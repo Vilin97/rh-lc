@@ -141,6 +141,7 @@ theorem UpperTheory.Gal.W2.Seed.pAdTensor :
     obtain ⟨m, g, hg⟩ := Module.Finite.exists_fin (R := ℤ) (M := 𝓞 E)
     obtain ⟨r, hr, e⟩ := Formalism.UG.P.levelaf_decomp g hg h
     have e' : y = c.symm (c y) := (c.symm_apply_apply y).symm
-    rw [e', e, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e', e, map_sum]
     refine sum_mem fun i _ => AddSubgroup.subset_closure ⟨r i, g i, hr i, ?_⟩
     rw [hc']

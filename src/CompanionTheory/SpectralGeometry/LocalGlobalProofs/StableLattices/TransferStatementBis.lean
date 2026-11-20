@@ -148,7 +148,8 @@ theorem avg_sigma {E : H →L[ℂ] H} (hA : IsAvg σ K E) (hv : ∀ k ∈ K, σ 
       ContinuousLinearMap.mul_apply, hA.2.2 _ _ k.2]
   have hfix := phi_fixed hv (((S.card : ℂ)⁻¹ • T : Hk K))
   rw [← hA.2.1 _ hfix, Subalgebra.coe_smul, LinearMap.smul_apply, hT]
-  simp only [map_smul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_smul, map_sum]
   rw [Finset.sum_congr rfl hterm, Finset.sum_const, ← Nat.cast_smul_eq_nsmul ℂ, smul_smul,
     inv_mul_cancel₀ hcard, one_smul]
 
@@ -204,13 +205,15 @@ theorem stTransfer : StTransfer := by
     have h0 := sum_reverse_eq_zero (fun i => b (g i)) (hPI _)
     show A (stdPoly E fun i => σ (g i)) = 0
     unfold CompanionTheory.D.gk.admitted.stdPoly
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     calc ∑ π : Equiv.Perm (Fin M), A (↑↑(Equiv.Perm.sign π) * word E (List.ofFn fun i => σ (g (π i))))
         = ∑ π : Equiv.Perm (Fin M), (Equiv.Perm.sign π : ℤ) • L (List.ofFn fun i => b (g (π i))).reverse.prod := by
           refine Finset.sum_congr rfl fun π _ => ?_
           rw [← zsmul_eq_mul, map_zsmul, hw]
       _ = L (∑ π : Equiv.Perm (Fin M), (Equiv.Perm.sign π : ℤ) • (List.ofFn fun i => b (g (π i))).reverse.prod) := by
-          rw [map_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [map_sum]
           simp only [map_zsmul]
       _ = 0 := by rw [h0, map_zero]
   ext v

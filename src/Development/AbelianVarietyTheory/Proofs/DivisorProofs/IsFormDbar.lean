@@ -38,12 +38,14 @@ theorem dbarAt_pull_comp {n m : ℕ} {φ : V n → V m} {U : Set (V n)} (hU : Is
   have e1 : (fun x => pull (fderiv ℂ φ x) (β (φ x))) =
       fun x => ∑ S, (fun S y => (bas m).repr (β (φ y)) S) S x • (fun S y => pull (fderiv ℂ φ y) (bas m S)) S x := by
     funext x
-    conv_lhs => rw [← (bas m).sum_repr (β (φ x)), map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [← (bas m).sum_repr (β (φ x)), map_sum]
     exact Finset.sum_congr rfl fun S _ => map_smul _ _ _
   rw [e1, GlobalTheory.T.dbar_sum_leibniz (c := fun S y => (bas m).repr (β (φ y)) S) (F := fun S y => pull (fderiv ℂ φ y) (bas m S)) (fun S => (hβ S).comp v (hφv.restrictScalars ℝ))
     (fun S T => GlobalTheory.T.differentiableAt_pullback_form hU hφ hv _ T)]
   simp only [GlobalTheory.T.dbar_pullback_holomorphic_zero hU hφ hv, smul_zero, add_zero]
-  rw [dbarAt_eq_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [dbarAt_eq_sum, map_sum]
   refine Finset.sum_congr rfl fun S _ => ?_
   rw [GlobalTheory.T.dbar_comp_holomorphic hφv (hβ S), map_mul]
 

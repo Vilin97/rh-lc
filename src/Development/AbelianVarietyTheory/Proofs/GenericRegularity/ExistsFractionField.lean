@@ -373,7 +373,8 @@ theorem exists_cell_algebra (K O A T : Type) [Field K] [CommRing O] [IsDomain O]
         rw [AddSubmonoidClass.coe_finset_sum]
         exact h0
       have h2 := congrArg ψ h1
-      rw [map_sum ψ, map_mul ψ ⟨g (α (N τ)), _⟩, hψA] at h2
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum ψ, map_mul ψ ⟨g (α (N τ)), _⟩, hψA] at h2
       refine Eq.trans (Finset.sum_congr rfl fun j _ => ?_) h2
       rw [map_mul ψ, hψA]
       rfl

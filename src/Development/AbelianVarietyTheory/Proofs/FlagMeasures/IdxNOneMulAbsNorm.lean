@@ -101,7 +101,8 @@ theorem latDetH_pseudo [DecidableEq ι] (hK : IsCMUnram K) (h : V →ₗ⋆[K] V
   let h' : (ι → K) →ₗ⋆[K] (ι → K) →ₗ[K] K := (h.comp φ).compl₂ φ
   have hh : ∀ x y, h' x y = h (φ x) (φ y) := fun _ _ => rfl
   have hx : ∀ y x, h' y x = ∑ i, star (y i) * (G *ᵥ x) i := fun y x => by
-    simp only [hh, hφ, Fintype.linearCombination_apply, map_sum, LinearMap.sum_apply, map_smulₛₗ,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hh, hφ, Fintype.linearCombination_apply, map_sum, LinearMap.sum_apply, map_smulₛₗ,
       LinearMap.smul_apply, smul_eq_mul, starRingEnd_apply, RingHom.id_apply, mulVec, dotProduct, hGd,
       Matrix.of_apply, Finset.mul_sum]
     rw [Finset.sum_comm]
@@ -235,7 +236,8 @@ theorem exists_norm_eq (F : FlagG S r T) (F' : FlagG S r T') (hT : T ≠ 0) (hs 
   have h1 : ∀ a, S.hT (F.fvec a) y = if a = Fin.last r then Z.det else 0 := fun a => by
     have := congrFun (congrFun (Matrix.mul_adjugate Z) a) (Fin.last r)
     rw [Matrix.mul_apply, Matrix.smul_apply, Matrix.one_apply] at this
-    rw [hy, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hy, map_sum]
     simp only [map_smul, smul_eq_mul, mul_ite, mul_one, mul_zero] at this ⊢
     rw [← this]
     exact Finset.sum_congr rfl fun b _ => mul_comm _ _
@@ -244,7 +246,8 @@ theorem exists_norm_eq (F : FlagG S r T) (F' : FlagG S r T') (hT : T ≠ 0) (hs 
     simp only [c, adjugate_fin_succ_eq_det_submatrix, Fin.succAbove_last, ← two_mul, pow_mul]
     simp [hZ]
   have h2 : S.hT y y = -T' * (Dl F F' r * star (Dl F F' r)) := by
-    simp only [hy, map_sum, LinearMap.sum_apply, map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, hT_fvec,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hy, map_sum, LinearMap.sum_apply, map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, hT_fvec,
       diagonal_apply, starRingEnd_apply, RingHom.id_apply, mul_ite, mul_zero, Finset.sum_ite_eq',
       Finset.mem_univ, if_true, hc]
     ring

@@ -96,7 +96,8 @@ theorem kfin : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberField F
     rw [Fintype.linearIndependent_iff]
     intro g hg j
     have := congrArg (BV (b j)) hg
-    simpa [map_sum, horth, Finset.sum_ite_eq] using this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [map_sum, horth, Finset.sum_ite_eq] using this
   have hspan' : Submodule.span ℂ (Set.range b') = V := by
     rw [show Set.range b' = V.subtype '' Set.range b from (Set.range_comp _ _), ← Submodule.map_span, hspan,
       Submodule.map_top, Submodule.range_subtype]

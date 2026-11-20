@@ -130,7 +130,8 @@ theorem base_frames_linInd (Z : LocDat D) (FP : ∀ p : PlF D, LocNG.FPair (locH
   have h1 : ∑ i, ((D.s.atP p).ιE (g i) * Ring.inverse (Sum.elim (frFac Z.δ p) (frFac Z.δ p) i)) •
       Sum.elim (FP p).A.f (FP p).B.f i = 0 := by
     have hmap := congrArg (baseChange₂ D p) hg
-    rw [map_sum, map_zero] at hmap
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero] at hmap
     rw [← hmap]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [hu i, smul_smul, mul_assoc, hs i, mul_one, baseChange_smul₂]

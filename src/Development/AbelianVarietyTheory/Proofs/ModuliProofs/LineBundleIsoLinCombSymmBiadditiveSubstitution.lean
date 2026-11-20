@@ -42,7 +42,8 @@ theorem map_prod_zpow {G M : Type*} [CommGroup G] [AddCommGroup M] (f : G → M)
     {n : ℕ} (x : Fin n → G) (c : Fin n → ℤ) : f (∏ i, x i ^ c i) = ∑ i, c i • f (x i) := by
   let φ : Additive G →+ M := AddMonoidHom.mk' (fun a => f a.toMul) fun a a' => hf _ _
   have hφ : ∀ g : G, f g = φ (Additive.ofMul g) := fun _ => rfl
-  rw [hφ, ofMul_prod, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hφ, ofMul_prod, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [ofMul_zpow, map_zsmul, ← hφ]
 

@@ -168,7 +168,8 @@ theorem operator_on_pullback_eq_sum : Laws → ∀ (E : Type) [Field E] [NumberF
       rw [star_mul, P.oA.map_mul, ← Category.assoc, k₁, MonObj.one_comp]
     show g (qkAdd hB p₀ (p₁ i)) ≫ P.oA.act (star (a' * a)) = 1
     rw [g₂ _ _ _ (qkAdd_qkAdd hB p₀ (p₁ i)), ← (g₀ _ _).1 hx₀, MonObj.mul_comp, e₀, e₁, _root_.mul_one]
-  · rw [(DVR.isSmul_iff _ _ _).1 hh, (hΦ₀ _ _).1 ht₀, hs, map_sum, map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [(DVR.isSmul_iff _ _ _).1 hh, (hΦ₀ _ _).1 ht₀, hs, map_sum, map_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [(DVR.isSmul_iff _ _ _).1 (htt' i), map_smul, map_smul, map_smul, map_smul, smul_comm, smul_smul ζ₀]
 

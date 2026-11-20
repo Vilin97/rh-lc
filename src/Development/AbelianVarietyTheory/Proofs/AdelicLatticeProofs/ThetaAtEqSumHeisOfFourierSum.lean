@@ -32,7 +32,8 @@ theorem thetaAt_eq_sum_heis_of_fourier_sum :
     simp only [Pi.smul_apply, smul_eq_mul]
     ring
   have hvac : Tm (halfInd e Λ) = f₀ := by simpa using hTm.vac
-  rw [hall Tm hTm, hΦ', map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hall Tm hTm, hΦ', map_sum]
   refine Finset.sum_congr rfl fun y hy => ?_
   rw [map_smul, hTm.modul _ (isSBHalf_halfInd e Λ) y (hY y hy), hvac]
 

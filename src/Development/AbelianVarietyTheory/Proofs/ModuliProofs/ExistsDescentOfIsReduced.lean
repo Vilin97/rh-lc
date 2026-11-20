@@ -35,7 +35,8 @@ theorem gs_zero (r : Z ⟶ X) (z : Z) (U : X.Opens) (h : r z ∈ U) :
 
 theorem gs_sum (r : Z ⟶ X) (z : Z) (U : X.Opens) (h : r z ∈ U) {κ : Type} [Fintype κ]
     (a : κ → Γ(X, U)) : gs r z U (∑ i, a i) = ∑ i, gs r z U (a i) := by
-  simp only [gs_eq_gsHom r z U h, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [gs_eq_gsHom r z U h, map_sum]
 
 theorem gs_appLE (r : Z ⟶ Y) (g : Y ⟶ X) (z : Z) (U : X.Opens) (V : Y.Opens) (e : V ≤ g ⁻¹ᵁ U)
     (h : r z ∈ V) (a : Γ(X, U)) : gs r z V ((g.appLE U V e).hom a) = gs (r ≫ g) z U a :=

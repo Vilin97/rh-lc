@@ -80,7 +80,8 @@ theorem gAct_conj_sum (hρ : Formalism.QuantumDeterminants.IsCRepOn (UJset ε) �
       fun a b => ∑ c, ∑ d, (P c a * P⁻¹ b d) • gAct hρ hV (single c d 1) := by
   funext a b
   rw [conj_single]
-  simp only [map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul]
 
 theorem gAct_conj_etr (hρ : Formalism.QuantumDeterminants.IsCRepOn (UJset ε) ρ) (hV : IsGKSub ε ρ (kFinVec ε ρ))
     (P : Matrix (Fin n) (Fin n) ℂ) (hP : IsUnit P) (k : ℕ) :

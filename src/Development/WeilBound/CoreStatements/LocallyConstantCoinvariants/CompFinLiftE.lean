@@ -188,7 +188,8 @@ theorem rho_apply (ψ : AddChar (AF F) ℂ) {u : Matrix (Fin n) (Fin d) (AE F E)
     M.co.rho ψ u Ψ x = ψ (⅟(2 : AF F) * ((M.co.e u).1 ⬝ᵥ (M.co.e u).2)) *
       (ψ (liftV v ((fun i => evFin F v (x i)) ⬝ᵥ fun i => evFin F v ((M.co.e u).2 i))) * Ψ (x + (M.co.e u).1)) := by
   have e : x ⬝ᵥ (M.co.e u).2 = liftV v ((fun i => evFin F v (x i)) ⬝ᵥ fun i => evFin F v ((M.co.e u).2 i)) := by
-    simp only [dotProduct, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [dotProduct, map_sum]
     exact Finset.sum_congr rfl fun i _ => by rw [← mul_liftV, ← at_eq (at_co M hu i).2]
   simp only [Darboux.rho, schr, AddChar.map_add_eq_mul, e]
   ring

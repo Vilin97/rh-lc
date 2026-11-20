@@ -449,7 +449,8 @@ theorem isobaricRigid_of_jacquetShalika (hJ : GlobalTheory.Published.JacquetShal
     choose B hB hB' using fun j : Fin L.length =>
       he.2.2 _ (L.get j).1.2 w (h1 _ (List.get_mem _ _)) (h2 _ (List.get_mem _ _))
     refine ⟨_, fun j => hasSat_twist (hB j) ((hν _).1 w), ?_⟩
-    rw [(frobEig_twSum h2).2, ← Multiset.coe_mapAddMonoidHom, map_sum, ← List.ofFn_getElem_eq_map, List.sum_ofFn]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [(frobEig_twSum h2).2, ← Multiset.coe_mapAddMonoidHom, map_sum, ← List.ofFn_getElem_eq_map, List.sum_ofFn]
     refine Finset.sum_congr rfl fun j _ => ?_
     refine Eq.trans ?_ (A.frobEig_tw _ (L.get j).2 (h2 _ (List.get_mem _ _))).symm
     rw [hB', Multiset.coe_mapAddMonoidHom, Multiset.map_map, Multiset.map_map]

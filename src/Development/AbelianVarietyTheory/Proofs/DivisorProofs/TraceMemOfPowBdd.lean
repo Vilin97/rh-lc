@@ -61,7 +61,8 @@ theorem trace_mem_valuationSubring_of_pow_bounded {K : Type} [Field K] (O : Valu
       exact hs2 ((Ne.isUnit hc).map _)
     exact ⟨p, hpm, by rwa [eval_map] at h0⟩
   have htr : algebraMap K (AlgebraicClosure K) y.trace = (y.map (algebraMap K (AlgebraicClosure K))).trace := by
-    simp [Matrix.trace, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Matrix.trace, map_sum]
   have hL : IsIntegral O (algebraMap K (AlgebraicClosure K) y.trace) := by
     rw [htr, Matrix.trace_eq_sum_roots_charpoly]
     exact multiset_sum_mem _ (fun μ hμ => (mem_integralClosure_iff _ _).2 (hroot μ hμ))

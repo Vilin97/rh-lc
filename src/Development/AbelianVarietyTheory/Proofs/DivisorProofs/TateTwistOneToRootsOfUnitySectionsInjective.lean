@@ -47,7 +47,8 @@ theorem mk_eq_single {A : Type} [CommRing A] (ζ : Prim q A) (f : Prim q A →�
   choose! a ha using h
   refine ⟨∑ ξ ∈ f.support, f ξ * ULift.up (a ξ : ZMod q), ?_⟩
   conv_lhs => rw [← Finsupp.sum_single f]
-  rw [Finsupp.sum, map_sum, Finsupp.single_finsetSum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finsupp.sum, map_sum, Finsupp.single_finsetSum, map_sum]
   exact Finset.sum_congr rfl fun ξ hξ => mk_single_eq q ζ ξ (a ξ) (ha ξ hξ) (f ξ)
 
 end GlobalTheory.EtC.MuTw.Inj

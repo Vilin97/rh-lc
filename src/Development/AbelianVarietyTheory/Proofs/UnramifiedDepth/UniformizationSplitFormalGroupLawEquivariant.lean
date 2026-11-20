@@ -32,7 +32,8 @@ private noncomputable def starMat {X : Type} [AddCommGroup X] {r : ℕ} (β : Mo
       conv_lhs => rw [← β.sum_repr (star a • β i)]
       rw [Finset.smul_sum]
       exact Finset.sum_congr rfl fun j _ => smul_comm _ _ _
-    simp only [Matrix.of_apply, Matrix.mul_apply, h, map_sum, map_zsmul, Finsupp.coe_finsetSum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.of_apply, Matrix.mul_apply, h, map_sum, map_zsmul, Finsupp.coe_finsetSum,
       Finset.sum_apply, Finsupp.smul_apply, smul_eq_mul]
   map_zero' := by
     ext i k

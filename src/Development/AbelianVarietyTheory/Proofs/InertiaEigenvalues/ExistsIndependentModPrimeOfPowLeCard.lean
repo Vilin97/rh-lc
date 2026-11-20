@@ -57,7 +57,8 @@ theorem ph_a_basis : ∀ (l : ℕ) [Fact l.Prime] (V ι : Type) [AddCommGroup V]
   refine ⟨x, hxZ, ?_⟩
   intro n hn a
   have hm : QuotientAddGroup.mk' K' (∑ a, n a • v (x a)) = 0 := (QuotientAddGroup.eq_zero_iff _).2 hn
-  rw [map_sum] at hm
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum] at hm
   simp only [map_nsmul, QuotientAddGroup.mk'_apply] at hm
   have hsum : ∑ a, (n a : ZMod l) • ((v (x a) : V ⧸ K')) = 0 := by
     rw [← hm]

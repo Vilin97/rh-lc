@@ -317,7 +317,8 @@ theorem exists_mem_ne_zero {σ V : Type} [Fintype σ] [NormedAddCommGroup V] [No
       AnalyticAt ℂ (fun z : Fin n → V => ∏ b, (G b (p b) : V → ℂ) (z b)) 0 := fun p =>
     Finset.analyticAt_fun_prod _ fun b _ => ThetaJet.analyticAt_of_differentiable
       ((hT _ (G b (p b)).2).comp (differentiable_apply b)) 0
-  rw [e, polyDeriv_eq_pairing, taylorDir_sum u _ fun p _ => (han p).const_smul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, polyDeriv_eq_pairing, taylorDir_sum u _ fun p _ => (han p).const_smul, map_sum]
   refine Finset.sum_eq_zero fun p _ => ?_
   rw [taylorDir_smul u _ (han p), map_smul, ← polyDeriv_eq_pairing,
     hcon (fun b => G b (p b)) fun b => (G b (p b)).2, smul_zero]
@@ -394,7 +395,8 @@ theorem exists_translates_jet_ne_zero : ∀ (g : ℕ) (Hm : Matrix (Fin g) (Fin 
           ((hasFDerivAt_apply b 0).add_const a)
         simpa using (hθ₁ a).hasFDerivAt
       rw [h1.fderiv]
-      simp only [← smul_eq_mul, ← map_smul, ← map_sum, ContinuousLinearMap.comp_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [← smul_eq_mul, ← map_smul, ← map_sum, ContinuousLinearMap.comp_apply]
       convert ha' using 2
       funext i'
       simp [Fintype.sum_prod_type, Pi.single_apply, ite_apply]) hP

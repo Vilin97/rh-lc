@@ -15,7 +15,8 @@ variable {F R : Type} [CommRing F] [CommRing R] {n : ℕ}
 private theorem mapd_mul (a : R →+* F) (d : R →+ F) (hd : ∀ y z, d (y * z) = a y * d z + d y * a z)
     (Y Z : Matrix (Fin n) (Fin n) R) : (Y * Z).map d = Y.map a * Z.map d + Y.map d * Z.map a := by
   ext i j
-  simp only [map_apply, mul_apply, map_sum, hd, Finset.sum_add_distrib, Matrix.add_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_apply, mul_apply, map_sum, hd, Finset.sum_add_distrib, Matrix.add_apply]
 
 private def toDual (a : R →+* F) (d : R →+ F) (hd : ∀ y z, d (y * z) = a y * d z + d y * a z) (h1 : d 1 = 0) :
     R →+* DualNumber F where

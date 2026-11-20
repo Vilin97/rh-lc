@@ -31,7 +31,8 @@ theorem exists_valued_le : ∀ (F E : Type) [Field F] [NumberField F] [Field E] 
   · intro a ha z hz
     refine ⟨z ⬝ᵥ c, hS z hz, ?_⟩
     have e : (splitVec τ fun i => a ⊗ₜ[F] z i) ⬝ᵥ (fun i => τ (c i)) = a * τ (z ⬝ᵥ c) := by
-      simp [splitVec, dotProduct, map_sum, Finset.mul_sum, mul_assoc]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [splitVec, dotProduct, map_sum, Finset.mul_sum, mul_assoc]
     rw [e, map_mul]
     exact mul_le_of_le_one_left' ((HeightOneSpectrum.mem_adicCompletionIntegers _ _ _).1 ha)
   · refine ⟨0, h0, ?_⟩
@@ -84,14 +85,16 @@ lemma form_smul_right (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n)
 
 lemma form_swap (σ : E →ₐ[F] E) (hσ : ∀ z, σ (σ z) = z) {n : ℕ} (J : Matrix (Fin n) (Fin n) E)
     (hJ : ∀ i j, σ (J j i) = -J i j) (a b : Fin n → E) : form σ J a b = -σ (form σ J b a) := by
-  simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, Finset.mul_sum, ← Finset.sum_neg_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, Finset.mul_sum, ← Finset.sum_neg_distrib]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   rw [hJ]; ring
 
 lemma map_dotProduct {K : Type} [Field K] [Algebra F K] (τ : E →ₐ[F] K) {n : ℕ} (a c : Fin n → E) :
     (fun i => τ (a i)) ⬝ᵥ (fun i => τ (c i)) = τ (a ⬝ᵥ c) := by
-  simp [dotProduct, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [dotProduct, map_sum, map_mul]
 
 theorem count_eq_zero_of_valuation {K : Type} [Field K] [NumberField K] {I : FractionalIdeal (𝓞 K)⁰ K} (hI : I ≠ 0)
     (w : HeightOneSpectrum (𝓞 K)) (h1 : ∀ s ∈ I, w.valuation K s ≤ 1) (h2 : ∃ s ∈ I, 1 ≤ w.valuation K s) :

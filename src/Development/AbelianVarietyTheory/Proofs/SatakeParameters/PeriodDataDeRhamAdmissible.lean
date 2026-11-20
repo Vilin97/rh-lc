@@ -135,7 +135,8 @@ theorem sum_le_finrank_piRep {m : ℕ} (ρ : Fin m → Representation LL G V)
     refine ⟨∑ a, Dmap PD _ _ _ (hs a) (y a), ?_⟩
     funext b
     apply Subtype.ext
-    simp only [F, LinearMap.pi_apply, coe_Dmap, Submodule.coe_sum, map_sum, key]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [F, LinearMap.pi_apply, coe_Dmap, Submodule.coe_sum, map_sum, key]
     simp
   have h1 : Module.Finite LL (∀ a, Dcris PD (ρ a)) := Module.Finite.of_surjective F hF
   have h2 : ∀ a, Module.Finite LL (Dcris PD (ρ a)) := fun a =>

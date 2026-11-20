@@ -37,7 +37,8 @@ theorem trace_eq_p_mul {B A : Type} [CommRing B] [CommRing A] [Algebra B A] (p :
     (hx : x ^ p = algebraMap B A y) (s : A) :
     Algebra.trace B A s = (p : B) * b.repr s ⟨0, hp⟩ := by
   conv_lhs => rw [← b.sum_repr s]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [map_smul, trace_basis_pow p b x y hb hx, smul_eq_mul]
   rw [Finset.sum_eq_single ⟨0, hp⟩]
   · simp [mul_comm]

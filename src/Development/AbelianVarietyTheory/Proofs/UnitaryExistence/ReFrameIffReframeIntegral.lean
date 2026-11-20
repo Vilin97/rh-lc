@@ -354,7 +354,8 @@ theorem intFrLieGL_of (hT : TanLin Xo) (hR : IntRebase Xo c) (hU : IntDiagUnit X
       (Formalism.L2.PjFree.isCombAt_single (y.1.tan τ) i)) j
     apply IsFractionRing.injective T.V T.Fr
     simp only [Matrix.mulVec, dotProduct, Matrix.of_apply, Pi.single_apply] at this
-    simp only [Matrix.mul_apply, Matrix.one_apply, Matrix.of_apply, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mul_apply, Matrix.one_apply, Matrix.of_apply, map_sum, map_mul]
     rw [Finset.sum_congr rfl fun r _ => mul_comm _ _, this]
     by_cases hij : i = j
     · simp [hij]

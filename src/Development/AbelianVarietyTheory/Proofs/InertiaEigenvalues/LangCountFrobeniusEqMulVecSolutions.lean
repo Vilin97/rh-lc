@@ -53,7 +53,8 @@ theorem langCount_card_semilinear (F : Type) [Field F] [IsAlgClosed F] (p : ℕ)
     intro v
     have hv : Φ v = b.equivFun.symm (fun i => b.equivFun v i ^ p ^ e) := by
       conv_lhs => rw [← b.sum_equivFun v]
-      rw [map_sum, Module.Basis.equivFun_symm_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Module.Basis.equivFun_symm_apply]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [hΦ, hb]
     rw [hv, LinearEquiv.apply_symm_apply]

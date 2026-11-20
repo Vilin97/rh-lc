@@ -215,7 +215,8 @@ theorem qrow_sum (y x : Fin (2 * r + k + 1) → ℂ) (Bs : Fin (k - 1) → Fin (
       omega
   calc ∑ d, qrow k r y x Bs j (bvec (posL k r (Fin.last r) d)) * v (posL k r (Fin.last r) d)
       = Lq (∑ d, v (posL k r (Fin.last r) d) • bvec (posL k r (Fin.last r) d)) := by
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         refine Finset.sum_congr rfl fun d _ => ?_
         rw [map_smul, smul_eq_mul, mul_comm]
         rfl

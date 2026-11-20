@@ -71,7 +71,8 @@ theorem hwb_restrict (f : MvPolynomial σ ℂ) (hf : HWB ι f) :
   · intro a b hab
     rw [bRow_apply]
     have h0 := congrArg (aeval (killS (edge ι))) (hf.1 a.succ b.succ (Fin.succ_lt_succ_iff.2 hab))
-    rw [bRow_apply, map_zero, map_sum, Fin.sum_univ_succ] at h0
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [bRow_apply, map_zero, map_sum, Fin.sum_univ_succ] at h0
     have e0 : ι (a.succ, 0) ∈ edge ι := Or.inr ⟨a, rfl⟩
     simp only [map_mul, aeval_X, killS, e0, if_true, zero_mul, zero_add] at h0
     rw [← h0]
@@ -81,7 +82,8 @@ theorem hwb_restrict (f : MvPolynomial σ ℂ) (hf : HWB ι f) :
   · intro c d hcd
     rw [bCol_apply]
     have h0 := congrArg (aeval (killS (edge ι))) (hf.2 c.succ d.succ (Fin.succ_lt_succ_iff.2 hcd))
-    rw [bCol_apply, map_zero, map_sum, Fin.sum_univ_succ] at h0
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [bCol_apply, map_zero, map_sum, Fin.sum_univ_succ] at h0
     have e0 : ι (0, c.succ) ∈ edge ι := Or.inl ⟨c, rfl⟩
     simp only [map_mul, aeval_X, killS, e0, if_true, zero_mul, zero_add] at h0
     rw [← h0]

@@ -147,7 +147,8 @@ theorem exists_eval_decomposition (hσ : IsSmooth σ) {m : ℕ} {R : Finset (GL 
     have hlam : lam ψ = L (E ⟨ψ, hψ⟩) := by
       simp only [L, LinearMap.coe_comp, Function.comp_apply, Submodule.coe_subtype]
       rw [← LinearMap.comp_apply E' E, hE', LinearMap.id_apply]
-    rw [hlam, hEψ, map_sum, ← Finset.sum_coe_sort R]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hlam, hEψ, map_sum, ← Finset.sum_coe_sort R]
     refine Finset.sum_congr rfl fun x _ => ?_
     dsimp only
     rw [dif_pos x.2]

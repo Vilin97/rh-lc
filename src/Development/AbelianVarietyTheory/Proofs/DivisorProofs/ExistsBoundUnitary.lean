@@ -78,7 +78,8 @@ theorem isTotDef_of_posDef (V : HSp D) (h : ∀ τ, (gramAt D V τ).PosDef) : Fo
       simpa using congrFun e i))
     have := (Matrix.posDef_iff_dotProduct_mulVec.1 (h τ)).2 hx'
     convert this using 1
-    simp only [Formalism.UG.hform, map_sum, map_mul, dotProduct, mulVec, Finset.mul_sum, gramAt, Pi.star_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Formalism.UG.hform, map_sum, map_mul, dotProduct, mulVec, Finset.mul_sum, gramAt, Pi.star_apply,
       Matrix.map_apply, mul_assoc]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
     rw [← hτ]; rfl
@@ -160,7 +161,8 @@ theorem integrableOn_theta : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsSt
         fun g => ∑ k, b.coord k (F g) * om (g, h) (L (b k)) 0 := by
       funext g
       conv_lhs => rw [← b.sum_repr (F g)]
-      simp only [thetaKO, map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Module.Basis.coord_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [thetaKO, map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Module.Basis.coord_apply]
     rw [e]
     refine continuous_finset_sum _ fun k _ => Continuous.mul ?_ ?_
     · exact (b.coord k).continuous_of_finiteDimensional.comp hF

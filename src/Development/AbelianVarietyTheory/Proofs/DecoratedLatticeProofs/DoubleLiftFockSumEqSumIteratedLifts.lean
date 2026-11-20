@@ -85,7 +85,8 @@ theorem biLift_biComb_fockSum : ∀ (D : D7), BiAct D → CenFock D → LiftSum 
     have e2 : (fun v => k.om (h₀, h₁) (fun u => ∑ i, k.pt ψ θ x y (P i) u * k'.pt ψ θ y z (P' i) v) 0) =
         ∑ i, k.om (h₀, h₁) (k.pt ψ θ x y (P i)) 0 • k'.pt ψ θ y z (P' i) := by
       funext v; rw [e1 v, map_sum]; simp [Finset.sum_apply, mul_comm]
-    rw [e2, map_sum]; simp [Finset.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e2, map_sum]; simp [Finset.sum_apply]
   funext h₂
   have hin : ∀ h₁, ∫ h₀ in x.vol.𝓕, φ h₀ * ∑ i, k.om (h₀, h₁) (k.pt ψ θ x y (P i)) 0 *
       k'.om (h₁, h₂) (k'.pt ψ θ y z (P' i)) 0 ∂x.vol.μ =

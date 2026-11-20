@@ -130,7 +130,8 @@ theorem endo_and_isoExt [hA : ArithBase o Ω] {ρ : S.Real} {M : RatModel o Ω} 
   have key : ∀ (y : Fin n → (Q.G ⊗ Q.G ⟶ Q.G)) (δ : Fin n → ℤ), (∀ i, IsMonHom (y i)) →
       CechPic.pull (η[Q.G ⊗ Q.G]).left (cls _ (LB.isLB_linComb hL (fun i => (y i).left) δ)) = 0 := by
     intro y δ hy
-    rw [cls_linComb hL, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [cls_linComb hL, map_sum]
     refine Finset.sum_eq_zero fun i _ => ?_
     rw [map_zsmul, ← pull_comp, ← Over.comp_left, (hy i).one_hom]
     exact (congrArg (_ • ·) h0).trans (smul_zero _)
@@ -187,7 +188,8 @@ theorem comb_mem (c : J → Γ(Z, W)) : comb p s W c ∈ secOn B (p ⁻¹ᵁ W) 
       resG X h' (resG X h f) = resG X (h'.trans h) f := fun h h' f => by
     rw [← CommRingCat.comp_apply, ← Functor.map_comp]
     rfl
-  simp only [comb, map_sum, map_mul, Finset.mul_sum, LocThetaConv.resG_appLE, rr]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [comb, map_sum, map_mul, Finset.mul_sum, LocThetaConv.resG_appLE, rr]
   refine Finset.sum_congr rfl fun l _ => ?_
   rw [mul_left_comm]
   congr 1

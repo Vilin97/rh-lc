@@ -96,7 +96,8 @@ theorem schr_tens {κ : Type} [Fintype κ] (ψ : AddChar (AF F) ℂ) (hψ : IsSt
   set z : AF F := x ⬝ᵥ liftV v.2 + ⅟(2 : AF F) * (liftV v.1 ⬝ᵥ liftV v.2) with hz
   let finH : AF F →+* FiniteAdeleRing (𝓞 F) F := RingHom.snd _ _
   have hfin : finH z = 0 := by
-    simp only [hz, dotProduct, map_add, map_mul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hz, dotProduct, map_add, map_mul, map_sum]
     have e : ∀ i, finH (liftV v.2 i) = 0 := fun _ => rfl
     simp only [e, mul_zero, Finset.sum_const_zero, add_zero]
   have hAt : At (evI F) z := by
@@ -109,8 +110,10 @@ theorem schr_tens {κ : Type} [Fintype κ] (ψ : AddChar (AF F) ℂ) (hψ : IsSt
   have htr : Algebra.trace ℝ (mixedEmbedding.mixedSpace F) (evI F z) =
       trP F κ (fun i => evI F (x i)) v.2 + trP F κ v.1 v.2 / 2 := by
     rw [evI_eq, hz]
-    simp only [dotProduct, map_add, map_mul, map_sum, ← evI_eq, evI_liftV, trP]
-    rw [show evI F (⅟(2 : AF F)) = algebraMap ℝ _ (1 / 2) from evH_invTwo, ← Algebra.smul_def, map_smul, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [dotProduct, map_add, map_mul, map_sum, ← evI_eq, evI_liftV, trP]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [show evI F (⅟(2 : AF F)) = algebraMap ℝ _ (1 / 2) from evH_invTwo, ← Algebra.smul_def, map_smul, map_sum,
       smul_eq_mul]
     ring
   have hloc : (fun i => evI F ((x + liftV v.1) i)) = (fun i => evI F (x i)) + v.1 := by

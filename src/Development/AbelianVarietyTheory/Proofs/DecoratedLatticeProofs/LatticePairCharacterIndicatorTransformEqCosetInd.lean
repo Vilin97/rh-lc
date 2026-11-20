@@ -41,7 +41,8 @@ theorem rowExt : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [Topological
   have h0 : f h ≠ 0 := (map_ne_zero f).2 hζ.2
   set u : Fin L.rank → k := fun j => f ((Matrix.vecMul (star ζ) L.gram) j) with hu
   have hu1 : ∑ j, u j * f (ζ j) = f h := by
-    rw [hh, Matrix.dotProduct_mulVec, dotProduct, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hh, Matrix.dotProduct_mulVec, dotProduct, map_sum]
     exact Finset.sum_congr rfl fun j _ => (map_mul f _ _).symm
   have hγ : ∀ j, FL.γ () j = (f h)⁻¹ * u j := fun j => by
     have h1 : ∀ i, f (ζ i) * FL.γ () j = (1 : Matrix _ _ k) i j := fun i => by
@@ -57,7 +58,8 @@ theorem rowExt : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [Topological
   show _ = (f h)⁻¹ * ∑ i, p.pr (∑ j, incA D (Matrix.vecMul (star ζ) L.gram j) * x j i) * β.b i r
   rw [Finset.mul_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
-  rw [map_sum, ← mul_assoc, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, ← mul_assoc, Finset.mul_sum]
   congr 1
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_mul, mul_assoc]

@@ -75,7 +75,8 @@ theorem dvd_aeval_of_coeff (p : ℕ) (x : σ → A) (S : ℕ) (hS : ∀ i, (p : 
     (p : A) ^ m ∣ MvPolynomial.aeval x P := by
   classical
   conv_rhs => rw [P.as_sum]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.dvd_sum fun α hα => ?_
   rw [MvPolynomial.aeval_monomial]
   obtain ⟨i, hi⟩ : ∃ i, m * S < α i := by

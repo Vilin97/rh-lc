@@ -46,12 +46,14 @@ theorem lvBasis_e_mem (hBasis : Module.Basis (Fin r) (PowerSeries O) ↥((latOf 
 
 theorem lvBasis_t_sum (x : Fin r → C.V) : C.t i (∑ l, x l) = ∑ l, C.t i (x l) := by
   have h : ∀ y, C.t i y = ((DDl W T i).subtype.comp (C.θ i).toAddMonoidHom) y := fun _ => rfl
-  simp only [h, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [h, map_sum]
 
 theorem lvBasis_cmp_sum {m : ℕ} (f : Fin m → W.DD T) (hf : ∀ l, f l ∈ W.N T) (hs : ∑ l, f l ∈ W.N T) :
     W.cmp T ⟨∑ l, f l, hs⟩ = ∑ l, W.cmp T ⟨f l, hf l⟩ := by
   have h : (⟨∑ l, f l, hs⟩ : ↥(W.N T)) = ∑ l, ⟨f l, hf l⟩ := Subtype.ext (by simp)
-  rw [h, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h, map_sum]
 
 theorem lvBasis_smul_letter {a a' : LetA O n} (h : a i = a' i) {x : W.DD T}
     (hx : (letE i : LetA O n) • x = x) : a • x = a' • x := by
@@ -159,7 +161,8 @@ theorem lvBasis_kernel {π' : LetA O n} (hP3 : Formalism.MainNotions.DeltaInvari
     have h1 := congrFun (congrFun ((huw _ hw1).trans (huw _ hw2).symm) j) i
     simp only [Finset.sum_apply, Pi.smul_apply, Pi.mul_apply, letπ] at h1
     have h2 := congrArg PowerSeries.constantCoeff h1
-    simpa [map_sum, PowerSeries.smul_eq_C_mul] using h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [map_sum, PowerSeries.smul_eq_C_mul] using h2
   have hG : ∀ j, ∃ g : Fin r → PowerSeries O,
       (letE i : LetA O n) • b j = ∑ l, (baseIdOf hR).d (g l) • C.t i (e l) := fun j =>
     lvBasis_expand hBasis hBasis_e ((W.N T).smul_mem _ (hbN j).1) (lvBasis_letE_idem i _)
@@ -197,7 +200,8 @@ theorem lvBasis_kernel {π' : LetA O n} (hP3 : Formalism.MainNotions.DeltaInvari
       rw [← hh l, ιOf_const, ← hrep, Finsupp.single_apply]
       split_ifs <;> simp
     rw [← hcc]
-    simp only [Finset.sum_apply, Pi.mul_apply, map_sum, map_mul, BaseId.d_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Finset.sum_apply, Pi.mul_apply, map_sum, map_mul, BaseId.d_apply]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [show (baseIdOf hR).ι = ιOf hR from rfl, ιOf_const]
   intro l
@@ -277,7 +281,8 @@ theorem lamSpan_holds {T : LocLat G Qp LL O} {C : Coord W (baseIdOf hR) T} {c : 
   have hx : x = ∑ k, a k • lamOf C c ell e k := by
     apply Subtype.ext
     simp only [Submodule.coe_sum, Submodule.coe_smul, lvBasis_lamOf_val hBasis hBasis_e]
-    rw [← hdx, ← ha, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hdx, ← ha, map_sum]
     simp only [map_smul]
   rw [hx]
   exact Submodule.sum_mem _ fun k _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨k, rfl⟩)

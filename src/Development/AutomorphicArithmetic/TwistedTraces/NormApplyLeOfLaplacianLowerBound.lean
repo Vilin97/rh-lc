@@ -16,7 +16,8 @@ theorem UpperTheory.norm_apply_le_of_laplacian_lower_bound :
     exact eq_neg_of_add_eq_zero_right h
   have h2 : (inner ℂ (j v) (j (∑ i, (ε i : ℂ) • A i (A i v)))).re
       = -∑ k, ε k * ‖j (A k v)‖ ^ 2 := by
-    rw [map_sum, inner_sum, Complex.re_sum, ← Finset.sum_neg_distrib]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, inner_sum, Complex.re_sum, ← Finset.sum_neg_distrib]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_smul, inner_smul_right, h1 k, ← Complex.ofReal_neg, ← Complex.ofReal_mul,
       Complex.ofReal_re]

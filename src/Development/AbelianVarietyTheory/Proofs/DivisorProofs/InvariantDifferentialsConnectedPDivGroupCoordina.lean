@@ -91,7 +91,8 @@ theorem omega_coord : ∀ (p : ℕ) (k : Type) [CommRing k] (d : ℕ) (G : PDivG
   have hres : ∀ n (w : Fin d → k), cotMap (G.res n) (∑ i, w i • dUnit k (c.x (n + 1) i)) =
       ∑ i, w i • dUnit k (c.x n i) := by
     intro n w
-    simp only [map_sum, map_smul, cotMap_d, c.res]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, cotMap_d, c.res]
   refine ⟨fun w n => hres n w, fun u => ?_⟩
   have hu : ∀ n, cotMap (G.res n) (u.1 (n + 1)) = u.1 n := u.2
   obtain ⟨n0, hn0⟩ := c.presents.2 2

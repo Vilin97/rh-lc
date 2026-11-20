@@ -15,7 +15,8 @@ theorem aeval_mul_prod_zpow (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) {d : K �
     aeval y g * ∏ k, y ⟨k, c k⟩ ^ (-(d k : ℤ)) = aeval (fun p : Σ k, ι k => y p / y ⟨p.1, c p.1⟩) g := by
   conv_lhs => rw [g.as_sum]
   conv_rhs => rw [g.as_sum]
-  rw [map_sum, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun m hm => ?_
   rw [aeval_monomial, aeval_monomial, Finsupp.prod, Finsupp.prod]
   have hsub : ∀ f : (Σ k, ι k) → Ω, ∏ p ∈ m.support, f p ^ m p = ∏ p, f p ^ m p := fun f =>

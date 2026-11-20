@@ -22,7 +22,8 @@ theorem gs_comb {n : ℕ} (p : X ⟶ Spec (CommRingCat.of R)) (r : Z ⟶ X) (z :
     (c : Fin n → R) (u : Fin n → Γ(X, W)) :
     gs r z W (∑ i, AbLaw.cst p W (c i) * u i) =
       ∑ i, gs (r ≫ p) z ⊤ ((Scheme.ΓSpecIso (CommRingCat.of R)).inv.hom (c i)) * gs r z W (u i) := by
-  rw [gs_eq r z _ hz, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [gs_eq r z _ hz, map_sum, map_sum]
   refine Finset.sum_congr rfl fun k _ => (gs_eq r z _ hz _).symm.trans ((gs_mul r z _ hz _ _).trans ?_)
   exact congrArg (· * _) ((gs_res r z le_top hz _).trans (gs_pull r p z ⊤ trivial _))
 

@@ -27,7 +27,8 @@ theorem cols_pair : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [Topologi
     intro Z _ M z
     rw [Finset.sum_comm, Matrix.mul_apply]
     refine Finset.sum_congr rfl fun r' _ => ?_
-    rw [← Finset.sum_mul, Matrix.map_apply, Matrix.mul_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Finset.sum_mul, Matrix.map_apply, Matrix.mul_apply, map_sum]
     congr 1
     refine Finset.sum_congr rfl fun r _ => ?_
     rw [map_mul, Matrix.conjTranspose_apply, hpr, hpr]

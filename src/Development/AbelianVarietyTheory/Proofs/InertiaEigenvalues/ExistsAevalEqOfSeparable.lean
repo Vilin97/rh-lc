@@ -70,13 +70,15 @@ theorem trace_σ (K : UQ) (B : InvAlg K) (a : B.A) :
   have hσsum : ∀ y : B.A, B.σ y = ∑ i, K.c (b.repr y i) • B.σ (b i) := by
     intro y
     conv_lhs => rw [← b.sum_repr y]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [σsm]
   have hli : LinearIndependent K.E (fun i => B.σ (b i)) := by
     rw [Fintype.linearIndependent_iff]
     intro r hr i
     have h1 := congrArg B.σ hr
-    rw [map_sum, map_zero] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero] at h1
     simp only [σsm, B.σ_σ] at h1
     have h2 := (Fintype.linearIndependent_iff.1 b.linearIndependent) _ h1 i
     have := congrArg K.c h2
@@ -92,7 +94,8 @@ theorem trace_σ (K : UQ) (B : InvAlg K) (a : B.A) :
     have : B.σ y = ∑ j, K.c (b.repr y j) • b' j := by
       rw [hσsum y]; simp only [hb']
     rw [this, b'.repr_sum_self]
-  rw [Algebra.trace_eq_matrix_trace b', Algebra.trace_eq_matrix_trace b, Matrix.trace, Matrix.trace,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Algebra.trace_eq_matrix_trace b', Algebra.trace_eq_matrix_trace b, Matrix.trace, Matrix.trace,
     map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   simp only [Matrix.diag, Algebra.leftMulMatrix_eq_repr_mul, hb', ← map_mul, hrepr]

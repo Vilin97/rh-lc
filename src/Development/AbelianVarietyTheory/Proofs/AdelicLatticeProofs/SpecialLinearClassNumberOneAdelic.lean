@@ -148,7 +148,8 @@ theorem sl_class_number_one : ∀ (ι : Type) [Fintype ι] [DecidableEq ι] (R :
     obtain ⟨z, hz⟩ := hgL q hq i
     have e : (g.map (algebraMap ℚ R) * x) i j =
         algebraMap ℚ R ((g *ᵥ q) i) + ∑ k, (M : R) * algebraMap ℚ R (g i k) * a k := by
-      simp only [Matrix.mul_apply, Matrix.mulVec, dotProduct, map_sum, Matrix.map_apply, map_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Matrix.mul_apply, Matrix.mulVec, dotProduct, map_sum, Matrix.map_apply, map_mul]
       rw [← Finset.sum_add_distrib]
       exact Finset.sum_congr rfl fun k _ => by rw [hqa k]; ring
     rw [e, hz, map_intCast]

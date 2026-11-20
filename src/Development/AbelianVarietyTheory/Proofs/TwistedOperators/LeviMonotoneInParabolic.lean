@@ -209,7 +209,8 @@ theorem EA_vecOf {A : Finset (SignType × Fin (wittIndex V))} {x : SignType × F
 theorem cf_EA {A : Finset (SignType × Fin (wittIndex V))} {x : SignType × Fin (wittIndex V)} (hx : x.1 ≠ 0)
     (hxA : x ∈ A) (y : Fin V.rank → R ⊗[F] E) :
     cf hc R (dualOf Φ x.1 x.2) (EA hc Φ R A y) = cf hc R (dualOf Φ x.1 x.2) y := by
-  rw [EA, LinearMap.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [EA, LinearMap.sum_apply, map_sum]
   simp only [cf_Eop hx, Finset.sum_ite_eq', if_pos hxA]
 
 end Ops

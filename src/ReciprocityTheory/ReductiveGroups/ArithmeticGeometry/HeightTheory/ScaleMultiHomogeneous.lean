@@ -77,7 +77,8 @@ theorem scale_multiHomogeneous (b : Fin (D + 1)) (u : Kˣ) (a : Fin (D + 1) → 
       exact absurd (Finset.mem_univ b) h
   conv_lhs => rw [F.as_sum]
   conv_rhs => rw [F.as_sum]
-  rw [map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun s hs => ?_
   rw [scaleEquiv_monomial, hsum s, hF s hs b]
 
@@ -131,7 +132,8 @@ theorem scale_sImg_expr (b : Fin (D + 1)) (hb : b ≠ 0) (u : Ωˣ) (j₀ : Fin 
       have hb' : ¬ ((0 : Fin (D + 1)) = b) := fun h => hb h.symm
       rw [if_pos rfl, if_neg hb', one_mul, scaleEquiv_X]
       simp [InBlock]
-    · rw [if_neg h0, map_neg, map_sum, mul_neg, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [if_neg h0, map_neg, map_sum, mul_neg, Finset.mul_sum]
       congr 1
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [map_mul, hX, scaleEquiv_C, mul_assoc]

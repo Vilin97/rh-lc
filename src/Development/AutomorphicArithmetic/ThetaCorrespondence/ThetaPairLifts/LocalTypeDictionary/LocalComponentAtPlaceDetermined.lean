@@ -131,7 +131,8 @@ theorem place_of_local_component (hCo : GlobalTheory.Published.DiscreteSeriesCov
     have h1 := hth x hx n a f hf
     rw [hε.twVia_eq] at h1
     refine (rdF_thPe _ hε H.ok hrat _).trans ((congrArg _ (he x)).trans (h1.trans (congrArg (z₁ • ·) ?_)))
-    rw [map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [rdF_tmul, smul_comm]
     refine congrArg (ε (c.embW w (a k)) • ·) ?_

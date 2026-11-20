@@ -17,7 +17,8 @@ variable {σ : Type*} {R : Type*} [CommRing R]
 
 theorem weight_comp_addMonoidHom_apply {M M' : Type*} [AddCommMonoid M] [AddCommMonoid M'] (w : σ → M)
     (f : M →+ M') (d : σ →₀ ℕ) : Finsupp.weight (fun v => f (w v)) d = f (Finsupp.weight w d) := by
-  simp [Finsupp.weight_apply, Finsupp.sum, map_sum, map_nsmul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Finsupp.weight_apply, Finsupp.sum, map_sum, map_nsmul]
 
 theorem weightedHomogeneousComponent_monomial' {M : Type*} [AddCommMonoid M] [DecidableEq M]
     (w : σ → M) (n : M) (d : σ →₀ ℕ) (c : R) :

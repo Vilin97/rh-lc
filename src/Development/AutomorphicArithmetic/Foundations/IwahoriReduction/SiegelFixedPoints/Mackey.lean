@@ -485,7 +485,8 @@ theorem UpperTheory.Kd.L.mackey :
       rw [hI, Finset.sum_product]
       refine Finset.sum_congr rfl fun y _ => ?_
       rw [Finset.sum_product]
-    rw [e2, map_sum, ← Finset.sum_sub_distrib]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e2, map_sum, ← Finset.sum_sub_distrib]
     simp only [Finset.mul_sum, Finset.sum_mul, ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_mul, map_natCast, hmx]

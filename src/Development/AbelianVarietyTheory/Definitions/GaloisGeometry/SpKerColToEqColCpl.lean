@@ -218,10 +218,12 @@ theorem spKer_colTo_eq_colCpl {F : ℕ → GFam K} {n m : ℕ} (hm : m = n + 2) 
     (h2 : ∀ al (d : Y.Pts) d₁, (A al).k2 d.1.1 d.1.2 d₁ = e ∘ₗ k2.k d (til d₁)) (φ : (F 0).Forms) (h : m = m) (d₁ : S₁.D) :
     e (((spKer kk k1 k2).colTo hS m (spIn n m _ T 0 φ) (.top h)).1 (til d₁)) = (colCpl kk hF n A (hF (n + 1) b) φ).1 d₁ := by
   have hC := cplGSD_ok Y (hF (n + 1) b)
-  rw [spKer_colTo_top kk k1 k2 hm hF hC φ h, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [spKer_colTo_top kk k1 k2 hm hF hC φ h, map_sum]
   show _ = ((∑ al : (F n).β, (((A al).comp (hF (n + 1) b) ((F (n + 1)).mem b).outSec).op (hF n al)) ∘ₗ (LinearMap.proj al))
     (kk.colTo hF n φ)).1 d₁
-  rw [LinearMap.sum_apply, Submodule.coe_sum, Submodule.coe_sum, Finset.sum_apply, Finset.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [LinearMap.sum_apply, Submodule.coe_sum, Submodule.coe_sum, Finset.sum_apply, Finset.sum_apply, map_sum]
   refine Finset.sum_congr rfl fun al _ => ?_
   obtain ⟨h', l1, l2, e1, e2, e3⟩ := cpl_op_eq_comp (A al) (hF n al) (hF (n + 1) b)
   have e4 : l1 = k1 al := by
@@ -232,7 +234,8 @@ theorem spKer_colTo_eq_colCpl {F : ℕ → GFam K} {n m : ℕ} (hm : m = n + 2) 
   rw [LinearMap.comp_apply, e3, e4]
   show e (k2.appOf hC _ _ (til d₁)) = l2.appOf hC _ _ d₁
   unfold ClsKer.appOf
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun c _ => ?_
   rw [map_smul, e2, h2]
   rfl

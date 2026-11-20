@@ -21,7 +21,8 @@ theorem trace_bE_bE' (i j : Fin (Module.finrank F E)) :
 theorem sum_repr_mul (a b : AE F E) :
     ∑ i, (bA F E).repr a i * (bA' F E).repr b i = Algebra.trace (AF F) (AE F E) (a * b) := by
   conv_rhs => rw [← (bA F E).sum_repr a, ← (bA' F E).sum_repr b]
-  rw [Finset.sum_mul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.sum_mul_sum, map_sum]
   have hb : ∀ i j, Algebra.trace (AF F) (AE F E) (bA F E i * bA' F E j) = if i = j then 1 else 0 := by
     intro i j
     rw [bA, bA', Algebra.TensorProduct.basis_apply, Algebra.TensorProduct.basis_apply,
@@ -30,7 +31,8 @@ theorem sum_repr_mul (a b : AE F E) :
     rw [trace_bE_bE'] at this
     split_ifs at this ⊢ <;> simpa [inclR] using this
   refine Finset.sum_congr rfl fun i _ => ?_
-  simp only [map_sum, smul_mul_smul_comm, map_smul, hb, smul_eq_mul, mul_ite, mul_one, mul_zero,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, smul_mul_smul_comm, map_smul, hb, smul_eq_mul, mul_ite, mul_one, mul_zero,
     Finset.sum_ite_eq, Finset.mem_univ, if_true]
 
 theorem planeMat_eq_frame {n n₁ : ℕ} (H : Plane E n n₁) : planeMat H = GlobalTheory.ThK.Adapt.frame H := by
@@ -132,7 +134,8 @@ theorem form_eq : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberFi
   have hpq : ∀ z z', (planeT σ X W H H' z).1.1 ⬝ᵥ (planeT σ X W H H' z').1.2 =
       Algebra.trace (AF F) (AE F E) (∑ k, sI H H' z k * pairI σ X W H H' z' k) := by
     intro z z'
-    simp only [planeT, LinearMap.coe_mk, AddHom.coe_mk, dotProduct, Fintype.sum_prod_type, sum_repr_mul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [planeT, LinearMap.coe_mk, AddHom.coe_mk, dotProduct, Fintype.sum_prod_type, sum_repr_mul, map_sum]
   have hR : ∀ z z' : Matrix (Fin n₁) (Fin d₁ ⊕ Fin 2) (AE F E),
       hTens (cA σ) (incM F X₁.J) (incM F (planeGram σ W.J H')) z z' =
         -1 * ∑ i, ∑ k, z i (.inr 1) * incM F X₁.J i k * cA σ (z' k (.inr 0)) +

@@ -21,7 +21,8 @@ theorem trace_map {R R' : Type} [CommRing R] [Algebra F R] [CommRing R'] [Algebr
     Algebra.trace R' (R' ⊗[F] E) (Algebra.TensorProduct.map φ (AlgHom.id F E) z) =
       φ (Algebra.trace R (R ⊗[F] E) z) := by
   classical
-  rw [Algebra.trace_eq_matrix_trace (Algebra.TensorProduct.basis R' (bE F E)),
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Algebra.trace_eq_matrix_trace (Algebra.TensorProduct.basis R' (bE F E)),
     Algebra.trace_eq_matrix_trace (Algebra.TensorProduct.basis R (bE F E)), Matrix.trace, Matrix.trace, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [Matrix.diag_apply, Matrix.diag_apply, Algebra.leftMulMatrix_eq_repr_mul, Algebra.leftMulMatrix_eq_repr_mul,

@@ -112,7 +112,8 @@ theorem heightOfPoint : HeightOfPoint.Statement := by
     (Submodule.mem_span_range_iff_exists_fun (𝓞 F)).mp (hw ▸ Submodule.mem_top)
   have hyvx : ∀ c : Fin n → 𝓞 F, yv (∑ k, c k • w k) = ∑ k, intToField F K (c k) * yv (w k) := by
     intro c
-    simp only [map_sum, map_smulₛₗ, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smulₛₗ, smul_eq_mul]
   set M : IsDedekindDomain.HeightOneSpectrum (𝓞 K) → ℝ := fun v =>
     ⨆ k, NumberField.HeightOneSpectrum.adicAbv K v (yv (w k)) with hMdef
   have hM0 : ∀ v, 0 ≤ M v := fun v => Real.iSup_nonneg fun _ => AbsoluteValue.nonneg _ _

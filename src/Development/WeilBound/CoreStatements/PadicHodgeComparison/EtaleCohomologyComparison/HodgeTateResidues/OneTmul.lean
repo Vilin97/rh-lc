@@ -67,7 +67,8 @@ theorem co_abs {W : Type 1} [AddCommGroup W] [Module B W] {m r : ℕ} (hr : r < 
           rw [hg, ← (e a ha).apply_symm_apply x, he a ha n b _ hb]
           exact hgen a ha b _
       | add t t' ht ht' => rw [Pi.single_add, map_add]; exact hadd _ _ ht ht'
-    rw [← g.apply_symm_apply w, ← Finset.univ_sum_single (g.symm w), map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← g.apply_symm_apply w, ← Finset.univ_sum_single (g.symm w), map_sum]
     exact Finset.sum_induction _ P hadd h0 (fun i _ => key i _)
   · let coT : (∀ i, N i ⊗[K] M i) →+ ∀ a, Module.Dual K (H a) →+ E :=
       { toFun := fun T a => if ha : a ≤ r then

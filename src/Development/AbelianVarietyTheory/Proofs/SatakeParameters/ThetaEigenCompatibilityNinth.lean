@@ -149,7 +149,8 @@ theorem eig_eq_satU : GlobalTheory.Published.AutomorphicFormsFiniteGL → ∀ (h
       s w (List.ofFn d) • (P.M.loc i).real (hj ▸ f) := by
     funext g
     have k4 := congrArg e (k2 ((hA.PV j).ψ ((hA.a j)⁻¹ * g)))
-    rw [Finset.sum_image (hA.PV j).inj.injOn, map_sum, map_smul, hy] at k4
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_image (hA.PV j).inj.injOn, map_sum, map_smul, hy] at k4
     rw [Finset.sum_apply, Pi.smul_apply]
     refine (Finset.sum_congr rfl fun γ _ => ?_).trans (k4.trans (congrArg _ (hreal f g).symm))
     refine (hreal f (g * γ)).trans ?_

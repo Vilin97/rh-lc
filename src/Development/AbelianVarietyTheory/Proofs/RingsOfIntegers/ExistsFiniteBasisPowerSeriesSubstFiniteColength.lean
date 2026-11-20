@@ -24,7 +24,8 @@ theorem finrank_quotient_eq_of_existsUnique {R : Type} [CommRing R] [Nontrivial 
     choose c hc _ using fun j => he (g j)
     have h1 : ∑ i, algebraMap R _ (a i) * e i = ∑ i, ψ (∑ j, c j i * X j) * e i := by
       rw [← hg]
-      simp only [map_sum, map_mul, Finset.sum_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_mul, Finset.sum_mul]
       rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [hc j, Finset.sum_mul]

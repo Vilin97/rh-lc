@@ -57,9 +57,11 @@ theorem unimodLocal_of_locDual (hLD : Formalism.HermitianLatticesTheory.LocDual)
   have hsymm : (hStd E n).IsSymm := by
     first
       | (refine ⟨fun x y => ?_⟩
-         simp [hStd, map_sum, starRingEnd_apply, star_mul', mul_comm])
+         set_option synthInstance.maxHeartbeats 100000 in
+           simp [hStd, map_sum, starRingEnd_apply, star_mul', mul_comm])
       | (intro x y
-         simp [hStd, map_sum, starRingEnd_apply, star_mul', mul_comm])
+         set_option synthInstance.maxHeartbeats 100000 in
+           simp [hStd, map_sum, starRingEnd_apply, star_mul', mul_comm])
   have hstar : ∀ r : 𝓞 E, star (algebraMap (𝓞 E) E r) ∈ Set.range (algebraMap (𝓞 E) E) := by
     intro r
     exact ⟨RingOfIntegers.mapRingHom (starRingEnd E) r, rfl⟩

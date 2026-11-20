@@ -94,7 +94,8 @@ theorem span : ∀ (p : ℕ) [Fact p.Prime] (Ω : Type) [Field Ω] [Algebra (O0 
   have hgP : ∀ g ∈ Ggeo p Ω, ∀ s : ℕ, (∀ i : ℕ, g ((τ ^ i) z) = (τ ^ (s + i)) z) →
       ∀ j, g (P j) = ζ ^ (s * j) * P j := by
     intro g hg s hs j
-    rw [hP, map_mul, map_inv₀, map_natCast, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hP, map_mul, map_inv₀, map_natCast, map_sum]
     have hper : ∀ i, (fun i => η ^ (i * j) * (τ ^ i) z) (i + M) = (fun i => η ^ (i * j) * (τ ^ i) z) i := by
       intro i
       show η ^ ((i + M) * j) * (τ ^ (i + M)) z = η ^ (i * j) * (τ ^ i) z

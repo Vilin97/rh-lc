@@ -57,7 +57,8 @@ theorem sumOp_comp_of_between : ∀ {R X M : Type} [CommRing R] [AddCommGroup X]
   · rw [(tBC _ (hfix v hv) _ g hgC hg).1, (tAB v hv _ f hfB hf).1,
       (tAC v hv _ (fun p : Fin m × Fin n => g p.1 + f p.2) hkC hk).1, Fintype.sum_prod_type]
     refine Finset.sum_congr rfl fun j _ => ?_
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun i _ => h.comp_of_mem hC (hgC j) (hfC i) v
 
 end GlobalTheory.FinWeil

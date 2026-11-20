@@ -14,7 +14,8 @@ namespace GlobalTheory.ZH.CombLocus
 def secComb {X : Scheme.{0}} {H : LB X} {J : Type} [Fintype J] (a : J → Γ(X, ⊤)) (s : J → H.Sec) : H.Sec where
   f l := ∑ k, resG X le_top (a k) * (s k).f l
   compat i j := by
-    rw [map_sum, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     have e : ∀ (U V : X.Opens) (h : V ≤ U),
         (X.presheaf.map (homOfLE h).op).hom (resG X (le_top : U ≤ ⊤) (a k)) = resG X (le_top : V ≤ ⊤) (a k) := by

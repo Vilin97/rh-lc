@@ -49,7 +49,8 @@ theorem map_phiHat (c : Coeff l) (τ : c.F →+* ℂ) : ∃ m : ℤ, IsCoprime m
   refine ⟨m, Nat.isCoprime_iff_coprime.2 hc, fun n φ hφ q => ?_⟩
   haveI := GlobalTheory.AdTh.PairModel.finite_levQc Dw l
   haveI := Fintype.ofFinite (Fin n → LevQc Dw l)
-  rw [phiHat, phiHat, finsum_eq_sum_of_fintype, finsum_eq_sum_of_fintype, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [phiHat, phiHat, finsum_eq_sum_of_fintype, finsum_eq_sum_of_fintype, map_sum, map_sum]
   refine Finset.sum_congr rfl fun x _ => ?_
   rw [GlobalTheory.LevelPairing.zpow_congr c (pairL_levRep_zsmul _ (m : ℤ) q), map_mul, map_mul, map_zpow₀, map_zpow₀, ← hm,
     _root_.zpow_mul, zpow_natCast]

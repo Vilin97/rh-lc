@@ -41,7 +41,8 @@ theorem bijective_sumElim (hfg : Function.Exact f g) (hf : Function.Injective f)
     refine ⟨Sum.elim (a.repr z) (c.repr (g y)), ?_⟩
     have : ∑ i, a.repr z i • f (a i) = f z := by
       conv_rhs => rw [← a.sum_repr z]
-      simp only [map_sum, map_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul]
     simp [Fintype.linearCombination_apply, Fintype.sum_sum_type, this, hz]
 
 theorem det_sumElim [DecidableEq ι] [DecidableEq κ] (hfg : ∀ x, g (f x) = 0)
@@ -51,13 +52,15 @@ theorem det_sumElim [DecidableEq ι] [DecidableEq κ] (hfg : ∀ x, g (f x) = 0)
   have h1 (x : A) : ⇑(b.repr (f x)) = Sum.elim (a.repr x) 0 := by
     have : f x = ∑ j, Sum.elim (a.repr x) 0 j • b j := by
       conv_lhs => rw [← a.sum_repr x]
-      simp only [Fintype.sum_sum_type, hb, map_sum, map_smul, Sum.elim_inl, Sum.elim_inr,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Fintype.sum_sum_type, hb, map_sum, map_smul, Sum.elim_inl, Sum.elim_inr,
         Pi.zero_apply, zero_smul, Finset.sum_const_zero, add_zero]
     rw [this, b.repr_sum_self]
   have h2 (y : B) (k : κ) : b.repr y (.inr k) = c.repr (g y) k := by
     have : g y = ∑ k, b.repr y (.inr k) • c k := by
       conv_lhs => rw [← b.sum_repr y]
-      simp only [Fintype.sum_sum_type, hb, hc, hfg, map_sum, map_smul, map_add, smul_zero,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Fintype.sum_sum_type, hb, hc, hfg, map_sum, map_smul, map_add, smul_zero,
         Finset.sum_const_zero, zero_add]
     rw [this, c.repr_sum_self]
   rw [Module.Basis.det_apply, Module.Basis.det_apply, Module.Basis.det_apply,

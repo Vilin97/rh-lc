@@ -36,7 +36,8 @@ theorem ell_phiOf (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) (hj : LS
       rw [MvPolynomial.smul_monomial, smul_eq_mul, mul_one]
     rw [this, map_zsmul, map_zsmul, map_zsmul, hm, smul_eq_mul]
   conv_lhs => rw [p.as_sum]
-  simp only [map_sum, hm']
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, hm']
   rw [Finset.sum_eq_single (Finsupp.single Δ 1)]
   · simp
   · intro b _ hb; simp [hb]

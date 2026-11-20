@@ -83,7 +83,8 @@ lemma inCone_step {ν μ : Ix p q → ℚ} (h : InCone ν μ) (i : Fin p) (j : F
 lemma act_mem {act : Mat p q →ₗ[ℂ] Module.End ℂ V} (N : Submodule ℂ V) (y : V)
     (h : ∀ a b, act (Eab a b) y ∈ N) (Z : Mat p q) : act Z y ∈ N := by
   rw [Matrix.matrix_eq_sum_single Z]
-  simp only [map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.sum_apply]
   refine N.sum_mem fun a _ => N.sum_mem fun b _ => ?_
   have : (Matrix.single a b (Z a b) : Mat p q) = Z a b • Eab a b := by
     rw [Eab, Matrix.smul_single, smul_eq_mul, mul_one]

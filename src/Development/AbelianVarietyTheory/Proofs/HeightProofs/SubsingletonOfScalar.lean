@@ -341,7 +341,8 @@ theorem actsBy_of_detCond {k : Type} [Field k] [CharZero k] [IsAlgClosed k] {S :
   classical
   obtain ⟨_, hs⟩ := DetCompare.exists_splitting (E := E) (k := k)
   have key : ∀ z : TanMod.TanSp t G, TanMod.TanSp.act t a H.w0 z = c • z := fun z => by
-    rw [← EigenSplit.sum_proj hs (TanMod.TanSp.act t a) z, map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← EigenSplit.sum_proj hs (TanMod.TanSp.act t a) z, map_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl fun τ _ => ?_
     have hz := EigenSplit.proj_mem hs (TanMod.TanSp.act t a) τ z
     by_cases hτ : τ H.rt = ρ

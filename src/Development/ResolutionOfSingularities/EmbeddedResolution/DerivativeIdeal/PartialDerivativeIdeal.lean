@@ -175,7 +175,8 @@ private theorem partialDerivIdeal_logDerivIdeal_le [Fintype ι] [DecidableEq ι]
       · exact logDerivIdeal_mono k _ (le_partialDerivIdeal k ι S h I)
           (derivation_apply_mem_logDerivIdeal k _ I D hD hy)
       · rw [derivation_apply_eq_sum_partialDeriv k ι S D y]
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         refine Ideal.sum_mem _ ?_
         intro i _
         rw [Derivation.leibniz]

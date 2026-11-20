@@ -104,7 +104,8 @@ theorem fibre : ∀ {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ
           (show (y i).2 + 0 = (y i).2 from add_zero _)
       rwa [e3] at e2
   have hT : T (∑ b ∈ s, c b • schr ψ (0, b) Φ) = ∑ b ∈ s, c b • schr ψ (0, b) (T Φ) := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun b hb => ?_
     rw [map_smul]
     congr 1

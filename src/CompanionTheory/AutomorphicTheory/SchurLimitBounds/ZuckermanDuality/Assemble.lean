@@ -182,7 +182,8 @@ theorem op_expand (S : Wq →L[ℂ] Wp) :
   simp only [ContinuousLinearMap.sum_apply, ContinuousLinearMap.smul_apply, ContinuousLinearMap.smulRight_apply,
     innerSL_apply_apply]
   conv_lhs => rw [← (stdOrthonormalBasis ℂ Wq).sum_repr' v]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp_rw [map_smul]
   conv_lhs => arg 2; ext b; rw [← (stdOrthonormalBasis ℂ Wp).sum_repr' (S (stdOrthonormalBasis ℂ Wq b))]
   simp_rw [Finset.smul_sum]

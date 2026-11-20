@@ -78,11 +78,13 @@ private theorem UpperTheory.Reformulated.B.ExistsOrthogonalBasisWithUnitNorms.ex
     L.sub_mem hw₀ (L.sum_mem fun i _ =>
       hL.smul_mem _ (S.mul_mem (hxu i).2.2 (hL.int _ (hxL i) _ hw₀)) _ (hxL i))
   have hyw : h y w = 1 := by
-    simp [w, map_sub, map_sum, hyx, hyw₀]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [w, map_sub, map_sum, hyx, hyw₀]
   have hxw : ∀ j, h (x j) w = 0 := by
     intro j
     have hj := (hxu j).1
-    simp only [w, map_sub, map_sum, map_smul, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [w, map_sub, map_sum, map_smul, smul_eq_mul]
     rw [Finset.sum_eq_single j]
     · field_simp
       ring

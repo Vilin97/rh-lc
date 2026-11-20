@@ -92,7 +92,8 @@ theorem frobenius_vector_succ (T : LocLat G Qp LL O) (e : ℕ) {d : ℕ} (b : Fi
     (c₀ : Fin d → O) :
     dvO W T (e + 1) b c₀ = Formalism.WeaklyAdmissibleFiltrations.φVB PD (LL := LL) (V := T.V) (dvO W T e b c₀) := by
   unfold dvO dv
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun m _ => ?_
   rw [map_smul, pow_succ', Module.End.mul_apply]
 

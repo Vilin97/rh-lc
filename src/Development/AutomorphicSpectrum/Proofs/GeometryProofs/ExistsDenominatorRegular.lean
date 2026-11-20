@@ -38,7 +38,8 @@ theorem exists_denom_of_injective {R K B S : Type} [CommRing R] [IsDomain R] [Fi
         have hx : (fun i => v i b) = ∑ i, (v i b) • (Pi.single i (1 : K) : S → K) := by
           funext j
           simp [Finset.sum_apply, Pi.single_apply]
-        rw [hx, map_sum] at hb
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [hx, map_sum] at hb
         simp only [map_smul, smul_eq_mul] at hb
         simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Pi.zero_apply]
         rw [← hb]

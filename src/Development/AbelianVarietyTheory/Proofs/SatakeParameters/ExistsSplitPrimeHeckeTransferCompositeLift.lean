@@ -141,7 +141,8 @@ theorem match_sum {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D} {om : GA D S ×
     {P : Pl D.host.E} (I : Finset ℕ) (w : ℕ → ℂ) (a b : ℕ → List ℤ →₀ ℂ) (h : ∀ l ∈ I, Match ψ om P (a l) (b l)) :
     Match ψ om P (∑ l ∈ I, w l • a l) (∑ l ∈ I, w l • b l) := by
   intro f hf
-  simp only [opOf_eq, map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [opOf_eq, map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply]
   refine Finset.sum_congr rfl fun l hl => ?_
   have := h l hl f hf
   simp only [opOf_eq] at this
@@ -154,7 +155,8 @@ theorem splitC_sum (n : ℕ) (I : Finset ℕ) (w : ℕ → ℂ) (M : ℕ → ℕ
 
 theorem dualC_splitC (n : ℕ) (w : ℕ → ℂ) :
     dualC (splitC n w) = ∑ l ∈ Finset.range (n + 1), w l • dualC (Finsupp.single (splitLab n l) 1) := by
-  simp only [splitC, dualC_eq, map_sum, ← map_smul, Finsupp.smul_single, smul_eq_mul, mul_one]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [splitC, dualC_eq, map_sum, ← map_smul, Finsupp.smul_single, smul_eq_mul, mul_one]
 
 theorem splitC_delta {n k : ℕ} (hk : k ≤ n) :
     splitC n (fun i => if i = k then 1 else 0) = Finsupp.single (splitLab n k) 1 := by

@@ -40,7 +40,8 @@ theorem eig_of_mem_support (T : Module.End ℂ (MvPolynomial σ ℂ)) (w : (σ �
 def NoVar (P : MvPolynomial σ ℂ) (v : σ) : Prop := ∀ e ∈ P.support, e v = 0
 
 theorem pderiv_eq_zero_of_noVar {P : MvPolynomial σ ℂ} {v : σ} (h : NoVar P v) : pderiv v P = 0 := by
-  rw [P.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [P.as_sum, map_sum]
   refine Finset.sum_eq_zero fun e he => ?_
   rw [pderiv_monomial]
   simp [h e he]
@@ -48,7 +49,8 @@ theorem pderiv_eq_zero_of_noVar {P : MvPolynomial σ ℂ} {v : σ} (h : NoVar P 
 theorem noVar_pderiv {P : MvPolynomial σ ℂ} {v : σ} (h : NoVar P v) (u : σ) : NoVar (pderiv u P) v := by
   classical
   intro f hf
-  rw [P.as_sum, map_sum] at hf
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [P.as_sum, map_sum] at hf
   obtain ⟨e, he, hfe⟩ := Finset.mem_biUnion.mp (support_sum hf)
   rw [pderiv_monomial] at hfe
   obtain rfl := Finset.mem_singleton.mp (support_monomial_subset hfe)
@@ -60,7 +62,8 @@ theorem noVar_of_pderiv_eq_zero {P : MvPolynomial σ ℂ} {v : σ} (h : pderiv v
   by_contra hev
   have hc : AddMonoidAlgebra.coeff (pderiv v P) (e - Finsupp.single v 1) = AddMonoidAlgebra.coeff P e * (e v : ℂ) := by
     conv_lhs => rw [P.as_sum]
-    rw [map_sum, coeff_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, coeff_sum]
     simp only [pderiv_monomial, coeff_monomial]
     rw [Finset.sum_eq_single e]
     · rw [if_pos rfl]
@@ -106,7 +109,8 @@ theorem gR_pos_lemma (u v : κ → σ) (pos : κ → Bool) (hu : Function.Inject
     rw [Derivation.leibniz, pderiv_eq_zero_of_noVar (noVar_pderiv hno0 b), smul_zero, zero_add, smul_eq_mul]
   have h0 : pderiv (u c0) (gR u v pos P) = 0 := by rw [hR, map_zero]
   unfold gR at h0
-  rw [map_sum, Finset.sum_eq_single c0] at h0
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_eq_single c0] at h0
   · rw [if_pos hc0, key, pderiv_X_self, mul_one] at h0
     exact h0
   · intro c _ hc

@@ -70,7 +70,8 @@ theorem exists_int_retraction_of_isIntegral :
     simp [Pi.single_apply]
   have key : ((∑ i, c i * m i : ℤ) : ℂ) = f (p m) := by
     conv_rhs => rw [hdec]
-    rw [map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum]
     push_cast
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, map_smul, ← hc, zsmul_eq_mul, mul_comm]

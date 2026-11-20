@@ -190,7 +190,8 @@ theorem RootFieldNumerics.tower_rational_weight_bound : ReciprocityTheory.ChartR
     · simp
     · rw [← geom_sum₂_mul]
       have hdiff : linA lam 0 - linA (T.lamS lam s) s = C (s : ℝ) * linA T.nu (-1) := linA_diff _ _ _
-      rw [hdiff, Finset.sum_mul, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hdiff, Finset.sum_mul, map_sum]
       refine Finset.sum_nonneg fun i hi => ?_
       have hie : i ≤ e := Nat.lt_succ_iff.mp (Finset.mem_range.mp hi)
       have h := eff_prod hK hE hS II hII (T.M B c) e he

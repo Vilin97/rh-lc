@@ -128,7 +128,8 @@ theorem coordSteps_of (hR : Ring9 W) (e : W.DD W.one) (hK : CoeffStep hR) (hS : 
       crys := hc₁.2.2.2
       crys' := hc₂.2.2.2 }, fun _ => D.m₁, fun i => ?_⟩
   · change ∑ j, D.κ i (c (Sum.inl j)) • b₂ i j = W.map F (∑ j, D.κ i (c j) • b₁ i j)
-    rw [map_sum, Fintype.sum_sum_type]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Fintype.sum_sum_type]
     simp only [map_smul, hin, hout, smul_zero, Finset.sum_const_zero, add_zero]
   · change ∑ _u : Unit, D.κ i D.m₁ • e = (letE i : LetA O n) • e
     rw [Fintype.sum_unique, D.unit, algebraMap_smul]

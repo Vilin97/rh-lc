@@ -80,7 +80,8 @@ theorem GlobalTheory.span_D_lift_clear_denominators : ∀ (k K L : Type) [Field 
     · simp only [g, Fin.cons_zero]; exact hΦD s
     · simp only [g, Fin.cons_succ]; exact hΦD (y j)
   refine ⟨b, b.2, c, ?_⟩
-  rw [← hRL, ← hΦD, algebraMap_smul, ← map_smul, ← hc', Finset.smul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hRL, ← hΦD, algebraMap_smul, ← map_smul, ← hc', Finset.smul_sum, map_sum]
   refine Finset.sum_congr rfl fun l _ => ?_
   rw [← hRL, ← hΦg, algebraMap_smul L (algebraMap B R (c l)) (Φ (g l)), ← map_smul Φ]
   congr 1

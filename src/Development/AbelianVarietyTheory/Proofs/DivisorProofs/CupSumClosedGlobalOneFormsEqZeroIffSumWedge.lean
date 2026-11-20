@@ -21,7 +21,8 @@ theorem cupSum_eq_zero_iff_wsum_eq_zero (R : Type) [CommRing R] (C : Type) [Cate
   have hsum : ∑ k, cupHyp F (clAll F hc (u k)) (clAll F hc (v k)) =
       Hyp2.mk F (∑ k, cupZZ F (formZZ F ⟨u k, hc ▸ Submodule.mem_top⟩)
         (formZZ F ⟨v k, hc ▸ Submodule.mem_top⟩)) := by
-    simp only [hcl, cupHyp_mk, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hcl, cupHyp_mk, map_sum]
   have hval : ∀ T, (∑ k, cupZZ F (formZZ F ⟨u k, hc ▸ Submodule.mem_top⟩)
         (formZZ F ⟨v k, hc ▸ Submodule.mem_top⟩)).1.2.2 T = wsum F u v T := by
     intro T

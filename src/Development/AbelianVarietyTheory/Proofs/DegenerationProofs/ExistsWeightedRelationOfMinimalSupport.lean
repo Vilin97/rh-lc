@@ -83,7 +83,8 @@ theorem exists_weighted_relation :
       = ∑ χ ∈ S, c t' χ * (c t⁻¹ χ * σ t (v' (Sum.inr χ))) := by
     intro t t'
     have h := congrArg (σ t) (hMv' (t' * t⁻¹))
-    simp only [map_mul, map_sum, hσc, hσφ, inv_mul_cancel_right, hmul] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_mul, map_sum, hσc, hσφ, inv_mul_cancel_right, hmul] at h
     have e : ∀ g : X → F, ∑ χ ∈ S, c t' χ * (c t⁻¹ χ * g χ) = ∑ χ ∈ S, c t' χ * c t⁻¹ χ * g χ :=
       fun g => Finset.sum_congr rfl fun χ _ => (mul_assoc _ _ _).symm
     rw [e (fun χ => σ t (v' (Sum.inl χ))), e (fun χ => σ t (v' (Sum.inr χ)))]

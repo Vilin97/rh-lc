@@ -98,7 +98,8 @@ theorem pd_aeval_scale {σ B : Type} [Fintype σ] [CommRing B] [Algebra A B] (c 
     (g : MvPolynomial σ A) (hg : g.IsHomogeneous d) : aeval (fun i => c * z i) g = c ^ d * aeval z g := by
   conv_lhs => rw [g.as_sum]
   conv_rhs => rw [g.as_sum]
-  simp only [map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun s hs => ?_
   have hd := hg (mem_support_iff.1 hs)
   simp only [Finsupp.weight_apply, Pi.one_apply, smul_eq_mul, mul_one] at hd

@@ -18,7 +18,8 @@ private theorem multi_cont {H : Type} [AddCommGroup H] [Module ℝ H] [Topologic
     funext x
     have e : x = fun i => ∑ j, b.coord j (x i) • b j := funext fun i => (b.sum_repr (x i)).symm
     conv_lhs => rw [e]
-    rw [f.map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [f.map_sum]
     exact Finset.sum_congr rfl fun r _ => f.map_smul_univ _ _
   rw [h]
   refine continuous_finset_sum _ fun r _ => Continuous.fun_smul (continuous_finset_prod _ fun i _ => ?_) continuous_const
@@ -93,7 +94,8 @@ private theorem abs_type {K H S : Type} [Group K] [TopologicalSpace K] [IsTopolo
         rw [hρ]
         generalize (M k⁻¹)ᵀ *ᵥ v = u
         conv_lhs => rw [pi_eq_sum_univ' u]
-        rw [TensorProduct.sum_tmul, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [TensorProduct.sum_tmul, map_sum]
         refine Finset.sum_congr rfl fun j _ => ?_
         rw [← TensorProduct.smul_tmul', map_smul]
         rfl

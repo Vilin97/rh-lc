@@ -80,7 +80,8 @@ theorem chv_rt (ψ : AddChar (AF D.host.F) ℂ) (hψ : IsCharAF D.host.F ψ) (b�
     (ξ ξ' : Matrix (Fin ρ) (Fin p) D.host.E) : chv ψ b₀ (rt ξ) (rt ξ') = 1 := by
   have h : Matrix.trace (pr b₀ (rt ξ) (rt ξ')) = incA D (Matrix.trace ((ξ.map D.sp.cm.sig)ᵀ * (b₀.1 * ξ'))) := by
     rw [pr_rt]
-    simp only [Matrix.trace, Matrix.diag_apply, Matrix.map_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.trace, Matrix.diag_apply, Matrix.map_apply, map_sum]
   rw [chv, h, trA_incA]
   exact hψ.2.2.1 _
 

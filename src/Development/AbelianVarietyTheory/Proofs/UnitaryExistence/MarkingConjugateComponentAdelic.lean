@@ -163,7 +163,8 @@ theorem exists_matrix_split {E : Type} [Field E] [NumberField E] {n p q : ℕ} (
       have hc' : (c : E) ≠ 0 := by simpa using hc
       have e : (c : E) • φ a = ∑ i, (s i : E) • φ (v i) := by
         have := congrArg (fun z : L => φ z) hs
-        simp only [Submodule.coe_smul, Submodule.coe_sum, map_smul, map_sum] at this
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [Submodule.coe_smul, Submodule.coe_sum, map_smul, map_sum] at this
         exact this
       rw [SetLike.mem_coe, ← Submodule.smul_mem_iff _ hc', e]
       exact Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)

@@ -192,7 +192,8 @@ theorem uni_exists {M I C : Type*} (L : M ≃ I) (c : M → C) (w : M → ℕ) (
         rw [hm1]
       · obtain ⟨i, hi, hmi⟩ := Finset.mem_biUnion.1 (Finsupp.support_finset_sum hm1)
         exact hg1 i hi m (Finsupp.support_smul hmi)
-    · rw [map_add, map_sum, Finsupp.linearCombination_single, one_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [map_add, map_sum, Finsupp.linearCombination_single, one_smul]
       rw [Finset.sum_congr rfl (fun i hi => by rw [map_smul, hg2 i hi])]
       have hsum : ∑ i ∈ v.support, v i • Finsupp.single i (1 : ℤ) = v := by
         conv_rhs => rw [← Finsupp.sum_single v]

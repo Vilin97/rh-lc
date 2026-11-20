@@ -152,7 +152,8 @@ theorem jMt_injective (D : D7) (μ : D.what₂.Tup) (j : ℕ) : Function.Injecti
   intro x hx
   have e : D.what₂.jMt μ j x = ∑ i, D.what₂.embLL (b.repr x i) • D.what₂.jMt μ j (b i) := by
     conv_lhs => rw [← b.sum_repr x]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp [LinearMap.map_smulₛₗ]
   rw [e] at hx
   have hc := Fintype.linearIndependent_iff.1 hli _ hx

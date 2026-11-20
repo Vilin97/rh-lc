@@ -115,7 +115,8 @@ theorem cast_pair {p m : ℕ} (h : p ∣ m) (e : (Fin n → 𝓞 E) →+ (Fin n 
     co p x ⬝ᵥ (Matrix.of fun a b => ZMod.castHom h (ZMod p) (e (dl a) (dl b))) *ᵥ co p x' =
       ZMod.castHom h (ZMod p) (e x x') := by
   conv_rhs => rw [← sum_cz x, ← sum_cz x']
-  simp only [map_sum, map_zsmul, AddMonoidHom.finset_sum_apply, AddMonoidHom.smul_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_zsmul, AddMonoidHom.finset_sum_apply, AddMonoidHom.smul_apply,
     dotProduct, Matrix.mulVec, Matrix.of_apply, co_apply, Finset.mul_sum]
   simp only [Finset.smul_sum, zsmul_eq_mul]
   conv_rhs => rw [Finset.sum_comm]
@@ -293,7 +294,8 @@ theorem core_pull {p : ℕ} [Fact p.Prime] [IsAlgClosed C] [CharZero C] (hv : v.
     rw [Ideal.Quotient.eq]
     have hih : ih x0 k = ∑ m, ih (dl m) k * (cz x0 m : R) := by
       conv_lhs => rw [← sum_cz x0]
-      simp only [map_sum, map_zsmul, Finset.sum_apply, Pi.smul_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_zsmul, Finset.sum_apply, Pi.smul_apply]
       simp only [zsmul_eq_mul]
       exact Finset.sum_congr rfl fun m _ => mul_comm _ _
     have hA' := sum_co_sub p (Hm k) x0

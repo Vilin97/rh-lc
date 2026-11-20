@@ -82,9 +82,11 @@ theorem pairing_top_degree : Formalism.FourierDecayAlt.F7.PairTop := by
     · intro ha'; exact absurd (Finset.mem_range.mpr (Nat.lt_succ_self a)) ha'
   · intro Y
     simp only []
-    rw [evR_smul P₁ a ha, evR_smul P₂ b hb, map_sum Ξ, LinearMap.sum_apply, eval_finsetSum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [evR_smul P₁ a ha, evR_smul P₂ b hb, map_sum Ξ, LinearMap.sum_apply, eval_finsetSum]
     refine Finset.sum_congr rfl fun i _ => ?_
-    rw [map_sum, eval_finsetSum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, eval_finsetSum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_smul Ξ, LinearMap.smul_apply, map_smulₛₗ]
     simp only [eval_mul, eval_C, eval_pow, eval_X, eval_add, smul_eq_mul, map_pow,

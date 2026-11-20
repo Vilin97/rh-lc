@@ -51,7 +51,8 @@ theorem core (H : Type) [NormedAddCommGroup H] [InnerProductSpace ℂ H] [Finite
       intro s g hs i hi
       have hia : Antitone (i : Fin n → ℤ) := ((hFs i).1 i.2).1
       have h1 := congrArg (p i) hs
-      rw [map_sum, map_zero, Finset.sum_eq_single i] at h1
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, map_zero, Finset.sum_eq_single i] at h1
       · rw [map_smul, hpid i hia (v i) (hvmem i i.2)] at h1
         exact (smul_eq_zero.mp h1).resolve_right (hvne i i.2)
       · intro j _ hji
@@ -65,7 +66,8 @@ theorem core (H : Type) [NormedAddCommGroup H] [InnerProductSpace ℂ H] [Finite
   have hcomm : ∀ a b w, (LinearMap.id - ∑ ν ∈ hfin.toFinset, p ν : H →ₗ[ℂ] H) (G a b w) =
       G a b ((LinearMap.id - ∑ ν ∈ hfin.toFinset, p ν : H →ₗ[ℂ] H) w) := by
     intro a b w
-    simp only [LinearMap.sub_apply, LinearMap.id_apply, LinearMap.sum_apply, map_sub, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [LinearMap.sub_apply, LinearMap.id_apply, LinearMap.sum_apply, map_sub, map_sum]
     congr 1
     exact Finset.sum_congr rfl fun ν hν => hpG ν ((hF ν).1 hν).1 a b w
   have hhigh : ∀ (μ : Fin n → ℝ) (v : H), Formalism.REAL.KHighest (fun _ => true) G μ v →
@@ -101,10 +103,12 @@ theorem core (H : Type) [NormedAddCommGroup H] [InnerProductSpace ℂ H] [Finite
         = LinearMap.trace ℂ H ((ρ k : H →ₗ[ℂ] H) ∘ₗ S ∘ₗ ∑ ν ∈ hfin.toFinset, p ν) := by
           rw [hsum, LinearMap.comp_id]
       _ = ∑ ν ∈ hfin.toFinset, LinearMap.trace ℂ H ((ρ k : H →ₗ[ℂ] H) ∘ₗ S ∘ₗ p ν) := by
-          rw [← map_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [← map_sum]
           congr 1
           ext w
-          simp [LinearMap.sum_apply, map_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            simp [LinearMap.sum_apply, map_sum]
       _ = _ := Finset.sum_congr rfl fun ν hν => hptr ν ((hF ν).1 hν).1 S hS k z hk hz
 
 theorem sum_single' {M : Type*} [AddCommGroup M] [Module ℂ M] (x : Fin n → Fin n → M) (a b : Fin n) (c : ℂ) :
@@ -179,7 +183,8 @@ theorem main : ∀ {n : ℕ} (E : KMod n) (T : E.V →L[ℂ] E.V), (∀ k, T * E
       have h4 : (fun t : ℝ => e (ξ ∘L E.ρ (γ t)⁻¹)) = fun t => ρ' (γ t) (e ξ) := funext fun t => he (γ t) ξ
       rw [h4] at h3
       have h5 := h3.unique h2
-      simp only [map_sum, map_smul] at h5
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul] at h5
       simp only [smul_sub, Finset.sum_sub_distrib]
       rw [h5, sub_self]
     exact sub_eq_zero.mp (eq_zero_of_skew (fun i j => e (G i j ξ) - G' i j (e ξ)) hx a b)

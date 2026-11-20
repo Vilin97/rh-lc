@@ -26,7 +26,8 @@ theorem SchWeightedPreimage.proof (h1 : SchPowerSumHomWeighted.Statement) :
   have key : homogeneousComponent k (powerSumHom N S₀) =
       powerSumHom N (weightedHomogeneousComponent w k S₀) := by
     conv_lhs => rw [← hsum]
-    rw [map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum]
     simp only [hterm, Finset.sum_ite_eq]
     split_ifs with hk
     · rfl

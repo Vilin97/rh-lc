@@ -124,7 +124,8 @@ theorem factAt_of {D : Formalism.BasicNotions.D7} (h52 : Formalism.MainNotions.C
   have hg : algebraMap O (KK O) (gEv T qO μ) =
       ((∑ ν ∈ T, q ν * ((ν.prod fun k i => (μ k).choose i : ℕ) : ℚ) : ℚ) : KK O) := by
     unfold gEv
-    rw [map_sum, Rat.cast_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Rat.cast_sum]
     refine Finset.sum_congr rfl fun ν hν => ?_
     rw [map_mul, ← hqO ν hν, map_natCast, Rat.cast_mul, Rat.cast_natCast]
   have heqK := congrArg (fun x : ℚ => (x : KK O)) heq

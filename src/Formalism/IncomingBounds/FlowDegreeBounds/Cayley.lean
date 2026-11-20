@@ -34,7 +34,8 @@ theorem der_det {n : Type*} [Fintype n] [DecidableEq n] (N : Matrix n n A) :
     rfl
   rw [Finset.sum_congr rfl fun i _ => hcol i]
   simp only [det_apply']
-  rw [map_sum, Finset.sum_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_comm]
   refine Finset.sum_congr rfl fun σ _ => ?_
   rw [Derivation.leibniz, Derivation.map_intCast, smul_zero, add_zero, smul_eq_mul,
     der_prod, Finset.mul_sum]
@@ -49,7 +50,8 @@ theorem der_det {n : Type*} [Fintype n] [DecidableEq n] (N : Matrix n n A) :
 theorem map_mul_der {n : Type*} [Fintype n] (X Y : Matrix n n A) :
     (X * Y).map D = X.map D * Y + X * Y.map D := by
   ext i j
-  simp only [Matrix.map_apply, Matrix.mul_apply, Matrix.add_apply, map_sum, Derivation.leibniz,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.map_apply, Matrix.mul_apply, Matrix.add_apply, map_sum, Derivation.leibniz,
     smul_eq_mul]
   rw [← Finset.sum_add_distrib]
   exact Finset.sum_congr rfl fun k _ => by ring

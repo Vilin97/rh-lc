@@ -38,7 +38,8 @@ def evalLine (ρ : A →+* ℂ) (w : Fin (N + 1) → ℂ) : MvPolynomial (Fin (N
 lemma evalLine_of_isHomogeneous (ρ : A →+* ℂ) (w : Fin (N + 1) → ℂ)
     {f : MvPolynomial (Fin (N + 1)) A} {d : ℕ} (hf : f.IsHomogeneous d) :
     evalLine ρ w f = Polynomial.C (evalAt ρ w f) * Polynomial.X ^ d := by
-  rw [evalLine, coe_eval₂Hom, eval₂_eq', evalAt, eval₂_eq', map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [evalLine, coe_eval₂Hom, eval₂_eq', evalAt, eval₂_eq', map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun m hm => ?_
   have hd : ∑ k, m k = d := by
     have := hf (mem_support_iff.mp hm)
@@ -50,7 +51,8 @@ lemma evalLine_of_isHomogeneous (ρ : A →+* ℂ) (w : Fin (N + 1) → ℂ)
 lemma coeff_evalLine (ρ : A →+* ℂ) (w : Fin (N + 1) → ℂ) (f : MvPolynomial (Fin (N + 1)) A)
     (d : ℕ) : (evalLine ρ w f).coeff d = evalAt ρ w (homogeneousComponent d f) := by
   conv_lhs => rw [← sum_homogeneousComponent f]
-  rw [map_sum, Polynomial.finsetSum_coeff]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Polynomial.finsetSum_coeff]
   simp_rw [evalLine_of_isHomogeneous ρ w (homogeneousComponent_isHomogeneous _ _),
     Polynomial.coeff_C_mul_X_pow]
   rw [Finset.sum_ite_eq]

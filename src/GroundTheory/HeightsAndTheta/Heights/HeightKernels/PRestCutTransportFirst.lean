@@ -41,7 +41,8 @@ theorem transport_mu (f j k : ℕ) (hjk : j < k) :
     restTransport f j k (j + k) (restFirstEquiv j k) (RestTerms.smallBlockMu f j k .first) =
       smallMu f j k := by
   have hkj : ¬ k ≤ j := by omega
-  simp only [RestTerms.smallBlockMu, map_sum, transport_yRoot, smallMu, if_neg hkj]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [RestTerms.smallBlockMu, map_sum, transport_yRoot, smallMu, if_neg hkj]
 
 theorem transport_fib (f j k : ℕ) (hjk : j < k) :
     restTransport f j k (j + k) (restFirstEquiv j k) (RestTerms.fibreClass f j k .first) =

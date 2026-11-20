@@ -33,7 +33,8 @@ theorem exists_eigen [Fintype k] [DecidableEq k] {n : ℕ} {ψ : AddChar k Circl
   refine ⟨∑ u : unipB k (Fin n), ((ψ (superDiag (u : GL (Fin n) k)) : ℂ))⁻¹ • ρ u v0, ?_, fun u' hu' => ?_⟩
   · have hterm : ∀ u : unipB k (Fin n), l (((ψ (superDiag (u : GL (Fin n) k)) : ℂ))⁻¹ • ρ u v0) = l v0 := fun u => by
       rw [map_smul, hl _ u.2, smul_eq_mul, inv_mul_cancel_left₀ (Circle.coe_ne_zero _)]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [hterm, Finset.sum_const, Finset.card_univ, nsmul_eq_mul]
     exact mul_ne_zero (Nat.cast_ne_zero.2 (Fintype.card_pos_iff.2 ⟨1⟩).ne') hv0
   · have hχ : ∀ w : unipB k (Fin n), (ψ (superDiag (((⟨u', hu'⟩ : unipB k (Fin n))⁻¹ * w : unipB k (Fin n)) :
@@ -42,7 +43,8 @@ theorem exists_eigen [Fintype k] [DecidableEq k] {n : ℕ} {ψ : AddChar k Circl
       rw [mul_inv_cancel_left] at this
       rw [this, inv_mul_cancel_left₀ (Circle.coe_ne_zero _)]
       rfl
-    rw [map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.smul_sum]
     set a : unipB k (Fin n) := ⟨u', hu'⟩ with ha
     set F : unipB k (Fin n) → V := fun w =>
       ((ψ (superDiag ((a⁻¹ * w : unipB k (Fin n)) : GL (Fin n) k)) : ℂ))⁻¹ • ρ w v0 with hF

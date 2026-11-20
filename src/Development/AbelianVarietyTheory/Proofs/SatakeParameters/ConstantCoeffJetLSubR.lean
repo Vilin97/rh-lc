@@ -37,7 +37,8 @@ theorem applyAt0_eq (l : ℕ) [Fact l.Prime] (a b : ℕ) (Th : MvPowerSeries (ι
     (Q : MvPolynomial (KM.XZ ι a b) ℤ) :
     KM.applyAt0 a b l Th Q = jetL (fun m => (m.prod fun _ k => (k.factorial : ℂ_[l])) * MvPowerSeries.coeff m Th)
       (MvPolynomial.map (Int.castRingHom ℂ_[l]) Q) := by
-  conv_rhs => rw [Q.as_sum, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_rhs => rw [Q.as_sum, map_sum, map_sum]
   unfold KM.applyAt0
   refine Finset.sum_congr rfl fun μ _ => ?_
   rw [map_monomial, jetL_monomial, mul_assoc]

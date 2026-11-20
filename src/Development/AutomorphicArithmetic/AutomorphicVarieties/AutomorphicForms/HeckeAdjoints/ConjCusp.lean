@@ -9,7 +9,8 @@ private theorem map_qdet_conj {A : Type} [Ring A] [Algebra ℂ A] {n : ℕ} (f :
     (hf : ∀ c : ℂ, f (algebraMap ℂ A c) = algebraMap ℂ A (starRingEnd ℂ c)) (X : Fin n → Fin n → A)
     (hX : ∀ i j, f (X i j) = X i j) (u : ℂ) :
     f (Formalism.REAL.qdet X u) = Formalism.REAL.qdet X (starRingEnd ℂ u) := by
-  simp only [Formalism.REAL.qdet, Formalism.REAL.qminor, map_sum, map_mul, map_intCast, map_list_prod, List.map_ofFn]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Formalism.REAL.qdet, Formalism.REAL.qminor, map_sum, map_mul, map_intCast, map_list_prod, List.map_ofFn]
   refine Finset.sum_congr rfl fun σ _ => ?_
   congr 3
 

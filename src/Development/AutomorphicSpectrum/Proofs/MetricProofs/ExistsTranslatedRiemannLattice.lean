@@ -95,7 +95,8 @@ theorem emb_sesq (τ : Ψ) (w v : Fin (j + j') → E) :
     embOf (F.σ τ) (C.h.toSesq w v) =
       star (fun i => embOf (F.σ τ) (w i)) ⬝ᵥ (C.gr τ *ᵥ fun i => embOf (F.σ τ) (v i)) := by
   rw [sesq_eq_sum C.h.toSesq (Pi.basisFun E (Fin (j + j'))) w v]
-  simp only [map_sum, map_mul, dotProduct, mulVec, Finset.mul_sum, LatEmb.gr, Matrix.map_apply, Pi.star_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, dotProduct, mulVec, Finset.mul_sum, LatEmb.gr, Matrix.map_apply, Pi.star_apply,
     Pi.basisFun_repr, GroundTheory.Heights₂.Theta.embedding_conj (maximalRealSubfield E) E, mul_assoc]
   rfl
 

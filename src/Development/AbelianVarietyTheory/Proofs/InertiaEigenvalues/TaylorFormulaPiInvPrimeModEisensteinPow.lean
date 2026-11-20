@@ -75,7 +75,8 @@ theorem taylor_S_mod (ϖ : PiSys l e) (g : ↥(GK (ϖ.field a))) (s : S O K e) (
   obtain ⟨y, hy⟩ := hN z
   refine ⟨y, ?_⟩
   have hz' := congrArg (crisToOD l O) hz
-  simp only [map_sub, map_sum, map_mul, map_pow, map_natCast, crisToOD_muDiv] at hz'
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sub, map_sum, map_mul, map_pow, map_natCast, crisToOD_muDiv] at hz'
   rw [← galOD_crisToOD, ← Finset.sum_range_add_sum_Ico _ (le_max_right M₀ R)] at hz'
   have key : galOD O g (crisToOD l O (ϖ.iS O K s)) -
       ∑ i ∈ Finset.range R, toOD l O (1 ⊗ₜ ϖ.mu g) ^ i * Ring.inverse (i.factorial : OD l O) *
@@ -176,7 +177,8 @@ theorem taylor_iD_mod_ED : ∀ (l : ℕ) [Fact l.Prime] (a e : ℕ) [NeZero a] [
       ∑ τ, idem (constD t) τ * (galOD O g (ϖ.iHat O K (hatR O (f τ))) - ∑ i ∈ Finset.range R,
         toOD l O (1 ⊗ₜ ϖ.mu g) ^ i * Ring.inverse (i.factorial : OD l O) *
           ϖ.iHat O K (hatR O (descN K i (f τ)))) := by
-    simp only [PiSys.iD, glue_apply, map_sum, map_mul, hfix, mul_sub, Finset.sum_sub_distrib,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [PiSys.iD, glue_apply, map_sum, map_mul, hfix, mul_sub, Finset.sum_sub_distrib,
       Finset.mul_sum]
     congr 1
     rw [Finset.sum_comm]

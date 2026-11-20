@@ -166,7 +166,8 @@ theorem locM_add {a b : ℕ} (β : GL (Fin a) (Formalism.IndefR.Lev.EAf D)) (β'
 theorem cpt_idemSum {e : AE D} {P : Finset (Pl D.host.E)} (he : IsIdemSum e P) {Q : Pl D.host.E} (hQ : Q ∉ P) :
     cpt Q (toEAf D e) = 0 := by
   obtain ⟨⟨es, hes, rfl⟩, -⟩ := he
-  rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum]
   exact Finset.sum_eq_zero fun P' hP => (cpt_of_isIdemAt (hes P' hP)).2 Q fun h => hQ (h ▸ hP)
 
 theorem exists_mult (hS : Submodule.IsLattice D.host.E ΛS) (hT : Submodule.IsLattice D.host.E ΛT) {e : AE D}

@@ -125,24 +125,28 @@ theorem atLog_change (D : D7) {N N' r : ℕ} (lam : Qbar →+* ℂ_[p]) (Λ : Ad
         PowerSeries.subst (MvPowerSeries.X i : MvPowerSeries (Fin r) ℂ_[p]) (flog (C • wModel lam Λ) wq)) := by
     apply MvPowerSeries.hasSubst_of_constantCoeff_zero
     intro k
-    simp [map_sum, hX]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, hX]
   have hSs : MvPowerSeries.HasSubst S := MvPowerSeries.hasSubst_of_constantCoeff_zero hS0
   unfold atLog
   simp only []
   rw [MvPowerSeries.subst_comp_subst_apply hY hSs]
   congr 1
   funext k
-  rw [← MvPowerSeries.coe_substAlgHom hSs, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← MvPowerSeries.coe_substAlgHom hSs, map_sum]
   simp only [map_mul, AlgHom.commutes, MvPowerSeries.coe_substAlgHom, subst_subst_X S hSs, hSl]
   have hx : ∀ j, lamC lam (embT D k.1 (b' j k.2.1 k.2.2)) =
       ∑ i, lam (embQ D k.1 (A i j)) * lam (embQ D k.1 (b i k.2.1 k.2.2)) := by
     intro j
     rw [lamC_embT, hb' j, Matrix.sum_apply]
-    simp only [Matrix.smul_apply, smul_eq_mul, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.smul_apply, smul_eq_mul, map_sum, map_mul]
   have hy : ∀ i j, lamC lam (D.host.φ₀ (A i j)) = lam (embQ D k.1 (A i j)) := by
     intro i j
     rw [← embT_K D k.1 _ (hAK i j), lamC_embT]
-  simp only [hx, hy, lamC_embT, Finset.mul_sum, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hx, hy, lamC_embT, Finset.mul_sum, map_sum, Finset.sum_mul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   simp only [map_mul]
@@ -219,7 +223,8 @@ theorem hYY_comb (D : D7) {N N' r : ℕ} (b : Fin r → Matrix (Fin N') (Fin N) 
     mul_mem (hx i) (Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity.G0.conj_mem D ⟨y i', hy i'⟩)
   have e1 : (∑ a, ∑ c, (∑ i, x i • b i) a c * D.host.conj ((∑ i, y i • b i) a c)) =
       ∑ i, ∑ i', (x i * D.host.conj (y i')) * ∑ a, ∑ c, b i a c * D.host.conj (b i' a c) := by
-    simp only [Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul, map_sum, map_mul, Finset.sum_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul, map_sum, map_mul, Finset.sum_mul,
       Finset.mul_sum]
     rw [sum4, Finset.sum_comm]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun i' _ =>
@@ -232,7 +237,8 @@ theorem hYY_comb (D : D7) {N N' r : ℕ} (b : Fin r → Matrix (Fin N') (Fin N) 
     rfl
   unfold hYY
   rw [e1]
-  simp only [e2, map_sum, map_smul, smul_eq_mul, IntermediateField.coe_sum, IntermediateField.coe_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [e2, map_sum, map_smul, smul_eq_mul, IntermediateField.coe_sum, IntermediateField.coe_mul]
 
 theorem orthChange_core : OrthChange := by
   intro D p hp N N' L L' r r' b b' hbL hbO hb'L hb'O

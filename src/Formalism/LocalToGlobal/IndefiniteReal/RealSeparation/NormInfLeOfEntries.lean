@@ -17,7 +17,8 @@ variable {D : D7}
 theorem rect_entry_mul_le {m n p : ℕ} (φ : AE D →+* ℂ) (X : Matrix (Fin m) (Fin n) (AE D))
     (Y : Matrix (Fin n) (Fin p) (AE D)) (i : Fin m) (j : Fin p) {bX bY : ℝ}
     (hX : ∀ i k, ‖φ (X i k)‖ ≤ bX) (hY : ∀ k j, ‖φ (Y k j)‖ ≤ bY) : ‖φ ((X * Y) i j)‖ ≤ n * (bX * bY) := by
-  rw [Matrix.mul_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.mul_apply, map_sum]
   calc ‖∑ e, φ (X i e * Y e j)‖ ≤ ∑ e : Fin n, ‖φ (X i e * Y e j)‖ := norm_sum_le _ _
     _ ≤ ∑ _e : Fin n, bX * bY := Finset.sum_le_sum fun e _ => by
         rw [map_mul, norm_mul]

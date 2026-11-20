@@ -166,7 +166,8 @@ theorem norm_move_le (K : FinExt l) {τ : GQ l} (hτ : τ ∈ Gj K 1) (i : ℕ) 
     have hτ1 : ‖τ ζ‖ ≤ 1 := by rwa [norm_gal]
     have hζ' : IsPrimitiveRoot (ζ ^ l) (l ^ i) :=
       hζ.pow (pow_pos hl.pos _) (by ring)
-    rw [map_sum, ← Finset.sum_sub_distrib]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, ← Finset.sum_sub_distrib]
     refine norm_sum_le_of_le _ _ (norm_nonneg _) fun a _ => ?_
     have : τ (ζ ^ (a : ℕ) * y a) - ζ ^ (a : ℕ) * y a =
         τ ζ ^ (a : ℕ) * (τ (y a) - y a) + y a * (τ ζ ^ (a : ℕ) - ζ ^ (a : ℕ)) := by

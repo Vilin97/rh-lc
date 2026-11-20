@@ -109,7 +109,8 @@ theorem pderiv_subst [Fintype σ] [Finite τ] {a : σ → MvPowerSeries τ R}
     rw [subst_coe, pderiv_aeval]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [MvPowerSeries.pderiv_coe P, subst_coe]
-  rw [h1 d (by omega), key, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h1 d (by omega), key, map_sum, map_sum]
   exact Finset.sum_congr rfl fun j _ => (h2 j d (by omega)).symm
 
 theorem pderiv_psubst [Finite τ] {a : MvPowerSeries τ R} (ha : constantCoeff a = 0)

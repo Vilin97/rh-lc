@@ -243,7 +243,8 @@ theorem admissible_comp_eval {B : Base F E} {n d n₁ d₁ : ℕ} {X : Spc F E n
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [mul_left_comm]
     rfl
-  rw [LinearMap.comp_apply, hsplit, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [LinearMap.comp_apply, hsplit, map_sum, map_sum]
   simp only [map_smul, ContinuousLinearMap.coe_sum', Finset.sum_apply, ContinuousLinearMap.coe_smul', Pi.smul_apply,
     ContinuousLinearMap.coe_comp', Function.comp_apply]
   refine Finset.sum_congr rfl fun j _ => ?_

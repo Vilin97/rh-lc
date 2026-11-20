@@ -32,7 +32,8 @@ theorem act_csmul (M : SlopeTestRemainingChoices S A) (c : ℂ) (X : Ix S → V)
 
 theorem pair_act (ρ : Rep A V) (M : SlopeTestRemainingChoices S A) (X X' : Ix S → V) :
     pair ρ (act M X) X' = pair ρ X (act (star M) X') := by
-  simp only [pair, act, map_sum, LinearMap.sum_apply, ρ.adj, Matrix.star_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [pair, act, map_sum, LinearMap.sum_apply, ρ.adj, Matrix.star_apply]
   exact Finset.sum_comm
 
 theorem pair_act' (ρ : Rep A V) (M : SlopeTestRemainingChoices S A) (X X' : Ix S → V) :

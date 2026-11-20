@@ -498,16 +498,19 @@ theorem part_lat (P : Pl D → Prop) (S : HSp D) (L : Lat S) (y : Fin S.rank →
       funext i
       rw [← sub_eq_zero]
       apply eq_zero_of_comp
-      · rw [map_sub, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        · rw [map_sub, map_sum]
         simp only [infPart_pair, Finset.sum_const_zero, sub_zero]
         exact infPart_of_idAt (hid i)
       · intro w
-        rw [map_sub, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sub, map_sum]
         simp only [compAt_pair, hβ]
         by_cases hw : P w
         · have h1 : compAt D w (y i) = compAt D w ((idem D (· = w) • y) i) := by
             rw [Pi.smul_apply, smul_eq_mul, map_mul, compAt_idem, if_pos rfl, one_mul]
-          rw [h1, hBy w hw, map_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [h1, hBy w hw, map_sum]
           simp only [compAt_pair, if_pos hw, sub_self]
         · rw [compAt_of_idAt (hid i) hw]
           simp only [if_neg hw, TensorProduct.zero_tmul, Finset.sum_const_zero, sub_zero]

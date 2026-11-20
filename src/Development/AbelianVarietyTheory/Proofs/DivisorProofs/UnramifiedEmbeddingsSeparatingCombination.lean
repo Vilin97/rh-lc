@@ -93,7 +93,8 @@ theorem exists_integral_idempotent_of_not_dvd_discr :
         = if φ = σ then (discr E : C) else 0 := by
       apply ι.injective
       simp only [hiff] at h
-      simp only [map_sum, map_mul, map_intCast, apply_ite ι, map_zero]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_mul, map_intCast, apply_ite ι, map_zero]
       convert h using 2
       rfl
     simp only [c, mul_assoc, ← Finset.mul_sum, h']

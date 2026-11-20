@@ -51,7 +51,8 @@ theorem Low.add {m : ℕ} {x y : MvPowerSeries σ K} (hx : Low m x) (hy : Low m 
 theorem Low.sum {α : Type*} {m : ℕ} (s : Finset α) (x : α → MvPowerSeries σ K)
     (h : ∀ a ∈ s, Low m (x a)) : Low m (∑ a ∈ s, x a) := by
   intro d hd
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_eq_zero fun a ha => h a ha d hd
 
 theorem low_one {x : MvPowerSeries σ K} (hx : MvPowerSeries.constantCoeff x = 0) : Low 1 x := by
@@ -128,7 +129,8 @@ theorem decomp {σ : Type*} [Fintype σ] [LinearOrder σ] (m : ℕ) (x : MvPower
       exact hx _ (by omega)
     · rfl
   · ext d
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     have hXm : ∀ i (φ : MvPowerSeries σ K), MvPowerSeries.coeff d (MvPowerSeries.X i * φ) =
         if Finsupp.single i 1 ≤ d then MvPowerSeries.coeff (d - Finsupp.single i 1) φ else 0 := by
       intro i φ
@@ -210,7 +212,8 @@ private theorem subst_diff_lemma {σ τ : Type*} [Fintype σ] [Finite τ] (N : �
       rw [← hy]
       abel
     have hab' : ∀ i, Agree N (a i) (b i) := fun i e he => hab i e (by omega)
-    rw [hz, hφa, hφb, map_add, map_add, AlgHom.commutes, AlgHom.commutes, map_sum, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hz, hφa, hφb, map_add, map_add, AlgHom.commutes, AlgHom.commutes, map_sum, map_sum,
       add_sub_add_left_eq_sub, ← Finset.sum_sub_distrib]
     apply Low.sum
     intro i _
@@ -242,7 +245,8 @@ private theorem low_one_subst_lemma_2 {σ τ : Type*} [Fintype σ] [Finite τ] (
         | exact (congrFun (MvPowerSeries.coe_substAlgHom (R := K) hsa) w).symm
         | rfl
   obtain ⟨y, -, hy⟩ := decomp 0 w hw
-  rw [hy, hφa, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hy, hφa, map_sum]
   apply Low.sum
   intro i _
   beta_reduce
@@ -273,7 +277,8 @@ theorem low_subst_diff {σ τ : Type*} [Fintype σ] [Finite τ] (g : MvPowerSeri
         | exact (congrFun (MvPowerSeries.coe_substAlgHom (R := K) hsb) w).symm
         | rfl
   obtain ⟨y, hy1, hy⟩ := decomp 1 g hg
-  rw [hy, hφa, hφb, map_sum, map_sum, ← Finset.sum_sub_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hy, hφa, hφb, map_sum, map_sum, ← Finset.sum_sub_distrib]
   apply Low.sum
   intro i _
   beta_reduce

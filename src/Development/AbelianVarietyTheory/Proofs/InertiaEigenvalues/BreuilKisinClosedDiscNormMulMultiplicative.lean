@@ -105,7 +105,8 @@ theorem norm_mul_disc (l : ℕ) [hl : Fact l.Prime] (K : FinExt l) (bk : BK K) (
       (exists_eq_sup hP (fun n => ha2 n _) (ha3 _) (ha4 _)) (exists_eq_sup hQ (fun n => ha2 n _) (ha3 _) (ha4 _))
     have hconv : a N (toDisc l (X : bk.S) ρ s * toDisc l (X : bk.S) ρ t) =
         ∑ x ∈ Finset.HasAntidiagonal.antidiagonal N, a x.1 (toDisc l (X : bk.S) ρ s) * a x.2 (toDisc l (X : bk.S) ρ t) := by
-      rw [← map_mul, ha1, coeff_mul, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← map_mul, ha1, coeff_mul, map_sum]
       exact Finset.sum_congr rfl fun x _ => by rw [map_mul, ha1, ha1]
     refine le_antisymm (norm_mul_le _ _) ?_
     rw [← hN, ← hconv]

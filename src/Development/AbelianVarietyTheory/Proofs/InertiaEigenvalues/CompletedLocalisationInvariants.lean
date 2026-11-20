@@ -80,7 +80,8 @@ theorem completed_localisation_invariants : ∀ {O A A' E E' J : Type} [CommRing
         rwa [map_sub, map_mul, hfix _ d hd, hy d hd, hδ] at this
       have h3 := Finset.dvd_sum h2
       obtain ⟨a, ha⟩ := (hinv _).2 (havg b)
-      rw [Finset.sum_sub_distrib, ← map_sum, ← ha, ← hg, Finset.sum_const, nsmul_eq_mul] at h3
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Finset.sum_sub_distrib, ← map_sum, ← ha, ← hg, Finset.sum_const, nsmul_eq_mul] at h3
       obtain ⟨n, hn⟩ := hD.exists_left_inv
       obtain ⟨v, hv⟩ := (hxm m).exists_right_inv
       have hn' : algebraMap O E' n * (D.card : E') = 1 := by

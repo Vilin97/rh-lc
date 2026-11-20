@@ -81,7 +81,8 @@ theorem gram_comb_map (D : Datum H) (τ : E →+* ℂ) {I J : Type} [Fintype J] 
     ((gramE D (fun a => ∑ m, X a m • x m)).map fun a => Complex.I * τ a) =
       (X.map fun a => τ (a : E)) * ((gramE D x).map fun a => Complex.I * τ a) * (X.map fun a => τ (a : E))ᴴ := by
   ext a b
-  simp only [Matrix.map_apply, gramE, Matrix.of_apply, Matrix.mul_apply, Matrix.conjTranspose_apply, sesq_comb,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.map_apply, gramE, Matrix.of_apply, Matrix.mul_apply, Matrix.conjTranspose_apply, sesq_comb,
     map_sum, map_mul, Finset.mul_sum, Finset.sum_mul, IsCMField.complexEmbedding_complexConj, starRingEnd_apply]
   refine Finset.sum_congr rfl fun n _ => Finset.sum_congr rfl fun m _ => ?_
   ring

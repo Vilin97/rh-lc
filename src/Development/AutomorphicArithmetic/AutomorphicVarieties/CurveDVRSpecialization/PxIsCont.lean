@@ -95,7 +95,8 @@ private theorem px_coef {O : Type} [CommRing O] [Algebra O A] (B : Subalgebra O 
     by_cases h : i = j <;> simp [φ, Fin.sum_univ_two, Matrix.charmatrix_apply, h, Matrix.one_apply, sub_eq_add_neg]
   generalize (∑ a : Fin 2, (MvPolynomial.X a : MvPolynomial (Fin 2) A) • (![1, M] a).map (MvPolynomial.C : A →+* MvPolynomial (Fin 2) A)).det = P at h h1
   have h2 : φ P ∈ Polynomial.liftsRing (B.val : B →+* A) := by
-    rw [P.as_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [P.as_sum, map_sum]
     refine sum_mem fun α _ => ?_
     rw [MvPolynomial.aeval_monomial]
     refine mul_mem ⟨Polynomial.C ⟨_, h α⟩, by simp⟩ (prod_mem fun a _ => pow_mem ?_ _)

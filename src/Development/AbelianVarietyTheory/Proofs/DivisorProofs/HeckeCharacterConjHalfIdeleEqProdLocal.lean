@@ -50,7 +50,8 @@ theorem char_eq_prod : ∀ (D : D7) (Q : Finset (Pl D.host.E)) (eQ : AE D), IsId
     simp only [g, if_pos hP, if_pos hP', ← map_mul]
     rw [idem_orth (idemAt_split (hes P hP)) (hes P hP) (hes P' hP') hne, map_zero]
   have hsum : cA D (∑ P ∈ Q, es P) = ∑ P ∈ Q, g P := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun P hP => by simp only [g, if_pos hP]
   have hy' : y = ∏ P ∈ Q, locU (hg P) k := by
     apply Units.ext

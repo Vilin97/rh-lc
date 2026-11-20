@@ -32,7 +32,8 @@ theorem eval_homogenize (c : MvPolynomial (Fin e) ℂ) (x : Fin e → ℂ) :
     eval (Fin.cons 1 x : Fin (e + 1) → ℂ) (homogenize c) = eval x c := by
   have hcs : (Fin.cons 1 x : Fin (e + 1) → ℂ) ∘ Fin.succ = x := funext fun i => Fin.cons_succ _ _ _
   conv_rhs => rw [c.as_sum]
-  simp only [homogenize, map_sum, map_mul, eval_C, map_pow, eval_X, Fin.cons_zero, one_pow, one_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [homogenize, map_sum, map_mul, eval_C, map_pow, eval_X, Fin.cons_zero, one_pow, one_mul,
     eval_rename, hcs, eval_monomial]
 
 theorem homogenize_ne_zero {c : MvPolynomial (Fin e) ℂ} (hc : c ≠ 0) : homogenize c ≠ 0 := by

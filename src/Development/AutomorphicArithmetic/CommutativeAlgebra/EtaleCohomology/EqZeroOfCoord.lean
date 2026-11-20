@@ -41,6 +41,7 @@ theorem UpperTheory.Ru.crystallineComparison.injOf :
   intro f
   apply hι
   have h2 := h1 f
-  simp only [UpperTheory.Ru.crystallineComparison.vec, map_sum, LinearMap.rTensor_tmul, TensorProduct.lid_tmul, pow_zero, mul_one, map_zero]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [UpperTheory.Ru.crystallineComparison.vec, map_sum, LinearMap.rTensor_tmul, TensorProduct.lid_tmul, pow_zero, mul_one, map_zero]
   simp only [Algebra.smul_def, map_mul, hq, hc]
   exact h2

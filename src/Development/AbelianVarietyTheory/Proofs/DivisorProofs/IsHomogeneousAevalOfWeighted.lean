@@ -129,9 +129,11 @@ theorem tag_sub (τ : D.what₂.Tau) (k : ℕ) (G : MvPolynomial (Vm D.what₂.T
   have h : ∀ i, dRt D.what₂.Tau N (τ, i) * toR (divDiff k (τ, i) * G) =
       (X (Sum.inl (false, (τ, i))) ^ k - X (Sum.inl (true, (τ, i))) ^ k) * toR G := fun i => by
     rw [← geom_sum₂_mul]
-    simp only [dRt, divDiff, toR, map_mul, map_sum, map_pow, map_X]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [dRt, divDiff, toR, map_mul, map_sum, map_pow, map_X]
     ring
-  simp only [h, tagDR, tagHT, pk, map_mul, map_sum, map_pow, rename_X, rename_C, smul_eq_C_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [h, tagDR, tagHT, pk, map_mul, map_sum, map_pow, rename_X, rename_C, smul_eq_C_mul]
   rw [← mul_sub, ← Finset.sum_sub_distrib, mul_assoc, Finset.sum_mul]
 
 variable {p : ℕ} [Fact p.Prime] {rk : Emb D p → ℕ} (M : Mdl D p N rk) (rt : Bool × Rt D.what₂.Tau N → M.Z.LB)

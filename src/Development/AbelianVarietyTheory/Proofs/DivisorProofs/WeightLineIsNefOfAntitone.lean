@@ -94,7 +94,8 @@ theorem wtLine_isNef : Hypotheses2 → ∀ (ι : Type) [Fintype ι] (N : ℕ) (l
   have hFL (L : GlobalTheory.HermLB (flStr ι N)) : F L.icls = (hex L).choose (i (genericPoint Z)) := rfl
   have key : h (i (genericPoint Z)) = ∑ y : ι × Fin (N + 1),
       (abelExp lam y : ℝ) * (hex (flDet y.1 y.2 : GlobalTheory.HermLB (flStr ι N))).choose (i (genericPoint Z)) := by
-    rw [← hht H, ← hFL, ← GlobalTheory.HermLB.icls_eq_iff.2 hiso, icls_comb, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hht H, ← hFL, ← GlobalTheory.HermLB.icls_eq_iff.2 hiso, icls_comb, map_sum]
     refine Finset.sum_congr rfl fun y _ => ?_
     rw [map_zsmul, hFL, zsmul_eq_mul]
   rw [key]

@@ -190,14 +190,16 @@ theorem nonempty_muFrameAt : ∀ (E : Type) [Field E] [NumberField E] [IsCMField
         rw [Finset.prod_div_distrib]
   obtain ⟨s, hs1, hs2⟩ := hval (∑ l, Q l * P l - 1)
   have hz : genMap Or.𝔐.ξ ⟨centre z, Or.𝔐.all _⟩ s = 0 := by
-    rw [hs1, map_sub, map_sum, map_one]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hs1, map_sub, map_sum, map_one]
     simp only [map_mul, hP, hQ]
     rw [hsum, sub_self]
   have hs0 : s = 0 := hginj (by rw [hz, map_zero])
   have hW : ∑ l, MvPolynomial.aeval (fun c' => (∏ k, w ⟨k, c' k⟩) / ∏ k, w ⟨k, ch k⟩) (Q l) *
       MvPolynomial.aeval (fun c' => (∏ k, w ⟨k, c' k⟩) / ∏ k, w ⟨k, ch k⟩) (P l) = 1 := by
     have h2 := hs2
-    rw [hs0, map_zero, map_sub, map_sum, map_one] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hs0, map_zero, map_sub, map_sum, map_one] at h2
     simp only [map_mul] at h2
     exact sub_eq_zero.mp h2.symm
   obtain ⟨l0, hl0⟩ : ∃ l, MvPolynomial.aeval

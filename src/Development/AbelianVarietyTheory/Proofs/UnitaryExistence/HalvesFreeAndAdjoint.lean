@@ -71,7 +71,8 @@ theorem exists_span {R Q : Type} [CommRing R] [AddCommGroup Q] [Module R Q] (I :
     (e : Q ≃ₗ[R] (Fin r → R ⧸ I)) : ∃ x : Fin r → Q, Submodule.span R (Set.range x) = ⊤ := by
   refine ⟨fun b => e.symm (Pi.single b 1), eq_top_iff.2 fun q _ => ?_⟩
   have h : q = ∑ b, e.symm (Pi.single b (e q b)) := by
-    rw [← map_sum, Finset.univ_sum_single, e.symm_apply_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, Finset.univ_sum_single, e.symm_apply_apply]
   rw [h]
   refine Submodule.sum_mem _ fun b _ => ?_
   obtain ⟨a, ha⟩ := Ideal.Quotient.mk_surjective (e q b)

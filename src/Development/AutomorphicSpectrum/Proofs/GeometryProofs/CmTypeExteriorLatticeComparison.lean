@@ -171,7 +171,8 @@ theorem frame_change : ∀ (X X' : Scheme.{0}) (Ω Ω' : Type) [Field Ω] [Field
       have he' : e ∈ L ⟨f p'.1, h⟩ := he
       rw [hb.2] at he'
       obtain ⟨c, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun _).1 he'
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Submodule.sum_mem _ fun k _ => ?_
       have e1 : j (c k • b k) = (⟨i (c k), hreg _ (c k).2⟩ : regAt ξ' p') • j (b k) := hj.1 (c k : Ω) (b k)
       rw [e1]
@@ -220,7 +221,8 @@ theorem frame_change : ∀ (X X' : Scheme.{0}) (Ω Ω' : Type) [Field Ω] [Field
           exact Finset.sum_comm
       _ = _ := by
           refine Finset.sum_congr rfl fun c _ => ?_
-          rw [Matrix.mul_apply, map_sum, Finset.sum_smul]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [Matrix.mul_apply, map_sum, Finset.sum_smul]
           simp only [map_mul, Matrix.of_apply]
   ext a c
   have h2 : ∑ c, genMap ξ' p' ((1 : Matrix (Fin n) (Fin n) _) a c) • j (b c) = j (b a) := by

@@ -167,9 +167,11 @@ theorem isLatticeBasis_mkQ (a : S → w.valuationSubring) (ha : Function.Injecti
   · rw [Fintype.linearIndependent_iff]
     intro c hc
     have h1 : g τ (∑ i, c i • u i) = 0 := (hfs _).1 (by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simpa only [map_smul] using hc)
-    rw [map_sum] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at h1
     simp only [map_smul, hu] at h1
     exact Fintype.linearIndependent_iff.1 hv c h1
   · apply le_antisymm
@@ -181,11 +183,13 @@ theorem isLatticeBasis_mkQ (a : S → w.valuationSubring) (ha : Function.Injecti
       obtain ⟨c, hc⟩ := (Submodule.mem_span_range_iff_exists_fun w.valuationSubring).1
         ((hmem z).1 hz)
       have h0 : (filSpace (kerFil a N g) τ).mkQ (z - ∑ i, (c i : C) • u i) = 0 := (hfs _).2 (by
-        rw [map_sub, map_sum, sub_eq_zero, ← hc]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sub, map_sum, sub_eq_zero, ← hc]
         refine Finset.sum_congr rfl fun i _ => ?_
         rw [map_smul, hu]
         exact (algebraMap_smul C (c i) (v i)).symm)
-      rw [map_sub, sub_eq_zero, map_sum] at h0
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, sub_eq_zero, map_sum] at h0
       rw [h0]
       refine sum_mem fun i _ => ?_
       rw [map_smul]

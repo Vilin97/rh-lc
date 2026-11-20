@@ -79,7 +79,8 @@ theorem splitVec_map_inclR_mulVec (τ : E →ₐ[F] Fv F v) {n r : ℕ} (C : Mat
     (a : Fin r → Fv F v ⊗[F] E) :
     splitVec τ ((C.map (inclR (Fv F v))) *ᵥ a) = (C.map τ) *ᵥ fun k => splitProj τ (a k) := by
   funext i
-  simp [splitVec, Matrix.mulVec, dotProduct, map_sum, map_mul, splitProj_inclR]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [splitVec, Matrix.mulVec, dotProduct, map_sum, map_mul, splitProj_inclR]
 
 end GlobalTheory.SplitStab
 

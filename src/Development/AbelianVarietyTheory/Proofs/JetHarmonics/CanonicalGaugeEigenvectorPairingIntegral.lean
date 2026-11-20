@@ -21,7 +21,8 @@ theorem eigen_pair_mem_range : ∀ (R : Type) [CommRing R] (d : ℕ) (OE : Type)
     intro v hv a
     funext i
     have e := congrArg (algebraMap R k) (congrFun (hv a) i)
-    simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Pi.smul_apply, smul_eq_mul, linPart,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Pi.smul_apply, smul_eq_mul, linPart,
       Matrix.of_apply] at e ⊢
     rw [← e]
     rfl

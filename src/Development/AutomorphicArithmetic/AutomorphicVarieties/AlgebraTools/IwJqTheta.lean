@@ -123,7 +123,8 @@ private theorem jq_dom (C : Subgroup 𝓀[k]ˣ) {V : Type} [AddCommGroup V] [Mod
     apply Submodule.subset_span
     refine ⟨⟨u, (Subgroup.mem_inf.mp (hsU u hu)).1⟩, π (diagT k (Fin n) t) (v : V), ?_⟩
     simp
-  rw [hsum C ℂ V π v, ← hcard, jacBU_mk, ← Submodule.mkQ_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hsum C ℂ V π v, ← hcard, jacBU_mk, ← Submodule.mkQ_apply, map_sum]
   simp only [Submodule.mkQ_apply]
   rw [Finset.sum_congr rfl hu, Finset.sum_const, Nat.cast_smul_eq_nsmul]
 

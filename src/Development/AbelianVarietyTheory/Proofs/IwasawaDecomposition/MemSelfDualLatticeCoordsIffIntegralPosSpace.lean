@@ -173,7 +173,8 @@ theorem mem_iff_swap (hL : ∀ x, x ∈ L ↔ ∀ i, x i ∈ Set.range (algebraM
     rw [← map_inv, ← map_inv]
     funext j
     rw [hw]
-    simp only [Formalism.UG.bc, Units.coe_map, MonoidHom.coe_coe, Matrix.mulVec, dotProduct, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Formalism.UG.bc, Units.coe_map, MonoidHom.coe_coe, Matrix.mulVec, dotProduct, map_sum, map_mul]
     rw [← e.symm.sum_comp]
     refine Finset.sum_congr rfl fun k _ => ?_
     simp [Matrix.reindexAlgEquiv_apply, Matrix.reindex_apply, Formalism.UG.inclE]

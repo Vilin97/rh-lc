@@ -300,13 +300,16 @@ private theorem core (μ : Measure A) (U : A → G)
       have : (Submodule.Quotient.mk Θ : S.toSubmodule ⧸ T.toSubmodule.comap S.toSubmodule.subtype) =
           ∑ q ∈ Sf, f q.out • subQuot S T q.out w := by
         simp only [Θ]
-        rw [← Submodule.mkQ_apply, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [← Submodule.mkQ_apply, map_sum]
         rfl
-      rw [this, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [this, map_sum]
       refine Finset.sum_congr rfl fun q _ => ?_
       rw [map_smul, hpi]
     have := congrArg l (hexp.symm.trans hz)
-    simpa only [map_sum, map_smul, smul_eq_mul, map_zero] using this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa only [map_sum, map_smul, smul_eq_mul, map_zero] using this
 
 end Core2
 

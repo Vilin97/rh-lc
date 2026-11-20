@@ -33,7 +33,8 @@ theorem cA_cA {σ : E →ₐ[F] E} (hσ : ∀ a, σ (σ a) = a) (z : AE F E) : c
 
 theorem hA_skew {σ : E →ₐ[F] E} (hσ : ∀ a, σ (σ a) = a) {n : ℕ} {J : Matrix (Fin n) (Fin n) E}
     (hJ : ∀ i j, σ (J j i) = -J i j) (v w : Fin n → AE F E) : cA σ (hA σ J v w) = -hA σ J w v := by
-  simp only [hA, dotProduct, Matrix.mulVec, map_sum, map_mul, cA_cA hσ, incM, Matrix.map_apply, cA_inclR]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hA, dotProduct, Matrix.mulVec, map_sum, map_mul, cA_cA hσ, incM, Matrix.map_apply, cA_inclR]
   simp_rw [Finset.mul_sum]
   rw [Finset.sum_comm, ← Finset.sum_neg_distrib]
   refine Finset.sum_congr rfl fun y _ => ?_
@@ -44,12 +45,14 @@ theorem hA_skew {σ : E →ₐ[F] E} (hσ : ∀ a, σ (σ a) = a) {n : ℕ} {J :
 
 theorem hA_incV (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (v w : Fin n → E) :
     hA σ J (incV F v) (incV F w) = inclR (F := F) (AF F) (form σ J v w) := by
-  simp only [hA, form, incV, incM, dotProduct, Matrix.mulVec, map_sum, map_mul, Matrix.map_apply, cA_inclR]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hA, form, incV, incM, dotProduct, Matrix.mulVec, map_sum, map_mul, Matrix.map_apply, cA_inclR]
 
 theorem incM_mulVec_incV {m n : ℕ} (A : Matrix (Fin m) (Fin n) E) (v : Fin n → E) :
     incM F A *ᵥ incV F v = incV F (A *ᵥ v) := by
   ext i
-  simp only [incM, incV, Matrix.mulVec, dotProduct, map_sum, map_mul, Matrix.map_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [incM, incV, Matrix.mulVec, dotProduct, map_sum, map_mul, Matrix.map_apply]
 
 theorem hA_add_left (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (v v' w : Fin n → AE F E) :
     hA σ J (v + v') w = hA σ J v w + hA σ J v' w := add_dotProduct _ _ _
@@ -81,7 +84,8 @@ theorem nmat_rat (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (
       (1 - Matrix.vecMulVec (u + c • x) (J *ᵥ fun i => σ (x i)) - Matrix.vecMulVec x (J *ᵥ fun i => σ (u i))).map
         (inclR (F := F) (AF F)) := by
   ext i j
-  simp only [nmat, incV, incM, Matrix.map_apply, Matrix.sub_apply, Matrix.vecMulVec_apply, Matrix.mulVec, dotProduct,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [nmat, incV, incM, Matrix.map_apply, Matrix.sub_apply, Matrix.vecMulVec_apply, Matrix.mulVec, dotProduct,
     map_sub, map_mul, map_sum, Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add, cA_inclR, Matrix.one_apply]
   split_ifs <;> simp
 
@@ -180,7 +184,8 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 theorem hA_incM_incV (σ : E →ₐ[F] E) {n m : ℕ} (J : Matrix (Fin n) (Fin n) E) (A : Matrix (Fin n) (Fin m) E)
     (z : Fin m → AE F E) (v : Fin n → E) :
     hA σ J (incM F A *ᵥ z) (incV F v) = ∑ j, z j * inclR (F := F) (AF F) (form σ J (fun i => A i j) v) := by
-  simp only [hA, form, dotProduct, Matrix.mulVec, incM, incV, Matrix.map_apply, cA_inclR, map_sum, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hA, form, dotProduct, Matrix.mulVec, incM, incV, Matrix.map_apply, cA_inclR, map_sum, map_mul,
     Finset.sum_mul, Finset.mul_sum]
   conv_lhs => enter [2, i]; rw [Finset.sum_comm]
   conv_lhs => rw [Finset.sum_comm]

@@ -23,7 +23,8 @@ theorem toForm_lamA_eq_two_mul_cross (ι : Type) [Fintype ι] [DecidableEq ι] (
         ← Finset.sum_sub_distrib]
       refine Finset.sum_congr rfl fun i _ => ?_
       by_cases hi : p i <;> simp [hi, rootForm]
-    simp only [toForm, pHigh, pLow, map_sub, map_sum, pow_one, aeval_X]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [toForm, pHigh, pLow, map_sub, map_sum, pow_one, aeval_X]
     rw [h1, h1, ← Finset.sum_sub_distrib]
     refine Finset.sum_congr rfl fun a _ => ?_
     rw [← Finset.sum_sub_distrib]
@@ -38,7 +39,8 @@ theorem toForm_lamA_eq_two_mul_cross (ι : Type) [Fintype ι] [DecidableEq ι] (
         simp [hab, ha, hb, not_lt.mp ha, not_lt.mp hb]
     · simp [hab]
   have h2 : (toForm (lamA ι N j) : FormPol ι N) = ∑ τ : ι, toForm (pHigh j τ 1 - pLow j τ 1) := by
-    simp only [lamA, toForm, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [lamA, toForm, map_sum]
   rw [h2, crSet, Finset.sum_filter, Finset.mul_sum, Fintype.sum_prod_type]
   refine Finset.sum_congr rfl fun τ _ => ?_
   rw [key, Fintype.sum_prod_type]

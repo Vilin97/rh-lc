@@ -92,7 +92,8 @@ lemma op_expand {H : Mat k r → E} {X g : Mat k r} (b : Bool) (hX : inLie k r X
     (hasDerivAt_ext (f := H) b hU hgU hg hd heq hZ).deriv
   rw [hop X hX]
   conv_lhs => rw [expandL hX]
-  rw [vf_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [vf_sum, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_smul, hop _ (Lt_unit i).1]
 

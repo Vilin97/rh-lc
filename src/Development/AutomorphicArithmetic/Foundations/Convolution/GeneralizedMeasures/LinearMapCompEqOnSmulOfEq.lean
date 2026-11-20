@@ -78,9 +78,11 @@ private theorem monomialDecomposition_eval {σ τ H : Type} [Ring H] [Algebra �
     ψ (g * R) = ∑ i ∈ R.support.sigma (fun β => (R.coeff β).support),
       (R.coeff i.1).coeff i.2 • ψ (g * monomial i.1 (monomial i.2 1)) := by
   rw [Finset.sum_sigma]
-  conv_lhs => rw [R.as_sum, Finset.mul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [R.as_sum, Finset.mul_sum, map_sum]
   refine Finset.sum_congr rfl fun β _ => ?_
-  conv_lhs => rw [(R.coeff β).as_sum, map_sum, Finset.mul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [(R.coeff β).as_sum, map_sum, Finset.mul_sum, map_sum]
   refine Finset.sum_congr rfl fun α _ => ?_
   rw [← smul_one_mul, ← hψ, ← map_mul, mul_left_comm, C_mul_monomial, C_mul_monomial, mul_one]
 
@@ -88,7 +90,8 @@ private theorem linearMap_comp_eq_on_smul_of_eq {V : Type*} [NormedAddCommGroup 
     (A B G : V →L[ℂ] V) (P : ι → V →L[ℂ] V) :
     A ∘L ((∑ i ∈ s, c i • P i) ∘L B) ∘L G = ∑ i ∈ s, c i • (A ∘L (P i ∘L B) ∘L G) := by
   ext v
-  simp [ContinuousLinearMap.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [ContinuousLinearMap.sum_apply, map_sum]
 
 private theorem self_over (F : Type) [Field F] [NumberField F] (q : Pl F) : q.asIdeal.LiesOver q.asIdeal :=
   ⟨by ext x; simp [Ideal.under_def, Ideal.mem_comap]⟩

@@ -287,7 +287,8 @@ theorem exists_parVec (hΛ : Eqv π σ ν₁ ν₂ Λ)
     have e : v = ∑ p : {p : Gn g (a + b) // InQ a p}, (φ (m p).1)⁻¹ • π (lift g _ (m p).1) w :=
       (hm.sum_comp (fun p => (φ p.1)⁻¹ • π (lift g _ p.1) w)).symm
     conv_rhs => rw [e]
-    simp only [v, map_sum, map_smul, Finset.smul_sum, m, smul_smul, map_mul, hb.2.2.1]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [v, map_sum, map_smul, Finset.smul_sum, m, smul_smul, map_mul, hb.2.2.1]
     refine Finset.sum_congr rfl fun p _ => ?_
     congr 1
     have := hφ0 q
@@ -312,7 +313,8 @@ theorem exists_parVec (hΛ : Eqv π σ ν₁ ν₂ Λ)
       · rw [Units.val_one, ← dg_one]; exact dg_par _ _ i j hj hi
       · ext i j
         rw [Units.val_one, ← dg_one]; exact dg_tl _ _ i j
-    simp only [v, map_sum, e, Finset.sum_const, ← Nat.cast_smul_eq_nsmul ℂ]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [v, map_sum, e, Finset.sum_const, ← Nat.cast_smul_eq_nsmul ℂ]
     refine smul_ne_zero ?_ hw0
     exact Nat.cast_ne_zero.2 (Finset.card_pos.2 Finset.univ_nonempty).ne'
 

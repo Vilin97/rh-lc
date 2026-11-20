@@ -67,7 +67,8 @@ theorem differentiableOn_coeff_of_linearIndependent (n m g : ℕ) (U : Set (Fin 
     filter_upwards [hTu, hUn] with t hu ht
     obtain ⟨u, hu'⟩ := hu
     have h1 : L (x t) = T t (w t) := by
-      rw [hw t ht, hTapply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hw t ht, hTapply, map_sum]
       simp
     rw [h1, ← hu', Ring.inverse_unit, ← ContinuousLinearMap.mul_apply, u.inv_mul]
     rfl

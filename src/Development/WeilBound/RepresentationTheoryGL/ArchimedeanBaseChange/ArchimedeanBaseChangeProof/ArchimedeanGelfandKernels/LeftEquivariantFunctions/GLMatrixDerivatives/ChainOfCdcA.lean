@@ -177,13 +177,15 @@ theorem basis_inv {W : Type} [AddCommGroup W] [Module ℝ W] (B : Mat n →ₗ[�
         refine Finset.sum_congr rfl fun p _ => ?_
         rw [hb_expand _ (hY p)]
     _ = ∑ p, ∑ q, ((Y p * hb q).trace.re : ℝ) • B (Y p) (hb q) := by
-        simp only [map_sum, map_smul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, map_smul]
     _ = ∑ q, ∑ p, ((hb q * Y p).trace.re : ℝ) • B (Y p) (hb q) := by
         rw [Finset.sum_comm]
         refine Finset.sum_congr rfl fun q _ => Finset.sum_congr rfl fun p _ => ?_
         rw [Matrix.trace_mul_comm]
     _ = ∑ q, B (∑ p, ((hb q * Y p).trace.re : ℝ) • Y p) (hb q) := by
-        simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply]
     _ = ∑ q, B (hb q) (hb q) := by
         refine Finset.sum_congr rfl fun q _ => ?_
         rw [expand_conj k (hb q) (hb_herm q)]

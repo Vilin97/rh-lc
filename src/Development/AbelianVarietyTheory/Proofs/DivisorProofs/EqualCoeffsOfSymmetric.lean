@@ -11,10 +11,12 @@ theorem rename_perm_invForm {ι : Type} [Fintype ι] (N j : ℕ) (σ : ι ≃ ι
     rename (fun x : ι × Fin N => (σ x.1, x.2)) (invForm (N := N) j al be)
       = invForm j (fun τ => al (σ.symm τ)) (fun τ => be (σ.symm τ)) := by
   unfold invForm
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   conv_rhs => rw [← Equiv.sum_comp σ]
   refine Finset.sum_congr rfl fun τ _ => ?_
-  simp [pLow, pHigh, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [pLow, pHigh, map_sum]
 
 theorem CoefLe.rename_perm {ι : Type} {N : ℕ} (σ : ι ≃ ι) {P : Pol ι N} {e : ℝ} (h : CoefLe P e) :
     CoefLe (rename (fun x : ι × Fin N => (σ x.1, x.2)) P) e := by

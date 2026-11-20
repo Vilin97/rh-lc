@@ -27,7 +27,8 @@ theorem semi_apply_pi {n : ℕ} (ι : (Fin n → K) →ₛₗ[σ] E) (u : Fin n 
     ι u = ∑ a, σ (u a) • ι (Pi.single a 1) := by
   classical
   conv_lhs => rw [← Finset.univ_sum_single u]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun a _ => ?_
   have : (Pi.single a (u a) : Fin n → K) = u a • Pi.single a 1 := by
     funext i; by_cases hi : i = a <;> simp [hi]
@@ -76,9 +77,11 @@ theorem exists_orth [FiniteDimensional K V] {H : Type} [NormedAddCommGroup H] [I
     intro y hy k' hk'
     have e : k' = ∑ i, b.repr ⟨k', hk'⟩ i • (b i : V) := by
       have := congrArg U.subtype (b.sum_repr ⟨k', hk'⟩)
-      rw [map_sum] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum] at this
       exact this.symm
-    rw [e, map_sum, sum_inner]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, map_sum, sum_inner]
     refine Finset.sum_eq_zero fun i _ => ?_
     have h0 : ⟪j (b i : V), j y⟫_ℂ = 0 := by
       have := hf y i

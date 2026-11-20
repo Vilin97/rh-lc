@@ -47,7 +47,8 @@ theorem coord_fixed (b : Module.Basis (Fin n) (LetA O f) ↥(W.N T)) (hb : ∀ k
   have e : ∑ m, W.γA δ (b.repr y m) • b m = y := by
     apply Subtype.ext
     have h1 : W.γD T δ (y : W.DD T) = ∑ m, W.γA δ (b.repr y m) • (b m : W.DD T) := by
-      conv_lhs => rw [coe_eq_sum W b y, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        conv_lhs => rw [coe_eq_sum W b y, map_sum]
       refine Finset.sum_congr rfl fun m _ => ?_
       rw [γD_smulA, (hb m).2 δ hδ]
     simp only [AddSubmonoidClass.coe_finset_sum, SetLike.val_smul]

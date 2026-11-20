@@ -200,7 +200,8 @@ theorem pos_of_relAmple (hL : Out.Laws) (c : SiegPre h k ζ s) (hc : Out.RelAmpl
       Fintype.card_fin, Nat.mul_one, one_smul] at b
     obtain ⟨V, hV, hfV⟩ := exists_affine_of_nonpos hF (z.left (default : PrimeSpectrum K)) f' a'
       (isAmpleLB_of_relAmple P.A hM hA U hU) (isAmpleLB_of_relAmple c.A hD hc U hU) m (by
-        rw [cls_pull hM, cls_pull hD, ← pull_comp, ← pull_comp, hf', ha', e, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [cls_pull hM, cls_pull hD, ← pull_comp, ← pull_comp, hf', ha', e, map_sum]
         have e₁ : ∀ uv : Fin n × Fin n, pull f.left (W uv.1 uv.2 • pull (lift (pr uv.1) (pr uv.2)).left (cls c.P c.isLB)) =
             W uv.1 uv.2 • pull (lift ((gp ≫ pr v) ^ u uv.1) ((gp ≫ pr v) ^ u uv.2)).left
               (cls c.P c.isLB) := fun uv => by
@@ -301,7 +302,8 @@ theorem cls_shape (hF : Out.GlobalFnsSt) (c : SiegPre h k (b.ζ : o) s) (hc : Ou
     simp only [Matrix.transpose_mul, Matrix.transpose_transpose, Matrix.mul_add, Matrix.add_mul, Matrix.mul_assoc])
   have e₁ : pull F.left (cls t.L t.isLB) = ∑ uv : Fin 8 × Fin 8, (a.transpose * W * a) uv.1 uv.2 •
       pull (lift (pr uv.1) (pr uv.2)).left (cls c.P c.isLB) := by
-    rw [e, hL, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, hL, map_sum]
     refine Finset.sum_congr rfl fun uv _ => ?_
     rw [map_zsmul, ← pull_comp, ← Over.comp_left, comp_lift, hFa, hFa, List.prod_ofFn, List.prod_ofFn]
   rw [cls_linComb t.isLB, Fin.sum_univ_two]

@@ -175,7 +175,8 @@ theorem frame (H : Host E) (D : Datum H) (N : ℕ) (hN : 0 < N) (T : 𝓞 E →+
   have Hsum_right : ∀ (a : D.La) (d : Fin r → 𝓞 E) (v : Fin r → D.La),
       π (h a (∑ j, d j • v j)) = ∑ j, s (π (d j)) * π (h a (v j)) := by
     intro a d v
-    rw [Hherm (∑ j, d j • v j) a, Hsum_left, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Hherm (∑ j, d j • v j) a, Hsum_left, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_mul, Hherm a (v j), hss]
   obtain ⟨e₀, hspan, hind⟩ := freeModN H D N hN
@@ -260,13 +261,15 @@ theorem frame (H : Host E) (D : Datum H) (N : ℕ) (hN : 0 < N) (T : 𝓞 E →+
     rw [this]
     refine modN_add hc0 (modN_sum _ _ fun i _ => modN_smul_of _ _ ?_)
     rw [← hπ]
-    simp only [map_sub, map_sum, map_mul, hA, hB]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sub, map_sum, map_mul, hA, hB]
     exact calc_inv (fun j => π (c0 j)) a.1 (a⁻¹ : GL (Fin r) (𝓞 E ⧸ I)).1 (Units.mul_inv a) i
   · intro c d
     have h1 := hh' (∑ i, c i • e i) (∑ i, d i • e i) 1
     rw [one_smul, one_mul] at h1
     have h2 : π (h (∑ i, c i • e i) (∑ i, d i • e i)) = π (∑ i, c i * H.bar (d i)) := by
-      rw [Hsum_left, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Hsum_left, map_sum]
       simp only [Hsum_right, hON]
       rw [calc_one]
       refine Finset.sum_congr rfl fun i _ => ?_
@@ -274,7 +277,8 @@ theorem frame (H : Host E) (D : Datum H) (N : ℕ) (hN : 0 < N) (T : 𝓞 E →+
     obtain ⟨z, hz⟩ := (hπ (h (∑ i, c i • e i) (∑ i, d i • e i) - ∑ i, c i * H.bar (d i))).1 (by rw [map_sub, h2, sub_self])
     have hT' : T (h (∑ i, c i • e i) (∑ i, d i • e i)) = T (N • z) + T (∑ i, c i * H.bar (d i)) := by
       rw [← map_add, ← hz, sub_add_cancel]
-    rw [map_sum, map_nsmul, nsmul_eq_mul] at hT'
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_nsmul, nsmul_eq_mul] at hT'
     rw [hT'] at h1
     have e3 : D.EF (∑ i, c i • e i) (∑ i, d i • e i) - ∑ i, T (c i * H.bar (d i)) =
         D.EF (∑ i, c i • e i) (∑ i, d i • e i) - ((N : ℤ) * T z + ∑ i, T (c i * H.bar (d i))) + (N : ℤ) * T z := by

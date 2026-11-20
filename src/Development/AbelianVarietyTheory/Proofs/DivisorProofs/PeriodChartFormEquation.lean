@@ -55,7 +55,8 @@ theorem eq_sum_of_isType {β : CxForm.Alt n} (h : IsType 1 1 β) :
     β = ∑ a, ∑ b, (bas n).repr β {a.castAdd n, b.natAdd n} • (CxForm.dz a * CxForm.dzb b) := by
   apply (bas n).repr.injective
   ext S
-  simp only [← bas_pair, map_sum, map_smul, Module.Basis.repr_self, Finsupp.finsetSum_apply, Finsupp.smul_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← bas_pair, map_sum, map_smul, Module.Basis.repr_self, Finsupp.finsetSum_apply, Finsupp.smul_apply,
     Finsupp.single_apply, smul_eq_mul, mul_ite, MulOneClass.mul_one, MulZeroClass.mul_zero]
   by_cases hS : (bas n).repr β S = 0
   · rw [hS]
@@ -110,7 +111,8 @@ theorem eq_sum_of_isType {β : CxForm.Alt n} (h : IsType 1 1 β) :
 open GlobalTheory.CxForm in
 theorem repr_pair_sum (x : Fin n → Fin n → ℂ) (c0 d0 : Fin n) :
     (bas n).repr (∑ c, ∑ d, x c d • (CxForm.dz c * CxForm.dzb d)) {c0.castAdd n, d0.natAdd n} = x c0 d0 := by
-  simp only [← bas_pair, map_sum, map_smul, Module.Basis.repr_self, Finsupp.finsetSum_apply, Finsupp.smul_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← bas_pair, map_sum, map_smul, Module.Basis.repr_self, Finsupp.finsetSum_apply, Finsupp.smul_apply,
     Finsupp.single_apply, smul_eq_mul, mul_ite, MulOneClass.mul_one, MulZeroClass.mul_zero]
   rw [Finset.sum_eq_single c0, Finset.sum_eq_single d0]
   · simp
@@ -124,7 +126,8 @@ theorem hermMat_isHermitian {α : CxForm.Alt n} (ht : IsType 1 1 α) (hr : IsRea
   set co := fun a b : Fin n => (bas n).repr α {a.castAdd n, b.natAdd n} with hco
   have hsw : swap α = ∑ c, ∑ d, (-co d c) • (CxForm.dz c * CxForm.dzb d) := by
     conv_lhs => rw [eq_sum_of_isType ht]
-    simp only [map_sum, map_smul, map_mul, (swap_dz _).1, (swap_dz _).2]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, map_mul, (swap_dz _).1, (swap_dz _).2]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun c _ => Finset.sum_congr rfl fun d _ => ?_
     rw [CxForm.dz, CxForm.dzb, eq_neg_of_add_eq_zero_left (ExteriorAlgebra.ι_add_mul_swap _ _), neg_smul, smul_neg]
@@ -155,7 +158,8 @@ theorem hermMat_pull (L : V n →L[ℂ] V m) {β : CxForm.Alt m} (h : IsType 1 1
   have hr : (bas n).repr (pull L β) {c.castAdd n, d.natAdd n} = ∑ a, ∑ b, (bas m).repr β {a.castAdd m, b.natAdd m} *
       (L (GoodMetric.coordVec c) a * (starRingEnd ℂ) (L (GoodMetric.coordVec d) b)) := by
     conv_lhs => rw [eq_sum_of_isType h]
-    simp only [map_sum, map_smul, Finsupp.finsetSum_apply, Finsupp.smul_apply, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, Finsupp.finsetSum_apply, Finsupp.smul_apply, smul_eq_mul]
     refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
     rw [pull_pair, repr_pair_sum]
   rw [hermMat, of_apply, hr]
@@ -267,7 +271,8 @@ theorem fibForm_posDef : ∀ (k : Type) [CommRing k] (S : Scheme.{0}) (p : S ⟶
   have hvm : star ξ ᵥ* M = (u.1 : Fin D → ℂ) := by
     rw [← hbase u, hu, hwsum]
     ext a
-    simp [vecMul, dotProduct, hM, map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [vecMul, dotProduct, hM, map_sum, map_smul]
   have hκpart : HermFrame.form (M * hermMat (κ y) * Mᴴ) (star ξ) (star ξ) =
       HermFrame.form (hermMat (κ y)) (u.1 : Fin D → ℂ) (u.1 : Fin D → ℂ) := by
     rw [form_mul_mul_conjTranspose, hvm]

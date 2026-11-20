@@ -28,7 +28,8 @@ theorem hatL_mulVec_mem (M : Matrix (Fin n) (Fin n) E) (Λ Λ' : Submodule (𝓞
     apply Submodule.subset_span
     refine ⟨M *ᵥ z, h z hz, ?_⟩
     funext i
-    simp [Matrix.mulVec, dotProduct, Formalism.UG.inclE, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Matrix.mulVec, dotProduct, Formalism.UG.inclE, map_sum]
   | zero => simp
   | add y z _ _ hy hz =>
     rw [Matrix.mulVec_add]; exact Submodule.add_mem _ hy hz

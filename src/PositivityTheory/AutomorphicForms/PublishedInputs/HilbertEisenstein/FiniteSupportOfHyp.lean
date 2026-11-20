@@ -119,12 +119,14 @@ theorem exists_den_row (c : HeightOneSpectrum (𝓞 F) → ℕ) (g : GA F 2) {C 
       (pFin F (((g⁻¹ : GA F 2) : Matrix (Fin 2) (Fin 2) (Ad F)) j i) *
         ((IdeleGroup.toFinite F a⁻¹ : (Af F)ˣ) : Af F)) := by
     have h2 := congrArg (fun v => pFin F (v i)) hrow
-    simp only [Matrix.vecMul, dotProduct, coe_Mcol_apply', map_sum, map_mul] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.vecMul, dotProduct, coe_Mcol_apply', map_sum, map_mul] at h2
     rw [← pFin_algebraMap]
     exact h2
   apply exists_int_of_val
   intro w
-  rw [map_mul, hx, Finset.mul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_mul, hx, Finset.mul_sum, map_sum]
   apply val_sum_two_le
   intro j
   rw [mul_left_comm, map_mul, Valuation.map_mul]
@@ -210,7 +212,8 @@ theorem exists_den_col (c : HeightOneSpectrum (𝓞 F) → ℕ) (hc : {w | c w �
   have hx : algebraMap F (Af F) (ξ i) = ∑ j, (((IdeleGroup.toFinite F a : (Af F)ˣ) : Af F) *
       pFin F (((g : GA F 2) : Matrix (Fin 2) (Fin 2) (Ad F)) i j)) * pFin F (col j) := by
     have h2 := congrArg (fun v => pFin F (v i)) hcol
-    simp only [Matrix.mulVec, dotProduct, coe_Mrow_apply', map_sum, map_mul] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, dotProduct, coe_Mrow_apply', map_sum, map_mul] at h2
     rw [← pFin_algebraMap]
     exact h2
   apply exists_int_of_val
@@ -223,7 +226,8 @@ theorem exists_den_col (c : HeightOneSpectrum (𝓞 F) → ℕ) (hc : {w | c w �
     refine Finset.sum_congr rfl fun j _ => ?_
     ring
   have e2 : (((d * e : 𝓞 F)) : F) = (d : F) * (e : F) := by push_cast; ring
-  rw [e2, e1, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e2, e1, map_sum]
   apply val_sum_two_le
   intro j
   rw [map_mul, Valuation.map_mul]

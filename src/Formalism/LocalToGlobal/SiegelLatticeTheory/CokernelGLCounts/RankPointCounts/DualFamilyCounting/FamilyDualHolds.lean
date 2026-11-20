@@ -16,13 +16,15 @@ variable {K V : Type} [Field K] [StarRing K] [AddCommGroup V] [Module K V]
 theorem form_sum_orth {ι' : Type} [Fintype ι'] [DecidableEq ι'] (h : V →ₗ⋆[K] V →ₗ[K] K) (v : ι' → V)
     (hvo : ∀ i k, i ≠ k → h (v i) (v k) = 0) (i : ι') (x : ι' → K) :
     h (v i) (∑ k, x k • v k) = x i * h (v i) (v i) := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [map_smul, smul_eq_mul]
   exact Finset.sum_eq_single i (fun k _ hk => by rw [hvo i k (Ne.symm hk), mul_zero]) (by simp)
 
 theorem form_sum_zero {ι' : Type} [Fintype ι'] (h : V →ₗ⋆[K] V →ₗ[K] K) (u : V) (v : ι' → V)
     (h0 : ∀ k, h u (v k) = 0) (x : ι' → K) : h u (∑ k, x k • v k) = 0 := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [map_smul, smul_eq_mul, h0, mul_zero, Finset.sum_const_zero]
 
 theorem family_dual_holds : FamDual := by

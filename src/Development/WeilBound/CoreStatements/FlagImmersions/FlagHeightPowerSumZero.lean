@@ -52,8 +52,10 @@ theorem flag_height_power_sum_zero : ∀ II : IntersectionSystem, IsFullIntersec
       refine Fin.lastCases ?_ (fun k => ?_) k
       · simp [u, GroundTheory.Heights₂.Heights.LowerBoundFree.xLine]
       · simp [u, GroundTheory.Heights₂.Heights.LowerBoundFree.xLine]
-    rw [Finset.sum_congr rfl (fun i _ => h1 i), ← map_sum, HH.sum_xDeg (N := N) τ, map_zero]
-  rw [MvPolynomial.as_sum Q, Finset.mul_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_congr rfl (fun i _ => h1 i), ← map_sum, HH.sum_xDeg (N := N) τ, map_zero]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [MvPolynomial.as_sum Q, Finset.mul_sum, map_sum]
   apply Finset.sum_eq_zero
   intro m hm
   have hdeg : Finsupp.degree m = dimFl Ψ N := by
@@ -71,7 +73,8 @@ theorem flag_height_power_sum_zero : ∀ II : IntersectionSystem, IsFullIntersec
     rw [pow_one, X, monomial_mul, one_mul, Fin.sum_univ_castSucc]
     simp only [Fin.snoc_castSucc, Fin.snoc_last]
     rw [← hw, add_comm (Finsupp.single (τ, i) 1)]
-  rw [hprod, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hprod, map_sum,
     Finset.sum_congr rfl (fun i _ => HH.hhFl_word II hII.1 hP
       (Fin.snoc (α := fun _ => Ψ × Fin N) w (τ, i)) (AddMonoidAlgebra.coeff Q m)),
     ← Finset.mul_sum, ← Finset.mul_sum, key w, mul_zero, mul_zero]

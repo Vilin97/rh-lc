@@ -248,7 +248,8 @@ theorem basPull_repr (φ : S →+* S') {x : Sp S ⟶ X} {x' : Sp S' ⟶ X} (e : 
     [Finite κ] (b : Module.Basis κ S (TanM x t.G)) (v : TanM x t.G) (i : κ) :
     (basPull φ e b).repr (tanPull φ e v) i = φ (b.repr v i) := by
   have := Fintype.ofFinite κ
-  conv_lhs => rw [← b.sum_repr v, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [← b.sum_repr v, map_sum]
   simp only [map_smulₛₗ, ← basPull_apply]
   exact congrFun ((basPull φ e b).repr_sum_self _) i
 

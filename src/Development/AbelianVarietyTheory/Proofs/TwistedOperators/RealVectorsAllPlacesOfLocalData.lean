@@ -64,7 +64,8 @@ theorem cmp_mul (θ : InfFam D) {V : HSp D} (τ : D.what₂.Tau) (g h : GA D V) 
   unfold GlobalTheory.SepPer.cmp infMat
   rw [Formalism.L2.GlobalTheoryTheory.GenusMassVolumes.HA_mat_mul, Units.val_mul]
   ext i j
-  simp only [Matrix.map_apply, Matrix.mul_apply, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.map_apply, Matrix.mul_apply, map_sum, map_mul]
 
 private theorem cmp_eq_map (θ : InfFam D) {V : HSp D} (τ : D.what₂.Tau) (x : GA D V) :
     GlobalTheory.SepPer.cmp θ τ x = (matHom V x).1.map

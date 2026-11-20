@@ -175,7 +175,8 @@ theorem atLin_comb {σ ν κ : Type} [Finite σ] [Fintype ν] [Fintype κ] {p : 
     (G : κ → MvPowerSeries σ ℂ_[p]) :
     TaylorLogMetric.atLin M (fun j => MvPowerSeries.X j) (∑ k, algebraMap ℂ_[p] (MvPowerSeries σ ℂ_[p]) (r k) * G k) =
       ∑ k, MvPowerSeries.C (r k) * TaylorLogMetric.atLin M (fun j => MvPowerSeries.X j) (G k) := by
-  rw [atLin_X, ← Formalism.L2.Th1.G.linSubHom_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [atLin_X, ← Formalism.L2.Th1.G.linSubHom_apply, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [map_mul, AlgHom.commutes, Formalism.L2.Th1.G.linSubHom_apply]
   rfl

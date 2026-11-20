@@ -40,7 +40,8 @@ theorem exists_closed_mem_basicOpen_of_stableBasis : ∀ (R : Type) [CommRing R]
   push Not at H
   let s : SecAb D k α := ∑ i, c i • b i
   have hP : P s = ∑ i, f (c i) • P (b i) := by
-    simp only [s, map_sum, map_smulₛₗ]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [s, map_sum, map_smulₛₗ]
   have hzero : P s = 0 := by
     refine GlobalTheory.FieldBaseChange.SecOver.ext _ _ fun j => ?_
     show ((T ⊗ D.P.A).left.presheaf.map _).hom ((h.app _).hom (s.f j)) = 0
@@ -54,7 +55,8 @@ theorem exists_closed_mem_basicOpen_of_stableBasis : ∀ (R : Type) [CommRing R]
     (y₁ := fun i => (Scheme.ΓSpecIso (CommRingCat.of (ResidueField R))).inv.hom (f (c i))) (y₂ := fun _ => 0)
     (fun j => by
       have := congrArg (GlobalTheory.FieldBaseChange.chartLin π' _ j) (hzero.symm.trans hP)
-      rw [map_zero, map_sum] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_zero, map_sum] at this
       refine this.trans (Finset.sum_congr rfl fun i _ => ?_)
       rw [map_smul]
       rfl)

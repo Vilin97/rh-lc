@@ -143,7 +143,8 @@ theorem eval_termPolynomial (tm : Polynomial ℂ × List (B.Mat k r)) (τ : B.Ma
     (x : Fin 2 → ℂ) :
     MvPolynomial.eval x (termP tm τ t) = tm.1.eval (x 0) * x 1 ^ tm.2.length * (tm.2.map τ).prod := by
   unfold termP
-  rw [map_sum, Polynomial.eval_eq_sum_range' (show tm.1.natDegree < t + 1 by omega), Finset.sum_mul, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Polynomial.eval_eq_sum_range' (show tm.1.natDegree < t + 1 by omega), Finset.sum_mul, Finset.sum_mul]
   refine Finset.sum_congr rfl fun d _ => ?_
   rw [MvPolynomial.eval_monomial, Finsupp.prod_add_index' (by simp) (by intros; rw [pow_add]),
     Finsupp.prod_single_index (by simp), Finsupp.prod_single_index (by simp)]
@@ -166,7 +167,8 @@ theorem core_symb (hD : FExpDeg) (hS : FExpSymb) (hDet : DetShiftCoeff) (hlen : 
   have hPD : P = D := by
     apply MvPolynomial.funext
     intro x
-    rw [hP, hDdef, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hP, hDdef, map_sum, map_sum]
     refine Finset.sum_congr rfl fun σ _ => ?_
     rw [map_mul, map_mul, eval_listSum]
     congr 1

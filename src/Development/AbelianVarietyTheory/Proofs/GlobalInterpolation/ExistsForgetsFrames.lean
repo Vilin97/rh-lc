@@ -68,7 +68,8 @@ theorem up_match (hf : S.Free) (hA : A.Ok T) (hT : A.Tied T) (hA' : A'.Ok T) (hT
     have := hA.f_act b (S.mv b d) (S.rep (S.cl b d)) P x
     rwa [hmv, ← hu] at this
   show S.tr emb σ b (S.mv b d) (∑ x ∈ s (S.cl b d), valAt S emb σ φ b (A.upPt P (S.cl b d) x)) = _
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_equiv e.toEquiv (fun x => ?_) fun x hx => ?_
   · rw [hs, hs']
     obtain ⟨x, rfl⟩ := Submodule.Quotient.mk_surjective _ x

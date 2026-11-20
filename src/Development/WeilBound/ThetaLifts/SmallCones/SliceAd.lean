@@ -197,7 +197,8 @@ theorem trace_nondeg (b : mixedSpace F) (h : ∀ y, Algebra.trace ℝ (mixedSpac
   refine (latticeBasis F).ext_elem fun j => ?_
   have := h (mixedEmbedding F ((integralBasis F).traceDual j))
   rw [← (latticeBasis F).sum_repr b] at this
-  simp only [Finset.sum_mul, smul_mul_assoc, map_sum, map_smul, latticeBasis_apply, ← map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finset.sum_mul, smul_mul_assoc, map_sum, map_smul, latticeBasis_apply, ← map_mul,
     GlobalTheory.ThK.Dbl.Dense.trace_emb, Module.Basis.trace_mul_traceDual] at this
   simpa [apply_ite] using this
 

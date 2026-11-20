@@ -42,7 +42,8 @@ theorem hE_crdOf {D : D7} (X : HidaSetting D) (x y : (VS D).V) :
     rw [X.ιE_conj, RingEquiv.apply_symm_apply]
     exact (host_star_conj _ D.host a).symm
   unfold Formalism.UG.hform
-  simp only [map_sum, map_mul, RingEquiv.apply_symm_apply, hs, X.J_eq, LinearMap.map_smulₛₗ,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, RingEquiv.apply_symm_apply, hs, X.J_eq, LinearMap.map_smulₛₗ,
     LinearMap.sum_apply, LinearMap.smul_apply, map_smul, smul_eq_mul, starRingEnd_apply]
   simp only [Finset.mul_sum, Finset.sum_mul]
   rw [Finset.sum_comm]

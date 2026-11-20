@@ -94,7 +94,8 @@ theorem intAt_linear_form_on_std {n : ℕ} (P : HeightOneSpectrum (𝓞 E)) (η 
   have hv' : v = ∑ i, v i • (Pi.single i 1 : Sp E n) := by
     ext j
     simp [Finset.sum_apply, Pi.single_apply]
-  rw [hv', map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hv', map_sum]
   refine Finset.sum_induction _ (IntAt P) (fun a b ha hb => IntAt.add ha hb) (by simpa using IntAt.coe P 0) ?_
   intro i _
   rw [map_smul, smul_eq_mul]

@@ -21,7 +21,8 @@ theorem WeightedIndexBound.proof (E : Type*) [Field E] [NumberField E] [IsTotall
   have hcoe : ∀ z : Fin (finrank ℚ E) → ℤ, ((∑ j, z j • e j : A) : E) = ∑ j, z j • (e j : E) := by
     intro z
     change A.subtype _ = _
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [map_zsmul]
     rfl
   have haT : ∀ i, (a i : E) = ∑ j, T i j • (e j : E) := by
@@ -45,7 +46,8 @@ theorem WeightedIndexBound.proof (E : Type*) [Field E] [NumberField E] [IsTotall
   have hmink : (lam / Real.sqrt (finrank ℚ E)) ^ finrank ℚ E ≤ |o.volumeForm b| := by
     refine h₅ o b lam hlam0 fun z hz => ?_
     have hsum : ∑ i, (z i : ℝ) • b i = Φ ((∑ i, z i • e i : A) : E) := by
-      rw [hcoe, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hcoe, map_sum]
       simp only [map_zsmul, b, Int.cast_smul_eq_zsmul]
     rw [hsum]
     set x : A := ∑ i, z i • e i
@@ -60,7 +62,8 @@ theorem WeightedIndexBound.proof (E : Type*) [Field E] [NumberField E] [IsTotall
 
   have hab : (fun i => Φ (a i : E)) = fun i => ∑ j, (T i j : ℝ) • b j := by
     funext i
-    rw [haT i, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [haT i, map_sum]
     simp only [map_zsmul, b, Int.cast_smul_eq_zsmul]
   have hvol : o.volumeForm (fun i => Φ (a i : E)) = (T.det : ℝ) * o.volumeForm b := by
     rw [hab]; exact h₆ o b T

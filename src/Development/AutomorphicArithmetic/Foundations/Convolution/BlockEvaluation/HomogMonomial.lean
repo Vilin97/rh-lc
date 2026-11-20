@@ -214,7 +214,8 @@ theorem UpperTheory.ConvolutionTheory.Ci.kfBc :
         rfl
       exact DFunLike.congr_fun e r
   · unfold trunc
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     exact cm_sb h C C (rename res).toRingHom (rename (Option.map res)).toRingHom (homog d) (homog d)
       (by simp [homog]) (by simp [homog]) (homog_add d) (homog_add d) (homog_mul d) (homog_rename res d) (G k)

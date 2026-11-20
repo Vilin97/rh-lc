@@ -46,7 +46,8 @@ theorem comb_coord {m : ℕ} {U : Fin m → Fin g → R} {u : Fin m → (epsR R 
   obtain rfl : u = fun k => ((Lie.basis a hB).equivFun.symm (U k)).hom :=
     funext fun k => (comb_iff_symm a hB _ _).1 (hU k)
   obtain rfl := (comb_iff_symm a hB _ _).1 hz
-  rw [Lie.isLieComb_iff, ← (Lie.basis a hB).equivFun.symm.injective.eq_iff, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Lie.isLieComb_iff, ← (Lie.basis a hB).equivFun.symm.injective.eq_iff, map_sum]
   simp only [map_smul]
   exact ⟨fun h => Lie.ext h, fun h => congrArg Lie.hom h⟩
 
@@ -57,7 +58,8 @@ theorem eig_coord {x : O} {M : Matrix (Fin g) (Fin g) R} (hM : ∀ i, IsLieComb 
   have h1 : ∀ i, x • Lie.basis a hB i = (Lie.basis a hB).equivFun.symm (M i) := fun i => Lie.ext (by
     rw [Lie.hom_act_smul, Lie.hom_basis]; exact (comb_iff_symm a hB _ _).1 (hM i))
   have h2 : x • (Lie.basis a hB).equivFun.symm z = (Lie.basis a hB).equivFun.symm (z ᵥ* M) := by
-    rw [Matrix.vecMul_eq_sum, map_sum, Module.Basis.equivFun_symm_apply, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Matrix.vecMul_eq_sum, map_sum, Module.Basis.equivFun_symm_apply, Finset.smul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [smul_comm x, h1, map_smul]
   rw [← Lie.hom_act_smul, ← Lie.hom_smul_left, h2, ← map_smul,

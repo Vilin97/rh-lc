@@ -52,7 +52,8 @@ theorem sum_quad {r : ℕ} (c w : Fin r → ℂ) (t : ℝ) :
     rw [Complex.mul_conj, Complex.normSq_eq_norm_sq]
     push_cast
     ring
-  rw [hS, map_sum, Finset.sum_mul_sum, Finset.sum_div]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hS, map_sum, Finset.sum_mul_sum, Finset.sum_div]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [Finset.sum_div]
   refine Finset.sum_congr rfl fun l _ => ?_
@@ -94,7 +95,8 @@ theorem quad_gram {X : Type*} [MeasurableSpace X] (μ : Measure X) (A : HermLine
 theorem eval_comb {r : ℕ} (f : Fin r → MRing ι) (a : Fin r → ℂ) (z : (Σ k, ι k) → ℂ) :
     eval z (∑ k, a k • map (Int.castRingHom ℂ) (f k) : MRingOver ℂ ι) =
       ∑ k, a k * eval z (map (Int.castRingHom ℂ) (f k)) := by
-  simp only [map_sum, smul_eval]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, smul_eval]
 
 theorem isMultiHomog_comb {r : ℕ} (f : Fin r → MRing ι) (a : Fin r → ℂ) {e : K → ℕ}
     (hf : ∀ k, IsMultiHomog (f k) e) :

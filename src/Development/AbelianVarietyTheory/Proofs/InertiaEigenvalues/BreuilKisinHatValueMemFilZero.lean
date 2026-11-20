@@ -150,8 +150,10 @@ theorem GlobalTheory.BKGal.value_hat_mem_filZero : ∀ (l : ℕ) [Fact l.Prime] 
     rw [map_pow, iotaO_toB]
   have hmain : dRO l O EAD ^ (H + η) • TWincl (iotaO O C) T (R.jB (toBcris t ϖ D.toPhiMod σ) - b₂) =
       dRO l O EAD ^ (H + η) • TWincl (dRO l O) T (∑ j, (z' j * v) • TWincl (toOD l O) T (z j)) := by
-    conv_lhs => rw [hE', ← TWincl_smul', key, map_sum]
-    conv_rhs => rw [← map_pow, ← TWincl_smul', Finset.smul_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [hE', ← TWincl_smul', key, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_rhs => rw [← map_pow, ← TWincl_smul', Finset.smul_sum, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [TWincl_smul', hz' j, hPsiL j, ← TWincl_smul', smul_smul, smul_smul]
     congr 2

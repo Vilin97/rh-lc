@@ -24,7 +24,8 @@ theorem dual_eq_sum_of_ker {R R₁ : Type} [CommRing R] [CommRing R₁] (ρ : R 
   have e1 : s c = ∑ k, s c k • (Pi.single k (1 : R) : Fin n → R) := by
     ext i; simp [Finset.sum_apply, Pi.single_apply]
   have e2 : x c = x (f (s c)) := by rw [← LinearMap.comp_apply f s, hs, LinearMap.id_apply]
-  rw [e2, e1, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e2, e1, map_sum, map_sum]
   simp [mul_comm]
 
 theorem isAdmissible_reduce : AbelianDeRham → ∀ (R R₁ R₀ : Type) [CommRing R] [CommRing R₁] [CommRing R₀] (I J : Ideal R) (I₁ : Ideal R₁) (κ : DividedPowers I) (π : R →+* R₀)
@@ -94,7 +95,8 @@ theorem isAdmissible_reduce : AbelianDeRham → ∀ (R R₁ R₀ : Type) [CommRi
     refine LinearMap.ext fun c₁ ↦ ?_
     obtain ⟨c, rfl⟩ := hPs c₁
     rw [ef c, hfp, hsum]
-    simp [map_sum, Submodule.coe_sum, hj]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, Submodule.coe_sum, hj]
   · refine codisjoint_iff_le_sup.2 fun y _ ↦ ?_
     obtain ⟨x, ex⟩ := hlift y
     obtain ⟨f, hf, n, hn, rfl⟩ := Submodule.mem_sup.1 (hN.sup_eq_top ▸ Submodule.mem_top : x ∈ F ⊔ N)

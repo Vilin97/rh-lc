@@ -197,7 +197,8 @@ theorem HodgeOver.exists_basesOver (a : HodgeOver A' A h i j) (bW : WBases A) (b
     have e : v' = ∑ m, i (bO τ m v) • C' m := Subtype.ext (by
       rw [hv]
       conv_lhs => rw [← C.sum_repr v]
-      simp only [AddSubmonoidClass.coe_finsetSum, SetLike.val_smul, map_sum, a.2.2.2.1.1, hC', hC])
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [AddSubmonoidClass.coe_finsetSum, SetLike.val_smul, map_sum, a.2.2.2.1.1, hC', hC])
     rw [e, Module.Basis.dualBasis_apply, C'.repr_sum_self]
   choose bO' hO using key
   exact ⟨bW', bO', hW, hO⟩

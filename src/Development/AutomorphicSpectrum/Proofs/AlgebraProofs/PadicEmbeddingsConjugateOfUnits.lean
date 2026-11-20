@@ -62,7 +62,8 @@ theorem exists_rat_poly_approx (x y : PadicAlgCl p) (e : ℚ_[p][X]) {ε : ℝ} 
       δ * ∑ i ∈ Finset.range N, ‖z‖ ^ i := by
     intro z
     conv_lhs => rw [e.as_sum_range' N hN]
-    rw [map_sum, map_sum, ← Finset.sum_sub_distrib, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum, ← Finset.sum_sub_distrib, Finset.mul_sum]
     refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun i _ => ?_)
     rw [norm_aeval_monomial_sub, norm_sub_rev]
     exact mul_le_mul_of_nonneg_right (hr i).le (by positivity)

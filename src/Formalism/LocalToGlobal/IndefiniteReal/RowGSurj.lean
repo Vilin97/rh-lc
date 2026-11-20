@@ -142,7 +142,8 @@ theorem avg_g (hρ : I.PRho) (t : T) (P : Subgroup G) (ψ : P →* Kˣ)
     Matrix.sum_mulVec]
   simp only [Matrix.smul_mulVec]
   erw [Sand.cpt_sum_smul]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   erw [map_sum, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   erw [map_smul, (hρ s hH).2.2 (k : G) (I.X.rowMat I.cg false t *ᵥ ((lv (faceOf3 I.A3 ⊥ 1 I.P1 I.ψ1 I.Dc I.Sp I.Zsc I.X.zs) false).Pq t *ᵥ f)),

@@ -60,7 +60,8 @@ theorem uniq_fix : ∀ (l : ℕ) [Fact l.Prime], l ≠ 2 → ∀ (Ω : Type) [Fi
   have hfix : ∀ i, σ.1 (o i) = o i := fun i => (how i).2.1 (σ.1.restrictScalars ℚ_[l]) hσ hine
   have e : σ • (∑ i, o i * j (w i)) - ∑ i, o i * j (w i) = ∑ i, o i * (j (res j σ.1 (w i)) - j (w i)) := by
     show σ.1 _ - _ = _
-    rw [map_sum, ← Finset.sum_sub_distrib]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, ← Finset.sum_sub_distrib]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_mul, hfix, res_spec]; ring
   rw [e]
@@ -133,7 +134,8 @@ theorem htv_coeff : ∀ (l : ℕ) [Fact l.Prime], l ≠ 2 → ∃ c : ℕ, ∀ (
   rw [hconj] at hZk
   have hPfix : ∀ i, (τ * s * τ⁻¹) ((P i).eval ζ) = (P i).eval ζ := by
     intro i
-    rw [Polynomial.eval_eq_sum_range, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Polynomial.eval_eq_sum_range, map_sum]
     refine Finset.sum_congr rfl fun n _ => ?_
     rw [map_mul, map_pow, hfix hs1']
     by_cases h : (P i).coeff n = 0

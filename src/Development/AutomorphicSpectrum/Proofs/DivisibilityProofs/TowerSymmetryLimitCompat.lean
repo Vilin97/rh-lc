@@ -30,7 +30,8 @@ theorem exists_word {α : Type} (μ : α →₀ ℕ) (d : ℕ) (h : μ.degree = 
   refine ⟨fun k => w (Fin.cast hc.symm k), ?_⟩
   classical
   have H : Finsupp.toMultiset (∑ k, Finsupp.single (w (Fin.cast hc.symm k)) 1) = Finsupp.toMultiset μ := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [Finsupp.toMultiset_single, one_smul]
     exact (Fintype.sum_equiv (finCongr hc.symm) _ _ (fun k => rfl)).trans hw
   simpa [Finsupp.toMultiset_toFinsupp] using congrArg Multiset.toFinsupp H
@@ -122,7 +123,8 @@ theorem propA_of_limits : ∀ (Ψ : Type) [Fintype Ψ] [DecidableEq Ψ] (N : ℕ
       T.PPc II B c (f F) = ∑ μ ∈ F.support, T.PPc II B c (f (monomial μ (F.coeff μ))) := by
     intro c f
     conv_lhs => rw [F.as_sum]
-    simp only [RootTower.PPc, toA, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [RootTower.PPc, toA, map_sum]
   calc T.PPt II B (rename (fun x : Ψ × Fin N => (σ x.1, x.2)) F)
       = ∑ c, ∑ μ ∈ F.support, T.PPc II B (π c) (monomial μ (F.coeff μ)) := by
         unfold RootTower.PPt

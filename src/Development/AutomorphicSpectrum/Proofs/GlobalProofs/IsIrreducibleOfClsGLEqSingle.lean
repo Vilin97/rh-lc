@@ -130,7 +130,8 @@ private theorem exists_hasSupport_of_symm_sum_ne_zero (hS : IsSegmentClass k Z) 
     (hX : ∀ Δ, Ψ (Finsupp.single ⟨Δ.len * Δ.d, Z Δ⟩ 1) = MvPolynomial.X Δ)
     (F : Finset (Segment k →₀ ℕ)) (c : (Segment k →₀ ℕ) → ℤ) (u : IrrGL k)
     (h : (Ψ.symm (∑ n ∈ F, monomial n (c n))) u ≠ 0) : ∃ n ∈ F, HasSupport u.rep (msum n) := by
-  rw [map_sum, Finsupp.finset_sum_apply] at h
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finsupp.finset_sum_apply] at h
   obtain ⟨n, hn, hne⟩ := Finset.exists_ne_zero_of_sum_ne_zero h
   refine ⟨n, hn, hasSupport_of_symm_monomial_ne_zero hS hΨ hX u n ?_⟩
   intro h0

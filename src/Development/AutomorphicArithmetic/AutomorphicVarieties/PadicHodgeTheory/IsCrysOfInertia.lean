@@ -62,7 +62,8 @@ private theorem exists_int_basis {l : ℕ} [Fact l.Prime] {G : Type} [Group G] [
   have h1 : ρ g (b.extendOfIsLattice ℚ_[l] j) =
       ∑ k, ((b.repr ⟨_, hst g _ (b j).2⟩ k : ℤ_[l]) : ℚ_[l]) • b.extendOfIsLattice ℚ_[l] k := by
     have := congrArg Λ.subtype (b.sum_repr ⟨_, hst g _ (b j).2⟩)
-    rw [map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at this
     simp only [Basis.extendOfIsLattice_apply]
     exact this.symm
   rw [h1, Basis.repr_sum_self]

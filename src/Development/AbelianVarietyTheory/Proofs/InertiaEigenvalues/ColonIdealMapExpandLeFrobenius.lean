@@ -33,7 +33,8 @@ theorem colon_map_expand_le : ∀ (O K : Type) [CommRing O] [NormedField K] [IsU
     exact mul_mem (pow_mem hX _) (frob_mem_A l (hm j i))
   · funext i
     have hwi : w i = ∑ j : Fin l, (X : K⟦X⟧) ^ j.val * frob K l (PowerSeries.map (algebraMap O K) (g i j)) := by
-      rw [← hf i, hg i, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hf i, hg i, map_sum]
       simp [map_mul, map_pow, map_X, map_expand, frob]
     have key : ∀ j : Fin l, frob K l (PowerSeries.map (algebraMap O K) α) *
         frob K l (PowerSeries.map (algebraMap O K) (g i j)) = (G.map (frob K l) *ᵥ frobV l (m j)) i := by

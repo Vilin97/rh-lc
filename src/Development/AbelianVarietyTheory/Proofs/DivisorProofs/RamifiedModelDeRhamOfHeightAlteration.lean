@@ -65,7 +65,8 @@ theorem ramModelDR : GlobalTheory.CovTop.Hypotheses2 → GlobalTheory.CovHt.Hypo
   rw [← halg, ← hA, ← hs] at h0
   have hc₀ : (((m : ℕ) : ℝ) ^ ((O.var c).dim + 1) * (Module.finrank ℚ D.what₂.LL : ℝ)) ≠ 0 :=
     mul_ne_zero (pow_ne_zero _ (Nat.cast_ne_zero.2 m.ne_zero)) (Nat.cast_ne_zero.2 Module.finrank_pos.ne')
-  rw [← hs, ← div_eq_zero_iff.trans (or_iff_left hc₀), map_sum, Finset.sum_div, ← zero_div V.ν, ← h0, map_sum, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hs, ← div_eq_zero_iff.trans (or_iff_left hc₀), map_sum, Finset.sum_div, ← zero_div V.ν, ← h0, map_sum, map_sum,
     Finset.sum_div]
   refine Finset.sum_congr rfl fun j _ => ?_
   have := hcmp (b j)

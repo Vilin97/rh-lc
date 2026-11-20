@@ -184,7 +184,8 @@ theorem integral_elements (K Ω U : Type) [Field K] [Field Ω] [Field U] [Algebr
         exact hk₀ q (Finset.mem_univ _)
       · have hr := hrel i'
         rw [Fintype.sum_eq_add_sum_subtype_ne _ k₀] at hr
-        simp only [map_sum, map_mul, aeval_C, aeval_X, RingHom.algebraMap_toAlgebra]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, map_mul, aeval_C, aeval_X, RingHom.algebraMap_toAlgebra]
         have key : ∑ q : {k : Fin N // k ≠ k₀}, f (-(a q / a k₀)) * t (Sum.inr (i', q)) =
             -(∑ q : {k : Fin N // k ≠ k₀}, s (i'.succ, q.1) * f (a q)) / f (a k₀) := by
           rw [neg_div, Finset.sum_div, ← Finset.sum_neg_distrib]

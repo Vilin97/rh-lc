@@ -22,7 +22,8 @@ theorem pow_eq_one_eq_of_residue {S : Type*} [CommRing S] [IsLocalRing S] {n : �
     rw [Commute.geom_sum₂_mul (Commute.all _ _), h₁, h₂, sub_self]
   have hr : residue S (∑ i ∈ Finset.range n, y₁ ^ i * y₂ ^ (n - 1 - i)) =
       (n : ResidueField S) * residue S y₂ ^ (n - 1) := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [map_mul, map_pow, h]
     rw [Finset.sum_congr rfl (g := fun _ => residue S y₂ ^ (n - 1)), Finset.sum_const, Finset.card_range,
       nsmul_eq_mul]

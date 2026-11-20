@@ -30,7 +30,8 @@ theorem toZ_thetaProd {K : Type} [Field K] {κ n : Type} [Fintype κ] [Fintype n
     Formalism.L2.Th1.G.toZ linv (Formalism.L2.Th1.E.thetaProd r H) =
       Formalism.L2.Th1.E.thetaProd r (fun k i => PowerSeries.subst linv (H k i)) := by
   unfold Formalism.L2.Th1.E.thetaProd Formalism.InvariantFactorPaths.G7.at1
-  rw [← Formalism.L2.Th1.G.toZHom_apply h0, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Formalism.L2.Th1.G.toZHom_apply h0, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [map_mul, map_prod]
   congr 1

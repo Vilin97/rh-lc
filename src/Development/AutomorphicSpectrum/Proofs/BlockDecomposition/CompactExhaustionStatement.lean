@@ -86,7 +86,8 @@ theorem actLin_apply (hP : IsPsiFor ε lam T Ψ) {m : ℕ} (a : AS T m) : actLin
 theorem pad (hP : IsPsiFor ε lam T Ψ) {m m' : ℕ} (h : m ≤ m') (a : AS T m) :
     ∃ a' : AS T m', actL T Ψ a' = actL T Ψ a := by
   refine ⟨∑ x : Wd n m, sgl m' (ofW x) (a x), ?_⟩
-  rw [← actLin_apply hP, map_sum, actL_eq hP a]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← actLin_apply hP, map_sum, actL_eq hP a]
   refine Finset.sum_congr rfl fun x _ => ?_
   rw [actLin_apply, actL_sgl hP]
   have : (ofW x).length = x.1 := by simp [ofW]
@@ -124,7 +125,8 @@ theorem genSub_le_exS (hP : IsPsiFor ε lam T Ψ) :
     rw [this]
     exact cD_mem_exS hP [] v
   · obtain ⟨m, f, hf⟩ := hx
-    rw [eq_sum hP hf, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [eq_sum hP hf, map_sum]
     refine Submodule.sum_mem _ fun y _ => ?_
     have := cD_cons hP (a, b) (ofW y) (f y)
     simp only at this

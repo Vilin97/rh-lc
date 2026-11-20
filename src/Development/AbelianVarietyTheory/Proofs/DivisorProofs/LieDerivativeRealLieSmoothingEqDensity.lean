@@ -22,7 +22,8 @@ theorem integral_mul_fderiv_lmul_eq_dens (ν : Measure (Lie E a)) [ν.IsAddHaarM
     (hG.continuousOn_fderiv_of_isOpen isOpen_invSet (by simp)).clm_apply continuousOn_const
   have e : ∀ x, α x * fderiv ℝ G x (L x) = ∑ i, c i x * fderiv ℝ G x (b i) := fun x => by
     conv_lhs => rw [← b.sum_repr (L x)]
-    simp only [map_sum, map_smul, Finset.mul_sum, c, Complex.real_smul, mul_assoc]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, Finset.mul_sum, c, Complex.real_smul, mul_assoc]
   have hdc : ∀ i x, fderiv ℝ (c i) x (b i) =
       α x * (b.repr (L (b i)) i : ℝ) + (b.repr (L x) i : ℝ) * fderiv ℝ α x (b i) := by
     intro i x

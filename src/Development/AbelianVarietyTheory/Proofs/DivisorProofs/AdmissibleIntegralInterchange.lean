@@ -106,9 +106,11 @@ theorem adm_integral_comm : ∀ (F : Type) [Field F] [NumberField F] (κ : Type)
     rw [integral_mul_const]
     congr 1
     exact ((hFj j (evalAt a)).2.2).symm
-  rw [hpt, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hpt, map_sum]
   have e2 : ∀ s t, L (∑ j, pureA F (f j s t) (g j)) = ∑ j, T j (f j s t) := fun s t => by
-    rw [map_sum]; exact Finset.sum_congr rfl fun j _ => hT j _
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]; exact Finset.sum_congr rfl fun j _ => hT j _
   simp_rw [e2]
   have e3 : ∀ s, ∫ t, ∑ j, T j (f j s t) ∂μ₂ = ∑ j, ∫ t, T j (f j s t) ∂μ₂ := fun s =>
     integral_finset_sum _ fun j _ => (hFj j (T j)).1 s

@@ -88,7 +88,8 @@ theorem tens_dual {K N V : Type*} {M : Type w} [Field K] [AddCommGroup N] [Modul
       rw [LinearEquiv.symm_apply_eq]; rfl
     simp [h2]
   have := congrArg (fun z => TensorProduct.rid K N (LinearMap.lTensor N ψ z)) hz
-  simpa [map_sum, h1] using this
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa [map_sum, h1] using this
 
 theorem tens_span {K N V : Type*} {M : Type w} [Field K] [AddCommGroup N] [Module K N] [AddCommGroup V] [Module K V]
     [AddCommGroup M] [Module K M] (e : V →ₗ[K] M) (he : Function.Surjective e) {a : ℕ} (bs : Module.Basis (Fin a) K V)
@@ -99,7 +100,8 @@ theorem tens_span {K N V : Type*} {M : Type w} [Field K] [AddCommGroup N] [Modul
     obtain ⟨v, rfl⟩ := he y
     refine ⟨fun t => bs.repr v t • x, ?_⟩
     conv_lhs => rw [← bs.sum_repr v]
-    rw [map_sum, TensorProduct.tmul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, TensorProduct.tmul_sum]
     refine Finset.sum_congr rfl fun t _ => ?_
     rw [map_smul, TensorProduct.tmul_smul, TensorProduct.smul_tmul']
   | add x y hx hy =>
@@ -119,8 +121,10 @@ theorem core_expand {K B : Type} [Field K] [CommRing B] [Algebra K B] {I : Ideal
     funext i
     simp only [Finset.sum_apply, Pi.single_apply]
     simp
-  rw [h1, map_sum]
-  simp only [map_sum, hG, hf, Finset.sum_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h1, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, hG, hf, Finset.sum_smul]
 
 theorem dividedPowerFiltration_anti' {B : Type} [CommRing B] {I : Ideal B} (γ : DividedPowers I) {a b : ℕ} (h : a ≤ b) :
     pdP γ b ≤ pdP γ a :=
@@ -191,7 +195,8 @@ theorem core_filt {K B : Type} [Field K] [CommRing B] [Algebra K B] {I : Ideal B
   · exact Ideal.sum_mem _ fun t _ => Ideal.mul_mem_right _ _ (dividedPowerFiltration_anti' γ hki (S.mem i _))
   · have h4 := tens_dual (e i) φ hki (fun t => n t i) bs (congrFun h2 i)
     have h3 := congrArg (S.ν i) h4
-    rw [map_sum, map_zero] at h3
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero] at h3
     have h5 : ∑ t, S.ν i (n t i) * algebraMap K B (φ (bs t)) = 0 := by
       rw [← h3]
       refine Finset.sum_congr rfl fun t _ => ?_

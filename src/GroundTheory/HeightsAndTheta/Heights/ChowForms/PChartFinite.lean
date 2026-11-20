@@ -70,11 +70,13 @@ theorem linePoly_natDegree_coeff {δ : ℕ} {f : MvPolynomial (Fin (e + 1) × Fi
     exact ⟨h1, h2.trans (Finset.prod_congr rfl fun ij _ => by rw [(lineVar_natDegree_coeff t m ij).2])⟩
   have hs : linePoly f t m = ∑ d ∈ f.support,
       Polynomial.C (C (AddMonoidAlgebra.coeff f d)) * ∏ ij ∈ d.support, lineVar t m ij ^ d ij := by
-    conv_lhs => rw [linePoly, f.as_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [linePoly, f.as_sum, map_sum]
     refine Finset.sum_congr rfl fun d _ => ?_
     simp [aeval_monomial, Polynomial.algebraMap_apply, Finsupp.prod]
   have hs' : specFirst f t = ∑ d ∈ f.support, C (AddMonoidAlgebra.coeff f d) * ∏ ij ∈ d.support, specFirstVar t ij ^ d ij := by
-    conv_lhs => rw [specFirst, f.as_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [specFirst, f.as_sum, map_sum]
     exact Finset.sum_congr rfl fun d _ => bind₁_monomial _ _ _
   rw [hs, hs']
   refine ⟨Polynomial.natDegree_sum_le_of_forall_le _ _ fun d hd =>

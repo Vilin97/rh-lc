@@ -84,7 +84,8 @@ theorem span_eq_top {E : Type} [Field E] {Ψ : Type} [Fintype Ψ] (N : ℕ) (s :
         · subst hj
           simp
         · simp [Pi.single_apply, hj]
-      rw [LinearMap.mem_ker, hsum, map_sum] at hmem
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [LinearMap.mem_ker, hsum, map_sum] at hmem
       exact hmem) τ
     have h1 : l i τ 1 = 0 := by
       have := congrArg Complex.re hc0
@@ -115,7 +116,8 @@ theorem exists_basis {E : Type} [Field E] {Ψ : Type} [Fintype Ψ] {g N : ℕ} (
   have hlat : ∀ x : Λ, vecOf N s (e x) ∈
       Submodule.span ℝ (Set.range fun k => vecOf N s (e (lam k))) := by
     intro x
-    rw [← lam.sum_repr x, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← lam.sum_repr x, map_sum, map_sum]
     refine Submodule.sum_mem _ fun k _ => ?_
     rw [map_zsmul, map_zsmul, ← Int.cast_smul_eq_zsmul ℝ]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨k, rfl⟩)

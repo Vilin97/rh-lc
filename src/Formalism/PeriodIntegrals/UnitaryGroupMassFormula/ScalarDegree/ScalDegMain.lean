@@ -45,7 +45,8 @@ theorem part_two {T : Type} {N N' : ℕ} (s s' : T → ℂ) (Q : MvPolynomial (F
   funext k
   rw [gv_mul]
   unfold gv
-  rw [map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun b _ => ?_
   rw [map_mul, aeval_C, aeval_X, algebraMap_eq]
   ring
@@ -57,7 +58,8 @@ theorem part_one {T : Type} [Fintype T] {N N' : ℕ} (s s' : T → ℂ) (Q : MvP
   rw [polD_eq, polD_eq]
   conv_lhs => rw [MvPolynomial.as_sum Q]
   conv_rhs => rw [MvPolynomial.as_sum Q]
-  rw [map_sum, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun v hv => ?_
   rw [aeval_monomial, aeval_monomial]
   have hg : (v.prod fun i k => gv (fun τ => s τ * s' τ) y' i ^ k) =

@@ -65,7 +65,8 @@ theorem im_Hf_act (x ξ : Vsp dim) (β : 𝓞 E) :
     refine Fintype.sum_equiv (ComplexEmbedding.involutive_conjugate (K := E)).toPerm _ _ (fun σ => ?_)
     simp only [Function.Involutive.coe_toPerm, ComplexEmbedding.involutive_conjugate (K := E) σ,
       ComplexEmbedding.conjugate_coe_eq, Complex.conj_conj]
-  rw [hZ, Complex.im_eq_sub_conj, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hZ, Complex.im_eq_sub_conj, map_sum]
   simp only [map_mul, Complex.conj_conj, mul_sub, mul_div_assoc', Finset.sum_div, Finset.sum_sub_distrib]
   rw [← hre]
   simp only [← Finset.sum_sub_distrib, ← Finset.sum_div]

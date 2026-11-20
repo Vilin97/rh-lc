@@ -161,7 +161,8 @@ theorem sup_orthRel_of_finite {H : Type*} [NormedAddCommGroup H] [InnerProductSp
   have hΔsum : ∀ φ : cuspForms K n,
       Δ φ = ∑ i, (gkModuleCusp K n).ρ (b i) ((gkModuleCusp K n).ρ (b i) φ) := by
     intro φ
-    simp only [Δ, laplacianU, map_sum, map_mul, LinearMap.sum_apply, Module.End.mul_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Δ, laplacianU, map_sum, map_mul, LinearMap.sum_apply, Module.End.mul_apply]
     rfl
   have hΔV : ∀ φ ∈ centralCuspForms K n, Δ φ ∈ centralCuspForms K n :=
     fun φ hφ => uActionCusp_mem_centralCuspForms _ hφ
@@ -175,7 +176,8 @@ theorem sup_orthRel_of_finite {H : Type*} [NormedAddCommGroup H] [InnerProductSp
   have hT : ∀ x ∈ centralCuspForms K n, ∀ y ∈ centralCuspForms K n,
       inner ℂ (ι (Δ x)) (ι y) = inner ℂ (ι x) (ι (Δ y)) := by
     intro x hx y hy
-    rw [hΔsum, hΔsum, map_sum, map_sum, sum_inner, inner_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hΔsum, hΔsum, map_sum, map_sum, sum_inner, inner_sum]
     exact Finset.sum_congr rfl fun i _ => hXX (b i) x hx y hy
   have hUΔ : ∀ φ ∈ U, Δ φ ∈ U := fun φ hφ => by
     rw [hΔsum]

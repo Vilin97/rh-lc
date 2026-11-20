@@ -18,7 +18,8 @@ theorem specPhi_coord {Z N C : Type} [CommRing Z] [AddCommGroup N] [Module Z N] 
     (fun i => φ (b.repr (u t) i)) = U.mulVec (fun i => φ (b.repr t i)) := by
   funext i
   conv_lhs => rw [← b.sum_repr t]
-  simp only [map_sum, map_smul, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.smul_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.smul_apply,
     smul_eq_mul, map_mul, Matrix.mulVec, dotProduct, hU]
   exact Finset.sum_congr rfl fun j _ => mul_comm _ _
 
@@ -166,7 +167,8 @@ theorem specPhi_abstract {G : Type} [Group G] [TopologicalSpace G] {Qp LL O : Ty
     have h2 : (fun i => σ g ((∑ k, κ r k • co (o k • t)) i)) =
         ∑ k, κ (u g r) k • co (o k • t) := by
       funext i
-      simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum, map_mul, hσ, ← hκ]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum, map_mul, hσ, ← hκ]
     rw [h2, Matrix.mulVec_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [h1, Matrix.mulVec_smul]

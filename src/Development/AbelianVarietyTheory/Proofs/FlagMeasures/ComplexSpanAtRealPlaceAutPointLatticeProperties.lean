@@ -52,7 +52,8 @@ theorem span_image_univ (ι : E →+* A) :
 theorem map_mulVec_image (ι : E →+* A) (Y : Matrix (Fin n) (Fin n) E) (w : Fin n → E) :
     Y.map ι *ᵥ (fun i => ι (w i)) = fun i => ι ((Y *ᵥ w) i) := by
   funext i
-  simp [Matrix.mulVec, dotProduct, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Matrix.mulVec, dotProduct, map_sum]
 
 theorem map_mulVec_mem (ι : E →+* A) (Y : Matrix (Fin n) (Fin n) E) (S T : Set (Fin n → E))
     (h : ∀ u ∈ S, Y *ᵥ u ∈ T) (u : Fin n → A)

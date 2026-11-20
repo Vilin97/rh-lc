@@ -52,7 +52,8 @@ variable {𝕜 : Type*} [RCLike 𝕜] {ι : Type*} [Fintype ι] [DecidableEq ι]
 theorem re_trace_conjTranspose_mul_self_pos {A : Matrix ι ι 𝕜} (hA : A ≠ 0) :
     0 < RCLike.re (trace (Aᴴ * A)) := by
   have e : RCLike.re (trace (Aᴴ * A)) = ∑ i, ∑ j, ‖A j i‖ ^ 2 := by
-    simp only [trace, diag_apply, Matrix.mul_apply, conjTranspose_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [trace, diag_apply, Matrix.mul_apply, conjTranspose_apply, map_sum]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
     rw [RCLike.star_def, RCLike.conj_mul, ← RCLike.ofReal_pow, RCLike.ofReal_re]
   rw [e]

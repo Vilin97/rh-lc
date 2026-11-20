@@ -60,7 +60,8 @@ theorem intM_transpose {X : Formalism.L2.SG.LsDatumB.MatP D p} (hX : IntM Z p X)
 
 theorem map_cj_mul (A B : Formalism.L2.SG.LsDatumB.MatP D p) : (A * B).map (Z.M p).L.cj = A.map (Z.M p).L.cj * B.map (Z.M p).L.cj := by
   ext i j
-  simp [Matrix.mul_apply, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Matrix.mul_apply, map_sum, map_mul]
 
 theorem map_cj_cj (A : Formalism.L2.SG.LsDatumB.MatP D p) : (A.map (Z.M p).L.cj).map (Z.M p).L.cj = A := by
   ext i j

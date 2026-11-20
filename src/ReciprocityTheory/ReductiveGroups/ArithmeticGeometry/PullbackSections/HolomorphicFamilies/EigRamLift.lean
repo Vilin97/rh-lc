@@ -34,15 +34,18 @@ theorem actP_mem (hRQ : IsRQ (R := R) k) (B : FB R d O) (h : PS k 2 d) (hc : B.I
   have hvec : (fun j => algebraMap R k ((∑ i, a i • u i) j)) =
       ∑ i, algebraMap R k (a i) • fun j => algebraMap R k (u i j) := by
     funext j
-    simp [Finset.sum_apply, map_sum, map_mul, smul_eq_mul, Algebra.smul_def]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Finset.sum_apply, map_sum, map_mul, smul_eq_mul, Algebra.smul_def]
   simp_rw [hu]
   refine Prod.ext ?_ ?_
   · funext j
-    simp [Prod.fst_sum, Finset.sum_apply, map_sum, map_mul, smul_eq_mul, Algebra.smul_def]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Prod.fst_sum, Finset.sum_apply, map_sum, map_mul, smul_eq_mul, Algebra.smul_def]
   · rw [hvec, Matrix.mulVec_sum]
     simp only [Matrix.mulVec_smul]
     funext j
-    simp [Prod.snd_sum, Finset.sum_apply, map_sum, map_mul, smul_eq_mul, Matrix.mulVec_smul, mul_sub,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Prod.snd_sum, Finset.sum_apply, map_sum, map_mul, smul_eq_mul, Matrix.mulVec_smul, mul_sub,
       Finset.sum_sub_distrib, Algebra.smul_def]
 
 theorem actP_smul (B : FB R d O) {n : ℕ} (b : Fin n → O) (c : Fin n → k) (r : k) (ξ : (Fin d → k) × (Fin d → k)) :

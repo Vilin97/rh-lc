@@ -26,7 +26,8 @@ theorem UpperTheory.V.Af.StrongMultiplicityOne.trDual :
   let b := Module.finBasis ℝ (Cinf E)
   refine ⟨_, b, B.dualBasis hB b, fun x y => ?_⟩
   conv_lhs => rw [← b.sum_repr y]
-  rw [Finset.mul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.mul_sum, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [LinearMap.BilinForm.dualBasis_repr_apply, mul_smul_comm, map_smul, smul_eq_mul, mul_comm]
   rfl

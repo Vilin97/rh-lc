@@ -36,7 +36,8 @@ theorem resM_mem_span {X : Scheme.{0}} {F : X.Modules} {r : ℕ} {V U : X.Opens}
     {σ : Γ(F, V)} (hσ : σ ∈ Submodule.span Γ(X, V) (Set.range η)) :
     resM F h σ ∈ Submodule.span Γ(X, U) (Set.range fun l => resM F h (η l)) := by
   obtain ⟨c, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun _).1 hσ
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Submodule.sum_mem _ fun l _ => ?_
   rw [GlobalTheory.Twist.resM_smul]
   exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨l, rfl⟩)
@@ -86,7 +87,8 @@ theorem size_eq {X : Scheme.{0}} {F : X.Modules} {g r : ℕ} {V U : X.Opens} {f 
 theorem crd_sum {X : Scheme.{0}} {F : X.Modules} {g r : ℕ} {V V' : X.Opens} {s : Fin r → Γ(F, V')} (hs : IsFrame s)
     (c : Fin g → Γ(X, V)) (f : Fin g → Γ(F, V)) (i : Fin r) :
     crd hs (∑ l, c l • f l) i = ∑ l, resG X inf_le_left (c l) * crd hs (f l) i := by
-  simp only [crd, map_sum, GlobalTheory.Twist.resM_smul, map_smul, Finsupp.finsetSum_apply, Finsupp.smul_apply, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [crd, map_sum, GlobalTheory.Twist.resM_smul, map_smul, Finsupp.finsetSum_apply, Finsupp.smul_apply, smul_eq_mul]
 
 theorem crd_app {X : Scheme.{0}} {F G : X.Modules} (ι : G ⟶ F) {r : ℕ} {V V' : X.Opens} {e : Fin r → Γ(G, V')}
     {s : Fin r → Γ(F, V')} (he : IsFrame e) (hs : IsFrame s) (hι : ∀ l, ι.app _ (e l) = s l) (σ : Γ(G, V)) (i : Fin r) :
@@ -96,7 +98,8 @@ theorem crd_app {X : Scheme.{0}} {F G : X.Modules} (ι : G ⟶ F) {r : ℕ} {V V
   have key : resM F (inf_le_left : V ⊓ V' ≤ V) (ι.app _ σ) = ∑ l, crd he σ l • hs.basis inf_le_right l := by
     rw [nat]
     conv_lhs => rw [← (he.basis (inf_le_right : V ⊓ V' ≤ V')).sum_repr (resM G inf_le_left σ)]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun l _ => ?_
     rw [Scheme.Modules.Hom.app_smul, he.basis_apply, hs.basis_apply, ← nat, hι]
     rfl
@@ -191,7 +194,8 @@ theorem exists_sections (Z : LocM.Mdl Y i₀) {X : Scheme.{0}} (h : X ⟶ Z.X) {
       exact this
     have key : ∀ i, valF (spMap (intO ↥y.C.S).subtype ≫ w) _ (crd (hs a) (∑ l, η j l • f l) i) =
         ∑ l, (κ (η j l) : ↥y.C.S) * valF (spMap (intO ↥y.C.S).subtype ≫ w) _ (crd (hs a) (f l) i) := fun i => by
-      rw [crd_sum, valF_eq_valHom _ _ hU, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [crd_sum, valF_eq_valHom _ _ hU, map_sum]
       refine Finset.sum_congr rfl fun l _ => ?_
       rw [map_mul, valHom_resG, hval, valF_eq_valHom _ _ hU]
       rfl

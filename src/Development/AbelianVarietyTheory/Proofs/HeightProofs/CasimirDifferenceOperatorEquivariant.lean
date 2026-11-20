@@ -132,7 +132,8 @@ theorem casOp_translate (hσ : IsURepOn (UJset ε) σ) {d e : ℕ} {X : Fin d �
     casOp σ X Y (σ g v) = σ g (casOp σ (fun i => g⁻¹ * X i * g) (fun b => g⁻¹ * Y b * g) v) := by
   have h : ∀ Z ∈ lieSet ε, dRep σ Z (dRep σ Z (σ g v)) = σ g (dRep σ (g⁻¹ * Z * g) (dRep σ (g⁻¹ * Z * g) v)) :=
     fun Z hZ => Dw_translate hσ hg hv (l := [Z, Z]) (by simp [hZ])
-  simp only [casOp, h _ (hX _), h _ (hY _), map_sub, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [casOp, h _ (hX _), h _ (hY _), map_sub, map_sum]
 
 theorem kk_orth (n : ℕ) (ε : Fin n → Bool) (i j : Fin (kList ε).length) :
     (trace (kB ε i * kB ε j)).re = if i = j then -1 else 0 := GlobalTheory.T.skewHermitianOrthonormalBasis_trace_orthonormal n ε i j

@@ -164,7 +164,8 @@ theorem explicit_map_onto_two_letter_space : ExplicitMapOntoTwoLetters := by
     · rintro c x _ ⟨f, hf, rfl⟩
       exact ⟨c • f, Submodule.smul_mem _ _ hf, map_smul _ _ _⟩
   · rintro ⟨f, hf, rfl⟩
-    rw [f.as_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [f.as_sum, map_sum]
     refine Submodule.sum_mem _ fun v hv => ?_
     rw [ta_monomial_split, map_smul, map_mul, Psi_xs, Psi_ys]
     refine Submodule.smul_mem _ _ (Submodule.subset_span ?_)

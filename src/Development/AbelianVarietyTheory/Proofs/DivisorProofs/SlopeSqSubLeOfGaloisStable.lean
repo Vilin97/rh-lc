@@ -36,7 +36,8 @@ theorem sum_dual_mul {K K' ι : Type} [Field K] [NumberField K] [Field K'] [Numb
   let φ : K' →ₐ[ℚ] ℂ := IsAlgClosed.lift
   let ψ : K' →ₐ[ℚ] ℂ := φ.comp ((s : K' →+* K').toRatAlgHom)
   have key : φ (∑ r, s (d r) * b r) = (1 : Matrix (K' →ₐ[ℚ] ℂ) (K' →ₐ[ℚ] ℂ) ℂ) φ ψ := by
-    rw [← hBA, Matrix.mul_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hBA, Matrix.mul_apply, map_sum]
     exact Finset.sum_congr rfl fun r _ => by rw [map_mul, mul_comm]; rfl
   apply φ.injective
   show φ _ = φ _
@@ -74,7 +75,8 @@ theorem different_mul_dual {K : Type} [Field K] [NumberField K] [DecidableEq (Fr
     rw [FractionalIdeal.mem_dual (one_ne_zero (α := FractionalIdeal (𝓞 K)⁰ K))]
     intro a ha
     obtain ⟨c, rfl⟩ := (FractionalIdeal.mem_one_iff _).mp ha
-    rw [← (RingOfIntegers.basis K).sum_repr c, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← (RingOfIntegers.basis K).sum_repr c, map_sum, map_sum]
     refine Subring.sum_mem _ fun i _ => ?_
     rw [map_zsmul, map_zsmul, ← integralBasis_apply, LinearMap.BilinForm.apply_dualBasis_left]
     refine zsmul_mem ?_ _
@@ -102,7 +104,8 @@ theorem gram_ge {K K' V V' ι κ : Type} [Field K] [NumberField K] [StarRing K] 
   have h1 : ∀ x : Fin j → K, N σ (∑ k, x k • e k) =
       1 * Formalism.HermitianLatticesTheory.cnorm (cols b' X' w (fun k => φ (e k)) *ᵥ fun k => σ (x k)) := fun x => by
     have h := ht w.embedding (∑ k, x k • e k)
-    rw [← (hG' w).2, map_sum] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← (hG' w).2, map_sum] at h
     simp only [map_smulₛₗ] at h
     rw [normAt_sum] at h
     rw [one_mul]
@@ -176,7 +179,8 @@ theorem slope_sq_sub_le_of_galois_stable : ∀ (K K' V V' : Type) [Field K] [Num
     refine le_antisymm (Submodule.span_le.2 (hsM.trans (Submodule.span_le.2 ?_))) (Submodule.span_mono ?_)
     · rintro _ ⟨x, hx, rfl⟩
       obtain ⟨a, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun K).1 (hsp ▸ hx)
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       exact Submodule.sum_mem _ fun k _ => by
         rw [map_smulₛₗ]; exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨k, rfl⟩)
     · rintro _ ⟨k, rfl⟩; exact hιM _ (heL k)
@@ -201,11 +205,13 @@ theorem slope_sq_sub_le_of_galois_stable : ∀ (K K' V V' : Type) [Field K] [Num
         congr 1
         show _ = (α : K') * _
         rw [hα, ← hd]; ring
-      simp only [map_sum, map_smulₛₗ, trace_eq_sum_automorphisms, Finset.sum_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smulₛₗ, trace_eq_sum_automorphisms, Finset.sum_smul]
       rw [Finset.sum_comm]
       exact Submodule.sum_mem _ fun s _ => hst s j _ e h1
     have h3 : δ • ∑ k, a k • ι (e k) = ∑ r, RingOfIntegers.basis K' r • ι (y r) := by
-      simp only [y, map_sum, map_smulₛₗ, ← algebraMap_smul K' (RingOfIntegers.basis K' _), ← algebraMap_smul K' δ,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [y, map_sum, map_smulₛₗ, ← algebraMap_smul K' (RingOfIntegers.basis K' _), ← algebraMap_smul K' δ,
         Finset.smul_sum, smul_smul, ← integralBasis_apply]
       rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun k _ => ?_

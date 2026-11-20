@@ -263,7 +263,8 @@ theorem finrank_le_of_span [IsIntegral X] (hL : L.IsLB)
     obtain ⟨a, ha⟩ := hs t
     refine (Submodule.mem_span_range_iff_exists_fun K).2 ⟨a, Subtype.ext ?_⟩
     refine eq_of_gr_eq Φ ρ hρ k hk e _ (Subtype.prop _) _ (Subtype.prop _) (congrArg _ ?_)
-    rw [hρ, ha k, Submodule.coe_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hρ, ha k, Submodule.coe_sum, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [Submodule.coe_smul, Algebra.smul_def, map_mul, hρc, hρ]
     rfl

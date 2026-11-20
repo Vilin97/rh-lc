@@ -37,7 +37,8 @@ theorem hJ_zero_l (y : Fin n → ℂ) : hJ ε 0 y = 0 := by
 
 theorem hJ_conj_sym (x y : Fin n → ℂ) : hJ ε x y = conj (hJ ε y x) := by
   unfold hJ
-  simp only [Formalism.REAL.Jm, mulVec_diagonal, dotProduct, Pi.star_apply, map_sum, map_mul, RCLike.star_def,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Formalism.REAL.Jm, mulVec_diagonal, dotProduct, Pi.star_apply, map_sum, map_mul, RCLike.star_def,
     Complex.conj_conj]
   refine Finset.sum_congr rfl fun i _ => ?_
   split_ifs <;> simp <;> ring
@@ -49,7 +50,8 @@ theorem hJ_sum_r {ι : Type*} (s : Finset ι) (x : Fin n → ℂ) (c : ι → �
 
 theorem hJ_sum_l {ι : Type*} (s : Finset ι) (x : Fin n → ℂ) (c : ι → ℂ) (y : ι → Fin n → ℂ) :
     hJ ε (∑ i ∈ s, c i • y i) x = ∑ i ∈ s, conj (c i) * hJ ε (y i) x := by
-  rw [hJ_conj_sym, hJ_sum_r, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hJ_conj_sym, hJ_sum_r, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_mul, ← hJ_conj_sym]
 

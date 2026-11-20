@@ -59,7 +59,8 @@ theorem exists_sum_fixed {G W : Type} [Group G] [TopologicalSpace G] [IsTopologi
       exact hσR r
     · rw [Finset.card_image_of_injOn hinj]
   calc ρ u (∑ r ∈ R, ρ r x) = ∑ r ∈ R, ρ (σ r) x := by
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         refine Finset.sum_congr rfl fun r _ => ?_
         rw [← hval, map_mul, Module.End.mul_apply]
     _ = ∑ s ∈ R.image σ, ρ s x := (Finset.sum_image (f := fun s => ρ s x) hinj).symm
@@ -103,7 +104,8 @@ theorem exists_avg : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (N :
       rw [hρ, e1]
       conv_lhs => rw [e2]
       exact inner_R μ _ _ _
-    rw [map_smul, map_sum, inner_smul_left, sum_inner, Finset.sum_congr rfl fun r _ => key r,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_smul, map_sum, inner_smul_left, sum_inner, Finset.sum_congr rfl fun r _ => key r,
       Finset.sum_const, nsmul_eq_mul, map_inv₀, Complex.conj_natCast, inv_mul_cancel_left₀ hn]
 
 end GlobalTheory.CompanionTheory.FinDiscAvg

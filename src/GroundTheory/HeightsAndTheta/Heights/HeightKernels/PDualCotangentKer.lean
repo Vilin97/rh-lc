@@ -78,7 +78,8 @@ theorem DualCotangentKer.proof : DualCotangentKer.Statement := by
       _ = 0 := by rw [hg, smul_zero]
   have hσχ : ∀ x, σ (χ x) = ρ (c x) • σ (w x) := fun x => hsl (c x) (w x) (χ x) rfl
   have hσsum : ∑ x, ρ (c x) • σ (w x) = 0 := by
-    rw [← map_zero σ, ← hsum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_zero σ, ← hsum, map_sum]
     exact Finset.sum_congr rfl fun x _ => (hσχ x).symm
 
   have hsome : ∀ j, ρ (c (some j)) = 0 := by

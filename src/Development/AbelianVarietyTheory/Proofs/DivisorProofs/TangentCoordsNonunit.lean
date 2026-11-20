@@ -143,7 +143,8 @@ theorem tangent_coords_nonunit : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field 
     funext i; simp [up, map_X]
   have hs' : map (algebraMap O E) s' = defect c.μ (p ^ 1) f := by
     rw [defect, pow_one, up_nmul_eq O E d c.μ hμ, subst_nmul_eq E d _ hμE f p, hcob, hf0]
-    simp only [s', map_sub, map_neg, map_sum, map_C]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [s', map_sub, map_neg, map_sum, map_C]
     rw [Finset.sum_congr rfl (fun k _ => map_at2_eq O E d (Fin d) _ _ _ (hnc k) (fun i => constantCoeff_X i))]
     simp only [hX, up_nmul_eq O E d c.μ hμ]
     abel
@@ -172,7 +173,8 @@ theorem tangent_coords_nonunit : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field 
       rw [pow_one] at h1
       have hC : c.ev 1 (C (t 0)) = algebraMap O _ (t 0) := (c.ev 1).commutes (t 0)
       rw [hs'2]
-      simp only [map_sub, map_add, map_smul, map_sum, ev_subst_nmul p O G d c 1 p s, h1, hC]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sub, map_add, map_smul, map_sum, ev_subst_nmul p O G d c 1 p s, h1, hC]
       have hA' : ∀ r : O, φ.ofConv (algebraMap O (G.A 1) r) = 0 := hA
       rw [hA', hA', zero_add, sub_zero, smul_eq_mul]
       refine Ideal.sub_mem _ (Ideal.mul_mem_right _ _ hpm) (Ideal.sum_mem _ fun k _ => ?_)

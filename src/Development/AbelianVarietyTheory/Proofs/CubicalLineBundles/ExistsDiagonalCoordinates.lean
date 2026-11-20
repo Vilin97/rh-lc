@@ -109,7 +109,8 @@ theorem exists_diagonal_coordinates {V : Type} [AddCommGroup V] [Module ℂ V] [
   generalize b.reindex e = b' at hb
   obtain ⟨z, rfl⟩ := b'.equivFun.symm.surjective v
   have : r a (b'.equivFun.symm z) = b'.equivFun.symm fun j => (e.symm j).1 (a : E) * z j := by
-    simp only [Module.Basis.equivFun_symm_apply, map_sum, map_smul, hb, smul_smul, mul_comm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Module.Basis.equivFun_symm_apply, map_sum, map_smul, hb, smul_smul, mul_comm]
   rw [this]
   simp only [LinearEquiv.apply_symm_apply]
 

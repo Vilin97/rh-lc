@@ -264,7 +264,8 @@ theorem indep (hG : GZ T T' (Zhat F0 F1) ≠ 0) : LinearIndependent D.host.E (Su
     funext a
     have h1 : (VS D).hT (Sum.elim F0.fvec F1.fvec a) (∑ i, c i • Sum.elim F0.fvec F1.fvec i) = 0 := by
       rw [hc, map_zero]
-    rw [map_sum] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at h1
     simp only [map_smul, smul_eq_mul] at h1
     simp only [Matrix.mulVec, dotProduct, Pi.zero_apply]
     rw [← h1]

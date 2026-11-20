@@ -133,7 +133,8 @@ theorem pure_mem {κ : Type} [Fintype κ] (ψ : AddChar (AdeleRing (𝓞 F) F) �
   funext x
   have k1 : x ⬝ᵥ y = a (fun i => e (x i).1) + GroundTheory.Global.finiteAdeleInr ((fun i => (x i).2) ⬝ᵥ fun i => (y i).2) := by
     show _ = (∑ i, _) + _
-    simp only [dotProduct, map_sum, ← Finset.sum_add_distrib]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [dotProduct, map_sum, ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun i _ => ?_
     have : GroundTheory.Global.mixedToInfinite F (e (x i).1) = (x i).1 := e.symm_apply_apply _
     rw [this]
@@ -176,7 +177,8 @@ theorem schr_mem_and_thetaSum : ∀ (F : Type) [Field F] [NumberField F] [Locall
     rw [← (Equiv.addRight w.1).tsum_eq fun ξ : κ → F => Φ fun i => algebraMap F (AdeleRing (𝓞 F) F) (ξ i)]
     refine tsum_congr fun ξ => ?_
     have := hF (ξ ⬝ᵥ w.2 + 2⁻¹ * (w.1 ⬝ᵥ w.2))
-    simp only [dotProduct, map_add, map_mul, map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [dotProduct, map_add, map_mul, map_sum] at this
     simp only [schr, dotProduct, h2]
     rw [this, one_mul]
     congr 1

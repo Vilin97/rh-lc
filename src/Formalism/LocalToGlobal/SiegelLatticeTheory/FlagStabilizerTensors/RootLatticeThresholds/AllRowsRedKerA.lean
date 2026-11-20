@@ -54,7 +54,8 @@ theorem hform_unit [DecidableEq n] (M : Matrix n n A) (hM : Formalism.UG.cT σ M
     simp only [Formalism.UG.hform, dotProduct, mulVec, Finset.mul_sum, mul_assoc]
   have hσ : (fun i => σ ((M *ᵥ x) i)) = M.map σ *ᵥ (fun i => σ (x i)) := by
     funext i
-    simp only [mulVec, dotProduct, map_sum, map_mul, Matrix.map_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [mulVec, dotProduct, map_sum, map_mul, Matrix.map_apply]
   rw [key, key, hσ, dotProduct_comm, dotProduct_mulVec, ← mulVec_transpose, dotProduct_comm,
     mulVec_mulVec, mulVec_mulVec, show (M.map σ)ᵀ * J * M = J from hM]
 
@@ -158,7 +159,8 @@ theorem stepA {w : HeightOneSpectrum (𝓞 I.E)} {p : ℕ} (hp : p.Prime) (hcard
         (∑ k, ((c k : ℤ) : I.E ⊗[I.F] Af I.F) • (fun i => Formalism.UG.inclE (F := I.F) (Af I.F) (b k i))) +
           (fun i => Formalism.UG.inclE (F := I.F) (Af I.F) ((l - ∑ k, (c k : I.E) • b k) i)) := by
       funext i
-      simp only [Pi.add_apply, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Pi.sub_apply, map_sub, map_sum,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Pi.add_apply, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Pi.sub_apply, map_sub, map_sum,
         map_mul, map_intCast]
       ring
     rw [hdec, Matrix.mulVec_add, Matrix.mulVec_sum]
@@ -330,7 +332,8 @@ theorem hhat_Lq {w : HeightOneSpectrum (𝓞 I.E)} {t β : 𝓞 I.E}
     have e : hhat I (fun i => Formalism.UG.inclE (F := I.F) (Af I.F) (x i))
         (fun i => Formalism.UG.inclE (F := I.F) (Af I.F) (y i)) =
         Formalism.UG.inclE (F := I.F) (Af I.F) (Formalism.UG.hform (starRingEnd I.E) I.J x y) := by
-      simp only [hhat, Formalism.UG.hform, map_sum, map_mul, Matrix.map_apply, hincl, starRingEnd_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hhat, Formalism.UG.hform, map_sum, map_mul, Matrix.map_apply, hincl, starRingEnd_apply]
     refine ⟨iE I g, iE_int I g, ?_⟩
     rw [e, hcv]
     show Formalism.UG.inclE (F := I.F) (Af I.F) (β : I.E) * Formalism.UG.inclE (F := I.F) (Af I.F) (c : I.E) =

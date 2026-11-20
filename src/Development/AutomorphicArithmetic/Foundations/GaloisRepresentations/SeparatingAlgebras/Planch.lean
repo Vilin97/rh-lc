@@ -78,7 +78,8 @@ private theorem sum_norm_sq_le_integral_of_plancherel {G : Type} [Group G] {n : 
           calc (mr : ℂ) * ∑ g ∈ T, starRingEnd ℂ (f g) * (S θ * φ θ g⁻¹ * D θ)
               = S θ * D θ * starRingEnd ℂ ((mr : ℂ) * ∑ g ∈ T, f g * φ θ g) := by
                 simp_rw [hθ]
-                rw [map_mul, map_sum, Complex.conj_ofReal]
+                set_option synthInstance.maxHeartbeats 100000 in
+                  rw [map_mul, map_sum, Complex.conj_ofReal]
                 simp_rw [map_mul]
                 rw [Finset.mul_sum, Finset.mul_sum, Finset.mul_sum]
                 exact Finset.sum_congr rfl fun g _ => by ring

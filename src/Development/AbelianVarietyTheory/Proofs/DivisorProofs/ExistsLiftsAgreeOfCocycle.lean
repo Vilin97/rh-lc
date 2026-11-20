@@ -138,6 +138,7 @@ theorem exists_lifts_agree_of_cocycle : ∀ (R R₀ : Type) [CommRing R] [CommRi
     ← spMap_comp_spMap, Category.assoc] at h₁ h₂
   refine eq_of_cocycle (hW j l i) _ _ _ _ _ _ _
     (fun k => algebraMap R (Localization.Away (s j l i)) (f k) ^ N) ?_ h₁ h₂ fun k => hco j l k i
-  simp only [← map_pow, ← map_mul, ← map_sum, ha, map_one]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← map_pow, ← map_mul, ← map_sum, ha, map_one]
 
 end GlobalTheory.SecGlue.Cocycle

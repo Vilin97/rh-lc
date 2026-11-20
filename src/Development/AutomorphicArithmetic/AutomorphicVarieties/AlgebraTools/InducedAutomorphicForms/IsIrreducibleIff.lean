@@ -68,7 +68,8 @@ theorem subst_one {k n : Type} [CommRing k] [Fintype n] [DecidableEq n] :
 theorem subst_mul {k n : Type} [CommRing k] [Fintype n] (A B : Matrix n n k) :
     subst (A * B) = (subst A).comp (subst B) := by
   ext1 i
-  simp only [AlgHom.comp_apply, subst_X, map_sum, map_smul, Matrix.mul_apply, Finset.sum_smul, Finset.smul_sum, smul_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [AlgHom.comp_apply, subst_X, map_sum, map_smul, Matrix.mul_apply, Finset.sum_smul, Finset.smul_sum, smul_smul]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by rw [mul_comm]
 

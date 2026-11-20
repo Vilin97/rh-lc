@@ -86,7 +86,8 @@ theorem rootOfUnity_teichmuller : ∀ (l : ℕ) [Fact l.Prime], ∀ o : Om l →
   rw [h1, h2, sub_self] at hg
   have hS : IsUnit (∑ i ∈ Finset.range m, y ^ i * o c ^ (m - 1 - i)) := by
     apply hu
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [map_mul, map_pow, t1, t2]
     rw [geom_sum₂_self]
     exact mul_ne_zero (by exact_mod_cast hm.ne') (pow_ne_zero _ hc0)

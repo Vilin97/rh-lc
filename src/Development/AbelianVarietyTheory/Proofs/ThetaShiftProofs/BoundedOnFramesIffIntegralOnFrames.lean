@@ -205,7 +205,8 @@ theorem coeffPoly_bind₁ (m : ℤ) (g : σ → MvPolynomial τ K) (G : MvPolyno
     coeffPoly m (bind₁ (fun k => map (HahnSeries.C : K →+* K⸨X⸩) (g k)) G) =
       bind₁ g (coeffPoly m G) := by
   conv_lhs => rw [G.as_sum]
-  rw [map_sum, coeffPoly_sum, coeffPoly, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, coeffPoly_sum, coeffPoly, map_sum]
   refine Finset.sum_congr rfl fun μ _ => ?_
   rw [bind₁_monomial, bind₁_monomial, ← coeffPoly_C_mul_map, map_prod]
   simp only [map_pow]
@@ -251,7 +252,8 @@ theorem hasSum_coeffPoly {K : Type*} [NormedField K] [CompleteSpace K] (i : O �
   refine Eq.mpr (congrArg (HasSum · _) (funext fun m => ?_))
     (hasSum_sum fun μ (_ : μ ∈ F.support) =>
       (hasSum_laurent i hi hπ ht0 ht (AddMonoidAlgebra.coeff F μ)).mul_right (∏ k ∈ μ.support, x k ^ μ k))
-  rw [h, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h, map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun μ _ => ?_
   rw [eval_monomial, Finsupp.prod]
   ring
@@ -263,7 +265,8 @@ theorem norm_coeff_bind₁_le {K : Type*} [NormedField K] [IsUltrametricDist K] 
   open ReciprocityTheory.ChartRestriction.G.FreeQuotientRank.BasisChangePf in
   have hmain : CB (bind₁ g P) (c ^ d) := by
     conv_lhs => rw [P.as_sum]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine cb_sum _ _ (pow_nonneg hc d) fun ν hν => ?_
     rw [bind₁_monomial]
     have hdeg : ∑ k ∈ ν.support, ν k = d := by
@@ -811,7 +814,8 @@ theorem BoundedOnFrames.norm_coeff_linear_le (hF : BoundedOnFrames i hi hπ F) {
       EntryIndex n n → MvPolynomial (EntryIndex n n) ℂ_[p]⸨X⸩) =
       fun k => map HahnSeries.C (∑ l, C (B k l) * X l) := by
     funext k
-    simp only [map_sum, map_mul, map_C, map_X]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, map_C, map_X]
   rw [h, ← coeff_coeffPoly, coeffPoly_bind₁]
   exact ⟨ReciprocityTheory.ChartRestriction.G.FreeQuotientRank.basisChange_holds _ _ _ d (isHomogeneous_coeffPoly m (hd.map _))
     (hF.coeffPoly_integral m).1 B c hc hB μ, fun hm => by simp [(hF.coeffPoly_integral m).2 hm]⟩
@@ -829,7 +833,8 @@ theorem BoundedOnFrames.norm_coeff_mul_le (hF : BoundedOnFrames i hi hπ F) {d :
       EntryIndex n n → MvPolynomial (EntryIndex κ n) ℂ_[p]⸨X⸩) =
       fun k => map HahnSeries.C (∑ j, C (w k.1 k.2.1 j) * X ⟨k.1, j, k.2.2⟩) := by
     funext k
-    simp only [map_sum, map_mul, map_C, map_X]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, map_C, map_X]
   rw [h]
   refine hF.norm_coeff_bind₁_le hd hc (fun k ν => ?_) μ m
   rw [coeff_sum]

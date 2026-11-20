@@ -181,8 +181,10 @@ theorem bijective_tateCompactDualityMap_of_sum {J : Type*} [Fintype J] (X : J �
       (χ.comp (tateCompactCohomologyResMap φ ψ (dualMap D (p j)) s).hom.toAddMonoidHom)
     refine ⟨∑ j, (cohomologyMap (i j) r).hom (a j), ?_⟩
     ext y
-    rw [map_sum, AddMonoidHom.finsetSum_apply]
-    conv_rhs => rw [← hdual y, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, AddMonoidHom.finsetSum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_rhs => rw [← hdual y, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [tateCompactDualityMap_cohomologyMap, ha j]
     rfl

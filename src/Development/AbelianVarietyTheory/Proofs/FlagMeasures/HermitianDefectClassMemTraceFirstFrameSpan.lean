@@ -39,7 +39,8 @@ theorem hf_neg_right {n : ℕ} (Hm : Matrix (Fin n) (Fin n) E) (a y : Fin n → 
 theorem hf_swap {n : ℕ} {Hm : Matrix (Fin n) (Fin n) E} (h : IsHerm L Hm) (v w : Fin n → E) :
     hf L Hm w v = L.cj (hf L Hm v w) := by
   have h' : ∀ i j, L.cj (Hm j i) = Hm i j := fun i j => congrFun (congrFun h i) j
-  simp only [hf, map_sum, map_mul, L.cj_cj, h']
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hf, map_sum, map_mul, L.cj_cj, h']
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 

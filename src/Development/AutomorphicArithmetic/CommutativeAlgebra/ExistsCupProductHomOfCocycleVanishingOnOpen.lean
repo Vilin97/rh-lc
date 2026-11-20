@@ -78,5 +78,6 @@ theorem UpperTheory.exists_cupProduct_hom_of_cocycle_vanishing_on_open :
       simp only [Units.smul_def]
       exact smul_comm _ _ _
     simp only [e]
-    rw [← Finset.smul_sum, hsign, mul_smul, Int.negOnePow_zero, one_smul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Finset.smul_sum, hsign, mul_smul, Int.negOnePow_zero, one_smul, map_sum]
     simp only [map_zsmul]

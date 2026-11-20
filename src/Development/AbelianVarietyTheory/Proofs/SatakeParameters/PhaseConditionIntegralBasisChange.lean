@@ -49,7 +49,8 @@ theorem phaseCondition_basisChange : ∀ (L : Type) [Field L] [Valued L (WithZer
   have := hx ((P.map σ)ᵀ * C' * P) ?_ ?_ ?_
   · rw [htr] at this; exact this
   · intro i j
-    simp only [Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, map_sum, map_mul, hσσ, hskew,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, map_sum, map_mul, hσσ, hskew,
       Finset.sum_mul, ← Finset.sum_neg_distrib]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring

@@ -189,7 +189,8 @@ theorem shift_invariant : ∀ (N k : ℕ) (a : ℝ), 2 ≤ k → k ≤ N →
   · have := eval_eq_of_derivative _ (derivative_shiftR h2 hk) (C a)
     simp only [Polynomial.eval_finset_sum, Polynomial.eval_mul, Polynomial.eval_pow,
       Polynomial.eval_neg, Polynomial.eval_one, eval_shiftE, eval_zero_shiftE] at this
-    simpa [hookR, map_sum] using this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [hookR, map_sum] using this
   · rw [← eval_shiftE, eval_eq_of_derivative _ (derivative_shiftE_rho N), eval_zero_shiftE]
 
 end GlobalTheory.FlagHookShift

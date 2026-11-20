@@ -101,7 +101,8 @@ theorem core [IsDomain R] [CharZero R] (ψ E0 Ea En : R →+* R) (U κ T I : R) 
     rcases mul_eq_zero.1 hg with hg | hg
     · exfalso
       have := congrArg E0 hg
-      simp only [map_sum, map_mul, map_pow, h3, map_zero] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_mul, map_pow, h3, map_zero] at this
       rw [geom_sum₂_self] at this
       exact mul_ne_zero (Nat.cast_ne_zero.2 hN0) (pow_ne_zero _ (hχu.map E0).ne_zero) this
     · exact sub_eq_zero.1 hg
@@ -228,7 +229,8 @@ theorem gp_mv {n m : ℕ} (mu : Matrix (Fin n) (Fin n) O) {x : Fin n → SP B m}
 
 theorem sL_mv {n k m : ℕ} (a : Fin k → SP B m) (mu : Matrix (Fin n) (Fin n) O) (x : Fin n → SP B k) (i : Fin n) :
     sL a (mv mu x i) = mv mu (fun j => sL a (x j)) i := by
-  simp only [mv, map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [mv, map_sum, map_smul]
 
 theorem mv_add {n m : ℕ} (mu : Matrix (Fin n) (Fin n) O) (x y : Fin n → SP B m) (i : Fin n) :
     mv mu (fun j => x j + y j) i = mv mu x i + mv mu y i := by
@@ -376,7 +378,8 @@ theorem exp_kappa (hh : B.IsCanonGauge K h) {n : ℕ} {mu : Matrix (Fin n) (Fin 
   have p : ∀ j : Fin n, GP (uP B j).val := gp_uP
   have base : IsExp K κ (∑ b, lg (B.hL K h w0) (mv mu (uP B) b) - N • ∑ b, lg (B.hL K h w0) (uP B b)) := by
     constructor
-    · simp only [map_sub, map_nsmul, map_sum, cc_lg H0 (p _), cc_lg H0 (gp_mv mu p _), Finset.sum_const_zero,
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp only [map_sub, map_nsmul, map_sum, cc_lg H0 (p _), cc_lg H0 (gp_mv mu p _), Finset.sum_const_zero,
         smul_zero, sub_zero]
     · have e : ∀ j : Fin n, mp K (uP B j).val = pt K d j := fun j => mp_pt K j
       have e' : ∀ b, (mv mu (uP B) b).val = matV B mu (fun j => pt V (n := n) d j) b :=
@@ -385,7 +388,8 @@ theorem exp_kappa (hh : B.IsCanonGauge K h) {n : ℕ} {mu : Matrix (Fin n) (Fin 
       rw [← Nat.cast_smul_eq_nsmul K]
       exact hκ
   have := base.ev x hx
-  simp only [map_sub, map_nsmul, map_sum, evK_lg _ _ hx (p _), evK_lg _ _ hx (gp_mv mu p _), sL_uP, sL_mv] at this
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sub, map_nsmul, map_sum, evK_lg _ _ hx (p _), evK_lg _ _ hx (gp_mv mu p _), sL_uP, sL_mv] at this
   exact this
 
 variable (hi : Function.Injective (algebraMap V K)) (hh : B.IsCanonGauge K h)

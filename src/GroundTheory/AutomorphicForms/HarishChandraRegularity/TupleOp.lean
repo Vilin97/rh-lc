@@ -123,7 +123,8 @@ theorem eq_sum_ev (v : 𝔼) : v = ∑ j, v j • ev j := by
 theorem fderiv_apply_eq_sum (f : 𝔼 → ℂ) (x v : 𝔼) :
     fderiv ℝ f x v = ∑ j, ((v j : ℝ) : ℂ) * fderiv ℝ f x (ev j) := by
   conv_lhs => rw [eq_sum_ev v]
-  simp [map_sum, map_smul, Complex.real_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, map_smul, Complex.real_smul]
 
 theorem analyticOnNhd_coord {Ω : Set 𝔼} {c : 𝔼 → 𝔼} (hc : AnalyticOnNhd ℝ c Ω) (j : Fin n) :
     AnalyticOnNhd ℝ (fun x => ((c x j : ℝ) : ℂ)) Ω := by

@@ -230,13 +230,15 @@ theorem exists_theta_eq_sum_of_phi_iterate {y : ACris K p} {N : ℕ} (hN : 1 ≤
     have hw2 : w = ∑ i ∈ Finset.range m, teichmuller p (a i) * (p : AInf K p) ^ i +
         (p : AInf K p) ^ m * w'' := by rw [← hw'']; ring
     conv_lhs => rw [hw2]
-    rw [map_add, map_sum, map_mul, map_pow, map_natCast]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_add, map_sum, map_mul, map_pow, map_natCast]
     congr 1
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_mul, map_pow, map_natCast, WittVector.frobeniusEquiv_pow_teichmuller]
   refine ⟨θ ((φ ^ n) w'') + theta K p ((phi K p ^ n) z'), ?_⟩
   conv_lhs => rw [hyn]
-  rw [map_add, map_mul, map_pow, map_natCast, theta_algebraMap, hwn, map_add, map_sum, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_add, map_mul, map_pow, map_natCast, theta_algebraMap, hwn, map_add, map_sum, map_mul,
     map_pow, map_natCast]
   simp only [map_mul, map_pow, map_natCast, fontaineTheta_teichmuller]
   push_cast
@@ -270,7 +272,8 @@ theorem exists_theta_approx_of_phi_iterate {y : ACris ℂ_[p] p} {N : ℕ} (hN :
   have hp1 : ‖(p : ℂ_[p])‖ ≤ 1 := norm_natCast_p_lt_one.le
   have hcoe : ((∑ i ∈ Finset.range m, (p : PadicAlgCl p) ^ i * u i : PadicAlgCl p) : ℂ_[p]) =
       ∑ i ∈ Finset.range m, (p : ℂ_[p]) ^ i * (u i : ℂ_[p]) := by
-    simp only [PadicComplex.coe_eq, map_sum, map_mul, map_pow, map_natCast]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [PadicComplex.coe_eq, map_sum, map_mul, map_pow, map_natCast]
   rw [he, hcoe]
   have hdiff : ∑ i ∈ Finset.range m, (p : ℂ_[p]) ^ i * (c i : ℂ_[p]) ^ p ^ (N * J) +
       (p : ℂ_[p]) ^ m * (e : ℂ_[p]) - ∑ i ∈ Finset.range m, (p : ℂ_[p]) ^ i * (u i : ℂ_[p]) =

@@ -75,7 +75,8 @@ theorem exists_eigen_lift {K S T : Type} [Group K] [TopologicalSpace K] [IsTopol
     rw [this, smul_smul, map_mul, map_inv, Units.val_mul, mul_left_comm, Units.inv_mul, mul_one]
   have hN : (Fintype.card (K ⧸ H) : ℂ) ≠ 0 := Nat.cast_ne_zero.2 Fintype.card_ne_zero
   refine ⟨(Fintype.card (K ⧸ H) : ℂ)⁻¹ • ∑ q : K ⧸ H, g q.out, fun k => ?_, ?_⟩
-  · rw [map_smul, smul_comm (c k : ℂ), map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_smul, smul_comm (c k : ℂ), map_sum]
     congr 1
     rw [Finset.smul_sum, ← Equiv.sum_comp (MulAction.toPerm k) fun q : K ⧸ H => (c k : ℂ) • g q.out]
     refine Finset.sum_congr rfl fun q _ => ?_
@@ -84,7 +85,8 @@ theorem exists_eigen_lift {K S T : Type} [Group K] [TopologicalSpace K] [IsTopol
     simp only [g]
     rw [map_smul, smul_smul, map_mul, mul_inv_rev, Units.val_mul, mul_left_comm, Units.mul_inv, mul_one, map_mul,
       Module.End.mul_apply]
-  · rw [map_smul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_smul, map_sum]
     have : ∀ q : K ⧸ H, p (g q.out) = p f₀ := fun q => by
       simp only [g]
       rw [map_smul, hp, smul_smul, Units.inv_mul, one_smul]

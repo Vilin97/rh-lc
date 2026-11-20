@@ -126,7 +126,8 @@ theorem main : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E], Unr E →
     have h1 : ∑ j, e (g j) • (b j : Fin n → w.adicCompletion E) = 0 := by
       funext k
       have := congrArg e (congrFun hg k)
-      simpa [v, Finset.sum_apply, map_sum, map_mul] using this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa [v, Finset.sum_apply, map_sum, map_mul] using this
     have := Fintype.linearIndependent_iff.1 (GlobalTheory.KapSignMul.li_coe b) _ h1 i
     simpa using this
   have hv_span : Submodule.span K.E (Set.range v) = W := by
@@ -148,7 +149,8 @@ theorem main : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E], Unr E →
         simp only [Submodule.coe_sum, Submodule.coe_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul] at this
         exact this
       apply e.injective
-      simpa [v, Finset.sum_apply, map_sum, map_mul] using h3
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa [v, Finset.sum_apply, map_sum, map_mul] using h3
   let f := Module.finBasis K.E B₁.A
   let φ : B₁.A →ₗ[K.E] (Fin n → K.E) := ψ.toLinearMap ∘ₗ LinearMap.inl K.E B₁.A B₂.A
   have hφi : Function.Injective φ := fun a a' h => congrArg Prod.fst (ψ.injective h)
@@ -166,7 +168,8 @@ theorem main : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E], Unr E →
   have hM : (Matrix.of fun i j => ∑ k, cj w ((b i : Fin n → w.adicCompletion E) k) * (b j : Fin n → w.adicCompletion E) k) =
       (Matrix.of fun i j => ∑ k, (K.c : K.E →+* K.E) (v i k) * v j k).map e := by
     ext i j
-    simp [v, map_sum, he]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [v, map_sum, he]
   have hG : (Matrix.of fun i j => ∑ k, (K.c : K.E →+* K.E) (u i k) * u j k) =
       (Matrix.of fun i j => B₁.herm (x : (B₁.prod B₂).A).1 (f i) (f j))ᵀ := by
     ext i j

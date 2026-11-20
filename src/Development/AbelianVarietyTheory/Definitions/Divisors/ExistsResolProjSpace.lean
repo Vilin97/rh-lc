@@ -153,7 +153,8 @@ abbrev sys (abelian₂ : ℝ) : HermSys F where
 theorem ofSec_comb (abelian₂ : ℝ) (u : Fin f.N → F) :
     H0.ofSec M.str ⊤ ((M.sys Δ φ f abelian₂).comb u) = Δ.lift (φ (f.b.equivFun.symm u)) := by
   refine (LinSys.ofSec_comb (M.sys Δ φ f abelian₂).toLinSys ⊤ u).trans ?_
-  rw [f.b.equivFun_symm_apply, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [f.b.equivFun_symm_apply, map_sum, map_sum]
   exact Finset.sum_congr rfl fun j _ => by rw [map_smul, map_smul]; exact congrArg _ (ofSec_toSec _)
 
 theorem isAlgebraicData [IsReduced Y] (hU : Dense (U : Set Y)) (hc : GeometricallyConnected M.str) (hD : 1 ≤ D)

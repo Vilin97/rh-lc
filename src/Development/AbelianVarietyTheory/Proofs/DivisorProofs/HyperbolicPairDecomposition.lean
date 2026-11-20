@@ -31,7 +31,8 @@ theorem cA_incV_eq (σ : E →ₐ[F] E) {n : ℕ} (x : Fin n → E) :
 theorem hA_incV_eq (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (a b : Fin n → E) :
     hA σ J (incV F a) (incV F b) = inclR (AF F) (form σ J a b) := by
   rw [hA, cA_incV_eq, incM_mulVec_incV_eq]
-  simp [form, incV, dotProduct, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [form, incV, dotProduct, map_sum, map_mul]
 
 variable (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E)
 
@@ -53,7 +54,8 @@ theorem hA_smul_r (a : AE F E) (v w : Fin n → AE F E) : hA σ J v (a • w) = 
 
 theorem hA_skew_eq (hσ : ∀ a, σ (σ a) = a) (hJ : ∀ i j, σ (J j i) = -J i j) (v w : Fin n → AE F E) :
     hA σ J w v = -cA σ (hA σ J v w) := by
-  simp only [hA, dotProduct, Matrix.mulVec, incM, Matrix.map_apply, map_sum, map_mul, cA_cA_eq σ hσ, cA_inclR_eq,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hA, dotProduct, Matrix.mulVec, incM, Matrix.map_apply, map_sum, map_mul, cA_cA_eq σ hσ, cA_inclR_eq,
     Finset.mul_sum, ← Finset.sum_neg_distrib]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_

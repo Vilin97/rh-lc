@@ -107,7 +107,8 @@ theorem coord_covMap {G G' : PDivGroup p S.R} (c : ConstTate (eps S) G) (c' : Co
   rw [← LinearMap.comp_apply, ← D.map_comp, LatticeBaseChange.constHom_comp]
   change tateMap _ _ S.R (dualHom _ G' f) (c'.t' j) = _ at h1
   rw [h1, tr_apply]
-  simp only [map_sum, map_zsmul, LinearMap.sum_apply, LinearMap.smul_apply, coord_apply, RingHom.id_apply, zsmul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_zsmul, LinearMap.sum_apply, LinearMap.smul_apply, coord_apply, RingHom.id_apply, zsmul_eq_mul]
 
 variable [Algebra S.R S'.R] {α : Ainf p S.R →+* Ainf p S'.R} {G : PDivGroup p S.R} {G' : PDivGroup p S'.R}
   {c : ConstTate (eps S) G} {c' : ConstTate (eps S') G'} {e : G.height = h} {e' : G'.height = h}
@@ -230,7 +231,8 @@ theorem mapSt : MapSt := by
     refine (hC'.κ n hn _ _).2 ⟨m', ?_, iL' (l y) - (p : S'.R) • z', ?_, ?_⟩
     · rw [hR hx, ← tr_theta (e := e) (e' := e') (M := M) hα h0, hm']
       congr 2
-      simp only [← RingHom.coe_pow, map_sum, map_mul, map_intCast]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [← RingHom.coe_pow, map_sum, map_mul, map_intCast]
     · rw [map_sub, map_smul, hl', h3, ← map_natCast (algebraMap S.R S'.R), ← map_smulₛₗ, ← map_sub, ← map_smul,
         ← map_sub, hz', sub_sub_cancel, h1, b_eq_tr hα hm']
     · rw [sub_sub_cancel]

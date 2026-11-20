@@ -49,7 +49,8 @@ theorem exists_part (R : RealDat D A Ks) (F : Face D A) {s : ℕ} (hs : A.fam.Ok
       simp only [LinearMap.sum_apply, LinearMap.smul_apply]⟩
   have htype : ∀ w (q : (F.lvl b).P), R.gW i (sg0 D A) (q : G) (π w) = lam q • π w := by
     intro w q
-    rw [hπ, map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hπ, map_sum, Finset.smul_sum]
     refine Fintype.sum_equiv (Equiv.mulLeft q) _ _ fun p => ?_
     rw [map_smul, ← Module.End.mul_apply, ← map_mul, smul_smul, Equiv.coe_mulLeft]
     show (lam p)⁻¹ • R.gW i (sg0 D A) ((q : G) * p) w =

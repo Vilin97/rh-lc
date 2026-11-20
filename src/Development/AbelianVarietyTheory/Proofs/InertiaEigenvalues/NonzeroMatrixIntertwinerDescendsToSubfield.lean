@@ -41,7 +41,8 @@ theorem matrix_intertwiner_descends : ∀ (K : Type) [Field K] (e : K →+* ℂ)
     simpa using this
   · ext i j
     have key := congrArg (fun M => ℓ (M i j)) (hXc γ)
-    simp only [Matrix.mul_apply, Matrix.map_apply, map_sum, h1, h2] at key ⊢
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mul_apply, Matrix.map_apply, map_sum, h1, h2] at key ⊢
     exact key
 
 end GlobalTheory

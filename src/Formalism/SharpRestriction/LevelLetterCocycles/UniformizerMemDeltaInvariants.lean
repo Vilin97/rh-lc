@@ -133,7 +133,8 @@ theorem uniformizer_mem_delta_invariants : W.π₀ ∈ W.AΔ := by
   have hδt := (W.DelF_def δ).1 hδ
   funext i
   show W.γ₀ δ W.π₀₁ = W.π₀₁
-  simp only [Formalism.BasicNotions.LocWach.π₀₁, map_add, map_sub, map_one, map_natCast, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Formalism.BasicNotions.LocWach.π₀₁, map_add, map_sub, map_one, map_natCast, map_sum]
   congr 1
   refine Finset.sum_equiv (Equiv.mulLeft δ) ?_ ?_
   · intro g

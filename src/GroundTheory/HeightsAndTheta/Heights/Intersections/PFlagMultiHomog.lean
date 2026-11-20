@@ -212,7 +212,8 @@ theorem exists_h (P : Ideal (MRing ι)) [P.IsPrime] {t : ℕ} (c : Fin t → Fin
     funext i
     have h1 := congrFun h0 i
     simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, M, Matrix.of_apply, Pi.zero_apply] at h1 ⊢
-    simp only [sigma_evalAt P n σ hσ (hc _ _), mul_assoc, ← Finset.mul_sum, ← map_mul, ← map_sum, h1,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [sigma_evalAt P n σ hσ (hc _ _), mul_assoc, ← Finset.mul_sum, ← map_mul, ← map_sum, h1,
       map_zero, mul_zero]
   choose h hh using fun a => (Submodule.mem_span_range_iff_exists_fun _).1 (hmem a)
   refine ⟨Matrix.of h, ?_⟩

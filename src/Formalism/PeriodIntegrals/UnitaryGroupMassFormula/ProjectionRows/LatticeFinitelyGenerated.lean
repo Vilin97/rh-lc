@@ -472,7 +472,8 @@ lemma lidx_span_act (w : HeightOneSpectrum (𝓞 K)) {d : ℕ} (y : Fin d → V)
   have hfA : ∀ j, f (Formalism.DivisionValues.idxChangeAct E P j) = ∑ k, P k j • y k := by
     intro j
     show combo y (∑ k, P k j • E k) = _
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_smul]
     congr 1
@@ -546,7 +547,8 @@ theorem localGamma_of_gramCS (hG : GramCS) : LocalGamma := by
     ext i j
     simp only [Matrix.of_apply]
     rw [← hP i, ← hP j]
-    simp only [Matrix.of_apply, map_sum, LinearMap.sum_apply, map_smulₛₗ, LinearMap.smul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.of_apply, map_sum, LinearMap.sum_apply, map_smulₛₗ, LinearMap.smul_apply,
       smul_eq_mul, starRingEnd_apply, Matrix.mul_apply, Matrix.conjTranspose_apply,
       Finset.mul_sum, Finset.sum_mul, RingHom.id_apply]
     refine Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring

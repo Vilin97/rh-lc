@@ -37,7 +37,8 @@ theorem mul_sum {A α β γ : Type} [CommRing A] [Fintype α] [Fintype β] [Fint
 
 theorem form_swap_herm {F E : Type} [Field F] [Field E] [Algebra F E] {σ : E →ₐ[F] E} (hinv : ∀ t, σ (σ t) = t) {d : ℕ}
     {J : Matrix (Fin d) (Fin d) E} (hh : ∀ i j, σ (J j i) = J i j) (x v : Fin d → E) : form σ J x v = σ (form σ J v x) := by
-  simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hinv, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hinv, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun l _ => ?_
   rw [hh]; ring
@@ -57,7 +58,8 @@ theorem dotProduct_J_c_eq_neg_of_pairing : ∀ {F E : Type} [Field F] [NumberFie
   set P : Fin n → AE F E := fun i => ∑ k, incM F X.J i k * cA σ (incV F H.x k) with hPdef
   have hform : ∀ u : Fin n → E, ∑ i, inclR (F := F) (AF F) (u i) * P i = inclR (F := F) (AF F) (form σ X.J u H.x) := by
     intro u
-    simp only [hPdef, form, dotProduct, Matrix.mulVec, incM, incV, Matrix.map_apply, OrthPlane.cA_inclR, map_sum, map_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hPdef, form, dotProduct, Matrix.mulVec, incM, incV, Matrix.map_apply, OrthPlane.cA_inclR, map_sum, map_mul,
       Finset.mul_sum]
   have hcol : ∀ m, H.ι *ᵥ Pi.single m 1 = fun j => H.ι j m := by
     intro m; ext j; simp [Matrix.mulVec, dotProduct, Pi.single_apply]

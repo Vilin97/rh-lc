@@ -138,7 +138,8 @@ theorem indep (hb : TanBasis t b) : TanIndep t (fun i => bcTan j hC (b i)) := by
   exact b'.linearIndependent
 
 theorem bc_comb (c : Fin n → K) : bcTan j hC (∑ i, c i • b i) = ∑ i, j (c i) • bcTan j hC (b i) := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_congr rfl fun i _ => map_smulₛₗ _ _ _
 
 theorem mem_of_latC {d : Fin n → C} (hd : d ∈ latC j (lieCoordLat t hx b)) :
@@ -218,7 +219,8 @@ theorem exists_latC [X.IsSeparated] (hb : TanBasis t b) {w : Sp (DualNumber C) �
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨_, hm, rfl⟩)
   · have h6 : bcTan (intO C).subtype e (tanOf hv) =
         ∑ i, (∑ q, a q • fun i => j (c q i)) i • bcTan j hC (b i) := by
-      rw [h1, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [h1, map_sum]
       simp only [Finset.sum_apply, Finset.sum_smul]
       rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun q _ => ?_

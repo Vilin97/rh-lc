@@ -93,7 +93,8 @@ theorem rank_identity (T : GoodSet K G) (P0 P : Pair K G) (hM : M1 T P0)
     rw [finrank_range_idem _ (by rw [← map_mul, hidS]), hc, ← hn, hM s, Nat.cast_one, mul_one]
   apply Nat.cast_injective (R := K)
   rw [finrank_range_idem _ (by rw [← map_mul, hidG])]
-  rw [eG, Finset.mul_sum, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [eG, Finset.mul_sum, map_sum, map_sum]
   push_cast
   refine Finset.sum_congr rfl fun s _ => ?_
   rw [hc, hr, hn, mul_comm]

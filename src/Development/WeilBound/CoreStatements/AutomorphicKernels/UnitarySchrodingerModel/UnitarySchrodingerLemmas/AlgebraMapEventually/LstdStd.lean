@@ -56,8 +56,10 @@ theorem eventually_mem_intLoc_iff {d : ℕ} (bs : Module.Basis (Fin d) F E) :
       refine mul_mem ha ?_
       have hx : (x : E) = ∑ i, (b.repr x i) • ((b i : 𝓞 E) : E) := by
         conv_lhs => rw [← b.sum_repr x]
-        simp only [map_sum, map_zsmul, RingOfIntegers.coe_eq_algebraMap]
-      rw [hx, map_sum, Finsupp.coe_finsetSum, Finset.sum_apply, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, map_zsmul, RingOfIntegers.coe_eq_algebraMap]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hx, map_sum, Finsupp.coe_finsetSum, Finset.sum_apply, map_sum]
       refine Subring.sum_mem _ fun i _ => ?_
       rw [map_zsmul, Finsupp.smul_apply, map_zsmul]
       exact zsmul_mem (hv1 i k) _

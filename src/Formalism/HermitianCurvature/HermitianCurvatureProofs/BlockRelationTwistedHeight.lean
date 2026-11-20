@@ -156,7 +156,8 @@ variable {k ρ : ℕ} {Wp Wq : Type} [NormedAddCommGroup Wp] [InnerProductSpace 
 theorem act_tr {V V' : Type} [AddCommGroup V] [Module ℂ V] [AddCommGroup V'] [Module ℂ V'] {T : V →ₗ[ℂ] V'}
     {M : Wd.SlopeTestRemainingChoices S (Pr V)} {M' : Wd.SlopeTestRemainingChoices S (Pr V')} (hM : ARel T M M') (x : Wd.Ix S → V) (a : Wd.Ix S) :
     T (∑ b, (M a b).1 (x b)) = ∑ b, (M' a b).1 (T (x b)) := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl (fun b _ => ?_)
   exact (LinearMap.congr_fun (hM a b).1 (x b)).symm
 

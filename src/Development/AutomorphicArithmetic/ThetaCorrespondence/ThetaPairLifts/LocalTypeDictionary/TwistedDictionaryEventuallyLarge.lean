@@ -63,7 +63,8 @@ theorem twisted_dictionary_eventually_large : _root_.GlobalTheory.FunPr.ThetaLoc
       simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Finset.mul_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       push_cast; ring
-    rw [hfun, GlobalTheory.NormSum.RepInv.applyAt0_sum _ _ _ hGi, Finset.mul_sum, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hfun, GlobalTheory.NormSum.RepInv.applyAt0_sum _ _ _ hGi, Finset.mul_sum, map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [oppQ_coe]
     simp only [map_mul, opp_opp]

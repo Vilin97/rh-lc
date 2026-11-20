@@ -68,7 +68,8 @@ theorem opOf_hsEmb (A : Wq →L[ℂ] Wp) : opOf (hsEmb A) = A := by
   ext e
   rw [opOf_apply]
   conv_rhs => rw [← (stdOrthonormalBasis ℂ Wq).sum_repr' e]
-  simp [hsEmb, map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [hsEmb, map_sum, map_smul]
 
 def opOfL : HS Wq Wp →ₗ[ℂ] (Wq →L[ℂ] Wp) where
   toFun := opOf

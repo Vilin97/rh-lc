@@ -42,7 +42,8 @@ theorem substF_mul {ι : Type} {N n : ℕ} (h h' : ι → Matrix (Fin N) (Fin N)
   rw [← AlgHom.comp_apply, MvPolynomial.comp_aeval]
   refine congrArg (fun F => (MvPolynomial.aeval F) P) (funext fun p => ?_)
   obtain ⟨τ, a, b⟩ := p
-  simp only [map_sum, map_mul, MvPolynomial.aeval_C, MvPolynomial.aeval_X, MvPolynomial.algebraMap_eq, Matrix.mul_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, MvPolynomial.aeval_C, MvPolynomial.aeval_X, MvPolynomial.algebraMap_eq, Matrix.mul_apply]
   simp only [Finset.sum_mul_sum]
   simp only [Finset.sum_mul, Finset.mul_sum]
   refine (sum4_lemma _).trans ?_

@@ -94,7 +94,8 @@ theorem form_gen {L V M ι : Type} [Field L] [AddCommGroup V] [Module L V] [AddC
     refine ⟨B.constr ℂ fun i => σ (l (b i)), fun x => ?_⟩
     conv_lhs => rw [← b.sum_repr x]
     conv_rhs => rw [← b.sum_repr x]
-    simp only [map_sum, LinearMap.map_smulₛₗ, ← hB, Module.Basis.constr_basis, smul_eq_mul, map_mul, RingHom.id_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.map_smulₛₗ, ← hB, Module.Basis.constr_basis, smul_eq_mul, map_mul, RingHom.id_apply]
   have hinj : Function.Injective j := fun x y hxy => by
     refine b.ext_elem fun i => σ.injective ?_
     obtain ⟨l', hl'⟩ := key (b.coord i)

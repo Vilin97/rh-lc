@@ -53,7 +53,8 @@ theorem coordinateRing_eq_zero_of_sum {ι : Type*} (s : Finset ι) {ω : ι → 
     rw [← hpq i, bcEmb_algebraMap_smul_basis]
     simp only [map_mul, aeval_C]
     ring
-  simp only [e, Finset.sum_add_distrib, ← Finset.sum_mul, ← map_sum] at h
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [e, Finset.sum_add_distrib, ← Finset.sum_mul, ← map_sum] at h
   obtain ⟨hP, hQ⟩ := eq_zero_of_aeval_genX_add_mul_genY _ h
   have hcoef : ∀ (t : ι → F[X]), ∑ i ∈ s, C (ω i) * (t i).map (algebraMap F Ω) = 0 →
       ∀ i ∈ s, t i = 0 := by

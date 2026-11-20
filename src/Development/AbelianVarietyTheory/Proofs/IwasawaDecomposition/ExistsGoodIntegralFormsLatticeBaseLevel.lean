@@ -94,9 +94,11 @@ theorem exists_oLat_good : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 I0
         R.toRealDat.bL F.lv2 false i k = y := by
       have h := congrArg (R.toRealDat.WL F.lv2 false i).subtype
         ((Module.finBasis D.what₂.LL (R.toRealDat.WL F.lv2 false i)).sum_repr ⟨y, hyW⟩)
-      rw [map_sum] at h
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum] at h
       exact h
-    rw [← hs, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hs, map_sum]
     refine Submodule.sum_mem _ fun k _ => ?_
     rw [map_smulₛₗ, ← GlobalTheory.Mem.LiftTheta.goodForm_single]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨k, rfl⟩)
@@ -148,7 +150,8 @@ theorem exists_oLat_good : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 I0
       exact hC _ (Module.finBasis D.what₂.LL (R.toRealDat.WL F.lv2 false i) k).2
   refine ⟨⟨T0.image g, hgen⟩, fun x => ⟨?_, ?_⟩⟩
   · rintro ⟨c, rfl⟩
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_induction _
       (fun w => ∃ v ∈ (R.FW i).MK, v ∈ (R.FW i).Wgood F.lv2.P0 F.lv2.ψ0⁻¹ (fun g => (idemOf A3.A.X).coeff g) ∧
         w = (R.FW i).j (sg0 D A3.A) v) ?_ ?_ ?_
@@ -175,14 +178,16 @@ theorem exists_oLat_good : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 I0
     obtain ⟨n, -, hn⟩ := Submodule.mem_span_finset.1 ((hT v).2 ⟨hv1, hv2⟩)
     have hx : x = ∑ t ∈ T0, ((n t : ℤ) : ℂ) • g t := by
       apply hinj
-      rw [hxv, ← hn, map_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hxv, ← hn, map_sum, map_sum]
       refine Finset.sum_congr rfl fun t ht => ?_
       rw [map_zsmul, map_smul, hg t ht, Int.cast_smul_eq_zsmul]
     refine ⟨fun y => ∑ t ∈ T0 with g t = y, (n t : D.what₂.O), ?_⟩
     rw [hx]
     symm
     refine Finset.sum_image' _ fun t _ => ?_
-    rw [map_sum, Finset.sum_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_smul]
     refine Finset.sum_congr rfl fun t' ht' => ?_
     rw [(Finset.mem_filter.1 ht').2, map_intCast]
 

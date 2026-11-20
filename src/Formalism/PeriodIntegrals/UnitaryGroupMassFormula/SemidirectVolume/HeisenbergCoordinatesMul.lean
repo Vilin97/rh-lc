@@ -15,7 +15,8 @@ theorem S_L (H : D.Hyp) {S : (n → A) →ₗ[A] (n → A)} (hS : D.FixEZ S) (hf
     S (D.L w s u) = D.L (fun a => S (w a)) s (S u) := by
   rw [L_apply, L_apply, pW_comm H hS hf hU]
   have hw : ∀ a, D.h (S (w a)) (S (D.pW u)) = D.h (w a) (D.pW u) := fun a => hU _ _
-  simp only [map_sub, map_add, map_sum, map_smul, hS.1, h_e_S hS hU, hw]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sub, map_add, map_sum, map_smul, hS.1, h_e_S hS hU, hw]
 
 theorem h_neg_left' (x y : n → A) : D.h (-x) y = -D.h x y := by
   have := D.h_add_left (-x) x y

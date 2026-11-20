@@ -44,7 +44,8 @@ private theorem inv_mul_eq_one_of_posDef {r : ℕ} {G : Matrix (Fin r) (Fin r) �
   Matrix.nonsing_inv_mul G (isUnit_det_of_posDef' hG)
 
 private theorem conj_star_dotProduct {r : ℕ} (u v : Fin r → ℂ) : starRingEnd ℂ (star u ⬝ᵥ v) = star v ⬝ᵥ u := by
-  simp only [dotProduct_eq_sum_mul, Pi.star_apply, map_sum, map_mul, starRingEnd_apply, star_star]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dotProduct_eq_sum_mul, Pi.star_apply, map_sum, map_mul, starRingEnd_apply, star_star]
   exact Finset.sum_congr rfl fun i _ => mul_comm _ _
 
 private theorem star_mulVec_dotProduct_of_isHermitian {r : ℕ} {H : Matrix (Fin r) (Fin r) ℂ} (hH : H.IsHermitian)
@@ -105,7 +106,8 @@ theorem bNormSq_eq (μ : Measure X) {r : ℕ} (s : Fin r → X → ℂ) (w : X �
   have hpt : ∀ x, ((‖∑ i, c i * s i x‖ ^ 2 * w x : ℝ) : ℂ) =
       ∑ i, ∑ j, starRingEnd ℂ (c i) * c j * (starRingEnd ℂ (s i x) * s j x * (w x : ℂ)) := by
     intro x
-    rw [Complex.ofReal_mul, Complex.sq_norm, Complex.normSq_eq_conj_mul_self, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Complex.ofReal_mul, Complex.sq_norm, Complex.normSq_eq_conj_mul_self, map_sum,
       Finset.sum_mul_sum, Finset.sum_mul]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [Finset.sum_mul]

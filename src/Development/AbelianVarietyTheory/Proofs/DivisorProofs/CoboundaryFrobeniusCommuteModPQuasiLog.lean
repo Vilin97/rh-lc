@@ -62,7 +62,8 @@ theorem dIn_comb {B Q σ ι : Type} [CommRing B] [CommRing Q] [Algebra B Q] [Fin
   intro α j
   choose c _ hc using fun i => he i α j
   refine ⟨∑ i, b i * c i, trivial, ?_⟩
-  simp only [comb, map_sum, coeff_smul, smul_eq_mul, Finset.mul_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [comb, map_sum, coeff_smul, smul_eq_mul, Finset.mul_sum, map_mul]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [← hc i]; ring
 

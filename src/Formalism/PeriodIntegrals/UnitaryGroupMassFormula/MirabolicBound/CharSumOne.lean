@@ -67,7 +67,8 @@ theorem sepLemma : SepLemma := by
     simp
   have h2 : ∑ x, χ' s x • T x (∑ q, g q • f q) =
       ∑ q, (if q.1 = s then N * g q else 0) • f q := by
-    simp_rw [map_sum, map_smul, hf', Finset.smul_sum, smul_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp_rw [map_sum, map_smul, hf', Finset.smul_sum, smul_smul]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun q _ => ?_
     rw [← Finset.sum_smul]

@@ -41,7 +41,8 @@ theorem dAct_mulVec {R : Type} [CommRing R] {d : ℕ} {OE : Type} [CommRing OE] 
     (TB.dAct k B a).mulVec (fun i => algebraMap R k (u i)) = algebraMap R k s • (fun i => algebraMap R k (u i)) := by
   funext i
   have h := congrArg (algebraMap R k) (congrFun hu i)
-  simp only [Matrix.mulVec, dotProduct, linPart, Matrix.of_apply, map_sum, map_mul, Pi.smul_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mulVec, dotProduct, linPart, Matrix.of_apply, map_sum, map_mul, Pi.smul_apply,
     smul_eq_mul] at h
   simp only [Matrix.mulVec, dotProduct, TB.dAct, FB.actK, MvPowerSeries.coeff_map, Pi.smul_apply, smul_eq_mul]
   exact h

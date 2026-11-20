@@ -55,7 +55,8 @@ theorem GlobalTheory.hermForm_norm_comparison_of_periods : ∀ (n a g r : ℕ) (
       Finset.sum_congr rfl fun m _ => (Complex.coe_smul _ _)
     rw [hc, hc]
     show hermFormImBilin (Hm t) _ _ = _
-    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul]
     simp only [dotProduct, Matrix.mulVec, Finset.mul_sum]
     have hb : ∀ u w, hermFormImBilin (Hm t) u w = (hermForm (Hm t) u w).im := fun _ _ => rfl
     rw [Finset.sum_comm]

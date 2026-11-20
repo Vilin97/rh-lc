@@ -93,7 +93,8 @@ theorem eigRank_eq (h1 : ∑ τ, P τ = 1) (hl : ∀ τ a, A a * P τ = χ τ a 
         rw [← Matrix.vecMul_smul, ← hm, ← hl, Matrix.map_mul, ← Matrix.vecMul_vecMul, hc a, Matrix.smul_vecMul]
       have h2 : ∑ τ, (P τ).map φ = 1 := by
         have := congrArg φ.mapMatrix h1
-        rw [map_sum, map_one] at this
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum, map_one] at this
         exact this
       rw [Matrix.toLin'_apply, Matrix.mulVec_transpose]
       conv_rhs => rw [← Matrix.vecMul_one c, ← h2, Matrix.vecMul_sum]
@@ -148,14 +149,16 @@ theorem exists_retract (h1 : ∑ τ, P τ = 1) (hl : ∀ τ a, A a * P τ = χ �
       have e : S ∘ₗ T = ∑ τ, sand (P τ) (P (c τ)) ∘ₗ T := by
         ext1 x
         simp only [S, LinearMap.sum_apply, LinearMap.comp_apply]
-      rw [e, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [e, map_sum]
       refine Finset.sum_eq_zero fun τ _ => ?_
       rw [trace_sand_transpose, orth hl hr hs (hc τ), Matrix.trace_zero]
     rw [LinearMap.subtype_comp_codRestrict]
     simp only [q]
     rw [map_smul, map_add, hT, add_zero, smul_eq_mul, ← _root_.mul_assoc, hu, _root_.one_mul]
     simp only [S]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun τ _ => trace_sand _ _
 
 end abstract
@@ -254,7 +257,8 @@ theorem balanced_finite_projective_rank : ∀ {E : Type} [Field E] [NumberField 
   have h2 := congrArg (algebraMap (R ⧸ m) m.ResidueField) (finrank_retract _ r hr1 (R ⧸ m))
   rw [map_natCast, ← IsScalarTower.algebraMap_apply] at h2
   push_cast
-  simp only [eigRank_eq hP hl hr hs, ← map_mul, ← map_sum, ← hr2]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [eigRank_eq hP hl hr hs, ← map_mul, ← map_sum, ← hr2]
   rw [map_mul, map_ofNat]
   exact congrArg _ h2
 

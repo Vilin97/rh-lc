@@ -93,7 +93,8 @@ theorem alt_sum {S S' F : Type*} [CommRing S] [CommRing S'] [FunLike F S S'] [Ri
     (hs : ∀ k : Fin n, b k.succ = B) :
     ∑ i : Fin (n + 1), (-1 : ℤ) ^ (i : ℕ) • (b i * J (t i)) =
       B * J (∑ i : Fin (n + 1), (-1 : ℤ) ^ (i : ℕ) • t i) - J (g * t 0) := by
-  rw [map_sum, Finset.mul_sum, Fin.sum_univ_succ, Fin.sum_univ_succ (f := fun i : Fin (n + 1) => B * J ((-1 : ℤ) ^ (i : ℕ) • t i))]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.mul_sum, Fin.sum_univ_succ, Fin.sum_univ_succ (f := fun i : Fin (n + 1) => B * J ((-1 : ℤ) ^ (i : ℕ) • t i))]
   have h : ∀ k : Fin n, (-1 : ℤ) ^ (k.succ : ℕ) • (b k.succ * J (t k.succ)) = B * J ((-1 : ℤ) ^ (k.succ : ℕ) • t k.succ) := by
     intro k
     rw [hs, map_zsmul, mul_smul_comm]
@@ -118,7 +119,8 @@ theorem gr_delta {R : Type} [CommRing R] {C : Type 1} [Category.{0} C] {Φ : PDF
     change Subtype.val (∑ i : Fin (j + 2), (-1 : ℤ) ^ (i : ℕ) •
       ((Cut.Pσ Q σ ⋙ Cut.U E ⋙ gr Fil r).map (toLast i s)).hom (y (face i s)) :
       sqM (Fil r) (Fil (r + 1)) (Q.P (s.obj (Fin.last (j + 1))))) = _
-    rw [AddSubmonoidClass.coe_finsetSum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [AddSubmonoidClass.coe_finsetSum, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_zsmul]
     refine Eq.trans ?_ (congrArg (fun z => (-1 : ℤ) ^ (i : ℕ) • z) (term_val Q E σ I x y hy s i))

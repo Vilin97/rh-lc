@@ -25,7 +25,8 @@ theorem isBaseChange_glob1 (R : Type) [CommRing R] (C : Type) [Category.{0} C] (
     rw [TensorProduct.smul_tmul', smul_eq_mul, _root_.mul_one]
   have h1 : ∀ ω, fwd (inv ω) = ω := by
     intro ω
-    rw [hinv, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hinv, map_sum]
     simp only [fwd, LinearMap.liftBaseChange_tmul, he]
     exact (Φ.sum T ω).symm
   have h2 : ∀ x, inv (fwd x) = x := by

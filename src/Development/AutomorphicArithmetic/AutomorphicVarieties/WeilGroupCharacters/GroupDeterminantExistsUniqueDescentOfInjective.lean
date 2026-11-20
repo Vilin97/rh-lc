@@ -30,7 +30,8 @@ private theorem exists_poly {n : ℕ} {A' A G : Type} [CommRing A'] [CommRing A]
   refine Eq.trans ?_ h2
   change _ = D.D B (ofT A G B _)
   congr 1
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [z, ofT_tmul, MonoidAlgebra.mapRingHom_single, map_one, MonoidAlgebra.smul_single, smul_eq_mul, mul_one]
   rw [Finset.sum_coe_sort S (fun g => MonoidAlgebra.single g (x.coeff g))]
   conv_lhs => rw [← MonoidAlgebra.sum_coeff_single x]

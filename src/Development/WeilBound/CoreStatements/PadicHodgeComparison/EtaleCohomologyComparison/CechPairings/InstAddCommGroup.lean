@@ -172,7 +172,8 @@ theorem d_d (n : ℕ) (f : Cn F n) : d F (n + 1) (d F n f) = 0 := by
   funext s
   change ∑ j : Fin (n + 3), (-1 : ℤ) ^ (j : ℕ) • (F.map (toLast j s)).hom
       (∑ i : Fin (n + 2), (-1 : ℤ) ^ (i : ℕ) • term F (face j s) f i.succAbove (Fin.strictMono_succAbove i).monotone) = 0
-  simp only [map_sum, map_zsmul, Finset.smul_sum, smul_smul, term_face]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_zsmul, Finset.smul_sum, smul_smul, term_face]
   rw [← Fintype.sum_prod_type']
   refine Finset.sum_involution (fun p _ => (p.1.succAbove p.2, p.2.predAbove p.1)) ?_ ?_ ?_ ?_
   · rintro ⟨j, i⟩ _
@@ -242,7 +243,8 @@ theorem d_pullC (n : ℕ) (f : Cn F n) : d F' n (m.pullC n f) = m.pullC (n + 1) 
   funext s
   change ∑ i : Fin (n + 2), (-1 : ℤ) ^ (i : ℕ) • (F'.map (toLast i s)).hom (m.τ _ (f (face i s ⋙ m.G))) =
     m.τ _ (∑ i : Fin (n + 2), (-1 : ℤ) ^ (i : ℕ) • (F.map (m.G.map (toLast i s))).hom (f (face i s ⋙ m.G)))
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_congr rfl fun i _ => by rw [map_zsmul, m.nat]
 
 def hom : Cx.Hom (cx F) (cx F') σ := ⟨m.pullC, m.d_pullC⟩

@@ -262,7 +262,8 @@ theorem uCat_indep {T T' : D.host.E} (F : FlagG (hS D) D.R.rS T) (F' : FlagG (hS
   have hG : (DetUU.gramCat F F').mulVec c = 0 := by
     funext k
     have h1 := congrArg (fun v => (hS D).hT (DetUU.uCat F F' k) v) hc
-    simp only [map_sum, map_smul, smul_eq_mul, map_zero] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, smul_eq_mul, map_zero] at h1
     simp only [DetUU.gramCat, Matrix.mulVec, dotProduct, Matrix.of_apply, Pi.zero_apply]
     rw [← h1]
     refine Finset.sum_congr rfl fun j _ => ?_

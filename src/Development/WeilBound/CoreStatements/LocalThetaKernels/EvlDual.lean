@@ -45,7 +45,8 @@ theorem exists_dual_frame {R K V : Type} [CommRing R] [IsDedekindDomain R] [Fiel
   obtain ⟨a, ha, h⟩ := hden x
   refine canc a ha _ _ ?_
   have h1 : f (g ⟨_, h⟩) = ⟨_, h⟩ := LinearMap.congr_fun hfg _
-  rw [← Finset.univ_sum_single (g ⟨_, h⟩), map_sum] at h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Finset.univ_sum_single (g ⟨_, h⟩), map_sum] at h1
   have h2 := congrArg Subtype.val h1
   rw [Submodule.coe_sum] at h2
   rw [Finset.smul_sum]
@@ -70,7 +71,8 @@ theorem rep_E {J : Matrix (Fin n) (Fin n) E} (hJ : J.det ≠ 0) (g : (Fin n → 
     ∃ x', ∀ x, form σ J x' x = σ (g x) := by
   obtain ⟨x', h⟩ := exists_form (σ := σ) hJ fun i => σ (g fun j => if i = j then 1 else 0)
   refine ⟨x', fun x => ?_⟩
-  rw [h, g.pi_apply_eq_sum_univ x, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h, g.pi_apply_eq_sum_univ x, map_sum]
   exact Finset.sum_congr rfl fun i _ => by rw [smul_eq_mul, map_mul, mul_comm]
 
 theorem rep_F (hσ : ∀ z, σ (σ z) = z) {J : Matrix (Fin n) (Fin n) E} (hJ : J.det ≠ 0) (g : (Fin n → E) →ₗ[F] F) :
@@ -79,8 +81,10 @@ theorem rep_F (hσ : ∀ z, σ (σ z) = z) {J : Matrix (Fin n) (Fin n) E} (hJ : 
   obtain ⟨x', h⟩ := exists_form (σ := σ) hJ fun i =>
     ((Algebra.traceForm F E).toDual hn).symm (g ∘ₗ LinearMap.single F (fun _ => E) i ∘ₗ σ.toLinearMap)
   refine ⟨x', fun x => ?_⟩
-  rw [h, map_sum]
-  conv_rhs => rw [← Finset.univ_sum_single x, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_rhs => rw [← Finset.univ_sum_single x, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [← Algebra.traceForm_apply, LinearMap.BilinForm.apply_toDual_symm_apply]
   simp [hσ]
@@ -169,7 +173,8 @@ theorem exists_frames {B : Base F E} {X : Spc F E n} {W : Spc F E d} {r s r' s' 
     simp only [hs']
     conv_lhs => rw [key]
     ext i j
-    simp only [incM, Matrix.map_apply, Matrix.sum_apply, Matrix.smul_apply, map_sum, algebraMap_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [incM, Matrix.map_apply, Matrix.sum_apply, Matrix.smul_apply, map_sum, algebraMap_smul]
     refine Finset.sum_congr rfl fun p _ => ?_
     exact map_smul (Algebra.TensorProduct.includeRight : E →ₐ[F] AF F ⊗[F] E) _ _
   | zero => simp [GlobalTheory.LatVacArith.symp_zero_right]

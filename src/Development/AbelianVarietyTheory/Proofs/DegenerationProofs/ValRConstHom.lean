@@ -241,13 +241,15 @@ theorem crd_comb {V K : Type} [CommRing V] [CommRing K] {L : LB X} {T : Type} [F
       ∑ j, constHom π' _ (a i j) * LB.Sec.f (pullOver L ε hp hφ (σ j)) l := by
     rw [hs i]
     show chartLin π' _ l (∑ j, a i j • pullOver L ε hp hφ (σ j)) = _
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [map_smul, Algebra.smul_def]
     rfl
   have hadd : ∀ f : J → Γ(Y, (LB.LinComb L φ' ε).U l),
       valR x ((LB.LinComb L φ' ε).U l) (∑ j, f j) = ∑ j, valR x ((LB.LinComb L φ' ε).U l) (f j) := by
     intro f
-    simp only [valR, dif_pos hl', map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [valR, dif_pos hl', map_sum]
   show ∑ j, ψ (a i j) * w j = (c : R) * valR x _ (LB.Sec.f (s i) l)
   rw [hsum, hadd, Finset.mul_sum]
   refine Finset.sum_congr rfl fun j _ => ?_

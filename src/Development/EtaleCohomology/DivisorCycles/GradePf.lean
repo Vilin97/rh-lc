@@ -113,7 +113,8 @@ theorem Grade_of : Grade := by
   let q : C[X] := ∏ kl ∈ (Finset.univ : Finset (Fin n × Fin n)).erase (i, j), (Polynomial.X - Polynomial.C (e kl.1 - e kl.2))
   have hq : aeval (adX X) q Y = q.eval (e i - e j) • (p i * Y * p j) := by
     conv_lhs => rw [hdec]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp_rw [aeval_eig (adX X) _ _ (heig _)]
     rw [Finset.sum_eq_single (i, j)]
     · intro b _ hb

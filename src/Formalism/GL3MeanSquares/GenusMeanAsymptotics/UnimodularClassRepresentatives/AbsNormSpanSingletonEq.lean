@@ -17,7 +17,8 @@ theorem exists_det_span (b : Basis (Fin (finrank K V)) K V) {x : Fin (finrank K 
   have hrepr : ∀ j i, b.repr (x j) i = algebraMap (𝓞 K) K (c j i) := by
     intro j i
     rw [← hc j]
-    simp [← algebraMap_smul K, map_sum, Finsupp.single_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [← algebraMap_smul K, map_sum, Finsupp.single_apply]
   refine ⟨(Matrix.of fun i j => c j i).det, ?_⟩
   rw [RingHom.map_det, Basis.det_apply]
   congr 1

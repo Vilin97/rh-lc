@@ -26,7 +26,8 @@ theorem continuous_liftE {F E : Type} [Field F] [NumberField F] [Field E] [Numbe
       liftE v z = ∑ i, GlobalTheory.LatVac.liftV v (bA.repr z i) • ((1 : AF F) ⊗ₜ[F] b i) := by
     intro z
     conv_lhs => rw [← bA.sum_repr z]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [Algebra.TensorProduct.basis_apply, TensorProduct.smul_tmul', smul_eq_mul, mul_one,
       TensorProduct.smul_tmul', smul_eq_mul, mul_one]

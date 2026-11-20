@@ -29,7 +29,8 @@ lemma hC_comb_f (y y' : Fin n → ℂ) :
   have hsumR : ∀ (u : Fin r → ℂ) (w : Fin n → Fin r → ℂ),
       hermC τ.1 X.Gm u (∑ l, w l) = ∑ l, hermC τ.1 X.Gm u (w l) := by
     intro u w
-    simp only [hermC, Finset.sum_apply, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hermC, Finset.sum_apply, map_sum, Finset.mul_sum]
     calc _ = ∑ a, ∑ l, ∑ b, u a * τ.1 (X.Gm a b) * conj (w l b) :=
           Finset.sum_congr rfl fun a _ => Finset.sum_comm
       _ = _ := Finset.sum_comm
@@ -74,7 +75,8 @@ lemma uc_comb (hz : z0 ∈ X.dom) {n : ℕ} (a : Fin n → ℂ) (V : Fin n → F
   have hHf : ∀ u w, X.Hf z0 τ u w = hermC τ.1 X.Gm ((2 : ℂ) • L u - u) w := fun u w => rfl
   have hsum : X.Hf z0 τ (∑ k, a k • V k) (Data.emb τ.1 ξ) =
       ∑ k, a k * X.Hf z0 τ (V k) (Data.emb τ.1 ξ) := by
-    rw [hHf, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hHf, map_sum]
     simp only [map_smul]
     have e : (2 : ℂ) • ∑ k, a k • L (V k) - ∑ k, a k • V k =
         ∑ k, a k • ((2 : ℂ) • L (V k) - V k) := by
@@ -103,7 +105,8 @@ lemma uc_perp (hξξ : hermC τ.1 X.Gm (Data.emb τ.1 ξ) (Data.emb τ.1 ξ) = 0
     exact Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => by ring
   have hsym : hermC τ.1 X.Gm (Data.emb τ.1 ξ) v = 0 := by
     have hc : hermC τ.1 X.Gm (Data.emb τ.1 ξ) v = conj (hermC τ.1 X.Gm v (Data.emb τ.1 ξ)) := by
-      simp only [hermC, map_sum, map_mul, Complex.conj_conj]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hermC, map_sum, map_mul, Complex.conj_conj]
       rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
       rw [← ReciprocityTheory.ChartRestriction.G.FD.emb_cc, X.Gm_herm]
@@ -117,7 +120,8 @@ end Uc
 lemma emb_sum {n : ℕ} (τ : E →+* ℂ) (c : Fin n → E) (β : Fin n → Fin r → E) :
     Data.emb τ (∑ k, c k • β k) = ∑ k, τ (c k) • Data.emb τ (β k) := by
   funext a
-  simp [Data.emb, Finset.sum_apply, map_sum, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Data.emb, Finset.sum_apply, map_sum, smul_eq_mul]
 
 end
 

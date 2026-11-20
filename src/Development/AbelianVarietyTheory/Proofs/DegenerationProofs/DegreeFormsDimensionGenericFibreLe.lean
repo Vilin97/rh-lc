@@ -77,7 +77,8 @@ theorem hilb_le {k J : Type} [Field k] [Fintype J] (C : Set (J → k)) (d m : �
   have le : (MvPolynomial.homogeneousSubmodule J k d).map
       (LinearMap.pi fun v : C => (MvPolynomial.aeval (R := k) v.1).toLinearMap) ≤ Submodule.span k (Set.range β) := by
     rintro _ ⟨P, hP, rfl⟩
-    rw [P.as_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [P.as_sum, map_sum]
     refine Submodule.sum_mem _ fun α hα => ?_
     have hd : ∑ i, α i = d := by
       have := MvPolynomial.IsHomogeneous.degree_eq_sum_deg_support hP hα

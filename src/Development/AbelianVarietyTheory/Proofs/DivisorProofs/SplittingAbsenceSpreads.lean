@@ -39,7 +39,8 @@ variable {A D}
 
 theorem map_gen {k : Type} [CommRing k] (ψ : A →+* k) (z : Var σ D → k) (b : Bool) :
     MvPolynomial.map (eval₂Hom ψ z) (gen A D b) = ∑ m : Mon σ D, monomial m.1 (z (Sum.inl (b, m))) := by
-  simp [gen, map_sum, map_monomial]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [gen, map_sum, map_monomial]
 
 theorem totalDegree_sum_le {k : Type} [CommRing k] (c : Mon σ D → k) :
     (∑ m : Mon σ D, monomial m.1 (c m)).totalDegree ≤ D := by

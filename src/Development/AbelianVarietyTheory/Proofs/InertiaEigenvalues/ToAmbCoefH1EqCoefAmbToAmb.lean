@@ -68,14 +68,16 @@ theorem indep_cons [IsLocalRing O] {lam : O} (hl : Ideal.span {lam} = IsLocalRin
     rw [this]; simp
   refine Fin.cases ?_ (fun a => ?_)
   · have h1 := congrArg ((C.projectionOnto F h.symm).rTensor _) hx
-    simp only [map_add, map_smul, map_sum, hC, LinearMap.rTensor_tmul, map_zero] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_add, map_smul, map_sum, hC, LinearMap.rTensor_tmul, map_zero] at h1
     simp only [Submodule.projectionOnto_apply_right, zero_tmul, smul_zero, Finset.sum_const_zero, add_zero] at h1
     rw [← Ideal.mem_span_singleton, hl]
     by_contra hu
     have hu' : IsUnit (x 0) := by simpa using hu
     exact hc (hu'.smul_eq_zero.mp h1)
   · have h1 := congrArg (fun y => TensorProduct.lid O _ ((b.coord a).rTensor _ ((F.projectionOnto C h).rTensor _ y))) hx
-    simp only [map_add, map_smul, map_sum, hF, LinearMap.rTensor_tmul, map_zero] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_add, map_smul, map_sum, hF, LinearMap.rTensor_tmul, map_zero] at h1
     simp only [Submodule.projectionOnto_apply_left, lid_tmul, smul_zero, zero_add, Module.Basis.coord_apply,
       Module.Basis.repr_self, Finsupp.single_apply, ite_smul, one_smul, zero_smul, smul_ite, Finset.sum_ite_eq',
       Finset.mem_univ, if_true] at h1
@@ -211,8 +213,10 @@ theorem subset_of_bound [IsDomain O] [IsDiscreteValuationRing O] {lam : O} (hl :
       choose c hc e using hy
       refine hk s c hc fun x hx => hind x ((hT _).1 ?_)
       have h2 := congrArg (toAmb (twCoef (latRep L) χ (O ⧸ Ideal.span {lam}))) hx
-      simp only [map_sum, map_smul, e, map_zero] at h2
-      simp only [map_sum, map_smul, map_zero, h2])
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, e, map_zero] at h2
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, map_zero, h2])
     X y ⟨c, hc, hy.symm⟩
   exact ⟨y', by rw [LinearMap.comp_apply, hy', hy]⟩
 

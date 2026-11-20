@@ -71,7 +71,8 @@ theorem pre_bounded_poles : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (bk : BK
   · refine Matrix.ext fun i j => ?_
     apply inclW_injective
     have e2 := congrFun (congrFun hTTi i) j
-    simp only [Matrix.mul_apply, Matrix.of_apply, map_sum, map_mul, Matrix.smul_apply, smul_eq_mul, Matrix.one_apply] at e2 ⊢
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mul_apply, Matrix.of_apply, map_sum, map_mul, Matrix.smul_apply, smul_eq_mul, Matrix.one_apply] at e2 ⊢
     simp only [← hYe, ← hY'e]
     calc ∑ k, inclW l τ ^ N * F.T i k * (inclW l τ ^ N * F.T⁻¹ k j)
         = inclW l τ ^ (2 * N) * ∑ k, F.T i k * F.T⁻¹ k j := by

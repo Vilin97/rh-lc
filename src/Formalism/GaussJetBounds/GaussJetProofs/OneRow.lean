@@ -59,10 +59,12 @@ theorem one_row_bound : OneRow.{u} := by
     congr 1
     funext i b
     unfold oldRowLow
-    simp only [map_sum, map_mul, aeval_X, algHom_C, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, aeval_X, algHom_C, Finset.mul_sum]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun a _ => ?_
-    rw [← hγf i a, map_sum, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hγf i a, map_sum, Finset.sum_mul]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_mul, mul_assoc]
     rfl

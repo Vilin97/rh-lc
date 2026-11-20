@@ -179,7 +179,8 @@ lemma sop_off (w : GlobalTheory.ExportSeries.Weight D n) (τ : D.what₂.Tau) (a
     (P : PolF D m n) (β : FVar D m n →₀ ℕ) (hβ : β ∈ (sop w τ a b P).support) :
     ∃ α ∈ P.support, ht w β = ht w α + ((b : ℕ) - (a : ℕ) : ℤ) := by
   classical
-  rw [as_sum P, map_sum] at hβ
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [as_sum P, map_sum] at hβ
   obtain ⟨α, hα, h⟩ := Finset.mem_biUnion.1 (support_sum hβ)
   exact ⟨α, hα, sop_off_mono w τ a b hab α β _ h⟩
 

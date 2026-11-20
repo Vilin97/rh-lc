@@ -505,7 +505,8 @@ theorem isDef_of_sig {F E : Type} [Field F] [Field E] [Algebra F E] [Algebra.IsA
   have hfixed : ∀ x : Fin k → E, σ (UnusedSlot33.hform (σ : E →+* E) J x x) = UnusedSlot33.hform (σ : E →+* E) J x x := by
     intro x
     unfold UnusedSlot33.hform
-    simp only [map_sum, map_mul, AlgHom.coe_toRingHom, hinv, hJ']
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, AlgHom.coe_toRingHom, hinv, hJ']
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
     ring
@@ -513,7 +514,8 @@ theorem isDef_of_sig {F E : Type} [Field F] [Field E] [Algebra F E] [Algebra.IsA
       star (fun i => τ (x i)) ⬝ᵥ ((J.map τ) *ᵥ (fun i => τ (x i))) := by
     intro x
     unfold UnusedSlot33.hform
-    simp only [map_sum, map_mul, AlgHom.coe_toRingHom, hconj, dotProduct, mulVec, Pi.star_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, AlgHom.coe_toRingHom, hconj, dotProduct, mulVec, Pi.star_apply,
       Matrix.map_apply, Finset.mul_sum]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
     simp [mul_assoc]

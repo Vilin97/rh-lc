@@ -62,7 +62,8 @@ theorem annihilator_mem_latO : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k
   have hyx : (y : Matrix _ _ (AE D)) *ᵥ x = fun i => cA D (q.sec ((x' ᵥ* N) i)) := by
     funext i
     have : (x' ᵥ* N) i = q.pr (cA D (((y : Matrix _ _ (AE D)) *ᵥ x) i)) := by
-      simp only [Matrix.vecMul, Matrix.mulVec, dotProduct, map_sum, RingHom.map_mul, hN, hx', Matrix.of_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Matrix.vecMul, Matrix.mulVec, dotProduct, map_sum, RingHom.map_mul, hN, hx', Matrix.of_apply]
       exact Finset.sum_congr rfl fun j _ => mul_comm _ _
     rw [this, hcs]
     simp only [Matrix.mulVec, dotProduct, Finset.mul_sum]

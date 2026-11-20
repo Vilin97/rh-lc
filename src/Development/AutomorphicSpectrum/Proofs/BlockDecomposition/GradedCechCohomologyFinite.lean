@@ -108,7 +108,8 @@ theorem vb_cech (hLoc : KH.LocGr) (hPoly : KH.PolyTf) {O : Type} [CommRing O] (l
       intro T h
       exact ⟨(h a).1, _, rfl, le_preimage_inf (pt T) (hq2 T (hle i a T h)) (hq2 T (hle i a' T h))⟩
     have h1 := congrArg ((resU _ hle2).pull r) (hg' (i a) (i a') k')
-    rw [res_res, map_sum] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [res_res, map_sum] at h1
     refine h1.trans (Finset.sum_congr rfl fun k _ => ?_)
     refine (res_fAct (isF _) hq2 r (isF _) (hT i) (le_inf (capO_le U.U i a) (capO_le U.U i a')) hle2 _ _).trans ?_
     change fAct _ _ r _ _ = fAct _ _ r _ _

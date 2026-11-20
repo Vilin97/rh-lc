@@ -18,7 +18,8 @@ theorem eq_of_pow_eq_self {R K : Type} [CommRing R] [Field K] [CharZero K] (θ :
   have h1 : S * (u - v) = u - v := by rw [hS, geom_sum₂_mul, hu, hv]
   have hc : θ u ^ n = θ u := by rw [← map_pow, hu]
   have e : θ S = n * θ u ^ (n - 1) := by
-    rw [hS, map_sum, Finset.sum_congr rfl (g := fun _ => θ u ^ (n - 1)) (fun i hi => by
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hS, map_sum, Finset.sum_congr rfl (g := fun _ => θ u ^ (n - 1)) (fun i hi => by
       have := Finset.mem_range.1 hi
       rw [map_mul, map_pow, map_pow, ← h, ← pow_add]
       congr 1

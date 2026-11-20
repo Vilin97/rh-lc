@@ -40,7 +40,8 @@ theorem symm_of_skew {M H : Type} [AddCommGroup M] [Module ℂ M] [NormedAddComm
     rw [hP, hP, neg_neg]
   have h2 : ∀ b x y, ⟪ι (Q b (Q b x)), ι y⟫_ℂ = ⟪ι x, ι (Q b (Q b y))⟫_ℂ := fun b x y => by
     rw [hQ, hQ, neg_neg]
-  simp only [LinearMap.sub_apply, LinearMap.sum_apply, Module.End.mul_apply, map_sub, map_sum, inner_sub_left,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [LinearMap.sub_apply, LinearMap.sum_apply, Module.End.mul_apply, map_sub, map_sum, inner_sub_left,
     inner_sub_right, sum_inner, inner_sum, h1, h2]
 
 theorem quad_symm (μ : Measure (GA D V)) [μ.IsHaarMeasure] (hθ : IsInfFam θ) {τ : D.what₂.Tau} {n₁ n₂ : ℕ}
@@ -61,7 +62,8 @@ theorem bd_of_quad (μ : Measure (GA D V)) [μ.IsHaarMeasure] (hθ : IsInfFam θ
   have hB0 : 0 ≤ B := add_nonneg hΛ0 (Finset.sum_nonneg fun b _ => sq_nonneg _)
   refine ⟨Real.sqrt B, Real.sqrt_nonneg _, fun φ hφ => ?_⟩
   have h2 := congrArg (fun w => ⟪io μ hθ φ, io μ hθ w⟫_ℂ) (quad_apply hθ hX hY φ)
-  simp only [map_sub, map_sum, inner_sub_right, inner_sum, inner_der_der] at h2
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sub, map_sum, inner_sub_right, inner_sum, inner_der_der] at h2
   have h3 := congrArg Complex.re h2
   simp only [Complex.sub_re, Complex.re_sum, Complex.neg_re, Complex.ofReal_re,
     Finset.sum_neg_distrib, sub_neg_eq_add, Complex.add_re] at h3

@@ -125,12 +125,14 @@ theorem transport_denom : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [
     intro t ht
     refine ⟨?_, fun v => ?_⟩
     · change fstA F (∑ j, y j * t j) = 0
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_eq_zero fun j _ => ?_
       rw [map_mul]
       change (y j).1 * _ = 0
       rw [hy.1 j, zero_mul]
-    · rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [map_sum]
       refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg (norm_nonneg _) fun j _ => ?_
       rw [map_mul, norm_mul]
       have h1 := hy.2 v j

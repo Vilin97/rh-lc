@@ -102,7 +102,8 @@ def invariantData {Γ : Subgroup (ι → GL (Fin p ⊕ Fin q) ℂ)} (hΓ : Γ �
   nrm_inv := fun i => i.elim0
   kae := bergman
   kae_herm := fun z hz ξ η => by
-    rw [bergman_apply, bergman_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [bergman_apply, bergman_apply, map_sum]
     refine Finset.sum_congr rfl fun τ _ => ?_
     rw [starRingEnd_apply, ← trace_conjTranspose]
     simp only [conjTranspose_mul, conjTranspose_conjTranspose, (hP_inv_posDef (hz τ)).isHermitian.eq,

@@ -89,7 +89,8 @@ theorem shift_basis : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgCl
       have h2 : y - ∑ j, c j • t j ∈ wQuot C D τ := by
         refine ⟨E.sub_mem hy (E.sum_mem fun j _ => E.smul_mem _ (htE j)), ?_⟩
         show alC C D (y - ∑ j, c j • t j) = 0
-        rw [map_sub, map_sum, ← hc]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sub, map_sum, ← hc]
         simp only [LinearMap.map_smul_of_tower, htn, sub_self]
       rw [← hw.2] at h2
       obtain ⟨d, hd⟩ := (Submodule.mem_span_range_iff_exists_fun O).1 h2
@@ -106,7 +107,8 @@ theorem shift_basis : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgCl
     rw [Fin.sum_univ_add] at hg
     simp only [vec, Fin.append_left, Fin.append_right] at hg
     have h1 := congrArg (alC C D) hg
-    simp only [map_add, map_sum, map_smul, (hwQ _).2, smul_zero, Finset.sum_const_zero, zero_add,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_add, map_sum, map_smul, (hwQ _).2, smul_zero, Finset.sum_const_zero, zero_add,
       htn, map_zero] at h1
     have hb : ∀ j, g (Fin.natAdd a j) = 0 :=
       (Fintype.linearIndependent_iff.1 hn.1) (fun j => g (Fin.natAdd a j)) h1

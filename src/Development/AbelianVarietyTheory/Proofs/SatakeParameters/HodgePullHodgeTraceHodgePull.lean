@@ -198,7 +198,8 @@ theorem hodgePull_hodgeTrace (j : ℕ)
   have e5 : cohOn.map k (∑ r ∈ R, liftPull (hσ r) (hσs r) j) ⊤ q =
       ∑ r ∈ R, cohOn.map k (liftPull (hσ r) (hσs r) j) ⊤ q :=
     map_sum (cohOn.mapAddHom k _ _ ⊤ q) _ _
-  rw [H, ← e2, e5, LinearMap.sum_apply, map_sum] at e4
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [H, ← e2, e5, LinearMap.sum_apply, map_sum] at e4
   rw [e1]
   refine e4.trans (Finset.sum_congr rfl fun r _ ↦ (e2 _).trans ?_)
   have h : (σ r ≫ c) ≫ s = sW := by rw [hσ, hπ]
@@ -249,7 +250,8 @@ theorem appSec_secTrace {Z Y W : Scheme.{0}} {s : Z ⟶ Sp ℂ} [Smooth s] {s' :
     (fun r ↦ by rw [Category.assoc, hσ]) (fun r hr r' hr' e ↦ ?_) (fun t ht ↦ ?_) b
   · let v : Sec sW (π ⁻¹ᵁ U) →+* ℂ := (valMap x (π ⁻¹ᵁ U) hxU).hom
     have hv : ∀ f : Sec sW (π ⁻¹ᵁ U), valR x (π ⁻¹ᵁ U) f = v f := valR_eq x _ hxU
-    rw [hv, map_sub, map_sum, sub_eq_zero, ← hv]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hv, map_sub, map_sum, sub_eq_zero, ← hv]
     refine ((valR_comp x π U _).symm.trans key).trans (Finset.sum_congr rfl fun r _ ↦ ?_)
     rw [← hv]
     exact (valR_comp x (act r ≫ w) (c ⁻¹ᵁ U) b).trans

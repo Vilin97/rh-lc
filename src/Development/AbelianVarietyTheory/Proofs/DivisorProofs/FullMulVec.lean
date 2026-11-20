@@ -42,7 +42,8 @@ theorem dot_full (d : CD N g' r bX) (σ : Fin g ≃ Fin g' ⊕ Fin r) (S : Matri
 theorem co_form {k : ℕ} (β : N.Form k) (x y : N.X) :
     co bX x ⬝ᵥ bmat bX β *ᵥ co bX y = (β.be x y : ℂ) := by
   conv_rhs => rw [← bX.sum_repr x, ← bX.sum_repr y]
-  simp only [map_sum, LinearMap.sum_apply, map_zsmul, LinearMap.smul_apply, smul_eq_mul, dotProduct, mulVec, co, bmat,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.sum_apply, map_zsmul, LinearMap.smul_apply, smul_eq_mul, dotProduct, mulVec, co, bmat,
     Matrix.of_apply, Int.cast_sum, Int.cast_mul, Finset.mul_sum]
   conv_rhs => rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun l _ => Finset.sum_congr rfl fun l' _ => ?_

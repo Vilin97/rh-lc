@@ -81,7 +81,8 @@ theorem gauss_units_norm_sq : ∀ {R : Type} [CommRing R] [Fintype R] [Decidable
     · exact absurd h3 (hχ0 1)
     · exact sub_eq_zero.mp h3
   have hconj : conj (∑ u : Rˣ, (χ u)⁻¹ * ψ u) = ∑ z : Rˣ, χ z * ψ (-(z : R)) := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl (fun z _ => ?_)
     rw [map_mul, Complex.inv_eq_conj (hχn z), Complex.conj_conj, AddChar.map_neg_eq_conj]
   have hexp : (∑ u : Rˣ, (χ u)⁻¹ * ψ u) * conj (∑ u : Rˣ, (χ u)⁻¹ * ψ u)

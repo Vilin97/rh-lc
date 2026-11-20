@@ -70,7 +70,8 @@ theorem sec_mem_iff (V : HSp D) (t : GA D V) (Λ L : GlobalTheory.FinPl.Lat V) (
   have hkey : (fun i => q.sec ((M *ᵥ x) i)) = Formalism.L2.Theta.mt V t *ᵥ (b *ᵥ s) := by
     rw [Matrix.mulVec_mulVec, ← hM b hb]
     funext i
-    simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     exact sec_pr_mul q _ _
   rw [hkey, ← hm _ hy]
@@ -83,7 +84,8 @@ theorem sec_mem_iff (V : HSp D) (t : GA D V) (Λ L : GlobalTheory.FinPl.Lat V) (
     change toEAf D ((b *ᵥ s) i) = _
     rw [← hb]
     simp only [Matrix.mulVec, dotProduct, Matrix.map_apply]
-    rw [map_sum (toEAf D)]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum (toEAf D)]
     simp only [RingHom.map_mul]
   rw [h2, Matrix.mulVec_mulVec, ← Units.val_mul, inv_mul_cancel, Units.val_one, Matrix.one_mulVec]
   exact forall_congr' fun i => sec_int_iff q (x i)

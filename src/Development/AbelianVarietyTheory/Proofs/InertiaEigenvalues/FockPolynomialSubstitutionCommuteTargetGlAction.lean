@@ -38,7 +38,8 @@ theorem pderiv_fockSubst_X (p : D.what₂.Tau → ℕ) (g : GLR D n) (τ : D.wha
     (u : FVar D m n) :
     pderiv (τ, i, b) (fockSubst p g (X u)) = if u.1 = τ ∧ u.2.1 = i then C (rowMat p g τ i u.2.2 b) else 0 := by
   rw [fockSubst_X]
-  simp only [map_sum, Derivation.leibniz, pderiv_C, smul_zero, add_zero, pderiv_X, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Derivation.leibniz, pderiv_C, smul_zero, add_zero, pderiv_X, smul_eq_mul]
   split_ifs with h
   · obtain ⟨h1, h2⟩ := h
     subst h1; subst h2
@@ -60,7 +61,8 @@ theorem chain_X (p : D.what₂.Tau → ℕ) (g : GLR D n) (τ : D.what₂.Tau) (
   by_cases h : u.1 = τ ∧ u.2.1 = i
   · simp only [if_pos h]
     have e : (∑ b, C' b c • C (rowMat p g τ i u.2.2 b) : PolF D m n) = C ((rowMat p g τ i * C') u.2.2 c) := by
-      rw [Matrix.mul_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Matrix.mul_apply, map_sum]
       refine Finset.sum_congr rfl fun b _ => ?_
       rw [smul_eq_C_mul, ← map_mul, mul_comm]
     rw [e, hC]

@@ -177,7 +177,8 @@ theorem atDict_indep (hT : LawsJ T) (O : OMDat T.toCore R i Tp tup) (κ : Weight
     Submodule.sum_mem _ fun j _ => Submodule.smul_mem _ _ (((mem_cusp _ _ _ _ _ _).1 (hb j)).2 _ (goodEmbedding_baseEmbedding_coreData O))
   have hEq := eqv_holSub (unfO O).X _ hmem
   have hz : atDict O (∑ j, w j • rdU (unfO O) (b j)) = 0 := by
-    rw [← hw, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hw, map_sum]
     exact Finset.sum_congr rfl fun j _ => map_smul _ _ _
   funext k x
   by_cases hx : x ∈ ((unfO O).X k).dom

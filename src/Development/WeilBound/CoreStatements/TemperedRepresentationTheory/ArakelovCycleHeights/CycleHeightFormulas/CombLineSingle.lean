@@ -252,7 +252,8 @@ theorem expand_comb (A : κ → HermLine ι) (sA : ∀ o, IsSmoothHerm (A o))
   have h₁ : M (fun _ => a) = F (fun _ => combLine A a) := rfl
   rw [← h₁]
   have h₂ : M (fun _ => a) = M (fun _ => ∑ o, a o • (Pi.single o 1 : κ → ℤ)) := by rw [← ha]
-  rw [h₂, M.map_sum (fun _ o => a o • (Pi.single o 1 : κ → ℤ))]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h₂, M.map_sum (fun _ o => a o • (Pi.single o 1 : κ → ℤ))]
   refine Finset.sum_congr rfl fun f _ => ?_
   rw [M.map_smul_univ (fun j => a (f j)) (fun j => (Pi.single (f j) 1 : κ → ℤ))]
   have h₃ : M (fun j => (Pi.single (f j) 1 : κ → ℤ)) = F (A ∘ f) := by

@@ -28,7 +28,8 @@ theorem sig_invol (h : IsCMExt F E σ) (x : E) : σ (σ x) = x := by
 
 theorem hE_swap' (hσ : ∀ x, σ (σ x) = x) (hJ : ∀ i j, σ (J j i) = J i j) (x y : Fin n → E) :
     σ (hE σ J y x) = hE σ J x y := by
-  simp only [hE, Formalism.UG.hform, RingHom.coe_coe, map_sum, map_mul, hσ, hJ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hE, Formalism.UG.hform, RingHom.coe_coe, map_sum, map_mul, hσ, hJ]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   ring
@@ -78,7 +79,8 @@ theorem hE_unitary {q : Matrix (Fin n) (Fin n) E} (hq : cT (σ : E →+* E) q * 
 theorem adMat_mulVec (N : Matrix (Fin n) (Fin n) E) (v : Fin n → E) :
     adMat F N *ᵥ GlobalTheory.EisMidHt.adVec F v = GlobalTheory.EisMidHt.adVec F (N *ᵥ v) := by
   funext i
-  simp only [GlobalTheory.EisMidHt.adVec, Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [GlobalTheory.EisMidHt.adVec, Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum, map_mul]
 
 theorem mul_first_column_of_unit_column {r : ℕ} (M : Matrix (Fin n) (Fin n) (AF F ⊗[F] E)) (X : Matrix (Fin n) (Fin (r + 1)) E)
     (i : Fin n) (j : Fin 1) :

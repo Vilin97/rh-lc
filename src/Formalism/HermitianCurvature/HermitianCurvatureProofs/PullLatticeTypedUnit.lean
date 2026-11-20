@@ -124,7 +124,8 @@ private lemma isPSD_comp_of_isPSD_image {X Y : Type} {inst : DecidableEq Y} (F :
           k p q := by
     rw [← Finset.sum_fiberwise_of_maps_to hmap]
     refine Finset.sum_congr rfl fun p _ => ?_
-    simp only [map_sum, Finset.sum_mul, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, Finset.sum_mul, Finset.mul_sum]
     conv_rhs => enter [2, q]; rw [Finset.sum_comm]
     conv_rhs => rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun x hx => ?_

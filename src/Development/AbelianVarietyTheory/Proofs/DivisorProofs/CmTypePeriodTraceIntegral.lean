@@ -157,7 +157,8 @@ theorem smul_mem_span_gens {E : Type} [Field E] [NumberField E] [IsCMField E] {c
     have h1 : inK (O := O) K H (F σ₀) ∈ eigK ρ σ₀ := hF σ₀
     have h2 : inK (O := O) K H (F σ₀) ∈ ⨆ (j : E →+* K) (_ : j ≠ σ₀), eigK ρ j := by
       have hsum : inK (O := O) K H (F σ₀) = inK (O := O) K H (D • (x : H)) - ∑ σ ∈ F.support.erase σ₀, inK (O := O) K H (F σ) := by
-        rw [← hFs, Finsupp.sum, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [← hFs, Finsupp.sum, map_sum]
         by_cases hm : σ₀ ∈ F.support
         · rw [← Finset.add_sum_erase _ _ hm, add_sub_cancel_right]
         · rw [Finsupp.notMem_support_iff.1 hm, map_zero, Finset.erase_eq_of_notMem hm, sub_self]

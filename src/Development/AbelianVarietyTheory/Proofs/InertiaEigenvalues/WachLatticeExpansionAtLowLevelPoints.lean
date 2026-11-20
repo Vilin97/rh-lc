@@ -126,7 +126,8 @@ theorem lattice_at_level : ∀ (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc)
         ∑ j, conv (((HW l).W K s LL h).lev i ζ (algebraMap ↥(OL LL) (AA K LL) (o j) * a j)) (ex (Cm l) h T i ζ (nb j)) r := by
       intro r
       show ((Cm l).C K s LL h).tie.levB T i ζ (∑ j, (algebraMap ↥(OL LL) (AA K LL) (o j) * a j) • nb j) r = _
-      rw [map_sum, Finset.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Finset.sum_apply]
       refine Finset.sum_congr rfl fun j _ => ?_
       exact congrFun (hli.1 _ _) r
     have hkey : ∀ r : ℤ, r < (m : ℤ) - a₀ →

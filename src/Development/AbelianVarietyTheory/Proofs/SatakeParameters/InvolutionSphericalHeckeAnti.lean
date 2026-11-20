@@ -272,7 +272,8 @@ theorem hh_fm (V : HSp D) (g : GA D V) (x y : Fin V.rank → RF D) :
   simp only [Matrix.map_mul] at h
   have h1 : (fun i => cf D ((fm V g *ᵥ x) i)) = ((mt V g).map (cA D)).map (finPart D) *ᵥ fun i => cf D (x i) := by
     funext i
-    simp only [fm_eq, Matrix.mulVec, dotProduct, map_sum, map_mul, Matrix.map_apply, fin_cA]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [fm_eq, Matrix.mulVec, dotProduct, map_sum, map_mul, Matrix.map_apply, fin_cA]
   rw [hh_eq, hh_eq, h1]
   exact form_inv h _ _
 
@@ -391,7 +392,8 @@ theorem map_mulVec (M : Matrix (Fin V.rank) (Fin V.rank) (RF D)) (c : RF D) (y :
     (fun j => π ((c • M *ᵥ y) j)) = π c • M.map π *ᵥ fun j => π (y j) := by
   funext j
   simp only [Pi.smul_apply, smul_eq_mul, Matrix.mulVec, dotProduct, RingHom.map_mul, Matrix.map_apply]
-  rw [map_sum π]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum π]
   simp only [RingHom.map_mul]
 
 theorem keeps_iff (he : e * e = e) (h2 : ∀ a, π (finPart D (s a)) = a)

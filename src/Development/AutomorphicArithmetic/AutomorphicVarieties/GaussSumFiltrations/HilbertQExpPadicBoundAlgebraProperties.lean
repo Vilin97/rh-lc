@@ -21,7 +21,8 @@ theorem small_filtration : ∀ (F : Type) [Field F] [NumberField F] [IsTotallyRe
   · obtain ⟨d, hd, hds⟩ := GlobalTheory.T.qExpansion_mul_finite_convolution F f g a b ha hb
     refine ⟨d, hd, fun ξ => ?_⟩
     obtain ⟨t, ht⟩ := hds ξ
-    rw [ht, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [ht, map_sum]
     refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg (mul_nonneg hr hs) fun η _ => ?_
     rw [map_mul, norm_mul]
     exact mul_le_mul (har η) (hbs _) (norm_nonneg _) hr

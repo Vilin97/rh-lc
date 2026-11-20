@@ -53,7 +53,8 @@ theorem isBig_hodgeLine : Hypotheses2 → GlobalTheory.Published.GrothendieckDef
     refine IsNef.of_cls_eq_sum Finset.univ
       (fun τ : Psi H => (GlobalTheory.NefUnit.isNef_unitWt (GlobalTheory.CovTop.Hypotheses2.toClassicalTheorems hP) hN E H Dw l Xo c TF Z hF τ).2) (fun _ => 1) hA
       (isLB_L₀ TF.X Z w) ?_
-    rw [hφ, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hφ, map_sum]
     exact Finset.sum_congr rfl fun τ _ => (one_smul _ _).symm
   letI := algebraΓOfHom (s₀ TF.Y Z)
   have hf : ∀ r : c.F, algebraMap c.F Γ(X₀ TF.Y Z, ⊤) r =

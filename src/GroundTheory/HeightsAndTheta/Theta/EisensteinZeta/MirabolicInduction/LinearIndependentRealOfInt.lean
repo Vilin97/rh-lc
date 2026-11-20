@@ -279,7 +279,8 @@ theorem decompose {m : ℕ} (b : Fin (m + 1) → W) (hb : LinearIndependent ℝ 
     obtain ⟨a, ha⟩ := (mem_span_range_iff_exists_fun ℝ).1 h
     have h2 : ∑ i, a i • c i = 0 := by
       have := congrArg (proj v) ha
-      rw [map_sum, hpv] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, hpv] at this
       simpa [map_smul, hw] using this
     have ha0 := Fintype.linearIndependent_iff.1 hc a h2
     apply hv
@@ -302,7 +303,8 @@ theorem decompose {m : ℕ} (b : Fin (m + 1) → W) (hb : LinearIndependent ℝ 
       have hyL : x - ∑ i, k i • w i ∈ L :=
         L.sub_mem hx (L.sum_mem fun i _ => L.smul_mem _ (hwL i))
       have hy0 : proj v (x - ∑ i, k i • w i) = 0 := by
-        rw [map_sub, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sub, map_sum]
         simp only [map_zsmul, hw, hk, sub_self]
       obtain ⟨k0, hk0⟩ := mem_zsmul_of_proj_eq_zero hvL hv hmin hyL hy0
       have hx' : x = k0 • v + ∑ i, k i • w i := by

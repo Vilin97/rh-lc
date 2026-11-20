@@ -29,7 +29,8 @@ theorem _root_.GlobalTheory.linearIndependent_of_comm_smul {K G V : Type} [Field
     simp only [LinearMap.sum_apply, LinearMap.smul_apply,
       LinearMap.zero_apply] at h0 h1 ⊢
     have h2 : A y (∑ x ∈ s, (g x * c x y) • A x v) = 0 := by
-      rw [map_sum, ← h1]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, ← h1]
       refine Finset.sum_congr rfl fun x _ => ?_
       rw [map_smul, h x y v, smul_smul]
     have h3 : ∑ x ∈ s, (g x * c x y) • A x v = 0 :=

@@ -22,7 +22,8 @@ theorem charInner_character_one {V : Type*} [AddCommGroup V] [Module ℂ V] [Fin
   have hG : (Fintype.card G : ℂ) ≠ 0 := Nat.cast_ne_zero.2 Fintype.card_ne_zero
   let _ : Invertible (Fintype.card G : ℂ) := invertibleOfNonzero hG
   rw [← (ρ.isProj_averageMap).trace, charInner_apply]
-  simp [Representation.character, GroupAlgebra.average, map_sum, Nat.card_eq_fintype_card]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Representation.character, GroupAlgebra.average, map_sum, Nat.card_eq_fintype_card]
 
 theorem charInner_indFun_char_one (H : Subgroup G) [Fintype H] (l : H →* ℂˣ) :
     charInner G (indFun H.subtype (fun k ↦ (l k : ℂ))) 1 = if l = 1 then 1 else 0 := by
@@ -47,7 +48,8 @@ theorem ne_one_of_charInner_sum_indFun_eq_zero {ι : Type*} [Fintype ι] {H : ι
   classical
   have hsum : charInner G (∑ i, n i • indFun (H i).subtype (fun k ↦ (l i k : ℂ))) 1 =
       ((∑ i, n i * if l i = 1 then 1 else 0 : ℕ) : ℂ) := by
-    rw [map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, LinearMap.sum_apply]
     push_cast
     refine Finset.sum_congr rfl fun j _ ↦ ?_
     rw [map_nsmul, LinearMap.smul_apply, charInner_indFun_char_one, nsmul_eq_mul]

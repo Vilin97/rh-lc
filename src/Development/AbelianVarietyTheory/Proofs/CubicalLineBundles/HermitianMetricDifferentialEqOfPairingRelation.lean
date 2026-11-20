@@ -96,7 +96,8 @@ private lemma form_sum_smul_right {K V : Type*} [Field K] [AddCommGroup V] [Modu
 private lemma form_sum_smul_left {K V : Type*} [Field K] [AddCommGroup V] [Module K V] (h : HermFam K V)
     (σ : K →+* ℂ) (y : V) {J : Type*} (S : Finset J) (a : J → K) (x : J → V) :
     h.form σ (∑ i ∈ S, a i • x i) y = ∑ i ∈ S, starRingEnd ℂ (σ (a i)) * h.form σ (x i) y := by
-  rw [← h.conj_symm σ y, form_sum_smul_right, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← h.conj_symm σ y, form_sum_smul_right, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_mul, h.conj_symm]
 

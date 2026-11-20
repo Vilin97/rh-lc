@@ -126,9 +126,11 @@ theorem conj_first_action_comm (a b : Ix p q) (P : Pol p q r s) :
     cjP (fockAct1 p q r s (Eab a b) P) = fockAct1 p q r s (Eab a b) (cjP P) := by
   rw [PI.FHS.fockAct1_eq, PI.FHS.omAct_apply, PI.FHS.omAct_apply]
   show MvPolynomial.map _ _ = _
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun l _ => ?_
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun l' _ => ?_
   change cjP _ = _
   rw [cjP_smul, cjP_omE]

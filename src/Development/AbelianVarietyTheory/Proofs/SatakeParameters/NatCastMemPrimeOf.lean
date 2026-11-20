@@ -43,7 +43,8 @@ theorem flat_system {A B : Type} [CommRing A] [AddCommGroup B] [Module A B] [Mod
       simp [x, Fintype.linearCombination_apply, Pi.single_apply]
     rw [hr, hxa, LinearMap.comp_apply]
     conv_lhs => rw [← Finsupp.univ_sum_single (a' (Pi.single k 1))]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun l _ => ?_
     rw [← Finsupp.smul_single_one, map_smul]
   · have h1 := congrArg (fun v => v l) (LinearMap.congr_fun haf (Pi.single j 1))
@@ -51,7 +52,8 @@ theorem flat_system {A B : Type} [CommRing A] [AddCommGroup B] [Module A B] [Mod
     have hf : f (Pi.single j 1) = ∑ k, b k j • Pi.single k 1 := by
       ext k'
       simp [f, Matrix.mulVec, dotProduct, Pi.single_apply, Finset.sum_apply]
-    rw [hf, map_sum] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hf, map_sum] at h1
     simpa [Finsupp.finsetSum_apply, map_smul] using h1
 
 def primeOf {p : ℕ} [Fact p.Prime] {E : Type} [Field E] (φ : E →+* ℂ_[p]) : Ideal (𝓞 E) where

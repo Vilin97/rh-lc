@@ -117,7 +117,8 @@ theorem mConeMap_homog (y : (Σ k, ι k) → Ω) {h : MRing ι} {d : K → ℕ} 
   classical
   conv_lhs => rw [h.as_sum]
   conv_rhs => rw [h.as_sum]
-  rw [map_sum, map_sum, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun m hm => ?_
   rw [mConeMap, aeval_monomial, aeval_monomial, map_mul, mul_assoc]
   congr 1

@@ -195,7 +195,8 @@ theorem latHat_iff (hV : Seed.FrmC.StdLat V) (y : Fin V.rank → Formalism.MainN
 theorem swap_mulVec (Y : Matrix (Fin V.rank) (Fin V.rank) (Lev.EAf D))
     (y : Fin V.rank → Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af D.host.F ⊗[D.host.F] D.host.E) (i : Fin V.rank) :
     swapAE D ((Y.map (GlobalTheory.HeckeTrans.unswap D) *ᵥ y) i) = (Y *ᵥ fun j => swapAE D (y j)) i := by
-  simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum, map_mul, GlobalTheory.HeckeTrans.swap_unswap]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum, map_mul, GlobalTheory.HeckeTrans.swap_unswap]
 
 theorem ksph_iff (hV : Seed.FrmC.StdLat V) {g : GA D V} (hg : g ∈ GfC V) :
     g ∈ KsphC V ∅ ↔ ∀ z : Fin V.rank → Lev.EAf D, (∀ i, z i ∈ SI D) ↔ ∀ i, ((finE V g).1 *ᵥ z) i ∈ SI D := by

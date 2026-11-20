@@ -87,7 +87,8 @@ theorem ssRep_of_normal_finiteIndex : ∀ (H k : Type) [Group H] [Field k] [Char
       rw [hTmul, hTmul, hTinv']
   have hqT : ∀ h v, T h (q v) = q (T h v) := by
     intro h v
-    simp only [q, LinearMap.smul_apply, LinearMap.sum_apply, map_smul, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [q, LinearMap.smul_apply, LinearMap.sum_apply, map_smul, map_sum,
       hcomm]
     congr 1
     exact Equiv.sum_comp (MulAction.toPerm h : Equiv.Perm (H ⧸ N)) (fun c => C' c (T h v))

@@ -23,7 +23,8 @@ namespace GlobalTheory.BigKernel
 
 theorem end_finsupp_sum {α β : Type} (A : Module.End ℂ (β → ℂ)) (Θ : α →₀ ℂ) (f : α → β → ℂ) :
     A (Θ.sum fun d c => c • f d) = Θ.sum fun d c => c • A (f d) := by
-  simp only [Finsupp.sum, map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finsupp.sum, map_sum, map_smul]
 
 theorem finsupp_sum_apply {α β : Type} (Θ : α →₀ ℂ) (f : α → β → ℂ) (w : β) :
     (Θ.sum fun d c => c • f d) w = Θ.sum fun d c => c * f d w := by

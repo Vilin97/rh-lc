@@ -96,7 +96,8 @@ theorem act_of {H V : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [No
     exact h1.trans (by simp)
   refine ⟨Finsupp.onFinset T (fun t => if t ∈ T then U t else 0) fun t ht => by_contra fun hn => ht (if_neg hn), 0,
     ⟨continuous_const, HasCompactSupport.zero⟩, fun x => ?_, fun z => ?_⟩
-  · rw [Finsupp.onFinset_sum (g := fun (t : ℝ) (c : V →L[ℂ] V) => c.compLpL 2 volume (sh V t x)) _ fun t => h0 _, hc, add_zero, h, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [Finsupp.onFinset_sum (g := fun (t : ℝ) (c : V →L[ℂ] V) => c.compLpL 2 volume (sh V t x)) _ fun t => h0 _, hc, add_zero, h, map_sum]
     exact Finset.sum_congr rfl fun t ht => by rw [if_pos ht]
   · rw [Finsupp.onFinset_sum (g := fun (t : ℝ) (c : V →L[ℂ] V) => Complex.exp (z * t) • c) _ fun t => smul_zero _]
     simp only [symb, Pi.zero_apply, smul_zero, integral_zero, add_zero]
@@ -167,7 +168,8 @@ theorem actEx [IsTotallyComplex K] (μ : Measure (G1 K (2 + 2))) [μ.IsHaarMeasu
     simp only [flat, map_mul, ← mul_assoc, hHk _ k hk, fix_inv hL hle (hsec v).2 _ hk]
   have hs : A.sec ((∑ t ∈ T, Complex.exp (z * t) • U t) v) = fun x => ∑ t ∈ T, Complex.exp (z * t) * A.sec (U t v) x := by
     funext x
-    rw [ContinuousLinearMap.sum_apply, map_sum, Finset.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [ContinuousLinearMap.sum_apply, map_sum, Finset.sum_apply]
     exact Finset.sum_congr rfl fun t _ => by rw [ContinuousLinearMap.smul_apply, map_smul, Pi.smul_apply, smul_eq_mul]
   refine h1.trans ?_
   rw [flat, hs]

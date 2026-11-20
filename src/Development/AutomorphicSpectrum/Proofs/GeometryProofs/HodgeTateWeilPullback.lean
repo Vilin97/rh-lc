@@ -46,7 +46,8 @@ theorem deriv_gen {X : Scheme.{0}} {Ω : Type} [Field Ω] {ξ : Spec (CommRingCa
     rfl
   have hy : y = ∑ k, a k • b k := by
     apply LiePull.val_inj
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine hce.trans (Finset.sum_congr rfl fun k _ => ?_)
     rw [LiePull.val_smul]
     rfl
@@ -62,7 +63,8 @@ theorem deriv_gen {X : Scheme.{0}} {Ω : Type} [Field Ω] {ξ : Spec (CommRingCa
   have e₂ : ∀ k, D (b k) = (secVal (B := DualNumber A) (v k).left W (hk k) s).snd := fun k =>
     (hD (b k)).trans (key _ _ (hbv k) (hin₀ (b k)) (hk k))
   refine e₁.trans ?_
-  rw [hy, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hy, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [map_smul, smul_eq_mul, e₂ k]
 
@@ -193,7 +195,8 @@ theorem ht_pull {X X' : Scheme.{0}} {Ω Ω' : Type} [Field Ω] [Field Ω'] {ξ :
       fun t => RegAtDom.genMap_stalkMap hd q'.1 q'.2 (hd.specializes q') t
     refine Eq.trans ?_ (congrArg (fun t => genMap ξ' q' t + (n : Ω') * ∑ k, genMap ξ' q' (a k) * i (ρ k)) hsum).symm
     show jd w (∑ k, genMap ξ' q' (a k) • B' k) = genMap ξ' q' (∑ k, a k * _) + (n : Ω') * ∑ k, genMap ξ' q' (a k) * i (ρ k)
-    rw [map_sum, map_sum, Finset.mul_sum, ← Finset.sum_add_distrib]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum, Finset.mul_sum, ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_smul, smul_eq_mul, hBB k, hjd, hρe' k, map_add, map_mul, map_mul, hcomp k, hg, map_natCast]
     ring

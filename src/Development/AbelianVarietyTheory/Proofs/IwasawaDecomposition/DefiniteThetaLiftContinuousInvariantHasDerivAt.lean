@@ -52,7 +52,8 @@ theorem kernel_continuous_invariant {D : D7} {ψ : AddChar (AF D.host.F) ℂ} {S
         fun p => ∑ k, b.coord k (F p.2) * om (p.2, p.1) (L (b k)) 0 := by
       funext p
       conv_lhs => rw [← b.sum_repr (F p.2)]
-      simp only [thetaKO, map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Module.Basis.coord_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [thetaKO, map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Module.Basis.coord_apply]
     rw [e]
     refine continuous_finsetSum _ fun k _ => Continuous.mul ?_ ?_
     · exact ((b.coord k).continuous_of_finiteDimensional.comp hF).comp continuous_snd

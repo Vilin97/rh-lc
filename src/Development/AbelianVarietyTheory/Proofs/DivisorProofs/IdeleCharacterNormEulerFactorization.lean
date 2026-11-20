@@ -68,10 +68,12 @@ theorem tendsto_zero_of_intLoc (x : Pl F → AE F E)
     · obtain ⟨a, ha, e⟩ := exists_coords hv.2
       obtain ⟨h1, h2⟩ := at_evFin_iff.1 hv.1
       refine ⟨a, ha, fun _ => GlobalTheory.Doubling.adele_ext (fun w => ?_) fun w => ?_⟩
-      · rw [h1, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        · rw [h1, map_sum]
         exact (Finset.sum_eq_zero fun i _ => by
           rw [compInf_smul, show evInf F w (GlobalTheory.LatVac.liftV v (a i)) = 0 from rfl, zero_smul]).symm
-      · rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        · rw [map_sum]
         by_cases hw : w = v
         · subst hw
           rw [e]

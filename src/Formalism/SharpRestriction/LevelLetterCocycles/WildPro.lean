@@ -88,7 +88,8 @@ theorem fix_of_coprime {p m : ℕ} (hpA : A.valuation ((p : ℕ) : Ω) < 1) (hm 
   set T : Ω := ∑ i ∈ Finset.range m, (τ ^ i) y with hT
   have hτT : τ T = T := by
     have h1 : τ T = ∑ i ∈ Finset.range m, (τ ^ (i + 1)) y := by
-      rw [hT, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hT, map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [pow_succ', AlgEquiv.mul_apply]
     have h2 := Finset.sum_range_succ' (fun i => (τ ^ i) y) m

@@ -50,21 +50,25 @@ theorem coord_transport {R' M' : Type} [CommRing R'] [AddCommGroup M'] [Module R
     intro m
     have hm : m = ∑ j, e m j • e.symm (Pi.single j 1) := by
       apply e.injective
-      simp only [map_sum, map_smul, LinearEquiv.apply_symm_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, LinearEquiv.apply_symm_apply]
       funext i
       simp [Finset.sum_apply, Pi.single_apply]
     conv_lhs => rw [hm]
-    simp only [map_sum, hT, hb, map_smul, LinearEquiv.apply_symm_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, hT, hb, map_smul, LinearEquiv.apply_symm_apply]
     funext i
     simp [Finset.sum_apply, Pi.single_apply]
   have hv : v = ∑ j, e' v j • T (e.symm (Pi.single j 1)) := by
     simp_rw [hb]
     apply e'.injective
-    simp only [map_sum, map_smul, LinearEquiv.apply_symm_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, LinearEquiv.apply_symm_apply]
     funext i
     simp [Finset.sum_apply, Pi.single_apply]
   conv_lhs => rw [hv]
-  simp only [map_sum, map_smul, ← hα, hTe]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, ← hα, hTe]
   funext i
   simp [Matrix.mulVec, dotProduct, Finset.sum_apply, mul_comm]
 

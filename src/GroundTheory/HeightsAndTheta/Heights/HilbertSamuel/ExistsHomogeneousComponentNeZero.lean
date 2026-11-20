@@ -118,7 +118,8 @@ theorem isMultiHomog_segreSub_linear (n : Ix ((k : K) → ι k) → ℤ) :
     IsMultiHomog (segreSub (∑ i, C (n i) * X i)) (fun _ : K => 1) := by
   apply isMultiHomog_of_weighted
   intro k
-  simp only [map_sum, map_mul, algHom_C, segreSub_X]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, algHom_C, segreSub_X]
   exact IsWeightedHomogeneous.sum _ _ _ fun i _ => (isWeightedHomogeneous_segreMonomial k i.2).C_mul _
 
 theorem exists_segre_prod (m : ℕ) (e : (Σ k, ι k) → ℕ) (he : ∀ k, ∑ i, e ⟨k, i⟩ = m) :
@@ -189,7 +190,8 @@ theorem exists_segre_form {f : MRing ι} {df : K → ℕ} (hf : IsMultiHomog f d
   choose! M hM hMe using key
   refine ⟨∑ μ ∈ f.support, C (f.coeff μ) * M μ,
     IsHomogeneous.sum _ _ _ fun μ hμ => (hM μ hμ).C_mul _, ?_⟩
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   conv_rhs => rw [f.as_sum]
   rw [Finset.sum_mul]
   refine Finset.sum_congr rfl fun μ hμ => ?_
@@ -267,7 +269,8 @@ theorem key_relation {D : ℕ} (y : (Σ k, ι k) → Ω) (w : Fin (D + 1) → Ω
   have hQx : aeval x Q = 0 := by
     have hc := congrArg (fun q => _root_.AddMonoidAlgebra.coeff (M := ℕ) q N) hp
     simp only [Polynomial.aeval_eq_sum_range, Polynomial.finsetSum_coeff, Polynomial.coeff_zero] at hc
-    rw [← hc, hQdef, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hc, hQdef, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [coneMap_of_isHomogeneous ℚ x hP, Algebra.smul_def]
     have hcoe : algebraMap (coneRing ℚ w) (Polynomial Ω) (p.coeff k) = coneMap ℚ w (g k) := (hg k).symm
@@ -278,7 +281,8 @@ theorem key_relation {D : ℕ} (y : (Σ k, ι k) → Ω) (w : Fin (D + 1) → Ω
       ring
     · rw [map_zero]
   have h0 := aeval_segre_eq_zero y hQ hQx hz
-  rw [hQdef, map_sum] at h0
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hQdef, map_sum] at h0
   refine Eq.trans (Finset.sum_congr rfl fun k _ => ?_) h0
   split_ifs
   · rw [map_mul, map_pow, aeval_aeval_eq]

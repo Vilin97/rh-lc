@@ -38,7 +38,8 @@ theorem det_ne_of_sig {n r s : ℕ} (c : ℂ)
 omit [NumberField F] [NumberField E] in
 theorem form_swap {σ : E →ₐ[F] E} (hσ : ∀ x, σ (σ x) = x) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (ε : E)
     (hJ : ∀ i j, σ (J j i) = ε * J i j) (x y : Fin n → E) : σ (form σ J x y) = ε * form σ J y x := by
-  simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, hJ, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, hJ, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 

@@ -26,7 +26,8 @@ theorem eval_blockScale {B n : ℕ} (a : Fin B → ℕ) (g : MvPolynomial (Fin B
     eval (fun p => r p.1 * x p) g = (∏ b, r b ^ a b) * eval x g := by
   conv_lhs => rw [g.as_sum]
   conv_rhs => rw [g.as_sum]
-  rw [map_sum, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun s hs => ?_
   rw [eval_monomial, eval_monomial]
   have h1 : (s.prod fun p e => (r p.1 * x p) ^ e) =

@@ -68,7 +68,8 @@ theorem eventually_absFin_le_one_nhds :
     conv_lhs => rw [← (Algebra.TensorProduct.basis (AF F) b).sum_equivFun z]
     refine Finset.sum_congr rfl fun i _ => ?_
     simp [e, TensorProduct.smul_tmul']
-  rw [h3, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h3, map_sum]
   exact absFin_sum_le F v _ _ fun i _ => hz i v
 
 theorem continuous_infEmb_compInf (w : InfinitePlace F) (τ : EmbOver E w) :
@@ -86,7 +87,8 @@ theorem continuous_infEmb_compInf (w : InfinitePlace F) (τ : EmbOver E w) :
       conv_lhs => rw [← (Algebra.TensorProduct.basis (AF F) b).sum_equivFun z]
       refine Finset.sum_congr rfl fun i _ => ?_
       simp [e, TensorProduct.smul_tmul']
-    conv_lhs => rw [h3, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [h3, map_sum, map_sum]
     rfl
   rw [h2]
   refine continuous_finsetSum _ fun i _ => Continuous.mul ?_ continuous_const

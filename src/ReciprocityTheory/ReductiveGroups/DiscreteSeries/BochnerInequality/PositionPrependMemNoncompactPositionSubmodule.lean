@@ -142,8 +142,10 @@ theorem wordContraction_tensorAction (hE : IsGlRep E) (k : ℕ) (a b : Fin n) (F
     first
     | exact sub_eq_iff_eq_add'.mp h
     | (rw [← h]; abel)
-  rw [wordContraction_apply, wordContraction_apply, map_sum]
-  simp only [positionTensorAction_apply, factorAd_apply', map_add, map_sum, map_sub,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [wordContraction_apply, wordContraction_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [positionTensorAction_apply, factorAd_apply', map_add, map_sum, map_sub,
     linearMap_apply_ite_zero, hc, Finset.sum_add_distrib]
   congr 1
   conv_lhs => rw [Finset.sum_comm]
@@ -193,7 +195,8 @@ def indexPairPrepend {k : ℕ} (p : Fin n × Fin n) (G : Big n k M) : Big n (k +
 
 theorem wordContraction_prepend {k : ℕ} (p : Fin n × Fin n) (G : Big n k M) :
     phi E (k + 1) (indexPairPrepend p G) = E p.1 p.2 (phi E k G) := by
-  rw [wordContraction_apply, wordContraction_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [wordContraction_apply, wordContraction_apply, map_sum]
   have hL : ∀ κ : Fin (k + 1) → Fin n × Fin n, word E κ ((indexPairPrepend p G) κ) =
       if κ 0 = p then word E κ (G (Fin.tail κ)) else 0 := by
     intro κ

@@ -61,7 +61,8 @@ theorem cong_swap_smul {F E : Type} [Field F] [NumberField F] [Field E] [NumberF
   obtain ⟨y, hy, e⟩ := h _ (GlobalTheory.PrincInLevel.swap_symm_mem_hat Λ z hz)
   refine ⟨_, GlobalTheory.PrincInLevel.swap_mem_hatL Λ y hy, funext fun i => ?_⟩
   have := congrArg (Algebra.TensorProduct.comm F _ E) (congrFun e i)
-  simpa only [Pi.sub_apply, Pi.smul_apply, smul_eq_mul, map_sub, map_mul, map_nsmul, Matrix.mulVec, dotProduct, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa only [Pi.sub_apply, Pi.smul_apply, smul_eq_mul, map_sub, map_mul, map_nsmul, Matrix.mulVec, dotProduct, map_sum,
     AlgEquiv.apply_symm_apply, Matrix.map_apply] using this
 
 end GlobalTheory.LevelFaithful

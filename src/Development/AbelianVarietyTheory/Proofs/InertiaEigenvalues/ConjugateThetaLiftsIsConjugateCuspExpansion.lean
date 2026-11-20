@@ -208,7 +208,8 @@ theorem conj_lifts : Formalism.MainNotions.ModuliIntegralCharts.H1.ChartIndepSt2
   have hΦ : (fun g => ph i * R.thF i t y (v₀ i (sg0 D A)) g) =
       fun g => ∑ k, (ζ * α k) * psi M (κ i) z (f k) g := by
     funext g
-    rw [hy, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hy, map_sum]
     simp only [map_smul, MultilinearMap.sum_apply, MultilinearMap.smul_apply, Finset.sum_apply, Pi.smul_apply,
       smul_eq_mul, Finset.mul_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
@@ -217,7 +218,8 @@ theorem conj_lifts : Formalism.MainNotions.ModuliIntegralCharts.H1.ChartIndepSt2
   have hΦ' : (fun g => ph i * R.thF i t' y' (v₀ i (sg0 D A)) g) =
       fun g => ζ * k0 / τ ζ * ((R.xi t' s : Circle) : ℂ) * ∑ k, τ (ζ * α k) * psi M (κ i) z (galRul hf (f k)) g := by
     funext g
-    rw [hy', map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hy', map_sum]
     simp only [map_smul, MultilinearMap.sum_apply, MultilinearMap.smul_apply, Finset.sum_apply, Pi.smul_apply,
       smul_eq_mul, Finset.mul_sum]
     refine Finset.sum_congr rfl fun k _ => ?_

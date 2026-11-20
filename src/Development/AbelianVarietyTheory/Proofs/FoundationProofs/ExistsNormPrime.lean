@@ -182,7 +182,8 @@ theorem hb_odd (dK : ℕ) (L : PeriodPair) (hmod : dK % 4 = 3) (hCM : Formalism.
       (IsUltrametricDist.norm_intCast_le_one ℂ_[p] _)
 
   have hi := congrArg ι hiso
-  simp only [map_mul, map_pow, map_add, map_sum, map_sub] at hi
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_mul, map_pow, map_add, map_sum, map_sub] at hi
   have key : (ι b ^ 2 - 1) * (W.b₂ / 12) =
       (ι (L.weierstrassP Q) - W.b₂ / 12) +
         ∑ P ∈ S, ((ι (L.weierstrassP (Q + P)) - W.b₂ / 12) - (ι (L.weierstrassP P) - W.b₂ / 12)) -

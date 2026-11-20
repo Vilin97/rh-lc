@@ -47,10 +47,12 @@ theorem UpperTheory.V.Alg.homog_span :
     obtain ⟨a, ha⟩ := Ideal.mem_span_range_iff_exists_fun.1 hf
     choose G hG using fun i => W.surj (a i)
     have h1 : f - ∑ i, G i * e i ∈ RingHom.ker W.π := by
-      rw [RingHom.mem_ker, map_sub, ← ha, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [RingHom.mem_ker, map_sub, ← ha, map_sum]
       simp [hG, heg]
     have h2 := W.homog _ h1 j
-    rw [RingHom.mem_ker, map_sub, map_sub, sub_eq_zero, map_sum, map_sum] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [RingHom.mem_ker, map_sub, map_sub, sub_eq_zero, map_sum, map_sum] at h2
     have hm : ∀ i, W.π (wcomp O W.wt (j - c i) (G i)) ∈ W.A := fun i =>
       W.part_le_A (j := j - c i) ⟨_, wcomp_mem O W.wt _ _, rfl⟩
     refine ⟨∑ i, ⟨_, hm i⟩ * g i, Ideal.mem_span_range_iff_exists_fun.2 ⟨fun i => ⟨_, hm i⟩, rfl⟩, ?_⟩
@@ -77,7 +79,8 @@ theorem UpperTheory.V.Alg.homog_span :
     obtain ⟨f, hf, s, hs⟩ := hl
     have hsum : f = ∑ j ∈ s, wcomp O W.wt j f := by
       ext n
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simp only [coeff_wcomp]
       rw [Finset.sum_ite_eq]
       split_ifs with h
@@ -88,7 +91,8 @@ theorem UpperTheory.V.Alg.homog_span :
       apply Subtype.ext
       rw [AddSubmonoidClass.coe_finset_sum, ← hf]
       conv_lhs => rw [hsum]
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       exact Finset.sum_congr rfl fun j _ => (hy' j).symm
     rw [this]
     exact Ideal.sum_mem _ fun j _ => hy j

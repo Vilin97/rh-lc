@@ -169,7 +169,8 @@ theorem isLatticeBasis_lie : ∀ (C : Type) [Field C] (v : Valuation C NNReal) (
     intro g hg
     refine Fintype.linearIndependent_iff.1 hy.1 g ?_
     have := (hk _ (hsum g)).2 (by rw [map_sum]; simp only [map_smul]; exact hg)
-    rw [map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at this
     simpa only [map_smul] using this
   · apply le_antisymm
     · rw [Submodule.span_le]
@@ -181,9 +182,11 @@ theorem isLatticeBasis_lie : ∀ (C : Type) [Field C] (v : Valuation C NNReal) (
       obtain ⟨g, hg⟩ := (Submodule.mem_span_range_iff_exists_fun O).1
         ((hlie x hx).1 ((hmem x hx).1 hq))
       have h0 := (hk _ (sub_mem hx (hsum fun i => algebraMap O C (g i)))).1 (by
-        rw [map_sub, map_sum, ← hg, sub_eq_zero]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sub, map_sum, ← hg, sub_eq_zero]
         exact Finset.sum_congr rfl fun i _ => by rw [map_smul, algebraMap_smul])
-      rw [map_sub, map_sum, sub_eq_zero] at h0
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, map_sum, sub_eq_zero] at h0
       rw [← hπ, h0]
       refine sum_mem fun i _ => ?_
       rw [map_smul]

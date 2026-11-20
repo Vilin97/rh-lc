@@ -27,7 +27,8 @@ def Rep {n m : ℕ} (f : Fin m → Fin n → E) (g : (Fin n → E) ≃ₗ[E] (Fi
 lemma Rep.mul {n m : ℕ} {f : Fin m → Fin n → E} {g h : (Fin n → E) ≃ₗ[E] (Fin n → E)}
     {s t : Matrix (Fin m) (Fin m) E} (hg : Rep f g s) (hh : Rep f h t) : Rep f (g * h) (s * t) := by
   intro j
-  rw [LinearEquiv.mul_apply, hh j, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [LinearEquiv.mul_apply, hh j, map_sum]
   simp only [map_smul, hg _, Finset.smul_sum, Matrix.mul_apply, Finset.sum_smul, smul_smul]
   rw [Finset.sum_comm]
   simp only [mul_comm]
@@ -44,7 +45,8 @@ private lemma rep_apply_sum_smul_eq_sum_mul_smul {n m : ℕ} {f : Fin m → Fin 
     {g : (Fin n → E) ≃ₗ[E] (Fin n → E)} {A : Matrix (Fin m) (Fin m) E}
     (hg : _root_.GlobalTheory.HL.StabConj.Rep f g A) (B : Matrix (Fin m) (Fin m) E) (j : Fin m) :
     g (∑ i, B i j • f i) = ∑ i, (A * B) i j • f i := by
-  simp only [map_sum, map_smul, hg _, Finset.smul_sum, smul_smul, Matrix.mul_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, hg _, Finset.smul_sum, smul_smul, Matrix.mul_apply,
     Finset.sum_smul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun l _ => ?_
@@ -222,7 +224,8 @@ theorem _root_.GlobalTheory.HL.StabConj.main : ∀ {F : Type} [Field F] [Valuati
       show h⁻¹ (g (h (h⁻¹ (n (S.f j))))) = h⁻¹ (n (∑ i, C i j • S.f i))
       rw [hhh, ← hc j]
       congr 1
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_smul, hC]
       rfl

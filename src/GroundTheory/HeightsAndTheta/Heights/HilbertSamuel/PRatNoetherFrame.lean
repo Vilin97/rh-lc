@@ -69,7 +69,8 @@ variable {Ω : Type} [Field Ω] [CharZero Ω] {J : Type}
 theorem sum_smul_cone [Fintype J] (x : J → Ω) (c : J → ℚ) :
     ∑ t, c t • (Polynomial.C (x t) * Polynomial.X) =
       Polynomial.C (∑ t, (c t : Ω) * x t) * Polynomial.X := by
-  rw [map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun t _ => ?_
   rw [Algebra.smul_def, Polynomial.algebraMap_apply, ← mul_assoc, ← map_mul]
   simp

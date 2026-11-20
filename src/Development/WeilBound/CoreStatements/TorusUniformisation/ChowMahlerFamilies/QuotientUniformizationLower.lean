@@ -29,7 +29,8 @@ theorem core_gram {V : Type} [AddCommGroup V] [Module ℂ V] (core : InnerProduc
   have hsr : ∀ (s : Finset (Fin N)) (f : Fin N → V) (x : V),
       core.inner x (∑ i ∈ s, f i) = ∑ i ∈ s, core.inner x (f i) := by
     intro s f x
-    rw [hconj, hsl, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hconj, hsl, map_sum]
     exact Finset.sum_congr rfl fun i _ => (hconj x (f i)).symm
   have hsmr : ∀ (x y : V) (r : ℂ), core.inner x (r • y) = r * core.inner x y := by
     intro x y r

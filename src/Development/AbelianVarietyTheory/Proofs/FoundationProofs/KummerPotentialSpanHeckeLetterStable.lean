@@ -29,7 +29,8 @@ theorem sum_opP_map {R S : Type} [CommRing R] [CommRing S] (φ : R →+* S) {ι 
     (∑ j ∈ s, opP S (m j)) (fun z => MvPolynomial.map φ (F z)) =
       fun z => MvPolynomial.map φ ((∑ j ∈ s, opP R (m j)) F z) := by
   funext z
-  simp only [LinearMap.sum_apply, Finset.sum_apply, opP_map, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [LinearMap.sum_apply, Finset.sum_apply, opP_map, map_sum]
 
 theorem opL_map {R S : Type} [CommRing R] [CommRing S] (φ : R →+* S) (N l : ℕ) (T : Letter)
     (F : ℂ → MvPolynomial (Fin 2) R) :

@@ -55,7 +55,8 @@ theorem hasSum_of_sumI {R : Type} [CommRing R] [IsNoetherianRing R] {I : Ideal R
   obtain ⟨S, hS⟩ := h n
   refine Filter.mem_of_superset (Filter.mem_atTop S) fun T hT => ?_
   show dist _ _ < e
-  rw [dist_comm, dist_eq_norm, ← map_sum, ← map_sub]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [dist_comm, dist_eq_norm, ← map_sum, ← map_sub]
   exact (hP n _ (hS T hT)).trans_lt hn
 
 theorem hasSum_fst_snd : ∀ (V : Type) [CommRing V] [IsDomain V] [IsNoetherianRing V] (I : Ideal V) (C : Type) [NormedField C] [IsUltrametricDist C] [Algebra (FractionRing V) C], CExt V I C → ∀ {Ix : Type} (x : Ix → DualNumber V) (s : DualNumber V), GlobalTheory.UT.SumI I x s → HasSum (fun i => toF V C (x i).fst) (toF V C s.fst) ∧ HasSum (fun i => toF V C (x i).snd) (toF V C s.snd) := by

@@ -35,7 +35,8 @@ theorem UpperTheory.Gal.W2.archEx_of :
     congr 1
     funext i
     rw [hk c w]
-    simp [Matrix.mulVec, dotProduct, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Matrix.mulVec, dotProduct, map_sum]
   have hform' : ∀ u w, ((D.EF.baseChange ℚ u w : ℚ) : ℝ) = ∑ v, 2 * (lam v * hv (G.gram v) (th u v) (th w v)).re := by
     intro u w
     rw [hform u w]

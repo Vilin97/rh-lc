@@ -595,7 +595,8 @@ lemma q_dvd_prod_sub_l (hq : QMul) (hl2 : l ≠ 2) :
   simp only [map_sub, map_prod, map_pow, Polynomial.aeval_X, map_one, Polynomial.aeval_C,
     map_mul] at h
   have hc : Polynomial.aeval (1 + X : ℤ_[l]⟦X⟧) (Polynomial.cyclotomic l ℤ) = q l ℤ_[l] := by
-    rw [Polynomial.cyclotomic_prime, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Polynomial.cyclotomic_prime, map_sum]
     simp only [map_pow, Polynomial.aeval_X]
     apply mul_left_cancel₀ (X_ne_zero (R := ℤ_[l]))
     rw [(hq l ℤ_[l]).1]
@@ -772,7 +773,8 @@ theorem eq_sum_coeff_add_division (n : ℕ) (w : (R⟦X⟧)ˣ) (f : R⟦X⟧) :
       _ = X ^ n * PowerSeries.mk fun i => coeff (i + n) f := by rw [Units.mul_inv, one_mul]
   rw [e]
   ext m
-  rw [map_add, map_sum, coeff_X_pow_mul']
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_add, map_sum, coeff_X_pow_mul']
   simp only [coeff_C_mul_X_pow, coeff_mk]
   by_cases hm : m < n
   · rw [if_neg (by omega), add_zero, Finset.sum_eq_single (⟨m, hm⟩ : Fin n)]
@@ -848,7 +850,8 @@ theorem constantCoeff_eq_zero_of_sum_subst (n : ℕ) (hn : 0 < n) (w : (R⟦X⟧
     exact Finset.sum_congr rfl fun j _ => by ring
   rw [e] at h0
   have h1 := congrArg (coeff (i : ℕ)) h0
-  rw [map_add, map_sum, coeff_X_pow_mul', if_neg (by have := i.2; omega), add_zero, map_zero] at h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_add, map_sum, coeff_X_pow_mul', if_neg (by have := i.2; omega), add_zero, map_zero] at h1
   simp only [coeff_C_mul_X_pow] at h1
   rw [Finset.sum_eq_single i] at h1
   · simpa using h1
@@ -909,7 +912,8 @@ theorem coeff_subst_X_mul_of_low_zero (s f : R⟦X⟧) (j : ℕ) (hj : 0 < j)
     coeff j (f.subst (X * s)) = coeff j f * constantCoeff s ^ j := by
   have ha : HasSubst (X * s) := HasSubst.of_constantCoeff_zero' (by simp)
   obtain ⟨h, hh⟩ := subst_eq_sum_range_add_pow_mul ha (j + 1) f
-  rw [hh, map_add, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hh, map_add, map_sum]
   have e1 : coeff j ((X * s) ^ (j + 1) * h) = 0 := by
     rw [mul_pow, mul_assoc, coeff_X_pow_mul', if_neg (by omega)]
   rw [e1, add_zero, Finset.sum_eq_single j]
@@ -1812,7 +1816,8 @@ theorem height_descent_of_r3_r2 (h3 : UnitFactorQ) (hb : PowerSeriesFreeBasis) :
             refine Finset.sum_congr rfl fun c _ => ?_
             rw [← hG c b]; ring
         _ = ∑ j, inc l O (∑ c, P a c * G c b j) * X ^ (j : ℕ) := by
-            simp only [hinc, map_sum, map_mul, Finset.mul_sum, Finset.sum_mul]
+            set_option synthInstance.maxHeartbeats 100000 in
+              simp only [hinc, map_sum, map_mul, Finset.mul_sum, Finset.sum_mul]
             rw [Finset.sum_comm]
             exact Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun c _ => by ring
     · rw [Finset.sum_eq_single (⟨0, hl1⟩ : Fin (l - 1))]

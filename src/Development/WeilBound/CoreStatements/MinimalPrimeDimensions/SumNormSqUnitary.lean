@@ -50,7 +50,8 @@ theorem norm_normOf_conj {m : ℕ} {M M' U : Matrix (Fin m) (Fin m) ℂ} (h : M.
     rw [h1, h2, ← Matrix.transpose_nonsing_inv, ← Matrix.conjTranspose_nonsing_inv]
   have hv : (M⁻¹).map (starRingEnd ℂ) *ᵥ star u = star (M⁻¹ *ᵥ u) := by
     ext i
-    simp [Matrix.mulVec, dotProduct, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Matrix.mulVec, dotProduct, map_sum]
   have key : (M.map (starRingEnd ℂ) * U)⁻¹ *ᵥ star u = star U *ᵥ star (M⁻¹ *ᵥ u) := by
     rw [Matrix.mul_inv_rev, hinvU, hmap, ← Matrix.mulVec_mulVec, hv]
   simp only [HermNorm.norm, normOf]

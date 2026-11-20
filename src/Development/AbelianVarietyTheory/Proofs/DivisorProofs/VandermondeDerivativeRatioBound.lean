@@ -39,7 +39,8 @@ theorem abs_eval_iterate_pderiv_prod_le {σ κ : Type} [DecidableEq κ] (i : σ)
   | zero => simp
   | succ n ih =>
     have hT0 : 0 ≤ T := (sum_nonneg hw).trans hT
-    rw [Function.iterate_succ_apply, pderiv_prod_of_const i S f e he, iterate_pderiv_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Function.iterate_succ_apply, pderiv_prod_of_const i S f e he, iterate_pderiv_sum, map_sum]
     refine (abs_sum_le_sum_abs _ _).trans ?_
     calc ∑ k ∈ S, |eval v ((pderiv i)^[n] (C (e k) * ∏ l ∈ S.erase k, f l))|
         ≤ ∑ k ∈ S, w k * (T ^ n * |eval v (∏ k ∈ S, f k)|) := by

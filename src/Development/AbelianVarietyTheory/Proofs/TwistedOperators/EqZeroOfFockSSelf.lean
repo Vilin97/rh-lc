@@ -73,7 +73,8 @@ private theorem map_conj_blockAct {ι : Type} [Fintype ι] {n : ℕ} (U : ι →
   next p q hp hq =>
     simp only [map_add, hp, hq]
   next p v hp =>
-    simp only [map_mul, hp, map_X, Formalism.L2.DIV.blockAct_X, map_sum, map_C, Matrix.map_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_mul, hp, map_X, Formalism.L2.DIV.blockAct_X, map_sum, map_C, Matrix.map_apply]
 
 theorem fockS_conj_trAct (n : ℕ) (g : ι → GL (Fin n) ℂ) (F F' : Formalism.L2.DIV.Pol ℂ ι n) :
     fockS (map (starRingEnd ℂ) (Formalism.L2.DIV.trAct g F)) (Formalism.L2.DIV.trAct (invTrK g) F') =

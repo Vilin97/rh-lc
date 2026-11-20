@@ -74,9 +74,11 @@ theorem UpperTheory.ConvolutionTheory.Dp.capZc :
     have e : z = u ^ n • 1 + ∑ i : Fin n, u ^ (n - (i + 1)) • w i := by
       apply HarishChandra.harishChandraHom_injective
       rw [hH, capZc_prod]
-      simp only [map_add, map_smul, map_one, map_sum, hwH]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_add, map_smul, map_one, map_sum, hwH]
     have e2 := congrArg (j.comp (Subalgebra.center ℂ (HarishChandra.U n)).val) e
-    simp only [map_add, map_smul, map_one, map_sum] at e2
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_add, map_smul, map_one, map_sum] at e2
     simp only [hzc]
     refine Eq.trans ?_ e2
     change _ = j (z : HarishChandra.U n)

@@ -200,14 +200,16 @@ theorem gram_det_ne' : V.gram.det ≠ 0 := by
     intro i
     have h1 := congrFun hc i
     simp only [Matrix.mulVec, dotProduct, Formalism.BasicNotions.HSpace.gram, Pi.zero_apply] at h1
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [map_smul, smul_eq_mul]
     rw [← h1]
     exact Finset.sum_congr rfl fun j _ => mul_comm _ _
   have hker : ∀ x, V.hT x (∑ j, c j • V.frame j) = 0 := by
     intro x
     have hx : x = ∑ i, V.frame.repr x i • V.frame i := (V.frame.sum_repr x).symm
-    rw [hx, map_sum V.hT, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hx, map_sum V.hT, LinearMap.sum_apply]
     refine Finset.sum_eq_zero fun i _ => ?_
     rw [LinearMap.map_smulₛₗ, LinearMap.smul_apply, hi i, smul_zero]
   have hy0 : ∑ j, c j • V.frame j = 0 := V.nondeg.2 _ hker

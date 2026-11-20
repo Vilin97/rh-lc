@@ -44,7 +44,8 @@ theorem ratio_mem {K C Y : Type} [Field K] [AddCommGroup C] [Module K C] [Finite
     simp only [Finset.sum_smul]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun j _ => ?_
-    conv_lhs => rw [← b.sum_repr (fs j), map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [← b.sum_repr (fs j), map_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl fun l _ => ?_
     rw [map_smulₛₗ, smul_smul]
   obtain ⟨s, hs, e⟩ := key as fs ha

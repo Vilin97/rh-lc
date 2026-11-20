@@ -192,7 +192,8 @@ theorem skew_iff (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) {r ρ
       have h1 : ∀ a b, IsCMField.complexConj E (χ a b) = χ b a := hχ
       have h2 : ∀ a b, IsCMField.complexConj E (β a b) = -β b a := hβ
       have h3 : IsCMField.complexConj E X.ξ0 = -X.ξ0 := X.ξ0_im
-      simp only [cc, map_sum, map_mul, map_div₀, h1, h2, h3, neg_div_neg_eq]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [cc, map_sum, map_mul, map_div₀, h1, h2, h3, neg_div_neg_eq]
       rw [Finset.sum_comm]
     have := (DiagDifferent.trace_even_real_iff E H 1 _ (fun a ha =>
       mem_one_fractionalIdeal_iff.2 (isIntegral_cc (mem_one_fractionalIdeal_iff.1 ha))) hreal).2
@@ -204,7 +205,8 @@ theorem skew_iff (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) {r ρ
           rwa [mul_one] at this)
       choose k hk using hh
       refine ⟨∑ a, ∑ b, k a b, ?_⟩
-      simp only [Finset.sum_mul, map_sum, mul_assoc, hk]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Finset.sum_mul, map_sum, mul_assoc, hk]
       push_cast
       rfl
 

@@ -51,7 +51,8 @@ theorem sum_quad_rows (h0 : q 0 = 0) (hq : ∀ x y, q (x + y) = q x + q y + B x 
     have e₁ : ∑ r, (al r d * al r d) • q (y d) = m • q (y d) := by
       rw [← Finset.sum_smul, hal, if_pos rfl]
     have e₂ : ∑ r, B (al r d • y d) (∑ c ∈ s, al r c • y c) = 0 := by
-      simp only [map_sum, map_zsmul, AddMonoidHom.zsmul_apply, smul_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_zsmul, AddMonoidHom.zsmul_apply, smul_smul]
       rw [Finset.sum_comm]
       refine Finset.sum_eq_zero fun c hc => ?_
       rw [← Finset.sum_smul, hal, if_neg (fun e : c = d => hd (e ▸ hc)), zero_smul]
@@ -64,10 +65,12 @@ theorem sum_quad_rows_add (h0 : q 0 = 0) (hq : ∀ x y, q (x + y) = q x + q y + 
     ∑ r, q (∑ c, al r c • y c + ξ r) = m • ∑ c, q (y c) := by
   simp only [hq, hξ, add_zero, Finset.sum_add_distrib, sum_quad_rows h0 hq h2 al m hal y]
   have e : ∑ r, B (∑ c, al r c • y c) (ξ r) = 0 := by
-    simp only [map_sum, map_zsmul, AddMonoidHom.finset_sum_apply, AddMonoidHom.zsmul_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_zsmul, AddMonoidHom.finset_sum_apply, AddMonoidHom.zsmul_apply]
     rw [Finset.sum_comm]
     refine Finset.sum_eq_zero fun c _ => ?_
-    simp only [← map_zsmul, ← map_sum, hk, map_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [← map_zsmul, ← map_sum, hk, map_zero]
   rw [e, add_zero]
 
 end Algebra

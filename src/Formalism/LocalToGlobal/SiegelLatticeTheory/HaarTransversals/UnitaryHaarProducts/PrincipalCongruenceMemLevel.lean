@@ -62,7 +62,8 @@ theorem BA_mulVec_mem (S : Set (Fin D.R.rS)) (c : Kap X → X.B.I.E ⊗[X.B.I.F]
 
 theorem hA_e_BA (a : Fin D.R.rS) (c : Kap X → X.B.I.E ⊗[X.B.I.F] Af X.B.I.F) :
     hA X.B.I (incl X.B.I (X.eR a)) (BA X *ᵥ c) = c (Sum.inr (Sum.inr a)) := by
-  rw [BA_mulVec, ← Cut.hAlin_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [BA_mulVec, ← Cut.hAlin_apply, map_sum]
   simp only [map_smul, Cut.hAlin_apply, smul_eq_mul]
   have e : ∀ k, hA X.B.I (incl X.B.I (X.eR a)) (incl X.B.I (bv X k)) = iE X (JB X (Sum.inl a) k) := by
     intro k

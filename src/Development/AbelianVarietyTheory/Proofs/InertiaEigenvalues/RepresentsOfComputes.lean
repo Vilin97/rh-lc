@@ -179,7 +179,8 @@ theorem represents_of_computes {s : X.Sig i} {M : ℕ} {ι : Type} {d : ι → (
       show matAct Φ (fun c => f' (u c)) = 0
       funext c
       have := congrArg f' (congrFun hu c)
-      simpa [matAct, map_sum] using this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa [matAct, map_sum] using this
     simp only [dif_pos hu, dif_pos hu']
     obtain ⟨z, hz⟩ := Submodule.Quotient.mk_surjective _ (e B (tor B) ⟨u, hu⟩).1
     rw [he B B' (tor B) (tor B') f' ⟨u, hu⟩ ⟨_, hu'⟩ z (cocycles1MapOfEquivariant _ _ (f'.compLeft _) continuous_of_discreteTopology

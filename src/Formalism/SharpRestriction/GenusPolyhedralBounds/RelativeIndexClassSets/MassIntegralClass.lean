@@ -20,10 +20,12 @@ theorem stdForm_apply' (n : ℕ) (x y : Fin n → K) :
 theorem stdForm_isSymm (n : ℕ) : (stdForm K n).IsSymm := by
   first
     | (intro x y
-       simp only [stdForm_apply', map_sum, starRingEnd_apply, star_mul', star_star]
+       set_option synthInstance.maxHeartbeats 100000 in
+         simp only [stdForm_apply', map_sum, starRingEnd_apply, star_mul', star_star]
        exact Finset.sum_congr rfl (fun i _ => mul_comm _ _))
     | (refine ⟨fun x y => ?_⟩
-       simp only [stdForm_apply', map_sum, starRingEnd_apply, star_mul', star_star]
+       set_option synthInstance.maxHeartbeats 100000 in
+         simp only [stdForm_apply', map_sum, starRingEnd_apply, star_mul', star_star]
        exact Finset.sum_congr rfl (fun i _ => mul_comm _ _))
 
 theorem stdLat_isLattice' (n : ℕ) : Submodule.IsLattice K (stdLat K n) where
@@ -71,7 +73,8 @@ theorem trace_star_mul_nonneg (a : K) : 0 ≤ Algebra.trace ℚ K (star a * a) :
 include hc in
 theorem stdForm_def (n : ℕ) (x : Fin n → K) (hx : x ≠ 0) :
     0 < Algebra.trace ℚ K (stdForm K n x x) := by
-  rw [stdForm_apply', map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [stdForm_apply', map_sum]
   obtain ⟨i, hi⟩ : ∃ i, x i ≠ 0 := by
     by_contra h
     push_neg at h

@@ -25,8 +25,10 @@ theorem sum_adjugate_eq {R : Type*} [CommRing R] [IsDomain R] {ι : Type*} [Fint
     have := congrFun (congrFun (RingHom.map_adjugate φ M) a) b
     simpa using this
   have key := det_add_replicateCol_mul_replicateRow (ι := Unit) hd (fun _ => (1 : K)) (fun _ => 1)
-  rw [map_sub, RingHom.map_det φ, RingHom.map_det φ, map_sum]
-  simp only [map_sum, hadj]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sub, RingHom.map_det φ, RingHom.map_det φ, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, hadj]
   change _ = ((M + Matrix.of fun _ _ => (1 : R)).map φ).det - (M.map φ).det
   rw [hJ, key, det_unique (n := Unit), Matrix.inv_def, Ring.inverse_eq_inv']
   simp only [Matrix.add_apply, Matrix.one_apply_eq, Matrix.mul_apply, replicateRow_apply, replicateCol_apply,
@@ -125,8 +127,10 @@ theorem poly_identity (m N : ℕ) (χ : Fin (m + 1) → ℂ) :
     intro i; rw [_root_.smul_pow, one_pow]
   have hBp : ∀ i : ℕ, ∑ a, ∑ b, (Bm ^ i) a b = C (GlobalTheory.Dec.gelfVal χ i) := by
     intro i
-    rw [gelfVal_eq, map_sum]
-    simp only [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [gelfVal_eq, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum]
     have : Bm ^ i = (amat m χ ^ i).map C := by
       rw [Matrix.map_pow]
     rw [this]

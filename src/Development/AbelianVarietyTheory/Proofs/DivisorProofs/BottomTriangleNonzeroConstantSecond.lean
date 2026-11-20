@@ -366,7 +366,8 @@ theorem reads_datum (hI : GlobalTheory.NormSum.Inp D) {large₂ : SizeData₂ D}
       (Circle.coe_ne_zero _) a2 sb1] at a1
     rwa [map_smul]
   have r5 := (reads_sum R hv r4).smul ζ₃
-  rw [← Finset.smul_sum, ← hF, ← map_sum, ← map_smul, ← hsum, smul_smul] at r5
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Finset.smul_sum, ← hF, ← map_sum, ← map_smul, ← hsum, smul_smul] at r5
   refine ⟨ζ₃ * (ζ₂ * ζ₁), z3.mul (z2.mul z1), ?_⟩
   rw [hf, alpha_div_beta, hβ, show κ * (ζ₃ * (ζ₂ * ζ₁)) = ζ₃ * (ζ₂ * (κ * ζ₁)) by ring]
   exact r5

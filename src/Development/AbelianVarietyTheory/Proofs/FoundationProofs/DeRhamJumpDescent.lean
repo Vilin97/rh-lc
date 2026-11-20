@@ -36,7 +36,8 @@ theorem descent {G M Ω : Type} [Group G] [AddCommGroup M] [Field Ω] (H : Subgr
         simp only [Set.mem_setOf_eq, Pi.zero_apply, hm0, Finset.sum_const_zero]
         exact F'.zero_mem
       smul_mem' := fun c a ha => by
-        simp only [Set.mem_setOf_eq, Pi.smul_apply, smul_eq_mul, hmm, ← map_sum] at *
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [Set.mem_setOf_eq, Pi.smul_apply, smul_eq_mul, hmm, ← map_sum] at *
         exact hF'm _ _ ha }
   let φ : G ⧸ H → (S →* Ω) := fun q => (ε q.out).comp S.subtype
   have hφ : Function.Injective φ := by
@@ -59,7 +60,8 @@ theorem descent {G M Ω : Type} [Group G] [AddCommGroup M] [Field Ω] (H : Subgr
       rw [hε, hxH h hh, (hH h).1 hh a a.2]
     apply hfix _ (F.sum_mem fun q _ => hFA _ _ (hFm _ _ hx))
     intro g
-    rw [map_sum, ← Equiv.sum_comp (MulAction.toPerm g) (fun q : G ⧸ H => A q.out (m a x))]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, ← Equiv.sum_comp (MulAction.toPerm g) (fun q : G ⧸ H => A q.out (m a x))]
     refine Finset.sum_congr rfl fun q _ => ?_
     obtain ⟨h, hh⟩ := QuotientGroup.mk_out_eq_mul H (g * q.out)
     have h2 : (MulAction.toPerm g q : G ⧸ H) = ((g * q.out : G) : G ⧸ H) :=

@@ -18,7 +18,8 @@ private lemma trace_conj_map_algebraMap {A : Type} [Ring A] [Algebra ℂ A] (N :
     ∑ c, (P.map (algebraMap ℂ A) * N * Q.map (algebraMap ℂ A)) c c = ∑ c, N c c := by
   have key : ∀ j i : Fin n, ∑ c, algebraMap ℂ A (Q j c * P c i) = if j = i then 1 else 0 := by
     intro j i
-    rw [← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum]
     have hji := congrFun (congrFun h j) i
     rw [Matrix.mul_apply] at hji
     rw [hji, Matrix.one_apply]
@@ -273,8 +274,10 @@ lemma of_conj {U : Set (Matrix (Fin n) (Fin n) ℂ)} (hU : IsOpen U) (k k' : Mat
   simp only [Matrix.of_apply, Matrix.mul_apply, Matrix.map_apply, Matrix.transpose_apply,
     Finset.sum_mul, Algebra.algebraMap_eq_smul_one, smul_mul_assoc, one_mul, mul_smul_comm, mul_one,
     smul_smul]
-  rw [hk, map_sum]
-  simp only [map_sum, map_smul, Finset.smul_sum, smul_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hk, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, Finset.smul_sum, smul_smul]
   refine Finset.sum_congr rfl fun x _ => Finset.sum_congr rfl fun i _ => ?_
   rw [mul_comm]
 

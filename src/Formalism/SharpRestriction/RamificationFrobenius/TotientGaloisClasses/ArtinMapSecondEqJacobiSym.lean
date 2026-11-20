@@ -48,7 +48,8 @@ theorem gs_act {K : Type*} [Field K] [CharZero K] {p : ℕ} [Fact p.Prime] {x : 
   have hχ : ∀ a : ZMod p, σ (Cond.chi p K a) = Cond.chi p K a := by
     intro a; simp [Cond.chi, MulChar.ringHomComp_apply]
   have h1 : σ (Cond.gs p hx) = gaussSum (Cond.chi p K) (AddChar.mulShift (AddChar.zmodChar p hx) (w : ZMod p)) := by
-    simp only [Cond.gs, gaussSum, map_sum, map_mul, hψ, hχ, AddChar.mulShift_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Cond.gs, gaussSum, map_sum, map_mul, hψ, hχ, AddChar.mulShift_apply]
   have h2 := gaussSum_mulShift (Cond.chi p K) (AddChar.zmodChar p hx) w
   have h3 : Cond.chi p K (w : ZMod p) = ((jacobiSym (v : ℤ) p : ℤ) : K) := by
     rw [← jacobiSym.legendreSym.to_jacobiSym, legendreSym, Int.cast_natCast, hwv]

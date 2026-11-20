@@ -150,7 +150,8 @@ theorem frE_add {n : ℕ} (f h : Fin n → S.V) (A : Matrix (Fin n) (Fin n) E) (
 
 theorem frE_map {n : ℕ} (β : S.V ≃ₗ[E] S.V) (f : Fin n → S.V) (A : Matrix (Fin n) (Fin n) E) (b : Fin n) :
     β (frE f A b) = frE (fun a => β (f a)) A b := by
-  simp only [frE, map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [frE, map_sum, map_smul]
 
 def UT {n : ℕ} (A : Matrix (Fin n) (Fin n) E) : Prop := (∀ a b, b < a → A a b = 0) ∧ ∀ a, A a a = 1
 

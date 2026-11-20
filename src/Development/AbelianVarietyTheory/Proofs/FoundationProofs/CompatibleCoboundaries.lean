@@ -45,7 +45,8 @@ theorem p_inc' (a : ι) (x : A) : S.p a (S.inc x) = b.repr 1 a • x := by
 
 theorem p_sum (m : ι → A) (a : ι) : S.p a (∑ a', b a' • S.inc (m a')) = m a := by
   classical
-  simp [map_sum, S.p_inc, Finsupp.single_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, S.p_inc, Finsupp.single_apply]
 
 theorem inc_smul (o : O) (x : A) : S.inc (o • x) = algebraMap O O' o • S.inc x := by
   refine S.ext_p fun a => ?_
@@ -76,7 +77,8 @@ theorem length_eq : Module.length O' A' = Module.length O' (O' ⊗[O] A) := by
     | add x y hx hy => simp only [map_add, TensorProduct.tmul_add, Finset.sum_add_distrib, hx, hy]
   refine (LinearEquiv.ofBijective F ⟨fun s t h => ?_, fun x => ⟨∑ a, b a ⊗ₜ[O] S.p a x, ?_⟩⟩).length_eq.symm
   · rw [← hl s, ← hl t, h]
-  · simp only [map_sum, hF, S.sum_p]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [map_sum, hF, S.sum_p]
 
 def pi (X : Type) : Comp b (X → A) (X → A') where
   inc := AddMonoidHom.compLeft S.inc X
@@ -108,7 +110,8 @@ def Compat.quot {N : Submodule O A} {N' : Submodule O' A'} (h : S.Compat N N') :
   p a := QuotientAddGroup.map N'.toAddSubgroup N.toAddSubgroup (S.p a) fun x hx => (h x).1 hx a
   sum_p x := by
     obtain ⟨x, rfl⟩ := N'.mkQ_surjective x
-    conv_rhs => rw [← S.sum_p x, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_rhs => rw [← S.sum_p x, map_sum]
     rfl
   p_inc a c x := by
     obtain ⟨x, rfl⟩ := N.mkQ_surjective x
@@ -283,7 +286,8 @@ theorem divComp_equiv {Γ O₀ : Type} [Group Γ] [CommRing O₀] (φ : O₀ →
   have : (((1 : O'ˣ)⁻¹ * (Units.map ((algebraMap O O').comp φ).toMonoidHom (χ g))⁻¹ : O'ˣ) : O') =
       algebraMap O O' (((1 : Oˣ)⁻¹ * (Units.map φ.toMonoidHom (χ g))⁻¹ : Oˣ) : O) := by
     simp [← map_inv]
-  rw [this, Comp.p_smul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [this, Comp.p_smul, map_sum]
   simp only [Comp.p_smul]
 
 def fracClasses {Γ O₀ : Type} [Group Γ] [TopologicalSpace Γ] [CommRing O₀] {O : Type} [CommRing O]

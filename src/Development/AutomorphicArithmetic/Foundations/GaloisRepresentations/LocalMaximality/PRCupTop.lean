@@ -101,7 +101,8 @@ private theorem top_zero (hc : IsFinCover ℂ K (xv x)) {τ : DR ℂ K →ₗ[K]
   rw [h2, map_zero, smul_zero] at h1
   have h3 : cupPair ((bil τ ρ).compr₂ φ) ((cech fun I => MZ F K (xv x) a I J).D u) α =
       φ (∑ i, bil τ ρ (deltaL ℂ _ _ u (Finset.univ.filter (· ≤ i))) (α (Finset.univ.filter (i ≤ ·)))) := by
-    simp [cupPair, cech, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [cupPair, cech, map_sum]
   rw [← h3]; exact h1
 
 end UpperTheory.Gal.productCup_of_system.RCT
@@ -197,7 +198,8 @@ theorem UpperTheory.Gal.productCup_of_system.rCupTop_of :
       intro i
       show (bil τ ρ).flip _ (((-1 : ℤ) ^ (Finset.univ.filter (· ≤ i)).card) •
         ∑ j ∈ J, GlobalTheory.cubeSign J j • y (uni (Finset.univ.filter (· ≤ i)) (J.erase j))) = _
-      simp only [Units.smul_def, map_zsmul, map_sum, LinearMap.flip_apply, Finset.smul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Units.smul_def, map_zsmul, map_sum, LinearMap.flip_apply, Finset.smul_sum]
       exact Finset.sum_congr rfl fun j _ => smul_comm _ _ _
     show ∑ j ∈ J, GlobalTheory.cubeSign J j • ∑ i, ((-1 : ℤ) ^ (Finset.univ.filter (· ≤ i)).card) •
         bil τ ρ (y (uni (Finset.univ.filter (· ≤ i)) (J.erase j))) (α (Finset.univ.filter (i ≤ ·))) =

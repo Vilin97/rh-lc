@@ -156,7 +156,8 @@ theorem exists_frame_flag : ∀ {E : Type} [Field E] [NumberField E] [IsCMField 
     intro σ k _
     refine initSpan_le_of_tri (B := (g σ).transpose) (hgt σ) (fun i => ?_) k
     have e2 : tanPull L.subtype ex (WL σ i) = ∑ j, (g σ * M σ) i j • V σ j := by
-      simp only [WL, map_sum, map_smulₛₗ]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [WL, map_sum, map_smulₛₗ]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [← congrFun (congrFun hTV σ) j]
       rfl

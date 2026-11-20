@@ -182,7 +182,8 @@ theorem psi_at_w (d : SD σ) (w : InfinitePlace F) (ε : ℤˣ) (M : Mx F E d.n 
     rw [map_zsmul, zsmul_eq_mul]
     rfl
   have ptr : ∀ u, piInf (d.B.emb u) M.trace = (d.cw u M).trace := fun u => by
-    simp [Matrix.trace, SD.cw, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Matrix.trace, SD.cw, map_sum]
   rw [hz, Place.psi_trace_at d.std d.cm d.B.emb w _ ?_ ?_, map_zsmul, ptr, zsmul_eq_mul]
   · rw [smul_comm, ← Matrix.trace_smul, hM2, Matrix.trace_zero, smul_zero]
   · intro u hu

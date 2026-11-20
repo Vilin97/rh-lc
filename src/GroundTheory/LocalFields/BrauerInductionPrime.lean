@@ -261,7 +261,8 @@ theorem indFun_theta_mem_spanA (hx : (orderOf x).Coprime p) :
       ∑ ψ ∈ irrChars Q, charInner Q δ ψ • (ψ ∘ QuotientGroup.mk' (sylowCentIn p x)) := by
     funext h
     simp [Finset.sum_apply]
-  rw [hcomp, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hcomp, map_sum]
   refine Submodule.sum_mem _ fun ψ hψ ↦ ?_
   rw [map_smul, hcoef]
   have hψc := (mem_irrChars.mp hψ).isCharacter

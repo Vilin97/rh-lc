@@ -33,7 +33,8 @@ theorem exists_homogeneous_lift_nat_mul {R F J : Type*} [CommRing R] [CommRing F
     have := hG (MvPolynomial.mem_support_iff.1 hs)
     rw [Finsupp.degree_eq_weight_one]
     exact this
-  · rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum]
     conv_rhs => rw [G.as_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun s hs => ?_
     rw [MvPolynomial.map_monomial, hr s hs, ← map_natCast (MvPolynomial.C : F →+* MvPolynomial J F),

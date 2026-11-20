@@ -410,7 +410,8 @@ theorem inGenus_of_selfDual [Algebra.Unramified (𝓞 (maximalRealSubfield E)) (
   · have h1 := (hhL v _).1 (Submodule.subset_span ⟨x, hx, rfl⟩)
     have h2 : ∀ i j, (((γ.map cc)ᵀ).map (locEmb v) * (h v).1) i j ∈ locOrder v := fun i j => by
       convert locConj_mem v (hγ' v hv j i) using 1
-      simp only [Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, map_sum, map_mul, locConj_locConj,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, map_sum, map_mul, locConj_locConj,
         locConj_locEmb, mul_comm]
     have h3 := mulVec_mem_locOrder v h2 h1
     rw [Matrix.mulVec_mulVec, Matrix.mul_assoc, Units.mul_inv, Matrix.mul_one, ← hmap] at h3

@@ -192,7 +192,8 @@ theorem isoSt_of : IntSt → LinSt → GlobalTheory.IndefiniteRowSideFullHecke.H
     exact Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨_, rfl⟩)
   have hval : ∀ (a : Fin g → ℂ_[p]) m, P.pairV (∑ i, a i • P.bLie (x i)) (1 ⊗ₜ t m) =
       ∑ i, a i * ((P.al₀ (t m)).1 (x i) : ℂ_[p]) := fun a m => by
-    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, P.pairV_bLie, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, P.pairV_bLie, smul_eq_mul]
     rfl
   refine hLin p (fun r => (io r).2) P.T N hrk (pairT P.A P.eps) t u B J hBJ hgram _ _ ((h5 _).1 (hW a) _ (hW a')) _ _ hb hb'
     (fun m => ?_) fun m => ?_

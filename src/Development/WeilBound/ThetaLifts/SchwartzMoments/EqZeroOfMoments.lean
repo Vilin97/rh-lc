@@ -44,9 +44,11 @@ theorem eq_zero_PG {n : ℕ} (q : EuclideanSpace ℝ (Fin n) → ℝ) (hq : q.Ha
     hT _ ⟨(∑ i, MvPolynomial.C ((L (EuclideanSpace.single i 1) : ℝ) : ℂ) * MvPolynomial.X i) ^ m, fun y => ?_⟩
   have hL : L y = ∑ i, L (EuclideanSpace.single i 1) * y i := by
     conv_lhs => rw [← (EuclideanSpace.basisFun (Fin n) ℝ).sum_repr y]
-    simp [map_sum, mul_comm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, mul_comm]
   rw [mulL_pow_apply, hL]
-  simp only [polE, map_pow, map_sum, map_mul, MvPolynomial.eval_C, MvPolynomial.eval_X]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [polE, map_pow, map_sum, map_mul, MvPolynomial.eval_C, MvPolynomial.eval_X]
   push_cast
   rfl
 

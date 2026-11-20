@@ -113,7 +113,8 @@ theorem trace_transpose_pow {V : Type} [AddCommGroup V] [Module ℂ V] {n : ℕ}
         (if j = 0 then φ else 0), fun a b => ?_, ?_⟩
       · rw [sum_range_shift_smul_eq_sub_add α m (n : ℂ) φ (fun j => (Matrix.of E ^ j) b a v)]
         rw [pow_succ', Matrix.mul_apply, LinearMap.sum_apply]
-        simp only [Module.End.mul_apply, Matrix.of_apply, h1, map_sum, map_smul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [Module.End.mul_apply, Matrix.of_apply, h1, map_sum, map_smul]
         rw [Finset.sum_comm]
         simp only [← Finset.smul_sum]
         simp only [ite_eq_trace_matrix_of_pow_apply E hE, hv]

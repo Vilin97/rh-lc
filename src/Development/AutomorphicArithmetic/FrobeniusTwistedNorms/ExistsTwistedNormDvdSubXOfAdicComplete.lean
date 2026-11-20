@@ -57,7 +57,8 @@ theorem UpperTheory.exists_twistedNorm_dvd_sub_X_of_adicComplete :
     exact fun x hx => this hx
   have ha' : ∑ i ∈ Finset.range d, (⇑τ)^[i] (AdjoinRoot.of f a) = 1 := by
     simp_rw [hofit]
-    rw [← map_sum, ha, map_one]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, ha, map_one]
   have hroot_fix : τ (AdjoinRoot.root f) = AdjoinRoot.root f := by
     have := hτ Polynomial.X
     simpa [AdjoinRoot.mk_X] using this

@@ -31,7 +31,8 @@ theorem imgR_map {R R' : Type*} [CommRing R] [CommRing R'] {D N : ℕ} (φ : R �
   · rw [imgR_same, imgR_same]
     split_ifs
     · exact MvPolynomial.map_X φ _
-    · simp only [map_neg, map_sum, map_mul, MvPolynomial.map_X, MvPolynomial.map_C]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp only [map_neg, map_sum, map_mul, MvPolynomial.map_X, MvPolynomial.map_C]
   · rw [imgR_succAbove, imgR_succAbove, MvPolynomial.map_X]
 
 section Ker

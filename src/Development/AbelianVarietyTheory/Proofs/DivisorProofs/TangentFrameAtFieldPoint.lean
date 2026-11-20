@@ -168,7 +168,8 @@ theorem isCombAtG_of_tanEv {V : X.Opens} (hV : ⊤ ≤ x ⁻¹ᵁ V) {n : ℕ} {
   obtain ⟨Φ, hΦ⟩ := TanPair.exists_tanM_equiv _ _ _ t k _ V hV n m hm
   refine (LieMet.isComb_iff (fun i => LieMet.tanOf (hu i)) _ (LieMet.tanOf hv)).2
     (Φ.injective (funext fun b => ?_))
-  rw [map_sum, Finset.sum_apply, hΦ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_apply, hΦ]
   refine (H b).trans (Finset.sum_congr rfl fun i _ => ?_)
   rw [map_smul, Pi.smul_apply, hΦ]
   rfl
@@ -182,7 +183,8 @@ theorem val_eq_sum_coef {X : Scheme.{0}} {F P : X.Modules} (θ : F ⟶ dual P) {
       ∑ i, valF w _ (ChainPts.coef false he hs i j) *
         (Scheme.ΓSpecIso (.of k)).hom (w.appLE T ⊤ hw (dualApp (θ.app _ (resM F inf_le_left (e i))) hT μ)) := by
   conv_lhs => rw [← (he.basis inf_le_left).sum_repr (resM F inf_le_right (s j))]
-  rw [map_sum, dualApp_sum, LinearMap.sum_apply, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, dualApp_sum, LinearMap.sum_apply, map_sum, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [Scheme.Modules.Hom.app_smul, dualApp_smul, LinearMap.smul_apply, smul_eq_mul, map_mul, map_mul, appLE_resG,
     IsFrame.basis_apply, valF, dif_pos (hw.trans (w.preimage_mono hT))]

@@ -27,7 +27,8 @@ theorem mulVec_sec {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [I
     (p : SplitPt D k) {r : ℕ} (m : Matrix (Fin r) (Fin r) (AE D)) (u : Fin r → k) :
     m *ᵥ (fun i => p.sec (u i)) = fun i => p.sec ((m.map p.pr *ᵥ u) i) := by
   funext i
-  simp only [mulVec, dotProduct, map_sum, Matrix.map_apply, sec_mul_sec]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [mulVec, dotProduct, map_sum, Matrix.map_apply, sec_mul_sec]
 
 theorem single_mem_gluedS {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
     {n : Type} [DecidableEq n] (q : Unif k) (P : Pair k n) :

@@ -106,10 +106,13 @@ theorem XX'_polComp (O : Type) [CommRing O] (r K : ℕ) [NeZero r] [NeZero K] {n
       have hsum : plEmb O r K A * nmEmb O r K G = ∑ d' ∈ T', ∑ d'' ∈ T'',
           plEmb O r K (polComp O r d' A) * nmEmb O r K (polComp O K d'' G) := by
         conv_lhs => rw [hT', hT'']
-        rw [map_sum, map_sum, Finset.sum_mul_sum]
-      rw [hsum, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum, map_sum, Finset.sum_mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hsum, map_sum]
       refine Submodule.sum_mem _ fun d' _ => ?_
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Submodule.sum_mem _ fun d'' _ => ?_
       have hP : plEmb O r K (polComp O r d' A) * nmEmb O r K (polComp O K d'' G) ∈ Pol O (r + K) (d' + d'') :=
         hom_Pol_mul O (plEmb_Pol r K (polComp_mem_Pol O r d' A)) (nmEmb_Pol r K (polComp_mem_Pol O K d'' G))

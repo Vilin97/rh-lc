@@ -28,7 +28,8 @@ theorem length_ne_top_of_smul {M : Type} [AddCommGroup M] [Module O M] [Module.F
     have hv : v = ∑ i, v i • Pi.single i (1 : O) := by
       ext j; simp [Finset.sum_apply, Pi.single_apply]
     conv_rhs => rw [hv]
-    rw [map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, LinearMap.sum_apply]
     exact Finset.sum_congr rfl fun i _ => by
       rw [map_smul]; rfl
   have h1 : Module.length O (O ⧸ Ideal.span {x}) ≠ ⊤ :=

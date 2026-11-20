@@ -114,7 +114,8 @@ theorem rhoPart_splits_by_idempotents : ∀ (W L : Type) [CommRing W] [IsDomain 
         have h2 := act_sub β v h1 (act_smul β v ((f i j).sum fun x r => r * t j x) (act_one β v))
         refine h2.trans ?_
         congr 1
-        simp [Finsupp.sum, map_sum, map_mul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp [Finsupp.sum, map_sum, map_mul]
     rw [act_list β v _ _ hZ]
     by_cases hki : k = i
     · rw [if_pos hki]

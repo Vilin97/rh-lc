@@ -189,11 +189,13 @@ theorem transH_translation (Ψ : Finset (E →+* ℂ)) {n N : ℕ} (β : Matrix 
   refine Finset.sum_congr rfl fun τ _ => ?_
   have hc : ∀ t : E, τ.1 (cc t) = conj (τ.1 t) := fun t => by
     simp [cc, IsCMField.complexEmbedding_complexConj]
-  rw [Matrix.trace, map_sum, ← Finset.sum_add_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.trace, map_sum, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun k _ => ?_
   have : τ.1 ((x * β * ccT x).diag k) =
       (fun a => τ.1 (x k a)) ⬝ᵥ β.map τ.1 *ᵥ (fun a => conj (τ.1 (x k a))) := by
-    simp only [Matrix.diag, Matrix.mul_apply, ccT, Matrix.transpose_apply, Matrix.map_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.diag, Matrix.mul_apply, ccT, Matrix.transpose_apply, Matrix.map_apply,
       map_sum, map_mul, hc, dotProduct, Matrix.mulVec, Finset.sum_mul, Finset.mul_sum]
     rw [Finset.sum_comm]
     simp only [mul_assoc]
@@ -215,7 +217,8 @@ theorem expo_ofQ (Ψ : Finset (E →+* ℂ)) {n N : ℕ} (m : Matrix (Fin n) (QI
   have hq : ∀ τ : Ψ, (fun a => τ.1 (ofQ m k a)) ⬝ᵥ Z τ *ᵥ (fun a => conj (τ.1 (ofQ m k a))) =
       ∑ p : QI E N, ∑ q : QI E N, (m k p : ℂ) * (e τ p.2 * Z τ p.1 q.1 * conj (e τ q.2) * m k q) := by
     intro τ
-    simp only [hx, dotProduct, Matrix.mulVec, Fintype.sum_prod_type, map_sum, map_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hx, dotProduct, Matrix.mulVec, Fintype.sum_prod_type, map_sum, map_mul,
       Finset.sum_mul, Finset.mul_sum, map_ratCast]
     refine Finset.sum_congr rfl fun a _ => ?_
     refine Eq.trans (Finset.sum_congr rfl fun c _ => Finset.sum_comm) ?_
@@ -225,7 +228,8 @@ theorem expo_ofQ (Ψ : Finset (E →+* ℂ)) {n N : ℕ} (m : Matrix (Fin n) (QI
   have hl : ∀ τ : Ψ, (fun a => τ.1 (ofQ m k a)) ⬝ᵥ z τ k + z' τ k ⬝ᵥ (fun a => conj (τ.1 (ofQ m k a))) =
       ∑ p : QI E N, (m k p : ℂ) * (e τ p.2 * z τ k p.1 + z' τ k p.1 * conj (e τ p.2)) := by
     intro τ
-    simp only [hx, dotProduct, Fintype.sum_prod_type, map_sum, map_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hx, dotProduct, Fintype.sum_prod_type, map_sum, map_mul,
       Finset.sum_mul, Finset.mul_sum, map_ratCast, ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun j _ => by ring
   simp only [add_assoc, hq, hl]

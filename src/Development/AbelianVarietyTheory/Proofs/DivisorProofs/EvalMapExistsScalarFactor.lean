@@ -39,7 +39,8 @@ theorem symp_vecMulVec {n d : ℕ} (JX : Matrix (Fin n) (Fin n) E) (JW : Matrix 
       (Matrix.vecMulVec (T • incV F β) (incV F x)) =
       algebraMap (AF F) (AE F E) T * inclR (F := F) (AF F) (form σ JX ξ β * form σ JW y x) := by
     simp only [hTens, Matrix.vecMulVec_apply, Pi.smul_apply, incM, incV, Matrix.map_apply]
-    simp only [form, dotProduct, Matrix.mulVec, Algebra.smul_def, map_mul, cA_inclR, AlgHom.commutes, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [form, dotProduct, Matrix.mulVec, Algebra.smul_def, map_mul, cA_inclR, AlgHom.commutes, map_sum,
       Finset.mul_sum, Finset.sum_mul]
     symm
     refine (Finset.sum_congr rfl fun j _ => Finset.sum_comm).trans ?_
@@ -118,7 +119,8 @@ theorem GlobalTheory.ExpandDenom.main : GlobalTheory.ThK.KP → ∀ (F E : Type)
   have hform : form σ W.J H'.y H'.x = -1 := by
     have h1 := hH.xy
     have h2 : σ (form σ W.J H'.x H'.y) = -form σ W.J H'.y H'.x := by
-      simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hW.skew, Finset.mul_sum, neg_mul, mul_neg,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hW.skew, Finset.mul_sum, neg_mul, mul_neg,
         Finset.sum_neg_distrib, AlgHom.commutes]
       rw [Finset.sum_comm]
       refine congrArg Neg.neg (Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun i _ => ?_)

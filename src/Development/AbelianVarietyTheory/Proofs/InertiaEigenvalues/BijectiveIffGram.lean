@@ -216,16 +216,19 @@ theorem dualFor [IsFractionRing O LL]
     simp [δ₀, Module.Basis.constr_apply_fintype]
   have hci : ∀ i y, e'.repr y i = b (c i) y := fun i y => by
     conv_rhs => rw [← e'.sum_repr y, ← hec]
-    simp only [map_sum, map_smul, hee, e.repr_self, Finsupp.single_apply, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, hee, e.repr_self, Finsupp.single_apply, smul_eq_mul]
     simp
   have hδ : ∀ (x : ↥(W.N T)) f, b x (δ₀ f) = algebraMap _ W.EE (f x) := fun x f => by
     conv_lhs => rw [← c.sum_repr x]
     conv_rhs => rw [← c.sum_repr x]
-    simp only [Submodule.coe_sum, Submodule.coe_smul, map_sum, LinearMap.sum_apply, hA₁, map_smul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Submodule.coe_sum, Submodule.coe_smul, map_sum, LinearMap.sum_apply, hA₁, map_smul,
       smul_eq_mul, map_mul]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [hsum]
-    simp [map_sum, hA₂, hee, ← hec, Finsupp.single_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, hA₂, hee, ← hec, Finsupp.single_apply]
   have hbas : ∀ y, (∀ i, ∃ a : LetA O n, b (c i) y = algebraMap _ W.EE a) →
       y ∈ LinearMap.range δ₀ := by
     intro y hy
@@ -304,7 +307,8 @@ theorem dualFor [IsFractionRing O LL]
         have h1 : y = ∑ i, b (W.φD T (e i)) y • W.φD T' (e' i) := by
           apply hb2.1
           refine LinearMap.ext_on_range (exists_frob_inv E hm hφ T e) fun j => ?_
-          simp [map_sum, hφb, hee, Finsupp.single_apply, apply_ite W.φE]
+          set_option synthInstance.maxHeartbeats 100000 in
+            simp [map_sum, hφb, hee, Finsupp.single_apply, apply_ite W.φE]
         rw [h1]
         refine Submodule.sum_mem _ fun i _ => ?_
         obtain ⟨k, hk⟩ := W.N_φ T (c i) (c i).2

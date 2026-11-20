@@ -15,7 +15,8 @@ namespace GlobalTheory.EisRestrict
 theorem hE_swap_conj {F E : Type} [Field F] [Field E] [Algebra F E] (σ : E →ₐ[F] E) {n : ℕ}
     (J : Matrix (Fin n) (Fin n) E) (hσ : ∀ e, σ (σ e) = e) (hJ : ∀ i j, σ (J j i) = J i j) (x y : Fin n → E) :
     hE σ J y x = σ (hE σ J x y) := by
-  simp only [hE, Formalism.UG.hform, map_sum, map_mul, RingHom.coe_coe, hσ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hE, Formalism.UG.hform, map_sum, map_mul, RingHom.coe_coe, hσ]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by rw [hJ]; ring
 
@@ -46,7 +47,8 @@ theorem GlobalTheory.EisRestrict.isHermND_restrictedForm : ∀ (F E : Type) [Fie
   have hyy : hE σ J y₀ y₀ = 0 := by
     rw [hE_col0v_gram σ J Y Y, hW.yy]; rfl
   refine ⟨fun i j => ?_, ?_⟩
-  · simp only [J0, Matrix.mul_apply, Formalism.UG.cT, Matrix.transpose_apply, Matrix.map_apply, map_sum, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [J0, Matrix.mul_apply, Formalism.UG.cT, Matrix.transpose_apply, Matrix.map_apply, map_sum, map_mul,
       RingHom.coe_coe, hσ]
     simp only [Finset.sum_mul]
     rw [Finset.sum_comm]

@@ -54,7 +54,8 @@ theorem tw_d [IsTopologicalAddGroup G] (ρ : Multiplicative G →* (M →ₗ[R] 
     (f : (lcCos R G M).cx.X n) :
     (lcCos R G M).d n (tw ρ v n f) = tw ρ v (n + 1) ((lcCos R G M).d n f) := by
   refine LocallyConstant.ext fun x => ?_
-  rw [tw_apply, lc_d_apply, lc_d_apply, lc_d_apply, map_sum, ← Finset.sum_sub_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [tw_apply, lc_d_apply, lc_d_apply, lc_d_apply, map_sum, ← Finset.sum_sub_distrib]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [tw_apply, map_zsmul, smul_sub]
 

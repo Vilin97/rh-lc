@@ -29,7 +29,8 @@ theorem row_action_diagonal_weight : RowActDiagWeight := by
     · simp
   conv_lhs => rw [f.as_sum]
   conv_rhs => rw [f.as_sum]
-  rw [map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.smul_sum]
   refine Finset.sum_congr rfl fun d hd => ?_
   have hw : Finsupp.weight (rowW k n) d = μ := hf (mem_support_iff.mp hd)
   have hp : (d.prod fun v e => t v.1 ^ e) = ∏ a, t a ^ μ a := by

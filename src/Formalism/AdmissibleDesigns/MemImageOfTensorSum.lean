@@ -73,7 +73,8 @@ theorem mem_image_of_tensor_sum (tens : L →ₗ[O] KO O →ₗ[O] M)
     exact Zf.sum_mem (fun a _ => Zf.smul_mem _ (hκ a))
   · funext g
     show qV ((∑ a, y a • (fun g => iL (κ a g))) g) = (z : Γ → M) g
-    rw [hz g, Finset.sum_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hz g, Finset.sum_apply, map_sum]
     refine Finset.sum_congr rfl (fun a _ => ?_)
     rw [← hy a, htens]
     rfl
@@ -147,7 +148,8 @@ theorem latBasisG_of [IsPrincipalIdealRing O] (j : ℕ) (hfg : Module.Finite O �
     let b := e.repr (Submodule.Quotient.mk zF)
     refine ⟨fun a => b a, ?_⟩
     have hmem : zF - ∑ a, b a • f a ∈ Submodule.torsion O ↥(FfG ρL iL Zf) := by
-      rw [← Submodule.Quotient.mk_eq_zero, ← Submodule.mkQ_apply, map_sub, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← Submodule.Quotient.mk_eq_zero, ← Submodule.mkQ_apply, map_sub, map_sum]
       simp only [map_smul, Submodule.mkQ_apply, hf]
       rw [sub_eq_zero]
       exact (e.sum_repr _).symm
@@ -167,7 +169,8 @@ theorem latBasisG_of [IsPrincipalIdealRing O] (j : ℕ) (hfg : Module.Finite O �
     have h0 : (Submodule.torsion O ↥(FfG ρL iL Zf)).mkQ (∑ a, b a • f a) = 0 := by
       rw [Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero]
       exact hT
-    rw [map_sum] at h0
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at h0
     simp only [map_smul, Submodule.mkQ_apply, hf] at h0
     exact funext (Fintype.linearIndependent_iff.1 e.linearIndependent b h0)
 
@@ -184,7 +187,8 @@ theorem iLM_smul (a : A) (u : LatM O O n ρ) : iLM O n ρ (a • u) = a • iLM 
   funext k
   show algebraMap O (FractionRing O) (∑ j, (ρ a) k j • u j) =
     ∑ j, (ρ a) k j • algebraMap O (FractionRing O) (u j)
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl (fun j _ => ?_)
   rw [smul_eq_mul, map_mul, Algebra.smul_def]
 

@@ -88,7 +88,8 @@ theorem mul_adj {γ : Matrix (Fin n) (Fin n) E} (h : UnitaryAdjointCongruence.Is
 theorem form_adj (γ : Matrix (Fin n) (Fin n) E) (v w : Fin n → E) :
     ∑ j, IsCMField.complexConj E (v j) * γ.mulVec w j =
       ∑ j, IsCMField.complexConj E ((UnitaryAdjointCongruence.adjM γ).mulVec v j) * w j := by
-  simp only [Matrix.mulVec, dotProduct, UnitaryAdjointCongruence.adjM, Matrix.of_apply, map_sum, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mulVec, dotProduct, UnitaryAdjointCongruence.adjM, Matrix.of_apply, map_sum, map_mul,
     IsCMField.complexConj_apply_apply, Finset.mul_sum, Finset.sum_mul]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring

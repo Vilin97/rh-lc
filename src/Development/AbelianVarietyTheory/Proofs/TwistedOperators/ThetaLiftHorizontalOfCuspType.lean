@@ -91,7 +91,8 @@ theorem thetaLift_approx_of (hL1 : ∀ (D : D7) (θ : InfFam D), IsInfFam θ →
       (GlobalTheory.Grid.fock R.ψ R.θ false (G.V i j) (G.V i (j + 1)) (f ab.2) (p ab.2)) * F ab.1 (v ab.1) g)).trans ?_
     rw [Fintype.sum_prod_type, hΦ']
     unfold thetaKO
-    rw [map_sum, Finset.sum_apply, Finset.sum_mul_sum, Finset.sum_comm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_apply, Finset.sum_mul_sum, Finset.sum_comm]
   have hq : ∀ g, 0 < GlobalTheory.Grow.quotHeight (G.V i (j + 1)).V g ^ Ae := fun g => pow_pos (GlobalTheory.Grow.quotHeight_pos _ g) _
   have bound : ∀ g, ‖thetaKO (G.th t i j).ω h g Φ * φ g - ∑ l : Fin (n1 * n2), thetaKO (G.th t i j).ω h g
       (GlobalTheory.Grid.fock R.ψ R.θ false (G.V i j) (G.V i (j + 1)) (f (e.symm l).2) (p (e.symm l).2)) *

@@ -88,7 +88,8 @@ theorem smMap_coord {X Y : Obj k r} {f : M X →ₗ[ℂ] M Y} (hf : IsHom X Y f)
 theorem sum_coord {X Y : Obj k r} (f : M X →ₗ[ℂ] M Y) (d : Y.1.ι) (x : M X) :
     ∑ c, extZ (coord f d c) (x c : X.2.R.H) = (f x d : Y.2.R.H) := by
   simp only [extZ_coe, coord_apply]
-  conv_rhs => rw [← Finset.univ_sum_single x, map_sum, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_rhs => rw [← Finset.univ_sum_single x, map_sum, Finset.sum_apply]
   simp
 
 theorem act_coe (X : Obj k r) {g : Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ} (hg : g ∈ GG k r) (x : M X) (c : X.1.ι) :

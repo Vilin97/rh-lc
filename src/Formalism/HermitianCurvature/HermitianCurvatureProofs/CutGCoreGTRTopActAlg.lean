@@ -133,7 +133,8 @@ theorem quadratic_top_algebra_holds : QTopAlg := by
         rw [if_pos (show lin 1 l from rfl)]
       rw [e1, (coeff_all (B 1)).2 hn]
       simp only [B, Equiv.Perm.one_apply, if_true]
-      rw [Finset.sum_add_distrib, add_comm, ← map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Finset.sum_add_distrib, add_comm, ← map_sum]
       congr 1
       congr 1
       rw [Finset.sum_sub_distrib, Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]

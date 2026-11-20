@@ -13,12 +13,14 @@ private theorem absBd {V W F : Type} [NormedAddCommGroup V] [NormedSpace ℝ V] 
   have hX : X = fun i => ∑ j, c j (e (X i)) • e.symm (b j) := by
     funext i
     apply e.injective
-    simp only [map_sum, map_smul, LinearEquiv.apply_symm_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, LinearEquiv.apply_symm_apply]
     exact (b.sum_repr _).symm
   have h1 : m X = ∑ I : Fin q → Fin (Module.finrank ℝ V),
       (∏ i, c (I i) (e (X i))) • m fun i => e.symm (b (I i)) := by
     conv_lhs => rw [hX]
-    rw [m.map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [m.map_sum]
     exact Finset.sum_congr rfl fun I _ => m.map_smul_univ _ _
   rw [h1, Finset.sum_mul, Finset.sum_mul]
   refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun I _ => ?_)

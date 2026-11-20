@@ -12,8 +12,10 @@ theorem exists_pow_eq_map_expand {σ k k' : Type*} [Field k] [Field k'] [Algebra
       N' ^ p ^ e = MvPolynomial.map (algebraMap k k') (MvPolynomial.expand (p ^ e) N) := by
   choose r hr using hN
   refine ⟨∑ m ∈ N.support, MvPolynomial.monomial m (r m), ?_⟩
-  rw [← MvPolynomial.map_iterateFrobenius_expand p, map_sum, map_sum]
-  conv_rhs => rw [N.as_sum, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← MvPolynomial.map_iterateFrobenius_expand p, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_rhs => rw [N.as_sum, map_sum, map_sum]
   refine Finset.sum_congr rfl fun m _ => ?_
   simp [MvPolynomial.expand_monomial, iterateFrobenius_def, hr]
 
@@ -69,7 +71,8 @@ theorem isSeparable_of_pow_coeff {F F' Ω : Type*} [Field F] [Field F'] [Field �
   set h : F'[X] := ∑ i ∈ Finset.range (g.natDegree + 1), C (d i) * X ^ i
   have hmap : (h.map (algebraMap F' Ω)).map (iterateFrobenius Ω p e) = g.map (algebraMap F Ω) := by
     ext i
-    simp only [h, coeff_map, Polynomial.map_sum, Polynomial.map_mul, Polynomial.map_pow, map_X,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [h, coeff_map, Polynomial.map_sum, Polynomial.map_mul, Polynomial.map_pow, map_X,
       map_C, finsetSum_coeff, coeff_C_mul_X_pow]
     rw [Finset.sum_ite_eq]
     split_ifs with hi

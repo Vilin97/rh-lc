@@ -28,9 +28,11 @@ theorem hR_self_fixed {σ : E →ₐ[F] E} (hσ : IsCMExt F E σ) {M : ℕ}
     simp only [JR, Matrix.map_apply, inclR, sigR]
     simp [h]
   unfold hR hform
-  rw [map_sum, Finset.sum_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_comm]
   refine Finset.sum_congr rfl fun j _ => ?_
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_mul, map_mul, sigR_sigR R hσ, hJR]
   ring

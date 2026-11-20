@@ -13,7 +13,8 @@ private lemma trace_restrictScalars_rat {F W : Type} [Field F] [NumberField F] [
   classical
   let b := Module.finBasis ℚ F
   let d := Module.finBasis F W
-  rw [LinearMap.trace_eq_matrix_trace ℚ (b.smulTower d), LinearMap.trace_eq_matrix_trace F d,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [LinearMap.trace_eq_matrix_trace ℚ (b.smulTower d), LinearMap.trace_eq_matrix_trace F d,
     Matrix.trace, Matrix.trace, map_sum, Fintype.sum_prod_type, Finset.sum_comm]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [Algebra.trace_eq_matrix_trace b, Matrix.trace]

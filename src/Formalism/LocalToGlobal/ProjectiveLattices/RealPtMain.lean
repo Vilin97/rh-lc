@@ -73,7 +73,8 @@ theorem realPt_of (h : LawsP T) (j : ℕ) (hj : InR D j) (hG : GenFrEx (T.Q.Xo j
       ∑ k, kap (algebraMap (Op (recPlus h j hj) la G.N) (Kp (recPlus h j hj) la G.N) (Tv (recPlus h j hj) la G.N (0, k))) *
         evI y ((G.w k : (recB h.toLawsCore).Cusp j wL) : T.R j) := by
     unfold Formalism.MainNotions.Gaps.EtaleWeightGaps.sec
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [Algebra.smul_def, map_mul, hev_k, hev_inc]
   have hs0' : (∑ k, kap (algebraMap (Op (recPlus h j hj) la G.N) (Kp (recPlus h j hj) la G.N) (Tv (recPlus h j hj) la G.N (0, k))) *

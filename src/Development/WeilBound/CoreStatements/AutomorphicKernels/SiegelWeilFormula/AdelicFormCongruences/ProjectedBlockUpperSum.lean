@@ -278,7 +278,8 @@ theorem finOne_mul {a : AF F} (ha : a.2 = 0) : finOne F * a = 0 :=
 theorem sum_mem_Sw (w : InfinitePlace F) (s : Fin (Module.finrank F E) → AF F) (hs : ∀ k, (s k).2 = 0 ∧ ∀ w', w' ≠ w → (s k).1 w' = 0) :
     ∑ k, s k • kfour.bsA F E k ∈ Sw d w := by
   refine ⟨fun w' hw' => ?_, ?_⟩
-  · rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum]
     refine Finset.sum_eq_zero fun k _ => ?_
     rw [St.piInf_smul, (hs k).2 w' hw', map_zero, zero_mul]
   · rw [Finset.smul_sum]
@@ -299,7 +300,8 @@ theorem dense_Sw (w : InfinitePlace F) : Dense {z : AE F E | ∃ e : E, ∃ s �
   choose q hq using hx
   refine ⟨∑ k, q k • kfour.bsE F E k, ∑ k, s k • kfour.bsA F E k, sum_mem_Sw d w s hs, ?_⟩
   have h1 : inclR (F := F) (AF F) (∑ k, q k • kfour.bsE F E k) = ∑ k, algebraMap F (AF F) (q k) • kfour.bsA F E k := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [Algebra.TensorProduct.basis_apply, algebraMap_smul, kfour.inclR_eq, TensorProduct.tmul_smul]
   rw [h1, ← Finset.sum_add_distrib]
@@ -322,7 +324,8 @@ variable {d : SD σ} (L : LD d)
 theorem cw_uN (w' : InfinitePlace F) (u : Fin L.n → AE F E) :
     d.cw w' (uN L u) = ∑ j, Matrix.single L.i₀ (L.em j) (piInf (d.B.emb w') (u j)) := by
   ext a b
-  simp only [SD.cw, uN, Matrix.map_apply, Matrix.sum_apply, map_sum, Matrix.single_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [SD.cw, uN, Matrix.map_apply, Matrix.sum_apply, map_sum, Matrix.single_apply]
   refine Finset.sum_congr rfl fun j _ => ?_
   split_ifs <;> simp
 

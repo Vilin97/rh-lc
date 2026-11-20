@@ -38,7 +38,8 @@ theorem hessC_posSemidef_of_levi {e : ℕ} (f : (Fin e → ℂ) → ℝ) (z : Fi
   · have h1 : ∀ i, ∑ j, hessC f z i j * x j =
         leviC (fderiv ℝ (fderiv ℝ f) z) (Pi.single i 1) (star x) := by
       intro i
-      rw [← leviC_conj_of_symm _ hs (star x) (Pi.single i 1),
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← leviC_conj_of_symm _ hs (star x) (Pi.single i 1),
         ← sum_mul_leviC (fderiv ℝ (fderiv ℝ f) z) (star x) (Pi.single i 1), map_sum]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [hM, map_mul, leviC_conj_of_symm _ hs]

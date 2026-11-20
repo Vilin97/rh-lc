@@ -32,7 +32,8 @@ theorem pr_ne {a : D.host.E} (ha : a ≠ 0) : p.pr a ≠ 0 := by
 theorem pr_dot {N M : ℕ} (Q : Matrix (Fin M) (Fin N) D.host.E) (v : Fin N → D.host.E) (i : Fin M) (a : k) :
     ∑ r, p.pr (Q i r) * (a * p.pr (v r)) = a * p.pr ((Q *ᵥ v) i) := by
   unfold Place.pr
-  simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Finset.mul_sum]
   exact Finset.sum_congr rfl fun r _ => by ring
 
 theorem pr_zero : p.pr 0 = 0 := by unfold Place.pr; rw [map_zero, map_zero]

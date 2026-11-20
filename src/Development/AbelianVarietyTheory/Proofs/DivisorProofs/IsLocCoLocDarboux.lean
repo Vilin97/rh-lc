@@ -91,7 +91,8 @@ theorem symp_lift (σ : E →ₐ[F] E) (v : Pl F) {n d : ℕ} (JX : Matrix (Fin 
   unfold symp hTens
   rw [evFin_trace]
   congr 1
-  simp only [map_mul, map_neg, map_one, map_sum, Matrix.map_apply, compFin_cA, compFin_liftE]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_mul, map_neg, map_one, map_sum, Matrix.map_apply, compFin_cA, compFin_liftE]
   rfl
 
 def locE (σ : E →ₐ[F] E) {n d : ℕ} {X : Spc F E n} {W : Spc F E d} (M : Model σ X W) (v : Pl F) :
@@ -142,7 +143,8 @@ def locDarboux (σ : E →ₐ[F] E) {n d : ℕ} {X : Spc F E n} {W : Spc F E d} 
   e := locE σ M v
   form x x' := by
     rw [symp_lift, M.co.form]
-    simp only [locE, LinearEquiv.coe_mk, LinearMap.coe_mk, AddHom.coe_mk, GlobalTheory.LatVac.locCo, AddMonoidHom.coe_mk,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [locE, LinearEquiv.coe_mk, LinearMap.coe_mk, AddHom.coe_mk, GlobalTheory.LatVac.locCo, AddMonoidHom.coe_mk,
       ZeroHom.coe_mk, dotProduct, map_sub, map_sum, map_mul]
 
 theorem isLocCo_locDarboux (σ : E →ₐ[F] E) {n d : ℕ} {X : Spc F E n} {W : Spc F E d} (M : Model σ X W) (v : Pl F) :

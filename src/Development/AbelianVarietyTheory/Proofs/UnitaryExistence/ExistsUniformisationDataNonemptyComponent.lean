@@ -32,7 +32,8 @@ theorem herm_std (x y : Fin r → E) :
 
 theorem emb_herm_self (φ : E →+* ℂ) (x : Fin r → E) :
     φ (herm (1 : Matrix (Fin r) (Fin r) E) x x) = ((∑ a, ‖φ (x a)‖ ^ 2 : ℝ) : ℂ) := by
-  rw [herm_std, map_sum, Complex.ofReal_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [herm_std, map_sum, Complex.ofReal_sum]
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [map_mul, emb_cc, Complex.mul_conj, Complex.normSq_eq_norm_sq]
 

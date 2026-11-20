@@ -56,7 +56,8 @@ theorem vecS_mulVec' {k : ℕ} (M : ↥Gw →* Matrix (Fin k) (Fin k) O)
   funext i
   change Br.toLLK Bw (∑ j, algebraMap O (FractionRing O) (M (Br.ι Bw g) i j) * u j) =
     ∑ j, Br.locM Bw M g i j * Br.toLLK Bw (u j)
-  simp only [map_sum, map_mul, locM_entry]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, locM_entry]
 
 set_option synthInstance.maxHeartbeats 400000 in
 

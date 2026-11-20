@@ -21,7 +21,8 @@ theorem continuous_psiT (D : D7) (τ : D.what₂.Tau) : Continuous (psiT D τ) :
       psiT D τ (basAF D c) := by
     intro x
     conv_lhs => rw [← (basAF D).sum_repr x]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun c _ => ?_
     rw [Algebra.smul_def, map_mul]
   have hc : ∀ c, Continuous fun x : AE D => (basAF D).repr x c := fun c =>

@@ -22,7 +22,8 @@ theorem exists_geometricPoint_rootOfUnity_eq_one_of_isDominant :
   set s : Γ(V, ⊤) := ∑ i ∈ Finset.range N, ζ ^ i with hs
   have hmul : s * (ζ - 1) = 0 := by rw [hs, geom_sum_mul, hζ, sub_self]
   have hys : y.appTop.hom s = (N : Γ(Sp k, ⊤)) := by
-    simp [hs, map_sum, map_pow, hy]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [hs, map_sum, map_pow, hy]
   have hunit : IsUnit (y.appTop.hom s) := by
     rw [hys]
     have h1 : IsUnit (N : k) := isUnit_iff_ne_zero.mpr hN

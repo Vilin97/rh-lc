@@ -186,7 +186,8 @@ theorem e2a : E2a := by
     intro a b h
     rw [Module.End.mul_apply, Module.End.mul_apply, compact_pair hU hD hE hB a b h.symm,
       compact_pair hU hD hE hB b a h]
-  simp only [ReciprocityTheory.ChartRestriction.DS.casimirK, LinearMap.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [ReciprocityTheory.ChartRestriction.DS.casimirK, LinearMap.sum_apply, map_sum]
   exact Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b hb =>
     hterm a b (Finset.mem_filter.mp hb).2
 

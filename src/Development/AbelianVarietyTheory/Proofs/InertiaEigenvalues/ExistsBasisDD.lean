@@ -88,7 +88,8 @@ theorem exists_descend {E R D D' D'' M M' M'' : Type} [CommRing E] [CommRing R]
   choose z hz using h
   refine ⟨e.constr E fun a => e'.constr E fun c => z a c, fun x y => ?_⟩
   conv_rhs => rw [← e.sum_repr x, ← e'.sum_repr y]
-  simp only [Module.Basis.constr_apply_fintype, LinearMap.sum_apply, LinearMap.smul_apply, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Module.Basis.constr_apply_fintype, LinearMap.sum_apply, LinearMap.smul_apply, map_sum,
     hj, hj', hj'', hz, map_smul, Module.Basis.equivFun_apply, Finset.smul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => ?_
@@ -127,7 +128,8 @@ theorem exists_basis_jD (T : LocLat G Qp LL O) {ι : Type} [Fintype ι]
   have hsp : ⊤ ≤ Submodule.span RW (Set.range fun i => E.jD T (e i)) := by
     rw [← E.jD_span T, Submodule.span_le]
     rintro _ ⟨x, rfl⟩
-    rw [← e.sum_repr x, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← e.sum_repr x, map_sum]
     refine Submodule.sum_mem _ fun i _ => ?_
     rw [E.jD_smul]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)
@@ -157,7 +159,8 @@ theorem exists_frob_inv (hm : ∀ m : Ideal W.EE, m.IsMaximal → m.map E.ioE.to
   intro y _
   obtain ⟨x, rfl⟩ : ∃ x, TWmap φR T x = y :=
     TensorProduct.map_surjective (g := φR.toLinearMap) hφ Function.surjective_id y
-  rw [← c.sum_repr x, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← c.sum_repr x, map_sum]
   refine Submodule.sum_mem _ fun i _ => ?_
   rw [TWmap, map_smul_alg]
   refine Submodule.smul_mem _ _ (Submodule.subset_span ⟨W.φD T (e i),
@@ -177,7 +180,8 @@ theorem mem_range_jD (hd : Descends E) (T : LocLat G Qp LL O) {ι : Type} [Finty
     (fun p q => U p.1 q.1 * e.repr (W.φD T (e q.2)) p.2) (fun p => c.repr (z p.1) p.2) ?_ ?_
   · choose u hu using h
     refine ⟨∑ k, u (a, k) • e k, ?_⟩
-    rw [map_sum, ← c.sum_repr (z a)]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, ← c.sum_repr (z a)]
     exact Finset.sum_congr rfl fun k _ => by rw [E.jD_smul, hu, hc]
   · rintro g hg ⟨a, k⟩
     have h1 := hz g hg a
@@ -190,18 +194,21 @@ theorem mem_range_jD (hd : Descends E) (T : LocLat G Qp LL O) {ι : Type} [Finty
     have h2 : ∀ q, TWmap φR T (c q) = ∑ r, E.ioE (e.repr (W.φD T (e q)) r) • c r := by
       intro q
       rw [hc, ← E.jD_φ]
-      conv_lhs => rw [← e.sum_repr (W.φD T (e q)), map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        conv_lhs => rw [← e.sum_repr (W.φD T (e q)), map_sum]
       simp only [E.jD_smul, hc]
     have h3 : ∀ b, c.repr (TWmap φR T (z b)) k =
         ∑ q, E.ioE (e.repr (W.φD T (e q)) k) * φR (c.repr (z b) q) := by
       intro b
-      conv_lhs => rw [← c.sum_repr (z b), map_sum, map_sum, Finsupp.finset_sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        conv_lhs => rw [← c.sum_repr (z b), map_sum, map_sum, Finsupp.finset_sum_apply]
       refine Finset.sum_congr rfl fun q _ => ?_
       rw [TWmap, map_smul_alg]
       change c.repr (_ • TWmap φR T (c q)) k = _
       rw [h2, map_smul, Finsupp.smul_apply, c.repr_sum_self, smul_eq_mul, mul_comm]
     change c.repr (z a) k = _
-    conv_lhs => rw [hU a, map_sum, Finsupp.finset_sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [hU a, map_sum, Finsupp.finset_sum_apply]
     rw [Fintype.sum_prod_type]
     refine Finset.sum_congr rfl fun b _ => ?_
     rw [map_smul, Finsupp.smul_apply, h3, smul_eq_mul, Finset.mul_sum]

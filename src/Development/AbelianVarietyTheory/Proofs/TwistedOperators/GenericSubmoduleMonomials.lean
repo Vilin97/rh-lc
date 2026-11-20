@@ -24,7 +24,8 @@ theorem map_eval_genSub (n n' k : ℕ) (x : Matrix (Fin n') (Fin n) ℂ) (f : Mv
   | mul_X p v hp =>
     have hv : map (eval (fun v : Fin n' × Fin n => x v.1 v.2)) (genSub n n' k (X v)) =
         ∑ t : Fin n, C (x v.1 t) * (X (t, v.2) : MvPolynomial (Fin n × Fin k) ℂ) := by
-      rw [genSub, aeval_X, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [genSub, aeval_X, map_sum]
       refine Finset.sum_congr rfl fun t _ => ?_
       rw [map_mul, map_C, map_X, eval_X]
     rw [map_mul, map_mul, hp, map_mul, hv, aeval_X]
@@ -40,7 +41,8 @@ theorem exists_pairing : ∀ (n n' k : ℕ), ∃ T : MvPolynomial (Fin n × Fin 
   have hs : ((basisMonomials (Fin n × Fin k) ℂ).repr φ).support = φ.support := by
     ext m
     rw [Finsupp.mem_support_iff, repr_basisMonomials, mem_support_iff]
-  rw [Module.Basis.constr_apply, Finsupp.sum, hs, fockF, LinearMap.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Module.Basis.constr_apply, Finsupp.sum, hs, fockF, LinearMap.sum_apply, map_sum]
   refine Finset.sum_congr rfl fun m _ => ?_
   rw [repr_basisMonomials, ← map_eval_genSub, coeff_map, coeff_map]
   simp only [LinearMap.smul_apply, smul_eval, LinearMap.comp_apply, AlgHom.toLinearMap_apply,

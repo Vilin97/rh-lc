@@ -53,7 +53,8 @@ theorem eval_projForm {e : ℕ} (Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (
     (w : ((k : K) → ι k) → ℂ) : eval w (projForm Ψ r) = Ψ w r := by
   classical
   rw [LinearMap.pi_apply_eq_sum_univ Ψ w]
-  simp only [projForm, map_sum, map_mul, eval_C, eval_X, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [projForm, map_sum, map_mul, eval_C, eval_X, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [mul_comm]
 
@@ -61,7 +62,8 @@ theorem segreConeMap_projForm (J : Ideal (MvPolynomial (Fin (Fintype.card (Σ k,
     (Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (e + 1) → ℂ)) (r : Fin (e + 1)) :
     segreConeMap J (projForm Ψ r) = X () * C (Ideal.Quotient.mk J (PtsSegreChart.projPoly Ψ r)) := by
   classical
-  simp only [projForm, PtsSegreChart.projPoly, segreConeMap, map_sum, map_mul, aeval_C, aeval_X,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [projForm, PtsSegreChart.projPoly, segreConeMap, map_sum, map_mul, aeval_C, aeval_X,
     Finset.mul_sum]
   refine Finset.sum_congr rfl fun a _ => ?_
   have hc : ∀ c : ℂ, Ideal.Quotient.mk J (C c : MvPolynomial (Fin (Fintype.card (Σ k, ι k))) ℂ) =

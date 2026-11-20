@@ -79,7 +79,8 @@ theorem TwistedDualGensSpan.proof : TwistedDualGensSpan.Statement := by
         (fun r => d * β.coord q (b l r)) ha' (fun r => hdc l r hl)
       refine ⟨n, ?_⟩
       have : d * β.coord q v = ∑ r, a' r * (d * β.coord q (b l r)) := by
-        rw [hrep, map_sum, Finset.mul_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [hrep, map_sum, Finset.mul_sum]
         refine Finset.sum_congr rfl fun r _ => ?_
         rw [map_smul, smul_eq_mul]; ring
       rw [smul_eq_mul, this]

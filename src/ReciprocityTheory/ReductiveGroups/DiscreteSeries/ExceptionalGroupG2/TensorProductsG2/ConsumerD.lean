@@ -255,7 +255,8 @@ theorem cns_zuck_cpt {ε : Fin n → Bool} (hpq : pOf ε = 0 ∨ qOf ε = 0) {μ
       cns_coefV (fun _ => T.op k) (S7.toMK k) (U0.symm v) (U0.symm w) x y]
     have h1 := cns_key_std T k (WithLp.toLp 2 (fun d => x d • U0.symm v)) (WithLp.toLp 2 (fun c => y c • U0.symm w))
     simp only [PiLp.toLp_apply] at h1
-    rw [← h1, ha, hb, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← h1, ha, hb, map_sum,
       show (∑ s ∈ univ.filter (fun s => S7.IsHCParam (shiftF false μ s)), HW.tensOp T (HW.stdRho ε) k (j s (a s))) =
         ∑ s ∈ univ.filter (fun s => S7.IsHCParam (shiftF false μ s)), j s ((Ts s).op k (a s)) from
         Finset.sum_congr rfl fun s hs => (hjE s hs k (a s)).symm,
@@ -343,7 +344,8 @@ theorem cns_zuckd_cpt {ε : Fin n → Bool} (hpq : pOf ε = 0 ∨ qOf ε = 0) {�
     have h1 := cns_key_dual T k (WithLp.toLp 2 (fun d => star (y d) • U0.symm v))
       (WithLp.toLp 2 (fun c => star (x c) • U0.symm w))
     simp only [PiLp.toLp_apply] at h1
-    rw [← h1, ha, hb, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← h1, ha, hb, map_sum,
       show (∑ s ∈ univ.filter (fun s => S7.IsHCParam (shiftF true μ s)), HW.tensOp T (HW.rhoDual ε) k (j s (a s))) =
         ∑ s ∈ univ.filter (fun s => S7.IsHCParam (shiftF true μ s)), j s ((Ts s).op k (a s)) from
         Finset.sum_congr rfl fun s hs => (hjE s hs k (a s)).symm,

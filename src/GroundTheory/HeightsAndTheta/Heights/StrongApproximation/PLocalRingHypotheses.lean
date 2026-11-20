@@ -113,7 +113,8 @@ theorem LocalRingHypotheses.proof : LocalRingHypotheses.Statement := by
     exact Algebra.FormallyUnramified.isReduced_of_field (v.adicCompletion F) (Kv E v)
   refine ⟨hinv, hfix, hrank, hred, h2k, hsig_incl, ?_⟩
   intro N J x y
-  simp only [hf, map_sum, map_mul, Matrix.map_apply, Function.comp_apply, AlgHom.toRingHom_eq_coe,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hf, map_sum, map_mul, Matrix.map_apply, Function.comp_apply, AlgHom.toRingHom_eq_coe,
     RingHom.coe_coe, hsig_incl]
   rfl
 

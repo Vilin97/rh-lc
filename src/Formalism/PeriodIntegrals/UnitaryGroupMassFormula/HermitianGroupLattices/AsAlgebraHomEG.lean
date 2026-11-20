@@ -22,14 +22,16 @@ theorem eG_eq (T : GoodSet K G) : eG T = ∑ g : G, cf T g • MonoidAlgebra.of 
 
 theorem asAlgebraHom_eG {V : Type} [AddCommGroup V] [Module K V] (T : GoodSet K G)
     (ρ : Representation K G V) : ρ.asAlgebraHom (eG T) = ∑ g : G, cf T g • ρ g := by
-  rw [eG_eq, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [eG_eq, map_sum]
   refine Finset.sum_congr rfl fun g _ => ?_
   rw [map_smul, Representation.asAlgebraHom_of]
 
 theorem star_map_cf (σ : K →+* ℂ) (T : GoodSet K G) (g : G) :
     star (σ (cf T g)) = σ (cf T g⁻¹) := by
   unfold cf
-  rw [map_sum, map_sum, star_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, star_sum]
   refine Finset.sum_congr rfl fun s _ => ?_
   rw [map_mul, map_mul, star_mul', star_map_trace_rep σ (T.tau s) g⁻¹, inv_inv]
   congr 1

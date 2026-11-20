@@ -314,7 +314,8 @@ private theorem multiset_eq_of_psum_lemma_5 {d : ℕ} (u v : Fin d → ℂ)
   have hps : ∀ j, 1 ≤ j → j ≤ d → MvPolynomial.aeval u (MvPolynomial.psum (Fin d) ℂ j) =
       MvPolynomial.aeval v (MvPolynomial.psum (Fin d) ℂ j) := by
     intro j h1 h2
-    simp only [MvPolynomial.psum, map_sum, map_pow, MvPolynomial.aeval_X]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [MvPolynomial.psum, map_sum, map_pow, MvPolynomial.aeval_X]
     exact h j h1 h2
   have hes : ∀ k, k ≤ d → MvPolynomial.aeval u (MvPolynomial.esymm (Fin d) ℂ k) =
       MvPolynomial.aeval v (MvPolynomial.esymm (Fin d) ℂ k) := by
@@ -327,7 +328,8 @@ private theorem multiset_eq_of_psum_lemma_5 {d : ℕ} (u v : Fin d → ℂ)
         simp [MvPolynomial.esymm_zero]
       · have hu := congrArg (MvPolynomial.aeval u) (MvPolynomial.mul_esymm_eq_sum (Fin d) ℂ k)
         have hv := congrArg (MvPolynomial.aeval v) (MvPolynomial.mul_esymm_eq_sum (Fin d) ℂ k)
-        simp only [map_mul, map_natCast, map_pow, map_neg, map_one, map_sum] at hu hv
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_mul, map_natCast, map_pow, map_neg, map_one, map_sum] at hu hv
         have hk0 : (k : ℂ) ≠ 0 := Nat.cast_ne_zero.2 hpos.ne'
         apply mul_left_cancel₀ hk0
         rw [hu, hv]

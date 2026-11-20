@@ -15,7 +15,8 @@ theorem smooth_coeff_closure : ∀ (n : ℕ) (v : V n), (∀ γ : Alt n, (∀ S,
     fun γ S => contDiffAt_const
   have hs : ∀ (J : Type) (s : Finset J) (α : J → V n → Alt n), (∀ j ∈ s, ∀ S, ContDiffAt ℝ ∞ (fun x => (bas n).repr (α j x) S) v) → (∀ S, ContDiffAt ℝ ∞ (fun x => (bas n).repr (∑ j ∈ s, α j x) S) v) := by
     intro J s α h S
-    simp only [map_sum, Finsupp.coe_finset_sum, Finset.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, Finsupp.coe_finset_sum, Finset.sum_apply]
     exact ContDiffAt.sum fun j hj => h j hj S
   have hg : ∀ (g : V n → ℂ) (α : V n → Alt n), ContDiffAt ℝ ∞ g v → (∀ S, ContDiffAt ℝ ∞ (fun x => (bas n).repr (α x) S) v) → (∀ S, ContDiffAt ℝ ∞ (fun x => (bas n).repr (g x • α x) S) v) := by
     intro g α h1 h2 S

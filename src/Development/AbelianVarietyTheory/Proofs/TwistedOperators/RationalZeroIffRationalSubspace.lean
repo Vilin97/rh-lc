@@ -46,7 +46,8 @@ theorem IsForm.linInd (h : IsForm j) {ι : Type} [Fintype ι] {v : ι → X} (hv
   funext i
   simp only [Function.comp, Fintype.linearCombination_apply]
   conv_lhs => rw [← b.sum_equivFun (v i)]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [map_smulₛₗ]; rfl
 
@@ -62,7 +63,8 @@ theorem span_image_eq {T : Submodule K X} {ι : Type} [Fintype ι] (b : Basis ι
       have := congrArg Subtype.val (b.sum_equivFun ⟨x, hx⟩)
       rw [Submodule.coe_sum] at this
       exact this.symm
-    rw [this, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [this, map_sum]
     refine Submodule.sum_mem _ fun i _ => ?_
     rw [map_smulₛₗ]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)

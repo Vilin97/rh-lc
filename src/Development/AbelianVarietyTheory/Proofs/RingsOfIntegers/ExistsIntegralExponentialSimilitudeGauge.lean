@@ -284,7 +284,8 @@ theorem hq_sum (hh : B.IsCanonGauge K h) (w0 : O) {n m : ℕ} (mu : Matrix (Fin 
   rw [Finset.sum_comm]
   have e2 : ∀ k, ∑ i, φ j k (star (mu i j) * mu i k * w0) = if j = k then N • φ j k w0 else 0 := by
     intro k
-    rw [← map_sum, ← Finset.sum_mul, hmu j k]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, ← Finset.sum_mul, hmu j k]
     split_ifs
     · rw [← nsmul_eq_mul, map_nsmul]
     · rw [zero_mul, map_zero]
@@ -339,7 +340,8 @@ theorem GlobalTheory.PlaceInt.exists_isKappa : ∀ (V : Type) [CommRing V] [IsDo
   have key := hq_sum hi hh w0 mu N hmu (fun j => pt V (n := n) d j) hx
   have hmem : (∑ b : Fin n, ev (n := n) ![fun i => FB.toK K (matV B mu (fun j => pt V (n := n) d j) b i)] (B.hL K h w0)
       - (N : K) • ∑ b : Fin n, ev (n := n) ![pt K d b] (B.hL K h w0)) ∈ intLog K hi n d := by
-    rw [← QuotientAddGroup.eq_zero_iff, ← QuotientAddGroup.mk'_apply, map_sub, sub_eq_zero, Nat.cast_smul_eq_nsmul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← QuotientAddGroup.eq_zero_iff, ← QuotientAddGroup.mk'_apply, map_sub, sub_eq_zero, Nat.cast_smul_eq_nsmul,
       map_nsmul, map_sum, map_sum]
     convert key using 2 with b _
     · rw [matV_eq_sumP B mu _ hx b, hq,

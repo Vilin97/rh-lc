@@ -94,7 +94,8 @@ theorem spread_exact {R L : Type} [CommRing R] [CommRing L] [Algebra R L] (P : I
     rw [map_mul, map_mul] at this
     have e := hp.mul_left_cancel this
     simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, Function.comp_apply] at e ⊢
-    rw [← e, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← e, map_sum]
     simp [map_mul]
 
 theorem basis_of_det {S : Type} [CommRing S] {n : ℕ} (w : Fin n → Fin n → S)

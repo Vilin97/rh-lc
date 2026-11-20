@@ -54,7 +54,8 @@ lemma isKC_comm {Y Z : Mat p q} (hY : IsKC Y) (hZ : IsKC Z) : IsKC (Y * Z - Z * 
 lemma kc_ind (act : Mat p q →ₗ[ℂ] Module.End ℂ V) (N : Submodule ℂ V) (y : V)
     (h : ∀ a b, sameBlock a b → act (Eab a b) y ∈ N) {Z : Mat p q} (hZ : IsKC Z) : act Z y ∈ N := by
   rw [Matrix.matrix_eq_sum_single Z]
-  simp only [map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.sum_apply]
   refine N.sum_mem fun a _ => N.sum_mem fun b _ => ?_
   by_cases hab : sameBlock a b
   · have : (Matrix.single a b (Z a b) : Mat p q) = Z a b • Eab a b := by
@@ -158,7 +159,8 @@ lemma exists_dual {act : Mat p q →ₗ[ℂ] Module.End ℂ V} (hL : IsKLieAct a
       · intro b _ hb; simp [hb]
       · simp
     rw [hh, this, hm]
-    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, hv.1, Finset.sum_smul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, hv.1, Finset.sum_smul,
       mul_smul]
   set Q : Submodule ℂ V := ⨆ (t : ℂ) (_ : t.re < m.re), h.eigenspace t with hQ
   have hvQ : v ∉ Q := by

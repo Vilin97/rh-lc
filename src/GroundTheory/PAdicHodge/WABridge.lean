@@ -231,7 +231,8 @@ theorem exists_bCrisPlus {m : ℕ} (C : Matrix (Fin m) (Fin m) (AInf ℂ_[p] p))
     have e1 : phiPlus ℂ_[p] p (algebraMap _ (BCrisPlus ℂ_[p] p) (c i) * pInv p ^ j₀ i) =
         algebraMap _ (BCrisPlus ℂ_[p] p) (ACris.phi ℂ_[p] p (c i)) * pInv p ^ j₀ i := by
       rw [map_mul, map_pow, phiPlus_algebraMap, phiPlus_pInv]
-    rw [e1, iotaPlus_div_eq (hιφ i), extFrob_rep C hy ha i (radTwo p), map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e1, iotaPlus_div_eq (hιφ i), extFrob_rep C hy ha i (radTwo p), map_sum, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_mul, map_mul, map_natCast, iota_awayToExt, map_mul, map_mul, map_natCast,
       iotaPlus_ainfToBCrisPlus, iotaPlus_div_eq (hι j)]

@@ -39,7 +39,8 @@ theorem eval_smul_eq_zero_of_isHomogeneous {I : Ideal (MvPolynomial ι k)}
     (hv : ∀ g ∈ I, MvPolynomial.eval v g = 0) (a : k) :
     ∀ g ∈ I, MvPolynomial.eval (a • v) g = 0 := by
   intro g hg
-  rw [← sum_homogeneousComponent g, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← sum_homogeneousComponent g, map_sum]
   refine Finset.sum_eq_zero fun i _ => ?_
   rw [eval_smul_of_isHomogeneous (homogeneousComponent_isHomogeneous i g),
     hv _ (homogeneousComponent_mem_of_mem hI hg i), mul_zero]

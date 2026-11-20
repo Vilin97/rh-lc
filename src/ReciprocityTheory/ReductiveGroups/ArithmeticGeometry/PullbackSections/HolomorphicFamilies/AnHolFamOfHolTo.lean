@@ -39,7 +39,8 @@ theorem anLin_coe (A : (Fin g' → ℂ) →L[ℂ] (Fin g → ℂ)) (p : Fin 1 ×
 
 theorem anLin_cc (A : (Fin g' → ℂ) →L[ℂ] (Fin g → ℂ)) (p : Fin 1 × Fin g) :
     MvPowerSeries.constantCoeff ((anLin A p : MvPolynomial (Fin 1 × Fin g') ℂ) : MvPowerSeries (Fin 1 × Fin g') ℂ) = 0 := by
-  rw [anLin_coe, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [anLin_coe, map_sum]
   simp
 
 theorem tay_comp_anLin {θ : (Fin g → ℂ) → ℂ} (hθ : ContDiffAt ℂ ω θ 0) (A : (Fin g' → ℂ) →L[ℂ] (Fin g → ℂ)) :
@@ -59,7 +60,8 @@ theorem tay_comp_anLin {θ : (Fin g → ℂ) → ℂ} (hθ : ContDiffAt ℂ ω �
     obtain ⟨a, j⟩ := q
     have ha : a = 0 := Subsingleton.elim _ _
     subst ha
-    rw [anLin_coe, map_sum, Finset.sum_eq_single j]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [anLin_coe, map_sum, Finset.sum_eq_single j]
     · rw [Derivation.leibniz, MvPowerSeries.pderiv_C, smul_zero, add_zero, MvPowerSeries.pderiv_X, smul_eq_mul]
       simp
     · intro k _ hk

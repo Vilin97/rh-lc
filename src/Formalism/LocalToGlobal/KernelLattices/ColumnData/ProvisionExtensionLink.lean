@@ -227,7 +227,8 @@ theorem ext_exists {K E : Type} [Field K] [Field E] [Algebra K E] {I : Type} [Fi
   have repr : ∀ x, x = ∑ v, (g x v) • g.symm (Pi.single v 1) := by
     intro x
     apply g.injective
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp_rw [map_smul, LinearEquiv.apply_symm_apply]
     funext w
     simp [Finset.sum_apply, Pi.single_apply]
@@ -238,7 +239,8 @@ theorem ext_exists {K E : Type} [Field K] [Field E] [Algebra K E] {I : Type} [Fi
   have key : ∀ x, hC (fun w => φ (g x w)) = em x := by
     intro x
     conv_rhs => rw [repr x]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp_rw [hem]
     rfl
   have hsurj : Function.Surjective hC := by

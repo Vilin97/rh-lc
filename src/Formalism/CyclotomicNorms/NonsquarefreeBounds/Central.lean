@@ -135,7 +135,8 @@ lemma nat_identity (ρ : Representation R G W) (z : G) (hz : ∀ g, z * g = g * 
   have hA : ∑ i ∈ range (n + 2), (-1 : R) ^ i • ρ (insN i z y 0) (φ (fun k => insN i z y (k + 1)))
       = ρ z (φ y) - ρ (y 0) (∑ i ∈ range (n + 1), (-1 : R) ^ i • φ (insN i z (fun k => y (k + 1)))) := by
     rw [sum_range_succ']
-    simp only [seq_d, seq_e, seq_f, seq_g, pow_zero, one_smul, map_sum, map_smul, sgn_succ,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [seq_d, seq_e, seq_f, seq_g, pow_zero, one_smul, map_sum, map_smul, sgn_succ,
       neg_smul, sum_neg_distrib]
     abel
   have hK := abstract (fun i j => (-1 : R) ^ (i + (j + 1)) • φ (contrN j (insN i z y)))

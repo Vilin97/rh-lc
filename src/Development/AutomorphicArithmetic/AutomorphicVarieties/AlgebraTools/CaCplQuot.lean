@@ -20,7 +20,8 @@ private theorem prec_of_surj {B C : Type} [CommRing B] [CommRing C] (g : B →+*
   let u : ℕ → B := fun n => b0 + ∑ i ∈ Finset.range n, d i
   have hu : ∀ n, g (u n) = f n := by
     intro n
-    simp only [u, map_add, map_sum, hgd, hb0, Finset.sum_range_sub]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [u, map_add, map_sum, hgd, hb0, Finset.sum_range_sub]
     ring
   have hc : ∀ {m n}, m ≤ n → u m ≡ u n [SMOD (I ^ m • ⊤ : Submodule B B)] := by
     intro m n hmn

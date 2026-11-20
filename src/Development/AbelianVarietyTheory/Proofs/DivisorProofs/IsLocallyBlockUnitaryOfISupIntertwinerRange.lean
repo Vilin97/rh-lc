@@ -41,7 +41,8 @@ theorem locU_of_iSup_range_eq_top : ∀ (ι M : Type) [Fintype ι] [DecidableEq 
   · intro y hy
     exact ⟨z y hy, hU _ (Finset.mem_image.2 ⟨⟨y, hy⟩, Finset.mem_attach _ _, rfl⟩), hz y hy⟩
   · intro a b hab x _
-    rw [hg, hg, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hg, hg, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     simp only [LinearMap.pi_apply, LinearMap.comp_apply, LinearMap.proj_apply]
     exact hG (f k) (e.symm k).1.2 a b hab (x k)

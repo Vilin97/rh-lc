@@ -44,7 +44,8 @@ theorem finrank_eq_card_mul_and_trace_eq_zero_of_free_values :
     refine ⟨⟨∑ x, T x, Submodule.sum_mem _ (fun x _ => hTS x)⟩, ?_⟩
     funext y
     show ev (s y) (∑ x, T x) = g y
-    rw [map_sum, Finset.sum_eq_single y]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_eq_single y]
     · exact hTg y
     · intro x _ hxy
       apply hT0

@@ -37,7 +37,8 @@ theorem map_mul_mul_transpose {α β α₁ β₁ : Type} [Fintype α₁] [Fintyp
     (z : Matrix α₁ β₁ A) (Q : Matrix β β₁ A) :
     (P * z * Qᵀ).map c = P.map c * z.map c * (Q.map c)ᵀ := by
   ext i j
-  simp [Matrix.mul_apply, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Matrix.mul_apply, map_sum, map_mul]
 
 theorem hTens_vmv_left_zero {α β α₁ β₁ : Type} [Fintype α] [Fintype β] [Fintype α₁] [Fintype β₁]
     (JA : Matrix α α A) (JB : Matrix β β A) (P : Matrix α α₁ A) (Q : Matrix β β₁ A)
@@ -79,7 +80,8 @@ end Gen
 theorem form_swap_of_herm {F E : Type} [Field F] [Field E] [Algebra F E] {σ : E →ₐ[F] E} {d : ℕ}
     (J : Matrix (Fin d) (Fin d) E) (hσ : ∀ x, σ (σ x) = x) (hJ : ∀ i j, σ (J j i) = J i j) (x y : Fin d → E) :
     form σ J y x = σ (form σ J x y) := by
-  simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, hJ, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, hJ, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   ring
@@ -87,7 +89,8 @@ theorem form_swap_of_herm {F E : Type} [Field F] [Field E] [Algebra F E] {σ : E
 theorem form_swap_of_skewHerm {F E : Type} [Field F] [Field E] [Algebra F E] {σ : E →ₐ[F] E} {d : ℕ}
     (J : Matrix (Fin d) (Fin d) E) (hσ : ∀ x, σ (σ x) = x) (hJ : ∀ i j, σ (J j i) = -J i j) (x y : Fin d → E) :
     form σ J y x = -σ (form σ J x y) := by
-  simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, hJ, Finset.mul_sum, ← Finset.sum_neg_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, hJ, Finset.mul_sum, ← Finset.sum_neg_distrib]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   ring
@@ -98,7 +101,8 @@ theorem incV_vecMul_zero {F E : Type} [Field F] [NumberField F] [Field E] [Numbe
     incV F x ᵥ* (incM F J * (incM F ι).map (cA σ)) = 0 := by
   funext m
   have hE := congrArg (inclR (F := F) (AF F)) (h (Pi.single m 1))
-  simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, map_zero, Pi.single_apply, mul_ite, mul_one,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, map_zero, Pi.single_apply, mul_ite, mul_one,
     mul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true] at hE
   simp only [Matrix.vecMul, dotProduct, Matrix.mul_apply, incV, incM, Matrix.map_apply, Pi.zero_apply]
   rw [← hE]

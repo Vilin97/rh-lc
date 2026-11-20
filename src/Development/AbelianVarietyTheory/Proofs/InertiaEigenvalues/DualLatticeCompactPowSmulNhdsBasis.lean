@@ -120,10 +120,12 @@ theorem isCompact_dualLattice_of_pairing [CompactSpace O] (hemb : Topology.IsOpe
     intro x
     have hx : D.bT x y = ∑ i, e.coord i x * algebraMap O (FractionRing O) (c i) := by
       conv_lhs => rw [← e.sum_repr x]
-      rw [map_sum, LinearMap.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, LinearMap.sum_apply]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [bT_smul_left, he, ← hc i, Module.Basis.coord_apply]
-    rw [map_sub, map_sum, hx, sub_eq_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_sum, hx, sub_eq_zero]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, hf, Algebra.smul_def, mul_comm]
   exact (isCompact_range hΦ).of_isClosed_subset (isClosed_dualLattice_of_pairing D hemb) hsub

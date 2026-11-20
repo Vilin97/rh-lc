@@ -79,7 +79,8 @@ theorem vac_eig : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberFi
   have hxv : (fun i => evFin F v (x i)) = z := by
     funext i
     rw [hx, evFin_mkPt, hy]
-    simp only [map_add, map_sum, evalV_singleFin_self]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_add, map_sum, evalV_singleFin_self]
     rw [Finset.sum_eq_zero, add_zero]
     intro u hu
     have : u ≠ v := (hT.mem_toFinset.mp hu).2
@@ -89,7 +90,8 @@ theorem vac_eig : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberFi
     have hcomp : ∀ i, evFin F u (x i) = ∑ u' ∈ T, evalV F u (singleFin u' (w u' i)) := by
       intro i
       rw [hx, evFin_mkPt, hy]
-      simp only [map_add, map_sum, evalV_singleFin_ne huv, zero_add]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_add, map_sum, evalV_singleFin_ne huv, zero_add]
     by_cases huT : u ∈ T
     · have : (fun i => evFin F u (x i)) = w u := by
         funext i

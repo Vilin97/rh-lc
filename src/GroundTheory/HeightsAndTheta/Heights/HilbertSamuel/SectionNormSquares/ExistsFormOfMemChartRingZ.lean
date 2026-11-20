@@ -129,7 +129,8 @@ theorem mConeMap_homog (y : (Σ k, ι k) → Ω) {g : MRing ι} {d : K → ℕ} 
   classical
   conv_lhs => rw [g.as_sum]
   conv_rhs => rw [g.as_sum]
-  rw [map_sum, map_sum, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun m hm => ?_
   have hdeg := hg m hm
   simp only [mConeMap, aeval_monomial, map_mul]
@@ -418,7 +419,8 @@ theorem comp_mem {y : (Σ k, ι k) → Ω} {g : MRing ι} (hg : g ∈ mCoordIdea
   suffices aeval y (comp g δ) = 0 by rw [this]; simp
   by_cases hδ : δ ∈ g.support.image blockDeg
   · have h0 : mConeMap y g = 0 := hg
-    rw [← sum_comp g, map_sum] at h0
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← sum_comp g, map_sum] at h0
     have h1 : ∀ δ' ∈ g.support.image blockDeg, mConeMap y (comp g δ') =
         MvPolynomial.C (aeval y (comp g δ')) * monomial (Finsupp.equivFunOnFinite.symm δ') 1 := fun δ' _ => by
       erw [mConeMap_homog y (homog_comp g δ'), prod_X_pow_eq_monomial']
@@ -514,14 +516,16 @@ theorem exists_G_ne {y : (Σ k, ι k) → Ω} {A : HermLine ι} {m N : ℕ} {v :
           rw [Finset.prod_congr rfl fun k _ => h3 k, Finset.prod_mul_distrib]
           ring
   have hFy : aeval y F = 0 := by
-    rw [hF, map_sub, map_sum, Finset.sum_congr rfl fun j _ => e1 j, ← Finset.sum_mul, hsum, one_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hF, map_sub, map_sum, Finset.sum_congr rfl fun j _ => e1 j, ← Finset.sum_mul, hsum, one_mul,
       aeval_chartMon]
     simp only [Pi.add_apply, sub_self]
   have hFx := vanish hx hFh hFy
   by_contra hne
   push Not at hne
   rw [hF] at hFx
-  simp only [map_sub, map_sum, map_mul, hne, mul_zero, Finset.sum_const_zero, zero_sub, neg_eq_zero,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sub, map_sum, map_mul, hne, mul_zero, Finset.sum_const_zero, zero_sub, neg_eq_zero,
     eval_chartMon] at hFx
   exact (Finset.prod_ne_zero_iff.mpr fun k _ => pow_ne_zero _ (hxc k)) hFx
 

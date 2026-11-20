@@ -44,7 +44,8 @@ theorem wtNonneg_add (v : AddValuation C (WithTop ℝ)) {τ : Type} (ρ : τ →
 theorem wtNonneg_sum (v : AddValuation C (WithTop ℝ)) {τ ι : Type} (ρ : τ → ℝ) (s : Finset ι)
     {F : ι → MvPowerSeries τ C} (hF : ∀ i ∈ s, WtNonneg v ρ (F i)) : WtNonneg v ρ (∑ i ∈ s, F i) := by
   intro α
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact v.map_le_sum fun i hi => hF i hi α
 
 theorem wtNonneg_smul (V : VF C) {τ : Type} (ρ : τ → ℝ) {c : C} (hc : V.Ge 0 c) {F : MvPowerSeries τ C}
@@ -80,7 +81,8 @@ theorem constantCoeff_linPull {σ ι : Type} [Fintype σ] [Fintype ι] (e : ι �
   have h0 : ∀ x : σ, MvPowerSeries.constantCoeff
       (∑ c : ι, e c x • (MvPowerSeries.X c : MvPowerSeries ι C)) = 0 := by
     intro x
-    simp [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum]
   exact MvPowerSeries.constantCoeff_subst_eq_zero (MvPowerSeries.hasSubst_of_constantCoeff_zero h0) h0 hF
 
 theorem pderiv_mainM (V : VF C) (i : ℕ) {ι ι' : Type} [Fintype ι] [Fintype ι'] (Φ : ι' → ι → C) (b : ι') :
@@ -88,13 +90,16 @@ theorem pderiv_mainM (V : VF C) (i : ℕ) {ι ι' : Type} [Fintype ι] [Fintype 
       ((V.l : C) ^ expE V.l i)⁻¹ • ∑ c : ι,
         Φ b c • (MvPowerSeries.X (Sum.inl c) : MvPowerSeries (ι ⊕ ι') C) ^ (V.l ^ i) := by
   unfold mainM
-  rw [Derivation.map_smul, map_sum, Finset.sum_eq_single b]
-  · rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Derivation.map_smul, map_sum, Finset.sum_eq_single b]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum]
     congr 1
     refine Finset.sum_congr rfl fun c _ => ?_
     simp [Derivation.leibniz, Derivation.leibniz_pow, MvPowerSeries.pderiv_X]
   · intro b' _ hb
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_eq_zero fun c _ => ?_
     simp [Derivation.leibniz, Derivation.leibniz_pow, MvPowerSeries.pderiv_X, hb]
   · simp
@@ -140,7 +145,8 @@ theorem weight_gauge_sub_main : ∀ (C : Type) [Field C] (V : VF C) (d : ℕ) [N
               Φt δ κ • (MvPowerSeries.X δ : MvPowerSeries (Fin N) C) ^ (V.l ^ i)) := by
       rw [map_sub, hd, pderiv_mainM, add_sub_assoc]
       congr 1
-      simp only [hpull.1, map_sub, smul_sub, Finset.sum_sub_distrib, map_smul, map_sum, map_pow,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hpull.1, map_sub, smul_sub, Finset.sum_sub_distrib, map_smul, map_sum, map_pow,
         MvPowerSeries.rename_X]
       congr 1
       simp only [Finset.smul_sum, smul_smul]

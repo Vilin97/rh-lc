@@ -280,7 +280,8 @@ theorem isogeny_sum_mem_and_norm {ι : Type} [Fintype ι] (U : ℕ → Euclidean
           (U 1 y F v * (starRingEnd ℂ) (U 1 y' F v) * cexp (-(Real.pi * Hf v v))) := by
       intro v
       rw [thetaSectionPointwiseNormSq_eq]
-      simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum, map_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum, map_mul]
       rw [Finset.sum_mul_sum]
       simp only [Finset.sum_mul]
       exact Finset.sum_congr rfl fun y _ => Finset.sum_congr rfl fun y' _ => by ring

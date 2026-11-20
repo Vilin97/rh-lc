@@ -60,7 +60,8 @@ private lemma map_trace_mul_mul_ccT_eq_trace_conjTranspose {E : Type} [Field E] 
     (τ : E →+* ℂ) (M P : Matrix (Fin n) (Fin N) E) (β : Matrix (Fin N) (Fin N) E) :
     τ (M * β * _root_.GlobalTheory.SW.ccT P).trace = (M.map τ * β.map τ * (P.map τ)ᴴ).trace := by
   rw [← _root_.GlobalTheory.SW.HAct.map_ccT, ← Matrix.map_mul, ← Matrix.map_mul]
-  simp only [Matrix.trace, Matrix.diag, map_sum, Matrix.map_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.trace, Matrix.diag, map_sum, Matrix.map_apply]
 
 open Matrix Complex NumberField Filter Topology in
 open scoped ComplexConjugate ComplexOrder Real in
@@ -291,7 +292,8 @@ private lemma map_trace_mul_mul_ccT_self_eq_sum_dotProduct {E : Type} [Field E] 
       ∑ k, (x.map τ) k ⬝ᵥ (β.map τ) *ᵥ star ((x.map τ) k) := by
   have hc : ∀ a k, τ (_root_.GlobalTheory.SW.ccT x a k) = star (τ (x k a)) := fun a k =>
     congrFun (congrFun (_root_.GlobalTheory.SW.HAct.map_ccT τ x) a) k
-  simp only [Matrix.trace, Matrix.diag, Matrix.mul_apply, map_sum, map_mul, hc, dotProduct, mulVec,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.trace, Matrix.diag, Matrix.mul_apply, map_sum, map_mul, hc, dotProduct, mulVec,
     Matrix.map_apply, Pi.star_apply, Finset.sum_mul, Finset.mul_sum, mul_assoc]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [Finset.sum_comm]

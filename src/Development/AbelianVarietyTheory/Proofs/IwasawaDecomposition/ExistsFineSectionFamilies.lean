@@ -82,7 +82,8 @@ theorem intFam : ∀ (R : Type) [CommRing R] [IsDomain R] [IsLocalRing R], IsCN 
     rintro c hc ⟨q, i⟩
     have h1 : ∑ i, c ⟨q, i⟩ • pullAb D.toPre K N (a q) (b q i) = 0 := by
       have h2 := congrArg (famAt D.toPre K N (a q)) hc
-      rw [map_sum, map_zero, Fintype.sum_sigma, Finset.sum_eq_single q] at h2
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, map_zero, Fintype.sum_sigma, Finset.sum_eq_single q] at h2
       · refine Eq.trans (Finset.sum_congr rfl fun i _ => ?_) h2
         rw [map_smul]
         exact congrArg (c ⟨q, i⟩ • ·) (hΦ₁ ⟨q, i⟩).symm
@@ -99,7 +100,8 @@ theorem intFam : ∀ (R : Type) [CommRing R] [IsDomain R] [IsLocalRing R], IsCN 
     obtain ⟨q, mu, rfl⟩ := hcov β
     refine GlobalTheory.FamDim.fam_term_eq hG ?_ mu j
     have h2 : famAt D.toPre K N (a q) (∑ x, c x.1 x.2 • Φ₀ x) = s.s (a q) := by
-      rw [map_sum, Fintype.sum_sigma, Finset.sum_eq_single q]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Fintype.sum_sigma, Finset.sum_eq_single q]
       · refine Eq.trans (Finset.sum_congr rfl fun i _ => ?_) (hc q).symm
         rw [map_smul]
         exact congrArg (c q i • ·) (hΦ₁ ⟨q, i⟩)

@@ -176,7 +176,8 @@ private theorem gl_map_mulVec_comp_eq_comp_mulVec {n : ℕ} {A B : Type} [CommRi
     (↑(Matrix.GeneralLinearGroup.map φ M) : Matrix (Fin n) (Fin n) B).mulVec (φ ∘ x) =
       φ ∘ (↑M : Matrix (Fin n) (Fin n) A).mulVec x := by
   funext i
-  simp [Matrix.mulVec, dotProduct, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Matrix.mulVec, dotProduct, map_sum]
 
 theorem w_nat {V' V : Scheme.{0}} (s : V' ⟶ V) (a b : V ⟶ P.T') (h : a ≫ P.e = b ≫ P.e)
     (h' : (s ≫ a) ≫ P.e = (s ≫ b) ≫ P.e) :

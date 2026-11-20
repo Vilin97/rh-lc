@@ -59,7 +59,8 @@ private theorem bil_expand_lemma {Y ι : Type} [AddCommGroup Y] [Fintype ι] (f 
     (b : Module.Basis ι ℤ Y) (a : Y) :
     f a a = ∑ i, ∑ k, ((b.repr a i : ℤ) : ℝ) * ((b.repr a k : ℤ) : ℝ) * f (b i) (b k) := by
   conv_lhs => rw [← b.sum_repr a]
-  simp only [map_sum, LinearMap.sum_apply, map_zsmul, LinearMap.smul_apply, zsmul_eq_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.sum_apply, map_zsmul, LinearMap.smul_apply, zsmul_eq_mul,
     Finset.mul_sum]
   conv_lhs => rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun k _ => ?_

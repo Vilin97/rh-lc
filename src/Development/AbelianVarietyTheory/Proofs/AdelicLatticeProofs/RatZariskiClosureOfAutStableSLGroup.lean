@@ -30,7 +30,8 @@ theorem exists_poly_of_dual (φ : Module.Dual ℂ (Matrix ι ι ℂ)) :
     ∃ f : MvPolynomial (ι × ι) ℂ, ∀ g, evC f g = φ g := by
   refine ⟨∑ ij : ι × ι, MvPolynomial.C (φ (Matrix.single ij.1 ij.2 1)) * MvPolynomial.X ij, fun g => ?_⟩
   conv_rhs => rw [Matrix.matrix_eq_sum_single g]
-  simp only [evC, map_sum, map_mul, MvPolynomial.eval_C, MvPolynomial.eval_X, Fintype.sum_prod_type]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [evC, map_sum, map_mul, MvPolynomial.eval_C, MvPolynomial.eval_X, Fintype.sum_prod_type]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   have : Matrix.single i j (g i j) = g i j • Matrix.single i j (1 : ℂ) := by
     rw [Matrix.smul_single, smul_eq_mul, mul_one]

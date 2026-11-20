@@ -40,7 +40,8 @@ theorem vecSec_injective {N : ℕ} {A : Type} [CommRing A] (y : Sp A ⟶ Sp ℤ)
 theorem vecSec_sum_smul {N : ℕ} {A : Type} [CommRing A] (y : Sp A ⟶ Sp ℤ) {κ : Type} [Fintype κ]
     (a : κ → A) (c : κ → Fin N → A) :
     vecSec y (∑ j, a j • c j) = ∑ j, (Scheme.ΓSpecIso (CommRingCat.of A)).inv.hom (a j) • vecSec y (c j) := by
-  simp only [vecSec, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum, map_mul, Finset.sum_smul, mul_smul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [vecSec, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum, map_mul, Finset.sum_smul, mul_smul,
     Finset.smul_sum]
   exact Finset.sum_comm
 
@@ -52,7 +53,8 @@ theorem mem_range_app_iff {X : Scheme.{0}} {F G : X.Modules} {κ : Type} [Fintyp
     obtain ⟨r, hr⟩ := (hs ⊤ le_rfl).2 t
     refine ⟨r, ?_⟩
     rw [← hr]
-    simp only [Fintype.linearCombination_apply, Twist.resM_self, ← QCoh.homAppLinear_apply, map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Fintype.linearCombination_apply, Twist.resM_self, ← QCoh.homAppLinear_apply, map_sum, map_smul]
   · rintro ⟨r, rfl⟩
     exact ⟨∑ j, r j • s j, by simp only [← QCoh.homAppLinear_apply, map_sum, map_smul]⟩
 

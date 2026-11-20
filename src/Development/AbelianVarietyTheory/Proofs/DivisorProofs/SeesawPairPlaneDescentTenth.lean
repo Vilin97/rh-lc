@@ -107,7 +107,8 @@ theorem symp_vecMulVec {n d : ℕ} (JX : Matrix (Fin n) (Fin n) E) (JW : Matrix 
       (Matrix.vecMulVec (T • incV F β) (incV F x)) =
       algebraMap (AF F) (AE F E) T * inclR (F := F) (AF F) (form σ JX ξ β * form σ JW y x) := by
     simp only [hTens, Matrix.vecMulVec_apply, Pi.smul_apply, incM, incV, Matrix.map_apply]
-    simp only [form, dotProduct, Matrix.mulVec, Algebra.smul_def, map_mul, cA_inclR, AlgHom.commutes, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [form, dotProduct, Matrix.mulVec, Algebra.smul_def, map_mul, cA_inclR, AlgHom.commutes, map_sum,
       Finset.mul_sum, Finset.sum_mul]
     symm
     refine (Finset.sum_congr rfl fun j _ => Finset.sum_comm).trans ?_
@@ -167,7 +168,8 @@ theorem denom : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberFiel
   have hxy : form σ X.J H.y H.x = 1 := by
     have h1 := hH
     have e1 : form σ X.J H.y H.x = σ (form σ X.J H.x H.y) := by
-      simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσσ]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσσ]
       simp only [Finset.mul_sum]
       rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
@@ -279,7 +281,8 @@ theorem arch_decay : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Numbe
   have hx : ∀ p, p2 (x p) = 0 := fun p => real_adele_mul_finite_part_zero _
   have hrho : M₁.co.rho B.ψ (realAd F 1 • Matrix.vecMulVec (incV F H.y) (incV F w)) Φ =
       schr B.ψ (∑ p, x p • M₁.co.e (Sm p)) Φ := by
-    rw [Darboux.rho, vecMulVec_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Darboux.rho, vecMulVec_sum, map_sum]
     simp only [map_smul]
     rfl
   have hθ : thetaSum F (e' (M₁.co.rho B.ψ (realAd F 1 • Matrix.vecMulVec (incV F H.y) (incV F w)) Φ)) =

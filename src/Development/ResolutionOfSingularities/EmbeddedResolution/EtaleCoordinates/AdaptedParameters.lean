@@ -307,7 +307,8 @@ private theorem exists_local_parameters (k : Type*) [CommRing k] (A : Type*) [Co
           KaehlerDifferential.D k A (∑ i, c' i * y i)
           = ∑ i, c i • ((1 : IsLocalRing.ResidueField A) ⊗ₜ[A]
             KaehlerDifferential.D k A (y i)) := by
-        rw [map_sum, TensorProduct.tmul_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum, TensorProduct.tmul_sum]
         refine Finset.sum_congr rfl fun i _ => ?_
         rw [mul_comm (c' i) (y i),
           KaehlerDifferential.residue_tmul_D_mul_of_mem_maximalIdeal k A (y i) (c' i) (hymem i),

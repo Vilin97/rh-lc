@@ -181,7 +181,8 @@ theorem L_int : ∀ (R K A : Type) [CommRing R] [Field K] [CommRing A] [IsLocalR
     ((G.left.presheaf.map (homOfLE hle1).op).hom ((s j).f fun _ => i₁)))
   have ha : algebraMap A K a = ∑ j, algebraMap R K (c j) * ev y V₁ t₁ ((der v₀ hv₀ hV₁)^[i]
       ((G.left.presheaf.map (homOfLE hle1).op).hom ((s j).f fun _ => i₁))) := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_mul, ← IsScalarTower.algebraMap_apply R A K]
     congr 1

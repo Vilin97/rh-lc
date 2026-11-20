@@ -153,9 +153,11 @@ theorem proof : IncidenceZeroLocus.Statement := by
     have hJW : ∀ p ∈ Jv, homogeneousComponent N p ∈ W := by
       intro p hp
       obtain ⟨a, rfl⟩ := Ideal.mem_span_range_iff_exists_fun.mp hp
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Submodule.sum_mem _ fun t _ => ?_
-      rw [(a t).as_sum, Finset.sum_mul, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [(a t).as_sum, Finset.sum_mul, map_sum]
       refine Submodule.sum_mem _ fun m _ => ?_
       have hmon : monomial m (AddMonoidAlgebra.coeff (a t) m) = AddMonoidAlgebra.coeff (a t) m • monomial m (1 : Ω) := by
         rw [smul_monomial, smul_eq_mul, mul_one]

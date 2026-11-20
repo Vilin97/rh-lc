@@ -375,7 +375,8 @@ theorem lvlA (hz : inWb k r z) (hz' : inWb k r z') (l : Fin r) (hl : l.val + 1 =
                   (mulB E l.succ (ho1 l hD.1) (aCbi k l) * mulB E l.succ (ho1 l hD.1) (aY z l.succ (skip1 t x)) *
                     mB E l.succ (ho1 l hD.1) (skip1 s ∘ skip1 w) (skip1 t ∘ skip1 x) (uC k r l.succ Y - 1) *
                     (xbv k r z' l.succ (skip1 s w) • (1 : Module.End ℂ (sfData E l.succ (ho1 l hD.1)).V)))))) := by
-    simp only [map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul]
     unfold Formalism.FourierDecayAlt.P.CutMP.NLv
     refine Fintype.sum_equiv (finCongr (mdim_lastL (k := k) l hl)) _ _ (fun s => ?_)
     refine Fintype.sum_equiv (finCongr (mdim_lastL (k := k) l hl)) _ _ (fun t => ?_)

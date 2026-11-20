@@ -290,7 +290,8 @@ theorem TopEigen.diag_unit (hT : F.TopEigen) {V K : Type} [CommRing V] [IsLocalR
         rw [F.step_eq k _ hz'] at h2
         obtain ⟨d, -, hd⟩ := mem_initSpan.1 h2
         exact mem_initSpan.2 ⟨d, fun j hj => absurd j.2 (not_lt.2 hj), hd⟩)
-      rw [← hP.initSpan_eq hz' hx rfl, map_sum] at h2
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hP.initSpan_eq hz' hx rfl, map_sum] at h2
       simp only [map_smulₛₗ, hub] at h2
       obtain ⟨d, hd, h3⟩ := mem_initSpan.1 h2
       refine mem_initSpan.2 ⟨a, fun j hj => hφ ?_, rfl⟩
@@ -301,7 +302,8 @@ theorem TopEigen.diag_unit (hT : F.TopEigen) {V K : Type} [CommRing V] [IsLocalR
     fun i => (h1 i).trans (F.step_eq k z hz rfl σ i)
   refine ⟨(hu i).unit, ?_⟩
   have h4 := congrArg (tanPull (G := Y.t.G) φ e) (eb i)
-  rw [hub, e', map_sum] at h4
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hub, e', map_sum] at h4
   simp only [map_smulₛₗ, F.tanPull_vecAt k φ z hz hz' rfl hx e] at h4
   rw [← hd']
   exact ((Fintype.linearIndependent_iffₛ.1 hK) _ _ h4 i).symm

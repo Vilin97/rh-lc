@@ -43,7 +43,8 @@ theorem eq_zero_of_tprodInnerFun {ι : Type} [Fintype ι] {E : ι → Type} [∀
     intro j
     have e : v j = fun i => ∑ k, ⟪(b i k : E i), v j i⟫_ℂ • (b i k : E i) := funext (hexp j)
     conv_lhs => rw [e]
-    rw [MultilinearMap.map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [MultilinearMap.map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [MultilinearMap.map_smul_univ]
   have hx' : x = ∑ j, f j • PiTensorProduct.tprod ℂ (v j) := by
@@ -51,7 +52,8 @@ theorem eq_zero_of_tprodInnerFun {ι : Type} [Fintype ι] {E : ι → Type} [∀
   have key : x = ∑ k : ∀ i, Fin (Module.finrank ℂ (W i)),
       tprodInnerFun (fun i => (b i (k i) : E i)) x • PiTensorProduct.tprod ℂ (fun i => (b i (k i) : E i)) := by
     conv_rhs => rw [hx']
-    simp only [map_sum, map_smul, tprodInnerFun_tprod, Finset.sum_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, tprodInnerFun_tprod, Finset.sum_smul]
     rw [Finset.sum_comm, hx']
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [hj j, Finset.smul_sum]

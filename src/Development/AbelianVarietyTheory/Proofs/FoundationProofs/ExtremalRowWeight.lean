@@ -63,7 +63,8 @@ theorem fock_extremal (hla : Antitone la) {f : Pol N ℂ} (hf : f ∈ nabla la �
   have hfin := weightedHomogeneousComponent_finsupp (w := rowW N N) f
   have hsum := sum_weightedHomogeneousComponent (rowW N N) f
   rw [finsum_eq_sum _ hfin] at hsum
-  rw [← hsum, Formalism.REAL.fischerInner_sum_left, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hsum, Formalism.REAL.fischerInner_sum_left, map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun μ _ => ?_
   have hmem := Formalism.GradedWeylDivisibility.dualWeylRowGraded ℂ N N la μ f hf
   have hw' := weightedHomogeneousComponent_isWeightedHomogeneous (w := rowW N N) μ f

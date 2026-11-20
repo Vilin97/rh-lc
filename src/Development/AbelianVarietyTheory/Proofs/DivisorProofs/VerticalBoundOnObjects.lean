@@ -183,7 +183,8 @@ theorem exists_bound {E : Type 1} [AddCommGroup E] [Module ℝ E] {D : ℕ} (num
   have e : (fun j => w j + ∑ i, c j i • g i) = fun j => ∑ o, c' j o • g' j o := by
     funext j
     simp [c', g', Fintype.sum_option]
-  rw [e, num.map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, num.map_sum]
   refine (Finset.abs_sum_le_sum_abs _ _).trans (Finset.sum_le_sum fun r _ => ?_)
   rw [num.map_smul_univ, smul_eq_mul, abs_mul, Finset.abs_prod]
   refine mul_le_of_le_one_left (abs_nonneg _) (Finset.prod_le_one₀ (fun _ _ => abs_nonneg _) fun j _ => ?_)
@@ -197,7 +198,8 @@ def wtCl {k : Type} [CommRing k] {X : Scheme.{0}} {p : X ⟶ Sp k} {R : Type} [F
 theorem pullCl_wtCl {k : Type} [CommRing k] {X X' : Scheme.{0}} {p : X ⟶ Sp k} {q : X' ⟶ Sp k} {R : Type} [Fintype R]
     (π : X' ⟶ X) (hπ : π ≫ p = q) (amp : HermLB p) (m : ℕ) (L : R → HermLB p) (u : R → ℝ) (t : ℝ) :
     pullCl π hπ (wtCl amp m L u t) = wtCl (amp.pull π hπ) m (fun r => (L r).pull π hπ) u t := by
-  simp only [wtCl, map_sub, map_smul, map_sum, pullCl_cl]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [wtCl, map_sub, map_smul, map_sum, pullCl_cl]
 
 theorem wtCl_sub {k : Type} [CommRing k] {X : Scheme.{0}} {p : X ⟶ Sp k} {R : Type} [Fintype R] (amp amp' : HermLB p)
     {m m' : ℕ} (hm : 0 < m) (hm' : 0 < m') (L L' : R → HermLB p) (u : R → ℝ) (t : ℝ) :
@@ -214,7 +216,8 @@ theorem cons_comb {E : Type 1} [AddCommGroup E] [Module ℝ E] {D : ℕ} (num : 
     num (Fin.cons (a • x - ∑ r, u r • z r) N) = a * num (Fin.cons x N) - ∑ r, u r * num (Fin.cons (z r) N) := by
   let f : E →ₗ[ℝ] ℝ := { toFun := fun x => num (Fin.cons x N), map_add' := num.cons_add N, map_smul' := num.cons_smul N }
   change f _ = a * f x - ∑ r, u r * f (z r)
-  simp only [map_sub, map_smul, map_sum, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sub, map_smul, map_sum, smul_eq_mul]
 
 theorem update_comb {E : Type 1} [AddCommGroup E] [Module ℝ E] {D : ℕ} (num : Form E D) {R : Type} [Fintype R] (a : ℝ) (x : E)
     (u : R → ℝ) (z : R → E) (o : E) (v : Fin D → E) (j : Fin D) :
@@ -222,7 +225,8 @@ theorem update_comb {E : Type 1} [AddCommGroup E] [Module ℝ E] {D : ℕ} (num 
       ∑ r, u r * num (Fin.cons o (Function.update v j (z r))) := by
   let f : E →ₗ[ℝ] ℝ := (num.curryLeft o).toLinearMap v j
   change f _ = a * f x - ∑ r, u r * f (z r)
-  simp only [map_sub, map_smul, map_sum, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sub, map_smul, map_sum, smul_eq_mul]
 
 end GlobalTheory.VertObj
 
@@ -418,7 +422,8 @@ theorem top_eq (hA : GlobalTheory.Published.ArCalc) {D : D7} {O : Setup D} {T : 
   have hm : (W.mult : ℝ) ≠ 0 := Nat.cast_ne_zero.2 W.mult_pos.ne'
   have e1 : ∑ i, a (some i) • T.gen B c W.mult i + a none • (T.K B c).ar 0 = T.L B c u + s • T.a B c := by
     have : T.L B c u = ∑ x : D.what₂.Tau × Fin O.Y.N, u x.1 x.2 • T.L B c (Pi.single x.1 (Pi.single x.2 1)) := by
-      simp only [← map_smul, ← map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [← map_smul, ← map_sum]
       congr 1
       funext τ i
       simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul]

@@ -41,7 +41,8 @@ theorem nl_le : NL W T Pt π' Eπ h' c ≤ LamLA W T π' Eπ h' c ⊤ := by
   refine Submodule.span_le.2 ?_
   rintro x ⟨m, a, y, ⟨hy, hx⟩, -⟩
   refine ⟨∑ j, a j ⊗ₜ ⟨mkL W T π' c (y j) (hy j), Submodule.mem_top⟩, ?_⟩
-  rw [map_sum, hx]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, hx]
   rfl
 
 theorem nl_smulA {b : LetA O n} (hb : b ∈ W.AΔ) {x : LA W T π' c} (hx : x ∈ NL W T Pt π' Eπ h' c) :

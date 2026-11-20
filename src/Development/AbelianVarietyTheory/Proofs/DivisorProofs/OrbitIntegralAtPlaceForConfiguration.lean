@@ -31,7 +31,8 @@ theorem commVac : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberFi
     have e : ∑ j, ∑ l, incV F H'.x j * incM F G.W.J j l * cA σ (incV F H'.x l) =
         inclR (F := F) (AF F) (form σ G.W.J H'.x H'.x) := by
       have hc : ∀ e : E, cA σ (inclR (F := F) (AF F) e) = inclR (F := F) (AF F) (σ e) := fun _ => rfl
-      simp only [form, dotProduct, Matrix.mulVec, incV, incM, Matrix.map_apply, hc, map_sum, map_mul, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [form, dotProduct, Matrix.mulVec, incV, incM, Matrix.map_apply, hc, map_sum, map_mul, Finset.mul_sum]
       exact Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun l _ => by ring
     rw [e, hC.hH'.xx, map_zero]
   have h0 : hTens (cA σ) (incM F G.V.J) (incM F G.W.J) (Matrix.vecMulVec y (incV F H'.x))
@@ -58,6 +59,7 @@ theorem commVac : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberFi
   rw [GlobalTheory.VacLoc.schr_comm, hfix]
   congr 2
   rw [G.M.co.form]
-  simp only [GlobalTheory.LatVac.locCo, AddMonoidHom.coe_mk, ZeroHom.coe_mk, dotProduct, map_sub, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [GlobalTheory.LatVac.locCo, AddMonoidHom.coe_mk, ZeroHom.coe_mk, dotProduct, map_sub, map_sum, map_mul]
 
 end GlobalTheory.CommVac

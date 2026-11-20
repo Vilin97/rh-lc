@@ -18,7 +18,8 @@ private theorem UpperTheory.sum_eq_of_dual_sums {G ι κ : Type} {M : Type} [Add
     ∑ γ ∈ R, Fm (u γ) = ∑ a ∈ B, Fm (v a) := by
   rw [← sub_eq_zero, ← Module.forall_dual_apply_eq_zero_iff ℂ]
   intro ℓ
-  rw [map_sub, map_sum, map_sum, sub_eq_zero]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sub, map_sum, map_sum, sub_eq_zero]
   exact (h ℓ).symm
 
 private theorem UpperTheory.dual_invariant_of_trivial_character {G : Type} [Group G] {M : Type} [AddCommGroup M] [Module ℂ M] (J : Subgroup G) (χ : J →* ℂˣ)

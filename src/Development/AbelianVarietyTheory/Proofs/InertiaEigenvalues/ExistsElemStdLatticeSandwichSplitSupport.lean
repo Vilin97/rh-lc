@@ -59,10 +59,12 @@ theorem lat_std_of_suppAt : ∀ (D : D7) (V : HSp D), V.gram = 1 → Bridge.hLat
   simp only [← hev] at hid hcj
   obtain ⟨⟨es, hes, hsum⟩, horth⟩ := he
   have e1 : ∀ Q ∈ Ps, ev Q e = 1 := fun Q hQ => by
-    rw [hsum, map_sum, Finset.sum_eq_single Q (fun Q' h' hne => (hid _ _ (hes Q' h')).2.2 Q hne.symm)
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hsum, map_sum, Finset.sum_eq_single Q (fun Q' h' hne => (hid _ _ (hes Q' h')).2.2 Q hne.symm)
       (fun h' => absurd hQ h'), (hid _ _ (hes Q hQ)).2.1]
   have e2 : ∀ Q, Q ∉ Ps → ev Q e = 0 := fun Q hQ => by
-    rw [hsum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hsum, map_sum]
     exact Finset.sum_eq_zero fun Q' h' => (hid _ _ (hes Q' h')).2.2 Q fun hh => hQ (hh ▸ h')
   have hP : ∀ Q ∈ Ps, GlobalTheory.IdemSupport.cP Q ∉ Ps := fun Q hQ hQ' => by
     have a := congrArg (ev (GlobalTheory.IdemSupport.cP Q)) horth

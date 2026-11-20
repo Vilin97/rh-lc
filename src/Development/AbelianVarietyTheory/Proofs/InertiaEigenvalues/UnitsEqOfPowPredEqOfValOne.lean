@@ -19,7 +19,8 @@ theorem eq_of_pow_pred_eq_of_sub_one_mem {R : Type*} [CommRing R] [IsDomain R] (
   have hl' : (l : R ⧸ I) = 0 := by
     rw [← map_natCast (Ideal.Quotient.mk I), Ideal.Quotient.eq_zero_iff_mem]; exact hlI
   have h2 := congrArg (Ideal.Quotient.mk I) hs
-  simp only [map_sum, map_mul, map_pow, ha', hb', one_pow, mul_one, Finset.sum_const,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, map_pow, ha', hb', one_pow, mul_one, Finset.sum_const,
     Finset.card_range, nsmul_eq_mul, map_zero] at h2
   rw [Nat.cast_sub hl, hl', Nat.cast_one, zero_sub, neg_eq_zero] at h2
   apply hI

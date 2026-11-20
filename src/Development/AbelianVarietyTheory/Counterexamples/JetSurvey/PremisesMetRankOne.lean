@@ -51,7 +51,8 @@ theorem adjCls_iff {L : LB A.left} (hL : L.IsLB) (f g : A ⟶ A) :
   constructor
   · intro h T x y
     have := congrArg (pull (lift x y).left) h
-    rw [map_sum, map_zero] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero] at this
     simp only [map_zsmul, ← pull_comp] at this
     exact (sum_six _ f g x y).symm.trans this
   · intro h
@@ -104,7 +105,8 @@ theorem adjCls_factor {n : ℕ} (p : IsPowGrp A' A n) (i₀ : Fin n) (c : Pic A.
   have hι : ∀ z i, em z ≫ p.pr i = if i = i₀ then z else 1 := fun z i =>
     p.lim.fac (Fan.mk T fun i => if i = i₀ then z else 1) ⟨i⟩
   have H := h T (em x) (em y)
-  simp only [map_sum, ← pull_comp, ← Over.comp_left, ← Finset.sum_sub_distrib, ← Finset.sum_add_distrib] at H
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, ← pull_comp, ← Over.comp_left, ← Finset.sum_sub_distrib, ← Finset.sum_add_distrib] at H
   rw [Finset.sum_eq_single i₀ ?_ (by simp)] at H
   · have := p.hom i₀
     simp only [MonObj.mul_comp, Category.assoc, hF, hG] at H

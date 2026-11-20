@@ -67,7 +67,8 @@ theorem der_C (y : Matrix (Fin N') (Fin N) D.host.E) (c : ℂ_[p]) :
 
 theorem der_comm (a b : Matrix (Fin N') (Fin N) D.host.E) (F : Ser) :
     der D lam a (der D lam b F) = der D lam b (der D lam a F) := by
-  simp only [der_eq, map_sum, pderiv_C_mul, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [der_eq, map_sum, pderiv_C_mul, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun l _ => ?_
   rw [pderiv_comm]

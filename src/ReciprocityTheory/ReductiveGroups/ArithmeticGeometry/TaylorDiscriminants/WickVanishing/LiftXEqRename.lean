@@ -87,7 +87,8 @@ theorem cc_ordEval_mem (J : Submodule R k) (e : ℕ) (E0 : AA k d) (hE0 : consta
     (σ : AA k d) (hσ : GoodE R E0 σ) (Q : MvPolynomial (Fin r ⊕ Fin q) k) (hQ : ∀ mo, Q.coeff mo ∈ J ^ e) :
     constantCoeff (PI.WickFormula.ordEval a a' Q σ) ∈ J ^ e := by
   unfold PI.WickFormula.ordEval
-  rw [LinearMap.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [LinearMap.sum_apply, map_sum]
   refine Submodule.sum_mem _ fun mo _ => ?_
   have hgood : GoodE R E0 (((List.ofFn fun i => a i ^ mo (Sum.inl i)).prod *
       (List.ofFn fun j => a' j ^ mo (Sum.inr j)).prod) σ) :=

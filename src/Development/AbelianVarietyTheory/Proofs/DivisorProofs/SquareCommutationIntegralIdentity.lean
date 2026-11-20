@@ -92,7 +92,8 @@ theorem thetaInt_eq_zero_of_finRel (hP : GlobalTheory.FunPr.Hypotheses₂) (hK :
     have e : ∑ i, c i • (g i : WO W₁ X → ℂ) = ∑ i, c i • (ωB (u i, 1) (Ψi i) - Ψi i) := by simp only [hg]
     rw [← e, hsum]
   have eW : wop ωB z Ψ = ∑ i, c i • (ωB (u' i, 1) (wop ωB z (Ψi i)) - wop ωB z (Ψi i)) := by
-    rw [eΨ, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [eΨ, map_sum]
     simp only [map_smul, map_sub, hcomm]
   have hJ : thetaInt ωB ν₁ 𝓕₁ (wop ωB z Ψ) = 0 := by
     have hi : ∀ i ∈ (Finset.univ : Finset (Fin n)),

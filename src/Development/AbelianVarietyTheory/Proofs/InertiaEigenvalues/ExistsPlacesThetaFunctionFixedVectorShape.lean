@@ -139,7 +139,8 @@ theorem evalV_offIdem {F : Type} [Field F] [NumberField F] (Sb : Finset (HeightO
   have e1 : evalV F w (singleV F w 1) = 1 := GlobalTheory.StdCharTotReal.single_same w 1
   have e2 : ∀ v, v ≠ w → evalV F w (singleV F v 1) = 0 := fun v hv => GlobalTheory.StdCharTotReal.single_ne v 1 hv.symm
   unfold offIdem
-  rw [map_sub, map_one, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sub, map_one, map_sum]
   refine ⟨fun hw => ?_, fun hw => ?_⟩
   · rw [Finset.sum_eq_single_of_mem w hw fun v _ hv => e2 v hv, e1, sub_self]
   · rw [Finset.sum_eq_zero fun v hv => e2 v fun h => hw (h ▸ hv), sub_zero]
@@ -214,7 +215,8 @@ theorem half_of_offPl (Sb : Finset (HeightOneSpectrum (𝓞 D.host.F))) {u : WO 
     exact Prod.ext (show (0 : Ainf D.host.F) = 1 - 1 - 0 by ring)
       (show 1 - ∑ v ∈ Sb, singleV D.host.F v 1 = 1 - 0 - ∑ v ∈ Sb, singleV D.host.F v 1 by rw [sub_zero])
   unfold offE
-  rw [e, RingHom.map_sub, RingHom.map_sub, RingHom.map_one, map_sum, sub_mul, sub_mul, one_mul, h1, Finset.sum_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, RingHom.map_sub, RingHom.map_sub, RingHom.map_one, map_sum, sub_mul, sub_mul, one_mul, h1, Finset.sum_mul,
     Finset.sum_eq_zero h2, sub_zero, sub_zero]
 
 open GlobalTheory.PlaceModel in

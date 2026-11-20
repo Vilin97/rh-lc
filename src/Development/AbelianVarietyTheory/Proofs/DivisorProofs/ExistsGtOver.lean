@@ -124,7 +124,8 @@ theorem tor_rel (hT : TensFacts W φ e wv) (hdet : IsUnit (W + W.transpose).det)
     rw [_root_.mul_one] at h1
     exact mul_eq_left.1 h1.symm
   · have hχ : χ' = ∑ i, E.symm (Pi.single i (e χ' i)) := by
-      rw [← map_sum, Finset.univ_sum_single]; exact (E.symm_apply_apply χ').symm
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← map_sum, Finset.univ_sum_single]; exact (E.symm_apply_apply χ').symm
     have ht : t' (Multiplicative.ofAdd χ') = ∏ i, sH i (Multiplicative.ofAdd (e χ' i)) := by
       conv_lhs => rw [hχ]
       rw [ofAdd_sum, map_prod]

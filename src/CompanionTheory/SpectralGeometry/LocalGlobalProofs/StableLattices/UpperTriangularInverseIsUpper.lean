@@ -26,7 +26,8 @@ theorem map_low_le {wt : ι → ℕ} {P : ι → Module.End L V} (hP : IsPieces 
     (low wt P m).map a ≤ low wt P m := by
   rintro _ ⟨x, hx, rfl⟩ i hi
   have hx' : x ∈ low wt P m := hx
-  rw [← sum_pieces hP x, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← sum_pieces hP x, map_sum, map_sum]
   refine Finset.sum_eq_zero fun j _ => ?_
   by_cases hj : m ≤ wt j
   · rw [hx' j hj, map_zero, map_zero]

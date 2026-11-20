@@ -280,11 +280,13 @@ theorem _root_.GlobalTheory.evCot_of_univDer :
           ∑ j, (PadicInt.toZMod (s j)).val • ⟨D.L.τ j 0, (_root_.ReciprocityTheory.PGsh.Be2.mem_torP B p _).2 (hτ j)⟩ := by
         apply Subtype.ext
         simp [_root_.ReciprocityTheory.PGsh.Be2.ptOf, _root_.ReciprocityTheory.PGsh.Up.red]
-      rw [hsplit, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hsplit, map_sum]
       simp only [map_nsmul]
       push_cast
       simp only [D.L.ρ_spec]
-      simp only [_root_.ReciprocityTheory.PGsh.Be2.ptOf, _root_.ReciprocityTheory.PGsh.Up.red, Matrix.mulVec, dotProduct, map_sum, map_mul, Finset.smul_sum, smul_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [_root_.ReciprocityTheory.PGsh.Be2.ptOf, _root_.ReciprocityTheory.PGsh.Up.red, Matrix.mulVec, dotProduct, map_sum, map_mul, Finset.smul_sum, smul_smul]
       rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun k _ => ?_
       have hc : (∑ j, PadicInt.toZMod (D.H.ρ a k j) * PadicInt.toZMod (s j)) =

@@ -112,7 +112,8 @@ theorem mem_lat_perBasis (y : EuclideanSpace ℂ (Fin g)) :
       ext k
       simp [Finset.sum_apply, Pi.single_apply]
     simp only [sumBasis, Module.Basis.map_apply, Pi.basisFun_apply]
-    rw [hm, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hm, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_smul, Int.cast_smul_eq_zsmul]
   show y ∈ Submodule.span ℤ (Set.range (perBasis hs hp φ)) ↔ _
@@ -157,12 +158,14 @@ def torus (a b : Fin g → ℝ) : GT (Fin g) where
     obtain ⟨n, hn⟩ := (mem_lat_perBasis hs hp φ y).1 y.2
     have hy : y = ∑ j, n j • e j := by
       apply Subtype.ext
-      simp only [hn, e, AddSubmonoidClass.coe_finsetSum, Submodule.coe_smul_of_tower,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hn, e, AddSubmonoidClass.coe_finsetSum, Submodule.coe_smul_of_tower,
         ← map_zsmul, ← map_sum]
       congr 1
       funext j
       simp [Pi.single_apply]
-    rw [hn, im_Hf_realCoord hs hp φ hφ, hy, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hn, im_Hf_realCoord hs hp φ hφ, hy, map_sum]
     simp [mul_comm]
   ka y := cexp (((π * ∑ i, (realCoord hs hp φ).symm y (.inl i) * (realCoord hs hp φ).symm y (.inr i) +
     2 * π * (∑ i, a i * (realCoord hs hp φ).symm y (.inl i) -

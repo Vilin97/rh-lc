@@ -45,7 +45,8 @@ theorem hodge_gram_conjPt : ∀ (D : D7) (A : Amb D) (N j : ℕ) (S : Sig A N j)
           RingHom.ext Complex.conj_conj, spMap_dualMap_id, Category.id_comp])
     rw [x.hodge_gram hH, x.hodge_gram hf, hf'.co τ hg hx]
     ext a b
-    simp only [Matrix.smul_apply, Matrix.map_apply, Matrix.mul_apply, Matrix.conjTranspose_apply, map_sum, map_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.smul_apply, Matrix.map_apply, Matrix.mul_apply, Matrix.conjTranspose_apply, map_sum, map_mul,
       smul_eq_mul, RCLike.star_def, Complex.conj_conj, Complex.conj_ofReal]
 
 end GlobalTheory.ShFam

@@ -148,7 +148,8 @@ theorem du_inj_single (m' : D.Cov G.dual) (i : Fin G.height) :
 theorem sum_coord_mul (m : D.Cov G) (m' : D.Cov G.dual) :
     ∑ j, coord D c m j * coord D c.dual m' j = Sandwich.mu S.ε * D.du S G.dual m' m := by
   have h := congrArg (D.du S G.dual m') (inj_coord D c m)
-  rw [map_smul, smul_eq_mul, inj_apply, map_sum] at h
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_smul, smul_eq_mul, inj_apply, map_sum] at h
   simp only [map_smul, smul_eq_mul, du_inj_single D c] at h
   exact h
 
@@ -157,7 +158,8 @@ theorem du_φ (c : ConstTate (eps S) G) (m : D.Cov G) (x : D.Cov G.dual) :
   apply mu_regular S
   simp only [smul_eq_mul]
   rw [← sum_coord_mul D c, coord_φ, coord_φ D c.dual]
-  simp only [piMap_apply, ← map_mul, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [piMap_apply, ← map_mul, ← map_sum]
   rw [sum_coord_mul D c, map_mul, frobenius_mu]
   simp only [map_mul]
   ring
@@ -172,14 +174,16 @@ theorem sum_mul_coord_dual (k : Fin G.height → Ainf p S.R) (m : D.Cov G) (hk :
     (m' : D.Cov G.dual) : ∑ j, k j * coord D c.dual m' j =
       muN S 1 * phiInv p S.R (D.du S G.dual (D.φ S G.dual.dual m') m) := by
   apply Dieudonne.frobenius_injective
-  rw [map_sum, map_mul, frobenius_muN S 0, Dieudonne.frobenius_phiInv]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_mul, frobenius_muN S 0, Dieudonne.frobenius_phiInv]
   have h : ∀ j, frobenius (k j * coord D c.dual m' j) = coord D c m j * coord D c.dual (D.φ S G.dual.dual m') j :=
     fun j => by rw [map_mul, ← piMap_apply frobenius _ k j, hk, coord_φ, piMap_apply]
   simp only [h]
   exact sum_coord_mul D c m _
 
 theorem apply_al (v : G.dual.Lie) (x : Fin G.height → S.R) : v (c.al x) = ∑ j, x j * c.dual.alDual v j := by
-  rw [c.al_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [c.al_apply, map_sum]
   exact Finset.sum_congr rfl fun j _ => by rw [map_smul, smul_eq_mul]; rfl
 
 theorem unit_mul_apply_al (u : (S.R)ˣ) (hb : ∀ m', b D c.dual m' = (u : S.R) • c.dual.alDual (D.toLie G.dual m'))
@@ -219,7 +223,8 @@ theorem GlobalTheory.PerfdLat.OmegaProj.exists_projection (p : ℕ) [Fact p.Prim
       ∀ m' : D.Cov G.dual, (u : S.R) * (D.toLie G.dual m') (c.al (piMap (fontaineTheta S.R p) _ k)) =
         (zeta S.ε 1 - 1) * fontaineTheta S.R p (phiInv p S.R (D.du S G.dual (D.φ S G.dual.dual m') m)) := by
     intro k m hk m'
-    rw [unit_mul_apply_al D c u hb', ← theta_muN_one, ← map_mul, ← sum_mul_coord_dual D c k m hk, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [unit_mul_apply_al D c u hb', ← theta_muN_one, ← map_mul, ← sum_mul_coord_dual D c k m hk, map_sum]
     simp only [piMap_apply, map_mul]
   have hdiv : ∀ x y, ∃ r, (zeta S.ε 1 - 1) * r = F x y := by
     intro x y
@@ -244,7 +249,8 @@ theorem GlobalTheory.PerfdLat.OmegaProj.exists_projection (p : ℕ) [Fact p.Prim
       intro m'
       have h1 : Finsupp.linearCombination (Ainf p S.R) id (s m') = m' := LinearMap.congr_fun hs m'
       conv_rhs => rw [← h1]
-      simp only [l, LinearMap.comp_apply, Finsupp.linearCombination_apply, Finsupp.sum, map_sum, map_smul,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [l, LinearMap.comp_apply, Finsupp.linearCombination_apply, Finsupp.sum, map_sum, map_smul,
         map_smulₛₗ, smul_eq_mul, map_mul, ha, id]
     obtain ⟨f, hf⟩ := exists_du_eq D l
     have hdivf : ∀ y, ∃ r, frobenius (xi S.ε) * r = (D.du S G.dual).toLinearMap.flip (D.φ S G.dual f) y := by
@@ -342,6 +348,7 @@ theorem GlobalTheory.PerfdLat.OmegaProj.exists_projection (p : ℕ) [Fact p.Prim
       have h2 : (u : S.R) * ∑ j, (x : Fin G.height → S.R) j * fontaineTheta S.R p (coord D c.dual m' j) = 0 := by
         rw [Finset.mul_sum]
         simp only [← mul_assoc, h3, ← map_mul]
-        rw [← map_sum, sum_coord_mul D c, map_mul, theta_mu, zero_mul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [← map_sum, sum_coord_mul D c, map_mul, theta_mu, zero_mul]
       rw [← h1] at h2
       exact u.isUnit.mul_right_eq_zero.1 (u.isUnit.mul_right_eq_zero.1 h2)

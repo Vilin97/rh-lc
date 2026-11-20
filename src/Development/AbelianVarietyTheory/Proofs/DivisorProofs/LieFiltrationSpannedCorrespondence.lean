@@ -60,7 +60,8 @@ theorem span_corr_baseChange : GlobalTheory.Published.AbelianDeRham → ∀ {F :
       simp only [hgc]
       rw [← hy c]
       conv_lhs => rw [← hef (q c)]
-      rw [map_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, map_sum]
       refine Finset.sum_congr rfl fun i _ ↦ ?_
       rw [LinearMap.map_smulₛₗ, map_smul, smul_eq_mul, mul_comm]
       rfl

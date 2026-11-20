@@ -21,7 +21,8 @@ theorem iter_sum {B J : Type} [AddCommMonoid B] (D : B →+ B) (s : Finset J) (k
   | zero => simp
   | succ k ih =>
     simp only [Function.iterate_succ_apply]
-    rw [map_sum, ih]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, ih]
 
 theorem iter_const_mul {B : Type} [CommRing B] (D : B →+ B) (c : B) (hc : ∀ g, D (c * g) = c * D g) (k : ℕ) (g : B) :
     D^[k] (c * g) = c * D^[k] g := by
@@ -38,7 +39,8 @@ theorem jet_cmp_ring {B K : Type} [CommRing B] [Field K] (D : B →+ B)
     ∑ j, e (c j) * e (D^[i] (a j)) = e u * ∑ j, e (c j) * e (D^[i] (a' j)) := by
   have hval : ∀ (b : Fin r → B) (k : ℕ), e (D^[k] (∑ j, c j * b j)) = ∑ j, e (c j) * e (D^[k] (b j)) := by
     intro b k
-    rw [iter_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [iter_sum, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [iter_const_mul D (c j) (hc j), map_mul]
   have hΦ : ∑ j, c j * a j = u * ∑ j, c j * a' j := by

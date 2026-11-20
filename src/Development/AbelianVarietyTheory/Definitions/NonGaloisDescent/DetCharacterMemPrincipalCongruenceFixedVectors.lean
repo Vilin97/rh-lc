@@ -166,7 +166,8 @@ theorem exists_charIn (S : Sys g) (χ : (ZMod g)ˣ →* ℂˣ) (b : ℕ) :
     ∃ h, CharIn S χ b h ∧ h.Monic ∧ h.natDegree = b ∧ h.coeff 0 ≠ 0 := by
   obtain ⟨T, hT⟩ := S.sum b
   have h1 := congrArg (fun a => (Model.chRep (χ.comp (det (n := Fin b)))).asAlgebraHom a 1) hT
-  simp only [map_sum, LinearMap.sum_apply, alg_ev, map_one, Module.End.one_apply, mul_one] at h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.sum_apply, alg_ev, map_one, Module.End.one_apply, mul_one] at h1
   obtain ⟨h, -, hh⟩ := Finset.exists_ne_zero_of_sum_ne_zero (h1 ▸ one_ne_zero)
   exact ⟨h, hh, S.label b h fun e => hh (by rw [e]; simp [ev])⟩
 

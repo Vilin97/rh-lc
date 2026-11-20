@@ -75,7 +75,8 @@ lemma eS_mem (T : GoodSet K G) (P0 : Pair K G) (hM : M1 T P0) (s : T.S) :
     fun i => Function.surjInv (T.irr s) (g i), ?_⟩
   have h1 : (T.tau s).asAlgebraHom
       (∑ i, Function.surjInv (T.irr s) (f i) * eps P0 * Function.surjInv (T.irr s) (g i)) = 1 := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [map_mul, Function.surjInv_eq (T.irr s)]
     exact hfg
   have h2 := eS_mul T s (∑ i, Function.surjInv (T.irr s) (f i) * eps P0 *

@@ -349,7 +349,8 @@ theorem map_tTildeExt (ρ : Set.Ioo (0 : ℝ) 1) (g : (𝓣).RobbaExt ρ →+* �
   refine Ideal.pow_le_pow_right (Nat.le_succ n) ?_
   have hsum : g (awayToExt p ρ (∑ i ∈ Finset.range n, logCoeff p (i + 1) * muA p ε ^ (i + 1))) =
       ∑ i ∈ Finset.Ico 1 (n + 1), algebraMap ℚ 𝔹 ((-1) ^ (i + 1) / i) * w ^ i := by
-    rw [hg, map_sum, map_sum, Finset.sum_Ico_eq_sum_range, Nat.add_sub_cancel]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hg, map_sum, map_sum, Finset.sum_Ico_eq_sum_range, Nat.add_sub_cancel]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_mul, map_mul, map_pow, map_pow, ← RingHom.comp_apply (toBDeRhamPlus (normInteger ℂ_[p]) p) ψ,
       map_logCoeff _ (Nat.succ_ne_zero i), add_comm 1 i]

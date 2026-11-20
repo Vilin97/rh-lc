@@ -216,7 +216,8 @@ theorem finrank_le_ker_add (l : ℕ) [Fact l.Prime] {T : Type} [AddCommGroup T]
     have h2 := hmem W (s * (c : ℚ_[l])⁻¹) _ (hPW t ht)
     rw [h1, map_smul, Polynomial.aeval_eq_sum_range, LinearMap.sum_apply]
     convert h2 using 2
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_zsmul, ← hit Φ Φ' hΦ', LinearMap.smul_apply, Module.End.pow_apply]
     rfl
@@ -371,7 +372,8 @@ theorem le_add_of_pairing (M A : Type) [AddCommGroup M] [AddCommGroup A] (l q g 
     refine hext _ _ fun n => ?_
     rw [hΦ', map_nsmul, hW n _ (hx n) (htor n x)]
   · intro x hx n
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [map_zsmul, hit Φ Φ' hΦ']
     exact hPW n _ (hfixH x hx n) (htor n _)
 

@@ -57,7 +57,8 @@ theorem hp_symm (σ : E →+* E) (hσ : ∀ c, σ (σ c) = c) (J : Matrix (Fin n
     (hJ : ∀ i j, σ (J j i) = J i j) (a b : Matrix (Fin n) (Fin 1) E) :
     σ (hp σ J a b) = hp σ J b a := by
   rw [hp_eq, hp_eq]
-  simp only [map_sum, map_mul, hσ, hJ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, hσ, hJ]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun i _ => ?_
   ring

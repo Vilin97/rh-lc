@@ -37,7 +37,8 @@ theorem actLin_resM (N : Matrix (Fin h) (Fin h) ℤ) {V W : X.Opens} (hle : W �
   apply (coords X h W).injective
   rw [coords_actLin, coords_resM, coords_resM, coords_actLin]
   funext i
-  simp [Matrix.mulVec, dotProduct, GlobalTheory.PerfdLat.piMap_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Matrix.mulVec, dotProduct, GlobalTheory.PerfdLat.piMap_apply, map_sum]
 
 def act (N : Matrix (Fin h) (Fin h) ℤ) : freeModule X (Fin h) ⟶ freeModule X (Fin h) :=
   GlobalTheory.LB.homOfLinear (actLin X h N) fun hle s => actLin_resM X h N hle s

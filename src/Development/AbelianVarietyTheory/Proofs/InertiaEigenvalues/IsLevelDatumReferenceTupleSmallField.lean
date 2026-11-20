@@ -52,7 +52,8 @@ theorem isIdemSum_conjPl {e : AE D} {P : Finset (Formalism.L2.DIV.Pl D.host.E)} 
   · rw [Finset.sum_image (fun a _ b _ (hab : Formalism.L2.DIV.conjPl a = Formalism.L2.DIV.conjPl b) => by
       rw [← Formalism.L2.DIV.conjPl_conjPl a, hab, Formalism.L2.DIV.conjPl_conjPl b])]
     simp only [Formalism.L2.DIV.conjPl_conjPl]
-    rw [he, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [he, map_sum]
   · rw [GlobalTheory.MovedIdem.cA_cA, mul_comm]; exact hc
 
 theorem frMapAdj_add' (S T : HSp D) (βS : GL (Fin S.rank) (EAf D)) (βT : GL (Fin T.rank) (EAf D)) (x y : WO S T) :

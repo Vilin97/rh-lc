@@ -25,7 +25,8 @@ theorem form_swap (σ : E →ₐ[F] E) (hσ : ∀ x, σ (σ x) = x) {n : ℕ} (J
     (hJ : ∀ i j, σ (J j i) = -J i j) (v w : Fin n → E) :
     form σ J w v = -σ (form σ J v w) := by
   unfold form
-  simp only [dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, Finset.mul_sum, ← Finset.sum_neg_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, Finset.mul_sum, ← Finset.sum_neg_distrib]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   rw [hJ]; ring
@@ -162,7 +163,8 @@ theorem incM_gam_mulVec (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin 
   congr 1
   · simp [Matrix.one_apply]
   · refine Finset.sum_congr rfl fun k _ => ?_
-    simp only [map_sum, map_mul, Finset.mul_sum, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, Finset.mul_sum, Finset.sum_mul]
     refine Finset.sum_congr rfl fun l _ => ?_
     ring
 

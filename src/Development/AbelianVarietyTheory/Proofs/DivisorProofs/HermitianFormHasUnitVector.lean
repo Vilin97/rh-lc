@@ -14,7 +14,8 @@ theorem hform_exists_unit_value {R : Type} [CommRing R] {n : Type} [Fintype n] [
     simpa [Formalism.UG.cT] using this
   have hsymm : ∀ x y, Formalism.UG.hform τ H y x = τ (Formalism.UG.hform τ H x y) := by
     intro x y
-    simp only [Formalism.UG.hform, map_sum, map_mul, hinv]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Formalism.UG.hform, map_sum, map_mul, hinv]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
     rw [hHij]; ring

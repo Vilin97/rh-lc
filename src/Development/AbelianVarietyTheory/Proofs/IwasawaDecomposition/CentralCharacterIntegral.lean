@@ -103,7 +103,8 @@ theorem cenInt_of_allT {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type}
       exact u.2
     · rw [h3']
       simp only [LinearMap.coe_comp, LinearEquiv.coe_coe, Function.comp_apply] at hc'
-      rw [hc', map_sum, ← Finset.sum_attach (D.what₂.MtLat μ ((k : ℕ) + 1)).gen]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hc', map_sum, ← Finset.sum_attach (D.what₂.MtLat μ ((k : ℕ) + 1)).gen]
       refine Finset.sum_congr rfl fun u _ => ?_
       have e1 : c u.1 • h.eMt k μ (ws u) = ((c u.1 : 𝓞 D.what₂.LL) : D.what₂.LL) • h.eMt k μ (ws u) := rfl
       rw [e1, LinearMap.map_smulₛₗ, hws u]

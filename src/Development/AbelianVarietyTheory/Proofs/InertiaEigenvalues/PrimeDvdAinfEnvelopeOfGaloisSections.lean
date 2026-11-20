@@ -43,7 +43,8 @@ theorem l_dvd_of_galois_sections : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (
   have heq : ∀ j, π (En.inl.f (bk.ev X)) ^ (bk.Ep.natDegree * h) * π (x j) =
       ∑ i, π (x i) ^ l * π (c i j) := fun j => by
     have := congrArg π (hx j)
-    rw [map_mul π, map_pow π, hE, ← pow_mul, map_sum π] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_mul π, map_pow π, hE, ← pow_mul, map_sum π] at this
     rw [this]
     exact Finset.sum_congr rfl fun i _ => by rw [map_mul π, hφ]
   have hpts : ∀ (O : Type) [CommRing O] [IsDomain O] [ValuationRing O] [CharP O l] [PerfectRing O l]

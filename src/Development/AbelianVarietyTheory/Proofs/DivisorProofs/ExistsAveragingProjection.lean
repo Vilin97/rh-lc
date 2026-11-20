@@ -148,7 +148,8 @@ theorem avg_invariant {x : V} (hx : (stab π L x).FiniteIndex) (l : L) :
   classical
   haveI := Fintype.ofFinite (L ⧸ stab π L x)
   unfold avg avgH
-  rw [finsum_eq_sum_of_fintype, map_smul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [finsum_eq_sum_of_fintype, map_smul, map_sum]
   congr 1
   have h : ∀ q : L ⧸ stab π L x, π (l : G) (cv π L (stab π L x) x q) =
       cv π L (stab π L x) x (l • q) := by

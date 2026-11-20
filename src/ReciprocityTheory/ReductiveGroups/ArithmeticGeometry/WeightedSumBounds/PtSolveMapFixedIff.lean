@@ -38,7 +38,8 @@ theorem pt_subst_lin_split {σ τ : Type*} [Fintype σ] {x : σ → MvPowerSerie
     (hx : HasSubst x) (Φ : MvPowerSeries σ C) (m : σ → C) :
     subst x Φ = ∑ a, m a • x a + subst x (Φ - ∑ a, m a • X a) := by
   have hs : subst x (∑ a, m a • X a : MvPowerSeries σ C) = ∑ a, m a • x a := by
-    rw [← MvPowerSeries.coe_substAlgHom hx, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← MvPowerSeries.coe_substAlgHom hx, map_sum]
     refine Finset.sum_congr rfl fun a _ => ?_
     rw [MvPowerSeries.coe_substAlgHom hx, MvPowerSeries.subst_smul hx, MvPowerSeries.subst_X hx]
   rw [MvPowerSeries.subst_sub hx, hs]
@@ -49,7 +50,8 @@ theorem pt_low_of_lin {σ : Type*} [Fintype σ] {Φ : MvPowerSeries σ C}
     (hm : ∀ s, coeff (Finsupp.single s 1) Φ = m s) :
     ∀ α : σ →₀ ℕ, α.degree ≤ 1 → coeff α (Φ - ∑ a, m a • X a) = 0 := by
   intro α hα
-  rw [map_sub, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sub, map_sum]
   simp only [map_smul, smul_eq_mul]
   rcases Nat.le_one_iff_eq_zero_or_eq_one.mp hα with h | h
   · obtain rfl := (Finsupp.degree_eq_zero_iff α).mp h
@@ -128,7 +130,8 @@ theorem ptSolveMap_agree
     (hxy : PTAgree k x y) :
     PTAgree (k + 1) (ptSolveMap A K N f x) (ptSolveMap A K N f y) := by
   intro c e he
-  simp only [ptSolveMap, map_sum, coeff_smul, map_sub]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [ptSolveMap, map_sum, coeff_smul, map_sub]
   refine Finset.sum_congr rfl fun b _ => ?_
   rw [pt_subst_agree (hasSubst_of_constantCoeff_zero (hA0 x hx))
     (hasSubst_of_constantCoeff_zero (hA0 y hy)) (hA0 x hx) (hA0 y hy) (K b) k
@@ -144,7 +147,8 @@ theorem ptSolveMap_good (hN : ∀ i j, N i j ∈ ptIntSub v) (hf : PTGood v f)
   have hs := hasSubst_of_constantCoeff_zero (hA0 x hx)
   refine ⟨?_, ?_⟩
   · rw [← coeff_zero_eq_constantCoeff_apply]
-    simp only [ptSolveMap, map_sum, coeff_smul, map_sub, coeff_zero_eq_constantCoeff_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [ptSolveMap, map_sum, coeff_smul, map_sub, coeff_zero_eq_constantCoeff_apply,
       (hf _).1, constantCoeff_subst_eq_zero hs (hA0 x hx) (hK0 _), sub_zero, mul_zero,
       Finset.sum_const_zero]
   · exact Subring.sum_mem _ fun b _ => ptIntSer_smul (hN b c)

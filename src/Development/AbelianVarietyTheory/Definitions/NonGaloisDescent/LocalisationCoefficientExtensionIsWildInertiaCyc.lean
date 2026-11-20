@@ -69,7 +69,8 @@ theorem s0_eq (a : LocExt N₀ N₁ A₀ A₁ i₀ i₁) : N₀.s0 i₀ = N₁.s
 theorem heckePol_map (a : LocExt N₀ N₁ A₀ A₁ i₀ i₁) (x : N₁.X i₁) (w : PlE H) (hw : SplitOut N₁ i₁ w) :
     heckePol N₁ i₁ x w = (heckePol N₀ i₀ (a.e x) w).map a.φ := by
   unfold heckePol
-  rw [Polynomial.map_add, Polynomial.map_pow, map_X, Polynomial.map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Polynomial.map_add, Polynomial.map_pow, map_X, Polynomial.map_sum]
   congr 1
   refine Finset.sum_congr rfl fun k hk => ?_
   rw [Finset.mem_Icc] at hk

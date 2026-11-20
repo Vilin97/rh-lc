@@ -66,11 +66,13 @@ theorem det_mem_maximalIdeal (k A : Type) [CommRing k] [CommRing A] [IsLocalRing
   refine Matrix.exists_vecMul_eq_zero_iff.1 ⟨_, hne, ?_⟩
   funext j
   have h1 : δ j t = ∑ i, c i * δ j (g i) := by
-    rw [← (δ j).liftKaehlerDifferential_comp_D t, hsum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← (δ j).liftKaehlerDifferential_comp_D t, hsum, map_sum]
     simp [hg]
   have h2 : residue A (δ j t) = 0 :=
     (residue_eq_zero_iff _).2 ((Ideal.span_singleton_le_iff_mem _).2 ht (hδ j))
-  rw [h1, map_sum] at h2
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h1, map_sum] at h2
   simpa [Matrix.vecMul, dotProduct] using h2
 
 theorem derivation_mem_span_of_prod {k A : Type} [CommRing k] [CommRing A] [IsRegularLocalRing A] [Algebra k A] {n : ℕ}

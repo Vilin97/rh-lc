@@ -17,7 +17,8 @@ theorem inner_homog_eq (hι : IsFockIP ι) {n : ℕ} {h : MvPolynomial σ ℂ} (
     (g : MvPolynomial σ ℂ) :
     inner ℂ (ι h) (ι g) = inner ℂ (ι h) (ι (homogeneousComponent n g)) := by
   conv_lhs => rw [← sum_homogeneousComponent g]
-  rw [map_sum, inner_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, inner_sum]
   by_cases hn : n ∈ Finset.range (g.totalDegree + 1)
   · rw [Finset.sum_eq_single_of_mem n hn]
     intro m _ hmn

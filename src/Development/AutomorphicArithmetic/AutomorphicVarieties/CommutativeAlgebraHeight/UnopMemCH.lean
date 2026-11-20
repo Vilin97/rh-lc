@@ -52,7 +52,8 @@ private theorem unopS_aeval (S : Type) [CommRing S] [Algebra A S] (y : S ⊗[A] 
 private theorem unopS_gen {k : ℕ} (x : Fin k → Eᵐᵒᵖ) :
     Det.unopS A E _ (Det.gen (A := A) x) = Det.gen (A := A) fun a => (x a).unop := by
   unfold Det.gen
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_congr rfl fun a _ => unopS_tmul _ _ _
 
 private theorem lid_unopS (S : Type) [CommRing S] [Algebra A S] (f : S →ₗ[A] A) (y : S ⊗[A] Eᵐᵒᵖ) :

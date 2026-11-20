@@ -89,7 +89,8 @@ theorem isVB_cokernel_hodgeSub : GlobalTheory.CovTop.Hypotheses2 → ∀ (p : �
     intro D hD c hc W hW h a
     obtain ⟨d, hd, hdF⟩ := restr D hD c hc W hW h
     have key : E W hW (∑ j, a j • resM H h ((E D hD).symm (c j))) = ∑ j, a j • d j := by
-      simp only [map_sum, map_smul, hd]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, hd]
     have hrep : ∀ j, d.repr (∑ i, a i • d i) j = a j := fun j => congrFun (d.repr_sum_self a) j
     rw [hF W hW, key, hdF, Module.Basis.mem_span_image]
     constructor
@@ -119,7 +120,8 @@ theorem isVB_cokernel_hodgeSub : GlobalTheory.CovTop.Hypotheses2 → ∀ (p : �
       have hk := F.res_mem (hle k) hs
       have hsum : resM H (hle k) (∑ j, a j • resM H h ((E D hD).symm (c j))) =
           ∑ j, resG T (hle k) (a j) • resM H ((hle k).trans h) ((E D hD).symm (c j)) := by
-        simp only [map_sum, resM_smul, resM_resM]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, resM_smul, resM_resM]
       rw [hsum] at hk
       rw [(affMem D hD c hc (W k) (hW k) ((hle k).trans h) _).1 hk j hj, map_zero]
     · intro ha

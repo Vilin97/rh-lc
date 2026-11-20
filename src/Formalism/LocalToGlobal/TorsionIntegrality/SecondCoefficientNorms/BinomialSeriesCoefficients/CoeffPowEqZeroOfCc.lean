@@ -85,7 +85,8 @@ private theorem coeff_mvExp_eq_coeff_trunc_sum {f : MvPowerSeries σ K} (hf : Mv
     (N : ℕ) (m : σ →₀ ℕ) (hm : m.degree < N) :
     MvPowerSeries.coeff m (mvExp f) =
       MvPowerSeries.coeff m (∑ k ∈ Finset.range N, ((k.factorial : K))⁻¹ • f ^ k) := by
-  rw [coeff_mvExp hf hm, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [coeff_mvExp hf hm, map_sum]
   simp only [map_smul, smul_eq_mul]
 
 private theorem coeff_mul_congr_of_degree_lt {A A' B B' : MvPowerSeries σ K} {N : ℕ}
@@ -111,7 +112,8 @@ theorem pderiv_mvExp {f : MvPowerSeries σ K} (hf : MvPowerSeries.constantCoeff 
       (∑ k ∈ Finset.range (n.degree + 1 + 1), ((k.factorial : K))⁻¹ • f ^ k) =
       MvPowerSeries.pderiv K i f *
         ∑ k ∈ Finset.range (n.degree + 1), ((k.factorial : K))⁻¹ • f ^ k := by
-    rw [map_sum, Finset.mul_sum, Finset.sum_range_succ' _ (n.degree + 1)]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.mul_sum, Finset.sum_range_succ' _ (n.degree + 1)]
     have h0 : MvPowerSeries.pderiv K i (((Nat.factorial 0 : K))⁻¹ • f ^ 0) = 0 := by simp
     rw [h0, add_zero]
     refine Finset.sum_congr rfl fun k _ => ?_
@@ -147,17 +149,20 @@ private theorem mvExp_add_binomial_series_coefficients {f g : MvPowerSeries σ K
   classical
   have hfg : MvPowerSeries.constantCoeff (f + g) = 0 := by simp [hf, hg]
   ext n
-  rw [coeff_mvExp hfg (Nat.lt_succ_self n.degree),
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [coeff_mvExp hfg (Nat.lt_succ_self n.degree),
     coeff_mul_congr_of_degree_lt (coeff_mvExp_eq_coeff_trunc_sum hf (n.degree + 1)) (coeff_mvExp_eq_coeff_trunc_sum hg (n.degree + 1)) n
       (Nat.lt_succ_self _),
     Finset.sum_mul_sum, map_sum]
-  simp only [map_sum, smul_mul_smul_comm, map_smul, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, smul_mul_smul_comm, map_smul, smul_eq_mul]
   have hL : ∀ k ∈ Finset.range (n.degree + 1),
       ((k.factorial : K))⁻¹ * MvPowerSeries.coeff n ((f + g) ^ k) =
         ∑ m ∈ Finset.range (k + 1), ((m.factorial : K))⁻¹ * (((k - m).factorial : K))⁻¹ *
           MvPowerSeries.coeff n (f ^ m * g ^ (k - m)) := by
     intro k _
-    rw [add_pow, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [add_pow, map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun m hm => ?_
     have hmk : m ≤ k := Nat.lt_succ_iff.1 (Finset.mem_range.1 hm)
     rw [← map_natCast (MvPowerSeries.C (σ := σ) (R := K)) (k.choose m),
@@ -204,7 +209,8 @@ theorem mvExp_sum {ι : Type} (s : Finset ι) (f : ι → MvPowerSeries σ K)
   | empty => simp [mvExp_zero]
   | insert x s hx ih =>
     have hs : MvPowerSeries.constantCoeff (∑ a ∈ s, f a) = 0 := by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       exact Finset.sum_eq_zero fun b hb => hf b (Finset.mem_insert_of_mem hb)
     rw [Finset.sum_insert hx, Finset.prod_insert hx,
       mvExp_add (hf x (Finset.mem_insert_self x s)) hs,

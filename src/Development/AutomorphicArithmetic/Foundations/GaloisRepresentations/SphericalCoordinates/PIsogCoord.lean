@@ -37,7 +37,8 @@ private theorem exists_bound (k : Module.End (AfP p) (AfP p ⊗[ℚ] VQ D)) :
     let f : D.La →+ (AfP p ⊗[ℚ] VQ D) :=
       ((c • k).toAddMonoidHom).comp (AddMonoidHom.mk' (inAf D) GammaUniq.inAf_add)
     have hf : ∀ y, f y = (c • k) (inAf D y) := fun y => rfl
-    rw [← hf, ← b.sum_repr x, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hf, ← b.sum_repr x, map_sum]
     refine AddSubgroup.sum_mem _ (fun j _ => ?_)
     rw [map_zsmul]
     exact AddSubgroup.zsmul_mem _ (hgen j) _

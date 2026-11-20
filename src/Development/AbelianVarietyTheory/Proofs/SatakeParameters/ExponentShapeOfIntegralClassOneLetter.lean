@@ -114,7 +114,8 @@ theorem expShape_of_integralClass : ∀ (D : D7) (p : ℕ) [Fact p.Prime] (g2 g3
     rw [← PowerSeries.coeff_zero_eq_constantCoeff_apply, PowerSeries.coeff_map,
       PowerSeries.coeff_zero_eq_constantCoeff_apply, Formalism.L2.Th1.D.FAux.cc_phFF hl, map_zero]
   have hf0 : MvPowerSeries.constantCoeff f = 0 := by
-    rw [hf, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hf, map_sum]
     exact Finset.sum_eq_zero fun x _ => Formalism.L2.Th1.D.Pair.constantCoeff_inVar_eq_zero x hm0
   have hg0 : MvPowerSeries.constantCoeff g = 0 := by
     have h := h50

@@ -92,7 +92,8 @@ theorem pairing_rational (hE : IsTotallyComplex E) {j : ℕ} (x y : Fin j → E)
       ((Algebra.trace ℚ E (x ⬝ᵥ y) : ℚ) : ℝ) / 2 := by
   rw [← sum_re_embedding hE]
   refine Finset.sum_congr rfl fun w _ => ?_
-  simp only [dotProduct, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dotProduct, map_sum, map_mul]
 
 theorem exists_trDual (hE : IsTotallyComplex E) {j : ℕ} (Λ : Submodule (𝓞 E) (Fin j → E))
     (hΛ : Submodule.IsLattice E Λ) (u : InfinitePlace E → Fin j → ℂ)

@@ -56,7 +56,8 @@ theorem eq_adjoint_apply_of_qW_polar (W : Matrix (Fin 8) (Fin 8) ℤ) (hW : PosW
   have h2 := congrFun (key d) a
   have h3 : β d d = 0 := by
     conv_lhs => rw [show β d d = β d (z' a - ∑ b, E' a b • z b) by rw [hd]]
-    simp only [map_sub, map_sum, map_zsmul, smul_eq_mul, h2, Matrix.mulVec, dotProduct, sub_self]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sub, map_sum, map_zsmul, smul_eq_mul, h2, Matrix.mulVec, dotProduct, sub_self]
   omega
 
 end GlobalTheory.Poinc

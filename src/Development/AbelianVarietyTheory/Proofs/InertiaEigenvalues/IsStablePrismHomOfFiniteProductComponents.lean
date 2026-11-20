@@ -33,7 +33,8 @@ theorem quot_pi_bij {P : Type} [CommRing P] {n : ℕ} {Ps : Fin n → Type} [∀
     choose b hbJ hbg using hb
     have ha : a = ∑ i, e i * b i := hg.1 <| funext fun j => by
       change g j a = g j (∑ i, e i * b i)
-      rw [map_sum, Finset.sum_eq_single j]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Finset.sum_eq_single j]
       · rw [map_mul, he j j, Pi.single_eq_same, one_mul, hbg]
       · intro i _ hij
         rw [map_mul, he i j, Pi.single_eq_of_ne (Ne.symm hij), zero_mul]

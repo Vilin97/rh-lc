@@ -25,7 +25,8 @@ theorem exists_avg_proj_balForms : ∀ (O : Type) [CommRing O] (bar : O → O) (
   have hsumL : ∀ L : O →ₗ[ℤ] ℤ, ∑ s, ∑ t, T s t * L (bar (b s) * b t) = c * L 1 := by
     intro L
     have := congrArg L hsum
-    simp only [map_sum, map_zsmul, smul_eq_mul] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_zsmul, smul_eq_mul] at this
     rw [this]
     have hc1 : (c : O) = c • (1 : O) := (nsmul_one c).symm
     rw [hc1, map_nsmul, nsmul_eq_mul]

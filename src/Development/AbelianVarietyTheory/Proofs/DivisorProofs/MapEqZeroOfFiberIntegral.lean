@@ -145,7 +145,8 @@ theorem map_eq_zero_of_fiber'
     rw [Submodule.coe_sum, Finset.sum_apply]
     show ∑ q ∈ T, G.1 (q.out, y.2) * (U : Set A).indicator (fun _ => (1 : ℂ)) y.1 = 0
     rw [← Finset.sum_mul, hsum, zero_mul]
-  rw [hdec, map_sum, Finset.sum_congr rfl fun q _ => hq q, ← map_sum, hg, map_zero]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hdec, map_sum, Finset.sum_congr rfl fun q _ => hq q, ← map_sum, hg, map_zero]
 
 end General
 

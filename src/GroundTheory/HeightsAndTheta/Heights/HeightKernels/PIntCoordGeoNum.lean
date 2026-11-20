@@ -29,11 +29,13 @@ theorem substR_substR (R : Type) [CommRing R] {A : Matrix T T₂ ℤ} {B : Matri
   have h : (substR R A).comp (substR R B) = AlgHom.id R _ := by
     refine MvPolynomial.algHom_ext fun p => ?_
     obtain ⟨⟨⟩, t⟩ := p
-    simp only [AlgHom.comp_apply, AlgHom.id_apply, substR, aeval_X, map_sum, map_mul, aeval_C,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [AlgHom.comp_apply, AlgHom.id_apply, substR, aeval_X, map_sum, map_mul, aeval_C,
       algebraMap_eq]
     simp_rw [Finset.mul_sum, ← mul_assoc, ← C_mul]
     rw [Finset.sum_comm]
-    simp_rw [← Finset.sum_mul, ← map_sum C, ← Int.cast_mul, ← Int.cast_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp_rw [← Finset.sum_mul, ← map_sum C, ← Int.cast_mul, ← Int.cast_sum]
     have h1 : ∀ x : T, ∑ s, B s t * A x s = (A * B) x t := fun x => by
       simp [Matrix.mul_apply, mul_comm]
     simp_rw [h1, hAB, Matrix.one_apply]
@@ -100,7 +102,8 @@ theorem red_substR (p : ℕ) (A : Matrix T T₂ ℤ) (f : MRingOver ℤ (dualBlo
   | mul_X f q hf =>
     rw [map_mul, map_mul, hf, map_mul, map_mul, map_X]
     congr 1
-    simp [substR, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [substR, map_sum]
 
 theorem hilbFn_comap (F : Type) [Field F] {A : Matrix T T₂ ℤ} {B : Matrix T₂ T ℤ}
     (hAB : A * B = 1) (hBA : B * A = 1) (Q : Ideal (MRingOver F (dualBlocks T))) :

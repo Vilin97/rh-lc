@@ -49,11 +49,13 @@ theorem mem_of_separating {κ V Y : Type} [AddCommGroup V] [Module ℂ V] (D : S
   have hA : A = 0 := hsep A fun y => by
     have := hf0' _ (hs y)
     rw [hval] at this
-    simpa [A, map_sum] using this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [A, map_sum] using this
   apply hfl
   have : f ⟨l, hlD'⟩ = L A := by
     rw [hval]
-    simp [A, map_sum, l]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [A, map_sum, l]
   rw [this, hA, map_zero]
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {a b : ℕ}

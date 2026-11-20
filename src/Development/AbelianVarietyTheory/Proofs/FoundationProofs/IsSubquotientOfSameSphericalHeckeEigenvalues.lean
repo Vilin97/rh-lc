@@ -21,7 +21,8 @@ theorem heckeVec_dosetInd {σ : Representation ℂ G V} (hσ : IsSmooth σ) (hc 
     exact ⟨fun ⟨a, ha, b, hb, e⟩ => ⟨⟨a, ha⟩, ⟨b, hb⟩, e⟩, fun ⟨a, b, e⟩ => ⟨a, a.2, b, b.2, e⟩⟩
   rw [← idem_of_mem hσ hc (SatCompare.heckeVec_mem_fixed hK (Final.DosetIndMem G K ℂ g) hz)]
   unfold heckeVec
-  rw [finsum_eq_sum_of_support_subset (s := (P.finite_cosets_in_doset hK g).toFinset), map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [finsum_eq_sum_of_support_subset (s := (P.finite_cosets_in_doset hK g).toFinset), map_sum,
     Nat.cast_smul_eq_nsmul, ← Finset.sum_const]
   · refine Finset.sum_congr rfl fun c hc' => ?_
     have h1 := (hmem c).2 hc'

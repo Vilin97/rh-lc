@@ -302,14 +302,16 @@ private theorem exists_sum_pow_apply_eq_one_of_lift_frobenius {R F₀ F₁ : Typ
         ← pow_mul, pow_succ, mul_comm (Fintype.card F₀ ^ i)]
   set t := ∑ i ∈ Finset.range n, (f ^ i) a₀ with ht
   have hrt : r t = 1 := by
-    rw [ht, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [ht, map_sum]
     simp_rw [hri, ha₀]
     exact hz
   have htu : IsUnit t := by
     rw [← IsLocalRing.notMem_maximalIdeal, ← hker, hrt]
     exact one_ne_zero
   have hft : f t = t := by
-    rw [ht, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [ht, map_sum]
     have e : ∀ i, f ((f ^ i) a₀) = (f ^ (i + 1)) a₀ := by
       intro i
       rw [pow_succ', RingHom.mul_def, RingHom.comp_apply]
@@ -355,7 +357,8 @@ private theorem mem_map_of_adjoinRoot_hom_eq_zero_of_ker_le {R S : Type*} [CommR
         Polynomial.coeff_zero]
     have hmk : AdjoinRoot.mk ψ g = AdjoinRoot.mk ψ g' := by
       rw [hg', map_sub, map_mul, AdjoinRoot.mk_self, zero_mul, sub_zero]
-    rw [hmk, g'.as_sum_range_C_mul_X_pow, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hmk, g'.as_sum_range_C_mul_X_pow, map_sum]
     refine Ideal.sum_mem _ (fun i _ => ?_)
     rw [map_mul, AdjoinRoot.mk_C, ← AdjoinRoot.algebraMap_eq]
     exact Ideal.mul_mem_right _ _ (Ideal.mem_map_of_mem _ (hg'0 i))
@@ -455,7 +458,8 @@ private theorem normPoly_lemma_7 {R F₀ F₁ : Type} [CommRing R] [IsNoetherian
   obtain ⟨a, ha⟩ := exists_sum_pow_apply_eq_one_of_lift_frobenius r hr hker φ sb hfrob hcomm hper
   have htr : ∑ i ∈ Finset.range n, (⇑τ)^[i] (AdjoinRoot.of ψ a) = 1 := by
     simp_rw [hof]
-    rw [← map_sum, ha, map_one]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, ha, map_one]
   have hper' : ∀ x, (⇑τ)^[n] x = x := by
     intro x
     induction x using AdjoinRoot.induction_on with

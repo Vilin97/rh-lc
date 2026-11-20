@@ -79,7 +79,8 @@ def freeCoord {n : ℕ} (V : X.Opens) (m : Γ(freeRank X n, V)) (j : Fin n) : Γ
 lemma freeSec_bijective {n : ℕ} (V : X.Opens) : Function.Bijective (freeSec (X := X) (n := n) V) := by
   refine Function.bijective_iff_has_inverse.2 ⟨freeCoord V, fun r => ?_, fun m => ?_⟩
   · funext j
-    rw [freeCoord, freeSec, map_sum, Finset.sum_eq_single j]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [freeCoord, freeSec, map_sum, Finset.sum_eq_single j]
     · rw [← ConcreteCategory.comp_apply, ← Scheme.Modules.Hom.comp_app, biproduct.ι_π_self]
       rfl
     · intro i _ hij
@@ -92,7 +93,8 @@ lemma basisHom_app_freeSec (N : X.Modules) {W : X.Opens} (hW : ⊤ ≤ W) {n : �
     (t : Fin n → Γ(N, W)) (V : X.Opens) (r : Fin n → Γ(X, V)) :
     (basisHom N hW t).app V (freeSec V r) =
       ∑ i, r i • (N.presheaf.map (homOfLE (le_top.trans hW : V ≤ W)).op).hom (t i) := by
-  rw [freeSec, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [freeSec, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [← ConcreteCategory.comp_apply, ← Scheme.Modules.Hom.comp_app, basisHom, biproduct.ι_desc,
     homOfSection_app]
@@ -191,7 +193,8 @@ lemma pullSectionOn_sum_res (j : Y ⟶ Z) (N : Z.Modules) {O V : Z.Opens} (h : V
     pullSectionOn j N V (∑ i, r i • (N.presheaf.map (homOfLE h).op).hom (t i)) =
       ∑ i, (j.app V).hom (r i) • (((Scheme.Modules.pullback j).obj N).presheaf.map
         (homOfLE ((Opens.map j.base).monotone h)).op).hom (pullSectionOn j N O (t i)) := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   exact (GroundTheory.Arith.SchemeCoh.pullbackUnitApp_smul j N V (r i) _).trans
     (congrArg _ (pullbackUnitApp_res j N (homOfLE h) (t i)))

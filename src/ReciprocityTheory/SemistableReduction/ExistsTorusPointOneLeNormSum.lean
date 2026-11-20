@@ -137,7 +137,8 @@ theorem exists_torus_point_one_le_norm_sum {K : Type*} [NormedField K] [IsUltram
     exact zero_ne_one h6
   have hval : ((eval σ P : unitBallRing K) : K) =
       ∑ χ ∈ F, a χ * ∏ i, (σ i : K) ^ (χ i + N).toNat := by
-    simp only [P, map_sum, eval_monomial]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [P, map_sum, eval_monomial]
     rw [AddSubmonoidClass.coe_finsetSum]
     refine Finset.sum_congr rfl fun χ _ => ?_
     rw [Finsupp.prod_fintype _ _ (fun i => pow_zero _)]

@@ -48,7 +48,8 @@ theorem absFin_map_le (v : HeightOneSpectrum (𝓞 D.host.F)) (y : Formalism.Mai
     absFin D.host.F v (Algebra.TensorProduct.map (evalV D.host.F v) (AlgHom.id D.host.F D.host.E) y) ≤
       cst D v * Finset.univ.sup fun k => ‖evalV D.host.F v (GlobalTheory.IndefiniteRowSideFullHecke.LieAlgebraExponentialFamilies.finCoord D y k)‖₊ := by
   conv_lhs => rw [← sum_finCoord y]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine absFin_sum_le _ v _ _ fun k _ => ?_
   rw [Algebra.TensorProduct.map_tmul, AlgHom.id_apply]
   have e1 : evalV D.host.F v (GlobalTheory.IndefiniteRowSideFullHecke.LieAlgebraExponentialFamilies.finCoord D y k) ⊗ₜ[D.host.F] (Module.finBasis D.host.F D.host.E k) =

@@ -69,7 +69,8 @@ theorem app_act_of_cover {s : G →* GQ l} {η H η' H' : ℕ} {D₁ : BKDat O K
         _ = R₂.I.act (s g) g (toW t ϖ D₂.toPhiMod ⟨_, mem_ME_of_mem_M m2⟩) := by rw [h2]
         _ = toW t ϖ D₂.toPhiMod ⟨_, mem_ME_of_mem_M m3⟩ := e2
     exact congrArg Subtype.val (toW_injective t ϖ _ key)
-  rw [eq_sum_bas v, map_sum, map_sum, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [eq_sum_bas v, map_sum, map_sum, map_sum, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [D₁.desc.act_smul_tot, F.app_smul_tot, F.app_smul_tot, D₂.desc.act_smul_tot, hb]
 

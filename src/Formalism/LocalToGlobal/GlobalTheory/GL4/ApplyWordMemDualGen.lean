@@ -89,7 +89,8 @@ theorem io_rowDiv_gen (R : Type) [CommRing R] [IsDomain R] [Infinite R] {n : ℕ
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [smul_eq_C_mul]
       rfl
-    rw [hsub, map_sum] at e
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hsub, map_sum] at e
     simp only [map_smul] at e
     rw [e]
     refine Finset.sum_congr rfl fun i _ => ?_

@@ -114,7 +114,8 @@ theorem ell_single (ℓ : B.Mat k r →ₗ[ℝ] ℝ) (i j : Fin (2 * r + k + 1))
 
 theorem re_trace_cMat (ℓ : B.Mat k r →ₗ[ℝ] ℝ) (X : B.Mat k r) : (Matrix.trace (cMat ℓ * X)).re = ℓ X := by
   conv_rhs => rw [Matrix.matrix_eq_sum_single X]
-  simp only [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum]
   simp only [Matrix.trace, Matrix.diag, Matrix.mul_apply, cMat, Matrix.of_apply, Complex.re_sum, Complex.mul_re,
     Complex.sub_re, Complex.sub_im, Complex.ofReal_re, Complex.ofReal_im, Complex.I_re, Complex.I_im, Complex.mul_im]
   rw [Finset.sum_comm]

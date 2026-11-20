@@ -18,7 +18,8 @@ theorem swap_matForm_transpose {n : ℕ} (H : Matrix (Fin n) (Fin n) ℂ) :
     swap (matForm n Hᵀ : Alt n) = -(matForm n H : Alt n) := by
   rw [ChernPull.coe_matForm, ChernPull.coe_matForm, map_smul, ← smul_neg, Finset.sum_comm]
   congr 1
-  simp only [map_sum, map_smul, map_mul, (swap_dz _).1, (swap_dz _).2, transpose_apply, ← Finset.sum_neg_distrib,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, map_mul, (swap_dz _).1, (swap_dz _).2, transpose_apply, ← Finset.sum_neg_distrib,
     ← smul_neg]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => congrArg _ ?_
   exact eq_neg_of_add_eq_zero_left (ExteriorAlgebra.ι_add_mul_swap _ _)

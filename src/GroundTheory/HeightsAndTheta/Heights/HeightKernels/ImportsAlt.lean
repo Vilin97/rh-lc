@@ -23,7 +23,8 @@ theorem S6.SaturatedSpan.proof : S6.SaturatedSpan.Statement := by
   have hspanO : ∀ c : Fin (Module.finrank (𝓞 K) G) → 𝓞 K,
       φ (∑ j, c j • f j) ∈ Submodule.span K (Set.range b) := by
     intro c
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Submodule.sum_mem _ fun j _ ↦ ?_
     rw [map_smul, ← algebraMap_smul K (c j)]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨j, rfl⟩)
@@ -65,7 +66,8 @@ theorem S6.SaturatedSpan.proof : S6.SaturatedSpan.Statement := by
     choose a ha using fun j ↦ ht j (Finset.mem_univ j)
     have htx : (t : 𝓞 K) • x ∈ G := by
       have heq : ψ ((t : 𝓞 K) • x) = ψ (∑ j, a j • (f j : M)) := by
-        rw [map_smul, ← hκ, map_sum, Finset.smul_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_smul, ← hκ, map_sum, Finset.smul_sum]
         refine Finset.sum_congr rfl fun j _ ↦ ?_
         rw [map_smul, ← algebraMap_smul K (a j), ha j, smul_assoc]
         rfl

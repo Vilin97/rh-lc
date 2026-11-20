@@ -131,7 +131,8 @@ private theorem actOn_inj {C V : Type} [Ring C] [Algebra ℚ C] [AddCommGroup V]
     rw [Finsupp.zero_apply, map_zero]
     refine LinearMap.ext fun v => ?_
     have h1 : actOn rep ℝ (c.sum fun i n => B i ⊗ₜ[ℚ] n) ((1 : ℝ) ⊗ₜ[ℚ] v) = 0 := by rw [hx]; rfl
-    rw [Finsupp.sum, map_sum, LinearMap.sum_apply] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finsupp.sum, map_sum, LinearMap.sum_apply] at h1
     simp only [actOn_tmul, _root_.mul_one] at h1
     have h2 : ((c.mapRange (fun y => rep y v) (by simp)).sum fun i n => B i ⊗ₜ[ℚ] n) = 0 := by
       rw [Finsupp.sum_mapRange_index (by simp)]

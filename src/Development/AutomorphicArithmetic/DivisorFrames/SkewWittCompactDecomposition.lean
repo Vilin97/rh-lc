@@ -67,7 +67,8 @@ private theorem exists_imag {σ : E →ₐ[F] E} (h : IsCMExt F E σ) : ∃ c : 
 omit [NumberField F] [NumberField E] in
 private theorem hE_eq {σ : E →ₐ[F] E} (hσ : ∀ x, σ (σ x) = x) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (c : E)
     (u v : Fin n → E) : hE σ (c • J.map σ) u v = c * σ (form σ J u v) := by
-  simp only [hE, Formalism.UG.hform, form, dotProduct, Matrix.mulVec, map_sum, map_mul, Matrix.smul_apply, smul_eq_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hE, Formalism.UG.hform, form, dotProduct, Matrix.mulVec, map_sum, map_mul, Matrix.smul_apply, smul_eq_mul,
     Matrix.map_apply, RingHom.coe_coe, hσ, Finset.mul_sum]
   exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
 

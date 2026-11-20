@@ -52,7 +52,8 @@ private theorem hasLen_mono {C : Type} [Field C] {v : Valuation C NNReal} {R : T
         _ = e.symm (∑ i, (Quotient.out (e x i) : R) • (Pi.single i (1 : R ⧸ Ideal.span {c i}) :
             (i : Fin m) → R ⧸ Ideal.span {c i})) := congrArg e.symm hx
         _ = _ := by simp only [map_sum, map_smul]
-    rw [this, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [this, map_sum]
     exact Submodule.sum_mem _ fun i _ => by
       rw [map_smul]; exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)
   have hT : ∀ k, ∑ i, (Matrix.diagonal c) k i • y i = 0 := by

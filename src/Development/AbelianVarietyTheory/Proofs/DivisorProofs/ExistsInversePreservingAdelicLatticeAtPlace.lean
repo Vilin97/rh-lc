@@ -70,7 +70,8 @@ theorem mul_liftT (v : Pl F) (x : AE F E) (y : Fv F v ⊗[F] E) :
 theorem mulVec_liftT {d : ℕ} (v : Pl F) (X : Matrix (Fin d) (Fin d) (AE F E)) (u : Fin d → Fv F v ⊗[F] E) :
     X *ᵥ (fun i => liftT E v (u i)) = fun i => liftT E v (((X.map (evT E v)) *ᵥ u) i) := by
   funext i
-  simp only [Matrix.mulVec, dotProduct, map_sum, mul_liftT, Matrix.map_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mulVec, dotProduct, map_sum, mul_liftT, Matrix.map_apply]
 
 end GlobalTheory.InertSph.Invert
 
@@ -333,7 +334,8 @@ theorem exists_inv_keeps_latAt : ∀ (F E : Type) [Field F] [NumberField F] [Fie
     apply mat_ext v
     · have h1 : (M * M').map (evT E v) = M.map (evT E v) * M'.map (evT E v) := by
         ext i j
-        simp only [Matrix.map_apply, Matrix.mul_apply, map_sum, map_mul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [Matrix.map_apply, Matrix.mul_apply, map_sum, map_mul]
       rw [h1, hM'v, hNv, Matrix.mul_nonsing_inv _ hdet]
       ext i j
       by_cases hij : i = j

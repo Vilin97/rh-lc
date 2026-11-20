@@ -137,7 +137,8 @@ theorem levRight (ψ : Matrix κ κ (Hf E a b → ℂ)) {ψ' : Matrix κ κ (Hf 
 
 theorem adjMul (ψ ψ' : Matrix κ κ (Hf E a b → ℂ)) : adjF (mulF ν ψ ψ') = mulF ν (adjF ψ') (adjF ψ) := by
   funext x y g
-  simp only [adjF, mulF, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [adjF, mulF, map_sum]
   refine Finset.sum_congr rfl fun z _ => ?_
   rw [← integral_conj]
   refine Eq.trans ?_ (integral_mul_left_eq_self

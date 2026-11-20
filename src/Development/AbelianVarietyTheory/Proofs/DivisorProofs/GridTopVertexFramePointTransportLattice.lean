@@ -146,7 +146,8 @@ theorem hat_mulVec {p q : ℕ} (N : Matrix (Fin p) (Fin q) E) {Λ : Submodule (�
   · rintro _ ⟨x, hx, rfl⟩
     refine Submodule.subset_span ⟨N *ᵥ x, h x hx, ?_⟩
     funext i
-    simp [Matrix.mulVec, dotProduct, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Matrix.mulVec, dotProduct, map_sum]
   · rw [Matrix.mulVec_zero]; exact zero_mem _
   · intro x y _ _ hx hy
     rw [Matrix.mulVec_add]; exact add_mem hx hy
@@ -357,7 +358,8 @@ theorem top_abs (d : HermitianOrthogonalExtensionData A B 1 1) (S : Finset ℕ) 
   · have hq : (prj d).map (incA D) *ᵥ (fun i => incA D (d.a i 0)) = 0 := by
       funext l
       have := congrArg (incA D) (congrFun (congrFun (orthogonalSumProjection_mul_auxiliary d) l) 0)
-      simpa [Matrix.mulVec, dotProduct, Matrix.mul_apply, map_sum] using this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa [Matrix.mulVec, dotProduct, Matrix.mul_apply, map_sum] using this
     exact Eq.trans (congrArg (fun X : Matrix (Fin B.rank) (Fin B.rank) (AF D.host.F ⊗[D.host.F] D.host.E) =>
       X *ᵥ (fun i => incA D (d.a i 0))) hg) (extM_mulVec _ _ _ hq)
 

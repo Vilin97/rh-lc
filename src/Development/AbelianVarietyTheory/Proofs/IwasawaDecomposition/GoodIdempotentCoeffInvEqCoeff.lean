@@ -50,7 +50,8 @@ theorem goodStable_of_coeff {K G : Type} [Field K] [CharZero K] [Group G] [Finty
       obtain ⟨n, ρ, -, hρ⟩ := GlobalTheory.GoodTypeGeneric.isIrrChar_of_isAbsIrrChar emb (hirr ψ hψ)
       exact isChar_inv ⟨n, ρ, hρ⟩) (fun g => by
       rw [← hsym g]
-      simp only [idemOf, MonoidAlgebra.coeff_sum, Finsupp.finsetSum_apply, coeff_chiIdem, map_sum, map_mul, map_div₀,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [idemOf, MonoidAlgebra.coeff_sum, Finsupp.finsetSum_apply, coeff_chiIdem, map_sum, map_mul, map_div₀,
         map_natCast, inv_one, inv_inv, Nat.card_eq_fintype_card]) hχ
   convert hψ using 1
   funext g

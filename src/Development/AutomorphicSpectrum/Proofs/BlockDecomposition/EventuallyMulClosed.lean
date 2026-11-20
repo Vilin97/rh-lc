@@ -70,7 +70,8 @@ theorem sum_mem_intE (b : Module.Basis (Fin d) F E) (v : HeightOneSpectrum (Numb
     {ι : Type} (s : Finset ι) (f : ι → HeckeCharacterZeroLocus.SiegelWeilU.Fv F v ⊗[F] E) (h : ∀ i ∈ s, f i ∈ intE b v) :
     ∑ i ∈ s, f i ∈ intE b v := by
   intro k
-  rw [map_sum, Finsupp.finsetSum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finsupp.finsetSum_apply]
   exact sum_mem fun i hi => h i hi k
 
 theorem mul_mem_intE (b : Module.Basis (Fin d) F E) (v : HeightOneSpectrum (NumberField.RingOfIntegers F))
@@ -79,7 +80,8 @@ theorem mul_mem_intE (b : Module.Basis (Fin d) F E) (v : HeightOneSpectrum (Numb
   simp only [intE, Set.mem_ofPred_eq] at hx hy ⊢
   intro k
   rw [eq_sum_tmul b x, eq_sum_tmul b y, Finset.sum_mul_sum]
-  simp only [Algebra.TensorProduct.tmul_mul_tmul, map_sum, Finsupp.finsetSum_apply, repr_tmul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Algebra.TensorProduct.tmul_mul_tmul, map_sum, Finsupp.finsetSum_apply, repr_tmul]
   refine sum_mem fun i _ => sum_mem fun j _ => ?_
   exact mul_mem (mul_mem (hx i) (hy j)) (hc i j k)
 
@@ -99,7 +101,8 @@ theorem eventually_mem_intE (b : Module.Basis (Fin d) F E) (x : HeckeCharacterZe
     Filter.eventually_all.mpr fun k => eventually_adele _
   filter_upwards [hall] with v hv
   rw [eq_sum_tmul b x]
-  simp only [map_sum, Algebra.TensorProduct.map_tmul, AlgHom.coe_comp, Function.comp_apply, AlgHom.id_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Algebra.TensorProduct.map_tmul, AlgHom.coe_comp, Function.comp_apply, AlgHom.id_apply]
   refine sum_mem_intE b v _ _ fun k _ => ?_
   intro k'
   rw [repr_tmul, Module.Basis.repr_self, Finsupp.single_apply]

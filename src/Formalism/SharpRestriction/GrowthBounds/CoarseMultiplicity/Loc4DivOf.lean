@@ -27,7 +27,8 @@ theorem map_xvL (X : Loc) [Fact X.p.Prime] (O : Type) [CommRing O] [IsDomain O] 
   have hw0 : Ideal.Quotient.mk (Ideal.span {w}) w = 0 :=
     Ideal.Quotient.eq_zero_iff_mem.mpr (Ideal.mem_span_singleton_self w)
   unfold xvL psiRes
-  rw [map_sum, Finset.sum_eq_single 0]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_eq_single 0]
   · simp [Formalism.MainNotions.LemmaBAlt.dW, Formalism.MainNotions.ColumnSystems.hhLetters]
     try ring
   · intro b _ hb

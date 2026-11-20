@@ -109,8 +109,10 @@ theorem heis_deriv_laws : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [
         trPair (fun i => evI F ((d.e u').2 i)) (fun i => evI F ((d.e u).1 i)) -
         trPair (fun i => evI F ((d.e u).2 i)) (fun i => evI F ((d.e u').1 i)) := by
       rw [d.form u u', evI_eq, map_sub]
-      simp only [dotProduct, map_sum, map_mul, ← evI_eq, trPair_apply]
-      simp only [map_sub, map_sum, Complex.ofReal_sub]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [dotProduct, map_sum, map_mul, ← evI_eq, trPair_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sub, map_sum, Complex.ofReal_sub]
     ext x
     rw [SchwartzMap.sub_apply, SchwartzMap.smul_apply, hD' u hu (D u' f), hD' u' hu' (D u f), e', e,
       fderiv_step, fderiv_step, (isSymm f x).eq (fun i => evI F ((d.e u').1 i)), key, smul_eq_mul]

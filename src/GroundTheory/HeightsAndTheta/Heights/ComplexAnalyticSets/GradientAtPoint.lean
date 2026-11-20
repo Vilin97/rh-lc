@@ -46,7 +46,8 @@ theorem eval_linPart [Fintype σ] (c : σ → ℂ) : eval w (linPart w c) = 0 :=
 theorem grad_linPart [Fintype σ] (c : σ → ℂ) : grad w (linPart w c) = c := by
   classical
   ext i
-  rw [linPart, map_sum, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [linPart, map_sum, Finset.sum_apply]
   simp [grad_mul, grad_C, grad_X_sub_C, Pi.single_apply]
 
 theorem linPart_single [Fintype σ] [DecidableEq σ] (j : σ) : linPart w (Pi.single j 1) = X j - C (w j) := by
@@ -94,7 +95,8 @@ theorem sub_linPart_mem_sq [Fintype σ] {p : MvPolynomial σ ℂ}
   rw [ker_eval_eq_span] at hp
   obtain ⟨a, rfl⟩ := (Ideal.mem_span_range_iff_exists_fun).1 hp
   have hg : grad w (∑ i, a i * (X i - C (w i))) = fun i => eval w (a i) := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp_rw [grad_mul, grad_X_sub_C, map_sub, eval_X, eval_C, sub_self, zero_smul, add_zero]
     ext i
     simp [Finset.sum_apply, Pi.single_apply]

@@ -124,7 +124,8 @@ theorem cpt_det_cutPart {e : AE D} {P : Finset (Pl D.host.E)} (he : IsIdemSum e 
   obtain ⟨⟨es, hes, hae⟩, -⟩ := id he
   let ψ : AE D →+* Kw PP := (GlobalTheory.StdFrames.cpt PP).comp (toEAf D)
   have hψe : ψ e = 1 := by
-    rw [hae, map_sum, Finset.sum_eq_single PP]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hae, map_sum, Finset.sum_eq_single PP]
     · exact (GlobalTheory.StdFrames.cpt_of_isIdemAt (hes PP hPP)).1
     · intro Q hQ hne
       exact (GlobalTheory.StdFrames.cpt_of_isIdemAt (hes Q hQ)).2 PP (Ne.symm hne)

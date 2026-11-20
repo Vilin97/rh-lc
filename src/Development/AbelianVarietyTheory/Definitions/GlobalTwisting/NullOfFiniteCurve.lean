@@ -259,7 +259,8 @@ theorem exists_isLam (ψ : AddChar (AF F) ℂ) [IsTotallyReal F] (hψ : IsCharAF
   let L : (InfinitePlace F → ℝ) →L[ℝ] ℝ := (AddMonoidHom.mk' L₀ hL₀a).toRealLinearMap hL₀c
   have hL : ∀ u, L₀ u = ∑ w, L₀ (Pi.single w 1) * u w := fun u => by
     have : L u = ∑ w, L (Pi.single w 1) * u w := by
-      conv_lhs => rw [← Finset.univ_sum_single u, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        conv_lhs => rw [← Finset.univ_sum_single u, map_sum]
       refine Finset.sum_congr rfl fun w _ => ?_
       rw [mul_comm, ← smul_eq_mul, ← map_smul, ← Pi.single_smul, smul_eq_mul, mul_one]
     exact this

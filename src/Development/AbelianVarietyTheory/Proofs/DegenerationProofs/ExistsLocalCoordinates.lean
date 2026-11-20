@@ -81,9 +81,11 @@ theorem span_of_derivation {k A K B W : Type} [Field k] [PerfectField k] [CommRi
   obtain ⟨c, hc⟩ := Ideal.mem_span_range_iff_exists_fun.mp (hb _ ha)
   have h1 : E (l s * 1 ⊗ₜ a - ∑ i, l (c i) * l (t i)) = 0 := by
     refine hEN _ (hker ?_)
-    rw [RingHom.mem_ker, map_sub, map_mul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [RingHom.mem_ker, map_sub, map_mul, map_sum]
     simp only [map_mul, hl, hc, sub_self]
-  rw [map_sub, map_sum, sub_eq_zero] at h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sub, map_sum, sub_eq_zero] at h1
   simp only [hE, hl, ha, ht, zero_smul, add_zero] at h1
   have h2 : E (1 ⊗ₜ a) = D a := by simp [E]
   rw [h2] at h1

@@ -116,7 +116,8 @@ theorem mem_idV_of_mem {D : D7} {A B : HSp D} {c : ℕ} {ε : D.host.E} (d : Glo
     show ∑ k, incA D (π k) * (b * incA D (d.a k q)) = b
     have : ∀ k, incA D (π k) * (b * incA D (d.a k q)) = b * incA D (π k * d.a k q) := fun k => by
       rw [map_mul (incA D) (π k) (d.a k q)]; ring
-    rw [Finset.sum_congr rfl (fun k _ => this k), ← Finset.mul_sum, ← map_sum, hπa q, if_pos rfl, map_one, mul_one]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_congr rfl (fun k _ => this k), ← Finset.mul_sum, ← map_sum, hπa q, if_pos rfl, map_one, mul_one]
   rwa [e] at key
 
 set_option maxHeartbeats 1000000 in

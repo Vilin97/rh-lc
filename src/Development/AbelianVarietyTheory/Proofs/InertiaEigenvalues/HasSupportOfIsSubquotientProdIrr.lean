@@ -193,7 +193,8 @@ theorem pos_bas (x : IrrGL k) : Pos Ψ (bas Ψ x) := by
 
 theorem eq_sum_bas (a : A) : a = ∑ x ∈ (Ψ.symm a).support, (Ψ.symm a x) • bas Ψ x := by
   conv_lhs => rw [← Ψ.apply_symm_apply a, ← Finsupp.sum_single (Ψ.symm a)]
-  rw [Finsupp.sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finsupp.sum, map_sum]
   refine Finset.sum_congr rfl fun x _ => ?_
   rw [bas, ← map_zsmul, Finsupp.smul_single_one]
 
@@ -409,7 +410,8 @@ theorem exists_hasSupport (hZ : GlobalTheory.Published.ZelevinskyPolynomialRing)
     push_neg at hne
     have h2 : Finsupp.single x (1 : ℤ) = Ψ.symm P := (Ψ.symm_apply_apply _).symm
     have h3 : Ψ.symm P x = 0 := by
-      rw [MvPolynomial.as_sum P, map_sum, Finsupp.finset_sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [MvPolynomial.as_sum P, map_sum, Finsupp.finset_sum_apply]
       refine Finset.sum_eq_zero fun m _ => ?_
       have h4 : MvPolynomial.monomial m (AddMonoidAlgebra.coeff P m) =
           (AddMonoidAlgebra.coeff P m) • MvPolynomial.monomial m (1 : ℤ) := by

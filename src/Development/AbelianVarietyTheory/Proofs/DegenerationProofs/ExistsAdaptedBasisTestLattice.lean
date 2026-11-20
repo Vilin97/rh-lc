@@ -18,7 +18,8 @@ theorem exists_eStd_eq_linear (g n : ℕ) (f : (Fin g ⊕ Fin g → ZMod n) →�
     ∃ b, ∀ y, eStd g n b y = f y := by
   refine ⟨Sum.elim (fun i => f (Pi.single (.inr i) 1)) (fun i => -f (Pi.single (.inl i) 1)),
     fun y => ?_⟩
-  conv_rhs => rw [← Finset.univ_sum_single y, map_sum, Fintype.sum_sum_type,
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_rhs => rw [← Finset.univ_sum_single y, map_sum, Fintype.sum_sum_type,
     ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun i _ => ?_
   have h : ∀ j, f (Pi.single j (y j)) = y j * f (Pi.single j 1) := fun j => by
@@ -90,7 +91,8 @@ theorem exists_proj_ne_zero {α : τ.X} (hα : ∀ v₀, τ.q α ≤ τ.q (α + 
     simp only [ThetaSys.FF, finsum_eq_sum_of_fintype, AddSubmonoidClass.coe_finsetSum, MulMemClass.coe_mul]
     rfl
   rw [h1] at h
-  simp only [map_sum, map_mul, h0, zero_mul, Finset.sum_const_zero, mul_zero, norm_zero] at h
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, h0, zero_mul, Finset.sum_const_zero, mul_zero, norm_zero] at h
   exact (mul_pos τ.δ_pos (Real.exp_pos _)).ne h
 
 end GlobalTheory.ZH.TestBasis
@@ -133,7 +135,8 @@ theorem exists_adapted_basis_testLattice : ∀ (o Ω : Type) [CommRing o] [Field
   · rw [hwa]
     funext j
     have h1 := congrArg (fun a => y₀ (algebraMap o S.R a)) (congrFun (congrFun (hmul (κ i) (κ i)) j) (col i))
-    simp only [if_true, Matrix.mul_apply, map_sum, map_mul] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [if_true, Matrix.mul_apply, map_sum, map_mul] at h1
     exact h1
   · refine le_antisymm (Submodule.span_le.2 ?_) (Submodule.span_mono ?_)
     · rintro _ ⟨α, l, i, hα, hl, rfl⟩

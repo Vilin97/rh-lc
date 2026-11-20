@@ -23,7 +23,8 @@ theorem map_ι_mul_rat (p : Place D k) {l m : ℕ} {Y : Type} [Fintype Y] (N : M
     (M : Matrix (Fin l) (Fin m) D.host.E) :
     (N.map p.ι) * (rat M : Matrix (Fin l) (Fin m) (AE D)) = (N * M.map p.pr).map p.ι := by
   ext i j
-  simp only [rat, Matrix.mul_apply, Matrix.map_apply, map_sum, ι_mul_incA]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [rat, Matrix.mul_apply, Matrix.map_apply, map_sum, ι_mul_incA]
 
 theorem fromCols_toCols₁ {Z n : Type} (x : Matrix Z (n ⊕ Fin 0) k) : fromCols x.toCols₁ 0 = x := by
   conv_rhs => rw [← Matrix.fromCols_toCols x]

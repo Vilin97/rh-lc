@@ -57,7 +57,8 @@ theorem exists_symm_invLift : ∀ (R : Type) [CommRing R] [IsDomain R] [IsLocalR
     have key : ∀ (A : Matrix (Fin n) (Fin n) R) (a : Fin n),
         ∑ b, cf (A a b) * dlg Y.H Y.q.left Dd.toPre.P.L (dd b) (j i) (j i') W = ∑ c, cf ((A * Pᵀ) a c) * X c := by
       intro A a
-      simp only [hdlg, Finset.mul_sum, Matrix.mul_apply, Matrix.transpose_apply, map_sum, Finset.sum_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hdlg, Finset.mul_sum, Matrix.mul_apply, Matrix.transpose_apply, map_sum, Finset.sum_mul]
       rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun c _ => Finset.sum_congr rfl fun b _ => ?_
       rw [map_mul, _root_.mul_assoc]

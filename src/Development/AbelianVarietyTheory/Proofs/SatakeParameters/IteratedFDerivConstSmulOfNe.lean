@@ -22,13 +22,15 @@ variable {σ R : Type} [Fintype σ] [CommRing R]
 theorem hasSubst_linMat (B : σ → σ → R) :
     MvPowerSeries.HasSubst (fun x : σ => ∑ y, MvPowerSeries.C (B x y) * MvPowerSeries.X y) :=
   MvPowerSeries.hasSubst_of_constantCoeff_zero fun x => by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_eq_zero fun y _ => by rw [map_mul, MvPowerSeries.constantCoeff_X, mul_zero]
 
 theorem subst_linMat {τ : Type} {a : σ → MvPowerSeries τ R} (ha : MvPowerSeries.HasSubst a) (c : σ → R) :
     MvPowerSeries.subst a (∑ y, MvPowerSeries.C (c y) * MvPowerSeries.X y : MvPowerSeries σ R) =
       ∑ y, MvPowerSeries.C (c y) * a y := by
-  rw [← MvPowerSeries.coe_substAlgHom ha, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← MvPowerSeries.coe_substAlgHom ha, map_sum]
   refine Finset.sum_congr rfl fun y _ => ?_
   rw [MvPowerSeries.coe_substAlgHom ha, MvPowerSeries.subst_mul ha, MvPowerSeries.subst_C, MvPowerSeries.subst_X ha]
 
@@ -44,7 +46,8 @@ theorem linSub_linSub' (U V : σ → σ → R) (f : MvPowerSeries σ R) :
   congr 1
   funext x
   rw [subst_linMat (hasSubst_linMat U)]
-  simp only [Finset.mul_sum, map_sum, Finset.sum_mul, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finset.mul_sum, map_sum, Finset.sum_mul, map_mul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun y _ => Finset.sum_congr rfl fun z _ => ?_
   ring
@@ -199,7 +202,8 @@ theorem serLaw' (cc : Ideal (𝓞 D.host.K)) (δ : ℂ) (lam : TaylorLogMetric.Q
   rw [e1, h]
   congr 1
   funext s
-  rw [← MvPolynomial.coeToMvPowerSeries.ringHom_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← MvPolynomial.coeToMvPowerSeries.ringHom_apply, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [MvPolynomial.smul_eq_C_mul, map_mul, MvPolynomial.coeToMvPowerSeries.ringHom_apply,
     MvPolynomial.coeToMvPowerSeries.ringHom_apply, MvPolynomial.coe_C, MvPolynomial.coe_X]

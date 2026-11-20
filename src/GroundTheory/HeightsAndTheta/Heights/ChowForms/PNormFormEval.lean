@@ -14,6 +14,7 @@ theorem NormFormEval.proof : NormFormEval.Statement := by
   rw [RingHom.map_det]
   congr 1
   ext i j
-  simp [map_sum, map_smul, Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, map_smul, Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul]
 
 end GroundTheory.Heights₂.Heights

@@ -68,7 +68,8 @@ theorem model_admissible_iff_evaluation : ∀ (F E : Type) [Field F] [NumberFiel
       have h2 : (fun v => ev v (ψ j v)) = φ j := funext fun v => hψev j v
       rw [h2] at h1
       exact h1.symm
-    rw [hsplit, map_sum, ContinuousLinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hsplit, map_sum, ContinuousLinearMap.sum_apply]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_smul, hφe j]
     simp only [ContinuousLinearMap.coe_smul', Pi.smul_apply, ContinuousLinearMap.coe_comp', Function.comp_apply]

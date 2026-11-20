@@ -37,7 +37,8 @@ theorem finitely_generated_projective_coords (L : Submodule R V) (hL : L.FG) (hK
     ext j
     simp [Finset.sum_apply, Pi.single_apply]
   conv_lhs => rw [← e1, e2]
-  simp [map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, map_smul]
 
 theorem dualLattice_basis [FiniteDimensional K V] (L : Submodule R V)
     (hsp : Submodule.span K (L : Set V) = ⊤) :
@@ -100,7 +101,8 @@ theorem dualLattice_expand {ι : Type*} [Fintype ι] [DecidableEq ι] (h : V →
   set z := x - ∑ j, h (b j) x • bs j with hzdef
   have hz : ∀ i, h (b i) z = 0 := by
     intro i
-    simp [z, map_sub, map_sum, map_smul, hbs, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [z, map_sub, map_sum, map_smul, hbs, smul_eq_mul]
   have hflip : h.flip z = 0 := b.ext fun i => by simp [hz i]
   have hz0 : z = 0 := hnd.2 z fun y => by simpa using LinearMap.congr_fun hflip y
   exact sub_eq_zero.mp hz0
@@ -119,7 +121,8 @@ theorem dualLattice_repr {ι : Type*} [Fintype ι] [DecidableEq ι] (h : V →�
     split_ifs <;> simp
   have hwb : ∀ i, h w (b i) = algebraMap R K (f ⟨b i, hb i⟩) := by
     intro i
-    simp [w, map_sum, LinearMap.map_smulₛₗ₂, hsym, starRingEnd_apply, star_star, Algebra.smul_def]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [w, map_sum, LinearMap.map_smulₛₗ₂, hsym, starRingEnd_apply, star_star, Algebra.smul_def]
   have hspL : Submodule.span R (Set.range b) ≤ L :=
     Submodule.span_le.mpr (by rintro _ ⟨i, rfl⟩; exact hb i)
   have hspan : ∀ z ∈ Submodule.span R (Set.range b), ∀ hz : z ∈ L,

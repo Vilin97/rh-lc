@@ -98,7 +98,8 @@ theorem subst2_one_left {N n : ℕ} (g : Matrix (Fin n) (Fin n) ℂ) (P : MvPoly
     rw [AlgHom.comp_apply, AlgHom.comp_apply, rename_X, subst2_X, ReciprocityTheory.PGsh.rowSubst, aeval_X,
       Finset.sum_eq_single p.2]
     · have h1 : (1 : Matrix (Fin N) (Fin N) ℂ) p.2 p.swap.1 = 1 := Matrix.one_apply_eq _
-      simp [map_sum, h1]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [map_sum, h1]
     · intro l _ hl
       have h1 : (1 : Matrix (Fin N) (Fin N) ℂ) l p.swap.1 = 0 := Matrix.one_apply_ne hl
       simp [h1]

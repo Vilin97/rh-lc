@@ -38,7 +38,8 @@ theorem polynomialKernel_constTerm_lieDeriv_dualSpace : _root_.GlobalTheory.FunP
     intro x
     refine (HasDerivAt.sum (u := Finset.univ) (fun i _ => hpure i x)).congr_of_eventuallyEq
       (Filter.Eventually.of_forall fun t => ?_)
-    simp [map_sum, Finset.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, Finset.sum_apply]
   have hΦ₁ : Φ₁ = ∑ i, pureT (D (f i)) (φ i) := by
     funext x
     rw [Finset.sum_apply]

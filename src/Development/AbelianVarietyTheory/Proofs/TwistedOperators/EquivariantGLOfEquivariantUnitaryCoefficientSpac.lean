@@ -31,11 +31,13 @@ theorem exists_poly_blockAct_coef {k : ℕ} (f : MvPolynomial (ι × Fin k × Fi
       simp only [T] at hp ⊢
       simp only [map_mul, hp]
       congr 1
-      simp only [Formalism.GradedWeylDivisibility.blockAct, aeval_X, map_X, Φ, map_sum, map_mul, map_C, eval_X]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Formalism.GradedWeylDivisibility.blockAct, aeval_X, map_X, Φ, map_sum, map_mul, map_C, eval_X]
   refine ⟨∑ m ∈ (T f).support, C (l (monomial m 1)) * (T f).coeff m, fun g => ?_⟩
   rw [hT g f]
   conv_lhs => rw [(T f).as_sum]
-  rw [map_sum, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, map_sum]
   refine Finset.sum_congr rfl fun m _ => ?_
   rw [map_monomial, map_mul, eval_C]
   rw [show (monomial m (eval (fun x => g x.1 x.2.1 x.2.2) ((T f).coeff m)) : MvPolynomial (ι × Fin k × Fin k) ℂ) =

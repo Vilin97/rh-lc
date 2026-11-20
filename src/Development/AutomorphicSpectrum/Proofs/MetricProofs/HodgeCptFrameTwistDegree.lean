@@ -100,7 +100,8 @@ private theorem linearIndependent_of_dual_pairing {Ω W : Type} [Field Ω] [AddC
   rw [Fintype.linearIndependent_iff]
   intro g hg a
   have h1 := congrArg (B a) hg
-  simp only [map_sum, map_smul, hBv, smul_eq_mul, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, hBv, smul_eq_mul, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq,
     Finset.mem_univ, if_true, map_zero] at h1
   exact h1
 
@@ -126,7 +127,8 @@ private theorem isFrameAt_of_dual_basis {X : Scheme.{0}} {Ω W : Type} [Field Ω
     have hco : ∀ b, bv.repr e b = B b e := by
       intro b
       conv_rhs => rw [← hs]
-      simp only [map_sum, map_smul, hBv, smul_eq_mul, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, hBv, smul_eq_mul, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq,
         Finset.mem_univ, if_true]
     rw [← hs]
     refine Submodule.sum_mem _ fun b _ => ?_
@@ -161,7 +163,8 @@ theorem adapted_frame_om : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E
     (hF.2.2.1 _) (hF.1 _) (hF.2.1 _).1 (hF.2.1 _).2 ⟨pr p'.1, hp⟩ c₁ hI
   have e1 : colFrame (cc 𝔐 bW bO (.inr τ)) T = fun a => inO 𝔐 τ (colFrame (bO τ) T a) := by
     funext a
-    simp only [colFrame, cc, map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [colFrame, cc, map_sum, map_smul]
     rfl
   rw [e1] at hfr
   have hom : (omBundle 𝔐 τ).IsFrameAt (colFrame (bO τ) T) ⟨pr p'.1, hp⟩ :=
@@ -184,7 +187,8 @@ theorem adapted_frame_om : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E
     have hm := congrFun (congrFun (Matrix.mul_nonsing_inv _ hTt) a) b
     rw [Matrix.mul_apply, Matrix.one_apply] at hm
     rw [← hm]
-    simp only [colFrame, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, hv, smul_eq_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [colFrame, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, hv, smul_eq_mul,
       Matrix.transpose_apply, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq',
       Finset.mem_univ, if_true]
     try exact Finset.sum_congr rfl fun _ _ => mul_comm _ _
@@ -207,7 +211,8 @@ theorem adapted_frame_om : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E
   have hcol : (fun k => j ((colFrame v Tᵀ⁻¹ k : 𝔐.Vgen (.inr τ)) : 𝔐.Li)) =
       colFrame (fun a => j (v a : 𝔐.Li)) ((Tᵀ⁻¹).map (algebraMap Ω (GenField Ω (rk (CMType H) D.p D.q)))) := by
     funext k
-    simp only [colFrame, Submodule.coe_sum, Submodule.coe_smul, map_sum, hj.1, Matrix.map_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [colFrame, Submodule.coe_sum, Submodule.coe_smul, map_sum, hj.1, Matrix.map_apply]
   rw [hcol, map_transpose_inv _ T hT] at hpull
   have hgdet : IsUnit (Matrix.of fun a b => (genU Ω (rk (CMType H) D.p D.q) (.inr τ))ᵀ⁻¹ a (Fin.rev b)).det := by
     apply isUnit_det_rev

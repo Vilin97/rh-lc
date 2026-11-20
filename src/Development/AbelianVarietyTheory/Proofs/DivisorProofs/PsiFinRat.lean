@@ -41,10 +41,12 @@ theorem psi_fin_rat {ψ : AddChar (AF F) ℂ} (hψ : IsStd ψ) [Fintype κ] (ρ 
     ψ (pairA F 0 (ratFin F κ ρ ⬝ᵥ ratFin F κ z)) =
       Complex.exp (2 * Real.pi * Complex.I * (GlobalTheory.VacLn.trPair F κ (ratInf F κ ρ) (ratInf F κ z) : ℂ)) := by
   have e1 : ratFin F κ ρ ⬝ᵥ ratFin F κ z = algebraMap F (FiniteAdeleRing (𝓞 F) F) (ρ ⬝ᵥ z) := by
-    simp [ratFin, dotProduct, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [ratFin, dotProduct, map_sum, map_mul]
   have e2 : GlobalTheory.VacLn.trPair F κ (ratInf F κ ρ) (ratInf F κ z) = ((Algebra.trace ℚ F (ρ ⬝ᵥ z) : ℚ) : ℝ) := by
     rw [GlobalTheory.VacLn.trPair_apply, ← GlobalTheory.PsiNontriv.trace_mixedEmbedding]
-    simp [ratInf, dotProduct, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [ratInf, dotProduct, map_sum, map_mul]
   rw [e1, e2]
   exact GlobalTheory.PsiNontriv.isStd_fin_rat hψ _
 

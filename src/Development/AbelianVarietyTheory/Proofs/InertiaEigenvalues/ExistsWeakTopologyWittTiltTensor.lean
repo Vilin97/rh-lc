@@ -228,7 +228,8 @@ theorem coords_map (b : Module.Basis ι R T) (σ : W →ₐ[R] W) (ρ : T →ₗ
       rw [← map_smul ρ]
       generalize a • t = u
       conv_lhs => rw [← b.sum_repr u]
-      simp only [map_sum, LinearMap.map_smul_of_tower, map_smul, Finsupp.coe_finsetSum,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, LinearMap.map_smul_of_tower, map_smul, Finsupp.coe_finsetSum,
         Finset.sum_apply, Finsupp.smul_apply, Finset.sum_smul, smul_eq_mul, Algebra.smul_def,
         map_mul, Finset.sum_mul]
       exact Finset.sum_congr rfl fun j _ => by ring

@@ -59,7 +59,8 @@ theorem lap_one_map (τ τ' : T) (a : Fin (r τ)) (a' : Fin (r τ'))
     (A : MvPolynomial (Letter T r n) K) :
     lap r n L 1 τ τ' a a' (MvPolynomial.map (algebraMap K L) A) =
       MvPolynomial.map (algebraMap K L) (lap r n K 1 τ τ' a a' A) := by
-  simp only [lap, LinearMap.sum_apply, LinearMap.smul_apply, LinearMap.comp_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [lap, LinearMap.sum_apply, LinearMap.smul_apply, LinearMap.comp_apply, map_sum]
   refine Finset.sum_congr rfl fun b _ => Finset.sum_congr rfl fun b' _ => ?_
   by_cases hb : b = b'
   · subst hb

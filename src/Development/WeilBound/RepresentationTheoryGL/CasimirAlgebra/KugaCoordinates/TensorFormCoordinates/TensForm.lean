@@ -34,7 +34,8 @@ private theorem re_sum_posSemidef_mul_H_nonneg {V : Type} [AddCommGroup V] [Modu
   obtain ⟨m, v, rfl⟩ := Matrix.posSemidef_iff_eq_sum_vecMulVec.mp hA
   have e : ∑ k, ∑ j, (∑ i, Matrix.vecMulVec (v i) (star (v i))) k j * H (u k) (u j) =
       ∑ i, H (∑ k, star (v i k) • u k) (∑ k, star (v i k) • u k) := by
-    simp only [Matrix.sum_apply, Matrix.vecMulVec_apply, map_sum, map_smulₛₗ,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.sum_apply, Matrix.vecMulVec_apply, map_sum, map_smulₛₗ,
       LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, Pi.star_apply,
       starRingEnd_apply, star_star, RingHom.id_apply, Finset.sum_mul, Finset.mul_sum]
     calc _ = ∑ k, ∑ i, ∑ j, v i k * star (v i j) * H (u k) (u j) :=
@@ -64,7 +65,8 @@ theorem tensForm_holds : TensForm := by
   refine ⟨B, ?_, ?_, ?_, ?_⟩
   · intro x y
     simp only [B, LinearMap.mk₂'ₛₗ_apply]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [hsym]
   · intro x hx
@@ -94,7 +96,8 @@ theorem tensForm_holds : TensForm := by
       · have h0 := hH.im_star_dotProduct_mulVec_self v
         simpa using h0.symm
     have key := re_sum_posSemidef_mul_H_nonneg H hnn _ hA (ec (V := V) d x)
-    simp only [B, LinearMap.mk₂'ₛₗ_apply, ec_lTensor, map_sum, map_smul, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [B, LinearMap.mk₂'ₛₗ_apply, ec_lTensor, map_sum, map_smul, smul_eq_mul]
     simp only [Matrix.sub_apply, Matrix.smul_apply, Matrix.one_apply, smul_eq_mul, sub_mul,
       Finset.sum_sub_distrib, mul_ite, mul_one, mul_zero, ite_mul, zero_mul,
       Finset.sum_ite_eq, Finset.mem_univ, if_true, Complex.sub_re, Complex.re_sum,

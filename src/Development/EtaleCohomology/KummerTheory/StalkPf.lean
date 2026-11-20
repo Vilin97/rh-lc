@@ -107,7 +107,8 @@ theorem stalkTop_pf : StalkTop := by
     intro y t hy
     unfold lh comb
     rw [Fintype.sum_eq_single a]
-    · rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [map_sum]
       refine Finset.sum_congr rfl fun u _ => ?_
       rw [hy u, pull_zsmul]
       exact hE h6n h6r q p s hqA n i (c n u) (t u)

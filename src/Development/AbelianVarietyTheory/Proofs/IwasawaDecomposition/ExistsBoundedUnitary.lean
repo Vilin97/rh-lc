@@ -229,7 +229,8 @@ theorem exists_bounded_basis [IsTotallyComplex E] (hτ : Function.Bijective fun 
     let g : (Fin n → I → ℂ) →ₗ[I → ℂ] (I → ℂ) :=
       ∑ a, Pi.ringHom τ (f (Pi.single a 1)) • LinearMap.proj a
     have hg : ∀ x : Fin n → E, g (fun a => Pi.ringHom τ (x a)) = Pi.ringHom τ (f x) := fun x => by
-      rw [LinearMap.pi_apply_eq_sum_univ f x, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [LinearMap.pi_apply_eq_sum_univ f x, map_sum]
       simp only [g, LinearMap.sum_apply, LinearMap.smul_apply, LinearMap.proj_apply, smul_eq_mul, map_mul]
       refine Finset.sum_congr rfl fun a _ => ?_
       rw [mul_comm]

@@ -23,7 +23,8 @@ theorem UpperTheory.trace_conj_dotProduct_eq_sum_infinitePlaces :
           simp only [Matrix.mul_assoc]
   have e1 : v.embedding ((fun i => IsCMField.complexConj F (y i)) ⬝ᵥ (A *ᵥ x))
       = (star fun i => v.embedding (y i)) ⬝ᵥ (A.map v.embedding *ᵥ fun i => v.embedding (x i)) := by
-    simp only [dotProduct, Matrix.mulVec, map_sum, map_mul, Matrix.map_apply, Pi.star_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [dotProduct, Matrix.mulVec, map_sum, map_mul, Matrix.map_apply, Pi.star_apply,
       IsCMField.complexEmbedding_complexConj]
     rfl
   have e2 : v.embedding ((fun i => IsCMField.complexConj F (y i)) ⬝ᵥ (A *ᵥ x))

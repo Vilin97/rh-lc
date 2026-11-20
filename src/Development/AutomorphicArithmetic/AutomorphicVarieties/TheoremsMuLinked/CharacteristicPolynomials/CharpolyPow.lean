@@ -76,7 +76,8 @@ theorem UpperTheory.V.Th.Det.n3small :
       have e : (fun g => f (Pr.gm ρ g)) = fun g => ∑ i, ∑ j, Pr.gm ρ g i j * f (Matrix.single i j 1) := by
         funext g
         conv_lhs => rw [Matrix.matrix_eq_sum_single (Pr.gm ρ g)]
-        simp only [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum]
         refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
         rw [← smul_eq_mul, ← map_smul, Matrix.smul_single, smul_eq_mul, mul_one]
       rw [e]

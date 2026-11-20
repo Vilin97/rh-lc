@@ -112,9 +112,11 @@ theorem mul_toLoc (ι : E →+* k) {Y Y' : Type} [Fintype Y] [Fintype Y'] {a b n
   ext r c
   have key : ∀ x : Fin nT → E, ∑ y : Y, f' (Pi.single (e y) 1) r * x (e y) = f' x r := fun x => by
     rw [e.sum_comp fun j => f' (Pi.single j 1) r * x j]
-    conv_rhs => rw [pi_eq_sum_univ' x, map_sum, Finset.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_rhs => rw [pi_eq_sum_univ' x, map_sum, Finset.sum_apply]
     exact Finset.sum_congr rfl fun j _ => by rw [map_smul, Pi.smul_apply, smul_eq_mul, mul_comm]
-  simp only [Matrix.mul_apply, hβ, hM, toLoc, Matrix.map_apply, ← map_mul, ← map_sum, finCongr_refl, Equiv.refl_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mul_apply, hβ, hM, toLoc, Matrix.map_apply, ← map_mul, ← map_sum, finCongr_refl, Equiv.refl_apply]
   rw [key]
   simp [Formalism.L2.Col.inFr, Matrix.mulVec, dotProduct]
 

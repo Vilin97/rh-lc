@@ -26,7 +26,8 @@ theorem exists_linearIndependent_iterates {K : Type} [Field K] (M : Matrix (Fin 
   have hq0 : aeval (toLin' M) q e = 0 := by
     rw [ha, toLin'_apply]
     have haq : aeval M q = ∑ j : Fin n, c j • M ^ (j : ℕ) := by
-      simp [q, map_sum, aeval_monomial, Algebra.smul_def]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [q, map_sum, aeval_monomial, Algebra.smul_def]
     rw [haq, Matrix.sum_mulVec]
     simpa [Matrix.smul_mulVec] using hc
   have hdvd := he q hq0
@@ -53,7 +54,8 @@ theorem pow_dim_mulVec [Nontrivial R] (Y : Matrix (Fin n) (Fin n) R) (v : Fin n 
   have hm := Y.charpoly_monic.as_sum
   rw [charpoly_natDegree_eq_dim, Fintype.card_fin] at hm
   rw [hm] at h0
-  simp only [map_add, map_pow, aeval_X, map_sum, map_mul, aeval_C] at h0
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_add, map_pow, aeval_X, map_sum, map_mul, aeval_C] at h0
   have := congrArg (fun M => (M *ᵥ v) i) h0
   simp only [add_mulVec, sum_mulVec, Pi.add_apply, Finset.sum_apply, zero_mulVec, Pi.zero_apply] at this
   rw [eq_neg_iff_add_eq_zero, ← this, ← Fin.sum_univ_eq_sum_range]

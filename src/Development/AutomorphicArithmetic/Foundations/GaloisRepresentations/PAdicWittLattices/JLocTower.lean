@@ -87,7 +87,8 @@ theorem UpperTheory.Gal.G3.locTower_of :
   · refine (congrArg (galV l (bcAlong H τ) Ω' L σ') (hb' i)).trans ?_
     refine (hgal (r σ') σ' (fun x => hr σ' x) _).trans ?_
     refine (congrArg ((pullTot l (sch.map u)).baseChange L) (hb (r σ') i)).trans ?_
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun m _ => ?_
     rw [LinearMap.map_smul]
     exact congrArg (((ρ₀ (r σ') : GL (Fin d) L) : Matrix (Fin d) (Fin d) L) m i • ·) (hb' m).symm

@@ -192,7 +192,8 @@ theorem exists_kInf_isLevi_of_fix : ∀ (F E : Type) [Field F] [NumberField F] [
         Matrix.of (fun i j => τ (H'.y i) * τ ((W.J *ᵥ fun k => σ (H'.x k)) j)) = 1 := by
       rw [← Matrix.map_one τ (map_zero τ) (map_one τ), ← hid]
       ext i j
-      simp [Matrix.mul_apply, map_sum, map_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [Matrix.mul_apply, map_sum, map_mul]
     have hπι : π.map τ * H'.ι.map τ = 1 := by
       rw [← Matrix.map_mul, p1, Matrix.map_one _ (map_zero τ) (map_one τ)]
     have hπθ := GlobalTheory.LeviKInf.proj_comm (W.θ w) (W₁.θ w) (H'.ι.map τ) (π.map τ) _ _ _ _ c hidw (hW.cartan w).1 hθι hc hy

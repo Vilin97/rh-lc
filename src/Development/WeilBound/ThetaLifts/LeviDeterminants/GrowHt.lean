@@ -28,10 +28,12 @@ theorem Sz.mul {m m' : ℕ} {c c' : ℝ} {a a' : AF F} (h : Sz m c a) (h' : Sz m
 theorem Sz.sum {ι : Type} [Fintype ι] {m : ℕ} {c : ℝ} {a : ι → AF F} (h : ∀ i, Sz m c (a i)) :
     Sz m (Fintype.card ι * c) (∑ i, a i) := by
   refine ⟨?_, fun v => ?_⟩
-  · rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum]
     refine (norm_sum_le_of_le _ fun i _ => (h i).1).trans ?_
     simp
-  · rw [Finset.mul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [Finset.mul_sum, map_sum]
     exact sum_mem fun i _ => (h i).2 v
 
 theorem Sz.mono {m m' : ℕ} {c c' : ℝ} {a : AF F} (h : Sz m c a) (hm : m ∣ m') (hc : c ≤ c') : Sz m' c' a := by
@@ -82,7 +84,8 @@ theorem intF_mul {a z : AF F} (ha : IntF a) (hz : ∀ v, evFin F v z ∈ v.adicC
 theorem intF_sum {ι : Type} [Fintype ι] {a : ι → AF F} (h : ∀ i, IntF (a i)) : IntF (∑ i, a i) := by
   refine ⟨?_, fun v => ?_⟩
   · exact (map_sum (RingHom.fst (Ainf F) (Af F)) a Finset.univ).trans (Finset.sum_eq_zero fun i _ => (h i).1)
-  · rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum]
     exact sum_mem fun i _ => (h i).2 v
 
 variable {κ : Type} [Fintype κ]
@@ -95,11 +98,13 @@ theorem crd_apply (s : Pt F κ →ₗ[AF F] Pt F κ) (w : Pt F κ) (i : κ ⊕ �
     crd F κ (s w) i = ∑ j, crd F κ w j * crd F κ (s ((crd F κ).symm (Pi.single j 1))) i := by
   have : w = ∑ j, crd F κ w j • (crd F κ).symm (Pi.single j 1) := by
     apply (crd F κ).injective
-    simp only [map_sum, map_smul, LinearEquiv.apply_symm_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, LinearEquiv.apply_symm_apply]
     funext k
     simp [Finset.sum_apply, Pi.single_apply]
   conv_lhs => rw [this]
-  simp only [map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
 
 theorem bd_of_sz {s : Pt F κ →ₗ[AF F] Pt F κ} {m : ℕ} {c : ℝ} (hc : 0 ≤ c)
     (h : ∀ i j, Sz m c (crd F κ (s ((crd F κ).symm (Pi.single j 1))) i)) : Bd s m (Fintype.card (κ ⊕ κ) * c) := by
@@ -199,9 +204,11 @@ theorem bilin {R A ι : Type} [CommRing R] [CommRing A] [Algebra R A] [Fintype �
       β.repr (M p.1.1 p.1.2.1) p.1.2.2 * β.repr (N p.2.1 p.2.2.1) p.2.2.2 *
         l (Matrix.single p.1.1 p.1.2.1 (β p.1.2.2) * u * (Matrix.single p.2.1 p.2.2.1 (β p.2.2.2))ᵀ) := by
   refine (congrArg₂ (fun A B => l (A * u * Bᵀ)) (expand β M) (expand β N)).trans ?_
-  rw [Fintype.sum_prod_type (α₁ := Fin n × Fin n × ι) (α₂ := Fin d × Fin d × ι), Matrix.sum_mul, Matrix.sum_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Fintype.sum_prod_type (α₁ := Fin n × Fin n × ι) (α₂ := Fin d × Fin d × ι), Matrix.sum_mul, Matrix.sum_mul, map_sum]
   refine Finset.sum_congr rfl fun p _ => ?_
-  rw [Matrix.transpose_sum, Matrix.mul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.transpose_sum, Matrix.mul_sum, map_sum]
   refine Finset.sum_congr rfl fun q _ => ?_
   rw [Matrix.transpose_smul, Matrix.mul_smul, Matrix.smul_mul, Matrix.smul_mul, map_smul, map_smul, smul_eq_mul, smul_eq_mul]
   ring

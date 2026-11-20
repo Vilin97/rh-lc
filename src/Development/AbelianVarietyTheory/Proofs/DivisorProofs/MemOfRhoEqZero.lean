@@ -95,7 +95,8 @@ theorem rank_eq {n : ℕ} {P : Pl E} (N : Submodule (𝓞 E) La) (hN : ∀ x ∈
     obtain ⟨u, hu, w, hw, rfl⟩ := Submodule.mem_sup.1 (hx.ge (Submodule.mem_top (x := y)))
     obtain ⟨co, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun _).1 hu
     refine (Submodule.mem_span_range_iff_exists_fun _).2 ⟨fun b => Ideal.Quotient.mk P.asIdeal (τ (co b)), funext fun a => ?_⟩
-    rw [← hy, map_add, hN w hw, add_zero, map_sum, Finset.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hy, map_add, hN w hw, add_zero, map_sum, Finset.sum_apply]
     exact Finset.sum_congr rfl fun b _ => (hs P a _ _).symm
   rw [Matrix.rank_eq_finrank_span_row, h, finrank_top, Module.finrank_fin_fun]
 

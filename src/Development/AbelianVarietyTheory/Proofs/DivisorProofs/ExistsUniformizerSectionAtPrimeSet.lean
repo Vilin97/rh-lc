@@ -46,7 +46,8 @@ theorem psi_sympl {D : D7} (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D) (βS :
     (βT : GL (Fin T.rank) (EAf D)) (t y : WO S T) (hy : ∀ i j, infPart D (y i j) = 0) :
     ψ (symplO S T t y) = psiE ψ (Matrix.trace (frMapAdj S T βS βT t * frMapO S T βS βT y)) := by
   have hinf : infPart D (hO S T y t) = 0 := by
-    simp only [hO, map_sum, map_mul, hy, mul_zero, Finset.sum_const_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hO, map_sum, map_mul, hy, mul_zero, Finset.sum_const_zero]
   rw [GlobalTheory.OrientedHeis.symplO_skew y t, ← GlobalTheory.HalfDuality.trace_id]
   change _ = ψ (-Algebra.trace (AF D.host.F) (AE D) (incA D D.host.xi0 * liftE (toEAf D (hO S T y t))))
   rw [liftE_toEAf hinf]
@@ -249,7 +250,8 @@ theorem trace_redM {D : D7} (PP : Pl D.host.E) {a b : ℕ} {A : Matrix (Fin a) (
   refine ⟨e ▸ Subtype.prop _, ?_⟩
   rw [show (⟨Matrix.trace (A * B), e ▸ Subtype.prop _⟩ : Formalism.L2.Herm.intAf D.host.F D.host.E) =
     ∑ i, ∑ j, (⟨A i j, hA i j⟩ * ⟨B j i, hB j i⟩) from Subtype.ext e]
-  simp only [Matrix.trace, Matrix.diag_apply, Matrix.mul_apply, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.trace, Matrix.diag_apply, Matrix.mul_apply, map_sum, map_mul]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   rw [GlobalTheory.HalfDuality.redM_apply_of_mem PP A i j (hA i j), GlobalTheory.HalfDuality.redM_apply_of_mem PP B j i (hB j i)]
 
@@ -282,7 +284,8 @@ theorem assemble {D : D7} (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D) (βS : 
       Matrix.ext fun k l => (toEAf D).map_mul _ _
     simp only [frMapO, h, Matrix.mul_smul, Matrix.smul_mul]
   have hhalf : (∑ PP ∈ Q, toEAf D (es PP)) • frMapAdj S T βS βT t = frMapAdj S T βS βT t := by
-    rw [← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum]
     exact Matrix.ext fun k l => GlobalTheory.AdjVecLocal.frMapAdj_half _ _ _ _ ht k l
   rw [psi_sympl ψ S T βS βT t y hy, sum_divisible_eq_sum_mul Q _ hinv _ _ hhalf, addChar_sum, ← hdil]
   refine Finset.prod_congr rfl fun PP hPP => ?_

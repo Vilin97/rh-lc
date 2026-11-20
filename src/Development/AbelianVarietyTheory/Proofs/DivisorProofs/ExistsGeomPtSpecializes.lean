@@ -56,7 +56,8 @@ theorem toStd_injective : Function.Injective (toStd (h := h) (M := M)) := fun c 
 
 theorem sum_val_smul [NeZero M] (c : Fin (h + h) → ZMod M) :
     ∑ i, (c i).val • toStd (Pi.single i (1 : ZMod M)) = toStd c := by
-  simp_rw [← map_nsmul, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp_rw [← map_nsmul, ← map_sum]
   congr 1
   conv_rhs => rw [← Finset.univ_sum_single c]
   refine Finset.sum_congr rfl fun i _ => ?_

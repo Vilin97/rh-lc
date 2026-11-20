@@ -70,7 +70,8 @@ theorem secCarriedOver_of_lift {X Z P : Scheme.{0}} (q : Z ⟶ X) (p₁ : Z ⟶ 
         exact gs_comp_map f' p₁ z ⊤ trivial _
       have e2 : ∀ l', gs (q ≫ φ) z (O ⊓ L.U j) (s l' j) = (f'.stalkMap z).hom (gs q (f' z) (O ⊓ L.U j) (s l' j)) :=
         fun l' => by rw [← hf'q]; exact gs_comp_map f' q z _ hmj _
-      simp only [e1, e2, ← map_mul, ← map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [e1, e2, ← map_mul, ← map_sum]
       rw [← hdec (f' z) j hf'zO hf'zj, ← gs_eq_map_gs f' z _ hmWj, gs_unit f' z _ hmWj]
     have S3 := hdec z k hzO hzk
     rw [gs_unit (𝟙 Z) z _ hmWk] at S3

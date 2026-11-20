@@ -170,7 +170,8 @@ theorem exists_coord_denom : ∃ D : ℕ, 0 < D ∧ ∀ y ∈ RInt F E, ∀ i, D
       (Module.finBasis F E).repr (algebraMap (𝓞 E) E (g p.1)) p.2)
   refine ⟨D, hD, fun y hy i => ?_⟩
   obtain ⟨r, hr, rfl⟩ := levelaf_decomp g hg hy
-  rw [map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.smul_sum]
   refine sum_mem fun j _ => ?_
   obtain ⟨o, ho⟩ := h _ (Finset.mem_image_of_mem _ (Finset.mem_univ (j, i)))
   rw [coord_tmul, ← smul_assoc, ← ho, Algebra.smul_def]
@@ -228,7 +229,8 @@ theorem map_tmul_one (x : E) : ι (x ⊗ₜ[F] 1) = algebraMap E _ x := by
 theorem map_mem_int {y : AfE F E} (hy : y ∈ RInt F E) : ι y ∈ intAd E := by
   obtain ⟨m, g, hg⟩ := Module.Finite.exists_fin (R := ℤ) (M := 𝓞 E)
   obtain ⟨r, hr, rfl⟩ := levelaf_decomp g hg hy
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine sum_mem fun j _ => ?_
   rw [hι]
   exact mul_mem (algebraMap_int_mem _) (adMap_int (hr j))

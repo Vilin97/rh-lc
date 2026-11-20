@@ -215,7 +215,8 @@ theorem rep_form {R : Type} [CommRing R] {C : Type 1} [Category.{0} C] {Φ : PDF
     funext s
     apply Subtype.ext
     have h := Ideal.Quotient.eq_zero_iff_mem.2 (d_form_mem E σ hF hc j q I x hx s)
-    rw [map_sum] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at h
     refine Eq.trans ?_ h
     change Subtype.val (∑ i : Fin (j + 2), (-1 : ℤ) ^ (i : ℕ) • ((sq (Fil ((j : ℤ) + q)) (Fil ((j : ℤ) + q + 1))).map (toLast i s)).hom (f (face i s)) :
       sqM (Fil ((j : ℤ) + q)) (Fil ((j : ℤ) + q + 1)) _) = _

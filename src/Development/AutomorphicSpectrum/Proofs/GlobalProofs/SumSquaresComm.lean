@@ -83,7 +83,8 @@ theorem sumSquares_comm {n : ℕ} {G : Set (Matrix (Fin n) (Fin n) ℂ)} {H : Ty
   have hdelta : ∀ l m, ∑ i, O l i * O m i = (1 : Matrix (Fin d) (Fin d) ℝ) l m := fun l m => by
     rw [← hOO]
     simp [Matrix.mul_apply]
-  rw [map_sum, Finset.sum_congr rfl fun i _ => step i, Finset.sum_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_congr rfl fun i _ => step i, Finset.sum_comm]
   refine Finset.sum_congr rfl fun l _ => ?_
   rw [Finset.sum_comm]
   simp_rw [← Finset.sum_smul, hdelta, Matrix.one_apply]

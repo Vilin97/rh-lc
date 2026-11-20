@@ -92,9 +92,11 @@ theorem exists_isom_map_unit (hK : Formalism.HermitianLatticesTheory.IsCMUnram K
     have hxs : x ∈ Submodule.span K (Set.range e) := by rw [hsp]; exact Submodule.mem_top
     obtain ⟨c, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun K).1 hxs
     have hval : h (∑ i, c i • e i) (∑ i, c i • e i) = ∑ i, star (c i) * c i := by
-      simp [map_sum, he, Finset.mul_sum, mul_ite, ite_mul, smul_eq_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [map_sum, he, Finset.mul_sum, mul_ite, ite_mul, smul_eq_mul]
       exact Finset.sum_congr rfl fun i _ => by rw [starRingEnd_apply, mul_comm]
-    rw [hval, map_sum, Complex.re_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hval, map_sum, Complex.re_sum]
     have hc : ∃ i, c i ≠ 0 := by
       by_contra hne
       push_neg at hne

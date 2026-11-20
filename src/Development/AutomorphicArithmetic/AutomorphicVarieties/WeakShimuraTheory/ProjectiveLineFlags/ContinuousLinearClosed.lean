@@ -124,7 +124,8 @@ theorem UpperTheory.V.Ws.P1.n4V0 :
     rw [map_mul, hφY, hφA]
     have h1 : φ (e • (A * Y)) = algebraMap x.A x.Fr e • (φ A * φ Y) := by
       ext i j
-      simp [φ, Matrix.smul_apply, Matrix.mul_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [φ, Matrix.smul_apply, Matrix.mul_apply, map_sum]
     rw [h1, hφY, hφA, Matrix.mul_smul, smul_comm, hX', Matrix.smul_mul]
   have hall : ∀ i, (r.chib i g : ResidueField O) = χ := fun i => congrArg Units.val (hD0 g hg i i0)
   have hcp := charpoly_mat_map_constantCoeff_eq_prod_X_sub_C x g

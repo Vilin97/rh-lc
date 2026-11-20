@@ -55,7 +55,8 @@ theorem latS_mulVec (R : Type) [CommRing R] [Algebra F R] (S : Subring (E ⊗[F]
     apply Submodule.subset_span
     refine ⟨M *ᵥ x0, hM x0 hx0, ?_⟩
     funext i
-    simp only [mulVec, dotProduct, map_sum, map_mul, Matrix.map_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [mulVec, dotProduct, map_sum, map_mul, Matrix.map_apply]
   | zero => rw [mulVec_zero]; exact zero_mem _
   | add x y _ _ hx hy => rw [mulVec_add]; exact add_mem hx hy
   | smul a x _ hx =>

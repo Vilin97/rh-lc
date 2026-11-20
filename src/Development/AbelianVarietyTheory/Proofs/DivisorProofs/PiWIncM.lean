@@ -63,7 +63,8 @@ theorem main : ∀ {F E : Type} [inst : Field F] [inst_1 : NumberField F] [inst_
   have h2 : piW (τ.comp σ) (GlobalTheory.WeilM.hTens (cA σ) (incM F JA) (incM F JB) x u) =
       ∑ i, ∑ j, ∑ k, ∑ l, (x.map (piW (τ.comp σ))) i j * (JA.map τ) k i * -(JB.map τ) l j *
         (u.map (piW τ)) k l := by
-    simp only [GlobalTheory.WeilM.hTens, map_sum, map_mul, piW_cA, comp_comp hσ, piW_incM, Matrix.map_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [GlobalTheory.WeilM.hTens, map_sum, map_mul, piW_cA, comp_comp hσ, piW_incM, Matrix.map_apply]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ =>
       Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun l _ => ?_
     rw [AlgHom.comp_apply, AlgHom.comp_apply, hA k i, hB l j, map_neg]

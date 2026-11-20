@@ -255,7 +255,8 @@ theorem brp_gram_star (hc : ∀ (φ : K →+* ℂ) (x : K), φ (star x) = starRi
     gramPl (Pi.basisFun K (Fin n)) (fun _ => (1 : Matrix (Fin n) (Fin n) ℂ)) v (fun a => star (e a)) =
       (gramPl (Pi.basisFun K (Fin n)) (fun _ => (1 : Matrix (Fin n) (Fin n) ℂ)) v e).map (starRingEnd ℂ) := by
   ext a c
-  simp only [Formalism.HN.gramPl, Matrix.of_apply, Matrix.map_apply, Formalism.HermitianLatticesTheory.majAt, Formalism.HermitianLatticesTheory.fcoord, Formalism.HermitianLatticesTheory.vecAt,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Formalism.HN.gramPl, Matrix.of_apply, Matrix.map_apply, Formalism.HermitianLatticesTheory.majAt, Formalism.HermitianLatticesTheory.fcoord, Formalism.HermitianLatticesTheory.vecAt,
     inv_one, Matrix.one_mulVec, Pi.basisFun_repr, Pi.star_apply, hc, map_sum, map_mul]
   simp [Complex.star_def]
 

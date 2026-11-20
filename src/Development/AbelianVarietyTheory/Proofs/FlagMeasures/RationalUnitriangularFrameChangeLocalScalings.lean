@@ -67,7 +67,8 @@ theorem tri_scaled : ∀ (D : D7) (Z : LocDat D), ∀ (f g : Fin (D.R.rS + 1) �
     · show Ring.inverse (frFac Z.δ p a) * frFac Z.δ p a * (D.s.atP p).ιE (A a a) = 1
       rw [hA.2 a, map_one, mul_one, Ring.inverse_mul_cancel _ (bt_frFac_unit Z p a)]
     · simp only [scaled]
-      rw [hg b, map_sum, Finset.smul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hg b, map_sum, Finset.smul_sum]
       refine Finset.sum_congr rfl fun a _ => ?_
       rw [baseChange_smul₂, smul_smul, smul_smul]
       congr 1

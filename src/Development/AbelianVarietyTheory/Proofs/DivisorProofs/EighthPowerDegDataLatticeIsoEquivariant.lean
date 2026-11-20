@@ -58,10 +58,12 @@ theorem GlobalTheory.Poinc.Sep.sharpRef_equivariant_of_unif_pow : ∀ (g n : ℕ
   have hEc := GlobalTheory.T.uniformisation_endomorphism_closedFibreTorus_characterMap V₁ hCN D P G hG U E
   have key := GlobalTheory.T.characterMap_of_integral_matrix_action V₁ hCN D₀ A₀ G₀ hsa U₀ D P G hG U q hq ch hch a E.aG E.h E.homG hEc hE
   show E.h (f mu) = f (act a' mu)
-  simp only [f, AddMonoidHom.coe_mk, ZeroHom.coe_mk, map_sum, key]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [f, AddMonoidHom.coe_mk, ZeroHom.coe_mk, map_sum, key]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun v _ => ?_
-  simp only [← map_zsmul, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← map_zsmul, ← map_sum]
   congr 2
   have h3 : act (W + W.transpose) (act a' mu) = act a.transpose (act (W + W.transpose) mu) := by
     rw [hact, hact, hM]

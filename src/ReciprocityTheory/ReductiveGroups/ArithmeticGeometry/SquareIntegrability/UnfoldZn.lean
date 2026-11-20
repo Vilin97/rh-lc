@@ -71,7 +71,8 @@ theorem gauss_lin {d : ℕ} {W : Type} [NormedAddCommGroup W] [InnerProductSpace
     rw [← ob.repr.norm_map]
     congr 1
     ext i
-    simp [hM, Matrix.mulVec, dotProduct, map_sum, mul_comm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [hM, Matrix.mulVec, dotProduct, map_sum, mul_comm]
   set G : (Fin d → ℝ) → ENNReal := fun y =>
     ENNReal.ofReal (Real.exp (-(2 * Real.pi) * ‖(WithLp.toLp 2 y : EuclideanSpace ℝ (Fin d))‖ ^ 2))
     with hG

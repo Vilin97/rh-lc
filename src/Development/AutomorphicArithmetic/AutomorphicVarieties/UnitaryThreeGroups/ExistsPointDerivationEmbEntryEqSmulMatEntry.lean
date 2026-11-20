@@ -47,7 +47,8 @@ private theorem der_inv {O R Q : Type} [CommRing O] [CommRing R] [Algebra O R] [
     · exact map_zero D
   have key := congrArg (fun M : Matrix (Fin 3) (Fin 3) R => D (M p q))
     (congrArg (fun h : GL (Fin 3) R => (h : Matrix (Fin 3) (Fin 3) R)) (mul_inv_cancel g))
-  simp only [Units.val_mul, Units.val_one, h1, Matrix.mul_apply, map_sum, hDm, hx, hxi, htor, htori,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Units.val_mul, Units.val_one, h1, Matrix.mul_apply, map_sum, hDm, hx, hxi, htor, htori,
     Finset.sum_add_distrib, diagonal_apply, ite_smul, zero_smul, Finset.sum_ite_eq, Finset.sum_ite_eq',
     Finset.mem_univ, if_true] at key
   have e : ((t ^ wt1 p : Oˣ) : O) • D (((g⁻¹ : GL (Fin 3) R) : Matrix (Fin 3) (Fin 3) R) p q) =

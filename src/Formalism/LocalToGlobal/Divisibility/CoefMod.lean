@@ -79,7 +79,8 @@ theorem blockAct_comp (g h : ι → Matrix (Fin n) (Fin n) K) :
     (Formalism.GradedWeylDivisibility.blockAct K (n := n) g).comp (Formalism.GradedWeylDivisibility.blockAct K h) = Formalism.GradedWeylDivisibility.blockAct K fun τ => h τ * g τ := by
   apply MvPolynomial.algHom_ext
   intro v
-  simp only [AlgHom.comp_apply, Formalism.GradedWeylDivisibility.blockAct, aeval_X, map_sum, map_mul, algHom_C, Matrix.mul_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [AlgHom.comp_apply, Formalism.GradedWeylDivisibility.blockAct, aeval_X, map_sum, map_mul, algHom_C, Matrix.mul_apply]
   simp only [algebraMap_eq, Finset.mul_sum, Finset.sum_mul, ← C_mul]
   rw [Finset.sum_comm]
   simp [C_mul, mul_assoc]

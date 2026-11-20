@@ -67,7 +67,8 @@ private theorem span_ne_eq_cutW_of_orthogonal {ι : Type} [Fintype ι] [Decidabl
     obtain ⟨hv1, hv2⟩ := Submodule.mem_inf.1 hv'
     obtain ⟨a, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun K).1 hv1
     have ha0 : a i₀ = 0 := by
-      rw [LinearMap.mem_ker, map_sum, Finset.sum_eq_single i₀] at hv2
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [LinearMap.mem_ker, map_sum, Finset.sum_eq_single i₀] at hv2
       · rw [map_smul, smul_eq_mul] at hv2
         exact (mul_eq_zero.1 hv2).resolve_right hf0
       · intro i _ hi
@@ -151,7 +152,8 @@ theorem core_of_split (hs : h.IsSymm) (hd : ∀ x, h x x = 0 → x = 0) (hsp : S
         h w (b i₀) = 0 := by
       intro w hw
       obtain ⟨a, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun K).1 hw
-      rw [map_sum, LinearMap.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, LinearMap.sum_apply]
       exact Finset.sum_eq_zero fun i _ => by
         rw [map_smulₛₗ, LinearMap.smul_apply, ho i i₀ i.2, smul_zero]
     have hg0 : g (b i₀) = c i₀ := by rw [hgagree _ hperp, hφ'0]

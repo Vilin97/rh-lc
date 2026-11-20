@@ -41,9 +41,11 @@ theorem mem_frameLat (V : HSpace E) (v : Fin V.rank → E) :
 theorem hT_eq (V : HSpace E) (x y : V.V) :
     V.hT x y = ∑ a, ∑ b, V.frame.repr y a * V.gram b a * star (V.frame.repr x b) := by
   conv_lhs => rw [← V.frame.sum_repr x, ← V.frame.sum_repr y]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun a _ => ?_
-  rw [map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, LinearMap.sum_apply]
   refine Finset.sum_congr rfl fun b _ => ?_
   simp only [LinearMap.map_smulₛₗ, LinearMap.smul_apply, RingHom.id_apply, smul_eq_mul, starRingEnd_apply,
     HSpace.gram]

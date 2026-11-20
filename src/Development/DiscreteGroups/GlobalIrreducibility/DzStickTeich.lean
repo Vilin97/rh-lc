@@ -22,7 +22,8 @@ theorem eq_of_pow_eq_one_of_mk_eq {A : Type*} [CommRing A] [IsDomain A] (P : Ide
     exact hn (by simp)
   have h3 : (n : A ⧸ P) * Ideal.Quotient.mk P b ^ (n - 1) = 0 := by
     have := congrArg (Ideal.Quotient.mk P) h2
-    rw [map_sum, map_zero] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero] at this
     rw [← this]
     have : ∀ i ∈ Finset.range n, Ideal.Quotient.mk P (a ^ i * b ^ (n - 1 - i)) =
         Ideal.Quotient.mk P b ^ (n - 1) := by

@@ -57,7 +57,8 @@ theorem kRight : KRight := by
     simp only [famP]
     rw [h1, h2, hw k', Fintype.sum_prod_type]
     refine sum_congr rfl fun l _ => ?_
-    simp only [map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Finset.mul_sum, p]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Finset.mul_sum, p]
     exact sum_congr rfl fun m _ => by ring
   rw [e1]
   refine (kr_dom _ _ (|B| * |B'|) fun q => ?_).trans ?_

@@ -80,7 +80,8 @@ theorem mem_subfield_of_bilinForm_monomials :
           = ∑ j, (ε j : LinearMap.BilinForm ℤ X) a b • (Pi.single j 1 : I → ℤ) := by
         funext i
         simp [Finset.sum_apply, Pi.single_apply]
-      rw [h1, map_sum, map_sum] at h0
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [h1, map_sum, map_sum] at h0
       simp only [map_smul, smul_eq_mul] at h0
       simp only [AddSubmonoidClass.coe_finsetSum, Submodule.coe_smul, LinearMap.sum_apply,
         LinearMap.smul_apply, smul_eq_mul, ZeroMemClass.coe_zero, LinearMap.zero_apply]

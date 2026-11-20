@@ -108,7 +108,8 @@ theorem exists_compatible_projective_embeddings : ∀ (R K W K' : Type) [CommRin
       congr 1
       have e3 := congrFun (congrFun hk j) m
       simp only [Matrix.map_apply, Matrix.mul_apply] at e3
-      rw [e3, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [e3, map_sum]
       simp only [map_mul]
     rw [e2]
     exact UpperTheory.Lit.Nos.C3.secMaps_sum_smul w _ _ _ _ hw

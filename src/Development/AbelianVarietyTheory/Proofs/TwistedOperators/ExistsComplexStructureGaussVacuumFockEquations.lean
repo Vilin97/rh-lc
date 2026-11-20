@@ -198,7 +198,8 @@ theorem actsD_Phi {ψ : AddChar (AF F) ℂ} (hψ : IsStd ψ) (M : Model σ X W)
       rw [harg, smul_eq_mul, mul_add, at_realAd_mul hc, at_realAd_mul hc, add_zero]
     have hdot : evI F (z ⬝ᵥ (lift w).2) = ∑ i, x i * w.2 i := by
       simp only [dotProduct, lift]
-      rw [← evIHom_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← evIHom_apply, map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_mul, evIHom_apply, evIHom_apply, evI_liftA]
     have hev : Algebra.trace ℝ (mixedEmbedding.mixedSpace F) (evI F (z ⬝ᵥ (realAd F t • lift w).2 +

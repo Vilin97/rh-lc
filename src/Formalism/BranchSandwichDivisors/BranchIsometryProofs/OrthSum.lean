@@ -84,7 +84,8 @@ theorem main (b : Basis ι K V) (X : InfinitePlace K → Matrix ι ι ℂ)
         inner ℝ (Formalism.HermitianLatticesTheory.realize b X x) (Formalism.HermitianLatticesTheory.realize b X y) = 0 := by
       intro x hx y hy
       obtain ⟨μ, hμ⟩ := (Submodule.mem_iSup_finset_iff_exists_sum A y).1 hy
-      rw [← hμ, map_sum, inner_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hμ, map_sum, inner_sum]
       refine Finset.sum_eq_zero fun i hi => ?_
       exact orth_inner b X (horth a i (fun h => ha (h ▸ hi))) x hx _ (μ i).2
     have hlA := (Formalism.HN.plLat K V ι b X hX (A a) (hA a)).1

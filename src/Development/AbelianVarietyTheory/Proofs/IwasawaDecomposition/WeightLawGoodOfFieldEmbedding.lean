@@ -45,7 +45,8 @@ def valMat (c : C.Cl) : Matrix C.ιV (Fin C.dim) K :=
 theorem pair_eq (x y : C.V) :
     C.pair x y = ∑ i, ∑ j, star (C.bV.repr x i) * C.gramV i j * C.bV.repr y j := by
   conv_lhs => rw [← C.bV.sum_repr x, ← C.bV.sum_repr y]
-  simp only [map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, map_smul, smul_eq_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, map_smul, smul_eq_mul,
     starRingEnd_apply, Finset.mul_sum, CSD.gramV, Matrix.of_apply]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
@@ -54,7 +55,8 @@ theorem pair_eq (x y : C.V) :
 theorem gram_map (hb : C.HasRatBasis) (φ : K →+* ℂ) :
     C.H.map φ = ∑ c, ((C.wt c : ℕ) : ℂ)⁻¹ • (((valMat C c).map φ)ᴴ * C.gramV.map φ * (valMat C c).map φ) := by
   ext a b
-  simp only [Matrix.map_apply, CSD.H, Matrix.of_apply, CSD.csum, map_sum, map_mul, map_inv₀, map_natCast,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.map_apply, CSD.H, Matrix.of_apply, CSD.csum, map_sum, map_mul, map_inv₀, map_natCast,
     Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul, pair_eq, Matrix.mul_apply, Matrix.conjTranspose_apply, valMat]
   refine Finset.sum_congr rfl fun c _ => ?_
   congr 1
@@ -78,7 +80,8 @@ theorem exists_val_ne (φ : K →+* ℂ) (x : Fin C.dim → ℂ) (hx : x ≠ 0) 
     ext i
     have h1 := congrFun huv (c, i)
     simp only [Matrix.mulVec, dotProduct, B, valMat, Matrix.of_apply] at h1
-    simp only [CSD.I_eq_sum, Finset.sum_apply, Pi.smul_apply, map_sum, map_smul, Finsupp.coe_finsetSum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [CSD.I_eq_sum, Finset.sum_apply, Pi.smul_apply, map_sum, map_smul, Finsupp.coe_finsetSum,
       Finsupp.smul_apply, smul_eq_mul]
     simpa only [mul_comm] using h1
   apply hx

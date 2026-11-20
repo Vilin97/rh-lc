@@ -55,7 +55,8 @@ theorem denseRange_rat_add_real : DenseRange (fun p : D.host.E × D.host.E =>
   simp only [Function.comp_apply, Pi.map_apply, Φ, Bt, Algebra.TensorProduct.basis_apply, pairA_alg, add_smul,
     Finset.sum_add_distrib, alg_smul_tmul, alg_smul_tmul_one]
   congr 1
-  · simp only [incA, inclR, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [incA, inclR, map_sum]
     exact Finset.sum_congr rfl fun k _ => rfl
   · rw [TensorProduct.tmul_sum]
 

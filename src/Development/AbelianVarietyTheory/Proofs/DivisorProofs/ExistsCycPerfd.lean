@@ -130,7 +130,8 @@ theorem exists_cycPerfd : ∀ (p : ℕ) [Fact p.Prime] (A K : Type) [CommRing A]
   have hθξ : fontaineTheta R p (GlobalTheory.Sandwich.xi ε) = 0 := by
     have h1 : PreTilt.untilt (GlobalTheory.Sandwich.root ε) = z 1 := by
       rw [← hzeta 1]; rfl
-    rw [GlobalTheory.Sandwich.xi, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [GlobalTheory.Sandwich.xi, map_sum]
     simp only [map_pow, fontaineTheta_teichmuller, h1]
     have h2 : ∑ i ∈ Finset.range p, z 1 ^ i = algebraMap A R (∑ i ∈ Finset.range p, ζ 1 ^ i) := by
       simp [hzdef]

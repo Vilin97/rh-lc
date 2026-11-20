@@ -15,7 +15,8 @@ theorem frobenius_mu (S : CycPerfd p) :
   have h2 : teichmuller p (root S.ε) ^ p = teichmuller p S.ε := by
     rw [← map_pow]; congr 1
     exact (_root_.frobeniusEquiv (PreTilt S.R p) p).apply_symm_apply S.ε
-  simp only [xi, Sandwich.mu, map_sum, map_pow, map_sub, map_one, h, h2]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [xi, Sandwich.mu, map_sum, map_pow, map_sub, map_one, h, h2]
   rw [geom_sum_mul]
 
 theorem theta_xi (S : CycPerfd p) : fontaineTheta S.R p (xi S.ε) = 0 := by

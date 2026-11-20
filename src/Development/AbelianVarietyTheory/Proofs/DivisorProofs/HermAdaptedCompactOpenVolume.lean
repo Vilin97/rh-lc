@@ -30,7 +30,8 @@ theorem lam_mul_x_eq_sum {σ : E →ₐ[F] E} {n : ℕ} {J : Matrix (Fin n) (Fin
   have hx : incV F x₀ i₀ = ∑ j, mat k i₀ j * (mat k⁻¹ *ᵥ incV F x₀) j := by
     conv_lhs => rw [← h1]
     rfl
-  rw [hx, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hx, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_mul, add_comm (compFin F E v (incV F x₀ j)), disp_add_x]
   ring

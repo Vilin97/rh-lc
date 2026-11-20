@@ -63,7 +63,8 @@ theorem isPair_addChar_form : ∀ (F : Type) [Field F] [CharZero F] [ValuativeRe
     intro y hy
     apply hnd y
     intro x
-    rw [← b.sum_repr x, map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← b.sum_repr x, map_sum, LinearMap.sum_apply]
     refine Finset.sum_eq_zero fun i _ => ?_
     rw [map_smul, LinearMap.smul_apply, show β (b i) y = 0 from congrFun hy i, smul_zero]
   have hbij : Function.Bijective f₂ :=
@@ -71,7 +72,8 @@ theorem isPair_addChar_form : ∀ (F : Type) [Field F] [CharZero F] [ValuativeRe
   let e₂ : V ≃ₗ[F] (Fin (Module.finrank F V) → F) := LinearEquiv.ofBijective f₂ hbij
   have key : ∀ u y, β (e₁.symm u) y = u ⬝ᵥ e₂ y := by
     intro u y
-    simp [e₁, e₂, f₂, Module.Basis.equivFun_symm_apply, map_sum, map_smul, dotProduct]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [e₁, e₂, f₂, Module.Basis.equivFun_symm_apply, map_sum, map_smul, dotProduct]
   have cont : ∀ g : V ≃ₗ[F] (Fin (Module.finrank F V) → F), Continuous g ∧ Continuous g.symm := fun g =>
     ⟨IsModuleTopology.continuous_of_linearMap g.toLinearMap,
       IsModuleTopology.continuous_of_linearMap g.symm.toLinearMap⟩

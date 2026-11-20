@@ -196,7 +196,8 @@ theorem eq_of_linApprox {k k' Γ : Type} [NormedField k] [NormedField k'] [IsUlt
     have hSβ : S * β = ∑ ρ ∈ s, σ (c ρ) * x.sum (fun g c' => c' * σ (trc ρ g)) := by
       rw [Finset.sum_mul]; exact Finset.sum_congr rfl fun ρ hρ => by rw [hβ ρ hρ]
     rw [hSβ, ← hα]
-    simp only [Finsupp.sum, map_sub, map_sum, map_mul, mul_sub, Finset.mul_sum, Finset.sum_sub_distrib]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Finsupp.sum, map_sub, map_sum, map_mul, mul_sub, Finset.mul_sum, Finset.sum_sub_distrib]
     rw [Finset.sum_comm]
     congr 1
     refine Finset.sum_congr rfl fun ρ _ => Finset.sum_congr rfl fun g _ => by ring

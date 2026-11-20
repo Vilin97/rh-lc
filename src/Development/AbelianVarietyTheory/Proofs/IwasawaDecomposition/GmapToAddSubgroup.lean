@@ -68,7 +68,8 @@ theorem toMatrix_unitary {n : ℕ} {g : Sp E n ≃ₗ[E] Sp E n} (hg : g ∈ UF 
     ((LinearMap.toMatrix' g.toLinearMap).map τ).conjTranspose * (LinearMap.toMatrix' g.toLinearMap).map τ = 1 := by
   ext i j
   have h := congrArg τ (hg (Pi.single i 1) (Pi.single j 1))
-  simp only [Formalism.L2.Col.hStd, LinearMap.mk₂'ₛₗ_apply, map_sum, map_mul, hτ] at h
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Formalism.L2.Col.hStd, LinearMap.mk₂'ₛₗ_apply, map_sum, map_mul, hτ] at h
   simp only [Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.map_apply, LinearMap.toMatrix'_apply, LinearEquiv.coe_coe]
   refine Eq.trans ?_ (h.trans ?_)
   · rfl

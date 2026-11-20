@@ -37,7 +37,8 @@ theorem res_locMap {U : X.Opens} {f : Fin r → Γ(M, U)} (hf : VB.IsFrame f) (�
     (h : W ≤ U) (h' : W' ≤ W) (s : Γ(M, W)) :
     Twist.resM M' h' (locMap hf φ h s) = locMap hf φ (h'.trans h) (Twist.resM M h' s) := by
   rw [← (hf.basis h).sum_repr s]
-  simp only [map_sum, map_smul, res_smul, hf.basis_apply, locMap_frame, res_res]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, res_smul, hf.basis_apply, locMap_frame, res_res]
 
 theorem locMap_eq {U U' : X.Opens} {f : Fin r → Γ(M, U)} (hf : VB.IsFrame f) (φ : Fin r → Γ(M', U))
     {f' : Fin r → Γ(M, U')} (hf' : VB.IsFrame f') (φ' : Fin r → Γ(M', U'))

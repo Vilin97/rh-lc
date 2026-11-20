@@ -138,7 +138,8 @@ theorem interPoly_sum_pow_fibrePoint (hG : GlobalTheory.Published.GoodChernNumbe
   obtain ⟨A, hA⟩ := E.nonempty (under y)
   refine ⟨A, hA, fun _ _ => (detRep m).ev A, fun _ => hL _ A hA, ?_⟩
   have hc := curvPoly_polyRep (detRep m) hH hHH hy hA c.holo hc
-  simp only [chernTop, chernPoly, map_pow, map_sum, aeval_X, Matrix.coeff_charpolyRev_eq_neg_trace, Matrix.trace_neg,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [chernTop, chernPoly, map_pow, map_sum, aeval_X, Matrix.coeff_charpolyRev_eq_neg_trace, Matrix.trace_neg,
     neg_neg, hc, Fintype.sum_unique, one_mul]
   rw [show Matrix.trace ((detRep m).lie _) = _ from (Matrix.trace_fin_one _).trans (lie_detRep _ 0 0)]
 
@@ -298,7 +299,8 @@ theorem interPoly_aeval {F : Type} [Field F] (Y : Var F) {κ κ' : Type} [Fintyp
     {P : MvPolynomial κ ℝ} (hP : P.IsHomogeneous Y.dim) :
     Y.interPoly (fun x => ∑ l, a x l • Δ l) P = Y.interPoly Δ (aeval (fun x => ∑ l, C (a x l : ℝ) * X l) P) := by
   classical
-  rw [P.as_sum, map_sum, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [P.as_sum, map_sum, map_sum, map_sum]
   refine Finset.sum_congr rfl fun d hd => ?_
   have hl : d.toMultiset.toList.length = Y.dim := by
     rw [Multiset.length_toList, Finsupp.card_toMultiset, ← hP (mem_support_iff.1 hd)]
@@ -403,9 +405,11 @@ theorem aeval_root (S : Sig A N j) :
       S.p_eq]
     split_ifs <;> simp
   constructor
-  · rw [← (rootLetter_bijective S).sum_comp, ← Finset.sum_neg_distrib, Fintype.sum_prod_type, lamA, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [← (rootLetter_bijective S).sum_comp, ← Finset.sum_neg_distrib, Fintype.sum_prod_type, lamA, map_sum]
     refine Finset.sum_congr rfl fun τ _ => ?_
-    simp only [pHigh, pLow, map_sub, map_sum, pow_one, aeval_X, Finset.sum_filter, apply_ite, map_zero, e,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [pHigh, pLow, map_sub, map_sum, pow_one, aeval_X, Finset.sum_filter, apply_ite, map_zero, e,
       ← Finset.sum_sub_distrib]
     refine Finset.sum_congr rfl fun i _ => ?_
     by_cases hi : (i : ℕ) < j

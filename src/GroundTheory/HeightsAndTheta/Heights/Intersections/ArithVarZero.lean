@@ -44,7 +44,8 @@ theorem killBlocks_of_isMultiHomog (S : Set K) {f : MRing ι} {a : K → ℕ} (h
     killBlocks S f = f ∨ killBlocks S f = 0 := by
   by_cases ha : ∀ k ∈ S, a k = 0
   · left
-    rw [f.as_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [f.as_sum, map_sum]
     refine Finset.sum_congr rfl fun m hm => killBlocks_monomial_of_forall S m _ ?_
     rintro ⟨k, i⟩ hp hkS
     have h1 := hf m hm k
@@ -55,7 +56,8 @@ theorem killBlocks_of_isMultiHomog (S : Set K) {f : MRing ι} {a : K → ℕ} (h
   · right
     push Not at ha
     obtain ⟨k, hkS, hak⟩ := ha
-    rw [f.as_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [f.as_sum, map_sum]
     refine Finset.sum_eq_zero fun m hm => ?_
     have h1 := hf m hm k
     obtain ⟨i, hi⟩ : ∃ i, m ⟨k, i⟩ ≠ 0 := by

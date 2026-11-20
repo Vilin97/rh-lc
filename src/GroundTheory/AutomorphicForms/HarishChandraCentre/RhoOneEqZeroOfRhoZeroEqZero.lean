@@ -35,8 +35,10 @@ theorem rhoDeriv_smul (c : Matrix (Fin n) (Fin n) ℂ) (r : ℂ) (M : gl n) :
 theorem rhoDeriv_rhoDeriv_X (c : Matrix (Fin n) (Fin n) ℂ) (P Q : gl n) (a : Fin n × Fin n) :
     rhoDeriv c P (rhoDeriv c Q (X a)) =
       ∑ k, C ((P * Q) k a.1) * (X (k, a.2) + C (c k a.2)) := by
-  rw [rhoDeriv_X, map_sum]
-  simp only [Derivation.leibniz, Derivation.map_add, derivation_C, smul_zero, add_zero,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [rhoDeriv_X, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Derivation.leibniz, Derivation.map_add, derivation_C, smul_zero, add_zero,
     smul_eq_mul, mul_zero, rhoDeriv_X, Matrix.mul_apply, map_sum, Finset.sum_mul, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun i _ => ?_
@@ -146,7 +148,8 @@ theorem rhoDeriv_one_shift (M : gl n) (f : Poly n) :
     rw [map_mul, Derivation.leibniz, Derivation.leibniz, hp, map_add, smul_eq_mul, smul_eq_mul,
       smul_eq_mul, smul_eq_mul, map_mul, map_mul]
     congr 2
-    rw [shift_X, Derivation.map_add, derivation_C, add_zero, rhoDeriv_X, rhoDeriv_X, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [shift_X, Derivation.map_add, derivation_C, add_zero, rhoDeriv_X, rhoDeriv_X, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     simp [shift_X, shift_C, Matrix.one_apply]
 
@@ -195,7 +198,8 @@ theorem mem_geDeg_of_isHomogeneous {f : Poly n} {d : ℕ} (hf : f.IsHomogeneous 
 theorem map_mem_of_monomial (L : Poly n →ₗ[ℂ] Poly n) (P : Submodule ℂ (Poly n))
     (Q : (Fin n × Fin n →₀ ℕ) → Prop) {f : Poly n} (hf : ∀ s, AddMonoidAlgebra.coeff f s ≠ 0 → Q s)
     (h : ∀ s (c : ℂ), Q s → L (monomial s c) ∈ P) : L f ∈ P := by
-  rw [f.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [f.as_sum, map_sum]
   exact Submodule.sum_mem _ fun s hs => h s _ (hf s (mem_support_iff.1 hs))
 
 theorem degree_sub_single {s : Fin n × Fin n →₀ ℕ} {a : Fin n × Fin n} (h : s a ≠ 0) :

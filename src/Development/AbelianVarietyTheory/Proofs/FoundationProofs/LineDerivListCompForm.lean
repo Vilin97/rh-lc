@@ -188,7 +188,8 @@ theorem ConjPair.sum {κ : Type*} [Fintype κ] {F F' : κ → VC D N N' → ℂ}
     (h : ∀ i, ConjPair D s (F i) (F' i)) :
     ConjPair D s (fun z => ∑ i, F i z) (fun z => ∑ i, F' i z) := by
   refine ⟨Differentiable.fun_sum fun i _ => (h i).1, Differentiable.fun_sum fun i _ => (h i).2.1, ?_⟩
-  rw [taylorDir_sum _ _ fun i _ => an0 (h i).1, taylorDir_sum _ _ fun i _ => an0 (h i).2.1, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [taylorDir_sum _ _ fun i _ => an0 (h i).1, taylorDir_sum _ _ fun i _ => an0 (h i).2.1, map_sum]
   exact Finset.sum_congr rfl fun i _ => (h i).2.2
 
 theorem ConjPair.prod {κ : Type*} [Fintype κ] {F F' : κ → VC D N N' → ℂ}

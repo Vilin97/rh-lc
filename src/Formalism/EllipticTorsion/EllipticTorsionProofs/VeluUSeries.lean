@@ -215,7 +215,8 @@ theorem velu_u_series : VeluUSeries.{u} := by
   have hXe : veluX WL SL x * u ^ 2 = ψ EX := by
     have e1 : ψ EX = ψ Ui' + u ^ 4 * ∑ i, (ψ (C (vq i)) * ψ (Di i)
         + ψ (C (uq i)) * u ^ 2 * ψ (Di i) ^ 2) := by
-      rw [hEX]; simp only [map_add, map_mul, map_pow, map_sum, hψX]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hEX]; simp only [map_add, map_mul, map_pow, map_sum, hψX]
     rw [e1]
     simp only [veluX]
     rw [add_mul, Finset.sum_mul, hx, Finset.mul_sum]
@@ -228,7 +229,8 @@ theorem velu_u_series : VeluUSeries.{u} := by
         + ψ (C (vq i)) * (ψ (C a1') * (ψ Ui' - ψ (C (xq i)) * u ^ 2) * u - ψ Ui'
           - ψ (C (yq i)) * u ^ 3) * ψ (Di i) ^ 2
         + ψ (C (cq i)) * u ^ 3 * ψ (Di i) ^ 2) := by
-      rw [hEY]; simp only [map_add, map_mul, map_pow, map_sum, map_sub, map_neg, map_ofNat, hψX]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hEY]; simp only [map_add, map_mul, map_pow, map_sum, map_sub, map_neg, map_ofNat, hψX]
     have hs : ∀ i ∈ Finset.univ, (veluU WL (SL i).1 (SL i).2 * (2 * y + WL.a₁ * x + WL.a₃)
           / (x - (SL i).1) ^ 3
         + veluV WL (SL i).1 (SL i).2 * (WL.a₁ * (x - (SL i).1) + y - (SL i).2) / (x - (SL i).1) ^ 2

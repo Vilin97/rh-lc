@@ -254,7 +254,8 @@ theorem invForm {U T T' : URep k r} {P : Mx k r} (hP : IsCayleyU k r ε P) (i : 
       funext c
       show ∑ d, P⁻¹ d c • ((CompanionTheory.Zuck.act (vr k r true, U) g w d : U.R.H)) =
         ∑ d, (P * g * P⁻¹)⁻¹ d c • U.R.σ g (∑ e, P⁻¹ e d • (w e : U.R.H))
-      simp only [act_coe U hg, map_sum, map_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [act_coe U hg, map_sum, map_smul]
       rw [sum_comp, sum_comp, eB]
     have hB : (P * g * P⁻¹)⁻¹ * Jm ε * ((P * g * P⁻¹)⁻¹)ᴴ = Jm ε := by
       have hC := cay_mem' hP hg

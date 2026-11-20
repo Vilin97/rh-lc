@@ -49,7 +49,8 @@ theorem _root_.GlobalTheory.RatUnit.isUA_ratM : ∀ (E : Type) [Field E] [Number
       ∑ a, ∑ b, x a * φ (G a b) * τ (y b)
     calc _ = ∑ a, ∑ b, ∑ i, ∑ j,
             x i * (φ (γ a i) * φ (G a b) * φ (IsCMField.complexConj E (γ b j))) * τ (y j) := by
-          simp only [mulVec, dotProduct, map_apply, map_sum, map_mul, hτ, Finset.sum_mul,
+          set_option synthInstance.maxHeartbeats 100000 in
+            simp only [mulVec, dotProduct, map_apply, map_sum, map_mul, hτ, Finset.sum_mul,
             Finset.mul_sum]
           refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
           rw [Finset.sum_comm]
@@ -69,9 +70,11 @@ theorem _root_.GlobalTheory.RatUnit.isUA_ratM : ∀ (E : Type) [Field E] [Number
           Finset.sum_congr rfl fun i _ => Finset.sum_comm
       _ = ∑ i, ∑ j, x i * φ (G i j) * τ (y j) := by
           refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
-          rw [← hmat i j, map_sum, Finset.mul_sum, Finset.sum_mul]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [← hmat i j, map_sum, Finset.mul_sum, Finset.sum_mul]
           refine Finset.sum_congr rfl fun a _ => ?_
-          rw [map_sum, Finset.mul_sum, Finset.sum_mul]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [map_sum, Finset.mul_sum, Finset.sum_mul]
           refine Finset.sum_congr rfl fun b _ => ?_
           simp only [map_mul]
 

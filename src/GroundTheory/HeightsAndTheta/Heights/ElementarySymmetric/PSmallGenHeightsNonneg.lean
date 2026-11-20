@@ -43,7 +43,8 @@ theorem killBlocksBelow_of_isMultiHomog (j : ℕ) {f : MRing ι} {a : K → ℕ}
   by_cases h : ∀ k, ((Fintype.equivFin K k : Fin _) : ℕ) < j → a k = 0
   · left
     conv_rhs => rw [f.as_sum]
-    conv_lhs => rw [f.as_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [f.as_sum, map_sum]
     refine Finset.sum_congr rfl fun m hm ↦ ?_
     rw [killBlocksBelow_monomial, if_pos]
     intro p hp hlt
@@ -53,7 +54,8 @@ theorem killBlocksBelow_of_isMultiHomog (j : ℕ) {f : MRing ι} {a : K → ℕ}
   · right
     push Not at h
     obtain ⟨k, hk, hak⟩ := h
-    conv_lhs => rw [f.as_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [f.as_sum, map_sum]
     refine Finset.sum_eq_zero fun m hm ↦ ?_
     rw [killBlocksBelow_monomial, if_neg]
     push Not

@@ -40,7 +40,8 @@ theorem dual_hkG {G W : Type} [Group G] [AddCommGroup W] [Module ℂ W] (φ : GA
   show l (c.sum fun d z => z • ∑ γ ∈ GlobalTheory.Hk3.rep V P d, F (φ x * φ γ)) = _
   rw [map_finsuppSum, Finsupp.sum]
   refine Finset.sum_congr rfl fun d _ => ?_
-  rw [map_smul, map_sum, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_smul, map_sum, smul_eq_mul]
   congr 1
   show _ = ∑ γ ∈ GlobalTheory.Hk3.rep V P d, l (F (φ (x * γ)))
   simp only [map_mul]
@@ -52,7 +53,8 @@ theorem hkG_left {G W : Type} [Group G] [AddCommGroup W] [Module ℂ W] (φ : GA
     T (c.sum fun d z => z • ∑ γ ∈ GlobalTheory.Hk3.rep V P d, F (h * φ γ))
   rw [map_finsuppSum]
   refine Finsupp.sum_congr fun d _ => ?_
-  rw [map_smul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_smul, map_sum]
   congr 1
   refine Finset.sum_congr rfl fun γ _ => ?_
   rw [mul_assoc, hF]

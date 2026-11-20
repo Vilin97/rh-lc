@@ -60,7 +60,8 @@ theorem harmK_map (io : k →+* K) {cc : Ty → Ty} {isX : Ty → Prop} {P : MvP
   simp only [harmK, Submodule.mem_iInf, LinearMap.mem_ker] at hP ⊢
   intro τ hτ a a'
   have e : lap r n K 1 τ (cc τ) a a' (P.map io) = (lap r n k 1 τ (cc τ) a a' P).map io := by
-    simp only [lap, LinearMap.sum_apply, LinearMap.smul_apply, LinearMap.comp_apply, Derivation.coeFn_coe,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [lap, LinearMap.sum_apply, LinearMap.smul_apply, LinearMap.comp_apply, Derivation.coeFn_coe,
       pderiv_map, map_sum, Matrix.one_apply, ite_smul, one_smul, zero_smul]
     refine Finset.sum_congr rfl fun b _ => Finset.sum_congr rfl fun b' _ => ?_
     split_ifs <;> simp [pderiv_map]

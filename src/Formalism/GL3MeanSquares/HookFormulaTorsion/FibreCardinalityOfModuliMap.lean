@@ -53,7 +53,8 @@ theorem mean_count_of_moduli_space : Ms_count_mean := by
     exact h
   have hmem : ∀ x : 𝓞 K, ι x ∈ E := by
     intro x
-    rw [← b.sum_repr x, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← b.sum_repr x, map_sum]
     refine Submodule.sum_mem _ fun i _ => ?_
     rw [map_zsmul]
     exact E.toAddSubgroup.zsmul_mem (Submodule.subset_span ⟨i, rfl⟩) _

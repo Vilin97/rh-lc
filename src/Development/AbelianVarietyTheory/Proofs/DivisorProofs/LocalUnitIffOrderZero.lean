@@ -37,7 +37,8 @@ theorem mem_intLoc_of_toCompl {v : HeightOneSpectrum (𝓞 F)} (y : Fv F v ⊗[F
     exact h2 u
   obtain ⟨m, g, hg⟩ := Module.Finite.exists_fin (R := ℤ) (M := 𝓞 E)
   obtain ⟨r, hr, e⟩ := P.levelaf_decomp g hg h4
-  rw [← h1, ← c.apply_symm_apply Y, e, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← h1, ← c.apply_symm_apply Y, e, map_sum, map_sum]
   exact sum_mem fun j _ => tmul_mem_intLoc (hr j v) (g j)
 
 theorem toCompl_mem_Ov_iff {v : Pl F} (m : idelesAt E (evFin F v)) {w : HeightOneSpectrum (𝓞 E)}

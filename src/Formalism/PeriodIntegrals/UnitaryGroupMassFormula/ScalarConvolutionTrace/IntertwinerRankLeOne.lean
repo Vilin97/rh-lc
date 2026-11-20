@@ -35,7 +35,8 @@ theorem whit_sgn_projQ (ψ₀ : AddChar F ℂ) (π : Representation ℂ (GL (Fin
       rw [if_pos hx, mul_comm (psiU ψ₀ x), psiU_sgn_conj]
     · unfold psiNat; rw [if_neg hx, if_neg hx, zero_mul, zero_mul]
   unfold projQ
-  simp only [LinearMap.smul_apply, LinearMap.sum_apply, map_smul, map_sum, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [LinearMap.smul_apply, LinearMap.sum_apply, map_smul, map_sum, smul_eq_mul]
   simp_rw [hterm]
   rw [← Finset.sum_mul, sum_boole_uni, ← mul_assoc, inv_mul_cancel₀ (cardU_ne_zero F k), one_mul]
 

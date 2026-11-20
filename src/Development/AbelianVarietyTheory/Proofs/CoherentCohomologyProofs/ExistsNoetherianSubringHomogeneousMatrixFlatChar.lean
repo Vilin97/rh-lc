@@ -23,7 +23,8 @@ private theorem exists_generalized_inverse_mod_ideal {R S B P : Type} [CommRing 
     intro y
     conv_lhs => rw [show y = ∑ m, y m • Pi.single m 1 from by
       funext j; simp [Finset.sum_apply, Pi.single_apply]]
-    simp [map_sum, p]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, p]
   let F : (Fin a → B) →ₗ[B] P := Fintype.linearCombination B p
   have hF : ∀ β, F β = ∑ m, β m • p m := fun β => Fintype.linearCombination_apply B p β
   have hFsurj : Function.Surjective F := by
@@ -73,10 +74,12 @@ private theorem exists_generalized_inverse_mod_ideal {R S B P : Type} [CommRing 
     have hsum : ∑ m, π (Φ m j) • s (p m) = 0 := by
       have h1 := hεsum (fun l => Φ l j)
       rw [hcolε j] at h1
-      simp_rw [← LinearMap.map_smul, ← map_sum, ← h1, map_zero]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp_rw [← LinearMap.map_smul, ← map_sum, ← h1, map_zero]
     have hsuml := congr_fun hsum l
     simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Pi.zero_apply] at hsuml
-    rw [Matrix.sub_apply, map_sub, Matrix.mul_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Matrix.sub_apply, map_sub, Matrix.mul_apply, map_sum]
     simp only [AlgHom.coe_toRingHom, map_mul, hcomp, Pi.sub_apply, sub_mul, Finset.sum_sub_distrib, Pi.single_apply,
       ite_mul, one_mul, zero_mul, Finset.sum_ite_eq, Finset.mem_univ, if_true]
     rw [show ∑ m, s (p m) l * π (Φ m j) = ∑ m, π (Φ m j) * s (p m) l from
@@ -256,7 +259,8 @@ theorem _root_.GlobalTheory.exists_noetherian_subring_homogeneous_matrix_flat_ch
       apply hφinj
       rw [aeval_eq_bind₁, MvPolynomial.map_bind₁]
       simp only [φ] at hg₀ hwa₀ hwb₀ hφX ⊢
-      simp only [map_add, map_sum, map_mul, hg₀, hwa₀, hwb₀, hφX]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_add, map_sum, map_mul, hg₀, hwa₀, hwb₀, hφX]
       rw [← aeval_eq_bind₁]
       exact hwit i j
     haveI : Algebra.FormallySmooth R₀ (MvPolynomial ι R₀ ⧸ Ideal.span (Set.range (g₀ i))) :=
@@ -268,14 +272,16 @@ theorem _root_.GlobalTheory.exists_noetherian_subring_homogeneous_matrix_flat_ch
     refine _root_.GlobalTheory.flat_quotSMulTop_coker_of_matrix_witnesses R₀ (MvPolynomial ι R₀) (r i) a b (g₀ i)
       (X i - 1) Φ₀ inferInstance ⟨c₀ i, ?_⟩ (fun k => ⟨C₀ i k, C'₀ i k, ?_⟩) ⟨Ψ₀ i, E₀ i, ?_⟩
     · apply hφinj
-      simp only [map_sub, map_one, map_sum, map_mul, hc₀, hg₀, hφX]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sub, map_one, map_sum, map_mul, hc₀, hg₀, hφX]
       exact hc' i
     · refine Matrix.ext fun l m => ?_
       apply hφinj
       have h1 := congr_fun (congr_fun (hCC i k) l) m
       simp only [Matrix.smul_apply, Matrix.add_apply, Matrix.mul_apply, Matrix.one_apply,
         smul_eq_mul] at h1 ⊢
-      simp only [map_add, map_mul, map_sum, map_sub, map_one, hg₀, hφX, hΦ₀, hC₀, hC'₀,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_add, map_mul, map_sum, map_sub, map_one, hg₀, hφX, hΦ₀, hC₀, hC'₀,
         apply_ite φ, map_zero, map_one]
       simpa [Φ₀, C₀, C'₀] using h1
     · refine Matrix.ext fun l j => ?_
@@ -283,7 +289,8 @@ theorem _root_.GlobalTheory.exists_noetherian_subring_homogeneous_matrix_flat_ch
       have h1 := congr_fun (congr_fun (hΨE i) l) j
       simp only [Matrix.add_apply, Matrix.mul_apply, Matrix.sum_apply, Matrix.smul_apply,
         smul_eq_mul] at h1 ⊢
-      simp only [map_add, map_mul, map_sum, hΦ₀, hΨ₀, hE₀, hg₀]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_add, map_mul, map_sum, hΦ₀, hΨ₀, hE₀, hg₀]
       exact h1
 
 end GlobalTheory

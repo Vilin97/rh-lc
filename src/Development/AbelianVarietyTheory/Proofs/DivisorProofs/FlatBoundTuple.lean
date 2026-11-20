@@ -34,7 +34,8 @@ theorem dot_pairVec (J : Matrix (Fin n) (Fin n) E) (w v : Fin n → E) : w ⬝�
 
 theorem form_symm {J : Matrix (Fin n) (Fin n) E} (hσ : ∀ a, σ (σ a) = a) (hJ : ∀ i j, σ (J j i) = J i j)
     (a b : Fin n → E) : form σ J a b = σ (form σ J b a) := by
-  simp only [form, dotProduct, mulVec, map_sum, map_mul, hσ, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, mulVec, map_sum, map_mul, hσ, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   rw [hJ j i]; ring

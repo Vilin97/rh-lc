@@ -125,7 +125,8 @@ theorem exists_deltaDat_large_coeff : ∀ (E : Type) [Field E] [NumberField E] [
         exact (Algebra.IsAlgebraic.isAlgebraic (R := ℚ) (b i)).algHom c.F.val)
   have hle : c.F ≤ c₀.F := fun x hx => by
     have e := congrArg c.F.val (b.sum_repr ⟨x, hx⟩)
-    rw [map_sum] at e
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at e
     change _ = x at e
     rw [← e]
     refine sum_mem fun i _ => ?_

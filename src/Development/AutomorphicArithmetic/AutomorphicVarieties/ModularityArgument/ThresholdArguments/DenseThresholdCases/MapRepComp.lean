@@ -179,7 +179,8 @@ private theorem ps_wt_any {D : Raw Ω c} (h : D.Good) {A : ValuationSubring Ω} 
   rwa [e, e] at h3
 private theorem map_psi {ι Γ R R' : Type} [Group Γ] [CommRing R] [CommRing R'] (P : PD ι Γ R) (f : R →+* R') (v : ι) (i : Fin 4)
     (s : Γ) : (P.map f).ψ v i s = f (P.ψ v i s) := by
-  simp [PD.ψ, PD.map, Matrix.mul_apply, adj_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [PD.ψ, PD.map, Matrix.mul_apply, adj_apply, map_sum]
 private theorem irr_L {D : Raw Ω c} (T : Tower D) (hT : T.Ok) (𝔞 : Amb l) (f : 𝔞.V →+* PadicAlgCl l) (hf : Function.Injective f)
     (r : G ℚ Ω →* M4 𝔞.V) (hr : ∀ g i j, r g i j - 𝔞.a c (D.r0 g i j) ∈ maximalIdeal 𝔞.V) (hi : Irr (mapRep f r)) :
     Irr ((mapRep f r).comp T.L.fixingSubgroup.subtype) := by
@@ -188,7 +189,8 @@ private theorem irr_L {D : Raw Ω c} (T : Tower D) (hT : T.Ok) (𝔞 : Amb l) (f
     rwa [inv_mul_cancel_right] at this⟩
   refine irr_sub f hf (residue 𝔞.V) r
     (fun i => (Units.map (𝔞.red c).toMonoidHom).comp (D.ps i)) (fun g => ?_) _ (comm_L T) (fun i j hij => ?_) hi
-  · rw [Matrix.trace, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [Matrix.trace, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     have h1 : residue 𝔞.V (r g i i) = residue 𝔞.V (𝔞.a c (D.r0 g i i)) := Ideal.Quotient.eq.2 (hr g i i)
     have h2 : D.r0 g i i = D.ps i g := Matrix.diagonal_apply_eq _ i

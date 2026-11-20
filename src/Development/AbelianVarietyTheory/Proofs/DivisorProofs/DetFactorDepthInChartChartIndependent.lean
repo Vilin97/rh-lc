@@ -30,7 +30,8 @@ theorem exp_eq_of_log_hom {d : ℕ} (G G' : LogFGL v d) (Φ : Fin d → MvPowerS
   have key : (fun j => subst (fun e => (subst (fun f => (subst w' (expOf G' f) : MvPowerSeries τ C)) (Φ e) :
       MvPowerSeries τ C)) (G.lg j)) = w := by
     funext j
-    rw [← subst_comp_subst_apply (hasSubst_of_constantCoeff_zero h0) s2, hl, hw, ← coe_substAlgHom s2, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← subst_comp_subst_apply (hasSubst_of_constantCoeff_zero h0) s2, hl, hw, ← coe_substAlgHom s2, map_sum]
     refine Finset.sum_congr rfl fun f _ => ?_
     rw [map_smul, coe_substAlgHom,
       ← subst_comp_subst_apply (hasSubst_of_constantCoeff_zero (isExp_expOf G').1) s1, (isExp_expOf G').2,
@@ -153,7 +154,8 @@ theorem detDepth_le_of_transF {R : Type} [CommRing R] (v : AddValuation C (WithT
       ∑ f, _ • subst (oneVar C d) (GlobalTheory.FormalLog.logOf L' f)
     rw [subst_oneVar _ cc_oneVar _ hψ]
     refine (congrArg (subst (oneVar C d)) (congrFun e3 a)).trans ?_
-    rw [← coe_substAlgHom hs_oneVar, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← coe_substAlgHom hs_oneVar, map_sum]
     simp only [map_smul]
   · funext e
     rw [hu, RingHom.map_mulVec]

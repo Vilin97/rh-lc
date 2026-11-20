@@ -184,7 +184,8 @@ theorem rootCone_add_mem (T : U₁ →ₗ[ℂ] U₂) (A : Module.End ℂ U₁) (
 
 theorem aeval_intertwine_alt (T : U₁ →ₗ[ℂ] U₂) (A : Module.End ℂ U₁) (B : Module.End ℂ U₂)
     (h : ∀ x, T (A x) = B (T x)) (p : ℂ[X]) (x : U₁) : T (aeval A p x) = aeval B p (T x) := by
-  rw [aeval_eq_sum_range, aeval_eq_sum_range, LinearMap.sum_apply, LinearMap.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [aeval_eq_sum_range, aeval_eq_sum_range, LinearMap.sum_apply, LinearMap.sum_apply, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [LinearMap.smul_apply, LinearMap.smul_apply, map_smul, rootCone_add_mem T A B h]
 

@@ -66,7 +66,8 @@ theorem map_smul_tup (φ : R →ₐ[F] S) {n : ℕ} (h : HA R σ J) (X : Fin n �
   funext x i
   simp only [HSMul.hSMul, SMul.smul]
   unfold actTup
-  simp [mat_haMap_apply, Matrix.mulVec, dotProduct, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [mat_haMap_apply, Matrix.mulVec, dotProduct, map_sum, map_mul]
 
 theorem tmap_comp {T : Type} [CommRing T] [Algebra F T] (f : R →ₐ[F] S) (g : S →ₐ[F] T)
     (y : R ⊗[F] E) :

@@ -33,7 +33,8 @@ theorem exists_sec_mul_adelic_fun : ∀ (D : D7) (H : ReciprocityTheory.ChartRes
     Submodule.sum_mem _ fun k _ => Submodule.smul_mem _ _ (hχ k)
   have hval : ∀ k x, x ∈ (U.X k).dom → rdU U (∑ k, v k • χ k) k x = σ (v k) := by
     intro k x hx
-    rw [map_sum, Finset.sum_apply, Finset.sum_apply, Finset.sum_eq_single k]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_apply, Finset.sum_apply, Finset.sum_eq_single k]
     · rw [LinearMap.map_smulₛₗ, Pi.smul_apply, Pi.smul_apply, (hrd k k x hx).1 rfl, smul_eq_mul, mul_one]
     · intro k' _ hk
       rw [LinearMap.map_smulₛₗ, Pi.smul_apply, Pi.smul_apply, (hrd k' k x hx).2 hk.symm, smul_zero]

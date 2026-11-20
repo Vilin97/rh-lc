@@ -54,7 +54,8 @@ theorem main : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridDa
     rw [Finset.sum_congr rfl hf]
     refine ae_ext ?_ fun Q => ?_
     · rw [map_mul, (atPl_spec w 1).1, mul_zero]
-    · rw [map_mul, map_mul, (atPl_spec w 1).2, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [map_mul, map_mul, (atPl_spec w 1).2, map_sum, map_sum]
       by_cases hQ : Q = w
       · subst hQ
         rw [Pi.single_eq_same, mul_one, Finset.sum_eq_single Q (fun b _ hb => by

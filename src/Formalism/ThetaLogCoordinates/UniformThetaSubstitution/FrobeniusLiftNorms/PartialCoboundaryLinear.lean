@@ -125,11 +125,13 @@ theorem subst_pow_g_zero {ι : Type} {p : ℕ} (hp : 2 ≤ p) (hpK : (p : K) ≠
 
 theorem map_lgF (σ : K →+* K) (p : ℕ) : PowerSeries.map σ (lgF K p) = lgF K p := by
   ext n
-  simp [lgF, map_sum, apply_ite]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [lgF, map_sum, apply_ite]
 
 theorem map_g0F (σ : K →+* K) (p : ℕ) : PowerSeries.map σ (g0F K p) = g0F K p := by
   ext n
-  simp [g0F, map_sum, apply_ite]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [g0F, map_sum, apply_ite]
 
 theorem map_derivative (σ : K →+* K) (f : PowerSeries K) :
     PowerSeries.map σ (PowerSeries.derivative K f) =

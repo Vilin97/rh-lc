@@ -62,7 +62,8 @@ theorem span_top (hP : IsPeriod D ty P) (b : Fin g → Bool) (a : ∀ k, PureTyp
     intro y
     obtain ⟨c, hc⟩ := (Submodule.mem_span_range_iff_exists_fun (OK H)).1 (hN y)
     have h1 : P (N • y) ∈ W := by
-      rw [← hc, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hc, map_sum]
       refine Submodule.sum_mem _ fun k _ => ?_
       rw [Subalgebra.smul_def, P_smul hP (a k) (c k)]
       exact W.smul_mem _ (Submodule.subset_span ⟨k, rfl⟩)
@@ -102,7 +103,8 @@ theorem coeff_of_period (hP : IsPeriod D ty P) (b : Fin g → Bool) (a : ∀ k, 
   have e1 : ∑ k, ((N : ℂ) * s k) • P (a k) = (N : ℂ) • P y := by
     simp only [mul_smul, ← Finset.smul_sum, hs]
   have e2 : ∑ k, kap ty H (b k) (c k) • P (a k) = (N : ℂ) • P y := by
-    rw [Nat.cast_smul_eq_nsmul, ← map_nsmul, ← hc, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Nat.cast_smul_eq_nsmul, ← map_nsmul, ← hc, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [Subalgebra.smul_def, P_smul hP (a k) (c k)]
   have hsum : ∑ k, ((N : ℂ) * s k - kap ty H (b k) (c k)) • P (a k) = 0 := by

@@ -37,7 +37,8 @@ theorem isDec_of_matrix : ∀ (l : ℕ) [Fact l.Prime] (act : GQ l →* (PadicCo
       (A * B).map e = A.map e * B.map e := by
     intro e A B
     ext i j
-    simp [Matrix.mul_apply, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Matrix.mul_apply, map_sum, map_mul]
   have hmapcomp : ∀ σ τ : GQ l, D.map (act (σ * τ)) = (D.map (act τ)).map (act σ) := by
     intro σ τ
     ext i j

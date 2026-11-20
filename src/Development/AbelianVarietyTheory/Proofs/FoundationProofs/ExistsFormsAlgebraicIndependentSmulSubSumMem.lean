@@ -110,7 +110,8 @@ theorem exists_smul_mem_formCombinations [Finite σ] {I : Ideal (MvPolynomial σ
     have hrh : r.IsHomogeneous (e + n) :=
       hp'.sub (IsHomogeneous.sum _ _ _ fun i _ => (hF i).mul (hG i))
     have h0 : map (Ideal.Quotient.mk J) (r - u) = 0 := by
-      rw [map_sub, hueq, hr, map_sub, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, hueq, hr, map_sub, map_sum]
       simp only [map_mul, hGg, sub_self]
     have h1 : r - homogeneousComponent (e + n) u ∈ J • homogeneousSubmodule σ R (e + n) := by
       refine mem_smul_of_isHomogeneous_of_coeff_mem (n := e + n)

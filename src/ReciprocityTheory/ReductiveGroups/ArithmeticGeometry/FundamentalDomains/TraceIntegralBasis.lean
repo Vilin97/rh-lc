@@ -135,7 +135,8 @@ lemma mem_span_bas {x : VS E} (hx : x ∈ span ℤ (Set.range (bas E))) :
     ∃ α : 𝓞 E, x = iota E (α : E) := by
   obtain ⟨c, rfl⟩ := (mem_span_range_iff_exists_fun ℤ).1 hx
   refine ⟨∑ i, c i • RingOfIntegers.basis E i, ?_⟩
-  simp only [bas_apply, integralBasis_apply, ← map_zsmul, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [bas_apply, integralBasis_apply, ← map_zsmul, ← map_sum]
 
 lemma card_CP : Fintype.card (CP E) = fdeg E ∧ finrank ℚ E = 2 * Fintype.card (CP E) := by
   have h := InfinitePlace.card_add_two_mul_card_eq_rank E

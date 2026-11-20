@@ -32,7 +32,8 @@ theorem integral_ddc_mul_eq_zero : ∀ {M : Type} [TopologicalSpace M] [CompactS
   have hsum : γ = ∑ j, A.fn (χ j) * γ := by
     rw [← Finset.sum_mul]
     funext x
-    simp only [Finset.sum_apply, Pi.mul_apply, GlobalTheory.CxForm.HolAtlas.fn, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Finset.sum_apply, Pi.mul_apply, GlobalTheory.CxForm.HolAtlas.fn, ← map_sum]
     rw [show (∑ j, ((χ j x.pt : ℝ) : ℂ)) = 1 by exact_mod_cast hχ1 x.pt, map_one, one_mul]
   rw [hsum, GlobalTheory.T.holAtlas_del_finset_sum A _ hf, GlobalTheory.T.holAtlas_integral_fin_sum_compact A _ fun j => GlobalTheory.T.holAtlas_isForm_del A _ (hf j)]
   exact Finset.sum_eq_zero fun j _ => GlobalTheory.T.integral_del_chartSupported_mul_form_eq_zero A γ (χ j) (c j) hγ' (hχs j) (hχt j)

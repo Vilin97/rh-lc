@@ -43,7 +43,8 @@ theorem trace_formula (τ : Representation K G T) (H₀ H : Subgroup G) (χ₀ :
       ((Nat.card H₀ : K)⁻¹ * (Nat.card H : K)⁻¹) *
         ∑ h₀ : H₀, ∑ h : H, ((((χ₀ h₀⁻¹ : (𝓞 K)ˣ) : 𝓞 K) : K) *
           (((χ h⁻¹ : (𝓞 K)ˣ) : 𝓞 K) : K)) * charOf τ ((h₀ : G) * a * h * b) := by
-  simp only [← Module.End.mul_eq_comp, epP, Finset.sum_mul, Finset.mul_sum, smul_mul_assoc,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← Module.End.mul_eq_comp, epP, Finset.sum_mul, Finset.mul_sum, smul_mul_assoc,
     mul_smul_comm, map_smul, map_sum, smul_eq_mul, ← map_mul, charOf, mul_assoc]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun h₀ _ => Finset.sum_congr rfl fun h _ => ?_
@@ -74,9 +75,11 @@ theorem norm_trace_le (hC : CharFacts) (τ : Representation K G T) (H₀ H : Sub
   have hB : ‖σ (∑ h₀ : H₀, ∑ h : H, ((((χ₀ h₀⁻¹ : (𝓞 K)ˣ) : 𝓞 K) : K) *
           (((χ h⁻¹ : (𝓞 K)ˣ) : 𝓞 K) : K)) * charOf τ ((h₀ : G) * a * h * b))‖ ≤
       ∑ _h₀ : H₀, ∑ _h : H, (finrank K T : ℝ) := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine norm_sum_le_of_le _ fun h₀ _ => ?_
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine norm_sum_le_of_le _ fun h _ => ?_
     rw [map_mul, map_mul, norm_mul, norm_mul, norm_chi, norm_chi, one_mul, one_mul]
     exact ((hC K G T τ _).2 σ).2
@@ -130,7 +133,8 @@ def epA (H : Subgroup G) (χ : H →* (𝓞 K)ˣ) : MonoidAlgebra K G :=
 
 theorem asAlg_epA (H : Subgroup G) (χ : H →* (𝓞 K)ˣ) {V : Type} [AddCommGroup V] [Module K V]
     (ρ : Representation K G V) : ρ.asAlgebraHom (epA H χ) = epP H χ ρ := by
-  simp only [epA, epP, map_smul, map_sum, Representation.asAlgebraHom_single]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [epA, epP, map_smul, map_sum, Representation.asAlgebraHom_single]
 
 def eA {T : Type} [AddCommGroup T] [Module K T] (τ : Representation K G T) : MonoidAlgebra K G :=
   (charOf τ 1 / (Fintype.card G : K)) • ∑ x : G, MonoidAlgebra.single x (charOf τ x⁻¹)
@@ -138,7 +142,8 @@ def eA {T : Type} [AddCommGroup T] [Module K T] (τ : Representation K G T) : Mo
 theorem asAlg_eA {T : Type} [AddCommGroup T] [Module K T] (τ : Representation K G T)
     {V : Type} [AddCommGroup V] [Module K V] (ρ : Representation K G V) :
     ρ.asAlgebraHom (eA τ) = eS τ ρ := by
-  simp only [eA, eS, map_smul, map_sum, Representation.asAlgebraHom_single]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [eA, eS, map_smul, map_sum, Representation.asAlgebraHom_single]
 
 end Alg
 
@@ -208,11 +213,13 @@ theorem core_of (hC : CharFacts) (hK : KeyZero) (hS : Schur) (hP : IdemP) : Core
           _ = a := by rw [ii, ha]
       have hy : (τ s).asAlgebraHom (∑ j, ∑ i, c⁻¹ j i • (epA H χ * MonoidAlgebra.of K G (γ j) *
           epA H₀ χ₀ * MonoidAlgebra.of K G (δ i) * epA H χ) - epA H χ) = 0 := by
-        simp only [map_sub, map_sum, map_mul, map_smul, asAlg_epA, Representation.asAlgebraHom_of,
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sub, map_sum, map_mul, map_smul, asAlg_epA, Representation.asAlgebraHom_of,
           Module.End.mul_eq_comp, LinearMap.comp_assoc]
         rw [he2, sub_self]
       have := LinearMap.congr_fun (hK K G (T s) (τ s) V ρ _ hy) a
-      simp only [LinearMap.comp_apply, map_sub, map_sum, map_mul, map_smul, asAlg_epA,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [LinearMap.comp_apply, map_sub, map_sum, map_mul, map_smul, asAlg_epA,
         Representation.asAlgebraHom_of, LinearMap.sub_apply, LinearMap.sum_apply,
         Module.End.mul_apply, LinearMap.smul_apply, LinearMap.zero_apply, ce₀, ce_g, ce, ea, Ea,
         sub_eq_zero] at this

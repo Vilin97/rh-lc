@@ -90,7 +90,8 @@ theorem formEq_of_eq {K K' : Type} [Fintype K] [Fintype K'] {φ : K → (Y ⟶ X
     FormEq φ ε φ' ε' := by
   intro U _ h
   have := congrArg (FreeAbelianGroup.lift (fun m => Additive.ofMul (h m))) H
-  simp only [map_sum, map_zsmul, FreeAbelianGroup.lift_apply_of] at this
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_zsmul, FreeAbelianGroup.lift_apply_of] at this
   apply Additive.ofMul.injective
   simpa only [ofMul_prod, ofMul_zpow] using this
 
@@ -298,7 +299,8 @@ variable {S : Scheme.{0}} {A A' : Over S} [GrpObj A] [IsCommMonObj A] [GrpObj A'
 
 theorem mk_qf (H : AddSubgroup (FreeAbelianGroup (T.left ⟶ A.left))) (W : Matrix (Fin r) (Fin r) ℤ) (u : T ⟶ A') :
     QuotientAddGroup.mk' H (qf pr W u) = ∑ i, ∑ j, W i j • ell H (u ≫ pr i) (u ≫ pr j) := by
-  simp only [qf, map_sum, map_zsmul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [qf, map_sum, map_zsmul]
   rfl
 
 theorem total_mem (hp : ∀ i, IsMonHom (pr i)) (H : AddSubgroup (FreeAbelianGroup (T.left ⟶ A.left)))
@@ -311,7 +313,8 @@ theorem total_mem (hp : ∀ i, IsMonHom (pr i)) (H : AddSubgroup (FreeAbelianGro
   refine (QuotientAddGroup.eq_zero_iff _).1 ?_
   change QuotientAddGroup.mk' H _ = 0
   rw [Fintype.sum_prod_type]
-  simp only [mul_smul, ← Finset.smul_sum, flat_eq, map_sum, map_zsmul, Fin.sum_univ_six]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [mul_smul, ← Finset.smul_sum, flat_eq, map_sum, map_zsmul, Fin.sum_univ_six]
   have v0 : (![(x ≫ f) * y, x ≫ f, y, x * (y ≫ g), x, y ≫ g] : Fin 6 → (T ⟶ A')) 0 = (x ≫ f) * y := rfl
   have v1 : (![(x ≫ f) * y, x ≫ f, y, x * (y ≫ g), x, y ≫ g] : Fin 6 → (T ⟶ A')) 1 = x ≫ f := rfl
   have v2 : (![(x ≫ f) * y, x ≫ f, y, x * (y ≫ g), x, y ≫ g] : Fin 6 → (T ⟶ A')) 2 = y := rfl

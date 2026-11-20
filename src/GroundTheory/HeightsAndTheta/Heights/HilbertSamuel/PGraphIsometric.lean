@@ -101,7 +101,8 @@ theorem wh_lin [DecidableEq K] (A : ∀ k, ι₂ k → ι k → ℤ) (q : Σ k, 
     IsWeightedHomogeneous (GroundTheory.Heights₂.Heights.NumbersDVR.blockWeight (Sum.elim ι ι₂))
       (rename inlV (linForm A q)) (Pi.single (Sum.inl q.1) 1) := by
   rw [← mem_weightedHomogeneousSubmodule]
-  simp only [linForm, map_sum, map_mul, rename_C, rename_X]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [linForm, map_sum, map_mul, rename_C, rename_X]
   refine Submodule.sum_mem _ fun i _ => ?_
   rw [← smul_eq_C_mul]
   exact Submodule.smul_mem _ _ ((mem_weightedHomogeneousSubmodule _ _ _ _).mpr (isWeightedHomogeneous_X ℤ _ _))

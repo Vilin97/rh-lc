@@ -39,7 +39,8 @@ theorem UpperTheory.exists_homogeneous_lift_mod_ker_pow_succ_sup :
         obtain ⟨e2, o, he2, hs2⟩ := hyp c hxc
         have haL : MvPolynomial.aeval t (∑ i, MvPolynomial.C (o i) * MvPolynomial.X i)
             = ∑ i, o i • t i := by
-          simp [map_sum, Algebra.smul_def]
+          set_option synthInstance.maxHeartbeats 100000 in
+            simp [map_sum, Algebra.smul_def]
         have hLK : MvPolynomial.aeval t (∑ i, MvPolynomial.C (o i) * MvPolynomial.X i)
             ∈ RingHom.ker x := by
           rw [haL]

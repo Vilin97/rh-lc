@@ -39,7 +39,8 @@ private theorem lp_homog_mul {O σ X κ : Type} [CommRing O] [AddCommGroup X] [F
   intro x hx j
   refine Submodule.mul_induction_on hx (fun a ha b hb => ?_) (fun a b ha hb => ?_)
   · obtain ⟨d, rfl⟩ := Ideal.mem_span_range_iff_exists_fun.1 hb
-    rw [Finset.mul_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.mul_sum, map_sum]
     refine Ideal.sum_mem _ fun u _ => ?_
     rw [← mul_assoc, lp_wcomp_mul wt (hf u)]
     exact Ideal.mul_mem_mul (hI _ (I.mul_mem_right _ ha) _) (Ideal.subset_span ⟨u, rfl⟩)
@@ -219,7 +220,8 @@ private theorem lp_ker {O B A R σ σB τ : Type} [CommRing O] [IsLocalRing O] [
         (maximalIdeal B).map (q.comp i) ⊔ maximalIdeal T ^ 2 := by
     intro T _ _ _ q
     have k1 := lp_loc_sq (q.comp π) hc
-    rw [map_sub, map_sub, AlgHom.commutes, map_sum, ← e.sum_comp, Fintype.sum_sum_type] at k1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_sub, AlgHom.commutes, map_sum, ← e.sum_comp, Fintype.sum_sum_type] at k1
     simp only [map_smul, AlgHom.comp_apply] at k1
     have k2 : algebraMap O T (constantCoeff g) ∈ (maximalIdeal B).map (q.comp i) := by
       rw [← (q.comp i).commutes]
@@ -350,13 +352,15 @@ theorem UpperTheory.V.Alg.lemmaP :
       obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 hy'
       rw [map_add, (hπ0 a).2 (Ideal.mem_sup_left ha), zero_add]
       obtain ⟨d, rfl⟩ := Ideal.mem_span_range_iff_exists_fun.1 hb
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Ideal.sum_mem _ fun u _ => ?_
       rw [map_mul]
       exact Ideal.mul_mem_left _ _ (Ideal.subset_span ⟨u, rfl⟩)
     have hind : ∀ c : κ → O, ∑ u, c u • π (f u) = 0 → ∀ u, c u ∈ maximalIdeal O := fun c hc => by
       refine p3 c ((hπ0 _).1 ?_)
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simpa only [map_smul] using hc
     have hpart : ∀ j, ∀ x ∈ W₀.part j, x ∈ (WA.part j).map p.toLinearMap := fun j x hx => by
       rw [← p2] at hx

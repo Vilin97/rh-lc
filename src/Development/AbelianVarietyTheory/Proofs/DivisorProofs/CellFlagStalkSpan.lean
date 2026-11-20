@@ -12,7 +12,8 @@ theorem GlobalTheory.FlagZ.Univ.colSpan_germ_cellGL : ∀ (ι : Type) [Fintype �
   unfold colSpan
   congr 1
   ext v
-  simp only [Set.mem_setOf_eq, Matrix.GeneralLinearGroup.map_apply, cellCol, map_sum, GlobalTheory.QCoh.germ_smul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Set.mem_setOf_eq, Matrix.GeneralLinearGroup.map_apply, cellCol, map_sum, GlobalTheory.QCoh.germ_smul,
     GlobalTheory.Twist.germ_resM, stalkStd, RingHom.comp_apply]
   refine exists_congr fun j => and_congr_right fun _ => ?_
   refine Eq.congr_right (Finset.sum_congr rfl fun i _ => ?_)

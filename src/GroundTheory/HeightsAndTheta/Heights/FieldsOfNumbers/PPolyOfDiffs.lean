@@ -12,7 +12,8 @@ variable {K : Type}
 
 theorem totalDegree_aeval_le (g : K → MvPolynomial K ℚ) (hg : ∀ j, (g j).totalDegree ≤ 1)
     (P : MvPolynomial K ℚ) : (aeval g P).totalDegree ≤ P.totalDegree := by
-  conv_lhs => rw [P.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [P.as_sum, map_sum]
   refine totalDegree_finsetSum_le fun α hα => ?_
   rw [aeval_monomial, algebraMap_eq]
   refine (totalDegree_mul _ _).trans ?_
@@ -94,7 +95,8 @@ theorem exists_antideriv (k : K) (q : MvPolynomial K ℚ) : ∃ P : MvPolynomial
   choose! P hPd hPe using key
   refine ⟨∑ α ∈ q.support, P α, totalDegree_finsetSum_le hPd, fun x => ?_⟩
   conv_rhs => rw [q.as_sum]
-  simp only [map_sum, ← Finset.sum_sub_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, ← Finset.sum_sub_distrib]
   exact Finset.sum_congr rfl fun α hα => hPe α hα x
 
 noncomputable def freeze (s : Finset K) (N : K → ℚ) : K → MvPolynomial K ℚ :=

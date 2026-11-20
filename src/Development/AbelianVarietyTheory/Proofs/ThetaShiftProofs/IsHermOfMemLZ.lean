@@ -178,7 +178,8 @@ theorem zmat_unitary (u : Fin d → Fin r → E) (hu : ∀ i k, herm X.Gm (u i) 
     rw [map_mul, Complex.conj_I, Complex.conj_ofReal]; ring
   rw [zmat_mulVec, zmat_mulVec]
   generalize (I * (X.c τ : ℂ)) = q at hcI
-  simp only [hermC_add_left, hermC_add_right, hermC_sum_left, hermC_sum_right, hermC_smul_left,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hermC_add_left, hermC_add_right, hermC_sum_left, hermC_sum_right, hermC_smul_left,
     hermC_smul_right, hiso, map_mul, map_neg, map_sum, hcI, hbc, hermC_conj τ.1 X.Gm_herm,
     mul_zero, Finset.sum_const_zero, add_zero, neg_neg]
   rw [add_assoc, add_eq_left]
@@ -240,7 +241,8 @@ theorem flowV_uvec (u : Fin d → Fin r → E) (a : X.Ψ → Fin d → ℂ) (s :
   show X.flowMatV (uvec X u a τ) τ (s τ) * mat x τ = zmat X u _ τ * mat x τ
   congr 1
   ext p j
-  simp only [Data.flowMatV, zmat, uvec, Matrix.of_apply, Finset.sum_apply, Pi.smul_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Data.flowMatV, zmat, uvec, Matrix.of_apply, Finset.sum_apply, Pi.smul_apply,
     smul_eq_mul, map_sum, map_mul]
   congr 1
   simp only [Finset.mul_sum, Finset.sum_mul]
@@ -268,7 +270,8 @@ def Mmat (u : Fin d → Fin r → E) (β : Matrix (Fin d) (Fin d) E) : Matrix (F
 theorem Mmat_map (u : Fin d → Fin r → E) (β : Matrix (Fin d) (Fin d) E) (τ : X.Ψ) :
     (Mmat X u β).map τ.1 = zmat X u (embH X β) τ := by
   ext a j
-  simp only [Mmat, zmat, embH, Matrix.map_apply, Matrix.of_apply, map_add, map_mul, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Mmat, zmat, embH, Matrix.map_apply, Matrix.of_apply, map_add, map_mul, map_sum,
     Data.emb, emb_cc, X.tau_kappa0, apply_ite, map_one, map_zero]
   ring
 

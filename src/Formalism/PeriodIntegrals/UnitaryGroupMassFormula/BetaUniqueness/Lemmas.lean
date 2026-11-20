@@ -22,7 +22,8 @@ theorem finrank_orth_add (U : Submodule E S.V) :
     rw [Fintype.linearIndependent_iff]
     intro g hg i
     have h0 : S.hT (∑ j, star (g j) • (b j : S.V)) = 0 := by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simp only [LinearMap.map_smulₛₗ, starRingEnd_apply, star_star]
       exact hg
     have h1 : ∑ j, star (g j) • (b j : S.V) = 0 :=
@@ -45,7 +46,8 @@ theorem finrank_orth_add (U : Submodule E S.V) :
         rw [Submodule.coe_sum] at h2
         simp only [Submodule.coe_smul] at h2
         exact h2.symm
-      rw [this, map_sum, LinearMap.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [this, map_sum, LinearMap.sum_apply]
       refine Finset.sum_eq_zero fun i _ => ?_
       rw [LinearMap.map_smulₛₗ, LinearMap.smul_apply]
       have := h (f i) (Submodule.subset_span ⟨i, rfl⟩)

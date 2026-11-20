@@ -283,7 +283,8 @@ theorem exists_lagr : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Numb
       have hcomb := combY F E n n₁ d H b c
       have hsum : (∑ p, c p • R (Y p)) = R (Matrix.vecMulVec H.y
           ((diagCols (Fin d) : Matrix (Fin d ⊕ Fin d) (Fin d) E) *ᵥ fun i => ∑ k, c (i, k) • b k)) := by
-        rw [← hcomb, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [← hcomb, map_sum]
         exact Finset.sum_congr rfl fun p _ => (map_smul R _ _).symm
       have hu := nondeg F E σ B n n₁ d r' s' X X₁ W M H j₀ j₁ hH hP.skew dd hdd (fun i => ∑ k, c (i, k) • b k)
         (fun z => by
@@ -301,7 +302,8 @@ theorem exists_lagr : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Numb
       have := (Fintype.linearIndependent_iff.mp b.linearIndependent) (fun k => c (p.1, k)) hi p.2
       simpa using this
     · intro u
-      rw [zsSum F E n n₁ d H b u, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [zsSum F E n n₁ d H b u, map_sum]
       refine Finset.sum_congr rfl fun p _ => ?_
       rw [map_smul, hR]
       rfl

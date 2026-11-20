@@ -416,7 +416,8 @@ theorem exists_gen_of_rep (hL : L.IsLB) {D} {f : ValFam L Y} (h : Rep L D f) {K 
   obtain ⟨K', _, φ', ε', t, ht, hs, hv⟩ := h
   obtain ⟨u, hu, k⟩ := exists_gen hL (φ' := φ) (ε' := ε) (fun U _ g => by
     have := congrArg (FreeAbelianGroup.lift (fun q => Additive.ofMul (g q))) (hs.trans hD)
-    simp only [map_sum, map_zsmul, FreeAbelianGroup.lift_apply_of] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_zsmul, FreeAbelianGroup.lift_apply_of] at this
     apply Additive.ofMul.injective
     simpa only [ofMul_prod, ofMul_zpow] using this) t ht
   exact ⟨u, hu, fun Z r z J hJ => (k _ _ z J hJ).trans (hv Z r z J hJ)⟩

@@ -95,7 +95,8 @@ theorem heckeCSD_rat (R : S.Rat) (x : offSub ST SG SG' S0 × ℕ) (a b : Fin (S.
   show S.bV.repr ((((Col.heckeD c x.1.1.1.asIdeal x.2).op ((S.res h).symm ((S.toCSD h).basis b)) : S.EqFun) :
     S.D → S.V) (S.outSec.rep cl)) i ∈ cmMax K
   rw [Col.heckeD_op_apply]
-  simp only [map_sum, Finsupp.coe_finsetSum, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Finsupp.coe_finsetSum, Finset.sum_apply]
   refine sum_mem fun e _ => ?_
   show S.bV.repr (S.ρ (S.outSec.mv e) ((((S.toCSD h).basis b).1 : S.Cl → S.V) (S.cls e))) i ∈ cmMax K
   exact S.rho_mem R _ _ (hf _) i

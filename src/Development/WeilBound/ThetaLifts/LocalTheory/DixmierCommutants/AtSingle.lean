@@ -69,7 +69,8 @@ def gm : Matrix (Fin d) (Fin d) E := reindex e e (fromBlocks W₁.J 0 0 (Matrix.
 variable {e}
 
 theorem form_swap (hσ : IsCMExt F E σ) (hs : ∀ i j, σ (W.J j i) = -W.J i j) (x y : Fin d → E) : form σ W.J y x = -σ (form σ W.J x y) := by
-  simp only [form, dotProduct, mulVec, map_sum, map_mul, Finset.mul_sum, hs, Vac.sigma_sigma hσ, ← Finset.sum_neg_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, mulVec, map_sum, map_mul, Finset.mul_sum, hs, Vac.sigma_sigma hσ, ← Finset.sum_neg_distrib]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 

@@ -21,8 +21,10 @@ theorem UpperTheory.Gal.W2.Seed.pFormCoord :
     refine Finset.sum_congr rfl fun τ _ => ?_
     have h2 : ((∑ i, A.hd n i * a i * A.bar (b i) : 𝓞 E) : E) =
         ∑ i, ((A.hd n i : 𝓞 E) : E) * (a i : E) * ((A.bar (b i) : 𝓞 E) : E) := by
-      simpa using map_sum (algebraMap (𝓞 E) E) (fun i => A.hd n i * a i * A.bar (b i)) Finset.univ
-    rw [h2, map_mul, map_sum, Finset.mul_sum, Complex.re_sum, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa using map_sum (algebraMap (𝓞 E) E) (fun i => A.hd n i * a i * A.bar (b i)) Finset.univ
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h2, map_mul, map_sum, Finset.mul_sum, Complex.re_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     simp only [map_mul, hconj, mul_assoc]
   have hx : ∀ (r : ℝ) (a : Fin n → 𝓞 E) (k : Phi A × Fin n),

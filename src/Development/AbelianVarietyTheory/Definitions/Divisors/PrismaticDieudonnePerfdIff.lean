@@ -217,7 +217,8 @@ def ofPerfect (t : Fin G.height → G.Tate) (t' : Fin G.height → G.dual.Tate) 
     have h1 : ∑ k, P i k * P⁻¹ k j = if i = j then 1 else 0 := by
       have h2 := congrFun (congrFun P.mul_inv i) j
       rwa [Matrix.mul_apply, Matrix.one_apply] at h2
-    simp only [map_sum, map_smul, h, smul_smul, mul_comm (P⁻¹ _ j)]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, h, smul_smul, mul_comm (P⁻¹ _ j)]
     rw [← Finset.sum_smul, h1]
     split_ifs <;> simp
 
@@ -257,7 +258,8 @@ theorem stable_iff (f : End G) (ρ : Matrix (Fin G.height) (Fin G.height) ℤ_[p
     c.Stable f ρ ↔ ∀ x, tateMap G G O f (c.toTate x) = c.toTate (ρ.mulVec x) := by
   constructor
   · intro h x
-    simp only [toTate, Fintype.linearCombination_apply, map_sum, map_smul, h _, Finset.smul_sum, smul_smul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [toTate, Fintype.linearCombination_apply, map_sum, map_smul, h _, Finset.smul_sum, smul_smul,
       Matrix.mulVec, dotProduct, Finset.sum_smul]
     rw [Finset.sum_comm]
     simp only [mul_comm]
@@ -297,7 +299,8 @@ theorem mem_W (x : Fin G.height → O) : x ∈ c.W ↔ c.al x = 0 := Iff.rfl
 
 theorem omegaMap_dual_al (y : Fin G.height → O) :
     omegaMap _ _ G.bidual.hom (c.dual.al y) = ∑ j, y j • dlog G (c.t' j) := by
-  rw [al_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [al_apply, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_smul, hodgeTate_apply, ← dlog_tateMap, ← tateMap_comp, ← dualHom_bidual_inv, ← dualHom_comp, Iso.hom_inv_id,
     dualHom_id, tateMap_id]
@@ -305,7 +308,8 @@ theorem omegaMap_dual_al (y : Fin G.height → O) :
 
 theorem Stable.al {c : ConstTate ε G} {f : End G} {ρ : Matrix (Fin G.height) (Fin G.height) ℤ_[p]} (hf : c.Stable f ρ)
     (φ : ℤ_[p] →+* O) (x : Fin G.height → O) : c.al ((ρ.map φ).mulVec x) = omegaDualMap G G f (c.al x) := by
-  simp only [al_apply, map_sum, map_smul, ← hodgeTate_tateMap, hf _, hodgeTate_smul φ, Finset.smul_sum, smul_smul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [al_apply, map_sum, map_smul, ← hodgeTate_tateMap, hf _, hodgeTate_smul φ, Finset.smul_sum, smul_smul,
     Matrix.mulVec, dotProduct, Finset.sum_smul, Matrix.map_apply]
   rw [Finset.sum_comm]
   simp only [mul_comm]
@@ -425,7 +429,8 @@ theorem phiInv_muN (n : ℕ) : phiInv p S.R (muN S n) = muN S (n + 1) := by
   exact phiInv_mu _
 
 theorem phiInv_xiN (n : ℕ) : phiInv p S.R (xiN S n) = xiN S (n + 1) := by
-  rw [xiN, xiN, Function.iterate_succ_apply', xi, xi, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [xiN, xiN, Function.iterate_succ_apply', xi, xi, map_sum]
   simp only [map_pow, phiInv, WittVector.map_teichmuller]
   rfl
 

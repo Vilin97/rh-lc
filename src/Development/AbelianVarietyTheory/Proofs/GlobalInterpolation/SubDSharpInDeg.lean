@@ -12,10 +12,12 @@ theorem algHom_hom {K σ ρ M N : Type} [CommRing K] [AddCommMonoid M] [AddCommM
     (g : M →+ N) (φ : MvPolynomial σ K →ₐ[K] MvPolynomial ρ K)
     (hφ : ∀ v, IsWeightedHomogeneous w' (φ (X v)) (g (w v))) {f : MvPolynomial σ K} {d : M}
     (hf : IsWeightedHomogeneous w f d) : IsWeightedHomogeneous w' (φ f) (g d) := by
-  rw [f.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [f.as_sum, map_sum]
   refine IsWeightedHomogeneous.sum _ _ _ fun m hm => ?_
   have hd : Finsupp.weight w m = d := hf (mem_support_iff.mp hm)
-  rw [monomial_eq, map_mul, algHom_C, algebraMap_eq, Finsupp.prod, map_prod, ← hd, Finsupp.weight_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [monomial_eq, map_mul, algHom_C, algebraMap_eq, Finsupp.prod, map_prod, ← hd, Finsupp.weight_apply,
     Finsupp.sum, map_sum]
   refine IsWeightedHomogeneous.C_mul ?_ _
   refine IsWeightedHomogeneous.prod _ _ _ fun v _ => ?_

@@ -169,7 +169,8 @@ private theorem isUnA_fm_of_isUnE (c : E ≃ₐ[F] E) (G γ : Matrix (Fin n) (Fi
     simp_rw [TensorProduct.tmul_sum, Algebra.TensorProduct.tmul_mul_tmul, mul_one]
   calc _ = ∑ a, ∑ b, ∑ i, ∑ j, ((1 : FiniteAdeleRing (𝓞 F) F) ⊗ₜ[F] γ a i) * x i * (1 ⊗ₜ[F] G a b) *
         ((1 ⊗ₜ[F] c (γ b j)) * σ (y j)) := by
-        simp only [Matrix.mulVec, dotProduct, _root_.GlobalTheory.UnRep.fm, Matrix.map_apply, map_sum,
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [Matrix.mulVec, dotProduct, _root_.GlobalTheory.UnRep.fm, Matrix.map_apply, map_sum,
           map_mul, h1, Finset.sum_mul, Finset.mul_sum]
         exact Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => Finset.sum_comm
     _ = ∑ i, ∑ j, ∑ a, ∑ b, ((1 : FiniteAdeleRing (𝓞 F) F) ⊗ₜ[F] γ a i) * x i * (1 ⊗ₜ[F] G a b) *

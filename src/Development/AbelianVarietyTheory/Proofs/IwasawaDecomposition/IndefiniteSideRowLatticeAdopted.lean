@@ -181,7 +181,8 @@ theorem isGramOf_jFrame_one [NumberField K] [StarRing K] {n : ℕ} (σ : K →+*
     IsGramOf σ (jFrame σ (1 : Matrix (Fin n) (Fin n) ℂ)) 1 := by
   intro x y
   simp only [jFrame, Formalism.DivisionValues.hform, Matrix.toLinearMapₛₗ₂'_apply]
-  simp [Matrix.one_mulVec, EuclideanSpace.inner_eq_star_dotProduct, dotProduct, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Matrix.one_mulVec, EuclideanSpace.inner_eq_star_dotProduct, dotProduct, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [Finset.sum_eq_single i (fun j _ hj => by rw [Matrix.one_apply_ne (Ne.symm hj)]; simp) (by simp)]
   rw [Matrix.one_apply_eq, map_one, mul_one, mul_comm]
@@ -216,7 +217,8 @@ theorem semilinear_eq_sum_single {K : Type} [Field K] {σ : K →+* ℂ} {n : �
   have hx : x = ∑ i, x i • (Pi.single i 1 : Fin n → K) := by
     ext k; simp [Finset.sum_apply, Pi.single_apply]
   conv_lhs => rw [hx]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [map_smulₛₗ]
 
 theorem isCxBasis_coord : ∀ (K : Type) [Field K] [NumberField K] [StarRing K] (σ : K →+* ℂ) (n : ℕ) (W : Type) [NormedAddCommGroup W] [InnerProductSpace ℂ W] [FiniteDimensional ℂ W] (j : (Fin n → K) →ₛₗ[σ] W), IsCxBasis σ j → (∀ x, j x = ∑ i, σ (x i) • j (Pi.single i 1)) ∧ Function.Injective j ∧ Module.finrank ℂ W = n := by
@@ -389,7 +391,8 @@ private theorem v0_int_lemma_5 {K : Type} [Field K] [NumberField K] [StarRing K]
     have hgen : ∀ v ∈ M.gen, ∃ y, j y = v := hM.1
     choose! pre hpre using hgen
     have hjy : j (∑ v ∈ M.gen, (c v : K) • pre v) = x := by
-      rw [map_sum, hc]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, hc]
       refine Finset.sum_congr rfl fun v hv => ?_
       rw [map_smulₛₗ, hpre v hv]
     set y := ∑ v ∈ M.gen, (c v : K) • pre v with hy
@@ -448,7 +451,8 @@ private theorem jEE_injective' {D : D7} {EE : Type} [NormedAddCommGroup EE] [Inn
   rw [injective_iff_map_eq_zero]
   intro y hy
   have hsum : y = ∑ i, X.RR.b.repr y i • X.RR.b i := (X.RR.b.sum_repr y).symm
-  rw [hsum, map_sum] at hy
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hsum, map_sum] at hy
   simp only [map_smulₛₗ] at hy
   have h0 := Fintype.linearIndependent_iff.mp X.jEE_basis.1 _ hy
   rw [hsum]
@@ -505,7 +509,8 @@ private theorem le_span_lemma_9 (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T
   have key : eRR ((S.ι t).mulVec (((A.side P ψ Zs).Pq t).mulVec F)) =
       ∑ u ∈ s', (c u : D.what₂.LL) • z u := by
     apply jEE_injective' X
-    rw [← hX.iota t F, hxs, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hX.iota t F, hxs, map_sum, map_sum]
     refine Finset.sum_congr rfl fun u hu => ?_
     rw [LinearMap.map_smul, map_smulₛₗ, hz u hu]
   have hsm : ∀ (a : 𝓞 D.what₂.LL) (v : X.RR.V), (a : D.what₂.LL) • v = a • v := fun a v => by

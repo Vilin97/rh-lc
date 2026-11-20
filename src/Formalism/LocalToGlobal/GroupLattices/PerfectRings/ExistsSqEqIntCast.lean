@@ -310,7 +310,8 @@ theorem jW_finite : (jW p n).Finite := by
     refine ⟨fun j => WittVector.teichmuller p (c j), ?_⟩
     have h0 : (w - ∑ j, jW p n (WittVector.teichmuller p (c j)) * e j).coeff 0 = 0 := by
       show WittVector.constantCoeff (w - ∑ j, jW p n (WittVector.teichmuller p (c j)) * e j) = 0
-      rw [map_sub, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, map_sum]
       have h1 : ∀ j, WittVector.constantCoeff (jW p n (WittVector.teichmuller p (c j)) * e j) =
           c j • b j := by
         intro j

@@ -53,7 +53,8 @@ theorem IsSS.exists_decomp {x : A} (hx : IsSS x) : ∃ (s : Finset ℂ) (e : ℂ
     have : Subsingleton A := subsingleton_of_zero_eq_one h10.symm
     exact ⟨{0}, fun _ => 1, by simp, fun _ _ => Subsingleton.elim _ _, fun _ _ _ => Commute.one_left _⟩
   refine ⟨s, fun v => aeval x (Lagrange.basis s id v), ?_, fun v hv => ?_, fun v y h => commute_aeval h _⟩
-  · rw [← map_sum, Lagrange.sum_basis (Set.injOn_id _) hne, map_one]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [← map_sum, Lagrange.sum_basis (Set.injOn_id _) hne, map_one]
   · have key : (X - C v) * Lagrange.basis s id v = (∏ j ∈ s.erase v, C (v - j)⁻¹) * ∏ j ∈ s, (X - C j) := by
       rw [← Finset.mul_prod_erase s (fun j => X - C j) hv, Lagrange.basis]
       simp only [Lagrange.basisDivisor, id, Finset.prod_mul_distrib]

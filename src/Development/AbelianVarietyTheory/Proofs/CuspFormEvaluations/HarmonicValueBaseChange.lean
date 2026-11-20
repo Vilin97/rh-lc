@@ -67,7 +67,8 @@ theorem sum_map_of_harmA (hC : ChartIndepSt2) {E : Type} [Field E] [NumberField 
       C2.B.nabVal S' C2.h H.w0 k (f2 b) C2.uvec (MvPolynomial.monomial α 1) :=
     fun b α => hval2 k (F' b) (f2 b) (hf2 b) α
   simp only [e1, e2]
-  rw [← hCI, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hCI, map_sum]
   refine Finset.sum_congr rfl fun m _ => ?_
   rw [map_mul, map_prod, AlgHom.commutes]
   congr 1

@@ -164,7 +164,8 @@ theorem exists_colFlags : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E]
         fun k => Φ (∑ l, genU Ω (rk (CMType H) D.p D.q) (.inl τ) l k •
           TensorProduct.mk Ω (GenField Ω (rk (CMType H) D.p D.q)) 𝔐.Li 1 (bW τ l)) := by
       funext k
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       exact Finset.sum_congr rfl fun a _ => by rw [map_smul, hΦ]
     rw [e]
     exact h2
@@ -260,7 +261,8 @@ theorem exists_colFlags : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E]
     intro s k
     have h1 : ∀ a, j (eb s a) = ∑ l, algebraMap Ω (GenField Ω (rk (CMType H) D.p D.q)) (A s l a) •
         (j.comp j₁) (c₀ s l) := fun a => by
-      rw [hAe s a, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hAe s a, map_sum]
       exact Finset.sum_congr rfl fun l _ => hext.1 _ _
     show ∑ a, U s a k • j (eb s a) = _
     simp only [h1, Matrix.mul_apply, Matrix.map_apply, Finset.sum_smul, Finset.smul_sum, smul_smul]

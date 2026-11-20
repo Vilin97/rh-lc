@@ -98,12 +98,14 @@ theorem density {G H ι : Type} [Group G] [Fintype ι] [NormedAddCommGroup H] [I
         rw [WithLp.ofLp_sum, Finset.sum_apply]
         simp [Pi.single_apply]
       conv_lhs => rw [hz]
-      rw [map_sum, WithLp.ofLp_sum, Finset.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, WithLp.ofLp_sum, Finset.sum_apply]
       exact Finset.sum_congr rfl fun j _ => hc i j _
     have hPT : ∀ z, S.starProjection (amp T z) = amp T (S.starProjection z) := by
       intro z
       refine (WithLp.ext_iff 2).2 (funext fun i => ?_)
-      rw [hPz, hamp, hPz, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hPz, hamp, hPz, map_sum]
       simp only [hamp, map_smul]
     have hξS : ξ ∈ S := S0.le_topologicalClosure (Submodule.subset_span ⟨1, hone ξ⟩)
     have hTξ : amp T ξ ∈ S := by
@@ -392,7 +394,8 @@ theorem multT_eq_zero {u : (⨂[ℂ] τ, M.sm τ) →ₗ[ℂ] (GA D V → ℂ)} 
   have hxsum : x = ∑ a : f.support, f a • PiTensorProduct.tprod ℂ (a : M.Vec) := by
     rw [← hf, Finsupp.sum, ← Finset.sum_coe_sort]
   have h0 : ∑ a : f.support, f a • T a = 0 := by
-    rw [hxsum, map_sum] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hxsum, map_sum] at h
     simpa only [map_smul, huT] using h
   obtain ⟨w', hw'⟩ : ∃ w' : M.Vec, tprodInnerFun w' x ≠ 0 := by
     by_contra hne
@@ -410,7 +413,8 @@ theorem multT_eq_zero {u : (⨂[ℂ] τ, M.sm τ) →ₗ[ℂ] (GA D V → ℂ)} 
     MultilinearMap.map_smul_univ T (fun τ => ⟪w' τ, (a : M.Vec) τ⟫_ℂ) w
   simp only [hA, smul_smul, ← Finset.sum_smul] at h1
   have hs : ∑ a : f.support, f a * ∏ τ, ⟪w' τ, (a : M.Vec) τ⟫_ℂ = tprodInnerFun w' x := by
-    rw [hxsum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hxsum, map_sum]
     simp only [map_smul, tprodInnerFun_tprod, smul_eq_mul]
   rw [hs] at h1
   exact (smul_eq_zero.1 h1).resolve_left hw'

@@ -118,9 +118,11 @@ theorem fderiv_om (hom : IsWeilDatumO ψ S T χS χT om) (hc : Chart θ σ) {n :
     rw [map_add, add_assoc]
   have h3 : dv θ σ S T (mov θ g⁻¹ h⁻¹ u) f = ∑ j, ((e.repr (mov θ g⁻¹ h⁻¹ u) j : ℝ) : ℂ) • dv θ σ S T (e j) f := by
     have := congrArg (fun z => ((dvL hc hψ S T z ⟨f, hf⟩ : thetaSub ψ S T) : WO S T → ℂ)) (e.sum_repr (mov θ g⁻¹ h⁻¹ u))
-    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, Submodule.coe_sum, Submodule.coe_smul] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, Submodule.coe_sum, Submodule.coe_smul] at this
     exact this.symm
-  rw [h2, dv_om hom hc g h u hf, h3, map_sum, map_add (piW θ T S), hc.pi_iota] at h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h2, dv_om hom hc g h u hf, h3, map_sum, map_add (piW θ T S), hc.pi_iota] at h1
   simp only [map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul] at h1
   rw [h1]
   ring
@@ -451,7 +453,8 @@ theorem biLift_sum (hwa : IsWeilDatumO ψ A S χA χS oma) (hwb : IsWeilDatumO �
       intro v; funext u; simp [Finset.sum_apply, mul_comm]
     have e2 : (fun v => oma (h₀, h₁) (fun u => ∑ i, X i u * Y i v) 0) = ∑ i, oma (h₀, h₁) (X i) 0 • Y i := by
       funext v; rw [e1 v, map_sum]; simp [Finset.sum_apply, mul_comm]
-    rw [e2, map_sum]; simp [Finset.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e2, map_sum]; simp [Finset.sum_apply]
   have hin : ∀ h₁, ∫ h₀ in vA.𝓕, φ h₀ * ∑ i, oma (h₀, h₁) (X i) 0 * omb (h₁, h₂) (Y i) 0 ∂vA.μ =
       ∑ i, (∫ g in vA.𝓕, oma (g, h₁) (X i) 0 * φ g ∂vA.μ) * omb (h₁, h₂) (Y i) 0 := by
     intro h₁

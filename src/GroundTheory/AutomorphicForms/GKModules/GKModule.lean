@@ -185,7 +185,8 @@ theorem isKFinite_derivOp {v : E} (hv : h.IsSmoothVector π v) (hK : π.IsKFinit
     have e : h.derivEnd π Y = ∑ i, b.repr Y i • h.derivEnd π (b i) := by
       conv_lhs => rw [← b.sum_repr Y]
       show h.derivEndL π (∑ i, b.repr Y i • b i) = _
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simp only [map_smul]
       rfl
     rw [e, LinearMap.sum_apply]

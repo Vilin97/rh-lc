@@ -37,7 +37,8 @@ theorem span_of_indep_residue {V M M' : Type} [CommRing V] [IsLocalRing V] [AddC
     obtain ⟨c, hc, hc'⟩ := Matrix.exists_vecMul_eq_zero_iff.2 h
     refine hc (ht c ?_)
     have e : ∀ i, ∑ a, c a * residue V (w a i) = 0 := fun i => congrFun hc' i
-    simp only [hw, map_sum, map_smulₛₗ, Finset.smul_sum, smul_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hw, map_sum, map_smulₛₗ, Finset.smul_sum, smul_smul]
     rw [Finset.sum_comm]
     exact Finset.sum_eq_zero fun i _ => by rw [← Finset.sum_smul, e, zero_smul]
   obtain ⟨d, rfl⟩ := hb s
@@ -93,7 +94,8 @@ theorem exists_test {F : Type} [Field F] (p : X ⟶ Spec (CommRingCat.of F)) (x 
     exact (em i).commutes a
   · funext a
     refine Fintype.linearIndependent_iff.1 h c (eq_zero_of_germOf (B := CommRingCat.of B) _ fun z => ?_) a
-    rw [← hc z, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hc z, map_sum]
     refine Finset.sum_congr rfl fun a _ => ?_
     rw [Algebra.smul_def, map_mul, map_prod]
     congr 1

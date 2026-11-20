@@ -162,7 +162,8 @@ theorem f_eq_rho (h : BasePi ST π) (hP : P ∈ ST) (hov : IsOver v P) {SG Q : F
   have ew : ∀ j, (((bc (prV (E := E) v) y)⁻¹).1 *ᵥ (fun a => inclE (F := F) (v.adicCompletion F) (z a))) j =
       prV (E := E) v (Col2.pullV y z j) := fun j => by
     rw [← map_inv]
-    simp only [Col2.pullV, Matrix.mulVec, dotProduct, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Col2.pullV, Matrix.mulVec, dotProduct, map_sum, map_mul]
     rfl
   rw [rll_dualV_eq hc n v h, rll_mem_loc_dLat n v _ h.star_ne_zero] at hz
   have hint : ∀ j, prV (E := E) v (inclE (F := F) (FiniteAdeleRing (𝓞 F) F) (star (π : E)) * Col2.pullV y z j) ∈ intV E v := fun j => by
@@ -199,7 +200,8 @@ theorem f_eq_rho (h : BasePi ST π) (hP : P ∈ ST) (hov : IsOver v P) {SG Q : F
       (fun hh => absurd (Finset.mem_univ _) hh), if_pos rfl]
     rfl
   show Valued.v (adAt F P _ - _) < 1
-  rw [e3, e4, map_mul, adAt_inclE, ← mul_sub, map_sum, ← Finset.sum_sub_distrib, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e3, e4, map_mul, adAt_inclE, ← mul_sub, map_sum, ← Finset.sum_sub_distrib, map_mul]
   refine lt_of_le_of_lt (mul_le_of_le_one_left' (valued_int_le s)) (Valuation.map_sum_lt _ one_ne_zero fun j _ => ?_)
   rw [map_mul, ← _root_.sub_mul, map_mul]
   refine lt_of_le_of_lt (mul_le_of_le_one_right' (hle j)) (hasRes_sub_lt ?_)

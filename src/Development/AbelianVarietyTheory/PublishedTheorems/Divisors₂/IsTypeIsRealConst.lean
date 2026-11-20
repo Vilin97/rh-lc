@@ -77,7 +77,8 @@ theorem swap_dz (a : Fin n) : swap (dz a) = dzb a ∧ swap (dzb a) = dz a := by
 
 theorem pull_dz (L : V n →L[ℂ] V m) (a : Fin m) : pull L (dz a) = ∑ b, L (coordVec b) a • dz b ∧
     pull L (dzb a) = ∑ b, conj (L (coordVec b) a) • dzb b := by
-  simp only [dz, dzb, ← map_smul, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dz, dzb, ← map_smul, ← map_sum]
   constructor <;> refine (ExteriorAlgebra.map_apply_ι _ _).trans (congrArg _ (funext ?_)) <;> rintro (b | b) <;>
     simp [Pi.single_apply, Finset.sum_apply]
 
@@ -150,14 +151,16 @@ theorem delAt_dbarAt_fun {u : V n → ℝ} {v : V n} (hu : ContDiffAt ℝ 2 u v)
   have h₁ (x : V n) (S) : (bas n).repr (dbarAt (fun x => algebraMap ℂ (Alt n) (u x)) x) S =
       ∑ b, if S = {finSumFinEquiv (.inr b)} then dbar (fun x => (u x : ℂ)) x (coordVec b) else 0 := by
     simp only [dbarAt, Algebra.algebraMap_eq_smul_one, ← bas_empty]
-    rw [map_sum, Finsupp.finset_sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finsupp.finset_sum_apply]
     refine Finset.sum_congr rfl fun b _ => ?_
     rw [coefwise_smul (by simp), bas_empty, mul_smul_comm, mul_one, dzb, ← bas_singleton]
     simp [Finsupp.single_apply, eq_comm]
   have h₂ (a : Fin n) : coefwise (fun f => del f v (coordVec a)) (dbarAt fun x => algebraMap ℂ (Alt n) (u x)) =
       ∑ b, leviForm u v (coordVec a) (coordVec b) • dzb b := by
     refine (bas n).ext_elem fun S => ?_
-    simp only [coefwise, h₁, map_sum, map_smul, Module.Basis.repr_self, Finsupp.finset_sum_apply, Finsupp.smul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [coefwise, h₁, map_sum, map_smul, Module.Basis.repr_self, Finsupp.finset_sum_apply, Finsupp.smul_apply,
       Finsupp.single_apply, smul_eq_mul, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true, dzb,
       ← bas_singleton]
     by_cases h : ∃ b, S = {finSumFinEquiv (.inr b)}

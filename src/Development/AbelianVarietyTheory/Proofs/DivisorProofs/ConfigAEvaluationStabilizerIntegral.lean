@@ -37,7 +37,8 @@ theorem coneIntegrand_bound : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F]
     intro w φ
     funext x
     simp only [Darboux.rho, schr, Finset.sum_apply, Finset.mul_sum]
-  rw [hdec k, hrho, map_sum, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hdec k, hrho, map_sum, Finset.sum_apply]
   have hν : ‖((X.ν l : Circle) : ℂ)‖ = 1 := Circle.norm_coe _
   have hr : ‖(((absE F E l : ℝ) : ℂ) ^ ((b + 2 - a') / 2))‖ = (absE F E l : ℝ) ^ ((b + 2 - a') / 2) := by
     rw [norm_pow, Complex.norm_real, Real.norm_of_nonneg (NNReal.coe_nonneg _)]

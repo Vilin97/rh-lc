@@ -127,7 +127,8 @@ theorem linearIndependent_of_span (hS : SecBaseChangeAnySt) {R : Type} [CommRing
   rw [linearIndependent_iff'] at hli ⊢
   intro s g hg i hi
   have e := congrArg (pullM P.A P.L N (overResι W)) hg
-  rw [map_sum, map_zero] at e
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_zero] at e
   simp only [LinearMap.map_smulₛₗ] at e
   exact hσ ((hli s (fun i => σ (g i)) e i hi).trans (map_zero σ).symm)
 

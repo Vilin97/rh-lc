@@ -120,9 +120,11 @@ theorem loc_sum {κ : Type*} (s : Finset κ) (α : κ → A.Fld) (i : A.ι) (v :
 theorem isForm_sum {κ : Type*} (s : Finset κ) {α : κ → A.Fld} (h : ∀ j ∈ s, A.IsForm (α j)) :
     A.IsForm (∑ j ∈ s, α j) := by
   refine ⟨fun i S => ?_, fun x x' e => ?_⟩
-  · simp only [loc_sum, map_sum, Finsupp.finsetSum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [loc_sum, map_sum, Finsupp.finsetSum_apply]
     exact ContDiffOn.sum fun j hj => (h j hj).smooth i S
-  · rw [Finset.sum_apply, Finset.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [Finset.sum_apply, Finset.sum_apply, map_sum]
     exact Finset.sum_congr rfl fun j hj => (h j hj).compat x x' e
 
 theorem isForm_fn_mul {χ : M → ℝ} (hχ : A.SmoothOn univ fun y => (χ y : ℂ)) {α : A.Fld} (hα : A.IsForm α) :
@@ -134,7 +136,8 @@ theorem sum_fn_mul {κ : Type*} (s : Finset κ) {χ : κ → M → ℝ} (h : ∀
   funext x
   rw [Finset.sum_apply]
   simp only [Pi.mul_apply, HolAtlas.fn]
-  rw [← Finset.sum_mul, ← map_sum, ← Complex.ofReal_sum, h, Complex.ofReal_one, map_one, one_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Finset.sum_mul, ← map_sum, ← Complex.ofReal_sum, h, Complex.ofReal_one, map_one, one_mul]
 
 def rd (α : A.Fld) (i : A.ι) (v : V n) : ℝ := (dens (A.loc α i v)).re
 

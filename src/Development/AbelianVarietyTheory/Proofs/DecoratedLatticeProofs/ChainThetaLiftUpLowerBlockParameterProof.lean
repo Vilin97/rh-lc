@@ -40,7 +40,8 @@ theorem isGen_of_injective {k : Type} [Field k] [ValuativeRel k] [TopologicalSpa
   · intro g hg d hd
     apply hi
     rw [hf, h1 g hg d hd, map_smul]
-  · rw [map_smul, map_sum, h3 s R d hR]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_smul, map_sum, h3 s R d hR]
     simp only [map_smul, hf]
 
 open ValuativeRel in

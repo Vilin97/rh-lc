@@ -34,7 +34,8 @@ theorem SchAntisymmetrizePlace.proof : SchAntisymmetrizePlace.Statement := by
   intro r a c Q
   set e := smallBlockPlaceEquiv r a c with he
   unfold antisymmetrize antisym
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Fintype.sum_equiv ((Equiv.funUnique (Fin 1) _).trans e.symm.permCongr) _ _ ?_
   intro w
   simp only [Equiv.trans_apply, Equiv.funUnique_apply]

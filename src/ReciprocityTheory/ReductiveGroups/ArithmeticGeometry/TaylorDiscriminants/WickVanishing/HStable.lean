@@ -314,10 +314,12 @@ theorem gauge_stable : ReciprocityTheory.ChartRestriction.G.TB.HStableSt := by
   let u₂ : Fin d → R := fun i => ∑ j, coeff (single ((0 : Fin 1), j) 1) (B.A.act a i) * u j
   let φ₂ : Fin d → R := fun i => ∑ j, coeff (single ((0 : Fin 1), i) 1) (B.A.act (star a) j) * φ j + ∑ j, M i j * u j
   have hu₂ : (fun i => algebraMap R k (u₂ i)) = (dAct k B a).mulVec vu := funext fun i => by
-    simp only [u₂, map_sum, map_mul, Matrix.mulVec, dotProduct, hA, vu]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [u₂, map_sum, map_mul, Matrix.mulVec, dotProduct, hA, vu]
   have hφ₂ : (fun i => algebraMap R k (φ₂ i)) = (dAct k B (star a)).transpose.mulVec vφ +
       (S * dAct k B a - (dAct k B (star a)).transpose * S).mulVec vu := funext fun i => by
-    simp only [φ₂, map_add, map_sum, map_mul, Matrix.mulVec, dotProduct, hA, hM, Matrix.transpose_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [φ₂, map_add, map_sum, map_mul, Matrix.mulVec, dotProduct, hA, hM, Matrix.transpose_apply,
       Pi.add_apply, vu, vφ]
   refine ⟨u₂, φ₂, Prod.ext ?_ ?_⟩
   · exact hu₂.symm

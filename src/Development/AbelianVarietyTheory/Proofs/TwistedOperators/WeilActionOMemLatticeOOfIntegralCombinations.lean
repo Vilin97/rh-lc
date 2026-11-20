@@ -56,7 +56,8 @@ theorem row_move (V : HSp D) (g : Formalism.L2.Theta.GA D V) (s : Fin V.rank →
   have e1 : (fun m => incA D (∑ k, star (s k) * V.gram k m)) =
       (fun k => cA D (incA D (s k))) ᵥ* V.gram.map (incA D) := by
     funext m
-    simp only [Matrix.vecMul, dotProduct, map_sum, map_mul, Matrix.map_apply, GlobalTheory.FinPl.FrameLat.cA_incA]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.vecMul, dotProduct, map_sum, map_mul, Matrix.map_apply, GlobalTheory.FinPl.FrameLat.cA_incA]
   have e2 : (fun m => cA D ((Formalism.L2.Theta.mt V g *ᵥ fun k => incA D (s k)) m)) =
       (Formalism.L2.Theta.mt V g).map (cA D) *ᵥ fun k => cA D (incA D (s k)) := by
     funext m
@@ -92,7 +93,8 @@ theorem comb_apply (S T : HSp D) (α : Af D.host.F) (a : D.host.E) {m m' : ℕ} 
       (pairA D.host.F 0 α ⊗ₜ[D.host.F] a) * ((∑ p, β p * incA D (b p i)) *
         ∑ k, cA D (∑ q, β' q * incA D (b' q k)) * incA D (S.gram k j)) := by
   simp only [Matrix.sum_apply, Matrix.smul_apply, Matrix.of_apply, smul_eq_mul, GlobalTheory.LatMoveStd.gen_eq]
-  simp only [map_sum, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul,
     GlobalTheory.FinPl.FrameLat.cA_incA, Finset.mul_sum, Finset.sum_mul]
   refine (Finset.sum_congr rfl fun _ _ => Finset.sum_comm).trans ?_
   refine Finset.sum_comm.trans ?_
@@ -135,7 +137,8 @@ theorem actO_mem_latO : ∀ {D : D7} (S T : HSp D) (g : Formalism.L2.Theta.GA D 
       rw [act_gen_apply, comb_apply, mul_comm, mul_comm (pairA D.host.F 0 α ⊗ₜ[D.host.F] a),
         GlobalTheory.LatticeStable.mul_pair_tmul, GlobalTheory.LatticeStable.mul_pair_tmul]
       congr 2
-      simp only [map_mul, map_sum, GlobalTheory.FinPl.FrameLat.finPart_cA, hv, hu]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_mul, map_sum, GlobalTheory.FinPl.FrameLat.finPart_cA, hv, hu]
     rw [SetLike.mem_coe, AddSubgroup.mem_comap]
     show actO S T g h _ ∈ latO S T (BS : Set (Fin S.rank → D.host.E)) (BT : Set (Fin T.rank → D.host.E)) (fun _ => True)
     rw [e]

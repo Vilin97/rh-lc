@@ -66,7 +66,8 @@ theorem exists_minor_norm_one : ∀ (p : ℕ) [Fact p.Prime] {κ J : Type} [Fint
       intro i
       have h1 : R (∑ k, a k * c' k i) = 0 := by
         have := congrFun hg i
-        simpa [map_sum, map_mul, ← ha, cb, Matrix.row, Finset.sum_apply] using this
+        set_option synthInstance.maxHeartbeats 100000 in
+          simpa [map_sum, map_mul, ← ha, cb, Matrix.row, Finset.sum_apply] using this
       rw [IsLocalRing.residue_eq_zero_iff, IsLocalRing.mem_maximalIdeal, mem_nonunits_iff,
         isUnit_int_iff] at h1
       have h2 : ‖((∑ k, a k * c' k i : PadicComplexInt p) : ℂ_[p])‖ ≤ 1 :=

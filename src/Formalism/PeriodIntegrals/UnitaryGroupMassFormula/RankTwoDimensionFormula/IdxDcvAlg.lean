@@ -55,7 +55,8 @@ theorem h_symm (hJ : Formalism.UG.cT σ J = J) (hσ : ∀ a, σ (σ a) = a) (x y
     have h := congrFun (congrFun hJ i) j
     simp only [Formalism.UG.cT, Matrix.transpose_apply, Matrix.map_apply] at h
     exact h.symm
-  simp only [Formalism.UG.hform, map_sum, map_mul, hσ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Formalism.UG.hform, map_sum, map_mul, hσ]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   rw [hJ' j i]

@@ -82,7 +82,8 @@ theorem generic (p : ℕ) (d : ℕ → S) (r0 : R) (f : S →ₐ[R] C) (g : W �
   have hL : Algebra.TensorProduct.lift f g (fun _ _ => Commute.all _ _) (z - gsum d w) = 0 := by
     obtain ⟨y, hy⟩ := Ideal.mem_span_singleton'.1 hw
     rw [← hy, map_mul, map_natCast, hC, mul_zero]
-  rw [map_sub, hz, zero_sub, neg_eq_zero, gsum, Finsupp.sum, map_sum] at hL
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sub, hz, zero_sub, neg_eq_zero, gsum, Finsupp.sum, map_sum] at hL
   have hsum : ∑ k ∈ w.support, f (d k) * g (w k) = 0 := by
     rw [← hL]
     refine Finset.sum_congr rfl fun k _ => ?_
@@ -144,7 +145,8 @@ theorem hsurj (a : Acris l) : ∃ (s : Finset ℕ) (c : ℕ → Ainf l),
   refine ⟨c.support, fun k => WittVector.teichmuller l (c k), mem_of_cris _ ?_⟩
   have e : (base (l := l)).expand c =
       ∑ k ∈ c.support, (base (l := l)).aTo1 (c k) * (base (l := l)).dxi 1 (l * k) := rfl
-  rw [map_sub, ← hc, e, sub_eq_zero, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sub, ← hc, e, sub_eq_zero, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [map_mul, cris_teich, cris_d]
 

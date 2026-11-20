@@ -156,7 +156,8 @@ theorem cc_hhS [NeZero ν] {p : ℕ} (hp : p ≠ 0) (u : ZMod (2 * ν) → K) :
     refine Finset.sum_eq_zero fun l _ => if_neg fun h => ?_
     have := Finsupp.single_eq_zero.1 h.symm
     exact (pow_ne_zero l (pow_ne_zero 2 hp)) this
-  simp [hhS, map_sum, h]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [hhS, map_sum, h]
 
 end Lin
 

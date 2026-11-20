@@ -91,7 +91,8 @@ theorem mConeMapOver_homog {g : MRingOver F ι} {d : K → ℕ} (hg : IsMultiHom
   classical
   conv_lhs => rw [g.as_sum]
   conv_rhs => rw [g.as_sum]
-  simp only [map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun μ hμ => ?_
   have hX : ∏ p : Σ k, ι k, (X p.1 : MvPolynomial K Ω) ^ μ p = ∏ k, (X k : MvPolynomial K Ω) ^ d k := by
     rw [Fintype.prod_sigma]

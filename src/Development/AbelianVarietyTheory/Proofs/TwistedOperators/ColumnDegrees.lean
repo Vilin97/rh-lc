@@ -33,7 +33,8 @@ theorem polar_mem {σ : Type} (u v : σ) (N : ℕ) (Q : MvPolynomial σ ℂ)
       rw [hone] at h2
       change ((Finsupp.single u 1 + (s - Finsupp.single v 1)).sum fun _ e => e) ≤ N
       omega
-  rw [polar_apply, Q.as_sum, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [polar_apply, Q.as_sum, map_sum, Finset.mul_sum]
   exact Submodule.sum_mem _ key
 
 theorem colOp_mem {σ I J : Type} [Fintype I] (z : I × J → σ) (a b : J) (N : ℕ)
@@ -72,7 +73,8 @@ theorem harmonic_rowOp {σ I I' J : Type} [Fintype J] (z : I × J → σ) (y : I
       intro t
       rw [pderiv_swap (y (j, t)) (z (b, k)), pderiv_swap (z (i, t)) (z (b, k))]
     simp only [hsw]
-    rw [← map_sum, hQ i j, map_zero, mul_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, hQ i j, map_zero, mul_zero]
   have hB : ∑ t, ∑ k, (if i = a ∧ t = k then pderiv (y (j, t)) (pderiv (z (b, k)) Q) else 0)
       = 0 := by
     by_cases hia : i = a
@@ -81,7 +83,8 @@ theorem harmonic_rowOp {σ I I' J : Type} [Fintype J] (z : I × J → σ) (y : I
       exact Finset.sum_congr rfl fun t _ => pderiv_swap _ _ _
     · simp [hia]
   rw [rowOp_apply]
-  simp only [map_sum, hexp, Finset.sum_add_distrib, hA, hB, add_zero]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, hexp, Finset.sum_add_distrib, hA, hB, add_zero]
 
 private theorem coeff_apply_of_diagonal_on_monomials' {σ : Type} (g : Module.End ℂ (MvPolynomial σ ℂ))
     (w : (σ →₀ ℕ) → ℂ) (hg : ∀ u, g (monomial u 1) = w u • monomial u 1) (m : σ →₀ ℕ)

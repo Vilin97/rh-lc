@@ -223,7 +223,8 @@ theorem hR_swap (x y : Fin V.rank → R ⊗[F] E) :
       rw [star_star]
   have hg : ∀ i j, Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR R hc.sig (inclR (F := F) R (V.gram i j)) = inclR (F := F) R (V.gram j i) :=
     fun i j => congrArg (inclR (F := F) R) (congrFun (congrFun (GlobalTheory.IndefiniteRowSideFullHecke.AdelicUnitaryGroups.cT_gram hc V) j) i)
-  simp only [GlobalTheory.Cusp.hR_eq, dotProduct, Matrix.mulVec, Matrix.map_apply, Finset.mul_sum, map_sum, map_mul, hs, hg]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [GlobalTheory.Cusp.hR_eq, dotProduct, Matrix.mulVec, Matrix.map_apply, Finset.mul_sum, map_sum, map_mul, hs, hg]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 
@@ -241,7 +242,8 @@ theorem detU_neg (u : SV (wittIndex V)) {g : HA R hc.sig V.gram} (hg : g ∈ par
         map_add' := fun y y' => hLin_add_left _ _ _ y y' _
         map_smul' := fun c y => hLin_smul_left _ _ _ c y _ }
     change _ = ψ _
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun l _ => ?_
     rw [map_smul, smul_eq_mul, mul_comm]
     congr 1
@@ -280,7 +282,8 @@ theorem detU_res (u : SV (wittIndex V)) (A : Fin (wittIndex V) → Prop) {g : HA
     have := bas_mem Φ (u := res u A) (i := j) (hj' ▸ j.2)
     simpa only [bas, hj'] using this
   change cf hc R (dbas Φ u i) (act hc V g (coordR V R (bas Φ u j))) = 0
-  rw [expand (hc := hc) Φ _ (mem_parab.1 hg _ hb), map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [expand (hc := hc) Φ _ (mem_parab.1 hg _ hb), map_sum]
   refine Finset.sum_eq_zero fun l _ => ?_
   have hl : A l := by by_contra e; exact l.2 (if_neg e)
   rw [map_smul, cf_coordR, bas_eq Φ l.2, dbas_eq Φ i.2, hD_vecOf_dualOf Φ l.2 i.2, if_neg, map_zero, smul_zero]

@@ -149,7 +149,8 @@ theorem cT_apply {l m : Type} (S : Matrix l m A) (i : m) (j : l) : cT s S i j = 
 theorem bf_conj (hs : ∀ z, s (s z) = z) {S : Matrix ι ι A} (hS : cT s S = S) (x y : ι → A) :
     s (bf s S x y) = bf s S y x := by
   have hS' : ∀ i j, s (S i j) = S j i := fun i j => by rw [← cT_apply, hS]
-  simp only [bf, dotProduct, mulVec, map_sum, map_mul, hs, hS', Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [bf, dotProduct, mulVec, map_sum, map_mul, hs, hS', Finset.mul_sum]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 
@@ -248,9 +249,11 @@ theorem exists_value_unit [Nonempty ι] [Finite (MaximalSpectrum R)] {S : Matrix
     exists_crt (B := R) fun m => if m = k then 1 else 0
   set x : ι → A := ∑ k, algebraMap R A (c k) • xm k with hx
   have hval : t (bf s S x x) = ∑ k, ∑ l, c k * c l * t (bf s S (xm k) (xm l)) := by
-    rw [hx, bf_sum_left, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hx, bf_sum_left, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
-    rw [bf_sum_right, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [bf_sum_right, map_sum]
     refine Finset.sum_congr rfl fun l _ => ?_
     rw [bf_smul_left, bf_smul_right, hR, ← mul_assoc, ← map_mul, ← Algebra.smul_def, map_smul,
       smul_eq_mul]
@@ -262,7 +265,8 @@ theorem exists_value_unit [Nonempty ι] [Finite (MaximalSpectrum R)] {S : Matrix
     have h1 : Ideal.Quotient.mk m.asIdeal (t (bf s S x x))
         = Ideal.Quotient.mk m.asIdeal (t (bf s S (xm m) (xm m))) := by
       rw [hval]
-      simp only [map_sum, map_mul, hπ]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_mul, hπ]
       simp
     rw [Ideal.Quotient.eq_zero_iff_mem.2 hm] at h1
     exact hxm m (Ideal.Quotient.eq_zero_iff_mem.1 h1.symm)

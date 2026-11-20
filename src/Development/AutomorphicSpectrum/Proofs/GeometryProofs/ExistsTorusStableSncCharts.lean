@@ -134,9 +134,11 @@ theorem snc_params : ∀ (K : Type) [Fintype K] (J : K → Type) [∀ k, Fintype
     by_contra hcon
     push_neg at hcon
     have h1 : aeval u (∑ l, A l * F l - 1) = (0 : Ω) := by
-      simp only [map_sub, map_sum, map_mul, hF, hAa, hsum, map_one, sub_self]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sub, map_sum, map_mul, hF, hAa, hsum, map_one, sub_self]
     have h2 := hz0 _ (hker _ h1)
-    simp [map_sub, map_sum, map_mul, hcon] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sub, map_sum, map_mul, hcon] at h2
   have hf0 : f l ≠ 0 := by
     intro h0
     exact hl0 (hz0 _ (hker (F l) (by rw [hF]; exact h0)))

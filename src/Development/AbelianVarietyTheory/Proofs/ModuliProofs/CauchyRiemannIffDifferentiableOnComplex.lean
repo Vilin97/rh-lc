@@ -30,7 +30,8 @@ theorem map_I_smul_of_cauchyRiemann {g : ℕ} (L : (Fin g → ℂ) →L[ℝ] ℂ
   have hsum : ∀ u : Fin g → ℂ, L u = ∑ a, u a * L (Pi.single a 1) := by
     intro u
     conv_lhs => rw [← Finset.univ_sum_single u]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl (fun a _ => hline a (u a))
   rw [hsum, hsum v, smul_eq_mul, Finset.mul_sum]
   refine Finset.sum_congr rfl (fun a _ => ?_)

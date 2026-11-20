@@ -22,7 +22,8 @@ variable {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ]
 theorem trPair_ratInf (x y : κ → F) :
     GlobalTheory.VacLn.trPair F κ (ratInf F κ x) (ratInf F κ y) = ((Algebra.trace ℚ F (x ⬝ᵥ y) : ℚ) : ℝ) := by
   rw [GlobalTheory.VacLn.trPair_apply, ← GlobalTheory.PsiNontriv.trace_mixedEmbedding]
-  simp [ratInf, dotProduct, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [ratInf, dotProduct, map_sum, map_mul]
 
 def vec (a : F) (i : κ) (k : Module.Free.ChooseBasisIndex ℤ (𝓞 F)) : κ → F :=
   Pi.single i (a * integralBasis F k)
@@ -116,6 +117,7 @@ theorem GlobalTheory.BoxLattice.dual_rat : ∀ (F : Type) [Field F] [NumberField
   have hw0 : w = 0 := by
     apply GlobalTheory.VacLn.trPair_nondeg
     intro x
-    rw [GlobalTheory.VacLn.trPair_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [GlobalTheory.VacLn.trPair_apply, map_sum]
     exact Finset.sum_eq_zero fun i _ => hall i (x i)
   exact sub_eq_zero.1 hw0

@@ -110,7 +110,8 @@ theorem resSeries_eq_sum {n : ℕ} {a : Fin n → ℂ} (ha : Function.Injective 
 theorem resSeries_coeff_succ' {n : ℕ} {a : Fin n → ℂ} (ha : Function.Injective a) (k : ℕ) :
     PowerSeries.coeff (k + 1) (resSeries a) =
       ∑ s, (∏ s' ∈ univ.erase s, (a s - a s' + 1) / (a s - a s')) * a s ^ k := by
-  rw [resSeries_eq_sum ha, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [resSeries_eq_sum ha, map_sum]
   refine Finset.sum_congr rfl fun s _ => ?_
   rw [PowerSeries.coeff_smul, inv_one_sub_C_mul_X, PowerSeries.coeff_succ_X_mul, PowerSeries.coeff_mk,
     smul_eq_mul]

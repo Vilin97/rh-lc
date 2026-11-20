@@ -89,7 +89,8 @@ theorem levelv_tmul_mem_range (e : 𝓞 E) (x : v.adicCompletionIntegers F) :
     · intro h
       exact absurd (Finset.mem_univ i) h
   show φ e ∈ _
-  rw [← (RingOfIntegers.basis E).sum_repr e, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← (RingOfIntegers.basis E).sum_repr e, map_sum]
   exact sum_mem fun i _ => by rw [map_zsmul]; exact zsmul_mem (hb i) _
 
 theorem levelv_mul_mem_range (y y' : E ⊗[F] v.adicCompletion F)

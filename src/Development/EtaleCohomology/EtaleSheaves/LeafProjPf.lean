@@ -46,7 +46,8 @@ theorem LeafProj_of (hNat : LateralTheory.E.t_E6Cut.LeafNat) : LateralTheory.E.t
     have h : Function.Bijective (Phi q V n i) := d1 q V hE n i
     have hcomp : ∀ a, pull _ s _ _ (Phi q V' n i a) = Phi q V n i (fun j => a j.castSucc) := by
       intro a
-      simp only [Phi, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Phi, map_sum]
       rw [Fin.sum_univ_castSucc]
       have hl : a (Fin.last N) = 0 := Subsingleton.elim _ _
       rw [hl, map_zero, map_zero, AddMonoidHom.zero_apply, cast_zero, map_zero, add_zero]

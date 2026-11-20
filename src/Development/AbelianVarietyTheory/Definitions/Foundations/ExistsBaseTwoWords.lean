@@ -128,7 +128,8 @@ theorem exists_gens (E : Type) [Field E] [NumberField E] : ∃ S : Finset ℂ, (
     obtain ⟨p, -, rfl⟩ := Finset.mem_image.1 hz
     exact (Algebra.IsAlgebraic.isAlgebraic (b p.2)).algHom p.1.toRatAlgHom
   · intro K hK τ x
-    rw [← b.sum_repr x, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← b.sum_repr x, map_sum]
     refine sum_mem fun i _ => ?_
     rw [map_rat_smul]
     exact K.smul_mem (hK _ (Finset.mem_image.2 ⟨(τ, i), Finset.mem_univ _, rfl⟩))

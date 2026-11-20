@@ -221,7 +221,8 @@ theorem coset_decomp (X : Tower Ω ε) (N l : ℕ) [hl : Fact l.Prime] (w d q : 
     have h1 := isDiam_mul hδ (isDiam_one_of_mem hg)
     rw [one_mul] at h1
     rw [act_act X l _ _ (sl_pos _) (hr o), e, ← act_act X l _ _ (hr _) (sl_pos _), X.act_isDiam_eq hb h1]
-  rw [heckeT_eq, map_sum, Finset.sum_congr rfl fun o _ => step o,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [heckeT_eq, map_sum, Finset.sum_congr rfl fun o _ => step o,
     Equiv.sum_comp π fun o => X.act l (repT q (sgD N l q) o) (X.act l (sgD N l d : Matrix (Fin 2) (Fin 2) ℤ) b),
     Fintype.sum_option, add_comm, Finset.sum_range]
   congr 1
@@ -317,7 +318,8 @@ theorem eval_homog (X : Tower Ω ε) (N l : ℕ) [Fact l.Prime] (w n : ℕ) (b :
   obtain ⟨c, -, hc⟩ := PolAct.subst_mem (A := ⊤) (X.kmap l (X.sl (toGQ m)).toRingEquiv) (fun _ _ => trivial) (mZl l m) h1
   have hc' : ∀ u, X.act l m b u = ∑ i : Fin (w + 1), (u 0 ^ (i : ℕ) * u 1 ^ (w - (i : ℕ))) • c i := hc
   obtain ⟨t, rfl⟩ := hy
-  rw [hc', hc', map_sum, map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hc', hc', map_sum, map_sum, Finset.smul_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   simp only [map_smul, Matrix.cons_val_zero, Matrix.cons_val_one, one_pow, one_mul, smul_smul]
   rcases Nat.eq_zero_or_pos (w - (i : ℕ)) with h | h
@@ -491,7 +493,8 @@ theorem isThB_heckeT : ∀ (Ω : Type) [Field Ω] [Algebra ℚ Ω] [IsAlgClosed 
   refine ⟨(∏ k ∈ Finset.range q, su X !![1, (k : ℤ); 0, (q : ℤ)] f₀) * su X !![(q : ℤ), 0; 0, 1] (su X τ f₀),
     ?_, ?_, ?_, ?_⟩
   · rw [hF]; exact hn_inv X hqP hτM hf₀I
-  · rw [coset_decomp X N l w d q hqP hqNl hd b hb, Pi.add_apply, Finset.sum_apply, map_add, map_sum, cls_mul, cls_prod,
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [coset_decomp X N l w d q hqP hqNl hd b hb, Pi.add_apply, Finset.sum_apply, map_add, map_sum, cls_mul, cls_prod,
       eval_act X N l w n b hb _ _ q rfl (by simp) f' hf'c]
     congr 1
     · refine Finset.sum_congr rfl fun k _ => ?_

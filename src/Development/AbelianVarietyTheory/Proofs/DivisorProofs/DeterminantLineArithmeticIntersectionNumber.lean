@@ -23,7 +23,8 @@ theorem sum_gen {D : D7} {Y : Formalism.BasicNotions.DV.ShimX D.what₂.Tau} (T 
   rw [Fintype.sum_option]
   simp only [Option.elim, zero_smul, zero_add, Real0.gen]
   simp_rw [← map_smul]
-  rw [← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum]
   · congr 1
     ext σ i
     simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
@@ -36,7 +37,8 @@ theorem sum_gen {D : D7} {Y : Formalism.BasicNotions.DV.ShimX D.what₂.Tau} (T 
 
 theorem lin_elim {ι : Type} [Fintype ι] (b : ι → ℝ) :
     lin (fun o : Option ι => o.elim 0 b) = rename some (lin b) := by
-  simp [lin, map_sum, Fintype.sum_option]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [lin, map_sum, Fintype.sum_option]
 
 theorem num_eq_htDetT_mul_int : GlobalTheory.CovTop.HypothesesXH → Hypotheses2 → HypothesesH → GlobalTheory.Published.ScholzeWeinsteinB → OnObj fun D O _ T _ _ => ∀ B : ℝ, 2 ≤ B → ∀ (τ : D.what₂.Tau) c (g : (T.M c).Fun),
     (T.M c).Smooth g →

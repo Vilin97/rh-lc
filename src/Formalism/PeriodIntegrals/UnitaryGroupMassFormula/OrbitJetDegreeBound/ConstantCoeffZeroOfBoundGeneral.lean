@@ -114,7 +114,8 @@ theorem orbAddUp_main : ∀ (D : Formalism.BasicNotions.D7) (E : PI.OrbJet.Ent D
     with hEall
   have hsub : subst (fun v : Pl D × Fin (D.R.N i) × Fin (D.R.N (i + 1)) => C ep * logPl D p v) (Th - Th') =
       (U - ∑ m ∈ S, monomial m (coeff m U)) * Eall := by
-    rw [subst_sub hTG.hasSubst, hEq, hTh', ← coe_substAlgHom hTG.hasSubst, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [subst_sub hTG.hasSubst, hEq, hTh', ← coe_substAlgHom hTG.hasSubst, map_sum]
     simp_rw [map_smul, coe_substAlgHom, subst_Pm D p ep hep0 hR sg be hcc]
     rw [sub_mul, Finset.sum_mul]
     congr 1
@@ -133,7 +134,8 @@ theorem orbAddUp_main : ∀ (D : Formalism.BasicNotions.D7) (E : PI.OrbJet.Ent D
       have hmem : ab.1 ∈ S := by
         rw [hS, Set.Finite.mem_toFinset]
         exact hdeg
-      rw [map_sub, map_sum, Finset.sum_eq_single ab.1]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, map_sum, Finset.sum_eq_single ab.1]
       · rw [coeff_monomial, if_pos rfl, sub_self, zero_mul]
       · intro b _ hb
         rw [coeff_monomial, if_neg (Ne.symm hb)]

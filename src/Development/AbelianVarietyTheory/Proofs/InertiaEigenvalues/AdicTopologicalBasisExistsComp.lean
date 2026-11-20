@@ -67,7 +67,8 @@ def TopBasis.comp {S A : Type} [CommRing S] [CommRing A] {s : S →+* A} {I : Id
       rw [Ideal.map_map] at h'
       have h'' := Ideal.mul_mem_right (TB'.b j) _ h'
       convert h'' using 1
-      rw [map_sub, map_sum, sub_mul, Finset.sum_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, map_sum, sub_mul, Finset.sum_mul]
       congr 1
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_mul]; ring

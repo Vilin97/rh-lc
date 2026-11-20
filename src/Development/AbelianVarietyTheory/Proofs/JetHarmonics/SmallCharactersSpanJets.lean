@@ -216,7 +216,8 @@ theorem exists_unit_prod {S A X : Type} [CommRing S] [CommRing A] [AddCommGroup 
     refine congrArg Additive.ofMul (QuotientGroup.eq.2 ⟨u, eq_inv_mul_of_mul_eq (Units.ext hu)⟩)
   have h : QuotientGroup.mk' H (v (∑ j, e j • b j)) = QuotientGroup.mk' H (∏ j, v (b j) ^ e j) := by
     show Additive.toMul (θ (∑ j, e j • b j)) = _
-    rw [map_sum, toMul_sum, map_prod]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, toMul_sum, map_prod]
     refine Finset.prod_congr rfl fun j _ => ?_
     rw [map_nsmul, toMul_nsmul, map_pow]
     rfl

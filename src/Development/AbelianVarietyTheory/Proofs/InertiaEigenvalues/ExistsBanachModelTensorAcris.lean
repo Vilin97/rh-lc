@@ -124,7 +124,8 @@ theorem log_tendsto (hp : 2 ≤ p)
     have h1 : c ((n.factorial : L)⁻¹) * ((n.factorial : ℕ) : N) = 1 := by
       rw [← map_natCast c, ← map_mul, inv_mul_cancel₀ hf, map_one]
     have h2 := congrArg (algebraMap A N) hu
-    rw [map_mul, map_natCast, map_sum] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_mul, map_natCast, map_sum] at h2
     rw [← one_mul (algebraMap A N u), ← h1, mul_assoc, h2, Finset.mul_sum, Finset.sum_range_succ']
     simp only [Nat.cast_zero, div_zero, map_zero, zero_mul, add_zero]
     refine Finset.sum_congr rfl fun k hk => ?_

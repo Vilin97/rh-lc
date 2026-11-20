@@ -42,7 +42,8 @@ theorem unit_comp_indCoindIso_inv_comp_counit (A : Rep.{u} k G) :
   change ((indResAdjunction k S.subtype).counit.app A).hom
       (coindToInd (res S.subtype A) (((resCoindAdjunction.{u, u} k S.subtype).unit.app A).hom a)) =
     S.index • a
-  rw [coindToInd_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [coindToInd_apply, map_sum]
   refine (Finset.sum_congr rfl (g := fun _ => a) fun x _ => ?_).trans ?_
   · induction x using Quotient.inductionOn with
     | h g =>

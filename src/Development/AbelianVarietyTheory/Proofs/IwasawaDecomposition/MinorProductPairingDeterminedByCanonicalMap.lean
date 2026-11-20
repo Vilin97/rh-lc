@@ -26,7 +26,8 @@ theorem aeval_map_nablaX {Lt : Type} [Fintype Lt] [DecidableEq Lt] (l : ℕ) [Fa
   rw [RingHom.map_det, RingHom.map_det, AlgHom.map_det]
   congr 1
   ext i k
-  simp [MvPolynomial.map_X, MvPolynomial.aeval_X, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [MvPolynomial.map_X, MvPolynomial.aeval_X, map_sum, map_mul]
 
 theorem ww_unique : ∀ (D : D7) {p : ℕ} [Fact p.Prime] (N0 N1 : ℕ) (hN : N0 ≤ N1) (nu : Bool × HH D → YoungDiagram)
     (hnu : ∀ z, (nu z).colLen 0 ≤ N0) (Th : MvPowerSeries ((Bool × HH D) × Fin N0 × Fin N1) ℂ_[p])
@@ -56,7 +57,8 @@ theorem ww_unique : ∀ (D : D7) {p : ℕ} [Fact p.Prime] (N0 N1 : ℕ) (hN : N0
     rw [aeval_map_nablaX, GlobalTheory.KFormCore.applyAt0_eq]
   have hLD : ∀ y, L (GL3Columns.DeX N1 nu y) = GL3Columns.applyQ p N0 N1 Th Q y := by
     intro y
-    rw [GL3Columns.ww_holds D p N0 N1 nu Th ph Q hQ y, GL3Columns.wwCB_holds D ℂ_[p] N1 nu y, finsum_eq_sum_of_fintype,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [GL3Columns.ww_holds D p N0 N1 nu Th ph Q hQ y, GL3Columns.wwCB_holds D ℂ_[p] N1 nu y, finsum_eq_sum_of_fintype,
       finsum_eq_sum_of_fintype, map_sum]
     refine Finset.sum_congr rfl fun J' _ => ?_
     rw [← MvPolynomial.smul_eq_C_mul, map_smul, hL, smul_eq_mul]

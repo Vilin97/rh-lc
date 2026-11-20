@@ -103,7 +103,8 @@ theorem exists_integral_types_and_directions : ∀ (E : Type) [Field E] [NumberF
     apply hinj
     have h := congrFun (GlobalTheory.T.integral_chart_directions_are_eigenvectors E H Dw l Xo c T io y C a ℓ) i
     simp only [Matrix.mulVec, dotProduct, Pi.smul_apply, smul_eq_mul, hρK, huv, ← hσV'] at h
-    simp only [Matrix.mulVec, dotProduct, Pi.smul_apply, smul_eq_mul, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, dotProduct, Pi.smul_apply, smul_eq_mul, map_sum, map_mul]
     exact h
   obtain ⟨lam, hlam⟩ := GlobalTheory.exists_dual_forms_of_separated_types T.V (𝓞 E) (chD C.ch) ρ (E →+* ℂ) Dw.mult
     (fun τ a => σV τ a) C.uvecT
@@ -125,7 +126,8 @@ theorem exists_integral_types_and_directions : ∀ (E : Type) [Field E] [NumberF
   · rw [hf, huv, ← IsScalarTower.algebraMap_apply]
   · funext i
     have h := congrArg (algebraMap T.V F) (congrFun (heig a ℓ) i)
-    simp only [Matrix.mulVec, dotProduct, Pi.smul_apply, smul_eq_mul, map_sum, map_mul] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, dotProduct, Pi.smul_apply, smul_eq_mul, map_sum, map_mul] at h
     simp only [Matrix.mulVec, dotProduct, Pi.smul_apply, smul_eq_mul, hρF, hf, RingHom.comp_apply]
     exact h
   · exact (GlobalTheory.hom_value_congruent_int_mod_prime (𝓞 E) (TWO.Ov v) g hg hgO hfrob _ a).2
@@ -137,7 +139,8 @@ theorem exists_integral_types_and_directions : ∀ (E : Type) [Field E] [NumberF
     have h2 : σV (ComplexEmbedding.conjugate τ) a = σV τ (H.bar a) := hinj (by rw [hσV', hσV', h])
     exact congrArg f h2
   · have h := congrArg f (hlam ℓ ℓ')
-    simp only [map_sum, map_mul] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul] at h
     rw [h]
     by_cases hl : ℓ = ℓ'
     · rw [if_pos hl, if_pos hl, map_one]

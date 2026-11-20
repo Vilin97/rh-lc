@@ -90,7 +90,8 @@ theorem spansP_map {R S : Type} [CommRing R] [CommRing S] {g n : ℕ} {η : Fin 
   obtain ⟨M, hM⟩ := h
   refine ⟨fun i j => φ (M i j), fun i k => ?_⟩
   have := congrArg φ (hM i k)
-  simpa [map_sum, apply_ite φ] using this
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa [map_sum, apply_ite φ] using this
 
 theorem cutsHT_map {R S : Type} [CommRing R] [CommRing S] {x : Sp R ⟶ X} {g n : ℕ}
     {e : Fin g → (Sp (DualNumber R) ⟶ t.G.left)} {η : Fin n → Fin g → R} (h : CutsHT t p x e η) (φ : R →+* S) :
@@ -123,7 +124,8 @@ theorem cutsHT_rows {R : Type} [CommRing R] {x : Sp R ⟶ X} {g n : ℕ}
     simp only [Finset.mul_sum]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun i _ => ?_
-    rw [hN i, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hN i, map_sum]
     push_cast
     rw [Finset.sum_mul]
     refine Finset.sum_congr rfl fun l _ => ?_

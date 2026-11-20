@@ -13,7 +13,8 @@ theorem tensor_sum_expand {ι : Type} [Fintype ι] [DecidableEq ι] {N : ℕ} (�
     (y : ∀ τ, κ τ → MvPolynomial (Fin N × Fin N) ℂ) (c : ∀ τ, κ τ → ℂ) :
     Formalism.L2.Forms.ten (fun τ => ∑ i, c τ i • y τ i) =
       ∑ g : (∀ τ, κ τ), (∏ τ, c τ (g τ)) • Formalism.L2.Forms.ten (fun τ => y τ (g τ)) := by
-  simp only [Formalism.L2.Forms.ten, map_sum, smul_eq_C_mul, Finset.prod_univ_sum, Fintype.piFinset_univ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Formalism.L2.Forms.ten, map_sum, smul_eq_C_mul, Finset.prod_univ_sum, Fintype.piFinset_univ]
   refine Finset.sum_congr rfl fun g _ => ?_
   simp only [map_mul, rename_C, Finset.prod_mul_distrib, map_prod]
 
@@ -34,7 +35,8 @@ theorem integral_span_eq_tensor_span (w : D.what₂.places.Pl) {N : ℕ} (lam : 
         intro τ
         have h1 := congrArg (fun x : delSq ℤ N (lam τ) => MvPolynomial.map (Int.castRingHom ℂ)
           (x : MvPolynomial (Fin N × Fin N) ℤ)) ((b τ).sum_repr ⟨f τ, hf τ⟩)
-        simp only [Submodule.coe_sum, Submodule.coe_smul, map_sum, map_zsmul] at h1
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [Submodule.coe_sum, Submodule.coe_smul, map_sum, map_zsmul] at h1
         rw [← h1]
         refine Finset.sum_congr rfl fun i _ => ?_
         rw [Int.cast_smul_eq_zsmul]

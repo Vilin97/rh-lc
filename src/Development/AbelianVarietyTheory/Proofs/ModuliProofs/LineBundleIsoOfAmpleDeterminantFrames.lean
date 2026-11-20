@@ -77,7 +77,8 @@ theorem Rel.map {M} (h : Rel x b' M b) (φ : R →+* R') : Rel (spMap φ ≫ x) 
 
 theorem Rel.mul {M M'} (h' : Rel x b'' M' b') (h : Rel x b' M b) : Rel x b'' (M' * M) b := fun p τ e a => by
   rw [h' p τ e a]
-  simp only [h p τ e, Matrix.mul_apply, map_sum, map_mul, Finset.mul_sum, Finset.sum_mul, mul_assoc]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [h p τ e, Matrix.mul_apply, map_sum, map_mul, Finset.mul_sum, Finset.sum_mul, mul_assoc]
   exact Finset.sum_comm
 
 theorem Rel.one : Rel x b 1 b := fun p τ _ a => by

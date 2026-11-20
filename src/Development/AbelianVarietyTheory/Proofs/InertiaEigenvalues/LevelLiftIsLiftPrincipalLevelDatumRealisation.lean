@@ -184,7 +184,8 @@ theorem vecFlat_eq_sum_princ {B : Base S T} (hB : B.Good) (hS : S.SigOK) {ψ : T
     funext x
     rw [datumFn_eq_sum B hQ k hk x, Finset.sum_apply]
     rfl
-  rw [Base.vecFlat, Base.vecAt, Frame.vec, e, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Base.vecFlat, Base.vecAt, Frame.vec, e, map_sum]
   refine Finset.sum_congr rfl fun p _ => ?_
   rw [mv, map_smul, smul_smul, mul_one, Units.val_mul]
 
@@ -224,7 +225,8 @@ theorem idem_orth {Pg Q : Finset (Pl D.host.E)} (h : PlacesOK Pg Q) :
       ∀ PP ∈ Q, idemAt PP * cA D (idem Pg) = 0 ∧ Formalism.L2.NTheta.IsIdemAt (idemAt PP) PP := by
   obtain ⟨P, h1, h2, hP⟩ := h.split
   have key : ∀ R ⊆ P, ∀ PP ∈ P, idemAt PP * cA D (idem R) = 0 := fun R hR PP hPP => by
-    rw [idem, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [idem, map_sum, Finset.mul_sum]
     exact Finset.sum_eq_zero fun j hj => hP.mul_conj hPP (hR hj)
   refine ⟨GlobalTheory.PlaceVec.idemSum_mul_self (hP.mono h1).isIdemSum, GlobalTheory.PlaceVec.idemSum_mul_self (hP.mono h2).isIdemSum, ?_,
     fun PP hPP => ⟨key _ h2 _ (h1 hPP), hP.isIdemAt (h1 hPP)⟩, fun PP hPP => ⟨key _ h1 _ (h2 hPP), hP.isIdemAt (h2 hPP)⟩⟩

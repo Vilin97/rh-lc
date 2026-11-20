@@ -256,7 +256,8 @@ theorem genericHomAt_relation (hd : d.AxH 𝒜) (c : ι) (j0 : Fin (d.N + 1)) (h
       MvPolynomial.algebraMap_eq]
   have hTjc : T (d.jc c) = -∑ k, T ((d.jc c).succAbove k) * algebraMap (Ω c) (OmS (Ω c) d.D d.N) (d.x c k) := by
     rw [hTX, Fin.succAbove_cases_eq_insertNth, Fin.insertNth_apply_same]
-    simp only [map_neg, map_sum, map_mul, hCr]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_neg, map_sum, map_mul, hCr]
     congr 1
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [hTX, Fin.succAbove_cases_eq_insertNth, Fin.insertNth_apply_succAbove]

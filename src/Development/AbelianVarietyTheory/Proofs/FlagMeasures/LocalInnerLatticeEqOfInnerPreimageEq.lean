@@ -29,7 +29,8 @@ theorem phiG_surj {T : D.host.E} (G : LFlag (VS D) D.R.rS T) : LinearMap.range (
     intro x
     have h1 := hμ (LinearMap.mem_range_self (phiG G) x)
     rw [LinearMap.mem_ker, LinearMap.pi_apply_eq_sum_univ μ] at h1
-    rw [map_sum, LinearMap.sum_apply, ← h1]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, LinearMap.sum_apply, ← h1]
     refine Finset.sum_congr rfl fun a _ => ?_
     rw [LinearMap.map_smulₛₗ, LinearMap.smul_apply, starRingEnd_apply, star_star, smul_eq_mul, smul_eq_mul,
       phiG_apply, mul_comm]
@@ -83,7 +84,8 @@ theorem exists_split {T : D.host.E} (G : LFlag (VS D) D.R.rS T) (Λ : LV D)
   · have hyQ : phiG G y ∈ Q := Submodule.mem_map_of_mem hy
     have h1 := congrArg Subtype.val (hψ ⟨_, hyQ⟩)
     simp only [Submodule.coe_sum, Submodule.coe_smul] at h1
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     conv_rhs => rw [h1]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, hle i, hc i ⟨_, hyQ⟩, algebraMap_smul]
@@ -123,7 +125,8 @@ theorem sigP_bcP {T : D.host.E} (G : LFlag (VS D) D.R.rS T) {m : ℕ} (l : Fin m
   rw [sigP_apply, Formalism.L2.SG.Pf.ScalarFramePf.baseChangeAt_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   congr 1
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [map_mul]
   congr 1

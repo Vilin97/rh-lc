@@ -445,7 +445,8 @@ theorem IsFrame.exists_row {Λ : Submodule O (n → K)} {b : GL n K} (h : IsFram
     congr 1
     funext j
     simp [Finset.sum_apply, Pi.single_apply]
-  rw [this, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [this, map_sum]
   refine Finset.sum_congr (M := IsLocalRing.ResidueField O) rfl fun i _ => ?_
   rw [map_smul]
   exact (residue_smul _ _).trans (mul_comm _ _)

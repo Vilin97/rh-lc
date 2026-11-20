@@ -83,7 +83,8 @@ theorem GlobalTheory.RiemFormKer.smul_mem_lattice : ∀ (F : Type) [Field F] [Nu
         exact Finset.sum_congr rfl fun j _ => by ring
       have hsw : hermForm (Matrix.diagonal fun j ↦ (h j : ℂ)) l x =
           starRingEnd ℂ (hermForm (Matrix.diagonal fun j ↦ (h j : ℂ)) x l) := by
-        simp only [hermForm, dotProduct, Matrix.mulVec_diagonal, Pi.star_apply, Complex.star_def, map_sum, map_mul,
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [hermForm, dotProduct, Matrix.mulVec_diagonal, Pi.star_apply, Complex.star_def, map_sum, map_mul,
           Complex.conj_conj, Complex.conj_ofReal]
         exact Finset.sum_congr rfl fun j _ => by ring
       have hadd : hermForm (Matrix.diagonal fun j ↦ (h j : ℂ)) (z + l) x =

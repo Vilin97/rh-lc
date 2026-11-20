@@ -54,7 +54,8 @@ theorem sum_atEmb_one : ∑ τ : E →+* ℂ, atEmb τ 1 = (2 : ℝ) • (1 : Ci
   simp
 
 theorem sum_Eop (a : ℕ) (i : Fin a) : ∑ τ : E →+* ℂ, Eop τ i i = lieS E a i i 1 := by
-  simp only [Eop, ← Finset.smul_sum, Finset.sum_sub_distrib, ← map_sum, sum_atEmb_I, sum_atEmb_one, map_zero,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Eop, ← Finset.smul_sum, Finset.sum_sub_distrib, ← map_sum, sum_atEmb_I, sum_atEmb_one, map_zero,
     smul_zero, sub_zero, map_smul]
   rw [← Complex.coe_smul, smul_smul]
   norm_num
@@ -68,7 +69,8 @@ open GlobalTheory.CuspRep.ZcTrace in
 theorem zc_eq_sum_Eop : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ), GlobalTheory.ResW.zc E a = ∑ τ : E →+* ℂ, ∑ i : Fin a, GlobalTheory.CuspRep.Eop τ i i := by
   intro E _ _ _ a
   rw [Finset.sum_comm]
-  simp only [sum_Eop, lieS_apply, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [sum_Eop, lieS_apply, ← map_sum]
   unfold zc
   congr 1
   funext k l

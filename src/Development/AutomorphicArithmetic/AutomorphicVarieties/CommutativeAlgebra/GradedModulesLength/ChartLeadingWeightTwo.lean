@@ -159,7 +159,8 @@ private theorem sp_comp (H : IsChart0 𝒜 x wt φ) (ν : τ →₀ ℕ) (f : A)
     MvPowerSeries.coeff ν (φ (DirectSum.decompose 𝒜 f (Finsupp.weight wt ν))) = MvPowerSeries.coeff ν (φ f) := by
   classical
   conv_rhs => rw [← DirectSum.sum_support_decompose 𝒜 f]
-  rw [map_sum, map_sum, Finset.sum_eq_single (Finsupp.weight wt ν)]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, Finset.sum_eq_single (Finsupp.weight wt ν)]
   · intro j _ hj
     exact H.graded j _ (SetLike.coe_mem _) ν (Ne.symm hj)
   · intro hnot

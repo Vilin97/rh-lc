@@ -16,6 +16,7 @@ theorem formPoly_isHomogeneous_and_eval (σ : Type) [Fintype σ] (n : ℕ) (a : 
       IsHomogeneous.prod _ _ _ fun j _ => isHomogeneous_X _ _
     have h' : (∏ j : Fin n, (X (w j) : MvPolynomial σ ℝ)).IsHomogeneous n := by simpa using h
     exact h'.C_mul _
-  · simp [formPoly, map_sum, map_prod]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp [formPoly, map_sum, map_prod]
 
 end GlobalTheory.CompanionTheory.Ar.PB

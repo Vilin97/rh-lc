@@ -82,7 +82,8 @@ theorem exists_det_ne_zero (B : Type) [CommRing B] [IsDomain B] [CharZero B] [Al
       intro φ
       have h0 : ℓ (fun j => pt φ (f j)) = 0 := hle (Submodule.subset_span ⟨pt φ, rfl⟩)
       rw [hℓv] at h0
-      rw [map_sum, ← h0]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, ← h0]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_smul, smul_eq_mul, mul_comm]
       rfl

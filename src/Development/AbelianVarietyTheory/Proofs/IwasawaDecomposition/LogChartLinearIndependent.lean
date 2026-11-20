@@ -86,7 +86,8 @@ theorem hodge_eq_riem_chart : ∀ (D : D7) (A : Amb D) (N j : ℕ) (S : Sig A N 
       exact ((hL.1.2.2.2.2.2 _ hsrc).2 _ (f.tan z.1 z.2)).unique (h2 ▸ (hML.2 _ v h1).1 h3) (hW z)
     obtain ⟨hind, T, hTL⟩ := Mark.exists_marking hP hML (hL.2.2.2.1 t ht).1 (hL.2.2.2.1 t ht).2.1
     have hLP : ∀ v, L (P v) = ∑ z, Q v z • Wd z := fun v => by
-      rw [hQ v, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hQ v, map_sum]
       simp only [map_smul, hWW]
     have hlam : ∀ m, lam t m = L (P (gm (T₀.symm (Pi.single m 1)))) := fun m => by
       rw [hLP, hsum, AddEquiv.apply_symm_apply]

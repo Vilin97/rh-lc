@@ -111,11 +111,13 @@ theorem mem_range_inclO : ∀ (l : ℕ) [Fact l.Prime] (O : Type) [CommRing O] [
   have hY : ∀ p, frobW l (v' p) = ∑ q, inclW l (Yt p q) * v' q := by
     rintro ⟨i', k⟩
     have e1 : frobW l (v' (i', k)) = coordT b k (frobOW l O (v i')) := (coordT_map b (frobW l) k (v i')).symm
-    rw [e1, h i', Matrix.mulVec, dotProduct, map_sum, Fintype.sum_prod_type]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e1, h i', Matrix.mulVec, dotProduct, map_sum, Fintype.sum_prod_type]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [Matrix.map_apply]
     conv_lhs => rw [hv j]
-    rw [Finset.mul_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.mul_sum, map_sum]
     refine Finset.sum_congr rfl fun m _ => ?_
     have e2 : inclO l O (Y i' j) * (b m ⊗ₜ[ℤ_[l]] (1 : WCb l)) =
         inclO l O (Y i' j * (b m ⊗ₜ[ℤ_[l]] (1 : Ainf l))) := by
@@ -123,7 +125,8 @@ theorem mem_range_inclO : ∀ (l : ℕ) [Fact l.Prime] (O : Type) [CommRing O] [
     rw [← mul_assoc, e2, coordT_mul_tmul, coordT_inclO]
   have hr : ∀ p, v' p ∈ (inclW l).range := mem_range_inclW l v' Yt hY
   refine ⟨∑ k, b k ⊗ₜ[ℤ_[l]] Classical.choose (hr (i, k)), ?_⟩
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   conv_rhs => rw [← sum_coordT b (v i)]
   refine Finset.sum_congr rfl fun k _ => ?_
   exact (inclO_tmul _ _).trans (congrArg (fun w => b k ⊗ₜ[ℤ_[l]] w) (Classical.choose_spec (hr (i, k))))

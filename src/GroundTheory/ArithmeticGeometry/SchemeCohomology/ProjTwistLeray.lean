@@ -39,7 +39,8 @@ lemma cechAcyclic_of_bijective_le (φ : ∀ W : Opens X, W ≤ D → Q.obj (op W
     funext i
     rw [d_apply]
     change _ = φ _ (hI i) (d Q U m σ i)
-    rw [d_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [d_apply, map_sum]
     refine Finset.sum_congr rfl fun a _ => ?_
     rw [map_zsmul]
     congr 1

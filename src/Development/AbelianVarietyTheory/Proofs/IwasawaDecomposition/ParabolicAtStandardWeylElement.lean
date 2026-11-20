@@ -63,7 +63,8 @@ theorem exists_finset_eig {κ : Type} (φ : κ → Module.End k W) (T : κ → M
       exact (isIntegral_trans (R := ℚ) z hi).isAlgebraic
   · intro L hL U hU h0 c hc t
     have hk : ∀ a : k, σ a ∈ L := fun a => by
-      rw [← b.sum_repr a, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← b.sum_repr a, map_sum]
       refine L.sum_mem fun i _ => ?_
       rw [map_rat_smul]
       exact L.smul_mem (hL _ (Finset.mem_union_left _ (Finset.mem_image_of_mem _ (Finset.mem_univ i))))
@@ -331,7 +332,8 @@ theorem exists_boundAt (hU : GlobalTheory.Published.DiscreteSeriesUpqUnique) (R 
     have hx : x ∈ Submodule.span D.what₂.LL (Set.range b) := hsp' ▸ Submodule.mem_top
     obtain ⟨a, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun _).1 hx
     show (R.HW i (sg0 D A3.A)).e _ ∈ Submodule.span ℂ (Set.range ι)
-    rw [map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum]
     refine Submodule.sum_mem _ fun l _ => ?_
     rw [map_smulₛₗ, map_smul]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨⟨b l, hb l⟩, rfl⟩)

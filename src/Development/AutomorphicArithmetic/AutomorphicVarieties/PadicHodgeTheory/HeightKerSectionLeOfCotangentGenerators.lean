@@ -33,7 +33,8 @@ theorem UpperTheory.height_ker_section_le_of_cotangent_generators :
       rw [smul_eq_mul, ← Localization.AtPrime.map_eq_maximalIdeal, ← Ideal.map_mul, ← pow_two]
       exact Ideal.mem_map_of_mem _ hmem
     have h3 : algebraMap S L (∑ i, o i • t i) ∈ T := by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Ideal.sum_mem _ (fun i _ => ?_)
       rw [Algebra.smul_def, map_mul]
       refine Ideal.mul_mem_left _ _ (Ideal.subset_span ?_)

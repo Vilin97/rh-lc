@@ -47,7 +47,8 @@ private theorem fixed_of_inner {H : Type} [NormedAddCommGroup H] [InnerProductSp
     have h1 := UnitaryRep.inner_map_map π g v (f x)
     rwa [hv g hg] at h1
   have hmem : (S.card : ℂ)⁻¹ • ∑ y ∈ S, y ∈ fixedVectors τ J := fun u hu => by
-    rw [map_smul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_smul, map_sum]
     congr 1
     refine Finset.sum_nbij' (τ u) (τ u⁻¹) (hst u hu) (hst _ (J.inv_mem hu)) (fun y _ => ?_) (fun y _ => ?_) fun _ _ => rfl
     · rw [← Module.End.mul_apply, ← map_mul, inv_mul_cancel, map_one]; rfl
@@ -55,7 +56,8 @@ private theorem fixed_of_inner {H : Type} [NormedAddCommGroup H] [InnerProductSp
   intro hb
   rw [hb, Submodule.mem_bot] at hmem
   have h1 : ⟪v, f ((S.card : ℂ)⁻¹ • ∑ y ∈ S, y)⟫_ℂ = ⟪v, f x⟫_ℂ := by
-    rw [map_smul, inner_smul_right, map_sum, inner_sum, Finset.sum_congr rfl hy, Finset.sum_const,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_smul, inner_smul_right, map_sum, inner_sum, Finset.sum_congr rfl hy, Finset.sum_const,
       ← Nat.cast_smul_eq_nsmul ℂ, smul_eq_mul, ← mul_assoc, inv_mul_cancel₀ hc', one_mul]
   rw [hmem, map_zero, inner_zero_right] at h1
   exact h0 h1.symm

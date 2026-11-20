@@ -73,7 +73,8 @@ theorem cup_cob {m : ℕ} (r r' : ↥Gw →* GL (Fin m) O)
       f (Bw.e g) = c (Bw.e g) ⬝ᵥ Bw.rep r' (Bw.e g) (c' (Bw.e h)) := congrFun hf' (Bw.e g, Bw.e h)
   rw [cycLL_eq, rep_apply, MulEquiv.symm_apply_apply, ← map_mul] at h1
   refine Eq.trans ?_ h1.symm
-  simp only [dotProduct, Matrix.mulVec, map_sum, map_mul, Matrix.map_apply, hy, hy']
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dotProduct, Matrix.mulVec, map_sum, map_mul, Matrix.map_apply, hy, hy']
 
 end Bridge
 

@@ -19,7 +19,8 @@ theorem mConeMap_linForm (b : Module.Basis T ℤ (dualLattice (HermLattice.stand
     (q : Σ _ : Unit, Fin i) :
     mConeMap (dualLatticeCoord b) (linForm (ι₂ := PBlk i) (dualStdCoordMat b) q) =
       C (aeval (dualLatticeCoord b) (linForm (ι₂ := PBlk i) (dualStdCoordMat b) q)) * X () := by
-  simp only [linForm, map_sum, map_mul, Finset.sum_mul, mConeMap, aeval_X, eq_intCast, map_intCast]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [linForm, map_sum, map_mul, Finset.sum_mul, mConeMap, aeval_X, eq_intCast, map_intCast]
   refine Finset.sum_congr rfl fun t _ => ?_
   rw [mul_assoc]
 

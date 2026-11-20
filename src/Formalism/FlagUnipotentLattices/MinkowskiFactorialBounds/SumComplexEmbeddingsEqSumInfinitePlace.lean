@@ -270,7 +270,8 @@ lemma four_mul_card_le_norm_sq_mul_discr (hc : ∀ w : InfinitePlace E, w.IsComp
       first
       | rw [LinearMap.BilinForm.apply_dualBasis_left]
       | exact LinearMap.BilinForm.apply_dualBasis_left _ _ _ _ _
-    rw [Finset.sum_mul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_mul, map_sum]
     have h' : ∀ i, Algebra.trace ℚ E ((n i : ℚ) • LinearMap.BilinForm.dualBasis (Algebra.traceForm ℚ E) hnd
         (integralBasis E) i * integralBasis E j) = if j = i then (n i : ℚ) else 0 := by
       intro i

@@ -108,7 +108,8 @@ theorem evGen_bij {C R A : Type} [Field C] [IsAlgClosed C] [CharZero C] [CommRin
       simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Pi.zero_apply, Function.comp_apply, hM]
       rw [← hfE b]
       conv_rhs => rw [← Finset.univ_sum_single (evGen C pt b)]
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun x _ => ?_
       rw [hsingle x (evGen C pt b x), map_smul, smul_eq_mul, mul_comm])
     apply hf0

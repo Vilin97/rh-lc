@@ -75,7 +75,8 @@ theorem exists_basis_top {κ : Type} (T : κ → Finset ι) (A : Cube.{0} ι R)
     by_contra ha
     obtain ⟨a, rfl⟩ := hz (Finsupp.mem_support_iff.2 ha)
     refine ha ?_
-    rw [← Module.Basis.coord_apply, ← e, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Module.Basis.coord_apply, ← e, map_sum]
     exact Finset.sum_eq_zero fun i _ => by rw [map_zsmul, h0, smul_zero]
   refine ⟨Module.Basis.mk hli ?_, fun a => Module.Basis.mk_apply _ _ a⟩
   rw [← LinearMap.range_eq_top.2 (topCech_surjective A hN), LinearMap.range_eq_map,

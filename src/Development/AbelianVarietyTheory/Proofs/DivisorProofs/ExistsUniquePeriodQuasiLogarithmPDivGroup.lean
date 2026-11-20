@@ -63,7 +63,8 @@ private lemma subst_pderiv_inr_cob1_eq_sum_sub_C {R : Type} [CommRing R] {d : �
       Fin d ⊕ Fin d → MvPowerSeries (Fin d ⊕ Fin d) R) (Sum.inr x)) = if x = j then 1 else 0 := fun x => by simp [Pi.single_apply]
   simp only [pderiv_X, hs1, hs2]
   rw [← coe_substAlgHom hE]
-  simp only [map_sub, map_sum, map_mul, map_zero, mul_zero, Finset.sum_const_zero, sub_zero,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sub, map_sum, map_mul, map_zero, mul_zero, Finset.sum_const_zero, sub_zero,
     apply_ite, map_one, mul_ite, mul_one, Finset.sum_ite_eq, Finset.sum_ite_eq',
     Finset.mem_univ, if_true]
   simp only [coe_substAlgHom]
@@ -139,7 +140,8 @@ private lemma exists_integral_pderiv_of_integral_cob1_lin {B Q : Type} [CommRing
       = ∑ j, (∑ k, pderiv Q k f * map (algebraMap B Q) (M k j)) *
           map (algebraMap B Q) (M⁻¹ j i) := by simp [map_sum, hrow]
     _ = ∑ k, pderiv Q k f * map (algebraMap B Q) ((M * M⁻¹) k i) := by
-        simp only [Matrix.mul_apply, map_sum, map_mul, Finset.sum_mul, Finset.mul_sum, mul_assoc]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [Matrix.mul_apply, map_sum, map_mul, Finset.sum_mul, Finset.mul_sum, mul_assoc]
         exact Finset.sum_comm
     _ = pderiv Q i f := by
         rw [hMN]; simp [Matrix.one_apply]

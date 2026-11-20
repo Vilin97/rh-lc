@@ -37,7 +37,8 @@ theorem adAt_entry_one {n : ℕ} (P : HeightOneSpectrum (𝓞 E)) {η : GL (Fin 
 
 theorem adAt_mul_entry {n : ℕ} (P : HeightOneSpectrum (𝓞 E)) (g κ : GL (Fin n) (AfE F E)) (i j : Fin n) :
     adAt F P ((g * κ).1 i j) = ∑ l, adAt F P (g.1 i l) * adAt F P (κ.1 l j) := by
-  rw [Units.val_mul, Matrix.mul_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Units.val_mul, Matrix.mul_apply, map_sum]
   simp only [map_mul]
 
 theorem adAt_mul_of_one {n : ℕ} (P : HeightOneSpectrum (𝓞 E)) (g : GL (Fin n) (AfE F E)) {κ : GL (Fin n) (AfE F E)}
@@ -57,7 +58,8 @@ theorem adAt_pullV_mul {n : ℕ} (P : HeightOneSpectrum (𝓞 E)) (g : GL (Fin n
     adAt F P (pullV (g * κ) x i) = adAt F P (pullV g x i) := by
   have h' : bc (prV (E := E) (P.under (𝓞 F))) κ⁻¹ = 1 := by rw [map_inv, h, inv_one]
   unfold pullV
-  rw [_root_.mul_inv_rev, Units.val_mul, ← Matrix.mulVec_mulVec, Matrix.mulVec, dotProduct, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [_root_.mul_inv_rev, Units.val_mul, ← Matrix.mulVec_mulVec, Matrix.mulVec, dotProduct, map_sum]
   simp only [map_mul, adAt_entry_one P h', ite_mul, one_mul, zero_mul, Finset.sum_ite_eq, Finset.mem_univ, if_true]
 
 theorem comm_of_bc {n : ℕ} (κ k : GL (Fin n) (AfE F E))

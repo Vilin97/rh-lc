@@ -211,7 +211,8 @@ private theorem not_mem_ker (O : Subring K) (π : Kˣ) (hπ : (π : K) ∈ O) (h
     | succ j ih =>
       intro h
       apply ih
-      rw [← W.smul_mem_iff lam.ne_zero, ← map_smul, ← hU, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← W.smul_mem_iff lam.ne_zero, ← map_smul, ← hU, map_sum]
       refine sum_mem fun u _ => ?_
       have e : ρ (aff (π ^ j) 0) (ρ (aff π (u : K)) v) = ρ (aff 1 ((π : K) ^ j * u)) (ρ (aff (π ^ (j + 1)) 0) v) := by
         simp only [← Module.End.mul_apply, ← map_mul, aff_mul]
@@ -253,7 +254,8 @@ private theorem gen (O : Subring K) (hO : ∀ x : K, x ∈ O ∨ x⁻¹ ∈ O) (
   have hy : N.mkQ v ≠ 0 := fun h =>
     not_mem_ker O π hπ hπ' ρ htor v hv hf S lam hU ((Submodule.Quotient.mk_eq_zero N).1 h)
   have he : (S.card : ℂ) • τ π (N.mkQ v) = (lam : ℂ) • N.mkQ v := by
-    rw [← map_smul N.mkQ, ← hU, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_smul N.mkQ, ← hU, map_sum]
     simp only [hq, Finset.sum_const, Nat.cast_smul_eq_nsmul]
   have hS : (S.card : ℂ) ≠ 0 := by
     intro h

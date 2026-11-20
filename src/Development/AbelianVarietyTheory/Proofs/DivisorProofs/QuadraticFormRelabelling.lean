@@ -31,7 +31,8 @@ theorem aeval_halfWholeSq_sub_rootSq : ∀ (D : D7) (O : Setup D), aeval (fun i 
   have hsq : ∀ i, (C (GlobalTheory.RelabDR.sg O i : ℝ) * X (GlobalTheory.RelabDR.ix O i) : MvPolynomial (Letter O.S.Dw ⊕ Letter O.S.Dw) ℝ) ^ 2 = X (GlobalTheory.RelabDR.ix O i) ^ 2 := by
     intro i
     rw [mul_pow, ← C_pow, GlobalTheory.RelabDR.sg_sq_real, C_1, one_mul]
-  simp only [map_sub, map_mul, map_sum, map_pow, aeval_X, aeval_C, hsq]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sub, map_mul, map_sum, map_pow, aeval_X, aeval_C, hsq]
   have hW : ∑ k, (X (Sum.inr (GlobalTheory.RelabDR.wholeL O k)) : MvPolynomial (Letter O.S.Dw ⊕ Letter O.S.Dw) ℝ) ^ 2 = ∑ z, X (Sum.inr z) ^ 2 :=
     Fintype.sum_bijective _ (GlobalTheory.RelabDR.wholeL_bijective_sqs O) _ _ (fun _ => rfl)
   have hR : ∑ x, (X (Sum.inl (GlobalTheory.RelabDR.rootL O x)) : MvPolynomial (Letter O.S.Dw ⊕ Letter O.S.Dw) ℝ) ^ 2 = ∑ z, X (Sum.inl z) ^ 2 :=

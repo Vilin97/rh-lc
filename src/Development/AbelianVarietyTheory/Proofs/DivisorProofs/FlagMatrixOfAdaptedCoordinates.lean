@@ -45,7 +45,8 @@ theorem exists_comb {Y : Scheme.{0}} {N : Y.Modules} {r : ℕ} (fl : Vert.Flag N
     refine (map_sum (QCoh.appLinear (fl.ι k) (W ⊓ W')) _ _).trans (Finset.sum_congr rfl fun i _ => ?_)
     rw [map_smul, QCoh.appLinear_apply, app_resM, hus]
   rw [← TangentOrigin.evalPt_res y inf_le_right hy' h0, ← he.repr_resM, h1]
-  simp only [map_sum, map_smul, Finsupp.finsetSum_apply, Finsupp.smul_apply, smul_eq_mul, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, Finsupp.finsetSum_apply, Finsupp.smul_apply, smul_eq_mul, map_mul]
   rw [Matrix.vecMul, dotProduct]
   symm
   refine (Finset.sum_of_injOn (Fin.castLE hk) (Fin.castLE_injective hk).injOn (fun _ _ => Finset.mem_univ _)

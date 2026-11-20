@@ -115,7 +115,8 @@ theorem nsmul_mem_LaB {T : Tor D} (hT : Good D T)
     obtain ⟨a, ha⟩ := hC.1 A hA
     have h1 : k • embV D T A = ∑ j, D.host.φ₀ (((a j : D.host.K) : D.host.E)) • embV D T (b j) := by
       have h2 := congrArg (hT.embHom N N') ha
-      rw [map_nsmul, map_sum] at h2
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_nsmul, map_sum] at h2
       refine h2.trans (Finset.sum_congr rfl fun j _ => ?_)
       exact hT.embV_smul _ _
     rw [smul_comm, h1, Finset.smul_sum]

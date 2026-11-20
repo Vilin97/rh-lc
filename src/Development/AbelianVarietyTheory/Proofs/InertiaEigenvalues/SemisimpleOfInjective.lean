@@ -177,7 +177,8 @@ theorem exists_complement {L : Type} [Field L] [CharZero L] (φ : FractionRing O
   have hj : Function.Injective j := hv.fintypeLinearCombination_injective
   have hje : ∀ g y, fracRep r g (j y) = j (charSum χ t g y) := by
     intro g y
-    simp only [j, Fintype.linearCombination_apply, map_sum, map_smul, he, smul_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [j, Fintype.linearCombination_apply, map_sum, map_smul, he, smul_smul]
     refine Finset.sum_congr rfl fun c _ => ?_
     rw [mul_comm]
     rfl
@@ -558,7 +559,8 @@ theorem complement_at (hC : GlobalTheory.TwSys.Cheb) (D : D7) (hG : GaloisRepsCu
     have h6 := D.naut.pt_loc i P π hP w (h4 hw)
     rw [← hr3 w (h4 hw) B σ hB hσ, ← hB4 w hw] at h6
     refine (map_trace_eq_sum _ _ _ h6).trans ?_
-    rw [D.naut.frobEig_tw _ _ h5.1, Multiset.sum_map_mul_right, Multiset.map_id', h5.2, map_add,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [D.naut.frobEig_tw _ _ h5.1, Multiset.sum_map_mul_right, Multiset.map_id', h5.2, map_add,
       h1 hw B σ hB hσ, map_sum, List.sum_map_mul_right]
     have h7 : ∑ c : Fin D.R.t, D.naut.iotaQC i (chiBar D.naut i (c.1 + 1) σ) =
         sumPart D.naut ⟨1, muEta D.naut i, D.R.t⟩ w *

@@ -131,7 +131,8 @@ theorem bertini_on_affine (Y : Var ℂ) (L : LB Y.X) (n d : ℕ) (b : Fin n → 
     exact h0 hu2
   have hLI := hQu u hu q (Y.X.presheaf.stalk (x' : Y.X)) hf
   refine cotangent_independent_unit_mul _ _ 1 (fun j => ?_) hLI
-  rw [Units.val_one, one_mul, sum_smul_f, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Units.val_one, one_mul, sum_smul_f, map_sum, map_sum]
   refine Finset.sum_congr rfl fun p _ => ?_
   rw [Algebra.smul_def, map_mul, map_mul]
   have e1 : algebraMap Γ(Y.X, V) (Y.X.presheaf.stalk (x' : Y.X)) (algebraMap ℂ Γ(Y.X, V) (u (j, p))) =

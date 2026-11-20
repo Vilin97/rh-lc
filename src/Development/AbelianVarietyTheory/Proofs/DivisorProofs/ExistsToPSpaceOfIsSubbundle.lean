@@ -146,7 +146,8 @@ theorem exists_prel (f : T ⟶ Sp k) (σ : Fin (N + 1) ≃ (Fin d → Fin (M + 1
   refine ⟨W, hW.trans (H.le_toHom_preimage f i), t, hxW, he,
     (hv.res hW).map_of_linearEquiv (ε he) fun V h a => by rw [resM_resM, resM_resM, hε], fun m => ?_⟩
   have h1 := congrArg (ε he W le_rfl) ((hv.basis hW).sum_repr (resM _ le_top (v m)))
-  rw [hε, resM_self, map_sum] at h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hε, resM_self, map_sum] at h1
   refine h1.symm.trans (Finset.sum_congr rfl fun a _ => ?_)
   rw [map_smul, IsFrame.basis_apply, resM_resM, hε, resM_self,
     ← ProjSpace.resG_pullRatio (hi := H.le_toHom_preimage f i) hW, H.pullRatio_toHom f, IsFrame.resG_det,
@@ -163,7 +164,8 @@ theorem PRel.pullback [L.IsQuasicoherent] [Q.IsQuasicoherent] (h : PRel φ σ u)
   refine ⟨g ⁻¹ᵁ W, g.preimage_mono hW, QCoh.pullbackSections g L le_rfl t, hx, ht.pullback g, ?_, fun m => ?_⟩
   · simpa only [QCoh.pullback_map_app_pullbackSections] using hf.pullback g
   · simp only [QCoh.pullback_map_app_pullbackSections]
-    rw [hr m, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hr m, map_sum]
     simp only [QCoh.pullbackSections_smul]
     exact Finset.sum_congr rfl fun a _ => by rw [← ProjSpace.appLE_pullRatio]
 
@@ -186,10 +188,12 @@ theorem PRel.exists_desc_app (h : PRel φ σ u) (i : Fin (N + 1)) (x : T) (hx : 
       refine Finset.sum_congr rfl fun a _ => ?_
       rw [← app_resM, ← Scheme.Modules.Hom.app_smul, ← eq_repr_smul ht])
     rw [eq_repr_smul ht hV (s a), congrFun this a, Pi.zero_apply, zero_smul]
-  · simp only [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [map_sum]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun m _ => ?_
-    rw [eq_repr_smul ht hV (s m), Scheme.Modules.Hom.app_smul, app_resM, hr m, map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [eq_repr_smul ht hV (s m), Scheme.Modules.Hom.app_smul, app_resM, hr m, map_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl fun a _ => ?_
     rw [Scheme.Modules.Hom.app_smul, Scheme.Modules.Hom.app_smul, app_resM, resM_smul, ProjSpace.resG_pullRatio,
       smul_comm]
@@ -225,7 +229,8 @@ theorem hom_ext_map_biproduct {C D : Type*} [Category C] [Category D] [Preadditi
     [Φ.Additive] {ι : Type} [Fintype ι] (f : ι → C) [HasBiproduct f] {Z : D} {a b : Φ.obj (⨁ f) ⟶ Z}
     (h : ∀ j, Φ.map (biproduct.ι f j) ≫ a = Φ.map (biproduct.ι f j) ≫ b) : a = b := by
   have e (c : Φ.obj (⨁ f) ⟶ Z) : c = ∑ j, Φ.map (biproduct.π f j) ≫ Φ.map (biproduct.ι f j) ≫ c := by
-    simp only [← Functor.map_comp_assoc, ← Preadditive.sum_comp, ← Functor.map_sum, biproduct.total, Φ.map_id,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [← Functor.map_comp_assoc, ← Preadditive.sum_comp, ← Functor.map_sum, biproduct.total, Φ.map_id,
       Category.id_comp]
   rw [e a, e b]
   simp only [h]

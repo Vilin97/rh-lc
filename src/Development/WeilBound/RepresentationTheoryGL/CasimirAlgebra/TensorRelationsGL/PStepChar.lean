@@ -33,7 +33,8 @@ theorem vanish (D : A[X]) (a : ℂ) (h : ∀ u : ℂ, u ≠ a → D.eval (algebr
   have hq : ∀ u : ℂ, u ≠ a → q.eval u = 0 := by
     intro u hu
     have e := congrArg φ (h u hu)
-    rw [Polynomial.eval_eq_sum_range, map_zero, map_sum] at e
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Polynomial.eval_eq_sum_range, map_zero, map_sum] at e
     simp only [q, Polynomial.eval_finsetSum, Polynomial.eval_monomial]
     rw [← e]
     refine Finset.sum_congr rfl fun j _ => ?_

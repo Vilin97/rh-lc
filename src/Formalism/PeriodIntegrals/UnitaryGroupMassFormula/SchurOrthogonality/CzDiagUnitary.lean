@@ -39,7 +39,8 @@ theorem czFam_eval {N : ℕ} (u v : Matrix (Fin N) (Fin N) ℂ) (P : MvPolynomia
   unfold evalM
   refine congrArg (fun x => eval x P) ?_
   funext w
-  simp only [map_sum, map_mul, MvPolynomial.eval_C, MvPolynomial.eval_X]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, MvPolynomial.eval_C, MvPolynomial.eval_X]
   rw [Matrix.mul_apply]
   simp only [Matrix.mul_diagonal]
   refine Finset.sum_congr rfl fun c _ => ?_

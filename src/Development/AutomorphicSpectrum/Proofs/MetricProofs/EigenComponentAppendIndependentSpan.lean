@@ -31,7 +31,8 @@ theorem eq_zero_of_sum_mem_span : ∀ (E : Type) [Field E] [NumberField E] (V : 
   have hact : ∀ (b : 𝓞 E) x, π (ρ b x) = s₀ b • π x := by
     intro b x
     have e : π (ρ b x) = ρ b (π x) := by
-      simp only [π, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [π, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul]
       refine Finset.sum_congr rfl fun a _ => ?_
       congr 1
       have : ρ a * ρ b = ρ b * ρ a := by rw [← map_mul, ← map_mul, mul_comm]

@@ -88,12 +88,14 @@ theorem exists_holomorphic_thetaConstants : ∀ (o : Type) [CommRing o] (g N' : 
       rw [toTh_lev, lab_single, Nat.cast_pow] at e
       exact congrArg (fun f => f.left) e
   have hx : ∀ a : Ix g (N' ^ 2), ∑ i, ((a i).val : ℂ) • (lam' i : Fin g → ℂ) = P z (x a) := fun a => by
-    simp only [x, lam', map_sum, map_zsmul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [x, lam', map_sum, map_zsmul]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [natCast_zsmul, Nat.cast_smul_eq_nsmul]
   have hx' : ∀ a : Ix g (N' ^ 2), χ' (∑ i, ((a i).val : ℤ) • lam' i) = χ (x a) := fun a => by
     refine hχ _ _ ?_
-    simp only [x, lam', map_sum, map_zsmul, AddSubmonoidClass.coe_finsetSum, SetLike.val_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [x, lam', map_sum, map_zsmul, AddSubmonoidClass.coe_finsetSum, SetLike.val_smul]
   simp only [hx, hx'] at key
   convert key using 2 with a
   exact (_root_.mul_assoc _ _ _).symm

@@ -70,7 +70,8 @@ theorem exp_pow_sub_one (E : PowerSeries LL) (h0 : constantCoeff E = 1)
     have g := geom_sum_mul (1 + X * E₁) p
     rw [add_sub_cancel_left] at g
     rw [← g, mul_comm]
-  · rw [map_mul, map_sum, hc1, one_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_mul, map_sum, hc1, one_mul]
     simp [map_pow]
 
 end Zero

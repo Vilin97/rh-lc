@@ -388,7 +388,8 @@ theorem isPtOf_mul (hQ : Q = ∅) {g k : GL (Fin n) (AfE F E)} {p : DecoF E n ST
       rw [Matrix.sub_mulVec, Matrix.one_mulVec, Pi.sub_apply, add_sub_cancel]
     rw [e, map_add, add_sub_right_comm]
     refine Valuation.map_add_lt _ hv ?_
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Valuation.map_sum_lt _ one_ne_zero fun j _ => ?_
     rw [map_mul, map_mul]
     exact mul_lt_one_of_lt_of_le (h3 P i j) (DetSpec.val_le_of_mem_hatL P hint j)

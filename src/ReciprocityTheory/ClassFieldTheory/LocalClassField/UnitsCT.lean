@@ -90,7 +90,8 @@ theorem exists_frob_sub_eq_of_sum_eq_zero_layerU (hK : FiniteDimensional ℚ_[p]
     (layerUIncl p K (Kn p K n)).equiv
   obtain ⟨w, hw⟩ := exists_sub_eq_of_cyclic_of_h1_subsingleton (layer p K (Kn p K n)) _ hg h1 ((layerUIncl p K (Kn p K n)).u u) (by
     simp only [← hI]
-    rw [← map_sum, hu, map_zero])
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, hu, map_zero])
   obtain ⟨π, hπ⟩ := vOn_surjective p K hK 1
   have hπL : π.1 ∈ multOf p (Kn p K n) := hKL π.2
   let π' : (layer p K (Kn p K n)).V := toLayer p ⟨π.1, hπL⟩

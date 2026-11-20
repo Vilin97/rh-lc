@@ -119,7 +119,8 @@ theorem repr_baseChange {R E B ι : Type} [CommRing R] [Field E] [Algebra R E] [
     funext i
     rw [LinearMap.baseChange_tmul, Algebra.TensorProduct.basis_repr_tmul, Algebra.TensorProduct.basis_repr_tmul]
     have h := congrFun (LinearMap.toMatrix_mulVec_repr β β φ b) i
-    simp only [Finsupp.smul_apply, Finsupp.mapRange_apply, smul_eq_mul, ← h, Matrix.mulVec, dotProduct,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Finsupp.smul_apply, Finsupp.mapRange_apply, smul_eq_mul, ← h, Matrix.mulVec, dotProduct,
       Matrix.map_apply, map_sum, map_mul, Finset.mul_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     ring
@@ -265,7 +266,8 @@ theorem cayleyHamilton_galV : ∀ {Ω : Type} [Field Ω] [Algebra ℚ Ω] [IsAlg
             (LinearMap.toMatrix β β (hT _ hadmD)).map (algebraMap ℤ_[l] E) := by
         rw [hR]
         ext i j
-        simp only [Matrix.map_apply, Matrix.add_apply, Matrix.sub_apply, Matrix.smul_apply, Matrix.mul_apply,
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [Matrix.map_apply, Matrix.add_apply, Matrix.sub_apply, Matrix.smul_apply, Matrix.mul_apply,
           smul_eq_mul, map_add, map_sub, map_mul, map_sum]
       have hHa : (LinearMap.toMatrix β β (hT _ hadmT)).map (algebraMap ℤ_[l] E) * (A σ).map (algebraMap ℤ_[l] E) =
           (A σ).map (algebraMap ℤ_[l] E) * (LinearMap.toMatrix β β (hT _ hadmT)).map (algebraMap ℤ_[l] E) := by

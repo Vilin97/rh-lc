@@ -32,14 +32,16 @@ variable (F) in
 def idemFin : AF F := LinearMap.inr F (Ainf F) (Af F) 1
 
 theorem idemS_fst (T : Finset (Pl F)) : fstA F (idemS T) = 0 := by
-  rw [idemS, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [idemS, map_sum]
   exact Finset.sum_eq_zero fun v _ => rfl
 
 open Classical in
 theorem evFin_idemS (T : Finset (Pl F)) (u : Pl F) : evFin F u (idemS T) = if u ∈ T then 1 else 0 := by
   have hne : ∀ v, v ≠ u → evFin F u (GlobalTheory.LatVac.liftV v (1 : Fv F v)) = 0 := fun v hv =>
     evalV_singleFin_ne (Ne.symm hv) _
-  rw [idemS, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [idemS, map_sum]
   split_ifs with hu
   · rw [Finset.sum_eq_single u (fun v _ hv => hne v hv) (fun h => absurd hu h), GlobalTheory.LatVac.evFin_liftV]
   · exact Finset.sum_eq_zero fun v hv => hne v (by rintro rfl; exact hu hv)

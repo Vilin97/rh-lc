@@ -53,7 +53,8 @@ theorem homogCoc_red_cob : ∀ (p : ℕ) [Fact p.Prime] (k : Type) [Field k] [Ch
           rw [map_sub, hbNc, if_pos hα, sub_self]) γ hγ, add_zero]
       conv_lhs => rw [hb]
       rw [map_add, map_add, e1]
-    · rw [hhom γ hγ, map_add, map_sum, (GlobalTheory.T.additive_formal_group_coboundary_homogeneous k d N).1 bN (fun α hα => by
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [hhom γ hγ, map_add, map_sum, (GlobalTheory.T.additive_formal_group_coboundary_homogeneous k d N).1 bN (fun α hα => by
         rw [hbNc, if_neg hα]) γ hγ, zero_add]
       refine (Finset.sum_eq_zero fun m _ => ?_).symm
       simp only [cm]
@@ -108,7 +109,8 @@ theorem homogCoc_red_cob : ∀ (p : ℕ) [Fact p.Prime] (k : Type) [Field k] [Ch
     intro m α
     rw [GlobalTheory.T.cob1_addLaw_X_pow_eq_sum_choose (Fr p k) d N m (by omega)]
     simp only [cm]
-    rw [GlobalTheory.T.coeff_powerSeriesEvalTwoGroups_single_pair, map_smul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [GlobalTheory.T.coeff_powerSeriesEvalTwoGroups_single_pair, map_smul, map_sum]
     simp only [coeff_monomial, smul_eq_mul]
     set i := α (Sum.inl m) with hi
     set j := α (Sum.inr m) with hj
@@ -152,7 +154,8 @@ theorem homogCoc_red_cob : ∀ (p : ℕ) [Fact p.Prime] (k : Type) [Field k] [Ch
       apply hs; obtain ⟨e1, e2⟩ := key i' h; rw [e1, e2]; exact h
   refine ⟨Katz.lift p bN + ∑ m, t m • (X m ^ N : MvPowerSeries (Fin d) (Fr p k)), ?_, ?_⟩
   · intro α hα
-    rw [map_add, map_sum, coeff_lift, hbNc, if_neg hα, WittVector.teichmuller_zero, map_zero,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_add, map_sum, coeff_lift, hbNc, if_neg hα, WittVector.teichmuller_zero, map_zero,
       zero_add]
     refine Finset.sum_eq_zero fun m _ => ?_
     rw [map_smul, coeff_X_pow, if_neg, smul_zero]

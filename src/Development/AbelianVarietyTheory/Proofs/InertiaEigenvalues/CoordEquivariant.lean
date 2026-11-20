@@ -218,7 +218,8 @@ theorem coord_equivariant {act : GQ l →* (PadicComplex l ≃+* PadicComplex l)
   | tmul t q =>
     funext a
     have h1 : b.repr (r t) a = ∑ j, b.repr (r (b j)) a * b.repr t j := by
-      conv_lhs => rw [← b.sum_repr t, map_sum, map_sum, Finsupp.finsetSum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        conv_lhs => rw [← b.sum_repr t, map_sum, map_sum, Finsupp.finsetSum_apply]
       simp only [map_smul, Finsupp.smul_apply, smul_eq_mul, mul_comm]
     simp only [TensorProduct.map_tmul, hΨ, twAct, Pi.smul_apply, smul_eq_mul, Matrix.mulVec,
       dotProduct, map_mul, act_zC ha, hM, hs, h1, zC_sum, zC_mul, Finset.sum_mul, Finset.mul_sum]

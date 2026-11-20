@@ -84,7 +84,8 @@ theorem hermForm_map_conj {g : ℕ} (Hm : Matrix (Fin g) (Fin g) ℂ) (z w : Fin
     hermForm (Hm.map (starRingEnd ℂ)) (fun i => starRingEnd ℂ (z i)) (fun i => starRingEnd ℂ (w i)) =
       starRingEnd ℂ (hermForm Hm z w) := by
   unfold hermForm
-  simp [Matrix.mulVec, dotProduct, map_sum, Matrix.map_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Matrix.mulVec, dotProduct, map_sum, Matrix.map_apply]
 
 theorem isMetricAt_of_dim {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {Dw : Datum H} {l : Level H}
     {Xo : Moduli Dw l} (x : Sp ℂ ⟶ Xo.X) (s : LB.Sec (PPx x))

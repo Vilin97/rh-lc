@@ -202,7 +202,8 @@ lemma tri_map {K W : Type} [CommRing K] [AddCommGroup W] [Module K W] {n : ℕ} 
   refine ⟨A, hA, fun b => ?_⟩
   have e : h b = ∑ a, A a b • f a := hfh b
   show g (h b) = ∑ a, A a b • g (f a)
-  rw [e, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, map_sum]
   simp_rw [map_smul]
 
 end Loc

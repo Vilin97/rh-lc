@@ -157,7 +157,8 @@ theorem eq_zero_of_eval_algebraMap (D : B[X]) (h : ∀ u : ℂ, D.eval (algebraM
   have hq : q = 0 := by
     refine Polynomial.funext fun u => ?_
     have h1 : φ (D.eval (algebraMap ℂ B u)) = 0 := by rw [h u, map_zero]
-    rw [eval_eq_sum_range, map_sum] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [eval_eq_sum_range, map_sum] at h1
     rw [eval_zero, ← h1, eval_finsetSum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [eval_monomial, ← map_pow, ← Algebra.commutes, ← Algebra.smul_def, map_smul, smul_eq_mul, mul_comm]

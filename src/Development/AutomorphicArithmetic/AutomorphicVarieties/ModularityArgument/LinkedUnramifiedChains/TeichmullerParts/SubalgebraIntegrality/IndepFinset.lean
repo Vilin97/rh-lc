@@ -35,7 +35,8 @@ private lemma indep_fin {τ : Representation ℂ G W'} {ρ : Representation ℂ 
       intro v hv
       exact ih' v (by rw [← hA]; exact hv)
     have hAeq : ∀ g v, A (fun i => τ g (v i)) = ρ g (A v) := fun g v => by
-      rw [hA, hA, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hA, hA, map_sum]
       exact Finset.sum_congr rfl fun i _ => hb i.succ g (v i)
     have hsum : b 0 (u 0) + A (fun i => u i.succ) = 0 := by
       rw [hA, ← hu, Fin.sum_univ_succ]
@@ -158,7 +159,8 @@ private lemma evl_inj {τ : Representation ℂ G W'} {ρ : Representation ℂ G 
   have hsum : ∑ i ∈ (e z).support, (B i).1 (e z i) = 0 := by
     rw [← hz]
     conv_rhs => rw [hz']
-    rw [Finsupp.sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finsupp.sum, map_sum]
     exact Finset.sum_congr rfl fun i _ => (evl_tmul τ ρ _ _).symm
   have hli : LinearIndependent ℂ fun i => (B i).1 :=
     B.linearIndependent.map' (intwSub τ ρ).subtype (Submodule.ker_subtype _)

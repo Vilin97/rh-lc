@@ -35,7 +35,8 @@ theorem twistedProjector_orthogonal_of_unitary : ∀ {LL Ks : Type} [Field LL] [
     rw [← hu g u (A.ρ g⁻¹ v), h1]
   have sa : ∀ u v, ⟪A.j σ (A.eOp eC u), A.j σ v⟫_ℂ = ⟪A.j σ u, A.j σ (A.eOp eC v)⟫_ℂ := by
     intro u v
-    simp only [Formalism.IndefR.Arith.FormsL.eOp_apply, map_sum, map_smulₛₗ, sum_inner, inner_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Formalism.IndefR.Arith.FormsL.eOp_apply, map_sum, map_smulₛₗ, sum_inner, inner_sum,
       inner_smul_left, inner_smul_right]
     conv_rhs => rw [← Equiv.sum_comp (Equiv.inv G0)]
     refine Finset.sum_congr rfl fun g _ => ?_

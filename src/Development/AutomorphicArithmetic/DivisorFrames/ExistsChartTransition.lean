@@ -17,7 +17,8 @@ private theorem frame_mul {X : Scheme.{0}} {F : X.Modules} {U : X.Opens} {n : Ty
       (Fintype.linearCombination Γ(X, V) fun i => GlobalTheory.Twist.resM F h (e i)) ∘
         ((resG X h).mapMatrix M).mulVec := by
     funext a
-    simp only [Function.comp_apply, Fintype.linearCombination_apply, map_sum, GlobalTheory.Twist.resM_smul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Function.comp_apply, Fintype.linearCombination_apply, map_sum, GlobalTheory.Twist.resM_smul,
       Matrix.mulVec, dotProduct, Finset.sum_smul, Finset.smul_sum, smul_smul,
       RingHom.mapMatrix_apply, Matrix.map_apply]
     rw [Finset.sum_comm]
@@ -78,7 +79,8 @@ theorem UpperTheory.exists_chart_transition :
   have : ((ch.isFrame.basis hVU).repr (GlobalTheory.Twist.resM M le_rfl (∑ i, S' i b • GlobalTheory.Twist.resM M hVU (ch.e i)))) a = S' a b := by
     have e : GlobalTheory.Twist.resM M le_rfl (∑ i, S' i b • GlobalTheory.Twist.resM M hVU (ch.e i)) =
         ∑ i, S' i b • ch.isFrame.basis hVU i := by
-      simp only [map_sum, GlobalTheory.Twist.resM_smul, GlobalTheory.Twist.resM_resM, IsFrame.basis_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, GlobalTheory.Twist.resM_smul, GlobalTheory.Twist.resM_resM, IsFrame.basis_apply]
       simp [resG]
     rw [e, Module.Basis.repr_sum_self]
   refine (congrArg _ this).trans ?_

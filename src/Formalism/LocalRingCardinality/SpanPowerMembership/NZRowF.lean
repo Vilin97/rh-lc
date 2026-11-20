@@ -44,10 +44,12 @@ theorem dual_std (x : Fin n → K) :
     choose ca' hca' using fun i => star_int (ca i)
     refine ⟨∑ i, ca' i * cx i, ?_⟩
     have hc : ((∑ i, ca' i * cx i : 𝓞 K) : K) = ∑ i, star (a i) * x i := by
-      rw [show ((∑ i, ca' i * cx i : 𝓞 K) : K) = algebraMap (𝓞 K) K (∑ i, ca' i * cx i) from rfl, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [show ((∑ i, ca' i * cx i : 𝓞 K) : K) = algebraMap (𝓞 K) K (∑ i, ca' i * cx i) from rfl, map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_mul, hca i, hcx i, hca' i]
-    rw [inner_jB, hc, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [inner_jB, hc, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_mul, hstar]
 

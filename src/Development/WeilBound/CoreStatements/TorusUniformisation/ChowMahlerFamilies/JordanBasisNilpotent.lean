@@ -26,7 +26,8 @@ theorem exists_span_sup_range {k W : Type} [Field k] [AddCommGroup W] [Module k 
     Submodule.sum_mem _ fun j _ => Submodule.smul_mem _ _ (hspan j), ?_⟩
   have hq : (LinearMap.range π).mkQ
       (v - ∑ j, b.repr ((LinearMap.range π).mkQ v) j • g (b j)) = 0 := by
-    rw [map_sub, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_sum]
     simp only [map_smul, hg]
     rw [b.sum_repr, sub_self]
   rw [Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero] at hq

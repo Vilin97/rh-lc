@@ -97,9 +97,11 @@ theorem dτ_mem {W : Submodule ℂ R.V} (hW : Formalism.REAL.KStable ε R.units 
     {X : Matrix (Fin n) (Fin n) ℂ} (hX : ∀ a b, ε a ≠ ε b → X a b = 0) :
     ∀ v ∈ W, R.dτ X v ∈ W := by
   intro v hv
-  rw [Matrix.matrix_eq_sum_single X, map_sum, _root_.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.matrix_eq_sum_single X, map_sum, _root_.sum_apply]
   refine W.sum_mem fun a _ => ?_
-  rw [map_sum, _root_.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, _root_.sum_apply]
   refine W.sum_mem fun b _ => ?_
   by_cases hab : ε a = ε b
   · have e : Matrix.single a b (X a b) = X a b • Matrix.single a b 1 := by

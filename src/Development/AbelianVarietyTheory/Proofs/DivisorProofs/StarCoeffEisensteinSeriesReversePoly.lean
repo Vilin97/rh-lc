@@ -102,7 +102,8 @@ theorem character_bc (σ : ℂ ≃+* ℂ) (τ : FDRep ℂ Γ) (γ : Γ) : (bc σ
 theorem simple_bc [Fintype Γ] (σ : ℂ ≃+* ℂ) {τ : FDRep ℂ Γ} (h : Simple τ) : Simple (bc σ τ) := by
   rw [FDRep.simple_iff_char_is_norm_one] at h ⊢
   simp only [character_bc]
-  rw [← map_natCast σ, ← h, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_natCast σ, ← h, map_sum]
   simp only [map_mul]
 
 variable {K : Type} [Field K] [Fintype K] [DecidableEq K] {ι : Type} [Fintype ι] [DecidableEq ι]

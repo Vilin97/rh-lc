@@ -128,11 +128,13 @@ theorem char_inv_eq_prod_locK_of_flip : ∀ (D : D7) (V : HSp D) (χW : (AE D)ˣ
   unfold IsFlipDet at hx
   have heT : ∀ P, ι (finPart D (∑ PP ∈ T, es PP)) P = if P ∈ T then 1 else 0 := by
     intro P
-    rw [map_sum, map_sum, fa_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum, fa_sum,
       Finset.sum_congr rfl (fun PP hPP => comp_of_isIdemAt ι h1 h2 (hes PP hPP) P)]
     exact Finset.sum_ite_eq T P (fun _ => (1 : HeightOneSpectrum.adicCompletion D.host.E P))
   have hinfT : infPart D (∑ PP ∈ T, es PP) = 0 := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_eq_zero (fun PP hPP => infPart_of_isIdemAt (hes PP hPP))
   have hinf : infPart D (x : AE D) = 1 := by
     have := congrArg (infPart D) hx

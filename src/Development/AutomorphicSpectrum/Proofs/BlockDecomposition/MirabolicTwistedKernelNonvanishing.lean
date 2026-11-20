@@ -146,7 +146,8 @@ theorem exists_JJ_ne_zero : ∀ {k : Type} [Field k] [ValuativeRel k] [Topologic
       (((piHaar ν (n + 1)).real (box (n + 1) t₀ : Set (Fin (n + 1) → k)) : ℝ) : ℂ) * B v₁ v' := by
     rw [JJ, setIntegral_eq_sum_reps (piHaar ν (n + 1)) (box (n + 1) t₀) (box (n + 1) t) hDo.measurableSet hfin hDM S
       hSM hS _ fun x d hd => integrand_add ψ T B v v' x d (ht₀ hd).1 (hr _ (ht₀ hd).2)]
-    simp only [hv₁, map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply, smul_eq_mul, coef]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hv₁, map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply, smul_eq_mul, coef]
   rw [hJ]
   exact mul_ne_zero (Complex.ofReal_ne_zero.2 hvol) hv'
 

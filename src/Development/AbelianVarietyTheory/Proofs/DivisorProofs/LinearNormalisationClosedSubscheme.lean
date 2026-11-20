@@ -49,7 +49,8 @@ theorem normal_iff {Rg : Type} [CommRing Rg] {mA mB : ℕ} (α : Fin mA → Γ(S
     Normal (g ≫ affπ Rg (mA * mB)) (matOf g) α β ↔
       ∀ j, g.appTop ((Scheme.ΓSpecIso (CommRingCat.of (MvPolynomial (Fin (mA * mB)) Rg))).inv (normEq α β j)) = 0 := by
   refine forall_congr' fun j => ?_
-  rw [normEq, map_sub, map_sub, sub_eq_zero, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [normEq, map_sub, map_sub, sub_eq_zero, map_sum, map_sum]
   simp only [map_mul, Scheme.Hom.comp_appTop, CommRingCat.comp_apply, appTop_affπ, matOf, coord]
 
 end GlobalTheory.HomFixUniv

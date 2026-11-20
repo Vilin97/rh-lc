@@ -63,7 +63,8 @@ private theorem UpperTheory.exists_adapted_plane_projection {F E : Type} [Field 
     rw [e.symm_apply_apply]
   have hyx : form σ X.J H.y H.x = 1 := by
     have : form σ X.J H.y H.x = σ (form σ X.J H.x H.y) := by
-      simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, hX.herm, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, hX.herm, Finset.mul_sum]
       rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun k _ => ?_
       ring

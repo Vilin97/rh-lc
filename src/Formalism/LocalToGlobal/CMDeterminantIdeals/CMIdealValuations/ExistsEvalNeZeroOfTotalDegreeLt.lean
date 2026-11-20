@@ -70,7 +70,8 @@ theorem substGauss : SubstGauss := by
     rw [map_bind₁, hP0, substFr, aeval_bind₁]
     change bind₁ _ P = bind₁ _ P
     refine congrArg (fun g => bind₁ g P) (funext fun v => ?_)
-    simp only [g0, map_sum, map_mul, aeval_C, aeval_X, map_C, map_X, algebraMap_eq]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [g0, map_sum, map_mul, aeval_C, aeval_X, map_C, map_X, algebraMap_eq]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [(hcU v.1 j v.2.2).choose_spec, C_mul]
     ring

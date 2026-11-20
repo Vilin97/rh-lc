@@ -58,7 +58,8 @@ theorem localRing_graph_of_injective : ∀ {K κ κ' L : Type} [Field K] [Field 
       Algebra.TensorProduct.productMap σ (AlgHom.id ℂ κ') (∑ i, (a i : K) ⊗ₜ[ℂ] b i) =
         ∑ i, ρ (π (a i)) * b i := by
     intro l a b
-    simp [map_sum, σ, he]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, σ, he]
   refine ⟨loc L σ, hQ, fun i => toLoc L σ (x i ⊗ₜ[ℂ] 1 - 1 ⊗ₜ[ℂ] σ (x i)), hm, hdim, ?_, ?_, ?_, ?_, ?_⟩
   · intro g hg
     refine ⟨toLoc L σ (g ⊗ₜ 1), ?_, rfl⟩

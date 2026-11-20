@@ -52,7 +52,8 @@ theorem det_low_ne_zero (hσ : ∀ x, σ (σ x) = x) {B : Base F E} {d d₁ : �
   set z : Fin d → E := H'.ι *ᵥ w' with hz
   have hσz : (fun i => σ (z i)) = H'.ι.map σ *ᵥ w := by
     funext i
-    simp [hz, hw', mulVec, dotProduct, map_sum, map_mul, hσ]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [hz, hw', mulVec, dotProduct, map_sum, map_mul, hσ]
   have hι : ∀ u, form σ W.J (H'.ι *ᵥ u) z = 0 := by
     intro u
     have e : form σ W.J (H'.ι *ᵥ u) z = u ⬝ᵥ (W₁.J *ᵥ w) := by

@@ -101,14 +101,16 @@ theorem lemmaR_of (hS : LemmaS.{u}) (hG : GenLogWeight.{u, 0}) (hB : LogBridges.
     by_cases hn : ∃ i, n = Finsupp.single i 1
     · obtain ⟨i, rfl⟩ := hn
       have hc : MvPowerSeries.coeff (Finsupp.single i 1) (linSub M x) = M x i := by
-        simp only [linSub, map_sum, MvPowerSeries.coeff_C_mul, MvPowerSeries.coeff_X]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [linSub, map_sum, MvPowerSeries.coeff_C_mul, MvPowerSeries.coeff_X]
         rw [Finset.sum_eq_single i (fun j _ hji => by
           rw [if_neg (fun h => hji ((Finsupp.single_left_inj one_ne_zero).mp h).symm), mul_zero])
           (by simp), if_pos rfl, mul_one]
       rw [hc, asmR_dot_single, Nat.cast_one, one_mul, sub_self, Real.rpow_zero]
       exact hM x i
     · have hc : MvPowerSeries.coeff n (linSub M x) = 0 := by
-        simp only [linSub, map_sum, MvPowerSeries.coeff_C_mul, MvPowerSeries.coeff_X]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [linSub, map_sum, MvPowerSeries.coeff_C_mul, MvPowerSeries.coeff_X]
         refine Finset.sum_eq_zero fun i _ => ?_
         rw [if_neg (fun h => hn ⟨i, h⟩), mul_zero]
       rw [hc, norm_zero]
@@ -132,7 +134,8 @@ theorem lemmaR_of (hS : LemmaS.{u}) (hG : GenLogWeight.{u, 0}) (hB : LogBridges.
       (MvPowerSeries.subst (linSub M) (MvPowerSeries.subst g U)) := fun n _ => hA' n
 
   have hbs0 : MvPowerSeries.constantCoeff (bSum M be) = 0 := by
-    simp only [bSum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [bSum, map_sum]
     exact Finset.sum_eq_zero fun ab _ => constantCoeff_mvPowerSeries_subst_eq_zero (fun s => hlin0 _) hbe0
   have hεbs0 : MvPowerSeries.constantCoeff (ε • bSum M be) = 0 := by
     rw [← MvPowerSeries.coeff_zero_eq_constantCoeff_apply, map_smul,

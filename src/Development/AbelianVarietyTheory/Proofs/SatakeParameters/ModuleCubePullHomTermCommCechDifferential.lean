@@ -28,7 +28,8 @@ theorem totalPull_totalD (y : ∀ s : Finset ι, A.obj s) :
   funext t
   rw [Cube.totalD_apply B]
   by_cases h : Set.InjOn τ (t : Set κ)
-  · rw [totalPull, if_pos h, Cube.totalD_apply A,
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [totalPull, if_pos h, Cube.totalD_apply A,
       Finset.sum_image (fun x hx y hy hxy => h hx hy hxy), map_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl fun i hi => ?_
     have hi' : Set.InjOn τ ((t.erase i : Finset κ) : Set κ) :=

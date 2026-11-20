@@ -109,7 +109,8 @@ theorem exists_trace_unit_of_span (K K' : UQ) (d : ℕ) (φ : K.E →+* K'.E) (h
     obtain ⟨a, ha⟩ := hu y
     have hy : y = ∑ i, a i • u i := by
       apply IsFractionRing.injective K'.O K'.E
-      rw [ha, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [ha, map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [Algebra.smul_def, map_mul, hmap, intMap_spec]
     rw [hy]

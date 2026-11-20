@@ -90,7 +90,8 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 
 theorem sq_incV (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (p q : Fin n → E) :
     sq (cA σ : AE F E →+* AE F E) (incM F J) (incV F p) (incV F q) = inclR (F := F) (AF F) (form σ J p q) := by
-  simp only [sq, form, incM, incV, dotProduct, Matrix.mulVec, Matrix.map_apply, map_sum, map_mul, RingHom.coe_coe,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [sq, form, incM, incV, dotProduct, Matrix.mulVec, Matrix.map_apply, map_sum, map_mul, RingHom.coe_coe,
     GlobalTheory.UnipCocptForm.cA_inclR]
 
 theorem mulVec_eq_sum {n m : ℕ} (ι : Matrix (Fin n) (Fin m) E) (z : Fin m → AE F E) :
@@ -136,7 +137,8 @@ theorem exists_unitary_of_fix : ∀ (F E : Type) [Field F] [NumberField F] [Fiel
     (by
       rw [← hJ₁]
       ext i j
-      simp only [incM, Matrix.mul_apply, Matrix.map_apply, Matrix.transpose_apply, map_sum, map_mul, RingHom.coe_coe,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [incM, Matrix.mul_apply, Matrix.map_apply, Matrix.transpose_apply, map_sum, map_mul, RingHom.coe_coe,
         GlobalTheory.UnipCocptForm.cA_inclR])
     (hP.decompA hσ hsk hd)
   have hu : IsUnit (incM F W₁.J).det := by

@@ -41,7 +41,8 @@ theorem latticeOf_mul_le (g k : GL (Fin n) F) (hk : k ∈ integralGL O F n) :
   rw [Units.val_mul, ← Matrix.mulVec_mulVec]
   congr 1
   funext i
-  simp [Matrix.mulVec, dotProduct, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Matrix.mulVec, dotProduct, map_sum]
 
 theorem latticeOf_mul (g k : GL (Fin n) F) (hk : k ∈ integralGL O F n) :
     latticeOf O (g * k) = latticeOf O g := by

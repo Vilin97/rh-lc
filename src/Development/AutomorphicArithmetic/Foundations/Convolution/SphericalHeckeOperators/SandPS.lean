@@ -264,7 +264,8 @@ private theorem key (hK : μ (integralGL F n : Set (GL (Fin n) F)) = 1) {ν₁ �
     have hsum : heckeAct μ (rz F z) (th μ (ν₁ + eL S)) (∑ σ, c σ • (b σ : Wz F z)) =
         ∑ σ, (c σ * monomialChar (ν₁ + eL S) (z ∘ σ)) • (b σ : Wz F z) := by
       change act μ z (th_mem μ a₁) _ = _
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun σ _ => ?_
       rw [map_smul]
       change c σ • heckeAct μ (rz F z) (th μ (ν₁ + eL S)) _ = _

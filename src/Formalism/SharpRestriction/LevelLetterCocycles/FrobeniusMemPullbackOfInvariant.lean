@@ -132,7 +132,8 @@ theorem frobenius_mem_pullback_of_invariant (W : LocWach PD LL O v n) (T : LocLa
       _ = _ := by
         rw [Finset.smul_sum]
         exact Finset.sum_congr rfl fun j _ => by rw [smul_smul, smul_smul, mul_comm]
-  rw [ht', map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [ht', map_sum]
   refine Submodule.sum_mem _ fun j _ => ?_
   rw [phiD_letA_smul_eq_phiA_smul_phiD]
   apply Submodule.smul_mem

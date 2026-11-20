@@ -75,7 +75,8 @@ theorem gval_eq_of_movesTo : ∀ (D : D7) {T T' : D.host.E} (F0 F : LFlag (VS D)
     ext a b
     simp only [Formalism.MainNotions.S.Zhat, Formalism.MainNotions.S.brS]
     rw [← hiso (F.fl.fvec a) (F'.fl.fvec b), hF a, hF' b]
-    simp only [map_sum, map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
       starRingEnd_apply, RingHom.id_apply, Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply,
       Formalism.MainNotions.S.Zhat, Formalism.MainNotions.S.brS, frame, Finset.mul_sum, Finset.sum_mul]
     refine Finset.sum_congr rfl (fun c _ => Finset.sum_congr rfl (fun d _ => ?_))

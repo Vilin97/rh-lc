@@ -60,7 +60,8 @@ theorem perLev_of_level (h k : ℕ) (P : Out.PolAV (Sp ℂ)) (lev : (Fin h ⊕ F
   have hBa : ∀ a, (B a : Fin h → ℂ) = ∑ i, a i • v i := fun a => by
     conv_lhs => rw [show a = ∑ i, a i • (Pi.single i 1 : Fin h ⊕ Fin h → ℤ) by
       ext j; simp [Finset.sum_apply, Pi.single_apply]]
-    simp only [v, map_sum, map_zsmul, Submodule.coe_sum, Submodule.coe_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [v, map_sum, map_zsmul, Submodule.coe_sum, Submodule.coe_smul]
   refine ⟨τ, hg, hs, hp, u', fun z => ?_, fun n a b e hn he => ?_, fun a => ?_⟩
   · rw [hΛ]
     constructor

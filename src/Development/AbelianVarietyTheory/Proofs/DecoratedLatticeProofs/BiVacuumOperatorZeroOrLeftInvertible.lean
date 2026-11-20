@@ -161,7 +161,8 @@ theorem ofK_at (P : Pl D → Prop) (κ : (WO A S × WO S A') →₀ ℂ) (hκ : 
 
 theorem biComb_sum {ι : Type} (s : Finset ι) (e : WO A S →₀ ℂ) (e' : WO S A' →₀ ℂ) (F : ι → WO A S → WO S A' → ℂ) :
     biComb ψ A S A' e e' (∑ i ∈ s, F i) = ∑ i ∈ s, biComb ψ A S A' e e' (F i) := by
-  simp only [biComb_eq, map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [biComb_eq, map_sum, Finset.smul_sum]
   conv_rhs => rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun x _ => ?_
   exact Finset.sum_comm

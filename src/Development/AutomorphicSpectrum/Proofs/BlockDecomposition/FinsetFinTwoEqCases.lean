@@ -295,7 +295,8 @@ theorem nM_mul (s : A →+* A) (J : Matrix (Fin M) (Fin M) A) (w w' : Fin M → 
 
 theorem s_rowv (hs : ∀ x, s (s x) = x) (hJ : ∀ i j, s (J j i) = J i j) (w : Fin M → A) (i : Fin M) :
     s (rowv s J w i) = ∑ b, J i b * w b := by
-  simp only [rowv, map_sum, map_mul, hs]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [rowv, map_sum, map_mul, hs]
   exact Finset.sum_congr rfl fun b _ => by rw [hJ, mul_comm]
 
 theorem nM_unitary (hs : ∀ x, s (s x) = x) (hJ : ∀ i j, s (J j i) = J i j) (w : Fin M → A) (z : A)
@@ -778,7 +779,8 @@ variable {A : Type} [CommRing A] {M : ℕ} {s : A →+* A} {J : Matrix (Fin M) (
 
 theorem s_hv (hs : ∀ x, s (s x) = x) (hJ : ∀ i j, s (J j i) = J i j) (x y : Fin M → A) :
     s (hv s J x y) = hv s J y x := by
-  simp only [hv, rowv, map_sum, map_mul, hs, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hv, rowv, map_sum, map_mul, hs, Finset.sum_mul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
   rw [hJ]

@@ -106,7 +106,8 @@ theorem gramR_ratTup {F E : Type} [Field F] [Field E] [Algebra F E] (R : Type) [
   have hs : ∀ e : E, sigR R σ (inclR R e) = inclR R (σ e) := fun e => by
     simp [sigR, inclR, Algebra.TensorProduct.map_tmul]
   ext p q
-  simp only [gramR, hR, gramE, hE, Formalism.UG.hform, Matrix.map_apply, ratTup, JR, map_sum, map_mul, hs]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [gramR, hR, gramE, hE, Formalism.UG.hform, Matrix.map_apply, ratTup, JR, map_sum, map_mul, hs]
   rfl
 
 end LocPosW

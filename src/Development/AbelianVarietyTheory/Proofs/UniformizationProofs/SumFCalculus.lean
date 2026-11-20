@@ -67,7 +67,8 @@ theorem _root_.GlobalTheory.AdicSum.sumI_map (f : E →ₗ[R] E') {x : Ix → E}
     fun i => Submodule.mem_map_of_mem (hx i), fun n => ?_⟩
   obtain ⟨S, hS⟩ := hconv n
   refine ⟨S, fun T hT => ?_⟩
-  rw [← Submodule.map_smul'', ← map_sum, ← map_sub]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Submodule.map_smul'', ← map_sum, ← map_sub]
   exact Submodule.mem_map_of_mem (hS T hT)
 
 open CategoryTheory CategoryTheory.Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry IsLocalRing in

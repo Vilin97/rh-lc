@@ -22,7 +22,8 @@ def x0Mat (B : BesLev D σ) : Matrix (Fin B.V.rank) (Fin (σ + 1)) D.host.E :=
 theorem rat_x0Mat (B : BesLev D σ) : rat (x0Mat B) = x0 B := by
   refine Matrix.ext fun k j => ?_
   refine Fin.lastCases ?_ (fun b => ?_) j
-  · simp [x0Mat, x0, xLast, rat, HypDec.j0, ratV, Matrix.mulVec, dotProduct, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp [x0Mat, x0, xLast, rat, HypDec.j0, ratV, Matrix.mulVec, dotProduct, map_sum, map_mul]
   · simp [x0Mat, x0, xLast, rat, HypDec.jX]
 
 def besselBasePointLevelNorm (B : BesLev D σ) : D.host.E := star (vecB B.o B.ζ) ⬝ᵥ B.V₀.gram *ᵥ vecB B.o B.ζ

@@ -31,9 +31,11 @@ private lemma spectrum_nonempty_of_countable_rank {V : Type} [AddCommGroup V] [_
     rw [this, hR, mul_one]
   have hp : aeval T p v = 0 := by
     have h1 := congrArg (aeval T (∏ j ∈ s, (X - C j))) hm
-    rw [map_zero, map_sum] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_zero, map_sum] at h1
     rw [← h1]
-    simp only [p, map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [p, map_sum, LinearMap.sum_apply]
     refine Finset.sum_congr rfl fun a ha => ?_
     rw [map_mul, aeval_C, ← key a ha, map_smul]
     simp [Module.End.mul_apply, Module.algebraMap_end_apply]

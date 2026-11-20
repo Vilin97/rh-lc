@@ -601,7 +601,8 @@ theorem torus_lipschitz : ∀ (n : ℕ) (ε : Fin n → Bool) (W : Submodule ℂ
         hρ hinv hsub hc0 hνint (hvL (E i) (hE1 i).1) (a t * g)
     have hLX : L Xg = ∑ i, (((Xg * (E i)ᴴ).trace).re) • L (E i) := by
       conv_lhs => rw [hE3 Xg hXg]
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl (fun i _ => ?_)
       rw [← map_smul]; congr 1
     have hDform : ∀ t : ℝ, ∫ m, ⟪v, σ (umat (m * (a t * g))) (L Xg)⟫_ℂ ∂ν =
@@ -612,7 +613,8 @@ theorem torus_lipschitz : ∀ (n : ℕ) (ε : Fin n → Bool) (W : Submodule ℂ
       have hpt : ∀ m : UJ ε, ⟪v, σ (umat (m * (a t * g))) (∑ i, (((Xg * (E i)ᴴ).trace).re) • L (E i))⟫_ℂ =
           ∑ i, ((((Xg * (E i)ᴴ).trace).re : ℝ) : ℂ) * ⟪v, σ (umat (m * (a t * g))) (L (E i))⟫_ℂ := by
         intro m
-        rw [map_sum, inner_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum, inner_sum]
         refine Finset.sum_congr rfl (fun i _ => ?_)
         rw [ContinuousLinearMap.map_smul_of_tower, ← Complex.coe_smul, inner_smul_right]
       simp only [hpt]

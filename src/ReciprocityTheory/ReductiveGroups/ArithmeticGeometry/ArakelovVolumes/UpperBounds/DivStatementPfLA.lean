@@ -113,7 +113,8 @@ theorem multilinear_expand {n d : ℕ} (q : ContinuousMultilinearMap ℂ (fun _ 
       _ = ∑ k, (L z) k • b k := by simp only [map_sum, map_smul, b]
   have hL : q (fun _ => z) = ∑ f : Fin d → Fin n, q (fun i => b (f i)) * ∏ k, (L z) k ^ cnt f k := by
     conv_lhs => rw [hz]
-    rw [ContinuousMultilinearMap.map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [ContinuousMultilinearMap.map_sum]
     refine Finset.sum_congr rfl fun f _ => ?_
     rw [ContinuousMultilinearMap.map_smul_univ, smul_eq_mul, mul_comm]
     congr 1

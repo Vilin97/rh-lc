@@ -21,7 +21,8 @@ theorem trace_mul_pairE (ξ : Module.Dual ℤ X) (b : 𝓞 E) (x : X) :
       (ξ (RingOfIntegers.basis E j • x) : ℚ) := by
     intro j
     unfold pairE
-    rw [Finset.mul_sum, map_sum, Finset.sum_eq_single j]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.mul_sum, map_sum, Finset.sum_eq_single j]
     · have := LinearMap.BilinForm.apply_dualBasis_left (traceForm_nondegenerate ℚ E)
         (integralBasis E) j j
       rw [Algebra.traceForm_apply, if_pos rfl, integralBasis_apply] at this
@@ -39,7 +40,8 @@ theorem trace_mul_pairE (ξ : Module.Dual ℤ X) (b : 𝓞 E) (x : X) :
   have hb := (RingOfIntegers.basis E).sum_repr b
   conv_lhs => rw [← hb]
   conv_rhs => rw [← hb]
-  simp only [map_sum, Finset.sum_smul, Finset.sum_mul, map_zsmul, smul_assoc, smul_mul_assoc]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Finset.sum_smul, Finset.sum_mul, map_zsmul, smul_assoc, smul_mul_assoc]
   push_cast
   refine Finset.sum_congr rfl fun j _ => ?_
   have := h1 j

@@ -65,7 +65,8 @@ theorem isoMap : ∀ (L : Type) [Field L] [NumberField L] [IsCMField L] (n : ℕ
       rw [GlobalTheory.HeckeRecon.heckeD_eq_sum J D hfin, Finset.sum_apply]
       refine Finset.sum_congr rfl fun c _ => ?_
       split_ifs <;> rfl
-    rw [hsum, hsum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hsum, hsum, map_sum]
     refine Finset.sum_congr rfl fun c _ => ?_
     split_ifs with hc
     · exact hrt _ f hf

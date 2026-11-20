@@ -142,7 +142,8 @@ theorem decay : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberField 
   have key := hC (fun p => realAd F 1 * algebraMap F (AF F) (b.repr (ξ p.1) p.2)) fun p => zero_mul _
   have hS : ∑ p : Fin n × Fin (Module.finrank F E), (realAd F 1 * algebraMap F (AF F) (b.repr (ξ p.1) p.2)) • S p =
       M.co.e (realAd F 1 • Matrix.vecMulVec (incV F ξ) (incV F H'.y)) := by
-    simp only [S, mul_smul, ← map_smul, ← map_sum, ← Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [S, mul_smul, ← map_smul, ← map_sum, ← Finset.smul_sum]
     congr 2
     ext i j
     rw [Matrix.sum_apply, Fintype.sum_prod_type, Finset.sum_eq_single i]
@@ -150,7 +151,8 @@ theorem decay : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberField 
         ← smul_mul_assoc, ← Finset.sum_mul]
       congr 1
       conv_rhs => rw [← b.sum_repr (ξ i)]
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun k _ => ?_
       change algebraMap F (AF F) (b.repr (ξ i) k) • ((1 : AF F) ⊗ₜ[F] b k) = (1 : AF F) ⊗ₜ[F] (b.repr (ξ i) k • b k)
       rw [algebraMap_smul, TensorProduct.tmul_smul]

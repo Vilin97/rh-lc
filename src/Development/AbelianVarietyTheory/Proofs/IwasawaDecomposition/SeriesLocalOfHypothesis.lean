@@ -373,7 +373,8 @@ theorem cen_used (Y : R3.Read (A3 := A3) R.toRealDat F.lv2 X0) (cG : G0 R.Pg D.R
   funext y
   refine (ad.eW _ hμ i).injective ?_
   letI : Fintype (G0g D.nd) := Fintype.ofEquiv G e
-  rw [hread, hact, GlobalTheory.PendOf.actSum, Finsupp.sum_fintype _ _ (by intro _; exact zero_smul _ _), Finset.sum_apply, map_sum, ← e.sum_comp]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hread, hact, GlobalTheory.PendOf.actSum, Finsupp.sum_fintype _ _ (by intro _; exact zero_smul _ _), Finset.sum_apply, map_sum, ← e.sum_comp]
   refine Finset.sum_congr rfl fun g _ => ?_
   have hz : (z : MonoidAlgebra ℂ (G0g D.nd)).coeff (e g) = (z : MonoidAlgebra ℂ (G0g D.nd)).coeff ((R.eG.trans cG) g) := by
     show (z : MonoidAlgebra ℂ (G0g D.nd)).coeff ((R.eG.trans cG) (û⁻¹ * g * û⁻¹⁻¹)) = _

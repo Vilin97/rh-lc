@@ -39,13 +39,15 @@ theorem vn_pairS (emb : ι → E →+* K) (J : Matrix (Fin n) (Fin n) E) (lam : 
       ∑ i, s ((bVV K lam).repr G i) • Formalism.GradedWeylDivisibility.blockAct ℂ o.1 (MvPolynomial.map s (bVV K lam i).1) := by
     intro G
     conv_lhs => rw [← (bVV K lam).sum_repr G]
-    rw [Submodule.coe_sum, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Submodule.coe_sum, map_sum, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [Submodule.coe_smul, MvPolynomial.smul_eq_C_mul, map_mul, MvPolynomial.map_C, map_mul, MvPolynomial.smul_eq_C_mul]
     congr 1
     exact (Formalism.GradedWeylDivisibility.blockAct ℂ o.1).commutes _
   rw [← nfL_apply, hexp F, hexp F']
-  simp only [map_sum, LinearMap.sum_apply, map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, nfL_apply, Finset.mul_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.sum_apply, map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, nfL_apply, Finset.mul_sum,
     RingHom.id_apply]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun i _ => ?_
@@ -80,7 +82,8 @@ theorem vn_pairAt_re (s : X.K →+* ℂ) (o : Frames (gramC (1 : Matrix (Fin n) 
     congr 1
     unfold GSD.pairAt
     rw [h]
-    simp only [map_sum, map_mul, ComplexEmbedding.conjugate_coe_eq, Complex.conj_conj]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, ComplexEmbedding.conjugate_coe_eq, Complex.conj_conj]
     rfl
 
 set_option maxHeartbeats 1000000 in

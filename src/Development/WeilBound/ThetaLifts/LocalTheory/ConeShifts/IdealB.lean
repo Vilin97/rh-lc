@@ -303,7 +303,8 @@ theorem plane_lines {B : Base F E} {n n₁ : ℕ} {Y : Spc F E n} {Y₁ : Spc F 
     (hd : ∀ y, y ∈ Y.L ↔ ∀ x ∈ Y.L, form σ Y.J y x ∈ D) (hD : D ≠ 0) (h : H.IsAdapted σ B Y Y₁ i j) :
     Line Y.L H.x H.𝔟 ∧ Line Y.L H.y (D * (cj hσ H.𝔟)⁻¹) := by
   have sym : ∀ u w, form σ Y.J w u = ε * σ (form σ Y.J u w) := fun u w => by
-    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, Finset.mul_sum, hJ]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, Finset.mul_sum, hJ]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
     linear_combination (-(w b * Y.J b a * σ (u a))) * hε

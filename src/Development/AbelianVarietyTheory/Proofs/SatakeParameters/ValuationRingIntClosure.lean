@@ -28,7 +28,8 @@ theorem isCompact_closure_range {A V : Type} [AddCommGroup A] [Module.Finite ℤ
   have ha : a ∈ Submodule.span ℤ (Set.range b) := hb ▸ Submodule.mem_top
   obtain ⟨c, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun ℤ).1 ha
   refine ⟨fun i => (c i : ℤ_[l]), ?_⟩
-  simp only [g, map_sum, map_zsmul, PadicInt.coe_intCast, Int.cast_smul_eq_zsmul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [g, map_sum, map_zsmul, PadicInt.coe_intCast, Int.cast_smul_eq_zsmul]
 
 variable {K : Type} [Field K] [NumberField K] (ρ : K →+* ℂ_[l])
 

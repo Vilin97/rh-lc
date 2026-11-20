@@ -38,7 +38,8 @@ theorem rel_inf (ei : SInf F κ →ₗ[ℂ] SInf F κ) {ι : Type} (s : Finset �
     rw [SchwartzMap.smul_apply, smul_eq_mul, mul_assoc, mul_comm _ (f j y)]
     exact congrArg (fun z => c j * (f j z * ∏ᶠ v, φ j v fun i => evFin F v (x i))) e.symm
   have h2 := DFunLike.congr_fun (congrArg ei h1) fun i => evI F (x i)
-  rw [map_sum, map_zero, SchwartzMap.sum_apply, SchwartzMap.zero_apply] at h2
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_zero, SchwartzMap.sum_apply, SchwartzMap.zero_apply] at h2
   rw [Finset.sum_apply, Pi.zero_apply, ← h2]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_smul, SchwartzMap.smul_apply, Pi.smul_apply, smul_eq_mul, smul_eq_mul, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure, mul_assoc,
@@ -55,7 +56,8 @@ theorem rel_fin (ev : ∀ v : Pl F, ((κ → Fv F v) → ℂ) →ₗ[ℂ] ((κ �
     | empty => simpa using h
     | insert v T hv ih =>
       have h1 := congrArg (opL v (ev v)) ih
-      rw [map_sum, map_zero] at h1
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, map_zero] at h1
       rw [← h1]
       refine Finset.sum_congr rfl fun j _ => ?_
       have h2 : ∀ᶠ w in cofinite, (fun w => if w ∈ T then ev w (φ j w) else φ j w) w = stdL F κ w := by

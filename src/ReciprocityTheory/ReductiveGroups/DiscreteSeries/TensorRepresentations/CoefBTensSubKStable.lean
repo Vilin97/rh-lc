@@ -115,7 +115,8 @@ theorem coefTr_apply (A : Module.End ℂ (Fin n → D)) (u : WithLp 2 (Fin n →
 theorem coefTr_casimirK (ε : Fin n → Bool) (A : Fin n → Fin n → Module.End ℂ (Fin n → D)) :
     casimirK ε (fun a b => coefTr (A a b)) = coefTr (casimirK ε A) := by
   refine LinearMap.ext fun u => ?_
-  simp only [casimirK, coefTr, LinearMap.sum_apply, Module.End.mul_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [casimirK, coefTr, LinearMap.sum_apply, Module.End.mul_apply,
     LinearMap.comp_apply, LinearEquiv.coe_coe, LinearEquiv.apply_symm_apply, map_sum]
 
 theorem coefB_sum_ite_left (a : Fin n) (x : D) (v : Fin n → D) :
@@ -189,7 +190,8 @@ theorem coefB_ι_casimirK (dual : Bool) {S' : Submodule ℂ D} {ι : D →ₗ[�
     (hS' : ∀ a b, ∀ v ∈ S', E a b v ∈ S')
     (hι : ∀ a b, ∀ x ∈ S', ι (E a b x) = tensF dual E a b (ι x)) {y : D} (hy : y ∈ S') :
     ι (casimirK ε E y) = casimirK ε (tensF dual E) (ι y) := by
-  simp only [casimirK, LinearMap.sum_apply, map_sum, Module.End.mul_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [casimirK, LinearMap.sum_apply, map_sum, Module.End.mul_apply]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
   rw [hι a b _ (hS' b a y hy), hι b a y hy]
 

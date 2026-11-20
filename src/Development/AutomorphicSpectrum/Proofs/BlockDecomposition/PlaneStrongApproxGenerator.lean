@@ -109,7 +109,8 @@ theorem hR_incV {F E : Type} [Field F] [Field E] [Algebra F E] (K : Type) [CommR
   have hs : ∀ t : E, sigR K σ (inclR K t) = inclR K (σ t) := by
     intro t
     simp [sigR, inclR]
-  simp only [hR, Formalism.UG.hform, hf, map_sum, map_mul, incV, hs, JR, Matrix.map_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hR, Formalism.UG.hform, hf, map_sum, map_mul, incV, hs, JR, Matrix.map_apply]
 
 theorem normOneGen_sigR {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E)
     (hCM : IsCMExt F E σ) (K : Type) [Field K] [Algebra F K] : NormOneGen (sigR K σ) := by

@@ -29,7 +29,8 @@ theorem slv_pure (Λ : (∀ i, M i) →ₗ[R] R) (f : ∀ i, M i) (v : V) :
   classical
   simp only [slv, LinearMap.sum_apply, LinearMap.comp_apply, LinearMap.proj_apply, LinearMap.rTensor_tmul,
     LinearEquiv.coe_coe, TensorProduct.lid_tmul]
-  rw [← Finset.sum_smul, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Finset.sum_smul, ← map_sum]
   congr 2
   ext j
   simp [Finset.sum_apply, Pi.single_apply]
@@ -247,7 +248,8 @@ theorem S_cup_R (q : ℕ) (x : Cn F 1) (hx : dn F 1 x = 0) (w : Cn (box F) (q + 
     simp
   have hS : a2 F (back q) (S F q w) =
       ∑ i : Fin (q + 1), ((-1 : R) ^ (i : ℕ)) • bi F (th q i) ((back q).comp (sg q i)) w := by
-    simp only [S_apply, map_sum, map_smul, bisimplicial_action_second_factor]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [S_apply, map_sum, map_smul, bisimplicial_action_second_factor]
   rw [h0, zero_mul, smul_zero, zero_add, hS, Finset.sum_apply, Finset.sum_apply, Finset.sum_apply,
     Finset.sum_apply, Finset.mul_sum]
   refine Finset.sum_congr rfl fun i _ ↦ ?_

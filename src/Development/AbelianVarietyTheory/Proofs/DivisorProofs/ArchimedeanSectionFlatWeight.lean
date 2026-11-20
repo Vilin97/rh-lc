@@ -80,7 +80,8 @@ theorem exists_unit (hG : GenSt) (hL : Laws U x) (s : ArchSec U x Z (flatWt Dw �
       rw [pairDet, pairDet, RingHom.map_det]
       congr 1
       ext i j
-      simp [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [map_sum]
   haveI : IsOpenImmersion (spMap ρ) := IsOpenImmersion.of_isLocalization q
   obtain ⟨f, hf⟩ := hG E H Dw l l' Xo Xo' c c' W Y r ν hle r₀ U x hL Z τ s la p Xw Fact.out hc (Localization.Away q)
     (spMap ρ ≫ ξ) (ρ.comp β) inferInstance (by rw [Category.assoc, hβ, spMap_spMap]) (isUnit_of_mul_isUnit_left hu')

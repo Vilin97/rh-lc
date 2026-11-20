@@ -21,7 +21,8 @@ theorem isUnit_sub_of_pow_eq_one {O : Type} [CommRing O] [IsDomain O] [IsLocalRi
     rw [← sub_eq_zero, ← map_sub, IsLocalRing.residue_eq_zero_iff]
     exact hn
   have h4 := congrArg (IsLocalRing.residue O) h2
-  simp only [map_sum, map_mul, map_pow, h3, map_zero] at h4
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, map_pow, h3, map_zero] at h4
   rw [geom_sum₂_self] at h4
   have hbu : IsUnit b := IsUnit.of_pow_eq_one hb hm0.ne'
   have h5 : IsUnit ((m : IsLocalRing.ResidueField O) * IsLocalRing.residue O b ^ (m - 1)) := by
@@ -118,7 +119,8 @@ theorem exists_root_ne {l : ℕ} [Fact l.Prime] {K LL : FinExt l}
     rw [AddSubmonoidClass.coe_finset_sum]
     exact hx
   have : e (algebraMap ℚ_[l] ↥(K0 K) a⁻¹ * x) = e' (algebraMap ℚ_[l] ↥(K0 K) a⁻¹ * x) := by
-    rw [hx', map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hx', map_sum, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     obtain ⟨m, hm, hl, h1⟩ := (hω i).2
     rw [map_mul, map_mul, e.commutes, e'.commutes, hn _ m hm hl (Subtype.ext (by simpa using h1))]

@@ -67,7 +67,8 @@ theorem Hf_sum_left {κ : Type*} (s : Finset κ) (v : κ → EuclideanSpace ℂ 
 
 theorem Hf_sum_right {κ : Type*} (s : Finset κ) (v : EuclideanSpace ℂ ι)
     (w : κ → EuclideanSpace ℂ ι) : Hf v (∑ j ∈ s, w j) = ∑ j ∈ s, Hf v (w j) := by
-  simp only [Hf, WithLp.ofLp_sum, Finset.sum_apply, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Hf, WithLp.ofLp_sum, Finset.sum_apply, map_sum, Finset.mul_sum]
   exact Finset.sum_comm
 
 theorem HC_add_left (v v' w : Fin n → EuclideanSpace ℂ ι) :
@@ -80,11 +81,13 @@ theorem HC_add_right (v w w' : Fin n → EuclideanSpace ℂ ι) :
 
 theorem HC_sum_left {κ : Type*} (s : Finset κ) (v : κ → Fin n → EuclideanSpace ℂ ι)
     (w : Fin n → EuclideanSpace ℂ ι) : HC (∑ j ∈ s, v j) w = ∑ j ∈ s, HC (v j) w := by
-  simp only [← Hf_flat, map_sum, Hf_sum_left]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← Hf_flat, map_sum, Hf_sum_left]
 
 theorem HC_sum_right {κ : Type*} (s : Finset κ) (v : Fin n → EuclideanSpace ℂ ι)
     (w : κ → Fin n → EuclideanSpace ℂ ι) : HC v (∑ j ∈ s, w j) = ∑ j ∈ s, HC v (w j) := by
-  simp only [← Hf_flat, map_sum, Hf_sum_right]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← Hf_flat, map_sum, Hf_sum_right]
 
 end Flat
 
@@ -118,11 +121,13 @@ theorem actE_coe (α : 𝓞 E) (v : Vsp dim) : actE (α : E) v = act α v := rfl
 
 theorem actE_sum_left {κ : Type*} (s : Finset κ) (α : κ → E) (v : Vsp dim) :
     actE (∑ j ∈ s, α j) v = ∑ j ∈ s, actE (α j) v := by
-  simp only [← actL_apply, map_sum, ContinuousLinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← actL_apply, map_sum, ContinuousLinearMap.sum_apply]
 
 theorem actE_sum_right {κ : Type*} (s : Finset κ) (α : E) (v : κ → Vsp dim) :
     actE α (∑ j ∈ s, v j) = ∑ j ∈ s, actE α (v j) := by
-  simp only [← actL_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← actL_apply, map_sum]
 
 theorem actE_neg_left (α : E) (v : Vsp dim) : actE (-α) v = -actE α v := by
   ext i; simp
@@ -277,7 +282,8 @@ theorem contr_sum_left {κ : Type*} (s : Finset κ) (γ : κ → Fin n → Vsp d
 
 theorem contr_sum_right {κ : Type*} (s : Finset κ) (γ : Fin n → Vsp dim) (w : κ → Fin n → E) :
     contr γ (∑ j ∈ s, w j) = ∑ j ∈ s, contr γ (w j) := by
-  simp only [contr, cc, Finset.sum_apply, map_sum, actE_sum_left]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [contr, cc, Finset.sum_apply, map_sum, actE_sum_left]
   exact Finset.sum_comm
 
 theorem contr_single' (γ : Fin n → Vsp dim) (k : Fin n) (α : E) :

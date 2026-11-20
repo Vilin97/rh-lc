@@ -57,10 +57,12 @@ theorem lam_gal {lam : (ℕ → Qbar l) →ₗ[Qbar l] Qbar l} (h : FinSupp lam)
     intro f
     have h0 := hS (f - ∑ s ∈ S, f s • (Pi.single s 1 : ℕ → Qbar l)) (fun s hs => by
       simp [Finset.sum_apply, Pi.single_apply, hs])
-    rw [map_sub, sub_eq_zero, map_sum] at h0
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, sub_eq_zero, map_sum] at h0
     simpa using h0
   refine ⟨S.image fun s => lam (Pi.single s 1), fun τ hτ f => ?_⟩
-  rw [key f, key, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [key f, key, map_sum]
   refine Finset.sum_congr rfl fun s hs => ?_
   rw [map_mul, hτ _ (Finset.mem_image_of_mem _ hs)]
 

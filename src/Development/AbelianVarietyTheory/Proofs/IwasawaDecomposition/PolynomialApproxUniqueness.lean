@@ -98,7 +98,8 @@ theorem _root_.GlobalTheory.coeff_mem_pow_of_flat_of_indep_mod_max : ∀ {A R : 
   have hz : ∀ x : Fin k →₀ A, z x = ∑ l, φ (x l) * w l := by
     intro x
     conv_lhs => rw [← Finsupp.univ_sum_single x]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl (fun l _ => by rw [← Finsupp.smul_single_one, map_smul, hsm])
   have hθ : ∀ j : Fin d, θ ^ (j : ℕ) = ∑ l, φ (C j l) * w l := by
     intro j
@@ -123,12 +124,14 @@ theorem _root_.GlobalTheory.coeff_mem_pow_of_flat_of_indep_mod_max : ∀ {A R : 
     have hQc : Q.coeff j = c j := by
       simp [Q, Polynomial.finsetSum_coeff, Polynomial.coeff_C_mul, Polynomial.coeff_X_pow, Fin.val_inj]
     have hQe : (Q.map φ).eval θ = ∑ l, φ (∑ j', c j' * C j' l) * w l := by
-      simp only [Q, Polynomial.map_sum, Polynomial.eval_finsetSum, Polynomial.map_mul, Polynomial.map_C,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Q, Polynomial.map_sum, Polynomial.eval_finsetSum, Polynomial.map_mul, Polynomial.map_C,
         Polynomial.map_pow, Polynomial.map_X, Polynomial.eval_mul, Polynomial.eval_C, Polynomial.eval_pow,
         Polynomial.eval_X, hθ, Finset.mul_sum]
       rw [Finset.sum_comm]
       refine Finset.sum_congr rfl (fun l _ => ?_)
-      rw [map_sum, Finset.sum_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Finset.sum_mul]
       exact Finset.sum_congr rfl (fun j' _ => by rw [map_mul]; ring)
     rw [← hQc]
     refine hind Q hQdeg ?_ j

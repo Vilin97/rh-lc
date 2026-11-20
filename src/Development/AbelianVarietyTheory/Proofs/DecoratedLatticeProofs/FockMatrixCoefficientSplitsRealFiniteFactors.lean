@@ -35,22 +35,26 @@ theorem actO_inf : ∀ (D : D7) (S T : HSp D) (a : GA D S) (b : GA D T), a ∈ G
   have e1 : Formalism.L2.Theta.mt T b * w = w := by
     ext i j
     refine GlobalTheory.UnitarySplit.parts_inj D _ _ ?_ ?_
-    · rw [Matrix.mul_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [Matrix.mul_apply, map_sum]
       simp [h0]
     · have h1 : ∀ k, finPart D (Formalism.L2.Theta.mt T b i k) = if i = k then 1 else 0 := fun k => by
         have := congrFun (congrFun hfb i) k
         simpa [Matrix.one_apply] using this
-      rw [Matrix.mul_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Matrix.mul_apply, map_sum]
       simp [h1]
   have e2 : w * Formalism.L2.Theta.mt S a⁻¹ = w := by
     ext i j
     refine GlobalTheory.UnitarySplit.parts_inj D _ _ ?_ ?_
-    · rw [Matrix.mul_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [Matrix.mul_apply, map_sum]
       simp [h0]
     · have h1 : ∀ k, finPart D (Formalism.L2.Theta.mt S a⁻¹ k j) = if k = j then 1 else 0 := fun k => by
         have := congrFun (congrFun hfa k) j
         simpa [Matrix.one_apply] using this
-      rw [Matrix.mul_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Matrix.mul_apply, map_sum]
       simp [h1]
   unfold actO
   rw [e1, e2]

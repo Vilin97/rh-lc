@@ -22,7 +22,8 @@ theorem odd_gen {K : Type} [Field K] {l : ℕ} (hl : 2 ≤ l) {ι : Type} [Finty
   have hsum0 : ∀ r', MvPowerSeries.constantCoeff
       (∑ r, MvPowerSeries.C (M r' r) * at1 ((true, r) : Bool × ι) (lgF K l)) = 0 := by
     intro r'
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_eq_zero fun r _ => ?_
     rw [map_mul, Pair.constantCoeff_inVar_eq_zero _ (Pair.cc_lgF hl), mul_zero]
   obtain ⟨φ, hφdef⟩ : ∃ φ : Bool × ι → MvPowerSeries (Bool × ι) K, φ = fun x : Bool × ι =>
@@ -55,7 +56,8 @@ theorem odd_gen {K : Type} [Field K] {l : ℕ} (hl : 2 ≤ l) {ι : Type} [Finty
   simp only [h1, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun r _ => ?_
-  rw [← mul_assoc, ← map_mul, h r, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← mul_assoc, ← map_mul, h r, map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun r' _ => ?_
   rw [map_mul]
   ring
@@ -63,7 +65,8 @@ theorem odd_gen {K : Type} [Field K] {l : ℕ} (hl : 2 ≤ l) {ι : Type} [Finty
 theorem iter_sum {K : Type} [Field K] (σ : K →+* K) (k : ℕ) {ι : Type} [Fintype ι] (f g : ι → K) :
     σ^[k] (∑ r, f r * g r) = ∑ r, σ^[k] (f r) * σ^[k] (g r) := by
   have hpw : ∀ x, σ^[k] x = (σ ^ k) x := fun x => by rw [RingHom.coe_pow]
-  rw [hpw, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hpw, map_sum]
   refine Finset.sum_congr rfl fun r _ => ?_
   rw [← hpw, iterate_map_mul]
 

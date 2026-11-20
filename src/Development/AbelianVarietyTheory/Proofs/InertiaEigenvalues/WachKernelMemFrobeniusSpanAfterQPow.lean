@@ -81,7 +81,8 @@ theorem phispan_of (hdec : ∀ a : LetA O n, ∃ c : Fin m → LetA O n, a = ∑
   have hπ0 : ∀ j, W.map π (w j) = 0 := by
     refine hind _ (fun j => hπN _ (hw j)) ?_
     have h1 := congrArg (W.map π) he
-    rw [map_smulA, (hex _).2 ⟨y, rfl⟩, smul_zero, map_sum] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_smulA, (hex _).2 ⟨y, rfl⟩, smul_zero, map_sum] at h1
     rw [h1]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_smulA, W.map_φ]
@@ -92,7 +93,8 @@ theorem phispan_of (hdec : ∀ a : LetA O n, ∃ c : Fin m → LetA O n, a = ∑
     exact hw j
   have heq : W.Q ^ k • y = ∑ j, u j • W.φD T₀ (w' j) := by
     apply hinj
-    rw [map_smulA, he, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_smulA, he, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_smulA, W.map_φ, hw']
   rw [heq]

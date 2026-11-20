@@ -122,7 +122,8 @@ theorem polForm_unique {S : Scheme.{0}} {t : S ⟶ Sp R} {G : Over S} [GrpObj G]
   have key : ∀ {m : ℕ} (a b : Fin m → prim κ t G),
       wedgeForm κ t G a b x y = Λ (∑ k, cup _ (a k).1 (b k).1) := by
     intro m a b
-    rw [wedgeForm_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [wedgeForm_apply, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [hΛ, hx (a k), hx (b k), hy (a k), hy (b k)]
   rw [key, key, hz]

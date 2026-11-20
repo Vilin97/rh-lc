@@ -62,7 +62,8 @@ theorem aeval_subst {F : Type} [Field F] [Algebra Ω F] (x : Fin N → Ω) (j0 :
     have hr := hrel i'
     rw [Fintype.sum_eq_add_sum_subtype_ne _ k] at hr
     have hx' : algebraMap Ω F (x k) ≠ 0 := (map_ne_zero _).2 hx
-    simp only [map_neg, map_sum, map_mul, aeval_C, aeval_X, map_div₀]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_neg, map_sum, map_mul, aeval_C, aeval_X, map_div₀]
     apply mul_right_cancel₀ hx'
     rw [neg_mul, Finset.sum_mul, eq_comm, ← add_eq_zero_iff_eq_neg, ← hr]
     congr 1

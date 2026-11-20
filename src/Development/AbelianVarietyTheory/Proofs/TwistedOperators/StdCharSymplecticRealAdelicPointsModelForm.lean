@@ -80,14 +80,16 @@ theorem infPart_cA_realPt (S T : HSp D) (X : Matrix (Fin T.rank) (Fin S.rank) D.
 theorem infPart_hO_realPt (S T : HSp D) (X Y : Matrix (Fin T.rank) (Fin S.rank) D.host.E) :
     infPart D (hO S T (realPt S T X) (realPt S T Y)) = infPart D (incA D (hRat S T X Y)) := by
   rw [GlobalTheory.PhaseReal.hO_eq_trace, hRat]
-  simp only [Matrix.trace, Matrix.diag, Matrix.mul_apply, map_sum, map_mul, Matrix.map_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.trace, Matrix.diag, Matrix.mul_apply, map_sum, map_mul, Matrix.map_apply,
     Matrix.transpose_apply, Matrix.conjTranspose_apply, infPart_realPt, infPart_cA_realPt]
 
 theorem finPart_hO_realPt (S T : HSp D) (X Y : Matrix (Fin T.rank) (Fin S.rank) D.host.E) :
     finPart D (hO S T (realPt S T X) (realPt S T Y)) = 0 := by
   have h : ∀ i j, finPart D (realPt S T X i j) = 0 := fun i j =>
     congrFun (congrFun (GlobalTheory.FrameConst.realPt_fin S T X) i) j
-  simp only [hO, map_sum, map_mul, h, mul_zero, Finset.sum_const_zero]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hO, map_sum, map_mul, h, mul_zero, Finset.sum_const_zero]
 
 theorem hermitian_column_sum_neg_mul_rearrange {n : ℕ} (ξ u : D.host.E) (v : Fin n → D.host.E) (G : Matrix (Fin n) (Fin n) D.host.E) (c : Fin n) :
     - -ξ * ∑ x, u * -G x c * ReciprocityTheory.ChartRestriction.G.FD.cc (v x) = -(ξ * ((∑ j, star (v j) * G j c) * u)) := by
@@ -159,7 +161,8 @@ theorem psi_symplOH_realPt : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsSt
   change psiInf D.host.F ψ _ = _
   rw [hψ.2.2 θ hθ]
   simp only [hs]
-  rw [← Finset.mul_sum, sum_two_re_tauE, ← Rat.cast_sum, ← map_sum, sum_herm_eq V W b hb r hr X hX Xm Ym, map_neg]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Finset.mul_sum, sum_two_re_tauE, ← Rat.cast_sum, ← map_sum, sum_herm_eq V W b hb r hr X hX Xm Ym, map_neg]
   congr 1
   push_cast
   ring

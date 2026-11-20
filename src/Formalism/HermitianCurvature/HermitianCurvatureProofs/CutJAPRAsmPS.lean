@@ -55,7 +55,8 @@ theorem PSV.apply {TT : ℝ} {V : Type*} [AddCommGroup V] [Module ℂ V] {f : �
   obtain ⟨n, a, v, ha, hf⟩ := hf
   refine PS.congr (PS.sum Finset.univ (fun i ζ => a i ζ * L (v i)) fun i _ => PS.mul (ha i) (PS.const TT _))
     fun ζ hζ => ?_
-  rw [hf ζ hζ, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hf ζ hζ, map_sum]
   simp only [map_smul, smul_eq_mul]
 
 end Asm

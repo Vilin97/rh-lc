@@ -47,7 +47,8 @@ theorem UpperTheory.V.AlgebraTools.AnnihilatorQuotientFinite.repAvg :
     rw [mul_inv, mul_inv_cancel_left]
   intro y
   show ρ' y (∑ q : K ⧸ S, F q.out) = (χ y : k) • ∑ q : K ⧸ S, F q.out
-  rw [map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.smul_sum]
   refine Fintype.sum_equiv (MulAction.toPerm y) _ _ fun q => ?_
   rw [hmul]
   congr 1

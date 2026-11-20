@@ -78,7 +78,8 @@ private theorem l1_rename {ι ι' : Type} (p : MvPolynomial ι ℂ) (δ : ι →
     l1 (rename δ p) ≤ l1 p := by
   have h : rename δ p = ∑ a ∈ p.support,
       (monomial (Finsupp.mapDomain δ a) (p.coeff a) : MvPolynomial ι' ℂ) := by
-    conv_lhs => rw [p.as_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [p.as_sum, map_sum]
     simp only [rename_monomial]
   rw [h]
   refine (intMvPolynomialCoeffAbsSum_sum_le _ _).trans (le_of_eq ?_)

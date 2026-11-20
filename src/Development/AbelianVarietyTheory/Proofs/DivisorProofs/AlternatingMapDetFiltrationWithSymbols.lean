@@ -33,7 +33,8 @@ theorem det_filtration_symbols : ∀ (E A' : Type) [Field E] [AddCommGroup A'] [
     refine (hsym a ⟨_, hy⟩).1 ?_
     have : (⟨_, hy⟩ : U a) = ⟨x, hx⟩ - ∑ i, sym a ⟨x, hx⟩ i • ⟨z (ix ⟨a, i⟩), hz ⟨a, i⟩⟩ := by
       ext; simp
-    rw [this, map_sub, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [this, map_sub, map_sum]
     simp only [map_smul, hzs']
     funext j
     simp [Finset.sum_apply, Pi.single_apply]
@@ -105,7 +106,8 @@ theorem det_filtration_symbols : ∀ (E A' : Type) [Field E] [AddCommGroup A'] [
     have hy := hdown (r - (a + 1)) (a + 1) (by omega) key
     obtain ⟨c, hc0, hcL⟩ := conv _ _ hy
     refine ⟨c + ∑ i, sym a ⟨v (ix ⟨a, i'⟩), hv ⟨a, i'⟩⟩ i • Pi.single (ix ⟨a, i⟩) 1, ?_, ?_, ?_⟩
-    · rw [map_add, map_sum, hcL]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [map_add, map_sum, hcL]
       simp only [map_smul, Fintype.linearCombination_apply_single, one_smul]
       abel
     · intro k hk

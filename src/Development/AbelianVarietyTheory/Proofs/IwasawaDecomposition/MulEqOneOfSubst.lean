@@ -36,7 +36,8 @@ theorem eig_of_comb {v : Fin m → (Sp (DualNumber k) ⟶ t.G.left)} (hv : ∀ i
   have key : ∀ i, actR t.act a (tanOf (hv i)) = lam a • tanOf (hv i) := fun i => tan_ext (he i a)
   have e := (comb_iff hv cf hw).1 hc
   have : actR t.act a (tanOf hw) = lam a • tanOf hw := by
-    rw [e, map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, map_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, key, smul_comm]
   exact congrArg (fun z => (tv z).left) this

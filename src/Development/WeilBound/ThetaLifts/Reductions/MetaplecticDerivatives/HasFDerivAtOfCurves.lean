@@ -144,7 +144,8 @@ theorem secDer : SecDer l := by
   refine (h1.comp x₀ h2).congr_fderiv ?_
   ext1 v
   rw [ContinuousLinearMap.comp_apply, hL, ← qd_sum]
-  simp only [map_sum, ContinuousLinearMap.sum_apply, ContinuousLinearMap.smulRight_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, ContinuousLinearMap.sum_apply, ContinuousLinearMap.smulRight_apply]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
   exact ((schwartzToL2 l).restrictScalars ℝ).map_smul _ _
 

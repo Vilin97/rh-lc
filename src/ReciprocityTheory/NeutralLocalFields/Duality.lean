@@ -375,7 +375,8 @@ theorem norm_mem_invariants [Finite G] (m : M) : normEnd rho m ∈ H0 rho := by
   letI := Fintype.ofFinite G
   rw [mem_riemannRochSpace_iff_regularAt_everywhere]
   intro g
-  rw [normEnd_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [normEnd_apply, map_sum]
   exact Fintype.sum_equiv (Equiv.mulLeft g) _ _ fun h => by
     simp only [Equiv.coe_mulLeft, map_mul, Module.End.mul_apply]
 

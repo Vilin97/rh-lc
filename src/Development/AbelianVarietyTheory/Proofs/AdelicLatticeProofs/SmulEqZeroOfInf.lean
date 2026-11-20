@@ -103,7 +103,8 @@ theorem hO_herm (x y : WO S T) : cA D (hO S T x y) = hO S T y x := by
     rw [hG] at this
     exact congrFun (congrFun this b) a
   unfold hO
-  simp only [map_sum, map_mul, GlobalTheory.DualPairCheck.cA_cA, cA_incA, hI, gram_star]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, GlobalTheory.DualPairCheck.cA_cA, cA_incA, hI, gram_star]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => ?_
   rw [Finset.sum_comm]

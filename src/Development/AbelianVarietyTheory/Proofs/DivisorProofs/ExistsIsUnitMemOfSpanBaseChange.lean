@@ -63,7 +63,8 @@ theorem exists_isUnit_mem_of_span_baseChange {k A K : Type} [Field k] [Infinite 
     intro t
     have : LinearMap.mulLeft k (∑ i, t i • (b i : A)) = ∑ i, t i • LinearMap.mulLeft k (b i : A) := by
       ext z; simp [Finset.sum_mul]
-    rw [this, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [this, map_sum]
     simp [M, map_smul]
 
   have hD0 : D ≠ 0 := by
@@ -91,7 +92,8 @@ theorem exists_isUnit_mem_of_span_baseChange {k A K : Type} [Field k] [Infinite 
       have : LinearMap.mulLeft K (∑ i, s i • (1 : K) ⊗ₜ[k] (b i : A)) =
           ∑ i, s i • LinearMap.mulLeft K ((1 : K) ⊗ₜ[k] (b i : A)) := by
         ext z; simp [Finset.sum_mul]
-      rw [this, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [this, map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_smul, ← baseChange_mulLeft, LinearMap.toMatrix_baseChange]
       simp only [MvPolynomial.coe_eval₂Hom, MvPolynomial.eval₂_X]

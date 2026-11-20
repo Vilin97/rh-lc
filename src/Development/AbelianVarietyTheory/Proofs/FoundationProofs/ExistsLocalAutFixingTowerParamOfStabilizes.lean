@@ -67,7 +67,8 @@ theorem orth (h : IsClo p Ωl) (hv : ∀ x : Ωl, v x ≤ 1 ↔ IsInt p x) (h1 :
     rw [map_pow]; exact pow_lt_one₀ zero_le hlt (pow_pos hp.out.pos n).ne'
   have h4 := v.map_sub_lt h3 h2
   rw [sub_sub_cancel, v_alg_lt_iff hv h1, ← hφ] at h4
-  simp only [map_sum, map_mul, map_pow, hq] at h4
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, map_pow, hq] at h4
   have h5 := GlobalTheory.laurent_pow_indep_over_prime_pow_powers p n (fun i => φ (f.coeff i)) h4
   rw [C_dvd_iff_dvd_coeff]
   intro i

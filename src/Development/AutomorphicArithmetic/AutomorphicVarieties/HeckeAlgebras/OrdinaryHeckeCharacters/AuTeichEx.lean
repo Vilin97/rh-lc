@@ -35,7 +35,8 @@ private theorem teichmuller_eq_of_residue_eq {O : Type} [CommRing O] [IsLocalRin
   have key := geom_sum₂_mul a b N
   rw [ha, hb, sub_self] at key
   have hu : IsUnit (∑ i ∈ Finset.range N, a ^ i * b ^ (N - 1 - i)) := by
-    rw [← IsLocalRing.residue_ne_zero_iff_isUnit, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← IsLocalRing.residue_ne_zero_iff_isUnit, map_sum]
     simp only [map_mul, map_pow, ← hab]
     have hterm : ∀ i ∈ Finset.range N,
         residue O a ^ i * residue O a ^ (N - 1 - i) = residue O a ^ (N - 1) := by

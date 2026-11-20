@@ -255,18 +255,22 @@ private theorem desc [T2Space G] (r : G →* GL (Fin n) (PadicAlgCl l))
   have hf : ∀ g X, f (adGL r g X) = adGL s g (f X) := fun g X => by
     ext1 a b
     change π (adGL r g X a b) = _
-    rw [ad_apply, ad_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [ad_apply, ad_apply, map_sum]
     refine Finset.sum_congr rfl fun c _ => ?_
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun d _ => ?_
     rw [hs', hs', mul_comm, hπ2, hπ2, mul_comm]
     rfl
   have hi : ∀ g X, i (adGL s g X) = adGL r g (i X) := fun g X => by
     ext1 a b
     change E.val (adGL s g X a b) = _
-    rw [ad_apply, ad_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [ad_apply, ad_apply, map_sum]
     refine Finset.sum_congr rfl fun c _ => ?_
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun d _ => ?_
     rw [map_mul, map_mul]
     rfl
@@ -286,7 +290,8 @@ private theorem desc [T2Space G] (r : G →* GL (Fin n) (PadicAlgCl l))
     | add a b ha hb => simp only [map_add, ha, hb]
   set x := ∑ p ∈ S, p.1 ⊗ₜ[ℚ_[l]] p.2 with hxd
   have hix : LinearMap.rTensor (Bcr l) i (LinearMap.rTensor (Bcr l) f x) = x := by
-    rw [hxd, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hxd, map_sum, map_sum]
     refine Finset.sum_congr rfl fun p hp => ?_
     rw [LinearMap.rTensor_tmul, LinearMap.rTensor_tmul]
     congr 1

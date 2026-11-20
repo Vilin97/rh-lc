@@ -51,7 +51,8 @@ theorem upper {κ ι : Type} [Fintype κ] [Fintype ι] (tb : Basis κ O M) (incl
   have h := hA ι κ (Matrix.of fun i k => x ^ m * tt.repr (nb i) k) P 1 0 (by
     ext i k
     have h1 := congrArg (fun z => tt.repr z k) (hP i)
-    simp only [map_smul, Finsupp.smul_apply, smul_eq_mul, map_sum, Finsupp.finsetSum_apply] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_smul, Finsupp.smul_apply, smul_eq_mul, map_sum, Finsupp.finsetSum_apply] at h1
     rw [htt, repr_phi, ← htt] at h1
     rw [Matrix.map_one _ (map_zero _) (map_one _), Matrix.mul_one, Matrix.map_zero _ (map_zero _),
       add_zero, Matrix.mul_apply]
@@ -61,7 +62,8 @@ theorem upper {κ ι : Type} [Fintype κ] [Fintype ι] (tb : Basis κ O M) (incl
   choose c hc using h i
   refine ⟨∑ k, c k ⊗ₜ[O] tb k, ?_⟩
   conv_rhs => rw [← tt.sum_repr (nb i)]
-  rw [map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.smul_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   have := hc k
   simp only [Matrix.of_apply] at this
@@ -84,14 +86,16 @@ theorem lower {κ ι : Type} [Fintype κ] [Fintype ι] (tb : Basis κ O M) (incl
   have hYU : Y * U = 1 := by
     ext i j
     have := congrArg (fun z => nb.repr z j) (tt.sum_repr (nb i))
-    simp only [map_smul, Finsupp.smul_apply, smul_eq_mul, map_sum, Finsupp.finsetSum_apply] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_smul, Finsupp.smul_apply, smul_eq_mul, map_sum, Finsupp.finsetSum_apply] at this
     rw [Matrix.mul_apply]
     simp only [hY, hU, Matrix.of_apply]
     rw [this, nb.repr_self, Matrix.one_apply, Finsupp.single_apply]
   have hUY : U * Y = 1 := by
     ext i j
     have := congrArg (fun z => tt.repr z j) (nb.sum_repr (tt i))
-    simp only [map_smul, Finsupp.smul_apply, smul_eq_mul, map_sum, Finsupp.finsetSum_apply] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_smul, Finsupp.smul_apply, smul_eq_mul, map_sum, Finsupp.finsetSum_apply] at this
     rw [Matrix.mul_apply]
     simp only [hY, hU, Matrix.of_apply]
     rw [this, tt.repr_self, Matrix.one_apply, Finsupp.single_apply]
@@ -100,7 +104,8 @@ theorem lower {κ ι : Type} [Fintype κ] [Fintype ι] (tb : Basis κ O M) (incl
   have h1 : ξ ^ m • Y = R.map incl * Y.map φ := by
     ext i k
     have h1 := congrArg (fun z => tt.repr z k) (hR i)
-    simp only [map_smul, Finsupp.smul_apply, smul_eq_mul, map_sum, Finsupp.finsetSum_apply] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_smul, Finsupp.smul_apply, smul_eq_mul, map_sum, Finsupp.finsetSum_apply] at h1
     simp only [htt, repr_phi] at h1
     rw [Matrix.mul_apply]
     simpa [hY, htt] using h1
@@ -186,12 +191,14 @@ theorem sandwich_of
     intro y hy
     refine ⟨fun j => b.repr ⟨y, hy⟩ j, ?_⟩
     have := congrArg N.subtype (b.sum_repr ⟨y, hy⟩)
-    rw [map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at this
     exact this.symm
   have hj : ∀ (c : ι → LetA S.O S.n) (w : ι → S.W.DD T),
       E.jD T (∑ j, c j • w j) = ∑ j, S.inclR (E.io (c j)) • E.jD T (w j) := by
     intro c w
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun j _ => jD_smulA S E T _ _
   constructor
   · choose P hP using fun i => hexp _ (h1 _ (b i).2)
@@ -215,7 +222,8 @@ theorem sandwich_of
         refine Submodule.span_le.mpr ?_
         rintro _ ⟨z, hz, rfl⟩
         obtain ⟨c, rfl⟩ := hexp z hz
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         refine Submodule.sum_mem _ fun j _ => ?_
         rw [φD_smulA]
         exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨j, rfl⟩)

@@ -90,7 +90,8 @@ theorem coef_mul {m n : ℕ} {s B₁ B₂ : Matrix (Fin n) (Fin n) ℂ} {s' C₁
   have e3 : ∑ b : Fin m × Fin n, ((C₂⁻¹ * C₁) w.1 b.1 * (C₁⁻¹ * C₂) b.1 v.1) * ((B₂⁻¹ * B₁) v.2 b.2 * (B₁⁻¹ * B₂) b.2 w.2) =
       ((C₂⁻¹ * C₁) * (C₁⁻¹ * C₂)) w.1 v.1 * ((B₂⁻¹ * B₁) * (B₁⁻¹ * B₂)) v.2 w.2 := by
     rw [Matrix.mul_apply (M := C₂⁻¹ * C₁), Matrix.mul_apply (M := B₂⁻¹ * B₁), Finset.sum_mul_sum, Fintype.sum_prod_type]
-  rw [← map_sum, e3, eC, eB]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum, e3, eC, eB]
   obtain ⟨v1, v2⟩ := v
   obtain ⟨w1, w2⟩ := w
   by_cases a1 : w1 = v1 <;> by_cases a2 : v2 = w2 <;> simp [Matrix.one_apply, a1, a2, @eq_comm _ w2 v2]
@@ -101,7 +102,8 @@ def sub {ι κ : Type} [Fintype κ] (c : ι → κ → κ → ℂ) : MvPolynomia
 theorem sub_comp {ι κ : Type} [Fintype κ] [DecidableEq κ] (c c' : ι → κ → κ → ℂ)
     (h : ∀ τ v w, ∑ b, c τ v b * c' τ b w = if w = v then 1 else 0) : (sub c').comp (sub c) = AlgHom.id ℂ _ := by
   refine MvPolynomial.algHom_ext fun p => ?_
-  simp only [sub, AlgHom.comp_apply, MvPolynomial.aeval_X, map_sum, map_smul, Finset.smul_sum, smul_smul, AlgHom.id_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [sub, AlgHom.comp_apply, MvPolynomial.aeval_X, map_sum, map_smul, Finset.smul_sum, smul_smul, AlgHom.id_apply]
   rw [Finset.sum_comm]
   simp only [← Finset.sum_smul, h, ite_smul, one_smul, zero_smul, Finset.sum_ite_eq', Finset.mem_univ, if_true]
 

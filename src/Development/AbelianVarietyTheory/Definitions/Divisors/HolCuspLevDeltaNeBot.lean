@@ -128,7 +128,8 @@ theorem heckeOp_mem_fixd (ρ : Representation ℂ G M) (f : HeckeFn U) {m : M} (
   have hq : ∀ q : G ⧸ U, MulAction.toPerm u q = ((u * q.out : G) : G ⧸ U) := fun q => by
     conv_lhs => rw [← QuotientGroup.out_eq' q]
     rfl
-  rw [heckeOp_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [heckeOp_apply, map_sum]
   refine Finset.sum_equiv (MulAction.toPerm u) (fun q => ?_) fun q _ => ?_
   · rw [hq, f.mk_mem_supp, f.left u hu, f.mem_supp]
   · rw [hq, heckeOp_term ρ f hm, f.left u hu, map_smul, map_mul, Module.End.mul_apply]
@@ -140,7 +141,8 @@ theorem heckeOp_mem_of_stable (ρ : Representation ℂ G M) (f : HeckeFn U) {W :
 
 theorem map_heckeOp {N : Type} [AddCommGroup N] [Module ℂ N] (ρ : Representation ℂ G M) (σ : Representation ℂ G N) (f : HeckeFn U)
     (T : M →ₗ[ℂ] N) (hT : ∀ g m, T (ρ g m) = σ g (T m)) (m : M) : T (heckeOp ρ f m) = heckeOp σ f (T m) := by
-  simp only [heckeOp_apply, map_sum, map_smul, hT]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [heckeOp_apply, map_sum, map_smul, hT]
 
 theorem heckeOp_one (ρ : Representation ℂ G M) {m : M} (hm : m ∈ Hi.fixd ρ U) : heckeOp ρ (HeckeFn.one U) m = m := by
   rw [heckeOp_eq_sum ρ _ hm (Finset.univ : Finset Unit) (fun _ => 1) (fun _ _ _ _ _ => rfl) fun g hg => ⟨(), Finset.mem_univ _, ?_⟩]

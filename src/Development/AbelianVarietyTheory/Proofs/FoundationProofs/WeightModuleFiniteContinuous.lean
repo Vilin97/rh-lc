@@ -30,7 +30,8 @@ theorem continuous_functional_dwAct (n : ℕ) (f : MvPolynomial (Fin n × Fin n)
         ∑ b : Fin n, (((g⁻¹ : GL (Fin n) ℂ) : Matrix (Fin n) (Fin n) ℂ) v.1 b) *
           (ψ.comp (LinearMap.mulRight ℂ (X (b, v.2)))) (Formalism.UG.dwAct ℂ n n g p) := by
       intro g
-      simp only [map_mul, Formalism.UG.dwAct, Formalism.GradedWeylDivisibility.rowAct, aeval_X, Finset.mul_sum, map_sum, LinearMap.comp_apply,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_mul, Formalism.UG.dwAct, Formalism.GradedWeylDivisibility.rowAct, aeval_X, Finset.mul_sum, map_sum, LinearMap.comp_apply,
         LinearMap.mulRight_apply]
       refine Finset.sum_congr rfl fun b _ => ?_
       rw [← smul_eq_C_mul, mul_smul_comm, map_smul, smul_eq_mul]
@@ -89,7 +90,8 @@ theorem finite_continuous_wtOp : ∀ (n : ℕ) (ι : Type) [Fintype ι] [Decidab
           ∑ i, (b τ).repr (Formalism.UG.dualWeylRep ℂ n n _ (g τ) (x τ)) i • b τ i :=
         funext fun τ => ((b τ).sum_repr _).symm
       change M _ = _
-      rw [h1, MultilinearMap.map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [h1, MultilinearMap.map_sum]
       refine Finset.sum_congr rfl fun p _ => ?_
       rw [MultilinearMap.map_smul_univ, smul_eq_mul]
     simp_rw [e]

@@ -147,7 +147,8 @@ private theorem sum_smul_translate_eq_zero_of_fixes_selfDual {σ : R →+* R} {w
       U a (∑ x ∈ s, c x • U x z) - γ a x₀ • ∑ x ∈ s, c x • U x z =
         ∑ x ∈ s.erase x₀, (c x * (γ a x - γ a x₀)) • U x z := by
     intro U z hU hz x₀ hx₀ a ha
-    rw [Finset.sum_erase _ (by simp) , map_sum, Finset.smul_sum, ← Finset.sum_sub_distrib]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_erase _ (by simp) , map_sum, Finset.smul_sum, ← Finset.sum_sub_distrib]
     refine Finset.sum_congr rfl fun x _ => ?_
     rw [map_smul, apply_translate_eq_smul_of_fixes hU hz ha, smul_smul, smul_smul, ← sub_smul]
     congr 1
@@ -267,7 +268,8 @@ theorem _root_.GlobalTheory.FinWeil.exists_weil_rep : ∀ {R X M : Type} [CommRi
           exact hi
         · dsimp only at hj
           rwa [← map_sub, hmem] at hj)
-    rw [normOp_eq_inv_smul_sumOp (B := A.map (ρ g)), hsum', hn',
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [normOp_eq_inv_smul_sumOp (B := A.map (ρ g)), hsum', hn',
       normOp_eq_inv_smul_sumOp (B := A) (C := A.map (ρ k)), hsum, hn, map_smul, map_sum]
     simp only [hLe]
   refine ⟨{ toFun := L, map_one' := hL1, map_mul' := hLmul }, fun g x v => hLint g x v,

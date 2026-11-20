@@ -125,7 +125,8 @@ theorem cupHH_self_eq_zero : ∀ (R : Type) [CommRing R] (A : Over (Sp R)) [GrpO
       cupHyp (OAff (A ⊗ A).hom) (deRhamH1Pullback (snd A A) (a' k)) (clAll _ hc2 (pF (fst A A) (w k)))) = 0 := by
     have h := hprim
     rw [hz] at h
-    simp only [map_sum, pH2_cupHH_over, pH1_clAll_over _ hc hc2, hP, hPF, map_add, LinearMap.add_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, pH2_cupHH_over, pH1_clAll_over _ hc hc2, hP, hPF, map_add, LinearMap.add_apply,
       Finset.sum_add_distrib] at h
     rw [Finset.sum_add_distrib]
     linear_combination (norm := module) h
@@ -145,7 +146,8 @@ theorem cupHH_self_eq_zero : ∀ (R : Type) [CommRing R] (A : Over (Sp R)) [GrpO
     simp only [Fin.append_left, Fin.append_right, LinearMap.comp_apply, (hax.2.1 _).2.2.2.1,
       (hax.2.1 _).2.2.2.2.1, map_zero, zero_smul, Finset.sum_const_zero, add_zero] at h3
     have h4 := congrArg (pO1 (lift (𝟙 A) (toUnit A ≫ η[A]))) h3
-    simp only [map_sum, map_smul, map_zero] at h4
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, map_zero] at h4
     simpa only [toHO1_pH1_over, (hax.1 _).1] using h4
 
   obtain ⟨m, ⟨Φ⟩⟩ := hb.1
@@ -153,7 +155,8 @@ theorem cupHH_self_eq_zero : ∀ (R : Type) [CommRing R] (A : Over (Sp R)) [GrpO
   have hu : ∀ i, ∃ u : Glob1 (OAff A.hom), clAll _ hc u = ∑ k, L i (w k) • a' k := by
     intro i
     have hm : ∑ k, L i (w k) • a' k ∈ Fil1 (OAff A.hom) := by
-      rw [Fil1, LinearMap.mem_ker, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Fil1, LinearMap.mem_ker, map_sum]
       simpa only [map_smul] using hk (L i)
     rw [Fil1_eq_range] at hm
     obtain ⟨ω, hω⟩ := hm
@@ -165,7 +168,8 @@ theorem cupHH_self_eq_zero : ∀ (R : Type) [CommRing R] (A : Over (Sp R)) [GrpO
     rw [hz]
     simp only [hu]
     conv_lhs => enter [2, k]; rw [hL (w k)]
-    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply]
     exact Finset.sum_comm
 
   have hwp : wsum (OAff (A ⊗ A).hom) (fun k ↦ pF μ[A] (u k)) (fun k ↦ pF μ[A] (Φ.w k)) =
@@ -173,7 +177,8 @@ theorem cupHH_self_eq_zero : ∀ (R : Type) [CommRing R] (A : Over (Sp R)) [GrpO
       wsum (OAff (A ⊗ A).hom) (fun k ↦ pF (snd A A) (u k)) (fun k ↦ pF (snd A A) (Φ.w k)) := by
     have h := hprim
     rw [hz2] at h
-    simp only [map_sum, pH2_cupHH_over, pH1_clAll_over _ hc hc2] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, pH2_cupHH_over, pH1_clAll_over _ hc hc2] at h
     exact wsum_eq_add_of_cupSum_eq _ hc2 hsur2 _ _ _ _ _ _ h
   have hw0 := GlobalTheory.T.sum_wedge_primitive_oneForms_eq_zero_abelianScheme R A g hA hs m u Φ.w hwp
   rw [hz2]

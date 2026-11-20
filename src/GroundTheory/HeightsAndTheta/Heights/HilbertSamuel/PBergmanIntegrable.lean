@@ -123,7 +123,8 @@ theorem bergman_eq_sum (hV : V ≤ L.sections n) [FiniteDimensional ℂ V] :
   have hr : ∀ v, ev v = ⟪r, v⟫_ℂ := fun v ↦ by
     calc ev v = ev (∑ i, ⟪b i, v⟫_ℂ • b i) := by rw [b.sum_repr']
       _ = ∑ i, ev (b i) * ⟪b i, v⟫_ℂ := by
-          rw [map_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [map_sum]
           exact Finset.sum_congr rfl fun i _ ↦ by rw [map_smul, smul_eq_mul, mul_comm]
       _ = ⟪r, v⟫_ℂ := by
           rw [sum_inner]

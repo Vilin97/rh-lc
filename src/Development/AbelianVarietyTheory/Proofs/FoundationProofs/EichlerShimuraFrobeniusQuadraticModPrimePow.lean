@@ -109,7 +109,8 @@ theorem defect_mem (X : Tower Ω ε) (l : ℕ) [Fact l.Prime] (n M q : ℕ) (σ 
     | zero => simpa using hone
     | succ k ih => rw [pow_succ, hmul, ih, Nat.cast_succ, add_smul, one_smul]
   rw [AdicCompletion.pow_smul_top_eq_ker_eval (Submodule.fg_span_singleton _), LinearMap.mem_ker]
-  simp only [defect, LinearMap.sub_apply, LinearMap.add_apply, LinearMap.smul_apply, LinearMap.comp_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [defect, LinearMap.sub_apply, LinearMap.add_apply, LinearMap.smul_apply, LinearMap.comp_apply,
     LinearMap.sum_apply, map_sub, map_add, map_sum, map_smul]
   rw [hk _ _ _ hc, hk _ _ _ hc, hk _ _ _ (hk _ _ _ hc), Finset.sum_congr rfl (fun j _ => hk _ _ _ hc),
     sub_eq_zero, ← hprod, ← hmul, ← hpow, ← hmul, hiff]
@@ -281,7 +282,8 @@ theorem rel_BSet [IsAlgClosure ℚ Ω] (X : Tower Ω ε) (hε : Function.Injecti
   obtain ⟨σ, h01, h10, h11⟩ := exists_diag M q hcop
   refine rel_of_defect X N l w n M q σ s b hb hNM hlM hnM hq.pos hcop
     (ES.cyclotomicCharacter_frobV l q hq hql V s hV) h01 h10 h11 (fun v => ?_) u
-  rw [hc, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hc, map_sum]
   refine Submodule.sum_mem _ fun i _ => ?_
   rw [map_smul]
   obtain ⟨g, hg⟩ := hS i q hq (fun h => hqS.1 ⟨i, Finset.mem_univ i, h⟩) s hs σ ⟨h01, h10, h11⟩

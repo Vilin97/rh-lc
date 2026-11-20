@@ -200,7 +200,8 @@ theorem share_eig : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r : 
     simp only [GlobalTheory.BadCount.eig, Submodule.mem_iInf, LinearMap.mem_ker]
     intro k
     rw [LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.id_apply, sub_eq_zero]
-    simp only [S, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [S, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, Finset.smul_sum]
     symm
     apply Fintype.sum_equiv (Equiv.mulRight k)
     intro g

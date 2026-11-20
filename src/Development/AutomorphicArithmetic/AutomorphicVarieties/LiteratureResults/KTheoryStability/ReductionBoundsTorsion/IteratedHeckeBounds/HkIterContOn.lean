@@ -36,7 +36,8 @@ theorem mn_map (S : Subgroup G) {E E' : Type} [AddCommGroup E] [Module ℝ E] [A
   · rw [mn_zero h, mn_zero h, map_zero]
   · haveI := fin_of_ne h
     letI := Fintype.ofFinite (Quotient (QuotientGroup.rightRel S))
-    rw [mn_fin, mn_fin, map_smul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [mn_fin, mn_fin, map_smul, map_sum]
 
 theorem mn_integral (S : Subgroup G) {X E : Type} [MeasurableSpace X] {μ : Measure X} [NormedAddCommGroup E]
     [NormedSpace ℝ E] (e : Quotient (QuotientGroup.rightRel S) → X → E) (he : ∀ c, Integrable (e c) μ) :
@@ -111,7 +112,8 @@ theorem intS_eq {q : ℕ} (ω : Form (HS L N) q) (y : Fin (q + 1) → HS L N) :
 
 theorem intS_pb {q : ℕ} (g : Gp L N) (ω : Form (HS L N) q) (y : Fin (q + 1) → HS L N) :
     intS (pb g ω) y = intS ω fun j => actL g (y j) := by
-  simp only [intS, pb, ContinuousAlternatingMap.compContinuousLinearMap_apply, Function.comp_def, map_add, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [intS, pb, ContinuousAlternatingMap.compContinuousLinearMap_apply, Function.comp_def, map_add, map_sum,
     map_smul, map_sub]
 
 theorem intP_pb {q : ℕ} (g : Gp L N) (ω : Form (HS L N) q) (y : Fin (q + 1) → Pos L N) :

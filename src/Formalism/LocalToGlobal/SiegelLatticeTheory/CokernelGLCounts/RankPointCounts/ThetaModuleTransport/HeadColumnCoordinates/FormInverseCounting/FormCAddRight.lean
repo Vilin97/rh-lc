@@ -79,7 +79,8 @@ theorem formC_rel_right (hcj : ∀ x, cj (cj x) = x) (Z : Matrix (Fin (r + 1)) (
     intro i
     have h1 : ∀ j, cj (W j : E) = ∑ k, cj (d k : E) * gramC cj Z T T' j k := by
       intro j
-      rw [hd j, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hd j, map_sum]
       exact Finset.sum_congr rfl fun k _ => by rw [map_mul, gramC_herm cj hcj Z T T' hT hT']
     simp only [h1, Finset.mul_sum]
     rw [Finset.sum_comm]

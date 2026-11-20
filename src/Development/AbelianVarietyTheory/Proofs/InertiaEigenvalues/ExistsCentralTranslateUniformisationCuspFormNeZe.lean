@@ -141,7 +141,8 @@ theorem eq_zero_of_rdU {D : D7} (T : Core D) (hM : LawsM T) {j : ℕ} (hj : InR 
     ∑ i, as i ⊗ₜ[T.Q.c.F] (⟨gs i, hgs i⟩ : sec (T.Q.Xo j) T.Q.c a n)
   have hbt : GlobalTheory.IndefiniteRowSideFullHecke.BaseChangeTensorProduct.bcMap hσ'
       ((rdU (T.U j (σ'.comp (incF T.Q.c c' hle)))).comp (sec (T.Q.Xo j) T.Q.c a n).subtype) t = 0 := by
-    simp only [t, map_sum, GlobalTheory.ReadingComparison.bcMap_tmul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [t, map_sum, GlobalTheory.ReadingComparison.bcMap_tmul]
     exact h0
   have ht : t = 0 := by
     by_contra ht
@@ -184,7 +185,8 @@ theorem eq_zero_of_rdU {D : D7} (T : Core D) (hM : LawsM T) {j : ℕ} (hj : InR 
   have e := congrArg Φ ht
   rw [map_zero] at e
   have e2 : Φ t = ∑ i, algebraMap c'.F p.R (as i) * evR (T.Q.Xo j) T.Q.c (gs i) (y.res hle hA) := by
-    simp only [t, map_sum, Φ, TensorProduct.liftAddHom_tmul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [t, map_sum, Φ, TensorProduct.liftAddHom_tmul]
     rfl
   rw [← e2, e]
 

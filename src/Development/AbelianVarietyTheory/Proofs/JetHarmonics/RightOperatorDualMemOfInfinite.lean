@@ -73,7 +73,8 @@ private lemma isPol_linearMap_eval {ι : Type} [Fintype ι] [DecidableEq ι] (g 
     intro y
     ext ρ'
     simp [Finset.sum_apply, Pi.single_apply]
-  simp only [h, map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [h, map_sum, map_smul]
   exact isPol_finset_sum _ fun ρ _ => isPol_eval_smul _ _
 
 open MeasureTheory in

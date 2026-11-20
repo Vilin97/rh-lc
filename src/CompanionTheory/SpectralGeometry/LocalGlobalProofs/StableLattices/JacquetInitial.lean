@@ -99,7 +99,8 @@ theorem coef_mem {M : Type*} [AddCommGroup M] [Module ℂ M] (P : Submodule ℂ 
     have e : ℓ' (∑ j ∈ Finset.range l, t ^ j • c j) = 0 := by
       show ℓ (P.mkQ _) = 0
       rw [Submodule.mkQ_apply, (Submodule.Quotient.mk_eq_zero P).2 (h t), map_zero]
-    simp only [map_sum, map_smul, smul_eq_mul] at e
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, smul_eq_mul] at e
     simp only [p, Polynomial.eval_finset_sum, Polynomial.eval_mul, Polynomial.eval_C, Polynomial.eval_pow,
       Polynomial.eval_X, Polynomial.eval_zero]
     rw [← e]

@@ -100,7 +100,8 @@ theorem l2_sum_eq_sum_norm_sq_of_orthogonal {n : ℕ} (q : ℕ) {ι : Type*} (s 
       ∑ i ∈ s, ∑ j ∈ s, (c i * (starRingEnd ℂ) (c j)) *
         (e i v * (starRingEnd ℂ) (e j v) * (Real.exp (-(q * Real.pi) * (HC v v).re) : ℂ)) := by
     intro v
-    rw [map_sum, Finset.sum_mul, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_mul, Finset.sum_mul]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [Finset.mul_sum, Finset.sum_mul]
     refine Finset.sum_congr rfl fun j _ => ?_

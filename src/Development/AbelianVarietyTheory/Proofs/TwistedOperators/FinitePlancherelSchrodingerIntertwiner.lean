@@ -140,7 +140,8 @@ theorem finite_plancherel_schrodinger_intertwiner :
   have hf0sum : f₀ = ∑ c, g c := by
     rw [← hf₀]
     simp only [hg]
-    rw [← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum]
     congr 1
     funext t
     rw [Finset.sum_apply]
@@ -150,7 +151,8 @@ theorem finite_plancherel_schrodinger_intertwiner :
     · simp [ht]
   have hΦsum : (T fun t => if h : t ∈ Λc then Gd (red ⟨t, h⟩) else 0) = ∑ c, Gd c • g c := by
     simp only [hg, ← map_smul]
-    rw [← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum]
     congr 1
     funext t
     rw [Finset.sum_apply]

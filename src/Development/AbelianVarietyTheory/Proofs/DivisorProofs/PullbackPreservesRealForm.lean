@@ -43,18 +43,21 @@ theorem cjCoef_mul (a b : Alt n) : cjCoef n (a * b) = cjCoef n a * cjCoef n b :=
   rw [← (bas n).sum_repr a, ← (bas n).sum_repr b]
   generalize (bas n).repr a = u
   generalize (bas n).repr b = w
-  simp only [Finset.sum_mul, Finset.mul_sum, smul_mul_smul_comm, map_sum, map_smulₛₗ, key, cjCoef_bas, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finset.sum_mul, Finset.mul_sum, smul_mul_smul_comm, map_sum, map_smulₛₗ, key, cjCoef_bas, map_mul]
 
 theorem cjCoef_one : cjCoef n 1 = 1 := by rw [← bas_empty, cjCoef_bas]
 
 theorem cjCoef_ι (u : Fin n ⊕ Fin n → ℂ) :
     cjCoef n (ExteriorAlgebra.ι ℂ u) = ExteriorAlgebra.ι ℂ (fun i => conj (u i)) := by
   have h (w : Fin n ⊕ Fin n → ℂ) : ExteriorAlgebra.ι ℂ w = ∑ i, w i • bas n {finSumFinEquiv i} := by
-    simp only [bas_singleton, ← map_smul, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [bas_singleton, ← map_smul, ← map_sum]
     congr 1
     ext j
     simp [Pi.single_apply, Finset.sum_apply]
-  simp only [h, map_sum, map_smulₛₗ, cjCoef_bas]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [h, map_sum, map_smulₛₗ, cjCoef_bas]
 
 theorem isReal_iff (α : Alt n) : IsReal α ↔ swap α = cjCoef n α := by
   simp only [IsReal, ← repr_cjCoef]

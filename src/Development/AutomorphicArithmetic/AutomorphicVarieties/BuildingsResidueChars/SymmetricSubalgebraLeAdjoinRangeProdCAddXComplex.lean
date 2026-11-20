@@ -26,7 +26,8 @@ theorem UpperTheory.symmetricSubalgebra_le_adjoin_range_prod_C_add_X_complex :
       apply Polynomial.funext
       intro u
       have h2 := h1 _ (Algebra.subset_adjoin ⟨u, rfl⟩)
-      simp only [hv, map_sum, map_smul, smul_eq_mul] at h2
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hv, map_sum, map_smul, smul_eq_mul] at h2
       simp only [Polynomial.eval_finset_sum, Polynomial.eval_monomial, Polynomial.eval_zero]
       rw [← h2]
       exact Finset.sum_congr rfl fun i _ => mul_comm _ _

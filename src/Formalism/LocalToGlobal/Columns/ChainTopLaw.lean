@@ -100,7 +100,8 @@ theorem ctl_col {N M : ℕ} (g : Sp E N →ₗ[E] Sp E M) (v : Sp E N) {p : ℕ}
     simp [Loc.eN, Finset.sum_apply, ← Fin.ext_iff]
   rw [Finset.sum_range]
   conv_lhs => rw [hv]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [map_smul]
   unfold Loc.atN
   simp [hp, Finset.sum_apply]

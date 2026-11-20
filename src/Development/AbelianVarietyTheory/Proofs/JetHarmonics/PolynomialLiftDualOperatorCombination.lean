@@ -173,7 +173,8 @@ theorem row_mul_det (q : Fin (r + 1 + (r + k)) → ℂ) (a : Fin (r + 1 + (r + k
     simp only [posL_cast]
     rfl
   rw [Finset.sum_mul]
-  simp only [smul_mul_assoc, map_sum, map_smul, key, smul_add, Finset.sum_add_distrib, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [smul_mul_assoc, map_sum, map_smul, key, smul_add, Finset.sum_add_distrib, Finset.smul_sum]
   congr 1
   · exact Finset.sum_congr rfl fun d _ => smul_comm _ _ _
   · simp only [smul_smul, ← Finset.sum_smul]
@@ -288,7 +289,8 @@ theorem group_identity (hz' : inWb k r z') (hT : 0 < Tz k r z') (Y : ℂ) :
     rw [evAt_apply, Module.End.mul_apply, mulE_pow_apply _ hs _ _ hg]
     rfl
   rw [hP] at e1
-  simp only [map_smul, map_sum, hL, hM, hR, hLN] at e1 e2
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_smul, map_sum, hL, hM, hR, hLN] at e1 e2
   simp only [mul_smul] at e2
   rw [e2, Matrix.det_transpose, Matrix.det_nonsing_inv, Ring.inverse_eq_inv'] at e1
   rw [Fintype.sum_prod_type]
@@ -505,7 +507,8 @@ theorem lift_regular {d : Q.NFData P (RA P Bs)} (hD : P5.IsData P Bs.z Bs.z' Bs.
         map_add' := fun _ _ => rfl
         map_smul' := fun _ _ => rfl }
     have := congrArg ev hB
-    rw [map_neg, map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_neg, map_sum] at this
     simp only [map_smul] at this
     exact this
   have e4 : dZ Bs.z Bs.z' h ^ P.r • B.JF Bs (B.opApply Θ F) h =

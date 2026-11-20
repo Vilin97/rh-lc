@@ -92,7 +92,8 @@ theorem UpperTheory.mem_fixed_of_character_sum_projection :
   have hE : opE ρ (∑ x, Finsupp.single (ι (s x)) (c x)) = ∑ x, c x • ρ (ι (s x)) :=
     opE_sum ρ (fun x => ι (s x)) c
   rw [hE]
-  simp only [LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_zsmul, Finset.smul_sum, smul_smul, hT]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_zsmul, Finset.smul_sum, smul_smul, hT]
   calc ∑ a, ∑ b, (c a * c b) • ρ (ι (s (b * a))) v
       = ∑ b, ∑ a, (c a * c b) • ρ (ι (s (b * a))) v := Finset.sum_comm
     _ = ∑ b, ∑ z, (c b * c (b⁻¹ * z)) • ρ (ι (s z)) v := by

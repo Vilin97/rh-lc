@@ -55,7 +55,8 @@ theorem snd_aeval {k : ℕ} (a : Fin k) (p : MvPolynomial (Fin k) R) :
       simp [this, h]
 
 theorem degree_topMon (k : ℕ) : Finsupp.degree (topMon k) = k := by
-  simp [topMon, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [topMon, map_sum]
 
 theorem coeff_top_of_mem {k n : ℕ} (h : k < n) {p : MvPolynomial (Fin k) R} (hp : p ∈ idealOfVars (Fin k) R ^ n) :
     AddMonoidAlgebra.coeff p (topMon k) = 0 := by
@@ -376,7 +377,8 @@ theorem jetVal_comb {y : epsR R ⟶ G} (hy : IsTangent y) {U : G.left.Opens} (he
   have h : ∀ g, valR (A := EpsAlg R k) (epsPt y k).left U g = vh (A := EpsAlg R k) (epsPt y k).left U
     (top_le_epsPt hy he k) g := fun g => valR_eq _ _ _ g
   erw [h]
-  rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum]
   refine Finset.sum_congr rfl fun a _ => ?_
   erw [h]
   rw [map_mul, vh_const (algebraMap R (EpsAlg R k)) G.hom _ (Over.w (epsPt y k)), ← Algebra.smul_def, map_smul,

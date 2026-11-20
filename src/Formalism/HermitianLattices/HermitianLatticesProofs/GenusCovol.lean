@@ -357,7 +357,8 @@ theorem genusCovol_dualBasis (h : V →ₗ⋆[K] V →ₗ[K] K) (N : ℕ)
   have hlin : ∀ x i, b x (y i) = ∑ j, Gi i j * b x (m j) := by
     intro x i
     simp only [hbdef, hy]
-    rw [map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [LinearMap.map_smul, smul_eq_mul, ← Algebra.smul_def, LinearMap.map_smul, smul_eq_mul]
   have hdelta : ∀ k i, b (m k) (y i) = (1 : Matrix _ _ ℚ) k i := by

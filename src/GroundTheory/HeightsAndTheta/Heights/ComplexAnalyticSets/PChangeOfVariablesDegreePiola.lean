@@ -40,7 +40,8 @@ theorem det_update_eq_sum (V : Fin n → Fin n → ℝ) (k : Fin n) (r : Fin n �
   conv_lhs => rw [hr]
   change (Matrix.detRowAlternating : (Fin n → ℝ) [⋀^Fin n]→ₗ[ℝ] ℝ).toMultilinearMap.toLinearMap V k
     (∑ l, r l • (Pi.single l 1 : Fin n → ℝ)) = _
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [map_smul, smul_eq_mul, MultilinearMap.toLinearMap_apply]
   rfl
 

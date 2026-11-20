@@ -48,7 +48,8 @@ theorem jetAt0_one_left {σ : Type} (G : MvPowerSeries σ C) :
 theorem constantCoeff_DpolyN_eq_jetAt0 : ∀ (C : Type) [Field C] (dd n : ℕ) (F : Fin dd → PS C 2 dd) (ι : Type) [Fintype ι] (cp : ι → Fin n) (uv : ι → Fin dd → C) (W : Type) [Fintype W] (E : Fin n × Fin dd → MvPowerSeries W C), (∀ s, MvPowerSeries.constantCoeff (E s) = 0) → ∀ (co : ι → W → C) (P : MvPolynomial ι C), (∀ ℓ ∈ P.vars, ∀ G : PS C n dd, MvPowerSeries.subst E (DofN F (cp ℓ) (uv ℓ) G) = ∑ w, co ℓ w • MvPowerSeries.pderiv C w (MvPowerSeries.subst E G)) → ∀ G : PS C n dd, MvPowerSeries.constantCoeff (DpolyN F cp uv P G) = jetAt0 (MvPolynomial.aeval (fun ℓ => ∑ w, MvPolynomial.C (co ℓ w) * MvPolynomial.X w) P : MvPolynomial W C) (MvPowerSeries.subst E G) := by
   intro C _ dd n F ι _ cp uv W _ E hE co P h G
   classical
-  rw [MvPolynomial.aeval_def, MvPolynomial.eval₂_eq', GlobalTheory.MinorShiftJet.jetAt0_sum_left, DpolyN, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [MvPolynomial.aeval_def, MvPolynomial.eval₂_eq', GlobalTheory.MinorShiftJet.jetAt0_sum_left, DpolyN, map_sum]
   refine Finset.sum_congr rfl fun m hm => ?_
   rw [map_mul, MvPowerSeries.constantCoeff_C, MvPolynomial.algebraMap_eq, GlobalTheory.MinorShiftJet.jetAt0_C_mul]
   congr 1

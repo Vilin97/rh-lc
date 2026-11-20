@@ -251,7 +251,8 @@ theorem du_dualFr_dualFr (hBA : BasisAtEx) (M : Submodule (𝓞 K) (Fin n → K)
 variable {E : Type} [Field E] [NumberField E]
 
 theorem du_f_dot (φ : E →+* K) (x y : Fin n → E) : du_f φ x ⬝ᵥ du_f φ y = φ (x ⬝ᵥ y) := by
-  simp [du_f, dotProduct, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [du_f, dotProduct, map_sum]
 
 theorem du_map_mem_one (φ : E →+* K) {c : E} (hc : c ∈ (1 : Submodule (𝓞 E) E)) :
     φ c ∈ (1 : Submodule (𝓞 K) K) := by
@@ -278,7 +279,8 @@ theorem du_dualFr_tl (hBA : BasisAtEx) (φ : E →+* K) (L : Submodule (𝓞 E) 
     have h' : ∀ a b, ∑ i, du_f φ (x i) a * du_f φ (ξ i) b = if a = b then 1 else 0 := by
       intro a b
       have := congrArg φ (h a b)
-      rw [map_sum, apply_ite φ, map_one, map_zero] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, apply_ite φ, map_one, map_zero] at this
       simpa [du_f] using this
     rw [du_expand_left _ _ h' ψ]
     exact Submodule.sum_mem _ fun i _ =>

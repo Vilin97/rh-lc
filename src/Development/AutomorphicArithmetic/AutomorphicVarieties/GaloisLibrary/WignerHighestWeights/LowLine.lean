@@ -28,7 +28,8 @@ private theorem weight_operator_commutator_multiGl {ι V : Type} [Fintype ι] [A
       have h1 := congrArg (fun f : Module.End ℂ V => f x) (hcomm s t hst a a i j)
       simp only [Module.End.mul_apply] at h1
       rw [h1, add_zero]
-  simp only [LinearMap.sum_apply, LinearMap.smul_apply, key, smul_add, Finset.sum_add_distrib,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [LinearMap.sum_apply, LinearMap.smul_apply, key, smul_add, Finset.sum_add_distrib,
     map_sum, map_smul]
   congr 1
   simp [smul_ite, smul_sub, Finset.sum_sub_distrib, Finset.sum_ite_eq', Finset.sum_ite_eq,

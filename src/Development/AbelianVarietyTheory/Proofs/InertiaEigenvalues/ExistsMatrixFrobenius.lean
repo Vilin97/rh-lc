@@ -133,7 +133,8 @@ theorem _root_.GlobalTheory.WachTie.MatF.exists_matrix_frobenius (R : _root_.Glo
   have hCinv : ∀ k m, ∀ δ ∈ W.DelF, W.γA δ (C k m) = C k m := by
     intro k m δ hδ
     have h := congrArg (W.γD T δ) (hC k)
-    rw [_root_.GlobalTheory.WachTie.MatF.γD_smulA, map_pow, hγe δ hδ, ← W.φγ_comm, hbΔ k δ hδ, hC k, map_sum] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [_root_.GlobalTheory.WachTie.MatF.γD_smulA, map_pow, hγe δ hδ, ← W.φγ_comm, hbΔ k δ hδ, hC k, map_sum] at h
     simp only [_root_.GlobalTheory.WachTie.MatF.γD_smulA, hbΔ _ δ hδ] at h
     exact congrFun (_root_.GlobalTheory.WachTie.MatF.coord_unique W T b _ _ h.symm) m
 
@@ -143,7 +144,8 @@ theorem _root_.GlobalTheory.WachTie.MatF.exists_matrix_frobenius (R : _root_.Glo
     rw [Submodule.span_le]
     rintro _ ⟨y, hy, rfl⟩
     obtain ⟨c, rfl⟩ := _root_.GlobalTheory.WachTie.MatF.exists_coord W T b y hy
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Submodule.sum_mem _ fun t _ => ?_
     rw [_root_.GlobalTheory.WachTie.MatF.φD_smulA]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨t, rfl⟩)
@@ -223,7 +225,8 @@ theorem _root_.GlobalTheory.WachTie.MatF.exists_matrix_frobenius (R : _root_.Glo
     have h := congrFun (congrFun (congrFun hPΨ x) y) i
     simp only [Matrix.mul_apply, Finset.sum_apply, Matrix.smul_apply, Matrix.one_apply,
       smul_eq_mul, Pi.mul_apply] at h
-    simp only [Matrix.mul_apply, Matrix.of_apply, map_sum, map_mul, hjP, hjΨ, Matrix.smul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mul_apply, Matrix.of_apply, map_sum, map_mul, hjP, hjΨ, Matrix.smul_apply,
       Matrix.one_apply, smul_eq_mul]
     rw [h]
     split_ifs <;> simp [hc, he, pow_mul]

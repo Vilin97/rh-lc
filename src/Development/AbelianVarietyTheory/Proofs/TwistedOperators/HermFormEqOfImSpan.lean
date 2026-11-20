@@ -22,13 +22,15 @@ theorem hermC_mulVec (τ : E →+* ℂ) (G N : Matrix (Fin r) (Fin r) E)
   classical
   have key : ∀ i j, ∑ p, ∑ q, τ (N p i) * τ (G p q) * conj (τ (N q j)) = τ (G i j) := fun i j => by
     have := congrArg τ (hN (Pi.single i 1) (Pi.single j 1))
-    simp only [herm, cc, Matrix.mulVec_single_one, Matrix.col_apply, map_sum, map_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [herm, cc, Matrix.mulVec_single_one, Matrix.col_apply, map_sum, map_mul,
       IsCMField.complexEmbedding_complexConj] at this
     rw [this]
     simp [Pi.single_apply, apply_ite, ite_mul]
   have e : hermC τ G (N.map τ *ᵥ u) (N.map τ *ᵥ v) =
       ∑ j, ∑ i, u i * (∑ p, ∑ q, τ (N p i) * τ (G p q) * conj (τ (N q j))) * conj (v j) := by
-    simp only [hermC, Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum, map_mul, Finset.sum_mul, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hermC, Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum, map_mul, Finset.sum_mul, Finset.mul_sum]
     rw [Finset.sum_congr rfl fun p _ => Finset.sum_comm, Finset.sum_comm]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [Finset.sum_congr rfl fun p _ => Finset.sum_comm, Finset.sum_comm]

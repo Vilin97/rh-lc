@@ -165,7 +165,8 @@ theorem eq_one_of_geometric {S : Scheme.{0}} {k : ℕ} (hk : Odd k) (u : Γ(S, �
       have := congrArg x.appTop.hom hu
       rwa [map_pow, map_one, pow_succ, pow_mul, h₂, one_pow, _root_.one_mul] at this
     have h₄ : IsUnit (x.appTop.hom (∑ i ∈ Finset.range k, u ^ i)) := by
-      simp only [map_sum, map_pow, h₃, one_pow, Finset.sum_const, Finset.card_range, nsmul_eq_mul, _root_.mul_one]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_pow, h₃, one_pow, Finset.sum_const, Finset.card_range, nsmul_eq_mul, _root_.mul_one]
       have := (Ne.isUnit h₁).map (Scheme.ΓSpecIso (CommRingCat.of K)).inv.hom
       rwa [map_natCast] at this
     have h₅ : x (default : PrimeSpectrum K) = p :=
@@ -341,7 +342,8 @@ theorem existsUnique_coord {Λ I : Type} [AddCommGroup Λ] {m k : ℕ} (hk : k �
       simp [Pi.single_apply]
     apply Additive.ofMul.injective
     show _ = F _
-    rw [h₁, map_sum, Finset.sum_apply, map_sum, ofMul_prod]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h₁, map_sum, Finset.sum_apply, map_sum, ofMul_prod]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_nsmul, Pi.smul_apply, map_nsmul, ofMul_pow]
     rfl
@@ -409,7 +411,8 @@ variable {n : ℕ} (pr : Fin n → (G ⟶ A)) (W : Matrix (Fin n) (Fin n) ℤ)
 omit [GrpObj A] [IsCommMonObj A] [GrpObj G] in
 theorem pull_sharp {T : Over S} (a : T ⟶ G) (h : (sharp Pb pr W).IsLB) :
     pull a.left (cls _ h) = quad (bi hP) W (fun u => a ≫ pr u) := by
-  rw [cls_linComb hP, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [cls_linComb hP, map_sum]
   refine Finset.sum_congr rfl fun uv _ => ?_
   rw [map_zsmul]
   exact congrArg _ (pull_bi hP a _ _)

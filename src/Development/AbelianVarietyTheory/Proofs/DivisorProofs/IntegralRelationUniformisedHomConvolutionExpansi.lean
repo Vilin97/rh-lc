@@ -47,7 +47,8 @@ theorem core : LL → ∀ (R : Type) [CommRing R] [IsDomain R] [CharZero R] (I :
     exact ⟨S, fun Z r z J hJ => ⟨(hS Z r z J hJ).1,
       (sval_zero' (π := D₁.toPre.P.A.hom) hJ _).trans (hS Z r z J hJ).2.symm⟩⟩
   · obtain ⟨⟨χ, δ⟩, hp⟩ := p
-    rw [hm _ _ _ _ z J hJ, CoefBasic.cst_eq, map_sum, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hm _ _ _ _ z J hJ, CoefBasic.cst_eq, map_sum, Finset.sum_mul]
     refine Finset.sum_congr rfl fun ν _ => ?_
     have c₁ : constVal (g.b.left ≫ D₁.toPre.P.A.hom) z (ρ ν) =
         CoefBasic.cstH z (algebraMap (FractionRing R) F (algebraMap R (FractionRing R) (ρ ν))) := by

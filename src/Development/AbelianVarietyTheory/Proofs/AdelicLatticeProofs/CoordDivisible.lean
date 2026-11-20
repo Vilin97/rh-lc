@@ -72,7 +72,8 @@ theorem coord_divisible : ∀ (F : Type) [Field F] [NumberField F] (β : Type) [
 
   have hL : algebraMap F (FiniteAdeleRing (𝓞 F) F) (((∑ j, z j • ω j : 𝓞 F)) : F) =
       ∑ j, (z j : FiniteAdeleRing (𝓞 F) F) * algebraMap F _ ((ω j : 𝓞 F) : F) := by
-    rw [RingOfIntegers.coe_eq_algebraMap, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [RingOfIntegers.coe_eq_algebraMap, map_sum, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_zsmul, map_zsmul, zsmul_eq_mul, RingOfIntegers.coe_eq_algebraMap]
   obtain ⟨a, ha⟩ := dvd_of_eq F (∑ j, z j • ω j) N hN

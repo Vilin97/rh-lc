@@ -676,7 +676,8 @@ def h2avD (κ : O) (x : W.DD T) : W.DD T := κ • ∑ h ∈ W.DelF, W.γD T h x
 
 theorem averageRing_mem_invariants (κ : O) (a : LetA O n) : h2avA W κ a ∈ W.AΔ := by
   intro g hg
-  simp only [h2avA, map_smul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [h2avA, map_smul, map_sum]
   congr 1
   rw [← sum_finiteDelta_translate W (fun h => W.γA h a) hg]
   exact Finset.sum_congr rfl fun h _ => (gammaRing_mul W g h a).symm
@@ -699,7 +700,8 @@ theorem average_sub (κ : O) (x y : W.DD T) : h2avD W T κ (x - y) = h2avD W T �
 
 theorem average_finset_sum (κ : O) {ι : Type} (s : Finset ι) (x : ι → W.DD T) :
     h2avD W T κ (∑ i ∈ s, x i) = ∑ i ∈ s, h2avD W T κ (x i) := by
-  simp only [h2avD, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [h2avD, map_sum]
   rw [Finset.sum_comm, Finset.smul_sum]
 
 theorem average_smul_invariant_ring (κ : O) {a : LetA O n} (ha : a ∈ W.AΔ) (x : W.DD T) :
@@ -773,7 +775,8 @@ theorem truncation_delta_invariant (hR : Formalism.MainNotions.UnusedSlot80.Tool
     have e2 := congrArg (W.γA g) e1
     rw [map_mul, map_mul, map_pow, map_pow, map_natCast, hr g hg] at e2
     rw [e2, e1]
-  rw [map_sub, map_smul, map_sum, ← frobenius_pow_gamma_comm, hwD.2 g hg]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sub, map_smul, map_sum, ← frobenius_pow_gamma_comm, hwD.2 g hg]
   congr 1
   refine Finset.sum_congr rfl fun y _ => ?_
   rw [gamma_smul_series, hs y, ← frobenius_pow_gamma_comm, ((hser.2.1 y).1).2 g hg]
@@ -802,7 +805,8 @@ theorem frobenius_sq_mem_pullback (hmod : Formalism.MainNotions.DeltaInvariantLa
     rw [Finset.smul_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [smul_smul, smul_smul, mul_comm]
-  rw [e1, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e1, map_sum]
   refine Submodule.sum_mem _ fun k _ => ?_
   rw [frobenius_pow_smul_series]
   refine Submodule.smul_mem _ _ (Submodule.subset_span ⟨_, ⟨?_, ?_, ?_⟩, rfl⟩)
@@ -1085,7 +1089,8 @@ theorem kernel_rank_bound [NeZero n] (hT2 : Formalism.MainNotions.CrystallineLif
   refine ⟨N, ak, wk, fun k => averageRing_mem_invariants W κ (a k), fun k => ⟨hwkN k, (hwkI k).1⟩, ?_⟩
   intro R hR
   have hER := congrArg (fun f => π (f R)) hEq
-  simp only [Finset.sum_apply, Pi.add_apply, map_sum, map_add, map_smul] at hER
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finset.sum_apply, Pi.add_apply, map_sum, map_add, map_smul] at hER
 
   have hl1 : ∀ k, π (Formalism.MainNotions.RamifiedCoefficientChains.Sh.conv (W.lev c ζ (ak k)) (dz k) R) =
       coeff R (W.lev c ζ (ak k)) • π ((PD.p : LL) ^ σ • μ k) := by
@@ -1121,7 +1126,8 @@ theorem kernel_rank_bound [NeZero n] (hT2 : Formalism.MainNotions.CrystallineLif
   simp only [map_smul, map_pow, map_natCast] at hER
   rw [← Submodule.Quotient.mk_eq_zero, ← Submodule.mkQ_apply, ← hπ]
   refine (smul_eq_zero.mp ?_).resolve_left hσ0
-  rw [map_sub, map_sum, smul_sub, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sub, map_sum, smul_sub, Finset.smul_sum]
   have e3 : ∑ k, (PD.p : LL) ^ σ • π (coeff R (W.lev c ζ (ak k)) • μ k) =
       ∑ k, coeff R (W.lev c ζ (ak k)) • ((PD.p : LL) ^ σ • π (μ k)) :=
     Finset.sum_congr rfl fun k _ => by rw [map_smul, smul_comm]
@@ -1316,7 +1322,8 @@ theorem comparison_linear_sum (W : LocWach PD LL O v n) (T : LocLat G Qp LL O) {
     exact (W.N T).smul_mem _ (hw k)
   have e : (⟨∑ k, o k • wk k, hmem⟩ : ↥(W.N T)) = ∑ k, o k • (⟨wk k, hw k⟩ : ↥(W.N T)) :=
     Subtype.ext (by simp)
-  simp only [Formalism.MainNotions.ArcLiftingSetup.cmpD, dif_pos hmem, dif_pos (hw _), e, map_sum, W.cmp_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Formalism.MainNotions.ArcLiftingSetup.cmpD, dif_pos hmem, dif_pos (hw _), e, map_sum, W.cmp_smul]
 
 end Formalism.MainNotions.N.Pv.LocalLengthBound
 
@@ -1453,7 +1460,8 @@ theorem h2Bound_of_hypotheses [NeZero n] (W : LocWach PD LL O v n)
         ∑ k, coeff R (W.lev c ζ (ak k)) • μ k) = 0 := by
       rw [hπ, Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero]
       exact hKR R hR
-    rw [map_sub, map_sum, sub_eq_zero, map_smul] at h0
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_sum, sub_eq_zero, map_smul] at h0
     rw [h0]
     exact Finset.sum_congr rfl fun k _ => map_smul _ _ _
   obtain ⟨⟨Sq, hSq, hqp⟩, -, hpku⟩ := expRing_of W hR hCA' c ζ hζ
@@ -1471,7 +1479,8 @@ theorem h2Bound_of_hypotheses [NeZero n] (W : LocWach PD LL O v n)
     have hα : ∑ k, mm k • ak k ∈ W.AΔ := Subalgebra.sum_mem _ fun k _ => W.AΔ.smul_mem (hakm k) _
     obtain ⟨o, ho⟩ := scalar_integrality_relation hC2 hR hCA' hpu hinj c ζ hζ (boxH d b S η (c - 1)) (b c) η (hb1 c)
       (by rw [hboxH]; exact hby) _ hα ((PD.p : LL) ^ σ * θ) (fun R hR => by
-        rw [map_sum, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum, map_sum]
         simp only [map_smul, coeff_smul]
         simp only [Algebra.smul_def]
         rw [hθ R hR, qP_eq_qp]
@@ -1483,5 +1492,6 @@ theorem h2Bound_of_hypotheses [NeZero n] (W : LocWach PD LL O v n)
   refine ⟨∑ k, o k • wk k, Submodule.sum_mem _ fun k _ => Submodule.smul_mem _ _ (hwk k), ?_⟩
   rw [comparison_linear_sum W T₂ o wk (fun k => (hwk k).1)]
   rw [← Submodule.Quotient.mk_eq_zero, ← Submodule.mkQ_apply, ← hπ]
-  simp only [map_sum, map_smul, map_sub]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, map_sub]
   rw [ho, sub_eq_zero]

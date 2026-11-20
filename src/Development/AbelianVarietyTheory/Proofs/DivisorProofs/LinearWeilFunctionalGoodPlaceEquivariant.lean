@@ -70,7 +70,8 @@ theorem linForm_sum {K : Type} [Field K] {m n : Type} [Fintype m] [Fintype n] [D
     (l : Matrix m n K →ₗ[K] K) (Y : Matrix m n K) :
     l Y = ∑ k, ∑ j, Y k j * l (Matrix.single k j 1) := by
   conv_lhs => rw [Y.matrix_eq_sum_single]
-  simp only [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum]
   refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun j _ => ?_
   rw [show Matrix.single k j (Y k j) = Y k j • Matrix.single k j (1 : K) by
     rw [Matrix.smul_single, smul_eq_mul, mul_one], map_smul, smul_eq_mul]

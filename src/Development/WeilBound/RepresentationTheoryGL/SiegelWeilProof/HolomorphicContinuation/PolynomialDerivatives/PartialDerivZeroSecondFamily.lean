@@ -189,7 +189,8 @@ theorem contr_mono (ε : Fin m → Bool) (c : ℝ) {s u : Fin m × Fin n × Bool
 theorem contr_eq_bf (ε : Fin m → Bool) (c : ℝ) {h g : PX m n} (hh : h ∈ F1 ε) (hg : g ∈ F2 ε) :
     contr c (h * g) = bf (fun s => (wt c s : ℂ)) h (rename pE g) := by
   conv_lhs => rw [h.as_sum, g.as_sum, Finset.sum_mul_sum, contr_sum]
-  conv_rhs => rw [h.as_sum, g.as_sum, map_sum, bf_sum_left]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_rhs => rw [h.as_sum, g.as_sum, map_sum, bf_sum_left]
   refine Finset.sum_congr rfl fun s hs => ?_
   rw [contr_sum, bf_sum_right]
   refine Finset.sum_congr rfl fun u hu => ?_

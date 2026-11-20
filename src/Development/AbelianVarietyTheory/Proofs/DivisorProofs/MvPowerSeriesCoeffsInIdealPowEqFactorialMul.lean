@@ -93,7 +93,8 @@ theorem pow_prime_eq (hp : p.Prime) (hJ : ∀ x ∈ J, ∃ y ∈ J, x ^ p = p * 
     set w' : MvPowerSeries τ B := ∑ α ∈ Finset.Iic β, monomial α (coeff α w) with hw'
     have hagree : ∀ α ≤ β, coeff α w = coeff α w' := by
       intro α hα
-      rw [hw', map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hw', map_sum]
       simp_rw [coeff_monomial]
       rw [Finset.sum_ite_eq]
       simp [Finset.mem_Iic.mpr hα]

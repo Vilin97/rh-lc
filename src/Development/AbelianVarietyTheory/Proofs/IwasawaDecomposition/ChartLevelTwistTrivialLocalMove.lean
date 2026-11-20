@@ -75,7 +75,8 @@ theorem isPtOf_mul {g g₁ s : GL (Fin n) (AfE F E)} {p q : DecoF E n ST SG Q} (
     rw [e]
     exact decorated_lattice_mul_principal hc n ST SG _ hc'
   refine (isPtOf_iff hc (g * s) q).2 ⟨⟨mul_mem hgu hsU, hds.trans hdr.symm⟩, fun P i j => ?_⟩
-  rw [← hfs P i j, Units.val_mul, Units.val_mul, Matrix.mul_apply, Matrix.mul_apply, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hfs P i j, Units.val_mul, Units.val_mul, Matrix.mul_apply, Matrix.mul_apply, map_sum, map_sum]
   refine Finset.sum_congr rfl fun l _ => ?_
   rw [map_mul, map_mul, hfg P i l, hf1 P i l]
 

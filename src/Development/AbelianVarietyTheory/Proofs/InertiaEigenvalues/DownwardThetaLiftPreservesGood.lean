@@ -28,7 +28,8 @@ theorem sum_translates {H X W ι : Type} [AddCommGroup H] [Module ℂ H] [AddCom
     E (∑ g, a g • yg g) = E y := by
   funext h
   refine sub_eq_zero.1 ((Module.forall_dual_apply_eq_zero_iff ℂ _).1 fun l => ?_)
-  rw [map_sub, sub_eq_zero, ← hy l h, map_sum, Finset.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sub, sub_eq_zero, ← hy l h, map_sum, Finset.sum_apply, map_sum]
   refine Finset.sum_congr rfl fun g _ => ?_
   rw [map_smul, Pi.smul_apply, map_smul, hext g h, map_smul, smul_eq_mul, smul_eq_mul]
 
@@ -152,7 +153,8 @@ theorem goodMem_of_given : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T 
         Finset.sum_congr rfl fun g _ => by
           rw [thF_translate_low R F hR i t g _ (hLV g).choose_spec y (yg g) (hyg g) v]
     _ = R.thF i t (∑ g, RealDat.eC (A := A) (sg0 D A) g • yg g) (fun ρ => v ρ) := by
-        rw [map_sum, MultilinearMap.sum_apply]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum, MultilinearMap.sum_apply]
         simp only [map_smul, MultilinearMap.smul_apply]
     _ = R.thF i t y (fun ρ => v ρ) := thF_low_eq R hR.thP i t y _ hz v
 

@@ -128,7 +128,8 @@ theorem sd_lat (hs : s.Ok) {n : ℕ} (N : Submodule (𝓞 X.E) (Sp X.E n)) (hN :
       intro x y
       have e : GlobalTheory.InertSign.hE D (fun i => s.iE (y i)) (fun i => s.iE (x i)) = s.iE (hStd X.E n x y) := by
         change _ = s.iE (∑ i, star (x i) * y i)
-        simp only [GlobalTheory.InertSign.hE, map_sum, map_mul, hs.2, mul_comm]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [GlobalTheory.InertSign.hE, map_sum, map_mul, hs.2, mul_comm]
       rw [e, ← s.iE.symm_apply_apply (hStd X.E n x y), ← mem_one_iff, s.iE.symm_apply_apply, Submodule.mem_one]
       rfl
     intro y

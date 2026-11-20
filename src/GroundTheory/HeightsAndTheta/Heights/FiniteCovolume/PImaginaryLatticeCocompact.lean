@@ -141,7 +141,8 @@ theorem ImaginaryLatticeCocompact.proof : ImaginaryLatticeCocompact.Statement F 
   refine ⟨⟨x, hx⟩, ?_, fun w => ?_⟩
   · change (m : E) * x + conj F E ((m : E) * x) = 0
     have : conj F E x = -x := by
-      simp only [x, map_sum, map_mul, map_intCast, conj_algebraMap, htc]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [x, map_sum, map_mul, map_intCast, conj_algebraMap, htc]
       rw [← Finset.sum_neg_distrib]
       refine Finset.sum_congr rfl fun i _ => ?_
       ring
@@ -153,7 +154,8 @@ theorem ImaginaryLatticeCocompact.proof : ImaginaryLatticeCocompact.Statement F 
         rw [Finset.mul_sum]
         refine Finset.sum_congr rfl fun i _ => ?_
         ring
-      rw [e, map_sum, Complex.im_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [e, map_sum, Complex.im_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_mul, map_intCast]
       simp [Complex.mul_im, L]

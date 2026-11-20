@@ -66,7 +66,8 @@ variable {X Y : Submodule K V} {Φ Ψ : Fin n → V →ₗ[K] V} {Γ : Matrix (F
 theorem BlockHyp.psiPhi (H : BlockHyp X Y Φ Ψ Γ) (x : Fin n → V) (hx : x ∈ Submodule.pi Set.univ fun _ => X) :
     LinearMap.pi Ψ (Φt Φ x) = matV Γ x := by
   funext j
-  rw [Ψt_apply, Φt_apply, map_sum, matV_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Ψt_apply, Φt_apply, map_sum, matV_apply]
   exact Finset.sum_congr rfl fun i _ => H.h1 i j (x i) (hx i (Set.mem_univ i))
 
 theorem BlockHyp.phi_mem (H : BlockHyp X Y Φ Ψ Γ) (x : Fin n → V) (hx : x ∈ Submodule.pi Set.univ fun _ => X) :

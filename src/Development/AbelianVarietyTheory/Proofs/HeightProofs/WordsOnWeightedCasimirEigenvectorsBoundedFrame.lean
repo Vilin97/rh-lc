@@ -67,7 +67,8 @@ theorem frame_norm_sq {q : ℕ} {e : Fin q → H} (ho : Orthonormal ℂ e) (d : 
     ‖∑ j, d j • e j‖ ^ 2 = ∑ j, ‖d j‖ ^ 2 := by
   have h := ho.inner_sum d d Finset.univ
   rw [@norm_sq_eq_re_inner ℂ, h]
-  simp only [Complex.conj_mul', map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Complex.conj_mul', map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [RCLike.re_to_complex]
   norm_cast

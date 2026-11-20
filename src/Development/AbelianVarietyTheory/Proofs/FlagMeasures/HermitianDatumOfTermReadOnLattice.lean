@@ -78,7 +78,8 @@ theorem h_sum_left {ι : Type} (s : Finset ι) (u : ι → V) (y : V) :
 
 theorem h_right_sum {ι : Type} [Fintype ι] (a : ι → E) (u : ι → V) (x : V) :
     H.h x (∑ i, a i • u i) = ∑ i, M.L.cj (a i) * H.h x (u i) := by
-  rw [H.h_herm, h_sum_left, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [H.h_herm, h_sum_left, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [H.h_smul_left, map_mul, ← H.h_herm]
 
@@ -247,7 +248,8 @@ theorem change_of (Fr : FrameD H r) (g : Fin (r + 1) → S.V) (hgf : ∀ a, g a 
     (hs : ∀ j, c.grp n (g j) = ∑ i, s i j • g i) (j : Fin (r + 1)) :
     n (Fr.f j) = ∑ i, s i j • Fr.f i := by
   apply c.e.injective
-  rw [← CoordUnip.grp_apply c n (Fr.f j), ← hgf j, hs j, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← CoordUnip.grp_apply c n (Fr.f j), ← hgf j, hs j, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_smul, hgf i]
 

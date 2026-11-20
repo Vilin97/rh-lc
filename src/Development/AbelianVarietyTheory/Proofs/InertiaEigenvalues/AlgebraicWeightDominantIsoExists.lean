@@ -54,7 +54,8 @@ theorem exists_beig_mem {Ψ : GL (Fin n) ℂ → Matrix κ κ ℂ} (hΨ : IsPoly
       rw [hact, ← Matrix.mulVec_mulVec, hact, hact, hep _ (hst _ _ (heS y)), hΨ.mul, Matrix.mulVec_mulVec]
     · choose Q hQ using hΨ.poly
       refine ⟨∑ l, (∑ k, MvPolynomial.C (Pm i k) * Q k l) * MvPolynomial.C (I l j), fun B => ?_⟩
-      simp only [Matrix.mul_apply, map_sum, map_mul, MvPolynomial.eval_C, hQ]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Matrix.mul_apply, map_sum, map_mul, MvPolynomial.eval_C, hQ]
   obtain ⟨w, lam, hw0, hw⟩ := GlobalTheory.T.exists_borelEigenvector_of_polynomialRepGLComplex n _ _ hR
   refine ⟨e w, heS w, lam, fun h => hw0 (he (by rw [h, map_zero])), fun B hB => ?_⟩
   have h1 := hw B hB

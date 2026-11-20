@@ -18,7 +18,8 @@ theorem span_alpha (h : IsExcResidueData b b' α M) : Submodule.span ℤ (Set.ra
   obtain ⟨-, ρ', -, -, hρ', -, -, -, -, hα, -⟩ := h
   refine eq_top_iff.mpr fun x _ => ?_
   obtain ⟨φ, rfl⟩ := hρ' x
-  rw [← b'.sum_repr φ, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← b'.sum_repr φ, map_sum]
   refine Submodule.sum_mem _ fun t _ => ?_
   rw [map_zsmul, ← hα t]
   exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨t, rfl⟩)
@@ -32,7 +33,8 @@ theorem linFormsIndep (h : IsExcResidueData b b' α M) : LinFormsIndep M := by
     intro j'
     have hs : σ φ = ∑ t, b.repr φ t • M t := by
       conv_lhs => rw [← b.sum_repr φ]
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simp_rw [map_zsmul, hM]
     rw [hs, Finset.sum_apply]
     simp only [Pi.smul_apply, zsmul_eq_mul]

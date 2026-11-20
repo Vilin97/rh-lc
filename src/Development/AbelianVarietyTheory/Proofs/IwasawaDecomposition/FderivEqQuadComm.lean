@@ -20,7 +20,8 @@ theorem IsQuadOf.apply_vec {V : Type} [NormedAddCommGroup V] [NormedSpace ℝ V]
   rw [SeparatingDual.eq_iff_forall_dual_eq (R := ℂ)]
   intro φ
   have := h ((φ.restrictScalars ℝ).toLinearMap ∘ₗ L) v
-  simpa [map_sum, ← mul_add] using this
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa [map_sum, ← mul_add] using this
 
 theorem fderiv_eq_quad_comm : ∀ (V : Type) [NormedAddCommGroup V] [NormedSpace ℝ V] (B : Type) [NormedAddCommGroup B] [NormedSpace ℂ B] (om : V →L[ℝ] V →L[ℝ] ℝ) (ρ : V → B →L[ℂ] B), (∀ x, om x x = 0) → IsHeis (fun x y => om x y) ρ → ∀ (X : V → V) (κ : Type) [Fintype κ] (c : κ → ℂ) (p q : κ → V), IsQuadOf (fun x y => om x y) X c p q → ∀ f, Sm ρ f → ∀ w, fderiv ℝ (fun u => ρ u f) w (X w) = quad ρ c p q (ρ w f) - ρ w (quad ρ c p q f) := by
   intro V _ _ B _ _ om ρ h0 hH X κ _ c p q hQ f hf w
@@ -51,13 +52,15 @@ theorem fderiv_eq_quad_comm : ∀ (V : Type) [NormedAddCommGroup V] [NormedSpace
     exact Finset.sum_congr rfl fun i _ => by ring
   have e4 : ∑ i, c i • (2 * π * I : ℂ) • ρ w ((om (q i) w : ℂ) • dH ρ (p i) f + (om (p i) w : ℂ) • dH ρ (q i) f)
       = ρ w (dH ρ (X w) f) := by
-    rw [← e1', map_smul, map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← e1', map_smul, map_sum, Finset.smul_sum]
     exact Finset.sum_congr rfl fun i _ => by rw [map_smul, smul_comm]
   have e5 : quad ρ c p q (ρ w f) = ρ w (quad ρ c p q f) + ρ w (dH ρ (X w) f)
       + (π * I * (om (X w) w : ℂ)) • ρ w f := by
     rw [← e3, ← e4, Finset.sum_smul]
     unfold quad
-    rw [map_sum, ← Finset.sum_add_distrib, ← Finset.sum_add_distrib]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, ← Finset.sum_add_distrib, ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [key, smul_add, smul_add, map_smul, smul_smul (c i) _ (ρ w f)]
   rw [h3, e5, skew]

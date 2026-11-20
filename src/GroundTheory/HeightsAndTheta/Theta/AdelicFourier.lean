@@ -62,7 +62,8 @@ theorem measurable_adelicCoord_symm (b : Basis ι K X) : Measurable (adelicCoord
 
 theorem adelicCoord_adelicCoord_symm (b : Basis ι K X) (c : Basis κ K X) (x : ι → 𝔸[K]) :
     adelicCoord c ((adelicCoord b).symm x) = (c.toMatrix b).map (algebraMap K 𝔸[K]) *ᵥ x := by
-  rw [adelicCoord_symm_apply, _root_.map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [adelicCoord_symm_apply, _root_.map_sum]
   funext k
   simp only [map_smul, adelicCoord_tmul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, mul_one,
     Matrix.mulVec, dotProduct, Matrix.map_apply, Basis.toMatrix_apply]

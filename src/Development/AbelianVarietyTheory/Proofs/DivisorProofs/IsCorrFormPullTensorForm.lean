@@ -170,7 +170,8 @@ theorem isCorrForm_pull_tensorForm {P : LB (A ⊗ B).left} (hP : P.IsLB) {N : �
   have k := grpMor_prod m n h₁ h₂
   refine ⟨N, _, _, ?_, tensorForm_apply _ _ _ _ _ _⟩
   have := isChern_pull k.isMor hc
-  rw [map_sum] at this
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum] at this
   convert this using 2 with i
   rw [IsMor.pullCohomologyTwo_cup]
   congr 1
@@ -187,7 +188,8 @@ theorem exists_eq_sum {K : Type} [Field K] {M : Type*} [AddCommGroup M] [Module 
   have hT : ∀ y, T y = ∑ k, y (c k) • a k := fun y ↦ by simp [T, LinearMap.sum_apply]
   have inj : Function.Injective T := (injective_iff_map_eq_zero _).2 fun y hy ↦ LinearMap.ext fun s ↦ by
     have e := congrArg (β s) ((hT y).symm.trans hy)
-    rw [map_sum, map_zero] at e
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero] at e
     rw [← hβ, LinearMap.zero_apply, ← e]
     exact Finset.sum_congr rfl fun k _ ↦ by rw [map_smul, smul_eq_mul, mul_comm]
   obtain ⟨y, hy⟩ := (LinearMap.injective_iff_surjective_of_finrank_eq_finrank Subspace.dual_finrank_eq).1 inj z
@@ -210,7 +212,8 @@ theorem frob_adjoint_verschiebung : GlobalTheory.Published.AbelianDeRham → Glo
   have mF := frobMor p K hK A (cast_left p K hK A)
   have mπ := grpMor_of_isGrpPullback hπ
   have hw' : primPull (dp0 K) (𝟙 _) V s = ∑ i, r i • mπ.pull (w i) := (e hn hA₁ t₁).injective (by
-    rw [he.primPull hn hA₁ hA t₁ t, map_eq_verschiebung hK t t₁ ht F V hF hV, hw, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [he.primPull hn hA₁ hA t₁ t, map_eq_verschiebung hK t t₁ ht F V hF hV, hw, map_sum]
     refine Finset.sum_congr rfl fun i _ ↦ ?_
     rw [map_smul, he hn hn hA hA₁ t t₁ mπ, (t₁.eq_semiOf_iff t mπ (frobProj hK 𝒜)).2 ht])
   have C := cupSquare_of_free H.1 (AbelianSchemeGerms.isAbelianScheme_tensor A A₁ hA hA₁) (smooth_prod hg hg₁)
@@ -226,12 +229,15 @@ theorem frob_adjoint_verschiebung : GlobalTheory.Published.AbelianDeRham → Glo
   obtain ⟨y, rfl⟩ := exists_eq_sum a c β (fun s y ↦ (hφ _ _).symm.trans (hβ s y)) z
   obtain ⟨y₁, hy⟩ := exists_corr H hA hg hπ y
   have k₁ := k (push _ _ (𝟙 A) (β s)) (β s) (push _ _ V y₁) y₁ (fun _ ↦ rfl) fun _ ↦ rfl
-  rw [push_id, LinearMap.id_apply, hβ, RingHom.id_apply, push_apply, hw', tensorForm_apply, map_sum] at k₁
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [push_id, LinearMap.id_apply, hβ, RingHom.id_apply, push_apply, hw', tensorForm_apply, map_sum] at k₁
   have hz : ∀ x : HdR A, x (∑ k, y (c k) • a k) = ψ x y := fun x ↦ by
-    rw [hφ, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hφ, map_sum]
     exact Finset.sum_congr rfl fun k _ ↦ by rw [map_smul, smul_eq_mul, mul_comm]
   simp only [hz, hβ]
-  rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum]
   refine Eq.trans (Finset.sum_congr rfl fun k _ ↦ ?_) (k₁.trans (Finset.sum_congr rfl fun i _ ↦ ?_))
   · rw [map_smulₛₗ, map_smul, smul_eq_mul, mul_comm, hy]
     rfl

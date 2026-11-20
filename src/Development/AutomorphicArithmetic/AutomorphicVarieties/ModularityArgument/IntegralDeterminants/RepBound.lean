@@ -23,7 +23,8 @@ private theorem nu_add_le (x y : ℂ) : nu ι (x + y) ≤ max (nu ι x) (nu ι y
 private theorem nu_sum_le {α : Type} (s : Finset α) (f : α → ℂ) {C : ℝ} (hC : 0 ≤ C)
     (h : ∀ i ∈ s, nu ι (f i) ≤ C) : nu ι (∑ i ∈ s, f i) ≤ C := by
   unfold nu
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg hC h
 private theorem nu_zpow (x : ℂ) (k : ℤ) : nu ι (x ^ k) = nu ι x ^ k := by
   simp [nu, map_zpow₀, norm_zpow]

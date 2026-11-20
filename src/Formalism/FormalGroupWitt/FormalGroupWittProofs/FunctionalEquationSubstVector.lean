@@ -128,7 +128,8 @@ theorem main (hC : Formalism.FG.CoeffBoundV.{u, v, v}) : Formalism.FG.FunEqSubst
       MvPowerSeries.subst α (f j) - (p : K)⁻¹ •
         ∑ k, M j k • MvPowerSeries.subst αq (MvPowerSeries.map σ (f k)) := by
     intro j
-    rw [← MvPowerSeries.substAlgHom_apply hαS, map_sub, map_smul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← MvPowerSeries.substAlgHom_apply hαS, map_sub, map_smul, map_sum]
     simp only [map_smul, MvPowerSeries.substAlgHom_apply, subst_expand q hq hαS, hαq]
 
   have hbr : ∀ k, Bd ‖(p : K)‖ (MvPowerSeries.subst αq (MvPowerSeries.map σ (f k)) -
@@ -185,7 +186,8 @@ theorem main (hC : Formalism.FG.CoeffBoundV.{u, v, v}) : Formalism.FG.FunEqSubst
     simp only [smul_sub, Finset.sum_sub_distrib]; abel
   rw [e]
   intro d
-  rw [map_add, MvPowerSeries.coeff_smul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_add, MvPowerSeries.coeff_smul, map_sum]
   refine norm_add_le_of (hgI d) ?_
   rw [norm_mul, norm_inv]
   have hsum : ‖∑ k, MvPowerSeries.coeff d (M j k • (MvPowerSeries.subst αq

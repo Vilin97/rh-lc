@@ -169,7 +169,8 @@ theorem mem_latAtV_iff_xm : ∀ (F E : Type) [Field F] [NumberField F] [Field E]
     have e : xm ι PV PW u = ∑ j, ∑ l, Matrix.vecMulVec (ι (u l j) • fun i => ι ((PV : Matrix _ _ L) i j))
         (fun k => ι ((PW : Matrix _ _ L) k l)) := by
       ext i k
-      simp only [xm_apply, Matrix.map_apply, Matrix.mul_apply, Matrix.transpose_apply, Matrix.sum_apply,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [xm_apply, Matrix.map_apply, Matrix.mul_apply, Matrix.transpose_apply, Matrix.sum_apply,
         Matrix.vecMulVec_apply, Pi.smul_apply, smul_eq_mul, map_sum, hmul]
       simp only [Finset.sum_mul]
       rw [Finset.sum_comm]

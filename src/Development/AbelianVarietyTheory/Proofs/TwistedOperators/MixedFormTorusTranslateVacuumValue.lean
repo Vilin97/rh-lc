@@ -133,7 +133,8 @@ theorem GlobalTheory.SphTheta.mixed_torus_value : ∀ (L : Type) [Field L] [Valu
     exact h1.symm
   have hsum : ℓ (sumOp ρ (intMat L (Fin n') (Fin n)) ((intMat L (Fin n') (Fin n)).map (lmulI t.1.1)) s) = 1 := by
     obtain ⟨N, f, hf, hu⟩ := ((GlobalTheory.T.sumOp_transversal_fixes_linear_and_of_le hH _ _ hΛ').2.1 hidx).1
-    rw [((GlobalTheory.T.sumOp_transversal_fixes_linear_and_of_le hH _ _ hΛ').1 s hS.fixes (Fin N) f hf hu).1, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [((GlobalTheory.T.sumOp_transversal_fixes_linear_and_of_le hH _ _ hΛ').1 s hS.fixes (Fin N) f hf hu).1, map_sum]
     obtain ⟨i0, hi0, huniq⟩ := hu 0 (zero_mem _)
     have key : ∀ i, ℓ (ρ (f i) s) = if i = i0 then 1 else 0 := by
       intro i

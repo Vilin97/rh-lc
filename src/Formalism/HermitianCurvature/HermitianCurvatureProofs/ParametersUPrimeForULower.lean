@@ -84,7 +84,8 @@ theorem act_mul {k r : ℕ} {z z' : Fin (2 * r + k + 1) → ℂ} {Wp Wq : Type} 
     (M N : Wd.SlopeTestRemainingChoices S (Q.Pr (Q.RadSp k r z z' π π'))) (x : Wd.Ix S → Q.RadSp k r z z' π π') :
     P5.act (M * N) x = P5.act M (P5.act N x) := by
   funext a
-  simp only [P5.act, Matrix.mul_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [P5.act, Matrix.mul_apply, map_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun b _ => ?_
   have key : ∀ s : Finset (Wd.Ix S),
@@ -780,7 +781,8 @@ theorem vecw_qmF {X Y : Type*} [AddCommGroup X] [Module ℂ X] [AddCommGroup Y] 
     (hE : ∀ i j x, E' i j (V x) = V (E i j x)) (a b : Fin t → Fin n) (u : ℂ) (x : X) :
     Q.qmF E' a b u (V x) = V (Q.qmF E a b u x) := by
   unfold Q.qmF
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun σ _ => ?_
   rw [map_smul]
   congr 1
@@ -1126,7 +1128,8 @@ theorem vecw_good_of_eig {P : M.Par} (hOK : P.OK) {π : B.Mat P.k P.r → (Wp �
         simp only [sub_smul, Finset.sum_sub_distrib]
         rw [← Finset.smul_sum, hμ]
         simp only [← h2]
-        rw [← map_sum, hμ, h1, sub_self]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [← map_sum, hμ, h1, sub_self]
       have hind := (iSupIndep_iff_finsetSum_eq_zero_imp_eq_zero S).1 hInt.submodule_iSupIndep Finset.univ
         (fun τ' => (M.xC (parametersUForUPrime P) τ' Y - M.xC (parametersUPrimeForU P) σ Y) • (μ τ' : Wp))
         (fun τ' _ => Submodule.smul_mem _ _ (μ τ').2) hsum τ (Finset.mem_univ τ)
@@ -1137,7 +1140,8 @@ theorem vecw_good_of_eig {P : M.Par} (hOK : P.OK) {π : B.Mat P.k P.r → (Wp �
       rw [hz0]
       simp
   rw [← hμ]
-  simp only [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun τ _ => hcomp τ
 

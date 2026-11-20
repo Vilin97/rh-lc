@@ -38,7 +38,8 @@ theorem toMatrix_smul_eq (S T : HSp D) (hS : S.gram = 1) {n : ℕ} (s s' : Fin n
   rw [LinearMap.toMatrix'_apply, Matrix.sum_apply]
   simp only [GlobalTheory.LatVac.genMap, Matrix.of_apply, hS, Matrix.one_apply, mul_ite, mul_one, mul_zero,
     Finset.sum_ite_eq', Finset.mem_univ, if_true, LinearMap.smul_apply, Pi.smul_apply, smul_eq_mul]
-  rw [← hd' j, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hd' j, map_sum]
   simp only [map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Finset.mul_sum]
   exact Finset.sum_congr rfl fun i _ => by ring
 
@@ -181,8 +182,10 @@ theorem tauE_X (S T : HSp D) (hS1 : S.gram = 1) (hT1 : T.gram = 1)
     refine Finset.sum_congr rfl fun a _ => ?_
     rw [Matrix.smul_apply, smul_eq_mul, star_mul']
     ring
-  rw [hX, map_mul, map_div₀, map_add, map_one, hxi, map_ofNat, map_sum]
-  simp only [map_sum, map_mul, tauE_star']
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hX, map_mul, map_div₀, map_add, map_one, hxi, map_ofNat, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, tauE_star']
   have hn : ∀ c a, starRingEnd ℂ (tauE D τ (γ c a)) * tauE D τ (γ c a) =
       ((Complex.normSq (tauE D τ (γ c a)) : ℝ) : ℂ) := fun c a => (Complex.normSq_eq_conj_mul_self).symm
   simp only [hn, ← Complex.ofReal_sum, Complex.re_mul_ofReal]

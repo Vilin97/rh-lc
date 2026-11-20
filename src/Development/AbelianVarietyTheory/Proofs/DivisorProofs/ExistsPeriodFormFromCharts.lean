@@ -47,7 +47,8 @@ theorem eq_pairForm {α : Alt n} (h : IsType 1 1 α) : α = pairForm (coef α) :
 
 theorem repr_pairForm (x : Fin n → Fin n → ℂ) (S : Finset (Fin (n + n))) :
     (bas n).repr (pairForm x) S = ∑ a, ∑ b, if {a.castAdd n, b.natAdd n} = S then x a b else 0 := by
-  simp only [pairForm, ← CxForm.bas_pair, map_sum, map_smul, Module.Basis.repr_self, Finsupp.finsetSum_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [pairForm, ← CxForm.bas_pair, map_sum, map_smul, Module.Basis.repr_self, Finsupp.finsetSum_apply,
     Finsupp.smul_apply, Finsupp.single_apply, smul_eq_mul, mul_ite, MulOneClass.mul_one, MulZeroClass.mul_zero]
 
 theorem isType_pairForm (x : Fin n → Fin n → ℂ) : IsType 1 1 (pairForm x) := by
@@ -74,7 +75,8 @@ theorem isType_pairForm (x : Fin n → Fin n → ℂ) : IsType 1 1 (pairForm x) 
     omega
 
 theorem swap_pairForm (x : Fin n → Fin n → ℂ) : CxForm.swap (pairForm x) = pairForm fun a b => -x b a := by
-  simp only [pairForm, map_sum, map_smul, map_mul, (CxForm.swap_dz _).1, (CxForm.swap_dz _).2]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [pairForm, map_sum, map_smul, map_mul, (CxForm.swap_dz _).1, (CxForm.swap_dz _).2]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun c _ => Finset.sum_congr rfl fun d _ => ?_
   rw [CxForm.dz, CxForm.dzb, eq_neg_of_add_eq_zero_left (ExteriorAlgebra.ι_add_mul_swap _ _), neg_smul, smul_neg]
@@ -82,7 +84,8 @@ theorem swap_pairForm (x : Fin n → Fin n → ℂ) : CxForm.swap (pairForm x) =
 theorem isReal_pairForm {x : Fin n → Fin n → ℂ} (h : ∀ a b, conj (x a b) = -x b a) : IsReal (pairForm x) := by
   intro S
   rw [swap_pairForm, repr_pairForm, repr_pairForm]
-  simp only [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
   split_ifs
   · exact (h a b).symm
@@ -120,7 +123,8 @@ theorem eval₂_pull (L : V n →L[ℂ] V m) {β : Alt m} (h : IsType 1 1 β) (�
       ext i; simp [Pi.single_apply]
     conv_rhs => rw [hu]
     ext a
-    simp [vecMul, dotProduct, map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [vecMul, dotProduct, map_sum, map_smul]
   have f (M : Matrix (Fin n) (Fin m) ℂ) (K : Matrix (Fin m) (Fin m) ℂ) (u w : Fin n → ℂ) :
       HermFrame.form (M * K * Mᴴ) u w = HermFrame.form K (u ᵥ* M) (w ᵥ* M) := by
     rw [HermFrame.form, HermFrame.form, ← mulVec_mulVec, ← mulVec_mulVec, dotProduct_mulVec, star_vecMul]
@@ -167,10 +171,12 @@ theorem exists_form (β : V n →ₗ[ℝ] V n →ₗ[ℝ] ℝ) (ha : ∀ ξ ζ, 
     have hu (u : V n) : u = ∑ c, u c • coordVec c := by
       ext i; simp [Pi.single_apply]
     have s1 (f : Fin n → V n) (w) : H (∑ a, f a) w = ∑ a, H (f a) w := by
-      simp only [H, map_sum, LinearMap.sum_apply, Complex.ofReal_sum, Finset.mul_sum, ← Finset.sum_add_distrib,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [H, map_sum, LinearMap.sum_apply, Complex.ofReal_sum, Finset.mul_sum, ← Finset.sum_add_distrib,
         Finset.sum_div]
     have s2 (f : Fin n → V n) (w) : H w (∑ a, f a) = ∑ a, H w (f a) := by
-      simp only [H, map_sum, Finset.smul_sum, Complex.ofReal_sum, Finset.mul_sum, ← Finset.sum_add_distrib,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [H, map_sum, Finset.smul_sum, Complex.ofReal_sum, Finset.mul_sum, ← Finset.sum_add_distrib,
         Finset.sum_div]
     conv_rhs => rw [hu ξ, hu ζ, s1]
     refine Finset.sum_congr rfl fun a _ => ?_

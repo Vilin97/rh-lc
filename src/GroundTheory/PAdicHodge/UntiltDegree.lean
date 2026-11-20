@@ -63,7 +63,8 @@ theorem exists_mul_eq_add_p_mul (N : IntermediateField K♭ C♭) [FiniteDimensi
 
   have hid : φ γ * a = ∑ i, φ (β i) * ω i := by
     apply IsFractionRing.injective 𝒪C♭ C♭
-    rw [map_mul, ← hφ, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_mul, ← hφ, map_sum]
     simp only [map_mul, ← hφ, hω, hβ]
     rw [← hx, hb, Finset.mul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_

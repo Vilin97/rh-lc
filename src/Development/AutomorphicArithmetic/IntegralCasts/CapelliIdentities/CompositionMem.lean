@@ -18,7 +18,8 @@ theorem UpperTheory.Reformulated.B.CompositionMem.comp_mem :
     intro x hx hsum
     have key : ∑ j ∈ s, (μ j - μ a) • x j
         = W (∑ j ∈ insert a s, x j) - μ a • ∑ j ∈ insert a s, x j := by
-      rw [map_sum, Finset.smul_sum, ← Finset.sum_sub_distrib, Finset.sum_insert ha, hx a,
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Finset.smul_sum, ← Finset.sum_sub_distrib, Finset.sum_insert ha, hx a,
         sub_self, zero_add]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [hx j, sub_smul]

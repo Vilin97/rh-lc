@@ -43,7 +43,8 @@ theorem aeval_scale {L Y : Type} (f : L → Y) (s : ℂ) {N : ℕ} {Q : MvPolyno
       MvPolynomial.C (s ^ N) * MvPolynomial.rename f Q := by
   conv_lhs => rw [Q.as_sum]
   conv_rhs => rw [Q.as_sum]
-  rw [map_sum, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun m hm => ?_
   have hd : m.degree = N := by
     have := hQ (MvPolynomial.mem_support_iff.1 hm)

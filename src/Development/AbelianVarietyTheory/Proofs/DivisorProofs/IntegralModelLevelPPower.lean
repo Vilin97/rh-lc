@@ -93,7 +93,8 @@ theorem exists_large_minors : GlobalTheory.IndefiniteRowSideFullHecke.HodgeTateK
   have hpair : ∀ (M : Fin g → 𝓞_ℂ_[p]) (X : Fin g → P.V) (t : P.V),
       P.pairV (∑ k, (M k : ℂ_[p]) • X k) t = ∑ k, (M k : ℂ_[p]) * P.pairV (X k) t := by
     intro M X t
-    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul]
   obtain ⟨K₁, hK₁, hK₁', hK₁''⟩ := GlobalTheory.T.exists_minor_norm_det_bounds_and_det_sub_le p n (Dw.mult τ.1) g (d ^ 2 * (p : ℂ_[p]) ^ 2)
     (fun k j => P.pairV (∑ b, (U₁ k b : ℂ_[p]) • P.bLie (x b))
       (∑ m, ((β (T (σ (Sum.inl j)) m) : 𝓞_ℂ_[p]) : ℂ_[p]) ⊗ₜ[ℤ_[p]] ta m))

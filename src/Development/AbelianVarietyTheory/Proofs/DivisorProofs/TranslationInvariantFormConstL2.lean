@@ -40,7 +40,8 @@ def evS (x : V) : 𝓢(V, ℂ) →L[ℂ] ℂ :=
 theorem evS_apply (x : V) (f : 𝓢(V, ℂ)) : evS x f = f x := rfl
 
 theorem sum_apply {ι : Type} (s : Finset ι) (F : ι → 𝓢(V, ℂ)) (x : V) : (∑ i ∈ s, F i) x = ∑ i ∈ s, F i x := by
-  rw [← evS_apply x, map_sum]; rfl
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← evS_apply x, map_sum]; rfl
 
 theorem trans_apply (a : V) (f : 𝓢(V, ℂ)) (x : V) : SchwartzMap.compSubConstCLM ℂ a f x = f (x - a) := by
   simp

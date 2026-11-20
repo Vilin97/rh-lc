@@ -284,7 +284,8 @@ theorem value_at_point : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] 
       apply Subtype.ext
       rw [AddSubmonoidClass.coe_finset_sum]
       exact hfA i
-    rw [this, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [this, map_sum]
     exact Finset.sum_congr rfl fun k _ => (ev.map_smulₛₗ _ _)
   have hrkC : ∀ s, Module.finrank ℂ_[p] (HT.eigSp ρC s) = Module.finrank Z.Ω (HT.eigSp Z.ρ (Z.inc.comp (inE c (f s)))) := by
     intro s
@@ -301,12 +302,14 @@ theorem value_at_point : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] 
       funext k
       have := congrFun (hPK i) k
       rw [← this]
-      simp [Finset.sum_apply, map_sum])
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [Finset.sum_apply, map_sum])
     (fun i => by
       funext k
       have := congrFun (hQK i) k
       rw [← this]
-      simp [Finset.sum_apply, map_sum])
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [Finset.sum_apply, map_sum])
     (GlobalTheory.T.reduce_lattice_coords_to_residue E Z.Ω Z.V ℂ_[p] Z.ρ _ _ _ ℓ (j.comp ψ) ρC _ (κ.comp (inE c τ)) b₁ x₁ hLI hℓs hρst hTC (hcarryC τ) hx₁ hb₁ hs₁ hrk).1 hfC
     (fun v' w' u'' B' h1 h2 h3 h4 h5 h6 h7 => hgm (Fin _ → ℂ_[p]) ρC ρHC HV (stdLat (OCp p) ℂ_[p] _) (fun i => ev ⟨t i, htmem i⟩) v' w' u'' B'
       hC1 hC2 hHV1 hHV2 (hFC htmem) hrkC h1 h2 h3 h4 h5 h6 h7)

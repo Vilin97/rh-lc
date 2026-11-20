@@ -74,7 +74,8 @@ theorem sum_character : ∀ (K : Type) [Field K] (H : Type) [CommRing H] [HopfAl
   have h1 : ∀ m : H →ₐ[K] K, q (F (toConv m.toLinearMap)) = 1 := fun m =>
     DFunLike.congr_fun hχ (toConv m)
   rw [hd]
-  simp [map_sum, map_smul, h1, hcounit]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, map_smul, h1, hcounit]
 
 theorem integral_eq_sum : ∀ (K : Type) [Field K] [CharZero K] (H : Type) [CommRing H] [HopfAlgebra K H] [IsCocomm K H] [FiniteDimensional K H] [Fintype (H →ₐ[K] K)] [DecidableEq (H →ₐ[K] K)] (e : (H →ₐ[K] K) → H), (∀ m n : H →ₐ[K] K, n (e m) = if n = m then 1 else 0) → (∀ a : H, (∀ m : H →ₐ[K] K, m a = 0) → a = 0) → ∀ (Λ : CartierDual K H) (y : K), (∀ d : CartierDual K H, d * Λ = algebraMap K _ (Coalgebra.counit (R := K) d) * Λ) → Coalgebra.counit (R := K) Λ = y → y ^ 2 = (Fintype.card (H →ₐ[K] K) : K) → ∃ c : K, c ^ 2 * (Fintype.card (H →ₐ[K] K) : K) = 1 ∧ ∀ h : H, Λ h = c * ∑ m : H →ₐ[K] K, m h := by
   intro K _ _ H _ _ _ _ _ _ e he hsep Λ y hΛ hy hy2
@@ -117,7 +118,8 @@ theorem integral_eq_sum : ∀ (K : Type) [Field K] [CharZero K] (H : Type) [Comm
   have hΛf : ∀ h : H, Λ h = c * ∑ m : H →ₐ[K] K, m h := by
     intro h
     conv_lhs => rw [eq_sum_delta e he hsep h]
-    simp [map_sum, hΛe, Finset.mul_sum, mul_comm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, hΛe, Finset.mul_sum, mul_comm]
   refine ⟨c, ?_, hΛf⟩
   have hN : (Fintype.card (H →ₐ[K] K) : K) ≠ 0 := by
     have : 0 < Fintype.card (H →ₐ[K] K) := Fintype.card_pos_iff.2 ⟨Bialgebra.counitAlgHom K H⟩
@@ -203,7 +205,8 @@ theorem inversion_field : ∀ (K : Type) [Field K] [IsAlgClosed K] [CharZero K] 
   have hFψ : ∀ (b : H) (p : H →ₐ[K] K), p (F (toConv (Λ.ofConv ∘ₗ LinearMap.mulLeft K b))) =
       ∑ n : H →ₐ[K] K, c * n b * p (F (toConv n.toLinearMap)) := by
     intro b p
-    rw [hψ b, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hψ b, map_sum, map_sum]
     simp [map_smul]
   have hx : ∀ (φ : CartierDual K H) (n : H →ₐ[K] K),
       n ((CartierDual.bidual K H).symm (CartierDual.map F φ)) = φ (F (toConv n.toLinearMap)) := by

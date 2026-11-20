@@ -25,7 +25,8 @@ theorem hermAt_mulVec (S : HSp D) {k : ℕ} (a : Mx D S.rank k) (x : Fin S.rank 
     hermAt S x (a *ᵥ y) = (fun i => cA D (y i)) ⬝ᵥ ((adj a ⬝ gA S) *ᵥ x) := by
   have h : (fun i => cA D ((a *ᵥ y) i)) = (fun i => cA D (y i)) ᵥ* adj a := by
     funext i
-    simp only [Matrix.mulVec, Matrix.vecMul, dotProduct, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, Matrix.vecMul, dotProduct, map_sum, map_mul]
     exact Finset.sum_congr rfl fun j _ => mul_comm _ _
   rw [hermAt_eq, h, ← Matrix.mulVec_mulVec, Matrix.dotProduct_mulVec _ (adj a)]
 
@@ -49,7 +50,8 @@ theorem exists_den {P : Pl D → Prop} {m n : ℕ} (X : Matrix (Fin m) (Fin n) (
   choose k hk hX using fun p : Fin m × Fin n => GlobalTheory.LatMatch.exists_nat_smul_intAE (finPart D (X p.1 p.2))
   refine ⟨∏ p, k p, Finset.prod_pos fun p _ => hk p, fun y hy i => ⟨?_, ?_⟩⟩
   · exact Ideal.mul_mem_left _ _ (mulVec_mem_idAt X (fun j => (hy j).1) i)
-  · simp only [Pi.smul_apply, smul_eq_mul, Matrix.mulVec, dotProduct, Finset.mul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [Pi.smul_apply, smul_eq_mul, Matrix.mulVec, dotProduct, Finset.mul_sum, map_sum]
     refine sum_mem fun j _ => ?_
     rw [← mul_assoc, map_mul]
     refine GlobalTheory.LatMatch.mul_mem_intAE' D ?_ (hy j).2

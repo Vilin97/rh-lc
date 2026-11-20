@@ -38,11 +38,13 @@ theorem dlt_eq_iff (hw : ¬ IsSplitAt w) (β β' : B.A) (hβ : IsUnit (GlobalThe
 
 theorem herm_sum_left (β z : B.A) (f : Fin m → B.A) : B.herm β (∑ i, f i) z = ∑ i, B.herm β (f i) z := by
   unfold GlobalTheory.UnitLemma.InvAlg.herm
-  rw [Finset.mul_sum, Finset.sum_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.mul_sum, Finset.sum_mul, map_sum]
 
 theorem herm_sum_right (β y : B.A) (f : Fin m → B.A) : B.herm β y (∑ i, f i) = ∑ i, B.herm β y (f i) := by
   unfold GlobalTheory.UnitLemma.InvAlg.herm
-  rw [map_sum, Finset.mul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.mul_sum, map_sum]
 
 theorem herm_sub_left (β y y' z : B.A) : B.herm β (y - y') z = B.herm β y z - B.herm β y' z := by
   unfold GlobalTheory.UnitLemma.InvAlg.herm
@@ -52,7 +54,8 @@ theorem herm_crd (he : ∀ x, e (K.c x) = cj w (e x)) (β y z : B.A) :
     e (B.herm β y z) = crd e b y ⬝ᵥ (GlobalTheory.TwLat.gram e b β *ᵥ fun l => cj w (crd e b z l)) := by
   conv_lhs => rw [← b.sum_repr y, ← b.sum_repr z]
   rw [herm_sum_left]
-  simp only [herm_sum_right, GlobalTheory.UnitLemma.Basic.herm_smul_left, GlobalTheory.UnitLemma.Basic.herm_smul_right, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [herm_sum_right, GlobalTheory.UnitLemma.Basic.herm_smul_left, GlobalTheory.UnitLemma.Basic.herm_smul_right, map_sum,
     map_mul, he]
   simp only [dotProduct, mulVec, crd, GlobalTheory.TwLat.gram, Matrix.of_apply, Finset.mul_sum]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_

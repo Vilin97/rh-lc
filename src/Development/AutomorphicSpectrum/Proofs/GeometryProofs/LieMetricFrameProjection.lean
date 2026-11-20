@@ -77,7 +77,8 @@ theorem GlobalTheory.CompanionTheory.Ar.RootHt.ArchB.gramAt_det_ne_zero : ∀ (X
     rw [Fintype.linearIndependent_iff]
     intro c hc j
     have := congrArg (g j) hc
-    simpa [map_sum, hd] using this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [map_sum, hd] using this
   obtain ⟨core, hcore⟩ := h.herm z Vz MR
   have key := core_gram_det_ne_zero core (β ∘ ix) (hli.comp ix hix)
   have hm : (gramAt h z fun l => B (ix l)) = Matrix.of fun a b => core.inner ((β ∘ ix) a) ((β ∘ ix) b) := by

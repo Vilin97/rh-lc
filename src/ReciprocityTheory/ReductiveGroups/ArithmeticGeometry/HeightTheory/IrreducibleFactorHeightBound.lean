@@ -79,7 +79,8 @@ theorem lineEval_eq_zero_iff (hd : d.AxH 𝒜) (c : ι) (n : ℕ) (Q : MvPolynom
   have hw0 := d.lineSection_pow_ne_zero hd c n
   have hfac : d.evc c Q = MvPolynomial.map (algebraMap (Ω c) (A c)) (d.linearSubstitution c Q) *
       MvPolynomial.C (d.w (d.jc c) c ^ n) := by
-    rw [Q.as_sum, map_sum, map_sum, map_sum, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Q.as_sum, map_sum, map_sum, map_sum, Finset.sum_mul]
     refine Finset.sum_congr rfl fun s hs => ?_
     simp only [evc, linearSubstitution, MvPolynomial.aeval_monomial, MvPolynomial.algebraMap_apply, map_mul,
       MvPolynomial.map_C, Finsupp.prod, map_prod, map_pow]
@@ -91,7 +92,8 @@ theorem lineEval_eq_zero_iff (hd : d.AxH 𝒜) (c : ι) (n : ℕ) (Q : MvPolynom
     cases x with
     | inl p => simp
     | inr i =>
-      simp only [Sum.elim_inr, map_sum, map_mul, MvPolynomial.map_X, MvPolynomial.map_C]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Sum.elim_inr, map_sum, map_mul, MvPolynomial.map_X, MvPolynomial.map_C]
       rw [← mul_pow, Finset.sum_mul]
       congr 1
       refine Finset.sum_congr rfl fun j _ => ?_

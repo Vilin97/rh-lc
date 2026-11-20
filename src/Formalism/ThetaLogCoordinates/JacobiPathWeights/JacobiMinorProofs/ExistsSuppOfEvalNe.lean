@@ -257,7 +257,8 @@ theorem tw_coeff (g gi : Matrix (Fin n) (Fin n) L) (last : Bool) (H : MvPolynomi
       sharpHom isVec S g gi
         (∑ e ∈ H.support.filter (fun e => wExp isVec S last e = j), monomial e (AddMonoidAlgebra.coeff H e)) := by
   conv_lhs => rw [H.as_sum]
-  rw [map_sum, lp_coeff_sum, map_sum, Finset.sum_filter]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, lp_coeff_sum, map_sum, Finset.sum_filter]
   refine Finset.sum_congr rfl fun e _ => ?_
   rw [tw_monomial, lp_coeff_TC]
 

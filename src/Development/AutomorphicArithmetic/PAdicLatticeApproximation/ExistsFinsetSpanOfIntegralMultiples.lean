@@ -20,12 +20,14 @@ theorem UpperTheory.exists_finset_span_of_integral_multiples :
   · rw [eq_top_iff]
     rintro v -
     have hsum : v = ∑ i, kp.symm (Pi.single i (kp v i)) := by
-      rw [← map_sum, Finset.univ_sum_single, AddEquiv.symm_apply_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← map_sum, Finset.univ_sum_single, AddEquiv.symm_apply_apply]
     rw [hsum]
     refine Submodule.sum_mem _ fun i _ => ?_
     let Φ : F →+ V := kp.symm.toAddMonoidHom.comp (AddMonoidHom.single (fun _ : Fin n => F) i)
     have hΦa : ∀ y, kp.symm (Pi.single i y) = Φ y := fun y => rfl
-    rw [hΦa, ← ib.sum_repr (kp v i), map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hΦa, ← ib.sum_repr (kp v i), map_sum]
     refine Submodule.sum_mem _ fun j _ => ?_
     rw [map_rat_smul]
     exact Submodule.smul_mem _ _ (Submodule.subset_span (hg i j))
@@ -35,7 +37,8 @@ theorem UpperTheory.exists_finset_span_of_integral_multiples :
       rw [AddEquiv.apply_symm_apply, map_nsmul]
       funext i
       rw [Pi.smul_apply, hc i, nsmul_eq_mul]
-    rw [hx, ← Finset.univ_sum_single (fun i => (c i : F)), map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hx, ← Finset.univ_sum_single (fun i => (c i : F)), map_sum]
     refine AddSubgroup.sum_mem _ fun i _ => ?_
     beta_reduce
     let Φ : F →+ V := kp.symm.toAddMonoidHom.comp (AddMonoidHom.single (fun _ : Fin n => F) i)
@@ -44,10 +47,12 @@ theorem UpperTheory.exists_finset_span_of_integral_multiples :
       calc ((c i : 𝓞 F) : F) = algebraMap (𝓞 F) F (∑ j, b.repr (c i) j • b j) := by
             rw [b.sum_repr]
         _ = ∑ j, (b.repr (c i) j) • ib j := by
-            rw [map_sum]
+            set_option synthInstance.maxHeartbeats 100000 in
+              rw [map_sum]
             refine Finset.sum_congr rfl fun j _ => ?_
             rw [map_zsmul, NumberField.integralBasis_apply]
-    rw [hΦa, hci, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hΦa, hci, map_sum]
     refine AddSubgroup.sum_mem _ fun j _ => ?_
     rw [map_zsmul]
     exact AddSubgroup.zsmul_mem _ (AddSubgroup.subset_closure (hg i j)) _

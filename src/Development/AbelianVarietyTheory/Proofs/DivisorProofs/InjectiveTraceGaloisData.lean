@@ -22,7 +22,8 @@ theorem injective_trace_galoisData : ∀ (F D : Type) [CommRing F] [CommRing D] 
       intro d
       have hfix : ∀ k, act k (∑ g, act g d) = ∑ g, act g d := by
         intro k
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         refine Fintype.sum_equiv (Equiv.mulLeft k) _ _ ?_
         intro g
         simp [map_mul]
@@ -49,7 +50,8 @@ theorem injective_trace_galoisData : ∀ (F D : Type) [CommRing F] [CommRing D] 
     obtain ⟨n, x, y, rfl⟩ := TensorProduct.exists_sum_tmul_eq z
     refine ⟨n, x, y, fun g => ?_⟩
     have := congrFun hz g
-    rw [map_sum, Finset.sum_apply] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_apply] at this
     exact this
 
 end GlobalTheory.TorsorTrace

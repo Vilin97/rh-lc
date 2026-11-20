@@ -31,7 +31,8 @@ theorem cont_pow (Φ : RPA Ψ N →ₗ[ℝ] ℝ) (P0 P1 : RPA Ψ N) (d : ℕ) :
   have h : ∀ s : ℝ, Φ ((P0 + C s * P1) ^ d) =
       ∑ m ∈ Finset.range (d + 1), s ^ (d - m) * Φ (P0 ^ m * P1 ^ (d - m) * (d.choose m : RPA Ψ N)) := by
     intro s
-    rw [add_pow, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [add_pow, map_sum]
     refine Finset.sum_congr rfl fun m _ => ?_
     rw [show s ^ (d - m) * Φ (P0 ^ m * P1 ^ (d - m) * (d.choose m : RPA Ψ N)) =
       Φ (s ^ (d - m) • (P0 ^ m * P1 ^ (d - m) * (d.choose m : RPA Ψ N))) by rw [map_smul, smul_eq_mul]]

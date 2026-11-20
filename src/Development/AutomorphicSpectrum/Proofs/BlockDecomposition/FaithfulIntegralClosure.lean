@@ -57,7 +57,8 @@ theorem trace_radical (π : R) (hπ : Irreducible π) (y z : integralClosure R L
     have h3 : Matrix.trace ((Algebra.leftMulMatrix (Module.Free.chooseBasis R (integralClosure R L)) y).map
         (IsLocalRing.residue R)) = IsLocalRing.residue R
           (Matrix.trace (Algebra.leftMulMatrix (Module.Free.chooseBasis R (integralClosure R L)) y)) := by
-      simp [Matrix.trace, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [Matrix.trace, map_sum]
     rw [← h3]
     exact h2.eq_zero
   have hmem := (IsLocalRing.residue_eq_zero_iff _).mp htrace0

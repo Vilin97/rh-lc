@@ -150,6 +150,7 @@ theorem wMod_of (hV : Cj.VMod) : WMod := by
     (fun ν hν => hV F E σ hCM M J hJ h ν hν) (actW hh) (fun w => rfl) μ hμ
   intro v
   rw [PG.Dat.pU_apply, PG.Dat.pX_apply, PG.Dat.pXv_apply, PG.Dat.pz_apply]
-  simp only [map_add, map_sum, map_smul, he, hf, hz]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_add, map_sum, map_smul, he, hf, hz]
 
 end PI.VolSemiDirect.W.Md

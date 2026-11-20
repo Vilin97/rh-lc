@@ -49,7 +49,8 @@ theorem PolyHom.sq {n : ℕ} {D : ℤ[X] → ℚ} (h : PolyHom n D) : PolyHom (2
   let b : Fin (2 * r) → ℤ := fun k => ∑ i : Fin r, ∑ j : Fin r, if (i : ℕ) + j = k then a i * a j else 0
   have e : (∑ i : Fin r, Polynomial.monomial (i : ℕ) (a i)) ^ 2 =
       ∑ k : Fin (2 * r), Polynomial.monomial (k : ℕ) (b k) := by
-    simp only [b, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [b, map_sum]
     rw [pow_two, Finset.sum_mul_sum, Finset.sum_comm (γ := Fin (2 * r))]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [Finset.sum_comm (γ := Fin (2 * r))]
@@ -65,7 +66,8 @@ theorem PolyHom.sq {n : ℕ} {D : ℤ[X] → ℚ} (h : PolyHom n D) : PolyHom (2
   rw [e, hD b]
   have : (fun k => (b k : ℚ)) = fun k => MvPolynomial.eval (fun i => (a i : ℚ)) (q k) := by
     funext k
-    simp only [b, q, map_sum, Int.cast_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [b, q, map_sum, Int.cast_sum]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
     split_ifs <;> simp
   rw [this, MvPolynomial.aeval_def, MvPolynomial.eval₂_comp_left, MvPolynomial.eval₂_eq_eval_map]

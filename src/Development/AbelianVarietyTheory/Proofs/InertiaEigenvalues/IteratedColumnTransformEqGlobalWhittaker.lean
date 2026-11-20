@@ -128,7 +128,8 @@ theorem colT_eq_stepCoeff {k : ℕ} (hk : k < a) (f : GA E a → ℂ)
       rfl
     have hD : dot (eLast a k) ((fun t => algebraMap E (Ad E) (c t)) + x) =
         algebraMap E (Ad E) (∑ t, eLast a k t * c t) + dot (eLast a k) x := by
-      simp only [dot, Pi.add_apply, mul_add, Finset.sum_add_distrib, map_sum, map_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [dot, Pi.add_apply, mul_add, Finset.sum_add_distrib, map_sum, map_mul]
     simp only [Φ]
     rw [hU, hD, neg_add, AddChar.map_add_eq_mul, hψ (-(algebraMap E (Ad E) _)), ← map_neg,
       GroundTheory.Global.adelicChar_algebraMap, Circle.coe_one, one_mul]

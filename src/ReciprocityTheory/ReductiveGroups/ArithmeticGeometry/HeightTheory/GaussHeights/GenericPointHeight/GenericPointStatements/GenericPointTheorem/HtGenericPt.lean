@@ -16,7 +16,8 @@ theorem HtGenericPt {K : Type} [Field K] [NumberField K] {ι : Type} [Fintype ι
     ∑ j, MvPolynomial.C (φ c (d.w j c)) * MvPolynomial.X j
   have hev : ∀ (x : Fin (d.N + 1) → K) c, MvPolynomial.eval x (P c) = φ c (d.wx x c) := by
     intro x c
-    simp only [P, map_sum, map_mul, MvPolynomial.eval_C, MvPolynomial.eval_X,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [P, map_sum, map_mul, MvPolynomial.eval_C, MvPolynomial.eval_X,
       ReciprocityTheory.ChartRestriction.G.T0.Data.wx, Finset.sum_apply, Pi.smul_apply, map_smul, smul_eq_mul]
     exact Finset.sum_congr rfl (fun j _ => mul_comm _ _)
   have hP : ∀ c, P c ≠ 0 := by

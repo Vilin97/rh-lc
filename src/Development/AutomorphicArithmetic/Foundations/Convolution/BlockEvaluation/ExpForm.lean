@@ -97,7 +97,8 @@ private theorem trace_eq {W : Type} [AddCommGroup W] [Module ℂ W] [FiniteDimen
   have h2 : LinearMap.trace ℂ W (aeval (U 0) (r * q) * B) = 0 :=
     (LinearMap.isNilpotent_trace_of_isNilpotent h1).eq_zero
   have h3 : U 0 ^ j = aeval (U 0) (X ^ j : ℂ[X]) := by simp
-  rw [h3, hq, map_add, add_mul, map_add, h2, zero_add, map_sum, Finset.sum_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h3, hq, map_add, add_mul, map_add, h2, zero_add, map_sum, Finset.sum_mul, map_sum]
   refine Finset.sum_congr rfl fun z _ => ?_
   rw [map_mul (aeval (U 0)), aeval_C, ← Algebra.smul_def, smul_mul_assoc, map_smul, smul_eq_mul, mul_comm]
 

@@ -22,7 +22,8 @@ theorem abs_apply_le_of_monomial_bound {σ : Type} (G : MvPolynomial σ ℝ →�
     |G F| ≤ (∑ m ∈ F.support, |coeff m F|) * e := by
   have h1 : G F = ∑ m ∈ F.support, AddMonoidAlgebra.coeff F m * G (monomial m 1) := by
     conv_lhs => rw [F.as_sum]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun m _ => ?_
     have : monomial m (AddMonoidAlgebra.coeff F m) = AddMonoidAlgebra.coeff F m • monomial m (1 : ℝ) := by
       rw [smul_monomial]; simp

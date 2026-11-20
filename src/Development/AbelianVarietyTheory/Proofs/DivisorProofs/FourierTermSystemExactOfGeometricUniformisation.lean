@@ -131,6 +131,7 @@ theorem exact_of_isGeo : ∀ (O : Type) [CommRing O] (bar : O → O) (q s : ℕ)
     hsum f (fun mu h => if_pos ((hwκ mu).1 h)) (fun mu h => if_neg fun h' => h ((hwκ mu).2 h'))
   refine ⟨d * ∑ τ : TT, zt ^ (-(w κ τ)).val * hτ τ, isClassSum_of_sumI Φ y _ κ c (RingHom.id _) _ f
     (fun mu h => if_pos h) (fun mu h => if_neg h) ?_⟩
-  simpa only [map_mul, map_sum, map_pow] using hf
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa only [map_mul, map_sum, map_pow] using hf
 
 end GlobalTheory.GSep.ExactSums

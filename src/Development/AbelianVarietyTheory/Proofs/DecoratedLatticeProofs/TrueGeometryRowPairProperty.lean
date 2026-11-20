@@ -69,16 +69,19 @@ theorem toLoc_frames {E k : Type} [Field E] [Field k] (ι : E →+* k) {A C : Ty
   have key : ∀ (y : Fin b' → E) r, ∑ c, M r c * ι (f.symm y (e c)) = ι (y r) := by
     intro y r
     have h4 : y = ∑ c, f.symm y (e c) • f (Pi.single (e c) 1) := by
-      conv_lhs => rw [← f.apply_symm_apply y, pi_eq_sum_univ' (f.symm y), map_sum, ← e.sum_comp]
+      set_option synthInstance.maxHeartbeats 100000 in
+        conv_lhs => rw [← f.apply_symm_apply y, pi_eq_sum_univ' (f.symm y), map_sum, ← e.sum_comp]
       exact Finset.sum_congr rfl fun b _ => map_smul _ _ _
-    conv_rhs => rw [h4, Finset.sum_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_rhs => rw [h4, Finset.sum_apply, map_sum]
     refine Finset.sum_congr rfl fun c _ => ?_
     rw [← hM r c, Pi.smul_apply, smul_eq_mul, map_mul, mul_comm]
     rfl
   ext r c
   rw [Matrix.mul_apply, Matrix.mul_apply]
   refine (key (Matrix.toLin' (z.reindex (finCongr rfl) (finCongr rfl)) (f' (Pi.single (e' c) 1))) r).trans ?_
-  rw [Matrix.toLin'_apply, Matrix.mulVec, dotProduct, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.toLin'_apply, Matrix.mulVec, dotProduct, map_sum]
   refine Finset.sum_congr rfl fun q _ => ?_
   rw [map_mul, ← hM' q c]
   rfl

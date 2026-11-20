@@ -178,7 +178,8 @@ theorem weakInt :
   obtain ⟨s, T', hT'⟩ := SchI.factor T
   have hsplit : ∀ g : SchwartzMap V ℂ, T g = ∑ i : s, T' (Pi.single i (SchI.J i.1.1 i.1.2 g)) := by
     intro g
-    rw [hT', ← map_sum, Finset.univ_sum_single]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hT', ← map_sum, Finset.univ_sum_single]
   have hint : ∀ i : s, Integrable (fun a => T' (Pi.single i (SchI.J i.1.1 i.1.2 (G a)))) μ := fun i =>
     (T'.comp (ContinuousLinearMap.single ℂ _ i)).integrable_comp
       (SchI.int_J hG hI _ _)

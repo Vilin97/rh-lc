@@ -73,7 +73,8 @@ theorem powerSum_pull_vandermonde : Hypotheses2 → ∀ (k : Type) [CommRing k] 
   have key := GlobalTheory.T.flag_bundle_metric_setup HP k B Y q p 1 D hq' hq.regular hp π w ι E r h H fl hfl (Σ a, Fin (r a))
     (fun z : Σ a, Fin (r a) => VMetric.grLB (m z.1) z.2 (H z.1)) Φ Ψ hΦ hΨ _ _ _ hP
     (hD ▸ isHomogeneous_rootDiscr r) (antisymm_rootDiscr r)
-  rw [prod_Ioi_eq_rootDiscr, mul_comm, key, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [prod_Ioi_eq_rootDiscr, mul_comm, key, map_sum]
   congr 1
   exact Finset.sum_congr rfl fun z _ =>
     HermLB.IsSelfInter.unique hq' (((HP.p4.arIso k B q 1 hq').2 _ _ Φ hΦ).1 z) (hs z)

@@ -49,7 +49,8 @@ theorem md_sDegs_comp [Fintype ι] (LL : Letters ι) (S : Set ι) (jj : Fin n) (
   obtain ⟨m', hm', hz'⟩ := hz
   have hWH : IsWeightedHomogeneous letterWeight (twistSub LL S jj (multidegreeComponent d G)) d := by
     unfold multidegreeComponent
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     apply IsWeightedHomogeneous.sum
     intro m hm
     have h := twist_substitution_weighted_homog LL S jj m (G.coeff m)
@@ -62,7 +63,8 @@ theorem md_sDegs_comp [Fintype ι] (LL : Letters ι) (S : Set ι) (jj : Fin n) (
     exact G.support_sum_monomial_coeff.symm
   have key : (twistSub LL S jj (multidegreeComponent d G)).coeff m' = (twistSub LL S jj G).coeff m' := by
     conv_rhs => rw [hsplit]
-    rw [map_add, MvPolynomial.coeff_add, map_sum, coeff_sum, Finset.sum_eq_zero, add_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_add, MvPolynomial.coeff_add, map_sum, coeff_sum, Finset.sum_eq_zero, add_zero]
     intro m hm
     apply (twist_substitution_weighted_homog LL S jj m (G.coeff m)).coeff_eq_zero
     intro h
@@ -85,7 +87,8 @@ theorem md_weight_mapDomain {σ τ M : Type*} [AddCommMonoid M] (f : σ → τ) 
 
 theorem md_wh_rename {σ τ M : Type*} [AddCommMonoid M] (f : σ → τ) (w : τ → M) {P : MvPolynomial σ R} {d : M}
     (h : IsWeightedHomogeneous (w ∘ f) P d) : IsWeightedHomogeneous w (rename f P) d := by
-  rw [P.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [P.as_sum, map_sum]
   apply IsWeightedHomogeneous.sum
   intro m hm
   rw [rename_monomial]
@@ -180,10 +183,13 @@ theorem md_comp_gen (m : ℤ) (th : ℤ → ℝ) (D : Fin (Mj F j) → ℕ) {ζ 
     have e : rename (plVar (K := K)) A * rename (tanVar (r := r)) G =
         ∑ d' ∈ IA, ∑ d'' ∈ IG,
             rename (plVar (K := K)) (multidegreeComponent d' A) * rename (tanVar (r := r)) (multidegreeComponent d'' G) := by
-      rw [← Finset.sum_mul_sum, ← map_sum, ← map_sum, ← hIA, ← hIG]
-    rw [e, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← Finset.sum_mul_sum, ← map_sum, ← map_sum, ← hIA, ← hIG]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, map_sum]
     refine Submodule.sum_mem _ fun d' _ => ?_
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Submodule.sum_mem _ fun d'' hd'' => ?_
     have h1 : IsWeightedHomogeneous letterWeight (rename (plVar (K := K)) (multidegreeComponent d' A)) d' :=
       md_wh_rename (plVar (K := K)) letterWeight ((md_pol_iff _ _).1 (homogeneous_component_mem d' A))

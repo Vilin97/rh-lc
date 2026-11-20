@@ -55,7 +55,8 @@ theorem selfDual_of_covolOne {m : ℕ} {T : Matrix (Fin m) (Fin m) D.host.E} (hT
     unfold GramMatrixBlocks.pairing GramMatrixBlocks.trA
     rw [← gramQ_adj hT x y, ← GlobalTheory.DualPairCheck.trace_cA (Matrix.trace (GramMatrixBlocks.gramQ T x y))]
     congr 2
-    simp only [Matrix.trace, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.trace, map_sum]
     rfl
   refine GlobalTheory.T.selfDual_of_fundamentalDomain_volume_eq_one _ (ratMx D m n) K hK hKc _ (fun y => ?_) hs (fun x x' y => ?_) (fun x y => hψ.2.1 _) h1 h2 μ 𝓕
     hμ.1 hμ.2.1 hμ.2.2
@@ -103,7 +104,8 @@ theorem siegel_eq : GramMatrixBlocks.siegel D n = P D n := by
 theorem hE_equivFun (V : HSp D) (x y : V.V) :
     hE D.sp.cm.sig V.gram (V.frame.equivFun x) (V.frame.equivFun y) = V.hT x y := by
   conv_rhs => rw [← V.frame.sum_equivFun x, ← V.frame.sum_equivFun y]
-  simp only [hE, Formalism.UG.hform, HSpace.gram, map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ₂, map_smul, smul_eq_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hE, Formalism.UG.hform, HSpace.gram, map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ₂, map_smul, smul_eq_mul,
     LinearMap.smul_apply, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => ?_

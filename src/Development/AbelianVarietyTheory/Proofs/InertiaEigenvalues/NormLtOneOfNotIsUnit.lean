@@ -24,7 +24,8 @@ theorem geom_mem (I : Ideal O) (hlI : (l : O) ∈ I) {a b : O} (h : a - b ∈ I)
     ∑ i ∈ Finset.range l, a ^ i * b ^ (l - 1 - i) ∈ I := by
   rw [← Ideal.Quotient.eq_zero_iff_mem] at h hlI ⊢
   have hab : Ideal.Quotient.mk I a = Ideal.Quotient.mk I b := by rw [← sub_eq_zero, ← map_sub]; exact h
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [map_mul, map_pow, hab, ← pow_add]
   have e : ∀ i ∈ Finset.range l, Ideal.Quotient.mk I b ^ (i + (l - 1 - i)) = Ideal.Quotient.mk I b ^ (l - 1) := by
     intro i hi
@@ -655,7 +656,8 @@ theorem eval_compat (K : FinExt l) {π : ↥(OL K)} (hπ : Irreducible π) {v : 
         ∑ i ∈ Finset.range M, Ideal.Quotient.mk (span {P}) (intToOC K (PowerSeries.coeff i G)) *
           Ideal.Quotient.mk (span {P}) (v m) ^ i := by
     intro m hm
-    simp only [← map_pow, ← map_mul, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [← map_pow, ← map_mul, ← map_sum]
     rw [Ideal.Quotient.eq, mem_span_iff_norm]
     have := norm_tail_le (fun i => intToOC K (PowerSeries.coeff i G)) (v m) (w m) (hw m) M
     push_cast at this ⊢

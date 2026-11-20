@@ -105,7 +105,8 @@ private theorem ptc_bdd {l : ℕ} [Fact l.Prime] {A : Type} [AddCommGroup A] [Mo
   refine ⟨∑ i, ‖φ (s i)‖, fun b => ?_⟩
   have hb : b ∈ Submodule.span ℤ_[l] (Set.range s) := hs ▸ Submodule.mem_top
   obtain ⟨c, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun _).1 hb
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun i _ => ?_)
   rw [map_smul, Algebra.smul_def, norm_mul]
   exact mul_le_of_le_one_left (norm_nonneg _) (PadicInt.norm_le_one (c i))

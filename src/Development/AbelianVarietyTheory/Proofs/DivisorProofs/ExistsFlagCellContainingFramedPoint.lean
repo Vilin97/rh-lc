@@ -81,7 +81,8 @@ theorem exists_cell_lies : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E
   have key : ((A.k b).u σ).map ψ₀ * (T σ).map φ' =
       ((((A.k b).u σ).map ψ₀).submatrix id (w σ) * L σ) * U σ := by
     rw [Matrix.mul_assoc, ← hLU σ, Matrix.submatrix_mul_equiv, Matrix.submatrix_id_id]
-  simp only [Frames.vecAt, huAt σ, hcell, ← map_smul, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Frames.vecAt, huAt σ, hcell, ← map_smul, ← map_sum]
   congr 1
   funext r
   change (((A.k b).u σ).map ψ₀ * (T σ).map φ') r i = _

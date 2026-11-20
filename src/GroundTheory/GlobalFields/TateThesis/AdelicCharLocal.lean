@@ -327,7 +327,8 @@ theorem adelicChar_eq_prod (x : 𝔸[K]) :
       (mem_invDifferentAdeles.mpr (by rw [finiteAdeleInr_snd]; exact hrest)),
       finiteAdeleInr_fst, map_zero, neg_zero, AddChar.map_zero_eq_one]
   have h2 : adelicChar K (finiteAdeleInr f) = ∏ v ∈ S, localAdelicChar K v (x.2 v) := by
-    rw [hfdef, map_sum, addChar_map_finsetSum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hfdef, map_sum, addChar_map_finsetSum]
     rfl
   have h3 : ∏ᶠ v, localAdelicChar K v (x.2 v) = ∏ v ∈ S, localAdelicChar K v (x.2 v) := by
     refine finprod_eq_prod_of_mulSupport_subset _ fun v hv => ?_

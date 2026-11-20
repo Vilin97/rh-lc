@@ -60,7 +60,8 @@ theorem kq_split : ∀ (p : ℕ) [Fact p.Prime] (K : IntermediateField ℚ_[p] (
       ((comp p K hq r i (∑ j : Fin r, inclK p K r (c j) * inclQ p K r ζ' ^ (j : ℕ)) : Kn p K (r / Nat.gcd f r)) :
         PadicAlgCl p) = ∑ j : Fin r, (c j : PadicAlgCl p) * (ζ ^ p ^ i) ^ (j : ℕ) := by
     intro c i
-    rw [map_sum, IntermediateField.coe_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, IntermediateField.coe_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_mul, map_pow, MulMemClass.coe_mul, SubmonoidClass.coe_pow, comp_inclK, comp_inclQ]
     rw [show ((ζ' : Qr p r) : PadicAlgCl p) = ζ from rfl, hfr]

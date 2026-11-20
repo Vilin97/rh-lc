@@ -61,7 +61,8 @@ theorem form_eq_zero_of_support {n d : ℕ} {ϖ : kˣ} (hϖ : IsUnif ϖ)
   obtain ⟨s₁, b₁, hb₁, e₁⟩ := ha₁ (max (max a₁ a₂) 1) (le_max_of_le_left (le_max_left _ _))
   obtain ⟨s₂, b₂, hb₂, e₂⟩ := ha₂ (max (max a₁ a₂) 1) (le_max_of_le_left (le_max_right _ _))
   rw [e₁, e₂]
-  simp only [map_sum, LinearMap.sum_apply, map_smul, map_smulₛₗ, LinearMap.smul_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.sum_apply, map_smul, map_smulₛₗ, LinearMap.smul_apply]
   refine Finset.sum_eq_zero fun c' hc' => ?_
   rw [Finset.sum_eq_zero fun c hc => ?_, smul_zero]
   rw [hB c (hb₁ c hc).2 c' (hb₂ c' hc').2 _ (le_max_right _ _) _ _ (hb₁ c hc).1 (hb₂ c' hc').1]

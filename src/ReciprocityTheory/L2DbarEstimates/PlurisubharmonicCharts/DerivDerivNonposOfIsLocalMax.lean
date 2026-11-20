@@ -135,7 +135,8 @@ private theorem re_div_four_mul_mul_conj_mul_four (P Q : ℝ) (z w : ℂ) :
 private theorem bilinear_apply_sum_sum (T : ReciprocityTheory.L2DbarEstimates.V n →L[ℝ] ReciprocityTheory.L2DbarEstimates.V n →L[ℝ] ℝ) (v w : Fin n → ReciprocityTheory.L2DbarEstimates.V n) :
     T (∑ j, v j) (∑ k, w k) = ∑ j, ∑ k, T (v j) (w k) := by
   have h : ∀ a : ReciprocityTheory.L2DbarEstimates.V n, T (∑ j, v j) a = ∑ j, T (v j) a := fun a => by
-    rw [map_sum, ContinuousLinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, ContinuousLinearMap.sum_apply]
   rw [h]
   exact Finset.sum_congr rfl fun j _ => map_sum (T (v j)) w Finset.univ
 

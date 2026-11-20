@@ -42,7 +42,8 @@ def combHom (hv : ∀ i, IsTangent (v i)) :
 theorem tanExp_tanExp (hv : ∀ i, IsTangent (v i)) {m : ℕ} (M : Fin m → Fin n → R)
     (c : Fin m → R) : tanExp (fun i => tanExp v (M i)) c = tanExp v (∑ i, c i • M i) := by
   change _ = (combHom hv (∑ i, c i • M i)).toMul
-  rw [map_sum, toMul_sum, tanExp, lieExp]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, toMul_sum, tanExp, lieExp]
   refine Finset.prod_congr rfl fun i _ => ?_
   refine (comp_lieExp v _ _ _).trans ?_
   exact lieExp_congr _ (fun j => by

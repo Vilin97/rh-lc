@@ -69,7 +69,8 @@ theorem piece_countU (Z : Subalgebra k (Matrix (Fin n) (Fin n) k)) {ξ : (Sp k n
     intro S _
     exact hξ _ ((j S)⁻¹).2 fA hfAUU
   have hsumξ : ξ fJ = ∑ S ∈ 𝒮, ξ (fun q => fA (act (((j S)⁻¹ : GzS Z) : GL (Fin n) k) q)) := by
-    rw [← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum]
     refine xi_eq hξC (supportedIn_mono hU₁UU hfJ)
       (Submodule.sum_mem _ fun S _ => comp_act_memUU ((j S)⁻¹ : GzS Z).1 hfAUU) fun x hx => ?_
     rw [lift_on_C' hO (hPsub J) hfJ hfJO x hx, hsum (toT x), Finset.sum_apply]

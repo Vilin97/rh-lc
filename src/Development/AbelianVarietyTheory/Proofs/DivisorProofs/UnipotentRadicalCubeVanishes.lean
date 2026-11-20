@@ -56,7 +56,8 @@ theorem unip_sub_one_pow_three : ∀ (F E : Type) [Field F] [NumberField F] [Fie
   have hyx : fA y x = 1 := by
     rw [hE]
     have : form σ Y.J H.y H.x = σ (form σ Y.J H.x H.y) := by
-      simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσσ, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσσ, Finset.mul_sum]
       rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
       rw [hY.herm j i]; ring

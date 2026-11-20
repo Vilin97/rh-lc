@@ -35,7 +35,8 @@ theorem norm_sum_mul_le {ι : Type} (s : Finset ι) (f : ι → K) {x c : ℝ} (
 
 theorem Bd.sum {ι : Type} (s : Finset ι) (f : ι → K⟦X⟧) {r c : ℝ} (hr : 0 < r) (hc : 0 ≤ c)
     (h : ∀ i ∈ s, Bd r c (f i)) : Bd r c (∑ i ∈ s, f i) := fun k => by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact norm_sum_mul_le _ _ (by positivity) hc fun i hi => h i hi k
 
 theorem Bd.add {r c : ℝ} (hr : 0 < r) {a b : K⟦X⟧} (ha : Bd r c a) (hb : Bd r c b) : Bd r c (a + b) := by

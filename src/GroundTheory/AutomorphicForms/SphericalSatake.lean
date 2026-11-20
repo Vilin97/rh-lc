@@ -205,7 +205,8 @@ theorem satake_eq_sum (h : SphericalHecke μ (F := F) (n := n))
 
 theorem evalAt_satake (w : Fin n → ℂˣ) (h : SphericalHecke μ (F := F) (n := n)) :
     evalAt w (satake μ h) = sphericalCharacter μ (isUnramified_unramifiedChar w) h := by
-  rw [sphericalCharacter_apply, satake, map_smul, map_sum, sphericalEigen_unramifiedChar,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [sphericalCharacter_apply, satake, map_smul, map_sum, sphericalEigen_unramifiedChar,
     smul_eq_mul]
   congr 1
   refine Finset.sum_congr rfl fun x _ => ?_

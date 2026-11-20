@@ -28,7 +28,8 @@ theorem repr_phi (b : Basis ι R M) (Φ : M →ₛₗ[φ] M) (x : M) :
     ⇑(b.repr (Φ x)) = (phiMatrix b Φ).mulVec (fun j => φ (b.repr x j)) := by
   conv_lhs => rw [← b.sum_repr x]
   funext i
-  simp only [map_sum, LinearMap.map_smulₛₗ, map_smul, Finset.sum_apply, Finsupp.coe_finsetSum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.map_smulₛₗ, map_smul, Finset.sum_apply, Finsupp.coe_finsetSum,
     Finsupp.smul_apply, smul_eq_mul, mulVec, dotProduct, phiMatrix_apply]
   exact Finset.sum_congr rfl fun j _ => mul_comm _ _
 
@@ -41,7 +42,8 @@ theorem span_range_eq (b : Basis ι R M) (Φ : M →ₛₗ[φ] M) :
     Submodule.span R (Set.range Φ) = Submodule.span R (Set.range (Φ ∘ b)) := by
   refine le_antisymm (Submodule.span_le.2 ?_) (Submodule.span_mono (Set.range_comp_subset_range _ _))
   rintro _ ⟨x, rfl⟩
-  rw [← b.sum_repr x, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← b.sum_repr x, map_sum]
   refine Submodule.sum_mem _ fun j _ => ?_
   rw [LinearMap.map_smulₛₗ]
   exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨j, rfl⟩)
@@ -58,7 +60,8 @@ theorem isPhiModule_iff_isUnit_det (b : Basis ι R M) (Φ : M →ₛₗ[φ] M) :
     rw [LinearEquiv.apply_symm_apply] at this
     rw [← this]
     funext i
-    simp [Function.comp, phi_basis, map_sum, Finset.sum_apply, mulVec, dotProduct, mul_comm,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Function.comp, phi_basis, map_sum, Finset.sum_apply, mulVec, dotProduct, mul_comm,
       Finsupp.single_apply]
   · intro h x _
     obtain ⟨c, hc⟩ := h (b.equivFun x)
@@ -66,13 +69,15 @@ theorem isPhiModule_iff_isUnit_det (b : Basis ι R M) (Φ : M →ₛₗ[φ] M) :
     apply b.equivFun.injective
     rw [← hc]
     funext i
-    simp [Function.comp, phi_basis, map_sum, Finset.sum_apply, mulVec, dotProduct, mul_comm,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Function.comp, phi_basis, map_sum, Finset.sum_apply, mulVec, dotProduct, mul_comm,
       Finsupp.single_apply]
 
 theorem sum_repr_mul_repr (b b' : Basis ι R M) (y : M) (i : ι) :
     ∑ k, b.repr (b' k) i * b'.repr y k = b.repr y i := by
   have := congrArg (fun z => b.repr z i) (b'.sum_repr y)
-  simp only [map_sum, map_smul, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.smul_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.smul_apply,
     smul_eq_mul] at this
   rw [← this]
   exact Finset.sum_congr rfl fun k _ => mul_comm _ _

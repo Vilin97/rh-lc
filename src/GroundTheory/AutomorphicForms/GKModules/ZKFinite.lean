@@ -214,7 +214,8 @@ theorem finiteDimensional_zkSpan (f : h.smoothFuns (F := F))
     rw [Submodule.coe_sum]
     simp only [Submodule.coe_smul]
   simp only [SetLike.mem_coe]
-  rw [e, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, map_sum]
   refine Submodule.sum_mem _ fun i _ => ?_
   rw [map_smul]
   exact Submodule.smul_mem _ _

@@ -60,8 +60,10 @@ lemma trace_int (c : Free.ChooseBasisIndex ℤ (𝓞 E) → ℤ) (γ : 𝓞 E) :
     rw [smul_mul_smul_comm, map_zsmul, mul_comm (ed E j), trace_ed]
     split_ifs <;> simp
   refine ⟨∑ j, c j * m j, ?_⟩
-  rw [hm, Finset.sum_mul_sum, map_sum]
-  simp_rw [map_sum, key]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hm, Finset.sum_mul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp_rw [map_sum, key]
   simp [Finset.sum_ite_eq']
 
 lemma norm_discr (β : E) (hβ : β ≠ 0)
@@ -82,7 +84,8 @@ lemma norm_discr (β : E) (hβ : β ≠ 0)
       ring
     rw [e]
     conv_lhs => rw [← (integralBasis E).sum_repr (β * integralBasis E j)]
-    rw [Finset.mul_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.mul_sum, map_sum]
     apply Finset.sum_congr rfl
     intro k _
     rw [Algebra.leftMulMatrix_eq_repr_mul, Algebra.traceMatrix_apply, Algebra.traceForm_apply,
@@ -135,7 +138,8 @@ lemma norm_bd_ge (x : VS E) (hx : x ∈ span ℤ (Set.range (bd E))) (hx0 : x �
   obtain ⟨β, hβdef⟩ : ∃ β : E, β = ∑ j, c j • ed E j := ⟨_, rfl⟩
   have hxβ : x = iota E (2 * cc β) := by
     rw [← hc, hβdef]
-    simp only [bd, cc, map_sum, map_zsmul, Finset.mul_sum, mul_smul_comm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [bd, cc, map_sum, map_zsmul, Finset.mul_sum, mul_smul_comm]
   have hβ0 : β ≠ 0 := by
     rintro h
     apply hx0

@@ -193,7 +193,8 @@ theorem exists_isFrame {n m : ℕ} {J : Matrix (Fin n) (Fin n) E} {J₁ : Matrix
     have e2 : P *ᵥ (fun i => σ (z i)) = 0 := by rw [hP, ← mulVec_mulVec, e1, mulVec_zero]
     funext j
     have := congrArg σ (congrFun e2 j)
-    simpa [mulVec, dotProduct, map_sum, map_mul, hσ] using this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [mulVec, dotProduct, map_sum, map_mul, hσ] using this
   have px := hz _ fun u => (horth u).1
   have py := hz _ fun u => (horth u).2
   obtain ⟨π, hπ⟩ : ∃ π, π = P.map σ := ⟨_, rfl⟩

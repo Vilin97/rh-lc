@@ -172,7 +172,8 @@ theorem liftInt_hk : ∀ {D : D7} (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D)
     have h5 := h4 _ (om.comp (MonoidHom.inr _ _)) f hfT
     have h6 : ∀ h, ∑ a ∈ Hk3.rep T P (dualLab d), thetaKO om g (h * a) f = ∑ a ∈ R', thetaKO om g (h * a) f := fun h => by
       have h7 := congrArg (fun u => om (g, h) u 0) h5
-      simp only [map_sum, Finset.sum_apply] at h7
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, Finset.sum_apply] at h7
       have h8 : ∀ a, thetaKO om g (h * a) f = om (g, h) (om (1, a) f) 0 := fun a => by rw [← hth, mul_one]
       simp only [h8]
       exact h7.symm
@@ -185,7 +186,8 @@ theorem liftInt_hk : ∀ {D : D7} (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D)
       ∑ d ∈ cS.support, cS d * ∑ a ∈ Hk3.rep S P d, thetaKO om (g * a) h f := fun h => by
     have h7 := congrArg (fun u => om (g, h) u 0) (hM f hf)
     rw [opOf_dualC] at h7
-    simp only [opOf, Finsupp.sum, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, Finset.sum_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [opOf, Finsupp.sum, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, Finset.sum_apply,
       Pi.smul_apply, smul_eq_mul] at h7
     have h8 : ∀ a, thetaKO om g (h * a) f = om (g, h) (om (1, a) f) 0 := fun a => by rw [← hth, mul_one]
     have h9 : ∀ a, thetaKO om (g * a) h f = om (g, h) (om (a, 1) f) 0 := fun a => by rw [← hth, mul_one]

@@ -170,7 +170,8 @@ theorem trJ_of_fibMat (S : C.HidaSetting E Wp Wq) (T : ∀ v : Fin S.f, D.LevTow
         ∑ π, inner ℂ (B.hsVec (e π q.1.2)) (B.hsVec (J (B.gq (T v).base q.1))) •
           c (B.gq (T v).base q.1) (e π q.1.2) := by
       conv_lhs => rw [hspan]
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simp only [ContinuousLinearMap.map_smul]
     rw [hcJ, En.hsVec_sum_smul, inner_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun π _ => ?_

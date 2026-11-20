@@ -195,7 +195,8 @@ theorem snd_polForm (P : AbelianDeRham) {A : Over (Sp R)} [GrpObj A] {n : ℕ} (
   have hz' : (constMor A).isMor.pull2 (∑ j, cup _ (u j).1 (w j).1 - ∑ j, cup _ (a j).1 (b j).1) +
       (DualNumber.eps : DualNumber R) •
         (constMor A).isMor.pull2 (∑ j, (cup _ (u j).1 (x j).1 + cup _ (v j).1 (w j).1)) = 0 := by
-    rw [map_sub, ← hz, sub_add_eq_add_sub, sub_eq_zero, map_sum, map_sum, map_sum, Finset.smul_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, ← hz, sub_add_eq_add_sub, sub_eq_zero, map_sum, map_sum, map_sum, Finset.smul_sum,
       ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun j _ ↦ ?_
     have e₁ : (liftMor (epsDP R) h).isMor.pull1 (a' j).1 = (constMor A).isMor.pull1 (u j).1 +
@@ -213,7 +214,8 @@ theorem snd_polForm (P : AbelianDeRham) {A : Over (Sp R)} [GrpObj A] {n : ℕ} (
   have t₁ := congrArg Λ₁ (sub_eq_zero.1 z₀)
   have t₂ := congrArg Λ₂ (sub_eq_zero.1 z₀)
   have t₃ := congrArg Λ₃ z₁
-  simp only [map_sum, map_add, map_zero, e₁, e₂, e₃] at t₁ t₂ t₃
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_add, map_zero, e₁, e₂, e₃] at t₁ t₂ t₃
   rw [wedgeForm_apply, wedgeForm_apply, wedgeForm_apply, ← t₁, ← t₂, ← add_zero (_ + _ : R), ← t₃,
     ← Finset.sum_add_distrib, ← Finset.sum_add_distrib, snd_sum]
   refine Finset.sum_congr rfl fun j _ ↦ ?_

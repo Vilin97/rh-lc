@@ -102,7 +102,8 @@ theorem _root_.GlobalTheory.CNorm.pows_eq_range_dif_pow : ∀ (p : ℕ) (M : Typ
     show Additive.ofMul (lam a) + Additive.ofMul a = Additive.ofMul (τ a)
     rw [hlam, ← ofMul_mul, div_mul_cancel]
   have hT : aeval T (cyclotomic p ℤ) = 0 := by
-    rw [cyclotomic_prime, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [cyclotomic_prime, map_sum]
     simp only [map_pow, aeval_X]
     refine DFunLike.ext _ _ fun x => ?_
     obtain ⟨a, rfl⟩ : ∃ a, Additive.ofMul a = x := ⟨_, ofMul_toMul x⟩

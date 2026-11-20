@@ -22,7 +22,8 @@ namespace GlobalTheory.FinPl.MovesEntries
 theorem map_mulVec_single {A B : Type} [CommRing A] [CommRing B] (f : A →+* B) {n : ℕ}
     (M : Matrix (Fin n) (Fin n) A) (y : Fin n → A) (r s : Fin n) (h1 : f (y s) = 1)
     (h0 : ∀ b, b ≠ s → y b = 0) : f ((M *ᵥ y) r) = f (M r s) := by
-  simp only [Matrix.mulVec, dotProduct, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mulVec, dotProduct, map_sum, map_mul]
   rw [Finset.sum_eq_single s]
   · rw [h1, mul_one]
   · intro b _ hb

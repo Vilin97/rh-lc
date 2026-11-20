@@ -161,7 +161,8 @@ theorem infOf : InfOf := by
     simp only [GlobalTheory.BCT.TwistDisc.expo_pow, hξe] at h
     rw [h, ← Finset.sum_fiberwise Finset.univ rs]
     refine Finset.sum_congr rfl fun φ _ => ?_
-    rw [map_sum']
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum']
     refine Finset.sum_congr rfl fun σ hσ => ?_
     rw [← (Finset.mem_filter.1 hσ).2]
   have hA := congrFun (hSep (K →+* ℂ) (expo χ) hχ mP A key) (τ.comp (algebraMap K M))

@@ -957,7 +957,8 @@ theorem asAlgebraHom_twistedIdem {G V : Type} [Group G] [Fintype G] [AddCommGrou
     (J : Subgroup G) (χ : J →* ℂˣ) (ρ : Representation ℂ G V) (x : V) :
     ρ.asAlgebraHom (twistedIdem J χ) x =
       ∑ u : J, ((Nat.card J : ℂ)⁻¹ * (((χ u)⁻¹ : ℂˣ) : ℂ)) • ρ (u : G) x := by
-  simp [twistedIdem, map_sum, Representation.asAlgebraHom_of]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [twistedIdem, map_sum, Representation.asAlgebraHom_of]
 
 open Classical in
 theorem twisted_idempotent_holds : TwistedIdempotent := by

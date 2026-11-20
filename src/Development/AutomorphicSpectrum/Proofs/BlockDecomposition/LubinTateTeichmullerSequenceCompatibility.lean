@@ -24,7 +24,8 @@ theorem tail_le (K : FinExt l) (c : ℕ → ↥(OL K)) (y x : Om l) (hy : ‖omC
       Filter.atTop (nhds (omC x)) := by
     have h1 := (continuous_omC (l := l)).continuousAt.tendsto.comp hs.tendsto_sum_nat
     refine h1.congr fun N => ?_
-    simp only [Function.comp, map_sum, map_mul, map_pow]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Function.comp, map_sum, map_mul, map_pow]
     rfl
   have h2 := (ht.sub_const (∑ i ∈ Finset.range D, oc K (c i) * omC y ^ i)).norm
   refine le_of_tendsto h2 ?_

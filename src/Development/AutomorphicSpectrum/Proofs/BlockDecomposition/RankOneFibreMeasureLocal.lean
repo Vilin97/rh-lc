@@ -39,7 +39,8 @@ theorem hf_zero_right (x : ι → A) : hform s J x 0 = 0 := by
 
 theorem hf_swap (hs : ∀ a, s (s a) = a) (hJ : ∀ i j, s (J j i) = J i j) (x y : ι → A) :
     s (hform s J x y) = hform s J y x := by
-  simp only [hform, map_sum, map_mul, hs, hJ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hform, map_sum, map_mul, hs, hJ]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 

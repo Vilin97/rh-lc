@@ -62,7 +62,8 @@ theorem trAt_mul {x : Sp K ⟶ X} (c c' c'' : Chart M r) (h : ⊤ ≤ x ⁻¹ᵁ
   have l₃ : c.U ⊓ c'.U ⊓ c''.U ≤ c''.U := inf_le_right
   ext a b
   rw [mul_apply, trAt_apply c c'' l₁ l₃ hW, ← (c'.isFrame.basis l₂).sum_repr (resM M l₃ (c''.e b))]
-  simp only [map_sum, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.smul_apply, smul_eq_mul, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.smul_apply, smul_eq_mul, map_mul,
     IsFrame.basis_apply]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [trAt_apply c c' l₁ l₂ hW, trAt_apply c' c'' l₂ l₃ hW, mul_comm]

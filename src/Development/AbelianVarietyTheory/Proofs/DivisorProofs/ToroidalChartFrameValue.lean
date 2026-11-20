@@ -30,7 +30,8 @@ theorem bijective_sum_of_eigBases {E F K M : Type} [Field E] [NumberField E] [Fi
     Function.Bijective fun a : (Σ τ, Fin (r τ)) → K => ∑ s, a s • U s.1 s.2 := by
   obtain ⟨α, hα, ⟨f, hf, hfs⟩, hN⟩ := exists_sepElt j χ hχ
   have he : ∀ τ (a : Fin (r τ) → K), IsEigV ρ (χ τ) (∑ i, a i • U τ i) := fun τ a b => by
-    simp only [map_sum, map_smul, hU τ _ b, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, hU τ _ b, Finset.smul_sum]
     exact Finset.sum_congr rfl fun _ _ => smul_comm _ _ _
   refine ⟨fun a a' h => ?_, fun w => ?_⟩
   · simp only [Fintype.sum_sigma] at h
@@ -69,7 +70,8 @@ theorem bijective_mulVec_of_eigBases : ∀ {E : Type} [Field E] [NumberField E] 
   obtain ⟨Φ, hΦ⟩ := LocM.TanPair.exists_tanM_equiv E H Z.X Z.t K x ch.U hV g ch.e ch.isFrame
   have e : P.mulVec = Φ ∘ fun a : (Σ τ, Fin (r τ)) → K => ∑ s, a s • U s.1 s.2 := by
     funext a b
-    simp only [Function.comp_apply, map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, Matrix.mulVec, dotProduct,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Function.comp_apply, map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, Matrix.mulVec, dotProduct,
       smul_eq_mul]
     exact Finset.sum_congr rfl fun s _ => (mul_comm _ _).trans (congrArg _ ((hP s _ hV b).trans (hΦ (U s.1 s.2) b).symm))
   rw [e]

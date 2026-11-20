@@ -12,7 +12,8 @@ private theorem zl_pow {R : Type} [CommRing R] (I : Ideal R) (l : ℕ) (hl : (l 
     refine Ideal.mul_mem_mul ih ?_
     rw [← Ideal.Quotient.eq_zero_iff_mem] at hl h1 ⊢
     rw [map_sub, map_one, sub_eq_zero] at h1
-    simp only [map_sum, map_pow _ (u ^ l ^ N), h1, one_pow]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_pow _ (u ^ l ^ N), h1, one_pow]
     simpa using hl
 
 private theorem zl_eq {R : Type} [CommRing R] (I : Ideal R) [IsHausdorff I R] {a b : R}

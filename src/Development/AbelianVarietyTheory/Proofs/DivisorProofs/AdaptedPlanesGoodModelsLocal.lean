@@ -50,7 +50,8 @@ theorem decompose_left (B : Base F E) {n d n₁ r s i₀ i₁ : ℕ} {X : Spc F 
         Matrix.vecMulVec (incV F H.x) (incV F a) + incM F H.ι * incM F (Matrix.of u)ᵀ +
           Matrix.vecMulVec (incV F H.y) (incV F t) := by
       ext i j
-      simp [incM, incV, Matrix.vecMulVec_apply, Matrix.mul_apply, map_sum, map_add, map_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [incM, incV, Matrix.vecMulVec_apply, Matrix.mul_apply, map_sum, map_add, map_mul]
     rw [e1, e2] at hI'
     conv_lhs => rw [← Matrix.one_mul w, hI']
     have hv : ∀ p q : Fin n → AE F E, Matrix.vecMulVec p q * w = Matrix.vecMulVec p (q ᵥ* w) := by
@@ -111,7 +112,8 @@ theorem symplectic_form_adapted_coordinates (hinv : ∀ t, σ (σ t) = t) (B : B
   set P : Fin n → AE F E := fun i => ∑ k, incM F X.J i k * cA σ (incV F H.x k) with hPdef
   have hform : ∀ u : Fin n → E, ∑ i, inclR (F := F) (AF F) (u i) * P i = inclR (F := F) (AF F) (form σ X.J u H.x) := by
     intro u
-    simp only [hPdef, form, dotProduct, Matrix.mulVec, incM, incV, Matrix.map_apply, OrthPlane.cA_inclR, map_sum, map_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hPdef, form, dotProduct, Matrix.mulVec, incM, incV, Matrix.map_apply, OrthPlane.cA_inclR, map_sum, map_mul,
       Finset.mul_sum]
   have hcol : ∀ m, H.ι *ᵥ Pi.single m 1 = fun j => H.ι j m := by
     intro m; ext j; simp [Matrix.mulVec, dotProduct, Pi.single_apply]

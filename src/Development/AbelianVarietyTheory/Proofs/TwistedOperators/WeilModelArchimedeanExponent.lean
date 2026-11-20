@@ -89,10 +89,12 @@ theorem exists_der {F E : Type} [Field F] [NumberField F] [Field E] [NumberField
   have hev : ∀ a, evI F a = ev a := fun _ => rfl
   have hc : coord M.co (∑ i ∈ s, u i) = ∑ i ∈ s, coord M.co (u i) := by
     refine Prod.ext (funext fun k => ?_) (funext fun k => ?_) <;>
-      simp only [coord, hev, map_sum, Prod.fst_sum, Prod.snd_sum, Finset.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [coord, hev, map_sum, Prod.fst_sum, Prod.snd_sum, Finset.sum_apply]
   ext x
   rw [hDx _ hs, hc, SchwartzMap.sum_apply, Finset.sum_congr rfl fun i _ => hDx _ (hu i) f x]
-  simp only [Prod.fst_sum, Prod.snd_sum, map_sum, Finset.sum_sub_distrib, Complex.ofReal_sum, Finset.mul_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Prod.fst_sum, Prod.snd_sum, map_sum, Finset.sum_sub_distrib, Complex.ofReal_sum, Finset.mul_sum,
     Finset.sum_mul]
 
 end Gauss
@@ -277,10 +279,12 @@ theorem eq_sum_lineAt {θ : InfFam D} (hθ : IsInfFam θ) {m n : ℕ} {x : Mx D 
   rw [Matrix.sum_apply]
   refine sub_eq_zero.1 (hσ.ext _ ?_ fun t' => ?_)
   · have h2 : ∀ t, finPart D (lineAt θ t (compAt θ t x) 1 i j) = 0 := fun t => congrFun (congrFun ((hL t).2.1 1) i) j
-    rw [RingHom.map_sub, map_sum, h1, Finset.sum_eq_zero fun t _ => h2 t, sub_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [RingHom.map_sub, map_sum, h1, Finset.sum_eq_zero fun t _ => h2 t, sub_zero]
   · have h2 : ∀ t, θ t' (infPart D (lineAt θ t (compAt θ t x) 1 i j)) =
         (if t' = t then ((1 : ℝ) : ℂ) • compAt θ t x else 0) i j := fun t => congrFun (congrFun ((hL t).2.2 1 t') i) j
-    rw [RingHom.map_sub, RingHom.map_sub, map_sum, map_sum, Finset.sum_congr rfl fun t _ => h2 t, ← Matrix.sum_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [RingHom.map_sub, RingHom.map_sub, map_sum, map_sum, Finset.sum_congr rfl fun t _ => h2 t, ← Matrix.sum_apply,
       Finset.sum_ite_eq, if_pos (Finset.mem_univ _), Complex.ofReal_one, one_smul]
     exact sub_self _
 

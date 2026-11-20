@@ -606,7 +606,8 @@ theorem exists_dual_apply_notMem_of_finite (M : Type*) [AddCommGroup M] [Module 
   have h3 : ∀ P ∈ t, (p P).1 e ∉ P := by
     intro P hP hmem
     have hP' := (ht P).mp hP
-    simp only [e, map_sum, map_smul, smul_eq_mul] at hmem
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [e, map_sum, map_smul, smul_eq_mul] at hmem
     rw [← Finset.add_sum_erase _ _ hP] at hmem
     have h4 : ∑ Q ∈ t.erase P, a Q * (p P).1 (p Q).2 ∈ P :=
       sum_mem fun Q hQ ↦ Ideal.mul_mem_right _ _

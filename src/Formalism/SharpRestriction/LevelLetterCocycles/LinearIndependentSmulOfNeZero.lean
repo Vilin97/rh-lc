@@ -355,7 +355,8 @@ theorem rTensor_PqTw (i : X.Tw) (j : ℕ) (b : Bool) (Q : Finset (PlE D.host)) (
     (x : Y.Fm i j b ⊗[X.O i] LamO X i Q M) :
     A.rTensor _ (PqTw Y i j b Q M P γ x) = PqTw Y i j b Q M P γ (A.rTensor _ x) := by
   unfold PqTw
-  simp only [LinearMap.add_apply, Module.End.one_apply, LinearMap.sum_apply, LinearMap.smul_apply, map_add,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [LinearMap.add_apply, Module.End.one_apply, LinearMap.sum_apply, LinearMap.smul_apply, map_add,
     map_sum, map_smul]
   congr 1
   refine Finset.sum_congr rfl fun k hk => ?_
@@ -497,7 +498,8 @@ theorem proj_PqTw (i : X.Tw) (j : ℕ) (b : Bool) {Q' Q : Finset (PlE D.host)} (
   | add x y hx hy => simp only [map_add, hx, hy]
   | tmul x lam =>
     unfold PqTw
-    simp only [LinearMap.add_apply, Module.End.one_apply, LinearMap.sum_apply, LinearMap.smul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [LinearMap.add_apply, Module.End.one_apply, LinearMap.sum_apply, LinearMap.smul_apply,
       TensorProduct.map_tmul, LinearMap.mulLeft_apply, map_add, map_sum, map_smul,
       LinearMap.lTensor_tmul, AlgHom.toLinearMap_apply, map_mul, projA_grp, map_nsmul]
 
@@ -789,7 +791,8 @@ theorem comm_lTensor_eq [Module.Flat O Λ] {R' : Type} [CommRing R'] [Algebra O 
   obtain ⟨W, rfl⟩ := h
   rw [crd_rTensor]
   conv_lhs => rw [eq_sum_crdB β W]
-  simp [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum]
 
 end Coord
 
@@ -1098,7 +1101,8 @@ theorem eq_vecOf_mxB (x : Fin d → Fm) (hx : ∀ a, x a ∈ B) :
   funext a
   unfold vecOf mxB
   have h := congrArg B.subtype (β.sum_repr ⟨x a, hx a⟩)
-  rw [map_sum] at h
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum] at h
   simp only [map_smul, Submodule.subtype_apply] at h
   exact h.symm
 
@@ -1151,7 +1155,8 @@ theorem Pmat_map {O Λ Λ' : Type} [CommRing O] [CommRing Λ] [Algebra O Λ] [Co
     (r : ℕ) (c : ℕ → O) (T : ℕ → Matrix (Fin d) (Fin d) O) (u : Λ) (φ : Λ →ₐ[O] Λ') :
     (Pmat r c T u).map φ = Pmat r c T (φ u) := by
   ext a b
-  simp only [Pmat, Matrix.map_apply, Matrix.add_apply, Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Pmat, Matrix.map_apply, Matrix.add_apply, Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul,
     map_add, map_sum, map_mul, map_pow, AlgHom.commutes, Matrix.one_apply]
   congr 1
   split_ifs <;> simp
@@ -1201,7 +1206,8 @@ theorem det_Pmat_factor (Λ : Type) [CommRing Λ] [Algebra O Λ] {d : ℕ} (r : 
             else res (c j) • (T j).map res).map Polynomial.C) (r + 1)
     rw [h1, Finset.sum_range_succ', Pmat, sum_Icc_one_eq_range]
     refine Matrix.ext fun a b => ?_
-    simp only [Matrix.map_apply, Matrix.add_apply, Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.map_apply, Matrix.add_apply, Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul,
       Polynomial.coe_mapRingHom, Polynomial.map_add, Polynomial.map_sum, Polynomial.map_mul,
       Polynomial.map_pow, Polynomial.map_X, Polynomial.algebraMap_eq, Polynomial.map_C, if_true,
       Nat.add_eq_zero_iff, one_ne_zero, and_false, if_false, pow_zero, one_mul, Matrix.one_apply, map_mul]
@@ -1291,7 +1297,8 @@ theorem det_isUnit_of_eigen {d : ℕ} {ι : Type} (Tm : ι → Matrix (Fin d) (F
   set Pb : Matrix (Fin d) (Fin d) (IsLocalRing.ResidueField O) :=
     res.mapMatrix (1 + ∑ a ∈ s, c a • Tm a) with hPb
   have hPb' : Pb = 1 + ∑ a ∈ s, res (c a) • res.mapMatrix (Tm a) := by
-    rw [hPb, map_add, map_one, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hPb, map_add, map_one, map_sum]
     refine congrArg (1 + ·) (Finset.sum_congr rfl fun a _ => ?_)
     ext x y
     simp [RingHom.mapMatrix_apply]
@@ -1364,7 +1371,8 @@ theorem det_isUnit_of_eigen {d : ℕ} {ι : Type} (Tm : ι → Matrix (Fin d) (F
     rw [Matrix.smul_mulVec, hTv a, smul_smul]
   rw [hPv] at hsc
   have h0 := (smul_eq_zero.1 hsc.symm).resolve_right hv
-  rw [map_add, map_one, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_add, map_one, map_sum]
   rw [← h0]
   congr 1
   refine Finset.sum_congr rfl fun a _ => ?_
@@ -1536,7 +1544,8 @@ theorem mem_smul_iff_repr {O Fm : Type} [CommRing O] [AddCommGroup Fm] [Module O
     exact h1
   · intro h
     have h1 := congrArg B.subtype (β.sum_repr y)
-    rw [map_sum] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at h1
     rw [show (y : Fm) = B.subtype y from rfl, ← h1]
     refine Submodule.sum_mem _ fun t _ => ?_
     rw [map_smul]
@@ -2328,7 +2337,8 @@ theorem exists_primitive_at {R Ω : Type} (F : Type) [CommRing R] [IsDedekindDom
     have h3 : ∀ k, algebraMap R Ω (c k) = algebraMap R Ω (p.coeff k) * algebraMap F Ω t := by
       intro k
       rw [IsScalarTower.algebraMap_apply R F Ω, hc k, map_mul, ← IsScalarTower.algebraMap_apply R F Ω]
-    simp only [map_sum, map_mul, aeval_C, map_pow, aeval_X, h3]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, aeval_C, map_pow, aeval_X, h3]
     have : ∑ k ∈ Finset.range (p.natDegree + 1), algebraMap R Ω (p.coeff k) * algebraMap F Ω t * x ^ k =
         algebraMap F Ω t * ∑ k ∈ Finset.range (p.natDegree + 1), algebraMap R Ω (p.coeff k) * x ^ k := by
       rw [Finset.mul_sum]

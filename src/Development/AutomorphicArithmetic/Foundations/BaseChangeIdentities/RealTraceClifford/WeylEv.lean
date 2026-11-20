@@ -17,7 +17,8 @@ private theorem evT_ex' {n : ℕ} (θ x : Wt n) :
 private theorem evT_alt' {n : ℕ} (θ x : Wt n) :
     evT θ (alt x) = (Matrix.of fun a b : Fin n => Complex.exp (Complex.I * ((θ a : ℂ) * (x b : ℂ)))).det := by
   rw [← Matrix.det_transpose, Matrix.det_apply]
-  simp only [alt, map_sum, map_smul, evT_ex', smul_eq_mul, sg, Matrix.transpose_apply, Matrix.of_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [alt, map_sum, map_smul, evT_ex', smul_eq_mul, sg, Matrix.transpose_apply, Matrix.of_apply]
   refine Finset.sum_congr rfl fun w _ => ?_
   rw [← Complex.exp_sum, Units.smul_def, zsmul_eq_mul, Finset.mul_sum]
   rfl

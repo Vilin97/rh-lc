@@ -30,7 +30,8 @@ variable {k : Type} [CommRing k] {d : ℕ}
 theorem jeq_sum {σ J : Type} {m : ℕ} (s : Finset J) {f g : J → MvPowerSeries σ k} (h : ∀ i, JEq m (f i) (g i)) :
     JEq m (∑ i ∈ s, f i) (∑ i ∈ s, g i) := by
   intro e he
-  rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum]
   exact Finset.sum_congr rfl fun i _ => h i e he
 
 theorem jeq_smul {σ : Type} {m : ℕ} (c : k) {f g : MvPowerSeries σ k} (h : JEq m f g) : JEq m (c • f) (c • g) := by
@@ -52,7 +53,8 @@ theorem expS_sum [Algebra ℚ k] {n : ℕ} {J : Type} (s : Finset J) (f : J → 
   induction s using Finset.induction_on with
   | empty => simp [expS_zero]
   | insert a s ha ih =>
-    rw [Finset.sum_insert ha, Finset.prod_insert ha, gt_expS_add _ _ (hf a) (by simp [map_sum, hf]), ih]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_insert ha, Finset.prod_insert ha, gt_expS_add _ _ (hf a) (by simp [map_sum, hf]), ih]
 
 theorem expS_natSmul [Algebra ℚ k] {n : ℕ} (q : ℕ) (f : PS k n d)
     (hf : MvPowerSeries.constantCoeff f = 0) : FB.expS k ((q : k) • f) = FB.expS k f ^ q := by
@@ -63,7 +65,8 @@ theorem expS_natSmul [Algebra ℚ k] {n : ℕ} (q : ℕ) (f : PS k n d)
 theorem ev_sum {m n : ℕ} (a : Fin m → Pt k n d) (ha : ∀ j, GP (a j)) {J : Type} (s : Finset J) (f : J → PS k m d) :
     ev a (∑ i ∈ s, f i) = ∑ i ∈ s, ev a (f i) := by
   unfold ev
-  rw [← MvPowerSeries.coe_substAlgHom (gt_hasSubst a ha), map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← MvPowerSeries.coe_substAlgHom (gt_hasSubst a ha), map_sum]
 
 theorem ev_smul {m n : ℕ} (a : Fin m → Pt k n d) (ha : ∀ j, GP (a j)) (c : k) (f : PS k m d) :
     ev a (c • f) = c • ev a f := by
@@ -139,7 +142,8 @@ theorem jeq_main [Algebra ℚ k] {n : ℕ} (m q : ℕ) (φ φi a : Pt k 1 d) (hi
   have cS : ∀ (V : Fin n → Fin 2 → Pt k n d), (∀ b j, GP (V b j)) → ∀ g : PS k 2 d,
       MvPowerSeries.constantCoeff g = 0 → MvPowerSeries.constantCoeff (∑ b, ev (V b) g) = 0 := by
     intro V hV g hg
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_eq_zero fun b _ => gt_const_ev _ (hV b) _ hg
   have cS' : ∀ (V : Fin n → Fin 2 → Pt k n d), (∀ b j, GP (V b j)) → ∀ g : PS k 2 d,
       MvPowerSeries.constantCoeff g = 0 → MvPowerSeries.constantCoeff ((q : k) • ∑ b, ev (V b) g) = 0 := by

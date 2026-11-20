@@ -130,7 +130,8 @@ theorem UpperTheory.local_frames_over_cover :
       (Matrix.of fun j i => algebraMap (V.G.presheaf.stalk z) V.G.functionField (∑ k, α (h j k) * a i k)) *
         (T (V.π z)).map V.φ := by
     ext j i
-    simp only [Matrix.mul_apply, Matrix.of_apply, Matrix.map_apply, hA, map_sum, map_mul, ← e0, RingHom.comp_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mul_apply, Matrix.of_apply, Matrix.map_apply, hA, map_sum, map_mul, ← e0, RingHom.comp_apply,
       Finset.mul_sum, Finset.sum_mul, _root_.mul_assoc]
     exact Finset.sum_comm
   intro j i

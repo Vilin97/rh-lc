@@ -53,7 +53,8 @@ theorem tanExp_eq_vecMul (hw : ∀ i, IsTangent (w i)) {M : Matrix (Fin n) (Fin 
       rw [← ofMul_mul, tanExp_add hw])
   rw [Matrix.vecMul_eq_sum]
   change _ = (F (∑ i, c i • M i)).toMul
-  rw [map_sum, toMul_sum, tanExp, lieExp]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, toMul_sum, tanExp, lieExp]
   refine Finset.prod_congr rfl fun i _ => ?_
   rw [epsTo_inr_comp, hM, scl_tanExp]
   change _ = tanExp w (c i • M i)

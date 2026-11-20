@@ -26,7 +26,8 @@ theorem exists_minor_ne_zero [Nontrivial R] {ι m : Type} [Fintype ι] [Decidabl
       ext i k; simp [Matrix.mul_apply, Finset.sum_apply]
     rw [e1]
     change Matrix.detRowAlternating.toMultilinearMap (fun i => ∑ j, L i j • M j) = _
-    rw [MultilinearMap.map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [MultilinearMap.map_sum]
     refine Finset.sum_congr rfl fun r _ => ?_
     rw [MultilinearMap.map_smul_univ]
     rfl
@@ -179,7 +180,8 @@ theorem nInf_minor_le (w : InfinitePlace D.host.F) {K : ℝ≥0} (he : ∀ i j, 
     exact mul_le_mul' (nInf_le_iff.1 le_rfl τ) (nInf_le_iff.1 le_rfl τ)
   · rw [RingHom.map_one, RingHom.map_one, nnnorm_one]
   · simp only [nInf, RingHom.map_neg, nnnorm_neg]
-  · rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum, map_sum]
     refine (nnnorm_sum_le _ _).trans ((Finset.sum_le_card_nsmul _ _ c fun i _ => nInf_le_iff.1 (h i) τ).trans ?_)
     rw [nsmul_eq_mul, Finset.card_univ]
   · refine le_trans ?_ (le_htOf _ _)
@@ -195,7 +197,8 @@ theorem nFin_minor_le (v : HeightOneSpectrum (𝓞 D.host.F)) {K : ℝ≥0} (he 
     (fun ι _ f c h => ?_) g.1 e i₀ x r (H := htFin D.host.F v (bc (compFin D.host.F D.host.E v) g)) (fun i j => ?_) he hi
     (vFin_le_iff.1 le_rfl)).trans_eq ?_
   · simp only [nFin, RingHom.map_neg, absFin_neg]
-  · rw [one_mul, nFin, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [one_mul, nFin, map_sum]
     exact absFin_sum_le _ v _ _ fun i _ => h i
   · exact (absFin_le_normFin D.host.F v (bc (compFin D.host.F D.host.E v) g).1 i j).trans (le_htOf _ _)
   · simp only [cst, one_mul, pow_succ]

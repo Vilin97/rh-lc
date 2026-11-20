@@ -23,11 +23,13 @@ theorem sum_secFun_eq' {x : Ix κ → Ω} {n r : ℕ} {b : Fin r → MvPolynomia
       ((mem_homogeneousSubmodule _ _).mpr hg)
     exact (mem_homogeneousSubmodule _ _).mp this
   have hx : aeval x h = 0 := by
-    rw [hh_def, map_sub, map_sum, ← hc, sub_eq_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hh_def, map_sub, map_sum, ← hc, sub_eq_zero]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_zsmul, zsmul_eq_mul, hbf j, aeval_map_intQ]
   have h0 := hz.2 h (mem_coordIdeal_of_isHomogeneous (o := ℤ) (x := x) hh hx)
-  rw [hh_def, map_sub, map_sum, map_sub, map_sum, sub_eq_zero] at h0
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hh_def, map_sub, map_sum, map_sub, map_sum, sub_eq_zero] at h0
   rw [← h0]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_zsmul, map_zsmul, zsmul_eq_mul, hbf j, secFun_map_intQ]

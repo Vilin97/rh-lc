@@ -698,7 +698,8 @@ theorem base_facts (hC : GlobalTheory.Hk3.Core R F) (hG : QGuard R) {i : Fin D.R
     rw [← idem_eq hea, ← idem_eq het, show idem K = ∑ PP ∈ K, idemAt PP from rfl, Finset.sum_mul]
     exact Finset.sum_eq_zero fun j hj => GlobalTheory.FlatThreeSteps.idemAt_mul_idem hsp hL (hK hj) (Finset.disjoint_left.1 hd hj)
   have h2 : ea * cA D et = 0 := by
-    rw [← idem_eq hea, ← idem_eq het, idem, idem, map_sum, Finset.sum_mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← idem_eq hea, ← idem_eq het, idem, idem, map_sum, Finset.sum_mul_sum]
     exact Finset.sum_eq_zero fun a ha => Finset.sum_eq_zero fun c hc => hsp.mul_conj (hK ha) (hL hc)
   have h3 : cA D ea * cA D et = 0 := by rw [← map_mul, h1, map_zero]
   have h4 : cA D ea * et = 0 := by rw [← Formalism.L2.Theta.cA_cA et, ← map_mul, h2, map_zero]

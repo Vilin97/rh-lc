@@ -148,7 +148,8 @@ theorem superSum_mul (c : Fin ρ → R) {T T' : Matrix (Fin ρ) (Fin ρ) R} (hT 
 
 theorem superSum_map {S : Type} [CommRing S] (φ : R →+* S) (c : Fin ρ → R) (T : Matrix (Fin ρ) (Fin ρ) R)
     (b : Fin ρ → R) : superSum (fun i => φ (c i)) (T.map φ) (fun i => φ (b i)) = φ (superSum c T b) := by
-  simp only [superSum, map_add, map_sum, apply_ite φ, map_mul, map_zero, Matrix.map_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [superSum, map_add, map_sum, apply_ite φ, map_mul, map_zero, Matrix.map_apply]
 
 theorem continuous_superSum [TopologicalSpace R] [IsTopologicalRing R] {X : Type} [TopologicalSpace X]
     (c : Fin ρ → R) {T : X → Matrix (Fin ρ) (Fin ρ) R} {b : X → Fin ρ → R} (hT : Continuous T) (hb : Continuous b) :

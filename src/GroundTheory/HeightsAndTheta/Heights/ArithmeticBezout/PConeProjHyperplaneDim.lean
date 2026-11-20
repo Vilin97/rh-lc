@@ -48,7 +48,8 @@ theorem cone_rel {n e : ℕ} {P : Ideal (MRing (PBlk n))}
   have hxP : ∀ q ∈ complexFibreIdeal P, eval x q = 0 := fun q hq => by
     rw [← hae]
     exact hx q hq
-  simp only [map_sub, map_pow, eval_X, map_sum, map_mul, eval_coneForm, eval_rename,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sub, map_pow, eval_X, map_sum, map_mul, eval_coneForm, eval_rename,
     segre_one_block]
   by_cases hx0 : ∃ i0, x i0 ≠ 0
   · obtain ⟨i0, hi0⟩ := hx0
@@ -93,7 +94,8 @@ theorem krullDim_le_of_rel {n m : ℕ} (I : Ideal (MvPolynomial (Fin n) ℂ))
       have hpoly : ∀ q : MvPolynomial (Fin n) ℂ, q.totalDegree < N →
           Ideal.Quotient.mk I q ∈ M := by
         intro q hq
-        rw [q.as_sum, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [q.as_sum, map_sum]
         refine Submodule.sum_mem _ fun d hd => ?_
         have hd' : (d.sum fun _ e => e) < N := lt_of_le_of_lt (le_totalDegree hd) hq
         have h1 := ih _ hd' d rfl
@@ -124,7 +126,8 @@ theorem krullDim_le_of_rel {n m : ℕ} (I : Ideal (MvPolynomial (Fin n) ℂ))
           have h2 : Ideal.Quotient.mk I (X i ^ r i) =
               Ideal.Quotient.mk I (∑ j, L j * H i j) :=
             Ideal.Quotient.eq.mpr (hrel i)
-          rw [h1, map_mul, h2, ← map_mul, Finset.mul_sum, map_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [h1, map_mul, h2, ← map_mul, Finset.mul_sum, map_sum]
           refine Finset.sum_congr rfl fun j _ => ?_
           rw [hsmul, aeval_X]
           congr 1
@@ -146,7 +149,8 @@ theorem krullDim_le_of_rel {n m : ℕ} (I : Ideal (MvPolynomial (Fin n) ℂ))
     rw [← hM, eq_top_iff]
     rintro x -
     obtain ⟨p, rfl⟩ := Ideal.Quotient.mk_surjective x
-    rw [p.as_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [p.as_sum, map_sum]
     refine Submodule.sum_mem _ fun d _ => ?_
     have : Ideal.Quotient.mk I (monomial d (AddMonoidAlgebra.coeff p d)) =
         (C (AddMonoidAlgebra.coeff p d) : MvPolynomial (Fin m) ℂ) • Ideal.Quotient.mk I (monomial d 1) := by

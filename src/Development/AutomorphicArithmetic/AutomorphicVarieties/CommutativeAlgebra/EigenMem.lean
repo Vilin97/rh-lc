@@ -42,7 +42,8 @@ private theorem eigen_split {O σ X : Type} [CommRing O] [Finite σ] [AddCommGro
   classical
   refine ⟨insert j ((truncTotal n g).support.image (Finsupp.weight wt)), Finset.mem_insert_self _ _,
     fun d hd => ?_⟩
-  rw [map_sub, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sub, map_sum]
   simp only [coeff_wcomp]
   rw [Finset.sum_ite_eq]
   split_ifs with h
@@ -100,7 +101,8 @@ theorem UpperTheory.V.Alg.eigen_mem :
     rfl
   have h3 := hind (R ⧸ maximalIdeal R ^ N) s
     (fun i => q (W.π (wcomp O W.wt i g)) - if i = j then q (W.π g) else 0) (by
-      rw [map_sub, map_sub, hx, map_sum, map_sum, Finset.sum_congr rfl
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, map_sub, hx, map_sum, map_sum, Finset.sum_congr rfl
         (fun i _ => hf' i (W.π (wcomp O W.wt i g)) ⟨_, wcomp_mem O W.wt i g, rfl⟩), map_sub, map_sum] at h2
       simp only [map_mul, hq, hf, map_C] at h2
       simp only [map_sub, mul_sub, Finset.sum_sub_distrib, apply_ite C, map_zero, mul_ite, mul_zero,

@@ -161,7 +161,8 @@ theorem exists_eq_of_mem_preSub {F : X.Modules} [F.IsQuasicoherent] {J : Type} [
   obtain ⟨a, ha⟩ := (mem_spanSub_iff u hU).1 ((mem_preSub_iff _ _).1 hs)
   choose t ht using fun i => QCoh.surjective_cokernel_π_app (N • 𝟙 F) hU (resM _ le_top (u i))
   obtain ⟨r, hr⟩ := (π_app_eq_zero_iff hU N (s - ∑ i, a i • t i)).1 (by
-    rw [map_sub, map_sum, ← ha, sub_eq_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_sum, ← ha, sub_eq_zero]
     exact Finset.sum_congr rfl fun i _ => by rw [Scheme.Modules.Hom.app_smul, ht])
   exact ⟨a, t, r, ht, eq_add_of_sub_eq hr.symm⟩
 
@@ -174,7 +175,8 @@ theorem fibLat_preSub_spanSub_le {J : Type} [Fintype J] (u : J → Γ(modN (omeg
   obtain ⟨W, hW, k, hle⟩ := exists_affine_le e
   obtain ⟨a, t, r, ht, hr⟩ := exists_eq_of_mem_preSub u hW ((preSub _ _).res_mem hle hs)
   have e₁ := evPt_resM hφ k hle s
-  rw [hr, map_add, map_nsmul, map_sum] at e₁
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hr, map_add, map_nsmul, map_sum] at e₁
   refine SetLike.mem_coe.2 (e₁ ▸ add_mem (h₀ _ (evPt_mem hφ k r)) (sum_mem fun i _ => ?_))
   obtain ⟨v, hv, h⟩ := h₁ i
   obtain ⟨w, hw, h⟩ := h.sub_evPt k (ht i)

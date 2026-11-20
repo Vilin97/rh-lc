@@ -52,7 +52,8 @@ theorem move_preserves_weight : MoveWeight := by
   intro E _ _ V _ _ h r f co al u s J hco hal hf hu
   have hx : ∀ i, h (f i) (∑ k, al k • f k) = 0 := by
     intro i
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_eq_zero fun k _ => ?_
     rw [LinearMap.map_smulₛₗ]
     by_cases hk : k.val ≤ J.val
@@ -239,7 +240,8 @@ theorem involution_well_defined : TauWell := by
   have hm : w - ∑ i, c' i • t i ∈ abelian₂ := abelian₂.sub_mem hw (abelian₂.sum_mem fun i _ => hL _ (hc' i) _ (ht i))
   refine ⟨h (w - ∑ i, c' i • t i) (g j), hI _ hm _ (hg j), ?_⟩
   have := congrArg (fun z => h z (g j)) key
-  simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, hd, smul_eq_mul] at this
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, hd, smul_eq_mul] at this
   simpa using this
 
 theorem orbit_count_formula : OmCount := by
@@ -788,7 +790,8 @@ lemma adj_mem {E : Type} [CommRing E] (O : Subring E) (m : ℕ) (G : Matrix (Fin
 lemma gram_pair {E : Type} [CommRing E] [StarRing E] {V : Type} [AddCommGroup V] [Module E V]
     (h : V →ₗ[E] V →ₗ⋆[E] E) (m : ℕ) (f : Fin m → V) (c : Fin m → E) (j : Fin m) :
     h (∑ i, c i • f i) (f j) = ∑ i, c i * h (f i) (f j) := by
-  simp [map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, LinearMap.sum_apply]
 
 theorem determinant_annihilates : DetKills := by
   intro E _ _ V _ _ h O m f c hG hp i
@@ -872,7 +875,8 @@ theorem isotropic_complement : IsoComplement := by
       intro i j; rw [hH (y j) (e i), hd]; split_ifs <;> simp
     have expand : h (y j - ∑ l, c j l • e l) (y k - ∑ l, c k l • e l)
         = h (y j) (y k) - star (c k j) - c j k := by
-      simp only [map_sub, map_sum, LinearMap.sub_apply, LinearMap.sum_apply, map_smul,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sub, map_sum, LinearMap.sub_apply, LinearMap.sum_apply, map_smul,
         LinearMap.smul_apply, LinearMap.map_smulₛₗ, he, hd, hd', smul_eq_mul, starRingEnd_apply]
       simp
       ring
@@ -935,7 +939,8 @@ theorem hermitian_gauss_sum_ring : HermGaussRing := by
   set T : (Fin n → S) → ℂ := fun d => ∑ v : Fin n → S, ψ (∑ i, v i * yv d i) with hT
   have h1 : ((‖∑ u, φ u‖ ^ 2 : ℝ) : ℂ) = ∑ d, φ d * T d := by
     push_cast
-    rw [← Complex.mul_conj', map_sum, Finset.sum_mul_sum, Finset.sum_comm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Complex.mul_conj', map_sum, Finset.sum_mul_sum, Finset.sum_comm]
     have : ∀ v : Fin n → S, ∑ u, φ u * (starRingEnd ℂ) (φ v) = ∑ d, φ d * ψ (∑ i, v i * yv d i) := by
       intro v
       rw [← Fintype.sum_equiv (Equiv.addLeft v) (fun d => φ (v + d) * (starRingEnd ℂ) (φ v)) _ (fun d => rfl)]
@@ -1272,7 +1277,8 @@ lemma unram_one (hU : Unram o O) : ∃ l : O →ₗ[o] o, l 1 = 1 := by
       exact Finset.sum_congr rfl fun j _ => by rw [smul_mul_assoc]
     have h2 : (1 : o) = ∑ j, b.repr 1 j * b.repr (b j * b i0) i0 := by
       have := congrArg (fun z => b.repr z i0) h1
-      simpa [map_sum, Finsupp.finsetSum_apply] using this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa [map_sum, Finsupp.finsetSum_apply] using this
     have h3 : (1 : o) ∈ IsLocalRing.maximalIdeal o := by
       rw [h2]
       exact Ideal.sum_mem _ fun j _ => Ideal.mul_mem_right _ _ ((IsLocalRing.mem_maximalIdeal _).2 (hex j))
@@ -1412,7 +1418,8 @@ lemma shear_apply (t : Fin r → V) (v : V) : shear h e t v = v + ∑ j, h v (e 
 
 lemma shear_pair (t : Fin r → V) (ht : ∀ j i, h (t j) (e i) = 0) (v : V) (i : Fin r) :
     h (shear h e t v) (e i) = h v (e i) := by
-  simp [shear_apply, map_sum, LinearMap.sum_apply, ht]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [shear_apply, map_sum, LinearMap.sum_apply, ht]
 
 lemma shear_inv (t : Fin r → V) (ht : ∀ j i, h (t j) (e i) = 0) (v : V) :
     shear h e (fun j => - t j) (shear h e t v) = v := by
@@ -1440,7 +1447,8 @@ theorem same_trace_count : SameTrace := by
     intro a v; simp [map_sum, LinearMap.map_smulₛₗ, starRingEnd_apply]
   have tv : ∀ (a : Fin r → E) (w : V), h (∑ k, a k • e k) w = ∑ k, a k * star (h w (e k)) := by
     intro a w
-    simp only [map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply, smul_eq_mul]
     exact Finset.sum_congr rfl fun k _ => by rw [hH w (e k)]
   have tt : ∀ (a b : Fin r → E), h (∑ k, a k • e k) (∑ k, b k • e k) = 0 := by
     intro a b
@@ -1492,7 +1500,8 @@ theorem same_trace_count : SameTrace := by
   have hn : ∀ v, n v = v + ∑ j, h v (e j) • t j := fun v => rfl
   refine ⟨n, fun v w => ?_, fun v hv => ?_, fun v => ⟨fun hv => ?_, fun hv => ?_⟩⟩
   · rw [hn, hn]
-    simp only [map_add, LinearMap.add_apply, map_sum, LinearMap.sum_apply, map_smul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_add, LinearMap.add_apply, map_sum, LinearMap.sum_apply, map_smul,
       LinearMap.smul_apply, LinearMap.map_smulₛₗ, smul_eq_mul, starRingEnd_apply]
     have h3 : ∀ j k, h (t j) (t k) = 0 := fun j k => by
       simp only [ht]; exact tt _ _
@@ -1507,7 +1516,8 @@ theorem same_trace_count : SameTrace := by
   · rw [hn]
     have h0 : ∀ i, h (v - ∑ j, h v (e j) • y j) (e i) = 0 := by
       intro i
-      simp [map_sum, LinearMap.sum_apply, hd]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [map_sum, LinearMap.sum_apply, hd]
     have hm : v - ∑ j, h v (e j) • y j ∈ La :=
       La.sub_mem hv (La.sum_mem fun j _ => hLa _ (hIa _ hv _ (heLa j)) _ (hy j))
     have : v + ∑ j, h v (e j) • t j = (v - ∑ j, h v (e j) • y j) + ∑ j, h v (e j) • (y j + t j) := by
@@ -1518,7 +1528,8 @@ theorem same_trace_count : SameTrace := by
     have hpO : ∀ i, h v (e i) ∈ O := fun i => by rw [← hp]; exact hIb _ hv _ (heLb i)
     have h0 : ∀ i, h (n v - ∑ j, h v (e j) • (y j + t j)) (e i) = 0 := by
       intro i
-      simp [map_sum, LinearMap.sum_apply, hd, hp, htE]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [map_sum, LinearMap.sum_apply, hd, hp, htE]
     have hm : n v - ∑ j, h v (e j) • (y j + t j) ∈ Lb :=
       Lb.sub_mem hv (Lb.sum_mem fun j _ => hLb _ (hpO j) _ (hzz j))
     have : v = (n v - ∑ j, h v (e j) • (y j + t j)) + ∑ j, h v (e j) • y j := by
@@ -1631,7 +1642,8 @@ theorem tauHom (H : TauWell) : TauHom := by
   have coef : ∀ (F G : Fin r → V) (b : Fin r → E), (∀ i j, h (F i) (G j) = if i = j then 1 else 0) →
       ∀ j, h (∑ i, b i • F i) (G j) = b j := by
     intro F G b hFG j
-    simp [map_sum, LinearMap.sum_apply, hFG]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, LinearMap.sum_apply, hFG]
   have hγ'O : ∀ i, γ' i ∈ O := fun i => by
     rw [← coef f' g' γ' hfg' i]; exact hI _ hξ' _ (hg' i)
   have hdiff : InTh (θ : E) abelian₂ ((∑ i, γ' i • f' i) - (∑ i, γ i • f i)) := by
@@ -2068,7 +2080,8 @@ theorem bridgeSelfDual : BridgeSelfDual := by
       rw [← hv]
       conv_lhs => rw [hexp x]
       conv_rhs => rw [hexp x, jsum]
-      simp [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [map_sum]
     have hvL : v ∈ abelian₂ := hdual v fun w hw => by
       obtain ⟨x, rfl⟩ := (hM.j_range _).mp hw
       rw [← key]; exact (hM.io_range _).mpr ⟨_, rfl⟩
@@ -2185,25 +2198,30 @@ theorem sameTraceHyp (H : DualCap) (HV : DualCapV) : SameTraceHyp := by
     have hw₀Z : w₀ ∈ Z := by
       intro i
       show h w₀ (e i) = 0
-      rw [hw₀, map_sub, LinearMap.sub_apply, map_sum, LinearMap.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hw₀, map_sub, LinearMap.sub_apply, map_sum, LinearMap.sum_apply]
       simp [hye]
     have e1 : w = w₀ + ∑ k, h w (e k) • y k := by rw [hw₀]; abel
     have a1 : h w₀ (v - ∑ i, c i • e i) = 0 := by
-      rw [map_sub, hlZ w₀ hw₀Z, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, hlZ w₀ hw₀Z, map_sum]
       have hz : ∀ i, h w₀ (e i) = 0 := hw₀Z
       simp [hz]
     have a2 : ∀ k, h (y k) (v - ∑ i, c i • e i) = 0 := by
       intro k
-      rw [map_sub, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, map_sum]
       simp [hye, hc, starRingEnd_apply]
-    rw [e1, map_add, LinearMap.add_apply, a1, map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e1, map_add, LinearMap.add_apply, a1, map_sum, LinearMap.sum_apply]
     simp [a2]
   have hdl : d = l + ∑ i, c i • e i := by
     have : v = ∑ i, c i • e i := sub_eq_zero.mp hzero
     rw [← this, hv]; abel
   refine ⟨l, hl, fun i => ?_, c, hdl⟩
   have : l = d - ∑ k, c k • e k := by rw [hdl]; abel
-  rw [this, map_sub, LinearMap.sub_apply, hd i, map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [this, map_sub, LinearMap.sub_apply, hd i, map_sum, LinearMap.sum_apply]
   simp [he]
 
 end Part2
@@ -3251,7 +3269,8 @@ variable {O : Type} [CommRing O] [StarRing O] {abelian₂ : Type} [AddCommGroup 
 
 lemma orth_pair_right {κ : Type} [Fintype κ] (v : κ → abelian₂) (horth : ∀ i j, i ≠ j → h (v i) (v j) = 0)
     (j : κ) (w : κ → O) : h (v j) (∑ i, w i • v i) = star (w j) * h (v j) (v j) := by
-  rw [map_sum, Finset.sum_eq_single j]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_eq_single j]
   · rw [LinearMap.map_smulₛₗ, starRingEnd_apply, smul_eq_mul]
   · intro i _ hi
     rw [LinearMap.map_smulₛₗ, horth j i (Ne.symm hi), smul_zero]
@@ -3259,13 +3278,15 @@ lemma orth_pair_right {κ : Type} [Fintype κ] (v : κ → abelian₂) (horth : 
 
 lemma orth_pair_gen {κ : Type} [Fintype κ] (v : κ → abelian₂) (x : abelian₂) (w : κ → O) :
     h x (∑ i, w i • v i) = ∑ i, star (w i) * h x (v i) := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_congr rfl fun i _ => by
     rw [LinearMap.map_smulₛₗ, starRingEnd_apply, smul_eq_mul]
 
 lemma orth_pair_left {κ : Type} [Fintype κ] (v : κ → abelian₂) (x : abelian₂) (w : κ → O) :
     h (∑ i, w i • v i) x = ∑ i, w i * h (v i) x := by
-  rw [map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, LinearMap.sum_apply]
   exact Finset.sum_congr rfl fun i _ => by rw [map_smul, LinearMap.smul_apply, smul_eq_mul]
 
 lemma orth_proj {κ : Type} [Fintype κ] (v : κ → abelian₂) (horth : ∀ i j, i ≠ j → h (v i) (v j) = 0)
@@ -3312,7 +3333,8 @@ lemma orth_span [Nontrivial O] {κ : Type} [Fintype κ] (v : κ → abelian₂)
       rw [← hw]
       simp
     rw [← hw, orth_pair_left]
-    conv_lhs => rw [hx, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [hx, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_smul, smul_eq_mul, orth_pair_right h v horth, star_star, ← hu, mul_assoc,
       Units.inv_mul, mul_one]
@@ -3337,7 +3359,8 @@ lemma gram_unit (hSD : SelfDual h) :
     ext j i
     rw [Matrix.mul_apply]
     have h1 : h (b j) (w i) = ∑ l, h (b j) (b l) * star (b.repr (w i) l) := by
-      conv_lhs => rw [← b.sum_repr (w i), map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        conv_lhs => rw [← b.sum_repr (w i), map_sum]
       exact Finset.sum_congr rfl fun l _ => by
         rw [LinearMap.map_smulₛₗ, starRingEnd_apply, smul_eq_mul, mul_comm]
     have h3 : h (b j) (w i) = if j = i then 1 else 0 := by
@@ -3772,7 +3795,8 @@ lemma index_piO (hU : Unram o O) (ϖ : o) (hϖ : Irreducible ϖ) (q : ℕ)
     change QuotientAddGroup.mk (b.repr (∑ i, r i • b i) i) = g i
     rw [← hr i]
     congr 1
-    simp [map_sum, Finsupp.finsetSum_apply, Finsupp.single_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, Finsupp.finsetSum_apply, Finsupp.single_apply]
   have hker : f.ker = piO O ϖ M := by
     ext y
     rw [AddMonoidHom.mem_ker]

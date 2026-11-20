@@ -86,7 +86,8 @@ theorem _root_.GlobalTheory.BorelUMod.adjJ_mul (σ : L →+* L) (X Y : Matrix (F
     _root_.GlobalTheory.BorelUMod.adjJ σ (X * Y) =
       _root_.GlobalTheory.BorelUMod.adjJ σ Y * _root_.GlobalTheory.BorelUMod.adjJ σ X := by
   ext i j
-  simp only [_root_.GlobalTheory.BorelUMod.adjJ, Matrix.mul_apply, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [_root_.GlobalTheory.BorelUMod.adjJ, Matrix.mul_apply, map_sum, map_mul]
   rw [← Equiv.sum_comp Fin.revPerm]
   simp [mul_comm]
 

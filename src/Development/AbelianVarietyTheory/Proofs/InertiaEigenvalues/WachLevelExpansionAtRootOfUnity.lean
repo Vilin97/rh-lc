@@ -74,7 +74,8 @@ theorem q_eq : W.q = ∑ k ∈ Finset.range PD.p, (1 + letπ : LetA O n) ^ k := 
   exact sub_eq_zero.mp h4
 
 theorem Q_eq : W.Q = ∑ k ∈ Finset.range PD.p, ((1 + letπ : LetA O n) ^ (PD.p ^ (W.s - 1))) ^ k := by
-  rw [LocWach.Q, q_eq, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [LocWach.Q, q_eq, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [map_pow, φA_pow_one_add]
 
@@ -113,13 +114,15 @@ theorem lev_values [CharZero LL] (i : ZMod n) (ζ : LL) (hζ : ∃ j : ℕ, IsPr
   have hX : W.lev i ζ W.X = U ^ (PD.p ^ r) - 1 := by
     rw [X_eq, map_sub, map_one, map_pow, hlevU, hr, Nat.add_sub_cancel]
   have hQ : W.lev i ζ W.Q = ∑ k ∈ Finset.range PD.p, (U ^ (PD.p ^ r)) ^ k := by
-    rw [Q_eq, map_sum, hr, Nat.add_sub_cancel]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Q_eq, map_sum, hr, Nat.add_sub_cancel]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_pow, map_pow, hlevU]
   have hXQ : W.lev i ζ W.Q * W.lev i ζ W.X = U ^ (PD.p ^ (r + 1)) - 1 := by
     rw [hX, hQ, geom_sum_mul, ← pow_mul, ← pow_succ]
   have hQ0 : constantCoeff (W.lev i ζ W.Q) = ∑ k ∈ Finset.range PD.p, (ζ ^ (PD.p ^ r)) ^ k := by
-    rw [hQ, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hQ, map_sum]
     simp [hU0]
   have hprim : IsPrimitiveRoot ζ (PD.p ^ (r + 1)) ↔
       ζ ^ (PD.p ^ (r + 1)) = 1 ∧ ¬ ζ ^ (PD.p ^ r) = 1 := by

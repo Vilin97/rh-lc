@@ -119,10 +119,12 @@ theorem genPath_scaling : ∀ (k K E : Type) [Field k] [IsAlgClosed k] [CharZero
           dualApp (resM _ h₀ (i.app V₀ (s j))) (inf_le_left : Vf ⊓ unitSec G ⁻¹ᵁ U₀ ≤ Vf) :=
         (dualApp_res _ _ _).symm
       have e2 : resM _ h₀ (i.app V₀ (s j)) = ∑ l, M l j • resM _ h₁ (i.app V (t l)) := by
-        rw [← GlobalTheory.Twist.app_resM, hst, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [← GlobalTheory.Twist.app_resM, hst, map_sum]
         refine Finset.sum_congr rfl fun l _ => ?_
         rw [Scheme.Modules.Hom.app_smul, GlobalTheory.Twist.app_resM]
-      rw [e1, e2, dualApp_sum, LinearMap.sum_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [e1, e2, dualApp_sum, LinearMap.sum_apply, map_sum]
       refine Finset.sum_congr rfl fun l _ => ?_
       rw [dualApp_smul, LinearMap.smul_apply, smul_eq_mul, map_mul, dualApp_res]
       congr 1

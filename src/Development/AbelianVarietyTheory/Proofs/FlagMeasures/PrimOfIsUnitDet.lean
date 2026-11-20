@@ -53,12 +53,14 @@ theorem ip_sum_left {ι : Type} (s : Finset ι) (x : ι → Fin n → A) (y : Fi
 theorem ip_sum_right {ι : Type} (s : Finset ι) (x : Fin n → A) (y : ι → Fin n → A) :
     ip c x (∑ a ∈ s, y a) = ∑ a ∈ s, ip c x (y a) := by
   unfold ip
-  simp only [Finset.sum_apply, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finset.sum_apply, map_sum, Finset.mul_sum]
   exact Finset.sum_comm
 
 theorem cj_ip (hc : ∀ u, c (c u) = u) (x y : Fin n → A) : c (ip c x y) = ip c y x := by
   unfold ip
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_mul, hc, mul_comm]
 
@@ -66,7 +68,8 @@ theorem map_ip {B : Type} [CommRing B] (c' : B →+* B) (φ : A →+* B)
     (hφ : ∀ u, φ (c u) = c' (φ u)) (x y : Fin n → A) :
     φ (ip c x y) = ip c' (fun i => φ (x i)) (fun i => φ (y i)) := by
   unfold ip
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_mul, hφ]
 

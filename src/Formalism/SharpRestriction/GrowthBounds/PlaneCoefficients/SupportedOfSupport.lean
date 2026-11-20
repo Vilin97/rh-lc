@@ -126,7 +126,8 @@ theorem restLink_of (hNN : ValNN) (hHD : HomDec) (hLL : LinkL) (hDg : LkDeg) (hV
   have e2 : compD dPl (Rst * PhiJ Fr Dt j (Ab j)) =
       ∑ δ ∈ Dl, compD dPl (Rst * PhiJ Fr Dt j (compD δ (Ab j))) := by
     conv_lhs => rw [hDl]
-    rw [map_sum, Finset.mul_sum, Lk.compD_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.mul_sum, Lk.compD_sum]
     rfl
   rw [e1, e2]
   refine Lk.geZ_sum _ _ _ _ _ fun δ _ => ?_

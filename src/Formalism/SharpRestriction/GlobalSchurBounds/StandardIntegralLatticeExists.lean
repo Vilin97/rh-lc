@@ -900,9 +900,11 @@ theorem posFrame_of_sig {E : Type} [Field E] [NumberField E] [StarRing E] (S : H
     have h3 : σ (S.hT y y) = star z ⬝ᵥ G.mulVec z := by
       have := LinearMap.sum_repr_mul_repr_mulₛₗ S.frame S.frame (B := S.hT) y y
       rw [← this, Finsupp.sum_fintype _ _ (by intro i; simp)]
-      simp only [dotProduct, Matrix.mulVec, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [dotProduct, Matrix.mulVec, map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
-      rw [Finsupp.sum_fintype _ _ (by intro j; simp), map_sum, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Finsupp.sum_fintype _ _ (by intro j; simp), map_sum, Finset.mul_sum]
       refine Finset.sum_congr rfl fun j _ => ?_
       simp only [smul_eq_mul, map_mul, RingHom.id_apply, hG, hz, Matrix.map_apply, HSpace.gram, Pi.star_apply]
       rw [starRingEnd_apply, hσ]
@@ -1191,7 +1193,8 @@ theorem branching_condition_of_isEmpty (D : D7) (u : D.what₂.Word) (hE : IsEmp
 
 theorem emb_mem_Fi (D : D7) (u : D.what₂.Word) (i : ℕ) (x : ((D.fm u).lat i).V) :
     (D.fm u).emb i x ∈ (D.fm u).Fi i := by
-  rw [← ((D.fm u).emb_basis i).2, ← ((D.fm u).lat i).b.sum_repr x, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← ((D.fm u).emb_basis i).2, ← ((D.fm u).lat i).b.sum_repr x, map_sum]
   refine Submodule.sum_mem _ fun a _ => ?_
   rw [LinearMap.map_smulₛₗ]
   exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨a, rfl⟩)

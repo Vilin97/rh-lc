@@ -334,7 +334,8 @@ theorem twHom_mul (hact : IsActC act) (hχ : IsCyc χ) (hF : Frame χ K m U g) (
     act_eq_of_mem_intC hact hσ (chiC_mem_intC hχ (Ks K m) i τ)
   have h3 : ∀ a b, act σ (U τ a b) = U τ a b := fun a b =>
     act_eq_of_mem_intC hact hσ (hF.2.2.1 τ hτ a b)
-  simp only [twHom_apply, h1, hF.2.2.2.1 σ hσ τ hτ, Matrix.mul_apply, map_mul, map_sum, h2, h3,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [twHom_apply, h1, hF.2.2.2.1 σ hσ τ hτ, Matrix.mul_apply, map_mul, map_sum, h2, h3,
     RingAut.mul_apply, Finset.mul_sum, Finset.sum_mul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun b _ => Finset.sum_congr rfl fun c _ => ?_

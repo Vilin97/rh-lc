@@ -117,8 +117,10 @@ theorem GlobalTheory.HalfGeo.fullSt : FullSt := by
       rw [hw']; exact GlobalTheory.DlogEx.chi_fst _ hqR (c m) _
     rw [prodChar_val]
     rw [(dual_prod _ _ fun m => (dual_pow _ (hf m) _).1).2]
-    simp only [map_sum, map_mul, map_natCast, Finset.sum_mul, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, map_natCast, Finset.sum_mul, Finset.mul_sum]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun m _ => ?_
-    rw [(dual_pow _ (hf m) _).2, hdl m a v hav w hw, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [(dual_pow _ (hf m) _).2, hdl m a v hav w hw, map_sum, Finset.mul_sum]
     exact Finset.sum_congr rfl fun i _ => by rw [map_mul]; ring

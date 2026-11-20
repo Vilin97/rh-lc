@@ -79,7 +79,8 @@ theorem idemSum_mul_zero (S : HSp D) {E0 : AE D} {Q : Finset (Pl D.host.E)} (hE 
         _ = 0 := by rw [hff]; ring
   constructor
   · rw [Finset.sum_mul]; exact Finset.sum_eq_zero fun PP h => (key PP h).1
-  · rw [map_sum, Finset.sum_mul]; exact Finset.sum_eq_zero fun PP h => (key PP h).2
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum, Finset.sum_mul]; exact Finset.sum_eq_zero fun PP h => (key PP h).2
 
 theorem vac_of_frames {ψ : AddChar (AF D.host.F) ℂ} {θ : InfFam D} {S T : HSp D}
     {sS : D.what₂.Tau → Matrix (Fin S.rank) (Fin S.rank) ℂ} {sT : D.what₂.Tau → Matrix (Fin T.rank) (Fin T.rank) ℂ}

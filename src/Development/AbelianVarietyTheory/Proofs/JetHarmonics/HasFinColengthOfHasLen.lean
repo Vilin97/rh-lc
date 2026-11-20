@@ -65,7 +65,8 @@ theorem hasLen_le_of_surjective (hv : v.Integers O) {M N : Type} [AddCommGroup M
       · intro b _ hb
         simp [Pi.single_eq_of_ne' hb]
       · intro h; exact absurd (Finset.mem_univ k) h
-    rw [hz, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hz, map_sum]
     exact Submodule.sum_mem _ fun i _ => by
       rw [map_smul]; exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)
   have hT : ∀ k, ∑ i, (Matrix.diagonal c) k i • q i = 0 := by

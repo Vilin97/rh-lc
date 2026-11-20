@@ -84,7 +84,8 @@ theorem norm_det_eq_nrmId : ∀ (D : D7) (p : ℕ) [Fact p.Prime] (lam : Qbar �
       congr 1
       funext a i
       simp only [Matrix.transpose_apply, hB, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, hψ]
-    rw [e1, f.map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e1, f.map_sum]
     refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg hS0 fun c _ => ?_
     rw [f.map_smul_univ, smul_eq_mul,
       norm_mul, norm_prod]

@@ -18,7 +18,8 @@ theorem eig_toPowerSeries {A : Type} [CommRing A] {I : Type} {g m : ℕ}
     ∃! cf : Fin m → PowerSeries A, w = ∑ k, cf k • fun j => PowerSeries.C (R := A) (U k j) := by
   have key : ∀ cf : Fin m → PowerSeries A, (w = ∑ k, cf k • fun j => PowerSeries.C (R := A) (U k j)) ↔
       ∀ n, (fun j => PowerSeries.coeff n (w j)) = ∑ k, PowerSeries.coeff n (cf k) • U k := fun cf => by
-    simp only [funext_iff, PowerSeries.ext_iff, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [funext_iff, PowerSeries.ext_iff, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum,
       PowerSeries.coeff_mul_C]
     exact forall_comm
   choose c hc hu using fun n => h (fun j => PowerSeries.coeff n (w j)) fun i => by

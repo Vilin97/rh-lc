@@ -176,7 +176,8 @@ theorem core {n a b : ℕ} (h : a + b = n) (w : Pl E) (μ : (w.adicCompletion E)
         c₀ * ∑ y : X, hint (K2 a b w) (fun g => phi3 h w e x y g * lw (ρ g (Λ j (F y)))) := by
     intro j F hF x lw
     show lw (Λ j (∑ y : X, actP w (phiMu h w μ e x y) (F y))) = _
-    rw [map_sum, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun y _ => ?_
     obtain ⟨U₁, hU₁o, hFU₁⟩ := (hF y).2
     have hFU : F y ∈ fixed (pairRt a b w) (U₁ ⊓ (Lv ⊓ χμ.ker)) :=

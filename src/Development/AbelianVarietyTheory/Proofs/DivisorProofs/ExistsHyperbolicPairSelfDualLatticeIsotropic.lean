@@ -25,7 +25,8 @@ theorem form_smul_right {F E : Type} [Field F] [Field E] [Algebra F E] (σ : E �
 theorem form_conj {F E : Type} [Field F] [Field E] [Algebra F E] (σ : E →ₐ[F] E) (hσ : ∀ e, σ (σ e) = e) {n : ℕ}
     (J : Matrix (Fin n) (Fin n) E) (hJ : ∀ i j, σ (J j i) = J i j) (z w : Fin n → E) :
     σ (form σ J z w) = form σ J w z := by
-  simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ]
   simp only [Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_

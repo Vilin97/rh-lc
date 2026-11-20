@@ -401,7 +401,8 @@ theorem exists_expansion {U : Over (Sp k)} [IsAffine U.left]
   obtain ⟨p, rfl⟩ := h.2 F
   refine ⟨p.coeff.support, p.coeff, fun u t => ?_⟩
   conv_lhs => rw [← AddMonoidAlgebra.sum_coeff_single p]
-  rw [Finsupp.sum, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finsupp.sum, map_sum, map_sum]
   refine Finset.sum_congr rfl fun χ _ => ?_
   rw [hψ, map_mul, ← ev_comp, ← ev_comp, lift_fst, lift_snd, ev_torusPt, mul_comm]
 

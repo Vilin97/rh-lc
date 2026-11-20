@@ -29,10 +29,12 @@ theorem sec_linear : ∀ (K V Ω : Type) [Field K] [NumberField K] [AddCommGroup
     rw [hM.base]
     exact RingHom.congr_fun (GlobalTheory.Cartier.fnOf_comp_algX p _ hU) b
   have hex : ψ (ev x) = ∑ k, ψ (algebraMap K Ω (β k : K)) * ψ (ev (u k)) := by
-    rw [hx, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hx, map_sum, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [← IsScalarTower.algebraMap_smul K (β k) (u k : V), map_smul, Algebra.smul_def, map_mul]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [map_mul, hc]
   apply mul_left_cancel₀ ha
   rw [hr x, hex, Finset.sum_mul, Finset.mul_sum]

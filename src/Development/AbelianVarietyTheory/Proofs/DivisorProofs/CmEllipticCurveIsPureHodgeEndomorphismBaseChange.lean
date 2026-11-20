@@ -52,7 +52,8 @@ theorem exists_isPolForm (P : GlobalTheory.Published.AbelianDeRham.Free) {R : Ty
     exact Submodule.mem_top
   refine ⟨_, n, fun k => ⟨a k, hmem _⟩, fun k => ⟨b k, hmem _⟩, ?_, rfl⟩
   have hz' : z = ∑ k, cup _ (a k) (b k) := by
-    rw [← e.apply_symm_apply z, ← hab, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← e.apply_symm_apply z, ← hab, map_sum]
     exact Finset.sum_congr rfl fun k _ => he _ _
   rw [hz'] at hz
   exact hz

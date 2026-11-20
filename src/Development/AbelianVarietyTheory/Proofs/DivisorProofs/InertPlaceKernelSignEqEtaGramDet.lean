@@ -132,7 +132,8 @@ theorem kapSign_eq_eta_gramDet : ∀ (E : Type) [Field E] [NumberField E] [IsCMF
     rw [hψ₁, h3, ψ.apply_symm_apply]
   have hsum : ∀ g : Fin m → K.E, ψ₁ (∑ i, g i • a' i) = ∑ i, e (g i) • (v i : Fin n → w.adicCompletion E) := by
     intro g
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [hψ₁s, hva]
   have hli : LinearIndependent K.E a' := by
     rw [Fintype.linearIndependent_iff]

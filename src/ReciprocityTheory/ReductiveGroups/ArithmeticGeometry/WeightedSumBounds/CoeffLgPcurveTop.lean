@@ -15,10 +15,12 @@ theorem coeff_lg_pcurve (G : LogFGL v d) {p : ℕ} (hp : p ≠ 0)
     PowerSeries.coeff m (G.lgCurve (pcurve G p γ x n) a) = ∑ s ∈ Finset.range n, ∑ b,
       if p ^ s ∣ m then x s b ^ (m / p ^ s) * PowerSeries.coeff (m / p ^ s) (G.lgCurve (γ b) a)
       else 0 := by
-  rw [lgCurve_pcurve G hp hγ x n hx a, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [lgCurve_pcurve G hp hγ x n hx a, map_sum]
   apply Finset.sum_congr rfl
   intro s _
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   apply Finset.sum_congr rfl
   intro b _
   rw [coeff_expand_rescale]

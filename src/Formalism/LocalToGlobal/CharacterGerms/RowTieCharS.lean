@@ -46,17 +46,20 @@ theorem subst_linU_linF {ι : Type} [Fintype ι] (U : ι → Fin dd → C) (y : 
       ∑ x : ι, (∑ i, y i * U x i) • (MvPowerSeries.X x : MvPowerSeries ι C) := by
   have ha : MvPowerSeries.HasSubst (fun i => ∑ c, U c i • (MvPowerSeries.X c : MvPowerSeries ι C)) :=
     VP.hs (fun i => by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_eq_zero fun c _ => ?_
       rw [MvPowerSeries.smul_eq_C_mul, map_mul, MvPowerSeries.constantCoeff_X, mul_zero])
-  rw [linF, ← MvPowerSeries.coe_substAlgHom ha, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [linF, ← MvPowerSeries.coe_substAlgHom ha, map_sum]
   simp only [map_smul, MvPowerSeries.coe_substAlgHom, MvPowerSeries.subst_X ha]
   simp only [Finset.smul_sum, smul_smul, Finset.sum_smul]
   rw [Finset.sum_comm]
 
 theorem cc_linU {ι κ : Type} [Fintype ι] (U : ι → κ → C) (i : κ) :
     MvPowerSeries.constantCoeff (∑ c, U c i • (MvPowerSeries.X c : MvPowerSeries ι C)) = 0 := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_eq_zero fun c _ => ?_
   rw [MvPowerSeries.smul_eq_C_mul, map_mul, MvPowerSeries.constantCoeff_X, mul_zero]
 

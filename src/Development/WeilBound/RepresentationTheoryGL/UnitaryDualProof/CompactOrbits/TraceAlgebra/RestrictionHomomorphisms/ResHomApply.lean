@@ -122,11 +122,13 @@ private theorem mul_eq_mul_of_ratio_eq_one {n : ℕ} {R : Type} [CommRing R] [Al
         simpa [h] using this
       rw [h1, map_zero, if_neg h]
       rfl
-  simp only [LinearMap.sum_apply, LinearMap.comp_apply, map_sum, Submodule.coe_subtype,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [LinearMap.sum_apply, LinearMap.comp_apply, map_sum, Submodule.coe_subtype,
     LinearEquiv.coe_coe]
   simp only [Submodule.coe_sum, inner]
   simp
-  rw [← LinearMap.sum_apply, ← map_sum, hs, map_one]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← LinearMap.sum_apply, ← map_sum, hs, map_one]
   rfl
 
 theorem isoOfTrace : IsoOfTrace k := by
@@ -154,7 +156,8 @@ theorem isoOfTrace : IsoOfTrace k := by
       · rw [Pi.single_eq_of_ne hx, zero_mul]
   have hs : ∑ m, e m = 1 := by
     apply E.injective
-    rw [map_sum, map_one]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_one]
     funext x
     simp [hE, Finset.sum_apply, Pi.single_apply]
   have hm : ∀ m : MaximalSpectrum R, ∀ a ∈ m.asIdeal, a * e m = 0 := by
@@ -182,7 +185,8 @@ theorem isoOfTrace : IsoOfTrace k := by
     LinearMap.ext fun v => mul_eq_mul_of_ratio_eq_one ρ' ρ e he hs (fun i => (φ i).symm) v
   refine ⟨LinearEquiv.ofLinear Φ Ψ h2 h1, fun r v => ?_⟩
   show Φ (ρ r v) = ρ' r (Φ v)
-  simp only [Φ, LinearMap.sum_apply, LinearMap.comp_apply, map_sum, Submodule.coe_subtype,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Φ, LinearMap.sum_apply, LinearMap.comp_apply, map_sum, Submodule.coe_subtype,
     LinearEquiv.coe_coe]
   refine Finset.sum_congr rfl fun i _ => ?_
   have h3 : (ρ (e i)).rangeRestrict (ρ r v) = resHom ρ (e i) r ((ρ (e i)).rangeRestrict v) := by

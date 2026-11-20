@@ -87,7 +87,8 @@ theorem colU_surjective : ∀ (D : D7) (S T : HSp D) (C : Ctx S T) (u : C.X.Ψ �
         (star (u (C.m.e τ) : Matrix (Fin S.rank) (Fin S.rank) ℂ) *
           (u (C.m.e τ) : Matrix (Fin S.rank) (Fin S.rank) ℂ)).map conj := by
       ext i j
-      simp [Matrix.mul_apply, Matrix.conjTranspose_apply, map_sum, Matrix.star_eq_conjTranspose]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [Matrix.mul_apply, Matrix.conjTranspose_apply, map_sum, Matrix.star_eq_conjTranspose]
     rw [e, hA]
     ext i j
     simp [Matrix.one_apply]

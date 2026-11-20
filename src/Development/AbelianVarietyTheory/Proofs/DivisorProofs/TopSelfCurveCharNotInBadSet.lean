@@ -89,7 +89,8 @@ theorem GlobalTheory.DetDRVert.topSelf_detDR_eq_zero : GlobalTheory.CovTop.Hypot
   have key {ι : Type} [Fintype ι] (L : ι → HermLB (h.mdl (GlobalTheory.FlagAr.setB O.Y B) c).V.p) (e : ι → ℤ) :
       topSelfIntersection κ ((comb L e).B.pull i) 1 = ∑ x, e x * F (L x).icls := by
     change F (comb L e).icls = _
-    rw [icls_comb, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [icls_comb, map_sum]
     exact Finset.sum_congr rfl fun x _ => by rw [map_zsmul, smul_eq_mul]
 
   set q := ringChar κ with hq

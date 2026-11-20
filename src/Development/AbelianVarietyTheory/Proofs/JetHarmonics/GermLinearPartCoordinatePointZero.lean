@@ -116,7 +116,8 @@ theorem additive_eq_lin (F : Fin d → PS k 2 d) (hF : ∀ i, constantCoeff (F i
       obtain rfl : s = 0 := Subsingleton.elim _ _
       exact congrFun (congrFun hd i) j
     · rw [addition_linear k d _ (congrFun e2 i) e he]
-      simp only [LogExpAdaptedGauge.linMap, map_sum, coeff_C_mul, coeff_X]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [LogExpAdaptedGauge.linMap, map_sum, coeff_C_mul, coeff_X]
       refine (Finset.sum_eq_zero fun j _ => ?_).symm
       rw [if_neg, mul_zero]
       rintro rfl

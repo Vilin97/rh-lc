@@ -411,7 +411,8 @@ theorem cech_nat (P Q : PM.{w} R ι) (f : ∀ S, P.M S →ₗ[R] Q.M S)
     (hf : ∀ {S T : Finset ι} (h : S ⊆ T) x, f T (P.res h x) = Q.res h (f S x)) (n : ℕ) (x : P.cech.X n) :
     Q.cech.d n (fun i => f _ (x i)) = fun i => f _ (P.cech.d n x i) := by
   funext i
-  rw [cech_d, cech_d, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [cech_d, cech_d, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [map_zsmul, hf]
 

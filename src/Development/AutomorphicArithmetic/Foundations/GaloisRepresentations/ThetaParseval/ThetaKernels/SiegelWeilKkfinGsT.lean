@@ -41,7 +41,8 @@ theorem firstColumns_eq_diag_mul : ∃ t : Matrix (Fin d.n) (Fin d.n) (AE F E), 
   ext i j
   rw [Matrix.mul_apply]
   change inclR (AF F) (d.b.1 i (Sum.inl j)) = _
-  rw [h2, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h2, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [map_mul]
   congr 1

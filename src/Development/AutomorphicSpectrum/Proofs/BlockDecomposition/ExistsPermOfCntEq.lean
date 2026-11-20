@@ -14,7 +14,8 @@ theorem cnt_apply {ι : Type} {m : ℕ} (f : Fin m → ι) (i : ι) :
 
 theorem degree_cnt {ι : Type} {m : ℕ} (f : Fin m → ι) : (cnt f).degree = m := by
   classical
-  simp [cnt, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [cnt, map_sum]
 
 theorem exists_perm_of_cnt_eq {ι : Type} {m : ℕ} {f g : Fin m → ι} (h : cnt f = cnt g) :
     ∃ σ : Equiv.Perm (Fin m), g = f ∘ σ := by
@@ -83,9 +84,11 @@ theorem exists_form (ι : Type) [Fintype ι] (D : ℕ) (F : (Fin (D + 1) → ι)
       (∀ n : ι → ℝ, Φ (GlobalTheory.ArInt.lin n ^ (D + 1)) = ∑ f : Fin (D + 1) → ι, (∏ j, n (f j)) * F f) ∧
       ∀ (P : MvPolynomial ι ℝ) (d : ℕ), d ≠ D + 1 → P.IsHomogeneous d → Φ P = 0 := by
   refine ⟨form F, fun n => ?_, fun P d hd hP => ?_⟩
-  · rw [lin_pow, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [lin_pow, map_sum]
     exact Finset.sum_congr rfl fun f _ => by rw [form_monomial, coef_cnt F hF]
-  · rw [P.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [P.as_sum, map_sum]
     refine Finset.sum_eq_zero fun k hk => ?_
     have hdeg : k.degree = d := by
       have := hP (mem_support_iff.1 hk)

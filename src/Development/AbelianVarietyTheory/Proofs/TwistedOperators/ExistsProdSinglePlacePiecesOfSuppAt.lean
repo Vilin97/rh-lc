@@ -87,7 +87,8 @@ theorem exists_prod_pieces : ∀ {D : D7} (V : HSp D) (P : Finset (Pl D.host.E))
     exact map_cut (GlobalTheory.RowRep.piAt w.1) a1 (h3 _ w.2 _ w.2) _
   · apply GlobalTheory.SplitCut.mt_injective
     have hsum : (Finset.univ.toList.map E).sum = (∑ w ∈ P, es w) + cA D (∑ w ∈ P, es w) := by
-      rw [Finset.sum_map_toList, map_sum, ← Finset.sum_add_distrib]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Finset.sum_map_toList, map_sum, ← Finset.sum_add_distrib]
       exact Finset.sum_coe_sort P fun w => es w + cA D (es w)
     rw [GlobalTheory.SplitCut.mt_list_prod V h E (mt V r) hh hEo _ (Finset.nodup_toList _), hsum]
     refine GlobalTheory.SplitCut.exists_widePullback_of_iteratedLine _ _ fun i j => ?_

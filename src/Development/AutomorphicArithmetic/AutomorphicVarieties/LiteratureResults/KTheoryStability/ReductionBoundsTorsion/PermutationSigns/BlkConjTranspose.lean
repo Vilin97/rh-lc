@@ -249,7 +249,8 @@ variable {q : ℕ}
 theorem f_expand (f : ContinuousMultilinearMap ℝ (fun _ : Fin q => HS L N) ℝ) (Y : Fin q → HS L N) :
     f Y = ∑ κ : Fin q → K L N, (∏ i, coef (κ i) (Y i)) * f (fun i => MH (κ i)) := by
   have : f Y = f (fun i => ∑ k : K L N, coef k (Y i) • MH k) := congrArg f (funext fun i => herm_decomp (Y i))
-  rw [this, ContinuousMultilinearMap.map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [this, ContinuousMultilinearMap.map_sum]
   refine Finset.sum_congr rfl fun κ _ => ?_
   rw [ContinuousMultilinearMap.map_smul_univ, smul_eq_mul]
 

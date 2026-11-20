@@ -227,7 +227,8 @@ theorem _root_.GlobalTheory.PsChar.cayleyHamilton (k R : Type) [Field k] [CharZe
       Polynomial.natDegree_X_pow]
   · have e := hzero y
     rw [Finset.sum_range_succ] at e
-    simp only [map_add, map_pow, Polynomial.aeval_X, map_sum, map_mul, Polynomial.aeval_C,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_add, map_pow, Polynomial.aeval_X, map_sum, map_mul, Polynomial.aeval_C,
       add_mul, Finset.sum_mul, Algebra.algebraMap_eq_smul_one, smul_mul_assoc, one_mul,
       map_smul, smul_eq_mul]
     rw [Fin.sum_univ_eq_sum_range (fun i => c i / c d * T (x ^ i * y)) d, hc]

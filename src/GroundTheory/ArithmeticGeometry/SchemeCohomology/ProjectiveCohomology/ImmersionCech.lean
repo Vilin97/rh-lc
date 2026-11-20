@@ -35,7 +35,8 @@ include he in
 lemma transE_d (n : ℕ) (σ : Cochain P' U n) :
     transE φ e U hinter (n + 1) (d P' U n σ) = d P (φ ∘ U) n (transE φ e U hinter n σ) :=
   funext fun i => by
-    simp only [transE, AddMonoidHom.coe_mk, ZeroHom.coe_mk, d_apply, map_sum, map_zsmul, he,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [transE, AddMonoidHom.coe_mk, ZeroHom.coe_mk, d_apply, map_sum, map_zsmul, he,
       res_res]
 
 lemma transE_transE' (n : ℕ) (σ : Cochain P (φ ∘ U) n) :

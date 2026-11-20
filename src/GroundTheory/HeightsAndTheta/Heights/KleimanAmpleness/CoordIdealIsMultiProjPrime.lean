@@ -71,7 +71,8 @@ theorem CechHom.amb_cechD [LinearOrder ι] (φ : CechHom C C') (v : ∀ I, C.V I
   simp only [CechHom.amb, cechD, LinearMap.pi_apply, LinearMap.comp_apply, LinearMap.proj_apply]
   by_cases h : C.good J
   · have h' : C'.good J := (φ.good_iff J).2 h
-    simp only [h, h', if_true, LinearMap.sum_apply, map_sum, LinearMap.smul_apply, map_zsmul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [h, h', if_true, LinearMap.sum_apply, map_sum, LinearMap.smul_apply, map_zsmul,
       LinearMap.comp_apply, LinearMap.proj_apply, LinearMap.pi_apply]
     refine Finset.sum_congr rfl fun j _ => ?_
     congr 1

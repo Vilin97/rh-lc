@@ -27,7 +27,8 @@ theorem map_cycSubOne {ρA : Representation ℤ G A} {ρB : Representation ℤ G
 theorem map_cycNorm [Fintype G] {ρA : Representation ℤ G A} {ρB : Representation ℤ G B}
     {f : A →+ B} (hf : ∀ g a, f (ρA g a) = ρB g (f a)) (a : A) :
     f (cycNorm ρA a) = cycNorm ρB (f a) := by
-  rw [cycNorm_apply, cycNorm_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [cycNorm_apply, cycNorm_apply, map_sum]
   simp only [hf]
 
 end Equivariant
@@ -132,7 +133,8 @@ theorem cycHerbrand_ideleClassGroup (σ : Gal(L/K)) (hσ : ∀ g, g ∈ Subgroup
   have hpS : ∀ b, p (cycSubOne ρB σ b) = cycSubOne ρC σ (p b) := fun b ↦ by
     rw [cycSubOne_apply, cycSubOne_apply, map_sub, hpG]
   have hpN : ∀ b, p (cycNorm ρB b) = cycNorm ρC (p b) := fun b ↦ by
-    rw [cycNorm_apply, cycNorm_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [cycNorm_apply, cycNorm_apply, map_sum]
     simp only [hpG]
   obtain ⟨wFin⟩ : Nonempty (∀ v : HeightOneSpectrum (𝓞 K), PlacesOver L v) :=
     ⟨fun v ↦ (nonempty_placesOver_of_finite (L := L) v).some⟩

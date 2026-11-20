@@ -60,7 +60,8 @@ variable {p f : ℕ} [Fact p.Prime] {k : Type*} [Field k] [Fintype k] [Algebra (
 
 theorem sum_inv_val_add_one_mem :
     (∑ x : k, (D.ω⁻¹) x * ((Algebra.trace (ZMod p) k x).val : A)) + 1 ∈ Q.asIdeal := by
-  rw [← Ideal.Quotient.eq_zero_iff_mem, map_add, map_sum, map_one]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Ideal.Quotient.eq_zero_iff_mem, map_add, map_sum, map_one]
   have h : ∀ x : k, Ideal.Quotient.mk Q.asIdeal
       ((D.ω⁻¹) x * ((Algebra.trace (ZMod p) k x).val : A)) =
       D.ι (x⁻¹ * algebraMap (ZMod p) k (Algebra.trace (ZMod p) k x)) := by
@@ -70,7 +71,8 @@ theorem sum_inv_val_add_one_mem :
     conv_rhs => rw [← ZMod.natCast_zmod_val (Algebra.trace (ZMod p) k x)]
     rw [map_natCast, map_natCast]
   simp_rw [h]
-  rw [← map_sum, sum_inv_mul_trace, map_neg, map_one, neg_add_cancel]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum, sum_inv_mul_trace, map_neg, map_one, neg_add_cancel]
 
 theorem exists_g_one_eq (h : 1 < p ^ f - 1) :
     ∃ y ∈ Q.asIdeal, D.g 1 = (D.ζ - 1) * (-1 + y) := by

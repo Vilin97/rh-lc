@@ -50,7 +50,8 @@ theorem isValueAt_sum {A : Over B} [GrpObj A] {L : LB A.left} (hL : L.IsLB) {k :
   have a := (congrArg (fun q => ThetaAct.sv q (𝟙 _ ≫ (ptSecT A x).left) y J) e).trans (ThetaGeom.sv_sum _ _ _ y hJ)
   refine a.trans ?_
   have g : gs (𝟙 T.left) y ⊤ (∑ i, c i * v i) = ∑ i, gs (𝟙 T.left) y ⊤ (c i) * gs (𝟙 T.left) y ⊤ (v i) := by
-    simp only [gs_eq (𝟙 T.left) y ⊤ trivial, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [gs_eq (𝟙 T.left) y ⊤ trivial, map_sum, map_mul]
   rw [g, Finset.sum_mul]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [Category.assoc, ThetaPtMove.ptSecT_fst, Category.comp_id, _root_.mul_assoc]
@@ -143,7 +144,8 @@ theorem mem_cstSpan_range (S : ThetaSys o Ω) {M : Type} [AddCommGroup M] [Modul
 theorem comb_comb (S : ThetaSys o Ω) {M : Type} [AddCommGroup M] [Module Γ((Base S).left, ⊤) M] {I J : Type}
     [Fintype I] [Fintype J] (b : I → M) (A : Matrix I J o) (c : J → o) :
     ∑ j, cst S (c j) • ∑ i, cst S (A i j) • b i = ∑ i, cst S (∑ j, A i j * c j) • b i := by
-  simp only [Finset.smul_sum, map_sum, Finset.sum_smul, smul_smul, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finset.smul_sum, map_sum, Finset.sum_smul, smul_smul, map_mul]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by rw [mul_comm]
 
@@ -231,7 +233,8 @@ theorem change_inv (S : ThetaSys o Ω) (c : Change S) : change (change S c) c.in
   · show ∑ j, algebraMap o Ω (c.M' j i) * ∑ l, algebraMap o Ω (c.M l j) * S.ev a l = _
     have : ∀ l, ∑ j, algebraMap o Ω (c.M' j i) * (algebraMap o Ω (c.M l j) * S.ev a l) =
         algebraMap o Ω (if l = i then 1 else 0) * S.ev a l := fun l => by
-      rw [← c.sum_mul, map_sum, Finset.sum_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← c.sum_mul, map_sum, Finset.sum_mul]
       exact Finset.sum_congr rfl fun j _ => by rw [map_mul]; ring
     simp only [Finset.mul_sum]
     rw [Finset.sum_comm]

@@ -64,7 +64,8 @@ theorem altOp_comm (ρ : O →+* Module.End R V) (σ : Representation R Γ V) (h
     intro M x
     funext i
     have h1 : ∀ b y, σ γ⁻¹ (ρ b y) = ρ b (σ γ⁻¹ y) := fun b y => LinearMap.congr_fun (hσ γ⁻¹ b) y
-    simp [matAct_apply, powRep, map_sum, h1]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [matAct_apply, powRep, map_sum, h1]
   unfold altOp Finsupp.sum
   rw [Finset.mul_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun M _ => ?_

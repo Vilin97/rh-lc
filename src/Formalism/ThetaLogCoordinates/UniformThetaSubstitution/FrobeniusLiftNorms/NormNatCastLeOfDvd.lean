@@ -144,7 +144,8 @@ lemma shiftPoly_lowPoly (b : κ → Lw → K) (Q : MvPolynomial Lw K) :
   | add f g hf hg => simp only [map_add, hf, hg]
   | mul_X f x hf =>
     simp only [map_mul, hf]
-    simp [ext0, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [ext0, map_sum]
 
 lemma hasseDir_topLow (b : κ → Lw → K) (β : κ →₀ ℕ) (e : Tp →₀ ℕ) (Q : MvPolynomial Lw K) :
     hasseDir (ext0 (Tp := Tp) b) β (topMonoP e * lowPoly Q) =
@@ -517,7 +518,8 @@ theorem TermBound_of (h1 : JetPairingHasseIdentity) (h2 : HasseDerivIntegralHomo
         (∑ i ∈ range (D + 1), MvPowerSeries.C (((p : K) ^ i)⁻¹) *
           ((∑ j, ETerm.piece p Z Y aA dA aB dB b j) ^ i * U i)) := by
       refine ETerm.jetPair_congr _ _ _ fun m hm => ?_
-      rw [hgU m, hsupp m hm, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hgU m, hsupp m hm, map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [MvPowerSeries.coeff_C_mul,
         ETerm.agree_mul (ETerm.agree_pow hag i) (ETerm.agree_refl D (U i)) m (hsupp m hm).le]

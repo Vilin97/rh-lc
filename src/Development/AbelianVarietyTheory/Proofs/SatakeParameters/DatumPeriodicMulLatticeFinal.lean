@@ -245,7 +245,8 @@ theorem intAt_div_pow_le (hq0 : (q : E) ≠ 0) {a b : ℕ} (h : a ≤ b) {z : E}
 
 theorem form_apply {n : ℕ} (f : Sp E n →ₗ[E] E) (y : Sp E n) : f y = ∑ i, y i * f (Pi.single i 1) := by
   conv_lhs => rw [pi_eq_sum_univ' y]
-  simp [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum]
 
 theorem psi_shift (hq0 : (q : E) ≠ 0) (psi : E → K) (D a b : ℕ) (hD : a + b ≤ D)
     (hadd : ∀ x y : E, IntAt P ((q : E) ^ D * x) → IntAt P ((q : E) ^ D * y) → psi (x + y) = psi x * psi y)

@@ -265,12 +265,14 @@ theorem grBound_of (hTR : TaylorRep) (hTH : TaylorHasse) (hHS : HasseSmul) (hHV 
     let Yo : ↥(JKo G la k) := ∑ a, ∑ i, cc a i • (⟨xg a i, hxJ a i⟩ : ↥(JKo G la k))
     have hN : ((tau G la T k Yo : ↥(Fk G la T k)) : WK X la G.w wF (a0 D j T)) ∈ firstLength_le_prime_bound G la T := by
       show toWKo G la (a0 D j T) (Yo : ↥(HK X la G.w wF)) ∈ firstLength_le_prime_bound G la T
-      simp only [Yo, Submodule.coe_sum, Submodule.coe_smul, map_sum, map_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Yo, Submodule.coe_sum, Submodule.coe_smul, map_sum, map_smul]
       exact Submodule.sum_mem _ fun a _ => Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _ (hxN a i)
     refine ⟨tau G la T k Yo, Submodule.mem_inf.2 ⟨hN, taylorSpanLeBound G la Q S CRm T c hOk hw hth hN⟩, ?_⟩
     rw [phi_tau G la hHS hHV T k hk]
     have hY : psi G la hHS k Yo = Uk G la k (∑ a, ∑ i, cc a i • Pi.single a (tL G la i)) := by
-      simp only [Yo, map_sum, map_smul, hpsi]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Yo, map_sum, map_smul, hpsi]
     rw [hY]
     congr 1
     funext a'

@@ -96,15 +96,18 @@ theorem flat : Module.Flat R (etaleColimit R K) := by
   obtain ⟨X, hX⟩ := exists_of_finset (Finset.univ.image x)
   choose x' hx' using fun i => hX (x i) (Finset.mem_image_of_mem _ (Finset.mem_univ i))
   have h0 : of X (∑ i, f i • x' i) = of X 0 := by
-    rw [map_zero, ← h, ← ofAlgHom_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_zero, ← h, ← ofAlgHom_apply, map_sum]
     simp only [map_smul, ofAlgHom_apply, hx']
   obtain ⟨Y, g, hg⟩ := exists_hom_eq_of_of_eq h0
-  rw [map_zero, map_sum] at hg
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_zero, map_sum] at hg
   simp only [map_smul] at hg
   obtain ⟨k, a, y, h1, h2⟩ := Module.Flat.isTrivialRelation_of_sum_smul_eq_zero (R := R) (M := Y) (f := f)
     (x := fun i => g.alg (x' i)) hg
   refine ⟨k, a, fun j => of Y (y j), fun i => ?_, h2⟩
-  rw [← hx', ← of_map g, show g.alg (x' i) = _ from h1 i, ← ofAlgHom_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hx', ← of_map g, show g.alg (x' i) = _ from h1 i, ← ofAlgHom_apply, map_sum]
   simp only [map_smul, ofAlgHom_apply]
 
 variable [IsDomain R]

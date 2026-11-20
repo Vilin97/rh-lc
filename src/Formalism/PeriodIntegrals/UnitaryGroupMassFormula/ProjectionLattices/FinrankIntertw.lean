@@ -127,7 +127,8 @@ theorem eS_eq (T : GoodSet K G) (s : T.S) :
 theorem asAlg_eS {V : Type} [AddCommGroup V] [Module K V] (ρ : Representation K G V)
     (T : GoodSet K G) (s : T.S) :
     ρ.asAlgebraHom (eS T s) = ∑ x : G, cS T s x • ρ x := by
-  rw [eS_eq, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [eS_eq, map_sum]
   simp [map_smul, Representation.asAlgebraHom_of]
 
 theorem cS_conj (T : GoodSet K G) (s : T.S) (h x : G) : cS T s (h * x * h⁻¹) = cS T s x := by
@@ -157,7 +158,8 @@ theorem tau_eS [CharZero K] (T : GoodSet K G) (s t : T.S) :
   have htr : LinearMap.trace K _ ((T.tau t).asAlgebraHom (eS T s)) =
       ((Module.finrank K (T.W s) : ℕ) : K) / ((Fintype.card G : ℕ) : K) *
         (if s = t then ((Fintype.card G : ℕ) : K) else 0) := by
-    rw [asAlg_eS, map_sum, ← char_orth T s t, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [asAlg_eS, map_sum, ← char_orth T s t, Finset.mul_sum]
     refine Finset.sum_congr rfl fun x _ => ?_
     rw [map_smul, smul_eq_mul, cS]
     ring
@@ -183,7 +185,8 @@ theorem coef_mul [CharZero K] (T : GoodSet K G) (s t : T.S) (z : G) :
   have key : ∑ x : G, cS T s x * cS T t (x⁻¹ * z) =
       ((Module.finrank K (T.W t) : ℕ) : K) / ((Fintype.card G : ℕ) : K) *
         LinearMap.trace K _ (T.tau t z⁻¹ * (T.tau t).asAlgebraHom (eS T s)) := by
-    rw [asAlg_eS, Finset.mul_sum, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [asAlg_eS, Finset.mul_sum, map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun x _ => ?_
     rw [mul_smul_comm, map_smul, smul_eq_mul, ← map_mul]
     simp only [cS, mul_inv_rev, inv_inv]

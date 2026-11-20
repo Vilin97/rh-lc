@@ -58,10 +58,12 @@ theorem tensOp_sum (f₁ : Sm E r →ₗ[ℂ] Sm E r) (f₂ : Sm E s →ₗ[ℂ]
     funext a; simp [mul_comm]
   have e2 : (fun b => extOp f₁ (fun a => ∑ i, (ψ₁ i).1 a * (ψ₂ i).1 b) m.1) = ∑ i, (f₁ (ψ₁ i)).1 m.1 • (ψ₂ i).1 := by
     funext b
-    rw [e1, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e1, map_sum]
     simp [extOp_apply, mul_comm]
   change extOp f₂ (fun b => extOp f₁ (fun a => ∑ i, (ψ₁ i).1 a * (ψ₂ i).1 b) m.1) m.2 = _
-  rw [e2, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e2, map_sum]
   simp [extOp_apply]
 
 theorem tensor_pair_finite_sum {U₁ : Submodule ℂ (Sm E r)} {U₂ : Submodule ℂ (Sm E s)} {F : GA E r × GA E s → ℂ}

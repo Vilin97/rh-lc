@@ -17,7 +17,8 @@ variable {F E : Type} [Field F] [Field E] [Algebra F E] {R : Type} [CommRing R] 
 theorem hermForm_base_conj_symm (hσ : ∀ x, σ (σ x) = x) (hJ : ∀ i j, σ (J j i) = J i j) (x y : Fin n → E) :
     σ (hE σ J x y) = hE σ J y x := by
   unfold hE Formalism.UG.hform
-  simp only [map_sum, map_mul, AlgHom.coe_toRingHom, hσ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, AlgHom.coe_toRingHom, hσ]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
   rw [hJ a b]

@@ -73,7 +73,8 @@ lemma evBasic_map_tEval {S' : Type} [CommRing S'] [Algebra R₀ S'] (φ : S →�
     (f : MvPowerSeries ι R₀) (a : ι → S) :
     φ (tEval N f a) = tEval N f (fun i => φ (a i)) := by
   unfold tEval
-  simp only [map_sum, map_mul, map_prod, map_pow, AlgHom.commutes]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, map_prod, map_pow, AlgHom.commutes]
 
 lemma evBasic_map_nEval {S' : Type} [CommRing S'] [Algebra R₀ S'] (φ : S →ₐ[R₀] S')
     (f : MvPowerSeries ι R₀) (a : ι → S) (ha : ∀ i, IsNilpotent (a i)) :

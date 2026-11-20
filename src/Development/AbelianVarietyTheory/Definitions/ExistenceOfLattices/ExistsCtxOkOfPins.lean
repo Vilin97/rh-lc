@@ -207,7 +207,8 @@ theorem iotaOK_at_lift (D : D7) (j : ℕ) (hj : 1 ≤ j ∧ j ≤ D.R.m) :
 
 theorem hT_coord (V : HSp D) (x y : Fin V.rank → D.host.E) :
     V.hT (V.frame.equivFun.symm y) (V.frame.equivFun.symm x) = -herm (-V.gramᵀ) x y := by
-  simp only [Module.Basis.equivFun_symm_apply, map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ₂, map_smul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Module.Basis.equivFun_symm_apply, map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ₂, map_smul,
     herm, Matrix.neg_apply, Matrix.transpose_apply, smul_eq_mul, ← Finset.sum_neg_distrib]
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [Finset.mul_sum]

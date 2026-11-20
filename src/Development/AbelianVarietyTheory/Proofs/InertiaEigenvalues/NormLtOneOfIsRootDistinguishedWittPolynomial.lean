@@ -67,7 +67,8 @@ theorem norm_lt_one_of_isRoot : ∀ (l : ℕ) [Fact l.Prime] (a : ℕ) [NeZero a
   have heq : x ^ d + ∑ i ∈ Finset.range d, GlobalTheory.TameFrob.iotaO l a (P.coeff i) * x ^ i = 0 := by
     have h := hx
     rw [Polynomial.IsRoot, hP.as_sum] at h
-    simpa [Polynomial.eval_finset_sum, Polynomial.map_add, Polynomial.map_pow, Polynomial.map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [Polynomial.eval_finset_sum, Polynomial.map_add, Polynomial.map_pow, Polynomial.map_sum,
       Polynomial.map_mul] using h
   have hsum : ‖∑ i ∈ Finset.range d, GlobalTheory.TameFrob.iotaO l a (P.coeff i) * x ^ i‖ ≤ (l : ℝ)⁻¹ * ‖x‖ ^ d := by
     refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg (by positivity) fun i hi => ?_

@@ -51,7 +51,8 @@ theorem subIner_pullback {L X Y I α J : Type} [Field L] [AddCommGroup X] [Modul
     rw [map_sub, hm, map_smul, (hx a ha).2, hy j a ha, sub_self]
   · rw [← sub_eq_zero]
     refine hinj _ fun j => ?_
-    rw [map_sub, map_sum, ← hs j, sub_eq_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_sum, ← hs j, sub_eq_zero]
     exact Finset.sum_congr rfl fun a ha => (hx a ha).2 j
 
 theorem subIner_rTensor_inj {Qp LL B V U : Type} [Field Qp] [Field LL] [Algebra Qp LL]
@@ -64,7 +65,8 @@ theorem subIner_rTensor_inj {Qp LL B V U : Type} [Field Qp] [Field LL] [Algebra 
     (LinearMap.ker_eq_bot'.2 fun v hv => hp v fun j => congrFun hv j)
   have h1 : ∀ v, ∑ j, q (Pi.single j (p j v)) = v := by
     intro v
-    rw [← map_sum, Finset.univ_sum_single]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, Finset.univ_sum_single]
     exact LinearMap.congr_fun hq v
   have h2 : ∀ z : V ⊗[Qp] B, ∑ j, AlgebraTensorModule.rTensor Qp B
       (q.comp (LinearMap.single LL (fun _ => U) j)) (AlgebraTensorModule.rTensor Qp B (p j) z) = z := by

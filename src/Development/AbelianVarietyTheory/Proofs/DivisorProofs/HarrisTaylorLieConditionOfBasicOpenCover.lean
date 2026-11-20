@@ -40,7 +40,8 @@ theorem kill_of_decomp {a : ℕ} (τ : Fin a → O →+* R') (v : M) (w : Fin a 
     (hw : ∀ i c, μ c (w i) = τ i c • w i) (hv : v = ∑ i, w i) (c : Fin a → O) :
     (List.ofFn fun i => μ (c i) - algebraMap R' _ (τ i (c i))).prod v = 0 := by
   classical
-  rw [← lam_prod_gen, hv, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← lam_prod_gen, hv, map_sum]
   refine Finset.sum_eq_zero fun j _ => ?_
   rw [← Finset.prod_erase_mul _ _ (Finset.mem_univ j), map_mul, Module.End.mul_apply, lam_gen_apply, hw,
     sub_self, map_zero]

@@ -26,7 +26,8 @@ theorem aniso_of_smul (hcm : IsCMExt F E σ) {n r s : ℕ} (J : Matrix (Fin n) (
   have hy : (fun i => τ (x i)) ⬝ᵥ (J.map τ) *ᵥ star (fun i => τ (x i)) = 0 := by
     rw [map_zero] at h1
     rw [← h1]
-    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hcm.2.2.2, Matrix.map_apply, Pi.star_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hcm.2.2.2, Matrix.map_apply, Pi.star_apply]
   have h2 := GlobalTheory.DefiniteAniso.eq_zero_of_hasSig (hasSig_definite h h0) (fun i => τ (x i)) (by
     rw [Matrix.smul_mulVec, dotProduct_smul, hy, smul_zero])
   funext i

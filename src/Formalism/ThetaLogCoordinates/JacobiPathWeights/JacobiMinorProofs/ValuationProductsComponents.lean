@@ -457,14 +457,16 @@ theorem col_all {i : ℕ} {μ : ℕ → Fin n → ℤ} (hS : ∀ j, j ∈ S ↔ 
       unfold stepF
       split
       · unfold wedgeF
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         refine wge_sum _ _ fun b _ => ?_
         rw [map_mul, map_mul, map_intCast]
         have := wge_mul (wge_mul (wge_int (isVec := isVec) (S := S) (last := last) (s := s)
           (L := GenField k n) (ζ := Empty) (n := n) (sg J b)) (ih (J.erase b))) (hX b)
         simpa using this
       · unfold contrF
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         refine wge_sum _ _ fun b _ => ?_
         rw [map_mul, map_mul, map_intCast]
         have := wge_mul (wge_mul (wge_int (isVec := isVec) (S := S) (last := last) (s := s)

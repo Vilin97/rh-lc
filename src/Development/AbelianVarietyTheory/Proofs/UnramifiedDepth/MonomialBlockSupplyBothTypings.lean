@@ -101,7 +101,8 @@ end
 
 theorem degree_dg {σ : Type} {N N' : ℕ} (j : Fin N × Fin N' → σ) (e : ℕ → ℕ) :
     (dg j (monAl N N' e)).degree = monDeg N N' e := by
-  rw [← sum_monAl, Fin.sum_univ_eq_sum_range (fun ρ => monAl N N' e ρ) N, dg, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← sum_monAl, Fin.sum_univ_eq_sum_range (fun ρ => monAl N N' e ρ) N, dg, map_sum]
   refine Finset.sum_congr rfl fun ρ hρ => ?_
   unfold dgOne
   split_ifs with h
@@ -173,7 +174,8 @@ theorem core (X : RowData C V d I J) (g : Fin 2) (r : ZMod d → ℕ) (en : ∀ 
       val_nat V.v V.l_prime V.v_l (Finset.prod_ne_zero_iff.2 fun _ _ => Nat.factorial_ne_zero _),
       WithTop.coe_le_coe, GlobalTheory.LegendreBounds.padicValNat_prod_factorial V.l V.l_prime]
     have hd : ∑ a, monDeg N (r a) (e a) = ∑ x, (∑ a, dg (j a) (monAl N (r a) (e a))) x := by
-      rw [← Finsupp.degree_eq_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← Finsupp.degree_eq_sum, map_sum]
       exact Finset.sum_congr rfl fun a _ => (degree_dg _ _).symm
     rw [hd, Nat.cast_sum, Finset.sum_div]
     exact Finset.sum_le_sum fun ρ _ => GlobalTheory.LegendreBounds.upper V.l V.l_prime _

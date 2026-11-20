@@ -108,7 +108,8 @@ theorem exists_positive_period_line {E : Type} [Field E] (i₀ : MvPolynomial K 
       rw [Equiv.sum_comp eF fun m => u m * w m]
       apply ψ.injective
       rw [hs, ← h]
-      simp only [map_sum, map_mul, hu, hw]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_mul, hu, hw]
     intro a b
     fin_cases a <;> fin_cases b
     · exact key α p _ _ 1 1 hα hp (by simp) Fr.αp

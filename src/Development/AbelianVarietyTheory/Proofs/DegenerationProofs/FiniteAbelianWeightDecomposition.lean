@@ -25,14 +25,16 @@ theorem avg_apply (c : T →* oˣ) (x : M) :
   simp [avg, LinearMap.sum_apply]
 
 theorem comm_avg (c : T →* oˣ) (s : T) (x : M) : ρ s (avg ρ u c x) = avg ρ u c (ρ s x) := by
-  simp only [avg_apply, map_smul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [avg_apply, map_smul, map_sum]
   congr 1
   refine Finset.sum_congr rfl fun t _ => ?_
   rw [← Module.End.mul_apply, ← map_mul, mul_comm s t, map_mul, Module.End.mul_apply]
 
 theorem apply_avg (c : T →* oˣ) (s : T) (x : M) :
     ρ s (avg ρ u c x) = (c s : o) • avg ρ u c x := by
-  simp only [avg_apply, map_smul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [avg_apply, map_smul, map_sum]
   rw [smul_comm]
   congr 1
   rw [Finset.smul_sum]

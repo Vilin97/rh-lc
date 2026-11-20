@@ -25,7 +25,8 @@ theorem coeff_aeval_of_isHomogeneous {R : Type} [CommRing R] {n : ℕ}
       ∑ d ∈ Finset.finsuppAntidiag (Finset.univ : Finset (Fin 2)) n,
         if d 0 = j then AddMonoidAlgebra.coeff P d else 0 := by
   conv_lhs => rw [MvPolynomial.as_sum P]
-  rw [map_sum, Polynomial.finsetSum_coeff]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Polynomial.finsetSum_coeff]
   have hterm : ∀ d : Fin 2 →₀ ℕ,
       (MvPolynomial.aeval ![(Polynomial.X : Polynomial R), 1]
         (MvPolynomial.monomial d (AddMonoidAlgebra.coeff P d))).coeff j =

@@ -203,7 +203,8 @@ theorem indep_on {Γ O : Type} [Group Γ] [TopologicalSpace Γ] [CommRing O] {r 
   refine Fintype.linearIndependent_iff.1 hx u ?_ a
   have e : ∑ a, u a • (Submodule.Quotient.mk (x a) : H1 (repOn ρ (1 : Γ →* Kˣ) K)) =
       Submodule.Quotient.mk (∑ a, u a • x a) := by
-    rw [← Submodule.mkQ_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Submodule.mkQ_apply, map_sum]
     simp
   rw [e, Submodule.Quotient.mk_eq_zero, Submodule.mem_comap, mem_coboundaries1]
   obtain ⟨m, hm⟩ := cob_of_vanish (matOf ρ K) L z d hL hz hd hd1 (∑ a, u a • x a).1

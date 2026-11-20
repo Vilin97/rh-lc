@@ -24,7 +24,8 @@ theorem push_div_pts : ∀ {S S₀ : Scheme.{0}} (f : S ⟶ S₀) (G : Over S) [
     have e : a = ∑ i, a i • (Pi.single i (1 : ℤ) : Fin r → ℤ) := by
       ext j; simp [Finset.sum_apply, Pi.single_apply]
     have := congrArg cH e
-    rw [map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at this
     simp only [map_zsmul] at this
     exact congrArg Additive.toMul this
   have hdi : ∀ i, pushHom hp T (d i ^ n) = preHom U (c (Pi.single i 1)) := by

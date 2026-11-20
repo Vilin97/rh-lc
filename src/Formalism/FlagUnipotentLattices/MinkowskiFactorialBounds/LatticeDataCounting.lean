@@ -284,7 +284,8 @@ theorem dualGen_span (h : U →ₗ[E] U →ₗ⋆[E] E) (M N : Submodule (𝓞 E
     Submodule.sub_mem _ hx (Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _ (ht i).1)
   have hφx' : φ x' ∈ A := by
     have : φ x' = φ x - ∑ i, c i • t' i := by
-      rw [hx', map_sub, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hx', map_sub, map_sum]
       congr 1
       exact Finset.sum_congr rfl fun i _ => by rw [map_smul, (ht i).2]
     rw [this]; exact hc
@@ -292,7 +293,8 @@ theorem dualGen_span (h : U →ₗ[E] U →ₗ⋆[E] E) (M N : Submodule (𝓞 E
   intro m hm
   obtain ⟨a, ha, y, hy, rfl⟩ := Submodule.mem_sup.mp (hM hm)
   obtain ⟨b, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun (𝓞 E)).mp hy
-  rw [map_add, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_add, map_sum]
   refine (algebraMap (𝓞 E) E).range.add_mem (hx'N a ha) (Subring.sum_mem _ fun i _ => ?_)
   rw [← algebraMap_smul E (b i) (s i), LinearMap.map_smulₛₗ, starRingEnd_apply, smul_eq_mul]
   exact (algebraMap (𝓞 E) E).range.mul_mem (star_mem (b i)) (hφx' i)

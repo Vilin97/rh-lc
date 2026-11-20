@@ -61,12 +61,14 @@ private theorem isWeightedHomogeneous_aeval_of_forall {R S σ τ Γ Δ : Type} [
     (hp : IsWeightedHomogeneous w p m) (φ : σ → MvPolynomial τ S)
     (hφ : ∀ v, IsWeightedHomogeneous w' (φ v) (g (w v))) :
     IsWeightedHomogeneous w' (aeval φ p) (g m) := by
-  rw [p.as_sum, map_sum, ← mem_weightedHomogeneousSubmodule]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [p.as_sum, map_sum, ← mem_weightedHomogeneousSubmodule]
   refine Submodule.sum_mem _ fun s hs => ?_
   rw [mem_weightedHomogeneousSubmodule, aeval_monomial, Finsupp.prod]
   have hw : Finsupp.weight w s = m := hp (mem_support_iff.mp hs)
   have hm : g m = 0 + ∑ v ∈ s.support, s v • g (w v) := by
-    rw [zero_add, ← hw, Finsupp.weight_apply, Finsupp.sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [zero_add, ← hw, Finsupp.weight_apply, Finsupp.sum, map_sum]
     simp [map_nsmul]
   rw [hm, MvPolynomial.algebraMap_apply]
   exact (isWeightedHomogeneous_C w' _).mul

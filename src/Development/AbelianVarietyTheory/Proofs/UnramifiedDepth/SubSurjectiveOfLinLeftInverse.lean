@@ -84,7 +84,8 @@ theorem sub_surjective_of_lin_leftInverse : âˆ€ (R : Type) [CommRing R] (d r : â
             have h3 := congrFun (congrFun hA i) k
             rw [Matrix.mul_apply, Matrix.one_apply] at h3
             simp only [lin, Matrix.of_apply] at h3
-            rw [map_sub, map_sum]
+            set_option synthInstance.maxHeartbeats 100000 in
+              rw [map_sub, map_sum]
             simp only [map_smul, smul_eq_mul]
             rw [h3, MvPowerSeries.coeff_X]
             simp [Finsupp.single_left_inj, eq_comm]

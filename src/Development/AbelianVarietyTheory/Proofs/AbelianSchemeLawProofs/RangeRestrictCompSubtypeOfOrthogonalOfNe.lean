@@ -365,7 +365,8 @@ theorem exists_retraction_tensor_ranges {f : ℕ → Module.End K V} {g : ℕ �
     simp only [LinearMap.comp_apply, LinearMap.proj_apply, LinearMap.pi_apply]
     rw [TensorProduct.map_map]
     rfl
-  · rw [LinearMap.sum_apply, LinearMap.pi_apply, map_sum, Finset.sum_eq_single x]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [LinearMap.sum_apply, LinearMap.pi_apply, map_sum, Finset.sum_eq_single x]
     · simp only [LinearMap.comp_apply, LinearMap.proj_apply]
       rw [TensorProduct.map_map, rangeRestrict_comp_subtype_of_orthogonal hf,
         rangeRestrict_comp_subtype_of_orthogonal hg, TensorProduct.map_id, LinearMap.id_apply]
@@ -511,7 +512,8 @@ theorem degProj_totalTensorEquiv (n : ℕ) (z : (∀ s, A.obj s) ⊗[K] (∀ t, 
   | add x y hx hy => simp only [map_add, hx, hy]
   | tmul x y =>
     funext w
-    rw [LinearMap.sum_apply, map_sum, Finset.sum_apply, degProj_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [LinearMap.sum_apply, map_sum, Finset.sum_apply, degProj_apply,
       card_parts]
     have h : ∀ p : ℕ × ℕ, totalTensorEquiv A B
         (TensorProduct.map (degProj A p.1) (degProj B p.2) (x ⊗ₜ y)) w =

@@ -138,7 +138,8 @@ theorem fockK_of (hB : FockBasic) : FockK := by
   have key : fock c (KopL ε i j p) = (2 * c : ℂ)⁻¹ •
       ((∑ a ∈ Finset.univ.filter (fun a => ε a = true), cr c (a, i, false) (pderiv (a, j, true) (fock c p))) -
         ∑ a ∈ Finset.univ.filter (fun a => ε a = false), cr c (a, j, true) (pderiv (a, i, false) (fock c p))) := by
-    rw [kopL_apply, eL, map_sub, map_sum, map_sum, smul_sub, Finset.smul_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [kopL_apply, eL, map_sub, map_sum, map_sum, smul_sub, Finset.smul_sum, Finset.smul_sum]
     congr 1
     · refine Finset.sum_congr rfl fun a _ => ?_
       rw [← eL, hX, hd, map_smul]

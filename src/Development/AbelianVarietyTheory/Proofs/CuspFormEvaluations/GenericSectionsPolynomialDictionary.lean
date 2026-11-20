@@ -66,7 +66,8 @@ private lemma algebraMap_mul_mem_Vw (la : HeightOneSpectrum (𝓞 B.KO)) (N : �
 
 theorem toRp_mem (la : HeightOneSpectrum (𝓞 B.KO)) (N : ℕ) (u : WeightFamilies.Wt D j)
     (p : MvPolynomial (Idx D j N) X.Forms) (hp : OfWt X u p) : toRp X la N p ∈ Vw X la N u := by
-  rw [p.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [p.as_sum, map_sum]
   refine Submodule.sum_mem _ fun m _ => ?_
   obtain ⟨F, hF⟩ := LinearMap.mem_range.mp (hp m)
   have key : toRp X la N (MvPolynomial.monomial m (p.coeff m)) = emb X la N (p.coeff m) *
@@ -91,7 +92,8 @@ theorem toRp_mem (la : HeightOneSpectrum (𝓞 B.KO)) (N : ℕ) (u : WeightFamil
 
 theorem toFn_mem (R : Rdg X) {N : ℕ} (t : Idx D j N → ℂ) (u : WeightFamilies.Wt D j)
     (p : MvPolynomial (Idx D j N) X.Forms) (hp : OfWt X u p) : R.toFn t p ∈ R.sp u Set.univ := by
-  rw [p.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [p.as_sum, map_sum]
   refine Submodule.sum_mem _ fun m _ => ?_
   obtain ⟨F, hF⟩ := LinearMap.mem_range.mp (hp m)
   have key : R.toFn t (MvPolynomial.monomial m (p.coeff m)) = R.ev (p.coeff m) *
@@ -182,12 +184,14 @@ theorem polyDictionary : ∀ (D : D7) (B : WeightFamilies.Prov D) (P : ModuliInt
     fun u p hp => ⟨PolyDict.toRp_mem la N u p hp, PolyDict.toFn_mem R t u p hp⟩,
     fun u u' f hf g hg => PolyDict.sp_mul R u u' f hf g hg,
     fun u s => PolyDict.sp_span R u s, fun u M => PolyDict.sp_finrank R u M⟩
-  · rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum]
     unfold Formalism.MainNotions.Gaps.EtaleWeightGaps.sec
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_mul, PolyDict.toRp_X, PolyDict.toRp_C, Algebra.smul_def,
       IsScalarTower.algebraMap_apply (Op X la N) (Kp X la N) (Rp X la N)]
-  · rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum]
     unfold Rdg.s
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_mul, PolyDict.toFn_X, PolyDict.toFn_C]

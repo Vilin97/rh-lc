@@ -74,7 +74,8 @@ theorem charpoly_map_eq_of_commute_semilinear {R : Type} [CommRing R] [IsDomain 
   have hFrepr : ∀ x i, b.repr (F x) i = ∑ j, Φ i j * σ (b.repr x j) := by
     intro x i
     conv_lhs => rw [← b.sum_repr x]
-    simp only [map_sum, LinearMap.map_smulₛₗ, Finsupp.coe_finset_sum, Finset.sum_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.map_smulₛₗ, Finsupp.coe_finset_sum, Finset.sum_apply,
       map_smul, Finsupp.coe_smul, Pi.smul_apply, smul_eq_mul]
     exact Finset.sum_congr rfl fun j _ => mul_comm _ _
   have hurepr : ∀ y i, b.repr (u y) i = ∑ l, U i l * b.repr y l := by

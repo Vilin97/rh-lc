@@ -20,7 +20,8 @@ theorem gram_det_eq (h : V →ₗ⋆[K] V →ₗ[K] K) (b : Basis ι K V) (u w :
     ext i j
     rw [Matrix.of_apply]
     conv_lhs => rw [← b.sum_repr (u i), ← b.sum_repr (w j)]
-    simp only [map_sum, LinearMap.sum_apply, map_smulₛₗ, LinearMap.smul_apply, Matrix.mul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.sum_apply, map_smulₛₗ, LinearMap.smul_apply, Matrix.mul_apply,
       Matrix.conjTranspose_apply, Basis.toMatrix_apply, Matrix.of_apply, smul_eq_mul,
       Finset.sum_mul, Finset.mul_sum, starRingEnd_apply, RingHom.id_apply]
     refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun l _ => ?_

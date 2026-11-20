@@ -6,7 +6,8 @@ theorem UpperTheory.V.Lit.Bor.ipDef :
     UpperTheory.V.Lit.Bor.IpDef := by
   intro E _ _ _ a n e he M _ _ _ _ H N hH q
   refine ⟨fun ω η => ?_, fun ω hω => ⟨?_, fun h0 => ?_⟩⟩
-  · simp only [ip, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [ip, map_sum]
     exact Finset.sum_congr rfl fun I _ => hH.herm _ _
   · simp only [ip, Complex.re_sum]
     exact Finset.sum_nonneg fun I _ => hH.nonneg _ (hω _)

@@ -47,7 +47,8 @@ theorem herm_skew_iff {E : Type} [Field E] {r : ℕ} (τ : E →+* ℂ) (G : Mat
   have key : ∀ u w, hermC τ G (A *ᵥ u) w + hermC τ G u (A *ᵥ w) =
       ∑ a, ∑ b, u a * (Aᵀ * G.map τ + G.map τ * cj A) a b * conj (w b) := by
     intro u w
-    simp only [hermC, Matrix.mulVec, dotProduct, Matrix.add_apply, Matrix.mul_apply, Matrix.transpose_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hermC, Matrix.mulVec, dotProduct, Matrix.add_apply, Matrix.mul_apply, Matrix.transpose_apply,
       Matrix.map_apply, map_sum, map_mul, Finset.sum_mul, Finset.mul_sum, mul_add, add_mul, Finset.sum_add_distrib]
     congr 1
     · refine (Finset.sum_congr rfl fun y _ => Finset.sum_comm).trans (Finset.sum_comm.trans

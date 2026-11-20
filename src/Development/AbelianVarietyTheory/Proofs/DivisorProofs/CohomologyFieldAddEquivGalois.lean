@@ -30,7 +30,8 @@ theorem cochX_d_apply (E : Spc) (F : Shv R) (m : ℕ) (x : (cochX R E F).X m) :
   let φ : ((cochC R E F).obj ⦋m⦌ ⟶ (cochC R E F).obj ⦋m + 1⦌) →+ (cochC R E F).obj ⦋m + 1⦌ :=
     AddMonoidHom.mk' (fun f => f x) (fun f g => rfl)
   change φ (AlgebraicTopology.AlternatingCofaceMapComplex.objD _ m) = _
-  simp only [AlgebraicTopology.AlternatingCofaceMapComplex.objD, map_sum, map_zsmul, cobd]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [AlgebraicTopology.AlternatingCofaceMapComplex.objD, map_sum, map_zsmul, cobd]
   rfl
 
 theorem etaleCohomology_simplicialCochain_representation_step (F : Shv R) (E : Spc) (n i : ℕ) (hi : (ComplexShape.up ℕ).prev n = i)

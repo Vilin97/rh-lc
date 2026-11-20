@@ -257,7 +257,8 @@ theorem gram_mul_mulMatrix (H : Host E) (a : 𝓞 E) :
       (trForm H (RingOfIntegers.basis E i) (a * RingOfIntegers.basis E j) : ℤ) := by
     intro a i j
     conv_rhs => rw [← (RingOfIntegers.basis E).sum_repr (a * RingOfIntegers.basis E j)]
-    simp only [map_sum, map_zsmul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_zsmul]
     simp [Matrix.mul_apply, gram, mulMatrix, Algebra.leftMulMatrix_eq_repr_mul, mul_comm]
   ext i j
   rw [← gram_transpose H, ← Matrix.transpose_mul, gram_transpose, Matrix.transpose_apply, h, h,
@@ -340,7 +341,8 @@ theorem hypJ_inl (H : Host E) (x : 𝓞 E) :
     intro y
     rw [trForm_symm]
     conv_lhs => rw [← (RingOfIntegers.basis E).sum_repr x]
-    simp only [map_sum, map_zsmul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_zsmul]
     simp [mul_comm]
   ext (i | i) <;>
     simp [Matrix.mulVec, dotProduct, Fintype.sum_sum_type, hypRealBasis, hypBasis_repr_inl, hypBasis_repr_inr, gram, hx]

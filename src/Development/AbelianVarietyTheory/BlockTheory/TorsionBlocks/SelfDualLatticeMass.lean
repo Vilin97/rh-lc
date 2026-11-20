@@ -111,7 +111,8 @@ theorem stdSpace_posDef (hc : ∀ (τ : E →+* ℂ) (a : E), τ (star a) = star
   intro τ x hx
   change 0 < (τ (∑ i, star (x i) * x i)).re
   obtain ⟨j, hj⟩ : ∃ j, x j ≠ 0 := Function.ne_iff.1 hx
-  simp only [map_sum, map_mul, hc, Complex.re_sum, ← Complex.normSq_eq_conj_mul_self,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, hc, Complex.re_sum, ← Complex.normSq_eq_conj_mul_self,
     Complex.ofReal_re]
   exact Finset.sum_pos' (fun i _ => Complex.normSq_nonneg _)
     ⟨j, Finset.mem_univ _, Complex.normSq_pos.2 ((map_ne_zero τ).2 hj)⟩

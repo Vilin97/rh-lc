@@ -96,7 +96,8 @@ theorem reduce (K₁ : Type) [NormedField K₁] [IsUltrametricDist K₁] [CharZe
     rw [← hgauss, ← hop]
     unfold frameJet
     rw [Formalism.DworkPowerSeriesWeights.eval₂_jetPairPoly, map_prod]
-    simp only [Formalism.DworkPowerSeriesWeights.ringMap_minorProd, map_sum, map_mul, MvPolynomial.map_C, MvPolynomial.map_X,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Formalism.DworkPowerSeriesWeights.ringMap_minorProd, map_sum, map_mul, MvPolynomial.map_C, MvPolynomial.map_X,
       MvPolynomial.coe_eval₂Hom, MvPolynomial.eval₂_X]
     exact le_rfl
 

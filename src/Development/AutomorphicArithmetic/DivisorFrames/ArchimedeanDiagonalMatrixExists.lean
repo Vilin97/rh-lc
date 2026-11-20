@@ -357,7 +357,8 @@ private theorem vac_lin (hP : GlobalTheory.FunPr.Hypotheses₂) {B : Base F E} {
   have hact := (actsLaws F _ (Φ T₀) _ (Φ T₀)).1 _ (fun t => map_zero _) hsd
   have e : (∑ w, (Φ ∘ₗ LinearMap.applyₗ T₀ ∘ₗ D w).restrictScalars ℝ ∘ₗ L w ∘ₗ LinearMap.proj w) Y =
       Φ (sumPl (fun w => fockAct2 r' s' r s (L w (Y w)) + (c w * (L w (Y w)).trace) • 1) T₀) := by
-    simp only [sumPl, LinearMap.sum_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [sumPl, LinearMap.sum_apply, map_sum]
     rfl
   rw [e]
   exact hact

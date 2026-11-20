@@ -49,7 +49,8 @@ theorem UpperTheory.cut_lattice_two_embeddings_bound :
     (UpperTheory.cut_lattice_norm_bound E H Dw p n g h b Λ hD σ' M N s a S δ' A' hS hδ'0 hδ'.le hn' hA' hE').2.2 u' hu'
   have hEv : IsEigL Dw σ' (b (∑ i, u' i • A' i)) := by
     intro o
-    simp only [map_sum, map_smul, hE' _ o, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, hE' _ o, Finset.smul_sum]
     exact Finset.sum_congr rfl fun i _ => smul_comm _ _ _
   refine dot_lt _ _ _ _ hu hu' h2 h2' ?_
   rw [hdual _ _ hEv, norm_neg]

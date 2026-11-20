@@ -125,7 +125,8 @@ private theorem isHecke_div_and_resEtaPow_div {K : Type} [Fintype K] {ι : K →
     rw [Finset.prod_pow_eq_pow_sum, hg m hm k]
   conv_lhs => rw [g.as_sum]
   conv_rhs => rw [g.as_sum]
-  simp only [map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl (fun m hm => ?_)
   rw [← key m hm]
   simp only [mConeMap, aeval_monomial, Finsupp.prod, mul_pow, Finset.prod_mul_distrib, map_mul, map_prod,

@@ -143,7 +143,8 @@ theorem om_comb {S T : HSp D} {χS χT : (AE D)ˣ →* Circle} {om : Om S T} (ho
     {g : GA D S} {h : GA D T} (hg : g ∈ GinfC S) (hh : h ∈ GinfC T) {c : WO S T →₀ ℂ} (hc : IsFinComb c)
     {f : WO S T → ℂ} (hf : IsThetaFunO ψ S T f) : om (g, h) (comb ψ S T c f) = comb ψ S T c (om (g, h) f) := by
   unfold comb
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun x hx => ?_
   rw [map_smul, hom.om_heis g h x f hf, actO_real hg hh (hc x hx)]
 
@@ -153,7 +154,8 @@ theorem op_combR {A S A' : HSp D} (T : Module.End ℂ (WO A S → ℂ)) (c : WO 
       ∑ y ∈ c.support, (c y * ψ (symplOH S A' v y)) • fun u => K u (v + y) := by
     funext u
     simp only [comb, Finset.sum_apply, Pi.smul_apply, heisO, smul_eq_mul, mul_assoc]
-  rw [e, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, map_sum]
   funext u
   simp only [comb, Finset.sum_apply, Pi.smul_apply, heisO, smul_eq_mul, map_smul, mul_assoc]
 
@@ -163,7 +165,8 @@ theorem op_combL {A S A' : HSp D} (T : Module.End ℂ (WO S A' → ℂ)) (c : WO
       ∑ x ∈ c.support, (c x * ψ (symplOH A S u x)) • K (u + x) := by
     funext v
     simp only [comb, Finset.sum_apply, Pi.smul_apply, heisO, smul_eq_mul, mul_assoc]
-  rw [e, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, map_sum]
   funext v
   simp only [comb, Finset.sum_apply, Pi.smul_apply, heisO, smul_eq_mul, map_smul, mul_assoc]
 

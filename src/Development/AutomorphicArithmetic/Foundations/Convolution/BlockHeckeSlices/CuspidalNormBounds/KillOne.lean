@@ -56,7 +56,8 @@ variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {S : Set (Pl 
 private theorem ev_hEP (d : Dat S n) (z : Fin d.len → ℂ) (k : Pl E × Fin n) :
     ev z (d.hEP k) = d.ptH (fun l => z l + d.rho l) k := by
   have hq : qc k.1 ≠ 0 := Nat.cast_ne_zero.2 (GlobalTheory.LFun.qV_ne_zero k.1)
-  rw [Dat.hEP, map_sum, Dat.ptH, Dat.ptS, esymm_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Dat.hEP, map_sum, Dat.ptH, Dat.ptS, esymm_sum]
   refine Finset.sum_congr rfl fun a _ => ?_
   have e : ∀ (v : Fin d.len → ℝ) (c : ℂ), ev z (AddMonoidAlgebra.single v (MvPolynomial.C c)) =
       c * Complex.exp (∑ l, (v l : ℂ) * z l) := fun v c => by

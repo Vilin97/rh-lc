@@ -47,13 +47,15 @@ private theorem indep {O A κ : Type} [CommRing O] [IsDomain O] [CommRing A] [Al
   rw [Fintype.linearIndependent_iff]
   intro c hc k
   have hs : (satSq x).mkQ (∑ i, c i • g i) = 0 := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simpa only [map_smul] using hc
   rw [Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero] at hs
   obtain ⟨a, ha0, ha⟩ := hs
   obtain ⟨δ, hδ, hk, hk'⟩ := hd k
   have hz := der_sq x δ hδ _ ha
-  rw [map_smul, map_sum] at hz
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_smul, map_sum] at hz
   simp only [map_smul, smul_eq_mul] at hz
   rw [Finset.sum_eq_single k (fun j _ hj => by rw [hk' j hj, mul_zero]) (by simp)] at hz
   rcases mul_eq_zero.mp hz with h | h

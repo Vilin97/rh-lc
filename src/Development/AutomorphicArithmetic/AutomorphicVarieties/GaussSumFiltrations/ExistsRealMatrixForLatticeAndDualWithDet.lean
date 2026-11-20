@@ -107,7 +107,8 @@ theorem eM_pair (G : Matrix κ κ ℤ) (R : Matrix κ κ ℝ) (hR : Rᵀ * R = G
     intro i j
     have := congrFun (congrFun hR i) j
     simpa [Matrix.mul_apply] using this.symm
-  simp only [eM, AddMonoidHom.coe_mk, ZeroHom.coe_mk, BF, dotProduct, Matrix.mulVec, map_sum, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [eM, AddMonoidHom.coe_mk, ZeroHom.coe_mk, BF, dotProduct, Matrix.mulVec, map_sum, map_mul,
     Matrix.map_apply, map_intCast, hG, Finset.sum_mul, Finset.mul_sum]
   conv_lhs => rw [Finset.sum_comm]
   conv_lhs => enter [2, a]; rw [Finset.sum_comm]
@@ -169,7 +170,8 @@ noncomputable def bM (ω : Module.Basis (InfinitePlace F) ℚ F) (a : F) (R : Ma
 theorem bM_mulVec (ω : Module.Basis (InfinitePlace F) ℚ F) (a : F) (R : Matrix κ κ ℝ) (m : InfinitePlace F × κ → ℤ) :
     eM R (a • fun j => ∑ w, (m (w, j) : F) * ω w) = bM ω a R *ᵥ fun i => (m i : ℝ) := by
   funext p
-  simp only [eM, bM, aM, AddMonoidHom.coe_mk, ZeroHom.coe_mk, Matrix.mulVec, dotProduct,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [eM, bM, aM, AddMonoidHom.coe_mk, ZeroHom.coe_mk, Matrix.mulVec, dotProduct,
     Matrix.kroneckerMap_apply, Matrix.of_apply, Pi.smul_apply, smul_eq_mul, map_mul, map_sum,
     map_intCast, Finset.mul_sum, Fintype.sum_prod_type]
   rw [Finset.sum_comm]
@@ -192,7 +194,8 @@ theorem bM_transpose (G : Matrix κ κ ℤ) (R : Matrix κ κ ℝ) (hR : Rᵀ * 
       mul_ite, mul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true]
     exact Finset.sum_congr rfl fun i _ => by ring
   rw [hB, ← sum_reAt]
-  simp only [reAt_eq, map_sum, map_mul, map_intCast, Matrix.mulVec, dotProduct, Matrix.transpose_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [reAt_eq, map_sum, map_mul, map_intCast, Matrix.mulVec, dotProduct, Matrix.transpose_apply,
     bM, aM, eM, Matrix.kroneckerMap_apply, Matrix.of_apply, AddMonoidHom.coe_mk, ZeroHom.coe_mk,
     Fintype.sum_prod_type]
   refine Finset.sum_congr rfl fun v _ => ?_
@@ -280,10 +283,12 @@ theorem mem_dualL (G : Matrix κ κ ℤ) (ω : Module.Basis (InfinitePlace F) �
     have htr : ∀ (c : ℤ) (z : F), Algebra.trace ℚ F ((c : F) * z) = c * Algebra.trace ℚ F z := by
       intro c z
       rw [← zsmul_eq_mul, map_zsmul, zsmul_eq_mul]
-    rw [hl', map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hl', map_sum]
     push_cast
     refine Finset.sum_congr rfl fun k _ => ?_
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun w _ => ?_
     rw [htr, hN (w, k)]
 

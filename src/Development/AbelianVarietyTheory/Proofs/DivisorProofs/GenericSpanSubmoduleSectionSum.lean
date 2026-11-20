@@ -18,9 +18,11 @@ theorem stalkBasis_repr_germ_of_fintype {X : Scheme.{0}} {F : X.Modules} {κ : T
     (he.stalkBasis x (h hx)).repr (F.presheaf.germ V x hx t) i =
       X.presheaf.germ V x hx ((he.basis h).repr t i) := by
   conv_lhs => rw [← (he.basis h).sum_repr t]
-  simp only [map_sum, QCoh.germ_smul, IsFrame.basis_apply, germ_resM]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, QCoh.germ_smul, IsFrame.basis_apply, germ_resM]
   simp only [← he.stalkBasis_apply x (h hx)]
-  rw [← map_sum, Module.Basis.repr_sum_self]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum, Module.Basis.repr_sum_self]
 
 theorem mem_ofGeneric_iff_of_span :
     ∀ {X : Scheme.{0}} [IsIntegral X] {F : X.Modules} {κ : Type} [Fintype κ] {V : X.Opens} (c : κ → Γ(F, V)), IsFrame c →

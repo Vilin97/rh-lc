@@ -27,7 +27,8 @@ theorem mid_lin {x y : κ} (hxy : x ≠ y) (c r : κ → ℝ) (hrx : r x = 0) (h
     (hr : ∀ z, z ≠ x → z ≠ y → r z = c z) :
     mid x y (lin c) = C ((c x + c y) / 2) * (X x + X y) + lin r := by
   have hmr : mid x y (lin r) = lin r := by
-    rw [lin, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [lin, map_sum]
     refine Finset.sum_congr rfl fun z _ => ?_
     rw [map_mul, algHom_C, algebraMap_eq]
     by_cases hx : z = x
@@ -42,7 +43,8 @@ theorem mid_lin {x y : κ} (hxy : x ≠ y) (c r : κ → ℝ) (hrx : r x = 0) (h
 theorem expand (Φ : MvPolynomial κ ℝ →ₗ[ℝ] ℝ) (u m : MvPolynomial κ ℝ) (D : ℕ) (t : ℝ) :
     Φ ((C t * u + m) ^ (D + 1)) =
       ∑ i ∈ Finset.range (D + 1 + 1), t ^ i * ((D + 1).choose i : ℝ) * Φ (u ^ i * m ^ (D + 1 - i)) := by
-  rw [add_pow, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [add_pow, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [show (C t * u) ^ i * m ^ (D + 1 - i) * ((D + 1).choose i : MvPolynomial κ ℝ) =
       C (t ^ i * ((D + 1).choose i : ℝ)) * (u ^ i * m ^ (D + 1 - i)) by
@@ -94,7 +96,8 @@ theorem key [DecidableEq κ] {x y : κ} (hxy : x ≠ y) (D : ℕ) (Φ Ψ : MvPol
       by_cases h2 : z = y
       · subst h2; simp [hry]
       simp [h1, h2, hr z h1 h2, hnz z h1 h2]
-    rw [← e1, ← e2, hs n, swapPol, swapG, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← e1, ← e2, hs n, swapPol, swapG, map_sum, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [hnx, hny]
     simp only [map_mul, map_pow, map_sub, map_add, aeval_C, aeval_X, algebraMap_eq, Matrix.cons_val_zero,

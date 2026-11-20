@@ -47,7 +47,8 @@ theorem map_vandermondeOf {R S : Type*} [CommRing R] [CommRing S] (g : R →+* S
 theorem transport_mu (f j k : ℕ) (hk : k ≤ j) :
     restTransport f j k (k + j) (restLastEquiv j k) (RestTerms.smallBlockMu f k j .last) =
       smallMu f j k := by
-  simp only [RestTerms.smallBlockMu, map_sum, transport_yRoot, smallMu, if_pos hk]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [RestTerms.smallBlockMu, map_sum, transport_yRoot, smallMu, if_pos hk]
 
 theorem transport_fib (f j k : ℕ) (hk : k ≤ j) :
     restTransport f j k (k + j) (restLastEquiv j k) (RestTerms.fibreClass f k j .last) =

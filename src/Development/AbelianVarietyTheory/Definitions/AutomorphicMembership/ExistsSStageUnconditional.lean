@@ -306,7 +306,8 @@ theorem colsPos_tcols {B : Base} (C : Cols B) : ColsPos (RowsRestModel.tcols C) 
   intro u
   refine ⟨fun x _ y _ => ?_, fun x _ h0 => ?_⟩
   · erw [RowsRestModel.tcols_ipC, RowsRestModel.tcols_ipC]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun c _ => by simp [mul_comm]
   · erw [RowsRestModel.tcols_ipC]
     rw [Complex.re_sum]

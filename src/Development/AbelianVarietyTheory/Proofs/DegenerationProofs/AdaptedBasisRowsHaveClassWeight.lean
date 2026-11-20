@@ -56,7 +56,8 @@ theorem proj_mulVec {o Ω : Type} [CommRing o] [Field Ω] [Algebra o Ω] (S : Th
     funext i
     simp [φ, Matrix.mulVec, dotProduct, Finset.mul_sum, _root_.mul_assoc]
   show φ _ = v
-  rw [ThetaSys.proj, finsum_eq_sum_of_fintype, hφ, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [ThetaSys.proj, finsum_eq_sum_of_fintype, hφ, map_sum]
   have h2 : ∀ t : T, φ (S.ζN ^ (-(c t)).val • S.ρ t) = v := fun t => by
     rw [hφ]
     refine (congrArg _ (h t)).trans ?_
@@ -70,14 +71,16 @@ theorem mulVec_eq_of_eigen {K B M J : Type} [CommRing K] [CommRing B] [AddCommGr
     (m : Matrix J J K) (h₁ : ∀ j, E (s j) = ∑ l, κ (m l j) • s l) {t : M} {z c : K} (h₂ : E t = κ z • t)
     {v : J → K} (h₃ : ∑ j, κ (v j) • s j = κ c • t) : m.mulVec v = z • v := by
   have h₄ := congrArg E h₃
-  rw [map_smul, h₂, smul_comm, ← h₃, map_sum] at h₄
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_smul, h₂, smul_comm, ← h₃, map_sum] at h₄
   simp only [map_smul, h₁, Finset.smul_sum, smul_smul] at h₄
   rw [Finset.sum_comm] at h₄
   simp only [← Finset.sum_smul] at h₄
   funext l
   apply hκ
   have h₅ := Fintype.linearIndependent_iffₛ.1 hs _ _ h₄ l
-  simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Pi.smul_apply, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Pi.smul_apply, smul_eq_mul]
   rw [← h₅]
   exact Finset.sum_congr rfl fun j _ => mul_comm _ _
 

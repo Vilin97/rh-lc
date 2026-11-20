@@ -23,14 +23,16 @@ theorem levelafC_natCast (m : ℕ) : levelafC (F := F) E (m : 𝓞 F) = (m : E �
 
 private theorem sum_afsplitI_one_apply_of_mem (S : Finset (HeightOneSpectrum (𝓞 F))) (w : HeightOneSpectrum (𝓞 F))
     (hw : w ∈ S) : (∑ v ∈ S, afsplitI v (1 : v.adicCompletion F)) w = 1 := by
-  rw [show (∑ v ∈ S, afsplitI v (1 : v.adicCompletion F)) w =
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [show (∑ v ∈ S, afsplitI v (1 : v.adicCompletion F)) w =
       ∑ v ∈ S, (afsplitI v (1 : v.adicCompletion F)) w from map_sum (evalV F w) _ S]
   rw [Finset.sum_eq_single_of_mem w hw (fun v _ hv => afsplitI_ne v w (Ne.symm hv) 1),
     afsplitI_self]
 
 private theorem sum_afsplitI_one_apply_of_not_mem (S : Finset (HeightOneSpectrum (𝓞 F))) (w : HeightOneSpectrum (𝓞 F))
     (hw : w ∉ S) : (∑ v ∈ S, afsplitI v (1 : v.adicCompletion F)) w = 0 := by
-  rw [show (∑ v ∈ S, afsplitI v (1 : v.adicCompletion F)) w =
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [show (∑ v ∈ S, afsplitI v (1 : v.adicCompletion F)) w =
       ∑ v ∈ S, (afsplitI v (1 : v.adicCompletion F)) w from map_sum (evalV F w) _ S]
   exact Finset.sum_eq_zero (fun v hv => afsplitI_ne v w (fun h => hw (by rw [h]; exact hv)) 1)
 

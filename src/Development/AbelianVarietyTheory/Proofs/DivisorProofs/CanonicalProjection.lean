@@ -45,7 +45,8 @@ theorem rd_eOp {D : D7} {c : NChoice D} {w : D.what₂.places.Pl} (ht : NChTie D
     obtain ⟨a, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun D.what₂.LL).1 hx
     have h5 := h3 n a (fun k => ⟨b k, hbK k⟩)
     refine Eq.trans ?_ h5.symm
-    rw [map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_smul, map_smulₛₗ]
     rw [hrd ⟨b k, hbK k⟩, TensorProduct.smul_tmul', smul_eq_mul, mul_one]
@@ -54,7 +55,8 @@ theorem rd_eOp {D : D7} {c : NChoice D} {w : D.what₂.places.Pl} (ht : NChTie D
   letI : Fintype (G0g D.nd) := Fintype.ofEquiv Gp I.toEquiv
   have hL : A'.eOp eC (fi.e x) = fi.e (∑ s : S.G, eC (fi.eG s) •
       ((((S.A j).chi s)⁻¹ : D.what₂.LLˣ).val • (S.A j).ρ s x)) := by
-    rw [map_sum, FormsL.eOp, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, FormsL.eOp, LinearMap.sum_apply]
     refine (Fintype.sum_equiv fi.eG.toEquiv _ _ fun s => ?_).symm
     rw [map_smul, map_smul, fi.rho]
     simp only [MulEquiv.toEquiv_eq_coe, MulEquiv.coe_toEquiv, LinearMap.smul_apply, smul_smul, fi.chi]
@@ -79,7 +81,8 @@ theorem rd_eOp {D : D7} {c : NChoice D} {w : D.what₂.places.Pl} (ht : NChTie D
       refine Finset.sum_congr rfl fun s _ => ?_
       rw [GroupAverageFixedPoints.GlobalTheory.CompanionTheory.LatSpan.tmul_smul_frac, GroupAverageFixedPoints.GlobalTheory.CompanionTheory.LatSpan.ext_tmul, TensorProduct.smul_tmul', smul_eq_mul]
       rfl
-  rw [hL, hre, hre, hR, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hL, hre, hre, hR, map_sum]
   refine Finset.sum_congr rfl fun s _ => ?_
   rw [map_smulₛₗ, h4 s x]
   congr 1

@@ -231,7 +231,8 @@ theorem exists_push (f : EigFrame Z φ x) (hφ : φ' = φ) (hx : x' = x ≫ T.ρ
   obtain ⟨w, rfl⟩ := (T.lie hx.symm).surjective w
   have h := f.existsUnique_sum (T.emb τ) w ((T.eig_iff hx.symm τ _).2 hw)
   refine (Equiv.existsUnique_congr (Equiv.arrowCongr (finCongr (T.mult_emb τ)) (Equiv.refl R)) fun a => ?_).2 h
-  rw [← (T.lie hx.symm).injective.eq_iff, map_sum, ← (finCongr (T.mult_emb τ)).sum_comp]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← (T.lie hx.symm).injective.eq_iff, map_sum, ← (finCongr (T.mult_emb τ)).sum_comp]
   simp
 
 theorem exists_pull (f' : EigFrame Z φ' x') (hφ : φ' = φ) (hx : x' = x ≫ T.ρ.hom) :
@@ -252,7 +253,8 @@ theorem exists_pull (f' : EigFrame Z φ' x') (hφ : φ' = φ) (hx : x' = x ≫ T
   · obtain ⟨τ, rfl⟩ := T.embEquiv.surjective τ
     have h := f'.existsUnique_sum τ _ ((T.eig_iff hx.symm τ _).1 hw)
     refine (Equiv.existsUnique_congr (Equiv.arrowCongr (finCongr (T.mult_emb τ)) (Equiv.refl R)) fun a => ?_).1 h
-    rw [← (T.lie hx.symm).injective.eq_iff (a := w), map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← (T.lie hx.symm).injective.eq_iff (a := w), map_sum]
     refine iff_of_eq (congrArg _ (Fintype.sum_equiv (finCongr (T.mult_emb τ)) _ _ fun i => ?_))
     rw [map_smul, ← hu']
     simp
@@ -261,7 +263,8 @@ theorem exists_pull (f' : EigFrame Z φ' x') (hφ : φ' = φ) (hx : x' = x ≫ T
 theorem Push.co {T : Tw Z} {f g : EigFrame Z φ x} {f' g' : EigFrame Z φ' x'} (hf : T.Push f f') (hg : T.Push g g')
     (τ : E →+* ℂ) : f'.co g' τ = (f.co g (T.emb τ)).submatrix T.ix T.ix :=
   EigFrame.co_eq fun i => (isComb_iff (f'.vec τ) _ (g'.vec τ i)).2 (by
-    rw [hg.vec, f.vec_eq g, map_sum, ← (finCongr (T.mult_emb τ)).sum_comp]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hg.vec, f.vec_eq g, map_sum, ← (finCongr (T.mult_emb τ)).sum_comp]
     simp only [map_smul, hf.vec]
     rfl)
 

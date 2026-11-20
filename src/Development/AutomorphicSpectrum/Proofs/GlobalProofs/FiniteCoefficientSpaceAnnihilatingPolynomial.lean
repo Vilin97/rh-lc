@@ -134,7 +134,8 @@ theorem coeff_ode : ∀ (K W : Type) [Group K] [TopologicalSpace K] [AddCommGrou
   rw [Polynomial.aeval_eq_sum_range] at hc
   calc ∑ j ∈ Finset.range ((LinearMap.charpoly D).natDegree + 1), (LinearMap.charpoly D).coeff j * L (D ^ j)
       = L (∑ j ∈ Finset.range ((LinearMap.charpoly D).natDegree + 1), (LinearMap.charpoly D).coeff j • D ^ j) := by
-        simp [map_sum, smul_eq_mul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp [map_sum, smul_eq_mul]
     _ = 0 := by rw [hc, map_zero]
 
 end GlobalTheory.CompanionTheory.HcFinite.OneParam

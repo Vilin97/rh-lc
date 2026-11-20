@@ -229,7 +229,8 @@ private theorem isLat_map_lemma_5 {C R : Type} [Field C] [CommRing R] [Algebra R
           simp only [Finset.sum_mul]
           rw [Finset.sum_comm]
           exact Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun k _ => by ring
-  rw [hf, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hf, map_sum]
   refine Submodule.sum_mem _ fun j _ => ?_
   rw [map_smul]
   refine Submodule.smul_mem _ _ (Submodule.subset_span ⟨j, ?_⟩)

@@ -18,7 +18,8 @@ theorem SpanBundleTrdegGe.algebraicIndependent_linComb {Ω Φ : Type*} [Field Ω
     intro B B'
     apply MvPolynomial.algHom_ext
     intro r
-    simp only [L, AlgHom.comp_apply, aeval_X, map_sum, map_mul, aeval_C, algebraMap_eq,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [L, AlgHom.comp_apply, aeval_X, map_sum, map_mul, aeval_C, algebraMap_eq,
       Matrix.mul_apply, Finset.mul_sum, Finset.sum_mul, mul_assoc]
     exact Finset.sum_comm
   have hid : L 1 = AlgHom.id Ω _ := by

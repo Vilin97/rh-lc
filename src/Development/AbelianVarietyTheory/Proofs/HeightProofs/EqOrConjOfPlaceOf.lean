@@ -73,7 +73,8 @@ theorem continuous_tensNU (j : R →ₗ[F] R') (hj : ∀ a b, j (a * b) = j a * 
   have h1 : Continuous e := IsModuleTopology.continuous_of_linearMap e.toLinearMap
   have h2 : (tensNU (E := E) j hj : _ → _) = fun z => ∑ i, j (e z i) • ((1 : R') ⊗ₜ[F] b i) := by
     funext z
-    conv_lhs => rw [← (Algebra.TensorProduct.basis R b).sum_equivFun z, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [← (Algebra.TensorProduct.basis R b).sum_equivFun z, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     simp [e, TensorProduct.smul_tmul']
   rw [h2]

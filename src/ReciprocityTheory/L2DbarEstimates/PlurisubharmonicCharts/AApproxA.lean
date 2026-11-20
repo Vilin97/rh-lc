@@ -30,7 +30,8 @@ theorem vec_expand {n : ℕ} (w : V n) : w = ∑ j, w j • bas n j := by
 private theorem clm_apply_eq_sum_re_im_basis {n : ℕ} (D : V n →L[ℝ] ℂ) (ζ : V n) :
     D ζ = ∑ k, ((ζ k).re * D (bas n k) + (ζ k).im * D (I • bas n k)) := by
   conv_lhs => rw [vec_expand ζ]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_congr rfl fun k _ => clm_smul_decomp D (ζ k) (bas n k)
 
 theorem sum_wdb_eq {n : ℕ} (g : V n → ℂ) (y : V n) (ζ : V n) :

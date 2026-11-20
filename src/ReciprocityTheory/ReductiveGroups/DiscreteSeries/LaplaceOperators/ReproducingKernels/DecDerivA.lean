@@ -40,9 +40,11 @@ theorem cdom_antisymm {ε : Fin n → Bool} {μ Λ : Fin n → ℝ} (h₁ : Form
         have : (0 : ℝ) ≤ (c a b : ℝ) := Nat.cast_nonneg _
         nlinarith
     have hLe : L (y - x) = ∑ a, ∑ b, (c a b : ℝ) * (((a : ℕ) : ℝ) - ((b : ℕ) : ℝ)) := by
-      rw [he, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [he, map_sum]
       refine Finset.sum_congr rfl fun a _ => ?_
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun b _ => ?_
       rw [map_smul, hLr, smul_eq_mul]
     refine ⟨?_, fun h0 => ?_⟩

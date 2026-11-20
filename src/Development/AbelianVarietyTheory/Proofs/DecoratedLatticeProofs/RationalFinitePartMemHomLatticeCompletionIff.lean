@@ -80,7 +80,8 @@ theorem mem_latRat_iff_perO {S T : HSp D}
             first
               | rfl
               | (congr 3; funext c; simp [Pi.single_apply])
-          rw [e2, e1, map_sum, Matrix.sum_apply, Finset.sum_apply, Finset.mul_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [e2, e1, map_sum, Matrix.sum_apply, Finset.sum_apply, Finset.mul_sum]
           apply Finset.sum_congr rfl
           intro k _
           rw [LinearMap.map_smul]

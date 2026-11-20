@@ -249,7 +249,8 @@ theorem proof (hG : GenericProjectionFinite.Statement) : DominantPrimitiveFibres
     have hψr : ∀ r, ψ (algebraMap (Localization.Away a) (Localization (Algebra.algebraMapSubmonoid (MvPolynomial (Fin n) ℂ ⧸ Q) (Submonoid.powers a))) r) = ev r := fun r => DFunLike.congr_fun hψ r
     refine ⟨fun p => ?_, ?_, fun P => ?_⟩
     · rw [Polynomial.aeval_def, Polynomial.hom_eval₂, hψ, Polynomial.eval_map]
-    · rw [hℓ, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [hℓ, map_sum]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [map_mul, hψr, RingHom.comp_apply, hev, eval_C]
     · have h : (ψ.comp ((algebraMap (MvPolynomial (Fin n) ℂ ⧸ Q) (Localization (Algebra.algebraMapSubmonoid (MvPolynomial (Fin n) ℂ ⧸ Q) (Submonoid.powers a)))).comp (Ideal.Quotient.mk Q))) =

@@ -39,7 +39,8 @@ theorem heckePol_map_eq_frobPol_alt : ∀ (D : D7) (cf : CharFrame D) (jE : D.ho
     (fun k => (((qCast (X.nd.w_l i) (A.pl.ι (X.nd.w i))).toRingHom.comp (Sp.iq i)).comp (algebraMap (X.nd.O i) (FractionRing (X.nd.O i)))) ((X.nd.hT i w k : X.nd.X i → X.nd.O i) x))
     (fun k hk1 hk2 => heig w k s ϖ hw hc hu hk1 hk2 y hyV)
   refine Eq.trans ?_ hpol
-  simp [heckePol, Polynomial.map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [heckePol, Polynomial.map_sum]
 end GlobalTheory.AutPart
 end
 end

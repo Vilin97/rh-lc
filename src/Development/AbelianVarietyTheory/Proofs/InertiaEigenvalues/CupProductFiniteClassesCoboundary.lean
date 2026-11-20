@@ -274,7 +274,8 @@ theorem cob_of_cont (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l P)
       rw [TensorProduct.smul_tmul']
       rfl
     rw [← hf g]
-    simp only [F, eb, map_sum, pairT_smul_right, map_neg]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [F, eb, map_sum, pairT_smul_right, map_neg]
     abel
   have hcont : Continuous f :=
     GlobalTheory.FundCont.contCore_tied l P AI hT K LL O hO

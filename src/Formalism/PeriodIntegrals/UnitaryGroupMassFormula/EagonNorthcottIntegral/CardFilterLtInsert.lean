@@ -62,7 +62,8 @@ theorem frame_of (hE : LEnum) (hB0 : LBasis0) (hB : LBasis) (hV : LVan) (hI : LI
       rw [← hc j i k, Finset.sum_apply]
       simp [zsmul_eq_mul]
     rw [hX D]
-    simp only [Phi, dmap, Matrix.mulVecLin_apply, Matrix.mulVec, dotProduct, Matrix.map_apply, Matrix.of_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Phi, dmap, Matrix.mulVecLin_apply, Matrix.mulVec, dotProduct, Matrix.map_apply, Matrix.of_apply,
       lin, map_sum, map_mul, map_intCast, inx_X, ct_Phi, key, Finset.mul_sum, Finset.sum_mul]
     conv_lhs =>
       rw [Finset.sum_comm]
@@ -71,7 +72,8 @@ theorem frame_of (hE : LEnum) (hB0 : LBasis0) (hB : LBasis) (hV : LVan) (hI : LI
       rw [Finset.sum_comm]
     conv_lhs => rw [Finset.sum_comm]
     exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun p _ => by ring
-  · simp only [aug, LinearMap.sum_apply, LinearMap.smul_apply, LinearMap.proj_apply, smul_eq_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [aug, LinearMap.sum_apply, LinearMap.smul_apply, LinearMap.proj_apply, smul_eq_mul,
       Phi, BB, b0, if_true, map_sum, map_mul, mu_inx, map_prod, map_pow, mu_ys]
     exact Finset.sum_congr rfl fun k _ => mul_comm _ _
 

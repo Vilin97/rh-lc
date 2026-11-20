@@ -51,7 +51,8 @@ theorem UpperTheory.Reformulated.B.Qf7.weight_components_mem_invariant.{u_1, u_2
         W.sub_mem (hW a _ hsum) (W.smul_mem _ hsum)
       have h2 : E a a (∑ l ∈ insert nu t, f l) - (nu a : K) • (∑ l ∈ insert nu t, f l)
           = ∑ l ∈ insert nu t, ((l a : K) - (nu a : K)) • f l := by
-        rw [map_sum, Finset.smul_sum, ← Finset.sum_sub_distrib]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum, Finset.smul_sum, ← Finset.sum_sub_distrib]
         refine Finset.sum_congr rfl fun l hl => ?_
         rw [UpperTheory.Reformulated.B.Qf7.apply_of_mem_weightSp (hf l hl) a, sub_smul]
       rw [h2, Finset.sum_insert hnu, sub_self, zero_smul, zero_add] at h1

@@ -1113,8 +1113,10 @@ theorem iterated_sum_bound_holds : Formalism.HermitianLatticeCounting.ExpansionT
           Finsupp.linearCombination ℂ (fun ν => jh (μ + ν)) a' :=
         (Finsupp.linearCombination_apply ℂ a').symm
       rw [hΨ]
-      simp only [a', map_sum, Finsupp.linearCombination_single]
-      rw [Finsupp.sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [a', map_sum, Finsupp.linearCombination_single]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Finsupp.sum, map_sum]
       refine Finset.sum_congr rfl fun ν hν => ?_
       rw [map_smul, (hb ν hν).1, Finsupp.sum, Finset.smul_sum]
       refine Finset.sum_congr rfl fun ν' _ => ?_

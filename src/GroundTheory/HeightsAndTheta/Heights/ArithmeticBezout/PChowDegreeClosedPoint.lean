@@ -18,7 +18,8 @@ theorem aeval_smul_of_isHomogeneous {F K : Type*} [Field F] [Field K] [Algebra F
   classical
   conv_lhs => rw [g.as_sum]
   conv_rhs => rw [g.as_sum]
-  rw [map_sum, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun m hm => ?_
   have hdeg : ∑ j ∈ m.support, m j = d := by
     have := hg (mem_support_iff.mp hm)
@@ -89,7 +90,8 @@ theorem ChowDegreeClosedPoint.proof (hField : ClosedPointChartField.Statement)
     let ys : Fin n → K := fun j => (y i)⁻¹ * y j
     have hker : J ≤ RingHom.ker (aeval (R := F) ys).toRingHom := by
       refine sup_le (fun g hg => ?_) ((Ideal.span_le).mpr ?_)
-      · rw [RingHom.mem_ker, AlgHom.toRingHom_eq_coe, AlgHom.coe_toRingHom,
+      set_option synthInstance.maxHeartbeats 100000 in
+        · rw [RingHom.mem_ker, AlgHom.toRingHom_eq_coe, AlgHom.coe_toRingHom,
           ← sum_homogeneousComponent g, map_sum]
         refine Finset.sum_eq_zero fun d _ => ?_
         rw [aeval_smul_of_isHomogeneous (homogeneousComponent_isHomogeneous d g),

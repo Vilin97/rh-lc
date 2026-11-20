@@ -109,7 +109,8 @@ theorem measure_lt_top_of_ringEquiv (φ : E ≃+* 𝕜) (hφ : ∀ x, ‖φ x‖
     have : (fun i => φ (φ.symm (y i))) ᵥ* (k : Matrix (Fin (m + 1)) (Fin (m + 1)) E).map φ =
         fun j => φ.toRingHom (((fun i => φ.symm (y i)) ᵥ* (k : Matrix (Fin (m + 1)) (Fin (m + 1)) E)) j) := by
       ext j
-      simp [vecMul, dotProduct, _root_.map_sum, map_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [vecMul, dotProduct, _root_.map_sum, map_mul]
     rw [this, euclidNorm_map φ.toRingHom hφ, hk, ← euclidNorm_map φ.toRingHom hφ]
     rfl
   refine ⟨hd1.trans_eq hdet.symm, hdet.trans_le hd2, Φ b, ⟨b, hbω, rfl⟩, r, hr,

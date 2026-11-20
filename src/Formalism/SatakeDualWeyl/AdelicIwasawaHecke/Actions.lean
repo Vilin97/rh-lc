@@ -30,7 +30,8 @@ theorem linSubst_comp (O : Type) [CommRing O] (n : Type) [Fintype n] [DecidableE
     (Formalism.UG.linSubst O n M).comp (Formalism.UG.linSubst O n N) = Formalism.UG.linSubst O n (N * M) := by
   apply MvPolynomial.algHom_ext
   intro i
-  simp only [Formalism.UG.linSubst, AlgHom.comp_apply, MvPolynomial.aeval_X, map_sum, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Formalism.UG.linSubst, AlgHom.comp_apply, MvPolynomial.aeval_X, map_sum, map_mul,
     MvPolynomial.aeval_C, MvPolynomial.algebraMap_eq, Matrix.mul_apply]
   simp only [Finset.mul_sum, ← mul_assoc, ← MvPolynomial.C_mul]
   rw [Finset.sum_comm]

@@ -47,7 +47,8 @@ lemma inj_phi (hN : IsUnit (Matrix.of fun j i => cB (MonoidAlgebra.of K G (h j) 
   apply unit_vec _ hN y
   intro j
   have := congrArg (ρ.asAlgebraHom (eps P0 * MonoidAlgebra.of K G (h j))) h0
-  rw [map_sum, map_zero] at this
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_zero] at this
   rw [← this]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [← Module.End.mul_apply, ← map_mul,
@@ -114,7 +115,8 @@ lemma inj_psi (hM : M1 T P0) [FiniteDimensional K V]
       apply unit_vec _ hN
       intro j
       have := h0 j
-      rw [hxy, map_sum] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hxy, map_sum] at this
       rw [← this]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [← Module.End.mul_apply, ← map_mul,

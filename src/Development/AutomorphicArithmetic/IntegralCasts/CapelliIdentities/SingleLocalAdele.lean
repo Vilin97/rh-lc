@@ -136,7 +136,8 @@ private theorem inter2 (hψ : IsLocallyConstant ψ) (h1 : ∃ t, ψ t ≠ 1)
   let N : (κ → K) →ₗ[K] (κ → K) := LinearMap.pi fun i => β (Pi.single i 1)
   have hN : ∀ y z, y ⬝ᵥ N z = β y z := fun y z => by
     conv_rhs => rw [← Finset.univ_sum_single y]
-    rw [map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, LinearMap.sum_apply]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [show (Pi.single i (y i) : κ → K) = y i • Pi.single i 1 by rw [← Pi.single_smul]; simp, map_smul]
     rfl
@@ -238,7 +239,8 @@ private def evp {κ : Type} (v : Pl F) (w : (κ → AF F) × (κ → AF F)) : (�
 
 private theorem ev_dot {κ : Type} [Fintype κ] (v : Pl F) (a b : κ → AF F) :
     evFin F v (a ⬝ᵥ b) = (fun i => evFin F v (a i)) ⬝ᵥ fun i => evFin F v (b i) := by
-  simp only [dotProduct, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dotProduct, map_sum, map_mul]
 
 open Classical in
 private theorem acts_eq {κ : Type} [Fintype κ] (ψ : AddChar (AF F) ℂ) (v : Pl F) [Invertible (2 : Fv F v)]
@@ -324,9 +326,11 @@ private theorem iso_symp (h : IsCMExt F E σ) {v : Pl F} (t : E →ₐ[F] Fv F v
   have h0 : compFin F E v (hTens (cA σ) JA JB x u) = 0 := by
     refine split_ext h t ?_ ?_
     · change piW t _ = _
-      simp only [hTens, map_sum, map_mul, hx, zero_mul, Finset.sum_const_zero, map_zero]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hTens, map_sum, map_mul, hx, zero_mul, Finset.sum_const_zero, map_zero]
     · change piW (t.comp σ) _ = _
-      simp only [hTens, map_sum, map_mul, piW_cA, comp_conj_conj h, hu, mul_zero, Finset.sum_const_zero, map_zero]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hTens, map_sum, map_mul, piW_cA, comp_conj_conj h, hu, mul_zero, Finset.sum_const_zero, map_zero]
   have h1 := rT_comp v (hTens (cA σ) JA JB x u)
   rw [h0, map_zero] at h1
   have h2 : sL v 1 * symp (R := AF F) (cA σ) (-1) JA JB x u = 0 := by

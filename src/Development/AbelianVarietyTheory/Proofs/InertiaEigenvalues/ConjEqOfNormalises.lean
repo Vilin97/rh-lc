@@ -128,7 +128,8 @@ theorem irr_of_scalar (ρ : G →* Module.End ℂ M) (S : Submodule ℂ M) (hS :
       · exact absurd ((W'.smul_mem_iff h).1 (hc ▸ havW _ (hw u hu))) hx'
     apply hx'
     have h1 : GlobalTheory.IsotSph.avg H ρK x = x := GlobalTheory.IsotSph.avg_of_fixed H ρK fun k => hxK k k.2
-    rw [← h1, ← e, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← h1, ← e, map_sum]
     refine W'.sum_mem fun u hu => ?_
     rw [map_smul, eb u hu, ← GlobalTheory.IsotSph.avg_map H ρK ρK (ρ (b u)) fun k y => ?_, hz u hu, map_zero, smul_zero]
     · exact W'.zero_mem
@@ -149,7 +150,8 @@ theorem descent {K H H' ι : Type} [Field K] [AddCommGroup H] [Module ℂ H] [Ad
   classical
   have hj : ∀ x, j x = ∑ k, σ (x k) • j (Pi.basisFun K (Fin n) k) := fun x => by
     conv_lhs => rw [← (Pi.basisFun K (Fin n)).sum_repr x]
-    simp [map_sum, map_smulₛₗ]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, map_smulₛₗ]
   have htop : ⊤ ≤ Submodule.span ℂ (Set.range fun k => j (Pi.basisFun K (Fin n) k)) := by
     rw [← hsp, Submodule.span_le]
     rintro _ ⟨x, rfl⟩
@@ -175,12 +177,15 @@ theorem descent {K H H' ι : Type} [Field K] [AddCommGroup H] [Module ℂ H] [Ad
     apply he
     rw [map_zero, ← hTz a]
     conv_rhs => rw [← b.sum_repr z]
-    simp only [map_sum, map_smul, hT, hb]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, hT, hb]
   funext l
   have h2 := congrArg (fun y => φ (b.repr y l)) h1
-  simp only [map_sum, map_smul, Finsupp.finsetSum_apply, Finsupp.smul_apply, hrep, map_zero, Finsupp.zero_apply] at h2
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, Finsupp.finsetSum_apply, Finsupp.smul_apply, hrep, map_zero, Finsupp.zero_apply] at h2
   conv_lhs => rw [← (Pi.basisFun K (Fin n)).sum_repr fun k => φ (b.repr z k)]
-  simp only [map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, Pi.basisFun_repr]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, Pi.basisFun_repr]
   rw [Pi.zero_apply, ← h2]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [smul_eq_mul, smul_eq_mul, mul_comm, mul_comm (b.repr z k), ← smul_eq_mul, ← map_smul]
@@ -302,12 +307,14 @@ theorem exists_scalar (π : NG.FinTyp L n) (s : SplitPlace L) : ∃ R : GAf L n 
     · intro x hx
       rw [hT]
       refine ⟨π.S.sum_mem fun γ _ => π.stable γ x hx.1, fun κ hκ => ?_⟩
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       have := hRα.sum_eq hRα hκ (fun g => rtHom L n ℂ g x)
         (fun y l hl => by rw [map_mul, Module.End.mul_apply, hx.2 l hl])
       simpa only [map_mul, Module.End.mul_apply] using this
     · intro b hb x _
-      rw [hT, hT, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hT, hT, map_sum]
       refine Finset.sum_congr rfl fun γ hγ => ?_
       rw [← Module.End.mul_apply, ← map_mul, ← Module.End.mul_apply, ← map_mul, (hcomm γ b (hRtriv γ hγ) hb).eq]
     · intro b hb x hx

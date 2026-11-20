@@ -273,9 +273,11 @@ theorem exists_ksCoc {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Hos
         ← map_mul, Units.mul_inv, map_one, _root_.one_mul, valR_eq y hy₁]
     simp only [k₁, k₂] at key
     rw [valR_eq _ hy₂, map_sub, ← valR_eq, ← valR_eq, ← valR_pbT _ _ (hpre O) hy, ← valR_pbT _ _ (hpre O) hy] at key
-    rw [valR_eq y hy, valR_eq y hy, map_sub, map_sum, ← valR_eq, ← valR_eq, ← neg_sub, key, ← Finset.sum_neg_distrib]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [valR_eq y hy, valR_eq y hy, map_sub, map_sum, ← valR_eq, ← valR_eq, ← neg_sub, key, ← Finset.sum_neg_distrib]
     refine Finset.sum_congr rfl fun c _ => ?_
-    rw [map_mul, ← valR_eq, ← valR_eq, valR_rsT y hab hy, lc, valR_eq y hy₁, map_sum, Finset.sum_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_mul, ← valR_eq, ← valR_eq, valR_rsT y hab hy, lc, valR_eq y hy₁, map_sum, Finset.sum_mul,
       ← Finset.sum_neg_distrib]
     refine Finset.sum_congr rfl fun c' _ => ?_
     rw [map_mul, ← valR_eq, ← valR_eq, valR_constFn A.hom y hy₁ e, map_neg, RingHom.comp_apply]

@@ -178,7 +178,8 @@ lemma evV_matV {n : ℕ} (p : Matrix (Fin n) (Fin n) O) (x : Fin n → Pt V m d)
     matV_val B p fun j => (⟨x j, hx j⟩ : SP B m)
   rw [h1, h2]
   show (evL B x hx (∑ j, p b j • (⟨pt V (n := n) d j, sm_pt j⟩ : SP B n))).val i = _
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [map_smul, he]
 
 lemma foldr_const (l : List (Pt V m d)) (hl : ∀ a ∈ l, ∀ i, MvPowerSeries.constantCoeff (a i) = 0) (i : Fin d) :

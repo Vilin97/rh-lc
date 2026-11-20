@@ -27,7 +27,8 @@ theorem wForm_nonneg (hG : G.PosSemidef) (a : C → ι → ℂ) : 0 ≤ wForm w 
 
 theorem wForm_conj (hG : G.IsHermitian) (a b : C → ι → ℂ) : starRingEnd ℂ (wForm w G b a) = wForm w G a b := by
   unfold wForm
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun c _ => ?_
   rw [map_mul, map_inv₀, map_natCast, starRingEnd_apply, ← Matrix.star_dotProduct, Matrix.star_mulVec, hG.eq,
     ← Matrix.dotProduct_mulVec]
@@ -113,7 +114,8 @@ theorem coordAt_sum (v : InfinitePlace K) (x : S.EqFun) :
     coordAt S v (x : S.D → S.V) = ∑ i, v.embedding ((S.hB h).repr x i) • coordAt S v (S.hB h i : S.D → S.V) := by
   funext c k
   conv_lhs => rw [← (S.hB h).sum_repr x]
-  simp only [coordAt, AddSubmonoidClass.coe_finset_sum, Submodule.coe_smul, Finset.sum_apply, Pi.smul_apply, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [coordAt, AddSubmonoidClass.coe_finset_sum, Submodule.coe_smul, Finset.sum_apply, Pi.smul_apply, map_sum,
     map_smul, Finsupp.coe_finset_sum, Finsupp.coe_smul, smul_eq_mul, map_mul]
 
 theorem coordAt_indep (v : InfinitePlace K) :
@@ -214,7 +216,8 @@ theorem gramB_posDef (φ : K →+* ℂ) : ((gramB K lam).map φ).PosDef := by
 theorem map_pairBK (φ : K →+* ℂ) (x y : VV K lam) :
     φ (pairBK lam x y) = (fun i => φ ((bVV K lam).repr x i)) ⬝ᵥ (gramB K lam).map φ *ᵥ fun i => φ ((bVV K lam).repr y i) := by
   conv_lhs => rw [← (bVV K lam).sum_repr x, ← (bVV K lam).sum_repr y]
-  simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, map_mul, dotProduct,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, map_mul, dotProduct,
     Matrix.mulVec, Matrix.map_apply, gramB, Matrix.of_apply, Finset.mul_sum]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring

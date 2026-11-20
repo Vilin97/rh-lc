@@ -61,7 +61,8 @@ theorem fix_sub_prV (g : (VS D).V ≃ₗ[D.host.E] (VS D).V)
     (hge : ∀ a, g (X.eX a) = X.eX a) (hgf : ∀ a, g (X.fY a) = X.fY a) (v : (VS D).V) :
     g (v - prV X v) = v - prV X v := by
   rw [sub_prV_eq]
-  simp [map_sum, map_smul, hge, hgf]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, map_smul, hge, hgf]
 
 theorem indA_inj (Λ : Submodule (𝓞 D.host.E) (VS D).V) : Function.Injective (indA X u Λ) := by
   intro γ γ' hγγ

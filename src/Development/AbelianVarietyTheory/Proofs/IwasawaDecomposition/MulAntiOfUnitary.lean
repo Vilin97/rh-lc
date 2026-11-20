@@ -187,7 +187,8 @@ theorem finite_translates (H : IsLieData σ j s) (hl : HasLog σ j) (hc : IsComp
     have := map_aeval (res H x ∘ₗ W.subtype) (T := T)
       (T' := ∑ i, derOp (isLieData_toU H) hl (X i) * derOp (isLieData_toU H) hl (X i)) (fun v => by
         change res H x ((∑ i, derOp H hl (X i) * derOp H hl (X i)) v.1) = _
-        simp only [LinearMap.sum_apply, map_sum, Module.End.mul_apply, res_derOp]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [LinearMap.sum_apply, map_sum, Module.End.mul_apply, res_derOp]
         rfl) T.charpoly ⟨φ, hφ⟩
     rw [LinearMap.aeval_self_charpoly, LinearMap.zero_apply, map_zero] at this
     exact this.symm

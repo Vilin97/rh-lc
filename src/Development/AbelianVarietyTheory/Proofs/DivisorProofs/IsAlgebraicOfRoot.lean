@@ -68,7 +68,8 @@ theorem exists_fns (hU : Rl.toRealDat.LUnif) (hW : Rl.toRealDat.models_HW) (hv :
       hLL.map' (YS.fi j).e.toLinearMap (YS.fi j).e.ker
     exact ((hU j (sg0 D A3.A)).1 m _ h1).map' L hL
   · conv_lhs => rw [← bK.sum_repr g]
-    rw [Submodule.coe_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Submodule.coe_sum, map_sum]
     refine Finset.sum_congr rfl fun a _ => ?_
     rw [Submodule.coe_smul, ← algebraMap_smul D.what₂.LL, evW_smul, hbK, ← S.kKs_spec]
     rfl
@@ -173,7 +174,8 @@ theorem eq_smul_of_conj (hU : Rl.toRealDat.LUnif) (hW : Rl.toRealDat.models_HW)
   have e1 := Fintype.linearIndependent_iffₛ.1 hφ _ _ h1
   have e2 := Fintype.linearIndependent_iffₛ.1 hφ _ _ h2
   have e3 : ∀ a, ρ'.ek i b k (A a) = c * ν * ν'⁻¹ * ρ'.ek i b k (A' a) := fun a => by
-    rw [← e2, ← hτ _ (Or.inr ⟨a, rfl⟩), e1, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← e2, ← hτ _ (Or.inr ⟨a, rfl⟩), e1, map_sum]
     exact Finset.sum_congr rfl fun l _ => by rw [map_mul, hfix]
   have hinj := (realRd_faithful _ _ _ _ _ _ _ Rl cG S YS v₀ ρ' hρ' i j b ν' hν' hU hW hv hK).injective_rdK hρ' k
   have e4 : rdK (realRd YS v₀ hρ' i j b ν') hρ' k y = (c * ν * ν'⁻¹) • rdK (realRd YS v₀ hρ' i j b ν') hρ' k y' := by

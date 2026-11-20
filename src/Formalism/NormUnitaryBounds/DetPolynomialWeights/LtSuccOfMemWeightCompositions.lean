@@ -14,7 +14,8 @@ namespace WeightCompositions
 lemma weight_hom {σ M M' : Type*} [AddCommMonoid M] [AddCommMonoid M'] (g : M →+ M')
     (w : σ → M) (d : σ →₀ ℕ) :
     Finsupp.weight (fun i => g (w i)) d = g (Finsupp.weight w d) := by
-  simp only [Finsupp.weight_apply, Finsupp.sum, map_sum, map_nsmul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finsupp.weight_apply, Finsupp.sum, map_sum, map_nsmul]
 
 lemma weight_mapDomain {σ τ M : Type*} [AddCommMonoid M] (f : σ → τ) (w : τ → M)
     (d : σ →₀ ℕ) :
@@ -54,7 +55,8 @@ lemma comp_sum_components {σ M K : Type*} [Field K] [AddCommMonoid M] [Decidabl
     (φ : σ → M) (S : Finset M) (g : S → MvPolynomial σ K)
     (hg : ∀ m : S, g m ∈ weightedHomogeneousSubmodule K φ (m : M)) (m : S) :
     weightedHomogeneousComponent φ (m : M) (∑ m', g m') = g m := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   rw [Finset.sum_congr rfl fun m' _ => weightedHomogeneousComponent_of_mem (m := (m : M)) (hg m')]
   rw [Finset.sum_eq_single m]
   · simp

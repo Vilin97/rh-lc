@@ -538,7 +538,8 @@ theorem isHomogeneous_lin (n : ι → ℝ) : (lin n).IsHomogeneous 1 :=
 
 theorem aeval_lin (A : κ → ι → ℝ) (m : κ → ℝ) :
     aeval (fun j => lin (A j)) (lin m) = lin fun i => ∑ j, m j * A j i := by
-  simp only [lin, map_sum, map_mul, aeval_C, aeval_X, algebraMap_eq, Finset.mul_sum, Finset.sum_mul, mul_assoc]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [lin, map_sum, map_mul, aeval_C, aeval_X, algebraMap_eq, Finset.mul_sum, Finset.sum_mul, mul_assoc]
   exact Finset.sum_comm
 
 theorem lin_single [DecidableEq ι] (i : ι) :

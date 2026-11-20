@@ -90,7 +90,8 @@ theorem exists_partL_pureA : ∀ {F : Type} [Field F] [NumberField F] {κ κ₁ 
     funext i; cases i <;> rfl
   show e (fun x => pureA F f g (Sum.elim x (y ∘ Sum.inr))) (y ∘ Sum.inl) = pureA F (P f) g₁ y
   rw [hslice]
-  simp only [map_sum, map_smul, hpure (T f) _ (hφSB _ _) (hφstd _ _), pureA, ey,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, hpure (T f) _ (hφSB _ _) (hφstd _ _), pureA, ey,
     hP f _ _ (T f) hh, g₁, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure, Finset.mul_sum]
   refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun j _ => ?_
   simp only [hE, Function.comp_def]

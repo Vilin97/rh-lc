@@ -110,7 +110,8 @@ private lemma poly_reg {A : Type} [CommRing A] {d : ℕ} (y : Fin d → A) (k : 
     intro φ a b hab q hq
     obtain ⟨c, hc, rfl⟩ := (mem_span_image_iff' a _ q).1 hq
     refine (mem_span_image_iff' b _ _).2 ⟨fun l => φ (c l), fun l hl => by simp [hc l hl], ?_⟩
-    simp [map_sum, hab]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, hab]
   have h1 := himg σ _ _ hσ _ h
   rw [map_mul, hσ] at h1
   have h2 := X_mul_mem {l | l < k} k (by simp) _ h1
@@ -141,7 +142,8 @@ private lemma reg_abs {S P : Type} [CommRing S] [Algebra ℂ S] [CommRing P] {d 
     rw [hq, hc0 l hl]; simp
   have heq : g k * p = ∑ l, g l * q l := by
     apply hφ
-    simp only [map_mul, map_sum, hp, hq]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_mul, map_sum, hp, hq]
     have hkm : φ (g k) * m = ∑ l, φ (g l) * c l := by simpa using hc
     calc φ (g k) * ((s : S) ^ N * m) = (s : S) ^ N * (φ (g k) * m) := by ring
       _ = _ := by rw [hkm, Finset.mul_sum]; exact Finset.sum_congr rfl fun l _ => by ring
@@ -154,7 +156,8 @@ private lemma reg_abs {S P : Type} [CommRing S] [Algebra ℂ S] [CommRing P] {d 
     rw [← mul_pow, Units.inv_mul, one_pow]
   calc m = ((s⁻¹ : Sˣ) : S) ^ N * ((s : S) ^ N * m) := by rw [← mul_assoc, hsN, one_mul]
     _ = _ := by
-      rw [← hp, hq', map_sum, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hp, hq', map_sum, Finset.mul_sum]
       exact Finset.sum_congr rfl fun l _ => by rw [map_mul]; ring
 
 private lemma exists_phi {F : Type} [Field F] [Algebra ℂ F] {d : ℕ} (x : Fin (d + 1) → Fˣ) (h : IsPd ℂ (xv x))

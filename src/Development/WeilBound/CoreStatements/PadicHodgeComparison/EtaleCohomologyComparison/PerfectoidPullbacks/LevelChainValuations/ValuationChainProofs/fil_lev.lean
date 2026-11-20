@@ -66,7 +66,8 @@ theorem fil_lev_pf [FiniteDimensional ℚ_[l] K] (hM : M.Sm) (U : Cov M.q) (hU :
   have h7 := (basisB L.γB s m (pdP_B_bot hL) hs M.q U hU {⊤} sSup_singleton j bs).2 N hN _ h5 r φ hφ
   have h8 : f φ = ∑ t, f (bs.coord t) * algebraMap K L.B (φ (bs t)) := by
     conv_lhs => rw [← bs.dualBasis.sum_repr φ]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun t _ => ?_
     refine (hlin _ _).trans ?_
     rw [Module.Basis.dualBasis_repr, Module.Basis.coe_dualBasis, mul_comm]

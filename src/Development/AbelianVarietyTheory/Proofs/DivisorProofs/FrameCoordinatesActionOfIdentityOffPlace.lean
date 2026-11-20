@@ -17,7 +17,8 @@ theorem frame_mul_map (ι : L →+ AE F E) (hmul : ∀ x y, ι (x * y) = ι x * 
     ((1 - ι 1) • (1 : Matrix (Fin m) (Fin m) (AE F E)) + A.map ι) * Y.map ι = (A * Y).map ι := by
   rw [Matrix.add_mul, Matrix.smul_mul, Matrix.one_mul]
   ext i j
-  rw [Matrix.add_apply, Matrix.smul_apply, Matrix.map_apply, smul_eq_mul, sub_mul, one_mul, ← hmul, one_mul, sub_self,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.add_apply, Matrix.smul_apply, Matrix.map_apply, smul_eq_mul, sub_mul, one_mul, ← hmul, one_mul, sub_self,
     zero_add, Matrix.mul_apply, Matrix.map_apply, Matrix.mul_apply, map_sum]
   simp only [Matrix.map_apply, hmul]
 
@@ -26,7 +27,8 @@ theorem map_mul_frame_transpose (ι : L →+ AE F E) (hmul : ∀ x y, ι (x * y)
     Y.map ι * ((1 - ι 1) • (1 : Matrix (Fin k) (Fin k) (AE F E)) + C.map ι)ᵀ = (Y * Cᵀ).map ι := by
   rw [Matrix.transpose_add, Matrix.transpose_smul, Matrix.transpose_one, Matrix.mul_add, Matrix.mul_smul, Matrix.mul_one]
   ext i j
-  rw [Matrix.add_apply, Matrix.smul_apply, Matrix.map_apply, smul_eq_mul, sub_mul, one_mul, ← hmul, one_mul, sub_self,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.add_apply, Matrix.smul_apply, Matrix.map_apply, smul_eq_mul, sub_mul, one_mul, ← hmul, one_mul, sub_self,
     zero_add, Matrix.mul_apply, Matrix.map_apply, Matrix.mul_apply, map_sum]
   simp only [Matrix.map_apply, Matrix.transpose_apply, hmul]
 

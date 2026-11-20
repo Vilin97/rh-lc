@@ -23,13 +23,15 @@ variable {S}
 theorem gram_comb_left {l m n : Type*} [Fintype m] (u : m → S.V) (A : Matrix m n E) (v : l → S.V) :
     gram S (comb S u A) v = gram S u v * A := by
   ext i j
-  simp only [gram, comb, Matrix.mul_apply, map_sum, map_smul, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [gram, comb, Matrix.mul_apply, map_sum, map_smul, smul_eq_mul]
   exact Finset.sum_congr rfl fun k _ => mul_comm _ _
 
 theorem gram_comb_right {l m n : Type*} [Fintype m] (u : l → S.V) (v : m → S.V) (B : Matrix m n E) :
     gram S u (comb S v B) = Bᴴ * gram S u v := by
   ext i j
-  simp only [gram, comb, Matrix.mul_apply, map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [gram, comb, Matrix.mul_apply, map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply,
     LinearMap.smul_apply, smul_eq_mul, Matrix.conjTranspose_apply, starRingEnd_apply]
 
 theorem gram_add_left {m n : Type*} (u₁ u₂ : n → S.V) (v : m → S.V) :
@@ -274,7 +276,8 @@ theorem frame_la {r : ℕ} {T T' : E} (F : FlagG S r T) (f₁ : Fin (r + 1) → 
     have hZc : Z *ᵥ c = 0 := by
       ext i
       have := congrArg (S.hT (f i)) hsum
-      rw [map_sum, map_zero] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, map_zero] at this
       simp only [map_smul, smul_eq_mul] at this
       rw [← hZ2]
       simpa [Matrix.mulVec, dotProduct, gram, mul_comm] using this

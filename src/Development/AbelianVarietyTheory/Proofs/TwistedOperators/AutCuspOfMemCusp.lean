@@ -46,7 +46,8 @@ variable {D : D7}
 
 theorem thetaKO_sum {S T : HSp D} (om : GA D S × GA D T →* Module.End ℂ (WO S T → ℂ)) (g : GA D S) (h : GA D T)
     {ι : Type} (s : Finset ι) (x : ι → WO S T → ℂ) : thetaKO om g h (∑ i ∈ s, x i) = ∑ i ∈ s, thetaKO om g h (x i) := by
-  simp only [thetaKO, map_sum, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [thetaKO, map_sum, Finset.sum_apply]
 
 theorem lift_finSum {θ : InfFam D} {A B : Node D} {P : Type} {m : A.MeasDat} {n : ℕ}
     (K : Fin n → P → GA D B.V → GA D A.V → ℂ) (It : P → SmT A.M → SmT B.M)

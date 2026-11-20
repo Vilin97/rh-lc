@@ -37,9 +37,12 @@ private theorem subalgebra_end_eq_whole_of_isSimpleModule {V : Type} [AddCommGro
       simp only [LinearMap.comp_apply, LinearMap.proj_apply, LinearMap.single_apply] at h1 h2
       rw [h1, h2, map_smul]
     funext i
-    conv_lhs => rw [← Finset.univ_sum_single (fun i => T (x i)), map_sum]
-    conv_rhs => rw [← Finset.univ_sum_single x, map_sum]
-    simp only [Finset.sum_apply, map_sum, hsingle]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [← Finset.univ_sum_single (fun i => T (x i)), map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_rhs => rw [← Finset.univ_sum_single x, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Finset.sum_apply, map_sum, hsingle]
   ext T
   simp only [Algebra.mem_top, iff_true]
   have hmem : (fun i => T (b i)) ∈ N := by

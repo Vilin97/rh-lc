@@ -246,7 +246,8 @@ theorem totalD_totalD (A : Cube.{v} ι R) (x : ∀ s, A.obj s) : totalD A (total
     rw [totalD_apply, Finset.sum_finset_product t.offDiag t (fun i => t.erase i)
       (fun q => by simp only [Finset.mem_offDiag, Finset.mem_erase]; tauto)]
     refine Finset.sum_congr rfl fun i _ => ?_
-    rw [totalD_apply, map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [totalD_apply, map_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     simp only [f, map_zsmul, res_res, smul_smul]
   rw [h1]
@@ -275,7 +276,8 @@ theorem d_comp_d (A : Cube.{v} ι R) (p : ℕ) : d A (p + 1) ∘ₗ d A p = 0 :=
 theorem termMap_d {A B : Cube.{v} ι R} (φ : A ⟶ B) (p : ℕ) (x : Term A p) :
     termMap φ (p + 1) (d A p x) = d B p (termMap φ p x) := by
   funext t
-  simp only [termMap_apply, d_apply, map_sum, map_zsmul, app_res]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [termMap_apply, d_apply, map_sum, map_zsmul, app_res]
 
 theorem d_zero_apply (A : Cube.{v} ι R) (x : Term A 0) :
     d A 0 x = aug A (termZeroEquiv A x) := by
@@ -679,13 +681,15 @@ instance Cube.isIso_termComparison [Finite ι] [F.Additive] (A : Cube.{v} ι R) 
   · rw [injective_iff_map_eq_zero]
     intro x hx
     have h : (F.map (∑ s, Cube.termProj A s ≫ e s)).hom x = x := by rw [h1, F.map_id]; rfl
-    rw [← h, F.map_sum, ModuleCat.hom_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← h, F.map_sum, ModuleCat.hom_sum, LinearMap.sum_apply]
     refine Finset.sum_eq_zero fun s _ => ?_
     have hs : (F.map (Cube.termProj A s)).hom x = 0 := congrFun hx s
     rw [F.map_comp, ModuleCat.hom_comp, LinearMap.comp_apply, hs, map_zero]
   · intro y
     refine ⟨∑ s, (F.map (e s)).hom (y s), funext fun t => ?_⟩
-    rw [Cube.termComparison_apply, map_sum, Finset.sum_eq_single t]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Cube.termComparison_apply, map_sum, Finset.sum_eq_single t]
     · rw [← LinearMap.comp_apply, ← ModuleCat.hom_comp, ← F.map_comp, h2, F.map_id]; rfl
     · intro s _ hs
       rw [← LinearMap.comp_apply, ← ModuleCat.hom_comp, ← F.map_comp, h3 _ _ hs.symm, F.map_zero]
@@ -727,7 +731,8 @@ theorem Cube.map_d_termComparison (A : Cube.{v} ι R) (p : ℕ) :
       Cube.termComparison F A p ≫ ModuleCat.ofHom (Cube.d (A ⋙ F) p) := by
   refine ModuleCat.hom_ext (LinearMap.ext fun x => funext fun t => ?_)
   have h := congrArg F.map (Cube.d_termProj A p t)
-  rw [F.map_comp, F.map_sum] at h
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [F.map_comp, F.map_sum] at h
   refine Eq.trans congr(($h).hom x) (Eq.trans ?_ (Cube.d_apply (A ⋙ F) p _ t).symm)
   rw [ModuleCat.hom_sum, LinearMap.sum_apply]
   refine Finset.sum_congr rfl fun i _ => ?_
@@ -969,7 +974,8 @@ theorem homology_directSum_bijective {K : κ → CochainComplex (ModuleCat.{v} R
     refine Eq.trans ?_ h
     have h' := (HomologicalComplex.homologyFunctor _ _ p).map_sum (fun k => π k ≫ i k) T
     refine Eq.trans ?_ congr(($h').hom ((L.homologyπ p).hom c)).symm
-    rw [map_sum, ModuleCat.hom_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, ModuleCat.hom_sum]
     refine Eq.trans (Finset.sum_congr rfl fun k _ => ?_) (LinearMap.sum_apply _ _ _).symm
     rw [DirectSum.toModule_lof, Functor.map_comp]
     rfl
@@ -1062,7 +1068,8 @@ theorem Cube.termDirectSum_bijective [Finite ι] (A : κ → Cube.{v} ι R) (p :
     obtain ⟨T, hT⟩ := Cube.exists_sum_directSum A p z
     refine ⟨∑ k ∈ T, DirectSum.lof R κ (fun k => Cube.Term (A k) p) k
       (Cube.termMap (Cube.directSumProj A k) p z), Eq.trans ?_ hT⟩
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun k _ => Cube.termDirectSum_lof A p k _
 
 noncomputable def Cube.termDirectSumEquiv [Finite ι] (A : κ → Cube.{v} ι R) (p : ℕ) :

@@ -40,7 +40,8 @@ theorem levelGen_holds (I : AutInst) (g : ℕ) (hg : 1 ≤ g) : LevelGen I g := 
       rw [hxw]
       funext i
       simp only [hι, Finset.sum_apply, Pi.add_apply, Pi.smul_apply, smul_eq_mul]
-      simp only [Algebra.smul_def, map_add, map_sum, map_mul, map_natCast]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Algebra.smul_def, map_add, map_sum, map_mul, map_natCast]
     | zero => exact ⟨0, 0, I.Lf.zero_mem, by simp⟩
     | add y y' _ _ hy hy' =>
       obtain ⟨a, z, hz, rfl⟩ := hy

@@ -201,7 +201,8 @@ theorem exists_l2Val : Out.Laws → ∀ (K : Type) [Field K] [IsAlgClosed K] (x 
       simp only [Finset.mul_sum, ← _root_.mul_assoc, ← map_mul]
       rw [Finset.sum_comm]
       refine Finset.sum_eq_zero fun I' _ => ?_
-      rw [← Finset.sum_mul, ← map_sum, show ∑ I, c I * Q I I' = 0 from congrFun hcQ I', map_zero, zero_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← Finset.sum_mul, ← map_sum, show ∑ I, c I * Q I I' = 0 from congrFun hcQ I', map_zero, zero_mul]
   refine ⟨Units.mk0 _ hdet ^ (2 * m ^ 2) * ∏ I, rho I ^ 2, ξ, mu, w, Matrix.of Q, rho, hξ, hk, hmu, hw,
     fun p J hJ => ⟨hmuv p J hJ, fun I => hrho I p J hJ⟩, fun I y J hJ => ?_, by simp⟩
   have e := hs I _ (𝟙 _) y J hJ

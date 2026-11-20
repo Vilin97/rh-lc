@@ -154,7 +154,8 @@ theorem smul_D_psi : ∀ (p : ℕ) [Fact p.Prime] (Ω : Type) [Field Ω] [Algebr
     rw [thL_part, map_add Ψ, map_mul Ψ (i : Lau p), map_mul Ψ ((p ^ L : ℕ) : Lau p), map_mul Ψ, map_natCast Ψ, map_natCast Ψ, hmono]
     exact part_eq_zero D qL _ _ i (p ^ L) (hsub i) hND
   have hE : E b = 0 := by
-    rw [decomp (p ^ L) hN b, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [decomp (p ^ L) hN b, map_sum]
     exact Finset.sum_eq_zero hpart
   exact sub_eq_zero.1 hE
 

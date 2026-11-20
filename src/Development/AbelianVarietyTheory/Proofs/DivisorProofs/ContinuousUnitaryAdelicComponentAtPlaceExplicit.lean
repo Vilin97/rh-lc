@@ -25,7 +25,8 @@ theorem continuous_tensorMap {R R' : Type} [CommRing R] [Algebra ℚ R] [Topolog
   have key : ∀ x, Algebra.TensorProduct.map f (AlgHom.id ℚ C) x = ∑ i, f (bA.repr x i) • bB i := by
     intro x
     conv_lhs => rw [← bA.sum_repr x]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     simp only [bA, bB, Algebra.TensorProduct.basis_apply, TensorProduct.smul_tmul', smul_eq_mul, mul_one,
       Algebra.TensorProduct.map_tmul, AlgHom.id_apply]

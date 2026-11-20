@@ -23,7 +23,8 @@ private theorem exists_avg {G V : Type} [Group G] [AddCommGroup V] [Module ℂ V
     rw [Finset.sum_congr rfl fun q _ => hv _ (q.out : K).2]
     simp [← Nat.cast_smul_eq_nsmul ℂ, smul_smul, hc]
   · intro v hv k hk
-    simp only [LinearMap.smul_apply, LinearMap.sum_apply, map_smul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [LinearMap.smul_apply, LinearMap.sum_apply, map_smul, map_sum]
     congr 1
     have key : ∀ q : K ⧸ H.subgroupOf K, R k (R ((q.out : K) : G) v) =
         R ((((⟨k, hk⟩ : K) • q).out : K) : G) v := fun q => by
@@ -118,7 +119,8 @@ theorem indepS : IndepS := by
     ⟨hA3 (σ j) (fun x v hv => hst j _ v hv) _ (hfσ j),
       GlobalTheory.LGrp.mem_fixed.2 fun k hk => hA2 _ (fun h hh => (Subgroup.mem_iInf.1 hh j)) k hk⟩
   have hmem : φ ∈ ⨆ (j) (_ : j ≠ i), σ j ⊓ fixed (RF E n) (globLev S K') := by
-    rw [← hφA, ← hsum', map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hφA, ← hsum', map_sum]
     refine Submodule.sum_mem _ fun j _ => ?_
     by_cases hj : j = i
     · rw [hj, hfi, map_zero]

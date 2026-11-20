@@ -99,11 +99,13 @@ theorem evI_dot (x y : κ → AF F) :
     evI F (x ⬝ᵥ y) = (fun i => evI F (x i)) ⬝ᵥ (fun i => evI F (y i)) := by
   have h : ∀ a : AF F, evI F a = ((InfiniteAdeleRing.ringEquiv_mixedSpace F).toRingHom.comp (fstA F).toRingHom) a :=
     fun a => rfl
-  simp only [h, dotProduct, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [h, dotProduct, map_sum, map_mul]
 
 theorem evFin_dot (v : Pl F) (x y : κ → AF F) :
     evFin F v (x ⬝ᵥ y) = (fun i => evFin F v (x i)) ⬝ᵥ (fun i => evFin F v (y i)) := by
-  simp only [dotProduct, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dotProduct, map_sum, map_mul]
 
 theorem evFin_mem (a : AF F) : ∀ᶠ v in cofinite, evFin F v a ∈ v.adicCompletionIntegers F :=
   a.2.2.mono fun _ hv => hv

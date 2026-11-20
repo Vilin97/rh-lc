@@ -42,7 +42,8 @@ theorem eig_single [DecidableEq ι] {τ : ι} {w : M} (hw : IsEigV ρ (χ τ) w)
 
 theorem eig_comb {κ : Type} [Fintype κ] {ψ : O →+* K} {u : κ → M} (hu : ∀ i, IsEigV ρ ψ (u i)) (a : κ → R) :
     IsEigV ρ ψ (∑ i, a i • u i) := fun o => by
-  rw [map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.smul_sum]
   exact Finset.sum_congr rfl fun i _ => by rw [map_smul, hu, smul_comm]
 
 theorem block_basis (hs : Splits χ) {m : ι → ℕ} (u : (Σ τ, Fin (m τ)) → M) (hu : ∀ z, IsEigV ρ (χ z.1) (u z))
@@ -88,7 +89,8 @@ theorem det_map {n : ℕ} (b : Module.Basis (Fin n) R M) (b' : Module.Basis (Fin
   congr 1
   ext i j
   rw [Module.Basis.toMatrix_apply, RingHom.mapMatrix_apply, Matrix.map_apply, Module.Basis.toMatrix_apply]
-  conv_lhs => rw [← b.sum_repr (u j), map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [← b.sum_repr (u j), map_sum]
   simp only [map_smulₛₗ, hb]
   exact congrFun (b'.repr_sum_self _) i
 
@@ -111,7 +113,8 @@ theorem lift_eig (hs : Splits χ) (hφ : ∀ y, φ (algebraMap K R y) = algebraM
   have h0 : φ (∏ j, s j) ≠ 0 := by rw [map_prod]; exact Finset.prod_ne_zero_iff.2 fun j _ => hs0 j
   have e : f w₀ = φ (∏ j, s j) • w := by
     conv_rhs => rw [← b'.sum_repr w, Finset.smul_sum]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smulₛₗ, hb, smul_smul, ← Finset.prod_erase_mul _ _ (Finset.mem_univ i), map_mul, map_mul, mul_assoc, hrs]
   obtain ⟨mm, h1, h2⟩ := (hs R M ρ).1 w₀

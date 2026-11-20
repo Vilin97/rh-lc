@@ -79,7 +79,8 @@ lemma fockR_monomial [DecidableEq (σ →₀ ℕ)] (m m' : σ →₀ ℕ) (a b :
 
 lemma fockR_map {S : Type*} [CommRing S] (φ : R →+* S) (f g : MvPolynomial σ R) :
     fockR (map φ f) (map φ g) = φ (fockR f g) := by
-  rw [fockR_eq_sum _ _ f.support (support_map_subset φ f), fockR, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [fockR_eq_sum _ _ f.support (support_map_subset φ f), fockR, map_sum]
   refine Finset.sum_congr rfl fun m _ => ?_
   simp only [coeff_map, map_mul, map_natCast]
 
@@ -140,7 +141,8 @@ lemma prod_blockEmb_expand [DecidableEq S] (F : S → MvPolynomial (Fin k × Fin
       = ∏ s, ∑ m ∈ (F s).support, blockEmb K s (monomial m (AddMonoidAlgebra.coeff (F s) m)) := by
         refine Finset.prod_congr rfl fun s _ => ?_
         conv_lhs => rw [(F s).as_sum]
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
     _ = ∑ p ∈ Fintype.piFinset (fun s => (F s).support),
           ∏ s, blockEmb K s (monomial (p s) (AddMonoidAlgebra.coeff (F s) (p s))) := Finset.prod_univ_sum _ _
     _ = _ := Finset.sum_congr rfl fun p _ => prod_blockEmb_monomial _ _

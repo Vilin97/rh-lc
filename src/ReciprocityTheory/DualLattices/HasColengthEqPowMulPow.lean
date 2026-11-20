@@ -93,7 +93,8 @@ theorem hasColength_eq_pow_mul_pow (hv : v.Integers R) (AA : HopfOrder (C := C) 
       obtain ⟨b', hb', hbb'⟩ := Submodule.mem_map.mp (hb j)
       rw [hQ] at hb'
       obtain ⟨r, hr⟩ := (Submodule.mem_span_range_iff_exists_fun R).mp hb'
-      rw [← hbb', ← hr, map_sum, Finset.sum_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hbb', ← hr, map_sum, Finset.sum_mul]
       refine sum_mem fun s _ => ?_
       rw [map_smul, smul_mul_assoc]
       refine Submodule.smul_mem _ _ (Submodule.subset_span ⟨e (j, s), ?_⟩)

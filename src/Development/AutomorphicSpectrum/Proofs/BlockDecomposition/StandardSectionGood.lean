@@ -45,7 +45,8 @@ theorem map_mem_unitary_of_ringEquiv (φ : E ≃+* 𝕜) (hφ : ∀ x, ‖φ x�
   have hφ' : ∀ x, ‖φ.symm x‖ = ‖x‖ := fun x => by rw [← hφ, RingEquiv.apply_symm_apply]
   have e1 : z ᵥ* k.map φ = fun j => φ.toRingHom (((fun i => φ.symm (z i)) ᵥ* k) j) := by
     ext j
-    simp [vecMul, dotProduct, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [vecMul, dotProduct, map_sum, map_mul]
   rw [e1, euclidNorm_map φ.toRingHom hφ, hk]
   exact euclidNorm_map φ.symm.toRingHom hφ' z
 
@@ -99,7 +100,8 @@ theorem mem_archCompact_of_map_mem_unitary (w : InfinitePlace K) {k : GL (Fin n)
         (k : Matrix (Fin n) (Fin n) w.Completion).map
           (InfinitePlace.Completion.extensionEmbedding w) := by
     ext j
-    simp [vecMul, dotProduct, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [vecMul, dotProduct, map_sum, map_mul]
   rw [e1, euclidNorm_vecMul_unitary hk]
 
 end Place

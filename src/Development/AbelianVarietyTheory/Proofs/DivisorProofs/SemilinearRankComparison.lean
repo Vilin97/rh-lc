@@ -119,7 +119,8 @@ theorem torsLen_diag [IsDomain R] {ι κ : Type} [Fintype ι] [Fintype κ] (b : 
         intro t ht
         by_contra hn
         have h1 : b.repr (r • y) t = 0 := by
-          rw [← hc, hh, map_sum, Finsupp.finset_sum_apply]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [← hc, hh, map_sum, Finsupp.finset_sum_apply]
           refine Finset.sum_eq_zero fun k _ => ?_
           have : f k ≠ t := fun e => hn ⟨k, e⟩
           simp [Finsupp.single_apply, this]

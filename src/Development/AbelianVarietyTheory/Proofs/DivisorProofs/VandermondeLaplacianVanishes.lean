@@ -113,7 +113,8 @@ theorem vdm_pderiv_sum_and_laplacian : ∀ r : ℕ, ∑ a : Fin r, MvPolynomial.
       intro a b hab
       have hinj : Function.Injective (Option.map (Equiv.swap a b)) := Option.map_injective (Equiv.injective _)
       have hVs : MvPolynomial.rename (Option.map (Equiv.swap a b)) V = -V := rename_swap_vdm hab
-      rw [hL, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hL, map_sum]
       simp only [← MvPolynomial.pderiv_rename hinj, hVs, map_neg, Option.map_some]
       rw [← Finset.sum_neg_distrib]
       exact Equiv.sum_comp (Equiv.swap a b) (fun c => -(MvPolynomial.pderiv (some c) (MvPolynomial.pderiv (some c) V)))

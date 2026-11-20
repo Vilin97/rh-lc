@@ -118,7 +118,8 @@ theorem exists_cov_eq_mulVec (k : Type) [CommRing k] (X : Scheme.{0}) (p : X ⟶
     rw [← cov_res d kW₀ ho, ← hd, LieVB.dUnit_resG, IsFrame.basis_apply,
       ← LieVB.resM_dUnit P.A c₀.le h₂, ← resM_resM (h₁ := hle₀) (h₂ := h₂), ← ht]
     rfl
-  rw [← cov_res d kW ho, ← hd, LieVB.dUnit_resG, ← LieVB.resM_dUnit P.A hU h₁,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← cov_res d kW ho, ← hd, LieVB.dUnit_resG, ← LieVB.resM_dUnit P.A hU h₁,
     ← (c.isFrame.basis (h₂.trans hle₀)).sum_repr (resM _ h₁ _), map_sum]
   funext a
   simp only [hL, e, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, mulVec, dotProduct, of_apply,

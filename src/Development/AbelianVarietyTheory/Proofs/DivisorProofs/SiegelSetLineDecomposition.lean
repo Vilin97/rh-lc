@@ -71,7 +71,8 @@ theorem dec : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField 
   have hA : (J.map τ.1)ᴴ = J.map τ.1 := conjTranspose_map h hJ τ.1
   have hv : star (fun i => τ.1 (x i)) ⬝ᵥ J.map τ.1 *ᵥ (fun i => τ.1 (x i)) = 0 := by
     have e := congrArg τ.1 hx
-    simp only [hE, Formalism.UG.hform, map_sum, map_mul, map_zero] at e
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hE, Formalism.UG.hform, map_sum, map_mul, map_zero] at e
     rw [← e]
     simp only [dotProduct, Matrix.mulVec, Finset.mul_sum, Pi.star_apply, Matrix.map_apply]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_

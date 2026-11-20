@@ -106,7 +106,8 @@ theorem weightedHomogeneousComponent_one_mem {I : Ideal (MvPolynomial ι k)}
     (hI : I.IsHomogeneous (homogeneousSubmodule ι k)) (n : ℤ) {p : MvPolynomial ι k}
     (hp : p ∈ I) : weightedHomogeneousComponent (fun _ : ι => (1 : ℤ)) n p ∈ I := by
   classical
-  rw [← sum_homogeneousComponent p, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← sum_homogeneousComponent p, map_sum]
   refine I.sum_mem fun i _ => ?_
   have h1 : homogeneousComponent i p ∈ weightedHomogeneousSubmodule k (fun _ : ι => (1 : ℤ))
       (i : ℤ) := by

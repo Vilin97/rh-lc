@@ -61,7 +61,8 @@ theorem sectionsOn_res_pi_bijective_of_separating {X : Scheme.{0}} (F : X.Module
       exact e
   choose s h₁ h₂ using key
   refine ⟨∑ i, s i, funext fun j => ?_⟩
-  rw [LinearMap.pi_apply, map_sum, Finset.sum_eq_single j (fun i _ hi => h₂ i j hi.symm) (by simp),
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [LinearMap.pi_apply, map_sum, Finset.sum_eq_single j (fun i _ hi => h₂ i j hi.symm) (by simp),
     h₁]
 
 theorem length_sectionsOn_top_eq_sum_of_separating :

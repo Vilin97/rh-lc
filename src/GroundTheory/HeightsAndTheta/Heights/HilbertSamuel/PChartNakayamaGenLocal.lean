@@ -120,7 +120,8 @@ theorem smul_mk_cancel {T : Submonoid (MRingOver S ι)} {M : Type} [AddCommGroup
 
 theorem sum_mk_one {T : Submonoid (MRingOver S ι)} {M : Type} [AddCommGroup M] [Module (MRingOver S ι) M]
     {n : ℕ} (y : Fin n → M) : ∑ i, LocalizedModule.mk (y i) (1 : T) = LocalizedModule.mk (∑ i, y i) 1 := by
-  simp only [← LocalizedModule.mkLinearMap_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← LocalizedModule.mkLinearMap_apply, map_sum]
 
 theorem exists_smul_mem_span_of_mem_span {T : Submonoid (MRingOver S ι)} {M : Type} [AddCommGroup M]
     [Module (MRingOver S ι) M] {Z : Set (LocalizedModule T M)} {w : LocalizedModule T M}

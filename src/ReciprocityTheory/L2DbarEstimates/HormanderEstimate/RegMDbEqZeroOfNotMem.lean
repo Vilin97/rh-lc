@@ -27,9 +27,11 @@ theorem regM_dbarDir_eq {n : ℕ} (g : V n → ℂ) (y v : V n) :
     simp [Finset.smul_sum, smul_smul]
   have hLv : L v = ∑ j, L (v j • bas n j) := by
     conv_lhs => rw [hv]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
   have hLIv : L (Complex.I • v) = ∑ j, L ((Complex.I * v j) • bas n j) := by
-    rw [hIv, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hIv, map_sum]
   simp only [C.dbarDir, wdb, ← hL]
   rw [hLIv, hLv, Finset.mul_sum, Finset.mul_sum, ← Finset.sum_sub_distrib]
   refine Finset.sum_congr rfl fun j _ => ?_

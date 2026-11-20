@@ -172,7 +172,8 @@ theorem hA_incl (x y : Fin I.n → I.E) : hA I (incl I x) (incl I y) =
     Formalism.UG.inclE (F := I.F) (Af I.F) (Formalism.UG.hform (starRingEnd I.E) I.J x y) := by
   have key : ∀ a : I.E, Formalism.UG.sigR I.cm.sig (Af I.F) (Formalism.UG.inclE (F := I.F) (Af I.F) a) =
       Formalism.UG.inclE (F := I.F) (Af I.F) (star a) := sigA_inclE I
-  simp only [hA, Formalism.UG.hform, incl, Matrix.map_apply, map_sum, map_mul, key, starRingEnd_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hA, Formalism.UG.hform, incl, Matrix.map_apply, map_sum, map_mul, key, starRingEnd_apply]
 
 theorem J_conj (i j : Fin I.n) : star (I.J i j) = I.J j i := by
   have hh : Formalism.UG.cT (starRingEnd I.E) I.J = I.J := I.J_herm
@@ -186,7 +187,8 @@ theorem hA_symm (u v : VA I) : hA I v u = sigA I (hA I u v) := by
     intro i j
     rw [← J_conj I i j]
     exact sigA_inclE I _
-  simp only [hA, Formalism.UG.hform, map_sum, map_mul, Matrix.map_apply, hs, hJ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hA, Formalism.UG.hform, map_sum, map_mul, Matrix.map_apply, hs, hJ]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   ring

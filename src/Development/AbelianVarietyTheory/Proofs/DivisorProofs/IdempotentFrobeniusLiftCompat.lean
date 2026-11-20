@@ -63,7 +63,8 @@ theorem main : ∀ {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing
   haveI := Examples₂.additive_frobFun p h
   refine nonempty_kernel_iso (frobFun p h) (eA M c a) (hidem M hM) (eA (frobA p h M) c' a) ?_
   unfold eA
-  rw [Functor.map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Functor.map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   obtain ⟨v, hv⟩ := hc k
   have e : smulHom ((frobFun p h).obj M.V) (c' k) = smulHom _ (c k ^ p) := by

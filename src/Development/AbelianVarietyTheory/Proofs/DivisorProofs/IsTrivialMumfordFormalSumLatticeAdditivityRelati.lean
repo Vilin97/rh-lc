@@ -42,7 +42,8 @@ theorem flat_single (u v : Vec r) : flat (Finsupp.single (u, v) 1) = lam u v := 
   simp [flat]
 
 theorem flat_sigP (W A A' : Matrix (Fin r) (Fin r) ℤ) : flat (sigP W A A') = sig W A A' := by
-  simp only [sigP, sig, map_sum, map_zsmul, flat_single]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [sigP, sig, map_sum, map_zsmul, flat_single]
 
 end Formal
 
@@ -390,7 +391,8 @@ theorem formEq_sig (hpr : ∀ i, IsMonHom (pr i)) (W A A' : Matrix (Fin r) (Fin 
     rfl
   apply Additive.ofMul.injective
   rw [hR]
-  simp only [ofMul_prod, ofMul_zpow, sig, map_sum, map_zsmul, hlam]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [ofMul_prod, ofMul_zpow, sig, map_sum, map_zsmul, hlam]
   rw [Fintype.sum_prod_type]
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [Fintype.sum_prod_type, Fintype.sum_prod_type]
@@ -466,7 +468,8 @@ theorem tv_sigP (Q : Data R) {X' : Type} [AddCommGroup X'] (xe : X' ≃+ (Fin r 
     fin_cases a <;> simp [rosVec, vecLat_add, vecLat_xv, vecLat_zv, vecLat_axv, vecLat_azv, hA, hA']
   apply Additive.ofMul.injective
   change T (sigP W A A') = _
-  simp only [sigP, map_sum, map_zsmul, ofMul_prod, ofMul_zpow]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [sigP, map_sum, map_zsmul, ofMul_prod, ofMul_zpow]
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [Finset.smul_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
@@ -534,7 +537,8 @@ theorem span_sigP {r : ℕ} (W A A' : Matrix (Fin r) (Fin r) ℤ)
     rw [hc]
     abel
   have hπ : N.mkQ (sigP W A A') = ∑ a : Fin 6, rosatiε a • X (rosVec A A' a) (rosVec A A' a) := by
-    simp only [sigP, map_sum, map_zsmul, X, Finset.smul_sum, mul_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [sigP, map_sum, map_zsmul, X, Finset.smul_sum, mul_smul]
     rfl
   have e0 : rosVec A A' 0 = fun i => axv A i + zv i := rfl
   have e1 : rosVec A A' 1 = fun i => axv A i := rfl

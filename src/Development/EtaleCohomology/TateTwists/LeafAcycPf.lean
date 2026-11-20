@@ -117,19 +117,22 @@ lemma key {N : ℕ} (z : Pr N) (hz : z.1 + z.2.1 ≠ 0) :
     | zero => simp at hz
     | succ r =>
       rw [H_X, Hg_zero, map_add, d_X, d_X, d_X, simplex_pair_first_face_cone_vertex_formula, diffOne_zero, diffOne_zero, simplex_pair_second_face_cone_succ_formula, simplex_pair_second_face_succ_alternating_sum, simplex_pair_second_face_succ_alternating_sum]
-      simp only [map_add, map_sub, map_sum, map_zsmul, H_X, Hg_zero, smul_add, Finset.sum_add_distrib, zero_add,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_add, map_sub, map_sum, map_zsmul, H_X, Hg_zero, smul_add, Finset.sum_add_distrib, zero_add,
         pow_zero, pow_one, one_smul, neg_smul, map_zero]
       abel
   | succ p =>
     cases r with
     | zero =>
       rw [H_X, Hg_succ, d_X, d_X, simplex_pair_first_face_cone_succ_formula, simplex_pair_first_face_succ_alternating_sum, simplex_pair_second_face_of_vertex_eq_zero, simplex_pair_second_face_of_vertex_eq_zero]
-      simp only [map_add, map_sub, map_sum, map_zsmul, H_X, smul_zero, add_zero, map_zero]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_add, map_sub, map_sum, map_zsmul, H_X, smul_zero, add_zero, map_zero]
       simp only [Hg, smul_add, Finset.sum_add_distrib, alt_const, add_zero]
       abel
     | succ r =>
       rw [H_X, Hg_succ, d_X, d_X, simplex_pair_first_face_cone_succ_formula, simplex_pair_first_face_succ_alternating_sum, simplex_pair_second_face_succ_alternating_sum, simplex_pair_second_face_succ_alternating_sum]
-      simp only [map_add, map_sub, map_sum, map_zsmul, H_X, Hg_succ, map_zero]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_add, map_sub, map_sum, map_zsmul, H_X, Hg_succ, map_zero]
       simp only [Hg, smul_add, Finset.sum_add_distrib, alt_const, add_zero]
       have e : (-1 : ℤ) ^ (p + 2) = -(-1) ^ (p + 1) := by ring
       rw [e, neg_smul]
@@ -176,7 +179,8 @@ theorem LateralTheory.EtaleFoundations.SteenPf.leaf_acyc_of : LateralTheory.Etal
   have e : Pr.d N (H N c) + H N (Pr.d N c) = c := by
     conv_rhs => rw [← Finsupp.sum_single c]
     conv_lhs => rw [← Finsupp.sum_single c]
-    simp only [Finsupp.sum, map_sum, ← Finset.sum_add_distrib]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Finsupp.sum, map_sum, ← Finset.sum_add_distrib]
     exact Finset.sum_congr rfl h
   rw [hcyc, map_zero, add_zero] at e
   exact e

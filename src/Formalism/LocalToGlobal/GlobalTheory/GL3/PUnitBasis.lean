@@ -48,7 +48,8 @@ theorem PLat.proj (P : PLat c h O L p) {ι : Type} [Fintype ι] [DecidableEq ι]
   refine ⟨((∏ j, n j : ℕ) : K) • x - S, L.sub_mem (P.smul _ (natCast_mem O _) _ hx) hSL, ?_, ∏ j, n j, ?_, ?_, ?_, ?_⟩
   · intro j
     have e1 : h (((∏ j, n j : ℕ) : K) • x - S) (v j) = H.hl (v j) (((∏ j, n j : ℕ) : K) • x - S) := rfl
-    rw [e1, map_sub, map_smul, hS, map_sum, Finset.sum_eq_single j]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e1, map_sub, map_smul, hS, map_sum, Finset.sum_eq_single j]
     · rw [map_smul]
       show ((∏ j, n j : ℕ) : K) • h x (v j)
         - (((∏ i ∈ Finset.univ.erase j, n i : ℕ) : K) * h x (v j)) • h (v j) (v j) = 0
@@ -66,7 +67,8 @@ theorem PLat.proj (P : PLat c h O L p) {ι : Type} [Fintype ι] [DecidableEq ι]
     exact Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)
   · intro y hy
     have e1 : h (((∏ j, n j : ℕ) : K) • x - S) y = H.hl y (((∏ j, n j : ℕ) : K) • x - S) := rfl
-    rw [e1, map_sub, map_smul, hS, map_sum, Finset.sum_eq_zero, sub_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e1, map_sub, map_smul, hS, map_sum, Finset.sum_eq_zero, sub_zero]
     · rfl
     · intro i _
       rw [map_smul]

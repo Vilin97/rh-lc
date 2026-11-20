@@ -213,7 +213,8 @@ theorem indep_of_frame {S : Scheme.{0}} {G : Over S} [GrpObj G] [IsCommMonObj G]
   have hL : ∀ x : Fin g → R, L (fun k => ψ (x k)) = j x := by
     intro x
     have ex : x = ∑ k, x k • Pi.basisFun R (Fin g) k := ((Pi.basisFun R (Fin g)).sum_repr x).symm
-    conv_rhs => rw [ex, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_rhs => rw [ex, map_sum]
     simp only [L, Fintype.linearCombination_apply, hlin]
     rfl
   refine LinearIndependent.of_comp L ?_

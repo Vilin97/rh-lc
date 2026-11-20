@@ -74,7 +74,8 @@ theorem tw_conv {c : L} (hc : c ≠ 0) (Φ : M →ₗ[L] M) (a : PowerSeries L) 
     tw c Φ (conv a u) = conv (PowerSeries.rescale c a) (tw c Φ u) := by
   funext k
   set N := (k - m).toNat + 1 with hN
-  rw [tw_apply, conv_eq_sum _ hm k N (by omega), conv_eq_sum _ (tw_van c Φ hm) k N (by omega),
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [tw_apply, conv_eq_sum _ hm k N (by omega), conv_eq_sum _ (tw_van c Φ hm) k N (by omega),
     map_sum, Finset.smul_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [tw_apply, map_smul, smul_smul, smul_smul, PowerSeries.coeff_rescale, zpow_sub₀ hc, zpow_natCast]

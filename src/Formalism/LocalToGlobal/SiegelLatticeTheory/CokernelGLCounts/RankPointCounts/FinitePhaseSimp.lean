@@ -125,7 +125,8 @@ theorem finPhaseC_of (hNR : Formalism.L2.SG.PairVal.NormRepExists D u u' (X.Fu u
     have h := humF b
     simp only [hframe] at h
     simp only [LinearEquiv.mul_apply]
-    rw [show (X.Fu u').fvec b = frame (lf D (X.Fu u')) b from rfl, h, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [show (X.Fu u').fvec b = frame (lf D (X.Fu u')) b from rfl, h, map_sum]
     refine Finset.sum_congr rfl fun c _ => ?_
     rw [map_smul, hig]
 

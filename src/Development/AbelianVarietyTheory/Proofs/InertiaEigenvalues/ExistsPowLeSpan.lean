@@ -13,7 +13,8 @@ theorem exists_norm_le : ∃ C : ℝ, ∀ b : N.O i, ‖iotaOQ N A i b‖ ≤ C 
   refine ⟨∑ a ∈ s, ‖iotaOQ N A i a‖, fun b => ?_⟩
   have hb : b ∈ Submodule.span ℤ_[N.l i] (s : Set (N.O i)) := hs ▸ Submodule.mem_top
   obtain ⟨c, -, rfl⟩ := Submodule.mem_span_finset.1 hb
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun a _ => ?_)
   have hz : iotaOQ N A i (algebraMap ℤ_[N.l i] (N.O i) (c a)) =
       algebraMap ℚ_[N.l i] (Qbar (N.l i)) (c a : ℚ_[N.l i]) := A.iotaQ_alg i (c a)

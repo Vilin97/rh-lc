@@ -370,7 +370,8 @@ theorem par_of_family (hS : Stein F) {W : Type} [AddCommGroup W] [Module R W] (g
   have hdec : ∀ w, ∑ k, lam k w • v k = w := fun w ↦ by
     have e1 : a (b w) = w := LinearMap.congr_fun hab w
     conv_rhs => rw [← e1, pi_eq_sum_univ' (b w)]
-    simp [lam, v, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [lam, v, map_sum]
   let abelian₂ : ∀ k T, Ω[F.obj T⁄R] →ₗ[F.obj T] F.obj T := fun k T ↦
     (hu T).lift (Algebra.linearMap R (F.obj T) ∘ₗ lam k)
   have hLam : ∀ k T w, abelian₂ k T (u T w) = algebraMap R (F.obj T) (lam k w) := fun k T w ↦
@@ -381,7 +382,8 @@ theorem par_of_family (hS : Stein F) {W : Type} [AddCommGroup W] [Module R W] (g
         simp only [LinearMap.sum_apply, LinearMap.comp_apply, LinearMap.toSpanSingleton_apply, hLam,
           LinearMap.id_apply, algebraMap_smul]
         have := congrArg (u T) (hdec w)
-        rw [map_sum] at this
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum] at this
         simpa using this
     simpa using LinearMap.congr_fun e ξ
   have hcomp : ∀ k ⦃T T' : C⦄ (φ : T ⟶ T') (ξ : Ω[F.obj T⁄R]),
@@ -410,7 +412,8 @@ theorem par_of_family (hS : Stein F) {W : Type} [AddCommGroup W] [Module R W] (g
         rfl)
     choose r hr using hd
     refine ⟨∑ k, r k • v k, Subtype.ext (funext fun T ↦ ?_)⟩
-    rw [hj, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hj, map_sum]
     refine Eq.trans (Finset.sum_congr rfl fun k _ ↦ ?_) (hexp T (ω.1 T))
     rw [map_smul, ← congrFun (hr k) T, ← algebraMap_smul (F.obj T) (r k) (u T (v k))]
     rfl

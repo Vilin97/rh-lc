@@ -20,7 +20,8 @@ theorem span_adelic : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Numb
   have fsmul : ∀ (c : E) (u w : Fin n → E), form σ J (c • u) w = c * form σ J u w := by
     intro c u w; simp [form, smul_dotProduct]
   have hswap : form σ J y x = σ (form σ J x y) := by
-    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, hJ]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, hJ]
     simp_rw [Finset.mul_sum]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl (fun i _ => Finset.sum_congr rfl (fun j _ => ?_))
@@ -64,7 +65,8 @@ theorem span_adelic : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Numb
   have key : z j = ∑ i, z i * R ((Pi.single i 1 : Fin n → E) j) := by
     simp [Pi.single_apply, Finset.sum_ite_eq', eq_comm]
   rw [key]
-  simp only [← hp, hL, Pi.add_apply, Pi.smul_apply, smul_eq_mul, Matrix.mulVec, dotProduct, map_add, map_mul, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← hp, hL, Pi.add_apply, Pi.smul_apply, smul_eq_mul, Matrix.mulVec, dotProduct, map_add, map_mul, map_sum,
     incV, incM, Matrix.map_apply]
   simp only [Finset.sum_mul, Finset.mul_sum, mul_add, Finset.sum_add_distrib]
   rw [Finset.sum_comm (f := fun k i => R (ι j k) * (z i * R ((p i).2.1 k)))]

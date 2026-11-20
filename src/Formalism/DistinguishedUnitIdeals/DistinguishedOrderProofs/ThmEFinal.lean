@@ -375,11 +375,13 @@ theorem lLift_of {h : LatHom L₁ L₂} {c' : ZMod n} {r₁ r₂ : ℕ} {e₁ : 
     simp only [Finset.smul_sum]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun l _ => ?_
-    rw [← LinearMap.toMatrix'_mulVec prL v₁, Matrix.mulVec, dotProduct, map_sum, Finset.sum_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← LinearMap.toMatrix'_mulVec prL v₁, Matrix.mulVec, dotProduct, map_sum, Finset.sum_smul]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [← mul_smul, ← map_mul, mul_comm]
   have h3 : h.f (∑ k, a k • e₁ k) - ∑ l, C (prL v₁ l) • e₂ l ∈ sm (X : PowerSeries O) (L₂.N c') := by
-    rw [← h2, map_sum, ← Finset.sum_sub_distrib]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← h2, map_sum, ← Finset.sum_sub_distrib]
     refine Submodule.sum_mem _ fun k _ => ?_
     rw [map_smul]
     exact h1 k

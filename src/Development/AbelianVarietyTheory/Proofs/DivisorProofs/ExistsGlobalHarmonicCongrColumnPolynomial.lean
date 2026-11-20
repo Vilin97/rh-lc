@@ -21,7 +21,8 @@ theorem sum_smul_mem_HaO {Ty : Type} {r : Ty → ℕ} {n : ℕ} {k : Type} [Fiel
   classical
   refine ⟨⟨Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _ (hP i).1.1, fun σ i i' hi t => ?_,
     fun q hq => ?_⟩, fun q => ?_⟩
-  · rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum]
     exact Finset.sum_congr rfl fun j _ => by rw [map_smul, (hP j).1.2.1 σ i i' hi t]
   · obtain ⟨j, -, hj⟩ := Finset.mem_biUnion.1 (MvPolynomial.support_sum hq)
     exact (hP j).1.2.2 q (MvPolynomial.support_smul hj)
@@ -111,7 +112,8 @@ theorem exists_harmA_congr_polyT : ∀ (E : Type) [Field E] [NumberField E] [IsC
   refine ⟨fun f b j => g (B₀ f b j), ∑ i, algebraMap T.V T.Fr (g (z i)) • MvPolynomial.map (χ.comp io₀) (Pi i),
     isCols_map g χ hχ hB₀, sum_smul_mem_HaO _ _ _ _ _ _ (fun i => ⟨_, rfl⟩)
       (fun i => PullbackSections.ffvMap E H Dw l c a n _ (hPi i) T _), ?_⟩
-  rw [← map_polyT g χ hχ, hsum, map_sum, map_sum, Finset.smul_sum, ← Finset.sum_add_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_polyT g χ hχ, hsum, map_sum, map_sum, Finset.smul_sum, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun i _ => ?_
   simp only [MvPolynomial.smul_eq_C_mul, map_mul, MvPolynomial.map_C, MvPolynomial.map_map, RingHom.comp_apply, hxz i,
     map_add, hχ, map_natCast, Nat.cast_pow, map_pow]

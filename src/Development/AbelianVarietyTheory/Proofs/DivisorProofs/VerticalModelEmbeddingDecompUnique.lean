@@ -50,7 +50,8 @@ theorem hom_eq_zero {X : Scheme.{0}} [IsIntegral X] {F G : X.Modules} {r n : ℕ
   obtain ⟨a, ha⟩ := (hs (W ⊓ U) inf_le_right).2 (resM F inf_le_left t)
   rw [← ha, Fintype.linearCombination_apply]
   change QCoh.appLinear φ _ _ = 0
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_eq_zero fun j _ => ?_
   rw [map_smul, QCoh.appLinear_apply, app_resM, h, map_zero, smul_zero]
 
@@ -224,7 +225,8 @@ theorem scalar_eq (Z : LocM.Mdl Y i₀) [IsDiscreteValuationRing (Z.i.c.V W)] {B
   have h1 : ∑ k, restrictGlobal B.X (h ⁻¹ᵁ (Z.U a).1) (B.const (cf k)) *
       (h.app (Z.U a).1).hom (Z.alg a (embK Z.i.c τ (if true then H.bar (b k) else b k))) =
         restrictGlobal B.X (h ⁻¹ᵁ (Z.U a).1) (B.const (∑ k, cf k * ev (b k))) := by
-    simp only [Vert.Model.const, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Vert.Model.const, map_sum, map_mul]
     refine Finset.sum_congr rfl fun l _ => ?_
     rw [if_pos trivial, embK_bar', ← hev, ← const_pull Z h hh]
   have key : ∀ {R S T : Type} [CommRing R] [CommRing S] [CommRing T] (u : R →+* S) (v : S →+* T),

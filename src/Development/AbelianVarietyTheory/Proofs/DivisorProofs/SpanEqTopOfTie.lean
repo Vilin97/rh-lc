@@ -55,7 +55,8 @@ theorem span_eq_top {G Γ W W' K V₀ H : Type} [Group G] [Group Γ] [NormedAddC
       rw [hval]
       by_cases h : c' = c
       · subst h
-        simp only [PresBasic.avgForm, Pi.single_eq_same, map_sum, hρ]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [PresBasic.avgForm, Pi.single_eq_same, map_sum, hρ]
       · simp [PresBasic.avgForm, Pi.single_eq_of_ne h]
     | zero => exact ⟨0, Submodule.zero_mem _, fun c' => by simp⟩
     | add u u' _ _ h h' =>
@@ -76,7 +77,8 @@ theorem span_eq_top {G Γ W W' K V₀ H : Type} [Group G] [Group Γ] [NormedAddC
     obtain ⟨c, ⟨γ, k, rfl⟩, -⟩ := P.reps g
     rw [hmem w γ _ k, hmem _ γ _ k]
     congr 2
-    rw [map_sum, Finset.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_apply]
     simp only [hf']
     rw [Finset.sum_eq_single c (fun c' _ hc => Pi.single_eq_of_ne (Ne.symm hc) _) (by simp), Pi.single_eq_same]
     have hg : ∀ g : S.Gam c, (χ' (stabK ι (P.stabI c g)) : ℂ) • ρ' (P.stabI c g : Γ)

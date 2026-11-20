@@ -34,7 +34,8 @@ theorem idem_coeff {Λ R : Type} [CommRing Λ] [CommRing R] {ι : Type} [Fintype
   have hb : ∀ σ (x : Λ), ∑ m, ((b.repr x m : ℤ) : R) * ev σ (b m) = ev σ x := by
     intro σ x
     conv_rhs => rw [← b.sum_repr x]
-    simp only [map_sum, zsmul_eq_mul, map_mul, map_intCast]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, zsmul_eq_mul, map_mul, map_intCast]
   refine congrFun (inj (fun m => ∑ k, ∑ l, cf τ k * cf τ l * ((b.repr (b k * b l) m : ℤ) : R)) (cf τ) ?_) m
   ext σ
   simp only [Matrix.vecMul, dotProduct, E, Matrix.of_apply]
@@ -58,7 +59,8 @@ theorem idem_ring {Λ R A : Type} [CommRing Λ] [CommRing R] [Ring A] {ι : Type
   have hb : ∀ x : Λ, ρ x = ∑ m, ρ (b m) * s ((b.repr x m : ℤ) : R) := by
     intro x
     conv_lhs => rw [← b.sum_repr x]
-    simp only [map_sum, zsmul_eq_mul, map_mul, map_intCast]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, zsmul_eq_mul, map_mul, map_intCast]
     exact Finset.sum_congr rfl fun m _ => Int.cast_comm _ _
   calc (∑ k, ρ (b k) * s (cf τ k)) * (∑ k, ρ (b k) * s (cf τ k))
       = ∑ k, ∑ l, ∑ m, ρ (b m) * s (cf τ k * cf τ l * ((b.repr (b k * b l) m : ℤ) : R)) := by
@@ -70,7 +72,8 @@ theorem idem_ring {Λ R A : Type} [CommRing Λ] [CommRing R] [Ring A] {ι : Type
         refine Finset.sum_congr rfl fun m _ => ?_
         rw [mul_assoc, ← map_mul, mul_comm ((b.repr (b k * b l) m : ℤ) : R)]
     _ = ∑ m, ρ (b m) * s (∑ k, ∑ l, cf τ k * cf τ l * ((b.repr (b k * b l) m : ℤ) : R)) := by
-        simp only [map_sum, Finset.mul_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, Finset.mul_sum]
         symm
         rw [Finset.sum_comm]
         refine Finset.sum_congr rfl fun k _ => ?_

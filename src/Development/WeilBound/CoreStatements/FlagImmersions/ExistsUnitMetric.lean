@@ -22,7 +22,8 @@ theorem evC_conj (w : (Σ k, J k) → ℂ) (f : MRing J) :
     evC (fun p => (starRingEnd ℂ) (w p)) f = (starRingEnd ℂ) (evC w f) := by
   simp only [evC, MvPolynomial.eval_map]
   rw [MvPolynomial.eval₂_eq', MvPolynomial.eval₂_eq']
-  simp [map_sum, map_prod, map_pow, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, map_prod, map_pow, map_mul]
 
 theorem contDiff_evC (f : MRing J) : ContDiff ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) fun w : (Σ k, J k) → ℂ => evC w f := by
   simp only [evC_eq]

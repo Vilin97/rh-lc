@@ -12,7 +12,8 @@ theorem aic_equiv {A A' : Type} [CommRing A] [CommRing A'] (e : A ≃+* A') (h :
   have := congrArg e ha
   rw [eval_map, ← coe_eval₂RingHom, map_zero] at this
   rw [← this]
-  simp [eval₂_eq_sum_range, eval_eq_sum_range, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [eval₂_eq_sum_range, eval_eq_sum_range, map_sum]
 
 theorem card_roots_of_aic {A : Type} [CommRing A] [IsDomain A] (h : AIC A) :
     ∀ (n : ℕ) (p : A[X]), p.Monic → p.natDegree = n → Multiset.card p.roots = n := by

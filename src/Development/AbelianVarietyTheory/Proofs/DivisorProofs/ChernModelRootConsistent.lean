@@ -21,7 +21,8 @@ private theorem ext_of_prod {ι : Type} {d : ℕ} (f g : MvPolynomial ι ℚ →
     (h : ∀ ν : Fin d → ι, f (∏ i, X (ν i)) = g (∏ i, X (ν i))) {P : MvPolynomial ι ℚ} (hP : P.IsHomogeneous d) :
     f P = g P := by
   classical
-  rw [P.as_sum, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [P.as_sum, map_sum, map_sum]
   refine Finset.sum_congr rfl fun u hu => ?_
   have h1 : u.degree = d := by
     have := hP (mem_support_iff.1 hu)

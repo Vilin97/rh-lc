@@ -37,7 +37,8 @@ theorem exists_mean (π : G →* (H →L[ℂ] H)) (hπ : ∀ g x, ‖π g x‖ =
   · refine Submodule.smul_mem _ _ (Submodule.sum_mem _ fun z hz => Submodule.subset_span ?_)
     obtain ⟨k, rfl⟩ := (hmem z).1 hz
     exact ⟨k, rfl⟩
-  · rw [map_smul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_smul, map_sum]
     congr 1
     refine Finset.sum_nbij' (fun z => π k z) (fun z => π k⁻¹ z) (fun z hz => ?_) (fun z hz => ?_)
       (fun z _ => ?_) (fun z _ => ?_) (fun z _ => rfl)

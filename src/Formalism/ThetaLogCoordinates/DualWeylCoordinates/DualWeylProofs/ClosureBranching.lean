@@ -45,7 +45,8 @@ lemma qr_equiv {m : ℕ} [NeZero m] {M : GLMod (m + 1)} {lam : Fin (m + 1) → �
       ((t ^ (∑ a, lam a - ∑ a, nu a) : Rˣ) : R) *
         ∑ K' : TIdx nu, ((ph i (qr_j hi K') : ℤ) : R) * evGL g1 (TMat nu K' I') := by
   have h1 := congrArg (evGL h) (congrFun (congrFun hE i) (qr_j hi I'))
-  simp only [Matrix.mul_apply, Matrix.map_apply, map_sum, map_mul, eq_intCast, map_intCast] at h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mul_apply, Matrix.map_apply, map_sum, map_mul, eq_intCast, map_intCast] at h1
   rw [h1, Finset.mul_sum]
   symm
   apply Finset.sum_of_injOn (qr_j hi) (qr_j_inj hi).injOn (fun _ _ => Finset.mem_coe.2 (Finset.mem_univ _))

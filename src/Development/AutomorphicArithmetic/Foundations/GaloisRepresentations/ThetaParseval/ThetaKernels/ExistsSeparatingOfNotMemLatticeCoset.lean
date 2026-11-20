@@ -290,7 +290,8 @@ theorem UpperTheory.exists_separating_of_not_mem_lattice_coset :
       c₂ * (GlobalTheory.LatVac.locCo M.co v (mat g⁻¹ * b)).2 i ∈ v.adicCompletionIntegers F := by
     intro b hb i
     obtain ⟨a, rfl⟩ := (hgm b).1 hb
-    simp only [Matrix.mul_sum, Matrix.mul_smul, map_sum, locCo_smul'_pk, GlobalTheory.EmbChart.evFin_atPlace, Prod.fst_sum, Prod.snd_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mul_sum, Matrix.mul_smul, map_sum, locCo_smul'_pk, GlobalTheory.EmbChart.evFin_atPlace, Prod.fst_sum, Prod.snd_sum,
       Finset.sum_apply, Prod.smul_fst, Prod.smul_snd, Pi.smul_apply, smul_eq_mul, Finset.mul_sum]
     constructor
     · refine sum_mem fun m _ => ?_

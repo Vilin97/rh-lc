@@ -58,7 +58,8 @@ theorem fmat_change {d m : ℕ} (σ : K →+* ℂ) (e : Fin m → Fin d → K)
     (γ : Matrix (Fin m) (Fin m) K) :
     fmat σ (fun i => ∑ k, γ k i • e k) = fmat σ e * γ.map σ := by
   ext j i
-  simp only [fmat, Matrix.of_apply, Matrix.mul_apply, Matrix.map_apply, Finset.sum_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [fmat, Matrix.of_apply, Matrix.mul_apply, Matrix.map_apply, Finset.sum_apply,
     Pi.smul_apply, smul_eq_mul, map_sum, map_mul]
   exact Finset.sum_congr rfl fun k _ => mul_comm _ _
 
@@ -152,7 +153,8 @@ theorem gram_ratHerm {d : ℕ} (K0 : Subfield K) (H : Matrix (Fin d) (Fin d) K)
   rw [gramR, RingHom.map_det]
   congr 1
   ext a b
-  simp only [gram, Formalism.HN.gramPl, Matrix.of_apply, majAt_eq, hm, RingHom.mapMatrix_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [gram, Formalism.HN.gramPl, Matrix.of_apply, majAt_eq, hm, RingHom.mapMatrix_apply,
     Matrix.map_apply, dotProduct, Matrix.mulVec, cvec, Pi.star_apply, map_sum, map_mul]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [hv0, Complex.star_def]

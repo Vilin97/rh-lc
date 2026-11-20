@@ -31,7 +31,8 @@ theorem locTop_eq_of_type : ∀ {X : Formalism.L2.Col.Fields} {Pr : Formalism.L2
     have hq : ((Formalism.L2.Col.qOf P.1 : ℕ) : X.E) ≠ 0 :=
       Nat.cast_ne_zero.2 fun h => P.1.ne_bot (Ideal.absNorm_eq_zero_iff.1 h)
     have hsum : η ((Formalism.L2.Col.qOf P.1 : X.E) • y') = ∑ i, ((Formalism.L2.Col.qOf P.1 : X.E) * y' i) * η (Pi.single i 1) := by
-      conv_lhs => rw [pi_eq_sum_univ' ((Formalism.L2.Col.qOf P.1 : X.E) • y'), map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        conv_lhs => rw [pi_eq_sum_univ' ((Formalism.L2.Col.qOf P.1 : X.E) • y'), map_sum]
       exact Finset.sum_congr rfl fun i _ => by rw [map_smul, smul_eq_mul, Pi.smul_apply, smul_eq_mul]
     have hε : Formalism.L2.Col.IntAt P.1 (Formalism.L2.Col.epsSg : X.E) := by
       simpa [Formalism.L2.Col.epsSg] using Formalism.L2.Col.IntAt.coe P.1 (-1)

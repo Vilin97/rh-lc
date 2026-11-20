@@ -189,8 +189,10 @@ theorem colAnti_of : TensorGl → JMComm → Height → ColAnti := by
       simpa using h3
   refine ⟨c, LinearMap.ext fun f => ?_⟩
   show L f = c * ℓ (cA col b f)
-  rw [cA_apply, alt_apply, map_sum]
-  conv_lhs => rw [← Finset.univ_sum_single f, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [cA_apply, alt_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [← Finset.univ_sum_single f, map_sum]
   rw [← Finset.sum_subset (Finset.subset_univ ((colG col).image (fun σ : Equiv.Perm (Fin m) => b ∘ ⇑σ)))
     (fun I _ hI => hzero I hI (f I))]
   rw [Finset.sum_image]

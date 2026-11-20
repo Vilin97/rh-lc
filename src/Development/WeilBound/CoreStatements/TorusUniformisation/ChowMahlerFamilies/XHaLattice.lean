@@ -69,7 +69,8 @@ theorem exists_ext {Ω C : Type} [Field Ω] [Field C] [Algebra Ω C] {ι : Type}
   classical
   refine ⟨Fintype.linearCombination C fun i => algebraMap Ω C (ψ (Pi.single i 1)), fun e => ?_⟩
   conv_rhs => rw [pi_eq_sum_univ' e]
-  simp [Fintype.linearCombination_apply, bcMap, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Fintype.linearCombination_apply, bcMap, map_sum]
 
 end PositivityTheory.Xgn.A_ha_lattice
 

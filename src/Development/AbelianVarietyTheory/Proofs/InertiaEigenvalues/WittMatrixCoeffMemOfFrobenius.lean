@@ -89,7 +89,8 @@ lemma key0 {n : Type} [Fintype n] (Y Z B : Matrix n n (WittVector p C))
       ∑ a, (Y i a).coeff 0 * (Z a j).coeff 0 + (B i j).coeff 0 := by
     intro i j
     have := congrArg (WittVector.constantCoeff (p := p) (R := C)) (h i j)
-    simp only [map_add, map_sum, map_mul, WittVector.constantCoeff_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_add, map_sum, map_mul, WittVector.constantCoeff_apply,
       coeff_frobenius_charP] at this
     exact this
   by_contra hne

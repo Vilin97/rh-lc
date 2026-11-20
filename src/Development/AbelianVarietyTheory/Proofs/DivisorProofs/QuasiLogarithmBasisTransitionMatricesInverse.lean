@@ -39,7 +39,8 @@ theorem comb_mul {ι κ : Type} [Fintype ι] [Fintype κ] (e : ι → MvPowerSer
     (f : κ → MvPowerSeries σ Q) (P : ι → κ → B) (P' : κ → ι → B) (i : ι) :
     e i - comb ((Matrix.of P * Matrix.of P') i) e =
       (e i - comb (P i) f) + ∑ j, algebraMap B Q (P i j) • (f j - comb (P' j) e) := by
-  simp only [comb, Matrix.mul_apply, Matrix.of_apply, smul_sub, Finset.sum_sub_distrib,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [comb, Matrix.mul_apply, Matrix.of_apply, smul_sub, Finset.sum_sub_distrib,
     Finset.smul_sum, smul_smul, ← map_mul, map_sum, Finset.sum_smul]
   rw [Finset.sum_comm (f := fun j k => algebraMap B Q (P i j * P' j k) • e k)]
   abel

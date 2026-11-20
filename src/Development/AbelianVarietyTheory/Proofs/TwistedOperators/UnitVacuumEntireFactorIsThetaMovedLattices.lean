@@ -56,7 +56,8 @@ theorem finRat_frame_mem_latO_sd {S T : HSp D} (frS : GL (Fin S.rank) D.host.E) 
         Finset.sum_mul]
       rw [Finset.sum_comm]
       exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
-    rw [eA, Finset.smul_sum, Matrix.mul_sum, Matrix.sum_mul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [eA, Finset.smul_sum, Matrix.mul_sum, Matrix.sum_mul, map_sum]
     exact AddSubgroup.sum_mem _ fun k _ => gen_mem frS frT hS Ls Lt a ha (u k) (hu k) (A *ᵥ s k)
       (GlobalTheory.ThetaLatImage.mem_homL.1 hA _ (hs k))
   have hI : ∀ t ∈ GlobalTheory.InertSign.Iid D D.host.ccK, t ∈ (D.host.AA : Submodule (𝓞 D.host.E) D.host.E) := by
@@ -201,7 +202,8 @@ theorem sign_eq_alpha_sd : ∀ {D : D7} (ψ : AddChar (AF D.host.F) ℂ) (S T : 
     rw [Finset.sum_congr rfl fun τ _ => this τ, ← Finset.sum_div, Finset.sum_neg_distrib, hc]
   have hcre : ((c.re : ℝ) : ℂ) = c := by
     have : starRingEnd ℂ c = c := by
-      rw [hc, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hc, map_sum]
       refine Finset.sum_congr rfl fun τ _ => ?_
       rw [← GlobalTheory.FockCompare.tauE_star, hns]
     exact Complex.conj_eq_iff_re.1 this
@@ -226,9 +228,11 @@ theorem sign_eq_alpha_sd : ∀ {D : D7} (ψ : AddChar (AF D.host.F) ℂ) (S T : 
   have hsum : (∑ τ, ∑ a, ∑ b, tauE D τ (Y a b) * starRingEnd ℂ (tauE D τ (Y a b))) = c := by
     rw [hc]
     refine Finset.sum_congr rfl fun τ _ => ?_
-    rw [hn, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hn, map_sum]
     refine Finset.sum_congr rfl fun a _ => ?_
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun b _ => ?_
     rw [map_mul, GlobalTheory.FockCompare.tauE_star, mul_comm]
   have h0 := GlobalTheory.RatFinIso.symplOH_ratW_finRat_neg S T v

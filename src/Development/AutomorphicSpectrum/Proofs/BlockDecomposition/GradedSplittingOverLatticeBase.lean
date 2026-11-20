@@ -134,7 +134,8 @@ theorem exists_basic_irreducible (ϖ : O) (hϖ : Irreducible ϖ)
       ∀ i ∈ s, ϖ ∣ g i := by
     intro s g h i hi
     have h0 : q (∑ i ∈ s, g i • e i) = 0 := (Submodule.Quotient.mk_eq_zero _).2 h
-    rw [map_sum] at h0
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at h0
     have h1 : ∑ i ∈ s, (Ideal.Quotient.mk I (g i)) • B i = 0 := by
       rw [← h0]
       refine Finset.sum_congr rfl fun i _ => ?_

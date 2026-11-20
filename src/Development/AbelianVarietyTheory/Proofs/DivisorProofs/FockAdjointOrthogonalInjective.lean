@@ -28,7 +28,8 @@ theorem inner_monomial_left (hι : IsFockIP ι) (α : σ →₀ ℕ) (Q : MvPoly
 theorem inner_eq_zero_of_isHomogeneous (hι : IsFockIP ι) {d e : ℕ} {P Q : MvPolynomial σ ℂ}
     (hde : d ≠ e) (hP : P.IsHomogeneous d) (hQ : Q.IsHomogeneous e) :
     inner ℂ (ι P) (ι Q) = 0 := by
-  rw [P.as_sum, map_sum, sum_inner]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [P.as_sum, map_sum, sum_inner]
   refine Finset.sum_eq_zero fun α hα => ?_
   have hm : (monomial α (AddMonoidAlgebra.coeff P α) : MvPolynomial σ ℂ) = AddMonoidAlgebra.coeff P α • monomial α 1 := by
     rw [smul_monomial]; simp

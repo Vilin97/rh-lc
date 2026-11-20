@@ -53,7 +53,8 @@ theorem cap_step_col : ∀ (M Wp : Type) [AddCommGroup M] [Module ℂ M] [AddCom
     simp only [hiff]
   have key : l (Formalism.REAL.qminor E (Fin.cons a0 a' : Fin (t + 1) → Fin n)
       (Fin.cons b0 b' : Fin (t + 1) → Fin n) u v) = p • l (Formalism.REAL.qminor E a' b' (u - 1) v) := by
-    rw [PI.QmColExpWork.expFirst, LinearMap.sum_apply, map_sum, Finset.sum_eq_single 0]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [PI.QmColExpWork.expFirst, LinearMap.sum_apply, map_sum, Finset.sum_eq_single 0]
     · have e1 : (Fin.cons a0 a' : Fin (t + 1) → Fin n) ∘ (0 : Fin (t + 1)).succAbove = a' := by
         funext k; simp
       have e2 : (Fin.cons b0 b' : Fin (t + 1) → Fin n) ∘ Fin.succ = b' := by

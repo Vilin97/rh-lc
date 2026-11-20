@@ -74,7 +74,8 @@ theorem γA_q {δ : W.Gam} (hδ : δ ∈ W.DelF) :
   congr 1
   funext i
   change W.γ₀ δ W.π₀₁ = W.π₀₁
-  rw [LocWach.π₀₁, map_add, map_sub, map_one, map_natCast, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [LocWach.π₀₁, map_add, map_sub, map_one, map_natCast, map_sum,
     ← sum_Del W (fun ε => W.γ₀ ε (1 + PowerSeries.X)) hδ]
   simp only [map_mul, AlgHom.mul_apply]
 
@@ -97,7 +98,8 @@ theorem card_Del {l : ℕ} (hl : 2 ≤ l) (hk : (PD.p : k) = 0) (ι : k⸨X⸩ �
     exact hu
   have h4 := congrArg (PowerSeries.constantCoeff (R := k)) h3
   have h5 : PowerSeries.constantCoeff W.π₀₁ = 1 - (PD.p : O) + W.DelF.card := by
-    rw [LocWach.π₀₁, map_add, map_sub, map_one, map_natCast, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [LocWach.π₀₁, map_add, map_sub, map_one, map_natCast, map_sum]
     congr 1
     rw [Finset.sum_congr rfl (g := fun _ => (1 : O))]
     · simp
@@ -170,7 +172,8 @@ theorem red_div (hq : Onto T A q) (hk : (PD.p : k) = 0) (hc : (W.DelF.card : k) 
     ∃ z' : ↥(W.NΔ T), red p T A q i y = vv k ^ (s : ℤ) • red p T A q i z' := by
   have hz' : ∑ δ ∈ W.DelF, W.γD T δ z ∈ W.NΔ T := by
     refine ⟨Submodule.sum_mem _ fun δ _ => W.N_Γ T δ z hz, fun δ hδ => ?_⟩
-    rw [map_sum, ← sum_Del W (fun ε => W.γD T ε z) hδ]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, ← sum_Del W (fun ε => W.γD T ε z) hδ]
     simp only [W.γD_mul]
   have he : (letE (τ i) : LetA O n₀) • (y : W.DD T) ∈ DΔ W T := fun δ hδ => by
     rw [γD_smulA, γA_e, y.2.2 δ hδ]

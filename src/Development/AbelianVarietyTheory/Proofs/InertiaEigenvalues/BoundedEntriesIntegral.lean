@@ -50,7 +50,8 @@ theorem val_smul_mulVec_le_one {n : ℕ} (M : Matrix (Fin n) (Fin n) (FiniteAdel
     rw [Pi.smul_apply, smul_eq_mul, Matrix.mulVec, dotProduct, Finset.mul_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     ring
-  rw [e, hev, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, hev, map_sum]
   refine Valuation.map_sum_le _ fun j _ => ?_
   rw [← hev]
   refine val_intMul_le_one c _ Q ?_

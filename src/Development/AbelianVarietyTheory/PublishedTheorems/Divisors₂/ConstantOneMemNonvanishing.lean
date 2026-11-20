@@ -201,7 +201,8 @@ theorem deg_aeval [IsIntegral X] {L : ι → HermLB p} {Φ : MvPolynomial ι ℝ
       simp [lin]
     rw [LinearMap.sub_apply, ← R.degreeFirstChernPow _ _ (hΦ.1 m), e, ← h₁, firstChern_tensor_powers]
     simp
-  · rw [LinearMap.sub_apply, hΦ.2 P e he hP, sub_zero, P.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [LinearMap.sub_apply, hΦ.2 P e he hP, sub_zero, P.as_sum, map_sum]
     refine Finset.sum_eq_zero fun d hd => ?_
     rw [← mul_one (AddMonoidAlgebra.coeff P d), ← smul_eq_mul, ← smul_monomial, map_smul, h₀, R.deg_eq_zero e he, smul_zero]
     rw [aeval_monomial, map_one, one_mul, ← hP (mem_support_iff.1 hd), Finsupp.weight_apply]

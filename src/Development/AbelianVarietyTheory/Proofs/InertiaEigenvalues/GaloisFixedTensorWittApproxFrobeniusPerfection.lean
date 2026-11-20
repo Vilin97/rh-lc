@@ -156,7 +156,8 @@ private theorem nearPi_sum_lemma_5 {l : ℕ} [Fact l.Prime] {P : LocPrime l} (AI
       ∑ i, basisO LL i ⊗ₜ[ℤ_[l]] (inclW l (piW AI s) ^ k * inclW l (WittVector.teichmuller l (v i))) := by
     change inclR LL ((1 : ↥(OL LL)) ⊗ₜ[ℤ_[l]] piW AI s) ^ k *
       inclR LL (∑ i, basisO LL i ⊗ₜ[ℤ_[l]] WittVector.teichmuller l (v i)) = _
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [hR]
     rw [Finset.mul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_

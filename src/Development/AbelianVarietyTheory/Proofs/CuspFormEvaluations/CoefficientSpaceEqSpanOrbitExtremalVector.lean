@@ -23,7 +23,8 @@ theorem coeff_mem_of_eval_mem {K A : Type} [Field K] [CharZero K] [CommRing A] [
       (Set.infinite_range_of_injective Nat.cast_injective)
     rintro _ ⟨c, rfl⟩
     have h1 := hφ _ (h c)
-    rw [Polynomial.eval_eq_sum_range, map_sum] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Polynomial.eval_eq_sum_range, map_sum] at h1
     simp only [Set.mem_setOf_eq, Polynomial.IsRoot.def, hq, Polynomial.eval_finset_sum, Polynomial.eval_monomial]
     rw [← h1]
     refine Finset.sum_congr rfl fun i _ => ?_

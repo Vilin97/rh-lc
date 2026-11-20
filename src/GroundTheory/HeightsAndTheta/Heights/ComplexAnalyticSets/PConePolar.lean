@@ -30,7 +30,8 @@ theorem maDens_log_dualNorm_sheet {n e : ℕ} (h : HermNorm n) (J : Ideal (MvPol
     rintro rfl
     have h1 : eval (0 : Fin n → ℂ) (linForm ℓ - 1) = 0 :=
       hxZ _ (Ideal.mem_sup_right (Ideal.subset_span rfl))
-    rw [map_sub, map_one, linForm, map_sum] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_one, linForm, map_sum] at h1
     simp at h1
   have hdual : ∀ z, h.dualNorm z = ‖WithLp.toLp 2 ((h.matᵀ)⁻¹ *ᵥ z)‖ := fun z => by
     simp [HermNorm.dualNorm, EuclideanSpace.norm_eq]

@@ -33,7 +33,8 @@ theorem lat_eq_span (M : LieModel G ξ E) (p : Cpt ξ)
     obtain ⟨c, hc⟩ := (Submodule.mem_span_range_iff_exists_fun _).1 hy
     have he' : e = ∑ k, genMap ξ p (c k) • val (b k) := by
       have h1 : val y = e := rfl
-      rw [← h1, ← hc, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← h1, ← hc, map_sum]
       rfl
     rw [he']
     refine Submodule.sum_mem _ fun k _ => ?_

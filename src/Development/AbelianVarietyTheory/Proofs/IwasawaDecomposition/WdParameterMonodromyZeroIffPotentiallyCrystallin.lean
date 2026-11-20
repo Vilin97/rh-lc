@@ -43,13 +43,15 @@ theorem mem_span_invariants {G F D : Type*} [Group G] [Field F] [AddCommGroup D]
     have hy : ∀ s ∈ S, a s ((c : F) • x) = (c : F) • x := fun s h => by rw [hs, c.2 s h, hS s h]
     have hinv : ∑ q : G ⧸ S, a q.out ((c : F) • x) ∈ Submodule.span F {y | ∀ g, a g y = y} := by
       refine Submodule.subset_span fun g => ?_
-      rw [map_sum, ← Equiv.sum_comp (MulAction.toPerm g) fun q : G ⧸ S => a q.out ((c : F) • x)]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, ← Equiv.sum_comp (MulAction.toPerm g) fun q : G ⧸ S => a q.out ((c : F) • x)]
       refine Finset.sum_congr rfl fun q _ => ?_
       rw [← ha]
       refine hcos _ hy _ _ ?_
       rw [QuotientGroup.out_eq', MulAction.toPerm_apply, ← smul_eq_mul, MulAction.Quotient.mk_smul_out]
     have h2 := LinearMap.mem_ker.mp (hker hinv)
-    rw [map_sum] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at h2
     simp only [hs, map_smul, smul_eq_mul] at h2
     rw [Finset.sum_apply, Pi.zero_apply, ← h2]
     exact Finset.sum_congr rfl fun q _ => mul_comm _ _) ((1 : G) : G ⧸ S)

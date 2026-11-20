@@ -48,7 +48,8 @@ theorem det_trace_monic {E A : Type} [Field E] [CommRing A] [Algebra E A] {n : �
         Matrix.of fun k l : Fin n => Algebra.trace E A (g ^ (k : ℕ) * e l) := by
     ext k l
     simp only [Matrix.of_apply, Matrix.mul_apply]
-    rw [aeval_eq_sum_range' (n := n) (by rw [hd k]; exact k.isLt), Finset.sum_mul, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [aeval_eq_sum_range' (n := n) (by rw [hd k]; exact k.isLt), Finset.sum_mul, map_sum,
       ← Fin.sum_univ_eq_sum_range]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [smul_mul_assoc, map_smul, smul_eq_mul]
@@ -78,7 +79,8 @@ theorem trace_mul_eq {E A : Type} [Field E] [CommRing A] [Algebra E A] {n : ℕ}
   ext k l
   simp only [Matrix.of_apply, Matrix.mul_apply, Algebra.leftMulMatrix_eq_repr_mul]
   conv_lhs => rw [mul_assoc, ← w.sum_repr (h * w l)]
-  rw [Finset.mul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.mul_sum, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [mul_smul_comm, map_smul, smul_eq_mul, mul_comm]
 

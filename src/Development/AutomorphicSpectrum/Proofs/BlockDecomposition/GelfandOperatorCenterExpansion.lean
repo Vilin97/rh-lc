@@ -37,7 +37,8 @@ theorem map_phiSeq (φ : A →+* B) (N : A) (τ : ℕ → A) (m : ℕ) :
   induction m using Nat.strong_induction_on with
   | _ m ih =>
     rw [phiSeq_unfold N, phiSeq_unfold (φ N)]
-    simp only [map_sub, map_sum, map_mul, map_bco, Function.comp]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sub, map_sum, map_mul, map_bco, Function.comp]
     congr 1
     exact Finset.sum_congr rfl fun j _ => by rw [ih j j.isLt]
 
@@ -74,7 +75,8 @@ theorem phiSeq_words (n m : ℕ) : ∃ (N : ℕ) (c : Fin N → ℂ) (w : Fin N 
     funext k; simp
   rw [h2, map_natCast] at h1
   rw [← h1, h]
-  simp only [map_sum, RingHom.coe_coe, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, RingHom.coe_coe, map_smul]
   refine Finset.sum_congr rfl fun i _ => ?_
   congr 1
   rw [map_list_prod, List.map_map]

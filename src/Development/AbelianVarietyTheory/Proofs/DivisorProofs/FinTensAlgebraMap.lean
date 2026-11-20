@@ -170,7 +170,8 @@ theorem sum_EF {r : ℕ} (hr : T.rank = r) (X : Data D.host.E r) (hS : S.gram = 
     ∑ k, EF X (colsR hr γ k) (colsR hr γ' k) = -Algebra.trace ℚ D.host.E (D.host.xi0 * hRat S T γ γ') := by
   subst hr
   simp only [EF_def]
-  rw [← map_sum, ← map_neg, hX.kap, ← Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum, ← map_neg, hX.kap, ← Finset.mul_sum]
   congr 1
   rw [show ∀ x : D.host.E, -(-(2 * x) / 2) = x from fun x => by ring, ← mul_neg]
   congr 1

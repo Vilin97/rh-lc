@@ -95,7 +95,8 @@ theorem exists_ders [Algebra.Smooth R B] :
         rw [map_mul, map_mul]
         linear_combination hprod a b }
   have key := congrArg δ.liftKaehlerDifferential (hD b)
-  simp only [map_sum, map_smul, Derivation.liftKaehlerDifferential_comp_D] at key
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, Derivation.liftKaehlerDifferential_comp_D] at key
   exact key
 
 end Der
@@ -307,7 +308,8 @@ theorem exists_res_eq_of_unitInChart (hS : UnitInChart G S) (hρ : IsAway ρ g)
       · have s := snd_eq_sum hτ (ρ.comp u) φ' hφ' b
         simp only [AlgHom.comp_apply, snd_dualScale, snd_dualMap, ψ, addDers_apply]
         rw [s, Finset.sum_mul]
-        simp [TrivSqZeroExt.snd_sum, map_sum, mul_assoc, ha]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp [TrivSqZeroExt.snd_sum, map_sum, mul_assoc, ha]
         exact Finset.sum_congr rfl fun i _ => mul_comm _ _
     dsimp only [res, scl]
     rw [← Category.assoc, ← Category.assoc, spMap_comp, spMap_comp, e]

@@ -25,7 +25,8 @@ private theorem UpperTheory.V.Cj.S.exists_interp {Y : Type} (V : Submodule ℂ (
   choose c hc using hc
   refine ⟨_, b, c, fun f hf y => ?_⟩
   have h := congrArg (ev y) (b.sum_repr ⟨f, hf⟩)
-  rw [map_sum] at h
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum] at h
   simp only [map_smul] at h
   refine h.symm.trans (Finset.sum_congr rfl fun i _ => ?_)
   have h2 : b.repr ⟨f, hf⟩ i = (c i).sum fun z t => t * f z := by
@@ -61,7 +62,8 @@ theorem UpperTheory.V.Cj.S.typesComm :
       ∑ i, ((c i).sum fun z t => t * (T φ).1 (g * infEmb E a z.1)) • (b i).1 := by
     funext k
     rw [← hR k, ← hTR, h1 k]
-    simp only [map_sum, map_smul, hTR]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, hTR]
     rw [hev]
     simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, mul_comm]
   rw [h2]

@@ -53,7 +53,8 @@ theorem gs_eq_gsHom (f : Y ⟶ X) (y : Y) (U : X.Opens) (h : f y ∈ U) (a : Γ(
 theorem comb_comp {Z : Scheme.{0}} (b : Fin N → LB.Sec (pw L t)) (r : Z ⟶ Y) (p₁ : Y ⟶ T) (p₂ : Y ⟶ X) (W : T.Opens)
     (c : Fin N → Γ(T, W)) (z : Z) (i : L.ι) (h₁ : p₁ (r z) ∈ W) (h₂ : p₂ (r z) ∈ L.U i) :
     comb b (r ≫ p₁) (r ≫ p₂) W c z i = (r.stalkMap z).hom (comb b p₁ p₂ W c (r z) i) := by
-  rw [comb, comb, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [comb, comb, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [map_mul, gs_comp r p₁ z W h₁]
   exact congrArg _ (gs_comp r p₂ z (L.U i) h₂ _)

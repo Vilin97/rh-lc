@@ -64,7 +64,8 @@ theorem factor : Factor := by
   obtain ⟨T, hT⟩ := exists_factor J B' _ hb
   refine ⟨Ws.length, Ws.get, fun i => T.comp (ContinuousLinearMap.single ℂ (fun _ => H) i), hI, fun v hv => ?_⟩
   have h2 : B v = T (J ⟨v, hv⟩) := hT ⟨v, hv⟩
-  rw [h2, ← Finset.univ_sum_single (J ⟨v, hv⟩), map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h2, ← Finset.univ_sum_single (J ⟨v, hv⟩), map_sum]
   rfl
 
 end GlobalTheory.CompanionTheory.BmuFactor

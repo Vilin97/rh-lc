@@ -100,7 +100,8 @@ theorem gramR_mem' (R : Type) [CommRing R] [Algebra F R] (σ : E →ₐ[F] E) (h
   intro a b
   have hJR : ∀ i j, sigR R σ (JR R J i j) = JR R J j i := by
     intro i j; simp [JR, inclR, sigR, hJ]
-  simp only [gramR, hR, hform, map_sum, map_mul, sigR_invol' R σ hσ, hJR]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [gramR, hR, hform, map_sum, map_mul, sigR_invol' R σ hσ, hJR]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 
@@ -178,7 +179,8 @@ theorem trPair_herm {n : ℕ} (σ : E →ₐ[F] E) (hσ : ∀ x, σ (σ x) = x) 
     rw [Finset.sum_comm]; simp_rw [hD']
   have h1 : ∑ a, ∑ c, (X + (X.map (sigR (Fv F v) σ))ᵀ) a c * D c a =
       (∑ a, ∑ c, X a c * D c a) + sigR (Fv F v) σ (∑ a, ∑ c, X a c * D c a) := by
-    simp only [Matrix.add_apply, Matrix.transpose_apply, Matrix.map_apply, add_mul, Finset.sum_add_distrib, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.add_apply, Matrix.transpose_apply, Matrix.map_apply, add_mul, Finset.sum_add_distrib, map_sum,
       map_mul]
     rw [h2]
   unfold trPair

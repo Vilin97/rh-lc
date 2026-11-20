@@ -53,7 +53,8 @@ variable {D : D7} {N N' r : ℕ}
 
 theorem hYY_comb (c : Fin r → D.host.K) (b : Fin r → Matrix (Fin N') (Fin N) D.host.E)
     (y : Matrix (Fin N') (Fin N) D.host.E) : hYY D (∑ k, c k • b k) y = ∑ k, c k * hYY D (b k) y := by
-  simp only [hYY, ← smul_eq_mul, ← map_smul, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hYY, ← smul_eq_mul, ← map_smul, ← map_sum]
   congr 1
   simp only [Matrix.sum_apply, Matrix.smul_apply, Finset.smul_sum, smul_eq_mul, Finset.sum_mul, smul_mul_assoc]
   symm

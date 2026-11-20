@@ -69,7 +69,8 @@ theorem eventually_repr_mem_of_mem_intLoc (F E : Type) [Field F] [NumberField F]
     have e : (x : E) = ∑ k, (β.repr x k : ℤ) • (β k : E) := by
       conv_lhs => rw [← β.sum_repr x]
       simp
-    rw [e, map_sum, Finsupp.coe_finset_sum, Finset.sum_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, map_sum, Finsupp.coe_finset_sum, Finset.sum_apply, map_sum]
     refine Subring.sum_mem (v.adicCompletionIntegers F).toSubring fun k _ => ?_
     rw [map_zsmul, Finsupp.smul_apply, map_zsmul]
     exact Subring.zsmul_mem (v.adicCompletionIntegers F).toSubring (hv k) _

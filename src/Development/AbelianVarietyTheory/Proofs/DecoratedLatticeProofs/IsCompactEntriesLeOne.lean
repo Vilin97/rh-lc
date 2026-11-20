@@ -23,7 +23,8 @@ theorem continuous_lin_mvZ {T : Type} [TopologicalSpace T] (g : T → ι → Mat
       intro x
       rw [map_mul]
       conv_lhs => rw [show mvZ (g x) h (X v) = ∑ i, ∑ j, C (h v.1 i v.2.1 * g x v.1 v.2.2 j) * X (v.1, i, j) by simp [mvZ, aeval_X]]
-      simp only [Finset.mul_sum, map_sum, LinearMap.comp_apply, LinearMap.mulRight_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Finset.mul_sum, map_sum, LinearMap.comp_apply, LinearMap.mulRight_apply]
       refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
       rw [C_mul', mul_smul_comm, map_smul, smul_eq_mul]
     simp_rw [key]
@@ -73,7 +74,8 @@ theorem subY_eq_sum_averages : ∀ (ι : Type) [Fintype ι] (a b : ℕ) (hab : a
         funext τ; rw [hinv, hstar']
       have hb : (fun τ => (1 : Matrix (Fin b) (Fin b) ℂ) * y' τ) = y' := by funext τ; simp
       rw [ha, hb, h5]
-    rw [← e1, hG, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← e1, hG, map_sum, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_smul, map_smul, smul_eq_mul, h6, mul_comm]
   have hst : Continuous fun u : ι → Matrix (Fin a) (Fin a) ℂ => fun τ => star (u τ) := continuous_pi fun τ => (continuous_apply τ).star

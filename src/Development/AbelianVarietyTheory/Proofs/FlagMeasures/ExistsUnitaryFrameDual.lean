@@ -71,7 +71,8 @@ lemma prF_of_inW {w : V} (hw : InW Fr w) : Fr.prF w = w := by
 lemma ext_decomp (f g : V →ₗ[E] E) (he : ∀ a : Fin r, f (Fr.f a.castSucc) = g (Fr.f a.castSucc))
     (hs : ∀ a, f (Fr.es a) = g (Fr.es a)) (hw : ∀ w, InW Fr w → f w = g w) (u : V) : f u = g u := by
   rw [decomp Fr u]
-  simp only [map_add, map_sum, map_smul, he, hs, hw _ (prF_inW Fr u)]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_add, map_sum, map_smul, he, hs, hw _ (prF_inW Fr u)]
 
 end Frame
 
@@ -129,7 +130,8 @@ lemma Nl_cube : Nl Fr y * Nl Fr y * Nl Fr y = 0 := by
   ext v
   simp only [Module.End.mul_apply, LinearMap.zero_apply]
   have h := Nl_perp Fr y (v := Nl Fr y v) (Nl_orth Fr y hy1 v)
-  rw [h, map_neg, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h, map_neg, map_sum]
   simp [Nl_e]
 
 include hy1 in

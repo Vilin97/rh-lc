@@ -434,7 +434,8 @@ def coMat (V : HSpace E) {a : Type} (x : a → V.V) : Matrix (Fin V.rank) a E :=
 theorem hT_eq_sum (V : HSpace E) (x y : V.V) :
     V.hT x y = ∑ j, (∑ i, star (V.frame.repr x i) * V.gram i j) * V.frame.repr y j := by
   conv_lhs => rw [← V.frame.sum_repr x, ← V.frame.sum_repr y]
-  simp only [map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
     RingHom.id_apply, HSpace.gram, starRingEnd_apply, mul_comm]
 
 theorem pairM_coMat (V : HSpace E) {a b : Type} (x : a → V.V) (y : b → V.V) (i : a) (j : b) :

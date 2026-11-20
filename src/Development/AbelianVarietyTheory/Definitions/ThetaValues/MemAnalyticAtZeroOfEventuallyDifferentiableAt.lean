@@ -346,7 +346,8 @@ theorem taylorDir_eq_iff (hu : Submodule.span ℂ (Set.range u) = ⊤)
 theorem taylorDir_fderiv_sum (hf : AnalyticAt ℂ f 0) (a : σ → ℂ) :
     taylorDir u (fun z => fderiv ℂ f z (∑ i, a i • u i)) =
       ∑ i, a i • MvPowerSeries.pderiv ℂ i (taylorDir u f) := by
-  simp only [map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul]
   rw [taylorDir_sum u _ (F := fun i z => a i • fderiv ℂ f z (u i))
     fun i _ => (analyticAt_fderiv_apply hf (u i)).const_smul (c := a i)]
   refine Finset.sum_congr rfl fun i _ => ?_

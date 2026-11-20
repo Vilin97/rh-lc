@@ -57,7 +57,8 @@ theorem UpperTheory.Reformulated.B.PlacewiseToOutsideS.wd_wd :
   intro σ E _ _ _ w hw c
   funext t
   rw [UpperTheory.Reformulated.B.PlacewiseToOutsideS.wd_apply, Pi.zero_apply]
-  simp only [UpperTheory.Reformulated.B.PlacewiseToOutsideS.wd_apply, map_sum, map_zsmul, Finset.smul_sum, smul_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [UpperTheory.Reformulated.B.PlacewiseToOutsideS.wd_apply, map_sum, map_zsmul, Finset.smul_sum, smul_smul]
   set f : σ → σ → E := fun i j =>
     (UpperTheory.Reformulated.B.PlacewiseToOutsideS.cubeSign t i * UpperTheory.Reformulated.B.PlacewiseToOutsideS.cubeSign (t.erase i) j) •
       w i (w j (c ((t.erase i).erase j))) with hf

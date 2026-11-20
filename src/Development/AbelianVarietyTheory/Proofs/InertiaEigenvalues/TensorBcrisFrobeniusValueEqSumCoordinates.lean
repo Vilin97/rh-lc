@@ -18,11 +18,13 @@ theorem toBcris_xiExt_eq_sum : ∀ (l : ℕ) [Fact l.Prime] (a e : ℕ) [NeZero 
     apply Subtype.ext
     show P.xiExt w = _
     rw [Submodule.coe_sum]
-    conv_lhs => rw [eq_sum_bas w, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [eq_sum_bas w, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     show _ = (fun τ => w τ j) • P.xi (fun _ => Pi.single j 1)
     rw [PhiMod.xiExt_smul_tot, PhiMod.xi_apply, cst_single]
-  rw [hsum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hsum, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   ext1 k
   rw [Pi.smul_apply, toBcris_apply, toBcris_apply, smul_eq_mul, ← map_mul]

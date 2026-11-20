@@ -223,7 +223,8 @@ def flagDegZ (lam : ι → Fin N → ℤ) : ℤ := degFlZ ι N (linRootZ ι N la
 theorem linRoot_intCast (lam : ι → Fin N → ℤ) :
     Formalism.DegreeFormula.linRoot (fun τ i => (lam τ i : ℝ)) =
       MvPolynomial.map (Int.castRingHom ℝ) (linRootZ ι N lam) := by
-  simp [Formalism.DegreeFormula.linRoot, linRootZ, map_neg, map_sum, map_mul, MvPolynomial.map_X]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Formalism.DegreeFormula.linRoot, linRootZ, map_neg, map_sum, map_mul, MvPolynomial.map_X]
 
 theorem flagDeg_intCast (lam : ι → Fin N → ℤ) :
     Formalism.DegreeFormula.flagDeg ι N (fun τ i => (lam τ i : ℝ)) = (flagDegZ ι N lam : ℝ) := by

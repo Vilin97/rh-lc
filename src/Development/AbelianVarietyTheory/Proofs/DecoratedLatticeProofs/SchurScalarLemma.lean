@@ -31,7 +31,8 @@ theorem exists_ext {K W : Type} [Field K] [AddCommGroup W] [Module ℂ W] (σ : 
     (c : VV K lam →ₛₗ[σ] W) : ∃ c' : VV ℂ lam →ₗ[ℂ] W, ∀ w, c' (bcVV σ lam w) = c w := by
   let b := Module.Basis.mk (bcVV_indep σ lam) (bcVV_span σ lam).ge
   refine ⟨b.constr ℂ fun i => c (bVV K lam i), fun w => ?_⟩
-  rw [← (bVV K lam).sum_repr w, map_sum, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← (bVV K lam).sum_repr w, map_sum, map_sum, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   have e : bcVV σ lam (bVV K lam i) = b i := (Module.Basis.mk_apply (bcVV_indep σ lam) (bcVV_span σ lam).ge i).symm
   rw [map_smulₛₗ (bcVV σ lam), map_smul, e, Module.Basis.constr_basis, map_smulₛₗ c]

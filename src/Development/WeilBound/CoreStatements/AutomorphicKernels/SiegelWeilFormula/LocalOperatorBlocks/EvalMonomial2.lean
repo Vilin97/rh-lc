@@ -10,7 +10,8 @@ def toMv {σ : Type} (i : σ) (p : Polynomial ℂ) : MvPolynomial σ ℂ :=
   ∑ j ∈ Finset.range (p.natDegree + 1), C (p.coeff j) * X i ^ j
 
 theorem eval_toMv {σ : Type} (i : σ) (p : Polynomial ℂ) (g : σ → ℂ) : eval g (toMv i p) = p.eval (g i) := by
-  simp [toMv, Polynomial.eval_eq_sum_range, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [toMv, Polynomial.eval_eq_sum_range, map_sum]
 
 theorem deg_toMv {σ : Type} (i : σ) (p : Polynomial ℂ) : (toMv i p).totalDegree ≤ p.natDegree := by
   refine (totalDegree_finsetSum _ _).trans (Finset.sup_le fun j hj => ?_)
@@ -24,7 +25,8 @@ theorem deg_toMv {σ : Type} (i : σ) (p : Polynomial ℂ) : (toMv i p).totalDeg
 theorem deg_bind_le {σ τ : Type} (f : σ → MvPolynomial τ ℂ) (hf : ∀ i, (f i).totalDegree ≤ 1)
     (p : MvPolynomial σ ℂ) : (bind₁ f p).totalDegree ≤ p.totalDegree := by
   conv_lhs => rw [p.as_sum]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine (totalDegree_finsetSum _ _).trans (Finset.sup_le fun v hv => ?_)
   rw [bind₁_monomial]
   refine (totalDegree_mul _ _).trans ?_
@@ -56,7 +58,8 @@ theorem intg_poly2 {b : ℂ} (hb : b.re < 0) (l μ : ℂ) (R : MvPolynomial (Fin
       fun p => ∑ v ∈ R.support, eval ![(p.1 : ℂ), (p.2 : ℂ)] (monomial v (AddMonoidAlgebra.coeff R v)) * G2 b l μ p := by
     funext p
     conv_lhs => rw [R.as_sum]
-    rw [map_sum, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_mul]
   rw [e]
   exact integrable_finsetSum _ fun v _ => intg_mono2 hb l μ v _
 
@@ -78,8 +81,10 @@ theorem mom2 {b : ℂ} (hb : b.re < 0) (R : MvPolynomial (Fin 2) ℂ) :
         fun p => ∑ v ∈ R.support, eval ![(p.1 : ℂ), (p.2 : ℂ)] (monomial v (AddMonoidAlgebra.coeff R v)) * G2 b l μ p := by
       funext p
       conv_lhs => rw [R.as_sum]
-      rw [map_sum, Finset.sum_mul]
-    rw [e, integral_finsetSum _ fun v _ => intg_mono2 hb l μ v _, map_sum, Finset.sum_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, integral_finsetSum _ fun v _ => intg_mono2 hb l μ v _, map_sum, Finset.sum_mul]
     refine Finset.sum_congr rfl fun v _ => ?_
     have e2 : (fun p : ℝ × ℝ => eval ![(p.1 : ℂ), (p.2 : ℂ)] (monomial v (AddMonoidAlgebra.coeff R v)) * G2 b l μ p) =
         fun p => AddMonoidAlgebra.coeff R v * (((p.1 : ℂ) ^ v 0 * cexp (b * (p.1 : ℂ) ^ 2 + l * p.1)) *

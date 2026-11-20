@@ -27,7 +27,8 @@ theorem exists_scalar (e : MonoidAlgebra ℂ Γ) (he : ∀ w, e * w = w * e) (ρ
   let T : ρ →ₗ[ℂ] ρ := ∑ q : Γ, e.coeff q • ρ.ρ q
   have hTA : T = Representation.asAlgebraHom ρ.ρ e := by
     conv_rhs => rw [eq_sum_single e]
-    simp only [T, map_sum, Representation.asAlgebraHom_single]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [T, map_sum, Representation.asAlgebraHom_single]
   have hcomm : ∀ h : Γ, ∀ v : ρ, T (ρ.ρ h v) = ρ.ρ h (T v) := by
     intro h v
     have h1 : Representation.asAlgebraHom ρ.ρ (e * MonoidAlgebra.single h 1) = Representation.asAlgebraHom ρ.ρ (MonoidAlgebra.single h 1 * e) := by
@@ -53,7 +54,8 @@ theorem mul_zIdem_eq_smul (e : MonoidAlgebra ℂ Γ) (ρ : FDRep ℂ Γ) (c : �
   have h1 : ∀ q : Γ, ρ.ρ (q⁻¹ * x)⁻¹ = ρ.ρ x⁻¹ * ρ.ρ q := fun q => by rw [mul_inv_rev, inv_inv, map_mul]
   have h2 : ∑ q : Γ, e.coeff q * LinearMap.trace ℂ ρ (ρ.ρ x⁻¹ * ρ.ρ q) =
       LinearMap.trace ℂ ρ (ρ.ρ x⁻¹ * ∑ q : Γ, e.coeff q • ρ.ρ q) := by
-    simp only [Finset.mul_sum, mul_smul_comm, map_sum, map_smul, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Finset.mul_sum, mul_smul_comm, map_sum, map_smul, smul_eq_mul]
   have h3 : ∑ q : Γ, e.coeff q * ((Module.finrank ℂ ρ : ℂ) / Fintype.card Γ * LinearMap.trace ℂ ρ (ρ.ρ (q⁻¹ * x)⁻¹)) =
       (Module.finrank ℂ ρ : ℂ) / Fintype.card Γ * ∑ q : Γ, e.coeff q * LinearMap.trace ℂ ρ (ρ.ρ x⁻¹ * ρ.ρ q) := by
     rw [Finset.mul_sum]

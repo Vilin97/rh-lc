@@ -98,11 +98,13 @@ theorem SerreHolomorphicSections.bijective_valC (h : SerreHolomorphicSections) {
       rintro _ ⟨s, rfl⟩
       have e : s = ∑ i, DVR.FlatBC.algX p ⊤ (b.repr (H0.ofSec p ⊤ s) i) • v i :=
         (H0.bijective_ofSec_top (p := p)).1 (by simp only [map_sum, H0.ofSec_smul, hv, b.sum_repr])
-      rw [e, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [e, map_sum]
       exact Submodule.sum_mem _ fun i _ => by
         rw [SecC.of_smul]; exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)
     obtain ⟨c, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun ℂ).1 hx'
-    simp only [map_sum, map_smul, hL, hv] at h₀
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, hL, hv] at h₀
     simp [Fintype.linearIndependent_iff.1 (hE.indep _ b b.linearIndependent) c h₀]
   · obtain ⟨t, ht⟩ := hS.2 ⟨_, pullVal_mem_holSec hm (AnRead.all _ _ D) s.2⟩
     have hr : H0.ofSec q ⊤ t ∈ LinearMap.range L := by

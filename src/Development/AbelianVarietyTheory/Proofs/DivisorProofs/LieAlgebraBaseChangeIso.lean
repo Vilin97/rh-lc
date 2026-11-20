@@ -103,11 +103,13 @@ theorem lieBaseChange_equiv : ∀ {F : Type} [Field F] [NumberField F] {𝔠 : F
       obtain ⟨s, hs, c, hc⟩ := span z
       have h0 : ∑ i, c i • ρ (w i) = 0 := by
         have := congrArg e₀ hc
-        rw [map_smul, hz, smul_zero, map_sum] at this
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_smul, hz, smul_zero, map_sum] at this
         simpa [he₀] using this.symm
       have h1 : Fintype.linearCombination T (fun i => ρq (ρ (w i))) (fun i => gT (c i)) = 0 := by
         have := congrArg ρq h0
-        rw [map_sum, map_zero] at this
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum, map_zero] at this
         simpa [Fintype.linearCombination_apply] using this
       have h2 : ∀ i, gT (c i) = 0 := fun i => by
         have := hB.1 (h1.trans (map_zero _).symm)
@@ -123,7 +125,8 @@ theorem lieBaseChange_equiv : ∀ {F : Type} [Field F] [NumberField F] {𝔠 : F
       obtain ⟨⟨t, ht⟩, hta⟩ := IsLocalization.exist_integer_multiples q.primeCompl (Finset.univ : Finset (Fin n)) c
       choose a ha using fun i => hta i (Finset.mem_univ i)
       have hx0 : ρq (t • y - ∑ i, a i • ρ (w i)) = 0 := by
-        rw [map_sub, map_smulₛₗ, map_sum, ← hcy, Fintype.linearCombination_apply, Finset.smul_sum,
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sub, map_smulₛₗ, map_sum, ← hcy, Fintype.linearCombination_apply, Finset.smul_sum,
           ← Finset.sum_sub_distrib]
         refine Finset.sum_eq_zero fun i _ => ?_
         rw [map_smulₛₗ, smul_smul, ha i, Algebra.smul_def, sub_self]
@@ -137,7 +140,8 @@ theorem lieBaseChange_equiv : ∀ {F : Type} [Field F] [NumberField F] {𝔠 : F
         exact e1.symm.trans e0)
       refine ⟨r * t, q.primeCompl.mul_mem hr ht, ∑ i, (r * a i) ⊗ₜ w i, ?_⟩
       rw [smul_sub, sub_eq_zero, Finset.smul_sum] at hrx
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simp only [he₀]
       rw [mul_smul, hrx]
       simp only [smul_smul]

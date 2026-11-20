@@ -181,7 +181,8 @@ theorem core_coord {O k : Type} [CommRing O] [Field k] [Algebra O k] (hinj : Fun
     intro p q
     apply hinj
     have e1 : algebraMap O k (η q ⬝ᵥ ξ p) = ∑ i, algebraMap O k (η q i) * algebraMap O k (ξ p i) := by
-      simp [dotProduct, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [dotProduct, map_sum]
     rw [e1, ← hsum1, hpair, hsum2]
     split_ifs <;> simp
   obtain ⟨K, hKI, hKcol, hKrow⟩ :=
@@ -203,7 +204,8 @@ theorem core_coord {O k : Type} [CommRing O] [Field k] [Algebra O k] (hinj : Fun
     rw [Matrix.mul_apply, hQ]
     calc ∑ i, (Q + QA) q i * (K.1.map (algebraMap O k)) i j
         = (t q)⁻¹ * algebraMap O k (∑ i, η q i * K.1 i j) := by
-          rw [map_sum, Finset.mul_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [map_sum, Finset.mul_sum]
           refine Finset.sum_congr rfl fun i _ => ?_
           rw [hQA', Matrix.map_apply, map_mul, mul_assoc]
       _ = (t q)⁻¹ * (if j = ι' q then 1 else 0) := by

@@ -133,7 +133,8 @@ theorem cw_toBlocks₁₂_k (d : _root_.PositivityTheory.SiegelWeilFormula.SD_k 
     d.cw w X.toBlocks₁₂ = (d.cw w X).toBlocks₁₂ := rfl
 theorem piInf_trace_k (d : _root_.PositivityTheory.SiegelWeilFormula.SD_k σ) (w : InfinitePlace F) (M : Matrix (Fin d.n) (Fin d.n) (AE F E)) :
     piInf (d.B.emb w) M.trace = (d.cw w M).trace := by
-  simp [_root_.PositivityTheory.SiegelWeilFormula.SD_k.cw, Matrix.trace, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [_root_.PositivityTheory.SiegelWeilFormula.SD_k.cw, Matrix.trace, map_sum]
 theorem cw_unip_k (d : _root_.PositivityTheory.SiegelWeilFormula.SD_k σ) (R : _root_.PositivityTheory.SiegelWeilFormula.RD_k d) (w : InfinitePlace F) (u : GR d.n) (H : Matrix (Fin d.n) (Fin d.n) ℂ)
     (hu : mR u = nU H) : d.cw w (inFrame d.b (R.ι w u)) = Matrix.fromBlocks 1 (R.ζ • H) 0 1 := by
   have hζ0 := Krd.zeta_ne R.hζ

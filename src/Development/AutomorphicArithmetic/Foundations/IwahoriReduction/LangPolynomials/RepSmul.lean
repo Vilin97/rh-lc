@@ -80,7 +80,8 @@ private theorem rs_cg {l : ℕ} [Fact l.Prime] {c : Coef l} (β : Bas c) (he : �
       _ = ∑ i, β.val i * algebraMap ℤ_[l] (PadicAlgCl l) (∑ k, β.mat b i k * (x k : ℤ_[l])) := by
           rw [Finset.sum_comm]
           refine Finset.sum_congr rfl fun i _ => ?_
-          rw [map_sum, Finset.mul_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [map_sum, Finset.mul_sum]
           refine Finset.sum_congr rfl fun k _ => ?_
           rw [map_mul, map_natCast]
           ring
@@ -198,9 +199,11 @@ theorem UpperTheory.Kd.C7.pRepSmul :
       fun f z => RingHom.congr_fun (padicHom_ext l (f.comp (algebraMap ℤ_[l] Φ.R)) (algebraMap ℤ_[l] Φ.R)) z
     have htw : Φ.tw m (Φ.act (β.mat b) D i)
         = ∑ k, PowerSeries.C (algebraMap ℤ_[l] Φ.R (β.mat b i k)) * Φ.tw m (D k) := by
-      simp only [Fr.tw, Fr.act, map_sum, map_mul, PowerSeries.map_C, hfixR]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Fr.tw, Fr.act, map_sum, map_mul, PowerSeries.map_C, hfixR]
     unfold LC at hLC ⊢
-    rw [htw, hser, (rs_dl_prod Finset.univ (fun k => Φ.ser (P k)) hunit (a i)).2, map_sum, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [htw, hser, (rs_dl_prod Finset.univ (fun k => Φ.ser (P k)) hunit (a i)).2, map_sum, map_sum,
       ← Finset.sum_sub_distrib]
     refine Ideal.sum_mem _ fun k _ => ?_
     have hdiff : ev Φ.R l m (PowerSeries.C (algebraMap ℤ_[l] Φ.R (β.mat b i k)))

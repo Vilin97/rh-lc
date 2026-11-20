@@ -35,7 +35,8 @@ theorem _root_.GlobalTheory.AnPer.perClD_relation_unique : ∀ {g : ℕ} {Λ : T
         _root_.GlobalTheory.CatCoh.H1.mk _
           (K₀.perZDLin et M p) := fun p => rfl
     simp only [hc] at hrel ⊢
-    simp only [q'', map_sub, map_sum, map_smul, hrel, sub_self]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [q'', map_sub, map_sum, map_smul, hrel, sub_self]
   obtain ⟨G, hG0, hGsh⟩ := _root_.GlobalTheory.ChartCobd.coboundary_on_charts K₀ et M hnil het q'' hcl
   have hzero : q'' l = 0 := by
     rw [← Module.forall_dual_apply_eq_zero_iff ℂ]

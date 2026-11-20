@@ -109,7 +109,8 @@ theorem res_inj {a b : OO l} {m : ℕ} (hm : 0 < m) (hlm : ¬ l ∣ m) (ha : a ^
   rw [ha, hb, sub_self] at h1
   have h2 := (mul_eq_zero.1 h1).resolve_right (sub_ne_zero.2 hne)
   have h3 := congrArg res h2
-  simp only [map_sum, map_mul, map_pow, map_zero, ← h] at h3
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, map_pow, map_zero, ← h] at h3
   rw [geom_sum₂_self] at h3
   rcases mul_eq_zero.1 h3 with h4 | h4
   · exact hlm ((CharP.cast_eq_zero_iff (kk l) l m).1 h4)

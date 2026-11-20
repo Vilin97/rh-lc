@@ -63,7 +63,8 @@ private theorem key {s : HidaSetting l L Ω} (V : s.Lev) (ι : Qbar l ≃+* ℂ)
   simp only [Pi.smul_apply, e1]
   unfold toForm
   rw [e2]
-  simp only [map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul]
 
 end SlopeTestRemainingChoices
 

@@ -73,7 +73,8 @@ theorem rescale_inj {κ : Type} [Finite κ] (b : Module.Basis κ K V) (σ : K �
     (h : LinearIndependent ℂ fun a => c (b a)) : Function.Injective c := by
   haveI := Fintype.ofFinite κ
   refine (injective_iff_map_eq_zero c).2 fun x hx => ?_
-  rw [← b.sum_repr x, map_sum] at hx
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← b.sum_repr x, map_sum] at hx
   simp only [LinearMap.map_smulₛₗ] at hx
   have := Fintype.linearIndependent_iff.1 h _ hx
   exact b.ext_elem fun a => by simpa using this a
@@ -86,9 +87,11 @@ theorem rescale_span_top {κ : Type} [Finite κ] (b : Module.Basis κ K V) (σ :
   rintro _ ⟨a, rfl⟩
   have : b a = ∑ k, b.repr (φ.symm (b a)) k • φ (b k) := by
     conv_lhs => rw [← φ.apply_symm_apply (b a), ← b.sum_repr (φ.symm (b a))]
-    simp only [map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul]
   change c (b a) ∈ Submodule.span ℂ _
-  rw [this, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [this, map_sum]
   refine Submodule.sum_mem _ fun k _ => ?_
   rw [LinearMap.map_smulₛₗ]
   exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨k, rfl⟩)

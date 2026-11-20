@@ -21,7 +21,8 @@ theorem mlin_norm_le {m : ℕ} (M : ContinuousMultilinearMap ℝ (fun _ : Fin m 
     funext i
     ext j'
     simp [ev, Finset.sum_apply, Pi.single_apply]
-  conv_lhs => rw [hv, M.map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [hv, M.map_sum]
   refine (norm_sum_le _ _).trans ?_
   rw [Finset.sum_mul]
   refine Finset.sum_le_sum fun r _ => ?_

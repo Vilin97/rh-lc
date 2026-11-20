@@ -146,7 +146,8 @@ theorem log_gram_frame_change : ∀ (E : Type) [Field E] [NumberField E] [IsCMFi
     choose T hT using h1
     refine ⟨Matrix.of T, fun i => (hT i).symm, ?_⟩
     ext i j
-    simp only [Cm, Bm, Matrix.of_apply, Matrix.mul_apply, ← hT i, map_sum, map_smul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Cm, Bm, Matrix.of_apply, Matrix.mul_apply, ← hT i, map_sum, map_smul,
       Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
   have hB0 : Bm t₀ = 1 := by
     ext i j

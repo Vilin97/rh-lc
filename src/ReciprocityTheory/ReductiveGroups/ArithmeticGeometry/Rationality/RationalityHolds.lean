@@ -179,12 +179,14 @@ theorem rationality_holds : RationalityStatement := by
       let m : D := x - ∑ j, ph j x • d j
       have hm : ∀ i, ph i m = 0 := by
         intro i
-        simp only [m, map_sub, map_sum, map_smul, smul_eq_mul, hphd, mul_ite, mul_one, mul_zero,
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [m, map_sub, map_sum, map_smul, smul_eq_mul, hphd, mul_ite, mul_one, mul_zero,
           Finset.sum_ite_eq, Finset.mem_univ, if_true, sub_self]
       have hmdesc : (m : K₁ ⊗[K] V) ∈ descend K₁ W := (hdescmem _).mpr ⟨m.2, hm⟩
       have hval : inclT K₁ V (m : K₁ ⊗[K] V) = Qm ((1 : Ω) ⊗ₜ[K] u) := by
         rw [hQm_apply]
-        simp only [m, Submodule.coe_sub, Submodule.coe_sum, Submodule.coe_smul, map_sub, map_sum,
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [m, Submodule.coe_sub, Submodule.coe_sum, Submodule.coe_smul, map_sub, map_sum,
           map_smul]
         rw [hx1]
         congr 1
@@ -215,7 +217,8 @@ theorem rationality_holds : RationalityStatement := by
         rw [Submodule.coe_sum] at this
         simp only [Submodule.coe_smul] at this
         exact this.symm
-      rw [hrep, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hrep, map_sum]
       refine Submodule.sum_mem _ fun k _ => ?_
       rw [map_smul, ← algebraMap_smul Ω]
       exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨k, rfl⟩)

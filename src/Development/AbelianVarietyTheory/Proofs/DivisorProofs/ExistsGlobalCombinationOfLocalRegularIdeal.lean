@@ -82,7 +82,8 @@ theorem exists_global (n : ℕ) : ∀ (t : Fin n → L.Sec) (F : Y.Modules) (j�
       (by push_cast at hj; omega) ((Twist.map (lbZPow L (l + 1)) (cutπ F hL (t 0))).app ⊤ f) fun y => by
         obtain ⟨W, hW, m, hm⟩ := hf y
         refine ⟨W, hW, fun i => (Twist.map (lbZPow L l) (cutπ F hL (t 0))).app W (m i.succ), ?_⟩
-        rw [← app_res, hm, Fin.sum_univ_succ, map_add, (hex W).apply_apply_eq_zero, zero_add, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [← app_res, hm, Fin.sum_univ_succ, map_add, (hex W).apply_apply_eq_zero, zero_add, map_sum]
         exact Finset.sum_congr rfl fun i _ => nat _ _ _
     have hlift : ∀ i, ∃ u : Γ(GlobalTheory.twistZ F L l, ⊤),
         (Twist.map (lbZPow L l) (cutπ F hL (t 0))).app ⊤ u = m' i := fun i => by
@@ -91,7 +92,8 @@ theorem exists_global (n : ℕ) : ∀ (t : Fin n → L.Sec) (F : Y.Modules) (j�
         (hv (l - 1) (by push_cast at hj; omega) 1 one_pos) (m' i)
     choose u hu using hlift
     obtain ⟨v, hv'⟩ := (hex ⊤ (f - ∑ i, (mulSecOfEq F (zofSec (t i.succ)) rfl).app ⊤ (u i))).1 (by
-      rw [map_sub, hm', map_sum, sub_eq_zero]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, hm', map_sum, sub_eq_zero]
       exact Finset.sum_congr rfl fun i _ => by rw [nat, hu])
     refine ⟨Fin.cons v u, ?_⟩
     rw [Fin.sum_univ_succ]

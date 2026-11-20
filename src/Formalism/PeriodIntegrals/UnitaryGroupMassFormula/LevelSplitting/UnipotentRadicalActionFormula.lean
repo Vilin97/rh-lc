@@ -66,7 +66,8 @@ private theorem hRsum_lemma_5 (x : n → A) (g : Fin r → n → A) :
   exact map_sum _ _ _
 
 private theorem hswap_lemma_6 (H : D.Hyp) (x y : n → A) : D.h y x = D.σA (D.h x y) := by
-  simp only [Dat.h, Formalism.UG.hform, map_sum, map_mul, H.σσ, H.herm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Dat.h, Formalism.UG.hform, map_sum, map_mul, H.σσ, H.herm]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   ring
@@ -80,7 +81,8 @@ private theorem hfe_lemma_7 (H : D.Hyp) (a b : Fin r) :
 
 private theorem hLsum_lemma_8 (H : D.Hyp) (g : Fin r → n → A) (y : n → A) :
     D.h (∑ i, g i) y = ∑ i, D.h (g i) y := by
-  rw [hswap_lemma_6 H, hRsum_lemma_5, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hswap_lemma_6 H, hRsum_lemma_5, map_sum]
   exact Finset.sum_congr rfl fun i _ => (hswap_lemma_6 H _ _).symm
 
 private theorem hLsub_lemma_9 (H : D.Hyp) (x x' y : n → A) :
@@ -171,7 +173,8 @@ theorem ext_Xp_f (H : D.Hyp) {Φ Ψ : (n → A) →ₗ[A] (n → A)} (h1 : ∀ v
   have e1 : v = (v - D.pXv v) + D.pXv v := (sub_add_cancel v _).symm
   rw [e1, map_add, map_add, h1 _ (xp_sub_pXv H v)]
   congr 1
-  simp only [pXvap_lemma_11, map_sum, map_smul, h2]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [pXvap_lemma_11, map_sum, map_smul, h2]
 
 section Sec
 
@@ -204,7 +207,8 @@ theorem sL_span {x : n → A} (hx : x ∈ Submodule.span A (Set.range D.e)) : sL
   simp [hz]
 
 theorem pWp_sL_f (c : Fin r) : pWp D (sL D half y (D.f c)) = y c := by
-  rw [sL_f H hy, map_add, pWp_f H, zero_add, uv, map_add, pWp_of_isWp (hy c), map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [sL_f H hy, map_add, pWp_f H, zero_add, uv, map_add, pWp_of_isWp (hy c), map_sum]
   simp [pWp_e H]
 
 theorem h_tV_right (x x' : n → A) :

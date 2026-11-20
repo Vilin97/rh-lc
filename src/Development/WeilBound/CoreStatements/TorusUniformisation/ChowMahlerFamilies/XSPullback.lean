@@ -120,7 +120,8 @@ theorem expansion_zero {N : ℕ} {G : MvPolynomial (Fin N) ℤ} (hG : G.IsHomoge
   have e := h.expansion
   rw [hGC, rename_C, rename_C, sub_self] at e
   have e2 := congrArg (eval (fun s : Fin N ⊕ Fin N => if s = Sum.inl i then (1 : ℤ) else 0)) e
-  rw [map_zero, map_sum, Finset.sum_eq_single i] at e2
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_zero, map_sum, Finset.sum_eq_single i] at e2
   · rw [hC i] at e2 ⊢
     simp only [map_mul, map_sub, eval_X, eval_C] at e2
     simp only [if_true, reduceCtorEq, if_false, sub_zero, one_mul] at e2

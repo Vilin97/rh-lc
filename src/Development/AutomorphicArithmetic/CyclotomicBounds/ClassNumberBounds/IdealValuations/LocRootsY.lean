@@ -118,7 +118,8 @@ theorem norm_aut_and_roots :
   rw [ha, hb, sub_self, mul_eq_zero_iff_right hab] at h1
   have h2 := congrArg (IsLocalRing.residue (lrO l)) h1
   have h3 := (lr_res a b).mpr hlt
-  simp only [map_sum, map_mul, map_pow, map_zero, h3] at h2
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, map_pow, map_zero, h3] at h2
   rw [geom_sum₂_self, mul_eq_zero] at h2
   rcases h2 with h2 | h2
   · exact hm ((CharP.cast_eq_zero_iff _ l m).mp h2)

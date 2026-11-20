@@ -56,7 +56,8 @@ theorem mem_range_of_frob {κ : Type} [Fintype κ] (tb : Module.Basis κ O M) (i
   choose c hc using fun k => key k ()
   refine ⟨∑ k, c k ⊗ₜ[O] tb k, ?_⟩
   conv_rhs => rw [← tt.sum_repr z]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   have := hc k
   simp only [Matrix.of_apply] at this

@@ -94,7 +94,8 @@ theorem sum_beta_insert (ψ : ∀ v, AddChar (Fq v) ℂ) (π : Representation �
     {a : ι} {s : Finset ι} (ha : a ∉ s) (w : V) :
     ∑ x, beta ψ (insert a s) x • π x w = placeOp ψ π a (∑ x, beta ψ s x • π x w) := by
   rw [placeOp_apply]
-  simp_rw [beta_insert ψ ha, Finset.sum_smul, map_sum, map_smul, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp_rw [beta_insert ψ ha, Finset.sum_smul, map_sum, map_smul, Finset.smul_sum]
   conv_lhs => rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun y _ => ?_
   refine Fintype.sum_equiv (Equiv.mulLeft (Pi.mulSingle a y)⁻¹) _ _ fun z => ?_

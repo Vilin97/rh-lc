@@ -360,7 +360,8 @@ theorem continuousAt_lsub {σ : Type} [Fintype σ] (M : ℂ → Matrix σ σ ℂ
     intro ξ
     have e : ∀ t, ξ (FMul.lsub (M t) (p * MvPolynomial.X v)) =
         ∑ w, M t w v * (ξ ∘ₗ LinearMap.mulRight ℂ (MvPolynomial.X w)) (FMul.lsub (M t) p) := fun t => by
-      rw [map_mul, FMul.lsub_X, Finset.mul_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_mul, FMul.lsub_X, Finset.mul_sum, map_sum]
       refine Finset.sum_congr rfl fun w _ => ?_
       rw [mul_left_comm, ← MvPolynomial.smul_eq_C_mul, map_smul, smul_eq_mul]
       rfl

@@ -107,7 +107,8 @@ theorem bcP_X_f' {x : (VS D).V} (hx : x ∈ Xsp (repF γ)) : baseChange₂ D p x
   induction hx using Submodule.span_induction with
   | mem x hx =>
     obtain ⟨j, rfl⟩ := hx
-    rw [← frame_csG, ← key, map_sum, Fin.sum_univ_castSucc]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← frame_csG, ← key, map_sum, Fin.sum_univ_castSucc]
     have hl : ξ (Fin.last D.R.rS) j.castSucc = 0 := h1 _ _ (Fin.castSucc_lt_last j)
     rw [hl]
     simp only [Formalism.L2.SG.Pf.LocalDenominators.baseChange_smul₂]

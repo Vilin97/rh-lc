@@ -47,7 +47,8 @@ theorem UpperTheory.even_weight_dictionary_frame :
     have e3 : κ (rdU (U (goodOf c σ)) f' z.1 z.2) =
         ∑ m, σ (b.repr ⟨f', hf'⟩ m) * κ (rdU (U (goodOf c σ)) (b m : Rul Xo c) z.1 z.2) := by
       conv_lhs => rw [e2]
-      rw [map_sum, Finset.sum_apply, Finset.sum_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Finset.sum_apply, Finset.sum_apply, map_sum]
       refine Finset.sum_congr rfl fun m _ => ?_
       rw [map_smulₛₗ, Pi.smul_apply, Pi.smul_apply, smul_eq_mul, map_mul]
       congr 1

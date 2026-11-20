@@ -144,7 +144,8 @@ theorem gram_form_phi_holds : GramFormPhiStatement := by
         intro k
         have h1 := congrFun hc (e k)
         simp only [Mz, mulVec, dotProduct, Matrix.of_apply, Equiv.symm_apply_apply, Pi.zero_apply] at h1
-        simp only [map_sum, map_zsmul, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.smul_apply,
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, map_zsmul, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.smul_apply,
           smul_eq_mul, map_zero, Finsupp.coe_zero, Pi.zero_apply]
         rw [← h1]
         exact Finset.sum_congr rfl fun i _ => mul_comm _ _
@@ -160,7 +161,8 @@ theorem gram_form_phi_holds : GramFormPhiStatement := by
         exact hi (congrFun h i)
       · funext a
         have h1 := congrArg (fun x => ((toG ι).symm x) (e.symm a)) hg
-        simp only [map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, hψ_apply, map_zero,
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, hψ_apply, map_zero,
           Pi.zero_apply, ψ0, LinearMap.coe_mk, AddHom.coe_mk] at h1
         simp only [mulVec, dotProduct, RingHom.mapMatrix_apply, Matrix.map_apply, Matrix.of_apply, Mz,
           eq_intCast, Pi.zero_apply]

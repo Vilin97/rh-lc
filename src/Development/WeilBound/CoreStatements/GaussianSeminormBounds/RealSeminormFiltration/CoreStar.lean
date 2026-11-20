@@ -65,7 +65,8 @@ theorem star_cas_mk {p q r s : ℕ} (c τ : ℂ) (g : Pol p q r s) :
     casK (units (thAct p q r s c τ)) (thMkC p q r s c g) =
       thMkC p q r s c (casK (units (twAct p q r s τ)) g) := by
   unfold casK
-  simp only [LinearMap.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [LinearMap.sum_apply, map_sum]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
   split_ifs with h
   · simp only [Module.End.mul_apply, units, thAct_mk]

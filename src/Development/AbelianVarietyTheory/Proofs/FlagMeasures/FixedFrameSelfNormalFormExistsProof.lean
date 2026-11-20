@@ -171,7 +171,8 @@ theorem idNF_spec (F : Formalism.MainNotions.S.FlagG S r (n : E)) (hT : ((n : �
     obtain ⟨s, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun E).1 hx
     refine Finset.sum_congr rfl fun c _ => ?_
     congr 1
-    simp [map_sum, hfe]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, hfe]
   have hXiso : ∀ x ∈ F.X, ∀ y ∈ F.X, S.hT x y = 0 := by
     intro x hx y hy
     refine left_zero ?_ x hx

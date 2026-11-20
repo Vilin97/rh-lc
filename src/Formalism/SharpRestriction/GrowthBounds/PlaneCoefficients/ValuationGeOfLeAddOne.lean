@@ -80,7 +80,8 @@ theorem mono_mem_Pol {d : ι → ℕ} (m : ι × Fin n →₀ ℕ) (c : R) (h : 
 theorem Pol_pderiv {d d' : ι → ℕ} (x0 : ι) (a : Fin n) (h0 : d' x0 = d x0 + 1) (h1 : ∀ i, i ≠ x0 → d' i = d i)
     {H : MvPolynomial (ι × Fin n) R} (hH : H ∈ Pol R n d') : pderiv (x0, a) H ∈ Pol R n d := by
   rw [mem_Pol'] at hH
-  rw [H.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [H.as_sum, map_sum]
   refine Submodule.sum_mem _ fun m hm => ?_
   by_cases hz : m (x0, a) = 0
   · rw [pderiv_mono_zero _ _ _ hz]
@@ -117,7 +118,8 @@ theorem Pol_X_mul {d d' : ι → ℕ} (x0 : ι) (a : Fin n) (h0 : d x0 = d' x0 +
 theorem pderiv_eq_zero_of_deg {d : ι → ℕ} (x0 : ι) (a : Fin n) (h0 : d x0 = 0)
     {H : MvPolynomial (ι × Fin n) R} (hH : H ∈ Pol R n d) : pderiv (x0, a) H = 0 := by
   rw [mem_Pol'] at hH
-  rw [H.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [H.as_sum, map_sum]
   refine Finset.sum_eq_zero fun m hm => ?_
   apply pderiv_mono_zero
   have h1 := hH m hm x0

@@ -22,7 +22,8 @@ def ts (f : MvPowerSeries σ ℂ_[p]) (N : ℕ) : MvPowerSeries σ ℂ_[p] :=
 
 theorem coeff_ts (f : MvPowerSeries σ ℂ_[p]) (N : ℕ) (a : σ →₀ ℕ) :
     coeff a (ts f N) = ∑ n ∈ Finset.range N, coeff a (f ^ n) / (n.factorial : ℂ_[p]) := by
-  simp only [ts, map_sum, coeff_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [ts, map_sum, coeff_smul]
   refine Finset.sum_congr rfl fun n _ => ?_
   rw [div_eq_inv_mul]
 
@@ -34,7 +35,8 @@ theorem coeff_expMv_eq_ts {f : MvPowerSeries σ ℂ_[p]} (hf : constantCoeff f =
 
 theorem pderiv_ts (k : σ) (f : MvPowerSeries σ ℂ_[p]) (N : ℕ) :
     pderiv ℂ_[p] k (ts f (N + 1)) = ts f N * pderiv ℂ_[p] k f := by
-  simp only [ts, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [ts, map_sum, Finset.sum_mul]
   rw [Finset.sum_range_succ']
   rw [pow_zero, Derivation.map_smul, pderiv_one, smul_zero, add_zero]
   refine Finset.sum_congr rfl fun n _ => ?_

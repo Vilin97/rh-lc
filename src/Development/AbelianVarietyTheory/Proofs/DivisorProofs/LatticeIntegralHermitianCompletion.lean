@@ -46,7 +46,8 @@ theorem exists_orthonormal_of_selfDual : ∀ (K : GlobalTheory.UnitLemma.UQ) (V 
   have hsum2 : ∀ (S : Finset (Fin (Module.finrank K.E V))) (c : Fin (Module.finrank K.E V) → K.E) (u : Fin (Module.finrank K.E V) → V) y,
       h y (∑ i ∈ S, c i • u i) = ∑ i ∈ S, K.c (c i) * h y (u i) := by
     intro S c u y
-    rw [hsym, hsum1, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hsym, hsum1, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_mul, ← hsym]
   have hrng : ∀ o : K.O, K.c (algebraMap K.O K.E o) ∈ (algebraMap K.O K.E).range :=
@@ -109,7 +110,8 @@ theorem exists_orthonormal_of_selfDual : ∀ (K : GlobalTheory.UnitLemma.UQ) (V 
   have hQR : Matrix.of Q * Matrix.of R = 1 := by
     ext i j
     apply inj
-    simp only [Matrix.mul_apply, Matrix.of_apply, map_sum, map_mul, hQ, hR]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mul_apply, Matrix.of_apply, map_sum, map_mul, hQ, hR]
     have h5 : h (d j) (b i) = ∑ k, b.repr (d j) k * h (b k) (b i) := by
       conv_lhs => rw [hexp (d j)]
       rw [hsum1]
@@ -133,7 +135,8 @@ theorem exists_orthonormal_of_selfDual : ∀ (K : GlobalTheory.UnitLemma.UQ) (V 
   have hfo : ∀ i j, h (f i) (f j) = if i = j then 1 else 0 := by
     intro i j
     have hM := congrArg (fun M : Matrix (Fin (Module.finrank K.E V)) (Fin (Module.finrank K.E V)) K.O => algebraMap K.O K.E (M j i)) ha
-    simp only [cT, Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, Matrix.of_apply, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [cT, Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, Matrix.of_apply, map_sum,
       map_mul, Matrix.one_apply] at hM
     simp only [f, hsum1, hsum2]
     simp only [hs, hQ, apply_ite (algebraMap K.O K.E), map_one, map_zero] at hM
@@ -153,7 +156,8 @@ theorem exists_orthonormal_of_selfDual : ∀ (K : GlobalTheory.UnitLemma.UQ) (V 
     have h6 : ∀ k, ∑ j, algebraMap K.O K.E (A k j) * algebraMap K.O K.E (A' j l) = if k = l then 1 else 0 := by
       intro k
       have := congrArg (fun M : Matrix (Fin (Module.finrank K.E V)) (Fin (Module.finrank K.E V)) K.O => algebraMap K.O K.E (M k l)) hAA'
-      simpa [Matrix.mul_apply, map_sum, Matrix.one_apply, apply_ite] using this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa [Matrix.mul_apply, map_sum, Matrix.one_apply, apply_ite] using this
     calc b l = ∑ k, (if k = l then (1 : K.E) else 0) • b k := by simp
       _ = ∑ k, (∑ j, algebraMap K.O K.E (A k j) * algebraMap K.O K.E (A' j l)) • b k := by simp only [h6]
       _ = ∑ j, algebraMap K.O K.E (A' j l) • f j := by
@@ -190,7 +194,8 @@ theorem exists_unitary_pullLat_eq : ∀ (E : Type) [Field E] [NumberField E] [Is
     intro y z
     apply e.injective
     rw [hc, ← hψh, ← hψh]
-    simp only [stdH, map_sum, map_mul, hcc]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [stdH, map_sum, map_mul, hcc]
     exact Finset.sum_congr rfl fun k _ => mul_comm _ _
   have hnd : ∀ y, (∀ z, B.herm x y z = 0) → y = 0 := by
     intro y hy

@@ -58,8 +58,10 @@ theorem span_eq_top_of_formMap (S : Set (Fin n → K))
   let ψ : W →ₗ[ℂ] ℂ := c.constr ℂ (fun i => e (f (Pi.basisFun K (Fin n) i)))
   have hψ : ∀ x, ψ (formMap e c x) = e (f x) := by
     intro x
-    rw [formMap_apply, map_sum]
-    conv_rhs => rw [← (Pi.basisFun K (Fin n)).sum_repr x, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [formMap_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_rhs => rw [← (Pi.basisFun K (Fin n)).sum_repr x, map_sum, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     simp [ψ]
   have h0 : ψ = 0 := by
@@ -99,7 +101,8 @@ theorem exists_hLat_form (K : Type) [Field K] [NumberField K] [StarRing K] (e : 
   have hsum : ∀ a : W → 𝓞 K, formMap e c (∑ v ∈ gen, a v • pre v) =
       ∑ v ∈ gen, e ((a v : 𝓞 K) : K) • v := by
     intro a
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun v hv => ?_
     rw [show a v • pre v = ((a v : 𝓞 K) : K) • pre v from rfl, LinearMap.map_smulₛₗ, hpre v hv]
   refine ⟨HLat.mk (Fin n → K) (Fin n) (Pi.basisFun K (Fin n)) X

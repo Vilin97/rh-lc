@@ -57,14 +57,16 @@ theorem projective_baseChange_presentation_matrix : ∀ (R B M : Type) [CommRing
       exact this
     have hsum : (1 : B) ⊗ₜ[R] π (r b) = ∑ a, algebraMap R B (r b a) • ((1 : B) ⊗ₜ[R] π (Pi.single a 1)) := by
       conv_lhs => rw [← Finset.univ_sum_single (r b)]
-      simp only [map_sum, TensorProduct.tmul_sum, algebraMap_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, TensorProduct.tmul_sum, algebraMap_smul]
       refine Finset.sum_congr rfl fun a _ => ?_
       rw [← TensorProduct.tmul_smul, ← map_smul]
       congr 2
       ext j
       simp [Pi.single_apply]
     have h1 : ∑ a, algebraMap R B (r b a) • v a = 0 := by
-      simp only [v, ← map_smul, ← map_sum, ← hsum, hrb, TensorProduct.tmul_zero, map_zero]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [v, ← map_smul, ← map_sum, ← hsum, hrb, TensorProduct.tmul_zero, map_zero]
     have := congrFun h1 l
     simpa [Finset.sum_apply, Algebra.smul_def] using this
   · have := congrFun (hw a) l

@@ -42,7 +42,8 @@ theorem leadingTermLength : LeadingTermLength := by
           ∑ i, a i • (⟨u α i, (hu α i).1⟩ : ↥(F (deg α))) := by
         apply Subtype.ext
         simp
-      rw [hz, map_sum, Finset.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hz, map_sum, Finset.sum_apply]
       have : ∀ i, (σ (deg α)) (a i • (⟨u α i, (hu α i).1⟩ : ↥(F (deg α)))) β =
           if β.1 = α then a i • t i else 0 := by
         intro i
@@ -75,7 +76,8 @@ theorem leadingTermLength : LeadingTermLength := by
         ∑ α, (⟨∑ i, c α i • u α i, hmem0 α j (c α) (hc α)⟩ : ↥(F j)) := by
       apply Subtype.ext
       simp
-    rw [hz, map_sum, Finset.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hz, map_sum, Finset.sum_apply]
     simp_rw [hval0 _ j _ _ (hc _) β]
     simp
 

@@ -25,7 +25,8 @@ theorem hform_smul_left (c : A) (u v : Fin n → A) : hform σ J (c • u) v = �
 
 theorem hform_swap (hσ : ∀ a, σ (σ a) = a) (hJ : ∀ i j, σ (J j i) = J i j) (u v : Fin n → A) :
     hform σ J v u = σ (hform σ J u v) := by
-  simp only [hform, map_sum, map_mul, hσ, hJ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hform, map_sum, map_mul, hσ, hJ]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 

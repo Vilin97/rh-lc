@@ -35,7 +35,8 @@ theorem dualOm_wToC : ∀ (p : ℕ) [Fact p.Prime] (σ : ℂ_[p] →+* ℂ_[p]),
     · rw [hk, B.fixS r]
   · intro r r'
     have h := congrArg (Formalism.L2.G.Pend.wToC p) (B.dual r r')
-    rw [map_sum] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at h
     rw [← Fin.sum_univ_eq_sum_range (fun i => (σ ^ (2 * i)) (Formalism.L2.G.Pend.wToC p (B.om r) * Formalism.L2.G.Pend.wToC p (B.omS r')))]
     simp only [← map_mul, hk]
     rw [h]

@@ -156,7 +156,8 @@ theorem act_Yv (v u : Fin Q → ℂ) (g : Pol P Q R S) :
       - (∑ x : Fin R, (∑ b, u b • X (Sum.inr b, Sum.inl x)) * ∑ a, v a • pderiv (Sum.inr a, Sum.inl x) g)
       + ((((S : ℂ) - R) / 2) * ∑ a, v a * u a) • g := by
   rw [Yv_eq]
-  simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, act_Eab, smul_add, smul_sub,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, act_Eab, smul_add, smul_sub,
     Finset.sum_add_distrib, Finset.sum_sub_distrib]
   congr 1
   · congr 1
@@ -202,27 +203,34 @@ theorem comp (pt : Ix P Q × Ix R S → ℂ) (v u : Fin Q → ℂ) (g : Pol P Q 
   set w : Fin R → ℂ := fun x => ∑ b, u b * pt (Sum.inr b, Sum.inl x) with hw
   have h1 : ∀ x : Fin S, aeval (path pt v w) (∑ a, v a • (X (Sum.inr a, Sum.inr x) : Pol P Q R S)) = 0 := by
     intro x
-    simp only [map_sum, map_smul, aeval_X, path, dl, map_zero, mul_zero, sub_zero, Polynomial.smul_C,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, aeval_X, path, dl, map_zero, mul_zero, sub_zero, Polynomial.smul_C,
       smul_eq_mul]
-    rw [← map_sum, hv, map_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, hv, map_zero]
   have h2 : ∀ x : Fin R, aeval (path pt v w) (∑ b, u b • (X (Sum.inr b, Sum.inl x) : Pol P Q R S)) =
       Polynomial.X * Polynomial.C (w x) := by
     intro x
-    simp only [map_sum, map_smul, aeval_X, path, dl, smul_sub, Finset.sum_sub_distrib,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, aeval_X, path, dl, smul_sub, Finset.sum_sub_distrib,
       Polynomial.smul_eq_C_mul]
     have e1 : ∑ b, Polynomial.C (u b) * Polynomial.C (pt (Sum.inr b, Sum.inl x)) = Polynomial.C (w x) := by
-      simp only [hw, map_sum, map_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hw, map_sum, map_mul]
     have e2 : ∑ b, Polynomial.C (u b) * ((1 - Polynomial.X) * Polynomial.C (v b * w x)) =
         (1 - Polynomial.X) * Polynomial.C (w x) := by
       have : Polynomial.C (w x) = Polynomial.C ((∑ a, v a * u a) * w x) := by rw [huv, one_mul]
-      rw [this, Finset.sum_mul, map_sum, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [this, Finset.sum_mul, map_sum, Finset.mul_sum]
       refine Finset.sum_congr rfl fun b _ => ?_
       simp only [map_mul]; ring
     rw [e1, e2]; ring
-  rw [act_Yv, huv, mul_one, map_add, map_sub, map_sum, map_sum, chain, map_smul, Polynomial.smul_eq_C_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [act_Yv, huv, mul_one, map_add, map_sub, map_sum, map_sum, chain, map_smul, Polynomial.smul_eq_C_mul]
   simp only [map_mul, h1, h2, zero_mul, Finset.sum_const_zero, path_deriv]
   rw [Fintype.sum_prod_type, Fintype.sum_sum_type]
-  simp only [Fintype.sum_sum_type, dl, map_zero, mul_zero, Finset.sum_const_zero, add_zero, zero_add,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Fintype.sum_sum_type, dl, map_zero, mul_zero, Finset.sum_const_zero, add_zero, zero_add,
     map_sum, map_smul, Polynomial.smul_eq_C_mul]
   rw [Finset.sum_comm, Finset.mul_sum]
   have : ∀ x : Fin R, Polynomial.X * Polynomial.C (w x) * ∑ a, Polynomial.C (v a) *

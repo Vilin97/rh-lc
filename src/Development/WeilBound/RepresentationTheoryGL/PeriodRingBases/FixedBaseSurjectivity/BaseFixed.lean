@@ -107,7 +107,8 @@ theorem base_fixed' (l : ℕ) [Fact l.Prime] : ∀ L : Fld l, FiniteDimensional 
       refine hsum.trans ?_
       simp only [IntermediateField.coe_sum, Algebra.smul_def, IntermediateField.coe_mul, c]
       rfl
-    rw [hk', map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hk', map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_mul, PositivityTheory.LocInh.uB_algebraMap, qB_eq]
 

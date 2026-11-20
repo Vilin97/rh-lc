@@ -79,7 +79,8 @@ theorem hf_smul_right {K : Type} [Field K] (c : K →+* K) {ι : Type} [Fintype 
 
 theorem hf_conj {K : Type} [Field K] (c : K →+* K) (hc : ∀ x, c (c x) = x) {ι : Type} [Fintype ι]
     (v w : ι → K) : c (hf c v w) = hf c w v := by
-  simp only [hf, map_sum, map_mul, hc]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hf, map_sum, map_mul, hc]
   exact Finset.sum_congr rfl fun i _ => mul_comm _ _
 
 theorem hf_single_right {K : Type} [Field K] (c : K →+* K) {ι : Type} [Fintype ι] [DecidableEq ι]

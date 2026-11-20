@@ -207,7 +207,8 @@ end Ambient
 
 theorem isHerm_HV {ι : Type} [Fintype ι] {a b : ℕ} (sc : ℝ) : IsHerm (Formalism.L2.Ker.HV (ι := ι) (a := a) (b := b) sc) := by
   intro x y
-  simp [Formalism.L2.Ker.HV, map_sum, mul_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Formalism.L2.Ker.HV, map_sum, mul_comm]
 
 theorem embH_injective {E : Type} [Field E] [NumberField E] [StarRing E] {ι : Type} [Fintype ι] [Nonempty ι] {a b : ℕ}
     (emb : ι → E →+* ℂ) {δ : ℂ} (hδ : δ ≠ 0) : Function.Injective (embH (a := a) (b := b) emb δ) := by

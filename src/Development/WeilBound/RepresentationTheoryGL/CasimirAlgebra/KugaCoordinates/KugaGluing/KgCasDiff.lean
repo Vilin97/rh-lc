@@ -19,7 +19,8 @@ theorem kg_casR (τ : E →+* ℂ) (t : ℝ) (htrX : ∑ i, cx τ Ξ.dmat i i = 
   have hΦR : ∀ A : Matrix (Fin Ξ.d) (Fin Ξ.d) ℂ, (Matrix.toLin' A).lTensor π.V = ΦR A := fun A => rfl
   simp only [cx_kgR, hΦR]
   refine (kg_cas_shift (fun i j => ΦR (cx τ Ξ.dmat i j)) (σ / 2 : ℂ)).trans ?_
-  simp only [← map_mul, ← map_sum, htrX, Algebra.algebraMap_eq_smul_one, map_smul, map_one]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← map_mul, ← map_sum, htrX, Algebra.algebraMap_eq_smul_one, map_smul, map_one]
   module
 
 theorem kg_casA (τ : E →+* ℂ) (c t : ℝ)
@@ -31,7 +32,8 @@ theorem kg_casA (τ : E →+* ℂ) (c t : ℝ)
   have hΦA : ∀ f : Module.End ℂ π.V, f.rTensor (Fin Ξ.d → ℂ) = ΦA f := fun f => rfl
   simp only [cx_kgA, hΦA]
   refine (kg_cas_shift (fun i j => ΦA (cx τ (lieOp π) i j)) (-(σ / 2) : ℂ)).trans ?_
-  simp only [← map_mul, ← map_sum, hcas, htr, Algebra.algebraMap_eq_smul_one, map_smul, map_one]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← map_mul, ← map_sum, hcas, htr, Algebra.algebraMap_eq_smul_one, map_smul, map_one]
   module
 
 theorem kg_casDiff (hC : FrameCas) (cc tt : (E →+* ℂ) → ℝ)

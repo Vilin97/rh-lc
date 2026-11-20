@@ -92,7 +92,8 @@ theorem lam_int_mul {N : ℕ} (𝔫 : Ideal (𝓞 D.host.E)) {h : GL (Fin N) (AE
       (fun i => (n : AE D) * ∑ j, t (i, j) * inc D ((M : D.host.E) * y j)) -
       (fun i => (n : AE D) * k.mulVec s i) := by
     funext i
-    simp only [Matrix.mulVec, dotProduct, Pi.sub_apply, map_sum, map_mul, map_natCast, Finset.mul_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, dotProduct, Pi.sub_apply, map_sum, map_mul, map_natCast, Finset.mul_sum,
       ← Finset.sum_sub_distrib]
     refine Finset.sum_congr rfl fun j _ => ?_
     have e1 := e j

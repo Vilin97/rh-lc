@@ -19,7 +19,8 @@ variable {X X' : Scheme.{0}} {Ω Ω' : Type} [Field Ω] [Field Ω'] {ξ : Sp Ω 
 theorem map_comb (hj : IsExtOver i j) {r : ℕ} {s c : Fin r → V} {b₀ : Fin r → V'} {T : Matrix (Fin r) (Fin r) Ω}
     {T₁ : Matrix (Fin r) (Fin r) Ω'} (hT : ∀ k, c k = ∑ l, T l k • s l) (hT₁ : ∀ k, j (s k) = ∑ l, T₁ l k • b₀ l) (k : Fin r) :
     j (c k) = ∑ l, (T₁ * i.mapMatrix T) l k • b₀ l := by
-  rw [hT k, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hT k, map_sum]
   simp only [hj.1, hT₁, Finset.smul_sum, smul_smul, Matrix.mul_apply, Finset.sum_smul, RingHom.mapMatrix_apply,
     Matrix.map_apply]
   rw [Finset.sum_comm]
@@ -56,7 +57,8 @@ theorem det_pull' {L : Lat ξ V} {r : ℕ} {s : Fin r → V} {U : Submodule Ω V
   have hjs : ∀ k, j (s k) ∈ Submodule.span Ω' (Set.range b₀) := by
     intro k
     obtain ⟨T, hT⟩ := exists_mat (Ω := Ω) (b := s) (s := b) fun k => by rw [hb]; exact hsU k
-    rw [hT k, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hT k, map_sum]
     exact Submodule.sum_mem _ fun k' _ => by rw [hj.1]; exact Submodule.smul_mem _ _ (hjb k')
   obtain ⟨T₁, hT₁⟩ := exists_mat hjs
   have main : ∀ (q : Cpt ξ') (h : genPt ξ ⤳ f q.1), ∃ t, (detLat L s).IsGenAt ⟨f q.1, h⟩ t ∧

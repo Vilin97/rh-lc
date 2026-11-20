@@ -133,10 +133,12 @@ theorem exists_isWeilData {n : ℕ} (hn : (n : F) ≠ 0) {T : W.toAffine.Point} 
     rw [h1, h2]
     simp only [eq_comm]
   have hdegD : divisorDegree W D = 0 := by
-    rw [hD, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hD, map_sum]
     simp
   have hsumD : divisorSum W D = 0 := by
-    rw [hD, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hD, map_sum]
     simp only [map_sub, divisorSum_single, one_smul, add_sub_cancel_right, Finset.sum_const,
       hcardK]
     have hT3 : n • T' = T := by rw [← natCast_zsmul]; exact hT''

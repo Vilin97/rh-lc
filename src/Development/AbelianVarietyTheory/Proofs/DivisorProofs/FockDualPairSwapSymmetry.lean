@@ -41,7 +41,8 @@ theorem rename_omE (l l' : Ln p q r s) (P : Pol p q r s) :
 theorem rename_omAct (M : Matrix (Ln p q r s) (Ln p q r s) ℂ) (P : Pol p q r s) :
     rename Prod.swap (omAct p q r s M P) =
       omAct r s p q (M.submatrix Prod.swap Prod.swap) (rename Prod.swap P) := by
-  simp only [omAct_apply, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [omAct_apply, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul,
     rename_omE]
   refine Fintype.sum_equiv (Equiv.prodComm _ _) _ _ fun l => ?_
   refine Fintype.sum_equiv (Equiv.prodComm _ _) _ _ fun l' => ?_

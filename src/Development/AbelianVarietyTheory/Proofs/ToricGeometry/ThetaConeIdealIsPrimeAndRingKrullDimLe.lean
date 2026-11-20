@@ -95,7 +95,8 @@ theorem isHomogeneous {φ : ι → E → ℂ} {I : Ideal (MvPolynomial ι ℂ)}
         = (0 : Polynomial ℂ).eval s := by
     intro s
     have h0 := (hI F).mp hF s z
-    rw [← hsum, map_sum] at h0
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hsum, map_sum] at h0
     simp only [Polynomial.eval_finsetSum, Polynomial.eval_mul, Polynomial.eval_C,
       Polynomial.eval_pow, Polynomial.eval_X, Polynomial.eval_zero]
     rw [← h0]
@@ -139,13 +140,15 @@ theorem finrank_quotPiece_le [Finite ι] {φ : ι → E → ℂ} {I : Ideal (MvP
     rw [eval_mul_of_isHomogeneous (fun c => φ c z) t hhom]
     have hz := congrFun ha z
     simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Pi.zero_apply] at hz
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [smul_eval]
     rw [hz, mul_zero]
   have h0 : ∑ k, a k • b k = 0 := by
     apply Subtype.ext
     simp only [Submodule.coe_sum, Submodule.coe_smul, Submodule.coe_zero]
-    simp_rw [← hFb, ← map_smul, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp_rw [← hFb, ← map_smul, ← map_sum]
     simp only [AlgHom.toLinearMap_apply, Ideal.Quotient.mkₐ_eq_mk]
     exact Ideal.Quotient.eq_zero_iff_mem.mpr hG
   exact (Fintype.linearIndependent_iff.mp b.linearIndependent) a h0

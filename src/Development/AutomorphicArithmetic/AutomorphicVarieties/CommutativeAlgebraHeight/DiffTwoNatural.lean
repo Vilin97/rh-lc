@@ -144,7 +144,8 @@ private theorem diffTwo_natural (P : MvPolynomial G A) (f : A →+* A') :
   congr 1
   · exact RingHom.ext fun a => by simp
   · funext g
-    simp [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum]
 
 private theorem PRep.d1 {D : GDet n A G} {P : MvPolynomial G A} (h : PRep D P) : d1 P = 0 := by
   have h1 : _root_.el (Pi.single (1 : G) (1 : A)) = 1 := by

@@ -41,7 +41,8 @@ theorem herm_sum {A : Type} [CommRing A] {m n : ℕ} (c : A →+* A) (hc : ∀ a
     (x y : Matrix (Fin m) (Fin n) A) :
     c (∑ a, ∑ b, ∑ e, ∑ d, P a b * c (y e b) * Q e d * x d a) =
       ∑ a, ∑ b, ∑ e, ∑ d, P a b * c (x e b) * Q e d * y d a := by
-  simp only [map_sum, map_mul, hc, hP, hQ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, hc, hP, hQ]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => ?_
   rw [Finset.sum_comm]
@@ -69,7 +70,8 @@ theorem map_hO_zero {A B : Type} [CommRing A] [CommRing B] {m n : ℕ} (q : A �
       rw [h1, mul_zero]
     · have h1 : q (y i j) = 0 := congrFun (congrFun h i) j
       rw [hc _ h1, mul_zero, zero_mul, zero_mul]
-  simp only [map_sum, hk, Finset.sum_const_zero]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, hk, Finset.sum_const_zero]
 
 theorem map_trace_hO_zero {F E A B : Type} [Field F] [Field E] [Algebra F E] [FiniteDimensional F E]
     [CommRing A] [CommRing B] [Algebra F A] [Algebra F B] (p : A →ₐ[F] B) (s : E →ₐ[F] E) {m n : ℕ}
@@ -164,7 +166,8 @@ theorem complexEmbedding_hermitianQuadrupleSum {A : Type} [CommRing A] (φ : A �
     {m n : ℕ} (x y : Fin m → Fin n → A) (P : Fin n → Fin n → A) (Q : Fin m → Fin m → A) :
     φ (∑ a, ∑ b, ∑ e, ∑ d, P a b * c (y e b) * Q e d * x d a) =
       ∑ a, ∑ b, ∑ e, ∑ d, φ (P a b) * starRingEnd ℂ (φ (y e b)) * φ (Q e d) * φ (x d a) := by
-  simp only [map_sum, map_mul, hc]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, hc]
 
 theorem valTau_symplO (hθ : IsInfFam θ) (τ : D.what₂.Tau) (x y : WO S T) :
     valTau θ τ (symplO S T x y) = formAt S T τ (piW θ T S x τ) (piW θ T S y τ) := by

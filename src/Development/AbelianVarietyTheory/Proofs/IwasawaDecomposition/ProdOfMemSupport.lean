@@ -89,11 +89,13 @@ theorem rescale_atLin {σ κ : Type} [Finite σ] [Fintype κ] {p : ℕ} [Fact p.
   unfold atLin
   have hs : MvPowerSeries.HasSubst (fun k : σ => ∑ j : κ, algebraMap ℂ_[p] (MvPowerSeries κ ℂ_[p]) (c k j) * MvPowerSeries.X j) := by
     refine MvPowerSeries.hasSubst_of_constantCoeff_zero fun k => ?_
-    simp [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum]
   rw [MvPowerSeries.rescale_eq_subst, MvPowerSeries.subst_comp_subst_apply hs (MvPowerSeries.HasSubst.smul_X a)]
   congr 1
   funext k
-  rw [← MvPowerSeries.rescale_eq_subst, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← MvPowerSeries.rescale_eq_subst, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [← Algebra.smul_def, ← Algebra.smul_def, ← MvPowerSeries.rescaleAlgHom_apply, map_smul, MvPowerSeries.rescaleAlgHom_apply,
     MvPowerSeries.rescale_eq_subst, MvPowerSeries.subst_X (MvPowerSeries.HasSubst.smul_X a)]

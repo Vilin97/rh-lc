@@ -16,7 +16,8 @@ theorem exists_sub_of_mem_span (hΦ : ∀ r x, Φ (r • x) = φ r • Φ x) (hs
   obtain ⟨n, c, g, rfl⟩ := Submodule.mem_span_set'.1 hy
   choose b hb using fun i => hs (c i)
   refine ⟨∑ i, b i • (g i : M), U.sum_mem fun i _ => U.smul_mem _ (g i).2.1, ?_⟩
-  rw [map_sum, ← Finset.sum_sub_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, ← Finset.sum_sub_distrib]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [hΦ, (g i).2.2, ← sub_smul, hb]
 
@@ -214,7 +215,8 @@ theorem mem_of_mem_span_image {E R D M : Type} [CommRing E] [CommRing R] [Algebr
   have hsp : ⊤ ≤ Submodule.span R (Set.range fun i => j (b i)) := by
     rw [← hspan, Submodule.span_le]
     rintro _ ⟨x, rfl⟩
-    rw [← b.sum_repr x, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← b.sum_repr x, map_sum]
     refine Submodule.sum_mem _ fun i _ => ?_
     rw [hj]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)
@@ -225,7 +227,8 @@ theorem mem_of_mem_span_image {E R D M : Type} [CommRing E] [CommRing R] [Algebr
   have hF : ∀ x, F (j x) = (1 : R) ⊗ₜ N.mkQ x := by
     intro x
     rw [← b.sum_repr x]
-    simp only [map_sum, hj, map_smul, TensorProduct.tmul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, hj, map_smul, TensorProduct.tmul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [← hc, Module.Basis.constr_basis, algebraMap_smul, TensorProduct.tmul_smul]
   have hker : Submodule.span R (j '' (N : Set D)) ≤ LinearMap.ker F := by

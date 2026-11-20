@@ -114,7 +114,8 @@ theorem LateralTheory.EtaleFoundations.columnPf.kill_of : kill := by
   intro W k hk
   choose y hy using hk
   refine ⟨∑ i ∈ S.attach, y i.1 i.2 ⊗ₜ (P.map k.op).hom i.1.2, ?_⟩
-  rw [map_sum, ← hw, hS, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, ← hw, hS, map_sum, map_sum]
   rw [← Finset.sum_attach S]
   refine Finset.sum_congr rfl fun i _ => ?_
   simp only [TensorProduct.map_tmul, LinearMap.rTensor_tmul, LinearMap.id_apply]

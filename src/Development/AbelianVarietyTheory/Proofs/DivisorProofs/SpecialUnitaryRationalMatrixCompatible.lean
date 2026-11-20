@@ -120,7 +120,8 @@ theorem herm_unitary {n r : ℕ} (h : n = r) (J γ : Matrix (Fin n) (Fin n) E)
   have key : (fun b => (IsCMField.complexConj E : E →+* E) ((γ *ᵥ y) b)) =
       γ.map (IsCMField.complexConj E : E →+* E) *ᵥ (fun b => (IsCMField.complexConj E : E →+* E) (y b)) := by
     funext b
-    simp only [mulVec, dotProduct, map_sum, map_mul, Matrix.map_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [mulVec, dotProduct, map_sum, map_mul, Matrix.map_apply]
   rw [key, dotProduct_comm, dotProduct_mulVec, ← mulVec_transpose, dotProduct_comm, mulVec_mulVec, mulVec_mulVec]
   have hγ' : (γ.map (IsCMField.complexConj E : E →+* E))ᵀ * J * γ = J := hγ
   rw [hγ']

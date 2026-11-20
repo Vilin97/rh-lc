@@ -115,7 +115,8 @@ theorem logCoord_of_dpull {Y : FBChart C V O dd} {p : ∀ o, PairData Y d (I o)}
     have h1 := VP.jet_list hD cp uv co m F _ hv 1
     rw [one_mul, Finset.prod_map_toList, jetAt0_one_eq_constantCoeff, hcc] at h1
     exact h1
-  rw [DpolyN, map_sum, MvPolynomial.aeval_def, MvPolynomial.eval₂_eq', VP.jetAt0_finset_sum_left]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [DpolyN, map_sum, MvPolynomial.aeval_def, MvPolynomial.eval₂_eq', VP.jetAt0_finset_sum_left]
   refine Finset.sum_congr rfl fun m hm => ?_
   rw [map_mul, hmon m hm, MvPolynomial.algebraMap_eq, jetAt0_C_mul']
   simp

@@ -54,7 +54,8 @@ theorem map_comb (S : ThetaSys o Ω) {M : Type} [AddCommGroup M] [Module Γ((Bas
     [Fintype I] [Fintype J] (u : M →ₗ[Γ((Base S).left, ⊤)] M) (b : I → M) (b' : J → M) (A : Matrix J I o)
     (h : ∀ i, u (b i) = ∑ j, cst S (A j i) • b' j) (c : I → o) :
     u (∑ i, cst S (c i) • b i) = ∑ j, cst S (∑ i, A j i * c i) • b' j := by
-  simp only [map_sum u, map_smul, h]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum u, map_smul, h]
   exact comb_comb S b' A c
 
 theorem old_eq {S : ThetaSys o Ω} (Z : Realisation S) (c : Change S) (i : S.J) :
@@ -97,7 +98,8 @@ theorem fn_ev (S : ThetaSys o Ω) (c : Change S) (a : S.Gam) (j : c.J) :
   have : (⟨(change S c).ev a j, (change S c).ev_mem a j⟩ : S.R) =
       ∑ i, algebraMap o S.R (c.M i j) * ⟨S.ev a i, S.ev_mem a i⟩ := Subtype.ext (by
     rw [AddSubmonoidClass.coe_finset_sum]; rfl)
-  rw [this, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [this, map_sum]
   exact Finset.sum_congr rfl fun i _ => map_mul _ _ _
 
 theorem fn_th (S : ThetaSys o Ω) (c : Change S) (a : S.Gam) :

@@ -337,12 +337,14 @@ theorem pt_act_of_pelClass {E : Type} [Field E] [NumberField E] [IsCMField E] {H
     AddMonoidHom.mk' (fun v => Additive.ofMul (I.ev k v ≫ φ.hom)) fun u v => by
       rw [I.add, MonObj.mul_comp]; rfl
   have e : a j • bas (Pi.single i 1) = ∑ i', bas.symm (a j • bas (Pi.single i 1)) i' • bas (Pi.single i' 1) := by
-    simp only [← map_zsmul, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [← map_zsmul, ← map_sum]
     rw [← LinearEquiv.symm_apply_eq]
     ext l
     simp [Finset.sum_apply, Pi.single_apply]
   have := congrArg f e
-  rw [map_sum] at this
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum] at this
   simp only [map_zsmul] at this
   rw [List.prod_ofFn, ← hI' i, Category.assoc, ← hact, ← Category.assoc]
   refine (congrArg (· ≫ φ.hom) (I.lin k (a j) _).symm).trans ((congrArg Additive.toMul this).trans ?_)

@@ -42,7 +42,8 @@ theorem pTaylor : PTaylor := by
   have hpull : nn.pull1 c.1 = ∑ r ∈ Finset.univ, f r • k.isMor.pull1 (a r).1 := by
     have e1 := IsMor.pullback1_comp m'.isMor (liftMor κ h).isMor nn (fun _ ↦ rfl) hi c.1
     have e2 := congrArg (Submodule.subtype _) hsum
-    rw [map_sum] at e2
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at e2
     exact e1.symm.trans e2
   have key := GlobalTheory.T.taylor_period_eq_period_over_thickening_alt (F := F) (F₀ := fibFam u₀) e (fibUnif u₀)
     (isSeparated_left_of_isAbelianScheme 𝒜 hA) (isSeparated_left_of_isAbelianScheme A₀ hA₀) h0
@@ -50,7 +51,8 @@ theorem pTaylor : PTaylor := by
     (fun _ hd ↦ hd) N t ht htN (j : B →+* D) hj (A₀.hom ≫ spMap π)
     (by rw [Category.comp_id]; rfl) nn _ k.isMor rfl c.1 per hper Finset.univ f (fun r ↦ (a r).1)
     (fun r l ↦ P₀ l (a r)) _ (fun _ _ ↦ rfl) (fun r ↦ hP₀ (a r)) hpull x
-  rw [crysToDR_apply, hsum, map_sum, ← key]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [crysToDR_apply, hsum, map_sum, ← key]
   refine Finset.sum_congr rfl fun r _ ↦ ?_
   rw [map_smul, hd (a r), smul_eq_mul]
 

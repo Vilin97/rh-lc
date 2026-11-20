@@ -110,7 +110,8 @@ theorem map_sc_le (M : Matrix ι ι K) {d : R} (hd0 : d ≠ 0)
   intro k
   refine ⟨∑ j, m k j * z j, ?_⟩
   simp only [LinearMap.coe_restrictScalars, Matrix.mulVecLin_apply, Matrix.mulVec, dotProduct]
-  rw [Algebra.smul_def, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Algebra.smul_def, map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [← hz j, map_mul, hm k j, Algebra.smul_def, Algebra.smul_def]
   field_simp

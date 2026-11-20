@@ -92,7 +92,8 @@ theorem jumpsInV_of_isSubOfSums : ∀ {G : Type} [Group G] [TopologicalSpace G] 
     | tmul v c =>
       simp only [AlgebraTensorModule.map_tmul, LinearMap.id_apply, ← TensorProduct.sum_tmul]
       congr 1
-      simp only [s, p, LinearMap.comp_apply, ← map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [s, p, LinearMap.comp_apply, ← map_sum]
       conv_lhs => rw [← hrv v]
       congr 1
       exact (Finset.univ_sum_single (j v)).symm

@@ -264,7 +264,8 @@ def gmul (M : FinGradedSub (S := S) (x := x) E) {s : ℕ} (h : Fin s → Poly S 
 theorem homogeneousComponent_mul_form (c h : Poly S N) {d : ℕ} (hh : h.IsHomogeneous d) (n : ℕ) :
     homogeneousComponent n (c * h) = if d ≤ n then homogeneousComponent (n - d) c * h else 0 := by
   classical
-  conv_lhs => rw [← sum_homogeneousComponent c, Finset.sum_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [← sum_homogeneousComponent c, Finset.sum_mul, map_sum]
   have each : ∀ i, homogeneousComponent n (homogeneousComponent i c * h) =
       if i + d = n then homogeneousComponent i c * h else 0 := fun i => by
     rw [homogeneousComponent_of_mem ((homogeneousComponent_isHomogeneous i c).mul hh)]
@@ -294,10 +295,12 @@ theorem smul_mem_gmul (M : FinGradedSub (S := S) (x := x) E) {s : ℕ} (h : Fin 
   rw [← hJ] at hfJ
   obtain ⟨c, hc⟩ := (Submodule.mem_span_range_iff_exists_fun _).mp hfJ
   have hf' : f = ∑ l, (if d l ≤ e then homogeneousComponent (e - d l) (c l) * h l else 0) := by
-    conv_lhs => rw [← homogeneousComponent_eq_self hf, ← hc, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [← homogeneousComponent_eq_self hf, ← hc, map_sum]
     refine Finset.sum_congr rfl fun l _ => ?_
     rw [smul_eq_mul, homogeneousComponent_mul_form _ _ (hh l)]
-  rw [hf', map_sum, Finset.sum_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hf', map_sum, Finset.sum_smul]
   refine Submodule.sum_mem _ fun l _ => ?_
   by_cases hle : d l ≤ e
   · rw [if_pos hle, map_mul, mul_comm, mul_smul]

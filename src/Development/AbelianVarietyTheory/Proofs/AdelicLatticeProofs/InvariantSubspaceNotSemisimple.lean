@@ -133,7 +133,8 @@ theorem exists_socle_radical_of_not_ss :
     have h2 := hv _ h1
     funext i
     have h3 := congrArg σ (congrFun h2 i)
-    simpa [spanAlgMap, mulVec, dotProduct, map_sum] using h3
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [spanAlgMap, mulVec, dotProduct, map_sum] using h3
   · intro v b hb
     rw [mulVec_mulVec]
     have := congrArg Subtype.val (hba b hb)

@@ -43,7 +43,8 @@ theorem ff_repr {e f : Fin r → S.V} (hfe : ∀ a b, S.hT (f a) (e b) = if a = 
   obtain ⟨c, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun E).1 hx
   refine Finset.sum_congr rfl fun a _ => ?_
   congr 1
-  simp [map_sum, hfe]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, hfe]
 
 def ffP (p q : Fin r → S.V) (c d : Fin r → E) : S.V := ∑ a, c a • p a + ∑ a, d a • q a
 
@@ -60,7 +61,8 @@ theorem ff_hyp {p q : Fin r → S.V} (hp : ∀ a b, S.hT (p a) (p b) = 0) (hq : 
     intro a b
     rw [← ff_herm, hpq]
     by_cases h : a = b <;> simp [h, Ne.symm]
-  simp [ffP, map_sum, LinearMap.sum_apply, hp, hq, hpq, hqp, mul_ite, Finset.sum_add_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [ffP, map_sum, LinearMap.sum_apply, hp, hq, hpq, hqp, mul_ite, Finset.sum_add_distrib]
 
 theorem ff_split_eval {H : Submodule E S.V} {w w' P P' : S.V} (hw : w ∈ orth S H) (hw' : w' ∈ orth S H)
     (hP : P ∈ H) (hP' : P' ∈ H) : S.hT (w + P) (w' + P') = S.hT w w' + S.hT P P' := by
@@ -96,7 +98,8 @@ theorem ff_orth_part (hee : ∀ a b, S.hT (e a) (e b) = 0) (hff : ∀ a b, S.hT 
   intro y hy
   have key : ffH e f ≤ LinearMap.ker (S.hT.flip (v - ffP e f (ffC f v) (ffC e v))) := by
     refine Submodule.span_le.2 (Set.union_subset ?_ ?_) <;> rintro _ ⟨b, rfl⟩ <;>
-      simp [LinearMap.mem_ker, ffP, ffC, map_sum, LinearMap.sum_apply, hee, hef, hfe, hff, mul_ite]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [LinearMap.mem_ker, ffP, ffC, map_sum, LinearMap.sum_apply, hee, hef, hfe, hff, mul_ite]
   simpa using LinearMap.mem_ker.1 (key hy)
 
 theorem ffMu_isom {x g : Fin r → S.V} (hee : ∀ a b, S.hT (e a) (e b) = 0) (hff : ∀ a b, S.hT (f a) (f b) = 0)
@@ -150,7 +153,8 @@ theorem ff_dual_pair (x : Fin r → S.V) (U : Matrix (Fin r) (Fin r) E)
   simp only [Matrix.mul_apply, Matrix.of_apply, Matrix.one_apply] at h
   have hc : S.hT (x a) (∑ c, starRingEnd E (U b c) • f c) =
       starRingEnd E (∑ c, U b c * S.hT (f c) (x a)) := by
-    simp [map_sum, ff_herm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, ff_herm]
   rw [hc, h]
   by_cases hab : a = b <;> simp [hab, Ne.symm]
 
@@ -302,7 +306,8 @@ theorem frameCorrection_holds : FrameFixNeed X Y u u' := by
     exact y.1.fl.e_iso a b
   have hgg : ∀ a b, (VS D).hT (g a) (g b) = 0 := by
     intro a b
-    simp [hg_def, map_sum, hff]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [hg_def, map_sum, hff]
   have hxg : ∀ a b, (VS D).hT (x a) (g b) = if a = b then 1 else 0 := ff_dual_pair x T⁻¹ hUT
   have hxH : ∀ a, x a ∈ ffH e f := fun a => Submodule.span_mono Set.subset_union_left (hxA a)
   have hgH : ∀ a, g a ∈ ffH e f := fun a =>

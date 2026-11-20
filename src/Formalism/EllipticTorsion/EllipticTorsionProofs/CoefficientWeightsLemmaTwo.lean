@@ -53,7 +53,8 @@ theorem coeff_X0_add_X1_pow {R : Type*} [CommRing R] (d i j : ℕ) :
     MvPowerSeries.coeff (Finsupp.single (0 : Fin 2) i + Finsupp.single 1 j)
       ((MvPowerSeries.X 0 + MvPowerSeries.X 1 : MvPowerSeries (Fin 2) R) ^ d) =
       if i + j = d then (d.choose i : R) else 0 := by
-  rw [add_pow, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [add_pow, map_sum]
   have hterm : ∀ m ∈ Finset.range (d + 1),
       MvPowerSeries.coeff (Finsupp.single (0 : Fin 2) i + Finsupp.single 1 j)
         ((MvPowerSeries.X 0 : MvPowerSeries (Fin 2) R) ^ m * MvPowerSeries.X 1 ^ (d - m) *

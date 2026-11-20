@@ -17,7 +17,8 @@ theorem bilinear_real_imag_expand {V : Type*} [NormedAddCommGroup V] [NormedSpac
         b i * a j * B (f i) (e j) + b i * b j * B (f i) (f j)) := by
   have key : ∀ (u w : Fin D → V), B (∑ i, u i) (∑ j, w j) = ∑ i, ∑ j, B (u i) (w j) := by
     intro u w
-    simp only [map_sum, ContinuousLinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, ContinuousLinearMap.sum_apply]
     first
       | rfl
       | exact Finset.sum_comm

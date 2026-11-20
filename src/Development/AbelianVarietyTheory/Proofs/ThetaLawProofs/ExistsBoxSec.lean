@@ -28,7 +28,8 @@ theorem gs_eqH (f : Y ⟶ X) (y : Y) (U : X.Opens) (h : f y ∈ U) (a : Γ(X, U)
 
 theorem gs_sum' (f : Y ⟶ X) (y : Y) (U : X.Opens) (h : f y ∈ U) {N : Type} (s : Finset N) (a : N → Γ(X, U)) :
     gs f y U (∑ i ∈ s, a i) = ∑ i ∈ s, gs f y U (a i) := by
-  simp only [gs_eqH f y U h, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [gs_eqH f y U h, map_sum]
 
 theorem gs_prod' (f : Y ⟶ X) (y : Y) (U : X.Opens) (h : f y ∈ U) {N : Type} (s : Finset N) (a : N → Γ(X, U)) :
     gs f y U (∏ i ∈ s, a i) = ∏ i ∈ s, gs f y U (a i) := by

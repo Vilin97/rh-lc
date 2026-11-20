@@ -79,7 +79,8 @@ theorem rho_projection_assembly : Assembly := by
       exact (hsm.mul (hϖ j) (hk i j)).mono (hϖ j) (hrk i j)
   have hsum : iw j (∑ i, e i * y i) - x j =
       (∑ i, (iw j (e i) - if i = j then 1 else 0) * iw j (y i)) + (iw j (y j) - x j) := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [map_mul, sub_mul, Finset.sum_sub_distrib, ite_mul, one_mul, zero_mul,
       Finset.sum_ite_eq', Finset.mem_univ, if_true]
     ring

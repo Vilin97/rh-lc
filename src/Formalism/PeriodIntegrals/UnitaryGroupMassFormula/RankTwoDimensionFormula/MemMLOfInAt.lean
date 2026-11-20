@@ -24,7 +24,8 @@ theorem hform_mulVec' {A : Type} [CommRing A] {n : Type} [Fintype n] [DecidableE
     simp only [Formalism.UG.hform, dotProduct, mulVec, Finset.mul_sum, mul_assoc]
   have hσ : (fun i => σ ((M *ᵥ x) i)) = (M.map σ) *ᵥ (fun i => σ (x i)) := by
     funext i
-    simp [mulVec, dotProduct, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [mulVec, dotProduct, map_sum, map_mul]
   rw [hdot, hdot, hσ, ← vecMul_transpose, ← dotProduct_mulVec]
   simp only [mulVec_mulVec, ← Matrix.mul_assoc]
   rw [show (M.map σ)ᵀ * J * M = J from hM]

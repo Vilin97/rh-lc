@@ -68,7 +68,8 @@ theorem gaussNorm_pow_le_one {ι : Type*} (f : MvPolynomial ι L)
 theorem gaussNorm_bind₁_le {ι κ : Type*} (f : ι → MvPolynomial κ L)
     (hf : ∀ i, gaussNormOf (normAbv L) (f i) ≤ 1) (g : MvPolynomial ι L) :
     gaussNormOf (normAbv L) (bind₁ f g) ≤ gaussNormOf (normAbv L) g := by
-  conv_lhs => rw [g.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [g.as_sum, map_sum]
   refine gaussNorm_sum_le _ _ (gaussNormOf_nonneg _ g) fun m _ ↦ ?_
   rw [bind₁_monomial]
   refine (gaussNormOf_mul_le isNonarchimedean_normAbv _ _).trans ?_
@@ -103,7 +104,8 @@ theorem affineSubst_affineSubst {ι κ μ : Type*} [Fintype κ] [Fintype μ] (B 
       (∑ j, C (B i j) * X j + C (a i) : MvPolynomial κ L) =
       ∑ l, C ((B * B') i l) * X l + C ((B.mulVec a' + a) i) := by
     intro i
-    simp only [map_add, map_sum, map_mul, bind₁_C_right, bind₁_X_right, mul_add,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_add, map_sum, map_mul, bind₁_C_right, bind₁_X_right, mul_add,
       Finset.sum_add_distrib, Finset.mul_sum, Matrix.mul_apply, Matrix.mulVec, dotProduct,
       Pi.add_apply, Finset.sum_mul, mul_assoc]
     rw [Finset.sum_comm (s := Finset.univ (α := κ)) (t := Finset.univ (α := μ))]

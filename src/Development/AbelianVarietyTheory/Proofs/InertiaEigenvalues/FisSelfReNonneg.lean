@@ -20,7 +20,8 @@ theorem fis_conj (P Q : MvPolynomial σ ℂ) : starRingEnd ℂ (fis P Q) = fis Q
   unfold fis
   set P' := rename (flat σ) P
   set Q' := rename (flat σ) Q
-  rw [ReciprocityTheory.PGsh.fischer_eq_sum P' Q' (P'.support ∪ Q'.support) Finset.subset_union_left,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [ReciprocityTheory.PGsh.fischer_eq_sum P' Q' (P'.support ∪ Q'.support) Finset.subset_union_left,
     ReciprocityTheory.PGsh.fischer_eq_sum Q' P' (P'.support ∪ Q'.support) Finset.subset_union_right, map_sum]
   refine Finset.sum_congr rfl fun A _ => ?_
   simp only [ReciprocityTheory.PGsh.fw, map_mul, Complex.conj_conj, map_natCast]

@@ -685,7 +685,8 @@ theorem hs_columns_inverse_left_inv (A : Wq →L[ℂ] Wp) : hsColumnsInverse (hs
   ext x
   rw [hs_columns_inverse_apply]
   conv_rhs => rw [← (stdOrthonormalBasis ℂ Wq).sum_repr' x]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_smul]
   rfl

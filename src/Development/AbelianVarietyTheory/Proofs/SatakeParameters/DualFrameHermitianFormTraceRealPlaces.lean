@@ -35,13 +35,15 @@ theorem hOK_vecF : ∀ (D : D7) (X : Fields) (s : Seam D X) (L : PeriodPair) (Λ
       Finset.mem_univ, if_true, Finset.mul_sum]
     rw [Fintype.sum_prod_type]
     refine Finset.sum_congr rfl fun τ _ => ?_
-    simp only [map_sum, map_mul, hconj, vecF]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, hconj, vecF]
     rw [Fintype.sum_prod_type]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun k _ => ?_
     have h0 : ((Formalism.L2.Th1.F.area L : ℝ) : ℂ) ≠ 0 := by exact_mod_cast hA.ne'
     push_cast
     field_simp
-  rw [hL, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hL, map_sum]
   rw [← Equiv.sum_comp s.iT.symm]
   simp only [Equiv.apply_symm_apply]
   rw [← (Equiv.ofBijective _ hbij).sum_comp]

@@ -227,7 +227,8 @@ theorem constantCoeff_dof_X {R k : Type} [CommRing R] [CommRing k] (φ : R →+*
       coeff_pderiv, FGLaw.mapF, coeff_map, zero_add, coeff_law]
     split_ifs <;> simp
   unfold Dof
-  simp only [map_sum, map_mul, h, constantCoeff_C]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, h, constantCoeff_C]
   rw [Finset.sum_eq_single j]
   · simp
   · intro j' _ hj
@@ -258,7 +259,8 @@ theorem constantCoeff_dmonOf_prod_linear :
   have key := word_value π (fun l => GE.dofD (G.mapF φ) (u l))
     (fun l => ∑ i, C (lam l i) * (X ((0 : Fin 1), i) : PS k 1 d)) (fun l => by simp [hπ]) α w al E
     (fun l l' hl hl' => by
-      rw [hπ, GE.dofD_apply, GE.dof_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hπ, GE.dofD_apply, GE.dof_sum, map_sum]
       simp only [GE.dof_C_mul, map_mul, constantCoeff_C, constantCoeff_dof_X]
       exact hpair l l' hl (by rw [← hc]; exact (List.count_pos_iff.2 hl').ne'))
     (by rw [hlen]; simpa [Finsupp.degree_eq_sum] using hdeg)

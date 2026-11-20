@@ -34,14 +34,16 @@ theorem continuous_block_of_continuous_matrix : ∀ {O Γ : Type} [CommRing O] [
   have hφ : ∀ x : Fin n → FractionRing O, (e x).1 i = ∑ k, x k * w k := by
     intro x
     conv_lhs => rw [pi_eq_sum_univ' x]
-    simp [map_sum, Prod.fst_sum, Finset.sum_apply, w]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, Prod.fst_sum, Finset.sum_apply, w]
   have key : ∀ g, ((b : O) * (c : O)) * P g i j = ∑ k, (∑ l, M g k l * v' l) * w' k := by
     intro g
     apply IsFractionRing.injective O (FractionRing O)
     have h1 := congrFun (hP g v) i
     rw [hφ] at h1
     simp only [v, LinearEquiv.apply_symm_apply, Matrix.mulVec_single_one, Matrix.col_apply, Matrix.map_apply] at h1
-    simp only [map_mul, map_sum, hv', hw', ← h1, Algebra.smul_def, Matrix.mulVec, dotProduct, Matrix.map_apply, Finset.mul_sum, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_mul, map_sum, hv', hw', ← h1, Algebra.smul_def, Matrix.mulVec, dotProduct, Matrix.map_apply, Finset.mul_sum, Finset.sum_mul]
     refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun l _ => ?_
     simp only [v]
     ring

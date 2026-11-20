@@ -65,7 +65,8 @@ theorem mem_span_iff : ∀ (V K : Type) [CommRing V] [IsDomain V] [IsDiscreteVal
   obtain rfl : vV = fun i => MT.pt (eV i) := funext fun i => (heV i).symm
   have hbj : ∀ i, b i = j (eV i) := fun i => uniq _ _ ((hb i).trans (key1 (eV i)).symm)
   have jcomb : ∀ c : Fin n → V, j (∑ i, c i • eV i) = ∑ i, c i • b i := fun c => by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [hj2, ← hbj, algebraMap_smul]
   constructor
@@ -82,7 +83,8 @@ theorem mem_span_iff : ∀ (V K : Type) [CommRing V] [IsDomain V] [IsDiscreteVal
         rw [← hbj i, hj2, ← hbj i] at h2
         exact h2.symm
       have hs : ∀ i, c i • b i = algebraMap V K (c i) • b i := fun i => (algebraMap_smul K (c i) (b i)).symm
-      simp only [hs, map_sum, map_smul, heig, Finset.smul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hs, map_sum, map_smul, heig, Finset.smul_sum]
       exact Finset.sum_congr rfl fun i _ => smul_comm _ _ _
   · rintro ⟨⟨a, ha, hka⟩, hr⟩
     obtain ⟨e, rfl⟩ := MT.onto a ha

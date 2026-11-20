@@ -43,7 +43,8 @@ theorem exists_cols_det_ne_zero {R : Type} [CommRing R] [IsDomain R] {d : ℕ} {
     have hr0 : r = 0 := h r fun k => hinj (by
       have h1 : f (v k) = 0 := hf (Submodule.subset_span ⟨k, rfl⟩)
       rw [LinearMap.pi_apply_eq_sum_univ] at h1
-      rw [map_zero, dotProduct, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_zero, dotProduct, map_sum]
       have h2 : ∀ a, algebraMap R F (r a * col k a) =
           algebraMap R F b * (v k a • f fun j => if a = j then 1 else 0) := fun a => by
         have e : (fun j => if a = j then (1 : F) else 0) = Pi.single a 1 := by
@@ -86,10 +87,12 @@ theorem exists_cols (hinj : Function.Injective bk.iA) {d : ℕ} {ι : Type}
   have h2 : (fun i => ∑ a, bk.iA (r a) * bk.iA (v i a b * β i)) = fun _ => 0 := funext fun i => by
     have h3 := hr (i, b)
     simp only [dotProduct] at h3
-    simp only [← map_mul, ← map_sum, ← mul_assoc, ← Finset.sum_mul, h3, zero_mul, map_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [← map_mul, ← map_sum, ← mul_assoc, ← Finset.sum_mul, h3, zero_mul, map_zero]
   rw [h2] at h1
   have h4 := h1.unique hasSum_zero
-  simp only [← map_mul, ← map_sum] at h4
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← map_mul, ← map_sum] at h4
   have h5 := hinj (h4.trans (map_zero _).symm)
   simp only [mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true] at h5
   exact (mul_eq_zero.1 h5).resolve_right hc
@@ -152,7 +155,8 @@ theorem nonempty_height : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (bk : BK K
     rw [e2, hZ1 j₀ hj₀, hG.ext] at e3
     refine Matrix.ext fun a b => hinj ?_
     have e4 := congrFun (congrFun e3 a) b
-    simp only [Matrix.smul_apply, Matrix.mul_apply, Matrix.map_apply, smul_eq_mul, map_mul, map_pow, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.smul_apply, Matrix.mul_apply, Matrix.map_apply, smul_eq_mul, map_mul, map_pow, map_sum,
       RingHom.comp_apply] at e4 ⊢
     exact e4
   obtain ⟨m, P, Y', hP, hPd, hY', hlat, hsat⟩ := GlobalTheory.T.exists_integralWittLattice_basis l K bk d _ hdet

@@ -61,7 +61,8 @@ theorem dpow_congr (hb : TFBase γ l s) {n : ℕ} {x y : A} (hx : x ∈ I) (hy :
   have haI : a ∈ I := mem_of_pow_mul hb n a (by rw [mul_comm, ha]; exact sub_mem hx hy)
   have hc : (l : A) ^ n * a ∈ I := Ideal.mul_mem_left _ _ haI
   have e : x = y + (l : A) ^ n * a := by rw [mul_comm, ha]; ring
-  rw [e, γ.dpow_add hy hc, map_sum, Finset.sum_eq_single (k, 0)]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, γ.dpow_add hy hc, map_sum, Finset.sum_eq_single (k, 0)]
   · rw [γ.dpow_zero hc, mul_one]
   · rintro ⟨i, j⟩ hij hne
     have hj : j ≠ 0 := by

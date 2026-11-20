@@ -209,7 +209,8 @@ theorem main : ∀ (D : D7) (u u' : D.what₂.Word) (F0 : Fb D u) (Λ : LatV D),
     have hE : ∀ a, (hS D).hT (F0.e a) om = 0 := fun a => by
       have h := congrFun (Formalism.HermitianLatticeCounting.Final.LatticeSumBounds.kernelRowSpace _ _
         ((Zhat F0 F'.fl).submatrix Fin.castSucc id)).1 a
-      rw [hom, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hom, map_sum]
       simp only [map_smul, smul_eq_mul]
       rw [← hκ] at h
       simpa [Matrix.mulVec, dotProduct, Zhat, brS, FlagG.fvec, mul_comm] using h
@@ -244,7 +245,8 @@ theorem main : ∀ (D : D7) (u u' : D.what₂.Word) (F0 : Fb D u) (Λ : LatV D),
     have hyP : y ∈ perpE D P := by
       refine (mem_perpE D P y).2 fun p hp => ?_
       have h1 : (hS D).hT (D.sp.iXY 0 p + φ ⟨p, hp⟩) om = 0 := by
-        rw [hom, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [hom, map_sum]
         refine Finset.sum_eq_zero fun b _ => ?_
         rw [map_smul, horth ⟨p, hp⟩ b, smul_zero]
       rwa [map_add, LinearMap.add_apply, hXom _ (hφ ⟨p, hp⟩).2, add_zero, hσom] at h1
@@ -253,7 +255,8 @@ theorem main : ∀ (D : D7) (u u' : D.what₂.Word) (F0 : Fb D u) (Λ : LatV D),
         sub_mem hyP (Submodule.sum_mem _ fun b _ => Submodule.smul_mem _ _ (hw b).1)
       refine sub_eq_zero.1 (han _ ?_)
       have h1 : ∀ σ ∈ perpE D P, (D.sp.X 0).hT σ (y - ∑ b, κ b • w b) = 0 := fun σ hσ => by
-        rw [map_sub, ← hσom, hom, map_sum, map_sum, sub_eq_zero]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sub, ← hσom, hom, map_sum, map_sum, sub_eq_zero]
         refine Finset.sum_congr rfl fun b _ => ?_
         rw [map_smul, map_smul, ← (hw b).2 σ hσ]
       exact h1 _ hd

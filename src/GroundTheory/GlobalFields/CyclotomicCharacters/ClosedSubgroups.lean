@@ -105,7 +105,8 @@ theorem mem_of_forall_toPadicInt (H : AddSubgroup ℤ̂) (hH : IsClosed (H : Set
     H.sum_mem fun q _ => mul_mem_of_isClosed' H hH (hh q) _
   have hcomp : ∀ (F : Finset Nat.Primes) (q' : Nat.Primes), toPadicInt q' (s F) = if q' ∈ F then toPadicInt q' y else 0 := by
     intro F q'
-    simp only [s, map_sum, map_mul, toPadicInt_primeIdempotent]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [s, map_sum, map_mul, toPadicInt_primeIdempotent]
     split_ifs with hq'
     · rw [Finset.sum_eq_single q', Pi.single_eq_same, one_mul, hhy]
       · intro b _ hb

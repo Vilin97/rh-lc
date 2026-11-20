@@ -397,10 +397,12 @@ private theorem assemble (hs : Seps rbar s) (A : ℕ → Type) [∀ N, CommRing 
           (Matrix.of (fun a b => Ideal.Quotient.mk J (xe (g, a, b))) *
             Matrix.of (fun a b => Ideal.Quotient.mk J (xe (h, a, b)))) a b
         rw [Matrix.mul_apply]
-        simp only [Matrix.of_apply, ← map_mul, ← map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [Matrix.of_apply, ← map_mul, ← map_sum]
         rw [hq]
         intro N
-        simp only [map_sum, map_mul, hxe', Matrix.mul_apply] }
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, map_mul, hxe', Matrix.mul_apply] }
   have hhom : ∀ g a b, hom g a b = Ideal.Quotient.mk J (xe (g, a, b)) := fun g a b => rfl
   have hJ0 : ∀ x ∈ J, F 0 x = 0 := fun x hx => (hmemJ x).1 hx 0
   have hred : ∀ g a b, res O (MvPowerSeries (σ × ι × ι) O ⧸ J) (hom g a b) = rbar g a b := by

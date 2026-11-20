@@ -32,7 +32,8 @@ theorem _root_.GlobalTheory.FinWeil.sumOp_sumOp_eq_idx_smul : ∀ {R X M : Type}
   letI := Fintype.ofFinite (B.toAddSubgroup ⧸ A.toAddSubgroup.addSubgroupOf B.toAddSubgroup)
   letI := Fintype.ofFinite (A.toAddSubgroup ⧸ B.toAddSubgroup.addSubgroupOf A.toAddSubgroup)
   unfold _root_.GlobalTheory.FinWeil.sumOp
-  simp_rw [finsum_eq_sum_of_fintype, map_sum] at hsum ⊢
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp_rw [finsum_eq_sum_of_fintype, map_sum] at hsum ⊢
   have hcomm : ∀ a ∈ A, ∀ b : X, W a (W b v) = γ a b • W b v := by
     intro a ha b
     rw [hW.comm, hv a ha]

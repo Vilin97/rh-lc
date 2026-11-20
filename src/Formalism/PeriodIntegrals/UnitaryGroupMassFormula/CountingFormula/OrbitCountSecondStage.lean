@@ -73,7 +73,8 @@ theorem hermitianDivisible_eq_smul (D : Formalism.BasicNotions.D7) {T : D.host.E
       rw [← hd a]
       abel
     rw [ex a, ex b] at hxx
-    simp only [map_add, map_sum, LinearMap.map_smulₛₗ, LinearMap.add_apply, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, map_smul, hee, mul_zero,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_add, map_sum, LinearMap.map_smulₛₗ, LinearMap.add_apply, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, map_smul, hee, mul_zero,
       Finset.sum_const_zero, add_zero, hβ, hβ', starRingEnd_apply] at hxx
     linear_combination hxx
   ext a b

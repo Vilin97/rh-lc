@@ -159,7 +159,8 @@ theorem dbl_form (σ : E →ₐ[F] E) {d : ℕ} (J : Matrix (Fin d) (Fin d) E) (
 
 theorem form_swap (σ : E →ₐ[F] E) (hσ : ∀ x, σ (σ x) = x) {d : ℕ} {J : Matrix (Fin d) (Fin d) E}
     (hJ : ∀ i j, σ (J j i) = -J i j) (p q : Fin d → E) : form σ J p q = -σ (form σ J q p) := by
-  simp only [form, dotProduct, mulVec, map_sum, map_mul, hσ, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, mulVec, map_sum, map_mul, hσ, Finset.mul_sum]
   rw [← Finset.sum_neg_distrib, Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [← Finset.sum_neg_distrib]

@@ -40,7 +40,8 @@ theorem c_frob_mem {S A : Type} [CommRing S] [IsNoetherianRing S] [CommRing A] {
   have e : Φ.comp s = s.comp φ := RingHom.ext fun a => (hφ a).symm
   rw [Ideal.map_map, e, ← Ideal.map_map, Ideal.map_pow] at h1
   have h2 := TB.c_mem_of_mem_map _ _ (Ideal.map_mono (Ideal.pow_right_mono hφI n) h1) j
-  rw [map_sub, map_sub, map_sum, map_sum] at h2
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sub, map_sub, map_sum, map_sum] at h2
   have h3 : ∑ i ∈ (TB.fin x n).toFinset, TB.c j (Φ (s (TB.c i x) * TB.b i)) ∈ N :=
     N.sum_mem fun i _ => by
       rw [map_mul, ← hφ, TB.c_mul]

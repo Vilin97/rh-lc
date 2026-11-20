@@ -12,7 +12,8 @@ theorem surjective_of_injective {F : Type} [AddCommGroup F] [Module ℂ F] [Fini
   have key : ∀ c : Fin (Module.finrank ℂ F) → ℂ,
       T (∑ i, starRingEnd ℂ (c i) • b i) = ∑ i, c i • T (b i) := by
     intro c
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [LinearMap.map_smulₛₗ, Complex.conj_conj]
   have hli : LinearIndependent ℂ fun i => T (b i) := by

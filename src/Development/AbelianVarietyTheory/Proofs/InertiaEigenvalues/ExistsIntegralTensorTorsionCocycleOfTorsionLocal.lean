@@ -58,7 +58,8 @@ theorem coordQ_iotaW (lam : O) (a k : ℕ) (x : Fin k → ↥(Xq LL lam a)) (j :
     obtain ⟨s, rfl⟩ := Submodule.Quotient.mk_surjective _ y
     rw [iotaW_tmul, coordQ_mk]
     by_cases hj : j = j' <;> simp [basisVec, hj]
-  simp [map_sum, h]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, h]
 
 theorem iotaW_injective (lam : O) (a k : ℕ) : Function.Injective (iotaW LL lam a k) := by
   rw [injective_iff_map_eq_zero]
@@ -80,7 +81,8 @@ theorem exists_iotaW (lam : O) (a k : ℕ) (q : (Fin k → LL) ⧸ stdG O LL k) 
     rw [map_smul, map_zero, coordQ_mk] at this
     exact this
   refine ⟨∑ j, basisVec LL k j ⊗ₜ[O] ⟨_, hx j⟩, ?_⟩
-  simp only [map_sum, iotaW_tmul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, iotaW_tmul]
   have : v = ∑ j, v j • (basisVec (O := O) LL k j : Fin k → LL) := by
     funext j'
     simp [basisVec, Finset.sum_apply, Pi.single_apply]

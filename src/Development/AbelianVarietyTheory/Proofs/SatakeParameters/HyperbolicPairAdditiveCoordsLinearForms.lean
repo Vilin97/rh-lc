@@ -29,7 +29,8 @@ theorem lg_flin {p : ℕ} [Fact p.Prime] (hl : 2 ≤ p) {τ m : Type} [Fintype m
       ∑ k, C (c k) * PowerSeries.subst (v k) (lgF ℂ_[p] p) := by
   unfold Formalism.L2.Th1.C.flin
   have hA : constantCoeff (∑ k, C (c k) * PowerSeries.subst (v k) (lgF ℂ_[p] p)) = 0 := by
-    simp only [map_sum, map_mul, constantCoeff_C]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, constantCoeff_C]
     exact Finset.sum_eq_zero fun k _ => by
       rw [PowerSeries.constantCoeff_subst_eq_zero (hv k) _ (Formalism.L2.Th1.D.Pair.cc_lgF hl), mul_zero]
   rw [← PowerSeries.subst_comp_subst_apply
@@ -42,7 +43,8 @@ theorem cc_flin {p : ℕ} [Fact p.Prime] (hl : 2 ≤ p) {τ m : Type} [Fintype m
     constantCoeff (Formalism.L2.Th1.C.flin (lgF ℂ_[p] p) (Formalism.L2.Th1.D.expF ℂ_[p] p) c v) = 0 := by
   unfold Formalism.L2.Th1.C.flin
   have hA : constantCoeff (∑ k, C (c k) * PowerSeries.subst (v k) (lgF ℂ_[p] p)) = 0 := by
-    simp only [map_sum, map_mul, constantCoeff_C]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, constantCoeff_C]
     exact Finset.sum_eq_zero fun k _ => by
       rw [PowerSeries.constantCoeff_subst_eq_zero (hv k) _ (Formalism.L2.Th1.D.Pair.cc_lgF hl), mul_zero]
   exact PowerSeries.constantCoeff_subst_eq_zero hA _ (Formalism.L2.Th1.D.expSpec ℂ_[p] p hl).1
@@ -123,7 +125,8 @@ theorem hypZ_of_inHyp : ∀ (D : D7) (p : ℕ) [Fact p.Prime] (hp : 5 ≤ p) (σ
     rw [hlog]
     unfold CofactorConverse.linP
     rw [← coe_substAlgHom hY]
-    simp only [map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul]
     simp only [coe_substAlgHom hY, subst_C]
     refine Finset.sum_congr rfl fun s _ => ?_
     rw [subst_X hY]
@@ -153,7 +156,8 @@ theorem hypZ_of_inHyp : ∀ (D : D7) (p : ℕ) [Fact p.Prime] (hp : 5 ≤ p) (σ
   rw [hL i]
 
   rw [← coe_substAlgHom hW]
-  simp only [map_sum, map_add, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_add, map_mul]
   simp only [coe_substAlgHom hW, subst_C, hWx, hEv, hOd]
   rfl
 

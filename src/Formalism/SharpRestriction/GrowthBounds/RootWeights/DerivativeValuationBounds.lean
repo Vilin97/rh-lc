@@ -156,7 +156,8 @@ theorem flt_hom_mem {B₀ B' : Type*} [CommRing B₀] [CommRing B'] {σ : Type*}
     (hC : ∀ (t : ℤ) (b : B₀), b ∈ Fl.F t → φ (C b) ∈ Fl'.F t)
     (hX : ∀ w, φ (X w) ∈ Fl'.F (wt (Finsupp.single w 1))) {t : ℤ} {P : MvPolynomial σ B₀}
     (hP : P ∈ (flt_lift Fl wt).F t) : φ P ∈ Fl'.F t := by
-  rw [P.as_sum, _root_.map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [P.as_sum, _root_.map_sum]
   refine (Fl'.F t).sum_mem fun m _ => ?_
   have e : monomial m (AddMonoidAlgebra.coeff P m) = C (AddMonoidAlgebra.coeff P m) * monomial m 1 := by
     rw [MvPolynomial.C_mul_monomial, mul_one]
@@ -403,7 +404,8 @@ theorem flt_gL_mul_gLinv (R : Type*) [CommRing R] (n : ℕ) : gL R n * gLinv R n
       (IsLocalization.Away.invSelf (genMat R n).det *
         algebraMap _ (GLCoord R n) ((genMat R n * (genMat R n).adjugate) a b)) := by
     intro a b
-    simp only [gL, gLinv, Matrix.mul_apply, Matrix.map_apply, ← _root_.map_mul, _root_.map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [gL, gLinv, Matrix.mul_apply, Matrix.map_apply, ← _root_.map_mul, _root_.map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun c _ => ?_
     congr 1
     rw [_root_.map_mul]
@@ -419,7 +421,8 @@ theorem flt_gLinv_mul_gL (R : Type*) [CommRing R] (n : ℕ) : gLinv R n * gL R n
       (IsLocalization.Away.invSelf (genMat R n).det *
         algebraMap _ (GLCoord R n) (((genMat R n).adjugate * genMat R n) a b)) := by
     intro a b
-    simp only [gL, gLinv, Matrix.mul_apply, Matrix.map_apply, ← _root_.map_mul, _root_.map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [gL, gLinv, Matrix.mul_apply, Matrix.map_apply, ← _root_.map_mul, _root_.map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun c _ => ?_
     congr 1
     rw [_root_.map_mul]
@@ -615,7 +618,8 @@ theorem flt_tay_monomial (R : Type*) [CommRing R] {σ : Type*} (m : σ →₀ �
 theorem flt_tay_coeff (R : Type*) [CommRing R] {σ : Type*} (F : MvPolynomial σ R) (be : σ →₀ ℕ) :
     AddMonoidAlgebra.coeff (flt_tay R σ F) be = divDer be F := by
   conv_lhs => rw [F.as_sum]
-  rw [_root_.map_sum, MvPolynomial.coeff_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [_root_.map_sum, MvPolynomial.coeff_sum]
   simp only [divDer]
   refine Finset.sum_congr rfl fun m _ => ?_
   have e1 : monomial m (AddMonoidAlgebra.coeff F m) = C (AddMonoidAlgebra.coeff F m) * monomial m 1 := by
@@ -654,7 +658,8 @@ theorem sum_C_C_mul_sum_of_mul_eq_one {B : Type*} [CommRing B] {σ' σ'' : Type*
         rw [Finset.sum_comm]
         exact Finset.sum_congr rfl fun c _ => Finset.sum_congr rfl fun b _ => by ring
     _ = ∑ c, C (C ((Q * P) c d)) * Y c := by
-        simp only [Matrix.mul_apply, _root_.map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [Matrix.mul_apply, _root_.map_sum]
     _ = Y d := by
         rw [h]
         simp [Matrix.one_apply]
@@ -685,7 +690,8 @@ theorem flt_Th_twist {R : Type*} [CommRing R] {ι : Type*} {n : ℕ} (LL : Lette
           (fun c => (X (v.1, c) : MvPolynomial (ι × Fin n) (MvPolynomial (ι × Fin n) (GLLaurent R n)))) v.2
         simp only [Matrix.transpose_apply] at hY
         rw [hT]
-        simp only [_root_.map_sum, hTh, Finset.sum_add_distrib]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [_root_.map_sum, hTh, Finset.sum_add_distrib]
         rw [hY]
         simp only [_root_.map_mul, Prod.mk.eta]
       · have hT : twistSub LL S j (X v : MvPolynomial (ι × Fin n) R) =
@@ -701,7 +707,8 @@ theorem flt_Th_twist {R : Type*} [CommRing R] {ι : Type*} {n : ℕ} (LL : Lette
           (fun c => (X (v.1, c) : MvPolynomial (ι × Fin n) (MvPolynomial (ι × Fin n) (GLLaurent R n)))) v.2
         try dsimp only at hY
         rw [hT]
-        simp only [_root_.map_sum, hTh, Finset.sum_add_distrib]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [_root_.map_sum, hTh, Finset.sum_add_distrib]
         rw [hY]
         simp only [_root_.map_mul, Prod.mk.eta]
     · have hT : twistSub LL S j (X v : MvPolynomial (ι × Fin n) R) = X v := by
@@ -841,7 +848,8 @@ theorem degree_truncation (D : Formalism.BasicNotions.D7) : DegreeTruncationLemm
   intro R _ ι _ LL n _ S c T hT q F
   constructor
   · refine flt_withTop_le fun t ht => ?_
-    rw [flt_le_valS, _root_.map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [flt_le_valS, _root_.map_sum]
     refine AddSubgroup.sum_mem _ fun m hm => ?_
     rw [MvPolynomial.smul_eq_C_mul, _root_.map_mul]
     have h1 := flt_twist_C_mem LL S (lastIdx n) 1 (q m)
@@ -849,7 +857,8 @@ theorem degree_truncation (D : Formalism.BasicNotions.D7) : DegreeTruncationLemm
     have h3 := (laurentCoeffFiltration R n _ 1).mul_mem h1 h2
     rwa [zero_add] at h3
   · refine flt_withBot_le fun M hM => ?_
-    rw [flt_lam1S_le, _root_.map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [flt_lam1S_le, _root_.map_sum]
     refine AddSubgroup.sum_mem _ fun m hm => ?_
     rw [MvPolynomial.smul_eq_C_mul, _root_.map_mul]
     have h1 := flt_twist_C_mem LL S (0 : Fin n) (-1) (q m)

@@ -112,7 +112,8 @@ theorem exists_eq_sub_of_mem_cob (hj : ReciprocityTheory.Neutral.Cmp.Compat l A 
   · refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg zero_le_one fun i _ => ?_
     rw [norm_mul]
     exact mul_le_one₀ (norm_le_one_of_mem (h i).1) (norm_nonneg _) ((hj _).1 (h i).2)
-  · rw [hf s, map_sum, ← Finset.sum_sub_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [hf s, map_sum, ← Finset.sum_sub_distrib]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_mul, hσ _ (h i).1, hs]
     ring

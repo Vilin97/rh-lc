@@ -38,13 +38,15 @@ theorem iotaW_mulVec (hw : Formalism.UG.IsInertAt F E v w) {l m : Type} [Fintype
     (M : Matrix l m (w.adicCompletion E)) (y : m → w.adicCompletion E) :
     (fun i => iotaW hw ((M *ᵥ y) i)) = M.map (iotaW hw) *ᵥ fun i => iotaW hw (y i) := by
   funext i
-  simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum, iotaW_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum, iotaW_mul]
 
 theorem map_iotaW_mul (hw : Formalism.UG.IsInertAt F E v w) {l m p : Type} [Fintype m]
     (M : Matrix l m (w.adicCompletion E)) (N : Matrix m p (w.adicCompletion E)) :
     M.map (iotaW hw) * N.map (iotaW hw) = (M * N).map (iotaW hw) := by
   ext i j
-  simp only [Matrix.mul_apply, Matrix.map_apply, map_sum, iotaW_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mul_apply, Matrix.map_apply, map_sum, iotaW_mul]
 
 theorem one_map_iotaW (hw : Formalism.UG.IsInertAt F E v w) (n : ℕ) :
     (1 : Matrix (Fin n) (Fin n) (w.adicCompletion E)).map (iotaW hw) =
@@ -56,7 +58,8 @@ theorem one_map_iotaW (hw : Formalism.UG.IsInertAt F E v w) (n : ℕ) :
 theorem herm_gram {R : Type} [CommRing R] (τ : R →+* R) (hτ : ∀ x, τ (τ x) = x) {n : ℕ}
     (A M : Matrix (Fin n) (Fin n) R) (hM : ∀ i j, τ (M i j) = M j i) (i j : Fin n) :
     τ ((Formalism.UG.cT τ A * M * A) i j) = (Formalism.UG.cT τ A * M * A) j i := by
-  simp only [Formalism.UG.cT, Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, map_sum, map_mul, hτ, hM,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Formalism.UG.cT, Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, map_sum, map_mul, hτ, hM,
     Finset.sum_mul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun l _ => ?_

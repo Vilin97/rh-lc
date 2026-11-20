@@ -95,7 +95,8 @@ def Statement : Prop :=
 
 example {E k : Type} [Field E] [Field k] (ι : E →+* k) {a : ℕ} {J : Type} [Fintype J] (e : J ≃ Fin a)
     (η : (Fin a → E) →ₗ[E] E) (y : Fin a → E) : locRow ι e η ⬝ᵥ locVec ι e y = ι (η y) := by
-  rw [LinearMap.pi_apply_eq_sum_univ η y, map_sum, ← e.sum_comp]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [LinearMap.pi_apply_eq_sum_univ η y, map_sum, ← e.sum_comp]
   refine Finset.sum_congr rfl fun s _ => ?_
   have : (fun j => if e s = j then (1 : E) else 0) = Pi.single (e s) 1 := by
     funext j; simp [Pi.single_apply, eq_comm]

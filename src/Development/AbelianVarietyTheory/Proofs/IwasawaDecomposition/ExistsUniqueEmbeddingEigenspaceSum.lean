@@ -123,7 +123,8 @@ theorem exists_unique_eigen_sum : ∀ {E : Type} [Field E] [NumberField E] [IsCM
     simpa [ψ, sub_eq_zero, P] using h
   have hsum : ∑ τ, P τ = 1 := by
     simp only [P]
-    rw [← map_sum, Lagrange.sum_basis hlinj.injOn Finset.univ_nonempty, map_one]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, Lagrange.sum_basis hlinj.injOn Finset.univ_nonempty, map_one]
   have hall : ∀ τ x, A x = φ (lam τ) • x → ∀ a, ρ a x = φ (embK c τ a) • x := by
     intro τ x hx a
     obtain ⟨N, hN, g, hg⟩ := hden a
@@ -146,7 +147,8 @@ theorem exists_unique_eigen_sum : ∀ {E : Type} [Field E] [NumberField E] [IsCM
   · rintro w ⟨hw, hws⟩
     funext τ
     show w τ = P τ v
-    rw [← hws, map_sum, Finset.sum_eq_single τ]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hws, map_sum, Finset.sum_eq_single τ]
     · rw [heig (lam τ) _ (hw τ α), Lagrange.eval_basis_self hlinj.injOn (Finset.mem_univ τ), map_one, one_smul]
     · intro τ' _ hne
       rw [heig (lam τ') _ (hw τ' α), Lagrange.eval_basis_of_ne (Ne.symm hne) (Finset.mem_univ τ'), map_zero, zero_smul]

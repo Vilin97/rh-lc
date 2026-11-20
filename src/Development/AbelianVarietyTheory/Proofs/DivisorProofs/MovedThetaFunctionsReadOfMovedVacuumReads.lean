@@ -126,7 +126,8 @@ theorem reads_om_of_vacuum : ∀ {D : D7} (ψ : AddChar (AF D.host.F) ℂ) (θ :
         heisO ψ S T (finPt hS hT r (z i)) f₀)) =
       ∑ i, rr i • (Formalism.MainNotions.StandardLatticesGL3.wdPh D (tor0 D cc δ) (pt D (tor0 D cc δ) δ (z' (z i))) •
         heisO ψ S T (finPt hS hT r (z' (z i))) (om (g, h) f₀)) := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, map_smul, hz2]
   rw [e1, e2]

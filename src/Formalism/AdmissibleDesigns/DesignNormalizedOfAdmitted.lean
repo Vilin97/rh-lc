@@ -84,7 +84,8 @@ theorem inR_phiC {P Q : Matrix (Fin D.R.nV) (Fin D.R.nV) (KK D.nd i)}
     simp only [Finset.sum_apply]
     change (toK D.nd i).mapMatrix (∑ k, f k π • rO D.nd i (rN i r ρ π) π (g k)) =
       P * (toK D.nd i).mapMatrix (∑ k, f k π • rO D.nd i r π (g k)) * Q
-    rw [map_sum, map_sum, Finset.mul_sum, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum, Finset.mul_sum, Finset.sum_mul]
     refine Finset.sum_congr rfl (fun k _ => ?_)
     rw [RingHom.mapMatrix_apply, RingHom.mapMatrix_apply, map_smul_toK, map_smul_toK, hconj, Matrix.mul_smul,
       Matrix.smul_mul]

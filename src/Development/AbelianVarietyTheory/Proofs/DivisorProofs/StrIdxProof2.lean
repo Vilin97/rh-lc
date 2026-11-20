@@ -19,7 +19,8 @@ theorem StrIdx_proof2 : StrIdx := by
   have hQ : ∀ m : Mat n, ev m Q = physDet ε m := by
     intro m
     show MvPolynomial.eval (entVar m) Q = _
-    rw [← strPhys_eq_physDet, strPhys, hQdef, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← strPhys_eq_physDet, strPhys, hQdef, map_sum]
     refine Finset.sum_congr rfl fun s _ => ?_
     rw [MvPolynomial.smul_eval, hQm]
     rfl

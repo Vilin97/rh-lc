@@ -59,7 +59,8 @@ theorem cc_sumE {ι : Type} [Fintype ι] {N0 N1 : ℕ} {be : MvPowerSeries (Fin 
     (h : constantCoeff be = 0) :
     constantCoeff (sumE (ι := ι) (N0 := N0) (N1 := N1) be) = 0 := by
   unfold sumE
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_eq_zero fun e _ => ?_
   exact constantCoeff_subst_eq_zero (hasSubst_of_constantCoeff_zero (by intro a; simp))
     (by intro a; simp) h
@@ -117,7 +118,8 @@ theorem biextension_relation_of_exp_spec (hE : ExpSpec) (hP : BiextensionPointsI
       subst (fun s => entLog (K := K) l (s, ab.1, ab.2)) bm := ⟨_, rfl⟩
   have hmapB : map j (∑ ab : Fin N0 × Fin N1, subst
       (fun s => entLog (K := K0) l (s, ab.1, ab.2)) (beMean (d := d) l σ be0 om oms ζ)) = Bt := by
-    rw [map_sum, hBt]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, hBt]
     refine Finset.sum_congr rfl fun ab _ => ?_
     rw [map_subst (hasSubst_of_constantCoeff_zero fun s => hE0 ab.1 ab.2 s), hbm]
     simp only [Formalism.DworkPowerSeriesWeights.Transfer.map_entLog]

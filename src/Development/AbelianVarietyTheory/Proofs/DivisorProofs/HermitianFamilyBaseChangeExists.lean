@@ -46,7 +46,8 @@ def extFam (h : HermFam K (Fin m → K)) : HermFam K' (Fin m → K') where
       smul_eq_mul]
   conj_symm σ x y := by
     have hH := (stdGram_posDef h σ).isHermitian
-    simp only [extForm, dotProduct, mulVec, map_sum, map_mul, Pi.star_apply, Complex.star_def, Complex.conj_conj,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [extForm, dotProduct, mulVec, map_sum, map_mul, Pi.star_apply, Complex.star_def, Complex.conj_conj,
       Finset.mul_sum]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_

@@ -31,7 +31,8 @@ theorem aeval_scale_rows {R : Type*} [CommRing R] {B n : ℕ} (d0 : ℕ)
             smul_eq_mul]
   conv_lhs => rw [F.as_sum]
   conv_rhs => rw [F.as_sum]
-  simp only [map_sum, aeval_monomial, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, aeval_monomial, Finset.mul_sum]
   refine Finset.sum_congr rfl (fun m hm => ?_)
   rw [Finsupp.prod_fintype, Finsupp.prod_fintype]
   · beta_reduce

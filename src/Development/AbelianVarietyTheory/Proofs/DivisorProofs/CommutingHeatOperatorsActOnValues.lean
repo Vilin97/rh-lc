@@ -27,7 +27,8 @@ theorem ringOp_map_of_intertwine {A B : Type} [CommRing A] [CommRing B] (iK : A 
     (d' : B → B) (dd' : Fin n → B → B) (hd : ∀ w, d' (iK w) = iK (d w)) (hdd : ∀ a w, dd' a (iK w) = iK (dd a w))
     (Θ : Matrix (Fin n) (Fin n) A) (u : Fin n → A) (p p' : A) (k : ℕ) (f : A) :
     iK (ringOp d dd Θ u p p' k f) = ringOp d' dd' (iK.mapMatrix Θ) (fun a => iK (u a)) (iK p) (iK p') k (iK f) := by
-  simp only [ringOp, map_sub, map_add, map_mul, map_sum, map_pow, map_natCast, map_ofNat, hd, hdd,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [ringOp, map_sub, map_add, map_mul, map_sum, map_pow, map_natCast, map_ofNat, hd, hdd,
     RingHom.mapMatrix_apply, Matrix.map_apply]
 
 theorem ringOp_mul_of_const {K : Type} [CommRing K] {n : ℕ} (d : K → K) (δ : Fin n → K → K)

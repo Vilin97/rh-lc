@@ -41,7 +41,8 @@ private theorem existsUnique_one {A O : Type} [CommRing A] [CommRing O] [IsDomai
   have hex : ∃ i, φ (g i) ≠ 0 := by
     by_contra hc
     push Not at hc
-    rw [map_sum, Finset.sum_eq_zero fun i _ => hc i] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_eq_zero fun i _ => hc i] at h
     exact zero_ne_one h
   obtain ⟨i, hi⟩ := hex
   have hi1 : φ (g i) = 1 := by
@@ -121,7 +122,8 @@ theorem UpperTheory.splitPlaces_discriminantDepth_of_splitAt :
   let w : Fin s → Place p (𝓞 E) := fun i => ⟨g i, (hg i).1, (hg i).2.1, (hg i).2.2, hsplit i⟩
   have hone : (∑ i, (w i).e) + (∑ i, (w i).bar) = 1 := by
     show (∑ i, g i) + (∑ i, sig p (𝓞 E) (g i)) = 1
-    rw [← map_sum, hsum, hs]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, hsum, hs]
   obtain ⟨hn, hvd⟩ := UpperTheory.discr_CMDatum_eq_prod_places E p C v O hv s w horth hone hcross
   have t : ∀ i, Fin (w i).n ≃ Emb (O := O) (w i).e := fun i =>
     (UpperTheory.trace_form_decomposition_CMDatum E p C v O hv (g i) (hg i).1).1.some

@@ -172,7 +172,8 @@ theorem flt_hom_mem {B₀ B' : Type*} [CommRing B₀] [CommRing B'] {σ : Type*}
     (hX : ∀ w, φ (X w) ∈ Fl'.F (wt (Finsupp.single w 1))) {t : ℤ} {P : MvPolynomial σ B₀}
     (hP : P ∈ (flt_lift Fl wt).F t) : φ P ∈ Fl'.F t := by
   classical
-  rw [P.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [P.as_sum, map_sum]
   refine (Fl'.F t).sum_mem fun m _ => ?_
   have e : monomial m (AddMonoidAlgebra.coeff P m) = C (AddMonoidAlgebra.coeff P m) * monomial m 1 := by
     rw [C_mul_monomial, mul_one]

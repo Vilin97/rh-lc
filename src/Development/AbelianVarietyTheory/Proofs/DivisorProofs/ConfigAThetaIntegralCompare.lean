@@ -61,7 +61,8 @@ theorem eq_zero_of_kills_mul {A : Type} (g : A → 𝓢(V, ℂ)) (hg : ∀ x, �
     let h : A → 𝓢(V, ℂ) := fun a => (hhc a).toSchwartzMap (((g a).smooth ⊤).mul ((hconj a).mul hms))
     have hφe : φ = ∑ a ∈ S, h a := by
       ext x
-      rw [← evAt_apply x (∑ a ∈ S, h a), map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← evAt_apply x (∑ a ∈ S, h a), map_sum]
       change φ x = ∑ a ∈ S, g a x * ((starRingEnd ℂ) (g a x) * m x)
       simp only [← mul_assoc]
       rw [← Finset.sum_mul]
@@ -69,7 +70,8 @@ theorem eq_zero_of_kills_mul {A : Type} (g : A → 𝓢(V, ℂ)) (hg : ∀ x, �
       by_cases hx : x ∈ tsupport (φ : V → ℂ)
       · field_simp [hsne x hx]
       · rw [image_eq_zero_of_notMem_tsupport hx]; simp
-    rw [hφe, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hφe, map_sum]
     exact Finset.sum_eq_zero fun a _ => hT a (ψ a) (h a) fun x => rfl
   have hclosed : IsClosed {φ : 𝓢(V, ℂ) | T φ = 0} := isClosed_eq T.continuous continuous_const
   ext φ

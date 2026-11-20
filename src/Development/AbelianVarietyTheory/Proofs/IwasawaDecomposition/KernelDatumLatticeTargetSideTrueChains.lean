@@ -22,7 +22,8 @@ theorem kerEnt_latT : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → T
   constructor
   · rintro ⟨y, hy, rfl⟩
     refine ⟨?_, fun c' => ?_⟩
-    · rw [← (((I.tw l l0 Z).fm u μ).emb_basis (i + 1)).2, ← ((((I.tw l l0 Z).fm u μ).lat (i + 1)).b.sum_repr y), map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [← (((I.tw l l0 Z).fm u μ).emb_basis (i + 1)).2, ← ((((I.tw l l0 Z).fm u μ).lat (i + 1)).b.sum_repr y), map_sum]
       exact Submodule.sum_mem _ fun a _ => by
         rw [LinearMap.map_smulₛₗ]
         exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨a, rfl⟩)

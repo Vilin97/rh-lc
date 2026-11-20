@@ -67,7 +67,8 @@ private theorem lie_eq_sum (X : Matrix (Fin a) (Fin a) (TR.Rinf F)) :
     simp [Matrix.sum_apply, Matrix.single_apply, ite_and, Pi.single_apply, ite_apply]
   change L X = _
   conv_lhs => rw [e]
-  simp only [map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul]
   rfl
 
 private theorem rt_Eop (y : GL (Fin a) (TR.Rinf F)) (v : InfinitePlace F) (i j : Fin a) :
@@ -212,7 +213,8 @@ private theorem uop_map {V W : Type} [AddCommGroup V] [Module ℂ V] [AddCommGro
     rw [e]
   have hd : ∀ u, GeneralLinearGroup.det (aff (atFin w (unif w)) u) = atFin w (unif w) := fun u =>
     Units.ext (by simp [aff, Matrix.det_fin_two])
-  rw [(uopSum F w V ρ c x hx).2 _ hS, (uopSum F w W ρ' c _ hx').2 _ hS, map_add, map_sum, smul_add, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [(uopSum F w V ρ c x hx).2 _ hS, (uopSum F w W ρ' c _ hx').2 _ hS, map_add, map_sum, smul_add, Finset.smul_sum]
   simp only [hf, hd]
   congr 1
   split_ifs

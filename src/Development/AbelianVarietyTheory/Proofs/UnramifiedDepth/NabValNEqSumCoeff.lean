@@ -23,12 +23,14 @@ theorem functional_eq_sum_coeff_of_vanish {σ K : Type} [CommRing K] [Finite σ]
     apply hvan
     intro ν hν
     have hνS : ν ∈ S := by simpa [hS] using hν
-    rw [map_sub, map_sum, Finset.sum_eq_single_of_mem ν hνS]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_sum, Finset.sum_eq_single_of_mem ν hνS]
     · simp
     · intro μ _ hne
       rw [map_smul, MvPowerSeries.coeff_monomial_ne (Ne.symm hne)]
       simp
-  rw [← hL, map_sub, map_sum, sub_eq_zero] at hg
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hL, map_sub, map_sum, sub_eq_zero] at hg
   rw [← hL, hg]
   refine Finset.sum_congr rfl fun μ _ => ?_
   rw [map_smul, hL, smul_eq_mul]

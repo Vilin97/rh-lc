@@ -157,7 +157,8 @@ theorem exists_of_integral_pairing (z : InfinitePlace E → ℂ)
           show ((q : ℂ)) = ((q : ℝ) : ℂ) by push_cast; rfl, Complex.re_ofReal_mul] }
   have hbt : ∀ j, Algebra.trace ℚ E (b j * t) = 2 * n j := by
     intro j
-    simp only [t, Finset.mul_sum, mul_smul_comm, map_sum, LinearMap.map_smul, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [t, Finset.mul_sum, mul_smul_comm, map_sum, LinearMap.map_smul, smul_eq_mul]
     have : ∀ i, Algebra.trace ℚ E (b j * db i) = if j = i then 1 else 0 := by
       intro i
       rw [mul_comm, ← Algebra.traceForm_apply]
@@ -316,7 +317,8 @@ theorem exists_dualBasis (A : Submodule (𝓞 E) V) (hA : A.FG) :
     have h2 : h x = ∑ i, h x i • (Pi.single i 1 : Fin n → 𝓞 E) := by
       funext j; simp [Finset.sum_apply, Pi.single_apply]
     conv_lhs => rw [h1, h2]
-    rw [map_sum, Submodule.coe_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Submodule.coe_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, Submodule.coe_smul, hσ i x, ← algebraMap_smul E (h x i),
       RingOfIntegers.coe_eq_algebraMap]
@@ -467,7 +469,8 @@ variable {H₁ H₂ : Type} [NormedAddCommGroup H₁] [InnerProductSpace ℂ H�
 
 theorem trace_adjoint' (T : H₁ →ₗ[ℂ] H₁) :
     LinearMap.trace ℂ H₁ (LinearMap.adjoint T) = conj (LinearMap.trace ℂ H₁ T) := by
-  rw [LinearMap.trace_eq_sum_inner _ (stdOrthonormalBasis ℂ H₁),
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [LinearMap.trace_eq_sum_inner _ (stdOrthonormalBasis ℂ H₁),
     LinearMap.trace_eq_sum_inner _ (stdOrthonormalBasis ℂ H₁), map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [LinearMap.adjoint_inner_right, inner_conj_symm]
@@ -679,7 +682,8 @@ theorem dualHom (F E : Type) [Field F] [NumberField F] [IsTotallyReal F] [Field 
         generalize (S'.fibSub (espan B') τ).starProjection y = x at hPB ⊢
         have hx := dualBasis_at S' τ B' b ρ hidB hPB
         conv_lhs => rw [hx]
-        rw [map_sum, hUfib, LinearMap.sum_apply]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum, hUfib, LinearMap.sum_apply]
         refine Finset.sum_congr rfl fun j _ => ?_
         rw [map_smul, LinearMap.smulRight_apply]
         congr 1
@@ -733,7 +737,8 @@ theorem dualHom (F E : Type) [Field F] [NumberField F] [IsTotallyReal F] [Field 
           generalize (S'.fibSub (espan B') τ).starProjection y = x at hPB ⊢
           have hx := dualBasis_at S' τ B' b ρ hidB hPB
           conv_lhs => rw [hx]
-          rw [map_sum, map_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [map_sum, map_sum]
           refine Finset.sum_congr rfl fun j _ => ?_
           rw [map_smul, map_smul, fibMap_pt',
             hγU _ (pt_mem_fibSub S τ (espan A) (hUE _ (Submodule.subset_span (hbB j)))),
@@ -745,7 +750,8 @@ theorem dualHom (F E : Type) [Field F] [NumberField F] [IsTotallyReal F] [Field 
           rw [LinearMap.trace_smulRight, LinearMap.comp_apply, ContinuousLinearMap.coe_coe,
             Submodule.starProjection_eq_self_iff.mpr (pt_mem_fibSub S' τ (espan B')
               (hU'E _ (hUE _ (Submodule.subset_span (hbB j))))), fibFun_pt]
-        rw [hcomp, map_sum, Finset.sum_congr rfl fun j _ => hterm j, ← map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [hcomp, map_sum, Finset.sum_congr rfl fun j _ => hterm j, ← map_sum]
       unfold eucl
       rw [Finset.sum_congr rfl fun τ _ => hτ τ, sum_re_embedding]
       have hn' : Algebra.trace ℚ E t = 2 * n := by simpa using hn

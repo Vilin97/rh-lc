@@ -21,7 +21,8 @@ theorem trace_mem {A : Type} [Ring A] [Algebra ℂ A] {n : ℕ} (X : Fin n → F
       Fintype.card_fin]
   have hP : ∑ T, f (CapelliTop.subdet X T) • p T = 0 := Polynomial.funext fun u => by
     have h2 := hf0 _ (h u)
-    rw [CapelliTop.qdet_expand, map_sum] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [CapelliTop.qdet_expand, map_sum] at h2
     rw [Polynomial.eval_zero, ← h2, Polynomial.eval_finsetSum]
     refine Finset.sum_congr rfl fun T _ => ?_
     simp [p, Polynomial.eval_prod, mul_comm]
@@ -71,10 +72,12 @@ theorem lie_mem_Zalg (x : Cinf E) : lie E a (scL a x) ∈ Zalg E a := by
       simp only [InfinitePlace.mk_embedding, if_true]
     simp [this, Finset.univ_sum_single]
   have e2 : lie E a (scL a x) = ∑ i, lieS E a i i x := by
-    simp only [lieS_apply, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [lieS_apply, ← map_sum]
     exact congrArg (lie E a) (Matrix.sum_single_eq_diagonal (fun _ : Fin a => x)).symm
   rw [e2, e]
-  simp only [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum]
   rw [Finset.sum_comm]
   exact sum_mem fun w _ => h1 _ _
 

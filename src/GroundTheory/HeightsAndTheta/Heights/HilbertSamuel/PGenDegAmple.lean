@@ -83,7 +83,8 @@ theorem GenDegAmple.proof (hVar : GenericFibreVar.Statement) (hPos : MultiDegree
     simp [unitDeg, Finset.sum_apply, Pi.single_apply]
   have expand : ∀ b : K → ℤ,
       f (fun _ => b) = ∑ r : Fin D → K, (∏ j, b (r j)) * f (fun j => unitDeg (r j)) := fun b => by
-    rw [hsum b, f.map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hsum b, f.map_sum]
     refine Finset.sum_congr rfl fun r _ => ?_
     rw [f.map_smul_univ (fun j => b (r j)) (fun j => unitDeg (r j)), smul_eq_mul]
   rw [hg, expand d]

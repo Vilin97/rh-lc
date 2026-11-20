@@ -17,7 +17,8 @@ include hm
 
 theorem map_mul_map (X Y : Matrix (Fin n) (Fin n) L) : X.map ι * Y.map ι = (X * Y).map ι := by
   ext i j
-  simp only [Matrix.mul_apply, Matrix.map_apply, map_sum, hm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mul_apply, Matrix.map_apply, map_sum, hm]
 
 theorem e_mul (t : L) : ι 1 * ι t = ι t := by rw [← hm, one_mul]
 

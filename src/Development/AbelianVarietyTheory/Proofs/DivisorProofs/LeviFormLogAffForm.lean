@@ -107,7 +107,8 @@ omit [NormedSpace ℝ E] [IsScalarTower ℝ ℂ E] in
 theorem ofReal_re_affForm {Q : Matrix ι ι ℂ} (hQ : Q.IsHermitian) (c : ι → ℂ)
     (L : ι → E →L[ℂ] ℂ) (x : E) : ((affForm Q c L x).re : ℂ) = affForm Q c L x := by
   rw [← Complex.conj_eq_iff_re, affForm]
-  simp only [map_sum, map_mul, Complex.conj_conj]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, Complex.conj_conj]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   have : (starRingEnd ℂ) (Q j i) = Q i j := hQ.apply i j

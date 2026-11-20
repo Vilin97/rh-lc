@@ -71,7 +71,8 @@ theorem exists_basis (hinj : Function.Injective (algebraMap A Ω)) (N : Submodul
     induction i using WellFoundedLT.induction with
     | _ i ih =>
       have := congrArg (φ i) hg'
-      rw [map_sum, map_zero, Finset.sum_eq_single i] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, map_zero, Finset.sum_eq_single i] at this
       · rw [map_smul_alg, hnt] at this
         exact hinj (by rw [map_zero]; exact (mul_eq_zero.1 this).resolve_right (ht i))
       · intro j _ hj
@@ -286,10 +287,12 @@ theorem shape_alt {r : ℕ} (b₀ : Fin r → L) (e : Fin r → Ω) (he : ∀ a,
     · simp
   · have hz : (z : Module.Dual Ω L) = ∑ i, n.repr z i • (n i).1 := by
       have := congrArg N.subtype (n.sum_repr z)
-      rw [map_sum] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum] at this
       exact this.symm
     rw [Module.Basis.dualBasis_apply, hz]
-    simp only [map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, Finset.mul_sum]
     simp only [fun a' i => map_smul_alg (Module.Dual.eval Ω L (e a' • b₀ a')) (n.repr z i) (n i).1]
     rw [Finset.sum_comm]
     have : ∀ i, ∑ a', U⁻¹ a' a / e a' * (algebraMap A Ω (n.repr z i) * Module.Dual.eval Ω L (e a' • b₀ a') (n i).1) =

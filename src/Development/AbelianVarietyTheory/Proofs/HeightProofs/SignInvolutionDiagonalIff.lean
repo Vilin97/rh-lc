@@ -15,9 +15,11 @@ variable {E M ι : Type} [Field E] [StarRing E] [AddCommGroup M] [Module E M] [F
 theorem form_eq_sum (h : M →ₗ⋆[E] M →ₗ[E] E) (b : Module.Basis ι E M) (hb : ∀ i j, i ≠ j → h (b i) (b j) = 0)
     (x y : M) : h x y = ∑ i, star (b.repr x i) * b.repr y i * h (b i) (b i) := by
   conv_lhs => rw [← b.sum_repr x, ← b.sum_repr y]
-  rw [map_sum h, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum h, LinearMap.sum_apply]
   refine Finset.sum_congr rfl fun i _ => ?_
-  rw [map_sum, Finset.sum_eq_single i]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_eq_single i]
   · rw [LinearMap.map_smulₛₗ h, LinearMap.smul_apply, map_smul, smul_eq_mul, smul_eq_mul, starRingEnd_apply]; ring
   · intro j _ hj
     rw [LinearMap.map_smulₛₗ h, LinearMap.smul_apply, map_smul, hb i j hj.symm]; simp
@@ -26,7 +28,8 @@ theorem form_eq_sum (h : M →ₗ⋆[E] M →ₗ[E] E) (b : Module.Basis ι E M)
 theorem re_form_eq_sum (h : M →ₗ⋆[E] M →ₗ[E] E) (b : Module.Basis ι E M) (hb : ∀ i j, i ≠ j → h (b i) (b j) = 0)
     (t : E →+* ℂ) (ht : ∀ a, t (star a) = starRingEnd ℂ (t a)) (x : M) :
     (t (h x x)).re = ∑ i, Complex.normSq (t (b.repr x i)) * (t (h (b i) (b i))).re := by
-  rw [form_eq_sum h b hb, map_sum, Complex.re_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [form_eq_sum h b hb, map_sum, Complex.re_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_mul, map_mul, ht, ← Complex.normSq_eq_conj_mul_self, Complex.re_ofReal_mul]
 
@@ -89,7 +92,8 @@ theorem apply_eq_smul (b : Module.Basis ι E M) (p : ι → Prop) (s : Module.En
     (hs : ∀ i, p i → s (b i) = c • b i) (x : M) (hx : x ∈ coordSub b p) : s x = c • x := by
   conv_lhs => rw [← b.sum_repr x]
   conv_rhs => rw [← b.sum_repr x]
-  rw [map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.smul_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   by_cases hi : p i
   · rw [map_smul, hs i hi, smul_comm]

@@ -31,7 +31,8 @@ theorem classSum_scalar [Fintype H] [FiniteDimensional ℂ W] (ρ : Representati
     (hρ : ρ.IsIrreducible) (h : H) : ∃ s : ℂ, ∀ w, (∑ k, ρ (k * h * k⁻¹)) w = s • w := by
   have hT : ∀ g v, (∑ k, ρ (k * h * k⁻¹)) (ρ g v) = ρ g ((∑ k, ρ (k * h * k⁻¹)) v) := by
     intro g v
-    simp only [LinearMap.sum_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [LinearMap.sum_apply, map_sum]
     rw [← Equiv.sum_comp (Equiv.mulLeft g)]
     refine Finset.sum_congr rfl fun s _ => ?_
     rw [← Module.End.mul_apply, ← map_mul, ← Module.End.mul_apply, ← map_mul]
@@ -51,7 +52,8 @@ theorem classSum_of_isotypic [Fintype H] (τ : Representation ℂ H V) (ρ : Rep
     rintro _ ⟨w, rfl⟩
     rw [LinearMap.mem_eqLocus]
     have e := congrArg f.toLinearMap (hs w)
-    simp only [LinearMap.sum_apply, map_sum, map_smul] at e
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [LinearMap.sum_apply, map_sum, map_smul] at e
     simp only [LinearMap.sum_apply, LinearMap.smul_apply, Module.End.one_apply, ← e]
     exact Finset.sum_congr rfl fun k _ => (f.isIntertwining _ _ _ w).symm
   exact LinearMap.ext fun v => this Submodule.mem_top
@@ -61,7 +63,8 @@ theorem card_mul_character {M : Type} [Group M] [Fintype H] (τ : Representation
     (ha : ∀ k, Commute (f k) a) :
     (Fintype.card H : ℂ) * τ.character (f h * a) = s * τ.character a := by
   have e := congrArg (fun T => LinearMap.trace ℂ V (T * τ a)) hs
-  simp only [Finset.sum_mul, map_sum, smul_mul_assoc, one_mul, map_smul, smul_eq_mul] at e
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finset.sum_mul, map_sum, smul_mul_assoc, one_mul, map_smul, smul_eq_mul] at e
   have e2 : ∀ k, LinearMap.trace ℂ V (τ (f (k * h * k⁻¹)) * τ a) = τ.character (f h * a) := by
     intro k
     rw [← map_mul, ← char_conj τ (f h * a) (f k)]

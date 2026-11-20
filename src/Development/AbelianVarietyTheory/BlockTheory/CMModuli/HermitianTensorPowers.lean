@@ -58,7 +58,8 @@ lemma herm_add_left {g : ℕ} (Hm : Matrix (Fin g) (Fin g) ℂ) (z z' w : Fin g 
 
 lemma herm_swap {g : ℕ} {Hm : Matrix (Fin g) (Fin g) ℂ} (h : Hm.IsHermitian) (v w : Fin g → ℂ) :
     herm Hm w v = starRingEnd ℂ (herm Hm v w) := by
-  simp only [herm, dotProduct, Matrix.mulVec, Finset.mul_sum, map_sum, map_mul, Pi.star_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [herm, dotProduct, Matrix.mulVec, Finset.mul_sum, map_sum, map_mul, Pi.star_apply,
     RCLike.star_def, Complex.conj_conj]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_

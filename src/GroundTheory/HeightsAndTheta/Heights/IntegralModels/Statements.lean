@@ -426,7 +426,8 @@ theorem IsBasisOn.of_iso {M N : X.Modules} (e : M ≅ N) {U : X.Opens} {n : ℕ}
       ∑ i, r i • (N.presheaf.map (homOfLE h).op).hom ((e.hom.app U).hom (s i))) =
       (e.hom.app V).hom ∘ (fun r => ∑ i, r i • (M.presheaf.map (homOfLE h).op).hom (s i)) := by
     funext r
-    simp only [Function.comp_apply, map_sum, Scheme.Modules.Hom.app_smul, app_map_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Function.comp_apply, map_sum, Scheme.Modules.Hom.app_smul, app_map_apply]
   rw [key]
   have : IsIso (e.hom.app V) := inferInstance
   exact (ConcreteCategory.bijective_of_isIso (e.hom.app V)).comp (hs V h)

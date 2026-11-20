@@ -180,7 +180,8 @@ theorem _root_.GlobalTheory.FibreProj.pol_pow {R : Type} [CommRing R]
       _ = _ := by rw [map_smul, smul_eq_mul]
   calc ∑ S : Finset ι, (-1 : ℝ) ^ S.card * Φ ((∑ i, if i ∈ S then -z i else 0) ^ D)
       = Φ (∑ S : Finset ι, (-1 : R) ^ S.card * (∑ i, if i ∈ S then -z i else 0) ^ D) := by
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         simp only [hterm]
     _ = Φ ((-1 : R) ^ D * D.factorial * ∏ i, -z i) :=
         congrArg Φ (sum_neg_one_pow_card_mul_sum_pow_eq_factorial_prod hD fun i => -z i)

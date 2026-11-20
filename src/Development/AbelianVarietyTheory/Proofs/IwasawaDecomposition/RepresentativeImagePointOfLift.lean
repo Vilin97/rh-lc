@@ -125,17 +125,20 @@ theorem core {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [A
       rw [adAt_of_off hmioff hwnot r s]
       exact LevRead.isRed_one r s
   · intro P'' r s
-    rw [inv_inv, Units.val_mul, Matrix.mul_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [inv_inv, Units.val_mul, Matrix.mul_apply, map_sum]
     by_cases hPP : P''.1 = P
     · obtain ⟨P'', hPm⟩ := P''
       simp only at hPP
       subst hPP
       rw [← hQ hPm]
       simp_rw [map_mul, hp.fr ⟨P'', hPm⟩ r, hpt, ← map_mul]
-      rw [← map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← map_sum]
       congr 1
       rw [LinearEquiv.mul_apply]
-      conv_rhs => rw [pi_eq_sum_univ (g' (Pi.single s 1)), map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        conv_rhs => rw [pi_eq_sum_univ (g' (Pi.single s 1)), map_sum]
       simp only [map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, LinearMap.toMatrix'_apply,
         LinearEquiv.coe_coe]
       refine Finset.sum_congr rfl fun l _ => ?_

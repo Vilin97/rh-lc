@@ -144,5 +144,6 @@ theorem GlobalTheory.GelfSymm.gelf_symm : ∀ {D : D7} (θ : D.what₂.Tau → (
     rw [hg x]
     simp only [wx]
     rw [← Submodule.coe_sum, ← Submodule.coe_sum, ← LinearMap.sum_apply, ← LinearMap.sum_apply, key]
-  rw [hg y, map_sum, ← hgx, map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hg y, map_sum, ← hgx, map_sum, LinearMap.sum_apply]
   exact Finset.sum_congr rfl fun idx _ => adj_word hA b hb _ x hx y hy

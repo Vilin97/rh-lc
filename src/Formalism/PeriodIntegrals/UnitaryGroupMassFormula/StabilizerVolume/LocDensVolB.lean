@@ -63,7 +63,8 @@ theorem BR_eT_left (σ : E →ₐ[F] E) {M a : ℕ} (J : Matrix (Fin M) (Fin M) 
     BR (Fv F v) σ J (eT v b q) Y =
       ((gG b σ J a).map (algebraMap F (Fv F v))).mulVec (cT b v Y) q := by
   have h := congrFun (congrArg (phiL (a := a) v b σ J) (sum_eT v b Y)) q
-  simp only [map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul] at h
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul] at h
   change BR (Fv F v) σ J (eT v b q) Y = _
   have h2 : phiL (a := a) v b σ J Y q = BR (Fv F v) σ J (eT v b q) Y := rfl
   rw [← h2, h]

@@ -83,7 +83,8 @@ theorem _root_.GlobalTheory.AntiLAdic.continuous_conjHom [Algebra.IsAlgebraic E 
       have h := congrArg Subtype.val (b.sum_repr ⟨x, hx⟩)
       simp only [IntermediateField.coe_sum, IntermediateField.coe_smul, Algebra.smul_def] at h
       exact h.symm
-    rw [hsum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hsum, map_sum]
     refine sum_mem (fun i _ => ?_)
     rw [map_mul]
     obtain ⟨y, hy⟩ := hc (b.repr ⟨x, hx⟩ i)

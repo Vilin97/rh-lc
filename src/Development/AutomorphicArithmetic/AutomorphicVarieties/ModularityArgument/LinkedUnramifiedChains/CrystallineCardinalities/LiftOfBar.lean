@@ -12,11 +12,13 @@ private theorem sq_exp {C Q : Type} [CommRing C] [CommRing Q] (n : ℕ) (π : C 
   have hL : ∀ (A : Matrix (Fin n) (Fin n) C) (X : Matrix (Fin n) (Fin n) Q),
       A * X.map μ = (A.map π * X).map μ := fun A X => by
     ext i j
-    simp only [Matrix.mul_apply, Matrix.map_apply, map_sum, hm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mul_apply, Matrix.map_apply, map_sum, hm]
   have hR : ∀ (A : Matrix (Fin n) (Fin n) C) (X : Matrix (Fin n) (Fin n) Q),
       X.map μ * A = (X * A.map π).map μ := fun A X => by
     ext i j
-    simp only [Matrix.mul_apply, Matrix.map_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mul_apply, Matrix.map_apply, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [mul_comm (X i k), hm, mul_comm]
   have h1 : ∀ X Y : Matrix (Fin n) (Fin n) Q, X.map μ * Y.map μ = 0 := fun X Y => by
@@ -183,7 +185,8 @@ private theorem ac_lc {X C : Type} [TopologicalSpace X] [CommRing C] {n : ℕ} (
     Filter.eventually_all.2 fun p => Filter.eventually_all.2 fun q =>
       (IsLocallyConstant.iff_eventually_eq _).1 (hm p q N) x
   refine (h.and ((IsLocallyConstant.iff_eventually_eq _).1 ha x)).mono fun y hy => ?_
-  simp only [Matrix.mul_apply, map_sum, map_mul, hy.1, hy.2]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mul_apply, map_sum, map_mul, hy.1, hy.2]
 
 private theorem lift_of_bar {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [IsLocalRing O] {F : Frame l (ResidueField O)}
     {n : ℕ} {R R' : Type} [CommRing R] [Algebra O R] [IsCO O R] [CommRing R'] [Algebra O R'] [IsCO O R']

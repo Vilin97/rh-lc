@@ -19,7 +19,8 @@ theorem evL_monomial (φ : (σ →₀ ℕ) → ℝ) (μ : σ →₀ ℕ) (c : �
 theorem evL_eq (φ : (σ →₀ ℕ) → ℝ) (H : MvPolynomial σ ℝ) :
     ∑ μ ∈ H.support, H.coeff μ * φ μ = evL φ H := by
   conv_rhs => rw [H.as_sum]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_congr rfl (fun μ _ => (evL_monomial φ μ _).symm)
 
 theorem evL_C_mul (φ : (σ →₀ ℕ) → ℝ) (c : ℝ) (H : MvPolynomial σ ℝ) :
@@ -83,7 +84,8 @@ theorem subst_multiset [AddCommGroup G] [Fintype σ] (d : ℕ) (n : List G → �
     intro l hl k
     let f : G →+ ℝ := AddMonoidHom.mk' (fun b => n (b :: l)) (fun b b' => ha b b' l hl)
     have hf : ∀ b, f b = n (b :: l) := fun _ => rfl
-    rw [← hf, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hf, map_sum]
     refine Finset.sum_congr rfl (fun i _ => ?_)
     rw [map_zsmul, zsmul_eq_mul, hf]
   induction s using Multiset.induction_on with
@@ -102,7 +104,8 @@ theorem subst_multiset [AddCommGroup G] [Fintype σ] (d : ℕ) (n : List G → �
     have hlen : ((Multiset.map (fun t => ∑ i, M t i • cls i) s).toList ++ Q).length + 1 = d := by
       rw [List.length_append, Multiset.length_toList, Multiset.card_map]
       omega
-    rw [hp _ _ hperm, hlin _ hlen, Multiset.map_cons, Multiset.prod_cons, Finset.sum_mul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hp _ _ hperm, hlin _ hlen, Multiset.map_cons, Multiset.prod_cons, Finset.sum_mul, map_sum]
     refine Finset.sum_congr rfl (fun i _ => ?_)
     have hmid : n (cls i :: ((Multiset.map (fun t => ∑ i, M t i • cls i) s).toList ++ Q)) =
         n ((Multiset.map (fun t => ∑ i, M t i • cls i) s).toList ++ (cls i :: Q)) :=
@@ -120,7 +123,8 @@ theorem subst_abs [AddCommGroup G] [Fintype σ] (d : ℕ) (n : List G → ℝ)
       evL (fun μ => n ((μ.toMultiset.map cls).toList ++ Q))
         (aeval (fun t => ∑ i, (C (M t i : ℝ) * X i : MvPolynomial σ ℝ)) H) := by
   conv_rhs => rw [H.as_sum]
-  rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum]
   refine Finset.sum_congr rfl (fun μ hμ => ?_)
   have hdeg : Multiset.card μ.toMultiset = m := by
     have h := hH (mem_support_iff.mp hμ)

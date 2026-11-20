@@ -302,8 +302,10 @@ theorem H_conj_sHG {g : HA R σ J} (hg : g ∈ Hsub R σ J P) {y : Fin r → Fin
     rw [← hu, lin_lin_inv]
   have luv : ∀ a, lin R σ J g (uv (datR R σ J P T) half y a) =
       uv (datR R σ J P T) half (fun b => lin R σ J g (y b)) a := fun a => by
-    simp only [uv, cf, map_add, map_sum, map_smul, H_e hJ H hh hg, hu]
-  simp only [map_add, map_sub, map_sum, map_smul, e1, e2, luv, H_e hJ H hh hg, lin_lin_inv]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [uv, cf, map_add, map_sum, map_smul, H_e hJ H hh hg, hu]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_add, map_sub, map_sum, map_smul, e1, e2, luv, H_e hJ H hh hg, lin_lin_inv]
 
 theorem H_xp {h : HA R σ J} (hh' : h ∈ Hsub R σ J P) {v : Fin M → R ⊗[F] E}
     (hv : Xp (datR R σ J P T) v) : Xp (datR R σ J P T) (lin R σ J h v) :=

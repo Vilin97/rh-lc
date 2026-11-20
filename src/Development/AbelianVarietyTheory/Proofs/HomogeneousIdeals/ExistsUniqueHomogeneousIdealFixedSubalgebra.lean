@@ -41,7 +41,8 @@ theorem isInternal_comap {K L N V ι : Type*} [CommRing K] [Ring L] [Algebra K L
     choose c hc using h n
     have : n = ∑ i ∈ (DirectSum.decompose 𝒱 (f n)).support, c i := by
       apply hf
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simp only [hc]
       exact (DirectSum.sum_support_decompose 𝒱 (f n)).symm
     rw [this]

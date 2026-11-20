@@ -132,7 +132,8 @@ theorem good_mul {B : Type} [NormedAddCommGroup B] [NormedSpace ℂ B] (U : ℝ 
     funext t
     show j ((dRho w * U t) f) = _
     rw [hD, ContinuousLinearMap.mul_apply, dRho_eq_sum]
-    simp only [ContinuousLinearMap.sum_apply, ContinuousLinearMap.smul_apply, map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [ContinuousLinearMap.sum_apply, ContinuousLinearMap.smul_apply, map_sum, map_smul]
   rw [e]
   have := HasDerivAt.fun_sum (u := Finset.univ) fun a _ => ((hc w a).ofReal_comp).smul (hj (dRho (Pi.single a 1) f))
   refine this.congr_deriv ?_
@@ -140,7 +141,8 @@ theorem good_mul {B : Type} [NormedAddCommGroup B] [NormedSpace ℂ B] (U : ℝ 
   have e1 : dRho w * Q = Q * dRho w - dRho (X *ᵥ w) := by rw [← hQ]; abel
   show _ = j ((dRho w * Q) f)
   rw [e1, ContinuousLinearMap.sub_apply, ContinuousLinearMap.mul_apply, map_sub, dRho_eq_sum w, dRho_eq_sum (X *ᵥ w)]
-  simp only [ContinuousLinearMap.sum_apply, ContinuousLinearMap.smul_apply, map_sum, map_smul, ofReal_neg, neg_smul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [ContinuousLinearMap.sum_apply, ContinuousLinearMap.smul_apply, map_sum, map_smul, ofReal_neg, neg_smul,
     Finset.sum_neg_distrib, sub_eq_add_neg]
 
 theorem seminorm_succ_n (k n : ℕ) (g : Sch l) :

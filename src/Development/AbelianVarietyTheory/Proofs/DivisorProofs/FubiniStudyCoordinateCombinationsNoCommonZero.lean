@@ -45,7 +45,8 @@ theorem exists_ne_zero_of_rel {K V : Type} [Field K] [AddCommGroup V] [Module K 
       simpa [Matrix.vecMul, dotProduct] using this
     have h4 : ∑ k, σ ((Pi.single l (1 : K) : Fin n → K) k - ∑ j, c k j * r j) * w k =
         w l - ∑ j, σ (r j) * ∑ k, w k * σ (c k j) := by
-      simp only [map_sub, map_sum, map_mul, sub_mul, Finset.sum_sub_distrib, Finset.mul_sum,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sub, map_sum, map_mul, sub_mul, Finset.sum_sub_distrib, Finset.mul_sum,
         Finset.sum_mul]
       congr 1
       · rw [Finset.sum_eq_single l]
@@ -119,7 +120,8 @@ theorem GlobalTheory.FubiniStudyFrame.noCommonZero_comb : ∀ (K V : Type) [Fiel
   have H : ∀ lam : Fin (m + 1) → 𝓞 K, ∑ k, lam k • u k = 0 → ∑ k, τ (lam k) * w k = 0 := by
     intro lam h
     have e := congrArg (fun t => secVal p τ t i y) (hrel lam h)
-    simpa [map_sum, secVal_smul, Finset.sum_apply, hw_def] using e
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [map_sum, secVal_smul, Finset.sum_apply, hw_def] using e
   obtain ⟨a, ha⟩ := exists_ne_zero_of_rel (OfLattice.extEmb τ) u b c (A (OfLattice.extEmb τ)) w hw
     (rel_field_of_rel_int τ u w H) hb (hA _)
   refine ⟨a, ?_⟩

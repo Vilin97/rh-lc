@@ -103,7 +103,8 @@ theorem exists_isModel (D : D7) (hD : admG1 D) (cc : Ideal (𝓞 D.host.K)) (δ 
       have h' : gamA ψ (w • incM D N N' x) (incM D N N' y) =
           psi0 D cc δ (∑ i, ∑ j, (w : D.host.E) * x i j * D.host.conj (y i j)) := by
         rw [← hψ.2.2.1]
-        simp only [gamA, incM_apply, Matrix.smul_apply, Matrix.map_apply, smul_AE, sgA_incE, map_sum, map_mul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [gamA, incM_apply, Matrix.smul_apply, Matrix.map_apply, smul_AE, sgA_incE, map_sum, map_mul]
       show Wd D _ _ (Wd D _ _ _) = gamA ψ (w • incM D N N' x) (incM D N N' y) • Wd D _ _ _
       rw [h', h])
     (fun x m hm => hdense x m hm)

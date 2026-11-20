@@ -63,7 +63,8 @@ private theorem sum_toMK_mul_conjTranspose_smul_eq_smul {M : Type} [AddCommGroup
 theorem commute_om_tensRho (A : KAct ε X) (k : S7.KG ε) : Commute (om X) (tensRho A k) := by
   refine LinearMap.ext fun u => funext fun b => ?_
   rw [Module.End.mul_apply, Module.End.mul_apply]
-  simp only [om_apply, tensRho_apply, map_sum, map_smul, A.compat, Finset.smul_sum, smul_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [om_apply, tensRho_apply, map_sum, map_smul, A.compat, Finset.smul_sum, smul_smul]
   conv_rhs =>
     rw [Finset.sum_comm]
     enter [2, a]
@@ -104,7 +105,8 @@ theorem tensRho_compat (A : KAct ε X) (k : S7.KG ε) (a b : Fin n) (u : Fin n �
     exact sum_conjTranspose_toMK_smul_tensRho_eq A k u b _
   rw [e1, e2]
   congr 1
-  simp only [A.compat, Finset.smul_sum, smul_smul, tensRho_apply, map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [A.compat, Finset.smul_sum, smul_smul, tensRho_apply, map_sum, map_smul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun c _ => ?_
   rw [Finset.sum_comm]

@@ -259,7 +259,8 @@ theorem om_latVac_sum {ψ : AddChar (AF D.host.F) ℂ} {χS χT : (AE D)ˣ →* 
       rw [Finset.sum_mul]
       exact Finset.sum_eq_zero fun j hj => h3 j (Finset.mem_insert_of_mem hj) i m0
     have a3 : (∑ j ∈ P, es j) * cA D (∑ j ∈ P, es j) = 0 := by
-      rw [map_sum, Finset.sum_mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Finset.sum_mul_sum]
       exact Finset.sum_eq_zero fun j hj => Finset.sum_eq_zero fun k hk =>
         h3 j (Finset.mem_insert_of_mem hj) k (Finset.mem_insert_of_mem hk)
     rw [Finset.sum_insert hi] at hg hh hx hy

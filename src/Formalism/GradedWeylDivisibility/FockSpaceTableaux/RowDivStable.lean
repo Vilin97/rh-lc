@@ -96,7 +96,8 @@ theorem rowDiv_homog (R : Type*) [CommRing R] {r n : ℕ} (ν : Fin n → ℕ) (
     IsWeightedHomogeneous (colW r n) (rowDiv R a b k f) ν := by
   unfold rowDiv
   conv => enter [2, 1, 2]; rw [f.as_sum]
-  rw [map_sum, Polynomial.finsetSum_coeff]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Polynomial.finsetSum_coeff]
   refine IsWeightedHomogeneous.sum _ _ _ fun d hd => ?_
   have := CoeffHom.rowGen_monomial R a b d (AddMonoidAlgebra.coeff f d) k
   rwa [hf (mem_support_iff.mp hd)] at this

@@ -29,7 +29,8 @@ theorem leviV_log_pos {n N : ℕ} {w : Fin N → V n → ℂ} {x : V n} (hC : �
       ext i
       simp [bas, Pi.single_apply]
     conv_rhs => rw [hξ]
-    simp only [wJac, Matrix.mulVec, dotProduct, wd_of_differentiableAt (hD a), map_sum, map_smul, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [wJac, Matrix.mulVec, dotProduct, wd_of_differentiableAt (hD a), map_sum, map_smul, smul_eq_mul]
     exact Finset.sum_congr rfl fun j _ => mul_comm _ _
   rw [e1, leviLogNormSq n N w x ξ.ofLp hC hne, Complex.ofReal_re]
   refine div_pos (sqNorm_pos fun hz => h fun a => ?_) (sqNorm_pos hne)

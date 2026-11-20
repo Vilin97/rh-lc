@@ -66,7 +66,8 @@ lemma exists_diag {E : Type} [Field E] [NumberField E] {W : Type} [AddCommGroup 
     simp only [c, Module.Basis.reindex_apply, hb, ← he, Equiv.apply_symm_apply]
   refine ⟨c.equivFun, fun a v i => ?_⟩
   conv_lhs => rw [← c.sum_equivFun v]
-  simp only [map_sum, map_smul, hc, Finset.sum_apply, Pi.smul_apply, Module.Basis.equivFun_self, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, hc, Finset.sum_apply, Pi.smul_apply, Module.Basis.equivFun_self, smul_eq_mul]
   simp [mul_comm]
 
 lemma trace_real {W : Type} [AddCommGroup W] [Module ℝ W] [Module ℂ W] [IsScalarTower ℝ ℂ W]
@@ -148,13 +149,15 @@ lemma exists_herm {g : ℕ} (B : LinearMap.BilinForm ℝ (Fin g → ℂ)) (halt 
   have hsum : ∀ x y, h x y = ∑ i, x i * h (Pi.single i 1) y := fun x y => by
     change hl y x = ∑ i, x i • hl y (Pi.single i 1)
     conv_lhs => rw [pi_eq_sum_univ' x]
-    simp only [map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul]
   have key : ∀ x y, hermForm (Matrix.of fun i j => h (Pi.single i 1) (Pi.single j 1)) x y = h x y := fun x y => by
     rw [hsum x y]
     unfold hermForm dotProduct
     refine Finset.sum_congr rfl fun i _ => ?_
     congr 1
-    rw [hconj, hsum y, map_sum (starRingEnd ℂ)]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hconj, hsum y, map_sum (starRingEnd ℂ)]
     simp only [Matrix.mulVec, dotProduct, Matrix.of_apply, Pi.star_apply]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_mul, ← hconj, mul_comm]

@@ -137,7 +137,8 @@ theorem red_lincomb (hR : RedData ϖ k r n b Λ) {ι : Type} [Fintype ι] (h : �
     push_cast
     rfl
   simp only [red, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
-  rw [h2, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h2, map_sum]
   simp only [map_mul]
 
 end FC

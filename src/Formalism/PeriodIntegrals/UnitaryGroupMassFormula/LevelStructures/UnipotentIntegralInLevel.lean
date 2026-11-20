@@ -132,7 +132,8 @@ theorem psiV_inclE (v : HeightOneSpectrum (𝓞 I.F)) (a : I.E) :
 theorem psiV_hA (v : HeightOneSpectrum (𝓞 I.F)) (x y : VA I) :
     PI.FinKW.psiV I v (hA I x y) =
       hR (Fv I.F v) I.cm.sig I.J (PI.FinKW.vecV I v x) (PI.FinKW.vecV I v y) := by
-  simp [hA, hR, Formalism.UG.hform, JR, PI.FinKW.vecV, map_sum, map_mul, psiV_sigR, psiV_inclE, dotProduct,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [hA, hR, Formalism.UG.hform, JR, PI.FinKW.vecV, map_sum, map_mul, psiV_sigR, psiV_inclE, dotProduct,
     mulVec, Matrix.map_apply]
 
 end Lift

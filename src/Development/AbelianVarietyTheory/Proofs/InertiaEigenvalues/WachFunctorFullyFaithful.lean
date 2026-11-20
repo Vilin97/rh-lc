@@ -148,7 +148,8 @@ theorem GlobalTheory.FontaineFullyFaithful.exists_extension {O E R D D' M P : Ty
       k (g x) = ∑ i, io (b.repr x i) • k (g (b i)) := by
     intro D₁ P₁ _ _ _ _ k hk g x
     conv_lhs => rw [← b.sum_repr x]
-    simp only [map_sum, map_smul, hk]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, hk]
   have hsp' : ⊤ ≤ Submodule.span R (Set.range fun i => j (b i)) := by
     rw [← hsp, Submodule.span_le]
     rintro _ ⟨x, rfl⟩
@@ -165,7 +166,8 @@ theorem GlobalTheory.FontaineFullyFaithful.exists_extension {O E R D D' M P : Ty
   refine ⟨(Basis.mk hli hsp').constr R fun i => j' (f (b i)), fun x => ?_⟩
   have h1 := hexp j hj LinearMap.id x
   simp only [LinearMap.id_apply] at h1
-  rw [h1, hexp j' hj' f x, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h1, hexp j' hj' f x, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_smul, show j (b i) = Basis.mk hli hsp' i from (Basis.mk_apply hli hsp' i).symm, Basis.constr_basis]
 

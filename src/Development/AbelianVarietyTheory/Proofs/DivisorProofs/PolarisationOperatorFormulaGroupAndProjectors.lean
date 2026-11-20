@@ -105,7 +105,8 @@ theorem comp_rowAct_transvection {O : Type} [CommRing O] {N : ℕ} (a b : Fin N)
   classical
   have hZ := rowZ_of_rowW w h hh
   rw [rowAct_transvection, Polynomial.eval_eq_sum_range' (n := (rowGen O a b h).natDegree + 2) (by omega)]
-  simp only [one_pow, mul_one, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [one_pow, mul_one, map_sum]
   have hk : ∀ k ∈ Finset.range ((rowGen O a b h).natDegree + 2),
       weightedHomogeneousComponent (rowW N N) (w + Pi.single a 1 - Pi.single b 1) ((rowGen O a b h).coeff k) =
         if k = 1 then rowDiv O a b 1 h else 0 := by
@@ -155,7 +156,8 @@ theorem polar_formula : ∀ (O : Type) [CommRing O] (N : ℕ) (ι : Type) [Finty
     have hPx : ∀ w, P τ w (PiTensorProduct.tprod O x) =
         PiTensorProduct.tprod O (Function.update x τ (cmp w)) :=
       fun w => hP τ w x (cmp w) rfl
-    simp only [evalE, map_sum, map_smul, FreeAlgebra.lift_ι_apply, Sum.elim_inr, LinearMap.sum_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [evalE, map_sum, map_smul, FreeAlgebra.lift_ι_apply, Sum.elim_inr, LinearMap.sum_apply,
       Finset.sum_apply, LinearMap.smul_apply, hPx]
     simp_rw [← MultilinearMap.map_update_smul]
     rw [← MultilinearMap.map_update_sum]
@@ -163,7 +165,8 @@ theorem polar_formula : ∀ (O : Type) [CommRing O] (N : ℕ) (ι : Type) [Finty
     apply Subtype.ext
     simp only [Submodule.coe_sum, Submodule.coe_smul]
     conv_rhs => rw [← sum_rowComp _ M hM _ hcol]
-    rw [show rowDiv O a a 1 (∑ w ∈ Fintype.piFinset (fun _ : Fin N => Finset.range (M + 1)),
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [show rowDiv O a a 1 (∑ w ∈ Fintype.piFinset (fun _ : Fin N => Finset.range (M + 1)),
         weightedHomogeneousComponent (rowW N N) w (x τ : MvPolynomial (Fin N × Fin N) O)) =
         rowDivL O a a 1 (∑ w ∈ Fintype.piFinset (fun _ : Fin N => Finset.range (M + 1)),
         weightedHomogeneousComponent (rowW N N) w (x τ : MvPolynomial (Fin N × Fin N) O)) from rfl, map_sum]
@@ -197,14 +200,16 @@ theorem polar_formula : ∀ (O : Type) [CommRing O] (N : ℕ) (ι : Type) [Finty
       by_cases hσ : σ = τ
       · subst hσ; simp [g]
       · simp [g, hσ, Pi.mulSingle_eq_of_ne hσ]
-    simp only [evalE, map_sum, map_mul, FreeAlgebra.lift_ι_apply, Sum.elim_inr, Sum.elim_inl, LinearMap.sum_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [evalE, map_sum, map_mul, FreeAlgebra.lift_ι_apply, Sum.elim_inr, Sum.elim_inl, LinearMap.sum_apply,
       Finset.sum_apply, Module.End.mul_apply, hPz, hg, Function.update_self, Function.update_idem]
     rw [← MultilinearMap.map_update_sum]
     congr 2
     apply Subtype.ext
     simp only [Submodule.coe_sum]
     conv_rhs => rw [← sum_rowComp _ M hM _ hcol]
-    rw [show rowDiv O a b 1 (∑ w ∈ Fintype.piFinset (fun _ : Fin N => Finset.range (M + 1)),
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [show rowDiv O a b 1 (∑ w ∈ Fintype.piFinset (fun _ : Fin N => Finset.range (M + 1)),
         weightedHomogeneousComponent (rowW N N) w (x τ : MvPolynomial (Fin N × Fin N) O)) =
         rowDivL O a b 1 (∑ w ∈ Fintype.piFinset (fun _ : Fin N => Finset.range (M + 1)),
         weightedHomogeneousComponent (rowW N N) w (x τ : MvPolynomial (Fin N × Fin N) O)) from rfl, map_sum]

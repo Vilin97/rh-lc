@@ -281,7 +281,8 @@ theorem be_expand {Z : L.Mdl} (y : L.Pt Z) {ι : Type} [Fintype ι] (b : Module.
     (u v : L.Ylat y) : L.be y u v =
       ∑ i, ∑ k, ((b.repr u i : ℤ) : ℝ) * ((b.repr v k : ℤ) : ℝ) * L.be y (b i) (b k) := by
   conv_lhs => rw [← b.sum_repr u, ← b.sum_repr v]
-  simp only [map_sum, LinearMap.sum_apply, map_zsmul, LinearMap.smul_apply, zsmul_eq_mul, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.sum_apply, map_zsmul, LinearMap.smul_apply, zsmul_eq_mul, Finset.mul_sum]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun k _ => by ring
 
@@ -311,7 +312,8 @@ theorem be_posDef_basis {Z : L.Mdl} (y : L.Pt Z) {κ : Type} [Fintype κ]
     have hd : ∀ m, ∑ i, ((b.repr (b' m) i : ℤ) : ℝ) * ((b'.repr (b i) m0 : ℤ) : ℝ) = if m = m0 then 1 else 0 := by
       intro m
       have h1 := congrArg (fun v => b'.repr v m0) (b.sum_repr (b' m))
-      simp only [map_sum, map_zsmul, Finsupp.finsetSum_apply, Finsupp.smul_apply, Module.Basis.repr_self,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_zsmul, Finsupp.finsetSum_apply, Finsupp.smul_apply, Module.Basis.repr_self,
         Finsupp.single_apply, smul_eq_mul] at h1
       have h2 := congrArg (fun z : ℤ => (z : ℝ)) h1
       push_cast at h2

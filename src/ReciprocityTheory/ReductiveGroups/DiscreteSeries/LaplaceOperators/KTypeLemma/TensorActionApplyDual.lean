@@ -83,7 +83,8 @@ theorem sT_sES (E : Fin n → Fin n → Module.End ℂ M) (V : Submodule ℂ M) 
     obtain ⟨w, c⟩ := p
     funext d'
     rw [sT_single, tensorAction_apply]
-    simp only [sES, Finsupp.lsum_single, LinearMap.sum_apply, Finset.sum_apply, Finsupp.lsingle_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [sES, Finsupp.lsum_single, LinearMap.sum_apply, Finset.sum_apply, Finsupp.lsingle_apply,
       map_sum, sT_single, wordAction_cons]
     rw [Finset.sum_eq_single d', Finset.sum_eq_single c]
     · simp
@@ -101,7 +102,8 @@ theorem sθ_sES (V : Submodule ℂ M) (EM : Fin n → Fin n → Module.End ℂ M
     obtain ⟨w, c⟩ := p
     funext d'
     rw [sθ_single, tensorAction_apply_dual]
-    simp only [sES, Finsupp.lsum_single, LinearMap.sum_apply, Finset.sum_apply, Finsupp.lsingle_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [sES, Finsupp.lsum_single, LinearMap.sum_apply, Finset.sum_apply, Finsupp.lsingle_apply,
       map_sum, sθ_single, wordAction_cons_dual]
     rw [Finset.sum_eq_single d', Finset.sum_eq_single c]
     · simp

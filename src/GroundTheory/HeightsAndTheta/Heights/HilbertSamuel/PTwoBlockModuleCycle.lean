@@ -89,7 +89,8 @@ theorem mConeMap_X_zero (x x' : Ix κ → Ω) (i : κ) :
 theorem mConeMap_num [Fintype κ] (x x' : Ix κ → Ω) (l : Ix κ → ℤ) :
     mConeMap (ι := FinTwoTypeFamily κ) (pair x x') (twoBlockNum l) =
       MvPolynomial.C (∑ j, (l j : Ω) * x' j) * MvPolynomial.X 1 := by
-  simp [twoBlockNum, mConeMap, pair, Finset.sum_mul, mul_assoc, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [twoBlockNum, mConeMap, pair, Finset.sum_mul, mul_assoc, map_sum]
 
 theorem rel_mem [Fintype κ] (x x' : Ix κ → Ω) (c : κ) (l m : Ix κ → ℤ) (i : κ)
     (hl : x ⟨(), c⟩ = ∑ j, (l j : Ω) * x' j) (hm : x ⟨(), i⟩ = ∑ j, (m j : Ω) * x' j) :

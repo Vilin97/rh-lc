@@ -14,7 +14,8 @@ theorem gramDet_eq_norm_mul (K : UQ) (B : InvAlg K) (x : B.A) :
       Algebra.leftMulMatrix_apply]
     have h := b.sum_repr (x * b i)
     conv_lhs => rw [← h]
-    rw [Finset.sum_mul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_mul, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [smul_mul_assoc, map_smul, smul_eq_mul, LinearMap.toMatrix_apply]
     simp

@@ -20,7 +20,8 @@ theorem hfL_apply (σ : E →+* E) (G : Matrix (Fin n) (Fin n) E) (y x : Fin n �
 
 theorem hf_symm {σ : E →+* E} {G : Matrix (Fin n) (Fin n) E} (hG : IsHerm σ G) (x y : Fin n → E) :
     σ (hf σ G x y) = hf σ G y x := by
-  simp only [hf, map_sum, map_mul, hG.invol, hG.herm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hf, map_sum, map_mul, hG.invol, hG.herm]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
   ring

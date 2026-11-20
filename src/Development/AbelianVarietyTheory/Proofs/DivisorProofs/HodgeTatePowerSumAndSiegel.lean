@@ -69,5 +69,6 @@ theorem GlobalTheory.WholeHT.hodge_tate_power_sum_siegel_read :
   intro h2 hH hR hS D O hO _ A T H h
   refine ⟨fun Sx R hR2 p hp Q => ?_, GlobalTheory.WholeHT.siegRead O⟩
   obtain ⟨c, hc⟩ := GlobalTheory.HTVert.tagDR_sub_tagHT D.what₂.Tau O.Y.N Q
-  rw [hc, Finset.mul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hc, Finset.mul_sum, map_sum]
   exact Finset.sum_eq_zero fun y _ => GlobalTheory.T.arithmetic_mixed_vanishing_difference h2 hH hR hS D O hO Sx R hR2 p hp y (c y)

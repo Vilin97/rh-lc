@@ -63,12 +63,14 @@ theorem polyToGerm_finPoly {σ : Type} [Fintype σ] {d : ℕ} (a : Fin d → (σ
   have hι : ∀ j, ((germLift σ (mkGerm (a j) (ha j)) : holGerms (0 : Option σ → ℂ)) :
       Germ (𝓝 (0 : Option σ → ℂ)) ℂ) = ↑(a j ∘ lastProj σ) :=
     fun j => germPull_coe _ _ _ (mkGerm (a j) (ha j)) (a j) rfl
-  simp only [finPoly, polyToGerm, map_sum, map_mul, map_pow, coe_eval₂RingHom, eval₂_C, eval₂_X]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [finPoly, polyToGerm, map_sum, map_mul, map_pow, coe_eval₂RingHom, eval₂_C, eval₂_X]
   rw [AddSubmonoidClass.coe_finsetSum]
   simp only [Subring.coe_mul, Subring.coe_pow, hι]
   change ∑ j : Fin d, Germ.coeRingHom _ (a j ∘ lastProj σ) *
       Germ.coeRingHom _ (fun x : Option σ → ℂ => x none) ^ (j : ℕ) = Germ.coeRingHom _ _
-  simp only [← map_mul, ← map_pow, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← map_mul, ← map_pow, ← map_sum]
   congr 1
   funext x
   simp [Finset.sum_apply, lastProj]
@@ -156,7 +158,8 @@ theorem weierstrassPoly_irreducible {σ : Type} [Fintype σ] {d : ℕ} (c : Fin 
     rw [hab, show (a * C (↑u⁻¹ : holGerms (0 : σ → ℂ))) * (b * C (u : holGerms (0 : σ → ℂ))) =
       a * b * C ((↑u⁻¹ : holGerms (0 : σ → ℂ)) * u) by rw [C_mul]; ring, Units.inv_mul, C_1, mul_one]
   have hmap : (weierstrassPoly c hc).map (germValue 0) = X ^ d := by
-    simp only [weierstrassPoly, finPoly, Polynomial.map_add, Polynomial.map_pow, map_X, Polynomial.map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [weierstrassPoly, finPoly, Polynomial.map_add, Polynomial.map_pow, map_X, Polynomial.map_sum,
       Polynomial.map_mul, map_C]
     have : ∀ j, germValue 0 (mkGerm (c j) (hc j)) = 0 := fun j => hc0 j
     simp [this]

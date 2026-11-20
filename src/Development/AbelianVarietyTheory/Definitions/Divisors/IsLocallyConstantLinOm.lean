@@ -79,7 +79,8 @@ theorem symp_eq (hq : IsQuad c δ) (hJ : ∀ i j, c (JB j i) = -JB i j) (x y : M
     WeilM.symp c (-1) (!![0, 1; 1, 0] : Matrix (Fin 2) (Fin 2) A) JB x y = trB c JB (x 0) (y 1) - trB c JB (y 0) (x 1) := by
   rw [trB_apply, trB_apply, ← trace_conj hq (y 0 ⬝ᵥ _), ← map_neg, ← map_neg, ← map_sub, WeilM.symp]
   congr 1
-  simp only [hTens, Fin.sum_univ_two, dotProduct, mulVec, map_sum, map_mul, hq.invol, hJ, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hTens, Fin.sum_univ_two, dotProduct, mulVec, map_sum, map_mul, hq.invol, hJ, Finset.mul_sum]
   simp only [of_apply, cons_val', cons_val_zero, cons_val_one, cons_val_fin_one, mul_zero, zero_mul, Finset.sum_const_zero,
     zero_add, add_zero, mul_one, ← Finset.mul_sum, neg_mul, one_mul, sub_neg_eq_add, neg_add]
   congr 1
@@ -98,7 +99,8 @@ theorem exists_coord (hq : IsQuad c δ) (hJ : ∀ i j, c (JB j i) = -JB i j) (hu
   let f : (β → A) →ₗ[k] (Fin _ → k) := LinearMap.pi fun i => trB c JB (ε i)
   have hf : ∀ u v, ε.equivFun u ⬝ᵥ f v = trB c JB u v := fun u v => by
     conv_rhs => rw [← ε.sum_equivFun u]
-    simp only [map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply]
     rfl
   have hi : Function.Injective f := (injective_iff_map_eq_zero f).2 fun v hv => by
     have h0 : ∀ u, trB c JB u v = 0 := fun u => by rw [← hf, hv, dotProduct_zero]

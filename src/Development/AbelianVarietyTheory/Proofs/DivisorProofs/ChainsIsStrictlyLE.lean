@@ -47,7 +47,8 @@ theorem phi_van (z : ∀ j : Fin N, Cochain ((chains (ZMod q)).obj B) (res _ (tw
     AddMonoidHom.mk' (fun γ => (biChains (ZMod q) (twX E V)).ιTotal (ComplexShape.up ℤ) c l t h ≫ γ.v t r hr)
       (fun γ γ' => by rw [Cochain.add_v, Preadditive.comp_add])
   change ev₀ _ = 0
-  rw [phi_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [phi_apply, map_sum]
   exact Finset.sum_eq_zero fun j _ => GlobalTheory.T.cochain_product_vanishing_above_degree V ℓ _ _ (α j) (z j) p (hα j) c l t h r hr hc
 
 theorem pull_iso_bijective {E E' : Spc} (e : E ≅ E') (F : Shv (ZMod q)) (n : ℤ) :

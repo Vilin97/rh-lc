@@ -37,7 +37,8 @@ theorem valAt'_add {U : X.Opens} (h : ⊤ ≤ x ⁻¹ᵁ U) (f f' : Γ(X, U)) :
 
 theorem valAt'_sum {U : X.Opens} (h : ⊤ ≤ x ⁻¹ᵁ U) {I : Type*} (t : Finset I) (f : I → Γ(X, U)) :
     valAt' x U (∑ i ∈ t, f i) = ∑ i ∈ t, valAt' x U (f i) := by
-  simp only [valAt'_eq_valHom x h, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [valAt'_eq_valHom x h, map_sum]
 
 theorem valAt'_unit_zpow {U : X.Opens} (h : ⊤ ≤ x ⁻¹ᵁ U) (f : Γ(X, U)ˣ) (k : ℤ) :
     valAt' x U (f ^ k).val = valAt' x U f.val ^ k := by

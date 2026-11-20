@@ -43,7 +43,8 @@ private theorem key_fin {n : ℕ} {A G : Type} [CommRing A] [Group G] (D : GDet 
     rw [← D.toDet.nat]
     change _ = D.D S (ofT A G S _)
     congr 1
-    simp [Det.gen, map_sum, ofT_tmul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Det.gen, map_sum, ofT_tmul]
   rw [h1, h1]
   congr 1
   ext α

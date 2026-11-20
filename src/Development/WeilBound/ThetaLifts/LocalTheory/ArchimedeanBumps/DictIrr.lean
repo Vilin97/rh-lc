@@ -169,7 +169,8 @@ theorem irr_inner (hS : WeakInt) (l : 𝓢(X, ℂ) →L[ℂ] ℂ) (g : 𝓢(X, �
       rw [mul_assoc, inv_mul_cancel₀ (hW x hx), mul_one]
     · simp [image_eq_zero_of_notMem_tsupport hx]
   change l φ = 0
-  rw [e, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, map_sum]
   exact Finset.sum_eq_zero fun a _ => kill_mul hS l _ (fun L => h L a) _
 
 theorem irr (hS : WeakInt) {V : Type} [NormedAddCommGroup V] [NormedSpace ℝ V] [FiniteDimensional ℝ V]

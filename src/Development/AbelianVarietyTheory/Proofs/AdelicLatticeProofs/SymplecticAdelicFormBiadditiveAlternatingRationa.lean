@@ -24,7 +24,8 @@ theorem map_sesq {E A : Type} [CommRing E] [CommRing A] (ι : E →+* A) (c : A 
     (x y : Fin n → Fin m → E) :
     ι ξ * ∑ a, ∑ b, ∑ c', ∑ d, ι (P a b) * c (ι (y c' b)) * ι (Q c' d) * ι (x d a) =
       ι (ξ * ∑ a, ∑ b, ∑ c', ∑ d, P a b * s (y c' b) * Q c' d * x d a) := by
-  simp only [map_sum, map_mul, hc]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, hc]
 
 theorem symplO_rat (D : D7) (S T : HSp D) (γ γ' : Matrix (Fin T.rank) (Fin S.rank) D.host.E) :
     ∃ a : D.host.F, symplO S T (ratW T S γ) (ratW T S γ') = algebraMap D.host.F (AF D.host.F) a := by

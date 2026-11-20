@@ -186,7 +186,8 @@ theorem lift_part {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type} {A :
     rw [← hS s, Finset.sum_apply]
     rfl
   have hvac : Tm (halfInd eQ (lattice₂ R i)) = fg := by simpa using hTm.vac
-  rw [h1, h2, map_sum, ← Finset.sum_coe_sort Y]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h1, h2, map_sum, ← Finset.sum_coe_sort Y]
   refine Finset.sum_congr rfl fun q _ => ?_
   rw [map_smul, hTm.trans _ (GlobalTheory.isSBHalf_halfInd eQ (lattice₂ R i)) _ (hY q.1 q.2), hvac]
 

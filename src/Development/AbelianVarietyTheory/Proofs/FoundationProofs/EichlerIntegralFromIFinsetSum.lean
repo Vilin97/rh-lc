@@ -32,7 +32,8 @@ theorem eichler_finset_sum (w : ℕ) {ι : Type} [Fintype ι] (g : ι → ℍ �
   unfold eichler
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun j _ => ?_
-  rw [← Finset.sum_mul, ← map_sum, ← Finset.mul_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Finset.sum_mul, ← map_sum, ← Finset.mul_sum,
     ← intervalIntegral.integral_finset_sum fun i _ => eichler_integrand_intervalIntegrable (hg i) τ (w - j)]
   congr 4
 

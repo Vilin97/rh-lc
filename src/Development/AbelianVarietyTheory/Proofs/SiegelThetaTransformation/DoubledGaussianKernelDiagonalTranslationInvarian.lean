@@ -106,7 +106,8 @@ theorem kernel_diag : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r 
       simp only [kRow_per idx hs h₁ h₂]
       have s₁ (k) := GlobalTheory.Dict.fock_hx_conj X bas idx x₁ hs h₁ (pv X idx x₁ (y k)) (zR X idx x₁ a k)
       have s₂ (k) := GlobalTheory.Dict.fock_hx_conj X bas idx x₂ hs h₂ (pv X idx x₂ (y k)) (zR X idx x₂ b k)
-      simp only [GlobalTheory.Dict.fock_hx_add_left, GlobalTheory.Dict.fock_hx_add_right, GlobalTheory.Dict.fock_hx_smul_left,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [GlobalTheory.Dict.fock_hx_add_left, GlobalTheory.Dict.fock_hx_add_right, GlobalTheory.Dict.fock_hx_smul_left,
         s₁, s₂, Finset.sum_add_distrib, ← Finset.mul_sum, ← map_sum, map_add, map_mul, map_neg,
         conj_conj, map_div₀, conj_ofReal, map_ofNat, map_one]
       push_cast at i₁ i₂ ⊢

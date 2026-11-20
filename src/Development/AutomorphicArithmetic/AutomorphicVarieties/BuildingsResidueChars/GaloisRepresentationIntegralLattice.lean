@@ -41,7 +41,8 @@ private theorem extendOfIsLattice_repr_eq_repr {l : ℕ} [Fact (Nat.Prime l)] {n
     (b : Module.Basis (Fin m) ℤ_[l] L) (y : L) (i : Fin m) :
     (b.extendOfIsLattice ℚ_[l]).repr (y : Fin n → ℚ_[l]) i = (b.repr y i : ℚ_[l]) := by
   conv_lhs => rw [← b.sum_repr y]
-  rw [Submodule.coe_sum, map_sum, Finset.sum_apply']
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Submodule.coe_sum, map_sum, Finset.sum_apply']
   simp_rw [Submodule.coe_smul_of_tower]
   have h : ∀ j, (b.repr y j • (b j : Fin n → ℚ_[l])) = ((b.repr y j : ℚ_[l]) • b.extendOfIsLattice ℚ_[l] j) := by
     intro j

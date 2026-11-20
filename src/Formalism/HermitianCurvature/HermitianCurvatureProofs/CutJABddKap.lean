@@ -391,10 +391,12 @@ theorem kapRep_of_typeProj (h : TypeProj) : KapRep := by
     constructor
     · simp only [ContinuousLinearMap.sum_apply, ContinuousLinearMap.smul_apply, heq _ h hh h' hh']
       ext w
-      simp [map_sum, map_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [map_sum, map_smul]
     · simp only [ContinuousLinearMap.sum_apply, ContinuousLinearMap.smul_apply, heq _ h hh h' hh']
       ext w
-      simp [map_sum, map_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [map_sum, map_smul]
   · intro x hx ρ A
     simp only [ContinuousLinearMap.sum_apply, ContinuousLinearMap.smul_apply]
     rw [kap_hsVec_sum, inner_sum, Finset.sum_eq_single ρ]

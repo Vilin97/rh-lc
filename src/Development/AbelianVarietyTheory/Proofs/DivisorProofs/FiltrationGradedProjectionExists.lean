@@ -47,7 +47,8 @@ theorem stalkProj_germ {V : X.Opens} (f' : ∀ a, Fin (r a) → Γ(E' a, V)) {c 
     stalkProj f' hc b x hx (L.presheaf.germ V x hx s) =
       (E' b).presheaf.germ V x hx (∑ j, (hc.basis le_rfl).repr s ⟨b, j⟩ • f' b j) := by
   conv_lhs => rw [← (hc.basis le_rfl).sum_repr s]
-  simp only [map_sum, QCoh.germ_smul, map_smul, hc.basis_apply, resM_self, stalkProj_frame]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, QCoh.germ_smul, map_smul, hc.basis_apply, resM_self, stalkProj_frame]
   rw [Fintype.sum_sigma, Finset.sum_eq_single b]
   · simp [img]
   · intro a _ ha
@@ -122,13 +123,15 @@ theorem exists_isProj : ∀ {X : Scheme.{0}} [IsIntegral X] {ι : Type} [Fintype
         (resM _ inf_le_right ((t j ∘ σ) a))
       have e2 := congrArg (fun s => stalkProj i.1.2.2.1 (hc i) b _ hW.1
         (L.presheaf.germ _ _ hW ((filtSub o T (o b + 1)).incl.app _ s))) e1
-      simp only [map_sum, Scheme.Modules.Hom.app_smul, IsFrame.basis_apply, app_resM, Function.comp_apply, htc,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, Scheme.Modules.Hom.app_smul, IsFrame.basis_apply, app_resM, Function.comp_apply, htc,
         QCoh.germ_smul, germ_resM, map_smul, stalkProj_frame] at e2
       have hm : L.presheaf.germ _ _ hW.2 (j.1.2.2.2 (σ a)) ∈ genSpan o T (o b + 1) := by
         rw [← htc]
         exact (filtSub o T (o b + 1)).incl_app_mem _ hW.2
       rw [stalkProj_eq ho (hf i) (hA i) (hf j) (hA j) b hW.1 hW.2 hm, stalkProj_frame] at e2
-      simp only [map_sum, QCoh.germ_smul, germ_resM]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, QCoh.germ_smul, germ_resM]
       exact e2.symm)
   refine ⟨κ, fun V f hf f' hf' c hc hA z s hs => ?_⟩
   let d : D := ⟨⟨V, f, f', c⟩, hf, hf', hc, hA⟩

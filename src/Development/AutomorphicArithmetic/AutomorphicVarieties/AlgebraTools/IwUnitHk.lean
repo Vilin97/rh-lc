@@ -60,7 +60,8 @@ private theorem unitHk_alg_comm (hI : HeckePair I) (v : fixd (permRep A I) I) (T
     obtain ⟨x, rfl⟩ := hT
     intro w w' hw
     haveI : Fintype (MulAction.orbit I (x : G ⧸ I)) := Set.Finite.fintype (hI x)
-    rw [unitHk_apply hI, unitHk_apply hI, finsum_eq_sum_of_fintype, finsum_eq_sum_of_fintype, map_sum, ← hw]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [unitHk_apply hI, unitHk_apply hI, finsum_eq_sum_of_fintype, finsum_eq_sum_of_fintype, map_sum, ← hw]
     simp only [unitHk_phi_comm]
   | algebraMap r =>
     intro w w' hw

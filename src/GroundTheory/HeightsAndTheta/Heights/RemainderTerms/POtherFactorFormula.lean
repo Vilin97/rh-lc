@@ -155,7 +155,8 @@ theorem OtherFactorFormula.proof (hA : LemmaA.Statement) (hB : LemmaB.Statement)
   rw [hTeq, hprod] at hres
   have hTsym : T.IsSymmetric := by
     intro e
-    rw [hT, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hT, map_sum]
     refine Finset.sum_congr rfl fun nu _ => ?_
     rw [map_mul, rename_C, isSymmetric_aeval_smul_X _ (Schur.schur_isSymmetric _) e]
   set K : ℚ := (Nat.multinomial Finset.univ (mstar f r a q (f * (r * a) + 1) τ) : ℚ) *

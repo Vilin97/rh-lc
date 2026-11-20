@@ -29,7 +29,8 @@ theorem lam_expand (g : Fin J → σ → τ) (e : Fin J → σ → ℕ) (y : Fin
   have h : ∀ j, lam_ph g e j (y j) = ∑ m ∈ (y j).support, monomial (imgMon (g j) (e j) m) (AddMonoidAlgebra.coeff (y j) m) := by
     intro j
     conv_lhs => rw [(y j).as_sum]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun m _ => aeval_pow_monomial _ _ _ _
   rw [Finset.prod_congr rfl fun j _ => h j, Finset.prod_univ_sum]
   exact Finset.sum_congr rfl fun m _ => lam_prod_monomial _ _ _
@@ -98,7 +99,8 @@ theorem lam_li_fixed (g : Fin J → σ → τ) (e : Fin J → σ → ℕ) (l : �
   have hexp : ∀ j (a : I j), (ψ j (u j a)) (b j) = ∑ m ∈ supp j, AddMonoidAlgebra.coeff (u j a) m * w j m := by
     intro j a
     conv_lhs => rw [(u j a).as_sum]
-    rw [map_sum, Finsupp.finsetSum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finsupp.finsetSum_apply]
     have hsub : (u j a).support ⊆ supp j := fun m hm => Finset.mem_biUnion.mpr ⟨a, Finset.mem_univ _, hm⟩
     rw [← Finset.sum_subset hsub]
     · refine Finset.sum_congr rfl fun m _ => ?_

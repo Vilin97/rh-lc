@@ -79,7 +79,8 @@ theorem evalAt_monomial_two (x y : ℂˣ) (a b : ℤ) :
 theorem evalAt_schur_two :
     ∀ (x y : ℂˣ) (A D : ℤ), D ≤ A → Spherical.evalAt ![x, y] (Spherical.schur ![A, D]) = ∑ j ∈ Finset.Icc D A, (x : ℂ) ^ (A + D - j) * (y : ℂ) ^ j := by
   intro x y A D h
-  rw [schur_two_eq_sum A D h, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [schur_two_eq_sum A D h, map_sum]
   exact Finset.sum_congr rfl fun j _ => evalAt_monomial_two x y _ _
 
 end GlobalTheory.CompanionTheory.WS.SchurTwo

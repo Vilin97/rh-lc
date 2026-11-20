@@ -138,7 +138,8 @@ theorem stab_eq_unip_mul_levi_inf : ∀ (F E : Type) [Field F] [NumberField F] [
       vecMulVec (incV F H.y) (incM F X.J *ᵥ fun i => c (incV F H.x i)) = 1 := by
     rw [← Matrix.map_one (inclR (F := F) (AF F)) (map_zero _) (map_one _), ← hD']
     ext i j
-    simp [Matrix.vecMulVec, Matrix.mulVec, dotProduct, incM, incV, map_sum, map_mul, Matrix.add_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Matrix.vecMulVec, Matrix.mulVec, dotProduct, incM, incV, map_sum, map_mul, Matrix.add_apply,
       Matrix.mul_apply, c, GlobalTheory.LeviTorusH.cA_incl]
 
   have hpU : (mat p)ᵀ * incM F X.J * (mat p).map c = incM F X.J := p.2

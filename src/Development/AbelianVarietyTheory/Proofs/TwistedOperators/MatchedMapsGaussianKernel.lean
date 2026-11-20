@@ -154,7 +154,8 @@ theorem stage : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberFiel
     obtain ⟨t, rfl⟩ := hrange hΦA
     have hk : t ∈ LinearMap.ker _ := hker (show t ∈ N.comap L from hΦN)
     obtain ⟨m, f, φ, rfl⟩ := decomp t
-    rw [LinearMap.mem_ker, map_sum] at hk
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [LinearMap.mem_ker, map_sum] at hk
 
     let φ' : Fin m → ∀ v : Pl F, (Fin a' × Fin (a + a') → Fv F v) → ℂ := fun j v =>
       if h : v ∈ T then (φ j ⟨v, h⟩ : (Fin a' × Fin (a + a') → Fv F v) → ℂ) else G.M'.vac v
@@ -167,7 +168,8 @@ theorem stage : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberFiel
       · rw [hin j v h]; exact (φ j ⟨v, h⟩).2
       · rw [hout j v h]; exact hvac v
     · simp
-    · rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [map_sum]
       exact Finset.sum_congr rfl fun j _ => hL (f j) (φ j) (φ' j) (hin j) (hout j)
     · rw [Finset.univ_eq_empty, Finset.sum_empty, ← hk]
       refine Finset.sum_congr rfl fun j _ => ?_

@@ -115,9 +115,11 @@ theorem actB_jB {P : PhiMod O K l e a ι} {T : LocLat (Gl l) ℚ_[l] K O} (I : I
     rw [e2, e1]
     exact huniq _ _ _ h1 (hval _)
   conv_lhs => rw [pi_eq_sum_univ' y]
-  rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum]
   conv_rhs => rw [pi_eq_sum_univ' (fun i => galOB O (sQ l g) (y i))]
-  rw [← Matrix.mulVecLin_apply, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Matrix.mulVecLin_apply, map_sum, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [LinearEquiv.map_smul, actB_smul, hbas, map_smul, Matrix.mulVecLin_apply, LinearEquiv.map_smul]
 
@@ -132,7 +134,8 @@ theorem horiz_of_fix {P : PhiMod O K l e a ι} {T : LocLat (Gl l) ℚ_[l] K O} (
       toBcris t ϖ P ((l ^ N : ℕ) • ξ) := by
     funext i
     rw [toBcris_eq_toOB t ϖ _ hN i, ← hfix]
-    simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, toBcris_eq_toOB t ϖ _ hN, galOB_toOB,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, toBcris_eq_toOB t ϖ _ hN, galOB_toOB,
       Matrix.map_apply, toB, AlgHom.comp_apply]
   rw [map_nsmul] at hB
   have hu : IsUnit ((l ^ N : ℕ) : OB l O) := by

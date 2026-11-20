@@ -57,7 +57,8 @@ theorem isUnit_of_unit_coefficient (hOloc : IsLocalRing O)
     PowerSeries.C (PowerSeries.coeff j (a i)) * PowerSeries.X ^ j := ⟨_, rfl⟩
   have hcL : ∀ d, PowerSeries.coeff d Lp = if d < k₀ then PowerSeries.coeff d (a i) else 0 := by
     intro d
-    simp only [hLp, map_sum, PowerSeries.coeff_C_mul_X_pow]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hLp, map_sum, PowerSeries.coeff_C_mul_X_pow]
     rw [Finset.sum_ite_eq]
     simp only [Finset.mem_range]
   have hdvd : (PowerSeries.X : PowerSeries O) ^ k₀ ∣ a i - Lp := by
@@ -135,7 +136,8 @@ theorem isUnit_of_unit_coefficient (hOloc : IsLocalRing O)
     exact Ideal.mul_mem_left _ _ ha
   have hunit : IsUnit (x * algebraMap (LetA O n) W.EE (letπ ^ m) + (1 - k17e W i)) := by
     apply isUnit_of_isUnit_mod_l
-    rw [hq, hdec, map_add, map_add, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hq, hdec, map_add, map_add, map_sum, map_sum]
     exact (isNilpotent_sum hnil).isUnit_add_right_of_commute (hγ.map _) (Commute.all _ _)
   have hprod : (x + (1 - k17e W i)) * (k17e W i * algebraMap (LetA O n) W.EE (letπ ^ m) +
       (1 - k17e W i)) = x * algebraMap (LetA O n) W.EE (letπ ^ m) + (1 - k17e W i) := by

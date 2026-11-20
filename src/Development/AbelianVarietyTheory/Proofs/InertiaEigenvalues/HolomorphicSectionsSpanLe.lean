@@ -36,7 +36,8 @@ theorem exists_indep_comb {K R V : Type} [Field K] [AddCommGroup R] [Module K R]
   · funext m
     exact (Fintype.linearIndependent_iff.1 hlin) c (by simpa only [hsm] using hc) m
   · rw [← hv]
-    simp only [map_sum, map_smulₛₗ, Finset.smul_sum, smul_smul, hgv]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smulₛₗ, Finset.smul_sum, smul_smul, hgv]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [← Finset.sum_smul, hzexp k]

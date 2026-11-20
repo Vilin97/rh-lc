@@ -74,7 +74,8 @@ theorem exists_unique_coords {Dw : Datum H} {l : Level H} {c : Coeff l} {f : c.F
       (tv v).left ≫ (t.act.act a).left = spMap (epsMul (f (embK c τ a))) ≫ (tv v).left := fun τ v =>
     forall_congr' fun a => ⟨fun h => congrArg (fun z => (tv z).left) h, fun h => tan_ext h⟩
   have hS : ∀ τ (a : Fin (Dw.mult τ) → R), PullbackSections.IsEigV ρ (embK c τ) (∑ i, a i • tanOf (hu.1 τ i).1) := fun τ a s => by
-    rw [map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, (hE τ (tanOf (hu.1 τ i).1)).2 (hu.1 τ i).2 s, smul_comm]
   have hsum : ∑ τ, proj ρ (embK c) α τ m = m := by

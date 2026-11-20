@@ -187,7 +187,8 @@ theorem piK_vac {k : ℕ} [Finite (Qt k (L ⊓ X))] [Finite (Ik L Y k)] {w : V} 
         ρ ((y.out : ↥(Yk L Y k)) : W) w := by
     unfold piK
     rw [finsum_eq_sum_of_fintype, finsum_eq_sum_of_fintype]
-    simp only [map_sum, hterm, Finset.sum_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, hterm, Finset.sum_smul]
     exact Finset.sum_comm
   rw [e1]
   simp only [chi_sum_X hχl hχr hχ0 hLL hdY (hyk _)]

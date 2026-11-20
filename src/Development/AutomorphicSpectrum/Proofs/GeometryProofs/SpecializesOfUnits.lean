@@ -123,7 +123,8 @@ theorem aeval_eq_dh_mul (y : (Σ k, J k) → Ω) (c : ∀ k, J k) (hc : ∀ k, y
   classical
   conv_lhs => rw [g.as_sum]
   conv_rhs => rw [g.as_sum]
-  rw [map_sum, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun m hm => ?_
   have hdeg := hg m hm
   simp only [dh, aeval_monomial]

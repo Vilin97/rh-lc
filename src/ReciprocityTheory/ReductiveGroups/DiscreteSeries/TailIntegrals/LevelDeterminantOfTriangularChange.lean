@@ -53,7 +53,8 @@ theorem lv_sum {ι : Type} (s : Finset ι) (f : ι → Fin (2 * r' + k + 1) → 
     liftVec k 1 r' (∑ i ∈ s, f i) = ∑ i ∈ s, liftVec k 1 r' (f i) := by
   have e : liftVec k 1 r' (∑ i ∈ s, f i) =
       (AddMonoidHom.mk' (liftVec k 1 r') fun v w => lv_add v w) (∑ i ∈ s, f i) := rfl
-  rw [e, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, map_sum]
   rfl
 
 theorem phi_lift (a : Fin (r' + 1)) : liftVec k 1 r' (phiV k r' a) = phiV k (1 + r') (su a) := by

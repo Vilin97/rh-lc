@@ -77,7 +77,8 @@ private def dinvPi (hρ : ∀ g x i, ρ' g x i = ρ i g (x i)) : Dinv σ ρ' ≃
         classical
         have hc : ∀ i, prI B i (∑ j, inI B j (y j : V j ⊗[F] B)) = y i := by
           intro i
-          rw [map_sum, Finset.sum_eq_single i (fun j _ h => prI_inI_ne h _) (by simp), prI_inI_same]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [map_sum, Finset.sum_eq_single i (fun j _ h => prI_inI_ne h _) (by simp), prI_inI_same]
         refine ⟨⟨∑ j, inI B j (y j : V j ⊗[F] B), (mem_Dinv_pi σ ρ ρ' hρ _).2 fun i => ?_⟩, ?_⟩
         · rw [hc]; exact (y i).2
         · funext i
@@ -110,7 +111,8 @@ private theorem annD_pi (ψ : End F B) (q n : ℕ) (T : ∀ i, ℕ → End F (V 
   intro x hx
   refine ext_prI fun i => ?_
   have := h i _ ((mem_Dinv_pi σ ρ ρ' hρ x).1 hx i)
-  rw [map_zero, map_sum, ← this]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_zero, map_sum, ← this]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_zsmul, prI_map i (T' j) (T i j) (ψ ^ (n - j)) (fun x => hT j x i)]
 

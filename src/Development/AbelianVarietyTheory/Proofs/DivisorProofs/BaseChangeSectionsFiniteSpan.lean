@@ -107,7 +107,8 @@ theorem linearIndependent_secPull (S : LinSys F) (hS : S.IsVariety) {n : ℕ} (b
   let R : (Fin n → F) →ₗ[F] (∀ i, SecOnR S.str S.L (D i)) :=
     LinearMap.pi fun i => ∑ j, (LinearMap.proj j).smulRight (resTo S.str S.L (D i) (b j))
   have hRi : ∀ u i, R u i = resTo S.str S.L (D i) (∑ j, u j • b j) := fun u i => by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [R, LinearMap.pi_apply, LinearMap.sum_apply, LinearMap.smulRight_apply,
       LinearMap.proj_apply]
     exact Finset.sum_congr rfl fun j _ => (resTo_smul S.str S.L (D i) (u j) (b j)).symm
@@ -143,9 +144,11 @@ theorem linearIndependent_secPull (S : LinSys F) (hS : S.IsVariety) {n : ℕ} (b
       resTo (S.baseChange E).str (S.baseChange E).L (S.bcFst E ⁻¹ᵁ D i) (∑ j, c j • pullSecs S E b j) := by
     intro c
     conv_lhs => rw [← Finset.univ_sum_single c]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     funext i
-    rw [Finset.sum_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_apply, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     simp only [Φ, LinearMap.comp_apply, LinearEquiv.coe_coe, TensorProduct.piScalarRight_symm_single,
       LinearMap.baseChange_tmul, TensorProduct.piRight_apply, TensorProduct.piRightHom_tmul,

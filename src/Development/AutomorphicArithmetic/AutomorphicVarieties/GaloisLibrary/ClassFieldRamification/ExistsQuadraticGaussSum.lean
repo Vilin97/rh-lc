@@ -43,7 +43,8 @@ private theorem UpperTheory.V.CF.exists_quadratic_gauss_sum {K : Type} [Field K]
   · intro σ b hσ
     have hG : σ (gaussSum χ ψ) = gaussSum χ (ψ.mulShift (b : ZMod d)) := by
       unfold gaussSum
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun a _ => ?_
       rw [map_mul, hχa, map_intCast, AddChar.mulShift_apply]
       congr 1

@@ -70,10 +70,12 @@ lemma EndSer.descend {M : Type} [Field M] [Algebra M ℂ] {α s : M} {N m : ℕ}
   have h1 := congrArg (fun B => r (coeff n B)) h
   have c1 : ∀ (x y : ℂ⟦X⟧) (c : ℂ), x * (C c * y) = C c * (x * y) := fun x y c => by ring
   have c2 : ∀ (x y : M⟦X⟧) (c : M), x * (C c * y) = C c * (x * y) := fun x y c => by ring
-  simp only [homSer, Finset.mul_sum, c1, ← map_rescale, ← map_wSer,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [homSer, Finset.mul_sum, c1, ← map_rescale, ← map_wSer,
     ← map_pow (PowerSeries.map (algebraMap M ℂ)), ← map_mul (PowerSeries.map (algebraMap M ℂ)),
     map_sum, coeff_C_mul, coeff_map, hr'] at h1
-  simp only [homSer, Finset.mul_sum, c2, map_sum, coeff_C_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [homSer, Finset.mul_sum, c2, map_sum, coeff_C_mul]
   rw [h1]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [mul_comm (q k), ← Algebra.smul_def, r.map_smul, smul_eq_mul, mul_comm (r (q k))]

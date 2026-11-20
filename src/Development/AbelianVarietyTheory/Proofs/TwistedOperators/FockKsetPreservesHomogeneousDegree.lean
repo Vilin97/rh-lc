@@ -112,7 +112,8 @@ theorem omAct_I_Jm_homog (p q r s d : ℕ) (P : Pol p q r s) (hP : P ∈ homog (
   have hP' : P.IsHomogeneous d := hP
   conv_lhs => rw [P.as_sum]
   conv_rhs => rw [P.as_sum]
-  rw [map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.smul_sum]
   refine Finset.sum_congr rfl fun α hα => ?_
   have hd : α.degree = d := by
     rw [Finsupp.degree_eq_weight_one]

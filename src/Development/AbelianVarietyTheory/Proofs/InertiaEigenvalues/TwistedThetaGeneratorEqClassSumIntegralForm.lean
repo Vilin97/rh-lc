@@ -49,7 +49,8 @@ theorem lift_finPt (V : HSp D) {a : GA D V} (ha : a ∈ GfC V) : lift V (finPt V
 theorem mem_GfC_of_suppAt {Q : Finset (Pl D.host.E)} (hQ : SplitSet Q) {V : HSp D} {g : GA D V}
     (hg : SuppAt (idem Q) V g) : g ∈ GfC V := by
   refine GlobalTheory.WeilProduct.mem_GfC_of_supp (a := idem Q + cA D (idem Q)) ?_ hg
-  rw [RingHom.map_add, idem, map_sum (cA D), map_sum (infPart D), map_sum (infPart D), ← Finset.sum_add_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [RingHom.map_add, idem, map_sum (cA D), map_sum (infPart D), map_sum (infPart D), ← Finset.sum_add_distrib]
   refine Finset.sum_eq_zero fun PP hPP => ?_
   have h1 := (hQ.isIdemAt hPP).1
   rw [GlobalTheory.SplitScalar.infPart_splitIdem h1, GlobalTheory.SplitScalar.infPart_splitIdem (GlobalTheory.SplitScalar.isSplitIdem_conj h1), add_zero]

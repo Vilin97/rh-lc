@@ -42,7 +42,8 @@ theorem eig_one {R : Type} [CommSemiring R] {σ : Type} (ν μ : σ →₀ ℕ) 
 theorem eigAt : EigAt := by
   intro O _ _ σ T q u μ
   unfold gOp gEv
-  rw [coeff_sum, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [coeff_sum, map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun ν _ => ?_
   rw [coeff_smul, eig_one, Algebra.smul_def, map_mul, map_natCast]
   ring
@@ -55,7 +56,8 @@ theorem fock_monoMap {K : Type} [Field K] {σ τ : Type} (f : MvPolynomial σ K 
   have hexp : ∀ v : MvPolynomial σ K, f v = ∑ μ ∈ v.support, monomial (ε μ) (v.coeff μ) := by
     intro v
     conv_lhs => rw [← v.support_sum_monomial_coeff]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun μ _ => hf μ _
   have hco : ∀ (v : MvPolynomial σ K) (μ : σ →₀ ℕ), AddMonoidAlgebra.coeff (f v) (ε μ) = AddMonoidAlgebra.coeff v μ := by
     intro v μ

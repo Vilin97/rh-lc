@@ -256,7 +256,8 @@ theorem weak_decay {ι T : Type} [Fintype ι] (ψ : AddChar (AF F) ℂ) (hψ : I
   refine ⟨∑ j, C j, fun t x hx => ?_⟩
   rw [hdec t, Finset.sum_mul]
   change ‖l (schrL ψ _ _)‖ ≤ _
-  rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum]
   refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun j _ => ?_)
   obtain ⟨f₁, h1, h2⟩ := hC j t x hx
   refine le_trans ?_ ((SchwartzMap.norm_le_seminorm ℂ f₁ 0).trans h2)
@@ -285,7 +286,8 @@ theorem tsum_enorm_le {n d : ℕ} {X : Spc F E n} {W : Spc F E d} (M : Model σ 
   have hSU' : ∀ i j, (M.co.e (S j)).1 ⬝ᵥ (M.co.e (U i)).2 - (M.co.e (U i)).1 ⬝ᵥ (M.co.e (S j)).2 =
       if i = j then 1 else 0 := fun i j => by rw [← M.co.form, hSU]
   have hrho : ∀ x : ι → AF F, M.co.rho ψ (∑ i, x i • S i) = schr ψ (∑ i, x i • M.co.e (S i)) := fun x => by
-    simp only [Darboux.rho, map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Darboux.rho, map_sum, map_smul]
   refine ⟨_, hΩ, fun N => ?_⟩
   let r : (ι → AF F) → ℝ := fun x => 1 + ∑ i, ∑ v : InfinitePlace F, ‖(x i).1 v‖
   have hr : ∀ x, 0 < r x := fun x => by positivity
@@ -336,7 +338,8 @@ theorem tsum_enorm_le {n d : ℕ} {X : Spc F E n} {W : Spc F E d} (M : Model σ 
           · linear_combination (pairA F 0 a * x j) * this
           · linear_combination (pairA F 0 a * x j) * this
         rw [M.co.form]
-        simp only [map_sum, map_smul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, map_smul]
         rw [Prod.fst_sum, Prod.snd_sum, sum_dotProduct, dotProduct_sum, ← Finset.sum_sub_distrib]
         simp only [this, Finset.sum_ite_eq, Finset.mem_univ, if_true]
       rw [ha i k hk, map_smul, hinv _ _ _ (GlobalTheory.HeisSchA.rho_mem_schA M ψ hψ _ _ (hΨ k)), hω] at h1
@@ -378,7 +381,8 @@ theorem trace_inclR (x : E) :
 
 theorem form_herm (h : IsCMExt F E σ) {n : ℕ} {J : Matrix (Fin n) (Fin n) E} (hJ : ∀ i j, σ (J j i) = J i j)
     (x y : Fin n → E) : form σ J y x = σ (form σ J x y) := by
-  simp only [form, dotProduct, Matrix.mulVec, Finset.mul_sum, map_sum, map_mul, GlobalTheory.XTermSupp.invol h, hJ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, Matrix.mulVec, Finset.mul_sum, map_sum, map_mul, GlobalTheory.XTermSupp.invol h, hJ]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   ring
@@ -403,7 +407,8 @@ theorem exists_dual (hcm : IsCMExt F E σ) {n d : ℕ} {JX : Matrix (Fin n) (Fin
 
 theorem cA_eq_sum (z : AE F E) :
     cA σ z = ∑ i, GlobalTheory.XTermMaj.crd F E z i • inclR (F := F) (AF F) (σ (Module.finBasis F E i)) := by
-  conv_lhs => rw [← (Algebra.TensorProduct.basis (AF F) (Module.finBasis F E)).sum_equivFun z, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [← (Algebra.TensorProduct.basis (AF F) (Module.finBasis F E)).sum_equivFun z, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_smul, Algebra.TensorProduct.basis_apply]
   rfl

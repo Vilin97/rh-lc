@@ -136,5 +136,6 @@ theorem GlobalTheory.exists_diagonal_coordinates_of_detCond :
   refine ⟨B.equivFun.symm, fun a z => ?_⟩
   rw [← hF a]
   refine congrArg u.ex ?_
-  simp only [Module.Basis.equivFun_symm_apply, map_sum, map_smul, hB, key, smul_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Module.Basis.equivFun_symm_apply, map_sum, map_smul, hB, key, smul_smul]
   exact Finset.sum_congr rfl fun i _ => by rw [mul_comm]

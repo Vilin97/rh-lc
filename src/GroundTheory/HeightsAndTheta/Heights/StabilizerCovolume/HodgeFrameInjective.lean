@@ -107,7 +107,8 @@ theorem UnitaryMinkowskiBound.proof : UnitaryMinkowskiBound.Statement := by
     intro x hx hx0
     obtain ⟨c, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun ℤ).1 hx
     have hw : ∑ k, c k • u k = D.hodgeFrame z (D.embHom (∑ k, c k • b k)) := by
-      simp only [u, map_sum, map_zsmul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [u, map_sum, map_zsmul]
     have hwI : ∑ k, c k • b k ∈ I := (hb.2 _).2 ((Submodule.mem_span_range_iff_exists_fun ℤ).2 ⟨c, rfl⟩)
     have hw0 : ∑ k, c k • b k ≠ 0 := by
       intro h

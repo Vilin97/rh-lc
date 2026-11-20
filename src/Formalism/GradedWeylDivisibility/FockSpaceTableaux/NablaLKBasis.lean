@@ -44,7 +44,8 @@ theorem nablaLKBasis_of (h1 : RowActMul) (_h2 : SSBasis) : NablaLKBasis := by
         have h := (isWeightedHomogeneous_C (colW k n) (A v.1 b)).mul
           (isWeightedHomogeneous_X K (colW k n) (b, v.2))
         simpa [colW] using h
-      rw [P.as_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [P.as_sum, map_sum]
       apply IsWeightedHomogeneous.sum
       intro d hd
       rw [← hP1 (mem_support_iff.mp hd), monomial_eq, map_mul, map_finsuppProd, Finsupp.weight_apply]

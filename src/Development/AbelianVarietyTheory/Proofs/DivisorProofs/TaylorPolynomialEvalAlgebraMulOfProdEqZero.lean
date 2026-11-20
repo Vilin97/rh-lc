@@ -62,7 +62,8 @@ theorem aeval_sum_monomial_finsuppAntidiag (N : ℕ) (t : I → D) (F : MvPowerS
         MvPolynomial.monomial m (MvPowerSeries.coeff m F)) =
       ∑ k ∈ Finset.range (N + 1), ∑ m ∈ Finset.finsuppAntidiag (Finset.univ : Finset I) k,
         MvPowerSeries.coeff m F • ∏ i, t i ^ m i := by
-  simp only [map_sum, MvPolynomial.aeval_monomial, Algebra.smul_def,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, MvPolynomial.aeval_monomial, Algebra.smul_def,
     Finsupp.prod_fintype _ _ (fun i => pow_zero (t i))]
 
 end

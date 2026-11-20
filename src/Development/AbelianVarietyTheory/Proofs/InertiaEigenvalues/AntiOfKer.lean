@@ -132,7 +132,8 @@ theorem det_ne_zero (hPT : PoitouTateTotallyComplex) (hT : TameLocal) (hl : 0 < 
     have key : ∀ (g : GE N) (k : Fin D.R.r → A), vecPair D.R.r β (rect ((Z' g).map π) (c • x)) k =
         β (∑ j, (∑ u, k u * π (Z' g u j)) • x j) c := fun g k => by
       rw [vecPair_apply]
-      simp only [rect, Finset.sum_smul, map_sum, AddMonoidHom.finsetSum_apply, Pi.smul_apply, Matrix.map_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [rect, Finset.sum_smul, map_sum, AddMonoidHom.finsetSum_apply, Pi.smul_apply, Matrix.map_apply]
       rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun u _ => ?_
       rw [hβ.1, hβ.1, hβ.1, smul_eq_mul, smul_eq_mul, smul_eq_mul]

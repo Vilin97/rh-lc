@@ -32,7 +32,8 @@ def cosHom {K L : Cos.{w} R} (f : ∀ n, K.X n →ₗ[R] L.X n)
     (h : ∀ n k x, L.δ n k (f n x) = f (n + 1) (K.δ n k x)) : Cx.Hom K.cx L.cx (RingHom.id R) :=
   ⟨f, fun n x => by
     change L.d n (f n x) = f (n + 1) (K.d n x)
-    rw [Cos.d_apply, Cos.d_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Cos.d_apply, Cos.d_apply, map_sum]
     exact Finset.sum_congr rfl fun k _ => by rw [map_zsmul, h]⟩
 
 end Complexes

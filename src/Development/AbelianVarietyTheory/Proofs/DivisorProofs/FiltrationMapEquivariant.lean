@@ -91,7 +91,8 @@ theorem phiN_tAct : ∀ (R S : ℕ) (M : GKMod R S) (N : Submodule ℂ M.V) (hN 
       M.act (eNC x) * M.act Z + ∑ y, adP Z y x • M.act (eNC y) := by
     intro x
     have h1 := M.lie Z (eNC x)
-    rw [bracket_eNC hZ, map_sum] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [bracket_eNC hZ, map_sum] at h1
     simp only [map_smul] at h1
     rw [h1]; abel
   have hw : ∀ (g : Fin k → NC R S) (v : M.V), M.act Z (word M.act g v) = word M.act g (M.act Z v) +
@@ -100,7 +101,8 @@ theorem phiN_tAct : ∀ (R S : ℕ) (M : GKMod R S) (N : Submodule ℂ M.V) (hN 
     have := congrArg (fun T : Module.End ℂ M.V => T v)
       (mul_prod_ofFn (fun x => M.act (eNC x)) (M.act Z) (adP Z) h k g)
     simpa [word, LinearMap.sum_apply] using this
-  simp only [phiN_apply, tAct_apply, map_sum, hw, Submodule.coe_add, Submodule.coe_sum, Submodule.coe_smul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [phiN_apply, tAct_apply, map_sum, hw, Submodule.coe_add, Submodule.coe_sum, Submodule.coe_smul,
     restrAct_apply, kpart_of_isKC hZ, map_add, map_smul, Finset.sum_add_distrib]
   congr 1
   rw [Finset.sum_comm]

@@ -142,7 +142,8 @@ private theorem move_idem {A B ι : Type} [Ring A] [Ring B] [Fintype ι] (π : A
   have h0 : π Y = 0 := by
     have : ∑ i, π (f' i * f i) = ∑ i, π (f i) :=
       Finset.sum_congr rfl fun i _ => by rw [map_mul, hπ, ← map_mul, (hf.idem i).eq]
-    rw [hY, map_sub, map_sum, this, ← map_sum, hf.complete, sub_self]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hY, map_sub, map_sum, this, ← map_sum, hf.complete, sub_self]
   have hYY : Y * Y = 0 := hsq _ _ h0 h0
   have hU : 1 - Y = ∑ i, f' i * f i := by rw [hY, sub_sub_cancel]
   have h1 : ∀ a, (1 - Y) * f a = f' a * (1 - Y) := by

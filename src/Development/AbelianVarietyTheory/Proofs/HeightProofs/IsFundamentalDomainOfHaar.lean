@@ -293,7 +293,8 @@ def colVec {D : D7} (V : HSp D) {i : ℕ} (C : Matrix (Fin V.rank) (Fin i) D.hos
 theorem gram_entry {D : D7} (V : HSp D) {i j : ℕ} (M : Matrix (Fin V.rank) (Fin i) D.host.E)
     (N : Matrix (Fin V.rank) (Fin j) D.host.E) (a : Fin i) (b : Fin j) :
     (Formalism.UG.cT (D.sp.cm.sig : D.host.E →+* D.host.E) M * V.gram * N) a b = V.hT (colVec V M a) (colVec V N b) := by
-  simp only [colVec, Module.Basis.equivFun_symm_apply, map_sum, LinearMap.sum_apply, map_smulₛₗ,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [colVec, Module.Basis.equivFun_symm_apply, map_sum, LinearMap.sum_apply, map_smulₛₗ,
     LinearMap.smul_apply, Matrix.mul_apply, Formalism.UG.cT, HSpace.gram, Matrix.transpose_apply, Matrix.map_apply,
     smul_eq_mul, RingHom.id_apply, Finset.sum_mul, Finset.mul_sum]
   refine Finset.sum_congr rfl fun s _ => Finset.sum_congr rfl fun r _ => ?_

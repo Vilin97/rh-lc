@@ -49,7 +49,8 @@ private lemma exists_injective_perm_of_coeff_det_ne_zero {R J : Type*} [CommRing
     simp only [Matrix.of_apply, Finset.prod_univ_sum, Fintype.piFinset_univ, Finset.smul_sum]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun κ _ => ?_
-    rw [Matrix.det_apply, map_sum, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Matrix.det_apply, map_sum, Finset.sum_mul]
     refine Finset.sum_congr rfl fun σ _ => ?_
     simp only [Matrix.of_apply, Finset.prod_mul_distrib, map_prod, Units.smul_def, map_zsmul,
       smul_mul_assoc]

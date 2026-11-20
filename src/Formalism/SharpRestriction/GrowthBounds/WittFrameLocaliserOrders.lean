@@ -50,7 +50,8 @@ theorem inWj_mul {P Q : MvPolynomial σ (KK O)} {i j : ℕ} (hP : InWj w P i) (h
   choose a ha using hP
   choose b hb using hQ
   refine ⟨∑ x ∈ Finset.HasAntidiagonal.antidiagonal m, a x.1 * b x.2, ?_⟩
-  rw [coeff_mul, Finset.mul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [coeff_mul, Finset.mul_sum, map_sum]
   refine Finset.sum_congr rfl fun x _ => ?_
   rw [ha, hb, ← map_mul]
   congr 1
@@ -127,7 +128,8 @@ theorem exists_map_of_inWj0 {P : MvPolynomial σ (KK O)} (hP : InWj w P 0) :
     ∃ h : MvPolynomial σ O, MvPolynomial.map (algebraMap O (KK O)) h = P ∧ h.vars ⊆ P.vars := by
   choose a ha using hP
   refine ⟨∑ m ∈ P.support, monomial m (a m), ?_, ?_⟩
-  · rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum]
     conv_rhs => rw [P.as_sum]
     refine Finset.sum_congr rfl fun m _ => ?_
     rw [map_monomial, ha]; simp
@@ -210,13 +212,15 @@ theorem subst_xg (w : O) (r : ℕ) {g : Matrix (Fin k) (Fin k) (WF p n')} (hg : 
     subst p n' O w n' r g (xg p n' O n' g a b) = newVar w r (posOf n' a, b) := by
   have hs : Even (posOf n' a).val := (posOf_even hn a).2 ha
   unfold xg
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [map_mul, subst_X_even w r g _ hs, sigMat_posOf]
   have hC : ∀ x : KK O, subst p n' O w n' r g (C x) = C x := fun x => by
     unfold subst; exact (liftSubst p n' O w r (LLT n') g).commutes x
   simp only [hC, Finset.sum_mul, mul_assoc, ← C_mul]
   rw [Finset.sum_comm]
-  simp only [← Finset.mul_sum, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← Finset.mul_sum, ← map_sum]
   have hinv : ∀ b' : Fin k, ∑ c : Fin k, (sigMat p n' O g a)⁻¹ b' c * sigMat p n' O g a c b =
       (1 : Matrix (Fin k) (Fin k) (KK O)) b' b := fun b' => by
     rw [← Matrix.mul_apply, Matrix.nonsing_inv_mul _ (sigMat_det_isUnit hg a)]
@@ -231,13 +235,15 @@ theorem subst_yg (w : O) (r : ℕ) {g : Matrix (Fin k) (Fin k) (WF p n')} (hg : 
     subst p n' O w n' r g (yg p n' O n' g a b) = newVar w r (posOf n' a, b) := by
   have hs : ¬ Even (posOf n' a).val := fun h => ha ((posOf_even hn a).1 h)
   unfold yg
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [map_mul, subst_X_odd w r g _ hs, sigMat_posOf]
   have hC : ∀ x : KK O, subst p n' O w n' r g (C x) = C x := fun x => by
     unfold subst; exact (liftSubst p n' O w r (LLT n') g).commutes x
   simp only [hC, Finset.sum_mul, mul_assoc, ← C_mul]
   rw [Finset.sum_comm]
-  simp only [← Finset.mul_sum, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← Finset.mul_sum, ← map_sum]
   have hinv : ∀ b' : Fin k, ∑ c : Fin k, sigMat p n' O g a c b' * (sigMat p n' O g a)⁻¹ b c =
       (1 : Matrix (Fin k) (Fin k) (KK O)) b b' := fun b' => by
     rw [← Matrix.nonsing_inv_mul _ (sigMat_det_isUnit hg a), Matrix.mul_apply]
@@ -488,7 +494,8 @@ theorem subst_twisted_row_even (w : O) (r : ℕ) (g : Matrix (Fin k) (Fin k) (WF
   have hmul : sigMat p n' O (g'⁻¹ * g) a = sigMat p n' O g'⁻¹ a * sigMat p n' O g a := by
     simp only [sigMat_eq_map, Matrix.map_mul]
   unfold xg integralPrimalRow
-  simp only [map_sum, map_mul, subst_X_even w r g' _ hs, sigMat_posOf, sigmaMatrix_inv_twisted hg', MvPolynomial.algHom_C,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, subst_X_even w r g' _ hs, sigMat_posOf, sigmaMatrix_inv_twisted hg', MvPolynomial.algHom_C,
     Finset.sum_mul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun b' _ => ?_
@@ -500,7 +507,8 @@ theorem subst_twisted_row_even (w : O) (r : ℕ) (g : Matrix (Fin k) (Fin k) (WF
   have hC : MvPolynomial.map (algebraMap O (KK O)) (C (algebraMap (WF p n') O (sigPow p n' a ((g'⁻¹ * g) b' b)))) =
       (C (sigMat p n' O (g'⁻¹ * g) a b' b) : MvPolynomial (TV n' k) (KK O)) := by
     rw [MvPolynomial.map_C]; rfl
-  rw [hN, hC, hmul, Matrix.mul_apply, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hN, hC, hmul, Matrix.mul_apply, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun c _ => ?_
   rw [map_mul, mul_assoc]
   rfl
@@ -518,7 +526,8 @@ theorem residue_integral_primal_row [IsDiscreteValuationRing O] (S : Uniformized
   rw [← sum_ite_first_columns hrk (fun b' => X (posOf n' a, b') *
         (C (ι (WittVector.constantCoeff (h b' b)))) ^ p ^ m)]
   unfold integralPrimalRow
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun b' _ => ?_
   have hF : IsLocalRing.residue O (algebraMap (WF p n') O (sigPow p n' a (h b' b))) =
       (ι (WittVector.constantCoeff (h b' b))) ^ p ^ m := by
@@ -726,7 +735,8 @@ theorem localiser_nonzero_off_plane : LocaliserNonzeroOffPlane := by
           (fun c => WittVector.constantCoeff (g⁻¹ d c)) := by
       funext c
       conv_lhs => rw [hdec]
-      rw [Matrix.mul_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Matrix.mul_apply, map_sum]
       simp [Finset.sum_apply, map_mul]
     show (fun c => WittVector.constantCoeff (g'⁻¹ (Fin.castLE hrk i) c)) ∈ ratPlane p n' r g
     rw [e]
@@ -1013,7 +1023,8 @@ theorem complement_minor_order_pos (hV : Fr.Valid L₁ N₁) (hn : Even n') (hr 
       (fun i _ => Nat.zero_le _) (Finset.mem_univ i0)
     simp only [hi0, hc', if_true] at this
     exact this
-  rw [minorI, dif_pos hIc, Matrix.det_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [minorI, dif_pos hIc, Matrix.det_apply, map_sum]
   refine sum_mem fun s _ => ?_
   rcases Int.units_eq_one_or (Equiv.Perm.sign s) with hs | hs
   · rw [hs, one_smul, map_prod]
@@ -1461,7 +1472,8 @@ theorem subst_integral (w : O) (r : ℕ) {g : Matrix (Fin k) (Fin k) (WF p n')} 
   have h : subst p n' O w n' r g F =
       ∑ d ∈ F.support, C (F.coeff d) * ∏ i ∈ d.support, (subst p n' O w n' r g (X i)) ^ d i := by
     conv_lhs => rw [F.as_sum]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun d _ => ?_
     rw [monomial_eq, map_mul, subst_C_alt, Finsupp.prod, map_prod]
     simp only [map_pow]
@@ -1626,7 +1638,8 @@ theorem substitute_new_coordinate (w : O) (r : ℕ) {g : Matrix (Fin k) (Fin k) 
 theorem subst_true_coordinates (w : O) (r : ℕ) {g : Matrix (Fin k) (Fin k) (WF p n')} (hg : IsGLW g) (hn : Even n')
     (h : MvPolynomial (TV n' k) O) (hh : InTV r h) :
     subst p n' O w n' r g (hTrue p n' O n' g h) = MvPolynomial.map (algebraMap O (KK O)) h := by
-  rw [true_coordinates_eq_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [true_coordinates_eq_sum, map_sum]
   conv_rhs => rw [(MvPolynomial.map (algebraMap O (KK O)) h).as_sum]
   refine Finset.sum_congr rfl fun d hd => ?_
   rw [map_mul, subst_C_alt, map_prod, monomial_eq, coeff_map, Finsupp.prod]
@@ -3247,7 +3260,8 @@ def twistedRowIntegral (p : ℕ) [Fact p.Prime] (O : Type) [CommRing O] [IsDomai
 theorem map_integral_primal_variable (g : Matrix (Fin k) (Fin k) (WF p n')) (a : ℤ) (b : Fin k) :
     MvPolynomial.map (algebraMap O (KK O)) (twistedRowIntegral p O g a b) = xg p n' O n' g a b := by
   unfold twistedRowIntegral xg
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun c _ => ?_
   rw [map_mul, MvPolynomial.map_X, MvPolynomial.map_C]
   rfl
@@ -3263,7 +3277,8 @@ theorem map_twisted_inverse_row {g : Matrix (Fin k) (Fin k) (WF p n')} (hg : IsG
       (∑ c : Fin k, X (posOf n' a, c) * C (algebraMap (WF p n') O (sigPow p n' a (g⁻¹ b c)))) =
       yg p n' O n' g a b := by
   unfold yg
-  rw [map_sum, sigmaMatrix_inv_at_shift hg]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, sigmaMatrix_inv_at_shift hg]
   refine Finset.sum_congr rfl fun c _ => ?_
   rw [map_mul, MvPolynomial.map_X, MvPolynomial.map_C]
   rfl
@@ -3292,7 +3307,8 @@ theorem third_key_integral (Fr : Frames n' r) {g : Matrix (Fin k) (Fin k) (WF p 
       (∑ c : Fin k, twistedRowIntegral p O g (Arow Fr s l.val) c ^ rowPowerExponent p Fr s l.val *
         (∑ c' : Fin k, X (posOf n' s, c') * C (algebraMap (WF p n') O (sigPow p n' s (g⁻¹ c c'))))) := by
     unfold pairingKey
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun c _ => ?_
     rw [map_mul, map_pow, map_integral_primal_variable, map_twisted_inverse_row hg]
   rw [h]
@@ -3344,9 +3360,11 @@ theorem substitute_pairing_key_leading_part (hp : 2 ≤ p) (w : O) (Fr : Frames 
     rw [sum_ite_lt_castLE r k hrk (fun c => C w * (X (posOf n' (Arow Fr s l.val), c) ^ rowPowerExponent p Fr s l.val *
       X (posOf n' s, c))), ← Finset.mul_sum, map_mul, MvPolynomial.map_C]
     rfl
-  rw [e0, ← map_add, Finset.mul_sum, ← Finset.sum_add_distrib, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e0, ← map_add, Finset.mul_sum, ← Finset.sum_add_distrib, map_sum]
   unfold pairingKey
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun c _ => ?_
   rw [map_mul, map_pow]
   by_cases hc : c.val < r
@@ -3516,7 +3534,8 @@ theorem pairing_order_of_planes_and_rows (D : Formalism.BasicNotions.D7) (h1 : R
         (Formalism.CountingSumsFrames.Top.detMulEqSumAdjugate (MvPolynomial (TV n' k) O) r (topPairingMatrix p O Fr hrk (s.val : ℤ))
           (fun a : Fin r => X (posOf n' (s.val : ℤ), Fin.castLE hrk a)) ⟨b.val, hc⟩)
       beta_reduce at e
-      rw [map_mul, map_sum, MvPolynomial.map_X] at e
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_mul, map_sum, MvPolynomial.map_X] at e
       have hX : (X (s, b) : MvPolynomial (TV n' k) (KK O)) =
           X (posOf n' (s.val : ℤ), Fin.castLE hrk ⟨b.val, hc⟩) := by
         rw [residue_position_of_nat]; rfl
@@ -3600,15 +3619,18 @@ theorem substitute_dual_row (w : O) (r : ℕ) (g' : Matrix (Fin k) (Fin k) (WF p
       MvPolynomial.map (algebraMap O (KK O)) (dualRowIntegral w r g' g a b) := by
   have hs : ¬ Even (posOf n' a).val := fun h => ha ((posOf_even hn a).1 h)
   unfold yg
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [map_mul, subst_X_odd w r g' _ hs, sigMat_posOf]
   have hC : ∀ x : KK O, subst p n' O w n' r g' (C x) = C x := fun x => by
     unfold subst; exact (liftSubst p n' O w r (LLT n') g').commutes x
   simp only [hC, Finset.sum_mul, mul_assoc, ← C_mul]
   rw [Finset.sum_comm]
-  simp only [← Finset.mul_sum, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← Finset.mul_sum, ← map_sum]
   unfold dualRowIntegral
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun b' _ => ?_
   have e : ∑ c : Fin k, sigMat p n' O g' a c b' * (sigMat p n' O g a)⁻¹ b c = sigMat p n' O (g⁻¹ * g') a b b' := by
     rw [frobenius_twisted_matrix_mul, ← sigmaMatrix_inv_at_shift hg, Matrix.mul_apply]
@@ -3679,7 +3701,8 @@ theorem residue_twisted_row_eq [IsDiscreteValuationRing O] (S : UniformizedDVR p
     rw [IsLocalRing.residue_eq_zero_iff, S.w_irr.maximalIdeal_eq]
     exact Ideal.mem_span_singleton_self _
   unfold dualRowIntegral
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun b' _ => ?_
   have hF : IsLocalRing.residue O (algebraMap (WF p n') O (sigPow p n' a ((g⁻¹ * g') b b'))) =
       (ι (WittVector.constantCoeff ((g⁻¹ * g') b b'))) ^ p ^ m := by
@@ -3720,13 +3743,15 @@ theorem third_key_residue_eq_zero [IsDiscreteValuationRing O] (S : UniformizedDV
     have h3 : (C (ι (WittVector.constantCoeff (((g'⁻¹ * g) * (g⁻¹ * g')) i b'))) :
         MvPolynomial (TV n' k) (FF O)) = ∑ c : Fin k, C (ι (WittVector.constantCoeff ((g'⁻¹ * g) i c))) *
           C (ι (WittVector.constantCoeff ((g⁻¹ * g') c b'))) := by
-      rw [Matrix.mul_apply, map_sum, map_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Matrix.mul_apply, map_sum, map_sum, map_sum]
       refine Finset.sum_congr rfl fun c _ => ?_
       rw [map_mul, map_mul, map_mul]
     rw [← h3, hh, Matrix.one_apply]
     split_ifs <;> simp
   unfold rowPowerExponent
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine (Finset.sum_congr rfl fun c _ => ?_).trans (twisted_pairing_eq_zero p hrk
     (fun i : Fin r => (X (posOf n' (Arow Fr s l.val), Fin.castLE hrk i) : MvPolynomial (TV n' k) (FF O)))
     (fun b' : Fin k => if b'.val < r then 0 else X (posOf n' s, b'))
@@ -3757,7 +3782,8 @@ theorem plane_pairings_of_first_key (h : ExplicitMinorsOrderRemaining) : RowsPai
       (∑ c : Fin k, integralPrimalRow p n' O S.w r (g'⁻¹ * g) (Arow Fr (s.val : ℤ) l.val) c ^ rowPowerExponent p Fr (s.val : ℤ) l.val *
         dualRowIntegral S.w r g' g (s.val : ℤ) c) := by
     unfold pairingKey
-    rw [map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum]
     refine Finset.sum_congr rfl fun c _ => ?_
     rw [map_mul, map_mul, map_pow, map_pow, subst_twisted_row_even S.w r g hg' hn _ (hA l.val l.isLt).1,
       substitute_dual_row S.w r g' hg hn _ hEz]
@@ -3842,7 +3868,8 @@ theorem bk_vanish1 (S : UniformizedDVR p O) (hrk : r ≤ k) (hn : Even n') (g : 
         (integralPrimalRow p n' O S.w r (g'⁻¹ * g) (aZ l) (cols c') ^ p ^ (Sn - An l))) = _
   rw [map_pow, map_pow, residue_integral_primal_row S hrk (g'⁻¹ * g) (aZ l) (cols c') ι hι' (An l) t ht, Matrix.of_apply]
   congr 1
-  rw [Matrix.vecMul, dotProduct, map_sum, ← sum_ite_first_columns hrk (fun b' : Fin k =>
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.vecMul, dotProduct, map_sum, ← sum_ite_first_columns hrk (fun b' : Fin k =>
     algebraMap (MvPolynomial (TV n' k) (FF O)) (FractionRing (MvPolynomial (TV n' k) (FF O)))
       (X (posOf n' (aZ l), b') * C (ι (WittVector.constantCoeff ((g'⁻¹ * g) b' (cols c')))) ^ p ^ An l))]
   refine Finset.sum_congr rfl fun b' _ => ?_
@@ -3973,7 +4000,8 @@ theorem bx_Gr_mul {P Q : MvPolynomial (TV n' k) (KK O)} (hP : bx_Gr w r P) (hQ :
     choose a ha using hP
     choose b hb using hQ
     refine ⟨∑ x ∈ Finset.HasAntidiagonal.antidiagonal m, a x.1 * b x.2, ?_⟩
-    rw [coeff_mul, Finset.mul_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [coeff_mul, Finset.mul_sum, map_sum]
     refine Finset.sum_congr rfl fun x hx => ?_
     have hm : x.1 + x.2 = m := Finset.HasAntidiagonal.mem_antidiagonal.1 hx
     rw [ha, hb, ← map_mul, ← hm, bx_normDeg_add, pow_add]
@@ -4047,7 +4075,8 @@ theorem bx_onTops_subst (w : O) {r : ℕ} (Fr : Frames n' r) (g : Matrix (Fin k)
     · rw [subst_X_odd w r g s hs c]
       exact sum_mem fun b _ => mul_mem (hN b) (Subalgebra.algebraMap_mem _ _)
   have hmem : subst p n' O w n' r g F ∈ supported (KK O) {v : TV n' k | v.1 ∈ Fr.TT} := by
-    rw [F.as_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [F.as_sum, map_sum]
     refine sum_mem fun d hd => ?_
     rw [monomial_eq, map_mul, Finsupp.prod, map_prod]
     refine mul_mem ?_ (prod_mem fun i hi => ?_)
@@ -4973,7 +5002,8 @@ theorem components_preserve_valuation : ComponentsPreserveValuation := by
   obtain ⟨m', hm', hz'⟩ := hz
   have hWH : IsWeightedHomogeneous letterWeight (twistSub LL S (lastIdx n) (multidegreeComponent d G)) d := by
     unfold multidegreeComponent
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     apply IsWeightedHomogeneous.sum
     intro m hm
     have h := twist_substitution_weighted_homog LL S (lastIdx n) m (G.coeff m)
@@ -4986,7 +5016,8 @@ theorem components_preserve_valuation : ComponentsPreserveValuation := by
     exact G.support_sum_monomial_coeff.symm
   have key : (twistSub LL S (lastIdx n) (multidegreeComponent d G)).coeff m' = (twistSub LL S (lastIdx n) G).coeff m' := by
     conv_rhs => rw [hsplit]
-    rw [map_add, MvPolynomial.coeff_add, map_sum, coeff_sum, Finset.sum_eq_zero, add_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_add, MvPolynomial.coeff_add, map_sum, coeff_sum, Finset.sum_eq_zero, add_zero]
     intro m hm
     apply (twist_substitution_weighted_homog LL S (lastIdx n) m (G.coeff m)).coeff_eq_zero
     intro h

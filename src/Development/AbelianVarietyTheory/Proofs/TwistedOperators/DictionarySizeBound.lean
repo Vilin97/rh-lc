@@ -68,7 +68,8 @@ theorem jetTab_comb {D : D7} {T : Type} {L : LevCh D T} {sc : GlobalTheory.ChiGr
     simpa using this
   simp only [jetTab, kerFin, fockIn, GridData.Weil.ker, thetaKO]
   rw [← h1]
-  simp only [← h2, map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← h2, map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
 
 end GlobalTheory.DictFree
 
@@ -123,7 +124,8 @@ theorem dictAt_big : GlobalTheory.FunPr.Hypotheses₂ → (∀ D, GlobalTheory.N
       simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Finset.mul_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       push_cast; ring
-    rw [hfun, GlobalTheory.NormSum.RepInv.applyAt0_sum _ _ _ hGi, Finset.mul_sum, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hfun, GlobalTheory.NormSum.RepInv.applyAt0_sum _ _ _ hGi, Finset.mul_sum, map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [oppQ_coe]
     simp only [map_mul, opp_opp]

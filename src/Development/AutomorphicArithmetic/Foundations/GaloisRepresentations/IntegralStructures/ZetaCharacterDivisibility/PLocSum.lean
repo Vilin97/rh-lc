@@ -56,7 +56,8 @@ private theorem descend {n : ℕ} (f : k →+* k') (hf : Function.Injective f) (
       map_mul' := fun g h => by
         ext i j
         apply hf
-        rw [hA, Matrix.mul_apply, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [hA, Matrix.mul_apply, map_sum]
         simp only [map_mul, hA, Units.val_mul, Matrix.mul_apply] }
   refine ⟨M.toHomUnits, ?_⟩
   ext g i j

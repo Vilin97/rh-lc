@@ -24,7 +24,8 @@ theorem eq_zero_of_trace (z : E) (h : ∀ a : 𝓞 E, Algebra.trace ℚ E (z * a
   apply (traceForm_nondegenerate ℚ E).1
   intro y
   rw [← (integralBasis E).sum_repr y]
-  simp only [map_sum, map_smul, Algebra.traceForm_apply, integralBasis_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, Algebra.traceForm_apply, integralBasis_apply]
   refine Finset.sum_eq_zero fun i _ => ?_
   have := h (RingOfIntegers.basis E i)
   rw [show (algebraMap (𝓞 E) E) (RingOfIntegers.basis E i) = (RingOfIntegers.basis E i : E) from rfl, this, smul_zero]
@@ -63,7 +64,8 @@ theorem trace_pairE (x : X) (a : 𝓞 E) :
       (ξ ((RingOfIntegers.basis E j) • x) : ℤ) := by
     intro j
     unfold GlobalTheory.ArcQ.pairE
-    rw [Finset.sum_mul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_mul, map_sum]
     have : ∀ i, Algebra.trace ℚ E ((Algebra.traceForm ℚ E).dualBasis (traceForm_nondegenerate ℚ E)
         (NumberField.integralBasis E) i * ((ξ ((NumberField.RingOfIntegers.basis E i) • x) : ℤ) : E) *
         (RingOfIntegers.basis E j : E)) = if j = i then ((ξ ((NumberField.RingOfIntegers.basis E i) • x) : ℤ) : ℚ) else 0 := by
@@ -77,7 +79,8 @@ theorem trace_pairE (x : X) (a : 𝓞 E) :
     simp [this]
   conv => enter [1]; rw [← (RingOfIntegers.basis E).sum_repr a]
   conv => enter [2]; rw [← (RingOfIntegers.basis E).sum_repr a]
-  simp only [Finset.sum_smul, map_sum, smul_assoc, map_zsmul, Finset.mul_sum, mul_smul_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finset.sum_smul, map_sum, smul_assoc, map_zsmul, Finset.mul_sum, mul_smul_comm]
   push_cast
   refine Finset.sum_congr rfl fun j _ => ?_
   erw [hb]
@@ -183,7 +186,8 @@ theorem exists_sep (S : Finset E) (hS : ∀ μ ∈ S, μ ≠ 0 ∧ cc μ = μ) :
       ∑ j, w μ j * n j := by
     intro μ n
     have : ((∑ j, n j • b j : 𝓞 E) : E) = ∑ j, n j • (b j : E) := by simp
-    rw [this, Finset.mul_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [this, Finset.mul_sum, map_sum]
     push_cast
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [mul_smul_comm, map_zsmul]

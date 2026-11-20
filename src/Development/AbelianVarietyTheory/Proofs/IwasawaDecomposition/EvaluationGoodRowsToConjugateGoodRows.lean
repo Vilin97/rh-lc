@@ -140,7 +140,8 @@ theorem evalOn_good : ∀ (D : D7) (G' : Type) [Group G'] [Fintype G'] (Pl0 T : 
         star (X.B.R (1, s0 γ) (star ((J S : conjRows X) : L2X X))) := by
       rw [hexp]
       change conjL (muX X) _ = _
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun γ _ => ?_
       rw [LinearIsometryEquiv.map_smulₛₗ, conjL_apply, starRingEnd_apply]
     have e2 : (gaL (Yc D 0) (R.βY 0) (R.dat0 R.triv) R.eG fun g => star (D.ntypes.e0.coeff (σ.symm g))) = R.e0 := by

@@ -40,7 +40,8 @@ theorem asmOne_lin_wt {K : Type u} [NormedField K] [IsUltrametricDist K] {ι : T
   classical
   intro n
   unfold MonoWtGe
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [MvPowerSeries.coeff_C_mul, MvPowerSeries.coeff_X]
   by_cases hn : ∃ i, n = Finsupp.single i 1
   · obtain ⟨i, rfl⟩ := hn
@@ -59,7 +60,8 @@ theorem asmOne_lin_wt {K : Type u} [NormedField K] [IsUltrametricDist K] {ι : T
 
 theorem asmOne_lin_const {K : Type u} [NormedField K] {ι : Type v} [Fintype ι] (c : ι → K) :
     MvPowerSeries.constantCoeff (∑ i, MvPowerSeries.C (c i) * MvPowerSeries.X i) = 0 := by
-  simp [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum]
 
 theorem asmOne_smul_wt {K : Type u} [NormedField K] {ι : Type v} {pi : ℝ} {r : ι → ℝ} {w : ℝ}
     {c : K} (hc : ‖c‖ ≤ 1) {f : MvPowerSeries ι K} (hf : WtGe pi r w f) :
@@ -241,7 +243,8 @@ theorem oneLetterR_of (hS : LemmaS.{u}) (hG : GenLogWeight.{u, 0}) (hB : LogBrid
       MvPowerSeries.subst (fun s : ZMod 2 => (if s = 0 then (1 : K) else ep) •
         ∑ i, MvPowerSeries.C (M x i) * MvPowerSeries.X i) be) = 0 := by
     refine asmOne_smul_const _ ?_
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_eq_zero fun x _ => cc_subst _ (hac x) be hbe0
   have hExp := hE K l hl hpi ι (fun _ => gam l) κ _ hBc (fun n _ => hBw n)
   have hMul := hMW K π hπ0 ι (fun _ => gam l) 0 0 κ _ _ (fun n _ => hA n) hExp

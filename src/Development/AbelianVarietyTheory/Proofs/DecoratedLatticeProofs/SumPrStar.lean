@@ -21,7 +21,8 @@ variable {D : D7} {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [Is
 theorem sum_pr_star {N : ℕ} (x y : Fin N → D.host.E) :
     ∑ r, p.pr (x r) * p.pr (star (y r)) = p.pr (star (star x ⬝ᵥ y)) := by
   change ∑ r, Witness.prH p (x r) * Witness.prH p (star (y r)) = Witness.prH p (star (star x ⬝ᵥ y))
-  rw [dotProduct, star_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [dotProduct, star_sum, map_sum]
   refine Finset.sum_congr rfl fun r _ => ?_
   rw [Pi.star_apply, star_mul, star_star, map_mul]
   ring

@@ -64,7 +64,8 @@ theorem index_det (ϖ : R) (hϖ : Irreducible ϖ) {n : Type} [Fintype n] [Decida
     rw [hdetP]; exact Finset.prod_ne_zero_iff.mpr (fun i _ => Submodule.smithNormalFormCoeffs_ne_zero b h i))
   have hPL : ∀ x, P x ∈ LinearMap.range L := by
     intro x
-    rw [← b'.sum_repr x, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← b'.sum_repr x, map_sum]
     refine Submodule.sum_mem _ (fun i _ => ?_)
     rw [map_smul, hPb, ← hab]
     exact Submodule.smul_mem _ _ (ab i).2
@@ -74,7 +75,8 @@ theorem index_det (ϖ : R) (hϖ : Irreducible ϖ) {n : Type} [Fintype n] [Decida
     refine ⟨∑ i, ab.repr y i • b' i, ?_⟩
     have e2 := congrArg Subtype.val (ab.sum_repr y)
     simp only [Submodule.coe_sum, Submodule.coe_smul] at e2
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     calc ∑ i, P (ab.repr y i • b' i) = ∑ i, ab.repr y i • (ab i : n → R) :=
           Finset.sum_congr rfl (fun i _ => by rw [map_smul, hPb, hab])
       _ = L x := e2

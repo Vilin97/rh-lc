@@ -81,7 +81,8 @@ theorem idem_denominator : ∀ (E : Type) [Field E] [NumberField E] [IsGalois �
   · rw [hnorm]
   · have hsum : ∑ k, algebraMap 𝓞_ℂ_[p] ℂ_[p] ⟨d * φ (dualBasis b k), hmem k⟩ * σ ((b k : 𝓞 E) : E) =
         d * evalAt σ (GlobalTheory.IndefiniteRowSideFullHecke.IntegralPartDecomposition.idem b φ) := by
-      simp only [GlobalTheory.IndefiniteRowSideFullHecke.IntegralPartDecomposition.idem, map_sum, evalAt_tmul, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [GlobalTheory.IndefiniteRowSideFullHecke.IntegralPartDecomposition.idem, map_sum, evalAt_tmul, Finset.mul_sum]
       refine Finset.sum_congr rfl fun k _ => ?_
       change d * φ (dualBasis b k) * σ ((b k : 𝓞 E) : E) = _
       ring

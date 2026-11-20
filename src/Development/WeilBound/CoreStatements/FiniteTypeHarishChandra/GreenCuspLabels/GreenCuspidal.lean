@@ -17,7 +17,8 @@ theorem sum_char_eq_zero {G V : Type} [Group G] [Fintype G] [AddCommGroup V] [Mo
     intro v
     apply h
     intro u hu
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Fintype.sum_equiv (Equiv.mulLeft u) _ _ ?_
     intro w
     simp only [Equiv.coe_mulLeft, map_mul, Module.End.mul_apply, U.mul_mem_cancel_left hu]
@@ -29,7 +30,8 @@ theorem sum_char_eq_zero {G V : Type} [Group G] [Fintype G] [AddCommGroup V] [Mo
     split_ifs <;> rfl
   calc (∑ u : G, if u ∈ U then ρ.character u else 0)
       = LinearMap.trace ℂ V (∑ u : G, if u ∈ U then ρ u else 0) := by
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         refine Finset.sum_congr rfl fun u _ => ?_
         split_ifs <;> simp [Representation.character]
     _ = 0 := by rw [hL, map_zero]

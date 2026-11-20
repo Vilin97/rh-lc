@@ -19,7 +19,8 @@ theorem isHerm_hform (hc : ∀ a, c (c a) = a) (hM : ∀ i j, c (M j i) = M i j)
   · simp only [Formalism.UG.hform, Pi.smul_apply, smul_eq_mul, Finset.mul_sum]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
     ring
-  · simp only [Formalism.UG.hform, map_sum, map_mul, hc]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [Formalism.UG.hform, map_sum, map_mul, hc]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
     rw [hM]
@@ -51,7 +52,8 @@ theorem isPerfect_hform (hc : ∀ a, c (c a) = a) (hM : IsUnit M.det) :
     simp only [hc]
     rw [Matrix.vecMul_vecMul, Matrix.nonsing_inv_mul _ hM, Matrix.vecMul_one]
     conv_rhs => rw [pi_eq_sum_univ y]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [map_smul, smul_eq_mul, dotProduct]
     exact Finset.sum_congr rfl fun i _ => mul_comm _ _
 

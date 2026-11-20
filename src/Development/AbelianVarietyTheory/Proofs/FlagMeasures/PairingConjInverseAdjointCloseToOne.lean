@@ -20,7 +20,8 @@ variable {E : Type} [CommRing E] [Algebra F E] [TopologicalSpace E]
 theorem cT_mul (L : LocE F E) {n : ℕ} (A B : Matrix (Fin n) (Fin n) E) :
     cT L (A * B) = cT L B * cT L A := by
   ext i j
-  simp only [cT, Matrix.mul_apply, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [cT, Matrix.mul_apply, map_sum, map_mul]
   exact Finset.sum_congr rfl fun k _ => mul_comm _ _
 
 theorem cT_one (L : LocE F E) {n : ℕ} : cT L (1 : Matrix (Fin n) (Fin n) E) = 1 := by

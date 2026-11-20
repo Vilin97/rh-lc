@@ -118,7 +118,8 @@ theorem ext_core (ϖ : O) (hϖ : Irreducible ϖ) (n : ℕ) (c : V →ₗ[K] (Fin
   have hg : ∀ x i, g x i = ∑ j, C i j * algebraMap K K₁ (x j) := by
     intro x i
     show c (Fintype.linearCombination K th x) i = _
-    rw [Fintype.linearCombination_apply, map_sum, Finset.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Fintype.linearCombination_apply, map_sum, Finset.sum_apply]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_smul, Pi.smul_apply, Algebra.smul_def, mul_comm]
     rfl

@@ -43,7 +43,8 @@ theorem eq_zero_of_linearIndependent_int {Y ι : Type} [Fintype ι] {f : ι → 
   have key : ∀ j, (fun i => B.coord j (a i)) = 0 := fun j =>
     eq_zero_of_linearIndependent_int_rat hf _ fun y => by
       have h := congrArg (B.coord j) (ha y)
-      rw [map_sum, map_zero] at h
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, map_zero] at h
       rw [← h]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [mul_comm (a i), ← zsmul_eq_mul, map_zsmul, zsmul_eq_mul, mul_comm]

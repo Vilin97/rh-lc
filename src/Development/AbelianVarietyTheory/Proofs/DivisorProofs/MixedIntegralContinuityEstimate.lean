@@ -48,7 +48,8 @@ theorem maDens_comb {D m : ℕ} (φ : Fin D → (Fin D → ℂ) → ℝ) (ψ : F
   obtain ⟨M, hM⟩ := ReciprocityTheory.AnForm.A.exists_multilinearMap_eq_mdisc (D := D)
   unfold maDens
   simp only [h, ← hM]
-  rw [M.map_sum, Complex.re_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [M.map_sum, Complex.re_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun s _ => ?_
   rw [M.map_smul_univ, smul_eq_mul, ← Complex.ofReal_prod, Complex.re_ofReal_mul]
   ring

@@ -80,7 +80,8 @@ private theorem coeff_eq {R : Type} [CommRing R] [IsDomain R] {n : ℕ} {K : Typ
     intro x
     obtain ⟨y, hy, e⟩ := hF x
     have e' := congrArg φ e
-    rw [hφ, hy, e, map_sum] at e'
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hφ, hy, e, map_sum] at e'
     simp only [sub_mul, Finset.sum_sub_distrib]
     rw [e', sub_eq_zero]
     refine Fintype.sum_equiv (Equiv.mulLeft σ) _ _ fun u => ?_
@@ -102,9 +103,11 @@ theorem UpperTheory.V.AlgebraTools.hkSandwich :
     intro x
     choose y hy hy' using fun w => hf w x
     refine ⟨∑ w, y w, ?_, ?_⟩
-    · rw [map_sum, Finset.sum_mul, ← Finset.sum_congr rfl fun w _ => hy w, ← Finset.sum_mul, ← Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [map_sum, Finset.sum_mul, ← Finset.sum_congr rfl fun w _ => hy w, ← Finset.sum_mul, ← Finset.sum_mul]
       rfl
-    · simp only [map_sum, hy', Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp only [map_sum, hy', Finset.sum_mul]
       exact Finset.sum_comm
   have hF := coeff_eq (K := K) (fun u => ∑ w, f w u) (by
     intro x
@@ -120,7 +123,8 @@ theorem UpperTheory.V.AlgebraTools.hkSandwich :
   have : y = dd (NN n q * x) := by
     apply mul_left_cancel₀ hD
     apply hinj
-    rw [UpperTheory.V.AlgebraTools.hkDdSpec, map_mul, e, alt, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [UpperTheory.V.AlgebraTools.hkDdSpec, map_mul, e, alt, map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun u _ => ?_
     have hu := hF u
     rw [hu, hsg, map_mul]

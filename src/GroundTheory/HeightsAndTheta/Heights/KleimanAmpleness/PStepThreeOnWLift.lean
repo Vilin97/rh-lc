@@ -24,7 +24,8 @@ theorem homogeneousComponent_mul_of_isHomogeneous {σ R : Type*} [CommRing R] {P
     homogeneousComponent d (P * G) =
       if l ≤ d then P * homogeneousComponent (d - l) G else 0 := by
   conv_lhs => rw [← sum_homogeneousComponent G, Finset.mul_sum]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   have hterm : ∀ i, homogeneousComponent d (P * homogeneousComponent i G) =
       if d = l + i then P * homogeneousComponent i G else 0 := fun i =>
     homogeneousComponent_of_mem ((hP.mul (homogeneousComponent_isHomogeneous i G)))
@@ -99,9 +100,11 @@ def idealGraded (P : Ideal (Poly k N)) : FinGradedSub (S := k) (x := x) Ω where
       calc f = homogeneousComponent e f := h0.symm
         _ = homogeneousComponent e (∑ h : T, a h • h.1) := by rw [ha]
         _ = ∑ h : T, homogeneousComponent e (h.1 * a h) := by
-          rw [map_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [map_sum]
           exact Finset.sum_congr rfl fun h _ => by rw [smul_eq_mul, mul_comm]
-    rw [SetLike.mem_coe, hfe, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [SetLike.mem_coe, hfe, map_sum]
     refine Submodule.sum_mem _ fun h _ => ?_
     rw [homogeneousComponent_mul_of_isHomogeneous (hdg h.1 h.2)]
     split_ifs with hle

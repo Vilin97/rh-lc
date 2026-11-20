@@ -137,7 +137,8 @@ theorem _root_.GlobalTheory.MomOne.lift_change : ∀ (q : ℕ) [Fact q.Prime] (l
   have hconjhf : ∀ x w : Fin g → ℂ, conj (_root_.Formalism.L2.Ker.JMB.hf S.Hm x w) = _root_.Formalism.L2.Ker.JMB.hf S.Hm w x := by
     intro x w
     unfold _root_.Formalism.L2.Ker.JMB.hf
-    simp only [map_sum, map_mul, Complex.conj_conj]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, Complex.conj_conj]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
     rw [show conj (S.Hm j i) = S.Hm i j from hpos.1.apply i j]

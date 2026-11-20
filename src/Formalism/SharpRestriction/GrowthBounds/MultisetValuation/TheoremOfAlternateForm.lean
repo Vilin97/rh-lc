@@ -510,7 +510,8 @@ theorem vGeK_hsymm (v : X.Pl) (m : ℕ → X.G.Kf) (hm : ∀ l ∈ Icc 1 X.mm, X
     X.vGeK (MvPolynomial.eval (X.FF v m j) (MvPolynomial.hsymm (Fin j × Fin (X.t + 1)) X.G.Kf l))
       ((l : ℝ) * ((muZ X.t (X.w v) j : ℤ) : ℝ)) := by
   have hfr := frac_of_place X v
-  rw [MvPolynomial.hsymm, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [MvPolynomial.hsymm, map_sum]
   refine vGeK_sum X _ _ fun s _ => ?_
   rw [map_multiset_prod, Multiset.map_map]
   have h1 := vGeK_multiset_prod X hfr (fun x => X.FF v m j x) ((muZ X.t (X.w v) j : ℤ) : ℝ) s.1

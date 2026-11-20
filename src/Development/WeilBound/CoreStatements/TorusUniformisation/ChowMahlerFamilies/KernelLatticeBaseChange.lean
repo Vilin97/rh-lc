@@ -49,7 +49,8 @@ theorem exists_section {o Ω : Type} [CommRing o] [Field Ω] [Algebra o Ω] (R :
   choose z hz using hz
   refine ⟨∑ i, (φ i).smulRight (z i), fun e he heU => ?_⟩
   have h4 := congrArg ρ (hv e)
-  rw [h2 e heU, map_sum] at h4
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h2 e heU, map_sum] at h4
   simp only [map_smul] at h4
   have : (e, (∑ i, (φ i).smulRight (z i)) e) = ∑ i, φ i e • (ρ (v i : V), z i) := by
     ext
@@ -69,7 +70,8 @@ theorem exists_lift {ι κ : Type} [Fintype ι] (T : (ι → Ω) →ₗ[Ω] (κ 
   classical
   refine ⟨Fintype.linearCombination C fun x => bcMap Ω C κ (T (Pi.single x 1)), fun v => ?_⟩
   conv_rhs => rw [pi_eq_sum_univ' v]
-  rw [Fintype.linearCombination_apply, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Fintype.linearCombination_apply, map_sum, map_sum]
   refine Finset.sum_congr rfl fun x _ => ?_
   rw [map_smul, map_smul, bc_apply, algebraMap_smul]
 

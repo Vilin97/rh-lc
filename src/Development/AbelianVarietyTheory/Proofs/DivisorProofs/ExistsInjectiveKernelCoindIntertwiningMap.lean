@@ -99,7 +99,8 @@ theorem exists_kernel : ∀ (G : Type) [Group G] [Finite G] (P P' : Subgroup G) 
     apply Representation.IntertwiningMap.ext
     ext1 f
     have h1 := congrArg Φ (sum_delta P σ f)
-    rw [map_sum, map_smul, Finset.sum_eq_zero (fun g _ => by
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_smul, Finset.sum_eq_zero (fun g _ => by
       rw [Φ.isIntertwining, h0, map_zero])] at h1
     have hc : ((Finset.univ.filter (fun x : G => x ∈ P)).card : ℂ) ≠ 0 := by
       rw [Nat.cast_ne_zero, Finset.card_ne_zero]

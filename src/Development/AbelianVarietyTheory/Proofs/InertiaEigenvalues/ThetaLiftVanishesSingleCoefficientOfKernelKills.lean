@@ -67,7 +67,8 @@ theorem integral_expand {H W ι : Type} [MeasurableSpace H] (ν : Measure H) (s 
   have e : ∀ h, θ h * l (F h) = ∑ k, l (b k) * (θ h * b.coord k (F h)) := by
     intro h
     conv_lhs => rw [← b.sum_repr (F h)]
-    rw [map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_smul, smul_eq_mul, Module.Basis.coord_apply]
     ring
@@ -148,7 +149,8 @@ theorem theta_expand (x : LowT (R.MW i (sg0 D A))) {ι : Type} [Fintype ι] (b :
     thetaKO (R.ωP i t) h g (phi R i t x w) = ∑ k, thetaKO (R.ωP i t) h g (phi R i t x (b k)) * b.coord k w := by
   conv_lhs => rw [← b.sum_repr w]
   unfold phi
-  rw [map_sum, pureTensor_sum, thetaKO_eq_lin, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, pureTensor_sum, thetaKO_eq_lin, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [map_smul, pureTensor_smul, map_smul, smul_eq_mul, mul_comm, Module.Basis.coord_apply, ← thetaKO_eq_lin]
 
@@ -177,7 +179,8 @@ theorem exists_op
     simp only [hsm, mul_smul, RingHom.id_apply, Finset.smul_sum]
   · intro w l
     show l (∑ k, downInt R i t y (phi R i t x w) (b.coord k) g • b k) = _
-    rw [map_sum, downInt_expand R i t y _ g b (fun k => hint _ _ (hth _)) l]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, downInt_expand R i t y _ g b (fun k => hint _ _ (hth _)) l]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_smul, smul_eq_mul, mul_comm]
 

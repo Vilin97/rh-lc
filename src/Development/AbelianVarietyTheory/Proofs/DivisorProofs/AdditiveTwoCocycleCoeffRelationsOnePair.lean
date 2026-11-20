@@ -39,7 +39,8 @@ theorem coeff_mono3 (a b c i j l : ℕ) (r : ℕ) :
 theorem coeff_left (p q i j l : ℕ) :
     coeff (ex3 i j l) ((X 0 + X 1) ^ p * X 2 ^ q : MvPowerSeries (Fin 3) R) =
       if p = i + j ∧ q = l then (p.choose i : R) else 0 := by
-  rw [add_pow, Finset.sum_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [add_pow, Finset.sum_mul, map_sum]
   simp only [mul_right_comm _ (_ : MvPowerSeries (Fin 3) R) (X 2 ^ q)]
   have h : ∀ k, coeff (R := R) (ex3 i j l) (X 0 ^ k * X 2 ^ q * X 1 ^ (p - k) * ((p.choose k : ℕ) :
       MvPowerSeries (Fin 3) R)) = if k = i ∧ p - k = j ∧ q = l then (p.choose k : R) else 0 := by
@@ -58,7 +59,8 @@ theorem coeff_left (p q i j l : ℕ) :
 theorem coeff_right (p q i j l : ℕ) :
     coeff (ex3 i j l) (X 0 ^ p * (X 1 + X 2) ^ q : MvPowerSeries (Fin 3) R) =
       if p = i ∧ q = j + l then (q.choose j : R) else 0 := by
-  rw [add_pow, Finset.mul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [add_pow, Finset.mul_sum, map_sum]
   simp only [← mul_assoc, coeff_mono3]
   rw [Finset.sum_eq_single j]
   · by_cases hp : j ≤ q

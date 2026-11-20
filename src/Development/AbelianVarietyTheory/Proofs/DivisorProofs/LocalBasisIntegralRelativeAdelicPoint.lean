@@ -147,7 +147,8 @@ theorem locBasis_integral : ∀ {D : D7} (V : Formalism.BasicNotions.TH.HSp D) (
     norm_natCast_eq_one' hs, one_mul] at h
   rw [← map_inv, Units.val_mul, Matrix.mul_apply]
   refine le_of_eq_of_le (congrArg norm ?_) h
-  rw [Matrix.mulVec, dotProduct, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.mulVec, dotProduct, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [map_mul, hev.1]
   rfl

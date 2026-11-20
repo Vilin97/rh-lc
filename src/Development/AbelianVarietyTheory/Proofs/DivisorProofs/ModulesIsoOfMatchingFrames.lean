@@ -24,7 +24,8 @@ theorem IsFrame.app_equiv_of_app_eq {X : Scheme.{0}} {F₁ F₂ E : X.Modules} (
     (h₁ : IsFrame s₁) (h₂ : IsFrame s₂) (h : ∀ j, m₁.app U (s₁ j) = m₂.app U (s₂ j))
     (hV : V ≤ U) (s : Γ(F₁, V)) : m₂.app V (h₁.equiv h₂ hV s) = m₁.app V s := by
   obtain ⟨a, rfl⟩ := (h₁ V hV).2 s
-  simp only [Fintype.linearCombination_apply, map_sum, map_smul, IsFrame.equiv_resM_frame,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Fintype.linearCombination_apply, map_sum, map_smul, IsFrame.equiv_resM_frame,
     Scheme.Modules.Hom.app_smul, app_resM, h]
 
 theorem exists_iso_of_frames_app_eq :

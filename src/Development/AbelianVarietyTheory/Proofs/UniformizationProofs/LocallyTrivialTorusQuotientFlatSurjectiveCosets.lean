@@ -250,7 +250,8 @@ theorem exists_point {Z : Over S} {g g' : Z ⟶ G} (hg : ⊤ ≤ g.left ⁻¹ᵁ
   apply CommRingCat.hom_ext
   ext a
   obtain ⟨c, rfl⟩ := exists_sum hV h₀ hU u hu a
-  simp only [Finsupp.sum, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finsupp.sum, map_sum, map_mul]
   refine Finset.sum_congr rfl fun χ _ => ?_
   rw [(h₀ _).2 ⟨c χ, rfl⟩ Z t g h₁ hg, hu χ Z t g h₁ hg, ← chV_val t (0 : X), chV_zero, Units.val_one,
     _root_.one_mul, ← chV_val t χ, hq, ← hχ]

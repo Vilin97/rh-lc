@@ -50,7 +50,8 @@ theorem cnt_triples {α γ ι : Type} {E : α → α → Prop} (hE : Equivalence
       exact and_congr_right fun hq => (hR p hp q hq).symm
   have e2 := e1.trans (FrEqv.encard_biUnion_le' S _)
   refine (ENat.toENNReal_le.2 e2).trans ?_
-  rw [show ((∑ i ∈ S, ((c '' Y₁ i) ×ˢ (c '' Y₂ i)).encard : ℕ∞) : ℝ≥0∞) =
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [show ((∑ i ∈ S, ((c '' Y₁ i) ×ˢ (c '' Y₂ i)).encard : ℕ∞) : ℝ≥0∞) =
     ∑ i ∈ S, ((((c '' Y₁ i) ×ˢ (c '' Y₂ i)).encard : ℕ∞) : ℝ≥0∞) from map_sum ENat.toENNRealRingHom _ _]
   refine (Finset.sum_le_card_nsmul S _ (K * K) fun i hi => ?_).trans ?_
   · rw [Set.encard_prod, ENat.toENNReal_mul, ← FrEqv.cntCl_eq_encard hE, ← FrEqv.cntCl_eq_encard hE]

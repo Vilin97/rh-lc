@@ -118,7 +118,8 @@ theorem exists_flag_frame (τ : Ψ) {z : (Σ k, ι k) → L} (hz : IsPt y z) {F 
       exact mul_div_mul_left _ _ hdet
     have hO : ∀ I, η * minorIJ h I (stepCols N j i) ∈ regO y z := fun I => by
       by_cases hI : IsStepRows N j i I
-      · rw [← dual_sum i (fun m I => am (F.u ⟨k, m⟩ I)) (fun I m => am (F.u' I ⟨k, m⟩)) (fun I I' h1 h2 => by
+      set_option synthInstance.maxHeartbeats 100000 in
+        · rw [← dual_sum i (fun m I => am (F.u ⟨k, m⟩ I)) (fun I m => am (F.u' I ⟨k, m⟩)) (fun I I' h1 h2 => by
           have := congrArg am (hF.2.2.1 (τ, i) k hk I I' h1 h2)
           rw [map_sum] at this
           simp only [map_mul] at this
@@ -137,7 +138,8 @@ theorem exists_flag_frame (τ : Ψ) {z : (Σ k, ι k) → L} (hz : IsPt y z) {F 
       rw [← this]
       exact Finset.sum_congr rfl fun I _ => by ring)
     have h2 := congrArg (valO hz) h1
-    rw [map_sum, map_one] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_one] at h2
     obtain ⟨I, -, hI⟩ := Finset.exists_ne_zero_of_sum_ne_zero (h2.trans_ne one_ne_zero)
     rw [map_mul] at hI
     have h3 := hasVal_valO hz ⟨_, hO I⟩

@@ -63,7 +63,8 @@ theorem bcAt_fin (hJ : Formalism.MainNotions.N.GlobalTheory.CoefJumpGen) (Th : L
   have hli : LinearIndependent ↥LL.1 b := linInd_frac (O := ↥(OL LL)) b hliO
   have hy : ∀ a : ↥(OL LL'), algebraMap ↥(OL LL') ↥LL'.1 a ∈ Submodule.span ↥LL.1 (Set.range b) := by
     intro a
-    rw [← bO.sum_repr a, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← bO.sum_repr a, map_sum]
     refine Submodule.sum_mem _ fun i _ => ?_
     have e : algebraMap ↥(OL LL') ↥LL'.1 (bO.repr a i • bO i) =
         (algebraMap ↥(OL LL) ↥LL.1 (bO.repr a i)) • b i := by

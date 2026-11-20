@@ -39,7 +39,8 @@ theorem besselIntg_sum (L : LocBessel k r) {ι : Type} (s : Finset ι)
     (g : Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ) (p : PairSp k r) :
     besselIntg L (fun q => ∑ a ∈ s, F a q) g p = ∑ a ∈ s, besselIntg L (F a) g p := by
   ext η
-  simp [besselIntg, ContinuousLinearMap.sum_apply, map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [besselIntg, ContinuousLinearMap.sum_apply, map_sum, Finset.smul_sum]
 
 theorem ampTK_pt (H : BranchingSupport.Hyps) (L : LocBessel k r) (h : ℝ) (μG : Measure (Mt k r)) (l : L.Hs → L.Wp)
     (l' : L.Hs → L.Wq) (hgap : GapAtLeast L.ε L.lam h) (hok : Formalism.FourierDecayAlt.ThreeDimData.GapOK k r h)
@@ -178,7 +179,8 @@ theorem oneAt : BranchingSupport.Hyps → ∀ (k r : ℕ) (L : Formalism.MainNot
     intro T
     ext η
     conv_lhs => rw [← e.sum_repr' η]
-    simp [ContinuousLinearMap.sum_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [ContinuousLinearMap.sum_apply, map_sum]
   have hFe : ∀ g ∈ UH (Hpk k r), F g = ∑ i, ∑ j, coefF L (x i) (y i) (X i (e j)) (e j) g := by
     intro g hg
     rw [hF g hg]
@@ -207,7 +209,8 @@ theorem oneAt : BranchingSupport.Hyps → ∀ (k r : ℕ) (L : Formalism.MainNot
   simp only [hc]
   rw [← Finset.sum_smul]
   congr 1
-  conv_rhs => rw [← e.sum_repr' (l' (y i)), map_sum, inner_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_rhs => rw [← e.sum_repr' (l' (y i)), map_sum, inner_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_smul, inner_smul_right, mul_comm]
 

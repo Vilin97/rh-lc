@@ -83,7 +83,8 @@ theorem jetAddDeg_of (dg : X.Tau → ℕ) (hfin : LatFin (X := X) a b Sall) (had
     rw [Finset.sum_apply, _root_.sum_apply]
   choose k hk using fun z => hrat N N' (c * c') (x + rep z) (hRz z) m hm
   have h3 : (A.chiF a b N N')⁻¹ * jetC A.cD (A.thInd Sall N N' c x) m = A.σ₀ (∑ z, k z) := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [hk]
     unfold jetC
     rw [h2, Finset.mul_sum, Finset.mul_sum]
@@ -239,7 +240,8 @@ theorem kernel_table_spec_degree : TabKSpecD := by
   have h4 : A.tabK Sall cA cB N N' Ξ m = ∑ z, Ξ (rep z) * A.jetK Sall N N' cB (rep z) m := by
     unfold Amb.tabK latSum
     rw [finsum_eq_sum_of_fintype]
-  rw [h4, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h4, map_sum]
   unfold jetC
   rw [h2, Finset.mul_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun z _ => ?_

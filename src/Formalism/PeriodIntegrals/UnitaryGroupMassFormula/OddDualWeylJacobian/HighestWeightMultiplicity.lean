@@ -115,7 +115,8 @@ theorem good_rowGen (a b : Fin k) (hδ : ∀ s, wt (a, s) = wt (b, s) + δ) {d :
     refine good_congr ?_ (good_mul h1 h2)
     rw [← hw, Finsupp.weight_apply, Finsupp.sum]
     simp [nsmul_eq_mul]
-  rw [f.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [f.as_sum, map_sum]
   intro i
   rw [Polynomial.finsetSum_coeff, ← mem_weightedHomogeneousSubmodule]
   refine Submodule.sum_mem _ fun m hm => ?_
@@ -210,7 +211,8 @@ theorem rowGen_diag (a : Fin k) {d : ℕ} {f : MvPolynomial (Fin k × Fin k) R}
     rowGen R a a f = (1 + Polynomial.X) ^ d * Polynomial.C f := by
   conv_lhs => rw [f.as_sum]
   conv_rhs => rw [f.as_sum]
-  rw [map_sum, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun m hm => ?_
   have hw : Finsupp.weight (rowW a) m = d := hf (mem_support_iff.mp hm)
   have hC : rowGen R a a (C (AddMonoidAlgebra.coeff f m) : MvPolynomial (Fin k × Fin k) R) = Polynomial.C (C (AddMonoidAlgebra.coeff f m) : MvPolynomial (Fin k × Fin k) R) := by

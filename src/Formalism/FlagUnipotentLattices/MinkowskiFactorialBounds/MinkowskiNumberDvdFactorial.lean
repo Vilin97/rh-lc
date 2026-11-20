@@ -422,7 +422,8 @@ lemma gsK (h : U →ₗ[K] U →ₗ⋆[K] K) (herm : ∀ x y : U, star (h x y) =
     have hLll : L (Fin.last s) (Fin.last s) = 1 := by simp [L]
     have hglo : ∀ b, h gl (g₀ b) = 0 := by
       intro b
-      simp only [gl, map_sub, map_sum, map_smul, LinearMap.sub_apply, LinearMap.sum_apply,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [gl, map_sub, map_sum, map_smul, LinearMap.sub_apply, LinearMap.sum_apply,
         LinearMap.smul_apply, smul_eq_mul]
       rw [Finset.sum_eq_single b]
       · by_cases h0 : h (g₀ b) (g₀ b) = 0
@@ -459,7 +460,8 @@ lemma bmatK (h' : U →ₗ[K] U →ₗ⋆[K] K) {m : ℕ} (e f : Fin m → U) (A
     (u w : Fin m → U) (hu : ∀ i, u i = ∑ k, A i k • e k) (hw : ∀ j, w j = ∑ l, C j l • f l) :
     (Matrix.of fun i j => h' (u i) (w j)) = A * (Matrix.of fun k l => h' (e k) (f l)) * Cᴴ := by
   ext i j
-  simp only [Matrix.of_apply, hu, hw, map_sum, map_smul, LinearMap.sum_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.of_apply, hu, hw, map_sum, map_smul, LinearMap.sum_apply,
     LinearMap.smul_apply, map_smulₛₗ, smul_eq_mul, Matrix.mul_apply,
     Matrix.conjTranspose_apply, Finset.sum_mul, Finset.mul_sum, starRingEnd_apply]
   exact Finset.sum_congr rfl fun l _ => Finset.sum_congr rfl fun k _ => by ring
@@ -478,17 +480,20 @@ lemma besselK (σ : K →+* ℂ) (h : U →ₗ[K] U →ₗ⋆[K] K) (hσ : ∀ x
   set y' : U := y - ∑ a, c a • g a with hy'
   have h1 : ∀ b, h y' (g b) = 0 := by
     intro b
-    simp only [hy', map_sub, map_sum, map_smul, LinearMap.sub_apply, LinearMap.sum_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hy', map_sub, map_sum, map_smul, LinearMap.sub_apply, LinearMap.sum_apply,
       LinearMap.smul_apply, smul_eq_mul]
     rw [Finset.sum_eq_single b]
     · simp only [c]; rw [div_mul_cancel₀ _ (hd b), sub_self]
     · intro a _ ha; rw [horth a b ha, mul_zero]
     · intro hb; exact absurd (Finset.mem_univ b) hb
   have h2 : h y' y' = h y' y := by
-    conv_lhs => rw [hy', (h y').map_sub, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [hy', (h y').map_sub, map_sum]
     simp [h1]
   have h3 : h y' y = h y y - ∑ a, c a * h (g a) y := by
-    simp only [hy', map_sub, map_sum, map_smul, LinearMap.sub_apply, LinearMap.sum_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hy', map_sub, map_sum, map_smul, LinearMap.sub_apply, LinearMap.sum_apply,
       LinearMap.smul_apply, smul_eq_mul]
   have h4 : ∀ a, (σ (c a * h (g a) y)).re = ‖σ (h (g a) y)‖ ^ 2 / (σ (h (g a) (g a))).re := by
     intro a
@@ -503,7 +508,8 @@ lemma besselK (σ : K →+* ℂ) (h : U →ₗ[K] U →ₗ⋆[K] K) (hσ : ∀ x
     rw [e2, Complex.ofReal_re]
     simp
   have h5 := hnn y'
-  rw [h2, h3, map_sub, map_sum, Complex.sub_re, Complex.re_sum] at h5
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h2, h3, map_sub, map_sum, Complex.sub_re, Complex.re_sum] at h5
   simp only [h4] at h5
   linarith
 

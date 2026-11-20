@@ -251,12 +251,14 @@ theorem sum_T0_mul_ratio_eq_one : ∑ k, algebraMap (Kp X la N) (Frac0 X la w) (
   have hL : ∑ k, algebraMap (Kp X la N) (Lw X la w) (algebraMap (Op X la N) (Kp X la N) (Tv X la N (0, k))) *
       frac X la w 1 (emb X la N (X.inc wL (w k))) = 1 := by
     simp_rw [e]
-    rw [← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum]
     show frac X la w 1 (sec X la w 0) = 1
     rw [frac_apply, pow_one, section_mul_inverse_eq_one]
   apply Subtype.ext
   show (Frac0 X la w).val (∑ k, _) = (Frac0 X la w).val 1
-  rw [map_sum, map_one]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_one]
   simp only [map_mul, AlgHom.commutes]
   exact hL
 
@@ -264,12 +266,14 @@ theorem sfr_eq_sum (i : Fin (WeightFamilies.dimY D j)) : sfr X la w i.succ =
     ∑ k, algebraMap (Kp X la N) (Frac0 X la w) (algebraMap (Op X la N) (Kp X la N) (Tv X la N (i.succ, k))) * xr X la w k := by
   apply Subtype.ext
   show (Frac0 X la w).val (sfr X la w i.succ) = (Frac0 X la w).val (∑ k, _)
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [map_mul, AlgHom.commutes]
   show frac X la w 1 (sec X la w i.succ) = ∑ k, algebraMap (Kp X la N) (Lw X la w)
     (algebraMap (Op X la N) (Kp X la N) (Tv X la N (i.succ, k))) * frac X la w 1 (emb X la N (X.inc wL (w k)))
   unfold sec
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [LinearMap.map_smul, Algebra.smul_def]
 

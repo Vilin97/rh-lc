@@ -164,7 +164,8 @@ theorem slopeInequality_of (h : SlopeLeMuMax.{v}) : SlopeInequality.{u, v} := by
       ‖∑ i, (n i : ℝ) • ((φ (b i) : M) : F)‖ ≤ C * ‖∑ i, (n i : ℝ) • (b i : E)‖ := by
     intro n
     have h2 := hC (∑ i, n i • b i)
-    simp only [map_sum, map_zsmul, Submodule.coe_sum, Submodule.coe_smul] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_zsmul, Submodule.coe_sum, Submodule.coe_smul] at h2
     simpa only [Int.cast_smul_eq_zsmul] using h2
   have hreal := norm_sum_smul_le_of_int (fun i => (b i : E))
     (fun i => ((φ (b i) : M) : F)) C hint

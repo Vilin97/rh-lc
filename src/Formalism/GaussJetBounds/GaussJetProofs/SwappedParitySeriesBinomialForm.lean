@@ -16,7 +16,8 @@ theorem bnx_lin_pow {K : Type u} [Field K] {σ : Type*} [DecidableEq σ] (x y : 
       ∑ r ∈ Finset.range (k + 1),
         if Finsupp.single x r + Finsupp.single y (k - r) = μ then
           a ^ r * b ^ (k - r) * (k.choose r : K) else 0 := by
-  rw [add_pow, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [add_pow, map_sum]
   refine Finset.sum_congr rfl fun r _ => ?_
   have e : (C a * X x : MvPowerSeries σ K) ^ r * (C b * X y) ^ (k - r) *
       ((k.choose r : ℕ) : MvPowerSeries σ K) =

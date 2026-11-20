@@ -280,7 +280,8 @@ theorem dof_comp_endo : ∀ (R : Type) [CommRing R] (d : ℕ) (G : FGLaw R d) (�
     rw [Finset.mul_sum]
     exact Finset.sum_congr rfl fun x _ => by ring
   conv_lhs => rw [Finset.sum_comm]
-  simp only [step, jac_endo G φ hφ hom c, Matrix.mulVec, dotProduct, map_sum, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [step, jac_endo G φ hφ hom c, Matrix.mulVec, dotProduct, map_sum, map_mul,
     Finset.mul_sum, Finset.sum_mul]
   conv_lhs => rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun b _ => Finset.sum_congr rfl fun i _ => by ring

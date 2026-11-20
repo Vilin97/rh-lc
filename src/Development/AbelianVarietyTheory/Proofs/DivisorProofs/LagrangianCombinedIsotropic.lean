@@ -53,7 +53,8 @@ lemma pairMap_surjective {m : ℕ} (g : Fin m → (κ → k) × (κ → k)) (hg 
     intro v
     have h1 := LinearMap.congr_fun hψ v
     rw [LinearMap.dualMap_apply, LinearMap.zero_apply, LinearMap.pi_apply_eq_sum_univ] at h1
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine (Finset.sum_congr rfl fun j _ => ?_).trans h1
     rw [map_smul, smul_eq_mul, smul_eq_mul, pairMap_apply, mul_comm]
   have hz := (Fintype.linearIndependent_iff.1 hg) _ key
@@ -189,15 +190,18 @@ theorem exists_frame : ∀ {k : Type} [Field k] {κ : Type} [Fintype κ] (U : Su
   obtain ⟨e, he, hef⟩ := exists_dual f hf hfi
   have hT : ∀ Y Y', form (Fintype.linearCombination k e Y) (Fintype.linearCombination k e Y') = 0 := by
     intro Y Y'
-    simp [Fintype.linearCombination_apply, map_sum, map_smul, he]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Fintype.linearCombination_apply, map_sum, map_smul, he]
   have hM : ∀ z z', form (Fintype.linearCombination k f z) (Fintype.linearCombination k f z') = 0 := by
     intro z z'
     have hf' : ∀ a b, form (f a) (f b) = 0 := hfi
-    simp [Fintype.linearCombination_apply, map_sum, map_smul, hf']
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Fintype.linearCombination_apply, map_sum, map_smul, hf']
   have hTM : ∀ Y z, form (Fintype.linearCombination k e Y) (Fintype.linearCombination k f z)
       = Y ⬝ᵥ z := by
     intro Y z
-    simp [Fintype.linearCombination_apply, map_sum, map_smul, hef, dotProduct, mul_comm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Fintype.linearCombination_apply, map_sum, map_smul, hef, dotProduct, mul_comm]
   refine ⟨Fintype.card κ, Fintype.linearCombination k e, Fintype.linearCombination k f,
     Finset.univ.filter (fun j : Fin (Fintype.card κ) => (j : ℕ) < Module.finrank k U),
     hT, hM, hTM, ?_, ?_⟩

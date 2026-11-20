@@ -66,7 +66,8 @@ theorem k3Vd (n : ℕ) : QuotientHighestWeightTensorDual n := by
     obtain ⟨f, hf, rfl⟩ := Submodule.mem_map.1 hy
     have hfg := hXg f hf
     have h1 : casimir EN (φ f) = φ (casimir (tensVd E) f) := by
-      simp only [casimir, LinearMap.sum_apply, Module.End.mul_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [casimir, LinearMap.sum_apply, Module.End.mul_apply, map_sum]
       refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
       rw [← hφ b a f hfg, ← hφ a b _ (dualTensorAction_mem hGs b a hfg)]
     have h2 := ((tens_statement n) (↥D) E hE).2.2.2 f

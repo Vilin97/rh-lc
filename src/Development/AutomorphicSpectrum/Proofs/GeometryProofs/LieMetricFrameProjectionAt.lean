@@ -70,7 +70,8 @@ theorem ev_sum {X : Scheme.{0}} {Ω : Type} [Field Ω] {ξ : Sp Ω ⟶ X} {z : S
     apply Subtype.ext
     rw [Submodule.coe_sum]
     exact hwe
-  rw [h1, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h1, map_sum]
   exact Finset.sum_congr rfl fun l _ => hev _ _ _ (hc l)
 
 theorem gram_val : ∀ (X : Scheme.{0}) (Ω : Type) [Field Ω] (ξ : Sp Ω ⟶ X) (K : Type) (J : K → Type)

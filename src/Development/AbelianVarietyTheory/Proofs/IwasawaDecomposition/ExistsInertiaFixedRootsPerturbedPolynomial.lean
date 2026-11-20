@@ -42,7 +42,8 @@ theorem eq_of_perturbed_pow_sub_one {R : Type*} [CommRing R] [IsDomain R] [IsLoc
     rw [h0, zero_pow hmpos] at hy1
     exact zero_ne_one hy1
   have := congrArg (IsLocalRing.residue R) hS'
-  simp only [map_sum, map_mul, map_pow, hu0, zero_mul, hzy0] at this
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, map_pow, hu0, zero_mul, hzy0] at this
   rw [geom_sum₂_self] at this
   exact mul_ne_zero hm0 (pow_ne_zero _ hy0) this
 

@@ -78,7 +78,8 @@ theorem shear_mem_isomG {Hm : Matrix (Fin n) (Fin n) E} (h : IsHerm L Hm) {m : �
   intro v w
   have hw : ∀ k, hf L Hm (d k) w = ∑ j, L.cj (hf L Hm w (b j)) * hf L Hm (d k) (c j) := by
     intro k
-    rw [← hf_cj L h, hv, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hf_cj L h, hv, map_sum]
     simp only [map_mul, hf_cj L h]
   simp only [shear_apply, hf_add_l, hf_add_r, hf_sum_l, hf_sum_r, hf_smul_l, hf_smul_r, hdd,
     mul_zero, Finset.sum_const_zero, add_zero]

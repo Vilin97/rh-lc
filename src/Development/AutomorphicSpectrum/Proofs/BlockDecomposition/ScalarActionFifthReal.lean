@@ -337,9 +337,11 @@ theorem polyTopLocal {n : ℕ} (L : Fin n → ℝ) (hL : StrictAnti L) (lev : Fi
       have hne2 : (univ.filter fun a => π' a = j).Nonempty := Finset.card_pos.1 (hcj' ▸ Finset.card_pos.2 hne)
       have h := ht j hj
       have e1 : (Q j).coeff ((blk lev j).card - 1) = ψ (∑ a ∈ univ.filter (fun a => π a = j), (L a : ℂ)) := by
-        rw [hQ j hj, hcj, coeff_prod_top _ hne1, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [hQ j hj, hcj, coeff_prod_top _ hne1, map_sum]
       have e2 : (Q' j).coeff ((blk lev j).card - 1) = ψ (∑ a ∈ univ.filter (fun a => π' a = j), (L a : ℂ)) := by
-        rw [hQ' j hj, hcj', coeff_prod_top _ hne2, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [hQ' j hj, hcj', coeff_prod_top _ hne2, map_sum]
       rw [e1, e2, ← map_add] at h
       have h2 := hψ h
       apply Complex.ofReal_injective
@@ -396,7 +398,8 @@ theorem coeffs_zero {V : Type*} [AddCommGroup V] [Module ℂ V] (N : ℕ) (d : �
   have hp : (∑ k ∈ range N, C (φ (d k)) * X ^ k : ℂ[X]) = 0 := by
     refine Polynomial.funext fun Y => ?_
     have := congrArg φ (h Y)
-    simp only [map_sum, map_smul, smul_eq_mul, map_zero] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, smul_eq_mul, map_zero] at this
     simp only [eval_finset_sum, eval_mul, eval_C, eval_pow, eval_X, eval_zero]
     rw [← this]
     exact Finset.sum_congr rfl fun k _ => mul_comm _ _
@@ -418,7 +421,8 @@ theorem coeff_mem_of_values {A : Type} [AddCommGroup A] [Module ℂ A] (W : Subm
   intro k hk
   have := coeffs_zero N (fun i => W.mkQ (c i)) (fun Y => by
     have h0 := (Submodule.Quotient.mk_eq_zero W).2 (h Y)
-    rw [← Submodule.mkQ_apply, map_sum] at h0
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Submodule.mkQ_apply, map_sum] at h0
     simpa only [map_smul] using h0) k hk
   exact (Submodule.Quotient.mk_eq_zero W).1 this
 
@@ -486,7 +490,8 @@ theorem capPoly {R : Type} [CommRing R] [Nontrivial R] [Algebra ℂ R] {A : Type
   refine ⟨X ^ t + r, monic_X_pow_add hdeg, by rw [natDegree_add_eq_left_of_degree_lt (by rwa [degree_X_pow]), natDegree_X_pow], fun u => ?_, fun k hk => ?_⟩
   · rw [hq u, Finset.sum_range_succ, h1, eval_add, eval_pow, eval_X, map_add, map_pow, add_comm]
     congr 1
-    · rw [hr, eval_finset_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [hr, eval_finset_sum, map_sum]
       refine Finset.sum_congr rfl fun k hk => ?_
       rw [eval_mul, eval_C, eval_pow, eval_X, map_mul, map_pow, hd k (by
         have := Finset.mem_range.1 hk

@@ -77,7 +77,8 @@ theorem conj_units_eq {F E : Type} [Field F] [NumberField F] [Field E] [NumberFi
     have e2 := congrArg τ e1
     rw [map_zero] at e2
     rw [← e2, ← GlobalTheory.CentreFin.map_cT_emb hcm τ A, ← Matrix.map_mul]
-    simp [Matrix.mul_apply, Matrix.mulVec, dotProduct, hP, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Matrix.mul_apply, Matrix.mulVec, dotProduct, hP, map_sum, map_mul]
   have what₂ := rows_of_adapted (P := P) hxx hyy hxy hyx hC.le
     (fun c k e a => by rw [hP, Matrix.map_apply, hC.colX c k e a, Matrix.map_apply])
     (fun c k e a => by rw [hP, Matrix.map_apply, hC.columnBlock c k e a, Matrix.map_apply])

@@ -35,7 +35,8 @@ theorem incM_mulVec' {m n : ℕ} (A : Matrix (Fin m) (Fin n) E) (v : Fin n → E
   ext i; simp [incM, incV, Matrix.mulVec, dotProduct, map_sum]
 
 theorem incV_dot' {n : ℕ} (a b : Fin n → E) : incV F a ⬝ᵥ incV F b = inclR (F := F) (AF F) (a ⬝ᵥ b) := by
-  simp [incV, dotProduct, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [incV, dotProduct, map_sum]
 
 theorem incM_mul' {m n k : ℕ} (A : Matrix (Fin m) (Fin n) E) (B : Matrix (Fin n) (Fin k) E) :
     incM F (A * B) = incM F A * incM F B := by
@@ -135,7 +136,8 @@ theorem form_ι {d d₁ : ℕ} (J : Matrix (Fin d) (Fin d) E) (ι : Matrix (Fin 
 
 theorem form_swap {d : ℕ} (J : Matrix (Fin d) (Fin d) E) (hσ : ∀ a, σ (σ a) = a) (hJ : ∀ i j, σ (J j i) = -J i j)
     (u v : Fin d → E) : form σ J u v = -σ (form σ J v u) := by
-  simp only [form, Matrix.mulVec, dotProduct, map_sum, map_mul, hσ, hJ, Finset.mul_sum, ← Finset.sum_neg_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, Matrix.mulVec, dotProduct, map_sum, map_mul, hσ, hJ, Finset.mul_sum, ← Finset.sum_neg_distrib]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   ring

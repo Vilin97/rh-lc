@@ -27,7 +27,8 @@ theorem parToFrac_parY (e n : ℕ) (v : HeightOneSpectrum (𝓞 K)) (p : Par e n
 
 theorem map_linForm {R S : Type*} [CommRing R] [CommRing S] {n : ℕ} (f : R →+* S) (u : Fin n → R) :
     MvPolynomial.map f (linForm u) = linForm (fun j => f (u j)) := by
-  simp [linForm, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [linForm, map_sum]
 
 theorem map_integralModel {n : ℕ} (I : Ideal (MvPolynomial (Fin n) K)) :
     (integralModel I).map (MvPolynomial.map (algebraMap (𝓞 K) K)) = I := by

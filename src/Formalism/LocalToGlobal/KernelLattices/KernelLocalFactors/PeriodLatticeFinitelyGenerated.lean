@@ -412,7 +412,8 @@ theorem liftL_subD (h : a ≤ b) {β : ι → Matrix (Fin b) (Fin b) K} (hβ : I
     apply MvPolynomial.algHom_ext
     rintro ⟨τ, α, s⟩
     have hs : s.1 < b := lt_of_lt_of_le s.2 h
-    simp only [AlgHom.comp_apply, subD, colSub, aeval_X, dif_pos hs, map_sum, map_mul, liftL, Sum.elim_inl, Sum.elim_inr, rename_X,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [AlgHom.comp_apply, subD, colSub, aeval_X, dif_pos hs, map_sum, map_mul, liftL, Sum.elim_inl, Sum.elim_inr, rename_X,
       algHom_C, algebraMap_eq]
     have h1 : ∀ r : Fin a, (r : ℕ) < b := fun r => lt_of_lt_of_le r.2 h
     simp only [dif_pos (h1 _)]
@@ -607,7 +608,8 @@ theorem frPolyG_colSub (fr : Y → ι → Matrix (Fin a) (Fin a) ℂ) (β : ι �
     · intro c
       simp [colSub]
     · intro v
-      simp only [RingHom.comp_apply, AlgHom.toRingHom_eq_coe, RingHom.coe_coe, colSub, aeval_X, map_sum, map_mul, eval_C, eval_X,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [RingHom.comp_apply, AlgHom.toRingHom_eq_coe, RingHom.coe_coe, colSub, aeval_X, map_sum, map_mul, eval_C, eval_X,
         Matrix.mul_apply]
       exact Finset.sum_congr rfl fun r _ => mul_comm _ _
   exact RingHom.congr_fun e Q
@@ -753,7 +755,8 @@ theorem colSc_hom {ν : Fin n → ℕ} {F : MvPolynomial (Fin r × Fin n) K} (hF
   classical
   conv_lhs => rw [F.as_sum]
   conv_rhs => rw [F.as_sum]
-  rw [map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.smul_sum]
   refine Finset.sum_congr rfl fun m hm => ?_
   rw [colSc_monomial]
   congr 2
@@ -789,7 +792,8 @@ theorem colOne_eq (β : Matrix (Fin n) (Fin n) K) (hβ : ∀ w s, s < w → β w
   simp only [colOne, colSc, colAddS, AlgHom.comp_apply, aeval_X]
   split_ifs with h
   · rw [sum_split t _ fun w hw => by rw [hβ w t hw, C_0, zero_mul]]
-    rw [map_add, aeval_X, if_pos h, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_add, aeval_X, if_pos h, map_sum]
     congr 1
     · obtain ⟨a, s⟩ := v
       simp only at h
@@ -817,7 +821,8 @@ theorem colSub1_cut (β : Matrix (Fin n) (Fin n) K) (t : Fin n) (hid : ∀ s, s 
   simp only [colSub1, colOne, AlgHom.comp_apply, aeval_X]
   split_ifs with h
   · subst h
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun w _ => ?_
     rw [map_mul, algHom_C, aeval_X]
     by_cases hw : s < w
@@ -1490,7 +1495,8 @@ theorem kernel_combination_form : KerCombOf := by
     have hq : ∀ k α, TaylorLogMetric.taylor D (TaylorLogMetric.U D (TaylorLogMetric.tor0 D cc δ) (t k) (e N N' L L')) α ∈ TaylorLogMetric.Qbar := fun k α =>
       halg (t k) (by obtain ⟨a, ha, -, hm⟩ := ht k; exact ⟨a, ha, hm⟩) α
     ext α
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     have h1 : MvPowerSeries.coeff α (TaylorLogMetric.pSer D lam Θ) = TaylorLogMetric.lamC lam (TaylorLogMetric.taylor D Θ α) := rfl
     rw [h1, hΘ, taylor_sum D r _ hU, lamC_sum lam _ _ fun k _ => mul_mem (hr k) (hq k α)]
     refine Finset.sum_congr rfl fun k _ => ?_
@@ -1565,7 +1571,8 @@ theorem matOf_mulVec (y : HomE X.E a b) (n : Sp X.E a) : (matOf s y).mulVec (fun
   have hn : n = ∑ j, n j • (Pi.single j (1 : X.E) : Sp X.E a) := by
     ext k; simp [Finset.sum_apply, Pi.single_apply]
   conv_rhs => rw [hn]
-  simp only [Matrix.mulVec, dotProduct, matOf, map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mulVec, dotProduct, matOf, map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_mul]
   exact Finset.sum_congr rfl fun j _ => mul_comm _ _
 
 theorem matOf_mem (N : Submodule (𝓞 X.E) (Sp X.E a)) (N' : Submodule (𝓞 X.E) (Sp X.E b)) {y : HomE X.E a b} (hy : y ∈ homO N N') :

@@ -40,7 +40,8 @@ theorem isCompact_intHat : IsCompact (intHat F E : Set (AE F E)) := by
       change ∑ j, (c j • a) • inclR (F := F) (AF F) ((s j : 𝓞 E) : E) =
         a • inclR (F := F) (AF F) (((∑ j, c j • s j : 𝓞 E)) : E)
       have hc : (((∑ j, c j • s j : 𝓞 E)) : E) = ∑ j, c j • ((s j : 𝓞 E) : E) := by push_cast; rfl
-      rw [hc, map_sum, Finset.smul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hc, map_sum, Finset.smul_sum]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [map_zsmul, smul_assoc, smul_comm]
     · rintro _ ⟨a, rfl⟩

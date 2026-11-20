@@ -87,7 +87,8 @@ theorem mem_span_of_aeval_eq_zero {O O' : Type} [CommRing O] [CommRing O'] [IsDo
     have hu : (fun q => (u q : O') - 1) = x := by ext q; simp [u]
     have h0 := hh u (fun q => Units.ext (by simpa [u] using hx1 q))
       (fun a => Units.ext (by simpa [u] using Finset.mem_singleton.1 (hx (.inr a))))
-    rw [hu, hf, map_add, Finsupp.linearCombination_apply, Finsupp.sum, map_sum, Finset.sum_eq_zero, zero_add] at h0
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hu, hf, map_add, Finsupp.linearCombination_apply, Finsupp.sum, map_sum, Finset.sum_eq_zero, zero_add] at h0
     · rw [eval_map, ← aeval_def, h0]
     · rintro (i | i) _
       · have := hx1 (.inl i)
@@ -332,7 +333,8 @@ theorem isUnit_det_of_eigen {O : Type} [CommRing O] [IsLocalRing O] [IsAlgClosed
   have hφr : LinearMap.range φ = Submodule.span O (Set.range bs) := Fintype.range_linearCombination O bs
   have hφT : ∀ k p, good k p → ∀ v, T k p (φ v) = φ ((t k p).mulVec v) := by
     intro k p hg v
-    simp only [φ, Fintype.linearCombination_apply, map_sum, map_smul, ht k p hg, Matrix.mulVec, dotProduct,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [φ, Fintype.linearCombination_apply, map_sum, map_smul, ht k p hg, Matrix.mulVec, dotProduct,
       Finset.sum_smul, Finset.smul_sum, smul_smul]
     rw [Finset.sum_comm]
     simp only [mul_comm]
@@ -411,7 +413,8 @@ theorem isUnit_det_of_eigen {O : Type} [CommRing O] [IsLocalRing O] [IsAlgClosed
       simp only [Pi.sub_apply, Pi.smul_apply, smul_eq_mul, map_sub, map_mul, sub_eq_zero]
       exact this)
   have h2 : Pm.mulVec v = ρ (1 + ∑ k ∈ s, c k * ev k p₀) • v := by
-    simp only [Pm, Matrix.add_mulVec, Matrix.one_mulVec, Matrix.sum_mulVec, Matrix.smul_mulVec, map_add, map_one,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Pm, Matrix.add_mulVec, Matrix.one_mulVec, Matrix.sum_mulVec, Matrix.smul_mulVec, map_add, map_one,
       map_sum, map_mul, add_smul, one_smul, Finset.sum_smul, mul_smul]
     congr 1
     exact Finset.sum_congr rfl fun k hk => by rw [hev k p₀ (hs k hk)]

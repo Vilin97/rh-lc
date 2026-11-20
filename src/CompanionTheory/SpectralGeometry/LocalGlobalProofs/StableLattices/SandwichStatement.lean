@@ -73,7 +73,8 @@ theorem exists_basis_of_pid {L V : Type} [Field L] [AddCommGroup V] [Module L V]
       rwa [hy]
     refine ⟨fun i => bN.repr ⟨y, hyN⟩ i, ?_⟩
     have h2 := congrArg (fun w : N => ψ (w : Fin m → O)) (bN.sum_repr ⟨y, hyN⟩)
-    simp only [Submodule.coe_sum, Submodule.coe_smul, map_sum, map_smul, hy] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Submodule.coe_sum, Submodule.coe_smul, map_sum, map_smul, hy] at h2
     rw [← h2]
     exact Finset.sum_congr rfl fun i _ => by rw [Subring.smul_def]
 

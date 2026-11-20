@@ -171,7 +171,8 @@ theorem isometric_case (p q : ℕ) (T : GrpData p q)
     rw [hΦ]
     refine Finset.sum_congr rfl fun l _ => ?_
     rw [map_one, map_one, ContinuousLinearMap.one_apply, ContinuousLinearMap.one_apply, hD₂j, hD₁]
-  rw [hΦ1, map_sum] at h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hΦ1, map_sum] at h1
   simp only [inner_self_eq_norm_sq] at h1
   have hz' := (Finset.sum_eq_zero_iff_of_nonneg (fun l _ => sq_nonneg ‖j₁ (ob l)‖)).1 h1
   exact ob.toBasis.ext fun l => by simpa using hz' l (Finset.mem_univ l)

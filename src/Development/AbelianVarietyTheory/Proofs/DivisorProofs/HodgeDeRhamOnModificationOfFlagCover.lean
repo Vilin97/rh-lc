@@ -132,14 +132,16 @@ theorem GlobalTheory.HorFrame.exists_horizontal_lift : ∀ {E : Type} [Field E] 
     ((dualMap ψ).comp ((combDer d' hd'1 (fun a => A b a)).comp ρ)) (fun a => ψ (A b a))
     (fun s => by rw [RingHom.comp_apply, fst_dualMap, RingHom.comp_apply, combDer_fst]; rfl)
     (fun s => by
-      rw [RingHom.comp_apply, snd_dualMap, RingHom.comp_apply, combDer_snd, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [RingHom.comp_apply, snd_dualMap, RingHom.comp_apply, combDer_snd, map_sum]
       refine Finset.sum_congr rfl fun a _ => ?_
       rw [map_mul, hd'2]
       rfl)
   refine ⟨w, hwD, ?_, ?_⟩
   · have key : ∀ h, ∑ a, ψ (A b a) * ψ (ρ (Mx a h)) = (Pi.single b (1 : K) : HIx Dw (psiSet H) → K) h := fun h => by
       have e := congrArg (fun N => ψ (N b h)) hAM
-      simp only [Matrix.mul_apply, Matrix.map_apply, hMxM, Matrix.of_apply, map_sum, map_mul] at e
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Matrix.mul_apply, Matrix.map_apply, hMxM, Matrix.of_apply, map_sum, map_mul] at e
       rw [e, Matrix.one_apply, Pi.single_apply]
       by_cases hh : h = b
       · subst hh; simp

@@ -67,12 +67,14 @@ theorem ev_coordInv (f : (LL →ₐ[Qp] Om) → BdR) (k : LL →ₐ[Qp] Om) :
     rw [Matrix.mul_apply, Matrix.one_apply] at this
     rw [← this]
     exact Finset.sum_congr rfl fun _ _ => mul_comm _ _
-  simp only [coordInv, map_sum, ev_tmul, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [coordInv, map_sum, ev_tmul, Finset.mul_sum]
   rw [Finset.sum_comm]
   have h2 : ∀ j, ∑ i, algebraMap Om BdR (k (embBasis Qp Om LL i)) *
       (algebraMap Om BdR ((embMat Qp Om LL)⁻¹ j i) * f j) =
       algebraMap Om BdR (if j = k then 1 else 0) * f j := fun j => by
-    rw [← h1 j, map_sum, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← h1 j, map_sum, Finset.sum_mul]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_mul, embMat_apply, mul_assoc]
   simp only [h2]
@@ -96,7 +98,8 @@ theorem coordInv_ev (z : (Fin 1 → LL) ⊗[Qp] BdR) :
     have hv : v 0 = ∑ k, a k • embBasis Qp Om LL k := ((embBasis Qp Om LL).sum_repr (v 0)).symm
     have h1 : ∀ i, ∑ j, (embMat Qp Om LL)⁻¹ j i * j (v 0) = algebraMap Qp Om (a i) := fun i => by
       have h2 : ∀ j : LL →ₐ[Qp] Om, j (v 0) = ∑ k, algebraMap Qp Om (a k) * embMat Qp Om LL k j := fun j => by
-        rw [hv, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [hv, map_sum]
         refine Finset.sum_congr rfl fun k _ => ?_
         rw [map_smul, Algebra.smul_def, embMat_apply]
       simp only [h2, Finset.mul_sum]
@@ -111,7 +114,8 @@ theorem coordInv_ev (z : (Fin 1 → LL) ⊗[Qp] BdR) :
       simp
     have h4 : ∀ i, ∑ j, algebraMap Om BdR ((embMat Qp Om LL)⁻¹ j i) *
         (algebraMap Om BdR (j (v 0)) * b) = a i • b := fun i => by
-      rw [Algebra.smul_def, IsScalarTower.algebraMap_apply Qp Om BdR, ← h1, map_sum, Finset.sum_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Algebra.smul_def, IsScalarTower.algebraMap_apply Qp Om BdR, ← h1, map_sum, Finset.sum_mul]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [map_mul, mul_assoc]
     simp only [coordInv, ev_tmul, h4, tmul_smul]

@@ -67,7 +67,8 @@ theorem UpperTheory.ConvolutionTheory.R2.G.contW :
         funext i
         fin_cases i <;> simp
       simp only []
-      rw [map_mul, Module.End.mul_apply, hS.m, hv, (hk k hk').2, ← hH, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_mul, Module.End.mul_apply, hS.m, hv, (hk k hk').2, ← hH, map_sum]
       simp [Finset.sum_apply]
     have hcont1 : Continuous fun p : IdeleGroup F × G1 F => Wf f.1 (gl (mD p.1 * p.2)) :=
       hWc.comp (continuous_gl.comp ((continuous_mD.comp continuous_fst).mul continuous_snd))

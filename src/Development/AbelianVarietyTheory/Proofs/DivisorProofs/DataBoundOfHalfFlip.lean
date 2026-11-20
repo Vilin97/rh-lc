@@ -68,13 +68,15 @@ theorem absLe_integral [MeasurableSpace X] [OpensMeasurableSpace X] [MeasurableA
     rw [integral_finset_sum _ fun c hc' => (integrable_indicator_iff (hm c)).2 (integrableOn_const (hfi c hc'))]
     exact Finset.sum_congr rfl fun c _ => by rw [integral_indicator_const _ (hm c), Complex.real_smul]
   refine ⟨∑ c ∈ V, (r c : D.what₂.LL) * y c, ?_, ?_⟩
-  · rw [hint, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [hint, map_sum]
     refine Finset.sum_congr rfl fun c hc' => ?_
     rw [map_mul, map_ratCast, hy c hc', ← hr c hc', Complex.ofReal_ratCast]
   · have h1 : ∑ c ∈ V, μ.real (f ⁻¹' {c}) ≤ Real.exp b := by
       rw [sum_measureReal_preimage_singleton V (fun c _ => hm c) hfi]
       exact ENNReal.toReal_le_of_le_ofReal (Real.exp_pos b).le ((measure_mono hsub).trans hSb)
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine (norm_sum_le _ _).trans ?_
     calc ∑ c ∈ V, ‖σ ((r c : D.what₂.LL) * y c)‖ ≤ ∑ c ∈ V, μ.real (f ⁻¹' {c}) * Real.exp a := by
           refine Finset.sum_le_sum fun c hc' => ?_

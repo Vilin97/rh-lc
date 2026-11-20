@@ -205,7 +205,8 @@ omit [Group H] in
 theorem hom_conjHomotopyFun {X Y : Rep.{u} k G} (P : X ⟶ Y) (g : G) (m : ℕ)
     (K : (Fin (m + 1) → G) → X) (γ : Fin m → G) :
     P.hom (conjHomotopyFun X g m K γ) = conjHomotopyFun Y g m (fun τ => P.hom (K τ)) γ := by
-  simp only [conjHomotopyFun, map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [conjHomotopyFun, map_sum, map_smul]
 
 omit [Group H] in
 

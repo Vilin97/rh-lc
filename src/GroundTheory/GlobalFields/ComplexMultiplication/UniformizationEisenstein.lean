@@ -48,7 +48,8 @@ theorem weierstrassCoeff_map (f : R →ₐ[ℚ] S) (a b : R) (n : ℕ) :
     | 1, _ => simp [map_smul]
     | 2, _ => simp [map_smul]
     | n + 3, ih =>
-      rw [weierstrassCoeff_add_three, weierstrassCoeff_add_three, map_smul, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [weierstrassCoeff_add_three, weierstrassCoeff_add_three, map_smul, map_sum]
       congr 1
       refine Finset.sum_congr rfl fun i _ ↦ ?_
       rw [map_mul, ih _ (by have := i.isLt; omega), ih _ (by omega)]

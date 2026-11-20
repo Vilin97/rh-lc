@@ -108,7 +108,8 @@ theorem hTens_uStar {σ : E →ₐ[F] E} (hσ : ∀ x, σ (σ x) = x) (JA : Matr
     GlobalTheory.WeilM.hTens (cA σ) (incM F JA) (incM F JB) (GlobalTheory.VanishLoc.uAt H H' v x) (uStar σ H H' z) =
       GlobalTheory.VanishLoc.liftT v x * z * inclR (F := F) (AF F) (form σ JA H.x H.y) *
         inclR (F := F) (AF F) (form σ JB H'.y H'.x) := by
-  simp only [GlobalTheory.WeilM.hTens, GlobalTheory.VanishLoc.uAt, uStar, Matrix.vecMulVec_apply, Matrix.smul_apply, Pi.smul_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [GlobalTheory.WeilM.hTens, GlobalTheory.VanishLoc.uAt, uStar, Matrix.vecMulVec_apply, Matrix.smul_apply, Pi.smul_apply,
     incV, incM, Matrix.map_apply, smul_eq_mul, map_mul, cA_inclR, cA_cA hσ, form, dotProduct, Matrix.mulVec,
     map_sum, Finset.mul_sum, Finset.sum_mul]
   refine Finset.sum_comm.trans (Finset.sum_congr rfl fun j _ => ?_)

@@ -167,7 +167,8 @@ theorem eig_iff (hv : IsLieBasis v) (f : G ⟶ G) [IsMonHom f] {M : Matrix (Fin 
   have tw := (isTan_iff _).2 (isTangent_of_comb hy hv.1 hw)
   have ew := (comb_iff_coord hy z tv tw).1 hw
   have e1 : tcoord hy (w ≫ f) (isTan_comp tw f) = ∑ j, (z ᵥ* M) j • tcoord hy (v j) (tv j) := by
-    rw [tcoord_comp hy f tw, ew, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [tcoord_comp hy f tw, ew, map_sum]
     simp only [map_smul, ← tcoord_comp hy f, (comb_iff_coord hy _ tv (isTan_comp (tv _) f)).1 (hM _),
       Finset.smul_sum, smul_smul, Matrix.vecMul, dotProduct, Finset.sum_smul]
     exact Finset.sum_comm

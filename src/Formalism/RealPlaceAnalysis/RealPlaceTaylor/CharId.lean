@@ -35,7 +35,8 @@ theorem CharId_comm {V : Type} [AddCommGroup V] [Module ℂ V] {n : ℕ}
   apply LinearMap.ext
   intro y
   funext x
-  simp only [Module.End.mul_apply, CharId_T_apply, CharId_M_apply, map_sum, map_sub]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Module.End.mul_apply, CharId_T_apply, CharId_M_apply, map_sum, map_sub]
   have key : ∀ b, E c d (E x b (y b)) = E x b (E c d (y b)) +
       ((if d = x then E c b (y b) else 0) - (if b = c then E x d (y b) else 0)) := by
     intro b
@@ -66,7 +67,8 @@ theorem CharId_Mpow {V : Type} [AddCommGroup V] [Module ℂ V] {n : ℕ}
     simp [h0]
   | succ k ih =>
     rw [pow_succ, Module.End.mul_apply, ih]
-    simp only [epow, CharId_M_apply, map_sum, LinearMap.sum_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [epow, CharId_M_apply, map_sum, LinearMap.sum_apply,
       Module.End.mul_apply]
     exact Finset.sum_comm
 

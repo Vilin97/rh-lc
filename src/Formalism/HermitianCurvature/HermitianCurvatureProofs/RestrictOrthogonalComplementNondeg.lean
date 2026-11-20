@@ -142,7 +142,8 @@ lemma form_norm_orthonormal_coords {V : Type} [AddCommGroup V] [Module K V] {h :
     (b : Basis (Fin n) K V) (hb : Ortho h b) (v : V) :
     h v v = ∑ i, σ (b.equivFun v i) * b.equivFun v i := by
   conv_lhs => rw [← b.sum_equivFun v]
-  simp only [map_sum, LinearMap.sum_apply, map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.sum_apply, map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul,
     RingHom.id_apply, hb _ _]
   simp [mul_comm]
 
@@ -207,11 +208,13 @@ variable {V : Type} [AddCommGroup V] [Module K V]
 
 lemma form_sum_right_alt (h : V →ₛₗ[σ] V →ₗ[K] K) {ι : Type} [Fintype ι] (u : V) (c : ι → K)
     (x : ι → V) : h u (∑ j, c j • x j) = ∑ j, c j * h u (x j) := by
-  simp [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum]
 
 lemma form_sum_left_alt (h : V →ₛₗ[σ] V →ₗ[K] K) {ι : Type} [Fintype ι] (u : V) (c : ι → K)
     (x : ι → V) : h (∑ j, c j • x j) u = ∑ j, σ (c j) * h (x j) u := by
-  simp [map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, LinearMap.sum_apply]
 
 def gramMatrix (h : V →ₛₗ[σ] V →ₗ[K] K) {ι : Type} (x : ι → V) : Matrix ι ι K :=
   Matrix.of fun i j => h (x i) (x j)
@@ -379,7 +382,8 @@ lemma witt_extension_of_nondeg_gram (hσ : Inv σ) [FiniteDimensional K V] (h : 
       calc bx.equiv bY (Equiv.refl _) w
           = bx.equiv bY (Equiv.refl _) (∑ i, bx.repr w i • bx i) := by rw [bx.sum_repr]
         _ = ∑ i, bx.repr w i • bY i := by
-            rw [map_sum]
+            set_option synthInstance.maxHeartbeats 100000 in
+              rw [map_sum]
             refine Finset.sum_congr rfl (fun i _ => ?_)
             rw [map_smul, Basis.equiv_apply]
             rfl
@@ -754,9 +758,11 @@ lemma d_fconj_one {q : ℕ} (hσ : ∀ x, σ x = x ^ q) {α : Type} [DecidableEq
 lemma d_herm {q : ℕ} (hσ : ∀ x, σ x = x ^ q) (hi : Inv σ) {n : ℕ} (J : Matrix (Fin n) (Fin n) K)
     (hJh : fconj q J = J) : Herm (hJ σ J) := by
   intro u v
-  rw [hJ_apply, hJ_apply, map_sum, Finset.sum_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hJ_apply, hJ_apply, map_sum, Finset.sum_comm]
   refine Finset.sum_congr rfl fun j _ => ?_
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   have h1 : σ (J j i) = J i j := by
     have := congrFun (congrFun hJh i) j

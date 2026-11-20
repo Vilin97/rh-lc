@@ -31,7 +31,8 @@ theorem inv_tensor [FiniteDimensional Q E] (a : H → B ≃ₐ[Q] B)
     | add x y hx hy => simp only [map_add, hx, hy]
   choose c hc using fun i => ha (φ i z) fun g => by rw [← h2, hz]
   refine ⟨∑ i, b i ⊗ₜ[Q] c i, ?_⟩
-  rw [← h1 z, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← h1 z, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [← hc]
   rfl

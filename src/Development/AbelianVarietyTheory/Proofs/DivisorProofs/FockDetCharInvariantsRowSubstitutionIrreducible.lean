@@ -106,10 +106,12 @@ theorem rowSub_lowScal_zero_mem {a d : ℕ} (S : Submodule ℂ (Pol ι d a))
       ∑ k ∈ Finset.range M, (M : ℂ)⁻¹ • rowSub (fun _ => lowScal d a (ω ^ k)) P := by
     conv_lhs => rw [as_sum P]
     conv_rhs => rw [as_sum P]
-    simp only [map_sum, rowSub_lowScal_monomial, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, rowSub_lowScal_monomial, Finset.smul_sum]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun s hs => ?_
-    rw [Finset.sum_congr rfl (fun x _ => by rw [smul_monomial]), ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_congr rfl (fun x _ => by rw [smul_monomial]), ← map_sum]
     congr 1
     have hb : lowDeg s < M := lt_of_le_of_lt (lowDeg_le s) (by have := le_totalDegree hs; omega)
     have hx : ∀ x : ℕ, (ω ^ x) ^ lowDeg s = (ω ^ lowDeg s) ^ x := fun x => by rw [← pow_mul, ← pow_mul, mul_comm]
@@ -177,7 +179,8 @@ theorem exists_fockS_orth {σ : Type} (V N : Submodule ℂ (MvPolynomial σ ℂ)
     rw [Submodule.coe_sum] at this
     simp only [Submodule.coe_smul] at this
     exact this.symm
-  rw [hPe, ← Formalism.L2.DIV.fockL_apply, map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hPe, ← Formalism.L2.DIV.fockL_apply, map_sum, LinearMap.sum_apply]
   refine Finset.sum_eq_zero fun i _ => ?_
   rw [LinearMap.map_smulₛₗ, LinearMap.smul_apply, Formalism.L2.DIV.fockL_apply, hQi i, smul_zero]
 

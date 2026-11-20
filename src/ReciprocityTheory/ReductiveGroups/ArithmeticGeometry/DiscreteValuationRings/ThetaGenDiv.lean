@@ -186,7 +186,8 @@ theorem expandsAt_of_div (U : UnifPre I D A G) [Flat G.hom] {ϖ : R} (hϖ : ϖ �
       rw [← LBVal.pullGen_val (L := D.toPre.P.L) _ _ ((U.gt (e + 1)).t α.1) (thickMap R I e G) (jt α.1) _ hW]
       exact C2
     have hR2 : (thickMap R I e G).appLE _ _ hV (expR U (e + 1) p j₁ S jf jt g) = expR U e p j₁ S jf jt g := by
-      simp only [expR, map_sum, map_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [expR, map_sum, map_mul]
       refine Finset.sum_congr rfl fun α _ => ?_
       congr 1
       · exact appLE_pull _ _ _ hq hV _ _ _

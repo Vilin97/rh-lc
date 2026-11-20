@@ -105,7 +105,8 @@ theorem not_klt_at_points : GlobalTheory.Published.Principalisation →
   have hψσ : ψ σ = s := by
     apply Subtype.ext
     rw [hs]
-    simp only [σ, map_add, map_sum, map_mul, hT.retr]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [σ, map_add, map_sum, map_mul, hT.retr]
     push_cast
     simp_rw [hψβ, mul_comm]
 
@@ -196,7 +197,8 @@ theorem not_klt_at_points : GlobalTheory.Published.Principalisation →
       fun q => Subtype.ext (hψj _ _ (hcc q))
     obtain ⟨v, hv⟩ := hux
     have hyv : π i (ψ (∑ q, ι (a' q) * jB (b' q))) = ∑ q, π i (a' q) * algebraMap ℂ κ (cc q) := by
-      simp only [map_sum, map_mul, hT.retr, hψb, hπc]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_mul, hT.retr, hψb, hπc]
     have hρB : ∀ f ∈ (π i).range, ρ i f ∈ B := fun f hf => (hBO _ ((hdom i) f hf).1).1
     have hu1 : IsUnit (⟨ρ i (π i v), hρB _ ⟨_, rfl⟩⟩ : B) := by
       refine IsUnit.of_mul_eq_one (⟨ρ i (π i ↑v⁻¹), hρB _ ⟨_, rfl⟩⟩ : B) (Subtype.ext ?_)
@@ -217,7 +219,8 @@ theorem not_klt_at_points : GlobalTheory.Published.Principalisation →
         simp_rw [mul_sub]
       rw [Subring.coe_neg, hmc, hD, zero_sub, neg_neg]
       show ρ i (π i v) = _
-      rw [hv, hyv, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hv, hyv, map_sum]
       simp only [map_mul, AlgHom.commutes]
     have hm' : -m ∈ IsLocalRing.maximalIdeal B := neg_mem hm
     rw [← he] at hm'

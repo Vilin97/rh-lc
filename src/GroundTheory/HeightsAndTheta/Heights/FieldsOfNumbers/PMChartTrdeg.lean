@@ -90,7 +90,8 @@ theorem algebraicIndependent (hH : MChartHomog.Statement.{u}) (hP : IsMultiHomog
     rw [aeval_def, eval₂_eq'] at hp'
     calc φ G = ∑ m ∈ s, φ (chartMonomial u N) * (algebraMap (chartMap P u).range L (p.coeff m) *
           ∏ k, algebraMap (MRing ι F ⧸ P) L (Ideal.Quotient.mk P (X ⟨k, u k⟩)) ^ m k) := by
-          simp only [G, map_sum, map_mul, hval]
+          set_option synthInstance.maxHeartbeats 100000 in
+            simp only [G, map_sum, map_mul, hval]
           refine Finset.sum_congr rfl fun m hm => ?_
           rw [hφapp (chartMonomial u (b m)), hφapp (chartMonomial u (c m)), hφapp (chartMonomial u N),
             map_chartMonomial, map_chartMonomial, map_chartMonomial]
@@ -113,7 +114,8 @@ theorem algebraicIndependent (hH : MChartHomog.Statement.{u}) (hP : IsMultiHomog
   have hcomp : ∀ m ∈ s,
       weightedHomogeneousComponent (blockWeight ι) (N + ⇑m) G = h m * chartMonomial u (c m) := by
     intro m hm
-    simp only [G, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [G, map_sum]
     rw [Finset.sum_eq_single m]
     · exact IsWeightedHomogeneous.weightedHomogeneousComponent_same (hhomt m hm)
     · intro m' hm' hne

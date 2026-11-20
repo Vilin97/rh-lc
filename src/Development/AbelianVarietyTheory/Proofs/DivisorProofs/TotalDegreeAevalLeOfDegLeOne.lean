@@ -13,7 +13,8 @@ theorem totalDegree_aeval_le_of_deg_le_one {σ τ F E : Type} [CommRing F] [Comm
     (aeval g P).totalDegree ≤ P.totalDegree := by
   classical
   conv_lhs => rw [P.as_sum]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine (totalDegree_finsetSum _ _).trans (Finset.sup_le fun d hd => ?_)
   rw [aeval_monomial]
   refine (totalDegree_mul _ _).trans ?_

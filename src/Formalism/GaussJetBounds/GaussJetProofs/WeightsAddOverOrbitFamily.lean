@@ -93,7 +93,8 @@ theorem one_letter_exponent_weight : OneLetterWt.{u, v} := by
         (fun s : ZMod 2 => (if s = 0 then (1 : K) else ep) •
           ∑ i, MvPowerSeries.C (M x i) * MvPowerSeries.X i) be) = 0 := by
     refine asmOne_smul_const _ ?_
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_eq_zero fun x _ => ?_
     exact MvPowerSeries.constantCoeff_subst_eq_zero
       (MvPowerSeries.hasSubst_of_constantCoeff_zero (ha0 x)) (ha0 x) hbe0

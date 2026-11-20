@@ -46,4 +46,5 @@ theorem UpperTheory.V.Odd.homKill :
         Finset.sum_congr rfl (fun b _ => by rw [key b])
     _ = 0 := by
       simp_rw [← map_zsmul ψ']
-      rw [← map_sum, hsum, map_zero]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← map_sum, hsum, map_zero]

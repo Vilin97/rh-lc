@@ -91,7 +91,8 @@ theorem placeModelExistsSum_of (h : PlaceLatDual D) (hO : IdemSumOrth D) : Place
     exact vac_of_sum ψ S T _ f₀ P es (fun i hi' => (hes i hi').1) (fun i hi' j hj hij => (horth i hi' j hj hij).2)
       (fun i hi' u hu => hi (es i) (hes i hi') u hu) (fun i hi' u hu hue => hlat.2 (es i) (hes i hi') u hu hue)
   have vacC : ∀ u ∈ latAll S T ΛS ΛT, IsHalf (cA D e) u → heisO ψ S T u f₀ = f₀ := by
-    rw [hsum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hsum, map_sum]
     refine vac_of_sum ψ S T _ f₀ P (fun i => cA D (es i)) (fun i hi' => (isSplitIdem_cA (hes i hi')).1)
       (fun i hi' j hj hij => ?_) (fun i hi' u hu => hi _ (isSplitIdem_cA (hes i hi')) u hu)
       (fun i hi' u hu hue => hlat.2 _ (isSplitIdem_cA (hes i hi')) u hu hue)

@@ -17,7 +17,8 @@ theorem app_eq_of_frame {X : Scheme.{0}} {F G : X.Modules} {r : ℕ} {A : X.Open
     (hs : GlobalTheory.VB.IsFrame s) (e : ∀ i, φ.app A (s i) = ψ.app A (s i)) (V : X.Opens) (h : V ≤ A) (σ : Γ(F, V)) :
     φ.app V σ = ψ.app V σ := by
   obtain ⟨c, rfl⟩ := (hs V h).2 σ
-  rw [Fintype.linearCombination_apply, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Fintype.linearCombination_apply, map_sum, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [Scheme.Modules.Hom.app_smul, Scheme.Modules.Hom.app_smul]
   congr 1

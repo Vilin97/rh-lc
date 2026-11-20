@@ -122,7 +122,8 @@ theorem dehom_mul_of_isMultiHomog {h : MRing ι F} {a : K → ℕ} (hh : IsMulti
     dehom V i h * ∏ k, xc V ⟨k, i k⟩ ^ a k = cls V h := by
   conv_rhs => rw [h.as_sum]
   conv_lhs => rw [h.as_sum]
-  rw [map_sum, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun m hm => ?_
   have hw : Finsupp.weight (blockWeight ι) m = a := hh (mem_support_iff.mp hm)
   have hmon : monomial m (AddMonoidAlgebra.coeff h m) = AddMonoidAlgebra.coeff h m • monomial m (1 : F) := by
@@ -139,7 +140,8 @@ theorem dehom_chartUnitIdeal {f : MRing ι F} (hf : f ∈ chartUnitIdeal i) : de
 
 theorem dehom_eq_zero_of_mem (hV : IsMultiHomogIdeal V) {f : MRing ι F} (hf : f ∈ V) :
     dehom V i f = 0 := by
-  rw [← sum_weightedHomogeneousComponent (blockWeight ι) f,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← sum_weightedHomogeneousComponent (blockWeight ι) f,
     finsum_eq_sum _ (weightedHomogeneousComponent_finsupp f), map_sum]
   refine Finset.sum_eq_zero fun b _ => ?_
   have h1 := dehom_mul_of_isMultiHomog i hi

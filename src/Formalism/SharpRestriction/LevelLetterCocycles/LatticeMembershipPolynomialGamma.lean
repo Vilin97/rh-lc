@@ -132,7 +132,8 @@ theorem uniformizer_mem_delta_invariants : W.π₀ ∈ W.AΔ := by
     obtain ⟨a, ha, hxa⟩ := (W.DelF_def δ).1 hδ
     exact (W.DelF_def _).2 ⟨a, ha, by rw [inv_pow, hxa, inv_one]⟩
   unfold LocWach.π₀₁
-  rw [map_add, map_sub, map_one, map_natCast, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_add, map_sub, map_one, map_natCast, map_sum]
   congr 1
   have key : ∀ y : W.Gam, W.γ₀ δ (W.γ₀ y (1 + PowerSeries.X)) = W.γ₀ (δ * y) (1 + PowerSeries.X) := by
     intro y; rw [map_mul, AlgHom.mul_apply]
@@ -209,7 +210,8 @@ theorem dvO_split (T : LocLat G Qp LL O) (e s : ℕ) (hs : s ≤ e) {d : ℕ} (b
       (∑ m, algebraMap O LL (c₀ m) • ((φVB PD (LL := LL) (V := T.V)) ^ (e - s))
         (Formalism.MainNotions.ArcLiftingSetup.cmpD W T (b m))) := by
   unfold Formalism.MainNotions.ArcLiftingSetup.dvO Formalism.MainNotions.ArcLiftingSetup.dv
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun m _ => ?_
   rw [map_smul, ← Module.End.mul_apply, ← pow_add, Nat.add_sub_cancel' hs]
 
@@ -419,7 +421,8 @@ theorem secIn_map (φ : W.EE →+ W.EE)
   obtain ⟨I, g, c₀, α, h, ef⟩ := hf
   refine ⟨I, fun i => φ (g i), c₀, α, fun i => ⟨hI _ _ (h i).1, (h i).2⟩, fun k => ?_⟩
   show φ (f k) = ∑ i, φ (g i) * algebraMap O W.EE (c₀ i k)
-  rw [ef k, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [ef k, map_sum]
   exact Finset.sum_congr rfl fun i _ => hφ _ _
 
 theorem secIn_mulι {c : LetA O n} (hc : c ∈ W.AΔ) {f : Fin d → W.EE} (hf : SecIn W a e cond f) :

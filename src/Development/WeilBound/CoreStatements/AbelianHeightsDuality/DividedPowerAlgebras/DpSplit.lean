@@ -60,7 +60,8 @@ theorem conv_mul {B : Type} [CommRing B] (c c' : ℕ → B) (h0 : c 0 = 1)
             ring
   have := congrArg (Algebra.TensorProduct.productMap (liftL c h0 hm) (liftL c' h0' hm')) (key m n)
   subst hiL hiR
-  simpa [map_sum, map_mul, map_natCast, liftL_bL] using this
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa [map_sum, map_mul, map_natCast, liftL_bL] using this
 
 end Pre
 
@@ -181,7 +182,8 @@ theorem dp_split' : ∀ (B : Type) [CommRing B] (J : Ideal B) (δ : DividedPower
       ext k
       rw [PowerSeries.coeff_mul]
       simp only [PowerSeries.coeff_mk]
-      rw [δ.dpow_add hb hb', map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [δ.dpow_add hb hb', map_sum]
       simp only [map_mul]
     have hY : (PowerSeries.mk fun j => η.dpow j (a + a')) =
         (PowerSeries.mk fun j => η.dpow j a) * PowerSeries.mk fun j => η.dpow j a' :=

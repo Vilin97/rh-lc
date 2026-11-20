@@ -10,7 +10,8 @@ theorem pa_pderiv_pk {Ψ : Type} [Fintype Ψ] [DecidableEq Ψ] {N : ℕ} (τ σ 
     pderiv (σ, i) (pk τ k : RP Ψ N) = if σ = τ then C (k : ℝ) * X (τ, i) ^ (k - 1) else 0 := by
   classical
   unfold pk
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   by_cases h : σ = τ
   · subst h
     rw [if_pos rfl, Finset.sum_eq_single i]

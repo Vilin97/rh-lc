@@ -112,7 +112,8 @@ namespace GlobalTheory.MovedFrames
 theorem map_sum_frame {E V : Type*} [Field E] [AddCommGroup V] [Module E V] {N : ℕ} (ρ : V ≃ₗ[E] V)
     (U W : Matrix (Fin N) (Fin N) E) (f g : Fin N → V) (hF : ∀ a, ρ (f a) = ∑ c, U c a • g c) (b : Fin N) :
     ρ (∑ a, W a b • f a) = ∑ c, (U * W) c b • g c := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [map_smul, hF, Finset.smul_sum, smul_smul, Matrix.mul_apply, Finset.sum_smul]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun c _ => Finset.sum_congr rfl fun a _ => by rw [mul_comm]
@@ -143,6 +144,7 @@ theorem moved_frames : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u u' : D.w
       rw [LinearEquiv.trans_apply, ht, hF']
     rw [frame_mapLF _ hγ, hx, hW'e]
     have := map_sum_frame (t₀.lin.trans ρ) U' W' _ _ hF2 b
-    rw [← this, LinearEquiv.trans_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← this, LinearEquiv.trans_apply, map_sum]
 
 end GlobalTheory.MovedFrames

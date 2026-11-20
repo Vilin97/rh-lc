@@ -332,7 +332,8 @@ def atPl (τ : D.what₂.Tau) (y : Matrix (Fin W.rank) (Fin V.rank) ℂ) : Ix V 
 
 theorem sum_atPl (x : Ix V W → ℂ) : x = ∑ τ, atPl τ (cpt x τ) := by
   unfold atPl
-  rw [← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum]
   exact (congrArg vecL (Finset.univ_sum_single (unvecL x))).symm
 
 theorem cpt_cplx (sS : D.what₂.Tau → Matrix (Fin V.rank) (Fin V.rank) ℂ)
@@ -373,7 +374,8 @@ theorem coe_dH {G : BB ψ V W} (hG : GlobalTheory.RealWeil.Sm (rhoV hψ σ V W) 
     coeL ψ V W (dH (rhoV hψ σ V W) x G) = ∑ τ, Formalism.IndefR.Datum.dRho (heisO ψ V W) θ τ (cpt x τ) (coeL ψ V W G) := by
   have e : dH (rhoV hψ σ V W) x G = ∑ τ, dH (rhoV hψ σ V W) (atPl τ (cpt x τ)) G :=
     (congrArg (fderiv ℝ (fun u => rhoV hψ σ V W u G) 0) (sum_atPl x)).trans (map_sum _ _ _)
-  simp only [e, map_sum, coe_dH_atPl h hψ hG]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [e, map_sum, coe_dH_atPl h hψ hG]
 
 theorem mem_level {U : AddSubgroup (WO V W)} (hU : IsOpen (U : Set (WO V W))) (G : BB ψ V W) :
     G ∈ (thetaLevel ψ V W U).comap (coeL ψ V W) ↔ GlobalTheory.RealWeil.Sm (rhoV hψ σ V W) G ∧

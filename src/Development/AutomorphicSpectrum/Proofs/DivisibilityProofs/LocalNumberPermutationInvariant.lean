@@ -29,7 +29,8 @@ theorem classNum_rename {K : Type} [DecidableEq K] {ι : K → Type} {O : Type} 
 
 theorem rename_psumExpansion {r : ℕ} (e : Equiv.Perm (Fin r)) (k : ℕ) (i : Fin r) :
     rename (Sum.map e e) (psumExpansion r k i) = psumExpansion r k (e i) := by
-  simp [psumExpansion, map_sum, rename_X]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [psumExpansion, map_sum, rename_X]
 
 theorem root_perm : ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (r : ℕ) (e : Equiv.Perm (Fin r)) (P : Ideal (MRing ι O)) (k : ℕ) (Q : List (K → ℤ)), (∀ (a : O) (x : Fin r → K → ℤ), laNum P a (x ∘ e) k Q = laNum P a x k Q) ∧ ∀ T : LocPair ι O (Fin r), (T.comp e).ck P k Q = T.ck P k Q := by
   intro O _ _ _ K _ _ ι _ r e P k Q

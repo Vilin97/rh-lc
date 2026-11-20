@@ -90,7 +90,8 @@ end RightTypeActionHermitianCurvature
 theorem right_type_action_holds : RightTypeAction0 := by
   intro Wp Wq _ _ _ _ _ k r m z z' π π' D mm _ _ hD hπ' hc J hJ g hg Bs hB w v
   unfold capR capRep qmF
-  simp only [Finset.sum_apply, Pi.smul_apply, _root_.sum_apply, _root_.smul_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finset.sum_apply, Pi.smul_apply, _root_.sum_apply, _root_.smul_apply,
     map_sum, map_smul]
   refine Finset.sum_congr rfl fun σ _ => ?_
   congr 1

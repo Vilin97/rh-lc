@@ -287,7 +287,8 @@ theorem GlobalTheory.character_laplace_factorisation : ∀ (a b : ℕ) (lam : Do
       rw [← mul_assoc, hW, Finset.mul_sum]
       exact Finset.sum_congr rfl fun J _ => by ring
     have hc := congrArg (starRingEnd ℂ) key
-    simp only [map_mul, map_sum, map_pow, map_neg, map_one] at hc
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_mul, map_sum, map_pow, map_neg, map_one] at hc
     have hsA : ∀ J : {J : Finset (Fin (a + b)) // J.card = a},
         gtChar a (selW lam (selL J) (selL_strictMono J) (-(b : ℤ) * K)).w α =
           (∏ i, α i) ^ (-(b : ℤ) * K) * gtChar a (fun k => (lam.w + delta (a + b)) (selL J k) - delta a k) α :=

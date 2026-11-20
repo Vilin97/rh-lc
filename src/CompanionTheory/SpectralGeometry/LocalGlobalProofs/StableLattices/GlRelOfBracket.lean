@@ -344,7 +344,8 @@ theorem smMod (hL : CompanionTheory.D.DSIC.SmLin) (hB : CompanionTheory.D.DSIC.S
       exact matrix_eq_sum_single X
     have h2 : (C X v : H) = ∑ a, ∑ b, X a b • (C (single a b 1) v : H) := by
       conv_lhs => rw [h]
-      simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, Submodule.coe_sum,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, Submodule.coe_sum,
         Submodule.coe_smul]
     rw [← h2]
     exact hder X hX v
@@ -370,7 +371,8 @@ theorem smMod (hL : CompanionTheory.D.DSIC.SmLin) (hB : CompanionTheory.D.DSIC.S
         LinearMap.add_apply, LinearMap.smul_apply, Submodule.coe_add, Submodule.coe_smul,
         h1 _ (inG_re Y), h1 _ (inG_im Y)]
     rw [h2, conj_single]
-    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, Submodule.coe_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, Submodule.coe_sum,
       Submodule.coe_smul]
 
 end GlobalTheory.CompanionTheory.SmoothModule

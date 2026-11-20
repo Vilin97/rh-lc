@@ -278,7 +278,8 @@ theorem PositivityTheory.Xgp.t_nef_curve : Inputs → ∀ (K : Type) [Fintype K]
   have ha : (combLine Re.ref n).a = ∑ a, n a • (Re.ref a).a := by
     funext k
     simp [combLine_a, Finset.sum_apply]
-  rw [hd _ (smooth_comb Re.ref_smooth n), ha, map_sum, Int.cast_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hd _ (smooth_comb Re.ref_smooth n), ha, map_sum, Int.cast_sum]
   refine Finset.sum_nonneg fun a _ => ?_
   rw [map_zsmul, smul_eq_mul, Int.cast_mul, ← hd _ (Re.ref_smooth a), hdeg]
   obtain ⟨h1, h2⟩ := mass_sys S hg a

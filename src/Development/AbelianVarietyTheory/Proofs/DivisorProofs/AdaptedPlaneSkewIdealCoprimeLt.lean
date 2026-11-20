@@ -118,7 +118,8 @@ theorem formL_apply (J : Matrix (Fin n) (Fin n) E) (y x : Fin n → E) : formL �
 omit [NumberField E] in
 theorem form_skew (hσ : ∀ x, σ (σ x) = x) {J : Matrix (Fin n) (Fin n) E} (hJ : ∀ i j, σ (J j i) = -J i j)
     (x y : Fin n → E) : form σ J x y = -σ (form σ J y x) := by
-  simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, Finset.mul_sum, hJ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, Finset.mul_sum, hJ]
   rw [Finset.sum_comm, ← Finset.sum_neg_distrib]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [← Finset.sum_neg_distrib]

@@ -67,7 +67,8 @@ theorem exists_homog_pair {P : Ideal (MRing ι)} (hP : IsMultiHomogIdeal P) {f g
     apply hu
     rw [← DirectSum.sum_support_decompose 𝒜 u]
     unfold evC at hc ⊢
-    rw [map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum]
     exact Finset.sum_eq_zero fun d _ => hc d
   obtain ⟨d, hd⟩ := h1
   refine ⟨_, _, d, (DirectSum.decompose 𝒜 u d).2,

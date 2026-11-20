@@ -70,7 +70,8 @@ end expand
 
 theorem isoDerivB : IsoDerivB := by
   intro Lt T _ _ _ tp N N' nu s Θ φ Q hQ y'
-  rw [polD_eq_aeval, Q_eq tp nu φ Q hQ, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [polD_eq_aeval, Q_eq tp nu φ Q hQ, map_sum]
   simp only [map_mul, MvPolynomial.aeval_C, MvPolynomial.algebraMap_eq, aeval_mY]
   rw [applyAt0_sum]
   simp only [applyAt0_C_mul, applyAt0_sum, applyAt0_mul_C]

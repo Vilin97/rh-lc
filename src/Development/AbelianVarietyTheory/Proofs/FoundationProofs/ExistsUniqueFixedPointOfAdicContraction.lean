@@ -153,7 +153,8 @@ theorem algHom_sub_mem_of_two_le_order (φ ψ : MvPowerSeries σ A →ₐ[A] S) 
     intro g hg
     obtain ⟨k, -, rfl⟩ := exists_eq_sum_X_mul (n := 0) (g := g) fun d hd =>
       coeff_of_lt_order (lt_of_lt_of_le (by exact_mod_cast hd) hg)
-    rw [map_sum, map_sum, ← Finset.sum_sub_distrib]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum, ← Finset.sum_sub_distrib]
     refine Ideal.sum_mem _ fun i _ => ?_
     have e : φ (X i * k i) - ψ (X i * k i) =
         φ (X i) * (φ (k i) - ψ (k i)) + (φ (X i) - ψ (X i)) * ψ (k i) := by
@@ -165,7 +166,8 @@ theorem algHom_sub_mem_of_two_le_order (φ ψ : MvPowerSeries σ A →ₐ[A] S) 
   obtain ⟨k, hk, rfl⟩ := exists_eq_sum_X_mul (n := 1) (g := g) fun d hd =>
     coeff_of_lt_order (lt_of_lt_of_le (by exact_mod_cast hd) hg)
   have hk' : ∀ i, ((1 : ℕ) : ℕ∞) ≤ (k i).order := fun i => nat_le_order (hk i)
-  rw [map_sum, map_sum, ← Finset.sum_sub_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, ← Finset.sum_sub_distrib]
   refine Ideal.sum_mem _ fun i _ => ?_
   have e : φ (X i * k i) - ψ (X i * k i) =
       φ (X i) * (φ (k i) - ψ (k i)) + ψ (k i) * (φ (X i) - ψ (X i)) := by

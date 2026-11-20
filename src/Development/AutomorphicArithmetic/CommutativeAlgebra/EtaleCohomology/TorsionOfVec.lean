@@ -66,13 +66,15 @@ private theorem torsion_of_vec (t : A) (c : A →+* C) (ht : IsUnit (c t))
   have hψ : ∀ q w x, ψ ((q ⊗ₜ[R] w) ⊗ₜ[F] x) = (q • x) ⊗ₜ[A] ((1 : A) ⊗ₜ[R] w) := fun _ _ _ => rfl
   have h1 : ∑ k, (c (a k) * Ring.inverse (c t) ^ r) ⊗ₜ[A] ((1 : A) ⊗ₜ[R] v k) = 0 := by
     have := congrArg ψ h
-    rw [map_sum, map_zero] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero] at this
     simpa only [hψ, one_smul] using this
   have hinv : c t * Ring.inverse (c t) = 1 := Ring.mul_inverse_cancel _ ht
   have h2 : (TensorProduct.mk A C (A ⊗[R] T) 1) (∑ k, (a k ⊗ₜ[R] v k : A ⊗[R] T)) = 0 := by
     have e : (TensorProduct.mk A C (A ⊗[R] T) 1) (∑ k, (a k ⊗ₜ[R] v k : A ⊗[R] T)) =
         t ^ r • ∑ k, (c (a k) * Ring.inverse (c t) ^ r) ⊗ₜ[A] ((1 : A) ⊗ₜ[R] v k) := by
-      rw [map_sum, Finset.smul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Finset.smul_sum]
       refine Finset.sum_congr rfl fun k _ => ?_
       have e1 : t ^ r • (c (a k) * Ring.inverse (c t) ^ r) = a k • (1 : C) := by
         rw [hsm, hsm, map_pow, mul_one, mul_left_comm, ← mul_pow, hinv, one_pow, mul_one]
@@ -98,7 +100,8 @@ private theorem apply_tensor (h : T →+ N) (hh : ∀ (s : R) (w : T), h (s • 
     | add y y' hy hy' => simp only [smul_add, map_add, hy, hy']
     | tmul x w => rw [TensorProduct.smul_tmul', hφ, hφ, smul_eq_mul, mul_smul]
   have := congrArg φ hs
-  rw [hφs, map_sum, map_zero] at this
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hφs, map_sum, map_zero] at this
   simpa only [hφ] using this
 
 end Abstract

@@ -196,7 +196,8 @@ theorem uAction_lieOf_apply (Y : ArchMatrix K n) (ψ : archSmooth K n) (g : Adel
         (uAction (UniversalEnvelopingAlgebra.ι ℝ (lieOf (archBasis K n j))) ψ :
           AdelicGLn.AdelicGL K n → ℂ) g := by
   conv_lhs => rw [← (archBasis K n).sum_repr Y]
-  simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply,
     Submodule.coe_sum, Submodule.coe_smul_of_tower, Finset.sum_apply, Pi.smul_apply,
     Complex.real_smul]
 

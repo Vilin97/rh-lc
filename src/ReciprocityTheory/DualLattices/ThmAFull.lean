@@ -19,7 +19,8 @@ private lemma ev_expand (B : BX R₀) {O : LAlg R₀} {g : ℕ} (gb : Module.Bas
     simp only [BX.ev, TensorProduct.map_tmul, LinearMap.mul'_apply, LinearMap.id_apply,
       LinearMap.comp_apply, Algebra.linearMap_apply, Module.Basis.coord_apply]
     conv_lhs => rw [← gb.sum_repr x]
-    rw [map_sum, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_mul]
     refine Finset.sum_congr rfl fun a _ => ?_
     rw [map_smul, Algebra.smul_def]
     ring

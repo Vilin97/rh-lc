@@ -254,7 +254,8 @@ theorem lev_transport (F : Frame Dc Mo T) (F' : Frame Dc Mo T') (σ : LetA LL n 
       toL O LL n q' • H.map (toL O LL n) *ᵥ (σ ∘ fun k => toL O LL n (F.nb.repr x k)) := by
     funext j
     have h1 := congrArg (fun z => toL O LL n (F'.nb.repr z j)) hxy
-    simp only [map_smul, map_sum, Module.Basis.repr_self, Finsupp.smul_apply, Finsupp.finsetSum_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_smul, map_sum, Module.Basis.repr_self, Finsupp.smul_apply, Finsupp.finsetSum_apply,
       Finsupp.single_apply, smul_eq_mul, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ,
       if_true, map_mul, hσA] at h1
     simp only [Pi.smul_apply, smul_eq_mul, Matrix.mulVec, dotProduct, Matrix.map_apply, Function.comp_apply, h1]
@@ -273,13 +274,15 @@ theorem lev_transport (F : Frame Dc Mo T) (F' : Frame Dc Mo T') (σ : LetA LL n 
   simp only [lev_apply]
   refine series_transport F.w F'.w _ _ κ hκ _ (fun j p => Cm j p i) (fun j => ?_) h _ _ hD k
   have h4 := congrArg (Dc.ex i ζ) (h3 j)
-  simpa only [map_mul, map_pow, map_sum, hex, Dc.numEx_t_eq_fifteen, Dc.ex_jA, Dc.ex_cstC, PowerSeries.rescale_X] using h4
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa only [map_mul, map_pow, map_sum, hex, Dc.numEx_t_eq_fifteen, Dc.ex_jA, Dc.ex_cstC, PowerSeries.rescale_X] using h4
 
 theorem expand (F : Frame Dc Mo T) (f : E.DD T →ₗ[O] E.DD T') (σA : LetA O n →+* LetA O n)
     (hf : ∀ (a : LetA O n) (x : E.DD T), f (a • x) = σA a • f x) (x : ↥(Mo.N T)) :
     f (x : E.DD T) = ∑ p, σA (F.nb.repr x p) • f (F.nb p : E.DD T) := by
   conv_lhs => rw [← F.nb.sum_repr x]
-  simp only [AddSubmonoidClass.coe_finsetSum, SetLike.val_smul, map_sum, hf]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [AddSubmonoidClass.coe_finsetSum, SetLike.val_smul, map_sum, hf]
 
 theorem γD_smulA (T : LocLat G Qp LL O) (g : Γ.Gam) (a : LetA O n) (x : E.DD T) :
     E.γD T g (a • x) = letγ (R.γ₀ g) a • E.γD T g x := by
@@ -369,7 +372,8 @@ include hP
 theorem bT_sum (hT : IsCrys PD T.ρ) {r : ℕ} (c : Fin r → LetA O n) (y : Fin r → ↥(Mo.N T)) (x : ↥(Mo.N T))
     (hx : (x : E.DD T) = ∑ i, c i • (y i : E.DD T)) : bT T x = ∑ i, b₀ (c i) • bT T (y i) := by
   have : x = ∑ i, c i • y i := Subtype.ext (by simpa using hx)
-  rw [this, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [this, map_sum]
   simp only [hP.smul T hT, smulS_def]
 
 theorem d_gal (hT : IsCrys PD T.ρ) (F : Frame Dc Mo T) (g : G) (p : Fin F.r) :
@@ -470,12 +474,14 @@ theorem lev_map (hinv : ∀ a : LetA LL n, γL R Γ.gam a = a → ∃ c, a = cst
   have hHG : H * F.Gm Γ.gam = F'.Gm Γ.gam * H.map (letγ (R.γ₀ Γ.gam)) := by
     ext1 j p
     have h1 := E.map_γ f Γ.gam (F.nb p : E.DD T)
-    rw [F.Gm_def, hH, map_sum, map_sum] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [F.Gm_def, hH, map_sum, map_sum] at h1
     simp only [hfA, hH, γD_smulA, F'.Gm_def] at h1
     have h2 : ∑ a, F.Gm Γ.gam a p • ∑ b, H b a • F'.nb b =
         ∑ a, letγ (R.γ₀ Γ.gam) (H a p) • ∑ b, F'.Gm Γ.gam b a • F'.nb b := Subtype.ext (by simpa using h1)
     have h3 := congrArg (fun z => F'.nb.repr z j) h2
-    simp only [map_smul, map_sum, Module.Basis.repr_self, Finsupp.smul_apply, Finsupp.finsetSum_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_smul, map_sum, Module.Basis.repr_self, Finsupp.smul_apply, Finsupp.finsetSum_apply,
       Finsupp.single_apply, smul_eq_mul, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ,
       if_true] at h3
     simp only [Matrix.mul_apply, Matrix.map_apply]
@@ -517,7 +523,8 @@ theorem lev_map (hinv : ∀ a : LetA LL n, γL R Γ.gam a = a → ∃ c, a = cst
     x ⟨E.map f (x : E.DD T), hx⟩ (by
       rw [one_smul, one_smul]
       apply Subtype.ext
-      simp only [AddSubmonoidClass.coe_finsetSum, SetLike.val_smul, ← hH, ← hfA, ← map_sum, RingHom.id_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [AddSubmonoidClass.coe_finsetSum, SetLike.val_smul, ← hH, ← hfA, ← map_sum, RingHom.id_apply]
       congr 1
       simpa only [AddSubmonoidClass.coe_finsetSum, SetLike.val_smul] using
         (congrArg Subtype.val (F.nb.sum_repr x)).symm) _
@@ -547,7 +554,8 @@ theorem bT_eq (hT : IsCrys PD T.ρ) (F : Frame Dc Mo T) (x : ↥(Mo.N T)) :
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [← Finset.sum_smul]
-  simp only [← map_mul, ← map_sum, h1]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← map_mul, ← map_sum, h1]
   simp only [map_mul, map_pow, Dc.J_jA, mul_assoc]
 
 omit hP in
@@ -588,7 +596,8 @@ theorem dR_basis (hT : IsCrys PD T.ρ) (F : Frame Dc Mo T) (ι : LL →ₐ[Qp] B
   have h2 : Algebra.TensorProduct.productMap ι (PD.ι.restrictScalars Qp) (Dc.J Dc.t ^ F.w) = tS ^ F.w := by
     rw [map_pow, Dc.periodDiscJ_tateElement]
     simp [Dc.ι_tb]
-  rw [h2, bT_eq hP hT, map_sum] at h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h2, bT_eq hP hT, map_sum] at h1
   have h3 := Submodule.sum_mem (compKer T ι) (t := Finset.univ)
     fun j _ => ιV_smul_sub (PD := PD) ι (Dc.J (F.a x j)) (F.d bT j)
   rw [Finset.sum_sub_distrib] at h3
@@ -612,7 +621,8 @@ theorem dR_lev (F : Frame Dc Mo T) (i : ZMod n) (ζ : LL) (ι : LL →ₐ[Qp] Bd
       · simp
     refine sub_eq_zero.mp (PD.Fil_sep _ fun a => ?_)
     exact antitone_int_of_succ_le PD.Fil_anti (show a ≤ ((a.toNat + 1 : ℕ) : ℤ) by omega) (h3 a.toNat)
-  rw [lev_apply, map_sum, ← Finset.sum_sub_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [lev_apply, map_sum, ← Finset.sum_sub_distrib]
   refine Submodule.sum_mem _ fun j _ => ?_
   rw [map_smul, ← smul_sub]
   refine Submodule.smul_mem _ _ ?_

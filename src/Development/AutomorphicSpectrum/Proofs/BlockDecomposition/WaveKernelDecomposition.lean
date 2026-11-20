@@ -213,7 +213,8 @@ theorem chain (hL : LgFacts) (hU : Unimod) (hR : RCalc) (hS : WaveSpeed) (hE : W
       = conj (∫ y : G n, ⟪zOp w (fun x => ∫ t, (g t : ℂ) • v t x) y.val, f y.val⟫_ℂ ∂μ) := by
     rw [← integral_conj]
     simp only [inner_conj_symm]
-  rw [e1, e2, e3, hw _ f hHs hf.1 cH cf, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e1, e2, e3, hw _ f hHs hf.1 cH cf, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_mul, ← term_eq μ hL hR hS hb (hK i) hu hv hu0 hv0 cf ch, ← integral_conj]
   congr 1
@@ -261,7 +262,8 @@ theorem kernel_adjoint : LgFacts → Unimod → RCalc → WaveSpeed → WaveEx �
         (ap.1.sub (continuousOn_finset_sum _ fun i _ => (aK i).1.const_smul (c i)))
         (by
           intro y hy k₂
-          simp only [ap.2 y hy k₂, (aK _).2 y hy k₂, map_sub, map_sum, map_smul])
+          set_option synthInstance.maxHeartbeats 100000 in
+            simp only [ap.2 y hy k₂, (aK _).2 y hy k₂, map_sub, map_sum, map_smul])
         (by
           intro h hh ch
           have int1 := pair_integrable μ hL ap.1 hh.1.continuousOn ch

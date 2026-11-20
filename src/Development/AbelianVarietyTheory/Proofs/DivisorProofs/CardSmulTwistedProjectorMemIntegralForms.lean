@@ -49,7 +49,8 @@ theorem card_smul_eOp_mem_Mall : ∀ {LL Ks : Type} [Field LL] [NumberField LL] 
     exact Submodule.smul_mem _ r (hρspan g x hx.1)
   · have hcomm : ∀ p : G0, A.ρ p (A.eOp eC x) = A.eOp eC (A.ρ p x) := by
       intro p
-      rw [FormsL.eOp_apply, FormsL.eOp_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [FormsL.eOp_apply, FormsL.eOp_apply, map_sum]
       simp only [LinearMap.map_smul]
       refine Fintype.sum_equiv (MulAut.conj p).toEquiv _ _ fun g => ?_
       simp only [MulEquiv.toEquiv_eq_coe, MulEquiv.coe_toEquiv, MulAut.conj_apply]

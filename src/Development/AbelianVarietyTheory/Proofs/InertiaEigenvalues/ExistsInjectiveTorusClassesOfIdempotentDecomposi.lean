@@ -137,7 +137,8 @@ theorem torus_points : ∀ (K : UQ) (B : InvAlg K) (ι : Type) [Fintype ι] (e :
     rw [tt_swap f h (d n)]
     unfold tt
     have hcα : K.c α = α := ha.2.2
-    simp only [map_add, map_one, map_sum, map_mul, map_sub, c, d, f, h, B.σ_σ, B.σ_alg, map_inv₀, map_pow, hcα]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_add, map_one, map_sum, map_mul, map_sub, c, d, f, h, B.σ_σ, B.σ_alg, map_inv₀, map_pow, hcα]
   let u : ({i // i ∉ S} → Fin (k + 1)) → B.Aˣ := fun n =>
     ⟨tt f h (c n) (d n), tt f h (d n) (c n), hinv n, by rw [mul_comm]; exact hinv n⟩
   let t : ({i // i ∉ S} → Fin (k + 1)) → B.T := fun n => ⟨u n, by

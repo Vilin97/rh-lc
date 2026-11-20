@@ -18,9 +18,11 @@ variable {E : Type} [Field E] [NumberField E] [StarRing E]
 
 theorem hT_coord (V : HSpace E) (x y : Fin V.rank → E) :
     V.hT (∑ i, x i • V.frame i) (∑ k, y k • V.frame k) = ∑ i, ∑ k, star (x i) * V.gram i k * y k := by
-  rw [map_sum V.hT, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum V.hT, LinearMap.sum_apply]
   refine Finset.sum_congr rfl fun i _ => ?_
-  rw [LinearMap.map_smulₛₗ, LinearMap.smul_apply, map_sum, smul_eq_mul, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [LinearMap.map_smulₛₗ, LinearMap.smul_apply, map_sum, smul_eq_mul, Finset.mul_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [map_smul, smul_eq_mul, HSpace.gram, starRingEnd_apply]
   ring

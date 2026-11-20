@@ -85,7 +85,8 @@ theorem p_eq (T : Tower p Ω) : ∃ r : Ω, IsInt p r ∧ (∀ g ∈ Ggeo p Ω, 
   refine ⟨-∑ i ∈ Finset.range p, ∑ m ∈ Finset.range i, T.ζ 1 ^ m, ?_, ?_, ?_⟩
   · exact (IsIntegral.sum _ fun i _ => IsIntegral.sum _ fun m _ => (isInt_zeta T 1).pow m).neg
   · intro g hg
-    simp only [map_neg, map_sum, map_pow, fix_zeta T 1 hg]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_neg, map_sum, map_pow, fix_zeta T 1 hg]
   · have h1 := hζ.geom_sum_eq_zero (Fact.out : p.Prime).one_lt
     rw [mul_neg, Finset.mul_sum]
     have : ∀ i ∈ Finset.range p, (T.ζ 1 - 1) * ∑ m ∈ Finset.range i, T.ζ 1 ^ m = T.ζ 1 ^ i - 1 :=

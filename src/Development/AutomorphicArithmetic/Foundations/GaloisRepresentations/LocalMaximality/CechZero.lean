@@ -65,7 +65,8 @@ theorem UpperTheory.Gal.productCup_of_system.zId_of :
       ∑ k ∈ Finset.univ.filter (fun k => p k = q), pr K τ ρ (e k) α • f k J := by
     intro J
     rw [Finset.sum_filter_of_ne (fun k _ hne => ?_)]
-    · simp only [Finset.sum_apply, join, lft_uni', rgt_uni', TensorProduct.mk_apply, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp only [Finset.sum_apply, join, lft_uni', rgt_uni', TensorProduct.mk_apply, map_sum,
         LinearMap.sum_apply, res_mu]
       rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun k _ => ?_
@@ -76,5 +77,6 @@ theorem UpperTheory.Gal.productCup_of_system.zId_of :
   have hfin := add_mem h1 h2
   convert hfin using 1
   rw [← key J]
-  simp only [Finset.sum_apply, map_sub, LinearMap.sub_apply, Finset.sum_sub_distrib, map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finset.sum_apply, map_sub, LinearMap.sub_apply, Finset.sum_sub_distrib, map_sum, LinearMap.sum_apply]
   abel

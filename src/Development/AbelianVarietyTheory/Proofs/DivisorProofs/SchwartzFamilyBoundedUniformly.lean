@@ -133,7 +133,8 @@ theorem theta_unif_weight : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [
   have e : theta om (Ψ t) g h = ∑ j, theta om (pureA F (A j (Ψ t)) (φ j)) g h := by
     rw [hlin _ (hsch (hΨ t))]
     conv_lhs => rw [hdec t]
-    rw [map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum]
     exact Finset.sum_congr rfl fun j _ => (hlin _ (hsch ((hφ j).2 _)) g h).symm
   rw [e, Finset.sum_mul]
   refine (mul_le_mul_of_nonneg_left (norm_sum_le _ _) (hw t)).trans ?_

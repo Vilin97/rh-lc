@@ -219,7 +219,8 @@ theorem UpperTheory.Gal.Mod.fixDesc :
     have h3 := LinearMap.congr_fun (hT n) z
     simp only [LinearMap.comp_apply, LinearMap.sum_apply] at h3 ⊢
     simp only [Tr, pullTot, DirectSum.lmap_lof]
-    rw [h3, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h3, map_sum]
   haveI : CharZero L := charZero_of_injective_algebraMap (algebraMap ℚ_[l] L).injective
   have hc : (Nat.card C.Δ : L) ≠ 0 := Nat.cast_ne_zero.2 Nat.card_pos.ne'
   refine ⟨(Nat.card C.Δ : L)⁻¹ • Tr.baseChange L x, ?_⟩

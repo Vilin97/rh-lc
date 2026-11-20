@@ -71,10 +71,12 @@ theorem reads_uniq {u : D.what₂.Word} {C : ColumnChain D.R D.what₂.Tau (D.hc
     intro z hz
     have hdec : z = ∑ c, eW.symm (Pi.single c (eW z c)) := by
       apply eW.injective
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simp only [LinearEquiv.apply_symm_apply]
       exact (Finset.univ_sum_single (eW z)).symm
-    rw [hdec, map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hdec, map_sum, LinearMap.sum_apply]
     refine Finset.sum_eq_zero fun c _ => ?_
     obtain ⟨v, hv⟩ := hval z hz c
     rw [← hv]

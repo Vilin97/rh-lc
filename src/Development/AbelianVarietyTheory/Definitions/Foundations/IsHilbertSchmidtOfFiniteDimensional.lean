@@ -625,7 +625,8 @@ theorem map_lcIntegral {E : Type*} [NormedAddCommGroup E] [NormedSpace ℂ E] [C
   have h2 : ∀ x, l (F x) = ∑ w ∈ hfin.toFinset, (F ⁻¹' {w}).indicator (fun _ => l w) x := by
     intro x
     simp [Set.indicator_apply]
-  simp only [h1, h2, map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [h1, h2, map_sum, map_smul]
   rw [MeasureTheory.integral_finsetSum]
   · refine Finset.sum_congr rfl fun w _ => ?_
     rw [integral_indicator_const _ (hF _).measurableSet, Complex.coe_smul]

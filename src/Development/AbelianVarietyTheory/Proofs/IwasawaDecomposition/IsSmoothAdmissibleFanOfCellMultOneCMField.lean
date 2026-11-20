@@ -266,7 +266,8 @@ theorem isPartOfBasis_of_card_torsion_le_one : ∀ (L : Type) [AddCommGroup L] [
       have e : (Submodule.Quotient.mk (∑ k, bQ.repr (Submodule.Quotient.mk x) k • s k) :
           L ⧸ Submodule.span ℤ (Set.range v)) = ∑ k, bQ.repr (Submodule.Quotient.mk x) k • bQ k := by
         change (Submodule.span ℤ (Set.range v)).mkQ (∑ k, bQ.repr (Submodule.Quotient.mk x) k • s k) = _
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         simp only [map_smul, Submodule.mkQ_apply, hs]
       rw [e, hx, sub_self]
     have h1 : Submodule.span ℤ (Set.range v) ≤ Submodule.span ℤ (Set.range (Sum.elim
@@ -334,7 +335,8 @@ theorem ray_of_mem_cone : ∀ (O : Type) [CommRing O] (bar : O → O) (φ : InvF
       apply Subtype.ext
       simpa using hkc
     have := congrArg (ψ l) hsub
-    rw [map_nsmul, map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_nsmul, map_sum] at this
     simp only [map_nsmul, hψ', nsmul_eq_mul, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq, Finset.mem_univ,
       if_true] at this
     exact this

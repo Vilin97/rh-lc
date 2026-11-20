@@ -60,7 +60,8 @@ theorem residue_formula : Residue := by
         apply hx
         exact ⟨s, by linear_combination -h0⟩
       have h1 := congrArg φ (H x hx')
-      simp only [map_sum, map_smul, smul_eq_mul] at h1
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, smul_eq_mul] at h1
       have hD : (∏ s, (x + s₀ - lam s)) ≠ 0 := Finset.prod_ne_zero_iff.mpr (fun s _ => hx' s)
       show P.eval x = Q.eval x
       rw [evP, evQ]

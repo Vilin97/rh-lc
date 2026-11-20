@@ -57,7 +57,8 @@ theorem exists_leading_generators {R : Type} [CommRing R] (I : Ideal R) (hI : I.
   have hz : (⟨monomial n g, reesAlgebra.monomial_mem.mpr hgn⟩ : reesAlgebra I) -
       ∑ q : s, p q * ⟨monomial (pre q).1.1 (pre q).1.2, reesAlgebra.monomial_mem.mpr (pre q).2.2⟩
       ∈ reesShiftIdeal I := by
-    rw [← Ideal.Quotient.eq_zero_iff_mem, map_sub, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Ideal.Quotient.eq_zero_iff_mem, map_sub, map_sum]
     have hq : ∀ q : s, Ideal.Quotient.mk (reesShiftIdeal I) (p q *
         ⟨monomial (pre q).1.1 (pre q).1.2, reesAlgebra.monomial_mem.mpr (pre q).2.2⟩) =
         c q • (q : reesAlgebra I ⧸ reesShiftIdeal I) := by

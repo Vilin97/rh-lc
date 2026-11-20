@@ -117,9 +117,11 @@ theorem liftZero_succ_eq_map (M : M2 A) : (lift0 M : M2 (SlopeTestRemainingChoic
 
 theorem ins_succ (a : Fin n) (M : M2 (SlopeTestRemainingChoices (Fin n) A)) : ins a.succ (M.map liftM) = liftM (ins a M) := by
   simp only [ins]
-  rw [← liftRingHom_apply_eq_liftM, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← liftRingHom_apply_eq_liftM, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_mul, liftRingHom_apply_eq_liftM, liftRingHom_apply_eq_liftM, eU_succ, Matrix.map_apply]
 

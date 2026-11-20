@@ -24,7 +24,8 @@ theorem hermJ_add_right (σ : L →+* L) (x y y' : Fin N → L) :
 
 theorem map_hermJ {σ : L →+* L} (hσσ : ∀ x, σ (σ x) = x) (x y : Fin N → L) :
     σ (hermJ σ x y) = hermJ σ y x := by
-  simp only [hermJ, map_sum, map_mul, hσσ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hermJ, map_sum, map_mul, hσσ]
   refine Fintype.sum_equiv Fin.revPerm _ _ fun i => ?_
   simp only [Fin.revPerm_apply, Fin.rev_rev, mul_comm]
 
@@ -50,7 +51,8 @@ theorem hermJ_mulVec (g : GU σ N) (x y : Fin N → L) :
     exact Fintype.sum_equiv Fin.revPerm _ _ fun i => rfl
   calc hermJ σ (mat g *ᵥ x) (mat g *ᵥ y)
       = ∑ k : Fin N, ∑ l : Fin N, σ (x k) * y l * ∑ i : Fin N, mat g⁻¹ k.rev i.rev * mat g i.rev l := by
-        simp only [hermJ, Matrix.mulVec, dotProduct, map_sum, map_mul, hconj, Finset.sum_mul, Finset.mul_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [hermJ, Matrix.mulVec, dotProduct, map_sum, map_mul, hconj, Finset.sum_mul, Finset.mul_sum]
         rw [Finset.sum_comm]
         conv_rhs => rw [Finset.sum_comm]
         refine Finset.sum_congr rfl fun l _ => ?_

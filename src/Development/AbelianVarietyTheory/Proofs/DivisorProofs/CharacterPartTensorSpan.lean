@@ -100,7 +100,8 @@ theorem homogeneousComponent_fockAct1 {P Q R S : ℕ} (X : Mat P Q) (hX : IsKC X
   classical
   have hh : ∀ i, fockAct1 P Q R S X (homogeneousComponent i f) ∈ homogeneousSubmodule (Ix P Q × Ix R S) ℂ i :=
     fun i => GlobalTheory.FockAlg.MinFirst.kStable_homog i X hX _ (homogeneousComponent_isHomogeneous i f)
-  conv_lhs => rw [← sum_homogeneousComponent f, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [← sum_homogeneousComponent f, map_sum, map_sum]
   simp_rw [homogeneousComponent_of_mem (hh _)]
   rw [Finset.sum_ite_eq]
   split_ifs with h

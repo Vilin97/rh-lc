@@ -49,7 +49,8 @@ theorem delta_rename (s : ι → Bool) (κ : ι → ι → k) (hκ : ∀ l l', �
     exact pderiv_rename (sideE s).injective _ _
   rw [PI.WickFormula.delta_eq_gdelta, PI.WickFormula.Gen.gdelta_apply,
     show secondOrder k κ P = ∑ l, ∑ l', C (κ l l') * pderiv l (pderiv l' P) from rfl]
-  simp only [map_sum, map_mul, rename_C]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, rename_C]
   rw [sum_side s _ ?_]
   · refine Finset.sum_congr rfl (fun i _ => Finset.sum_congr rfl (fun j _ => ?_))
     rw [smul_eq_C_mul, hd, hd]

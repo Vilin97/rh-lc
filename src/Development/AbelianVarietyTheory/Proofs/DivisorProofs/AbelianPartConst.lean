@@ -52,7 +52,8 @@ theorem lift_agree {R : Type} [CommRing R] {G : Over (Sp R)} {n : ℕ} {X : Sche
     refine Finset.sum_congr rfl fun a _ => ?_
     rw [(hdd a).2.1 O le_top, map_add, map_mul, map_mul]
     ring
-  simp only [op, pow_one, _root_.mul_one, Nat.cast_one, one_pow, map_add, map_sub, map_mul, map_sum, hΘ, zero_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [op, pow_one, _root_.mul_one, Nat.cast_one, one_pow, map_add, map_sub, map_mul, map_sum, hΘ, zero_mul,
     Finset.sum_const_zero, sub_zero, map_ofNat, isField_one (hdd _) le_top, isField_one (h.lift i').1 hi', map_zero,
     mul_zero, map_one] at e₁ e₀
   rw [hs, (h.lift i).1.2.1 O hi, map_add, map_mul, map_mul] at e₁

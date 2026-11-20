@@ -84,7 +84,8 @@ theorem jMt_inj' (μ : D.what₂.Tup) (j : ℕ) : Function.Injective (D.what₂.
   haveI := Fintype.ofFinite (Module.Free.ChooseBasisIndex D.what₂.LL (D.what₂.MtL μ j))
   refine (injective_iff_map_eq_zero (D.what₂.jMt μ j)).2 fun y hy => ?_
   have hsum := b.sum_repr y
-  rw [← hsum, map_sum] at hy
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hsum, map_sum] at hy
   simp only [LinearMap.map_smulₛₗ] at hy
   have hz := Fintype.linearIndependent_iff.1 hb _ hy
   rw [← hsum]

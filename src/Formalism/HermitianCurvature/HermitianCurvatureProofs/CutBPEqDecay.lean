@@ -119,7 +119,8 @@ theorem shifted_decay : FpmShDecay := by
   have e : fpmSh q f A p₀ = fun g => ∑ i, (Gp g * c i g) • (f g).comp (L i) := by
     funext g
     ext v
-    simp [fpmSh, hAe g, map_sum, map_smul, Finset.smul_sum, smul_smul, hGp]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [fpmSh, hAe g, map_sum, map_smul, Finset.smul_sum, smul_smul, hGp]
   rw [e]
   refine inCC_finsum _ fun i => ?_
   set Φ : (Wq →L[ℂ] Wp) →L[ℂ] (Wq' →L[ℂ] Wp) := (ContinuousLinearMap.compL ℂ Wq' Wq Wp).flip (L i)

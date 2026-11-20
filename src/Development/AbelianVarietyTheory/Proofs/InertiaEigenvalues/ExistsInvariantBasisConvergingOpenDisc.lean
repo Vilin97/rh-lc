@@ -164,7 +164,8 @@ theorem map_act (c : ℤ_[l]) (a : PowerSeries O) :
 
 omit [Algebra ℤ_[l] O] [Algebra ℤ_[l] L] [IsScalarTower ℤ_[l] O L] [Fact l.Prime] in
 theorem map_QQ (s : ℕ) : PowerSeries.map (algebraMap O L) (QQ l O s) = QQ l L s := by
-  simp [QQ, XX, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [QQ, XX, map_sum]
 
 theorem const_act (c : ℤ_[l]) (a : PowerSeries O) : constantCoeff (act l O c a) = constantCoeff a := by
   obtain ⟨b, hb⟩ : X ∣ a - C (constantCoeff a) := by rw [X_dvd_iff]; simp
@@ -241,7 +242,8 @@ theorem letφ_pow (n : ℕ) (φ : O⟦X⟧ →ₐ[O] O⟦X⟧) (q : O⟦X⟧) (h
     intro k
     rw [pow_succ', AlgHom.mul_apply]
     change φ ((letφ (n := n) φ ^ j) (fun _ => q) (k - 1)) = _
-    rw [ih, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [ih, map_sum]
     simp only [map_pow, map_add, map_one, hφ, hq, add_sub_cancel, ← pow_mul, pow_succ', mul_assoc]
 
 omit [Algebra ℤ_[l] O] in

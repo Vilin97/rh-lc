@@ -31,7 +31,8 @@ theorem iSup_maxGen_baseChange {L K M I : Type} [Field L] [Field K] [Algebra L K
   have e : (op x).baseChange K = ∑ y ∈ s, algebraMap L K (c y) • (op y).baseChange K := by
     rw [hcx]
     change LinearMap.baseChangeHom L K M M (∑ y ∈ s, c y • op y) = _
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun y _ => ?_
     change (c y • op y).baseChange K = _
     rw [LinearMap.baseChange_smul, algebraMap_smul]

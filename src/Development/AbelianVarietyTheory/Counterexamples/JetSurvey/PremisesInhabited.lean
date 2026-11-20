@@ -59,7 +59,8 @@ theorem trBil_posDef :
           starRingEnd ℂ (σ (RingOfIntegers.basis E j : E))).re * t j) := by
         intro σ
         rw [← Complex.ofReal_re (Complex.normSq (u σ)), ← Complex.mul_conj, hu]
-        simp only [map_sum, Finset.sum_mul_sum, Complex.re_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, Finset.sum_mul_sum, Complex.re_sum]
         refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
         simp; ring
       simp only [this, dotProduct, Matrix.mulVec, Matrix.of_apply, trBil_apply, star_trivial,

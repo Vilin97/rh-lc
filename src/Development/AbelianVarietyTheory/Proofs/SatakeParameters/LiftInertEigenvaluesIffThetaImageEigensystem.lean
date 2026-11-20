@@ -78,7 +78,8 @@ theorem comb_apply {M X : Type} [AddCommGroup M] [Module ℂ M] [AddCommGroup X]
       apply he
       rw [hh, hT0 d hd, map_zero]
   apply he
-  rw [hh, hT, valC, Finset.sum_smul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hh, hT, valC, Finset.sum_smul, map_sum]
   refine Finset.sum_congr rfl fun d _ => ?_
   rw [mul_smul, ← hone d, map_smul, hh]
 

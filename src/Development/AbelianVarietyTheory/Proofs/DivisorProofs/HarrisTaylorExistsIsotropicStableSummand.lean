@@ -89,7 +89,8 @@ theorem exists_summand : ∀ (p : ℕ) [Fact p.Prime] (D : GlobalTheory.UPel.HT.
       rw [map_sub, LinearMap.map_smulₛₗ, hpush, hw]
       exact hw₀ i c
     · show red _ ∈ Fil o₀.A
-      rw [map_sub, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, map_sum]
       simp only [hw]
       exact hsum
   obtain ⟨E, ⟨M, hEM⟩, hEF, hstab, hiso, hlieE⟩ := GlobalTheory.T.exists_lagrangian_lift_lie_squareZero_harrisTaylor p D R b C (RingHom.ker π) hI2 tR

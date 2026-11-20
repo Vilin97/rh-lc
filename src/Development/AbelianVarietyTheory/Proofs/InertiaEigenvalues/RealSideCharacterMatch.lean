@@ -288,7 +288,8 @@ theorem dcOp_mem (hDC : IsDC J x A) (Lc : Subgroup G) (hAL : ∀ a ∈ A, a ∈ 
         _ = _ := by group
     rw [e, hF', map_mul, hχL j hjL, one_mul, hχk]
   show ∑ a ∈ A, F (ι γ * h * k * a) = (χ k : ℂ) • ρ γ (∑ a ∈ A, F (h * a))
-  rw [Finset.sum_congr rfl term, map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.sum_congr rfl term, map_sum, Finset.smul_sum]
   exact Finset.sum_nbij' (pick hDC hk₁) (pick hDC (J.inv_mem hk₁))
     (fun a ha => (pick_spec hDC hk₁ ha).1) (fun a ha => (pick_spec hDC _ ha).1)
     (fun a ha => pick_inv hDC hk₁ ha)

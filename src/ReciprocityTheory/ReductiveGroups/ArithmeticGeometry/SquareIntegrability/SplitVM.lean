@@ -15,7 +15,8 @@ theorem emb_indep (g : (E →+* ℂ) → ℂ) (h : ∀ β : 𝓞 E, ∑ σ, σ (
   have hE : ∀ x : E, ∑ σ : E →+* ℂ, σ x * g σ = 0 := by
     intro x
     rw [← (integralBasis E).sum_repr x]
-    simp only [map_sum, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, Finset.sum_mul]
     rw [Finset.sum_comm]
     refine Finset.sum_eq_zero fun i _ => ?_
     have e : ∀ σ : E →+* ℂ, σ ((integralBasis E).repr x i • integralBasis E i) * g σ =
@@ -42,7 +43,8 @@ theorem conjSymm_canonical (x : E) : ConjSymm (canonicalEmbedding E x) := fun σ
 
 theorem conjSymm_sum {ι : Type} (s : Finset ι) (c : ι → ℝ) (v : ι → (E →+* ℂ) → ℂ)
     (hv : ∀ i, ConjSymm (v i)) : ConjSymm (∑ i ∈ s, c i • v i) := fun σ => by
-  rw [Finset.sum_apply, Finset.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.sum_apply, Finset.sum_apply, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [Pi.smul_apply, Pi.smul_apply, hv i σ, Complex.real_smul, Complex.real_smul, map_mul,
     Complex.conj_ofReal]
@@ -79,7 +81,8 @@ theorem real_span (t : (E →+* ℂ) → ℂ) (ht : ConjSymm t) :
   apply eq_of_commMap t _ ht (conjSymm_sum Finset.univ
     (fun k => (mixedEmbedding.latticeBasis E).repr (mixedEmbedding.commMap E t) k)
     (fun k => canonicalEmbedding E (integralBasis E k)) fun k => conjSymm_canonical _)
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [map_smul]
   conv_lhs => rw [← (mixedEmbedding.latticeBasis E).sum_repr (mixedEmbedding.commMap E t)]
   refine Finset.sum_congr rfl fun k _ => ?_

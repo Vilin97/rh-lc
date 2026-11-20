@@ -98,7 +98,8 @@ theorem noBase : Formalism.MainNotions.ModuliIntegralCharts.H1.ChartIndepSt2 →
   apply hf0
   have hz : ∀ i, rdU (T.U j σ) (gi i) k x0 = 0 := fun i =>
     hno x (g i) (gi i) (g i).2.1 (g i).2.2 (hgi i) x0 hx0
-  rw [hlin, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hlin, map_sum]
   simp only [LinearMap.map_smulₛₗ, Finset.sum_apply, Pi.smul_apply, hz, smul_zero, Finset.sum_const_zero]
 
 end GlobalTheory.NoBase

@@ -203,7 +203,8 @@ theorem _root_.GlobalTheory.JetProd.jetAt0_prod_rename (hd : ∀ i j x y, e i x 
     conv_lhs => rw [show P = fun j => ∑ v ∈ (P j).support,
       MvPolynomial.monomial v (AddMonoidAlgebra.coeff (P j) v) from
         funext fun j => MvPolynomial.as_sum (P j)]
-    simp only [map_sum, MvPolynomial.rename_monomial]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, MvPolynomial.rename_monomial]
     rw [Finset.prod_univ_sum]
     refine Finset.sum_congr rfl fun f _ => ?_
     rw [prod_monomial_eq_monomial_sum_prod']

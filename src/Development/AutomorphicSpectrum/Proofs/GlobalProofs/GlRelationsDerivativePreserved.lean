@@ -85,7 +85,8 @@ theorem monic_of_shifted_prod {V : Type} [AddCommGroup V] [Module ℂ V] {c : �
     have : (⟨R i t, hRmem i t⟩ : Algebra.adjoin ℂ s)
         = ∑ k ∈ Finset.range (d i + 1), t ^ k • (⟨a i k, hamem i k⟩ : Algebra.adjoin ℂ s) := by
       apply Subtype.ext; simp [hform i t]
-    rw [this, map_sum, sumPoly_eval]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [this, map_sum, sumPoly_eval]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_smul, Algebra.smul_def, map_pow, mul_comm]
   let φ : Algebra.adjoin ℂ s →* Module.End ℂ V :=

@@ -27,7 +27,8 @@ theorem cupflip_aw_cochain_of (hm : cupflip_ev_mk) (he : cupflip_ev_res) (hs : c
       (ev α p _ rfl U (x.sub 0 p (by omega))) (ev β (N - p) _ rfl U (x.sub p (N - p) (by omega))))
     (by
       intro N w h V U g x
-      simp only [Sec.res, map_sum, Units.smul_def, map_zsmul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Sec.res, map_sum, Units.smul_def, map_zsmul]
       refine Finset.sum_congr rfl (fun p _ => ?_)
       congr 1
       have := μ.nat g (-((p : ℕ) : ℤ) + n) (-((N - p : ℕ) : ℤ) + m) w (by omega)

@@ -102,7 +102,8 @@ theorem continuous_partialCoeff {ϕ : AdelicGLn.AdelicGL K n → ℂ} (hϕ : Con
 
 theorem pair_matVec [DecidableEq ι] (ξ : ι → K) (M : Matrix ι ι K) (x : ι → 𝔸[K]) :
     pair ξ (matVec M x) = pair (Matrix.vecMul ξ M) x := by
-  simp only [pair, matVec_apply, Finset.mul_sum, Matrix.vecMul, dotProduct, map_sum, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [pair, matVec_apply, Finset.mul_sum, Matrix.vecMul, dotProduct, map_sum, map_mul,
     Finset.sum_mul, mul_assoc]
   exact Finset.sum_comm
 

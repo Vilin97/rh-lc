@@ -81,7 +81,8 @@ theorem eA_app_const (Z : LocM.Mdl Y i₀) [IsDiscreteValuationRing (Z.i.c.V W)]
     (hv : ∑ k, cf k * v k = if Q then 1 else 0) :
     (eA M (fun k => B.const (cf k)) b).app _ s = if Q then s else 0 := by
   rw [eA_app M _ b s _ hs]
-  simp only [← res_const Z hh a, ← map_mul, ← map_sum, hv]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← res_const Z hh a, ← map_mul, ← map_sum, hv]
   split_ifs <;> simp
 
 theorem isLatPres_part (Z : LocM.Mdl Y i₀) {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]

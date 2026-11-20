@@ -52,7 +52,8 @@ theorem mem_idV_inv {𝔠 : FI D} (h𝔠 : 𝔠 ≠ 0) {v : GlobalTheory.FinPl.P
 
 theorem pairing_smul_ratV (S : HSp D) (s x : Fin S.rank → D.host.E) (a : AE D) :
     pairing S s (a • ratV x) = incA D (∑ b, row S s b * x b) * a := by
-  simp only [pairing, ratV, Pi.smul_apply, smul_eq_mul, map_sum, map_mul, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [pairing, ratV, Pi.smul_apply, smul_eq_mul, map_sum, map_mul, Finset.sum_mul]
   exact Finset.sum_congr rfl fun b _ => by ring
 
 theorem incA_inj : Function.Injective (incA D) := GlobalTheory.MixModel.incA_injective
@@ -83,7 +84,8 @@ theorem line_trace : ∀ (D : D7) (S : HSp D) (L : Lat S) (x : Fin S.rank → D.
     apply incA_inj (D := D)
     have := hexp ((1 : AE D) • ratV x) i
     simp only [pairing_smul_ratV, mul_one] at this
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simpa only [one_smul, ratV, map_mul] using this
   set 𝔠 : FI D := FractionalIdeal.spanFinset (𝓞 D.host.E) Finset.univ c with h𝔠def
   have hmem : ∀ y, y ∈ 𝔠 ↔ y ∈ Submodule.span (𝓞 D.host.E) (Set.range c) := by

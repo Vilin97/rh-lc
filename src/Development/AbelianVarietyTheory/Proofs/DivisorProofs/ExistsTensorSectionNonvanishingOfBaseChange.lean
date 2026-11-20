@@ -119,9 +119,11 @@ theorem exists_sec_of_pull {F E : Type} [Field F] [Field E] [Algebra F E] {Y X :
   have hm : m' j = (e₁ t).sum fun β m => (π.appLE (V j) (π ⁻¹ᵁ V j ⊓ q ⁻¹ᵁ ⊤) inf_le_left).hom (m j) *
       algX q (π ⁻¹ᵁ V j ⊓ q ⁻¹ᵁ ⊤) (b β) := by
     have h1 := hpt j
-    rw [hexp, piLeft_apply_eq, Finsupp.sum, map_sum] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hexp, piLeft_apply_eq, Finsupp.sum, map_sum] at h1
     simp only [LinearMap.rTensor_tmul, LinearMap.proj_apply] at h1
-    rw [← RingEquiv.apply_symm_apply (eTens p q π H (V j) (hVa j)) (m' j), ← h1, map_sum, Finsupp.sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← RingEquiv.apply_symm_apply (eTens p q π H (V j) (hVa j)) (m' j), ← h1, map_sum, Finsupp.sum]
     refine Finset.sum_congr rfl fun β _ => ?_
     rw [eTens_tmul]
   have key : ∀ β, ReciprocityTheory.ChartRestriction.G.Geo.Tor.gs (𝟙 X) x _
@@ -133,7 +135,8 @@ theorem exists_sec_of_pull {F E : Type} [Field F] [Field E] [Algebra F E] {Y X :
       ← mem_nonzeroLocus_iff_pull (θ β) π x (hVc j hj)]
     exact hcon (θ β)
   have hmem : ReciprocityTheory.ChartRestriction.G.Geo.Tor.gs (𝟙 X) x _ (m' j) ∈ IsLocalRing.maximalIdeal (X.presheaf.stalk x) := by
-    rw [hm, Finsupp.sum, ReciprocityTheory.ChartRestriction.G.Geo.Tor.gs_eq (𝟙 X) x _ hxj, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hm, Finsupp.sum, ReciprocityTheory.ChartRestriction.G.Geo.Tor.gs_eq (𝟙 X) x _ hxj, map_sum, map_sum]
     refine Ideal.sum_mem _ fun β _ => ?_
     rw [map_mul, map_mul, ← ReciprocityTheory.ChartRestriction.G.Geo.Tor.gs_eq (𝟙 X) x _ hxj]
     exact Ideal.mul_mem_right _ _ (key β)

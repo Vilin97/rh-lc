@@ -21,7 +21,8 @@ theorem li_of_frac {W O F L ι : Type*} [CommRing W] [IsDomain W] [CommRing O] [
   intro s g hg i hi
   choose w d hd h using hfrac
   have h1 : ∑ k ∈ s, (w (g k) * ∏ m ∈ s.erase k, d (g m)) • v k = 0 := ho (by
-    rw [map_zero, map_sum, ← mul_zero (o (algebraMap W O (∏ m ∈ s, d (g m)))), ← hg, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_zero, map_sum, ← mul_zero (o (algebraMap W O (∏ m ∈ s, d (g m)))), ← hg, Finset.mul_sum]
     refine Finset.sum_congr rfl fun k hk => ?_
     rw [← Finset.mul_prod_erase s _ hk, Algebra.smul_def, Algebra.smul_def]
     simp only [map_mul]
@@ -46,7 +47,8 @@ theorem eq_zero_of_sum_tmul {F V B ι : Type*} [Field F] [AddCommGroup V] [Modul
     rw [LinearMap.comp_apply, LinearMap.comp_apply, hv.repr_eq_single k ⟨v k, hm⟩ rfl] at this
     exact this
   have h2 := congrArg (fun x => TensorProduct.lid F B (φ.rTensor B x)) h
-  simp only [map_sum, LinearMap.rTensor_tmul, TensorProduct.lid_tmul, h1, map_zero, Finsupp.single_apply] at h2
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.rTensor_tmul, TensorProduct.lid_tmul, h1, map_zero, Finsupp.single_apply] at h2
   simpa using h2
 
 theorem exists_coord {W A O ι : Type*} [CommRing W] [CommRing A] [CommRing O] [Algebra W A] [Algebra W O]
@@ -67,7 +69,8 @@ theorem injective_abstract {A O C S F L B ι : Type*} [CommRing A] [CommRing O] 
   obtain ⟨D, z, hz⟩ := hS y
   obtain ⟨a, rfl⟩ := hC z
   have h3 := congrArg Λ hz
-  rw [map_mul, hy, mul_zero, map_sum, map_sum] at h3
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_mul, hy, mul_zero, map_sum, map_sum] at h3
   simp only [map_mul, ← hκ, h1, h2, Algebra.TensorProduct.tmul_mul_tmul, one_mul, mul_one] at h3
   have h4 : ∀ i, a i = 0 := fun i => hj ((eq_zero_of_sum_tmul hv h3.symm i).trans (map_zero j).symm)
   simp only [h4, map_zero, zero_mul, Finset.sum_const_zero] at hz

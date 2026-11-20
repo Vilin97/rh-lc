@@ -35,7 +35,8 @@ theorem isAdj_sumOp (S S' : Pair k n → Finset (Pair k n)) (w w' : Pair k n →
     refine (Finset.sum_subset (fun Q hQ => (Finset.mem_filter.1 hQ).2) fun Q hQ hQ' => ?_).symm
     have : φ' Q = 0 := by simpa [hQ] using hQ'
     simp [this]
-  simp only [e1, e2, Finset.sum_mul, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [e1, e2, Finset.sum_mul, map_sum, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun Q _ => Finset.sum_congr rfl fun P _ => ?_
   by_cases hQ : Q ∈ S P

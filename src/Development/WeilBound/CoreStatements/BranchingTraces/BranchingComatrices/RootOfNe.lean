@@ -54,7 +54,8 @@ theorem th_proj (hE : GlRel E) (hq : ∀ u v, qdet E u v = (∏ j, (u + m j)) �
     (Y : ι → Fin (N + 1) → V) (κ : ι → ℂ) (hκ : Set.InjOn κ S) (hY : ∀ t ∈ S, EE E (Y t) = κ t • Y t) {s : ι} (hs : s ∈ S)
     (i : Fin (N + 1)) (hi : κ s = N + m i) :
     Th E (-m i) (∑ t ∈ S, Y t) = (∏ j ∈ univ.erase i, (-m i + m j)) • Y s := by
-  rw [map_sum, Finset.sum_eq_single_of_mem s hs fun t ht hts => ?_]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_eq_single_of_mem s hs fun t ht hts => ?_]
   · exact th_eig hE hq i (hi ▸ hY s hs) _
   · have h := th_mul hE hq (hY t ht) (-m i)
     rw [Finset.prod_eq_zero (mem_univ i) (by ring), zero_smul, smul_eq_zero] at h
@@ -91,7 +92,8 @@ theorem qdet_int {V V' : Type} [AddCommGroup V] [Module ℂ V] [AddCommGroup V']
     | nil => simp
     | cons p L ih => simp only [List.map_cons, List.prod_cons, Module.End.mul_apply, tm, ih]
   unfold qdet qminor
-  rw [LinearMap.sum_apply, LinearMap.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [LinearMap.sum_apply, LinearMap.sum_apply, map_sum]
   refine Finset.sum_congr rfl fun σ _ => ?_
   rw [Module.End.mul_apply, Module.End.mul_apply, Module.End.intCast_apply, Module.End.intCast_apply, map_zsmul]
   have := hl (List.ofFn fun k : Fin n => (u - (k : ℂ), σ k, k)) x

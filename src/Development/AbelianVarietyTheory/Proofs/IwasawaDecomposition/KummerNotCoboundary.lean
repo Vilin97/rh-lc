@@ -44,7 +44,8 @@ theorem exists_full (P : LocPrime l) (K : FinExt l) (b : P.R.B)
   have h4 : ∑ q : GQ l ⧸ GK K, F (s * q.out) = ∑ q : GQ l ⧸ GK K, F q.out :=
     Fintype.sum_equiv (MulAction.toPerm s) _ _ fun q => by
       rw [MulAction.toPerm_apply, ← MulAction.Quotient.mk_smul_out, h3, smul_eq_mul]
-  rw [map_smul, map_sum, ← smul_sub]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_smul, map_sum, ← smul_sub]
   simp only [h1]
   rw [Finset.sum_add_distrib, h4, add_sub_cancel_left, Finset.sum_const, Finset.card_univ,
     ← Nat.cast_smul_eq_nsmul ℚ_[l], smul_smul, inv_mul_cancel₀ hn, one_smul]
@@ -129,7 +130,8 @@ theorem IsLogP.add {a b : Per.AinfP l} {y y' z : Per.BdRp l} (ha : a ∈ Per.ker
     exact Ideal.map_quotient_self _
   have key := LogAdd.trunc_add hR n _ hI _ _ (Ideal.mem_map_of_mem q ha) (Ideal.mem_map_of_mem q hb)
   change q _ = q _ + q _
-  simp only [map_sum, map_mul, map_pow, map_neg, map_one, map_natCast, map_add]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, map_pow, map_neg, map_one, map_natCast, map_add]
   exact key
 
 theorem IsLogP.gal {a : Per.AinfP l} {y : Per.BdRp l} (hy : IsLogP a y) (g : GQ l) :
@@ -140,7 +142,8 @@ theorem IsLogP.gal {a : Per.AinfP l} {y : Per.BdRp l} (hy : IsLogP a y) (g : GQ 
   have h2 := CrisUnique.ev_σDp g n _ _ h
   rw [map_mul, map_natCast, map_mul, map_natCast] at h2
   rw [h2]
-  simp only [map_sum (Per.extP (Per.σA g)), map_mul (Per.extP (Per.σA g)), map_pow (Per.extP (Per.σA g)),
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum (Per.extP (Per.σA g)), map_mul (Per.extP (Per.σA g)), map_pow (Per.extP (Per.σA g)),
     map_neg (Per.extP (Per.σA g)), map_one (Per.extP (Per.σA g)), map_natCast (Per.extP (Per.σA g))]
 
 theorem exists_tilt (ν : ℕ → Om l) (hs : ∀ m, ν (m + 1) ^ l = ν m) (u : ℕ) (h0 : ν 0 = u) :

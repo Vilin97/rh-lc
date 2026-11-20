@@ -22,7 +22,8 @@ theorem mulVec_mem_headColsU (Z : Matrix (Fin (r + 1)) (Fin (r + 1)) R) (w : Fin
     simp [Finset.sum_apply, Pi.single_apply]
   have hsum : Z.mulVec w = ∑ j, w j • Z.mulVec (Pi.single j 1) := by
     conv_lhs => rw [hw']
-    rw [← Matrix.mulVecLin_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Matrix.mulVecLin_apply, map_sum]
     simp only [map_smul, Matrix.mulVecLin_apply]
   rw [hsum, Fin.sum_univ_castSucc, hw, zero_smul, add_zero]
   refine Submodule.sum_mem _ fun a _ => Submodule.smul_mem _ _ ?_

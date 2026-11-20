@@ -225,7 +225,8 @@ theorem exists_map_eq_of_coeff_mem_range (f : R →+* S) (q : MvPolynomial σ S)
     (h : ∀ m, ∃ r, f r = q.coeff m) : ∃ q₀ : MvPolynomial σ R, MvPolynomial.map f q₀ = q := by
   classical
   refine ⟨∑ m ∈ q.support, MvPolynomial.monomial m (h m).choose, ?_⟩
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [MvPolynomial.map_monomial, (h _).choose_spec]
   exact MvPolynomial.support_sum_monomial_coeff q
 
@@ -255,13 +256,15 @@ noncomputable def pack (e : J → ℕ) (ℓ : J → σ → A') : Polynomial (MvP
 
 theorem map_pack (e : J → ℕ) (ℓ : J → σ → A') (f : A' →+* R) :
     Polynomial.map (MvPolynomial.map f) (pack e ℓ) = pack e (fun j s => f (ℓ j s)) := by
-  simp [pack, Polynomial.map_sum, Polynomial.map_monomial, map_sum, map_mul, MvPolynomial.map_C,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [pack, Polynomial.map_sum, Polynomial.map_monomial, map_sum, map_mul, MvPolynomial.map_C,
     MvPolynomial.map_X]
 
 theorem map_eval_pack (e : J → ℕ) (ℓ : J → σ → A') (f : A' →+* C) (T : σ → C) :
     Polynomial.map (MvPolynomial.eval₂Hom f T) (pack e ℓ) =
       ∑ j, Polynomial.monomial (e j) (∑ s, f (ℓ j s) * T s) := by
-  simp [pack, Polynomial.map_sum, Polynomial.map_monomial, MvPolynomial.eval₂_mul, MvPolynomial.eval₂_C, MvPolynomial.eval₂_X]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [pack, Polynomial.map_sum, Polynomial.map_monomial, MvPolynomial.eval₂_mul, MvPolynomial.eval₂_C, MvPolynomial.eval₂_X]
 
 theorem coeffsHom_pack (e : J → ℕ) (ℓ : J → σ → A') : CoeffsHom 1 (pack e ℓ) := by
   classical

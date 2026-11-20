@@ -74,7 +74,8 @@ theorem readExt_injective
   obtain ⟨d, hd, c, e⟩ := key x
   have h1 : ∑ a, eL (c a) • rd (v a) = 0 := by
     have := congrArg (readExt rd eL hL) e
-    rw [← algebraMap_smul L d x, readExt_smul, hx, smul_zero, map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← algebraMap_smul L d x, readExt_smul, hx, smul_zero, map_sum] at this
     exact this.symm
   have h2 : ∀ a, c a = 0 := fun a => eL.injective
     ((Fintype.linearIndependent_iff.1 (hF _ v v.linearIndependent) _ h1 a).trans (map_zero _).symm)
@@ -172,7 +173,8 @@ theorem descent_of_reading : AtFit fun Fm x hx i p w j ρ hρ ν rd => ∀ e : F
       erw [hAsmul]
       rw [smul_comm]
   apply hRinj
-  rw [hinc, hz, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hinc, hz, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [← algebraMap_smul (FractionRing ((Fm.ex x hx i).nch.Oe w)) (a k) (rd (y k)), hRdef, readExt_smul, ← hRdef,
     hrd _ (hy k), mul_smul]

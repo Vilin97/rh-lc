@@ -47,7 +47,8 @@ theorem rename_swapAt_sum (τ t : ι) (a b : Fin N) (p : Fin N → Prop) [Decida
     (hp : p a ↔ p b) :
     rename (swapAt τ a b) (∑ i ∈ Finset.univ.filter p, (X (t, i) : Pol ι N) ^ 1) =
       ∑ i ∈ Finset.univ.filter p, (X (t, i) : Pol ι N) ^ 1 := by
-  simp only [map_sum, pow_one, rename_X, swapAt]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, pow_one, rename_X, swapAt]
   by_cases ht : t = τ
   · simp only [ht, if_true]
     refine Finset.sum_equiv (Equiv.swap a b) (fun i => ?_) (fun i _ => rfl)
@@ -63,7 +64,8 @@ theorem rename_swapAt_invForm (j : ℕ) (al be : ι → ℝ) (τ : ι) (a b : Fi
     (h1 : (b : ℕ) = a + 1) (h2 : (b : ℕ) ≠ j) :
     rename (swapAt τ a b) (invForm (N := N) j al be) = invForm j al be := by
   unfold invForm pLow pHigh
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun t _ => ?_
   rw [map_add, map_mul, map_mul, rename_C, rename_C,
     rename_swapAt_sum τ t a b (fun i : Fin N => (i : ℕ) < j) (by omega),

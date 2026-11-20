@@ -115,7 +115,8 @@ theorem dual_gen (hθ : IsSplitEquiv X p θ) (l l' : Fin X.B.I.n → X.B.I.E) (h
   obtain ⟨o, ho⟩ := (X.B.I.L_dual l).1 hl l' hl'
   have key : (fun j => iota2 X p θ (l' j)) ⬝ᵥ (J1 X p θ *ᵥ fun j => iota1 X p θ (l j)) =
       iota1 X p θ (Formalism.UG.hform (starRingEnd X.B.I.E) X.B.I.J l' l) := by
-    simp only [Formalism.UG.hform, map_sum, map_mul, dotProduct, Matrix.mulVec, firstForm_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Formalism.UG.hform, map_sum, map_mul, dotProduct, Matrix.mulVec, firstForm_apply,
       secondEmbedding_eq_star X p θ hθ, starRingEnd_apply]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [Finset.mul_sum]

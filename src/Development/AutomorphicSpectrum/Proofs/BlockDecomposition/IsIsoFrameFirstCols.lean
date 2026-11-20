@@ -43,7 +43,8 @@ theorem isIsoFrame_firstCols {X Y : Matrix (Fin V.rank) (Fin r) D.host.E}
           Formalism.UG.cT (D.sp.cm.sig : D.host.E →+* D.host.E) X = 0 := by
         funext a
         have := congrArg (D.sp.cm.sig : D.host.E →+* D.host.E) (h3 a)
-        simp only [map_sum, map_mul, map_zero] at this
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, map_mul, map_zero] at this
         simpa [Matrix.vecMul, dotProduct, Formalism.UG.cT] using this
       have h5 := congrArg (fun v => v ᵥ* (V.gram * Y)) h4
       simp only [Matrix.vecMul_vecMul, Matrix.zero_vecMul, ← Matrix.mul_assoc, hW.xy, Matrix.vecMul_one] at h5

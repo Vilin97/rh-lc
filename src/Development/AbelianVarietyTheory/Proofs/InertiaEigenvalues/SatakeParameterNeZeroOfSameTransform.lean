@@ -82,7 +82,8 @@ def lin (c₀ : ℂ) (a b : Fin m → ℂ) : (Fin m → ℤ) →₀ ℂ :=
 
 theorem laurentCoeffEval_linearCoeffsAtBasis (α : Fin m → ℂ) (c₀ : ℂ) (a b : Fin m → ℂ) :
     ev0 α (lin c₀ a b) = c₀ + ∑ k, (a k * α k + b k * (α k)⁻¹) := by
-  simp only [lin, map_add, map_sum, laurentCoeffEvalLinear_single, mon_zero, mon_e, mon_ne, mul_one]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [lin, map_add, map_sum, laurentCoeffEvalLinear_single, mon_zero, mon_e, mon_ne, mul_one]
 
 def sqCoeff (c₀ A : ℂ) : (Fin m → ℤ) →₀ ℂ :=
   Finsupp.single 0 (c₀ ^ 2) + ∑ k, (Finsupp.single (Pi.single k 1) (2 * c₀ * A) +
@@ -103,7 +104,8 @@ theorem laurentCoeffEval_squareSymmetricCoeffs (α : Fin m → ℂ) (c₀ A : �
     rw [← quad]
     simp only [map_add, laurentCoeffEvalLinear_single]
     ring
-  rw [sqCoeff, map_add, map_add, map_sum, map_sum, Finset.sum_congr rfl fun j _ =>
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [sqCoeff, map_add, map_add, map_sum, map_sum, Finset.sum_congr rfl fun j _ =>
     (map_sum _ _ _).trans (Finset.sum_congr rfl fun k _ => e j k)]
   simp only [map_add, laurentCoeffEvalLinear_single, mon_zero, mon_e, mon_ne, mul_one]
   have h1 : ∑ j, ∑ k, A ^ 2 * ((α j + (α j)⁻¹) * (α k + (α k)⁻¹) + if j = k then 2 * (1 - α j * (α j)⁻¹) else 0) =

@@ -131,7 +131,8 @@ theorem koszul_finset (s : Finset (Fin n)) :
 
     have hcol : ∑ i, (if i = p then 0 else pairDiff i * G' i) = 0 := by
       have h := congrArg (rename (pairCollapse p)) hrel'
-      rw [map_sum, map_zero] at h
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, map_zero] at h
       refine Eq.trans (Finset.sum_congr rfl fun i _ => ?_) h
       rw [map_mul, rename_pairCollapse_pairDiff]
       by_cases hip : i = p
@@ -182,7 +183,8 @@ theorem koszul_homogeneous {m : ℕ} (G : Fin n → MvPolynomial (Fin n ⊕ Fin 
     · exact isHomogeneous_zero _ _ _
     · exact homogeneousComponent_isHomogeneous _ _
   · have h := congrArg (homogeneousComponent (m - 1)) (hGK i)
-    rw [homogeneousComponent_of_mem ((mem_homogeneousSubmodule _ _).mpr (hG i)), if_pos rfl,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [homogeneousComponent_of_mem ((mem_homogeneousSubmodule _ _).mpr (hG i)), if_pos rfl,
       map_sum] at h
     simp only [homogeneousComponent_linear_mul (isHomogeneous_pairDiff _)] at h
     rw [h]

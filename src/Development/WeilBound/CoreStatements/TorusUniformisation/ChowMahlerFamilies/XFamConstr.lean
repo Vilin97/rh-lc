@@ -121,7 +121,8 @@ theorem fg_comap {R : Subalgebra o Ω} {L : AddSubgroup V₁} (h : FG R L) (f : 
   · obtain ⟨a, ha, hs⟩ := hL (f e) he
     refine ⟨a, ha, hf ?_⟩
     rw [← h2 (f e) ⟨e, rfl⟩, ← hs]
-    simp only [map_sum, map_smul, hy]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, hy]
 
 theorem fam_dual {m : ℕ} {A : (∀ k, ι k) → AddSubgroup (Fin m → Ω)} (hA : IsLatFamily o x A)
     (hfg : ∀ c, mseg x c ≠ 0 → FG (chartRing o (mseg x) c) (A c)) :

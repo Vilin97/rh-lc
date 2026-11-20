@@ -8,7 +8,8 @@ noncomputable section
 
 theorem TangentJacComp.real_inner_eq_re {d : ℕ} (x y : EuclideanSpace ℂ (Fin d)) :
     @inner ℝ _ _ x y = RCLike.re (@inner ℂ _ _ x y) := by
-  simp [PiLp.inner_apply, Complex.inner, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [PiLp.inner_apply, Complex.inner, map_sum]
 
 theorem TangentJacComp.adjoint_restrictScalars {d n : ℕ}
     (L : EuclideanSpace ℂ (Fin d) →ₗ[ℂ] EuclideanSpace ℂ (Fin n)) :

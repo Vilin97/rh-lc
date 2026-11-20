@@ -66,7 +66,8 @@ private theorem locOne_nak {L : Type} [Field L] [Algebra ℂ L] (B O : Subalgebr
         have h5 := congrArg (fun u : O => (u : L)) ha
         push_cast at h5
         linear_combination h5
-      rw [h1, map_add, Derivation.map_algebraMap, zero_add, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [h1, map_add, Derivation.map_algebraMap, zero_add, map_sum]
       refine Finset.sum_congr rfl fun l _ => ?_
       rw [Derivation.leibniz]
       rfl

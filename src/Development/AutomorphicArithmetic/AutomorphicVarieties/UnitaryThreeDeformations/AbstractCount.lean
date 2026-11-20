@@ -64,13 +64,16 @@ theorem UpperTheory.V.UnitaryThreeInertia.abstract_count :
         ∑ i, ⟨(u φ).mat i i, mem_Sring u (hdiag i)⟩ - algebraMap O (Sring O u) ((r0 F.η F.Ψ φ).mat.trace) := by
       apply Subtype.ext
       simp [a, Matrix.trace]
-    rw [hsplit, map_sub, map_sum, AlgHom.commutes]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hsplit, map_sub, map_sum, AlgHom.commutes]
     simp only [Matrix.trace, Matrix.diag]
     congr 1
     · exact Finset.sum_congr rfl fun i _ => hval ξ r hr φ i i
-    · simp [Frame.rz, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp [Frame.rz, map_sum]
   have hao : W.origin h a = 0 := by
-    simp [a, Matrix.trace, map_sum, hent]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [a, Matrix.trace, map_sum, hent]
   have hfacts : ∀ (ξ : Sring O u →ₐ[O] PadicAlgCl l) r, IsPtHom u ξ r →
       (¬∀ j < 0, ∀ (x : R) (hx : x ∈ wpart O u j), ξ ⟨x, mem_Sring u hx⟩ = 0) →
       (¬∀ j > 0, ∀ (x : R) (hx : x ∈ wpart O u j), ξ ⟨x, mem_Sring u hx⟩ = 0) →

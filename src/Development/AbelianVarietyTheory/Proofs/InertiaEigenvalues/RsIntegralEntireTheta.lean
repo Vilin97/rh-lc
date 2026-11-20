@@ -45,7 +45,8 @@ theorem bounded_of_decays (ha : 0 < a) {F : GA E a → ℂ} (hF : Decays F) : �
   have key := hC g 1 rfl (fun j => (d : E) * e j) hξ (fun i _ => by
     have h1 : pFin E (((fun j => algebraMap E (Ad E) ((d : E) * e j)) ᵥ* g.val) i) =
         (d : Af E) * pFin E (((fun j => algebraMap E (Ad E) (e j)) ᵥ* g.val) i) := by
-      simp only [vecMul, dotProduct, map_mul, map_natCast, Finset.mul_sum, map_sum, mul_assoc]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [vecMul, dotProduct, map_mul, map_natCast, Finset.mul_sum, map_sum, mul_assoc]
     show pFin E _ ∈ _
     rw [h1]
     exact hmem i)

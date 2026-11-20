@@ -18,7 +18,8 @@ theorem det_update_sum {ι : Type*} [Fintype ι] [DecidableEq ι] (b : Basis ι 
       (Matrix.transpose (b.toMatrix x)).updateRow i (∑ k, a k • Matrix.transpose (b.toMatrix x) k) := by
     ext r s
     rcases eq_or_ne r i with rfl | hr
-    · simp [Basis.toMatrix_apply, Matrix.updateRow_self, Finset.sum_apply, map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp [Basis.toMatrix_apply, Matrix.updateRow_self, Finset.sum_apply, map_sum, map_smul]
     · simp [Basis.toMatrix_apply, Matrix.updateRow_ne hr, Function.update_apply, hr]
   rw [e, Matrix.det_updateRow_sum, smul_eq_mul]
 

@@ -139,7 +139,8 @@ theorem cyclotomicInvariantsZero_statement : CyclotomicInvariantsZero := by
     apply hemb
     have := congrFun (hinv R.gg) t
     rw [hUg] at this
-    rw [ha t, ← this, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [ha t, ← this, map_sum]
     simp only [Matrix.vecMul, dotProduct, Matrix.map_apply, map_mul, ← hg0, ha]
     rfl
 
@@ -148,7 +149,8 @@ theorem cyclotomicInvariantsZero_statement : CyclotomicInvariantsZero := by
     rw [gmI_apply]
     funext t
     have := congrArg R.Tt.pr (hrel t)
-    rw [map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at this
     show ∑ q, R.Tt.Vi Vm R.w 0 t q * R.Tt.pr (a q) = R.Tt.pr (a t)
     rw [← this]
     refine Finset.sum_congr rfl fun q _ => ?_

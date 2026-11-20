@@ -22,7 +22,8 @@ theorem sh_push (a : Fin 3) (s : GQ l) : GlobalTheory.OrdLoc.sh D (push f r) a s
 theorem tr_push (a : Fin 3) : f (GlobalTheory.OrdLoc.tr D r a) = GlobalTheory.OrdLoc.tr D (push f r) a := by
   unfold GlobalTheory.OrdLoc.tr
   rw [sh_push, sh_push, push_mat, ← Matrix.map_mul, ← Matrix.map_mul]
-  rw [Matrix.trace, Matrix.trace, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.trace, Matrix.trace, map_sum]
   rfl
 
 theorem dd_push (a : Fin 3) : f (GlobalTheory.OrdLoc.dd D r a) = GlobalTheory.OrdLoc.dd D (push f r) a := by

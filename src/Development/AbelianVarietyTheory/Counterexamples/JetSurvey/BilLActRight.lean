@@ -55,7 +55,8 @@ theorem additive_eq (G : FGLaw S d) (g : PS S 1 d)
   have hd : ∀ v, pderiv S v (g - ∑ j, C (constantCoeff (pderiv S ((0 : Fin 1), j) g)) * logOf G j) = 0 := by
     rintro ⟨j, c⟩
     obtain rfl : j = 0 := Subsingleton.elim _ _
-    rw [map_sub, map_sum, h2 c, sub_eq_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_sum, h2 c, sub_eq_zero]
     refine Finset.sum_congr rfl fun b _ => ?_
     rw [← smul_eq_C_mul, ← smul_eq_C_mul, Derivation.map_smul, pderiv_logOf]
   rw [eq_C_of_pderiv_zero hd]
@@ -90,7 +91,8 @@ theorem log_act {O : Type} [CommRing O] (G : FGLaw S d) (A : OAct O G) (a : O) (
   rw [additive_eq G _ hadd]
   refine Finset.sum_congr rfl fun j _ => ?_
   congr 2
-  rw [pderiv_ev hA, Fintype.sum_prod_type, Fin.sum_univ_one, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [pderiv_ev hA, Fintype.sum_prod_type, Fin.sum_univ_one, map_sum]
   have hO : ∀ c, constantCoeff (Om G i c) = if i = c then 1 else 0 := fun c => by
     have := congrFun (congrFun (cc_om G) i) c
     simpa [Matrix.one_apply] using this
@@ -120,7 +122,8 @@ theorem bilL_act_left {O : Type} [CommRing O] (G : FGLaw S d) (A : OAct O G) (a 
   have hP : CZ (![comp1 (A.act a) (pt S (n := 2) d 0), pt S d 1] : Fin 2 → Pt S 2 d) :=
     CZ.cons (fun c => by rw [comp1, cc_ev czX]; exact A.const a c) czY
   rw [ev_bilL G cc hP]
-  simp only [Matrix.cons_val_zero, Matrix.cons_val_one, log_act_at, bilL, Matrix.mul_apply, Matrix.transpose_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.cons_val_zero, Matrix.cons_val_one, log_act_at, bilL, Matrix.mul_apply, Matrix.transpose_apply,
     Matrix.of_apply, smul_eq_C_mul, map_sum, map_mul, Finset.sum_mul, Finset.mul_sum]
   rw [Finset.sum_comm]
   conv_rhs => rw [Finset.sum_comm]
@@ -135,7 +138,8 @@ theorem bilL_act_right {O : Type} [CommRing O] (G : FGLaw S d) (A : OAct O G) (b
   have hP : CZ (![pt S (n := 2) d 0, comp1 (A.act b) (pt S d 1)] : Fin 2 → Pt S 2 d) :=
     CZ.cons (cc_pt 0) (CZ.cons (fun c => by rw [comp1, cc_ev czY]; exact A.const b c) CZ.nil)
   rw [ev_bilL G cc hP]
-  simp only [Matrix.cons_val_zero, Matrix.cons_val_one, log_act_at, bilL, Matrix.mul_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.cons_val_zero, Matrix.cons_val_one, log_act_at, bilL, Matrix.mul_apply,
     Matrix.of_apply, smul_eq_C_mul, map_sum, map_mul, Finset.sum_mul, Finset.mul_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [Finset.sum_comm]
@@ -147,7 +151,8 @@ theorem bilL_mixed (G : FGLaw S d) (cc : Fin d → Fin d → S) (i l : Fin d) :
   have hO : ∀ a c, constantCoeff (Om G a c) = if a = c then 1 else 0 := fun a c => by
     have := congrFun (congrFun (cc_om G) a) c
     simpa [Matrix.one_apply] using this
-  simp only [bilL, lg, map_sum, Derivation.map_smul, Derivation.leibniz, smul_eq_mul, d_evX, d_evY, pderiv_second_ev_first_point_eq_zero, pderiv_first_ev_second_point_eq_zero,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [bilL, lg, map_sum, Derivation.map_smul, Derivation.leibniz, smul_eq_mul, d_evX, d_evY, pderiv_second_ev_first_point_eq_zero, pderiv_first_ev_second_point_eq_zero,
     pderiv_logOf, mul_zero, add_zero, zero_add, map_add, map_mul, constantCoeff_smul, cc_ev czX, cc_ev czY, hO]
   simp
 

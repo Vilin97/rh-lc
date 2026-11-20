@@ -88,7 +88,8 @@ theorem exists_compact_denom (D : D7) (d : ℕ) (hd : 0 < d) :
     change ∑ i, (b.repr x i • a) • ((1 : Af D.host.F) ⊗ₜ[D.host.F] (b i : D.host.E)) = _
     conv_rhs => rw [← b.sum_repr x]
     change _ = a ⊗ₜ[D.host.F] (algebraMap (𝓞 D.host.E) D.host.E _)
-    rw [map_sum, TensorProduct.tmul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, TensorProduct.tmul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_zsmul, smul_assoc, TensorProduct.smul_tmul', smul_eq_mul, mul_one]
     exact (map_zsmul (TensorProduct.mk D.host.F (Af D.host.F) D.host.E a) _ _).symm

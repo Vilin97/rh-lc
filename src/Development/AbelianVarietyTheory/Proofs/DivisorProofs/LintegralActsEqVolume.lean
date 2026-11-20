@@ -193,7 +193,8 @@ theorem archActX_bound (M : Model σ X W) (S : Set (UA σ X.J)) (hS : IsCompact 
   have hv : archActX M g v = ∑ j, b.coord j v • archActX M g (b j) := by
     change T v = ∑ j, b.coord j v • T (b j)
     conv_lhs => rw [← b.sum_repr v]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [map_smul, Module.Basis.coord_apply]
   rw [hv, Finset.sum_mul]
   refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun j _ => ?_)

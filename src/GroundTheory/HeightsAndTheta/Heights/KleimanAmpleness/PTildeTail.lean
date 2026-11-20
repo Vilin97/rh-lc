@@ -55,7 +55,8 @@ theorem FinGradedSub.cellCone_cocycle {z : Cech.Cochain (locSys S N M.coneSub) 0
     change ({a, b} : Finset (Fin (N + 1))).erase j = K.1.1
     rw [hj, ha, Finset.pair_comm, Finset.erase_insert (Finset.notMem_singleton.mpr (Ne.symm hab))]
   have h0 := congrArg (M.cellCone Kp.1) (congrFun hz Kp)
-  rw [Cech.d_apply, map_sum, Pi.zero_apply, map_zero] at h0
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Cech.d_apply, map_sum, Pi.zero_apply, map_zero] at h0
   have hterm : ∀ j : Kp.1.1, M.cellCone Kp.1 (Cech.sgn Kp.1.1 j • locResS (Cech.face Kp j).1 Kp.1
       (Cech.face_subset Kp j) (z (Cech.face Kp j))) =
       Cech.sgn Kp.1.1 j • M.cellCone (Cech.face Kp j).1 (z (Cech.face Kp j)) := by
@@ -223,7 +224,8 @@ theorem TildeTail.proof (h : SerreTail.Statement.{u, w}) : TildeTail.Statement.{
     · intro d; rw [map_zero, map_zero]; exact zero_mem _
     · intro a b _ _ ha hb d; rw [map_add, map_add]; exact add_mem (ha d) (hb d)
     · intro p a _ ha d
-      rw [map_smul, ← sum_homogeneousComponent p, Finset.sum_smul, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_smul, ← sum_homogeneousComponent p, Finset.sum_smul, map_sum]
       refine Submodule.sum_mem _ fun k _ => ?_
       rw [coeffAt_smul_of_isHomogeneous (homogeneousComponent_isHomogeneous k p)]
       exact hmulSp _ k (homogeneousComponent_isHomogeneous k p) d _ (ha (d - k))

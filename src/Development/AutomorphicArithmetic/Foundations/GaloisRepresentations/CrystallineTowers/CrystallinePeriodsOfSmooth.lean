@@ -42,7 +42,8 @@ theorem isAdmP_of_isAdm (T : LocTied6 l P AI) {d : ℕ} {G : Subgroup (PadicAlgC
   · ext i j
     apply T.eD.injective
     have := congrFun (congrFun (hσ σ) i) j
-    simp only [Matrix.mul_apply, Matrix.map_apply, map_sum, map_mul, UpperTheory.Lit.Drps.eD_alg T, T.actD,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mul_apply, Matrix.map_apply, map_sum, map_mul, UpperTheory.Lit.Drps.eD_alg T, T.actD,
       RingEquiv.apply_symm_apply] at this ⊢
     exact this
 
@@ -58,7 +59,8 @@ theorem isAdmD_of_isAdmP (T : LocTied l P AI) {d : ℕ} {G : Subgroup (PadicAlgC
   · rw [← Matrix.map_mul, hAB, Matrix.map_one _ (map_zero _) (map_one _)]
   · ext i j
     have := congrArg T.eD (congrFun (congrFun (hσ σ) i) j)
-    simp only [Matrix.mul_apply, Matrix.map_apply, map_sum, map_mul, T.actD] at this ⊢
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mul_apply, Matrix.map_apply, map_sum, map_mul, T.actD] at this ⊢
     exact this
 
 def CrystallinePeriodMatrices : Prop :=

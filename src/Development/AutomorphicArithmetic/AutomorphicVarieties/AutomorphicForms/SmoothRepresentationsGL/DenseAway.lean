@@ -72,7 +72,8 @@ variable (S : Finset (HeightOneSpectrum (𝓞 E)))
 
 private theorem sum_mem (x : ∀ v : S, v.1.adicCompletion E) (w : S) : pLoc E w.1 (∑ v : S, sLoc E v.1 (x v)) = x w := by
   classical
-  rw [map_sum, Finset.sum_eq_single w]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_eq_single w]
   · exact Pi.single_eq_same (M := fun v : HeightOneSpectrum (𝓞 E) => v.adicCompletion E) w.1 _
   · exact fun v _ h => Pi.single_eq_of_ne (M := fun v : HeightOneSpectrum (𝓞 E) => v.adicCompletion E)
       (fun e => h (Subtype.ext e.symm)) _
@@ -81,7 +82,8 @@ private theorem sum_mem (x : ∀ v : S, v.1.adicCompletion E) (w : S) : pLoc E w
 private theorem sum_notMem (x : ∀ v : S, v.1.adicCompletion E) {w : HeightOneSpectrum (𝓞 E)} (hw : w ∉ S) :
     pLoc E w (∑ v : S, sLoc E v.1 (x v)) = 0 := by
   classical
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_eq_zero fun v _ => Pi.single_eq_of_ne (M := fun v : HeightOneSpectrum (𝓞 E) => v.adicCompletion E)
     (fun e : w = v.1 => hw (e ▸ v.2)) _
 

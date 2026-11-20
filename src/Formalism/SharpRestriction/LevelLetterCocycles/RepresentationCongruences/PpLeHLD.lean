@@ -173,7 +173,8 @@ theorem Pp_qpow (T : LocLat G Qp LL O) (c : ZMod n) (k : ℕ)
     unfold LocWach.γA letγ LocWach.π₀
     change W.γ₀ δ W.π₀₁ = W.π₀₁
     unfold LocWach.π₀₁
-    rw [map_add, map_sub, map_one, map_natCast, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_add, map_sub, map_one, map_natCast, map_sum]
     congr 1
     have hm : ∀ δ' : W.Gam, W.γ₀ δ (W.γ₀ δ' (1 + PowerSeries.X)) = W.γ₀ (δ * δ') (1 + PowerSeries.X) :=
       fun δ' => by rw [map_mul, AlgHom.mul_apply]

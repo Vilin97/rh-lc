@@ -50,7 +50,8 @@ theorem isUnit_det_of_isCombAtG_vecAt : ∀ (E : Type) [Field E] [NumberField E]
   have hCD : C * D = 1 := by
     ext i l
     have h : ρ (∑ j, C i j • B' j) = ρ (TF.X.F.vecAt k (z ≫ inc₀ TF.X Z) hk hx σ i) := congrArg ρ (hsum' i)
-    rw [hρ, map_sum] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hρ, map_sum] at h
     have h2 := congrFun h l
     simp only [map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul] at h2
     have h3 : (if i = l then (1 : S) else 0) = (Pi.single i (1 : S) : Fin (Dw.mult σ) → S) l := by

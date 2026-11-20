@@ -40,7 +40,8 @@ theorem spans_pullCol_of_carries : ∀ (B Y T : Scheme.{0}) (π : Y ⟶ B) (ι :
     exact h1.map_iso φ.hom
   · dsimp only
     rw [QCoh.app_app, hφ, ← QCoh.app_app, QCoh.pullback_map_app_pullbackSections, hsι j]
-    simp only [pullCol, map_sum, QCoh.pullbackSections_smul, Scheme.Modules.Hom.app_smul, Matrix.map_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [pullCol, map_sum, QCoh.pullbackSections_smul, Scheme.Modules.Hom.app_smul, Matrix.map_apply,
       pullbackComp_congr_app_pullbackSections π g' g w (E a) hV h h']
 
 end GlobalTheory.FlagCell

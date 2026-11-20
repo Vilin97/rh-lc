@@ -46,7 +46,8 @@ theorem killedIn_component_mul_of_homog {d : ℕ} {a h : MvPolynomial (Fin (N + 
     KilledIn φ n (homogeneousComponent n (a * h)) := by
   have hsum : a * h = ∑ m ∈ Finset.range (h.totalDegree + 1), a * homogeneousComponent m h := by
     rw [← Finset.mul_sum, sum_homogeneousComponent]
-  rw [hsum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hsum, map_sum]
   refine KilledIn.sum _ _ fun m _ => ?_
   rw [homogeneousComponent_of_mem
     ((mem_homogeneousSubmodule _ _).2 (ha.mul (homogeneousComponent_isHomogeneous m h)))]
@@ -60,7 +61,8 @@ theorem killedIn_component_mul (a : MvPolynomial (Fin (N + 1)) R)
     KilledIn φ n (homogeneousComponent n (a * h)) := by
   have hsum : a * h = ∑ k ∈ Finset.range (a.totalDegree + 1), homogeneousComponent k a * h := by
     rw [← Finset.sum_mul, sum_homogeneousComponent]
-  rw [hsum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hsum, map_sum]
   exact KilledIn.sum _ _ fun k _ =>
     killedIn_component_mul_of_homog (homogeneousComponent_isHomogeneous k a) hh n
 

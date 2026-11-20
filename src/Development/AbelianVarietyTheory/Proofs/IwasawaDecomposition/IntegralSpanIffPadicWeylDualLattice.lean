@@ -87,7 +87,8 @@ theorem of_map_mem {L K : Type} [CommRing L] [CommRing K] (φ : L →+* K) (hφ 
   choose r' hr' e using fun i => (h i).1
   have : R = ∑ i, r' i • map (Int.castRingHom L) (g i) := by
     apply map_injective φ hφ
-    rw [hR', map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hR', map_sum]
     simp only [map_smul_map, e]
   rw [this]
   exact sum_mem fun i _ => AddSubgroup.subset_closure ⟨r' i, hr' i, g i, (h i).2, rfl⟩
@@ -140,7 +141,8 @@ theorem keyCoord {L K : Type} [Field L] [Field K] [Module.Flat ℤ K] (ψ : L �
       map (Int.castRingHom K') g = ∑ k, (crd g k : K') • map (Int.castRingHom K') (e k) := by
     intro K' _ g hg
     conv_lhs => rw [hexp g hg]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_zsmul, Int.cast_smul_eq_zsmul]
   have hg1 : ∀ i, g1 i ∈ N := fun i => Submodule.subset_span (by simp [hT])
@@ -161,7 +163,8 @@ theorem keyCoord {L K : Type} [Field L] [Field K] [Module.Flat ℤ K] (ψ : L �
     rw [Finset.sum_comm]
     simp [c, Finset.sum_smul]
   have hψ : map ψ R = ∑ k, ψ (c k) • map (Int.castRingHom K) (e k) := by
-    rw [hRc, map_sum]; simp only [map_smul_map]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hRc, map_sum]; simp only [map_smul_map]
   have hd : map ψ R = ∑ k, d k • map (Int.castRingHom K) (e k) := by
     rw [hR2]
     simp_rw [mapExp K _ (hg2 _), Finset.smul_sum, smul_smul]

@@ -32,7 +32,8 @@ theorem aeval_elim_mul_of_xhom (f : P → S) (g : I → S) (t : S) (n : ℕ) (Q 
       t ^ n * MvPolynomial.aeval (Sum.elim f g) Q := by
   conv_lhs => rw [Q.as_sum]
   conv_rhs => rw [Q.as_sum]
-  simp only [map_sum, MvPolynomial.aeval_monomial, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, MvPolynomial.aeval_monomial, Finset.mul_sum]
   refine Finset.sum_congr rfl fun s hs => ?_
   rw [Finsupp.prod_fintype _ _ (by simp), Finsupp.prod_fintype _ _ (by simp), Fintype.prod_sum_type,
     Fintype.prod_sum_type]

@@ -171,7 +171,8 @@ theorem isPairExpansion_psum (N k : ℕ) :
     IsPairExpansion k (psum (Fin N) ℤ k) (psumExpansion N k) := by
   refine ⟨?_, isHomogeneous_psumExpansion N k⟩
   unfold psumExpansion
-  simp only [psum, map_sum, map_pow, rename_X, ← Finset.sum_sub_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [psum, map_sum, map_pow, rename_X, ← Finset.sum_sub_distrib]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [mul_comm, (Commute.all _ _).geom_sum₂_mul]
 

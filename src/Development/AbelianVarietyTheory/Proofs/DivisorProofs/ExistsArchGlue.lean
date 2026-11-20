@@ -77,7 +77,8 @@ theorem yx_of_xy (hσ : IsCMExt F E σ) (hJ : IsHermND σ J) (x y : Matrix (Fin 
     obtain ⟨τ⟩ : Nonempty (E →+* ℂ) := inferInstance
     exact τ.injective (by rw [hσ.2.2.2, hσ.2.2.2, star_star])
   have key : (cT (σ : E →+* E) y * J * x) 0 0 = σ ((cT (σ : E →+* E) x * J * y) 0 0) := by
-    simp only [cT, Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, map_sum, map_mul, AlgHom.coe_toRingHom, hs,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [cT, Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, map_sum, map_mul, AlgHom.coe_toRingHom, hs,
       Finset.sum_mul]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun l _ => ?_

@@ -36,7 +36,8 @@ theorem toMultiset_word {J : Type} {d : ℕ} (w : Fin d → J) :
 
 theorem degree_word {J : Type} {d : ℕ} (w : Fin d → J) :
     (∑ k, Finsupp.single (w k) 1 : J →₀ ℕ).degree = d := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp
 
 theorem monoLines_word {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {J : Type} (ℓ : J → HermLine ι)
@@ -68,7 +69,8 @@ theorem map_prod_lin {J : Type} [Fintype J] [DecidableEq J] {d : ℕ} (Φ : MvPo
     (c : Fin d → J → ℝ) :
     Φ (∏ k, ∑ j, C (c k j) * X j) =
       ∑ w : Fin d → J, (∏ k, c k (w k)) * Φ (monomial (∑ k, Finsupp.single (w k) 1) 1) := by
-  rw [Finset.prod_univ_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.prod_univ_sum, map_sum]
   refine Finset.sum_congr rfl (fun w _ => ?_)
   rw [Finset.prod_mul_distrib, ← map_prod, MvPolynomial.C_mul', map_smul, smul_eq_mul,
     MvPolynomial.monomial_sum_one]
@@ -82,7 +84,8 @@ def cf (lam : Wt Ψ N) (s : ℝ) : Option (Ψ × Fin N) → ℝ
 
 theorem linA_eq (lam : Wt Ψ N) (s : ℝ) : linA lam s = ∑ j, C (cf lam s j) * X j := by
   rw [Fintype.sum_option]
-  simp only [linA, toA, linRoot, cf, map_neg, map_sum, map_mul, rename_C, rename_X, neg_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [linA, toA, linRoot, cf, map_neg, map_sum, map_mul, rename_C, rename_X, neg_mul,
     Finset.sum_neg_distrib]
   ring
 

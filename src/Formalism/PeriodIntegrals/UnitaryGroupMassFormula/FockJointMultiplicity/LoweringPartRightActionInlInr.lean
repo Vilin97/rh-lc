@@ -379,7 +379,8 @@ theorem minusPart_smul (c : ℂ) (A : Module.End ℂ (MvPolynomial σ ℂ)) (P :
 
 theorem minusPart_sum {ι : Type*} (t : Finset ι) (A : ι → Module.End ℂ (MvPolynomial σ ℂ))
     (P : MvPolynomial σ ℂ) : minusPart (∑ i ∈ t, A i) P = ∑ i ∈ t, minusPart (A i) P := by
-  simp only [minusPart_eq_sum, LinearMap.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [minusPart_eq_sum, LinearMap.sum_apply, map_sum]
   exact Finset.sum_comm
 
 theorem minusPart_raise (A : Module.End ℂ (MvPolynomial σ ℂ))
@@ -394,7 +395,8 @@ private theorem homogeneousComponent_minusPart (A : Module.End ℂ (MvPolynomial
     (P : MvPolynomial σ ℂ) (e : ℕ) :
     homogeneousComponent e (FockH1Action.minusPart A P) =
       homogeneousComponent e (A (homogeneousComponent (e + 2) P)) := by
-  rw [minusPart_eq_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [minusPart_eq_sum, map_sum]
   simp only [hc_hc]
   first
   | rw [Finset.sum_ite_eq]

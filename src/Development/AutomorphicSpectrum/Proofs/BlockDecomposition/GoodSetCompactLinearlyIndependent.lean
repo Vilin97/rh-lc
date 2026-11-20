@@ -59,7 +59,8 @@ lemma linIndep_iff (κ : K ≃+* (W → ℂ)) {n M : ℕ} (X : Fin n → Fin M �
       funext w'
       have := congrFun ht i
       simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul] at this
-      simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum, map_mul,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum, map_mul,
         RingEquiv.apply_symm_apply, Pi.zero_apply, map_zero, Finset.sum_apply, Pi.mul_apply]
       by_cases h : w' = w
       · subst h; simpa using this
@@ -76,7 +77,8 @@ lemma linIndep_iff (κ : K ≃+* (W → ℂ)) {n M : ℕ} (X : Fin n → Fin M �
     have := hw (fun b => κ (c b) w) (by
       funext i
       have := congrArg (fun y => κ y w) (congrFun hc i)
-      simpa [Finset.sum_apply, map_sum, map_mul] using this) b
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa [Finset.sum_apply, map_sum, map_mul] using this) b
     simpa using this
 
 lemma isOpen_linIndep (κ : K ≃+* (W → ℂ)) (hκ : IsHomeomorph κ) (n M : ℕ) :
@@ -119,7 +121,8 @@ lemma goodK_subset (κ : K ≃+* (W → ℂ)) {n M : ℕ} (R ε : ℝ) (hε : 0 
   have hsum : ∀ i, ∑ b, κ (c b) w * κ (X b i) w = 0 := by
     intro i
     have := congrArg (fun y => κ y w) (congrFun hc i)
-    simpa [Finset.sum_apply, map_sum, map_mul] using this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [Finset.sum_apply, map_sum, map_mul] using this
   apply hX
   simp only [Set.mem_iUnion]
   refine ⟨w, a, fun b => κ (c b) w / κ (c a) w, ⟨div_self hca, fun b => ?_⟩, ?_⟩

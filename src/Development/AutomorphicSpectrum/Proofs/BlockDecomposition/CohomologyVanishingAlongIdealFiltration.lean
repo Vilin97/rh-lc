@@ -57,7 +57,8 @@ theorem d_cl (a b : IdF A) {j : ℕ} (x : Q A j) (hx : Vals a x) :
   apply Subtype.ext
   change Subtype.val (∑ i : Fin (j + 2), (-1 : ℤ) ^ (i : ℕ) • (sqMap a b (toLast i s)) (sqMk a b (val x (face i s)) (hx _)) :
     sqM a b _) = Ideal.Quotient.mk _ (∑ i : Fin (j + 2), (-1 : ℤ) ^ (i : ℕ) • (A.map (toLast i s)).hom (val x (face i s)))
-  rw [map_sum, Submodule.coe_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Submodule.coe_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_zsmul]
   rfl

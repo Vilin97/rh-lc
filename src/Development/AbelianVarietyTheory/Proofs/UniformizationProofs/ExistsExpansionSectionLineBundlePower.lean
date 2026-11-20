@@ -76,7 +76,8 @@ theorem sum_of_id {K₁ K₂ : Type} [Fintype K₁] [Fintype K₂] {N : Type} {�
     sval τ r z J = ∑ α ∈ S, sval (f α) (r ≫ q) z J * (val (t α) r z J).val := by
   obtain ⟨h₀, h₁, -⟩ := values_natural X Y Y Z L K φ ε (𝟙 Y) r z J hJ
   have a := h₁ τ
-  rw [Category.comp_id, h _ _ h₀, map_sum] at a
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Category.comp_id, h _ _ h₀, map_sum] at a
   refine a.trans (Finset.sum_congr rfl fun α _ => ?_)
   have b := (values_natural X Y' Y Z L K₁ (φ₁ α) ε₁ q r z J hJ).2.1 (f α)
   have c := (values_natural X Y Y Z L K₂ (φ₂ α) ε₂ (𝟙 Y) r z J hJ).2.2.1 (t α)

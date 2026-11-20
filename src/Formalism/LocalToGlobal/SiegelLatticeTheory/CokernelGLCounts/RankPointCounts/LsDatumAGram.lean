@@ -24,7 +24,8 @@ def hL (y : V) : V →ₗ[E] E where
 theorem h_sum_smul_left {ι : Type} [Fintype ι] (c : ι → E) (v : ι → V) (y : V) :
     H.h (∑ i, c i • v i) y = ∑ i, c i * H.h (v i) y := by
   show hL H y (∑ i, c i • v i) = _
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [map_smul, smul_eq_mul]
   rfl
 
@@ -32,7 +33,8 @@ theorem h_sub_left (x x' y : V) : H.h (x - x') y = H.h x y - H.h x' y := (hL H y
 
 theorem h_sum_smul_right {ι : Type} [Fintype ι] (c : ι → E) (v : ι → V) (w : V) :
     H.h w (∑ i, c i • v i) = ∑ i, M.L.cj (c i) * H.h w (v i) := by
-  rw [H.h_herm (∑ i, c i • v i) w, h_sum_smul_left, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [H.h_herm (∑ i, c i • v i) w, h_sum_smul_left, map_sum]
   refine Finset.sum_congr rfl (fun i _ => ?_)
   rw [map_mul, H.h_herm (v i) w]
 

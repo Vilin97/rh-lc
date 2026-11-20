@@ -296,7 +296,8 @@ theorem main (hP : GlobalTheory.Published.RealMetaplecticRepresentation) (h : Is
     obtain ⟨x, hx, rfl⟩ := hsurj w
     simp only [sympl_e]
     rw [← hE0 x hx, hρ]
-    simp only [huv x hx, ← hE0 _ (hu _), ← map_smul, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [huv x hx, ← hE0 _ (hu _), ← map_smul, ← map_sum]
     congr 1
     funext w
     simp [Finset.sum_apply]
@@ -305,7 +306,8 @@ theorem main (hP : GlobalTheory.Published.RealMetaplecticRepresentation) (h : Is
   refine (this.congr_deriv ?_).congr_of_eventuallyEq (.of_forall fun t => ?_)
   · rw [ContinuousLinearMap.comp_apply, hq]
     congr 1
-    simp only [ContinuousLinearMap.smul_apply, ContinuousLinearMap.sum_apply, ContinuousLinearMap.add_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [ContinuousLinearMap.smul_apply, ContinuousLinearMap.sum_apply, ContinuousLinearMap.add_apply,
       ContinuousLinearMap.mul_apply, map_add, map_smul, map_sum, hD.P c (hu _), hD.P c (hv _), c.P_P']
   · show l _ = T (c.P (A0 (γ0 t) (c.P' f)))
     rw [← hT, ← hA0 _ _ gf hgf, c.P_P', ← e0]

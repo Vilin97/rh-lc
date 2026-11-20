@@ -285,7 +285,8 @@ theorem map_FF {K : Type} [CommRing K] (y : S.R →+* K) (T : AddSubgroup S.Gam)
     (k : S.J × (T → ZMod ((S.r * S.N) ^ 2))) (hk : S.FF T c k ∈ S.R) :
     y ⟨S.FF T c k, hk⟩ = ∑ t : T, y (algebraMap o S.R S.ζ) ^ (k.2 t).val *
       ∑ j, y (algebraMap o S.R (S.proj T c j k.1)) * y ⟨S.ev t j, S.ev_mem t j⟩ := by
-  simp only [← map_mul, ← map_sum, ← map_pow]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← map_mul, ← map_sum, ← map_pow]
   congr 1
   apply Subtype.ext
   simp [FF, finsum_eq_sum_of_fintype]

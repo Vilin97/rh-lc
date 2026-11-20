@@ -170,7 +170,8 @@ def lin : (F.ιV → ℂ) →ₗ[ℂ] (E.Y → ℂ) := Fintype.linearCombination
 
 theorem ev_eq_lin (x : F.V) : E.ev x = E.lin fun i => σ (F.bV.repr x i) := by
   conv_lhs => rw [← F.bV.sum_repr x]
-  rw [map_sum, lin, Fintype.linearCombination_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, lin, Fintype.linearCombination_apply]
   exact Finset.sum_congr rfl fun i _ => LinearMap.map_smulₛₗ E.ev _ _
 
 theorem lin_ker : LinearMap.ker E.lin = ⊥ := by
@@ -203,7 +204,8 @@ theorem sharp_mem (b : F.β) (ℓ : F.V →ₛₗ[σ] ℂ) : (E.mem b).sharp ℓ
 
 theorem ipB_lin (z : F.ιV → ℂ) : E.ipB (E.lin z) = E.gram *ᵥ z := by
   funext j
-  simp only [ipB, LinearMap.pi_apply, lin, Fintype.linearCombination_apply, map_sum, LinearMap.map_smul, smul_eq_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [ipB, LinearMap.pi_apply, lin, Fintype.linearCombination_apply, map_sum, LinearMap.map_smul, smul_eq_mul,
     Matrix.mulVec, dotProduct, gram, Matrix.of_apply]
   exact Finset.sum_congr rfl fun i _ => mul_comm _ _
 
@@ -217,7 +219,8 @@ theorem co_lin (z : F.ιV → ℂ) : E.co (E.lin z) = z := by
 theorem extend_eq_ip (hG : IsUnit E.gram.det) (ℓ : F.V →ₛₗ[σ] ℂ) (f : E.Y → ℂ) : E.extend ℓ f = E.ip (E.sharp ℓ) f := by
   unfold extend co sharp
   rw [if_pos hG]
-  simp only [LinearMap.comp_apply, Fintype.linearCombination_apply, Matrix.toLin'_apply, Matrix.mulVec, dotProduct, ipB,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [LinearMap.comp_apply, Fintype.linearCombination_apply, Matrix.toLin'_apply, Matrix.mulVec, dotProduct, ipB,
     LinearMap.pi_apply, smul_eq_mul, map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply,
     RingHomCompTriple.comp_apply, RingHom.id_apply]
   simp only [Finset.sum_mul]
@@ -228,7 +231,8 @@ theorem extend_eq_ip (hG : IsUnit E.gram.det) (ℓ : F.V →ₛₗ[σ] ℂ) (f :
 theorem extend_ev {M : Type} [AddCommGroup M] [Module ℂ M] (ℓ : F.V →ₛₗ[σ] M) (x : F.V) : E.extend ℓ (E.ev x) = ℓ x := by
   rw [extend, LinearMap.comp_apply, ev_eq_lin, co_lin, Fintype.linearCombination_apply]
   conv_rhs => rw [← F.bV.sum_repr x]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_congr rfl fun i _ => (LinearMap.map_smulₛₗ ℓ _ _).symm
 
 def ipCl (h : F.Ok) : (F.Cl → E.Y → ℂ) →ₗ⋆[ℂ] (F.Cl → E.Y → ℂ) →ₗ[ℂ] ℂ :=
@@ -271,7 +275,8 @@ theorem span_basis {ι : Type} [Fintype ι] (b : Basis ι K F.Forms) :
   · unfold Fi
     rw [Submodule.span_le]
     rintro _ ⟨φ, rfl⟩
-    rw [← b.sum_repr φ, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← b.sum_repr φ, map_sum]
     refine Submodule.sum_mem _ fun a _ => ?_
     rw [LinearMap.map_smulₛₗ]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨a, rfl⟩)

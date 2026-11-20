@@ -16,10 +16,12 @@ theorem UpperTheory.ConvolutionTheory.H.symAlg :
         rw [AlgHom.comp_apply, AlgHom.comp_apply, permAct_single, hb, hb, permAct_single]; rfl) (Subsingleton.elim _ _)
     exact AlgHom.congr_fun this y
   refine ⟨fun τ => ?_, ?_, fun p hp => ?_, fun hy σ => ?_, fun z => ?_⟩
-  · rw [symSum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [symSum, map_sum]
     simp only [permAct_permAct]
     exact Fintype.sum_equiv (Equiv.mulLeft τ) _ _ fun σ => rfl
-  · rw [symSum, symSum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [symSum, symSum, map_sum]
     exact Finset.sum_congr rfl fun σ _ => hc σ y
   · rw [symSum, symSum, Finset.sum_mul]
     exact Finset.sum_congr rfl fun σ _ => by rw [map_mul, hp σ]

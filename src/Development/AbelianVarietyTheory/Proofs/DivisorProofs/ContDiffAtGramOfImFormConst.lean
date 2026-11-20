@@ -25,9 +25,11 @@ theorem imForm_sum_sum {g : ℕ} {ι : Type*} [Fintype ι] (H : Matrix (Fin g) (
     (c d : ι → ℝ) (x : ι → Fin g → ℂ) :
     imForm H (∑ s, c s • x s) (∑ s, d s • x s) =
       ∑ s, ∑ s', c s * d s' * imForm H (x s) (x s') := by
-  rw [map_sum (imForm H), LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum (imForm H), LinearMap.sum_apply]
   refine Finset.sum_congr rfl fun s _ => ?_
-  rw [map_smul (imForm H), LinearMap.smul_apply, map_sum, smul_eq_mul, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_smul (imForm H), LinearMap.smul_apply, map_sum, smul_eq_mul, Finset.mul_sum]
   refine Finset.sum_congr rfl fun s' _ => ?_
   rw [map_smul, smul_eq_mul]
   ring

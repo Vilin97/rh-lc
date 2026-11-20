@@ -211,7 +211,8 @@ theorem sum_read_abs {G H W W' : Type} [Group G] [Group H] [AddCommGroup W] [Mod
   apply eW.injective
   have hr : ∀ z, eW (Φ (ψ z)) = F (b * z) := fun z => by rw [hreal, inv_mul_cancel_left]
   have e2 := h₀.sum_eq h₁ (one_mem _) (fun γ => F (b * x * γ)) (fun z l hl => by rw [← mul_assoc, hfix l hl])
-  rw [map_sum, map_smul, hr, ← hc, ← e2]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_smul, hr, ← hc, ← e2]
   refine Finset.sum_congr rfl fun γ _ => ?_
   rw [← map_mul, hr, one_mul, mul_assoc]
 

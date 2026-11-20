@@ -45,7 +45,8 @@ theorem inner_central {G : Type} [Group G] [Fintype G] (ρ : Representation ℂ 
       Representation.self_inv_apply]
     simp
   have hcomm : E (LinearMap.adjoint E y) = LinearMap.adjoint E y := by
-    rw [hadj, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hadj, map_sum]
     refine Finset.sum_congr rfl fun h _ => ?_
     rw [map_smul, hc, hy]
   have h0 : LinearMap.adjoint E y - y = 0 := by

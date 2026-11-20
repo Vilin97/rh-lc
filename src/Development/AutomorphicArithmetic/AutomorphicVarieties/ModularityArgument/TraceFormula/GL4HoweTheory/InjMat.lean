@@ -178,7 +178,8 @@ private theorem dual (u w D : Matrix (Fin n) (Fin n) E) (h : ¬ ∃ Y Z, Bd 1 Y 
   let X : Matrix (Fin n) (Fin n) E := Matrix.of fun j i => φ (Matrix.single i j 1)
   have hX : ∀ M : Matrix (Fin n) (Fin n) E, (M * X).trace = φ M := fun M => by
     conv_rhs => rw [Matrix.matrix_eq_sum_single M]
-    simp only [map_sum, Matrix.trace, Matrix.diag, Matrix.mul_apply, X, Matrix.of_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, Matrix.trace, Matrix.diag, Matrix.mul_apply, X, Matrix.of_apply]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
     rw [show Matrix.single i j (M i j) = M i j • Matrix.single i j (1 : E) by simp, map_smul, smul_eq_mul]
   refine ⟨X, fun j i => h1 _ (Or.inl ⟨(i, j), rfl⟩), fun j i => ?_, by rwa [hX]⟩

@@ -556,7 +556,8 @@ omit [DecidableEq σ] in
 theorem coeff_single_sum_mul_X (c : σ → MvPowerSeries σ R) (j : σ) :
     coeff (Finsupp.single j 1) (∑ l, c l * X l) = constantCoeff (c j) := by
   classical
-  rw [map_sum, Finset.sum_eq_single j]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_eq_single j]
   · have := coeff_add_mul_monomial (0 : σ →₀ ℕ) (Finsupp.single j 1) (c j) 1
     rwa [zero_add, mul_one, ← X_def, coeff_zero_eq_constantCoeff_apply] at this
   · intro l _ hl
@@ -573,7 +574,8 @@ theorem ker_eq_span_range_X {π : MvPowerSeries σ R →ₐ[R] D} (hπ : Functio
   refine le_antisymm (fun d hd => ?_) (Ideal.span_le.2 ?_)
   · obtain ⟨g, rfl⟩ := hπ d
     obtain ⟨a, ha⟩ := exists_matrix_eq_sum_mul_X (f := fun _ : Unit => g) fun _ => (hε g).symm.trans hd
-    rw [ha (), map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [ha (), map_sum]
     exact Ideal.sum_mem _ fun j _ => by
       rw [map_mul]; exact Ideal.mul_mem_left _ _ (Ideal.subset_span ⟨j, rfl⟩)
   · rintro _ ⟨j, rfl⟩

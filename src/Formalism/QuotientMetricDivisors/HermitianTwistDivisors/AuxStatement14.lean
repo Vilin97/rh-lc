@@ -432,7 +432,8 @@ def invSub : Submodule K V where
   smul_mem' := fun c v hv γ => by rw [map_smul, hv γ]
 
 theorem tr_inv (v : V) (γ : Γ) : ρ γ (∑ δ, ρ δ v) = ∑ δ, ρ δ v := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   have h : ∀ δ, ρ γ (ρ δ v) = ρ (γ * δ) v := fun δ => by rw [map_mul]; rfl
   simp_rw [h]
   exact Fintype.sum_bijective (γ * ·) (Group.mulLeft_bijective γ) _ _ (fun _ => rfl)
@@ -461,7 +462,8 @@ theorem inv_dual [FiniteDimensional K V] (pair : V →ₗ⋆[K] V →ₗ[K] K) (
     ⟨fun x y => hs.eq _ _⟩ hstar (invSub ρ).subtype (avg ρ)
     ?_ (Submodule.subtype_injective _) ?_ A hA
   · intro x z
-    rw [LinearMap.domRestrict₁₂_apply, avg_coe, map_smulₛₗ, LinearMap.smul_apply, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [LinearMap.domRestrict₁₂_apply, avg_coe, map_smulₛₗ, LinearMap.smul_apply, map_sum,
       LinearMap.sum_apply]
     have : ∀ δ, pair (ρ δ x) (z : V) = pair x (z : V) := by
       intro δ
@@ -506,7 +508,8 @@ theorem orthogonal_projection_exists : OrthProjExists := by
   have hmap : ∀ u : Fin n → K, star (fun i => v0.embedding (u i)) ⬝ᵥ
       ((H.map v0.embedding) *ᵥ (fun i => v0.embedding (u i))) = v0.embedding (star u ⬝ᵥ (H *ᵥ u)) := by
     intro u
-    simp only [dotProduct, Matrix.mulVec, map_sum, map_mul, Pi.star_apply, hc, starRingEnd_apply, Matrix.map_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [dotProduct, Matrix.mulVec, map_sum, map_mul, Pi.star_apply, hc, starRingEnd_apply, Matrix.map_apply]
   have hZ : IsUnit (Eᴴ * H * E).det := by
     rw [isUnit_iff_ne_zero]
     intro h0

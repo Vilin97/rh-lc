@@ -58,7 +58,8 @@ theorem linearIndependent_adjoin_of_transcendental {K E : Type*} [Field K] [Fiel
     simpa [hp, Subalgebra.smul_def] using hg
   let P : A[X] := ∑ j ∈ s, C (b j) * (p j).map (algebraMap K A)
   have hP : aeval t P = 0 := by
-    simp only [P, map_sum, map_mul, aeval_C, aeval_map_algebraMap]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [P, map_sum, map_mul, aeval_C, aeval_map_algebraMap]
     rw [← hsum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [mul_comm]

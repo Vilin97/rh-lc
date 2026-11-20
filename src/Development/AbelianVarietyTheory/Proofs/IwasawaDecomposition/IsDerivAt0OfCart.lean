@@ -104,7 +104,8 @@ theorem exists_family (hU : IsUnf U) (k : U.Comp) {n : ℕ} {B : Set (Fin n → 
       (isTan_tv u').1 (by simpa only [IsPullback.lift_fst, h3] using h)
     exact isDerivAt0_comp_hom h4 Y.m.φ
   have hsum : ∑ i, cf i • torBasis Y y (q i) = lieEquiv Y y (∑ i, cf i • frVec y (q i)) := by
-    simp only [map_sum, map_smul, torBasis, Module.Basis.map_apply, Module.Basis.mk_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, torBasis, Module.Basis.map_apply, Module.Basis.mk_apply]
   rw [hsum]
   refine hT _ _ ?_
   have e0 : (F.ex (ik k) (P (x b)) 0).left = (1 : Over.mk (xC y) ⟶ Xo.univ.t.G).left := by

@@ -42,9 +42,11 @@ theorem cls_pow {W : Matrix (Fin r) (Fin r) ℤ} (w : LB.Iso D'.P.L (LB.LinComb 
 theorem pull_pow {W : Matrix (Fin r) (Fin r) ℤ} (w : LB.Iso D'.P.L (LB.LinComb Q.M.L (tensφ pr) (tensε W)))
     (hw : w.IsGen) {X : Over (Spec (CommRingCat.of R))} (h : X ⟶ D'.P.A) :
     pull h.left (cls D'.P.L D'.P.isLB) = pairQ Q pr W h h := by
-  rw [cls_pow w hw, pairQ, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [cls_pow w hw, pairQ, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_zsmul, pull_lam]
 
@@ -118,7 +120,8 @@ theorem rosatiAdj_pow : ∀ (R : Type) [CommRing R] [IsDomain R] (Q : Data R) (D
   calc ∑ k, rosatiε k • pull (((D'.P.A ⊗ D'.P.A).hom ⁻¹ᵁ ⊤).ι ≫ rosatiφ D'.P.A f g k) (cls D'.P.L D'.P.isLB)
       = pull (((D'.P.A ⊗ D'.P.A).hom ⁻¹ᵁ ⊤).ι)
           (∑ k, rosatiε k • pull (rosatiφ D'.P.A f g k) (cls D'.P.L D'.P.isLB)) := by
-        simp only [pull_comp, map_sum, map_zsmul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [pull_comp, map_sum, map_zsmul]
     _ = 0 := by rw [key, map_zero]
 
 end GlobalTheory.Mum.PowLim.Rosati

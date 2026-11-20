@@ -42,7 +42,8 @@ def L (z : MonoidAlgebra K G) : Module.End ℂ M.V := ∑ g, σ (z.coeff g) • 
 
 lemma L_j (z : MonoidAlgebra K G) (x : M.VK) :
     L M z (M.j x) = M.j (M.rhoK.asAlgebraHom z x) := by
-  simp only [L, rep_apply, LinearMap.sum_apply, LinearMap.smul_apply, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [L, rep_apply, LinearMap.sum_apply, LinearMap.smul_apply, map_sum,
     LinearMap.map_smulₛₗ, M.j_eq]
 
 lemma L_mul (a b : MonoidAlgebra K G) : L M (a * b) = L M a * L M b :=

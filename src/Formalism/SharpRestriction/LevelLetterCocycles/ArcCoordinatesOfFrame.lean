@@ -324,7 +324,8 @@ theorem span_pow_le (T : LocLat G Qp LL O) {r : ℕ} (b : Fin r → W.DD T)
   rw [Submodule.span_le]
   rintro _ ⟨_, ⟨z, hz, rfl⟩, rfl⟩
   obtain ⟨aa, haa⟩ := hb z hz
-  rw [SetLike.mem_coe, LinearMap.smul_apply, LinearMap.id_apply, haa, Finset.smul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [SetLike.mem_coe, LinearMap.smul_apply, LinearMap.id_apply, haa, Finset.smul_sum, map_sum]
   refine Submodule.sum_mem _ fun j _ => ?_
   rw [smul_comm, SatPW.φD_pow_smulA]
   exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨j, rfl⟩)
@@ -472,7 +473,8 @@ theorem arcL_at [NeZero n] (hΔ : IsUnit ((W.DelF.card : ℕ) : O)) : Formalism.
   have hx₁N : x₁ ∈ W.N T₁ := Nl_le_N W T₁ c' hx₁l
   have hx₁Δ : ∀ δ' ∈ W.DelF, W.γD T₁ δ' x₁ = x₁ := by
     intro δ' hδ'
-    rw [hx₁, map_smul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hx₁, map_smul, map_sum]
     congr 1
     refine Finset.sum_equiv (Equiv.mulLeft δ') (fun δ => ?_) (fun δ _ => ?_)
     · exact mem_DelF_mul hδ' δ
@@ -480,7 +482,8 @@ theorem arcL_at [NeZero n] (hΔ : IsUnit ((W.DelF.card : ℕ) : O)) : Formalism.
   have hlp : Formalism.MainNotions.LiftingTheory.lp W rr • x₂ = (((PD.p : ℕ) : O) ^ rr) • x₂ := by
     rw [← algebraMap_smul (LetA O n) (((PD.p : ℕ) : O) ^ rr) x₂, map_pow, map_natCast]; rfl
   have hmap1 : W.map F x₁ = (((PD.p : ℕ) : O) ^ rr) • x₂ := by
-    rw [hx₁, map_smulO, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hx₁, map_smulO, map_sum]
     have h1 : ∀ δ ∈ W.DelF, W.map F (W.γD T₁ δ x₁') = (((PD.p : ℕ) : O) ^ rr) • x₂ := by
       intro δ hδ
       rw [W.map_γ, hmap, hlp, map_smul, hx₂Δ δ hδ]

@@ -66,7 +66,8 @@ theorem pointwise_sum_bound {r : ℕ} (X : Data E r) (la : Wt X.Ψ r) (Q : Frame
 private theorem herm_swap_eq_cc_of_conj_symm {r : ℕ} (G : Matrix (Fin r) (Fin r) E)
     (hG : ∀ a b, cc (G a b) = G b a) (x y : Fin r → E) : herm G y x = cc (herm G x y) := by
   have hG' : ∀ a b, IsCMField.complexConj E (G a b) = G b a := hG
-  simp only [herm, cc, map_sum, map_mul, IsCMField.complexConj_apply_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [herm, cc, map_sum, map_mul, IsCMField.complexConj_apply_apply]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
   rw [hG' a b]

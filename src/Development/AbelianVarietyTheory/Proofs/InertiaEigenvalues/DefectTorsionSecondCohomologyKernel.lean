@@ -124,7 +124,8 @@ theorem φ_mem [NeZero n] (T : LocLat G Qp LL O) (M h : ZMod n → ℕ) (h5 : p5
     (hx : x ∈ W.N T) : W.Q ^ mx M • W.φD T x ∈ W.N T := by
   have hx' : x = ∑ j, (letE j : LetA O n) • x := by
     rw [← Finset.sum_smul, sum_letE_eq_one', one_smul]
-  rw [hx', map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hx', map_sum, Finset.smul_sum]
   refine Submodule.sum_mem _ (fun j _ => ?_)
   have hj : (letE j : LetA O n) • x ∈ W.Nl T (j + 1 - 1) := by
     rw [add_sub_cancel_right]

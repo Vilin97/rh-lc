@@ -34,7 +34,8 @@ theorem ConjIn.act_ne {ρ : Representation ℂ G V} {W : Submodule ℂ V} {j : G
   refine ⟨Λ y, (h2 y hy).1, ?_⟩
   have : actK π a' (Λ y) = Λ y := by
     conv_rhs => rw [← hfix]
-    rw [map_sum, actK, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, actK, LinearMap.sum_apply]
     refine Finset.sum_congr rfl fun x _ => ?_
     rw [LinearMap.smul_apply, map_smulₛₗ, ha, (h2 y hy).2]
   rwa [this]
@@ -108,7 +109,8 @@ theorem exists_good (D : D7) {V : Type} [AddCommGroup V] [Module ℂ V] (ρ : Re
     (hx : x ≠ 0) (he : ρ.asAlgebraHom D.ntypes.e0 x = x) :
     ∃ (t : Tup2 D) (a : MonoidAlgebra ℂ (G0g D.nd)), D.ntypes.goodTuple t ∧ ρ.asAlgebraHom a x ≠ 0 ∧
       ∀ k v, ρ.asAlgebraHom (atPlace D k v (D.ntypes.eSer k (t k v))) (ρ.asAlgebraHom a x) = ρ.asAlgebraHom a x := by
-  rw [Ten.e0_eq, Ten.eGood, map_sum, LinearMap.sum_apply] at he
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Ten.e0_eq, Ten.eGood, map_sum, LinearMap.sum_apply] at he
   obtain ⟨p, -, hp⟩ := Finset.exists_ne_zero_of_sum_ne_zero (he.trans_ne hx)
   by_cases hg : Ten.goodVec D p
   · rw [if_pos hg] at hp

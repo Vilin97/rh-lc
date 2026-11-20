@@ -41,7 +41,8 @@ private theorem pair_eq {F E : Type} [Field F] [NumberField F] [Field E] [Number
     simp only [atV, Pi.smul_apply, smul_eq_mul, map_mul]
   have h2 : ∀ e : E, sigR (Fv F v) σ (inclR (F := F) (Fv F v) e) = inclR (F := F) (Fv F v) (σ e) := fun _ => rfl
   have h3 := congrArg (inclR (F := F) (Fv F v)) hxy
-  simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, map_one] at h3
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, map_one] at h3
   simp only [pairV, dotProduct, Matrix.mulVec, h1, map_mul, sigR_sigR' _ hσ, atV_incV, h2, Matrix.map_apply]
   rw [← mul_one (compFin F E v c * a), ← h3]
   simp only [Finset.mul_sum]

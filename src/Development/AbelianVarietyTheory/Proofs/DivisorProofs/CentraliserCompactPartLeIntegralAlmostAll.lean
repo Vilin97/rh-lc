@@ -26,7 +26,8 @@ theorem gram_map {K L : Type} [Field K] [Field L] (f : K →+* L) {n : ℕ} (g :
     (Matrix.of fun i j : Fin n => ((g.map f) ^ ((i : ℕ) + j)).trace) =
       (Matrix.of fun i j : Fin n => (g ^ ((i : ℕ) + j)).trace).map f := by
   ext i j
-  rw [Matrix.map_apply, Matrix.of_apply, Matrix.of_apply, ← Matrix.map_pow, Matrix.trace, Matrix.trace, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.map_apply, Matrix.of_apply, Matrix.of_apply, ← Matrix.map_pow, Matrix.trace, Matrix.trace, map_sum]
   rfl
 
 theorem main : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E], Unr E → ∀ n : ℕ, ∀ γ : UE E n,

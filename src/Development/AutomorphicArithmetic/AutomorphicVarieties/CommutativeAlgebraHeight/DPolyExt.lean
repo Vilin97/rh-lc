@@ -25,7 +25,8 @@ theorem UpperTheory.V.CA.d_poly_ext :
   choose x hxM hx using fun a => (g a).2
   have h3 : ∑ a, s a • (g a : S ⊗[A] E) =
       Algebra.TensorProduct.map (MvPolynomial.aeval s) (AlgHom.id A E) (Det.gen x) := by
-    simp only [Det.gen, map_sum, Algebra.TensorProduct.map_tmul, MvPolynomial.aeval_X, AlgHom.id_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Det.gen, map_sum, Algebra.TensorProduct.map_tmul, MvPolynomial.aeval_X, AlgHom.id_apply]
     refine Finset.sum_congr rfl fun a _ => ?_
     rw [← hx a]; simp [smul_tmul']
   rw [h3, D.nat, D'.nat]

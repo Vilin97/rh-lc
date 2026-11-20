@@ -91,7 +91,8 @@ theorem exists_step (hcc : ∀ a, c (c a) = a) (hεε : ε * ε = ε) (hεc : c 
   let s := Finset.univ.filter (· < j)
   let t : Fin ρ → R := β' • b j - ∑ i ∈ s, (β' * h (X (b j)) (g i)) • b i
   have hXt : X t = β' • X (b j) - ∑ i ∈ s, (β' * h (X (b j)) (g i)) • X (b i) := by
-    simp only [t, map_sub, map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [t, map_sub, map_sum, map_smul]
   have htM : X t ∈ M := by
     refine (hM₂ _ ?_).2 fun y hy => ?_
     · rw [hXt, smul_sub, Finset.smul_sum, smul_smul, h1]
@@ -101,7 +102,8 @@ theorem exists_step (hcc : ∀ a, c (c a) = a) (hεε : ε * ε = ε) (hεc : c 
         M.sub_mem hy (M.sum_mem fun i _ => hsm (hcO _ (hint i y hy)) (hg i))
       have hK : h (X (b j)) (y - ∑ i ∈ s, c (h (X (b i)) y) • g i) ∈ K := by
         refine ⟨_, hy', fun l hl => ?_, rfl⟩
-        rw [map_sub, map_sum, Finset.sum_eq_single l]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sub, map_sum, Finset.sum_eq_single l]
         · rw [map_smulₛₗ, hcc, hg' l l hl, Pi.single_eq_same, smul_eq_mul, mul_comm, hOε _ (hint l y hy), sub_self]
         · intro i _ hi
           rw [map_smulₛₗ, hg' i l hl, Pi.single_eq_of_ne hi.symm, smul_zero]
@@ -109,7 +111,8 @@ theorem exists_step (hcc : ∀ a, c (c a) = a) (hεε : ε * ε = ε) (hεc : c 
       have := h3 _ hK
       convert this using 1
       rw [hXt]
-      simp only [map_sub, map_sum, map_smul, map_smulₛₗ, LinearMap.sub_apply, LinearMap.sum_apply,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sub, map_sum, map_smul, map_smulₛₗ, LinearMap.sub_apply, LinearMap.sum_apply,
         LinearMap.smul_apply, smul_eq_mul, hcc, mul_sub, Finset.mul_sum, RingHom.id_apply]
       congr 1
       exact Finset.sum_congr rfl fun i _ => by ring

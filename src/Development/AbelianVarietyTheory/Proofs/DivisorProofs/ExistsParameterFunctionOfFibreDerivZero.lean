@@ -52,7 +52,8 @@ theorem exists_cst_of_dw_eq_zero : ∀ {I : Type} [Fintype I] {g : ℕ} {Λ : Ty
       · simp [Prod.fst_sum]
       · simp [Prod.snd_sum, Finset.sum_apply, Pi.single_apply]
     change fderiv ℂ G (z, w) (0, v) = 0
-    rw [hv, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hv, map_sum]
     exact Finset.sum_eq_zero fun i _ ↦ by rw [map_smul, d0 (z, w) hz i, smul_zero]
   refine ⟨Hol.mk (fun z ↦ G (z, 0)) fun z hz ↦
     AnalyticAt.comp (g := G) (f := fun z ↦ ((z, 0) : Tot I g)) (an (z, 0) hz)

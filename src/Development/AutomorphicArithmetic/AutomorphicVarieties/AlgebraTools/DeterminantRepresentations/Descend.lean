@@ -24,7 +24,8 @@ private theorem exists_isCompact_preimage_eq_of_isLimit_of_isAffineHom {n : ℕ}
   have key := UpperTheory.V.AlgebraTools.Det.genEval D' (MvPolynomial σ A') m (fun j => MonoidAlgebra.single (g j) 1) (fun j => MvPolynomial.map ι (b j))
   refine ⟨MvPolynomial.aeval b Q, ?_⟩
   have hx : MonoidAlgebra.mapRingHom G (MvPolynomial.map ι) (∑ j, b j • MonoidAlgebra.mapRingHom G (algebraMap A (MvPolynomial σ A)) (MonoidAlgebra.single (g j) 1)) = ∑ j, (MvPolynomial.map ι (b j)) • MonoidAlgebra.mapRingHom G (algebraMap A' (MvPolynomial σ A')) (MonoidAlgebra.single (g j) 1) := by
-    simp [map_sum, MonoidAlgebra.mapRingHom_single]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, MonoidAlgebra.mapRingHom_single]
   rw [hx, key, ← hQ, MvPolynomial.map_aeval]
   simp [MvPolynomial.aeval_def, MvPolynomial.eval₂_map]
   rw [MvPolynomial.bind₁, MvPolynomial.aeval_def, MvPolynomial.eval₂_map]
@@ -34,7 +35,8 @@ private theorem mapRingHom_gdet_gen_single_eq_gen_single {A G : Type} [CommRing 
     (m : ℕ) (g : Fin m → G) :
     MonoidAlgebra.mapRingHom G (MvPolynomial.map ι) (GDet.gen (A := A) fun j => MonoidAlgebra.single (g j) 1) =
       GDet.gen (A := A') fun j => MonoidAlgebra.single (g j) 1 := by
-  simp [GDet.gen, map_sum, MonoidAlgebra.mapRingHom_single]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [GDet.gen, map_sum, MonoidAlgebra.mapRingHom_single]
 
 theorem UpperTheory.V.AlgebraTools.Det.descend :
     ∀ {n : ℕ} {A G : Type} [CommRing A] [Group G] {A' : Type} [CommRing A'] (ι : A →+* A') (D' : GDet n A' G), Function.Injective ι →

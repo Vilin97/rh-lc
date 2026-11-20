@@ -118,7 +118,8 @@ theorem smul_glueM {e : I → R} (he : OrthogonalIdempotents e) (A : I → Matri
 theorem cT_glueM (τ : R →+* R) {e : I → R} (hτ : ∀ i, τ (e i) = e i) (A : I → Matrix n n R) :
     cT τ (glueM e A) = glueM e (fun i => cT τ (A i)) := by
   ext a b
-  simp only [cT, glueM, Matrix.transpose_apply, Matrix.map_apply, Matrix.sum_apply, Matrix.smul_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [cT, glueM, Matrix.transpose_apply, Matrix.map_apply, Matrix.sum_apply, Matrix.smul_apply,
     smul_eq_mul, map_sum, map_mul, hτ]
 
 def glueGL {e : I → R} (he : CompleteOrthogonalIdempotents e) (A : I → GL n R) : GL n R where

@@ -58,7 +58,8 @@ theorem bcMap_bcVec (C C' : Submodule K Rl) [Module.Finite K C] (f : Rl →ₗ[K
     exact ((Module.finBasis K C).sum_equivFun x).symm
   funext k
   conv_rhs => rw [hx]
-  simp only [bcMap, bcVec, matV, Matrix.mulVecLin_apply, Matrix.mulVec, dotProduct, Matrix.map_apply, Matrix.of_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [bcMap, bcVec, matV, Matrix.mulVecLin_apply, Matrix.mulVec, dotProduct, Matrix.map_apply, Matrix.of_apply,
     map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_mul]
   exact Finset.sum_congr rfl fun i _ => mul_comm _ _
 

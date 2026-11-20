@@ -84,6 +84,7 @@ theorem exists_siegel_form : ∀ (La : Type) [AddCommGroup La] (EF : LinearMap.B
     rw [hPP, h1 (fun i => a (.inl i)), h1 (fun i => a (.inr i))]
     simp only [Matrix.mulVec_add, Matrix.mulVec_sum, Matrix.mulVec_smul, hP, hτ]
     conv_lhs => rw [h2]
-    simp only [map_add, map_sum, map_zsmul, he, hf]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_add, map_sum, map_zsmul, he, hf]
 
 end GlobalTheory.SiegelPeriod

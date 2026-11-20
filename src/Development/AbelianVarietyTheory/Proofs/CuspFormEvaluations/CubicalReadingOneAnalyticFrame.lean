@@ -161,7 +161,8 @@ theorem tripleColumnPeriodLattice_span_real_top : Submodule.span ℝ (lat3 Φ : 
   rw [eq_top_iff]
   rintro v -
   have hv : v = ∑ k : Fin 3, e.symm (Pi.single k (e v k)) := by
-    rw [← map_sum, Finset.univ_sum_single, LinearEquiv.symm_apply_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, Finset.univ_sum_single, LinearEquiv.symm_apply_apply]
   rw [hv]
   exact Submodule.sum_mem _ fun k _ => key k _
 

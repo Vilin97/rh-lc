@@ -55,7 +55,8 @@ theorem crd_sum (c : Fin m → K) (k : Fin m) : crd h b a (∑ i, c i • b i) k
     (IsScalarTower.algebraMap_apply (𝓞 F) (𝓞 K) K (a j)).symm.trans
       (IsScalarTower.algebraMap_apply (𝓞 F) F K (a j))
   unfold crd
-  rw [map_sum, Finset.sum_eq_single k]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_eq_single k]
   · rw [LinearMap.map_smul, hdiag k, smul_eq_mul, ← e k, mul_div_assoc,
       div_self (jK_ι_ne_zero (K := K) (ha k)), mul_one]
   · intro i _ hik
@@ -88,7 +89,8 @@ theorem h_expand (h𝔭 : 𝔭.IsPrime) (hL : IsLatIn ⊤ L) (x y : V) :
     intro j
     have hx := coordsT horth hdiag ha hbX hloc h𝔭 hL x
     conv_lhs => rw [hx]
-    rw [map_sum, LinearMap.sum_apply, Finset.sum_eq_single j]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, LinearMap.sum_apply, Finset.sum_eq_single j]
     · rw [LinearMap.map_smulₛₗ, LinearMap.smul_apply, hdiag j, smul_eq_mul, starRingEnd_apply, ← e j]
     · intro i _ hij
       rw [LinearMap.map_smulₛₗ, LinearMap.smul_apply, horth i j hij, smul_zero]
@@ -96,7 +98,8 @@ theorem h_expand (h𝔭 : 𝔭.IsPrime) (hL : IsLatIn ⊤ L) (x y : V) :
       exact absurd (Finset.mem_univ j) hj
   have hy := coordsT horth hdiag ha hbX hloc h𝔭 hL y
   conv_lhs => rw [hy]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [LinearMap.map_smul, e1 j, smul_eq_mul]
   ring

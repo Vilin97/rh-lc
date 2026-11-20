@@ -64,7 +64,8 @@ theorem fin_part {e : HeightOneSpectrum (𝓞 F) → ℤ} (D : 𝓞 F)
       rw [← pLoc_pFin_algebraMap]
       change pLoc F w (pFin F (rowA ξ j)) = _
       rw [hrow]
-      simp only [Matrix.vecMul, dotProduct, Matrix.smul_apply, smul_eq_mul, map_sum, map_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Matrix.vecMul, dotProduct, Matrix.smul_apply, smul_eq_mul, map_sum, map_mul]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [pFin_inv_moduleSection_mul]
       congr 2
@@ -120,7 +121,8 @@ theorem mn_mul_le_left (A B : Matrix (Fin 2) (Fin 2) (Ad F)) (H : ℝ)
   have hH : 0 ≤ H := (norm_nonneg _).trans (hA 0 0)
   have h : ∀ i j, ‖UpperTheory.V.TR.pInf F ((A * B) i j)‖ ≤ 2 * H * mn B := by
     intro i j
-    rw [Matrix.mul_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Matrix.mul_apply, map_sum]
     refine (norm_sum_le _ _).trans ?_
     calc ∑ k, ‖UpperTheory.V.TR.pInf F (A i k * B k j)‖ ≤ ∑ _k : Fin 2, H * mn B :=
           Finset.sum_le_sum fun k _ => by
@@ -136,7 +138,8 @@ theorem mn_mul_le_right (A B : Matrix (Fin 2) (Fin 2) (Ad F)) (H : ℝ)
   have hH : 0 ≤ H := (norm_nonneg _).trans (hB 0 0)
   have h : ∀ i j, ‖UpperTheory.V.TR.pInf F ((A * B) i j)‖ ≤ 2 * H * mn A := by
     intro i j
-    rw [Matrix.mul_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Matrix.mul_apply, map_sum]
     refine (norm_sum_le _ _).trans ?_
     calc ∑ k, ‖UpperTheory.V.TR.pInf F (A i k * B k j)‖ ≤ ∑ _k : Fin 2, H * mn A :=
           Finset.sum_le_sum fun k _ => by

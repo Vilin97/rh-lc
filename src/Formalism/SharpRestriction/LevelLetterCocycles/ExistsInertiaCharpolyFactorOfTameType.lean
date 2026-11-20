@@ -102,7 +102,8 @@ theorem closed_of_adic {O : Type} [CommRing O] [IsLocalRing O] [IsNoetherianRing
     have h2 : g - f = ∑ x, (g x - f x) • (Pi.single x 1 : X → O) := by
       funext y
       simp [Finset.sum_apply, Pi.single_apply]
-    rw [h2, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h2, map_sum]
     refine Submodule.sum_mem _ fun x _ => ?_
     rw [map_smul]
     exact Submodule.smul_mem_smul (hg x) Submodule.mem_top
@@ -240,7 +241,8 @@ theorem isSSRep_descent (ρ : Γ →* GL (Fin a) K) (hs : IsSSRep (mapRep (algeb
     intro M y
     funext j
     show s (∑ b, algebraMap K L (M j b) * y b) = ∑ b, M j b * s (y b)
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun b _ => ?_
     rw [← Algebra.smul_def, map_smul, smul_eq_mul]
   intro W hW
@@ -347,7 +349,8 @@ theorem norm_le_one_of_finite {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [
   have hbd : ∀ x : O, ‖ι x‖ ≤ ∑ j, ‖ι (b j)‖ := by
     intro x
     obtain ⟨c, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun ℤ_[l]).1 (hb ▸ Submodule.mem_top : x ∈ _)
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun j _ => ?_)
     rw [Algebra.smul_def, map_mul, norm_mul]
     exact mul_le_of_le_one_left (norm_nonneg _) (hz _)
@@ -614,7 +617,8 @@ theorem eq_one_of_map_eq_one {A B : Type} [CommRing A] [IsDomain A] [CommRing B]
   have h2 : ∑ k ∈ Finset.range n, x ^ k = 0 := (mul_eq_zero.1 h1).resolve_left (sub_ne_zero.2 h)
   apply hn
   have h3 := congrArg f h2
-  simpa [map_sum, map_pow, hf] using h3
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa [map_sum, map_pow, hf] using h3
 
 theorem card_map_eq {Γ A B : Type} [Group Γ] [Group A] [Group B] (K : Subgroup Γ) (δ : Γ →* A) (χ : Γ →* B)
     (φ : A →* B) (h : ∀ σ ∈ K, χ σ = φ (δ σ)) (hinj : ∀ x ∈ K.map δ, φ x = 1 → x = 1) :
@@ -730,17 +734,20 @@ theorem psiChi_span (hG : Formalism.MainNotions.SumRepresentations.At.Idempotent
   have hM : (∑ k, f k π • rO N i r π (g k)).map (toK N i) =
       ∑ k, toK N i (f k π) • mapM (toK N i) (rO N i r π) (g k) := by
     show (toK N i).mapMatrix _ = _
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     ext a b
     simp [mapM]
-  rw [hM, Matrix.sum_mulVec, map_sum] at h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hM, Matrix.sum_mulVec, map_sum] at h1
   simp only [Matrix.smul_mulVec, map_smul, hgrp] at h1
   have h2 := congrFun (congrArg Prod.snd h1) c
   simp only [LinearEquiv.apply_symm_apply, Pi.single_eq_same, mul_one, Prod.snd_sum, Prod.smul_snd,
     Finset.sum_apply, Pi.smul_apply, smul_eq_mul] at h2
   apply IsFractionRing.injective (N.O i) (KK N i)
-  rw [← h2, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← h2, map_sum]
   simp
 
 end G5c
@@ -874,7 +881,8 @@ theorem Y_of_b (hG : Formalism.MainNotions.SumRepresentations.At.IdempotentChoic
     rw [haev, yg_eq, mul_smul_comm, ← mul_assoc, hk _ γ hγ, zero_mul, smul_zero]
   · rw [hψ]
     have h1 := hu.map ((Pi.evalRingHom (fun _ : N.X i => N.O i) π).comp (N.T i).val.toRingHom)
-    rw [eval_eq_sum_range, map_sum, Finset.sum_range] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [eval_eq_sum_range, map_sum, Finset.sum_range] at h1
     convert h1 using 2
     rw [map_mul, map_pow, map_pow, character_eq_first_off_l N w hw _ (by omega) (by have := c.2; omega) _ (N.locNd_chebotarevPlace_mem i w)]
     simp [chi1]

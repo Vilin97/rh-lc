@@ -37,7 +37,8 @@ theorem eq_zero_of_mem_eigenSub_of_sum {O k N : Type} [CommRing O] [Field k] [Ad
     have hfy : ∀ i, f (y i) = (χ i c - χ j c) • y i := fun i => by
       simp [f, mem_eigenSub.1 (hy i) c, sub_smul]
     have h1 : (σ c - χ j c) • m = ∑ i ∈ s, (χ i c - χ j c) • y i := by
-      rw [← hfm, h, Finset.sum_insert hj, map_add, map_sum, hfy j, sub_self, zero_smul, zero_add]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hfm, h, Finset.sum_insert hj, map_add, map_sum, hfy j, sub_self, zero_smul, zero_add]
       exact Finset.sum_congr rfl fun i _ => hfy i
     have h2 := ih ((σ c - χ j c) • m) (fun i => (χ i c - χ j c) • y i)
       (Submodule.smul_mem _ _ hm) (fun i => Submodule.smul_mem _ _ (hy i)) h1

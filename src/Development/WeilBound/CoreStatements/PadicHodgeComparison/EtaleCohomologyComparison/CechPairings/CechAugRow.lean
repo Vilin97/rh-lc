@@ -191,7 +191,8 @@ theorem lc_d_apply (n : ℕ) (f : LocallyConstant (Fin (n + 1) → G) M) (x : Fi
 abbrev grpCx (ρ : Multiplicative G →* (M →ₗ[R] M)) (S : Set G) : Cx.{w} R :=
   (lcCos R G M).cx.sub (eqv ρ S) fun n f hf g hg x => by
     change (lcCos R G M).d n f _ = ρ _ ((lcCos R G M).d n f x)
-    rw [lc_d_apply, lc_d_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [lc_d_apply, lc_d_apply, map_sum]
     exact Finset.sum_congr rfl fun i _ => by rw [map_zsmul]; exact congrArg _ (hf g hg _)
 
 def grpAug (ρ : Multiplicative G →* (M →ₗ[R] M)) (S : Set G) (N : Submodule R M)

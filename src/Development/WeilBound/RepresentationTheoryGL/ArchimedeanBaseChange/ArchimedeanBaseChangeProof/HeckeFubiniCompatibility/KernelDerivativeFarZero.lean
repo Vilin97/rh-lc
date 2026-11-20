@@ -197,14 +197,16 @@ theorem Epow_clm (T : V →L[ℂ] W) (s : Bool) {f : Mat n → V} (hf : ContDiff
     by_cases hab : a = b <;> simp [Epow, hab]
   | succ m ih =>
     intro a b x hx
-    simp only [Epow, Finset.sum_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Epow, Finset.sum_apply, map_sum]
     refine Finset.sum_congr rfl fun c _ => ?_
     rw [GlobalTheory.CompanionTheory.WaveAll.Eu_congr GlobalTheory.CompanionTheory.WaveAll.isOpen_GLs (ih c b) s a c hx]
     exact Eu_clm T s a c (GlobalTheory.CompanionTheory.WaveAll.Epow_smooth GlobalTheory.T.right_derivative_calculus_holds hf s m c b) hx
 
 theorem gel_clm (T : V →L[ℂ] W) (s : Bool) (m : ℕ) {f : Mat n → V} (hf : ContDiffOn ℝ ∞ f (GLs n)) {x : Mat n}
     (hx : x ∈ GLs n) : gel s m (fun x => T (f x)) x = T (gel s m f x) := by
-  simp only [gel, Finset.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [gel, Finset.sum_apply, map_sum]
   exact Finset.sum_congr rfl fun a _ => Epow_clm T s hf m a a hx
 
 end Clm

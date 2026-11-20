@@ -104,7 +104,8 @@ private theorem core {q : ℕ} [NeZero q] (N : ℕ) (hN : 1 ≤ N) {E X Y B : Sp
     rw [← pull_comp, ← pull_comp, hc]
   have h1 : ∑ j : Fin (N + 1), ((cup q (pull _ p _ _ (pull _ πX _ _ (a j))) (cpow q (pull _ β _ _ ξY) j)).cast (by ring) (by ring) : Ht q B n i) = 0 := by
     have h' := congrArg (pull _ β (tw q i) n) h
-    rw [map_sum, map_zero] at h'
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero] at h'
     rw [← h']
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [pull_cast, pull_cup, UpperTheory.pull_cupPow_eq_cupPow_pull q β ξY j hY, pp]
@@ -119,7 +120,8 @@ private theorem core {q : ℕ} [NeZero q] (N : ℕ) (hN : 1 ≤ N) {E X Y B : Sp
       rw [pull_cast, cup_cast_left, ht_cast_cast]
       rfl
     · simp only [y1]
-      rw [map_sum, map_sum, AddMonoidHom.finset_sum_apply, ht_cast_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, map_sum, AddMonoidHom.finset_sum_apply, ht_cast_sum]
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [pull_cast, cup_cast_left, ht_cast_cast]
       exact (step_term p ξX (pull _ β _ _ ξY) hX hrel _ k _ _ _ _).symm)

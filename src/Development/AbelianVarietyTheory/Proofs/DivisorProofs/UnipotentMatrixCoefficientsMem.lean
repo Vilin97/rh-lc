@@ -42,7 +42,8 @@ theorem coeff_mem_of_scalar_add_nilpotent (hS : BlockHyp H S) {V : Type} [AddCom
       rw [← LinearMap.toMatrix_mulVec_repr b b (T s) v, hρ]; rfl
     calc φ (T s v) = ∑ i, b.repr (T s v) i * φ (b i) := by
           have h2 := congrArg φ (b.sum_repr (T s v))
-          rw [map_sum] at h2
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [map_sum] at h2
           simp only [map_smul, smul_eq_mul] at h2
           exact h2.symm
       _ = _ := by

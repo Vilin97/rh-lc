@@ -18,7 +18,8 @@ theorem dAct_mul (B : FB R d O) (a b : O) : dAct k B (a * b) = dAct k B a * dAct
   simp only [dAct, FB.actK, coeff_map, Matrix.mul_apply]
   rw [B.A.mul_act]
   unfold comp1 ev
-  rw [coeff_single_subst, Fintype.sum_prod_type, Fin.sum_univ_one, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [coeff_single_subst, Fintype.sum_prod_type, Fin.sum_univ_one, map_sum]
   · refine Finset.sum_congr rfl fun l _ => ?_
     rw [map_mul]
     rfl

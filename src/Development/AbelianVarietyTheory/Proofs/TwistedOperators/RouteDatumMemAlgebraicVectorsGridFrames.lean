@@ -53,7 +53,8 @@ theorem exists_aPlus_ptF (hψ : IsStdChar D ψ (-1)) (hθ : IsInfFam θ) {S T : 
   conv_lhs => rw [eq_sum_unitMap A B τ z]
   rw [GlobalTheory.FockSubst.aPlus_dir_sum hψ hθ τ _ _ hg]
   conv_rhs => unfold ptF
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun p _ => ?_
   rw [GlobalTheory.FockSubst.aPlus_dir_smul hψ hθ τ _ _ hg _ _ (GlobalTheory.CompactFockAction.Jm_single A B τ p.1 p.2), map_smul]
   congr 1

@@ -134,7 +134,8 @@ theorem stdForm_pos {n : ℕ} (σ : E →+* ℂ) (x : Fin n → E) (hx : x ≠ 0
   have e : ∀ j, (σ (x j * star (x j))).re = Complex.normSq (σ (x j)) := fun j => by
     rw [map_mul, complexEmbedding_star]
     exact congrArg Complex.re (Complex.mul_conj _)
-  rw [stdForm_apply, map_sum, Complex.re_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [stdForm_apply, map_sum, Complex.re_sum]
   simp only [e]
   exact Finset.sum_pos' (fun j _ => Complex.normSq_nonneg _)
     ⟨i, Finset.mem_univ _, Complex.normSq_pos.2 ((map_ne_zero σ).2 hi)⟩
@@ -191,7 +192,8 @@ theorem unimod_stdLat (n : ℕ) : (⟨Formalism.L2.Pj.stdLat E n⟩ : Formalism.
   · choose c hc using (mem_stdLat _).1 hv
     choose d hd using (mem_stdLat _).1 hw
     refine ⟨∑ j, star (c j) * d j, ?_⟩
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun j _ => by rw [map_mul, ← hc, ← hd]; rfl
   · obtain ⟨c, hc⟩ := h _ (single_mem_stdLat i)
     rw [Finset.sum_eq_single i (fun j _ hj => by simp [hj]) (by simp), Pi.single_eq_same, _root_.mul_one] at hc

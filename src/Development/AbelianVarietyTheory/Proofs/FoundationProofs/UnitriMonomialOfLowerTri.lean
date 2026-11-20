@@ -224,7 +224,8 @@ theorem coeffWord : Formalism.GradedWeylDivisibility.CoeffWord := by
   rw [wordOf_eq, eval_applyWord e _ (fun q hq => (mem_positions q).1 hq) pairwise_positions]
   conv_lhs => rw [F.as_sum]
   conv_rhs => rw [F.as_sum]
-  rw [map_sum, coeff_sum, coeff_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, coeff_sum, coeff_sum]
   refine Finset.sum_congr rfl fun m hm => ?_
   have hw : Finsupp.weight (colW r n) m = ν := hF (mem_support_iff.1 hm)
   by_cases hl : LowerTri m

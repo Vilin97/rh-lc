@@ -30,7 +30,8 @@ theorem integrable_dbar_integral_eq_zero {n : ℕ} {G : V n → ℂ} (hG : ContD
 
 theorem dens_dbarAt_eq_sum {n : ℕ} (F : V n → Alt n) (v : V n) :
     dens (dbarAt F v) = ∑ a, ∑ S, dbar (fun x => (bas n).repr (F x) S) v (coordVec a) * dens (dzb a * bas n S) := by
-  simp only [dens, dbarAt, coefwise, Finset.mul_sum, mul_smul_comm, map_sum, map_smul, Finsupp.finset_sum_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dens, dbarAt, coefwise, Finset.mul_sum, mul_smul_comm, map_sum, map_smul, Finsupp.finset_sum_apply,
     Finsupp.smul_apply, smul_eq_mul, Finset.sum_div, mul_div_assoc]
 
 theorem integral_re_dens_dbarAt_eq_zero {n : ℕ} (F : V n → Alt n)

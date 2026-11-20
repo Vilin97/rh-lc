@@ -51,7 +51,8 @@ theorem form_swap (σ : K →+* K) (hσ : ∀ x, σ (σ x) = x) (D γ : Matrix (
     (hγ : D * γ = (D.map σ)ᵀ) (u v : Fin n → K) :
     form σ D u (γ *ᵥ v) = σ (form σ D v u) := by
   simp only [form, Matrix.mulVec_mulVec, hγ]
-  simp only [dotProduct, mulVec, map_sum, map_mul, hσ, transpose_apply, map_apply, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dotProduct, mulVec, map_sum, map_mul, hσ, transpose_apply, map_apply, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   ring

@@ -60,7 +60,8 @@ theorem sum_split {M N P : Type*} [AddCommGroup M] [Module R M] [AddCommGroup N]
     ∑ k, Φ (a k) (b k) = ∑ k, Φ (a₁ k) (b k) + ∑ k, Φ (a k - a₁ k) (b₁ k) := by
   have h0 : ∑ k, Φ (a k - a₁ k) (b k - b₁ k) = 0 := by
     have := congrArg (TensorProduct.lift Φ) h
-    simpa only [map_sum, TensorProduct.lift.tmul, map_zero] using this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa only [map_sum, TensorProduct.lift.tmul, map_zero] using this
   rw [← Finset.sum_add_distrib, ← sub_eq_zero, ← Finset.sum_sub_distrib, ← h0]
   refine Finset.sum_congr rfl fun k _ ↦ ?_
   simp only [map_sub, LinearMap.sub_apply]
@@ -166,7 +167,8 @@ theorem rep_contr {v : epsR R ⟶ B} (hv : IsTangent v) (f : Z1 (O (dp0 R) (A.ho
     linear_combination h3
   rw [fv_sub_sum] at e2
   simp only [Fn1.add, Fn1.neg, hX0, Finset.sum_const_zero, zero_add] at e1 ⊢
-  rw [e1, map_add, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e1, map_add, map_sum]
   simp only [e3, Finset.sum_sub_distrib]
   linear_combination e2
 
@@ -179,13 +181,15 @@ theorem apply_sub_sum {M N : Type*} [AddCommGroup M] [Module R M] [AddCommGroup 
   have e := sum_split ((LinearMap.mul R R).compl₁₂ x y) a a₁ b b₁ h
   simp only [LinearMap.compl₁₂_apply, LinearMap.mul_apply'] at e
   simp only [map_sub, hx, sub_zero, zero_mul, Finset.sum_const_zero, zero_add] at e
-  rw [map_sub, map_sum, hc, e]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sub, map_sum, hc, e]
   simp only [map_smul, map_sub, hx, sub_zero, smul_eq_mul, mul_comm, sub_self]
 
 theorem mk_sub_sum {n : ℕ} {f : Z1 (O (dp0 R) (A.hom ≫ 𝟙 _))} {c : primDR A} (hf : CatCoh.H1.mk _ f = c.1)
     {a' : Fin n → Z1 (O (dp0 R) (A.hom ≫ 𝟙 _))} {a : Fin n → primDR A} (ha : ∀ k, CatCoh.H1.mk _ (a' k) = (a k).1)
     (t : Fin n → R) : CatCoh.H1.mk _ (f - ∑ k, t k • a' k) = (c - ∑ k, t k • a k : primDR A).1 := by
-  rw [map_sub, map_sum, hf, Submodule.coe_sub, Submodule.coe_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sub, map_sum, hf, Submodule.coe_sub, Submodule.coe_sum]
   congr 1
   refine Finset.sum_congr rfl fun k _ ↦ ?_
   rw [map_smul, ha k, Submodule.coe_smul]

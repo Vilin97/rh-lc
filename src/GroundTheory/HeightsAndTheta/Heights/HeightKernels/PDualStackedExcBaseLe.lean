@@ -37,7 +37,8 @@ theorem DualStackedExcBaseLe.proof (hBihom : DualStackedGraphBihomog.Statement)
   refine sup_le ?_ ?_
   · intro f hf
     obtain ⟨s, g, rfl, hg⟩ := hBihom K i F F' T b b' a hab f hf
-    rw [linPrime, RingHom.mem_ker, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [linPrime, RingHom.mem_ker, map_sum]
     exact Finset.sum_eq_zero fun p hp =>
       hLead K i F F' T b b' a hi hlt hcov hab k α M hres p.1 p.2 (g p) (hg p hp).1 (hg p hp).2
   · rw [Ideal.span_le, Set.range_subset_iff]

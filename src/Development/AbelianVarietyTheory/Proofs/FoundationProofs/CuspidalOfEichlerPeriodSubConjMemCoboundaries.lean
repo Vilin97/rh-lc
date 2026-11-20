@@ -17,7 +17,8 @@ lemma lam_apply (w : ℕ) (x y : ℂ) (p : ℂ[X]) :
 
 lemma lam_eq (w : ℕ) (x y : ℂ) (p : ℂ[X]) :
     lam w x y p = MvPolynomial.eval ![x, y] (p.homogenize w) := by
-  rw [lam_apply, Polynomial.homogenize, map_sum, Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [lam_apply, Polynomial.homogenize, map_sum, Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [MvPolynomial.eval_monomial, Finsupp.prod_fintype _ _ (by simp)]
   simp
@@ -49,7 +50,8 @@ lemma polySlash_sum (w : ℕ) (g : Matrix (Fin 2) (Fin 2) ℤ) (p : ℂ[X]) :
 lemma lam_slP (w : ℕ) (g : Matrix (Fin 2) (Fin 2) ℤ) (x y : ℂ) (p : ℂ[X]) :
     lam w x y (slP w g p) =
       lam w ((g 0 0 : ℤ) * x + (g 0 1 : ℤ) * y) ((g 1 0 : ℤ) * x + (g 1 1 : ℤ) * y) p := by
-  rw [polySlash_sum, map_sum, lam_apply w _ _ p]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [polySlash_sum, map_sum, lam_apply w _ _ p]
   refine Finset.sum_congr rfl fun i hi => ?_
   have hi' : i ≤ w := Nat.lt_succ_iff.mp (Finset.mem_range.mp hi)
   rw [map_smul, smul_eq_mul]
@@ -69,7 +71,8 @@ lemma lam_one_zero (w : ℕ) (p : ℂ[X]) : lam w 1 0 p = p.coeff w := by
 
 lemma lam_conj (w : ℕ) (a c : ℤ) (p : ℂ[X]) :
     lam w a c (p.map (starRingEnd ℂ)) = starRingEnd ℂ (lam w a c p) := by
-  simp [lam_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [lam_apply, map_sum]
 
 lemma coeff_eichler (w : ℕ) (f : ℍ → ℂ) (τ : ℍ) :
     (eichler w f τ).coeff w = ∫ t in (0 : ℝ)..1,

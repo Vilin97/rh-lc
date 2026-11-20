@@ -104,7 +104,8 @@ theorem exists_mul_mem_chartRing {I : Chart x} {a : Ω} (ha : a ∈ chartRing F 
       ∑ d ∈ f.support, AddMonoidAlgebra.coeff f d • (aeval x (monomial d (1 : S)) / aeval x s') := by
     rw [aeval_map_algebraMap]
     conv_lhs => rw [f.as_sum]
-    rw [map_sum, Finset.sum_div]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_div]
     refine Finset.sum_congr rfl fun d _ => ?_
     rw [aeval_monomial, aeval_monomial, map_one, one_mul, Algebra.smul_def, mul_div_assoc]
   rw [hsum]

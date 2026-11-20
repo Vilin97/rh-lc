@@ -34,7 +34,8 @@ theorem qminor_row_step_under_functional : ∀ (M Wp : Type) [AddCommGroup M] [M
     unfold Formalism.REAL.Tm
     rw [if_neg hne, zero_add, ← hk, hl k x]
     simp only [hiff]
-  rw [hq u, quantum_minor_row_expansion.1 (Module.End ℂ M) n t E hE, LinearMap.smul_apply, map_smul, LinearMap.sum_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hq u, quantum_minor_row_expansion.1 (Module.End ℂ M) n t E hE, LinearMap.smul_apply, map_smul, LinearMap.sum_apply,
     map_sum, Fin.sum_univ_succ, Finset.sum_eq_zero, add_zero, mul_smul]
   · congr 1
     have h0 := key 0

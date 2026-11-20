@@ -48,7 +48,8 @@ theorem coeff_unique (p : ℕ) [Fact p.Prime] (Lt T : Type) [Fintype Lt] [Decida
     apply MvPolynomial.funext
     intro z
     have hz := h (fun τ => Matrix.of fun i j => z (E.symm τ, i, j))
-    rw [map_zero, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_zero, map_sum]
     rw [← hz]
     refine Finset.sum_congr rfl fun κ _ => ?_
     rw [smul_eval, hP]
@@ -60,7 +61,8 @@ theorem coeff_unique (p : ℕ) [Fact p.Prime] (Lt T : Type) [Fintype Lt] [Decida
     simp only [Matrix.of_apply, hs]
   funext κ'
   have h1 := congrArg (fockB (ten fun s => map (algebraMap ℚ ℂ_[p]) (b s (κ' s)))) h0
-  rw [← fockBL_apply, ← fockBL_apply, map_sum, map_zero] at h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← fockBL_apply, ← fockBL_apply, map_sum, map_zero] at h1
   simp only [map_smul, fockBL_apply, hP, fockB_ten_dual ι b g Nc hbg, smul_eq_mul, mul_ite, mul_zero,
     Finset.sum_ite_eq', Finset.mem_univ, if_true] at h1
   have hne : ∏ s, (Nc s : ℂ_[p]) ≠ 0 :=
@@ -125,7 +127,8 @@ theorem comb_mem_iff : ∀ (p : ℕ) [Fact p.Prime] (Lt T : Type) [Fintype Lt] [
             ∑ k, ((n s k : ℤ) : ℂ_[p]) * MvPolynomial.eval (fun k : Fin N × Fin N => y (e s) k.1 k.2)
               (MvPolynomial.map (algebraMap ℚ ℂ_[p]) (g s k)) := by
           intro s
-          rw [← map_intQ, ← hn s, map_sum, map_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [← map_intQ, ← hn s, map_sum, map_sum]
           refine Finset.sum_congr rfl fun k _ => ?_
           rw [map_zsmul, map_zsmul, zsmul_eq_mul]
         simp only [hterm, Fintype.prod_sum, Finset.mul_sum, hG]

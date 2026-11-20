@@ -102,7 +102,8 @@ theorem transport (hR : Formalism.MainNotions.UnusedSlot80.ToolsR.RingP W) (hp0 
       obtain ⟨q, hq, hqe⟩ := hP'
       have hE : W.φD T (lA W ^ κ' • (lA W ^ κ • Λ • x - ∑ k, aa k • ((W.φD T) ^ e) (Hh k))) =
           lA W ^ κ' • (lA W ^ κ • W.φA Λ • W.φD T x - ∑ k, W.φA (aa k) • ((W.φD T) ^ (e + 1)) (Hh k)) := by
-        rw [φD_smulA, φA_lA, map_sub, φD_smulA, φA_lA, φD_smulA, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [φD_smulA, φA_lA, map_sub, φD_smulA, φA_lA, φD_smulA, map_sum]
         congr 2
         refine Finset.sum_congr rfl fun k _ => ?_
         rw [φD_smulA, pow_apply_succ]

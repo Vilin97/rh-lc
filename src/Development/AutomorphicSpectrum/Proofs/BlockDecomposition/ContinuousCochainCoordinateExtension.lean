@@ -149,13 +149,15 @@ theorem core {R : Type} [CommRing R] (l : ℕ) [Fact l.Prime] (k : ℕ) {M : Typ
       change ρ _ (f (sh t _)) = ρ _ (ρ _ (f (sh t x)))
       rw [h1, hf j hj, hcomm]
     simp only [gf]
-    rw [hzj j hj x, map_neg, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hzj j hj x, map_neg, map_sum]
     exact congrArg _ (Finset.sum_congr rfl fun t _ => hFj t)
   have hgT : ∀ x : Fin (n + 1) → Fin k → ℤ_[l],
       ρ (Multiplicative.ofAdd e) (gf fun j => x j - e) - gf x = f x := by
     intro x
     simp only [gf]
-    rw [map_neg, map_sum, hz1 x]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_neg, map_sum, hz1 x]
     simp only [hFs]
     obtain ⟨hne, h0⟩ := val_sub_one (z x)
     by_cases hx : (z x).val = 0

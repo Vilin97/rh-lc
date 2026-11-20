@@ -151,7 +151,8 @@ theorem choose_gh (T : GoodSet K G) (s : T.S) (P0 P : Pair K G) (hM : nS T P0 s 
       intro a
       induction a using MonoidAlgebra.induction_on with
       | of h =>
-        rw [hu', map_sum, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [hu', map_sum, map_sum]
         simp only [map_smul, hkey, smul_smul]
         rw [← Finset.sum_smul]
         have : ∑ i, lam i * cB (MonoidAlgebra.of K G h * eps P * MonoidAlgebra.of K G (g i)) = 0 := by

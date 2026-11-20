@@ -95,7 +95,8 @@ theorem exists_integral_primitive [FaithfulSMul R A] [Algebra.IsAlgebraic R A] {
   have hθ₁ : IntermediateField.adjoin E {algebraMap A L θ₁} = ⊤ := by
     have h := hDc c hcD
     have he : ∑ j, c j • algebraMap A L (x j) = algebraMap A L θ₁ := by
-      simp only [hθ₁def, map_sum, map_zsmul, ← hz, Int.cast_smul_eq_zsmul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hθ₁def, map_sum, map_zsmul, ← hz, Int.cast_smul_eq_zsmul]
     rwa [he] at h
   obtain ⟨a, ha, hai⟩ := (Algebra.IsAlgebraic.isAlgebraic (R := R) θ₁).exists_integral_multiple
   refine ⟨a • θ₁, hai, eq_top_iff.2 (hθ₁ ▸ IntermediateField.adjoin_simple_le_iff.2 ?_)⟩

@@ -37,7 +37,8 @@ theorem toMatrix_mem_latRat (hc : D.host.ccK = ⊤) (hN : IsSelfDualC S N) {x : 
         exact Finset.sum_congr rfl fun k _ => mul_comm _ _
       rw [Matrix.sum_apply, LinearMap.toMatrix'_apply]
       change r * x (Pi.single j 1) i = _
-      rw [h1, map_sum, Finset.sum_apply, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [h1, map_sum, Finset.sum_apply, Finset.mul_sum]
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [map_smul, Pi.smul_apply, smul_eq_mul, genMap, Matrix.of_apply]
       ring
@@ -108,7 +109,8 @@ theorem char_sympl_halfB : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : I
     have e1 : c • ((LinearMap.toMatrix' y).map fun r => cA D (∑ PP ∈ SS, es PP) * incA D r : WO S T) =
         ∑ PP ∈ SS, ((LinearMap.toMatrix' ((c : D.host.E) • y)).map fun r => cA D (es PP) * incA D r : WO S T) := by
       ext i j
-      rw [Matrix.smul_apply, Matrix.map_apply, Matrix.sum_apply, map_sum, nsmul_eq_mul, Finset.sum_mul, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Matrix.smul_apply, Matrix.map_apply, Matrix.sum_apply, map_sum, nsmul_eq_mul, Finset.sum_mul, Finset.mul_sum]
       refine Finset.sum_congr rfl fun PP _ => ?_
       change _ = cA D (es PP) * incA D ((c : D.host.E) * LinearMap.toMatrix' y i j)
       rw [RingHom.map_mul (incA D), map_natCast, mul_left_comm]

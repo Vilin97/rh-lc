@@ -90,7 +90,8 @@ theorem eq_of_comp_eq {y z : k⸨X⸩} (h : ∀ i < l, comp l hl i y = comp l hl
 theorem comp_one_add_pow_mul {i j : ℕ} (hi : i < l) (hj : j < l) (a : k⸨X⸩) :
     comp l hl i ((1 + (HahnSeries.single (1 : ℤ) (1 : k) : k⸨X⸩)) ^ j * φ a)
       = (j.choose i) • a := by
-  rw [add_comm, add_pow, Finset.sum_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [add_comm, add_pow, Finset.sum_mul, map_sum]
   have : ∀ m ∈ Finset.range (j + 1),
       comp l hl i ((HahnSeries.single (1 : ℤ) (1 : k) : k⸨X⸩) ^ m * 1 ^ (j - m) *
         (j.choose m : k⸨X⸩) * φ a) = if m = i then (j.choose i) • a else 0 := by
@@ -121,7 +122,8 @@ theorem existsUnique_decomp (y : k⸨X⸩) :
   have key : ∀ (x : Fin l → k⸨X⸩) (i : Fin l), comp l hl i (∑ j : Fin l,
       (1 + (HahnSeries.single (1 : ℤ) (1 : k) : k⸨X⸩)) ^ j.val * φ (x j)) = M.mulVec x i := by
     intro x i
-    rw [map_sum, Matrix.mulVec, dotProduct]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Matrix.mulVec, dotProduct]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [comp_one_add_pow_mul l hl φ hφ i.2 j.2, nsmul_eq_mul]
   have := hb.existsUnique (fun i : Fin l => comp l hl i y)

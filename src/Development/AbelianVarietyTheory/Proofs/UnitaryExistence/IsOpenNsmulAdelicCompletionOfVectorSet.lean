@@ -123,7 +123,8 @@ theorem isOpen_nsmul_hat : ∀ (F E : Type) [Field F] [NumberField F] [Field E] 
       | mem x hx =>
         obtain ⟨a, ha, _, ⟨x, rfl⟩, rfl⟩ := hx
         refine ⟨fun k => w.repr x k • a, fun k v => zsmul_mem (ha v) _, ?_⟩
-        conv_rhs => rw [← w.sum_repr x, map_sum, TensorProduct.tmul_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          conv_rhs => rw [← w.sum_repr x, map_sum, TensorProduct.tmul_sum]
         refine Finset.sum_congr rfl fun k _ => ?_
         rw [TensorProduct.smul_tmul', smul_eq_mul, mul_one, map_zsmul, TensorProduct.tmul_smul,
           TensorProduct.smul_tmul']

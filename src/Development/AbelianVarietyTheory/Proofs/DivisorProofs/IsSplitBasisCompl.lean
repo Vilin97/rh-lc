@@ -20,7 +20,8 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 theorem form_swap_herm (h : IsCMExt F E σ) {k : ℕ} {J : Matrix (Fin k) (Fin k) E}
     (hJ : ∀ i j, σ (J j i) = J i j) (x y : Fin k → E) : form σ J y x = σ (form σ J x y) := by
   have hJ' : ∀ i j, σ (J i j) = J j i := fun i j => hJ j i
-  simp only [form, Matrix.mulVec, dotProduct, map_sum, map_mul, GlobalTheory.AdaptedPlaneBasis.sigma_sigma h, hJ',
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, Matrix.mulVec, dotProduct, map_sum, map_mul, GlobalTheory.AdaptedPlaneBasis.sigma_sigma h, hJ',
     Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
@@ -31,7 +32,8 @@ theorem herm_compl (hB : B.IsGood σ) (hX : X.IsHerm σ B r s) (hH : H.IsAdapted
   intro i j
   have hσσ := GlobalTheory.AdaptedPlaneBasis.sigma_sigma hB.cm
   rw [← hH.gram]
-  simp only [Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, map_sum, map_mul, hσσ, hX.herm,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, map_sum, map_mul, hσσ, hX.herm,
     Finset.sum_mul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun l _ => ?_

@@ -33,7 +33,8 @@ theorem mem_span_of_sum_eq {X Y : Type} {m k : ℕ} (u : Fin m → X → ℂ) (h
   have hzero : ∑ l, μ (G l) • u l = 0 := by
     funext x
     have := congrArg μ (hfun x)
-    simp only [map_sum, map_smul, smul_eq_mul, hg, mul_zero, Finset.sum_const_zero] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, smul_eq_mul, hg, mul_zero, Finset.sum_const_zero] at this
     simpa [Finset.sum_apply, mul_comm] using this
   exact hμ (Fintype.linearIndependent_iff.1 hu _ hzero l)
 
@@ -121,7 +122,8 @@ theorem lieClosed : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberFi
     let aC : Fin n → Fin (Module.finrank ℂ Wsp) → ℂ := fun i l => b.repr ⟨c i • f i, Submodule.subset_span ⟨i, rfl⟩⟩ l
     have hexp : ∀ i, c i • f i = ∑ l, aC i l • (b l : SInf F (Fin a' × Fin (a + a'))) := fun i => by
       have e := congrArg Wsp.subtype (b.sum_repr ⟨c i • f i, Submodule.subset_span ⟨i, rfl⟩⟩)
-      simp only [map_sum, map_smul, Submodule.subtype_apply] at e
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, Submodule.subtype_apply] at e
       exact e.symm
     let π : (Fin a' × Fin (a + a') → AF F) → (Fin a' × Fin (a + a') → mixedEmbedding.mixedSpace F) := fun y i => evI F (y i)
     let r : Fin n → (Fin a' × Fin (a + a') → AF F) → ℂ := fun i y => ∏ᶠ v, φ i v fun j => evFin F v (y j)
@@ -137,7 +139,8 @@ theorem lieClosed : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberFi
     have key : ∀ L' : SInf F (Fin a' × Fin (a + a')) →ₗ[ℂ] SInf F (Fin a' × Fin (a + a')), ∀ y,
         ∑ i, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure (L' (c i • f i)) (φ i) y = ∑ l, L' (b l) (π y) * Gf l y := by
       intro L' y
-      simp only [hpure, hexp, map_sum, map_smul, hev, Gf, Finset.mul_sum, Finset.sum_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hpure, hexp, map_sum, map_smul, hev, Gf, Finset.mul_sum, Finset.sum_mul]
       rw [Finset.sum_comm]
       exact Finset.sum_congr rfl fun l _ => Finset.sum_congr rfl fun i _ => by ring
     have hu : LinearIndependent ℂ (fun l => ((b l : SInf F (Fin a' × Fin (a + a'))) : (Fin a' × Fin (a + a') → mixedEmbedding.mixedSpace F) → ℂ)) :=
@@ -174,7 +177,8 @@ theorem lieClosed : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberFi
   · have e : (fun t : ℝ => om' (1, γ (Multiplicative.ofAdd t)) Φ x) =
         fun t => ∑ i, om' (1, γ (Multiplicative.ofAdd t)) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure (c i • f i) (φ i)) x := by
       funext t
-      rw [hΦe, map_sum, Finset.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hΦe, map_sum, Finset.sum_apply]
     rw [e, Finset.sum_apply]
     refine HasDerivAt.fun_sum fun i _ => ?_
     have hsb := GlobalTheory.BigNZ.Fam.sb hM' (And.intro (hφ i) (hφv i))

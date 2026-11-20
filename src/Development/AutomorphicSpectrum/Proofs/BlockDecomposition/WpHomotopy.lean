@@ -88,7 +88,8 @@ theorem wp_homotopy : ∀ (A : Type) [CommRing A](B : Type) [CommRing B] [Algebr
     show (alt (δ n)).lTensor B (h n z) + h (n + 1) (alt (δ (n + 1)) z) = (1 : B) ⊗ₜ[A] z
     have e1 : h (n + 1) (δ (n + 1) 0 z) = (1 : B) ⊗ₜ[A] z := by
       simpa using e0
-    rw [a1, a2, map_add, e1, map_sum, add_left_comm, ← Finset.sum_add_distrib]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [a1, a2, map_add, e1, map_sum, add_left_comm, ← Finset.sum_add_distrib]
     have : ∀ k : Fin (n + 1), (-1 : ℤ) ^ (k : ℕ) • ((δ n k).toLinearMap.lTensor B) (h n z) +
         h (n + 1) (-((-1 : ℤ) ^ (k : ℕ) • δ (n + 1) k.succ z)) = 0 := by
       intro k

@@ -100,7 +100,8 @@ theorem ind_orth (A : PAlg l) (m : ℕ) {c c' : ZMod (l ^ m)} (h : c ≠ c') :
 
 theorem sum_ind (A : PAlg l) (m : ℕ) : ∑ c, ind A m c = 1 := by
   refine cont_ext fun z => ?_
-  rw [map_sum, map_one]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_one]
   simp only [ev_ind]
   rw [Finset.sum_ite_eq]
   simp

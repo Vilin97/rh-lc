@@ -184,7 +184,8 @@ theorem psiK_eq_chi : ∀ (D : D7) (X : HidaSetting D) (u : D.what₂.Word) (wt 
           ιA.symm (if hi : i.1 + 1 < D.R.k then
             hR (Formalism.L2.Forms.sigD D) (Formalism.L2.Forms.gramN D 0 (Nat.zero_le _)) (Ad D.host.F)
               (Fr.bd i) (y.1.1 *ᵥ Fr.b ⟨i.1 + 1, hi⟩) else 0)) := by
-      simp only [Afun, supSum, map_sum, Finset.sum_sub_distrib]; ring
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Afun, supSum, map_sum, Finset.sum_sub_distrib]; ring
     rw [e]
     refine Z_add X.B.I X.B.g (Z_sum X.B.I X.B.g _ _ fun a _ => ?_) (Z_sum X.B.I X.B.g _ _ fun i _ => ?_)
     · exact congruence_fixed_term X.B.I X.B.g _ _ (nxt_Z X.B.I X.B.g X.e0 X.f0 X.z0 hfe hfz a)

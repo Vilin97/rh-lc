@@ -101,7 +101,8 @@ theorem relLength_read (h : Induces emb v) (rd : V →ₛₗ[emb] W) {ι : Type}
     obtain ⟨c, hc, s, hs⟩ := hnorm t
     have h1 : ∑ a, algebraMap O' (FractionRing O') (s a) • rd (b a) = 0 := by
       have := congrArg g hs
-      rw [← algebraMap_smul O' c, map_smul, ht, smul_zero, map_sum] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← algebraMap_smul O' c, map_smul, ht, smul_zero, map_sum] at this
       simpa only [hg, algebraMap_smul] using this.symm
     have h2 : ∀ a, s a = 0 := fun a => (map_eq_zero_iff _ (IsFractionRing.injective O' (FractionRing O'))).1
       (Fintype.linearIndependent_iff.1 hli _ h1 a)

@@ -13,7 +13,8 @@ theorem SchAevalSignedRename.proof : SchAevalSignedRename.Statement := by
   intro ι κ _ _ _ _ s g d P hP
   conv_lhs => rw [P.as_sum]
   conv_rhs => rw [P.as_sum]
-  rw [map_sum, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun e he => ?_
   have hd : (∑ i ∈ e.support, e i) = d := by
     have h := hP (mem_support_iff.mp he)

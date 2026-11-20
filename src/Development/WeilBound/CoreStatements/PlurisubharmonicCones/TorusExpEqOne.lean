@@ -85,7 +85,8 @@ theorem torus_deriv {X : Type} [AddCommGroup X] {d : ℕ} (β : Module.Basis (Fi
       have : HasFDerivAt (fun z => Complex.exp (Lc z)) (Complex.exp (Lc 0) • Lc) 0 := Lc.hasFDerivAt.cexp
       simp only [hLc] at this
       rw [this.fderiv, ContinuousLinearMap.smul_apply, hLc, ← hLc 0, map_zero, Complex.exp_zero, one_smul]
-      conv_rhs => rw [← β.sum_repr χ, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        conv_rhs => rw [← β.sum_repr χ, map_sum]
       simp only [pairing, map_zsmul, zsmul_eq_mul]
     have h6 := hMT δ' χ
     rw [hδ'] at h6

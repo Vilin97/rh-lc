@@ -103,7 +103,8 @@ theorem dualComp_rightDerivEnd (l : StrongDual ℂ E) (X : 𝔤) (f : h.smoothFu
 theorem dualComp_laplacian (l : StrongDual ℂ E) {ι : Type*} [Fintype ι]
     (b : Module.Basis ι ℝ h.lieSubalgebra) (f : h.smoothFuns (F := E)) :
     h.dualComp l (h.laplacian (F := E) b f) = h.laplacian (F := ℂ) b (h.dualComp l f) := by
-  simp only [laplacian, LinearMap.sum_apply, map_sum, Module.End.mul_apply, dualComp_rightDerivEnd]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [laplacian, LinearMap.sum_apply, map_sum, Module.End.mul_apply, dualComp_rightDerivEnd]
 
 variable [MeasurableSpace G] [BorelSpace G]
 

@@ -22,7 +22,8 @@ theorem exists_reduce (E : Type) [Field E] [NumberField E] :
       rw [← Finset.sum_sub_distrib]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [Int.fract, sub_smul, Int.cast_smul_eq_zsmul]
-    rw [h, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h, map_sum]
     refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun i _ => ?_)
     rw [map_rat_smul, norm_smul]
     have h0 := Int.fract_nonneg (b.repr x i)
@@ -78,7 +79,8 @@ theorem exists_den {E : Type} [Field E] [NumberField E] {k : ℕ} {m : Type} [Fi
   refine ⟨d, hd, fun s hs i => ?_⟩
   have h1 : g (s ᵥ* W) = s := by simpa using LinearMap.congr_fun hg s
   have h2 : s ᵥ* W = ∑ j, (s ᵥ* W) j • (Pi.single j 1 : m → E) := pi_eq_sum_univ' _
-  rw [← h1, h2, map_sum, Finset.sum_apply, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← h1, h2, map_sum, Finset.sum_apply, Finset.mul_sum]
   refine IsIntegral.sum _ fun j _ => ?_
   rw [map_smul, Pi.smul_apply, smul_eq_mul, mul_left_comm]
   refine (hs j).mul ?_

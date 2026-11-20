@@ -76,7 +76,8 @@ theorem mem_support_pderiv {u : Sym m n} {i : Ix m n ⊕ Ix m n} {t' : Ix m n �
   classical
   have hu : pderiv i u = ∑ t ∈ u.support, monomial (t - Finsupp.single i 1) (AddMonoidAlgebra.coeff u t * (t i : ℂ)) := by
     conv_lhs => rw [u.as_sum]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun t _ => ?_
     rw [pderiv_monomial]
   rw [MvPolynomial.mem_support_iff, hu, coeff_sum] at h

@@ -139,10 +139,12 @@ theorem pos_sec_eval :
   have e : rzMap X la N Ω gF (Formalism.MainNotions.Gaps.EtaleWeightGaps.sec X la w 0) =
       ∑ k, (algebraMap (Op X la N) (Kp X la N) (Tv X la N (0, k))) • rzMap X la N Ω gF (emb X la N (X.inc wL (w k))) := by
     unfold Formalism.MainNotions.Gaps.EtaleWeightGaps.sec
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [map_smul]
   refine (congrArg (fun v => χ (algebraMap (RZ X la N Ω) (RZs X la N Ω gF w) v)) e).trans ?_
-  simp only [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [Algebra.smul_def, map_mul, map_mul, ← IsScalarTower.algebraMap_apply, AlgHom.commutes,
     CurveLoc.alg_rzMap_emb]

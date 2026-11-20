@@ -31,7 +31,8 @@ private theorem UpperTheory.V.Alg.M.fin_inv {O A K : Type} [CommRing O] [CommRin
     ξ = act 𝒜 (tz t⁻¹) (act 𝒜 (tz t) ξ) := by
   classical
   ext a
-  rw [← DirectSum.sum_support_decompose 𝒜 a, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← DirectSum.sum_support_decompose 𝒜 a, map_sum, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   have hm := SetLike.coe_mem (DirectSum.decompose 𝒜 a i)
   rw [fin_act 𝒜 t⁻¹ _ hm, fin_act 𝒜 t ξ hm, ← mul_assoc, ← Units.val_mul, ← mul_zpow, inv_mul_cancel,
@@ -42,7 +43,8 @@ private theorem UpperTheory.V.Alg.M.fin_onS {O A K : Type} [CommRing O] [CommRin
     (hI : I.IsHomogeneous 𝒜) (h : OnS I ξ) : OnS I (act 𝒜 (tz t) ξ) := by
   classical
   intro f hf
-  rw [← DirectSum.sum_support_decompose 𝒜 f, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← DirectSum.sum_support_decompose 𝒜 f, map_sum]
   refine Finset.sum_eq_zero fun j _ => ?_
   rw [fin_act 𝒜 _ _ (DirectSum.decompose 𝒜 f j).2, h _ (hI j hf), mul_zero]
 

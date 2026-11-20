@@ -165,7 +165,8 @@ theorem length_torsion_quot (T : Submodule O V) {n : ℕ} (b : Fin n → V)
       rw [hx]
       first
         | (change T.mkQ _ = ∑ i, c i • T.mkQ ((algebraMap O LL a)⁻¹ • b i)
-           rw [map_sum]
+           set_option synthInstance.maxHeartbeats 100000 in
+             rw [map_sum]
            simp only [map_smul])
         | simp [Submodule.Quotient.mk_sum]
     rw [he]

@@ -527,7 +527,8 @@ theorem aeval_weighted_homog {σ τ Mo : Type*} [AddCommMonoid Mo] (w : τ → M
     (hφ : ∀ v, IsWeightedHomogeneous w (φ v) (ω v)) (x : MvPolynomial σ ℤ) (κ : Mo)
     (hx : IsWeightedHomogeneous ω x κ) : IsWeightedHomogeneous w (aeval φ x) κ := by
   conv => enter [2, 2]; rw [x.as_sum]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine IsWeightedHomogeneous.sum _ _ _ fun d hd => ?_
   rw [aeval_monomial, ← hx (mem_support_iff.mp hd), Finsupp.weight_apply, MvPolynomial.algebraMap_eq]
   refine IsWeightedHomogeneous.C_mul ?_ _
@@ -628,7 +629,8 @@ theorem pow_mul_eval_homogeneous_eq {σ S : Type*} [CommRing S] (φ ψ : MvPolyn
     d ^ N * φ x = e ^ N * ψ x := by
   conv_lhs => rw [x.as_sum]
   conv_rhs => rw [x.as_sum]
-  rw [map_sum, map_sum, Finset.mul_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, Finset.mul_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun m hm => ?_
   have hN : ∑ v ∈ m.support, m v = N := by
     have := hx (mem_support_iff.mp hm)
@@ -679,7 +681,8 @@ theorem divided_power_diag_weight_vector {r : ℕ} (a : Fin r) (k : ℕ) (μ : F
   have h1 : rowDivL ℤ a a k y = ((μ a).choose k : ℤ) • y := by
     conv_lhs => rw [y.as_sum]
     conv_rhs => rw [y.as_sum]
-    rw [map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl fun d hd => ?_
     rw [rowDivL_apply, rowDiv, generator_diag_monomial, Polynomial.coeff_C_mul, Polynomial.coeff_one_add_X_pow,
       ← lgraded_weight_rowW, hy (mem_support_iff.mp hd), smul_eq_C_mul, mul_comm]
@@ -761,7 +764,8 @@ theorem weyl_le_of_stable_submodule {r : ℕ} (ν : Fin r → ℕ) (hν : Antito
         ∑ μ' ∈ S, weightedHomogeneousComponent (rowW r r) μ
           (rowDiv ℤ a b k (weightedHomogeneousComponent (rowW r r) μ' f)) := by
       conv_lhs => rw [hS]
-      rw [← rowDivL_apply, map_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← rowDivL_apply, map_sum, map_sum]
       rfl
     rw [hT]
     refine L.sum_mem fun μ' _ => ?_

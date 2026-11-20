@@ -78,9 +78,12 @@ theorem piW_mem (x : (VS D).V) : piWL X u' x ∈ Wsp X u' := by
   rw [mem_W_iff, piW_apply]
   have hz := zz_ne X u'
   refine ⟨fun b => ?_, fun b => ?_, ?_⟩
-  · simp [map_sub, map_sum, X.ee, X.ef, (X.zu_orth u' b).1, mul_ite, Finset.sum_ite_eq]
-  · simp [map_sub, map_sum, fe, X.ff, (X.zu_orth u' b).2, mul_ite, Finset.sum_ite_eq]
-  · simp [map_sub, map_sum, ze, zf, hz]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp [map_sub, map_sum, X.ee, X.ef, (X.zu_orth u' b).1, mul_ite, Finset.sum_ite_eq]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp [map_sub, map_sum, fe, X.ff, (X.zu_orth u' b).2, mul_ite, Finset.sum_ite_eq]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp [map_sub, map_sum, ze, zf, hz]
 
 theorem levi_projection_of_mem {w : (VS D).V} (hw : w ∈ Wsp X u') : piWL X u' w = w := by
   obtain ⟨h1, h2, h3⟩ := (mem_W_iff X u').1 hw

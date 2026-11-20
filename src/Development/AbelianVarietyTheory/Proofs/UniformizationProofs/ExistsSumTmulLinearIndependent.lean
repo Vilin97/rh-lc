@@ -80,7 +80,8 @@ theorem tensor_sections_eq_zero_iff : ∀ (F : Type) [Field F] (Z : Scheme.{0}) 
           (Over.w (fst (Over.mk p₁) (Over.mk p₂))).trans (Over.w (snd (Over.mk p₁) (Over.mk p₂))).symm
         obtain ⟨Φ, hΦ⟩ := key _ _ _ w z J hJ
         have h2 := congrArg Φ ht
-        rw [map_sum, map_sum, Finset.sum_congr rfl (fun i _ => hΦ (a i) (b i)),
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum, map_sum, Finset.sum_congr rfl (fun i _ => hΦ (a i) (b i)),
           Finset.sum_congr rfl (fun i _ => hΦ (e i) (c i))] at h2
         exact h2.symm.trans (H _ _ _ w z J hJ))
     rw [ht]

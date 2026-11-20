@@ -150,7 +150,8 @@ theorem smul_mem_locP {N : Submodule (𝓞 E) (Sp E n)} {a : E} (ha : IntAt P a)
 theorem apply_eq_sum {m : ℕ} (f : Sp E n →ₗ[E] Sp E m) (x : Sp E n) (i : Fin m) :
     f x i = ∑ j, x j * f (Pi.single j 1) i := by
   conv_lhs => rw [← Finset.univ_sum_single x]
-  rw [map_sum, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_apply]
   refine Finset.sum_congr rfl fun j _ => ?_
   have : (Pi.single j (x j) : Sp E n) = x j • (Pi.single j 1 : Sp E n) := by rw [← Pi.single_smul, smul_eq_mul, mul_one]
   rw [this, map_smul, Pi.smul_apply, smul_eq_mul]

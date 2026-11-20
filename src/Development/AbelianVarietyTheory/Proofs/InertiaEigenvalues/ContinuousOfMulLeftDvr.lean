@@ -43,7 +43,8 @@ theorem continuous_of_coeff_dvr {O X : Type} [CommRing O] [IsDomain O] [IsDiscre
     funext x
     apply IsFractionRing.injective O (FractionRing O)
     rw [map_mul, hf, LinearMap.pi_apply_eq_sum_univ L]
-    simp only [map_sum, map_mul, hd, Finset.mul_sum, Matrix.mulVec, dotProduct, Matrix.map_apply, smul_eq_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, hd, Finset.mul_sum, Matrix.mulVec, dotProduct, Matrix.map_apply, smul_eq_mul,
       Finset.sum_mul, Algebra.smul_def]
     refine Finset.sum_congr rfl fun p _ => Finset.sum_congr rfl fun q _ => ?_
     have : (fun j => if p = j then (1 : FractionRing O) else 0) = Pi.single p 1 := by

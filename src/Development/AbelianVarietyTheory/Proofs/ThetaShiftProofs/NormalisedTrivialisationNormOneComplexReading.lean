@@ -28,7 +28,8 @@ theorem map_real_eq_zero (φ : A.V →ₗ[ℝ] ℝ) (w : ℂ) (h : ∀ n, φ (A.
     refine Prod.ext (AddMonoidHom.ext fun x => ?_) ?_
     · rw [Prod.fst_sum, AddMonoidHom.finset_sum_apply]
       conv_lhs => rw [← b.sum_repr x]
-      simp only [map_sum, map_zsmul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_zsmul]
       refine Finset.sum_congr rfl fun i _ => ?_
       have h1 : r (b i) = ((r (b i)).re : ℂ) := Complex.ext (by simp) (by simp [hr])
       change _ = (r (b i)).re • (A.Pw w (AnArc.La.mk 0 (b.coord i).toAddMonoidHom 0)).1 x
@@ -36,7 +37,8 @@ theorem map_real_eq_zero (φ : A.V →ₗ[ℝ] ℝ) (w : ℂ) (h : ∀ n, φ (A.
       simp [mul_comm]
     · rw [Prod.snd_sum]
       simp
-  rw [e, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, map_sum]
   simp [h]
 
 def abLift : (Fin A.gB → ℂ) →ₗ[ℝ] A.V where

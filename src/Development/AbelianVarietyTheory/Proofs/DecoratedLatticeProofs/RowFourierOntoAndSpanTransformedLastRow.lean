@@ -117,7 +117,8 @@ theorem transform_onto_and_span_lastRow : ∀ (k : Type) [Field k] [ValuativeRel
     exact hc i _
   · have h1 : Ξ₂ = comapH e (comapH e.symm Ξ₂) := by
       ext x; simp only [comapH_apply, Homeomorph.symm_apply_apply]
-    rw [h1, ← hq, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h1, ← hq, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, ← hp i]
     ext x

@@ -142,7 +142,8 @@ theorem short_finite {X : Type} [TopologicalSpace X] (R : X → RiemLat E g Λ) 
   let a : Fin (2 * g) → ℝ := fun i => (b.equivFun v i : ℝ)
   have hTa : T x a = (R x).P v := by
     conv_rhs => rw [← b.sum_equivFun v]
-    simp only [T, a, map_sum, map_zsmul, Int.cast_smul_eq_zsmul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [T, a, map_sum, map_zsmul, Int.cast_smul_eq_zsmul]
   have hQa : Q (x, a) ≤ C := by
     simp only [Q, hTa]
     exact hv
@@ -184,7 +185,8 @@ theorem near_trivial {X : Type} [TopologicalSpace X] (R : X → RiemLat E g Λ) 
   have hG : G.Finite := (Set.Finite.pi' fun _ => hS).preimage fun γ _ γ' _ h => by
     ext v
     rw [← b.sum_equivFun v]
-    simp only [map_sum, map_zsmul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_zsmul]
     exact Finset.sum_congr rfl fun i _ => by rw [show γ (b i) = γ' (b i) from congrFun h i]
   have h2 : ∀ᶠ p : X × X in 𝓝 (x₀, x₀), ∀ γ ∈ G, (∀ v, ∃ e, γ v = v + M • e) →
       (∀ u v, reForm (R p.2) (γ u) (γ v) = reForm (R p.1) u v) → γ = 1 := by

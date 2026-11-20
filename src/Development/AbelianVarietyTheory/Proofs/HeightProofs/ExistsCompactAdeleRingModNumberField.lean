@@ -17,12 +17,14 @@ theorem exists_bound_sub_integer :
       = ∑ i, ((Int.fract ((integralBasis F).repr x i) : ℚ) : F) * integralBasis F i := by
     conv_lhs => enter [1]; rw [← (integralBasis F).sum_repr x]
     change _ - algebraMap (𝓞 F) F _ = _
-    rw [map_sum, ← Finset.sum_sub_distrib]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, ← Finset.sum_sub_distrib]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_zsmul, ← integralBasis_apply, Int.fract, Rat.smul_def, zsmul_eq_mul]
     push_cast
     ring
-  rw [h, ← InfinitePlace.norm_embedding_eq, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h, ← InfinitePlace.norm_embedding_eq, map_sum]
   refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun i _ => ?_)
   rw [map_mul, norm_mul, InfinitePlace.norm_embedding_eq v (integralBasis F i), map_ratCast,
     Complex.norm_ratCast]

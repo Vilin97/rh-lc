@@ -34,7 +34,8 @@ private theorem cocycle_coboundary_averaging {k G M : Type} [Field k] [Group G] 
       have : (QuotientGroup.mk (t * x.out) : G ⧸ N) = t • x := MulAction.Quotient.mk_smul_out N t x
       simp only [this, MulAction.toPerm_apply]
     conv_lhs => rw [e1]
-    simp only [hf, A, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hf, A, map_sum]
     rw [Finset.sum_add_distrib, Finset.sum_const, Finset.card_univ, Subgroup.index, Nat.card_eq_fintype_card,
       Nat.cast_smul_eq_nsmul]
   refine ⟨-((N.index : k)⁻¹ • A), fun g => ?_⟩

@@ -97,7 +97,8 @@ theorem sqRep_intertwines_of_unitary : ∀ (n : ℕ) (lam : DomWeight n) (ι : T
   have hQs : ∀ B' : GL (Fin n) ℂ,
       MvPolynomial.eval (Sum.elim (fun p => B'.val p.1 p.2) (fun p => (B'⁻¹).val p.1 p.2)) Qs = (Φ B' *ᵥ M v) k := by
     intro B'
-    simp only [Qs, map_sum, map_mul, MvPolynomial.eval_C, ← hQ, Matrix.mulVec, dotProduct]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Qs, map_sum, map_mul, MvPolynomial.eval_C, ← hQ, Matrix.mulVec, dotProduct]
   obtain ⟨d, P₂, hP₂⟩ := exists_det_pow_mul_eq_poly Qs
   set a := lam.detShift
   set m : ℕ := a.natAbs

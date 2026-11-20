@@ -207,7 +207,8 @@ theorem inv_comp (φ : Pt R 1 d) (hφ : ∀ i, constantCoeff (φ i) = 0)
   simp only [Finset.mul_sum, ← mul_assoc]
   rw [Finset.sum_comm]
   simp only [← Finset.sum_mul, K]
-  simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Finset.sum_mul, Finset.mul_sum, mul_assoc]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Finset.sum_mul, Finset.mul_sum, mul_assoc]
   exact Finset.sum_comm
 
 theorem isUnit_det_of_const {σ ι : Type} [Fintype ι] [DecidableEq ι]

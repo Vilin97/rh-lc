@@ -27,7 +27,8 @@ variable {K : Type} [Field K] [NumberField K] [StarRing K] (H : HLat K) (σ : K 
 include hc in
 theorem repr_j (x : H.V) (i : H.ι) : c.repr (j x) i = σ (H.b.repr x i) := by
   have h : j x = ∑ k, σ (H.b.repr x k) • c k := by
-    conv_lhs => rw [← H.b.sum_repr x, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [← H.b.sum_repr x, map_sum]
     simp only [LinearMap.map_smulₛₗ, hc]
   rw [h, c.repr_sum_self]
 

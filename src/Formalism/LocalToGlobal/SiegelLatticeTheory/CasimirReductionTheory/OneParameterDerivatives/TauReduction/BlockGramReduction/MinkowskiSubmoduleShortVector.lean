@@ -23,7 +23,8 @@ theorem coord_linear_comb (I : AutInst) (x : I.GA) (v : InfinitePlace I.F) {j : 
   have hw : (fun i => I.φ v ((∑ k, a k • b k) i)) =
       (Matrix.of fun i k => b k i).map (I.φ v) *ᵥ fun k => I.φ v (a k) := by
     funext i
-    simp [Matrix.mulVec, dotProduct, Finset.sum_apply, map_sum, mul_comm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Matrix.mulVec, dotProduct, Finset.sum_apply, map_sum, mul_comm]
   rw [hw, Matrix.mulVec_mulVec]
 
 theorem gramV_eq_conjTranspose_t8C_mul_t8C (I : AutInst) (x : I.GA) (v : InfinitePlace I.F) {j : ℕ} (b : Fin j → Fin I.n → I.E) :

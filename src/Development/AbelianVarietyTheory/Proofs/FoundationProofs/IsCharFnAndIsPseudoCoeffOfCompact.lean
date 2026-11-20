@@ -81,7 +81,8 @@ theorem repOp_conj_trace_eq_zero [CompleteSpace V] [CompleteSpace U] (hD : IsUni
   rw [hπ.repOp_apply (f := fun g => conj (LinearMap.trace ℂ V (D g : V →ₗ[ℂ] V)) / c)
     ((Complex.continuous_conj.comp (continuous_trace_rep hD)).div_const c)
     (HasCompactSupport.of_compactSpace _)]
-  simp only [LinearMap.trace_eq_sum_inner _ (stdOrthonormalBasis ℂ V), map_sum, inner_conj_symm, div_eq_inv_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [LinearMap.trace_eq_sum_inner _ (stdOrthonormalBasis ℂ V), map_sum, inner_conj_symm, div_eq_inv_mul,
     mul_smul, integral_smul, Finset.sum_smul, ContinuousLinearMap.coe_coe]
   have hI : ∀ e : V, Integrable (fun g => ⟪D g e, e⟫_ℂ • π g v) μ := fun e =>
     integrable_of_continuous_of_compactSpace μ

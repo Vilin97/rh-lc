@@ -109,7 +109,8 @@ theorem xB_mvB_mul (C : Ctx S T) (B : C.Bas) (hB : C.IsB B) (a k : GA D T) (b : 
     simp only [Ctx.mvB]
     rw [hm, hk]
     simp only [Matrix.mul_assoc, nonsing_inv_mul _ (isUnit_det_B C hB ρ), Matrix.mul_one]
-  simp only [Ctx.xB, rmul, mat, Equiv.symm_apply_apply, e1, Matrix.mul_apply, Matrix.of_apply, Matrix.map_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Ctx.xB, rmul, mat, Equiv.symm_apply_apply, e1, Matrix.mul_apply, Matrix.of_apply, Matrix.map_apply,
     map_sum, map_mul, Complex.conj_conj]
 
 end GlobalTheory.AdSpan.ConjHol

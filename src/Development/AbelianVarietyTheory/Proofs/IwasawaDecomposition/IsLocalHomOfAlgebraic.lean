@@ -108,7 +108,8 @@ theorem exists_matrix {R : Type} [CommRing R] [IsLocalRing R] {φ : c.F →+* R}
       simp only [sub_smul, Finset.sum_sub_distrib]
       rw [← d₁, d₂, sub_eq_zero]
       funext q
-      simp only [hM', Finset.sum_apply, Pi.smul_apply, Function.comp_apply, smul_eq_mul, map_sum, map_mul,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hM', Finset.sum_apply, Pi.smul_apply, Function.comp_apply, smul_eq_mul, map_sum, map_mul,
         Finset.mul_sum, Finset.sum_mul, mul_assoc]
       exact Finset.sum_comm)
   exact sub_eq_zero.1 (congrFun this k')

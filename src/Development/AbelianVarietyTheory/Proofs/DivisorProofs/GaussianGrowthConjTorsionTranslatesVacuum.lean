@@ -21,7 +21,8 @@ theorem fnConj_sum (D : D7) {N N' n : ℕ} (M : IntermediateField ℚ ℂ) (ρ :
   have ht : ∀ α, TaylorLogMetric.taylor D (fun z => ∑ i, (c i : ℂ) * F i z) α =
       ((∑ i, c i * ⟨_, hM i α⟩ : M) : ℂ) := by
     intro α
-    rw [GlobalTheory.ConjSeries.taylor_eq_coeff, taylorDir_sum _ _ fun i _ =>
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [GlobalTheory.ConjSeries.taylor_eq_coeff, taylorDir_sum _ _ fun i _ =>
       GlobalTheory.ProdThetaConj.an0 ((hF i).const_mul (c i : ℂ)), map_sum]
     push_cast
     refine Finset.sum_congr rfl fun i _ => ?_
@@ -33,7 +34,8 @@ theorem fnConj_sum (D : D7) {N N' n : ℕ} (M : IntermediateField ℚ ℂ) (ρ :
   rw [← hs.tsum_eq]
   refine tsum_congr fun α => ?_
   change cj M ρ _ * _ = _
-  rw [ht, hcj, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [ht, hcj, map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [(GlobalTheory.ConjSeries.taylor_fnConj D N N' M ρ (F i) (hd i) (h0 i)).1 α, map_mul, mul_assoc, ← hcj ⟨_, hM i α⟩]
 

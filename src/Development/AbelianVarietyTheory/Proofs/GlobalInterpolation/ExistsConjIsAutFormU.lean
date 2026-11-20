@@ -35,7 +35,8 @@ theorem exists_conj_isAutFormU (E : Type) [Field E] [NumberField E] [IsCMField E
       rw [← hx]
       conv_rhs => rw [hab x, map_mul, show cInf (a x).1 = 1 from (a x).2, one_mul]
     conv_lhs => rw [hab x, hv]
-    conv_rhs => rw [hab x, hdec, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_rhs => rw [hab x, hdec, map_sum]
     exact Finset.sum_congr rfl fun i _ => by rw [map_mul, hpp i γ hγ _ h1]
   refine ⟨φ', ⟨hc, fun γ hγ g => ?_, hl, hk⟩, fun g hg => key 1 (one_mem _) g (by rw [map_one]; exact hg)⟩
   have hc2 : Continuous fun x => φ' (γ * x) := hc.comp (continuous_const.mul continuous_id)

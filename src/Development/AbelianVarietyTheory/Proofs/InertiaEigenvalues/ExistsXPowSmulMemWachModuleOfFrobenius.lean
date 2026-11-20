@@ -36,7 +36,8 @@ theorem mem_N_of_jD (E : EtTie W RA RW inclR φR gR πA) (T : LocLat G Qp LL O)
       obtain ⟨a, x, hxN, rfl⟩ := hz
       obtain ⟨α, hα, -⟩ := hbA x hxN
       refine ⟨fun j => a * E.io (α j), ?_⟩
-      rw [hα, map_sum, Finset.smul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hα, map_sum, Finset.smul_sum]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [GlobalTheory.NL.FrobDenom.jD_smulA, smul_smul, map_mul]
     | zero => exact ⟨0, by simp⟩
@@ -69,7 +70,8 @@ theorem mem_N_of_jD (E : EtTie W RA RW inclR φR gR πA) (T : LocLat G Qp LL O)
   obtain ⟨β, hβ⟩ := hNA _ hx
   obtain ⟨μ, rfl⟩ := hDE x
   have hj : E.jD T (∑ j, μ j • b j) = ∑ j, E.ioE (μ j) • E.jD T (b j) := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun j _ => E.jD_smul T _ _
   obtain ⟨c, -, hc⟩ := hbW (E.jD T (∑ j, μ j • b j))
   have e1 := hc (fun j => E.ioE (μ j)) hj

@@ -39,7 +39,8 @@ theorem exists_clear {I : Type} (e : Λ →+ V) (he : Function.Injective e)
     rw [show (a : E) = algebraMap (𝓞 E) E a from rfl, ha, Algebra.smul_def]
   choose! a ha using h2
   refine ⟨d, (b.repr (e x)).support, a, nonZeroDivisors.ne_zero hd, he ?_⟩
-  rw [hs, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hs, map_sum]
   conv_lhs => rw [← b.linearCombination_repr (e x), Finsupp.linearCombination_apply, Finsupp.sum,
     Finset.smul_sum]
   refine Finset.sum_congr rfl fun i hi => ?_
@@ -55,7 +56,8 @@ theorem exists_ext (e : Λ →+ V) (he : Function.Injective e)
   have hdE : (d : E) ≠ 0 := by simpa using hd
   have h1 : (d : E) • (b.constr E fun i => e (f (xs i))) (e x) = (d : E) • e (f x) := by
     rw [← map_smul, ← hs, ← hs, ← map_smul, hx]
-    simp only [map_sum, hs, map_smul, ← hb, Module.Basis.constr_basis]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, hs, map_smul, ← hb, Module.Basis.constr_basis]
   exact smul_right_injective _ hdE h1
 
 theorem exists_extEquiv (e : Λ →+ V) (he : Function.Injective e)

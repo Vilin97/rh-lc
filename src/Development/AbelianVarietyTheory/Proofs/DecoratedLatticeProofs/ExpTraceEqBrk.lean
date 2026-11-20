@@ -31,7 +31,8 @@ theorem exp_trace_eq_brk : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : I
   have hHV : HV sc (embH (tauE D) δ (Matrix.toLin' M)) (embH (tauE D) δ (Matrix.toLin' Y)) =
       ((sc * ‖δ‖ ^ 2 : ℝ) : ℂ) * ∑ τ, tauE D τ (GlobalTheory.LatVac.hRat S T M Y) := by
     rw [GlobalTheory.LatSign.hRat_one S T h.gS h.gT]
-    simp only [HV, LinearMap.mk₂'ₛₗ_apply, hz, map_sum, map_mul, GlobalTheory.LatSign.tauE_star']
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [HV, LinearMap.mk₂'ₛₗ_apply, hz, map_sum, map_mul, GlobalTheory.LatSign.tauE_star']
     rw [Complex.ofReal_mul, ← hδ, mul_assoc]
     congr 1
     simp only [Finset.mul_sum]

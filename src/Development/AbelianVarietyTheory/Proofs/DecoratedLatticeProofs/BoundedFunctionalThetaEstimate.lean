@@ -63,7 +63,8 @@ theorem phase_real (hψ : IsStdChar D ψ (-1)) (hθ : IsInfFam θ) {m n : ℕ} (
     exact neg_zero
   have h2 := hψ.2.2 θ hθ (-(fstA D.host.F R))
   have h4 : ∀ ρ, θ ρ (infPart D t) = Matrix.trace (compAt θ ρ y ⬝ compAt θ ρ κ) := fun ρ => by
-    simp only [ht, Matrix.trace, Matrix.diag, Matrix.mul_apply, map_sum, map_mul, Matrix.map_apply, compAt]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [ht, Matrix.trace, Matrix.diag, Matrix.mul_apply, map_sum, map_mul, Matrix.map_apply, compAt]
   have h3 : ∀ ρ, θ ρ ((-(fstA D.host.F R)) ⊗ₜ[D.host.F] (1 : D.host.E)) =
       -((2 * (Matrix.trace (compAt θ ρ y ⬝ compAt θ ρ κ)).re : ℝ) : ℂ) := by
     intro ρ

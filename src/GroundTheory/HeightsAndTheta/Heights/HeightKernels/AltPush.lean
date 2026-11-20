@@ -52,7 +52,8 @@ theorem antisym_permTerm (e : ι → ℕ) (π : Equiv.Perm ι) :
 
 theorem antisym_sum {κ : Type*} (s : Finset κ) (f : κ → MvPolynomial ι ℚ) :
     antisym (∑ x ∈ s, f x) = ∑ x ∈ s, antisym (f x) := by
-  simp only [antisym, map_sum, smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [antisym, map_sum, smul_sum]
   rw [sum_comm]
 
 theorem antisym_sign_mul (a : Equiv.Perm ι) (p : MvPolynomial ι ℚ) :
@@ -68,7 +69,8 @@ theorem rename_mul_rename (α : Fin r → ℕ) (β : Fin s → ℕ) :
         rename (Sum.inr : Fin s → Fin r ⊕ Fin s) (alternant β) =
       ∑ σ : Equiv.Perm (Fin r), ∑ τ : Equiv.Perm (Fin s),
         sgnP (Equiv.Perm.sumCongr σ τ) * permTerm (Sum.elim α β) (Equiv.Perm.sumCongr σ τ) := by
-  rw [alternant_eq_sum, alternant_eq_sum, map_sum, map_sum, sum_mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [alternant_eq_sum, alternant_eq_sum, map_sum, map_sum, sum_mul_sum]
   refine sum_congr rfl fun σ _ => sum_congr rfl fun τ _ => ?_
   simp only [sgnP, permTerm, map_mul, map_intCast, map_prod, map_pow, rename_X,
     Equiv.Perm.sign_sumCongr, Units.val_mul, Int.cast_mul, Fintype.prod_sum_type,

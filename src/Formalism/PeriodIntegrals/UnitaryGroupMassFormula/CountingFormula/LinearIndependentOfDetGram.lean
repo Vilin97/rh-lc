@@ -14,7 +14,8 @@ theorem gram_comb {K V ι κ : Type} [Field K] [StarRing K] [AddCommGroup V] [Mo
     (h : V →ₗ⋆[K] V →ₗ[K] K) (v : ι → V) (A : Matrix ι κ K) (x : κ → V)
     (hx : ∀ j, x j = ∑ i, A i j • v i) : gram h x = A.conjTranspose * gram h v * A := by
   ext i j
-  simp only [gram, Matrix.of_apply, hx, Matrix.mul_apply, Matrix.conjTranspose_apply, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [gram, Matrix.of_apply, hx, Matrix.mul_apply, Matrix.conjTranspose_apply, map_sum,
     LinearMap.map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, map_smul, smul_eq_mul,
     starRingEnd_apply, Finset.sum_mul, Finset.mul_sum]
   exact Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => by ring
@@ -27,7 +28,8 @@ theorem linearIndependent_of_det_gram {K V ι : Type} [Field K] [StarRing K] [Ad
   have hv : Matrix.mulVec (gram h x) c = 0 := by
     funext j
     have hj := congrArg (h (x j)) hc
-    simp only [map_sum, map_smul, smul_eq_mul, map_zero] at hj
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, smul_eq_mul, map_zero] at hj
     simp only [Matrix.mulVec, dotProduct, gram, Matrix.of_apply, Pi.zero_apply]
     rw [← hj]
     exact Finset.sum_congr rfl fun i _ => mul_comm _ _

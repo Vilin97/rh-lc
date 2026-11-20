@@ -75,7 +75,8 @@ theorem sum_hx_hAct (x : Frame X.Ψ r)
   have hj : ∀ b, ∑ k, rowType X (idx j) (cc (h k a) * h k b) * w b j =
       rowType X (idx j) ((1 : Matrix (Fin n) (Fin n) E) a b) * w b j := by
     intro b
-    rw [← Finset.sum_mul, ← map_sum, hcol]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Finset.sum_mul, ← map_sum, hcol]
   simp only [hj, Matrix.one_apply, apply_ite, map_one, map_zero, ite_mul, _root_.one_mul, zero_mul,
     Finset.sum_ite_eq, Finset.mem_univ, if_true]
 

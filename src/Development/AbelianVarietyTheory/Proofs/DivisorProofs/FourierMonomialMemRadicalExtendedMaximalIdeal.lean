@@ -307,7 +307,8 @@ theorem map_mono_eq_zero {O : Type} [CommRing O] {bar : O → O} {q s : ℕ} {W 
     · rw [hout mu hH]
       simp
   have hrestsum : ((q₀ + 1 : ℕ) : ℕ∞) ≤ addVal R (φ (∑ mu ∈ S.erase mu₀, Φ.term y mu c)) := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact AddValuation.map_le_sum _ fun mu hmu => hrest mu hmu
   have hv₀ : addVal R (φ (Φ.term y mu₀ c)) = (q₀ : ℕ∞) := by
     rw [VPre.term, map_mul, addVal_mul, addVal_unit (hc.map φ), hvmono mu₀ hmu₀H, he₀, zero_add]

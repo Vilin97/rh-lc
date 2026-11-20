@@ -207,7 +207,8 @@ theorem normalize_esymm_yElt (k : ℕ) :
     normalize F n ((Finset.univ.val.map (yElt F (n := n))).esymm k) =
       (sqrtQ F ^ ((n : ℤ) - 1)) ^ k • polyEmb n (MvPolynomial.esymm (Fin n) ℂ k) := by
   classical
-  rw [Finset.esymm_map_val, map_sum, MvPolynomial.esymm, map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.esymm_map_val, map_sum, MvPolynomial.esymm, map_sum, Finset.smul_sum]
   refine Finset.sum_congr rfl fun t ht => ?_
   rw [map_prod, map_prod]
   simp only [normalize_yElt, polyEmb_X, smul_single', mul_one]
@@ -230,7 +231,8 @@ theorem satakeTransform_eq_sum (h : SphericalHecke μ (F := F) (n := n)) :
     satakeTransform μ h = (μ.real (integralGL F n : Set (GL (Fin n) F)) : ℂ) •
       ∑ x ∈ cosetSupport h, single (iwasawaExponent F n x.out)
         (halfModulus F (iwasawaExponent F n x.out) * (h : HeckeAlgebra μ) x.out) := by
-  rw [satakeTransform_apply, satake, map_smul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [satakeTransform_apply, satake, map_smul, map_sum]
   congr 1
   refine Finset.sum_congr rfl fun x _ => ?_
   rw [normalize_single, mul_comm]

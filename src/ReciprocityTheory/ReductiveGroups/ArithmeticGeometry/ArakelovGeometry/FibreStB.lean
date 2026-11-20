@@ -196,7 +196,8 @@ private theorem deh_eq_zero_of_mem_pts_of_deh_eq_zero (hx0 : x (e 0) ≠ 0) (F :
   have hmem : (∑ m ∈ F.support, MvPolynomial.C (AddMonoidAlgebra.coeff F m) *
       X (e 0) ^ (F.totalDegree - ∑ i ∈ m.support, m i) * ∏ i ∈ m.support, X i ^ m i) ∈ coordIdeal ℤ x := by
     show _ ∈ RingHom.ker (coneMap ℤ x)
-    rw [RingHom.mem_ker, coneMap, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [RingHom.mem_ker, coneMap, map_sum]
     have h1 : ∀ m ∈ F.support, (aeval fun i => Polynomial.C (x i) * Polynomial.X)
         (MvPolynomial.C (AddMonoidAlgebra.coeff F m) * X (e 0) ^ (F.totalDegree - ∑ i ∈ m.support, m i) *
           ∏ i ∈ m.support, X i ^ m i) =
@@ -209,7 +210,8 @@ private theorem deh_eq_zero_of_mem_pts_of_deh_eq_zero (hx0 : x (e 0) ≠ 0) (F :
       simp only [map_mul, map_pow, map_prod, MvPolynomial.aeval_C, MvPolynomial.aeval_X, mul_pow,
         Finset.prod_mul_distrib, Finset.prod_pow_eq_pow_sum, algebraMap_int_eq, eq_intCast, map_intCast]
       ring
-    rw [Finset.sum_congr rfl h1, ← Finset.sum_mul, ← map_sum Polynomial.C,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_congr rfl h1, ← Finset.sum_mul, ← map_sum Polynomial.C,
       sum_coeff_homogenize_eq_pow_mul_eval₂ F (fun i => x i / x (e 0)) x (x (e 0)) (fun i => rfl) hx0 _ le_rfl, ← deh_apply, hF,
       mul_zero, map_zero, zero_mul]
   have h2 := hz'.2 _ hmem

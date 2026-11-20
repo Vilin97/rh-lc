@@ -100,7 +100,8 @@ theorem exists_dual {K R : Type} [CommRing K] [CommRing R] [Algebra K R]
   have h3 := congrFun this r
   rw [Finset.sum_apply] at h3
   refine Eq.trans ?_ h3.symm
-  rw [← hD', ← D'.liftKaehlerDifferential_comp_D r, ← bΩ.sum_repr (KaehlerDifferential.D K R r), map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hD', ← D'.liftKaehlerDifferential_comp_D r, ← bΩ.sum_repr (KaehlerDifferential.D K R r), map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [map_smul, hb, D'.liftKaehlerDifferential_comp_D, hD']
   simp [hd', mul_comm]

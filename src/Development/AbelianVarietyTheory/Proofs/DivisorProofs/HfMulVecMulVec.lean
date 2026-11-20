@@ -56,7 +56,8 @@ theorem hf_neg_right (v w : Fin n → R) : hf c J v (-w) = -hf c J v w := by
 
 theorem hf_herm (hc : ∀ r, c (c r) = r) (hJ : ∀ i j, c (J j i) = J i j) (v w : Fin n → R) :
     hf c J w v = c (hf c J v w) := by
-  simp only [hf, dotProduct, Matrix.mulVec, map_sum, map_mul, hc, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hf, dotProduct, Matrix.mulVec, map_sum, map_mul, hc, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   rw [hJ]; ring
@@ -165,7 +166,8 @@ theorem eich_map {S : Type} [CommRing S] (f : R →+* S) (c' : S →+* S) (hf' :
     (x : Fin n → R) (ι : Matrix (Fin n) (Fin m) R) (a : R) (v : Fin m → R) :
     (eich c J x ι a v).map f = eich c' (J.map f) (fun i => f (x i)) (ι.map f) (f a) (fun i => f (v i)) := by
   ext i j
-  simp only [eich, Matrix.map_apply, Matrix.add_apply, Matrix.sub_apply, Matrix.one_apply, Matrix.vecMulVec_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [eich, Matrix.map_apply, Matrix.add_apply, Matrix.sub_apply, Matrix.one_apply, Matrix.vecMulVec_apply,
     Matrix.mulVec, dotProduct, map_add, map_sub, map_mul, map_sum, Pi.add_apply, Pi.smul_apply, smul_eq_mul, hf']
   split_ifs <;> simp
 

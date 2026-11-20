@@ -287,7 +287,8 @@ variable {K : Type} [NormedField K] [IsUltrametricDist K] {σ : Type} in
 private lemma le_finset_sum {ι : Type*} {c : ℝ} (hc : 0 ≤ c) (t : Finset ι)
     (f : ι → MvPowerSeries σ K) (h : ∀ i ∈ t, _root_.GlobalTheory.BddAlg.Le c (f i)) :
     _root_.GlobalTheory.BddAlg.Le c (∑ i ∈ t, f i) := fun ν => by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg hc fun i hi => h i hi ν
 
 variable {K : Type} [NormedField K] [IsUltrametricDist K] {σ : Type} in

@@ -239,7 +239,8 @@ theorem isT_sum {V : VF C} {d : ℕ} {I₁ J₁ : Type} [Fintype I₁] [Fintype 
       rw [Finset.coe_range, Set.mem_Iio]
       by_contra h
       exact hn (by rw [hlow n (by omega), smul_zero])
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [key]
   rw [Finset.sum_comm, MvPowerSeries.coeff_X]
   exact ht.2 x μ
@@ -434,7 +435,8 @@ theorem sys_P (Y : FBChart C V O dd) (p : PairData Y d I) {g : Fin 2} (hg : (Y.r
       show _ = MvPowerSeries.subst (fun _ : Unit => (MvPowerSeries.X c : MvPowerSeries (I g) C)) _
       rw [MvPowerSeries.subst_comp_subst_apply (MvPowerSeries.hasSubst_of_constantCoeff_zero (hγ0 c)) (hXc c)]
       rfl
-    rw [e1, hlog c i, ← PowerSeries.coe_substAlgHom
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e1, hlog c i, ← PowerSeries.coe_substAlgHom
       (PowerSeries.HasSubst.of_constantCoeff_zero (MvPowerSeries.constantCoeff_X c)), map_sum]
     simp only [map_smul]
   set P : Fin dd → MvPowerSeries (I g) C := gsum Y.B.G.F Γ Finset.univ.toList with hPdef
@@ -449,8 +451,10 @@ theorem sys_P (Y : FBChart C V O dd) (p : PairData Y d I) {g : Fin 2} (hg : (Y.r
   ·
     intro j c
     have hlin := coeff_single_subst_lin P hP0 (un1 (Y.lg j)) j (Y.raw_lin p j) c
-    rw [← hlin, hPlg j, map_sum]
-    simp only [map_sum, MvPowerSeries.coeff_smul, coeff_single_substX_tyS hl, mul_ite, mul_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hlin, hPlg j, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, MvPowerSeries.coeff_smul, coeff_single_substX_tyS hl, mul_ite, mul_zero]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun c' _ => ?_
     rw [Finset.sum_ite_eq']
@@ -478,8 +482,10 @@ theorem sys_P (Y : FBChart C V O dd) (p : PairData Y d I) {g : Fin 2} (hg : (Y.r
         congr 1
         funext u
         rw [MvPowerSeries.subst_X hts]
-      rw [e1, hPlg i, ← MvPowerSeries.coe_substAlgHom hts, map_sum]
-      simp only [map_sum, map_smul, MvPowerSeries.coe_substAlgHom hts, e2]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [e1, hPlg i, ← MvPowerSeries.coe_substAlgHom hts, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, MvPowerSeries.coe_substAlgHom hts, e2]
       rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun c' _ => ?_
       rw [← Finset.smul_sum, isT_sum S ht c']

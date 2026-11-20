@@ -63,7 +63,8 @@ theorem map_mem_homLat_of_mem_YYl : ∀ (D : D7) (P : HeightOneSpectrum (𝓞 D.
         obtain ⟨x, hx, rfl⟩ := hz0
         refine Submodule.subset_span ⟨A *ᵥ x, hA0 x hx, ?_⟩
         funext i
-        simp [Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum, map_mul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp [Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum, map_mul]
       | zero => rw [Matrix.mulVec_zero]; exact Submodule.zero_mem _
       | add z z' _ _ hz hz' => rw [Matrix.mulVec_add]; exact Submodule.add_mem _ hz hz'
       | smul c z _ hz => rw [Matrix.mulVec_smul]; exact Submodule.smul_mem _ c hz

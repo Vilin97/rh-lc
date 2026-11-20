@@ -74,7 +74,8 @@ theorem linIndep {k : ℕ} (V : Fin k → Submodule ℂ (Sm E N)) (hV : ∀ i, I
       by_contra hx0
       exact hn i j hij (isoV_of_map (hV i) (hV j) f hf hfV ⟨x, hx, hx0⟩)) i
   have h := congrArg p hs
-  rw [map_sum, map_zero, Finset.sum_eq_single i (fun j _ hji => by rw [map_smul, hp0 j hji _ (hφV j), smul_zero])
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_zero, Finset.sum_eq_single i (fun j _ hji => by rw [map_smul, hp0 j hji _ (hφV j), smul_zero])
     (fun h' => absurd hi h'), map_smul, hpid _ (hφV i)] at h
   exact (smul_eq_zero.1 h).resolve_right (hφ0 i)
 

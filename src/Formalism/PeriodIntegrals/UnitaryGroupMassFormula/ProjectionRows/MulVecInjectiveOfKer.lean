@@ -208,7 +208,8 @@ lemma frame_majAt (A : HLat K) (v : InfinitePlace K) :
 lemma h_expand (A : HLat K) (h : A.V →ₗ⋆[K] A.V →ₗ[K] K) (x y : A.V) :
     h x y = ∑ k, ∑ l, star (A.b.repr x k) * A.b.repr y l * h (A.b k) (A.b l) := by
   conv_lhs => rw [← A.b.sum_repr x, ← A.b.sum_repr y]
-  simp only [map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, map_smul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, map_smul,
     smul_eq_mul, starRingEnd_apply, Finset.mul_sum]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
@@ -217,7 +218,8 @@ lemma hmatrix_eq (A : HLat K) (h : A.V →ₗ⋆[K] A.V →ₗ[K] K) (φ : K →
     (f : Fin m → A.V) (g : Fin m' → A.V) :
     (Matrix.of fun i j => φ (h (f i) (g j))) = (cmat A (rho φ) f)ᴴ * hmat A h φ * cmat A φ g := by
   ext i j
-  simp only [of_apply, h_expand A h (f i) (g j), map_sum, map_mul, Matrix.mul_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [of_apply, h_expand A h (f i) (g j), map_sum, map_mul, Matrix.mul_apply,
     conjTranspose_apply, cmat, hmat, rho_apply, star_star, Finset.sum_mul]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
@@ -253,7 +255,8 @@ omit hC3 in
 lemma gmat_conj (φ : K →+* ℂ) {m : ℕ} (f : Fin m → A.V) :
     gmat A h (ComplexEmbedding.conjugate φ) f = (gmat A h φ f).map (starRingEnd ℂ) := by
   ext i j
-  simp [gmat, cmat, hmat, Matrix.mul_apply, conjTranspose_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [gmat, cmat, hmat, Matrix.mul_apply, conjTranspose_apply, map_sum]
 
 omit hC3 in
 lemma gramPl_psd (v : InfinitePlace K) {m : ℕ} (f : Fin m → A.V) :
@@ -316,7 +319,8 @@ lemma cmat_injective (A : HLat K) (σ : K →+* ℂ) {m : ℕ} (f : Fin m → A.
   set Y : Matrix A.ι (Fin m) K := Matrix.of fun k i => A.b.repr (f i) k with hY
   have hYc : ∀ c : Fin m → K, Y *ᵥ c = ⇑(A.b.repr (∑ i, c i • f i)) := by
     intro c; ext k
-    simp [hY, Matrix.mulVec, dotProduct, map_sum, Finsupp.finsetSum_apply, mul_comm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [hY, Matrix.mulVec, dotProduct, map_sum, Finsupp.finsetSum_apply, mul_comm]
   have hker : LinearMap.ker (Matrix.mulVecLin Y) = ⊥ := by
     rw [LinearMap.ker_eq_bot']
     intro c hc
@@ -380,12 +384,15 @@ lemma cmat_rho_range (A : HLat K) (e : Module.End K A.V) (he : e * e = e)
     rw [← LinearMap.toMatrix_mulVec_repr A.b A.b e]
     simp [Matrix.mulVec, dotProduct, LinearMap.toMatrix_apply]
   have h2 : ∀ l, A.b.repr (e (A.b l)) k = ∑ j, c l j * A.b.repr (w j) k := fun l => by
-    rw [← hc l]; simp [map_sum, Finsupp.finsetSum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hc l]; simp [map_sum, Finsupp.finsetSum_apply]
   have h3 : ∀ l, rho σ (A.b.repr (e (A.b l)) k) = σ (A.b.repr (e (A.b l)) k) := fun l => by
     rw [rho_apply, hCe k l σ, star_star]
   simp only [cmat, of_apply, Matrix.mul_apply]
-  rw [h1, map_sum]
-  simp_rw [map_mul, h3, h2, map_sum, map_mul, Finset.sum_mul, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h1, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp_rw [map_mul, h3, h2, map_sum, map_mul, Finset.sum_mul, Finset.mul_sum]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
 

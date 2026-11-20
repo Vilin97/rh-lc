@@ -130,7 +130,8 @@ theorem columns_iff (sp : A ≃+* K × K) (I : Subring A) (Λ : Submodule I (Fin
     have hs1 : φ ∘ s = fr *ᵥ (fun b => if b < i then M b i else 0) := by
       funext a
       show φ (s a) = _
-      rw [hs, Finset.sum_apply, map_sum, Finset.sum_filter]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hs, Finset.sum_apply, map_sum, Finset.sum_filter]
       simp only [Matrix.mulVec, dotProduct]
       refine Finset.sum_congr rfl fun b _ => ?_
       by_cases hb : b < i
@@ -141,7 +142,8 @@ theorem columns_iff (sp : A ≃+* K × K) (I : Subring A) (Λ : Submodule I (Fin
       · rw [if_neg hb, if_neg hb, mul_zero]
     have hs2 : ∀ a, ψ (s a) = 0 := by
       intro a
-      rw [hs, Finset.sum_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hs, Finset.sum_apply, map_sum]
       refine Finset.sum_eq_zero fun j _ => ?_
       show ψ ((sp.symm (M j i, 0) : A) * c j a) = 0
       rw [map_mul, hψa (c j a), hc2, mul_zero]

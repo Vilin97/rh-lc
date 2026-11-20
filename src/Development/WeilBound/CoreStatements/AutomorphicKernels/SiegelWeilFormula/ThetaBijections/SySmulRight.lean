@@ -95,7 +95,8 @@ theorem sy_smul_right (a : AF F) (w w' : Matrix (Fin d.m) (Fin d.n ⊕ Fin d.n) 
 
 theorem sy_sum_left {ι : Type} (s : Finset ι) (a : ι → AF F) (v : ι → Matrix (Fin d.m) (Fin d.n ⊕ Fin d.n) (AE F E))
     (w' : Matrix (Fin d.m) (Fin d.n ⊕ Fin d.n) (AE F E)) : sy d (∑ i ∈ s, a i • v i) w' = ∑ i ∈ s, a i * sy d (v i) w' := by
-  simp only [sy_eq, map_sum, map_smul, om, Prod.fst_sum, Prod.snd_sum, Prod.smul_fst, Prod.smul_snd, sum_dotProduct,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [sy_eq, map_sum, map_smul, om, Prod.fst_sum, Prod.snd_sum, Prod.smul_fst, Prod.smul_snd, sum_dotProduct,
     dotProduct_sum, smul_dotProduct, dotProduct_smul, smul_eq_mul, Finset.mul_sum, ← Finset.sum_sub_distrib]
   refine Finset.sum_congr rfl fun i _ => ?_
   ring

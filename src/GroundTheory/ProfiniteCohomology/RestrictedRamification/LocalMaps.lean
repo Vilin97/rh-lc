@@ -60,10 +60,12 @@ theorem continuous_decompHom [Normal K E] (ι : E →ₐ[K] Ωv) : Continuous (d
   intro y hy
   have hy' : y = ∑ i, b.repr ⟨y, hy⟩ i • (b i : E) := by
     have := congrArg L.val (b.sum_repr ⟨y, hy⟩)
-    rw [map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at this
     simp only [map_smul] at this
     exact this.symm
-  rw [hy', map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hy', map_sum]
   simp only [map_smul, hb]
 
 theorem exists_eq_comp_of_normal [Normal K E] (ι ι' : E →ₐ[K] Ωv) :

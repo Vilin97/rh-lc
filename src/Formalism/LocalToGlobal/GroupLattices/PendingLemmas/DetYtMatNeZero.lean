@@ -210,7 +210,8 @@ theorem evPt_YtMat (j : ℕ) (v : X.Pl) (s : Fin (X.G.P.n' v)) : (evPt X Kc j).m
     simp only [RingHom.mapMatrix_apply, Matrix.map_apply] at this
     rw [this, ← RingHom.mapMatrix_apply, evPt_yMat, Matrix.adjugate_one]
   ext t a
-  simp only [RingHom.mapMatrix_apply, Matrix.map_apply, YtMat, Matrix.mul_apply, Matrix.submatrix_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [RingHom.mapMatrix_apply, Matrix.map_apply, YtMat, Matrix.mul_apply, Matrix.submatrix_apply,
     Matrix.transpose_apply, id, map_sum, map_mul, hadj, dMat, Matrix.one_apply]
   simp [evPt, (shiftI_injective X j).eq_iff, eq_comm]
 

@@ -17,7 +17,8 @@ theorem form_conj_symm (σ : A →+* A) (hσ : ∀ x, σ (σ x) = x) {J : Matrix
   have hJij : ∀ i j, σ (J i j) = J j i := fun i j => by
     have := congrFun (congrFun hJ j) i
     simpa [cT] using this
-  simp only [form, hform, map_sum, map_mul, hσ, hJij]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, hform, map_sum, map_mul, hσ, hJij]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   ring

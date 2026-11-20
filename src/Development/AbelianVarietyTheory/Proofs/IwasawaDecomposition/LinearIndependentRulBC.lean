@@ -74,7 +74,8 @@ theorem linearIndependent_rulBC {a : (E →+* ℂ) × ℕ → ℕ} {n m : ℕ} {
   have h4 : (0 : TensorProduct c₀.F c.F p.R) = ∑ j, TensorProduct.tmul c₀.F (g j) (v j p y) :=
     h1.trans (Finset.sum_congr rfl fun j _ => h3 j)
   have h5 := congrArg (coord lam p.R) h4
-  rw [map_zero, map_sum] at h5
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_zero, map_sum] at h5
   simp only [coord_tmul] at h5
   rw [Finset.sum_apply, Finset.sum_apply]
   exact h5.symm

@@ -87,7 +87,8 @@ lemma subD_X_hom {K : Type} [Field K] (v : ι × Fin a × Fin a) :
 lemma subD_hom {K : Type} [Field K] (P : Formalism.L2.DIV.Pol K ι a) (n : ι → ℕ)
     (hP : IsWeightedHomogeneous (wF ι a) P n) :
     IsWeightedHomogeneous (wD ι a b) (subD K ι a b P) n := by
-  rw [P.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [P.as_sum, map_sum]
   apply IsWeightedHomogeneous.sum
   intro e he
   have hw : weight (wF ι a) e = n := hP (MvPolynomial.mem_support_iff.mp he)
@@ -102,7 +103,8 @@ lemma jetLin_congr {K : Type} [Field K] (J₁ J₂ : (DVar ι a b →₀ ℕ) �
     (Q : MvPolynomial ((ι × Fin b × Fin b) ⊕ DVar ι a b) K) (hQ : IsWeightedHomogeneous (wD ι a b) Q n)
     (hJ : ∀ m : DVar ι a b →₀ ℕ, (∀ τ, ∑ β, ∑ α, m (τ, β, α) = n τ) → J₁ m = J₂ m) :
     jetLin J₁ Q = jetLin J₂ Q := by
-  rw [Q.as_sum, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Q.as_sum, map_sum, map_sum]
   refine Finset.sum_congr rfl fun u hu => ?_
   rw [jetLin_monomial, jetLin_monomial, hJ]
   intro τ

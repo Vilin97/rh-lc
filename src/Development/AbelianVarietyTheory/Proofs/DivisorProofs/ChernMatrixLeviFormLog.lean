@@ -22,7 +22,8 @@ theorem sum_mul_apply_single_mul_conj {D : ℕ} (B : V D →L[ℂ] V D →L⋆[�
     ext i
     simp [Pi.single_apply, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq']
   conv_rhs => rw [hξ]
-  simp only [map_sum, ContinuousLinearMap.sum_apply, map_smul, map_smulₛₗ, ContinuousLinearMap.smul_apply, smul_eq_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, ContinuousLinearMap.sum_apply, map_smul, map_smulₛₗ, ContinuousLinearMap.smul_apply, smul_eq_mul,
     Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun l _ => ?_

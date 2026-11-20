@@ -28,7 +28,8 @@ theorem lin_iff {X Y : Scheme.{0}} {L : LB X} (hL : L.IsLB) {K : Type} [Fintype 
       gs r z (LB.wchart L φ j) (∑ i, constFn p (LB.wchart L φ j) (a i) * (show Γ(Y, LB.wchart L φ j) from (t i).f j)) =
         ∑ i, cst (r ≫ p) z (a i) * gs r z (LB.wchart L φ j) ((t i).f j) := fun Z r z j hm => by
     have e : ∀ (b : I → Γ(Y, LB.wchart L φ j)), gs r z _ (∑ i, b i) = ∑ i, gs r z _ (b i) := fun b => by
-      simp only [gs_eq r z _ hm, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [gs_eq r z _ hm, map_sum]
     rw [e]
     exact Finset.sum_congr rfl fun i _ => (gs_mul r z _ hm _ _).trans
       (congrArg₂ (· * ·) (gs_constFn p _ r z hm _) rfl)

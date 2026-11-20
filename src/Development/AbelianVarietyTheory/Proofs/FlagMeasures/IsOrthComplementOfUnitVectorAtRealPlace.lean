@@ -45,7 +45,8 @@ theorem isPerp_at_place (I : AutInst) (D : Sib I) (s : Bool) (x : Fin I.n → I.
     have e : ((sgn ℝ s : ℝ) : ℂ) = I.φ v (sgn I.E s) := by
       unfold sgn; split_ifs <;> simp
     rw [e, ← this]
-    simp [dotProduct, mulVec, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [dotProduct, mulVec, map_sum]
   · rw [infVec, infMat, star_mulVec, vecMul_vecMul]
     have e : ((I.P v)⁻¹)ᴴ * (Formalism.REAL.Jm (I.ε v) * ((I.P v)⁻¹ * A.map (I.φ v) * D.P v))
         = (I.J * A).map (I.φ v) * D.P v := by
@@ -54,7 +55,8 @@ theorem isPerp_at_place (I : AutInst) (D : Sib I) (s : Bool) (x : Fin I.n → I.
     have e2 : (fun i => I.φ v (star x i)) ᵥ* (I.J * A).map (I.φ v) = 0 := by
       funext j
       have := congrArg (I.φ v) (congrFun h2 j)
-      simpa [vecMul, dotProduct, map_sum] using this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa [vecMul, dotProduct, map_sum] using this
     rw [e2, zero_vecMul]
   · rw [← D.P_spec v, ← h3, Matrix.map_mul, Matrix.map_mul, ← hF, infMat,
       Matrix.conjTranspose_map (I.φ v) hφ, Matrix.conjTranspose_mul, Matrix.conjTranspose_mul]

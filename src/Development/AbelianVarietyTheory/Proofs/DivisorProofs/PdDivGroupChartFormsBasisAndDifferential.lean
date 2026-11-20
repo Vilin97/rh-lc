@@ -131,7 +131,8 @@ theorem val_comb (a : Fin d → O) (n : ℕ) :
 
 theorem res_lvl (n : ℕ) (a : Fin d → O) :
     PDiv.cotMap (G.res n) (lvl c (n + 1) a) = lvl c n a := by
-  simp [lvl_apply, map_sum, map_smul, PDiv.cotMap_d, c.res]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [lvl_apply, map_sum, map_smul, PDiv.cotMap_d, c.res]
 
 theorem lvl_le (w : G.omega) (a : Fin d → O) {n k : ℕ} (h : n ≤ k)
     (hk : lvl c k a = w.1 k) : lvl c n a = w.1 n := by
@@ -148,9 +149,11 @@ theorem exists_level_dvd [IsAdicComplete (Ideal.span {(p : O)}) O] (m : ℕ) :
   have hx : ∀ j, Bialgebra.counitAlgHom O (G.A n) (c.x n j) = 0 := fun j => by
     simpa using c.aug n j
   have hεy : Bialgebra.counitAlgHom O (G.A n) y = 0 := by
-    simp [hy0, map_sum, map_smul, hx]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [hy0, map_sum, map_smul, hx]
   have hy : PDiv.dUnit O y = 0 := by
-    rw [hy0, PDiv.dUnit, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hy0, PDiv.dUnit, map_sum]
     simpa [map_smul, lvl_apply] using ha
   rw [PDiv.dUnit, AugCot.d_eq_zero_iff, hεy, map_zero, sub_zero] at hy
   have hI : RingHom.ker (Bialgebra.counitAlgHom O (G.A n)) ≤
@@ -166,7 +169,8 @@ theorem exists_level_dvd [IsAdicComplete (Ideal.span {(p : O)}) O] (m : ℕ) :
     exact Ideal.pow_right_mono hI 2 hy
   obtain ⟨h, hh, hev⟩ := (Ideal.mem_map_iff_of_surjective _ (c.surj n)).1 hy2
   have hz : c.ev n ((∑ j, a j • X j) - h) = 0 := by
-    rw [map_sub, hev, map_sum, hy0]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, hev, map_sum, hy0]
     simp [map_smul, (c.isEval n).1]
   have := hn _ hz (Finsupp.single i 1) (by simp)
   rw [map_sub, coeff_single_of_mem_sq hh, sub_zero] at this

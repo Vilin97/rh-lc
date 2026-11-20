@@ -50,7 +50,8 @@ private theorem eventually_congruent_mod_l_pow {l : ℕ} [Fact l.Prime] {X V M :
     have h3 : j m = Finsupp.linearCombination ℚ_[l] (j ∘ b)
         ((Finsupp.linearEquivFunOnFinite ℚ_[l] ℚ_[l] _).symm fun i => algebraMap ℤ_[l] ℚ_[l] (b.repr m i)) := by
       rw [Finsupp.linearCombination_eq_fintype_linearCombination_apply, Fintype.linearCombination_apply]
-      conv_lhs => rw [← b.sum_repr m, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        conv_lhs => rw [← b.sum_repr m, map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_smul, algebraMap_smul]
       rfl

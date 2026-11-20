@@ -45,7 +45,8 @@ namespace GlobalTheory.HTUniv
 theorem coord {k : Type} [Field k] {d : ℕ} (c : (Fin d → k) →ₗ[k] k) (v : Fin d → k) :
     c v = ∑ j, v j * c (Pi.single j 1) := by
   conv_lhs => rw [← Finset.univ_sum_single v]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   have e : Pi.single j (v j) = v j • (Pi.single j (1 : k) : Fin d → k) := by
     ext i; simp [Pi.single_apply]

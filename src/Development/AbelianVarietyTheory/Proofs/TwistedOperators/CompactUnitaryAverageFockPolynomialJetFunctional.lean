@@ -66,7 +66,8 @@ theorem integrable_term {a b : ℕ} {K : Type} [Group K] [TopologicalSpace K] [I
   have hp : ∀ g : ι → Matrix (Fin a) (Fin a) ℂ, Λ (mvZ g (fun _ => 1) Q) = eval (fun w => g w.1 w.2.1 w.2.2) p := by
     intro g
     rw [GlobalTheory.KJAvg.mvZ_one_eq_map_univSubst, GlobalTheory.KJAvg.linear_eq_sum_coeff Λ U.support _ (support_map_subset _ _)]
-    simp only [hp', map_sum, map_mul, eval_C, coeff_map]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hp', map_sum, map_mul, eval_C, coeff_map]
     exact Finset.sum_congr rfl fun m _ => mul_comm _ _
   have e : (fun k => Λ (mvZ (fun τ => (r k τ)⁻¹) (fun _ => 1) Q) * evalAt (fun τ => r k τ * y τ) F) =
       fun k => eval (fun w => r k⁻¹ w.1 w.2.1 w.2.2) p * evalAt (fun τ => r k τ * y τ) F := by

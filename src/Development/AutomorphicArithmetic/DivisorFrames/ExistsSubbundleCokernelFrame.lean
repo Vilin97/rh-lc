@@ -16,7 +16,8 @@ private theorem UpperTheory.frame_defines_endomorphism {X : Scheme.{0}} {E : X.M
     obtain ⟨c, rfl⟩ := (he V le_top).2 s
     change (he.basis (le_top : W ≤ ⊤)).constr ℕ (fun j => resM E (le_top : W ≤ ⊤) (q j)) (resM E h _) =
       resM E h _
-    simp only [Fintype.linearCombination_apply, map_sum, Twist.resM_smul, Twist.resM_resM,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Fintype.linearCombination_apply, map_sum, Twist.resM_smul, Twist.resM_resM,
       map_smul, key]
   · rw [LB.homOfLinear_app]
     have := (he.basis (le_top : (⊤ : X.Opens) ≤ ⊤)).constr_basis ℕ
@@ -38,30 +39,35 @@ theorem UpperTheory.exists_subbundle_cokernel_frame :
   have h2 (i : Fin m) : (cokernel.π (Sub.ker p).incl).app ⊤ (e (Sum.inl i)) =
       ∑ k, a i k • (cokernel.π (Sub.ker p).incl).app ⊤ (e (Sum.inr k)) := by
     simp only [← Scheme.Modules.Hom.app_smul]
-    rw [← map_sum, ← sub_eq_zero, ← map_sub, hz, map_sub, hl, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, ← sub_eq_zero, ← map_sub, hz, map_sub, hl, map_sum]
     simp only [Scheme.Modules.Hom.app_smul, hr, sub_self]
   refine ⟨Sub.ker p, ?_, h2⟩
   have hgen (V : X.Opens) (h : V ≤ ⊤) (s : Γ(E, V)) : (cokernel.π (Sub.ker p).incl).app V s ∈
       Submodule.span Γ(X, V) (Set.range fun k =>
         resM _ h ((cokernel.π (Sub.ker p).incl).app ⊤ (e (Sum.inr k)))) := by
     obtain ⟨c, rfl⟩ := (he V h).2 s
-    rw [Fintype.linearCombination_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Fintype.linearCombination_apply, map_sum]
     refine Submodule.sum_mem _ fun j _ => ?_
     rw [Scheme.Modules.Hom.app_smul, Twist.app_resM]
     refine Submodule.smul_mem _ _ ?_
     rcases j with i | k
-    · rw [h2, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [h2, map_sum]
       refine Submodule.sum_mem _ fun k _ => ?_
       rw [Twist.resM_smul]
       exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨k, rfl⟩)
     · exact Submodule.subset_span ⟨k, rfl⟩
   have hpp (V : X.Opens) (s : Γ(E, V)) : p.app V (p.app V s) = p.app V s := by
     obtain ⟨c, rfl⟩ := (he V le_top).2 s
-    simp only [Fintype.linearCombination_apply, map_sum, Scheme.Modules.Hom.app_smul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Fintype.linearCombination_apply, map_sum, Scheme.Modules.Hom.app_smul,
       Twist.app_resM]
     refine Finset.sum_congr rfl fun j _ => ?_
     rcases j with i | k
-    · simp only [hl, map_sum, Scheme.Modules.Hom.app_smul, hr]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp only [hl, map_sum, Scheme.Modules.Hom.app_smul, hr]
     · simp only [hr]
   have h0 : (Sub.ker p).incl ≫ p = 0 := by
     refine Scheme.Modules.hom_ext _ _ fun V => ?_
@@ -80,7 +86,8 @@ theorem UpperTheory.exists_subbundle_cokernel_frame :
     intro c hc
     apply hli c
     simp only [← Twist.app_resM, ← Scheme.Modules.Hom.app_smul] at hc
-    rw [← map_sum, hz, map_sum] at hc
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, hz, map_sum] at hc
     simpa only [Scheme.Modules.Hom.app_smul, Twist.app_resM, hr, Function.comp_apply] using hc
   · have := hgen V h ((cokernel.desc _ p h0).app V t)
     rwa [QCoh.app_app, h1] at this

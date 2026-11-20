@@ -45,7 +45,8 @@ theorem UpperTheory.ConvolutionTheory.H.hlEval :
     exact h1.ne (σ.injective (hz (Units.ext h)))
   refine ⟨hne, ?_⟩
   have h1 := congrArg (evalAt z) (alternant_mul_altQuot (monomial a * hlFactor n t))
-  rw [map_mul, he_alt, antisymm_apply, map_sum] at h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_mul, he_alt, antisymm_apply, map_sum] at h1
   have h0 : evalAt z (dPol n 1) ≠ 0 := hne 1
   refine mul_left_cancel₀ h0 (h1.trans ?_)
   rw [Finset.mul_sum]

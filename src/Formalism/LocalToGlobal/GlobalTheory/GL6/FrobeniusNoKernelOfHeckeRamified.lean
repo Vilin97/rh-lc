@@ -169,7 +169,8 @@ theorem frobenius_diamond_character_sum (i : ℕ) (v : (D.mem u).A.vT) (φ : For
   refine Finset.sum_congr rfl (fun g _ => ?_)
   rw [LinearMap.comp_apply, LinearMap.proj_apply]
   unfold Formalism.MainNotions.product_first_zeroth_parts.Gs
-  rw [LinearMap.sum_apply, Finset.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [LinearMap.sum_apply, Finset.sum_apply, map_sum]
   refine Finset.sum_congr rfl (fun a _ => ?_)
   rw [LinearMap.smul_apply, Pi.smul_apply, map_smul]
   rfl
@@ -211,7 +212,8 @@ theorem frobenius_eq_D_gauss_of_dilation (Tf : FormsTied D u) (hL : DnDilLoc Tf)
         (D.fm u).dnT i v c ((a : (D.mem u).A.Fv v) • g) (φ ((D.fm u).dn i v c ((a : (D.mem u).A.Fv v) • g))) =
           (D.fm u).dnT i v c g (Formalism.MainNotions.product_first_zeroth_parts.dia D u i v a φ ((D.fm u).dn i v c g)) :=
       fun a => (down_transport_diamond Tf hL i hi v c g hg a φ hφF).symm
-    rw [Finset.sum_congr rfl (fun a _ => e a), ← map_sum, sum_diamond_eq_norm, hN]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_congr rfl (fun a _ => e a), ← map_sum, sum_diamond_eq_norm, hN]
     exact map_zero _
   convert character_sum_nonzero_duals ((D.mem u).A.psiT v) ((D.fm u).te i v c)
     (fun g => (D.fm u).dnT i v c g (φ ((D.fm u).dn i v c g))) hZ
@@ -244,7 +246,8 @@ theorem gauss_sum_preserves_ramified (Tf : FormsTied D u) (i : ℕ) (hi : i ≤ 
     have e : Formalism.MainNotions.product_first_zeroth_parts.Nm D u i v' (Formalism.MainNotions.product_first_zeroth_parts.Gs D u i v φ) =
         Formalism.MainNotions.product_first_zeroth_parts.Gs D u i v (Formalism.MainNotions.product_first_zeroth_parts.Nm D u i v' φ) := by
       unfold Formalism.MainNotions.product_first_zeroth_parts.Nm Formalism.MainNotions.product_first_zeroth_parts.Gs
-      simp only [LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, Finset.smul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, Finset.smul_sum]
       rw [Finset.sum_comm]
       exact Finset.sum_congr rfl (fun a _ => Finset.sum_congr rfl (fun b _ => by rw [hc b a]))
     rw [e, hN v', map_zero]
@@ -277,21 +280,24 @@ theorem class_form_sum_left {ι : Type} (s : Finset ι) (i : ℕ) (x : ι → Fo
   unfold Formalism.BasicNotions.MemberForms.ipC
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl (fun d _ => ?_)
-  rw [Finset.sum_apply, map_sum, LinearMap.sum_apply, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.sum_apply, map_sum, LinearMap.sum_apply, Finset.mul_sum]
 
 theorem class_form_sum_right {ι : Type} (s : Finset ι) (i : ℕ) (x : Formalism.MainNotions.product_first_zeroth_parts.Fn D u i) (y : ι → Formalism.MainNotions.product_first_zeroth_parts.Fn D u i) :
     (D.fm u).ipC i x (∑ a ∈ s, y a) = ∑ a ∈ s, (D.fm u).ipC i x (y a) := by
   unfold Formalism.BasicNotions.MemberForms.ipC
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl (fun d _ => ?_)
-  rw [Finset.sum_apply, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.sum_apply, map_sum, Finset.mul_sum]
 
 theorem gauss_sum_commute_dual (Tf : FormsTied D u) (i : ℕ) (hi : i ≤ D.R.m) (v : (D.mem u).A.vT) (φ : Formalism.MainNotions.product_first_zeroth_parts.Fn D u i)
     (hφ : φ ∈ (D.fm u).Fi i) :
     Formalism.MainNotions.product_first_zeroth_parts.GsD D u i v (Formalism.MainNotions.product_first_zeroth_parts.Gs D u i v φ) = Formalism.MainNotions.product_first_zeroth_parts.Gs D u i v (Formalism.MainNotions.product_first_zeroth_parts.GsD D u i v φ) := by
   have hE := diamond_elements_exist_all Tf
   unfold Formalism.MainNotions.product_first_zeroth_parts.Gs Formalism.MainNotions.product_first_zeroth_parts.GsD
-  simp only [LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, Finset.smul_sum, smul_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, Finset.smul_sum, smul_smul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl (fun x _ => Finset.sum_congr rfl (fun y _ => ?_))
   rw [diamond_comm_same_place Tf hE i hi v x⁻¹ y φ hφ, mul_comm]

@@ -40,7 +40,8 @@ theorem gaussOp_eq : GaussOp := by
     intro a b w
     rw [map_mul, Module.End.mul_apply]
   constructor
-  · simp only [Formalism.ThetaLiftIndependence.gaussOp, gaussOpDual, LinearMap.sum_apply, LinearMap.smul_apply, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [Formalism.ThetaLiftIndependence.gaussOp, gaussOpDual, LinearMap.sum_apply, LinearMap.smul_apply, map_sum,
       map_smul, hρ]
     have step : ∀ d : 𝔽ˣ, ψ (-(d : 𝔽)) • ∑ c : 𝔽ˣ, ψ (c : 𝔽) • ρ (c * d⁻¹) v =
         ∑ e : 𝔽ˣ, ψ (((e : 𝔽) - 1) * d) • ρ e v := by
@@ -54,7 +55,8 @@ theorem gaussOp_eq : GaussOp := by
     rw [Finset.sum_congr rfl (fun d _ => step d), Finset.sum_comm]
     simp_rw [← Finset.sum_smul]
     exact core ψ hψ ρ v hv
-  · simp only [Formalism.ThetaLiftIndependence.gaussOp, gaussOpDual, LinearMap.sum_apply, LinearMap.smul_apply, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [Formalism.ThetaLiftIndependence.gaussOp, gaussOpDual, LinearMap.sum_apply, LinearMap.smul_apply, map_sum,
       map_smul, hρ]
     simp_rw [Finset.smul_sum, smul_smul]
     rw [Finset.sum_comm]

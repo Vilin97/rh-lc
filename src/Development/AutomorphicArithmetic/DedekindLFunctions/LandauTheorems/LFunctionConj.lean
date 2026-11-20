@@ -87,7 +87,8 @@ end LFunctionConjugation
 
 theorem LFunction_conj {N : ℕ} [NeZero N] (χ : DirichletCharacter ℂ N) (s : ℂ) :
     DirichletCharacter.LFunction χ⁻¹ ((starRingEnd ℂ) s) = (starRingEnd ℂ) (DirichletCharacter.LFunction χ s) := by
-  simp only [DirichletCharacter.LFunction, ZMod.LFunction, map_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [DirichletCharacter.LFunction, ZMod.LFunction, map_mul, map_sum]
   congr 1
   · have h := LFunctionConjugation.ofReal_cpow_conj (Nat.cast_nonneg N : (0 : ℝ) ≤ N) (-s)
     simpa using h

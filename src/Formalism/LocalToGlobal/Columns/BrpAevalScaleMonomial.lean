@@ -37,7 +37,8 @@ theorem brp_aeval_scale_whom {r n : ℕ} (ν : Fin n → ℕ) (Q : MvPolynomial 
     simp [Pi.single_apply]
   conv_lhs => rw [Q.as_sum]
   conv_rhs => rw [Q.as_sum]
-  rw [map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.smul_sum]
   refine Finset.sum_congr rfl fun m hm => ?_
   rw [brp_aeval_scale_monomial, hdeg m hm]
 

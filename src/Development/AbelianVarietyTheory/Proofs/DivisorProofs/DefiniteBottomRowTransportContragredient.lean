@@ -110,7 +110,8 @@ theorem rowSub_one' (P : Pol ι d a) : rowSub (1 : ι → Matrix (Fin d) (Fin d)
 
 theorem rho_rowSub_X (S A : ι → Matrix (Fin d) (Fin d) ℂ) (y : Var ι d a) :
     rho S (rowSub A (X y)) = rowSub (S * A) (X y) := by
-  rw [← rowSub_mul, rowSub_X A, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← rowSub_mul, rowSub_X A, map_sum, map_sum]
   simp only [map_smul, Derivation.map_smul, rho_X]
 
 def natSet (S : ι → Matrix (Fin d) (Fin d) ℂ) (t : ℂ) : Set (Pol ι d a) :=

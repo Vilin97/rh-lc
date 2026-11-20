@@ -98,7 +98,8 @@ theorem linearIndependent_actTate : ∀ (K Ω : Type) [Field K] [Field Ω] [Alge
   have hsum : (l ^ N) • Additive.ofMul h = ∑ i, m i • ψ (a i) := by
     rw [← ofMul_pow, ← hfh]
     change ψ x = _
-    simp only [x, map_sum, map_zsmul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [x, map_sum, map_zsmul]
   have := hE (l ^ N) m (Additive.ofMul h) hh hsum j
   exact hN (m j) (hm j) (by exact_mod_cast this)
 

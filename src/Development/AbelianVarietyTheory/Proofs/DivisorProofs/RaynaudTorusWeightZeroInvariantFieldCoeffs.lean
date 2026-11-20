@@ -329,7 +329,8 @@ theorem isWt_coeff : ∀ (R : Type) [CommRing R] [IsDomain R] (Q : DegPre R) (O 
     refine ⟨a₁, a₂, fun α f hf => a₃ f ?_⟩
     have ev : ∀ b : Sp S ⟶ Y.H.left, ⊤ ≤ b ⁻¹ᵁ (Y.q.left ⁻¹ᵁ V') →
         valR b _ (δ _ f) = ∑ i, valR b _ (cf i) * valR b _ (dd i _ f) := fun b hb => by
-      rw [hcf _ hle', GlobalTheory.ZH.CrdCalc.valR_eq _ _ hb, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hcf _ hle', GlobalTheory.ZH.CrdCalc.valR_eq _ _ hb, map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_mul, ← GlobalTheory.ZH.CrdCalc.valR_eq _ _ hb, ← GlobalTheory.ZH.CrdCalc.valR_eq _ _ hb, rsT, dif_pos hle', valR_res _ _ hb]
     have t := hδ α V' hle f hf S φ x x' c _ _ rfl rfl m m' hq hc

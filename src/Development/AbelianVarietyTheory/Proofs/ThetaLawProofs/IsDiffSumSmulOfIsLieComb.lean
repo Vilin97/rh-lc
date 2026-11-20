@@ -99,7 +99,8 @@ theorem isDiff_sum_smul_of_isLieComb :
   have hU : ⊤ ≤ (x 1).left ⁻¹ᵁ U := top_le_preimage_of_dualLift _ U _ (ew ▸ h)
   obtain ⟨h', e'⟩ := evalPt_of_eq (x 1).left U hU _ w.left ew f
   change (evalPt (R := DualNumber ℂ) w.left U h' f).snd = _
-  rw [e', snd_dualLift_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e', snd_dualLift_sum, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   obtain ⟨hi, ei⟩ := evalPt_of_eq (x 1).left U hU _ (v i).left (ev i) f
   rw [← ei, map_smul, smul_eq_mul]

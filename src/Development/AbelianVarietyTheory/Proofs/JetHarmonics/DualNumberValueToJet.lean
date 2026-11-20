@@ -41,7 +41,8 @@ theorem constantCoeff_dof {R O : Type} [CommRing R] [CommRing O] (f : R →+* O)
       Finsupp.embDomain_zero, coeff_pderiv, FGLaw.mapF, coeff_map, zero_add, SymbolOne.coeff_law]
     split_ifs <;> simp
   unfold Dof
-  simp only [map_sum, map_mul, h, constantCoeff_C]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, h, constantCoeff_C]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [← coeff_zero_eq_constantCoeff_apply, coeff_pderiv]
   simp
@@ -53,7 +54,8 @@ theorem dualNumber_value_toJet : ∀ (R O : Type) [CommRing R] [CommRing O] (f :
   have hX : ∀ q, ψ (Ideal.Quotient.mk _ (MvPolynomial.X q)) =
       TrivSqZeroExt.inr (algebraMap O S (e q.2)) := hψ
   rw [toJet_one_eq, constantCoeff_dof]
-  simp only [map_add, map_sum, map_mul, hC, hX, Fintype.sum_prod_type, Fin.sum_univ_one]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_add, map_sum, map_mul, hC, hX, Fintype.sum_prod_type, Fin.sum_univ_one]
   congr 1
   ext
   · simp [TrivSqZeroExt.fst_sum]

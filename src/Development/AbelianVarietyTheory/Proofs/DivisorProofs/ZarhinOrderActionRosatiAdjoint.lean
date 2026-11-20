@@ -162,7 +162,8 @@ theorem pull_zCls {P : LB (A ⊗ A).left} (hP : P.IsLB) {Q : LB (A ⊗ B).left} 
       zf (fun a b => evc hQ a b) (fun a => a ≫ la) (fun b => b ≫ mu) (quat d) (fun i => w ≫ pa A B i)
         (fun j => w ≫ pb A B j) (fun i => w' ≫ pa A B i) (fun j => w' ≫ pb A B j) := by
   rw [zCls_eq]
-  simp only [map_add, map_sum, map_zsmul, pull_evc, lift_fst_assoc, lift_snd_assoc, hPQ, zf, Category.assoc]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_add, map_sum, map_zsmul, pull_evc, lift_fst_assoc, lift_snd_assoc, hPQ, zf, Category.assoc]
 
 theorem comp_one_pow {Y : Over S} {G : Over S} [GrpObj G] (y : Y ⟶ G) (n : ℕ) : y ≫ (𝟙 G ^ n) = y ^ n := by
   have := map_pow (pre (G := G) y) (𝟙 G) n

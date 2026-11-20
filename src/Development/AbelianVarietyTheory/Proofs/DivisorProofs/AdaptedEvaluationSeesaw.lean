@@ -61,7 +61,8 @@ theorem GlobalTheory.ThK.IsoComp.main : GlobalTheory.ThK.KP → ∀ (F E : Type)
     obtain ⟨Ψ, hΨ, hne⟩ := hne
     apply hne
     obtain ⟨T, m, f, φ, hφ, hT, rfl⟩ := GlobalTheory.SchADecomp.exists_sum_pure F (Fin n × Fin d) Ψ hΨ
-    rw [map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum]
     refine Finset.sum_eq_zero fun i _ => ?_
     have hv : ∀ᶠ v in cofinite, φ i v = M.vac v := by
       filter_upwards [hM.std, (Set.Finite.compl_mem_cofinite T.finite_toSet : (↑T : Set (Pl F))ᶜ ∈ cofinite)] with v h1 h2

@@ -75,14 +75,16 @@ theorem subst_colCoef_expPt {k : Type} [Field k] {v : AddValuation k (WithTop �
   have hw : ∀ (j : Fin n) (e : Fin d), constantCoeff (∑ ℓ : LtN Dw n,
       (if ℓ.2.2 = j then u ⟨ℓ.1, ℓ.2.1⟩ e else 0) • (X ℓ : MvPowerSeries (LtN Dw n) k)) = 0 := by
     intro j e
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_eq_zero fun ℓ _ => by rw [constantCoeff_smul, constantCoeff_X, smul_zero]
   have hs : HasSubst (fun q : Fin n × Fin d => expPt G (fun e => ∑ ℓ : LtN Dw n,
       (if ℓ.2.2 = q.1 then u ⟨ℓ.1, ℓ.2.1⟩ e else 0) • (X ℓ : MvPowerSeries (LtN Dw n) k)) q.2) :=
     hasSubst_of_constantCoeff_zero fun q => cc_expPt G (hw q.1) q.2
   refine (subst_comp_subst_apply hs ht Φ).trans (congrArg (fun s => subst s Φ) (funext fun q => ?_))
   refine (subst_expPt G ht (hw q.1) q.2).trans (congrArg (fun s => expPt G s q.2) (funext fun e => ?_))
-  simp only [← coe_substAlgHom ht, map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← coe_substAlgHom ht, map_sum, map_smul]
   simp only [coe_substAlgHom, subst_X ht, Finset.smul_sum, smul_smul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun lam _ => ?_

@@ -108,7 +108,8 @@ private theorem map_add_p_mul_pow_sub_pow_eq_p_smul {τ : Type} (c : _root_.Glob
       ((V + (p : MvPowerSeries τ (WittVector p k)) * H) ^ n - V ^ n) =
         algebraMap (WittVector p k) (_root_.GlobalTheory.Katz.Fr p k) p •
           MvPowerSeries.map (algebraMap (WittVector p k) (_root_.GlobalTheory.Katz.Fr p k)) Y := by
-  rw [add_pow, Finset.sum_range_succ, Nat.sub_self, pow_zero, Nat.choose_self, Nat.cast_one, mul_one,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [add_pow, Finset.sum_range_succ, Nat.sub_self, pow_zero, Nat.choose_self, Nat.cast_one, mul_one,
     mul_one, add_sub_cancel_right, map_sum, Finset.smul_sum]
   have key : ∀ j ∈ Finset.range n, ∃ Y, c • MvPowerSeries.map (algebraMap (WittVector p k) (_root_.GlobalTheory.Katz.Fr p k))
       (V ^ j * ((p : MvPowerSeries τ (WittVector p k)) * H) ^ (n - j) * (n.choose j : MvPowerSeries τ (WittVector p k))) =

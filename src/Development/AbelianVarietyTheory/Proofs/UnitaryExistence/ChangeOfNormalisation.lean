@@ -83,7 +83,8 @@ private theorem addMonoidHom_eq_matrix_mulVec {ι : Type*} [Fintype ι] [Decidab
     (Q : (ι → ℤ) →+ (Fin g → ℂ)) (x : ι → ℤ) :
     Q x = (Matrix.of fun i u => Q (Pi.single u 1) i) *ᵥ fun u => (x u : ℂ) := by
   conv_lhs => rw [← Finset.univ_sum_single x]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   funext i
   simp only [Finset.sum_apply, mulVec, dotProduct, of_apply]
   refine Finset.sum_congr rfl fun u _ => ?_

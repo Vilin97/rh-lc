@@ -37,7 +37,8 @@ theorem rec_li_semilin {K V M ι κ : Type} [Field K] [AddCommGroup V] [Module K
     intro x
     conv_lhs => rw [← b.linearCombination_repr x]
     conv_rhs => rw [← b.linearCombination_repr x]
-    rw [Finsupp.linearCombination_apply, Finsupp.sum, TensorProduct.tmul_sum, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finsupp.linearCombination_apply, Finsupp.sum, TensorProduct.tmul_sum, map_sum, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [LinearMap.map_smulₛₗ, TensorProduct.tmul_smul, ← algebraMap_smul ℂ (b.repr x i), map_smul, hLb]
     rfl
@@ -155,7 +156,8 @@ def lin : (S.ιV → ℂ) →ₗ[ℂ] (E.Y → ℂ) := Fintype.linearCombination
 
 theorem ev_eq_lin (x : S.V) : E.ev x = E.lin fun i => σ (S.bV.repr x i) := by
   conv_lhs => rw [← S.bV.sum_repr x]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [LinearMap.map_smulₛₗ, lin, Fintype.linearCombination_apply]
 
 theorem lin_ker : LinearMap.ker E.lin = ⊥ := by
@@ -196,7 +198,8 @@ def sharp (ℓ : S.V →ₛₗ[σ] ℂ) : E.Y → ℂ :=
   ∑ j, starRingEnd ℂ (∑ i, ℓ (S.bV i) * E.gram⁻¹ i j) • E.ev (S.bV j)
 
 theorem extend_eq_ip (hG : IsUnit E.gram.det) (ℓ : S.V →ₛₗ[σ] ℂ) (f : E.Y → ℂ) : E.extend ℓ f = E.ip (E.sharp ℓ) f := by
-  simp only [extend, co, if_pos hG, LinearMap.comp_apply, Fintype.linearCombination_apply, Matrix.toLin'_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [extend, co, if_pos hG, LinearMap.comp_apply, Fintype.linearCombination_apply, Matrix.toLin'_apply,
     Matrix.mulVec, dotProduct, ipB, LinearMap.pi_apply, sharp, map_sum, LinearMap.map_smulₛₗ, starRingEnd_self_apply,
     LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, Finset.sum_mul]
   rw [Finset.sum_comm]
@@ -206,7 +209,8 @@ theorem extend_ev {M : Type} [AddCommGroup M] [Module ℂ M] (ℓ : S.V →ₛ�
   simp only [extend, LinearMap.comp_apply]
   rw [E.ev_eq_lin x, E.co_lin, Fintype.linearCombination_apply]
   conv_rhs => rw [← S.bV.sum_repr x]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [LinearMap.map_smulₛₗ]
 
 def ipCl (h : S.Ok) : (S.Cl → E.Y → ℂ) →ₗ⋆[ℂ] (S.Cl → E.Y → ℂ) →ₗ[ℂ] ℂ :=
@@ -248,7 +252,8 @@ theorem span_basis {ι : Type} [Fintype ι] (b : Basis ι K S.EqFun) :
   · show Submodule.span ℂ (Set.range E.emb) ≤ _
     rw [Submodule.span_le]
     rintro _ ⟨φ, rfl⟩
-    rw [← b.sum_repr φ, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← b.sum_repr φ, map_sum]
     refine Submodule.sum_mem _ fun a _ => ?_
     rw [LinearMap.map_smulₛₗ]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨a, rfl⟩)
@@ -262,7 +267,8 @@ theorem pairAt_mk (S : GSD K) (σ : K →+* ℂ) (hσ : ∀ x : K, σ (star x) =
       ∑ i, ∑ j, starRingEnd ℂ (σ (S.bV.repr x i)) * σ (S.gramV i j) * σ (S.bV.repr y j) := by
     intro x y
     conv_lhs => rw [← S.bV.sum_repr x, ← S.bV.sum_repr y]
-    simp only [map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, map_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, map_mul,
       Finset.mul_sum]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
@@ -277,7 +283,8 @@ theorem pairAt_mk (S : GSD K) (σ : K →+* ℂ) (hσ : ∀ x : K, σ (star x) =
   · right
     intro x y
     rw [key, pairAt, h]
-    simp only [map_sum, map_mul, ComplexEmbedding.conjugate_coe_eq]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, ComplexEmbedding.conjugate_coe_eq]
 
 theorem Ev.norm_eq {S : GSD K} {σ : K →+* ℂ} (E : S.Ev σ) (h : S.Ok) (R : S.Rat)
     (hσ : ∀ x : K, σ (star x) = starRingEnd ℂ (σ x)) (φ : S.EqFun) :
@@ -299,7 +306,8 @@ theorem Ev.norm_eq {S : GSD K} {σ : K →+* ℂ} (E : S.Ev σ) (h : S.Ok) (R : 
   · simp only [hp]
     rw [← Complex.conj_re]
     congr 1
-    simp only [map_sum, map_mul, map_inv₀, map_natCast, Complex.conj_conj]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, map_inv₀, map_natCast, Complex.conj_conj]
 
 end GSD
 
@@ -1585,7 +1593,8 @@ theorem periodC_eq_ipCl (hX : X.Ok) (σ₀ : X.K →+* ℂ) (hσ : ∀ x : X.K, 
   unfold periodC GSD.Ev.perCl
   refine Finset.sum_congr rfl fun c _ => ?_
   congr 1
-  simp only [jMC, map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, Complex.conj_conj, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [jMC, map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, Complex.conj_conj, smul_eq_mul]
   exact Finset.sum_congr rfl fun a _ => congrArg (fun t => z a * t) (GSD.Ev.extend_eq_ip _ hG _ _)
 
 variable (W ΛM) in
@@ -1707,7 +1716,8 @@ theorem recChain_K_emb (hX : X.Ok) (σ₀ : X.K →+* ℂ) (G : ChainGlob W σ�
     show (stepEv W Λ σ₀ G.hσ u (i + 1)).ev ((A.kk i).appOf (stepOk W Λ hX u i) (stepGSD W Λ u i).outSec φ
       ((stepGSD W Λ u (i + 1)).outSec.rep L')) = _
     unfold ClsKer.appOf
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun L _ => ?_
     rw [LinearMap.map_smulₛₗ, map_inv₀, map_natCast]
     congr 3
@@ -1811,7 +1821,8 @@ theorem rhoTC_sum_emb (σ₀ : X.K →+* ℂ) (hσ : ∀ x : X.K, σ₀ (star x)
     (hfree : (stepGSD W Λ u 0).Free) (P : {P // P ∈ Pr.vT u}) [Fintype (𝓞 X.E ⧸ P.1.asIdeal)ˣ] (φ : (stepGSD W Λ u 0).EqFun) :
     ∑ a, rhoTC σ₀ hσ u hfree P a ((stepEv W Λ σ₀ hσ u 0).emb φ) =
       (stepEv W Λ σ₀ hσ u 0).emb (NmG (colVal W u 0 (Pr.vT u) Pr.vGs) (Λ 0) P φ) := by
-  rw [NmG_eq, LinearMap.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [NmG_eq, LinearMap.sum_apply, map_sum]
   exact Finset.sum_congr rfl fun a _ => step_opOn_dia σ₀ hσ u 0 P a φ
 
 end NonDeg

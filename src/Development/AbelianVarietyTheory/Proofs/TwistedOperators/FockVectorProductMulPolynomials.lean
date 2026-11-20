@@ -429,7 +429,8 @@ theorem fock_datum {θ : InfFam D} (hθ : IsInfFam θ) (ε : Bool) (A : Fr S) (B
       rw [hsm] at h4
       exact h4
     rw [heq] at h2
-    rw [h2.unique h3, map_sum, Finset.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h2.unique h3, map_sum, Finset.sum_apply]
     exact Finset.sum_congr rfl fun τ _ => congrFun (hLp τ F hF'.1 (hF'.2 τ) P) _
 
 end Fock

@@ -8,7 +8,8 @@ open scoped nonZeroDivisors
 theorem UpperTheory.V.FW.stickH :
     ∀ (M c : ℕ) [NeZero M] (L : Type) [Field L] [NumberField L] [IsCyclotomicExtension {M} ℚ L], c.Coprime M → Odd c → 2 < M → (cycRep M L).asAlgebraHom (thetaH M c * (1 - MonoidAlgebra.of ℤ _ (-1 : (ZMod M)ˣ))) = 0 := by
   intro M c _ L _ _ _ hc hodd hM
-  rw [(thetaFull M c hc hodd hM).1, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [(thetaFull M c hc hodd hM).1, map_sum]
   refine LinearMap.ext fun x => ?_
   simp only [Representation.asAlgebraHom_single, LinearMap.sum_apply,
     LinearMap.smul_apply, LinearMap.zero_apply]

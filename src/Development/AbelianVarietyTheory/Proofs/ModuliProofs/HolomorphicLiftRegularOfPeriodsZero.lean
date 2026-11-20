@@ -75,7 +75,8 @@ theorem vector_ext (hu : GoodU u Hm χ) (hp : Smooth p) (hm : IsPullback m P₀.
       Matrix.vecMul w (Matrix.of fun a b => fderiv ℂ (fn u m W (t b)) z (Pi.single a 1)) b := by
     intro w b
     conv_lhs => rw [← Finset.univ_sum_single w]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [Matrix.vecMul, dotProduct, Matrix.of_apply]
     refine Finset.sum_congr rfl fun a _ => ?_
     rw [show Pi.single a (w a) = w a • (Pi.single a 1 : Fin P₀.g → ℂ) by
@@ -142,7 +143,8 @@ private theorem valAt'_mul_of_top_le {X : Scheme.{0}} (x : Sp ℂ ⟶ X) (U : X.
 
 private theorem valAt'_finset_sum {X : Scheme.{0}} (x : Sp ℂ ⟶ X) (U : X.Opens) (hx : ⊤ ≤ x ⁻¹ᵁ U)
     {κ : Type} (s : Finset κ) (F : κ → Γ(X, U)) : valAt' x U (∑ i ∈ s, F i) = ∑ i ∈ s, valAt' x U (F i) := by
-  simp only [valAt', dif_pos hx, valAt, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [valAt', dif_pos hx, valAt, map_sum]
 
 private theorem valAt'_comp' {Y X : Scheme.{0}} (y : Sp ℂ ⟶ Y) (m : Y ⟶ X) (W : X.Opens) (f : Γ(X, W)) :
     valAt' (y ≫ m) W f = valAt' y (m ⁻¹ᵁ W) ((m.app W).hom f) := by
@@ -166,7 +168,8 @@ private theorem valAt'_resG_of_top_le {X : Scheme.{0}} (x : Sp ℂ ⟶ X) {U V :
 private theorem continuousLinearMap_apply_eq_sum_single {n : ℕ} (φ : (Fin n → ℂ) →L[ℂ] ℂ) (w : Fin n → ℂ) :
     φ w = ∑ b, w b * φ (Pi.single b 1) := by
   conv_lhs => rw [← Finset.univ_sum_single w]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [show Pi.single a (w a) = w a • (Pi.single a 1 : Fin n → ℂ) by
     ext j; by_cases hj : j = a <;> simp [hj], map_smul, smul_eq_mul]

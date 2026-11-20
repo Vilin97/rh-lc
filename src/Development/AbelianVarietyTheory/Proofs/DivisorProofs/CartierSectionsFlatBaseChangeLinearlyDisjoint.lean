@@ -71,7 +71,8 @@ theorem span_chart {R R₁ : Type} [CommRing R] [CommRing R₁] {ρ : R →+* R�
     choose a ha e using ht
     choose b hb using ha
     refine ⟨∑ j, b j ⊗ₜ[R] r j, ?_⟩
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun j _ => by rw [hβ, hb, e, _root_.mul_comm]
   · rintro ⟨x, rfl⟩
     induction x using TensorProduct.induction_on with

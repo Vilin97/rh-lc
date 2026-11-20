@@ -83,7 +83,8 @@ open MvPolynomial in
 
 theorem rename_lin {α κ : Type} [Fintype α] [Fintype κ] (f : α → κ) (n : α → ℝ) :
     rename f (lin n) = lin fun i => ∑ s with f s = i, n s := by
-  simp only [lin, map_sum, map_mul, rename_C, rename_X, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [lin, map_sum, map_mul, rename_C, rename_X, Finset.sum_mul]
   rw [← Finset.sum_fiberwise Finset.univ f]
   exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun s hs => by rw [(Finset.mem_filter.1 hs).2]
 
@@ -132,7 +133,8 @@ theorem sum_mix {μ : Type} [Fintype μ] {e D : ℕ} (ε : Fin (D + 1) ≃ Fin (
   simp only [Complex.ofReal_intCast] at e₁
   have e₀ : ∑ j, c j * mix (f + e) (∑ i, (n j i : ℂ) • C i) (chg J (blk ε 0 fun t => bcDiag a (some t))) =
       Λ (rename x (vdm r) * rename y P) := by
-    simp only [← hV, ← e₁, map_sum, map_smul, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [← hV, ← e₁, map_sum, map_smul, smul_eq_mul]
   rw [e₀, ← h₁, ← h₂]
   have key (j : I₁) (l : I₂) : Λ (rename x (lin fun z => (n₁ j z : ℝ)) ^ f * rename y (lin fun m => (n₂ l m : ℝ)) ^ e) =
       ‖J.det‖ ^ 2 * s * (f.factorial * ∑ t : Option (Σ a, Low (r a)), bcDiag a t * ∏ t' ∈ Finset.univ.erase t,
@@ -170,7 +172,8 @@ theorem sum_mix {μ : Type} [Fintype μ] {e D : ℕ} (ε : Fin (D + 1) ≃ Fin (
     simp only [s, Matrix.mul_sum, Matrix.mul_smul, trace_sum, trace_smul, smul_eq_mul, Complex.re_sum,
       Complex.re_ofReal_mul]
     field_simp
-  simp only [map_sum, map_smul, map_pow, Finset.sum_mul, Finset.mul_sum, smul_mul_smul_comm, smul_eq_mul, Matrix.sum_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, map_pow, Finset.sum_mul, Finset.mul_sum, smul_mul_smul_comm, smul_eq_mul, Matrix.sum_mul,
     Matrix.smul_mul, trace_sum, trace_smul, Complex.re_sum, Complex.re_ofReal_mul]
   rw [Finset.sum_comm (s := Finset.univ (α := Fin (r a)))]
   refine Finset.sum_congr rfl fun l _ => ?_

@@ -43,14 +43,16 @@ theorem lieMod_transport (ω : O) (ρ : T) {a : ℕ} (τ : Fin a → (O →+* T)
       apply e.injective
       rw [he, map_smul, LinearEquiv.apply_symm_apply, hw])
     refine ⟨fun i => e (u i), fun i => (mem_eigSub_transport ψ ν e he _ _).2 (hu i), ?_⟩
-    rw [← map_sum, ← hs, LinearEquiv.apply_symm_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, ← hs, LinearEquiv.apply_symm_apply]
   · intro h v hv
     obtain ⟨u, hu, hs⟩ := h (e v) (by rw [← he, hv, map_smul])
     refine ⟨fun i => e.symm (u i), fun i => ?_, ?_⟩
     · rw [← mem_eigSub_transport ψ ν e he, LinearEquiv.apply_symm_apply]
       exact hu i
     · apply e.injective
-      rw [map_sum, hs]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, hs]
       simp
 
 end Transport

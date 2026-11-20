@@ -219,7 +219,8 @@ theorem det_cHess_pos {n : ℕ} {f : V n → ℝ} {x : V n} (hf : ContDiffAt ℝ
       ring
     have hself : (starRingEnd ℂ) (dotProduct (star z) (Matrix.mulVec (cHess n (fun v => ((f v : ℝ) : ℂ)) x) z)) =
         dotProduct (star z) (Matrix.mulVec (cHess n (fun v => ((f v : ℝ) : ℂ)) x) z) := by
-      simp only [dotProduct, Matrix.mulVec, Pi.star_apply, Complex.star_def, map_sum, map_mul,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [dotProduct, Matrix.mulVec, Pi.star_apply, Complex.star_def, map_sum, map_mul,
         Complex.conj_conj, Finset.mul_sum]
       rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun k _ => ?_

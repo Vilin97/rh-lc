@@ -81,6 +81,7 @@ theorem UpperTheory.p_adic_lattice_membership_approximated :
     have : cf = ∑ i, cf i • (Pi.single i 1 : Fin g → ℂ_[p]) := by
       funext j; simp [Finset.sum_apply, Pi.single_apply]
     conv_lhs => rw [this]
-    simp only [pr, map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [pr, map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul]
     exact Finset.sum_congr rfl fun i _ => mul_comm _ _
   rw [e]

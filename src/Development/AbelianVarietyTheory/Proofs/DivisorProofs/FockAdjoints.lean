@@ -59,7 +59,8 @@ theorem inner_omAct {ι : Pol p q r s →ₗ[ℂ] H} (hι : IsFockIP ι)
     (h : ∀ l l', N l' l = (if linePos l = linePos l' then 1 else -1) * star (M l l'))
     (P Q : Pol p q r s) :
     inner ℂ (ι (omAct p q r s M P)) (ι Q) = inner ℂ (ι P) (ι (omAct p q r s N Q)) := by
-  simp only [omAct_apply, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, sum_inner,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [omAct_apply, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, sum_inner,
     inner_sum, inner_smul_left, inner_smul_right]
   conv_rhs => rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun l _ => Finset.sum_congr rfl fun l' _ => ?_

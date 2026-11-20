@@ -52,7 +52,8 @@ theorem sub_qR_mem_integers : ∀ (F E : Type) [Field F] [NumberField F] [Field 
     exact mul_mem (mul_mem (oev_sigR v σ (hx i)) (hJv i j)) (hx j)
   have htrace : Algebra.trace (Fv F v) (Fv F v ⊗[F] E) (hR (Fv F v) σ J (X 0) (X 0)) ∈
       v.adicCompletionIntegers F := by
-    rw [hrepr (hR (Fv F v) σ J (X 0) (X 0)), map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hrepr (hR (Fv F v) σ J (X 0) (X 0)), map_sum]
     refine sum_mem fun k _ => ?_
     rw [map_smul, trace_one_tmul_len, smul_eq_mul]
     exact mul_mem (hc _ hh' k) (htrv k)

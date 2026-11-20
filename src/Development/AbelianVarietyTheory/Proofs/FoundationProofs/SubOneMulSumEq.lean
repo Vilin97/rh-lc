@@ -75,7 +75,8 @@ theorem mono {Ω : Type} [Field Ω] [Algebra ℚ Ω] (p : ℕ) [hpf : Fact p.Pri
   set S : Ω := ∑ s ∈ Finset.range p, (s : Ω) * ω ^ s with hS
   have hγtS : ∀ t : ℕ, (γ ^ t) S = S := by
     intro t
-    rw [hS, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hS, map_sum]
     exact Finset.sum_congr rfl fun s _ => by rw [map_mul, map_natCast, map_pow, hγtω]
   have hK : (γ ^ K) (ζ ^ i) = ω * ζ ^ i := by
     rw [pow_apply_pow γ ζ _ hγ, he, pow_add, hω, mul_comm]
@@ -87,7 +88,8 @@ theorem mono {Ω : Type} [Field Ω] [Algebra ℚ Ω] (p : ℕ) [hpf : Fact p.Pri
   refine ⟨∑ t ∈ Finset.range K, (γ ^ t) (S * ζ ^ i),
     Subring.sum_mem _ fun t _ => pow_apply_mem γ ζ _ hγ t hH0, ?_⟩
   have hγH : γ (∑ t ∈ Finset.range K, (γ ^ t) (S * ζ ^ i)) = ∑ t ∈ Finset.range K, (γ ^ (t + 1)) (S * ζ ^ i) := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun t _ => by rw [pow_succ', AlgEquiv.mul_apply]
   rw [hγH, ← Finset.sum_sub_distrib, Finset.sum_range_sub (fun t => (γ ^ t) (S * ζ ^ i)), pow_zero,
     AlgEquiv.one_apply, map_mul, hγtS, hK]

@@ -126,7 +126,8 @@ theorem PolyRep.lie_sum_C_mul_X {ι κ : Type} [Fintype ι] [Fintype κ] {m : ι
   have key : ∀ (c : EntIx m → ℂ) (f : κ → κ → EntIx m → ℂ),
       (∑ a, ∑ b, C (∑ v, c v * f a b v) * X (a, b) : MvPolynomial (κ × κ) ℂ) =
         ∑ v, C (c v) * ∑ a, ∑ b, C (f a b v) * X (a, b) := fun c f => by
-    simp only [map_sum, map_mul, Finset.sum_mul, Finset.mul_sum, mul_assoc]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, Finset.sum_mul, Finset.mul_sum, mul_assoc]
     rw [eq_comm, Finset.sum_comm]
     exact Finset.sum_congr rfl fun a _ => Finset.sum_comm
   simp only [PolyRep.lie, Matrix.of_apply]

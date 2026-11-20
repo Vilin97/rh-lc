@@ -180,7 +180,8 @@ theorem comap_map_eq {L σ : Type} [Field L] [Algebra K L] (I : Ideal (MvPolynom
   have hmul : ∀ p (g : MvPolynomial σ K), ρ (p * map (algebraMap K L) g) = ρ p * g := fun p g =>
     MvPolynomial.ext _ _ fun s => by
       classical
-      simp only [hρ, coeff_mul, map_sum, coeff_map]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hρ, coeff_mul, map_sum, coeff_map]
       refine Finset.sum_congr rfl fun x _ => ?_
       rw [mul_comm, ← Algebra.smul_def, map_smul, smul_eq_mul, mul_comm]
   refine le_antisymm (fun g hg => ?_) Ideal.le_comap_map

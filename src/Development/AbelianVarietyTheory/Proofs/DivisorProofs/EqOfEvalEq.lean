@@ -49,7 +49,8 @@ theorem exists_eval {R K T : Type} [CommRing R] [IsDomain R] [Field K] [Algebra 
     by_contra hne
     push Not at hne
     have h1 := congrArg φ hsum
-    rw [map_sum, φ.commutes] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, φ.commutes] at h1
     simp only [map_smul, hne, smul_zero, Finset.sum_const_zero] at h1
     exact Finset.prod_ne_zero_iff.2 (fun y _ => hr y) (hinj (by rw [← h1, map_zero]))
   obtain ⟨x, hx⟩ := hex

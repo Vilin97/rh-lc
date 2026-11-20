@@ -240,7 +240,8 @@ theorem det_frame_ne_zero (L : LogPeriods n a g Λ) (bas : Module.Basis (Fin g �
       intro i k
       have h := T_fix L i x
       rw [hx] at h
-      simp only [map_add, map_sum, map_zsmul, hTa, hTb, smul_add, Finset.sum_add_distrib] at h
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_add, map_sum, map_zsmul, hTa, hTb, smul_add, Finset.sum_add_distrib] at h
       have h' : ∑ j, cv j • ∑ l, Q.B i j l • bas (.inl l) = 0 := by
         exact add_eq_left.1 (add_left_cancel h)
       have h2 := congrArg (bas.coord (.inl k)) h'
@@ -268,7 +269,8 @@ theorem det_frame_ne_zero (L : LogPeriods n a g Λ) (bas : Module.Basis (Fin g �
       have e1 : L.P w (x : Λ) = ∑ i, cu i • L.P w (bas (.inl i)) +
           ∑ j, cv j • ∑ k, Q.τ w j k • L.P w (bas (.inl k)) := by
         conv_lhs => rw [hx]
-        simp only [map_add, map_sum, map_zsmul, hQP w hw]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_add, map_sum, map_zsmul, hQP w hw]
       rw [L.s_eq x w hw, e1]
       simp only [Pi.add_apply, Finset.sum_apply, Pi.smul_apply, zsmul_eq_mul, smul_eq_mul, hAP w hw,
         Pi.mul_apply, Pi.intCast_apply, add_mul, Finset.sum_add_distrib, e2, Finset.sum_mul,

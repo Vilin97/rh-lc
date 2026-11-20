@@ -16,7 +16,8 @@ theorem UpperTheory.exists_regular_parameters_of_reduced_quotient :
     intro a ha
     rw [hI, Ideal.mem_span_range_iff_exists_fun] at ha
     obtain ⟨g, rfl⟩ := ha
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_eq_zero fun j _ => by rw [map_mul, hφ j, mul_zero]
   let ψ : (rB ℂ K x {0} ⧸ I) →ₐ[ℂ] ℂ := Ideal.Quotient.liftₐ I φ hφI
   have hψ : ∀ a, ψ (Ideal.Quotient.mk I a) = φ a := fun a => rfl

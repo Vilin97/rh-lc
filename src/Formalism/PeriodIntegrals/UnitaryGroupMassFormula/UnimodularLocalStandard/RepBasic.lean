@@ -15,7 +15,8 @@ theorem rep_H_apply (z w : m → ℂ) :
   simp [stdH, matH, Matrix.smul_apply, Matrix.one_apply, Finset.mul_sum, mul_comm, mul_left_comm, mul_assoc]
 
 theorem rep_H_conj (z w : m → ℂ) : conj (stdH L m z w) = stdH L m w z := by
-  rw [rep_H_apply, rep_H_apply, map_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [rep_H_apply, rep_H_apply, map_mul, map_sum]
   congr 1
   · simp [Complex.conj_ofReal]
   · refine Finset.sum_congr rfl fun i _ => ?_

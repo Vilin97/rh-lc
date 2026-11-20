@@ -167,7 +167,8 @@ theorem exists_dual_family : ∀ {F : Type} [Field F] [ValuativeRel F] [Topologi
   have hh2 : ∀ (y : V) (k : Fin (r + 1) → E),
       H.h y (∑ a, k a • Fr.f a) = ∑ a, M.L.cj (k a) * H.h y (Fr.f a) := by
     intro y k
-    rw [H.h_herm, hsum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [H.h_herm, hsum, map_sum]
     refine Finset.sum_congr rfl (fun a _ => ?_)
     rw [H.h_smul_left, map_mul, ← H.h_herm]
   let I : Submodule M.L.O (Fin (r + 1) → M.L.O) :=

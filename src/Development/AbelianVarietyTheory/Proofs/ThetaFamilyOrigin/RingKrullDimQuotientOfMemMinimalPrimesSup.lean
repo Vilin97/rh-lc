@@ -190,7 +190,8 @@ theorem exists_isHilbertPoly_gradedQuotPiece {I : Ideal T} (hI : I.IsHomogeneous
     (I.restrictScalars (MvPolynomial ι K)) ⊤ le_top
     (by
       intro n m hm
-      rw [← sum_support_decompose 𝒜 m, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← sum_support_decompose 𝒜 m, map_sum]
       refine Submodule.sum_mem _ fun i _ => ?_
       have h1 : (decompose 𝒜 m i : T) ∈ extendGradingByZero 𝒜 i := SetLike.coe_mem _
       by_cases hi : (i : ℤ) = n

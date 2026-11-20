@@ -54,7 +54,8 @@ theorem dualFr_colLat_one {K : Type} [Field K] [NumberField K] {n : ℕ} :
     choose y hy using (mem_colLat_one _).1 h
     choose z hz using (mem_colLat_one _).1 hx
     refine Submodule.mem_one.2 ⟨∑ a, y a * z a, ?_⟩
-    simp only [map_sum, map_mul, hy, hz, dotProduct]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, hy, hz, dotProduct]
 
 theorem mem_of_forall_locP {K W : Type} [Field K] [NumberField K] [AddCommGroup W] [Module (𝓞 K) W]
     (T : Submodule (𝓞 K) W) (x : W) (h : ∀ w : HeightOneSpectrum (𝓞 K), x ∈ Formalism.HermitianLatticesTheory.localization₂ w.asIdeal T) : x ∈ T := by

@@ -30,7 +30,8 @@ theorem eigGen_integral_comb : ∀ (D : D7) (cD : D.what₂.Tau → ℂ), Formal
     have hc := congrFun hfv τ'
     simp only [Finset.sum_apply, Pi.smul_apply, hav] at hc
     simp only [e, ← map_mul]
-    rw [← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum]
     have hc' : (∑ j, ((f j : 𝓞 M) : M) * TaylorLogMetric.liftM M (TaylorLogMetric.embT D τ' (a j))) =
         (LinearMap.single (𝓞 M) (fun _ : D.what₂.Tau => (M : Type)) τ) s τ' := by
       rw [← hc]; rfl

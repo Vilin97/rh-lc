@@ -45,7 +45,8 @@ theorem lin_add_pSum {ι : Type} [Fintype ι] [DecidableEq ι] {N : ℕ} (τ : �
 
 theorem rename_lin {ι : Type} [Fintype ι] {N : ℕ} (σ : Equiv.Perm ι) (n : ι × Fin N → ℝ) :
     rename (Prod.map σ id) (lin n) = lin (fun x => n (σ.symm x.1, x.2)) := by
-  simp only [lin, map_sum, map_mul, rename_C, rename_X]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [lin, map_sum, map_mul, rename_C, rename_X]
   exact (Equiv.sum_comp (Equiv.prodCongr σ (Equiv.refl _)) (fun y => C (n (σ.symm y.1, y.2)) * X y)).symm.trans
     (Finset.sum_congr rfl fun x _ => by simp) |>.symm
 

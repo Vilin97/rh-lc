@@ -110,7 +110,8 @@ theorem exists_int_comb_oneBlockForms (om : Module.Basis (Fin (e + 1)) ℤ (𝓞
   rw [sum_smul_oneBlockForms_apply]
   simp only [Equiv.apply_symm_apply]
   have h := congrArg (algebraMap (𝓞 K) K) (om.sum_repr (s j))
-  simp only [map_sum, map_zsmul] at h
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_zsmul] at h
   exact h
 
 theorem isDualBasis_oneBlockForms (om : Module.Basis (Fin (e + 1)) ℤ (𝓞 K)) :
@@ -122,7 +123,8 @@ theorem isDualBasis_oneBlockForms (om : Module.Basis (Fin (e + 1)) ℤ (𝓞 K))
     rw [sum_smul_oneBlockForms_apply] at hj
     have h0 : ∑ a, g ((oneBlockIndex e r).symm (a, (oneBlockIndex e r p).2)) • om a = 0 := by
       apply FaithfulSMul.algebraMap_injective (𝓞 K) K
-      simpa [map_sum, map_zsmul] using hj
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa [map_sum, map_zsmul] using hj
     have := (Fintype.linearIndependent_iff.mp om.linearIndependent) _ h0 (oneBlockIndex e r p).1
     simpa using this
   · rw [Submodule.span_le]
@@ -255,7 +257,8 @@ variable {K : Type} [Field K] [NumberField K]
 omit [NumberField K] in
 theorem sum_intCast_mul_apply {ι : Type*} [Fintype ι] {m : ℕ} (c : ι → ℤ) (u : ι → Fin m → K)
     (τ : K →+* ℂ) (j : Fin m) : ∑ i, (c i : ℂ) * τ (u i j) = τ ((∑ i, c i • u i) j) := by
-  simp [Finset.sum_apply, map_sum, zsmul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Finset.sum_apply, map_sum, zsmul_eq_mul]
 
 omit [NumberField K] in
 theorem sum_zsmul_sum_mul {ι : Type*} [Fintype ι] {m : ℕ} (c : ι → ℤ) (u : ι → Fin m → K)
@@ -277,7 +280,8 @@ theorem sum_comb_comb {M : Type*} [AddCommGroup M] {ι κ : Type*} [Fintype ι] 
 omit [NumberField K] in
 theorem latticeForm_sum_zsmul {ι : Type*} [Fintype ι] {m : ℕ} (c : ι → ℤ) (u : ι → Fin m → K) :
     ∑ i, c i • latticeForm (u i) = latticeForm (∑ i, c i • u i) := by
-  simp only [latticeForm, Finset.smul_sum, Finset.sum_apply, Pi.smul_apply, map_sum, map_zsmul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [latticeForm, Finset.smul_sum, Finset.sum_apply, Pi.smul_apply, map_sum, map_zsmul,
     Finset.sum_mul, smul_mul_assoc]
   exact Finset.sum_comm
 
@@ -292,14 +296,16 @@ theorem linear_relation {r N : ℕ} {φ : Fin (N + 1) → Fin (r + 1) → K} {z 
     (hc : ∑ b, c b • φ b = ∑ b, c' b • φ b) : ∑ b, c b • z () b = ∑ b, c' b • z () b := by
   have hmem : (∑ b, (c b - c' b) • X ⟨(), b⟩ : MvPolynomial (Coord (fun _ : Unit ↦ N)) ℤ) ∈
       latticeIdeal φ := by
-    rw [latticeIdeal, RingHom.mem_ker, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [latticeIdeal, RingHom.mem_ker, map_sum]
     simp only [map_zsmul, latticeMap, coe_eval₂Hom, eval₂_X]
     rw [latticeForm_sum_zsmul]
     simp only [sub_smul, Finset.sum_sub_distrib, hc, sub_self]
     simp [latticeForm]
   have h := hz.2 _ hmem
   rw [evalCone_eq] at h
-  simp only [sub_smul, Finset.sum_sub_distrib, map_sub, map_sum, map_zsmul, eval₂Hom_X'] at h
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [sub_smul, Finset.sum_sub_distrib, map_sub, map_sum, map_zsmul, eval₂Hom_X'] at h
   exact sub_eq_zero.mp h
 
 theorem of_standard (hB : OneBlockPoints.Statement) : Heights.OneBlockPoints.Statement := by
@@ -372,7 +378,8 @@ theorem of_standard (hB : OneBlockPoints.Statement) : Heights.OneBlockPoints.Sta
         eval₂Hom C fun j ↦ C (D : K) * X j
       have hΘ : (latticeMap φ).comp Θ = sc.comp (Heights.oneBlockMap om) := by
         refine MvPolynomial.ringHom_ext (fun a ↦ by simp [Θ, sc]) fun v ↦ ?_
-        simp only [RingHom.comp_apply, Θ, sc, coe_eval₂Hom, eval₂_X, map_sum, map_zsmul,
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [RingHom.comp_apply, Θ, sc, coe_eval₂Hom, eval₂_X, map_sum, map_zsmul,
           Heights.oneBlockMap, eval₂_mul, eval₂_C]
         simp only [latticeMap, coe_eval₂Hom, eval₂_X]
         rw [latticeForm_sum_zsmul, hCm, hψ]
@@ -384,7 +391,8 @@ theorem of_standard (hB : OneBlockPoints.Statement) : Heights.OneBlockPoints.Sta
         congr 1
         refine MvPolynomial.ringHom_ext (fun a ↦ by simp [Θ]) fun v ↦ ?_
         rw [RingHom.comp_apply]
-        simp only [Θ, eval₂Hom_X', map_sum, map_zsmul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [Θ, eval₂Hom_X', map_sum, map_zsmul]
         rfl
       rw [← hev]
       refine hz.2 _ ?_

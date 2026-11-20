@@ -173,7 +173,8 @@ theorem eq_zero_of_row_vanish : ∀ (k : Type) [Field k] [ValuativeRel k] [Topol
     apply Subtype.ext
     rw [Submodule.coe_sum]
     exact (sum_piece Φ.1).symm
-  rw [hsum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hsum, map_sum]
   exact Finset.sum_eq_zero fun i _ => step1 i _ fun y X hX => piece_vanish hrow i y X hX
 
 end GlobalTheory.RowCut

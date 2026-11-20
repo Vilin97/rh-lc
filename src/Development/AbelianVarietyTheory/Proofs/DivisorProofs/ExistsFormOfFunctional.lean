@@ -27,9 +27,11 @@ theorem exists_form_of_functional : ∀ (ι : Type) [Fintype ι] [DecidableEq ι
         conv_lhs => enter [1]; rw [h0]
         rw [Finset.sum_mul]
         simp only [smul_mul_assoc]
-      rw [h1, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [h1, map_sum]
       unfold ev
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun x _ => ?_
       have := hev x lam
       unfold ev at this

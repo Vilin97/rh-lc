@@ -98,7 +98,8 @@ theorem mem_pts_of_deh {ι : Type} [Fintype ι] {Ω : Type*} [Field Ω] (x : ι 
   refine ⟨fun h0 => hz (by rw [h0]; rfl), fun f hf => ?_⟩
   rw [coordIdeal, RingHom.mem_ker] at hf
   conv_lhs => rw [← sum_homogeneousComponent f]
-  rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum]
   refine Finset.sum_eq_zero fun d _ => ?_
   have hd := homogeneousComponent_isHomogeneous d f
   have hx0 : aeval x (homogeneousComponent d f) = 0 := by

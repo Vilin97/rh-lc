@@ -52,7 +52,8 @@ theorem contr_wedge (k i : Fin m) (w : Ext m) :
 
 theorem contr_wedgeVec (k : Fin m) (v : Fin m → ℂ) (w : Ext m) :
     contr k (wedgeVec v w) = v k • w - wedgeVec v (contr k w) := by
-  rw [wedgeVec_apply, wedgeVec_apply, ← contrLin_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [wedgeVec_apply, wedgeVec_apply, ← contrLin_apply, map_sum]
   simp_rw [map_smul, contrLin_apply, contr_wedge, smul_sub, Finset.sum_sub_distrib, smul_smul]
   congr 1
   rw [← Finset.sum_smul]
@@ -87,7 +88,8 @@ theorem defect_wedge {g : ℕ} (ψ : Matrix (Fin m) (Fin m) ℂ) (d : Fin m) (c 
     (w : Ext m) : defect ψ d c x (wedge i w) = - wedgeVec (ψ i) (defect ψ d c x w) := by
   rw [defect_apply, defect_apply, contr_wedge, map_sub, map_smul, extMap_wedge, extMap_wedge]
   simp_rw [contr_wedgeVec, smul_sub, Finset.sum_sub_distrib, smul_smul]
-  rw [← Finset.sum_smul, hs i, map_sub, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Finset.sum_smul, hs i, map_sub, map_sum]
   simp_rw [map_smul]
   abel
 

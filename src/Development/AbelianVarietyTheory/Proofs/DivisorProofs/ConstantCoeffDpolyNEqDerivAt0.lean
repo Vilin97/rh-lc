@@ -163,7 +163,8 @@ theorem cc_lin (j : Fin n) (e : Fin d) : constantCoeff (lin β w j e) = 0 := by
   first
   | (simp [lin, MvPowerSeries.smul_eq_C_mul]; done)
   | (unfold lin
-     rw [map_sum]
+     set_option synthInstance.maxHeartbeats 100000 in
+       rw [map_sum]
      refine Finset.sum_eq_zero fun l _ => ?_
      rw [MvPowerSeries.smul_eq_C_mul, map_mul, MvPowerSeries.constantCoeff_X, mul_zero])
 
@@ -209,7 +210,8 @@ theorem pderiv_subst_psi (G : FGLaw C d) (hL : ∀ a, L.F a = subst (twoVars C d
   simp only [hcol]
   simp only [GlobalTheory.MatChain.dofN_eq G, GlobalTheory.MatChain.jv]
   rw [← MvPowerSeries.coe_substAlgHom hΨ]
-  simp only [map_sum, map_mul, MvPowerSeries.coe_substAlgHom, subst_C_eq_C' hΨ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, MvPowerSeries.coe_substAlgHom, subst_C_eq_C' hΨ]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [Finset.mul_sum]
   refine Finset.sum_congr rfl fun c _ => ?_
@@ -278,7 +280,8 @@ theorem constantCoeff_dpolyN_eq_derivAt0 : ∀ (C : Type) [Field C] [CharZero C]
   have hlinD : ∀ (Q : MvPolynomial Λ C) (b : Fin n → C) (s : Fin n → MvPowerSeries Λ C),
       derivAt0 Q (∑ j, MvPowerSeries.C (b j) * s j) = ∑ j, b j * derivAt0 Q (s j) := by
     intro Q b s
-    simp only [derivAt0, map_sum, MvPowerSeries.coeff_C_mul, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [derivAt0, map_sum, MvPowerSeries.coeff_C_mul, Finset.mul_sum]
     rw [Finset.sum_comm]
     exact Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun α _ => by ring
   revert g
@@ -303,7 +306,8 @@ theorem constantCoeff_dpolyN_eq_derivAt0 : ∀ (C : Type) [Field C] [CharZero C]
     rw [hφ, hfin]
     simp only [GlobalTheory.MatChain.dpoly_C_mul, GlobalTheory.MatChain.dpoly_mul_X, hcp, hu, hcomm1]
     rw [← derivAt0_pderiv v Q l, pderiv_subst_psi L β w G hL l g, ← MvPowerSeries.coe_substAlgHom hΨ]
-    simp only [map_sum, map_mul, MvPowerSeries.coe_substAlgHom, subst_C_eq_C' hΨ, MvPowerSeries.constantCoeff_C, h]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, MvPowerSeries.coe_substAlgHom, subst_C_eq_C' hΨ, MvPowerSeries.constantCoeff_C, h]
     rw [hlinD]
 
 end GlobalTheory.ExpCoord

@@ -24,7 +24,8 @@ theorem exists_eq_apply_of_algHom {O : Type} [CommRing O] [IsDomain O] {N : ℕ}
       change f _ * f _ = f _
       rw [← map_mul, hsq])
   have hsum : ∑ k, f (Pi.single k 1) = 1 := by
-    rw [← map_sum, ← map_one f]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, ← map_one f]
     congr 1
     ext j
     simp [Finset.sum_apply, Pi.single_apply]
@@ -94,13 +95,15 @@ theorem level_span (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgClosed C]
     (LinearMap.proj n ∘ₗ G.dual.omegaSub.subtype) ∘ₗ
       Fintype.linearCombination O (fun i => hodgeTate G (b i))
   have hLev : ∀ c, Lev c = ∑ i, c i • (hodgeTate G (b i)).1 n := fun c => by
-    simp only [Lev, LinearMap.comp_apply, Fintype.linearCombination_apply, map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Lev, LinearMap.comp_apply, Fintype.linearCombination_apply, map_sum, map_smul]
     rfl
   have hpt : ∀ t : G.Tate, (hodgeTate G t).1 n ∈ LinearMap.range Lev := fun t => by
     refine ⟨fun i => (digit n (b.repr t i) : O), ?_⟩
     rw [hLev]
     conv_rhs => rw [← b.sum_repr t]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     change _ = ((∑ i, hodgeTate G (b.repr t i • b i) : G.dual.omega) : ∀ k, Cot O (G.dual.A k)) n
     rw [Submodule.coe_sum, Finset.sum_apply]
     exact Finset.sum_congr rfl fun i _ => (hodgeTate_smul_val G _ _ n).symm
@@ -123,14 +126,16 @@ theorem level_span (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgClosed C]
     refine WithConv.ofConv_injective ?_
     conv_lhs => rw [← β.sum_dual_apply_smul_coord φ.ofConv]
     change _ = CartierDual.toDual O (G.A n) _
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_smul, hγ]
     rfl
   suffices hw : AugCot.d (counitAlgHom O (G.dual.A n)) φ ∈ LinearMap.range Lev by
     obtain ⟨c, hc⟩ := hw
     exact ⟨c, (hLev c).symm.trans hc⟩
-  rw [hφ, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hφ, map_sum]
   exact Submodule.sum_mem _ fun k _ => by rw [map_smul]; exact Submodule.smul_mem _ _ (hmem k)
 
 end GlobalTheory.ConstHT
@@ -218,7 +223,8 @@ theorem level_indep (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgClosed C
     · subst hi; rw [Finsupp.single_eq_same, map_one, hg1, if_pos rfl]
     · rw [Finsupp.single_eq_of_ne (Ne.symm hi), map_zero, map_zero, if_neg hi]
   have h2 := congrArg Dl hc
-  rw [map_sum, map_zero] at h2
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_zero] at h2
   simp only [map_smul, hDl, smul_ite, smul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true] at h2
   rw [← Ideal.mem_span_singleton, ← Ideal.Quotient.eq_zero_iff_mem]
   rw [Algebra.smul_def, mul_one] at h2
@@ -256,7 +262,8 @@ theorem omega_const : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgCl
     have hcompat : ∀ n i, (p : O) ^ n ∣ c (n + 1) i - c n i := fun n =>
       level_indep p C O G hG h b n _ (by
         simp only [Pi.sub_apply, sub_smul, Finset.sum_sub_distrib]
-        rw [sub_eq_zero, hc n, ← w.2 n, ← hc (n + 1), map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [sub_eq_zero, hc n, ← w.2 n, ← hc (n + 1), map_sum]
         refine Finset.sum_congr rfl fun i _ => ?_
         rw [map_smul, (hodgeTate G (b i)).2 n])
     have hL : ∀ i, ∃ L : O, ∀ n, (p : O) ^ n ∣ c n i - L := fun i => by

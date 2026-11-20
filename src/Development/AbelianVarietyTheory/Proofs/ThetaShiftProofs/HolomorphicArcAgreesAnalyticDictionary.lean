@@ -156,7 +156,8 @@ theorem form_eq_zero (D : A.V →ₗ[ℝ] A.V →ₗ[ℝ] ℝ) (alt : ∀ a b, D
     have e : a = ∑ i, a.1 (b i) • A.P0 (AnArc.La.mk 0 (b.coord i).toAddMonoidHom 0) := by
       refine Prod.ext (A.coord.injective (funext fun k => ?_)) (by simp [ha, Prod.snd_sum])
       simp [Prod.fst_sum, AnArc.coord_apply, b, Finsupp.single_apply]
-    rw [e, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, map_sum]
     exact Finset.sum_eq_zero fun i _ => hc _ _ (h₁ _)
   let s : Set A.V := {a | a.2 = 0} ∪ Set.range fun l => A.P0 (AnArc.La.mk 0 0 l)
   have hs : Submodule.span ℝ s = ⊤ := by

@@ -26,7 +26,8 @@ theorem lbIso_pull_translDiff {S : Scheme.{0}} {A : Over S} [GrpObj A] {L : LB A
   have h₂ := LB.isLB_linComb hL (K := Fin 2)
     ![(lift (toUnit A ≫ x) (𝟙 A) ≫ μ[A]).left, 𝟙 A.left] ![1, -1]
   refine (CechPic.cls_eq_iff (LB.isLB_pull h₂ _) (LB.isLB_pull h₁ _)).1 ?_
-  rw [CechPic.cls_pull h₂, CechPic.cls_pull h₁, CechPic.cls_linComb hL _ _ h₂,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [CechPic.cls_pull h₂, CechPic.cls_pull h₁, CechPic.cls_linComb hL _ _ h₂,
     show CechPic.cls _ h₁ = _ from CechPic.cls_linComb hL _ _ h₁, map_sum, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [map_zsmul, map_zsmul, ← CechPic.pull_comp, ← CechPic.pull_comp]

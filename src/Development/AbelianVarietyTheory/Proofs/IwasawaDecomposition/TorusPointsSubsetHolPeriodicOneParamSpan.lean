@@ -166,7 +166,8 @@ theorem mem_closure_oneParam [Module.Free ℤ Λ] [Module.Finite ℤ Λ]
     ext x
     simp
     conv_lhs => rw [← b.sum_repr x]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_zsmul, zsmul_eq_mul]
     ring

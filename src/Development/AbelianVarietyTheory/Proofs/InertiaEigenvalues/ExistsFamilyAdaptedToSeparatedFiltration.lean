@@ -71,7 +71,8 @@ theorem exists_family_adapted_filtration :
         by_cases ha : lo = a
         · subst ha
           have h3 := hf hs
-          rw [LinearMap.mem_ker, map_add, map_sum, map_smul] at h3
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [LinearMap.mem_ker, map_add, map_sum, map_smul] at h3
           have h4 : ∑ j : Fin d, f (c j.succ • x j) = 0 :=
             Finset.sum_eq_zero fun j _ => by
               rw [map_smul, (LinearMap.mem_ker.mp (h1 j).1.2), smul_zero]

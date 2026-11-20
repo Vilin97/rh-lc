@@ -110,7 +110,8 @@ theorem abs_linear_le {ι : Type} [Fintype ι] {N : ℕ} (f : (ι → Fin N → 
     funext τ i
     simp [Finset.sum_apply, Pi.single_apply, ite_apply]
   conv_lhs => rw [hu]
-  simp only [map_sum, map_smul, smul_eq_mul, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, smul_eq_mul, Finset.mul_sum]
   refine (Finset.abs_sum_le_sum_abs _ _).trans (Finset.sum_le_sum fun τ _ =>
     (Finset.abs_sum_le_sum_abs _ _).trans (Finset.sum_le_sum fun i _ => ?_))
   rw [abs_mul]

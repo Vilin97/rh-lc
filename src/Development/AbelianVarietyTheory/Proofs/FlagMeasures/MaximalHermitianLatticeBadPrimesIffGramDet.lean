@@ -18,12 +18,14 @@ theorem form_eq_sum (h : V →ₗ⋆[K] V →ₗ[K] K) (e : Module.Basis ι K V)
     (he : ∀ i l, i ≠ l → h (e i) (e l) = 0) (x y : V) :
     h x y = ∑ i, star (e.repr x i) * h (e i) (e i) * e.repr y i := by
   conv_lhs => rw [← e.sum_repr x]
-  rw [map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, LinearMap.sum_apply]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, starRingEnd_apply, mul_assoc]
   congr 1
   conv_lhs => rw [← e.sum_repr y]
-  rw [map_sum, Finset.sum_eq_single i]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_eq_single i]
   · rw [map_smul, smul_eq_mul, mul_comm]
   · intro l _ hl
     rw [map_smul, he i l hl.symm, smul_zero]

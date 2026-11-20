@@ -161,7 +161,8 @@ theorem exists_matrix (c : CubicalStr A L) {H : Type} [CommRing H] [Algebra O H]
     Algebra.TensorProduct.productMap_left, Algebra.TensorProduct.productMap_right] at h
   convert h using 1
   conv_rhs => rw [← (b.tensorProduct b).sum_repr e]
-  rw [map_sum, Fintype.sum_prod_type]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Fintype.sum_prod_type]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   rw [map_smul, Module.Basis.tensorProduct_apply, Algebra.TensorProduct.productMap_apply_tmul, Algebra.smul_def,
     _root_.mul_assoc]

@@ -54,7 +54,8 @@ theorem eigen_span_iff : ∀ {G Γ W K G0 : Type} [Group G] [Group Γ] (ι : Γ 
     have L_apply : ∀ F, L F = ∑ g : G0, σ (GlobalTheory.TraceIncl.invChar U ψ g) • gA (κ g) F := fun F => by
       simp [L, LinearMap.sum_apply]
     have hLext : ∀ f : S.Forms, L (P.extL f) = P.extL (GlobalTheory.TraceIncl.trU act U ψ f) := fun f => by
-      rw [L_apply, GlobalTheory.TraceIncl.trU_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [L_apply, GlobalTheory.TraceIncl.trU_apply, map_sum]
       refine Finset.sum_congr rfl fun g _ => ?_
       rw [hsemi, hact g (κ g) (hκ g)]
     let E := P.extL '' {f | ∀ u : U, act (u : G0) f = ((ψ u : Kˣ) : K) • f}

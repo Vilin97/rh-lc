@@ -197,9 +197,11 @@ theorem nuBridge : NuBridge := by
     simp only [sumReI]
     refine Finset.sum_congr rfl fun v _ => ?_
     show (PI.AprimeInfU.evInf X v (pairHerm (Ainf X.B.I.F) X.B.I.cm.sig (D.R.rS + 1 + D.R.rS) S T)).re = _
-    rw [pairHerm, map_mul, NuB.evInf_alg, NuB.evInf_trace, half_emb, half_re, map_sum, Complex.re_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [pairHerm, map_mul, NuB.evInf_alg, NuB.evInf_trace, half_emb, half_re, map_sum, Complex.re_sum]
     refine Finset.sum_congr rfl fun a _ => ?_
-    rw [map_sum, Complex.re_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Complex.re_sum]
     refine Finset.sum_congr rfl fun b _ => ?_
     rw [map_mul, hTh v a b]
     simp only [thH, Matrix.map_apply, Complex.mul_re, Complex.conj_re, Complex.conj_im]

@@ -136,7 +136,8 @@ theorem fderiv_opFst (T : 𝓢(V, ℂ) →L[ℂ] 𝓢(W, E)) (f : 𝓢(V × V', 
   simp [compFst, coordSnd]
   congr 1
   conv_lhs => rw [hv]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_smul, dSndCLM_apply]
 

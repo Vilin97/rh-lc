@@ -67,7 +67,8 @@ theorem iSup_part [IsSepClosed L] [Algebra.Etale K B] (m : B →ₐ[K] Module.En
   have hχ : ∀ i b, χ i b = e (1 ⊗ₜ b) i := fun _ _ => rfl
   refine eq_top_iff.2 fun v _ => ?_
   have h1 : v = ∑ i, M (e.symm (Pi.single i 1)) v := by
-    rw [← LinearMap.sum_apply, ← map_sum, ← map_sum, Finset.univ_sum_single (fun _ => (1 : L))]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← LinearMap.sum_apply, ← map_sum, ← map_sum, Finset.univ_sum_single (fun _ => (1 : L))]
     have : e.symm (fun _ => (1 : L)) = 1 := map_one e.symm
     rw [this, map_one]
     rfl

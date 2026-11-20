@@ -208,7 +208,8 @@ theorem lead_det {k : ℕ} (w : Fin k → Fin k → σ) (hw : ∀ b c, p (w b c)
     rw [hM, Matrix.det_diagonal, MvPolynomial.monomial_sum_one]
     rfl
   · have hdeg : (∑ b : Fin k, Finsupp.single (w b b) 1).degree = k := by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simp [Finsupp.degree_single]
     rw [hdeg, Matrix.det_apply]
     apply MvPolynomial.IsHomogeneous.sum

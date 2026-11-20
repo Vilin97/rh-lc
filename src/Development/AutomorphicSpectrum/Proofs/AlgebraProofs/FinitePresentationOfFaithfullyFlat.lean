@@ -42,10 +42,12 @@ theorem ker_fg_of_projective {P C M : Type*} [CommRing P] [CommRing C] [Algebra 
   let E : (Fin n → P) → Fin n → P := fun x j => ∑ i, x i * v (i, j)
   have key1 : ∀ x j, algebraMap P C (E x j) = s (π x) j := fun x j => by
     have hsx : s (π x) = ∑ i, algebraMap P C (x i) • s (b i) := by
-      rw [hπC, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hπC, map_sum]
       simp only [map_smul]
     rw [hsx, Finset.sum_apply]
-    simp only [E, map_sum, map_mul, hv, Pi.smul_apply, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [E, map_sum, map_mul, hv, Pi.smul_apply, smul_eq_mul]
   have key2 : ∀ x, π (fun j => E x j) = π x := fun x => by
     rw [hπC]
     simp only [key1]

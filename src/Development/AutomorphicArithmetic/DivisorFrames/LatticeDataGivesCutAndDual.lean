@@ -37,7 +37,8 @@ private theorem span_of_casimir {O La V K : Type} [CommRing O] [AddCommGroup La]
     induction hy using Submodule.span_induction with
     | mem x hx =>
       obtain ⟨i, rfl⟩ := hx
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simp only [phi_tmul]
       exact Submodule.subset_span ⟨i, rfl⟩
     | zero => simp
@@ -51,8 +52,10 @@ private theorem span_of_casimir {O La V K : Type} [CommRing O] [AddCommGroup La]
       apply hL
       intro o
       have h1 := congrArg (TensorProduct.map σ.toIntAlgHom.toLinearMap g) (hc o)
-      simp only [map_sum, TensorProduct.map_tmul] at h1
-      simp only [map_sum, LinearMap.baseChange_tmul, Finset.smul_sum, TensorProduct.smul_tmul']
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, TensorProduct.map_tmul] at h1
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, LinearMap.baseChange_tmul, Finset.smul_sum, TensorProduct.smul_tmul']
       simp only [g, LinearMap.restrictScalars_apply, LinearMap.toSpanSingleton_apply, mul_smul, map_mul,
         AlgHom.toLinearMap_apply] at h1
       exact h1
@@ -73,7 +76,8 @@ private theorem span_of_casimir {O La V K : Type} [CommRing O] [AddCommGroup La]
     simp only [Q, LinearMap.sum_apply, LinearMap.smul_apply, hw, smul_smul]
     rw [← Finset.sum_smul]
     congr 1
-    simp [map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, map_mul]
   have : w = (β (σ (∑ j, c j * θ j)))⁻¹ • Q w := by
     rw [hQ, smul_smul, inv_mul_cancel₀ hne, one_smul]
   rw [this]
@@ -87,7 +91,8 @@ private theorem coeff_eq {La K : Type} [AddCommGroup La] [CommRing K] (B : Linea
   have h1 : ∀ m, S i m * B.baseChange K (∑ j, c j • ∑ m', T j m' ⊗ₜ[ℤ] a m') (1 ⊗ₜ a m) =
       -∑ j, c j * ∑ m', S i m * T j m' * ((B (a m) (a m') : ℤ) : K) := by
     intro m
-    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, LinearMap.BilinForm.baseChange_tmul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, LinearMap.BilinForm.baseChange_tmul,
       smul_eq_mul, Finset.mul_sum, ← Finset.sum_neg_distrib]
     refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun m' _ => ?_
     rw [halt (a m') (a m)]
@@ -102,9 +107,11 @@ private theorem pair_eq {La K : Type} [AddCommGroup La] [CommRing K] (B : Linear
     {M N : ℕ} (a : Fin M → La) (T : Fin N → Fin M → K) (c : Fin N → K) (y : K ⊗[ℤ] La) :
     ∑ j, (∑ m, T j m * B.baseChange K y (1 ⊗ₜ a m)) * (-c j) =
       -B.baseChange K y (∑ j, c j • ∑ m', T j m' ⊗ₜ[ℤ] a m') := by
-  rw [map_sum, ← Finset.sum_neg_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, ← Finset.sum_neg_distrib]
   refine Finset.sum_congr rfl fun j _ => ?_
-  rw [map_smul, map_sum, smul_eq_mul, mul_neg, mul_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_smul, map_sum, smul_eq_mul, mul_neg, mul_comm]
   congr 2
   refine Finset.sum_congr rfl fun m _ => ?_
   rw [← smul_eq_mul, ← map_smul, TensorProduct.smul_tmul', smul_eq_mul, _root_.mul_one]
@@ -114,7 +121,8 @@ private theorem norm_pair_le {La K : Type} [AddCommGroup La] [NormedField K] [Is
     {M N : ℕ} (a : Fin M → La) (T : Fin N → Fin M → K) (hT : ∀ j m, ‖T j m‖ ≤ 1) (c : Fin N → K)
     (hc : ∀ j, ‖c j‖ ≤ 1) (b : La) :
     ‖B.baseChange K (∑ j, c j • ∑ m', T j m' ⊗ₜ[ℤ] a m') (1 ⊗ₜ b)‖ ≤ 1 := by
-  simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, LinearMap.BilinForm.baseChange_tmul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, LinearMap.BilinForm.baseChange_tmul,
       smul_eq_mul]
   refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg zero_le_one fun j _ => ?_
   rw [norm_mul]
@@ -141,7 +149,8 @@ theorem UpperTheory.lattice_data_gives_cut_and_dual :
       if i = j then 1 else 0 := by
     intro i j
     have h := congrArg (intO ℂ_[p]).subtype (hL.2.1 i j)
-    simp only [map_sum, map_mul, map_intCast, Subring.subtype_apply] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, map_intCast, Subring.subtype_apply] at h
     rw [h]
     split_ifs <;> simp
   have hsp : ∀ y, IsEigL Dw ((intO ℂ_[p]).subtype.comp s) y →

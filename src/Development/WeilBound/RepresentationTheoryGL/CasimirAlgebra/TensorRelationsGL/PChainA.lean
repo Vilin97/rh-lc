@@ -42,7 +42,8 @@ theorem qdet_comp {n : ℕ} (f : V →ₗ[ℂ] W) (E : Fin n → Fin n → Modul
     · refine LinearMap.ext fun v => ?_; simp
     · simp
   refine LinearMap.ext fun v => ?_
-  simp only [LinearMap.comp_apply, LinearMap.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [LinearMap.comp_apply, LinearMap.sum_apply, map_sum]
   exact Finset.sum_congr rfl fun σ _ => LinearMap.congr_fun (key σ) v
 
 theorem listSub_comp (f : V →ₗ[ℂ] W) (A : Module.End ℂ V) (B : Module.End ℂ W) (h : f ∘ₗ A = B ∘ₗ f)

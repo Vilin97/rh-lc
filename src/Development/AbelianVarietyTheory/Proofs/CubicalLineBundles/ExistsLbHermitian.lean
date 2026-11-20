@@ -21,7 +21,8 @@ variable {S : Scheme.{0}} {G A T : Over S} [GrpObj G] [GrpObj A]
 
 theorem lam_sum {I : Type} (s : Finset I) (c : I → Pic A.left) (x y : T ⟶ A) :
     lam (∑ i ∈ s, c i) x y = ∑ i ∈ s, lam (c i) x y := by
-  simp only [lam, map_sum, Finset.sum_add_distrib, Finset.sum_sub_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [lam, map_sum, Finset.sum_add_distrib, Finset.sum_sub_distrib]
 
 variable [IsCommMonObj G] {L : LB G.left} (hL : L.IsLB) (hΘ : ∃ t : LB.Gen (Theta G L), t.IsGen)
 include hΘ
@@ -48,16 +49,19 @@ theorem herm_expand {O : Type} [CommRing O] (bar : O →+* O) {M : Type} [AddCom
       h (P.proj (Pi.single i 1)) (P.proj (Pi.single j 1)) := by
   have hx : ∀ m : M, m = ∑ i, P.incl m i • P.proj (Pi.single i 1) := fun m => by
     have e : P.proj (P.incl m) = m := congr($(P.proj_incl) m)
-    simp only [← map_smul, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [← map_smul, ← map_sum]
     rw [← pi_eq_sum_univ', e]
   have lin : ∀ m n : M, h m n = ∑ i, P.incl m i * h (P.proj (Pi.single i 1)) n := fun m n => by
     let f : M →+ O := AddMonoidHom.mk' (fun m => h m n) fun a b => hadd a b n
     have : f m = f (∑ i, P.incl m i • P.proj (Pi.single i 1)) := congrArg f (hx m)
-    rw [map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at this
     exact this.trans (Finset.sum_congr rfl fun i _ => hsmul _ _ _)
   rw [lin]
   refine Finset.sum_congr rfl fun i _ => ?_
-  rw [hsym n, lin n, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hsym n, lin n, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_mul, ← hsym, _root_.mul_assoc]
 
@@ -109,7 +113,8 @@ theorem exists_lb_hermitian : ∀ (S : Scheme.{0}) (G : Over S) [GrpObj G] [IsCo
     have hq : ∀ m i c, t.tmul m ≫ p i ≫ a.act c = a.act (P.incl m i * c) := fun m i c => by
       rw [← Category.assoc, hp, a.mul]
     rw [key]
-    simp only [Category.assoc, hq, lam_comm _ (snd G G ≫ _), hφ, ← map_add, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Category.assoc, hq, lam_comm _ (snd G G ≫ _), hφ, ← map_add, ← map_sum]
     change _ = φ (h m n)
     congr 1
     have E := herm_expand bar h hadd hsmul hsym P m n

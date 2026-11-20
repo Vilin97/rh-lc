@@ -16,7 +16,8 @@ theorem sum_esymm_mul_hsymm_int {k : ℕ} (hk : k ≠ 0) :
   apply map_injective (Int.castRingHom ℂ) Int.cast_injective
   apply MvPolynomial.funext
   intro x
-  simp only [map_sum, map_mul, map_pow, map_neg, map_one, map_esymm, map_hsymm, map_zero]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, map_pow, map_neg, map_one, map_esymm, map_hsymm, map_zero]
   rw [GroundTheory.Heights₂.Theta.SymmFun.sum_esymm_mul_hsymm x k, if_neg hk]
 
 theorem esymm_mem_adjoin (k : ℕ) :

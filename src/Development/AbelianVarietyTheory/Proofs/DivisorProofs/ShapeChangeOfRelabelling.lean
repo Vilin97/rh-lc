@@ -17,7 +17,8 @@ omit [DecidableEq ι] in
 theorem rename_linRoot (σ : Equiv.Perm ι) (u : ι → Fin N → ℝ) :
     rename (Prod.map σ id) (linRoot (fun τ => u (σ τ))) = linRoot u := by
   unfold linRoot
-  rw [map_neg, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_neg, map_sum]
   congr 1
   rw [← Equiv.sum_comp (σ.prodCongr (Equiv.refl (Fin N))) (fun x => C (u x.1 x.2) * X x)]
   refine Finset.sum_congr rfl fun x _ => ?_
@@ -45,7 +46,8 @@ omit [DecidableEq ι] in
 theorem ev_invForm (j : ℕ) (al be : ι → ℝ) (u : ι → Fin N → ℝ) :
     ev u (invForm j al be) = ∑ τ, (al τ * ev u (pLow j τ 1) + be τ * ev u (pHigh j τ 1)) := by
   unfold ev invForm
-  simp [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum]
 
 theorem average (j d : ℕ) (G : Subgroup (Equiv.Perm ι)) [MulAction.IsPretransitive G ι]
     (φ hh : Pol ι N →ₗ[ℝ] ℝ) (v k e : ℝ)
@@ -90,7 +92,8 @@ theorem average (j d : ℕ) (G : Subgroup (Equiv.Perm ι)) [MulAction.IsPretrans
     have hev : ev u (C n⁻¹ * ∑ g : G, rename (fun x : ι × Fin N => ((g : Equiv.Perm ι) x.1, x.2)) E) =
         n⁻¹ * ∑ g : G, ev u (rename (fun x : ι × Fin N => ((g : Equiv.Perm ι) x.1, x.2)) E) := by
       unfold ev
-      rw [map_mul, eval_C, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_mul, eval_C, map_sum]
     rw [Finset.sum_add_distrib, ← Finset.mul_sum, Finset.sum_add_distrib, ← Finset.mul_sum, hinv,
       Finset.sum_const, Finset.sum_const, Finset.card_univ, nsmul_eq_mul, nsmul_eq_mul, ← hn] at hs
     rw [hev]

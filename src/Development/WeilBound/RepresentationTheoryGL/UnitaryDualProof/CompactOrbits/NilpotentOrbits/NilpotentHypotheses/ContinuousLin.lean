@@ -82,7 +82,8 @@ theorem continuous_lin {n : ℕ} (L : Matrix (Fin n) (Fin n) k →ₗ[k] Matrix 
       fun x => ∑ i, ∑ j, x i j • L (Matrix.single i j 1) := by
     funext x
     conv_lhs => rw [Matrix.matrix_eq_sum_single x]
-    simp only [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
     rw [← map_smul, Matrix.smul_single, smul_eq_mul, mul_one]
   rw [hL]

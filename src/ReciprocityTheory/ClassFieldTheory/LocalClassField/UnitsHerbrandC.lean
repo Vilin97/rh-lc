@@ -24,7 +24,8 @@ theorem Phi_map (σ : L ≃ₐ[K] L) (x : L) (τ : L ≃ₐ[K] L) : Phi K L (σ 
     rw [Phi_symm_apply]
     calc σ x = σ ((Phi K L).symm (Phi K L x)) := by simp
       _ = ∑ ρ, Phi K L x ρ • (σ * ρ) (IsGalois.normalBasis K L 1) := by
-        rw [Phi_symm_apply, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [Phi_symm_apply, map_sum]
         exact Finset.sum_congr rfl fun ρ _ => by rw [map_smul]; rfl
       _ = ∑ τ, Phi K L x (σ⁻¹ * τ) • τ (IsGalois.normalBasis K L 1) :=
         Fintype.sum_equiv (Equiv.mulLeft σ) _ _ (fun ρ => by simp)

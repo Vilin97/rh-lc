@@ -111,7 +111,8 @@ theorem eig_combG {x : Sp Ω ⟶ Z.X} (τ : E →+* ℂ) {m : ℕ} (v : Fin m �
     (hv : ∀ i, IsEigV (actR (x0 := x) (S := Ω) Z.t.act) (embK c τ) (v i)) (a : Fin m → Ω) :
     IsEigV (actR (x0 := x) (S := Ω) Z.t.act) (embK c τ) (∑ i, a i • v i) := by
   intro b
-  rw [map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.smul_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_smul, hv i b, smul_comm]
 

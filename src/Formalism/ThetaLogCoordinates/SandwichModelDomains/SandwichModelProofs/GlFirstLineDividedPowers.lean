@@ -130,7 +130,8 @@ theorem gl_first_line_divided_powers : RowGlDiv := by
       rw [rgl_rowDiv_C_succ, pow_succ, Module.End.mul_apply, glAct_C', map_zero, map_zero, smul_zero]
   | add f g hf hg => rw [rowDiv_add, map_add, map_add, map_add, smul_add, hf, hg]
   | mul_X f v hf =>
-    rw [rgl_rowDiv_mul, map_mul, divPow_mul _ (Formalism.GM.M.FB.glAct_mul (vecL ν) n a b), map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [rgl_rowDiv_mul, map_mul, divPow_mul _ (Formalism.GM.M.FB.glAct_mul (vecL ν) n a b), map_sum]
     refine Finset.sum_congr rfl fun ij _ => ?_
     rw [map_mul, hf, rgl_div_X ν a b hab]
 

@@ -97,7 +97,8 @@ theorem jB_inj : Function.Injective (jB σ b) :=
   inj_of_li σ (jB σ b) (Pi.basisFun K (Fin n)) (jB_basis0 σ b).1
 
 theorem repr_jB (x : Fin n → K) (i : Fin n) : b.repr (jB σ b x) i = σ (x i) := by
-  rw [jB_apply, map_sum, WithLp.ofLp_sum, Finset.sum_apply, Finset.sum_eq_single i]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [jB_apply, map_sum, WithLp.ofLp_sum, Finset.sum_apply, Finset.sum_eq_single i]
   · rw [map_smul, b.repr_self]; simp
   · intro k _ hk
     rw [map_smul, b.repr_self]; simp [hk]
@@ -225,11 +226,13 @@ theorem basis_of_basis {K W M ι κ : Type} [Field K] [AddCommGroup W] [Module K
     LinearIndependent ℂ (fun i => e (b' i)) ∧ Submodule.span ℂ (Set.range fun i => e (b' i)) = ⊤ := by
   have hexp : ∀ (c : Module.Basis ι K W) (x : W), e x = ∑ i, σ (c.repr x i) • e (c i) := fun c x => by
     conv_lhs => rw [← c.sum_repr x]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun i _ => LinearMap.map_smulₛₗ e _ _
   have hexp' : ∀ x : W, e x = ∑ i, σ (b'.repr x i) • e (b' i) := fun x => by
     conv_lhs => rw [← b'.sum_repr x]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun i _ => LinearMap.map_smulₛₗ e _ _
   have hspan : Submodule.span ℂ (Set.range fun i => e (b' i)) = ⊤ := by
     rw [eq_top_iff, ← hb.2, Submodule.span_le]

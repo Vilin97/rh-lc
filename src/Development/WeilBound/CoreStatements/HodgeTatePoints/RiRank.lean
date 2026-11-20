@@ -52,7 +52,8 @@ lemma wsum_zero_of_ne (hv : v.Integers R) {χ : MulChar F R} (hχ : χ ≠ 1) (g
   haveI : IsDomain R := Function.Injective.isDomain (algebraMap R C) hv.hom_inj
   have hs : ∑ a : F, χ⁻¹ a = 0 := MulChar.sum_eq_zero_of_ne_one (inv_ne_one.mpr hχ)
   simp only [wsum, mul_zero]
-  rw [← Finset.sum_mul, ← map_sum, hs, map_zero, zero_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Finset.sum_mul, ← map_sum, hs, map_zero, zero_mul]
 
 lemma sum_inv_mul (χ : MulChar F R) :
     ∑ a : F, algebraMap R C (χ⁻¹ a) * algebraMap R C (χ a) = (Fintype.card F : C) - 1 := by

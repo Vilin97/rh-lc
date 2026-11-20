@@ -91,13 +91,15 @@ theorem li_map {K L : Type*} [Field K] [Field L] (σ : K →+* L) {n m : Type*} 
       funext j
       simp [Finset.sum_apply, Pi.single_apply]
     conv_lhs => rw [hx]
-    simp only [map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul]
   have hid : ∀ k k', ∑ i, σ (u k i) * σ (g (Pi.single i 1) k') = if k' = k then 1 else 0 := by
     intro k k'
     have h0 := congrFun ((hexp k).symm.trans (hgu k)) k'
     simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul] at h0
     have h1 := congrArg σ h0
-    rw [map_sum] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at h1
     simp only [map_mul] at h1
     rw [h1, Pi.single_apply]
     split_ifs <;> simp
@@ -200,7 +202,8 @@ theorem fcoord_lincomb (b : Basis ι K V) (X : InfinitePlace K → Matrix ι ι 
   let F : V →+ (ι → ℂ) :=
     { toFun := Formalism.HermitianLatticesTheory.fcoord b X v, map_zero' := hzero, map_add' := hadd }
   change F (∑ k, c k • y k) = _
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_congr rfl fun k _ => fcoord_smul b X v (c k) (y k)
 
 theorem realize_mem (b : Basis ι K V) (X : InfinitePlace K → Matrix ι ι ℂ) (N : Submodule (𝓞 K) V)

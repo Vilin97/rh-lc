@@ -13,7 +13,8 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E]
 
 theorem sEmb : SEmb E := by
   intro r τ G x y
-  simp [hermC, herm, Data.emb, map_sum, map_mul, emb_cc]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [hermC, herm, Data.emb, map_sum, map_mul, emb_cc]
 
 theorem sMajFlag : SMajFlag E := by
   intro r X x x' hx hx' h

@@ -32,7 +32,8 @@ theorem val_eq_sum {X : Scheme.{0}} {F P : X.Modules} (θ : F ⟶ dual P) {g : �
       ∑ l, valF w _ ((he.basis hU).repr σ l) *
         (Scheme.ΓSpecIso (.of k)).hom (w.appLE T ⊤ hw (dualApp (θ.app _ (e l)) (hT.trans hU) μ)) := by
   conv_lhs => rw [← (he.basis hU).sum_repr σ]
-  rw [map_sum, dualApp_sum, LinearMap.sum_apply, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, dualApp_sum, LinearMap.sum_apply, map_sum, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [Scheme.Modules.Hom.app_smul, dualApp_smul, LinearMap.smul_apply, smul_eq_mul, map_mul, map_mul, appLE_resG,
     IsFrame.basis_apply, valF, dif_pos (hw.trans (w.preimage_mono hT)), app_resM, dualApp_res]

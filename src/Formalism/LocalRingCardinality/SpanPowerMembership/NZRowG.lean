@@ -124,7 +124,8 @@ theorem row_thetaRat : Idx.ThetaRat (levelRecordDivisor H u0 hcW hv0 hb0 he0 hf0
 theorem row_hermRat : Idx.HermRat DR := fun μ j _ _ (x y : Fin d0 → H.E) => by
   letI : StarRing H.E := H.cmStar
   have e : H.φ₀ (∑ i, star (x i) * y i : H.E) = inner ℂ (jB H.φ₀ (eb d0) x) (jB H.φ₀ (eb d0) y) := by
-    rw [inner_jB, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [inner_jB, map_sum]
     exact Finset.sum_congr rfl fun i _ => by rw [map_mul, emb_star H H.φ₀]
   exact ⟨_, e⟩
 

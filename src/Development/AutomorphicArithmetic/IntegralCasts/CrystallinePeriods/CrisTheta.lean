@@ -240,7 +240,8 @@ theorem theta_surjective (hθ : Function.Surjective (Ainf.theta p R)) :
   obtain ⟨y, hy⟩ := (eval_eq_zero_iff n (log u hu - algebraMap _ _ (logPartial (p ^ n) u hu))).1
     (by rw [RingHom.map_sub, eval_log u hu le_rfl, eval_algebraMap, sub_self])
   have h0 : AcrisZero.theta p R (logPartial (p ^ n) u hu) = 0 := by
-    rw [logPartial, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [logPartial, map_sum]
     exact Finset.sum_eq_zero fun k _ => by
       rw [map_mul, AcrisZero.theta_gamma (Nat.succ_ne_zero k), mul_zero]
   have h := congrArg (theta p R) hy

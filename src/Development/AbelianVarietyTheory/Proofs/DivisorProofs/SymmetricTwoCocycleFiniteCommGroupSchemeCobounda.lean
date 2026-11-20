@@ -72,7 +72,8 @@ theorem mulpt (K : Type) [CommRing K] (B A : Type) [CommRing B] [HopfAlgebra K B
       j (((Algebra.TensorProduct.lift φ ψ (fun _ _ => Commute.all _ _)).comp (Bialgebra.comulAlgHom K B)) b) := by
   rw [AlgHom.comp_apply, Bialgebra.comulAlgHom_apply]
   obtain ⟨S, hS⟩ := TensorProduct.exists_finset (R := K) (Coalgebra.comul (R := K) b)
-  rw [GlobalTheory.CharExists.mulsharp K B Y f h b S (fun i => i.1) (fun i => i.2) hS, hS, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [GlobalTheory.CharExists.mulsharp K B Y f h b S (fun i => i.1) (fun i => i.2) hS, hS, map_sum, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [Algebra.TensorProduct.lift_tmul, map_mul, hf, hh]
 

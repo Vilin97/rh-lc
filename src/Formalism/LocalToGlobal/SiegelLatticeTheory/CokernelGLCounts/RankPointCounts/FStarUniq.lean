@@ -181,7 +181,8 @@ theorem mem_orth_of_span {ι : Type*} (v : ι → (VS D).V) (w : (VS D).V) (hw :
 
 theorem hT_sum {ι : Type*} [Fintype ι] (x : (VS D).V) (c : ι → D.host.E) (v : ι → (VS D).V) :
     (VS D).hT x (∑ i, c i • v i) = ∑ i, c i * (VS D).hT x (v i) := by
-  simp [map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, map_smul]
 
 theorem eq_zero_of_gram {ι : Type*} [Fintype ι] [DecidableEq ι] (v : ι → (VS D).V)
     (hM : (Matrix.of fun j i => (VS D).hT (v j) (v i)).det ≠ 0) {d : (VS D).V}

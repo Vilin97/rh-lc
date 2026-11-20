@@ -26,7 +26,8 @@ theorem coord_inj {l : ℕ} [Fact l.Prime] {X : Type} [AddCommGroup X] [Module (
 theorem dsum {l : ℕ} [Fact l.Prime] {X : Type} [AddCommGroup X] [Module (Om l) X] {p q : ℕ} (α : Fin p → ℤ_[l])
     (β : Fin p → Fin q → ℤ_[l]) (w : Fin q → X) :
     ∑ s, zOm l (α s) • ∑ i, zOm l (β s i) • w i = ∑ i, zOm l (∑ s, β s i * α s) • w i := by
-  simp only [Finset.smul_sum, smul_smul, map_sum, map_mul, Finset.sum_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finset.smul_sum, smul_smul, map_sum, map_mul, Finset.sum_smul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun s _ => ?_
   rw [mul_comm]

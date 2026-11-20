@@ -111,7 +111,8 @@ theorem crea_fock (hψ : IsStdChar D ψ (-1)) (hθ : IsInfFam θ) {x : DefSp S} 
         Formalism.IndefR.Datum.aPlus (heisO ψ S T) θ τ (cplxO (x.s τ) (y.s τ))
           (Formalism.IndefR.Datum.unitMap (x.B τ) (y.B τ) i j) (pureTensorO ψ θ S T x.s y.s x.B y.B f P) := by
     unfold pureTensorO
-    simp only [map_smul, map_sum, hX]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_smul, map_sum, hX]
     rfl
   rw [h2]
   congr 1

@@ -542,7 +542,8 @@ theorem inDual_iff {n : ℕ} (ξ : Sp E n →ₗ[E] E) : InDual P ξ ↔ ∀ i, 
   have e : y = ∑ i, y i • (Pi.single i 1 : Sp E n) := by
     funext j
     simp [Finset.sum_apply, Pi.single_apply]
-  rw [e, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, map_sum]
   refine intAt_sum _ fun i _ => ?_
   rw [map_smul, smul_eq_mul]
   exact (mem_stdAt.1 hy i).mul (h i)

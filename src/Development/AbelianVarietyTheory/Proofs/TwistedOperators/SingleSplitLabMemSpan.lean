@@ -54,7 +54,8 @@ theorem single_mem_span (nX nY q : ℕ) (hq : q ≠ 0) (c : ℂ) (hc : c ≠ 0) 
     rw [← Fin.sum_univ_eq_sum_range (fun i => z k i * a i)]
     conv_lhs => rw [show (fun i : Fin (nY + 1) => z k i) = ∑ i : Fin (nY + 1), z k i • Pi.single i (1 : ℂ) by
       ext m; simp [Finset.sum_apply, Pi.single_apply]]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     have hi := Fin.is_le i
     simp [ha, hi]

@@ -73,7 +73,8 @@ theorem scaleHom_genPtR {D : ComponentData II Ψ K ι Ω E} (Pl : PlueckerData D
           (∏ a, X (Sum.inr (q.1, headIdx (step_le q.2) a, c a))) * C (V q t c) := fun c => by
       rw [map_mul, map_prod, scaleHom_C]
       simp only [scaleHom_X_inr]
-    rw [hs, map_mul, scaleHom_X_inl, map_sum, Finset.sum_congr rfl fun c _ => hterm c, mul_assoc]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hs, map_mul, scaleHom_X_inl, map_sum, Finset.sum_congr rfl fun c _ => hterm c, mul_assoc]
     exact mul_left_comm _ _ _
 
 end FlagGenericPointScale

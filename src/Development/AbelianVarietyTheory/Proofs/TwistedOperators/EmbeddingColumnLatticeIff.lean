@@ -65,7 +65,8 @@ theorem form_line {K R : Type} [CommRing K] [CommRing R] (f : K →+* R) {n : �
     formHom (fun k => f (r k)) (fun k => s * f (a k)) = s := by
   show ∑ k, s * f (a k) * f (r k) = s
   simp only [mul_assoc, ← map_mul]
-  rw [← Finset.mul_sum, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Finset.mul_sum, ← map_sum]
   have : ∑ k, a k * r k = 1 := by
     rw [← h, dotProduct]; exact Finset.sum_congr rfl fun k _ => mul_comm _ _
   rw [this, map_one, mul_one]

@@ -27,7 +27,8 @@ def toIndefiniteRowSideFullHecke {P : ArithVariety n} (D : GroundTheory.Heights�
     obtain ⟨u, hu, hsum⟩ := D.generating c hc
     refine ⟨fun j ↦ funFieldEquiv P (u j), fun j ↦ (funFieldEquiv_mem_chartRing_iff P c _).2 (hu j), ?_⟩
     have h := congrArg (funFieldEquiv P) hsum
-    simpa only [map_sum, map_mul, map_div₀, map_inv₀, map_one, funFieldEquiv_chartPow, div_eq_mul_inv,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa only [map_sum, map_mul, map_div₀, map_inv₀, map_one, funFieldEquiv_chartPow, div_eq_mul_inv,
       chartPow_neg] using h
 
 def split_model_to_place_model {P : ArithVariety n} (D : AddBlockData P) : GroundTheory.Heights₂.Heights.AddBlockData P where
@@ -47,7 +48,8 @@ def split_model_to_place_model {P : ArithVariety n} (D : AddBlockData P) : Groun
     · rw [← funFieldEquiv_mem_chartRing_iff, RingEquiv.apply_symm_apply]
       exact hu j
     · apply (funFieldEquiv P).injective
-      simpa only [map_sum, map_mul, map_div₀, map_inv₀, map_one, funFieldEquiv_chartPow, div_eq_mul_inv,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa only [map_sum, map_mul, map_div₀, map_inv₀, map_one, funFieldEquiv_chartPow, div_eq_mul_inv,
         chartPow_neg, RingEquiv.apply_symm_apply] using hsum
 
 def addBlockEquiv (P : ArithVariety n) :

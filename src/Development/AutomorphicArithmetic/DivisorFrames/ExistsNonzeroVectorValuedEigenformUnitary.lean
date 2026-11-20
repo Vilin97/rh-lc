@@ -55,7 +55,8 @@ private theorem core {l : ℕ} [Fact l.Prime] {ι : Type} [Fintype ι] {n : ℕ}
     have h2 := hf3 i (e.symm g)
     rw [hc, map_one, one_smul, ← h1] at h2
     show ∑ a ∈ S, Φ _ = _ • Φ _
-    rw [← hΦs, ← LinearMap.map_smul, ← h2, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hΦs, ← LinearMap.map_smul, ← h2, map_sum, map_sum]
     refine Finset.sum_congr rfl fun a ha => ?_
     rw [map_mul, map_mul, hA a ha, mul_one]
 

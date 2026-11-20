@@ -87,7 +87,8 @@ theorem apply_eq_sum {X : Type} [Fintype X] [DecidableEq X] (E : (X → C) →�
     funext j
     simp [Finset.sum_apply]
   conv_lhs => rw [hf]
-  rw [map_sum, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_apply]
   simp [map_smul]
 
 end ReciprocityTheory.PGsh.L2.SecondCohomologyLattice

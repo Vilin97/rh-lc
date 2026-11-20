@@ -36,7 +36,8 @@ theorem eq_zero_of_dot (invol : ∀ e, σ (σ e) = e) {v : Fin b → E}
 
 theorem form_symm (invol : ∀ e, σ (σ e) = e) {J : Matrix (Fin n) (Fin n) E} (herm : ∀ i j, σ (J j i) = J i j)
     (u w : Fin n → E) : form σ J u w = σ (form σ J w u) := by
-  simp only [form, dotProduct, mulVec, map_sum, map_mul, invol, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, mulVec, map_sum, map_mul, invol, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   rw [herm]; ring

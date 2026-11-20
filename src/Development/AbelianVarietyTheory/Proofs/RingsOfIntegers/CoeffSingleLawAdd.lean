@@ -46,7 +46,8 @@ theorem coeff_single_subst {σ τ R : Type*} [CommRing R] [Fintype σ]
       subst a (f - C (constantCoeff f) - ∑ s, C (coeff (Finsupp.single s 1) f) * X s) := by
     conv_lhs => rw [hsplit]
     rw [subst_add ha, subst_add ha]
-  rw [hexp, map_add, map_add, hord, add_zero, subst_C' ha, subst_sum' ha, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hexp, map_add, map_add, hord, add_zero, subst_C' ha, subst_sum' ha, map_sum]
   simp [subst_mul ha, subst_C' ha, subst_X ha, coeff_C_mul, coeff_C]
 
 variable {R : Type} [CommRing R] {d : ℕ}

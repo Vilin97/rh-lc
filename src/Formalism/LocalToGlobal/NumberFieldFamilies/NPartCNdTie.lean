@@ -20,7 +20,8 @@ theorem bjC_sum (hI : OsInt B) (i : LocT B) (c : (what₂.MjLat (jOf B i)).gen �
     ∑ g, c g • bjC B hI i g = Submodule.Quotient.mk c := by
   have e : ∑ g, c g • Pi.basisFun (OOf B i) _ g = c := by
     simpa using (Pi.basisFun (OOf B i) ((what₂.MjLat (jOf B i)).gen)).sum_repr c
-  simp only [bjC, ← map_smul, ← map_sum, e]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [bjC, ← map_smul, ← map_sum, e]
   rfl
 
 theorem bjC_span (hI : OsInt B) (i : LocT B) :

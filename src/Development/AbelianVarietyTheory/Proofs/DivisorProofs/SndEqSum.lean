@@ -38,7 +38,8 @@ theorem snd_eq_sum {k A : Type} [CommRing k] [CommRing A] [Algebra k A] {D : ℕ
     rw [hsndmul, mul_comm (TrivSqZeroExt.snd (θ a))]
 
   have key := congrArg d.liftKaehlerDifferential (B.sum_repr (KaehlerDifferential.D k A s))
-  rw [Derivation.liftKaehlerDifferential_comp_D, map_sum] at key
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Derivation.liftKaehlerDifferential_comp_D, map_sum] at key
   change d s = _
   rw [← key]
   refine Finset.sum_congr rfl fun b _ => ?_

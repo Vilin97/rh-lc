@@ -147,7 +147,8 @@ theorem exists_kForm : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H
     choose y hy using fun i : Fin n => (kLin_perfect D ε ((LinearMap.proj i).comp s)).exists
     refine ⟨n, fun i => π (Pi.single i 1), y, fun a => ?_⟩
     have ha : π (s a) = a := LinearMap.congr_fun hs a
-    conv_lhs => rw [← ha, ← Finset.univ_sum_single (s a), map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [← ha, ← Finset.univ_sum_single (s a), map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [← hy, ← map_smul, ← Pi.single_smul, smul_eq_mul, _root_.mul_one]
     rfl

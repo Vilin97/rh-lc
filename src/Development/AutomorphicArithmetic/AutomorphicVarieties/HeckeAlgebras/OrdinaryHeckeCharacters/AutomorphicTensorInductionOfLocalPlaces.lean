@@ -77,7 +77,8 @@ private theorem automorphic_tensor_induction_of_local_places {L Ω : Type} [Fiel
       (fun _ y _ => y.2) (fun _ g y _ => ?_) fun y _ h => Subtype.ext (h ())
     exact (hρ _ y).trans (by rw [hJ]; rfl)
   · change σ.subtype (∑ a, τ₀ k i a • ρ k ⟨F a, hF1 a⟩) = F i
-    rw [map_sum, ← hF2 k i]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, ← hF2 k i]
     rfl
 
 theorem UpperTheory.V.Hi.partUR2Type :

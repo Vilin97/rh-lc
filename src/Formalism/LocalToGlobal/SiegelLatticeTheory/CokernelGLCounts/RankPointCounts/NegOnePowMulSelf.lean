@@ -79,7 +79,8 @@ theorem Psi_sub (A B : MatR D) : Psi w (A - B) = Psi w A - Psi w B := by
 
 theorem Psi_mul (A B : MatR D) : Psi w (A * B) = Psi w B * Psi w A := by
   funext a c
-  simp only [Psi, Matrix.mul_apply, map_sum, map_mul, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Psi, Matrix.mul_apply, map_sum, map_mul, Finset.mul_sum]
   refine Fintype.sum_equiv (piPerm w) _ _ (fun e => ?_)
   simp only [piPerm, Equiv.coe_fn_mk, pinv_pinv]
   rw [← sgm_mul a (pinv w e) c]; ring

@@ -26,10 +26,12 @@ theorem genSec_chart_ne_zero_and_isPrime : ∀ (k : Type) [Field k] (N : ℕ) (X
     let F : (L.pull π).Sec →+ Γ(X', (L.pull π).U J) :=
       { toFun := fun s => s.f J, map_zero' := rfl, map_add' := fun _ _ => rfl }
     show F (∑ i, genVar k N f' i • secPull (b i) π) = _
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     rfl
   have key : resG X' hWU ((genSec k N f' π L b).f (fun _ => c)) = e t₀ := by
-    rw [hsum (fun _ => c), map_sum, ht, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hsum (fun _ => c), map_sum, ht, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_mul]
     have hq : algebraMap (MvPolynomial (Fin N) k) (FractionRing (MvPolynomial (Fin N) k)) (MvPolynomial.X i) ⊗ₜ[k] a i =

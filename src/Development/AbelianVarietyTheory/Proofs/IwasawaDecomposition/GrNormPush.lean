@@ -160,7 +160,8 @@ theorem grNorm_push {X' : Scheme.{0}} {t' : SAB H X'} {f : X' ⟶ X} (mu : SABMa
   have e : ∀ c : Fin m → C, (∃ w ∈ Λ', IsCombAtG t' x' (fun i => (tv (U i)).left) c w) ↔
       ∃ w ∈ Λ, IsCombAtG t x (fun i => (tv (pushL mu x' hx (U i))).left) c w := fun c => by
     simp only [comb_iff, exists_eq_right]
-    rw [hΛ _ (isTan_tv _), ← left_pushL mu x' hx, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hΛ _ (isTan_tv _), ← left_pushL mu x' hx, map_sum]
     simp only [map_smul]
   simp only [grNorm, e]
   rfl

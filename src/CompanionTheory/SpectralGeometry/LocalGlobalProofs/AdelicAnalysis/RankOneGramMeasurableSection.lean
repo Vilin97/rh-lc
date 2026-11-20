@@ -38,7 +38,8 @@ theorem hform_sub_right (τ : A →+* A) (J : Matrix n n A) (x y z : n → A) :
 
 theorem map_hform (τ : A →+* A) (hτ : ∀ a, τ (τ a) = a) (J : Matrix n n A)
     (hJ : ∀ i j, τ (J j i) = J i j) (x y : n → A) : τ (hform τ J x y) = hform τ J y x := by
-  simp only [hform, map_sum, map_mul, hτ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hform, map_sum, map_mul, hτ]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   rw [hJ i j]; ring
@@ -67,7 +68,8 @@ theorem reflM_unitary (τ : A →+* A) (hτ : ∀ a, τ (τ a) = a) (J : Matrix 
     rw [Matrix.vecMulVec_mul]; rfl
   have hJd : J.mulVec d = fun i => τ (w i) := by
     ext i
-    simp only [hw, rowOf, Matrix.mulVec, Matrix.vecMul, dotProduct, map_sum, map_mul, hτ]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hw, rowOf, Matrix.mulVec, Matrix.vecMul, dotProduct, map_sum, map_mul, hτ]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [hJ i j]; ring
   have h2 : J * Matrix.vecMulVec d w = Q := by

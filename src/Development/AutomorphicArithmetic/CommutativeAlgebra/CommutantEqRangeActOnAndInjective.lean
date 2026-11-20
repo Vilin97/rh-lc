@@ -74,7 +74,8 @@ theorem UpperTheory.commutant_eq_range_actOn_and_injective :
   have hx : ∀ l, ∃ x, L.rep x = h l := fun l => (L.rep_range (h l)).2 (fun b => hh l b)
   choose x hx using hx
   refine ⟨∑ l, r l ⊗ₜ[ℚ] x l, ?_⟩
-  rw [hA', map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hA', map_sum]
   refine Finset.sum_congr rfl fun l _ => ?_
   refine TensorProduct.AlgebraTensorModule.curry_injective (LinearMap.ext_ring (LinearMap.ext fun v => ?_))
   simp only [TensorProduct.AlgebraTensorModule.curry_apply, LinearMap.restrictScalars_apply,

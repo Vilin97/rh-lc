@@ -65,7 +65,8 @@ theorem exists_height : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (bk : BK K) 
     rw [e2, hZ1 j₀ hj₀, hG.ext] at e3
     refine Matrix.ext fun a b => hinj ?_
     have e4 := congrFun (congrFun e3 a) b
-    simp only [Matrix.smul_apply, Matrix.mul_apply, Matrix.map_apply, smul_eq_mul, map_mul, map_pow, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.smul_apply, Matrix.mul_apply, Matrix.map_apply, smul_eq_mul, map_mul, map_pow, map_sum,
       RingHom.comp_apply] at e4 ⊢
     exact e4
   obtain ⟨m, P, Y', hP, hPd, hY', hlat, hsat⟩ := GlobalTheory.T.exists_integralWittLattice_basis l K bk d _ hdet

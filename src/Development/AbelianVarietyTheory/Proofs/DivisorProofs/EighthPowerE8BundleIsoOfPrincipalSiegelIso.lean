@@ -63,6 +63,7 @@ theorem iso_of_sRel : ∀ (g n N : ℕ) (B : Type) [CommRing B] (ζ : B) (K : Ty
   rw [← cls_eq_iff t.isLB (pull_isLB Q.isLB _), (cls_eq_iff t.isLB (LB.isLB_linComb C.isLB _ _)).2 ht,
     cls_linComb C.isLB, (cls_eq_iff C.isLB (pull_isLB c.isLB _)).2 hP, cls_pull c.isLB,
     cls_pull Q.isLB, (cls_eq_iff Q.isLB (LB.isLB_linComb c.isLB _ _)).2 hQ, cls_linComb c.isLB]
-  simp only [map_sum, map_zsmul, ← pull_comp, key]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_zsmul, ← pull_comp, key]
 
 end GlobalTheory.SharpIso

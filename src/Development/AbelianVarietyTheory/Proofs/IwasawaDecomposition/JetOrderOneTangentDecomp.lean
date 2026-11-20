@@ -33,7 +33,8 @@ theorem jetOne_tan_span : ∀ {S : Type} [CommRing S] {ρ : Type} [Fintype ρ] [
   have hfst : ∀ r, ((Formalism.L2.Pj.jetTan r : Formalism.L2.Pj.Jet S ρ (0 + 1) →ₐ[S] DualNumber S) p).fst = 0 := by
     intro r
     obtain ⟨c, hc⟩ := (Ideal.mem_span_range_iff_exists_fun (R := Formalism.L2.Pj.Jet S ρ (0 + 1))).1 hI
-    rw [← hc, map_sum, TrivSqZeroExt.fst_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hc, map_sum, TrivSqZeroExt.fst_sum]
     refine Finset.sum_eq_zero fun j _ => ?_
     rw [map_mul, Formalism.MainNotions.ModuliIntegralCharts.H1.ExpUniqTan.jetTan_alt, TrivSqZeroExt.fst_mul]
     split_ifs
@@ -45,7 +46,8 @@ theorem jetOne_tan_span : ∀ {S : Type} [CommRing S] {ρ : Type} [Fintype ρ] [
   · refine Ideal.sub_mem _ hI (Ideal.sum_mem _ fun r _ => ?_)
     rw [Algebra.smul_def]
     exact Ideal.mul_mem_left _ _ (Ideal.subset_span ⟨r, rfl⟩)
-  · rw [map_sub, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sub, map_sum]
     have e : ∀ r ∈ (Finset.univ : Finset ρ),
         (Formalism.L2.Pj.jetTan l : Formalism.L2.Pj.Jet S ρ (0 + 1) →ₐ[S] DualNumber S)
           (((Formalism.L2.Pj.jetTan r : Formalism.L2.Pj.Jet S ρ (0 + 1) →ₐ[S] DualNumber S) p).snd •

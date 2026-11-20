@@ -73,7 +73,8 @@ theorem perExt_injective : Function.Injective (C.perExt R) := by
     intro l
     obtain ⟨x, hx⟩ := R.unimod.2 (C.lam.coord l)
     have key : imLin R.Hm (R.P x) (C.perExt R y) = C.bas.equivFun y l := by
-      rw [LatEmb.perExt, Module.Basis.constr_apply_fintype, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [LatEmb.perExt, Module.Basis.constr_apply_fintype, map_sum]
       have hk : ∀ k, imLin R.Hm (R.P x) (R.P (C.lam k)) = if k = l then 1 else 0 := by
         intro k
         have h1 : imLin R.Hm (R.P x) (R.P (C.lam k)) = (R.form x (C.lam k) : ℝ) := R.im x _

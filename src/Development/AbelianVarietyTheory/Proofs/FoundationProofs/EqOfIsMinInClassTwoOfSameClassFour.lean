@@ -128,7 +128,8 @@ theorem polar_sum_smul {R : Type*} [CommRing R] [Module R X] [Algebra R ℝ] [Fi
     polar Q (∑ i, x i • e i) (∑ i, y i • e i) =
       (fun i => algebraMap R ℝ (x i)) ⬝ᵥ (gram Q e *ᵥ fun i => algebraMap R ℝ (y i)) := by
   rw [← polarBilin_apply_apply, LinearMap.map_sum₂]
-  simp only [map_sum, map_smul, LinearMap.smul_apply, polarBilin_apply_apply, dotProduct, mulVec,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, LinearMap.smul_apply, polarBilin_apply_apply, dotProduct, mulVec,
     gram_apply, Algebra.smul_def, Finset.mul_sum]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   ring
@@ -309,7 +310,8 @@ theorem finite_affine_sublevel (hQ : (realExtension Q).PosDef) {t : ℝ} (ht : 0
     e.equivFun.injective.injOn (Set.Finite.pi fun _ => Set.finite_Icc _ _)
   intro a ha i _
   have hν : ν a = ∑ i, (e.repr a i : ℝ) * ν (e i) := by
-    conv_lhs => rw [← e.sum_repr a, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [← e.sum_repr a, map_sum]
     simp only [map_zsmul, zsmul_eq_mul]
   have h1 : s / 2 * ∑ i, (e.repr a i : ℝ) ^ 2 ≤
       s * ∑ i, (e.repr a i : ℝ) ^ 2 + ν a + ∑ i, ν (e i) ^ 2 / (2 * s) := by

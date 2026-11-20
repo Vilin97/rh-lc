@@ -54,7 +54,8 @@ theorem grIdeal_fg_ne_bot (K : Type) [Field K] [NumberField K] (V : Type) [AddCo
     refine Submodule.FG.of_le (hE.map (g.restrictScalars (𝓞 K))) ?_
     rintro a ⟨c, rfl, hc, hmem⟩
     refine ⟨_, hmem, ?_⟩
-    rw [LinearMap.restrictScalars_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [LinearMap.restrictScalars_apply, map_sum]
     simp only [map_smul, hgv, smul_eq_mul, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true]
   · have hvi : v i ∈ Submodule.span K (E : Set V) := hspan (Submodule.subset_span ⟨i, rfl⟩)
     obtain ⟨d, hd, hdE⟩ := exists_ne_zero_smul_mem_of_mem_kspan E (v i) hvi

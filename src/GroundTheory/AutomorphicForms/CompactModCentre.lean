@@ -147,7 +147,8 @@ theorem sum_pairing_basis [FiniteDimensional ℂ V] (hπ2 : IsSquareIntegrable Z
     simp only [coeffProd]
     have : ∑ j, b.coord j (π q.out v) * (ψ : Module.Dual ℂ V) (π q.out⁻¹ (b j)) =
         (ψ : Module.Dual ℂ V) (π q.out⁻¹ (∑ j, b.coord j (π q.out v) • b j)) := by
-      simp only [map_sum, map_smul, smul_eq_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, smul_eq_mul]
     rw [this]
     simp only [Basis.coord_apply, Basis.sum_repr, rep_inv_apply_apply]
   simp only [hpt, integral_const, Complex.real_smul]

@@ -90,7 +90,8 @@ theorem univGenCore_of' [IsDomain O] [IsPrincipalIdealRing O] [NeZero n]
           fun h => absurd hk h, ?_⟩
         have hsm : ∑ j, cc j • (Λi * ιE (letE c * W.π₀ ^ (j : ℕ))) =
             Λi * ιE (letE c * ∑ j : Fin D, algebraMap O (LetA O n) (cc j) * W.π₀ ^ (j : ℕ)) := by
-          rw [Finset.mul_sum, map_sum, Finset.mul_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [Finset.mul_sum, map_sum, Finset.mul_sum]
           refine Finset.sum_congr rfl fun j _ => ?_
           rw [Algebra.smul_def, IsScalarTower.algebraMap_apply O (LetA O n) W.EE]
           simp only [map_mul]; ring

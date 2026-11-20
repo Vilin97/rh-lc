@@ -49,7 +49,8 @@ private theorem eps_left_mul_eq_det_smul {M : Type} [AddCommGroup M] [Module ℂ
       ∑ c : Fin n → Fin n, (∏ k, g (c k) (σ k)) • μ (fun k => single (c k) (τ k) (1 : ℂ)) := by
     intro σ
     simp only [units, hs]
-    rw [MultilinearMap.map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [MultilinearMap.map_sum]
     refine Finset.sum_congr rfl fun c _ => ?_
     rw [MultilinearMap.map_smul_univ]
   have hc : ∀ c : Fin n → Fin n, ∑ σ : Equiv.Perm (Fin n),

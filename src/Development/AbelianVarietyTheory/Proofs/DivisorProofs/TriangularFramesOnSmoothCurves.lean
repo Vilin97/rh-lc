@@ -131,7 +131,8 @@ theorem deg_of_sabMap {A : Type} [CommRing A] {s : X ⟶ Sp A} {ε : 𝓞 E →+
         ((valR_appLE _ _ _ (le_preimage_affPt hT.1) _).trans ?_))
       rw [Category.assoc]
     · have key := (isComb_iff (fun c' => tanOf (htan j.1.2 _ _ h c')) cf (tanOf (htan j'.1.2 _ _ h' c))).1 h₃
-      rw [hres j' hT, key, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hres j' hT, key, map_sum]
       refine Finset.sum_congr rfl fun c' _ => ?_
       rw [map_smul, hres j hT]
   have main := GlobalTheory.TriangularFrames.exists_isCohSub_deg_eq_sum k C hC (Lie t'.G) J _ hc (fun j => Fin (N j)) B hB
@@ -169,7 +170,8 @@ theorem deg_of_sabMap {A : Type} [CommRing A] {s : X ⟶ Sp A} {ε : 𝓞 E →+
           have := hx' o
           rw [← hΨa, ← map_smul] at this
           exact congrArg (fun z => (tv z).left) ((Ψ U hU _ _).injective this)
-        rw [(isComb_iff (fun c' => tanOf (htan j.1.2 _ _ h₀ c')) cf w).1 hcf, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [(isComb_iff (fun c' => tanOf (htan j.1.2 _ _ h₀ c')) cf w).1 hcf, map_sum]
         refine Submodule.sum_mem _ fun c _ => ?_
         rw [map_smul, ← hres j hU (hUV.trans h)]
         exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨c, by simp, rfl⟩)

@@ -102,7 +102,8 @@ theorem exists_coords_of_mem_locOrder : ∀ (ℓ : ℕ) [Fact ℓ.Prime] (F B : 
         refine Finset.sum_congr rfl fun k _ => ?_
         rw [← mul_assoc, ← map_mul]
       rw [Finset.sum_mul_sum]
-      simp only [hprod, map_sum, Finset.sum_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hprod, map_sum, Finset.sum_mul]
       conv_rhs => rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [Finset.sum_comm]
@@ -157,7 +158,8 @@ theorem basisLoc : ∀ (F B : Type) [Field F] [NumberField F] [Ring B] [Algebra 
     intro c b h k
     obtain ⟨π, hπ1, hπ2⟩ := exists_coordProj ℓ F B e k
     have h' := congrArg π h
-    rw [hsum, map_sum, hπ1] at h'
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hsum, map_sum, hπ1] at h'
     simp only [hπ2, Finset.sum_ite_eq', Finset.mem_univ, if_true] at h'
     exact h'
   have hli : LinearIndependent (cenOrder ℓ F) v := by

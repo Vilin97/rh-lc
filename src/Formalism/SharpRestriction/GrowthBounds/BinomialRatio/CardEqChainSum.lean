@@ -168,7 +168,8 @@ theorem clear_den {σ : Type} (F : MvPolynomial σ (KK O)) :
   choose g hg using hc
   refine ⟨sd, ∑ m ∈ F.support, monomial m (g m), nonZeroDivisors.coe_ne_zero sd, ?_⟩
   conv_rhs => rw [F.as_sum]
-  rw [map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.smul_sum]
   refine Finset.sum_congr rfl fun m hm => ?_
   rw [map_monomial, smul_monomial, hg m hm]
 

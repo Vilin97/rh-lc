@@ -56,7 +56,8 @@ def prodCoeff (α : A.X) (z : Fin A.gB → ℂ) : ℂ :=
 
 theorem prodTerm_eq_mul_char (m : Fin n → A.X) (v : A.V) :
     A.prodTerm th w a m v = A.prodTerm th w a m (0, v.2) * eTwoPi (v.1 (∑ i, m i)) := by
-  rw [map_sum, e_sum, prodTerm, prodTerm, ← Finset.prod_mul_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, e_sum, prodTerm, prodTerm, ← Finset.prod_mul_distrib]
   refine Finset.prod_congr rfl fun i _ => ?_
   simp only [term, Prod.fst_add, Prod.snd_add, AddMonoidHom.add_apply, zero_add, one_smul, e_add]
   ring

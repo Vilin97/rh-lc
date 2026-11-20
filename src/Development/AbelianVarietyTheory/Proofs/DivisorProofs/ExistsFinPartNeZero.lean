@@ -54,7 +54,8 @@ theorem exists_finPart_ne_zero (φ : ∀ v : Pl F, (κ → Fv F v) → ℂ) (h0 
     intro w
     funext i
     show Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.evalV F w (x i).2 = _
-    rw [hx i, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hx i, map_sum]
     by_cases hw : w ∈ S
     · rw [Finset.sum_eq_single w (fun v _ hv => evalV_singleFin_ne (Ne.symm hv) _) (fun h => absurd hw h),
         evalV_singleFin_self, if_pos hw]

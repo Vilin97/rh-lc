@@ -33,7 +33,8 @@ theorem mem_UJ_gramN_iff_map_symm : ∀ (D : D7) (X : HidaSetting D) (g : GL (Fi
       (A * B).map X.ιE.symm = A.map X.ιE.symm * B.map X.ιE.symm := by
     intro A B
     ext i j
-    simp [Matrix.mul_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Matrix.mul_apply, map_sum]
   have hb : ∀ A : Matrix (Fin (D.R.N 0)) (Fin (D.R.N 0)) D.host.E,
       (A.map X.ιE.symm).map (starRingEnd X.B.I.E) =
         (A.map (Formalism.L2.Forms.sigD D : D.host.E →+* D.host.E)).map X.ιE.symm := by

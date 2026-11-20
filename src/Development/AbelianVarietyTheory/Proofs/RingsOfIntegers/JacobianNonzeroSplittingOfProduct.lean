@@ -107,7 +107,8 @@ theorem coeff_one_subst {k σ τ : Type} [CommRing k] [Fintype σ] {a : σ → M
       obtain ⟨s, hs⟩ := Finsupp.support_nonempty_iff.2 he
       rw [Finsupp.prod, map_prod, Finset.prod_eq_zero hs, smul_zero]
       rw [map_pow, ha, zero_pow (Finsupp.mem_support_iff.1 hs)]
-  rw [← h0, ReciprocityTheory.ChartRestriction.G.TB.LogPf.pderiv_subst ha, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← h0, ReciprocityTheory.ChartRestriction.G.TB.LogPf.pderiv_subst ha, map_sum]
   simp only [map_mul, h1, h0]
 
 theorem map_subst_eq_zero {k σ τ Ω : Type} [CommRing k] [CommRing Ω] [Algebra k Ω] [Fintype σ]

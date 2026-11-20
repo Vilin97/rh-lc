@@ -124,7 +124,8 @@ theorem fderiv_translate (F : Sm E a) (g : GA E a) {ℓ : Fin a} {y : Fin a → 
     ((contDiffAt_rowInv hy).differentiableAt (by simp)), ContinuousLinearMap.comp_apply, ← h1, ← chart_lieD F.2 X g hm,
     ← chart_rowInv _ g hy]
   change fderiv ℝ (chart F.1 _) (oneL E a) X = _
-  conv_lhs => rw [← (Module.finBasis ℝ (Lie E a)).sum_repr X, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [← (Module.finBasis ℝ (Lie E a)).sum_repr X, map_sum]
   refine Finset.sum_congr rfl fun β _ => ?_
   rw [map_smul, Complex.real_smul]
   rfl
@@ -150,7 +151,8 @@ theorem fderiv_rsInf {ℓ : Fin a} (F F' : Sm E a) {Φ : (Fin a → Cinf E) → 
     have h4 := ((h1.mul (Complex.conjCLE.hasFDerivAt.comp y h2)).mul h3).fderiv
     refine (congrArg (· v) h4).trans ?_
     have hc : ∀ β, conj (rowCoef ℓ v β y) = rowCoef ℓ v β y := fun β => Complex.conj_ofReal _
-    simp only [ContinuousLinearMap.add_apply, ContinuousLinearMap.smul_apply, ContinuousLinearMap.comp_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [ContinuousLinearMap.add_apply, ContinuousLinearMap.smul_apply, ContinuousLinearMap.comp_apply,
       fderiv_translate _ g (hΦ.2.2 hy), rsInf, smul_eq_mul, Pi.mul_apply, Function.comp_apply,
       ContinuousLinearEquiv.coe_coe, Complex.conjCLE_apply, map_sum, map_mul, hc, Finset.mul_sum, mul_add]
     rw [add_comm, add_comm (∑ _, _)]

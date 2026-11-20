@@ -283,7 +283,8 @@ private theorem actP_lamVec_vecP {K : Type} [Field K] (h : Unit → GL (Fin 2) K
   have h0 : (lamVec : DomWeight 2).detShift = 0 := by rfl
   have hd : detTwK (fun _ : Unit => lamVec) h = 1 := by
     simp [detTwK, detPow, h0]
-  simp only [actP, LinearMap.smul_apply, hd, one_smul, AlgHom.toLinearMap_apply, trAct, vecP, map_sum, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [actP, LinearMap.smul_apply, hd, one_smul, AlgHom.toLinearMap_apply, trAct, vecP, map_sum, map_mul,
     Formalism.GradedWeylDivisibility.blockAct, MvPolynomial.aeval_C, MvPolynomial.aeval_X, MvPolynomial.algebraMap_eq,
     Matrix.transpose_apply, Matrix.mulVec, dotProduct, Fin.sum_univ_two, map_add]
   ring

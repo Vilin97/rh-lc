@@ -18,7 +18,8 @@ theorem word_col {K A : Type} [Field K] [AddCommGroup A] [Module K A] {N n t : �
     intro i; funext k; simp [Matrix.col, Finset.sum_apply, Pi.single_apply]
   rw [hΦ]
   simp_rw [hcol]
-  rw [MultilinearMap.map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [MultilinearMap.map_sum]
   refine Finset.sum_congr rfl fun e _ => ?_
   rw [MultilinearMap.map_smul_univ, hΦ]
 
@@ -32,11 +33,13 @@ theorem linSubst_coordP {K A : Type} [Field K] [AddCommGroup A] [Module K A] {N 
         ∏ i, (X (β i, g i) : MvPolynomial (Fin B × Fin n) K)) =
       ∑ g : Fin t → Fin n, ∑ e : Fin t → Fin N, C (c (word mul (fun i => Pi.single (e i) 1) x)) *
         ((∏ i, C (w (e i) (g i))) * ∏ i, (X (β i, g i) : MvPolynomial (Fin B × Fin n) K)) from ?_]
-  · simp only [linSubst, coordP, map_sum, map_mul, aeval_C, map_prod, aeval_X, algebraMap_eq]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [linSubst, coordP, map_sum, map_mul, aeval_C, map_prod, aeval_X, algebraMap_eq]
     simp_rw [Fintype.prod_sum, Finset.mul_sum, ← Finset.prod_mul_distrib]
     exact Finset.sum_comm
   · refine Finset.sum_congr rfl fun g _ => ?_
-    rw [word_col, LinearMap.sum_apply, map_sum, map_sum, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [word_col, LinearMap.sum_apply, map_sum, map_sum, Finset.sum_mul]
     refine Finset.sum_congr rfl fun e _ => ?_
     rw [LinearMap.smul_apply, map_smul, smul_eq_mul, ← map_prod, map_mul]
     ring

@@ -71,7 +71,8 @@ theorem dense_range_emb : Dense (Set.range (emb σ)) := by
   rw [HasSum] at hx
   refine mem_closure_of_tendsto hx (Filter.Eventually.of_forall fun s => ?_)
   refine ⟨∑ α ∈ s, monomial α (x α / wt α), ?_⟩
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun α _ => ?_
   rw [emb_monomial, div_mul_cancel₀ _ (wt_ne_zero α)]
 

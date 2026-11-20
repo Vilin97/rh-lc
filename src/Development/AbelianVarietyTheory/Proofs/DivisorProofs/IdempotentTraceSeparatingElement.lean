@@ -57,7 +57,8 @@ theorem map_expand (φ₀ : E →+* C) (x : E) :
     ∑ k, φ₀ ((integralBasis E).traceDual k) * algebraMap ℚ C (Algebra.trace ℚ E (integralBasis E k * x)) = φ₀ x := by
   set b := integralBasis E
   conv_rhs => rw [← b.traceDual.sum_repr x]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [Module.Basis.traceDual_repr_apply, Algebra.traceForm_apply, Algebra.smul_def, map_mul φ₀, mul_comm x (b k),
     mul_comm (φ₀ (b.traceDual k))]
@@ -169,7 +170,8 @@ theorem base {O : Type} [CommRing O] [Algebra O C] {v : Valuation C ℝ≥0} (hv
       rw [← h2]
       have : ∑ k, algebraMap O C (r k) * algebraMap ℚ C (((RingOfIntegers.basis E).repr (a k) k₀ : ℤ) : ℚ) =
           algebraMap O C (∑ k, r k * (((RingOfIntegers.basis E).repr (a k) k₀ : ℤ) : O)) := by
-        simp [map_sum, map_mul, map_intCast]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp [map_sum, map_mul, map_intCast]
       rw [this]
       exact hv.map_le_one _
     calc v s = v (s * φ₀ ((integralBasis E).traceDual k₀)) * v (φ₀ ((integralBasis E).traceDual k₀))⁻¹ := by

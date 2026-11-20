@@ -32,7 +32,8 @@ theorem expo_drSym (la : AllWt.Weight S.Dw) : expo S.Dw (drSym la) = fun z => -e
     Finsupp.sum_add_index' (fun _ => by simp) fun _ _ _ => by split_ifs <;> simp
   let φ : (Sym D.host.E →₀ ℤ) →+ ℤ := AddMonoidHom.mk' (fun w => expo S.Dw w x) e
   change φ _ = _
-  rw [drSym, map_sum, Finset.sum_eq_single x (fun z _ hz => ?_) (by simp)]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [drSym, map_sum, Finset.sum_eq_single x (fun z _ hz => ?_) (by simp)]
   · change expo S.Dw _ x = _
     rw [GlobalTheory.Mean4O.expo_single, if_pos (by simp [letterOf])]
   · change expo S.Dw _ x = _

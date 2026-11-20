@@ -120,7 +120,8 @@ theorem killBlocks_of_isMultiHomog (T : Finset K) {p : MRing ι F} {b : K → �
 
 theorem killBlocks_mem_of_isMultiHomogIdeal {Q : Ideal (MRing ι F)} (hQ : IsMultiHomogIdeal Q)
     (T : Finset K) {q : MRing ι F} (hq : q ∈ Q) : killBlocks T q ∈ Q := by
-  rw [← sum_weightedHomogeneousComponent (blockWeight ι) q,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← sum_weightedHomogeneousComponent (blockWeight ι) q,
     finsum_eq_sum _ (weightedHomogeneousComponent_finsupp q), map_sum]
   refine Ideal.sum_mem _ fun b _ => ?_
   rw [killBlocks_of_isMultiHomog T (weightedHomogeneousComponent_isWeightedHomogeneous b q)]

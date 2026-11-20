@@ -178,7 +178,8 @@ theorem map_etr {M M' : Type} [AddCommGroup M] [Module ℂ M] [AddCommGroup M'] 
     induction k with
     | zero => intro a b v; simp only [epow]; split_ifs <;> simp
     | succ k ih => intro a b v; simp only [epow, LinearMap.sum_apply, map_sum, Module.End.mul_apply, ih, h]
-  simp only [etr, LinearMap.sum_apply, map_sum, this]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [etr, LinearMap.sum_apply, map_sum, this]
 
 theorem ringHom_etr {A B : Type} [Ring A] [Ring B] (f : A →+* B) (E : Fin n → Fin n → A) (k : ℕ) :
     f (etr E k) = etr (fun a b => f (E a b)) k := by
@@ -186,7 +187,8 @@ theorem ringHom_etr {A B : Type} [Ring A] [Ring B] (f : A →+* B) (E : Fin n �
     induction k with
     | zero => intro a b; simp only [epow]; split_ifs <;> simp
     | succ k ih => intro a b; simp only [epow, map_sum, map_mul, ih]
-  simp only [etr, map_sum, this]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [etr, map_sum, this]
 
 theorem genInfChar_of_isFactor : GlobalTheory.Published.LanglandsClassification → ∀ (n : ℕ) (ε : Fin n → Bool) (V : Type) [NormedAddCommGroup V] [InnerProductSpace ℂ V] [CompleteSpace V] (π : Matrix (Fin n) (Fin n) ℂ → (V →L[ℂ] V)), IsIrrAdm ε π → (∀ v, IsKFin ε π v → Formalism.QuantumDeterminants.SmoothOnH (Jm ε) (fun g => π g v)) → ∀ χ : Fin n → ℂ, HasInfChar ε χ π → ∀ I : IndModule ε, I.Positive → ∀ Z, IsFactor ε I.ρ Z (kFinVec ε I.ρ) π → (∀ (k : ℕ) v, IsKFin ε I.ρ v → ∃ N : ℕ, actU ε I.ρ ((etr (Egl n) (k + 1) - algebraMap ℂ _ (gelfVal χ (k + 1))) ^ N) v = 0) := by
   intro hL n ε V _ _ _ π hπ hsm χ hχ I hI Z hF k v hv
@@ -214,10 +216,12 @@ theorem genInfChar_of_isFactor : GlobalTheory.Published.LanglandsClassification 
   have hcomm : ∀ X u, etr E (k + 1) (A X u) = A X (etr E (k + 1) u) := fun X u => by
     have h1 : A X = ∑ a, ∑ b, X a b • E a b := by
       conv_lhs => rw [Matrix.matrix_eq_sum_single X]
-      simp only [map_sum, hE, ← map_smul, Matrix.smul_single, smul_eq_mul, mul_one]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, hE, ← map_smul, Matrix.smul_single, smul_eq_mul, mul_one]
     have h2 := fun a b u => LinearMap.congr_fun (generatorTraceCentral_holds _ n E hgl (k + 1) a b) u
     simp only [Module.End.mul_apply] at h2
-    simp only [h1, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, h2]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [h1, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, h2]
   have hhom : IsGKHom ε I.ρ I.ρ φ := by
     refine ⟨fun κ hκ u w e => ?_, fun X hX u w e => ?_⟩
     · simp only [hφv, Submodule.coe_sub, Submodule.coe_smul, map_sub, map_smul, hK κ hκ (k + 1) u w e, e]

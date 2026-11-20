@@ -41,7 +41,8 @@ theorem actSt : ActSt := by
       _ = ∑ f, dAct C B a e f • (fglOf hB).lg f := by
           rw [hcomp]
           dsimp only
-          rw [← coe_substAlgHom hs_oneVar, map_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [← coe_substAlgHom hs_oneVar, map_sum]
           simp only [map_smul, coe_substAlgHom]
           exact Finset.sum_congr rfl fun f _ => rfl
 

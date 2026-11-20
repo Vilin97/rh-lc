@@ -30,7 +30,8 @@ theorem mem_iff_herm_of_unimod {n : ℕ} {Λ : GenLat E n} (h : Λ.Unimod) (x : 
   have key : ∀ y : Fin n → E, FD.herm 1 x y =
       IsCMField.complexConj E (∑ j, IsCMField.complexConj E (x j) * y j) := by
     intro y
-    simp only [FD.herm, FD.cc, Matrix.one_apply, mul_ite, mul_one, mul_zero, ite_mul, zero_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [FD.herm, FD.cc, Matrix.one_apply, mul_ite, mul_one, mul_zero, ite_mul, zero_mul,
       Finset.sum_ite_eq, Finset.mem_univ, if_true, map_sum, map_mul,
       IsCMField.complexConj_apply_apply]
   rw [h x]

@@ -21,7 +21,8 @@ variable {R : Type} [CommRing R]
 private lemma cc_psTrunc_lemma {κ : Type} [Fintype κ] [DecidableEq κ] (m : ℕ) (f : MvPowerSeries κ R) :
     MvPolynomial.constantCoeff (psTrunc m f) = MvPowerSeries.constantCoeff f := by
   unfold psTrunc
-  rw [map_sum, Finset.sum_eq_single 0]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_eq_single 0]
   · rw [MvPolynomial.constantCoeff_monomial, if_pos rfl]
     first | rfl | simp
   · intro e _ he

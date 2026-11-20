@@ -22,7 +22,8 @@ theorem evP_qP (k : Fin n → Fin n → ℂ) : evP (qP (n := n)) k = (qr k : ℂ
     intro a j; rw [Matrix.one_apply]; split_ifs <;> simp
   have hz : ∀ z : ℂ, starRingEnd ℂ z * z = ((‖z‖ ^ 2 : ℝ) : ℂ) := by
     intro z; rw [← Complex.normSq_eq_conj_mul_self, Complex.normSq_eq_norm_sq]
-  simp only [evP, qP, qr, map_sum, map_mul, map_sub, MvPolynomial.eval_X, MvPolynomial.eval_C,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [evP, qP, qr, map_sum, map_mul, map_sub, MvPolynomial.eval_X, MvPolynomial.eval_C,
     Sum.elim_inl, Sum.elim_inr, Complex.ofReal_sum]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun j _ => ?_
   rw [← hz, map_sub, hδ]

@@ -74,7 +74,8 @@ theorem loc_units_eq :
       have := congrArg g.appTop.hom hm
       rwa [map_mul, map_natCast, map_one] at this
     have he : g.appTop.hom e = g.appTop.hom m * ∑ i ∈ Finset.range N, g.appTop.hom w ^ i := by
-      simp only [e, map_mul, map_sum, map_pow]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [e, map_mul, map_sum, map_pow]
     obtain ⟨a, b⟩ := avg_cases hm' hw
     rw [mem_basicOpen_iff, mem_basicOpen_iff, h1, map_sub, map_one, he]
     by_cases h : g.appTop.hom w = 1

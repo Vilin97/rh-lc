@@ -128,7 +128,8 @@ theorem transferOn_isSplit : ∀ D : D7, TransferOn D fun v => IsSplit (E := D.h
   have hT : heckeVec πU (KGL w T.rank) (fun g => Tj ℂ T.rank (Ov D.host.E w) ϖ k g⁻¹) f =
       ∑ j ∈ Finset.range (S.rank + 1), cf j • heckeVec σU (KGL w S.rank) (Tj ℂ S.rank (Ov D.host.E w) ϖ j) f := by
     apply U.injective_subtype
-    rw [e1, hH', map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e1, hH', map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_smul, e2 j]
   have hmove : ∀ j ∈ Finset.range (S.rank + 1), b (heckeVec σU (KGL w S.rank) (Tj ℂ S.rank (Ov D.host.E w) ϖ j) f) x =
@@ -143,7 +144,8 @@ theorem transferOn_isSplit : ∀ D : D7, TransferOn D fun v => IsSplit (E := D.h
       = b (heckeVec πU (KGL w T.rank) (fun g => Tj ℂ T.rank (Ov D.host.E w) ϖ k g⁻¹) f) x :=
         (map_heckeVec hcT hInvT (b.flip x) hequiv f).symm
     _ = ∑ j ∈ Finset.range (S.rank + 1), cf j • satEig (qV D.host.E w) S.rank (B.map (·⁻¹)) j • b f x := by
-        rw [hT, map_sum, LinearMap.sum_apply]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [hT, map_sum, LinearMap.sum_apply]
         refine Finset.sum_congr rfl fun j hj => ?_
         rw [map_smul, LinearMap.smul_apply, hmove j hj]
     _ = satEig (qV D.host.E w) T.rank ((stepPar χS χT t (fun _ => B) w).map (·⁻¹)) k • b f x := by

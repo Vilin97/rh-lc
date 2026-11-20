@@ -56,7 +56,8 @@ theorem wedgeVec_comm (v v' : Fin m → ℂ) (w : Ext m) :
     intro a b
     rw [wedgeVec_apply]
     refine Finset.sum_congr rfl fun k _ => ?_
-    rw [wedgeVec_apply, show wedge k (∑ l, b l • wedge l w) = wedgeLin k (∑ l, b l • wedge l w) from rfl,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [wedgeVec_apply, show wedge k (∑ l, b l • wedge l w) = wedgeLin k (∑ l, b l • wedge l w) from rfl,
       map_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl fun l _ => ?_
     rw [map_smul, smul_smul]; rfl
@@ -164,7 +165,8 @@ theorem extMap_wedge (φ : Matrix (Fin m) (Fin m) ℂ) (i : Fin m) (w : Ext m) :
 
 theorem extMap_wedgeVec (φ ψ : Matrix (Fin m) (Fin m) ℂ) (a : Fin m) (x : Ext m) :
     extMap φ (wedgeVec (ψ a) x) = wedgeVec ((ψ * φ) a) (extMap φ x) := by
-  rw [wedgeVec_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [wedgeVec_apply, map_sum]
   simp_rw [map_smul, extMap_wedge, wedgeVec_apply, Finset.smul_sum, smul_smul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun l _ => ?_
@@ -180,5 +182,6 @@ theorem extMap_genProd (φ ψ : Matrix (Fin m) (Fin m) ℂ) (S : Finset (Fin m))
 theorem extMap_comp {m : ℕ} (φ ψ : Matrix (Fin m) (Fin m) ℂ) :
     extMap φ ∘L extMap ψ = extMap (ψ * φ) := by
   ext1 w
-  rw [ContinuousLinearMap.comp_apply, extMap_apply ψ, map_sum, extMap_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [ContinuousLinearMap.comp_apply, extMap_apply ψ, map_sum, extMap_apply]
   simp_rw [map_smul, extMap_genProd]

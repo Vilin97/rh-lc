@@ -71,7 +71,8 @@ theorem exists_op (lam : ι → DomWeight n) (τ₀ : ι) (φ : nablaSq K n (lam
       rw [LinearMap.smul_apply]
       exact W.smul_mem _ (hW _ _ hw)
   · intro k
-    rw [hc, bSq_coe, ← tenAt_apply, map_sum, LinearMap.sum_apply, Submodule.coe_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hc, bSq_coe, ← tenAt_apply, map_sum, LinearMap.sum_apply, Submodule.coe_sum]
     refine Finset.sum_congr rfl fun g _ => ?_
     rw [LinearMap.smul_apply, Submodule.coe_smul, map_smul]
     congr 1
@@ -130,7 +131,8 @@ theorem eq_bot_or_eq_top : ∀ (K : Type) [Field K] (ι : Type) [Fintype ι] (n 
     · intro a S ha ih
       obtain ⟨T, hTW, hT⟩ := exists_elem lam H W hW a (i a) (i a)
       have h1 := hTW _ ih
-      rw [map_sum] at h1
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum] at h1
       convert h1 using 1
       simp only [map_smul, hT]
       rw [Finset.sum_filter, Finset.sum_filter]

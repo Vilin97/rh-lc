@@ -34,7 +34,8 @@ theorem boundAt_of_chainTie (D : D7) (L : SizeData₂ D) (EX : ErrX D) (Dx : Div
   obtain ⟨hne, hloss⟩ := vG_loss_le L EX hPr i w hw u
   choose! x hx using hrow.2.2.1
   have hxF : jA (∑ v ∈ (D.what₂.Mtilde μ).gen, D.what₂.OtoLL (c v) • x v) = F := by
-    rw [hc, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hc, map_sum]
     exact Finset.sum_congr rfl fun v hv => by rw [LinearMap.map_smulₛₗ, hx v hv]; rfl
   have hxM := (hrow.2.2.2 _).2 ⟨fun v => ⟨D.what₂.OtoLL (c v), D.O_int _⟩, hxF.trans hc⟩
   refine ⟨_, (hxF ▸ hper φ _).symm, ?_⟩

@@ -60,7 +60,8 @@ theorem GlobalTheory.BKGal.HatVal.iotaO_iB_eq_Epow_mul : ∀ (l : ℕ) [Fact l.P
       rw [hfr τ, h2, hat_coe_Rpi, map_mul, map_pow, toHat_E]
     rw [GlobalTheory.BKReal.TwoMaps.iSD_eq_iHat_of_hat l a e O K t ϖ (f τ) _ h1, map_mul, map_pow, hE]
   refine ⟨∑ τ, idem (constD t) τ * ϖ.iHat O K (toHat O K l e ⟨r τ, hr τ⟩), ?_⟩
-  rw [PiSys.iB, glue_apply, map_sum, Finset.mul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [PiSys.iB, glue_apply, map_sum, Finset.mul_sum, map_sum]
   refine Finset.sum_congr rfl fun τ _ => ?_
   have hI : iotaO O C (idem (constB t) τ) = dRO l O (idem (constD t) τ) :=
     iotaO_toB C (constA t (Pi.single τ 1))

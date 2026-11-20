@@ -2839,7 +2839,8 @@ theorem polyBessel_holds : PolyBessel := by
     intro θ
     have hgen : ∀ Ψ : ℂ, (starRingEnd ℂ) (P θ) * Ψ =
         ∑ e ∈ E, (starRingEnd ℂ) (a e) * ((starRingEnd ℂ) (chi e θ) * Ψ) := fun Ψ => by
-      rw [hP_def θ, map_sum, Finset.sum_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hP_def θ, map_sum, Finset.sum_mul]
       exact Finset.sum_congr rfl fun e _ => by rw [map_mul]; ring
     exact hgen _
   have hGint : Integrable (fun θ => (starRingEnd ℂ) (P θ) * (2 * F (w θ) - P θ)) (muT ι) := by

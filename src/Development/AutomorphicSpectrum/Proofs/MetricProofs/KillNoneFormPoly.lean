@@ -13,7 +13,8 @@ theorem killNone_formPoly {σ : Type} [Fintype σ] (n : ℕ) (a : (Fin n → Opt
       = formPoly n fun w => a fun j => some (w j) := by
   classical
   unfold formPoly
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   symm
   refine Finset.sum_of_injOn (fun (w : Fin n → σ) j => some (w j)) ?_ ?_ ?_ ?_
   · intro w _ w' _ h

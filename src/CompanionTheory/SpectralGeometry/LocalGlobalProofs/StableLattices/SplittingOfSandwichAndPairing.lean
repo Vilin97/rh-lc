@@ -54,7 +54,8 @@ theorem lat_bdd {V' : Type} [AddCommGroup V'] [Module L V'] {Λ : AddSubgroup V}
   have hx' := (hb x).1 hx
   have key : c • P x = ∑ i, b.repr x i • (c • P (b i)) := by
     conv_lhs => rw [← b.sum_repr x]
-    simp only [map_sum, map_smul, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, Finset.smul_sum]
     exact Finset.sum_congr rfl fun i _ => smul_comm _ _ _
   rw [key]
   exact AddSubgroup.sum_mem _ fun i _ => lat_smul_mem hΛ₀ (hx' i) (hc i)

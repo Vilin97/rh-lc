@@ -172,7 +172,8 @@ theorem logJ_one_add_pow {x : AInf K p} (hx : x ∈ pdIdeal K p) :
   have h2 : ∑ n ∈ Finset.range M, (p : ACris K p) * logTermJA hx n -
       ∑ n ∈ Finset.range M, logTermJA (one_add_pow_sub_one_mem_pdIdeal hx) n ∈ 𝔭 ^ k := by
     have h := algebraMap_mem_pow (sum_p_mul_logTermJ_sub_mem hx (le_of_max_le_right hM))
-    rw [map_sub, map_sum, map_sum] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_sum, map_sum] at h
     simpa only [map_mul, map_natCast, logTermJA] using h
   have := add_mem h1 h2
   simp only at this

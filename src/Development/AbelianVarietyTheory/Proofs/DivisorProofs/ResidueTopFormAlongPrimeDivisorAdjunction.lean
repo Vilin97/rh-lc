@@ -59,7 +59,8 @@ theorem exists_basis_D_cons (k V : Type) [Field k] [CharZero k] [CommRing V] [Is
     rw [Fin.sum_univ_succ] at hg
     simp only [Function.comp_apply, TensorProduct.mk_apply, z, Fin.cons_zero, Fin.cons_succ] at hg
     have hφ := congrArg (mapBaseChange k V κ) hg
-    simp only [map_add, map_sum, map_smul, map_zero, mapBaseChange_tmul, one_smul, map_D, ht₀,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_add, map_sum, map_smul, map_zero, mapBaseChange_tmul, one_smul, map_D, ht₀,
       Derivation.map_zero, smul_zero, zero_add] at hφ
     have hs : ∀ i : Fin n, g i.succ = 0 :=
       Fintype.linearIndependent_iff.mp hdli (fun i => g i.succ) hφ
@@ -163,7 +164,8 @@ theorem residue_dForm : ∀ {L K : Type} [Field L] [Field K] (cL : ℂ →+* L) 
     refine dForm_eq_det_smul _ _ N fun i => ?_
     change D ℂ K (ψ (w i)) = ∑ j, N i j • D ℂ K (ψ (v j))
     have := congrArg (KaehlerDifferential.map ℂ ℂ S.ring K) (b.sum_repr (D ℂ S.ring (w i)))
-    rw [map_sum, KaehlerDifferential.map_D, Fin.sum_univ_succ, RingHom.algebraMap_toAlgebra] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, KaehlerDifferential.map_D, Fin.sum_univ_succ, RingHom.algebraMap_toAlgebra] at this
     rw [← this]
     simp only [map_smul, hb, KaehlerDifferential.map_D, hz, Fin.cons_zero, Fin.cons_succ,
       RingHom.algebraMap_toAlgebra, hψt, map_zero, smul_zero, zero_add]

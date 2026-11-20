@@ -25,7 +25,8 @@ theorem sum_mem_span_range_le_of_isSimpleModule :
       Submodule.linearProjOfIsCompl_apply_left hC ⟨ξ, hξD⟩
     simp only [G, LinearMap.comp_apply, this, Submodule.subtype_apply]
     exact hF ξ
-  rw [← hGξ, ← Finset.univ_sum_single ξ, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hGξ, ← Finset.univ_sum_single ξ, map_sum]
   refine Submodule.sum_mem _ fun i _ => Submodule.subset_span ?_
   refine ⟨G.comp (LinearMap.single A (fun _ : Fin n => P) i), ξ i, ?_, ?_⟩
   · rintro _ ⟨y, rfl⟩

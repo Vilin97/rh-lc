@@ -50,7 +50,8 @@ theorem span_basis : ∀ (F E A A' : Type) [Field F] [Field E] [Algebra F E] [Ad
       have h := congrArg Subtype.val (bb.sum_repr ⟨x, hx⟩)
       rw [Submodule.coe_sum] at h
       simpa using h.symm
-    rw [hx', map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hx', map_sum]
     refine Submodule.sum_mem _ fun i _ => ?_
     rw [LinearMap.map_smulₛₗ]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)

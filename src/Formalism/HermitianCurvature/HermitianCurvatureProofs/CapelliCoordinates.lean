@@ -215,7 +215,8 @@ theorem right_lowering_linear : Formalism.FourierDecayAlt.Qr.RZLin := by
   have hs : ∀ a b, CapelliCoordinates.Sup k r i (Matrix.single (posL k r i a) (posL k r i b) (1 : ℂ)) :=
     fun a b => CapelliCoordinates.sup_single a b
   rw [hL _ (CapelliCoordinates.sup_sum _ _ fun a _ => CapelliCoordinates.sup_sum _ _ fun b _ => (hs a b).smul (c a b))]
-  simp only [map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
   rw [← hL _ (hs a b)]
   rfl
@@ -437,9 +438,11 @@ theorem rep_econj (hD : IsOpen D) {m : ℕ} (Bs : Fin m → Fin (2 * r + k + 1) 
   rw [hrep.2 φ g hg]
   obtain ⟨L, hL⟩ := rz_linear φ.2.1 hg
   show _ = RZ (Hpk k r) (unitB (Hpk k r) Bs a b) φ.1 g
-  rw [hL _ hSu, unitB_expand Bs hB a b, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hL _ hSu, unitB_expand Bs hB a b, map_sum]
   refine Finset.sum_congr rfl fun c _ => ?_
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun d _ => ?_
   rw [map_smul, ← hL _ (hS c d), hP, hQ]
   rfl

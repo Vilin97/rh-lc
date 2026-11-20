@@ -24,7 +24,8 @@ theorem exists_comb {K V Ω : Type} [Field K] [AddCommGroup V] [Module K V] [Fie
     rw [Finset.sum_comm]
     rfl
   rw [hv]
-  simp only [map_sum, map_smul, Algebra.smul_def]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, Algebra.smul_def]
 
 theorem closure_eq_top {K V Ω : Type} [Field K] [NumberField K] [AddCommGroup V] [Module K V] [Field Ω] [Algebra K Ω]
     (ev : V →ₗ[K] Ω) {m : ℕ} (t : Fin m → Ω)

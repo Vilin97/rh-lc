@@ -51,7 +51,8 @@ theorem integral_isotropic_lines_le_flow_sum : ∀ (F E : Type) [Field F] [Numbe
     refine ⟨fun a => g.val *ᵥ X a, funext fun a => funext fun i => ?_⟩
     have e' : (HA.mat (AF F) σ _ γ).val = g.val.map (inclR (AF F)) :=
       (congrArg Units.val e).symm
-    simp only [actW, actTup, e', ratTup, Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [actW, actTup, e', ratTup, Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum, map_mul]
   have he : e₀ = ratTup (AF F) (eOne E (M + 1)) := by
     funext a i
     refine Fin.cases ?_ (fun i => ?_) i <;> simp [he₀, eOne, ratTup]
@@ -99,7 +100,8 @@ theorem integral_isotropic_lines_le_flow_sum : ∀ (F E : Type) [Field F] [Numbe
       rw [he]
       funext a i
       rw [Subsingleton.elim a 0, ratTup, ← e]
-      simp only [Matrix.mulVec, dotProduct, map_sum, map_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Matrix.mulVec, dotProduct, map_sum, map_mul]
       rfl
     choose γ hγ hγe using hw
     let Q := Quotient (QuotientGroup.rightRel ((Γ ⊓ P).subgroupOf Γ))

@@ -128,14 +128,16 @@ theorem thmAGen7_of (hO : ThmAOp7.{u}) : ThmAGen7.{u} := by
     simp [degE] at this
   have hbS0 : MvPowerSeries.constantCoeff (bSum (frameM (N1 := N1) x) be) = 0 := by
     unfold bSum
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_eq_zero fun ab _ => ?_
     exact MvPowerSeries.constantCoeff_subst_eq_zero
       (MvPowerSeries.hasSubst_of_constantCoeff_zero fun s => hlin0 _) (fun s => hlin0 _) hbe0
   have hbS : MvPowerSeries.subst aa (bSum (frameM (N1 := N1) x) be) =
       bSum (frameM (N1 := N1) xg) be := by
     unfold bSum
-    rw [← MvPowerSeries.coe_substAlgHom hs, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← MvPowerSeries.coe_substAlgHom hs, map_sum]
     refine Finset.sum_congr rfl fun ab _ => ?_
     rw [MvPowerSeries.coe_substAlgHom hs, MvPowerSeries.subst_comp_subst_apply
       (MvPowerSeries.hasSubst_of_constantCoeff_zero fun s => hlin0 _) hs]

@@ -73,7 +73,8 @@ theorem ball_descent : ∀ (D : D7) (Γ : Type) [Group Γ] [Fintype Γ] (Pl0 I0 
         exact (DFunLike.congr_fun hψ _).symm.trans (GlobalTheory.FlagTan.evR_frMap (hmem g).1 hmap).symm
       rw [h5, hz' _ _ _ (hmem g)]
     refine (hk'.int _).1 ?_
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [map_mul, hk'.comp, h4]
     have hid : ∑ t, φ' (bb t : F') * valC z'.1 (cuspOf YS fw j (F t) : T0.R ((j : ℕ) + 1)) =
         ∑ s, φ' (a s) * valC z'.1 (cuspOf YS fw j (f s) : T0.R ((j : ℕ) + 1)) -
@@ -83,7 +84,8 @@ theorem ball_descent : ∀ (D : D7) (Γ : Type) [Group Γ] [Fintype Γ] (Pl0 I0 
       rw [Finset.sum_comm, ← Finset.sum_add_distrib]
       refine Finset.sum_congr rfl fun s _ => ?_
       rw [hx s]
-      simp only [map_add, map_sum, map_mul, hφ', Finset.sum_mul, add_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_add, map_sum, map_mul, hφ', Finset.sum_mul, add_mul]
       congr 1
       · exact Finset.sum_congr rfl fun t _ => by ring
       · ring

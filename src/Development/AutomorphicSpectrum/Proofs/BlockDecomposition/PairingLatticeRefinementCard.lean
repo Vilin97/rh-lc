@@ -61,7 +61,8 @@ theorem mL_refine (B : SchF k d V →ₗ[ℂ] SchF k d V' →ₗ[ℂ] ℂ)
       = B (∑ s ∈ S, ind L' (x + s) a) (∑ t ∈ S, ind L' (0 + t) a') := by
         rw [mL, ← ind_eq_sum_reps h hS, ← ind_eq_sum_reps h hS]
     _ = ∑ t ∈ S, ∑ s ∈ S, mL B L' (x + s - t) a a' := by
-        simp only [map_sum, LinearMap.sum_apply, B_ind_ind B hT, zero_add]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, LinearMap.sum_apply, B_ind_ind B hT, zero_add]
     _ = (S.card : ℂ) * ∑ s ∈ S, mL B L' (x + s) a a' := by
         rw [Finset.sum_congr rfl hshift, Finset.sum_const, nsmul_eq_mul]
 

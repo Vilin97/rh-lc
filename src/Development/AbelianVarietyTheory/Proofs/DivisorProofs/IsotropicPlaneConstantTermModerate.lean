@@ -76,7 +76,8 @@ private theorem exists_ext (c : R →+* R) (hc : ∀ z, c (c z) = z) {J θ : Mat
     have e3 : P.map c *ᵥ z = 0 := by
       funext j
       have := congrArg c (congrFun e2 j)
-      simpa [mulVec, dotProduct, map_sum, map_mul, hc] using this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa [mulVec, dotProduct, map_sum, map_mul, hc] using this
     rw [add_mulVec, one_mulVec, ← mulVec_mulVec, e3, mulVec_zero, add_zero]
 
 private theorem exists_ext_line (c : R →+* R) (hc : ∀ z, c (c z) = z) {J θ : Matrix (Fin n) (Fin n) R}
@@ -96,7 +97,8 @@ private theorem exists_ext_line (c : R →+* R) (hc : ∀ z, c (c z) = z) {J θ 
     funext j
     have := congrArg c (congrFun hιx j)
     have skij : ∀ i l, c (J i l) = -J l i := fun i l => congrFun (congrFun sk i) l
-    simp only [mulVec, dotProduct, Matrix.mul_apply, map_sum, map_mul, hc, skij, transpose_apply, Pi.zero_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [mulVec, dotProduct, Matrix.mul_apply, map_sum, map_mul, hc, skij, transpose_apply, Pi.zero_apply,
       map_zero, Finset.sum_mul] at this
     simp only [vecMul, dotProduct, map_apply, Pi.zero_apply, Finset.sum_mul]
     rw [← neg_eq_zero, ← this, Finset.sum_comm, ← Finset.sum_neg_distrib]
@@ -231,12 +233,14 @@ private theorem exists_unip_mul_mem_kInf {B : Base F E} (hCM : IsCMExt F E σ) {
     · ext i j
       simp only [Matrix.map_apply, Matrix.neg_apply, Matrix.transpose_apply, ← hτσ, hsk, map_neg]
     · have := congrArg (B.emb w).1 hxx
-      simpa [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hτσ] using this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hτσ] using this
     · funext j
       have := congrArg (B.emb w).1 (horth (Pi.single j 1))
       rw [form, Matrix.mulVec_single_one] at this
       rw [← Matrix.mulVec_mulVec]
-      simpa [dotProduct, Matrix.mulVec, map_sum, map_mul, hτσ] using this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa [dotProduct, Matrix.mulVec, map_sum, map_mul, hτσ] using this
     · rw [← hgram, Matrix.map_mul, Matrix.map_mul]
       congr 1
       ext i j

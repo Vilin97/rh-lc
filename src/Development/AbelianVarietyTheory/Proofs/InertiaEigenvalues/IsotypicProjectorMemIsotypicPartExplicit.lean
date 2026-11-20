@@ -34,7 +34,8 @@ theorem isoProj_mem_isotypic {P : PhiMod O K l e a ι} (Δ : Descent P) (c : ZMo
   rw [LinearMap.smul_apply]
   refine Submodule.smul_mem _ _ ?_
   intro ξ τ
-  simp only [LinearMap.sum_apply, LinearMap.comp_apply, map_sum, act_inertia_diagScale,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [LinearMap.sum_apply, LinearMap.comp_apply, map_sum, act_inertia_diagScale,
     Finset.sum_apply, diagScale_apply, Finset.smul_sum]
   refine Fintype.sum_equiv (Equiv.mulLeft ξ) _ _ fun ζ => ?_
   rw [Equiv.coe_mulLeft, ← Module.End.mul_apply, ← map_mul, ← map_mul, smul_smul]

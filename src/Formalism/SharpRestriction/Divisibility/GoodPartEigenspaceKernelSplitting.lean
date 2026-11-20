@@ -560,7 +560,8 @@ theorem cj_smul {ι : Type} (a : ℂ) (v : EuclideanSpace ℂ ι) : cj (a • v)
   ext i; simp [cj]
 
 theorem cj_inner {ι : Type} [Fintype ι] (v w : EuclideanSpace ℂ ι) : inner ℂ (cj v) (cj w) = starRingEnd ℂ (inner ℂ v w) := by
-  simp [cj, PiLp.inner_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [cj, PiLp.inner_apply, map_sum]
 
 theorem map_conj_inv {ι : Type} [Fintype ι] [DecidableEq ι] (M : Matrix ι ι ℂ) (h : IsUnit M.det) :
     (M.map (starRingEnd ℂ))⁻¹ = (M⁻¹).map (starRingEnd ℂ) := by

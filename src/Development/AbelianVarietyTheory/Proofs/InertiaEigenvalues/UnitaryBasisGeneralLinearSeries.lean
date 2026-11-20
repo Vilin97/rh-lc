@@ -110,7 +110,8 @@ theorem lowestKType_irreducible : ∀ (D : D7) (n m : ℕ) (w : GlobalTheory.Exp
   have hdeg : ∀ ψ : W →ₗ[ℂ] PolF D m n, (∀ i, (ψ (e i)).totalDegree ≤ d) →
       ∀ x, ψ x ∈ MvPolynomial.restrictTotalDegree (FVar D m n) ℂ d := by
     intro ψ hψ x
-    rw [← e.sum_repr x, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← e.sum_repr x, map_sum]
     exact Submodule.sum_mem _ fun i _ => by
       rw [map_smul]
       exact Submodule.smul_mem _ _ ((MvPolynomial.mem_restrictTotalDegree _ _ _).2 (hψ i))

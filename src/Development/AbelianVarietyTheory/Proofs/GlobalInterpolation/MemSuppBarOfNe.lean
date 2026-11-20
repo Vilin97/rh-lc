@@ -115,7 +115,8 @@ theorem assemble {p : ℕ} [Fact p.Prime] (lam : TaylorLogMetric.Qbar →+* ℂ_
       rw [norm_mul, hinv, norm_inv, hχ1, inv_one, mul_one]
       exact h2 x (hR x hx)
   · unfold jetSum
-    rw [hsum X.K _ (fun x hx y hy => by rw [h0 x hx y hy]; unfold Amb.jetK; rw [thInd_add A S N N' c x y hy]), map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hsum X.K _ (fun x hx y hy => by rw [h0 x hx y hy]; unfold Amb.jetK; rw [thInd_add A S N N' c x y hy]), map_sum]
     refine Finset.sum_congr rfl fun x hx => ?_
     have hj : ∀ j ∈ J, Ξ (x + j) = Ξ x := fun j hj => h1 x (hR x hx) j (hJ.1 j hj)
     rw [Finset.sum_congr rfl fun j hj' => by rw [hj j hj'], ← Finset.mul_sum]
@@ -130,7 +131,8 @@ theorem assemble {p : ℕ} [Fact p.Prime] (lam : TaylorLogMetric.Qbar →+* ℂ_
       exact this.choose_spec
     have e : A.σ₀ (∑ j ∈ J, A.jetK S N N' c (x + j) m) =
         (A.chiF a b N N')⁻¹ * ∑ j ∈ J, jetC A.cD (A.thInd S N N' c (x + j)) m := by
-      rw [map_sum, Finset.mul_sum]; exact Finset.sum_congr rfl hk
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Finset.mul_sum]; exact Finset.sum_congr rfl hk
     have hq : ∑ j ∈ J, jetC A.cD (A.thInd S N N' c (x + j)) m ∈ TaylorLogMetric.Qbar := by
       have := mul_mem hχ (hlam (∑ j ∈ J, A.jetK S N N' c (x + j) m)).1
       rwa [e, mul_inv_cancel_left₀ hχ0] at this

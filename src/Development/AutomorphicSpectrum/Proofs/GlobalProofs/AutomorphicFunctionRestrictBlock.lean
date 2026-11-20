@@ -143,7 +143,8 @@ theorem qdet_scalar_of_gelf : ∀ (D : D7) (θ : D.what₂.Tau → (Ainf D.host.
     intro Z
     conv_lhs => rw [Matrix.matrix_eq_sum_single Z]
     change _ = envRep R τ (∑ a, ∑ b, Z a b • E a b)
-    simp only [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum]
     refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
     have : Matrix.single a b (Z a b) = Z a b • Matrix.single a b (1 : ℂ) := by
       rw [Matrix.smul_single, smul_eq_mul, mul_one]

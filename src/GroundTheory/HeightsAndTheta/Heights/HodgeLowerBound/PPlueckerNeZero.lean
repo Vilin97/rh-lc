@@ -57,7 +57,8 @@ theorem PlueckerNeZero.proof : PlueckerNeZero.Statement := by
     fun c => Pl.gen τ i m0 (exteriorPower.ιMulti Ω _ (Pl.e τ ∘ c))
   let P : MvPolynomial (Ψ × Fin D.N × Fin D.N) Ω := ∑ c, monomial (μ c) (g c)
   have hP : Pl.pluecker τ i m0 = algebraMap _ Pl.ΩY P := by
-    simp only [PlueckerData.pluecker, PlueckerData.gvar, PlueckerData.ofΩ, P, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [PlueckerData.pluecker, PlueckerData.gvar, PlueckerData.ofΩ, P, map_sum]
     refine Finset.sum_congr rfl fun c _ => ?_
     rw [← map_prod, ← map_mul]
     congr 1

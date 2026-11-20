@@ -224,7 +224,8 @@ theorem res_eq (σ : Fin k ⊕ Fin l ≃ Fin n) (χ : Gn g n → ℂ) (hχ : IsC
 open MonoidAlgebra in
 theorem map_zOf {G H : Type} [Group G] [Fintype G] [Group H] (i : G →* H) (α : G → ℂ) :
     mapDomainAlgHom ℂ ℂ i (zOf α) = ∑ x, single (i x) (α 1 / (Fintype.card G : ℂ) * α x⁻¹) := by
-  simp [zOf, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [zOf, map_sum]
 
 open MonoidAlgebra in
 theorem commute_map {G H : Type} [Group G] [Group H] (i : G →* H) (e : MonoidAlgebra ℂ H)
@@ -348,14 +349,16 @@ theorem eN_left {W W' : Type} [AddCommGroup W] [Module ℂ W] [AddCommGroup W'] 
     (σ : Fin k ⊕ Fin l ≃ Fin n) (ρ : Representation ℂ (Gn g n) W) (T : W →ₗ[ℂ] W')
     (h : ∀ B, T ∘ₗ ρ (par σ 1 B 1) = T) (w : W) : T (ρ.asAlgebraHom (eN g σ) w) = T w := by
   have h' : ∀ B, T (ρ (par σ 1 B 1) w) = T w := fun B => LinearMap.congr_fun (h B) w
-  simp only [eN, map_sum, Representation.asAlgebraHom_single, LinearMap.sum_apply, LinearMap.smul_apply, map_smul, h']
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [eN, map_sum, Representation.asAlgebraHom_single, LinearMap.sum_apply, LinearMap.smul_apply, map_smul, h']
   rw [Finset.sum_const, Finset.card_univ, ← Nat.cast_smul_eq_nsmul ℂ, card_mat, smul_smul, mul_inv_cancel₀ gpow_ne,
     one_smul]
 
 theorem eN_right {W : Type} [AddCommGroup W] [Module ℂ W]
     (σ : Fin k ⊕ Fin l ≃ Fin n) (ρ : Representation ℂ (Gn g n) W) (w : W)
     (h : ∀ B, ρ (par σ 1 B 1) w = w) : ρ.asAlgebraHom (eN g σ) w = w := by
-  simp only [eN, map_sum, Representation.asAlgebraHom_single, LinearMap.sum_apply, LinearMap.smul_apply, h]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [eN, map_sum, Representation.asAlgebraHom_single, LinearMap.sum_apply, LinearMap.smul_apply, h]
   rw [Finset.sum_const, Finset.card_univ, ← Nat.cast_smul_eq_nsmul ℂ, card_mat, smul_smul, mul_inv_cancel₀ gpow_ne,
     one_smul]
 
@@ -384,23 +387,29 @@ theorem step (L : LabelDatum g) (h5 : 5 ≤ g) (hG : Green) (σ : Fin k ⊕ Fin 
   obtain ⟨S₂, -, h₂⟩ := (GlobalTheory.T.harishChandraSeriesCentralIdempotent_laws g L h5 hG l).2.2.2.2
   have e₁ : ∀ v : W, v = ∑ f₁ ∈ S₁, ρ.asAlgebraHom (mapDomainAlgHom ℂ ℂ (inA σ) (eSerC L k f₁)) v := by
     intro v
-    rw [← LinearMap.sum_apply, ← map_sum, ← map_sum, h₁, map_one, map_one, Module.End.one_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← LinearMap.sum_apply, ← map_sum, ← map_sum, h₁, map_one, map_one, Module.End.one_apply]
   have e₂ : ∀ v : W, v = ∑ f₂ ∈ S₂, ρ.asAlgebraHom (mapDomainAlgHom ℂ ℂ (inB σ) (eSerC L l f₂)) v := by
     intro v
-    rw [← LinearMap.sum_apply, ← map_sum, ← map_sum, h₂, map_one, map_one, Module.End.one_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← LinearMap.sum_apply, ← map_sum, ← map_sum, h₂, map_one, map_one, Module.End.one_apply]
   have e₃ : ∀ v : W', v = ∑ f₁ ∈ S₁, ρ'.asAlgebraHom (mapDomainAlgHom ℂ ℂ (inA σ) (eSerC L k f₁)) v := by
     intro v
-    rw [← LinearMap.sum_apply, ← map_sum, ← map_sum, h₁, map_one, map_one, Module.End.one_apply]
-  rw [e₂ (ρ.asAlgebraHom (eSerC L n f) w), map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← LinearMap.sum_apply, ← map_sum, ← map_sum, h₁, map_one, map_one, Module.End.one_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e₂ (ρ.asAlgebraHom (eSerC L n f) w), map_sum, map_sum]
   refine Finset.sum_eq_zero fun f₂ _ => ?_
-  rw [e₁ (ρ.asAlgebraHom (mapDomainAlgHom ℂ ℂ (inB σ) (eSerC L l f₂)) _), map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e₁ (ρ.asAlgebraHom (mapDomainAlgHom ℂ ℂ (inB σ) (eSerC L l f₂)) _), map_sum, map_sum]
   refine Finset.sum_eq_zero fun f₁ _ => ?_
   by_cases h12 : f = f₁ * f₂
   swap
   · rw [← hN, ← Module.End.mul_apply, ← Module.End.mul_apply, ← Module.End.mul_apply, ← map_mul, ← map_mul,
       ← map_mul, ser_vanish L h5 hG σ f f₁ f₂ h12]
     simp
-  rw [e₃ (T _), map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e₃ (T _), map_sum]
   refine Finset.sum_eq_zero fun f₃ _ => ?_
   by_cases h13 : f₁ = f₃
   swap

@@ -63,7 +63,8 @@ theorem eq_zero_of_cov : ∀ (S : Scheme.{0}) (P : PPAS S) (y : Sp ℂ ⟶ S) (d
       funext fun z => (valR_comp _ _ _ _).symm
     rw [e]
     conv_lhs => rw [← Finset.univ_sum_single w]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun a _ => ?_
     rw [show (Pi.single a (w a) : Fin P.g → ℂ) = w a • Pi.single a 1 by
       rw [← Pi.single_smul, smul_eq_mul, mul_one], map_smul, smul_eq_mul, mul_comm]

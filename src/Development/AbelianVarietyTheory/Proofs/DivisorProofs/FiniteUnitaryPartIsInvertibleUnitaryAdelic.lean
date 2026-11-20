@@ -40,7 +40,8 @@ theorem hermA_mulVec {F E : Type} [Field F] [NumberField F] [Field E] [Algebra F
       (g.map (GlobalTheory.AdLat.sg (FiniteAdeleRing (𝓞 F) F) c)) *ᵥ
         (fun b => GlobalTheory.AdLat.sg (FiniteAdeleRing (𝓞 F) F) c (y b)) := by
     funext b
-    simp [Matrix.mulVec, dotProduct, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Matrix.mulVec, dotProduct, map_sum]
   rw [e]
   conv_rhs => rw [← h]
   rw [Matrix.mul_assoc, ← Matrix.mulVec_mulVec, ← Matrix.mulVec_mulVec, Matrix.dotProduct_mulVec _ (Matrix.transpose _),

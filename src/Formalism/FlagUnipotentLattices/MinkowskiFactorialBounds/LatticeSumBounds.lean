@@ -9,10 +9,12 @@ theorem sesqFormSumExpansion : CommonLiftExpand := by
   intro V _ _ h r e e' l₁ l₂ α α' h1 h2
   have hA : ∀ x, h (∑ a, α a • e a) x = ∑ a, α a * h (e a) x := by
     intro x
-    simp [map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply]
   have hB : ∀ x, h x (∑ b, α' b • e' b) = ∑ b, conj (α' b) * h x (e' b) := by
     intro x
-    simp [map_sum, map_smulₛₗ]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, map_smulₛₗ]
   simp only [map_add, LinearMap.add_apply, hA, hB, h1, h2, mul_zero, Finset.sum_const_zero,
     zero_add, add_zero, Finset.mul_sum, mul_assoc]
 

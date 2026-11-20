@@ -174,7 +174,8 @@ theorem flip_translates : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : In
         linear_combination (-((m : AE D) * eT * y i j)) * hinc
       rw [heq]
       refine GlobalTheory.LatticeStable.smul_mem_latO D V W _ _ _ _ ?_ _ hMy
-      rw [hsum, Finset.sum_mul, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hsum, Finset.sum_mul, map_sum]
       refine AddSubgroup.sum_mem _ fun PP hPP => ?_
       have hx := (hes PP hPP).2 ((u : ℕ) : 𝓞 D.host.E) (Nat.cast_ne_zero.mpr hu0)
       have hc : (((u : ℕ) : 𝓞 D.host.E) : D.host.E) = (u : D.host.E) := by simp

@@ -24,14 +24,16 @@ theorem sum_C_mul_linForm {τ ρ : Type} [Fintype τ] [Fintype ρ] (c : ρ → �
   simp only [Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun q _ => ?_
-  rw [map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [map_mul, mul_assoc]
 
 theorem linSubst_linForm (ℓ : σ → Fin n → Φ) (μ : σ → Φ) :
     linSubst ℓ (∑ q, C (μ q) * X q) = ∑ b, C (∑ q, μ q * ℓ q b) * X b := by
   rw [← sum_C_mul_linForm μ ℓ]
-  simp only [linSubst, map_sum, map_mul, aeval_C, aeval_X, MvPolynomial.algebraMap_eq]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [linSubst, map_sum, map_mul, aeval_C, aeval_X, MvPolynomial.algebraMap_eq]
 
 theorem ker_linSubst (ℓ : σ → Fin n → Φ) (ν : Fin n → σ → Φ)
     (hν : ∀ a b, ∑ q, ν a q * ℓ q b = if a = b then 1 else 0) :
@@ -47,7 +49,8 @@ theorem ker_linSubst (ℓ : σ → Fin n → Φ) (ν : Fin n → σ → Φ)
       have h1 : ρ (linSubst ℓ (X q)) =
           Ideal.Quotient.mk I (∑ q', C (∑ a, ℓ q a * ν a q') * X q') := by
         rw [← sum_C_mul_linForm]
-        simp only [ρ, linSubst, aeval_X, map_sum, map_mul, aeval_C]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [ρ, linSubst, aeval_X, map_sum, map_mul, aeval_C]
         rfl
       rw [h1, Ideal.Quotient.eq]
       refine Ideal.subset_span ⟨fun q' => ∑ a, ℓ q a * ν a q' - if q' = q then 1 else 0, fun b => ?_, ?_⟩
@@ -229,7 +232,8 @@ theorem ProjBundleFibreLine.proof : ProjBundleFibreLine.Statement := by
         ext i
         simp [Finset.sum_apply, Pi.single_apply]
       conv_rhs => rw [hB']
-      rw [map_sum, Finset.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Finset.sum_apply]
       simp [mul_comm]
     have h2 : B b = Fintype.linearCombination (FnField P) B (Pi.single b 1) := by
       exact ((Fintype.linearCombination_apply_single (FnField P) B b (1 : FnField P)).trans (one_smul _ _)).symm

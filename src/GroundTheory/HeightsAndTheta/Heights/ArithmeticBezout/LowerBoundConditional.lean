@@ -33,7 +33,8 @@ theorem IsWeightedHomogeneous.bind₁ {σ τ : Type*} {w : σ → ℕ} {w' : τ 
     (hφ : ∀ x, IsWeightedHomogeneous w' (φ x) (w x)) :
     IsWeightedHomogeneous w' (bind₁ φ f) m := by
   classical
-  rw [f.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [f.as_sum, map_sum]
   apply IsWeightedHomogeneous.sum
   intro d hd
   rw [bind₁_monomial]

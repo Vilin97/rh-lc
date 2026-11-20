@@ -47,7 +47,8 @@ theorem eq_zero_of_lattice (X : Data E r) (τ : E →+* ℂ) (f : (Fin r → ℂ
     funext a
     simp [Data.emb, Finset.sum_apply, Pi.single_apply, apply_ite]
   show F u = 0
-  rw [hu, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hu, map_sum]
   refine Finset.sum_eq_zero fun k _ => ?_
   show f _ = 0
   rw [hsm, hE, mul_zero]

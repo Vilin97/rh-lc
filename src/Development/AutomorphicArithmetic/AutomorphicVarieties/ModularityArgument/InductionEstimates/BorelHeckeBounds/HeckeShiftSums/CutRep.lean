@@ -158,7 +158,8 @@ private theorem th_chi {K : Type} [Field K] [NumberField K] (μ : Measure (G1 K 
   generalize ((q.out : G1 K (2 + 2)) * y) = z
   have hs : A.sec (U (HH z)) z = ∑ i, U (HH z) i * A.sec (EuclideanSpace.single i (1 : ℂ)) z := by
     conv_lhs => rw [← eu_sum (U (HH z))]
-    rw [map_sum, Finset.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_apply]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, Pi.smul_apply, smul_eq_mul]
   have ex : ((((2 + 2 : ℕ) : ℝ) / 2 * HP 2 2 z : ℝ) : ℂ) = 2 * (HH z : ℂ) := by
@@ -188,7 +189,8 @@ private theorem rep_chi {K : Type} [Field K] [NumberField K] (μ : Measure (G1 K
     have h3 := (quasiMeasurePreserving_mk (Gam K (2 + 2)) μ).ae (sum_ae Finset.univ fun i => A.J (u i))
     unfold Reps
     filter_upwards [h2, h3] with y a b
-    rw [map_sum, b, Finset.sum_congr rfl fun i _ => a i]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, b, Finset.sum_congr rfl fun i _ => a i]
     exact th_chi μ A T U χ h0 y
 
 private theorem th_lim {K : Type} [Field K] [NumberField K] (T : ℝ) (G : G1 K (2 + 2) → ℂ) (y : G1 K (2 + 2)) :

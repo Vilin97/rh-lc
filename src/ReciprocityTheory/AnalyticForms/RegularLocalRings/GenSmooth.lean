@@ -16,7 +16,8 @@ theorem gs_exists_rows_det_ne_zero {K : Type*} [Field K] {t r : ℕ} (M : Matrix
     have hfx : ∀ x : Fin r → K, f x = ∑ k, x k * f (Pi.single k 1) := by
       intro x
       conv_lhs => rw [← (Pi.basisFun K (Fin r)).sum_repr x]
-      simp [map_sum, smul_eq_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [map_sum, smul_eq_mul]
     have hc : M.mulVec (fun k => f (Pi.single k 1)) = 0 := by
       funext i
       have hi : M i ∈ LinearMap.ker f := hf (Submodule.subset_span ⟨i, rfl⟩)
@@ -52,7 +53,8 @@ theorem gs_pderiv_facts {σ : Type*} (p : MvPolynomial σ ℚ) (j : σ) (hj : 0 
 
   have key : ∀ m ∈ (pderiv j p).support, ∃ m' ∈ p.support, m = m' - Finsupp.single j 1 := by
     intro m hm
-    rw [p.as_sum, map_sum] at hm
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [p.as_sum, map_sum] at hm
     obtain ⟨m', hm', hmm⟩ := Finset.mem_biUnion.1 (MvPolynomial.support_sum hm)
     rw [pderiv_monomial] at hmm
     exact ⟨m', hm', Finset.mem_singleton.1 (support_monomial_subset hmm)⟩
@@ -73,7 +75,8 @@ theorem gs_pderiv_facts {σ : Type*} (p : MvPolynomial σ ℚ) (j : σ) (hj : 0 
     intro h0
     have hc : AddMonoidAlgebra.coeff (pderiv j p) (m' - Finsupp.single j 1) = AddMonoidAlgebra.coeff p m' * (m' j : ℚ) := by
       conv_lhs => rw [p.as_sum]
-      rw [map_sum, coeff_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, coeff_sum]
       simp only [pderiv_monomial, coeff_monomial]
       rw [Finset.sum_eq_single m']
       · simp

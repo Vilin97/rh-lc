@@ -142,7 +142,8 @@ theorem FinGradedSub.embedC_d (n : ℕ) (s : Cech.Cochain (fun I : Chart x => (M
   funext J
   rw [Cech.d_apply]
   by_cases hJ : J.1.1 ⊆ support x
-  · rw [M.embedC_of_subset' c _ J hJ, Cech.d_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [M.embedC_of_subset' c _ J hJ, Cech.d_apply, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_zsmul, supportRes_of_subset _ hJ, LinearMap.id_apply,
       M.embedC_of_subset c s _ ((Cech.face_subset J j).trans hJ)]

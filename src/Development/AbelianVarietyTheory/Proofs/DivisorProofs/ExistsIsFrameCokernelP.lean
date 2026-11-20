@@ -77,7 +77,8 @@ theorem exists_isFrame_subP (P : Sub F) (c : κ → Γ(F, U)) (hc : IsFrame c) (
     have h3 : t = ∑ j : {z // Q z}, (hc.basis h).repr (P.incl.app V t) j • resM P.toMod h (P.mkSec _ (hmem j)) := by
       apply P.incl_app_injective V
       conv_lhs => rw [← (hc.basis h).sum_repr (P.incl.app V t)]
-      simp only [map_sum, Scheme.Modules.Hom.app_smul, app_resM, Sub.incl_app_mkSec, IsFrame.basis_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, Scheme.Modules.Hom.app_smul, app_resM, Sub.incl_app_mkSec, IsFrame.basis_apply]
       symm
       refine Finset.sum_of_injOn Subtype.val Subtype.val_injective.injOn
         (fun _ _ => Finset.mem_coe.2 (Finset.mem_univ _)) (fun j _ hj => ?_) (fun _ _ => rfl)

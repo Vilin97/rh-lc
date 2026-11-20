@@ -41,7 +41,8 @@ theorem gram_inv_star (a b : Fin S.rank) : star (S.gram⁻¹ a b) = S.gram⁻¹ 
 
 theorem hO_herm (x y : WO S T) : cA D (hO S T x y) = hO S T y x := by
   unfold hO
-  simp only [map_sum, map_mul, cA_cA, cA_incA, gram_star, gram_inv_star]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, cA_cA, cA_incA, gram_star, gram_inv_star]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
   rw [Finset.sum_comm]

@@ -95,7 +95,8 @@ theorem aaRep_holds : AARep := by
     · rw [he β hβ]
       exact Submodule.coe_mem _
     · have hm : toA0K X la G.w wF (F β) ∈ Q.A0 := by
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         refine Q.A0.sum_mem fun q hq => ?_
         rw [LinearMap.map_smul_of_tower, algebraMap_smul, hg' q ((sum_snd_le hq).trans hβ)]
         exact Q.A0.smul_mem _ (h2 q.2 ((sum_snd_le hq).trans hβ))

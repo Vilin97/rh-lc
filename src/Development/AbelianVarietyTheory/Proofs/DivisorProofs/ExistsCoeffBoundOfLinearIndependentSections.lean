@@ -60,7 +60,8 @@ theorem exists_coeff_le_of_linearIndependent : ∀ (k : Type) [CommRing k] (X : 
   refine ⟨K * E, mul_nonneg hK hE, fun cc R hR l => ?_⟩
   set v : Fin r → ℂ := Matrix.mulVec M fun l => (cc l : ℂ) with hvdef
   have hsum : P.loc a b (∑ l, cc l • f l) i j = fnOf U hgU (∑ l, cc l • g l) := by
-    rw [hloc, Finset.sum_mul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hloc, Finset.sum_mul, map_sum]
     refine Finset.sum_congr rfl fun l _ => ?_
     rw [map_zsmul, hg, hloc, smul_mul_assoc]
   have key : ∀ s, ‖v s‖ ≤ R * w s := by
@@ -69,7 +70,8 @@ theorem exists_coeff_le_of_linearIndependent : ∀ (k : Type) [CommRing k] (X : 
       (ptsIn_mono hl (hy (x s))) (ptsIn_mono hr (hy (x s)))
     rw [hsum, ratVal_fnOf (hy (x s)), ev_eq (hy (x s)), hyx] at e
     have hv : v s = x s (∑ l, cc l • g l) := by
-      simp [v, M, Matrix.mulVec, dotProduct, map_sum, map_zsmul, mul_comm]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [v, M, Matrix.mulVec, dotProduct, map_sum, map_zsmul, mul_comm]
     have hb := hR.2 (σ (x s)) (y (x s))
     rw [e] at hb
     rw [hv]

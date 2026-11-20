@@ -374,7 +374,8 @@ theorem count_B_formula : CountB := by
       refine Finset.sum_congr rfl fun e _ => ?_
       have : (fun i => g (e, i)) = ∑ i, g (e, i) • (Pi.single i 1 : Fin n → O) := by
         ext j; simp [Finset.sum_apply, Pi.single_apply]
-      rw [this, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [this, map_sum]
       simp [w, map_smul]
     rw [hconv] at hg
     exact zero (fun e i => g (e, i)) hg p.1 p.2

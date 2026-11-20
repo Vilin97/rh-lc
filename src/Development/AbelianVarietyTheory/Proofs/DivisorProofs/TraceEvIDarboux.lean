@@ -22,7 +22,8 @@ theorem trace_evI_darboux : ∀ {F : Type} [Field F] [NumberField F] {κ : Type}
       map_add' := fun a b => by simp only [evI]; exact map_add (InfiniteAdeleRing.ringEquiv_mixedSpace F) a.1 b.1 }
   have hf : ∀ a, f a = evI F a := fun _ => rfl
   have hsum : ∀ (x y : κ → AF F), evI F (x ⬝ᵥ y) = ∑ i, arch F x i * arch F y i := fun x y => by
-    rw [← hf, dotProduct, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hf, dotProduct, map_sum]
     exact Finset.sum_congr rfl fun i _ => map_mul f _ _
   rw [d.form, ← hf, map_sub, hf, hf, hsum, hsum, map_sub, mixedTracePairing_apply, mixedTracePairing_apply]
 

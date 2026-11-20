@@ -227,7 +227,8 @@ theorem exists_dRho_ptAt : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : I
   have h2 : aPlus (heisO ψ S T) θ τ (cplxO sS sT) z (pureTensorL A f P) =
       pureTensorL A f (∑ k, α k • (MvPolynomial.X k * P)) := by
     conv_lhs => rw [eq_sum_unitMap hfS.1 hfT.1 z]
-    rw [GlobalTheory.FockSubst.aPlus_dir_sum hψ hθ τ sS sT hm, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [GlobalTheory.FockSubst.aPlus_dir_sum hψ hθ τ sS sT hm, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [GlobalTheory.FockSubst.aPlus_dir_smul hψ hθ τ sS sT hm _ _ (cplxO_unitMap hfS hfT k.1 k.2), map_smul,
       pure_X_mul hadd hsm hA hc Aadd Asm hf]

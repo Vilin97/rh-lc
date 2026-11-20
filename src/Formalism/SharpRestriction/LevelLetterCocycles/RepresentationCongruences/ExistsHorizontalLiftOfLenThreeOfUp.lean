@@ -53,7 +53,8 @@ theorem dvO_eq_sum (T : LocLat G Qp LL O) (e : ℕ) {d : ℕ} (b : Fin d → W.D
 theorem dv_shift (T : LocLat G Qp LL O) (e k : ℕ) {d : ℕ} (b : Fin d → W.DD T) (c₀ : Fin d → LL) :
     dv W T (e + k) b c₀ = ((φVB PD (LL := LL) (V := T.V)) ^ k) (dv W T e b c₀) := by
   unfold dv
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun m _ => ?_
   rw [map_smul, pow_add, pow_mul_comm, Module.End.mul_apply]
 
@@ -371,7 +372,8 @@ theorem exists_horizontal_lift_of_len_three_of_up [NeZero n] [Fintype (K →ₐ[
     simp only [Br.cst_C]
     by_cases hk : k = k₀
     · rw [if_pos hk] at h2 ⊢
-      simp only [map_mul, map_sub, map_sum, map_pow, map_natCast, map_one, map_neg, lA, lE, mul_one] at h3 h2 ⊢
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_mul, map_sub, map_sum, map_pow, map_natCast, map_one, map_neg, lA, lE, mul_one] at h3 h2 ⊢
       linear_combination (algebraMap (LetA O n) W.EE (qA W)) ^ G₀ * h3 - ((PD.p : ℕ) : W.EE) ^ Kc * hsum +
         (algebraMap (LetA O n) W.EE E * ((PD.p : ℕ) : W.EE) ^ Kc * ((PD.p : ℕ) : W.EE) ^ σ *
           (algebraMap (LetA O n) W.EE W.π₀) ^ AI * ((PD.p : ℕ) : W.EE) ^ σ) * h2 +
@@ -380,7 +382,8 @@ theorem exists_horizontal_lift_of_len_three_of_up [NeZero n] [Fintype (K →ₐ[
         (algebraMap (LetA O n) W.EE E * algebraMap (LetA O n) W.EE (Br.cst (G₂ k)) *
           (algebraMap (LetA O n) W.EE (qA W)) ^ (2 * G₀)) * hq
     · rw [if_neg hk] at h2 ⊢
-      simp only [map_mul, map_sub, map_sum, map_pow, map_natCast, map_one, map_neg, map_zero, lA, lE, mul_one,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_mul, map_sub, map_sum, map_pow, map_natCast, map_one, map_neg, map_zero, lA, lE, mul_one,
         sub_zero] at h3 h2 ⊢
       linear_combination (algebraMap (LetA O n) W.EE (qA W)) ^ G₀ * h3 - ((PD.p : ℕ) : W.EE) ^ Kc * hsum +
         (algebraMap (LetA O n) W.EE E * ((PD.p : ℕ) : W.EE) ^ Kc * ((PD.p : ℕ) : W.EE) ^ σ *
@@ -396,7 +399,8 @@ theorem exists_horizontal_lift_of_len_three_of_up [NeZero n] [Fintype (K →ₐ[
     rw [show (PowerSeries.C ((PD.p : ℕ) : O)) ^ Kc = PowerSeries.C (((PD.p : ℕ) : O) ^ Kc) from (map_pow _ _ _).symm,
       show (PowerSeries.C ((PD.p : ℕ) : O)) ^ (2 * σ) = PowerSeries.C (((PD.p : ℕ) : O) ^ (2 * σ)) from
         (map_pow _ _ _).symm] at h
-    simp only [PowerSeries.coeff_X_pow_mul', if_neg (show ¬ 2 * G₀ ≤ j by omega), PowerSeries.coeff_C_mul, map_sub,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [PowerSeries.coeff_X_pow_mul', if_neg (show ¬ 2 * G₀ ≤ j by omega), PowerSeries.coeff_C_mul, map_sub,
       map_sum, PowerSeries.coeff_mul_C, apply_ite (PowerSeries.coeff j), map_zero] at h
     rcases mul_eq_zero.1 h with h0 | h0
     · exact absurd h0 (pow_ne_zero _ hp0)
@@ -465,7 +469,8 @@ theorem exists_horizontal_lift_of_len_three_of_up [NeZero n] [Fintype (K →ₐ[
       ring
     have hs := hsumI m
     beta_reduce at hs
-    rw [← hL, hs, Finset.mul_sum, ArcLengthFourSecond.cst_sum, Finset.mul_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hL, hs, Finset.mul_sum, ArcLengthFourSecond.cst_sum, Finset.mul_sum, map_sum]
     exact Finset.sum_congr rfl fun i _ => hR i
   have hFil : ∀ j < G₀ - η, dvO W T₁ 1 b₁ (fun m => PowerSeries.coeff j (G₁ m)) ∈ FilS W T₁ (c - 2) 0 (wa : ℤ) := by
     intro j hj
@@ -474,7 +479,8 @@ theorem exists_horizontal_lift_of_len_three_of_up [NeZero n] [Fintype (K →ₐ[
     have hvec : ∀ m, ((PD.p : ℕ) : O) ^ κ * PowerSeries.coeff j (G₁ m) = ∑ i, r i * c₀ i m := by
       intro m
       have h := congrArg (PowerSeries.coeff (N' - G₀ + j)) (hX m)
-      rw [PowerSeries.coeff_X_pow_mul', if_pos (by omega), Nat.add_sub_cancel_left, PowerSeries.coeff_C_mul, map_sum] at h
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [PowerSeries.coeff_X_pow_mul', if_pos (by omega), Nat.add_sub_cancel_left, PowerSeries.coeff_C_mul, map_sum] at h
       rw [h]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [PowerSeries.coeff_X_pow_mul']
@@ -486,7 +492,8 @@ theorem exists_horizontal_lift_of_len_three_of_up [NeZero n] [Fintype (K →ₐ[
         FilS W T₁ (c - 2) 0 (wa : ℤ) := by
       have e : dvO W T₁ 1 b₁ (fun m => ((PD.p : ℕ) : O) ^ κ * PowerSeries.coeff j (G₁ m)) =
           ∑ i, algebraMap O LL (r i) • dvO W T₁ 1 b₁ (c₀ i) := by
-        simp_rw [hvec, ArcLengthFourSecond.dvO_eq_sum, Finset.smul_sum, map_sum, Finset.sum_smul, map_mul, mul_smul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp_rw [hvec, ArcLengthFourSecond.dvO_eq_sum, Finset.smul_sum, map_sum, Finset.sum_smul, map_mul, mul_smul]
         exact Finset.sum_comm
       rw [e]
       refine Submodule.sum_mem _ fun i _ => ?_
@@ -568,10 +575,12 @@ theorem exists_horizontal_lift_of_len_three_of_up [NeZero n] [Fintype (K →ₐ[
     · rw [mul_zero]
   have hcris1 : Formalism.MainNotions.TruncatedSeriesCountingBounds.crisMap B F.f (dvO W T₁ 1 b₁ c₁) =
       ((PD.p : LL) ^ (2 * σ + 1)) • dv W T₂ 1 bb (Pi.single k₀ 1) := by
-    rw [ArcLengthFourSecond.dvO_eq_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [ArcLengthFourSecond.dvO_eq_sum, map_sum]
     simp_rw [map_smul, hμcris, ArcLengthFourSecond.dvO_eq_sum, Finset.smul_sum, smul_smul]
     rw [Finset.sum_comm]
-    simp_rw [← Finset.sum_smul, ← map_mul, ← map_sum, hμc]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp_rw [← Finset.sum_smul, ← map_mul, ← map_sum, hμc]
     rw [Finset.sum_eq_single k₀]
     · simp
     · intro k _ hk; simp [hk]

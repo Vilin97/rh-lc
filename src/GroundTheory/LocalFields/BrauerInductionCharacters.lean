@@ -185,7 +185,8 @@ theorem finite_setOf_isIrrCharacter : {χ : G → ℂ | IsIrrCharacter χ}.Finit
   rw [linearIndependent_iff']
   intro s c hs i hi
   have h := congrArg (fun f ↦ charInner G f i.1) hs
-  simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, map_zero,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, map_zero,
     LinearMap.zero_apply] at h
   rw [Finset.sum_eq_single i] at h
   · rw [charInner_of_isIrrCharacter i.2 i.2, if_pos rfl, smul_eq_mul, mul_one] at h
@@ -205,7 +206,8 @@ theorem mem_irrChars {χ : G → ℂ} : χ ∈ irrChars G ↔ IsIrrCharacter χ 
 theorem charInner_sum_irrChars (c : (G → ℂ) → ℂ) {ψ : G → ℂ} (hψ : ψ ∈ irrChars G) :
     charInner G (∑ χ ∈ irrChars G, c χ • χ) ψ = c ψ := by
   classical
-  simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply]
   rw [Finset.sum_eq_single ψ]
   · rw [charInner_of_isIrrCharacter (mem_irrChars.mp hψ) (mem_irrChars.mp hψ), if_pos rfl, smul_eq_mul,
       mul_one]
@@ -369,7 +371,8 @@ theorem sum_mul_irr_apply {f : G → ℂ} (hf : IsClassFun f) {ψ : G → ℂ} (
   have hT : ∀ k, T ∘ₗ ρ k = ρ k ∘ₗ T := by
     intro k
     ext v
-    simp only [T, LinearMap.coe_comp, Function.comp_apply, LinearMap.sum_apply, LinearMap.smul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [T, LinearMap.coe_comp, Function.comp_apply, LinearMap.sum_apply, LinearMap.smul_apply,
       map_sum, map_smul]
     refine Fintype.sum_equiv (MulAut.conj k⁻¹).toEquiv _ _ fun g ↦ ?_
     simp only [MulEquiv.toEquiv_eq_coe, MulEquiv.coe_toEquiv, MulAut.conj_apply, inv_inv]
@@ -386,7 +389,8 @@ theorem sum_mul_irr_apply {f : G → ℂ} (hf : IsClassFun f) {ψ : G → ℂ} (
     have hcomp : T ∘ₗ ρ h' = ∑ g, f g • ρ (g⁻¹ * h') := by
       ext v
       simp [T, LinearMap.sum_apply, map_mul]
-    rw [hcomp, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hcomp, map_sum]
     simp only [map_smul, smul_eq_mul, Representation.character]
   have hval : ∀ h' : G, ∑ g, f g * ρ.character (g⁻¹ * h') = c * ρ.character h' := by
     intro h'

@@ -143,7 +143,8 @@ attribute [local instance] MvPolynomial.weightedGradedAlgebra
 
 theorem weight_lex (m : (Σ k, ι k) →₀ ℕ) :
     Finsupp.weight (fun p => lexDeg (mw (ι := ι) p)) m = lexDeg (Finsupp.weight (mw (ι := ι)) m) := by
-  simp only [Finsupp.weight_apply, Finsupp.sum, map_sum, map_nsmul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finsupp.weight_apply, Finsupp.sum, map_sum, map_nsmul]
 
 theorem mem_lex_of_mem {x : MRingOver F ι} {d : K → ℕ}
     (hx : x ∈ weightedHomogeneousSubmodule F (mw (ι := ι)) d) :

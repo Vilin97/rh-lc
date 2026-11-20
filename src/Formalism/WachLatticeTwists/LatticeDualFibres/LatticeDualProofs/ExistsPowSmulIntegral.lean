@@ -68,7 +68,8 @@ theorem quotEmbeds : StatQuotEmbeds.{u} := by
   have hTv : ∀ t : T, (t : V) = ∑ i, b.repr t i • v i := by
     intro t
     have h := congrArg T.subtype (b.sum_repr t)
-    rw [map_sum] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at h
     simpa [v] using h.symm
   have hsp : ⊤ ≤ Submodule.span (FractionRing O) (Set.range v) := by
     rw [← hT.2, Submodule.span_le]

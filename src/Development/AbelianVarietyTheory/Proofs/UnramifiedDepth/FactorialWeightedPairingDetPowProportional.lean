@@ -152,7 +152,8 @@ private theorem pairing_cayDet_mul' (n : ℕ) (F G : MvPolynomial (Fin n × Fin 
     _root_.GlobalTheory.DetPowPairing.pairing (_root_.ReciprocityTheory.PGsh.cayDet n C * F) G =
       _root_.GlobalTheory.DetPowPairing.pairing F (_root_.ReciprocityTheory.PGsh.cayOp n C G) := by
   unfold _root_.ReciprocityTheory.PGsh.cayDet _root_.ReciprocityTheory.PGsh.cayOp _root_.ReciprocityTheory.PGsh.cayMono
-  rw [Matrix.det_apply, Finset.sum_mul, pairing_comm', map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.det_apply, Finset.sum_mul, pairing_comm', map_sum,
     LinearMap.sum_apply, map_sum]
   refine Finset.sum_congr rfl fun σ _ => ?_
   rw [Units.smul_def, smul_mul_assoc, map_zsmul, LinearMap.smul_apply, map_zsmul,

@@ -131,7 +131,8 @@ theorem exists_short (X : Data E r) (x : Frame X.Ψ r) (hx : x ∈ X.dom)
         obtain ⟨c, rfl⟩ := (mem_span_range_iff_exists_fun ℤ).1 ((hb y).2 hy)
         choose k hk using hk
         refine ⟨∑ j, c j * k j, ?_⟩
-        rw [← HermitianTraceFormVanishing.herm_smul_left, ← ThickPoint.traceFormOf_apply, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [← HermitianTraceFormVanishing.herm_smul_left, ← ThickPoint.traceFormOf_apply, map_sum]
         simp only [map_zsmul, hk]
         simp
       rw [Real.sq_sqrt hl.le, hψ]

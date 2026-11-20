@@ -58,7 +58,8 @@ theorem sobolev_hilbertSchmidt : ∀ (n : ℕ) (ε : Fin n → Bool) (H : Type) 
   let F : List (Mx n) → Mx n → ℂ := fun l g => ∑ j, ⟪f j, σ g (Dw σ l (x j))⟫_ℂ
   have eF : ∀ l g, F l g = ∑ p, ⟪h p, σ g (∑ j, (starRingEnd ℂ) (φ j p) • Dw σ l (x j))⟫_ℂ := by
     intro l g
-    simp only [F, map_sum, map_smul, inner_sum, inner_smul_right]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [F, map_sum, map_smul, inner_sum, inner_smul_right]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [hf j, sum_inner]

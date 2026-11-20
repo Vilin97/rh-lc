@@ -39,11 +39,13 @@ theorem exists_finAdele_of_idemSum : ∀ (D : D7) (P : Finset (Formalism.L2.DIV.
       have hadd : ∀ a b : Af D.host.F, pairA D.host.F 0 (a + b) = pairA D.host.F 0 a + pairA D.host.F 0 b :=
         fun a b => Prod.ext (add_zero 0).symm rfl
       exact map_sum (AddMonoidHom.mk' (pairA D.host.F 0) hadd) α P
-    rw [hp, map_sum, map_sum (cA D), ← Finset.sum_add_distrib]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hp, map_sum, map_sum (cA D), ← Finset.sum_add_distrib]
     exact Finset.sum_congr rfl fun PP hPP => (hα PP hPP).1
   refine ⟨∑ PP ∈ P, α PP, hsum, ?_, ?_⟩
   · intro w hw
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_eq_zero fun PP hPP => (hα PP hPP).2.2 w (hw PP hPP).symm
   · intro PP hPP
     have h1 := GlobalTheory.CompFinIdemSum.compFin_add_cA_eq_one P _ he' PP hPP

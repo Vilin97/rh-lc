@@ -61,13 +61,15 @@ theorem exists_fixed_preimage {τ : Representation ℂ G M} (π : M →ₗ[ℂ] 
   refine ⟨(O.card : ℂ)⁻¹ • ∑ o ∈ O, o, ?_, ?_⟩
   · rw [mem_fixed_iff_twisted_operators]
     intro a
-    rw [map_smul, map_sum, hperm a]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_smul, map_sum, hperm a]
   · have hconst : ∀ o ∈ O, π o = π m := by
       intro o ho
       obtain ⟨k, rfl⟩ := (hO o).1 ho
       rw [hπ]
       exact (mem_fixed_iff_twisted_operators ρ K (π m)).1 hy k
-    rw [map_smul, map_sum, Finset.sum_congr rfl hconst, Finset.sum_const, ← Nat.cast_smul_eq_nsmul ℂ,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_smul, map_sum, Finset.sum_congr rfl hconst, Finset.sum_const, ← Nat.cast_smul_eq_nsmul ℂ,
       smul_smul, inv_mul_cancel₀ hne, one_smul]
 
 def permRep (K : Subgroup G) : Representation ℂ G (G ⧸ K →₀ ℂ) where

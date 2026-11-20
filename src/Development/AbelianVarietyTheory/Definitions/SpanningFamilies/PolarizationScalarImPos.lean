@@ -423,7 +423,8 @@ theorem isONFr_xB (B : C.Bas) (h : C.IsB B) : IsONFr C.X (C.xB B) := by
 theorem EF_eq (x y : Matrix (Fin S.rank) (Fin T.rank) D.host.E) :
     ∑ k, EF C.X (x k) (y k) = -Algebra.trace ℚ D.host.E (D.host.xi0 * GlobalTheory.LatVac.hRat S T xᵀ yᵀ) := by
   simp only [EF_def, C.m.ka, C.m.gT]
-  rw [← map_sum, ← map_neg, ← Finset.mul_sum, ← neg_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum, ← map_neg, ← Finset.mul_sum, ← neg_mul]
   congr 2
   · ring
   · unfold GlobalTheory.LatVac.hRat herm

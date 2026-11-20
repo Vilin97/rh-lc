@@ -129,7 +129,8 @@ theorem qOfVal : ∀ D : D7, SoftQ D → QOfVal D := by
         rw [hu']; funext h
         have := congrArg (starRingEnd ℂ) (congrFun e0 h)
         simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, hπ] at this
-        simp only [map_sum (starRingEnd ℂ), (starRingEnd ℂ).map_mul, Complex.conj_conj] at this
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum (starRingEnd ℂ), (starRingEnd ℂ).map_mul, Complex.conj_conj] at this
         rw [Pi.smul_apply, smul_eq_mul, this]
         refine Finset.sum_congr rfl fun y hy => ?_
         rw [hunit y (hR.1 y hy).1 (dd y) (hR.1 y hy).2]
@@ -142,7 +143,8 @@ theorem qOfVal : ∀ D : D7, SoftQ D → QOfVal D := by
       funext h
       have := congrArg (starRingEnd ℂ) (congrFun (hu' v') h)
       rw [heq] at this
-      simp only [PiLocalization₂.val, Submodule.coe_smul, LinearMap.smul_apply, Pi.smul_apply, smul_eq_mul, (starRingEnd ℂ).map_mul,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [PiLocalization₂.val, Submodule.coe_smul, LinearMap.smul_apply, Pi.smul_apply, smul_eq_mul, (starRingEnd ℂ).map_mul,
         Complex.conj_conj, map_sum (starRingEnd ℂ)] at this
       simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, hπ]
       refine this.trans (Finset.sum_congr rfl fun y hy => ?_)

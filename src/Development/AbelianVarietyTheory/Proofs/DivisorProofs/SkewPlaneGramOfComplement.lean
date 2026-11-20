@@ -40,7 +40,8 @@ theorem form_gram (J : Matrix (Fin n) (Fin n) E) (A : Matrix (Fin n) (Fin m) E) 
 
 theorem form_swap (h : IsCMExt F E σ) {J : Matrix (Fin n) (Fin n) E} (hJ : ∀ i j, σ (J j i) = -J i j)
     (a b : Fin n → E) : form σ J a b = -σ (form σ J b a) := by
-  simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, sigma_sigma h, hJ, Finset.mul_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, sigma_sigma h, hJ, Finset.mul_sum,
     ← Finset.sum_neg_distrib]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_

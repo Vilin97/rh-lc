@@ -101,7 +101,8 @@ theorem kOp_io {μ : Fin (2 * r + k + 1) → ℝ} {U T : URep k r} (hk : 1 ≤ k
   have S := zuckerman_ingredients
   have hL := S.homLie k r _ _ i (S.okTriv k r) (S.okVr k r true) hi
   have h1 : cas (vr k r true, U) (i y) = i (cas (one T) y) := by
-    simp only [cas, LinearMap.sum_apply, Module.End.mul_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [cas, LinearMap.sum_apply, Module.End.mul_apply, map_sum]
     refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
     rw [← LinearMap.comp_apply (L _ (Matrix.single b a 1)) i, ← hL, LinearMap.comp_apply,
       ← LinearMap.comp_apply (L _ (Matrix.single a b 1)) i, ← hL, LinearMap.comp_apply]

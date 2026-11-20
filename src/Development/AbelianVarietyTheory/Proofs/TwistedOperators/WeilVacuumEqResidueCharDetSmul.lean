@@ -138,7 +138,8 @@ theorem split_cases {a : AE D} (ha : IsSplitIdem D a) {v : HeightOneSpectrum (�
 
 theorem cA_sum_mul {P : Finset (Pl D.host.E)} {es : Pl D.host.E → AE D} {a : AE D}
     (h : ∀ PP ∈ P, cA D (es PP) * a = 0) : cA D (∑ PP ∈ P, es PP) * a = 0 := by
-  rw [map_sum (cA D), Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum (cA D), Finset.sum_mul]
   exact Finset.sum_eq_zero h
 
 theorem unramAt_of_tame {χ : (AE D)ˣ →* Circle} {P : Finset (Pl D.host.E)} {es : Pl D.host.E → AE D}

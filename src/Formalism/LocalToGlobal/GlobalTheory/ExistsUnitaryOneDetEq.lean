@@ -43,7 +43,8 @@ theorem hform_mulVec_rect {A : Type} [CommRing A] (τ : A →+* A) (J' : Matrix 
   have hx : (fun i => τ ((Q *ᵥ x) i)) = (fun i => τ (x i)) ᵥ* (Q.map τ)ᵀ := by
     rw [Matrix.vecMul_transpose]
     ext i
-    simp [Matrix.mulVec, dotProduct, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Matrix.mulVec, dotProduct, map_sum, map_mul]
   rw [hx, Matrix.dotProduct_mulVec, Matrix.vecMul_vecMul, Matrix.vecMul_vecMul, Matrix.mul_assoc]
 
 theorem dl_mapQ (σ : E →ₐ[F] E) (J : Matrix n n E) (Q : Matrix m n E) (Q' : Matrix n m E) (h1 : Q * Q' = 1)

@@ -39,7 +39,8 @@ theorem map_sesq_sum_eq_zero {A B : Type} [CommRing A] [CommRing B] {m n : ℕ} 
       rw [h1, mul_zero]
     · have h1 : q (y i j) = 0 := congrFun (congrFun h i) j
       rw [hσ _ h1, zero_mul, zero_mul, zero_mul]
-  simp only [map_sum, hk, Finset.sum_const_zero]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, hk, Finset.sum_const_zero]
 
 theorem map_trace_sesq_eq_zero {F E A B : Type} [Field F] [Field E] [Algebra F E] [FiniteDimensional F E]
     [CommRing A] [CommRing B] [Algebra F A] [Algebra F B] (p : A →ₐ[F] B) (s : E →ₐ[F] E) {m n : ℕ}

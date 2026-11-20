@@ -36,14 +36,16 @@ theorem inf_rat (L : Ainf F →+ ℂ) (hL : Continuous L)
     funext x
     simp only [Function.comp_apply, ← map_mul, hT]
     conv_lhs => rw [← (integralBasis F).traceDual.sum_repr x]
-    simp only [map_sum, Module.Basis.traceDual_repr_apply, Algebra.traceForm_apply, Algebra.smul_def, map_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, Module.Basis.traceDual_repr_apply, Algebra.traceForm_apply, Algebra.smul_def, map_mul,
       eq_ratCast]
     exact Finset.sum_congr rfl fun i _ => by
       rw [← RingHom.comp_apply φ (algebraMap F (Ainf F)), map_ratCast]
   apply (InfinitePlace.Completion.extensionEmbedding v).injective
   change φ y = φ (algebraMap F (Ainf F) _)
   rw [congrFun key y]
-  simp only [hn, map_sum, map_mul, map_intCast]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hn, map_sum, map_mul, map_intCast]
 
 theorem fin_eq_zero {ψ : AddChar (AF F) ℂ} (hψ : Continuous ψ) (hv : ∀ v, ∃ y, psiV F ψ v y ≠ 1) (l : Af F)
     (h : ∀ c : F, ψ (pairA F 0 (l * algebraMap F _ c)) = 1) : l = 0 := by
@@ -170,7 +172,8 @@ theorem sum_single {E A : Type} [Field E] [CommRing A] (ι : E →+* A) {m n : �
   have h2 : ∀ a, ∑ b, ∑ c, ∑ d, ι (P⁻¹ a b) * ι (M b c) * ι (Q c d) * x d a =
       ∑ d, ι (Matrix.single a₀ d₀ e a d) * x d a := fun a => by
     rw [← h1]
-    simp only [Matrix.mul_apply, map_sum, map_mul, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mul_apply, map_sum, map_mul, Finset.sum_mul]
     rw [Finset.sum_comm]
     refine (Finset.sum_congr rfl fun c _ => Finset.sum_comm).trans Finset.sum_comm
   simp only [h2]

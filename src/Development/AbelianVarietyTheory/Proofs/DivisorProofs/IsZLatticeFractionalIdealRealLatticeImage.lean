@@ -19,7 +19,8 @@ theorem span_range_remb (F : Type) [Field F] [NumberField F] :
     have h2 : remb F a = ∑ τ : F →+* ℝ, τ a • EuclideanSpace.single τ (1 : ℝ) := by
       ext σ
       simp [PiLp.single_apply, Pi.single_apply]
-    rw [h2, map_sum] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h2, map_sum] at h1
     simpa [mul_comm] using h1
   have hcoef := Fintype.linearIndependent_iff.mp hli (fun τ => f (EuclideanSpace.single τ 1))
     (by
@@ -31,7 +32,8 @@ theorem span_range_remb (F : Type) [Field F] [NumberField F] :
   have hx : x = ∑ τ : F →+* ℝ, x τ • EuclideanSpace.single τ (1 : ℝ) := by
     ext σ
     simp [PiLp.single_apply, Pi.single_apply]
-  rw [hx, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hx, map_sum]
   simp [hcoef]
 
 end GlobalTheory.LipschitzTR

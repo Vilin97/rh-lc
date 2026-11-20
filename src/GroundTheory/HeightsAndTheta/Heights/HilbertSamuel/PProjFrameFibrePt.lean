@@ -60,7 +60,8 @@ theorem aeval_inl_eq_zero {f : MRing (GlobalTheory κ)} (hf : f ∈ coordIdeal �
 
 theorem aeval_inl_mul_eq_zero {f : MRing (GlobalTheory κ)} (hf : f ∈ coordIdeal ℤ x) {R : Type*} [CommRing R]
     (φ : G.Φ' →+* R) (s : R) : aeval (fun p : Ix κ => φ (G.x' (aV D p.2)) * s) f = 0 := by
-  rw [← sum_homogeneousComponent f, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← sum_homogeneousComponent f, map_sum]
   refine Finset.sum_eq_zero fun d _ => ?_
   rw [aeval_mul_of_isHomogeneous _ _ (homogeneousComponent_isHomogeneous d f)]
   have h0 := aeval_inl_eq_zero G (coordIdeal_isHomogIdeal ℤ x f hf d)

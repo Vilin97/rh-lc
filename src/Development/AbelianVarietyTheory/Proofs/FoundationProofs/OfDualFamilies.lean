@@ -64,7 +64,8 @@ theorem sq_embV (hG : admG1 D) (x y : Matrix (Fin N') (Fin N) D.host.E) :
       D.host.φ₀ ((hYY D x y : D.host.K) : D.host.E) := by
   rw [hYY, ← hG.2]
   refine Finset.sum_congr rfl fun τ _ => ?_
-  simp only [map_sum, map_mul, embV_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, embV_apply]
   refine Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => ?_
   rw [D.host.toHostAx.conjE_apply]
 

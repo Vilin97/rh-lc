@@ -18,7 +18,8 @@ theorem key {G : Type} [Group G] (j : ℕ) (e : (Fin (j + 1) → G) → ℝ) (he
     (g : Fin (j + 1) → G) :
     dC e (fun i => (MonoidHom.id G) (Fin.partialProd g i) • (1 : G)) =
       ev (MonoidHom.id G) e 1 (bd G j (Finsupp.single g 1)) := by
-  rw [ev_eq, bd, Finsupp.linearCombination_single, one_smul, map_add, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [ev_eq, bd, Finsupp.linearCombination_single, one_smul, map_add, map_sum,
     Finsupp.linearCombination_single, dC, Fin.sum_univ_succ]
   simp only [MonoidHom.id_apply, smul_eq_mul, mul_one, Fin.succAbove_zero, one_smul,
     Fin.val_zero, pow_zero, one_mul, map_smul, Finsupp.linearCombination_single, Fin.val_succ]

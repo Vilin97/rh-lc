@@ -225,7 +225,8 @@ theorem faithfullyFlat_of_tie [IsDomain O] [IsDiscreteValuationRing O] (hp0 : (P
     · have h1 : ∑ i, (letE i : LetA O n) = 1 := by
         funext k
         simp [letE, Finset.sum_apply, Pi.single_apply]
-      rw [← map_sum, h1, map_one]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← map_sum, h1, map_one]
     · intro i
       rw [← map_mul]
       congr 1

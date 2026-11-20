@@ -130,11 +130,13 @@ theorem p_dvd_geom [IsDomain R] (e : Tilt p R) (he : PreTilt.untilt e = 1) :
     rw [hc, map_add, map_natCast, map_mul]
     exact dvd_add dvd_rfl (h1.mul_right _)
   · have h1 := AcrisZero.p_dvd_frob (∑ i ∈ Finset.range p, Ainf.teich p e' ^ i) (by
-      simp only [map_sum, map_pow, Ainf.theta_teich]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_pow, Ainf.theta_teich]
       have := geom_sum_mul (PreTilt.untilt e') p
       rw [← map_pow, he, sub_self] at this
       exact (mul_eq_zero.1 this).resolve_right (sub_ne_zero.2 h))
-    rw [map_sum (Ainf.frob p R)] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum (Ainf.frob p R)] at h1
     simp only [map_pow (Ainf.frob p R), hφ] at h1
     exact h1
 
@@ -147,7 +149,8 @@ theorem log_eq [IsDomain R] [CharZero R] (η : tateModule p R) :
   have hr1 : r - 1 ∈ AcrisZero.pdIdeal p R := by
     rw [← AcrisZero.theta_eq_zero_iff, RingHom.map_sub, map_one, sub_eq_zero]
     have h := congrArg (AcrisZero.theta p R) hr
-    rw [AcrisZero.theta_algebraMap, map_mul, map_natCast, map_sum] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [AcrisZero.theta_algebraMap, map_mul, map_natCast, map_sum] at h
     simp only [map_pow, hθ, one_pow, Finset.sum_const, Finset.card_range, nsmul_eq_mul] at h
     exact (mul_left_cancel₀ (Nat.cast_ne_zero.2 (Fact.out : p.Prime).ne_zero) h).symm
   have hv : algebraMap (Ainf p R) (AcrisZero p R) (Ainf.teich p η.1 - 1) ∈
@@ -157,7 +160,8 @@ theorem log_eq [IsDomain R] [CharZero R] (η : tateModule p R) :
   refine key p (algebraMap (Ainf p R) (Acris p R) (Ainf.teich p η.1))
     (algebraMap (AcrisZero p R) (Acris p R) r) _ ?_ ?_ ?_ ?_
   · have h := congrArg (algebraMap (AcrisZero p R) (Acris p R)) hr
-    rw [← IsScalarTower.algebraMap_apply, map_mul, map_natCast, map_sum] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← IsScalarTower.algebraMap_apply, map_mul, map_natCast, map_sum] at h
     simp only [map_pow] at h
     rw [← geom_sum_mul, h]
     ring

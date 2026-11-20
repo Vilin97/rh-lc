@@ -52,7 +52,8 @@ theorem lift_etr' {n : ℕ} {B : Type} [Ring B] [Algebra ℂ B] (φ : Fin n × F
     induction m with
     | zero => intro a b; simp only [epow]; split_ifs <;> simp
     | succ m ih => intro a b; simp [epow, map_sum, map_mul, ih, Egl]
-  simp [etr, map_sum, key]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [etr, map_sum, key]
 
 section Restr
 variable {M : Type} [AddCommGroup M] [Module ℂ M] {n : ℕ} (V : Submodule ℂ M)
@@ -113,7 +114,8 @@ theorem infChar_sub_eq_of_line : GlobalTheory.Published.LanglandsClassification 
     rw [← Module.End.mul_apply, (hcommTE k a b).eq, Module.End.mul_apply, (memY w).1 hw k, map_zero]
   have hYA : ∀ Z : Matrix (Fin n) (Fin n) ℂ, ∀ w ∈ Y, A Z w ∈ Y := fun Z w hw => by
     rw [Matrix.matrix_eq_sum_single Z]
-    simp only [map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.sum_apply]
     refine Submodule.sum_mem _ fun a _ => Submodule.sum_mem _ fun b _ => ?_
     rw [show Matrix.single a b (Z a b) = Z a b • Matrix.single a b 1 by simp [Matrix.smul_single], map_smul,
       LinearMap.smul_apply]

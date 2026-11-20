@@ -119,7 +119,8 @@ theorem Hf_ptH (D : D7) (cc : Ideal (𝓞 D.host.K)) (δ : ℂ) (N : ℕ) {N' : 
   have h1 : ∀ s : 𝓞 D.host.E, algebraMap (𝓞 D.host.E) D.host.E (sgO D s) =
       D.host.conj (algebraMap (𝓞 D.host.E) D.host.E s) := fun s => rfl
   rw [phiH, AddMonoidHom.mk'_apply]
-  simp only [Hf, ptH_apply, pt_apply, mat, Algebra.smul_def,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Hf, ptH_apply, pt_apply, mat, Algebra.smul_def,
     RingOfIntegers.coe_eq_algebraMap, map_sum, map_mul, h1, embT_conj, Finset.sum_mul]
   congr 1
   refine Finset.sum_congr rfl fun τ _ => Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun k _ => ?_
@@ -173,7 +174,8 @@ theorem triDat_of_tri : ∀ (D : D7) (cc : Ideal (𝓞 D.host.K)) (δ : ℂ), cc
         ptH D cc δ N t₀ y a := by
     intro y a
     simp only [AddMonoidHom.comp_apply, AddMonoidHom.single_apply]
-    rw [← map_sum, Finset.univ_sum_single]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, Finset.univ_sum_single]
   have hin : ∀ (L : Lat D N') (y : Fin N' → D.host.E), y ∈ L → ∀ a : Fin N → 𝓞 D.host.E,
       ptH D cc δ N t₀ y a ∈ La D (tor0 D cc δ) (stdL D N) L := fun L y hy a =>
     (ptH_mem hδ L t₀ y a).2 fun j => smul_mem_IL (Submodule.smul_mem _ _ ht₀) hy

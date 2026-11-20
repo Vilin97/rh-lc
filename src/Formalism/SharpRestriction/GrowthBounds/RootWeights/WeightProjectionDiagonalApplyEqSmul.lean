@@ -85,7 +85,8 @@ theorem homRepresentation_isRep [CharZero K] [FiniteDimensional K V] [FiniteDime
       ext x
       simp only [LinearMap.sum_apply, LinearMap.comp_apply]
       rw [Finset.sum_comm]
-      simp only [← map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [← map_sum]
       rw [hsum x, hsum' (f x)]
     rw [hf]
     refine Submodule.sum_mem _ fun mu _ => Submodule.sum_mem _ fun mu' _ => ?_

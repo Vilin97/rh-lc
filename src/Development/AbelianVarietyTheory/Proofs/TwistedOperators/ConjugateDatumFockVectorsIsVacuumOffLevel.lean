@@ -51,7 +51,8 @@ theorem half_orth {m n : ℕ} {P : Pl D.host.E} {e f : AE D} (h : IsPrimeIdem P 
       rw [Finset.sum_mul]
       exact Finset.sum_eq_zero fun PP hPP => delta_orth hΦ (delta_of_isIdemAt hΦ (hes PP hPP)) ha (key PP hPP).1
     have k2 : cA D (∑ PP ∈ S, es PP) * a = 0 := by
-      rw [map_sum, Finset.sum_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Finset.sum_mul]
       exact Finset.sum_eq_zero fun PP hPP =>
         delta_orth hΦ (delta_conj hΦ (delta_of_isIdemAt hΦ (hes PP hPP))) ha (key PP hPP).2
     rw [← hu, ← mul_assoc, ← mul_assoc, k1, k2, zero_mul]

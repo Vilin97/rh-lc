@@ -151,7 +151,8 @@ theorem tanIso_of :
       refine ⟨m, fun i => σ (b i), fun i => Ψ.symm (ω' i), fun i => ?_, ?_⟩
       · rw [← EV]; exact hb i
       · apply Ψ.injective
-        rw [hsum, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [hsum, map_sum]
         refine Finset.sum_congr rfl fun i _ => ?_
         rw [hΨs, AlgEquiv.symm_apply_apply, LinearEquiv.apply_symm_apply]
 

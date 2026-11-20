@@ -30,7 +30,8 @@ theorem isIntegral_trace_of_isIntegral {R K : Type} [CommRing R] [Field K] [Alge
     (IsScalarTower.toAlgHom R K L).mapMatrix
   have hM' : IsIntegral R (φ M) := hM.map φ
   have htr : algebraMap K L M.trace = (φ M).trace := by
-    simp only [Matrix.trace, Matrix.diag, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.trace, Matrix.diag, map_sum]
     rfl
   rw [← isIntegral_algebraMap_iff (A := K) (B := L) , htr,
     Matrix.trace_eq_sum_roots_charpoly]
@@ -103,7 +104,8 @@ theorem det_hankel_trace_ne_zero (K : Type) [Field K] (n : ℕ) (N : Matrix (Fin
       Matrix.of fun j k : Fin n => (M ^ ((j : ℕ) + (k : ℕ))).trace := by
     ext j k
     simp only [RingHom.mapMatrix_apply, Matrix.map_apply, Matrix.of_apply, hM, ← Matrix.map_pow]
-    simp [Matrix.trace, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Matrix.trace, map_sum]
   intro h0
   have h1 : f (Matrix.of fun j k : Fin n => (N ^ ((j : ℕ) + (k : ℕ))).trace).det = 0 := by
     rw [h0, map_zero]

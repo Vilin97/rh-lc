@@ -200,7 +200,8 @@ theorem sat_A_core (hR : RD W) (hp0 : ((PD.p : ℕ) : O) ≠ 0) {f z y : LetA O 
   have hS : ∀ δ' ∈ W.DelF, ∀ x : PowerSeries O,
       W.γ₀ δ' (∑ δ ∈ W.DelF, W.γ₀ δ x) = ∑ δ ∈ W.DelF, W.γ₀ δ x := by
     intro δ' hδ' x
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_nbij' (fun δ => δ' * δ) (fun δ => δ'⁻¹ * δ) ?_ ?_ ?_ ?_ ?_
     · intro a ha
       try simp only [Finset.mem_coe] at ha ⊢

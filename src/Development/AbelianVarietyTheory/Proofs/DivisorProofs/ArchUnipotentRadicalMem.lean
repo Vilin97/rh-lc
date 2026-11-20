@@ -90,7 +90,8 @@ theorem embArch_mem_unipRad_of_nilRad : ∀ (F E : Type) [Field F] [NumberField 
     ext i j; exact hΦi (x i)
   have hrow : ∀ k i, (Formalism.UG.cT (σ : E →+* E) (Matrix.of fun i (_ : Fin 1) => x i) * J).map τ.1 k i =
       (star x' ᵥ* J.map τ.1) i := fun k i => by
-    simp only [Matrix.map_apply, Matrix.mul_apply, Formalism.UG.cT, Matrix.transpose_apply, Matrix.of_apply, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.map_apply, Matrix.mul_apply, Formalism.UG.cT, Matrix.transpose_apply, Matrix.of_apply, map_sum,
       map_mul, Matrix.vecMul, dotProduct, Pi.star_apply, hx']
     refine Finset.sum_congr rfl fun l _ => ?_
     rw [show ((σ : E →+* E) (x l)) = σ (x l) from rfl, hσ.2.2.2]

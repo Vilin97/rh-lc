@@ -62,7 +62,8 @@ theorem aeval_homog {g : MRing (GlobalTheory κ)} {d : Unit → ℕ} (hg : IsMul
   rw [hjx, show x = fun p => μ * j (y p) from funext hx]
   conv_lhs => rw [g.as_sum]
   conv_rhs => rw [g.as_sum]
-  rw [map_sum, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun m hm => ?_
   rw [aeval_monomial, aeval_monomial, Finsupp.prod, Finsupp.prod]
   simp only [mul_pow, Finset.prod_mul_distrib, Finset.prod_pow_eq_pow_sum, hsum m hm]

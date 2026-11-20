@@ -44,16 +44,19 @@ theorem toInc_mk (x : MvPolynomial (Fin n) F) :
     toInc I t e (mkQ I t x) = chartX I t e x := rfl
 
 theorem sum_tQ : (∑ m, mkQ I t (C (t m) * X m)) = 1 := by
-  rw [← map_sum, ← map_one (mkQ I t), Ideal.Quotient.eq]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum, ← map_one (mkQ I t), Ideal.Quotient.eq]
   exact Ideal.mem_sup_right (Ideal.mem_span_singleton_self _)
 
 theorem sum_tS : (∑ m, chartX I t e (C (t m) * X m)) = 1 := by
   have := congrArg (toInc I t e) (sum_tQ I t)
-  simpa [map_sum, toInc_mk] using this
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa [map_sum, toInc_mk] using this
 
 theorem sum_uS (i : Fin e) :
     (∑ m, mkS I t e (X (Sum.inr (i, m)) * X (Sum.inl m))) = 0 := by
-  rw [← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum]
   exact mkS_eq_zero I t e (Ideal.mem_sup_right (Ideal.subset_span ⟨i, rfl⟩))
 
 def fwd : MvPolynomial (Fin e × Fin n) (ChartQ I t) →+* MvPolynomial (Fin e) (ChartInc I t e) :=
@@ -101,8 +104,10 @@ theorem chartIncIdeal_le_ker : chartIncIdeal I t e ≤ RingHom.ker (back₀ I t 
     rintro _ ⟨i, rfl⟩
     rw [SetLike.mem_coe, RingHom.mem_ker]
     have h1 := congrArg (C : ChartQ I t →+* MvPolynomial (Fin e × Fin n) (ChartQ I t)) (sum_tQ I t)
-    simp only [map_sum, map_mul, map_one] at h1
-    simp only [map_sum, map_mul, back₀_inl, back₀_inr, genSubst]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, map_one] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, back₀_inl, back₀_inr, genSubst]
     set S := ∑ l, X (i, l) * C (mkQ I t (X l))
     have : ∑ m, (X (i, m) - S * C (mkQ I t (C (t m)))) * C (mkQ I t (X m)) = S - S * 1 := by
       rw [← h1, Finset.mul_sum, ← Finset.sum_sub_distrib]
@@ -128,7 +133,8 @@ theorem sum_fwd (i : Fin e) :
       C (chartX I t e (X l))) = (X i : MvPolynomial (Fin e) (ChartInc I t e)) := by
   have hu := congrArg (C : ChartInc I t e →+* MvPolynomial (Fin e) (ChartInc I t e)) (sum_uS I t e i)
   have ht := congrArg (C : ChartInc I t e →+* MvPolynomial (Fin e) (ChartInc I t e)) (sum_tS I t e)
-  simp only [map_sum, map_mul, map_one, map_zero] at hu ht
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, map_one, map_zero] at hu ht
   have hX : ∀ l, chartX I t e (X l) = mkS I t e (X (Sum.inl l)) := fun l => by
     rw [chartX_apply, rename_X]
   simp only [hX] at ht ⊢
@@ -145,7 +151,8 @@ theorem fwd_back (s : ChartInc I t e) : fwd I t e (back I t e s) = C s := by
     · simp only [RingHom.comp_apply, back_mk, back₀_C, fwd_C, toInc_mk, chartX_apply, rename_C]
     · rcases v with m | ⟨i, m⟩
       · simp only [RingHom.comp_apply, back_mk, back₀_inl, fwd_C, toInc_mk, chartX_apply, rename_X]
-      · simp only [RingHom.comp_apply, back_mk, back₀_inr, genSubst, map_sub, map_mul, map_sum, fwd_X,
+      set_option synthInstance.maxHeartbeats 100000 in
+        · simp only [RingHom.comp_apply, back_mk, back₀_inr, genSubst, map_sub, map_mul, map_sum, fwd_X,
           fwd_C, toInc_mk]
         linear_combination (-(C (chartX I t e (C (t m))))) * sum_fwd I t e i
   obtain ⟨a, rfl⟩ := mkS_surjective I t e s
@@ -154,7 +161,8 @@ theorem fwd_back (s : ChartInc I t e) : fwd I t e (back I t e s) = C s := by
 theorem fwd_bwd : (fwd I t e).comp (bwd I t e) = RingHom.id _ := by
   refine MvPolynomial.ringHom_ext (fun s => ?_) (fun i => ?_)
   · simp [bwd, fwd_back]
-  · simp only [bwd, RingHom.comp_apply, eval₂Hom_X', map_sum, map_mul, fwd_X, fwd_C, toInc_mk,
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [bwd, RingHom.comp_apply, eval₂Hom_X', map_sum, map_mul, fwd_X, fwd_C, toInc_mk,
       RingHom.id_apply]
     exact sum_fwd I t e i
 

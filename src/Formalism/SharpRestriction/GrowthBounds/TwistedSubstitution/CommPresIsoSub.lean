@@ -82,11 +82,14 @@ theorem comm_isoProj (A : Module.End K V) (hA : ∀ mu, ∀ x ∈ isoSub E mu, A
   simp only [Module.End.mul_apply]
   have hAx : A x = ∑ mu ∈ T, A (ee mu x) := by
     conv_lhs => rw [hx]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
   have hex : ee lam x = ∑ mu ∈ T, ee lam (ee mu x) := by
     conv_lhs => rw [hx]
-    rw [map_sum]
-  rw [hAx, hex, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hAx, hex, map_sum, map_sum]
   refine Finset.sum_congr rfl fun mu _ => ?_
   rw [hproj mu _ (hA mu _ (hm mu)), hproj mu _ (hm mu)]
   split_ifs <;> simp

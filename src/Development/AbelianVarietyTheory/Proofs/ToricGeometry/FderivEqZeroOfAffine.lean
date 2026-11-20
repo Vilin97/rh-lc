@@ -136,7 +136,8 @@ theorem apply_eq_sum (S : (Fin g → ℂ) →ₗ[ℂ] (Fin g → ℂ)) (v : Fin 
     ext k
     simp [Finset.sum_apply, Pi.single_apply]
   conv_lhs => rw [hv]
-  simp [map_sum, Finset.sum_apply, mul_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, Finset.sum_apply, mul_comm]
 
 private theorem valAt'_zero_toric_geometry {X : Scheme.{0}} (x : Sp ℂ ⟶ X) (U : X.Opens) :
     valAt' x U 0 = 0 := by
@@ -198,7 +199,8 @@ theorem exists_coord_adapted : (∀ (X : Over (Sp ℂ)) (g : ℕ), SmoothOfRelat
     have hS : Sinv (fun j => D (t j)) = 0 := by
       funext i
       have e : D (t' i) = ∑ j, Sinv (Pi.single j 1) i * D (t j) := by
-        rw [ht', map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [ht', map_sum]
         refine Finset.sum_congr rfl fun j _ => ?_
         rw [hl, hc, hc0, mul_zero, add_zero]
       rw [apply_eq_sum]

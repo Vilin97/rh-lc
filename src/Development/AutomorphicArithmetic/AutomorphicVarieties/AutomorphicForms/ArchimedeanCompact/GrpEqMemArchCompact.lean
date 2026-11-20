@@ -132,7 +132,8 @@ theorem grpEq_mem_archCompact (y : GL (Fin a) (Cinf E)) :
         (fun i => ψ.toRingHom (z i)) ᵥ* y.val.map (fun x => x w) := by
     intro z
     ext j
-    simp only [vecMul, dotProduct, map_sum, map_mul, Matrix.map_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [vecMul, dotProduct, map_sum, map_mul, Matrix.map_apply]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [infAt_infGL]
     exact congrArg _ (ψ.apply_symm_apply _)

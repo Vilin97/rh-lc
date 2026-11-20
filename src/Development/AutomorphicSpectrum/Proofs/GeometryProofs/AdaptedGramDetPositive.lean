@@ -135,7 +135,8 @@ theorem linearIndependent_f (A : LinPt E L Ψ V) (s : Ψ ⊕ Ψ) {r k : ℕ} (v 
   have hwV : (w : V) = ∑ c, g c • (q c : V) := by
     simp [hw]
   have hfw : A.f w = 0 := by
-    simpa [hw, map_sum] using hg
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [hw, map_sum] using hg
   have hwI : (w : V) ∈ Submodule.span (𝓞 L) (A.I : Set V) := (A.ker w).1 hfw
   have hwe : (w : V) ∈ eigSp A.ρ (A.σ s) := by
     have : (w : V) ∈ (eigSp A.ρ (A.σ s)).restrictScalars (𝓞 L) := by

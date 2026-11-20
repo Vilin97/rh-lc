@@ -40,7 +40,8 @@ theorem span_top (R : RiemLat E g Λ) : Submodule.span ℝ (Set.range R.P) = ⊤
     refine Fintype.linearIndependent_iff.2 fun r hr l => ?_
     obtain ⟨y, hy⟩ := R.unimod.2 (b.coord l)
     have h := congrArg (imB R.Hm (R.P y)) hr
-    simp only [map_sum, map_smul, map_zero, imB_P, hy, Module.Basis.coord_apply, Module.Basis.repr_self,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, map_zero, imB_P, hy, Module.Basis.coord_apply, Module.Basis.repr_self,
       smul_eq_mul] at h
     rw [Finset.sum_eq_single l (fun k _ hk => by simp [Finsupp.single_apply, hk]) (by simp)] at h
     simpa using h
@@ -59,7 +60,8 @@ theorem exists_decomp {V : Type} [AddCommGroup V] [Module ℂ V] (ρ : 𝓞 E �
   choose cs hcs using exists_coeff (E := E)
   have hsum : ∑ s, combo (cs s) = 1 := by
     apply evalHom_injective
-    rw [map_sum, map_one]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_one]
     simp only [hcs]
     funext s'
     simp [Finset.sum_apply, Pi.single_apply]
@@ -78,7 +80,8 @@ theorem exists_decomp {V : Type} [AddCommGroup V] [Module ℂ V] (ρ : 𝓞 E �
     rw [map_mul, map_smul, actHom_tmul, one_smul] at h
     exact LinearMap.congr_fun h x
   · have h := congrArg (actHom ρ) hsum
-    rw [map_sum, map_one] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_one] at h
     have h2 := LinearMap.congr_fun h x
     simpa [LinearMap.sum_apply] using h2
 
@@ -92,7 +95,8 @@ theorem exists_proj {V : Type} [AddCommGroup V] [Module ℂ V] (ρ : 𝓞 E →+
     rw [h₁]
     simp [LinearMap.sum_apply]
   refine ⟨_, e, fun x => e x ▸ h₂ x, fun x hx => e x ▸ h₃ x hx, fun a x => ?_⟩
-  rw [← e, ← e, ← mem_eigSp_iff.1 (h₂ x) a, h₁, h₁, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← e, ← e, ← mem_eigSp_iff.1 (h₂ x) a, h₁, h₁, map_sum]
   refine Finset.sum_congr rfl fun b _ => ?_
   rw [map_smul, ← Module.End.mul_apply, ← map_mul, mul_comm, map_mul, Module.End.mul_apply]
 
@@ -104,7 +108,8 @@ theorem sum_eigComp {V : Type} [AddCommGroup V] [Module ℂ V] (ρ : 𝓞 E →+
   conv_rhs => rw [← hs]
   refine Finset.sum_congr rfl fun s _ => ?_
   obtain ⟨p, h₁, -, h₃, h₄⟩ := exists_proj ρ (s.comp (algebraMap (𝓞 E) E))
-  rw [h₁, ← hs, map_sum, Finset.sum_eq_single s (fun s' _ hne => ?_) (by simp), h₃ _ (hy s)]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h₁, ← hs, map_sum, Finset.sum_eq_single s (fun s' _ hne => ?_) (by simp), h₃ _ (hy s)]
   by_contra h0
   refine hne (comp_injective (RingHom.ext fun a => ?_))
   have e := h₄ a (y s')

@@ -34,13 +34,15 @@ theorem zetaOf_period : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (
     simp [Base.map_cc]
   have h2 : ∀ (τ : Ψ) c, τ.1 (d k c) = ∑ l, (t (c, l) : ℂ) * τ.1 (Module.finBasis ℚ E l) := by
     intro τ c
-    rw [hd, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hd, map_sum]
     simp [Rat.smul_def]
   simp only [zetaOf, Pi.add_apply, qv, h1, mulVec, dotProduct, tauOf, Matrix.of_apply,
     Finset.sum_mul, Matrix.add_apply, Matrix.map_apply, Matrix.mul_apply, Matrix.transpose_apply]
   rw [Finset.sum_comm, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun τ _ => ?_
-  simp only [h2, Fintype.sum_prod_type, map_sum, map_mul, map_ratCast, Finset.sum_mul, mul_add,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [h2, Fintype.sum_prod_type, map_sum, map_mul, map_ratCast, Finset.sum_mul, mul_add,
     add_mul, Finset.mul_sum, Finset.sum_add_distrib]
   rw [add_add_add_comm]
   congr 1
@@ -270,7 +272,8 @@ theorem exists_isDbl (hs : IsSympl X bas) (hn : Even n) {φ₁ φ₂ : TF n g} (
     congr 2
     ring
   rw [e1, e2, thA, thA, imInv_eq, imInv_eq]
-  simp only [map_mul, map_pow, ← Complex.exp_conj, map_div₀, conj_ofReal, map_ofNat, map_sum (starRingEnd ℂ)]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_mul, map_pow, ← Complex.exp_conj, map_div₀, conj_ofReal, map_ofNat, map_sum (starRingEnd ℂ)]
   have hne : h.det ^ (n / 2) * (h.det⁻¹) ^ (n / 2) = 1 := by
     rw [← mul_pow, mul_inv_cancel₀ hu.ne_zero, one_pow]
   rw [mul_pow, mul_pow] at key

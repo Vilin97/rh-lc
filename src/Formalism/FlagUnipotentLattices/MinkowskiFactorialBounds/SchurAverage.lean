@@ -270,7 +270,8 @@ lemma det_sesquilinear_change_basis {V₁ V₂ : Type*} [AddCommGroup V₁] [Mod
   have : (Matrix.of fun a b => B (∑ i, L a i • g i) (∑ k, L' b k • g' k)) =
       L * (Matrix.of fun i k => B (g i) (g' k)) * L'ᴴ := by
     ext a b
-    simp only [Matrix.of_apply, Matrix.mul_apply, Matrix.conjTranspose_apply, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.of_apply, Matrix.mul_apply, Matrix.conjTranspose_apply, map_sum,
       LinearMap.sum_apply, map_smul, LinearMap.smul_apply, LinearMap.map_smulₛₗ, smul_eq_mul,
       Finset.sum_mul, Finset.mul_sum, starRingEnd_apply]
     refine Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
@@ -383,7 +384,8 @@ lemma norm_det_sesquilinear_le_gramSchmidt {V₁ V₂ : Type*} [NormedAddCommGro
     have hT0 : 0 ≤ T := Finset.sum_nonneg fun k _ => by positivity
     set w := ∑ k, Nt i k • gh k with hw
     have hBw : B (g i) w = (T : ℂ) := by
-      simp only [hw, map_sum, LinearMap.map_smulₛₗ, smul_eq_mul, hT]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hw, map_sum, LinearMap.map_smulₛₗ, smul_eq_mul, hT]
       push_cast
       refine Finset.sum_congr rfl fun k _ => ?_
       have : B (g i) (gh k) = Nt i k := rfl

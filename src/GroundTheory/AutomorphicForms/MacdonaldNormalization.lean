@@ -127,7 +127,8 @@ theorem exists_antisymm_hlFactor_eq (t : ℂ) :
   choose c hc using key
   refine ⟨∑ ν ∈ (hlFactor n t).coeff.support.attach, c ν.1 ν.2, ?_⟩
   conv_lhs => rw [← AddMonoidAlgebra.sum_coeff_single (hlFactor n t)]
-  rw [Finsupp.sum, map_sum, Finset.sum_smul, ← Finset.sum_attach]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finsupp.sum, map_sum, Finset.sum_smul, ← Finset.sum_attach]
   exact Finset.sum_congr rfl fun ν _ => hc ν.1 ν.2
 
 theorem evalAt_varL (w : Fin n → ℂˣ) (a : Fin n) : evalAt w (varL a) = w a := by
@@ -145,7 +146,8 @@ theorem evalAt_hlFactor (w : Fin n → ℂˣ) (t : ℂ) :
 theorem evalAt_antisymm (w : Fin n → ℂˣ) (p : LaurentRing n) :
     evalAt w (antisymm n p) = ∑ σ : Equiv.Perm (Fin n),
       ((Equiv.Perm.sign σ : ℤ) : ℂ) * evalAt (w ∘ σ) p := by
-  rw [antisymm_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [antisymm_apply, map_sum]
   refine Finset.sum_congr rfl fun σ _ => ?_
   rw [Units.smul_def, map_zsmul, evalAt_permAct, zsmul_eq_mul]
 

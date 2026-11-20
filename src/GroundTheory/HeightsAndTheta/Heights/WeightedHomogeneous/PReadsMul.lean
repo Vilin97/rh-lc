@@ -18,7 +18,8 @@ theorem mConeMap_of_homog {Ω : Type} [Field Ω] (y : Coord n → Ω) {g : MvPol
   have hg' := (geoMultiHomog_iff g d).mpr hg
   conv_lhs => rw [g.as_sum]
   conv_rhs => rw [g.as_sum]
-  rw [map_sum, map_sum, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun m hm => ?_
   have hX : ∏ p : Coord n, (X p.1 : MvPolynomial ι Ω) ^ m p = ∏ k, (X k : MvPolynomial ι Ω) ^ d k := by
     rw [Fintype.prod_sigma]

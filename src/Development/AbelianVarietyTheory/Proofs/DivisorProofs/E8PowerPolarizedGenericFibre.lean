@@ -112,7 +112,8 @@ theorem exists_polAV_gen : Laws → Laws2 → GlobalTheory.LN.Ega → ∀ (V₁ 
     have hlam : cls c.P c.isLB = lam (cls _ hA) (fst A₀.A A₀.A) (snd A₀.A A₀.A) := cls_cube_two hA _ _ c.isLB
     have eL : pull gen.hom.left (cls Q.L hQ) =
         ∑ uv : Fin 8 × Fin 8, W uv.1 uv.2 • lam (cls _ hA) (y uv.1) (y uv.2) := by
-      rw [show cls Q.L hQ = _ from cls_linComb c.isLB
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [show cls Q.L hQ = _ from cls_linComb c.isLB
         (fun uv : Fin 8 × Fin 8 => (lift (powPr A₀.A uv.1) (powPr A₀.A uv.2)).left) (fun uv => W uv.1 uv.2) hQ, map_sum]
       refine Finset.sum_congr rfl fun uv _ => ?_
       rw [map_zsmul, hlam]
@@ -124,7 +125,8 @@ theorem exists_polAV_gen : Laws → Laws2 → GlobalTheory.LN.Ega → ∀ (V₁ 
       rw [show cls _ hE = _ from cls_linComb hLG (K := (Fin 8 × Fin 8) × Fin 4)
         (fun k => GlobalTheory.PolDeg.lamPts (powPr G₀ k.1.1) (powPr G₀ k.1.2) k.2)
         (fun k => -(W k.1.1 k.1.2 * GlobalTheory.PolDeg.negε k.2)) hE, Fintype.sum_prod_type]
-      simp only [sum_lamPts, map_sum, map_zsmul, key, y]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [sum_lamPts, map_sum, map_zsmul, key, y]
     refine (cls_eq_iff (pull_isLB hQ _) (pull_isLB hE _)).1 ?_
     rw [cls_pull hQ, cls_pull hE, eL, eR]
 

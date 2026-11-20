@@ -56,7 +56,8 @@ theorem trace_pos {E : Type} [Field E] [NumberField E] [StarRing E]
     have h2 : τ (W.hT x x) = star (fun i => τ (W.frame.repr x i)) ⬝ᵥ
         (W.gram.map τ).mulVec (fun i => τ (W.frame.repr x i)) := by
       conv_lhs => rw [← W.frame.sum_repr x]
-      simp only [map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply,
         smul_eq_mul, map_mul, RingHom.id_apply, starRingEnd_apply, hst, dotProduct, Matrix.mulVec,
         Matrix.map_apply, HSpace.gram, Pi.star_apply, Finset.mul_sum]
       rw [Finset.sum_comm]

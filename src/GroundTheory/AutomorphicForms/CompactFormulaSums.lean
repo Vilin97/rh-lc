@@ -44,7 +44,8 @@ theorem isTraceClass_integrated_sum_conv {ι : Type*} (s : Finset ι)
     IsTraceClass ((rightRegularRep Γ μ).integrated μ
       (UnitaryRep.ccToL1 μ (∑ i ∈ s, conv μ (φ i) (ψ i)))) := by
   classical
-  rw [UnitaryRep.ccToL1_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [UnitaryRep.ccToL1_sum, map_sum]
   induction s using Finset.induction_on with
   | empty =>
     rw [Finset.sum_empty, isTraceClass_iff, traceNorm_zero]

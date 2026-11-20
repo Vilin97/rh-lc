@@ -304,7 +304,8 @@ theorem redM_mul_intM (PP : Formalism.L2.DIV.Pl D.host.E) {a b : ℕ} {N : Matri
     _ = Formalism.L2.DIV.resS D.host.F PP (∑ k, ⟨N i k, hN i k⟩ * (y : Matrix (Fin a) (Fin a) _) k j) := congrArg _ this
     _ = ∑ k, Formalism.L2.DIV.resS D.host.F PP ⟨N i k, hN i k⟩ *
           Formalism.L2.DIV.resS D.host.F PP ((y : Matrix (Fin a) (Fin a) _) k j) := by
-        rw [map_sum]; exact Finset.sum_congr rfl fun k _ => map_mul _ _ _
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]; exact Finset.sum_congr rfl fun k _ => map_mul _ _ _
     _ = _ := by
         rw [Matrix.mul_apply]
         exact Finset.sum_congr rfl fun k _ => by rw [← redM_of_int PP hN i k]; rfl
@@ -327,7 +328,8 @@ theorem redM_intM_mul (PP : Formalism.L2.DIV.Pl D.host.E) {a b : ℕ} {N : Matri
     _ = Formalism.L2.DIV.resS D.host.F PP (∑ k, (y : Matrix (Fin b) (Fin b) _) i k * ⟨N k j, hN k j⟩) := congrArg _ this
     _ = ∑ k, Formalism.L2.DIV.resS D.host.F PP ((y : Matrix (Fin b) (Fin b) _) i k) *
           Formalism.L2.DIV.resS D.host.F PP ⟨N k j, hN k j⟩ := by
-        rw [map_sum]; exact Finset.sum_congr rfl fun k _ => map_mul _ _ _
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]; exact Finset.sum_congr rfl fun k _ => map_mul _ _ _
     _ = _ := by
         rw [Matrix.mul_apply]
         exact Finset.sum_congr rfl fun k _ => by rw [← redM_of_int PP hN k j]; rfl
@@ -455,7 +457,8 @@ theorem liftE_neg (y : EAf D) : liftE (D := D) (-y) = -liftE y := by
   simp only [liftE, map_neg, lift_neg]
 
 theorem liftE_sum {ι : Type} (s : Finset ι) (f : ι → EAf D) : liftE (D := D) (∑ i ∈ s, f i) = ∑ i ∈ s, liftE (f i) := by
-  simp only [liftE, map_sum, lift_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [liftE, map_sum, lift_sum]
 
 theorem liftE_smul_mem {z : EAf D} (hz : z ∈ Formalism.L2.Herm.intAf D.host.F D.host.E) :
     ∀ u ∈ latAll S T ΛS ΛT, liftE z • u ∈ latAll S T ΛS ΛT := by
@@ -539,7 +542,8 @@ theorem genL_eq_genE (α : Af D.host.F) (a : D.host.E) (s : Fin S.rank → D.hos
     Matrix.of_apply, smul_eq_mul, sR_eTo]
   rw [← liftE_eTo_mul]
   congr 1
-  rw [show ∑ k, eToEAf D (star (s k)) * eToEAf D (S.gram k j) = eToEAf D (∑ k, star (s k) * S.gram k j) by
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [show ∑ k, eToEAf D (star (s k)) * eToEAf D (S.gram k j) = eToEAf D (∑ k, star (s k) * S.gram k j) by
     rw [map_sum]; exact Finset.sum_congr rfl fun k _ => (map_mul _ _ _).symm]
   rw [map_mul, map_mul]
   ring
@@ -799,7 +803,8 @@ theorem hform_int {V : HSp D} {Λ : Submodule (𝓞 D.host.E) (Fin V.rank → D.
     obtain ⟨b, hb⟩ := (hΛ.2 s₂).1 hs₂ s hs
     have e : (fun k => sR D (eToEAf D (s k))) ⬝ᵥ (V.gram.map (eToEAf D) *ᵥ fun i => eToEAf D (s₂ i)) =
         eToEAf D (∑ i, ∑ j, star (s i) * V.gram i j * s₂ j) := by
-      simp only [dotProduct, Matrix.mulVec, Matrix.map_apply, sR_eTo, map_sum, map_mul, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [dotProduct, Matrix.mulVec, Matrix.map_apply, sR_eTo, map_sum, map_mul, Finset.mul_sum]
       exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
     show (fun k => sR D (eToEAf D (s k))) ⬝ᵥ (V.gram.map (eToEAf D) *ᵥ fun i => eToEAf D (s₂ i)) ∈ _
     rw [e, ← hb]
@@ -904,7 +909,8 @@ theorem infPart_of_splitIdem {e : AE D} (he : IsSplitIdem D e) : infPart D e = 0
 
 theorem infPart_of_idemSum {e : AE D} {P : Finset (Formalism.L2.DIV.Pl D.host.E)} (he : IsIdemSum e P) : infPart D e = 0 := by
   obtain ⟨⟨es, hes, rfl⟩, _⟩ := he
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_eq_zero fun PP hPP => infPart_of_splitIdem (hes PP hPP).1
 
 theorem comm_comm' (y : Af D.host.F ⊗[D.host.F] D.host.E) :
@@ -1047,7 +1053,8 @@ theorem isSBHalf_frameFn (hPL : PlaceLatDual D) {ψ : AddChar (AF D.host.F) ℂ}
           Matrix.single i j (1 : EAf D) * ((βS⁻¹ : GL (Fin S.rank) (EAf D)) : Matrix (Fin S.rank) (Fin S.rank) (EAf D)))).map (liftE (D := D)) =
         (liftEHom D).mapMatrix (∑ i, ∑ j, frMapO S T βS βT t i j • ((βT : Matrix (Fin T.rank) (Fin T.rank) (EAf D)) *
           Matrix.single i j (1 : EAf D) * ((βS⁻¹ : GL (Fin S.rank) (EAf D)) : Matrix (Fin S.rank) (Fin S.rank) (EAf D)))) from rfl]
-      simp only [map_sum, liftEHom_single_smul, Finset.smul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, liftEHom_single_smul, Finset.smul_sum]
       exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => smul_comm _ _ _
     rw [hdec, Finset.smul_sum]
     refine sum_mem fun i _ => ?_
@@ -1178,7 +1185,8 @@ theorem heisO_fix_of_latVac (ψ : AddChar (AF D.host.F) ℂ) {f₀ : WO S T → 
       rw [← mul_assoc, (hes PP hPP).1.1]
   · have hec' : cA D (∑ PP ∈ P, es PP) * cA D (cA D (∑ PP ∈ P, es PP)) = 0 := by rw [cA_cA, mul_comm, hec]
     have hu' : u = ∑ PP ∈ P, cA D (es PP) • u := by
-      rw [← Finset.sum_smul, ← map_sum]; ext i j; simp only [Matrix.smul_apply, smul_eq_mul, hh i j]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← Finset.sum_smul, ← map_sum]; ext i j; simp only [Matrix.smul_apply, smul_eq_mul, hh i j]
     rw [hu']
     refine heisO_fix_sum ψ hec' P _ f₀ (fun PP _ i j => ?_) (fun PP hPP => ?_)
     · simp only [Matrix.smul_apply, smul_eq_mul]
@@ -1374,7 +1382,8 @@ theorem frameFnAdj_actO {βS : GL (Fin S.rank) (EAf D)} {βT : GL (Fin T.rank) (
 theorem infPart_cA_idemSum {e : AE D} {P : Finset (Formalism.L2.DIV.Pl D.host.E)} (he : IsIdemSum e P) :
     infPart D (cA D e) = 0 := by
   obtain ⟨⟨es, hes, rfl⟩, _⟩ := he
-  rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum]
   exact Finset.sum_eq_zero fun PP hPP => infPart_of_splitIdem (isSplitIdem_cA (hes PP hPP).1)
 
 set_option maxHeartbeats 4000000 in
@@ -1481,7 +1490,8 @@ theorem isSBHalf_frameFnAdj (hPL : PlaceLatDual D) {ψ : AddChar (AF D.host.F) �
           (sR D).toAddMonoidHom.mapMatrix (∑ i, ∑ j, M i j • ((βS : Matrix (Fin S.rank) (Fin S.rank) (EAf D)) *
             Matrix.single i j (1 : EAf D) *
             ((βT⁻¹ : GL (Fin T.rank) (EAf D)) : Matrix (Fin T.rank) (Fin T.rank) (EAf D)))) from rfl]
-      simp only [map_sum, Matrix.transpose_sum, Matrix.mul_sum, Matrix.sum_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, Matrix.transpose_sum, Matrix.mul_sum, Matrix.sum_mul]
       refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
       rw [show (sR D).toAddMonoidHom.mapMatrix (M i j • ((βS : Matrix (Fin S.rank) (Fin S.rank) (EAf D)) *
           Matrix.single i j (1 : EAf D) *
@@ -1504,7 +1514,8 @@ theorem isSBHalf_frameFnAdj (hPL : PlaceLatDual D) {ψ : AddChar (AF D.host.F) �
         (liftEHom D).mapMatrix (∑ i, ∑ j, sR D (frMapAdj S T βS βT t i j) • (GIE T *
           (((βS : Matrix (Fin S.rank) (Fin S.rank) (EAf D)) * Matrix.single i j (1 : EAf D) *
           ((βT⁻¹ : GL (Fin T.rank) (EAf D)) : Matrix (Fin T.rank) (Fin T.rank) (EAf D))).map (sR D))ᵀ * GE S)) from rfl]
-      simp only [map_sum, liftEHom_single_smul, Finset.smul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, liftEHom_single_smul, Finset.smul_sum]
       exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => smul_comm _ _ _
     rw [hdec, Finset.smul_sum]
     refine sum_mem fun i _ => ?_

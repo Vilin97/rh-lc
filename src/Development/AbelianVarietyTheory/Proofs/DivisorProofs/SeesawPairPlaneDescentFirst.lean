@@ -71,7 +71,8 @@ theorem twist_plain : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Numb
             Finset.sum_congr rfl fun i _ => Finset.sum_comm
         _ = ∑ m, ∑ i, ∑ k, z m j * inclR (F := F) (AF F) (H.ι i m * (X.J i k * σ (H.x k))) := Finset.sum_comm
         _ = ∑ m, z m j * inclR (F := F) (AF F) (∑ i, ∑ k, H.ι i m * (X.J i k * σ (H.x k))) := by
-            simp [map_sum, Finset.mul_sum]
+            set_option synthInstance.maxHeartbeats 100000 in
+              simp [map_sum, Finset.mul_sum]
         _ = 0 := Finset.sum_eq_zero fun m _ => by rw [hcol m, map_zero, mul_zero]
     have hT : hTens (cA σ) (incM F X.J) (incM F W.J) (incM F H.ι * z) (Matrix.vecMulVec (incV F H.x) q) = 0 := by
       unfold hTens

@@ -32,7 +32,8 @@ theorem sum_repr_dual [Algebra.IsSeparable F E] [Fintype ι] [DecidableEq ι] (�
       Algebra.trace A (A ⊗[F] E) (a * b) := by
   conv_rhs => rw [← (Algebra.TensorProduct.basis A ε).sum_repr a, ← (Algebra.TensorProduct.basis A ε.traceDual).sum_repr b,
     Finset.sum_mul_sum]
-  simp only [map_sum, smul_mul_smul_comm, map_smul, Algebra.TensorProduct.basis_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, smul_mul_smul_comm, map_smul, Algebra.TensorProduct.basis_apply,
     Algebra.TensorProduct.tmul_mul_tmul, mul_one, trace_one_tmul, Module.Basis.trace_mul_traceDual, smul_eq_mul]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [Finset.sum_eq_single i] <;> simp +contextual [eq_comm]
@@ -107,9 +108,11 @@ theorem coord_dot (ε : Module.Basis (Fin d) D.host.F D.host.E) (x y : Mx D m n)
     coord ε x ⬝ᵥ coord ε.traceDual (cj y) = StdUnn.trA (Matrix.trace (adj x ⬝ y : Mx D n n)) := by
   have h : Matrix.trace (adj x ⬝ y : Mx D n n) = ∑ i, ∑ j, cA D (x i j) * y i j := by
     rw [Finset.sum_comm]; rfl
-  rw [h, StdUnn.trA, map_sum, dotProduct, Fintype.sum_prod_type]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h, StdUnn.trA, map_sum, dotProduct, Fintype.sum_prod_type]
   refine Finset.sum_congr rfl fun i _ => ?_
-  rw [map_sum, Fintype.sum_prod_type]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Fintype.sum_prod_type]
   refine Finset.sum_congr rfl fun j _ => ?_
   refine (sum_repr_dual ε (x i j) (cA D (y i j))).trans ?_
   refine Eq.trans ?_ (trA_cA _)

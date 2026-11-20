@@ -592,7 +592,8 @@ theorem extension_generated_holds : ExtGOf := by
   obtain ⟨m, hm, hme⟩ := isPhiCombination_of_mem_pull Y.LY hb hu'
   have h0 : ∑ t, b t • L₀.phiIt i k (Y.π.f (m t)) = 0 := by
     have h1 : Y.π.f (Y.ι.f (lam • u)) = 0 := (Y.exact _).2 ⟨_, rfl⟩
-    rw [hme, map_sum] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hme, map_sum] at h1
     simpa only [map_smul, hom_phiIt] using h1
   have hm0 := hind (fun t => Y.π.f (m t)) (fun t => Y.π.map_N i _ (hm t)) h0
   have hex : ∀ t, ∃ w : V₂, Y.ι.f w = m t := fun t => (Y.exact _).1 (hm0 t)
@@ -600,7 +601,8 @@ theorem extension_generated_holds : ExtGOf := by
   have hwN : ∀ t, w t ∈ L₂.N i := fun t => h6 i (w t) (by rw [hw t]; exact hm t)
   have heq : lam • u = ∑ t, b t • L₂.phiIt i k (w t) := by
     apply Y.ι_inj
-    rw [hme, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hme, map_sum]
     refine Finset.sum_congr rfl fun t _ => ?_
     rw [map_smul, hom_phiIt, hw t]
   show lam • u ∈ L₂.pull i k
@@ -1040,7 +1042,8 @@ theorem lattice_filtration_second_form : FrobeniusDiffBijective := by
     have e1 : L.φ i ((X : PowerSeries O) ^ M • y (i - 1)) =
         (∑ k ∈ Finset.range K, f1bIt L t (k + 1) i) -
           L.φ i ((X : PowerSeries O) ^ M • ((∑ k ∈ Finset.range K, w k (i - 1)) - y (i - 1))) := by
-      rw [smul_sub, map_sub, Finset.smul_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [smul_sub, map_sub, Finset.smul_sum, map_sum]
       simp only [hwe]
       simp [f1bIt]
     have e2 : (X : PowerSeries O) ^ M • y i = (∑ k ∈ Finset.range K, f1bIt L t k i) -
@@ -1316,7 +1319,8 @@ theorem cp_mem_equiv {R M : Type} [CommRing R] [AddCommGroup M] [Module R M] (J 
       simp [Finset.sum_apply, Pi.single_apply]
     have h2 : x = ∑ t, Φ x t • Φ.symm (Pi.single t (1 : R)) := by
       apply Φ.injective
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simpa only [map_smul, LinearEquiv.apply_symm_apply] using h1
     rw [h2]
     exact Submodule.sum_mem _ fun t _ => Submodule.smul_mem_smul (h t) trivial

@@ -122,7 +122,8 @@ theorem hasDeg_iff_mem (k : ℕ) (α : Alt n) : HasDeg k α ↔ α ∈ ⋀[ℂ]^
 theorem repr_degPart (k : ℕ) (α : Alt n) (S : Finset (Fin (n + n))) :
     (bas n).repr (degPart n k α) S = if S.card = k then (bas n).repr α S else 0 := by
   conv_lhs => rw [← (bas n).sum_repr α]
-  simp only [map_sum, map_smul, degPart, Module.Basis.constr_basis, Finsupp.finset_sum_apply, Finsupp.smul_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, degPart, Module.Basis.constr_basis, Finsupp.finset_sum_apply, Finsupp.smul_apply]
   rw [Finset.sum_eq_single S (fun T _ h => by split_ifs <;> simp [h]) (by simp)]
   split_ifs <;> simp
 
@@ -258,7 +259,8 @@ theorem differentiableAt_dirD {f : V n → ℂ} (hf : ContDiffAt ℝ 2 f v) (i :
 theorem repr_linear (L : Alt n →ₗ[ℂ] Alt n) (α : Alt n) (S : Finset (Fin (n + n))) :
     (bas n).repr (L α) S = ∑ T, (bas n).repr (L (bas n T)) S • (bas n).repr α T := by
   conv_lhs => rw [← (bas n).sum_repr α]
-  simp only [map_sum, map_smul, Finsupp.finset_sum_apply, Finsupp.smul_apply, smul_eq_mul, mul_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, Finsupp.finset_sum_apply, Finsupp.smul_apply, smul_eq_mul, mul_comm]
 
 theorem coefwise_dirD_linear (i : Fin n ⊕ Fin n) (L : Alt n →ₗ[ℂ] Alt n) {F : V n → Alt n}
     (hF : ∀ S, DifferentiableAt ℝ (fun x => (bas n).repr (F x) S) v) :
@@ -320,7 +322,8 @@ theorem delAt_dbarAt_mul {F G : V n → Alt n} (hF : ∀ S, DifferentiableAt ℝ
 theorem opAt_par (s : Fin n → Fin n ⊕ Fin n) {F : V n → Alt n}
     (hF : ∀ S, DifferentiableAt ℝ (fun x => (bas n).repr (F x) S) v) :
     opAt s (fun x => par n (F x)) v = -par n (opAt s F v) := by
-  rw [opAt, opAt, map_sum, ← Finset.sum_neg_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [opAt, opAt, map_sum, ← Finset.sum_neg_distrib]
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [map_mul, par_ι, neg_mul, neg_neg]
   exact congrArg _ (coefwise_dirD_linear (s a) (par n).toLinearMap hF)
@@ -328,7 +331,8 @@ theorem opAt_par (s : Fin n → Fin n ⊕ Fin n) {F : V n → Alt n}
 theorem degPart_opAt (s : Fin n → Fin n ⊕ Fin n) (k : ℕ) {F : V n → Alt n}
     (hF : ∀ S, DifferentiableAt ℝ (fun x => (bas n).repr (F x) S) v) :
     degPart n (k + 1) (opAt s F v) = opAt s (fun x => degPart n k (F x)) v ∧ degPart n 0 (opAt s F v) = 0 := by
-  rw [opAt, opAt, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [opAt, opAt, map_sum, map_sum]
   refine ⟨Finset.sum_congr rfl fun a _ => ?_, Finset.sum_eq_zero fun a _ => (degPart_ι_mul _ k _).2⟩
   rw [(degPart_ι_mul _ k _).1, coefwise_dirD_linear _ _ hF]
 

@@ -45,7 +45,8 @@ open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalC
 variable {g : ℕ} (Hm : Matrix (Fin g) (Fin g) ℂ) in
 theorem _root_.GlobalTheory.EigenNorm.hermForm_conj (hH : Hm.IsHermitian) (z w : Fin g → ℂ) :
     _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.hermForm Hm w z = starRingEnd ℂ (_root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.hermForm Hm z w) := by
-  simp only [_root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.hermForm, dotProduct, Matrix.mulVec, map_sum, map_mul, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [_root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.hermForm, dotProduct, Matrix.mulVec, map_sum, map_mul, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   have h := congrFun (congrFun hH i) j
@@ -106,7 +107,8 @@ theorem hermForm_eigen :
     hermForm Hm (∑ τ, x τ a) (∑ τ, x τ b) - c * ∑ τ ∈ Ψ, τ (h a b)
   have hD0 : ∀ a, D a a = 0 := fun a => sub_eq_zero.2 (hq a)
   have hDc : ∀ a b, D b a = starRingEnd ℂ (D a b) := fun a b => by
-    simp only [D, map_sub, map_mul, map_sum, Complex.conj_ofReal, ← hconj]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [D, map_sub, map_mul, map_sum, Complex.conj_ofReal, ← hconj]
     rw [hermForm_conj Hm hH]
   have hDl : ∀ a b e, D (a + b) e = D a e + D b e := fun a b e => by
     simp only [D, map_add, hadd, Finset.sum_add_distrib, hermForm_add_left]; ring
@@ -159,6 +161,7 @@ theorem hermForm_eigen :
     simp only [mul_sub, Finset.sum_sub_distrib, h1, mul_ite, mul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true]
     ring
   have h3 := congrArg (starRingEnd ℂ) h2
-  simpa only [map_sum, map_mul, Complex.conj_conj, map_zero] using h3
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa only [map_sum, map_mul, Complex.conj_conj, map_zero] using h3
 
 end GlobalTheory.EigenNorm

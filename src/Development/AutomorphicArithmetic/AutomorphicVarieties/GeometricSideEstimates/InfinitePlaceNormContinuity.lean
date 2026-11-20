@@ -25,7 +25,8 @@ private theorem row_last (i : Fin a) (hi : i.val + 1 = a) (b k : GA E a)
 private theorem row_map {R : Type} [CommRing R] (f : Ad E →+* R) (γ : GL (Fin a) E) (g : GA E a) (i j : Fin a) :
     ((fun l => f (algebraMap E (Ad E) (γ.val i l))) ᵥ* (GeneralLinearGroup.map f g).val) j =
       f ((ratGL E a γ * g).val i j) := by
-  rw [Units.val_mul, Matrix.mul_apply, map_sum, Matrix.vecMul, dotProduct]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Units.val_mul, Matrix.mul_apply, map_sum, Matrix.vecMul, dotProduct]
   refine Finset.sum_congr rfl fun l _ => ?_
   rw [map_mul]
   rfl

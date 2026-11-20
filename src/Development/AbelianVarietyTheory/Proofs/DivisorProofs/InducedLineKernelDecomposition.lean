@@ -168,7 +168,8 @@ private theorem group_rows {V : Type} [AddCommGroup V] [Module ℂ V] {N : ℕ} 
         ((absPow k (((N : ℂ) - 1) / 2) x : ℂ) * c i x) • g ∈ twKer π (unipRad k (linePlace h)) 1 := by
     intro i g hg x
     have h1 : jac (linePlace h) π (firstBlockScalar k N x) (Submodule.Quotient.mk g) = c i x • Submodule.Quotient.mk g := by
-      rw [hg, map_sum, Finset.smul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hg, map_sum, Finset.smul_sum]
       refine Finset.sum_congr rfl fun t ht => ?_
       rw [hwe, (Finset.mem_filter.1 ht).2]
     rw [jac_mk, Units.val_inv_eq_inv_val, deltaHalf_positionOne h, inv_smul_eq_iff₀ (Units.ne_zero _), smul_smul] at h1

@@ -221,7 +221,8 @@ theorem dual_box {c : K} (hc : c ≠ 0) : dual (box (i := i) c) = box c⁻¹ := 
     choose a ha using h
     choose b hb using hx
     refine ⟨∑ j, a j * b j, ?_⟩
-    rw [map_sum, dotProduct]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, dotProduct]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [← ha j, ← hb j, Algebra.smul_def, Algebra.smul_def, map_mul]
     field_simp

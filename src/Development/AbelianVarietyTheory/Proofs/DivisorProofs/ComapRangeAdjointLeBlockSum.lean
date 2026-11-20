@@ -18,7 +18,8 @@ variable {K V H E : Type} [Field K] [AddCommGroup V] [Module K V]
 
 theorem map_eq_sum (j : V →ₛₗ[σ] H) (b : Module.Basis ι K V) (v : V) : j v = ∑ i, σ (b.repr v i) • j (b i) := by
   conv_lhs => rw [← b.sum_repr v]
-  simp only [map_sum, map_smulₛₗ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smulₛₗ]
 
 theorem injective_of_li (hli : LinearIndependent ℂ fun i => j (b i)) : Function.Injective j := by
   rw [injective_iff_map_eq_zero]
@@ -39,9 +40,11 @@ theorem exists_cx (hli : LinearIndependent ℂ fun i => j (b i)) (hsp : Submodul
   have h3 : ∀ i, ((Module.Basis.mk hli h2).constr ℂ fun i => j (f (b i))) (j (b i)) = j (f (b i)) := fun i => by
     have := (Module.Basis.mk hli h2).constr_basis ℂ (fun i => j (f (b i))) i
     rwa [Module.Basis.mk_apply] at this
-  rw [map_eq_sum j b v, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_eq_sum j b v, map_sum]
   conv_rhs => rw [← b.sum_repr v]
-  simp only [map_sum, map_smul, map_smulₛₗ, h3]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, map_smulₛₗ, h3]
 
 theorem ext_of_span {X : Type} [AddCommGroup X] [Module ℂ X] (hsp : Submodule.span ℂ (Set.range j) = ⊤)
     {f g : H →ₗ[ℂ] X} (h : ∀ v, f (j v) = g (j v)) : f = g :=
@@ -111,7 +114,8 @@ theorem sum_selfAdj {G : Type} [Group G] [Fintype G] (r : Representation K G V) 
     (ha : ∀ g, starRingEnd ℂ (σ (a g)) = σ (a g⁻¹))
     (hr : ∀ g v w, inner ℂ (j (r g v)) (j (r g w)) = inner ℂ (j v) (j w)) (v w : V) :
     inner ℂ (j ((∑ g, a g • r g) v)) (j w) = inner ℂ (j v) (j ((∑ g, a g • r g) w)) := by
-  simp only [LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smulₛₗ, sum_inner, inner_sum, inner_smul_left,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smulₛₗ, sum_inner, inner_sum, inner_smul_left,
     inner_smul_right, ha]
   refine Fintype.sum_equiv (Equiv.inv G) _ _ fun g => ?_
   rw [Equiv.inv_apply, ← hr g v, ← Module.End.mul_apply (r g) (r g⁻¹), ← map_mul, mul_inv_cancel, map_one,
@@ -277,12 +281,14 @@ theorem model_good {G0 E : Type} [Group G0] [Fintype G0] [NormedAddCommGroup E] 
   obtain ⟨h1, h2, h3⟩ := model_form P M hM hj
   rw [goodAt, level_idempotent_bot, mul_one]
   refine comap_range_adjoint_le (injective_of_li h1) h2 (sum_selfAdj r _ (fun g => ?_) fun g v w => ?_) fun v => ?_
-  · simp only [coeff_idemOf, map_sum, map_mul, map_div₀, map_natCast, inv_inv]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [coeff_idemOf, map_sum, map_mul, map_div₀, map_natCast, inv_inv]
     refine Finset.sum_congr rfl fun c hc => ?_
     rw [← (hX c hc).map_inv σ, ← (hX c hc).map_inv σ, inv_one, inv_inv]
   · rw [h3, h3, hr.unitary]
   · rw [← he (j v)]
-    simp only [LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smulₛₗ, hΘ, RingHom.id_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smulₛₗ, hΘ, RingHom.id_apply]
 
 end Pres
 
@@ -290,7 +296,8 @@ theorem idem_idem {K G E : Type} [Field K] [CharZero K] [Group G] [Fintype G] [A
     (σ : K →+* ℂ) {X : Finset (G → K)} (hX : ∀ c ∈ X, IsAbsIrrChar c) (ρ : Representation ℂ G E) (z : E) :
     ∑ g, σ ((idemOf X).coeff g) • ρ g (∑ h, σ ((idemOf X).coeff h) • ρ h z) = ∑ h, σ ((idemOf X).coeff h) • ρ h z := by
   conv_rhs => rw [← idemOf_mul_self X hX]
-  simp only [coeff_mul_fin, map_sum, map_smul, Finset.smul_sum, Finset.sum_smul, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [coeff_mul_fin, map_sum, map_smul, Finset.smul_sum, Finset.sum_smul, map_mul]
   rw [Finset.sum_comm (f := fun h x => (σ ((idemOf X).coeff x) * σ ((idemOf X).coeff (x⁻¹ * h))) • ρ h z)]
   refine Finset.sum_congr rfl fun g _ => Fintype.sum_equiv (Equiv.mulLeft g) _ _ fun h => ?_
   simp [mul_smul]

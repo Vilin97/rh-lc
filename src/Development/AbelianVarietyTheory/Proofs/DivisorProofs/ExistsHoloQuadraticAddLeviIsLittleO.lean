@@ -78,7 +78,8 @@ def quadCoef (B : V n →L[ℝ] V n →L[ℝ] ℝ) (j k : Fin n) : ℂ :=
 
 theorem lin_re (D : V n →L[ℝ] ℝ) (ξ : Fin n → ℂ) :
     (∑ j, linCoef D j * ξ j).re = D (rmVec ξ) := by
-  simp only [rmVec, map_sum, Complex.re_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [rmVec, map_sum, Complex.re_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [rm_cplx_smul_eq]
   simp [linCoef, Complex.mul_re]

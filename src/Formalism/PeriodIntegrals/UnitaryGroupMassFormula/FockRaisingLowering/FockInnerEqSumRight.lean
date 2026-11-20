@@ -149,7 +149,8 @@ theorem wt_conj (α : σ →₀ ℕ) : (starRingEnd ℂ) (wt α) = wt α := by
 
 theorem fockInner_swap (P Q : MvPolynomial σ ℂ) :
     fockInner Q P = (starRingEnd ℂ) (fockInner P Q) := by
-  rw [fockInner_eq_support Q P, fockInner_eq_sum_support_right P Q, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [fockInner_eq_support Q P, fockInner_eq_sum_support_right P Q, map_sum]
   refine Finset.sum_congr rfl (fun α _ => ?_)
   rw [map_mul, map_mul, Complex.conj_conj, wt_conj]
   ring

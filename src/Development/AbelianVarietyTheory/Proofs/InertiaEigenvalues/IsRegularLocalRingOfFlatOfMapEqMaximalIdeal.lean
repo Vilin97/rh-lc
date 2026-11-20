@@ -107,7 +107,8 @@ theorem projective_of_socle {A : Type} [CommRing A] [IsNoetherianRing A] [IsLoca
       intro c
       have h0 : ∑ i, residue A (c.1 i) • b i = 0 := by
         have h1 := congrArg (TensorProduct.mk A (ResidueField A) M 1) (LinearMap.mem_ker.mp c.2)
-        rw [Fintype.linearCombination_apply, map_sum, map_zero] at h1
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [Fintype.linearCombination_apply, map_sum, map_zero] at h1
         rw [← h1]
         refine Finset.sum_congr rfl fun i _ => ?_
         rw [map_smul, hv]

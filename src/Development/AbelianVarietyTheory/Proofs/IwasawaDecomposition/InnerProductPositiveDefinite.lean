@@ -30,7 +30,8 @@ theorem re_pos_of_majAt {K V ι M : Type} [Field K] [NumberField K] [StarRing K]
     induction w using hd0.induction_on with
     | hp =>
       apply isClosed_eq
-      · simp only [map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
+      set_option synthInstance.maxHeartbeats 100000 in
+        · simp only [map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
           RingHom.id_apply]
         have := Complex.continuous_conj
         fun_prop
@@ -41,7 +42,8 @@ theorem re_pos_of_majAt {K V ι M : Type} [Field K] [NumberField K] [StarRing K]
       have h1 := h (b.equivFun.symm y)
       have h2 : e (b.equivFun.symm y) =
           ∑ a, ρ (Pi.map (fun _ : ι => (v.embedding : K → ℂ)) y a) • e (b a) := by
-        rw [b.equivFun_symm_apply, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [b.equivFun_symm_apply, map_sum]
         refine Finset.sum_congr rfl fun a _ => ?_
         rw [LinearMap.map_smulₛₗ, Pi.map_apply, hρσ]
       have h3 : Formalism.HermitianLatticesTheory.vecAt b v (b.equivFun.symm y) = Pi.map (fun _ : ι => (v.embedding : K → ℂ)) y := by

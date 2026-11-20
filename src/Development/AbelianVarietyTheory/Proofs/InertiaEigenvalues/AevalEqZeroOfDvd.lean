@@ -90,7 +90,8 @@ theorem _root_.GlobalTheory.lagIdem_spec : ∀ (R E ι : Type) [CommRing R]
   intro R E ι _ _ _ _ _ _ M a hu hM
   have hsum : ∑ i, _root_.GlobalTheory.Pat.lagIdem M a i = 1 := by
     have h := aeval_eq_zero_of_dvd_of_aeval_eq_zero hM (prod_X_sub_C_dvd_sum_lagPoly_sub_one a hu)
-    simpa [map_sum, aeval_lagPoly_eq_lagIdem, sub_eq_zero] using h
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [map_sum, aeval_lagPoly_eq_lagIdem, sub_eq_zero] using h
   have hortho : ∀ i j, i ≠ j →
       _root_.GlobalTheory.Pat.lagIdem M a i * _root_.GlobalTheory.Pat.lagIdem M a j = 0 := by
     intro i j hij

@@ -223,7 +223,8 @@ theorem symmetrisation_injective (act : Mat p q →ₗ[ℂ] Module.End ℂ V) (h
       φ ∘ₗ (indRel act).mkQ ∘ₗ (TensorProduct.mk ℂ (Ug p q) V).flip v ∘ₗ symU p q -
         (TensorProduct.mk ℂ (MvPolynomial (PIx p q) ℂ) V).flip v
     have hM : ∀ Q, M Q = φ ((indRel act).mkQ (symU p q Q ⊗ₜ[ℂ] v)) - Q ⊗ₜ[ℂ] v := fun Q => rfl
-    rw [← hM, P.as_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hM, P.as_sum, map_sum]
     refine Submodule.sum_mem _ fun α hα => ?_
     have hdeg : α.degree = k := by
       rw [Finsupp.degree_eq_weight_one]

@@ -100,7 +100,8 @@ theorem betaP_fix {ι : Type} [Fintype ι] (g : (VS D).V ≃ₗ[D.host.E] (VS D)
     rw [hermitian_base_change_smul Zd p]
     rfl
   conv_lhs => rw [vp_eq_sum p w]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [map_smul, betaP_bc, hform, map_add, baseChangeAt_sum, smul_add, Finset.sum_add_distrib, Finset.smul_sum,
     smul_smul]
   rw [← vp_eq_sum p w, Finset.sum_comm]

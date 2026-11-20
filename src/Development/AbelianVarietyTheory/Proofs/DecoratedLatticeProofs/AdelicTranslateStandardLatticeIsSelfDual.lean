@@ -23,7 +23,8 @@ theorem moves_exists (V : HSp D) (g : GA D V) : ∃ N, Moves V rfl g N := by
         (((finHom V g⁻¹).1 *ᵥ GlobalTheory.AdLat.fv D.host.F x) i) =
       (finM V rfl g⁻¹ *ᵥ fun j => eToEAf D (x j)) i := by
     intro x i
-    simp only [GlobalTheory.AdForm.finM, Matrix.mulVec, dotProduct, map_sum, map_mul, Matrix.reindex_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [GlobalTheory.AdForm.finM, Matrix.mulVec, dotProduct, map_sum, map_mul, Matrix.reindex_apply,
       finCongr_refl, Equiv.refl_symm, Equiv.coe_refl, Matrix.submatrix_id_id]
     refine Finset.sum_congr rfl fun j _ => ?_
     congr 1

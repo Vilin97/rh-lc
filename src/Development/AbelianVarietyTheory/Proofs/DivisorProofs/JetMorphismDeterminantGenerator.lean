@@ -31,7 +31,8 @@ theorem exists_gen_of_basis {L L' : Type*} [AddCommGroup L] [Module R L] [AddCom
   · rw [smul_smul, _root_.mul_assoc, ← map_mul, h1, map_one, _root_.mul_one, ← ω.eq_smul_basis_det e']
   · have hr : ∀ (x : L) (i : Fin g), e'.repr (φ x) i = algebraMap R B (e.repr x i) := fun x i ↦ by
       have : φ x = ∑ j, algebraMap R B (e.repr x j) • e' j := by
-        conv_lhs => rw [← e.sum_repr x, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          conv_lhs => rw [← e.sum_repr x, map_sum]
         simp only [LinearMap.map_smulₛₗ, hφ]
       rw [this, e'.repr_sum_self]
     have hm : e'.toMatrix (fun j ↦ φ (v j)) = (algebraMap R B).mapMatrix (e.toMatrix v) := by
@@ -72,8 +73,10 @@ theorem exists_gen_quot {H H' L L' : Type*} [AddCommGroup H] [Module R H] [AddCo
     ⟨b'.constr B fun k ↦ algebraMap R B (l (b k)), fun x ↦ by
       have h : ∀ k, (b'.constr B fun k ↦ algebraMap R B (l (b k))) (b' k) = algebraMap R B (l (b k)) :=
         fun k ↦ b'.constr_basis B _ k
-      conv_lhs => rw [← b.sum_repr x, map_sum, map_sum]
-      conv_rhs => rw [← b.sum_repr x, map_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        conv_lhs => rw [← b.sum_repr x, map_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        conv_rhs => rw [← b.sum_repr x, map_sum, map_sum]
       refine Finset.sum_congr rfl fun k _ ↦ ?_
       rw [bc.map_smulₛₗ, map_smul, hb, h, map_smul, smul_eq_mul, smul_eq_mul, map_mul]⟩
   have coord : ∀ l : L →ₗ[R] R, ∃ l' : L' →ₗ[B] B, ∀ v, l' (φ v) = algebraMap R B (l v) := fun l ↦ by
@@ -81,7 +84,8 @@ theorem exists_gen_quot {H H' L L' : Type*} [AddCommGroup H] [Module R H] [AddCo
     choose l₁ h₁ using fun i ↦ ext (l ∘ₗ q ∘ₗ N i)
     let ξ : H' →ₗ[B] B := l₀ - ∑ i, t i • l₁ i
     have hξ : ∀ x, ξ (nn x) = algebraMap R B (l (q x)) := fun x ↦ by
-      simp [ξ, nn_def, LinearMap.sum_apply, map_sum, h₀, h₁, hNN]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [ξ, nn_def, LinearMap.sum_apply, map_sum, h₀, h₁, hNN]
     have hk : LinearMap.ker q' ≤ LinearMap.ker ξ := by
       rw [hker, Submodule.span_le]
       rintro _ ⟨x, hx, rfl⟩
@@ -98,21 +102,25 @@ theorem exists_gen_quot {H H' L L' : Type*} [AddCommGroup H] [Module R H] [AddCo
     intro c hc j
     obtain ⟨l', hl'⟩ := coord (e.coord j)
     have := congrArg l' hc
-    simpa [map_sum, hl', Finsupp.single_apply, apply_ite (algebraMap R B)] using this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [map_sum, hl', Finsupp.single_apply, apply_ite (algebraMap R B)] using this
   have sp : ⊤ ≤ Submodule.span B (Set.range fun j ↦ φ (e j)) := by
     have h1 : ∀ v, φ v ∈ Submodule.span B (Set.range fun j ↦ φ (e j)) := fun v ↦ by
-      rw [← e.sum_repr v, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← e.sum_repr v, map_sum]
       refine Submodule.sum_mem _ fun j _ ↦ ?_
       rw [LinearMap.map_smulₛₗ]
       exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨j, rfl⟩)
     have h2 : ∀ x, q' (bc x) ∈ Submodule.span B (Set.range fun j ↦ φ (e j)) := fun x ↦ by
-      rw [bc_eq, map_sub, map_sum, ← hφ]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [bc_eq, map_sub, map_sum, ← hφ]
       refine sub_mem (h1 _) (Submodule.sum_mem _ fun i _ ↦ ?_)
       rw [map_smul, ← hφ]
       exact Submodule.smul_mem _ _ (h1 _)
     intro w _
     obtain ⟨d, rfl⟩ := hq' w
-    rw [← b'.sum_repr d, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← b'.sum_repr d, map_sum]
     refine Submodule.sum_mem _ fun k _ ↦ ?_
     rw [map_smul, ← hb]
     exact Submodule.smul_mem _ _ (h2 _)

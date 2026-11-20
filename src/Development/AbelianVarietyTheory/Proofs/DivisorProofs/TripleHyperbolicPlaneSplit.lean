@@ -155,7 +155,8 @@ theorem det_compl_ne_zero {F E : Type} [Field F] [Field E] [Algebra F E] (σ : E
     (horth : ∀ u, form σ J (ι *ᵥ u) x = 0 ∧ form σ J (ι *ᵥ u) y = 0) (hι : Function.Injective ι.mulVec) :
     (ιᵀ * J * ι.map σ).det ≠ 0 := by
   have hsym : ∀ a b, form σ J b a = σ (form σ J a b) := fun a b => by
-    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, hJ, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, hJ, Finset.mul_sum]
     rw [Finset.sum_comm]
     exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun k _ => by ring
   have hyx : form σ J y x = 1 := by rw [hsym, hxy, map_one]
@@ -430,7 +431,8 @@ theorem exists_model_isEv : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [
     exact mul_eq_zero_of_right _ this.symm
   have hJ₁ := det_compl_ne_zero σ d₂ G.V.J H.x H.y H.ι hσ hV.herm hV' hxx hyy hxy horth hιinj
   have hherm : ∀ i k, σ ((H.ιᵀ * G.V.J * H.ι.map σ) k i) = (H.ιᵀ * G.V.J * H.ι.map σ) i k := fun i k => by
-    simp only [Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, map_sum, map_mul, hσ, hV.herm, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, map_sum, map_mul, hσ, hV.herm, Finset.sum_mul]
     rw [Finset.sum_comm]
     exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
   let V₁ : Spc F E d₂ := ⟨H.ιᵀ * G.V.J * H.ι.map σ, G.V.L.comap (H.ι.mulVecLin.restrictScalars (𝓞 E)), fun _ => 1, fun _ => 1⟩

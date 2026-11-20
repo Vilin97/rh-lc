@@ -82,9 +82,11 @@ theorem coeff_logOf_congr (X : RawChart C d I κ) (V : VF C) (g : Fin 2) {x x' :
     fun n => coeff_tyS_congr V.l m fun s hs => h s hs n
   constructor
   · intro i
-    simp only [logOf, map_sum, PowerSeries.coeff_smul, key]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [logOf, map_sum, PowerSeries.coeff_smul, key]
   · intro q
-    simp only [logOf, map_sub, map_sum, key]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [logOf, map_sub, map_sum, key]
     congr 1
     refine Finset.sum_congr rfl fun c _ => ?_
     split_ifs

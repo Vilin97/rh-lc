@@ -1215,7 +1215,8 @@ theorem L_norm {ϖ : kˣ} (hϖ : IsUnif ϖ) {n d : ℕ} (i₀ : Fin n) (x : ℂ)
       rfl
     · rw [Finset.sum_eq_zero fun s _ => Set.indicator_of_notMem (fun h' => h (ha s Y h')) _, Set.indicator_of_notMem h]
   have h2 : B (∑ t, ft t) (∑ t, ft t) = (resCard k : ℂ) ^ d * B f f := by
-    rw [map_sum, Finset.sum_congr rfl fun s _ => show B (∑ t, ft t) (ft s) = B f f by
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_congr rfl fun s _ => show B (∑ t, ft t) (ft s) = B f f by
       rw [map_sum, LinearMap.sum_apply, Finset.sum_eq_single s (fun t _ ht => horth _ _ fun Y => ?_) (by simp)]
       · exact htr (Yt s) f _ f _ (fun _ => rfl) fun _ => rfl
       · by_contra hh
@@ -1594,7 +1595,8 @@ theorem zero_of_ball (n : ℕ) (T : SchwartzMap (Fin n → ℝ) ℂ →L[ℂ] �
       refine Finset.sum_congr rfl fun i _ => ?_
       show _ = cexp (2 * π * I * x i) * g i x - g i x
       ring
-    rw [e, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, map_sum]
     refine Finset.sum_eq_zero fun i _ => ?_
     rw [map_sub, hχ i (g i) _ (fun x => rfl), sub_self]
 
@@ -1743,10 +1745,12 @@ theorem schur (F : Type) [Field F] [NumberField F] [IsTotallyReal F] {κ : Type}
       have e : (x ⬝ᵥ fun i => pairA F (r.symm (y i)) 0) = pairA F (r.symm (y ⬝ᵥ fun i => r (x i).1)) 0 := by
         refine Prod.ext ?_ ?_
         · show fstA F _ = r.symm _
-          simp only [dotProduct, map_sum, map_mul, r.symm_apply_apply]
+          set_option synthInstance.maxHeartbeats 100000 in
+            simp only [dotProduct, map_sum, map_mul, r.symm_apply_apply]
           exact Finset.sum_congr rfl fun i _ => mul_comm _ _
         · show sndA F _ = 0
-          simp only [dotProduct, map_sum, map_mul]
+          set_option synthInstance.maxHeartbeats 100000 in
+            simp only [dotProduct, map_sum, map_mul]
           exact Finset.sum_eq_zero fun i _ => mul_zero _
       rw [e, hst, r.apply_symm_apply, pureA, pureA, h, mul_assoc _ (f _)]
       refine congrArg₂ (· * ·) (congrArg Complex.exp ?_) rfl
@@ -2072,11 +2076,13 @@ theorem at_mul_off (t : Fv F v) (a : AF F) : atPlace v t * off v a = 0 := by
 theorem off_add_at (a : AF F) : off v a + atPlace v (evFin F v a) = a := sub_add_cancel _ _
 
 theorem off_dot (x y : κ → AF F) : off v (x ⬝ᵥ y) = x ⬝ᵥ fun i => off v (y i) := by
-  simp only [off, dotProduct, map_sum, ← Finset.sum_sub_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [off, dotProduct, map_sum, ← Finset.sum_sub_distrib]
   exact Finset.sum_congr rfl fun i _ => off_mul v _ _
 
 theorem ev_dot (x y : κ → AF F) : evFin F v (x ⬝ᵥ y) = (fun i => evFin F v (x i)) ⬝ᵥ fun i => evFin F v (y i) := by
-  simp only [dotProduct, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dotProduct, map_sum, map_mul]
 
 def Indep (r : (κ → AF F) → ℂ) : Prop := ∀ x (t : κ → Fv F v), r (x + fun i => atPlace v (t i)) = r x
 
@@ -2750,7 +2756,8 @@ theorem gen [IsTotallyReal F] (ψ : AddChar (AF F) ℂ) (hψ : IsCharAF F ψ) (h
     simp only [Finsupp.sum, hχ _ _ hΦ, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, lift_apply]
     simp only [Sz, Finsupp.sum, LinearMap.sum_apply, LinearMap.smul_apply, Finset.sum_apply, Pi.smul_apply, smul_eq_mul,
       mul_assoc]
-  rw [e1, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e1, map_sum]
   refine Submodule.sum_mem _ fun i _ => ?_
   rw [map_smul, hg, lift_pure _ _ (hφ i)]
   have hv := (hφ i).1 v
@@ -2758,7 +2765,8 @@ theorem gen [IsTotallyReal F] (ψ : AddChar (AF F) ℂ) (hψ : IsCharAF F ψ) (h
   · simp only [Sz, Finsupp.sum, LinearMap.sum_apply, LinearMap.smul_apply]
     exact Submodule.sum_mem _ fun γ _ => Submodule.smul_mem _ _ (hS _ _ hv)
   · rw [Function.update_self, ← hz' _ (Finset.mem_image_of_mem _ (Finset.mem_univ i)) Y hY]
-    simp only [Sz, Finsupp.sum, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, Finset.sum_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Sz, Finsupp.sum, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, Finset.sum_apply,
       Pi.smul_apply, smul_eq_mul, IS _ _ hv, mul_assoc]
     rfl
 

@@ -187,7 +187,8 @@ theorem core (hcomm : ∀ a b : G, a * b = b * a) (hcont : ∀ g : G, Continuous
       exact ⟨_, Finset.mem_image.2 ⟨r, hbfin.mem_toFinset.2 hr, rfl⟩⟩
     have hsum : D Φ = (Q.card : ℂ) * D F := by
       conv_lhs => rw [hΦsum]
-      rw [map_sum, Finset.sum_congr rfl hpiece, Finset.sum_const, nsmul_eq_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Finset.sum_congr rfl hpiece, Finset.sum_const, nsmul_eq_mul]
     rw [hΦ0] at hsum
     have hc : (Q.card : ℂ) ≠ 0 := Nat.cast_ne_zero.2 (Finset.card_ne_zero.2 hQne)
     exact (mul_eq_zero.1 hsum.symm).resolve_left hc
@@ -217,7 +218,8 @@ theorem core (hcomm : ∀ a b : G, a * b = b * a) (hcont : ∀ g : G, Continuous
       have : Quotient.mk (rel (K i)) p.2 ∈ Q :=
         Finset.mem_image.2 ⟨r, hbfin.mem_toFinset.2 hr, ((rel_iff _ _ _).2 ⟨g, hg, hgr⟩).symm⟩
       simp [this]
-  rw [hfsum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hfsum, map_sum]
   refine Finset.sum_eq_zero fun q hq => ?_
   obtain ⟨r, hr, rfl⟩ := Finset.mem_image.1 hq
   have hrS : r ∈ S := hCS (hbC (hbfin.mem_toFinset.1 hr))

@@ -91,9 +91,11 @@ theorem position_coeff : GlobalTheory.ThK.KP → ∀ (k : Type) [Field k] [Valua
     rw [h, smul_smul, ← Units.val_mul, mul_inv_cancel, Units.val_one, one_smul]
   have hsum : jac (place3 h2) π (tor3 k d (x, 1)) (Submodule.Quotient.mk F) =
       ∑ t, cellChar₂ k (b2 n d) (chi2 k ν) (r t) (r' t) (x, 1) • w t := by
-    rw [hw, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hw, map_sum]
     exact Finset.sum_congr rfl fun t _ => hwe t (x, 1)
-  rw [hmk, hjac, hsum, hdel, map_smul, map_sum, smul_eq_mul, Finset.mul_sum, Finset.mul_sum, Finset.sum_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hmk, hjac, hsum, hdel, map_smul, map_sum, smul_eq_mul, Finset.mul_sum, Finset.mul_sum, Finset.sum_mul,
     Finset.sum_mul, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun t _ => ?_
   rw [map_smul, smul_eq_mul]

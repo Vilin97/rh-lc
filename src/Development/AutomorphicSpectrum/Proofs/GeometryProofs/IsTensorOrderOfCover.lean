@@ -174,16 +174,19 @@ theorem isHomEmb_of_isEmb [Finite T] (Γ : QFGroup R T) (A : Subalgebra R (T →
       ∑ k, (fst Γ.G Γ.G).left.appTop (pullSec j (a k)) * (snd Γ.G Γ.G).left.appTop (pullSec j (b k)) := by
     rw [← sub_eq_zero]
     refine sec_prod_zero Γ _ fun s t => ?_
-    rw [map_sub, map_sum, CharMul.pull, comp_mul, lift_fst, lift_snd, ← map_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_sum, CharMul.pull, comp_mul, lift_fst, lift_snd, ← map_mul,
       CharMul.appTop_pt Γ _ _ (hasValues_pullSec Γ hj f), hf, map_sum, map_sum, sub_eq_zero]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_mul, map_mul, map_mul, CharMul.pull, CharMul.pull, lift_fst, lift_snd,
       CharMul.appTop_pt Γ _ _ (hasValues_pullSec Γ hj (a k)), CharMul.appTop_pt Γ _ _ (hasValues_pullSec Γ hj (b k))]
   have h := congrArg (lift y z).left.appTop univ
-  rw [CharMul.pull, comp_mul, lift_fst, lift_snd, map_sum] at h
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [CharMul.pull, comp_mul, lift_fst, lift_snd, map_sum] at h
   rw [← valAt_pullSec, valAt_top]
   refine (congrArg (Scheme.ΓSpecIso (CommRingCat.of B)).hom.hom h).trans ?_
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [← valAt_pullSec, ← valAt_pullSec, valAt_top, valAt_top, ← map_mul]
   congr 1

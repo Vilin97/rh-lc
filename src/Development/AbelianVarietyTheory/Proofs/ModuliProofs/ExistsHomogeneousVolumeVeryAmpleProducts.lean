@@ -75,7 +75,8 @@ theorem eq_eval_homogeneousComponent {σ : Type} (Ψ : MvPolynomial σ ℚ) (n :
 theorem isWeightedHomogeneous_aeval {K σ τ M : Type} [CommRing K] [AddCommMonoid M] (w : σ → M) (n : M)
     (G : τ → MvPolynomial σ K) (hG : ∀ a, (G a).IsWeightedHomogeneous w n) (F : MvPolynomial τ K) (e : ℕ)
     (hF : F.IsHomogeneous e) : (MvPolynomial.aeval G F).IsWeightedHomogeneous w (e • n) := by
-  rw [F.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [F.as_sum, map_sum]
   refine MvPolynomial.IsWeightedHomogeneous.sum _ _ _ fun d hd => ?_
   rw [MvPolynomial.aeval_monomial]
   have h1 : d.degree = e := by
@@ -308,7 +309,8 @@ theorem isSec_eval (p : X ⟶ Sp K) (col : σ → Fin r) (v : σ → ∀ j, Γ(X
     | single a m =>
       rw [Finsupp.weight_single, gpow_smul, gpow_single, Finsupp.prod_single_index (h := fun a m => v a ^ m) (pow_zero _)]
       exact (hv a).pow m
-  rw [F.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [F.as_sum, map_sum]
   refine Finset.sum_induction _ _ (fun _ _ => IsSec.add) (isSec_zero _) fun d hd => ?_
   rw [MvPolynomial.eval₂Hom_monomial, ← hF (MvPolynomial.mem_support_iff.1 hd), ← _root_.one_mul (gpow _ _)]
   exact (isSec_cst p _).mul (key d)

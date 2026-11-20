@@ -81,7 +81,8 @@ theorem exists_pairing_Dst_Dcris_phi_one : ∀ (l : ℕ) [Fact l.Prime] (P : Loc
     have h1 : j w = 0 := by
       refine hnd _ fun v => ?_
       obtain ⟨k, a, x, hx, hv⟩ := GlobalTheory.T.semistableDieudonneModule_spans_tensor_periodRing l P AI T K V ρ hs v
-      rw [hv, map_sum, LinearMap.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hv, map_sum, LinearMap.sum_apply]
       refine Finset.sum_eq_zero fun i _ => ?_
       rw [hmul, h0 _ (hx i), mul_zero]
     apply Subtype.ext

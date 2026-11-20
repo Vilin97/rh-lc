@@ -199,7 +199,8 @@ theorem trace_act {E : Type} [Field E] [NumberField E] (M : Type) [AddCommGroup 
     refine LinearMap.ext fun x => funext fun j => ?_
     simp [m, Pi.single_apply]
   have ht : LinearMap.trace ℤ _ m = n * Algebra.trace ℤ (𝓞 E) a := by
-    rw [hm, map_sum, Finset.sum_congr rfl (g := fun _ => Algebra.trace ℤ (𝓞 E) a)]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hm, map_sum, Finset.sum_congr rfl (g := fun _ => Algebra.trace ℤ (𝓞 E) a)]
     · simp
     · intro k _
       rw [LinearMap.trace_comp_comm']

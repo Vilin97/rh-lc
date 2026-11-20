@@ -273,7 +273,8 @@ theorem it_sub (f : PowerSeries O →ₐ[O] PowerSeries O) (k : ℕ) (a b : Powe
 
 theorem it_sum (f : PowerSeries O →ₐ[O] PowerSeries O) (k : ℕ) {ι : Type} (s : Finset ι)
     (g : ι → PowerSeries O) : (⇑f)^[k] (∑ t ∈ s, g t) = ∑ t ∈ s, (⇑f)^[k] (g t) := by
-  rw [it_eq, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [it_eq, map_sum]
 
 theorem it_lc (B : Base O) (k K : ℕ) : (⇑B.φ)^[k] (B.lc ^ K) = B.lc ^ K := by
   rw [lc_pow, it_C]
@@ -520,7 +521,8 @@ theorem XDivisibilityOfActions.partner_gen {O : Type} [CommRing O] {B : Base O} 
         apply Subtype.ext
         simpa using hid
       have h1 := congrArg (fun p => S.loc s (θ p)) hid'
-      simp only [map_add, map_smul, map_sum] at h1
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_add, map_smul, map_sum] at h1
       apply flSat_pow S hS hs (K + K₀)
       have hZ : S.locL s Z = ∑ k, Z k • S.locL s (bv O k) :=
         LinearMap.pi_apply_eq_sum_univ (S.locL s) Z
@@ -551,7 +553,8 @@ theorem XDivisibilityOfActions.partner_gen {O : Type} [CommRing O] {B : Base O} 
       simpa using hcf.symm
     refine ⟨∑ m, cf m • z m, fun s hs => ?_⟩
     rw [hwe]
-    simp only [map_sum, map_smul, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, Finset.smul_sum]
     rw [← Finset.sum_sub_distrib]
     refine Submodule.sum_mem _ fun m _ => ?_
     rw [smul_comm, ← smul_sub]
@@ -581,7 +584,8 @@ theorem XDivisibilityOfActions.partner_gen {O : Type} [CommRing O] {B : Base O} 
     have hy : S.locL s y = ∑ k, y k • S.locL s (bv O k) :=
       LinearMap.pi_apply_eq_sum_univ (S.locL s) y
     rw [hy]
-    simp only [map_sum, map_smul, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, Finset.smul_sum]
     rw [← Finset.sum_sub_distrib]
     refine Submodule.sum_mem _ fun k _ => ?_
     rw [smul_comm, ← smul_sub]
@@ -854,7 +858,8 @@ theorem height_inverse_holds : HinvOf := by
       have hsw : ∑ l, G₁ m l • nn l = ∑ k₀, (∑ l, G₁ m l * Y k₀ l) • D k₀ := by
         simp only [hnn, Finset.smul_sum, Finset.sum_smul, smul_smul]
         exact Finset.sum_comm
-      rw [hsw, Finset.smul_sum, Finset.smul_sum, ← Finset.sum_add_distrib,
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hsw, Finset.smul_sum, Finset.smul_sum, ← Finset.sum_add_distrib,
         ← Finset.sum_add_distrib, map_sum]
       refine Finset.sum_congr rfl fun k₀ _ => ?_
       have := hYτ k₀ m
@@ -1009,7 +1014,8 @@ lemma coeffs_zero {r : ℕ} (lam : Fin r → D) (h : LinearIndependent LL lam) (
     (h0 : ∑ k, x k • ((1 : Ks) ⊗ₜ[LL] lam k) = 0) (k : Fin r) : x k = 0 := by
   obtain ⟨f, hf⟩ := exists_dual lam h k
   have h1 := congrArg ((TensorProduct.rid LL Ks).toLinearMap ∘ₗ LinearMap.lTensor Ks f) h0
-  rw [map_sum, map_zero] at h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_zero] at h1
   rw [Finset.sum_eq_single k] at h1
   · simpa [TensorProduct.smul_tmul', hf] using h1
   · intro j _ hj

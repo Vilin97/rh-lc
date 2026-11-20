@@ -75,7 +75,8 @@ theorem sd_lat (hs : s.Ok) {n : ℕ} {N : Submodule (𝓞 X.E) (Sp X.E n)} (h : 
     have e1 : hStd X.E n (fun i => s.iE.symm (x i)) (fun i => s.iE.symm (y i)) = s.iE.symm (hE D y x) := by
       apply s.iE.injective
       change s.iE (∑ i, star (s.iE.symm (x i)) * s.iE.symm (y i)) = _
-      simp only [map_sum, map_mul, hs.2, RingEquiv.apply_symm_apply, hE, mul_comm]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_mul, hs.2, RingEquiv.apply_symm_apply, hE, mul_comm]
     rw [e1, ← mem_one_iff, Submodule.mem_one]
     rfl
   have hm : ∀ x, x ∈ s.lat N ↔ (fun i => s.iE.symm (x i)) ∈ N := mem_trL s.iE N

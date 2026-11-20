@@ -239,7 +239,8 @@ theorem levelafQ_tmul {m : ℕ} (b : Fin m → 𝓞 E) (hb : Submodule.span ℤ 
   have he : e ∈ Submodule.span ℤ (Set.range b) := by rw [hb]; exact Submodule.mem_top
   obtain ⟨c, hc⟩ := (Submodule.mem_span_range_iff_exists_fun ℤ).1 he
   refine ⟨fun j => c j • y, fun j => zsmul_mem hy _, ?_⟩
-  rw [← hc, map_sum, TensorProduct.sum_tmul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hc, map_sum, TensorProduct.sum_tmul]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_zsmul, TensorProduct.smul_tmul]
 

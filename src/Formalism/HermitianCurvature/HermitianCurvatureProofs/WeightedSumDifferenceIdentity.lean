@@ -847,7 +847,8 @@ theorem IsPoly.eq_zero {F : ℂ → B} (hF : IsPoly F) {S : Set ℂ} (hS : S.Fin
   intro φ
   have hev : ∀ Z, φ (F Z) = (∑ i ∈ p.support, monomial i (φ (p.coeff i)) : ℂ[X]).eval Z := by
     intro Z
-    rw [hp, ev_eq_sum, map_sum, eval_finsetSum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hp, ev_eq_sum, map_sum, eval_finsetSum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, eval_monomial, smul_eq_mul, mul_comm]
   have h0 : (∑ i ∈ p.support, monomial i (φ (p.coeff i)) : ℂ[X]) = 0 := by
@@ -1345,7 +1346,8 @@ theorem UmUl (hSh : SSShift) (hR : RhoUp) (hNorm : SSNorm) (hMix : SSMixed) (P :
   have e2 : Ul P u * Um P u = ∑ l ∈ Icc 1 (P.k - 1), ∑ j ∈ Icc 1 (P.k - 1),
       kap P (bb P u j) * SS P j * (kap P (bb P u l) * star (SS P l)) :=
     (Finset.sum_mul_sum _ _ _ _).trans Finset.sum_comm
-  rw [e1, e2, ← Finset.sum_sub_distrib, Finset.sum_congr rfl (per_l hSh hR hNorm hMix P hP u), ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e1, e2, ← Finset.sum_sub_distrib, Finset.sum_congr rfl (per_l hSh hR hNorm hMix P hP u), ← map_sum]
   exact congrArg (kap P) (funext fun π => Finset.sum_apply _ _ _)
 
 theorem raising_lowering_commutator_alt (hSc : SSScalar) (hSh : SSShift) (hR : RhoUp) (hLF : LevFns) (hLN : LevNab) (hLNs : LevNabs)
@@ -1412,7 +1414,8 @@ theorem isPoly_kap (P : Par) (p : Ty P → ℂ[X]) : IsPoly (fun Y => kap P fun 
       ∑ π : Ty P, algebraMap ℂ (A P) ((p π).eval Y) * kap P (fun j => if π = j then 1 else 0) := by
     intro Y
     conv_lhs => rw [pi_eq_sum_univ (fun π => (p π).eval Y)]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun π _ => ?_
     rw [map_smul, Algebra.smul_def]
   exact (IsPoly.sum _ _ fun π _ => (IsPoly.scalar (p π)).mul (IsPoly.const _)).congr h

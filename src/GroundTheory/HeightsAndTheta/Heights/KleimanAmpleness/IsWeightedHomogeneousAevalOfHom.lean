@@ -16,13 +16,15 @@ theorem isWeightedHomogeneous_aeval_of_hom {σ τ M M' R : Type*} [CommSemiring 
     (g : σ → MvPolynomial τ R) (hg : ∀ v, IsWeightedHomogeneous w' (g v) (L (w v)))
     {p : MvPolynomial σ R} {m : M} (hp : IsWeightedHomogeneous w p m) :
     IsWeightedHomogeneous w' (aeval g p) (L m) := by
-  rw [p.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [p.as_sum, map_sum]
   refine IsWeightedHomogeneous.sum _ _ _ fun d hd => ?_
   have hdm : Finsupp.weight w d = m := hp (mem_support_iff.mp hd)
   rw [aeval_monomial, algebraMap_eq]
   refine IsWeightedHomogeneous.C_mul ?_ _
   have : L m = ∑ v ∈ d.support, d v • L (w v) := by
-    rw [← hdm, Finsupp.weight_apply, Finsupp.sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hdm, Finsupp.weight_apply, Finsupp.sum, map_sum]
     simp only [map_nsmul]
   rw [this]
   exact IsWeightedHomogeneous.prod _ _ _ fun v _ => (hg v).pow _
@@ -90,7 +92,8 @@ theorem segreLiftMap_of_homog (W : Ideal (MRing ι R)) {f : MRing (segreIdx ι) 
       Polynomial.X ^ m₀ * Polynomial.C (Ideal.Quotient.mk W (segreFlat ι R f)) := by
   conv_lhs => rw [f.as_sum]
   conv_rhs => rw [f.as_sum]
-  simp only [map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun d hd => ?_
   rw [segreLiftMap_monomial_eq_X_pow, hf (mem_support_iff.mp hd)]
 
@@ -204,7 +207,8 @@ theorem exists_segreFlat_eq_monomial (m₀ : ℕ) : ∀ (m : K → ℕ) (e : (Σ
         exact absurd (Finset.mem_univ _) h
     have hws : Finsupp.weight (blockWeight ι) s = fun _ => 1 := by
       funext k'
-      rw [hs, map_sum, Finset.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hs, map_sum, Finset.sum_apply]
       simp [Finsupp.weight_single, blockWeight, Pi.single_apply]
     have he' : Finsupp.weight (blockWeight ι) (e - s) = m + fun _ => m₀ := by
       have h2 := congrArg (Finsupp.weight (blockWeight ι)) (tsub_add_cancel_of_le hse)

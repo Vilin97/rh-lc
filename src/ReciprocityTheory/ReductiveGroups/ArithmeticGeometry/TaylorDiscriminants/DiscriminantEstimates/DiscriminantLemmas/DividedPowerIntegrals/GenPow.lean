@@ -32,7 +32,8 @@ private theorem gdelta_apply' (κ : I → J → K) (R : MvPolynomial (I ⊕ J) K
 theorem commute_gdelta_pd (κ : I → J → K) (c : I ⊕ J) : Commute (gdelta κ) (pd c) := by
   refine LinearMap.ext fun R => ?_
   show gdelta κ (pderiv c R) = pderiv c (gdelta κ R)
-  simp only [gdelta_apply', map_sum, map_smul, Derivation.map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [gdelta_apply', map_sum, map_smul, Derivation.map_smul]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   rw [pderiv_comm c (Sum.inl i), pderiv_comm c (Sum.inr j)]
 
@@ -51,13 +52,15 @@ private theorem gdelta_pderiv_comm (κ : I → J → K) (c : I ⊕ J) (S : MvPol
 theorem commute_gdelta_dL (κ : I → J → K) (i : I) : Commute (gdelta κ) (dL κ i) := by
   refine LinearMap.ext fun S => ?_
   show gdelta κ (dL κ i S) = dL κ i (gdelta κ S)
-  rw [dL_apply', dL_apply', map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [dL_apply', dL_apply', map_sum]
   simp only [map_smul, gdelta_pderiv_comm]
 
 theorem commute_gdelta_dR (κ : I → J → K) (j : J) : Commute (gdelta κ) (dR κ j) := by
   refine LinearMap.ext fun S => ?_
   show gdelta κ (dR κ j S) = dR κ j (gdelta κ S)
-  rw [dR_apply', dR_apply', map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [dR_apply', dR_apply', map_sum]
   simp only [map_smul, gdelta_pderiv_comm]
 
 theorem gdelta_dL_apply (κ : I → J → K) (i : I) (S : MvPolynomial (I ⊕ J) K) :

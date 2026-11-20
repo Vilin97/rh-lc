@@ -39,7 +39,8 @@ theorem GramContraction.proof : GramContraction.Statement := by
   let y : ι ⊕ κ → V := Sum.elim (fun i => Ψ (e i)) w
   have hu : ∀ i, Ψ (u i) = ∑ j, U i j • Ψ (e j) := fun i => by
     conv_lhs => rw [← e.sum_repr (u i)]
-    simp [U, e, map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [U, e, map_sum, map_smul]
   have hfam : Sum.elim (Ψ ∘ u) w = fun a => ∑ b, M a b • y b := by
     funext a
     rcases a with i | k

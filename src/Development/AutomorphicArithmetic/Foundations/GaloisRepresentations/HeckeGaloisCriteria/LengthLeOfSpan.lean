@@ -23,7 +23,8 @@ theorem length_le_of_span {O Q C : Type} [CommRing O] [AddCommGroup Q] [Module O
     have hq : q ∈ Submodule.span O (Set.range b) := hb ▸ Submodule.mem_top
     obtain ⟨r, hr⟩ := (Submodule.mem_span_range_iff_exists_fun O).mp hq
     refine ⟨fun i => Submodule.Quotient.mk (r i), ?_⟩
-    simp [g, ← hr, map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [g, ← hr, map_sum, map_smul]
     exact Finset.sum_congr rfl fun i _ => rfl
   calc Module.length O C ≤ Module.length O (Fin m → O ⧸ Ideal.span {A}) := Module.length_le_of_surjective g hg
     _ = m * Module.length O (O ⧸ Ideal.span {A}) := by simp

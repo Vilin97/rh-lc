@@ -43,7 +43,8 @@ theorem under_injOn {P : Finset (Formalism.L2.DIV.Pl D.host.E)} {e : AE D} (h : 
     rw [ev_sum, Finset.sum_eq_single PP (fun Q hQ hQP => (hd Q hQ).2.2 PP (Ne.symm hQP))
       (fun h => absurd (Finset.mem_coe.1 hPP) h), (hd PP (Finset.mem_coe.1 hPP)).2.1]
   have e2 : Φ (cA D (∑ Q ∈ P, es Q)) PP = 1 := by
-    rw [map_sum, ev_sum, Finset.sum_eq_single PP' ?_ (fun h => absurd (Finset.mem_coe.1 hPP') h)]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, ev_sum, Finset.sum_eq_single PP' ?_ (fun h => absurd (Finset.mem_coe.1 hPP') h)]
     · have := (delta_conj hΦ (hd PP' (Finset.mem_coe.1 hPP'))).2.1
       rwa [← hc] at this
     · intro Q hQ hQP

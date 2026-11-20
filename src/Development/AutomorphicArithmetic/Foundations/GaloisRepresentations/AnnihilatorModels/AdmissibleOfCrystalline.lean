@@ -18,7 +18,8 @@ def HeckeRoots : Prop :=
 
 theorem heckePol_map {K K' : Type} [CommRing K] [CommRing K'] (f : K →+* K') (q n : ℕ) (θ : ℕ → K) :
     (heckePol q n θ).map f = heckePol q n fun j => f (θ j) := by
-  simp [heckePol, Polynomial.map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [heckePol, Polynomial.map_sum]
 
 def AnnMat {F G C : Type} [Field F] [CommRing C] (c : F →+* C) (s : G → C → C) (φ : C → C) (q n : ℕ) {a : ℕ}
     (M : G → Matrix (Fin a) (Fin a) F) (T : ℕ → Matrix (Fin a) (Fin a) F) : Prop :=

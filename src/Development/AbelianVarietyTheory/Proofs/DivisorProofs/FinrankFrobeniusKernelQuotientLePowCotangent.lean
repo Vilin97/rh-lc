@@ -49,7 +49,8 @@ theorem finrank_quot_frobKerIdeal_le : ∀ (q : ℕ) (K H : Type) [Field K] [Com
   choose x hx using fun i => (RingHom.ker ε).toCotangent_surjective (b i)
   have hsum : ∀ l : Fin d → K, AugCot.d ε (∑ i, l i • (x i : H)) = ∑ i, l i • b i := by
     intro l
-    simp [map_sum, hx]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, hx]
   have hmem : ∀ l : Fin d → K, (∑ i, l i • (x i : H)) ∈ RingHom.ker ε := by
     intro l
     refine Ideal.sum_mem _ fun i _ => ?_
@@ -78,7 +79,8 @@ theorem finrank_quot_frobKerIdeal_le : ∀ (q : ℕ) (K H : Type) [Field K] [Com
       Ideal.mem_map_of_mem _ hl
     rw [Ideal.map_pow] at h1
     have h2 := Ideal.pow_right_mono hmapI 2 h1
-    simpa [y, map_sub, map_sum, map_smul] using h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [y, map_sub, map_sum, map_smul] using h2
   have hsurj := GlobalTheory.HeightOneHopf.aeval_surjective_of_span_cotangent εQ hnil y hy hspan
   have hyq : ∀ i, y i ^ q = 0 := fun i => hpowQ _ (hy i)
 

@@ -18,7 +18,8 @@ theorem bijective_of_injective_sesq [FiniteDimensional E V]
   let sx : (Fin (finrank E V) → E) → V := fun c => b.equivFun.symm (fun i => conj F E (c i))
   have key : ∀ c j, B (sx c) (b j) = Matrix.vecMul c G j := by
     intro c j
-    simp only [sx, Basis.equivFun_symm_apply, map_sum, LinearMap.map_smulₛₗ₂, conjHom_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [sx, Basis.equivFun_symm_apply, map_sum, LinearMap.map_smulₛₗ₂, conjHom_apply,
       conj_conj, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, Matrix.vecMul,
       dotProduct, G, gram_apply]
   have hinj : Function.Injective (Matrix.vecMulLinear G) := by

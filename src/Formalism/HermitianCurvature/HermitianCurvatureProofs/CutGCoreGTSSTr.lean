@@ -29,7 +29,8 @@ theorem fib_sum_smul (P : M.Par) (Bs : B.RealPlaceData P.k P.r Wp Wq) (ζ : ℂ)
     ∑ ρ, a ρ • X ρ ∈ NF.Fib P.k P.r Bs.z Bs.z' Bs.μsec Bs.π Bs.π' ζ := by
   intro p hp
   ext v
-  simp only [ContinuousLinearMap.comp_apply, ContinuousLinearMap.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [ContinuousLinearMap.comp_apply, ContinuousLinearMap.sum_apply, map_sum]
   refine Finset.sum_congr rfl fun ρ _ => ?_
   have h := congrArg (fun L : Wq →L[ℂ] Wp => L v) (hX ρ p hp)
   simp only [ContinuousLinearMap.comp_apply] at h

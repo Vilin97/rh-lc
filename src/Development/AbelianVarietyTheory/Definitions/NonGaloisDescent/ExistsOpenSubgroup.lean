@@ -360,7 +360,8 @@ theorem nonempty_sec (i : D.nd.Loc) (x : D.nd.X i) (hx : ∀ P, D.naut.ptV i P =
   have hspan : ⊤ ≤ Submodule.span (KK D.nd i) (Set.range fun s => D.nd.prMt i (b s)) := by
     rw [← D.nd.prMt_span i, Submodule.span_le]
     rintro _ ⟨y, rfl⟩
-    rw [← b.sum_repr y, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← b.sum_repr y, map_sum]
     exact Submodule.sum_mem _ fun s _ => by
       rw [map_smulₛₗ]
       exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨s, rfl⟩)
@@ -382,11 +383,13 @@ theorem nonempty_sec (i : D.nd.Loc) (x : D.nd.X i) (hx : ∀ P, D.naut.ptV i P =
   · rw [Subsingleton.elim y x, htop]
     trivial
   · have h1 : D.nd.prMt i y = ∑ s, D.nd.embK i (b.repr y s) • bK s := by
-      conv_lhs => rw [← b.sum_repr y, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        conv_lhs => rw [← b.sum_repr y, map_sum]
       simp only [map_smulₛₗ, hbK]
     have h2 : D.what₂.jMt _ _ y = Φ (D.nd.prMt i y) := by
       rw [hΦ]
-      conv_lhs => rw [← b.sum_repr y, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        conv_lhs => rw [← b.sum_repr y, map_sum]
       refine Finset.sum_congr rfl fun s _ => ?_
       rw [map_smulₛₗ, h1, bK.repr_sum_self, Basis.mk_apply]
       congr 1

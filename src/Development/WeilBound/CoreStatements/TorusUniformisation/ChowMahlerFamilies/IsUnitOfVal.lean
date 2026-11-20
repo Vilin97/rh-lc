@@ -19,7 +19,8 @@ theorem bcLin_bc {Ω C : Type} [Field Ω] [Field C] [Algebra Ω C] {m n : ℕ} (
   rw [bcLin_apply]
   have h := congrFun (LinearMap.toMatrix'_mulVec f x) k
   rw [← h]
-  simp [Matrix.mulVec, dotProduct, LinearMap.toMatrix'_apply, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Matrix.mulVec, dotProduct, LinearMap.toMatrix'_apply, map_sum, map_mul]
 
 theorem isUnit_of_val {O C : Type} [CommRing O] [Field C] [Algebra O C] {RC : Subalgebra O C} {v : Valuation C NNReal}
     (hv : ∀ c, c ∈ RC ↔ v c ≤ 1) (a : RC) (ha : v (a : C) = 1) : IsUnit a := by
@@ -172,7 +173,8 @@ theorem gram_cong {E : Type} [Field E] [NumberField E] {R : Type} [CommRing R] {
   have hexp : ∀ l c, L l c = ∑ t, ((B.repr c t : ℤ) : R ⧸ Ideal.span {(p : R)}) * L l (B t) := by
     intro l c
     conv_lhs => rw [← B.sum_repr c]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun t _ => ?_
     rw [map_zsmul, zsmul_eq_mul]
   have hdual : ∀ l, ∑ k, mk (s k) * L l (bar (B m.2) * B k) = mk (σ' (bar (B m.2))) * ∑ t, mk (s t) * L l (B t) := by
@@ -183,7 +185,8 @@ theorem gram_cong {E : Type} [Field E] [NumberField E] {R : Type} [CommRing R] {
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun t _ => ?_
     have h3 := congrArg mk (hd.2 (bar (B m.2)) t)
-    simp only [map_mul, map_sum, map_intCast] at h3
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_mul, map_sum, map_intCast] at h3
     rw [← mul_assoc, h3, Finset.sum_mul]
     refine Finset.sum_congr rfl fun k _ => ?_
     ring
@@ -205,7 +208,8 @@ theorem gram_cong {E : Type} [Field E] [NumberField E] {R : Type} [CommRing R] {
           ring
   rw [← Ideal.Quotient.eq_zero_iff_mem]
   change mk _ = 0
-  simp only [map_add, map_sum, map_mul, hE', hφ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_add, map_sum, map_mul, hE', hφ]
   rw [Fintype.sum_prod_type, Finset.mul_sum, ← Finset.sum_add_distrib]
   apply Finset.sum_eq_zero
   intro l _
@@ -314,14 +318,16 @@ theorem hdual_chart [Fact p.Prime] (hRr : 1 ≤ Rr) (hact : ∀ a u, Dh.ρΩ a u
     push_cast at h1
     simpa [hx', hGdef] using h1
   have hG : G = algebraMap Ω C (∑ l, x l * Dh.gram σ 1 l m.1) := by
-    simp only [hGdef, HT.HTChart.gram, map_one, one_mul, map_sum, map_mul, map_natCast, hs]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hGdef, HT.HTChart.gram, map_one, one_mul, map_sum, map_mul, map_natCast, hs]
   have hzC : algebraMap Ω C (∑ l, x l * Dh.gram σ 1 l m.1) =
       algebraMap Ω C (Dh.h (Pi.single m.1 1) (∑ k, a k • b k)) + (p : C) ^ M * algebraMap Ω C z := by
     rw [hzeq, map_add, map_mul, map_pow, map_natCast]
   have hsec : ∑ k, algebraMap Ω C (a k) * ev (b k) (fun j => (Hm j m : C)) =
       algebraMap Ω C t * algebraMap Ω C (Dh.h (Pi.single m.1 1) (∑ k, a k • b k)) + (p : C) * S := by
     rw [Finset.sum_congr rfl fun k _ => by rw [hu (b k) t (hb _ k)]]
-    simp only [hS, map_sum, map_smul, smul_eq_mul, map_mul, Finset.mul_sum, ← Finset.sum_add_distrib]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hS, map_sum, map_smul, smul_eq_mul, map_mul, Finset.mul_sum, ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun k _ => ?_
     ring
   have hT : ∑ m', (Eg m m' : C) * ((Jm n s).map (algebraMap RC C) *ᵥ fun l => algebraMap Ω C (x l)) m' +

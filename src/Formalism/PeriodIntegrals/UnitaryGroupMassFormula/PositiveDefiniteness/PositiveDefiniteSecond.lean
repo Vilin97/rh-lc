@@ -97,7 +97,8 @@ theorem positive_definite_second : Step2 := by
   have hQ : ∀ x : Fin k → E, star (fun i => φ (x i)) ⬝ᵥ (J.map φ *ᵥ (fun i => φ (x i)))
       = φ (hform (σ : E →+* E) J x x) := by
     intro x
-    simp only [dotProduct, mulVec, hform, Pi.star_apply, hst, Matrix.map_apply, map_sum, map_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [dotProduct, mulVec, hform, Pi.star_apply, hst, Matrix.map_apply, map_sum, map_mul,
       Finset.mul_sum, mul_assoc]
     rfl
   have hdet : J.det ≠ 0 := by

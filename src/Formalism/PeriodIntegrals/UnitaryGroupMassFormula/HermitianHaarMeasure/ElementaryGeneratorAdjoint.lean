@@ -385,9 +385,11 @@ lemma ec_expand {i : Fin (r + 1)} {f : Mx k r → ℂ} (hf : SmoothLev k r i Set
         (Hpk k r * (Matrix.single (posL k r i a) (posL k r i b) (1 : ℂ))ᴴ * Hpk k r)) f g =
     ∑ c, ∑ d, (Hm k r i c b * Hm k r i a d) • EH k r (posL k r i c) (posL k r i d) f g := by
   obtain ⟨L, hL⟩ := rd_ext hf hg
-  rw [ec_phi hL (supp_conj (supp_single i a b)), conj_single_expand, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [ec_phi hL (supp_conj (supp_single i a b)), conj_single_expand, map_sum]
   refine Finset.sum_congr rfl fun c _ => ?_
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun d _ => ?_
   rw [map_smul, ← ec_phi hL (supp_single i c d)]
   rfl

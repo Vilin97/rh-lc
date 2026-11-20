@@ -38,7 +38,8 @@ theorem pair_fockAct1_embS_up : ∀ (P Q S : ℕ) (h : Q ≤ S) (k' : ℕ) (a : 
       LinearMap.mulRight_apply, AlgHom.toLinearMap_apply, map_mul, aeval_X]
     ring
   rw [hE, fockAct1_Eab, LinearMap.sum_apply, Fintype.sum_sum_type]
-  simp only [Finset.univ_eq_empty, Finset.sum_empty, zero_add, hom, map_sum, map_neg,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finset.univ_eq_empty, Finset.sum_empty, zero_add, hom, map_sum, map_neg,
     LinearMap.sum_apply, LinearMap.neg_apply, pair_pderiv', mS, Finset.mul_sum,
     Finset.sum_neg_distrib, mul_assoc]
 

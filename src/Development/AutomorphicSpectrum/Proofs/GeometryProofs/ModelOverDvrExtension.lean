@@ -269,7 +269,8 @@ theorem exists_decomp_mem (hcl : IsIntegrallyClosedIn O Ω)
   have h0 : pointConeMap O' (fun v => algebraMap Ω Ω' (y v)) f = 0 := hf
   have hz : ∑ i, (C (algebraMap O' Ω' (e i)) : MvPolynomial K Ω') *
       MvPolynomial.map (algebraMap Ω Ω') (pointConeMap O y (g i)) = 0 := by
-    rw [hfe, map_sum] at h0
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hfe, map_sum] at h0
     rw [← h0]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_mul, pointConeMap_map]

@@ -99,7 +99,8 @@ theorem splitPts : StatSplitPts := by
     obtain ⟨z, rfl⟩ := hrange f' hf'
     refine ⟨fun k => (bas.repr z k).1, fun k => (bas.repr z k).2, ?_⟩
     conv_lhs => rw [← bas.sum_repr z]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [Algebra.smul_def, map_mul, hΨa]
   · intro x a ha
@@ -148,7 +149,8 @@ theorem splitPts : StatSplitPts := by
           rw [hψ2, hσ])
         exact fun z => DFunLike.congr_fun h12 z
       have h4 := congrArg ι (ha y rfl)
-      rw [map_sum, map_zero] at h4
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, map_zero] at h4
       rw [← h4]
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [hφy, map_mul]

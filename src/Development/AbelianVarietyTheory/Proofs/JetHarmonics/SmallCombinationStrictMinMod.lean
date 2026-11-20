@@ -104,7 +104,8 @@ theorem _root_.GlobalTheory.small_combination_strict_min_mod :
   · intro z hz
     have hz1 : (1 : ℝ) ≤ Q z := by exact_mod_cast hpos z hz
     have hBv : Bf (∑ j, e j • b j) z = ∑ j, (e j : ℤ) * Bf (b j) z := by
-      simp [map_sum, map_nsmul, nsmul_eq_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [map_sum, map_nsmul, nsmul_eq_mul]
     have hBvR : (Bf (∑ j, e j • b j) z : ℝ) = ∑ j, (e j : ℝ) * Bf (b j) z := by
       rw [hBv]; push_cast; rfl
     have hMz : (0 : ℝ) ≤ M₀ * Q z := mul_nonneg hM₀ (by linarith)

@@ -85,7 +85,8 @@ theorem mainOf_k : _root_.PositivityTheory.SiegelWeilFormula.MainOf_k := by
   have hΦeq : Φ = ∑ i, φ i (P i) := by
     have hmem : Φ - ∑ i, φ i (P i) ∈ d.sch := d.sch.sub_mem hΦ.1 (d.sch.sum_mem fun i _ => hsch i)
     refine sub_eq_zero.mp ((hT.1 F E σ d).2.2 _ hmem ?_)
-    rw [← _root_.PositivityTheory.SiegelWeilFormula.KMain.Tl_apply_k, map_sub, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← _root_.PositivityTheory.SiegelWeilFormula.KMain.Tl_apply_k, map_sub, map_sum]
     simp only [_root_.PositivityTheory.SiegelWeilFormula.KMain.Tl_apply_k, eT, hsum, sub_self]
   have key : ∀ i, HolValueAt (fun z => d.eis (d.sec0 (φ i (P i))) (s0 d.m d.n) z x) (s0 d.m d.n)
       (d.I (φ i (P i)) x) := fun i =>
@@ -104,7 +105,8 @@ theorem mainOf_k : _root_.PositivityTheory.SiegelWeilFormula.MainOf_k := by
   choose tt htt using hconv
   have hsec : d.sec0 Φ = fun y => ∑ i, d.sec0 (φ i (P i)) y := by
     funext y
-    rw [hΦeq, ← _root_.PositivityTheory.SiegelWeilFormula.KMain.secl_apply_k, map_sum, Finset.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hΦeq, ← _root_.PositivityTheory.SiegelWeilFormula.KMain.secl_apply_k, map_sum, Finset.sum_apply]
     rfl
   have heq : EqRight (fun z => ∑ i, d.eis (d.sec0 (φ i (P i))) (s0 d.m d.n) z x)
       (fun z => d.eis (d.sec0 Φ) (s0 d.m d.n) z x) := by

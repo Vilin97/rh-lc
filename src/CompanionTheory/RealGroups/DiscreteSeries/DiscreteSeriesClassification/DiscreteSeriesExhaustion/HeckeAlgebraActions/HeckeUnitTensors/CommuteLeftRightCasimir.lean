@@ -53,7 +53,8 @@ theorem psi_apply (H : Fin (m + 1) → Fin (m + 1) → X.V) : psi X H = ∑ c, H
 
 theorem commute_left_right_casimir : Commute (y1 X) (y2 X) := by
   refine LinearMap.ext fun H => funext fun a => ?_
-  simp only [Module.End.mul_apply, left_casimir_apply, right_casimir_apply, map_neg, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Module.End.mul_apply, left_casimir_apply, right_casimir_apply, map_neg, map_sum]
   congr 1
   refine Finset.sum_congr rfl fun c _ => ?_
   exact (LinearMap.congr_fun (commute_om X a c).eq (H c)).symm

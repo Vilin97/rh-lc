@@ -190,7 +190,8 @@ theorem coords (ha : ∀ x y, a (x * y) = a y * a x) (h1 : a 1 = 1) {m : ℕ} (Y
     have h2 := (c.comp (pr a)).hasStrictFDerivAt.comp 0 hΦd
     refine HasStrictFDerivAt.congr_fderiv h2 (ContinuousLinearMap.ext fun s => ?_)
     have h3 : pr a (∑ i, s i • Y i) = ∑ i, s i • Y i := by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_smul, pr_apply, hY, sub_neg_eq_add, ← two_smul ℝ (Y i), smul_smul (1 / 2 : ℝ)]
       norm_num

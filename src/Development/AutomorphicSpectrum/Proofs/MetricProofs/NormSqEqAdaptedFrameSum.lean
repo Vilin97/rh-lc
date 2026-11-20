@@ -124,14 +124,16 @@ theorem gr_apply (τ : Ψ) (u w : Fin (j + j') → E) :
   have hB : C.h.toSesq u w = ∑ a, ∑ b, conjHom (maximalRealSubfield E) E (u a) * (w b *
       gram C.h.toSesq (Pi.basisFun E (Fin (j + j'))) a b) := by
     conv_lhs => rw [hu, hw]
-    simp only [map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul,
       RingHom.id_apply, GroundTheory.Automorphic.gram]
     simp only [Finset.mul_sum]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
     ring
   rw [hB]
-  simp only [dotProduct, mulVec, map_sum, map_mul, embOf_conj, Finset.mul_sum, Pi.star_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dotProduct, mulVec, map_sum, map_mul, embOf_conj, Finset.mul_sum, Pi.star_apply,
     RCLike.star_def]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
   have hg : C.gr τ a b = embOf (F.σ τ) (gram C.h.toSesq (Pi.basisFun E (Fin (j + j'))) a b) := rfl
@@ -263,7 +265,8 @@ theorem perExt_tw (h : C.IsAdapted R A) (y : Ψ → Fin (j + j') → ℂ) :
   have hs : ∀ u : Ψ → Fin (j + j') → ℂ, u = ∑ τ, Pi.single τ (u τ) := fun u => (Finset.univ_sum_single u).symm
   conv_lhs => rw [hs (fun τ => A τ *ᵥ tw (C.cinv (A τ) τ *ᵥ y τ))]
   conv_rhs => rw [hs y]
-  rw [map_sum, map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, Finset.smul_sum]
   refine Finset.sum_congr rfl fun τ _ => ?_
   rw [perExt_single_tw h]
   have : A τ *ᵥ (C.cinv (A τ) τ *ᵥ y τ) = y τ := by

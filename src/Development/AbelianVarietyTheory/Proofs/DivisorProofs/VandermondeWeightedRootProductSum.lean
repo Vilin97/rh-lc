@@ -39,7 +39,8 @@ theorem apolar_lin_pow {U E : Type} [Fintype U] (n : U → ℝ) (c : E → U →
       ring
     rw [Finset.card_insert_of_notMem he, Finset.prod_insert he, Finset.prod_insert he]
     nth_rewrite 2 [lin]
-    rw [Finset.sum_mul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_mul, map_sum]
     simp only [mul_assoc, MvPolynomial.C_mul', map_smul, smul_mul_assoc, apolar_X_mul, smul_eq_mul, h1, ih]
     rw [Nat.factorial_succ, Finset.sum_mul, Finset.mul_sum]
     refine Finset.sum_congr rfl fun x _ => ?_
@@ -111,7 +112,8 @@ theorem apolar_vdm : apolar (vdm r) (vdm r) = ∏ a, ∏ l ∈ Finset.range (r a
     refine Finset.prod_eq_one fun a _ => ?_
     rcases Int.units_eq_one_or (Equiv.Perm.sign (σ a)) with h | h <;> simp [h]
   nth_rewrite 2 [vdm_eq]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [apolar_monomial, hc, hf, mul_left_comm _ (∏ a, ∏ l ∈ Finset.range (r a), (l.factorial : ℝ)), hs]
   simp [Finset.prod_range_succ, Finset.prod_mul_distrib, Fintype.card_perm, mul_comm]
 

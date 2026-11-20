@@ -132,7 +132,8 @@ theorem pt_monomial (k : ι →₀ ℕ) (c : ℂ) :
 theorem pt_sum (P : MvPolynomial ι ℂ) :
     pureTensorL aP v P = ∑ α ∈ P.support, P.coeff α • opPow aP α v := by
   conv_lhs => rw [P.as_sum]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_congr rfl (fun α _ => pt_monomial α _)
 
 end CCRAlg
@@ -173,7 +174,8 @@ theorem ccrDerivAt : CCRDerivAt := by
         smul_smul]
   conv_lhs => rw [pt_sum]
   conv_rhs => rw [P.as_sum]
-  rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum]
   exact key _
 
 section Norm

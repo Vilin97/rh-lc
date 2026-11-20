@@ -74,7 +74,8 @@ theorem UpperTheory.Gal.productCup_of_system.pTheta_of :
     change ∑ i ∈ t, GlobalTheory.cubeSign t i • b (t.erase i) = 0
     have h1 : ∑ i ∈ t, GlobalTheory.cubeSign t i • β (t.erase i) = 0 := h0
     have h2 := congrArg (TensorProduct.mk ℂ F (DR ℂ K) 1) h1
-    rw [map_sum, map_zero] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero] at h2
     rw [← h2]
     exact Finset.sum_congr rfl fun i _ => by simp only [hbdef, Units.smul_def, map_zsmul, TensorProduct.mk_apply]
   have hb2 : ∀ J, J.card ≠ p + 1 → b J = 0 := fun J hJ => hb0 J fun h => hJ h.2

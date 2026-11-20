@@ -31,7 +31,8 @@ theorem UpperTheory.locallyFinite_of_algMod_criterion :
     have h1 : ∀ x, F x y = ∑ i, b.coord i ⟨F x, hF x⟩ * ((b i : V) : Y → ℂ) y := by
       intro x
       have h := congrArg (ev y) (b.sum_repr ⟨F x, hF x⟩)
-      rw [map_sum] at h
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum] at h
       simp only [map_smul] at h
       exact h.symm
     simp only [h1, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]

@@ -22,7 +22,8 @@ private theorem exE {R K : Type} [CommRing R] [NormedField K] [CompleteSpace K] 
   · intro a b
     rw [tsum_mul_tsum_eq_tsum_sum_antidiagonal_of_summable_norm (summ f hf t ht a) (summ f hf t ht b)]
     refine tsum_congr fun n => ?_
-    rw [PowerSeries.coeff_mul, map_sum, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [PowerSeries.coeff_mul, map_sum, Finset.sum_mul]
     refine Finset.sum_congr rfl fun p hp => ?_
     rw [← Finset.HasAntidiagonal.mem_antidiagonal.1 hp, map_mul, pow_add]; ring
   · simp

@@ -36,7 +36,8 @@ private theorem UpperTheory.V.KH.tupJ_faceD {I : Type} (S : âˆ€ n, Set (Fin n â†
   | zero => simp
   | add a b ha hb => simp only [map_add, ha, hb]
   | single x c =>
-    rw [faceD_single, map_sum, Finsupp.lmapDomain_apply, Finsupp.mapDomain_single,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [faceD_single, map_sum, Finsupp.lmapDomain_apply, Finsupp.mapDomain_single,
       UpperTheory.V.ConeExtensionAcyclic.bd, Finsupp.linearCombination_single, Finset.smul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, Finsupp.lmapDomain_apply, Finsupp.mapDomain_single, smul_comm c,

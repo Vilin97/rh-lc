@@ -104,7 +104,8 @@ theorem ConeAvoidsFinite.proof : ConeAvoidsFinite.Statement := by
     obtain ⟨r, a, g, hag⟩ := Submodule.mem_span_set'.1 hmem
     have hm : monomial s (1 : ℂ) = homogeneousComponent k (∑ t, a t • (g t : MvPolynomial (Fin n) ℂ)) := by
       rw [hag, homogeneousComponent_eq_self (isHomogeneous_monomial _ hdeg)]
-    rw [hm, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hm, map_sum]
     exact hsum _ _ fun t _ => by rw [smul_eq_mul]; exact key _ _ (g t).2
   have htop : M = ⊤ := by
     rw [eq_top_iff]

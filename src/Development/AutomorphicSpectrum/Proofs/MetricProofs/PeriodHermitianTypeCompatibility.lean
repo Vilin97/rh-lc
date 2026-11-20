@@ -101,7 +101,8 @@ theorem trace_mul_sesq (D : Datum H) (a : 𝓞 E) (x y : D.La) :
     rw [Finset.sum_smul]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [smul_assoc]
-  rw [e1, map_sum, LinearMap.sum_apply, sesq, Finset.mul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e1, map_sum, LinearMap.sum_apply, sesq, Finset.mul_sum, map_sum]
   push_cast
   refine Finset.sum_congr rfl fun k _ => ?_
   have e2 : (a : E) * (((D.EF (RingOfIntegers.basis E k • x) y : ℤ) : E) * HT.dualInt E k) =
@@ -134,7 +135,8 @@ theorem sesq_smul_left (D : Datum H) (a : 𝓞 E) (x y : D.La) :
 theorem sesq_sum_left (D : Datum H) {I : Type} (s : Finset I) (f : I → D.La) (y : D.La) :
     sesq D (∑ m ∈ s, f m) y = ∑ m ∈ s, sesq D (f m) y := by
   classical
-  simp only [sesq, Finset.smul_sum, map_sum, LinearMap.sum_apply, Int.cast_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [sesq, Finset.smul_sum, map_sum, LinearMap.sum_apply, Int.cast_sum, Finset.sum_mul]
   rw [Finset.sum_comm]
 
 end RiemannTau
@@ -300,7 +302,8 @@ theorem det_ne_zero (D : Datum H) {I : Type} [Fintype I] [DecidableEq I] (e : I 
     obtain ⟨b, f, hb, hbf⟩ := exists_smul_eq_sum D e hcard he y
     have h3 : ∀ a : 𝓞 E, D.EF (a • x) (b • y) = 0 := by
       intro a
-      rw [hbf, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hbf, map_sum]
       refine Finset.sum_eq_zero fun n _ => ?_
       obtain ⟨f', hf'⟩ := H.bar.surjective (f n)
       rw [← hf', ← D.adj, smul_smul]

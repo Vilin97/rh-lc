@@ -84,7 +84,8 @@ theorem per_span (hn0 : 0 < n) (hcx : ∀ m, c (x m) = Finsupp.single m (n : �
   have hf : ∀ v : Fin g → ℂ, f v = (∑ k, l k * v k).re := by
     intro v
     conv_lhs => rw [← Finset.univ_sum_single v]
-    rw [map_sum, Complex.re_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Complex.re_sum]
     exact Finset.sum_congr rfl (fun k _ => hsingle k (v k))
   have hl0 : ∀ k0, l k0 = 0 := by
     intro k0

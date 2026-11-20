@@ -80,7 +80,8 @@ theorem adAt_pullV_fr [StarRing E] {hc : CMData F E} {n : ℕ} {ST SG Q : Finset
   have e1 : GlobalTheory.Mem.ColAd.locM P.1 (g⁻¹ * g) = 1 := by rw [inv_mul_cancel, GlobalTheory.Mem.ColAd.locM_one]
   rw [← e1, GlobalTheory.Mem.ColAd.locM_mul, Matrix.mul_apply]
   unfold pullV
-  rw [Matrix.mulVec, dotProduct, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.mulVec, dotProduct, map_sum]
   refine Finset.sum_congr rfl fun t _ => ?_
   rw [map_mul, adAt_inclE, ← h.fr P t s]
   rfl

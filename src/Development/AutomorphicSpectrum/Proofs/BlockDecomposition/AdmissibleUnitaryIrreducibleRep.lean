@@ -47,7 +47,8 @@ theorem isAdmissible_of_unitary_irreducible : ∀ {n : ℕ} {G : Set (Matrix (Fi
   rintro _ ⟨v, hv, rfl⟩
   have hv' : v = ((⟨v, hv⟩ : S) : H) := rfl
   rw [hv', ← b.sum_repr ⟨v, hv⟩]
-  simp only [Submodule.coe_sum, Submodule.coe_smul, map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Submodule.coe_sum, Submodule.coe_smul, map_sum, map_smul]
   refine Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _ (Submodule.mem_iSup_of_mem i ?_)
   have := hY i T hT _ (hvY i)
   simpa [T] using this

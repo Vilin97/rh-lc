@@ -96,7 +96,8 @@ def prR (b : ι → Fin 2 → Fin 2 → ℂ) : (ι → Fin 2 → Fin 2 → ℂ) 
 lemma pr_sum {N : ℕ} (χ : ι → Fin 2 → Fin 2 → ℂ) (c : Fin N → ℝ) (ω : Fin N → ι → Fin 2 → Fin 2 → ℂ) :
     pr χ (∑ j, (c j : ℂ) • ω j) = ∑ j, c j * pr χ (ω j) := by
   show prL χ (∑ j, (c j : ℂ) • ω j) = _
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_congr rfl fun j _ => pr_smul_right χ (ω j) (c j)
 
 lemma eq_zero_of_pr_conj {χ : ι → Fin 2 → Fin 2 → ℂ}
@@ -129,7 +130,8 @@ lemma kap_li (hω : ∀ j, IsHermFam (ω j)) (hli : LinearIndependent ℝ ω) :
   intro s g hg i hi
   refine hli s g ?_ i hi
   have h := congrArg thL hg
-  rw [map_sum, map_zero] at h
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_zero] at h
   rw [← h]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_smul]
@@ -150,7 +152,8 @@ lemma herm_eq_sum (hω : ∀ j, IsHermFam (ω j)) (hli : LinearIndependent ℝ �
   calc b = thL (kap b) := (th_kap hb).symm
     _ = thL (∑ j, B.repr (kap b) j • kap (ω j)) := by rw [hsum]
     _ = ∑ j, (B.repr (kap b) j : ℂ) • ω j := by
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         refine Finset.sum_congr rfl fun j _ => ?_
         rw [map_smul, Complex.coe_smul]
         exact congrArg _ (th_kap (hω j))

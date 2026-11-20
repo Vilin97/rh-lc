@@ -70,7 +70,8 @@ theorem exists_change {φ : c.F →+* R} {x : Sp R ⟶ Z.X} (f : EigFrame Z φ x
     exact Finset.sum_comm
   refine ⟨EigFrame.ofVec (fun τ i => ∑ k, A τ i k • f.vec τ k) (fun τ i a => ?_) fun τ w hw => ?_,
     fun τ i => tan_ext rfl⟩
-  · simp only [map_sum, map_smul, f.act_vec, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [map_sum, map_smul, f.act_vec, Finset.smul_sum]
     exact Finset.sum_congr rfl fun k _ => smul_comm _ _ _
   · obtain ⟨a, ha, hu⟩ := f.existsUnique_sum τ w hw
     refine ⟨Matrix.vecMul a (B τ), ?_, fun b hb => ?_⟩
@@ -147,7 +148,8 @@ theorem exists_frame_nhds : ∀ (E : Type) [Field E] [NumberField E] [IsCMField 
   have hAB' : ∀ τ, B' τ * A' τ = 1 := fun τ => Matrix.ext fun i k => germ_injective_of_isIntegral C.Y.X y hy (by
     show gm _ = gm _
     have := congrFun (congrFun (hAB τ) i) k
-    simp only [Matrix.mul_apply, map_sum, map_mul, hA', hB', Matrix.one_apply] at this ⊢
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mul_apply, map_sum, map_mul, hA', hB', Matrix.one_apply] at this ⊢
     rw [this]
     split_ifs <;> simp)
   have hx₂ : spMap ρ ≫ (show Sp Γ(gen Z, U₀) ⟶ gen Z from hU₀.fromSpec) ≫ genι Z =

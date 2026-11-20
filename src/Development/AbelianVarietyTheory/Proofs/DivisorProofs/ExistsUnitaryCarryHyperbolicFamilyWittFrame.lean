@@ -77,7 +77,8 @@ theorem exists_GF_carry_hyperbolic : ∀ {D : D7} {V : HSp D} (Φ : WittFrame V)
       conv_lhs => rw [← V.frame.sum_repr (g (V.frame k))]
       simp [M, LinearMap.toMatrix_apply]
     rw [show V.gram i j = V.hT (V.frame i) (V.frame j) from rfl, ← hgB, hexp, hexp]
-    simp only [Formalism.UG.cT, Matrix.mul_apply, Matrix.map_apply, Matrix.transpose_apply, map_sum, map_smulₛₗ,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Formalism.UG.cT, Matrix.mul_apply, Matrix.map_apply, Matrix.transpose_apply, map_sum, map_smulₛₗ,
       LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, Finset.sum_mul, Finset.mul_sum]
     have hσ : ∀ z, (D.sp.cm.sig : D.host.E →+* D.host.E) z = star z := fun z => rfl
     simp only [hσ, starRingEnd_apply, HSpace.gram, RingHom.id_apply]

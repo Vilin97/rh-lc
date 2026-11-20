@@ -173,7 +173,8 @@ theorem norm_eq_all (s t : Multiset (PadicAlgCl l))
         ∑ i ∈ Finset.range (D + 1), algebraMap ℚ_[l] (PadicAlgCl l) ((r n i : ℚ) : ℚ_[l]) * a ^ i := by
       intro n
       rw [aeval_map_algebraMap]
-      simp [R, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [R, map_sum]
     simp only [e]
     rw [aeval_eq_sum_range]
     simp only [Algebra.smul_def]

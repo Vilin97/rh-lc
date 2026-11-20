@@ -37,14 +37,16 @@ theorem coef_zero_of_heis_relations : ∀ (D : D7) (ψ : AddChar (AF D.host.F) �
     have e := congrFun h1 x
     rw [Finset.sum_apply] at e
     conv_lhs => rw [← e]
-    rw [map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     simp only [Pi.smul_apply, smul_eq_mul, map_mul]
     ring
   have hz : ∀ x, om (g, 1) (∑ i, conj (a i) • heisO ψ S T (actO S T g⁻¹ 1 (-(y i))) F) x * conj (F x) =
       ∑ i, conj (a i) * (om (g, 1) (heisO ψ S T (actO S T g⁻¹ 1 (-(y i))) F) x * conj (F x)) := by
     intro x
-    rw [map_sum, Finset.sum_apply, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_apply, Finset.sum_mul]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, Pi.smul_apply, smul_eq_mul, mul_assoc]
   calc (∫ x in X, om (g, 1) F x * conj (F x) ∂m)

@@ -30,7 +30,8 @@ theorem iso_of_hf {g : Matrix n n ℂ} (h : ∀ x y, hf M (g *ᵥ x) (g *ᵥ y) 
 
 omit [DecidableEq n] in
 theorem hf_conj (hM : ∀ i j, star (M j i) = M i j) (x y : n → ℂ) : starRingEnd ℂ (hf M x y) = hf M y x := by
-  simp only [hf_apply, dotProduct, mulVec, map_sum, map_mul, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hf_apply, dotProduct, mulVec, map_sum, map_mul, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   rw [← hM i j]

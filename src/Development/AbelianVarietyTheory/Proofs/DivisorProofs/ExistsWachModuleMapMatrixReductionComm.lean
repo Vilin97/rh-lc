@@ -62,11 +62,13 @@ theorem coeff_comm {R M M' : Type} [CommRing R] [AddCommGroup M] [Module R M] [A
     (hA : ∀ k, g (e k) = ∑ m, A m k • (b' m : M')) (j : Fin n') (k : Fin n) :
     ∑ m, p m k * A j m = ∑ m, σ (A m k) * p' j m := by
   have h1 : g (u (e k)) = ∑ j, (∑ m, p m k * A j m) • (b' j : M') := by
-    rw [hp k, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hp k, map_sum]
     simp only [hg, hA]
     exact sum_smul_sum (fun m => p m k) (fun m j => A j m) (fun j => (b' j : M'))
   have h2 : u' (g (e k)) = ∑ j, (∑ m, σ (A m k) * p' j m) • (b' j : M') := by
-    rw [hA k, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hA k, map_sum]
     simp only [hu', hp']
     exact sum_smul_sum (fun m => σ (A m k)) (fun m j => p' j m) (fun j => (b' j : M'))
   have hc' := coeff_unique (c := fun j => ∑ m, p m k * A j m) (d := fun j => ∑ m, σ (A m k) * p' j m) b'
@@ -81,7 +83,8 @@ theorem mul_eq_of_inc {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [Algebra 
   apply (pi0Subst_laws_hold l O).2.2.2.2.2.2.2 hl
   simp only [Matrix.mul_apply]
   show incHom l O (∑ m, P' j m * A' m k) = incHom l O (∑ m, A j m * P m k)
-  simp only [map_sum, map_mul, incHom_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, incHom_apply]
   rw [Finset.sum_congr rfl fun m _ => mul_comm (inc l O (P' j m)) (inc l O (A' m k)), ← h j k]
   exact Finset.sum_congr rfl fun m _ => mul_comm _ _
 
@@ -129,7 +132,8 @@ theorem exists_mapMat (RF : ∀ a : O⟦X⟧, (∀ δ ∈ W.DelF, W.γ₀ δ a =
       (show (b' m : W.DD T') ∈ W.N T' ∧ ∀ δ ∈ W.DelF, W.γD T' δ (b' m : W.DD T') = b' m from hb' m).2 δ hδ
     have e1 : W.γD T' δ (W.map g (b k : W.DD T)) = W.map g (b k : W.DD T) := by
       rw [← W.map_γ, hk.2 δ hδ]
-    rw [hc, map_sum] at e1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hc, map_sum] at e1
     simp only [gamD_smul, hb2] at e1
     have e2 := coeff_unique (c := fun m => letγ (W.γ₀ δ) (c m)) (d := c) b' e1
     exact congrFun (congrFun e2 m) i

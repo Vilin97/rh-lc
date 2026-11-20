@@ -25,7 +25,8 @@ theorem pre_rowvec (Λ : Submodule (𝓞 E) S.V) (hint : IntLat Λ) (Tn : ℕ) (
   have hv0e : ∀ i, S.hT v₀ (F.fl.e i) =
       if a < i then (t i.castSucc : E) * ((1 + g * q i : 𝓞 E) : E) else 0 := by
     intro i
-    rw [map_sum, LinearMap.sum_apply, Finset.sum_eq_single i]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, LinearMap.sum_apply, Finset.sum_eq_single i]
     · by_cases hai : a < i
       · rw [if_pos hai, if_pos hai, hT_cj_left, hq]
       · rw [if_neg hai, if_neg hai, zero_smul, map_zero, LinearMap.zero_apply]

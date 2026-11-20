@@ -36,7 +36,8 @@ theorem exp_sum (T : Thick κ s) {K : Type} [Fintype K] (ε : K → ℤ) (a : K 
     change _ = dpExp T.δ (Subtype.val _)
     congr 1
     simp
-  rw [e2, map_sum, toMul_sum, ← Units.val_mul, ← Finset.prod_mul_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e2, map_sum, toMul_sum, ← Units.val_mul, ← Finset.prod_mul_distrib]
   congr 1
   refine Finset.prod_congr rfl fun k _ ↦ ?_
   rw [e1, mul_zpow, map_zsmul, toMul_zsmul]
@@ -86,7 +87,8 @@ theorem isChern_linComb {L : LB X} {z : Cris.H2 κ s} (hz : IsChern κ s L z) {K
     · refine Eq.trans ?_ (Units.val_mul (Units.map (χ.hom.φ : T'.obj.B →* T''.obj.B) (∏ k, U k T T' ψ ^ ε k)) _)
       rw [map_prod, ← Finset.prod_mul_distrib]
       simp only [mul_zpow, map_zpow]
-  · rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum, map_sum]
     refine Finset.sum_congr rfl fun k _ ↦ ?_
     rw [map_zsmul, map_zsmul, ← (n k).pullCohomologyTwo_class, ← h3]
     obtain ⟨z, rfl⟩ := CatCoh.H2.mk_surjective _ z
@@ -130,7 +132,8 @@ theorem isChern_cube {L : LB A.left} {n : ℕ} {a b : Fin n → prim κ t A}
   have e : ∀ J : ULift.{0} (Finset (Fin 2)), (isMor_psum ![u, v] J).pull2 (∑ k, cup _ (a k).1 (b k).1) =
       ∑ k, cup _ (∑ i ∈ J.down, pullOver κ t (![u, v] i) (a k).1)
         (∑ i ∈ J.down, pullOver κ t (![u, v] i) (b k).1) := fun J ↦ by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun k _ ↦ ?_
     rw [IsMor.pullCohomologyTwo_cup, ← pullOver_psum, ← pullOver_psum]
     rfl
@@ -227,7 +230,8 @@ theorem adjoint_of_lbIso (P : GlobalTheory.Published.AbelianDeRham.Free) {R : Ty
       E.symm (pullOver (dp0 R) (𝟙 _) ρ c.1) = primPull (dp0 R) (𝟙 _) ρ c := fun _ _ _ ↦ Subtype.ext rfl
   have v₁ : ∀ c : primDR A, primPull (dp0 R) (𝟙 _) (𝟙 A) c = c := fun c ↦
     Subtype.ext (IsMor.pullCohomologyOne_id _ _)
-  simp only [map_sum, map_add, hΛ, LinearMap.comp_apply, LinearEquiv.coe_coe, pullOver_pullOver,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_add, hΛ, LinearMap.comp_apply, LinearEquiv.coe_coe, pullOver_pullOver,
     lift_fst_assoc, lift_snd_assoc, lift_fst, lift_snd, Category.id_comp, MonObj.one_comp, pullOver_one,
     map_zero, v, v₁, mul_zero, zero_mul, sub_zero, zero_sub] at e
   simp only [wedgeForm_apply, push_apply, sub_eq_add_neg]

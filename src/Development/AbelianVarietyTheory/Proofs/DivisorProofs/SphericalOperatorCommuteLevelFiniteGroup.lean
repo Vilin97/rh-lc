@@ -126,7 +126,8 @@ theorem heckeKeeps : ∀ D : Formalism.BasicNotions.D7, GlobalTheory.HeckeOrthSu
   show eGoodOp (D.sp.W j) hj β ψ pl red om (heckeLin _ R (T v)) = heckeLin _ R (T v)
   conv_rhs => rw [← h3]
   unfold eGoodOp
-  simp only [LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul]
   refine Finset.sum_congr rfl fun x _ => ?_
   congr 1
   exact sphericalOperator_commute_levelFiniteGroup hB hN hPP hR (hT1.lev v) x

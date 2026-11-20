@@ -566,7 +566,8 @@ theorem psd_comap {X Y : Type} [DecidableEq Y] (k : Y → Y → ℂ) (f : X → 
     intro z
     rw [sum_mul_comp_eq_sum_image_filter F f (fun y => conj (a y)) (k z)]
     refine Finset.sum_congr rfl fun w _ => ?_
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
   have key : ∑ x ∈ F, ∑ y ∈ F, a x * conj (a y) * k (f x) (f y) =
       ∑ x ∈ F.image f, ∑ y ∈ F.image f, (∑ u ∈ F.filter (fun u => f u = x), a u) *
         conj (∑ u ∈ F.filter (fun u => f u = y), a u) * k x y := by

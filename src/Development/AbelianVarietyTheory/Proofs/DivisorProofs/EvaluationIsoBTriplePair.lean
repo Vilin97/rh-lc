@@ -26,7 +26,8 @@ def build (y : mixedEmbedding.mixedSpace F) (T : Finset (Pl F)) (p : ∀ w : Pl 
 
 theorem evFin_build (y : mixedEmbedding.mixedSpace F) (T : Finset (Pl F)) (p : ∀ w : Pl F, Fv F w) (u : Pl F) :
     evFin F u (build y T p) = if u ∈ T then p u else 0 := by
-  rw [build, map_add, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [build, map_add, map_sum]
   have h0 : evFin F u (atInf y) = 0 := by
     show evalV F u (0 : Af F) = 0
     exact map_zero _

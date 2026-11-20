@@ -90,7 +90,8 @@ theorem ChartDualRational.proof : ChartDualRational.Statement := by
     refine ⟨m + n l, ?_⟩
     have : f l ^ (m + n l) * (f l₀ ^ M * bb.coord q (∑ p, a p • b l p)) =
         ∑ p, (f l ^ m * a p) * (f l₀ ^ M * bb.coord q (f l ^ n l • b l p)) := by
-      simp only [map_sum, map_smul, smul_eq_mul, Finset.mul_sum, pow_add]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, smul_eq_mul, Finset.mul_sum, pow_add]
       exact Finset.sum_congr rfl fun p _ ↦ by ring
     rw [this]
     exact sum_mem fun p _ ↦ mul_mem (hm p) (hM (l, p, q))

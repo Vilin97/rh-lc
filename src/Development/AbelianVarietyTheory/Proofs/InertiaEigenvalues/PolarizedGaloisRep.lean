@@ -84,7 +84,8 @@ theorem exists_conj_integral {O K Γ : Type} [CommRing O] [IsDomain O] [IsDiscre
   refine ⟨b.repr v i, ?_⟩
   have h2 : (v : Fin n → K) = ∑ k, algebraMap O K (b.repr v k) • B k := by
     have h3 := congrArg Λ.subtype (b.sum_repr v)
-    rw [map_sum] at h3
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at h3
     refine h3.symm.trans (Finset.sum_congr rfl fun k _ => ?_)
     rw [hB, algebraMap_smul]
     rfl
@@ -258,7 +259,8 @@ theorem isClosed_submodule {O X : Type} [CommRing O] [IsLocalRing O] [IsNoetheri
   obtain ⟨t, ht, htT⟩ := mem_closure_iff.1 hf _ ho (by simp)
   have h1 : (Submodule.Quotient.mk f : (X → O) ⧸ T) = T.mkQ (f - t) := by
     rw [map_sub, Submodule.mkQ_apply, Submodule.mkQ_apply, (Submodule.Quotient.mk_eq_zero T).2 htT, sub_zero]
-  rw [h1, pi_eq_sum_univ (f - t), map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h1, pi_eq_sum_univ (f - t), map_sum]
   refine Submodule.sum_mem _ fun x _ => ?_
   rw [map_smul]
   exact Submodule.smul_mem_smul (ht x) Submodule.mem_top

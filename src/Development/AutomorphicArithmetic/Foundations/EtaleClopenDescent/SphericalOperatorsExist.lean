@@ -74,8 +74,10 @@ private theorem opOf_zero (ρ : Representation ℂ G V) (A : G →₀ ℂ) : opO
 private theorem opOf_cv (ρ : Representation ℂ G V) (A B : G →₀ ℂ) (v : V) :
     opOf ρ (cv A B) v = opOf ρ A (opOf ρ B v) := by
   rw [opOf_eq, cv]
-  simp only [Finsupp.sum, map_sum, Finsupp.linearCombination_single]
-  simp only [opOf, Finsupp.sum, map_sum, Finset.smul_sum, map_smul, map_mul, Module.End.mul_apply, mul_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finsupp.sum, map_sum, Finsupp.linearCombination_single]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [opOf, Finsupp.sum, map_sum, Finset.smul_sum, map_smul, map_mul, Module.End.mul_apply, mul_smul]
 
 private theorem poly_op (R : Subring ℂ) {I : Type} (f : I → G →₀ ℂ) (hf : ∀ i g, f i g ∈ R) (P : MvPolynomial I ℤ) :
     ∃ F : G →₀ ℂ, (∀ g, F g ∈ R) ∧ ∀ (V : Type) [AddCommGroup V] [Module ℂ V] (ρ : Representation ℂ G V) (v : V)
@@ -173,7 +175,8 @@ private theorem exists_Tj_op (R : Subring ℂ) {ϖ : w.adicCompletion E} (hϖ : 
     split_ifs
     · exact hR _
     · exact R.zero_mem
-  · rw [opOf_eq, map_sum, GlobalTheory.LFun.heckeVec, finsum_eq_sum_of_support_subset (s := hfin.toFinset)]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [opOf_eq, map_sum, GlobalTheory.LFun.heckeVec, finsum_eq_sum_of_support_subset (s := hfin.toFinset)]
     · simp only [Finsupp.linearCombination_single]
     · intro c hc
       simp only [Function.mem_support] at hc

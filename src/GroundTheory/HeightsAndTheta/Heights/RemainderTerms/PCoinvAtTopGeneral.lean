@@ -23,7 +23,8 @@ theorem CoinvAtTopGeneral.proof (h1 : CoinvAtTop.Statement) : CoinvAtTopGeneral.
     refine Ideal.span_le.mpr ?_
     rintro P ⟨m, b, hm1, hm2, rfl⟩
     refine Ideal.subset_span ⟨m, (Fintype.equivFin β).symm b, hm1, hm2, ?_⟩
-    simp only [bps, map_sum, map_pow, rename_X]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [bps, map_sum, map_pow, rename_X]
     refine Fintype.sum_equiv o.symm _ _ (fun i => ?_)
     simp [ψ]
   have hH' : rename ψ.symm (rename ψ H) = H := by

@@ -126,7 +126,8 @@ theorem numL_X_pow (num : Multiset A → ℝ) (d : ℕ) (a : A) :
 theorem numL_homog (num : Multiset A → ℝ) (d e : ℕ) (he : e ≠ d) (P : MvPolynomial A ℝ) (hP : P.IsHomogeneous e) :
     numL num d P = 0 := by
   classical
-  rw [P.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [P.as_sum, map_sum]
   refine Finset.sum_eq_zero fun m hm => ?_
   have h1 : m.degree = e := by
     have := hP (MvPolynomial.mem_support_iff.1 hm)

@@ -54,8 +54,10 @@ lemma LFocks_constantCoeff_sub (U : Matrix σ σ ℂ) (g : MvPolynomial σ ℂ) 
 lemma LFocks_sub_comp (A B : Matrix σ σ ℂ) :
     (sub A).comp (sub B) = sub (B * A) := by
   refine MvPolynomial.algHom_ext fun i => ?_
-  rw [AlgHom.comp_apply, LFocks_sub_X, LFocks_sub_X, map_sum]
-  simp only [map_mul, LFocks_sub_C, LFocks_sub_X, Finset.mul_sum, Matrix.mul_apply, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [AlgHom.comp_apply, LFocks_sub_X, LFocks_sub_X, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_mul, LFocks_sub_C, LFocks_sub_X, Finset.mul_sum, Matrix.mul_apply, map_sum, Finset.sum_mul]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun j _ => by ring
 
@@ -72,7 +74,8 @@ lemma LFocks_pderiv_sub (V : Matrix σ σ ℂ) (i : σ) (g : MvPolynomial σ ℂ
   next p q hp hq => simp only [map_add, mul_add, Finset.sum_add_distrib, hp, hq]
   next p k hp =>
     have hS : pderiv i (sub V (X k)) = C (V k i) := by
-      rw [LFocks_sub_X, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [LFocks_sub_X, map_sum]
       simp [pderiv_X, Pi.single_apply]
     have hT : ∀ j, sub V (pderiv j (X k : MvPolynomial σ ℂ)) = if j = k then 1 else 0 := by
       intro j

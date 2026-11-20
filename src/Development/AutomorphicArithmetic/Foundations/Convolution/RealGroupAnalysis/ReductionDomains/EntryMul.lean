@@ -57,11 +57,13 @@ private theorem place_iff {F : Type} [Field F] [NumberField F] [IsTotallyReal F]
         (fun i => ψ.toRingHom (z i)) ᵥ* M := by
     intro z
     ext j
-    simp only [vecMul, dotProduct, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [vecMul, dotProduct, map_sum, map_mul]
     rfl
   have key : ∀ i j, (M * Mᵀ) i j = ψ (((k.1 * k.1ᵀ) i j).1 w) := by
     intro i j
-    rw [entry_mul, map_sum, Matrix.mul_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [entry_mul, map_sum, Matrix.mul_apply]
     refine Finset.sum_congr rfl fun l _ => ?_
     rw [map_mul]
     rfl

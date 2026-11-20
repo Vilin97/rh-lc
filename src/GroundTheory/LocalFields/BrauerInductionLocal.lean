@@ -68,7 +68,8 @@ theorem classCount_mem_spanA (s : G) : classCount s ∈ spanA E ζ := by
     rw [Finset.sum_ite_eq', if_pos (Finset.mem_univ _), ← mul_assoc, inv_mul_cancel₀ hN, one_mul]
   rw [← indFun_zpowers_delta]
   change indFun C.subtype δ ∈ spanA E ζ
-  rw [eq_sum_irrChars_of_isClassFun hδ, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [eq_sum_irrChars_of_isClassFun hδ, map_sum]
   refine Submodule.sum_mem _ fun ψ hψ ↦ ?_
   rw [map_smul, hcoef]
   refine smul_mem_spanA ?_ (indFun_mem_spanZ hE hmono (hcyc s) (mem_irrChars.mp hψ).isCharacter)

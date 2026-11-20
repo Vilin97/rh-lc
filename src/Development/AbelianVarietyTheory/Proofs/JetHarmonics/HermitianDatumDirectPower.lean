@@ -44,7 +44,8 @@ theorem trace_diagEnd {U V : Type} [AddCommGroup U] [Module ℝ U] [AddCommGroup
     apply LinearMap.ext; intro x
     funext j
     simp [LinearMap.sum_apply, Finset.sum_apply, Pi.single_apply]
-  rw [h1, LinearMap.trace_conj', h2, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h1, LinearMap.trace_conj', h2, map_sum]
   have h3 : ∀ i : Fin n, LinearMap.trace ℝ _ (LinearMap.single ℝ (fun _ : Fin n => V) i ∘ₗ (f ∘ₗ LinearMap.proj i)) =
       LinearMap.trace ℝ V f := by
     intro i

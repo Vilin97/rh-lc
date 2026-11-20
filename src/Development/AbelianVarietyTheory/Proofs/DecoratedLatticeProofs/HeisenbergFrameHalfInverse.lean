@@ -106,7 +106,8 @@ theorem pi_hO_up (p : Place D k) {S T : HSp D} (FS : Frame k S.rank Y') (FT : Fr
       Matrix.trace ((S.gram⁻¹).map (p.π.comp (incA D)) * N * T.gram.map (p.π.comp (incA D)) * (FT.β * t * FS.γ)) := by
   unfold hO
   rw [← sum_four_eq_trace_mul]
-  simp only [map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul]
   have hterm : ∀ a b c d, p.π (incA D (S.gram⁻¹ a b)) * p.π (cA D ((N.transpose.map fun a => cA D (p.ι a)) c b)) *
       p.π (incA D (T.gram c d)) * p.π (p.up FS FT t d a) =
       (S.gram⁻¹).map (p.π.comp (incA D)) a b * N b c * T.gram.map (p.π.comp (incA D)) c d * (FT.β * t * FS.γ) d a := by

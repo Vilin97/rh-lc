@@ -39,7 +39,8 @@ theorem hf_sum_l {ι : Type} (t : Finset ι) (c : ι → A) (x : ι → Fin n �
 
 theorem hf_symm (hs : ∀ a, s (s a) = a) (hJ : ∀ i j, s (J j i) = J i j) (x y : Fin n → A) :
     s (Formalism.UG.hform s J x y) = Formalism.UG.hform s J y x := by
-  simp only [Formalism.UG.hform, map_sum, map_mul, hs]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Formalism.UG.hform, map_sum, map_mul, hs]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   rw [hJ]; ring
@@ -97,7 +98,8 @@ theorem JR_herm (hJ : IsHermND σ J) (i j : Fin n) : sigR R σ (JR R J j i) = JR
 
 theorem h_rat (x y : Fin n → E) :
     Formalism.UG.hform (sigR R σ) (JR R J) (ratV (F := F) R x) (ratV (F := F) R y) = inclR R (hE σ J x y) := by
-  simp [Formalism.UG.hform, hE, ratV, JR, map_sum, map_mul, sigR_inclR]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Formalism.UG.hform, hE, ratV, JR, map_sum, map_mul, sigR_inclR]
 
 variable {r : ℕ}
 

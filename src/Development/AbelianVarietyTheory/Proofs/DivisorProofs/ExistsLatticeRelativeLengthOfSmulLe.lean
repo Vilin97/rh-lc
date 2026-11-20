@@ -54,7 +54,8 @@ theorem exists_relLen_of_smul_le (C : Type) [Field C] (v : AddValuation C (WithT
     intro k
     have e := b.sum_repr (ι (b' k))
     have e2 := congrArg (Submodule.subtype X) e
-    rw [map_sum] at e2
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at e2
     simp only [map_smul, Submodule.subtype_apply] at e2
     simpa [A, LinearMap.toMatrix_apply, ι] using e2.symm
   have hdet : A.det ≠ 0 := by

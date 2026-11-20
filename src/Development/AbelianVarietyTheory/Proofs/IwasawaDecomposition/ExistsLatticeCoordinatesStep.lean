@@ -129,7 +129,8 @@ theorem tanLin_tr {F : X.Modules} (θ : F ⟶ GlobalTheory.LieVB.omega t.G) {V' 
     ((frMat hm hm' inf_le_left inf_le_right).map (ev x _ (le_preimage_inf h h'))).mulVec
       (tanLin t h' (fun l => θ.app V' (m' l)) v) = tanLin t h (fun l => θ.app V (m l)) v := by
   funext l
-  rw [tanLin_apply, ← tanEv_resM t _ (le_preimage_inf h h') inf_le_left, ← app_resM,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [tanLin_apply, ← tanEv_resM t _ (le_preimage_inf h h') inf_le_left, ← app_resM,
     sum_frMat hm hm' inf_le_left inf_le_right, map_sum]
   simp only [Scheme.Modules.Hom.app_smul, app_resM]
   rw [tanEv_sum_smul]

@@ -68,7 +68,8 @@ omit [DecidableEq ι] in
 theorem repr_apply_algEquiv (σ : L' ≃ₐ[K] L') (x : L') (i : ι) :
     b.repr (σ x) i = ∑ j, galMatrix b σ i j * AlgEquiv.restrictNormalHom L σ (b.repr x j) := by
   conv_lhs => rw [← b.sum_repr x]
-  simp only [map_sum, map_smul_restrictNormalHom, map_smul, Finsupp.coe_finsetSum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul_restrictNormalHom, map_smul, Finsupp.coe_finsetSum,
     Finset.sum_apply, Finsupp.smul_apply, smul_eq_mul, galMatrix]
   exact Finset.sum_congr rfl fun j _ => mul_comm _ _
 

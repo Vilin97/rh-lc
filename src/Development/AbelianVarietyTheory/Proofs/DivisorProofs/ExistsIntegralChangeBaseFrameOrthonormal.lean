@@ -73,9 +73,11 @@ theorem exists_coeff {k : ℕ} (x : Fin k → 𝓞 E) (hx : Submodule.span ℤ (
     have : y ∈ Submodule.span ℤ (Set.range x) := hx ▸ Submodule.mem_top
     obtain ⟨n, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun ℤ).1 this
     have e : ((∑ j, n j • x j : 𝓞 E) : E) = ∑ j, n j • (x j : E) := by
-      rw [RingOfIntegers.coe_eq_algebraMap, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [RingOfIntegers.coe_eq_algebraMap, map_sum]
       exact Finset.sum_congr rfl fun j _ => map_zsmul _ _ _
-    rw [e, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, map_sum]
     refine Submodule.sum_mem _ fun j _ => ?_
     rw [map_zsmul]
     exact zsmul_mem (Submodule.subset_span (Set.mem_range_self (f := fun j => locEmb v (x j : E)) j)) _

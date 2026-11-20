@@ -51,7 +51,8 @@ theorem gramR_ratTup {F E : Type} [Field F] [Field E] [Algebra F E] (R : Type) [
     (X : Fin a → Fin n → E) :
     gramR R σ J (ratTup (F := F) R X) = (gramE σ J X).map (inclR (F := F) R) := by
   ext k l
-  simp only [gramR, gramE, hR, hE, Formalism.UG.hform, map_sum, map_mul, ratTup, JR, Matrix.map_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [gramR, gramE, hR, hE, Formalism.UG.hform, map_sum, map_mul, ratTup, JR, Matrix.map_apply]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   congr 2
 

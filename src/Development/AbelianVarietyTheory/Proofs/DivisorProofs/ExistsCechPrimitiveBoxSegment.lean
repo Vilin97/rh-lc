@@ -127,7 +127,8 @@ private theorem hasDerivAt_radial_integrand {P : Type} [NormedAddCommGroup P] [N
         · simp [Prod.fst_sum]
         · funext i
           simp [Prod.snd_sum, Finset.sum_apply, Pi.single_apply]
-      rw [hv, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hv, map_sum]
       simp only [map_smul, smul_eq_mul]
     have hterm : ∀ c, fderiv ℂ (ω c) p (0, τ • Pi.single a 1) = τ * fderiv ℂ (ω a) p (0, Pi.single c 1) := by
       intro c

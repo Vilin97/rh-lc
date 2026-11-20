@@ -207,7 +207,8 @@ theorem levi_normSq {M : Type*} [TopologicalSpace M] (n : ℕ) (z : M → V n) (
       ← d_db_comm n z g (hC 2) k j x, hdb0 j, d_const]
     simp
   simp only [Levi, hd, dDot]
-  rw [← Complex.normSq_eq_norm_sq, ← Complex.mul_conj, map_sum, Finset.sum_mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Complex.normSq_eq_norm_sq, ← Complex.mul_conj, map_sum, Finset.sum_mul_sum]
   refine Finset.sum_congr rfl (fun j _ => Finset.sum_congr rfl (fun k _ => ?_))
   simp only [map_mul]
   ring

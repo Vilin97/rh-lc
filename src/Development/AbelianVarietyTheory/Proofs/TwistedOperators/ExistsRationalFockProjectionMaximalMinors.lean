@@ -103,7 +103,8 @@ theorem exists_rat_proj : ∀ {ι : Type} [Fintype ι] (a d : ℕ) (n : ι → �
   refine ⟨Fintype.card (Tup ι a d n), fun p => c (e p), fun p => e p, fun T => ?_⟩
   have hsum : (∑ p, ((c (e p) : ℚ) : ℂ) • prodMinors (e p)) =
       map (algebraMap ℚ ℂ) (w₀ : MvPolynomial (Var ι d a) ℚ) := by
-    rw [e.sum_comp (fun T => ((c T : ℚ) : ℂ) • prodMinors T), ← hc, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e.sum_comp (fun T => ((c T : ℚ) : ℂ) • prodMinors T), ← hc, map_sum]
     refine Finset.sum_congr rfl fun T _ => ?_
     simp only [PQ]
     rw [smul_eq_C_mul (prodMinorsQ T) (c T), map_mul, map_C, map_prodMinorsQ, smul_eq_C_mul]

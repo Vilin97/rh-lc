@@ -184,8 +184,10 @@ theorem exists_system (R : Subalgebra O Ω) {N : ℕ} (L : AddSubgroup V) (h : L
     exact hv e
   · apply hβ.1
     ext e
-    rw [LinearMap.flip_apply, LinearMap.flip_apply, map_sum]
-    conv_rhs => rw [← hv e, map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [LinearMap.flip_apply, LinearMap.flip_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_rhs => rw [← hv e, map_sum, LinearMap.sum_apply]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, map_smul, LinearMap.smul_apply, hl', smul_eq_mul, smul_eq_mul, mul_comm]
 

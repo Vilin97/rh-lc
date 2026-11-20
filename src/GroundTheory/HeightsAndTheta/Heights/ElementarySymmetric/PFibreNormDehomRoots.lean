@@ -150,7 +150,8 @@ theorem proof (hG : PullFormsGeneric.Statement) (hS : PullSectionIntegral.Statem
     rw [Finset.sum_attach g.support (fun x => ((AddMonoidAlgebra.coeff g x : ℤ) : Ω) *
       (aeval y (monomial x (1 : ℤ)) / aeval y (L a) ^ (1 * 1)))]
     conv_lhs => rw [g.as_sum]
-    rw [map_sum, Finset.sum_div]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_div]
     refine Finset.sum_congr rfl fun x _ => ?_
     simp only [aeval_monomial, map_one, one_mul, algebraMap_int_eq, eq_intCast, mul_div_assoc]
   obtain ⟨ν, hν, hψv⟩ : ∃ (ν : (Σ k, ι k) →₀ ℕ) (hν : ν ∈ (L a).support),
@@ -163,7 +164,8 @@ theorem proof (hG : PullFormsGeneric.Statement) (hS : PullSectionIntegral.Statem
         show aeval y (L a) / aeval y (L a) ^ (1 * 1) = 1
         rw [mul_one, pow_one, div_self hla])
     have h2 := congrArg ψ ((hsplit (L a) (hLe a)).symm.trans h1)
-    rw [map_one, map_sum] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_one, map_sum] at h2
     simp only [map_mul, map_intCast] at h2
     rw [Finset.sum_eq_zero (fun x _ => by rw [h x.1 x.2, mul_zero])] at h2
     exact zero_ne_one h2

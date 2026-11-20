@@ -43,7 +43,8 @@ theorem darboux_rho_acts_sch {F : Type} [Field F] [NumberField F] {κ : Type} [F
     funext i; simp [he]
   simp only [Darboux.rho, schr, tens, hg, sch, ech, mixedTracePairing_apply, arch]
   rw [hpsi, hra, hx]
-  simp only [he, map_add, map_mul, dotProduct, map_sum, hT]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [he, map_add, map_mul, dotProduct, map_sum, hT]
   rw [show arch F (d.e z).1 = fun i => e ((d.e z).1 i) from funext fun i => he _]
   ring
 

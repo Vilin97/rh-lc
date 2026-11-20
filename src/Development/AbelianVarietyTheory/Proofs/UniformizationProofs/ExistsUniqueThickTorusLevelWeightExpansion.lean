@@ -335,7 +335,8 @@ theorem coeff_unique (k : ℕ)
         Finset.sum_subset (Finset.subset_union_right (s₁ := s) (s₂ := s')) (fun β _ hβ => by
           rw [sval_eq_zero _ (h₀' β hβ) _ hJ', zero_mul]), ← sub_eq_zero, ← Finset.sum_sub_distrib] at E
       have E' := congrArg (x.stalkMap z).hom E
-      rw [map_sum, map_zero] at E'
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, map_zero] at E'
       refine Eq.trans (Finset.sum_congr rfl fun β _ => ?_) E'
       rw [← sub_mul, map_mul]
       refine congrArg₂ (· * ·) ((sval_comp _ x g.q.left hJ).trans (congrArg _ (sval_secSub _ _ _ hJ'))) ?_

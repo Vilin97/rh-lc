@@ -27,7 +27,8 @@ theorem hR_incV (K : Type) [CommRing K] [Algebra F K] (σ : E →ₐ[F] E) {M : 
   have hs : ∀ t : E, sigR K σ (inclR K t) = inclR K (σ t) := by
     intro t
     simp [sigR, inclR]
-  simp only [hR, Formalism.UG.hform, hf, incV, JR, Matrix.map_apply, map_sum, map_mul, hs]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hR, Formalism.UG.hform, hf, incV, JR, Matrix.map_apply, map_sum, map_mul, hs]
 
 theorem hf_smul_right (σ : E →ₐ[F] E) {M : ℕ} (J : Matrix (Fin M) (Fin M) E) (p q : Fin M → E) (s : E) :
     hf σ J p (s • q) = s * hf σ J p q := by

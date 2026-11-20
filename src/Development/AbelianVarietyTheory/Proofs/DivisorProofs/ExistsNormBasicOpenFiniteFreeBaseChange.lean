@@ -29,7 +29,8 @@ theorem norm_map_of_basis {A A' B B' : Type} [CommRing A] [CommRing A'] [CommRin
   have h : ψ f * e' j = ∑ k, ρ (e.repr (f * e j) k) • e' k := by
     rw [← he j, ← map_mul]
     conv_lhs => rw [← e.sum_repr (f * e j)]
-    simp only [map_sum, Algebra.smul_def, map_mul, hc, he]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, Algebra.smul_def, map_mul, hc, he]
   rw [h, e'.repr_sum_self]
 
 theorem exists_basis_of_ringEquiv {S₀ A T₀ B : Type} [CommRing S₀] [CommRing A] [CommRing T₀]

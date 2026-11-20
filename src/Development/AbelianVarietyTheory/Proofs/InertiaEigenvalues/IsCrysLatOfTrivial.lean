@@ -88,7 +88,8 @@ theorem _root_.GlobalTheory.TrivCrys.dcris_of_trivial {V : Type} [AddCommGroup V
       rfl
     choose k hk using hc
     refine ⟨∑ i, b i ⊗ₜ[Qp] k i, ?_⟩
-    rw [map_sum, eq_sum_basis_tmul_coord b x]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, eq_sum_basis_tmul_coord b x]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [AlgebraTensorModule.map_tmul, ← hk i]
     rfl

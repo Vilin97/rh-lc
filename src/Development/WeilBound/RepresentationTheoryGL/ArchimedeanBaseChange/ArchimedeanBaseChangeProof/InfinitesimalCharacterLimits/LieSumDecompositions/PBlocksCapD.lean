@@ -110,7 +110,8 @@ theorem decomp_G (G : Sm E (r + s))
     refine Subtype.ext (funext fun y => ?_)
     have k2 := congrFun key (y, m₂)
     simp only [Pi.smul_apply, smul_eq_mul] at k2
-    simp only [map_sum, map_smul, Submodule.coe_sum, Submodule.coe_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, Submodule.coe_sum, Submodule.coe_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
     rw [Finset.mul_sum]
     simp only [mul_comm ((ψ₂ _).1 m₂)] at k2 ⊢
     rw [k2, Finset.mul_sum]
@@ -125,7 +126,8 @@ theorem decomp_G (G : Sm E (r + s))
     refine Subtype.ext (funext fun y => ?_)
     have k2 := congrFun key (m₁, y)
     simp only [Pi.smul_apply, smul_eq_mul] at k2
-    simp only [map_sum, map_smul, Submodule.coe_sum, Submodule.coe_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, Submodule.coe_sum, Submodule.coe_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
     rw [k2, Finset.mul_sum]
 
 end PositivityTheory.Rg.BcB.SpectralAccumulation.Cz.BlockCapelli

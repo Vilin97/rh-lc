@@ -16,7 +16,8 @@ theorem form_mulVec {F E : Type} [Field F] [Field E] [Algebra F E] (σ : E →�
     form σ J (A *ᵥ x) (A *ᵥ y) = form σ (Aᵀ * J * A.map σ) x y := by
   have h : (fun i => σ ((A *ᵥ y) i)) = A.map σ *ᵥ fun i => σ (y i) := by
     funext i
-    simp [Matrix.mulVec, dotProduct, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Matrix.mulVec, dotProduct, map_sum]
   unfold form
   rw [h, Matrix.mul_assoc, ← Matrix.mulVec_mulVec, ← Matrix.mulVec_mulVec, Matrix.dotProduct_mulVec x,
     Matrix.vecMul_transpose]

@@ -140,7 +140,8 @@ theorem key_succ (R : Type) [CommRing R]
     (((((chainsP R).obj (hoc Z)).d (n+2) (n+1)).app W).hom (L Z f π e R (n+1) s)) +
       Lh Z f π e R n (((((chainsP R).obj (hoc Z)).d (n+1) n).app T).hom (gen (hoc Z) (n+1) T s)) =
     gen (hoc Z) (n+1) W (rs Z f s) := by
-  rw [L_good Z f π e R h, d_gen, Fin.sum_univ_succ, d_gen, map_sum, cone_δ_zero]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [L_good Z f π e R h, d_gen, Fin.sum_univ_succ, d_gen, map_sum, cone_δ_zero]
   simp only [Fin.val_zero, pow_zero, one_smul, map_zsmul, Lh_gen]
   rw [add_assoc, ← Finset.sum_add_distrib, Finset.sum_eq_zero, add_zero]
   intro j _
@@ -179,7 +180,8 @@ theorem eq_on_sup {E : Spc} {n : ℕ} {T : Scheme.{0}ᵒᵖ} {M : Type*} [AddCom
     refine Finset.sum_congr rfl fun u _ => ?_
     change Finsupp.single u (w u) = w u • Finsupp.single u (1 : ULift.{1} R)
     rw [Finsupp.smul_single_one]
-  rw [hw, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hw, map_sum, map_sum]
   refine Finset.sum_congr rfl fun u hu => ?_
   rw [map_smul, map_smul, h _ (hz u (Finsupp.mem_support_iff.mp hu))]
 

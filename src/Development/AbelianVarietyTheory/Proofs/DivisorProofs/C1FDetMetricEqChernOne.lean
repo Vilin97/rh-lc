@@ -27,7 +27,8 @@ variable {n m : ℕ}
 
 theorem pull_ofValues (L : V n →L[ℂ] V m) {α : V m → V m → ℂ} (hα : IsSesq α) :
     pull L (ofValues α : Alt m) = ofValues (fun ξ η => α (L ξ) (L η)) := by
-  simp only [ofValues, GlobalTheory.LineForm.OmReal.sesq_expand hα (L _), AddSubmonoidClass.coe_finsetSum, Subalgebra.coe_smul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [ofValues, GlobalTheory.LineForm.OmReal.sesq_expand hα (L _), AddSubmonoidClass.coe_finsetSum, Subalgebra.coe_smul,
     sym, map_sum, map_smul, map_mul, (pull_dz L _).1, (pull_dz L _).2, Finset.sum_mul, Finset.mul_sum, Finset.sum_smul,
     Finset.smul_sum, smul_mul_smul_comm, smul_smul]
   conv_lhs => enter [2, a, 2, b]; rw [Finset.sum_comm]
@@ -299,7 +300,8 @@ theorem curvH_eq {E : X.Modules} (m : VMetric p E 2) (c : Chart E 2) (P : Matrix
     ring
   have e' (i j : Fin 2) : MvPolynomial.aeval sym (curvPoly (fun v => (m.met σ).G c (x.ch.symm v)) x.crd i j) =
       ofValues fun ξ η => curv (fun v => (m.met σ).G c (x.ch.symm v)) x.crd ξ η i j := by
-    simp only [curvPoly, of_apply, ofValues, map_sum, map_mul, MvPolynomial.aeval_C, MvPolynomial.aeval_X,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [curvPoly, of_apply, ofValues, map_sum, map_mul, MvPolynomial.aeval_C, MvPolynomial.aeval_X,
       ← Algebra.smul_def]
   rw [curvH, of_apply, e, ofValues_sum]
   simp only [Matrix.smul_apply, mul_apply, Fintype.sum_prod_type, Fin.sum_univ_two, RingHom.mapMatrix_apply, map_apply,

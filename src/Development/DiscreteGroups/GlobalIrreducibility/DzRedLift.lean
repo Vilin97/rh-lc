@@ -20,7 +20,8 @@ theorem rep_one_apply {G V : Type*} [Monoid G] [AddCommGroup V] [Module ℂ V] (
 
 theorem superDiag_map {R S : Type} [CommRing R] [CommRing S] (f : R →+* S) {n : ℕ} (x : GL (Fin n) R) :
     superDiag (Matrix.GeneralLinearGroup.map f x) = f (superDiag x) := by
-  simp only [superDiag, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [superDiag, map_sum]
   rfl
 
 variable {E : Type} [Field E] [NumberField E] {w : HeightOneSpectrum (𝓞 E)} {g : ℕ} [Fact g.Prime]

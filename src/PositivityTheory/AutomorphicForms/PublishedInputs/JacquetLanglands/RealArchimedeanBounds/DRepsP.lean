@@ -86,7 +86,8 @@ theorem step {c : Pl F → ℕ} {w : Pl F} {W : List (Pl F)} {ι κ : Type} [Fin
         Uop w (ρ.comp (locGL F 2 w)) (c w) (∑ i, ρ (b i) x) := by
       rw [hr1 V (ρ.comp (locGL F 2 w)) _ hy', Fintype.sum_prod_type]
       refine Finset.sum_congr rfl fun j _ => ?_
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_mul, Module.End.mul_apply]
       rfl

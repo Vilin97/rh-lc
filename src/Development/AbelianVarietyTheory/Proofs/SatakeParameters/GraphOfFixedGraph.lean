@@ -28,7 +28,8 @@ theorem avgN_fixed (ρ : G →* Module.End ℂ V) (N : Subgroup G) [Fintype (G �
       conv_lhs => rw [← QuotientGroup.out_eq' q]
       rfl
     rw [e0, out_apply ρ N hx, map_mul, Module.End.mul_apply]
-  simp only [avgN_apply, map_smul, map_sum, key]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [avgN_apply, map_smul, map_sum, key]
   congr 1
   exact Equiv.sum_comp (MulAction.toPerm k) (fun q : G ⧸ N => ρ q.out x)
 
@@ -52,7 +53,8 @@ theorem avgN_translate (ρ : G →* Module.End ℂ V) (N : Subgroup G) [Fintype 
 theorem avgN_indep (ρ : G →* Module.End ℂ V) (N N' : Subgroup G) [Fintype (G ⧸ N)] [Fintype (G ⧸ N')] [N'.Normal]
     {x : V} (hx : ∀ s ∈ N, ρ s x = x) (hx' : ∀ s ∈ N', ρ s x = x) : avgN ρ N x = avgN ρ N' x := by
   have hc : (Fintype.card (G ⧸ N) : ℂ) ≠ 0 := Nat.cast_ne_zero.2 Fintype.card_ne_zero
-  rw [← avgN_of_fixed ρ N' (avgN_fixed ρ N hx), avgN_apply ρ N, map_smul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← avgN_of_fixed ρ N' (avgN_fixed ρ N hx), avgN_apply ρ N, map_smul, map_sum]
   simp only [avgN_translate ρ N' hx', Finset.sum_const, Finset.card_univ]
   rw [← Nat.cast_smul_eq_nsmul ℂ, smul_smul, inv_mul_cancel₀ hc, one_smul]
 
@@ -133,14 +135,16 @@ theorem IsAvg.mem (h : IsAvg ρ K P) (S : Submodule ℂ V) (hS : ∀ k ∈ K, �
 theorem IsAvg.comm (h : IsAvg ρ K P) (T : Module.End ℂ V) (hT : ∀ k ∈ K, ∀ x, T (ρ k x) = ρ k (T x)) (x : V) :
     P (T x) = T (P x) := by
   obtain ⟨ι, _, k, c, hk, e1, e2⟩ := h.pair x (T x)
-  rw [e1, e2, map_smul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e1, e2, map_smul, map_sum]
   simp only [hT _ (hk _)]
 
 theorem IsAvg.avg_avg (h : IsAvg ρ K P) {K' : Subgroup G} {P' : Module.End ℂ V} (h' : IsAvg ρ K' P')
     (hle : K' ≤ K) (x : V) : P (P' x) = P x := by
   have h0 : P' (P x) = P x := h'.self _ fun k hk => h.fix x k (hle hk)
   obtain ⟨ι, _, k, c, hk, e1, e2⟩ := h'.pair x (P x)
-  rw [e1, map_smul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e1, map_smul, map_sum]
   rw [h0] at e2
   simp only [h.tr _ _ (hle (hk _))]
   simp only [h.fix _ _ (hle (hk _))] at e2
@@ -516,7 +520,8 @@ theorem graph_of_hecke {A B K : Subgroup G} (hc : ∀ x ∈ A, ∀ y ∈ B, x * 
     have e' : ∑ γ ∈ R, res ρ _ (sup_stab h₁ h₂) γ f = c • f := Subtype.ext (by
       rw [Submodule.coe_sum]; exact e)
     have e2 := congrArg P e'
-    rw [map_sum, map_smul, hP.self f hf', Finset.sum_congr rfl (g := fun _ => P (res ρ _ (sup_stab h₁ h₂) x f))
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_smul, hP.self f hf', Finset.sum_congr rfl (g := fun _ => P (res ρ _ (sup_stab h₁ h₂) x f))
       (fun γ hγ' => by
         obtain ⟨a, ha, b, hb, rfl⟩ := hγ γ hγ'
         rw [rho_mul, rho_mul, hf' b hb, hP.tr _ a ha]), Finset.sum_const, ← Nat.cast_smul_eq_nsmul ℂ] at e2

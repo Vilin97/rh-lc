@@ -264,7 +264,8 @@ theorem isMultiHomog_one' : IsMultiHomog (1 : MRing ι) 0 := by
 
 theorem comb_int {r : ℕ} (f : Fin r → MRing ι) (m : Fin r → ℤ) (z : (Σ k, ι k) → ℂ) :
     comb f (fun k => (m k : ℝ)) z = eval z (map (Int.castRingHom ℂ) (∑ k, m k • f k)) := by
-  simp [comb, map_sum, zsmul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [comb, map_sum, zsmul_eq_mul]
 
 theorem blockL2Norm_sum_eq_sqrt_gram (d : HSMBlockDatum D K ι Ω) (n : ℕ) {r : ℕ} (f : Fin r → MRing ι)
     (hf : ∀ k, IsMultiHomog (f k) (blockDeg d.k₀ n)) (m : Fin r → ℤ) :

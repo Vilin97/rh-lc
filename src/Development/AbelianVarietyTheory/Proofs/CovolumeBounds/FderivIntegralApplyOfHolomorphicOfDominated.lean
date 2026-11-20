@@ -49,7 +49,8 @@ theorem aestronglyMeasurable_fderiv_of_param {F : T → E → V} {x₀ : E}
     ext v
     have h : fderiv ℂ (F t) x₀ v = ∑ i, (b.repr v) i • fderiv ℂ (F t) x₀ (b i) := by
       conv_lhs => rw [← b.sum_repr v]
-      simp only [map_sum, map_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul]
     simpa using h
   rw [key]
   refine Finset.aestronglyMeasurable_fun_sum _ fun i _ => ?_

@@ -38,7 +38,8 @@ theorem thetaKO_smul (g : GA D M) (h : GA D X) (c : ℂ) (Φ : WO M X → ℂ) :
 
 theorem thetaKO_sum {ι : Type} (s : Finset ι) (g : GA D M) (h : GA D X) (Φ : ι → WO M X → ℂ) :
     thetaKO ω g h (∑ i ∈ s, Φ i) = ∑ i ∈ s, thetaKO ω g h (Φ i) := by
-  simp [thetaKO, map_sum, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [thetaKO, map_sum, Finset.sum_apply]
 
 theorem thetaKO_right (g k : GA D M) (h : GA D X) (Φ : WO M X → ℂ) :
     thetaKO ω g h (ω (k, 1) Φ) = thetaKO ω (g * k) h Φ := by
@@ -201,7 +202,8 @@ theorem reg_of_const : GlobalTheory.FunPr.Hypotheses₂ → GlobalTheory.Indefin
     have e : ∑ i, c i • (g i : WO W₁ X → ℂ) = ∑ i, c i • (ωB (u i, 1) (Ψ i) - Ψ i) := by simp only [hg]
     rw [← e, hsum]; abel
   have eW : wop ωB z ΦB = wop ωB z Φ₀ + ∑ i, c i • (ωB (u' i, 1) (wop ωB z (Ψ i)) - wop ωB z (Ψ i)) := by
-    rw [eB, map_add, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [eB, map_add, map_sum]
     simp only [map_smul, map_sub, hcomm]
   have hJ : thetaInt ωB ν₁ 𝓕₁ (wop ωB z ΦB) = GlobalTheory.FunObj.zdeg z • thetaInt ωB ν₁ 𝓕₁ Φ₀ := by
     have hi : ∀ i ∈ (Finset.univ : Finset (Fin n)),

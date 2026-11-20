@@ -69,7 +69,8 @@ theorem casimir_move {A : Type} [Ring A] [Algebra ℂ A] (R R' : Matrix (Fin n) 
     (U V : Matrix (Fin n) (Fin n) ℂ) :
     ∑ a, ∑ b, R (U * single a b 1 * V) * R' (single b a 1) =
       ∑ c, ∑ d, R (single c d 1) * R' (V * single d c 1 * U) := by
-  simp only [mul_single_mul, map_sum, map_smul, Finset.sum_mul, Finset.mul_sum, smul_mul_assoc, mul_smul_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [mul_single_mul, map_sum, map_smul, Finset.sum_mul, Finset.mul_sum, smul_mul_assoc, mul_smul_comm]
   rw [← Fintype.sum_prod_type', ← Fintype.sum_prod_type' (f := fun c d => ∑ b, ∑ a, (V b d * U c a) • (R (single c d 1) * R' (single b a 1)))]
   simp only [← Fintype.sum_prod_type']
   refine Fintype.sum_equiv ((Equiv.prodComm _ _).trans (Equiv.prodCongr (Equiv.refl _) (Equiv.prodComm _ _))) _ _

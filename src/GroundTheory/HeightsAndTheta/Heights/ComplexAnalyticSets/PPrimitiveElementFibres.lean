@@ -61,7 +61,8 @@ theorem proof : PrimitiveElementFibres.Statement := by
       (fun j : Fin n => Ideal.Quotient.mk J (X j)) (adjoin_eq_top J A)
   set ℓ : (MvPolynomial (Fin n) ℂ ⧸ J) := ∑ j, algebraMap (MvPolynomial (Fin d) ℂ) (MvPolynomial (Fin n) ℂ ⧸ J) (C (c j)) * Ideal.Quotient.mk J (X j) with hℓ
   have hℓmk : ℓ = Ideal.Quotient.mk J (∑ j, C (c j) * X j) := by
-    rw [hℓ, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hℓ, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_mul]
     congr 1

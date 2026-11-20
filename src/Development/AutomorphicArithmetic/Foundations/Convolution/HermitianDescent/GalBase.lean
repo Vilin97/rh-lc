@@ -15,7 +15,8 @@ private theorem sum_fixed (h : IsGal σ q) (r : R) :
   have h1 := Finset.sum_range_succ (fun j => (σ ^ j) r) q
   have h2 := Finset.sum_range_succ' (fun j => (σ ^ j) r) q
   rw [h1, h.pow, pow_zero] at h2
-  rw [map_sum, add_right_cancel h2]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, add_right_cancel h2]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [pow_succ', AlgEquiv.mul_apply]
 

@@ -57,7 +57,8 @@ private theorem mult_le (hn : 0 < n) (τ : E →+* PadicAlgCl p) (y : Gam0 E n)
   have h : (y.1.1.val.map (GlobalTheory.SplitPts.conjE E).toRingHom)ᵀ * y.1.1.val =
       algebraMap ℚ E y.1.2 • (1 : Matrix (Fin n) (Fin n) E) := y.2.1
   have h0 := congrArg τ (congrFun (congrFun h ⟨0, hn⟩) ⟨0, hn⟩)
-  rw [Matrix.mul_apply, map_sum, Matrix.smul_apply, Matrix.one_apply_eq, smul_eq_mul, mul_one] at h0
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.mul_apply, map_sum, Matrix.smul_apply, Matrix.one_apply_eq, smul_eq_mul, mul_one] at h0
   have e : algebraMap ℚ_[p] (PadicAlgCl p) (algebraMap ℚ ℚ_[p] (y.1.2 : ℚ)) = τ (algebraMap ℚ E y.1.2) := by
     simp only [eq_ratCast, map_ratCast]
   rw [e, ← h0]

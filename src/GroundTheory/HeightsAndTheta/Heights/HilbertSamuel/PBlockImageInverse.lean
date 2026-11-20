@@ -214,7 +214,8 @@ theorem mem_coordIdeal_iff {r : ℕ} (x : Ix (Fin r) → Ω) {F : MRing (GlobalT
 
 theorem aeval_linear {σ α : Type*} [Fintype α] {S : Type*} [CommRing S] [Algebra ℤ S] (v : σ → S)
     (A : α → ℤ) (q : α → σ) : aeval v (∑ j, C (A j) * X (q j) : MvPolynomial σ ℤ) = ∑ j, (A j : S) * v (q j) := by
-  simp [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum]
 
 theorem sum_mul_sum {α β γ : Type*} [Fintype β] [Fintype γ] {S : Type*} [CommRing S] (N : Matrix α β ℤ)
     (M : Matrix β γ ℤ) (w : γ → S) (i : α) :
@@ -340,7 +341,8 @@ theorem BlockImageInverse.proof : BlockImageInverse.Statement := by
     rw [aeval_bind₁]
     refine aeval_congr_block hP fun i => ?_
     rw [hσ0, hv i]
-    simp [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum]
 
   set e := n₀ + 1 + ∑ k, (nn k (c k) + ∑ i, nn k i) with he
   obtain ⟨F, hF⟩ : ∃ F : MRing (GlobalTheory (Fin r)), F = bind₁ σ Bf := ⟨_, rfl⟩
@@ -355,12 +357,14 @@ theorem BlockImageInverse.proof : BlockImageInverse.Statement := by
     intro z
     rw [aeval_bind₁]
     refine congrArg (fun φ => aeval φ F) (funext fun j => ?_)
-    simp [hρ, blockMapC, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [hρ, blockMapC, map_sum]
   have hFx : aeval x F = aeval y Bf := hF ▸ heval hBH x y fun i => hI.2 i
   have hGy : aeval y (bind₁ ρ F) = aeval x F := by
     rw [aeval_bind₁]
     refine congrArg (fun φ => aeval φ F) (funext fun j => ?_)
-    simp [hρ, hI.1 j, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [hρ, hI.1 j, map_sum]
 
   obtain ⟨Q, hQ⟩ : ∃ Q : ∀ k, ι k → MRing ι, Q = fun k i => gg k i * ∏ i' ∈ Finset.univ.erase i, hh k i' :=
     ⟨_, rfl⟩
@@ -490,7 +494,8 @@ theorem BlockImageInverse.proof : BlockImageInverse.Statement := by
     obtain ⟨z, hz⟩ : ∃ z : (Σ k, ι k) → ℂ, z = fun p => aeval u (τ p) := ⟨_, rfl⟩
     have hzk₀ : ∀ i, z ⟨k₀, i⟩ = ∑ j, (N i j : ℂ) * u j := by
       intro i
-      simp [hz, hτ, hσ0, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [hz, hτ, hσ0, map_sum]
     have hzB : aeval z Bf = aeval u F := by
       rw [hF]
       exact (heval hBH u z hzk₀).symm

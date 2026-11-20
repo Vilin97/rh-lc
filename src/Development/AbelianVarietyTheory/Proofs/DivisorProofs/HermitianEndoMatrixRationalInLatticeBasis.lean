@@ -56,7 +56,8 @@ theorem herm_endo_matrix_rat : ∀ (g n : ℕ) (e : Module.Basis (Fin n) ℝ (Fi
     have hk : ∀ k, imFormRight H₁ (e k) v = 0 := by
       intro k
       have := congrFun hx k
-      rw [hv, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hv, map_sum]
       simp only [map_smul, smul_eq_mul]
       simp only [mulVec, dotProduct, Pi.zero_apply] at this
       rw [← this]
@@ -64,7 +65,8 @@ theorem herm_endo_matrix_rat : ∀ (g n : ℕ) (e : Module.Basis (Fin n) ℝ (Fi
       rw [mul_comm]; rfl
     have hu : ∀ u, imFormLeft H₁ v u = 0 := by
       intro u
-      rw [← e.sum_repr u, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← e.sum_repr u, map_sum]
       refine Finset.sum_eq_zero fun k _ => ?_
       rw [map_smul]
       have := hk k

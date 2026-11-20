@@ -76,7 +76,8 @@ theorem pr_hzz (q : SplitPt D k) {ρ : ℕ} (B : BesLev D ρ) {n : Type} [Fintyp
   refine mul_left_cancel₀ hsc ?_
   rw [← h, Matrix.vecMul, dotProduct]
   simp only [hF₀.2]
-  rw [map_sum, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun b _ => ?_
   rw [map_mul, map_mul]
   show sc * (q.pr (incA D (FrameLat.row B.V₀ (vecB B.o B.ζ) b)) * q.pr (incA D (vecB B.o B.ζ b))) =
@@ -111,7 +112,8 @@ theorem pairing_mem_intAt (q : SplitPt D k) {ρ : ℕ} (B : BesLev D ρ) {n : Ty
         ((fun l => q.pr (incA D ((star (vecB B.o B.ζ) ᵥ* B.V₀.gram) l))) ᵥ* F₀.β) ⬝ᵥ
           (F₀.γ *ᵥ fun b => q.pr (yv b)) := by
       rw [← Matrix.dotProduct_mulVec, Matrix.mulVec_mulVec, F₀.βγ, Matrix.one_mulVec]
-      simp only [FrameLat.pairing, map_sum, map_mul, dotProduct]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [FrameLat.pairing, map_sum, map_mul, dotProduct]
       rfl
     rw [e, GlobalTheory.LastPrimSplit.row_core q B sc FA F₀ hF₀, single_dotProduct]
     refine mul_mem ?_ (hw _)
@@ -137,7 +139,8 @@ theorem pairing_mem_intAt (q : SplitPt D k) {ρ : ℕ} (B : BesLev D ρ) {n : Ty
       field_simp
     have h := (FrameLat.csec_mem_iff hM _).1 hx _ hz
     convert h using 1
-    simp only [FrameLat.pairing, FrameLat.row, map_sum, map_mul, FrameLat.cA_incA, star_sum, star_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [FrameLat.pairing, FrameLat.row, map_sum, map_mul, FrameLat.cA_incA, star_sum, star_mul,
       Pi.star_apply, star_star]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun i _ => ?_
@@ -224,7 +227,8 @@ theorem normalFr_incAdj_yZero_mem_latO_iff : ∀ {D : D7} (ψ : AddChar (AF D.ho
     have h2 := (hLineN _ (hpid _ hy₀)).1 h1
     have e : FrameLat.pairing ((y.bes j ρ h).lev (a.x j).vol).V₀ (vecB ((y.bes j ρ h).lev (a.x j).vol).o ((y.bes j ρ h).lev (a.x j).vol).ζ) (fun r => (l.q.e + cA D l.q.e) * incA D ((vecB ((y.bes j ρ h).lev (a.x j).vol).o ((y.bes j ρ h).lev (a.x j).vol).ζ) r)) =
         (l.q.e + cA D l.q.e) * incA D (∑ b, FrameLat.row ((y.bes j ρ h).lev (a.x j).vol).V₀ (vecB ((y.bes j ρ h).lev (a.x j).vol).o ((y.bes j ρ h).lev (a.x j).vol).ζ) b * (vecB ((y.bes j ρ h).lev (a.x j).vol).o ((y.bes j ρ h).lev (a.x j).vol).ζ) b) := by
-      simp only [FrameLat.pairing, map_sum, map_mul, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [FrameLat.pairing, map_sum, map_mul, Finset.mul_sum]
       exact Finset.sum_congr rfl fun b _ => by ring
     have hid2 := hpid _ hy₀
     rw [e] at h2 hid2

@@ -107,10 +107,12 @@ theorem exists_cyclic_pair : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] 
       have h0 : R₁.p (∑ i ∈ s, c i • g i) = 0 := by simpa [map_sum, map_smul] using hsum
       have h2 := hC₁ _ hmem h0
       apply hΦ₁
-      rw [map_sum, map_zero, ← h2]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, map_zero, ← h2]
       exact Finset.sum_congr rfl fun i hi => by rw [map_smul, hgT i hi]
     calc ∑ i ∈ s, c i • R.p (f i) = R.p (Φ (tensIncl F P Q r₀ s₀ (∑ i ∈ s, c i • Tf i))) := by
-          simp only [map_sum, map_smul]
+          set_option synthInstance.maxHeartbeats 100000 in
+            simp only [map_sum, map_smul]
           exact Finset.sum_congr rfl fun i hi => by rw [hfT i hi]
       _ = 0 := by rw [hsumT, map_zero, map_zero, map_zero]
 

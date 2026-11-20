@@ -120,7 +120,8 @@ theorem sum_expand {Z I : Type} (θ : MvPolynomial Z O →ₐ[O] R) (ψ : Gm →
     (hψ : ∀ (c : O) z, ψ (algebraMap O (alg O N lam) c • z) = algebraMap O R c * ψ z) (s : Finset I) (p : I → MvPolynomial Z O)
     (a : I → alg O N lam) (U : Finset (Z →₀ ℕ)) (hU : ∀ i ∈ s, (p i).support ⊆ U) (z : Gm) :
     ∑ i ∈ s, θ (p i) * ψ (a i • z) = ∑ μ ∈ U, θ (monomial μ 1) * ψ ((∑ i ∈ s, AddMonoidAlgebra.coeff (p i) μ • a i) • z) := by
-  simp only [Finset.sum_smul, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finset.sum_smul, map_sum, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i hi => ?_
   have : p i = ∑ μ ∈ U, AddMonoidAlgebra.coeff (p i) μ • monomial μ 1 := by
@@ -128,7 +129,8 @@ theorem sum_expand {Z I : Type} (θ : MvPolynomial Z O →ₐ[O] R) (ψ : Gm →
     simp only [smul_monomial, smul_eq_mul, mul_one]
     exact Finset.sum_subset (hU i hi) fun m _ hm => by rw [notMem_support_iff.1 hm, map_zero]
   conv_lhs => rw [this]
-  rw [map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun μ _ => ?_
   rw [Algebra.smul_def (A := alg O N lam), mul_smul, hψ, map_smul, Algebra.smul_def]
   ring

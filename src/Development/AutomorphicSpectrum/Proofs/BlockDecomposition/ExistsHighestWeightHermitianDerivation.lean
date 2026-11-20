@@ -78,7 +78,8 @@ theorem strict_kill (ν : Fin n → ℤ) (c : Jd n ν → ℂ) (hc : ∀ a b, a 
     (hB : ∀ i j, j ≤ i → B i j = 0) : XA ν B *ᵥ c = 0 := by
   rw [XA_eq_sum]
   have h : (∑ a, ∑ b, B a b • Xu ν a b) *ᵥ c = ∑ a, ∑ b, B a b • (Xu ν a b *ᵥ c) := by
-    simp only [← Matrix.toLin'_apply, map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [← Matrix.toLin'_apply, map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply]
   rw [h]
   refine Finset.sum_eq_zero fun a _ => Finset.sum_eq_zero fun b _ => ?_
   rcases lt_or_ge a b with h | h
@@ -193,7 +194,8 @@ theorem frameL_mul (A B : Matrix (Jd n ν) (Jd n ν) ℂ) : frameL e (A * B) = f
 theorem frameL_XA (X : Mat n) (w : L) :
     ∑ a, ∑ b, X a b • frameL e (Xu ν a b) w = frameL e (XA ν X) w := by
   rw [XA_eq_sum]
-  simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply]
 
 theorem glRel_frame : Formalism.REAL.GlRel fun a b => frameL e (Xu ν a b) := by
   intro a b c d

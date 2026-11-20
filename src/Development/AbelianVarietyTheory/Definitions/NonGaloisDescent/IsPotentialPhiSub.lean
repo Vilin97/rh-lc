@@ -115,7 +115,8 @@ omit [TameDescentExponentData K l e a] in
 
 theorem galOB_iB_const {h : GQ l} (hh : h ∈ GK (ϖ.field a)) (f : ZMod a → invL l (S O K e))
     (c : ZMod a → K) (hf : ∀ τ, (f τ : K⟦X⟧) = C (c τ)) : galOB O h (ϖ.iB t K f) = ϖ.iB t K f := by
-  rw [PiSys.iB, glue_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [PiSys.iB, glue_apply, map_sum]
   refine Finset.sum_congr rfl fun τ _ => ?_
   rw [map_mul]
   congr 1
@@ -154,10 +155,12 @@ def unitGal (s : G →* GQ l) (η H : ℕ) (T : LocLat G ℚ_[l] K O) (hT : ∀ 
     have h1 : (unitIdent t ϖ T b).j (inclL t ϖ (unitMod l a e O K ι) c) =
         (unitIdent t ϖ T b).j (inclL t ϖ (unitMod l a e O K ι) c') := by
       refine h.trans ?_
-      rw [unitIdent_j, coordEq_apply, map_sum, inclL_apply, frobMat_unitMod, Matrix.one_mulVec]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [unitIdent_j, coordEq_apply, map_sum, inclL_apply, frobMat_unitMod, Matrix.one_mulVec]
       rfl
     obtain rfl := inclL_injective t ϖ _ ((unitIdent t ϖ T b).j.injective h1)
-    rw [coordEq_apply, coordEq_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [coordEq_apply, coordEq_apply, map_sum]
     rfl
   desc g γ hc v v' hv := by
     refine (unitIdent_act t ϖ T b (s g) (hT g) _).trans (funext fun i => ?_)
@@ -165,7 +168,8 @@ def unitGal (s : G →* GQ l) (η H : ℕ) (T : LocLat G ℚ_[l] K O) (hT : ∀ 
       (congrFun (congrFun hv τ) i).trans (unitDesc_act γ v.1 τ i)
   stable g := (Ident.exists_isLMat_iff _ _ _).1 ⟨1, isLMat_unitIdent t ϖ T b (s g) (hT g)⟩
   horiz g hg d h := by
-    rw [coordEq_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [coordEq_apply, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     have h1 : T.actT g (b i) = b i := Subtype.ext (hT g _)
     rw [actB, TWact, TensorProduct.map_tmul, h1, AlgHom.toLinearMap_apply, toBcris_apply,

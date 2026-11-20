@@ -26,7 +26,8 @@ theorem coef_expand (L : LocBessel k r) (P : L.Hs →L[ℂ] L.Wp) (Q : L.Wq →L
   rw [← Finset.sum_smul]
   congr 1
   conv_lhs => rw [← (stdOrthonormalBasis ℂ L.Wq).sum_repr' η]
-  simp only [map_sum, map_smul, inner_sum, inner_smul_right]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, inner_sum, inner_smul_right]
 
 theorem int_coefF (L : LocBessel k r) {μG : Measure (Mt k r)} (hμG : IsHaarOn (UH (Hpk k r)) μG) {d : ℝ} (hd : 0 < d)
     (hSch : ∀ v w v' w' : L.Hs,

@@ -91,7 +91,8 @@ theorem gram_unit (L : LocE F E) [IsArtinianRing E] {n m : ℕ} {H : Matrix (Fin
       rw [FrameBasic.mem_perp_span L h]
       intro j
       change FrameBasic.hfL L H (x j) _ = 0
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Eq.trans ?_ (congrFun hα j)
       simp only [Matrix.toLin'_apply, Matrix.mulVec, dotProduct, gramT, Matrix.of_apply, map_smul,
         smul_eq_mul]

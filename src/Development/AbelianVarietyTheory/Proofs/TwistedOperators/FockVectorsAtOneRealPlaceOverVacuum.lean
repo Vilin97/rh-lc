@@ -440,7 +440,8 @@ private theorem laws_lemma_7 {D : D7} {V W : HSp D} {ψ : AddChar (AF D.host.F) 
     have lin : GlobalTheory.IndefiniteRowSideFullHecke.ThetaSourceAction.ptAt ψ θ V W τ s s' B B' f Q = ∑ β ∈ Q.support, Q.coeff β • GlobalTheory.IndefiniteRowSideFullHecke.ThetaSourceAction.ptAt ψ θ V W τ s s' B B' f (MvPolynomial.monomial β 1) := by
       conv_lhs => rw [Q.as_sum]
       unfold GlobalTheory.IndefiniteRowSideFullHecke.ThetaSourceAction.ptAt Formalism.IndefR.Datum.pureTensorL
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       apply Finset.sum_congr rfl
       intro β _
       rw [← map_smul, MvPolynomial.smul_monomial, smul_eq_mul, mul_one]

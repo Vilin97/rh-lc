@@ -100,7 +100,8 @@ lemma idx_reduce (hI : IdxCalc) (w : HeightOneSpectrum (𝓞 K)) {d : ℕ} {b : 
     simpa using this
   have hfb : ∀ k, f (b k) = stdE d k := fun k => by rw [← hgb k, hfg]
   have hfC : ∀ j, f (famC b C j) = famC (stdE d) C j := fun j => by
-    simp only [famC, map_sum, map_smul, hfb]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [famC, map_sum, map_smul, hfb]
   set M := Submodule.span (𝓞 K) (Set.range b) with hM
   set N := Submodule.span (𝓞 K) (Set.range (famC b C)) with hN
   have hMfg : M.FG := Submodule.fg_span (Set.finite_range _)
@@ -127,7 +128,8 @@ lemma idx_reduce (hI : IdxCalc) (w : HeightOneSpectrum (𝓞 K)) {d : ℕ} {b : 
     hrange b fun k => ⟨stdE d k, hgb k⟩
   have hk2 : N ⊓ (LinearMap.ker f).restrictScalars (𝓞 K) = ⊥ := by
     refine hrange _ fun j => ⟨famC (stdE d) C j, ?_⟩
-    simp only [famC, map_sum, map_smul, hgb]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [famC, map_sum, map_smul, hgb]
   have hm1 : M.map (f.restrictScalars (𝓞 K)) = Submodule.span (𝓞 K) (Set.range (stdE (K := K) d)) := by
     rw [hM, Submodule.map_span, ← Set.range_comp]
     congr 2

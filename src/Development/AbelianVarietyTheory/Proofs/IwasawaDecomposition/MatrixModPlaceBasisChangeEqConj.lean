@@ -22,7 +22,8 @@ theorem basisChange_quot {Q ι : Type} [AddCommGroup Q] [Fintype ι] [DecidableE
     (hυ : ∀ j, υ j = ∑ i, (P i j).val • β i) (hf : ∀ i, f (β i) = ∑ j, (M j i).val • β j) (j : ι) :
     f (υ j) = ∑ m, (N m j).val • υ m := by
   have e1 : f (υ j) = ∑ l, ((M * P) l j).val • β l := by
-    rw [hυ, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hυ, map_sum]
     simp only [map_nsmul, hf, Finset.smul_sum]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun l _ => ?_
@@ -48,13 +49,16 @@ theorem basisChange_mod {V ι : Type} [AddCommGroup V] [Fintype ι] [DecidableEq
     M P N hPN
     (fun j => by
       have := (key _ _).1 (hυ j)
-      rw [this, map_sum]; simp only [map_nsmul])
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [this, map_sum]; simp only [map_nsmul])
     (fun i => by
       have := (key _ _).1 (hf i)
-      rw [map_sum] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum] at this
       simp only [map_nsmul] at this
       rw [← this]; rfl) j
-  rw [key, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [key, map_sum]
   simp only [map_nsmul]
   rw [← h]; rfl
 

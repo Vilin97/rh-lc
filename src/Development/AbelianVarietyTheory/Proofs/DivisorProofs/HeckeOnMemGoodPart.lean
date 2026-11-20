@@ -154,7 +154,8 @@ theorem heckeOn_mem_goodPart {θ : InfFam D} {M : DSModel V S} {β : GL (Fin V.r
   refine ⟨heckeOn_mem_mult hL' hf hx hA hT.1, fun v => ?_⟩
   show gaL V β L eG c (heckeLin V A (T v)) = heckeLin V A (T v)
   conv_rhs => rw [← hT.2 v]
-  simp only [gaL, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [gaL, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul]
   exact Finset.sum_congr rfl fun g _ => by rw [heckeLin_actL hL hx hA (inv_of_mem_mult hL' hT.1 v)]
 
 theorem offAt_of_place {β : GL (Fin V.rank) (Lev.EAf D)} {Λ : Submodule (𝓞 D.host.E) (Fin V.rank → D.host.E)} {N : ℕ}

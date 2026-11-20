@@ -133,7 +133,8 @@ theorem gramR_ratTup {F E : Type} [Field F] [Field E] [Algebra F E] (R : Type) [
     intro e
     simp [sigR, inclR, Algebra.TensorProduct.includeRight_apply, Algebra.TensorProduct.map_tmul]
   ext a b
-  simp only [gramR, gramE, hR, hE, Formalism.UG.hform, ratTup, JR, Matrix.map_apply, hs, map_sum, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [gramR, gramE, hR, hE, Formalism.UG.hform, ratTup, JR, Matrix.map_apply, hs, map_sum, map_mul,
     AlgHom.coe_toRingHom]
 
 end LocPosW

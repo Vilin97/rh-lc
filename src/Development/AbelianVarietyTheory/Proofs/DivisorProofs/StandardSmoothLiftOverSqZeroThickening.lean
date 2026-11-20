@@ -83,7 +83,8 @@ theorem standardSmooth_lift_of_sqZero : ∀ (R R₀ : Type) [CommRing R] [CommRi
       let c' : τ → MvPolynomial κ R := fun j => Function.surjInv hmap (c j)
       have hc' : ∀ j, MvPolynomial.map π (c' j) = c j := fun j => Function.surjInv_eq hmap _
       have hg : f - ∑ j, c' j * v j ∈ RingHom.ker (MvPolynomial.map (σ := κ) π) := by
-        rw [RingHom.mem_ker, map_sub, map_sum, ← hc]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [RingHom.mem_ker, map_sub, map_sum, ← hc]
         simp [hc', hv]
       rw [MvPolynomial.ker_map, hk] at hg
       have hs : ∑ j, c' j * v j ∈ J :=

@@ -48,7 +48,8 @@ theorem frames_at_point : ∀ {X : Scheme.{0}} {Ω : Type} [Field Ω] (ξ : Spec
   · ext j a
     simp only [Matrix.mul_apply, Matrix.of_apply, Matrix.smul_apply, smul_eq_mul]
     have h1 : ∑ l, φ j (cc l) * t a l = φ j (b a) := by
-      rw [← ht a, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← ht a, map_sum]
       simp only [map_smul, smul_eq_mul]
       exact Finset.sum_congr rfl fun l _ => mul_comm _ _
     rw [h1]

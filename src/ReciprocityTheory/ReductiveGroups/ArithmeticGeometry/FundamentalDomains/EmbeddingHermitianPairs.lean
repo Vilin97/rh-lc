@@ -31,7 +31,8 @@ lemma hermC_smul_right (a : ℂ) (u v : Fin r → ℂ) : hermC τ G u (a • v) 
 
 lemma hermC_conj (hG : ∀ a b, cc (G a b) = G b a) (u v : Fin r → ℂ) :
     conj (hermC τ G u v) = hermC τ G v u := by
-  simp only [hermC, map_sum, map_mul, Complex.conj_conj]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hermC, map_sum, map_mul, Complex.conj_conj]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
   rw [← emb_cc' τ (G b a), hG]
@@ -39,7 +40,8 @@ lemma hermC_conj (hG : ∀ a b, cc (G a b) = G b a) (u v : Fin r → ℂ) :
 
 lemma hermC_emb (x y : Fin r → E) :
     hermC τ G (fun a => τ (x a)) (fun a => τ (y a)) = τ (herm G x y) := by
-  simp only [hermC, herm, map_sum, map_mul, emb_cc']
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hermC, herm, map_sum, map_mul, emb_cc']
 
 end herm
 

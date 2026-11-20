@@ -233,7 +233,8 @@ theorem br_mem (X Y : lie (Jm ε)) : (Y * X - X * Y : Mx n) ∈ lie (Jm ε) := b
 
 theorem map_der_eq (hb : ∀ X : lie (Jm ε), ∑ j, φ j X • b j = X) (T : Fam ε ρ →L[ℂ] Fam ε ρ) (X : lie (Jm ε))
     (v : Fam ε ρ) (l : List (lie (Jm ε))) : (T (der ρ X v)).1 l = ∑ j, φ j X • (T (der ρ (b j) v)).1 l := by
-  rw [der_eq hb, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [der_eq hb, map_sum]
   simp only [map_smul, Submodule.coe_sum, Finset.sum_apply, Submodule.coe_smul, Pi.smul_apply]
   simp only [Complex.coe_smul]
 

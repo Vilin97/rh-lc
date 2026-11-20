@@ -178,7 +178,8 @@ theorem exists_isFrame {n : ℕ} (L : Submodule (𝓞 E) (Fin n → E)) (hfg : L
     rw [← Matrix.map_mul, hAB, Matrix.map_one _ (map_zero _) (map_one _)]
   refine ⟨⟨P.map s, Q.map s, hm _ _ hPQ, hm _ _ hQP⟩, fun x => ?_⟩
   have e : ∀ i, (Q.map s *ᵥ x) i = s ((Q *ᵥ fun j => s.symm (x j)) i) := fun i => by
-    simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, AlgEquiv.apply_symm_apply, Matrix.map_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, AlgEquiv.apply_symm_apply, Matrix.map_apply]
   change _ ↔ ∀ i, (Q.map s *ᵥ x) i ∈ _
   simp only [e]
   constructor

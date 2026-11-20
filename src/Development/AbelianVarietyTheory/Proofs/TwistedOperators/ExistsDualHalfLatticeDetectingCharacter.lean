@@ -146,7 +146,8 @@ theorem GlobalTheory.HalfDuality.exists_dual_half : ∀ {D : D7} {G : Type} [Gro
       · rw [← mul_assoc, ← map_mul, hee]
       · rw [mul_zero])
   have hinf : ∀ k, infPart D (hO (Vc D i) (Wc D i) y k) = 0 := fun k => by
-    simp only [hO, map_sum, map_mul, hy0, mul_zero, Finset.sum_const_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hO, map_sum, map_mul, hy0, mul_zero, Finset.sum_const_zero]
   have hfin : ∀ k, IsHalf (cA D e) k → toEAf D (hO (Vc D i) (Wc D i) y k) =
       c₀ * frMapAdj (Vc D i) (Wc D i) (R.βV i) (R.βW i) k a b := fun k hk => by
     rw [GlobalTheory.HalfDuality.trace_id _ _ (R.βV i) (R.βW i), hyz, GlobalTheory.HalfDuality.trace_mul_single, mul_comm (toEAf D e) c₀, mul_left_comm,

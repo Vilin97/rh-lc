@@ -30,7 +30,8 @@ theorem exists_eigBasis (g : EigFrame Z φ x) : ∃ b : Module.Basis (Σ τ : E 
     ∀ p, b p = g.vec p.1 p.2 := by
   have heig : ∀ (τ : E →+* ℂ) (a : Fin (Dw.mult τ) → R) (b : 𝓞 E),
       actR Z.t.act b (∑ i, a i • g.vec τ i) = φ (embK c τ b) • ∑ i, a i • g.vec τ i := fun τ a b => by
-    simp only [map_sum, map_smul, g.act_vec, Finset.smul_sum, smul_comm (a _)]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, g.act_vec, Finset.smul_sum, smul_comm (a _)]
   have hli : LinearIndependent R (fun p : (Σ τ : E →+* ℂ, Fin (Dw.mult τ)) => g.vec p.1 p.2) := by
     rw [Fintype.linearIndependent_iff]
     intro a ha p
@@ -77,7 +78,8 @@ theorem eigBasis_toMatrix (g g' : EigFrame Z φ x) :
   ext ⟨σ, b⟩ ⟨τ, i⟩
   have hv : ∀ a, g.vec τ a = eigBasis g ⟨τ, a⟩ := fun a => (eigBasis_apply g ⟨τ, a⟩).symm
   rw [Module.Basis.toMatrix_apply, eigBasis_apply, g.vec_eq g' τ i]
-  simp only [hv, map_sum, map_smul, Module.Basis.repr_self, Finsupp.coe_finset_sum, Finset.sum_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hv, map_sum, map_smul, Module.Basis.repr_self, Finsupp.coe_finset_sum, Finset.sum_apply,
     Finsupp.smul_apply, Finsupp.single_apply, smul_eq_mul]
   by_cases h : σ = τ
   · subst h
@@ -102,7 +104,8 @@ theorem toMatrix_map_of_semilinear {R' : Type} [CommRing R'] {N N' : Type} [AddC
     (hv : ∀ j, f (v j) = v' j) : b'.toMatrix v' = (b.toMatrix v).map ψ := by
   ext i j
   have e : v' j = ∑ k, ψ (b.repr (v j) k) • b' k := by
-    rw [← hv, ← b.sum_repr (v j), map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hv, ← b.sum_repr (v j), map_sum]
     exact Finset.sum_congr rfl fun k _ => by rw [map_smulₛₗ, hb, b.sum_repr]
   rw [Module.Basis.toMatrix_apply, e, Module.Basis.repr_sum_self]
   rfl

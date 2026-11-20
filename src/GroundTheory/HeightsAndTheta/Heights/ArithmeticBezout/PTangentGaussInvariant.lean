@@ -152,7 +152,8 @@ theorem exists_unitary_leadCoordPlane {n m : ℕ} (hm : 0 < m) (hmn : m ≤ n)
   have hU : ∀ w, e.equiv B (Equiv.refl _) w = ∑ j, w j • B j := by
     intro w
     conv_lhs => rw [← e.sum_repr w]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_smul, OrthonormalBasis.equiv_apply_basis, Equiv.refl_apply]
     rfl
@@ -181,7 +182,8 @@ theorem exists_unitary_leadCoordPlane {n m : ℕ} (hm : 0 < m) (hmn : m ≤ n)
       simp [he, EuclideanSpace.basisFun_apply, hne]
     · calc e.equiv B (Equiv.refl _) (∑ k : Fin m, (bT.repr ⟨t, ht⟩ k) • e (Fin.castLE hmn k))
             = ∑ k : Fin m, (bT.repr ⟨t, ht⟩ k) • (bT k : EuclideanSpace ℂ (Fin n)) := by
-              simp [map_sum, map_smul, OrthonormalBasis.equiv_apply_basis, hBk]
+              set_option synthInstance.maxHeartbeats 100000 in
+                simp [map_sum, map_smul, OrthonormalBasis.equiv_apply_basis, hBk]
         _ = ((∑ k : Fin m, (bT.repr ⟨t, ht⟩ k) • bT k : T) : EuclideanSpace ℂ (Fin n)) := by
               simp
         _ = t := by rw [bT.sum_repr]

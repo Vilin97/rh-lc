@@ -22,7 +22,8 @@ variable {S : Type} [CommRing S] {s : S →+* S} {M : ℕ} {J : Matrix (Fin M) (
 
 theorem hf_conj (hs : ∀ x, s (s x) = x) (hJ : cT s J = J) (x y : Fin M → S) : s (hform s J x y) = hform s J y x := by
   have : ∀ i j, s (J j i) = J i j := fun i j => congrFun (congrFun hJ i) j
-  simp only [hform, map_sum, map_mul, hs, this]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hform, map_sum, map_mul, hs, this]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
 

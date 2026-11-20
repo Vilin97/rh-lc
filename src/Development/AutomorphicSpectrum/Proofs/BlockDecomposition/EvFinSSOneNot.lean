@@ -82,14 +82,16 @@ variable {S}
 theorem evalV_finOf (c : ∀ v : S, Fv F v.1) (u : HeightOneSpectrum (𝓞 F)) (h : u ∈ S) :
     evalV F u (finOf S c) = c ⟨u, h⟩ := by
   unfold finOf
-  rw [map_sum, Finset.sum_eq_single (⟨u, h⟩ : S)
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_eq_single (⟨u, h⟩ : S)
     (fun b _ hb => evalV_singleFin_ne (fun e => hb (Subtype.ext e.symm)) _) (by simp)]
   exact evalV_singleFin_self u _
 
 theorem evalV_finOf_not (c : ∀ v : S, Fv F v.1) (u : HeightOneSpectrum (𝓞 F)) (h : u ∉ S) :
     evalV F u (finOf S c) = 0 := by
   unfold finOf
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_eq_zero fun b _ => evalV_singleFin_ne (fun e => h (by rw [e]; exact b.2)) _
 
 theorem af_ext {x y : Af F} (h : ∀ u, evalV F u x = evalV F u y) : x = y :=

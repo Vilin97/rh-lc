@@ -45,20 +45,23 @@ theorem alg_descend {O K T : Type} [CommRing O] [Field K] [AddCommGroup T] [Modu
   choose a' ha' using fun k i => hZ (Or.inl ⟨(k, i), rfl⟩)
   choose l' hl' using fun k i => hZ (Or.inr ⟨(k, i), rfl⟩)
   have hbu : ∀ k, b (∑ i, a' k i • s i) = u k := fun k => by
-    rw [map_sum, ← ha k]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, ← ha k]
     exact Finset.sum_congr rfl fun i _ => by rw [hsm, hs, ha']
   have heig : ∀ x, x ∈ eigSp ρV σV ↔ b x ∈ eigSp ρ σ := fun x => by
     rw [EigBase.mem_eigSp, EigBase.mem_eigSp]
     refine forall_congr' fun a => ?_
     rw [← hρ, ← hσ, RingHom.comp_apply, ← hsm, hb.eq_iff]
   have hsum : ∀ cf : Fin n → V, b (∑ k, cf k • ∑ i, a' k i • s i) = ∑ k, g (cf k) • u k := fun cf => by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun k _ => by rw [hsm, hbu]
   refine ⟨fun k => ∑ i, a' k i • s i, hbu, fun k => (heig _).2 (by rw [hbu]; exact h1 k), fun e he => ?_⟩
   obtain ⟨cf, hcf, -⟩ := h2 _ ((heig e).1 he)
   obtain ⟨x, hx⟩ := (Submodule.mem_span_range_iff_exists_fun V).1 (hsp ▸ Submodule.mem_top : e ∈ _)
   have hc : ∀ k, cf k = g (∑ i, x i * l' k i) := fun k => by
-    rw [← hL' cf, ← hcf, ← hx, map_sum, map_sum, map_sum, Finset.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hL' cf, ← hcf, ← hx, map_sum, map_sum, map_sum, Finset.sum_apply]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [hsm, hs, map_smul, map_mul, hl']
     rfl
@@ -109,7 +112,8 @@ theorem span_map {R R' V V' : Type} [CommRing R] [CommRing R'] [AddCommGroup V] 
   rw [eq_top_iff, ← h, Submodule.span_le]
   rintro _ ⟨e, rfl⟩
   obtain ⟨x, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun R).1 (hs ▸ Submodule.mem_top : e ∈ _)
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Submodule.sum_mem _ fun i _ => by
     rw [hb]; exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)
 

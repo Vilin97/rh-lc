@@ -40,7 +40,8 @@ theorem UpperTheory.primitive_root_eq_pow_locally :
     have hcu : IsUnit (Ideal.Quotient.mk p ξ.1) := by
       refine (Units.ofPowEqOne _ q ?_ (NeZero.ne q)).isUnit
       rw [← map_pow, hpow ξ, map_one]
-    rw [map_sum] at hz
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at hz
     have hsum : ∑ i ∈ Finset.range q, Ideal.Quotient.mk p (ξ.1 ^ i * (ζ.1 ^ k) ^ (q - 1 - i)) =
         ∑ i ∈ Finset.range q, (Ideal.Quotient.mk p ξ.1) ^ (q - 1) := by
       refine Finset.sum_congr rfl ?_

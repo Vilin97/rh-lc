@@ -55,7 +55,8 @@ theorem eq_zero_of_sum (lam : InfinitePlace E → DomWeight n) {ι : Type} [Fint
   refine b.ext fun m => ?_
   obtain ⟨P, hP⟩ := exists_op lam ((b.coord k).smulRight (b m))
   have := congrArg P h
-  rw [map_sum, map_zero] at this
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_zero] at this
   rw [LinearMap.zero_apply, ← this]
   rw [Finset.sum_eq_single k]
   · rw [← hP _ (hT k)]; simp
@@ -127,7 +128,8 @@ theorem mem_range_of_mem (S : Set (Pl E)) (K' : ∀ w : Pl E, Subgroup (UL n w))
       have := hfix ⟨k, hk⟩
       simpa [RF] using this
     have h2 : ∑ i, (RU E n k.1 ∘ₗ T i - T i) (b i) = 0 := by
-      simp only [LinearMap.sub_apply, LinearMap.comp_apply, Finset.sum_sub_distrib, ← map_sum, h1, sub_self]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [LinearMap.sub_apply, LinearMap.comp_apply, Finset.sum_sub_distrib, ← map_sum, h1, sub_self]
     exact sub_eq_zero.1 (eq_zero_of_sum lam b _ (fun i => sub_mem (comp_mem_infHom lam (hT i) k) (hT i)) h2 j)
   obtain ⟨F, hFa⟩ : ∃ F : Fin (Module.finrank ℂ (Wsp lam)) → finU E n → Module.Dual ℂ (Wsp lam),
       ∀ j x w, F j x w = T j w x.1 :=
@@ -170,7 +172,8 @@ theorem mem_range_of_mem (S : Set (Pl E)) (K' : ∀ w : Pl E, Subgroup (UL n w))
       change T j w (x.1 * k.1) = T j w x.1
       exact congrFun (LinearMap.congr_fun (hfixT k hk j) w) x.1
   refine ⟨∑ j, ⟨F j, hF j⟩ ⊗ₜ b j, ?_⟩
-  simp [map_sum, Phi_tmul, hphi]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, Phi_tmul, hphi]
 
 theorem forms_le_range : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E], Unr E → ∀ n : ℕ, 1 ≤ n → ∀ (S : Set (Pl E)), IsSection S → ∀ (lam : InfinitePlace E → DomWeight n) (K' : ∀ w : Pl E, Subgroup (UL n w)), IsLevelFam (fun w : Pl E => MonoidHom.id (UL n w)) (KL n) K' → forms S lam K' ≤ LinearMap.range (Phi S lam K') := by
   intro E _ _ _ _ n _ S _ lam K' _

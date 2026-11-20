@@ -113,7 +113,8 @@ theorem exists_eq_sum (hi : Function.Injective (algebraMap O C)) {J : Type} [Fin
       exact evalChar_zero C _
   have : Tate.map p (evalChar C (b i)) s =
       Tate.map p (evalChar C (b i)) (∑ j, a j • Tate.map p (ptsHom (cochar b j)) ζ) := by
-    simp only [map_sum, map_smul, key, smul_ite, smul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, key, smul_ite, smul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true]
     exact (ha i).symm
   exact congrArg (·.lev n) this
 
@@ -196,7 +197,8 @@ theorem tateTorus_le_span_bLie : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field 
   refine Submodule.span_le.2 ?_
   rintro _ ⟨_, ⟨s, rfl⟩, rfl⟩
   obtain ⟨a, rfl⟩ := exists_eq_sum P.integers.hom_inj b P.eps ζ hζ s
-  simp only [map_sum, map_smul, SetLike.mem_coe]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, SetLike.mem_coe]
   refine Submodule.sum_mem _ fun j _ => Submodule.smul_of_tower_mem _ _ (Submodule.subset_span
     ⟨lieMap (cochar b j ≫ P.D.i) e, (bLie_cochar P _ ζ hζ e he).trans ?_⟩)
   exact congrArg ((1 : C) ⊗ₜ[ℤ_[p]] ·) (Tate.ext fun n => congrArg P.toA (Category.assoc (ζ.lev n) (cochar b j) P.D.i).symm)

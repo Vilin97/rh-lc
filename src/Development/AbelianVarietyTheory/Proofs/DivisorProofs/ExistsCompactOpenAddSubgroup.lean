@@ -127,7 +127,8 @@ private theorem exists_coeff_form_and_integral [IsTopologicalAddGroup V] [T2Spac
   · calc m φ = m (∑ q ∈ S, φ q.out •
           (fun x => Set.indicator (H : Set V) (fun _ => (1 : ℂ)) (x + -q.out))) := congrArg m hS
       _ = ∑ q ∈ S, φ q.out * m (Set.indicator (H : Set V) (fun _ => (1 : ℂ))) := by
-          rw [map_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [map_sum]
           refine Finset.sum_congr rfl fun q _ => ?_
           rw [map_smul, smul_eq_mul, hm _ hmemH]
       _ = _ := by rw [Finset.sum_mul]

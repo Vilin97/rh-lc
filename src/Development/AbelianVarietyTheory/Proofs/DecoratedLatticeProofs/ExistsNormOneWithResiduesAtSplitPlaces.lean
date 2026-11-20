@@ -13,7 +13,8 @@ theorem exists_normOne_residues {A : Type} [CommRing A] {S : Subring A} {P : Typ
 
   have comp : ∀ (f : P → A) Q0, Z.p Q0 (∑ Q ∈ T, Z.e Q * f Q) = if Q0 ∈ T then Z.p Q0 (f Q0) else 0 := by
     intro f Q0
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     by_cases h : Q0 ∈ T
     · rw [if_pos h, Finset.sum_eq_single_of_mem Q0 h
         (fun Q _ hQ => by rw [map_mul, Z.e_ne Q Q0 (Ne.symm hQ), zero_mul]), map_mul, Z.e_self, one_mul]
@@ -46,7 +47,8 @@ theorem exists_normOne_residues {A : Type} [CommRing A] {S : Subring A} {P : Typ
   have pa : ∀ Q0, Z.p Q0 a = if Q0 ∈ T then Z.p Q0 (s Q0) else 0 := fun Q0 => by rw [had, comp]
   have pb : ∀ Q0, Z.p Q0 bb = if Q0 ∈ T then Z.p Q0 (t Q0) else 0 := fun Q0 => by rw [hbd, comp]
   have pF : ∀ Q0 ∈ T, Z.p Q0 (σ E) = 0 := fun Q0 hQ0 => by
-    rw [hEd, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hEd, map_sum, map_sum]
     refine Finset.sum_eq_zero fun Q hQ => ?_
     obtain ⟨Q3, h3⟩ := Z.exists_bar hσ Q
     rw [map_mul, map_one, mul_one, h3, Z.e_ne Q3 Q0 (fun h => hT Q hQ Q0 hQ0 (by rw [h3, h]))]

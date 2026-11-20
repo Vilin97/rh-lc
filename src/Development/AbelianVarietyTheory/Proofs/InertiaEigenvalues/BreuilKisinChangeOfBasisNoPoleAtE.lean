@@ -97,7 +97,8 @@ theorem core {S B : Type*} [CommRing S] [CommRing B] {d m : ℕ} (F G : S →+* 
   intro i j
   have := congrFun (congrFun hsuff i) j
   rw [← Ideal.mem_span_singleton, ← Ideal.Quotient.eq_zero_iff_mem]
-  simpa [Matrix.mul_apply, map_sum, F', G', π] using this
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa [Matrix.mul_apply, map_sum, F', G', π] using this
 
 end GlobalTheory.NoPole
 

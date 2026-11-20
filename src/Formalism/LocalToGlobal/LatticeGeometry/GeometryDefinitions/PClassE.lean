@@ -193,7 +193,8 @@ theorem gen_lat (Λ : Submodule (𝓞 E) (n → E)) {p : ℕ} (w : Fin p → Λ)
     funext i
     show inclE (F := F) 𝔸 (lam i) = _
     rw [hl]
-    simp [Finset.sum_apply, Subring.smul_def, Algebra.smul_def, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Finset.sum_apply, Subring.smul_def, Algebra.smul_def, map_sum, map_mul]
     exact Finset.sum_congr rfl fun l _ => rfl
   | zero => exact ⟨0, by simp⟩
   | add a b _ _ ha hb =>

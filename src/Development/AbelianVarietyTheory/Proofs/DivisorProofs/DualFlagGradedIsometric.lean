@@ -106,9 +106,11 @@ theorem ev_dualApp_eq_sum {σ : k →+* ℂ} {E : X.Modules} {r : ℕ} (c : Char
   simp only [e]
   rw [← ev_res (inf_le_left : V ⊓ c.U ≤ V) hW, ← dualApp_resM l le_rfl inf_le_left s]
   conv_lhs => rw [← (c.isFrame.basis (inf_le_right : V ⊓ c.U ≤ c.U)).sum_repr (resM E inf_le_left s)]
-  simp only [map_sum, map_smul, smul_eq_mul, Chart.crd, IsFrame.basis_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, smul_eq_mul, Chart.crd, IsFrame.basis_apply]
   rw [ev_eq hW]
-  simp only [map_sum, map_mul, ev_eq hW]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, ev_eq hW]
   exact Finset.sum_congr rfl fun j _ => mul_comm _ _
 
 section Ann

@@ -27,7 +27,8 @@ theorem embR_isHomogeneous (P Q R : ℕ) (h : P ≤ R) (k : ℕ) {G : Mdl P Q} {
 
 theorem homogeneousComponent_embR_mem (P Q R : ℕ) (h : P ≤ R) (k : ℕ) (G : Mdl P Q) (n : ℕ) :
     homogeneousComponent n (embR P Q R h k G) ∈ LinearMap.range (embR P Q R h k) := by
-  rw [← sum_homogeneousComponent G, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← sum_homogeneousComponent G, map_sum, map_sum]
   refine Submodule.sum_mem _ fun m _ => ?_
   rw [homogeneousComponent_of_mem (embR_isHomogeneous P Q R h k (homogeneousComponent_isHomogeneous m G))]
   split_ifs

@@ -97,7 +97,8 @@ theorem Acts.mat_eq {π : Matrix (Fin n₁) (Fin n) E} (hπ : π * H.ι = 1) (h�
   have h2 : incM F π *ᵥ incV F H.x = 0 := by
     funext i
     have := congrArg (inclR (F := F) (AF F)) (congrFun hπx i)
-    simpa [incM, incV, mulVec, dotProduct, map_sum] using this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [incM, incV, mulVec, dotProduct, map_sum] using this
   refine Matrix.ext_of_mulVec_single fun j => ?_
   obtain ⟨a, ha⟩ := h.2 (Pi.single j 1)
   rw [← mulVec_mulVec, ← mulVec_mulVec, ha, mulVec_add, mulVec_smul, h2, smul_zero, add_zero, mulVec_mulVec _ (incM F π), h1,

@@ -416,7 +416,8 @@ theorem reciprocity : Cheb → PoitouTateTotallyComplex → CohDimTwo → TameLo
       change inv _ _ = 0
       rw [this, map_zero]
   rw [h0, Fintype.sum_sum_type, ← Finset.sum_add_distrib] at h1
-  rw [map_sum, ← h1]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, ← h1]
   refine Finset.sum_congr rfl fun a _ => ?_
   obtain ⟨e1, e2⟩ := hu a lam x y (hyI' _ _ (over_refl _) _ (N.plOm.2 _))
     (hyI' _ _ (Or.inr (hPb a)) _ (isPlaceOver_moveVal_cc X (hPb a) (N.plOm.2 _)))

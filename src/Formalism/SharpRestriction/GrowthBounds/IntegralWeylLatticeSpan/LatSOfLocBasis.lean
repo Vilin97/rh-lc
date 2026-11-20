@@ -156,7 +156,8 @@ theorem hform_incl (y x : Fin n → E) :
     hform (sigR σ (v.adicCompletion F)) (J.map (inclE (F := F) (v.adicCompletion F)))
       (fun i => inclE (F := F) (v.adicCompletion F) (y i)) (fun i => inclE (F := F) (v.adicCompletion F) (x i)) =
       inclE (F := F) (v.adicCompletion F) (hform (σ : E →+* E) J y x) := by
-  simp only [hform, map_sum, map_mul, sigR_incl, Matrix.map_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hform, map_sum, map_mul, sigR_incl, Matrix.map_apply]
   rfl
 
 theorem pair_int (M : Submodule (𝓞 E) (Fin n → E)) (x : Fin n → E) (hx : x ∈ dualSet (σ : E →+* E) J M)

@@ -13,7 +13,8 @@ theorem UpperTheory.V.Weyl.commAll :
   have hent : ∀ (g : Matrix (Fin n) (Fin n) ℂ) i j,
       (Ξ.mat g * Z - Z * Ξ.mat g) i j = MvPolynomial.eval (fun ab => g ab.1 ab.2) (Q i j) := by
     intro g i j
-    simp [Q, Matrix.mul_apply, hP, map_sum, mul_comm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Q, Matrix.mul_apply, hP, map_sum, mul_comm]
   rw [← sub_eq_zero]
   ext i j
   rw [hent, Matrix.zero_apply]

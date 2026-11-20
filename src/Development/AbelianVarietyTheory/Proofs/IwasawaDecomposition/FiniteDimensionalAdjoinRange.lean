@@ -176,7 +176,8 @@ theorem finiteDimensional_adjoin_range :
     apply le_antisymm
     · rw [IntermediateField.adjoin_le_iff]
       rintro _ ⟨x, rfl⟩
-      rw [← b.sum_repr x, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← b.sum_repr x, map_sum]
       refine sum_mem fun i _ => ?_
       rw [Rat.smul_def, map_mul, map_ratCast]
       exact mul_mem (SubfieldClass.ratCast_mem _ _) (IntermediateField.subset_adjoin _ _ ⟨i, rfl⟩)

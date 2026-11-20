@@ -87,7 +87,8 @@ theorem UpperTheory.ConvolutionTheory.R2.Ff.dLCen :
     have hz : zF (trI F s) = ∑ v, trI F s v • (TR.toL (Matrix.single 0 0 (Pi.single v 1)) + TR.toL (Matrix.single 1 1 (Pi.single v 1)) : TR.Lie F 2) := by
       ext i j w
       fin_cases i <;> fin_cases j <;> simp [zF, TR.toL, Matrix.scalar_apply, Finset.sum_apply, Pi.single_apply, Matrix.single_apply]
-    rw [hz, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hz, map_sum]
     refine Finset.sum_congr rfl fun v _ => ?_
     rw [map_smul, map_add]
     first

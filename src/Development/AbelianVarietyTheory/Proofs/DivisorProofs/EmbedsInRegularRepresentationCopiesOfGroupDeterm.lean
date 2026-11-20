@@ -22,7 +22,8 @@ theorem sum_act_act (x : R) (g : H) : ∑ k : H, act k (act g x) = ∑ k : H, ac
   simp [← act_mul_apply]
 
 theorem act_sum_act (x : R) (g : H) : act g (∑ k : H, act k x) = ∑ k : H, act k x := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   rw [← Equiv.sum_comp (Equiv.mulLeft g⁻¹)]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [Equiv.coe_mulLeft, ← act_mul_apply, Subgroup.coe_mul, Subgroup.coe_inv, mul_inv_cancel_left]
@@ -61,7 +62,8 @@ theorem eq_zero_of_sum [DecidableEq H] (u : R)
   refine GlobalTheory.mulVec_eq_zero_of_det_nonZeroDivisor _ hdet F ?_
   funext g
   have h2 := congrArg (fun x => act (g : Γ) x) h0
-  simp only [map_sum, map_zero] at h2
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_zero] at h2
   rw [Pi.zero_apply, ← h2]
   simp only [Matrix.mulVec, dotProduct, Matrix.of_apply]
   refine Finset.sum_congr rfl fun h _ => ?_

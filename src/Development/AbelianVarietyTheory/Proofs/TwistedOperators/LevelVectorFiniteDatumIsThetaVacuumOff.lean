@@ -62,7 +62,8 @@ theorem idemSum_mul_off {S T : HSp D} {LS : Set (Fin S.rank → D.host.E)} {LT :
     · linear_combination cA D (es PP) * h0 - u a b * c1 - u a b * c2
   refine ⟨?_, ?_⟩
   · rw [Finset.sum_mul]; exact Finset.sum_eq_zero fun PP hPP => (key PP hPP).1
-  · rw [map_sum, Finset.sum_mul]; exact Finset.sum_eq_zero fun PP hPP => (key PP hPP).2
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum, Finset.sum_mul]; exact Finset.sum_eq_zero fun PP hPP => (key PP hPP).2
 
 end GlobalTheory.FinZeta.VacOff
 

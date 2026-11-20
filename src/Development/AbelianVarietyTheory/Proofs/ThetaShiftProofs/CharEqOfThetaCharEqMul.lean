@@ -168,7 +168,8 @@ theorem IsConvLine.BwMat_posDef {T₀ : ℝ} (hT : A.IsConvLine T₀) {w : ℂ} 
       hx (funext (Fintype.linearIndependent_iff.1 b.linearIndependent x h))
     have := A.be_pos _ h0
     convert this using 1
-    simp only [M, dotProduct, mulVec, map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [M, dotProduct, mulVec, map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
       Finset.mul_sum, Matrix.of_apply]
     rw [Finset.sum_comm]
     exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
@@ -182,7 +183,8 @@ theorem IsConvLine.BwMat_posDef {T₀ : ℝ} (hT : A.IsConvLine T₀) {w : ℂ} 
         simp only [Complex.mul_im, Complex.ofReal_re, Complex.I_im, Complex.ofReal_im, Complex.I_re]
         linarith
       refine h1.trans_eq ?_
-      simp only [dotProduct, mulVec, map_sum, map_zsmul, AddMonoidHom.finsetSum_apply, AddMonoidHom.smul_apply,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [dotProduct, mulVec, map_sum, map_zsmul, AddMonoidHom.finsetSum_apply, AddMonoidHom.smul_apply,
         zsmul_eq_mul, Finset.mul_sum, BwMat_apply, b]
       rw [Finset.sum_comm]
       exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
@@ -201,7 +203,8 @@ theorem coord_Pw_of_basis (Φ : A.V →ₗ[ℂ] (Fin g → ℂ)) {w : ℂ} {τ :
       Φ (A.Pw w (bas (Pi.single (.inr k) 1))) = τ *ᵥ Pi.single k 1) (u : Fin g ⊕ Fin g → ℤ) :
     Φ (A.Pw w (bas u)) = τ *ᵥ ofIntVec (fun k => u (.inr k)) + ofIntVec (fun k => u (.inl k)) := by
   conv_lhs => rw [pi_eq_sum_univ' u]
-  simp only [Fintype.sum_sum_type, map_add, map_sum, map_zsmul, fun k => (hP k).1, fun k => (hP k).2]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Fintype.sum_sum_type, map_add, map_sum, map_zsmul, fun k => (hP k).1, fun k => (hP k).2]
   funext i
   simp [ofIntVec, mulVec, dotProduct, Pi.single_apply, mul_comm, add_comm]
 

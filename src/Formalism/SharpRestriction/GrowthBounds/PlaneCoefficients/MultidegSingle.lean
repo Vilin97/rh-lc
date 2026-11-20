@@ -168,7 +168,8 @@ end LkD
 theorem lkDeg : LkDeg := by
   intro p _ n' r _ _ O _ _ _ Fr L₁ N₁ hV J _ Dt hS hJ j F hF δ hδ ν hν m'
   have hFs := congrArg (PhiJ Fr Dt j) F.as_sum
-  rw [map_sum] at hFs
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum] at hFs
   rw [hFs] at hν
   obtain ⟨μ, hμ, hν'⟩ := Finset.mem_biUnion.1 (MvPolynomial.support_sum hν)
   obtain ⟨ν0, a0, b0⟩ := LkD.PhiJ_monomial Dt hV hS.2.1 hJ j μ (fun v hv =>

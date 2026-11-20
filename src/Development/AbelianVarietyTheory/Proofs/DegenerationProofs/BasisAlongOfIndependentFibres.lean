@@ -47,7 +47,8 @@ theorem map_eq_zero_of_points {X B Y : Scheme.{0}} {M : LB X} (π : X ⟶ B) {n 
   let z : Sp K := (default : PrimeSpectrum K)
   by_cases hz : (g' ≫ r) z ∈ M.U j
   · apply (toStk z).injective
-    rw [map_zero, ← h0 g' z j h₂ hz, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_zero, ← h0 g' z j h₂ hz, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_mul, toStk_valF_eq_gs _ _ z hz, toStk_eq_cst, h₂, H1.gs_spec]
   · refine Finset.sum_eq_zero fun i _ => ?_
@@ -61,7 +62,8 @@ theorem exists_comb_of_independent {F : Type} [Field F] {Y : Scheme.{0}} {M : LB
   choose m hm using fun i => (he (β i)).exists
   have key : ∀ (c : Fin n → F) j, ∑ i, Out.resTop _ (Out.scal p (c i)) * (β i).f j =
       ∑ k, Out.resTop _ (Out.scal p (Matrix.vecMul c (Matrix.of m) k)) * (e k).f j := fun c j => by
-    simp only [fun i => hm i j, SaturatedSections.cst_eq, Matrix.vecMul, dotProduct, map_sum, map_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [fun i => hm i j, SaturatedSections.cst_eq, Matrix.vecMul, dotProduct, map_sum, map_mul,
       Finset.mul_sum, Finset.sum_mul, Matrix.of_apply, _root_.mul_assoc]
     exact Finset.sum_comm
   have inj : Function.Injective (Matrix.vecMulLinear (Matrix.of m)) := by

@@ -71,7 +71,8 @@ theorem coeff_pow_congr {f g : MvPowerSeries (Fin M) C} (hf : constantCoeff f = 
       have : β = 0 := by
         rw [← Finsupp.degree_eq_zero_iff]; omega
       subst this
-      rw [coeff_zero_eq_constantCoeff_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [coeff_zero_eq_constantCoeff_apply, map_sum]
       refine Finset.sum_eq_zero fun i hi => ?_
       rw [map_mul, map_pow, map_pow, hf, hg, ← pow_add, zero_pow]
       have := Finset.mem_range.1 hi
@@ -156,7 +157,8 @@ theorem ord_of_step {d l : ℕ} (hl : 2 ≤ l) (al : Fin d → ℕ → Fin d →
       simp only [h0, pow_zero, pow_one, ite_mul, one_mul, zero_mul, Finset.sum_ite_eq',
         Finset.mem_univ, if_true] at h5
       convert h2 using 2
-      simp only [map_sub, map_sum, coeff_C_mul, h4, h5]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sub, map_sum, coeff_C_mul, h4, h5]
       ring
   exact fun c α => key _ α rfl c
 
@@ -300,10 +302,12 @@ theorem chain :
     Finset.sum_eq_zero fun s hs => if_neg (hc s (by simpa [Nat.lt_succ_iff] using hs))
   have main : ∀ c, OrdGe v (fun _ => ρ + σ) (t c - μ c) (1 + ρ) := by
     refine ord_of_step (by omega) al h0 t μ _ ht (fun c => ?_) hz _ ?_
-    · simp only [μ, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp only [μ, map_sum]
       refine Finset.sum_eq_zero fun s _ => ?_
       split_ifs
-      · simp only [pure, map_sum, map_mul, map_pow, constantCoeff_X]
+      set_option synthInstance.maxHeartbeats 100000 in
+        · simp only [pure, map_sum, map_mul, map_pow, constantCoeff_X]
         refine Finset.sum_eq_zero fun j _ => ?_
         rw [zero_pow (by positivity), mul_zero]
       · simp
@@ -319,7 +323,8 @@ theorem chain :
       simp only [F, pure, Finset.mul_sum]
       rw [Finset.sum_comm, ← Finset.sum_neg_distrib]
       refine Finset.sum_congr rfl fun j _ => ?_
-      rw [← pow_succ, ← neg_mul, ← map_neg, hπ, kap_succ (hp.odd_of_ne_two (by omega)),
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← pow_succ, ← neg_mul, ← map_neg, hπ, kap_succ (hp.odd_of_ne_two (by omega)),
         Finset.mul_sum, ← Finset.sum_neg_distrib, map_sum, Finset.sum_mul]
       refine Finset.sum_congr rfl fun c _ => ?_
       rw [← mul_assoc, ← map_mul]

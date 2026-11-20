@@ -175,7 +175,8 @@ theorem hL_apply (u v : VA I) : hL I u v = hA I u v := rfl
 theorem hA_incl (x y : Fin I.n → I.E) : hA I (incl I x) (incl I y) =
     Formalism.UG.inclE (F := I.F) (Af I.F) (Formalism.UG.hform (starRingEnd I.E) I.J x y) := by
   unfold Formalism.L2.SG.HidaSetting.hA Formalism.UG.hform Formalism.L2.SG.HidaSetting.incl
-  simp only [Matrix.map_apply, map_sum, map_mul, starRingEnd_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.map_apply, map_sum, map_mul, starRingEnd_apply]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   rw [sigA_inclE]
 
@@ -187,7 +188,8 @@ theorem J_conj (i j : Fin I.n) : star (I.J i j) = I.J j i := by
 
 theorem hA_symm (u v : VA I) : hA I v u = sigA I (hA I u v) := by
   unfold Formalism.L2.SG.HidaSetting.hA Formalism.UG.hform
-  simp only [map_sum, map_mul, Matrix.map_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, Matrix.map_apply]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   rw [sigA_sigA, sigA_inclE, J_conj]

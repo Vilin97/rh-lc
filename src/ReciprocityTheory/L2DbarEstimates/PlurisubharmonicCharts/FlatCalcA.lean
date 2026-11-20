@@ -15,7 +15,8 @@ theorem fc_clm_decomp (n : ℕ) (D : V n →L[ℝ] ℂ) (u : V n) :
     simp [bas, PiLp.single_apply, Finset.sum_add_distrib, Complex.real_smul,
       Pi.single_apply, mul_ite, mul_one, mul_zero]
   conv_lhs => rw [hu]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [map_add, map_smul, map_smul, Complex.real_smul, Complex.real_smul]
   have h1 : u a = ((u a).re : ℂ) + ((u a).im : ℂ) * Complex.I := (Complex.re_add_im _).symm

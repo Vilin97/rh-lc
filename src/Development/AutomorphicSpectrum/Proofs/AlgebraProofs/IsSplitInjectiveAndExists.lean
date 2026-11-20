@@ -36,12 +36,14 @@ theorem isSplit_injective_and_exists (O k S : Type) [CommRing O] [Field k] [Fint
     choose y hy using fun s => h.2 (Pi.single s (1 : k))
     have hsum : ∑ s, y s = 1 := by
       apply h.1
-      rw [map_sum, map_one]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, map_one]
       simp only [hy]
       ext t
       simp [Finset.sum_apply, Pi.single_apply]
     have hne : ∑ s, Ψ (y s) ≠ 0 := by
-      rw [← map_sum, hsum, map_one]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← map_sum, hsum, map_one]
       exact one_ne_zero
     obtain ⟨s, -, hs⟩ := Finset.exists_ne_zero_of_sum_ne_zero hne
     refine ⟨s, ?_⟩

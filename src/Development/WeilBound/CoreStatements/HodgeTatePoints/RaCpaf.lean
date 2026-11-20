@@ -79,7 +79,8 @@ lemma form_add {C : Type} [Field C] {R : Type} [CommRing R] [Algebra R C] (p : �
     {ι : Type} [Fintype ι] (l : ι → R) (x y : ι → ZMod p) :
     algebraMap R C (∑ i, l i * (((x + y) i).val : R)) - algebraMap R C (∑ i, l i * ((x i).val : R))
       - algebraMap R C (∑ i, l i * ((y i).val : R)) ∈ pInt (C := C) R p := by
-  simp only [map_sum, ← Finset.sum_sub_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, ← Finset.sum_sub_distrib]
   refine Submodule.sum_mem _ fun i _ => ?_
   have h := Nat.mod_add_div ((x i).val + (y i).val) p
   rw [← ZMod.val_add] at h
@@ -144,7 +145,8 @@ theorem lifts : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgClosed C
       rw [Pi.smul_apply, Algebra.smul_def, map_mul]
       conv_lhs => rw [hr i, map_mul]
       field_simp
-    · rw [map_sum, ← Finset.sum_sub_distrib]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [map_sum, ← Finset.sum_sub_distrib]
       refine v.map_sum_lt one_ne_zero fun i _ => ?_
       have h0 := he0' i
       have h2 : algebraMap R C (l i) * (g i x / algebraMap R C (e i)) -

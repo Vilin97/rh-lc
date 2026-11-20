@@ -146,7 +146,8 @@ theorem form_comp_lineMap (χ : X.Ψ → Fin d → Fin d → ℂ) (a : X.Ψ → 
 theorem chiAt_re {χ : X.Ψ → Fin d → Fin d → ℂ} (hχ : IsHerm χ) (a : X.Ψ → Fin d → ℂ) (τ : X.Ψ) :
     ((chiAt X χ a τ).re : ℂ) = chiAt X χ a τ := by
   rw [← Complex.conj_eq_iff_re, chiAt]
-  simp only [map_sum, map_mul, Complex.conj_conj, ← hχ τ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, Complex.conj_conj, ← hχ τ]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
 

@@ -142,7 +142,8 @@ theorem transpose_mul_mul_map_apply {m : Type*} (c : E → E) (G : Matrix n n E)
 theorem map_dotProduct_mulVec_comp (hc : ∀ t, c (c t) = t) {G : Matrix n n E}
     (hG : ∀ a b, c (G a b) = G b a) (x y : n → E) :
     c (x ⬝ᵥ G *ᵥ (c ∘ y)) = y ⬝ᵥ G *ᵥ (c ∘ x) := by
-  simp only [dotProduct_mulVec_comp_eq_sum, map_sum, map_mul, hc, hG]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dotProduct_mulVec_comp_eq_sum, map_sum, map_mul, hc, hG]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
   ring

@@ -105,7 +105,8 @@ theorem finIncl_small : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Nu
       φ (fun j => (N : FiniteAdeleRing (𝓞 F) F) * a j) := by
     rw [← nsmul_eq_mul, ← map_nsmul]
     show GlobalTheory.ArchFinSplit.finIncl F E (∑ j, ((RingOfIntegers.basis E j : 𝓞 E) : E) ⊗ₜ[F] (N • a) j) = _
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [GlobalTheory.ArchFinSplit.finIncl_tmul, TensorProduct.smul_tmul', smul_eq_mul, mul_one]
     simp only [Pi.smul_apply, nsmul_eq_mul]

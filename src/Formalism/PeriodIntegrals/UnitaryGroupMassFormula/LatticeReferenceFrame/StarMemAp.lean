@@ -91,7 +91,8 @@ theorem riesz (c : (Fin I.n → I.E) →ₗ[I.E] I.E) : ∃ u : Fin I.n → I.E,
     simp [Finset.sum_apply, Pi.single_apply]
   have hc : c x = ∑ j, x j * w j := by
     conv_lhs => rw [hx]
-    simp [map_sum, map_smul, w]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, map_smul, w]
   have hw : (w ᵥ* I.J⁻¹) ᵥ* I.J = w := by
     rw [Matrix.vecMul_vecMul, hJ, Matrix.vecMul_one]
   rw [hc, hG_def]

@@ -154,7 +154,8 @@ theorem exists_adForm (fw : FWTie T R κ v₀) (hHW : R.models_HW) (hU : R.LUnif
   let y : Fin m → Fin (R.nW i) → D.what₂.LL := fun l => fw.e i (f l)
   have e : adForm R i (∑ l, b l • y l) = ∑ l, D.what₂.embLL (b l) • adForm R i (y l) := by
     unfold adForm
-    rw [map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum]
     exact Finset.sum_congr rfl fun l _ => adForm_smul _ _
   have e' : (R.HW i (sg0 D A)).e (c • (R.FW i).j (sg0 D A) (∑ l, b l • y l)) = c • adForm R i (∑ l, b l • y l) :=
     (R.HW i (sg0 D A)).e.map_smul c _

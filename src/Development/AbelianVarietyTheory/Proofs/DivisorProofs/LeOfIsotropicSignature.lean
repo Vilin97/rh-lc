@@ -88,7 +88,8 @@ theorem wittIdx_le_signature : ∀ (E : Type) [Field E] [NumberField E] [StarRin
       ext i j
       have h0 := hW _ (b i).2 _ (b j).2
       rw [hb i, hb j] at h0
-      simp only [map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, RingHom.id_apply,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, RingHom.id_apply,
         starRingEnd_apply] at h0
       simp only [Matrix.mul_apply, Matrix.conjTranspose_apply, HSpace.gram, Matrix.zero_apply]
       rw [← h0]

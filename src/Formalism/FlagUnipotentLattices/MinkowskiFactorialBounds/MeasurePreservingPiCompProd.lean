@@ -230,7 +230,8 @@ theorem s5b7_ideal (p : Ideal O) [hp : p.IsMaximal] (hp0 : p ≠ ⊥) [Finite (O
         ext c
         have h1 : (c : O) = ∑ i, s c i * ((g (fun j => if i = j then 1 else 0) : p) : O) := by
           conv_lhs => rw [← hgs c, pi_eq_sum_univ (s c)]
-          simp [map_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            simp [map_sum]
         simp only [LinearMap.lcomp_apply, Submodule.subtype_apply, LinearMap.sum_apply,
           LinearMap.smul_apply, LinearMap.comp_apply, LinearMap.proj_apply,
           LinearMap.toSpanSingleton_apply]

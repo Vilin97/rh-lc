@@ -57,7 +57,8 @@ private theorem pderiv_inr_mainM_one {C : Type} [Field C] (V : VF C) {ι ι' : T
   have hE : expE V.l 1 = 1 := by simp [expE]
   unfold mainM
   rw [hE, pow_one, pow_one]
-  simp only [map_smul, map_sum, MvPowerSeries.rename_X, map_pow, Finset.smul_sum, smul_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_smul, map_sum, MvPowerSeries.rename_X, map_pow, Finset.smul_sum, smul_smul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl (fun c _ => ?_)
   rw [Finset.sum_eq_single b]
@@ -125,7 +126,8 @@ theorem mPlus_of_good_tangents : ∀ (C : Type) [Field C] (V : VF C) (d : ℕ) [
         (fun c => toW g ((fun δ => (S g).tan (em δ)) c)) (fun b => toW (1 - g) (v' b))) γ +
       MvPowerSeries.rename Sum.inl G := by
     rw [hF, map_sub, hγeq, pderiv_inr_mainM_one V Φ b]
-    simp only [h91.1, hG, map_sub, map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [h91.1, hG, map_sub, map_sum, map_smul]
     abel
   rw [hsplit, map_add]
   refine VF.Ge.add ?_ ?_
@@ -149,7 +151,8 @@ theorem mPlus_of_good_tangents : ∀ (C : Type) [Field C] (V : VF C) (d : ℕ) [
         rw [h91.1]
         apply ge_coeff_rename_inl V
         intro ν' hν'
-        rw [(GlobalTheory.T.coeff_coordinates_good_tangents_lt_sq C V d (I j) (J j) (X.G j) (S j) (t j) (hT j) N em hal ν'
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [(GlobalTheory.T.coeff_coordinates_good_tangents_lt_sq C V d (I j) (J j) (X.G j) (S j) (t j) (hT j) N em hal ν'
           (by rw [hν']; exact hP.1)).1 x, map_sum]
         apply VF.Ge.sum
         intro δ _
@@ -170,8 +173,10 @@ theorem mPlus_of_good_tangents : ∀ (C : Type) [Field C] (V : VF C) (d : ℕ) [
     have hdeg : ν.degree < V.l ^ 2 := by rw [hν]; exact hl'
     have h19 := (GlobalTheory.T.coeff_coordinates_good_tangents_lt_sq C V d (I g) (J g) (X.G g) (S g) (t g) (hT g) N em hal ν hdeg).2
     have hz : MvPowerSeries.coeff ν G = 0 := by
-      rw [hG, map_sub, map_sum]
-      simp only [MvPowerSeries.coeff_smul, h19, map_neg, map_sum, hΦ]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hG, map_sub, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [MvPowerSeries.coeff_smul, h19, map_neg, map_sum, hΦ]
       have hL : (V.l : C) ≠ 0 := VF.l_ne_zero
       rw [sub_eq_zero]
       simp only [Finset.mul_sum, Finset.sum_mul, mul_neg, Finset.sum_neg_distrib, neg_mul]

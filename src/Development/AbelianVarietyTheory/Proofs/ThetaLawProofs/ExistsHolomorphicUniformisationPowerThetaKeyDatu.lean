@@ -315,7 +315,8 @@ theorem exists_powUnif (hL : L.IsLB) {L' : LB G'.left} (hL' : L'.IsLB) (w : LB.I
     rw [MonObj.mul_comp, hex, hex, hex, map_add, u.ex_add]
   · choose z hz using fun i => u.ex_onto (a ≫ p.pr i)
     refine ⟨∑ i, blockIn e i (z i), pow_hom_ext p fun i => ?_⟩
-    rw [hex, ← hz, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hex, ← hz, map_sum]
     simp only [blockPr_blockIn, Finset.sum_ite_eq', Finset.mem_univ, if_true]
   · constructor
     · intro h i

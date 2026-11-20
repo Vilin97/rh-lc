@@ -116,7 +116,8 @@ theorem norm_minor_sub_le {p : ℕ} [Fact p.Prime] {E : Type} [Field E] [NumberF
     rw [RingHom.map_det]
     congr 1
     ext k k'
-    simp only [RingHom.mapMatrix_apply, Matrix.map_apply, Matrix.of_apply, hMex, map_sum, map_mul, map_smul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [RingHom.mapMatrix_apply, Matrix.map_apply, Matrix.of_apply, hMex, map_sum, map_mul, map_smul,
       LinearMap.sum_apply, LinearMap.smul_apply, e, smul_eq_mul, Finset.sum_mul, Finset.mul_sum]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
@@ -207,7 +208,8 @@ theorem kap_close : GlobalTheory.IndefiniteRowSideFullHecke.HodgeTateKernel.Hodg
     rw [← Matrix.det_mul]
     congr 1
     ext k k'
-    simp only [Matrix.of_apply, Matrix.mul_apply, hL, map_sum, map_smul, LinearMap.sum_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.of_apply, Matrix.mul_apply, hL, map_sum, map_smul, LinearMap.sum_apply,
       LinearMap.smul_apply, smul_eq_mul]
   set M₁ := (Matrix.of fun k k' => P.pairV (w₁ k)
     ((fun i => ∑ m, (β (T i m) : ℂ_[p]) ⊗ₜ[ℤ_[p]] ta m) (σ (Sum.inl k')))).det with hM₁

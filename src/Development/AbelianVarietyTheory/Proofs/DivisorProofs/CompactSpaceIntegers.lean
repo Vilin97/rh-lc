@@ -122,7 +122,8 @@ theorem exists_adelic_limit (g : ℕ → D.La →+ D.La)
       obtain ⟨i, rfl⟩ := hy
       choose e he he' using fun j => ha i j n hn hp
       refine ⟨∑ j, e j • inAf D (b j), sum_mem fun j _ => smul_inAf_mem D (he j) _, ?_⟩
-      conv_rhs => rw [← b.sum_repr (g n (b i)), map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        conv_rhs => rw [← b.sum_repr (g n (b i)), map_sum]
       rw [Finset.smul_sum, ← Finset.sum_add_distrib]
       refine (h₀b i).trans (Finset.sum_congr rfl fun j _ => ?_)
       rw [he' j, map_zsmul, add_smul, mul_smul, Int.cast_smul_eq_zsmul, Nat.cast_smul_eq_nsmul]

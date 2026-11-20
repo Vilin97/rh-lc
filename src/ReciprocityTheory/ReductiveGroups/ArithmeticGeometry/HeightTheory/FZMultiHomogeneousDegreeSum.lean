@@ -19,7 +19,8 @@ theorem chiP_rename_swap (j₀ : Fin (N + 1)) (x : Fin N → Ω) (g : MvPolynomi
   have key : ∀ p : TVar D N, chiImg j₀ x (swapT p) = rename swapS (chiImg j₀ x p) := by
     rintro ⟨b, j⟩
     rcases Fin.eq_self_or_eq_succAbove j₀ j with rfl | ⟨k, rfl⟩
-    · simp [chiImg, swapT, swapS, Fin.succAbove_cases_eq_insertNth, Fin.insertNth_apply_same, map_sum, map_neg]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp [chiImg, swapT, swapS, Fin.succAbove_cases_eq_insertNth, Fin.insertNth_apply_same, map_sum, map_neg]
     · simp [chiImg, swapT, swapS, Fin.succAbove_cases_eq_insertNth, Fin.insertNth_apply_succAbove]
   induction g using MvPolynomial.induction_on with
   | C a => simp [chiP]

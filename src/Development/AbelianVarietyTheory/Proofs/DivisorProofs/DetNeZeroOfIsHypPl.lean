@@ -29,7 +29,8 @@ theorem form_smul_left (s : E) (a c : Fin n → E) : form σ J (s • a) c = s *
 
 theorem form_skew (hσ : ∀ e, σ (σ e) = e) (hJ : ∀ i j, σ (J j i) = -J i j) (a b : Fin n → E) :
     σ (form σ J b a) = -form σ J a b := by
-  simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, hJ, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, hJ, Finset.mul_sum]
   rw [Finset.sum_comm, ← Finset.sum_neg_distrib]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [← Finset.sum_neg_distrib]

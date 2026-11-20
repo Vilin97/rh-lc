@@ -96,13 +96,15 @@ theorem sand_of {E : WEt I} (Mo : WN E zl)
     intro y hy
     refine ⟨fun j => b.repr ⟨y, hy⟩ j, ?_⟩
     have := congrArg (Mo.N T).subtype (b.sum_repr ⟨y, hy⟩)
-    rw [map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at this
     exact this.symm
   have hj : ∀ (c : Fin (Module.finrank O ↥T.L.T) → LetA O n)
       (w : Fin (Module.finrank O ↥T.L.T) → E.DD T),
       E.jD T (∑ j, c j • w j) = ∑ j, inclR (I.io (c j)) • E.jD T (w j) := by
     intro c w
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun j _ => jD_smulA E T _ _
   have hsp : ⊤ ≤ Submodule.span RW (Set.range fun i => E.jD T (b i : E.DD T)) := by
     rw [← E.jD_span T, Submodule.span_le]
@@ -160,7 +162,8 @@ theorem sand_of {E : WEt I} (Mo : WN E zl)
         refine Submodule.span_le.mpr ?_
         rintro _ ⟨z, hz, rfl⟩
         obtain ⟨c, rfl⟩ := hexp z hz
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         refine Submodule.sum_mem _ fun j _ => ?_
         rw [φD_smulA]
         exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨j, rfl⟩)

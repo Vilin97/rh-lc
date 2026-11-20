@@ -28,7 +28,8 @@ theorem detRel_unitary (γ γ₀ : IsoK D) :
     rw [← h2] at h1
     simp only [LinearEquiv.apply_symm_apply] at h1
     have h3 := congrArg D.host.φ₀ h1
-    simp only [map_sum, map_mul, phi_conj] at h3
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, phi_conj] at h3
     exact h3
   set M : Matrix (Fin 4 × D.what₂.Tau) (Fin 4 × D.what₂.Tau) D.host.K := LinearMap.toMatrix' T with hM
   have hdet : f (γ.detRel γ₀) = (f.mapMatrix M).det := by

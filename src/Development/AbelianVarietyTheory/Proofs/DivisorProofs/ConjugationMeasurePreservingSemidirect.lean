@@ -55,7 +55,8 @@ theorem supMeas_inv_invariant {G : Type} [Group G] [TopologicalSpace G] [IsTopol
   refine ⟨continuous_inv.measurable, ?_⟩
   show (Measure.sum fun k : H ⧸ N.subgroupOf H => D (Quotient.out k)).map _ =
     Measure.sum fun k : H ⧸ N.subgroupOf H => D (Quotient.out k)
-  rw [Measure.map_sum continuous_inv.measurable.aemeasurable]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Measure.map_sum continuous_inv.measurable.aemeasurable]
   have hk : ∀ k : H ⧸ N.subgroupOf H, (D (Quotient.out k)).map (fun p : H => p⁻¹) = D (Quotient.out (k⁻¹ : H ⧸ N.subgroupOf H)) := by
     intro k
     rw [hD2]

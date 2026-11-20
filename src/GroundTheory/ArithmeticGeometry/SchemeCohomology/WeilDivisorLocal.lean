@@ -312,7 +312,8 @@ theorem WeilDivisor.exists_local_equation (D : WeilDivisor X) (x : X) :
     intro Z hZ
     have hsum : principalDivisor (Additive.ofMul g) =
         ∑ Y ∈ S, D Y • principalDivisor (Additive.ofMul (u Y)) := by
-      simp only [g, ofMul_prod, ofMul_zpow, map_sum, map_zsmul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [g, ofMul_prod, ofMul_zpow, map_sum, map_zsmul]
     rw [hsum, Finset.sum_apply']
     simp only [Finsupp.smul_apply, smul_eq_mul, principalDivisor_apply]
     by_cases hZS : Z ∈ S

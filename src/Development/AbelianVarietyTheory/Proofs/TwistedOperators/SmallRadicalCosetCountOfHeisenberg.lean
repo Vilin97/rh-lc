@@ -177,7 +177,8 @@ theorem count_of_heis : Heis → LatIndex → TraceIndex → Count := by
       obtain ⟨τ, hτ, hτ1⟩ := exists_trace_one hU
       set s : L := -∑ j, ρ j * σ (ρ j.rev) with hsdef
       have hs : σ s = s := by
-        simp only [hsdef, map_neg, map_sum, map_mul, hσσ]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [hsdef, map_neg, map_sum, map_mul, hσσ]
         congr 1
         exact Fintype.sum_equiv Fin.revPerm _ _ (fun j => by simp [mul_comm])
       have hsint : s ∈ intL L := neg_mem (Subring.sum_mem _ fun j _ => mul_mem (hρ' j) (hσint _ (hρ' _)))

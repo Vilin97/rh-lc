@@ -252,8 +252,10 @@ theorem ringRes (hM : GlobalTheory.RingChain.MapSt) : GlobalTheory.ChainPts.SysB
   · apply (omegaMap_polBC_bijective pol' S'.R).1
     have h3 := congrArg (fun u => s.omega (omegaMap _ _ (polBC pol S.R) u)) hx
     beta_reduce at h3
-    rw [map_smul, hO, map_smulₛₗ, hom, map_sub, map_one, ← hz, ConstTate.al_apply, map_sum, map_sum] at h3
-    rw [map_smul, hO', h3, mv_one, ConstTate.al_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_smul, hO, map_smulₛₗ, hom, map_sub, map_one, ← hz, ConstTate.al_apply, map_sum, map_sum] at h3
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_smul, hO', h3, mv_one, ConstTate.al_apply, map_sum]
     refine Fintype.sum_equiv (finCongr (e.trans e'.symm)) _ _ fun i => ?_
     rw [map_smul (omegaMap _ _ (polBC pol S.R)), map_smul (omegaMap _ _ (polBC pol' S'.R)), map_smulₛₗ s.omega]
     refine congrArg₂ _ rfl ?_

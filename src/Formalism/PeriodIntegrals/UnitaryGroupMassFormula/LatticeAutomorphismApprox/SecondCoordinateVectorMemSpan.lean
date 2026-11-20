@@ -60,7 +60,8 @@ theorem hl_swap (I : AutInst) (v : HeightOneSpectrum (𝓞 I.F)) (X Y : Fin I.n 
     intro i j
     have := congrFun (congrFun hJ i) j
     simpa [Formalism.UG.cT] using this
-  simp only [hl, Formalism.UG.hform, map_sum, map_mul, sig2]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hl, Formalism.UG.hform, map_sum, map_mul, sig2]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   rw [hJij j i]
@@ -69,7 +70,8 @@ theorem hl_swap (I : AutInst) (v : HeightOneSpectrum (𝓞 I.F)) (X Y : Fin I.n 
 theorem pr_vec (I : AutInst) (v : HeightOneSpectrum (𝓞 I.F)) (p1 : RV I v →+* KV I v)
     (X Y : Fin I.n → RV I v) :
     pr (Pm I v p1) (vec2 p1 X) (vec1 p1 Y) = p1 (hl I v X Y) := by
-  simp only [pr, Pm, vec1, vec2, hl, Formalism.UG.hform, dotProduct, mulVec, map_sum, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [pr, Pm, vec1, vec2, hl, Formalism.UG.hform, dotProduct, mulVec, map_sum, map_mul,
     Matrix.map_apply, RingHom.comp_apply, Finset.mul_sum]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   ring
@@ -81,11 +83,13 @@ theorem hl_ratV (I : AutInst) (v : HeightOneSpectrum (𝓞 I.F)) (l l' : Fin I.n
   have h1 : Formalism.L2.SG.Sub.ratV (F := I.F) (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Fv I.F v) l = fun i => inclV I v (l i) := rfl
   have h2 : Formalism.L2.SG.Sub.ratV (F := I.F) (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Fv I.F v) l' = fun i => inclV I v (l' i) := rfl
   rw [h1, h2]
-  simp only [hl, Formalism.UG.hform, spl_sigV_inclV, Matrix.map_apply, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hl, Formalism.UG.hform, spl_sigV_inclV, Matrix.map_apply, map_sum, map_mul]
 
 theorem psiV_hA (I : AutInst) (v : HeightOneSpectrum (𝓞 I.F)) (x y : VA I) :
     PI.FinKW.psiV I v (hA I x y) = hl I v (PI.FinKW.vecV I v x) (PI.FinKW.vecV I v y) := by
-  simp only [hA, hl, Formalism.UG.hform, map_sum, map_mul, Matrix.map_apply, psiV_sigR, psiV_inclE,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hA, hl, Formalism.UG.hform, map_sum, map_mul, Matrix.map_apply, psiV_sigR, psiV_inclE,
     PI.FinKW.vecV]
 
 theorem vecV_incl' (I : AutInst) (v : HeightOneSpectrum (𝓞 I.F)) (l : Fin I.n → I.E) :
@@ -105,7 +109,8 @@ theorem hformE_swap (I : AutInst) (x y : Fin I.n → I.E) :
     intro i j
     have := congrFun (congrFun I.J_herm i) j
     simpa [Formalism.UG.cT] using this
-  simp only [Formalism.UG.hform, map_sum, map_mul, RingHomCompTriple.comp_apply, RingHom.id_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Formalism.UG.hform, map_sum, map_mul, RingHomCompTriple.comp_apply, RingHom.id_apply]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   rw [hJij j i]

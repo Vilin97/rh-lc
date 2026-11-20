@@ -200,7 +200,8 @@ theorem end_entry_int (H : RLaw Y V) {M : Matrix κ κ C}
   have h := matrixEnd_two (w := fun _ => 1) H M (b := (MvPowerSeries.X : κ → MvPowerSeries κ C))
     (fun i => MvPowerSeries.constantCoeff_X i) (fun i => ordGe_X (w := fun _ => 1) i) i (Finsupp.single j 1)
     (by simp [Finsupp.weight_single])
-  rw [map_sub, sub_eq_zero, map_sum] at h
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sub, sub_eq_zero, map_sum] at h
   have h2 := hM i (Finsupp.single j 1)
   rw [h] at h2
   simpa [MvPowerSeries.coeff_X, Finsupp.single_left_inj] using h2
@@ -274,7 +275,8 @@ theorem sg_all (H : RLaw Y V) (hP : HasProj Y V) {g : Fin 2} {γ : κ → PowerS
     rw [MvPowerSeries.subst_sub hΓ, MvPowerSeries.subst_comp_subst_apply hS hΓ, hb, sg_sum, subst_sum_smul hΓ]
     simp only [subst_endP H (M g) hγ0, hfixγ]
   beta_reduce at hK
-  rw [e, map_sub, map_sum] at hK
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, map_sub, map_sum] at hK
   have := mm_add (mm_l_mul hK) (mm_sum' Finset.univ _ fun c _ => mm_mul (hbi c) (h c))
   convert this using 1
   simp only [PowerSeries.coeff_smul, smul_eq_mul, mul_sub, Finset.mul_sum]
@@ -296,7 +298,8 @@ theorem tangent_mm_of_nonDeg : ∀ (C : Type) [Field C] (V : VF C) (d : ℕ) [Ne
     simpa using coeff_tyS_pow hl s 0
   have hlow : ∀ i n, 2 ≤ n → n < V.l ^ 2 → PowerSeries.coeff n (alongCv γ (Y.lg i)) = 0 := by
     intro i n hn hn'
-    rw [h1, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h1, map_sum]
     refine Finset.sum_eq_zero fun c _ => ?_
     rw [PowerSeries.coeff_smul]
     by_cases hs : ∃ s, V.l ^ s = n
@@ -312,7 +315,8 @@ theorem tangent_mm_of_nonDeg : ∀ (C : Type) [Field C] (V : VF C) (d : ℕ) [Ne
   have hq : ∀ q : I (1 - g), V.MM ((V.l : C) * PowerSeries.coeff V.l (alongCv γ (Y.sg (Y.u (1 - g) q)))) := by
     intro q
     have e := congrArg (PowerSeries.coeff V.l) (h2 q)
-    rw [tl, map_add, map_sub, map_sum, Finset.sum_eq_zero, add_zero] at e
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [tl, map_add, map_sub, map_sum, Finset.sum_eq_zero, add_zero] at e
     · have := mm_sub (mm_l_mul ((hlam q).2 V.l)) (hc0 q)
       convert this using 1
       unfold Cart.c0'
@@ -338,7 +342,8 @@ theorem tangent_mm_of_nonDeg : ∀ (C : Type) [Field C] (V : VF C) (d : ℕ) [Ne
     have := lg_two (τ := Unit) (w := fun _ => 1) H (b := γ) hγ0 (fun i => ordGe_one_of_const (hγ0 i)) i
       (Finsupp.single () 1) (by simp [Finsupp.weight_single])
     have e : PowerSeries.coeff 1 (alongCv γ (Y.lg i) - γ i) = 0 := this
-    rw [map_sub, sub_eq_zero, h1, map_sum] at e
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, sub_eq_zero, h1, map_sum] at e
     rw [← e]
     refine Finset.sum_congr rfl fun c _ => ?_
     rw [PowerSeries.coeff_smul, t1, hx0, smul_eq_mul, mul_comm]

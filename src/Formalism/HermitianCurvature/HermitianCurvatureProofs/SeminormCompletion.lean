@@ -192,12 +192,14 @@ theorem useDerivBoundOfParts : UseDerivBoundOfParts := by
   · intro J w hJ
     have hv : ∀ g ∈ B.GV k ρ, M.ev (∑ Z ∈ J, w Z • Φ Z) g = (∑ Z ∈ J, w Z • U.Phi f Z) g := by
       intro g hg
-      rw [map_sum, Finset.sum_apply, Finset.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Finset.sum_apply, Finset.sum_apply]
       refine Finset.sum_congr rfl fun Z hZ => ?_
       rw [map_smul, Pi.smul_apply, Pi.smul_apply, hev Z (hJ Z hZ) g hg]
     have hb := hcong _ _ _ _ hv hv
     have hsum : (∑ Z ∈ J, w Z • T (Φ Z)) = T (∑ Z ∈ J, w Z • Φ Z) := by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simp only [map_smul]
     show ‖∑ Z ∈ J, w Z • T (Φ Z)‖ ^ 2 = _
     rw [hsum, hT, hpn, hb]

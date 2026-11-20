@@ -47,13 +47,15 @@ theorem mul_map_secW (hw : IsInertAt D.host.F D.host.E v w) (h : w.under (𝓞 D
     (A : Matrix (Fin m) (Fin n) (AE D)) (M : Matrix (Fin n) (Fin p) (w.adicCompletion D.host.E)) :
     A * M.map (secW hw h) = (A.map (GlobalTheory.InertHomIdx.compW D w) * M).map (secW hw h) := by
   ext i j
-  simp only [Matrix.mul_apply, Matrix.map_apply, map_sum, mul_secW]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mul_apply, Matrix.map_apply, map_sum, mul_secW]
 
 theorem map_secW_mul (hw : IsInertAt D.host.F D.host.E v w) (h : w.under (𝓞 D.host.F) = v) {m n p : ℕ}
     (M : Matrix (Fin m) (Fin n) (w.adicCompletion D.host.E)) (B : Matrix (Fin n) (Fin p) (AE D)) :
     M.map (secW hw h) * B = (M * B.map (GlobalTheory.InertHomIdx.compW D w)).map (secW hw h) := by
   ext i j
-  simp only [Matrix.mul_apply, Matrix.map_apply, map_sum, secW_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mul_apply, Matrix.map_apply, map_sum, secW_mul]
 
 end GlobalTheory.InertFrameAct
 

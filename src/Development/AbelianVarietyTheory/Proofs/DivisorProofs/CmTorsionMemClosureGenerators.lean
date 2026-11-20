@@ -138,7 +138,8 @@ private theorem lattice_mem_closure (E : Type) [Field E] [NumberField E] (gA gB 
         exact congrArg Subtype.val h
       have hval : ∀ y' : ΛA, (N : ℂ)⁻¹ • ∑ a, J a (αA (φ ⟨x a, hx a⟩) y') = αB (φ y') l := fun y' => by
         have : ∑ a, J a (αA (φ ⟨x a, hx a⟩) y') = N • αB (φ y') l := by
-          rw [← map_nsmul, hNl, map_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [← map_nsmul, hNl, map_sum]
           exact Finset.sum_congr rfl fun a _ => by rw [hsw, inter]
         rw [this, ← Nat.cast_smul_eq_nsmul ℂ, smul_smul, inv_mul_cancel₀ hN0, one_smul]
       refine ⟨φ y, hφ y, AddSubmonoid.subset_closure ⟨N, fun a => φ ⟨x a, hx a⟩, y, hN, y.2, fun x' hx' => ?_,

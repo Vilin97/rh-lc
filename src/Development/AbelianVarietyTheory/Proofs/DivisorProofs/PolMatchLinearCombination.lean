@@ -86,7 +86,8 @@ theorem polMatch_smul_add : ∀ (F E : Type) [Field F] [NumberField F] [Field E]
           (∑ i, R.p (h i) ⊗ₜ[ℂ] (PiTensorProduct.tprod ℂ fun v : S => Rf.p v (χ i v))) =
         ∑ i, R.p (h i) ⊗ₜ[ℂ] (PiTensorProduct.tprod ℂ fun v : T => Rf.p v (χ i v)) := by
     intro S hS n h χ hχ
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [LinearMap.lTensor_tmul, extMul_tprod Rf.Pi S T hS z (fun v => Rf.p v (χ i v))]
     intro v _ hv
@@ -98,7 +99,8 @@ theorem polMatch_smul_add : ∀ (F E : Type) [Field F] [NumberField F] [Field E]
           (∑ i, R.p' (h i) ⊗ₜ[ℂ] (PiTensorProduct.tprod ℂ fun v : S => Rf.p' v (χ i v))) =
         ∑ i, R.p' (h i) ⊗ₜ[ℂ] (PiTensorProduct.tprod ℂ fun v : T => Rf.p' v (χ i v)) := by
     intro S hS hXS n h χ hχ
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [LinearMap.lTensor_tmul, extMul_tprod Rf.Pi S T hS z (fun v => Rf.p' v (χ i v))]
     intro v _ hv

@@ -40,7 +40,8 @@ theorem hh_rk (p p' : Fin n → E) (q q' : Fin d → E) :
   have f2 : form σ W.J q q' = ∑ i, ∑ k, q i * (W.J i k * σ (q' k)) := by
     simp only [form, dotProduct, Matrix.mulVec, Finset.mul_sum]
   rw [f1, f2, Finset.sum_mul_sum]
-  simp only [Finset.sum_mul_sum, map_sum, hh, hTens, rk, Matrix.vecMulVec_apply, GlobalTheory.ThK.incV, incM, Matrix.map_apply, map_mul, hc]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finset.sum_mul_sum, map_sum, hh, hTens, rk, Matrix.vecMulVec_apply, GlobalTheory.ThK.incV, incM, Matrix.map_apply, map_mul, hc]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun j _ =>
     Finset.sum_congr rfl fun l _ => ?_
   ring

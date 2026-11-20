@@ -227,7 +227,8 @@ theorem toBlocks₁₂_one {n : ℕ} {α : Type} [Zero α] [One α] :
 
 theorem piInf_trace (d : SD σ) (w : InfinitePlace F) (M : Matrix (Fin d.n) (Fin d.n) (AE F E)) :
     piInf (d.B.emb w) M.trace = (d.cw w M).trace := by
-  simp [SD.cw, Matrix.trace, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [SD.cw, Matrix.trace, map_sum]
 
 theorem cw_unip (d : SD σ) (R : RD d) (w : InfinitePlace F) (u : GR d.n) (H : Matrix (Fin d.n) (Fin d.n) ℂ)
     (hu : mR u = nU H) : d.cw w (inFrame d.b (R.ι w u)) = Matrix.fromBlocks 1 (R.ζ • H) 0 1 := by

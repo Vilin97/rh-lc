@@ -124,7 +124,8 @@ theorem psiN_rat (d : BesselDatum A B ι) (ψ : AddChar (AF D.host.F) ℂ) (hψ 
     rw [Algebra.trace_apply, Algebra.trace_apply, ← Algebra.baseChange_lmul, LinearMap.trace_baseChange]
   unfold BesselDatum.psiN BesselDatum.simpleSum
   simp only [hw, hA_vec]
-  rw [← map_sum (incA D), ← RingHom.map_mul, h3, hψ.2.2.1]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum (incA D), ← RingHom.map_mul, h3, hψ.2.2.1]
 
 end Character
 

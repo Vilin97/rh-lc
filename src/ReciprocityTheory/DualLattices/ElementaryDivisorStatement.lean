@@ -57,7 +57,8 @@ theorem finrank_split (hv : v.Integers R) {α : Type} [Fintype α] [DecidableEq 
     rw [Matrix.mulVec_mulVec, horth]
     split_ifs <;> simp
   have hs : ∀ w : α → R, ∑ i, P i *ᵥ w = w := fun w => by
-    rw [← show (∑ i, P i) *ᵥ w = ∑ i, P i *ᵥ w from map_sum (Matrix.mulVec.addMonoidHomLeft w) P Finset.univ,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← show (∑ i, P i) *ᵥ w = ∑ i, P i *ᵥ w from map_sum (Matrix.mulVec.addMonoidHomLeft w) P Finset.univ,
       hsum, Matrix.one_mulVec]
 
   let e : (α → R) ≃ₗ[R] ((i : Fin m) → LinearMap.range (Matrix.mulVecLin (P i))) :=
@@ -76,7 +77,8 @@ theorem finrank_split (hv : v.Integers R) {α : Type} [Fintype α] [DecidableEq 
         funext i
         apply Subtype.ext
         show P i *ᵥ ∑ j, (f j : α → R) = f i
-        rw [show P i *ᵥ ∑ j, (f j : α → R) = ∑ j, P i *ᵥ (f j : α → R) from
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [show P i *ᵥ ∑ j, (f j : α → R) = ∑ j, P i *ᵥ (f j : α → R) from
           map_sum (Matrix.mulVecLin (P i)) _ _]
         have hj : ∀ j, P i *ᵥ (f j : α → R) = if i = j then (f i : α → R) else 0 := by
           intro j

@@ -141,7 +141,8 @@ theorem exists_finite_smooth [Algebra.FinitePresentation R₀ B] [Algebra.Smooth
     refine formallySmooth_of_witness Q' h' (fun i ↦ ?_) (fun j ↦ ?_)
     · rw [Ideal.mem_span_range_iff_exists_fun]
       refine ⟨c' i, hM ?_⟩
-      simp only [map_sum, map_mul, map_sub, hc', hrel, hh', hMX]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_mul, map_sub, hc', hrel, hh', hMX]
       exact hc i
     · rw [span_range_sq, Ideal.mem_span_range_iff_exists_fun]
       refine ⟨d' j, hM ?_⟩
@@ -151,7 +152,8 @@ theorem exists_finite_smooth [Algebra.FinitePresentation R₀ B] [Algebra.Smooth
         | add p q hp hq => simp only [map_add, hp, hq]
         | mul_X p i hp =>
           simp only [map_mul, aeval_X, hp, hh', hMX]
-      simp only [map_sum, map_mul, hd', hrel, hMa, hd j]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_mul, hd', hrel, hMa, hd j]
   exact ⟨inferInstance, inferInstance⟩
 
 end Spread

@@ -355,7 +355,8 @@ theorem Om_sum {e0 : VC D N N' → ℂ} (W : WeilO D cc δ N N' e0) (g : GA D N)
     (F : Fin k → VC D N N' → ℂ) (hF : ∀ j, F j ∈ TT D (tor0 D cc δ) N N') :
     W.Om g g' (a • ∑ j, F j) = a • ∑ j, W.Om g g' (F j) := by
   have := (OmL W g g').map_smul a (∑ j, ⟨F j, hF j⟩)
-  rw [map_sum] at this
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum] at this
   refine Eq.trans ?_ this
   change _ = W.Om g g' _
   congr 1

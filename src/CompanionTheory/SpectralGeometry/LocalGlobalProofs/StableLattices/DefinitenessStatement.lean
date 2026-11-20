@@ -99,7 +99,8 @@ theorem isPosDef_diagonal (hσ : ∀ (τ : E →+* ℂ) (x : E), τ (σ x) = sta
       rw [Complex.normSq_eq_conj_mul_self, Complex.star_def]
       ring
     rw [this, Complex.re_ofReal_mul]
-  simp only [dotProduct, mulVec_diagonal, map_sum, Complex.re_sum, hre]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dotProduct, mulVec_diagonal, map_sum, Complex.re_sum, hre]
   obtain ⟨i, hi⟩ := Function.ne_iff.1 hx
   refine Finset.sum_pos' (fun j _ => mul_nonneg (Complex.normSq_nonneg _) (he τ j).le)
     ⟨i, Finset.mem_univ _, mul_pos (Complex.normSq_pos.2 ?_) (he τ i)⟩

@@ -74,7 +74,8 @@ private lemma herm_mulVec_mulVec' {r : ℕ} (G P : Matrix (Fin r) (Fin r) E) (u 
     _root_.ReciprocityTheory.ChartRestriction.G.FD.herm G (P *ᵥ u) (P *ᵥ v) = _root_.ReciprocityTheory.ChartRestriction.G.FD.herm (Pᵀ * G * P.map _root_.ReciprocityTheory.ChartRestriction.G.FD.cc) u v := by
   have hc : (fun b => _root_.ReciprocityTheory.ChartRestriction.G.FD.cc ((P *ᵥ v) b)) = P.map _root_.ReciprocityTheory.ChartRestriction.G.FD.cc *ᵥ fun b => _root_.ReciprocityTheory.ChartRestriction.G.FD.cc (v b) := by
     ext b
-    simp [mulVec, dotProduct, _root_.ReciprocityTheory.ChartRestriction.G.FD.cc, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [mulVec, dotProduct, _root_.ReciprocityTheory.ChartRestriction.G.FD.cc, map_sum, map_mul]
   rw [herm_eq_dotProduct_mulVec_cc, herm_eq_dotProduct_mulVec_cc, hc, ← mulVec_mulVec, ← mulVec_mulVec,
     dotProduct_mulVec u, vecMul_transpose]
 
@@ -93,7 +94,8 @@ private lemma exists_re_pos_of_herm_diagonal_re_pos {r : ℕ} (τ : E →+* ℂ)
     (hy : 0 < (τ (_root_.ReciprocityTheory.ChartRestriction.G.FD.herm (Matrix.diagonal d) y y)).re) : ∃ i, 0 < (τ (d i)).re := by
   by_contra h
   push_neg at h
-  rw [_root_.GlobalTheory.UTrans.herm_diagonal_self, map_sum, Complex.re_sum] at hy
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [_root_.GlobalTheory.UTrans.herm_diagonal_self, map_sum, Complex.re_sum] at hy
   refine absurd hy (not_lt.2 (Finset.sum_nonpos fun i _ => ?_))
   rw [re_mul_cc_eq_normSq_mul_re]
   exact mul_nonpos_of_nonneg_of_nonpos (Complex.normSq_nonneg _) (h i)
@@ -105,7 +107,8 @@ private lemma exists_re_neg_of_herm_diagonal_re_neg {r : ℕ} (τ : E →+* ℂ)
     (hy : (τ (_root_.ReciprocityTheory.ChartRestriction.G.FD.herm (Matrix.diagonal d) y y)).re < 0) : ∃ i, (τ (d i)).re < 0 := by
   by_contra h
   push_neg at h
-  rw [_root_.GlobalTheory.UTrans.herm_diagonal_self, map_sum, Complex.re_sum] at hy
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [_root_.GlobalTheory.UTrans.herm_diagonal_self, map_sum, Complex.re_sum] at hy
   refine absurd hy (not_lt.2 (Finset.sum_nonneg fun i _ => ?_))
   rw [re_mul_cc_eq_normSq_mul_re]
   exact mul_nonneg (Complex.normSq_nonneg _) (h i)

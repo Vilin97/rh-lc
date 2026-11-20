@@ -19,7 +19,8 @@ theorem res_one' : res b (1 : Matrix κ κ A) = 1 := by
 omit [DecidableEq κ] in
 theorem res_mul' (g h : Matrix κ κ A) : res b (g * h) = res b g * res b h := by
   ext ⟨i, x⟩ ⟨j, y⟩
-  simp only [res, Matrix.of_apply, Matrix.mul_apply, map_sum, map_mul, Matrix.sum_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [res, Matrix.of_apply, Matrix.mul_apply, map_sum, map_mul, Matrix.sum_apply,
     Fintype.sum_prod_type]
 
 omit [Fintype κ] [DecidableEq κ] in

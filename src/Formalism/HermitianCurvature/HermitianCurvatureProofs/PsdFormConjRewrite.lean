@@ -84,7 +84,8 @@ private theorem im_quadratic_form_eq_zero_of_hermitian {α : Type} (F : Finset �
     (∑ x ∈ F, ∑ y ∈ F, conj (a x) * k x y * a y).im = 0 := by
   have h : conj (∑ x ∈ F, ∑ y ∈ F, conj (a x) * k x y * a y) =
       ∑ x ∈ F, ∑ y ∈ F, conj (a x) * k x y * a y := by
-    simp only [map_sum, map_mul, Complex.conj_conj]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, Complex.conj_conj]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun u hu => Finset.sum_congr rfl fun v hv => ?_
     rw [← hh v hv u hu]
@@ -255,7 +256,8 @@ theorem q_im (F : Finset α) (k : α → α → ℂ) (hh : ∀ x ∈ F, ∀ y �
     (∑ x ∈ F, ∑ y ∈ F, conj (a x) * k x y * a y).im = 0 := by
   have h : conj (∑ x ∈ F, ∑ y ∈ F, conj (a x) * k x y * a y) =
       ∑ x ∈ F, ∑ y ∈ F, conj (a x) * k x y * a y := by
-    simp only [map_sum, map_mul, Complex.conj_conj]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, Complex.conj_conj]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun u hu => Finset.sum_congr rfl fun v hv => ?_
     rw [← hh v hv u hu]

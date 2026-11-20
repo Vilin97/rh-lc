@@ -68,7 +68,8 @@ def genLogTrunc (l : ℕ) (p : τ → τ) (x : τ) (M : ℕ) : MvPowerSeries τ 
 theorem coeff_genLogTrunc (l : ℕ) (p : τ → τ) (x : τ) (M : ℕ) (n : τ →₀ ℕ) :
     coeff n (genLogTrunc (K := K) l p x M) = ∑ e ∈ Finset.range M,
       if n = Finsupp.single (p^[e] x) ((l ^ 2) ^ e) then ((l : K) ^ e)⁻¹ else 0 := by
-  simp only [genLogTrunc, map_sum, MvPowerSeries.coeff_smul, MvPowerSeries.coeff_X_pow, mul_ite, mul_one,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [genLogTrunc, map_sum, MvPowerSeries.coeff_smul, MvPowerSeries.coeff_X_pow, mul_ite, mul_one,
     mul_zero]
 
 theorem low_genLog_sub {l : ℕ} (hl : 2 ≤ l) (p : τ → τ) (x : τ) (M : ℕ) :
@@ -81,7 +82,8 @@ theorem subst_genLogTrunc [Finite τ] {g : τ → MvPowerSeries τ K} (hs : HasS
     subst g (genLogTrunc (K := K) l p x M) =
       ∑ e ∈ Finset.range M, ((l : K) ^ e)⁻¹ • (g (p^[e] x)) ^ ((l ^ 2) ^ e) := by
   rw [← MvPowerSeries.coe_substAlgHom hs]
-  simp only [genLogTrunc, map_sum, map_smul, map_pow, MvPowerSeries.coe_substAlgHom, MvPowerSeries.subst_X hs]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [genLogTrunc, map_sum, map_smul, map_pow, MvPowerSeries.coe_substAlgHom, MvPowerSeries.subst_X hs]
 
 private theorem coeff_pow_eq_zero_of_degree_lt' {h : MvPowerSeries τ K} (h0 : constantCoeff h = 0) :
     ∀ (m : ℕ) (n : τ →₀ ℕ), n.degree < m → coeff n (h ^ m) = 0 := by

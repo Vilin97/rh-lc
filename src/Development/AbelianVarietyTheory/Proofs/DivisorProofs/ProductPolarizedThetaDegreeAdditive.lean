@@ -96,7 +96,8 @@ theorem cov_appLE {S : Scheme.{0}} {P P' : PPAS S} {y : Sp ℂ ⟶ S} (d : P.Rie
   change _ = ∑ b, M.col a b * fderiv ℂ (d'.fn W' f) 0 (Pi.single b 1)
   generalize fderiv ℂ (d'.fn W' f) 0 = L
   conv_lhs => rw [pi_eq_sum_univ (M.col a)]
-  simp only [map_sum, map_smul, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, smul_eq_mul]
   refine Finset.sum_congr rfl fun b _ => ?_
   congr 2
   funext j

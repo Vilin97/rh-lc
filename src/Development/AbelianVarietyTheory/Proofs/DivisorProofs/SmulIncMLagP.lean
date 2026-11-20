@@ -70,7 +70,8 @@ theorem smul_incM_lagP {F E : Type} [Field F] [NumberField F] [Field E] [NumberF
       (diagCols (Fin n) : Matrix (Fin n ⊕ Fin n) (Fin n) (AE F E)) a b := fun a b => by
     rw [← map_diagCols (F := F) n]; rfl
   ext i j
-  simp only [lagP, LinearMap.coe_mk, AddHom.coe_mk, incM, Matrix.smul_apply, Matrix.map_apply, Matrix.add_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [lagP, LinearMap.coe_mk, AddHom.coe_mk, incM, Matrix.smul_apply, Matrix.map_apply, Matrix.add_apply,
     Matrix.mul_apply, Matrix.vecMulVec_apply, incV, map_add, map_sum, map_mul, Matrix.transpose_apply, smul_add,
     Finset.smul_sum, hΔ, smul_eq_mul]
   congr 1

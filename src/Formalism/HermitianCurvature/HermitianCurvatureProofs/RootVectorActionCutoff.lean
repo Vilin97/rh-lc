@@ -110,7 +110,8 @@ theorem map_qminor {A B : Type} [Ring A] [Algebra ℂ A] [Ring B] [Algebra ℂ B
     (E : Fin n → Fin n → A) (a b : Fin t → Fin n) (u : ℂ) :
     φ (qminor E a b u) = qminor (fun p q => φ (E p q)) a b u := by
   unfold qminor
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun σ _ => ?_
   rw [map_mul, map_intCast, map_list_prod, List.map_ofFn]
   congr 2

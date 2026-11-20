@@ -86,7 +86,8 @@ theorem exists_orth_basis (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (
     rw [linearIndependent_iff']
     intro t g hg i hi
     have := congrArg (h (b0 i)) hg
-    rw [map_sum, map_zero, Finset.sum_eq_single i] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero, Finset.sum_eq_single i] at this
     · rw [map_smul, smul_eq_mul] at this
       exact (mul_eq_zero.1 this).resolve_right (hunit i).1
     · intro j _ hji
@@ -113,7 +114,8 @@ theorem exists_orth_basis (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (
         obtain ⟨a, ha⟩ := Submodule.mem_one.1 (hLi _ (hb0L i) _ hy)
         have hrep : h (b0 i) (t • y) = b.repr (t • y) i * h (b0 i) (b0 i) := by
           conv_lhs => rw [← b.sum_repr (t • y)]
-          rw [map_sum, Finset.sum_eq_single i]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [map_sum, Finset.sum_eq_single i]
           · rw [map_smul, smul_eq_mul, hb]
           · intro j _ hji
             rw [map_smul, hb, horth i j (Ne.symm hji), smul_zero]

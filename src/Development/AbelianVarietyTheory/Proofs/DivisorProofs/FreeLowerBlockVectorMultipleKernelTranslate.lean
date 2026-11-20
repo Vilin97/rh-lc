@@ -232,7 +232,8 @@ theorem exists_pow_hat {V : HSp D} {β : GL (Fin V.rank) (Lev.EAf D)}
   convert h5 using 1
   funext i
   rw [AlgEquiv.eq_symm_apply]
-  simp only [Pi.smul_apply, nsmul_eq_mul, Matrix.mulVec, dotProduct, map_sum, map_mul, map_natCast]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Pi.smul_apply, nsmul_eq_mul, Matrix.mulVec, dotProduct, map_sum, map_mul, map_natCast]
   rfl
 
 theorem smul_mem_hLat {V : HSp D} {β : GL (Fin V.rank) (Lev.EAf D)}

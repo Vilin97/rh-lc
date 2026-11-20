@@ -26,7 +26,8 @@ variable {K : Type} [Field K] {σ : K →+* ℂ}
 theorem semi_expand {W : Type} [AddCommGroup W] [Module ℂ W] {m : ℕ} (f : (Fin m → K) →ₛₗ[σ] W) (v : Fin m → K) :
     f v = ∑ l, σ (v l) • f (Pi.single l 1) := by
   conv_lhs => rw [← Finset.univ_sum_single v]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun l _ => ?_
   rw [← map_smulₛₗ]
   congr 1
@@ -98,7 +99,8 @@ theorem orth_ker_eq_span [NumberField K] [StarRing K] {V W : Type} [NormedAddCom
       exact Submodule.sum_mem _ fun l _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨l, rfl⟩)
     obtain ⟨c, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun ℂ).1 (hsub hy)
     have hc : (Θ.map σ) *ᵥ c = 0 := by
-      rw [map_sum] at h0
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum] at h0
       simp only [map_smul, hθ, hPZ] at h0
       have e : ∀ k, jW (Θ *ᵥ Pi.single k 1) = ∑ l, σ (Θ l k) • jW (Pi.single l 1) := fun k => by
         rw [semi_expand jW]

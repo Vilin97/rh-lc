@@ -20,7 +20,8 @@ private theorem coeff_cons_eq {A : Type} [CommRing A] {k n : ℕ} (P : MvPolynom
     AddMonoidAlgebra.coeff (MvPolynomial.aeval (Fin.cons 1 MvPolynomial.X : Fin (k + 1) → MvPolynomial (Fin k) A) P) α := by
   classical
   rw [P.as_sum]
-  simp only [map_sum, MvPolynomial.coeff_sum, aeval_cons_monomial]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, MvPolynomial.coeff_sum, aeval_cons_monomial]
   refine Finset.sum_congr rfl fun β hβ => ?_
   have hd : β.degree = n := by
     by_contra h

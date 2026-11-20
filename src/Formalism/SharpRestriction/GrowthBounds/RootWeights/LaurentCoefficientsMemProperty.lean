@@ -67,7 +67,8 @@ theorem laurent_coefficients_mem_property (y : MvPolynomial (ι × Fin n) R) (K 
   have hinv : (h' * g0.map ψ) * (g0inv.map ψ * h) = 1 := by
     rw [Matrix.mul_assoc, ← Matrix.mul_assoc (g0.map ψ), h2, Matrix.one_mul, hh1]
   apply hy (LaurentPolynomial k1) (ψ.comp φ) (h' * g0.map ψ) (g0inv.map ψ * h) hinv m
-  rw [← matrixSubst_comp, hE, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← matrixSubst_comp, hE, map_sum]
   have hA : ∀ k', matrixSubst LL S (RingHom.id _) (g0inv.map ψ) (g0.map ψ)
       (C (LaurentPolynomial.T k') * MvPolynomial.map (ψ.comp φ) (yk k')) =
       C (LaurentPolynomial.T k') * MvPolynomial.map ψ (matrixSubst LL S φ g0inv g0 (yk k')) := by

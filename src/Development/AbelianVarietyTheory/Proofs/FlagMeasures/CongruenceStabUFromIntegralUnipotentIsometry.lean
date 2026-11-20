@@ -141,12 +141,14 @@ theorem herm' (x y : S.V) : S.hT x y = star (S.hT y x) := by
 
 theorem hT_comb_left (v : ι → S.V) (c : ι → E) (x : S.V) :
     S.hT (∑ p, c p • v p) x = star c ⬝ᵥ fun p => S.hT (v p) x := by
-  simp only [map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, dotProduct, Pi.star_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, dotProduct, Pi.star_apply,
     smul_eq_mul, starRingEnd_apply]
 
 theorem hT_comb_right (v : ι → S.V) (c : ι → E) (x : S.V) :
     S.hT x (∑ p, c p • v p) = star (fun p => S.hT (v p) x) ⬝ᵥ c := by
-  simp only [map_sum, map_smul, dotProduct, Pi.star_apply, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, dotProduct, Pi.star_apply, smul_eq_mul]
   refine Finset.sum_congr rfl fun p _ => ?_
   rw [herm' x (v p), mul_comm]
 
@@ -576,7 +578,8 @@ theorem Dr1_ne_zero {T' : ℕ} (F : LFlag S r T) (F' : LFlag S r (T' : E)) (τ :
   obtain ⟨y, hy⟩ : ∃ y, y = ∑ b, w b • frame F' b := ⟨_, rfl⟩
   have hperp : ∀ c, S.hT (frame F c) y = 0 := by
     intro c
-    rw [hy, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hy, map_sum]
     simp only [map_smul, smul_eq_mul]
     have h1 := congrFun hZw c
     simp only [Matrix.mulVec, dotProduct, Pi.zero_apply] at h1
@@ -593,7 +596,8 @@ theorem Dr1_ne_zero {T' : ℕ} (F : LFlag S r T) (F' : LFlag S r (T' : E)) (τ :
       rw [Matrix.mulVec_zero]
       funext p
       have h2 := congrArg (S.hT (Sum.elim (frame F) (frame F') p)) hs
-      rw [map_sum, map_zero] at h2
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, map_zero] at h2
       simp only [map_smul, smul_eq_mul] at h2
       rw [Pi.zero_apply, ← h2]
       simp only [Matrix.mulVec, dotProduct, gramM_apply]
@@ -629,7 +633,8 @@ theorem Dr1_ne_zero {T' : ℕ} (F : LFlag S r T) (F' : LFlag S r (T' : E)) (τ :
     have hyy : S.hT y y = star (w (Fin.last r)) * w (Fin.last r) * -(T' : E) := by
       have h1 : ∀ b, S.hT (frame F' b) y = w b * (if b = Fin.last r then -(T' : E) else 0) := by
         intro b
-        rw [hy, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [hy, map_sum]
         simp only [map_smul, smul_eq_mul, gram_self, Matrix.diagonal_apply]
         rw [Finset.sum_eq_single b]
         · simp

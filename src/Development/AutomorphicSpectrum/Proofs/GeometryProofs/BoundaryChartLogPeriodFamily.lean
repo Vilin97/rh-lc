@@ -67,7 +67,8 @@ def conjTan {S : Scheme.{0}} {G : Over S} {x x' : Sp ℂ ⟶ S} (h : x' = spMap 
 
 theorem conj_hermForm' {g : ℕ} (Hm : Matrix (Fin g) (Fin g) ℂ) (a b : Fin g → ℂ) :
     hermForm (Hm.map (starRingEnd ℂ)) a b = (starRingEnd ℂ) (hermForm Hm (star a) (star b)) := by
-  simp [hermForm, dotProduct, Matrix.mulVec, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [hermForm, dotProduct, Matrix.mulVec, map_sum, map_mul]
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {D : Datum H} {l : Level H}
 

@@ -114,7 +114,8 @@ theorem exists_eq_of_idemOf {K G ι : Type} [Field K] [CharZero K] [Group G] [Fi
   have e1 : ∀ (k : ℕ) (σ : Representation ℂ G (Fin k → ℂ)), algebraMap ℂ ℂ (σ.character 1) = k := by
     intro k σ; simp
   have h1 : (n : ℂ) = ∑ i ∈ Y, (m i : ℂ) * (Module.finrank ℂ ((τ i).IntertwiningMap ρ) : ℂ) := by
-    rw [← e1 n ρ, ← hρ, ← h0, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← e1 n ρ, ← hρ, ← h0, map_sum]
     simp only [map_mul, h, Finset.sum_mul]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun i hi => ?_

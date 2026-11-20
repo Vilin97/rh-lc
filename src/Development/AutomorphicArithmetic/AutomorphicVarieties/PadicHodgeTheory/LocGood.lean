@@ -73,7 +73,8 @@ private theorem mem_sq_of_coeff [Fintype σ] {f : MvPowerSeries σ E} (h0 : MvPo
     simpa using h0
   have hg : ∀ i, MvPowerSeries.constantCoeff (g i) = 0 := fun i => by
     have := h1 i
-    rw [e, map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, map_sum] at this
     simpa [coeff_lin_mul, coeff_lin_X] using this
   rw [e, pow_two]
   exact Ideal.sum_mem _ fun i _ =>

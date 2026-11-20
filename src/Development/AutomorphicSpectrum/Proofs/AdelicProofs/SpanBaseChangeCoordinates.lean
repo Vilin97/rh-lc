@@ -90,7 +90,8 @@ theorem lift_length : ∀ (L : Type) [Field L] [NumberField L] (B : HermitianBun
     (FibreSpace.equiv B.metric (τ.comp (algebraMap L K))
       (baseChangeCoord τ ((1 : ComplexAt τ) ⊗ₜ[𝓞 K] X))) = _
   rw [hX τ]
-  simp only [map_sum, map_smul, sum_inner, inner_sum, inner_smul_left, inner_smul_right]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, sum_inner, inner_sum, inner_smul_left, inner_smul_right]
   simp only [dotProduct, mulVec, Pi.star_apply, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_

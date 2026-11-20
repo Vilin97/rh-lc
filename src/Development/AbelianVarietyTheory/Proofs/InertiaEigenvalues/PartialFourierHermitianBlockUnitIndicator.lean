@@ -108,7 +108,8 @@ theorem fourU_unitU : ∀ (F E : Type) [NontriviallyNormedField F] [Nontrivially
       · have e1 : unitU r F E (X.1, c, X.2.2) = 1 := by
           simp only [unitU]; rw [Set.indicator_of_mem (by exact ⟨h0.1, hc, h0.2⟩)]; rfl
         rw [e1, one_mul]
-        simp only [dotProduct, Pi.star_apply, map_sum, addChar_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [dotProduct, Pi.star_apply, map_sum, addChar_sum]
         refine Finset.prod_congr rfl fun i _ => ?_
         rw [Set.indicator_of_mem (mem_closedBall_zero_iff.2 (hc i))]
       · push_neg at hc

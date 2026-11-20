@@ -103,7 +103,8 @@ theorem main : PI.KFinSmooth → ∀ (k r : ℕ) (ι κ : Type) [Fintype ι] [De
   · have hG := mem_GG_of_mem_Sset hs
     rw [hT.io_eq I s hG y hy, ev_eq, ev_eq]
     have hv := vecMul_inv Γ (ρ s) om (hF.2.2.2.2.1 s hG) (hom s hs)
-    simp only [act, map_sum, map_smul, Finset.smul_sum, smul_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [act, map_sum, map_smul, Finset.smul_sum, smul_smul]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [← Finset.sum_smul, ← congrFun hv j]

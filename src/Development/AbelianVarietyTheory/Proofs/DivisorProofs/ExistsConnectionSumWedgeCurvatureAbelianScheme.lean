@@ -46,7 +46,8 @@ theorem sum_dRel_eq_zero (R : Type) [CommRing R] (A : Over (Sp R)) [GrpObj A] (g
   have e3 : ∀ k, l (pF a₂ (pF (snd A A) (w k))) = l (w k) := fun k ↦ by rw [(hafF (w k)).2.2.2.2.1]
   simp only [e1, e2, e3, zero_smul, Finset.sum_const_zero, zero_add] at key
   have := congrArg (pO1 a₁) key
-  simp only [map_sum, map_smul] at this
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul] at this
   have f1 : ∀ k, pO1 a₁ (pO1 μ[A] (y k)) = y k := fun k ↦ (hax (y k)).2.2.1
   have f2 : ∀ k, pO1 a₁ (pO1 (snd A A) (y k)) = 0 := fun k ↦ (hax (y k)).2.1
   simp only [f1, f2, smul_zero, Finset.sum_const_zero] at this

@@ -29,7 +29,8 @@ theorem kerAt_pull {X X' : Scheme.{0}} (g : X' ⟶ X) {R : Type} [CommRing R] (w
       (∑ l, (Scheme.ΓSpecIso (CommRingCat.of R)).inv.hom (c l) • pullbackSections (w ≫ g) F hV (s l)) =
       ∑ l, (Scheme.ΓSpecIso (CommRingCat.of R)).inv.hom (c l) •
         pullbackSections w _ hV' (pullbackSections g F le_rfl (s l)) := by
-    simp only [map_sum, Scheme.Modules.Hom.app_smul, GlobalTheory.Vert.DivPull.pullbackComp_inv_app w g F le_rfl hV' hV]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, Scheme.Modules.Hom.app_smul, GlobalTheory.Vert.DivPull.pullbackComp_inv_app w g F le_rfl hV' hV]
   rw [← hx]
   let I : (Scheme.Modules.pullback (w ≫ g)).obj Q ≅ (Scheme.Modules.pullback w).obj Q' :=
     ((Scheme.Modules.pullbackComp w g).app Q).symm ≪≫ (Scheme.Modules.pullback w).mapIso e.symm

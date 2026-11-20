@@ -227,7 +227,8 @@ theorem mem_of_idem (hs : ∀ e, IsSplitIdem D e → ∀ g, Formalism.L2.Theta.S
     (h1 : e * e = e) (h2 : {v | e v ≠ 0}.Finite) (h3 : ∀ v, e v ≠ 0 → SplitPl (cF D) v) (g : GA D V)
     (hg : fj D e • (Formalism.L2.Theta.mt V g - 1) = Formalism.L2.Theta.mt V g - 1) : g ∈ H := by
   refine mem_of_finset H hs h2.toFinset (fun v hv => h3 v (h2.mem_toFinset.1 hv)) g ?_
-  rw [← map_sum, ← GlobalTheory.SplitReps.idem_eq_sum e h1 h2.toFinset (fun v => h2.mem_toFinset), hg]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum, ← GlobalTheory.SplitReps.idem_eq_sum e h1 h2.toFinset (fun v => h2.mem_toFinset), hg]
 
 theorem mem_of_suppSplit (hs : ∀ e, IsSplitIdem D e → ∀ g, Formalism.L2.Theta.SuppAt e V g → g ∈ H) {N : ℕ}
     {h : GA D V} (hh : h ∈ GfC V) (h0 : SuppSplit (cF D) N (finHom V h).1) : h ∈ H := by

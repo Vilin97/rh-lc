@@ -206,7 +206,8 @@ theorem exists_decomp : ∃ (n : ℕ) (b : Fin n → ↥L₂.1) (π : Fin n → 
   refine ⟨_, fun j => B j, fun j => ((B.coord j).restrictScalars ℚ_[l]).compLeft (Fin m), ?_, ?_⟩
   · intro j M v
     funext i
-    simp only [LinearMap.compLeft, LinearMap.coe_mk, AddHom.coe_mk, Function.comp_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [LinearMap.compLeft, LinearMap.coe_mk, AddHom.coe_mk, Function.comp_apply,
       LinearMap.coe_restrictScalars, Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum, hsm, map_smul,
       smul_eq_mul]
   · intro v

@@ -19,7 +19,8 @@ theorem clm_expand (L : (Fin n → ℝ) →L[ℝ] ℂ) : L = ∑ i, L (Pi.single
   ext1 u
   have e : L u = ∑ i, u i • L (Pi.single i 1) := by
     conv_lhs => rw [← Finset.univ_sum_single u]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [← map_smul]
     congr 1

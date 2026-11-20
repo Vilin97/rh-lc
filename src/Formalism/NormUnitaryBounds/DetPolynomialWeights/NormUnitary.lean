@@ -99,11 +99,13 @@ lemma sub_sub (V : Matrix σ σ ℂ) (hV : V * star V = 1) (F : MvPolynomial σ 
   have key : (sub (star V)).comp (sub V) = AlgHom.id ℂ _ := by
     apply MvPolynomial.algHom_ext
     intro i
-    simp only [AlgHom.comp_apply, sub, aeval_X, map_sum, map_mul, aeval_C, algebraMap_eq,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [AlgHom.comp_apply, sub, aeval_X, map_sum, map_mul, aeval_C, algebraMap_eq,
       AlgHom.id_apply]
     simp_rw [Finset.mul_sum, ← mul_assoc, ← map_mul]
     rw [Finset.sum_comm]
-    simp_rw [← Finset.sum_mul, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp_rw [← Finset.sum_mul, ← map_sum]
     have h2 : ∀ k, ∑ l, V i l * star V l k = (1 : Matrix σ σ ℂ) i k := fun k => by
       rw [← hV, Matrix.mul_apply]
     simp_rw [h2, Matrix.one_apply]

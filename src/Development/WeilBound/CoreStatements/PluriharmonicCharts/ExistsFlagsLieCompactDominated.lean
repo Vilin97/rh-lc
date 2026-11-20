@@ -49,7 +49,8 @@ theorem basis {F Ω V W : Type} [Field F] [Field Ω] [AddCommGroup V] [Module F 
     · rintro _ ⟨e, he, rfl⟩
       rw [← h2] at he
       obtain ⟨c, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun F).1 he
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Submodule.sum_mem _ fun k _ => ?_
       rw [hj.1]
       exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨k, rfl⟩)

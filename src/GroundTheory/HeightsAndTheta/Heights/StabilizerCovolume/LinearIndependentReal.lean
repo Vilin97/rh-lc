@@ -64,12 +64,14 @@ theorem HermDatum.linearIndependent_real (A : HermDatum Em Ψ N j) {m : ℕ} {x 
       exact h1 τ a
     · rw [← h]
       have := congrArg (starRingEnd ℂ) (h1 τ a)
-      simpa [map_sum, Complex.conj_ofReal] using this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa [map_sum, Complex.conj_ofReal] using this
   set ω := NumberField.integralBasis Em
   have hxω : ∀ (σ : Em →+* ℂ) (y : Em), σ y = ∑ i, ((ω.repr y i : ℚ) : ℂ) * σ (ω i) := by
     intro σ y
     conv_lhs => rw [← ω.sum_repr y]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [Algebra.smul_def, map_mul, eq_ratCast, map_ratCast]
   have h3 : ∀ a i, ∑ k, c k * (ω.repr (x k a) i : ℝ) = 0 := by
@@ -109,8 +111,10 @@ theorem HermDatum.linearIndependent_real (A : HermDatum Em Ψ N j) {m : ℕ} {x 
     apply ω.repr.injective
     ext i
     have := congrArg φ (h3 a i)
-    rw [map_sum, map_zero] at this
-    simp only [Finset.sum_apply, Pi.smul_apply, map_sum, map_smul, Finsupp.coe_finsetSum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Finset.sum_apply, Pi.smul_apply, map_sum, map_smul, Finsupp.coe_finsetSum,
       Finsupp.smul_apply, smul_eq_mul, map_zero, Finsupp.coe_zero, Pi.zero_apply]
     rw [← this]
     refine Finset.sum_congr rfl fun k _ => ?_

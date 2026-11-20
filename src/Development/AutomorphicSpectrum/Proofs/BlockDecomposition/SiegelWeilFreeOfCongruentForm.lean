@@ -276,7 +276,8 @@ theorem exists_scaled_basis {d : ℕ} (b : Module.Basis (Fin d) F E) (v : Height
     rw [hinv]
     simp only [actTup, Matrix.mulVec, dotProduct]
     exact Finset.sum_congr rfl fun j _ => mul_comm _ _
-  rw [hXa, map_sum, Finsupp.finsetSum_apply, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hXa, map_sum, Finsupp.finsetSum_apply, Finset.mul_sum]
   refine sum_mem fun j _ => ?_
   rw [GlobalTheory.CompanionTheory.SW.LatRat.repr_mul, Finset.mul_sum]
   refine sum_mem fun k _ => ?_
@@ -356,7 +357,8 @@ theorem theta_map_frames (σ : E →ₐ[F] E) (hCM : IsCMExt F E σ) {M n : ℕ}
   unfold thetaMeas
   rw [Measure.map_smul, hmass]
   congr 1
-  rw [Measure.map_sum hmG.aemeasurable, ← sum_reindex (framesEquiv σ J g T)]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Measure.map_sum hmG.aemeasurable, ← sum_reindex (framesEquiv σ J g T)]
   congr 1
   funext X
   rw [Measure.map_map hmG (hmf' _)]

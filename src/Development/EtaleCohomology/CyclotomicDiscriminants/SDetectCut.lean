@@ -17,7 +17,8 @@ theorem root_eq_one {R : Type} [CommRing R] [IsDomain R] (P : Ideal R) (q : ℕ)
     rw [← map_one (Ideal.Quotient.mk P), Ideal.Quotient.eq]
     exact h1
   have h3 := congrArg (Ideal.Quotient.mk P) h0
-  simp only [map_sum, map_pow, h2, one_pow, Finset.sum_const, Finset.card_range, nsmul_eq_mul, mul_one,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_pow, h2, one_pow, Finset.sum_const, Finset.card_range, nsmul_eq_mul, mul_one,
     map_zero] at h3
   rw [← Ideal.Quotient.eq_zero_iff_mem, map_natCast]
   exact h3

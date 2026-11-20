@@ -37,7 +37,8 @@ theorem val_det_block {K Γ ι : Type*} [Field K] [LinearOrderedCommGroupWithZer
   have h1 : f.mapMatrix A₁ * f.mapMatrix B₁ = 1 := by
     ext a b
     have h := congrArg f (congrFun (congrFun hAB' a.1) b.1)
-    rw [Matrix.mul_apply, map_sum, ← Fintype.sum_subtype_add_sum_subtype p] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Matrix.mul_apply, map_sum, ← Fintype.sum_subtype_add_sum_subtype p] at h
     rw [Finset.sum_eq_zero (s := (Finset.univ : Finset {x // ¬ p x}))
       (fun c _ => by rw [map_mul, hf a.1 c.1 a.2 c.2, zero_mul]), add_zero] at h
     rw [Matrix.mul_apply]

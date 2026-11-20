@@ -110,7 +110,8 @@ theorem adjoint_and_diag (hG : Out.GlobalFnsSt) {S : Scheme.{0}} {o : Type} [Com
     rw [← k, pull_comp, ← e]
   have hQ : ∀ {T : Over S} (x : T ⟶ A),
       pull x.left (cls L hL) = ∑ uv : Fin 8 × Fin 8, W uv.1 uv.2 • B (x ≫ pr uv.1) (x ≫ pr uv.2) := fun x => by
-    rw [(cls_eq_iff hL (LB.isLB_linComb c.isLB _ _)).2 iso, cls_linComb c.isLB, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [(cls_eq_iff hL (LB.isLB_linComb c.isLB _ _)).2 iso, cls_linComb c.isLB, map_sum]
     refine Finset.sum_congr rfl fun uv _ => ?_
     rw [map_zsmul, ← pull_comp, ← Over.comp_left, comp_lift]
   have hC : ∀ {T : Over S} (x y : T ⟶ A) (h : (cubeLB A ![x, y] L).IsLB),
@@ -156,7 +157,8 @@ theorem exists_basis_matrixRep [Module.Finite K V] {h : ℕ} (ρ : Matrix (Fin (
     · subst hv; simp [e]
     · simp [hv]
   have hs : ∀ y, ∑ u, e u u y = y := fun y => by
-    rw [← LinearMap.sum_apply, ← map_sum, Matrix.sum_single_one, map_one, Module.End.one_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← LinearMap.sum_apply, ← map_sum, Matrix.sum_single_one, map_one, Module.End.one_apply]
   let V₀ := LinearMap.range (e 0 0)
   have h₀ : ∀ z : V₀, e 0 0 z = z := by
     rintro ⟨_, y, rfl⟩
@@ -185,7 +187,8 @@ theorem exists_basis_matrixRep [Module.Finite K V] {h : ℕ} (ρ : Matrix (Fin (
     ext p q
     simp [Matrix.sum_apply, Matrix.mul_apply, Matrix.single_apply, ite_and]
   simp only [hb, e]
-  rw [← Module.End.mul_apply, ← map_mul, hM, map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Module.End.mul_apply, ← map_mul, hM, map_sum, LinearMap.sum_apply]
   simp only [map_zsmul, LinearMap.smul_apply, Int.cast_smul_eq_zsmul]
 
 end Linear
@@ -250,7 +253,8 @@ theorem cls_cube_push {S S' : Scheme.{0}} {G : Over S} {G' : Over S'} [GrpObj G]
     cls (cubeLB G' ![a', b'] L') (LB.isLB_linComb hL' _ _) =
       pull U.left (cls (cubeLB G ![a, b] L) (LB.isLB_linComb hL _ _)) := by
   refine (cls_linComb hL' _ _ _).trans (Eq.trans ?_ (congrArg _ (cls_linComb hL _ _ _)).symm)
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun I _ => ?_
   rw [map_zsmul, (cls_eq_iff hL' (pull_isLB hL _)).2 H, cls_pull hL, ← pull_comp, ← pull_comp,
     psum_push h _ ![a, b] U (fun i => by

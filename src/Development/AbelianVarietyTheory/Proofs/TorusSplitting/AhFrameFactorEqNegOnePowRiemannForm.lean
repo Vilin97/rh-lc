@@ -250,7 +250,8 @@ theorem GlobalTheory.ahFrame_factor_eq_negOnePow : ∀ (E : Type) [Field E] [Num
       rintro _ ⟨b, rfl⟩ (_ | ⟨I⟩)
       · exact ⟨b, rfl⟩
       · refine ⟨∑ s ∈ I.down, ![b, H.w0 • b] s, ?_⟩
-        simp only [lam0, Option.elim, map_sum, LinearMap.sum_apply]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [lam0, Option.elim, map_sum, LinearMap.sum_apply]
         refine Finset.sum_congr rfl fun s _ => ?_
         fin_cases s
         · rfl

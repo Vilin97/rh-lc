@@ -35,7 +35,8 @@ theorem sesq_left {F : (Fin n → ℂ) → (Fin n → ℂ) → ℂ} (hF : IsSesq
       map_add' := fun x y => hF.add_left x y w
       map_smul' := fun c x => hF.smul_left c x w }
   change L v = ∑ a, v a * L (Pi.single a 1)
-  conv_lhs => rw [eq_sum_single v, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [eq_sum_single v, map_sum]
   simp
 
 theorem sesq_right {F : (Fin n → ℂ) → (Fin n → ℂ) → ℂ} (hF : IsSesq F) (v w : Fin n → ℂ) :
@@ -45,7 +46,8 @@ theorem sesq_right {F : (Fin n → ℂ) → (Fin n → ℂ) → ℂ} (hF : IsSes
       map_add' := fun x y => hF.add_right v x y
       map_smul' := fun c x => hF.smul_right c v x }
   change L w = ∑ a, conj (w a) * L (Pi.single a 1)
-  conv_lhs => rw [eq_sum_single w, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [eq_sum_single w, map_sum]
   simp [map_smulₛₗ]
 
 noncomputable def dsum {J : Type} [Fintype J] (π : J → Equiv.Perm (Fin n))

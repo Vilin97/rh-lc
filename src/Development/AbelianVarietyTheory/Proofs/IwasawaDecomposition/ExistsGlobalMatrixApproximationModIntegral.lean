@@ -83,7 +83,8 @@ theorem exists_glob_approx : ∀ {ι : Type} [Fintype ι] [DecidableEq ι] (W Q 
           algebraMap (W q) (Q q) (π q) • ((H q).map (algebraMap (W q) (Q q))).mulVec
             (fun j => algebraMap (W q) (Q q) (zc j)) := by
         funext j
-        simp [Matrix.mulVec, dotProduct, map_sum, map_mul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp [Matrix.mulVec, dotProduct, map_sum, map_mul]
       rw [e2, ← hH q, Matrix.mulVec_smul, Matrix.smul_mulVec, Matrix.mulVec_smul, Matrix.mulVec_mulVec,
         Matrix.mul_nonsing_inv _ (hg q), Matrix.one_mulVec]
       funext i

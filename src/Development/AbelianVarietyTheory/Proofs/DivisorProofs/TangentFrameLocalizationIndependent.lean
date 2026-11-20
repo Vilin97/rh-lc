@@ -44,7 +44,8 @@ theorem exists_smul_mem_span : ∀ {R O : Type} [CommRing R] [CommRing O] {G : O
   obtain ⟨⟨q, hq⟩, hqi⟩ := IsLocalization.exist_integer_multiples p.primeCompl (Finset.univ : Finset (Fin n)) c
   choose b hb' using fun i => hqi i (Finset.mem_univ _)
   have hz : ρ (q • l - ∑ i, b i • w i) = 0 := by
-    rw [map_sub, map_smulₛₗ, ← hc, map_sum, Finset.smul_sum, sub_eq_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_smulₛₗ, ← hc, map_sum, Finset.smul_sum, sub_eq_zero]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smulₛₗ, hb', smul_smul, Algebra.smul_def]
   obtain ⟨r, hr, e⟩ := exists_smul_eq_zero a p (q • l - ∑ i, b i • w i) (by

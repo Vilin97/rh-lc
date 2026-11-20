@@ -133,7 +133,8 @@ lemma exists_rep (A : HLat K) (h : A.V →ₗ⋆[K] A.V →ₗ[K] K) (hnd : ∀ 
   let G : Matrix A.ι A.ι K := fun i j => h (A.b i) (A.b j)
   have hsum : ∀ (c : A.ι → K) (j : A.ι), h (∑ i, star (c i) • A.b i) (A.b j) = Matrix.vecMul c G j := by
     intro c j
-    simp only [map_sum, map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, starRingEnd_apply, star_star,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, starRingEnd_apply, star_star,
       smul_eq_mul, Matrix.vecMul, dotProduct, G]
   have key : ∀ c : A.ι → K, Matrix.vecMul c G = 0 → c = 0 := by
     intro c hc

@@ -22,7 +22,8 @@ theorem UpperTheory.Gal.W2.minBridge_of :
       j (q.sum fun i b => algebraMap (𝓞 D.F) D.O b • (ga ^ i) u) =
         L.rep (aeval c (q.map f)) (j u) := by
     intro q u
-    rw [Polynomial.aeval_def, Polynomial.eval₂_map, Polynomial.eval₂_eq_sum, Polynomial.sum_def,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Polynomial.aeval_def, Polynomial.eval₂_map, Polynomial.eval₂_eq_sum, Polynomial.sum_def,
       Polynomial.sum_def, map_sum, map_sum, LinearMap.sum_apply]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [hsmul, hpow, map_mul, map_pow, Module.End.mul_apply, ← L.rep_F]

@@ -21,7 +21,8 @@ theorem ringHom_conjTranspose_smul_dotProduct_adjoint {R : Type*} [CommRing R] {
     Matrix.dotProduct_mulVec]
   congr 2
   funext k
-  simp [vecMul, mulVec, dotProduct, map_sum, map_mul, mul_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [vecMul, mulVec, dotProduct, map_sum, map_mul, mul_comm]
 
 set_option maxHeartbeats 2000000 in
 

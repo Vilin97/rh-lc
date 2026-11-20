@@ -20,7 +20,8 @@ theorem blockRed_rowAct (O : Type) [CommRing O] (N : ℕ) {ι : Type} (ϖ : O) (
       ((blockSub (O ⧸ Ideal.span {ϖ}) N A).restrictScalars O).comp (blockRed O N ϖ τ) := by
     apply MvPolynomial.algHom_ext
     intro v
-    simp only [AlgHom.comp_apply, AlgHom.restrictScalars_apply, rowAct, blockRed, blockSub, aeval_X, map_sum, map_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [AlgHom.comp_apply, AlgHom.restrictScalars_apply, rowAct, blockRed, blockSub, aeval_X, map_sum, map_mul,
       hA, Matrix.map_apply]
     refine Finset.sum_congr rfl fun b _ => ?_
     congr 1

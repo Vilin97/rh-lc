@@ -110,8 +110,10 @@ theorem linForm_eq {k : Type} [CommRing k] {m n : ℕ} (l : Matrix (Fin m) (Fin 
       GlobalTheory.FlipMatch.pairM (splitC Y).1 (formL l) := by
   have e : ∀ i j, l (Matrix.single i j (Y i j)) = Y i j * l (Matrix.single i j 1) := fun i j => by
     rw [← smul_eq_mul, ← map_smul, Matrix.smul_single, smul_eq_mul, mul_one]
-  conv_lhs => rw [Matrix.matrix_eq_sum_single Y, map_sum]
-  simp only [map_sum, e]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [Matrix.matrix_eq_sum_single Y, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, e]
   simp only [GlobalTheory.FlipMatch.pairM, splitC, formR, formL, Fin.sum_univ_add, mul_neg, Finset.sum_neg_distrib,
     sub_neg_eq_add, Finset.sum_add_distrib]
   ring

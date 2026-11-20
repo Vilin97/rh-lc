@@ -27,7 +27,8 @@ theorem exists_ne_zero_iff {O K k J : Type} [CommRing O] [Field K] [Algebra O K]
     rw [← hn', Matrix.mul_apply]
     rfl
   have hsum : ∀ i, ∑ j, φ (A i j) * (n.map φ).mulVec w j = ∑ i', φ ((A * n) i i') * w i' := fun i => by
-    simp only [Matrix.mulVec, dotProduct, Matrix.mul_apply, Matrix.map_apply, map_sum, map_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, dotProduct, Matrix.mul_apply, Matrix.map_apply, map_sum, map_mul,
       Finset.mul_sum, Finset.sum_mul, _root_.mul_assoc]
     exact Finset.sum_comm
   have hA : ∀ i i', algebraMap O K ((A * n) i i') = ∑ j, algebraMap O K (A i j) * algebraMap O K (n j i') :=
@@ -67,14 +68,16 @@ theorem exists_ne_zero_iff {O K k J : Type} [CommRing O] [Field K] [Algebra O K]
         rw [← hc]
         simp only [Finset.sum_apply, Pi.smul_apply]
         simp only [Algebra.smul_def]
-      rw [this, ← hb, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [this, ← hb, map_sum]
       simp only [map_mul, hA, hc', Finset.sum_mul, Finset.mul_sum, _root_.mul_assoc]
       exact Finset.sum_comm)
     apply hw
     calc w i = ∑ i', φ ((1 : Matrix J J O) i i') * w i' := by
           simp [Matrix.one_apply, apply_ite φ]
       _ = ∑ a, φ (c a) * ∑ i', φ ((A * n) a i') * w i' := by
-          simp only [h1, map_sum, map_mul, Finset.sum_mul, Finset.mul_sum, _root_.mul_assoc]
+          set_option synthInstance.maxHeartbeats 100000 in
+            simp only [h1, map_sum, map_mul, Finset.sum_mul, Finset.mul_sum, _root_.mul_assoc]
           exact Finset.sum_comm
       _ = 0 := by simp only [hz, mul_zero, Finset.sum_const_zero]
 

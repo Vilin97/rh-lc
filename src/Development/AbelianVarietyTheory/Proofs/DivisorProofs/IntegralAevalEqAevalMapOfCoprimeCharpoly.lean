@@ -23,7 +23,8 @@ theorem exists_eq_uniformizer_smul {O K : Type} [CommRing O] [IsDomain O] [IsDis
   have hF : aeval γ F = 0 := by
     have h1 : aeval γ F = u ^ m • aeval y Q := by
       rw [aeval_eq_sum_range (p := Q) y, Finset.smul_sum]
-      simp only [F, map_sum, map_mul, aeval_C, map_pow, hf]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [F, map_sum, map_mul, aeval_C, map_pow, hf]
       refine Finset.sum_congr rfl fun i hi => ?_
       have him : i ≤ m := Nat.lt_succ_iff.1 (Finset.mem_range.1 hi)
       have hAlg : ∀ (c : O) (X : Matrix (Fin n) (Fin n) K), algebraMap O _ c * X = c • X :=
@@ -42,7 +43,8 @@ theorem exists_eq_uniformizer_smul {O K : Type} [CommRing O] [IsDomain O] [IsDis
   let φ := residue O
   have hφπ : φ π = 0 := (residue_eq_zero_iff π).2 ((mem_maximalIdeal _).2 hπ.not_isUnit)
   have hFm : F.map φ = (f.map φ) ^ m := by
-    simp only [F, Polynomial.map_sum, Polynomial.map_mul, Polynomial.map_pow, map_C, map_mul, map_pow]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [F, Polynomial.map_sum, Polynomial.map_mul, Polynomial.map_pow, map_C, map_mul, map_pow]
     rw [Finset.sum_range_succ, Finset.sum_eq_zero, zero_add, hQm.coeff_natDegree, Nat.sub_self,
       pow_zero, mul_one, map_one, C_1, one_mul]
     intro i hi

@@ -95,7 +95,8 @@ theorem ratM_one : ratM P (1 : Sp E n ≃ₗ[E] Sp E n) = 1 := by
 theorem ratM_mulVec (f : Sp E n ≃ₗ[E] Sp E n) (x : Sp E n) :
     ratM P f *ᵥ (fun i => algebraMap E (P.adicCompletion E) (x i)) = fun i => algebraMap E _ (f x i) := by
   funext i
-  rw [← mat_mulVec, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← mat_mulVec, map_sum]
   simp [ratM, Matrix.mulVec, dotProduct]
 
 theorem locM_bc (γ : GL (Fin n) E) : locM P (Formalism.UG.bc ι γ) = ratM P (Formalism.UG.glEquiv γ) := by
@@ -150,7 +151,8 @@ theorem exists_frame (x : GL (Fin n) (AfE F E)) (P : HeightOneSpectrum (𝓞 E))
   obtain ⟨f, hf⟩ := CharValCompare.exists_isFr P hN
   have hA : Sm Valued.v 1 (locM P x⁻¹ * ratM P f) := fun i j => by
     have := PtExist.valued_pullV_le x ((hf (Pi.single j 1)).2 (single_mem_stdAt j)) i
-    simp only [Formalism.L2.Col.pullV, Matrix.mulVec, dotProduct, map_sum, map_mul, adAt_inclE] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Formalism.L2.Col.pullV, Matrix.mulVec, dotProduct, map_sum, map_mul, adAt_inclE] at this
     exact this
   have hB : Sm Valued.v 1 (ratM P f⁻¹ * locM P x) := fun i j => by
     refine PtExist.valued_symm_le (u := fun l => (x : Matrix (Fin n) (Fin n) (AfE F E)) l j) hf
@@ -168,7 +170,8 @@ theorem exists_frame (x : GL (Fin n) (AfE F E)) (P : HeightOneSpectrum (𝓞 E))
       (((mat f⁻¹).map ι * (x : Matrix (Fin n) (Fin n) (AfE F E))) i j) {P} (dep_ne_zero (P := P) (c + 1))
     refine ⟨y, ?_⟩
     have e1 : (ratM P f⁻¹ * locM P x) i j = adAt F P (((mat f⁻¹).map ι * (x : Matrix (Fin n) (Fin n) (AfE F E))) i j) := by
-      simp only [Matrix.mul_apply, map_sum, map_mul, Matrix.map_apply, adAt_inclE, ratM, locM]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Matrix.mul_apply, map_sum, map_mul, Matrix.map_apply, adAt_inclE, ratM, locM]
     rw [e1, e, map_add, adAt_inclE, sub_add_cancel_left, Valuation.map_neg]
     exact (valued_nat_mul_lt hr (hN P (by simp))).le
   choose κ hκ using hap

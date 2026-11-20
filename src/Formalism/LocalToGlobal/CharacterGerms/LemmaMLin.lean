@@ -159,7 +159,8 @@ theorem pderiv_subst [Fintype σ] {a : σ → MvPowerSeries τ C} (ha : ∀ s, O
   have hL : coeff e (pderiv C b (subst a R)) = 0 :=
     ordGE_pderiv (n := e.degree + 1) (ordGE_subst ha hRo) b e (by omega)
   have hRr : coeff e (∑ w, pderiv C b (a w) * subst a (pderiv C w R)) = 0 := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_eq_zero fun w _ => ?_
     have h1 : OrdGE (0 + (e.degree + 1)) (pderiv C b (a w) * subst a (pderiv C w R)) :=
       Formalism.BaseCaseIdentities.OrdGE.mul (ordGE_zero _) (ordGE_subst ha (ordGE_pderiv (n := e.degree + 1) hRo w))
@@ -214,7 +215,8 @@ theorem subst_linS_X [Finite σ] (M : τ → σ → C) (w : σ) :
 theorem subst_linS_sum [Finite σ] (M : τ → σ → C) {ι : Type*} (s : Finset ι)
     (F : ι → MvPowerSeries σ C) :
     subst (linS M) (∑ i ∈ s, F i) = ∑ i ∈ s, subst (linS M) (F i) := by
-  rw [← substAlgHom_apply (hasSubst_linS M), map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← substAlgHom_apply (hasSubst_linS M), map_sum]
   simp only [substAlgHom_apply]
 
 theorem subst_linS_neg [Finite σ] (M : τ → σ → C) (F : MvPowerSeries σ C) :
@@ -238,7 +240,8 @@ theorem coeff_subst_linS_congr [Finite σ] (M : τ → σ → C) {F G : MvPowerS
 theorem pderiv_linS (M : τ → σ → C) (b : τ) (w : σ) :
     pderiv C b (linS M w) = MvPowerSeries.C (M b w) := by
   unfold linS
-  rw [map_sum, Finset.sum_eq_single b]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_eq_single b]
   · rw [Derivation.map_smul, pderiv_X_self, smul_eq_C_mul, mul_one]
   · intro c _ hc
     rw [Derivation.map_smul, pderiv_X_of_ne hc, smul_zero]
@@ -302,7 +305,8 @@ theorem linS_rowM_self (g : Fin 2) (e : ι → I g → C) (v' : ι' → I (1 - g
     linS (rowM g e v') (⟨g, x⟩ : WV I) =
       rename (Function.Embedding.inl : ι ↪ ι ⊕ ι') (linS e x) := by
   unfold linS rowM
-  rw [Fintype.sum_sum_type, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Fintype.sum_sum_type, map_sum]
   have h2 : ∑ b : ι', (Sum.elim (fun c => toW g (e c)) (fun b => toW (1 - g) (v' b)) (Sum.inr b)
       (⟨g, x⟩ : WV I)) • (X (Sum.inr b) : MvPowerSeries (ι ⊕ ι') C) = 0 := by
     refine Finset.sum_eq_zero fun b _ => ?_
@@ -316,7 +320,8 @@ theorem linS_rowM_other (g : Fin 2) (e : ι → I g → C) (v' : ι' → I (1 - 
     linS (rowM g e v') (⟨1 - g, x⟩ : WV I) =
       rename (Function.Embedding.inr : ι' ↪ ι ⊕ ι') (linS v' x) := by
   unfold linS rowM
-  rw [Fintype.sum_sum_type, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Fintype.sum_sum_type, map_sum]
   have h2 : ∑ c : ι, (Sum.elim (fun c => toW g (e c)) (fun b => toW (1 - g) (v' b)) (Sum.inl c)
       (⟨1 - g, x⟩ : WV I)) • (X (Sum.inl c) : MvPowerSeries (ι ⊕ ι') C) = 0 := by
     refine Finset.sum_eq_zero fun c _ => ?_
@@ -420,7 +425,8 @@ theorem Sys.isT_partial {t : I → MvPowerSeries I C} (ht : S.IsT t) (x : I) (N 
     (hμ : μ.degree ≤ N) :
     coeff μ (∑ s ∈ Finset.range (N + 1), ∑ c : I, S.al c s x • t c ^ (V.l ^ s)) =
       coeff μ (X x : MvPowerSeries I C) := by
-  rw [coeff_X, ← ht.2 x μ, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [coeff_X, ← ht.2 x μ, map_sum]
   symm
   refine Finset.sum_subset_zero_on_sdiff (Finset.range_subset_range.2 (by omega)) ?_ ?_
   · intro s hs
@@ -428,11 +434,13 @@ theorem Sys.isT_partial {t : I → MvPowerSeries I C} (ht : S.IsT t) (x : I) (N 
       have := (Finset.mem_sdiff.1 hs).2
       simp only [Finset.mem_range, not_lt] at this
       omega
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_eq_zero fun c _ => ?_
     rw [map_smul, coeff_pow_eq_zero_of_lt (S.ordGE_alt ht c) V.l_prime.one_lt hs', smul_zero]
   · intro s _
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun c _ => ?_
     rw [map_smul, smul_eq_mul]
 
@@ -442,7 +450,8 @@ theorem Sys.ze_partial {t : I → MvPowerSeries I C} (ht : S.IsT t) (κ : J) (N 
       coeff μ (-∑ s ∈ Finset.Icc 1 N, ∑ c : I, S.be c s κ • t c ^ (V.l ^ s)) := by
   have h1 : coeff μ (S.ze t κ) = -(∑ s ∈ Finset.Icc 1 μ.degree, ∑ c : I,
       S.be c s κ * coeff μ (t c ^ (V.l ^ s))) := rfl
-  rw [h1, map_neg, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h1, map_neg, map_sum]
   congr 1
   refine Finset.sum_subset_zero_on_sdiff (Finset.Icc_subset_Icc_right hμ) ?_ ?_
   · intro s hs
@@ -451,11 +460,13 @@ theorem Sys.ze_partial {t : I → MvPowerSeries I C} (ht : S.IsT t) (κ : J) (N 
       have h3 := Finset.mem_Icc.1 h2.1
       by_contra hcon
       exact h2.2 (Finset.mem_Icc.2 ⟨h3.1, not_lt.1 hcon⟩)
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_eq_zero fun c _ => ?_
     rw [map_smul, coeff_pow_eq_zero_of_lt (S.ordGE_alt ht c) V.l_prime.one_lt hs', smul_zero]
   · intro s _
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun c _ => ?_
     rw [map_smul, smul_eq_mul]
 
@@ -466,11 +477,13 @@ theorem Sys.coeff_subst_ze (W : τ → I → C) {t : I → MvPowerSeries I C} (h
     coeff A (subst (linS W) (S.ze t κ)) =
       -∑ c, ∑ j ∈ Finset.Icc 1 A.degree,
         S.be c j κ * coeff A (subst (linS W) (t c) ^ (V.l ^ j)) := by
-  rw [coeff_subst_linS_congr W (fun μ hμ => S.ze_partial ht κ A.degree μ hμ) A le_rfl,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [coeff_subst_linS_congr W (fun μ hμ => S.ze_partial ht κ A.degree μ hμ) A le_rfl,
     subst_linS_neg, subst_linS_sum, map_neg, map_sum, Finset.sum_comm]
   congr 1
   refine Finset.sum_congr rfl fun s _ => ?_
-  rw [subst_linS_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [subst_linS_sum, map_sum]
   refine Finset.sum_congr rfl fun c _ => ?_
   rw [subst_linS_smul, subst_linS_pow, map_smul, smul_eq_mul]
 
@@ -492,14 +505,17 @@ theorem Sys.coeff_tD (W : τ → I → C) {t : I → MvPowerSeries I C} (ht : S.
       ∑ β, W β x * coeff A (X β : MvPowerSeries τ C) := by
     intro x
     have h := coeff_subst_linS_congr W (fun μ hμ => S.isT_partial ht x N μ hμ) A (le_of_eq hN.symm)
-    rw [subst_linS_X, subst_linS_sum, map_sum] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [subst_linS_X, subst_linS_sum, map_sum] at h
     have hR : coeff A (linS W x) = ∑ β, W β x * coeff A (X β : MvPowerSeries τ C) := by
       unfold linS
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       exact Finset.sum_congr rfl fun β _ => by rw [map_smul, smul_eq_mul]
     rw [← hR, ← h]
     refine Finset.sum_congr rfl fun s _ => ?_
-    rw [subst_linS_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [subst_linS_sum, map_sum]
     refine Finset.sum_congr rfl fun c _ => ?_
     rw [subst_linS_smul, subst_linS_pow, map_smul, smul_eq_mul, htD']
 
@@ -566,7 +582,8 @@ theorem Sys.coeff_tD (W : τ → I → C) {t : I → MvPowerSeries I C} (ht : S.
   rw [hy] at hyb
   have hz : coeff A (∑ β, MvPowerSeries.C (zc β b) * (X β : MvPowerSeries τ C)) =
       ∑ β, zc β b * coeff A (X β : MvPowerSeries τ C) := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun β _ => by rw [coeff_C_mul]
   rw [hz]
   linear_combination hyb
@@ -715,7 +732,8 @@ theorem coeff_subst_linS_eq_zero {σ τ : Type} [Fintype σ] [Fintype τ] (M : �
     have hlin : ∀ B : τ →₀ ℕ, (∀ b, Q b → B b = 0) → coeff B (linS M w) = 0 := by
       intro B hB
       unfold linS
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_eq_zero fun c _ => ?_
       rw [map_smul]
       by_cases hc : Q c
@@ -806,7 +824,8 @@ theorem RowData.dh_pull (hAlt : Xr.Alt) (g : Fin 2) (a a' : ZMod d) (hodd : Odd 
           toLeaf Xr.G g a a' K +
             toLeaf Xr.G g a a' (∑ κ : J g, Xr.pair g κ k • upG g ((S g).ze (t g) κ)) := by
         rw [← hEq]; ring
-      rw [h1, subst_linS_add, subst_row_toLeaf Xr.G g a a' e v' he hv,
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [h1, subst_linS_add, subst_row_toLeaf Xr.G g a a' e v' he hv,
         subst_row_toLeaf Xr.G g a a' e v' he hv, hKpe, subst_linS_sum, map_sum]
       congr 1
       refine Finset.sum_congr rfl fun κ _ => ?_
@@ -815,7 +834,8 @@ theorem RowData.dh_pull (hAlt : Xr.Alt) (g : Fin 2) (a a' : ZMod d) (hodd : Odd 
   choose Kp hKp hKpe using hk
   refine ⟨∑ k, v' b k • Kp k, ?_, ?_⟩
   · intro A
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine VF.Ge.sum fun k _ => ?_
     rw [map_smul, smul_eq_mul]
     exact (hvint b k).mul_int (hKp k A)
@@ -835,9 +855,11 @@ theorem RowData.dh_pull (hAlt : Xr.Alt) (g : Fin 2) (a a' : ZMod d) (hodd : Odd 
       · intro h; exact absurd (Finset.mem_univ _) h
     rw [hsig]
     simp only [hKpe, smul_add]
-    rw [Finset.sum_add_distrib, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_add_distrib, map_sum]
     congr 1
-    · rw [← substAlgHom_apply hs, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [← substAlgHom_apply hs, map_sum]
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [map_smul, substAlgHom_apply]
     · refine Finset.sum_congr rfl fun k _ => ?_

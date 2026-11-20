@@ -93,10 +93,12 @@ theorem exists_idelesSumInv_eq_one_div :
   choose t ht using ht
   let D : ⨁ u : Place K.1, localGaloisCohomology K 2 u := ∑ u ∈ s, DirectSum.of _ (.inr u) (t u)
   refine ⟨(idelesLimitCohomologyEquiv ι (by norm_num : 1 ≤ 2)).symm D, ?_, fun v => ?_, fun v w => ?_⟩
-  · rw [idelesSumInv_apply, AddEquiv.apply_symm_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [idelesSumInv_apply, AddEquiv.apply_symm_apply, map_sum]
     simp_rw [sumPlaceInv_of, ht]
     change ∑ u ∈ s, QZ.mkHom (c u / localDegree E u) = _
-    rw [← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum]
     change QZ.mk _ = _
     congr 1
     have hn0 : (Module.finrank K.1 E.1 : ℚ) ≠ 0 := by
@@ -114,7 +116,8 @@ theorem exists_idelesSumInv_eq_one_div :
     rw [Finset.sum_congr rfl hdu, ← Finset.sum_div, hsumQ]
   · rw [AddEquiv.apply_symm_apply, DFinsupp.finsetSum_apply]
     exact Finset.sum_eq_zero fun u _ => DirectSum.of_eq_of_ne _ _ _ (by simp)
-  · rw [AddEquiv.apply_symm_apply, DFinsupp.finsetSum_apply, map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [AddEquiv.apply_symm_apply, DFinsupp.finsetSum_apply, map_sum, Finset.smul_sum]
     refine Finset.sum_eq_zero fun u hu => ?_
     by_cases huv : u = v
     · subst huv

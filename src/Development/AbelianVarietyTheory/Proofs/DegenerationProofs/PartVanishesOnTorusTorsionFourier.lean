@@ -16,7 +16,8 @@ variable {F : Type} [Field F] {X : Scheme.{0}} {x : Sp F ⟶ X} {U : X.Opens}
 
 theorem valF_sum (h : ⊤ ≤ x ⁻¹ᵁ U) {J : Type} (A : Finset J) (a : J → Γ(X, U)) :
     valF x U (∑ j ∈ A, a j) = ∑ j ∈ A, valF x U (a j) := by
-  simp only [valF, dif_pos h, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [valF, dif_pos h, map_sum]
 
 theorem valF_ne_zero_iff_le (h : ⊤ ≤ x ⁻¹ᵁ U) (a : Γ(X, U)) :
     valF x U a ≠ 0 ↔ ⊤ ≤ x ⁻¹ᵁ X.basicOpen a := by

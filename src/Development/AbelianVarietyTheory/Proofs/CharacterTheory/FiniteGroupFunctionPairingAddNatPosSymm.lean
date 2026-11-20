@@ -17,7 +17,8 @@ private theorem character_pairing_eq_finrank_hom (K L : Type) [Field K] [Field L
     (Representation.card_inv_mul_sum_char_mul_char_eq_finrank ρ σ)
   rw [map_natCast] at hK
   rw [← hK]
-  simp only [pair, finsum_eq_sum_of_fintype, map_mul, map_inv₀, map_natCast, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [pair, finsum_eq_sum_of_fintype, map_mul, map_inv₀, map_natCast, map_sum]
 
 theorem pair_add_nat_pos_symm : ∀ (K L : Type) [Field K] [Field L] [Algebra K L] [CharZero K] [CharZero L] (G : Type) [Group G] [Finite G], (∀ a b c : G → L, pair (a + b) c = pair a c + pair b c) ∧ (∀ a b : G → L, IsChar K L a → IsChar K L b → ∃ n : ℕ, pair a b = (n : L)) ∧ (∀ φ : G → L, IsIrrChar K L φ → ∃ n : ℕ, 0 < n ∧ pair φ φ = (n : L)) ∧ ∀ a b : G → L, pair a b = pair b a := by
   intro K L _ _ _ _ _ G _ _

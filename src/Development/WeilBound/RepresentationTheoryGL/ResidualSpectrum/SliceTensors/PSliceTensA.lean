@@ -24,7 +24,8 @@ theorem interp {K : Type} (A : Submodule ℂ (K → ℂ)) [FiniteDimensional ℂ
     funext κ'
     simp [Finset.sum_apply, Pi.single_apply, ev]
   have h3 := congrArg Subtype.val h1
-  rw [h2, map_sum] at h3
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h2, map_sum] at h3
   simp only [map_smul, Submodule.coe_sum, Submodule.coe_smul] at h3
   exact h3.symm
 

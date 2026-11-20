@@ -32,7 +32,8 @@ theorem retr_mem {n : ℕ} (ε : Fin n → Bool) :
     funext k
     rw [Complex.re_eq_add_conj]
     simp only [Finset.sum_apply, Pi.add_apply, Pi.smul_apply, smul_eq_mul, coord]
-    simp only [if_true, Bool.false_eq_true, if_false, Matrix.trace, Matrix.diag, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [if_true, Bool.false_eq_true, if_false, Matrix.trace, Matrix.diag, map_sum,
       ← Finset.sum_add_distrib, Finset.sum_div, Complex.star_def]
     refine Finset.sum_congr rfl fun a _ => ?_
     ring

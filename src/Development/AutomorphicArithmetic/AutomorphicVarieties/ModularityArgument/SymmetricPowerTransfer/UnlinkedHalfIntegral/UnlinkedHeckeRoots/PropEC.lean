@@ -163,7 +163,8 @@ private theorem slash_comb (k : ℕ) (E G : ℍ → ℂ) (c : ℂ) (γ : SL(2, �
 
 private theorem sig_cj (k : ℕ) {N : ℕ} (χ : DirichletCharacter ℂ N) (σ : ℂ ≃+* ℂ) (n : ℕ) :
     σ (sigChi k χ n) = sigChi k (cj σ χ) n := by
-  simp [sigChi, cj, MulChar.ringHomComp_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [sigChi, cj, MulChar.ringHomComp_apply, map_sum]
 
 private theorem cusp_comb {N k : ℕ} [NeZero N] (χ : DirichletCharacter ℂ N) (E G : ModularForm (Gamma1 N) (k : ℤ))
     (hEc : HasChar k χ E) (hGc : HasChar k χ G) (hEv : VanOff N k E) (hGv : VanOff N k G) (hG0 : coef G 0 = 1) :

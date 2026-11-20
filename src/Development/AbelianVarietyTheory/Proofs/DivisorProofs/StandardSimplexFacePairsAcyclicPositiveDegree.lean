@@ -105,7 +105,8 @@ theorem d_single {N : ℕ} (z : Pr N) : Pr.d N (Finsupp.single z 1) = z.d₁ + (
 
 theorem H_sum {N n : ℕ} (f : Fin n → Pr N) :
     H N (∑ i : Fin n, ((-1 : ℤ) ^ (i : ℕ)) • Finsupp.single (f i) 1) = ∑ i : Fin n, ((-1 : ℤ) ^ (i : ℕ)) • hz (f i) := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_congr rfl fun i _ => by rw [map_smul, H_single]
 
 theorem key {N : ℕ} (z : Pr N) (hpos : 0 < z.1 + z.2.1) :
@@ -175,7 +176,8 @@ theorem homotopy {N k : ℕ} (c : Pr N →₀ ℤ) (hc : Pr.Deg (k + 1) c) :
   calc Pr.d N (H N c) + H N (Pr.d N c)
       = Pr.d N (H N (c.sum Finsupp.single)) + H N (Pr.d N (c.sum Finsupp.single)) := by rw [Finsupp.sum_single]
     _ = ∑ z ∈ c.support, Finsupp.single z (c z) := by
-        simp only [Finsupp.sum, map_sum, ← Finset.sum_add_distrib]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [Finsupp.sum, map_sum, ← Finset.sum_add_distrib]
         exact Finset.sum_congr rfl step
     _ = c := Finsupp.sum_single c
 

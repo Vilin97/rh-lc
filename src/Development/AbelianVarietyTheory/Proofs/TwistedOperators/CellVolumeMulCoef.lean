@@ -317,7 +317,8 @@ theorem mem_flagN {e : AE D} {P : Finset (Pl D.host.E)} (he : IsIdemSum e P) {S 
   have q1 : ∀ {q : ℕ} (M : Mx D S.rank S.rank) (J : Mx D S.rank q) (w : Pl D.host.E),
       (∀ i j, piAt w (blk d.p0 M J i j) = 0) → ∀ i j, piAt w (blk (HMul.hMul (adj d.j0) (gA S)) M J i j) = 0 :=
     fun M J w h i j => by
-      rw [q0, Matrix.mul_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [q0, Matrix.mul_apply, map_sum]
       exact Finset.sum_eq_zero fun l _ => by rw [map_mul, h, mul_zero]
   have q2 : ∀ {q : ℕ} (M : Mx D S.rank S.rank) (J : Mx D S.rank q),
       blk (HMul.hMul (adj d.j0) (gA S)) M J = 0 → blk d.p0 M J = 0 := fun M J h => by

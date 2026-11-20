@@ -407,7 +407,8 @@ theorem herm_HV (sc : ℝ) : IsHerm (HV sc : Sesq (VV ι a b)) := by
   intro x y
   show (sc : ℂ) * ∑ τ, ∑ i, ∑ j, y τ i j * (starRingEnd ℂ) (x τ i j) =
     (starRingEnd ℂ) ((sc : ℂ) * ∑ τ, ∑ i, ∑ j, x τ i j * (starRingEnd ℂ) (y τ i j))
-  simp only [map_mul, map_sum, Complex.conj_ofReal, Complex.conj_conj]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_mul, map_sum, Complex.conj_ofReal, Complex.conj_conj]
   congr 1
   exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => mul_comm _ _
 

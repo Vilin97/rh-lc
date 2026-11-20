@@ -148,7 +148,8 @@ theorem entries_bound (a : ℕ) (b : ℤ) (d : ℕ) (ha : 0 < a) (hd : 0 < d) (l
   intro w
   have hfx : f x w = ∑ w', x w' * f (Pi.single w' 1) w := by
     conv_lhs => rw [← Finset.univ_sum_single x]
-    rw [map_sum, Finset.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_apply]
     refine Finset.sum_congr rfl fun w' _ => ?_
     rw [show (Pi.single w' (x w') : m → ℂ) = x w' • (Pi.single w' (1 : ℂ) : m → ℂ) by
       ext j; simp [Pi.single_apply]]

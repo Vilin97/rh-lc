@@ -60,7 +60,8 @@ theorem vhol_diff_fock {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] {s 
       rw [map_mul, blockAct_X, Finset.mul_sum]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [MvPolynomial.smul_eq_C_mul]; ring
-    simp only [e1, map_sum, map_smul, ← fockL_pderiv_X, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [e1, map_sum, map_smul, ← fockL_pderiv_X, smul_eq_mul]
     exact DifferentiableOn.fun_sum fun b _ => (h _ _ _).mul (hp _)
 
 theorem vhol_aniso {σ : Type} (x : MvPolynomial σ ℂ) (hx : fockL x x = 0) : x = 0 := by

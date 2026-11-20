@@ -232,7 +232,8 @@ private theorem exists_ne_zero_polynomial_zero_of_homogeneous {k : Type} [Field 
         Polynomial.map_id, RingHom.id_apply]
     have h3 : Polynomial.map (MvPolynomial.eval a) ∘ y = x := by
       funext i
-      simp [y, x, Polynomial.map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [y, x, Polynomial.map_sum]
     rw [h2, h3]
     rfl
   refine ⟨x, ?_, hΦx ▸ hmapΦ⟩

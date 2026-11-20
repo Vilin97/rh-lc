@@ -23,7 +23,8 @@ theorem RelAlgClosureFinite.linearIndependent_adjoin {K L : Type*} [Field K] [Fi
   have hP : (∑ j ∈ s, C (m j) * map (algebraMap K M) (p j) : MvPolynomial σ M) = 0 := by
     apply hx.eq_zero_of_aeval_eq_zero
     rw [← hg]
-    simp only [map_sum, map_mul, aeval_C, aeval_map_algebraMap, hp]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, aeval_C, aeval_map_algebraMap, hp]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [Subalgebra.smul_def, smul_eq_mul, mul_comm]
     rfl

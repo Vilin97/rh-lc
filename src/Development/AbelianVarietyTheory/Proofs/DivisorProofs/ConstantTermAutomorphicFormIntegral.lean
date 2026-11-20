@@ -75,7 +75,8 @@ theorem fderiv_chart (φ : Sm E a) (g : GA E a) {y : Lie E a} (hy : y ∈ invSet
     rw [Matrix.mul_nonsing_inv_cancel_left _ _ ((Matrix.isUnit_iff_isUnit_det _).1 hy)]
   have e2 : ∀ X, rmul X y = lmul y X := fun _ => rfl
   conv_lhs => rw [e, e2, ← (Module.finBasis ℝ (Lie E a)).sum_repr (lmul (invM y) Y)]
-  rw [map_sum, map_sum, ContinuousLinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, ContinuousLinearMap.sum_apply]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_smul, map_smul, ← e2, ← chart_lieD φ.2 _ g hy, ContinuousLinearMap.smul_apply, smul_eq_mul, mul_comm,
     Complex.real_smul]

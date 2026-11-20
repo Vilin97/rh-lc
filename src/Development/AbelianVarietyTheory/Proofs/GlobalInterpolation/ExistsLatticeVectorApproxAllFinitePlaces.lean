@@ -35,7 +35,8 @@ theorem exists_lattice_approx_all : ∀ (F E : Type) [Field F] [NumberField F] [
     (H (v.adicCompletion F) (v.adicCompletionIntegers F).toSubring _).2 ⟨w, hw, rfl⟩, ?_⟩
   rw [hyt v]
   funext i
-  simp only [Pi.add_apply, Pi.smul_apply, Finset.sum_apply, map_sum, Finset.smul_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Pi.add_apply, Pi.smul_apply, Finset.sum_apply, map_sum, Finset.smul_sum,
     ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [hwt j, TensorProduct.tmul_add]

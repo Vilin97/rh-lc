@@ -51,7 +51,8 @@ theorem partner_determinant_holds : PartnerDet := by
     have hWG : ∀ b, be u (g b) = dg i * V i b := by
       intro b
       have e1 : be u (g b) = ((W.map φ) * G) i b := by
-        rw [Matrix.mul_apply, hu, map_sum, LinearMap.sum_apply]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [Matrix.mul_apply, hu, map_sum, LinearMap.sum_apply]
         refine Finset.sum_congr rfl fun a _ => ?_
         rw [hsm, map_smul, LinearMap.smul_apply, smul_eq_mul]; rfl
       have e2 : (W.map φ) * U = 1 := by
@@ -59,7 +60,8 @@ theorem partner_determinant_holds : PartnerDet := by
         exact Matrix.map_one φ (map_zero φ) (map_one φ)
       rw [e1, hGUV, ← Matrix.mul_assoc, ← Matrix.mul_assoc, e2, Matrix.one_mul, Matrix.diagonal_mul]
     have hval : be u (∑ b, c b • g b) = dg i * ((∑ b, c b * V' i b : ℤ_[p]) : ℚ_[p]) := by
-      rw [map_sum, PadicInt.coe_sum, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, PadicInt.coe_sum, Finset.mul_sum]
       refine Finset.sum_congr rfl fun b _ => ?_
       rw [hsm, map_smul, smul_eq_mul, hWG b, PadicInt.coe_mul]
       show _ = dg i * ((c b : ℚ_[p]) * V i b)

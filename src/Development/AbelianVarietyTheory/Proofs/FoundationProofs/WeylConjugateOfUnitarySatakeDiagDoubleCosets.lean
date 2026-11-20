@@ -86,7 +86,8 @@ theorem weylConj_of_sym {α β : Fin m → ℂˣ} (h : ∀ a, sym a α = sym a �
   have hli := (linearIndependent_monoidHom (Multiplicative (Fin m → ℤ)) ℂ).comp _ chr_injective
   have e : ∑ w : Sgn m, Finsupp.single (act w α) (1 : ℂ) = ∑ w : Sgn m, Finsupp.single (act w β) (1 : ℂ) := by
     refine hli (funext fun a => ?_)
-    simpa [map_sum, sym] using (show ∑ w : Sgn m, chr (act w α) a = ∑ w : Sgn m, chr (act w β) a from h a.toAdd)
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [map_sum, sym] using (show ∑ w : Sgn m, chr (act w α) a = ∑ w : Sgn m, chr (act w β) a from h a.toAdd)
   by_contra hn
   have h1 := DFunLike.congr_fun e β
   rw [Finsupp.finset_sum_apply, Finsupp.finset_sum_apply, Finset.sum_eq_zero fun w _ =>

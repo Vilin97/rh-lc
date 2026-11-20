@@ -127,7 +127,8 @@ theorem adm8At_of_hkFrob : ∀ (D : D7) (i : D.ntw.Tw) (s : D.ntw.Sig i), UnrRho
         have := h2 σ hσ; rw [hb] at this; simpa [chiS, hb] using this
       simp [MonoidHom.mul_apply, MonoidHom.pow_apply, MonoidHom.inv_apply, h1 σ hσ, h2', h3 σ hσ]
   · intro P hP hs σ hσ
-    rw [eta_smul, ← sum_coeff_charpolyRev, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [eta_smul, ← sum_coeff_charpolyRev, map_sum]
     refine Finset.sum_congr rfl fun k hk => ?_
     exact hH P hP hs σ hσ k (Nat.lt_succ_iff.1 (Finset.mem_range.1 hk))
 

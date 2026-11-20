@@ -47,7 +47,8 @@ theorem hermForm_periods_alternating_nondeg :
     have hxi : ∀ i, hermFormImBilin Hm (x i) z = 0 := by
       intro i
       have : hermFormImBilin Hm (x i) z = ∑ j, v j * M i j := by
-        rw [hz, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [hz, map_sum]
         refine Finset.sum_congr rfl fun j _ => ?_
         rw [map_smul, smul_eq_mul, ← hM i j]
         rfl

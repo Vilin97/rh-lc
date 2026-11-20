@@ -79,7 +79,8 @@ theorem mem_of_map_mem_span_integralClosure :
     have hg : ∀ u : Fin n → K, g (ι u) = algebraMap K L (F j u) := by
       intro u
       have hu := LinearMap.pi_apply_eq_sum_univ (F j) u
-      rw [hu, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hu, map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       have e : (fun k => if i = k then (1 : K) else 0) = Pi.single i 1 := by
         ext k; simp [Pi.single_apply, eq_comm]

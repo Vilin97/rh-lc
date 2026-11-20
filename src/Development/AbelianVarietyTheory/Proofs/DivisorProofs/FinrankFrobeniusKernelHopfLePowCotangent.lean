@@ -43,7 +43,8 @@ theorem finrank_le_pow_of_aeval_surjective {n d : ℕ} {K A : Type*} [Field K] [
     rw [eq_top_iff]
     rintro y -
     obtain ⟨P, rfl⟩ := hsurj y
-    rw [P.as_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [P.as_sum, map_sum]
     refine Submodule.sum_mem _ fun m _ => ?_
     have : MvPolynomial.monomial m (AddMonoidAlgebra.coeff P m) =
         AddMonoidAlgebra.coeff P m • MvPolynomial.monomial m (1 : K) := by
@@ -77,7 +78,8 @@ theorem finrank_le_pow_finrank_cot (p : ℕ) [hp : Fact p.Prime] (K H : Type) [F
   have hsum : ∀ l : Fin (Module.finrank K (AugCot ε)) → K,
       AugCot.d ε (∑ i, l i • (x i : H ⧸ J)) = ∑ i, l i • b i := by
     intro l
-    simp [map_sum, hx]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, hx]
   have hmem : ∀ l : Fin (Module.finrank K (AugCot ε)) → K,
       (∑ i, l i • (x i : H ⧸ J)) ∈ RingHom.ker ε := by
     intro l

@@ -88,7 +88,8 @@ theorem GlobalTheory.SquareAgree.StabLieAdelic.stabLie_adelic : GlobalTheory.Fun
     have hfun : (fun t : ℝ => om' (1, γ (Multiplicative.ofAdd t)) ΦD x) =
         fun t => ∑ i, om' (1, γ (Multiplicative.ofAdd t)) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure (f i) (φ i)) x := by
       funext t
-      rw [hΦ, map_sum, Finset.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hΦ, map_sum, Finset.sum_apply]
     rw [hfun, Finset.sum_apply]
     exact hsum
   have hΨN := hN.stabLie γ hγ ΦD hΦD _ hΨalg hpt

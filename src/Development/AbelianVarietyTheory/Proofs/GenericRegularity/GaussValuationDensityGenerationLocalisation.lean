@@ -96,7 +96,8 @@ theorem gauss_dense_gen : ∀ (D : D7) (B : WeightFamilies.Prov D) (P : ModuliIn
     have := val_unit v (ψ.comp (algebraMap (Op X la N) (Kp X la N))) h1 hu
     rw [← this]
     congr 1
-    rw [MvPolynomial.eval₂_eq, hp₀, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [MvPolynomial.eval₂_eq, hp₀, map_sum, map_sum]
     refine Finset.sum_congr rfl fun α _ => ?_
     rw [MvPolynomial.monomial_eq, map_mul, map_mul, eC, hf', ← hb, hφ, RingHom.comp_apply, e1, Finsupp.prod,
       map_prod, map_prod]

@@ -76,7 +76,8 @@ theorem aeval_mem_sec {a : (E →+* ℂ) × ℕ → ℕ} {n : ℕ} {σ : Type} (
     (hu : ∀ i, u i ∈ sec Xo c a n) {Q : MvPolynomial σ c.F} {d : ℕ} (hQ : Q.IsHomogeneous d) :
     MvPolynomial.aeval u Q ∈ sec Xo c (d • a) (d • n) := by
   classical
-  rw [Q.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Q.as_sum, map_sum]
   refine Submodule.sum_mem _ fun s hs => ?_
   have hc : s.toMultiset.card = d := by
     rw [Finsupp.card_toMultiset]

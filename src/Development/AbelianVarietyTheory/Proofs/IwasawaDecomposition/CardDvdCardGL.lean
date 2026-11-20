@@ -210,7 +210,8 @@ theorem duStarOf_nat : ∀ (R : Ranks) (H : Formalism.BasicNotions.Host R) (hc :
   have hsym : (StandardLattice.stdForm H.E R.k).IsSymm := by
     refine LinearMap.isSymm_def.mpr fun x y => ?_
     show starRingEnd H.E (∑ i, star (x i) * y i) = ∑ i, star (y i) * x i
-    simp only [map_sum, starRingEnd_apply, star_mul, star_star]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, starRingEnd_apply, star_mul, star_star]
   have hpos : ∀ x : Fin R.k → H.E, x ≠ 0 → 0 < Algebra.trace ℚ H.E (StandardLattice.stdForm H.E R.k x x) := fun x hx => by
     have := hStd_trace_pos hconj x hx
     rw [hStd_apply] at this

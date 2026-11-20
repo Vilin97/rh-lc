@@ -46,7 +46,8 @@ def toPi (a : ι) : N ≃ₗ[R] (ι → U.corner a) where
     rw [U.apply_apply]; simp
   right_inv v := by
     ext j
-    simp only [map_sum, U.apply_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, U.apply_apply]
     simp [(U.mem_corner_iff a _).1 (v j).2]
 
 theorem toPi_apply (a : ι) (x : N) (i : ι) : ((U.toPi a x) i : N) = U.E a i x := rfl
@@ -87,7 +88,8 @@ def ofModule [Module (Matrix ι ι R) N] [IsScalarTower R (Matrix ι ι R) N] : 
     · subst h; rw [Matrix.single_mul_single_same]; simp
     · rw [Matrix.single_mul_single_of_ne (h := h)]; simp [h]
   sum_diag := by
-    rw [← map_sum, Matrix.sum_single_one, map_one]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, Matrix.sum_single_one, map_one]
 
 theorem ofModule_E [Module (Matrix ι ι R) N] [IsScalarTower R (Matrix ι ι R) N] (i j : ι) (x : N) :
     (ofModule (R := R)).E i j x = Matrix.single i j (1 : R) • x := rfl

@@ -256,7 +256,8 @@ private lemma hconj_lemma_25 (τ : X.Ψ) (u v : Fin r → ℂ) :
     first
       | simp [cc, IsCMField.complexEmbedding_complexConj]
       | simp [cc, NumberField.IsCMField.complexEmbedding_complexConj]
-  simp only [hermC, map_sum, map_mul, Complex.conj_conj, hG]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hermC, map_sum, map_mul, Complex.conj_conj, hG]
   refine Finset.sum_comm.trans ?_
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
   ring

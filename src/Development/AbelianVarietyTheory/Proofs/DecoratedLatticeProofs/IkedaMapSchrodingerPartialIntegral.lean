@@ -38,7 +38,8 @@ theorem trace_incA (x : D.host.E) : Algebra.trace (AF D.host.F) (AE D) (incA D x
   rw [Algebra.trace_apply, Algebra.trace_apply, ← Algebra.baseChange_lmul, LinearMap.trace_baseChange]
 
 theorem trace_rat {ρ : ℕ} (M : Matrix (Fin ρ) (Fin ρ) D.host.E) : (rat M : Mx D ρ ρ).trace = incA D M.trace := by
-  simp only [Matrix.trace, Matrix.diag, rat, Matrix.map_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.trace, Matrix.diag, rat, Matrix.map_apply, map_sum]
 
 def chi (ψ : AddChar (AF D.host.F) ℂ) {k ρ : ℕ} (M : Matrix (Fin k) (Fin ρ) D.host.E) (z : Mx D k ρ) : ℂ :=
   ψ (Algebra.trace (AF D.host.F) (AE D) (incA D D.host.xi0 * (adj z ⬝ (rat M : Mx D k ρ)).trace))

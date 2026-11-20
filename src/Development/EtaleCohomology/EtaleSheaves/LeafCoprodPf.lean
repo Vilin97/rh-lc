@@ -117,7 +117,8 @@ theorem LeafCoprod_of : LateralTheory.E.E4.LeafCoprod := by
   have hsum : ∑ j, (G (ZMod q)).map (prS (ZMod q) Z j) ≫ (chains (ZMod q)).map (sch.map (Sigma.ι Z j)) = 𝟙 _ := by
     have h1 : (G (ZMod q)).map (∑ j, prS (ZMod q) Z j ≫ (W (ZMod q)).map (sch.map (Sigma.ι Z j))) = 𝟙 _ := by
       rw [sum_prS, CategoryTheory.Functor.map_id]
-    rw [Functor.map_sum] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Functor.map_sum] at h1
     simp only [Functor.map_comp] at h1
     exact h1
   exact cls_inj (fun j => (chains (ZMod q)).map (sch.map (Sigma.ι Z j))) (fun j => (G (ZMod q)).map (prS (ZMod q) Z j))

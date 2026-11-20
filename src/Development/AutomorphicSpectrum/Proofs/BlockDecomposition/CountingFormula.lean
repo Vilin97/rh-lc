@@ -29,7 +29,8 @@ theorem sigma_sigma (hcm : IsCMExt F E σ) (x : E) : σ (σ x) = x := by
 
 theorem hE_self_fixed (hcm : IsCMExt F E σ) {M : ℕ} {J : Matrix (Fin M) (Fin M) E} (hJ : IsHermND σ J) (x : Fin M → E) :
     σ (hE σ J x x) = hE σ J x x := by
-  simp only [hE, hform, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hE, hform, map_sum, map_mul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   have h1 : σ ((σ : E →+* E) (x j)) = x j := sigma_sigma hcm _

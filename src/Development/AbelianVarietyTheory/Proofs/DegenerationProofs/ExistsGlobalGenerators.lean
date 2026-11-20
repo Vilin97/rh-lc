@@ -307,7 +307,8 @@ theorem exists_global_generators : ∀ (o Ω : Type) [CommRing o] [Field Ω] [Al
     intro w hw
     let P : (S.TT M z →+ ZMod S.N) → Matrix S.J S.J Ω := fun c => (algebraMap o Ω).mapMatrix (S.proj _ c)
     have hP : ∑ c, P c * P c = 1 := by
-      simp only [P, ← map_mul, proj_mul_self hT, ← map_sum, sum_proj hT, map_one]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [P, ← map_mul, proj_mul_self hT, ← map_sum, sum_proj hT, map_one]
     have e : w = ∑ c, ∑ i, (w ᵥ* P c) i • P c i := by
       simp only [← vecMul_eq_sum, vecMul_vecMul]
       rw [← vecMul_sum, hP, vecMul_one]

@@ -55,7 +55,8 @@ theorem aeval_chernPoly (c : ℂ) (G : V n → Matrix r r ℂ) (v : V n) (k : �
   have e : ∀ p, aeval (fun y => C c * X y) p = ψ p := fun _ => rfl
   have hM : (-curvPoly G v).map ψ = (C c : MvPolynomial (Fin n × Fin n) ℂ) • (-curvPoly G v) := by
     refine Matrix.ext fun i j => ?_
-    simp only [Matrix.map_apply, Matrix.neg_apply, Matrix.smul_apply, curvPoly, Matrix.of_apply, map_neg, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.map_apply, Matrix.neg_apply, Matrix.smul_apply, curvPoly, Matrix.of_apply, map_neg, map_sum,
       map_mul, smul_eq_mul, Finset.mul_sum, mul_neg, ← e, aeval_X, aeval_C, algebraMap_eq]
     refine congrArg _ (Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_)
     ring
@@ -72,7 +73,8 @@ theorem topCoeff_aeval_C_mul_X (c : ℂ) (Q : MvPolynomial (Fin n × Fin n) ℂ)
   refine Finset.sum_congr rfl fun w _ => ?_
   have hdeg : (∑ a, Finsupp.single (a, w a) 1 : Fin n × Fin n →₀ ℕ).sum (fun _ e => e) = n := by
     change Finsupp.degree (∑ a, Finsupp.single (a, w a) 1 : Fin n × Fin n →₀ ℕ) = n
-    simp [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum]
   rw [coeff_aeval_C_mul_X, hdeg]
   ring
 

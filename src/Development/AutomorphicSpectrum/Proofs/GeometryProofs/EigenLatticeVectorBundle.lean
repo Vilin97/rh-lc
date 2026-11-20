@@ -295,7 +295,8 @@ theorem linearIndependent_sigma {Ω V F : Type} [Field Ω] [CharZero Ω] [AddCom
   rintro g hg ⟨s, j⟩
   have spec := HT.ProjEig.eigProj_spec Ω V F ρ (φ s)
   have h1 := congrArg (HT.eigProj ρ (φ s)) hg
-  rw [map_sum, map_zero, Fintype.sum_sigma] at h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_zero, Fintype.sum_sigma] at h1
   have h2 : ∑ j, HT.eigProj ρ (φ s) (g ⟨s, j⟩ • b s j) = 0 := by
     rw [← h1]
     symm

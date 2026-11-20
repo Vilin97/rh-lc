@@ -121,14 +121,16 @@ theorem etaleClosed_point_lifts_simple_roots_monic : Lift := by
           rw [act_coe X hg, Finset.sum_eq_single c (fun d _ hd => by simp [Pi.single_eq_of_ne hd]) (by simp),
             Finset.sum_apply, Finset.sum_eq_single e (fun d _ hd => by simp [Pi.single_eq_of_ne' hd]) (by simp)]
           simp
-        rw [e, _root_.map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [e, _root_.map_sum]
         refine Finset.sum_congr rfl fun d _ => ?_
         rw [map_smul, ← ht] }
   have hM : ∀ c d, SmOn (GG k r) fun g => X.1.ρ g d c := fun c d => hX.smooth d c
   have hM1 : ∀ c d, X.1.ρ 1 d c = if c = d then 1 else 0 := fun c d => by
     rw [hX.one, Matrix.one_apply]; exact if_congr eq_comm rfl rfl
   have hfx : ∀ x : M X, f x = ∑ c, t c (x c) := fun x => by
-    conv_lhs => rw [← Finset.univ_sum_single x, _root_.map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [← Finset.univ_sum_single x, _root_.map_sum]
     exact Finset.sum_congr rfl fun c _ => (ht c (x c)).symm
   have hsum : ∀ (x : M X) (W : List (Mx k r)), LieWd k r W → ∀ s : Finset X.1.ι,
       IsSm (GG k r) T.R.σ (∑ c ∈ s, t c (x c)) ∧
@@ -291,7 +293,8 @@ theorem act_mul {X : Obj k r} (hX : X.1.OK) {g h : Mx k r} (hg : g ∈ GG k r) (
   funext c
   refine Subtype.ext ?_
   rw [act_coe X (X.2.repOn.mul_mem _ hg _ hh), act_coe X hg]
-  simp only [act_coe X hh, hX.mul g hg h hh, Matrix.mul_apply, _root_.map_sum, map_smul, Finset.smul_sum, smul_smul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [act_coe X hh, hX.mul g hg h hh, Matrix.mul_apply, _root_.map_sum, map_smul, Finset.smul_sum, smul_smul,
     Finset.sum_smul, X.2.repOn.apply_mul hg hh]
   exact Finset.sum_comm
 

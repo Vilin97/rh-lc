@@ -166,7 +166,8 @@ theorem deltaForm_eq_sum (x g : A) (hf : {γ : Γ | x⁻¹ * ((ι γ)⁻¹ * g) 
 theorem deltaForm_sum {J : Type} (x g : A) (hf : {γ : Γ | x⁻¹ * ((ι γ)⁻¹ * g) ∈ U}.Finite) (s : Finset J) (a : J → K) (v : J → M) :
     deltaForm ι U ρ x (∑ i ∈ s, a i • v i) g = ∑ i ∈ s, a i • deltaForm ι U ρ x (v i) g := by
   classical
-  simp only [deltaForm_eq_sum ι U ρ x g hf, map_sum, map_smul, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [deltaForm_eq_sum ι U ρ x g hf, map_sum, map_smul, Finset.smul_sum]
   exact Finset.sum_comm
 
 theorem finite_index (x g : A) (h : Finite {δ : Γ // g⁻¹ * ι δ * g ∈ U}) :
@@ -262,7 +263,8 @@ theorem vCore_lin {S : GridChoice W U} {t : T} {Φ : G.Datum} (h : S.SumOK t Φ)
   simp only [GridChoice.classSum, finsum_eq_sum_of_fintype, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun c _ => ?_
-  rw [hv β c, map_sum, LinearMap.sum_apply, Finset.mul_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hv β c, map_sum, LinearMap.sum_apply, Finset.mul_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_smul, LinearMap.smul_apply, smul_eq_mul]
   ring
@@ -368,7 +370,8 @@ theorem psiC_sum {L : LevCh D T} {sc : Consts} {G : GridData L sc} {J : Type} (s
     psiC Ψ0 x = ∑ i ∈ s, D.what₂.embLL (a i) • psiC (Ψs i) x := by
   apply Subtype.ext
   show (GlobalTheory.CoefModel.mapVV D.what₂.embLL (LaP G) (Ψ0 (finG (Xp G) x))).1 = _
-  rw [h, map_sum, Submodule.coe_sum, Submodule.coe_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h, map_sum, Submodule.coe_sum, Submodule.coe_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_smulₛₗ, Submodule.coe_smul, Submodule.coe_smul]
   rfl
@@ -443,7 +446,8 @@ theorem exists_intMod_levelPrimePow_eq_add_mul (ch : Choice R) {t : T} {w : PlL 
       exact hb c.1 c.2 hSO _ hc
     obtain ⟨y', e, h⟩ := hl
     have e2 : y' = y ⬝ᵥ x := D.what₂.embLL.injective (by
-      rw [e, dotProduct, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [e, dotProduct, map_sum]
       refine Finset.sum_congr rfl fun a _ => ?_
       rw [map_mul, hy, mul_comm])
     rwa [e2] at h

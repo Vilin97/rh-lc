@@ -141,7 +141,8 @@ private theorem UpperTheory.V.AlgebraTools.selfdual_ramified_mat {A : Type} [Com
   have hz : ∀ k j, Matrix.toBilin' H (∑ i, (Qᵀ * H * Q * D)⁻¹ k i • b i) (c j) =
       (1 : Matrix (Fin n) (Fin n) F) k j := by
     intro k j
-    rw [← Matrix.nonsing_inv_mul _ hXdet, Matrix.mul_apply, map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Matrix.nonsing_inv_mul _ hXdet, Matrix.mul_apply, map_sum, LinearMap.sum_apply]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, LinearMap.smul_apply, hX, smul_eq_mul]
   have hzZ : ∀ k, ∃ a : Fin n → A, ∑ i, a i • b i = ∑ i, (Qᵀ * H * Q * D)⁻¹ k i • b i := by
@@ -166,8 +167,10 @@ private theorem UpperTheory.V.AlgebraTools.selfdual_ramified_mat {A : Type} [Com
     ext k j
     apply hinj
     have := hz k j
-    rw [← hN, map_sum, LinearMap.sum_apply] at this
-    rw [Matrix.mul_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hN, map_sum, LinearMap.sum_apply] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Matrix.mul_apply, map_sum]
     refine Eq.trans (Finset.sum_congr rfl fun i _ => ?_) (this.trans ?_)
     · rw [← algebraMap_smul F (N k i), map_smul, LinearMap.smul_apply, ← hM, map_mul]
       rfl

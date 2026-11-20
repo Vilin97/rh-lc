@@ -48,7 +48,8 @@ theorem LinesProjLattice.proof (h1 : LinesIdealLatticeFG.Statement) : LinesProjL
       by_cases h : τ j = x
       · subst h; simpa using hv' j
       · simp [Pi.single_eq_of_ne' h]
-    · simp only [LinearMap.restrictScalars_apply, map_sum, map_smul, ← hB, coordProj_basis_inr]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp only [LinearMap.restrictScalars_apply, map_sum, map_smul, ← hB, coordProj_basis_inr]
       ext i
       simp [Pi.single_apply]
 

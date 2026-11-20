@@ -41,11 +41,13 @@ theorem four_diag (sg : ℤˣ) (t : ℂ) (z : Fin n → ℂ) (hz : ∀ j, 0 < ((
         = ∑ e ∈ Q.support, ker t u v * (evX (MvPolynomial.monomial e (Q.coeff e)) v * gZ sg (Matrix.diagonal z) v) := by
       intro v
       conv_lhs => rw [Q.as_sum]
-      simp only [evX, map_sum, Finset.sum_mul, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [evX, map_sum, Finset.sum_mul, Finset.mul_sum]
     simp_rw [hsplit]
     rw [integral_finset_sum _ (fun e _ => intg_mono sg t z hz e (Q.coeff e) u)]
     rw [Finset.sum_congr rfl (fun e he => hF e he u)]
-    simp only [evX, map_sum, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [evX, map_sum, Finset.sum_mul]
 
 theorem pg_four (sg : ℤˣ) (t C0 : ℂ) (z : Fin n → ℂ) (hz : ∀ j, 0 < ((sg : ℤ) : ℝ) * (z j).im) {d : ℕ}
     {f : (Fin m → Fin n → ℂ) → ℂ} (hp : IsPG sg d (Matrix.diagonal z) f) :

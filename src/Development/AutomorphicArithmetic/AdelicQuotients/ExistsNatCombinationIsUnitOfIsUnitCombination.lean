@@ -20,8 +20,10 @@ private lemma UpperTheory.rational_polynomial_vanishing_naturals {K : Type} [Fie
     simpa [mem_support_iff, hd] using hφ
   · intro a ha
     have h1 := congrArg φ ha
-    rw [eval_eq', map_sum, map_zero] at h1
-    rw [map_sum, ← h1]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [eval_eq', map_sum, map_zero] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, ← h1]
     refine Finset.sum_congr rfl fun e _ => ?_
     rw [eval_monomial, Finsupp.prod_fintype _ _ (by simp)]
     have : coeff e P * ∏ i, (a i : K) ^ e i = (∏ i, (a i : ℚ) ^ e i) • coeff e P := by

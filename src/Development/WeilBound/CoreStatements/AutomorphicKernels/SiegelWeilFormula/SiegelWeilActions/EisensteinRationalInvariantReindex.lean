@@ -266,7 +266,8 @@ theorem heis' (h : Hyp L nb uM nb' w₁ cM δ) :
     obtain ⟨xb, rfl⟩ := ratV_incl hb
     have e : y (fun i => inclR (F := F) (AF F) (x0 i)) (fun i => inclR (F := F) (AF F) (xb i)) =
         inclR (F := F) (AF F) (∑ l, xb l * σ (x0 l) - ∑ k, x0 k * (((R.ε : ℤ) : E) * σ (xb k))) := by
-      simp only [y, eA, map_sub, map_sum, map_mul, GlobalTheory.EisBL.DoubledUnipotentRadical.cA_inclR]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [y, eA, map_sub, map_sum, map_mul, GlobalTheory.EisBL.DoubledUnipotentRadical.cA_inclR]
     show ellA δ (y _ _) ∈ _
     rw [e]
     exact ellA_inclR h _
@@ -288,7 +289,8 @@ theorem heis' (h : Hyp L nb uM nb' w₁ cM δ) :
       have hZ : ellA δ (y u₀ b) • inclR (F := F) (AF F) δ = y u₀ b := by
         refine eig (R := R) h _ ?_
         have he := eps_mul R
-        simp only [y, eA_eq, map_sub, map_sum, map_mul, map_intCast, cc d, mul_sub, Finset.mul_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [y, eA_eq, map_sub, map_sum, map_mul, map_intCast, cc d, mul_sub, Finset.mul_sum]
         simp only [← Finset.sum_sub_distrib]
         refine Finset.sum_congr rfl fun l _ => ?_
         linear_combination (-(u₀ l * cA σ (b l))) * he

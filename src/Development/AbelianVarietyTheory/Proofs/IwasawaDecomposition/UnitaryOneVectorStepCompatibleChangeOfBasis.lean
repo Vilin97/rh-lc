@@ -39,7 +39,8 @@ theorem isHermND_basis (hσ : ∀ z, σ (σ z) = z) {n : ℕ} {J : Matrix (Fin n
   obtain ⟨h1, h2⟩ := hJ
   refine ⟨fun i j => ?_, ?_⟩
   · unfold Formalism.UG.cT
-    simp only [Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, Finset.sum_mul, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, Finset.sum_mul, map_sum,
       map_mul, AlgHom.coe_toRingHom, hσ, h1]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun l _ => ?_

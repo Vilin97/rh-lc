@@ -49,6 +49,7 @@ theorem dof_C_mul (F : Fin d → PS k 2 d) (v : Fin d → k) (r : k) (f : PS k 1
 
 theorem dof_sum (F : Fin d → PS k 2 d) (v : Fin d → k) {α : Type} (s : Finset α) (f : α → PS k 1 d) :
     Dof F v (∑ a ∈ s, f a) = ∑ a ∈ s, Dof F v (f a) := by
-  simp only [← dofD_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← dofD_apply, map_sum]
 
 end ReciprocityTheory.ChartRestriction.G.TB.GE

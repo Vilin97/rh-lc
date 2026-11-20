@@ -19,7 +19,8 @@ theorem totalDegree_bind_le_of_linear {ι : Type*} (f : ι → MvPolynomial ι �
     (Q : MvPolynomial ι ℂ) : (bind₁ f Q).totalDegree ≤ Q.totalDegree := by
   classical
   conv_lhs => rw [Q.as_sum]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine (totalDegree_finsetSum _ _).trans (Finset.sup_le fun m hm => ?_)
   rw [bind₁_monomial]
   refine (totalDegree_mul _ _).trans ?_

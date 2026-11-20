@@ -228,7 +228,8 @@ theorem frechet (n : ℕ) (ε : Fin n → Bool) (X : GMod n) (c : X.V →ₗ[ℂ
     have hq := hUs ⟨hxU, hxJ⟩
     set x := g * NormedSpace.exp ((s : ℂ) • Y) with hx
     have e : c (∑ a, ∑ b, Y a b • X.E a b u) x - T = ∑ a, ∑ b, Y a b * (c (X.E a b u) x - c (X.E a b u) g) := by
-      simp only [hT, map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, mul_sub, Finset.sum_sub_distrib]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hT, map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, mul_sub, Finset.sum_sub_distrib]
     rw [e, Finset.mul_sum]
     refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun a _ => ?_)
     rw [Finset.mul_sum]
@@ -263,7 +264,8 @@ theorem chain {X : GMod n} {c : X.V →ₗ[ℂ] (Matrix (Fin n) (Fin n) ℂ → 
   set A : Fin n → Fin n → ℂ := fun a b => c (X.E a b u) g with hA
   have hT : ∀ Z : Matrix (Fin n) (Fin n) ℂ, c (∑ a, ∑ b, Z a b • X.E a b u) g = ∑ a, ∑ b, Z a b * A a b := by
     intro Z
-    simp only [map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, hA]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, hA]
   have hTd : HasDerivAt (fun s => ∑ a, ∑ b, Y s a b * A a b) (∑ a, ∑ b, (slmJi ε g * cv') a b * A a b) s0 :=
     HasDerivAt.fun_sum fun a _ => HasDerivAt.fun_sum fun b _ => (hY a b).mul_const (A a b)
   set R : ℝ → ℂ := fun s => c u (g * NormedSpace.exp (Y s)) - c u g - ∑ a, ∑ b, Y s a b * A a b with hRdef

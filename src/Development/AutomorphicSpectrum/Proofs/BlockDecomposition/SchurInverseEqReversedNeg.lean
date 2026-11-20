@@ -39,7 +39,8 @@ theorem evalAt_inv (z : Fin n → ℂˣ) (p : LaurentRing n) :
   rw [h, AlgHom.comp_apply]
 
 theorem negHom_alternant (μ : Fin n → ℤ) : negHom n (alternant μ) = alternant (-μ) := by
-  simp only [alternant, antisymm_apply, map_sum, Units.smul_def, map_zsmul, permAct_monomial,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [alternant, antisymm_apply, map_sum, Units.smul_def, map_zsmul, permAct_monomial,
     negHom_monomial]
   rfl
 

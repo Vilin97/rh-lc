@@ -120,7 +120,8 @@ theorem part1 {U : ∀ σ : c.F →+* ℂ, Unf Xo c σ r} {h : GenFrEx Xo c} {e 
     by_contra hcon
     push Not at hcon
     have := congrArg ev i6
-    rw [map_sum, map_one] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_one] at this
     simp [hcon] at this
   have h1 : ev (e Z) = 1 := mul_left_cancel₀ hZ (by rw [← map_mul, i4, mul_one])
   have h2 : ∀ f, f * e Z = 0 → nval T.V d (evI y f) = ⊤ := fun f hf => by

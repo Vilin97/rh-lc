@@ -376,7 +376,8 @@ theorem exists_coeff_idempotent_sections :
       exact mem_algebraicClosure_iff.1 (coeff_le_algebraicClosure c (b j).2))
   refine ⟨c', fun z hz => ?_, fun c'' hle i => ?_⟩
   · have e := congrArg c.F.val (b.sum_repr ⟨z, hz⟩)
-    rw [map_sum] at e
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at e
     have e' : z = _ := e.symm
     rw [e']
     refine sum_mem fun j _ => ?_

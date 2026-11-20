@@ -63,7 +63,8 @@ theorem mul_kMat (P : HeightOneSpectrum (𝓞 E)) (g : GL (Fin n) (AfE F E)) (f 
     unfold pullV
     rw [Matrix.mulVec_mulVec, ← Units.val_mul, mul_inv_cancel, Units.val_one, Matrix.one_mulVec]
   have e2 := congrArg (fun y => adAt F P (y i)) e
-  simp only [adAt_inclE, Matrix.mulVec, dotProduct, map_sum, map_mul] at e2
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [adAt_inclE, Matrix.mulVec, dotProduct, map_sum, map_mul] at e2
   simp only [Matrix.mul_apply, RingHom.mapMatrix_apply, Matrix.map_apply, LinearMap.toMatrix'_apply, kMat]
   rw [e2]
   congr 2
@@ -74,7 +75,8 @@ theorem det_kMat (P : HeightOneSpectrum (𝓞 E)) (g : GL (Fin n) (AfE F E)) (f 
 
 theorem adAt_pullV_smul (P : HeightOneSpectrum (𝓞 E)) (g : GL (Fin n) (AfE F E)) (s : 𝓞 E) (x : Sp E n) (i : Fin n) :
     adAt F P (pullV g (s • x) i) = algebraMap E _ (algebraMap (𝓞 E) E s) * adAt F P (pullV g x i) := by
-  simp only [pullV, Matrix.mulVec, dotProduct, map_sum, map_mul, Pi.smul_apply, Algebra.smul_def, adAt_inclE, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [pullV, Matrix.mulVec, dotProduct, map_sum, map_mul, Pi.smul_apply, Algebra.smul_def, adAt_inclE, Finset.mul_sum]
   exact Finset.sum_congr rfl fun _ _ => by ring
 
 variable [StarRing E]

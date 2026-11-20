@@ -254,5 +254,6 @@ theorem UpperTheory.Gal.Mod.esGen :
     rw [LinearMap.zero_apply] at hE' ⊢
     simp only [LinearMap.sum_apply, LinearMap.smul_apply, Module.End.mul_apply] at hE' ⊢
     simp only [hpow, hopc]
-    rw [← map_zero sp, ← hE', map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_zero sp, ← hE', map_sum]
     simp only [map_smul]

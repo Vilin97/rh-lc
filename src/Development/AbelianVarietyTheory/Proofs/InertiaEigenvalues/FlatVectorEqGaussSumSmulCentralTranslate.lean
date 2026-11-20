@@ -182,7 +182,8 @@ theorem om_model_eq_dilate : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 
     congr 1
     funext _
     have hs : incA D (star (ϖ : D.host.E)) = cA D (incA D (ϖ : D.host.E)) := rfl
-    rw [Finset.sum_add_distrib, ← Finset.sum_mul, ← Finset.sum_mul, ← map_sum, ← hsum, hs]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_add_distrib, ← Finset.sum_mul, ← Finset.sum_mul, ← map_sum, ← hsum, hs]
     ring
   have hK := GlobalTheory.OnCmp.kerDat_tuple (i := i) hC.lev hC.thP t
   have heQ' : IsIdemSum eQ (R.Q t) := by rw [hQt]; exact heQ

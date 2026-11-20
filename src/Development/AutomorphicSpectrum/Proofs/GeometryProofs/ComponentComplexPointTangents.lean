@@ -53,7 +53,8 @@ theorem exists_coef {g : A →+* Ω} (j : F →ₛₗ[g] V) (hj : Function.Injec
   obtain ⟨a, ha⟩ := (Submodule.mem_span_range_iff_exists_fun _).1 h
   choose C hC using fun k => (a k).2
   refine ⟨C, hj ?_⟩
-  rw [← ha, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← ha, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [j.map_smulₛₗ, hC]
   rfl
@@ -80,7 +81,8 @@ theorem frame_change {g : A →+* Ω} (hg : Function.Injective g) {θ : A →+* 
       exact Finset.sum_congr rfl fun k _ => by rw [hQ k]
     have h2 : j (x i) = ∑ m, g ((Matrix.vecMul (P i) Q) m) • j (x m) := by
       conv_lhs => rw [h1]
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       exact Finset.sum_congr rfl fun m _ => j.map_smulₛₗ _ _
     have h3 := congrFun (coef_eq hx i _ h2) l
     have h4 : (Matrix.vecMul (P i) Q) l = (1 : Matrix (Fin a) (Fin a) A) i l := by
@@ -99,11 +101,13 @@ theorem frame_change {g : A →+* Ω} (hg : Function.Injective g) {θ : A →+* 
     rw [← Matrix.map_mul, hDC, Matrix.map_one _ (map_zero θ) (map_one θ)]
   have hw : ∀ i, jy (e i) = ∑ k, (Cm.map θ) i k • jy (f k) := fun i => by
     conv_lhs => rw [hC i]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun k _ => jy.map_smulₛₗ _ _
   have hv : ∀ k, jy (f k) = ∑ i, (Dm.map θ) k i • jy (e i) := fun k => by
     conv_lhs => rw [hD k]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun m _ => jy.map_smulₛₗ _ _
   refine ⟨?_, le_antisymm ?_ ?_⟩
   · rw [Fintype.linearIndependent_iff]

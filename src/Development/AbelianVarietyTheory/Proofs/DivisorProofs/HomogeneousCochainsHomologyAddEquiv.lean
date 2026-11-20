@@ -96,7 +96,8 @@ theorem toInh_d (n : ℕ) (c : C.obj ⦋n⦌) :
   apply Subtype.ext
   funext g
   rw [toInh_apply, dLocallyConstant_hom_apply, inhomogeneousCochains.d_hom_apply]
-  simp only [AlgebraicTopology.AlternatingCofaceMapComplex.objD, sum_hom_apply, zsmul_hom_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [AlgebraicTopology.AlternatingCofaceMapComplex.objD, sum_hom_apply, zsmul_hom_apply,
     map_sum, map_zsmul, Finset.sum_apply, Pi.smul_apply, hd]
   rw [Fin.sum_univ_succ]
   congr 1

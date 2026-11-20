@@ -343,9 +343,11 @@ theorem segForm_eq_sum (p r : ℕ) {s : ℕ} (S : SegData s) (T : Finset (SegBlo
 
 theorem fock_bilin {σ : Type} {n : ℕ} (F G : Fin n → MvPolynomial σ (KK O)) (a η : Fin n → O) :
     fock (∑ i, a i • F i) (∑ l, η l • G l) = ∑ i, ∑ l, algebraMap O (KK O) (a i * η l) * fock (F i) (G l) := by
-  rw [← fockBilinear_apply, map_sum, Finset.sum_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← fockBilinear_apply, map_sum, Finset.sum_comm]
   refine Finset.sum_congr rfl fun l _ => ?_
-  rw [map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, LinearMap.sum_apply]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [← algebraMap_smul (KK O) (a i) (F i), ← algebraMap_smul (KK O) (η l) (G l), map_smul, map_smul,
     LinearMap.smul_apply, smul_eq_mul, smul_eq_mul, fockBilinear_apply, map_mul]

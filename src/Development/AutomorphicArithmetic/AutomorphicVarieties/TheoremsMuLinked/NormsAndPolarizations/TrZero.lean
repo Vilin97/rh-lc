@@ -34,7 +34,8 @@ private theorem UpperTheory.V.Th.Nm.trZero_inner {K : Type} [Field K] {n : ℕ}
     rw [Finset.mul_sum, Finset.sum_congr rfl fun i _ => e1 i, Finset.sum_sub_distrib,
       ← Finset.mul_sum, h3, mul_one, Finset.sum_mul]
     congr 1
-    simp only [h1, map_sum, map_smul, Finset.sum_mul, mul_assoc, h2, Finset.mul_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [h1, map_sum, map_smul, Finset.sum_mul, mul_assoc, h2, Finset.mul_sum,
       smul_mul_assoc, mul_smul_comm]
     exact Finset.sum_comm
   rw [mul_neg, neg_mul, h4]; abel

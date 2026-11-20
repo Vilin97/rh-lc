@@ -33,7 +33,8 @@ theorem h_right (x y : V) : H.h x y = M.L.cj (H.h y x) := by
   rw [H.h_herm x y, M.L.cj_cj]
 
 theorem h_sum_right {κ : Type} (s : Finset κ) (f : κ → V) (x : V) : H.h x (∑ c ∈ s, f c) = ∑ c ∈ s, H.h x (f c) := by
-  rw [h_right, h_sum_left, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h_right, h_sum_left, map_sum]
   exact Finset.sum_congr rfl fun c _ => (h_right H x (f c)).symm
 
 theorem h_smul_right (a : E) (x y : V) : H.h x (a • y) = M.L.cj a * H.h x y := by
@@ -168,7 +169,8 @@ theorem psi_mk (abelian₂ : Submodule M.L.O V) (c : E) (A : Matrix ι ι E) (hA
       fun a => Submodule.Quotient.mk (p := H.smulLat c abelian₂) (act A v a) := by
   funext b
   simp only [psi, act]
-  rw [show (Submodule.Quotient.mk (∑ a, A a b • v a) : V ⧸ H.smulLat c abelian₂) =
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [show (Submodule.Quotient.mk (∑ a, A a b • v a) : V ⧸ H.smulLat c abelian₂) =
     (H.smulLat c abelian₂).mkQ (∑ a, A a b • v a) from rfl, map_sum]
   refine Finset.sum_congr rfl fun a _ => ?_
   show _ = (H.smulLat c abelian₂).mkQ ((⟨A a b, hAO a b⟩ : M.L.O) • v a)

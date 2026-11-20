@@ -28,7 +28,8 @@ theorem tilt_root_eq_one {c : Per.Fl l} {m : ℕ} (hlm : ¬ l ∣ m) (hc : c ^ m
   have h2 : (∑ i ∈ Finset.range m, c ^ i) = 0 :=
     (mul_eq_zero.1 h1).resolve_right (sub_ne_zero.2 hne)
   have h3 := congrArg (PreTilt.coeff (O := Per.OC l) (p := l) 0) h2
-  simp only [map_sum, map_pow, h0, one_pow, Finset.sum_const, Finset.card_range, map_zero,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_pow, h0, one_pow, Finset.sum_const, Finset.card_range, map_zero,
     nsmul_eq_mul, mul_one] at h3
   exact hlm ((CharP.cast_eq_zero_iff _ l m).1 h3)
 

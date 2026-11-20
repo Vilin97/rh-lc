@@ -83,7 +83,8 @@ theorem span_eq_top_of_span_map {Γ k K : Type} [Field k] [Field K] [Algebra k K
   have hF : ∀ X : Matrix (Fin r) (Fin r) k, F (X.map (algebraMap k K)) = algebraMap k K (f X) := by
     intro X
     conv_rhs => rw [Matrix.matrix_eq_sum_single X]
-    simp only [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum]
     change ∑ i, ∑ j, algebraMap k K (X i j) * algebraMap k K (f (Matrix.single i j 1)) = _
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
     have : Matrix.single i j (X i j) = X i j • Matrix.single i j (1 : k) := by

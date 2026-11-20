@@ -53,7 +53,8 @@ theorem constantCoeff_esymm (n k : ℕ) :
     constantCoeff (esymm (Fin n) ℝ k) = if k = 0 then 1 else 0 := by
   rcases Nat.eq_zero_or_pos k with rfl | hk
   · simp [esymm_zero]
-  · rw [if_neg hk.ne', esymm, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [if_neg hk.ne', esymm, map_sum]
     refine Finset.sum_eq_zero fun t ht => ?_
     rw [Finset.mem_powersetCard] at ht
     obtain ⟨i, hi⟩ : t.Nonempty := Finset.card_pos.1 (ht.2 ▸ hk)

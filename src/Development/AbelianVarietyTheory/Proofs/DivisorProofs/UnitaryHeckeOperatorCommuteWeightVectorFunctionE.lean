@@ -15,7 +15,8 @@ theorem finsum_comp_eq_comp_finsum {ι V W : Type} [AddCommGroup V] [Module ℂ 
   · rw [finsum_eq_sum_of_support_subset g (s := hfin.toFinset) (by rw [hg]; simp),
       finsum_eq_sum_of_support_subset h (s := hfin.toFinset) (by simp)]
     ext x
-    rw [LinearMap.comp_apply, LinearMap.comp_apply, LinearMap.sum_apply, LinearMap.sum_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [LinearMap.comp_apply, LinearMap.comp_apply, LinearMap.sum_apply, LinearMap.sum_apply, map_sum]
     exact Finset.sum_congr rfl fun i _ => LinearMap.congr_fun (hc i) x
   · rw [finsum_of_infinite_support hfin, finsum_of_infinite_support (by rwa [hg])]
     simp

@@ -102,7 +102,8 @@ theorem contract {τ : A} (hτ : ι τ = t) {S : Subring R}
   have h3 : ∀ k, ∑ i ∈ Finset.range (k + 1), T^[i] y =
       y + T (∑ i ∈ Finset.range k, T^[i] y) := by
     intro k
-    rw [Finset.sum_range_succ', map_sum, add_comm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_range_succ', map_sum, add_comm]
     simp only [Function.iterate_succ_apply', Function.iterate_zero_apply]
   choose r hr using fun i j => meet ((Matrix.of z - y - T (Matrix.of z)) i j) fun k => by
     have := ((h2 (k + 1)).sub (hT k _ (h2 k))).mono hτ (show k ≤ k + 1 + m by omega)

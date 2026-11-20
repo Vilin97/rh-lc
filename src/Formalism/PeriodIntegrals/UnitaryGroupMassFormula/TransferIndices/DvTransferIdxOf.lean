@@ -86,7 +86,8 @@ theorem intEl_mem (ρ : Representation K G V) (L : Submodule (𝓞 K) V) (hL : �
     (z : MonoidAlgebra K G) (hz : IntEl z) : ∀ x ∈ L, ρ.asAlgebraHom z x ∈ L := by
   intro x hx
   rw [← MonoidAlgebra.sum_single z]
-  rw [Finsupp.sum, map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finsupp.sum, map_sum, LinearMap.sum_apply]
   refine Submodule.sum_mem _ fun g _ => ?_
   obtain ⟨o, ho⟩ := hz g
   rw [Representation.asAlgebraHom_single, LinearMap.smul_apply, ← ho, algebraMap_smul]
@@ -130,7 +131,8 @@ theorem dvTransferIdx_of (hB : BlockIdx) (hS : SumIdx) (hG : GrpData) (hV0 : VNo
       · refine ⟨ρ.asAlgebraHom (b' i * (eps P * eS T s)) y', ?_⟩
         rw [← Module.End.mul_apply, ← map_mul, ← mul_assoc, ← hb'1 i]
       · conv_lhs => rw [← hb'2]
-        rw [map_sum, LinearMap.sum_apply]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum, LinearMap.sum_apply]
         refine Finset.sum_congr rfl fun i _ => ?_
         rw [mul_assoc, map_mul, Module.End.mul_apply])
     A.L B hAfg hBfg hAsp hBsp
@@ -140,7 +142,8 @@ theorem dvTransferIdx_of (hB : BlockIdx) (hS : SumIdx) (hG : GrpData) (hV0 : VNo
     (fun j x hx _ => intEl_mem ρ B hBL' (b s j) (hb s j) x hx)
 
   have hπ : ∑ t, ρ.asAlgebraHom (eps P * eS T t) = ρ.asAlgebraHom (eps P * eG T) := by
-    rw [eG, Finset.mul_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [eG, Finset.mul_sum, map_sum]
   have hcomm : ∀ s, eps P * eS T s = eS T s * eps P := fun s => (hZ s (eps P)).symm
   have hsum := hS K A.V T.S (fun s => ρ.asAlgebraHom (eps P * eS T s)) (Fintype.card G) Fintype.card_pos
     (by

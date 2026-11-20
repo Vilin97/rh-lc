@@ -71,7 +71,8 @@ def pair (σ : E →ₐ[F] E) (J : Matrix (Fin n) (Fin n) E) (p q : Fin n → E)
 
 theorem pair_swap (hcm : IsCMExt F E σ) (hJ : IsHermND σ J) (p q : Fin n → E) :
     pair σ J p q = σ (pair σ J q p) := by
-  simp only [pair, map_sum, map_mul, cm_conj_conj hcm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [pair, map_sum, map_mul, cm_conj_conj hcm]
   conv_rhs => rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun c _ => ?_
   rw [hJ.1]; ring
@@ -90,20 +91,23 @@ theorem cT_mul_mulVec_apply (P : Matrix (Fin n) (Fin r) E) (z : Fin n → E) (j 
 
 theorem dot_row (t : E →ₐ[F] Fv F v) (Y : Matrix (Fin n) (Fin r) E) (i : Fin r) (q : Fin n → E) :
     (fun c => t ((Formalism.UG.cT (σ : E →+* E) Y * J) i c)) ⬝ᵥ (fun a => t (q a)) = t (pair σ J (fun a => Y a i) q) := by
-  simp only [pair, Formalism.UG.cT, dotProduct, Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, map_sum, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [pair, Formalism.UG.cT, dotProduct, Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, map_sum, map_mul,
     Finset.sum_mul, AlgHom.coe_toRingHom, RingHom.coe_coe]
   exact Finset.sum_comm
 
 theorem dot_conj (t : E →ₐ[F] Fv F v) (p q : Fin n → E) :
     ((fun a => (t.comp σ) (p a)) ᵥ* J.map t) ⬝ᵥ (fun c => t (q c)) = t (pair σ J p q) := by
-  simp only [pair, Matrix.vecMul, dotProduct, Matrix.map_apply, map_sum, map_mul, Finset.sum_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [pair, Matrix.vecMul, dotProduct, Matrix.map_apply, map_sum, map_mul, Finset.sum_mul,
     AlgHom.comp_apply]
   exact Finset.sum_comm
 
 theorem vecMul_conj (t : E →ₐ[F] Fv F v) (Y : Matrix (Fin n) (Fin r) E) (i : Fin r) :
     (fun a => (t.comp σ) (Y a i)) ᵥ* J.map t = fun c => t ((Formalism.UG.cT (σ : E →+* E) Y * J) i c) := by
   funext c
-  simp only [Formalism.UG.cT, Matrix.vecMul, dotProduct, Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Formalism.UG.cT, Matrix.vecMul, dotProduct, Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, map_sum,
     map_mul, AlgHom.comp_apply, AlgHom.coe_toRingHom, RingHom.coe_coe]
 
 theorem col_ext (hcm : IsCMExt F E σ) (t : E →ₐ[F] Fv F v) (M : Matrix (Fin n) (Fin n) (Fv F v ⊗[F] E))
@@ -117,12 +121,14 @@ theorem col_ext (hcm : IsCMExt F E σ) (t : E →ₐ[F] Fv F v) (M : Matrix (Fin
   · have := congrFun (h1 j) a
     simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, Pi.smul_apply, smul_eq_mul] at this
     rw [Matrix.mul_diagonal]
-    simp only [Matrix.mul_apply, Matrix.map_apply, map_sum, map_mul, splitProj_inclR]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mul_apply, Matrix.map_apply, map_sum, map_mul, splitProj_inclR]
     rw [this]; ring
   · have := congrFun (h2 j) a
     simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, Pi.smul_apply, smul_eq_mul] at this
     rw [Matrix.mul_diagonal]
-    simp only [Matrix.mul_apply, Matrix.map_apply, map_sum, map_mul, splitProj_inclR]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mul_apply, Matrix.map_apply, map_sum, map_mul, splitProj_inclR]
     rw [this]; ring
 
 end Herm

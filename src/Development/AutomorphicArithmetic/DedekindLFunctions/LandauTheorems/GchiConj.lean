@@ -10,7 +10,8 @@ namespace Deduction
 theorem Gchi_conj_ramp {N : ℕ} [NeZero N] (χ : DirichletCharacter ℂ N) (y : ℝ) :
     (starRingEnd ℂ) (ramp (fun n => χ n) y) = ramp (fun n => χ⁻¹ n) y := by
   unfold ramp
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun n _ => ?_
   rw [map_mul, map_mul, Complex.conj_ofReal, Complex.conj_ofReal]
   congr 2

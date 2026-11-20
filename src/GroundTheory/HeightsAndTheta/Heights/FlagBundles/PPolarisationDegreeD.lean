@@ -32,7 +32,8 @@ theorem PolarisationDegreeD.proof : PolarisationDegreeD.Statement := by
   have hQ : Q = 0 := by
     apply MvPolynomial.funext
     intro c
-    rw [map_zero, ← hχ c, hexp c, hQdef, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_zero, ← hχ c, hexp c, hQdef, map_sum, map_sum]
     refine sum_congr rfl fun k _ => ?_
     have hs : C ((Nat.multinomial univ k : K) * ∏ i, c i ^ k i) * ∏ i, X i ^ k i =
         ((Nat.multinomial univ k : K) * ∏ i, c i ^ k i) • (∏ i, X i ^ k i : MvPolynomial (Fin r) K) :=
@@ -54,7 +55,8 @@ theorem PolarisationDegreeD.proof : PolarisationDegreeD.Statement := by
     exact (mul_eq_zero.mp hc.symm).resolve_left hm
 
   have hP0 : χ P = 0 := by
-    rw [as_sum P, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [as_sum P, map_sum]
     refine sum_eq_zero fun d hd => ?_
     have hdeg : ∑ i, d i = D := by
       rw [← Finsupp.degree_eq_sum, Finsupp.degree_eq_weight_one]

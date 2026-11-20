@@ -87,7 +87,8 @@ theorem admissible_over_prime (hd : d.AxH 𝒜) (h : d.S1) (la : IsDedekindDomai
   have hrel : ∀ i : Fin (d.D + 1), i ≠ 0 → ∑ j, s (i, j) * f (a j) = 0 := by
     intro i hi
     rw [Fin.sum_univ_succAbove _ (d.jc c)]
-    simp only [s, sImg, Fin.succAbove_cases_eq_insertNth, Fin.insertNth_apply_same,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [s, sImg, Fin.succAbove_cases_eq_insertNth, Fin.insertNth_apply_same,
       Fin.insertNth_apply_succAbove, hi, ↓reduceIte, ha_jc, map_one, mul_one, map_neg, map_sum,
       map_mul, hC]
     rw [neg_add_eq_zero]
@@ -257,7 +258,8 @@ theorem admissible_over_prime (hd : d.AxH 𝒜) (h : d.S1) (la : IsDedekindDomai
   have hsH : ∀ q, d.sH c (MvPolynomial.X q) = s q := fun q => by simp [Data.sH, sHom, s]
   have hsum : (∑ j, d.sH c (MvPolynomial.X (0, j)) * f (r j)) =
       MvPolynomial.aeval t (∑ j, p (0, j) * MvPolynomial.C (r j)) := by
-    simp only [map_sum, map_mul, hpu, MvPolynomial.aeval_C, hsH]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, hpu, MvPolynomial.aeval_C, hsH]
     rfl
   show w (∑ j, d.sH c (MvPolynomial.X (0, j)) * f (r j)) = 0
   rw [hsum]

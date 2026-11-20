@@ -48,8 +48,10 @@ theorem exists_inv_rows {R ι : Type} [CommRing R] [Fintype ι] {n : ℕ} (e : F
     obtain ⟨σ, rfl⟩ := Finite.injective_iff_surjective.1 hφ σ
     have a := congrArg q (h1 (φ τ) (φ σ))
     have b := congrArg (fun x => q x ^ p) (h1 τ σ)
-    simp only [map_sum, map_mul, hφ.eq_iff] at a
-    simp only [map_sum, map_mul, sum_pow_char, mul_pow, ← hq] at b
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, hφ.eq_iff] at a
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, sum_pow_char, mul_pow, ← hq] at b
     simp only [sub_mul, Finset.sum_sub_distrib]
     rw [a, b]
     split_ifs <;> simp [hp.out.ne_zero]
@@ -57,7 +59,8 @@ theorem exists_inv_rows {R ι : Type} [CommRing R] [Fintype ι] {n : ℕ} (e : F
     have : ∑ σ, (∑ i, (q (cf (φ τ) i) - q (cf τ i) ^ p) * q (M σ i)) * q (cf σ k) = 0 := by simp only [h3, zero_mul, Finset.sum_const_zero]
     simp only [Finset.sum_mul] at this
     rw [Finset.sum_comm] at this
-    simp only [mul_assoc, ← Finset.mul_sum, ← map_mul, ← map_sum, h2] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [mul_assoc, ← Finset.mul_sum, ← map_mul, ← map_sum, h2] at this
     rw [Finset.sum_eq_single k (fun i _ hi => by rw [if_neg hi, map_zero, mul_zero]) (by simp), if_pos rfl, map_one, mul_one] at this
     exact this
   rw [← map_pow, ← map_sub, Ideal.Quotient.eq_zero_iff_mem, Ideal.mem_span_singleton] at h4

@@ -129,7 +129,8 @@ theorem mConeMap_homog (y : (Σ k, ι k) → Ω) {g : MRing ι} {d : K → ℕ} 
   classical
   conv_lhs => rw [g.as_sum]
   conv_rhs => rw [g.as_sum]
-  rw [map_sum, map_sum, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun m hm => ?_
   have hdeg := hg m hm
   simp only [mConeMap, aeval_monomial, map_mul]
@@ -311,13 +312,15 @@ theorem exists_lower (y : (Σ k, ι k) → Ω) (A : HermLine ι) (q : ℕ) (w : 
           rw [Finset.prod_mul_distrib]
           ring
   have hΦy : aeval y Φ = 0 := by
-    rw [hΦ, map_sub, map_sum, aeval_chartMon, Finset.sum_congr rfl fun j _ => hterm j, ← Finset.sum_mul, hsum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hΦ, map_sub, map_sum, aeval_chartMon, Finset.sum_congr rfl fun j _ => hterm j, ← Finset.sum_mul, hsum,
       one_mul, sub_self]
   refine ⟨∑ j, coeffNorm (U j), Finset.sum_nonneg fun j _ => coeffNorm_nonneg _, ?_⟩
   intro z hz hmax hz0
   have hr : ∀ k, ‖z ⟨k, c k⟩‖ ≠ 0 := fun k => norm_ne_zero_iff.mpr (hz0 k)
   have hΦz := vanish hz hΦh hΦy
-  simp only [hΦ, map_sub, map_sum, map_mul, eval_chartMon, sub_eq_zero] at hΦz
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hΦ, map_sub, map_sum, map_mul, eval_chartMon, sub_eq_zero] at hΦz
   have hbd : ∏ k, ‖z ⟨k, c k⟩‖ ^ D k ≤
       ∑ j, coeffNorm (U j) * A.h z * ∏ k, (‖z ⟨k, c k⟩‖ ^ (-A.a k) * ‖z ⟨k, c k⟩‖ ^ D k) := by
     have e0 : ∏ k, ‖z ⟨k, c k⟩‖ ^ D k = ‖∏ k, z ⟨k, c k⟩ ^ D k‖ := by

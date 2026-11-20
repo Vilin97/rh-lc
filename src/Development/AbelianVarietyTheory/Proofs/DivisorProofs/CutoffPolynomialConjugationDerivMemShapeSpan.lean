@@ -18,7 +18,8 @@ theorem sb_derivcut (H : ℝ → ℝ) (hH : IsCutFn H) : IsCutFn (deriv H) := by
   simp
 
 theorem sb_evrp {n : ℕ} (ε : Fin n → Bool) (g : Mat n) : ev g (rP ε) = ((rM ε g : ℝ) : ℂ) := by
-  simp only [rP, rM, map_sum, map_mul, ev, eval_X, Sum.elim_inl, Sum.elim_inr]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [rP, rM, map_sum, map_mul, ev, eval_X, Sum.elim_inl, Sum.elim_inr]
   push_cast
   refine Finset.sum_congr rfl fun x _ => ?_
   rw [Complex.star_def, Complex.mul_conj, Complex.normSq_eq_norm_sq]
@@ -59,7 +60,8 @@ theorem sb_degmono {n : ℕ} (ε : Fin n → Bool) (Z : Mat n) (s : _) (a : ℂ)
 theorem sb_degdz {n : ℕ} (ε : Fin n → Bool) (Z : Mat n) (P : Poly n) :
     (dZ ε Z P).totalDegree ≤ P.totalDegree := by
   conv_lhs => rw [P.as_sum]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine (totalDegree_finsetSum _ _).trans (Finset.sup_le fun m hm => ?_)
   refine (sb_degmono ε Z m _).trans ?_
   exact (totalDegree_monomial_le _ _).trans (le_totalDegree hm)

@@ -146,7 +146,8 @@ theorem rank_eq {O k M : Type} [CommRing O] [Nontrivial O] [Field k] [Algebra O 
     intro c hc j
     choose a ha using fun j => hs (c j)
     have h1 : q (∑ j, a j • b j) = 0 := by
-      rw [← hc, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hc, map_sum]
       exact Finset.sum_congr rfl fun j _ => by rw [map_smul, ← ha, algebraMap_smul]
     obtain ⟨y, hy⟩ := (hk _).1 h1
     have h2 := congrArg (fun z => b.repr z j) hy
@@ -176,7 +177,8 @@ theorem γD_smulA (T : LocLat G Qp LL O) (g : W.Gam) (a : LetA O n₀) (x : W.DD
 theorem γ₀_π₀ {δ : W.Gam} (hδ : δ ∈ W.DelF) : W.γ₀ δ W.π₀₁ = W.π₀₁ := by
   classical
   have hm : ∀ g, g ∈ W.DelF ↔ IsOfFinOrder g := fun g => by rw [W.DelF_def, isOfFinOrder_iff_pow_eq_one]
-  rw [LocWach.π₀₁, map_add, map_sub, map_one, map_natCast, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [LocWach.π₀₁, map_add, map_sub, map_one, map_natCast, map_sum]
   congr 1
   refine Finset.sum_bijective (δ * ·) (Group.mulLeft_bijective δ) (fun g => ?_) (fun g _ => ?_)
   · rw [hm, hm]
@@ -192,7 +194,8 @@ theorem coord_inv (T : LocLat G Qp LL O) {m : ℕ} (b : Fin m → W.DD T) (hb : 
     ∀ δ ∈ W.DelF, W.γA δ (a j) = a j := by
   intro δ hδ
   have h := hx δ hδ
-  rw [map_sum] at h
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum] at h
   simp only [γD_smulA, hb _ δ hδ] at h
   have := Fintype.linearIndependent_iff.1 hli (fun j => W.γA δ (a j) - a j) (by
     simp only [sub_smul, Finset.sum_sub_distrib, h, sub_self]) j
@@ -251,7 +254,8 @@ theorem sen_gen [IsDomain O] (p : Pres W F ι τ γ) (hp : ((PD.p : ℕ) : k) = 
     have hai := coord_inv W T _ (fun j => (b j).2.2) hli a (by rw [ha]; exact x.2.2)
     have hx : x = ∑ j, (⟨a j • (b j : W.DD T), (W.N T).smul_mem _ (b j).2.1,
         smul_mem W T (hai j) (b j).2.2⟩ : ↥(W.NΔ T)) := Subtype.ext (by rw [← ha]; simp)
-    rw [hx, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hx, map_sum]
     refine Submodule.sum_mem _ fun j _ => ?_
     obtain ⟨c, hc⟩ := hinv (a j (τ i)) fun δ hδ => congrFun (hai j δ hδ) (τ i)
     rw [hs (a j) c (b j) _ hc rfl]
@@ -304,7 +308,8 @@ theorem sen_gen [IsDomain O] (p : Pres W F ι τ γ) (hp : ((PD.p : ℕ) : k) = 
   have h2 : J ⟨_, hwi⟩ = (PowerSeries.X : k⟦X⟧) • J ⟨_, hzi⟩ :=
     hs (W.π₀ + (PD.p : LetA O n₀)) PowerSeries.X _ _ (by rw [hιX, ← hq]; rfl) hzz
   refine mem_sh_iff_exists.2 ⟨_, hJN ⟨_, hzi⟩, ?_⟩
-  rw [← X_smul_eq, ← h2, h1, one_smul, hw, map_sub, map_sum, hnab]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← X_smul_eq, ← h2, h1, one_smul, hw, map_sub, map_sum, hnab]
   simp only [hO', Matrix.map_apply]
 
 omit [TopologicalSpace G] [TopologicalSpace LL] in

@@ -56,7 +56,8 @@ theorem IsLatBasis.inv_mulVec {K K' : Set (Fin g → ℂ)} {b : Fin r → Fin g 
   rw [hK, hb.2]
   have key : ∀ m : Fin r → ℤ, M⁻¹ *ᵥ (∑ j, m j • b j) = ∑ j, m j • (M⁻¹ *ᵥ b j) := fun m => by
     change Matrix.mulVecLin M⁻¹ (∑ j, m j • b j) = ∑ j, m j • Matrix.mulVecLin M⁻¹ (b j)
-    simp only [map_sum, map_zsmul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_zsmul]
   constructor
   · rintro ⟨m, hm⟩
     exact ⟨m, by rw [← key, ← hm, inv_mulVec_mulVec h]⟩

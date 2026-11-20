@@ -75,7 +75,8 @@ theorem continuous_dual : Continuous (dual p FS FT) :=
 
 theorem π_hO (x y : WO S T) : p.π (hO S T x y) = Matrix.trace
     (loc p S.gram⁻¹ * (Matrix.map y fun z => p.π (cA D z))ᵀ * loc p T.gram * Matrix.map x p.π) := by
-  simp only [hO, map_sum, map_mul, Matrix.trace, Matrix.diag, Matrix.mul_apply, Finset.sum_mul, loc, Matrix.map_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hO, map_sum, map_mul, Matrix.trace, Matrix.diag, Matrix.mul_apply, Finset.sum_mul, loc, Matrix.map_apply,
     Matrix.transpose_apply, RingHom.comp_apply]
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [Finset.sum_comm]

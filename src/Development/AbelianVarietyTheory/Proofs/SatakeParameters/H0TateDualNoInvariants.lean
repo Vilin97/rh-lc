@@ -29,7 +29,8 @@ theorem tate_dual_single_basis (ρ : G H.E N.Om →* GL (Fin R.r) (N.O i)) (g : 
         ((ρ g⁻¹ : GL (Fin R.r) (N.O i)) : Matrix (Fin R.r) (Fin R.r) (N.O i)) b a) * f (Pi.single b 1) := by
   have hv : ∀ v : Fin R.r → N.O i, f v = ∑ b, v b * f (Pi.single b 1) := fun v => by
     conv_lhs => rw [pi_eq_sum_univ v]
-    simp only [map_sum, map_smul, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, smul_eq_mul]
     refine Finset.sum_congr rfl fun b _ => ?_
     congr 2
     funext j
@@ -54,7 +55,8 @@ theorem coordEquiv_equivariant (ρ : G H.E N.Om →* GL (Fin R.r) (N.O i)) (g : 
     rw [tate_dual_single_basis]
     simp only [Matrix.mulVec, dotProduct, matT, matW, Matrix.smul_apply, Matrix.transpose_apply,
       Matrix.map_apply, smul_eq_mul]
-    simp only [Algebra.smul_def, map_sum, map_mul, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Algebra.smul_def, map_sum, map_mul, Finset.sum_mul]
     refine Finset.sum_congr rfl fun b _ => ?_
     simp only [eps, Glob.epsO]
     ring

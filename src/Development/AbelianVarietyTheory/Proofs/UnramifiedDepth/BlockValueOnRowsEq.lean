@@ -210,7 +210,8 @@ private lemma mvExp_add_unramified_depth [CharZero C] {a b : MvPowerSeries σ C}
           MvPowerSeries.coeff m (a ^ i * b ^ (k - i)) /
             ((i.factorial : C) * ((k - i).factorial : C)) := by
         refine Finset.sum_congr rfl fun k _ => ?_
-        rw [add_pow, map_sum, Finset.sum_div]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [add_pow, map_sum, Finset.sum_div]
         refine Finset.sum_congr rfl fun i hi => ?_
         have hik : i ≤ k := Nat.lt_succ_iff.1 (Finset.mem_range.1 hi)
         have hch : ((k.choose i : ℕ) : C) ≠ 0 := Nat.cast_ne_zero.2 (Nat.choose_pos hik).ne'
@@ -250,7 +251,8 @@ private lemma mvExp_sum' [CharZero C] {ι : Type} (s : Finset ι) (f : ι → Mv
   | @insert a s ha ih =>
     rw [Finset.sum_insert ha, Finset.prod_insert ha,
       mvExp_add_unramified_depth (h a (Finset.mem_insert_self a s)), ih fun i hi => h i (Finset.mem_insert_of_mem hi)]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_eq_zero fun i hi => h i (Finset.mem_insert_of_mem hi)
 
 open scoped BigOperators in
@@ -301,7 +303,8 @@ private lemma onlyIn_sum {S : σ → Prop} {ι : Type} (s : Finset ι) (f : ι �
     (h : ∀ i ∈ s, _root_.GlobalTheory.BlockValue.OnlyIn S (f i)) :
     _root_.GlobalTheory.BlockValue.OnlyIn S (∑ i ∈ s, f i) := by
   intro m hm
-  rw [map_sum] at hm
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum] at hm
   obtain ⟨i, hi, hne⟩ := Finset.exists_ne_zero_of_sum_ne_zero hm
   exact h i hi m hne
 

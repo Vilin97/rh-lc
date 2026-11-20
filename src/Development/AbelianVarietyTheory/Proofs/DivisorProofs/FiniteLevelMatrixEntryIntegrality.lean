@@ -26,7 +26,8 @@ theorem infinitePart_eq_zero_of_forall_component_eq_zero (I : Formalism.MainNoti
     fin_cases k
     · exact this.1
     · exact this.2
-  rw [Formalism.L2.SG.Pf.alg_y_eq I z, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Formalism.L2.SG.Pf.alg_y_eq I z, map_sum]
   refine Finset.sum_eq_zero fun k _ => ?_
   rw [Algebra.TensorProduct.map_tmul, hc k, TensorProduct.zero_tmul]
 

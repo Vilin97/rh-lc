@@ -244,7 +244,8 @@ theorem _root_.GlobalTheory.ThetaPositivity.re_form_pos_of_theta_ne_zero :
     have hl : Ef (b.equivFun.symm c) = 0 := by
       refine b.ext fun j => ?_
       have := congrFun hc j
-      simpa [Module.Basis.equivFun_symm_apply, map_sum, Matrix.vecMul, dotProduct, M] using this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa [Module.Basis.equivFun_symm_apply, map_sum, Matrix.vecMul, dotProduct, M] using this
     have := hinj (hl.trans (map_zero Ef).symm)
     have h2 := congrArg b.equivFun this
     rwa [LinearEquiv.apply_symm_apply, map_zero] at h2

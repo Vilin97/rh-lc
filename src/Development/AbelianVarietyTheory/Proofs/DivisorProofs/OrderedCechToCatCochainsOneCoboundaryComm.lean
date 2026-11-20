@@ -50,7 +50,8 @@ theorem alternatingToOrderedCechDegreeTwo_apply_valueAtSubset (c : CC F 2) {a b 
 theorem val_δ {p : ℕ} (c : CC F p) (t : Finset κ) (d : (NE κ)ᵒᵖ) (h : t.card = p + 1 + 1)
     (ht : t ⊆ sub d) :
     val F (δ F p c) t d = ∑ i ∈ t, GlobalTheory.cubeSign t i • val F c (t.erase i) d := by
-  rw [← val_eq F (δ F p c) ⟨t, h⟩ d (homOf ht), δ_apply, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← val_eq F (δ F p c) ⟨t, h⟩ d (homOf ht), δ_apply, map_sum,
     ← Finset.sum_coe_sort t (fun i => GlobalTheory.cubeSign t i • val F c (t.erase i) d)]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_zsmul, ← mp_comp, val_eq]

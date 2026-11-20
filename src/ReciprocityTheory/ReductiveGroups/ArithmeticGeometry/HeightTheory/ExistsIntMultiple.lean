@@ -336,7 +336,8 @@ theorem exists_int_multiple {κ : Type} (F : MvPolynomial κ K) :
   choose y hy using hy
   refine ⟨algebraMap (𝓞 K) K b, ∑ s ∈ F.support, MvPolynomial.monomial s (y s), ?_, ?_⟩
   · exact IsFractionRing.to_map_ne_zero_of_mem_nonZeroDivisors b.2
-  · rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum]
     simp only [MvPolynomial.map_monomial, hy]
     conv_rhs => rw [MvPolynomial.as_sum F]
     rw [Finset.mul_sum]

@@ -43,7 +43,8 @@ private theorem tensIso_dens {κ : Type} (ρ : Representation ℂ P V) (σ : P �
         b a (ρ p u) + ∑ j ∈ s, b j (ρ p (v j)) = 0 := by
       intro p u v hv
       simp only [hbe]
-      rw [← map_sum, ← map_add, hv, map_zero]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← map_sum, ← map_add, hv, map_zero]
     have huniq : ∀ (u : V) (v v' : κ → V), b a u + ∑ j ∈ s, b j (v j) = 0 →
         b a u + ∑ j ∈ s, b j (v' j) = 0 → ∀ j ∈ s, v j = v' j := by
       intro u v v' h1 h2 j hj
@@ -179,7 +180,8 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.IwahoriBlocks.tensIso 
     have hli : LinearIndependent ℂ (fun j => (β j).1) :=
       β.linearIndependent.map' (tensIso_B ρ y).subtype (Submodule.ker_subtype _)
     have h0 := tensIso_dens ρ (fun p => y (p, 1)) hρ hS _ hli (fun j => (β j).2) c.support c (by
-      rw [← hx, Finsupp.sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hx, Finsupp.sum, map_sum]
       rfl)
     refine Finset.sum_eq_zero fun j hj => ?_
     show c j ⊗ₜ[ℂ] β j = 0

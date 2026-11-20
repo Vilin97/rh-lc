@@ -30,7 +30,8 @@ theorem prj_selfAdjoint : ∀ (D : D7) (X : HidaSetting D) (u : D.what₂.Word) 
     rw [map_mul, map_natCast, map_one] at h2
     rw [← divN_gmul X.B.I _ hT (sigA X.B.I _), h2]
   rw [hA_symm X.B.I y]
-  simp only [prj, hA_sub_right, hA_add_right, hA_smul_right, hsum, map_sub, map_add, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [prj, hA_sub_right, hA_add_right, hA_smul_right, hsum, map_sub, map_add, map_sum, map_mul]
   rw [hd (hA X.B.I (zV X u) x), hd (hA X.B.I (zV X u) y), map_mul, hs]
   simp only [← hA_symm]
   rw [add_comm (∑ a, _ * hA X.B.I x (eV X a))]

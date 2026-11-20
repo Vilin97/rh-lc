@@ -354,7 +354,8 @@ theorem adj_adj (e : G → ℂ) : adj (adj e) = e := by funext x; simp [adj]
 
 theorem adj_conv (a b : G → ℂ) : adj (conv a b) = conv (adj b) (adj a) := by
   funext x
-  simp only [adj, conv, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [adj, conv, map_sum, map_mul]
   rw [← Equiv.sum_comp (Equiv.mulLeft x⁻¹)]
   refine Finset.sum_congr rfl fun y _ => ?_
   simp [mul_comm, mul_assoc]

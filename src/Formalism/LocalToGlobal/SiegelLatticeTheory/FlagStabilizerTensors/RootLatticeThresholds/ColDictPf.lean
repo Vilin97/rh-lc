@@ -108,7 +108,8 @@ theorem repF_mul {h h' : X.B.I.Gf} {y y' : unitaryGroupFiniteAdeles D} (hy : Rep
   simp_rw [Matrix.mulVec_smul, hy2, Finset.smul_sum, smul_smul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun k _ => ?_
-  rw [← Finset.sum_smul, Matrix.mul_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Finset.sum_smul, Matrix.mul_apply, map_sum]
   congr 1
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_mul, mul_comm]

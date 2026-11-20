@@ -78,7 +78,8 @@ private theorem coord_iff (x : ι → V ⊗[Q] P) (y : V ⊗[Q] P) :
     rfl
   refine (e.existsUnique_congr fun k => ?_).symm
   rw [LinearEquiv.symm_apply_eq]
-  simp only [he, map_sum, LinearMap.sum_apply, sm_comm, Fintype.sum_prod_type]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [he, map_sum, LinearMap.sum_apply, sm_comm, Fintype.sum_prod_type]
 
 end Alg
 
@@ -293,7 +294,8 @@ private theorem exists_frame {K L : FinExt l} (h : K.1 ≤ L.1) (ρ : Representa
       let g' : ↥(GK K) := ⟨g, GK_le (h.trans hL) g.2⟩
       have e1 : u = ∑ j, actSt (PP l) (g : GQ l) (w.repr u j) • w j := by
         conv_lhs => rw [← (cm).symm_apply_apply u, ← hu g' g.2, ← w.sum_repr u]
-        simp only [map_sum, st_smul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, st_smul]
         refine Finset.sum_congr rfl fun j _ => ?_
         obtain ⟨y, hy, e⟩ := hw j
         rw [← e, fix y hy g' (GK_le hL g.2), e, LinearEquiv.symm_apply_apply]
@@ -373,7 +375,8 @@ private theorem basis_iff {K L : FinExt l} (h : K.1 ≤ L.1) (ρ : Representatio
   have e : ∀ y, (∃! c : Fin n → A ⊗[ℚ_[l]] ↥(K0 L), y = ∑ a, smulC V L (c a) (x a)) ↔
       ∃! c : Fin n → A ⊗[ℚ_[l]] ↥(K0 L), ci y = ∑ a, Thick.sm V (Bst (PP l)) (c a) (ci (x a)) := by
     refine fun y => existsUnique_congr fun c => ?_
-    simp only [← ci_sm, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [← ci_sm, ← map_sum]
     exact (crisIncl_injective (PP l)).eq_iff.symm
   refine Iff.trans ⟨fun H u hu => ?_, fun H y hy => ?_⟩ (key.trans ⟨fun H y hy => ?_, fun H u hu => ?_⟩)
   · obtain ⟨y, hy, ey⟩ := (h2 u).1 hu
@@ -404,7 +407,8 @@ private theorem cov (K : FinExt l) (ρ : Representation A ↥(GK K) V) (n : ℕ)
       (∀ b, stRep (PP l) (resCoef ℚ_[l] ρ) γ (ci (x b)) =
         ∑ a, Thick.sm V (Bst (PP l)) ((jU A L).toRingHom.mapMatrix M a b) (ci (x a))) := by
     intro L x γ M H b
-    rw [st_ci, H, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [st_ci, H, map_sum]
     exact Finset.sum_congr rfl fun a _ => (ci_sm L _ _).trans (sm_jU L _ _).symm
   have hT : ∀ (L : FinExt l) (M : Matrix (Fin n) (Fin n) (A ⊗[ℚ_[l]] ↥(K0 L))) (s : A),
       ((jU A L).toRingHom.mapMatrix M).trace = s ⊗ₜ[ℚ_[l]] 1 ↔ M.trace = s ⊗ₜ[ℚ_[l]] 1 := by

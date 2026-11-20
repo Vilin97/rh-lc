@@ -54,7 +54,8 @@ theorem γA_apply (g : W.Gam) (a : LetA O n₀) (i : ZMod n₀) : W.γA g a i = 
 
 theorem trace_mem (T : LocLat G Qp LL O) (x : W.DD T) : ∑ δ ∈ W.DelF, W.γD T δ x ∈ DΔ W T := by
   intro d hd
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp_rw [← W.γD_mul]
   exact sum_del W (fun δ => W.γD T δ x) hd
 
@@ -140,7 +141,8 @@ theorem exists_lat {l n : ℕ} {R : RingPG k l} {F : DFun R n G} {ι : k⸨X⸩ 
       refine ⟨∑ j, x j, ?_, ?_⟩
       · rw [AddSubgroup.val_finset_sum]
         exact sum_mem fun j _ => (W.N T).smul_mem _ (hbΔ j).1
-      · rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        · rw [map_sum]
         exact Finset.sum_congr rfl fun j _ =>
           p.j_smul T A q hq i (fun _ => a j) (c j) (b' j) (x j) (hι j) rfl
     · rintro ⟨x, hx, rfl⟩
@@ -149,7 +151,8 @@ theorem exists_lat {l n : ℕ} {R : RingPG k l} {F : DFun R n G} {ι : k⸨X⸩ 
       have hinv : ∀ j t, ∀ δ ∈ W.DelF, W.γ₀ δ (a j t) = a j t := by
         intro j t δ hδ
         have h1 := x.2 δ hδ
-        rw [← ha, map_sum] at h1
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [← ha, map_sum] at h1
         simp_rw [γD_smulA, (hbΔ _).2 δ hδ] at h1
         have h2 := (Fintype.linearIndependent_iffₛ.1 hli) _ _ h1 j
         exact congrFun h2 t
@@ -159,7 +162,8 @@ theorem exists_lat {l n : ℕ} {R : RingPG k l} {F : DFun R n G} {ι : k⸨X⸩ 
         apply Subtype.ext
         rw [AddSubgroup.val_finset_sum, ← ha]
       refine ⟨c, ?_⟩
-      rw [hx', map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hx', map_sum]
       exact Finset.sum_congr rfl fun j _ =>
         (p.j_smul T A q hq i (a j) (c j) (b' j) (x' j) (hc j) rfl).symm
   refine ⟨_, hmem, Submodule.fg_span (Set.finite_range _), ?_⟩
@@ -251,11 +255,13 @@ theorem red_lift {l : ℕ} [Fact l.Prime] [CharP k l] {R : RingPG k l} {ι : k�
     obtain ⟨d, hd⟩ := hs ((W.DelF.card : ℕ) : k)⁻¹
     refine ⟨∑ δ ∈ W.DelF, W.γ₀ δ (d • b₀), ?_, ?_⟩
     · intro g hg
-      rw [map_sum, ← sum_del W (fun δ => W.γ₀ δ (d • b₀)) hg]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, ← sum_del W (fun δ => W.γ₀ δ (d • b₀)) hg]
       refine Finset.sum_congr rfl fun δ _ => ?_
       rw [map_mul]
       rfl
-    · rw [hb, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [hb, map_sum]
       congr 1
       have h1 : ∀ δ ∈ W.DelF, PowerSeries.map (algebraMap O k) (W.γ₀ δ (d • b₀)) =
           ((W.DelF.card : ℕ) : k)⁻¹ • PowerSeries.map (algebraMap O k) b₀ := by

@@ -99,7 +99,8 @@ theorem TjL_fg (D : D7) (μ : D.what₂.Tup) (j : ℕ)
       (⟨D.what₂.OtoLL (c v), D.O_int _⟩ : 𝓞 D.what₂.LL) • f (g v) := by
     apply jMt_inj D μ j
     rw [← hx]
-    simp only [map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul]
     refine Finset.sum_congr rfl fun v hv => ?_
     show _ = D.what₂.jMt μ j (D.what₂.OtoLL (c v) • f (g v))
     rw [LinearMap.map_smulₛₗ, hf, hg v hv]

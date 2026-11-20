@@ -136,7 +136,8 @@ theorem isotropic_of_types (hcok : CokernelBound P) {J : Type} [Fintype J] [Deci
     exact (smul_eq_zero.1 h5).resolve_left hs'
   intro x hx y hy
   rw [← sum_proj hs P.actV x, ← sum_proj hs P.actV y]
-  simp only [map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.sum_apply]
   refine Finset.sum_eq_zero fun l _ => Finset.sum_eq_zero fun k _ => ?_
   by_cases hk : AvDefs.rTau P.Gt P.oGt (σ k) = 0
   · rw [key k hk x hx, map_zero, LinearMap.zero_apply]
@@ -182,7 +183,8 @@ theorem isotropic_of_sum {A A' B : Point ℓ v O Λ} {p q : ℕ} (φ : Fin p →
   have h₅ : ∀ a b, A.pairV (A.actV (g a b) (z.1 a)) (w.1 b) = 0 := fun a b => iA _ (actV_mem A _ (z.1 a).2) _ (w.1 b).2
   have h₆ : ∀ a b, A'.pairV (A'.actV (g' a b) (z.2 a)) (w.2 b) = 0 := fun a b =>
     iA' _ (actV_mem A' _ (z.2 a).2) _ (w.2 b).2
-  simp only [hF, map_add, map_sum, LinearMap.add_apply, LinearMap.sum_apply, h₁, h₂, h₃, h₄, h₅, h₆,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hF, map_add, map_sum, LinearMap.add_apply, LinearMap.sum_apply, h₁, h₂, h₃, h₄, h₅, h₆,
     Finset.sum_const_zero, add_zero]
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {K : Type} [Field K] [NumberField K]

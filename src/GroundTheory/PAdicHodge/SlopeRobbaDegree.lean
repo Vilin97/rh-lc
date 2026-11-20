@@ -372,7 +372,8 @@ theorem mul_map_eq_mul_phiMatrix {ι κ : Type*} [Fintype ι] [DecidableEq ι] [
     rw [Matrix.mul_apply]
     simp only [Matrix.of_apply, phiMatrix_apply]
     have := congrArg (fun z : N => b.repr (z : M) i) (bN.sum_repr (restrict Ψ N h (bN j)))
-    simp only [Submodule.coe_sum, Submodule.coe_smul, map_sum, map_smul, Finsupp.coe_finsetSum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Submodule.coe_sum, Submodule.coe_smul, map_sum, map_smul, Finsupp.coe_finsetSum,
       Finset.sum_apply, Finsupp.smul_apply, smul_eq_mul, coe_restrict_apply] at this
     rw [← this]
     exact Finset.sum_congr rfl fun k _ => mul_comm _ _

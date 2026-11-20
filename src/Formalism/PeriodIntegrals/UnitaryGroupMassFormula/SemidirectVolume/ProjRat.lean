@@ -53,7 +53,8 @@ theorem ratV_pX (v : Fin M → E) :
     ratV (F := F) R (∑ a, hE σ J (P.f a) v • P.e a)
   simp only [hR_ratV]
   funext i
-  simp [ratV, Finset.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [ratV, Finset.sum_apply, map_sum]
 
 theorem ratV_pXv (v : Fin M → E) :
     (datR R σ J P T).pXv (ratV (F := F) R v) = ratV (F := F) R ((datE σ J P T).pXv v) := by
@@ -62,7 +63,8 @@ theorem ratV_pXv (v : Fin M → E) :
     ratV (F := F) R (∑ a, hE σ J (P.e a) v • P.f a)
   simp only [hR_ratV]
   funext i
-  simp [ratV, Finset.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [ratV, Finset.sum_apply, map_sum]
 
 theorem ratV_pz (v : Fin M → E) :
     (datR R σ J P T).pz (ratV (F := F) R v) = ratV (F := F) R ((datE σ J P T).pz v) := by

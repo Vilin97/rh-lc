@@ -234,7 +234,8 @@ theorem orthL_of
     (fun i => (IsModuleTopology.continuous_of_linearMap (e.coord i)).comp hbc) w f (fun g => ?_)
   refine (hf g).trans ?_
   congr 1
-  conv_lhs => rw [← e.sum_repr (b g), TensorProduct.sum_tmul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [← e.sum_repr (b g), TensorProduct.sum_tmul, map_sum]
   exact Finset.sum_congr rfl fun i _ => pr_smul_right P x _ _ _
 
 end Top

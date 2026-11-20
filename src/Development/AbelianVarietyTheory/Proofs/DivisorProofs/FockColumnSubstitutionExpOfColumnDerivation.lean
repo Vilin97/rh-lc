@@ -24,7 +24,8 @@ theorem totalDegree_colSub_le {d a : ℕ} (g : ι → Matrix (Fin a) (Fin a) ℂ
     refine (totalDegree_mul _ _).trans ?_
     rw [totalDegree_C, totalDegree_X]
   conv_lhs => rw [as_sum P]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine (totalDegree_finset_sum _ _).trans (Finset.sup_le fun m hm => ?_)
   refine le_trans ?_ (le_totalDegree hm)
   rw [monomial_eq, map_mul, algHom_C, algebraMap_eq, Finsupp.prod, map_prod]
@@ -43,7 +44,8 @@ theorem hasDerivAt_dual_of_coeff {σ : Type} [Finite σ] (l : MvPolynomial σ �
   have key : ∀ P : MvPolynomial σ ℂ, P.support ⊆ A → l P = ∑ m ∈ A, AddMonoidAlgebra.coeff P m * l (monomial m 1) := by
     intro P hP
     conv_lhs => rw [as_sum P]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_subset_zero_on_sdiff hP (fun m hm => ?_) (fun m _ => ?_)
     · rw [notMem_support_iff.1 (Finset.mem_sdiff.1 hm).2, zero_mul]
     · rw [← smul_eq_mul, ← map_smul, smul_monomial, smul_eq_mul, mul_one]

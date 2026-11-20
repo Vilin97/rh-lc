@@ -145,7 +145,8 @@ theorem op_mulL (μ : σ →₀ ℕ) (s : Sym m n) (f : PX m n) :
   rw [monomial_mul, one_mul, op_monomial, add_comm, opMono_shiftL, mul_smul_comm]
 
 theorem op_renameL (p : PX m n) (s : Sym m n) (f : PX m n) : op (rename Sum.inl p * s) f = p * op s f := by
-  conv_lhs => rw [p.as_sum, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [p.as_sum, map_sum, Finset.sum_mul]
   conv_rhs => rw [p.as_sum, Finset.sum_mul]
   rw [op_sum]
   refine Finset.sum_congr rfl fun μ _ => ?_
@@ -222,7 +223,8 @@ theorem sf_mulL (μ : σ →₀ ℕ) (hμ : ∀ k ∈ μ.support, inF1 ε k) {s 
   exact sf_monomial ε _ _ (goodT_add_inl ε t μ (h t ht) hμ)
 
 theorem sf_renameL (p : PX m n) (hp : p ∈ F1 ε) {s : Sym m n} (h : SymbolInFirstFamily ε s) : SymbolInFirstFamily ε (rename Sum.inl p * s) := by
-  rw [p.as_sum, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [p.as_sum, map_sum, Finset.sum_mul]
   refine sf_sum ε _ _ fun μ hμ => ?_
   rw [rename_monomial]
   refine sf_mulL ε μ (fun k hk => ?_) h _

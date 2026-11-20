@@ -37,7 +37,8 @@ theorem isFrame_stdSec_ovl (g : T ⟶ Sp ℤ) (U : T.Opens) (hU : U ≤ g ⁻¹�
 theorem resM_colSecOn_ovl (g : T ⟶ Sp ℤ) {U V : T.Opens} (h : U ≤ V) (M : Matrix (Fin N) (Fin N) Γ(T, V))
     (j : Fin N) :
     resM _ h (colSecOn g V M j) = colSecOn g U (M.map (resG T h)) j := by
-  simp only [colSecOn, map_sum, resM_smul, Matrix.map_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [colSecOn, map_sum, resM_smul, Matrix.map_apply]
   refine Finset.sum_congr rfl fun i _ => congrArg _ ?_
   exact QCoh.res_pullbackSections g _ _ _ _
 
@@ -61,7 +62,8 @@ theorem exists_col_comb_ovl {ι : Type} {g : T ⟶ Sp ℤ}
   obtain ⟨c, hc⟩ := (hs U le_rfl).2 (t (Fin.last j))
   simp only [resM_self, Fintype.linearCombination_apply] at hc
   have e1 := congrArg (((fl' a).ι j.succ).app U) hc
-  simp only [map_sum, Scheme.Modules.Hom.app_smul, hsι, htι] at e1
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Scheme.Modules.Hom.app_smul, hsι, htι] at e1
   have hj : Fin.castLE j.succ.is_le (Fin.last j) = j := Fin.ext rfl
   rw [hj] at e1
   simp only [colSecOn, Finset.smul_sum, smul_smul] at e1

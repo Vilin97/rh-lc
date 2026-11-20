@@ -70,7 +70,8 @@ theorem finrank_Dst_le {l : ℕ} [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l
       exact congrArg Subtype.val this
     refine ⟨fun i => ⟨c i, hfix i, (c i).2⟩, ?_⟩
     have := congrArg val hc
-    rw [map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at this
     exact this
   refine ⟨Submodule.finiteDimensional_of_le hle, ?_⟩
   have h1 : finrank ℚ_[l] ↥(Dst P ρ) ≤ Fintype.card ↥b * finrank ℚ_[l] ↥(K0 K) := by

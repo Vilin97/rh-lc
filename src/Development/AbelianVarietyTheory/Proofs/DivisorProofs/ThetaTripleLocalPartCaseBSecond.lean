@@ -46,7 +46,8 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 theorem iso_adelic {d : ℕ} {J : Matrix (Fin d) (Fin d) E} {w : Fin d → E} (hw : form σ J w w = 0) :
     ∑ j, ∑ l, incV F w j * incM F J j l * cA σ (incV F w l) = 0 := by
   have := congrArg (inclR (F := F) (AF F)) hw
-  simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, map_zero, Finset.mul_sum] at this
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, map_zero, Finset.mul_sum] at this
   rw [← this]
   refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun l _ => ?_
   simp only [incV, incM, Matrix.map_apply, GlobalTheory.UnipLine.cA_inclR, mul_assoc]

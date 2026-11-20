@@ -59,7 +59,8 @@ theorem symp_iso {n d : ℕ} (σ : E →ₐ[F] E) (J : Matrix (Fin n) (Fin n) E)
       (Matrix.vecMulVec (incV F x) q) = 0 := by
   have h0 : (∑ i, ∑ k, incV F x i * incM F J i k * cA σ (incV F x k)) = 0 := by
     have : (∑ i, ∑ k, incV F x i * incM F J i k * cA σ (incV F x k)) = inclR (F := F) (AF F) (form σ J x x) := by
-      simp only [incV, incM, Matrix.map_apply, cA_inclR, form, dotProduct, Matrix.mulVec, map_sum, map_mul,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [incV, incM, Matrix.map_apply, cA_inclR, form, dotProduct, Matrix.mulVec, map_sum, map_mul,
         Finset.mul_sum, mul_assoc]
     rw [this, hx, map_zero]
   rw [symp, hTens_vecMulVec, h0, zero_mul, mul_zero, map_zero]
@@ -103,7 +104,8 @@ theorem decompA {B : Base F E} {d d₁ r' s' i₀ i₁ : ℕ} {W : Spc F E d} {W
       · subst hk; simp
       · simp [Pi.single_apply, hk]
     have h2 : inclR (F := F) (AF F) ((H'.ι *ᵥ u i) k) = (incM F H'.ι *ᵥ incV F (u i)) k := by
-      simp [Matrix.mulVec, dotProduct, incM, incV, map_sum, map_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [Matrix.mulVec, dotProduct, incM, incV, map_sum, map_mul]
     rw [h1, h2] at h
     rw [h]
     simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, incV]
@@ -128,7 +130,8 @@ theorem fA_incM_mulVec_incV_eq_zero {B : Base F E} {d d₁ i₀ i₁ : ℕ} {W :
     simp only [dotProduct, Matrix.mulVec, Matrix.transpose_apply, Matrix.col_apply] at h0
     have : ((incM F W.J *ᵥ fun i => cA σ (incV F H'.x i)) ᵥ* incM F H'.ι) j =
         inclR (F := F) (AF F) (∑ i, H'.ι i j * ∑ k, W.J i k * σ (H'.x k)) := by
-      simp only [Matrix.vecMul, dotProduct, Matrix.mulVec, incM, incV, Matrix.map_apply, cA_inclR, map_sum, map_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Matrix.vecMul, dotProduct, Matrix.mulVec, incM, incV, Matrix.map_apply, cA_inclR, map_sum, map_mul]
       exact Finset.sum_congr rfl fun i _ => by ring
     rw [this, Pi.zero_apply, h0, map_zero]
   rw [hz, zero_dotProduct]

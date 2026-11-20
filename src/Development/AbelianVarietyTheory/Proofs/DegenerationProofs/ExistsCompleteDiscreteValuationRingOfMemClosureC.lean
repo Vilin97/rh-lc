@@ -39,7 +39,8 @@ theorem exists_complete_discreteValuationRing_of_mem_closure_cone :
   have hker : RingHom.ker Φ ≤ RingHom.ker (MvPolynomial.eval v) := by
     intro G h
     have h1 : ψ G = 0 := hinj (h.trans (map_zero _).symm)
-    rw [RingHom.mem_ker, ← MvPolynomial.sum_homogeneousComponent G, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [RingHom.mem_ker, ← MvPolynomial.sum_homogeneousComponent G, map_sum]
     refine Finset.sum_eq_zero fun d _ => hG _ d (MvPolynomial.homogeneousComponent_isHomogeneous d G) ?_
     rw [← coeff_aeval_C_mul_X]
     change (ψ G).coeff d = 0

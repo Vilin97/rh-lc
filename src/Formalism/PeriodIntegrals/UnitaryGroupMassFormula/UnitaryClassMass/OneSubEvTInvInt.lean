@@ -99,7 +99,8 @@ theorem one_sub_evT_int (T : Set (HeightOneSpectrum (𝓞 F))) : 1 - evT T ∈ i
 theorem evT_eq_sum (T : Finset (HeightOneSpectrum (𝓞 F))) : evT (T : Set _) = ∑ w ∈ T, sgl w 1 := by
   apply af_ext
   intro w
-  rw [evT_apply, show (∑ w' ∈ T, sgl w' 1) w = evalV F w (∑ w' ∈ T, sgl w' 1) from rfl, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [evT_apply, show (∑ w' ∈ T, sgl w' 1) w = evalV F w (∑ w' ∈ T, sgl w' 1) from rfl, map_sum]
   simp only [show ∀ w', evalV F w (sgl w' 1) = Pi.single w' 1 w from fun _ => rfl]
   by_cases hw : w ∈ T
   · rw [if_pos (by exact_mod_cast hw), Finset.sum_eq_single w]

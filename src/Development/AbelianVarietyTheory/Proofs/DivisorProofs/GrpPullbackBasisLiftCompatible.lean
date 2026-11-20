@@ -85,7 +85,8 @@ theorem linearIndependent {S : Type} [CommRing S] {A : Over (Sp S)} [GrpObj A] [
   intro g hg k
   obtain ⟨σ, i⟩ := k
   have h1 := congrArg (EigenSplit.proj hχ ρ σ) hg
-  rw [map_sum, map_zero, Fintype.sum_sigma] at h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_zero, Fintype.sum_sigma] at h1
   have h2 : ∑ j, g ⟨σ, j⟩ • v ⟨σ, j⟩ = 0 := by
     rw [← h1, Finset.sum_eq_single σ]
     · refine Finset.sum_congr rfl fun j _ => ?_

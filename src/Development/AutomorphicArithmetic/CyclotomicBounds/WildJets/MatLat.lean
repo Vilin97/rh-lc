@@ -77,7 +77,8 @@ theorem UpperTheory.WildA.matLat :
     calc (bVV ℂ lam').repr (f v) i
         = (bVV ℂ lam').repr (f (∑ j, (bVV ℂ lam).repr v j • bVV ℂ lam j)) i := by rw [hsum]
       _ = _ := by
-        rw [map_sum, map_sum, Finsupp.coe_finset_sum, Finset.sum_apply]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum, map_sum, Finsupp.coe_finset_sum, Finset.sum_apply]
         refine Finset.sum_congr rfl fun j _ => ?_
         rw [map_smul, map_smul, Finsupp.smul_apply, smul_eq_mul]
   rw [hrepr]

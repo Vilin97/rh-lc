@@ -47,7 +47,8 @@ theorem coord_change {K : Type} [CommRing K] {χ : c.F →+* K} {x : Sp K ⟶ Z.
     refine ⟨isTan_tv _, fun o => ?_⟩
     have e2 : ∀ j, actR Z.t.act o (U' j) = χ (embK c τ o) • U' j := fun j => tan_ext ((hu'.1 j).2 o)
     have e3 : actR Z.t.act o (∑ j, a' j • U' j) = χ (embK c τ o) • ∑ j, a' j • U' j := by
-      simp only [map_sum, map_smul, e2, Finset.smul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, e2, Finset.smul_sum]
       exact Finset.sum_congr rfl fun j _ => smul_comm _ _ _
     exact congrArg (fun z => (tv z).left) e3
   refine (hu.2 _ hw).unique h ((isComb_iff U _ _).2 ?_)

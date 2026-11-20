@@ -167,7 +167,8 @@ theorem aeval_scale_new {S : Type*} [CommRing S] [Algebra ℤ S] {N q : ℕ} {F 
 theorem homog_bind_new {N q : ℕ} {e : K → ℕ} (G : Fin N → MRing ι) (hG : ∀ j, IsMultiHomog (G j) e)
     {F : MRing (addIdx ι N)} (hF : IsMultiHomog F (blockDeg (none : Option K) q)) :
     IsMultiHomog (bind₁ (newSubst G) F) (q • e) := by
-  rw [F.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [F.as_sum, map_sum]
   refine pn_sum _ fun μ hμ => ?_
   rw [bind₁_monomial]
   have hfac : ∀ p ∈ μ.support, IsMultiHomog (newSubst G p ^ μ p) (μ p • e) := by

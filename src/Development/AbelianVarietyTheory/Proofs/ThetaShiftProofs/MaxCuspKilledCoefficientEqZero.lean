@@ -39,7 +39,8 @@ theorem herm_comb {E : Type} [Field E] [NumberField E] [IsCMField E] {r ρ : ℕ
     herm X.Gm (∑ a, η a • cu.e a) (∑ a, η a • cu.e a) = 0 := by
   have key : herm X.Gm (∑ a, η a • cu.e a) (∑ a, η a • cu.e a) =
       ∑ a, ∑ b, η a * cc (η b) * herm X.Gm (cu.e a) (cu.e b) := by
-    simp only [herm, cc, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum, map_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [herm, cc, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum, map_mul,
       Finset.mul_sum, Finset.sum_mul]
     calc _ = ∑ k, ∑ b, ∑ l, ∑ a, η a * cu.e a k * X.Gm k l *
             (IsCMField.complexConj E (η b) * IsCMField.complexConj E (cu.e b l)) :=

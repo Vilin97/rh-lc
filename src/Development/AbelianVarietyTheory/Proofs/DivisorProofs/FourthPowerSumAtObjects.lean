@@ -130,7 +130,8 @@ theorem main : GlobalTheory.CovTop.HypothesesXH → Hypotheses2 → HypothesesH 
   intro hX h2 hH hRA hSW hPD D O hC _ _ _ _ _ Sx R hR p hp Q hQ
   conv_lhs => rw [Q.as_sum]
   conv_rhs => rw [Q.as_sum]
-  simp only [map_sum, Finset.mul_sum, ← Finset.sum_neg_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Finset.mul_sum, ← Finset.sum_neg_distrib]
   refine Finset.sum_congr rfl fun d hd => ?_
   have hdeg : d.degree = dimFl D.what₂.Tau O.Y.N - 1 := by
     rw [Finsupp.degree_eq_weight_one]

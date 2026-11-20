@@ -40,7 +40,8 @@ theorem one : IntM v (1 : Mx D m m) := fun i j => by
   · rw [map_zero]; exact zero_mem _
 
 theorem mul {M : Mx D m p} {N : Mx D p q} (hM : IntM v M) (hN : IntM v N) : IntM v (M * N) := fun i j => by
-  rw [Matrix.mul_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.mul_apply, map_sum]
   exact sum_mem fun k _ => by rw [map_mul]; exact mul_mem (hM i k) (hN k j)
 
 theorem inv {M : Mx D m m} (hM : IntM v M) (hu : IsUnit M.det)

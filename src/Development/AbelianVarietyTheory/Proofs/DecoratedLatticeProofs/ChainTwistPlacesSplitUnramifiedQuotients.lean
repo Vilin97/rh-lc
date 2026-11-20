@@ -48,7 +48,8 @@ theorem conjPrime_ne_of_mem {P : Finset (Pl D.host.E)} {e : AE D} (h : IsIdemSum
     rw [GlobalTheory.LevelPlaces.ev_sum, Finset.sum_eq_single PP (fun Q hQ hQP => (hd Q hQ).2.2 PP (Ne.symm hQP))
       (fun h => absurd hPP h), (hd PP hPP).2.1]
   have e2 : Φ (cA D (∑ Q ∈ P, es Q)) PP = 1 := by
-    rw [map_sum, GlobalTheory.LevelPlaces.ev_sum, Finset.sum_eq_single PP ?_ (fun h => absurd hPP h)]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, GlobalTheory.LevelPlaces.ev_sum, Finset.sum_eq_single PP ?_ (fun h => absurd hPP h)]
     · have := (GlobalTheory.IdemSupport.delta_conj hΦ (hd PP hPP)).2.1
       rwa [hc] at this
     · intro Q hQ hQP

@@ -24,7 +24,8 @@ theorem fam_rv (u : D.what₂.Word) (v : InfinitePlace X.B.I.F) (a : Fin (D.R.rS
 
 theorem rv_sum (v : InfinitePlace X.B.I.F) {ι : Type} (t : Finset ι) (c : ι → X.B.I.E) (y : ι → Fin X.B.I.n → X.B.I.E) :
     rv X.B.I v (∑ i ∈ t, c i • y i) = ∑ i ∈ t, X.B.I.φ v (c i) • rv X.B.I v (y i) := by
-  rw [← Formalism.L2.SG.Pf.Vanish2.rvHom_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Formalism.L2.SG.Pf.Vanish2.rvHom_apply, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [Formalism.L2.SG.Pf.Vanish2.rv_smul']
   rfl
@@ -47,6 +48,7 @@ theorem psiInf_rat (u : D.what₂.Word) {x : X.B.I.GA} {n : (VS D).V ≃ₗ[D.ho
     X.psiInfU u x.1 = Formalism.L2.SG.PairVal.psiInf X.B.g (Formalism.L2.SG.PairVal.sgUp un) := by
   refine FormRegularity.psi_of_frame X u x.1 (fun v => (un.map (fun t => X.B.I.φ v (X.ιE.symm t)))ᵀ)
     (fun v a => by simpa [Matrix.transpose_apply, Matrix.map_apply] using real_frame X u hRL un hun v a) _ fun v => ?_
-  simp only [Matrix.transpose_apply, Matrix.map_apply, FormRegularity.sgUp_eq, map_sum, star_sum, ← Finset.sum_add_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.transpose_apply, Matrix.map_apply, FormRegularity.sgUp_eq, map_sum, star_sum, ← Finset.sum_add_distrib]
 
 end Formalism.L2.SG.RealObj.RealFramesCharacters

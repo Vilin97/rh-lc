@@ -100,7 +100,8 @@ theorem val_pl (hz : genPt ξ ⤳ centre z) {A : Matrix (Fin N) (Fin N) Ω} {h :
   have e1 : A = (Matrix.of s).map (genMap ξ ⟨centre z, hz⟩) := Matrix.ext fun a b => (hs a b).symm
   have e2 : h = (Matrix.of s).map (Scheme.stalkClosedPointTo z).hom := Matrix.ext fun a b => (hs' a b).symm
   refine ⟨hz, ∑ I, t I * minorIJ (Matrix.of s) I C, ?_, ?_⟩
-  · rw [e1, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [e1, map_sum]
     exact Finset.sum_congr rfl fun I _ => by rw [map_mul, CPts.minorIJ_map, ht]
   · rw [e2]
     refine (map_sum (Scheme.stalkClosedPointTo z).hom _ _).trans (Finset.sum_congr rfl fun I _ => ?_)

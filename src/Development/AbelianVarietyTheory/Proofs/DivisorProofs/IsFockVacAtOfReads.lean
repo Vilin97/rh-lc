@@ -25,7 +25,8 @@ theorem hasDerivAt_translate {n g : ℕ} (c : Fin g → ℝ) (H : (Fin g → ℂ
       (cexp (-(Real.pi / 2 : ℂ) * ∑ b, H (Z b) (Z b)) *
         (-(Real.pi * ∑ b, H (A b) (Z b)) * F Z + fderiv ℂ F Z A)) 0 := by
   have hc : ∀ z w, conj (H z w) = H w z := fun z w => by
-    simp only [hH, map_sum, map_mul, conj_ofReal, conj_conj]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hH, map_sum, map_mul, conj_ofReal, conj_conj]
     exact Finset.sum_congr rfl fun _ _ => by ring
   have e : (fun t : ℝ => cexp (Real.pi * I * ((∑ b, (H (Z b) (((t : ℂ) • A) b)).im : ℝ) : ℂ)) *
       (cexp (-(Real.pi / 2 : ℂ) * ∑ b, H ((Z + (t : ℂ) • A) b) ((Z + (t : ℂ) • A) b)) * F (Z + (t : ℂ) • A))) =

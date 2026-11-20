@@ -237,7 +237,8 @@ theorem exists_glue {n : ℕ} (L : Set (Fin n → E)) {N : ℕ} (hN : N ≠ 0) (
   refine ⟨∑ v ∈ hfin.toFinset, (ind {v} ⊗ₜ[F] (1 : E) : RA F E) • y v,
     sum_mem fun v hv => Translate.hat_smul_int (ind_int _) (hy v (hfin.mem_toFinset.1 hv)), fun v hv i => ?_⟩
   rw [hy' v hv i]
-  simp only [Pi.smul_apply, nsmul_eq_mul, map_mul, Finset.sum_apply, map_sum, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Pi.smul_apply, nsmul_eq_mul, map_mul, Finset.sum_apply, map_sum, smul_eq_mul]
   rw [Finset.sum_eq_single v, loc_ind_pos (Set.mem_singleton v), one_mul]
   · intro w _ hw
     rw [loc_ind_neg (fun h => hw (Set.mem_singleton_iff.1 h).symm), zero_mul]
@@ -316,7 +317,8 @@ theorem unitary_iff_matrix {R : Type} [CommRing R] {n : ℕ} (s : R →+* R) (G 
       ∑ a, ∑ b, x a * (gᵀ * G * g.map s) a b * s (y b) := fun x y => by
     have e : (fun b => s ((g *ᵥ y) b)) = g.map s *ᵥ fun b => s (y b) := by
       funext b
-      simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Matrix.map_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Matrix.map_apply]
     rw [key, key, e, Matrix.mulVec_mulVec, Matrix.dotProduct_mulVec, Matrix.vecMul_mulVec,
       ← Matrix.dotProduct_mulVec, mul_assoc]
   constructor

@@ -18,7 +18,8 @@ def logPoly (k : ℕ) (z : R) : R := ∑ i ∈ Finset.Ico 1 k, (logPolyCoeff k i
 
 theorem map_logPoly {S : Type*} [CommRing S] (f : R →+* S) (k : ℕ) (z : R) :
     f (logPoly k z) = logPoly k (f z) := by
-  simp [logPoly, map_sum, map_mul, map_intCast, map_pow]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [logPoly, map_sum, map_mul, map_intCast, map_pow]
 
 theorem logPoly_sub_mem (k : ℕ) {z w : R} {J : Ideal R} (h : z - w ∈ J) :
     logPoly k z - logPoly k w ∈ J := by

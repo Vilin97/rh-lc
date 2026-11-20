@@ -15,7 +15,8 @@ private theorem aeval_mulVec_of_eigenvector {K R : Type} [Field K] [CommRing R] 
     | succ k ih =>
       rw [pow_succ', ← Matrix.mulVec_mulVec, ih, Matrix.mulVec_smul, hx, smul_smul, pow_succ',
         map_mul, mul_comm]
-  rw [aeval_eq_sum_range, Matrix.sum_mulVec, eval_eq_sum_range, map_sum, Finset.sum_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [aeval_eq_sum_range, Matrix.sum_mulVec, eval_eq_sum_range, map_sum, Finset.sum_smul]
   refine Finset.sum_congr rfl fun i _ => ?_
   simp only [Matrix.smul_mulVec, hpow, map_mul, mul_smul, algebraMap_smul]
 

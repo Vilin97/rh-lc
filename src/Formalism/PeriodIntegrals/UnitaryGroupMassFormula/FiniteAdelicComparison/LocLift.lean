@@ -42,14 +42,16 @@ theorem psiV_liftOne_same (I : AutInst) (v : HeightOneSpectrum (𝓞 I.F))
       (TensorProduct.equivFinsuppOfBasisRight (Module.Basis.ofVectorSpace I.F I.E) y) = y :=
     LinearEquiv.symm_apply_apply _ y
   conv_rhs => rw [← hy]
-  rw [TensorProduct.equivFinsuppOfBasisRight_symm_apply, liftOne, Finsupp.sum, Finsupp.sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [TensorProduct.equivFinsuppOfBasisRight_symm_apply, liftOne, Finsupp.sum, Finsupp.sum,
     map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   simp [psiV, evalV_singleV_same]
 
 theorem psiV_liftOne_ne (I : AutInst) {v w : HeightOneSpectrum (𝓞 I.F)} (hw : w ≠ v)
     (y : Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Fv I.F v ⊗[I.F] I.E) : psiV I w (liftOne I v y) = 0 := by
-  rw [liftOne, Finsupp.sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [liftOne, Finsupp.sum, map_sum]
   refine Finset.sum_eq_zero fun j _ => ?_
   simp [psiV, evalV_singleV_ne I hw]
 

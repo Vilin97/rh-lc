@@ -37,7 +37,8 @@ theorem half_idem_int {D : D7} {e : AE D} {SS : Finset (Formalism.L2.DIV.Pl D.ho
     (h2 : ∀ Q ∈ SS, ((D.host.QS * D.host.q * D.host.d : ℕ) : 𝓞 D.host.E) ∉ Q.asIdeal) :
     finPart D (incA D ((2 : D.host.E)⁻¹) * e) ∈ intAE D := by
   obtain ⟨⟨es, hes, rfl⟩, _⟩ := hI
-  rw [Finset.mul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.mul_sum, map_sum]
   refine AddSubgroup.sum_mem _ fun PP hPP => ?_
   have hn : (2 : 𝓞 D.host.E) ∉ PP.asIdeal := by
     intro hm

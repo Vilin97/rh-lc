@@ -63,7 +63,8 @@ theorem UpperTheory.V.AlgRepEndIrreducible.homot :
         (L (toL (Y i).1)).restrictScalars ℝ ∘ₗ F (i.removeNth Y) - F (i.removeNth Y) ∘ₗ ad (Y i).1
       have h3 : ∀ i, L (toL (Y i).1) (α (F (i.removeNth Y))) = α (G i) := fun i =>
         hα.lie _ _ _ fun X => (sub_add_cancel _ _).symm
-      rw [dCo_apply, ← hα.retr (ω Y) (∑ i : Fin (q + 1), (-1 : ℤ) ^ (i : ℕ) • G i) fun X => ?_, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [dCo_apply, ← hα.retr (ω Y) (∑ i : Fin (q + 1), (-1 : ℤ) ^ (i : ℕ) • G i) fun X => ?_, map_sum]
       · refine Finset.sum_congr rfl fun i _ => ?_
         rw [map_zsmul, ← h3]
         rfl

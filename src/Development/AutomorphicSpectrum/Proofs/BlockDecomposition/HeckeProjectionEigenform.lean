@@ -173,7 +173,8 @@ theorem hecke_projection_sum_right {C : ℝ} (hc : Continuous φ) (hb : ∀ g, �
   refine integral_congr_ae (Eventually.of_forall fun g => ?_)
   simp only [Fn, ← mul_assoc]
   have h2 := congrArg conj (hT (g * u'))
-  simp only [map_add, map_sum, map_mul] at h2
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_add, map_sum, map_mul] at h2
   rw [← Finset.sum_mul, ← Finset.mul_sum, ← add_mul, ← mul_add, h2]
   ring
 

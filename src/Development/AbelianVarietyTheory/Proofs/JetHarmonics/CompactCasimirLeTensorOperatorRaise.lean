@@ -60,13 +60,15 @@ theorem core (V : Type) [NormedAddCommGroup V] [InnerProductSpace ℂ V] [Finite
   have hKu : KUnit ε K := kunit_tensAct ε E A hE hA
   have hint : ∀ a b, ε a = ε b → ∀ x, F a b (sumMap φ x) = sumMap φ (K a b x) := by
     intro a b hab x
-    simp only [hK, sumMap_apply, tensAct_apply, map_sum, map_add, map_smul, hφ a b hab,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hK, sumMap_apply, tensAct_apply, map_sum, map_add, map_smul, hφ a b hab,
       Finset.sum_add_distrib]
     congr 1
     rw [Finset.sum_comm]
   have hcas : ∀ x, sumMap φ (CasK ε K x) = CasK ε F (sumMap φ x) := by
     intro x
-    simp only [CasK, LinearMap.sum_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [CasK, LinearMap.sum_apply, map_sum]
     refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
     split_ifs with hab
     · simp only [Module.End.mul_apply]

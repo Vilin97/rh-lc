@@ -26,7 +26,8 @@ theorem trace_inclR_mul [FiniteDimensional F E] (c : E) (y : AE F E) :
         (Algebra.TensorProduct.basis (AF F) (Module.finBasis F E)).repr y i := by
   set b := Algebra.TensorProduct.basis (AF F) (Module.finBasis F E)
   conv_lhs => rw [← b.sum_repr y]
-  rw [Finset.mul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.mul_sum, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [mul_smul_comm, LinearMap.map_smul, smul_eq_mul, mul_comm]
   congr 1
@@ -91,7 +92,8 @@ theorem coords : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberFie
     have hw : w = 0 := hC w fun k => by
       rw [← hl k, Fintype.sum_prod_type]
       refine Finset.sum_congr rfl fun j _ => ?_
-      simp only [w, Finset.mul_sum, map_sum, mul_smul_comm, LinearMap.map_smul, smul_eq_mul, mul_comm]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [w, Finset.mul_sum, map_sum, mul_smul_comm, LinearMap.map_smul, smul_eq_mul, mul_comm]
     have hz' : ∀ j i, z (.inl (j, i)) = 0 := fun j i => by
       have h0 : ∑ i, z (.inl (j, i)) • Module.finBasis F E i = 0 := congrFun hw j
       exact Fintype.linearIndependent_iff.mp (Module.finBasis F E).linearIndependent (fun i => z (.inl (j, i))) h0 i

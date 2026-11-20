@@ -44,7 +44,8 @@ theorem coefMap_zero (c : L →+ K) : coefMap c (0 : MvPolynomial I L) = 0 := by
 theorem coefMap_sum {J : Type*} (c : L →+ K) (s : Finset J) (p : J → MvPolynomial I L) :
     coefMap c (∑ j ∈ s, p j) = ∑ j ∈ s, coefMap c (p j) := by
   ext m
-  simp only [coeff_coefMap, MvPolynomial.coeff_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [coeff_coefMap, MvPolynomial.coeff_sum, map_sum]
 
 variable {σ}
 

@@ -22,7 +22,8 @@ def rAct {n : ℕ} (β : Matrix (Fin n) (Fin n) E) (f : Fin n → S.V) : Fin n �
 theorem rAct_map {n : ℕ} (β : Matrix (Fin n) (Fin n) E) (f : Fin n → S.V) (k : S.V ≃ₗ[E] S.V) :
     rAct β (fun c => k (f c)) = fun a => k (rAct β f a) := by
   funext a
-  simp [rAct, map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [rAct, map_sum, map_smul]
 
 theorem rAct_mul {n : ℕ} (α β : Matrix (Fin n) (Fin n) E) (f : Fin n → S.V) :
     rAct α (rAct β f) = rAct (α * β) f := by
@@ -146,7 +147,8 @@ theorem zhat_move {Λ : Submodule (𝓞 E) S.V} {T : E} (F : LFlag S r T) {n : S
       = S.hT (n (n.symm (frame F a))) (n (rAct β f b)) := by rw [n.apply_symm_apply]
     _ = S.hT (n.symm (frame F a)) (rAct β f b) := Saturated.isom_apply hn.1.1 _ _
     _ = S.hT (n.symm (frame F a)) (rAct β f' b) := by
-      simp only [rAct, map_sum, map_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [rAct, map_sum, map_smul]
       exact Finset.sum_congr rfl (fun c _ => by rw [key c])
     _ = S.hT (n (n.symm (frame F a))) (n (rAct β f' b)) := (Saturated.isom_apply hn.1.1 _ _).symm
     _ = S.hT (frame F a) (n (rAct β f' b)) := by rw [n.apply_symm_apply]
@@ -311,7 +313,8 @@ theorem move_exists (hΛ : IsRowLat D F0 Λ) {t : TermsOf D u' F0 Λ} {Z₁ Z₂
       fun a => by rw [hf3 a]; rfl, rfl⟩
   have hframe : ∀ a, frame F3 a = n (rAct β (frame F'') a) := fun a => by
     rw [hf3 a, hβ a]
-    simp only [rAct, map_sum, map_smul, hfr'']
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [rAct, map_sum, map_smul, hfr'']
   have pd3 : PD D Λ (lf D F0) u' F3 :=
     Formalism.L2.SG.Closed.TermStable_holds D u u' F0 Λ hΛ ⟨F₁, p₁⟩ F3 hdc
   have hrep : TermDef.Rep Λ (lf D F0) (PD D Λ (lf D F0) u') t F3 :=

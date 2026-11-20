@@ -38,7 +38,8 @@ private lemma univ_coeff {ι : Type} (s : Finset ι) :
   refine ⟨h0, ?_⟩
   have hg : ghostComponent 1 (∑ i ∈ s, teichmuller p (X i : MvPolynomial ι ℤ)) =
       ∑ i ∈ s, (X i : MvPolynomial ι ℤ) ^ p := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl (fun i _ => ?_)
     rw [ghost_one]
     simp [WittVector.teichmuller_coeff_pos]
@@ -105,7 +106,8 @@ theorem teichSum (p : ℕ) [Fact p.Prime] : TeichSumStatement p := by
     have hmap : WittVector.map (MvPolynomial.aeval X).toRingHom
         (∑ i ∈ s, teichmuller p (MvPolynomial.X i : MvPolynomial ι ℤ)) =
           ∑ i ∈ s, teichmuller p (X i) := by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl (fun i _ => ?_)
       rw [WittVector.map_teichmuller]
       simp

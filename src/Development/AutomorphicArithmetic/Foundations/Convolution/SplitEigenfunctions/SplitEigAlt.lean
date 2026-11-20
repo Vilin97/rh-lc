@@ -45,7 +45,8 @@ private theorem mc_fix {G V H : Type} [Group G] [AddCommGroup V] [Module ℂ V] 
     have h1 : (s.card : ℂ) * c x = ∑ k ∈ s, c (x * ι k) := by
       simp only [hinv, Finset.sum_const, nsmul_eq_mul]
     have h2 : ∑ k ∈ s, c (x * ι k) = ∑ i, a i * Λ i (ρ x (S i)) := by
-      simp only [hval, hS, map_sum, map_mul, Module.End.mul_apply, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hval, hS, map_sum, map_mul, Module.End.mul_apply, Finset.mul_sum]
       exact Finset.sum_comm
     simp only [Pi.smul_apply, Finset.sum_apply, smul_eq_mul]
     rw [← h2, ← h1, inv_mul_cancel_left₀ hcard]

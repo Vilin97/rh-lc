@@ -55,7 +55,8 @@ theorem sesq_mem_of_closure (O : Subring L) (S : Set (Fin n → L))
 
 theorem sesq_skew (hσσ : ∀ x, σL (σL x) = x) (hJ : ∀ k l, σL (J k l) = -J l k) (x y : Fin n → L) :
     σL (sesq σL J x y) = -sesq σL J y x := by
-  simp only [sesq, map_sum, map_mul, hσσ, hJ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [sesq, map_sum, map_mul, hσσ, hJ]
   rw [Finset.sum_comm, ← Finset.sum_neg_distrib]
   refine Finset.sum_congr rfl fun l _ => ?_
   rw [← Finset.sum_neg_distrib]
@@ -69,7 +70,8 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 theorem sesq_smul_map {L : Type} [Field L] (σ : E →ₐ[F] E) (σL : L →+* L) (φ : E →+* L)
     (hφσ : ∀ e, σL (φ e) = φ (σ e)) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (t t' : L) (y y' : Fin n → E) :
     sesq σL (J.map φ) (t • fun i => φ (y i)) (t' • fun i => φ (y' i)) = t * σL t' * φ (form σ J y y') := by
-  simp only [sesq, form, Pi.smul_apply, smul_eq_mul, Matrix.map_apply, map_mul, hφσ, dotProduct, Matrix.mulVec,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [sesq, form, Pi.smul_apply, smul_eq_mul, Matrix.map_apply, map_mul, hφσ, dotProduct, Matrix.mulVec,
     map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun l _ => ?_
   ring

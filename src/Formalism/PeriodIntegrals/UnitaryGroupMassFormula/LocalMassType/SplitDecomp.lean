@@ -21,7 +21,8 @@ theorem hform_mulVec (σ : A →+* A) (J M : Matrix (Fin n) (Fin n) A) (x y : Fi
   have hx : (fun i => σ ((M *ᵥ x) i)) = (M.map σ) *ᵥ (fun i => σ (x i)) := by
     funext i
     show σ (∑ j, M i j * x j) = ∑ j, σ (M i j) * σ (x j)
-    simp only [map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul]
   have hc : Formalism.UG.cT σ M = (M.map σ)ᵀ := rfl
   rw [hform_eq_dot, hform_eq_dot, hx, hc, ← mulVec_mulVec, ← mulVec_mulVec]
   conv_rhs => rw [dotProduct_mulVec, vecMul_transpose]

@@ -63,7 +63,8 @@ theorem toEAf_cA_idem_mul_mem {Pg Q : Finset (Formalism.L2.DIV.Pl D.host.E)} (hP
     toEAf D (cA D (idem Pg) * incA D a) ∈ Formalism.L2.Herm.intAf D.host.F D.host.E := by
   obtain ⟨P, h1, -, hsp⟩ := hP.split
   have hS : GlobalTheory.ExportSeries.SplitSet Pg := hsp.mono h1
-  rw [GlobalTheory.ExportSeries.idem, map_sum, Finset.sum_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [GlobalTheory.ExportSeries.idem, map_sum, Finset.sum_mul, map_sum]
   refine sum_mem fun PP hPP => ?_
   have ht : GlobalTheory.IdemSupport.Comparison₂ PP (GlobalTheory.ExportSeries.idemAt PP) := (hS.isIdemAt hPP).2
   refine toEAf_mul_mem ht.conj ?_ ha
@@ -141,7 +142,8 @@ theorem adj_shape {m n : ℕ} (c : EAf D) (C : Matrix (Fin m) (Fin 1) (EAf D)) (
       GlobalTheory.AdelicLatMove.cF D c • ((R.map (GlobalTheory.AdelicLatMove.cF D))ᵀ * (C.map (GlobalTheory.AdelicLatMove.cF D))ᵀ) := by
   ext i j
   simp only [Matrix.transpose_apply, Matrix.map_apply, Matrix.smul_apply, smul_eq_mul, Matrix.mul_apply]
-  rw [map_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_mul, map_sum]
   congr 1
   exact Finset.sum_congr rfl fun z _ => by rw [map_mul, mul_comm]
 
@@ -159,13 +161,15 @@ theorem frMapAdj_gen {S T : HSp D} {F : GlobalTheory.ExportSeries.Frame S T} (hF
       ((Matrix.of fun (_ : Fin 1) j => eToEAf D (∑ k, star (s k) * S.gram k j)).map (GlobalTheory.AdelicLatMove.cF D))ᵀ =
       Matrix.of fun m (_ : Fin 1) => eToEAf D (s m) := by
     ext m z
-    simp only [Matrix.mul_apply, Matrix.map_apply, Matrix.transpose_apply, Matrix.of_apply, cF_eToEAf, ← map_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mul_apply, Matrix.map_apply, Matrix.transpose_apply, Matrix.of_apply, cF_eToEAf, ← map_mul,
       ← map_sum]
     rw [gram_inv_star]
   have hB : ((Matrix.of fun i (_ : Fin 1) => eToEAf D (t i)).map (GlobalTheory.AdelicLatMove.cF D))ᵀ * T.gram.map (eToEAf D) =
       Matrix.of fun (_ : Fin 1) m => eToEAf D (∑ l, star (t l) * T.gram l m) := by
     ext z m
-    simp only [Matrix.mul_apply, Matrix.map_apply, Matrix.transpose_apply, Matrix.of_apply, cF_eToEAf, ← map_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mul_apply, Matrix.map_apply, Matrix.transpose_apply, Matrix.of_apply, cF_eToEAf, ← map_mul,
       ← map_sum]
   have e : (F.βS⁻¹).val * (S.gram⁻¹).map (eToEAf D) *
       (((Matrix.of fun (_ : Fin 1) j => eToEAf D (∑ k, star (s k) * S.gram k j)).map (GlobalTheory.AdelicLatMove.cF D))ᵀ *

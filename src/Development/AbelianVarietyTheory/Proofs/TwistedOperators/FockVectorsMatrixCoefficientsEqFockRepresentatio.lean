@@ -232,7 +232,8 @@ theorem inner_fock (P Q : Pol p q r s) : ⟪F.ι Q, F.ι P⟫_ℂ = fockIp P Q :
   have hm : ∀ R : Pol p q r s, F.ι R = ∑ v ∈ R.support, R.coeff v • F.ι (MvPolynomial.monomial v 1) := by
     intro R
     conv_lhs => rw [R.as_sum]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun v _ => ?_
     rw [← map_smul, MvPolynomial.smul_monomial, smul_eq_mul, mul_one]
   rw [hm P, hm Q, sum_inner]

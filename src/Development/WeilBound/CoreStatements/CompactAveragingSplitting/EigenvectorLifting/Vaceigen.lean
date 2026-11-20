@@ -74,7 +74,8 @@ theorem local_line {W : Type} [AddCommGroup W] [Module (AF F) W] {B : W → W �
     rw [← h]
     change _ = ψ (liftV v _)
     congr 1
-    simp only [co.form, up, LinearEquiv.apply_symm_apply, dotProduct, map_sub, map_sum, liftV_mul, mul_comm ((co.e γ).1 _)]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [co.form, up, LinearEquiv.apply_symm_apply, dotProduct, map_sub, map_sum, liftV_mul, mul_comm ((co.e γ).1 _)]
     simp only [locCo, AddMonoidHom.coe_mk, ZeroHom.coe_mk, mul_comm]
   obtain ⟨a, ha⟩ := line_of_eigen S (locCo co v '' Γ) (fun w => χ (up w)) (φ := ⟨φ, hs⟩) (φ' := ⟨φ', hs'⟩)
     (fun w hw => ⟨up w, hΓ _ (hup w) (hd w hw), hlo w⟩) h0'

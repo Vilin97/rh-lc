@@ -115,7 +115,8 @@ theorem truncMono_linearIndependent : ∀ (p : ℕ) [Fact p.Prime] (k A : Type) 
     simp only [F, coeff_sum, coeff_monomial]
   have hF : aeval x F = 0 := by
     rw [← hg]
-    simp only [F, map_sum, aeval_monomial]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [F, map_sum, aeval_monomial]
     refine Finset.sum_congr rfl (fun a _ => ?_)
     rw [Finsupp.prod_fintype _ _ (fun i => pow_zero _), Subalgebra.smul_def]
     rfl

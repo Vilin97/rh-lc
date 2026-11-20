@@ -17,7 +17,8 @@ theorem cA_inclR (σ : E →ₐ[F] E) (e : E) :
 theorem incM_mulVec_incV {m n : ℕ} (A : Matrix (Fin m) (Fin n) E) (z : Fin n → E) :
     incM F A *ᵥ incV F z = incV F (A *ᵥ z) := by
   funext i
-  simp [incM, incV, Matrix.mulVec, dotProduct, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [incM, incV, Matrix.mulVec, dotProduct, map_sum, map_mul]
 
 theorem single_eq_incV {n : ℕ} (j : Fin n) :
     (Pi.single j (1 : AE F E) : Fin n → AE F E) = incV F (Pi.single j (1 : E)) := by
@@ -28,7 +29,8 @@ theorem single_eq_incV {n : ℕ} (j : Fin n) :
 
 theorem fA_incV (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (v w : Fin n → E) :
     fA σ J (incV F v) (incV F w) = inclR (F := F) (AF F) (form σ J v w) := by
-  simp [fA, incV, form, incM, cA_inclR, dotProduct, Matrix.mulVec, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [fA, incV, form, incM, cA_inclR, dotProduct, Matrix.mulVec, map_sum, map_mul]
 
 theorem fA_add_left (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (v v' w : Fin n → AE F E) :
     fA σ J (v + v') w = fA σ J v w + fA σ J v' w := by

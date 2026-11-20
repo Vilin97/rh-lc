@@ -55,9 +55,11 @@ theorem ring_diff {K A B : Type} [CommRing K] [CommRing A] [CommRing B] [Algebra
     ring
   have hδ : ∀ x, δ x = Ideal.Quotient.mk J' (f' x - f x) := fun x => rfl
   have h := congrArg δ.liftKaehlerDifferential hp
-  rw [map_sum] at h
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum] at h
   simp only [map_smul, Derivation.liftKaehlerDifferential_comp_D, hδ, hsm] at h
-  rw [← map_sum] at h
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum] at h
   exact Ideal.Quotient.eq.1 h
 
 theorem form_expand {K A : Type} [CommRing K] [CommRing A] [Algebra K A] {d a : ℕ}
@@ -409,7 +411,8 @@ theorem frame_main (Q : Poly Φ) (hF : IsFil Φ Fil) (E : Frame Φ d) (σ : ∀ 
     (b.sum_repr _).symm
   have hrule := frame_rule hF E σ hc θ.toAlgHom τ ht g₀ g (fun k i => b.repr (KaehlerDifferential.D R A (g k)) i)
     (fun k => by simpa only [hb] using hp k)
-  rw [form_expand b g₀ g _ hp, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [form_expand b g₀ g _ hp, map_sum]
   simp only [he]
   have hsum := rep_sum (a := Fil (a : ℤ)) (b := Fil ((a : ℤ) + 1)) Finset.univ
     (fun I : Fin a → Fin d => E.form σ I (θ (g₀ * ∏ k, b.repr (KaehlerDifferential.D R A (g k)) (I k))))

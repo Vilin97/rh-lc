@@ -98,6 +98,7 @@ theorem UpperTheory.ConvolutionTheory.R2.Ff.sDiff :
     rw [Finset.sum_apply, Finset.sum_eq_single i (fun c _ hc => h1 c hc) (by simp), h2]
   have key : fderiv ℝ G 0 x' = ∑ i, ∑ w, ((x' i w : ℝ) : ℂ) * (O.d w i φ).1 v := by
     conv_lhs => rw [hs]
-    simp only [map_sum, map_smul, hb, Complex.real_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, hb, Complex.real_smul]
   rw [← key]
   exact hc

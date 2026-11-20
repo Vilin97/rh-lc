@@ -573,7 +573,8 @@ theorem HZ_unit (h : BlockHyp B ℓ v0 s) : IsUnit ((B.zE ℓ Z)ᴴ * B.HV ℓ *
     intro c h0
     have h1 : star (fun i => v0.embedding (c i)) ⬝ᵥ (B.S.H.map v0.embedding) *ᵥ (fun i => v0.embedding (c i)) =
         v0.embedding (star c ⬝ᵥ B.S.H *ᵥ c) := by
-      simp only [dotProduct, Matrix.mulVec, map_sum, map_mul, Pi.star_apply, hv0', Matrix.map_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [dotProduct, Matrix.mulVec, map_sum, map_mul, Pi.star_apply, hv0', Matrix.map_apply]
     rw [h0, map_zero] at h1
     by_contra hc0
     have hne : (fun i => v0.embedding (c i)) ≠ 0 := by

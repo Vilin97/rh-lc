@@ -41,7 +41,8 @@ theorem adj_incM (σ : E →ₐ[F] E) {n : ℕ} (J P Q : Matrix (Fin n) (Fin n) 
 theorem skew_flip (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (hσ : ∀ x, σ (σ x) = x)
     (hJ : ∀ i j, σ (J j i) = -J i j) (x y : Fin n → E) :
     form σ J y x = -σ (form σ J x y) := by
-  simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, hJ, Finset.mul_sum, Finset.sum_neg_distrib,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, hJ, Finset.mul_sum, Finset.sum_neg_distrib,
     neg_mul, mul_neg, neg_neg]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
@@ -50,7 +51,8 @@ theorem adjX (σ : E →ₐ[F] E) {n n₁ : ℕ} (J : Matrix (Fin n) (Fin n) E) 
     (hJ : ∀ i j, σ (J j i) = -J i j) :
     ((prX σ J H).map σ)ᵀ * J.map σ = J.map σ * prY σ J H := by
   ext i j
-  simp only [prX, prY, Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, Matrix.vecMulVec_apply, Matrix.neg_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [prX, prY, Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, Matrix.vecMulVec_apply, Matrix.neg_apply,
     Matrix.mulVec, dotProduct, map_sum, map_mul, hσ, hJ, Finset.mul_sum, Finset.sum_mul, Finset.sum_neg_distrib,
     neg_mul, mul_neg, neg_neg]
   rw [Finset.sum_comm]
@@ -60,7 +62,8 @@ theorem adjY (σ : E →ₐ[F] E) {n n₁ : ℕ} (J : Matrix (Fin n) (Fin n) E) 
     (hJ : ∀ i j, σ (J j i) = -J i j) :
     ((prY σ J H).map σ)ᵀ * J.map σ = J.map σ * prX σ J H := by
   ext i j
-  simp only [prX, prY, Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, Matrix.vecMulVec_apply, Matrix.neg_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [prX, prY, Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, Matrix.vecMulVec_apply, Matrix.neg_apply,
     Matrix.mulVec, dotProduct, map_sum, map_mul, map_neg, hσ, hJ, Finset.mul_sum, Finset.sum_mul, Finset.sum_neg_distrib,
     neg_mul, mul_neg, neg_neg]
   rw [neg_inj, Finset.sum_comm]

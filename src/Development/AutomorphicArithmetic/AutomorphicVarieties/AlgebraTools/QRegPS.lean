@@ -81,7 +81,8 @@ theorem UpperTheory.V.AlgebraTools.qRegAt_mvPowerSeries :
     rw [α.2]
     exact_mod_cast Nat.lt_succ_self a
   have h1 : MvPowerSeries.coeff α.1 (u + v) = MvPowerSeries.constantCoeff (c α) := by
-    rw [huv, map_sum, Finset.sum_eq_single α]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [huv, map_sum, Finset.sum_eq_single α]
     · rw [monoVal_X_eq, smul_eq_mul, MvPowerSeries.coeff_monomial_mul]
       simp
     · intro β _ hβ

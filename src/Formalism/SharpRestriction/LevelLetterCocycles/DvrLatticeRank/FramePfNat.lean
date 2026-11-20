@@ -77,7 +77,8 @@ theorem framepf_Lmap_mkL (z : W.DD T₁) (h₁ : z ∈ NcS W T₁ (c - 1)) (h₂
 theorem framepf_LAover {x₁ : LA W T₁ π' c} {x₂ : LA W T₂ π' c} (h : LAover W f π' c x₁ x₂) :
     x₂ = (framepf_Lmap f hfN π' c).lTensor W.EE x₁ := by
   obtain ⟨m, e, y, h₁, h₂, rfl, rfl⟩ := h
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   rfl
 
 theorem framepf_Lmap_smulLA (a : LetA O n) (x : LA W T₁ π' c) :
@@ -176,7 +177,8 @@ theorem framepf_mem_toLA {r : ℕ} (bL : Module.Basis (Fin r) O (LcQ W T π' c))
   · intro h
     choose a ha hae using h
     refine ⟨∑ k, (⟨a k, ha k⟩ : ↥W.AΔ) ⊗ₜ ⟨bL k, trivial⟩, ?_⟩
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     conv_rhs => rw [← (Algebra.TensorProduct.basis W.EE bL).sum_repr x]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [hae, Algebra.TensorProduct.basis_apply, TensorProduct.smul_tmul', smul_eq_mul, mul_one]

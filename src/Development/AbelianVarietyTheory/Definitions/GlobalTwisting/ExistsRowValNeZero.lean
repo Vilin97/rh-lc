@@ -100,7 +100,8 @@ theorem rowVal_carrier (Z : TC.Later B (I.cols l)) (u : B.Word) (a : I.ι) {V : 
     (M : Rows.OLat B.O (B.embLL.comp B.OtoLL) V) (e : (I.per l u a).Mt ≃ₗ[ℂ] V) (H : ∀ v ∈ M.gen, RowVal I l u a (e.symm v)) :
     ∀ F ∈ M.carrier, RowVal I l u a (e.symm F) := by
   rintro _ ⟨c, rfl⟩
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_induction _ (RowVal I l u a) (fun _ _ => rowVal_add I l) (rowVal_zero I l u a) fun v hv => ?_
   rw [map_smul]
   exact rowVal_smul I l ⟨B.OtoLL (c v), (I.rec7 l Z).O_int (c v)⟩ (H v hv)

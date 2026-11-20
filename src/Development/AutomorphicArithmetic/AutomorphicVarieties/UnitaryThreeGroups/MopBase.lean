@@ -90,7 +90,8 @@ theorem approx {O X R σ : Type} [CommRing O] [AddCommGroup X] [CommRing R] [Alg
     | single i k =>
       rw [Finsupp.prod_single_index (by simp), Finsupp.weight_single]
       exact hpow i k
-  rw [(MvPowerSeries.truncTotal n F).as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [(MvPowerSeries.truncTotal n F).as_sum, map_sum]
   refine Submodule.sum_mem _ fun d hd => ?_
   rw [MvPolynomial.aeval_monomial, ← Algebra.smul_def]
   refine Submodule.smul_mem _ _ ?_

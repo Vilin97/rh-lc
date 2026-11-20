@@ -97,7 +97,8 @@ theorem sB_frame (h : IsCMExt F E σ) (hfr : Framed τ JA JB a b A C) {u u' : Ma
     (c w) (c' w)
   simp only [← hc, ← hc', Matrix.map_apply] at e2
   rw [← e2, hTens, neg_one_mul, map_neg, neg_re]
-  simp only [map_sum, map_mul, piInf_cA h]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, piInf_cA h]
   ring
 
 theorem fock_data (h : IsCMExt F E σ) (hfr : Framed τ JA JB a b A C) {Φ : Tens F P Q R S →ₗ[ℂ] SInf F κ}
@@ -155,12 +156,14 @@ theorem fock_data (h : IsCMExt F E σ) (hfr : Framed τ JA JB a b A C) {Φ : Ten
       ← Matrix.sum_mul, ← Matrix.mul_sum, ← expand, hc]
     simp only [Matrix.transpose_mul, Matrix.mul_assoc]
     rw [← Matrix.mul_assoc (C w)ᵀ, ← Matrix.transpose_mul, h2, Matrix.transpose_one, Matrix.one_mul]
-  · simp only [hU, ← map_add, ← map_sum, ← map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [hU, ← map_add, ← map_sum, ← map_smul]
     congr 1
     rw [Fintype.sum_prod_type, sumPl, LinearMap.sum_apply, Finset.smul_sum]
     refine Finset.sum_congr rfl fun w _ => ?_
     rw [atL_eq, ← fock_eq (hu w)]
-    simp only [map_smul, map_sum, map_add, atL_mul, LinearMap.smul_apply, LinearMap.sum_apply, LinearMap.add_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_smul, map_sum, map_add, atL_mul, LinearMap.smul_apply, LinearMap.sum_apply, LinearMap.add_apply,
       Module.End.mul_apply]
 
 theorem sumPl_add (Φ : Tens F P Q R S →ₗ[ℂ] SInf F κ) (L : InfinitePlace F → Module.End ℂ (Formalism.BasicNotions.TH.Pol P Q R S))
@@ -437,7 +440,8 @@ theorem lieSecond' (hM : GlobalTheory.Published.RealMetaplecticRepresentation) :
       push_cast
       ring
     rw [hT0] at hne
-    simp only [hT0, map_add, map_smul, map_sum, Fintype.sum_sum_type, Sum.elim_inl, Sum.elim_inr, kill _ (hh _),
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hT0, map_add, map_smul, map_sum, Fintype.sum_sum_type, Sum.elim_inl, Sum.elim_inr, kill _ (hh _),
       kill _ (hv _), t1, t2, zero_add, add_zero, Finset.sum_neg_distrib, add_neg_cancel, smul_zero, smul_eq_mul,
       trace_blocks, tr, id, ofReal_zero, zero_mul, Complex.exp_zero, one_mul, ofReal_one, mul_zero] at h3
     have h4 := mul_right_cancel₀ hne h3

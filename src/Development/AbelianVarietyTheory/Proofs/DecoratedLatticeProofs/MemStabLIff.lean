@@ -81,7 +81,8 @@ theorem apply_sum {N : ℕ} (φ : Sp E N ≃ₗ[E] Sp E N) (v : Sp E N) (l : Fin
     funext i
     simp [Finset.sum_apply, Pi.single_apply]
   conv_lhs => rw [hv]
-  rw [map_sum, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_apply]
   refine Finset.sum_congr rfl fun l' _ => ?_
   rw [map_smul, Pi.smul_apply, smul_eq_mul, mul_comm]
 

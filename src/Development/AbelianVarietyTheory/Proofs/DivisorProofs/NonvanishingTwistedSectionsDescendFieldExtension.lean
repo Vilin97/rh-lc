@@ -136,7 +136,8 @@ theorem exists_sec_of_baseChange : ∀ (S : Scheme.{0}) (P : PolAV S) (k : Type)
       exact H.w.symm
   have hsb := hE (E.symm sb) i _ (𝟙 _) z hi
   rw [Equiv.apply_symm_apply] at hsb
-  simp only [Category.id_comp, hvu, ← GlobalTheory.SecTwist.cstHom_apply, map_sum, map_mul] at hsb
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Category.id_comp, hvu, ← GlobalTheory.SecTwist.cstHom_apply, map_sum, map_mul] at hsb
   simp only [GlobalTheory.SecTwist.cstHom_apply, e1] at hsb
   refine (IsLocalRing.mem_maximalIdeal _).1 ?_ hu1
   rw [hsb]

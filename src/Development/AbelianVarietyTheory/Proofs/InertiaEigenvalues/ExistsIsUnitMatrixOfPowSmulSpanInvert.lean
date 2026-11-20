@@ -92,7 +92,8 @@ theorem exists_isUnit_matrix_of_pow_smul_span : ∀ (S EE W RW Y : Type) [CommRi
         · simp
       rw [h1]
       conv_rhs => rw [hB i]
-      simp only [Matrix.mul_apply, Matrix.of_apply, map_sum, Finset.sum_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Matrix.mul_apply, Matrix.of_apply, map_sum, Finset.sum_smul]
       rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [hA j, Finset.smul_sum]

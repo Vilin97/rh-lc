@@ -92,7 +92,8 @@ theorem kS_inA (j : Fin (numSeg X.TT)) (i : Fin (segS X.TT j)) : InA (kSkey O X 
     (X.p ^ (segDists X.TT j).get i) * MvPolynomial.X ((topOdd X j i, false), a)).coeff m, ?_⟩
   rw [← MvPolynomial.coeff_map]
   congr 1
-  simp [kSkey, map_sum, map_mul, map_pow, map_X]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [kSkey, map_sum, map_mul, map_pow, map_X]
 
 theorem softKS (S : UniformizedDVR X.p O) (hS : S.SqP) (hD : D1num X) (j : Fin (numSeg X.TT)) (i : Fin (segS X.TT j)) :
     SoftOK S.w (kSkey O X j i) 1 (sgKS O X j i) (dgKS X j i) where

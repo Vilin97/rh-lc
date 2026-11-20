@@ -80,14 +80,16 @@ theorem phi_d₁ (hf : CH.d F₁ p f = 0) {N : ℕ} (s : ComposableArrows C N) (
   cases a with
   | zero => rw [d₁_zero, map_zero]
   | succ a =>
-    rw [d₁_succ, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [d₁_succ, map_sum]
     simp only [phi_single]
     by_cases h : a = p ∧ r = q
     · obtain ⟨rfl, rfl⟩ := h
       have e := CrystallineSemistableComparison.Auxff.term_d F₁ s f (fun i : Fin (a + 2) => α.toOrderHom i) α.toOrderHom.monotone
       rw [hf, term_zero] at e
       have e2 := congrArg ((P.μ _).flip (CH.term F₂ s g (fun i : Fin (r + 1) => β.toOrderHom i) β.toOrderHom.monotone)) e
-      simp only [map_zero, map_sum, map_zsmul, LinearMap.flip_apply] at e2
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_zero, map_sum, map_zsmul, LinearMap.flip_apply] at e2
       refine Eq.trans (Finset.sum_congr rfl fun i _ => ?_) e2.symm
       rw [val_mk]
       rfl
@@ -98,14 +100,16 @@ theorem phi_d₂ (hg : CH.d F₂ q g = 0) {N : ℕ} (s : ComposableArrows C N) (
   cases r with
   | zero => rw [d₂_zero, map_zero]
   | succ r =>
-    rw [d₂_succ, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [d₂_succ, map_sum]
     simp only [phi_single]
     by_cases h : a = p ∧ r = q
     · obtain ⟨rfl, rfl⟩ := h
       have e := CrystallineSemistableComparison.Auxff.term_d F₂ s g (fun i : Fin (r + 2) => β.toOrderHom i) β.toOrderHom.monotone
       rw [hg, term_zero] at e
       have e2 := congrArg (P.μ _ (CH.term F₁ s f (fun i : Fin (a + 1) => α.toOrderHom i) α.toOrderHom.monotone)) e
-      simp only [map_zero, map_sum, map_zsmul] at e2
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_zero, map_sum, map_zsmul] at e2
       refine Eq.trans (Finset.sum_congr rfl fun i _ => ?_) e2.symm
       rw [val_mk]
       rfl
@@ -140,12 +144,14 @@ def hc {N : ℕ} (c : Pr N →₀ ℤ) : CH.Cn F₃ N := fun s => phi P f g s c
 theorem d_hc {N : ℕ} (c : Pr N →₀ ℤ) (s : ComposableArrows C (N + 1)) :
     CH.d F₃ N (hc P f g c) s = phi P f g s (Pr.bd c) := by
   change ∑ i : Fin (N + 2), (-1 : ℤ) ^ (i : ℕ) • (F₃.map (GlobalTheory.CatH.toLast i s)).hom (phi P f g (GlobalTheory.CatH.face i s) c) = _
-  rw [Pr.bd, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Pr.bd, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_smul, ← phi_face]
 
 theorem phi_aw {n : ℕ} (h : p + q = n) (s : ComposableArrows C n) : phi P f g s (Pr.aw n) = P.cupC h f g s := by
-  rw [Pr.aw, map_sum, Finset.sum_eq_single (⟨p, by omega⟩ : Fin (n + 1))]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Pr.aw, map_sum, Finset.sum_eq_single (⟨p, by omega⟩ : Fin (n + 1))]
   · rw [phi_single, one_smul, val_pos P f g s _ ⟨rfl, show n - p = q by omega⟩, CrystallineSemistableComparison.Auxff.cupC_apply]
     exact congrArg₂ (fun x y => P.μ _ x y)
       (CH.term_congr F₁ s f _ _ (funext fun i => Fin.ext rfl))
@@ -160,7 +166,8 @@ theorem phi_aw {n : ℕ} (h : p + q = n) (s : ComposableArrows C n) : phi P f g 
 theorem phi_wa {n : ℕ} (h' : q + p = n) (s : ComposableArrows C n) :
     phi P f g s (Pr.wa n) = (-1 : ℤ) ^ (p * q) •
       P.μ _ (CH.term F₁ s f (CH.back h') (CH.back_mono h')) (CH.term F₂ s g (CH.front h') (CH.front_mono h')) := by
-  rw [Pr.wa, map_sum, Finset.sum_eq_single (⟨q, by omega⟩ : Fin (n + 1))]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Pr.wa, map_sum, Finset.sum_eq_single (⟨q, by omega⟩ : Fin (n + 1))]
   · rw [phi_single, val_pos P f g s _ ⟨show n - q = p by omega, rfl⟩]
     have e2 : ((-1 : ℤ) ^ (q * (n - q))) = (-1) ^ (p * q) := by rw [show n - q = p by omega, mul_comm]
     refine Eq.trans (congrArg (fun t : ℤ => t • P.μ _ (CH.term F₁ s f _ (om_mono _ _)) (CH.term F₂ s g _ (om_mono _ _))) e2) ?_

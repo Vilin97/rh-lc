@@ -45,7 +45,8 @@ theorem mem_twKer_of_map (f : π₁.IntertwiningMap π) (hπ : IsSmooth π) (hf 
   have hUf : ∀ u ∈ U, π (u : H) (f v) = f v := fun u hu => by rw [← map_apply', hUv u hu]
   rw [← GlobalTheory.LocGL.idem_eq_zero_iff h₁ hH]
   apply hf
-  rw [map_zero, GlobalTheory.LocGL.idem_eq_cosetSum h₁ hH U hUv, map_smul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_zero, GlobalTheory.LocGL.idem_eq_cosetSum h₁ hH U hUv, map_smul, map_sum]
   simp only [map_apply']
   rw [← GlobalTheory.LocGL.idem_eq_cosetSum hπ hH U hUf]
   exact (GlobalTheory.LocGL.idem_eq_zero_iff hπ hH).2 hv

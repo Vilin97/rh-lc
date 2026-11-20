@@ -174,7 +174,8 @@ theorem exists_vac_of_lattice : ∀ {F : Type} [Field F] [NumberField F] {W : Ty
         · exact GlobalTheory.VacAny.at_sum _ fun i _ => GlobalTheory.VacAny.at_mul_left _ (hAtE _ (hAt _ hγ') i).2
         · exact GlobalTheory.VacAny.at_sum _ fun i _ => GlobalTheory.VacAny.at_mul_left _ (hAtE _ (hAt _ hγ) i).2
       rw [hψloc _ hA, co.form, map_mul, GlobalTheory.VacAny.evFin_invOf_two, map_sub]
-      simp only [dotProduct, map_sum, map_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [dotProduct, map_sum, map_mul]
       rfl)
     (by
       rintro _ ⟨γ, hγ, rfl⟩

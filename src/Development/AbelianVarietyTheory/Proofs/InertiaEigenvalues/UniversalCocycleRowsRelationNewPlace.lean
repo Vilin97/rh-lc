@@ -46,7 +46,8 @@ theorem rel : TameLocal → ∀ (D : Formalism.BasicNotions.D7) (N : NData D.R D
   let x0 : Fin a → Y := fun j => mk (Pi.single j 1)
   have hrow : ∀ (r : ℕ) (A : Matrix (Fin r) (Fin a) B) (c : Fin r), ∑ j, A c j • x0 j = mk (A c) := by
     intro r A c
-    simp only [x0, ← map_smul, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [x0, ← map_smul, ← map_sum]
     congr 1
     ext j
     simp [Pi.single_apply]

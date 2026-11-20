@@ -71,7 +71,8 @@ theorem exists_point {D : Datum H} {l : Level H} (hA : l.A = 1) (Xo : Moduli D l
   have hfd : FiniteDimensional K K' :=
     IntermediateField.finiteDimensional_adjoin fun x _ => Algebra.IsIntegral.isIntegral x
   have hβm : ∀ z, β z ∈ K' := fun z => by
-    rw [← b.sum_repr z, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← b.sum_repr z, map_sum]
     refine sum_mem fun i _ => ?_
     rw [Rat.smul_def, map_mul, map_ratCast]
     exact mul_mem (SubfieldClass.ratCast_mem _ _) (IntermediateField.subset_adjoin K U (Or.inr ⟨i, rfl⟩))

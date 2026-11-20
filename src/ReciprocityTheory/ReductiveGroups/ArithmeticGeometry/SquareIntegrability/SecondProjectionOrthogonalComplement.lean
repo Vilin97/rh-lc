@@ -55,7 +55,8 @@ theorem Hf_sum_r {κ : Type} (s : Finset κ) (v : EuclideanSpace ℂ ι) (f : κ
     rw [Finset.sum_insert ha, Finset.sum_insert ha, Hf_add_r, ih]
 
 theorem Hf_swap (v w : EuclideanSpace ℂ ι) : Hf w v = (starRingEnd ℂ) (Hf v w) := by
-  simp only [Hf, map_sum, map_mul, Complex.conj_conj]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Hf, map_sum, map_mul, Complex.conj_conj]
   exact Finset.sum_congr rfl fun i _ => mul_comm _ _
 
 theorem Hf_self_re (v : EuclideanSpace ℂ ι) : (Hf v v).re = ‖v‖ ^ 2 := by

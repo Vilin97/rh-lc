@@ -111,7 +111,8 @@ theorem IsHyp.proj_mem (H : IsHyp Y U e f) (y : Y.V) :
     y - ∑ i, Y.hT (f i) y • e i - ∑ i, Y.hT (e i) y • f i ∈ U := by
   rw [H.mem]
   intro i
-  simp [map_sum, H.ee, H.ff, H.fe, hT_ef H.fe]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, H.ee, H.ff, H.fe, hT_ef H.fe]
 
 theorem IsHyp.pairing (H : IsHyp Y U e f) (β γ β' γ' : Fin ρ → E) {w w' : Y.V} (hw : w ∈ U) (hw' : w' ∈ U) :
     Y.hT (∑ i, β' i • e i + w' + ∑ i, γ' i • f i) (∑ i, β i • e i + w + ∑ i, γ i • f i) =
@@ -120,7 +121,8 @@ theorem IsHyp.pairing (H : IsHyp Y U e f) (β γ β' γ' : Fin ρ → E) {w w' :
   have h2 : ∀ i, Y.hT (f i) w = 0 := fun i => ((H.mem w).1 hw i).2
   have h3 : ∀ i, Y.hT w' (e i) = 0 := fun i => by rw [hT_swap, ((H.mem w').1 hw' i).1, star_zero]
   have h4 : ∀ i, Y.hT w' (f i) = 0 := fun i => by rw [hT_swap, ((H.mem w').1 hw' i).2, star_zero]
-  simp [map_sum, LinearMap.sum_apply, H.ee, H.ff, H.fe, hT_ef H.fe, h1, h2, h3, h4, mul_comm, starRingEnd_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, LinearMap.sum_apply, H.ee, H.ff, H.fe, hT_ef H.fe, h1, h2, h3, h4, mul_comm, starRingEnd_apply]
 
 theorem IsHyp.selfDual (H : IsHyp Y U e f) {L : Submodule (𝓞 E) Y.V} (hfg : L.FG)
     (hsp : Submodule.span E (L : Set Y.V) = U)
@@ -170,7 +172,8 @@ theorem IsHyp.selfDual (H : IsHyp Y U e f) {L : Submodule (𝓞 E) Y.V} (hfg : L
       have h2 : ∀ i, Y.hT (f i) x = 0 := fun i => ((H.mem x).1 (hLU x hx) i).2
       rw [← hT_swap] at this
       have h3 : Y.hD x (y - ∑ i, Y.hT (f i) y • e i - ∑ i, Y.hT (e i) y • f i) = Y.hT y x := by
-        simp [HSpace.hD, map_sum, LinearMap.sum_apply, h1, h2]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp [HSpace.hD, map_sum, LinearMap.sum_apply, h1, h2]
       rwa [h3]
     · refine mem_idealSum.2 ⟨_, fun i => ?_, rfl⟩
       rw [FractionalIdeal.mem_inv_iff (hJ0 i)]

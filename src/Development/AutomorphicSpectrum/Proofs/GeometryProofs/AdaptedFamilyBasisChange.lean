@@ -11,7 +11,8 @@ theorem phiNormSq_baseChange : ∀ (E L Ψ : Type) [Field E] [NumberField E] [Fi
   obtain ⟨hvI, hvind, hvrel⟩ := hv
   have hsum : ∀ a : Fin r → 𝓞 E, ∑ i, ρ' (a i) (j (v i)) = j (∑ i, A.ρ (a i) (v i)) := by
     intro a
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun i _ => hρ' _ _
   have hspan : oSpan ρ' (fun i => j (v i)) = (oSpan A.ρ v).map j := by
     unfold GlobalTheory.CompanionTheory.Ar.Cusp.oSpan
@@ -53,7 +54,8 @@ theorem phiNormSq_baseChange : ∀ (E L Ψ : Type) [Field E] [NumberField E] [Fi
       refine Fin.addCases (fun a => ?_) (fun c => ?_) i
       · simp only [Fin.append_left, heig]
       · simp only [Fin.append_right]
-    rw [hap, hfi, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hap, hfi, map_sum]
     refine Finset.sum_congr rfl fun j' _ => ?_
     rw [hjs, Matrix.map_apply]
   have hdet : ∀ τ, ((T τ).map e).det = e (T τ).det := by

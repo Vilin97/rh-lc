@@ -50,7 +50,8 @@ theorem isoV_of (r : D.nd.X i → (GE D.nd →* GL (Fin D.R.nV) (D.nd.O i))) (g0
   have h2 : KDim.repW i dc ρ π (K.colIdx i dc l) hn g (F v) a =
       ∑ b, algebraMap (Br.OLL D.nbr i _ hn) (Br.LL D.nbr i _ hn) ((D.nbr i _ hn).eO
         (WpO D.nd i ρ π ((Br.iota D.nbr i _ hn g : KHf.Γn i dc (K.colIdx i dc l)) : GE D.nd) a b)) * F v b := rfl
-  rw [h1, h2, map_sum, ← Equiv.sum_comp (K.H0.e0 (D := D))]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h1, h2, map_sum, ← Equiv.sum_comp (K.H0.e0 (D := D))]
   refine Finset.sum_congr rfl fun b _ => ?_
   rw [Algebra.smul_def, map_mul, KHf.eK_apply, Br.toLLK_alg, K.H0.unipotent_block_zero_entry hD hN _ a b]
   rfl

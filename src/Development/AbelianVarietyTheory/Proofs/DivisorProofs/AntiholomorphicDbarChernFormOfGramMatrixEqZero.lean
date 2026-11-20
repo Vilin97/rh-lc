@@ -43,7 +43,8 @@ theorem dbarAt_sum_smul {ι : Type} [Fintype ι] {v : V n} {g : ι → V n → �
       ∑ p, dbar (g p) v (coordVec a) • c p := by
     refine (bas n).ext_elem fun S => ?_
     rw [FormMul.repr_coefwise]
-    simp only [map_sum, map_smul, Finsupp.finset_sum_apply, Finsupp.smul_apply, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, Finsupp.finset_sum_apply, Finsupp.smul_apply, smul_eq_mul]
     rw [dbar_sum (A := fun p x => g p x * (bas n).repr (c p) S) (fun p _ => (hg p).mul (differentiableAt_const _)),
       ContinuousLinearMap.sum_apply]
     refine Finset.sum_congr rfl fun p _ => ?_
@@ -55,7 +56,8 @@ theorem dbarAt_sum_smul {ι : Type} [Fintype ι] {v : V n} {g : ι → V n → �
 theorem differentiableAt_sum_smul {ι : Type} [Fintype ι] {v : V n} {g : ι → V n → ℂ}
     (hg : ∀ p, DifferentiableAt ℝ (g p) v) (c : ι → Alt n) (S : Finset (Fin (n + n))) :
     DifferentiableAt ℝ (fun x => (bas n).repr (∑ p, g p x • c p) S) v := by
-  simp only [map_sum, map_smul, Finsupp.finset_sum_apply, Finsupp.smul_apply, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, Finsupp.finset_sum_apply, Finsupp.smul_apply, smul_eq_mul]
   exact DifferentiableAt.fun_sum fun p _ => (hg p).mul (differentiableAt_const _)
 
 theorem dbarAt_add {v : V n} {F G : V n → Alt n} (hF : ∀ S, DifferentiableAt ℝ (fun x => (bas n).repr (F x) S) v)

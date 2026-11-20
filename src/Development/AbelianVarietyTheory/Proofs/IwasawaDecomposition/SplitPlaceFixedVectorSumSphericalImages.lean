@@ -72,7 +72,8 @@ theorem exists_fixed_of_sum {n : ℕ} {W : Type} [AddCommGroup W] [Module ℂ W]
   refine ⟨e, fun j => ?_, ?_⟩
   · intro k
     simp only [MonoidHom.one_apply, Units.val_one, one_smul]
-    simp only [e, map_smul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [e, map_smul, map_sum]
     congr 1
     have hstep : ∀ q : K ⧸ H.subgroupOf K, σ.ρ (k : GL (Fin n) _) (σ.ρ ((q.out : K) : GL (Fin n) _) (u j)) =
         σ.ρ (((k • q).out : K) : GL (Fin n) _) (u j) := by
@@ -97,14 +98,16 @@ theorem exists_fixed_of_sum {n : ℕ} {W : Type} [AddCommGroup W] [Module ℂ W]
       intro q
       rw [← hκ q]
       simp_rw [hT _ (κ q) (hκT q)]
-      rw [← map_sum, ← hf, hfix _ (hκU q) (hκT q)]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← map_sum, ← hf, hfix _ (hκU q) (hκT q)]
     calc f = N⁻¹ • ∑ _q : K ⧸ H.subgroupOf K, f := by
           rw [Finset.sum_const, Finset.card_univ, ← Nat.cast_smul_eq_nsmul ℂ, smul_smul, ← hNdef,
             inv_mul_cancel₀ hN, one_smul]
       _ = N⁻¹ • ∑ q : K ⧸ H.subgroupOf K, ∑ j, T j (σ.ρ ((q.out : K) : GL (Fin n) _) (u j)) := by
           simp_rw [key]
       _ = ∑ j, T j (e j) := by
-          simp only [e, map_smul, map_sum, ← Finset.smul_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            simp only [e, map_smul, map_sum, ← Finset.smul_sum]
           rw [Finset.sum_comm]
 
 end GlobalTheory.SphAvg

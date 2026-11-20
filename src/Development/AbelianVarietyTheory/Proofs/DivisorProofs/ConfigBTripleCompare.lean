@@ -96,7 +96,8 @@ theorem form_decay {κ ι T : Type} [Fintype κ] [Fintype ι] (ψ : AddChar (AF 
   refine ⟨∑ j, C j, fun t x hx => ?_⟩
   rw [hdec t, Finset.sum_mul]
   change ‖l (schrL ψ _ _)‖ ≤ _
-  rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum]
   refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun j _ => ?_)
   obtain ⟨f₁, h1, h2⟩ := hC j t x hx
   refine le_trans ?_ h2
@@ -134,7 +135,8 @@ theorem form_swap_herm (hcm : IsCMExt F E σ) {n : ℕ} {J : Matrix (Fin n) (Fin
   have hσ : ∀ z, σ (σ z) = z := fun z => by
     obtain ⟨τ⟩ : Nonempty (E →+* ℂ) := inferInstance
     exact τ.injective (by rw [hcm.2.2.2, hcm.2.2.2, star_star])
-  simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, hJ, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, hJ, Finset.mul_sum]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 
@@ -167,12 +169,14 @@ theorem cone_decay : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberF
   let S := fun j => G.M'.co.e (inclR (F := F) (AF F) (σ (Module.finBasis F E j)) • Matrix.vecMulVec (incV F H.y) (incV F H'.x))
   let U' := fun i => G.M'.co.e (inclR (F := F) (AF F) (t i) • Matrix.vecMulVec (incV F H.x) (incV F H'.y))
   have hS : ∀ l : (AE F E)ˣ, G.M'.co.e (shiftB σ H H' l) = ∑ i, GlobalTheory.XTermMaj.crd F E (l : AE F E) i • S i := fun l => by
-    simp only [S, ← map_smul, ← map_sum, ← smul_assoc, ← Finset.sum_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [S, ← map_smul, ← map_sum, ← smul_assoc, ← Finset.sum_smul]
     congr 2
     rw [shiftB]
     congr 1
     refine (congrArg (cA σ) ((Algebra.TensorProduct.basis (AF F) (Module.finBasis F E)).sum_equivFun (l : AE F E)).symm).trans ?_
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, Algebra.TensorProduct.basis_apply]
     rfl

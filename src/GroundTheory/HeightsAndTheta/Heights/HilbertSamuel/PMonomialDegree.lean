@@ -210,10 +210,12 @@ theorem exists_change {x : Ix (Fin (D + 1)) → Ω} (hx : coordIdeal ℤ x = ⊥
       · calc aeval x f' = aeval x (b' k) := by rw [hbf', aeval_map_intQ]
           _ = ∑ l, A k l • aeval x (monoForm D n l) := (hA k).symm
           _ = _ := by
-            simp only [map_sum, map_mul, map_intCast, eq_intCast, zsmul_eq_mul, monoForm,
+            set_option synthInstance.maxHeartbeats 100000 in
+              simp only [map_sum, map_mul, map_intCast, eq_intCast, zsmul_eq_mul, monoForm,
               aeval_map_intQ]
     rw [hbf', secFun_map_intQ, heq]
-    simp only [monoForm, secFun_map_intQ, Matrix.of_apply, map_sum, map_mul, map_intCast, eq_intCast]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [monoForm, secFun_map_intQ, Matrix.of_apply, map_sum, map_mul, map_intCast, eq_intCast]
   · have hAB : Matrix.of A * Matrix.of B = 1 := by
       ext k m
       have h1 : ∑ m, (Matrix.of A * Matrix.of B) k m • aeval x (b' m) = aeval x (b' k) := by

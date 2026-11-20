@@ -81,9 +81,11 @@ theorem cotangent_indep_of_isComplAt : ∀ (W : Type) [CommRing W] [IsLocalRing 
   have hX' : ∀ j, MvPolynomial.X (ι₀ j) ∈ P := hX
   let t₀ : TensorProduct (MvPolynomial I W) R P := ∑ j, c j ⊗ₜ ⟨MvPolynomial.X (ι₀ j), hX' j⟩
   have hmu0 : muT t₀ = ∑ j, c j * ψ (MvPolynomial.X (ι₀ j)) := by
-    simp only [t₀, map_sum, hmut]; exact Finset.sum_congr rfl fun j _ => mul_comm _ _
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [t₀, map_sum, hmut]; exact Finset.sum_congr rfl fun j _ => mul_comm _ _
   have hL₀ : L t₀ = residue R (c k) := by
-    simp only [t₀, map_sum, hLt, δ, MvPolynomial.pderiv_X, Pi.single_apply, ι₀.injective.eq_iff]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [t₀, map_sum, hLt, δ, MvPolynomial.pderiv_X, Pi.single_apply, ι₀.injective.eq_iff]
     simp
   obtain ⟨t, ht₁, ht₂⟩ := hspan _ (hJ hc) 1
   have : t = t₀ := hmu (by rw [ht₁, _root_.one_mul, hmu0])

@@ -135,7 +135,8 @@ theorem main : ∀ {I : Type} [Fintype I] [DecidableEq I] {g : ℕ} {Λ : Type} 
     congrArg (algebraMap ℂ D') ((congrArg (Hol.ev z₀ hz₀) (hps i l)).trans ((Hol.ev z₀ hz₀).commutes _))
   have hfib := fun i => TenFib.ten_fib π' r₀ rfl κ hs' (io : D →+* D') hpio hnil (algebraMap ℂ D) φ hφ k io.commutes (cs i) (p i)
     (ps i) (q i) (hps i) (hq i) (hcs i K₀ r₀ hr₀)
-  rw [hdec, map_sum] at hfam
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hdec, map_sum] at hfam
   simp only [LinearMap.map_smulₛₗ, hfib] at hfam
   have hz : K₀.tenZ (∑ i, io (d i) • q i - τV.toAddMonoidHom.comp per) =
       ∑ i, io (d i) • K₀.tenZ (q i) - K₀.tenZ (τV.toAddMonoidHom.comp per) := by
@@ -146,14 +147,17 @@ theorem main : ∀ {I : Type} [Fintype I] [DecidableEq I] {g : ℕ} {Λ : Type} 
           funext T T' f
           exact (map_mul (algebraMap D' (T'.ten D')) _ _).trans (Algebra.smul_def _ _).symm) }
     change Z _ = ∑ i, io (d i) • Z _ - Z _
-    simp only [map_sub, map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sub, map_sum, map_smul]
   have := Charts.tenZ_eq_zero K₀ hrich ⟨z₀, hz₀⟩ (∑ i, io (d i) • q i - τV.toAddMonoidHom.comp per) (by
-    rw [hz, map_sub, ← hfam, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hz, map_sub, ← hfam, map_sum]
     simp only [map_smul]
     exact sub_self _)
   have h1 := DFunLike.congr_fun (sub_eq_zero.1 this) l
   refine hio ?_
-  rw [← hT, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hT, map_sum]
   refine Eq.trans ?_ h1
   rw [AddMonoidHom.finset_sum_apply]
   exact Finset.sum_congr rfl fun i _ => by rw [map_mul, io.commutes, AddMonoidHom.smul_apply, hq, smul_eq_mul]

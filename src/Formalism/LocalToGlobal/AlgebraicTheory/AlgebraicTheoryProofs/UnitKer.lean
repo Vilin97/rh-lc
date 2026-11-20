@@ -467,7 +467,8 @@ theorem main_case {p : ℕ} [Fact p.Prime] (ι : ℂ ≃+* ℂ_[p]) {dK : ℕ} (
       ι (Formalism.L2.Th1.F.s2 L) = ∑ P : S, (ι (L.weierstrassP (P : ℂ)) + (curveL p L ι).b₂ / 12) := by
     rw [hb2]
     have := congrArg ι hs2C
-    simpa [map_mul, map_sub, map_sum] using this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [map_mul, map_sub, map_sum] using this
   have hIsoP := (Formalism.L2.Th1.C.isogenyIffBar ℂ_[p] (wpReg (curveL p L ι)) (ι (Formalism.L2.Th1.F.s2 L)) S neg
     (fun P : S => ι (L.weierstrassP (P : ℂ))) ((curveL p L ι).b₂ / 12) _ _ _ hα0p hNp hEp').2 hs2p
   obtain ⟨hLP, hXW, hA, -, -⟩ := Formalism.L2.Th1.C.curveFrame ℂ_[p] (unitBall ℂ_[p]) (curveL p L ι)

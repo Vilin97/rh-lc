@@ -15,7 +15,8 @@ theorem homogeneousComponent_mul_left {σ R : Type*} [CommRing R] {P : MvPolynom
     homogeneousComponent d (P * G) =
       if l ≤ d then P * homogeneousComponent (d - l) G else 0 := by
   conv_lhs => rw [← sum_homogeneousComponent G, Finset.mul_sum]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   have hterm : ∀ i, homogeneousComponent d (P * homogeneousComponent i G) =
       if d = l + i then P * homogeneousComponent i G else 0 := fun i =>
     homogeneousComponent_of_mem ((hP.mul (homogeneousComponent_isHomogeneous i G)))
@@ -104,7 +105,8 @@ theorem psiPoly_map_mul {σ : Type*} (ψ : ℝ →ₗ[ℚ] ℚ) (A : MvPolynomia
     (P : MvPolynomial σ ℝ) : psiPoly ψ (map (algebraMap ℚ ℝ) A * P) = A * psiPoly ψ P := by
   classical
   ext β
-  rw [coeff_psiPoly, coeff_mul, coeff_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [coeff_psiPoly, coeff_mul, coeff_mul, map_sum]
   refine Finset.sum_congr rfl fun x _ => ?_
   rw [coeff_map, coeff_psiPoly, ← Algebra.smul_def, ψ.map_smul, smul_eq_mul]
 

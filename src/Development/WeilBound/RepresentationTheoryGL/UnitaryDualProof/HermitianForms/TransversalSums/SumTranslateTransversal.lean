@@ -127,7 +127,8 @@ theorem avg_eigen (hψ : Continuous ψ) (hπ : IsSmooth π) (ξ : Fin (m + 1) �
       AddChar.map_add_eq_mul, Circle.coe_mul, map_mul]
     congr 1
     linear_combination (-starRingEnd ℂ ((ψ (ξ ⬝ᵥ t) : Circle) : ℂ)) * conj_circle_mul_self (ψ (ξ ⬝ᵥ y))
-  rw [hav, map_smul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hav, map_smul, map_sum]
   simp only [map_smul]
   rw [Finset.sum_congr rfl (fun t _ => key t), ← Finset.smul_sum, smul_comm]
   congr 2

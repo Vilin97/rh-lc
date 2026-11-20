@@ -57,7 +57,8 @@ theorem mem_span_map_of_coeffForm_mem (V : Set (MvPolynomial σ F)) {P : MvPolyn
   have hx (i) : x i = coeffForm (b.coord i) P := TensorProduct.equivFinsuppOfBasisLeft_apply b _ i
   have e : P = algebraTensorAlgEquiv F K ((TensorProduct.equivFinsuppOfBasisLeft b).symm x) := by
     simp [x]
-  rw [e, TensorProduct.equivFinsuppOfBasisLeft_symm_apply, Finsupp.sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, TensorProduct.equivFinsuppOfBasisLeft_symm_apply, Finsupp.sum, map_sum]
   refine Submodule.sum_mem _ fun i _ => ?_
   rw [algebraTensorAlgEquiv_tmul, hx]
   exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨_, h _, rfl⟩)
@@ -126,7 +127,8 @@ theorem colLie_lie [DecidableEq κ] (t : T) (i j k l : κ) :
 theorem fockInner_colLie (t : T) (k l : κ) (P Q : Poly ℂ T p q κ) :
     fockInner (colLie ℂ p q t k l P) Q = fockInner P (colLie ℂ p q t l k Q) := by
   rw [colLie_apply, colLie_apply, ← fockInnerₛₗ_apply, ← fockInnerₛₗ_apply]
-  simp only [map_sub, map_sum, LinearMap.sub_apply, LinearMap.sum_apply, fockInnerₛₗ_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sub, map_sum, LinearMap.sub_apply, LinearMap.sum_apply, fockInnerₛₗ_apply,
     fockInner_X_mul_left, fockInner_pderiv_left]
 
 variable [Fintype T] (h : p + q ≤ n) (c : T → Fin p → ℕ) (c' : T → Fin q → ℕ)

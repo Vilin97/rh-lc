@@ -78,7 +78,8 @@ lemma exists_idealSumMap_smulHom (J₁ J₂ : Ideal A) (a : A)
     ?_⟩
   apply biproduct.hom_ext'
   intro i
-  simp only [idealSumMap, biproduct.ι_desc_assoc, biproduct.lift_desc, smulHom_comp_smulHom,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [idealSumMap, biproduct.ι_desc_assoc, biproduct.lift_desc, smulHom_comp_smulHom,
     ← map_mul, ← smulHom_sum, ← map_sum]
   rw [hc i, mul_comm]
 
@@ -168,7 +169,8 @@ theorem range_idealPowι_app {V : X.Opens} (hV : IsAffineOpen V) (n : ℕ) :
       change (∑ k, toFunctions V (g k) •
         (biproduct.π (fun _ : Fin (idealGenNum (I ^ n)) => F) k).app V p) = _
       conv_rhs => rw [biproduct_app_eq_sum _ V p]
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [← ConcreteCategory.comp_apply, ← Scheme.Modules.Hom.comp_app, idealSumMap,
         biproduct.ι_desc, smulHom_app_apply]
@@ -176,7 +178,8 @@ theorem range_idealPowι_app {V : X.Opens} (hV : IsAffineOpen V) (n : ℕ) :
     · rintro ⟨x, rfl⟩
       refine ⟨∑ k, (biproduct.ι (fun _ : Fin (idealGenNum (I ^ n)) => F) k).app V (x k), ?_⟩
       change _ = ∑ k, toFunctions V (g k) • x k
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [← ConcreteCategory.comp_apply, ← Scheme.Modules.Hom.comp_app, idealSumMap,
         biproduct.ι_desc, smulHom_app_apply]

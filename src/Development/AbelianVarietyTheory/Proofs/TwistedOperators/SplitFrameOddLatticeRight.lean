@@ -53,7 +53,8 @@ theorem pair_rat_int {T : HSp D} {LT : Lat T} (hT : IsSelfDualC T LT) {P : Globa
         p.pr (pairA D.host.F 0 α ⊗ₜ[D.host.F] (1 * x l)) =
         p.pr (pairA D.host.F 0 α ⊗ₜ[D.host.F] (1 : D.host.E)) * p.pr (incA D (b : D.host.E)) := by
       rw [hb]
-      simp only [map_sum, Finset.mul_sum, RingHom.map_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, Finset.mul_sum, RingHom.map_mul]
       refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun l _ => ?_
       rw [one_mul, tmul_split _ (x l), RingHom.map_mul]
       ring
@@ -79,7 +80,8 @@ theorem pair_int {S T : HSp D} {LS : Lat S} {LT : Lat T} (hS : IsSelfDualC S LS)
     obtain ⟨ε, hε, hε', hs⟩ := exists_factor p hα
     have e : ∀ j, ∑ m, ε * incA D (a * t j * ∑ k, star (s k) * S.gram k m) * incA D (x m) =
         ε * incA D (a * (b : D.host.E) * t j) := fun j => by
-      rw [hb, Finset.sum_comm, Finset.mul_sum, Finset.sum_mul, map_sum, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hb, Finset.sum_comm, Finset.mul_sum, Finset.sum_mul, map_sum, Finset.mul_sum]
       refine Finset.sum_congr rfl fun m _ => ?_
       rw [mul_assoc, ← RingHom.map_mul, ← Finset.sum_mul]
       congr 2
@@ -306,7 +308,8 @@ theorem bessel_step_conj_place_column_functional_bound : OnStd fun {D} _ _ {sc} 
     rw [g1] at g
     have g2 : ∑ l, (∑ j, star (dW.a j qW) * (G.V (.grid (2 * (σ + 1) + 1) 0)).gram j l) * dW.a l r = 1 := g
     have g3 := congrArg (fun c => p.pr (incA D c)) g2
-    simp only [map_sum, RingHom.map_mul, RingHom.map_one, Finset.sum_mul] at g3
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, RingHom.map_mul, RingHom.map_one, Finset.sum_mul] at g3
     have x1 : ∀ j, p.pr (cA D (xZero (F.dJ (σ + 1) h) j q)) = ξ * p.pr (incA D (star (dW.a j qW))) := fun j => by
       have : xZero (F.dJ (σ + 1) h) j q = incA D ((-D.host.xi0) ^ (q.1 + 1) * dW.a j qW) := by
         change incA D ((F.dJ (σ + 1) h).e j q) = _

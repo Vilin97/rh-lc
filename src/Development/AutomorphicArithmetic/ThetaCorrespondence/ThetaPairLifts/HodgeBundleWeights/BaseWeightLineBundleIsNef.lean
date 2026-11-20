@@ -55,7 +55,8 @@ theorem weight_line_bundle_isNef : _root_.GlobalTheory.CovTop.Hypotheses'' → G
       (fun y : Psi H × Bool => if y.2 then (cτ y.1).toNat else (-cτ y.1).toNat)) hA (C.isLB la) ?_
   rw [hφ]
   conv_lhs => rw [key]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun x _ => ?_
   rw [map_nsmul]
   rcases x with ⟨τ, k⟩ | ⟨τ, b⟩ <;> rfl

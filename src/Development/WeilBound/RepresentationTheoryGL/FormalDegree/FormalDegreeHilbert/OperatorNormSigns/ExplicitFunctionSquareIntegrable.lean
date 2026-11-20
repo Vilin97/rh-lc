@@ -19,7 +19,8 @@ theorem pl_opNorm_le {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℂ V
   have h1 : ‖A‖ ≤ ∑ i, ‖A (b i)‖ := by
     refine A.opNorm_le_bound (Finset.sum_nonneg fun _ _ => norm_nonneg _) fun v => ?_
     conv_lhs => rw [← b.sum_repr' v]
-    rw [map_sum, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_mul]
     refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun i _ => ?_)
     rw [map_smul, norm_smul, mul_comm]
     refine mul_le_mul_of_nonneg_left ?_ (norm_nonneg _)

@@ -18,7 +18,8 @@ theorem norm_word_le_number_pow : ∀ (T H κ : Type) [AddCommGroup T] [Module �
     intro x; subst hM; simp [Module.End.mul_apply]
   have hQeq : ∀ x, RCLike.re (inner ℂ (Φ x) (Φ (M x))) = ∑ j, ‖Φ (a j x)‖ ^ 2 + r * ‖Φ x‖ ^ 2 := by
     intro x
-    rw [hMx, map_add, inner_add_right, map_add, ← hreal, map_sum, inner_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hMx, map_add, inner_add_right, map_add, ← hreal, map_sum, inner_sum, map_sum]
     simp only [hca]
   have hQ : ∀ x, ∑ j, ‖Φ (a j x)‖ ^ 2 + r * ‖Φ x‖ ^ 2 ≤ ‖Φ x‖ * ‖Φ (M x)‖ := by
     intro x; rw [← hQeq]; exact (RCLike.re_le_norm _).trans (norm_inner_le_norm _ _)

@@ -592,7 +592,8 @@ instance finiteDimensional_Fw (i : Fin G.m) : FiniteDimensional ℚ_[p] (G.Fw i)
   have hle : G.Fw i ≤ IntermediateField.adjoin ℚ_[p] (Set.range (fun k => G.emb i (b k))) := by
     rw [Fw, FwOf, IntermediateField.adjoin_le_iff]
     rintro _ ⟨x, rfl⟩
-    rw [← b.sum_repr x, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← b.sum_repr x, map_sum]
     refine sum_mem fun k _ => ?_
     have : G.emb i (b.repr x k • b k) = algebraMap ℚ_[p] (PadicAlgCl p) ((b.repr x k : ℚ) : ℚ_[p]) * G.emb i (b k) := by
       rw [Rat.smul_def, map_mul, map_ratCast, map_ratCast]

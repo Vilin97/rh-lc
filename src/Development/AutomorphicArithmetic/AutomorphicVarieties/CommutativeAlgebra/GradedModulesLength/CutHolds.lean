@@ -77,16 +77,19 @@ private theorem lin_span {O A τ : Type} [CommRing O] [IsDomain O] [CommRing A] 
   have hsat : (∑ k, a k • Z k) - c • g ∈ satSq x := by
     rw [← Submodule.Quotient.eq]
     show (satSq x).mkQ _ = (satSq x).mkQ _
-    rw [map_sum, map_smul, ← ha]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_smul, ← ha]
     simp only [map_smul]
   have hc' : algebraMap O (FractionRing O) c ≠ 0 := fun h0 =>
     hc (IsFractionRing.injective O (FractionRing O) (by rw [h0, map_zero]))
   refine ⟨fun k => (algebraMap O (FractionRing O) c * MvPowerSeries.coeff (Finsupp.single i 1) (φ f))⁻¹ *
     algebraMap O (FractionRing O) (a k), fun i' => ?_⟩
   have h1 := lin_sat x φ h.const i' _ hsat
-  rw [map_sub, map_sub, sub_eq_zero, lin_smul, map_sum, map_sum, hgl] at h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sub, map_sub, sub_eq_zero, lin_smul, map_sum, map_sum, hgl] at h1
   simp only [lin_smul] at h1
-  simp only [map_sum, map_smul, smul_eq_mul, mul_assoc]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, smul_eq_mul, mul_assoc]
   rw [← Finset.mul_sum, h1, MvPowerSeries.coeff_X]
   by_cases hii : i' = i
   · subst hii

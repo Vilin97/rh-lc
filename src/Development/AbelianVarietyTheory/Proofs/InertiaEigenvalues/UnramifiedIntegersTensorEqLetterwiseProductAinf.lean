@@ -53,7 +53,8 @@ theorem aeval_surjective {a : ι → O} (h : ∀ i j, i ≠ j → IsUnit (a i - 
   choose p hp using h1
   intro x
   refine ⟨∑ i, x i • p i, ?_⟩
-  simp only [map_sum, map_smul, hp]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, hp]
   funext k
   simp [Finset.sum_apply, Pi.single_apply]
 
@@ -190,7 +191,8 @@ theorem emb_ext (K : FinExt l) {L : Type} [Field L] [Algebra ℚ_[l] L] (σ τ :
       rw [hsum]
       push_cast
       rfl
-    rw [h2, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h2, map_sum, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     obtain ⟨m, hm, hl, hx⟩ := (hω i).2
     rw [map_mul, map_mul, AlgHom.commutes, AlgHom.commutes, h _ m hm hl (Subtype.ext hx)]

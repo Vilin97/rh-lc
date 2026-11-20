@@ -82,21 +82,24 @@ theorem exists_lift {d : Deco E n ST SG} (hd : d.Ok) (P : ST) :
   have e1 : s • fr x = ∑ i, r i • fr (Pi.single i 1) := by
     rw [← equiv_osmul]
     simp_rw [← equiv_osmul]
-    rw [← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum]
     congr 1
     funext j
     rw [← hr j, Finset.sum_apply, Finset.sum_eq_single j (fun i _ hi => by simp [Pi.single_eq_of_ne hi.symm]) (by simp)]
     simp [Algebra.smul_def]
   have e2 : algebraMap (𝓞 E) E s * ((∑ i, algebraMap (𝓞 E) E (c i) • (LinearMap.proj i : Sp E n →ₗ[E] E)) ∘ₗ
       fr.symm.toLinearMap) (fr x) = algebraMap (𝓞 E) E (∑ i, r i * c i) := by
-    simp only [LinearMap.comp_apply, LinearEquiv.coe_coe, LinearEquiv.symm_apply_apply, LinearMap.sum_apply, LinearMap.smul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [LinearMap.comp_apply, LinearEquiv.coe_coe, LinearEquiv.symm_apply_apply, LinearMap.sum_apply, LinearMap.smul_apply,
       LinearMap.proj_apply, map_sum, map_mul, hr, Finset.mul_sum, smul_eq_mul, Pi.smul_apply, Algebra.smul_def]
     exact Finset.sum_congr rfl fun i _ => by ring
   have e3 := congrArg (P.1.valuation E) e2
   rw [map_mul, GlobalTheory.CharValCompare.val_of_notMem hs, one_mul] at e3
   rw [e3]
   refine ⟨P.1.valuation_le_one _, ?_⟩
-  rw [P.1.valuation_lt_one_iff_mem, ← f_smul_eq_zero_iff hd P hs hv, e1,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [P.1.valuation_lt_one_iff_mem, ← f_smul_eq_zero_iff hd P hs hv, e1,
     f_sum hd P _ _ fun i => Submodule.smul_mem _ _ (hb i), ← Ideal.Quotient.eq_zero_iff_mem, map_sum]
   simp_rw [fun i => hd.f_smul P (r i) _ (hb i), map_mul, hc]
 

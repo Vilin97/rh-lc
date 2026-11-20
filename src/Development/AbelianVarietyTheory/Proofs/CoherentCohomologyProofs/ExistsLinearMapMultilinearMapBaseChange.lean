@@ -248,7 +248,8 @@ theorem interNum_update_of_cls_eq_sum {κ : Type*} (s : Finset κ) {P : κ → L
     fun a b ↦ congrFun (h.multiDiff_update_add_of_le_card hd _ i a b) 0
   have hψ : ∀ (N : LB X) (hN : N.IsLB), interNum k F (Function.update L i N) = ψ (cls N hN) :=
     fun N hN ↦ by rw [interNum_eq_multiDiff k F (isLB_update hL i hN), cls_update hL i hN]; rfl
-  rw [hψ M hM, e, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hψ M hM, e, map_sum]
   exact Finset.sum_congr rfl fun j _ ↦ by rw [map_zsmul, hψ _ (hP j), smul_eq_mul]
 
 theorem interNum_update_of_cls_eq_zsmul (hM : M.IsLB) (hA : A.IsLB) (n : ℤ)
@@ -277,7 +278,8 @@ theorem interNum_of_cls_eq_sum [DecidableEq ι] (hL : ∀ j, (L j).IsLB) {Q : Fi
     (hQ : ∀ i, (Q i).IsLB) (n : Fin d → ι → ℤ)
     (e : ∀ i, cls (Q i) (hQ i) = ∑ j, n i j • cls (L j) (hL j)) :
     interNum k F Q = ∑ a : Fin d → ι, (∏ i, n i (a i)) * interNum k F (L ∘ a) := by
-  rw [← h.form_cls hQ, funext e, MultilinearMap.map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← h.form_cls hQ, funext e, MultilinearMap.map_sum]
   refine Finset.sum_congr rfl fun a _ ↦ ?_
   rw [MultilinearMap.map_smul_univ, smul_eq_mul, ← h.form_cls (P := L ∘ a) fun i ↦ hL (a i)]
   rfl

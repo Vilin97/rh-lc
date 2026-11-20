@@ -147,7 +147,8 @@ theorem colAct_rat (γ : GL (Fin a) E) (c : UnipotentBlockColumnIndex a k k → 
     colAct (ratGL E a γ).val (fun t => algebraMap E (Ad E) (c t)) =
       fun t => algebraMap E (Ad E) (colAct γ.val c t) := by
   funext t
-  simp only [colAct, ratGL_val_apply, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [colAct, ratGL_val_apply, map_sum, map_mul]
 
 theorem continuous_colAct (M : Matrix (Fin a) (Fin a) (Ad E)) :
     Continuous (colAct M : (UnipotentBlockColumnIndex a k k → Ad E) → UnipotentBlockColumnIndex a k k → Ad E) :=
@@ -182,7 +183,8 @@ theorem colEquiv_mem (γ : GL (Fin a) E)
 
 theorem dot_colAct (γ : GL (Fin a) E) (ξ : UnipotentBlockColumnIndex a k k → E) (y : UnipotentBlockColumnIndex a k k → Ad E) :
     dot ξ (colAct (ratGL E a γ).val y) = dot (fun t => ∑ s : UnipotentBlockColumnIndex a k k, ξ s * γ.val s.1.1 t.1.1) y := by
-  simp only [dot, colAct, ratGL_val_apply, Finset.mul_sum, map_sum, Finset.sum_mul, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dot, colAct, ratGL_val_apply, Finset.mul_sum, map_sum, Finset.sum_mul, map_mul]
   rw [Finset.sum_comm]
   simp only [mul_assoc]
 

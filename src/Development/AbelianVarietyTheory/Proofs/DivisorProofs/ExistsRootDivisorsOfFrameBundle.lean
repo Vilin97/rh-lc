@@ -32,9 +32,11 @@ theorem app_π_eq_smul {X : Scheme.{0}} {G : X.Modules} {m : ℕ} {fl : Vert.Fla
     · rw [hT h, zero_smul, zero_smul]
   have e : t₀ = ∑ k, T k i • w k := by
     refine QCoh.injective_app_of_mono (fl.ι i.succ) W ?_
-    rw [ht₀, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [ht₀, map_sum]
     exact Finset.sum_congr rfl fun k _ => ((Scheme.Modules.Hom.app_smul _ _ _).trans (hw k)).symm
-  rw [e, map_sum, Finset.sum_eq_single i]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, map_sum, Finset.sum_eq_single i]
   · rw [Scheme.Modules.Hom.app_smul]
     simp only [w, lt_irrefl, dif_neg, not_false_eq_true]
   · intro k _ hk

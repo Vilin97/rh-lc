@@ -128,7 +128,8 @@ theorem det_kill {σ : Type*} {n : ℕ} (φ : Fin n × Fin n → σ) (hφ : Func
 theorem pderiv_eq_zero_of {σ : Type*} (f : MvPolynomial σ ℂ) (v : σ)
     (h : ∀ α ∈ f.support, α v = 0) : pderiv v f = 0 := by
   classical
-  rw [f.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [f.as_sum, map_sum]
   refine Finset.sum_eq_zero fun α hα => ?_
   rw [pderiv_monomial, h α hα]
   simp

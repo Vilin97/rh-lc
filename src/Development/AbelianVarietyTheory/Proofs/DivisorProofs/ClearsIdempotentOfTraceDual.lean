@@ -12,7 +12,8 @@ theorem trace_eq_sum_ringHom {E : Type} [Field E] [NumberField E] {K : Type} [Fi
     algebraMap ℚ K (Algebra.trace ℚ E x) = ∑ σ : E →+* K, σ x := by
   let ι : K →+* AlgebraicClosure K := algebraMap K (AlgebraicClosure K)
   apply ι.injective
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   have hq : ι.comp (algebraMap ℚ K) = algebraMap ℚ (AlgebraicClosure K) := RingHom.ext_rat _ _
   rw [← RingHom.comp_apply, hq, trace_eq_sum_embeddings (AlgebraicClosure K)]
   let f : (E →+* K) → (E →ₐ[ℚ] AlgebraicClosure K) := fun σ => (ι.comp σ).toRatAlgHom
@@ -69,7 +70,8 @@ theorem clearsIdem_top_of_dual : ∀ (E : Type) [Field E] [NumberField E] [IsCMF
     have h1 : Algebra.trace ℚ E (bd j * x) = bQ.repr (x : E) j := by
       rw [← Algebra.traceForm_apply]
       conv_lhs => rw [← bQ.sum_repr (x : E)]
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simp only [bd, map_smul, LinearMap.BilinForm.apply_dualBasis_left, smul_eq_mul, mul_ite, mul_one, mul_zero,
         Finset.sum_ite_eq, Finset.sum_ite_eq', Finset.mem_univ, if_true]
     rw [h1]
@@ -87,7 +89,8 @@ theorem clearsIdem_top_of_dual : ∀ (E : Type) [Field E] [NumberField E] [IsCMF
     simp only [b]
     rw [← RingOfIntegers.coe_eq_algebraMap]
     ring
-  rw [map_sum, Finset.sum_congr rfl fun j _ => hc j, ← Finset.mul_sum, sum_basis_mul_dual hcard' bQ σ σ']
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_congr rfl fun j _ => hc j, ← Finset.mul_sum, sum_basis_mul_dual hcard' bQ σ σ']
   split_ifs <;> simp
 
 end GlobalTheory.DualCrit

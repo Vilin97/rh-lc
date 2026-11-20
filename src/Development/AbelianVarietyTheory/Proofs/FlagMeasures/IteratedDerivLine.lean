@@ -130,7 +130,8 @@ theorem rd_eq_sum {f : Matrix (Fin n) (Fin n) ℂ → ℂ} (hf : SmoothOnG ε f)
     simp
   rw [h0]
   conv_lhs => rw [h1]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun p _ => ?_
   rw [map_smul]
   rfl

@@ -185,7 +185,8 @@ theorem wG_vac_eq : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r : 
     have hm : m = ∑ j, m j • Pi.single j (1 : ℤ) := by
       funext j; simp [Pi.single_apply]
     conv_lhs => rw [hm]
-    simp only [map_sum, map_zsmul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_zsmul]
   obtain ⟨c₁, c₂, C, hC, h₁, h₂, hth⟩ := GlobalTheory.T.periodCoordinateTheta_of_signedHeisenbergVacuum E r X g bas idx n hs hn _ hw hw' L hL v hv
     (fun j => ψ (bs (Pi.single j 1)))
     (fun u => by

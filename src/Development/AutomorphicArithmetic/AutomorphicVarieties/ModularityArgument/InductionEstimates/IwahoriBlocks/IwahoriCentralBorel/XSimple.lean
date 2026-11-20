@@ -56,7 +56,8 @@ private lemma mem_of_closure (π : UnitaryRep G H) (L : Subgroup G) (M E : Submo
     obtain ⟨u, hu, rfl⟩ := (hmem x).1 hx
     exact hst u hu m hm
   refine ⟨O.centerMass (fun _ => (1 : ℝ)) id, ⟨haM, hE _ haM fun u hu => ?_⟩, ?_⟩
-  · rw [Finset.centerMass, ContinuousLinearMap.map_smul_of_tower, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [Finset.centerMass, ContinuousLinearMap.map_smul_of_tower, map_sum]
     congr 1
     simp only [one_smul, id]
     refine Finset.sum_nbij' (fun x => π u x) (fun x => π u⁻¹ x) ?_ ?_ ?_ ?_ (fun _ _ => rfl)

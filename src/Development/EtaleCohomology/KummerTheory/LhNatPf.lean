@@ -23,7 +23,8 @@ theorem pull_pull (q : ℕ) {E E' E'' : Spc} (f : E ⟶ E') (g : E' ⟶ E'') {n 
 theorem lhNat_of : LateralTheory.KummerTheory.LHCut.LhNat := by
   intro hA q _ X S p i r c M n V U g y
   unfold LateralTheory.KummerTheory.lh
-  simp only [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun s _ => ?_
   unfold LateralTheory.KummerTheory.ext
   rw [pull_cast, (hA q).1, pull_pull, pull_pull, pull_pull, ← Functor.map_comp, ← Functor.map_comp,

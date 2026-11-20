@@ -156,7 +156,8 @@ theorem linIndep : LinearIndependent R (Eidx R I n) := by
   intro s g hg ν hν
   have h3 : ∑ μ ∈ s, g μ • Eidx R I n μ = Ideal.Quotient.mk _ (∑ μ ∈ s,
       monomial (Finsupp.equivFunOnFinite.symm μ.1) (algebraMap R (K R) (g μ) * (∏ i, ((μ.1 i).factorial : K R))⁻¹)) := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun μ _ => ?_
     rw [Eidx, E_eq, Algebra.smul_def, IsScalarTower.algebraMap_apply R (K R) (C R I n), ← mk_C, ← map_mul,
       C_mul_monomial]

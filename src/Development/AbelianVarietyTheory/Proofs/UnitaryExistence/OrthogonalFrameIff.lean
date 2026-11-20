@@ -232,7 +232,8 @@ theorem latEmb_iff {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} (Dw
 
 theorem hT_expand (y x : W) : hT y x = ∑ a, ∑ b, fr.repr x a * gramOf fr hT b a * cc (fr.repr y b) := by
   conv_lhs => rw [← fr.sum_repr y, ← fr.sum_repr x]
-  simp only [map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, RingHom.id_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, RingHom.id_apply]
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [Finset.mul_sum]
   refine Finset.sum_congr rfl fun b _ => ?_

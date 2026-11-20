@@ -146,7 +146,8 @@ theorem rder_real_linear {n : ℕ} (ε : Fin n → Bool) (d : ℕ) (φ : KG ε �
   rw [hr _ (inK_sum_real X c hX) k, Finset.sum_apply]
   have e : (∑ j, (c j : ℂ) • X j) = ∑ j, c j • X j :=
     Finset.sum_congr rfl fun j _ => Complex.coe_smul (c j) (X j)
-  rw [e, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_smul, Pi.smul_apply, hr _ (hX j) k, Complex.real_smul, smul_eq_mul]
 

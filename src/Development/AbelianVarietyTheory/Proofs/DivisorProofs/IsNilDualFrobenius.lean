@@ -65,9 +65,11 @@ theorem GlobalTheory.DualFrobNil.isNil_dual_frobenius : ∀ (p : ℕ) [Fact p.Pr
         rw [← hnat, ← coeff_zero_eq_constantCoeff_apply, coeff_map, coeff_zero_eq_constantCoeff_apply]
       simp only [hSh]
       rw [hcc, ← hu]
-      simp only [← map_pow, ← map_mul, ← map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [← map_pow, ← map_mul, ← map_sum]
       rw [Ideal.Quotient.eq]
-      simpa [map_sub, map_sum, map_mul, map_pow] using key
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa [map_sub, map_sum, map_mul, map_pow] using key
   have iter : ∀ t (u : Fin d → O) (φ : G.dual.A n), (∀ Fs, φ (c.ev n Fs) - ∑ i, u i * lin Fs i ∈ m) →
       ∃ u' : Fin d → O, (∀ Fs, (φ ^ (p ^ t)) (c.ev n Fs) - ∑ i, u' i * lin Fs i ∈ m) ∧
         (fun a => Ideal.Quotient.mk m (u' a)) = Sh^[t] (fun a => Ideal.Quotient.mk m (u a)) := by

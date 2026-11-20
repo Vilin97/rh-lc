@@ -50,7 +50,8 @@ theorem sum_localCoord (v : HeightOneSpectrum (𝓞 K)) (z : CompletionsOver L v
   have h := (Algebra.TensorProduct.basis (v.adicCompletion K) b).sum_repr
     ((tensorEquiv L v).symm z)
   have h2 := congrArg (tensorEquiv L v) h
-  rw [AlgEquiv.apply_symm_apply, map_sum] at h2
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [AlgEquiv.apply_symm_apply, map_sum] at h2
   conv_rhs => rw [← h2]
   refine Finset.sum_congr rfl fun i _ ↦ ?_
   rw [Algebra.TensorProduct.basis_apply, map_smul, tensorEquiv_one_tmul, Algebra.smul_def]

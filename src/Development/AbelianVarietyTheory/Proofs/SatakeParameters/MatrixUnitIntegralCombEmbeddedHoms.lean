@@ -37,7 +37,8 @@ theorem coord_le_one (D : D7) (ρ : D.host.E →+* ℂ_[p]) {N : ℕ} {L : Submo
     funext i
     simp only [Matrix.mulVec, dotProduct, Matrix.map_apply]
     have h2 := congrArg ρ (e i)
-    rw [map_mul, map_sum] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_mul, map_sum] at h2
     simp only [map_mul] at h2
     calc ρ (x i) = (ρ (s : D.host.E))⁻¹ * (ρ (s : D.host.E) * ρ (x i)) := by field_simp
       _ = _ := by

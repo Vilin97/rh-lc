@@ -186,7 +186,8 @@ theorem geoMono_word (hE : ResExistsStatement) (M : GlobalTheory.CompanionTheory
     simp [Finsupp.mapDomain_single]
   rw [hmap]
   have hdeg : (∑ j, Finsupp.single (some (w j)) (1 : ℕ)).degree = GlobalTheory.CompanionTheory.Ar.Top.dimFl Ψ N := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp [Finsupp.degree_single]
   have hnone : (∑ j, Finsupp.single (some (w j)) (1 : ℕ)) none = 0 := by
     simp [Finsupp.finset_sum_apply]

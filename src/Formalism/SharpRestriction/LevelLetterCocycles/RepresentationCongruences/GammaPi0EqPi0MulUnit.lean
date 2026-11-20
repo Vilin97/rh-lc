@@ -42,7 +42,8 @@ theorem π₀_mem : W.π₀ ∈ W.AΔ := by
   rw [γA_apply]
   show W.γ₀ δ W.π₀₁ = W.π₀₁
   unfold LocWach.π₀₁
-  rw [map_add, map_sub, map_one, map_natCast, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_add, map_sub, map_one, map_natCast, map_sum]
   congr 1
   refine Finset.sum_equiv (Equiv.mulLeft δ) (fun g => ?_) (fun g _ => ?_)
   · rw [delF_iff, delF_iff]

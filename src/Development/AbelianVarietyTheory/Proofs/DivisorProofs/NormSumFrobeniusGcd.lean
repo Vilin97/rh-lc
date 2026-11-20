@@ -64,7 +64,8 @@ theorem spread_main (p : ℕ) [Fact p.Prime] (K : IntermediateField ℚ_[p] (Pad
   set φ := frobK p K ^ k
   have hsum : φ (∑ j : Fin r, (c j : PadicAlgCl p) * (ζ ^ p ^ i) ^ (j : ℕ)) =
       ∑ j : Fin r, (c j : PadicAlgCl p) * (ζ ^ p ^ s) ^ (j : ℕ) := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_mul, map_pow, hφ]
     congr 1

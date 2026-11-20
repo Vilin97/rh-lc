@@ -91,7 +91,8 @@ theorem exists_sum_comp {Qp V ι : Type} [Field Qp] [AddCommGroup V] [Module Qp 
   have h1 := LinearMap.congr_fun hG v
   simp only [LinearMap.comp_apply, LinearMap.id_apply] at h1
   simp only [LinearMap.comp_apply, LinearMap.coe_single]
-  rw [← map_sum, Finset.univ_sum_single]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum, Finset.univ_sum_single]
   exact h1
 
 theorem sum_rTensor {Qp V ι BdR : Type} [Field Qp] [AddCommGroup V] [Module Qp V] [Fintype ι]
@@ -227,7 +228,8 @@ theorem colMap_coe {Γ : Type} [Group Γ] {a d : ℕ} {L₀ : FinExt l} {Cl : Se
     {ρ : Γ →* GL (Fin d) ℤ_[l]} (Ly : Layer L₀ Cl ρ) (k : Fin Ly.m) (c : Fin a) (v : Fin d → ℚ_[l])
     (i : Fin a) :
     algebraMap ↥(Ly.L k).1 (Om l) (colMap Ly k c v i) = ∑ j, algebraMap ℚ_[l] (Om l) (v j) * Ly.b j k i c := by
-  simp only [colMap, LinearMap.sum_apply, Finset.sum_apply, LinearMap.smulRight_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [colMap, LinearMap.sum_apply, Finset.sum_apply, LinearMap.smulRight_apply,
     LinearMap.proj_apply, Pi.smul_apply, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [Algebra.smul_def, map_mul, ← IsScalarTower.algebraMap_apply]
@@ -249,7 +251,8 @@ theorem colMap_equi {Γ : Type} [Group Γ] {a d : ℕ} {L₀ : FinExt l} {Cl : S
     simpa [Matrix.mul_apply, Matrix.sum_apply, smul_eq_mul] using this
   have hL : algebraMap ↥(Ly.L k).1 (Om l) (((repL (Ly.L k) (Ly.rep k) (Ly.rep_mem k) g).val *ᵥ colMap Ly k c v) i₀) =
       ∑ i', (Ly.rep k g).val i₀ i' * ∑ j, algebraMap ℚ_[l] (Om l) (v j) * Ly.b j k i' c := by
-    simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, colMap_coe]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, colMap_coe]
     rfl
   rw [hL]
   simp only [Finset.mul_sum]
@@ -264,7 +267,8 @@ theorem colMap_equi {Γ : Type} [Group Γ] {a d : ℕ} {L₀ : FinExt l} {Cl : S
   refine Finset.sum_congr rfl fun i _ => ?_
   simp only [qRep, MonoidHom.coe_comp, Function.comp_apply]
   show algebraMap ℚ_[l] (Om l) ((((ρ g).val.map (algebraMap ℤ_[l] ℚ_[l])) *ᵥ v) i) * _ = _
-  simp only [Matrix.mulVec, dotProduct, map_sum, Finset.sum_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mulVec, dotProduct, map_sum, Finset.sum_mul,
     RingHom.mapMatrix_apply, Matrix.map_apply, Units.coeHom_apply, map_mul, zOm, RingHom.comp_apply]
   refine Finset.sum_congr rfl fun x _ => by ring
 

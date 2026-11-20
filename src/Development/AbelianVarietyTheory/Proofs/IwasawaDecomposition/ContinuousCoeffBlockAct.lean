@@ -113,7 +113,8 @@ variable [StarRing K] (hφ : ∀ x, φ (star x) = starRingEnd ℂ (φ x))
 include hφ
 
 theorem fockS_map {σ : Type} (f g : MvPolynomial σ K) : fockS (map φ f) (map φ g) = φ (fockS f g) := by
-  rw [fockS_eq_sum _ _ f.support (support_map_subset _ _), fockS, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [fockS_eq_sum _ _ f.support (support_map_subset _ _), fockS, map_sum]
   refine Finset.sum_congr rfl fun m _ => ?_
   simp [coeff_map, hφ]
 
@@ -154,7 +155,8 @@ theorem pairK_pos (lam : ι → DomWeight n) {G : ι → Matrix (Fin n) (Fin n) 
   have h2 : ∀ (P : VV ℂ lam →ₗ⋆[ℂ] VV ℂ lam →ₗ[ℂ] ℂ) (c : VVIdx lam → ℂ) (b : VVIdx lam → VV ℂ lam),
       P (∑ i, c i • b i) (∑ i, c i • b i) = star c ⬝ᵥ (Matrix.of fun i j => P (b i) (b j)) *ᵥ c := by
     intro P c b
-    simp only [dotProduct, Matrix.mulVec, Matrix.of_apply, map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [dotProduct, Matrix.mulVec, Matrix.of_apply, map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ,
       LinearMap.smul_apply, smul_eq_mul, Finset.mul_sum, Pi.star_apply, starRingEnd_apply, RingHom.id_apply]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_

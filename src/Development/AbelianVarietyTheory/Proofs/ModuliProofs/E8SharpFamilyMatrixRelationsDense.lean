@@ -202,7 +202,8 @@ theorem rel_of_isSharp {h : ℕ} {W : Matrix (Fin 8) (Fin 8) ℤ} {a : J → Mat
     have key : ∀ n : Fin (2 * g) → ℤ, ∑ i', n i' • bas (Pi.single i' 1) = bas n := by
       intro n
       conv_rhs => rw [← Finset.univ_sum_single n]
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun i' _ => ?_
       rw [← map_zsmul]
       congr 1

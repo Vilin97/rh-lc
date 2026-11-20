@@ -204,7 +204,8 @@ theorem FlagFrameOfFullFlag.proof : FlagFrameOfFullFlag.Statement := by
     have htri' := repr_tri b u (fun q => IndefiniteRowSideFullHecke.NumbersDVR.Bundles.chartMon x c (fl.deg q))
       fun q => (hu q).2
     have hy : w.repr v i = a i * (u i * IndefiniteRowSideFullHecke.NumbersDVR.Bundles.chartMon x c (fl.deg i)) := by
-      rw [hva, map_sum, Finsupp.finsetSum_apply, Finset.sum_eq_single i]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hva, map_sum, Finsupp.finsetSum_apply, Finset.sum_eq_single i]
       · rw [map_smul, Finsupp.smul_apply, smul_eq_mul, (htri' i).1]
       · intro q _ hqi
         rw [map_smul, Finsupp.smul_apply, smul_eq_mul]

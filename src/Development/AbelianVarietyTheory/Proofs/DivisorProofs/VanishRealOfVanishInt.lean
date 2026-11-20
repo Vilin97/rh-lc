@@ -21,11 +21,13 @@ theorem exists_poly_eval {ι : Type} [Fintype ι] (Φ : MvPolynomial (Option ι)
       rw [pow_succ']
       generalize rename some (lin β) ^ e = R
       unfold lin
-      rw [map_sum, Finset.sum_mul, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Finset.sum_mul, Finset.mul_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_mul, rename_C, rename_X, smul_eq_C_mul]
       ring
-    rw [h, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h, map_sum, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, hQ, map_mul, eval_X, smul_eq_mul]
 

@@ -98,7 +98,8 @@ theorem exists_kAt_line (B : Base F E) {n n₁ r s : ℕ} {X : Spc F E n} {X₁ 
   set yc : Matrix (Fin n) (Fin 1) E := Matrix.of fun i _ => H.y i with hyc
   have hfyx : form σ X.J H.y H.x = 1 := by
     have e : form σ X.J H.y H.x = σ (form σ X.J H.x H.y) := by
-      simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hs, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hs, Finset.mul_sum]
       rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun l _ => ?_
       rw [← hX.herm k l, hs]; ring
@@ -150,13 +151,15 @@ theorem exists_kAt_line (B : Base F E) {n n₁ r s : ℕ} {X : Spc F E n} {X₁ 
   rw [hp, GlobalTheory.IwLine.mat_ofGAd]
   funext i
   refine GlobalTheory.Doubling.adele_ext (fun w => ?_) (fun u => ?_)
-  · simp only [Matrix.mulVec, dotProduct, Pi.smul_apply, smul_eq_mul, map_sum, map_mul, compInf_mat, hinf w, cI]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [Matrix.mulVec, dotProduct, Pi.smul_apply, smul_eq_mul, map_sum, map_mul, compInf_mat, hinf w, cI]
     have e1 : compInf F E w ((GlobalTheory.Doubling.ideleAt F E v β₀ : (AE F E)ˣ) : AE F E) = 1 := by
       have := congrArg Units.val (GlobalTheory.Doubling.unitInf_ideleAt (F := F) (E := E) w v β₀)
       simpa [GlobalTheory.Doubling.unitInf] using this
     rw [e1, one_mul, map_one, Units.val_one]
     simp [Matrix.one_apply]
-  · simp only [Matrix.mulVec, dotProduct, Pi.smul_apply, smul_eq_mul, map_sum, map_mul, compFin_mat, cF]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [Matrix.mulVec, dotProduct, Pi.smul_apply, smul_eq_mul, map_sum, map_mul, compFin_mat, cF]
     by_cases hu : u = v
     · subst hu
       rw [hv]

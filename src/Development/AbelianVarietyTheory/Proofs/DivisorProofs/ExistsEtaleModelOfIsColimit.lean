@@ -100,7 +100,8 @@ theorem exists_etale_model_of_isColimit :
           - E + 1 := by
       rw [hEdef]; ring
     have h2 := congr(φ $h1)
-    simp only [map_mul, map_add, map_sub, map_sum, map_one, hφrel, mul_zero,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_mul, map_add, map_sub, map_sum, map_one, hφrel, mul_zero,
       Finset.sum_const_zero, hφE, sub_zero, zero_add] at h2
     exact h2
   let Q' : Algebra.SubmersivePresentation (D.obj K) (D.obj K ⊗[D.obj j] M) ι σ :=

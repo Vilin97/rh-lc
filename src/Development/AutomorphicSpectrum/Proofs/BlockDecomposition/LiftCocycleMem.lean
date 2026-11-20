@@ -163,13 +163,15 @@ theorem exists_rp (W : Y.Opens) {d : ℕ} (t : Fin d → Γ(Y, W)) (u : Fin d �
     GlobalTheory.CompanionTheory.GrForm.stCocycle hF (fun i (T : P.FullSubcategory) => (show (sP P).A.obj T from u i T.obj)) hu'
       (fun T : P.FullSubcategory => (show (sP P).A.obj T from lft 𝔭 W T.obj (x I))) (hy I) I.1
   have hd : CH.d (sq (sFil P r) (sFil P ((r : ℤ) + 1))) r (∑ I, f I) = 0 := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_eq_zero fun I _ => hf I
   refine ⟨(CH.cx (sq (sFil P r) (sFil P ((r : ℤ) + 1)))).cls (∑ I, f I) hd, ∑ I, f I, hd, rfl, ?_⟩
   intro s
   have e : (show sqM (sFil P r) (sFil P ((r : ℤ) + 1)) _ from (∑ I, f I) s) =
       ∑ I, (show sqM (sFil P r) (sFil P ((r : ℤ) + 1)) _ from f I s) := Finset.sum_apply _ _ _
-  rw [e, AddSubmonoidClass.coe_finset_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, AddSubmonoidClass.coe_finset_sum, map_sum]
   exact Finset.sum_congr rfl fun I _ => hz I s
 
 theorem lft_add_sub {W : Y.Opens} (T : Thick L) (h : InY 𝔭 W T) (f g : Γ(Y, W)) :

@@ -104,7 +104,8 @@ theorem map_star_of_continuous {ι : Type} [Fintype ι] (ψ : (ι → ℂ) →+*
     by_contra hc
     push_neg at hc
     have h1 : ψ 1 = ∑ i, ψ (Pi.single i 1) := by
-      rw [← map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← map_sum]
       congr 1
       exact (Finset.univ_sum_single (1 : ι → ℂ)).symm
     rw [map_one, Finset.sum_eq_zero fun i _ => hc i] at h1
@@ -167,7 +168,8 @@ theorem evTens_pi_bijective : Function.Bijective (Pi.ringHom fun w : InfinitePla
   refine ⟨fun z z' h => GlobalTheory.AutFunCompare.infTens_ext fun w => congrFun h w, fun t => ?_⟩
   refine ⟨∑ w, LinearMap.rTensor E (GlobalTheory.AutFunCompare.sgW w) (t w), funext fun u => ?_⟩
   change evTens u (∑ w, LinearMap.rTensor E (GlobalTheory.AutFunCompare.sgW w) (t w)) = t u
-  rw [map_sum, Finset.sum_eq_single u (fun w _ hw => evTens_rTensor_ne (Ne.symm hw) _) (by simp),
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_eq_single u (fun w _ hw => evTens_rTensor_ne (Ne.symm hw) _) (by simp),
     evTens_rTensor_self]
 
 variable [IsTotallyComplex E]

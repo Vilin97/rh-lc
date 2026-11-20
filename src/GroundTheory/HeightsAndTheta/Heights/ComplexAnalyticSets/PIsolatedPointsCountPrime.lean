@@ -81,7 +81,8 @@ theorem IsolatedPointsCountPrime.proof (hOpen : IsolatedFibreOpenPoly.Statement)
   have hqe : ∀ x, (fun i => eval x (q i)) = B.mulVec (Qm x) := by
     intro x
     funext i
-    simp only [hq, IsolatedPointsCountPrime.eval_aeval, linPoly, map_sum, map_mul, eval_C, eval_X,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hq, IsolatedPointsCountPrime.eval_aeval, linPoly, map_sum, map_mul, eval_C, eval_X,
       Matrix.mulVec, dotProduct, hQm]
 
   have step1 : ∀ z x, x ∈ isolatedFibrePts P Q z →

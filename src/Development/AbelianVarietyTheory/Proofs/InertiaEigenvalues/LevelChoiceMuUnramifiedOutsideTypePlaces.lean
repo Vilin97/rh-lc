@@ -35,7 +35,8 @@ theorem unramOutside_mu0_of_splitSet : ∀ (D : D7) (T0 : Type) (L : LevCh D T0)
   have hk : ∀ PP ∈ L.Pg, idemAt PP * idem L.Pg = idemAt PP := fun l hl =>
     GlobalTheory.PlaceModelSum.mul_sum_orth (fun a ha => (hS.isIdemAt ha).1) (fun a ha b hb hab => hS.mul_eq_zero ha hb hab) hl
   have hc0 : ∀ PP ∈ L.Pg, idemAt PP * cA D (idem L.Pg) = 0 := fun PP hPP => by
-    rw [idem, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [idem, map_sum, Finset.mul_sum]
     exact Finset.sum_eq_zero fun i hi => hS.mul_conj hPP hi
   have hc1 : ∀ PP ∈ L.Pg, cA D (idemAt PP) * idem L.Pg = 0 := fun PP hPP => by
     rw [idem, Finset.mul_sum]

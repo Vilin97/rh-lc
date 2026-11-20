@@ -69,7 +69,8 @@ theorem xx_span_MGen0 (th o : ℤ → ℝ) {xi : SegRing O r K} (hxi : xi ∈ XX
       rw [map_mul, rename_rename, rename_rename, rename_rename, rename_rename]
       rfl
   obtain ⟨ξ0, hξ0, rfl⟩ := h2
-  rw [← sum_comp_image letterWeight ξ0, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← sum_comp_image letterWeight ξ0, map_sum]
   refine Submodule.sum_mem _ fun D _ => ?_
   have h5 := md_comp_gen F j 0 th D hξ0
   have h6 := Submodule.mem_map_of_mem (f := (plnm F j O K).toLinearMap) h5

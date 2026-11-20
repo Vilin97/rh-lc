@@ -52,5 +52,6 @@ theorem GlobalTheory.tail_subst_small : ∀ (p : ℕ) [Fact p.Prime] (B O Q : Ty
         - (coeff α f * (p : Q) ^ (v + m) * algebraMap B Q c) * hw'
   choose bb hbb using key
   refine ⟨∑ α ∈ hfin.toFinset, bb α, ?_⟩
-  rw [Finset.mul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.mul_sum, map_sum]
   exact Finset.sum_congr rfl fun α _ => hbb α

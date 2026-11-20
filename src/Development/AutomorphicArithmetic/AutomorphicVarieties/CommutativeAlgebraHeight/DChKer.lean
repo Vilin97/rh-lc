@@ -178,7 +178,8 @@ private theorem chkK_coef (M : ℕ) : ∀ z : ℕ → E,
     have h0 : z 0 ∈ D.ker := by
       refine (d_ker D _).1.2 fun S _ _ h => ?_
       have := hz S (aeval 0) h
-      simpa [map_sum] using this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa [map_sum] using this
     have h1 : chkK D A[X] (∑ k ∈ Finset.range M, ((X : A[X]) ^ k) ⊗ₜ[A] z (k + 1)) := by
       apply chkK_sat
       intro S _ _ f h
@@ -243,7 +244,8 @@ private theorem chkK_mv {k : ℕ} (w : MvPolynomial (Fin k) A ⊗[A] E) (hw : ch
   have h3 : Algebra.TensorProduct.map (MvPolynomial.aeval fun i : Fin k => (X : A[X]) ^ N ^ (i : ℕ))
       (AlgHom.id A E) w = ∑ j ∈ Finset.range (t.sup φ + 1),
         ((X : A[X]) ^ j) ⊗ₜ[A] ∑ β ∈ t with φ β = j, c β := by
-    rw [h1, map_sum, ← Finset.sum_fiberwise_of_maps_to hlt]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h1, map_sum, ← Finset.sum_fiberwise_of_maps_to hlt]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [tmul_sum]
     refine Finset.sum_congr rfl fun β hβ => ?_

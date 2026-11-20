@@ -82,7 +82,8 @@ theorem second_kernel_nonzero_unit : K2OfAgreements := by
     intro F hF
     refine body_of_span Y j cK (R.cmp j '' R.Sh j) ?_ F (hSp j hj hF)
     rintro _ ⟨x, hx, rfl⟩ c' L' hL
-    rw [hC j hj x, hRd j hj _ c' L' hL, hR j hj x, hS j hj x hx, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hC j hj x, hRd j hj _ c' L' hL, hR j hj x, hS j hj x hx, map_sum]
     rw [← Equiv.sum_comp (R.e j), ← Finset.sum_coe_sort (Y.Rep j)]
     refine Finset.sum_congr rfl fun La _ => ?_
     rw [map_smulₛₗ, map_inv₀, map_natCast, hCl j hj La, hD La x hx c' L' hL,

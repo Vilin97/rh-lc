@@ -23,7 +23,8 @@ theorem compact_sq_le_A (hU : IsInfUnitary ε E) (x : M) {a b : Fin n} (hab : ε
     rw [Module.End.mul_apply, hU a' b', adjSign, if_pos h.symm, one_mul, inner_self_eq_norm_sq]
   have hsum : RCLike.re (inner ℂ (casimirK ε E x) x) =
       ∑ a', ∑ b' ∈ Finset.univ.filter (fun b' => ε b' = ε a'), ‖E b' a' x‖ ^ 2 := by
-    simp only [casimirK, LinearMap.sum_apply, sum_inner, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [casimirK, LinearMap.sum_apply, sum_inner, map_sum]
     exact Finset.sum_congr rfl fun a' _ => Finset.sum_congr rfl fun b' hb' =>
       key a' b' (Finset.mem_filter.1 hb').2
   rw [hsum]

@@ -80,7 +80,8 @@ theorem cT_gl (σ : R →+* R) {s : Finset ι} {e : ι → R} (hσ : ∀ i ∈ s
     Formalism.UG.cT σ (gl s e M A) = gl s e (Formalism.UG.cT σ M) (fun i => Formalism.UG.cT σ (A i)) := by
   unfold gl Formalism.UG.cT
   ext i j
-  simp only [Matrix.transpose_apply, Matrix.map_apply, Matrix.add_apply, Matrix.sum_apply, Matrix.smul_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.transpose_apply, Matrix.map_apply, Matrix.add_apply, Matrix.sum_apply, Matrix.smul_apply,
     Matrix.sub_apply, map_add, map_sum, map_mul, map_sub, smul_eq_mul]
   congr 1
   exact Finset.sum_congr rfl fun k hk => by rw [hσ k hk]

@@ -74,7 +74,8 @@ theorem centre_ident (e : FamExp t.G M B ψ) {b : Fin n → ℂ} (hb : b ∈ B) 
         by_cases hc : c = a
         · subst hc; simp
         · simp [hc, Finsupp.single_apply]
-      rw [e1, map_sum, star_sum, Matrix.mulVec_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [e1, map_sum, star_sum, Matrix.mulVec_sum]
       refine Finset.sum_eq_zero fun a _ => ?_
       rw [map_smul, star_smul, Matrix.mulVec_smul, e2, smul_zero]
     · have hp : ℓ p ∈ Submodule.span ℝ (u.Λ : Set (Fin g' → ℂ)) := by rw [u.full]; trivial

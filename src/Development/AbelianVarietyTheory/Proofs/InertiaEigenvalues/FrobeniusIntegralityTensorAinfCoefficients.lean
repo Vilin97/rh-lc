@@ -60,7 +60,8 @@ theorem mem_range_of_regRep (f : W →ₐ[R] W') (z : O ⊗[R] W')
   choose g hg using h
   refine ⟨∑ i, ∑ j, b.repr 1 j • (b i ⊗ₜ[R] g i j), ?_⟩
   conv_rhs => rw [eq_sum_regRep b z]
-  simp_rw [TensorProduct.smul_tmul', map_sum, Algebra.TensorProduct.map_tmul, AlgHom.id_apply, hg]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp_rw [TensorProduct.smul_tmul', map_sum, Algebra.TensorProduct.map_tmul, AlgHom.id_apply, hg]
 
 def blow {p q : Type} (Z : Matrix p q (O ⊗[R] W)) : Matrix (p × I) (q × I) W :=
   Matrix.of fun x y => regRep b W (Z x.1 y.1) x.2 y.2
@@ -78,7 +79,8 @@ theorem blow_add {p q : Type} (Z Z' : Matrix p q (O ⊗[R] W)) :
 theorem blow_mul {p q r : Type} [Fintype q] (Z : Matrix p q (O ⊗[R] W))
     (Z' : Matrix q r (O ⊗[R] W)) : blow b (Z * Z') = blow b Z * blow b Z' := by
   ext x y
-  simp [blow, Matrix.mul_apply, map_sum, Matrix.sum_apply, Fintype.sum_prod_type]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [blow, Matrix.mul_apply, map_sum, Matrix.sum_apply, Fintype.sum_prod_type]
 
 omit b [Fintype I] [DecidableEq I] in
 

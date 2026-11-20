@@ -113,7 +113,8 @@ private lemma hermC_ppos_lemma_5 (x : Frame X.Ψ r) (τ : X.Ψ) (u w : Fin r →
     exact h
   unfold Data.ppos
   rw [hermC_sum_left_lemma, hermC_sum_right_lemma_2]
-  simp only [map_sum, map_mul, hM, hermC_conj τ.1 X.Gm_herm, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, hM, hermC_conj τ.1 X.Gm_herm, Finset.sum_mul]
   conv_lhs => rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => by ring
 

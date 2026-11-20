@@ -142,11 +142,13 @@ theorem koszulTwoExact_of_gl2 : FiltrationCocycleLiftCriterion → SubQEx → Ko
           exact Finset.card_pos.2 ⟨_, hQmem j⟩
         omega
       exact Pi.single_eq_of_ne this _
-    · rw [wd_single, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [wd_single, map_sum]
       refine Finset.sum_congr rfl fun l hl => ?_
       have hl' : l ∉ Q := by simpa using hl
       have hlc : l ∈ Qᶜ := hl
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simp only [hterm l hl']
       rw [← hsum]
       congr 1

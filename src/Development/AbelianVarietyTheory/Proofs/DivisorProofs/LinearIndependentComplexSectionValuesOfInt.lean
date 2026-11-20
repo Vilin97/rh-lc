@@ -60,7 +60,8 @@ theorem linearIndependent_vals : ∀ (k : Type) [CommRing k] (X : Scheme.{0}) [I
     intro n hn
     apply hli n
     have h1 := congrArg (fnOf U hgU) hn
-    rw [map_sum, map_zero] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero] at h1
     simp only [map_zsmul, hg, hloc] at h1
     have h2 : (∑ l, n l • f l) * ((P.r i : X.functionField) ^ a * (P.r' j : X.functionField) ^ b) = 0 := by
       rw [Finset.sum_mul]; simpa only [smul_mul_assoc] using h1

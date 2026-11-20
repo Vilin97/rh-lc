@@ -146,7 +146,8 @@ theorem UpperTheory.Lit.Nos.twistIso :
       (GlobalTheory.LB.pull_U_le f₁ i).trans (f₁.preimage_mono (GlobalTheory.LB.pull_U_le φ _))
     exact (appLE_appLE f₁ φ _ rfl (GlobalTheory.LB.pull_U_le φ _) (GlobalTheory.LB.pull_U_le f₁ i) l _).trans
       (appLE_appLE ρ f₁ _ h₁.symm (GlobalTheory.LB.pull_U_le f₁ (τ i)) (lA i) l _).symm
-  · rw [sum_f, sum_f, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [sum_f, sum_f, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [GlobalTheory.LB.smul_f, GlobalTheory.LB.smul_f, map_mul, secPull_f, appLE_appLE ρ f₂ _ h₂ _ _ (GlobalTheory.LB.pull_U_le f₂ n),
       GlobalTheory.LB.appLE_resG, ← appTop_cst ρ q q σ hq]

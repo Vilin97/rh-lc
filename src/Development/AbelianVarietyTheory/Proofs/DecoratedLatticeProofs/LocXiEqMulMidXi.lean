@@ -328,7 +328,8 @@ theorem frame_cong (hI : I.Ok) {b : I.ι} {j : ℕ} (p : Formalism.L2.Col.ChPt (
   have e4 : ∀ y : Fin (B.R.N j) → B.host.E, adAt B.host.F P.1 (GlobalTheory.Mem.Col2.pullV (TC.kStd X u (B.R.N j)) y r) =
       algebraMap B.host.E (P.1.adicCompletion B.host.E) (y r) := fun y => by
     unfold GlobalTheory.Mem.Col2.pullV
-    rw [Matrix.mulVec, dotProduct, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Matrix.mulVec, dotProduct, map_sum]
     simp only [map_mul, h1, adAt_inclE]
     simp
   refine Eq.trans ?_ (congrArg (· - _) (e4 _).symm)

@@ -392,7 +392,8 @@ theorem cls_lbProd (hL : ∀ i, (L i).IsLB) (n : ι → ℤ) (h : (lbProd L n).I
     ext i
     simp [Finset.sum_apply, Pi.single_apply]
   change c n = _
-  rw [e, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, map_sum]
   refine Finset.sum_congr rfl fun i _ ↦ ?_
   rw [map_zsmul, ← e]
   exact congrArg _ (cls_lbProd_single hL i)

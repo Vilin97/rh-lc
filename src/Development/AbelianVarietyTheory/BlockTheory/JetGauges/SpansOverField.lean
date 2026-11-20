@@ -73,15 +73,18 @@ private theorem sum_B_eq_sum_bar_outer (B : X →ₗ[ℤ] X →ₗ[ℤ] ℝ) (hB
     have e1 := eq_sum_of_support_subset E s hs S (x i) (hx i)
     have e2 := eq_sum_of_support_subset E s hs S (x' i) (hx' i)
     conv_lhs => rw [e1, e2]
-    simp only [map_sum, LinearMap.sum_apply, hB', smul_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.sum_apply, hB', smul_smul]
     exact Finset.sum_comm
   rw [Finset.sum_congr rfl fun i _ => h1 i, Finset.sum_comm]
   refine Finset.sum_congr rfl fun m _ => ?_
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun p _ => ?_
-  rw [← map_sum, ← Finset.sum_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum, ← Finset.sum_smul]
   refine congrArg (fun a => B m (a • p)) ?_
-  simp only [outer, map_sum, map_mul, bar_bar_jet_gauges, LinearMap.comp_apply, Finsupp.lapply_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [outer, map_sum, map_mul, bar_bar_jet_gauges, LinearMap.comp_apply, Finsupp.lapply_apply]
 
 theorem pairing_eq_of_outer_eq [Module.Finite (𝓞 E) X] [Module.Projective (𝓞 E) X]
     (B : X →ₗ[ℤ] X →ₗ[ℤ] ℝ) (hB : IsBalanced E (fun a c => B a c)) {n m : ℕ}

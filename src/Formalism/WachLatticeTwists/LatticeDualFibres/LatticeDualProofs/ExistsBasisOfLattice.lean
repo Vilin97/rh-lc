@@ -57,8 +57,10 @@ theorem exists_dual_basis {b : V →ₗ[O] V' →ₗ[O] FractionRing O} (hb : Pe
     intro w
     refine (hb ((b.flip w).extendScalarsOfIsLocalization (nonZeroDivisors O)
       (FractionRing O))).unique (fun x => rfl) (fun x => ?_)
-    rw [LinearMap.extendScalarsOfIsLocalization_apply', LinearMap.flip_apply, map_sum]
-    conv_rhs => rw [← e.sum_repr x, map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [LinearMap.extendScalarsOfIsLocalization_apply', LinearMap.flip_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_rhs => rw [← e.sum_repr x, map_sum, LinearMap.sum_apply]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_frac_smul, hf, map_frac_smul b, LinearMap.smul_apply, Basis.coord_apply, smul_eq_mul,
       smul_eq_mul, mul_comm]
@@ -66,7 +68,8 @@ theorem exists_dual_basis {b : V →ₗ[O] V' →ₗ[O] FractionRing O} (hb : Pe
     rw [Fintype.linearIndependent_iff]
     intro c hc j
     have h := congrArg (b (e j)) hc
-    rw [map_sum, map_zero] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero] at h
     rw [← h, Finset.sum_eq_single j]
     · rw [map_frac_smul, hf, Basis.coord_apply, Basis.repr_self, Finsupp.single_eq_same,
         smul_eq_mul, mul_one]

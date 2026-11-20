@@ -181,7 +181,8 @@ def HermSp.ofMatrix (hτ : ∀ a, τ (τ a) = a) {m : ℕ} (S : Matrix (Fin m) (
     have hij : ∀ i j, τ (S j i) = S i j := fun i j => by
       have := congrFun (congrFun hS i) j
       simpa [cT] using this
-    simp only [dotProduct, Matrix.mulVec, map_sum, map_mul, hτ, hij]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [dotProduct, Matrix.mulVec, map_sum, map_mul, hτ, hij]
     simp only [Finset.mul_sum]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_

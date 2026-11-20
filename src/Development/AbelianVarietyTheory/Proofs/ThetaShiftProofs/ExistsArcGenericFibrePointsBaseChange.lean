@@ -175,11 +175,13 @@ theorem span_ext (hG : IsSemiAbelian G) (hL : L.IsLB) {m : ℕ} {V I : Type} (x 
   rw [ρ.sum_comp (fun a => c a.1 * algebraMap K F (r _ a.2) * algebraMap K F (φ (i _ a.2) v)), Fintype.sum_sigma,
     Finset.sum_mul]
   refine (congrArg (evalAt _ m _ (fib_snd _) j hj) e).trans ?_
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun b _ => ?_
   rw [map_smul, smul_eq_mul]
   refine (congrArg (c b * ·) (hasVal_pullFib _ (hr b v) j hj)).trans ?_
-  simp only [map_sum, map_mul, ← _root_.mul_assoc, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, ← _root_.mul_assoc, Finset.mul_sum]
 
 end Ext
 

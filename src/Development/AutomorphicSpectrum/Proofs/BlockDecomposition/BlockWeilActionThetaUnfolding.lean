@@ -55,7 +55,8 @@ theorem inner_mul_right (V : HSp D) {n : ℕ} (x y : Mx D V.rank n) (B : Mx D n 
   simp only [GlobalTheory.StdUnn.inner, Matrix.mul_assoc]
 
 theorem trace_adj {n : ℕ} (M : Mx D n n) : Matrix.trace (adj M) = cA D (Matrix.trace M) := by
-  simp [Matrix.trace, adj, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Matrix.trace, adj, map_sum]
 
 theorem adj_inner (V : HSp D) {n : ℕ} (x y : Mx D V.rank n) :
     adj (GlobalTheory.StdUnn.inner V x y) = GlobalTheory.StdUnn.inner V y x := by
@@ -96,7 +97,8 @@ theorem trace_inner_rat (V : HSp D) {n : ℕ} (p : Matrix (Fin V.rank) (Fin n) D
     rw [rat_mul, rat_mul, rat_mul, rat_conjTranspose]
     rfl
   rw [this]
-  simp only [Matrix.trace, Matrix.diag_apply, rat, Matrix.map_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.trace, Matrix.diag_apply, rat, Matrix.map_apply, map_sum]
 
 theorem psi_combine (ψ : AddChar (AF D.host.F) ℂ) (X Y T t₁ t₃ t₄ t₅ : AE D) (e₁ : X = -t₁ + t₅) (e₂ : Y = t₃)
     (e₃ : T = t₃ - cA D t₁ - t₁ + t₄) (e₄ : ψ (halfTr t₄) = 1) :

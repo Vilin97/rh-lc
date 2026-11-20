@@ -27,7 +27,8 @@ theorem exists_orthCompl_hypPair : ∀ (F E : Type) [Field F] [NumberField F] [F
       apply σ.toRingHom.injective
       have h1 := congrFun h0 j
       simp only [ha_def, Matrix.mulVec, dotProduct, Pi.zero_apply] at h1
-      simp only [Matrix.vecMul, dotProduct, Pi.zero_apply, map_zero, AlgHom.toRingHom_eq_coe, RingHom.coe_coe, map_sum, map_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Matrix.vecMul, dotProduct, Pi.zero_apply, map_zero, AlgHom.toRingHom_eq_coe, RingHom.coe_coe, map_sum, map_mul]
       rw [← h1]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [hJ j i, mul_comm]

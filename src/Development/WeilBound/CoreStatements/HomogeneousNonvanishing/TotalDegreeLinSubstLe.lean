@@ -9,7 +9,8 @@ private theorem totalDegree_aeval_le_of_totalDegree_le_one {K : Type} [Field K] 
     (hL : ∀ i, (L i).totalDegree ≤ 1) (f : MvPolynomial σ K) :
     (aeval L f).totalDegree ≤ f.totalDegree := by
   conv_lhs => rw [f.as_sum]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine (totalDegree_finsetSum _ _).trans (Finset.sup_le fun s hs => ?_)
   rw [aeval_monomial, algebraMap_eq]
   refine (totalDegree_mul _ _).trans ?_

@@ -37,7 +37,8 @@ theorem hermMat_matForm {n : ℕ} (H : Matrix (Fin n) (Fin n) ℂ) :
     hermMat (matForm n H : Alt n) = ((2 * Real.pi : ℝ)⁻¹ : ℂ) • H := by
   ext a b
   rw [GlobalTheory.ChernPull.coe_matForm]
-  simp only [hermMat, of_apply, Matrix.smul_apply, smul_eq_mul, ← bas_pair, map_smul, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hermMat, of_apply, Matrix.smul_apply, smul_eq_mul, ← bas_pair, map_smul, map_sum,
     Module.Basis.repr_self, Finsupp.smul_apply, Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.single_apply,
     pair_eq_iff, smul_eq_mul]
   simp only [mul_one, Finset.sum_ite_irrel, Finset.sum_const_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true,
@@ -77,7 +78,8 @@ theorem hermMat_c1F_posDef {k : Type} [CommRing k] {X : Scheme.{0}} {p : X ⟶ S
   have key : ∀ u : Fin D → ℂ, u ᵥ* P = (fderiv ℂ (c0.e ∘ PtsOver.map i hip (spMap σ) ∘ c.e.symm) (c.e y)
       (∑ j, u j • GlobalTheory.GoodMetric.coordVec j)).ofLp := by
     intro u; ext b
-    simp [vecMul, dotProduct, hP, map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [vecMul, dotProduct, hP, map_sum, map_smul]
   change u ᵥ* P = v ᵥ* P at huv
   rw [key, key] at huv
   have := hF (WithLp.ofLp_injective _ huv)

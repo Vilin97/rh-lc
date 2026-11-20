@@ -126,7 +126,8 @@ theorem psi_one (ρ : Representation ℂ (∀ c, L c) W) (v : W) :
 theorem psi_single_mul (ρ : Representation ℂ (∀ c, L c) W) (v : W) (g : ∀ c, L c)
     (x : ∀ c, MonoidAlgebra ℂ (L c)) :
     psi ρ v (fun c => MonoidAlgebra.single (g c) (1 : ℂ) * x c) = ρ g (psi ρ v x) := by
-  rw [psi_apply, psi_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [psi_apply, psi_apply, map_sum]
   refine Fintype.sum_equiv (Equiv.mulLeft g⁻¹) _ _ fun h => ?_
   simp only [MonoidAlgebra.coeff_single_mul_apply, one_mul, map_smul, Equiv.coe_mulLeft,
     Pi.mul_apply, Pi.inv_apply]

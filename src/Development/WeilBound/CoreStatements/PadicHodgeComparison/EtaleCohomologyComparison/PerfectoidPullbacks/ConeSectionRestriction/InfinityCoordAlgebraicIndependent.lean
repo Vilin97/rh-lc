@@ -204,7 +204,8 @@ theorem infinityCoord_algebraicIndependent (t : Fin (n + 1) → Rˣ) (ht : Algeb
     rw [MvPolynomial.aeval_monomial, map_one, one_mul, Finsupp.prod_fintype _ _ (fun _ => pow_zero _)]
   have hg : MvPolynomial.aeval (fun k => (t k : R)) g = (t 0 : R) ^ N * MvPolynomial.aeval (fun k => (u0 t k : R)) f := by
     conv_rhs => rw [← MvPolynomial.support_sum_monomial_coeff f]
-    simp only [g, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [g, map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun α hα => ?_
     rw [← mul_one (f.coeff α), ← smul_eq_mul, ← MvPolynomial.smul_monomial, ← MvPolynomial.smul_monomial,
       map_smul, map_smul, hu, htm, mul_smul_comm, infinityCoord_monomial_eq t N α (hdeg α hα)]

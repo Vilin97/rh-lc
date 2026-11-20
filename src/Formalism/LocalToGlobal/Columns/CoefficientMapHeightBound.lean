@@ -91,14 +91,16 @@ theorem tensor_pairing_gram_eq (v : InfinitePlace K) (i j : VVIdx lam) :
 theorem embedding_map_basis_repr (v : InfinitePlace K) (x : VV K lam) :
     map v.embedding x.1 = ∑ i, v.embedding ((bVV K lam).repr x i) • map v.embedding (bVVfun K lam i) := by
   conv_lhs => rw [← (bVV K lam).sum_repr x]
-  rw [Submodule.coe_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Submodule.coe_sum, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [Submodule.coe_smul, bVV_coe, bc_map_smul]
 
 theorem metric_eq_normalised_fock (v : InfinitePlace K) (x y : VV K lam) :
     formAt (bVV K lam) (pairK lam fun _ => 1) v x y = nfL lam (map v.embedding x.1) (map v.embedding y.1) := by
   rw [embedding_map_basis_repr K lam v x, embedding_map_basis_repr K lam v y]
-  simp only [formAt, tensor_pairing_gram_eq, map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, map_smul, smul_eq_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [formAt, tensor_pairing_gram_eq, map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, map_smul, smul_eq_mul,
     Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_

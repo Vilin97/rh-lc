@@ -174,7 +174,8 @@ theorem cf_kDiag (hσ : IsURepOn (UJset ε) σ) (dual : Bool) (y : H) (ξ : Fin 
     cf dual ε σ y ξ (kDiag dual σ (Formalism.MainNotions.S.umat κ) F) g = cf dual ε σ y ξ F (g * κ) := by
   unfold cf kDiag
   rw [sig_mul hσ g κ, umat_mul]
-  simp only [ContinuousLinearMap.comp_apply, map_sum, map_smul, inner_sum, inner_smul_right, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [ContinuousLinearMap.comp_apply, map_sum, map_smul, inner_sum, inner_smul_right, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun d _ => ?_
   rw [← wt_K dual ξ _ _ hk d, Finset.sum_mul]
@@ -224,8 +225,10 @@ theorem hasDerivAt_matrixCoeff_flow (hσ : IsURepOn (UJset ε) σ) (hD : IsDeriv
     refine Finset.sum_congr rfl fun c _ => ?_
     congr 1
     cases dual
-    · simp [Submodule.coe_sum, Submodule.coe_smul, map_sum, map_smul, inner_sum, inner_smul_right]
-    · simp [Submodule.coe_sum, Submodule.coe_smul, Submodule.coe_neg, map_sum, map_smul, map_neg, inner_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp [Submodule.coe_sum, Submodule.coe_smul, map_sum, map_smul, inner_sum, inner_smul_right]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp [Submodule.coe_sum, Submodule.coe_smul, Submodule.coe_neg, map_sum, map_smul, map_neg, inner_sum,
         inner_smul_right, inner_neg_right]
   rw [hv]
   exact hs

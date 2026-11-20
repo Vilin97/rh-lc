@@ -30,14 +30,16 @@ def HasBasis (M : LB Y) (p : Y ⟶ Sp F) (n : ℕ) : Prop :=
 theorem exists_comb {M : LB Y} (p : Y ⟶ Sp F) (b : Fin n → LB.Sec M) (c : Fin n → F) :
     ∃ s : LB.Sec M, IsComb p b c s :=
   ⟨⟨fun j => ∑ i, resTop _ (scal p (c i)) * (b i).f j, fun j j' => by
-    rw [map_sum, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum, Finset.mul_sum]
     exact Finset.sum_congr rfl fun i _ => (SecOps.secScale (scal p (c i)) (b i)).compat j j'⟩, fun _ => rfl⟩
 
 theorem gs_comb {M : LB Y} (p : Y ⟶ Sp F) (b : Fin n → LB.Sec M) (c : Fin n → F) (r : Z ⟶ Y) (z : Z) (j : M.ι)
     (hz : r z ∈ M.U j) :
     gs r z (M.U j) (∑ i, resTop _ (scal p (c i)) * (b i).f j) =
       ∑ i, cst (r ≫ p) z (c i) * gs r z (M.U j) ((b i).f j) := by
-  rw [gs_eq r z _ hz, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [gs_eq r z _ hz, map_sum, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [← gs_eq r z _ hz, gs_mul r z _ hz, GlobalTheory.IndivisibleSection.gs_scal p r z _ hz]
 

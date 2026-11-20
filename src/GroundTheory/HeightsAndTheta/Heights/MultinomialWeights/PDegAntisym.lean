@@ -12,7 +12,8 @@ open MvPolynomial Finset
 theorem blockPermute_lamDotX_permWeight (d : IndexData) (w : Fin d.f → Equiv.Perm (Fin d.N))
     (u : Idx d → ℚ) :
     RestTerms.blockPermute d.f d.N w (lamDotX d (permWeight d w u)) = lamDotX d u := by
-  simp only [lamDotX, map_sum, map_mul, RestTerms.blockPermute, rename_C, rename_X, permWeight]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [lamDotX, map_sum, map_mul, RestTerms.blockPermute, rename_C, rename_X, permWeight]
   exact Fintype.sum_equiv (Equiv.prodShear (Equiv.refl _) w) _ _ (fun p => rfl)
 
 theorem blockPermute_lineClass_permWeight (d : IndexData) (w : Fin d.f → Equiv.Perm (Fin d.N))

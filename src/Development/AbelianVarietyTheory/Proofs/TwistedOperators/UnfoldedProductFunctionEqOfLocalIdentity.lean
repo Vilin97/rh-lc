@@ -33,7 +33,8 @@ theorem prodRel_map {ι I : Type} [Fintype ι] {X Y : ι → Type} (S : Finset I
     have h2 : ∀ l, T l (g i l) (y l) = ∑ x ∈ s l, g i l x * T l (E l x) (y l) := by
       intro l
       conv_lhs => rw [hE l (g i l) (Finset.mem_image_of_mem _ hi)]
-      simp [map_sum, Finset.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [map_sum, Finset.sum_apply]
     simp only [h2]
     rw [Finset.prod_univ_sum]
     refine Finset.sum_congr rfl fun ξ _ => ?_

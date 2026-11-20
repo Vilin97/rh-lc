@@ -47,7 +47,8 @@ theorem frobSlice_frob_mul {K : Type} [NormedField K] (l : ℕ) [Fact l.Prime] {
 theorem frobSlice_sum {K : Type} [Field K] (l i : ℕ) {μ : Type} (s : Finset μ) (f : μ → K⟦X⟧) :
     frobSlice l i (∑ j ∈ s, f j) = ∑ j ∈ s, frobSlice l i (f j) := by
   ext n
-  simp only [coeff_frobSlice, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [coeff_frobSlice, map_sum]
 
 theorem bdd_matrix_mul {K : Type} [NormedField K] [IsUltrametricDist K] {μ ν ρ : Type} [Fintype ν]
     {Y : Matrix μ ν K⟦X⟧} {Z : Matrix ν ρ K⟦X⟧} (hY : ∃ c : ℝ, ∀ i j n, ‖coeff n (Y i j)‖ ≤ c)
@@ -56,7 +57,8 @@ theorem bdd_matrix_mul {K : Type} [NormedField K] [IsUltrametricDist K] {μ ν �
   obtain ⟨a, ha⟩ := hY
   obtain ⟨b, hb⟩ := hZ
   refine ⟨max a 0 * max b 0, fun i j n => ?_⟩
-  rw [Matrix.mul_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.mul_apply, map_sum]
   refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg (by positivity) fun k _ => ?_
   simpa using norm_coeff_mul_le (w := fun _ => 1) (fun _ => zero_le_one) (fun _ _ => by simp)
     (le_max_right a 0) (le_max_right b 0) (f := Y i k) (g := Z k j)

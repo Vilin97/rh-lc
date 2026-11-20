@@ -32,9 +32,11 @@ theorem symp_eq_zero_of_comp (hcm : IsCMExt F E σ) {v : Pl F} (s : E →ₐ[F] 
   have hx' : ∀ i j, piW (s.comp σ) (x i j) = 0 := fun i j => by simpa using congrFun (congrFun hx0 i) j
   have hy' : ∀ i j, piW (s.comp σ) (y i j) = 0 := fun i j => by simpa using congrFun (congrFun hy0 i) j
   have h1 : piW s z = 0 := by
-    simp only [hz, hTens, map_sum, map_mul, GlobalTheory.VacIso.piW_cA, hy', mul_zero, Finset.sum_const_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hz, hTens, map_sum, map_mul, GlobalTheory.VacIso.piW_cA, hy', mul_zero, Finset.sum_const_zero]
   have h2 : piW (s.comp σ) z = 0 := by
-    simp only [hz, hTens, map_sum, map_mul, hx', zero_mul, Finset.sum_const_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hz, hTens, map_sum, map_mul, hx', zero_mul, Finset.sum_const_zero]
   have : z = 0 := GlobalTheory.VacIso.eq_zero_of_at_split hcm s hat h1 h2
   simp only [symp, ← hz, this, mul_zero, map_zero]
 

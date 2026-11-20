@@ -36,7 +36,8 @@ theorem exists_anti {σ : E →ₐ[F] E} (h : IsCMExt F E σ) : ∃ δ : E, δ �
 theorem hA_swap_herm (σ : E →ₐ[F] E) (hσ : ∀ a, σ (σ a) = a) {n : ℕ} (J : Matrix (Fin n) (Fin n) E)
     (hJ : ∀ i j, σ (J j i) = J i j) (v w : Fin n → AE F E) :
     hA σ J w v = cA σ (hA σ J v w) := by
-  simp only [hA, dotProduct, Matrix.mulVec, map_sum, map_mul, Unitary.cA_invol σ hσ, incM, Matrix.map_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hA, dotProduct, Matrix.mulVec, map_sum, map_mul, Unitary.cA_invol σ hσ, incM, Matrix.map_apply,
     Unitary.cA_inclR, hJ, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_

@@ -26,7 +26,8 @@ theorem Spans.mul_upper : ∀ (X : Scheme.{0}) (F : X.Modules) (m : ℕ) (fl : V
     (GlobalTheory.FlagZ.Loc.isUnit_submatrix_castLE_of_upper l.is_le M hb
       ((Matrix.isUnit_iff_isUnit_det M).2 hu)), fun j => ?_⟩
   rw [← GlobalTheory.QCoh.appLinear_apply]
-  simp only [map_sum, map_smul, GlobalTheory.QCoh.appLinear_apply, hι, Matrix.submatrix_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, GlobalTheory.QCoh.appLinear_apply, hι, Matrix.submatrix_apply]
   refine Finset.sum_of_injOn (Fin.castLE l.is_le) (Fin.castLE_injective _).injOn
     (fun _ _ => Finset.mem_univ _) (fun k _ hk => ?_) (fun _ _ => rfl)
   rw [hb, zero_smul]

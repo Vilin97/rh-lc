@@ -11,7 +11,8 @@ theorem map_supported_mem {α β : Type} {S : Set α}
     (f : (α →₀ ℤ) →ₗ[ℤ] (β →₀ ℤ)) (P : Submodule ℤ (β →₀ ℤ)) (h : ∀ z ∈ S, f (Finsupp.single z 1) ∈ P) :
     ∀ x ∈ Finsupp.supported ℤ ℤ S, f x ∈ P := by
   intro x hx
-  rw [← Finsupp.sum_single x, Finsupp.sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Finsupp.sum_single x, Finsupp.sum, map_sum]
   refine Submodule.sum_mem _ fun a ha => ?_
   rw [← Finsupp.smul_single_one, map_zsmul]
   exact P.smul_mem _ (h a (hx ha))

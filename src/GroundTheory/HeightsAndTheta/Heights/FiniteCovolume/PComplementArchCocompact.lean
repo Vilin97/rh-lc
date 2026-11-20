@@ -102,7 +102,8 @@ theorem ComplementArchCocompact.proof (h : HermitianForm F E W) (v : Basis ι E 
     calc Y = (projAt h v x₀ w₀).restrictScalars ℝ (∑ k, Bs.repr Y k • Bs k) := by
           rw [Bs.sum_repr]; exact hPY.symm
       _ = ∑ k, Bs.repr Y k • vecAt v (p k) := by
-          simp only [map_sum, map_smul, LinearMap.restrictScalars_apply, hBe]
+          set_option synthInstance.maxHeartbeats 100000 in
+            simp only [map_sum, map_smul, LinearMap.restrictScalars_apply, hBe]
           exact Finset.sum_congr rfl fun k _ => by rw [projAt_vecAt]
       _ = _ := Finset.sum_congr rfl fun k _ => by
           rw [hf, smul_smul, hs, mul_assoc, inv_mul_cancel₀ (hD k), mul_one]
@@ -115,7 +116,8 @@ theorem ComplementArchCocompact.proof (h : HermitianForm F E W) (v : Basis ι E 
     exact Finset.sum_congr rfl fun k _ => smul_comm _ _ _
   · show ∑ k, Int.fract (s k) • vecAt v (f k) = Y - vecAt v (∑ k, ⌊s k⌋ • f k)
     conv_rhs => rw [hYs]
-    rw [← vecAtHom_apply, map_sum, ← Finset.sum_sub_distrib]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← vecAtHom_apply, map_sum, ← Finset.sum_sub_distrib]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_zsmul, vecAtHom_apply, ← Int.cast_smul_eq_zsmul ℝ, ← sub_smul, Int.self_sub_floor]
 

@@ -69,7 +69,8 @@ open GlobalTheory.CechPic in
 theorem cls_pull_box {S : Scheme.{0}} (G : Over S) (L : LB G.left) (hL : L.IsLB) (N : ℕ)
     {X : Scheme.{0}} (φ : X ⟶ (pow G N).left) (h : ((boxLB G L N).pull φ).IsLB) :
     cls ((boxLB G L N).pull φ) h = ∑ k, pull (φ ≫ pr G N k) (cls L hL) := by
-  rw [cls_pull (LB.isLB_linComb hL _ _), cls_linComb hL, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [cls_pull (LB.isLB_linComb hL _ _), cls_linComb hL, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [one_smul, pull_comp]
 

@@ -47,7 +47,8 @@ theorem inCone {n : ℕ} {γ' : Fin m' → LinearMap.BilinForm ℤ X} (hγ' : Is
 
 theorem apply_sum_nsmul {L : Type} [AddCommGroup L] (F : L →ₗ[ℤ] ℤ) {p : ℕ} (n : Fin p → ℕ) (v : Fin p → L) :
     F (∑ j, n j • v j) = ∑ j, (n j : ℤ) * F (v j) := by
-  simp [map_sum, map_nsmul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, map_nsmul]
 
 theorem ray {γ : Fin m → LinearMap.BilinForm ℤ X} {γ' : Fin m' → LinearMap.BilinForm ℤ X} (hγ : IsCone bar φ γ)
     (hγ' : IsCone bar φ γ') {i : Fin m} {k : ℕ} {d : Fin m' → ℕ} (hk : 0 < k) (hkd : k • γ i = ∑ j, d j • γ' j)

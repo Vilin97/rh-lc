@@ -239,7 +239,8 @@ theorem exists_subsheaf {α : Type} [Fintype α] (rk : α → ℕ) (σ : α → 
       · refine (GlobalTheory.LB.resG_pull_g (L := grLB hZ _) c.f _ _ _).trans ((valR_affPt hT.1 _).symm.trans
           ((valR_appLE _ _ _ (le_preimage_affPt hT.1) _).trans ?_))
         exact (congrArg _ (IntChart.tr_neg_oneAt j.1.2 j'.1.2 hZ _ _)).trans (valR_res _ _ (le_preimage_inf h h') _)
-      · simp only [hres _ hT, h₃, map_sum, map_smul]) S hS
+      set_option synthInstance.maxHeartbeats 100000 in
+        · simp only [hres _ hT, h₃, map_sum, map_smul]) S hS
   refine ⟨G, i, hi, hd, fun hp hS => ?_⟩
   have := hi.mono
   refine Twist.isIso_of_cover i hc fun j V hV => ⟨QCoh.injective_app_of_mono i V, fun x => (hs j V hV x).2 ?_⟩

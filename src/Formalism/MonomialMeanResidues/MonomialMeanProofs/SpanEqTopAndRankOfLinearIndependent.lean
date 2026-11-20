@@ -150,7 +150,8 @@ theorem bc_linIndep {j : ℕ} (e : Fin j → ι → F) (he : LinearIndependent F
       simp [Finset.sum_apply, Pi.single_apply]
     have h4 : π (e c) a = ∑ i, π (Pi.single i 1) a * e c i := by
       conv_lhs => rw [h3]
-      simp only [map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
       exact Finset.sum_congr rfl fun i _ => mul_comm _ _
     rw [← h4, h1]
     simp [Pi.single_apply, eq_comm]
@@ -160,7 +161,8 @@ theorem bc_linIndep {j : ℕ} (e : Fin j → ι → F) (he : LinearIndependent F
     rw [hg]; simp
   have h1 : ∑ i, algebraMap F E (π (Pi.single i 1) a) * (∑ c, g c • bcMap (E := E) (e c)) i
       = ∑ c, g c * algebraMap F E (∑ i, π (Pi.single i 1) a * e c i) := by
-    simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, bcMap, Finset.mul_sum, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, bcMap, Finset.mul_sum, map_sum, map_mul]
     rw [Finset.sum_comm]
     exact Finset.sum_congr rfl fun c _ => Finset.sum_congr rfl fun i _ => by ring
   rw [h1] at h0

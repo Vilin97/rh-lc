@@ -101,7 +101,8 @@ theorem map_pv_smul (e : Fin g ≃ I2.Idx dim) (c : ℂ)
     conv_lhs => rw [← Finset.univ_sum_single z]
     have h2 (i) : (Pi.single i (z i) : Fin g → ℂ) = z i • (Pi.single i 1 : Fin g → ℂ) := by
       rw [← Pi.single_smul, smul_eq_mul, _root_.mul_one]
-    simp only [h2, map_sum, map_smul, (he _).2]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [h2, map_sum, map_smul, (he _).2]
     simp [Pi.single_apply, _root_.mul_comm]
   ext i
   obtain ⟨j, rfl⟩ := e.surjective i

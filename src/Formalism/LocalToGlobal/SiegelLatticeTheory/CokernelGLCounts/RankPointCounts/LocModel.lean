@@ -481,7 +481,8 @@ theorem epsilonDual_almost_all : EpDualCof := by
   have hc : ∀ j, Matrix.vecMul (bE.repr z) M j ∈ 𝒪[(D.s.atP p).Fp] := by
     intro j
     have h := hz ((D.s.atP p).ιE (bF j)) (iotaE_mem_of_int D p (hbint j))
-    rw [← bE.sum_repr z, Finset.sum_mul, map_sum] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← bE.sum_repr z, Finset.sum_mul, map_sum] at h
     convert h using 1
     simp only [Matrix.vecMul, dotProduct]
     refine Finset.sum_congr rfl fun i _ => ?_
@@ -524,7 +525,8 @@ theorem finrank_fp_le (D : Formalism.BasicNotions.D7) (p : PlF D) :
     Submodule.span ℚ_[Loc.resChar p] (Set.range fun i => (D.s.atP p).ιF (b i))
   have hsub : Set.range (D.s.atP p).ιF ⊆ (S : Set (D.s.atP p).Fp) := by
     rintro _ ⟨x, rfl⟩
-    rw [← b.sum_repr x, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← b.sum_repr x, map_sum]
     refine Submodule.sum_mem _ fun i _ => ?_
     have : (D.s.atP p).ιF (b.repr x i • b i) =
         ((b.repr x i : ℚ) : ℚ_[Loc.resChar p]) • (D.s.atP p).ιF (b i) := by

@@ -147,7 +147,8 @@ private theorem range_pi_hT_eq_top (D : D7) (u : D.what₂.Word) (F0 : FlagG (VS
       have h1 : f ((LinearMap.pi fun a => (VS D).hT (F0.e a)) y) = 0 :=
         LinearMap.mem_ker.mp (hf (LinearMap.mem_range_self _ y))
       rw [LinearMap.pi_apply_eq_sum_univ] at h1
-      simp only [map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ,
         LinearMap.smul_apply, starRingEnd_apply, star_star, smul_eq_mul]
       simpa [LinearMap.pi_apply, smul_eq_mul, mul_comm] using h1
     have h0 := (VS D).nondeg.1 _ hw

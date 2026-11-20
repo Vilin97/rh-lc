@@ -48,7 +48,8 @@ theorem dual_rep (E : Type) [Field E] [NumberField E] (n : ℕ) : ∃ D : ℕ, 1
     have hAB : A = B := LinearMap.pi_ext' fun j => (RingOfIntegers.basis E).ext fun k => by
       show ((g (Pi.single j (RingOfIntegers.basis E k)) : ℤ) : ℚ) =
         Algebra.trace ℚ E (c ⬝ᵥ fun i => ((Pi.single j (RingOfIntegers.basis E k) : Fin n → 𝓞 E) i : E))
-      rw [dotProduct, Finset.sum_eq_single j (fun i _ hi => by simp [Pi.single_eq_of_ne hi]) (by simp),
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [dotProduct, Finset.sum_eq_single j (fun i _ hi => by simp [Pi.single_eq_of_ne hi]) (by simp),
         Pi.single_eq_same, Finset.sum_mul, map_sum, Finset.sum_eq_single k (fun l _ hl => ?_) (by simp)]
       · rw [mul_assoc, ← zsmul_eq_mul, map_zsmul, show ((RingOfIntegers.basis E k : 𝓞 E) : E) = integralBasis E k from
           (integralBasis_apply E k).symm, Module.Basis.trace_traceDual_mul]

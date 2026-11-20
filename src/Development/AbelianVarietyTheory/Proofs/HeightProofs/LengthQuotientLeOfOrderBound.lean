@@ -100,7 +100,8 @@ theorem length_quotient_le_of_order_bound :
     (Submodule.span R' ((fun v : (∀ c, L c) => (1 : F') ⊗ₜ[F] v) ''
       (Submodule.span R (Set.range b) : Set _))) ?_ ?_) (le_of_eq ?_)
   · intro a ha
-    rw [hspan, LinearMap.comp_apply, ← Finset.univ_sum_single (Ψ a), map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hspan, LinearMap.comp_apply, ← Finset.univ_sum_single (Ψ a), map_sum]
     refine Submodule.sum_mem _ fun c _ => ?_
     obtain ⟨η, hη0, hη⟩ := hη c
     have hx := mem_span_one_tmul_of_order_bound R R' F F' hmax hres (L c) (n c) η hη0 hη

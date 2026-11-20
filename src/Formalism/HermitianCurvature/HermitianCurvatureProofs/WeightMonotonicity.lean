@@ -37,7 +37,8 @@ theorem dm_one : (1 : Module.End ℂ V).dualMap = 1 := by
 theorem dm_sum {ι : Type*} (s : Finset ι) (f : ι → Module.End ℂ V) :
     (∑ i ∈ s, f i).dualMap = ∑ i ∈ s, (f i).dualMap := by
   ext φ x
-  simp [LinearMap.dualMap_apply, LinearMap.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [LinearMap.dualMap_apply, LinearMap.sum_apply, map_sum]
 
 theorem dm_intCast (z : ℤ) : ((z : Module.End ℂ V)).dualMap = (z : Module.End ℂ (Module.Dual ℂ V)) := by
   ext φ x

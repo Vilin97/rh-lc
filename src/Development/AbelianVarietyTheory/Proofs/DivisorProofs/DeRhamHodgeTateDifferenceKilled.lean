@@ -35,5 +35,6 @@ open MvPolynomial Formalism.BasicNotions.DV in
 theorem GlobalTheory.HTVert.onObj_aux1tAt_of_knownResults : Hypotheses2 → HypothesesH → OnObj fun _ O _ _ _ _ => DeRhamHodgeTateDifferenceKilledAt O.Y := by
   intro h2 hH D O hO _ A T H h Sx R p hp τ k hk Q
   obtain ⟨c, hc⟩ := GlobalTheory.HTVert.tagDR_sub_tagHT D.what₂.Tau O.Y.N Q
-  rw [hc, GlobalTheory.T.arithmetic_mixed_volume_parameter_max_two D O hO, Finset.mul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hc, GlobalTheory.T.arithmetic_mixed_volume_parameter_max_two D O hO, Finset.mul_sum, map_sum]
   exact Finset.sum_eq_zero fun y _ => GlobalTheory.T.arithmetic_mixed_volume_kills_difference h2 hH D O hO Sx _ (le_max_right _ _) p hp τ k hk y (c y)

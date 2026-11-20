@@ -44,7 +44,8 @@ theorem UpperTheory.V.Z.Tf.GlobalTraceComparison.Pi.uncutOf_pf :
     let ev : π.V →ₗ[ℂ] ℂ :=
       { toFun := fun ψ => ψ.1.1 g, map_add' := fun _ _ => rfl, map_smul' := fun _ _ => rfl }
     have h3 : (∑ b, e b (L v) • w b).1.1 g = ev (∑ b, e b (L v) • w b) := rfl
-    rw [h3, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h3, map_sum]
     exact h2
   have htr := hT π.V p.B L w e hspan
   refine ⟨?_, ?_⟩

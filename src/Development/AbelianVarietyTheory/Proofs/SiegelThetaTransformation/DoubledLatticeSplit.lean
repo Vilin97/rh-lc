@@ -115,7 +115,8 @@ theorem pair_sub_right (x y y' : Fin r → E) : pair x (y - y') = pair x y - pai
 
 theorem pair_vecMul (x y : Fin r → E) (M : Matrix (Fin r) (Fin r) E) :
     pair (x ᵥ* M) y = pair x (y ᵥ* ccT M) := by
-  simp only [pair, Matrix.vecMul, dotProduct, ccT, Matrix.transpose_apply, Matrix.map_apply, cc,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [pair, Matrix.vecMul, dotProduct, ccT, Matrix.transpose_apply, Matrix.map_apply, cc,
     map_sum, map_mul, IsCMField.complexConj_apply_apply, Finset.sum_mul, Finset.mul_sum]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => by ring
@@ -206,7 +207,8 @@ theorem vecMul_dblT (y₁ y₂ : Fin r → E) : Sum.elim y₁ y₂ ᵥ* dblT X =
 
 private theorem ccT_mul_siegel_theta_transformation (M N : Matrix (Fin r) (Fin r) E) : ccT (M * N) = ccT N * ccT M := by
   ext i j
-  simp [ccT, cc, Matrix.mul_apply, map_sum, map_mul, mul_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [ccT, cc, Matrix.mul_apply, map_sum, map_mul, mul_comm]
 
 private theorem ccT_one_fin_r : ccT (1 : Matrix (Fin r) (Fin r) E) = 1 := by
   simp only [ccT]

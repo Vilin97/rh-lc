@@ -110,7 +110,8 @@ lemma C_prod_geom (n : ℕ) [NeZero (n + 1)] :
 lemma R_prod_geom (n : ℕ) [NeZero (n + 1)] :
     ∏ i ∈ range n, (X - C (θ (n + 1) ^ (i + 1))) = ∑ i ∈ range (n + 1), (X ^ i : (R (n + 1))[X]) := by
   apply Polynomial.map_injective _ (φ_inj (n + 1))
-  simp only [Polynomial.map_prod, Polynomial.map_sum, Polynomial.map_sub, Polynomial.map_X,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Polynomial.map_prod, Polynomial.map_sum, Polynomial.map_sub, Polynomial.map_X,
     Polynomial.map_C, map_pow, φ_root, Polynomial.map_pow]
   simpa using C_prod_geom n
 

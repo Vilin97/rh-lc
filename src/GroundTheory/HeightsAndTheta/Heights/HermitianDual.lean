@@ -44,7 +44,8 @@ theorem dualCoord_injective [Module.Finite (𝓞 K) E] [Module.Projective (𝓞 
     refine LinearMap.ext fun e ↦ ?_
     rw [LinearMap.sum_apply]
     conv_rhs => rw [← hdecomp e]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun i _ ↦ ?_
     rw [LinearMap.smul_apply, map_smul, smul_eq_mul, smul_eq_mul, mul_comm]
   have hrec : ∀ x, ∑ i, dualCoord σ E x (1 ⊗ₜ g i) ⊗ₜ φ i = x := by

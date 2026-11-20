@@ -213,7 +213,8 @@ theorem div_le_of_integral (y : (Σ k, ι k) → Ω) (hP : (mCoordIdeal y).IsPri
       rw [e3]
       show _ = _ * ((p.coeff j : Ω) * t ^ j)
       ring
-    rw [map_add, map_sum, Finset.sum_congr rfl hsum, ← Finset.mul_sum, map_mul, map_pow, ht, mul_pow]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_add, map_sum, Finset.sum_congr rfl hsum, ← Finset.mul_sum, map_mul, map_pow, ht, mul_pow]
     simp only [map_prod, map_pow, aeval_X]
     linear_combination ((∏ k, y ⟨k, c k⟩ ^ e k) * aeval y b ^ n) * hp
 

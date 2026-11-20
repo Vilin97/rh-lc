@@ -72,7 +72,8 @@ theorem lin_iff {T T' : Over S} (h : T' ⟶ T) {n : ℕ} (b : Fin n → LB.Sec (
   constructor
   · intro H W r z J hJ
     have e := congrArg (r.stalkMap z).hom (H (r z) (fun ψ => J (r ≫ ψ)) (fun ψ => hJ (r ≫ ψ)))
-    rw [map_sum] at e
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at e
     refine ((congrArg (fun q => sv s q z J) (Category.comp_id r).symm).trans (sval_comp _ r _ z hJ)).trans
       (e.trans (Finset.sum_congr rfl fun i _ => ?_))
     rw [map_mul, ← gs_comp r _ z ⊤ trivial]

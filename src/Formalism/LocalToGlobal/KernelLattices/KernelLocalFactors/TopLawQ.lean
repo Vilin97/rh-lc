@@ -162,7 +162,8 @@ theorem redV_map {a b : ℕ} (x : HomE E a b) (hx : ∀ s l, IntAt P (x (Pi.sing
   have e : x v l = ∑ s, v s * x (Pi.single s 1) l := by
     have h1 : x v = ∑ s, v s • x (Pi.single s 1) := by
       conv_lhs => rw [pi_eq_sum_univ v]
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun s _ => ?_
       rw [map_smul]
       congr 2

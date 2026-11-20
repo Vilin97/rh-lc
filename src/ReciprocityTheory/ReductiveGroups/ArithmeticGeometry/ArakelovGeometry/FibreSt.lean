@@ -28,7 +28,8 @@ theorem exists_proj_ne_zero {x : Ix κ → Ω} {e : Fin (D + 1) → Ix κ} (hfr 
   have hQ : Q ∈ coordIdeal ℤ x := by
     rw [coordIdeal, RingHom.mem_ker]
     rw [Polynomial.eval₂_eq_sum_range] at hq
-    simp only [Q, map_sum, map_mul, map_pow, Fib.coneMap_rename, hg]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Q, map_sum, map_mul, map_pow, Fib.coneMap_rename, hg]
     convert hq using 2
     simp [coneMap]
   have hz0 := Fib.coneMap_eq_zero_of_mem_pts (coordIdeal_isHomogIdeal ℤ x) hz hQ
@@ -40,7 +41,8 @@ theorem exists_proj_ne_zero {x : Ix κ → Ω} {e : Fin (D + 1) → Ix κ} (hfr 
     simp at h1
     exact_mod_cast h1
   have h2 := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p n) hz0
-  simp only [Q, map_sum, map_mul, map_pow, Fib.coneMap_rename, hze] at h2
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Q, map_sum, map_mul, map_pow, Fib.coneMap_rename, hze] at h2
   have h3 : ∀ j, coneMap ℤ (0 : Fin (D + 1) → ℂ) (g j) =
       Polynomial.C ((constantCoeff (g j) : ℤ) : ℂ) := by
     intro j

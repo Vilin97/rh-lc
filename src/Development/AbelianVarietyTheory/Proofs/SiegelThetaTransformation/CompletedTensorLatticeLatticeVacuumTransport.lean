@@ -123,7 +123,8 @@ theorem actO_outer (S T : HSp D) (hS : S.gram = 1) (h : GA D S) (g : GA D T) (v 
   rw [h1, Matrix.one_mul, Matrix.mul_one] at key
   ext i j
   simp only [actO, key, outer, Matrix.mul_apply, Matrix.of_apply, Matrix.transpose_apply, Matrix.map_apply]
-  simp only [← emb_mul, ← map_sum, mul_comm (emb D _)]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← emb_mul, ← map_sum, mul_comm (emb D _)]
   congr 1
   simp only [fmt, fmtC, Formalism.L2.Theta.cM, Matrix.mulVec, dotProduct, Matrix.map_apply, Finset.mul_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun l _ => Finset.sum_congr rfl fun m _ => ?_

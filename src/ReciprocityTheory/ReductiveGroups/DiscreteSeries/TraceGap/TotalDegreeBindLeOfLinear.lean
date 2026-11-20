@@ -101,7 +101,8 @@ theorem range_one_layer {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ
     rw [SetLike.mem_coe, mem_restrictTotalDegree] at hQ
     have hsum : Xu u Q = ∑ m ∈ Q.support, AddMonoidAlgebra.coeff Q m • Xu u (monomial m 1) := by
       conv_lhs => rw [Q.as_sum]
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun m _ => ?_
       rw [← map_smul, smul_monomial, smul_eq_mul, mul_one]
     have horth : ∀ m ∈ Q.support, inner ℂ (Xu u Q) (Xu u (monomial m 1)) = 0 := by

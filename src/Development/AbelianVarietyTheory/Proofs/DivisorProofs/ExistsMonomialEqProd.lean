@@ -159,7 +159,8 @@ theorem powerSum_mul_vertical (hP : Hypotheses2) (M : TrueGeo.Model Y) {ι : Typ
         by_cases hj : (j : ℕ) < k
         · simp only [Finset.mem_filter, Finset.mem_univ, true_and, hj, if_true, hg']
         · simp only [Finset.mem_filter, Finset.mem_univ, true_and, hj, if_false])
-    rw [← hv, Finset.sum_mul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hv, Finset.sum_mul, map_sum]
     refine Finset.sum_congr rfl fun a _ => ?_
     have := hn ι L' Φ hΦ (Fin.cons (Pi.single i₀ 1 - Pi.single i₁ 1) fun j =>
       Pi.single (if (j : ℕ) < k then s a else ν' j) 1)

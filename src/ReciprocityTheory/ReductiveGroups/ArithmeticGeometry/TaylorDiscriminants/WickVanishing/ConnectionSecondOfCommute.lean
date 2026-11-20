@@ -23,7 +23,8 @@ theorem Dof_X (F : Fin d → PS k 2 d) (u : Fin d → k) (j : Fin d) :
 
 theorem vf_fm (B : FB R d O) (h : PS k 2 d) (u φ u' : Fin d → k) :
     vf (cf k B h u φ) (fm k h u') = C (∑ i, φ i * u' i) := by
-  simp only [fm, vf_sum, vf_mul, vf_C, mul_zero, add_zero, vf_sub, vf_X, vf_cf_liftX, cf_inr, add_sub_cancel_left,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [fm, vf_sum, vf_mul, vf_C, mul_zero, add_zero, vf_sub, vf_X, vf_cf_liftX, cf_inr, add_sub_cancel_left,
     map_sum, map_mul]
 
 theorem cf_bracket (hC : GE.DofCommSt) (B : FB R d O) (h : PS k 2 d) (u φ u' φ' : Fin d → k)
@@ -44,7 +45,8 @@ theorem connection_second_of_commute (hC : GE.DofCommSt) : ConnectionCommutator 
   have hb : (fun t => vf (cf k B h u φ) (cf k B h u' φ' t) - vf (cf k B h u' φ') (cf k B h u φ t)) =
       fun _ => (0 : AA k d) := funext (cf_bracket k hC B h u φ u' φ')
   rw [hb, vf_zeroc, vf_Cmul, vf_Cmul, vf_fm, vf_fm]
-  simp only [betaH, map_mul, map_sum, map_sub, Finset.sum_sub_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [betaH, map_mul, map_sum, map_sub, Finset.sum_sub_distrib]
   ring
 
 theorem connection_second_identity : ConnectionCommutator :=

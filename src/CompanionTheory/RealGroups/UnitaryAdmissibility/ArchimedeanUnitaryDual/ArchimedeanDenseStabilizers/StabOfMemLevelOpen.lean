@@ -181,7 +181,8 @@ theorem isTotDef_of_posDef (h : IsCMExt F E σ) (hJ : IsHermND σ J) (hp : Compa
     rfl
   have hfix : σ y = y := by
     rw [ey]
-    simp only [dotProduct, Matrix.mulVec, map_sum, map_mul, sigma_invol h]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [dotProduct, Matrix.mulVec, map_sum, map_mul, sigma_invol h]
     simp only [Finset.mul_sum]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_

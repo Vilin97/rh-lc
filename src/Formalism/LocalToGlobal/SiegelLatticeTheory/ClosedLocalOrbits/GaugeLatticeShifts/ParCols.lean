@@ -25,7 +25,8 @@ theorem hform_mulVec' {A : Type} [CommRing A] {n : Type} [Fintype n] [DecidableE
     rw [Finset.sum_comm]
   have hσ : (fun i => σ ((M *ᵥ x) i)) = (fun i => σ (x i)) ᵥ* (Formalism.UG.cT σ M) := by
     funext i
-    simp only [Matrix.mulVec, Matrix.vecMul, dotProduct, Formalism.UG.cT, Matrix.transpose_apply, Matrix.map_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, Matrix.vecMul, dotProduct, Formalism.UG.cT, Matrix.transpose_apply, Matrix.map_apply,
       map_sum, map_mul]
     exact Finset.sum_congr rfl (fun k _ => mul_comm _ _)
   rw [key, key, Matrix.dotProduct_mulVec, hσ, Matrix.vecMul_vecMul, Matrix.vecMul_vecMul, ← Matrix.mul_assoc, hM]

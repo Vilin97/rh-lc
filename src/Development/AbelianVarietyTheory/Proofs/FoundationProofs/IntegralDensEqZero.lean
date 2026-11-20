@@ -171,7 +171,8 @@ theorem card_eq_card (hH : IsHerm H) {A₁ A₂ : AddSubgroup V} [Fintype (A₁ 
       altE_swap hH y x]
     congr 1; push_cast; ring
   rw [Finset.sum_comm] at h1
-  simp only [fun (c : A₁ ⧸ A₂.addSubgroupOf A₁) (d : A₂ ⧸ A₁.addSubgroupOf A₂) =>
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [fun (c : A₁ ⧸ A₂.addSubgroupOf A₁) (d : A₂ ⧸ A₁.addSubgroupOf A₂) =>
     h3 ((Quotient.out c : A₁) : V) ((Quotient.out d : A₂) : V), ← map_sum] at h1
   rw [h2, map_natCast] at h1
   exact_mod_cast h1.symm
@@ -482,7 +483,8 @@ theorem mean_inter (hH : IsHerm H) {A₁ A₂ : AddSubgroup W} [Finite (A₂ ⧸
       have h2 : ((Real.sqrt m : ℝ) : ℂ)⁻¹ * ((Real.sqrt m : ℝ) : ℂ)⁻¹ = (m⁻¹ : ℝ) := by
         rw [← mul_inv, ← Complex.ofReal_mul, Real.mul_self_sqrt hpos.le, Complex.ofReal_inv]
       rw [rho_eq hH, inter_eq, ← h2]
-      simp only [dens, map_mul, map_sum, map_inv₀, Complex.conj_ofReal]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [dens, map_mul, map_sum, map_inv₀, Complex.conj_ofReal]
       rw [mul_mul_mul_comm, Finset.sum_mul_sum, mul_assoc]
       congr 1
       simp only [Finset.sum_mul]

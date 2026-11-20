@@ -189,13 +189,15 @@ theorem exists_maxEven_adapted : ∀ {R : Type} [CommRing R] (c : R →+* R) (�
   have hux : ∀ j k, h (x j) (u k) = 0 := by
     intro j k
     have : hl H (x j) (u k) = 0 := by
-      simp only [u, map_sub, map_sum, map_smul, hl_apply, smul_eq_mul, F.xx, F.xy]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [u, map_sub, map_sum, map_smul, hl_apply, smul_eq_mul, F.xx, F.xy]
       simp
     exact this
   have huy : ∀ j k, h (y j) (u k) = 0 := by
     intro j k
     have : hl H (y j) (u k) = 0 := by
-      simp only [u, map_sub, map_sum, map_smul, hl_apply, smul_eq_mul, F.yy, hyx]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [u, map_sub, map_sum, map_smul, hl_apply, smul_eq_mul, F.yy, hyx]
       simp
     exact this
   obtain ⟨t, ht⟩ := Hr.two.exists_right_inv

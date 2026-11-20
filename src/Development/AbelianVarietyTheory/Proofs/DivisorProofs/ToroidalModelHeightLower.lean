@@ -41,7 +41,8 @@ theorem tanEv_change {Y : Scheme.{0}} (t : SAB H Y) {K : Type} [CommRing K] {x :
   let L : Γ(omega t.G, ch'.U ⊓ ch.U) →+ K := AddMonoidHom.mk' (tanEv t hv h'') (GlobalTheory.LocM.tanEv_add t hv h'')
   have e := congrArg L
     ((ch'.isFrame.basis (inf_le_left : ch'.U ⊓ ch.U ≤ ch'.U)).sum_repr (Twist.resM _ inf_le_right (ch.e k)))
-  rw [map_sum] at e
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum] at e
   refine ((GlobalTheory.LocM.tanEv_resM t hv h'' inf_le_right _).symm.trans e.symm).trans (Finset.sum_congr rfl fun b _ => ?_)
   refine (GlobalTheory.LocM.tanEv_smul t hv h'' _ _).trans ?_
   rw [VB.IsFrame.basis_apply, GlobalTheory.LocM.tanEv_resM]
@@ -97,7 +98,8 @@ theorem genCoord_compat (hq : IsArithVar q d)
       rw [hD]
       exact evalPt_appLE_of_eq _ ρ hy _ _ _ _ _ _
     apply hinj
-    simp only [map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul]
     simp only [evalPt_res (x ≫ jB) inf_le_left hU h, evalPt_res (x ≫ jB) inf_le_right hU' h,
       evalPt_res (x ≫ jB) hI hII h, e1, e2, e3]
     rw [← hcomb k, tanEv_change Z.t hv ch ch' hc hc' hcc k]
@@ -110,7 +112,8 @@ theorem genCoord_compat (hq : IsArithVar q d)
       (Twist.resM L (inf_le_right : V ⊓ V' ≤ V') (Twist.resM L hV' (ℓ ch' b))) k =
       resG X hI (trCo (hℓ ch) (ℓ ch') k b) := by
     rw [trCo, ← (hℓ ch).repr_resM inf_le_left hI, Twist.resM_resM, Twist.resM_resM]
-  simp only [map_sum, Twist.resM_smul, e1, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Twist.resM_smul, e1, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply,
     Finsupp.coe_smul, Pi.smul_apply, smul_eq_mul, Module.Basis.repr_self, Finsupp.single_apply, mul_ite, mul_one,
     mul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true, e2]
   exact key k
@@ -147,7 +150,8 @@ theorem exists_tanCoord : ∀ {E : Type} [Field E] [NumberField E] [IsCMField E]
   have key (i : Fin r) : T.app V₀ (f₀ i) = ∑ b, A₀ b i • Twist.resM L hV₀ (ℓ ch₀ b) := by
     refine Twist.sec_ext_of_cover (fun x : X => V x ⊓ V₀) (fun _ => inf_le_right)
       (fun y hy => TopologicalSpace.Opens.mem_iSup.2 ⟨y, hx y, hy⟩) fun x => ?_
-    rw [genCoord_compat Z e ρ hq hW hρ hℓ hD ht (hV x) hV₀ (hf x) hf₀ (hAc x) hA₀ i, ← Twist.app_resM,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [genCoord_compat Z e ρ hq hW hρ hℓ hD ht (hV x) hV₀ (hf x) hf₀ (hAc x) hA₀ i, ← Twist.app_resM,
       ← ((hf x).basis (inf_le_left : V x ⊓ V₀ ≤ V x)).sum_repr (Twist.resM M inf_le_right (f₀ i)), map_sum]
     refine Finset.sum_congr rfl fun b _ => ?_
     rw [Scheme.Modules.Hom.app_smul, VB.IsFrame.basis_apply, Twist.app_resM, hT]

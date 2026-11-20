@@ -62,7 +62,8 @@ theorem abs_levi_lin_le {ι : Type} [Fintype ι] {N : ℕ} {Om : LocPot X} (hO :
   have hl : leviAt A (th u) j y w =
       ∑ p : ι × Fin N, u p.1 p.2 * leviAt A (th (Pi.single p.1 (Pi.single p.2 1))) j y w := by
     have := congrArg ((hlin j y hy w).mk' _) hu
-    rw [map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at this
     simpa only [map_smul, IsLinearMap.mk'_apply, smul_eq_mul] using this
   rw [hl, Finset.sum_mul, Finset.sum_mul]
   refine (Finset.abs_sum_le_sum_abs _ _).trans (Finset.sum_le_sum fun p _ => ?_)

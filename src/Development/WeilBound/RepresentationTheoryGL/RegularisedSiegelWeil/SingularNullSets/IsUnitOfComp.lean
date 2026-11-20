@@ -117,7 +117,8 @@ theorem crd_int_ev (k : Fin (Module.finrank D.host.F D.host.E)) :
       conv_lhs => rw [← B.sum_repr o]
       push_cast
       rfl
-    rw [ho, map_sum, Finsupp.coe_finsetSum, Finset.sum_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [ho, map_sum, Finsupp.coe_finsetSum, Finset.sum_apply, map_sum]
     refine sum_mem fun j _ => ?_
     rw [map_zsmul, Finsupp.smul_apply, map_zsmul]
     exact zsmul_mem (hv j) _
@@ -136,10 +137,12 @@ theorem glue_one (D : D7) (f : ∀ v : Pl D, Fv D.host.F v ⊗[D.host.F] D.host.
     exact hv _ (hf v)
   let C : Fin (Module.finrank D.host.F D.host.E) → Af D.host.F := fun k => RestrictedProduct.mk (c k) (hc k)
   refine ⟨∑ k, pairA D.host.F 0 (C k) ⊗ₜ[D.host.F] (Module.finBasis D.host.F D.host.E) k, fun v => ?_, ?_⟩
-  · rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum]
     conv_rhs => rw [← sum_crd (Fv D.host.F v) (f v)]
     rfl
-  · rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum]
     refine Finset.sum_eq_zero fun k _ => ?_
     show (0 : Ainf D.host.F) ⊗ₜ[D.host.F] _ = 0
     rw [TensorProduct.zero_tmul]

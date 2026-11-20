@@ -119,7 +119,8 @@ theorem mem_span_of {I : Type*} [Fintype I] (g : I → ∀ k, A k) (hg : ∀ i, 
       exact (ZMod.natCast_eq_natCast_iff' _ _ _).2 (Nat.mod_mod_of_dvd _ (pow_dvd_pow l hpn)))
     (fun m c => ∑ i, (c i).val • g i m = x m)
     (fun m n c hnm hc => by
-      rw [← hA.compat hS hx hnm, ← hc, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hA.compat hS hx hnm, ← hc, map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_nsmul, hA.compat hS (hg i) hnm, ZMod.val_natCast, ← hA.nsmul_mod])
     (fun m => by

@@ -203,7 +203,8 @@ theorem bkOn_orthogonal : LocalTateDuality → ∀ (D : Formalism.BasicNotions.D
   have e3 : z.1 g ⬝ᵥ red i K ρ g.1 (z'.1 h) =
       b * b' * algebraMap (X.O0 i) K (d g ⬝ᵥ (Tdual i s g.1).mulVec (d' h)) := by
     rw [red_apply, hρ]
-    simp only [dotProduct, Matrix.mulVec, e, e', map_sum, map_mul, Matrix.map_apply, smul_eq_mul, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [dotProduct, Matrix.mulVec, e, e', map_sum, map_mul, Matrix.map_apply, smul_eq_mul, Finset.mul_sum]
     refine Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
   refine e3.trans ?_
   rw [e1]

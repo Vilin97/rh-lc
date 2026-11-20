@@ -239,7 +239,8 @@ theorem jets_three {Y : GT ι} {θ : EuclideanSpace ℂ ι → ℂ} (hθ : θ �
       have h3 := hφ (Submodule.mem_sup_left (S := jets Y 3) ⟨_, h, rfl⟩)
       rw [LinearMap.mem_ker, hform, constantCoeff_taylorDir] at h3
       simp only [coeff_single_taylorDir _ (analyticAt_of_differentiable h.1 0)] at h3
-      rw [hc, map_sum, ← h3]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hc, map_sum, ← h3]
       simp only [map_smul, smul_eq_mul, zero_add, zero_sub]
       congr 1
       · ring

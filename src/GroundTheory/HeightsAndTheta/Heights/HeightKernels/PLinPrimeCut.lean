@@ -43,7 +43,8 @@ theorem subst_comp {n : ℕ} (α : T → k) (M : T → Fin (n + 2) → k) (c : T
   apply ringHom_int_ext
   rintro ⟨⟨⟨⟩⟩ | ⟨⟨⟩⟩, t⟩
   · simp [linPointMap, subst]
-  · simp only [linPointMap, RingHom.comp_apply, coe_eval₂Hom, eval₂_X, AlgHom.toRingHom_eq_coe,
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [linPointMap, RingHom.comp_apply, coe_eval₂Hom, eval₂_X, AlgHom.toRingHom_eq_coe,
       RingHom.coe_coe, map_sum, map_mul, subst, aeval_X, aeval_C, algebraMap_eq, Option.elim]
     rw [Fin.sum_univ_succAbove _ j₀]
     simp only [Fin.insertNth_apply_same, Fin.insertNth_apply_succAbove, cutForms, map_sub, map_mul,
@@ -62,7 +63,8 @@ theorem subst_ellForm {n : ℕ} (M : T → Fin (n + 2) → k) (c : T) (j₀ : Fi
       · subst hj
         simp only [AlgHom.comp_apply, subst, aeval_X, Option.elim, Fin.insertNth_apply_same]
         rw [Ideal.Quotient.mkₐ_eq_mk, Ideal.Quotient.eq, Ideal.mem_span_singleton']
-        simp only [liftBack, map_neg, map_sum, map_mul, rename_C, rename_X, Option.map_some]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [liftBack, map_neg, map_sum, map_mul, rename_C, rename_X, Option.map_some]
         refine ⟨-C (M c j)⁻¹, ?_⟩
         have e : ∀ j' : Fin (n + 1), C (M c (j.succAbove j') / M c j) * X (some (j.succAbove j')) =
             C (M c j)⁻¹ * (C (M c (j.succAbove j')) * X (some (j.succAbove j'))) := by
@@ -131,7 +133,8 @@ theorem X_some_eq {m : ℕ} (M : T → Fin m → k) (hM : LinFormsIndep M) (j : 
     _ = ∑ j', C (∑ t, g (fun t' => if t = t' then 1 else 0) j * M t j') * X (some j') := by
         simp_rw [hcoef]
     _ = ∑ t, C (g (fun t' => if t = t' then 1 else 0) j) * ellForm M t := by
-        simp only [ellForm, map_sum, map_mul, Finset.sum_mul, Finset.mul_sum, mul_assoc]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [ellForm, map_sum, map_mul, Finset.sum_mul, Finset.mul_sum, mul_assoc]
         exact Finset.sum_comm
 
 theorem mul_mem_range {m : ℕ} (α : T → k) (M : T → Fin m → k) (hα : Submodule.span ℤ (Set.range α) = ⊤)

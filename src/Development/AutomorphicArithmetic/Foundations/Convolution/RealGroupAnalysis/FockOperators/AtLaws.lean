@@ -42,7 +42,8 @@ theorem UpperTheory.ConvolutionTheory.R2.Fo.atLaws :
     · change (at1 w t * a).2 = (at1 w (t * TR.pInf F a w)).2
       rw [h2, hmul, h2, zero_mul]
   · refine TR.ad_ext ?_ ?_
-    · rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [map_sum]
       simp_rw [hp]
       ext w'
       simp [Finset.sum_apply, Pi.single_apply]

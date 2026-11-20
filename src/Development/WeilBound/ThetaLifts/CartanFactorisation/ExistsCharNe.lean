@@ -120,7 +120,8 @@ theorem apply_pure {ψ : AddChar (AF F) ℂ} (hψ : IsStd ψ) (S : Module.End �
         simp only [e2, ← Finset.sum_mul]
         change _ = G _ * _
         field_simp
-    rw [hsum, map_sum, Finset.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hsum, map_sum, Finset.sum_apply]
     refine Finset.sum_eq_zero fun z _ => ?_
     rw [map_sub, hS _ _ (pureA_mem f (hφ' z)), Pi.sub_apply, schr_mod]
     have : (fun i => (infE F y i).2) = 0 := rfl

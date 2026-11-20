@@ -216,7 +216,8 @@ theorem dotB_bijective (N : ℕ) : Function.Bijective (dotB (Ω := Ω) N).flip :
     refine ⟨fun i => f (Pi.single i 1), LinearMap.ext fun v => ?_⟩
     rw [LinearMap.flip_apply, dotB_apply]
     conv_rhs => rw [← Finset.univ_sum_single v]
-    simp only [dotProduct, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [dotProduct, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     have e : Pi.single i (v i) = v i • (Pi.single i 1 : Fin N → Ω) := by
       rw [← Pi.single_smul]

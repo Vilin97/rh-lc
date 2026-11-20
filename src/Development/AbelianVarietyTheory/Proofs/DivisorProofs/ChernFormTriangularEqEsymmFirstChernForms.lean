@@ -36,11 +36,13 @@ theorem chernAt_tri : ∀ (n s : ℕ) (T : V n → Matrix (Fin s) (Fin s) ℂ) (
   have key := GlobalTheory.T.chernCurvature_lowerTriangular_positive_diagonal n s T d v hT hd htri
   rw [chernAt, chernPoly, coeff_charpolyRev_neg_of_tri _ (fun a b hab => by
     simp [curvPoly, fun ξ η => (key ξ η).1 a b hab]), esymm]
-  simp only [map_sum, map_prod, aeval_X, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_prod, aeval_X, Finset.smul_sum]
   refine Finset.sum_congr rfl fun t ht => ?_
   have e (i : Fin s) : ofValues (ddc (fun x => -Real.log (d i x)) v) =
       kappa • (aeval sym (curvPoly T v i i) : Ev n) := by
-    simp only [ofValues, ddc, curvPoly, Matrix.of_apply, map_sum, map_mul, aeval_C, aeval_X, Finset.smul_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [ofValues, ddc, curvPoly, Matrix.of_apply, map_sum, map_mul, aeval_C, aeval_X, Finset.smul_sum,
       fun ξ η => (key ξ η).2 i, leviForm_neg, ← Algebra.smul_def, smul_smul, ContinuousLinearMap.neg_apply]
   simp only [e]
   rw [Finset.prod_smul, Finset.prod_const, (Finset.mem_powersetCard.1 ht).2]

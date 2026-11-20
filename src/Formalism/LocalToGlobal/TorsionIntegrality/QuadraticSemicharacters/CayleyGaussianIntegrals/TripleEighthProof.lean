@@ -183,7 +183,8 @@ theorem TripleConj_proof : TripleConj := by
     rw [← h1, ← h2, Finset.sum_comm]
 
   have hB : tripleSum H α Λ₁ S₃' S₂' = conj (∑ q ∈ R', psiT H α q.2 q.1) := by
-    rw [tripleSum_eq, ← hR'def, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [tripleSum_eq, ← hR'def, map_sum]
     refine Finset.sum_congr rfl fun q hq => ?_
     obtain ⟨q1, q2, q3⟩ := hR'.1 q hq
     rw [add_comm] at q3

@@ -132,7 +132,8 @@ theorem cx_at_alt (s1 : _root_.GlobalTheory.BigOn.Exp.TupLe.PlacesCondition) (s2
     rw [e3]
     simp only [GlobalTheory.ConjTwist.ser, singleSeries]
     ring
-  rw [hgen, GlobalTheory.TwTraceCx.gen_eq_smul hB ht hadm (hρ.weil_base _ _ _) hω,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hgen, GlobalTheory.TwTraceCx.gen_eq_smul hB ht hadm (hρ.weil_base _ _ _) hω,
     ← s3 _ _ _ _ _ _ _ _ _ _ p j hr hm ρ hρ hpin hlev _ _ _ _ ht hadm hω, ← hsum, map_sum, map_sum]
   simp only [Subring.smul_def, map_smul, eS, eA, eE, Finset.smul_sum, smul_smul]
   refine Finset.sum_congr rfl fun k _ => ?_

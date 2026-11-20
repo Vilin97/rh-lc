@@ -79,7 +79,8 @@ theorem lvData_localizesConst_of_crystalline [IsDomain O] {T : LocLat G Qp LL O}
       (Lb.levB T (c - (ell : ZMod n)) 1 ⟨C.t (c - (ell : ZMod n)) x, hx⟩ 0) = _
     have hlet : ((letE (c - (ell : ZMod n)) : LetA O n) • (⟨C.t (c - (ell : ZMod n)) x, hx⟩ : ↥(W.N T))) =
         ⟨C.t (c - (ell : ZMod n)) x, hx⟩ := Subtype.ext (C.t_letter _ x)
-    rw [mul_zero, zpow_zero, one_smul, ← cmp_eq, hlet,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [mul_zero, zpow_zero, one_smul, ← cmp_eq, hlet,
       comparison_of_reduction C (c - (ell : ZMod n)) hp9 e he x hx a hred, ← Module.End.coe_pow, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_smul, Submodule.coe_smul, hlam, lambda_coe_eq_frobenius_pow C c ell e k (he k)]

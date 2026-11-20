@@ -331,7 +331,8 @@ theorem exists_global (W : Formalism.L2.Theta.AE D) (hW : W ∈ intL D) (h3 : fj
     rw [evalV_singleV_same, evalV_singleV_ne _ v' _ hne] at h4
     exact one_ne_zero h4
   have hone' : fj D 1 = ∑ v ∈ P, pl D v + 2 * fj D β := by
-    rw [hone, map_add, map_sum, two_mul, two_mul, map_add]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hone, map_add, map_sum, two_mul, two_mul, map_add]
   have h1L : fj D 1 ∈ intL D :=
     AddSubgroup.subset_closure ⟨1, fun v => by rw [map_one]; exact one_mem _, 1, rfl⟩
   refine ⟨P.image f, fun e he => ?_, ⟨∑ v ∈ P, g v + fj D β * W,

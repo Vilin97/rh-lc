@@ -134,7 +134,8 @@ theorem hpow_congr (S : UniformizedDVR X.p O) (hS : S.SqP) (x : X.TT) (e : ℕ) 
       ∑ a : Fin (X.m + 1), (MvPolynomial.X ((x, true), a) * MvPolynomial.X ((x, false), a)) ^ (X.p ^ e) with hDdef
   have hD : hTop O X x ^ (X.p ^ e) - EhatT O X x (X.p ^ e) = MvPolynomial.map (algebraMap O (KK O)) D := by
     rw [EhatT_eq_sum, ← EhatT_one, EhatT_eq_sum, hDdef]
-    simp only [map_sub, map_pow, map_sum, map_mul, map_X, pow_one]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sub, map_pow, map_sum, map_mul, map_X, pow_one]
   rw [hD]
   apply Formalism.MainNotions.G.WittFrameLocaliserOrders.residue_zero_mem_order_one S
   have hp0 : ((X.p : ℕ) : IsLocalRing.ResidueField O) = 0 := by
@@ -142,7 +143,8 @@ theorem hpow_congr (S : UniformizedDVR X.p O) (hS : S.SqP) (x : X.TT) (e : ℕ) 
     exact S.p_mem
   haveI : CharP (IsLocalRing.ResidueField O) X.p := (CharP.charP_iff_prime_eq_zero Fact.out).2 hp0
   rw [hDdef]
-  simp only [map_sub, map_pow, map_sum, map_mul, map_X]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sub, map_pow, map_sum, map_mul, map_X]
   rw [sum_pow_char_pow, sub_self]
 
 theorem softH (S : UniformizedDVR X.p O) (hS : S.SqP) (x : X.TT) (e : ℕ) :

@@ -47,7 +47,8 @@ private theorem resM_colSec {N : ℕ} {A : Type} [CommRing A] (x : Sp A ⟶ Sp �
       GlobalTheory.FlagZ.Loc.colSecOn x V
         (G.map ((resG (Sp A) (le_top : V ≤ ⊤)).comp (Scheme.ΓSpecIso (CommRingCat.of A)).inv.hom)) j := by
   unfold GlobalTheory.FlagZ.Taut.colSec GlobalTheory.FlagZ.Loc.colSecOn
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [resM_smul]
   congr 1
@@ -79,7 +80,8 @@ private theorem exists_frame_mul {T : Scheme.{0}} (x : T ⟶ Sp ℤ) {N : ℕ} {
     obtain ⟨a, rfl⟩ := (he W hW).2 s
     have li := (GlobalTheory.VB.isFrame_iff.1 (isFrame_colSecOn x V C) W hW).1.comp _ (Fin.castLE_injective l.is_le)
     have ha := Fintype.linearIndependent_iff.1 li a (by
-      rw [← hs, Fintype.linearCombination_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hs, Fintype.linearCombination_apply, map_sum]
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [Scheme.Modules.Hom.app_smul, app_resM, hφ]
       rfl)
@@ -90,7 +92,8 @@ private theorem exists_frame_mul {T : Scheme.{0}} (x : T ⟶ Sp ℤ) {N : ℕ} {
     have := minor_mul 1 b.1 l hb' ((rowsEquiv _ _).symm c)
     rw [one_mul] at this
     exact Dvd.intro_left _ this.symm
-  · rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum]
     simp only [Scheme.Modules.Hom.app_smul, hφ, Loc.colSecOn, Finset.smul_sum, smul_smul, Matrix.submatrix_apply]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun i _ => ?_
@@ -120,14 +123,16 @@ private theorem app_pullbackSections_cell (ι : Type) [Fintype ι] (N : ℕ) (a 
       GlobalTheory.QCoh.pullbackSections (flStr ι N) (Taut.stdE N) (U := TautCell.cellU w) (V := ⊤) le_top
         (GlobalTheory.VB.freeFrame (Sp ℤ) (Fin N) i) := by
     refine (congrArg ((freeIso ι N).inv.app (TautCell.cellU w)) he).trans ?_
-    rw [TautCell.colU, TautCell.colOn, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [TautCell.colU, TautCell.colOn, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [Scheme.Modules.Hom.app_smul, app_resM, h1]
     exact congrArg _ (GlobalTheory.QCoh.res_pullbackSections _ _ _ _ _)
   refine (congrArg (((Scheme.Modules.pullbackComp f (flStr ι N)).hom.app (Taut.stdE N)).app V)
     ((GlobalTheory.QCoh.pullback_map_app_pullbackSections f (incl ι N a l) hV e).trans
       (congrArg (GlobalTheory.QCoh.pullbackSections f ((Scheme.Modules.pullback (flStr ι N)).obj (Taut.stdE N)) hV) h2))).trans ?_
-  rw [map_sum, map_sum, Loc.colSecOn]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, Loc.colSecOn]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [GlobalTheory.QCoh.pullbackSections_smul, Scheme.Modules.Hom.app_smul]
   exact congrArg (_ • ·) (LocTaut.pullbackComp_hom_app f (flStr ι N) (Taut.stdE N) (U := ⊤) le_top hV le_top _)

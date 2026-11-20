@@ -95,7 +95,8 @@ private theorem levelFn_mulOp {U : Subgroup (GL (Fin a) (Af E))} {Ξ : AlgRep E 
 private theorem ev_dCo (Ξ : AlgRep E a) {q : ℕ} (ω : Co Ξ q) (X : Fin (q + 1) → Herm E a) (g : GA E a) :
     ev (dCo (smLie Ξ) ω X) g =
       ∑ i : Fin (q + 1), (-1 : ℂ) ^ (i : ℕ) • ev (smLie Ξ (toL (X i).1) (ω (i.removeNth X))) g := by
-  rw [dCo, AlternatingMap.alternatizeUncurryFin_apply, map_sum, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [dCo, AlternatingMap.alternatizeUncurryFin_apply, map_sum, Finset.sum_apply]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_zsmul, Pi.smul_apply, ← Int.cast_smul_eq_zsmul ℂ]
   push_cast

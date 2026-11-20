@@ -74,7 +74,8 @@ lemma trace_eS {T U : Type} [AddCommGroup T] [Module K T] [AddCommGroup U] [Modu
     LinearMap.trace K U (eS τ σ) =
       charOf τ 1 / (Fintype.card G : K) * ∑ x : G, charOf τ x⁻¹ * charOf σ x := by
   unfold eS
-  rw [map_smul, map_sum, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_smul, map_sum, smul_eq_mul]
   congr 1
   refine Finset.sum_congr rfl fun x _ => ?_
   rw [map_smul, smul_eq_mul]
@@ -156,7 +157,8 @@ lemma asAlg_eAlg {T V : Type} [AddCommGroup T] [Module K T] [AddCommGroup V] [Mo
     (τ : Representation K G T) (ρ : Representation K G V) :
     ρ.asAlgebraHom (eAlg τ) = eS τ ρ := by
   unfold eAlg eS
-  rw [map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.smul_sum]
   refine Finset.sum_congr rfl fun x _ => ?_
   rw [Representation.asAlgebraHom_single, mul_smul]
 

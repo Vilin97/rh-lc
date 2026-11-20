@@ -257,7 +257,8 @@ theorem faceCut_data (hP : IsPolyFanOn bar φ X) [Module.Finite ℤ X] {m m' : �
         · linarith
       obtain ⟨k, c, hk, hkc⟩ := hF.2.2 (γ j) (hγ.mem j) (hγ.nonneg j) he
       have hk0 : h (k • γ j) = 0 := by
-        rw [hkc, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [hkc, map_sum]
         refine Finset.sum_eq_zero fun i _ => ?_
         rw [map_nsmul, (hh.2 (s i)).2 ⟨i, rfl⟩, smul_zero]
       rw [map_nsmul] at hk0

@@ -151,7 +151,8 @@ theorem mem_map_C_of_coeff_mem {I : Ideal R} (hI : I.FG) {g : MvPowerSeries σ R
   choose c hc using fun d => (Submodule.mem_span_range_iff_exists_fun R).1 (hg d)
   have : g = ∑ i, (show MvPowerSeries σ R from fun d => c d i) * C (s i) := by
     ext d
-    rw [← hc d, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hc d, map_sum]
     exact Finset.sum_congr rfl fun i _ => by rw [coeff_mul_C]; rfl
   rw [this]
   exact Ideal.sum_mem _ fun i _ => Ideal.mul_mem_left _ _

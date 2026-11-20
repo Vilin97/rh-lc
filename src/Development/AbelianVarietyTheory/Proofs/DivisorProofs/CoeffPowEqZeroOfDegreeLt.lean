@@ -48,10 +48,12 @@ theorem subst_sum_lgCurve_eq_lgSum : ∀ (C : Type) [Field C] [CharZero C] (v : 
     rw [PowerSeries.subst, MvPowerSeries.subst_comp_subst_apply (PowerSeries.HasSubst.X a).const hts]
     simp only [subst_X hts]
     rfl
-  rw [← coe_substAlgHom hts, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← coe_substAlgHom hts, map_sum]
   simp only [coe_substAlgHom, step]
   ext α
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [coeff_subst_of_pow_support p hp.two_le _ (fun m hm => hγ _ e m hm) _ (ht _) α]
   rw [Finset.sum_comm]
   rfl

@@ -33,7 +33,8 @@ theorem prV_tmul {F E : Type} [Field F] [NumberField F] [CommRing E] [Algebra F 
 theorem prV_sum_tmul {F E : Type} [Field F] [NumberField F] [CommRing E] [Algebra F E]
     (v : HeightOneSpectrum (𝓞 F)) {k : ℕ} (e : Fin k → E) (a : Fin k → FiniteAdeleRing (𝓞 F) F) :
     prV (E := E) v (∑ i, e i ⊗ₜ[F] a i) = ∑ i, e i ⊗ₜ[F] a i v := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_congr rfl fun i _ => prV_tmul v (e i) (a i)
 
 def adOf {F : Type} [Field F] [NumberField F] (a : ∀ v : HeightOneSpectrum (𝓞 F), v.adicCompletion F)

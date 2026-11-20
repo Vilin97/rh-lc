@@ -207,15 +207,18 @@ structure PerTied {X : ThetaX D} {T : ThetaTied D X} (Wl : WeilTied D X T) exten
 theorem kap_symm_tPt (L A : HSp D) (c : D.host.E) (a : Fin A.rank → AE D) (i : Fin L.rank) (k : Fin A.rank) :
     (kap L A).symm (tPt L A c a) i k = incA D (-(c * L.hD (L.frame i) (lineVec L))) * a k := by
   have : L.hD (L.frame i) (lineVec L) = ∑ m, L.gram m i := by
-    simp only [HSpace.hD, lineVec, map_sum, LinearMap.sum_apply, HSpace.gram]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [HSpace.hD, lineVec, map_sum, LinearMap.sum_apply, HSpace.gram]
   rw [this, WeilTieCompare.kap_symm_apply]
-  simp only [Matrix.mul_apply, Matrix.transpose_apply, gramA, Matrix.map_apply, tPt, Matrix.of_apply, map_neg, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mul_apply, Matrix.transpose_apply, gramA, Matrix.map_apply, tPt, Matrix.of_apply, map_neg, map_mul,
     map_sum, Finset.mul_sum, neg_mul, Finset.sum_mul, mul_neg, Finset.sum_neg_distrib]
   congr 1
   exact Finset.sum_congr rfl fun m _ => by ring
 
 theorem lineNorm_eq (L : HSp D) : lineNorm L = ∑ i, ∑ k, L.gram k i := by
-  simp only [lineNorm, HSpace.hD, lineVec, map_sum, LinearMap.sum_apply, HSpace.gram]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [lineNorm, HSpace.hD, lineVec, map_sum, LinearMap.sum_apply, HSpace.gram]
 
 theorem star_lineNorm (L : HSp D) : star (lineNorm L) = lineNorm L := L.herm.eq _ _
 
@@ -230,14 +233,16 @@ theorem hHom_tPt {L A : HSp D} (hr : L.rank ≤ A.rank) (c : D.host.E) (a a' : F
     hHom L A (tPt L A c a') (tPt L A c a) = incA D (c * star c * lineNorm L) * hA A a a' := by
   unfold hHom
   rw [if_pos hr, lineNorm_eq]
-  simp only [tPt, Matrix.of_apply, hA, map_neg, map_mul, map_sum, DualPairCheck.cA_incA, Finset.mul_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [tPt, Matrix.of_apply, hA, map_neg, map_mul, map_sum, DualPairCheck.cA_incA, Finset.mul_sum, Finset.sum_mul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [Finset.sum_comm_cycle]
   refine Finset.sum_congr rfl fun l _ => Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun k _ => by ring
 
 theorem cA_hA (A : HSp D) (a a' : Fin A.rank → AE D) : cA D (hA A a a') = hA A a' a := by
-  simp only [hA, map_sum, map_mul, DualPairCheck.cA_cA, DualPairCheck.cA_incA, DualPairCheck.gram_star]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hA, map_sum, map_mul, DualPairCheck.cA_cA, DualPairCheck.cA_incA, DualPairCheck.gram_star]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 
@@ -307,7 +312,8 @@ theorem isIsoSub : IsIsoSub B d.eM := by
       simpa [eMat] using congrFun hg k
     have h1 := congrArg (B.hT (d.f i)) h0
     have ef : ∀ l, B.hT (d.f i) (d.e l) = if l = i then 1 else 0 := fun l => d.ef l i
-    simpa [map_sum, ef] using h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [map_sum, ef] using h1
   · funext i j
     rw [BesselCompare.cT_mul]
     exact d.ee j i
@@ -341,7 +347,8 @@ theorem actV_one (v : B.V) : actV B 1 v = vecA B v := by
 
 theorem hD_fTop (y : B.V) (h : ∀ i, B.hD (d.f i) y = 0) : B.hD d.fTop y = 0 := by
   unfold HSpace.hD at h ⊢
-  rw [fTop, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [fTop, map_sum]
   exact Finset.sum_eq_zero fun i _ => by split_ifs <;> simp [h]
 
 theorem coords_of (n : GA D B) (a : Fin A.rank → AE D) (b : Fin d.ρ → AE D)
@@ -361,7 +368,8 @@ theorem coords_of (n : GA D B) (a : Fin A.rank → AE D) (b : Fin d.ρ → AE D)
   · have e : ∀ l, B.hD (d.e l) d.fTop = if l.1 + 1 = d.ρ then 1 else 0 := fun l => by
       have ef : ∀ i, B.hT (d.f i) (d.e l) = if l = i then 1 else 0 := fun i => d.ef l i
       unfold HSpace.hD
-      rw [fTop, map_sum, LinearMap.sum_apply, Finset.sum_eq_single l]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [fTop, map_sum, LinearMap.sum_apply, Finset.sum_eq_single l]
       · split_ifs
         · rw [ef, if_pos rfl]
         · rw [map_zero, LinearMap.zero_apply]
@@ -532,7 +540,8 @@ theorem isAniso_of_posDef {V : HSp D} (hs : V.SigOK) (hp : V.IsPosDef) : IsAniso
   have h3 : ∀ a : D.host.E, D.host.φ₀ (star a) = starRingEnd ℂ (D.host.φ₀ a) :=
     NumberField.IsCMField.complexEmbedding_complexConj D.host.E D.host.φ₀
   have h4 := congrArg (fun a => (D.host.φ₀ a).re) ((BesselCompare.hT_co V v v).symm.trans hv)
-  simp only [map_sum, map_mul, h3, map_zero, Complex.zero_re] at h4
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, h3, map_zero, Complex.zero_re] at h4
   exact h2.ne' h4
 
 theorem isAniso_Xs (T : ThetaTied D X) (t : ℕ) {j : ℕ} (hj : j ≤ D.R.m) : IsAniso (X.Xs t j) :=

@@ -50,7 +50,8 @@ theorem eq_one_of_slice_trivial : ∀ (W : Matrix (Fin 8) (Fin 8) ℤ) (S : Sche
       ∑ uv : Fin 8 × Fin 8, W uv.1 uv.2 • p (z ≫ pr uv.1) (z ≫ pr uv.2) := fun z => by
     have e := (cls_eq_iff hL (LB.isLB_linComb hP _ _)).2 hLP
     rw [cls_linComb hP] at e
-    rw [e, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, map_sum]
     refine Finset.sum_congr rfl fun uv _ => ?_
     rw [map_zsmul, ← pull_comp, ← Over.comp_left, comp_lift]
   obtain ⟨x', hx', -⟩ := huniv T fun v => if v = 0 then x else 1

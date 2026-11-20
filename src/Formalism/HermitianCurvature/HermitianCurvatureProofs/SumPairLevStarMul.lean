@@ -83,7 +83,8 @@ theorem pairLev_sum_left (hI : IntLevOn μ i U) {c : Fin r → ℂ} (hc : c ∈ 
 theorem pairLev_sum_right (hI : IntLevOn μ i U) {c : Fin r → ℂ} (hc : c ∈ OmX r) {ι : Type} (s : Finset ι)
     {Φ : RadSp k r z z' π π'} (hΦ : Φ ∈ U) (Ψ : ι → RadSp k r z z' π π') (hΨ : ∀ j, Ψ j ∈ U) :
     pairLev μ i Φ (∑ j ∈ s, Ψ j) c = ∑ j ∈ s, pairLev μ i Φ (Ψ j) c := by
-  rw [pairLev_swap, pairLev_sum_left hI hc s Ψ hΨ hΦ, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [pairLev_swap, pairLev_sum_left hI hc s Ψ hΨ hΦ, map_sum]
   exact Finset.sum_congr rfl fun j _ => (pairLev_swap (μ := μ) (i := i) (Ψ j) Φ c).symm
 
 def adjLev (μ : Measure (Mt k r)) (i : Fin (r + 1)) (U : Submodule ℂ (RadSp k r z z' π π')) (hI : IntLevOn μ i U)

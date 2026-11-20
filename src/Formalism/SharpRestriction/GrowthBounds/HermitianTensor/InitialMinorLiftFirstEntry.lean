@@ -113,7 +113,8 @@ theorem qc_resY_X_zero (A : Type) [CommRing A] (r : ℕ) (a : Fin (r + 1 + 1)) :
 
 theorem qc_resY_X_mid (A : Type) [CommRing A] (r : ℕ) (a : Fin (r + 1 + 1)) (j : Fin r) :
     resY A r (X (a, midI r j)) = ∑ i : Fin r, X (i, j) * (if a.val = (midI r i).val then 1 else 0) := by
-  simp [resY, subY, midOf_midI, idPoint, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [resY, subY, midOf_midI, idPoint, map_sum]
 
 theorem qc_resY_X_mid_mid (A : Type) [CommRing A] (r : ℕ) (i j : Fin r) :
     resY A r (X (midI r i, midI r j)) = X (i, j) := by

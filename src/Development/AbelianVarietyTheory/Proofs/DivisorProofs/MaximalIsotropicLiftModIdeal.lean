@@ -72,10 +72,12 @@ theorem isotropic_summand_lift : ∀ (R : Type) [CommRing R] (I : Ideal R) (D : 
     intro x y
     have hBx : B x y = ∑ i, s x i * B (e i) y := by
       conv_lhs => rw [hexp x]
-      simp [map_sum, LinearMap.sum_apply, smul_eq_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [map_sum, LinearMap.sum_apply, smul_eq_mul]
     have h0 : ∑ i, B (e i) y * (s x i - φ x (z i)) = 0 :=
       Finset.sum_eq_zero fun i _ => hII _ (hBI _ _) _ (hz' i x)
-    rw [hT, map_sum, hBx]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hT, map_sum, hBx]
     simp only [map_smul, smul_eq_mul]
     rw [Finset.mul_sum]
     have h1 : ∑ i, -c * (s x i * B (e i) y) - ∑ i, -c * (B (e i) y * φ x (z i)) = 0 := by

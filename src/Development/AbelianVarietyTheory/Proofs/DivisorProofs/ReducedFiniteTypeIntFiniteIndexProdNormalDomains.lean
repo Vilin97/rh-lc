@@ -101,7 +101,8 @@ theorem exists_conductor {R : Type} [CommRing R] {ι : Type} [Fintype ι] [Decid
   refine ⟨∑ i, y i, funext fun k => Subtype.ext ?_⟩
   change algebraMap R (FractionRing (R ⧸ p k)) (∑ i, y i) =
     algebraMap R (FractionRing (R ⧸ p k)) (∑ i, c i) * (r k : FractionRing (R ⧸ p k))
-  rw [map_sum, map_sum, Finset.sum_mul, Finset.sum_eq_single k, Finset.sum_eq_single k, hy k]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, Finset.sum_mul, Finset.sum_eq_single k, Finset.sum_eq_single k, hy k]
   · intro i _ hik
     rw [algebraMap_eq_zero_of_mem (p k) (hmemJ (hcJ i) hik), zero_mul]
   · intro h; exact absurd (Finset.mem_univ k) h

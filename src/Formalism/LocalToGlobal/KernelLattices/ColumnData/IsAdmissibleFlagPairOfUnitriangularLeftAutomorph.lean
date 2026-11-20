@@ -34,7 +34,8 @@ theorem formV_apply (A : ℝ) (n : Type) [Fintype n] (N N' : ℕ) (z w : n → F
 
 theorem formV_herm (A : ℝ) (n : Type) [Fintype n] (N N' : ℕ) : IsHerm (formV A n N N') := by
   intro x y
-  simp only [formV_apply, map_div₀, map_sum, map_mul, Complex.conj_conj, Complex.conj_ofReal]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [formV_apply, map_div₀, map_sum, map_mul, Complex.conj_conj, Complex.conj_ofReal]
   congr 1
   refine Finset.sum_congr rfl fun τ _ => Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   ring
@@ -752,7 +753,8 @@ theorem isoK_hermitian_sum_eq_emb4_hermitian_sum (γ : IsoK D) (x y : Fin 4 → 
   calc ∑ w, D.host.φ₀ ((γ.g x w : D.host.K) : D.host.E) * conj (D.host.φ₀ ((γ.g y w : D.host.K) : D.host.E))
       = D.host.φ₀ (∑ w, algebraMap D.host.K D.host.E (γ.g x w)
           * D.host.conj (algebraMap D.host.K D.host.E (γ.g y w))) := by
-        rw [map_sum]; refine Finset.sum_congr rfl fun w _ => ?_
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]; refine Finset.sum_congr rfl fun w _ => ?_
         rw [map_mul, CU.emb_conj]; rfl
     _ = D.host.φ₀ (algebraMap D.host.K D.host.E
           (∑ a, Algebra.trace D.host.K D.host.E (x a * D.host.conj (y a)))) := by rw [γ.isom]

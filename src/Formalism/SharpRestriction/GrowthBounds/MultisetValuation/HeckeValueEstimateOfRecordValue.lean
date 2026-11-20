@@ -188,7 +188,8 @@ theorem Zop_coe (hT : RestTmFQ X) (v : X.Pl) (u m : ℕ → X.G.Kf) {j : ℕ} (h
 private theorem eval_smul_esymm_eq_pow_mul {K σ : Type} [Field K] [Fintype σ] (c : K) (x : σ → K) (l : ℕ) :
     MvPolynomial.eval (fun s => c * x s) (MvPolynomial.esymm σ K l) =
       c ^ l * MvPolynomial.eval x (MvPolynomial.esymm σ K l) := by
-  simp only [MvPolynomial.esymm, map_sum, map_prod, MvPolynomial.eval_X, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [MvPolynomial.esymm, map_sum, map_prod, MvPolynomial.eval_X, Finset.mul_sum]
   refine Finset.sum_congr rfl fun t ht => ?_
   rw [Finset.prod_mul_distrib, Finset.prod_const, (Finset.mem_powersetCard.mp ht).2]
 

@@ -73,7 +73,8 @@ theorem mem_pplus (ε : Fin n → Bool) (E : Fin n → Fin n → Module.End ℂ 
 theorem stab_pplus (ε : Fin n → Bool) (E : Fin n → Fin n → Module.End ℂ V) (hE : GlRel E) {c d : Fin n}
     (hc : ε c = false) (hd : ε d = false) : ∀ v ∈ pplus ε E, E c d v ∈ pplus ε E := by
   rintro _ ⟨w, rfl⟩
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Submodule.sum_mem _ fun i _ => ?_
   obtain ⟨⟨a, b⟩, ha, hb⟩ := i
   dsimp only at ha hb ⊢

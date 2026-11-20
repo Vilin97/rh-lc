@@ -29,7 +29,8 @@ theorem subst_lin {σ τ ι : Type} [Finite σ] [Fintype ι] {a : σ → MvPower
     (ha : ∀ s, constantCoeff (a s) = 0) (c : ι → C) (f : ι → MvPowerSeries σ C) :
     subst a (∑ y, c y • f y) = ∑ y, c y • subst a (f y) := by
   have hs := hasSubst_of_constantCoeff_zero ha
-  rw [← substAlgHom_apply hs, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← substAlgHom_apply hs, map_sum]
   refine Finset.sum_congr rfl fun y _ => ?_
   rw [substAlgHom_apply, subst_smul hs]
 
@@ -38,7 +39,8 @@ theorem lg_cc (H : RLaw X V) (i : κ) : constantCoeff (X.lg i) = 0 := by
 
 theorem lin_cc (H : RLaw X V) {τ : Type} {a : κ → MvPowerSeries τ C} (ha : ∀ s, constantCoeff (a s) = 0)
     (A : Matrix κ κ C) (x : κ) : constantCoeff (∑ y, A x y • subst a (X.lg y)) = 0 := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_eq_zero fun y _ => ?_
   rw [constantCoeff_smul, cc_subst ha, lg_cc H, smul_zero]
 

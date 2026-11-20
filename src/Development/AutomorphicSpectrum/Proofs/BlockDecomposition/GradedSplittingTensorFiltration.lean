@@ -188,7 +188,8 @@ theorem tensEquiv_mem_iff (r : ℕ) (z : ∀ i, S.N i ⊗[O] Γ) :
     rw [← coord_tensEquiv S i z]
     exact coord_map_eq_zero S i hi h
   · intro h
-    rw [← Finset.univ_sum_single z, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Finset.univ_sum_single z, map_sum]
     refine Ideal.sum_mem _ fun i _ => ?_
     by_cases hi : (i : ℕ) < r
     · rw [h i hi, Pi.single_zero, map_zero]

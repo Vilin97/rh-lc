@@ -29,7 +29,8 @@ theorem siegelGauss_pair_standard (l : Type) [Fintype l] [DecidableEq l] (τ : M
     rw [e, hσdef, Matrix.add_mulVec, dotProduct_add, Matrix.smul_mulVec, Matrix.one_mulVec, dotProduct_smul]
     simp only [map_mul, map_neg, conj_ofReal, smul_eq_mul]
     have : conj ((fun i => (x i : ℂ)) ⬝ᵥ (fun i => (x i : ℂ))) = (fun i => (x i : ℂ)) ⬝ᵥ (fun i => (x i : ℂ)) := by
-      simp [dotProduct, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [dotProduct, map_sum]
     rw [this]
     ring_nf
     simp [I_sq]

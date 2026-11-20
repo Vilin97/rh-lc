@@ -43,7 +43,8 @@ theorem sC_mul (a b c d : Fin n) : sC V a b * sC V c d = if b = c then sC V a d 
 theorem compactWordAction_commute (hV : IsKStableSub ε E V) (a b c d : Fin n) :
     compactWordAction ε E V hV a b * sC V c d = sC V c d * compactWordAction ε E V hV a b := by
   refine Finsupp.lhom_ext fun p v => ?_
-  rw [Module.End.mul_apply, Module.End.mul_apply, sC_single, compactWordAction_single, map_add, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Module.End.mul_apply, Module.End.mul_apply, sC_single, compactWordAction_single, map_add, map_sum]
   by_cases h1 : p.2 = d <;> by_cases h : ε a = ε b <;>
     simp only [h1, h, if_true, if_false, dif_pos, dif_neg, not_false_eq_true, compactWordAction_single, map_smul,
       sC_single, map_zero, smul_zero, sum_const_zero, add_zero]

@@ -26,7 +26,8 @@ variable [Fintype H] [Fintype G]
 
 theorem cycNorm_mulEquiv (e : H ≃* G) (f : V ≃+ W) (hf : ∀ h x, f (ρ' h x) = ρ (e h) (f x))
     (x : V) : f (cycNorm ρ' x) = cycNorm ρ (f x) := by
-  rw [cycNorm_apply, cycNorm_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [cycNorm_apply, cycNorm_apply, map_sum]
   simp_rw [hf]
   exact Fintype.sum_equiv e.toEquiv _ _ fun _ ↦ rfl
 

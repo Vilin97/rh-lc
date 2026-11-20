@@ -197,7 +197,8 @@ theorem integral_conj_character_mul_character_self [ρ.IsIrreducible]
     fun i j => integrable_of_continuous_of_compactSpace μ
       ((Complex.continuous_conj.comp (continuous_const.inner (hρc _))).mul
         (continuous_const.inner (hρc _)))
-  simp only [Representation.character, LinearMap.trace_eq_sum_inner _ b, _root_.map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Representation.character, LinearMap.trace_eq_sum_inner _ b, _root_.map_sum,
     Finset.sum_mul_sum]
   rw [integral_finsetSum _ (fun i _ => integrable_finsetSum _ fun j _ => hi i j)]
   simp only [integral_finsetSum _ (fun j _ => hi _ j),

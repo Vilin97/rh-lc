@@ -61,7 +61,8 @@ theorem jetRing_π_algebraMap {I : Type} [Fintype I] {n : ℕ} (J : JetRing ℂ 
 
 theorem π_jet (hJ : JetCalc) {I : Type} [Fintype I] {n : ℕ} (J : JetRing ℂ I n) (f : (I → ℂ) → ℂ) : J.π (jet J f) = f 0 := by
   obtain ⟨-, -, -, -, -, ht, -⟩ := hJ I n J
-  simp only [jet, taylor, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [jet, taylor, map_sum]
   rw [Finset.sum_eq_single 0]
   · simp [Algebra.smul_def, jetRing_π_algebraMap]
   · intro k _ hk

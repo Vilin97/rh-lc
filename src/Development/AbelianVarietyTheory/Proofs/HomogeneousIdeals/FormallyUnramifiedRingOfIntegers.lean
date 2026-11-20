@@ -138,7 +138,8 @@ theorem exists_eigen_of_projective (M : Type*) [AddCommGroup M] [Module O M] [Mo
         simp [c, smul_tmul, tmul_sum]
     choose u hu using fun k ↦ (hr (c k z)).mpr fun x ↦ by rw [← map_smul, hz, hc]
     refine ⟨∑ k, u k ⊗ₜ t (Pi.single k 1), ?_⟩
-    rw [map_sum, ← hsum z]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, ← hsum z]
     exact Finset.sum_congr rfl fun k _ ↦ by rw [← hu]; rfl
 
 theorem exists_eigen_tensor [Module.Finite O M] [Module.Projective O M]

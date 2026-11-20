@@ -37,7 +37,8 @@ theorem re_twist (g : ℂ →+* ℂ) (hg : g = RingHom.id ℂ ∨ g = starRingEn
   · simp
   · have e : (∑ j, ∑ j', starRingEnd ℂ (b j) * starRingEnd ℂ (starRingEnd ℂ (b j')) * starRingEnd ℂ (M j j')) =
         starRingEnd ℂ (∑ j, ∑ j', b j * starRingEnd ℂ (b j') * M j j') := by
-      simp only [map_sum, map_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_mul]
     rw [e, Complex.conj_re]
 
 theorem sqrt_le_of_bounds {t N A pn hh lf : ℝ} (hN : 0 < N) (h1 : t * N ≤ (A * pn) ^ 2)
@@ -83,7 +84,8 @@ theorem GlobalTheory.CompanionTheory.Ar.Rec.berg_dual : ∀ (D : D7) (H : Recipr
     rw [hPeq x hx]
     have e1 : ∀ i, rdU (U (goodOf c σ)) (fs i) k x = ∑ j, goodOf c σ (b i j) * rdU (U (goodOf c σ)) (ω j) k x := by
       intro i
-      rw [← hb i, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hb i, map_sum]
       simp [Finset.sum_apply, map_smulₛₗ]
     simp only [e1, has', Finset.mul_sum, Finset.sum_mul]
     rw [Finset.sum_comm]
@@ -109,7 +111,8 @@ theorem GlobalTheory.CompanionTheory.Ar.Rec.berg_dual : ∀ (D : D7) (H : Recipr
     split_ifs <;> rfl
   have hsum : ∑ j, Small.goodTwist c σ (as' j) * lin (ω j) =
       Small.goodTwist c σ (P y) := by
-    rw [hQ y hy, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hQ y hy, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [hlin, map_mul]
   have hre : (∑ j, ∑ j', Small.goodTwist c σ (as' j) * starRingEnd ℂ (Small.goodTwist c σ (as' j')) *

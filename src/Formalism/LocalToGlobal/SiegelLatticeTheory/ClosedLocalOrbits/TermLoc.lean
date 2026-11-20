@@ -53,7 +53,8 @@ theorem gram_det_ne : (Matrix.of (gramV D)).det ≠ 0 := by
     intro j
     have := congrFun hv j
     simp only [Matrix.vecMul, dotProduct, Matrix.of_apply, Pi.zero_apply, gramV, brS] at this
-    rw [hw, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hw, map_sum]
     simpa [map_smul, smul_eq_mul] using this
   have hall : (VS D).hT.flip w = 0 := b.ext fun j => by simpa using hj j
   have hw0 : w = 0 := (VS D).nondeg.2 w fun x => by
@@ -82,7 +83,8 @@ def locHerm (M : ∀ p : PlF D, Loc.Model (D.s.atP p).Fp (D.s.atP p).Ep) (p : Pl
   h_smul_left a x y := by
     simp only [LocFacts₂, Pi.smul_apply, smul_eq_mul, Finset.mul_sum, mul_assoc]
   h_herm x y := by
-    simp only [LocFacts₂, map_sum, map_mul, (M p).L.cj_cj, cj_iota hcj, star_gramV]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [LocFacts₂, map_sum, map_mul, (M p).L.cj_cj, cj_iota hcj, star_gramV]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
     ring
@@ -126,12 +128,14 @@ theorem baseChangeAt_form (M : ∀ p : PlF D, Loc.Model (D.s.atP p).Fp (D.s.atP 
   have key : (VS D).hT y x = ∑ j, ∑ i, star ((VS D).frame.repr y j) *
       ((VS D).frame.repr x i * (VS D).hT ((VS D).frame j) ((VS D).frame i)) := by
     conv_lhs => rw [← (VS D).frame.sum_repr y, ← (VS D).frame.sum_repr x]
-    simp only [map_sum, map_smulₛₗ, smul_eq_mul, starRingEnd_apply, LinearMap.sum_apply, LinearMap.smul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smulₛₗ, smul_eq_mul, starRingEnd_apply, LinearMap.sum_apply, LinearMap.smul_apply,
       RingHom.id_apply, Finset.mul_sum]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun i _ => ?_
     ring
-  simp only [LocFacts₂, brS, key, baseChange₂, AddMonoidHom.coe_mk, ZeroHom.coe_mk, cj_iota hcj, map_sum, map_mul, gramV]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [LocFacts₂, brS, key, baseChange₂, AddMonoidHom.coe_mk, ZeroHom.coe_mk, cj_iota hcj, map_sum, map_mul, gramV]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   ring

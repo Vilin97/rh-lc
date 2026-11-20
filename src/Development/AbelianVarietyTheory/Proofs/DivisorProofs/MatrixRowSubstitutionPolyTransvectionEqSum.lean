@@ -8,7 +8,8 @@ theorem natDegree_rowGen_le (O : Type) [CommRing O] (N : ℕ) (a b : Fin N)
     (f : MvPolynomial (Fin N × Fin N) O) :
     (rowGen O (n := N) a b f).natDegree ≤ f.totalDegree := by
   conv_lhs => rw [f.as_sum]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   apply Polynomial.natDegree_sum_le_of_forall_le
   intro m hm
   rw [rowGen, aeval_monomial]

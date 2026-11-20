@@ -21,7 +21,8 @@ open MvPowerSeries in
 private lemma subst_sum_smul_X' {C : Type} [Field C] {σ τ ι : Type} [Fintype ι]
     {b : σ → MvPowerSeries τ C} (hb : HasSubst b) (c : ι → C) (g : ι → σ) :
     subst b (∑ a, c a • (X (g a) : MvPowerSeries σ C)) = ∑ a, c a • b (g a) := by
-  rw [← coe_substAlgHom hb, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← coe_substAlgHom hb, map_sum]
   simp only [map_smul, coe_substAlgHom, subst_X hb]
 
 open MvPowerSeries in
@@ -58,7 +59,8 @@ theorem _root_.GlobalTheory.FGDepth.Coord.depth_in_coords : ∀ (C : Type) [Fiel
   have hexS : HasSubst (_root_.GlobalTheory.FGDepth.expOf G) := hasSubst_of_constantCoeff_zero hex0
   have hLin0 : ∀ e, constantCoeff (∑ a, u a e • (X a : MvPowerSeries (Fin i) C)) = 0 := by
     intro e
-    simp [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum]
   have hLinS : HasSubst fun e => ∑ a, u a e • (X a : MvPowerSeries (Fin i) C) :=
     hasSubst_of_constantCoeff_zero hLin0
   have hΦtS : HasSubst fun a => subst t (Φ a) :=
@@ -91,7 +93,8 @@ theorem _root_.GlobalTheory.FGDepth.Coord.depth_in_coords : ∀ (C : Type) [Fiel
   have hLinB0 : ∀ (b : Fin i) (e : Fin d),
       constantCoeff (∑ a, u a e • (X ⟨b, a⟩ : MvPowerSeries (Σ _ : Fin i, Fin i) C)) = 0 := by
     intro b e
-    simp [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum]
   have hLinBS : ∀ b : Fin i, HasSubst fun e =>
       ∑ a, u a e • (X ⟨b, a⟩ : MvPowerSeries (Σ _ : Fin i, Fin i) C) :=
     fun b => hasSubst_of_constantCoeff_zero (hLinB0 b)

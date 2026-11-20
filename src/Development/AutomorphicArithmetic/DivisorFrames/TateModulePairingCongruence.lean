@@ -29,7 +29,8 @@ private theorem exists_dual_fam : ∃ (N : ℕ) (a s : Fin N → Dw.La),
     simp only [hs, Module.Basis.coord_apply, a.sum_repr]
   refine ⟨N, a, s, h1, fun y => Dw.unimod.1 (LinearMap.ext fun x => ?_)⟩
   conv_rhs => rw [← h1 x]
-  simp only [map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply, smul_eq_mul]
   exact Finset.sum_congr rfl fun m _ => mul_comm _ _
 
 private theorem pr_tmul {K : Type} [CommRing K] (c : K) (x a : Dw.La) :
@@ -115,7 +116,8 @@ private theorem isot (p : ℕ) [Fact p.Prime] (n : ℕ) {T : Type} [AddCommGroup
     have e1 : Dw.EF.baseChange ℂ_[p] (B (1 ⊗ₜ f x)) (B w') =
         ∑ m, pr Dw (B w') (a m) * -algebraMap ℤ_[p] ℂ_[p] (β (f x) (f (s m))) := by
       conv_lhs => rw [← pr_expand Dw h2 (B w')]
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun m _ => ?_
       rw [map_smul, smul_eq_mul]
       congr 1
@@ -123,7 +125,8 @@ private theorem isot (p : ℕ) [Fact p.Prime] (n : ℕ) {T : Type} [AddCommGroup
       rw [LinearMap.BilinForm.baseChange_tmul, _root_.mul_one, Algebra.algebraMap_eq_smul_one]
     have e2 : β.baseChange ℂ_[p] w' (1 ⊗ₜ f x) = ∑ m, pr Dw (B w') (a m) * (Dw.EF x (s m) : ℂ_[p]) := by
       conv_lhs => rw [← h1 x]
-      simp only [map_sum, map_zsmul, TensorProduct.tmul_sum, TensorProduct.tmul_smul, hB, zsmul_eq_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_zsmul, TensorProduct.tmul_sum, TensorProduct.tmul_smul, hB, zsmul_eq_mul]
       refine Finset.sum_congr rfl fun m _ => ?_
       rw [← LinearMap.IsAlt.neg (B := Dw.EF) Dw.alt x (s m)]
       push_cast
@@ -139,7 +142,8 @@ private theorem isot (p : ℕ) [Fact p.Prime] (n : ℕ) {T : Type} [AddCommGroup
   have e4 : Dw.EF.baseChange ℂ_[p] (B w) (B w') = φ w := by
     rw [hφ, h0, mul_zero, add_zero]
   have e5 : φ w = ∑ j, β.baseChange ℂ_[p] w (1 ⊗ₜ e j) * φ (1 ⊗ₜ t j) := by
-    conv_lhs => rw [← (t.baseChange ℂ_[p]).sum_repr w, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [← (t.baseChange ℂ_[p]).sum_repr w, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_smul, smul_eq_mul, ht, Module.Basis.baseChange_apply]
   rw [e4, e5]
@@ -152,7 +156,8 @@ private theorem exists_lin {K V : Type} [CommRing K] [AddCommGroup V] [Module K 
   obtain ⟨N, a, s, h1, -⟩ := exists_dual_fam Dw
   refine ⟨∑ m, (g (a m)).smulRight ((1 : K) ⊗ₜ[ℤ] s m), fun w x => ?_⟩
   conv_rhs => rw [← h1 x]
-  simp only [pr, LinearMap.sum_apply, LinearMap.smulRight_apply, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [pr, LinearMap.sum_apply, LinearMap.smulRight_apply, map_sum,
     map_smul, LinearMap.smul_apply, LinearMap.BilinForm.baseChange_tmul, map_zsmul,
     smul_eq_mul, zsmul_eq_mul, _root_.mul_one]
   exact Finset.sum_congr rfl fun m _ => by simp [mul_comm]

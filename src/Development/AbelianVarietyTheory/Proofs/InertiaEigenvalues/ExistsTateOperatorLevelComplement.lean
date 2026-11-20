@@ -138,7 +138,8 @@ theorem int_decomp (K : FinExt l) {j : ℕ} (hj : 1 ≤ j) (c : ℕ) : ∀ x : O
       apply Nat.Coprime.pow_right
       have ha0 : (a : ℕ) ≠ 0 := fun h => (Finset.ne_of_mem_erase ha) (Fin.ext h)
       exact (Nat.coprime_of_lt_prime ha0 a.2 hp).symm
-    · rw [← Finset.add_sum_erase _ _ (Finset.mem_univ (0 : Fin l)), map_add, map_sum, ← add_assoc,
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [← Finset.add_sum_erase _ _ (Finset.mem_univ (0 : Fin l)), map_add, map_sum, ← add_assoc,
         ← hod]
       simp
 
@@ -252,7 +253,8 @@ theorem solve_alg (hact : IsActC act) (hχ : IsCyc χ) (K : FinExt l) {j : ℕ} 
     sum_mem fun k _ => act_algC hact K (hgk k) (Xalg_alg K j hu), ?_⟩
   have hs : act g (∑ k ∈ Finset.range (l ^ b), act (g ^ k) u) -
       ∑ k ∈ Finset.range (l ^ b), act (g ^ k) u = act (g ^ l ^ b) u - act (g ^ 0) u := by
-    rw [← Finset.sum_range_sub (fun k => act (g ^ k) u), map_sum, ← Finset.sum_sub_distrib]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Finset.sum_range_sub (fun k => act (g ^ k) u), map_sum, ← Finset.sum_sub_distrib]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [pow_succ', map_mul]
     rfl

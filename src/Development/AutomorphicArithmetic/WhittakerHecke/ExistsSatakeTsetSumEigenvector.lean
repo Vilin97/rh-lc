@@ -139,4 +139,5 @@ theorem UpperTheory.exists_satakeTset_sum_eigenvector :
     exact inv_mem w har hπ (satakeB_mem w hϖ hu _)
   · rw [Equiv.sum_comp e.symm (fun i => ρ (z⁻¹ * satakeB w hϖ hu i) f)]
     simp only [map_mul, Module.End.mul_apply]
-    rw [← map_sum, hsum _ (Nat.sub_le _ _), map_smul, hzi, smul_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, hsum _ (Nat.sub_le _ _), map_smul, hzi, smul_smul]

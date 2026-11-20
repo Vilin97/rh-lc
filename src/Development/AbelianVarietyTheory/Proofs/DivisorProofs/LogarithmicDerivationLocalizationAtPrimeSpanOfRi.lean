@@ -76,7 +76,8 @@ theorem logDerivation_atPrime_span : ∀ (F A R : Type) [Field F] [CommRing A] [
       intro s; induction s using Finset.induction_on with
       | empty => simp
       | insert x s hx ih => rw [Finset.sum_insert hx, Finset.sum_insert hx, Derivation.add_apply, ih, Derivation.smul_apply, smul_eq_mul]
-    rw [this, map_sum]; simp only [map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [this, map_sum]; simp only [map_mul]
   have e2 : algebraMap A R (D₁ a) = algebraMap A R (t' * s) * D' (algebraMap A R a) := by
     rw [hD₁, map_mul, hD₀, map_mul, mul_assoc]
   rw [e2] at e1

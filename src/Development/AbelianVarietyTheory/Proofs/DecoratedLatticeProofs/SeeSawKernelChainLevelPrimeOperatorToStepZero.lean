@@ -51,7 +51,8 @@ theorem S_smul (o : TDat c k ι) (ε : ℕ → ι → 𝓀[k]ˣ) (j : ℕ) (a : 
 theorem S_sum (o : TDat c k ι) (ε : ℕ → ι → 𝓀[k]ˣ) (j : ℕ) {α : Type} (s : Finset α) (f : α → GA D (c.X j) → ℂ) :
     o.S ε j (∑ a ∈ s, f a) = ∑ a ∈ s, o.S ε j (f a) := by
   obtain ⟨L, hL⟩ := S_lin o ε j
-  rw [hL, map_sum]; simp only [hL]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hL, map_sum]; simp only [hL]
 
 theorem lift_smul {S T : HSp D} (kd : KerDat S T) (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam D) (x : DefSp S) (y : DefSp T)
     (P : PolF D T.rank S.rank) (a : ℂ) (φ : GA D S → ℂ) :

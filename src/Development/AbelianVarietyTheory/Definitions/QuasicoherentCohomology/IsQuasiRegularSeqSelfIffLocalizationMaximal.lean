@@ -269,7 +269,8 @@ theorem monoToPowGr_mk (f : ι → R) (a : ℕ) (c : MonoDeg ι a → M) :
       powGr.mk _ M a ⟨∑ α, monoVal f α.1 • c α, (mem_pow_smul_top_iff f a _).mpr ⟨c, rfl⟩⟩ := by
   rw [monoToPowGr_apply]
   simp only [powGr.mulElem_mk]
-  rw [← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum]
   congr 1
   ext
   simp
@@ -521,7 +522,8 @@ noncomputable def monoToQuotPow (f : ι → R) (a : ℕ) :
 theorem monoToQuotPow_mk (f : ι → R) (a : ℕ) (c : MonoDeg ι a → R) :
     monoToQuotPow f a (fun α => Ideal.Quotient.mk _ (c α)) =
       Ideal.Quotient.mk _ (∑ α, monoVal f α.1 * c α) := by
-  rw [monoToQuotPow, LinearMap.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [monoToQuotPow, LinearMap.sum_apply, map_sum]
   rfl
 
 variable {M : Type*} [AddCommGroup M] [Module R M]

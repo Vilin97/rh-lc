@@ -47,7 +47,8 @@ theorem h_zero_right (x : n → A) : D.h x 0 = 0 := by
 
 theorem h_sum_right {ι : Type} (s : Finset ι) (x : n → A) (y : ι → n → A) :
     D.h x (∑ i ∈ s, y i) = ∑ i ∈ s, D.h x (y i) := by
-  simpa only [hL_apply] using map_sum (D.hL x) y s
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa only [hL_apply] using map_sum (D.hL x) y s
 
 theorem h_add_left (x x' y : n → A) : D.h (x + x') y = D.h x y + D.h x' y := by
   simp only [h, hform, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
@@ -79,7 +80,8 @@ structure Hyp : Prop where
 variable {D}
 
 theorem h_symm (H : D.Hyp) (x y : n → A) : D.h y x = D.σA (D.h x y) := by
-  simp only [h, hform, map_sum, map_mul, H.σσ, H.herm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [h, hform, map_sum, map_mul, H.σσ, H.herm]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 
@@ -186,7 +188,8 @@ theorem orthogonal_proj_normal_zero (H : D.Hyp) : D.pW D.z = 0 := by
 
 theorem pW_pX (H : D.Hyp) (u : n → A) : D.pW (D.pX u) = 0 := by
   rw [pX_apply]
-  simp [map_sum, map_smul, pW_e H]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, map_smul, pW_e H]
 
 end Dat
 

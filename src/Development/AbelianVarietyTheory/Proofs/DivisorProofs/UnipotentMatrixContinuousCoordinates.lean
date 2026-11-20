@@ -21,7 +21,8 @@ theorem cA_inclR (σ : E →ₐ[F] E) (e : E) : cA σ (inclR (F := F) (AF F) e) 
 
 theorem fA_incV (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (v w : Fin n → E) :
     fA σ J (incV F v) (incV F w) = inclR (F := F) (AF F) (form σ J v w) := by
-  simp [fA, form, incV, incM, dotProduct, Matrix.mulVec, map_sum, map_mul, cA_inclR]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [fA, form, incV, incM, dotProduct, Matrix.mulVec, map_sum, map_mul, cA_inclR]
 
 theorem fA_add_left (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (v v' w : Fin n → AE F E) :
     fA σ J (v + v') w = fA σ J v w + fA σ J v' w := by
@@ -167,7 +168,8 @@ theorem gramM_isUnit {B : Base F E} {d₁ r s i₀ i₁ : ℕ} {W : Spc F E (d�
 theorem vecMul_gramM {d₁ : ℕ} (J : Matrix (Fin (d₁ + 2)) (Fin (d₁ + 2)) E) (H' : Plane E (d₁ + 2) d₁)
     (v : Fin (d₁ + 2) → AE F E) : v ᵥ* incM F (gramM σ J H') = fun k => fA σ J v (incV F (colE H' k)) := by
   funext k
-  simp [Matrix.vecMul, dotProduct, fA, Matrix.mulVec, incM, incV, gramM, basM, Matrix.mul_apply, map_sum, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Matrix.vecMul, dotProduct, fA, Matrix.mulVec, incM, incV, gramM, basM, Matrix.mul_apply, map_sum, map_mul,
     cA_inclR, Finset.mul_sum]
 
 def rv {d₁ : ℕ} (J : Matrix (Fin (d₁ + 2)) (Fin (d₁ + 2)) E) (H' : Plane E (d₁ + 2) d₁) (a : Fin d₁ → AE F E)

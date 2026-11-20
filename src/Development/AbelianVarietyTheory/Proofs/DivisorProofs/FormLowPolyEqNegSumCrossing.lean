@@ -19,7 +19,8 @@ theorem toForm_pLow_one (ι : Type) [Fintype ι] [DecidableEq ι] (N j : ℕ) (�
     · intro t _ ht
       simp [ht]
     · simp
-  rw [h1, toForm, pLow, map_sum, Finset.sum_filter]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h1, toForm, pLow, map_sum, Finset.sum_filter]
   simp only [pow_one, aeval_X, rootForm]
   have h2 : ∀ i : Fin N, (if (i : ℕ) < j then
       ((∑ a : Fin N, if a < i then X (τ, a, i) else 0) -

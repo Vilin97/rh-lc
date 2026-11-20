@@ -14,7 +14,8 @@ private theorem ac_mul {S A ι : Type} [TopologicalSpace S] [CommRing A] [Fintyp
     ∀ a b, AdicCont I fun s => (M s * N s) a b := by
   intro a b n
   classical
-  simp only [Matrix.mul_apply, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mul_apply, map_sum, map_mul]
   induction (Finset.univ : Finset ι) using Finset.induction_on with
   | empty => simp only [Finset.sum_empty]; exact IsLocallyConstant.const _
   | insert c t hc ih =>
@@ -188,20 +189,24 @@ theorem UpperTheory.V.Alg.obs_class :
   have hx : ∑ u, residue O (c u) • z j u ∈ F.framedTwoCoboundaries (FormData.adRep hbar j) := by
     have h1 : (Submodule.Quotient.mk (∑ u, residue O (c u) • (⟨z j u, z0 j u⟩ : F.framedTwoCocycles (FormData.adRep hbar j))) :
         F.Ob (FormData.adRep hbar j)) = 0 := by
-      rw [← hc, ← Submodule.mkQ_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hc, ← Submodule.mkQ_apply, map_sum]
       rfl
-    rw [Submodule.Quotient.mk_eq_zero, Submodule.mem_comap, map_sum] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Submodule.Quotient.mk_eq_zero, Submodule.mem_comap, map_sum] at h1
     exact h1
   obtain ⟨μ, m1, m2⟩ := ex_mu (O := O) η hη
   have pp : ∀ x, p'' (p' x) = p x := fun x => DFunLike.congr_fun hpp x
   have key : ∀ x, p x = 0 → p' x = μ (∑ u : {u // wf u = j}, residue O (c u) * co u x) := fun x hx => by
     obtain ⟨a, ha, hxa⟩ := k4 x hx
     have : ∑ u : {u // wf u = j}, residue O (c u) * co u x = residue O (∑ u : {u // wf u = j}, a u * c u) := by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       exact Finset.sum_congr rfl fun u _ => by rw [map_mul, ha, mul_comm]
     rw [this, m1, Finset.sum_smul]
     conv_lhs => rw [hxa]
-    rw [map_sum, ← Fintype.sum_subtype_add_sum_subtype (fun u => wf u = j),
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, ← Fintype.sum_subtype_add_sum_subtype (fun u => wf u = j),
       Finset.sum_eq_zero (s := (Finset.univ : Finset {u // ¬ wf u = j})) fun u _ => by
         rw [map_smul, e2 u u.2, smul_zero], add_zero]
     convert Finset.sum_congr rfl fun u _ => ?_

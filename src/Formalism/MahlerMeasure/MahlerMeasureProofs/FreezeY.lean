@@ -271,7 +271,8 @@ theorem snoc_deg_last (LL : Letters N) (n : ℕ) : (LL.snoc n).deg (Fin.last N) 
 theorem coeffη_glAct (LL : Letters N) (n j : ℕ) (hj : j ≤ N) (c d : Fin r) (b : Fin r →₀ ℕ)
     (F : MvPolynomial (Fin (N + 1) × Fin r) ℚ_[p]) :
     coeffη b (glAct p (LL.snoc n) j c d F) = glAct p LL j c d (coeffη b F) := by
-  rw [glAct_apply, glAct_apply, Fin.sum_univ_castSucc, map_add, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [glAct_apply, glAct_apply, Fin.sum_univ_castSucc, map_add, map_sum,
     if_neg (show ¬ ((Fin.last N : ℕ) < j) by rw [Fin.val_last]; omega), map_zero, add_zero]
   refine Finset.sum_congr rfl (fun i _ => ?_)
   simp only [Fin.coe_castSucc, snoc_vec_castSucc]
@@ -391,7 +392,8 @@ theorem X_mul_pderiv_eq_sum [DecidableEq σ] (a b : σ) (F : MvPolynomial σ K) 
     X a * pderiv b F = ∑ m0 ∈ F.support,
       monomial (m0 - Finsupp.single b 1 + Finsupp.single a 1) (AddMonoidAlgebra.coeff F m0 * m0 b) := by
   conv_lhs => rw [F.as_sum]
-  rw [map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl (fun m0 _ => ?_)
   rw [pderiv_monomial, X_mul_monomial']
 
@@ -526,7 +528,8 @@ theorem rest_comm (LL : Letters N) (j : ℕ) (c d c' d' : Fin r) (F : MvPolynomi
     restAct p LL j c d (glAct p LL j c' d' F) = glAct p LL j c' d' (restAct p LL j c d F) := by
   rw [glAct_eq_top]
   unfold restAct
-  simp only [LinearMap.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [LinearMap.sum_apply, map_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl (fun a _ => Finset.sum_congr rfl (fun b _ => ?_))
   split_ifs <;> (try simp only [LinearMap.zero_apply, map_zero]) <;>
@@ -586,7 +589,8 @@ theorem ycond_hc (LL : Letters N) (j : ℕ) (M : WithTop ℤ) (t : ℕ)
     (F : MvPolynomial (Fin N × Fin r) ℚ_[p]) (hF : F ∈ YCond p LL j M) :
     homogeneousComponent t F ∈ YCond p LL j M := by
   refine ycond_map p LL LL j j M (homogeneousComponent t) (fun c d G => ?_) (fun G m hm => ?_) F hF
-  · rw [glAct_apply, glAct_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [glAct_apply, glAct_apply, map_sum]
     refine Finset.sum_congr rfl (fun i _ => ?_)
     split_ifs <;> simp [op_hc]
   · have h := mem_support_iff.1 hm
@@ -653,7 +657,8 @@ theorem diff_gen (LL : Letters N) (ρ c : Fin r) (hc : c ≠ ρ) (x : Fin N × F
   split_ifs <;> (try (exfalso; exact hc ((‹d = c›).symm.trans ‹d = ρ›))) <;>
     (try (have hcd : c ≠ d := Ne.symm ‹¬d = c›)) <;>
     (try (have hρd : ρ ≠ d := Ne.symm ‹¬d = ρ›)) <;>
-    simp only [map_sub, map_sum, map_neg, map_zero, mvPolynomial_pderiv_X_mul_X_eq_ite] <;>
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sub, map_sum, map_neg, map_zero, mvPolynomial_pderiv_X_mul_X_eq_ite] <;>
     simp [*, n1, Ne.symm hc, freezeSub_apply, Finset.sum_ite_eq, Finset.sum_ite_eq'] <;> ring
 
 theorem diff_id (LL : Letters N) (ρ c : Fin r) (hc : c ≠ ρ) (f : MvPolynomial (Fin N × Fin r) ℚ_[p]) :
@@ -905,7 +910,8 @@ theorem hom_aeval {σ τ : Type*} (w : τ → ℕ) (v : σ → ℕ) (g : σ → 
     (hg : ∀ x, IsWeightedHomogeneous w (g x) (v x)) (f : MvPolynomial σ K) (d : ℕ)
     (hf : IsWeightedHomogeneous v f d) : IsWeightedHomogeneous w (aeval g f) d := by
   classical
-  rw [f.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [f.as_sum, map_sum]
   refine isWeightedHomogeneous_finset_sum _ _ (fun m hm => ?_)
   show IsWeightedHomogeneous w (aeval g (monomial m (AddMonoidAlgebra.coeff f m))) d
   have hmd : Finsupp.weight v m = d := hf (mem_support_iff.1 hm)

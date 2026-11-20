@@ -170,13 +170,15 @@ theorem degFlEsymm : DegFlEsymm := by
   have hp : ∀ n, 1 ≤ n → ∀ P : MvPolynomial (ι × Fin N) ℝ,
       degFl ι N (rename (fun i : Fin N => (τ, i)) (psum (Fin N) ℝ n) * P) = 0 := by
     intro n hn P
-    simp only [psum, map_sum, map_pow, rename_X]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [psum, map_sum, map_pow, rename_X]
     exact degFlPowerSum ι N τ n P hn
   have hZ : ∀ P : MvPolynomial (ι × Fin N) ℝ, degFl ι N (rename (fun i : Fin N => (τ, i))
       ((k : MvPolynomial (Fin N) ℝ) * esymm (Fin N) ℝ k) * P) = 0 := by
     rw [mul_esymm_eq_sum, map_mul]
     apply Z_mul_left
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     apply Z_sum
     intro a ha
     rw [map_mul]

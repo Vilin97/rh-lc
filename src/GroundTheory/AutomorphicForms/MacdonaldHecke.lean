@@ -170,7 +170,8 @@ omit [MeasurableSpace (GL (Fin n) F)] [BorelSpace (GL (Fin n) F)] in
 theorem evalAt_esymmL (z : Fin n → ℂˣ) (r : ℕ) :
     evalAt z (esymmL n r) = ∑ S ∈ (Finset.univ : Finset (Fin n)).powersetCard r,
       monomialChar (lamS S) z := by
-  rw [esymmL, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [esymmL, map_sum]
   simp only [monomial, evalAt_single, one_mul]
 
 theorem evalAt_satakeTransform_minusculeHecke (z : Fin n → ℂˣ) {r : ℕ} (hr : r ≤ n) :
@@ -179,7 +180,8 @@ theorem evalAt_satakeTransform_minusculeHecke (z : Fin n → ℂˣ) {r : ℕ} (h
         evalAt z (esymmL n r) := by
   classical
   rw [satakeTransform_apply, satake_minusculeHecke]
-  simp only [map_smul, map_sum, smul_eq_mul, evalAt_esymmL]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_smul, map_sum, smul_eq_mul, evalAt_esymmL]
   rw [mul_assoc]
   congr 1
   rw [Finset.mul_sum]

@@ -81,7 +81,8 @@ theorem subst_lgPt {τ : Type} {t : σ → MvPowerSeries τ C} (ht : HasSubst t)
 
 theorem subst_mv {τ : Type} {t : σ → MvPowerSeries τ C} (ht : HasSubst t) (A : Matrix (Fin d) (Fin d) C)
     (w : Fin d → MvPowerSeries σ C) (i : Fin d) : subst t (mv A w i) = mv A (fun e => subst t (w e)) i := by
-  simp only [mv, ← coe_substAlgHom ht, map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [mv, ← coe_substAlgHom ht, map_sum, map_smul]
 
 theorem intLog_lgPt_X (s : Fin d → σ) : IntLog G (lgPt G fun i => (X (s i) : MvPowerSeries σ C)) := by
   classical

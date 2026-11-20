@@ -22,7 +22,8 @@ theorem hform_gramMatrix {K : Type} [Field K] [StarRing K] {n j : ℕ}
     simp only [hform, Matrix.toLinearMapₛₗ₂'_apply, dotProduct, Matrix.mulVec, Finset.mul_sum,
       smul_eq_mul, RingHom.id_apply, Pi.star_apply, starRingEnd_apply]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun k _ => by ring
-  simp only [map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, h,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, h,
     RingHom.id_apply]
   rw [hform, Matrix.toLinearMapₛₗ₂'_apply, Finset.sum_comm]
   refine Finset.sum_congr rfl fun b _ => ?_

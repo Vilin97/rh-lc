@@ -63,7 +63,8 @@ private theorem diag_cS_Pimg (j₀ : Fin (N + 1)) (x : Fin N → Ω) (b : Fin (D
     · subst hi
       rw [if_pos rfl, diag_X]
       rfl
-    · rw [if_neg hi, map_neg, map_sum, mul_neg, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [if_neg hi, map_neg, map_sum, mul_neg, Finset.mul_sum]
       congr 1
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [map_mul, diag_X, hC, mul_assoc]
@@ -99,7 +100,8 @@ theorem lift_swap {K : Type} [Field K] [Algebra K Ω] (j₀ : Fin (N + 1)) (x : 
     · subst hi
       simp [he, eS]
     · have hei : e i ≠ 0 := fun h' => hi (e.injective (h'.trans he.symm))
-      simp [hi, hei, eS, map_sum, map_neg]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [hi, hei, eS, map_sum, map_neg]
   · rw [Pimg_succAbove, Pimg_succAbove, rename_X]
     rfl
 
@@ -130,7 +132,8 @@ theorem lift_transl {K : Type} [Field K] [Algebra K Ω] (j₀ : Fin (N + 1)) (x 
   rcases Fin.eq_self_or_eq_succAbove j₀ j with rfl | ⟨k, rfl⟩ <;> by_cases hi : i = 0
   · subst hi
     simp [Pimg_self, translS, blk, col, MvPolynomial.algebraMap_apply]
-  · simp [Pimg_self, translS, blk, col, hi, map_sum, map_neg]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp [Pimg_self, translS, blk, col, hi, map_sum, map_neg]
   · subst hi
     simp [Pimg_succAbove, translS, blk, col, MvPolynomial.algebraMap_apply]
   · simp [Pimg_succAbove, translS, blk, col, hi]

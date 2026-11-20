@@ -15,7 +15,8 @@ theorem law_inf (ψ : AddChar (Ad E) ℂ) (f : GA E a → ℂ)
     f (infGL E a u * g) = ψ (sInf E (sd u.val)) * f g := by
   rw [GlobalTheory.CuspGeneric.tri_law E a ψ f hf (infGL E a u) ?_ ?_ g]
   · congr 2
-    rw [sd, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [sd, map_sum]
     refine Finset.sum_congr rfl fun p hp => ?_
     have hp' : (p.2 : ℕ) = p.1 + 1 := (Finset.mem_filter.1 hp).2
     have hne : p.1 ≠ p.2 := fun h => by rw [h] at hp'; omega

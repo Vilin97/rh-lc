@@ -38,7 +38,8 @@ theorem slice_mul_left (γ : MvPolynomial (S × τ) K →ₗ[K] K) (P R : MvPoly
   | monomial f b =>
     conv_lhs => rw [P.as_sum]
     conv_rhs => rw [P.as_sum]
-    rw [Finset.sum_mul, Finset.sum_mul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_mul, Finset.sum_mul, map_sum]
     refine Finset.sum_congr rfl fun e he => ?_
     have h := filter_of_supported (q := fun v : S × τ => v.1 ∈ A) hP he
     beta_reduce at h
@@ -52,7 +53,8 @@ theorem slice_spec (γ : MvPolynomial (S × τ) K →ₗ[K] K) (Q : MvPolynomial
     (hQ : Q ∈ supported K {v : S × τ | v.1 ∉ A}) : slice A γ Q = γ Q • 1 := by
   conv_lhs => rw [Q.as_sum]
   conv_rhs => rw [Q.as_sum]
-  rw [map_sum, map_sum, Finset.sum_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, Finset.sum_smul]
   refine Finset.sum_congr rfl fun e he => ?_
   have h := filter_of_supported (q := fun v : S × τ => v.1 ∉ A) hQ he
   beta_reduce at h

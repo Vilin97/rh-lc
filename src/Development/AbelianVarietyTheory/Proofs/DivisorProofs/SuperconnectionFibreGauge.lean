@@ -106,7 +106,8 @@ theorem foComm_anticomm (c : K → V → ℂ) (ε : K → Ext m →L[ℂ] Ext m)
         Z P ((c k P * fderiv ℝ ρ P (v k P)) • ε k (s P))) = 0 := by
     intro k
     cases hk : vt k
-    · simp only [foOp, map_add, map_sum, map_smul, h5 _ k hk, h6 k hk, smul_add, Finset.smul_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp only [foOp, map_add, map_sum, map_smul, h5 _ k hk, h6 k hk, smul_add, Finset.smul_sum,
         smul_neg, Finset.sum_neg_distrib, smul_comm (c _ P) (c k P * _)]
       abel
     · simp [h1 k hk]
@@ -116,10 +117,12 @@ theorem foComm_anticomm (c : K → V → ℂ) (ε : K → Ext m →L[ℂ] Ext m)
     rw [foOp, Finset.sum_add_distrib, Finset.sum_comm, ← add_assoc, hX, ← Finset.sum_add_distrib]
     congr 1
     · refine Finset.sum_congr rfl fun j _ => ?_
-      rw [hd, map_sum, Finset.smul_sum, ← Finset.sum_add_distrib]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hd, map_sum, Finset.smul_sum, ← Finset.sum_add_distrib]
       refine Finset.sum_congr rfl fun k _ => ?_
       simp only [map_add, map_smul, smul_add, smul_smul, mul_assoc]
-    · rw [foComm, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [foComm, map_sum]
   rw [e, hX0, zero_add, foComm, ← Finset.sum_add_distrib]
   exact Finset.sum_eq_zero fun k _ => hY k
 
@@ -240,7 +243,8 @@ theorem scE_anticomm (j : Idx n g) (k : Fin n × Bool × Bool) (w : Ext (n + n +
 theorem connFormL_wedge (τ : E → Matrix (Fin g) (Fin g) ℂ) (b v : E) {i : Fin (n + n + g)}
     (hi : ∀ a, i ≠ dzb n a) (w : Ext (n + n + g)) :
     connFormL τ b v (wedgeL i w) = wedgeL i (connFormL τ b v w) := by
-  simp only [connFormL, ContinuousLinearMap.sum_apply, ContinuousLinearMap.smul_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [connFormL, ContinuousLinearMap.sum_apply, ContinuousLinearMap.smul_apply,
     ContinuousLinearMap.comp_apply, map_sum, map_smul]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun c _ => ?_
   congr 1
@@ -260,7 +264,8 @@ theorem scZ_anticomm (τ : E → Matrix (Fin g) (Fin g) ℂ) (h : Pt E g → ℝ
     FlatAcyc.wedge_wedge _ _ _
   have h2 : ∀ c x, contrL (dzb n c) (wedgeL e x) = -wedgeL e (contrL (dzb n c) x) := fun c x =>
     contr_wedge_of_ne (hi c) x
-  simp only [scZ, ContinuousLinearMap.sub_apply, ContinuousLinearMap.sum_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [scZ, ContinuousLinearMap.sub_apply, ContinuousLinearMap.sum_apply,
     ContinuousLinearMap.add_apply, ContinuousLinearMap.smul_apply, ContinuousLinearMap.comp_apply,
     connFormL_wedge τ _ _ hi, h1, h2, map_sub, map_sum, map_add, map_smul, smul_neg,
     Finset.sum_neg_distrib, Finset.sum_add_distrib]

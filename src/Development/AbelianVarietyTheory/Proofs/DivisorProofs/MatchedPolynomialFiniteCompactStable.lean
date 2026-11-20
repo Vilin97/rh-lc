@@ -109,11 +109,14 @@ theorem finite (hK : KP) (hM : IsMatched B G X om om' R Rf) (Φ : (Fin a × Fin 
     refine ⟨T ∪ (S ∪ S'), fun v hv => Finset.mem_union_left _ (hXT hv), m, m', f, φ₁, f', φ₁', ?_, ?_, ?_, ?_, ?_⟩
     · intro i; exact ⟨(hφ i).1, fun v => ((hφ₁ i).1 v).1, (hφ₁ i).2.1⟩
     · intro j; exact ⟨(hφ' j).1, fun v => ((hφ₁' j).1 v).1, (hφ₁' j).2.1⟩
-    · rw [map_sum]; exact Finset.sum_congr rfl fun i _ => (hφ₁ i).2.2
-    · rw [map_sum]; exact Finset.sum_congr rfl fun j _ => (hφ₁' j).2.2
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [map_sum]; exact Finset.sum_congr rfl fun i _ => (hφ₁ i).2.2
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [map_sum]; exact Finset.sum_congr rfl fun j _ => (hφ₁' j).2.2
     · have key := congrArg (LinearMap.lTensor R.Pi
         (PiTensorProduct.map fun v : ↥(T ∪ (S ∪ S')) => L v.1)) hsum
-      simp only [map_sum, LinearMap.lTensor_tmul, PiTensorProduct.map_tprod] at key
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, LinearMap.lTensor_tmul, PiTensorProduct.map_tprod] at key
       have e1 : ∀ i, (fun v : ↥(T ∪ (S ∪ S')) => L v.1 (Rf.p v.1 (φ i v.1))) =
           fun v : ↥(T ∪ (S ∪ S')) => Rf.p v.1 (φ₁ i v.1) :=
         fun i => funext fun v => (hL v.1).1 _ ((hφ i).2.1 v) _ ((hφ₁ i).1 v).1 ((hφ₁ i).1 v).2
@@ -195,12 +198,15 @@ theorem archimedean (hM : IsMatched B G X om om' R Rf) (Φ : (Fin a × Fin (a + 
     refine ⟨S, hXS, m, m', fun i => T (f i), φ, fun j => T' (f' j), φ', ?_, ?_, ?_, ?_, ?_⟩
     · intro i; exact ⟨hpol _ (hφ i).1, (hφ i).2.1, (hφ i).2.2⟩
     · intro j; exact ⟨hpol' _ (hφ' j).1, (hφ' j).2.1, (hφ' j).2.2⟩
-    · rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [map_sum]
       exact Finset.sum_congr rfl fun i _ => hpure (f i) (φ i) (hφ i).2.1 (hcof _ (hφ i).2.2)
-    · rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [map_sum]
       exact Finset.sum_congr rfl fun j _ => hpure' (f' j) (φ' j) (hφ' j).2.1 (hcof' _ (hφ' j).2.2)
     · have key := congrArg (LinearMap.rTensor _ L) hsum
-      simp only [map_sum, LinearMap.rTensor_tmul] at key
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, LinearMap.rTensor_tmul] at key
       have e1 : ∀ i, L (R.p (f i)) = R.p (T (f i)) := fun i => hL _ (hφ i).1 _ (hpol _ (hφ i).1) rfl
       have e2 : ∀ j, L (R.p' (f' j)) = R.p' (T' (f' j)) := fun j => hL' _ (hφ' j).1 _ (hpol' _ (hφ' j).1) rfl
       simp only [e1, e2] at key

@@ -72,7 +72,8 @@ theorem hbd_vbd (V W : Type) (x : List V × List W →₀ ℤ) : hbd V W (vbd V 
     simp only [LinearMap.comp_apply]
     rw [single_eq_smul, map_zsmul, map_zsmul, map_zsmul, map_zsmul]
     congr 1
-    rw [vbd_single, hbd_single, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [vbd_single, hbd_single, map_sum, map_sum]
     simp only [map_zsmul, hbd_single, vbd_single, Finset.smul_sum, smul_smul]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun i _ => ?_

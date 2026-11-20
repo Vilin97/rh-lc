@@ -13,7 +13,8 @@ theorem sum_rep_subgroup_eq_zero {G V : Type} [Group G] [AddCommGroup V] [Module
   simp only [LinearMap.sum_apply, LinearMap.zero_apply]
   apply h
   intro m hm
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Fintype.sum_equiv (Equiv.mulLeft (⟨m, hm⟩ : N)) _ _ ?_
   intro n
   simp [map_mul]
@@ -23,7 +24,8 @@ theorem noFixedSum : Formalism.PacketSums.NoFixedSum := by
   have h0 := sum_rep_subgroup_eq_zero τ N h
   have : ∑ n : N, τ (x * (n : G) * y) = τ x * (∑ n : N, τ (n : G)) * τ y := by
     simp [Finset.mul_sum, Finset.sum_mul, map_mul]
-  rw [← map_sum, this, h0]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum, this, h0]
   simp
 
 end GlobalTheory.NoFixedCharSum

@@ -34,10 +34,12 @@ theorem unimod_conj (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) {�
   constructor
   · intro hv w hw
     have := hr _ (hv _ hw)
-    simpa only [map_sum, map_mul, IsCMField.complexConj_apply_apply] using this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa only [map_sum, map_mul, IsCMField.complexConj_apply_apply] using this
   · intro hv w hw
     have := hr _ (hv (fun j => IsCMField.complexConj E (w j)) (by rw [mem_conjLat, conj_conj]; exact hw))
-    simpa only [map_sum, map_mul, IsCMField.complexConj_apply_apply] using this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa only [map_sum, map_mul, IsCMField.complexConj_apply_apply] using this
 
 theorem trivAt_conj (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) {Λ : GenLat E n} {N : ℕ} (hT : Λ.TrivAt N) :
     (conjLat H Λ.La).TrivAt N := by

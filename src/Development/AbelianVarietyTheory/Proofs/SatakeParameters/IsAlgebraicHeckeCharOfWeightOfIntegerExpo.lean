@@ -27,8 +27,10 @@ theorem dchi_eq_sum (χ : HChar E) (x : Cinf E) : dchi χ x = ∑ φ : E →+* �
     refine Finset.sum_congr rfl fun w _ => ?_
     unfold atEmb
     rw [InfinitePlace.mk_embedding, if_pos rfl]
-  rw [hx, map_sum]
-  simp only [map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hx, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun w _ => ?_
   rw [dchi_atEmb]

@@ -55,8 +55,10 @@ theorem tied_map_comp : ∀ (E : Type) [Field E] [NumberField E] (Ω Vs K C : Ty
   have hxC : (fun i => j (x i)) = ∑ i, j (x i) • (Pi.single i (1 : C) : Fin g → C) := by
     ext k
     simp [Finset.sum_apply, Pi.single_apply]
-  rw [hxC, map_sum]
-  conv_rhs => rw [hxK, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hxC, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_rhs => rw [hxK, map_sum]
   ext k
   simp [Finset.sum_apply, h1, h2]
 

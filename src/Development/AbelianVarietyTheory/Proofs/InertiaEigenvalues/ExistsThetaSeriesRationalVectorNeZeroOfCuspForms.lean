@@ -31,7 +31,8 @@ theorem thetaKO_sum' {D : D7} {S T : HSp D} (om : GA D S × GA D T →* Module.E
     {ι : Type} (s : Finset ι) (c : ι → ℂ) (φ : ι → WO S T → ℂ) :
     thetaKO om x g (∑ k ∈ s, c k • φ k) = ∑ k ∈ s, c k * thetaKO om x g (φ k) := by
   unfold thetaKO
-  rw [map_sum, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_apply]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [map_smul, Pi.smul_apply, smul_eq_mul]
 
@@ -41,7 +42,8 @@ theorem ser_sum {D : D7} {Γ : Type} [Group Γ] [Fintype Γ] {Pl0 T0 : Type} {A 
     {ι : Type} (s : Finset ι) (a : ι → ℂ) (w : ι → (R.cV i).W) :
     ser R i t f u h (∑ k ∈ s, a k • w k) g = ∑ k ∈ s, a k * ser R i t f u h (w k) g := by
   unfold ser
-  rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum]
   simp only [map_smul]
   exact thetaKO_sum' _ _ _ _ _ _
 
@@ -58,7 +60,8 @@ theorem exists_rat_of_ser_ne {D : D7} {Γ : Type} [Group Γ] [Fintype Γ] {Pl0 T
   classical
   have hw' : c0' w = ∑ b, σ' ((bVV K' (lamV D i)).repr w b) • c0' (bVV K' (lamV D i) b) := by
     conv_lhs => rw [← (bVV K' (lamV D i)).sum_repr w]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [map_smulₛₗ]
   rw [hw', ser_sum] at hne
   obtain ⟨b, -, hb⟩ := Finset.exists_ne_zero_of_sum_ne_zero hne

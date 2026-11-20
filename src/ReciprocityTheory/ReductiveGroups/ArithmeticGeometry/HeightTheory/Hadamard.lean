@@ -13,7 +13,8 @@ theorem psd_det_re_le_one_of_diag (N : ℕ) (H : Matrix (Fin N) (Fin N) ℂ) (hH
     have h2 : H.trace = N := by simp [Matrix.trace, hd]
     rw [h2] at h
     have h4 := congrArg (RCLike.re : ℂ → ℝ) h
-    simp only [map_sum, RCLike.ofReal_re, RCLike.natCast_re] at h4
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, RCLike.ofReal_re, RCLike.natCast_re] at h4
     linarith
   have hre : H.det.re = ∏ i, hHerm.eigenvalues i := by
     rw [hHerm.det_eq_prod_eigenvalues]

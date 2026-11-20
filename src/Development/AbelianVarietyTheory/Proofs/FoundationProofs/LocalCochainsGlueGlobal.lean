@@ -103,7 +103,8 @@ instance (c : Coef l) (n : ℕ) : Finite (Red c n) := by
   obtain ⟨a, ha⟩ := (Submodule.mem_span_range_iff_exists_fun ℤ_[l]).1 hx
   refine ⟨fun i => PadicInt.toZModPow n (a i), ?_⟩
   show ∑ i, _ = _
-  rw [← ha, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← ha, map_sum]
   exact Finset.sum_congr rfl fun i _ => (red_smul c n (a i) (s i)).symm
 
 theorem continuous_red_comp {X : Type*} [TopologicalSpace X] (c : Coef l) (n : ℕ) (f : X → c.O)

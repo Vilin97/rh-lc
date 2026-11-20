@@ -44,14 +44,17 @@ theorem root_exchange : ∀ (G : Type) [Group G] [Fintype G] (M : Type) [AddComm
     apply hv g
     apply hinj
     · intro b hb
-      rw [map_sum, Finset.smul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Finset.smul_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_smul, (hvi i).1 b hb, smul_comm]
     · intro y hy
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_smul, (hvi i).2 y hy]
-    · rw [map_sum, ← hg]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [map_sum, ← hg]
       simp only [map_smul]
   · choose f hf g hg hfg hχ using hBX b hb
     let F : X → X := fun x => ⟨f x x.2, hf x x.2⟩
@@ -69,11 +72,13 @@ theorem root_exchange : ∀ (G : Type) [Group G] [Fintype G] (M : Type) [AddComm
       exact Subtype.ext (inv_mul_eq_one.1 this)
     have hB : Function.Bijective F := Finite.injective_iff_bijective.1 hF
     show ρ b (S (v i)) = χ b • S (v i)
-    rw [hS, map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hS, map_sum, Finset.smul_sum]
     refine Fintype.sum_bijective F hB _ _ fun x => ?_
     rw [← hmul, hfg x x.2, hmul, (hvi i).1 _ (hg x x.2), hχ, map_smul]
   · show ρ x (S (v i)) = S (v i)
-    rw [hS, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hS, map_sum]
     refine Fintype.sum_equiv (Equiv.mulLeft (⟨x, hx⟩ : X)) _ _ fun z => ?_
     rw [← hmul]; rfl
 

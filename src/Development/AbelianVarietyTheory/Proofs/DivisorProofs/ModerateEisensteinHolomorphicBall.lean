@@ -136,7 +136,8 @@ theorem prod_ofFn_single {M : Type*} [Monoid M] : ∀ {d : ℕ} (g : Fin d → M
 
 theorem clm_expand {k : ℕ} (L : (Fin k → ℝ) →L[ℝ] ℂ) (v : Fin k → ℝ) :
     L v = ∑ i, (v i : ℂ) * L (Pi.single i 1) := by
-  conv_lhs => rw [← Finset.univ_sum_single v, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [← Finset.univ_sum_single v, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [show Pi.single i (v i) = v i • (Pi.single i 1 : Fin k → ℝ) by rw [← Pi.single_smul', smul_eq_mul, mul_one],
     map_smul, Complex.real_smul]

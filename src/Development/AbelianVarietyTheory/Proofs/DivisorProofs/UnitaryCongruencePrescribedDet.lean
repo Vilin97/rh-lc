@@ -15,7 +15,8 @@ theorem detfix_unitary_transvection {R : Type} [CommRing R] {n : Type} [Fintype 
   set a := Formalism.UG.hform τ H e e with ha_def
   obtain ⟨b, hab⟩ : ∃ b, a * b = 1 := ⟨ha.unit⁻¹.1, ha.mul_val_inv⟩
   have hτa : τ a = a := by
-    simp only [ha_def, Formalism.UG.hform, map_sum, map_mul, hτ, hHij]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [ha_def, Formalism.UG.hform, map_sum, map_mul, hτ, hHij]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
     ring
@@ -28,7 +29,8 @@ theorem detfix_unitary_transvection {R : Type} [CommRing R] {n : Type} [Fintype 
     simp only [dotProduct, hr, ha_def, Formalism.UG.hform, Finset.sum_mul]
     rw [Finset.sum_comm]
   have hτr : ∀ i, τ (r i) = ∑ l, H i l * e l := fun i => by
-    simp only [hr, map_sum, map_mul, hτ, hHij]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hr, map_sum, map_mul, hτ, hHij]
     refine Finset.sum_congr rfl fun l _ => ?_
     ring
   set X : Matrix n n R := vecMulVec e r with hX

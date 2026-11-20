@@ -108,7 +108,8 @@ theorem wedgeSum_injective {i : F →ₗ[R] H} {s : L →ₗ[R] H} {r : H →ₗ
   have hl : ∀ t (a' : Fin (c + 1)),
       Ψ a' (c - a') (wedgeSum i s c t : ExteriorAlgebra R H) = t a' := by
     intro t a'
-    rw [coe_wedgeSum, map_sum, Finset.sum_eq_single a']
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [coe_wedgeSum, map_sum, Finset.sum_eq_single a']
     · rw [key]
       have h₁ : gradeProj R F a' ∘ₗ (⋀[R]^(a' : ℕ) F).subtype = LinearMap.id :=
         LinearMap.ext gradeProj_same

@@ -154,7 +154,8 @@ theorem exists_local (m : Ideal R) [hm : m.IsMaximal] (A : Matrix (Fin (n + 1)) 
     show _ ∈ redV m '' (K : Set (Fin (n + 1) → R))
     refine ⟨w - A *ᵥ x, hx, ?_⟩
     funext i
-    simp [redV, Ab, Matrix.mulVec, dotProduct, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [redV, Ab, Matrix.mulVec, dotProduct, map_sum]
   obtain ⟨Hb, hHcol, hHlast, hdet⟩ := srLift_field Ab (Kbar m K) hAb hKb
   have hlift : ∀ j, ∃ g : Fin (n + 1) → R, g ∈ K ∧ redV m g = fun i => Hb i j := by
     intro j
@@ -241,7 +242,8 @@ theorem srLift_of_finite (hfin : {m : Ideal R | m.IsMaximal}.Finite) (A : Matrix
     ext i j
     simp only [Matrix.map_apply, Matrix.add_apply, map_add]
     congr 1
-    rw [Matrix.sum_apply, map_sum, Finset.sum_eq_single M]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Matrix.sum_apply, map_sum, Finset.sum_eq_single M]
     · have h1 : Ideal.Quotient.mk M (e M) = 1 := by
         rw [← map_one (Ideal.Quotient.mk M)]
         exact Ideal.Quotient.eq.2 (he1 M hMS)

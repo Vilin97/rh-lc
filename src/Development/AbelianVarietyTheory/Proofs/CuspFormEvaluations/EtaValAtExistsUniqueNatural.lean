@@ -41,7 +41,8 @@ theorem map_etaExpr {S T : Type} [CommRing S] [CommRing T] (φ : S →+* T) {k :
     φ (etaExpr k cf x w) = etaExpr k cf x (fun q => φ (w q)) := by
   haveI := finite_levGrp Dw hk
   haveI := Fintype.ofFinite (LevGrp Dw k)
-  simp only [etaExpr, finprod_eq_prod_of_fintype, map_prod, map_sum, map_mul, map_intCast]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [etaExpr, finprod_eq_prod_of_fintype, map_prod, map_sum, map_mul, map_intCast]
 
 theorem etaExpr_comp {S : Type} [CommRing S] {k : ℕ} {J : Type} [Fintype J]
     {n : ℕ} (cf : J → ℤ) (x : J → Fin n → LatMod Dw k) (w : LatMod Dw k → S) (g₀ : LevGrp Dw k) :

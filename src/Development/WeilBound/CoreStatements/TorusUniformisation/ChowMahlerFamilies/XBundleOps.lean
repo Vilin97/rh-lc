@@ -57,7 +57,8 @@ theorem locFree_comap (R : Subalgebra O Ω) {N : ℕ} (L : AddSubgroup V) (e : V
     rw [hb]
     refine exists_congr fun a => and_congr_right fun _ => ?_
     rw [← e.symm.injective.eq_iff, e.symm_apply_apply]
-    simp only [map_sum, map_smul, Function.comp_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, Function.comp_apply]
 
 theorem locFree_prod (R : Subalgebra O Ω) {N N₁ : ℕ} (L : AddSubgroup V) (L₁ : AddSubgroup V₁)
     (h : LocFree R N L) (h₁ : LocFree R N₁ L₁) : LocFree R (N + N₁) (L.prod L₁) := by

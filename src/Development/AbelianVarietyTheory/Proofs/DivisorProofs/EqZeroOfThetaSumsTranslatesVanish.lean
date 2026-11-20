@@ -40,12 +40,14 @@ theorem evH_arch (s : mixedEmbedding.mixedSpace F) : evH F (arch F s) = s :=
 
 theorem snd_dot {κ : Type} [Fintype κ] (ξ : κ → F) (s : κ → mixedEmbedding.mixedSpace F) :
     sndH F ((fun i => algebraMap F (AF F) (ξ i)) ⬝ᵥ (fun i => arch F (s i))) = 0 := by
-  simp only [dotProduct, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dotProduct, map_sum, map_mul]
   exact Finset.sum_eq_zero fun i _ => by rw [show sndH F (arch F (s i)) = 0 from rfl, mul_zero]
 
 theorem evH_dot {κ : Type} [Fintype κ] (ξ : κ → F) (s : κ → mixedEmbedding.mixedSpace F) :
     evH F ((fun i => algebraMap F (AF F) (ξ i)) ⬝ᵥ (fun i => arch F (s i))) = ∑ i, mixedEmbedding F (ξ i) * s i := by
-  simp only [dotProduct, map_sum, map_mul, evH_algebraMap, evH_arch]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dotProduct, map_sum, map_mul, evH_algebraMap, evH_arch]
 
 theorem trace_one_ne : Algebra.trace ℝ (mixedEmbedding.mixedSpace F) 1 ≠ 0 := by
   rw [show (1 : mixedEmbedding.mixedSpace F) = algebraMap ℝ _ 1 from (map_one _).symm, Algebra.trace_algebraMap,
@@ -62,7 +64,8 @@ theorem eq_zero_of_trA {ι : Type} [Fintype ι] (b : Module.Basis ι ℚ F) (d :
   by_contra hne
   have hz : ∀ z : F, trA F (d * z) = 0 := by
     intro z
-    rw [← b.sum_repr z, Finset.mul_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← b.sum_repr z, Finset.mul_sum, map_sum]
     exact Finset.sum_eq_zero fun k _ => by rw [mul_smul_comm, map_rat_smul, hd, smul_zero]
   have h1 := hz d⁻¹
   rw [mul_inv_cancel₀ hne, trA_apply, map_one] at h1
@@ -72,9 +75,11 @@ theorem trace_sum {κ ι : Type} [Fintype κ] [Fintype ι] {N : ℕ} (e : κ × 
     (t : Fin N → ℝ) :
     Algebra.trace ℝ (mixedEmbedding.mixedSpace F) (∑ i, mixedEmbedding F (ξ i) * ∑ k, t (e (i, k)) • mixedEmbedding F (b k)) =
       ∑ j, trA F (ξ (e.symm j).1 * b (e.symm j).2) * t j := by
-  rw [← e.sum_comp, Fintype.sum_prod_type, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← e.sum_comp, Fintype.sum_prod_type, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
-  rw [Finset.mul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.mul_sum, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [mul_smul_comm, LinearMap.map_smul, smul_eq_mul, ← map_mul, Equiv.symm_apply_apply, trA_apply, mul_comm]
 

@@ -70,7 +70,8 @@ theorem rowAct_map {R S : Type} [CommRing R] [CommRing S] (φ : R →+* S) {k n 
   | add p q hp hq => simp only [map_add, hp, hq]
   | mul_X p v hp =>
     rw [map_mul, map_mul, map_mul, hp]
-    simp [rowAct, map_sum, Matrix.map_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [rowAct, map_sum, Matrix.map_apply]
 
 theorem glMap_inv {k : ℕ} (g : GL (Fin k) LL) :
     ((g : Matrix (Fin k) (Fin k) LL).map e)⁻¹ = ((g⁻¹ : GL (Fin k) LL) : Matrix (Fin k) (Fin k) LL).map e := by

@@ -115,7 +115,8 @@ theorem line_mem {A B : HSp D} {c : ℕ} {ε : D.host.E} (d : GlobalTheory.ChiGr
     have e : Φ (fun k => t * incA D (d.a k p)) = t := by
       show ∑ l, incA D (φ l) * (t * incA D (d.a l p)) = t
       calc ∑ l, incA D (φ l) * (t * incA D (d.a l p)) = t * incA D (∑ l, φ l * d.a l p) := by
-            rw [map_sum, Finset.mul_sum]
+            set_option synthInstance.maxHeartbeats 100000 in
+              rw [map_sum, Finset.mul_sum]
             refine Finset.sum_congr rfl fun l _ => ?_
             rw [map_mul, mul_left_comm]
         _ = t := by rw [h3, map_one, mul_one]

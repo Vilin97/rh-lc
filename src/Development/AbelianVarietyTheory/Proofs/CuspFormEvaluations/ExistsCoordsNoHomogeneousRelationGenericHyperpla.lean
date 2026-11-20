@@ -11,7 +11,8 @@ theorem aeval_mul_of_isHomogeneous_cone {K L ι : Type} [CommRing K] [CommRing L
   classical
   conv_lhs => rw [Q.as_sum]
   conv_rhs => rw [Q.as_sum]
-  rw [map_sum, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun s hs => ?_
   have hd := hQ.degree_eq_sum_deg_support hs
   simp only [aeval_monomial, Finsupp.prod, mul_pow, Finset.prod_mul_distrib,

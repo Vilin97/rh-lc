@@ -22,7 +22,8 @@ theorem ie_atLog_hasSubst (lam : Qbar →+* ℂ_[p]) (Λ : AddSubgroup ℂ)
       PowerSeries.subst (MvPowerSeries.X i) (flog (C • wModel lam Λ) wq)) := by
   apply MvPowerSeries.hasSubst_of_constantCoeff_zero
   intro k
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_eq_zero fun i _ => ?_
   rw [map_mul, PowerSeries.constantCoeff_subst_eq_zero (MvPowerSeries.constantCoeff_X i) _ (ie_flog_const _ _),
     mul_zero]
@@ -39,7 +40,8 @@ theorem ie_atLog_comb (lam : Qbar →+* ℂ_[p]) (Λ : AddSubgroup ℂ)
   rw [e]
   unfold atLog
   dsimp only
-  rw [← MvPowerSeries.substAlgHom_apply ha, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← MvPowerSeries.substAlgHom_apply ha, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [map_smul, MvPowerSeries.substAlgHom_apply]
 
@@ -48,7 +50,8 @@ end Comb
 theorem combination_fact : CombFact := by
   intro D T p _ lam N N' L L' m r F hr hF C wq rr b hC hW hb ho n
   rw [ie_atLog_comb, Finset.sum_mul]
-  simp only [smul_mul_assoc, map_sum, map_smul, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [smul_mul_assoc, map_sum, map_smul, smul_eq_mul]
   refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg zero_le_one fun k _ => ?_
   rw [norm_mul]
   exact mul_le_one₀ (hr k) (norm_nonneg _) (hF k C wq rr b hC hW hb ho n)
@@ -84,7 +87,8 @@ theorem ie_lamC_sum (lam : Qbar →+* ℂ_[p]) {m : ℕ} (f : Fin m → ℂ) (h 
     lamC lam (∑ k, f k) = ∑ k, lamC lam (f k) := by
   rw [ie_lamC_of_mem lam (sum_mem fun k _ => h k)]
   simp only [ie_lamC_of_mem lam (h _)]
-  rw [← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum]
   congr 1
   ext
   simp
@@ -95,7 +99,8 @@ theorem power_series_linearity : PSerLin := by
   intro D p _ lam N N' m c G hc hG
   have hsm : ∀ k (n : ℕ), ContDiff ℂ n (G k) := fun k n => ie_smooth (hG k).1 n
   ext α
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [← Algebra.smul_def, map_smul, smul_eq_mul]
   show lamC lam (taylor D (fun z => ∑ k, c k * G k z) α) = ∑ k, lamC lam (c k) * lamC lam (taylor D (G k) α)
   rw [ie_taylor_lin c G hsm α, ie_lamC_sum lam _ fun k => mul_mem (hc k) ((hG k).2 α)]

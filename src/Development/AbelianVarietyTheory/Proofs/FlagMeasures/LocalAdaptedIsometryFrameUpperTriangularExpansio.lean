@@ -52,7 +52,8 @@ theorem adapt_expand : ∀ (D : D7) {T : D.host.E} (F0 F : LFlag (VS D) D.R.rS T
   · simp [hu0 a a le_rfl]
   · have e1 : g (frame F0 b) = frame F b + ∑ c, u b c • frame F c := by
       rw [← hux b]; abel
-    rw [e1, map_add, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e1, map_add, map_sum]
     simp only [baseChange_smul₂]
     have e2 : ∀ a, (((D.s.atP p).ιE (u b a) + if a = b then 1 else 0) * Ring.inverse (frFac Z.δ p a)) •
         (frFac Z.δ p a • baseChange₂ D p (frame F a)) =

@@ -77,7 +77,8 @@ theorem descend_multilinear_mod : ∀ (ι : Type) [Fintype ι] [DecidableEq ι] 
     rw [key _ (hmem k).1 _ (hmem k).2]
     simp [Λ, L, τ]
   have : NQ.mkQ (∑ k, Ψ (a k) (s k)) = 0 := by
-    rw [map_sum]; simp_rw [hk]; rw [← map_sum, hsum, map_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]; simp_rw [hk]; rw [← map_sum, hsum, map_zero]
   rwa [Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero] at this
 
 end GlobalTheory

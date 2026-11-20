@@ -105,7 +105,8 @@ theorem abs_fderiv_regMax_apply_le {η : ℝ} (hη : 0 < η) (p z : ι → ℝ) 
     simp [Finset.sum_apply, Pi.single_apply]
   have hLz : L z = ∑ j, z j * L (Pi.single j 1) := by
     conv_lhs => rw [hz]
-    simp [map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, map_smul]
   have hs : ∑ j, L (Pi.single j 1) = 1 := regMax_fderiv_sum hη p
   have hn : ∀ j, 0 ≤ L (Pi.single j 1) := fun j =>
     regMax_fderiv_nonneg hη p _ (Pi.single_nonneg.2 zero_le_one)

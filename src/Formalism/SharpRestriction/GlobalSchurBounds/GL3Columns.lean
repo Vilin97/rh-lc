@@ -982,7 +982,8 @@ theorem IsRatU.mul {D : D7} {N : ℕ} {a b : GA D N} (ha : IsRatU D a) (hb : IsR
   unfold IsRat at hγ hγ' ⊢
   rw [Subgroup.coe_mul, Units.val_mul, hγ, hγ']
   ext i j
-  simp [Matrix.mul_apply, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Matrix.mul_apply, map_sum, map_mul]
 
 theorem IsRatU.inv {D : D7} {N : ℕ} {a : GA D N} (ha : IsRatU D a) : IsRatU D a⁻¹ := by
   obtain ⟨γ, hγ⟩ := ha
@@ -997,7 +998,8 @@ theorem IsRatU.inv {D : D7} {N : ℕ} {a : GA D N} (ha : IsRatU D a) : IsRatU D 
   calc (γ : Matrix (Fin N) (Fin N) D.host.E).map (inc D) * ((γ⁻¹ : _) : Matrix (Fin N) (Fin N) D.host.E).map (inc D)
       = ((γ : Matrix (Fin N) (Fin N) D.host.E) * (γ⁻¹ : _)).map (inc D) := by
         ext i j
-        simp [Matrix.mul_apply, map_sum, map_mul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp [Matrix.mul_apply, map_sum, map_mul]
     _ = 1 := by
         rw [h2]
         ext i j
@@ -1065,7 +1067,8 @@ theorem class_sum_integral_holds (D : D7) : ClassSumIntegralAlt D := by
     · intro hn
       exact absurd hg0R hn
   conv_lhs => rw [key]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl (fun g _ => ?_)
   rw [map_smul, smul_eq_mul]
   have hu := X.unf g

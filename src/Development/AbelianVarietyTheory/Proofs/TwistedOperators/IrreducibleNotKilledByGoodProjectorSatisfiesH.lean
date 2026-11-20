@@ -46,7 +46,8 @@ theorem exists_char_of_fixed {K G W : Type} [Field K] [CharZero K] [Group G] [Fi
     exact hx0 (by rw [← hPx, h1, LinearMap.zero_apply])
   have htr' : LinearMap.trace ℂ W P =
       ∑ χ ∈ X, ∑ g, emb (χ 1 / (Fintype.card G : K) * χ g⁻¹) * τ.character g := by
-    simp only [P, map_sum, map_smul, smul_eq_mul, Formalism.L2.DIV.coeff_idemOf, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [P, map_sum, map_smul, smul_eq_mul, Formalism.L2.DIV.coeff_idemOf, Finset.sum_mul]
     rw [Finset.sum_comm]
     rfl
   rw [htr'] at htr

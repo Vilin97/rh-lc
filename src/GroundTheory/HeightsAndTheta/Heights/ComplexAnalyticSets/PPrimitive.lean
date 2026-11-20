@@ -89,7 +89,8 @@ theorem PrimitiveDiscriminant.proof (hG : GenericPrimitive.Statement) (hD : Disc
   have hsum : ∑ j, c j • algebraMap (MvPolynomial (Fin n) ℂ ⧸ J) (funField J)
       (Ideal.Quotient.mk J (X j)) = algebraMap (MvPolynomial (Fin n) ℂ ⧸ J) _
         (Ideal.Quotient.mk J (sum₂ c)) := by
-    simp only [Algebra.smul_def, hC, ← map_mul, ← map_sum, sum₂]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Algebra.smul_def, hC, ← map_mul, ← map_sum, sum₂]
   rw [hsum] at hprim
   have hℓ : IsIntegral (MvPolynomial (Fin d) ℂ) (Ideal.Quotient.mk J (sum₂ c)) :=
     Algebra.IsIntegral.isIntegral _

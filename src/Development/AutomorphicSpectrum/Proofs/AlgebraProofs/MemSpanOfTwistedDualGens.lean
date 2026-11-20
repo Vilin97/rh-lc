@@ -70,7 +70,8 @@ theorem mem_span_of_twistedDualGens (E : ChartBundle O (mseg x) N V) {M : ℕ} {
       intro g
       obtain ⟨a', ha', he⟩ := (hiff (G g)).1 ⟨0, by simpa using hG g⟩
       have : bas.coord q (G g) = a' q := by
-        rw [he, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [he, map_sum]
         simp only [map_smul]
         have hbq : ∀ q', bas.coord q (b q') = if q' = q then 1 else 0 := by
           intro q'
@@ -89,7 +90,8 @@ theorem mem_span_of_twistedDualGens (E : ChartBundle O (mseg x) N V) {M : ℕ} {
     have h3 : ∀ v ∈ E.lat s₀, (f l ^ n₀ • bas.coord q) v ∈ chartRing O (mseg x) s₀ := by
       intro v hv
       obtain ⟨β, hβ, rfl⟩ := hgen v hv
-      simp only [LinearMap.smul_apply, map_sum, map_smul, smul_eq_mul, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [LinearMap.smul_apply, map_sum, map_smul, smul_eq_mul, Finset.mul_sum]
       refine sum_mem fun g _ => ?_
       exact mul_mem (hβ g) (h2 g)
     obtain ⟨u, -, hu⟩ := hg.generate s₀ hs _ h3

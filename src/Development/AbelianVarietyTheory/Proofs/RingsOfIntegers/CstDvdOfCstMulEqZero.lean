@@ -229,7 +229,8 @@ theorem expandsAtUpTo_succ {V : Type} [CommRing V] [IsDomain V] [IsDiscreteValua
     have := key _ (h2 jL hL')
     convert this using 2
     symm
-    rw [map_sub, map_mul, map_sum, Units.val_pow_eq_pow_val, Units.val_pow_eq_pow_val, map_pow]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_mul, map_sum, Units.val_pow_eq_pow_val, Units.val_pow_eq_pow_val, map_pow]
     refine congrArg₂ (· - ·) (congrArg₂ (· * ·) ?_ ?_) (Finset.sum_congr rfl fun α _ => ?_)
     · have hj : J (thickMap V (maximalIdeal V) e G ≫ pGl U (e + 1)) = J (pGl U e) := by rw [hq]
       simp only [hj]

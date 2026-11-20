@@ -34,7 +34,8 @@ theorem UpperTheory.V.Z.Tf.GlobalTraceComparison.Pi.evalBasis_pf :
     fun i => Subtype.coe_prop _, fun v hv => ?_⟩
   have key : (⟨v, hv⟩ : W) = ∑ i, (B i ⟨v, hv⟩) • (Module.evalEquiv ℂ W).symm (B.coord i) := by
     apply (Module.evalEquiv ℂ W).injective
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [map_smul, LinearEquiv.apply_symm_apply]
     exact (B.sum_dual_apply_smul_coord _).symm
   have h2 := congrArg (Subtype.val) key

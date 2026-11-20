@@ -137,13 +137,15 @@ theorem pow_intertw (e : Matrix (Fin n) (Fin n) (Module.End ℂ M)) (e' : Matrix
     split_ifs <;> simp
   | succ m ih =>
     intro a b x
-    simp only [pow_succ', Matrix.mul_apply, LinearMap.sum_apply, map_sum, Module.End.mul_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [pow_succ', Matrix.mul_apply, LinearMap.sum_apply, map_sum, Module.End.mul_apply]
     exact Finset.sum_congr rfl fun c _ => by rw [h, ih]
 
 theorem trace_intertw (e : Matrix (Fin n) (Fin n) (Module.End ℂ M)) (e' : Matrix (Fin n) (Fin n) (Module.End ℂ M'))
     (α : M →ₗ[ℂ] M') (h : ∀ a b x, α (e a b x) = e' a b (α x)) (m : ℕ) (x : M) :
     α ((e ^ m).trace x) = (e' ^ m).trace (α x) := by
-  simp only [Matrix.trace, Matrix.diag, LinearMap.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.trace, Matrix.diag, LinearMap.sum_apply, map_sum]
   exact Finset.sum_congr rfl fun a _ => pow_intertw e e' α h m a a x
 
 end End

@@ -60,7 +60,8 @@ theorem exists_equiv : ∀ (g n : ℕ) (o : Type) [CommRing o] (ζ : o) (F : SFa
     · rfl
     · exact MonObj.one_comp _
   have key := congrArg ε (he₂ a b f f₁ m hf hM' hgen hE y v)
-  rw [apply_ite ε, map_sum, map_sum, map_zero] at key
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [apply_ite ε, map_sum, map_sum, map_zero] at key
   simp only [map_zsmul] at key
   exact key
 

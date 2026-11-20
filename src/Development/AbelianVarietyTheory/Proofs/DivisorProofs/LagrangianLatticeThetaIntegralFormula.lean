@@ -37,7 +37,8 @@ private theorem act_sum {F R : Type} [Field F] [CommRing R] [Algebra F R] {κ ι
       (∑ i, t i • ((fun k => algebraMap F R (v i (Sum.inl k))), (fun k => algebraMap F R (v i (Sum.inr k))))).2) m =
       ∑ i, t i * algebraMap F R ((g *ᵥ v i) m) := by
     intro m
-    simp only [Matrix.mulVec, dotProduct, Fintype.sum_sum_type, Sum.elim_inl, Sum.elim_inr, Matrix.map_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, dotProduct, Fintype.sum_sum_type, Sum.elim_inl, Sum.elim_inr, Matrix.map_apply,
       Prod.fst_sum, Prod.snd_sum, Finset.sum_apply, Prod.smul_fst, Prod.smul_snd, Pi.smul_apply, smul_eq_mul,
       map_add, map_sum, map_mul, mul_add, Finset.mul_sum, Finset.sum_add_distrib]
     congr 1 <;> (rw [Finset.sum_comm]; refine Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => ?_; ring)

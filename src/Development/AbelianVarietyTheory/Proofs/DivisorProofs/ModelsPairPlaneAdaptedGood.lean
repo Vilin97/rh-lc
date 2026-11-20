@@ -179,7 +179,8 @@ theorem GlobalTheory.ThK.IsoUniq.main : GlobalTheory.ThK.KP → ∀ (F E : Type)
     (GlobalTheory.ThK.IsoUniq.infRel_of_ev hM hM₂ e₂ he₂ ei' ev' hev' hloc')
   refine ⟨c, fun Ψ hΨ => ?_⟩
   obtain ⟨T, m, f, φ, hφ, hT, rfl⟩ := GlobalTheory.SchADecomp.exists_sum_pure F (Fin n × Fin d) Ψ hΨ
-  rw [map_sum, map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, Finset.smul_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   have hv : ∀ᶠ v in cofinite, φ i v = M.vac v := by
     filter_upwards [hM.std, (Set.Finite.compl_mem_cofinite T.finite_toSet : (↑T : Set (Pl F))ᶜ ∈ cofinite)] with v h1 h2

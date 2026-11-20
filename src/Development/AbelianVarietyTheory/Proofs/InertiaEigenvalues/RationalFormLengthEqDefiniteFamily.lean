@@ -61,7 +61,8 @@ theorem lat_eq_map (D : D7) (μ : D.what₂.Tup) (j : ℕ) {n : ℕ} (e : (Fin n
     choose! g hg using D.what₂.MtLat_sub μ j
     have hx' : e x = ∑ v ∈ (D.what₂.MtLat μ j).gen, (c v) • g v := by
       apply GlobalTheory.Mem.LiftForms.jMt_injective μ j
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       have hc' : D.what₂.jMt μ j (e x) = ∑ v ∈ (D.what₂.MtLat μ j).gen, D.what₂.embLL (c v : D.what₂.LL) • v := hc
       rw [hc']
       refine Finset.sum_congr rfl fun v hv => ?_

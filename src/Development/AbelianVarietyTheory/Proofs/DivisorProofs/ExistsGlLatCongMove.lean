@@ -61,7 +61,8 @@ theorem exists_rightInverse {X : Matrix A D k} (hX : IsPrimFrame (SplitFlip.stdL
   have h1 : l (f (Pi.single i 1)) = Pi.single i 1 := LinearMap.congr_fun hl _
   have h2 : f (Pi.single i 1) = ∑ j, X' i j • Pi.single j 1 := by
     funext j; simp [f, Finset.sum_apply, Pi.single_apply]
-  rw [h2, map_sum] at h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h2, map_sum] at h1
   have h3 := congrArg Subtype.val (congrFun h1 i')
   simp only [map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul] at h3
   push_cast at h3

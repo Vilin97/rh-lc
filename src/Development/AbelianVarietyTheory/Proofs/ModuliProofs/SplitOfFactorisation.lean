@@ -25,10 +25,12 @@ theorem trace_eq_sum_finrank {W : Type} [AddCommGroup W] [Module ℂ W] [FiniteD
   have h1 : ρ a = ∑ τ : E →+* ℂ, τ (a : E) • EigenSplit.proj h ρ τ := by
     ext v
     conv_lhs => rw [← EigenSplit.sum_proj h ρ v]
-    rw [map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, LinearMap.sum_apply]
     exact Finset.sum_congr rfl fun τ _ =>
       EigenSplit.mem_eigenSub.1 (EigenSplit.proj_mem h ρ τ v) a
-  rw [h1, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h1, map_sum]
   refine Finset.sum_congr rfl fun τ _ => ?_
   rw [map_smul, (EigenSplit.isProj_proj h ρ τ).trace, smul_eq_mul, mul_comm]
 

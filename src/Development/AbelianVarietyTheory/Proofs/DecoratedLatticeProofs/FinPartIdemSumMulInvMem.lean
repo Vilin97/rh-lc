@@ -24,7 +24,8 @@ theorem finPart_idemSum_mul_inv_mem : ∀ (D : D7) (e : AE D) (SS : Finset (Form
   by_cases h0 : t = 0
   · subst h0
     simp
-  · rw [Finset.sum_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [Finset.sum_mul, map_sum]
     refine AddSubgroup.sum_mem _ fun PP hPP => ?_
     by_contra hn
     exact ht PP hPP (((hes PP hPP).2 t h0).2 hn)

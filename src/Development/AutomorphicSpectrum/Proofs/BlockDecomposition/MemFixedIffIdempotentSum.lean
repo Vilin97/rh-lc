@@ -65,7 +65,8 @@ theorem sum_teichmuller {I : Type} [Fintype I] {e : I → A.A}
       rw [← map_mul, he.ortho hij, WittVector.teichmuller_zero]⟩
   have hu : IsIdempotentElem (1 - ∑ i, τ (e i)) := ho.isIdempotentElem_sum.one_sub
   have h0 : (1 - ∑ i, τ (e i)) ∈ Ideal.span {(l : A.W)} := by
-    rw [A.mem_span_l_iff, ← WittVector.constantCoeff_apply, map_sub, map_one, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [A.mem_span_l_iff, ← WittVector.constantCoeff_apply, map_sub, map_one, map_sum]
     simp only [WittVector.constantCoeff_apply, WittVector.teichmuller_coeff_zero]
     rw [he.complete, sub_self]
   have hz : (1 - ∑ i, τ (e i)) = 0 :=
@@ -116,7 +117,8 @@ theorem exists_idemSum (n : ℕ) {I : Type} [Fintype I] (v : I → ℕ) (e : I �
   haveI : NeZero (l ^ n) := ⟨pow_ne_zero _ (Fact.out : l.Prime).ne_zero⟩
   refine ⟨fun c => ∑ i with ((v i : ℕ) : ZMod (l ^ n)) = c, e i, coi_push he _, ?_⟩
   rw [idemSum]
-  simp only [teichmuller_push A he, map_sum, map_mul, map_natCast]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [teichmuller_push A he, map_sum, map_mul, map_natCast]
   have key : ∀ c : ZMod (l ^ n), ((c.val : ℕ) : A.Wn n) *
       ∑ i with ((v i : ℕ) : ZMod (l ^ n)) = c, Ideal.Quotient.mk _ (τ (e i)) =
       ∑ i with ((v i : ℕ) : ZMod (l ^ n)) = c, (v i : A.Wn n) * Ideal.Quotient.mk _ (τ (e i)) := by
@@ -149,11 +151,13 @@ theorem exists_rep (n : ℕ) : ∀ y : A.W, A.phiW y - y ∈ Ideal.span {(l : A.
     obtain ⟨f, hf, hfc⟩ := GlobalTheory.CompanionTheory.FrobFixed.fix_one A _ h0
     have hTφ : A.phiW (∑ c : ZMod l, (c.val : A.W) * τ (f c)) =
         ∑ c : ZMod l, (c.val : A.W) * τ (f c) := by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun c _ => ?_
       rw [map_mul, map_natCast, phiW_teichmuller A (hf.idem c)]
     have hT0 : (y - ∑ c : ZMod l, (c.val : A.W) * τ (f c)).coeff 0 = 0 := by
-      rw [← WittVector.constantCoeff_apply, map_sub, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← WittVector.constantCoeff_apply, map_sub, map_sum]
       simp only [map_mul, map_natCast, WittVector.constantCoeff_apply,
         WittVector.teichmuller_coeff_zero]
       rw [sub_eq_zero]
@@ -212,7 +216,8 @@ theorem mem_Fix_iff : ∀ {l : ℕ} [Fact l.Prime] (A : PAlg l) (n : ℕ) (x : A
     exact ⟨e', he', (Ideal.Quotient.eq.2 hm).trans h'⟩
   · rintro ⟨e, he, rfl⟩
     change wnMap A.frob n (A.idemSum n e) = A.idemSum n e
-    rw [idemSum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [idemSum, map_sum]
     refine Finset.sum_congr rfl fun c _ => ?_
     rw [map_mul, map_natCast]
     congr 1

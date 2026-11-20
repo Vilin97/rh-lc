@@ -188,7 +188,8 @@ theorem rational_coordinates : RatCoord := by
   have hc1 : ∀ w i' τ, g₁.symm (Pi.single w 1) (i', τ) =
       ∑ m, D.host.φ₀ ((c w i' m : D.host.K) : D.host.E) * TaylorLogMetric.embT D τ (b m 0 0) := by
     intro w i' τ
-    rw [hau w i' τ, ← hX w i', map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hau w i' τ, ← hX w i', map_sum]
     refine Finset.sum_congr rfl fun m _ => ?_
     rw [map_mul, IntegralOrthonormalChange.embT_K D τ _ (SetLike.coe_mem _)]
   refine ⟨c, hc1, ?_, ?_⟩
@@ -217,7 +218,8 @@ theorem rational_coordinates : RatCoord := by
     have hemb : ∀ w i' τ, TaylorLogMetric.embT D τ (∑ m, ((c w i' m : D.host.K) : D.host.E) * b m 0 0) =
         g₁.symm (Pi.single w 1) (i', τ) := by
       intro w i' τ
-      rw [hc1, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hc1, map_sum]
       refine Finset.sum_congr rfl fun m _ => ?_
       rw [map_mul, IntegralOrthonormalChange.embT_K D τ _ (SetLike.coe_mem _)]
     have hG : ∀ i', D.host.φ₀ (∑ m, ∑ n, ((c w i' m : D.host.K) : D.host.E) *
@@ -242,7 +244,8 @@ theorem rational_coordinates : RatCoord := by
     have e4 := hH
     rw [Fintype.sum_prod_type] at e4
     apply D.host.φ₀.injective
-    rw [map_sum, Finset.sum_congr rfl (fun i' _ => hG i'), e4]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_congr rfl (fun i' _ => hG i'), e4]
     split_ifs <;> simp
 
 end Formalism.L2.KerInert

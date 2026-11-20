@@ -27,8 +27,10 @@ theorem UpperTheory.V.Odd.resKill :
     simp only [AlgHom.toRingHom_eq_coe, RingHom.coe_coe, MonoidAlgebra.lift_single, MonoidHom.comp_apply, MonoidHom.inv_apply, inv_inv, MonoidAlgebra.of_apply, MonoidAlgebra.smul_single, map_zsmul]
     rw [Representation.asAlgebraHom_single, zsmul_eq_mul, mul_one]
     rfl
-  simp only [ytEl, sumEl, map_neg, map_sum, coefMap, key]
-  rw [LinearMap.neg_apply, map_neg, Pi.neg_apply, neg_eq_zero, LinearMap.sum_apply, map_sum, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [ytEl, sumEl, map_neg, map_sum, coefMap, key]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [LinearMap.neg_apply, map_neg, Pi.neg_apply, neg_eq_zero, LinearMap.sum_apply, map_sum, Finset.sum_apply]
   simp only [LinearMap.smul_apply, map_smul, Pi.smul_apply]
   have hm2 : 2 ≤ m := le_trans (Nat.le_add_left 2 _) hm
   have hnm : n ≤ m := le_trans (le_trans (le_max_left n r) (Nat.le_add_right _ 2)) hm

@@ -112,7 +112,8 @@ theorem tr_inc (e : E) : Algebra.trace (AF F) (AE F E) (inclR (F := F) (AF F) e)
 
 theorem hT_inc (x y : Matrix (Fin n) (Fin d) E) : hTens (cA σ) (incM F X.J) (incM F W.J) (incM F x) (incM F y) =
     inclR (F := F) (AF F) (hTens σ X.J W.J x y) := by
-  simp only [hTens, incM, Matrix.map_apply, cA_inc, map_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hTens, incM, Matrix.map_apply, cA_inc, map_mul, map_sum]
 
 theorem sy_inc (x y : Matrix (Fin n) (Fin d) E) :
     sy σ X W (incM F x) (incM F y) = algebraMap F (AF F) (Algebra.trace F E (-hTens σ X.J W.J x y)) := by
@@ -237,7 +238,8 @@ theorem polar_of {T : Type} [AddCommGroup T] [Module E T] [Module F T] [IsScalar
   · rw [sy, sy, symp, symp, hT_mm, incM_gram g, incM_gram g']
   · obtain ⟨s, t, x₁, rfl⟩ := span x
     refine ⟨b.repr s, (β.dualBasis hβ b).repr t, x₁, ?_⟩
-    simp only [← LinearMap.map_smul_of_tower, ← map_sum, Module.Basis.sum_repr]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [← LinearMap.map_smul_of_tower, ← map_sum, Module.Basis.sum_repr]
 
 end PositivityTheory.ThKCT.Ker
 

@@ -54,7 +54,8 @@ theorem projMat_map_mulVec_of_eig : ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (
       (fun x _ => map_mul_mulVec_of_scal g v (algebraMap_map_mulVec g v _)
         (map_sub_mulVec_of_scal g v (hv x) (algebraMap_map_mulVec g v _)))]
     have hs := congrArg (fun y => g (βB y)) (comaxC_spec b hij)
-    simp only [Finsupp.sum, map_sum, map_mul, map_sub, map_one] at hs
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Finsupp.sum, map_sum, map_mul, map_sub, map_one] at hs
     rw [hs, one_smul]
   have hlast := map_mul_mulVec_of_scal g v (algebraMap_map_mulVec g v (βB (uInv b)))
     (map_sub_mulVec_of_scal g v (hv D.ω) (algebraMap_map_mulVec g v (βB ((D.tr : R) - b.ρ))))

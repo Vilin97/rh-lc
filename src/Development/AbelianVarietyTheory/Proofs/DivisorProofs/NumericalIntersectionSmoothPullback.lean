@@ -95,7 +95,8 @@ theorem chernOn_of_numOn : GlobalTheory.Published.ArCalc → ∀ (e : ℕ) (M : 
         C (t : ℝ) * MvPolynomial.X none + rename some (lin fun i => (n i : ℝ)) := by
       rw [show (fun o => ∑ j : Option ι, (j.elim 1 fun i => (n (some i) : ℝ)) * (A j o : ℝ)) =
           fun o => o.elim (t : ℝ) fun o' => (n o' : ℝ) from funext hb]
-      simp only [lin, Fintype.sum_option (α := Option ι), Option.elim, map_sum, map_mul, rename_C, rename_X]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [lin, Fintype.sum_option (α := Option ι), Option.elim, map_sum, map_mul, rename_C, rename_X]
     rw [hlin] at hn
     rw [hn, Calc.top]
     congr 2

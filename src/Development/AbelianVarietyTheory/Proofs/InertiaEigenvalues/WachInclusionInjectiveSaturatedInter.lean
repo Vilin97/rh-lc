@@ -253,7 +253,8 @@ theorem abstract (j : A →+* E) (f : E →+* W) (g : A →+* B) (c : B →+* W)
       rw [this]
       exact M.sub_mem (M.mul_mem_right _ hxM) (M.mul_mem_right _ htM)
     apply hM.ne_top
-    rw [Ideal.eq_top_iff_one, ← map_one j, ← hsum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Ideal.eq_top_iff_one, ← map_one j, ← hsum, map_sum]
     refine M.sum_mem fun i _ => ?_
     rcases dich a i with ⟨b, hb⟩ | ⟨b, k, u, hu, hb⟩
     · exfalso
@@ -331,7 +332,8 @@ theorem idem_ne_zero {O E W : Type} [CommRing O] [CommRing E] [CommRing W] [Nont
     | zero => simpa using hi
     | succ m ih => rw [Nat.cast_succ, ← add_assoc, ← letφ_letE φ₀, ← h₁, h₂, ih, h0]
   apply one_ne_zero (α := W)
-  rw [← map_one f, ← map_one j, ← Finset.univ_sum_single (1 : LetA O n), map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_one f, ← map_one j, ← Finset.univ_sum_single (1 : LetA O n), map_sum, map_sum]
   refine Finset.sum_eq_zero fun i' _ => ?_
   have := h1 (i' - i).val
   rwa [ZMod.natCast_zmod_val, add_sub_cancel] at this

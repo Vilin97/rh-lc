@@ -61,7 +61,8 @@ theorem exists_generator_eigenform (R : Subring ℂ) [IsPrincipalIdealRing R] {g
   have hexp : ∀ v, ψ v = ∑ k, ((b.repr v k : R) : ℂ) • ψ (b k) := by
     intro v
     conv_lhs => rw [← b.sum_repr v]
-    simp only [map_sum, map_smul, Subring.smul_def]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, Subring.smul_def]
   have hprop : ∀ v, ψ (P v) = (ψ v i / ψ w i) • ψ (P w) := by
     intro v
     funext k

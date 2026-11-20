@@ -72,11 +72,13 @@ theorem exists_E {w : Matrix (Fin n) (Fin n) k} (hw : w ∈ Bz Z) : ∃ u, E Z u
   ⟨(bas Z).equivFun ⟨w, hw⟩, by simp [E]⟩
 
 theorem dot_D (u : Fin (dd Z) → k) (x : Matrix (Fin n) (Fin n) k) : u ⬝ᵥ D τ Z x = τ (E Z u * x) := by
-  simp [E_apply, D, dotProduct, Finset.sum_mul, map_sum, smul_mul_assoc]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [E_apply, D, dotProduct, Finset.sum_mul, map_sum, smul_mul_assoc]
 
 theorem D_E (u : Fin (dd Z) → k) : D τ Z (E Z u) = G τ Z *ᵥ u := by
   funext i
-  simp [D, G, E_apply, mulVec, dotProduct, Finset.mul_sum, map_sum, mul_smul_comm, mul_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [D, G, E_apply, mulVec, dotProduct, Finset.mul_sum, map_sum, mul_smul_comm, mul_comm]
 
 theorem D_add (x y : Matrix (Fin n) (Fin n) k) : D τ Z (x + y) = D τ Z x + D τ Z y := by
   funext j; simp [D, mul_add]

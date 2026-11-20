@@ -105,7 +105,8 @@ theorem sval_sum {A : Over S} [GrpObj A] {L : LB A.left} {T : Over S} {a : ℤ} 
   refine (congrArg (gs _ z _) (H _)).trans ?_
   have hs : ∀ (W : (T ⊗ A).left.Opens) (_ : (ptSecT A x).left z ∈ W) (u : I → Γ((T ⊗ A).left, W)),
       gs (ptSecT A x).left z W (∑ l, u l) = ∑ l, gs (ptSecT A x).left z W (u l) := fun W hW u => by
-    simp only [gs_eq _ z W hW, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [gs_eq _ z W hW, map_sum]
   refine (hs _ hy _).trans (Finset.sum_congr rfl fun l _ => (gs_mul _ z _ hy _ _).trans (congrArg (· * _) ?_))
   refine (gs_res _ z _ hy _).trans ((gs_pull _ (fst T A).left z ⊤ trivial _).trans ?_)
   rw [← Over.comp_left, ptSecT, lift_fst]; rfl
@@ -223,11 +224,13 @@ theorem ev_crd_act : GlobalTheory.UT.LL → ∀ (o Ω : Type) [CommRing o] [Fiel
   simp only [hgs] at e'
   have q : ∑ n, algebraMap o S.R (S.ρ a n i) * ⟨S.ev h n, S.ev_mem _ _⟩ =
       algebraMap o S.R (S.ζ ^ k) * ⟨S.ev (h + S.r • a) i, S.ev_mem _ _⟩ := hg (by
-    rw [map_sum, map_mul, map_pow, map_pow, hk]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_mul, map_pow, map_pow, hk]
     simp only [map_mul]
     exact e')
   have q' := congrArg S.R.val q
-  rw [map_sum] at q'
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum] at q'
   exact q'
 
 end GlobalTheory.ZH.EvCrd

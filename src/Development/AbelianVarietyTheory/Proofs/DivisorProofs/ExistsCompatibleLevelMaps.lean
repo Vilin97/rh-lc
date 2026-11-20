@@ -15,7 +15,8 @@ namespace GlobalTheory.TwistIsom
 theorem sum_twist_coord {ι κ R M : Type} [Fintype ι] [Fintype κ] [CommRing R] [AddCommGroup M] [Module R M]
     (σ : R ≃+* R) (x : R) (α : κ → ℤ) (ck : κ → ι → R) (e : ι → M) :
     ∑ k, α k • ∑ i, (x * σ (ck k i)) • e i = ∑ i, (x * σ (∑ k, (α k : R) * ck k i)) • e i := by
-  simp only [map_sum, map_mul, map_intCast, Finset.mul_sum, Finset.sum_smul, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, map_intCast, Finset.mul_sum, Finset.sum_smul, Finset.smul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun k _ => ?_
   rw [← Int.cast_smul_eq_zsmul R, smul_smul]

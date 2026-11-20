@@ -55,7 +55,8 @@ theorem classSum_kernel_isAlgebraic : ∀ {D : D7} {T : Type} [Finite T] {L : Le
     have e3 : ∀ p, X.ω t (x, h) (pt (heisO W.ψ (GlobalTheory.Grid.neg A) WW (w p) X.vac)) =
         ∑ q, c' p q • pt (heisO W.ψ (GlobalTheory.Grid.neg A) WW (w' p q) X.vac) := fun p => by
       rw [move _ (GlobalTheory.ThetaClosed.isThetaFunO_heisO_all hψ hv _), hm p, comb _ _ _ (hw' p)]
-    rw [e2, hf, comb _ _ _ hw, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e2, hf, comb _ _ _ hw, map_sum]
     simp only [map_smul, e3, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Finset.sum_div, Finset.mul_sum, mul_div_assoc]
   rw [hval, ← mem_algebraicClosure_iff]
   refine sum_mem fun p _ => mul_mem (mem_algebraicClosure_iff.2 (hc p)) (sum_mem fun q _ => mul_mem

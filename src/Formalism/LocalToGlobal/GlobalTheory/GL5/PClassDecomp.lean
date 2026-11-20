@@ -173,7 +173,8 @@ theorem unit_bound (W : Formalism.BasicNotions.HSpace E) (σ' : E →+* E) (hσ 
   have hrep : ∀ k, W.frame.repr v k = um k j := by
     intro k; simp only [v, W.frame.repr_sum_self]
   have e1 : W.hT v v = ∑ k, ∑ l, star (um k j) * (um l j * W.gram k l) := by
-    simp only [v, map_sum, LinearMap.sum_apply, map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [v, map_sum, LinearMap.sum_apply, map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul,
       Finset.mul_sum, Formalism.BasicNotions.HSpace.gram, starRingEnd_apply]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun l _ => ?_

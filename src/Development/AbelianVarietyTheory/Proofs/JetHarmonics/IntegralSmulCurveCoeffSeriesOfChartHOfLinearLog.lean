@@ -52,7 +52,8 @@ theorem intS_iff_coeff {V : VF C} {σ : Type} {F : MvPowerSeries (Option σ) C} 
 
 theorem intS_sum {V : VF C} {σ ι : Type} {s : Finset ι} {f : ι → MvPowerSeries σ C} (h : ∀ i ∈ s, IntS V (f i)) :
     IntS V (∑ i ∈ s, f i) := fun μ => by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact VF.Ge.sum fun i hi => h i hi μ
 
 theorem ge_div_factorial (V : VF C) {k : ℕ} (hk : k < V.l) {x : C} (hx : V.Ge 0 x) :
@@ -145,7 +146,8 @@ theorem mm_of_mul_matrix {V : VF C} {κ : Type} [Fintype κ] {D : κ → MvPower
       simp [mul_sub]
     rw [e, map_sub]
     refine mm_sub (h i μ) ?_
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine hsum _ _ fun j _ => ?_
     rw [coeff_mul]
     refine hsum _ _ fun p hp => ?_
@@ -492,7 +494,8 @@ theorem const_invM {X : RawChart C d I κ} {V : VF C} (h : RLaw X V) (j i : κ) 
   have hA := formalAdd_const h (gp_const (C := C) (κ := κ) (0 : Fin 2)) (gp_const 1)
   have e := congrArg (fun F => constantCoeff (pderiv C ((1 : Fin 2), i) F))
     (lg_addP h (gp_const (C := C) (κ := κ) (0 : Fin 2)) (gp_const 1) j)
-  rw [map_add, pderiv_subst_eq_zero (gp_const 0) (fun x => pderiv_X_of_ne (by simp)), zero_add,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_add, pderiv_subst_eq_zero (gp_const 0) (fun x => pderiv_X_of_ne (by simp)), zero_add,
     FormalCalc.pderiv_subst (hasSubst_of_constantCoeff_zero hA),
     FormalCalc.pderiv_subst (hasSubst_of_constantCoeff_zero (gp_const 1)), map_sum, map_sum] at e
   simp only [map_mul, GlobalTheory.RowVal.cc_subst hA, GlobalTheory.RowVal.cc_subst (gp_const (C := C) (κ := κ) (1 : Fin 2)),
@@ -615,7 +618,8 @@ theorem mm_pderiv_l_smul_hCoef {X : RawChart C d I κ} {V : VF C} (h : RLaw X V)
   refine mm_of_mul_matrix (D := fun j => pderiv C j ((V.l : C) • hCoef X γ n)) (intS_invM h) (const_invM h)
     fun i μ => ?_
   have h1 := intS_iff_coeff (intS_invDeriv h hγ i) n μ
-  simp only [map_sub, map_neg, map_sum, map_mul, optionEquivLeft_inT, optionEquivLeft_rename_some,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sub, map_neg, map_sum, map_mul, optionEquivLeft_inT, optionEquivLeft_rename_some,
     PowerSeries.coeff_mul_C, PowerSeries.coeff_map, ← pderiv_coeff_optionEquivLeft,
     coeff_hCv X fun i => (hγ i).1] at h1
   have h2 := hs (Pi.single i 1) fun j => by
@@ -630,7 +634,8 @@ theorem mm_pderiv_l_smul_hCoef {X : RawChart C d I κ} {V : VF C} (h : RLaw X V)
     · rw [mul_zero]; exact mm_zero
   have h4 := mm_neg (mm_add (mm_l_mul h1) h3)
   convert h4 using 1
-  simp only [Derivation.map_smul, smul_mul_assoc, map_sum, coeff_smul, ← Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Derivation.map_smul, smul_mul_assoc, map_sum, coeff_smul, ← Finset.mul_sum]
   ring
 
 end GlobalTheory.GaugeCoef

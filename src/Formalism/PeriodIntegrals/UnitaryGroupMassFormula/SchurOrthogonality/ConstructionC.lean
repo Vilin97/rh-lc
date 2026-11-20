@@ -22,7 +22,8 @@ private lemma normFock_smul_left {N : ℕ} (lam : DomWeight N) (c : ℂ) (p q : 
 private lemma aform_sum_smul_left {N : ℕ} {μ : Measure (Matrix (Fin N) (Fin N) ℂ)} (hμ : IsHaarU N μ) {ι : Type*}
     (t : Finset ι) (c : ι → ℂ) (p : ι → MvPolynomial (Fin N × Fin N) ℂ) (q : MvPolynomial (Fin N × Fin N) ℂ) :
     Aform μ (∑ i ∈ t, c i • p i) q = ∑ i ∈ t, c i * Aform μ (p i) q := by
-  simp only [← ci_Alin_apply hμ, map_sum, map_smul, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← ci_Alin_apply hμ, map_sum, map_smul, smul_eq_mul]
 
 private lemma exists_nonneg_fockF_self {σ : Type*} (f : MvPolynomial σ ℂ) :
     ∃ r : ℝ, 0 ≤ r ∧ Formalism.REAL.fockF f f = (r : ℂ) := by

@@ -138,7 +138,8 @@ theorem addOf_eps {R : Type} [CommRing R] {d : ℕ} (G : FGLaw R d) (v : Fin d �
     (MvPowerSeries.map (algebraMap R (DualNumber R)) (G.F j))
   have h1 := map_ev_pt_zero (algebraMap R (DualNumber R)) (G.F j)
   rw [law_right_unit, map_X] at h1
-  rw [h1, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h1, map_sum]
   simp only [map_mul, map_C, map_ev_pt_zero, map_pderiv']
   rw [Fintype.sum_prod_type, Fin.sum_univ_two] at h
   simp only [Matrix.cons_val_zero, Matrix.cons_val_one, Pi.zero_apply, zero_mul,
@@ -175,7 +176,8 @@ theorem ev_addOf_eps :
     (MvPowerSeries.map (algebraMap R (DualNumber R)) f)
   rw [subst_self, Fintype.sum_prod_type, Fin.sum_univ_one] at h
   unfold Dof
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [map_mul (MvPowerSeries.map (algebraMap R (DualNumber R)))
     (∑ i : Fin d, _) (pderiv R _ f), map_pderiv' (algebraMap R (DualNumber R)) _ f]
   refine Eq.trans ?_ h

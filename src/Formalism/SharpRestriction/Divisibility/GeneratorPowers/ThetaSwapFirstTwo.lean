@@ -132,7 +132,8 @@ theorem mk_rename {κ κ' : Type} (m : ℕ) (ρ : κ → κ') (P : MvPolynomial 
 theorem cc_psTrunc {κ : Type} [Fintype κ] [DecidableEq κ] (m : ℕ) (f : MvPowerSeries κ S) :
     constantCoeff (psTrunc m f) = MvPowerSeries.constantCoeff f := by
   unfold psTrunc
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [MvPolynomial.constantCoeff_monomial]
   rw [Finset.sum_ite_eq']
   rw [if_pos]

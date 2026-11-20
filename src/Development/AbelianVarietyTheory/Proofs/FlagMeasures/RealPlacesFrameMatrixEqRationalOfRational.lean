@@ -57,7 +57,8 @@ theorem sTil_eq_atInf_of_rational : ∀ (D : D7) (X : HidaSetting D) (u : D.what
     rw [Matrix.mulVec_mulVec, Matrix.mul_assoc _ (X.B.I.P v), hinv, Matrix.mul_one, ← Matrix.mulVec_mulVec]
     congr 1
     funext k
-    simp [Matrix.mulVec, dotProduct, map_sum, map_mul, φ]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Matrix.mulVec, dotProduct, map_sum, map_mul, φ]
   have hlin : ∀ b, rv X.B.I v (γ₀ *ᵥ X.crd (qFr wt b)) = ∑ i, φ (y₀ i b) • rvV X v (qFr wt i) := by
     intro b
     rw [hy b]
@@ -66,7 +67,8 @@ theorem sTil_eq_atInf_of_rational : ∀ (D : D7) (X : HidaSetting D) (u : D.what
     rw [← Matrix.mulVec_sum]
     congr 1
     funext k
-    simp [Finset.sum_apply, map_sum, map_mul, φ]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Finset.sum_apply, map_sum, map_mul, φ]
   have hM : (Matrix.of fun a b => hJ (X.B.I.ε v) (rvV X v (qFr wt a))
       (uMat (s v) *ᵥ rvV X v (qFr wt b))) = gramQ X wt v * y₀.map φ := by
     ext a b

@@ -49,7 +49,8 @@ theorem form_latS_int (σ : E →ₐ[F] E) {n : ℕ} (L' : Submodule (𝓞 E) (F
         unfold hform
         refine Finset.sum_congr rfl fun i _ => ?_
         simp [Matrix.one_apply]
-      rw [h1, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [h1, map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_mul]
       rfl
@@ -178,7 +179,8 @@ private lemma pairing_mem_intV_of_mem_dualSet (σ : E →ₐ[F] E) (w : HeightOn
   | mem v hv =>
     obtain ⟨y, hy, rfl⟩ := hv
     have h := inclE_mem_intV_of_mem_intOE (F := F) w (hz' y hy)
-    rw [hform_one_apply, map_sum] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hform_one_apply, map_sum] at h
     convert h using 2 with j
     rw [map_mul]
     congr 1

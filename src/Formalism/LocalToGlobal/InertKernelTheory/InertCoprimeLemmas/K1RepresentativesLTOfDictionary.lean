@@ -126,13 +126,15 @@ theorem frameStdLt_of (lam : Qbar →+* ℂ_[p]) (c : ℂ_[p]) (hc0 : c ≠ 0) (
   congr 1
   · refine Finset.sum_congr rfl fun e _ => ?_
     simp only [← mul_assoc, ← map_mul]
-    rw [← Finset.sum_mul, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Finset.sum_mul, ← map_sum]
     congr 2
     simp only [hf]
     exact (coord_recon D lam b hL hc0 (fun k' => frVec X E pos M φ (Sum.inl e) k') k).symm
   · refine Finset.sum_congr rfl fun e _ => ?_
     simp only [← mul_assoc, ← map_mul]
-    rw [← Finset.sum_mul, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Finset.sum_mul, ← map_sum]
     congr 2
     simp only [hf']
     exact (coord_recon D lam b hL hc0 (fun k' => frVec X E pos M φ (Sum.inr e) k') k).symm

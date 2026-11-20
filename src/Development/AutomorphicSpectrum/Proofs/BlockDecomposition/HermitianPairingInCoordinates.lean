@@ -34,7 +34,8 @@ theorem trace_sigR_mul {σ : E →ₐ[F] E} (h : IsCMExt F E σ) (R : Type) [Com
     intro r k
     simp [hC, Algebra.TensorProduct.basis_apply, TensorProduct.smul_tmul']
   conv_lhs => rw [← C.sum_repr u, ← C.sum_repr w]
-  simp only [hC', map_sum, Finset.sum_mul, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hC', map_sum, Finset.sum_mul, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun l _ => ?_
   have hs : sigR R σ (C.repr u k ⊗ₜ[F] b k) = C.repr u k ⊗ₜ[F] σ (b k) := by simp [sigR]

@@ -107,7 +107,8 @@ theorem UpperTheory.V.Loc.ptFin :
     intro c
     have hc : c ∈ Submodule.span ℤ_[l] (Set.range o) := ho ▸ Submodule.mem_top
     obtain ⟨u, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun _).1 hc
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine sum_mem fun i _ => ?_
     rw [Algebra.smul_def, map_mul, ← IsScalarTower.algebraMap_apply,
       IsScalarTower.algebraMap_apply ℤ_[l] ℚ_[l] (PadicAlgCl l)]
@@ -123,7 +124,8 @@ theorem UpperTheory.V.Loc.ptFin :
     intro a
     obtain ⟨u, hu⟩ := hdec a
     rw [RingHom.mem_ker, map_sub, sub_eq_zero] at hu
-    rw [hu, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hu, map_sum]
     refine sum_mem fun i _ => ?_
     rw [map_smul, Algebra.smul_def]
     exact mul_mem (hOE _) (hTE (Or.inl (Or.inl (Or.inr ⟨i, rfl⟩))))
@@ -143,7 +145,8 @@ theorem UpperTheory.V.Loc.ptFin :
   obtain ⟨u, hu⟩ := hdec a
   have h3 := h2 _ (hP ▸ hu)
   have h4 : (F (∑ i, u i • b i)).snd ∈ E := by
-    rw [map_sum, TrivSqZeroExt.snd_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, TrivSqZeroExt.snd_sum]
     refine sum_mem fun i _ => ?_
     rw [map_smul, TrivSqZeroExt.snd_smul, Algebra.smul_def]
     exact mul_mem (hOE _) (hTE (Or.inl (Or.inr ⟨i, rfl⟩)))

@@ -59,7 +59,8 @@ theorem realPt_actO (C : Ctx S T) {ga : GL (Fin T.rank) D.host.E} {γ : GA D T} 
     simp [compAt, Matrix.one_apply, apply_ite]
   simp only [Ctx.realPt]
   rw [(hact 1 γ w).2.2 (C.m.e.symm σ), hm, hg, h1, Matrix.mul_one]
-  simp only [compAt, Matrix.map_apply, Matrix.mul_apply, Matrix.mulVec, dotProduct, map_sum, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [compAt, Matrix.map_apply, Matrix.mul_apply, Matrix.mulVec, dotProduct, map_sum, map_mul,
     inf_incA C, he, Ctx.realPt]
 
 end GlobalTheory.Ker.ZakLaws

@@ -12,7 +12,8 @@ theorem sb_mul_addChar_linear : ∀ (k : Type) [Field k] [ValuativeRel k] [Topol
   have hexp : ∀ x : Matrix R Q k, f x = ∑ i, ∑ j, x i j * f (Matrix.single i j 1) := by
     intro x
     conv_lhs => rw [Matrix.matrix_eq_sum_single x]
-    simp only [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
     rw [← smul_eq_mul, ← LinearMap.map_smul, Matrix.smul_single, smul_eq_mul, mul_one]
   have hf : Continuous f := by

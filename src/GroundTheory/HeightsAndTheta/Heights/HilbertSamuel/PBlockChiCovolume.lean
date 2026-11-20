@@ -94,7 +94,8 @@ theorem BlockChiCovolume.proof : BlockChiCovolume.Statement := by
     intro m
     rw [hnorm _ (∑ j, m j • f j) (isMultiHomog_zsum f m hf), blockL2Norm_sum_eq_sqrt_gram d n f hf m,
       Real.sq_sqrt (quad_nonneg d n f hf _)]
-    simp [ε, hw, aeval_map_int, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [ε, hw, aeval_map_int, map_sum]
   have hgram : Matrix.gram ℝ (fun i => (B i : EuclideanSpace ℝ (Fin r))) = G := by
     ext k l
     rw [entry_of_quad G (gram_symm d n f hf) k l, ← cast_single_add, ← cast_single, ← cast_single, ← key, ← key,

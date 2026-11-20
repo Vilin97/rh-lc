@@ -95,7 +95,8 @@ theorem yPart_linearIndependent (σ : E →ₐ[F] E) {M n : ℕ} (J : Matrix (Fi
   have htail : tailH w = 0 := funext hwr
   have hx0 : ∀ y, hR R σ (hypOne J) (X 0) y = hLin R σ (hypOne J) (X 0) y := fun _ => rfl
   have hzero : hR R σ (hypOne J) (X 0) w = 0 := by
-    rw [hx0, hw, map_sub, map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hx0, hw, map_sub, map_sum, map_smul]
     have h1 : ∀ j : Fin n, hLin R σ (hypOne J) (X 0) (g j • X j.succ) = 0 := fun j => by
       rw [map_smul, ← hx0]
       have := congrFun (congrFun hg 0) j.succ

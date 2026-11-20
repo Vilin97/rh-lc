@@ -152,7 +152,8 @@ theorem red_matOp (A : Matrix ι ι (𝕎 k)) {τ : 𝕎 k →+* 𝕎 k}
     red (matOp A τ x) = resOp A e (red x) := by
   funext i
   simp only [red, matOp_apply, resOp_apply, Matrix.mulVec, dotProduct, Matrix.map_apply]
-  rw [← WittVector.constantCoeff_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← WittVector.constantCoeff_apply, map_sum]
   simp [WittVector.mul_coeff_zero, hτ]
 
 theorem red_iterate_matOp (A : Matrix ι ι (𝕎 k)) {τ : 𝕎 k →+* 𝕎 k}

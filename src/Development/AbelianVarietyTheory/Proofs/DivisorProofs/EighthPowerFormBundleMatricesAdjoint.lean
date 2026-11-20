@@ -143,7 +143,8 @@ theorem lbIso_cubeLB_adjoint : ∀ (K : Type) [Field K] (A A' : PolAV (Sp K)) (W
   have key : ∀ {T : Over (Sp K)} (u v : T ⟶ A'.A), lam (cls A'.L hL') u v =
       ∑ i, ∑ j, (W + W.transpose) i j • lam (cls A.L hL) (u ≫ pr i) (v ≫ pr j) := by
     intro T u v
-    rw [← lamC_apply, hcA, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← lamC_apply, hcA, map_sum]
     simp only [map_zsmul, lamC_apply, lam_lam hL hΘ, smul_add, Finset.sum_add_distrib, Matrix.add_apply,
       Matrix.transpose_apply, add_smul]
     rw [Fintype.sum_prod_type, Fintype.sum_prod_type]

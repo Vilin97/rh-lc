@@ -29,7 +29,8 @@ theorem extHom_onto : ∀ (l : ℕ) [Fact l.Prime] {G : Type} [Group G] [Topolog
   have hX : extMat hL b₁ b₂ F * X = 1 := by
     refine Matrix.ext fun i j => ?_
     have := congrArg (incl hL) (key i j)
-    rw [map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at this
     simp only [map_mul] at this
     rw [Matrix.mul_apply]
     refine Eq.trans this ?_

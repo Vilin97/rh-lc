@@ -15,7 +15,8 @@ theorem RestCutPsiFlag.proof : RestCutPsiFlag.Statement := by
     rw [coeff_map, eq_ratCast]
     ring
   · unfold realFlagIntegral RestTerms.flagIntegral
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun α _ => ?_
     rw [KRest.coeff_psiPoly]
     have h : AddMonoidAlgebra.coeff P α * ((AddMonoidAlgebra.coeff (RestTerms.blockVandermonde f N) α *

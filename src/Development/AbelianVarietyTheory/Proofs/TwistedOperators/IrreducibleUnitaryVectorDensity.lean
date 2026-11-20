@@ -38,7 +38,8 @@ lemma comm_diag (P : PiLp 2 (fun _ : Fin n => H) →L[ℂ] PiLp 2 (fun _ : Fin n
     (c : Fin n → Fin n → ℂ) (hc : ∀ i j x, P (incl j x) i = c i j • x) (T : H →L[ℂ] H)
     (x : PiLp 2 (fun _ : Fin n => H)) : P (diag n T x) = diag n T (P x) := by
   rw [← sum_incl x]
-  simp only [map_sum, diag_incl]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, diag_incl]
   refine Finset.sum_congr rfl fun j _ => ?_
   ext i
   simp [hc]

@@ -171,7 +171,8 @@ theorem master (h : All) {E : Type} [Field E] [NumberField E] [IsCMField E] {l :
       refine ⟨fun h0 => ?_, ?_⟩
       · rw [h0, map_zero] at e0; exact zero_ne_one e0
       · rw [e0, ← e1]
-        simp [crystallineComparison.heckePol, Polynomial.map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp [crystallineComparison.heckePol, Polynomial.map_sum]
   refine ⟨{ p := p, D := S.D, G := S.G, L := S.L, sc := hsc, e := RingEquiv.refl E, n_eq := rfl, N := N, J := J, g := g, θ := θ,
             κ := V.κ, m := mOf x V.W V.jz, alg := V.kap.alg, lam := V.lam, anti := hanti, f := f, fn := hf,
             spec := by simpa only [θ, RingEquiv.apply_symm_apply] using hsp, cong := ?_ }, fun v hv => ?_, fun w hw B hB => ?_⟩

@@ -73,7 +73,8 @@ theorem chart_firstForm_sub (t : T) (e : T → ℤ) :
     intro s
     rw [C_sub, C_mul, sub_mul, mul_assoc, map_sub, map_mul (excChartMap b' a v u) (C (e s)), first_eq_zero,
       mul_zero, sub_zero]
-  rw [graphFirstForm, map_sum, Finset.sum_congr rfl fun s _ => h1 s, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [graphFirstForm, map_sum, Finset.sum_congr rfl fun s _ => h1 s, ← map_sum]
   congr 1
   rw [Finset.sum_eq_single t (fun s _ hs => by rw [Pi.single_eq_of_ne hs, C_0, zero_mul])
     (fun h => absurd (Finset.mem_univ t) h), Pi.single_eq_same, C_1, one_mul]
@@ -170,7 +171,8 @@ theorem DualStackedExcChart.proof (hC : DualStackedExcChartForms.Statement) : Du
           simp only [σ, eval₂Hom_C, eval₂Hom_X', Option.elim]
           exact hfirst t
         · show σ (linPointMap α M (graphSecond t)) = excChartMap b' a v u (graphSecond t)
-          rw [LinPrimeExample.linPointMap_second, map_sum, ← hW t]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [LinPrimeExample.linPointMap_second, map_sum, ← hW t]
           refine Finset.sum_congr rfl fun j _ => ?_
           simp only [σ, map_mul, eval₂Hom_C, eval₂Hom_X', Option.elim]
     rw [← key, RingHom.comp_apply, RingHom.mem_ker.mp he, map_zero]

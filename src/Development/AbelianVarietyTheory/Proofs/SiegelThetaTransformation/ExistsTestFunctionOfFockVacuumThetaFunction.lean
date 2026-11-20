@@ -119,7 +119,8 @@ theorem GlobalTheory.Ker.exists_test_of_fock : ∀ (D : D7) (S T : HSp D) (C : C
   have hC : Differentiable ℂ Φ := by
     refine differentiable_of_fderiv_I hd fun ζ u => ?_
     obtain ⟨v, rfl⟩ := L.surjective u
-    rw [← Finset.univ_sum_single v, map_sum, Finset.smul_sum, map_sum, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Finset.univ_sum_single v, map_sum, Finset.smul_sum, map_sum, map_sum, Finset.mul_sum]
     exact Finset.sum_congr rfl fun σ _ => hone ζ σ _
   obtain ⟨-, hext, hth⟩ := GlobalTheory.T.thetaFunction_space_heisenberg_laws D S T C
   obtain ⟨-, -, -, hfin, -, N, hN, hlev⟩ := hth f hf

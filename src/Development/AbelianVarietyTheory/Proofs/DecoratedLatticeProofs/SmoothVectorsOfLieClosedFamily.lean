@@ -143,9 +143,11 @@ theorem crit_nat (hu : IsUnit Hm.det) (hσ : Formalism.MainNotions.S.IsURepOn (F
         ((σ (pr Xs y)).restrictScalars ℝ).hasFDerivAt.comp_hasDerivAt (0 : ℝ) (hd _ (hYl m y) i)
       convert h1 using 1
       show _ = σ (pr Xs y) (v (δ (Y m y) i))
-      rw [v_expand ha hs (Y m y) i, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [v_expand ha hs (Y m y) i, map_sum]
       refine Finset.sum_congr rfl fun a _ => ?_
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun c _ => ?_
       rw [map_add, map_smul, map_smul, Complex.coe_smul, Complex.coe_smul]
     rw [Nat.cast_succ, contDiff_succ_iff_hasFDerivAt]

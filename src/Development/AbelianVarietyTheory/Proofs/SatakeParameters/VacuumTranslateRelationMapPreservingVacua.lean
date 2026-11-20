@@ -83,12 +83,14 @@ theorem locVac_rel_map : ∀ (L : Type) [Field L] [CharZero L] [Valued L (WithZe
     rw [e1, ← Finset.sum_fiberwise_of_maps_to (s := f.support) (t := I) (g := fun x => (QuotientAddGroup.mk x : _ ⧸ Λ))
       (fun x hx => Finset.mem_image_of_mem _ hx)]
     refine Finset.sum_congr rfl fun y _ => ?_
-    simp only [cl, map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [cl, map_sum, map_smul]
     refine Finset.sum_congr rfl fun x hx => ?_
     rw [(Finset.mem_filter.mp hx).2]
   have hclvac : ∀ y, LocVac ρ (cl f y) := by
     intro y u hu
-    simp only [cl, map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [cl, map_sum, map_smul]
     exact Finset.sum_congr rfl fun x _ => by rw [hf x u hu]
 
   have hcl0 : ∀ y ∈ I, cl f y = 0 := by
@@ -109,7 +111,8 @@ theorem locVac_rel_map : ∀ (L : Type) [Field L] [CharZero L] [Valued L (WithZe
     exact hinj _ _ hind
   have hφcl : ∀ y, cl (fun x => φ (f x)) y = φ (cl f y) := by
     intro y
-    simp only [cl, map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [cl, map_sum, map_smul]
   show ∑ x ∈ f.support, ρ x (φ (f x)) = 0
   rw [hdec (fun x => φ (f x)) (fun x => hφ _ (hf x))]
   exact Finset.sum_eq_zero fun y hy => by rw [hφcl, hcl0 y hy, map_zero, map_zero]

@@ -73,7 +73,8 @@ theorem heisenberg_weightSpace_irreducible : ∀ (F : Type) [Field F] [IsAlgClos
     simp only
     rw [← h1]
     conv_lhs => rw [hvs]
-    rw [map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl fun a _ => ?_
     rw [map_smul, hlamΦ, smul_smul, smul_smul]
     congr 1; ring

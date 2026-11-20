@@ -32,7 +32,8 @@ theorem continuous_comp_of_filtered_continuity {ι : Type} [Fintype ι] {N : ℕ
         congr 1
         refine Finset.sum_congr rfl fun x _ => ?_
         ring
-      rw [this, map_neg, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [this, map_neg, map_sum]
       congr 1
       refine Finset.sum_congr rfl fun x _ => ?_
       rw [C_mul', map_smul, smul_eq_mul]

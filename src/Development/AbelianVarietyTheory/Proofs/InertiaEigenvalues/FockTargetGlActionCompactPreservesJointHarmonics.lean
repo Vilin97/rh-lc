@@ -59,14 +59,16 @@ theorem gen {σ : Type*} [DecidableEq σ] {n : ℕ} (x y u w : Fin n → σ) (P 
     (hA1 : ∑ j, ∑ k, (if u k = y j then pderiv (x j) (pderiv (w k) P) else 0) = 0)
     (hA2 : ∑ j, ∑ k, (if u k = x j then pderiv (y j) (pderiv (w k) P) else 0) = 0) :
     ∑ j, pderiv (x j) (pderiv (y j) (∑ k, X (u k) * pderiv (w k) P)) = 0 := by
-  simp only [map_sum, dd_X_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, dd_X_mul]
   simp only [Finset.sum_add_distrib]
   rw [hA1, hA2, zero_add, zero_add, Finset.sum_comm]
   have : ∀ k, ∑ j, X (u k) * pderiv (x j) (pderiv (y j) (pderiv (w k) P)) = 0 := by
     intro k
     rw [← Finset.mul_sum]
     simp only [pd_comm (y _) (w k), pd_comm (x _) (w k)]
-    rw [← map_sum, hxy, map_zero, mul_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, hxy, map_zero, mul_zero]
   simp [this]
 
 end GlobalTheory.CompactHarm
@@ -169,7 +171,8 @@ theorem fockT_compact_harm : ∀ (D : D7) (n m : ℕ) (p : D.what₂.Tau → ℕ
         (∑ k, if ((τ, b, k) : FVar D m n) = (τ, a, k) then P else 0) + ∑ k, X (τ, b, k) * pderiv (τ, a, k) P := by
       simp only [pd_X_mul, Finset.sum_add_distrib]
     have hS1 : Lop (∑ k, if ((τ, b, k) : FVar D m n) = (τ, a, k) then P else 0) = 0 := by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_eq_zero fun k _ => ?_
       split_ifs <;> simp [hP0]
     rw [e, map_add, map_neg, map_add, hS1, zero_add, hite, add_zero, neg_eq_zero, hLop]

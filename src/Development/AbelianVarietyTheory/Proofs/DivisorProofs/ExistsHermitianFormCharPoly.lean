@@ -45,7 +45,8 @@ theorem trace_semilinear {A : Type} [CommRing A] [Algebra E A] {ι : Type} [Fint
       · subst h; simp
       · simp [h]
     rw [this]; simp [Module.Basis.equivFun_symm_apply, Pi.single_apply]
-  rw [Algebra.trace_eq_matrix_trace b', Algebra.trace_eq_matrix_trace b, Matrix.trace, Matrix.trace, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Algebra.trace_eq_matrix_trace b', Algebra.trace_eq_matrix_trace b, Matrix.trace, Matrix.trace, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   simp only [Matrix.diag, Algebra.leftMulMatrix_eq_repr_mul, hrep, hb', ← map_mul, hσσ]
 
@@ -140,7 +141,8 @@ theorem trace_expand {A : Type} [CommRing A] [Algebra E A] {ι : Type} [Fintype 
   have hsm : ∀ (e : E) (z : A), σ (e • z) = c e • σ z := by
     intro e z; rw [Algebra.smul_def, Algebra.smul_def, map_mul, hσ]
   conv_lhs => rw [← b.sum_repr x, ← b.sum_repr y]
-  simp only [map_sum, hsm, Finset.sum_mul, Finset.mul_sum, smul_mul_assoc, mul_smul_comm, map_smul, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, hsm, Finset.sum_mul, Finset.mul_sum, smul_mul_assoc, mul_smul_comm, map_smul, smul_eq_mul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun l _ => ?_
   ring

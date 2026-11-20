@@ -243,7 +243,8 @@ theorem ycond_pair (LL : ChainLetters N) (j : ℕ) (a a' : Fin N) (ha : LL.vec a
         obtain ⟨t, rfl⟩ := Submodule.mem_span_singleton.1 hx
         have h0 : glAct K (⟨LL.vec⟩ : Letters (Fin N)) {i : Fin N | (i : ℕ) < j} c d (tcPairP K (r := r) a a') = 0 := by
           unfold tcPairP
-          rw [map_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [map_sum]
           simp only [glAct_mul', glAct_X']
           have m1 : a ∈ {i : Fin N | (i : ℕ) < j} := hboth.1
           have m2 : a' ∈ {i : Fin N | (i : ℕ) < j} := hboth.2

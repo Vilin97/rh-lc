@@ -106,7 +106,8 @@ theorem UpperTheory.V.Cj.H.zigLim :
           G.dOm q (hd (fun x => K (G.ρ (x.headD 1) p) (u j x)) x) = 0 := by
         intro j x hx
         have h0 := (hcoc j).2 x hx
-        simp only [hd, map_sum, map_zsmul] at h0 ⊢
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [hd, map_sum, map_zsmul] at h0 ⊢
         rw [← h0]
         refine Finset.sum_congr rfl fun i hi => ?_
         rw [hK1 _ (hpt _) _ (hcl j _ (hlen x i hx hi))]

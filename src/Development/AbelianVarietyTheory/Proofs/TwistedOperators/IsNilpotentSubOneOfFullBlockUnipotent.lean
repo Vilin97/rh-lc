@@ -302,7 +302,8 @@ theorem wat_eq (h : HidaSetting R F) (b : Bool) (i : Fin D.R.m) :
   have key : ∀ x, (R.HW i (sg0 D A)).e ((∑ g : G, RealDat.eC (A := A) (sg0 D A) g • R.gW i (sg0 D A) g) x) =
       postOn (R.MW i (sg0 D A)) (R.eWf i (sg0 D A)) ((R.HW i (sg0 D A)).e x) := by
     intro x
-    simp only [LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, h.models.gW i (sg0 D A)]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, h.models.gW i (sg0 D A)]
     ext v y
     simp [postOn, RealDat.eWf, gaL, LinearMap.sum_apply]
     rfl

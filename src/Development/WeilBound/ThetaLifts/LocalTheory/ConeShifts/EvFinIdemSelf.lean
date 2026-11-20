@@ -54,7 +54,8 @@ def aS (S : Finset (Pl F)) : AF F := realAd F 1 + ∑ v ∈ S, idem F v
 theorem idem_mul_aS {S : Finset (Pl F)} {v : Pl F} (hv : v ∉ S) : idem F v * aS F S = 0 :=
   af_ext' (by rw [evI_mul, evI_idem, zero_mul, evI_zero]) fun u => by
     rcases eq_or_ne u v with rfl | h
-    · rw [map_mul, aS, map_add, evFin_real, map_sum, Finset.sum_eq_zero fun t ht => evFin_idem_ne (fun e : u = t => hv (e ▸ ht))]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [map_mul, aS, map_add, evFin_real, map_sum, Finset.sum_eq_zero fun t ht => evFin_idem_ne (fun e : u = t => hv (e ▸ ht))]
       simp
     · rw [map_mul, evFin_idem_ne h, zero_mul, map_zero]
 
@@ -80,7 +81,8 @@ theorem tendsto_aS : Tendsto (aS F) atTop (𝓝 1) := by
       Finset.sum_induction _ (fun a => evI F a = 0) (fun a b ha hb => by rw [evI_add, ha, hb, add_zero]) evI_zero
         fun v _ => evI_idem v, add_zero]
     exact map_one (InfiniteAdeleRing.ringEquiv_mixedSpace F)
-  · rw [aS, map_add, evFin_real, zero_add, map_sum, sub_sub_cancel]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [aS, map_add, evFin_real, zero_add, map_sum, sub_sub_cancel]
     exact map_sum (evalV F u) _ _
 
 section U

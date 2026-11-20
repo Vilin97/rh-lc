@@ -104,7 +104,8 @@ theorem zeta_sum_GL_complex : GlobalTheory.Published.UnramifiedDoublingGL → �
   have hC0 : 0 ≤ Cℓ := (norm_nonneg _).trans (hC 1)
   have hab : ∀ d, ‖a d‖ ≤ Cℓ * b d := fun d => by
     have e1 : c d.1 * ℓ x = ∑ y : S d.1, ℓ (ρ (y : GL (Fin r) (w.adicCompletion E) ⧸ KGL w r).out x) := by
-      rw [← map_sum, hsumF, map_smul, smul_eq_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← map_sum, hsumF, map_smul, smul_eq_mul]
     have hz' : ‖(z : ℂ) ^ (∑ i, d.1 i)‖ = 1 := by rw [norm_zpow, hz, _root_.one_zpow]
     simp only [a, b]
     rw [mul_assoc, norm_mul, hz', one_mul, e1]
@@ -186,7 +187,8 @@ theorem zeta_sum_GL_complex : GlobalTheory.Published.UnramifiedDoublingGL → �
         rw [hφv, hDu d y.1 y.2]
         rfl
     have h3 : ∑ y : S d.1, (f ∘ e.symm) ⟨d, y⟩ = a d * X₀ ^ deg d := by
-      rw [Finset.sum_congr rfl fun y _ => h2 y, ← Finset.mul_sum, ← map_sum, hsumF, map_smul, smul_eq_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Finset.sum_congr rfl fun y _ => h2 y, ← Finset.mul_sum, ← map_sum, hsumF, map_smul, smul_eq_mul]
       simp only [a]
       ring
     exact h3 ▸ hasSum_fintype _

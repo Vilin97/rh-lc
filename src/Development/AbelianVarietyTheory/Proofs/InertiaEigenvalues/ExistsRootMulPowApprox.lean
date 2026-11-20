@@ -68,7 +68,8 @@ theorem exists_lift {l : ℕ} [hl : Fact l.Prime] (Δ : Subgroup ℤ_[l]ˣ) [Fin
     rcases mul_eq_zero.1 h3 with h | h
     · exfalso
       have := congrArg (PadicInt.toZMod (p := l)) h
-      simp only [map_sum, map_pow, h1, one_pow, Finset.sum_const, Finset.card_range,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_pow, h1, one_pow, Finset.sum_const, Finset.card_range,
         nsmul_eq_mul, mul_one, map_zero] at this
       rw [Nat.cast_pred hl.out.pos] at this
       simp at this

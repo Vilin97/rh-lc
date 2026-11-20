@@ -71,13 +71,15 @@ theorem subst_mem_quasiInt : ∀ (p : ℕ) [Fact p.Prime] (k : Type) [Field k] [
     have hδj : (δ j : Fr p k) + 1 = γ j := by
       rw [← hδγ, Finsupp.add_apply, Finsupp.single_eq_same]; push_cast; rfl
     have key := coeff_pderiv (R := WittVector p k) (i := j) (∏ s, v s ^ α s) δ
-    rw [hδγ, pderiv_prod_pow, map_sum] at key
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hδγ, pderiv_prod_pow, map_sum] at key
     have hk : (γ j : Fr p k) * φ (coeff γ (∏ s, v s ^ α s)) =
         φ (∑ i, coeff δ (α i • ((∏ s ∈ Finset.univ.erase i, v s ^ α s) *
           (v i ^ (α i - 1) * pderiv (WittVector p k) j (v i))))) := by
       rw [key, map_mul, map_add, map_natCast, map_one, ← hδj]
       ring
-    rw [mul_left_comm, hk, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [mul_left_comm, hk, map_sum, Finset.mul_sum]
     refine Subring.sum_mem _ fun i _ => ?_
     obtain ⟨w, hw⟩ := (hf : ∀ (α : σ →₀ ℕ) (i : σ), ∃ w : WittVector p k,
       (α i : Fr p k) * coeff α f = φ w) α i

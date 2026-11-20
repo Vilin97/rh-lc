@@ -71,7 +71,8 @@ theorem th_gen_harm (c τ : ℂ) (c0 : ℚ) (hc : c = c0) (N : Submodule ℂ (Th
   rintro x -
   obtain ⟨f, rfl⟩ := Submodule.Quotient.mk_surjective _ x
   change thMkC p q r s c f ∈ N
-  rw [← sum_homogeneousComponent f, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← sum_homogeneousComponent f, map_sum]
   exact N.sum_mem fun d _ => key d _ (homogeneousComponent_mem d f)
 
 theorem gen_oneDeg (c : ℂ) (c0 : ℚ) (hc : c = c0) {g : Pol p q r s} (h0 : g ≠ 0)

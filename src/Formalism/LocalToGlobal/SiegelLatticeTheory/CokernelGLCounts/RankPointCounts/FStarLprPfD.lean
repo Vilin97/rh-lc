@@ -36,7 +36,8 @@ theorem gramW_det_ne {r : ℕ} {U : Submodule D.host.E (VS D).V} (hdim : Module.
     intro i
     have h := congrFun hMc i
     simp only [Matrix.mulVec, dotProduct, gramW, Matrix.of_apply, brS, Pi.zero_apply] at h
-    rw [hx, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hx, map_sum]
     simp only [map_smul, smul_eq_mul]
     rw [← h]
     exact Finset.sum_congr rfl fun j _ => mul_comm _ _

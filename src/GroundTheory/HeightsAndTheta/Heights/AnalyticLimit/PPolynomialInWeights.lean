@@ -36,7 +36,8 @@ theorem locDens_expand (A : FinHolAtlas D X) (Φ : Fin D → LocPot X) (B : Fin 
       (D.factorial : ℝ) * (2 / Real.pi) ^ D * (M fun k => hessC (f k (σ k)) y).re := fun σ => by
     rw [hM]
     rfl
-  rw [hL, MultilinearMap.map_sum, Complex.re_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hL, MultilinearMap.map_sum, Complex.re_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun σ _ => ?_
   rw [MultilinearMap.map_smul_univ, hR, smul_eq_mul, ← Complex.ofReal_prod, Complex.re_ofReal_mul]
   ring
@@ -152,7 +153,8 @@ theorem PolynomialInWeights.proof : PolynomialInWeights.Statement := by
       MvPolynomial.totalDegree_finsetSum_le fun o _ =>
         MvPolynomial.totalDegree_finsetSum_le fun σ _ => totalDegree_C_mul_X_mul_prod_le _ _ _
   · intro x
-    simp only [map_sum, map_mul, map_prod, MvPolynomial.eval_C, MvPolynomial.eval_X]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, map_prod, MvPolynomial.eval_C, MvPolynomial.eval_X]
     unfold Family.weightEnergy
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [mInt_expand A _ (B k) (hB k) x ?_ _ w hw ?_]

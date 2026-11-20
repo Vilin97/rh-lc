@@ -42,7 +42,8 @@ theorem T_fac : ∀ {W A C₀ : Type} [CommRing W] [CommRing A] [CommRing C₀] 
     have hsum : ∑ s, ι (T c k hk (b.coord s) (a ⊗ₜ y)) * E (b s) =
         ι (c a) * E ((1 : K₀) ⊗ₜ y) := by
       conv_rhs => rw [← b.sum_repr ((1 : K₀) ⊗ₜ y)]
-      rw [map_sum, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Finset.mul_sum]
       refine Finset.sum_congr rfl (fun s _ => ?_)
       have hT : T c k hk (b.coord s) (a ⊗ₜ y) = c a * k (b.repr ((1 : K₀) ⊗ₜ y) s) := by
         first

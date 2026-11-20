@@ -132,9 +132,11 @@ theorem ker_le {R B S : Type} {n : ℕ} [CommRing R] [CommRing B] [CommRing S] [
       intro r
       rw [← q.commutes, hD, algebraMap_eq, gr_C, map_zero])
   have h := congrArg l hu
-  rw [map_sum, map_zero] at h
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_zero] at h
   simp only [map_smul, dd, hl, hD, gr_X] at h
-  simp only [← map_smul, ← map_sum] at h
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← map_smul, ← map_sum] at h
   have h2 : ∑ i, u i • (Pi.single i 1 : Fin n → S) = u := by
     funext j; simp [Pi.single_apply]
   rw [h2] at h
@@ -201,7 +203,8 @@ theorem factA {R k C : Type} {n : ℕ} [CommRing R] [CommRing k] [CommRing C] [A
   choose h hh using fun j => hm (D (X j))
   refine ⟨h, fun j => (hI _).2 (by rw [← hρ, hh, hD]), fun g hg => ?_⟩
   have h1 : g - ∑ j, pderiv j g * h j ∈ T := by
-    rw [← hm0, map_sub, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hm0, map_sub, map_sum]
     have := hch g
     simp only [D, (hI g).1 hg, map_zero, sub_zero] at this
     rw [this, sub_eq_zero]
@@ -250,7 +253,8 @@ theorem factB {R B S : Type} {n : ℕ} [CommRing R] [CommRing B] [CommRing S] [A
   have h2 : ∑ i, gr σ f i • (Pi.single i 1 : Fin n → S) = gr σ f := by
     funext j; simp [Pi.single_apply]
   rw [gr_sub, gr_sum, sub_eq_zero, ← h1]
-  conv_lhs => rw [← h2, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [← h2, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [gr_mul, hσ (h j), hh1, map_zero, zero_smul, add_zero, hh2, map_smul]; rfl
 
@@ -336,7 +340,8 @@ theorem core {R B B' S : Type} {n : ℕ} [CommRing R] [CommRing B] [CommRing B']
     have e1 : b' = e + ∑ i, φ (q (pderiv i g)) * β i + φ (q p) := by
       apply huniq
       rw [mul_add, mul_add, he, hb', Finset.mul_sum]
-      simp only [map_sub, map_sum, map_mul, hCπ, ← hβh]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sub, map_sum, map_mul, hCπ, ← hβh]
       simp only [mul_left_comm (algebraMap R B' π)]
       ring
     have ddsum : ∀ f : Fin n → B', dd R B' S (∑ i, f i) = ∑ i, dd R B' S (f i) := fun f => by
@@ -486,9 +491,11 @@ theorem tors {R B B' S : Type} [CommRing R] [CommRing B] [CommRing B'] [CommRing
   obtain ⟨r, hr⟩ := hu
   have h1 : ι ((r : S) • ∑ i, u i • dd R B S (x i)) = 0 := by
     have := congrArg l hr
-    rw [Submonoid.smul_def, map_smul, map_sum, map_zero] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Submonoid.smul_def, map_smul, map_sum, map_zero] at this
     simp only [map_smul, hlφ] at this
-    rw [map_smul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_smul, map_sum]
     simpa only [map_smul] using this
   obtain ⟨s, hs⟩ := (IsLocalizedModule.eq_zero_iff (nonZeroDivisors S) ι).1 h1
   exact ⟨s * r, by rw [mul_smul]; exact hs⟩

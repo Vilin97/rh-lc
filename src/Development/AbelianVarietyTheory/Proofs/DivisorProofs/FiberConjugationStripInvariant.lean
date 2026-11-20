@@ -277,7 +277,8 @@ theorem clm_apply_expand {N : ℕ} (K : Ext N →L[ℂ] Ext N) (u : Ext N) (T' :
   have hu : u = ∑ T, u T • (Pi.single T (1 : ℂ) : Ext N) := by
     ext T0; simp [Finset.sum_apply, Pi.single_apply]
   conv_lhs => rw [hu]
-  rw [map_sum, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_apply]
   simp [map_smul]
 
 theorem clm_apply_fib (a : Matrix (Fin g) (Fin g) ℂ) (K : Ext (n + n + g) →L[ℂ] Ext (n + n + g))

@@ -39,13 +39,15 @@ theorem crd_symm (R : Type) [CommRing R] [Algebra F R] (c : Fin (Module.finrank 
 theorem fst_coordinates (x : (R1 × R2) ⊗[F] E) :
     p1 R1 R2 x = (crd R1).symm (fun k => (crd (R1 × R2) x k).1) := by
   conv_lhs => rw [← (crd (E := E) (R1 × R2)).symm_apply_apply x]
-  rw [crd_symm, crd_symm, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [crd_symm, crd_symm, map_sum]
   rfl
 
 theorem snd_coordinates (x : (R1 × R2) ⊗[F] E) :
     p2 R1 R2 x = (crd R2).symm (fun k => (crd (R1 × R2) x k).2) := by
   conv_lhs => rw [← (crd (E := E) (R1 × R2)).symm_apply_apply x]
-  rw [crd_symm, crd_symm, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [crd_symm, crd_symm, map_sum]
   rfl
 
 def qq (a : R1 ⊗[F] E) (b : R2 ⊗[F] E) : (R1 × R2) ⊗[F] E :=

@@ -146,7 +146,8 @@ theorem pointHeight_algebraMap : ∀ (F K : Type) [Field F] [NumberField F] [Fie
   have h₁ := finsum_log_iSup_algebraMap (L := K') hz
   have h₂ := sum_comp_algebraMap (L := K')
     fun τ : K →+* ℂ => Real.log (archSize (A (τ.comp (algebraMap F K))) fun j => τ (y j))
-  simp only [map_sum, map_mul, ← IsScalarTower.algebraMap_apply] at h₁
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, ← IsScalarTower.algebraMap_apply] at h₁
   simp only [RingHom.comp_assoc, ← IsScalarTower.algebraMap_eq, RingHom.comp_apply] at h₂
   have hK : (0 : ℝ) < Module.finrank ℚ K := by exact_mod_cast Module.finrank_pos
   have hKL : (0 : ℝ) < Module.finrank K K' := by exact_mod_cast Module.finrank_pos

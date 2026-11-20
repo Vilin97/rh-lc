@@ -70,7 +70,8 @@ theorem depth_filtration_rename {O : Type*} [CommRing O] [IsDomain O] {σ τ : T
     {P : MvPolynomial σ (KK O)} {j : ℕ} (hP : InWj w P j) : InWj w (rename f P) j := by
   have h : rename f P = ∑ m ∈ P.support, rename f (monomial m (AddMonoidAlgebra.coeff P m)) := by
     conv_lhs => rw [P.as_sum]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
   rw [h]
   refine inWj_sum _ _ fun m _ => ?_
   rw [rename_monomial]
@@ -125,14 +126,16 @@ theorem substitution_rename_lift (w : O) (hn : Even n') (g : Matrix (Fin k) (Fin
     · have hE' : Even (posOf n' (eL F j v.1)).val := (posOf_even hn _).2 hE
       have h1 : (LLT n').vec (rho F j k v).1 = true := by simp [LLT, rho, hE']
       have h2 : (LLs F j).vec v.1 = true := by simp [LLs, hE]
-      rw [if_pos h1, if_pos h2, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [if_pos h1, if_pos h2, map_sum]
       refine Finset.sum_congr rfl fun b _ => ?_
       rw [map_mul, rename_C]
       split_ifs <;> simp [rho]
     · have hE' : ¬ Even (posOf n' (eL F j v.1)).val := fun h => hE ((posOf_even hn _).1 h)
       have h1 : ¬ (LLT n').vec (rho F j k v).1 = true := by simp [LLT, rho, hE']
       have h2 : ¬ (LLs F j).vec v.1 = true := by simp [LLs, hE]
-      rw [if_neg h1, if_neg h2, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [if_neg h1, if_neg h2, map_sum]
       refine Finset.sum_congr rfl fun b _ => ?_
       rw [map_mul, rename_C]
       split_ifs <;> simp [rho]
@@ -202,7 +205,8 @@ theorem segment_substitution_weighted_homog (hn : Even n') (Y : MvPolynomial (Fi
       ∑ m ∈ Y.support,
         aeval (fun v => (X (rho F j (r + K) v) : RRing O n' (r + K)) ^ omL F j p v.1) (monomial m (AddMonoidAlgebra.coeff Y m)) := by
     conv_lhs => rw [Y.as_sum]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
   rw [h]
   refine IsWeightedHomogeneous.sum _ _ _ fun m hm => ?_
   rw [aeval_monomial]

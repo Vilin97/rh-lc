@@ -45,7 +45,8 @@ theorem pullback_map_comp_canonical : ∀ (X T : Scheme.{0}) (c : T ⟶ X) (t : 
   have e1 := QCoh.pullback_map_app_pullbackSections t Φ (U := ⊤) (V := ⊤) (le_refl _)
     (QCoh.pullbackSections c F (le_refl (⊤ : T.Opens)) (e i))
   erw [e1]
-  rw [hΦ, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hΦ, map_sum, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   have e2 := QCoh.pullbackSections_smul t ((Scheme.Modules.pullback c).obj F) (U := ⊤) (V := ⊤)
     (le_refl _) (B j i) (QCoh.pullbackSections c F (le_refl (⊤ : T.Opens)) (e j))

@@ -289,7 +289,8 @@ theorem stab_norm_le (hneg : ∀ σ : F →+* ℝ, σ Δ < 0) (γ : U3 Δ) (i j 
     rw [map_sub, map_mul, map_pow, map_pow]
     nlinarith [sq_nonneg (σ z.re), sq_nonneg (σ z.im)]
   have hs := congrArg σ hjj
-  rw [map_sum] at hs
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum] at hs
   have hsum : ∑ k, σ ((A k j).re ^ 2 - Δ * (A k j).im ^ 2) = 1 := by
     rw [hs]
     exact (congrArg σ (QuadraticAlgebra.re_one)).trans (map_one σ)

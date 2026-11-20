@@ -27,7 +27,8 @@ theorem pushout_residue_linearIndependent :
         funext fun k => (Ideal.Quotient.mk_surjective (c k)).choose_spec⟩
     have hsum : (∑ k, Ideal.Quotient.mk (maximalIdeal T) (c' k) • v k) =
         Submodule.Quotient.mk (p := maximalIdeal T • (⊤ : Submodule T A)) (∑ k, c' k • x k) := by
-      rw [← Submodule.mkQ_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← Submodule.mkQ_apply, map_sum]
       rfl
     rw [hsum, Submodule.Quotient.mk_eq_zero, hmem] at hc
     exact Ideal.Quotient.eq_zero_iff_mem.2 (hx c' hc i)
@@ -74,7 +75,8 @@ theorem pushout_residue_linearIndependent :
       rw [this, zero_mul]
     · intro a b ha hb; rw [map_add, ha, hb, add_zero]
   have := hkill _ hd
-  rw [map_sum, Finset.sum_eq_single j (fun i _ hi => by rw [map_smul, hψ, hg, if_neg hi, smul_zero])
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_eq_single j (fun i _ hi => by rw [map_smul, hψ, hg, if_neg hi, smul_zero])
     (by simp)] at this
   rw [map_smul, hψ, hg, if_pos rfl, Algebra.smul_def, mul_one] at this
   exact (residue_eq_zero_iff _).1 this

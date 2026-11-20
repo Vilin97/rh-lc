@@ -43,7 +43,8 @@ theorem conjTensor_incl (a : E) : sigR R σ (inclR R a) = inclR R (σ a) := by
 
 theorem hermForm_rational_vectors (x y : Fin n → E) :
     hR R σ J (ratV (F := F) R x) (ratV (F := F) R y) = inclR R (hE σ J x y) := by
-  simp [hR, hE, Formalism.UG.hform, ratV, JR, conjTensor_incl, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [hR, hE, Formalism.UG.hform, ratV, JR, conjTensor_incl, map_sum, map_mul]
 
 theorem mem_tensor_span_iff {r : ℕ} (Y : Fin r → Fin n → E) (y : Fin n → R ⊗[F] E)
     (hy : y ∈ spanR (F := F) R Y Set.univ) : ∃ d : Fin r → R ⊗[F] E, y = ∑ i, d i • ratV (F := F) R (Y i) := by

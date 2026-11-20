@@ -78,7 +78,8 @@ theorem secM_sub_one_mulVec (hj : ∀ x y, j (x * y) = j x * j y) (φ : R →ₐ
       fun a => Jt j (((A - 1) *ᵥ fun b => Algebra.TensorProduct.map φ (AlgHom.id F E) (y b)) a) := by
   rw [secM_sub_one hj]
   funext a
-  simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum, Jt_mul_right φ hφ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum, Jt_mul_right φ hφ]
 
 theorem genLat_map (f : R' →ₗ[F] R) (S' : Set R') (S : Set R) (hS : ∀ a ∈ S', f a ∈ S) (L : Set (Fin n → E))
     {y : Fin n → R' ⊗[F] E} (hy : y ∈ genLat F R' S' L) : (fun a => Jt f (y a)) ∈ genLat F R S L := by

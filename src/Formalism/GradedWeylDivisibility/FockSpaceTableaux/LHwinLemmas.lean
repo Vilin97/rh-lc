@@ -103,7 +103,8 @@ theorem lhwin_rowDiv_shift (R : Type*) [CommRing R] {r n : ℕ} (H : ℤ) (a b :
     IsWeightedHomogeneous (lhwinHt r n) (rowDiv R a b k f) (H + k * ((a.val : ℤ) - b.val)) := by
   unfold rowDiv
   conv => enter [2, 1, 2]; rw [f.as_sum]
-  rw [map_sum, Polynomial.finsetSum_coeff]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Polynomial.finsetSum_coeff]
   refine IsWeightedHomogeneous.sum _ _ _ fun d hd => ?_
   have := lhwinShift_rowGen_monomial R a b d (AddMonoidAlgebra.coeff f d) k
   rwa [hf (mem_support_iff.mp hd)] at this

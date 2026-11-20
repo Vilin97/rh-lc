@@ -117,7 +117,8 @@ theorem span_top (D : D7) (ρ : D.host.E →+* ℂ_[p]) {N : ℕ} (L : Submodule
     rw [Finset.sum_comm]
     refine Finset.sum_eq_zero fun k _ => ?_
     have : ∑ i, ρ (φ i) * (r k * ρ (x k i)) = r k * ρ (∑ i, x k i * φ i) := by
-      rw [map_sum, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Finset.mul_sum]
       exact Finset.sum_congr rfl fun i _ => by rw [map_mul]; ring
     rw [this, hL _ (hx k), map_zero, mul_zero]
   have hz : ρ ∘ φ = 0 := by
@@ -180,7 +181,8 @@ theorem locBasis_of (D : D7) (ρ : D.host.E →+* ℂ_[p]) {N : ℕ} (L : Submod
         rw [Finset.sum_comm]
         refine Finset.sum_congr rfl fun k _ => ?_
         rw [hxc k]
-        simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Finset.mul_sum, Matrix.map_apply]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Finset.mul_sum, Matrix.map_apply]
         exact Finset.sum_congr rfl fun b _ => by ring
       have := congrArg (fun v => (Q.map ρ)⁻¹.mulVec v) e1
       simpa only [Matrix.mulVec_mulVec, Matrix.nonsing_inv_mul _ (Ne.isUnit hQρ), Matrix.one_mulVec] using this

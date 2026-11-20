@@ -58,7 +58,8 @@ theorem geZ_sum {R : Type} [CommRing R] {ι : Type} {n : ℕ} [NeZero n] (LL : L
     rw [he] at hk
     have hkd : d = k := WithTop.coe_injective hk
     subst hkd
-    simp only [sDegs, Finset.mem_biUnion, map_sum, MvPolynomial.coeff_sum] at hd
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [sDegs, Finset.mem_biUnion, map_sum, MvPolynomial.coeff_sum] at hd
     obtain ⟨m, -, hdm⟩ := hd
     rw [Finsupp.mem_support_iff] at hdm
     have hdm' : ∑ i ∈ s, ((AddMonoidAlgebra.coeff (twistSub LL S (lastIdx n) (f i)) m).coeff d) ≠ 0 := by

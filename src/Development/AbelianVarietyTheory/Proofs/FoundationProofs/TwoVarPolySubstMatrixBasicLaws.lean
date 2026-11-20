@@ -71,7 +71,8 @@ theorem polySlash_neg_one (w : ℕ) (p : MvPolynomial (Fin 2) R) (hp : p.IsHomog
   rw [e]
   conv_lhs => rw [p.as_sum]
   conv_rhs => rw [p.as_sum]
-  rw [map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.smul_sum]
   refine Finset.sum_congr rfl fun v hv => ?_
   have hw := hp (mem_support_iff.mp hv)
   rw [aeval_monomial]

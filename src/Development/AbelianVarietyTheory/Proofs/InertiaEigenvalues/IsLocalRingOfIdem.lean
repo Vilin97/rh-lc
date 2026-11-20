@@ -193,9 +193,11 @@ theorem eta_gram (B : InvAlg K) (x : B.A) (b : Module.Basis (Fin (Module.finrank
     ext i j
     simp only [Matrix.mul_apply, Matrix.of_apply, Matrix.transpose_apply, RingHom.mapMatrix_apply,
       Matrix.map_apply, InvAlg.herm, RingHom.coe_coe]
-    rw [hb i, hb j, map_sum, Finset.mul_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hb i, hb j, map_sum, Finset.mul_sum, map_sum]
     refine Finset.sum_congr rfl fun l _ => ?_
-    rw [Finset.mul_sum, Finset.sum_mul, map_sum, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.mul_sum, Finset.sum_mul, map_sum, Finset.sum_mul]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [Algebra.smul_def (M l j), map_mul B.σ, B.σ_alg, ← Algebra.smul_def, mul_smul_comm, mul_smul_comm,
       smul_mul_assoc, map_smul, map_smul]

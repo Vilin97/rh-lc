@@ -64,7 +64,8 @@ theorem cth_mul (v : σ) (n : ℕ) (F G : MvPolynomial σ K) :
       rw [mul_add, cth_add, hG, hG', ← Finset.sum_add_distrib]
       exact Finset.sum_congr rfl fun ab _ => by rw [cth_add, mul_add]
     | monomial e' c' =>
-      rw [monomial_mul, cth_monomial, Finsupp.add_apply, Nat.add_choose_eq, Nat.cast_sum, Finset.mul_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [monomial_mul, cth_monomial, Finsupp.add_apply, Nat.add_choose_eq, Nat.cast_sum, Finset.mul_sum, map_sum]
       refine Finset.sum_congr rfl fun ab _ => ?_
       rw [cth_monomial, cth_monomial, monomial_mul]
       congr 1

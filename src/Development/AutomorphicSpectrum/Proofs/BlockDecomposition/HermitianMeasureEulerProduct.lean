@@ -50,7 +50,8 @@ theorem eval_mulVec {F : Type} [Field F] [NumberField F] {ι : Type} [Fintype ι
       (B.map (algebraMap F (Fv F v))).mulVec (fun j => (sndA F (y j)) v) i := by
   let φ : AF F →ₐ[F] Fv F v := (evalV F v).comp (sndA F)
   change φ _ = _
-  simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Matrix.map_apply, AlgHom.commutes]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Matrix.map_apply, AlgHom.commutes]
   rfl
 
 end GlobalTheory.CompanionTheory.SiegelND.Coef.TestN

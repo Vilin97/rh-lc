@@ -20,7 +20,8 @@ theorem GlobalTheory.wedge_D_eq_pow_mul_wedge_D_of_eq_unit_mul_pow : ∀ (k K : 
     obtain ⟨ρ, hρ, c, hc⟩ := hgen v
     refine ⟨ρ, hρ, c 0, ?_⟩
     have h2 := congrArg f hc
-    rw [map_smul, map_sum, Fin.sum_univ_succ] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_smul, map_sum, Fin.sum_univ_succ] at h2
     simpa [hg0, g] using h2
   obtain ⟨ρa, hρa, ca, hA⟩ := key a
   obtain ⟨ρr, hρr, cr, hR⟩ := key r

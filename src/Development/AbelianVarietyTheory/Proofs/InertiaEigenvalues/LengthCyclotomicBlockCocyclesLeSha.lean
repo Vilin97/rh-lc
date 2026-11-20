@@ -326,7 +326,8 @@ theorem vecS_mulVec (B : LocBridge l E Ω Gw O) {k : ℕ} (M : ↥Gw →* Matrix
   funext i
   change Br.toLLK B (∑ j, algebraMap O (FractionRing O) (M (Br.ι B g) i j) * u j) =
     ∑ j, Br.locM B M g i j * Br.toLLK B (u j)
-  simp only [map_sum, map_mul, h]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, h]
 
 set_option synthInstance.maxHeartbeats 400000 in
 

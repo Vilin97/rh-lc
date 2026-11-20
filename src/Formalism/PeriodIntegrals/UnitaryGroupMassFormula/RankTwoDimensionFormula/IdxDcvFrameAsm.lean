@@ -45,7 +45,8 @@ theorem idxDFrame_of (hS : IdxDSig) (hJ : IdxDJacE) (hG : FrGram) : IdxDFrame :=
     have := fixV_perp hS hE.2.1 u (X.bw i) w hw
     rw [eps_eq, show E1 X e * X.ew * hA X.B.I w (Qv X e u (X.bw i)) =
       X.ew * (E1 X e * hA X.B.I w (Qv X e u (X.bw i))) by ring, this, mul_zero, map_zero]
-  · rw [hA_symm X.B.I w, ← hL_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [hA_symm X.B.I w, ← hL_apply, map_sum]
     have hz : ∀ l, hL X.B.I w (sigA X.B.I (M i l) • cv e u l) = 0 := fun l => by
       rw [hL_apply, hA_smul_right, cv, hA_smul_right, sig_eps]
       have := fixV_perp hS hE.2.1 u (X.bwd l) w hw

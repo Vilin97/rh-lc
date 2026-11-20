@@ -96,7 +96,8 @@ theorem shortExact_stepMap : ∀ {X : Scheme.{0}} [IsIntegral X] {ι : Type} [Fi
     let s : Γ(L, W ⊓ V) := ∑ j, ((hf' b).basis h).repr y j • hc.basis h ⟨b, j⟩
     have hs (z : Σ a, Fin (r a)) : (hc.basis h).repr s z =
         ∑ j, if (⟨b, j⟩ : Σ a, Fin (r a)) = z then ((hf' b).basis h).repr y j else 0 := by
-      simp only [s, map_sum, map_smul, Module.Basis.repr_self, Finsupp.finsetSum_apply, Finsupp.smul_apply,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [s, map_sum, map_smul, Module.Basis.repr_self, Finsupp.finsetSum_apply, Finsupp.smul_apply,
         Finsupp.single_apply, smul_eq_mul, mul_ite, mul_one, mul_zero]
     have hmem : s ∈ (filtSub o T (o b + 1)).sec (W ⊓ V) := by
       refine (hM.mem_iff_repr _ hf hA h _).2 fun z hz => ?_

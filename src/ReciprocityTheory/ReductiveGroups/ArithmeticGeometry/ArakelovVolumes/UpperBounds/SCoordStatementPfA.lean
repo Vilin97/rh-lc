@@ -49,7 +49,8 @@ theorem map_xTerm {R S : Type*} [CommSemiring R] [CommSemiring S] (ψ : MvPolyno
     (f : R →+* S) (s : R) (i : ι) (P : Polynomial (MvPolynomial ι K)) :
     f (xTerm ψ s i P) = xTerm (f.comp ψ) (f s) i P := by
   unfold xTerm Polynomial.sum
-  simp [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum]
 
 theorem hasFDerivAt_eval₂ (P : Polynomial (MvPolynomial ι K)) {h : V → ι → ℂ} {g : V → ℂ} {z0 : V}
     {Dh : ι → V →L[ℂ] ℂ} {Dg : V →L[ℂ] ℂ}

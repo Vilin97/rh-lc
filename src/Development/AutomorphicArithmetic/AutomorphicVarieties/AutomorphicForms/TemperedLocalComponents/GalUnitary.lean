@@ -75,7 +75,8 @@ private theorem assemble (H : HypothesesH) (hFam : SumFam) (hHalf : Half) (hStr 
     exact (hFrob E Ω l ι n c a d r hr.cont w hw (ρ · w) S hSat (hpar w) A hA).1
   · rw [← (hStr n c d (m · (ι.toRingHom.comp τ)) lam (hP.weight _ lam hl)).2]
     simp only [← hw₀]
-    simp only [← Multiset.coe_mapAddMonoidHom, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [← Multiset.coe_mapAddMonoidHom, map_sum]
   · exact (locGlob_iff ι r w τ).2 ((hpar w).congr (hRec E Ω n c a d hsum P w (ρ · w) (σ · w) hP.pos (hP.loc · w) (hS · w) τ
       (hUni E n π hπ w hw _ _ _ _ hτ (hsplit w hw))))
   · refine hPol E Ω l ι n r hr.cont hr.ss ?_

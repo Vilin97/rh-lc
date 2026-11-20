@@ -51,7 +51,8 @@ private theorem dO_desc {O Q : Type} [CommRing O] [IsDomain O] [IsPrincipalIdeal
     congr 2
     refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun m _ => by ring
   have h3 := congrArg π h2
-  simp only [map_smul, map_sub, map_sum, smul_eq_mul] at h3
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_smul, map_sub, map_sum, smul_eq_mul] at h3
   simp only [Matrix.sub_apply, Matrix.smul_apply, Matrix.mul_apply, smul_eq_mul, Matrix.of_apply, Finset.sum_mul]
   rw [mul_comm, h3]
   congr 2

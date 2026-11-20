@@ -135,14 +135,16 @@ theorem sum_diagFirst_eq_smul {k R P M : Type*} [CommRing k] [AddCommGroup M] [M
 
 theorem depth_eigen_holds : DepthEigen := by
   intro k V P R _ _ _ _ _ _ _ S n z
-  rw [LinearMap.sum_apply, Finset.sum_congr rfl fun α _ => ((symMap_equivariant_holds k V P R S n z).2.1 α α), ← map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [LinearMap.sum_apply, Finset.sum_congr rfl fun α _ => ((symMap_equivariant_holds k V P R S n z).2.1 α α), ← map_sum,
     sum_diagFirst_eq_smul, map_smul]
 
 theorem depth_orthogonal_holds : DepthOrthogonal := by
   intro k V P R _ _ _ _ _ _ _ _ S B h n n' hne z z'
   have h1 : B ((∑ α : P, S.E (Sum.inl α) (Sum.inl α)) (S.mu n z)) (S.mu n' z') =
       B (S.mu n z) ((∑ α : P, S.E (Sum.inl α) (Sum.inl α)) (S.mu n' z')) := by
-    rw [LinearMap.sum_apply, LinearMap.sum_apply, map_sum, map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [LinearMap.sum_apply, LinearMap.sum_apply, map_sum, map_sum, LinearMap.sum_apply]
     exact Finset.sum_congr rfl fun α _ => h _ _ _ _
   rw [depth_eigen_holds, depth_eigen_holds, map_smul, LinearMap.smul_apply, map_smul, smul_eq_mul, smul_eq_mul] at h1
   have h2 : ((n' : k) - (n : k)) * B (S.mu n z) (S.mu n' z') = 0 := by linear_combination h1
@@ -212,7 +214,8 @@ theorem mfact_cast_ne_zero {k ι : Type*} [Field k] [CharZero k] [Fintype ι] [D
 
 theorem iota_kernel_holds : IotaKernel := by
   intro k V P R _ _ _ _ _ _ _ _ S B h n v hv z
-  rw [symMap_apply_sum_words, map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [symMap_apply_sum_words, map_sum, LinearMap.sum_apply]
   refine Finset.sum_eq_zero fun g _ => ?_
   rw [pairing_word_adjoint S B h, ← (word_products_of_content S g).2]
   have h1 := hv (cont g)
@@ -327,7 +330,8 @@ theorem shape_coefficient_holds : ShapeCoeff := by
   have hm := shapePoly_monic lam2 tau
   have hd := natDegree_shapePoly_eq htau
   conv_rhs => rw [hm.as_sum, hd]
-  rw [Polynomial.map_add, Polynomial.map_pow, map_X, Polynomial.map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Polynomial.map_add, Polynomial.map_pow, map_X, Polynomial.map_sum,
     Fin.sum_univ_eq_sum_range (fun a => (C (((shapePoly lam2 tau).coeff a : ℤ) : A) * X ^ a : A[X])) i]
   congr 1
   refine Finset.sum_congr rfl fun a _ => ?_

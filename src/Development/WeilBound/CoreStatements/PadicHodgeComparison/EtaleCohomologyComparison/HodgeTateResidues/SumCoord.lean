@@ -26,7 +26,8 @@ theorem sum_coord' {K B V V' V'' : Type _} [Field K] [CommRing B] [AddCommGroup 
     (μ : V →ₗ[K] V' →ₗ[K] V'') (φ : Module.Dual K V'') (x : V) (y : V') :
     ∑ s, ∑ s', o (b.coord s x) * o (b'.coord s' y) * o (φ (μ (b s) (b' s'))) = o (φ (μ x y)) := by
   conv_rhs => rw [← b.sum_repr x, ← b'.sum_repr y]
-  simp only [map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply, smul_eq_mul, map_mul, Module.Basis.coord_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply, smul_eq_mul, map_mul, Module.Basis.coord_apply,
     Finset.mul_sum]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun s _ => Finset.sum_congr rfl fun s' _ => by ring
@@ -197,7 +198,8 @@ theorem conn0 (P : HTPre l K) {M : Model l K} (hM : M.Sm) {d : ℕ} (hD : M.Dual
     by_contra hall
     push Not at hall
     apply hu
-    rw [← hc, map_sum, AddMonoidHom.finsetSum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hc, map_sum, AddMonoidHom.finsetSum_apply]
     exact Finset.sum_eq_zero fun s _ => by rw [P.lin, hall, mul_zero]
   have hall : ∀ s, P.h M d (n + j) (g s) φ ≠ 0 := by
     intro s h0
@@ -217,7 +219,8 @@ theorem red_sum (P : HTPre l K) {M N : Model l K} (u : M.X ⟶ N.X) (hu : u ≫ 
   have hexp : ∀ v, P.h M p n v φ = ∑ j, qC l (e.coord j v) * P.h M p n (e j) φ := by
     intro v
     conv_lhs => rw [← e.sum_repr v]
-    rw [map_sum, AddMonoidHom.finsetSum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, AddMonoidHom.finsetSum_apply]
     simp only [P.lin, Module.Basis.coord_apply]
   simp_rw [← P.nat M N u hu hM hN, Finset.sum_mul]
   rw [Finset.sum_comm]

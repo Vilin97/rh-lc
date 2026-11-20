@@ -83,7 +83,8 @@ theorem lv_sum_right (a v : Fin D → ℂ) :
   rw [← vec_eq_sum] at this
   simp only [map_smul, smul_eq_mul] at this
   have h := congrArg (starRingEnd ℂ) this
-  simp only [ℓ, LinearMap.coe_mk, AddHom.coe_mk, Complex.conj_conj, map_sum, map_mul] at h
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [ℓ, LinearMap.coe_mk, AddHom.coe_mk, Complex.conj_conj, map_sum, map_mul] at h
   exact h
 
 theorem lv_expand (u v : Fin D → ℂ) :

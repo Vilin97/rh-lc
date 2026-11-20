@@ -47,7 +47,8 @@ theorem hilbert_ninety : ∀ (Ω K Γ : Type) [Field Ω] [Field K] [Algebra Ω K
     rw [QuotientGroup.eq] at h
     have e : g' = g * (g⁻¹ * g') := by group
     rw [e, cm, c1 _ h, map_one, one_mul, map_mul, AlgEquiv.mul_apply, h _ x.2]
-  rw [map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.mul_sum]
   refine Fintype.sum_equiv (MulAction.toPerm γ) _ _ fun q => ?_
   rw [MulAction.toPerm_apply, F (γ * q.out) (γ • q).out
     (by rw [QuotientGroup.out_eq']; exact MulAction.Quotient.coe_smul_out D γ q), cm, map_mul, map_mul,
@@ -256,7 +257,8 @@ theorem cls_eq_of_mem_Gam : ∀ (Ω : Type) [Field Ω] [Algebra ℚ Ω] (ε : Ω
     | mem b hb =>
       refine ⟨hb.2 γ hγ, ?_⟩
       obtain ⟨c, -, hc⟩ := hb.1
-      rw [hc, hc, map_sum, map_sum, Finset.smul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hc, hc, map_sum, map_sum, Finset.smul_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_smul, map_smul, smul_smul]
       apply hsm

@@ -83,7 +83,8 @@ theorem approx_step {ι : A →+* R} {p : ℕ} {t : R} {τ : A} (hτ : ι τ = t
     | succ N ih =>
       intro u h1 h2
       refine ih (fun i => ∑ j, M i j * φ (u j) + c i) (fun i => ?_) (fun i => ?_)
-      · rw [map_add, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        · rw [map_add, map_sum]
         refine add_mem (sum_mem fun j _ => ?_) (pow_mem_of_le hD (Nat.zero_le N) (hc i))
         rw [map_mul]
         exact mul_mem (pow_mem_of_le hD (Nat.zero_le N) (hM i j)) (h1 j)
@@ -128,7 +129,8 @@ theorem padic_step {io : E →+* R} {φ : R →+* R} {φE : E → E} {p : ℕ}
         intro i
         have := hc i
         simp only [her, map_add, map_mul, map_natCast, mul_add, Finset.sum_add_distrib] at this
-        simp only [map_sub, map_add, map_sum, map_mul, hφ, mul_sub, Finset.mul_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sub, map_add, map_sum, map_mul, hφ, mul_sub, Finset.mul_sum]
         have e2 : ∑ j, (p : R) * (io (M i j) * φ (r j)) = ∑ j, io (M i j) * (p * φ (r j)) :=
           Finset.sum_congr rfl fun j _ => by ring
         rw [e2]
@@ -215,7 +217,8 @@ theorem exists_series_sum (a : ℕ → LetA O n) :
       - ∑ j ∈ Finset.range m, X ^ j * a j i := fun i => by
     rw [X_pow_dvd_iff]
     intro k hk
-    rw [map_sub, coeff_mk, map_sum, map_sum, sub_eq_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, coeff_mk, map_sum, map_sum, sub_eq_zero]
     refine Finset.sum_subset (Finset.range_subset_range.2 hk) fun j _ hj => ?_
     rw [coeff_X_pow_mul', if_neg]
     simpa using hj

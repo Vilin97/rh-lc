@@ -81,7 +81,8 @@ theorem plt_kap {P : M.Par} {A : Type} [Ring A] [Algebra ℂ A] (κ : (M.Ty P �
     rw [hc ρ u, Finset.sum_apply]
     rfl
   dsimp only
-  rw [e, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, map_sum]
   simp only [map_smul]
 
 theorem expand {A : Type} [Ring A] [Algebra ℂ A] (m : ℕ) (GG GGi K α β γ Wt1 Wt2 Θ : A)

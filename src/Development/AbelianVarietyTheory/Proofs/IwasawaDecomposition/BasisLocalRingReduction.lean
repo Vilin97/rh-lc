@@ -23,7 +23,8 @@ theorem linA_at {T T' : Over S} {h : T' ⟶ T} {n : ℕ} {b : Fin n → LB.Sec (
     gs (r ≫ (fst T' G).left) z ⊤ a * sv s r z J =
       ∑ i, gs (r ≫ (fst T' G).left) z ⊤ (c i) * sv (b i) (r ≫ (h ▷ G).left) z J := by
   have e := congrArg (r.stalkMap z).hom (H (r z) (fun ψ => J (r ≫ ψ)) (fun ψ => hJ (r ≫ ψ)))
-  rw [map_sum, map_mul, ← gs_comp r _ z ⊤ trivial] at e
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_mul, ← gs_comp r _ z ⊤ trivial] at e
   have e₁ : sv s r z J = (r.stalkMap z).hom (sv s (𝟙 _) (r z) (fun ψ => J (r ≫ ψ))) :=
     (congrArg (fun q => sv s q z J) (Category.comp_id r).symm).trans (sval_comp _ r _ z hJ)
   rw [e₁]

@@ -76,7 +76,8 @@ theorem finiteDimensional_letter {ι : Type} [Fintype ι] (b : ι → D)
   rw [← span_letterMk, Submodule.span_le, Set.Finite.coe_toFinset]
   rintro _ ⟨x, rfl⟩
   obtain ⟨c, rfl⟩ := hb x
-  rw [letterMk, tmul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [letterMk, tmul_sum, map_sum]
   refine Submodule.sum_mem _ fun i _ => ?_
   have := letterMk_mul m F τ (c i) (b i)
   rw [letterMk] at this

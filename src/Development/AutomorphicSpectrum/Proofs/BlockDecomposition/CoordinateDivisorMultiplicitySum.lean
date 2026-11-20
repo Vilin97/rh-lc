@@ -85,7 +85,8 @@ theorem gam_of_form {Z : Scheme.{0}} (f : Z ⟶ MP ℤ m n) (c : ∀ k, Bk n k) 
   classical
   conv_lhs => rw [F.as_sum]
   conv_rhs => rw [F.as_sum]
-  rw [map_sum, map_sum, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun e he => ?_
   have he' : ∀ k, ∑ i, e ⟨k, i⟩ = d k := fun k => by
     rw [← GroundTheory.Heights₂.Heights.weight_coordDeg_apply, hF (mem_support_iff.mp he)]

@@ -95,7 +95,8 @@ theorem Phi_add (hcont : Continuous (algebraMap ℚ_[l] K)) (c c' : Fin (fdim K 
 
 theorem res_Phi (hcont : Continuous (algebraMap ℚ_[l] K)) (c : Fin (fdim K l) → ℤ_[l]) :
     residue 𝒪[K] (Phi K l hcont c) = ∑ i, PadicInt.toZMod (c i) • bb K l i := by
-  simp only [Phi, map_sum, map_mul, res_iotaR, res_blift, Algebra.smul_def]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Phi, map_sum, map_mul, res_iotaR, res_blift, Algebra.smul_def]
 
 theorem one_step (hcont : Continuous (algebraMap ℚ_[l] K)) (huni : Irreducible ((l : ℕ) : 𝒪[K]))
     (x : 𝒪[K]) : ∃ c, ∃ y : 𝒪[K], x = Phi K l hcont c + (l : 𝒪[K]) * y := by

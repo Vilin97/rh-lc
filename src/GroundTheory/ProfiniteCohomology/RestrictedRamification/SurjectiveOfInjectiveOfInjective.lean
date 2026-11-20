@@ -178,7 +178,8 @@ theorem exists_sUnitsQuotDiv_gsQuotMor_eq (hF : ∀ v : HeightOneSpectrum (𝓞 
   have e2 : gsVal K S ιs u.1 u.2 (∑ u ∈ hfin.toFinset, x u) =
       (cohomologyMapAlong (gsDecomp K S ιs u) (continuous_gsDecomp K S ιs u)
         (divFunEval (gsDecomp K S ιs) ℤ u) 2).hom d := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     have hne : ∀ w ∈ hfin.toFinset, w ≠ u → gsVal K S ιs u.1 u.2 (x w) = 0 := fun w _ hw =>
       (gsLoc_eq_zero_iff K S ιs u.1 u.2 _).1 (hx' w u.1 u.2 fun h => hw (Subtype.ext h).symm)
     by_cases hu : u ∈ hfin.toFinset

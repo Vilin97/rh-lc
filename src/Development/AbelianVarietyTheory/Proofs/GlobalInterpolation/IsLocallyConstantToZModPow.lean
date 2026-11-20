@@ -82,7 +82,8 @@ theorem riemann_sums : ∀ (p r : ℕ) [Fact p.Prime] (μ : C(Fin r → ℤ_[p],
     rw [Finsupp.onFinset_sum _ (by simp)]
     have h1 : (∑ a ∈ S, (if a ∈ S then μ (ind r n a) else 0) * g i fun j => (a j : ℤ_[p]))
         = μ (∑ a ∈ S, (g i fun j => (a j : ℤ_[p])) • ind r n a) := by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun a ha => ?_
       rw [if_pos ha, map_smul, smul_eq_mul, mul_comm]
     beta_reduce

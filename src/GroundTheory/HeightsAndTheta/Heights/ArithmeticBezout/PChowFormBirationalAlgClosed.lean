@@ -141,7 +141,8 @@ theorem ChowFormBirationalAlgClosed.proof : ChowFormBirationalAlgClosed.Statemen
       · simp
     rw [hsum, hmem]
     exact not_dvd_pderiv_of_pderiv_ne_zero hg.1 hl
-  · simp only [map_sum, map_mul, aeval_C, MvPolynomial.algebraMap_apply, hρ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [map_sum, map_mul, aeval_C, MvPolynomial.algebraMap_apply, hρ]
     simp only [Finset.sum_mul, Finset.mul_sum]
     refine Finset.sum_congr rfl fun l' _ => ?_
     ring

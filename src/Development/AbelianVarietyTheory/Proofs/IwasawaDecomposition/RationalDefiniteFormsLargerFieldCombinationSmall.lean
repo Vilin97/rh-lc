@@ -26,7 +26,8 @@ private theorem span_of_bc {K L : Type} [Field K] [NumberField K] [StarRing K] [
   obtain ⟨m, a, g, hg⟩ := Submodule.mem_span_set'.1 (b.mem_span_lift F φ')
   choose ψ hψ using fun k => (g k).2
   refine ⟨m, a, fun k => r (ψ k), heq_of_eq ?_⟩
-  rw [← hg, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hg, map_sum, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [map_smul, LinearMap.map_smulₛₗ, ← hψ k, eq_of_heq (h (ψ k))]
 

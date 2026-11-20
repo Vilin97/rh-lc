@@ -19,9 +19,11 @@ theorem expwd_core {O A E L X Y : Type*} [CommRing O] [AddCommGroup A] [Module O
     Module.Flat.rTensor_preserves_injective_linearMap j hj
   have h2 : (j.rTensor X) (∑ i, a i ⊗ₜ[O] g (s i)) = (j.rTensor X) (∑ k, b k ⊗ₜ[O] g (t k)) := by
     have h' := congrArg (g.lTensor E) h
-    simpa only [map_sum, LinearMap.lTensor_tmul, LinearMap.rTensor_tmul] using h'
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa only [map_sum, LinearMap.lTensor_tmul, LinearMap.rTensor_tmul] using h'
   have h3 := congrArg μ (hinj h2)
-  simpa only [map_sum] using h3
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa only [map_sum] using h3
 
 theorem flat_compHom {O LL X : Type*} [CommRing O] [IsDedekindDomain O] [Field LL]
     [Algebra O LL] (hinj : Function.Injective (algebraMap O LL)) [AddCommGroup X] [Module LL X] :

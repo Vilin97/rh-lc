@@ -52,7 +52,8 @@ theorem exists_traceForm {H Γ W : Type} [Group H] [Group Γ] [NormedAddCommGrou
   · refine finsum_eq_zero_of_forall_eq_zero fun γ => dif_neg fun h => hz ⟨γ⁻¹, ⟨_, h⟩, ?_⟩
     rw [map_inv]; group
   · show L (∑ᶠ γ, T z₀ γ) = _
-    rw [finsum_eq_sum_of_support_subset (s := hfin'.toFinset) _ (by rw [Set.Finite.coe_toFinset, ← hS0]; exact hS z₀),
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [finsum_eq_sum_of_support_subset (s := hfin'.toFinset) _ (by rw [Set.Finite.coe_toFinset, ← hS0]; exact hS z₀),
       map_sum, Finset.sum_congr rfl (g := fun _ => L w) fun γ hγ => ?_]
     · rw [Finset.sum_const, nsmul_eq_mul, ← Set.ncard_eq_toFinset_card _ hfin']
       rfl

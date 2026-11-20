@@ -304,9 +304,11 @@ theorem quadratic_operator_pure_tensor (h : IsCCR Sm aP aM) {v : Mx D m n → �
     pureTensorL aP v (quadOp τ sS BS XS sT BT XT pS pT 1) = q1Op aP τ (nCoef sS BS XS sT BT XT pS pT) v := by
   have e : ∀ g : (Fin m × Fin n) × (Fin m × Fin n) → (Mx D m n → ℂ), ∑ p, g p = ∑ k, ∑ l, g (k, l) :=
     fun g => by rw [Fintype.sum_prod_type]
-  rw [quadOp_one, map_sum, q1Op, e]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [quadOp_one, map_sum, q1Op, e]
   refine Finset.sum_congr rfl fun k _ => ?_
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun l _ => ?_
   rw [mul_assoc, pt_C_mul, pt_X_mul h hv, ← mul_one (MvPolynomial.X ((τ, l.1, l.2) : FVar D m n)),
     pt_X_mul h hv, pt_one]
@@ -941,8 +943,10 @@ theorem qGen_D (ι : K → σ) (hι : Function.Injective ι) (M N : K → K → 
     simp only [hι.eq_iff]
     split_ifs <;> subst_vars <;> ring
   unfold qGen
-  rw [map_sum, ← Finset.sum_sub_distrib]
-  simp only [map_sum, ← Finset.sum_sub_distrib, term]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, ← Finset.sum_sub_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, ← Finset.sum_sub_distrib, term]
   simp only [Finset.sum_sub_distrib, Finset.sum_neg_distrib, Finset.sum_ite_eq', Finset.sum_ite_eq, Finset.mem_univ,
     if_true]
   rw [Finset.sum_comm (f := fun k l => if k = j then MvPolynomial.C (M j l) * _ else 0),
@@ -969,7 +973,8 @@ theorem qGen_dGen (ι : K → σ) (hι : Function.Injective ι) (M N : K → K �
   rw [Finset.sum_comm]
   unfold dGen
   refine Finset.sum_congr rfl fun k _ => ?_
-  rw [hc k, hd k, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hc k, hd k, map_sum, map_sum]
   simp only [Finset.sum_mul, ← Finset.sum_sub_distrib]
   refine Finset.sum_congr rfl fun j _ => ?_
   simp only [add_div, map_add, map_sub, map_mul, map_neg]
@@ -1083,7 +1088,8 @@ theorem quadCommPol : QuadCommPol D := by
     rw [(mn_skew_sym hS hT hXS hXT k j).2]
     ring
   · intro k
-    rw [coord_adX hS hT z k, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [coord_adX hS hT z k, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [(mn_skew_sym hS hT hXS hXT k j).2, (mn_skew_sym hS hT hXS hXT j k).1]
     simp only [map_add, map_mul, map_neg, Complex.conj_conj]
@@ -1168,7 +1174,8 @@ theorem dRhoPoly_of (hT : ThetaDRho D) (hL : DRhoLin D) (hC : DRhoComm D) : DRho
   rw [hsum]
   simp only [hadd _ _ _ hF, hsm _ _ _ hF, hu, hJu]
 
-  simp only [dzPol, MvPolynomial.C_mul', map_smul, map_sum, map_sub, smul_mul_assoc]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dzPol, MvPolynomial.C_mul', map_smul, map_sum, map_sub, smul_mul_assoc]
   rw [Finset.smul_sum]
   refine Finset.sum_congr rfl fun l _ => ?_
   set ζ := fCoord (BS τ) (BT τ) (pS τ) (pT τ) z l

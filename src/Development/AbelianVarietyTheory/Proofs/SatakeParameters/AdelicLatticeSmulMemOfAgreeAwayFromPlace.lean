@@ -145,7 +145,8 @@ theorem exists_nsmul_mulVec_mem_hatL {N : ℕ} (Lb : Submodule (𝓞 E) (Fin N �
     have e2 : (fun i => inclE (F := F) 𝔸 (w i)) = ∑ j, m j • fun i => inclE (F := F) 𝔸 ((s j : Fin N → E) i) := by
       funext i
       rw [e]
-      simp [Finset.sum_apply, map_sum, map_zsmul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [Finset.sum_apply, map_sum, map_zsmul]
     show (fun i => inclE (F := F) 𝔸 (w i)) ∈ Q
     rw [e2]
     have hj : ∀ j, (fun i => inclE (F := F) 𝔸 ((s j : Fin N → E) i)) ∈ Q := fun j => hDj j

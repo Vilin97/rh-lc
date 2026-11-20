@@ -45,7 +45,8 @@ theorem posStar_of_conj (h : ∀ (τ : E →+* ℂ) (a : E), τ (star a) = starR
 
 theorem hStd_pos (hE : PosStar E) (x : Sp E n) (hx : x ≠ 0) :
     0 < Algebra.trace ℚ E (hStd E n x x) := by
-  simp only [hStd, LinearMap.mk₂'ₛₗ_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hStd, LinearMap.mk₂'ₛₗ_apply, map_sum]
   obtain ⟨i, hi⟩ : ∃ i, x i ≠ 0 := by
     by_contra h
     push_neg at h
@@ -340,10 +341,12 @@ theorem dual_anti {L M : Submodule (𝓞 E) (Sp E n)} (h : L ≤ M) :
 private theorem hStd_symm_lemma_8 : (hStd E n).IsSymm := by
   first
   | exact fun x y => by
-      simp only [hStd, LinearMap.mk₂'ₛₗ_apply, map_sum, map_mul, starRingEnd_apply, star_star]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hStd, LinearMap.mk₂'ₛₗ_apply, map_sum, map_mul, starRingEnd_apply, star_star]
       exact Finset.sum_congr rfl fun i _ => mul_comm _ _
   | exact ⟨fun x y => by
-      simp only [hStd, LinearMap.mk₂'ₛₗ_apply, map_sum, map_mul, starRingEnd_apply, star_star]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hStd, LinearMap.mk₂'ₛₗ_apply, map_sum, map_mul, starRingEnd_apply, star_star]
       exact Finset.sum_congr rfl fun i _ => mul_comm _ _⟩
 
 theorem dual_dual {L : Submodule (𝓞 E) (Sp E n)} (hL : Submodule.IsLattice E L) :
@@ -2267,7 +2270,8 @@ theorem Deco.Ok.Lsh_quot_L {d : Deco E n ST SG} (hd : d.Ok) (hc : ∀ P Q : ST, 
     intro x hx
     obtain ⟨c, hcx⟩ := hdec x hx
     have e1 : x = (x - ∑ P, c P • e P) + ∑ P, c P • e P := by abel
-    rw [e1, map_add, LinearMap.add_apply, map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e1, map_add, LinearMap.add_apply, map_sum, LinearMap.sum_apply]
     refine Submodule.add_mem _ ((mem_dual _ y).1 hy _ hcx) (Submodule.sum_mem _ fun P _ => ?_)
     rw [hStd_osmul_left, LinearMap.map_smul_of_tower]
     exact Submodule.smul_mem _ _ (H P)
@@ -2329,7 +2333,8 @@ theorem Deco.Ok.Lsh_quot_L {d : Deco E n ST SG} (hd : d.Ok) (hc : ∀ P Q : ST, 
     choose r hr using fun P : ST => Ideal.Quotient.mk_surjective (c P)
     refine ⟨∑ P, r P • yb P, ?_⟩
     funext Q
-    rw [map_sum, Finset.sum_apply, Finset.sum_eq_single Q]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_apply, Finset.sum_eq_single Q]
     · rw [map_smul, Pi.smul_apply, hyb1, quot_smul_def, mul_one, hr]
     · intro P _ hP
       rw [map_smul, Pi.smul_apply, hyb2 P Q hP.symm, smul_zero]
@@ -2566,7 +2571,8 @@ theorem til_fix_eLast (hconj : ∀ (τ : E →+* ℂ) (a : E), τ (star a) = sta
   have hcσ : ∀ σ : E →ₐ[ℚ] ℂ, ‖σ (algebraMap (𝓞 E) E c)‖ ≤ 1 := by
     intro σ
     have h1 := congrArg σ hnorm
-    rw [map_add, map_mul, map_one, hStd_apply, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_add, map_mul, map_one, hStd_apply, map_sum,
       show σ (star (algebraMap (𝓞 E) E c)) = starRingEnd ℂ (σ (algebraMap (𝓞 E) E c)) from
         hconj σ.toRingHom _, mul_comm (starRingEnd ℂ _), Complex.mul_conj] at h1
     have h2 : ∀ i, σ (star (initL E n (γ (eLast E n)) i) * initL E n (γ (eLast E n)) i) =

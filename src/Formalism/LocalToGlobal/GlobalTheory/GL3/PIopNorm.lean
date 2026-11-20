@@ -461,7 +461,8 @@ theorem iso_core (T : Tor D) {La₁ La₂ : AddSubgroup (VC D N N')}
           starRingEnd ℂ (∑ q' : Q, trm T G (xr q') z) *
           (Real.exp (-Real.pi * (Hf D T z z).re) : ℂ)) := by
       simp only [crD, hI, map_mul]; ring
-    rw [e1, map_sum, Finset.sum_mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e1, map_sum, Finset.sum_mul_sum]
     simp_rw [Finset.sum_mul]
     rfl
   have hint : ∀ q q' : Q, IntegrableOn (crD T (trm T G (xr q)) (trm T G (xr q'))) t volume :=

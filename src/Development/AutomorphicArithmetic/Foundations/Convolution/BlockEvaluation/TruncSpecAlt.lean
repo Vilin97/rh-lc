@@ -37,7 +37,8 @@ private theorem homog_eval {ι : Type} {d : ℕ} {p : MvPolynomial ι ℂ} (h : 
     eval (fun o : Option ι => o.elim x fun y => x * g y) (homog d p) = x ^ d * eval g p := by
   unfold homog
   conv_rhs => rw [p.as_sum]
-  rw [map_sum, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun α hα => ?_
   have hd := deg_le h hα
   rw [map_mul, map_pow, eval_X, eval_rename, eval_monomial, eval_monomial]
@@ -80,7 +81,8 @@ private theorem homog_norm {ι : Type} [Fintype ι] {H : Type} [NormedAddCommGro
     ∃ D : ℝ, 1 ≤ D ∧ ∀ (d : ℕ) (p : MvPolynomial ι ℂ), p.totalDegree ≤ d → ‖ψ (homog d p)‖ ≤ l1 p * D ^ d := by
   obtain ⟨D, hD, h⟩ := mon_norm ψ
   refine ⟨D, hD, fun d p hp => ?_⟩
-  rw [homog_eq, map_sum, l1, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [homog_eq, map_sum, l1, Finset.sum_mul]
   refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun α hα => ?_)
   rw [← mul_one (p.coeff α), ← C_mul_monomial, map_mul, hψ, smul_mul_assoc, one_mul, norm_smul, mul_one]
   refine mul_le_mul_of_nonneg_left ((h _).trans (le_of_eq ?_)) (norm_nonneg _)
@@ -91,7 +93,8 @@ private theorem trunc_eq {K : Type} [Field K] [NumberField K] {n : ℕ} (d : ℕ
     (h : ∀ k, (G k).support ⊆ s) :
     trunc d G = ∑ β ∈ s, monomial β (∑ k ∈ Finset.range (d + 1), homog d ((G k).coeff β)) := by
   unfold trunc
-  simp only [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun k _ => Finset.sum_subset (h k) fun β _ hβ => ?_
   rw [notMem_support_iff.mp hβ]
@@ -156,15 +159,18 @@ theorem UpperTheory.ConvolutionTheory.Ci.truncSpec :
       β.prod fun i e => hval t i ^ e, ?_, fun x d => ?_⟩
     · have : evK L (hval t) Φ = ∑ β ∈ Φ.support, PositivityTheory.Rg.Fx.ev L (Φ.coeff β) * β.prod fun i e => hval t i ^ e := by
         conv_lhs => rw [Φ.as_sum]
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         refine Finset.sum_congr rfl fun β _ => ?_
         rw [evK, eval₂Hom_monomial]
       rw [this]
       refine tendsto_finsetSum _ fun β _ => Tendsto.mul_const _ ?_
       exact (UpperTheory.ConvolutionTheory.FX.piece_sum _ (Φ.coeff β) L).tendsto_sum_nat.comp (tendsto_add_atTop_nat 1)
-    · rw [hT, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [hT, map_sum, Finset.mul_sum]
       refine Finset.sum_congr rfl fun β hβ => ?_
-      rw [val, eval₂Hom_monomial, map_sum, ← mul_assoc, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [val, eval₂Hom_monomial, map_sum, ← mul_assoc, Finset.mul_sum]
       congr 1
       refine Finset.sum_congr rfl fun k hk => ?_
       rw [← hc k β hβ]
@@ -178,7 +184,8 @@ theorem UpperTheory.ConvolutionTheory.Ci.truncSpec :
     have h1 : ∀ β, ‖ev (C (∑ k ∈ Finset.range (d + 1), homog d ((G k).coeff β)))‖
         ≤ 2 ^ (d + 1) * E ^ (d + 1) * D ^ (d + 1) := by
       intro β
-      rw [map_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, map_sum]
       refine (norm_sum_le _ _).trans ?_
       have h2 : ∀ k ∈ Finset.range (d + 1), ‖ev (C (homog d ((G k).coeff β)))‖ ≤ E ^ (d + 1) * D ^ (d + 1) := by
         intro k hk
@@ -196,7 +203,8 @@ theorem UpperTheory.ConvolutionTheory.Ci.truncSpec :
       rw [Finset.card_range, nsmul_eq_mul, mul_assoc]
       refine mul_le_mul_of_nonneg_right ?_ (by positivity)
       exact_mod_cast (Nat.lt_two_pow_self (n := d + 1)).le
-    rw [hT, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hT, map_sum]
     refine (norm_sum_le _ _).trans ?_
     have h6 : ∀ β ∈ Φ.support, ‖ev (monomial β (∑ k ∈ Finset.range (d + 1), homog d ((G k).coeff β)))‖
         ≤ 2 ^ (d + 1) * E ^ (d + 1) * D ^ (d + 1) * ‖ev (monomial β 1)‖ := by

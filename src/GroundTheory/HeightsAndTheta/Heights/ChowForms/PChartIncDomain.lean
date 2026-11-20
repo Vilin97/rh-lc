@@ -58,7 +58,8 @@ theorem ker_aeval_eta (I : Ideal (MvPolynomial (Fin n) F)) (t : Fin n → F) (hI
       ∑ d ∈ Finset.range (g.totalDegree + 1), τ⁻¹ ^ d * aeval ξ (homogeneousComponent d g) := by
     intro g
     conv_lhs => rw [← sum_homogeneousComponent g]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun d _ => hhom _ _ (homogeneousComponent_isHomogeneous d g)
   apply le_antisymm
   · intro g hg
@@ -66,7 +67,8 @@ theorem ker_aeval_eta (I : Ideal (MvPolynomial (Fin n) F)) (t : Fin n → F) (hI
     set D := g.totalDegree
     set G := ∑ d ∈ Finset.range (D + 1), homogeneousComponent d g * linForm t ^ (D - d)
     have hGξ : aeval ξ G = τ ^ D * aeval (τ⁻¹ • ξ) g := by
-      rw [hcomp, Finset.mul_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hcomp, Finset.mul_sum, map_sum]
       refine Finset.sum_congr rfl fun d hd => ?_
       have hdD : d ≤ D := Nat.lt_succ_iff.mp (Finset.mem_range.mp hd)
       rw [map_mul, map_pow, ← mul_assoc, mul_comm (aeval ξ _)]
@@ -85,8 +87,10 @@ theorem ker_aeval_eta (I : Ideal (MvPolynomial (Fin n) F)) (t : Fin n → F) (hI
       rw [← sub_eq_zero, ← map_one (Ideal.Quotient.mk J), ← map_sub, Ideal.Quotient.eq_zero_iff_mem]
       exact Ideal.mem_sup_right (Ideal.mem_span_singleton_self _)
     have hG : Ideal.Quotient.mk J G = Ideal.Quotient.mk J g := by
-      simp only [G, map_sum, map_mul, map_pow, h1, one_pow, mul_one]
-      rw [← map_sum, sum_homogeneousComponent]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [G, map_sum, map_mul, map_pow, h1, one_pow, mul_one]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← map_sum, sum_homogeneousComponent]
     rw [← Ideal.Quotient.eq_zero_iff_mem, ← hG, Ideal.Quotient.eq_zero_iff_mem]
     exact Ideal.mem_sup_left hGI
   · refine sup_le ?_ ?_
@@ -115,7 +119,8 @@ theorem proof : ChartIncDomain.Statement := by
     have h1 : q (linForm t) = 1 := by
       rw [← sub_eq_zero, ← map_one q, ← map_sub, hq, Ideal.Quotient.eq_zero_iff_mem]
       exact Ideal.mem_sup_right (Ideal.mem_span_singleton_self _)
-    rw [← h1, linForm, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← h1, linForm, map_sum]
     simp only [map_mul, hζ, hc']
 
   set γ : MvPolynomial (Fin n ⊕ Fin e × Fin n) F →+* MvPolynomial (Fin e × Fin n) (MvPolynomial (Fin n) F ⧸ J) :=
@@ -137,9 +142,11 @@ theorem proof : ChartIncDomain.Statement := by
       rintro _ ⟨i, rfl⟩
       rw [SetLike.mem_coe, RingHom.mem_ker]
       have hC : ∑ l, C (c l) * C (ζ l) = (1 : MvPolynomial (Fin e × Fin n) (MvPolynomial (Fin n) F ⧸ J)) := by
-        rw [← C_1, ← hc, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [← C_1, ← hc, map_sum]
         simp only [C_mul]
-      simp only [map_sum, map_mul, hγ, coe_eval₂Hom, eval₂_X, Sum.elim_inl, Sum.elim_inr]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_mul, hγ, coe_eval₂Hom, eval₂_X, Sum.elim_inl, Sum.elim_inr]
       simp only [genSubst, sub_mul, Finset.sum_sub_distrib, mul_assoc, ← Finset.mul_sum, hC, mul_one,
         sub_self]
 
@@ -167,7 +174,8 @@ theorem proof : ChartIncDomain.Statement := by
             (∑ l, X (Sum.inr (im.1, l)) * X (Sum.inl l)) = 0 := by
           rw [Ideal.Quotient.eq_zero_iff_mem]
           exact Ideal.mem_sup_right (Ideal.subset_span ⟨im.1, rfl⟩)
-        simp only [map_sum, map_mul] at h0
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, map_mul] at h0
         simp [hβ, hγ, hζ, hc', hq, hχ, genSubst, h0]
   have hleft : ∀ x : MvPolynomial (Fin n ⊕ Fin e × Fin n) F ⧸ chartIncIdeal I t e, β (γbar x) = x := by
     intro x

@@ -24,7 +24,8 @@ theorem frame_col (p : Place D k) {σ : ℕ} (B : BesLev D σ) (s : k) {n : Type
     rw [hz l hl x]
     simp only [xLast, Matrix.map_apply, Matrix.of_apply, Fin.snoc_last, Fin.val_last, Nat.add_sub_cancel_left, pow_one]
     congr 1
-    simp only [Place.pr, Matrix.mulVec, dotProduct, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Place.pr, Matrix.mulVec, dotProduct, map_sum, map_mul]
     rfl
   | cast j =>
     rw [hX j l hl x]

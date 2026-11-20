@@ -315,12 +315,14 @@ theorem kZero_swap {x₁ x₂ : Frame X.Ψ r} (h₁ : x₁ ∈ X.dom) (h₂ : x�
   have hv (a b : Fin g → ℂ) : mixV X idx τ (star a) (star b) = star (mixV X idx τ a b) := by
     funext c
     simp only [mixV, Pi.star_apply, apply_ite star]
-  rw [hM, hA, hB, det_cj, det_cj, map_mul, map_inv₀, map_pow, map_mul, ← Complex.exp_conj, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hM, hA, hB, det_cj, det_cj, map_mul, map_inv₀, map_pow, map_mul, ← Complex.exp_conj, map_mul,
     conj_ofReal, map_sum, mul_comm (conj _) (conj _)]
   congr 3
   refine Finset.sum_congr rfl fun k _ => ?_
   simp only [Pi.star_apply, hv]
-  simp only [dotProduct, mulVec, conjTranspose_apply, Pi.star_apply, Complex.star_def, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dotProduct, mulVec, conjTranspose_apply, Pi.star_apply, Complex.star_def, map_sum,
     map_mul, Complex.conj_conj, Finset.mul_sum]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => by ring
@@ -417,7 +419,8 @@ variable {X} in
 theorem kern_swap {m : ℕ} (P : Fin m → Harm.Poly ℂ X.Ψ q0 X.p0 (Fin n)) {x₁ x₂ : Frame X.Ψ r}
     (h₁ : x₁ ∈ X.dom) (h₂ : x₂ ∈ X.dom) :
     kern X hr idx P x₂ x₁ = conj (kern X hr idx P x₁ x₂) := by
-  rw [kern, kern, biDeriv, biDeriv, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [kern, kern, biDeriv, biDeriv, map_sum]
   refine Finset.sum_congr rfl fun j _ => polyDeriv_barP_symm _ _ (fun l => ?_)
     (analyticAt_kZero X idx x₁ x₂) (analyticAt_kZero X idx x₂ x₁) (kZero_swap idx h₁ h₂)
   simp [letterDir]

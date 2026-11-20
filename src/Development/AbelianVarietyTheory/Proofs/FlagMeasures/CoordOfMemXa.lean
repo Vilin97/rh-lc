@@ -97,9 +97,11 @@ theorem mat_exists [FiniteDimensional K V] (h : IsReal H k r σ Φ) (hd : Module
   let c := basisOfTopLeSpanOfCardEqFinrank (fun i => Φ (b i)) hsp (by simp)
   have hc : ∀ i, c i = Φ (b i) := fun i => by simp [c]
   refine ⟨LinearMap.toMatrix' (c.constr ℂ fun i => Φ (s (b i))), fun x => ?_⟩
-  rw [LinearMap.toMatrix'_mulVec, hx x, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [LinearMap.toMatrix'_mulVec, hx x, map_sum]
   conv_rhs => rw [← b.sum_repr x]
-  rw [map_sum, phi_sum h]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, phi_sum h]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_smul, map_smul, h.2.1, ← hc, Module.Basis.constr_basis]
 
@@ -136,13 +138,15 @@ theorem exists_dual (F : FlagD H r) : ∃ f : Fin r → V, ∀ a b, H.B (f a) (F
     obtain ⟨φ, hφ, hle⟩ := Submodule.exists_le_ker_of_lt_top _ (lt_top_iff_ne_top.2 hne)
     have hφ' : ∀ v : Fin r → K, φ v = ∑ b, v b * φ (Pi.single b 1) := fun v => by
       conv_lhs => rw [pi_eq_sum_univ' v]
-      simp [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [map_sum]
     have h0 : ∑ b, star (φ (Pi.single b 1)) • F.e b.castSucc = 0 := by
       refine H.nondeg _ fun y => ?_
       rw [← H.herm, star_eq_zero]
       have := hle (LinearMap.mem_range_self L y)
       rw [LinearMap.mem_ker, hφ'] at this
-      rw [← this, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← this, map_sum]
       refine Finset.sum_congr rfl fun b _ => ?_
       simp [L, mul_comm, starRingEnd_apply]
     have := Fintype.linearIndependent_iff.1 F.indep _ h0

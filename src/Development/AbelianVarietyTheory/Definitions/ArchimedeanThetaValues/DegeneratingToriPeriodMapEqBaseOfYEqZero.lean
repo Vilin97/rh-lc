@@ -130,7 +130,8 @@ theorem H_neg_right (z w : Fin A.gB → ℂ) : A.H z (-w) = -A.H z w := by
 
 theorem H_conj (z w : Fin A.gB → ℂ) : starRingEnd ℂ (A.H z w) = A.H w z := by
   have h : ∀ i k, starRingEnd ℂ (A.Hm i k) = A.Hm k i := fun i k => A.Hm_herm.apply k i
-  simp only [H, hermForm, dotProduct, Matrix.mulVec, map_sum, map_mul, Finset.mul_sum, h, Pi.star_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [H, hermForm, dotProduct, Matrix.mulVec, map_sum, map_mul, Finset.mul_sum, h, Pi.star_apply,
     RCLike.star_def, Complex.conj_conj]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun k _ => by ring

@@ -106,7 +106,8 @@ theorem eigOf : EigOf := by
   symm
   rw [← ContinuousLinearMap.mul_apply, frame_inv_mul_sym_zero hu hG]
   change (sqQ lam * (clm lam (gamM (0 : Matrix (Md n) (Md n) ℂ) ⊗ₖ rhoW lam x⁻¹) * Ring.inverse (sqQ lam))) w = _
-  rw [ContinuousLinearMap.mul_apply, ContinuousLinearMap.mul_apply, clm_apply', map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [ContinuousLinearMap.mul_apply, ContinuousLinearMap.mul_apply, clm_apply', map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_smul]
   simp only [vv, smul_smul]

@@ -95,7 +95,8 @@ theorem phi_Wm_last (hE : IsGlRep E) (hU : IsInfUnitary ε E) (hV : IsKIrrHW ε 
   have hs : ∀ p, (Fin.snocEquiv (fun _ => Fin n × Fin n)) (p, init) =
       (Fin.snoc init p : Fin (k + 1) → Fin n × Fin n) := fun p => rfl
   simp only [hs, LinearMap.comp_apply, sch_coord_apply, sch_word_snoc, Module.End.mul_apply]
-  rw [← map_sum, key, map_zero]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum, key, map_zero]
 
 theorem phi_Wm_position (hE : IsGlRep E) (hU : IsInfUnitary ε E) (hV : IsKIrrHW ε E (lowK ε lam) V) (hc : ∀ v ∈ V, casimir E v = (casVal lam : ℂ) • v)
     (hmono : StrictAnti lam) {h : ℝ} (hh : GapAtLeast ε lam h)

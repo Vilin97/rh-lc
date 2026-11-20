@@ -57,7 +57,8 @@ theorem baseChange_polynomial_kills_descent (Ks L0 KB WK ι : Type) [Field Ks] [
       (∑ g ∈ s, rd (a g) • LinearMap.baseChange KB (ρ g)) (c ⊗ₜ[Ks] f)
         = c • R ((∑ g ∈ s, a g • LinearMap.baseChange L0 (ρ g)) ((1 : L0) ⊗ₜ[Ks] f)) := by
     intro c f
-    simp only [LinearMap.sum_apply, LinearMap.smul_apply, LinearMap.baseChange_tmul, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [LinearMap.sum_apply, LinearMap.smul_apply, LinearMap.baseChange_tmul, map_sum,
       hRs, hRt, map_one, Finset.smul_sum]
     refine Finset.sum_congr rfl fun g _ => ?_
     simp only [TensorProduct.smul_tmul', smul_eq_mul, mul_one]

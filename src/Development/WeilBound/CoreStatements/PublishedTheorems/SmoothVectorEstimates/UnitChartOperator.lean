@@ -478,7 +478,8 @@ theorem e_Dy_eq (D : LieI ι a → V → X) (y : V) (D' : LieI ι a →L[ℝ] X)
   ext Z
   rw [e_Dy_apply]
   conv_lhs => rw [← (e_b ι a).sum_repr Z]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_smul, h]
   simp [Complex.coe_smul]

@@ -115,7 +115,8 @@ theorem hatC_eq_datum : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (
   have hφ : c.F.val (d.φδ q) = ∑ z : Fin n → LaJ Xo c d, ((ph z : c.F) : ℂ) * (zeta d.l₂.M ^ l.M) ^
       (∑ b, Dw.EF (qRep (z b)) (cHalf H d.I • levRep (q b))) := by
     change d.c₂.F.val (d.eF (d.φδ q)) = _
-    rw [hpin.2.2.2.2.2 q, finsum_eq_sum_of_fintype, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hpin.2.2.2.2.2 q, finsum_eq_sum_of_fintype, map_sum]
     refine Finset.sum_congr rfl fun z _ => ?_
     rw [map_mul, map_zpow₀, ← GlobalTheory.Dict.CoverFourier.zetaM_pow d hd, map_pow, hz]
     rfl

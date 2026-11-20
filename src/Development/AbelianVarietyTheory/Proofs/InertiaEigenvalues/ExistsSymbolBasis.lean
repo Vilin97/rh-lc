@@ -103,7 +103,8 @@ theorem sum_mem_DdR {G : Type} [Group G] {Qp K₀ K : Type} [Field Qp] [Field K�
   obtain ⟨Φ, h, -⟩ := GlobalTheory.exists_tensor_coord_of_basis (M := BdR) b
   apply Φ.injective
   funext i
-  rw [map_sum, map_sum, map_sum, Finset.sum_apply, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, map_sum, Finset.sum_apply, Finset.sum_apply]
   simp only [hact, h, Module.Basis.repr_self]
   have h1 := congrFun (hx g) i
   simp only [Matrix.mulVec, dotProduct, Matrix.of_apply, ← Algebra.smul_def] at h1

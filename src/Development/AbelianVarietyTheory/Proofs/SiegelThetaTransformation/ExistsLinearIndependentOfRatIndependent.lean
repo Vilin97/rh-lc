@@ -158,10 +158,12 @@ theorem det_gram_rowEmb {E m : Type} [Field E] [NumberField E] [Fintype m] {N : 
     rw [hR]
     have hreal : conj (∑ σ : E →+* ℂ, ∑ j, σ (ω k' * W i' j) * conj (σ (ω k * W i j))) =
         ∑ σ : E →+* ℂ, ∑ j, σ (ω k' * W i' j) * conj (σ (ω k * W i j)) := by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Fintype.sum_equiv (Function.Involutive.toPerm _
         (ComplexEmbedding.involutive_conjugate E)) _ _ fun σ => ?_
-      simp [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [map_sum]
     rw [← conj_eq_iff_re.1 hreal]
     simp [gram_apply, PiLp.inner_apply, Fintype.sum_prod_type, Complex.inner, single_vecMul]
   rw [← ofRealHom_eq_coe, RingHom.map_det, RingHom.mapMatrix_apply, key, det_transpose, det_mul,

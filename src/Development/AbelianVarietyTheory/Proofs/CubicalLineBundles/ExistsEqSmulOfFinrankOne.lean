@@ -85,7 +85,8 @@ theorem card_le_finrank_lat {ρ ρ' : ℂ} (hne : ρ ≠ ρ') {n : ℕ} (hn : 0 
   have h1 : ∀ a : PureType.lat hP ρ, pr (Pe a) ∈ W := fun a => by
     obtain ⟨s, hs⟩ := hv a
     have hc' : τ (c : E) ≠ 0 := by simpa using hc
-    rw [← W.smul_mem_iff hc', ← hsm, ← Submodule.coe_smul, hs, Submodule.coe_sum, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← W.smul_mem_iff hc', ← hsm, ← Submodule.coe_smul, hs, Submodule.coe_sum, map_sum, map_sum]
     refine W.sum_mem fun i _ => ?_
     rw [Submodule.coe_smul, hsm]
     exact W.smul_mem _ (Submodule.subset_span ⟨i, rfl⟩)

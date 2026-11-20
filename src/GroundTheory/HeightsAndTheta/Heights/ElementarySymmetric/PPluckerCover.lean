@@ -419,7 +419,8 @@ theorem local_rel (N : ℕ) (F : S.ι → S.ν → S.κ → S.κ → MRing S.YId
         rw [this, hs]
         ring
       have := congrArg (algebraMap S.Ω S.Φ) hΩ
-      simp only [r0, map_sub, map_sum, map_mul, aeval_Xpow, (hPc _).2, (hPf _).2, map_zero] at this ⊢
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [r0, map_sub, map_sum, map_mul, aeval_Xpow, (hPc _).2, (hPf _).2, map_zero] at this ⊢
       simpa [map_pow] using this
   have hrl : ∀ l, Good S (rl l) := by
     intro l
@@ -443,7 +444,8 @@ theorem local_rel (N : ℕ) (F : S.ι → S.ν → S.κ → S.κ → MRing S.YId
       have := congrArg (algebraMap S.Ω S.Φ) hΩ
       have ePf : ∀ l, aeval (yyc S) (Pf l) = algebraMap S.Ω S.Φ (f l * S.x i ^ Df) := fun l => (hPf l).2
       have eQ : ∀ t, aeval (yyc S) (Q l t) = algebraMap S.Ω S.Φ (C l t * S.x i ^ E l) := fun t => (hQ l t).2
-      simp only [rl, map_sub, map_sum, map_mul, map_pow, aeval_X, yyc_base, ePf, eQ, F_value S N F hF, map_zero]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [rl, map_sub, map_sum, map_mul, map_pow, aeval_X, yyc_base, ePf, eQ, F_value S N F hF, map_zero]
         at this ⊢
       simpa [map_pow] using this
   refine ⟨insert r0 (Finset.univ.image rl), ?_, ?_⟩
@@ -457,11 +459,13 @@ theorem local_rel (N : ℕ) (F : S.ι → S.ν → S.κ → S.κ → MRing S.YId
     have hPl : ∀ l, eval w (map (Int.castRingHom ℂ) (Pf l)) = 0 := by
       intro l
       have h := hw (rl l) (Finset.mem_insert_of_mem (Finset.mem_image_of_mem _ (Finset.mem_univ l)))
-      simp only [rl, map_sub, map_mul, map_pow, map_sum, map_X, eval_X, hFw, mul_zero, Finset.sum_const_zero,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [rl, map_sub, map_mul, map_pow, map_sum, map_X, eval_X, hFw, mul_zero, Finset.sum_const_zero,
         sub_zero] at h
       exact eq_zero_of_pow_eq_zero ((mul_eq_zero.1 h).resolve_left (pow_ne_zero _ hwi))
     have h := hw r0 (Finset.mem_insert_self _ _)
-    simp only [r0, map_sub, map_mul, map_pow, map_sum, map_X, eval_X, hPl, mul_zero, Finset.sum_const_zero,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [r0, map_sub, map_mul, map_pow, map_sum, map_X, eval_X, hPl, mul_zero, Finset.sum_const_zero,
       sub_zero] at h
     exact hwi (eq_zero_of_pow_eq_zero h)
 

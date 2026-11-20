@@ -35,7 +35,8 @@ theorem tri_map {K W W' : Type} [CommSemiring K] [AddCommMonoid W] [Module K W] 
     GlobalTheory.LocOver.Tri K (fun a => φ (f a)) (fun a => φ (g a)) := by
   obtain ⟨A, hA, hc⟩ := h
   refine ⟨A, hA, fun b => ?_⟩
-  simp only [hc b, map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hc b, map_sum, map_smul]
 
 theorem tri_trans {K W : Type} [CommSemiring K] [AddCommMonoid W] [Module K W] {n : ℕ} {f g h : Fin n → W}
     (h1 : GlobalTheory.LocOver.Tri K f g) (h2 : GlobalTheory.LocOver.Tri K g h) : GlobalTheory.LocOver.Tri K f h := by
@@ -83,7 +84,8 @@ theorem tri_adapt_loc (Z : LocDat D) (p : PlF D) (g : GV D) {T : D.host.E} (F₁
   · have e := hc b
     rw [Formalism.L2.SG.Saturated.frame_mapL] at e
     simp only [GlobalTheory.LocOver.scaled]
-    rw [map_smul, he, e, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_smul, he, e, map_sum]
     simp only [baseChange_smul₂, Finset.smul_sum, smul_smul]
     refine Finset.sum_congr rfl fun a _ => ?_
     rw [mul_assoc (frFac Z.δ p b * _), Ring.inverse_mul_cancel _ (hu a), mul_one]

@@ -41,9 +41,11 @@ theorem lamJ_eq {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E]
   subst hfr
   obtain ⟨hh, e⟩ := hres (inclE (F := F) (FiniteAdeleRing (𝓞 F) F) (z : E)) _ (by rw [adAt_inclE]; exact hasRes_coe w z)
   refine ⟨⟨_, hh⟩, rfl, ?_⟩
-  rw [e, TC.GLev0.redM_mat G i h ρ hres hA, Formalism.L2.Forms.lamJ, Finset.range_zero, Finset.prod_empty, mul_one, hz, map_sum ρ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, TC.GLev0.redM_mat G i h ρ hres hA, Formalism.L2.Forms.lamJ, Finset.range_zero, Finset.prod_empty, mul_one, hz, map_sum ρ]
   refine congrArg _ (Finset.sum_congr rfl fun x _ => ?_)
-  rw [map_sum ρ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum ρ]
   refine Finset.sum_congr rfl fun y _ => ?_
   rw [apply_ite ρ, map_zero]
   rfl
@@ -95,17 +97,21 @@ theorem exists_close {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] 
   have hc : ∀ a b : Fin V.rank, ((a : ℕ) + 1 = b ∧ (b : ℕ) < V.rank ∧ (b : ℕ) ≠ V.rank) ↔ b.val = a.val + 1 := fun a b =>
     ⟨fun h => h.1.symm, fun h => ⟨h.symm, b.2, b.2.ne⟩⟩
   refine ⟨∑ a : Fin V.rank, ∑ b : Fin V.rank, if b.val = a.val + 1 then R a b else 0, ?_, ?_⟩
-  · rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum]
     refine Finset.sum_congr rfl fun a _ => ?_
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun b _ => ?_
     rw [apply_ite (Ideal.Quotient.mk PP.asIdeal), map_zero, hR]
     exact if_congr (hc a b).symm rfl rfl
   · let φ : 𝓞 D.host.E →+* k := (q.pr.comp (incA D)).comp (algebraMap (𝓞 D.host.E) D.host.E)
     have hφ : ∀ r : 𝓞 D.host.E, (ofSplit q).pr (r : D.host.E) = φ r := fun _ => rfl
-    rw [hφ, map_sum φ, ← Finset.sum_sub_distrib]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hφ, map_sum φ, ← Finset.sum_sub_distrib]
     refine (valuation k).map_sum_lt one_ne_zero fun a _ => ?_
-    rw [map_sum φ, ← Finset.sum_sub_distrib]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum φ, ← Finset.sum_sub_distrib]
     refine (valuation k).map_sum_lt one_ne_zero fun b _ => ?_
     split_ifs
     · rw [hgM, he', he']

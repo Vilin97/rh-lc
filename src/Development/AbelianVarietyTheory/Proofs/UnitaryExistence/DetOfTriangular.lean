@@ -101,7 +101,8 @@ omit [NumberField E] [IsCMField E] in
 lemma _root_.GlobalTheory.PerMove.emb_mulVec (τ : E →+* ℂ) (γ : Matrix (Fin r) (Fin r) E) (v : Fin r → E) :
     _root_.ReciprocityTheory.ChartRestriction.G.FD.Data.emb τ (γ *ᵥ v) = γ.map τ *ᵥ _root_.ReciprocityTheory.ChartRestriction.G.FD.Data.emb τ v := by
   ext a
-  simp [_root_.ReciprocityTheory.ChartRestriction.G.FD.Data.emb, Matrix.mulVec, dotProduct, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [_root_.ReciprocityTheory.ChartRestriction.G.FD.Data.emb, Matrix.mulVec, dotProduct, map_sum]
 
 open NumberField Matrix in
 open scoped nonZeroDivisors in

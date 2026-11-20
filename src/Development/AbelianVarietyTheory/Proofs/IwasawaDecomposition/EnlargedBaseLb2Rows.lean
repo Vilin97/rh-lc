@@ -181,10 +181,12 @@ private theorem isEigSys_sigEv {cf : CharFrame D} {Rw low Pq S hL eig θ} (Bs : 
     have hx1 := Module.End.mem_eigenspace_iff.1 (Submodule.mem_inf.1 hxg).1
     rw [one_smul, finsum_eq_sum_of_fintype, LinearMap.sum_apply] at hx1
     apply e.injective
-    rw [eG, MonoidAlgebra.lift_apply, Finsupp.sum_fintype _ _ (by intros; simp), LinearMap.sum_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [eG, MonoidAlgebra.lift_apply, Finsupp.sum_fintype _ _ (by intros; simp), LinearMap.sum_apply,
       map_sum, e.apply_symm_apply]
     conv_rhs => rw [← hx1]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun g _ => ?_
     rw [LinearMap.smul_apply, map_smul, LinearMap.smul_apply, hΦs, D.nexp.eAlg_def]
     change readLL0 S i _ (D.nexp.eLL0 g) • e (D.nexp.actG i _ _ g (e.symm (Φ x))) = _

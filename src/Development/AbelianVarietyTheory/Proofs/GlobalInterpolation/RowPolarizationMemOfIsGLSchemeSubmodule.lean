@@ -67,7 +67,8 @@ theorem polyOfMv_sqAct_transv (k : Type) [CommRing k] (N : ℕ) (lam : DomWeight
   | mul_X p v hp =>
     simp only [map_mul, hp, map_X]
     congr 1
-    simp only [rowGen, rowAct, aeval_X, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [rowGen, rowAct, aeval_X, map_sum, map_mul]
     have hg : ∀ x, (transvGL k a b h : Matrix (Fin N) (Fin N) (Polynomial k)).transpose v.1 x =
         (if v.1 = x then 1 else 0) + (if a = x ∧ b = v.1 then Polynomial.X else 0) := by
       intro x

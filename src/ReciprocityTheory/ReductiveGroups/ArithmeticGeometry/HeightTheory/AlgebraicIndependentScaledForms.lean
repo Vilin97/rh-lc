@@ -35,7 +35,8 @@ theorem algebraicIndependent_scaledForms {K Ω : Type} [Field K] [CharZero K] [F
       (X none * ∑ j, X (some (ρ o, j)) * C (y j)) =
         X none * ∑ j, X (some (ρ o, j)) * C (δ a (y j)) := by
     intro a o
-    simp [Derivation.leibniz, coeffDer_X, coeffDer_C, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Derivation.leibniz, coeffDer_X, coeffDer_C, map_sum]
   let M : Matrix (Option (Fin D)) (Option (Fin D))
       (MvPolynomial (Option (Fin (D + 2) × Fin (N + 1))) Ω) := fun r o =>
     match r with

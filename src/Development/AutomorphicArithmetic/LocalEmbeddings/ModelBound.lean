@@ -75,10 +75,12 @@ theorem IsModelOf.bound {Nm : (K →+* ℂ) → V → ℝ} {W : Submodule (𝓞 
       have : (⟨_, hc (b m)⟩ : R) = ∑ i, algebraMap K R (cc i m) * ⟨_, hc (gw i)⟩ := by
         apply Subtype.ext
         simp only [AddSubmonoidClass.coe_finset_sum, MulMemClass.coe_mul, SubalgebraClass.coe_algebraMap]
-        rw [hb m, map_sum, Finset.mul_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [hb m, map_sum, Finset.mul_sum]
         refine Finset.sum_congr rfl fun i _ => ?_
         rw [map_smul, Algebra.smul_def]; ring
-      rw [this, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [this, map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_mul, ← hφσ]; rfl
     have e4 : S y' = (∑ a, ‖∑ m, A σ m a * φ ⟨_, hc (b m)⟩‖ ^ 2) * ‖ratVal u y'‖ ^ 2 := by

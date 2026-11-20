@@ -185,7 +185,8 @@ theorem stepB_ring {A : Type} [Ring A] [Algebra ℂ A] {n : ℕ} (E : Fin n → 
     have hsk := Formalism.REAL.quantumMinorRowSkew_holds A n (t + 1) E a' b' τ (u - 1)
     have e1 : qminor E a' b' (u - 1) = ((Equiv.Perm.sign τ : ℤ) : A) * qminor E (a' ∘ τ) b' (u - 1) := by
       rw [hsk, ← mul_assoc, hsq, one_mul]
-    rw [e1, Formalism.FourierDecayAlt.P.expansion_last_line A n t E hE (a' ∘ τ) b' (u - 1), Finset.mul_sum, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e1, Formalism.FourierDecayAlt.P.expansion_last_line A n t E hE (a' ∘ τ) b' (u - 1), Finset.mul_sum, map_sum,
       Fin.sum_univ_succ]
     have hrest : ∀ m : Fin t, Λ (((Equiv.Perm.sign τ : ℤ) : A) * ((((-1 : ℤ) ^ (t + ((m.succ : Fin (t + 1)) : ℕ)) : ℤ) : A) *
         (qminor E ((a' ∘ τ) ∘ Fin.castSucc) (b' ∘ m.succ.succAbove) (u - 1 - 1) *
@@ -206,7 +207,8 @@ theorem stepB_ring {A : Type} [Ring A] [Algebra ℂ A] {n : ℕ} (E : Fin n → 
       norm_num
     rw [h11, Int.cast_one, one_mul]
 
-  rw [Formalism.FourierDecayAlt.P.expansion_first_column A n (t + 1) E a b u, map_sum, Fin.sum_univ_succ, Fin.sum_univ_succ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Formalism.FourierDecayAlt.P.expansion_first_column A n (t + 1) E a b u, map_sum, Fin.sum_univ_succ, Fin.sum_univ_succ]
   have hrest : ∀ m : Fin t, Λ ((((-1 : ℤ) ^ ((m.succ.succ : Fin (t + 2)) : ℕ) : ℤ) : A) *
       (Tm E u (a m.succ.succ) (b 0) * qminor E (a ∘ m.succ.succ.succAbove) (b ∘ Fin.succ) (u - 1))) = 0 := by
     intro m

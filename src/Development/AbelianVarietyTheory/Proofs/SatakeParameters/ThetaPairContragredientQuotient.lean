@@ -40,7 +40,8 @@ theorem ev_injective (π : Representation ℂ G W) : Function.Injective (ev V π
     refine LinearMap.ext fun w => ?_
     have h0 : ev V π (c.sum fun i n => b i ⊗ₜ[ℂ] n) w = 0 := by rw [ht]; rfl
     have h1 : ∑ j ∈ c.support, ((c j : Module.Dual ℂ W) w) • b j = 0 := by
-      rw [← h0, Finsupp.sum, map_sum, LinearMap.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← h0, Finsupp.sum, map_sum, LinearMap.sum_apply]
       rfl
     exact linearIndependent_iff'.1 b.linearIndependent c.support _ h1 i hi
   rw [Finsupp.sum]
@@ -82,7 +83,8 @@ theorem exists_fixed (π : Representation ℂ G W) (hπ : IsSmooth π) (K : Subg
   refine ⟨((Fintype.card (K ⧸ S) : ℕ) : ℂ)⁻¹ • ∑ q, φ q, ?_, fun T hT => ?_⟩
   · intro k
     simp only [MonoidHom.one_apply, Units.val_one, one_smul]
-    rw [map_smul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_smul, map_sum]
     congr 1
     simp_rw [← hφ]
     exact Equiv.sum_comp (MulAction.toPerm k) φ
@@ -90,7 +92,8 @@ theorem exists_fixed (π : Representation ℂ G W) (hπ : IsSmooth π) (K : Subg
       intro q
       induction q using QuotientGroup.induction_on with
       | H a => exact hT _ a.2 w
-    rw [map_smul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_smul, map_sum]
     simp only [h1, Finset.sum_const, Finset.card_univ]
     rw [← Nat.cast_smul_eq_nsmul ℂ, smul_smul, inv_mul_cancel₀ hcard, one_smul]
 
@@ -113,7 +116,8 @@ theorem exists_ev_eq (π : Representation ℂ G W) (hπ : IsAdmissible π) (K : 
         Subtype.ext (hT _ (inv_mem hg) x)
       simp only [l, LinearMap.comp_apply, this])
   refine ⟨∑ i, (b i : V) ⊗ₜ[ℂ] (⟨l i, hl i⟩ : smoothPart π.dual), LinearMap.ext fun w => ?_⟩
-  rw [map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, LinearMap.sum_apply]
   have h2 : ((∑ i, b.repr (T.rangeRestrict w) i • b i : LinearMap.range T) : V) = T w := by
     rw [b.sum_repr]
     rfl

@@ -35,7 +35,9 @@ theorem weight_sum_mem {E : Type} [AddCommGroup E] [Module ℂ E] (V : Submodule
   intro φ hφ
   rw [Submodule.mem_dualAnnihilator] at hφ
   have := scalar_weight_sum S w (fun s => φ (f s)) fun z hz => by
-    simpa [map_sum] using hφ _ (h z hz)
-  simpa [map_sum] using this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [map_sum] using hφ _ (h z hz)
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa [map_sum] using this
 
 end GlobalTheory.WeightSum

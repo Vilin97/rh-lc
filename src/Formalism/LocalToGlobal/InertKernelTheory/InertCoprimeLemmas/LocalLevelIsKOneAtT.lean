@@ -117,7 +117,8 @@ theorem resV_sub (f : κ → ι) (a b : MvPowerSeries ι R) : resV f (a - b) = r
 theorem resV_sum {α : Type} (f : κ → ι) (s : Finset α) (a : α → MvPowerSeries ι R) :
     resV f (∑ x ∈ s, a x) = ∑ x ∈ s, resV f (a x) := by
   ext n
-  simp only [resV_coeff, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [resV_coeff, map_sum]
 
 theorem cc_resV (f : κ → ι) (a : MvPowerSeries ι R) :
     MvPowerSeries.constantCoeff (resV f a) = MvPowerSeries.constantCoeff a := by

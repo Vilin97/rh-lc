@@ -34,7 +34,8 @@ theorem aeval_surjective_of_dUnit_span {K A : Type} [Field K] [CommRing A] [Bial
       rw [Algebra.smul_def]; exact Ideal.mul_mem_left _ _ (hxm i))
   have h0 : dUnit K (y - ∑ i, l i • x i) = 0 := by
     have e : dUnit K (y - ∑ i, l i • x i) = dUnit K y - ∑ i, l i • dUnit K (x i) := by
-      simp only [dUnit, map_sub, map_sum, map_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [dUnit, map_sub, map_sum, map_smul]
     rw [e, ← hl, sub_self]
   rwa [dUnit, AugCot.d_of_mem _ hmem, Ideal.toCotangent_eq_zero] at h0
 
@@ -106,7 +107,8 @@ theorem exists_coords_generate (p : ℕ) [Fact p.Prime] (K : Type) [Field K] (h 
       obtain ⟨w, rfl⟩ := G.omegaLevel_surjective (n + 1) c
       refine ⟨b.repr w, ?_⟩
       conv_lhs => rw [← b.sum_repr w]
-      simp only [map_sum, map_smul, omegaLevel_apply, hdu]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, omegaLevel_apply, hdu]
       rfl
   exact ⟨x, hres, hcou, fun n =>
     aeval_surjective_of_dUnit_span (hG n) (x n) (hcou n) (hspan n)⟩

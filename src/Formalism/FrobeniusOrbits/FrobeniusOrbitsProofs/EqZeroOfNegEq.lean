@@ -76,7 +76,8 @@ theorem gs_map {p : ℕ} [Fact p.Prime] (hp4 : p % 4 = 3) {x : K} (hx : x ^ p = 
     intro a
     rw [← map_mul, neg_one_mul, neg_neg]
   unfold gs gaussSum
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [map_mul, hχ, hψ]
   calc ∑ a, chi p K a * AddChar.zmodChar p hx (-a)
         = ∑ a, chi p K (-1) * (chi p K (-a) * AddChar.zmodChar p hx (-a)) := by

@@ -24,7 +24,8 @@ private theorem chart_cover {R : Type} [CommRing R] (I : Ideal R) {M : ℕ} (a :
   have hsum : reesGenerator I b = ∑ l, algebraMap R ↥(reesAlgebra I) (c l) * reesGenerator I (a l) := by
     apply Subtype.ext
     rw [AddSubmonoidClass.coe_finset_sum]
-    simp only [reesGenerator_coe, ← hc, MulMemClass.coe_mul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [reesGenerator_coe, ← hc, MulMemClass.coe_mul, map_sum]
     refine Finset.sum_congr rfl fun l _ => ?_
     show _ = Polynomial.C (c l) * _
     rw [Polynomial.C_mul_monomial]

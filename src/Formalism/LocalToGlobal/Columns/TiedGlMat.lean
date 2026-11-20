@@ -222,9 +222,11 @@ theorem glm_lamGen (e : κ ≃+* k') (σ₀ : K →+* ℂ) (ψ : AddChar κ K) (
       ∑ x : Fin n, ∑ y : Fin n, if (x : ℕ) + 1 = y ∧ (y : ℕ) < a ∧ (y : ℕ) ≠ skip then
         ((M.1 : Matrix (Fin n) (Fin n) κ).map e) x y else 0 := by
     unfold supSum
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun x _ => ?_
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun y _ => ?_
     have hc : ((x : ℕ) + 1 = y ∧ (y : ℕ) < a ∧ (x : ℕ) ∈ S) ↔ ((x : ℕ) + 1 = y ∧ (y : ℕ) < a ∧ (y : ℕ) ≠ skip) := by
       constructor

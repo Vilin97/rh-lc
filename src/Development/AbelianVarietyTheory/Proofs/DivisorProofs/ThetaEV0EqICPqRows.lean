@@ -17,7 +17,8 @@ theorem iC_cpt_eq_theta_toR {K : Type} [Field K] [NumberField K] [StarRing K] {B
     {fc : DefSub A → DefFace Bs} (cr : Crd A fc) (b : Bool) (t : Bs.Tup) (z : Fin ((lv (fc X.zs) b).dQ t) → K) :
     X.iC cr b t (cpt Bs.v0.embedding z) = X.Θ t (X.jR t (cr.toR X.zs b t z)) := by
   conv_rhs => rw [pi_eq_sum_univ z]
-  simp only [map_sum, map_smul, LinearMap.map_smulₛₗ, iC, lin, Fintype.linearCombination_apply, cpt]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, LinearMap.map_smulₛₗ, iC, lin, Fintype.linearCombination_apply, cpt]
   refine Finset.sum_congr rfl fun i _ => ?_
   congr 4
   ext j
@@ -109,7 +110,8 @@ theorem csum_goodPart_perp_eq_zero {K : Type} [Field K] [NumberField K] [StarRin
     · show (B.S.gaOp B.r (goodAt ℓ.X ℓ.P ℓ.ψ) w) ∈ Z
       simp only [CSD.gaOp, LinearMap.sum_apply, LinearMap.smul_apply]
       exact Submodule.sum_mem _ fun t _ => Submodule.smul_mem _ _ (hZ t hw)
-    · simp only [CSD.gaOp, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, hGm,
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp only [CSD.gaOp, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, hGm,
         CSD.gaMat, Matrix.sum_mulVec, Matrix.smul_mulVec]
       refine Finset.sum_congr rfl fun t _ => ?_
       congr 1

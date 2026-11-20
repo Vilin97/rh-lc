@@ -36,7 +36,8 @@ theorem tlq_ftY_pertQ (hcst : cst.Ok) (w : rowSG Pr sel mu) (hw : w.1 ∉ Pr.vGs
     have hv : v = ∑ j, v j • (Pi.single j (1 : X.E) : Sp X.E n) := by
       ext k; simp [Finset.sum_apply, Pi.single_apply]
     conv_lhs => rw [hv]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl (fun j _ => ?_)
     rw [map_smul, smul_eq_mul, mul_comm]
   have hy : ∀ i : Fin n, IntAt w.1 ((qOf w.1 : X.E) ^ cst.M * y i) := by
@@ -194,7 +195,8 @@ private theorem linearEquiv_apply_eq_sum_single {N : ℕ} (g : Sp E N ≃ₗ[E] 
   have hv : v = ∑ j, v j • (Pi.single j (1 : E) : Sp E N) := by
     ext k; simp [Finset.sum_apply, Pi.single_apply]
   conv_lhs => rw [hv]
-  rw [map_sum, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_apply]
   refine Finset.sum_congr rfl (fun j _ => ?_)
   rw [map_smul, Pi.smul_apply, smul_eq_mul, mul_comm]
 

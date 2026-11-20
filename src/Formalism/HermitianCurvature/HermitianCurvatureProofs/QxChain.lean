@@ -2011,7 +2011,8 @@ theorem signed_first_column_expansion_block01 (ho : IsOpen (UU Dc)) (z z' : Fin 
     (∑ w : Fin (mdim k r L), ∑ x : Fin (mdim k r L), (((((-1 : ℤ) ^ ((w : ℕ) + (x : ℕ)) : ℤ)) : ℂ) * xv k r z' L x) •
       (mulB E L ho (aYb z L w) * mB E L ho (skip1 w) (skip1 x) (uC k r L Y - 1))) = -tB E L ho z z' Y 0 1 := by
   refine stp_end_ext ho (fun Ψ c hc g hg hgD => ?_)
-  simp only [map_sum, map_smul, map_neg, stp_ev_mul ho (sf_aYb z _) Ψ hc hg hgD]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, map_neg, stp_ev_mul ho (sf_aYb z _) Ψ hc hg hgD]
   show _ = -(((tB E L ho z z' Y 0 1 Ψ : (sfData E L ho).V) : Fn k r E) c g)
   rw [stp_tB_apply ho z z' Y 0 1 Ψ hc hg hgD]
   show _ = -(-(chatL (EH k r) (posL k r L) (uC k r L Y - 1) (fun _ => xv k r z' L) (ybv k r z L) ((Ψ : Fn k r E) c) g))
@@ -2028,7 +2029,8 @@ theorem signed_expansion_block10 (ho : IsOpen (UU Dc)) (z z' : Fin (2 * r + k + 
     (∑ w : Fin (mdim k r L), ∑ x : Fin (mdim k r L), (((((-1 : ℤ) ^ ((w : ℕ) + (x : ℕ)) : ℤ)) : ℂ) * xbv k r z' L w) •
       (mulB E L ho (aY z L x) * mB E L ho (skip1 w) (skip1 x) (uC k r L Y))) = -tB E L ho z z' Y 1 0 := by
   refine stp_end_ext ho (fun Ψ c hc g hg hgD => ?_)
-  simp only [map_sum, map_smul, map_neg, stp_ev_mul ho (sf_aY z _) Ψ hc hg hgD]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, map_neg, stp_ev_mul ho (sf_aY z _) Ψ hc hg hgD]
   show _ = -(((tB E L ho z z' Y 1 0 Ψ : (sfData E L ho).V) : Fn k r E) c g)
   rw [stp_tB_apply ho z z' Y 1 0 Ψ hc hg hgD]
   show _ = -(-(chatL (EH k r) (posL k r L) (uC k r L Y) (yv k r z L) (fun _ => xbv k r z' L) ((Ψ : Fn k r E) c) g))
@@ -2052,7 +2054,8 @@ theorem signed_double_expansion_block11 (ho : IsOpen (UU Dc)) (z z' : Fin (2 * r
     (fun i i' j j' => (LinearMap.toSpanSingleton ℂ E (qminorOp (EH k r) (posL k r L ∘ skip2 i i')
       (posL k r L ∘ skip2 j j') (uC k r L Y - 1) ((Ψ : Fn k r E) c) g)).toAddMonoidHom)
   simp only [LinearMap.toAddMonoidHom_coe, LinearMap.toSpanSingleton_apply] at key
-  simp only [map_sum, map_neg, apply_ite (evP ho Ψ c g), map_zero, map_smul, stp_ev_mul ho (sf_aYb z _) Ψ hc hg hgD,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_neg, apply_ite (evP ho Ψ c g), map_zero, map_smul, stp_ev_mul ho (sf_aYb z _) Ψ hc hg hgD,
     stp_ev_mul ho (sf_aY z _) Ψ hc hg hgD]
   show _ = -(((tB E L ho z z' Y 1 1 Ψ : (sfData E L ho).V) : Fn k r E) c g)
   rw [stp_tB_apply ho z z' Y 1 1 Ψ hc hg hgD]

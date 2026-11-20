@@ -47,7 +47,8 @@ theorem ofIntVec_single' {g : ℕ} (i : Fin g) : ofIntVec (Pi.single i 1 : Fin g
 theorem linForm_eq_dotProduct {g : ℕ} (lam : (Fin g → ℂ) →ₗ[ℂ] ℂ) (z : Fin g → ℂ) :
     lam z = (fun i => lam (Pi.single i 1)) ⬝ᵥ z := by
   conv_lhs => rw [← Finset.univ_sum_single z]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [dotProduct]
   refine Finset.sum_congr rfl fun i _ => ?_
   have hs : (Pi.single i (z i) : Fin g → ℂ) = z i • Pi.single i 1 := by

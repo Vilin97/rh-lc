@@ -25,10 +25,12 @@ theorem sum_sq_eq {L A ι κ : Type*} [Fintype ι] [DecidableEq ι] [Fintype κ]
     ∑ i, ε i • (l (b i) * l (b i)) = ∑ k, l (c k) * l (c' k) := by
   have h1 : ∀ i, l (b i) = ∑ k, B (c' k) (b i) • l (c k) := fun i => by
     conv_lhs => rw [hc (b i)]
-    simp only [map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul]
   have h2 : ∀ k, l (c' k) = ∑ i, (ε i * B (b i) (c' k)) • l (b i) := fun k => by
     conv_lhs => rw [eq_sum_of_orthogonal hε horth (c' k)]
-    simp only [map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul]
   calc ∑ i, ε i • (l (b i) * l (b i))
       = ∑ i, ε i • ((∑ k, B (c' k) (b i) • l (c k)) * l (b i)) :=
         Finset.sum_congr rfl fun i _ => by rw [← h1 i]
@@ -189,11 +191,13 @@ theorem expansion (Y : (isExpLieAlgebra E a).lieSubalgebra) :
     · obtain ⟨rfl, rfl, rfl⟩ : w = v ∧ i = p ∧ j = q := by simpa using h
       apply Complex.ext <;> simp
     · simp
-  rw [map_sum, Fintype.sum_prod_type]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Fintype.sum_prod_type]
   funext p q v
   let ev : Lie E a →+ ℂ := ⟨⟨fun X => X p q v, rfl⟩, fun _ _ => rfl⟩
   change ev (coordL Y) = ev (∑ t, ∑ b, coordL (archTraceForm E a (cc' (t, b)) Y • cc (t, b)))
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   change _ = ∑ t, (∑ b, coordL (archTraceForm E a (cc' (t, b)) Y • cc (t, b))) p q v
   simp only [term]
   simp [ev]

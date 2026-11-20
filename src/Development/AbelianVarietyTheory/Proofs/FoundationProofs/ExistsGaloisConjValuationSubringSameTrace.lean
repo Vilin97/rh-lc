@@ -227,10 +227,12 @@ private lemma mem_of_mem_of_inv_core_mem [FiniteDimensional F L] (W₁ W₂ U U'
   have hsS : s ∈ _root_.GlobalTheory.ValConj.core F W₁ W₂ := by
     intro σ
     have hσs : σ s = ∑ j ∈ Finset.range k, algebraMap F L (a j) * σ x ^ j / σ x ^ k := by
-      simp [hs, map_sum, map_div₀, map_mul, map_pow, AlgEquiv.commutes]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [hs, map_sum, map_div₀, map_mul, map_pow, AlgEquiv.commutes]
     have hσrel : ∑ j ∈ Finset.range (n + 1), algebraMap F L (a j) * σ x ^ j = 0 := by
       have := congrArg σ hrel
-      simpa [map_sum, map_mul, map_pow, AlgEquiv.commutes] using this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa [map_sum, map_mul, map_pow, AlgEquiv.commutes] using this
     have hσx : σ x ≠ 0 := by simpa using hx0
     rw [hσs]
     exact ⟨sum_lower_div_pow_mem_of_normalized_relation W₁ n k _ (σ x) hσx hk (fun j => hUW₁ _ (ha j)) (by simp [hak]) hσrel,

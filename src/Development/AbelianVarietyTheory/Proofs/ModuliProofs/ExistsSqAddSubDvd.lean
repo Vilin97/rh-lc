@@ -139,7 +139,8 @@ theorem exists_det_polynomial {R K : Type*} [CommRing R] [CommRing K] (φ : R �
       (fun i => F.coeff i • U ^ i) r]
     change φ ((∑ i : Fin r, F.coeff i • U ^ (i : ℕ)) j k) = MvPolynomial.eval _
       (∑ i : Fin r, MvPolynomial.C (φ ((U ^ (i : ℕ)) j k)) * MvPolynomial.X i)
-    rw [Matrix.sum_apply, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Matrix.sum_apply, map_sum, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [Matrix.smul_apply, map_zsmul, zsmul_eq_mul, mul_comm, map_mul, MvPolynomial.eval_C,
       MvPolynomial.eval_X]

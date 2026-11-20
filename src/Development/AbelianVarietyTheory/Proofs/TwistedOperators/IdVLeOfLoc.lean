@@ -88,7 +88,8 @@ theorem line_mem_iff {A B : HSp D} {c : ℕ} {ε : D.host.E} (d : HermitianOrtho
     have h := hΦ _ hmem
     have e : ∑ k, incA D (r k) * (a * incA D (x * d.a k q)) = a := by
       calc _ = a * incA D (r ⬝ᵥ (fun k => x * d.a k q)) := by
-            simp only [dotProduct, map_sum, map_mul, Finset.mul_sum]
+            set_option synthInstance.maxHeartbeats 100000 in
+              simp only [dotProduct, map_sum, map_mul, Finset.mul_sum]
             refine Finset.sum_congr rfl fun k _ => ?_
             ring
         _ = a := by rw [hcol, map_one, mul_one]

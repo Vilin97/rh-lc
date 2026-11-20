@@ -80,7 +80,8 @@ theorem up (snf : Basis.SmithNormalForm P ι n) (π : O) (hπ : Irreducible π) 
       have := congrArg Subtype.val hsum
       rw [Submodule.coe_sum] at this
       simpa using this.symm
-    rw [hp', map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hp', map_sum]
     simp only [map_smul, hφb, smul_zero, Finset.sum_const_zero]
   have hsurj : Function.Surjective φ := by
     intro t

@@ -28,7 +28,8 @@ theorem orbit_average_fixed_same_pairing : ∀ {V G : Type} [AddCommGroup V] [Mo
   · exact Submodule.smul_mem _ _
       (Submodule.sum_mem _ fun x hx => Submodule.subset_span ((hmem x).1 hx))
   · intro k hk
-    rw [map_smul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_smul, map_sum]
     congr 1
     apply Finset.sum_nbij' (ρ k) (ρ k⁻¹)
     · intro a ha

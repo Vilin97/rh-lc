@@ -20,7 +20,8 @@ theorem isOrthCo_toLE_of_cT_mul_self {E : Type} [Field E] [NumberField E] {N : â
     IsOrthCo Ïƒ J (toLE co) := by
   intro x y
   subst h
-  simp only [toLE_apply, Matrix.mulVec, dotProduct, Matrix.mul_apply, cT, Matrix.transpose_apply, Matrix.map_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [toLE_apply, Matrix.mulVec, dotProduct, Matrix.mul_apply, cT, Matrix.transpose_apply, Matrix.map_apply,
     map_sum, map_mul, Finset.sum_mul, Finset.mul_sum]
   conv_lhs => rw [Finset.sum_comm]
   conv_lhs => enter [2, j]; rw [Finset.sum_comm]

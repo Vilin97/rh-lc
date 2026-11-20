@@ -112,7 +112,8 @@ theorem map_trAct (g : ι → GL (Fin n) K) (F : Pol K ι n) :
   | mul_X p v hp =>
     simp only [map_mul, hp, MvPolynomial.map_X]
     congr 1
-    simp [trAct, Formalism.GradedWeylDivisibility.blockAct, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [trAct, Formalism.GradedWeylDivisibility.blockAct, map_sum]
 
 theorem map_actP (lam : ι → DomWeight n) (g : ι → GL (Fin n) K) (F : Pol K ι n) :
     MvPolynomial.map (algebraMap K K') (actP lam g F) =

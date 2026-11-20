@@ -312,7 +312,8 @@ variable {E : Type} [Field E] {n : ℕ}
 
 theorem herm_map_mv (σ : E →+* E) (J : Matrix (Fin n) (Fin n) E) (φ : E →+* ℂ) (hφ : ∀ x, φ (σ x) = star (φ x))
     (x y : Fin n → E) : herm (J.map φ) (mv φ x) (mv φ y) = φ (form σ J x y) := by
-  simp [herm, form, dotProduct, Matrix.mulVec, mv, map_sum, hφ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [herm, form, dotProduct, Matrix.mulVec, mv, map_sum, hφ]
 
 variable {k r : ℕ} (σ : E →+* E) (J : Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) E) (φ : E →+* ℂ)
   (B : Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ)
@@ -350,7 +351,8 @@ theorem Cm_mulVec {m : ℕ} (Y : Matrix (Fin (2 * r + k + 1)) (Fin m) E) (c : Fi
 theorem mv_mulVec {m : ℕ} (Y : Matrix (Fin (2 * r + k + 1)) (Fin m) E) (u : Fin m → E) :
     mv φ (Y *ᵥ u) = Y.map φ *ᵥ fun j => φ (u j) := by
   ext i
-  simp [mv, Matrix.mulVec, dotProduct, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [mv, Matrix.mulVec, dotProduct, map_sum]
 
 theorem isUnit_det_Cm (hφ : ∀ x, φ (σ x) = star (φ x)) (hB : Bᴴ * Hpk k r * B = J.map φ) (hBu : IsUnit B.det)
     {e g : Fin r → Fin (2 * r + k + 1) → E} {s : Fin r → ℝ} (hs : ∀ a, 0 < s a)

@@ -196,7 +196,8 @@ theorem actM_vE (hρ : Formalism.QuantumDeterminants.IsCRepOn (UJset ε) ρ) (hV
     ext i j
     simp [Matrix.sum_apply, single_apply, ite_and, Finset.sum_ite_eq, Finset.sum_ite_eq']
   conv_rhs => rw [hX]
-  simp only [map_sum, map_smul, ReciprocityTheory.ChartRestriction.DS.actM, vE]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, ReciprocityTheory.ChartRestriction.DS.actM, vE]
 
 theorem isGlRep_vE (hρ : Formalism.QuantumDeterminants.IsCRepOn (UJset ε) ρ) (hV : IsGKSub ε ρ V) :
     ReciprocityTheory.ChartRestriction.DS.IsGlRep (vE hρ hV) := by
@@ -353,7 +354,8 @@ theorem vAct_conj_etr (hρ : Formalism.QuantumDeterminants.IsCRepOn (UJset ε) �
       fun a b => ∑ c, ∑ d, (P c a * P⁻¹ b d) • vAct hρ hV (single c d 1) := by
     funext a b
     rw [conj_single]
-    simp only [map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul]
   rw [this]
   exact GlobalTheory.T.gelfandTrace_conj_invertible_scalarMatrix (fun a b => vAct hρ hV (single a b 1)) P hP k
 

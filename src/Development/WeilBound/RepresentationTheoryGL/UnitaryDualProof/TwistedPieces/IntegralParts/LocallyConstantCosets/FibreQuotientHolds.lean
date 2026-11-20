@@ -50,7 +50,8 @@ theorem lemB (hZ : CR Z) {ζ : (Sp k n → ℂ) →ₗ[ℂ] ℂ} (hg : Good Z ζ
     congr 2
     funext a
     rw [sub_neg_eq_add]
-  rw [e1, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e1, map_sum]
   refine Finset.sum_eq_zero fun c hc => ?_
   rw [good_tr hg (Z.neg_mem (hSZ c hc)) (hgm c hc)]
   exact hz c hc

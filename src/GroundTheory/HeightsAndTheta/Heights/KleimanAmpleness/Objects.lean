@@ -217,7 +217,8 @@ theorem mapC_d (φ : ∀ I, G I →ₗ[R] G' I) (hφ : ∀ I J h m, φ J (ρ I J
   funext J
   rw [d_apply]
   change φ J.1 (d G ρ i s J) = _
-  rw [d_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [d_apply, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_zsmul, hφ]
   rfl
@@ -355,7 +356,8 @@ theorem coneGen_of_isHomogeneous {σ : Type*} (y : σ → Ω) {g : MvPolynomial 
   classical
   conv_lhs => rw [g.as_sum]
   conv_rhs => rw [g.as_sum]
-  simp only [map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun s hs => ?_
   have hdeg : ∑ i ∈ s.support, s i = d := by
     have := hg (mem_support_iff.mp hs)
@@ -373,7 +375,8 @@ theorem coneGen_homogeneousComponent {σ : Type*} (y : σ → Ω) {g : MvPolynom
   · have hsum : coneGen y g = ∑ i ∈ Finset.range (g.totalDegree + 1),
         Polynomial.C (aeval y (homogeneousComponent i g)) * Polynomial.X ^ i := by
       conv_lhs => rw [← sum_homogeneousComponent g]
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       exact Finset.sum_congr rfl fun i _ =>
         coneGen_of_isHomogeneous y (homogeneousComponent_isHomogeneous i g)
     have hc := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p d) hsum
@@ -1049,7 +1052,8 @@ theorem aeval_div_of_isHomogeneous {f : Poly S N} {e : ℕ} (hf : f.IsHomogeneou
   classical
   conv_lhs => rw [f.as_sum]
   conv_rhs => rw [f.as_sum]
-  simp only [map_sum, Finset.sum_div]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Finset.sum_div]
   refine Finset.sum_congr rfl fun s hs => ?_
   have hdeg : ∑ i ∈ s.support, s i = e := by
     have := hf (mem_support_iff.mp hs)

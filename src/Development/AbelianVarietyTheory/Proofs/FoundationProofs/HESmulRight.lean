@@ -37,7 +37,8 @@ theorem embT_conj (D : D7) (τ : D.what₂.Tau) (x : D.host.E) :
   exact NumberField.IsCMField.complexEmbedding_complexConj D.host.E (embT D τ) x
 
 theorem conj_hE (D : D7) {n : ℕ} (x y : Fin n → D.host.E) : D.host.conj (hE D x y) = hE D y x := by
-  simp only [hE, map_sum, map_mul, conj_conj, mul_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hE, map_sum, map_mul, conj_conj, mul_comm]
 
 theorem hE_add_left (D : D7) {n : ℕ} (x x' y : Fin n → D.host.E) : hE D (x + x') y = hE D x y + hE D x' y := by
   simp only [hE, Pi.add_apply, add_mul, Finset.sum_add_distrib]
@@ -114,7 +115,8 @@ theorem Hf_add_right (D : D7) (T : Tor D) {N N' : ℕ} (x y y' : VC D N N') :
 
 theorem Hf_conj (D : D7) (T : Tor D) {N N' : ℕ} (x y : VC D N N') :
     (starRingEnd ℂ) (Hf D T x y) = Hf D T y x := by
-  simp only [Hf, map_div₀, map_sum, map_mul, Complex.conj_conj, Complex.conj_ofReal, mul_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Hf, map_div₀, map_sum, map_mul, Complex.conj_conj, Complex.conj_ofReal, mul_comm]
 
 theorem bc_ne_zero (D : D7) (T : Tor D) {N N' : ℕ} (x y : VC D N N') : bc D T x y ≠ 0 := Complex.exp_ne_zero _
 

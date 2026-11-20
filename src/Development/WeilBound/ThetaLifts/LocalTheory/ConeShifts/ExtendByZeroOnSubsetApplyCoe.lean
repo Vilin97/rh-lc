@@ -101,12 +101,14 @@ def rest (T : Finset (Pl F)) : AF F := 1 - realAd F 1 - ∑ v ∈ T, idem F v
 
 theorem rest_fst (T : Finset (Pl F)) : (rest T).1 = 0 := by
   have : ∀ a : AF F, a.1 = fstA F a := fun _ => rfl
-  rw [this, rest, map_sub, map_sub, map_one, map_sum, ← this, real_fst, sub_self, zero_sub, neg_eq_zero]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [this, rest, map_sub, map_sub, map_one, map_sum, ← this, real_fst, sub_self, zero_sub, neg_eq_zero]
   exact Finset.sum_eq_zero fun v _ => rfl
 
 open Classical in
 theorem evFin_rest (T : Finset (Pl F)) (v : Pl F) : evFin F v (rest T) = if v ∈ T then 0 else 1 := by
-  rw [rest, map_sub, map_sub, map_one, map_sum, evFin_real_k, sub_zero]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [rest, map_sub, map_sub, map_one, map_sum, evFin_real_k, sub_zero]
   split_ifs with h
   · rw [Finset.sum_eq_single_of_mem v h fun u _ hu => evFin_idem_ne_k hu.symm, evFin_idem_self_k, sub_self]
   · rw [Finset.sum_eq_zero fun u hu => evFin_idem_ne_k (fun e : v = u => h (by rw [e]; exact hu)), sub_zero]

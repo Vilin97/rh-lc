@@ -29,11 +29,13 @@ theorem majAt_classSum {K : Type} [Field K] [NumberField K] [StarRing K] (C : CS
   have hc : ∀ i j, v.embedding (C.H i j) =
       ∑ c, ((C.wt c : ℂ))⁻¹ * B (ψ ((C.basis i : C.Cl → C.V) c)) (ψ ((C.basis j : C.Cl → C.V) c)) := by
     intro i j
-    simp only [CSD.H, Matrix.of_apply, CSD.csum, map_sum, map_mul, map_inv₀, map_natCast]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [CSD.H, Matrix.of_apply, CSD.csum, map_sum, map_mul, map_inv₀, map_natCast]
     exact Finset.sum_congr rfl fun c _ => congrArg _ (hs _ _ (C.basis_rat hb i c))
   rw [h1, Formalism.L2.DIV.majAt_eq, hm, hI]
   generalize C.basis.equivFun x = a
-  simp only [dotProduct, Matrix.mulVec, Matrix.map_apply, hc, map_sum, LinearMap.sum_apply, Finset.sum_apply, Pi.smul_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dotProduct, Matrix.mulVec, Matrix.map_apply, hc, map_sum, LinearMap.sum_apply, Finset.sum_apply, Pi.smul_apply,
     LinearMap.map_smulₛₗ, LinearMap.smul_apply, map_smul, smul_eq_mul, Finset.mul_sum, Finset.sum_mul, Pi.star_apply,
     starRingEnd_apply, RingHom.id_apply]
   rw [Finset.sum_comm]
@@ -50,7 +52,8 @@ variable {ι : Type} [Fintype ι] {n : ℕ}
 theorem fockF_conj {τ : Type} (f g : MvPolynomial τ ℂ) :
     Formalism.REAL.fockF (MvPolynomial.map (starRingEnd ℂ) f) (MvPolynomial.map (starRingEnd ℂ) g) =
       starRingEnd ℂ (Formalism.REAL.fockF f g) := by
-  rw [fockF_eq_sum _ _ f.support (MvPolynomial.support_map_subset _ _), Formalism.REAL.fockF, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [fockF_eq_sum _ _ f.support (MvPolynomial.support_map_subset _ _), Formalism.REAL.fockF, map_sum]
   refine Finset.sum_congr rfl fun m _ => ?_
   rw [MvPolynomial.coeff_map, MvPolynomial.coeff_map, map_mul, map_mul, map_natCast]
   rfl

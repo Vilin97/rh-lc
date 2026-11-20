@@ -117,12 +117,14 @@ theorem exists_deriv_comb {O : Type} [CommRing O] [StarRing O] (A : AnArc O) : �
   have key : (fun v => Conv.ev T w (hT.trans_lt hw) (f v)) =
       fun v => ∑ i, Conv.ev T₁ w hw (r₁ i) * A.Sum j (α i) (th i) w v := by
     funext v
-    rw [Conv.ev_congr (hT.trans_lt hw) hw (s' := ∑ i, r₁ i * ⟨_, hm i v⟩)
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Conv.ev_congr (hT.trans_lt hw) hw (s' := ∑ i, r₁ i * ⟨_, hm i v⟩)
       (by rw [AddSubmonoidClass.coe_finset_sum]; exact h2 v), map_sum]
     exact Finset.sum_congr rfl fun i _ => by rw [map_mul, hv]
   rw [key]
   refine ⟨Differentiable.fun_sum fun i _ => (hd i).const_mul _, ?_⟩
-  rw [fderiv_fun_sum fun i _ => ((hd i).const_mul _) 0, map_sum, ContinuousLinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [fderiv_fun_sum fun i _ => ((hd i).const_mul _) 0, map_sum, ContinuousLinearMap.sum_apply]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_mul, hFv, fderiv_const_mul (hd i 0)]
   rfl

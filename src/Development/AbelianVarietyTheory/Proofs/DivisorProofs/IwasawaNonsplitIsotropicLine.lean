@@ -161,7 +161,8 @@ theorem glue_mulVec {n : ℕ} (A : Matrix (Fin n) (Fin n) L) (z : Fin n → AE F
   have := congrArg ι (congrFun h i)
   rw [Pi.smul_apply, smul_eq_mul, ← iota_mul] at this
   rw [Pi.smul_apply, smul_eq_mul, ← this]
-  simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum, ← iota_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum, ← iota_mul]
 
 include hmul in
 theorem glue_mul_glue (a b : L) : (1 - ι 1 + ι a) * (1 - ι 1 + ι b) = 1 - ι 1 + ι (a * b) := by
@@ -273,7 +274,8 @@ theorem exists_stab_line : ∀ (F E : Type) [Field F] [NumberField F] [Field E] 
     have h1 : ∀ i, σL (y i) = π (inclR (F := F) (AF F) (σ (x i))) := fun i =>
       (proj_cA hinj him hmul hσ _).symm
     have h2 : (y ⬝ᵥ T *ᵥ fun i => σL (y i)) = (π.comp (inclR (F := F) (AF F))) (form σ W.J x x) := by
-      simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, h1]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, h1]
       rfl
     rw [h2, h0, mul_zero]
   obtain ⟨k, hk, hk1, hk2, β, hβ, hkX⟩ := exists_int hunr hodd hJT hJTh hy0 hiso hh

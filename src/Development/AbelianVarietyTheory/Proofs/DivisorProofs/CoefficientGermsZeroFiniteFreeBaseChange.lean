@@ -67,8 +67,10 @@ theorem germ_eq_zero : ∀ (R R₁ : Type) [CommRing R] [CommRing R₁] (ρ₁ :
       rw [hc, Scheme.fromSpecStalk_closedPoint] at this
       exact this
     have e := congrArg (r.stalkMap z).hom (h (r z) hzx)
-    rw [map_zero, map_sum] at e
-    rw [← e, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_zero, map_sum] at e
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← e, map_sum]
     refine Finset.sum_congr rfl fun l _ => ?_
     rw [map_mul, map_mul, ← gs_comp' r _ z ⊤ trivial, ← gs_comp' r _ z U (hzx ▸ hx), r1, r2,
       gs_fromSpecStalk x hx, ← germOf_apply, ← germOf_map, ← germOf_map, Category.id_comp, Category.id_comp]

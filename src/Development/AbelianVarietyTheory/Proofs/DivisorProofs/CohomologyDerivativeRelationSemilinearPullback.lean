@@ -55,7 +55,8 @@ theorem dRel_pull : ∀ (R R' : Type) [CommRing R] [CommRing R'] (X X' : Scheme.
         p1 (OAff s') b ((g' k).1 T T' a • (w' k).1 T') + (g' k).1 T' T'' b • (w' k).1 T'' := by
       intro k; rw [Z1.comp, add_smul, oneFormsMapOfFunctorMorphism_smul, ← (w' k).2 b]
     simp only [κ]
-    rw [e1, Finset.sum_congr rfl fun k _ ↦ e2 k, Finset.sum_add_distrib, map_sub, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e1, Finset.sum_congr rfl fun k _ ↦ e2 k, Finset.sum_add_distrib, map_sub, map_sum]
     abel
   let θP : A0 (OPair φ s') := fun t ↦
     q1 (pairPull h) t (ω ((pairPull h).G.obj t)) + D R' _ (A t) - ∑ k, B k t • (Wm k).1 t
@@ -68,7 +69,8 @@ theorem dRel_pull : ∀ (R R' : Type) [CommRing R] [CommRing R'] (X X' : Scheme.
         ∑ k, ((pairPull h).pullbackOneCocycle (g k)).1 t t' a • (Wm k).1 t' +
           (q1 (pairPull h) t' (ω ((pairPull h).G.obj t')) -
             p1 (OPair φ s') a (q1 (pairPull h) t (ω ((pairPull h).G.obj t)))) := by
-      rw [CoefMap.pullCocycleOne_apply, ← cechDeRhamCoefMapOneForms_D, hD, map_add, map_sum, map_sub, cechDeRhamCoefMapOneForms_naturality]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [CoefMap.pullCocycleOne_apply, ← cechDeRhamCoefMapOneForms_D, hD, map_add, map_sum, map_sub, cechDeRhamCoefMapOneForms_naturality]
       congr 1
       exact Finset.sum_congr rfl fun k _ ↦ prodFirstProjection_smul _ _ _
     have e2 : ∀ k, ((pairRes φ s').pullbackOneCocycle (g' k)).1 t t' a • (Wm k).1 t' =
@@ -79,7 +81,8 @@ theorem dRel_pull : ∀ (R R' : Type) [CommRing R] [CommRing R'] (X X' : Scheme.
       abel
     simp only [θP]
     rw [hA', Derivation.map_add, Derivation.map_sub, ← p1_D, e1, Finset.sum_congr rfl fun k _ ↦ e2 k]
-    simp only [Finset.sum_sub_distrib, Finset.sum_add_distrib, map_sub, map_add, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Finset.sum_sub_distrib, Finset.sum_add_distrib, map_sub, map_add, map_sum]
     abel
   let θ' : ∀ t : (Pair φ)ᵒᵖ, Ω[(OAff s').obj ((pairFst φ).obj t)⁄R'] := θP
   have hθ' : ∀ ⦃t t' : (Pair φ)ᵒᵖ⦄ (a : t ⟶ t'), κ _ _ ((pairFst φ).map a) =

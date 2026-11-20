@@ -16,11 +16,13 @@ theorem dual_apply_eq_sum {W ι : Type} [AddCommGroup W] [Module ℂ W] [Fintype
     (ℓ : Module.Dual ℂ W) (w : W) (A : W →ₗ[ℂ] W) :
     ℓ (A w) = ∑ j, ∑ i, (b.repr w j * ℓ (b i)) * b.repr (A (b j)) i := by
   conv_lhs => rw [← b.sum_repr w]
-  rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_smul, map_smul]
   conv_lhs => rw [← b.sum_repr (A (b j))]
-  rw [map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.smul_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_smul, smul_eq_mul, smul_eq_mul]
   ring

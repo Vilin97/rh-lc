@@ -22,7 +22,8 @@ theorem exists_casimir (τ : A →ₗ[ℚ] ℚ) (y : A) (hy : ∀ a, a ≠ 0 →
   have hco : ∀ a i, β a (v i) = v.repr a i * β (v i) (v i) := by
     intro a i
     conv_lhs => rw [← v.sum_repr a]
-    rw [map_sum, LinearMap.sum_apply, Finset.sum_eq_single i]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, LinearMap.sum_apply, Finset.sum_eq_single i]
     · simp
     · intro j _ hj
       have : β (v j) (v i) = 0 := hv hj
@@ -35,7 +36,8 @@ theorem exists_casimir (τ : A →ₗ[ℚ] ℚ) (y : A) (hy : ∀ a, a ≠ 0 →
       simp [ha]
     simpa using this
   · intro a
-    rw [LinearMap.trace_eq_matrix_trace ℚ v, Matrix.trace, Finset.mul_sum, Finset.sum_mul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [LinearMap.trace_eq_matrix_trace ℚ v, Matrix.trace, Finset.mul_sum, Finset.sum_mul, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     have h1 := hco (a * v i) i
     rw [hβ] at h1
@@ -76,7 +78,8 @@ theorem exists_sum_sq (τ : A →ₗ[ℚ] ℚ) (h1 : ∀ a, a ≠ 0 → 0 < τ (
     refine he a fun i => hz _ ?_
     have h0 : ∑ i, c i * τ ((e i * a) ^ 2) = 0 := by
       have : τ (K * a * a) = 0 := by rw [ha]; simp
-      rw [← this, hKd, Finset.sum_mul, Finset.sum_mul, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← this, hKd, Finset.sum_mul, Finset.sum_mul, map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [smul_mul_assoc, smul_mul_assoc, map_smul, smul_eq_mul]
       congr 2; ring
@@ -222,6 +225,7 @@ theorem main (n : ℕ) (Tm : Matrix (Fin n) (Fin n) ℚ) (B : Matrix (Fin n) (Fi
       linear_combination ((algebraMap ℚ _ N - x) * (x * u + 1)) * hu
     rw [e3, Algebra.smul_def, ← map_mul, inv_mul_cancel₀ hN0'.ne', map_one]
   have := congrArg ι hmain
-  simpa only [map_one, map_add, map_smul, map_sum, map_mul, map_pow, hx, hιm, aeval_X] using this
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa only [map_one, map_add, map_smul, map_sum, map_mul, map_pow, hx, hιm, aeval_X] using this
 
 end GlobalTheory.Desc.SqLin

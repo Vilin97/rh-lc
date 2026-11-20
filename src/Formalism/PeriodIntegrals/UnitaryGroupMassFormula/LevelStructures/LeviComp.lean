@@ -23,7 +23,8 @@ theorem conjTensor_involutive (hσ : ∀ x, σ (σ x) = x) (a : R ⊗[F] E) : si
 theorem hermForm_conj_symm (hσ : ∀ x, σ (σ x) = x) (hJ : ∀ i j, σ (J j i) = J i j) (x y : Fin n → R ⊗[F] E) :
     sigR R σ (hR R σ J x y) = hR R σ J y x := by
   unfold hR Formalism.UG.hform
-  simp only [map_sum, map_mul, conjTensor_involutive hσ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, conjTensor_involutive hσ]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   have hJ' : sigR R σ (JR R J j i) = JR R J i j := by

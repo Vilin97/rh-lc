@@ -42,7 +42,8 @@ theorem norm_mdisc_sum_le {m : ℕ} (a : Fin D → Fin m → ℝ)
     ‖mdisc (fun k => ∑ i, (a k i : ℂ) • B k i)‖ ≤
       ∑ σ : Fin D → Fin m, (∏ k, |a k (σ k)|) * (mdisc fun k => B k (σ k)).re := by
   obtain ⟨M, hM⟩ := ReciprocityTheory.AnForm.A.exists_multilinearMap_eq_mdisc (D := D)
-  rw [← hM, MultilinearMap.map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hM, MultilinearMap.map_sum]
   refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun σ _ => ?_)
   rw [MultilinearMap.map_smul_univ, norm_smul, hM, norm_prod]
   obtain ⟨him, hre⟩ := ReciprocityTheory.AnForm.A.mdisc_nonneg_of_posSemidef _ fun k => hB k (σ k)

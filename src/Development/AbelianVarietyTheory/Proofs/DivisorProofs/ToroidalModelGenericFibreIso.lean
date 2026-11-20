@@ -28,13 +28,15 @@ theorem repr_app {X : Scheme.{0}} {M M' : X.Modules} {r : ℕ} (g : M ⟶ M') {U
     rw [hp.basis_apply, trCo, ← hp.repr_resM, Twist.resM_resM]
   have h2 : ∀ a, QCoh.appLinear g (U ⊓ V) (Twist.resM M (inf_le_right : U ⊓ V ≤ V) (p a)) =
       ∑ b, resG X (inf_le_right : U ⊓ V ≤ V) (A b a) • Twist.resM M' (inf_le_right : U ⊓ V ≤ V) (p' b) := fun a => by
-    rw [QCoh.appLinear_apply, Twist.app_resM, hg, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [QCoh.appLinear_apply, Twist.app_resM, hg, map_sum]
     simp only [Twist.resM_smul]
   have h3 : Twist.resM M' (inf_le_left : U ⊓ V ≤ U) (g.app U (f i)) =
       QCoh.appLinear g (U ⊓ V) (Twist.resM M (inf_le_left : U ⊓ V ≤ U) (f i)) := by
     rw [QCoh.appLinear_apply, Twist.app_resM]
   rw [← hf'.repr_resM, Twist.resM_resM, h3, h1]
-  simp only [map_sum, map_smul, h2, Finsupp.finset_sum_apply, Finsupp.smul_apply, smul_eq_mul, Finset.mul_sum, trCo]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, h2, Finsupp.finset_sum_apply, Finsupp.smul_apply, smul_eq_mul, Finset.mul_sum, trCo]
 
 theorem sum_smul_three {K N : Type} [CommRing K] {_ : AddCommMonoid N} {_ : Module K N} {r : ℕ} {P : Fin r → K}
     {A Q : Fin r → Fin r → K} {u u' v : Fin r → N} {w : N} (e1 : w = ∑ a, P a • u a)
@@ -104,7 +106,8 @@ theorem comb_of_chart (h : IsLieFrames Z e jB πB M r τ false t) (h' : IsLieFra
         (TangentOrigin.evalPt (x ≫ jB) V hV (A b a) * TangentOrigin.evalPt (x ≫ jB) (U ⊓ V) hUV (trCo hf' p' k b)) := by
     intro k
     rw [← TangentOrigin.evalPt_res _ inf_le_left hx hUV, repr_app g f hf' hp p' A hg]
-    simp only [map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul]
     refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
     rw [TangentOrigin.evalPt_res _ _ hVU hUV, TangentOrigin.evalPt_res _ _ hV hUV]
   rw [funext e4]

@@ -98,7 +98,8 @@ theorem Hf_embV (T : Tor D) (hT : ∀ τ x, T.emb τ x = embT D τ x) {N N' : �
   congr 1
   rw [← sum_tau_trace]
   refine Finset.sum_congr rfl fun τ _ => ?_
-  simp only [embV, hT, map_sum, map_mul, emb_conj]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [embV, hT, map_sum, map_mul, emb_conj]
 
 end Formalism.L2.Ker.Cd.IntegralLatticeDensity.FL
 

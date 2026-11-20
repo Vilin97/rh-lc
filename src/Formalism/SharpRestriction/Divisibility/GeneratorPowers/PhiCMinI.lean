@@ -18,7 +18,8 @@ def etil (ν : Y →ₗ[ℤ] ℤ) (a : Y) : E :=
 theorem comp_int (ν : Y →ₗ[ℤ] ℤ) (σ : E →+* ℂ) (a : Y) :
     comp (Algebra.linearMap ℤ ℝ ∘ₗ ν) σ a = σ (etil ν a) := by
   unfold comp etil
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   simp [map_mul, map_intCast]
 
@@ -235,7 +236,8 @@ theorem lower_bound {cj : E → E} (hcj : ∀ (φ : E →+* ℂ) (z : E), φ (cj
       cj (etil ν (x i)) * etil ν (x' i)) := ⟨_, rfl⟩
   have htσ : ∀ σ : E →+* ℂ, σ t = ((2 * L σ : ℝ) : ℂ) := by
     intro σ
-    rw [ht, hL, Finset.mul_sum, Complex.ofReal_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [ht, hL, Finset.mul_sum, Complex.ofReal_sum, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_add, map_mul, map_mul, hcj', hcj', hv, hv]
     apply Complex.ext <;>

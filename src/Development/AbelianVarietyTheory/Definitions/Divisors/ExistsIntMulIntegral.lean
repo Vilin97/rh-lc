@@ -22,7 +22,8 @@ theorem Datum.EF_smulF_eq_sum (c : 𝓞 D.F) (x y : D.La) :
     D.EF (D.smulF c x) y = ∑ k, (RingOfIntegers.basis D.F).repr c k *
       D.EF (D.smulF (RingOfIntegers.basis D.F k) x) y := by
   conv_lhs => rw [← (RingOfIntegers.basis D.F).sum_repr c]
-  simp only [Datum.smulF, map_sum, Finset.sum_smul, LinearMap.sum_apply, map_zsmul, smul_assoc,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Datum.smulF, map_sum, Finset.sum_smul, LinearMap.sum_apply, map_zsmul, smul_assoc,
     LinearMap.smul_apply, smul_eq_mul]
 
 theorem Datum.skewFun_apply (x y : D.La) (c : 𝓞 D.F) :
@@ -30,10 +31,12 @@ theorem Datum.skewFun_apply (x y : D.La) (c : 𝓞 D.F) :
   have hc : algebraMap (𝓞 D.F) D.F c =
       ∑ k, ((RingOfIntegers.basis D.F).repr c k : ℚ) • integralBasis D.F k := by
     conv_lhs => rw [← (RingOfIntegers.basis D.F).sum_repr c]
-    simp only [map_sum, integralBasis_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, integralBasis_apply]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_zsmul, Int.cast_smul_eq_zsmul]
-  rw [hc, map_sum, D.EF_smulF_eq_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hc, map_sum, D.EF_smulF_eq_sum]
   push_cast
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [map_smul, Datum.skewFun, Module.Basis.constr_basis, smul_eq_mul]
@@ -48,7 +51,8 @@ theorem eq_of_trace_mul {F : Type} [Field F] [NumberField F] {s t : F}
     s = t := by
   have key : ∀ z : F, Algebra.traceForm ℚ F (s - t) z = 0 := by
     intro z
-    rw [← (integralBasis F).sum_repr z, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← (integralBasis F).sum_repr z, map_sum]
     refine Finset.sum_eq_zero fun k _ => ?_
     rw [map_smul, Algebra.traceForm_apply, integralBasis_apply, sub_mul, map_sub, h, sub_self, smul_zero]
   exact sub_eq_zero.1 ((traceForm_nondegenerate ℚ F).1 _ key)

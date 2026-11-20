@@ -208,12 +208,14 @@ theorem birational_extension_two (hb : Birational y) (A : ι k₀ → Φ) : Bira
 
 theorem sum_smul_penCo_none_eq_one {α : ι k₀ → Φ} (hA : ∑ m, α m * A m = 1) (hB : ∑ m, α m * B m = 0) (t : RatFunc Φ) :
     ∑ m, algebraMap Φ (RatFunc Φ) (α m) * penCo y k₀ A B t ⟨none, m⟩ = 1 := by
-  simp only [penCo, mul_add, Finset.sum_add_distrib, mul_left_comm _ t, ← Finset.mul_sum, ← map_mul, ← map_sum, hA, hB]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [penCo, mul_add, Finset.sum_add_distrib, mul_left_comm _ t, ← Finset.mul_sum, ← map_mul, ← map_sum, hA, hB]
   simp
 
 theorem pencil_coordinate_sum {β : ι k₀ → Φ} (hA : ∑ m, β m * A m = 0) (hB : ∑ m, β m * B m = 1) (t : RatFunc Φ) :
     ∑ m, algebraMap Φ (RatFunc Φ) (β m) * penCo y k₀ A B t ⟨none, m⟩ = t := by
-  simp only [penCo, mul_add, Finset.sum_add_distrib, mul_left_comm _ t, ← Finset.mul_sum, ← map_mul, ← map_sum, hA, hB]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [penCo, mul_add, Finset.sum_add_distrib, mul_left_comm _ t, ← Finset.mul_sum, ← map_mul, ← map_sum, hA, hB]
   simp
 
 theorem exists_ne_of_sum {R σ : Type} [Field R] [Fintype σ] {a b : σ → R} (h : ∑ m, a m * b m ≠ 0) :

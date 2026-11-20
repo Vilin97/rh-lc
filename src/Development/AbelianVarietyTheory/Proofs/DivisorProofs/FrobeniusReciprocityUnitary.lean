@@ -146,7 +146,8 @@ theorem functional_eq_integral {ϖ : kˣ} (hϖ : IsUnif ϖ) (C : Matrix (Fin a) 
       exact hs
     have e2 : T Ψ = (∑ c ∈ s, Ψ.1 c) * T (B m C) := by
       conv_lhs => rw [e1]
-      rw [map_sum, Finset.sum_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Finset.sum_mul]
       refine Finset.sum_congr rfl fun c _ => ?_
       rw [map_smul, smul_eq_mul]
       by_cases hc : c ∈ box ϖ C (fun _ => n)

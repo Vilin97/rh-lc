@@ -158,7 +158,8 @@ theorem finite_of_gelf (h : IsCMExt F E σ) (hJ : IsHermND σ J) (τ : ∀ w : I
   let A := Algebra.adjoin ℂ (Set.range fun p : InfinitePlace F × Fin n × Fin n => X p.1 p.2.1 p.2.2)
   have hDA : ∀ w Z, D w Z ∈ A := fun w Z => by
     rw [Matrix.matrix_eq_sum_single Z]
-    simp only [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum]
     refine A.sum_mem fun a _ => A.sum_mem fun b _ => ?_
     rw [← mul_one (Z a b), ← smul_eq_mul, ← Matrix.smul_single, map_smul]
     exact A.smul_mem (Algebra.subset_adjoin ⟨(w, a, b), rfl⟩) _

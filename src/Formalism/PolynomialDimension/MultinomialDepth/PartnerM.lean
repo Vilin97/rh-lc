@@ -247,7 +247,8 @@ theorem ops_keep_supp (S : Set σ) (Q : Set (σ →₀ ℕ))
     · intro z hz
       rw [MvPolynomial.mem_restrictSupport_iff] at hz
       show pderiv u z ∈ restrictSupport k Q
-      rw [MvPolynomial.as_sum z, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [MvPolynomial.as_sum z, map_sum]
       refine Submodule.sum_mem _ fun m hm => ?_
       rw [pderiv_monomial, MvPolynomial.mem_restrictSupport_iff]
       refine (Finset.coe_subset.mpr support_monomial_subset).trans ?_
@@ -379,7 +380,8 @@ theorem phi_pol {N r : ℕ} [NeZero r] (LL : Letters N) (T : TieData) (j : Fin T
   · subst hia
     rw [hphi]
     unfold tiePhi
-    simp only [LinearMap.sum_apply, LinearMap.smul_apply, LinearMap.comp_apply, map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [LinearMap.sum_apply, LinearMap.smul_apply, LinearMap.comp_apply, map_sum, map_smul]
     rw [Finset.smul_sum]
     refine Finset.sum_congr rfl fun l _ => ?_
     rw [smul_comm]
@@ -393,7 +395,8 @@ theorem phi_pol {N r : ℕ} [NeZero r] (LL : Letters N) (T : TieData) (j : Fin T
   · subst hib
     rw [hphi]
     unfold tiePhi
-    simp only [LinearMap.sum_apply, LinearMap.smul_apply, LinearMap.comp_apply, map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [LinearMap.sum_apply, LinearMap.smul_apply, LinearMap.comp_apply, map_sum, map_smul]
     rw [Finset.smul_sum]
     refine Finset.sum_congr rfl fun l _ => ?_
     rw [smul_comm]
@@ -620,7 +623,8 @@ theorem XD_keep (u v : σ) (Q Q' : Set (σ →₀ ℕ))
     ∀ x ∈ restrictSupport k Q, X u * pderiv v x ∈ restrictSupport k Q' := by
   intro x hx
   rw [MvPolynomial.mem_restrictSupport_iff] at hx
-  rw [MvPolynomial.as_sum x, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [MvPolynomial.as_sum x, map_sum, Finset.mul_sum]
   refine Submodule.sum_mem _ fun m hm => ?_
   have hmQ : m ∈ Q := hx hm
   rw [pderiv_monomial, X, monomial_mul, one_mul]
@@ -817,7 +821,8 @@ theorem comm_preserves_weight_le [NeZero r] (LL : Letters N) (j : ℕ) (Mt : Wit
     ∀ x ∈ restrictSupport ℚ_[p] {m : Fin N × Fin r →₀ ℕ | ((wt LL j 0 m : ℤ) : WithTop ℤ) ≤ Mt},
       T x ∈ restrictSupport ℚ_[p] {m : Fin N × Fin r →₀ ℕ | ((wt LL j 0 m : ℤ) : WithTop ℤ) ≤ Mt} := by
   intro x hx
-  rw [x.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [x.as_sum, map_sum]
   refine Submodule.sum_mem _ fun m hm => ?_
   have hmon : glAct p LL j 0 0 (monomial m (AddMonoidAlgebra.coeff x m)) = ((wt LL j 0 m : ℤ) : ℚ_[p]) • monomial m (AddMonoidAlgebra.coeff x m) := by
     ext m'
@@ -1006,7 +1011,8 @@ theorem tm_comm_eq (LL : Letters N) (j : ℕ) (i : Fin N) (c d a b : Fin r)
 theorem glAct_comm (LL : Letters N) (j : ℕ) (c d a b : Fin r) (x : MvPolynomial (Fin N × Fin r) ℚ_[p]) :
     glAct p LL j c d (glAct p LL j a b x) - glAct p LL j a b (glAct p LL j c d x) =
       (if d = a then glAct p LL j c b x else 0) - (if b = c then glAct p LL j a d x else 0) := by
-  simp only [glAct_eq_sum, LinearMap.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [glAct_eq_sum, LinearMap.sum_apply, map_sum]
   rw [Finset.sum_comm (s := Finset.univ) (t := Finset.univ)
       (f := fun o n => tm (p := p) LL j n c d (tm (p := p) LL j o a b x)), ← Finset.sum_sub_distrib]
   have hrow : ∀ i : Fin N, (∑ i', tm (p := p) LL j i c d (tm (p := p) LL j i' a b x)) -
@@ -1069,7 +1075,8 @@ theorem eul_XD {σ : Type} {s : ℕ} (t : Fin s → σ) (ht : Function.Injective
 theorem eul_glAct (LL : Letters N) (j : ℕ) (i0 : Fin N) (c d : Fin r) (x : MvPolynomial (Fin N × Fin r) ℚ_[p]) :
     ProjS.eulL (fun c : Fin r => (i0, c)) (glAct p LL j c d x) = glAct p LL j c d (ProjS.eulL (fun c : Fin r => (i0, c)) x) := by
   have ht : Function.Injective (fun c : Fin r => (i0, c)) := fun a b h => (Prod.mk.inj h).2
-  rw [glAct_eq_sum, LinearMap.sum_apply, LinearMap.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [glAct_eq_sum, LinearMap.sum_apply, LinearMap.sum_apply, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   by_cases hi : i = i0
   · subst hi

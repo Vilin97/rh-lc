@@ -46,7 +46,8 @@ private theorem tr_z_eq_transfer (X : Tower Ω ε) (l : ℕ) [Fact l.Prime] (w n
     AdicCompletion.eval (idl l) (X.Kl l) n (trH X l w (fun i => z * γ i) lam x u +
       trH X l w γ lam (X.kmap l (X.sl (ofSL z)).toRingEquiv x) u) = 0 := by
   unfold trH
-  rw [Finset.sum_apply, Finset.sum_apply, ← Finset.sum_add_distrib, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.sum_apply, Finset.sum_apply, ← Finset.sum_add_distrib, map_sum]
   refine Finset.sum_eq_zero fun i _ => ?_
   simp only [Tower.act, LinearMap.coe_mk, AddHom.coe_mk, sec, map_smul]
   rw [toGQ_sl, toGQ_sl, map_mul ofSL, Tower.sl_mul_toRingEquiv, ← Tower.kmap_kmap, ← add_smul]

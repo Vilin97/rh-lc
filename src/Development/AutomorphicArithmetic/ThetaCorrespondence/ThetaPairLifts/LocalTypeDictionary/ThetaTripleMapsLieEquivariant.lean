@@ -48,7 +48,8 @@ theorem GlobalTheory.TripleAssembly.theta_triple_maps_lie_equivariant : GlobalTh
         Submodule.sum_mem _ fun i _ => Submodule.subset_span ⟨f i, φ i, (hf i).1, (hf i).2.1, (hf i).2.2.1, rfl⟩
       have hφ : ∀ i, (∀ v, φ i v ∈ GlobalTheory.WeilM.SB _) ∧ ∀ᶠ v in Filter.cofinite, φ i v = Γ.M.vac v :=
         fun i => ⟨(hf i).2.1, (hf i).2.2.1⟩
-      rw [_root_.GlobalTheory.T.tripleProduct_image_thetaSum_pure hHD hPr D ψ θ hψ hθ W W₁ X A A₁ B α β hT ωA ωB hWA hWB e Bs Γ Xc om om' h hTA hTB R Rf hM m f₁ φ hφ hsum, _root_.GlobalTheory.T.tripleProduct_image_thetaSum_pure hHD hPr D ψ θ hψ hθ W W₁ X A A₁ B α β hT ωA ωB hWA hWB e Bs Γ Xc om om' h hTA hTB R Rf hM m f φ hφ hmem, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [_root_.GlobalTheory.T.tripleProduct_image_thetaSum_pure hHD hPr D ψ θ hψ hθ W W₁ X A A₁ B α β hT ωA ωB hWA hWB e Bs Γ Xc om om' h hTA hTB R Rf hM m f₁ φ hφ hsum, _root_.GlobalTheory.T.tripleProduct_image_thetaSum_pure hHD hPr D ψ θ hψ hθ W W₁ X A A₁ B α β hT ωA ωB hWA hWB e Bs Γ Xc om om' h hTA hTB R Rf hM m f φ hφ hmem, map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [LinearMap.rTensor_tmul, ← hTi _ (hf i).1 _ (hf i).2.2.2]
     · intro Φ hΦ Φ' hΦ' hD
@@ -57,7 +58,8 @@ theorem GlobalTheory.TripleAssembly.theta_triple_maps_lie_equivariant : GlobalTh
         Submodule.sum_mem _ fun i _ => Submodule.subset_span ⟨f i, φ i, (hf i).1, (hf i).2.1, (hf i).2.2.1, rfl⟩
       have hφ : ∀ i, (∀ v, φ i v ∈ GlobalTheory.WeilM.SB _) ∧ ∀ᶠ v in Filter.cofinite, φ i v = Γ.M'.vac v :=
         fun i => ⟨(hf i).2.1, (hf i).2.2.1⟩
-      rw [_root_.GlobalTheory.T.tripleProduct_secondMap_theta_pure hHD hPr D ψ θ hψ hθ W W₁ X A A₁ B α β hT ωA ωB hWA hWB e Bs Γ Xc om om' h hTA hTB R Rf hM m f₁ φ hφ hsum, _root_.GlobalTheory.T.tripleProduct_secondMap_theta_pure hHD hPr D ψ θ hψ hθ W W₁ X A A₁ B α β hT ωA ωB hWA hWB e Bs Γ Xc om om' h hTA hTB R Rf hM m f φ hφ hmem, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [_root_.GlobalTheory.T.tripleProduct_secondMap_theta_pure hHD hPr D ψ θ hψ hθ W W₁ X A A₁ B α β hT ωA ωB hWA hWB e Bs Γ Xc om om' h hTA hTB R Rf hM m f₁ φ hφ hsum, _root_.GlobalTheory.T.tripleProduct_secondMap_theta_pure hHD hPr D ψ θ hψ hθ W W₁ X A A₁ B α β hT ωA ωB hWA hWB e Bs Γ Xc om om' h hTA hTB R Rf hM m f φ hφ hmem, map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [LinearMap.rTensor_tmul, ← hTi' _ (hf i).1 _ (hf i).2.2.2]
   have H : ∀ τ, ∀ Y ∈ lieAt X τ, ∃ T : Module.End ℂ (GlobalTheory.TripleAssembly.PiT R Γ Rf),

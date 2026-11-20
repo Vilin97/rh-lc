@@ -37,7 +37,8 @@ theorem ptInt_iff (X : Ch D u) : PtInt X ↔
       obtain ⟨y, hy⟩ := hR ((X.fm.lat D.R.m).b a)
       show Pt X _ ∈ X.fm.ptC
       have : Pt X (X.fm.emb D.R.m ((X.fm.lat D.R.m).b a)) = X.fm.ptEmb y := hy.symm
-      rw [this, ← X.fm.ptEmb_basis.2, ← X.fm.ptLat.b.sum_repr y, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [this, ← X.fm.ptEmb_basis.2, ← X.fm.ptLat.b.sum_repr y, map_sum]
       refine Submodule.sum_mem _ fun i _ => ?_
       rw [LinearMap.map_smulₛₗ]
       exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)

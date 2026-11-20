@@ -57,7 +57,8 @@ theorem locCo_latAtV_bounded : ∀ {F E : Type} [Field F] [NumberField F] [Field
     ext k <;> simp [smul_eq_mul, map_mul, GlobalTheory.EmbChart.evFin_atPlace]
   refine ⟨c, hc0, fun γ hγ i => ?_⟩
   obtain ⟨a, rfl⟩ := (hg γ).1 hγ
-  simp only [map_sum, hsmul, Prod.fst_sum, Prod.snd_sum, Finset.sum_apply, Prod.smul_fst, Prod.smul_snd,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, hsmul, Prod.fst_sum, Prod.snd_sum, Finset.sum_apply, Prod.smul_fst, Prod.smul_snd,
     Pi.smul_apply, smul_eq_mul, Finset.mul_sum]
   constructor
   · refine sum_mem fun m _ => ?_

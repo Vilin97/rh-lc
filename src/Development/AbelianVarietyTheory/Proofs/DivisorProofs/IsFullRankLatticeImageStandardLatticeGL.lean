@@ -49,7 +49,8 @@ theorem GlobalTheory.LatOrb.matLat_stdLat_isLatV : ∀ {O K : Type} [CommRing O]
     ext j
     simp [Finset.sum_apply, Pi.single_apply]
   have hv : v = ∑ i, w i • Matrix.mulVecLin g.val (Pi.single i (1 : K)) := by
-    simp only [← map_smul, ← map_sum, ← hw']
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [← map_smul, ← map_sum, ← hw']
     rw [Matrix.mulVecLin_apply, hgw]
   rw [hv]
   refine Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _ (Submodule.subset_span ?_)

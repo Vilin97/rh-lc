@@ -534,7 +534,8 @@ theorem siegel_eq_of_bounded (hol : IsHoloSiegel g H) (hH : IsSpInvariant g H)
     have h3 : ∀ S : Matrix (Fin g) (Fin g) ℂ, S.IsSymm → M S = 0 := fun S hS => by
       have e1 : M S = ∑ i, ∑ j, S i j * M (single i j 1) := by
         conv_lhs => rw [matrix_eq_sum_single S]
-        simp only [map_sum, ← smul_eq_mul, ← map_smul, smul_single]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, ← smul_eq_mul, ← map_smul, smul_single]
         simp
       have e2 : M S = ∑ i, ∑ j, S i j * M (single j i 1) := by
         rw [e1, Finset.sum_comm]

@@ -291,7 +291,8 @@ theorem tauBimult_iff_right : D.TauBimult ↔ ∀ χ χ₁ χ₂, LB.Gen.Corr D.
 
 theorem gs_sum {Y Z : Scheme.{0}} (f : Z ⟶ Y) (z : Z) (U : Y.Opens) (h : f z ∈ U) {N : Type} [Fintype N]
     (a : N → Γ(Y, U)) : gs f z U (∑ n, a n) = ∑ n, gs f z U (a n) := by
-  simp only [gs_eq f z U h, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [gs_eq f z U h, map_sum]
 
 theorem gs_appLE {Y Z : Scheme.{0}} (f : Z ⟶ Y) (z : Z) {U : Y.Opens} {V : Z.Opens} (e : V ≤ f ⁻¹ᵁ U) (h : z ∈ V)
     (a : Γ(Y, U)) : gs (𝟙 Z) z V ((f.appLE U V e).hom a) = gs f z U a :=

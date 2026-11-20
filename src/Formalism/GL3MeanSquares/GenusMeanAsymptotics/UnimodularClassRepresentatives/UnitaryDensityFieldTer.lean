@@ -101,7 +101,8 @@ variable {z g}
 theorem form_right (hzo : ∀ i j, i ≠ j → h (z i : V) (z j : V) = 0)
     (hzg : ∀ i, h (z i : V) (z i : V) = algebraMap (𝓞 K) K (g i)) (j : Fin m) (c : Fin m → 𝓞 K) :
     h (z j : V) (lin z c : V) = algebraMap (𝓞 K) K (c j * g j) := by
-  rw [coe_lin, map_sum, Finset.sum_eq_single j]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [coe_lin, map_sum, Finset.sum_eq_single j]
   · rw [← algebraMap_smul K (c j) (z j : V), map_smul, hzg, smul_eq_mul, map_mul]
   · intro i _ hij
     rw [← algebraMap_smul K (c i) (z i : V), map_smul, hzo j i (Ne.symm hij), smul_zero]
@@ -111,7 +112,8 @@ theorem form_lin (hzo : ∀ i j, i ≠ j → h (z i : V) (z j : V) = 0)
     (hzg : ∀ i, h (z i : V) (z i : V) = algebraMap (𝓞 K) K (g i)) (c : Fin m → 𝓞 K) :
     h (lin z c : V) (lin z c : V) = algebraMap (𝓞 K) K (∑ i, conjO K (c i) * c i * g i) := by
   nth_rewrite 1 [coe_lin]
-  rw [map_sum, LinearMap.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, LinearMap.sum_apply, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [← algebraMap_smul K (c i) (z i : V), LinearMap.map_smulₛₗ, LinearMap.smul_apply,
     form_right hzo hzg, smul_eq_mul, map_mul, map_mul, map_mul, ← mul_assoc]
@@ -207,7 +209,8 @@ theorem nkCount_eq_cnt (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF 
   have hsum : ∀ x, Ideal.Quotient.mk (extP K 𝔭 ^ k) (∑ i, conjO K (lift x i) * lift x i * g i) =
       ∑ i, sg hF 𝔭 k (x i) * x i := by
     intro x
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     have hg : Ideal.Quotient.mk (extP K 𝔭 ^ k) (g i) = 1 := by
       rw [← map_one (Ideal.Quotient.mk (extP K 𝔭 ^ k)), Ideal.Quotient.eq]

@@ -39,7 +39,8 @@ private theorem lc_inv {E τ ι : Type} [CommRing E] [Fintype ι] [DecidableEq �
   have h3 : B' * A = 1 := by
     ext1 a c
     have e : (B' * A) a c = wcomp E w (u a - u c) ((B * A) a c) := by
-      rw [Matrix.mul_apply, Matrix.mul_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Matrix.mul_apply, Matrix.mul_apply, map_sum]
       refine Finset.sum_congr rfl fun b _ => ?_
       rw [lc_wcomp_mul E w (hA b c)]
       have : u a - u c - (u b - u c) = u a - u b := by ring

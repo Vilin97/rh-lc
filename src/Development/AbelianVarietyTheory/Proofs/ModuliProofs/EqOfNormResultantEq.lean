@@ -199,7 +199,8 @@ theorem padic_case (a b : Multiset Ω)
     refine Continuous.ext_on hd (hc a) (hc b) ?_
     rintro _ ⟨v, rfl⟩
     have := rat_case (l := l) a b h (∑ i : Fin n, monomial (i : ℕ) (v i))
-    simpa [φ, Polynomial.map_sum, aeval_monomial] using this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [φ, Polynomial.map_sum, aeval_monomial] using this
   have := congrFun heq fun i => F.coeff i
   have hx : ∀ x : Ω, aeval x F = ∑ i : Fin n, algebraMap ℚ_[l] Ω (F.coeff i) * x ^ (i : ℕ) := by
     intro x

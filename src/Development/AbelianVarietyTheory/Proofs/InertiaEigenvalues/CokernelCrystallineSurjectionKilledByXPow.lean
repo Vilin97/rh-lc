@@ -90,7 +90,8 @@ theorem decomp_unique {κ : Type} [Fintype κ] (ht : ∀ z : ι → A, ∑ j, t 
   rw [Fintype.linearIndependent_iff] at hb
   have h1 : ∀ k, ∑ j, t j * φ (z j k) = 0 := hb (fun k => ∑ j, t j * φ (z j k)) (by
     rw [← h]
-    simp only [← hz, map_sum, hΦ, Finset.sum_smul, Finset.smul_sum, mul_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [← hz, map_sum, hΦ, Finset.sum_smul, Finset.smul_sum, mul_smul]
     exact Finset.sum_comm)
   rw [← hz]
   exact Finset.sum_eq_zero fun k _ => by
@@ -271,7 +272,8 @@ theorem key_inclusion {ι κ : Type} [Fintype ι] [Fintype κ] (t : ι → Power
       rw [← hspan, SetLike.mem_coe, Submodule.mem_span_range_iff_exists_fun] at hx
       obtain ⟨c, rfl⟩ := hx
       change Φ _ ∈ _
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Submodule.sum_mem _ fun k _ => ?_
       rw [hΦ]
       exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨k, rfl⟩)

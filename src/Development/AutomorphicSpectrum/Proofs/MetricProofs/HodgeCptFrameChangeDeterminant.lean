@@ -31,7 +31,8 @@ theorem exists_unitAt_of_sum (hg : IsCptGen ξ) (p : Cpt ξ) {ι : Type} (s : Fi
     · exact ⟨0, fun h => absurd h hi⟩
   choose g hgf using hf'
   have hs : ∑ i ∈ s, g i = 1 := hg.inj p (by
-    rw [map_sum, map_one, Finset.sum_congr rfl (fun i hi => hgf i hi), h1])
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_one, Finset.sum_congr rfl (fun i hi => hgf i hi), h1])
   by_contra hcon
   push_neg at hcon
   have hnu : ∀ i ∈ s, g i ∈ IsLocalRing.maximalIdeal (X.presheaf.stalk p.1) := by
@@ -86,7 +87,8 @@ theorem exists_inChart_minors (hg : IsCptGen ξ) {κ : Type} (x : κ → Ω) (L 
       ext i a
       simp only [Matrix.mul_apply, Matrix.submatrix_apply, Matrix.transpose_apply, id, Matrix.smul_apply,
         smul_eq_mul, hA, hC, hT', Matrix.of_apply]
-      rw [mul_div_cancel₀ _ hxm, ← hTb a, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [mul_div_cancel₀ _ hxm, ← hTb a, map_sum]
       exact Finset.sum_congr rfl fun l _ => by rw [map_smul, smul_eq_mul, mul_comm]
     have := congrArg Matrix.det e
     rwa [Matrix.det_mul, Matrix.det_transpose, Matrix.det_smul, Fintype.card_fin] at this

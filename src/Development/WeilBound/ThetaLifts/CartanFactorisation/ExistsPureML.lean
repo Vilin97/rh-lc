@@ -87,7 +87,8 @@ theorem tens_eq_map {w : ∀ v : Pl F, (κ → Fv F v) → ℂ} (hne : ∀ v, w 
     ∑ i, p (f i) ⊗ₜ[ℂ] (PiTensorProduct.tprod ℂ fun v : T => q v (φ i v)) =
       ∑ i, p (f' i) ⊗ₜ[ℂ] (PiTensorProduct.tprod ℂ fun v : T => q v (φ' i v)) := by
   have := congrArg (TensorProduct.map p (PiTensorProduct.map fun v : T => q v)) (tens_eq hne hw T f φ f' φ' h h' e)
-  simpa only [map_sum, TensorProduct.map_tmul, PiTensorProduct.map_tprod] using this
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa only [map_sum, TensorProduct.map_tmul, PiTensorProduct.map_tprod] using this
 
 def ext (w : ∀ v : Pl F, (κ → Fv F v) → ℂ) (T : Finset (Pl F)) (ψ : ∀ v : T, (κ → Fv F v) → ℂ) (v : Pl F) :
     (κ → Fv F v) → ℂ := if h : v ∈ T then ψ ⟨v, h⟩ else w v

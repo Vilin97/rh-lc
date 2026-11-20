@@ -318,7 +318,8 @@ theorem exists_gen_ne_zero {D : D7} {B : WeightFamilies.Prov D} {P : ModuliInteg
   by_contra hc
   push Not at hc
   apply hs.s0.ne_zero
-  rw [Formalism.MainNotions.Gaps.EtaleWeightGaps.sec, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Formalism.MainNotions.Gaps.EtaleWeightGaps.sec, map_sum]
   refine Finset.sum_eq_zero fun k _ => ?_
   rw [Algebra.smul_def, map_mul]
   exact mul_eq_zero_of_right _ (hc k)

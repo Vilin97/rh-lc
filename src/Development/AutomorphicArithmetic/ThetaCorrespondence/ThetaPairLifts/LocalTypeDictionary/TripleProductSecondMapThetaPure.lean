@@ -58,7 +58,8 @@ theorem secondFactorMap_theta_pure_tensor : GlobalTheory.Published.HoweDualityRe
   have hs : ∀ᶠ v in Filter.cofinite, Rf.p' v (Γ.M'.vac v) = vacIm Γ Rf v := by
     filter_upwards [Xc.T.eventually_cofinite_notMem] with v hv using (hm.fin.sph v hv).1.symm
   have HL := GlobalTheory.T.weil_model_projection_factorisation _ _ _ Γ.M' Bs.ψ hg.hM' _ R.p' _ Rf.p' (vacIm Γ Rf) hs
-  rw [h1, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h1, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   unfold liftPure
   rw [dif_pos HL]

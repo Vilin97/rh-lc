@@ -13,7 +13,8 @@ theorem wh_aeval {K : Type} [CommRing K] {σ τ : Type} (ω : τ → ℕ) (f : �
   have e : aeval (fun v => (X (f v) : MvPolynomial τ K) ^ lev v) u =
       ∑ μ ∈ u.support, aeval (fun v => (X (f v) : MvPolynomial τ K) ^ lev v) (monomial μ (u.coeff μ)) := by
     conv_lhs => rw [← support_sum_monomial_coeff u]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
   rw [e]
   refine IsWeightedHomogeneous.sum _ _ _ fun μ hμ => ?_
   rw [aeval_monomial, MvPolynomial.algebraMap_eq, Finsupp.prod]

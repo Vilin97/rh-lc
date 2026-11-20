@@ -110,7 +110,8 @@ theorem exists_bLie_eq_sq_smul (hcok : ∀ f : omega P.Gt, (p : O) ^ 2 • f ∈
     have h := pairV_inclT_mem P hu (y j)
     rw [← ha] at h
     convert h using 1
-    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul]
     rw [Finset.sum_eq_single j]
     · rw [hyF]
       simp [map_pow, map_natCast, mul_comm]
@@ -154,10 +155,12 @@ theorem discr_smul_proj_mem {_ : DecidableEq (E →+* C)} (i : E →+* C) {y : P
     apply (isSplitting_embO (E := E) P.integers).1
     rw [map_smul, splitMap_idem]
     ext k
-    simp only [t, map_sum, Finset.sum_apply, splitMap_tmul, RingHom.comp_apply, Pi.smul_apply, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [t, map_sum, Finset.sum_apply, splitMap_tmul, RingHom.comp_apply, Pi.smul_apply, smul_eq_mul]
     have e1 : ∑ j, algebraMap O C (o j) * algebraMap O C (embO P.integers k (b j)) =
         algebraMap O C (M.det * (M * M.adjugate) k i) := by
-      rw [Matrix.mul_apply, Finset.mul_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Matrix.mul_apply, Finset.mul_sum, map_sum]
       refine Finset.sum_congr rfl fun j _ => ?_
       simp only [o, M, Matrix.of_apply, map_mul]
       ring
@@ -169,7 +172,8 @@ theorem discr_smul_proj_mem {_ : DecidableEq (E →+* C)} (i : E →+* C) {y : P
       tensorAction P.actV t y := by
     rw [ht, map_smul, proj, LinearMap.smul_apply]
   rw [e2]
-  simp only [t, map_sum, LinearMap.sum_apply, tensorAction_tmul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [t, map_sum, LinearMap.sum_apply, tensorAction_tmul]
   refine Submodule.sum_mem _ fun j _ => ?_
   rw [algebraMap_smul]
   exact Submodule.smul_mem _ _ (actV_mem_latT P _ hy)

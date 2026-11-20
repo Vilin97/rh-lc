@@ -58,7 +58,8 @@ theorem kogEq_WKG {Γ : Type} [Group Γ] {k : ℕ} (M : Γ →* Matrix (Fin k) (
     simp only [LinearMap.restrictScalars_apply]
     unfold matRep mapM
     simp [Matrix.toLinAlgEquiv'_apply, Matrix.mulVec, dotProduct, Algebra.smul_def]
-  · rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum]
     simp only [map_smul, Submodule.mkQ_apply]
 
 end Gen

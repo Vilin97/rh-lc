@@ -97,7 +97,8 @@ variable {S₁ : Finset (InfinitePlace F)} {S₂ : Finset (HeightOneSpectrum (�
 open Classical in
 theorem ci_invS (y : AF F) (u : InfinitePlace F) :
     ci u (invS S₁ S₂ y) = if u ∈ S₁ then (ci u y)⁻¹ else 0 := by
-  rw [invS, map_add, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [invS, map_add, map_sum, map_sum]
   simp only [ci_sglF, Finset.sum_const_zero, add_zero]
   split_ifs with hu
   · rw [Finset.sum_eq_single_of_mem u hu (fun w _ hw => ci_sglI_ne (Ne.symm hw) _), ci_sglI_self]
@@ -106,7 +107,8 @@ theorem ci_invS (y : AF F) (u : InfinitePlace F) :
 open Classical in
 theorem cf_invS (y : AF F) (u : HeightOneSpectrum (𝓞 F)) :
     cf u (invS S₁ S₂ y) = if u ∈ S₂ then (cf u y)⁻¹ else 0 := by
-  rw [invS, map_add, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [invS, map_add, map_sum, map_sum]
   simp only [cf_sglI, Finset.sum_const_zero, zero_add]
   split_ifs with hu
   · rw [Finset.sum_eq_single_of_mem u hu (fun w _ hw => cf_sglF_ne (Ne.symm hw) _), cf_sglF_self]

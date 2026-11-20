@@ -141,7 +141,8 @@ theorem cot_comp : ∀ (k : Type) [CommRing k] (S : Scheme.{0}) (p : S ⟶ Sp k)
   rw [hG.fderiv, ContinuousLinearMap.comp_apply]
   have hs : C (Pi.single a 1) = ∑ b, C (Pi.single a 1) b • (Pi.single b (1 : ℂ) : Fin g → ℂ) := by
     ext j; simp [Finset.sum_apply, Pi.single_apply]
-  conv_lhs => rw [hs, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [hs, map_sum]
   simp only [map_smul, smul_eq_mul]
   rfl
 

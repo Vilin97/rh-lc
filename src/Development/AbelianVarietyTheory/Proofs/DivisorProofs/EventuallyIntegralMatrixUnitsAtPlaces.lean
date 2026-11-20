@@ -134,7 +134,8 @@ theorem matrixUnits_eventually : ∀ (p : ℕ) [Fact p.Prime] (G : HTGroup p),
       · intro c _ hc; simp [Matrix.single_apply, hc]
       · simp
     simp only [E]
-    rw [← map_sum (theta p G v), ← AddSubmonoidClass.coe_finset_sum, ← map_sum ψ.symm, hs, map_one,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum (theta p G v), ← AddSubmonoidClass.coe_finset_sum, ← map_sum ψ.symm, hs, map_one,
       OneMemClass.coe_one, map_one]
 
 end GlobalTheory.OrbFinAf.MatrixUnits₂

@@ -94,7 +94,8 @@ theorem finrank_typeSp_cx : ∀ (L : Type) [Field L] [NumberField L] [IsCMField 
     have hcoord : ∀ g i, ∑ j, c j * e (b.equivFun (((v j : V) : GAf L n → W) g) i) = 0 := by
       intro g i
       have := congrArg (fun F => b'.equivFun (F g) i) hc
-      simpa only [Finset.sum_apply, Pi.smul_apply, map_sum, map_smul, Pi.smul_apply, smul_eq_mul, hωc,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa only [Finset.sum_apply, Pi.smul_apply, map_sum, map_smul, Pi.smul_apply, smul_eq_mul, hωc,
         Pi.zero_apply, map_zero] using this
     have hα : ∀ α, ∀ j, β.repr (c j) α = 0 := by
       intro α
@@ -103,9 +104,11 @@ theorem finrank_typeSp_cx : ∀ (L : Type) [Field L] [NumberField L] [IsCMField 
       apply b.equivFun.injective
       funext i
       have := congrArg (fun z => β.repr z α) (hcoord g i)
-      simp only [map_sum, Finsupp.coe_finset_sum, Finset.sum_apply, mul_comm (c _), hβ1, map_zero,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, Finsupp.coe_finset_sum, Finset.sum_apply, mul_comm (c _), hβ1, map_zero,
         Finsupp.coe_zero, Pi.zero_apply] at this
-      simp only [Finset.sum_apply, Pi.smul_apply, map_sum, map_smul, smul_eq_mul, map_zero, Pi.zero_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Finset.sum_apply, Pi.smul_apply, map_sum, map_smul, smul_eq_mul, map_zero, Pi.zero_apply]
       rw [← this]
       exact Finset.sum_congr rfl fun j _ => mul_comm _ _
     exact β.repr.injective (by ext α; simp [hα α j])
@@ -117,7 +120,8 @@ theorem finrank_typeSp_cx : ∀ (L : Type) [Field L] [NumberField L] [IsCMField 
     have : (fun g => ω ((∑ j, a j • ((v j : V) : GAf L n → W)) g)) =
         ∑ j, e (a j) • fun g => ω (((v j : V) : GAf L n → W) g) := by
       funext g
-      simp only [Finset.sum_apply, Pi.smul_apply, map_sum, map_smulₛₗ]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Finset.sum_apply, Pi.smul_apply, map_sum, map_smulₛₗ]
     rw [this]
     exact Submodule.sum_mem _ fun j _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨j, rfl⟩)
   have hspan : NG.TypeSp ρ' J (cx e χ) = Submodule.span ℂ (Set.range fun j => fun g => ω (((v j : V) : GAf L n → W) g)) := by
@@ -130,7 +134,8 @@ theorem finrank_typeSp_cx : ∀ (L : Type) [Field L] [NumberField L] [IsCMField 
     have hfaV : ∀ α, fa α ∈ V := by
       intro α
       refine ⟨fun γ g => b.equivFun.injective (funext fun i => ?_), fun κ g => b.equivFun.injective (funext fun i => ?_)⟩
-      · rw [hfa, hF1, hρ', hρ, map_sum, Finsupp.coe_finset_sum, Finset.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        · rw [hfa, hF1, hρ', hρ, map_sum, Finsupp.coe_finset_sum, Finset.sum_apply]
         simp only [hβ1, hfa]
       · rw [hfa, hFk, map_smul, Pi.smul_apply, smul_eq_mul, hβ1, map_smul, Pi.smul_apply, smul_eq_mul, hfa]
     obtain ⟨P, hP⟩ := exists_finset_eval_eq_zero V
@@ -151,7 +156,8 @@ theorem finrank_typeSp_cx : ∀ (L : Type) [Field L] [NumberField L] [IsCMField 
       funext g
       apply b'.equivFun.injective
       funext i
-      simp only [Finset.sum_apply, Pi.smul_apply, map_sum, map_smul, smul_eq_mul, hωc, hfa]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Finset.sum_apply, Pi.smul_apply, map_sum, map_smul, smul_eq_mul, hωc, hfa]
       conv_lhs => rw [← β.linearCombination_repr (b'.equivFun (F g) i)]
       rw [Finsupp.linearCombination_apply, Finsupp.sum_of_support_subset _ (hsub g i) (fun a c => c • β a) (fun _ _ => zero_smul _ _)]
       exact Finset.sum_congr rfl fun α _ => mul_comm _ _

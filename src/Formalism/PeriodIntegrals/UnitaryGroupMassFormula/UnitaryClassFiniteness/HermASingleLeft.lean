@@ -105,7 +105,8 @@ def hermA (X Y : Fin M → Af F ⊗[F] E) : Af F ⊗[F] E :=
 
 theorem hermA_vinc (x y : Fin M → E) :
     hermA σ J (vinc (F := F) x) (vinc y) = inclR (Af F) (PI.HermLatFin.herm (σ : E →+* E) J x y) := by
-  simp only [hermA, dotProduct, Matrix.mulVec, vinc, JR, Matrix.map_apply, sigR_inclR, PI.HermLatFin.herm,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hermA, dotProduct, Matrix.mulVec, vinc, JR, Matrix.map_apply, sigR_inclR, PI.HermLatFin.herm,
     map_sum, map_mul, Finset.mul_sum, AlgHom.coe_toRingHom]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   ring

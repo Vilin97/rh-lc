@@ -283,11 +283,15 @@ theorem hTens_zero (h : IsSec σ t sec) {u u' : Matrix (Fin n) (Fin d) (AE F E)}
   refine h.ext _ (fun a ha => ?_) ?_ ?_
   · simp only [hTens, Finset.smul_sum, ← smul_mul_assoc, fun i j => kd_at_matrix.1 hu i j a ha, zero_mul, Finset.sum_const_zero]
   · rcases h0 with h0 | h0
-    · simp only [hTens, map_sum, map_mul, z h0.1, zero_mul, Finset.sum_const_zero]
-    · simp only [hTens, map_sum, map_mul, (h.conj _).1, z h0.2, mul_zero, Finset.sum_const_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp only [hTens, map_sum, map_mul, z h0.1, zero_mul, Finset.sum_const_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp only [hTens, map_sum, map_mul, (h.conj _).1, z h0.2, mul_zero, Finset.sum_const_zero]
   · rcases h0 with h0 | h0
-    · simp only [hTens, map_sum, map_mul, (h.conj _).2, z h0.2, mul_zero, Finset.sum_const_zero]
-    · simp only [hTens, map_sum, map_mul, z h0.1, zero_mul, Finset.sum_const_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp only [hTens, map_sum, map_mul, (h.conj _).2, z h0.2, mul_zero, Finset.sum_const_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp only [hTens, map_sum, map_mul, z h0.1, zero_mul, Finset.sum_const_zero]
 
 theorem vac_ind {B : Base F E} (hB : B.IsGood σ) {r s r' s' : ℕ} (hX : X.IsHerm σ B r s) (hW : W.IsSkew σ B r' s') {φ}
     (hφ : M.IsVac B.ψ v φ) {π₁ π₀ : AE F E →+* Fv F v} {co ι} (hι : M.IsLin B.ψ π₁ π₀ co ι)

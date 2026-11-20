@@ -47,7 +47,8 @@ theorem eig_sum_zero {K V O I : Type} [Field K] [AddCommGroup V] [Module K V] [C
       have hg : ∑ u ∈ A, (σ u a - σ t a) • f u = 0 := by
         have e : ∑ u ∈ A, (σ u a - σ t a) • f u =
             ρ a (f t + ∑ u ∈ A, f u) - σ t a • (f t + ∑ u ∈ A, f u) := by
-          rw [map_add, map_sum, mem_eig (hf t (Finset.mem_insert_self _ _)) a, smul_add, Finset.smul_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [map_add, map_sum, mem_eig (hf t (Finset.mem_insert_self _ _)) a, smul_add, Finset.smul_sum]
           simp only [sub_smul, Finset.sum_sub_distrib]
           rw [Finset.sum_congr rfl fun u hu => (mem_eig (hf u (Finset.mem_insert_of_mem hu)) a).symm]
           abel
@@ -110,7 +111,8 @@ theorem exists_model_at {R : Type} [CommRing R] {G : Over (Sp R)} [GrpObj G] [Is
       funext c
       simp [Finset.sum_apply, Pi.single_apply]
     conv_rhs => rw [hu]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [Module.Basis.equivFun_symm_apply, map_smulₛₗ, hβ]
   show (MF.pt (β.equivFun.symm _)).left = _
   rw [h, hj]

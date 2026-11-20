@@ -72,7 +72,8 @@ theorem comp_zero (lam : K →ₗ[ℚ] ℚ) : comp lam (0 : MvPolynomial σ K) =
 theorem comp_sum (lam : K →ₗ[ℚ] ℚ) {α : Type} (s : Finset α) (f : α → MvPolynomial σ K) :
     comp lam (∑ i ∈ s, f i) = ∑ i ∈ s, comp lam (f i) := by
   ext m
-  simp only [coeff_comp, coeff_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [coeff_comp, coeff_sum, map_sum]
 
 theorem comp_smul_map (lam : K →ₗ[ℚ] ℚ) (c : K) (p : MvPolynomial σ ℚ) :
     comp lam (c • map (algebraMap ℚ K) p) = lam c • p := by
@@ -93,9 +94,11 @@ theorem comp_comm (lam : K →ₗ[ℚ] ℚ) (Φ : MvPolynomial σ K →ₗ[K] Mv
     unfold comp
     refine Finset.sum_congr rfl fun m _ => ?_
     rw [smul_monomial, smul_eq_mul, mul_one]
-  rw [hc, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hc, map_sum]
   conv_lhs => rw [hP]
-  rw [map_sum, comp_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, comp_sum]
   refine Finset.sum_congr rfl fun m _ => ?_
   rw [map_smul Φ, h, comp_smul_map, map_smul Ψ]
 
@@ -252,7 +255,8 @@ private theorem fix_sum_lemma {ι : Type} [Fintype ι] [DecidableEq ι] (ρ : (�
   calc z j = ρ z j := (congrFun hz j).symm
     _ = ρ (∑ b, z b • (Pi.single b (1 : ℤ) : ι → ℤ)) j := by rw [← hz']
     _ = ∑ b, z b * ρ (Pi.single b 1) j := by
-      simp only [map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
 
 theorem haSpanSt_of (hS : SatRetrSt) (hR : RowInvUpSt) : HaSpanSt := by
   unfold HaSpanSt
@@ -282,7 +286,8 @@ theorem haSpanSt_of (hS : SatRetrSt) (hR : RowInvUpSt) : HaSpanSt := by
     have hN' : (N : ℚ) ≠ 0 := Nat.cast_ne_zero.mpr hN
     have hq : (z j : ℚ) = ∑ b, (z b : ℚ) * ((ρ (Pi.single b 1) j : ℤ) : ℚ) := by exact_mod_cast hfix
     simp only [hz] at hq
-    rw [map_sub, map_sum, sub_eq_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_sum, sub_eq_zero]
     have hl : lam (AddMonoidAlgebra.coeff P j.1) = ∑ b : Bd, lam (AddMonoidAlgebra.coeff P b.1) * ((ρ (Pi.single b 1) j : ℤ) : ℚ) := by
       apply mul_left_cancel₀ hN'
       rw [hq, Finset.mul_sum]

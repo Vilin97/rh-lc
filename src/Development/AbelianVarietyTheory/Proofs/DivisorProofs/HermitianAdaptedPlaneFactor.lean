@@ -211,7 +211,8 @@ theorem exists_decomp {B : Base F E} {n n₁ d : ℕ} {X : Spc F E n} {X₁ : Sp
       Matrix.vecMulVec (incV F H.x) (incV F a) + incM F H.ι * incM F P + Matrix.vecMulVec (incV F H.y) (incV F b) := by
     rw [← incM_one, h]
     ext i j
-    simp [incM, incV, Matrix.vecMulVec_apply, Matrix.mul_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [incM, incV, Matrix.vecMulVec_apply, Matrix.mul_apply, map_sum]
   refine ⟨incV F a ᵥ* u, incV F b ᵥ* u, incM F P * u, ?_⟩
   conv_lhs => rw [← Matrix.one_mul u, h']
   rw [Matrix.add_mul, Matrix.add_mul, Matrix.vecMulVec_mul, Matrix.vecMulVec_mul, Matrix.mul_assoc]

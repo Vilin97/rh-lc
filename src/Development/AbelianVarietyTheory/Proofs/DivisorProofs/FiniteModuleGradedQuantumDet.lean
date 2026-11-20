@@ -18,7 +18,8 @@ variable {A A' : Type} [Ring A] [Algebra ℂ A] [Ring A'] [Algebra ℂ A']
 theorem qdet_map (φ : A →ₐ[ℂ] A') {n : ℕ} (E : Fin n → Fin n → A) (u : ℂ) :
     φ (Formalism.REAL.qdet E u) = Formalism.REAL.qdet (fun a b => φ (E a b)) u := by
   unfold Formalism.REAL.qdet Formalism.REAL.qminor Formalism.REAL.Tm
-  simp only [map_sum, map_mul, map_intCast, map_list_prod, List.map_ofFn]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, map_intCast, map_list_prod, List.map_ofFn]
   refine Finset.sum_congr rfl fun σ _ => ?_
   congr 3
   split_ifs <;> simp

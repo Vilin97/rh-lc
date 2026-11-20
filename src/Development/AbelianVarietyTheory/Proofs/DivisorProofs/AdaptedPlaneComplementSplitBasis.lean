@@ -31,7 +31,8 @@ theorem mulVec_mem_splitLat {v : Pl F} (τ : E →ₐ[F] Fv F v) {m k : ℕ} (M 
     · intro y z hy hz; rw [Matrix.mulVec_add]; exact add_mem hy hz
     · intro y hy; rw [Matrix.mulVec_neg]; exact neg_mem hy
   · funext i
-    simp only [splitVec, Matrix.mulVec, dotProduct, map_sum, map_mul, Matrix.map_apply, ιR,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [splitVec, Matrix.mulVec, dotProduct, map_sum, map_mul, Matrix.map_apply, ιR,
       Algebra.TensorProduct.includeRight_apply, splitProj_tmul, one_mul]
 
 theorem sigma_sigma {σ : E →ₐ[F] E} (h : IsCMExt F E σ) (x : E) : σ (σ x) = x := by
@@ -42,7 +43,8 @@ theorem sigma_sigma {σ : E →ₐ[F] E} (h : IsCMExt F E σ) (x : E) : σ (σ x
 theorem form_swap {σ : E →ₐ[F] E} (h : IsCMExt F E σ) {k : ℕ} {J : Matrix (Fin k) (Fin k) E}
     (hJ : ∀ i j, σ (J j i) = -J i j) (x y : Fin k → E) : form σ J y x = -σ (form σ J x y) := by
   have hJ' : ∀ i j, σ (J i j) = -J j i := fun i j => hJ j i
-  simp only [form, Matrix.mulVec, dotProduct, map_sum, map_mul, sigma_sigma h, hJ', Finset.mul_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, Matrix.mulVec, dotProduct, map_sum, map_mul, sigma_sigma h, hJ', Finset.mul_sum,
     ← Finset.sum_neg_distrib]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_

@@ -131,5 +131,6 @@ theorem UpperTheory.V.CA.d_gma_det :
         rw [h0, h0, Det.lam, Det.lam, chi_zero, chi_zero]
   have h2 := (d_bc D S).1 T (∑ a, t a ⊗ₜ ((1 : S) ⊗ₜ[A] x a))
   rw [main, hrep] at h2
-  simp only [map_sum, Det.cancel_tmul, Det.repS_tmul, rS_tmul, map_one, mul_one, one_smul] at h2
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Det.cancel_tmul, Det.repS_tmul, rS_tmul, map_one, mul_one, one_smul] at h2
   exact h2.symm

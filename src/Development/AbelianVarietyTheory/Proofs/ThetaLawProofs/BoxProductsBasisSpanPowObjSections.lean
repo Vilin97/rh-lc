@@ -31,7 +31,8 @@ theorem gs_cst (p : Y ⟶ Spec (CommRingCat.of R)) (r : Z ⟶ Y) (z : Z) (U : Y.
 
 theorem gs_sum {I : Type} (s : Finset I) (r : Z ⟶ Y) (z : Z) (U : Y.Opens) (h : r z ∈ U) (a : I → Γ(Y, U)) :
     gs r z U (∑ i ∈ s, a i) = ∑ i ∈ s, gs r z U (a i) := by
-  simp only [gs_eq r z U h, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [gs_eq r z U h, map_sum]
 
 theorem exists_sec_pw (L : LB X) (t : ℤ) (a : LB.Sec (LB.LinComb L (K := PUnit) (fun _ => 𝟙 X) (fun _ => t))) :
     ∃ a' : LB.Sec (pw L t), ∀ (Z : Scheme.{0}) (r : Z ⟶ X) (z : Z) J, Good L z J →
@@ -70,7 +71,8 @@ theorem sum_mul_sum_cons {T : Type} [CommRing T] {E₁ E₂ E : R →+* T} (h₁
       ∑ I : Fin (n + 1) → Fin N, E (∑ i, c i (I 0) * q i (Fin.tail I)) * ∏ d, G d (I d) := by
   subst h₁ h₂
   rw [← (Fin.consEquiv fun _ => Fin N).sum_comp, Fintype.sum_prod_type]
-  simp only [Fin.consEquiv_apply, Fin.prod_univ_succ, Fin.cons_zero, Fin.cons_succ, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Fin.consEquiv_apply, Fin.prod_univ_succ, Fin.cons_zero, Fin.cons_succ, map_sum, map_mul]
   simp only [Finset.sum_mul_sum]
   simp only [Finset.sum_mul]
   rw [Finset.sum_comm]

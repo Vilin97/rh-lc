@@ -34,7 +34,8 @@ private theorem eq_of_pow_eq_self_of_valuation_sub_lt_one {Ω : Type} [Field Ω]
     rw [IsLocalRing.residue_eq_zero_iff, A.valuation_lt_one_iff]
     simpa using hq
   have := congrArg (IsLocalRing.residue A) hS'
-  rw [map_sum, map_one] at this
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_one] at this
   simp only [map_mul, map_pow, ← hr] at this
   rw [Finset.sum_congr rfl (fun i hi => by rw [← pow_add, Nat.add_sub_cancel' (by have := Finset.mem_range.1 hi; omega)])] at this
   rw [Finset.sum_const, Finset.card_range, nsmul_eq_mul, ← map_natCast (IsLocalRing.residue A), hq', zero_mul] at this

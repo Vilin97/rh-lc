@@ -114,7 +114,8 @@ private theorem dIn_univ_of_QL_of_isLaw {B Q : Type} [CommRing B] [CommRing Q] [
   have hchain : ∀ i, ∑ j, pderiv Q j f * map (algebraMap B Q) (M j i) =
       subst e (pderiv Q (Sum.inr i) (subst μQ f)) := by
     intro i
-    rw [_root_.GlobalTheory.PSChain.pderiv_subst_chain μQ hμQ0 f (Sum.inr i), ← coe_substAlgHom he, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [_root_.GlobalTheory.PSChain.pderiv_subst_chain μQ hμQ0 f (Sum.inr i), ← coe_substAlgHom he, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_mul, coe_substAlgHom, hρμ]
     simp only [M, μQ]

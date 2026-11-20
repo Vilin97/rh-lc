@@ -13,7 +13,8 @@ namespace GlobalTheory.ExportSeries
 
 theorem idemAt_mul_idem_add_conj {D : D7} {P Q' : Finset (Pl D.host.E)} (hP : SplitSet P) (hQ : Q' ⊆ P)
     {PP : Pl D.host.E} (hPP : PP ∈ P) (hPQ : PP ∉ Q') : idemAt PP * (idem Q' + cA D (idem Q')) = 0 := by
-  rw [mul_add, idem, map_sum, Finset.mul_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [mul_add, idem, map_sum, Finset.mul_sum, Finset.mul_sum]
   rw [Finset.sum_eq_zero fun q hq => hP.mul_eq_zero hPP (hQ hq) (fun e => hPQ (e ▸ hq)),
     Finset.sum_eq_zero fun q hq => hP.mul_conj hPP (hQ hq), add_zero]
 

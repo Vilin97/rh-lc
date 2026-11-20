@@ -485,7 +485,8 @@ theorem exists_twistGen : ∀ (X : Scheme.{0}) (Ω : Type) [Field Ω] (ξ : Spec
     rw [twist_eval]
     have e1 : β t.1 t.2 e = ∑ l, β j l e * β t.1 t.2 (b j l) := by
       conv_lhs => rw [hexp]
-      simp only [map_sum, map_smul, smul_eq_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, smul_eq_mul]
     rw [e1, Finset.mul_sum]
     refine sum_mem fun l _ => ?_
     rw [mul_left_comm]
@@ -508,7 +509,8 @@ theorem exists_twistGen : ∀ (X : Scheme.{0}) (Ω : Type) [Field Ω] (ξ : Spec
     · obtain ⟨-, hexp⟩ := frame_coords hfr (hβ j) he
       have e1 : w e = ∑ l, β j l e * w (b j l) := by
         conv_lhs => rw [hexp]
-        simp only [map_sum, map_smul, smul_eq_mul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, map_smul, smul_eq_mul]
       rw [e1, Fintype.sum_prod_type, Finset.sum_eq_single j]
       · refine Finset.sum_congr rfl fun l _ => ?_
         have e2 : φ (j, l) e / x c ^ ((d + 1) * M) = (s' : Ω) ^ M * β j l e := by

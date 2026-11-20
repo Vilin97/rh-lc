@@ -79,7 +79,8 @@ private theorem finrank_add_finrank_orth_le (U : Submodule E S.V) :
         rw [Submodule.coe_sum] at this
         simp only [Submodule.coe_smul] at this
         exact this.symm
-      rw [hxs, map_sum, LinearMap.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hxs, map_sum, LinearMap.sum_apply]
       simp [LinearMap.map_smulₛₗ, hyi]
     · intro h
       funext i
@@ -95,7 +96,8 @@ private theorem finrank_add_finrank_orth_le (U : Submodule E S.V) :
       intro y
       have h1 : f (ψ y) = 0 := hf (LinearMap.mem_range_self ψ y)
       rw [hfw] at h1
-      rw [map_sum, LinearMap.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, LinearMap.sum_apply]
       simp only [LinearMap.map_smulₛₗ, starRingEnd_apply, star_star, LinearMap.smul_apply, smul_eq_mul]
       rw [← h1]
       refine Finset.sum_congr rfl fun i _ => ?_

@@ -172,8 +172,10 @@ theorem exists_isogeny : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] 
     choose b hb using fun j => hlift (x j) ((hu x).1 hx j)
     refine (U.lat _).2 ⟨_, hnL (∑ j, θ ^ (s j : ℕ) * b j), funext fun k => ?_⟩
     have e : ((∑ j, θ ^ (s j : ℕ) * b j : 𝓞 E) : E) = ∑ j, (θ : E) ^ (s j : ℕ) * (b j : E) := by
-      simp only [RingOfIntegers.coe_eq_algebraMap, map_sum, map_mul, map_pow]
-    rw [hVe, e, GlobalTheory.IndefiniteRowSideFullHecke.DefiningCoordinates.defCoord, Pi.zero_apply, zero_mul, add_zero, map_mul, map_natCast, map_sum, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [RingOfIntegers.coe_eq_algebraMap, map_sum, map_mul, map_pow]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hVe, e, GlobalTheory.IndefiniteRowSideFullHecke.DefiningCoordinates.defCoord, Pi.zero_apply, zero_mul, add_zero, map_mul, map_natCast, map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_mul, map_pow, hb, _root_.mul_assoc]
   obtain ⟨α, hα, hαe⟩ := GlobalTheory.HolUnifHom.exists_isMonHom_of_map_lattice A' X.A _ hA' X.ab hg X.dim L' _ u U.u

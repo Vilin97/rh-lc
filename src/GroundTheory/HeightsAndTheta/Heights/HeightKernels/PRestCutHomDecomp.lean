@@ -11,9 +11,11 @@ theorem RestCutHomDecomp.proof : RestCutHomDecomp.Statement := by
   unfold RestTerms.IsPowerSumDecomposition at hF ⊢
   have h := congrArg (homogeneousComponent d) hF
   rw [homogeneousComponent_eq_self hFh] at h
-  rw [h, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h, map_sum]
   refine Finset.sum_congr rfl fun l hl => ?_
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun τ _ => ?_
   have hlN : l ≤ N := (Finset.mem_Icc.mp hl).2
   have hp : (RestTerms.blockPowerSum f N l τ).IsHomogeneous l := by

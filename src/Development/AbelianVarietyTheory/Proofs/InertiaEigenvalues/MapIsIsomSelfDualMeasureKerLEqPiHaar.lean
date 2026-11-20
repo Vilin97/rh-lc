@@ -121,7 +121,8 @@ theorem pi_selfDual [hU : Unram F E] (ψ : AddChar F ℂ) (hψ : IsStdChar ψ) (
       rw [trForm_apply] at h1
       simpa [dotProduct, Pi.single_apply, apply_ite star] using h1
     · intro h x hx
-      rw [trForm_apply, dotProduct, map_sum, addChar_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [trForm_apply, dotProduct, map_sum, addChar_sum]
       refine Finset.prod_eq_one fun i _ => ?_
       rw [Pi.star_apply]
       exact (hc (y i)).2 (h i) (star (x i)) (by rw [hU.norm_star]; exact hx i)

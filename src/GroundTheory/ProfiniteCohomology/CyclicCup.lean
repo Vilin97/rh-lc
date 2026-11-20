@@ -200,7 +200,8 @@ theorem smul_norm_mem_coboundaries₂ (χ : Additive G →+ AddCircle (1 : ℚ))
     exact_mod_cast this
   have hshift : A.ρ x (∑ h, normWeight χ h x' • A.ρ h b) =
       ∑ h, normWeight χ (x⁻¹ * h) x' • A.ρ h b := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp_rw [map_zsmul, ← Module.End.mul_apply, ← map_mul]
     exact Fintype.sum_equiv (Equiv.mulLeft x) _ _ (fun h => by simp)
   simp only [d₁₂_hom_apply]
@@ -241,7 +242,8 @@ theorem exists_sub_mem_coboundaries₂ (χ : Additive G →+ AddCircle (1 : ℚ)
       intro x
       rw [(hz h x g)]
       abel
-    rw [hadef, map_sum, Finset.sum_congr rfl (fun x _ => e x), Finset.sum_sub_distrib,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hadef, map_sum, Finset.sum_congr rfl (fun x _ => e x), Finset.sum_sub_distrib,
       Finset.sum_add_distrib,
       Fintype.sum_equiv (Equiv.mulLeft h) (fun x => z (h * x, g)) (fun x => z (x, g))
         (fun x => rfl),

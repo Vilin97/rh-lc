@@ -75,7 +75,8 @@ theorem inner_deriv {U : Type*} [NormedAddCommGroup U] [InnerProductSpace ℂ U]
     funext t
     ext x
     conv_lhs => rw [← e.sum_repr' (f t x), ← e.sum_repr' x]
-    simp only [map_sum, map_smul, inner_sum, inner_smul_right, sum_smul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, inner_sum, inner_smul_right, sum_smul,
       _root_.sum_apply, _root_.smul_apply,
       ContinuousLinearMap.smulRight_apply, innerSL_apply_apply, smul_smul]
     exact sum_congr rfl fun i _ => sum_congr rfl fun j _ => by rw [mul_comm]
@@ -146,6 +147,7 @@ theorem evZ_word (μ : Fin n → ℤ) (L : List (Matrix (Fin n) (Fin n) ℂ)) : 
       conv_lhs => rw [Matrix.matrix_eq_sum_single Z]
       simp only [Matrix.mul_sum, ← Matrix.mul_smul, Matrix.smul_single, smul_eq_mul, mul_one]
     rw [hZ]
-    simp only [actM, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, h1]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [actM, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, h1]
 
 end ReciprocityTheory.ChartRestriction.DS.Lap.LemK.TRA

@@ -31,7 +31,8 @@ def awfLin {κ : Type} [Fintype κ] (e : Module.Basis κ ℚ L) (p : (L →+* K)
 theorem awf_emb_eq {κ : Type} [Fintype κ] (e : Module.Basis κ ℚ L) (σ : L →+* K) (x : L) :
     σ x = ∑ k : κ, σ (e k) * ((e.repr x k : ℚ) : K) := by
   conv_lhs => rw [← e.sum_repr x]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [Rat.smul_def, map_mul, map_ratCast, mul_comm]
 
@@ -50,7 +51,8 @@ theorem isAlgWeightF_of_embPoly {W : Type} [AddCommGroup W] [Module K W] (ρ : R
   ext i j
   rw [awf_eval_aeval]
   refine congrArg (fun f => MvPolynomial.eval f (Q i j)) (funext fun p => ?_)
-  simp only [awfLin, awfPt, map_sum, MvPolynomial.eval_mul, MvPolynomial.eval_C, MvPolynomial.eval_X]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [awfLin, awfPt, map_sum, MvPolynomial.eval_mul, MvPolynomial.eval_C, MvPolynomial.eval_X]
   exact awf_emb_eq e p.1 _
 
 end Gen
@@ -82,7 +84,8 @@ theorem awfCf_eval (ℓ : Pol K ι n →ₗ[K] K) (y : ι × Fin n × Fin n → 
     (Q : MvPolynomial (ι × Fin n × Fin n) (MvPolynomial (ι × Fin n × Fin n) K)) :
     MvPolynomial.eval y (awfCf ℓ Q) = ℓ (MvPolynomial.map (MvPolynomial.eval y) Q) := by
   conv_rhs => rw [Q.as_sum]
-  rw [map_sum, map_sum, awfCf, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, awfCf, map_sum]
   refine Finset.sum_congr rfl fun m _ => ?_
   rw [MvPolynomial.map_monomial, MvPolynomial.eval_mul, MvPolynomial.eval_C,
     show MvPolynomial.monomial m (MvPolynomial.eval y (AddMonoidAlgebra.coeff Q m)) =

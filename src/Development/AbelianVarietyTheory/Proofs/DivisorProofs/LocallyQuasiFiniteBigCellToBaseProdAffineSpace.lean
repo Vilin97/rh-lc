@@ -90,7 +90,8 @@ theorem step_eq_cell (TF : TorFlag Xo c) (Z : Comp Xo c) (U : TF.Y.X.affineOpens
   refine initSpan_eq_of_lower (fun a b => ev z W hz (L σ a b))
     (fun a b hab => by rw [h.2.2.2.1 σ a b hab, map_zero]) (fun a => (h.2.2.2.2.1 σ a).map _) (fun a => ?_) i
   rw [vecAt_eq_sum TF Z U e v hv W k L N h z hz ex hU hk hx σ a]
-  simp only [Matrix.mul_apply, map_sum, map_mul, Finset.smul_sum, smul_smul, Finset.sum_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mul_apply, map_sum, map_mul, Finset.smul_sum, smul_smul, Finset.sum_smul]
   exact Finset.sum_comm
 
 end GlobalTheory.LogPole.CellQF

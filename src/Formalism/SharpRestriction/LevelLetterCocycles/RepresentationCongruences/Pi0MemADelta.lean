@@ -76,7 +76,8 @@ theorem pi0_mem_ADelta : W.π₀ ∈ W.AΔ := by
   intro δ hδ
   funext i
   show W.γ₀ δ W.π₀₁ = W.π₀₁
-  simp only [LocWach.π₀₁, map_add, map_sub, map_one, map_natCast, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [LocWach.π₀₁, map_add, map_sub, map_one, map_natCast, map_sum]
   congr 1
   refine Finset.sum_nbij' (δ * ·) (δ⁻¹ * ·) (fun g hg => delF_mul W hδ hg)
     (fun g hg => delF_mul W (delF_inv W hδ) hg) (fun g _ => by simp) (fun g _ => by simp) (fun g _ => ?_)

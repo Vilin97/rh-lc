@@ -119,14 +119,16 @@ theorem exists_ne_zero_of_live {P : ArithVariety n} {D : AddBlockData P} {d : ι
     field_simp
   set Q := chartMonomial c fun k ↦ (d k + D.deg k).toNat
   have hmem : ∑ j, f j * g c j - chartMonomial c 1 ^ E * Q ∈ P.ideal := by
-    rw [← P.mkF_eq_zero_iff, map_sub, map_sum, map_mul, map_pow,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← P.mkF_eq_zero_iff, map_sub, map_sum, map_mul, map_pow,
       ← mkF_chartMonomial_mul_chartPow D hg.nonneg hc, ← hsum', sub_eq_zero, Finset.mul_sum,
       Finset.mul_sum]
     refine Finset.sum_congr rfl fun j _ ↦ ?_
     rw [map_mul, ← hf j, hg.value c hc j]
     ring
   have hv := hz.2 _ hmem
-  rw [← evalHom_apply, map_sub, map_sum, map_mul, map_pow] at hv
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← evalHom_apply, map_sub, map_sum, map_mul, map_pow] at hv
   simp only [map_mul, evalHom_apply, h0, mul_zero, Finset.sum_const_zero, zero_sub, neg_eq_zero] at hv
   exact mul_ne_zero (pow_ne_zero _ (evalCone_chartMonomial_ne_zero hzc 1))
     (evalCone_chartMonomial_ne_zero hzc _) hv

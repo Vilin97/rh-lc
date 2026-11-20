@@ -38,7 +38,8 @@ theorem fA_flip {σ : E →ₐ[F] E} (hσ : ∀ e, σ (σ e) = e) {n : ℕ} {J :
     (hJ : ∀ i j, σ (J j i) = J i j) (v w : Fin n → AE F E) : fA σ J w v = cA σ (fA σ J v w) := by
   have hJ' : ∀ i k, cA σ (incM F J i k) = incM F J k i := by
     intro i k; simp [incM, GlobalTheory.ThK.UnipDom.Inverse.cA_inclR, hJ]
-  simp only [fA, dotProduct, Matrix.mulVec, map_sum, map_mul, GlobalTheory.ThK.UnipDom.Inverse.cA_cA hσ, hJ', Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [fA, dotProduct, Matrix.mulVec, map_sum, map_mul, GlobalTheory.ThK.UnipDom.Inverse.cA_cA hσ, hJ', Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun k _ => ?_
   ring
@@ -46,7 +47,8 @@ theorem fA_flip {σ : E →ₐ[F] E} (hσ : ∀ e, σ (σ e) = e) {n : ℕ} {J :
 theorem cA_incM_mulVec (σ : E →ₐ[F] E) {m n : ℕ} (N : Matrix (Fin m) (Fin n) E) (v : Fin n → AE F E) :
     (fun i => cA σ ((incM F N *ᵥ v) i)) = incM F (N.map σ) *ᵥ fun i => cA σ (v i) := by
   funext i
-  simp [incM, Matrix.mulVec, dotProduct, map_sum, map_mul, GlobalTheory.ThK.UnipDom.Inverse.cA_inclR]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [incM, Matrix.mulVec, dotProduct, map_sum, map_mul, GlobalTheory.ThK.UnipDom.Inverse.cA_inclR]
 
 theorem fA_incM_incM (σ : E →ₐ[F] E) {d b : ℕ} (J : Matrix (Fin d) (Fin d) E) (N : Matrix (Fin d) (Fin b) E)
     (β γ : Fin b → AE F E) : fA σ J (incM F N *ᵥ β) (incM F N *ᵥ γ) = fA σ (Nᵀ * J * N.map σ) β γ := by
@@ -141,7 +143,8 @@ theorem fA_betaOf (hσ : ∀ e, σ (σ e) = e) (hJ₁ : ∀ i j, σ (J₁ j i) =
     rw [incM, incM, ← Matrix.transpose_map, ← Matrix.map_mul, hT]
     exact Matrix.map_one _ (map_zero _) (map_one _)
   rw [h5, Matrix.one_mulVec, dotProduct_comm]
-  simp [dotProduct, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [dotProduct, map_sum, map_mul]
 
 end Plane
 

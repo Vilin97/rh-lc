@@ -145,7 +145,8 @@ theorem model (σ : E →ₐ[F] E) (hcm : IsCMExt F E σ) (J : Matrix (Fin 1) (F
         ∑ k, (Algebra.TensorProduct.basis (Fv F v) b).repr y k * algebraMap F (Fv F v) (b2.repr (b k) l) := by
       intro l
       conv_lhs => rw [← (Algebra.TensorProduct.basis (Fv F v) b).sum_repr y]
-      rw [map_sum, Finsupp.finset_sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Finsupp.finset_sum_apply]
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [map_smul, Finsupp.smul_apply, smul_eq_mul, Algebra.TensorProduct.basis_apply]
       congr 1

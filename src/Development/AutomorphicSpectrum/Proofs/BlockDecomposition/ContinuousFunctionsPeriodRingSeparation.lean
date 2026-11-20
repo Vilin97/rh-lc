@@ -97,7 +97,8 @@ theorem exists_of_lc [CompactSpace X] (hcompl : ∀ V, E V + E Vᶜ = 1) (hj : �
   · refine Ideal.sum_mem _ fun b hb => ?_
     obtain ⟨z, rfl⟩ := hf.range_finite.mem_toFinset.1 hb
     exact Ideal.mul_mem_left _ _ (hI z)
-  · rw [map_sum, Finset.sum_eq_single (f z)]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum, Finset.sum_eq_single (f z)]
     · rw [map_mul, h1 z _ ((hF z _).2 rfl), hj, one_mul]
     · intro b _ hb
       rw [map_mul, h0 z _ (fun h => hb ((hF z b).1 h).symm), zero_mul]

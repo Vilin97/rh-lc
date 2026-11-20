@@ -129,7 +129,8 @@ theorem mapLocL_cmp_map {T₁ T₂ : LocLat G Qp LL O} {C₁ : Coord W (baseIdOf
     show W.map F (C₁.t i x) = ∑ l, (baseIdOf hR).d (a l) • C₂.t i (e₂ l)
     rw [← hC.coord_hom_map_trace, ha, mapLocL_t_sum]
     simp only [Coord.t_smul]
-  rw [heq, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [heq, map_sum]
   simp only [mapLocL_cmp_d]
 
 theorem mapLocL_lamOf_coe {T : LocLat G Qp LL O} (C : Coord W (baseIdOf hR) T) (c : ZMod n) (ell : ℕ)
@@ -168,7 +169,8 @@ theorem mapLocL_dmap_lam (hC : CoordHom C₁ C₂ F) (Mh : MapHyp hR uZ ιZ F c)
   apply Subtype.ext
   rw [Submodule.coe_sum]
   show AlgebraTensorModule.map F.f (LinearMap.id : B →ₗ[Qp] B) ((lamOf C₁ c ell e₁ k : Dc W T₁ c) : T₁.V ⊗[Qp] B) = _
-  rw [mapLocL_lamOf_coe C₁ c ell e₁ k (he₁ k), mapLocL_map_φVB_pow,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [mapLocL_lamOf_coe C₁ c ell e₁ k (he₁ k), mapLocL_map_φVB_pow,
     mapLocL_cmp_map hC _ (e₁ k) (he₁ k) e₂ he₂ a ha, map_sum]
   refine Finset.sum_congr rfl fun l _ => ?_
   rw [map_smul, Submodule.coe_smul, mapLocL_lamOf_coe C₂ c ell e₂ l (he₂ l), hPa l]
@@ -205,9 +207,11 @@ theorem loclComm_holds (hC : CoordHom C₁ C₂ F)
     intro l
     simp [E.extL, Matrix.toLin'_apply, Matrix.mulVec, dotProduct]
   simp only [locLF]
-  rw [Mh.smul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Mh.smul, map_sum]
   congr 1
-  simp only [Mh.smul, hk, hext, map_sum, map_mul, Finset.sum_smul, mul_smul, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Mh.smul, hk, hext, map_sum, map_mul, Finset.sum_smul, mul_smul, Finset.smul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => smul_comm _ _ _
 

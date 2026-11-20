@@ -252,6 +252,7 @@ theorem chart_cover {κ : Type} {x : κ → Ω} (tie : CoordTie ℤ ξ x) {E : T
     refine TieFrame.exists_unitAt_of_sum tie.gen p _ (fun l => (a l : Ω))
       (fun l => TieFrame.chart_le_regAt tie hp (g l).1.2) (fun l => TieFrame.chart_le_regAt tie hp (a l).2) ?_
     have := congrArg (chartRing ℤ x c).val hag
-    simpa [map_sum] using this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [map_sum] using this
 
 end CoverDenseAlt.Met

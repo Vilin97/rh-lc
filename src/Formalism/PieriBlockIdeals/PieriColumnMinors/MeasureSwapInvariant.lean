@@ -20,7 +20,8 @@ theorem no_bad_tuple : NoTuple := by
     have h1 : (t0 j - tt e0 j) • v = ∑ a ∈ t', (f a * (tt a j - tt e0 j)) • a := by
       have h3 : T j v - tt e0 j • v = ∑ a ∈ insert e0 t', f a • (T j a - tt e0 j • a) := by
         rw [← hsum]
-        simp only [map_sum, map_smul, Finset.smul_sum, smul_sub, Finset.sum_sub_distrib]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, map_smul, Finset.smul_sum, smul_sub, Finset.sum_sub_distrib]
         congr 1
         apply Finset.sum_congr rfl
         intros

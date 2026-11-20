@@ -71,12 +71,14 @@ private theorem false_of_forall_sub_smul_bijective {V : Type} [AddCommGroup V] [
     have hQ : Polynomial.aeval T Q v = 0 := by
       calc Polynomial.aeval T Q v
           = ∑ j ∈ s, g j • Polynomial.aeval T (∏ l ∈ s.erase j, (Polynomial.X - Polynomial.C l)) v := by
-            rw [hQdef, map_sum, LinearMap.sum_apply]
+            set_option synthInstance.maxHeartbeats 100000 in
+              rw [hQdef, map_sum, LinearMap.sum_apply]
             refine Finset.sum_congr rfl fun j _ => ?_
             rw [map_mul, Polynomial.aeval_C, Module.End.mul_apply, Module.algebraMap_end_apply]
         _ = Polynomial.aeval T (∏ l ∈ s, (Polynomial.X - Polynomial.C l))
               (∑ j ∈ s, g j • (LinearEquiv.ofBijective (T - j • (1 : Module.End ℂ V)) (h j)).symm v) := by
-            rw [map_sum]
+            set_option synthInstance.maxHeartbeats 100000 in
+              rw [map_sum]
             refine Finset.sum_congr rfl fun j hj => ?_
             rw [map_smul, hP j hj]
         _ = 0 := by rw [hsum, map_zero]

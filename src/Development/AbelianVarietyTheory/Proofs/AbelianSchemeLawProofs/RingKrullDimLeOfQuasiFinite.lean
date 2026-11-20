@@ -44,13 +44,15 @@ theorem exists_quotient (s t : M.Sec) :
 theorem gs_sum_mul {I : Type} [Fintype I] (c : I → Γ(Y, ⊤)) {U : Y.Opens} (b : I → Γ(Y, U)) (y : Y)
     (hy : y ∈ U) :
     gs (𝟙 Y) y U (∑ i, resG Y le_top (c i) * b i) = ∑ i, gs (𝟙 Y) y ⊤ (c i) * gs (𝟙 Y) y U (b i) := by
-  rw [gs_eq _ y U hy, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [gs_eq _ y U hy, map_sum, map_sum]
   exact Finset.sum_congr rfl fun i _ => by rw [← gs_eq _ y U hy, gs_mul _ y U hy, gs_res _ y _ hy]
 
 theorem exists_sec_sum {I : Type} [Fintype I] (c : I → Γ(Y, ⊤)) (s : I → M.Sec) :
     ∃ t : M.Sec, ∀ k, t.f k = ∑ i, resG Y le_top (c i) * (s i).f k :=
   ⟨⟨fun k => ∑ i, resG Y le_top (c i) * (s i).f k, fun j j' => by
-    rw [map_sum, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum, Finset.mul_sum]
     exact Finset.sum_congr rfl fun i _ => (DVR.SecOps.secScale (c i) (s i)).compat j j'⟩, fun _ => rfl⟩
 
 theorem isAffineOpen_nonzeroLocus_sum (hM : M.IsLB) {I : Type} [Fintype I] (c : I → Γ(Y, ⊤)) (s : I → M.Sec)

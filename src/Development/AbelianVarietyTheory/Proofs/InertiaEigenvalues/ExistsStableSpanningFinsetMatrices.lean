@@ -75,7 +75,8 @@ theorem exists_stable_spanning_finset : ∀ (l : ℕ) [Fact l.Prime] (Γ : Type)
           (Finset.sum_fiberwise_of_maps_to hmaps _).symm
       _ = ∑ y ∈ t, zOm l (∑ k ∈ f'.support with (ρ k).val * b = y, f' k) • y := by
           refine Finset.sum_congr rfl fun y _ => ?_
-          rw [map_sum, Finset.sum_smul]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [map_sum, Finset.sum_smul]
           refine Finset.sum_congr rfl fun k hk => ?_
           rw [(Finset.mem_filter.mp hk).2]
 

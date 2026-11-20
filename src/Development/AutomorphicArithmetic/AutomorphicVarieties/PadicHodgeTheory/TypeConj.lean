@@ -97,14 +97,17 @@ theorem UpperTheory.V.Loc.potCrysType_equiv (K : FinExt l) {ρ : Representation 
     refine ⟨fun a => tr _ e (z a), fun a => (tr_FilD e _ h i _).2 (hz a), fun y hy => ?_⟩
     obtain ⟨y, rfl⟩ := (tr (Bdr l) e).surjective y
     refine (existsUnique_congr fun c => ?_).1 (hv y ((tr_FilD e _ h i _).1 hy))
-    rw [← tr_FilD e _ h, map_sub, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← tr_FilD e _ h, map_sub, map_sum]
     simp only [tr_smulD]
   · obtain ⟨y, rfl⟩ := (tr (Bcr l) e).surjective y
     refine (existsUnique_congr fun c => ?_).1 (hu y ((tr_Dcr e _ h' _).1 hy))
-    rw [← (tr (Bcr l) e).injective.eq_iff, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← (tr (Bcr l) e).injective.eq_iff, map_sum]
     simp only [tr_smulC]
   · apply (tr (Bcr l) e).injective
-    rw [map_sum, actC, tr_map e (h γ)]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, actC, tr_map e (h γ)]
     simp only [tr_smulC]
     exact hM b
 

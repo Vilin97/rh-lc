@@ -32,7 +32,8 @@ lemma fm_neg_right (a u : Fin n → E) : fm σ J a (-u) = - fm σ J a u := by
 
 lemma fm_skew (hσ : ∀ e, σ (σ e) = e) (hJ : ∀ i j, σ (J j i) = -J i j) (a b : Fin n → E) :
     fm σ J b a = - σ (fm σ J a b) := by
-  simp only [GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, Finset.mul_sum, map_neg]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, Finset.mul_sum, map_neg]
   rw [Finset.sum_comm, ← Finset.sum_neg_distrib]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [← Finset.sum_neg_distrib]

@@ -43,7 +43,8 @@ theorem av_fixed (ρ : Representation ℂ G V) (K K' : Subgroup G) [Fintype (K �
     (hv : K' ≤ stab ρ v) : ∀ k ∈ K, ρ k (av ρ K K' v) = av ρ K K' v := by
   intro k hk
   unfold av
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Fintype.sum_equiv (MulAction.toPerm (⟨k, hk⟩ : K)) _ _ fun q => ?_
   have h1 : ((((⟨k, hk⟩ : K) • q).out : K) : K ⧸ K'.subgroupOf K) = ((⟨k, hk⟩ * q.out : K) : K ⧸ K'.subgroupOf K) := by
     rw [QuotientGroup.out_eq', ← smul_eq_mul, MulAction.Quotient.mk_smul_out]
@@ -191,7 +192,8 @@ theorem exists_finiteDimensional {G₁ G₂ V S X J : Type} [Group G₁] [Topolo
       Submodule.mem_iSup_of_mem j (Submodule.mem_iSup_of_mem a ⟨_, mem_fixed.2 (av_fixed π _ _ le_rfl), rfl⟩)
     have h3 : ∀ k ∈ K₂ ⊓ stab ω₂ a.1, b (π k u) a.1 = b u a.1 := fun k hk => by
       rw [← eq2 k u, show ω₂ k a.1 = a.1 from hk.2]
-    rw [av, map_sum, LinearMap.sum_apply, Finset.sum_congr rfl fun q _ => h3 _ (q.out).2, Finset.sum_const,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [av, map_sum, LinearMap.sum_apply, Finset.sum_congr rfl fun q _ => h3 _ (q.out).2, Finset.sum_const,
       ← Nat.cast_smul_eq_nsmul ℂ, Finset.card_univ] at h2
     exact (Submodule.smul_mem_iff _ (Nat.cast_ne_zero.2 Fintype.card_ne_zero)).1 h2
   refine ⟨W₀, inferInstance, fun φ hφ hfix => mem_of_span ζ c _ W₀ ?_ hφ hfix⟩

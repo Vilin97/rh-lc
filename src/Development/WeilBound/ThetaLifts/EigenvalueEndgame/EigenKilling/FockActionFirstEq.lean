@@ -31,7 +31,8 @@ theorem eq_zero_of_pow {σ : Type} [Fintype σ] (f : MvPolynomial σ ℂ) :
     let c : Polynomial ℂ := ∑ m ∈ Finset.range (n + 2), Polynomial.monomial m (l (X i ^ m * lin u ^ (n + 1 - m)) * (n + 1).choose m)
     have hc : c = 0 := Polynomial.funext fun s => by
       have := h (s • Pi.single i 1 + u) (n + 1)
-      rw [map_add, map_smul, ← hx, add_pow, map_sum] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_add, map_smul, ← hx, add_pow, map_sum] at this
       rw [Polynomial.eval_zero, ← this, Polynomial.eval_finsetSum]
       refine Finset.sum_congr rfl fun m _ => ?_
       rw [Polynomial.eval_monomial, smul_pow, smul_mul_assoc, smul_mul_assoc, map_smul, ← nsmul_eq_mul' (X i ^ m * lin u ^ (n + 1 - m)), map_nsmul]
@@ -49,7 +50,8 @@ theorem der_apply (p : C → Bool) (v w : I → ℂ) (f : MvPolynomial (I × C) 
     ∑ a, ∑ b, ∑ c, (v a * w b) • (if p c then X (a, c) * pderiv (b, c) f else -(X (b, c) * pderiv (a, c) f)) := by
   have hs : ∀ {ι : Type} [Fintype ι] (D : ι → Derivation ℂ (MvPolynomial (I × C) ℂ) (MvPolynomial (I × C) ℂ)),
       (∑ i, D i) f = ∑ i, D i f := fun D => by
-    rw [← Finset.sum_apply]; exact congrFun (map_sum Derivation.coeFnAddMonoidHom D _) f
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Finset.sum_apply]; exact congrFun (map_sum Derivation.coeFnAddMonoidHom D _) f
   simp only [der, hs, Derivation.smul_apply]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => Finset.sum_congr rfl fun c _ => ?_
   split_ifs <;> simp
@@ -118,7 +120,8 @@ theorem core_pos (p : C → Bool) (S : I → Prop) (k : ℝ) (hk : 0 < k) (hc : 
     rw [e, map_smul, smul_eq_mul] at this
     have h0 : (k : ℂ) + j ≠ 0 := by exact_mod_cast (by positivity : (0 : ℝ) < k + j).ne'
     exact (mul_eq_zero.1 (show ((k : ℂ) + j) * _ = 0 by linear_combination -this)).resolve_left h0
-  rw [← sub_add_cancel (lin u) (lin u'), add_pow, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← sub_add_cancel (lin u) (lin u'), add_pow, map_sum]
   exact Finset.sum_eq_zero fun m _ => by rw [← nsmul_eq_mul', map_nsmul, key, smul_zero]
 
 theorem core_neg (p : C → Bool) (S : I → Prop) (k : ℝ) (hk : k < 0) (hc : Nat.card {c // !p c} < Nat.card {a // S a})

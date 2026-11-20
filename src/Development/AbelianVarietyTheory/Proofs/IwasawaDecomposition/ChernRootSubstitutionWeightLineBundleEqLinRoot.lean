@@ -47,7 +47,8 @@ theorem chernRootSubstitution_weightLineBundle_eq_linRoot (H : Host E) (Dw : Dat
     flagMap Dw (∑ x : GlobalTheory.GoodMetric.Root Dw.mult,
         MvPolynomial.C (-(GlobalTheory.AllWt.exOf Dw la 0 (some x) : ℝ)) * MvPolynomial.X x) =
       Formalism.DegreeFormula.linRoot (fun τ i => (la τ i : ℝ)) := by
-  simp only [flagMap, map_sum, map_mul, aeval_C, aeval_X, MvPolynomial.algebraMap_eq]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [flagMap, map_sum, map_mul, aeval_C, aeval_X, MvPolynomial.algebraMap_eq]
   rw [Fintype.sum_sigma, ← Fintype.sum_subtype_add_sum_subtype (fun τ : E →+* ℂ => τ (H.rt : E) = H.rt0)]
   let e : GlobalTheory.AllWt.Psi H ≃ {τ : E →+* ℂ // ¬ τ (H.rt : E) = H.rt0} :=
     { toFun := fun τ => ⟨conjEmb τ.1, GlobalTheory.AllWt.conj_not_mem τ⟩

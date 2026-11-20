@@ -245,7 +245,8 @@ theorem toTh_surjective (hζ : unitS s b.ζ ^ k = 1) :
   have comb : ∀ c : Ix P.g k, Out.linComb pt (fun i => (c i).val) = lev ((labEquiv P.g k).symm c) := fun c => by
     have : c = ∑ i, (c i).val • Pi.single i 1 := by
       funext j; simp [-ZMod.natCast_val, Finset.sum_apply, Pi.single_apply, ZMod.natCast_zmod_val]
-    conv_rhs => rw [this, map_sum, hℓ, ofAdd_sum, map_prod]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_rhs => rw [this, map_sum, hℓ, ofAdd_sum, map_prod]
     rw [linComb_eq]
     exact Finset.prod_congr rfl fun i _ => by rw [map_nsmul, ofAdd_nsmul, map_pow]; rfl
   refine ⟨{ A := P.A, ab := P.isAb, dim := P.smoothDim, L := P.L, isLB := P.isLB, rigid := P.rigid, sym := P.sym

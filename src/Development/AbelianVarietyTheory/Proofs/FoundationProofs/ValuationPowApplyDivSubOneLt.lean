@@ -56,7 +56,8 @@ theorem _root_.GlobalTheory.mem_of_wild_of_pow_mem_open_normal :
     have e1 := Finset.sum_range_succ (fun i => (σ ^ i) z) n
     have e2 := Finset.sum_range_succ' (fun i => (σ ^ i) z) n
     simp only [hz, pow_zero, AlgEquiv.one_apply] at e1 e2
-    rw [hsdef, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hsdef, map_sum]
     have e3 : ∑ i ∈ Finset.range n, σ ((σ ^ i) z) = ∑ i ∈ Finset.range n, (σ ^ (i + 1)) z :=
       Finset.sum_congr rfl fun i _ => by rw [pow_succ', AlgEquiv.mul_apply]
     rw [e3]

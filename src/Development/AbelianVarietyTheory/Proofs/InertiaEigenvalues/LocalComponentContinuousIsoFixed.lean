@@ -79,7 +79,8 @@ theorem exists_eigen_local_sum : ∀ (L : Type) [Field L] [NumberField L] [IsCMF
       intro k hk
       obtain ⟨x, hx, e, hfx⟩ := hrt k hk
       subst e
-      rw [Finset.sum_congr rfl fun j _ => hint j x hx (y j.1), ← map_sum, hsum, hfx])
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Finset.sum_congr rfl fun j _ => hint j x hx (y j.1), ← map_sum, hsum, hfx])
   rw [hsum] at hus
   by_contra hall
   push_neg at hall
@@ -92,12 +93,14 @@ theorem exists_eigen_local_sum : ∀ (L : Type) [Field L] [NumberField L] [IsCMF
       = ∑ m, z m • ∑ j : F.support, (j.1.1 : σ.V →ₗ[ℂ] (GAf L n → a.W))
           (σ.ρ (Matrix.GeneralLinearGroup.map c.toRingHom (s.loc n (xs m))) (u j)) := by
         refine Finset.sum_congr rfl fun m _ => ?_
-        rw [← hus, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [← hus, map_sum]
         congr 1
         exact Finset.sum_congr rfl fun j _ => (hint j (xs m) (hxs m) (u j)).symm
     _ = ∑ j : F.support, (j.1.1 : σ.V →ₗ[ℂ] (GAf L n → a.W))
           (∑ m, z m • σ.ρ (Matrix.GeneralLinearGroup.map c.toRingHom (s.loc n (xs m))) (u j)) := by
-        simp only [map_sum, map_smul, Finset.smul_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, map_smul, Finset.smul_sum]
         exact Finset.sum_comm
     _ = 0 := Finset.sum_eq_zero fun j _ => by rw [key j, map_zero]
 

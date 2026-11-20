@@ -54,7 +54,8 @@ theorem sum_unip_rho {t : ℕ} (bb : ι → Fin t) (hs : Function.Surjective bb)
   have h1 : ∑ v ∈ Y, τ.ρ (y * v) = ∑ v ∈ Y, τ.ρ v := by
     conv_rhs => rw [← himg]
     rw [Finset.sum_image (fun a _ b _ h => mul_right_injective y h)]
-  rw [LinearMap.sum_apply, map_sum, ← LinearMap.sum_apply, ← h1, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [LinearMap.sum_apply, map_sum, ← LinearMap.sum_apply, ← h1, LinearMap.sum_apply]
   refine Finset.sum_congr rfl fun v _ => ?_
   rw [map_mul]
   rfl
@@ -65,7 +66,8 @@ theorem sum_char {t : ℕ} (bb : ι → Fin t) (hs : Function.Surjective bb) (ht
     (τ : FDRep ℂ (GL ι K)) (hτ : IsCuspidal K τ) (g : GL ι K) :
     ∑ v ∈ Finset.univ.filter (fun v : GL ι K => v ∈ unip K bb), τ.character (g * v) = 0 := by
   have h := congrArg (fun P => LinearMap.trace ℂ τ (τ.ρ g * P)) (sum_unip_rho bb hs ht τ hτ)
-  simp only [mul_zero, map_zero, Finset.mul_sum, map_sum] at h
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [mul_zero, map_zero, Finset.mul_sum, map_sum] at h
   rw [← h]
   refine Finset.sum_congr rfl fun v _ => ?_
   rw [FDRep.character, map_mul]

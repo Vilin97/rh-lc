@@ -49,7 +49,8 @@ theorem ph_coefGe (Dt : SignedChainData p O r J) {R : MvPolynomial (ML J Dt.nL r
 theorem ph_mem_pol (Dt : SignedChainData p O r J) (F : MvPolynomial (ML J Dt.nL r × Fin r) (KK O))
     (h : ∀ mo ∈ F.support, Dt.ph (monomial mo 1) ∈ Pol (KK O) r Dt.d) : Dt.ph F ∈ Pol (KK O) r Dt.d := by
   have hF : Dt.ph F = Dt.ph (∑ mo ∈ F.support, monomial mo (F.coeff mo)) := by rw [← F.as_sum]
-  rw [hF, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hF, map_sum]
   refine Submodule.sum_mem _ fun mo hmo => ?_
   have : (monomial mo (F.coeff mo) : MvPolynomial (ML J Dt.nL r × Fin r) (KK O)) = F.coeff mo • monomial mo 1 := by
     rw [smul_monomial, smul_eq_mul, mul_one]

@@ -42,12 +42,14 @@ private theorem fin_quot {R κ G : Type} [CommRing R] [Field κ] [Group G] (I : 
     refine Submodule.smul_mem _ _ ?_
     obtain ⟨c, hc⟩ := hs (MonoidAlgebra.single g 1)
     have h1 := span_map_mem (MonoidAlgebra.mapRingHom G ψ) I _ hc
-    rw [map_sub, map_sum] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_sum] at h1
     simp only [MonoidAlgebra.mapRingHom_single, map_one] at h1
     have h2 : π (MonoidAlgebra.single g 1) = π (∑ g ∈ s, MonoidAlgebra.single g (ψ (c g))) := by
       show J.ringCon.mk' _ = J.ringCon.mk' _
       exact J.ringCon.eq.2 ((TwoSidedIdeal.rel_iff J _ _).2 h1)
-    rw [h2, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h2, map_sum]
     refine Submodule.sum_mem _ fun a ha => ?_
     rw [key]
     refine Submodule.smul_mem _ _ (Submodule.subset_span ?_)

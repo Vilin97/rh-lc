@@ -44,7 +44,8 @@ theorem norm_sub_le (e : L → G) (he0 : e 0 = 1) (he : ∀ (Z : L) (s t : ℝ),
     set F' := fderiv ℝ (fun X : L => φ (g * e (t • Z) * e X)) 0 with hF'
     have hZ : F' Z = ∑ i, b.repr Z i • F' (b i) := by
       have : F' Z = F' (∑ i, b.repr Z i • b i) := by rw [b.sum_repr]
-      rw [this, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [this, map_sum]
       simp only [map_smul]
     rw [hZ, Finset.mul_sum]
     refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun i _ => ?_)

@@ -59,7 +59,8 @@ private theorem sum4_lemma {M : Type} [AddCommMonoid M] (f : σ → σ → σ �
 
 theorem so_comm (c1 c2 : σ → σ → k) (P : MvPolynomial σ k) :
     secondOrder k c1 (secondOrder k c2 P) = secondOrder k c2 (secondOrder k c1 P) := by
-  simp only [so_def, map_sum, Finset.mul_sum, Derivation.leibniz, smul_eq_mul, pderiv_C, mul_zero,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [so_def, map_sum, Finset.mul_sum, Derivation.leibniz, smul_eq_mul, pderiv_C, mul_zero,
     add_zero]
   rw [sum4_lemma]
   refine Finset.sum_congr rfl fun m _ => Finset.sum_congr rfl fun m' _ =>
@@ -71,7 +72,8 @@ theorem totalDegree_pderiv_le (i : σ) (Q : MvPolynomial σ k) :
     (pderiv i Q).totalDegree ≤ Q.totalDegree - 1 := by
   classical
   conv_lhs => rw [Q.as_sum]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine (MvPolynomial.totalDegree_finsetSum _ _).trans (Finset.sup_le fun s hs => ?_)
   rw [pderiv_monomial]
   by_cases h0 : s i = 0
@@ -186,7 +188,8 @@ theorem so_colB (c : ι → ι → k) (b : Fin n) (Q : MvPolynomial ι k) (R : M
       rw [hd]
     · simp
   rw [so_def, so_def]
-  simp only [key, map_sum, Finset.sum_mul, map_mul, MvPolynomial.rename_C]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [key, map_sum, Finset.sum_mul, map_mul, MvPolynomial.rename_C]
   rw [Fintype.sum_prod_type]
   refine Finset.sum_congr rfl fun l _ => ?_
   rw [Finset.sum_eq_single b]

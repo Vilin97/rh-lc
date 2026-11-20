@@ -80,7 +80,8 @@ theorem adForm_eOp (hU : R.LUnif) (i : Fin D.R.m) (x : Fin (R.nW i) → D.what�
     adForm R i ((R.FW i).eOp (fun g => (idemOf A.X).coeff g) x) =
       Mult.postOn _ (R.eWf i (sg0 D A)) (adForm R i x) := by
   unfold adForm
-  rw [Arith.FormsL.eOp_apply, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Arith.FormsL.eOp_apply, map_sum, map_sum]
   simp only [map_smulₛₗ, RingHom.id_apply, (hU i (sg0 D A)).2.2, smul_smul]
   have e : ∀ g, (sg0 D A) ((idemOf A.X).coeff g * (((R.FW i).chi g)⁻¹ : D.what₂.LLˣ)) *
       (sg0 D A) (((R.FW i).chi g : D.what₂.LLˣ) : D.what₂.LL) = RealDat.eC (A := A) (sg0 D A) g := fun g => by

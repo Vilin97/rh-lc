@@ -144,7 +144,8 @@ theorem assoc_sub {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [IsDomain O] 
         refine Ideal.mem_of_dvd _ (dvd_ev_sub ψ w) ?_
         rw [hψ]
         exact Ideal.mem_of_dvd _ (by simpa using sub_dvd_pow_sub_pow ζ 1 c.val) hm
-      rw [map_mul, h1, map_pow, map_pow, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_mul, h1, map_pow, map_pow, map_sum]
       simp [hζ]
   obtain ⟨y, hy, hy2⟩ := key b φ hφ
   obtain ⟨y', hy', hy2'⟩ := key b' φ' hφ'

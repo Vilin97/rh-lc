@@ -17,7 +17,8 @@ variable {F : Type} [Field F] [NumberField F] {κ ι : Type} [Fintype κ] [Finty
 private theorem hom_mulVec {R S : Type} [CommRing R] [CommRing S] (q : R →+* S) (M : Matrix κ ι R) (x : ι → R) :
     (fun k => q ((M *ᵥ x) k)) = M.map q *ᵥ fun i => q (x i) := by
   funext k
-  simp [Matrix.mulVec, dotProduct, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Matrix.mulVec, dotProduct, map_sum]
 
 private theorem left_inv {R : Type} [CommRing R] (a : F →+* R) (M : Matrix κ ι F) (N : Matrix ι κ F) (h : N * M = 1)
     (x : ι → R) : N.map a *ᵥ (M.map a *ᵥ x) = x := by
@@ -81,7 +82,8 @@ private theorem schr_zero_eq (ψ : AddChar (AF F) ℂ) (u : ι → (κ → F) ×
   congr 3
   · simp only [Prod.fst_sum, Prod.snd_sum, Prod.smul_fst, Prod.smul_snd, sum_dotProduct, dotProduct_sum,
       smul_dotProduct, dotProduct_smul, smul_eq_mul]
-    simp only [Matrix.mulVec, dotProduct, Matrix.of_apply, map_sum, map_mul, Finset.mul_sum, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, dotProduct, Matrix.of_apply, map_sum, map_mul, Finset.mul_sum, Finset.sum_mul]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun k _ => ?_
     ring

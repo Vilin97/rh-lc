@@ -37,7 +37,8 @@ theorem GlobalTheory.GoodEtale.galMap_injective_of_flat : ∀ (A R C O : Type) [
       simp only [Φ, GlobalTheory.GoodEtale.galMap_tmul, L, LinearMap.lTensor_tmul, LinearMap.mulLeft_apply]
       have h2 : ∀ i, (∑ g, σ (act g (y i)) * (o * σ (act g c))) = T (y i * c) • o := by
         intro i
-        rw [Algebra.smul_def, ← σ.commutes, hT, map_sum, Finset.sum_mul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [Algebra.smul_def, ← σ.commutes, hT, map_sum, Finset.sum_mul]
         refine Finset.sum_congr rfl fun g _ => ?_
         rw [map_mul, map_mul]; ring
       simp_rw [h2, ← key, TensorProduct.tmul_sum, TensorProduct.smul_tmul]

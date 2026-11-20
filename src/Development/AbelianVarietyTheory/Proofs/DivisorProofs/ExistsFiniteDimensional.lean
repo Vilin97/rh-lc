@@ -33,7 +33,8 @@ def stab {V : Type} [AddCommGroup V] [Module ℂ V] (ρ : Representation ℂ G V
 theorem IsAvg.fix {V : Type} [AddCommGroup V] [Module ℂ V] (ρ : Representation ℂ G V) (v : V) {K : Subgroup G}
     {t : Finset G} (h : IsAvg K (stab ρ v) t) : ∀ k ∈ K, ρ k (∑ g ∈ t, ρ g v) = ∑ g ∈ t, ρ g v := by
   intro k hk
-  rw [map_sum, ← h.2.2 V (fun g => ρ g v) (fun g k hk => by
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, ← h.2.2 V (fun g => ρ g v) (fun g k hk => by
     rw [map_mul, Module.End.mul_apply, show ρ k v = v from hk]) k hk]
   simp only [map_mul, Module.End.mul_apply]
 
@@ -171,7 +172,8 @@ theorem isAdmissible_orb {V U : Type} [AddCommGroup V] [Module ℂ V] [AddCommGr
       rintro _ ⟨T, h, v, rfl⟩
       refine ⟨stab π v, hπ.1 v, fun t ht => ?_⟩
       refine Submodule.mem_iSup_of_mem ⟨T, h⟩ ⟨∑ g ∈ t, π g v, (mem_fixed _ _ _).2 (ht.fix π v), ?_⟩
-      simp only [map_sum, hTv T h]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, hTv T h]
     let L : fixed (sub ρ (orb ρ w) (orb_stable ρ w)) K →ₗ[ℂ] W :=
       (((orb ρ w).subtype.comp (Submodule.subtype _))).codRestrict W fun x =>
         hW _ (hle x.1.2) fun k hk => congrArg Subtype.val ((mem_fixed _ _ _).1 x.2 k hk)
@@ -208,12 +210,14 @@ theorem exists_finiteDimensional {G₂ : Type} [Group G₂] [TopologicalSpace G�
     have e : ∀ g ∈ t, b (π g u) a = b u a := fun g hg => by
       conv_lhs => rw [← show ω₂ g a = a from (ht.2.1 g hg).1]
       exact eq2 g u a
-    rw [map_sum, LinearMap.sum_apply, Finset.sum_congr rfl e, Finset.sum_const, ← Nat.cast_smul_eq_nsmul ℂ] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, LinearMap.sum_apply, Finset.sum_congr rfl e, Finset.sum_const, ← Nat.cast_smul_eq_nsmul ℂ] at h
     exact (W.smul_mem_iff ht.card_ne).1 h
   refine ⟨W, inferInstance, mem_of_avg ζ hK _ W ?_⟩
   rintro _ ⟨j, u, s, hs, rfl⟩
   refine ⟨stab ω₁ s, sm1 j s hs, fun t ht => ?_⟩
-  simp only [eq1, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [eq1, ← map_sum]
   have h := hfg j _ (sum_mem fun g _ => h1 j g s hs) (ht.fix ω₁ s)
   generalize ∑ g ∈ t, ω₁ g s = y at h
   induction h using Submodule.span_induction with

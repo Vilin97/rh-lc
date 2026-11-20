@@ -35,7 +35,8 @@ theorem phiC_nonneg (X : WeightAlgebra.PJ D B P j) (la : HeightOneSpectrum (𝓞
             ∑ i, ∑ k, ((b.repr a i : ℤ) : ℝ) * ((b.repr a k : ℤ) : ℝ) *
               (P.loc X.dat (WeightAlgebra.resCh la)).be (X.pt66 la y) (b i) (b k) := by
           conv_lhs => rw [← b.sum_repr a]
-          simp only [map_sum, map_zsmul, LinearMap.sum_apply, LinearMap.smul_apply, zsmul_eq_mul, Finset.mul_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            simp only [map_sum, map_zsmul, LinearMap.sum_apply, LinearMap.smul_apply, zsmul_eq_mul, Finset.mul_sum]
           rw [Finset.sum_comm]
           exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun k _ => by ring
         rw [h2]; exact h1.le

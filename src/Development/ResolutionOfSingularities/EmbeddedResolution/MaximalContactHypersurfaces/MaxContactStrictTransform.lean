@@ -378,7 +378,8 @@ theorem isMaxContactHypersurfaceAt_strictTransform_of_mem_support (k : Type u) [
     intro i hi
     by_cases hij : i = j
     · subst hij
-      rw [Function.update_self, hcj, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Function.update_self, hcj, map_sum]
       exact Finset.sum_congr rfl (fun t _ => (map_mul _ _ _).symm)
     · rw [Function.update_of_ne hij, hcne i hij]
   have hHV : restrictIdeal H V = cV.coordIdeal {j} := by

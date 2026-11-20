@@ -103,6 +103,7 @@ theorem nabVal_columns_congr : ∀ (R : Type) [CommRing R] (d : ℕ) (O : Type) 
     exact Finset.prod_congr rfl fun b _ => Ideal.Quotient.eq.2 (hs mo b)
   · rw [add_sub_cancel]
     simp only [he]
-    simp only [map_sum, map_mul, map_prod]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, map_prod]
 
 end GlobalTheory

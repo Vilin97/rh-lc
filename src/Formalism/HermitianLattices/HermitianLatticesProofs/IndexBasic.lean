@@ -84,7 +84,8 @@ theorem indexBasic_finLen [IsNoetherianRing R] [Ring.KrullDimLE 1 R] (p : Ideal 
     obtain ⟨c, hc⟩ := (Submodule.mem_span_range_iff_exists_fun R).mp hx
     refine ⟨fun i => Submodule.Quotient.mk (c i), ?_⟩
     have hx' : x = ∑ i, c i • (⟨g i, hgX i⟩ : ↥X) := Subtype.ext (by simp [hc])
-    rw [hx', map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hx', map_sum]
     simp only [F, m]
     rw [LinearMap.sum_apply]
     refine Finset.sum_congr rfl fun i _ => ?_
@@ -257,7 +258,8 @@ theorem indexBasic_dual_le_fg {R K V : Type*} [CommRing R] [Field K] [StarRing K
   have hψ : ∀ y, ψ y = φ y := fun y => LinearEquiv.ofBijective_apply φ y
   have hx' : x = ∑ j, (algebraMap R K (r j)) • ψ.symm (Pi.single j 1) := by
     apply ψ.injective
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [map_smul, LinearEquiv.apply_symm_apply]
     ext i
     rw [hψ]

@@ -53,13 +53,16 @@ theorem ext_corr [Module.Finite R M] [Module.Projective R M] (hf : Function.Bije
     refine ext_bc hf fun c ↦ ?_
     have hc : c = ∑ i, s c i • p (Pi.single i 1) := by
       conv_lhs => rw [← LinearMap.id_apply (R := R) c, ← hps, LinearMap.comp_apply, pi_eq_sum_univ' (s c)]
-      simp only [map_sum, map_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul]
     conv_lhs => rw [hc]
-    simp only [map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, hl,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, hl,
       LinearMap.comp_apply, LinearMap.proj_apply, smul_eq_mul, mul_comm]
     simp
   rw [e]
-  simp only [map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul]
   exact Finset.sum_congr rfl fun i _ ↦ by rw [h _ _ (hl i)]
 
 theorem subsingleton_coker [Module.Finite R M] [Module.Projective R M]

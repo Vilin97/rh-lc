@@ -465,7 +465,8 @@ theorem gelfVal_two_eq (n : ℕ) (χ : Fin n → ℂ) :
 theorem skew_term {V : Type} [NormedAddCommGroup V] [InnerProductSpace ℂ V] {ι : Type} [Fintype ι] [DecidableEq ι]
     (P Q : Module.End ℂ V) (M N : Matrix ι ι ℂ) (hP : ∀ x y : V, ⟪P x, y⟫_ℂ = -⟪x, Q y⟫_ℂ) (hN : Mᴴ = N) (x y : ι → V) :
     ∑ i, ⟪(lft ι P * rgt V M) x i, y i⟫_ℂ = -∑ i, ⟪x i, (lft ι Q * rgt V N) y i⟫_ℂ := by
-  simp only [Module.End.mul_apply, lft_apply, rgt_apply, hP, map_sum, map_smul, sum_inner, inner_sum, inner_smul_left,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Module.End.mul_apply, lft_apply, rgt_apply, hP, map_sum, map_smul, sum_inner, inner_sum, inner_smul_left,
     inner_smul_right, mul_neg, Finset.sum_neg_distrib, neg_inj]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
@@ -690,12 +691,14 @@ theorem dirac_ineq : ∀ {n : ℕ} (lam : Fin n → ℤ) (V : Type) [NormedAddCo
     have h1 := congrArg L (cas_p_add_k E1 E2)
     simp only [two_mul] at h1
     rw [← h1]
-    simp [Formalism.REAL.Cas, map_add, map_sum, map_mul, hpdef, hkdef, pF, kF]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Formalism.REAL.Cas, map_add, map_sum, map_mul, hpdef, hkdef, pF, kF]
   have hCasS : Formalism.REAL.Cas s = (((n : ℂ) ^ 3 - n) / 4) • (1 : Module.End ℂ (ι → V)) := by
     have h1 := congrArg Rr (spinM_cas c hcl)
     simp only [map_smul, map_one] at h1
     rw [← h1]
-    simp [Formalism.REAL.Cas, map_sum, map_mul, hsdef]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Formalism.REAL.Cas, map_sum, map_mul, hsdef]
   have hTot : D * D + Formalism.REAL.Cas (yF (kF E1 E2) c) =
       L (Formalism.REAL.Cas E1 + Formalism.REAL.Cas E1 + (Formalism.REAL.Cas E2 + Formalism.REAL.Cas E2)) +
         (((n : ℂ) ^ 3 - n) / 4) • (1 : Module.End ℂ (ι → V)) := by

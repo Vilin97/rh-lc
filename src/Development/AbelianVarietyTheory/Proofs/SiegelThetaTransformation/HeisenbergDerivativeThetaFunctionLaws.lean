@@ -38,7 +38,8 @@ theorem EFR_conj (C : Ctx S T) (x y : RW T S) :
       ∑ k, ∑ a, conj (x τ a k) * ∑ b, conj (tauE D τ (T.gram b a)) * y τ b k =
       conj (-(tauE D τ D.host.xi0 *
         ∑ k, ∑ b, conj (y τ b k) * ∑ a, tauE D τ (T.gram b a) * x τ a k)) := by
-    simp only [map_neg, map_mul, map_sum, RCLike.conj_conj, neg_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_neg, map_mul, map_sum, RCLike.conj_conj, neg_mul]
     congr 2
     refine Finset.sum_congr rfl fun k _ => ?_
     simp_rw [Finset.mul_sum]

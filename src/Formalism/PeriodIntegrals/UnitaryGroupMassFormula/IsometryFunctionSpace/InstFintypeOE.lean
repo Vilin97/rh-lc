@@ -116,7 +116,8 @@ theorem AOp_hv {Lt T : Type} [Fintype Lt] [DecidableEq Lt] [Fintype T] (tp : Lt 
     (nu : Lt → YoungDiagram) (s : T → ℂ) (Θ : VC T N N' → ℂ) (x : Lt → Fin N → ℕ → ℂ) :
     AOp tp nu s Θ (hvC N nu x) = fun I => linW (wTh Θ) (minY N' nu I (yfr tp s x)) := by
   funext I
-  rw [AOp_eq, ← key_id, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [AOp_eq, ← key_id, map_sum]
   refine Finset.sum_congr rfl (fun J _ => ?_)
   rw [applyAt0_eq, mul_comm (PIJ tp nu s I J), ← MvPolynomial.smul_eq_C_mul, map_smul,
     smul_eq_mul, mul_comm]
@@ -139,14 +140,16 @@ theorem mem_Vnu_poly {Lt σ : Type} [Fintype Lt] [DecidableEq Lt] (N : ℕ) (nu 
       Submodule.subset_span ⟨_, rfl⟩
     have h0 := hf _ hv
     rw [LinearMap.pi_apply_eq_sum_univ f] at h0
-    rw [map_sum, map_zero, ← h0]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero, ← h0]
     refine Finset.sum_congr rfl (fun I _ => ?_)
     simp only [MvPolynomial.smul_eval, smul_eq_mul]
     rw [mul_comm]
     congr 1
     exact minY_map (eval p) N nu I y
   have := congrArg L hQ
-  rw [map_sum, map_zero] at this
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_zero] at this
   refine Eq.trans (Finset.sum_congr rfl (fun I _ => ?_)) this
   simp only [map_smul, smul_eq_mul, he]
   ring

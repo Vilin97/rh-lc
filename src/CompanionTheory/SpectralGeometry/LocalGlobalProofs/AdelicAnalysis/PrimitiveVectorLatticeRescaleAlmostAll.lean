@@ -428,7 +428,8 @@ theorem change_basis {d d' : ℕ} (b : Module.Basis (Fin d) F E) (b' : Module.Ba
         (Algebra.TensorProduct.basis (Fv F v) b').repr
           ((Algebra.TensorProduct.basis (Fv F v) b) j) k := by
     conv_lhs => rw [← (Algebra.TensorProduct.basis (Fv F v) b).sum_repr x]
-    simp [map_sum, Finsupp.finsetSum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, Finsupp.finsetSum_apply]
   rw [key]
   refine sum_mem fun j _ => mul_mem (hx j) ?_
   have e : (Algebra.TensorProduct.basis (Fv F v) b) j = inclR (Fv F v) (b j) := by

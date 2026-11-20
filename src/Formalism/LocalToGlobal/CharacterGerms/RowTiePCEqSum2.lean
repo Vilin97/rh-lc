@@ -34,7 +34,8 @@ theorem hasSubst_unit {τ : Type} {T : MvPowerSeries τ C} (hT : MvPowerSeries.c
 theorem subst_lin {σ τ : Type} {a : σ → MvPowerSeries τ C} (ha : MvPowerSeries.HasSubst a) {ι : Type}
     (s : Finset ι) (r : ι → C) (F : ι → MvPowerSeries σ C) :
     MvPowerSeries.subst a (∑ i ∈ s, r i • F i) = ∑ i ∈ s, r i • MvPowerSeries.subst a (F i) := by
-  rw [← MvPowerSeries.coe_substAlgHom ha, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← MvPowerSeries.coe_substAlgHom ha, map_sum]
   refine Finset.sum_congr rfl (fun i _ => ?_)
   first
   | exact map_smul _ _ _
@@ -48,7 +49,8 @@ theorem coeff_subst_tyS {τ : Type} [Finite τ] {l : ℕ} (hl : 2 ≤ l) {T : Mv
   set P : PowerSeries C := ∑ s ∈ Finset.range N, a s • PowerSeries.X ^ (l ^ s) with hP
   have hPc : ∀ m < l ^ N, PowerSeries.coeff m (tyS l a) = PowerSeries.coeff m P := by
     intro m hm
-    rw [hP, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hP, map_sum]
     simp only [PowerSeries.coeff_smul, PowerSeries.coeff_X_pow]
     by_cases h : ∃ s', l ^ s' = m
     · obtain ⟨s', rfl⟩ := h
@@ -76,7 +78,8 @@ theorem coeff_subst_tyS {τ : Type} [Finite τ] {l : ℕ} (hl : 2 ≤ l) {T : Mv
     exact hPc _ (lt_of_lt_of_le he (Nat.lt_pow_self (by omega)).le)
   have h1 := Formalism.G.LogCR.Agree.subst (a := fun _ : Unit => T) (a' := fun _ : Unit => T) (fun _ => hT) (fun _ => hT) hAg
     (fun _ _ _ => rfl) μ (by omega)
-  rw [h1, hP, ← MvPowerSeries.coe_substAlgHom (hasSubst_unit hT), map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h1, hP, ← MvPowerSeries.coe_substAlgHom (hasSubst_unit hT), map_sum, map_sum]
   refine Finset.sum_congr rfl fun s _ => ?_
   rw [map_smul, map_pow, MvPowerSeries.coe_substAlgHom]
   rw [show (PowerSeries.X : PowerSeries C) = (MvPowerSeries.X () : MvPowerSeries Unit C) from rfl,
@@ -206,7 +209,8 @@ theorem cEqSum_holds : CEqSumSt := by
       MvPowerSeries.X x := by
     intro x
     ext μ
-    rw [map_sum, MvPowerSeries.coeff_X]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, MvPowerSeries.coeff_X]
     simp only [hc]
     rw [Finset.sum_comm]
     exact ht.2 x μ
@@ -214,7 +218,8 @@ theorem cEqSum_holds : CEqSumSt := by
       -S.ze t q := by
     intro q
     ext μ
-    rw [map_sum, map_neg]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_neg]
     simp only [hc]
     rw [Finset.sum_comm]
     show _ = -(-(∑ s ∈ Finset.Icc 1 μ.degree, ∑ c : I g, S.be c s q * MvPowerSeries.coeff μ (t c ^ (V.l ^ s))))
@@ -256,7 +261,8 @@ theorem cEqSum_holds : CEqSumSt := by
   have hpush : ∀ f : MvPowerSeries (Fin dd) C, MvPowerSeries.subst t (∑ c, MvPowerSeries.subst (γt c) f) =
       ∑ c, MvPowerSeries.subst (fun _ : Unit => t c) (alongCv (γ c) f) := by
     intro f
-    rw [← MvPowerSeries.coe_substAlgHom htS, map_sum, MvPowerSeries.coe_substAlgHom]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← MvPowerSeries.coe_substAlgHom htS, map_sum, MvPowerSeries.coe_substAlgHom]
     refine Finset.sum_congr rfl fun c _ => ?_
     rw [key1, key2]
   have hlgZ : ∀ i, MvPowerSeries.subst (fun j => MvPowerSeries.subst t (Γ j)) ((Y.raw p).lg i) =
@@ -299,7 +305,8 @@ theorem cEqSum_holds : CEqSumSt := by
             (Y.raw p).sg1 ((Y.raw p).u g c') v • tyS V.l (fun s => S.cur c s (Sum.inl c')) else 0 := by
         rw [h2 c q]
         ring
-      rw [e, ← MvPowerSeries.coe_substAlgHom (hasSubst_unit (ht0 c)), map_add, map_sub, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [e, ← MvPowerSeries.coe_substAlgHom (hasSubst_unit (ht0 c)), map_add, map_sub, map_sum]
       congr 1
       refine Finset.sum_congr rfl fun c' _ => ?_
       split_ifs
@@ -328,7 +335,8 @@ theorem cEqSum_holds : CEqSumSt := by
         MvPowerSeries.subst t (MvPowerSeries.subst Γ ((Y.raw p).sg v)) -
           ∑ c, MvPowerSeries.subst (fun _ : Unit => t c) (alongCv (γ c) ((Y.raw p).sg v)) +
           ∑ c, MvPowerSeries.subst (fun _ : Unit => t c) (lam c q) := by
-      rw [← hpush, ← MvPowerSeries.coe_substAlgHom htS, map_add, map_sub, map_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hpush, ← MvPowerSeries.coe_substAlgHom htS, map_add, map_sub, map_sum, map_sum]
       simp only [MvPowerSeries.coe_substAlgHom, key2]
     rw [hexp, hsum, hsplit, hAll]
     ring

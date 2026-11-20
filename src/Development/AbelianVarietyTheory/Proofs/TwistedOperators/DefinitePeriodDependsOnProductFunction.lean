@@ -24,7 +24,8 @@ theorem lin_van {X I : Type} (A : Module.End ℂ (X → ℂ)) (S : Finset I) (a 
     funext u
     simpa only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Pi.zero_apply] using h u
   have e2 := congrFun (congrArg A e) x
-  simpa only [map_sum, map_smul, map_zero, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Pi.zero_apply] using e2
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa only [map_sum, map_smul, map_zero, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Pi.zero_apply] using e2
 
 theorem int_van {X I : Type} [MeasurableSpace X] (μ : Measure X) (S : Finset I) (a : I → ℂ) (f : I → X → ℂ)
     (hf : ∀ i ∈ S, Integrable (f i) μ) (h : ∀ u, ∑ i ∈ S, a i * f i u = 0) : ∑ i ∈ S, a i * ∫ x, f i x ∂μ = 0 := by

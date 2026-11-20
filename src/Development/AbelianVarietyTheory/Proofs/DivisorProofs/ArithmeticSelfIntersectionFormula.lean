@@ -175,7 +175,8 @@ open MvPolynomial Formalism.DegreeFormula Formalism.BasicNotions.DV Formalism.Ma
 theorem sum_single {D : D7} {Y : ShimX D.what₂.Tau} (T : Real0 Y) (B : ℝ) (c : Y.Comp) (w : Wt Y) :
     ∑ x : D.what₂.Tau × Fin Y.N, w x.1 x.2 • T.L B c (Pi.single x.1 (Pi.single x.2 1)) = T.L B c w := by
   simp_rw [← map_smul]
-  rw [← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum]
   congr 1
   ext σ i
   simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul]

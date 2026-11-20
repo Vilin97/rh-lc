@@ -50,7 +50,8 @@ private theorem coE_prjC_of_ne_eq_zero (c c' : (D.mem u).C.cls 0) (x : ((D.fm u)
 theorem prjC_sum (x : ((D.fm u).lat 0).V) : ∑ c, prjC CV c x = x := by
   apply (coE CV (hTV0 D u)).injective
   funext c'
-  rw [map_sum, Finset.sum_apply, Finset.sum_eq_single c']
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_apply, Finset.sum_eq_single c']
   · exact coE_prjC_self CV c' x
   · intro b _ hb
     exact coE_prjC_of_ne_eq_zero CV b c' x (Ne.symm hb)

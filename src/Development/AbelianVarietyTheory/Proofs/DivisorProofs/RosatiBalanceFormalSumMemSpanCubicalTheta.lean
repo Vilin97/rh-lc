@@ -65,7 +65,8 @@ lemma P_add (C D : Matrix (Fin r) (Fin r) ℤ) : P (C + D) = P C + P D := by
 
 lemma T1 (A V : Matrix (Fin r) (Fin r) ℤ) :
     ∑ i, ∑ j, V i j • B r (axv A i) (zv j) = P (A.transpose * V) := by
-  simp only [P, axv_eq, map_sum, map_zsmul, LinearMap.sum_apply, LinearMap.smul_apply, Matrix.mul_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [P, axv_eq, map_sum, map_zsmul, LinearMap.sum_apply, LinearMap.smul_apply, Matrix.mul_apply,
     Matrix.transpose_apply, Finset.sum_smul, Finset.smul_sum, smul_smul]
   rw [Finset.sum_comm]
   refine (Finset.sum_congr rfl fun j _ => Finset.sum_comm).trans ?_
@@ -75,7 +76,8 @@ lemma T1 (A V : Matrix (Fin r) (Fin r) ℤ) :
 
 lemma T3 (A' V : Matrix (Fin r) (Fin r) ℤ) :
     ∑ i, ∑ j, V i j • B r (xv i) (azv A' j) = P (V * A') := by
-  simp only [P, azv_eq, map_sum, map_zsmul, Matrix.mul_apply, Finset.sum_smul, Finset.smul_sum, smul_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [P, azv_eq, map_sum, map_zsmul, Matrix.mul_apply, Finset.sum_smul, Finset.smul_sum, smul_smul]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [Finset.sum_comm]
 
@@ -98,7 +100,8 @@ theorem main {r : ℕ} (W A A' : Matrix (Fin r) (Fin r) ℤ)
   have e : (Submodule.Quotient.mk (sig W A A') : (Vec r →₀ ℤ) ⧸ S r) =
       ∑ i, ∑ j, W i j • ∑ a : Fin 6, rosatiε a • B r (rosVec A A' a i) (rosVec A A' a j) := by
     rw [sig, ← Submodule.mkQ_apply]
-    simp only [map_sum, map_zsmul, Submodule.mkQ_apply, ← B_apply, Finset.smul_sum, smul_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_zsmul, Submodule.mkQ_apply, ← B_apply, Finset.smul_sum, smul_smul]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [Finset.sum_comm]

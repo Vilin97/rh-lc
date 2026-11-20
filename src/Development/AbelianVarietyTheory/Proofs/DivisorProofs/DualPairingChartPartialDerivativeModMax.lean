@@ -104,7 +104,8 @@ theorem pairing_ev₂_sub_mem : ∀ (p : ℕ) (O : Type) [CommRing O] (G : PDivG
     rw [Submodule.mem_comap, hL]
     obtain ⟨a, ha⟩ := h₂ T fun α hα => hT α (by omega)
     obtain ⟨b, hb⟩ := h₁ (∑ i, u i • atZero (pderiv O (Sum.inr i) T)) fun α hα => by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_eq_zero fun i _ => ?_
       rw [map_smul, coeff_atZero_pderiv_inr, hT, smul_zero]
       rw [map_add, Finsupp.degree_mapDomain, Finsupp.degree_single]

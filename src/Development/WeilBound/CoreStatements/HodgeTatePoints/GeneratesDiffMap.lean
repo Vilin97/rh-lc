@@ -53,7 +53,8 @@ theorem span_om' (hred : D.ReducesTo φ P ι) (hκ : κ' ∣ (p : O) ^ R) :
   have ht : ∀ x, P.tate x ∈ P.T := by
     intro x
     refine P.T.sum_mem fun i _ => ?_
-    rw [← (RingOfIntegers.basis E).sum_repr (x i), map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← (RingOfIntegers.basis E).sum_repr (x i), map_sum, LinearMap.sum_apply]
     refine P.T.sum_mem fun k _ => ?_
     rw [map_zsmul, LinearMap.smul_apply]
     refine zsmul_mem ?_ _
@@ -192,7 +193,8 @@ theorem red_proj : ∀ (A K : Type) [CommRing A] [Field K] [Algebra A K] [CharZe
       apply Subtype.ext
       rw [e, smul_eigProj_eq _ hcc]
       simp
-    rw [hy, map_sum, smul_eigProj_eq (cc := fun k => φ (cc k)) _
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hy, map_sum, smul_eigProj_eq (cc := fun k => φ (cc k)) _
       (fun k => transfer_mul hAK hσ hφ (hcc k))]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [ι.map_smulₛₗ, hred.lin]

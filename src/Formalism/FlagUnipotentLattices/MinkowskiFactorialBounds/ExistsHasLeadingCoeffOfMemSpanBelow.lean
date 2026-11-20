@@ -719,7 +719,8 @@ lemma Dl_zeroL (F F' : FlagD H r) {j : ℕ} (hj : j ≤ r) (hD : Dl F F' j (hj.t
     exact Fintype.linearIndependent_iff.1 ((indep_le F) hj) c h0 a
   · intro u hu
     obtain ⟨d, rfl⟩ := ((mem_Xa_iff F') hj).1 hu
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_eq_zero fun b _ => by rw [HermSpace_B_smul_right_eq_star_mul, hcb b, mul_zero]
 
 lemma II_comm (F F' : FlagD H r) : II F' F = II F F' := by
@@ -1667,7 +1668,8 @@ lemma liftTransitive_of (hE : Formalism.HermitianLatticeCounting.S6.EichlerIsom)
   have hφ : ∀ w : W₁, (w : V) - (φ w : V) ∈ W₂ := by
     intro w
     rw [← b1.sum_repr w]
-    simp only [φ, map_sum, map_smul, Module.Basis.constr_basis, Submodule.coe_sum, Submodule.coe_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [φ, map_sum, map_smul, Module.Basis.constr_basis, Submodule.coe_sum, Submodule.coe_smul]
     rw [← Finset.sum_sub_distrib]
     exact Submodule.sum_mem _ fun k _ => by
       rw [← smul_sub]

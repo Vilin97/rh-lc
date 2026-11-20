@@ -22,7 +22,8 @@ private theorem UpperTheory.V.CA.d_tr_dual {n : ℕ} {A E : Type} [CommRing A] [
   rw [Finset.sum_range_succ', Finset.sum_range_succ', (d_chi D x).1]
   have h2 : ∀ k : ℕ, (DualNumber.eps : DualNumber A) ^ (k + 1 + 1) = 0 := fun k => by
     rw [pow_succ, pow_succ, mul_assoc, DualNumber.eps_mul_eps, mul_zero]
-  simp only [map_add, map_sum, map_mul, map_pow, aeval_X, aeval_C, h2, mul_zero, Finset.sum_const_zero]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_add, map_sum, map_mul, map_pow, aeval_X, aeval_C, h2, mul_zero, Finset.sum_const_zero]
   simp [Det.tr, Algebra.smul_def, add_comm]
 
 theorem UpperTheory.V.CA.d_tr :

@@ -40,7 +40,8 @@ theorem isInternal_comap (f : P →ₗ[B] M) (hf : Function.Injective f)
     · show f (g x m) ∈ ℳ m
       rw [hg]; exact (decompose ℳ (f x) m).2
     · apply hf
-      rw [map_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, map_sum]
       conv_rhs => rw [← DirectSum.sum_support_decompose ℳ (f x)]
       refine Finset.sum_congr rfl (fun m _ => ?_)
       rw [DirectSum.coeAddMonoidHom_of]

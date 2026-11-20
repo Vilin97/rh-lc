@@ -93,7 +93,8 @@ noncomputable def baseChangeMatrix : L ⊗[K] Matrix n n A ≃ₐ[L] Matrix n n 
 theorem baseChangeMatrix_tmul (l : L) (x : Matrix n n A) :
     baseChangeMatrix K L A n (l ⊗ₜ x) = Matrix.of fun i j ↦ l ⊗ₜ x i j := by
   ext i j
-  simp [baseChangeMatrix, matrixEquivTensorBaseChange, tmul_sum, map_sum, Matrix.sum_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [baseChangeMatrix, matrixEquivTensorBaseChange, tmul_sum, map_sum, Matrix.sum_apply,
     Matrix.single_apply]
   rw [Fintype.sum_eq_single (i, j) fun p hp ↦ if_neg fun h ↦ hp (Prod.ext h.1 h.2)]
   simp

@@ -104,7 +104,8 @@ theorem red_of_red {γ : GL (Fin r) E} {u : Fin r → Fin r → E} {k l : GL (Fi
     exact h2 v hv
   obtain ⟨s, hs, h1⟩ := exists_mul_of_fg (X.Λ_fg.map _) h1
   refine red_congr (fun i => ?_) (red_comb h' hb)
-  simpa only [map_sum, map_smul] using cong_lin hs (fun v hv => h1 _ ⟨v, hv, rfl⟩) (h4 i)
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa only [map_sum, map_smul] using cong_lin hs (fun v hv => h1 _ ⟨v, hv, rfl⟩) (h4 i)
 
 theorem red_of_dat (hn : r ≤ n) {y : Matrix (Fin n) (Fin r) E} (h : ‖D.dat hn y‖ = 1) :
     ∃ k : D.J, D.Red (fun i => y (Fin.castLE hn i)) k := by

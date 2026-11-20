@@ -248,7 +248,8 @@ theorem exists_hw (h : Rep E) (S : Submodule ℂ V) [FiniteDimensional ℂ S] (h
     exact S.sum_mem fun a _ => S.smul_mem _ (hK a a (sb_refl a) x hx)
   have hTc : ∀ c d x, T (E c d x) = E c d (T x) + ((ht c : ℂ) - ht d) • E c d x := by
     intro c d x
-    simp only [hT, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, h.diag _ c d,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hT, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, h.diag _ c d,
       smul_add, Finset.sum_add_distrib, smul_smul, ← Finset.sum_smul, mul_sub, Finset.sum_sub_distrib]
     simp
   have hfin : {c : ℂ | ∃ v ∈ S, v ≠ 0 ∧ T v = c • v}.Finite := by
@@ -713,7 +714,8 @@ theorem Aterm (h : Rep E) (y : V) :
 theorem Ph_CK (h : Rep E) (hU : KSt E U) (hπ : IsPr π U) (k : ℕ) (x y : V) :
     ⟪Ph E π k x, Ph E π k (CK E y)⟫_ℂ = ∑ a, ∑ b, ⟪Ph E π k (Kc E a b x), Ph E π k (Kc E a b y)⟫_ℂ := by
   rw [Finset.sum_comm]
-  simp only [CK, LinearMap.sum_apply, Module.End.mul_apply, map_sum, inner_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [CK, LinearMap.sum_apply, Module.End.mul_apply, map_sum, inner_sum]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
   by_cases hab : sameBlock a b
   · simp only [Kc, hab, sb_symm hab, if_true]
@@ -724,7 +726,8 @@ theorem Ph_CK (h : Rep E) (hU : KSt E U) (hπ : IsPr π U) (k : ℕ) (x y : V) :
 theorem Ph_CK_symm (h : Rep E) (hU : KSt E U) (hπ : IsPr π U) (k : ℕ) (x y : V) :
     ⟪Ph E π k x, Ph E π k (CK E y)⟫_ℂ = ⟪Ph E π k (CK E x), Ph E π k y⟫_ℂ := by
   rw [← inner_conj_symm (Ph E π k (CK E x)), Ph_CK h hU hπ, Ph_CK h hU hπ]
-  simp only [map_sum, inner_conj_symm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, inner_conj_symm]
 
 theorem Ph_CK_re (h : Rep E) (hU : KSt E U) (hπ : IsPr π U) (k : ℕ) (x : V) :
     (⟪Ph E π k x, Ph E π k (CK E x)⟫_ℂ).re = ∑ w, ∑ a, ∑ b, ‖π (Ew E k w (Kc E a b x))‖ ^ 2 := by
@@ -1172,7 +1175,8 @@ theorem Eab_mul (a b c d : Ix p q) : Eab a b * Eab c d = if b = c then Eab a d e
 theorem act_eq {V : Type} [AddCommGroup V] [Module ℂ V] (act : Mat p q →ₗ[ℂ] Module.End ℂ V)
     (Z : Mat p q) (x : V) : act Z x = ∑ a, ∑ b, Z a b • act (Eab a b) x := by
   conv_lhs => rw [Matrix.matrix_eq_sum_single Z]
-  simp only [map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.sum_apply]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
   rw [← LinearMap.smul_apply, ← map_smul, Eab, Matrix.smul_single, smul_eq_mul, mul_one]
 

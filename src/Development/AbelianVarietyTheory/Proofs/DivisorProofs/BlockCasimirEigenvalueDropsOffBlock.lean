@@ -138,8 +138,10 @@ theorem cas_drop : ∀ (ι M : Type) [Fintype ι] [DecidableEq ι] [AddCommGroup
     cases hc : s c
     · simp [hy0 c hc]
     · simp only [if_true]
-      rw [← map_sum, hyA c hc, map_smul]
-  rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← map_sum, hyA c hc, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [term]
   rw [Finset.sum_sub_distrib, ← Finset.smul_sum, ← Finset.smul_sum, sumT, smul_smul, ← sub_smul]
   congr 1

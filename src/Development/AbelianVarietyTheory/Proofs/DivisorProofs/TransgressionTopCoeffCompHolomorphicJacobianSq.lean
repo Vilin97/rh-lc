@@ -93,7 +93,8 @@ private lemma conn_sum_smul {n : ℕ} {r : Type} [Fintype r] [DecidableEq r]
       map_zero' := by simpa using _root_.GlobalTheory.HermFrame.conn_smul_vec G z 0 0
       map_add' := _root_.GlobalTheory.HermFrame.conn_add_vec G z }
   change f (∑ c, x c • v c) = _
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_congr rfl fun c _ => _root_.GlobalTheory.HermFrame.conn_smul_vec G z (x c) (v c)
 
 set_option autoImplicit false in
@@ -136,7 +137,8 @@ theorem _root_.GlobalTheory.GoodTop.corrC_comp_holo {n : ℕ} {r : Type} [Fintyp
     simp only [_root_.GlobalTheory.GoodTop.cutForm, Matrix.map_apply]
     have hw := _root_.GlobalTheory.dbar_comp_holo (u := fun y => (ρ y : ℂ)) hρc hφd
 
-    rw [hw, _root_.GlobalTheory.HermFrame.conn_comp_holo h₁' hφd,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hw, _root_.GlobalTheory.HermFrame.conn_comp_holo h₁' hφd,
       _root_.GlobalTheory.HermFrame.conn_comp_holo h₀' hφd, hL, hL, conn_sum_smul,
       conn_sum_smul, map_sum, ← Finset.sum_sub_distrib, Finset.sum_smul]
     simp only [map_smulₛₗ, Finset.smul_sum]

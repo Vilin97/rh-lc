@@ -86,7 +86,8 @@ theorem exists_isometry (hc : Formalism.HermitianLatticesTheory.IsCMUnram E) (W 
   change ∑ i, cc ((P *ᵥ W.frame.equivFun x) i) * (P *ᵥ W.frame.equivFun y) i = _
   generalize W.frame.equivFun x = u
   generalize W.frame.equivFun y = v
-  simp only [herm, cc, Matrix.mul_apply, Matrix.mulVec, dotProduct, map_sum, map_mul, Matrix.transpose_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [herm, cc, Matrix.mul_apply, Matrix.mulVec, dotProduct, map_sum, map_mul, Matrix.transpose_apply,
     Matrix.map_apply, Finset.mul_sum, Finset.sum_mul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun a _ => ?_

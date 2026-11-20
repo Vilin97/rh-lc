@@ -90,7 +90,8 @@ theorem bset_rel (X : Tower Ω ε) (l : ℕ) [Fact l.Prime] [IsAlgClosed Ω] (hJ
     rw [Finset.sum_apply]
     have MX := GlobalTheory.T.binaryMonomialDegree_subst_expansion (ZMod (l ^ n)) w
     conv_lhs => rw [MX.2.1 (Φ n δ) (hΦ.1 n δ)]
-    simp only [map_sum, map_mul, MvPolynomial.eval_C, MX.2.2.2.1, map_pow]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, MvPolynomial.eval_C, MX.2.2.2.1, map_pow]
     exact Finset.sum_congr rfl fun i _ => mul_comm _ _
   · obtain ⟨M1, hM1, hM1'⟩ := hzΦ n
     have hl : 0 < l := (Fact.out : l.Prime).pos

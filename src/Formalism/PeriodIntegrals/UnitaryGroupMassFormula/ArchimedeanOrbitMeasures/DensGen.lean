@@ -31,7 +31,8 @@ private theorem exists_linearMap_inner_eq_and_det_eq_gram_det (β : W → W → 
     have h1 : β x y = ∑ i, ⟪b i, x⟫ * β (b i) y := by
       conv_lhs => rw [← b.sum_repr' x]
       change (AddMonoidHom.mk' (fun x => β x y) (fun x x' => hL x x' y)) (∑ i, ⟪b i, x⟫ • b i) = _
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simp [sL]
     have h2 : ⟪x, A y⟫ = ∑ i, β (b i) y * ⟪x, b i⟫ := by
       simp [A, inner_sum, inner_smul_right]

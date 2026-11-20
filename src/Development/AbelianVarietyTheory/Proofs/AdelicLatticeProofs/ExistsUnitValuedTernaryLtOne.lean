@@ -55,11 +55,13 @@ theorem exists_unit_valued_ternary_lt_one (F : Type) [Field F] [NumberField F]
     exact Ideal.Quotient.eq_zero_iff_mem.2 ((hlt _).1 h)
   · have hmem : (∑ i, ∑ j, r i j * y i * y j) ∈ v.asIdeal := by
       rw [← Ideal.Quotient.eq_zero_iff_mem, ← hx]
-      simp only [map_sum, map_mul, hy]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_mul, hy]
     have hsplit : ∑ i, ∑ j, c i j * ι (y i) * ι (y j) =
         ι (∑ i, ∑ j, r i j * y i * y j) +
           ∑ i, ∑ j, (c i j - ι (r i j)) * ι (y i) * ι (y j) := by
-      simp only [map_sum, map_mul, ← Finset.sum_add_distrib]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_mul, ← Finset.sum_add_distrib]
       refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
       ring
     rw [hsplit]

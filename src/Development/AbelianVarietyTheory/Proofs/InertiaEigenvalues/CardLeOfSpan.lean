@@ -241,7 +241,8 @@ theorem eps_idem (i : ZMod n) : IsIdempotentElem (eps E ρ i) := by
 theorem sum_mem_DΔ (T : LocLat G Qp LL O) (x : W.DD T) : ∑ δ ∈ W.DelF, W.γD T δ x ∈ DΔ W T := by
   have hm : ∀ g, g ∈ W.DelF ↔ IsOfFinOrder g := fun g => by rw [W.DelF_def, isOfFinOrder_iff_pow_eq_one]
   intro δ hδ
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_nbij' (fun d => δ * d) (fun d => δ⁻¹ * d) ?_ ?_ ?_ ?_ ?_
   · intro d hd; exact (hm _).2 (((hm _).1 hδ).mul ((hm _).1 hd))
   · intro d hd; exact (hm _).2 (((hm _).1 hδ).inv.mul ((hm _).1 hd))

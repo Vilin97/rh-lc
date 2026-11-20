@@ -23,7 +23,8 @@ theorem dot_zero_left (x : ι → Ad E) : dot (0 : ι → E) x = 0 := by
 
 theorem dot_rat (ξ c : ι → E) :
     dot ξ (fun t => algebraMap E (Ad E) (c t)) = algebraMap E (Ad E) (∑ t, ξ t * c t) := by
-  simp only [dot, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dot, map_sum, map_mul]
 
 theorem dot_single [DecidableEq ι] (t : ι) (c : E) (x : ι → Ad E) :
     dot (Pi.single t c) x = algebraMap E (Ad E) c * x t := by

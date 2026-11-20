@@ -25,7 +25,8 @@ theorem mem_span_of_image {E : Type} [Field E] {n : ℕ} (φ : E →+* ℂ) (s :
     simp only [smul_eq_mul]
   let F : (Fin n → ℂ) →ₗ[ℂ] ℂ := ∑ l, φ (f (fun j => if l = j then 1 else 0)) • LinearMap.proj l
   have hF : ∀ y : Fin n → E, F (fun l => φ (y l)) = φ (f y) := fun y => by
-    rw [hfx y, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hfx y, map_sum]
     simp only [F, LinearMap.coe_sum, Finset.sum_apply, LinearMap.smul_apply, LinearMap.coe_proj,
       Function.eval, smul_eq_mul, map_mul]
     exact Finset.sum_congr rfl fun l _ => mul_comm _ _

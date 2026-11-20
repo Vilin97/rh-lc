@@ -37,7 +37,8 @@ theorem GlobalTheory.isCompl_orth_of_definite {E : Type} [Field E] [NumberField 
       have := congrArg (Subtype.val) hx'
       simp only [Submodule.coe_sum, Submodule.coe_smul] at this
       exact this
-    rw [hxs, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hxs, map_sum]
     simp [LinearMap.sum_apply, hy']
   have hrk : Module.finrank E S.V ≤ Module.finrank E U + Module.finrank E (orth S U) := by
     have h1 := LinearMap.finrank_range_add_finrank_ker φ

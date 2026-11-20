@@ -395,7 +395,8 @@ theorem Eg_ord (hg : ∀ i j, Ord 1 (g i j - if i = j then 1 else 0)) {b : ℤ}
 
 theorem Gam_ψ {x : Fin n → LaurentSeries k} (hx : ∀ j, P.ψ (x j) = 0) (m : Fin n) :
     P.ψ ((Gam P g x - x) m) = 0 := by
-  rw [Pi.sub_apply, map_sub, hx m, sub_zero, Gam, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Pi.sub_apply, map_sub, hx m, sub_zero, Gam, map_sum]
   apply Finset.sum_eq_zero
   intro j _
   rw [mul_comm, P.ψ_φ, P.ψ_γ, hx j, map_zero, mul_zero]

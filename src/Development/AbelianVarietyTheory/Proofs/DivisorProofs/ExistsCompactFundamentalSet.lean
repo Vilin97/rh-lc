@@ -72,7 +72,8 @@ theorem inBasis_one : inBasis σ T (1 : UA σ J₂) = 1 := by
 theorem entry_mul_mem (v : HeightOneSpectrum (𝓞 F)) {A B : Matrix (Fin (n + n)) (Fin (n + n)) (AE F E)}
     (hA : ∀ i j, compFin F E v (A i j) ∈ intLoc F E v) (hB : ∀ i j, compFin F E v (B i j) ∈ intLoc F E v) (i j) :
     compFin F E v ((A * B) i j) ∈ intLoc F E v := by
-  rw [Matrix.mul_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.mul_apply, map_sum]
   exact Subring.sum_mem _ fun k _ => by rw [map_mul]; exact Subring.mul_mem _ (hA i k) (hB k j)
 
 def stdK : Subgroup (UA σ J₂) where

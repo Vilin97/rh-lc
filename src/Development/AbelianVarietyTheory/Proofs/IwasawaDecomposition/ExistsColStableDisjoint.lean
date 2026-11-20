@@ -18,9 +18,11 @@ theorem exists_sub_perp {E : Type*} [AddCommGroup E] [Module ℂ E] (B : E →�
   let L : E →ₗ[ℂ] (Fin (Module.finrank ℂ W) → ℂ) := LinearMap.pi fun i => B.flip (b i)
   have hL (P) (h : L P = 0) (w) (hw : w ∈ W) : B P w = 0 := by
     have := congrArg W.subtype (b.sum_repr ⟨w, hw⟩)
-    rw [map_sum, Submodule.subtype_apply] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Submodule.subtype_apply] at this
     change _ = w at this
-    rw [← this, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← this, map_sum]
     refine Finset.sum_eq_zero fun i _ => ?_
     rw [map_smul, map_smulₛₗ]
     exact smul_eq_zero_of_right _ (congrFun h i)
@@ -138,7 +140,8 @@ theorem exists_colStable_disjoint (ι : Type) [Fintype ι] (m n : ℕ) (X : Type
   have hβD : β ∈ D := by
     rw [hD]
     intro x
-    rw [← b.sum_repr x, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← b.sum_repr x, map_sum]
     refine R.sum_mem fun i _ => ?_
     rw [map_smul]
     exact R.smul_mem _ ((hR _).2 (hd i))

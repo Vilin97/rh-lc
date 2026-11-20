@@ -25,7 +25,8 @@ theorem form_sum_right {J : Type} (t : Finset J) (x : V) (c : J → K) (y : J �
 
 theorem form_sum_left {J : Type} (t : Finset J) (c : J → K) (x : J → V) (y : V) :
     h.form s (∑ i ∈ t, c i • x i) y = ∑ i ∈ t, starRingEnd ℂ (s (c i)) * h.form s (x i) y := by
-  rw [← h.conj_symm, form_sum_right, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← h.conj_symm, form_sum_right, map_sum]
   exact Finset.sum_congr rfl fun i _ => by rw [map_mul, h.conj_symm]
 
 end Form

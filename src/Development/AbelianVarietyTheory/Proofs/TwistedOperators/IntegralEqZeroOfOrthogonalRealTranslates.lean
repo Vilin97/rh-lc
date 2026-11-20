@@ -56,7 +56,8 @@ theorem integral_eq_zero_of_translates : GlobalTheory.Published.CuspRapidDecay �
     exact hw (GlobalTheory.eq_zero_of_tprodInnerFun w hcon)
   have hφ' : (∑ j, c j * ∏ τ, ⟪((φ τ : M.sm τ) : M.H τ), (vv j τ : M.H τ)⟫_ℂ) ≠ 0 := by
     rw [hw'] at hφ
-    simpa [map_sum, GlobalTheory.tprodInnerFun_tprod, Submodule.coe_inner] using hφ
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [map_sum, GlobalTheory.tprodInnerFun_tprod, Submodule.coe_inner] using hφ
   have hinv : ∀ τ (g : Formalism.IndefR.SchurOrthogonalityAlt.Gt V τ), ∀ x ∈ M.sm τ, Formalism.IndefR.SchurOrthogonalityAlt.piR M τ g x ∈ M.sm τ :=
     fun τ g x hx => GlobalTheory.SmoothStable.rep_mem_sm D V S M τ _ (Formalism.IndefR.SchurOrthogonalityAlt.gm_mem g) x hx
   have htv : ∀ (u : M.Vec) x, (PiTensorProduct.lift.symm t : MMap M) u x = t (PiTensorProduct.tprod ℂ u) x := by
@@ -70,7 +71,8 @@ theorem integral_eq_zero_of_translates : GlobalTheory.Published.CuspRapidDecay �
         (fun τ => ⟨Formalism.IndefR.SchurOrthogonalityAlt.piR M τ (gs τ) (vv j τ), hinv τ (gs τ) _ (vv j τ).2⟩)) x) := by
       intro x
       rw [hw']
-      simp only [map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Finset.mul_sum]
       refine Finset.sum_congr rfl fun j _ => ?_
       have e1 := hPe (vv j) x
       rw [htv, htv] at e1

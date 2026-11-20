@@ -155,7 +155,8 @@ def tau (σ : L →+* L) (A : Matrix (Fin n) (Fin n) L) : Matrix (Fin n) (Fin n)
 omit [Valued L (WithZero (Multiplicative ℤ))] in
 theorem tau_mul (σ : L →+* L) (A B : Matrix (Fin n) (Fin n) L) : tau σ (A * B) = tau σ B * tau σ A := by
   ext a b
-  simp only [tau, Matrix.mul_apply, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [tau, Matrix.mul_apply, map_sum, map_mul]
   refine Fintype.sum_equiv Fin.revPerm _ _ fun k => ?_
   simp [mul_comm]
 

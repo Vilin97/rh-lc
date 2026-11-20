@@ -87,10 +87,12 @@ theorem ACo.cup {W' W'' : Type 1} [AddCommGroup W'] [Module B W'] [AddCommGroup 
       Finset.sum_eq_single ⟨(a, a'), Finset.HasAntidiagonal.mem_antidiagonal.2 e⟩ (fun p _ hp => hz p fun e => hp (Subtype.ext e))
         (fun hh => absurd (Finset.mem_univ _) hh)]
     obtain ⟨β, hβ⟩ := hV e
-    simp only [h.same a ha, h'.same a' ha', ho, ← hβ, ← map_mul, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [h.same a ha, h'.same a' ha', ho, ← hβ, ← map_mul, ← map_sum]
     congr 1
     conv_lhs => rw [← (b a).sum_repr y, ← (b' a').sum_repr y']
-    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, Basis.coord_apply, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, Basis.coord_apply, Finset.mul_sum]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
   · rw [hμ rfl ha ha', h''.diff c _ (Ne.symm e), AddMonoidHom.zero_apply]

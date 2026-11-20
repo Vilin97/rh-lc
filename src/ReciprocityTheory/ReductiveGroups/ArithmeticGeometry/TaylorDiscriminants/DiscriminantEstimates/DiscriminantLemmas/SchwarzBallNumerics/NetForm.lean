@@ -15,7 +15,8 @@ theorem netHerm : ReciprocityTheory.ChartRestriction.G.TB.NetHermSt := by
     rfl
   refine ⟨?_, ?_, ?_⟩
   · intro F G
-    simp only [ReciprocityTheory.ChartRestriction.G.TB.netForm, map_mul, map_sum, map_inv₀, map_natCast,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [ReciprocityTheory.ChartRestriction.G.TB.netForm, map_mul, map_sum, map_inv₀, map_natCast,
       Complex.conj_conj]
     congr 1
     refine Finset.sum_congr rfl fun y _ => ?_

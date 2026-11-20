@@ -281,7 +281,8 @@ theorem span_cut {G : Type} [Group G] [Fintype G] (A : HLat K) (ρ : Representat
     exact A.L.smul_mem o hy
   have hint : ∀ x ∈ A.L, ((Nat.card P.H : ℕ) : K) • e x ∈ A.L := by
     intro x hx
-    rw [he, eps, map_smul, LinearMap.smul_apply, smul_smul, mul_inv_cancel₀ hm, one_smul, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [he, eps, map_smul, LinearMap.smul_apply, smul_smul, mul_inv_cancel₀ hm, one_smul, map_sum,
       LinearMap.sum_apply]
     refine Submodule.sum_mem _ (fun g _ => ?_)
     split

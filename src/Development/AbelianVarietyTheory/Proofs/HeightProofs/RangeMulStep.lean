@@ -54,7 +54,8 @@ theorem range_aeval {k : ℕ} (Pw : MvPolynomial (Fin N) B.KO) (hPw : Pw.IsHomog
     (hy : y ∈ LinearMap.range (X.inc (addL (wt0 D j) wL m))) :
     y * MvPolynomial.aeval (fun i => X.inc wL (w i)) Pw ∈ LinearMap.range (X.inc (addL (wt0 D j) wL (m + k))) := by
   classical
-  rw [Pw.as_sum, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Pw.as_sum, map_sum, Finset.mul_sum]
   refine Submodule.sum_mem _ fun d hd => ?_
   rw [MvPolynomial.aeval_monomial, mul_left_comm, ← Algebra.smul_def]
   refine Submodule.smul_mem _ _ ?_
@@ -189,7 +190,8 @@ theorem ev_sec {F : Type} [Field F] (ev : Rp X la N →+* F) (τ : Ω →+* F) (
     ev (sec X la w i) = (∑ k, evK X la N ev (algebraMap (Op X la N) (Kp X la N) (Tv X la N (i, k))) *
       τ (gF (X.inc wL (w k)))) * σ := by
   unfold Formalism.MainNotions.Gaps.EtaleWeightGaps.sec
-  rw [map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [ev_smul, hc 1 _ (by rw [add_zero_weight_one_eq]; exact emb_mem_Vw X la N wL (w k)), pow_one, mul_assoc]
 

@@ -57,7 +57,8 @@ theorem hasSum_inner_comp_finProj (u : ι → H) (S : H →L[ℂ] H) {κ : Type*
   have h : (fun β => ⟪b β, S (finProj u (b β))⟫_ℂ) =
       fun β => ∑ i, ⟪u i, b β⟫_ℂ * ⟪b β, S (u i)⟫_ℂ := by
     ext β
-    rw [finProj_apply, map_sum, inner_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [finProj_apply, map_sum, inner_sum]
     simp only [map_smul, inner_smul_right]
   rw [h]
   exact hasSum_sum fun i _ => b.hasSum_inner_mul_inner (u i) (S (u i))

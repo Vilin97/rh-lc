@@ -34,7 +34,8 @@ theorem pt_eta (x : κ → AF F) :
 
 theorem dot_finA (x : κ → AF F) (b : κ → Af F) :
     (x ⬝ᵥ fun i => finA F (b i)) = finA F ((fun i => (x i).2) ⬝ᵥ b) := by
-  simp only [dotProduct, finA, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dotProduct, finA, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   refine Prod.ext ?_ ?_
   · change (x i).1 * 0 = 0; simp

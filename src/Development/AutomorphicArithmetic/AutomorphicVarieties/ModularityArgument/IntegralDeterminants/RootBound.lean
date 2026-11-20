@@ -19,7 +19,8 @@ theorem UpperTheory.V.Z.Int.rootBound :
   simp only [Polynomial.eval_mul, Polynomial.eval_pow, Polynomial.eval_neg, Polynomial.eval_one,
     Polynomial.eval_C, Polynomial.eval_X, pow_zero, one_mul, Nat.sub_zero, h0] at hroot
   have hK := congrArg ι.symm hroot
-  simp only [map_add, map_sum, map_mul, map_pow, map_neg, map_one, map_zero] at hK
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_add, map_sum, map_mul, map_pow, map_neg, map_one, map_zero] at hK
   have heq : ‖ι.symm b‖ ^ S.card = ‖∑ j ∈ Finset.range S.card, (-1 : PadicAlgCl l) ^ (j + 1) * (ι.symm (S.esymm (j + 1)) * ι.symm b ^ (S.card - (j + 1)))‖ := by
     rw [eq_neg_of_add_eq_zero_left hK, norm_neg, norm_pow]
   obtain ⟨i, hi, hle⟩ := IsUltrametricDist.exists_norm_finset_sum_le_of_nonempty

@@ -115,7 +115,8 @@ theorem comap_eq_span_res : ∀ (X X' : Scheme.{0}) [IsIntegral X] (f : X' ⟶ X
       apply hinj U'
       have h1 := congrFun hwt i
       rw [piMap_apply] at h1
-      rw [h1, Finset.sum_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [h1, Finset.sum_apply, map_sum]
       change ∑ j, ψ (Q i j) * t j = _
       refine Finset.sum_congr rfl fun j _ => ?_
       have h2 := congrFun (hcomp' (q j)) i

@@ -130,7 +130,8 @@ theorem upper {s n m : ℕ} (y : Fin s → B) (b : Fin n → B)
         boxSpan K y b (t * d + f 1) := by
     rintro _ ⟨p, hp, rfl⟩
     have hp' : p.totalDegree ≤ t := (MvPolynomial.mem_restrictTotalDegree _ _ _).1 hp
-    rw [p.as_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [p.as_sum, map_sum]
     refine Submodule.sum_mem _ fun a ha => ?_
     have h1 := prod_mul_mem_boxSpan y b (f 1) d r hr a.support a (hf 1)
     have h2 : ∑ i ∈ a.support, a i ≤ t := (MvPolynomial.le_totalDegree ha).trans hp'

@@ -861,7 +861,8 @@ theorem Bridge.exists_powerSeries_eval_eq : ∀ {l : ℕ} [hl : Fact (Nat.Prime 
   choose w hw using hw
   refine ⟨∑ i ∈ Finset.range e, PowerSeries.C (w i) * PowerSeries.X ^ i, ?_⟩
   apply Subtype.ext
-  rw [hx0, hsum, map_sum (algebraMap (PadicAlgCl l) ℂ_[l])]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hx0, hsum, map_sum (algebraMap (PadicAlgCl l) ℂ_[l])]
   let Θ : PowerSeries (Wq l a) →+* ℂ_[l] :=
     (PadicComplexInt l).subtype.comp ((Formalism.Per.θ l).comp (PiSys.ev a ϖ))
   have hΘX : Θ PowerSeries.X = algebraMap (PadicAlgCl l) ℂ_[l] (ϖ.seq 0) := by
@@ -872,7 +873,8 @@ theorem Bridge.exists_powerSeries_eval_eq : ∀ {l : ℕ} [hl : Fact (Nat.Prime 
       ((Formalism.Per.θ l (wA l a v) : Formalism.Per.OC l) : ℂ_[l])
     rw [hspec.2]
   change Θ _ = _
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun i hi => ?_
   rw [map_mul, map_pow, hΘX, hΘC, hw i (Finset.mem_range.mp hi), map_mul, map_pow]
 end

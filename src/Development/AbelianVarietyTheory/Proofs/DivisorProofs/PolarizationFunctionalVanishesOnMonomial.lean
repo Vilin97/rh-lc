@@ -93,7 +93,8 @@ theorem GlobalTheory.Div.polar_prod_eq_zero (D : ℕ) (Ψ : MvPolynomial (Fin D)
       · simp [e, hi, Function.update_of_ne hi]
     rw [← hlin (insert j S), ← hlin S, h, hu]
   have hP := congrArg Ψ (GlobalTheory.PolarFlat.polar D)
-  rw [map_sum] at hP
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum] at hP
   simp_rw [map_zsmul] at hP
   rw [hB, map_nsmul, map_zsmul] at hP
   have hcard : (Finset.univ.filter fun f : Fin D → Fin D => Function.Surjective f).card ≠ 0 := by

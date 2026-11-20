@@ -67,7 +67,8 @@ theorem aeval_isWeightedHomogeneous {σ τ : Type} {w : σ → ℕ} {w' : τ →
     {φ : MvPolynomial σ ℝ} {m : ℕ} (hφ : IsWeightedHomogeneous w φ m)
     (g : σ → MvPolynomial τ ℂ) (hg : ∀ i, IsWeightedHomogeneous w' (g i) (w i)) :
     IsWeightedHomogeneous w' (aeval g φ) m := by
-  rw [φ.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [φ.as_sum, map_sum]
   refine IsWeightedHomogeneous.sum _ _ _ fun d hd => ?_
   rw [aeval_monomial]
   have hdeg : (Finsupp.weight w) d = m := hφ (mem_support_iff.mp hd)
@@ -88,7 +89,8 @@ theorem topCoeff_eq_zero {n d : ℕ} {P : MvPolynomial (Fin n × Fin n) ℂ} (hP
   rw [hP.coeff_eq_zero, mul_zero]
   intro h
   apply hd
-  rw [← h, Finsupp.degree_eq_weight_one, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← h, Finsupp.degree_eq_weight_one, map_sum]
   simp [Finsupp.weight_single]
 
 end GlobalTheory.GoodMetric.ChernDegree

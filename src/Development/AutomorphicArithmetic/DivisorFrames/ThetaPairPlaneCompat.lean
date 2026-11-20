@@ -63,7 +63,8 @@ private theorem fA_iota {σ : E →ₐ[F] E} {d d₁ : ℕ} (J : Matrix (Fin d) 
     simp only [dotProduct, Matrix.mulVec, Matrix.col_apply] at h0
     have : ((incM F J *ᵥ fun i => cA σ (incV F x i)) ᵥ* incM F ι) j =
         inclR (F := F) (AF F) (∑ i, ι i j * ∑ k, J i k * σ (x k)) := by
-      simp only [Matrix.vecMul, dotProduct, Matrix.mulVec, incM, incV, Matrix.map_apply, cA_inclR, map_sum, map_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Matrix.vecMul, dotProduct, Matrix.mulVec, incM, incV, Matrix.map_apply, cA_inclR, map_sum, map_mul]
       exact Finset.sum_congr rfl fun i _ => by ring
     rw [this, Pi.zero_apply, h0, map_zero]
   rw [hz, zero_dotProduct]
@@ -73,7 +74,8 @@ private theorem fA_swap' {σ : E →ₐ[F] E} (hσ : ∀ e, σ (σ e) = e) {n : 
     fA σ J w v = cA σ (fA σ J v w) := by
   have hJ' : ∀ i k, cA σ (incM F J i k) = incM F J k i := by
     intro i k; simp [incM, cA_inclR, hJ]
-  simp only [fA, dotProduct, Matrix.mulVec, map_sum, map_mul, cA_cA hσ, hJ', Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [fA, dotProduct, Matrix.mulVec, map_sum, map_mul, cA_cA hσ, hJ', Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun k _ => ?_
   ring

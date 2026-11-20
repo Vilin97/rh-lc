@@ -57,7 +57,8 @@ theorem main : ∀ (V₁ : Type) [CommRing V₁] [IsDomain V₁] [IsLocalRing V�
       exact torMatch_unique V₁ hB G₀ hG₀ D₀ A₀ U₀ V₁ hB G₀ hG₀ D₀ A₀ U₀ (RingHom.id V₁) _ Function.injective_id _ _ h hone₀
   have dsum : ∀ (χ : Fin 8 → D₀.toPre.X) w, d w (∑ u, c u (χ u)) = χ w := by
     intro χ w
-    rw [map_sum, Finset.sum_eq_single w]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_eq_single w]
     · have := DFunLike.congr_fun (dc w w) (χ w)
       simpa using this
     · intro b _ hb

@@ -54,7 +54,8 @@ theorem killed_of_coordinates {G : Type} [Group G] [TopologicalSpace G] {Qp LL O
     have e2 : b.repr (ac σ t) a =
         ∑ j, b.repr (ac σ (b j)) a * b.repr t j := by
       conv_lhs => rw [← b.sum_repr t]
-      simp only [map_sum, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.smul_apply,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.smul_apply,
         smul_eq_mul, mul_comm]
     have e3 := congrArg (fun z => ((b.repr z a : ℤ_[l]) : ℚ_[l])) e1
     simp only [map_sub, map_smul, Finsupp.sub_apply, Finsupp.smul_apply, smul_eq_mul, e2] at e3
@@ -64,7 +65,8 @@ theorem killed_of_coordinates {G : Type} [Group G] [TopologicalSpace G] {Qp LL O
         (fun a => algebraMap ℚ_[l] (PadicComplex l) (((l : ℚ_[l]) ^ n)⁻¹ * (b.repr t a : ℚ_[l])))) a =
         algebraMap ℚ_[l] (PadicComplex l) ((b.repr (⟨_, hw σ⟩ : ↥T.L.T) a : ℤ_[l]) : ℚ_[l]) := by
       have hb' : ∀ i j, M σ i j = zC (b.repr (ac σ (b j)) i) := hb σ
-      simp only [Pi.sub_apply, Matrix.mulVec, dotProduct, hb', zC, ← map_mul, ← map_sum, ← map_sub]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Pi.sub_apply, Matrix.mulVec, dotProduct, hb', zC, ← map_mul, ← map_sum, ← map_sub]
       congr 1
       have hp : (l : ℚ_[l]) ^ n ≠ 0 := pow_ne_zero _ hl
       rw [← inv_mul_cancel_left₀ hp (((b.repr (⟨_, hw σ⟩ : ↥T.L.T) a : ℤ_[l]) : ℚ_[l])), ← e3,
@@ -193,7 +195,8 @@ theorem invariants_killed : ∀ (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc
             (P.mulVec (fun a => algebraMap ℚ_[l] (PadicComplex l) (y a)) a)) =
             (P.map ((D.locA l).actC σ)).mulVec (fun a => algebraMap ℚ_[l] (PadicComplex l) (y a)) := by
           funext a
-          simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Matrix.map_apply,
+          set_option synthInstance.maxHeartbeats 100000 in
+            simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Matrix.map_apply,
             act_algebraMap' hact]
         rw [Matrix.mulVec_sub, Matrix.mulVec_mulVec, hPM σ hσ, twAct, e1, Matrix.mulVec_mulVec]
         simp [chiC])

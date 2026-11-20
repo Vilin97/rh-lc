@@ -15,7 +15,8 @@ private theorem chi_mul_neg (ν : Fin (2 + 2) → ℤ) (θ : Fin (2 + 2) → ℝ
 private theorem chi_mul_conj (ν : Fin (2 + 2) → ℤ) (θ : Fin (2 + 2) → ℝ) : chi ν θ * conj (chi ν θ) = 1 := by
   have h : conj (chi ν θ) = chi ν (-θ) := by
     unfold chi
-    rw [← Complex.exp_conj, map_mul, map_sum, Complex.conj_I]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Complex.exp_conj, map_mul, map_sum, Complex.conj_I]
     congr 1
     simp only [map_mul, map_intCast, Complex.conj_ofReal, Pi.neg_apply, Complex.ofReal_neg, mul_neg, neg_mul,
       Finset.sum_neg_distrib]

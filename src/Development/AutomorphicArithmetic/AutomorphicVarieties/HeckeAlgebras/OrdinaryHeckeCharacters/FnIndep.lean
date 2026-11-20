@@ -29,7 +29,8 @@ theorem UpperTheory.V.Hi.fnIndep :
   have h := congrFun (congrFun hg x) y
   simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Pi.zero_apply] at h ⊢
   have h2 := congrArg (fun z => b.repr z k) h
-  simp only [map_sum, map_zero, Finsupp.coe_finset_sum, Finset.sum_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_zero, Finsupp.coe_finset_sum, Finset.sum_apply,
     Finsupp.zero_apply] at h2
   rw [← h2]
   refine Finset.sum_congr rfl fun i _ => ?_

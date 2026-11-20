@@ -142,7 +142,8 @@ theorem local_pairing_perfect : LocalPairing := by
     simp only [ham, Fin.append_left, Fin.append_right] at hg
     have h1 : ∑ j, g (Fin.natAdd r1 j) • nb j = 0 := by
       have := congrArg Φ hg
-      rw [map_add, map_sum, map_sum, map_zero] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_add, map_sum, map_sum, map_zero] at this
       simp only [map_smul, hΦU _ (haU _), smul_zero, Finset.sum_const_zero, zero_add, hmΦ] at this
       exact this
     have h2 := (Fintype.linearIndependent_iff.1 hnb) _ h1
@@ -191,7 +192,8 @@ theorem local_pairing_perfect : LocalPairing := by
 
   have hCeq : (Matrix.of fun i j => h (y i) (z j)) = C0 * Q := by
     ext i j
-    rw [Matrix.of_apply, ← hZ j, map_sum, Fin.sum_univ_add]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Matrix.of_apply, ← hZ j, map_sum, Fin.sum_univ_add]
     simp only [ham, Fin.append_left, Fin.append_right, map_smul, smul_eq_mul,
       hyU i _ (haU _), mul_zero, Finset.sum_const_zero, zero_add, Matrix.mul_apply, C0, Q,
       Matrix.of_apply]
@@ -205,13 +207,15 @@ theorem local_pairing_perfect : LocalPairing := by
     intro k j
     have hinv := congrFun (congrFun (Matrix.nonsing_inv_mul C0 hC0u) k) j
     rw [Matrix.mul_apply, Matrix.one_apply] at hinv
-    rw [← hinv, hysdef, map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hinv, hysdef, map_sum, LinearMap.sum_apply]
     refine Finset.sum_congr rfl (fun i _ => ?_)
     rw [map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, starRingEnd_apply]
     simp [G, C0]
   have hysU : ∀ k, ∀ x ∈ U, h (ys k) x = 0 := by
     intro k x hx
-    rw [hysdef, map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hysdef, map_sum, LinearMap.sum_apply]
     refine Finset.sum_eq_zero (fun i _ => ?_)
     rw [map_smulₛₗ, LinearMap.smul_apply, hyU i x hx, smul_zero]
   have hyse : ∀ k, ys k ∈ LinearMap.range e := fun k =>
@@ -228,7 +232,8 @@ theorem local_pairing_perfect : LocalPairing := by
     exact inv_ne_zero hC0 this.symm
   have hys_comb : ∀ (c : Fin r2 → K) j, h (∑ k, c k • ys k) (m j) = star (c j) := by
     intro c j
-    rw [map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, LinearMap.sum_apply]
     simp only [map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, hys_dual, starRingEnd_apply]
     simp
   have hysli : LinearIndependent K ys := by
@@ -271,7 +276,8 @@ theorem local_pairing_perfect : LocalPairing := by
     set x1 := t • x - ∑ j, β j • m j with hx1
     have hx1M : x1 ∈ M := M.sub_mem (M.smul_mem t hx) (Submodule.sum_mem _ (fun j _ => M.smul_mem _ (hmM j)))
     have hΦx1 : Φ x1 = 0 := by
-      rw [hx1, map_sub, map_sum, hΦO]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hx1, map_sub, map_sum, hΦO]
       simp only [hΦO, hmΦ]
       rw [hβ, sub_self]
     have hx1U : x1 ∈ U := F1 x1 (hMe _ hx1M) (fun i => congrFun hΦx1 i)

@@ -33,7 +33,8 @@ theorem reduce_of_equiv {K : Type} [CommRing K] [TopologicalSpace K] {W : Type} 
   have hsum : ∀ w, ∑ i, Φ (z₀ i) w * Φ (y 0 i) w = 1 := by
     intro w
     have := congrFun (congrArg Φ hz₀) w
-    simpa [dotProduct, map_sum, Finset.sum_apply] using this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [dotProduct, map_sum, Finset.sum_apply] using this
   have hmax : ∀ w, ∃ i, (∀ j, ‖Φ (y 0 j) w‖ ≤ ‖Φ (y 0 i) w‖) ∧ Φ (y 0 i) w ≠ 0 := by
     intro w
     obtain ⟨i₀, hi₀⟩ : ∃ i, Φ (y 0 i) w ≠ 0 := by
@@ -86,7 +87,8 @@ theorem reduce_of_equiv {K : Type} [CommRing K] [TopologicalSpace K] {W : Type} 
       have : Φ (((a : K) • y) 0 i) w = (u w)⁻¹ * Φ (y 0 i) w := by simp [hΦa]
       rw [this, hΦz 0 i w]
       split_ifs <;> simp
-    simp only [dotProduct, map_sum, Finset.sum_apply, map_mul, Pi.mul_apply, map_one, Pi.one_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [dotProduct, map_sum, Finset.sum_apply, map_mul, Pi.mul_apply, map_one, Pi.one_apply]
     rw [Finset.sum_congr rfl fun i _ => h1 i]
     simp only [Finset.sum_ite_eq, Finset.mem_univ, if_true]
     exact inv_mul_cancel₀ (hu w)

@@ -185,7 +185,8 @@ theorem span_integral_descent {c c' : Coeff l} (hle : c.F ≤ c'.F) {r : ℕ} (U
     exact hgL
   have hπs : ∀ y : Fin m → c.F, π (∑ i, y i • b i) = Φ (fun i => algebraMap c.F d.c₂.F (y i)) := by
     intro y
-    rw [map_sum, hΦ]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, hΦ]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [LinearMap.map_smulₛₗ]
     rfl

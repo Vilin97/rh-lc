@@ -249,7 +249,8 @@ theorem linInd_bB {r : ℕ} (b : Fin r → Matrix (Fin m') (Fin m) D.host.E) (hb
   intro g hg q
   obtain ⟨⟨⟨I, J⟩, k⟩, rfl⟩ := (eIdx n' n r).surjective q
   have h1 := congrArg (entB (D := D) eR eC I J) hg
-  rw [map_sum, map_zero] at h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_zero] at h1
   simp_rw [entB_Ksmul] at h1
   have h2 : ∑ k, g (eIdx n' n r ((I, J), k)) • b k =
       ∑ q, g q • entB (D := D) eR eC I J (bB (D := D) eR eC b q) := by
@@ -424,7 +425,8 @@ theorem atLogA_blk {r : ℕ} (b : Fin r → Matrix (Fin m') (Fin m) D.host.E) (I
     atLogA lam Λ C wq (bB (D := D) eR eC b) (blkIdx D eR eC I J k) =
       MvPowerSeries.rename (idxK r I J) (atLogA lam Λ C wq b k) := by
   classical
-  simp only [atLogA, map_sum, map_mul, AlgHom.commutes]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [atLogA, map_sum, map_mul, AlgHom.commutes]
   rw [← (eIdx n' n r).sum_comp, Fintype.sum_prod_type, Finset.sum_eq_single (I, J)]
   · refine Finset.sum_congr rfl fun k' _ => ?_
     rw [rename_psubst _ (MvPowerSeries.constantCoeff_X k'), MvPowerSeries.rename_X]

@@ -170,7 +170,8 @@ theorem fh_gmF : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgClosed 
     refine coeff_eq_zero_of_roots hζ c fun b => ?_
     obtain ⟨φ, hφ⟩ := hpt b
     have := hcφ φ
-    simpa only [map_sum, map_smul, m, map_prod, map_pow, map_add, map_one, hφ, add_sub_cancel,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa only [map_sum, map_smul, m, map_prod, map_pow, map_add, map_one, hφ, add_sub_cancel,
       smul_eq_mul] using this
   have hli : LinearIndependent O m := by
     rw [Fintype.linearIndependent_iff]

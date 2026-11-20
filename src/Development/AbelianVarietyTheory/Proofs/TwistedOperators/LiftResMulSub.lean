@@ -20,7 +20,8 @@ theorem liftRes_mul_sub {A C : Type} [Fintype C] {ϖ : kˣ} (hϖ : IsUnif ϖ) (e
   have h1 : ((liftRes (Matrix.of T * N.map (Ideal.Quotient.mk (IsLocalRing.maximalIdeal 𝒪[k] ^ e)) :
         A → C → Res k e) - liftRes T * N.map (fun x => (x : k))) i j) = (r : k) := by
     simp [hr, liftRes, Matrix.mul_apply]
-  rw [h1, ← GlobalTheory.SplitFlip.Model.val_le_iff_mem hϖ, ← Ideal.Quotient.eq_zero_iff_mem, hr, map_sub, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h1, ← GlobalTheory.SplitFlip.Model.val_le_iff_mem hϖ, ← Ideal.Quotient.eq_zero_iff_mem, hr, map_sub, map_sum]
   simp [Matrix.mul_apply, Ideal.Quotient.mk_out]
 
 theorem sum_liftRes_mul {A C : Type} [Fintype A] [DecidableEq A] [Fintype C] [DecidableEq C] {ϖ : kˣ} (hϖ : IsUnif ϖ) (e : ℕ)

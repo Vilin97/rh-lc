@@ -274,7 +274,8 @@ theorem psiAnalytic_of_psBasic (hB : PsBasic) : PsiAnalytic := by
     have hc := (unitPart_mem hz).2
     simp only [Psi, ContinuousLinearMap.comp_apply]
     conv_lhs => rw [← b.sum_repr' (ps ε lam τ w (posPart (Matrix.of z)) v)]
-    rw [map_sum, inner_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, inner_sum]
     refine Finset.sum_congr rfl (fun i _ => ?_)
     rw [map_smul, inner_smul_right, projJ_of_comm hc]
     exact mul_comm _ _

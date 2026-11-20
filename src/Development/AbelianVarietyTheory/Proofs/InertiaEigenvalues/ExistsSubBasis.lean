@@ -200,7 +200,8 @@ theorem frame_of_idem (act : GQ l →* (PadicComplex l ≃+* PadicComplex l)) (�
       have hmap : (fun a => act σ (Pm.mulVec (e (κ k)) a)) =
           (Pm.map (act σ)).mulVec (fun a => act σ (e (κ k) a)) := by
         funext a
-        simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum, map_mul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum, map_mul]
       simp only
       rw [hmap, Matrix.mulVec_mulVec, ← heq σ hσ, ← Matrix.mulVec_mulVec, ← Matrix.mulVec_smul, h3]
   · intro y hy

@@ -122,7 +122,8 @@ theorem exists_decomp : ∀ (K : Type) [Field K] [NumberField K] (E : Type) [Fie
             algebraMap E (Af E) (algebraMap K E (a k) * b k) * yi := fun k => by
         simp only [map_sub, map_mul, finiteAdeleMap_algebraMap]
         ring
-      rw [Finset.sum_congr rfl fun k _ => e2 k, Finset.sum_sub_distrib, ← Finset.sum_mul, ← Finset.sum_mul,
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Finset.sum_congr rfl fun k _ => e2 k, Finset.sum_sub_distrib, ← Finset.sum_mul, ← Finset.sum_mul,
         ← Finset.mul_sum, ← map_sum, ← map_sum, ← hx', hT, map_sub]
       ring
     rw [mem_lattice, hkey]

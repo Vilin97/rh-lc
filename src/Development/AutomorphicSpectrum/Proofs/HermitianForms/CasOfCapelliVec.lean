@@ -193,7 +193,8 @@ theorem cas_of_capelli_vec : ∀ (n : ℕ) (ε : Fin n → Bool) (V : Type) [Add
         have h1 := h Y
         rw [hR] at h1
         have h2 := congrArg φ h1
-        simp only [LinearMap.add_apply, LinearMap.sum_apply, LinearMap.smul_apply,
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [LinearMap.add_apply, LinearMap.sum_apply, LinearMap.smul_apply,
           Module.End.one_apply, map_add, map_sum, map_smul, smul_eq_mul, add_sub_assoc,
           Formalism.QuantumDeterminants.capP] at h2
         exact h2)
@@ -202,7 +203,8 @@ theorem cas_of_capelli_vec : ∀ (n : ℕ) (ε : Fin n → Bool) (V : Type) [Add
     intro φ
     have := (core φ).1
     rw [hρ0] at this
-    simp only [LinearMap.sum_apply, map_sub, map_sum, map_smul, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [LinearMap.sum_apply, map_sub, map_sum, map_smul, smul_eq_mul]
     linear_combination this
   rw [← sub_eq_zero, ← Module.forall_dual_apply_eq_zero_iff ℂ]
   intro φ
@@ -210,7 +212,8 @@ theorem cas_of_capelli_vec : ∀ (n : ℕ) (ε : Fin n → Bool) (V : Type) [Add
   have h3 := congrArg (fun T : Module.End ℂ M => φ (T v)) (sq_sub_cas E hE)
   rw [LinearMap.sub_apply, Module.End.mul_apply, e1, map_smul, e1, LinearMap.sub_apply] at h3
   simp only [sum_erase_eq_sub (mem_univ _), hρ0] at h2
-  simp only [LinearMap.sum_apply, LinearMap.smul_apply, map_sub φ, map_sum, map_smul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [LinearMap.sum_apply, LinearMap.smul_apply, map_sub φ, map_sum, map_smul,
     smul_eq_mul] at h3 h2 ⊢
   have h5 : ∑ i : Fin n, ((n : ℂ) - 1 - 2 * (i : ℕ)) * φ (E i i v)
       = - (2 * ∑ i, (0 - ρ i) * φ (E i i v)) := by

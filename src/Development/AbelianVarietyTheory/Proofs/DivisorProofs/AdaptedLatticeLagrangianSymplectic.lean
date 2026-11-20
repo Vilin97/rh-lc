@@ -212,7 +212,8 @@ theorem exists_inv (hβ : Function.Injective β) {F : Submodule K H} (hF : IsLag
   ext j k
   have := hk j k
   rw [← e.sum_repr (x j)] at this
-  simp only [map_sum, map_add, map_smul, Fintype.sum_sum_type, LinearMap.add_apply, LinearMap.sum_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_add, map_smul, Fintype.sum_sum_type, LinearMap.add_apply, LinearMap.sum_apply,
     LinearMap.smul_apply, (hF _).1 (h₂ _) _ (h₂ _), smul_zero, Finset.sum_const_zero, zero_add] at this
   simp only [Matrix.mul_apply, blk, Matrix.of_apply, ← smul_eq_mul]
   rw [this]
@@ -265,7 +266,8 @@ theorem adapted (hβ : Function.Injective β) (hs : ∀ s w, β s w = - β w s) 
     refine g₂.le.trans (Submodule.span_le.2 ?_)
     rintro _ ⟨k, rfl⟩
     have hYe : ∀ i, β (g (Sum.inr i)) (g (Sum.inl k)) = algebraMap R K (Y i k) := fun i => congrFun (congrFun hY i) k
-    simp only [SetLike.mem_coe, LinearMap.mem_ker, map_sub, map_sum, LinearMap.sub_apply, LinearMap.sum_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [SetLike.mem_coe, LinearMap.mem_ker, map_sub, map_sum, LinearMap.sub_apply, LinearMap.sum_apply,
       ← algebraMap_smul K (c _), map_smul, LinearMap.smul_apply, hYe, ← hv k, ← hc, smul_eq_mul]
     simp [Matrix.vecMul, dotProduct]
   exact this hw

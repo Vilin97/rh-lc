@@ -82,7 +82,8 @@ theorem aeval_expand (hd : PhiData q Z Z' φ e) (hN : 0 < N) (χ : k[X]) (x : Ma
     intro i h1 h2
     rw [← map_natCast (algebraMap k (Matrix (Fin N) (Fin N) k)), hc i h1 h2, map_zero]
   have hsum : φ (aeval x χ) = ∑ i ∈ Finset.range (χ.natDegree + 1), φ (χ.coeff i • x ^ i) := by
-    rw [aeval_eq_sum_range, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [aeval_eq_sum_range, map_sum]
   rw [hx, map_zero] at hsum
   have hp := pow_sum hq hcM (Finset.range (χ.natDegree + 1)) (fun i => φ (χ.coeff i • x ^ i))
     (fun i j => (((Commute.pow_pow_self x i j).smul_left _).smul_right _).map φ)

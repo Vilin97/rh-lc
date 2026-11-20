@@ -61,7 +61,8 @@ theorem isSSRep_mapRep :
     have := congrArg φ (htr g)
     rw [map_zero] at this
     rw [← this]
-    simp only [Matrix.trace, Matrix.diag, Matrix.mul_apply, map_sum, hent, hφι, Matrix.map_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.trace, Matrix.diag, Matrix.mul_apply, map_sum, hent, hφι, Matrix.map_apply]
   ext i j
   rw [Matrix.zero_apply, ← Module.forall_dual_apply_eq_zero_iff k]
   intro φ

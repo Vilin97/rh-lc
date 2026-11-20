@@ -113,7 +113,8 @@ theorem col_tri (hZ : Cells A π g κ) (k k' : A.B × Pm Dw.mult) (σ : E →+* 
     intro b w φ i
     funext r
     rw [uvec_cv, Matrix.mulVec_single_one]
-    simp [Matrix.mul_apply, Matrix.mulVec, dotProduct, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Matrix.mul_apply, Matrix.mulVec, dotProduct, map_sum]
   let av : Fin (Dw.mult σ) → L := ∑ l, f l • Pi.single (Fin.castLE hj l) 1
   have hq : (fun s => ψ' (uC A k'.1 k'.2 σ s j)) = ((uC A k'.1 k'.2 σ).map ψ').mulVec (Pi.single j 1) := by
     funext s

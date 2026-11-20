@@ -125,7 +125,8 @@ theorem act_coord (t : G) (x : Fin S.dim → K) :
 
 theorem gaOp_coord (a : MonoidAlgebra K G) (x : Fin S.dim → K) :
     S.gaOp r a (S.basis.equivFun.symm x) = S.basis.equivFun.symm (S.gaMat r a *ᵥ x) := by
-  simp only [CSD.gaOp, CSD.gaMat, LinearMap.sum_apply, LinearMap.smul_apply, Matrix.sum_mulVec, Matrix.smul_mulVec, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [CSD.gaOp, CSD.gaMat, LinearMap.sum_apply, LinearMap.smul_apply, Matrix.sum_mulVec, Matrix.smul_mulVec, map_sum,
     map_smul, act_coord]
 
 def lvlForm (P : Subgroup G) (ψ : P →* Kˣ) : (Fin (S.lvlDim r P ψ) → K) →ₗ[K] S.Forms :=
@@ -269,7 +270,8 @@ theorem span_range_mulVec {σ : K →+* ℂ} {M : Type} [AddCommGroup M] [Module
       ext i; simp [Pi.single_apply]
     rw [SetLike.mem_coe]
     beta_reduce
-    rw [hz, Matrix.mulVec_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hz, Matrix.mulVec_sum, map_sum]
     refine Submodule.sum_mem _ fun k _ => ?_
     rw [Matrix.mulVec_smul, map_smulₛₗ]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨k, rfl⟩)

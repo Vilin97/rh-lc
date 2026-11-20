@@ -49,7 +49,8 @@ theorem delta_map (F E : Type) [Field F] [NumberField F] [Field E] [NumberField 
       fun i => σ ((c *ᵥ fun j => algebraMap (𝓞 E) E (y j)) i) := by
     intro y
     funext i
-    simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum, map_mul, hφ, hψ]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum, map_mul, hφ, hψ]
   have key : Kc c = (Kc (c.map σ)).comap φ := by
     ext y
     rw [AddSubgroup.mem_comap]

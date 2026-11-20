@@ -208,7 +208,8 @@ theorem lubinTateSeries_eq_of_coeff_one_eq {O : Type} [CommRing O] [IsDomain O] 
       obtain ⟨S, hS, hS0⟩ : ∃ S : PowerSeries O, S * (φ - ψ) = φ ^ (p + 2) - ψ ^ (p + 2) ∧
           PowerSeries.constantCoeff S = 0 := by
         refine ⟨_, (Commute.all φ ψ).geom_sum₂_mul (p + 2), ?_⟩
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         refine Finset.sum_eq_zero fun i _ => ?_
         rw [map_mul, map_pow, map_pow, h0, h0', ← pow_add, zero_pow (by omega)]
       have e1 : PowerSeries.C π * (φ - ψ) + S * (φ - ψ) = F (φ - ψ) := by

@@ -48,7 +48,8 @@ def actC (lam : X.Tau → DomWeight n) (f : Module.End X.K (VV X.K lam)) (w : VV
 theorem expand {W : Type} [AddCommGroup W] [Module ℂ W] {lam : X.Tau → DomWeight n} (c : VV X.K lam →ₛₗ[σ] W) (v : VV X.K lam) :
     c v = ∑ j, σ ((bVV X.K lam).repr v j) • c (bVV X.K lam j) := by
   conv_lhs => rw [← (bVV X.K lam).sum_repr v]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [map_smulₛₗ]
 
 theorem crd_act (lam : X.Tau → DomWeight n) (f : Module.End X.K (VV X.K lam)) (v : VV X.K lam) :
@@ -112,7 +113,8 @@ theorem one_map {SG : ι → Finset (Pl X.E)} {Fm : ι → Type} {val : ∀ t, F
     exact this
   refine ⟨T, fun t φ h => ?_⟩
   obtain ⟨x, hm⟩ := hx h
-  rw [hr hc t φ h x hm, hr' hc t φ h x hm, expand σ c, expand σ c', map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hr hc t φ h x hm, hr' hc t φ h x hm, expand σ c, expand σ c', map_sum]
   simp only [map_smul, hb]
 
 theorem not_sign [Nonempty H] {S : Finset (Pl X.E)} (v : VV X.K lam) (hv : v ≠ 0) (f : H → W) :

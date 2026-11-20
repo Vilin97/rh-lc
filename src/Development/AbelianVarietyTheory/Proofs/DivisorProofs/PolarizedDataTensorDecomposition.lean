@@ -45,7 +45,8 @@ theorem exists_interp {α : Type} (K : Submodule ℂ (α → ℂ)) [FiniteDimens
     ext j
     simp [R, ev, Finset.sum_apply, Pi.single_apply]
   have h3 := congrArg Subtype.val h1
-  rw [h2, map_sum] at h3
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h2, map_sum] at h3
   simpa [map_smul, Submodule.coe_sum] using h3
 
 end GlobalTheory.ThK.SoPolSplit

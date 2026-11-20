@@ -16,7 +16,8 @@ theorem main : ∀ {E V : Type} [inst : Field E] [CharZero E] [inst_2 : AddCommG
   have hzx : ∀ i, B z (x i) = 0 := fun i => hsym _ _ (hxz i)
   have hzy : ∀ i, B z (y i) = 0 := fun i => hsym _ _ (hyz i)
   have hzw1 : B z w1 = 1 := by
-    simp [hw1, map_sum, hzx, hzy, hzw]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [hw1, map_sum, hzx, hzy, hzw]
   have hw1z : B w1 z = 1 := by rw [hB, hzw1, map_one]
   set c : E := B w1 w1 / 2 with hc
   have hsc : s c = c := by

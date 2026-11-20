@@ -22,7 +22,8 @@ theorem hTens_change {R A : Type} [CommRing R] [CommRing A] [Algebra R A] (c : A
   rw [GlobalTheory.SympRestrict.hTens_eq_trace']
   have hm : (P' * u' * Q'ᵀ).map c = P'.map c * u'.map c * (Q'.map c)ᵀ := by
     ext i j
-    simp only [Matrix.map_apply, Matrix.mul_apply, Matrix.transpose_apply, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.map_apply, Matrix.mul_apply, Matrix.transpose_apply, map_sum, map_mul]
   rw [hm]
   simp only [Matrix.transpose_mul, Matrix.transpose_transpose]
   simp only [Matrix.mul_assoc]
@@ -75,7 +76,8 @@ theorem gram_apply (σ : E →ₐ[F] E) {n : ℕ} {p q : Type} (P : Matrix (Fin 
 
 theorem form_herm {σ : E →ₐ[F] E} (hinv : ∀ t, σ (σ t) = t) {d : ℕ} {J : Matrix (Fin d) (Fin d) E}
     (hh : ∀ i j, σ (J j i) = J i j) (x v : Fin d → E) : form σ J x v = σ (form σ J v x) := by
-  simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hinv, hh, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hinv, hh, Finset.mul_sum]
   rw [Finset.sum_comm (f := fun a b => σ (v a) * (J b a * x b))]
   refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun l _ => ?_
   ring

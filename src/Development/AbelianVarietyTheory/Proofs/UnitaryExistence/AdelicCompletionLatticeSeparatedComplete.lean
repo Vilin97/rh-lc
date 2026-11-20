@@ -52,7 +52,8 @@ theorem exists_frame (R K V : Type) [CommRing R] [IsDedekindDomain R] [Field K] 
     fun i => (f _).2, fun i v hv => ⟨_, (hs' i v hv).symm⟩, fun v hv => ?_⟩
   have h1 : f (g ⟨v, hv⟩) = ⟨v, hv⟩ := LinearMap.congr_fun hfg _
   have h2 : ∑ i, g ⟨v, hv⟩ i • f (Pi.single i 1) = ⟨v, hv⟩ := by
-    conv_rhs => rw [← h1, pi_eq_sum_univ' (g _), map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_rhs => rw [← h1, pi_eq_sum_univ' (g _), map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul]
   have h3 := congrArg Subtype.val h2
@@ -130,7 +131,8 @@ private theorem eq_zero_of_forall_nsmul_mem_hat [FiniteDimensional F E] {m : ℕ
       (δ * B.repr (w i) ℓ) v ∈ v.adicCompletionIntegers F := by
     intro w hw i ℓ
     obtain ⟨a, ha, rfl⟩ := exists_integral_comb_of_mem_hat he hw
-    simp only [comb_apply_eq_sum_tmul, Finset.sum_apply, map_sum, Finsupp.coe_finsetSum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [comb_apply_eq_sum_tmul, Finset.sum_apply, map_sum, Finsupp.coe_finsetSum,
       Algebra.TensorProduct.basis_repr_tmul, Finsupp.smul_apply, Finsupp.mapRange_apply,
       smul_eq_mul, Finset.mul_sum]
     refine Finset.sum_induction _ (fun y : FiniteAdeleRing (𝓞 F) F =>

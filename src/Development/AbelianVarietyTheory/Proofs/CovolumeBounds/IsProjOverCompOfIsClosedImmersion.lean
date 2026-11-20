@@ -508,7 +508,8 @@ theorem exists_comp_vPlusι_eq_pt_iff (c : R →+* A) (v : Fin (N + 1) → A) (h
         rw [← appLE_pt_formOn_mul c v hv i (pt_preimage_chart c v hv i).ge hg]
         exact mul_eq_zero_of_left ((congrArg (resG _ (pt_preimage_chart c v hv i).ge) (H i n g hg hI)).trans
           (map_zero _)) _
-    rw [← sum_homogeneousComponent f, ← coe_eval₂Hom, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← sum_homogeneousComponent f, ← coe_eval₂Hom, map_sum]
     exact Finset.sum_eq_zero fun n _ => key n _ (homogeneousComponent_isHomogeneous n f)
       (decomposition.decompose'_apply f n ▸ I.isHomogeneous n hf)
   · intro H

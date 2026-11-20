@@ -121,7 +121,8 @@ private theorem psJet_eq_nv {R : Type} [CommRing R] {n d : ℕ} (m : ℕ) (f : P
       Ideal.Quotient.mk _ (∑ e : Fin n × Fin d → Fin (m + 1), MvPolynomial.monomial
         (Finsupp.equivFunOnFinite.symm fun i => (e i : ℕ)) (MvPowerSeries.coeff
         (Finsupp.equivFunOnFinite.symm fun i => (e i : ℕ)) f)) := by
-    rw [h1, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h1, map_sum]
     refine Finset.sum_congr rfl fun e _ => ?_
     rw [MvPolynomial.monomial_eq, Finsupp.prod_fintype _ _ (fun i => pow_zero _), map_mul, map_prod]
     simp only [map_pow]

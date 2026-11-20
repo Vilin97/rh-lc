@@ -22,7 +22,8 @@ lemma coeff_add_pow (k m : ℕ) :
     coeff (mon k m) ((X ((0 : Fin 2), (0 : ZMod 1)) + X ((1 : Fin 2), (0 : ZMod 1)) :
       MvPowerSeries (Fin 2 × ZMod 1) K) ^ (k + m)) = ((k + m).choose k : K) := by
   classical
-  rw [add_pow, map_sum, Finset.sum_eq_single k]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [add_pow, map_sum, Finset.sum_eq_single k]
   · rw [X_pow_eq, X_pow_eq, monomial_mul_monomial, Nat.add_sub_cancel_left, ← nsmul_eq_mul',
       map_nsmul, coeff_monomial_same]
     simp

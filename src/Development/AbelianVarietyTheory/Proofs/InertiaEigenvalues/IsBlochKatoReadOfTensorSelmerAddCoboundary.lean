@@ -77,7 +77,8 @@ theorem readW_gen (PD : PeriodData G Qp K₀ K B BdR) (hinj : Function.Injective
         LinearMap.pi (fun g => actD (stdLatG (LL := LL) hinj N) g - LinearMap.id)
           (iotaL hinj (twistM N θ) N lam a m) := by
     funext g
-    rw [hz g, map_add, map_sum, map_sub, ← actD_iotaL hinj N θ χ hχ lam a g m]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hz g, map_add, map_sum, map_sub, ← actD_iotaL hinj N θ χ hχ lam a g m]
     simp only [Pi.add_apply, Finset.sum_apply, LinearMap.pi_apply, LinearMap.sub_apply, LinearMap.id_apply]
     congr 1
     refine Finset.sum_congr rfl fun j _ => ?_

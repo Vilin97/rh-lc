@@ -33,7 +33,8 @@ theorem toEAf_surjective (z : EAf D) : ∃ w : AE D, toEAf D w = z := by
 
 theorem map_sum_mem {R R' ι : Type} [CommRing R] [CommRing R'] (f : R →+* R') (A : Subring R') (p : ι → R) (s : Finset ι)
     (h : ∀ i ∈ s, f (p i) ∈ A) : f (∑ i ∈ s, p i) ∈ A := by
-  rw [map_sum]; exact sum_mem h
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]; exact sum_mem h
 
 theorem res_ite {R κ : Type} [CommRing R] [CommRing κ] (A : Subring R) (f : A →+* κ) {c z : R} (hc : c ∈ A) (hz : z ∈ A)
     (h1 : f ⟨c, hc⟩ = 1) (p : Prop) [Decidable p] (h : z = if p then c else 0) : f ⟨z, hz⟩ = if p then 1 else 0 := by

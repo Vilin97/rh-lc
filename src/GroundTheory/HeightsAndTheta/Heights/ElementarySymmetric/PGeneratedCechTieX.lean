@@ -124,7 +124,8 @@ theorem GeneratedCechTie.proof : GeneratedCechTie.Statement := by
         (Submodule.mem_pi.mp (Submodule.mem_inf.mp (hz j)).1 (cell0 c) (Set.mem_univ _))
       rwa [neg_add_cancel] at h
     refine evMap_injOn y (good_chart hc) 0 hmem (one_mem_locPart _) ?_
-    rw [evMap_one (good_chart hc), map_sum, ← hsum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [evMap_one (good_chart hc), map_sum, ← hsum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [evMap_mul (good_chart hc), hUv j, show evMap y (chart c) (Z j) = s j from hzv j c hc]
     ring

@@ -168,7 +168,8 @@ theorem ord_comul_local : ∀ (R K : Type) [CommRing R] [IsDomain R] [IsIntegral
     refine ⟨K1 + K2, T, ?_⟩
     funext a b
     rw [hΦ, Pi.smul_apply, Pi.smul_apply, Algebra.smul_def]
-    simp only [T, ev, map_sum, Algebra.TensorProduct.lift_tmul, AlgHom.comp_apply, Subalgebra.coe_val,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [T, ev, map_sum, Algebra.TensorProduct.lift_tmul, AlgHom.comp_apply, Subalgebra.coe_val,
       Pi.evalAlgHom_apply, Pi.smul_apply]
     simp only [Algebra.smul_def]
     by_cases hab : (∃ ψ, a = s * pt ψ) ∧ (∃ ψ, b = t * pt ψ)
@@ -182,7 +183,8 @@ theorem ord_comul_local : ∀ (R K : Type) [CommRing R] [IsDomain R] [IsIntegral
         rw [(hg2 x.2).2.1, map_pow, ← _root_.mul_assoc, ← pow_add, Nat.sub_add_cancel (Finset.le_sup (f := fun x => k2 x.2) hx)]
       rw [Finset.sum_congr rfl fun x hx => by rw [e1 x hx, e2 x hx]]
       have hsumA := hA ψ₁ ψ₂
-      rw [hS, map_sum] at hsumA
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hS, map_sum] at hsumA
       simp only [Algebra.TensorProduct.lift_tmul] at hsumA
       rw [map_pow, pow_add, show (s * pt ψ₁) * (t * pt ψ₂) = s * t * (pt ψ₁ * pt ψ₂) from mul_mul_mul_comm _ _ _ _,
         ← hsumA, Finset.mul_sum]

@@ -54,7 +54,8 @@ theorem apol_lin (c : S → ℝ) (P Q : MvPolynomial S ℝ) :
     apol ((∑ s, C (c s) * X s) * P) Q = apol P (∑ s, c s • pderiv s Q) := by
   induction Q using MvPolynomial.induction_on' with
   | monomial u a =>
-    rw [apol_monomial, map_sum, Finset.sum_mul, coeff_sum, Finset.mul_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [apol_monomial, map_sum, Finset.sum_mul, coeff_sum, Finset.mul_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun s _ => ?_
     rw [map_smul, pderiv_monomial, apol_monomial, mul_assoc, coeff_C_mul, coeff_X_mul', smul_eq_mul]
     by_cases h : u s = 0
@@ -189,7 +190,8 @@ theorem facM_permExp (σ : ι → Equiv.Perm (Fin N)) :
 theorem degFl_eq_apol (P : Pol ι N) :
     facM (permExp (fun _ : ι => (1 : Equiv.Perm (Fin N)))) * degFl ι N P = (-1) ^ dimFl ι N *
       apol P (∏ p ∈ Finset.univ.filter (fun p : ι × Fin N × Fin N => p.2.1 < p.2.2), rootP p) := by
-  rw [← alt_eq, map_sum, degFl, mul_left_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← alt_eq, map_sum, degFl, mul_left_comm]
   congr 1
   rw [Finset.mul_sum]
   refine Finset.sum_congr rfl fun σ _ => ?_

@@ -148,7 +148,8 @@ theorem UpperTheory.V.Z.Tf.SR.splitRigid_of (hSh : ShareBd) (hAS : AbsShare) (hT
       Multiset.sumAddMonoidHom.comp (Multiset.mapAddMonoidHom fun z : ℂˣ => (z : ℂ) ^ k)
     have hφ : ∀ M : Multiset ℂˣ, φ M = (M.map fun z : ℂˣ => (z : ℂ) ^ k).sum := fun M => rfl
     have h := congrArg φ e0
-    rw [map_sum] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at h
     simp only [hφ, e1, power_sum_map] at h
     exact h.symm
   obtain ⟨j, hj⟩ := hAS (Off E S) nq X d A hSys x₀ I J y M C hM.ge hC hpow

@@ -92,7 +92,8 @@ theorem repr_aeval {F S : Type*} [Field F] [CommRing S] [Algebra F S] (pb : Powe
     intro k
     rw [← pb.basis_eq_pow k]
     exact pb.basis.repr_self k
-  rw [aeval_eq_sum_range' hr, map_sum, Finsupp.finset_sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [aeval_eq_sum_range' hr, map_sum, Finsupp.finset_sum_apply]
   rw [Finset.sum_eq_single (i : ℕ)]
   · rw [map_smul, Finsupp.smul_apply, hrep i]
     simp

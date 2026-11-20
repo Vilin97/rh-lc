@@ -62,7 +62,8 @@ theorem sum_map_of_harmA {E : Type} [Field E] [NumberField E] [IsCMField E] {H :
     exact Finset.prod_congr rfl fun b _ => hpin3 k (F' b) (f3 b) (hf3 b) (colOf m b)
   refine Eq.trans ?_ (hI.trans e3.symm)
   unfold chartVal
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun m _ => ?_
   rw [map_mul, AlgHom.commutes, map_prod]
   congr 1

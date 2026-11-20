@@ -53,7 +53,8 @@ variable (j : ℕ)
 theorem muPoly_rename (w : Ψ → Perm (Fin N)) (hw : IsBlockPerm Ψ N j w) :
     rename (weylAct Ψ N w) (muPoly Ψ N j) = muPoly Ψ N j := by
   unfold muPoly
-  rw [map_sum, Finset.sum_filter, Finset.sum_filter]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_filter, Finset.sum_filter]
   simp only [rename_X]
   rw [← (Equiv.prodCongrRight fun τ => w τ).sum_comp
     (fun q => if ¬ (q.2 : ℕ) < j then (X q : RootPoly Ψ N) else 0)]

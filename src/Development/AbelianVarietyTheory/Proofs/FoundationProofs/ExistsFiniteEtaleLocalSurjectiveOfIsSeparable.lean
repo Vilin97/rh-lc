@@ -27,7 +27,8 @@ private lemma mem_smul_top_iff_of_linearEquiv_pi {V M ι : Type*} [CommRing V] [
   · intro hx
     have hsum : x = ∑ i, e x i • e.symm (fun j => if i = j then 1 else 0) := by
       apply e.injective
-      simp only [map_sum, map_smul, LinearEquiv.apply_symm_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, LinearEquiv.apply_symm_apply]
       exact pi_eq_sum_univ (e x)
     rw [hsum]
     exact Submodule.sum_mem _ fun i _ => Submodule.smul_mem_smul (hx i) Submodule.mem_top

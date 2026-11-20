@@ -193,11 +193,13 @@ theorem exists_cut (c : E ≃ₐ[F] E) (hc : ∀ x, c (c x) = x) (N : ℕ) (hN :
   let e : Af F := ∑ v ∈ hfin.toFinset, singleV F v 1
   have he1 : ∀ v : HeightOneSpectrum (𝓞 F), m ∈ v.asIdeal → e v = 1 := fun v hv => by
     change evalV F v e = 1
-    rw [map_sum, Finset.sum_eq_single v (fun w _ h => GlobalTheory.SplitIdem.evalV_singleV_ne _ w _ h.symm)
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_eq_single v (fun w _ h => GlobalTheory.SplitIdem.evalV_singleV_ne _ w _ h.symm)
       (fun h => absurd (hfin.mem_toFinset.2 hv) h), GlobalTheory.SplitIdem.evalV_singleV_same]
   have he0 : ∀ v : HeightOneSpectrum (𝓞 F), m ∉ v.asIdeal → e v = 0 := fun v hv => by
     change evalV F v e = 0
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_eq_zero fun w hw => GlobalTheory.SplitIdem.evalV_singleV_ne _ w _
       (fun h : v = w => hv (h ▸ hfin.mem_toFinset.1 hw))
   obtain ⟨a, ha, hae⟩ := exists_div m hm0 e he1 he0
@@ -339,7 +341,8 @@ theorem eq_one_of_idem (hs : ∀ e, IsSplitIdem D e → ∀ g, SuppAt e V g → 
     (h1 : e * e = e) (h2 : {v | e v ≠ 0}.Finite) (h3 : ∀ v, e v ≠ 0 → SplitPl (cF D) v) (g : GA D V)
     (hg : fj D e • (Formalism.L2.Theta.mt V g - 1) = Formalism.L2.Theta.mt V g - 1) : ν g = 1 := by
   refine eq_one_of_finset hs h2.toFinset (fun v hv => h3 v (h2.mem_toFinset.1 hv)) g ?_
-  rw [← map_sum, ← GlobalTheory.SplitReps.idem_eq_sum e h1 h2.toFinset (fun v => h2.mem_toFinset), hg]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum, ← GlobalTheory.SplitReps.idem_eq_sum e h1 h2.toFinset (fun v => h2.mem_toFinset), hg]
 
 end Char
 

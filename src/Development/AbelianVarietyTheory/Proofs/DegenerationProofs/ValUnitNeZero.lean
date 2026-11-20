@@ -38,7 +38,8 @@ theorem Reg.sum {I : Type} [Fintype I] {F : I → (Sp C ⟶ Y) → C} (hF : ∀ 
     Reg q σ W fun x => ∑ i, F i x := by
   choose r hr using hF
   refine ⟨∑ i, r i, fun x hx hW => ?_⟩
-  rw [valR_eq x W hW, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [valR_eq x W hW, map_sum]
   exact Finset.sum_congr rfl fun i _ => (hr i x hx hW).trans (valR_eq x W hW _)
 
 theorem Reg.const (a : K) : Reg q σ W fun _ => σ a :=

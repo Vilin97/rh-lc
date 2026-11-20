@@ -21,7 +21,8 @@ theorem mat_step {K V : Type} [CommRing K] [AddCommGroup V] [Module K V] {m : �
   have hw : ∀ i, n.symm (v i) = ∑ k, s⁻¹ k i • v k := by
     intro i
     apply n.injective
-    rw [LinearEquiv.apply_symm_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [LinearEquiv.apply_symm_apply, map_sum]
     simp_rw [map_smul, hn, Finset.smul_sum, smul_smul]
     rw [Finset.sum_comm]
     have h1 : s * s⁻¹ = 1 := Matrix.mul_nonsing_inv s hs
@@ -31,7 +32,8 @@ theorem mat_step {K V : Type} [CommRing K] [AddCommGroup V] [Module K V] {m : �
     simp
   intro j
   change n.symm (g' (v j)) = _
-  rw [hg, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hg, map_sum]
   simp_rw [map_smul, hw, Finset.smul_sum, smul_smul]
   rw [Finset.sum_comm]
   simp_rw [← Finset.sum_smul, Matrix.mul_apply]
@@ -46,7 +48,8 @@ theorem bc_sum {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] 
     (a : Fin m → E) (x : Fin m → Fin n → E) :
     A.bc p (∑ i, a i • x i) = ∑ i, (A.loc p).ιE (a i) • A.bc p (x i) := by
   funext l
-  simp [Places.bc, Finset.sum_apply, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Places.bc, Finset.sum_apply, map_sum, map_mul]
 
 theorem unit_of_pat {K : Type} [CommRing K] {m : ℕ} (P : Fin m → Fin m → Prop)
     (hP : ∀ i j, P i j → i < j) (s : Matrix (Fin m) (Fin m) K)

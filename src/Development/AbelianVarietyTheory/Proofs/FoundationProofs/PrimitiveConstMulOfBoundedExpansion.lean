@@ -64,7 +64,8 @@ theorem exists_dividing {Ω : Type} [Field Ω] [Algebra ℚ Ω] (A : ValuationSu
   rw [Submodule.mem_span_finset] at h1
   obtain ⟨g, -, hg⟩ := h1
   have h2 := congrArg (algebraMap (𝓞 E) Ω) hg
-  rw [hf, map_sum] at h2
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hf, map_sum] at h2
   have hle : v ((D : Ω) * c i) ≤ v (D : Ω) * v (c i0) := by
     rw [← h2]
     refine Valuation.map_sum_le _ (fun y hy => ?_)

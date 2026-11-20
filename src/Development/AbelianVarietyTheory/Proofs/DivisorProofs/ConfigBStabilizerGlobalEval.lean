@@ -130,14 +130,16 @@ theorem exists_piInf_le (hcm : IsCMExt F E σ) (τ : ∀ w : InfinitePlace F, Em
   refine ⟨1 + A, by linarith, fun z => ?_⟩
   set x := GlobalTheory.XTermMaj.crd F E (cA σ z) with hx
   have hz : z = ∑ i, x i ⊗ₜ[F] σ (Module.finBasis F E i) := by
-    rw [← hc z, ← (Algebra.TensorProduct.basis (AF F) (Module.finBasis F E)).sum_equivFun (cA σ z), map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hc z, ← (Algebra.TensorProduct.basis (AF F) (Module.finBasis F E)).sum_equivFun (cA σ z), map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [Algebra.TensorProduct.basis_apply, TensorProduct.smul_tmul', smul_eq_mul, mul_one]
     rfl
   have h1 : ∑ w, ‖piInf (τ w) z‖ ≤ A * ∑ i, ∑ v : InfinitePlace F, ‖(x i).1 v‖ := by
     rw [Finset.sum_comm, Finset.mul_sum]
     refine Finset.sum_le_sum fun w _ => ?_
-    conv_lhs => rw [hz, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [hz, map_sum]
     rw [Finset.mul_sum]
     refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun i _ => ?_)
     change ‖InfinitePlace.Completion.extensionEmbedding w ((x i).1 w) * (τ w).1 _‖ ≤ _
@@ -166,7 +168,8 @@ theorem shift_decay {B : Base F E} {n d n₁ d₁ r s i₀ i₁ j₀ j₁ : ℕ}
     exact τ.injective (by rw [hcm.2.2.2, hcm.2.2.2, star_star])
   have hyx : form σ X.J H.y H.x = 1 := by
     have h1 : form σ X.J H.y H.x = σ (form σ X.J H.x H.y) := by
-      simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, hX.herm, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, hX.herm, Finset.mul_sum]
       rw [Finset.sum_comm]
       exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
     rw [h1, hH.xy, map_one]
@@ -198,7 +201,8 @@ theorem shift_decay {B : Base F E} {n d n₁ d₁ r s i₀ i₁ j₀ j₁ : ℕ}
     rw [h1, one_mul]
   obtain ⟨f₁, hf₁, hb⟩ := hC k (fun i => realAd F 1 * x i) (funext fun i => show (0 : Af F) * (x i).2 = 0 from zero_mul _)
   have hS : M.co.e (partInf F (shiftB σ H H' l)) = ∑ i, (realAd F 1 * x i) • S i := by
-    simp only [S, mul_smul, ← Finset.smul_sum, ← map_smul, ← map_sum, ← smul_assoc (x _), ← Finset.sum_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [S, mul_smul, ← Finset.smul_sum, ← map_smul, ← map_sum, ← smul_assoc (x _), ← Finset.sum_smul]
     rw [partInf, shiftB]
     congr 3
     refine ((Algebra.TensorProduct.basis (AF F) (Module.finBasis F E)).sum_equivFun (cA σ (l : AE F E))).symm.trans ?_

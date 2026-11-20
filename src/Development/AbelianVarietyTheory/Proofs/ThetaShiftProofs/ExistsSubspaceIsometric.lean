@@ -36,7 +36,8 @@ theorem mulVec_period {g : ℕ} (h τ : Matrix (Fin g) (Fin g) ℂ) (p : (Fin g 
     funext i
     simp [Finset.sum_apply, Pi.single_apply]
   conv_lhs => rw [hu]
-  rw [map_sum, Matrix.mulVec_sum, Fintype.sum_sum_type, e fun i => u (.inl i), e fun i => u (.inr i), Matrix.mulVec_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Matrix.mulVec_sum, Fintype.sum_sum_type, e fun i => u (.inl i), e fun i => u (.inr i), Matrix.mulVec_sum]
   simp only [map_zsmul, Matrix.mulVec_smul, (hp _).1, (hp _).2]
 
 theorem surjective_mulVec {g : ℕ} (h : Matrix (Fin g) (Fin g) ℂ) (e : Fin g → Fin g → ℂ)

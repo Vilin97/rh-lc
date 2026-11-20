@@ -131,7 +131,8 @@ private lemma nu_mem {p : ℕ} (β : ℚ ⊗[ℤ] (Fin n → 𝓞 E) ≃ₗ[ℚ]
       | add a b _ _ h1 h2 => rw [Pi.single_add, map_add]; exact add_mem h1 h2
       | neg a _ h => rw [Pi.single_neg, map_neg]; exact neg_mem h
     have hv : v = ∑ i, (nu (AfP p) β).symm (Pi.single i (nu (AfP p) β v i)) := by
-      rw [← map_sum, Finset.univ_sum_single]; simp
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← map_sum, Finset.univ_sum_single]; simp
     rw [hv]
     exact sum_mem fun i _ => hs i _ (h i)
 

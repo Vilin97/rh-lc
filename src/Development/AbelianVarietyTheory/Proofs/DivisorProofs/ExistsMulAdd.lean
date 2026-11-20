@@ -19,9 +19,11 @@ theorem semi_mk {q : ℕ} {P : Type} [AddCommGroup P] [Module A P] (S : Submodul
   have : (Submodule.Quotient.mk x : (Fin m → A) ⧸ S) = ∑ i, x i • Submodule.Quotient.mk (Pi.single i 1) := by
     conv_lhs => rw [pi_eq_sum_univ' x]
     change S.mkQ _ = _
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun i _ => map_smul _ _ _
-  rw [this, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [this, map_sum]
   exact Finset.sum_congr rfl fun i _ => hτ _ _
 
 theorem exists_semi [Fact p.Prime] (k : ℕ) {P : Type} [AddCommGroup P] [Module A P] (R : Matrix (Fin m) (Fin r) A)
@@ -40,7 +42,8 @@ theorem exists_semi [Fact p.Prime] (k : ℕ) {P : Type} [AddCommGroup P] [Module
   have : Matrix.mulVecLin R c = ∑ j, fun i => c j * R i j := by
     funext i
     simp [Matrix.mulVec, dotProduct, mul_comm]
-  rw [AddMonoidHom.mem_ker, this, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [AddMonoidHom.mem_ker, this, map_sum]
   refine Finset.sum_eq_zero fun j _ => ?_
   rw [hφ]
   simp only [mul_pow, mul_smul]
@@ -59,7 +62,8 @@ theorem mk_mulVec (S : Submodule A (Fin m₂ → A)) (U : Matrix (Fin m₂) (Fin
     simp [Matrix.mulVec, dotProduct, mul_comm]
   rw [this]
   change S.mkQ _ = _
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_congr rfl fun i _ => map_smul _ _ _
 
 theorem univ_of_mat [Fact p.Prime] (k : ℕ) (R₁ : Matrix (Fin m) (Fin r) A) (R₂ : Matrix (Fin m₂) (Fin r₂) A)
@@ -107,7 +111,8 @@ theorem univ_of_mat [Fact p.Prime] (k : ℕ) (R₁ : Matrix (Fin m) (Fin r) A) (
       have : R₁.map (· ^ p ^ k) *ᵥ d = ∑ j, d j • fun i => R₁ i j ^ p ^ k := by
         funext l
         simp [Matrix.mulVec, dotProduct, mul_comm]
-      rw [this, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [this, map_sum]
       exact Finset.sum_eq_zero fun j _ => by rw [map_smul, hL, rel_semi R₁ τ hτ, smul_zero]
     refine ⟨Submodule.liftQ _ (L ∘ₗ V.mulVecLin) ?_, fun x => ?_⟩
     · rintro _ ⟨c, rfl⟩
@@ -196,7 +201,8 @@ theorem mat_of_univ [Fact p.Prime] (k : ℕ) (R₁ : Matrix (Fin m) (Fin r) A) (
     simp only [Pi.smul_apply, smul_eq_mul, mul_pow, mul_smul]
   have hker : ∀ x, (Submodule.Quotient.mk (U *ᵥ x) : (Fin m₂ → A) ⧸ LinearMap.range (Matrix.mulVecLin R₂)) = 0 →
       x ∈ K := fun x hx => by
-    rw [← Submodule.Quotient.mk_eq_zero, ← h1, ← map_zero g, ← hx, hUx, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Submodule.Quotient.mk_eq_zero, ← h1, ← map_zero g, ← hx, hUx, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, hg, hτ, Finset.sum_eq_single i (fun j _ h => by simp [h, zero_pow hq]) (by simp)]
     simp

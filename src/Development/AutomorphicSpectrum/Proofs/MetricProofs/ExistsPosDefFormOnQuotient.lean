@@ -33,7 +33,8 @@ theorem hermitian_transport_along_orthogonal_complement :
     simp [A, Matrix.vecMul, dotProduct, Finset.sum_apply]
   have hTq : ∀ u, q (Matrix.vecMul u A) = u := by
     intro u
-    rw [hT, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hT, map_sum]
     simp_rw [map_smul, hAq]
     ext j
     simp [Finset.sum_apply, Pi.single_apply]

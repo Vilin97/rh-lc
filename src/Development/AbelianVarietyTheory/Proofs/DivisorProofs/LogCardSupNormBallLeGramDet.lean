@@ -59,7 +59,8 @@ theorem val_comb (P : Pair p) (a b : ℤ) {r : ℕ} (f : Fin r → X.functionFie
   have heq : (⟨comb f z, hmem⟩ : P.H a b) = ∑ i, z i • (⟨f i, hf i⟩ : P.H a b) := by
     apply Subtype.ext
     simp [comb_apply]
-  rw [← hℓ ⟨comb f z, hmem⟩, heq, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hℓ ⟨comb f z, hmem⟩, heq, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_zsmul, hℓ, zsmul_eq_mul]
 
@@ -96,7 +97,8 @@ theorem cmb_conj_le (P : Pair p) (a b : ℤ) {r : ℕ} (f : Fin r → X.function
   simp only [cmb, vals]
   have h : ∑ i, c i * val P a b σ' y' (f i) =
       θ * starRingEnd ℂ (∑ i, starRingEnd ℂ (c i) * val P a b σ y (f i)) := by
-    rw [map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [hval _ (hf i), map_mul, Complex.conj_conj]
     ring

@@ -468,7 +468,8 @@ theorem small_inf (j : ℕ) (H : Subgroup (PadicAlgCl l ≃ₐ[W] PadicAlgCl l))
       rw [norm_mul]
       refine mul_le_mul_of_nonneg_left (hC _ _ fun σ hσ => ?_) (norm_nonneg _)
       change ‖_ - c σ * _‖ ≤ _
-      rw [map_sum, Finset.mul_sum, ← Equiv.sum_comp (MulAction.toPerm (⟨σ, hσ⟩ : H))
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Finset.mul_sum, ← Equiv.sum_comp (MulAction.toPerm (⟨σ, hσ⟩ : H))
         (fun t : MulAction.orbit H α => c σ * ((t : PadicAlgCl l) ^ k * (c (τ t)⁻¹ * τ t x))),
         ← Finset.sum_sub_distrib]
       refine (norm_sum_le _ _).trans ?_

@@ -72,7 +72,8 @@ theorem pderiv_mS (P Q S : ℕ) (a a' : Fin P) (c : Fin S) (b : Fin Q) :
     pderiv (Sum.inl a', Sum.inr c) (mS P Q S a b) =
       if a = a' then X (Sum.inr b, Sum.inr c) else 0 := by
   classical
-  simp only [mS, map_sum, Derivation.leibniz, pderiv_X, Pi.single_apply, smul_eq_mul, Prod.mk.injEq,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [mS, map_sum, Derivation.leibniz, pderiv_X, Pi.single_apply, smul_eq_mul, Prod.mk.injEq,
     Sum.inl.injEq, Sum.inr.injEq]
   split_ifs with e
   · simp [e]
@@ -82,7 +83,8 @@ theorem euler_embS (P Q S : ℕ) (h : Q ≤ S) (k' : ℕ) (a a' : Fin P) (G : Md
     ∑ c : Fin S, X (Sum.inl a, Sum.inr c) * pderiv (Sum.inl a', Sum.inr c) (embS P Q S h k' G) =
       embS P Q S h k' (∑ b, X (a, b) * pderiv (a', b) G) := by
   classical
-  simp only [embS, LinearMap.comp_apply, LinearMap.mulRight_apply, AlgHom.toLinearMap_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [embS, LinearMap.comp_apply, LinearMap.mulRight_apply, AlgHom.toLinearMap_apply,
     Derivation.leibniz, Derivation.leibniz_pow, pderiv_detS, smul_zero, zero_add, smul_eq_mul,
     pderiv_aeval, pderiv_mS, map_sum, map_mul, aeval_X, Fintype.sum_prod_type, mul_zero, mul_ite,
     Finset.sum_mul, Finset.mul_sum]
@@ -94,12 +96,14 @@ theorem euler_embS (P Q S : ℕ) (h : Q ≤ S) (k' : ℕ) (a a' : Fin P) (G : Md
 theorem pair_act_first_block : ∀ (P Q S : ℕ) (h : Q ≤ S) (k' : ℕ) (a a' : Fin P) (G : Mdl P Q) (f : Pol P Q 0 S), GlobalTheory.DefLift.BilFischer.pair (fockAct1 P Q 0 S (Eab (Sum.inl a) (Sum.inl a')) f) (embS P Q S h k' G) = GlobalTheory.DefLift.BilFischer.pair f (embS P Q S h k' (opS P Q S k' (Sum.inl a) (Sum.inl a') G)) := by
   intro P Q S h k' a a' G f
   rw [fockAct1_Eab, LinearMap.sum_apply, Fintype.sum_sum_type]
-  simp only [omE_neg (Sum.inl _, Sum.inr _) (Sum.inl _, Sum.inr _) rfl rfl, Finset.univ_eq_empty,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [omE_neg (Sum.inl _, Sum.inr _) (Sum.inl _, Sum.inr _) rfl rfl, Finset.univ_eq_empty,
     Finset.sum_empty, zero_add, map_sum, map_sub, map_neg, map_smul, LinearMap.sum_apply,
     LinearMap.sub_apply, LinearMap.neg_apply, LinearMap.smul_apply, pair_X_mul, pair_pderiv,
     opS, Module.End.mul_apply, LinearMap.mulLeft_apply, Module.End.one_apply]
   have key := congrArg (pair f) (euler_embS P Q S h k' a a' G)
-  simp only [map_sum] at key
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum] at key
   rw [Finset.sum_sub_distrib, Finset.sum_neg_distrib, key]
   by_cases e : a = a'
   · simp [e]

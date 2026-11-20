@@ -29,7 +29,8 @@ theorem det_change {V₁ V₂ : Type} [AddCommGroup V₁] [Module ℂ V₁] [Add
   have e : (Matrix.of fun a b => B (∑ c, U c a • y c) (∑ c, U' c b • y' c)) =
       Uᵀ * (Matrix.of fun a b => B (y a) (y' b)) * (U'ᴴ)ᵀ := by
     ext a b
-    simp only [Matrix.of_apply, Matrix.mul_apply, map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.of_apply, Matrix.mul_apply, map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply,
       LinearMap.map_smulₛₗ, Matrix.transpose_apply, Matrix.conjTranspose_apply, smul_eq_mul, Finset.sum_mul,
       Finset.mul_sum]
     first
@@ -78,7 +79,8 @@ theorem gramProj_le {n r : ℕ} (P : Submodule ℂ (EuclideanSpace ℂ (Fin n)))
     (fun a => ∑ b, U b a • P.starProjection (WithLp.toLp 2 (v b)))).2 R (fun a => by
       refine le_trans ?_ (hR a)
       rw [eucl_eq, WithLp.toLp_sum]
-      simp only [← map_smul, ← map_sum, WithLp.toLp_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [← map_smul, ← map_sum, WithLp.toLp_smul]
       exact P.norm_starProjection_apply_le _)
   have e : ∀ w : Fin r → EuclideanSpace ℂ (Fin n), (Matrix.gram ℂ w).det =
       (Matrix.of fun a b => (innerₛₗ ℂ).flip (w a) (w b)).det := by

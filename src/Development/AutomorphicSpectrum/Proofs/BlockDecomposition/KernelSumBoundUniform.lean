@@ -59,7 +59,8 @@ private theorem orth_sum_lemma {X : Type*} [MeasurableSpace X] {ν : Measure X} 
     have e1 : ∀ x, (((‖∑ i, c i * ψ i x‖ ^ 2 : ℝ)) : ℂ) =
         ∑ i, ∑ j, (c i * (starRingEnd ℂ) (c j)) * (ψ i x * (starRingEnd ℂ) (ψ j x)) := by
       intro x
-      rw [Complex.ofReal_pow, ← Complex.mul_conj', map_sum, Finset.sum_mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Complex.ofReal_pow, ← Complex.mul_conj', map_sum, Finset.sum_mul_sum]
       refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
       simp only [map_mul]
       ring

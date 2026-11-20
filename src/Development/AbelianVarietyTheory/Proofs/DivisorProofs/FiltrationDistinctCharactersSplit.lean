@@ -91,7 +91,8 @@ theorem chain_split : ∀ {V : Type} [AddCommGroup V] [Module ℂ V] {G : Type} 
       have hPS : ∀ x ∈ S k.castSucc, P x = 0 := by
         intro x hx
         obtain ⟨w', hsum, heig, hsupp⟩ := ih x hx
-        rw [hsum, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [hsum, map_sum]
         refine Finset.sum_eq_zero fun s _ => ?_
         by_cases hs : s = k
         · subst hs; rw [hsupp s le_rfl, map_zero]

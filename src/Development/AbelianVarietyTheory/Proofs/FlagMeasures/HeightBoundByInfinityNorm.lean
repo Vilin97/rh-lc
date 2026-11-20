@@ -18,7 +18,8 @@ theorem exists_bound {n : ℕ} {E : Type} [NormedAddCommGroup E] [NormedSpace �
   refine ⟨c, hc0, fun B => ?_⟩
   have hB : L B = ∑ i, ∑ j, B i j • L (Matrix.single i j (1 : ℂ)) := by
     conv_lhs => rw [Matrix.matrix_eq_sum_single B]
-    simp [map_sum, ← map_smul, Matrix.smul_single]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, ← map_smul, Matrix.smul_single]
   have hle : ∀ i j, ‖L (Matrix.single i j (1 : ℂ))‖ ≤ c := fun i j =>
     (Finset.single_le_sum (f := fun j => ‖L (Matrix.single i j (1 : ℂ))‖) (fun _ _ => norm_nonneg _)
       (Finset.mem_univ j)).trans

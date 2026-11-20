@@ -107,10 +107,12 @@ theorem pe_idem (v : Pl D) : pe D v * pe D v = pe D v :=
 def peT (D : D7) (T : Finset (Pl D)) : AE D := ∑ v ∈ T, pe D v
 
 theorem inf_peT (T : Finset (Pl D)) : infPart D (peT D T) = 0 := by
-  rw [peT, map_sum]; exact Finset.sum_eq_zero fun v _ => inf_pe v
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [peT, map_sum]; exact Finset.sum_eq_zero fun v _ => inf_pe v
 
 theorem comp_peT (T : Finset (Pl D)) (w : Pl D) : compAt D w (peT D T) = if w ∈ T then 1 else 0 := by
-  simp [peT, map_sum, comp_pe]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [peT, map_sum, comp_pe]
 
 theorem pe_mul_peT {v : Pl D} {T : Finset (Pl D)} (hv : v ∉ T) : pe D v * peT D T = 0 :=
   ext_AE (by simp [inf_pe]) fun w => by

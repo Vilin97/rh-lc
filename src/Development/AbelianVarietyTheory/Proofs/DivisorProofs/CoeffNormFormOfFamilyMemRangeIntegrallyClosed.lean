@@ -18,7 +18,8 @@ theorem leftMulMatrix_sum_tmul (K L : Type) [Field K] [Field L] [Algebra K L] [F
       (∑ i, (X i : MvPolynomial (Fin m) K) ⊗ₜ[K] x i) =
     ∑ i, (X i : MvPolynomial (Fin m) K) •
       (Algebra.leftMulMatrix (Module.finBasis K L) (x i)).map (C : K →+* MvPolynomial (Fin m) K) := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   ext a c
   simp [Algebra.leftMulMatrix_eq_repr_mul, Algebra.TensorProduct.basis_repr_tmul,

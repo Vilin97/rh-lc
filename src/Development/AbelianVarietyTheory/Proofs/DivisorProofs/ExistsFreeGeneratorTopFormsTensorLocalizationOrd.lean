@@ -237,7 +237,8 @@ theorem exists_isFreeGen_locAt_formOrd : ∀ {K κ' L : Type} [Field K] [Field �
     letI := j.toAlgebra
     haveI : IsScalarTower ℂ K L := IsScalarTower.of_algebraMap_eq' hj.symm
     have e := congrArg (KaehlerDifferential.map ℂ ℂ K L) (hcx i)
-    rw [map_sum] at e
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at e
     simp only [map_smul, KaehlerDifferential.map_D] at e
     simp only [Matrix.map_apply]
     rw [show dFun (algebraMap ℂ L) (j (x i)) = KaehlerDifferential.D ℂ L (algebraMap K L (x i)) from rfl, e]

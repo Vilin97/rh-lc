@@ -159,7 +159,8 @@ theorem tf_closure_stable (dual : Bool) {lam : Fin n → ℝ} {H : Type*} [Norme
       · exact LinearMap.congr_fun (casimir_tensVd hD.glRep) _
     show casimir _ (Φ (P' f)) = _ • Φ (P' f)
     rw [← map_smul]
-    simp only [casimir, LinearMap.sum_apply, Module.End.mul_apply, hΦE, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [casimir, LinearMap.sum_apply, Module.End.mul_apply, hΦE, ← map_sum]
     refine congrArg Φ (Subtype.ext ?_)
     simp only [Submodule.coe_sum, Submodule.coe_smul]
     rw [show ((P' f : tensSub (n := n) (genSub E V)) : Fin n → D) = P f.1 from rfl, ← h2]

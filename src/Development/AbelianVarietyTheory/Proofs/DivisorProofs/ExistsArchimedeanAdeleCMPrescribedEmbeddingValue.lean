@@ -67,7 +67,8 @@ theorem exists_at_inf_values : ∀ {F E : Type} [Field F] [NumberField F] [Field
     rw [Finset.smul_sum]
     refine Finset.sum_eq_zero fun w _ => ?_
     rw [smul_add, smul_adAt_tmul u hu, smul_adAt_tmul u hu, add_zero]
-  · rw [map_sum, Finset.sum_eq_single v]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum, Finset.sum_eq_single v]
     · rw [map_add, piInf_adAt_same, piInf_adAt_same]
       simp only [cR, ext_symm_real, map_one, mul_one]
       have h0 := hξ v

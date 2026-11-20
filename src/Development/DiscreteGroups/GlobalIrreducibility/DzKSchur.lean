@@ -24,7 +24,8 @@ theorem central_scalar (τ : FDRep ℂ G) [Simple τ] (f : G → ℂ) (hf : ∀ 
   have hA : ∀ h, A ∘ₗ τ.ρ h = τ.ρ h ∘ₗ A := by
     intro h
     refine LinearMap.ext fun v => ?_
-    rw [LinearMap.comp_apply, LinearMap.comp_apply, hAapp, hAapp, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [LinearMap.comp_apply, LinearMap.comp_apply, hAapp, hAapp, map_sum]
     rw [← Equiv.sum_comp (MulAut.conj h).toEquiv]
     refine Finset.sum_congr rfl fun y _ => ?_
     have e1 : f ((MulAut.conj h).toEquiv y) = f y := by
@@ -47,7 +48,8 @@ theorem central_scalar (τ : FDRep ℂ G) [Simple τ] (f : G → ℂ) (hf : ∀ 
   have htr : LinearMap.trace ℂ τ A = c * Module.finrank ℂ τ := by
     rw [hAc, map_smul, LinearMap.trace_id, smul_eq_mul]
   rw [← htr]
-  simp only [A, map_sum, map_smul, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [A, map_sum, map_smul, smul_eq_mul]
   rfl
 
 end DiscreteGroups.sglob.DzType.Kon

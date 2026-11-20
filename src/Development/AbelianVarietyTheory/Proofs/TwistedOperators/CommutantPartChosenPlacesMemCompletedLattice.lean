@@ -39,7 +39,8 @@ theorem part_mem_latO : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {�
   refine (GlobalTheory.SelfDualAt.latO_ann_at D ψ hψ _ _ _ _ hS hT (fun _ => True) (e • w) hmx).2 fun u hu => ?_
   rw [GlobalTheory.SplitScalar.symplO_smul]
   obtain ⟨⟨es, hes, rfl⟩, -⟩ := he
-  rw [map_sum, Finset.sum_smul, ← GlobalTheory.LatVac.symplHom_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_smul, ← GlobalTheory.LatVac.symplHom_apply, map_sum]
   refine Finset.sum_induction _ (fun z => ψ z = 1) (fun a b ha hb => by rw [AddChar.map_add_eq_mul, ha, hb, mul_one])
     (AddChar.map_zero_eq_one ψ) fun PP hPP => ?_
   rw [GlobalTheory.LatVac.symplHom_apply]

@@ -79,7 +79,8 @@ theorem linIndep_of_isUnit_det (σ : E →ₐ[F] E) {M n : ℕ} (J : Matrix (Fin
   have key : ∀ b, ∑ a, g a * gramR R σ J X b a = 0 := by
     intro b
     have e := congrArg (hLin R σ J (X b)) hg
-    rw [map_sum, map_zero] at e
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero] at e
     simp only [map_smul, smul_eq_mul] at e
     exact e
   have hv : Matrix.mulVec (gramR R σ J X) g = 0 := by
@@ -179,7 +180,8 @@ theorem gramR_mem (σ : E →ₐ[F] E) (hσ : ∀ x, σ (σ x) = x) {M n : ℕ}
     simp [JR, inclR, sigR, hJ]
   show ∀ a b, sigR R σ (gramR R σ J X b a) = gramR R σ J X a b
   intro a b
-  simp only [gramR, hR, Formalism.UG.hform, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [gramR, hR, Formalism.UG.hform, map_sum, map_mul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun p _ => Finset.sum_congr rfl fun q _ => ?_
   rw [sigR_invol R σ hσ, hJR]

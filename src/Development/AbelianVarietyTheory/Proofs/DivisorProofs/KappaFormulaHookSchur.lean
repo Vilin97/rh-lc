@@ -77,8 +77,10 @@ theorem iter_pderiv_hookR (N k m : ℕ) (i : Fin N) (v : Fin N → ℝ) :
     induction m with
     | zero => rfl
     | succ m ih =>
-      simp only [Function.iterate_succ_apply', ih, map_sum, pderiv_C_mul]
-  rw [this, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Function.iterate_succ_apply', ih, map_sum, pderiv_C_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [this, map_sum]
   simp only [map_mul, eval_C]
 
 theorem eval_detE_rho_ne_zero (N : ℕ) (v : Fin N → ℝ) (hv : ∀ a b, a ≠ b → v a ≠ v b) :

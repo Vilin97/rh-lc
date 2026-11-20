@@ -72,7 +72,8 @@ theorem zl_span_image_finite : ∀ (l : ℕ) [Fact l.Prime] (Γ : Type) [Group �
     unfold Finsupp.sum
     simp only [A]
     unfold Finsupp.sum
-    rw [Finset.sum_apply, hcs, map_sum, Finset.sum_apply, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_apply, hcs, map_sum, Finset.sum_apply, Finset.mul_sum]
     refine Finset.sum_congr rfl fun h _ => ?_
     rw [map_smul, Pi.smul_apply, Pi.smul_apply, smul_eq_mul, smul_eq_mul, PadicInt.coe_mul]
     simp only [ψ]

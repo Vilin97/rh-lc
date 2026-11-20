@@ -77,7 +77,8 @@ namespace GlobalTheory.HeisTranslate
 
 theorem hf_swap (D : D7) (T : Tor D) {N N' : ℕ} (a b : VC D N N') :
     Hf D T b a = starRingEnd ℂ (Hf D T a b) := by
-  simp only [Hf, map_div₀, map_sum, map_mul, Complex.conj_conj, Complex.conj_ofReal]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Hf, map_div₀, map_sum, map_mul, Complex.conj_conj, Complex.conj_ofReal]
   congr 1
   refine Finset.sum_congr rfl fun τ _ => Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   ring

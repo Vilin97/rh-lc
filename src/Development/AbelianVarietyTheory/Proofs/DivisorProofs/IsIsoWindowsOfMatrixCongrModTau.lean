@@ -26,7 +26,8 @@ theorem iter_vec (σ : B →+* B) (M : Matrix ι ι B) (n : ℕ) (w : ι → B) 
     rw [Function.iterate_succ_apply', ih, lft, ← Matrix.mulVec_mulVec]
     congr 1
     funext j
-    simp [Matrix.mulVec, dotProduct, map_sum, map_mul, Function.iterate_succ_apply']
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Matrix.mulVec, dotProduct, map_sum, map_mul, Function.iterate_succ_apply']
 
 theorem iter_mat (σ : B →+* B) (M N : Matrix ι ι B) (n : ℕ) (Y : Matrix ι ι B) :
     (fun Y : Matrix ι ι B => M * Y.map σ * N)^[n] Y =
@@ -89,7 +90,8 @@ theorem isNil_kron {B O ι : Type} [CommRing B] [CommRing O] [IsLocalRing O] [Fi
   refine ⟨n, fun v x => ?_⟩
   rw [kron_iter]
   refine (IsLocalRing.mem_maximalIdeal _).1 ?_
-  simp only [Matrix.mul_apply, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mul_apply, map_sum, map_mul]
   exact Ideal.sum_mem _ fun m _ => Ideal.mul_mem_right _ _ (Ideal.sum_mem _ fun j _ =>
     Ideal.mul_mem_right _ _ (hL _ _))
 
@@ -110,7 +112,8 @@ theorem isNil_lift {A B O ι : Type} [CommRing A] [CommRing B] [CommRing O] [Fin
       rw [Function.iterate_succ_apply', Function.iterate_succ_apply']
       set w := (fun w : ι → B => K.mulVec fun j => σB (w j))^[m] (fun j => a (v j))
       set u := (fun w : ι → A => KA.mulVec fun j => φ (w j))^[m] v
-      simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, ← Finset.sum_sub_distrib]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, ← Finset.sum_sub_distrib]
       refine Ideal.sum_mem _ fun j _ => ?_
       have e : K i j * σB (w j) - a (KA i j) * a (φ (u j)) =
           (K i j - a (KA i j)) * σB (w j) + a (KA i j) * σB (w j - a (u j)) := by
@@ -220,7 +223,8 @@ theorem window_iso : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgClo
     have h1 := congrArg F.a (hvA (i, l))
     have h2 : F.a ((KA.mulVec fun j => WittVector.frobenius (vA j)) (i, l)) =
         (KA.map F.a).mulVec (fun j => F.σ (F.a (vA j))) (i, l) := by
-      simp [Matrix.mulVec, dotProduct, map_sum, map_mul, F.σ_a]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [Matrix.mulVec, dotProduct, map_sum, map_mul, F.σ_a]
     have h3 : (M * Z.map F.σ * N) i l = K.mulVec (fun y => F.σ (F.a (vA y))) (i, l) :=
       (kron_mulVec F.σ M N Z (i, l)).symm
     rw [map_sub, h2] at h1

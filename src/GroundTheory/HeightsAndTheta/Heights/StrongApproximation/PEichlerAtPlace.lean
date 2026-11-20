@@ -26,7 +26,8 @@ theorem hf_single_incl (c : E ≃ₐ[F] E) (v : HeightOneSpectrum (𝓞 F))
     {N : ℕ} (J : Matrix (Fin N) (Fin N) E) (u : Fin N → Kv E v) (y : Fin N → E) :
     hf (sigA c) (J.map (inclA F E)) (singleV E v ∘ u) (inclA F E ∘ y) =
       singleV E v (hf (sigV c v).toRingHom (J.map (inclV E v)) u (inclV E v ∘ y)) := by
-  simp only [hf, map_sum, Matrix.map_apply, Function.comp_apply, AlgHom.toRingHom_eq_coe,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hf, map_sum, Matrix.map_apply, Function.comp_apply, AlgHom.toRingHom_eq_coe,
     RingHom.coe_coe]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   rw [sigA_inclA, sigV_inclV, mul_assoc, ← map_mul (inclA F E), mul_assoc, ← map_mul (inclV E v), hsi]
@@ -38,7 +39,8 @@ theorem hf_single_single (c : E ≃ₐ[F] E) (v : HeightOneSpectrum (𝓞 F))
     {N : ℕ} (J : Matrix (Fin N) (Fin N) E) (u w : Fin N → Kv E v) :
     hf (sigA c) (J.map (inclA F E)) (singleV E v ∘ u) (singleV E v ∘ w) =
       singleV E v (hf (sigV c v).toRingHom (J.map (inclV E v)) u w) := by
-  simp only [hf, map_sum, Matrix.map_apply, Function.comp_apply, AlgHom.toRingHom_eq_coe,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hf, map_sum, Matrix.map_apply, Function.comp_apply, AlgHom.toRingHom_eq_coe,
     RingHom.coe_coe]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   rw [hsig, hmul, hsi]
@@ -52,17 +54,20 @@ theorem embed_eich (c : E ≃ₐ[F] E) (v : HeightOneSpectrum (𝓞 F))
   have hw : ∀ j, ((J.map (inclV E v)) *ᵥ ((sigV c v).toRingHom ∘ (inclV E v ∘ e))) j =
       inclV E v ((J *ᵥ (c ∘ e)) j) := by
     intro j
-    simp only [mulVec, dotProduct, map_sum, Matrix.map_apply, Function.comp_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [mulVec, dotProduct, map_sum, Matrix.map_apply, Function.comp_apply,
       AlgHom.toRingHom_eq_coe, RingHom.coe_coe, sigV_inclV, map_mul]
   have hwA : ∀ j, ((J.map (inclA F E)) *ᵥ (sigA c ∘ (inclA F E ∘ e))) j =
       inclA F E ((J *ᵥ (c ∘ e)) j) := by
     intro j
-    simp only [mulVec, dotProduct, map_sum, Matrix.map_apply, Function.comp_apply, sigA_inclA,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [mulVec, dotProduct, map_sum, Matrix.map_apply, Function.comp_apply, sigA_inclA,
       map_mul]
   have hz : ∀ j, ((J.map (inclA F E)) *ᵥ (sigA c ∘ (singleV E v ∘ u))) j =
       singleV E v (((J.map (inclV E v)) *ᵥ ((sigV c v).toRingHom ∘ u)) j) := by
     intro j
-    simp only [mulVec, dotProduct, map_sum, Matrix.map_apply, Function.comp_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [mulVec, dotProduct, map_sum, Matrix.map_apply, Function.comp_apply,
       AlgHom.toRingHom_eq_coe, RingHom.coe_coe]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [hsig, mul_comm (inclV E v (J j k)), hsi, mul_comm]

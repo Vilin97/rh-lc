@@ -90,7 +90,8 @@ lemma qd_vec_can_high {M : GLMod n} (CF : ColFam M) (R : Type) [CommRing R] (j :
   · intro R' _ _ u h1 h2
     funext i
     have h := congrArg (evGL u) (qb_equiv_apply CF j i (canT (CF.mu j)))
-    simp only [map_sum, map_mul, map_intCast, unipotent_eval_canonical u h1 h2, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq',
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, map_intCast, unipotent_eval_canonical u h1 h2, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq',
       Finset.mem_univ, if_true] at h
     simpa [Matrix.mulVec, dotProduct, ColFam.vec] using h
 

@@ -142,7 +142,8 @@ theorem sig_sig (h : IsCMExt F E σ) (x : E) : σ (σ x) = x := by
 
 theorem form_swap (hσ : ∀ x, σ (σ x) = x) {J : Matrix (Fin n) (Fin n) E} (ε : E) (h : ∀ i j, σ (J j i) = ε * J i j) (x y : Fin n → E) :
     σ (form σ J x y) = ε * form σ J y x := by
-  simp only [form, dotProduct, mulVec, map_sum, map_mul, hσ, h, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, mulVec, map_sum, map_mul, hσ, h, Finset.mul_sum]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 
@@ -654,7 +655,8 @@ theorem soLower_of (hMx : PositivityTheory.ThKG.MixW) : SoLower := by
     have h1 : ι'ᵀ * J * ιb = J₁ := by
       rw [hJ₁, ← hH.gram, hι', hJ, hιb]
       refine Matrix.ext fun i j => ?_
-      simp only [Matrix.mul_apply, map_apply, transpose_apply, map_sum, map_mul, AlgHom.comp_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Matrix.mul_apply, map_apply, transpose_apply, map_sum, map_mul, AlgHom.comp_apply]
     rw [← h1, transpose_mul, transpose_mul, transpose_transpose, Matrix.mul_assoc]
   let κ : Matrix (Fin d₁) (Fin d) (Fv F B.v₁) := J₁ᵀ⁻¹ * (ιbᵀ * Jᵀ)
   let ρ : Fin d → Fv F B.v₁ := J *ᵥ fun i => (t.comp σ) (H.x i)

@@ -96,7 +96,8 @@ theorem comm_rtr : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberF
   have hsum : ∀ M : Matrix (Fin n) (Fin n) ℂ, D M = ∑ i, ∑ j, M i j • X i j := by
     intro M
     conv_lhs => rw [Matrix.matrix_eq_sum_single M]
-    simp only [map_sum, X]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, X]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
     rw [← map_smul, Matrix.smul_single, smul_eq_mul, mul_one]
   have hgl : Formalism.REAL.GlRel X := by

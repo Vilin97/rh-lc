@@ -28,7 +28,8 @@ theorem adjL_comm {g : ℕ} (G : Matrix (Fin g) (Fin g) ℂ) (a a' : Fin g) (w :
   have key : ∀ b b' : Fin g, adjL G b (adjL G b' w) =
       ∑ c, ∑ c', (G b c * G b' c') • contr (dzb 0 c) (contr (dzb 0 c') w) := by
     intro b b'
-    simp only [adjL, LinearMap.neg_apply, LinearMap.sum_apply, LinearMap.smul_apply, map_neg, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [adjL, LinearMap.neg_apply, LinearMap.sum_apply, LinearMap.smul_apply, map_neg, map_sum,
       map_smul, contrL_apply, Finset.smul_sum, smul_smul, neg_neg, Finset.sum_neg_distrib]
     simp only [Finset.smul_sum, smul_neg, Finset.sum_neg_distrib, neg_neg, smul_smul]
     first
@@ -94,7 +95,8 @@ theorem dbarAdjF_dbarAdjF : ∀ {g : ℕ} (G : Matrix (Fin g) (Fin g) ℂ) (ψ :
   have hX : dbarAdjF G ψ (dbarAdjF G ψ f) z = ∑ a, ∑ a', adjL G a (adjL G a' (B a a')) := by
     rw [dbarAdjF_eq G ψ (dbarAdjF G ψ f) z]
     refine Finset.sum_congr rfl fun a _ => ?_
-    rw [hd a, dbarAdjF_eq G ψ f z, Finset.smul_sum, ← Finset.sum_add_distrib, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hd a, dbarAdjF_eq G ψ f z, Finset.smul_sum, ← Finset.sum_add_distrib, map_sum]
     refine Finset.sum_congr rfl fun a' _ => ?_
     rw [← map_smul, ← map_add, hdA]
   have hneg : dbarAdjF G ψ (dbarAdjF G ψ f) z = -dbarAdjF G ψ (dbarAdjF G ψ f) z := by

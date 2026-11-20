@@ -77,7 +77,8 @@ theorem gram_conj {r : ℕ} (τ : E →+* ℂ) (G : Matrix (Fin r) (Fin r) E) (p
     simpa using hQ
   · ext a b
     have := congrArg (starRingEnd ℂ) (congrFun (congrFun h a) b)
-    simp only [FD.gram, FD.hermC, FD.col, Matrix.of_apply, Matrix.map_apply, map_sum, map_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [FD.gram, FD.hermC, FD.col, Matrix.of_apply, Matrix.map_apply, map_sum, map_mul,
       ComplexEmbedding.conjugate_coe_eq, Complex.conj_conj, Matrix.diagonal_apply] at this ⊢
     rw [this]
     split_ifs <;> simp

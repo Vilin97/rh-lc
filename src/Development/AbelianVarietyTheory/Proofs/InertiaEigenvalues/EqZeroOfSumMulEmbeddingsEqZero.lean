@@ -32,7 +32,8 @@ theorem eq_zero_of_sum_mul_embeddings_eq_zero (F Ω L : Type) [Field F] [CharZer
     simp_rw [Finset.sum_mul]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl (fun t _ => ?_)
-    conv_rhs => rw [← b.sum_repr (a t), map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_rhs => rw [← b.sum_repr (a t), map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl (fun i _ => ?_)
     rw [map_smul, Algebra.smul_def, Algebra.smul_def]
     ring

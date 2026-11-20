@@ -77,7 +77,8 @@ theorem orbClosed_gen (N r : ℕ) (A : Type) [CommRing A] [Algebra k A] [FiniteD
   constructor
   · rintro ⟨g, hg⟩
     have hΦ : ∀ c, Φ w c = g.val * ρ₀ (L c) * g⁻¹.val := fun c => by
-      simp only [Φ, L, hg, map_sum, map_smul, Finset.mul_sum, Finset.sum_mul, mul_smul_comm, smul_mul_assoc]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Φ, L, hg, map_sum, map_smul, Finset.mul_sum, Finset.sum_mul, mul_smul_comm, smul_mul_assoc]
     have hgi : g⁻¹.val * g.val = 1 := Units.inv_mul g
     refine ⟨fun c hc => by rw [hΦ, hc, map_zero, mul_zero, zero_mul], fun a a' => ?_, ?_, fun e he => ?_⟩
     · rw [hΦ, hΦ, hΦ, hs, hs, hs, map_mul]

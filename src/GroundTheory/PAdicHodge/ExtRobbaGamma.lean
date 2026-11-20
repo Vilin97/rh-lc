@@ -208,7 +208,8 @@ def fin0 : Fin (ramIdx p hϖ) := ⟨0, ramIdx_pos p hϖ⟩
 theorem gammaRed_eq_coeff (x : Gamma p ι) :
     gammaRed p ι x = (WittOver.equiv p ι ((gammaBasis p ι hϖ).repr x (fin0 p hϖ))).coeff 0 := by
   conv_lhs => rw [eq_sum_tmul p ι hϖ x]
-  rw [map_sum, Finset.sum_eq_single (fin0 p hϖ)]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_eq_single (fin0 p hϖ)]
   · simp [fin0]
   · intro j _ hj
     exact gammaRed_tmul_unif_pow p ι hϖ _ fun h => hj (Fin.ext h)
@@ -239,10 +240,12 @@ theorem mem_gammaInt_iff (hι : ∀ a, ‖ι a‖ ≤ 1) {x : Gamma p ι} :
       intro j; rw [map_neg, Finsupp.neg_apply]; exact neg_mem (hx j)
     | mul x y _ _ hx hy =>
       intro j
-      rw [eq_sum_tmul p ι hϖ x, eq_sum_tmul p ι hϖ y, Finset.sum_mul_sum, map_sum,
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [eq_sum_tmul p ι hϖ x, eq_sum_tmul p ι hϖ y, Finset.sum_mul_sum, map_sum,
         Finsupp.finsetSum_apply]
       refine Subring.sum_mem _ fun a _ => ?_
-      rw [map_sum, Finsupp.finsetSum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Finsupp.finsetSum_apply]
       refine Subring.sum_mem _ fun b _ => ?_
       rw [Algebra.TensorProduct.tmul_mul_tmul]
       exact repr_mem_wittOverInt_of_tmul p ι hϖ hι (mul_mem (hx a) (hy b)) _ j
@@ -604,7 +607,8 @@ theorem gammaPhi_bijective (hσ : ∀ x, residue (normInteger K) (σ x) = residu
       ∑ j : Fin (ramIdx p hϖ), wittOverFrob p ι a ((gammaBasis p ι hϖ).repr x j) ⊗ₜ[WittVector p (IsLocalRing.ResidueField (normInteger K))] ((σ ϖ) ^ (j : ℕ)) := by
     intro x
     conv_lhs => rw [eq_sum_tmul p ι hϖ x]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [gammaPhi_tmul p ι a σ hσ, map_pow]
   obtain ⟨finv, hfl, hfr⟩ : ∃ g : WittOver p ι → WittOver p ι,

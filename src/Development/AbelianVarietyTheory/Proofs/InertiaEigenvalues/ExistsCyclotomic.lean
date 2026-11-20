@@ -170,7 +170,8 @@ def trace (m : ℤ_[l]) : k⟦X⟧ := 1 + ∑ z ∈ mu l, onePlusPow k l (m * z)
 
 theorem hom_trace (σ : k⟦X⟧ →ₐ[k] k⟦X⟧) (t : ℤ_[l]) (h : σ X = onePlusPow k l t - 1) (m : ℤ_[l]) :
     σ (trace k l m) = trace k l (t * m) := by
-  simp only [trace, map_add, map_one, map_sum, hom_opp' σ t h, mul_assoc]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [trace, map_add, map_one, map_sum, hom_opp' σ t h, mul_assoc]
 
 theorem trace_mul {t : ℤ_[l]} (ht : t ^ (l - 1) = 1) (m : ℤ_[l]) : trace k l (t * m) = trace k l m := by
   have := sum_mu_mul (fun z => onePlusPow k l (m * z)) ht

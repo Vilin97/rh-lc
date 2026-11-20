@@ -155,7 +155,8 @@ theorem satU_eq_satU_liftPar_of_heckeVec_eq : ∀ (L : Type) [Field L] [Valued L
       simp only [← hZ] at e3
       rw [(hmix 1 (b' j) hb1 (hb' j)).2, hlow1, Matrix.mul_one, e3, hℓz, hZint]
     have := congrArg (fun v => ℓ (ρ (embLow n' n (Z t.1)) v)) E
-    simp only [map_sum, map_smul, smul_eq_mul, l1, l2] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, smul_eq_mul, l1, l2] at this
     simpa only [mul_assoc] using this
   have G := GlobalTheory.T.sum_diag_order_eq_of_integralTranslateIndicator_relation L ϖ σ q hU (n / 2) ι κ _ _ U V hU2 hVt key
     (fun d => ∏ r : Fin (n / 2), ((-1) ^ n' * (qu : ℂ) ^ (2 * ((n' / 2 : ℕ) : ℤ) - n') *

@@ -22,14 +22,16 @@ theorem monomial_mem {A B : ℕ} {m : XY k →₀ ℕ} (c : K) (hx : xDeg m = A)
 theorem lin_mem {A B : ℕ} (T : PolXY K k →ₗ[K] PolXY K k) (S : Submodule K (PolXY K k))
     (h : ∀ (m : XY k →₀ ℕ) (c : K), xDeg m = A → yDeg m = B → T (monomial m c) ∈ S)
     {f : PolXY K k} (hf : f ∈ PolAB K k A B) : T f ∈ S := by
-  rw [MvPolynomial.as_sum f, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [MvPolynomial.as_sum f, map_sum]
   exact Submodule.sum_mem _ fun m hm =>
     h m _ (mem_PolAB_iff_forall_support_bidegree.1 hf m hm).1 (mem_PolAB_iff_forall_support_bidegree.1 hf m hm).2
 
 theorem lin_eq {A B : ℕ} (T T' : PolXY K k →ₗ[K] PolXY K k)
     (h : ∀ (m : XY k →₀ ℕ) (c : K), xDeg m = A → yDeg m = B → T (monomial m c) = T' (monomial m c))
     {f : PolXY K k} (hf : f ∈ PolAB K k A B) : T f = T' f := by
-  rw [MvPolynomial.as_sum f, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [MvPolynomial.as_sum f, map_sum, map_sum]
   exact Finset.sum_congr rfl fun m hm =>
     h m _ (mem_PolAB_iff_forall_support_bidegree.1 hf m hm).1 (mem_PolAB_iff_forall_support_bidegree.1 hf m hm).2
 
@@ -200,11 +202,13 @@ theorem euler_X_sum {A B : ℕ} {f : PolXY K k} (hf : f ∈ PolAB K k A B) :
   have hf' := mem_PolAB_iff_forall_support_bidegree.1 hf
   conv_lhs => rw [MvPolynomial.as_sum f]
   conv_rhs => rw [MvPolynomial.as_sum f]
-  simp only [map_sum, Finset.mul_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Finset.mul_sum, Finset.smul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun m hm => ?_
   simp only [X_mul_pderiv_monomialMultinomialDepth]
-  rw [← map_sum (monomial m), ← Finset.mul_sum, ← Nat.cast_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum (monomial m), ← Finset.mul_sum, ← Nat.cast_sum,
     show (∑ i : Fin k, m (Sum.inl i)) = A from (hf' m hm).1, smul_monomial, smul_eq_mul, mul_comm]
 
 theorem euler_y {A B : ℕ} {f : PolXY K k} (hf : f ∈ PolAB K k A B) :
@@ -212,11 +216,13 @@ theorem euler_y {A B : ℕ} {f : PolXY K k} (hf : f ∈ PolAB K k A B) :
   have hf' := mem_PolAB_iff_forall_support_bidegree.1 hf
   conv_lhs => rw [MvPolynomial.as_sum f]
   conv_rhs => rw [MvPolynomial.as_sum f]
-  simp only [map_sum, Finset.mul_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Finset.mul_sum, Finset.smul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun m hm => ?_
   simp only [X_mul_pderiv_monomialMultinomialDepth]
-  rw [← map_sum (monomial m), ← Finset.mul_sum, ← Nat.cast_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum (monomial m), ← Finset.mul_sum, ← Nat.cast_sum,
     show (∑ i : Fin k, m (Sum.inr i)) = B from (hf' m hm).2, smul_monomial, smul_eq_mul, mul_comm]
 
 theorem ctr_h {A B : ℕ} {f : PolXY K k} (hf : f ∈ PolAB K k A B) :
@@ -288,7 +294,8 @@ theorem har_indep [CharZero K] (hk : 1 ≤ k) (n : ℕ) : ∀ (a b : ℕ → ℕ
         Finset.sum_eq_zero fun j hj => by
           rw [ctr_pow_h_pow_har hk (hw j) n j,
             Nat.descFactorial_eq_zero_iff_lt.2 (Finset.mem_range.1 hj), zero_mul, Nat.cast_zero, zero_smul]
-      rw [map_sum, Finset.sum_range_succ, hz, zero_add, ctr_pow_h_pow_har hk (hw n) n n, Nat.sub_self,
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Finset.sum_range_succ, hz, zero_add, ctr_pow_h_pow_har hk (hw n) n n, Nat.sub_self,
         pow_zero, one_mul, smul_eq_zero] at h1
       rcases h1 with h1 | h1
       · exfalso
@@ -479,7 +486,8 @@ theorem exists_laplacian_eq [CharZero K] (hk : 1 ≤ k) {A B : ℕ} {g : PolXY K
     have hj' := Finset.mem_range.1 hj
     have := h_pow_mul_mem (j + 1) (mem_HarAB_iff_mem_PolAB_and_ctrF_eq_zero.1 (hw j)).1
     rwa [show A - j + (j + 1) = A + 1 by omega, show B - j + (j + 1) = B + 1 by omega] at this
-  · rw [map_sum, hgw]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum, hgw]
     refine Finset.sum_congr rfl fun j hj => ?_
     rw [map_smul, ctr_h_pow_har j (hw j), smul_smul, inv_mul_cancel₀, one_smul]
     exact Nat.cast_ne_zero.2 (Nat.mul_ne_zero (Nat.succ_ne_zero j) (by omega))
@@ -542,7 +550,8 @@ theorem levelProj_sum [CharZero K] (hk : 1 ≤ k) {A B : ℕ} {f : PolXY K k} (h
   obtain ⟨w, hw, hfw⟩ := decomp_exists hk A B f hf
   conv_rhs => rw [hfw]
   conv_lhs => rw [hfw]
-  simp only [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i hi => ?_
   have hi' : i ≤ min A B := Nat.lt_succ_iff.1 (Finset.mem_range.1 hi)

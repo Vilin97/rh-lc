@@ -123,8 +123,10 @@ theorem lin_ev_two {x y : Pt R n d} (hx : ∀ i, constantCoeff (x i) = 0)
       ∑ l, coeff (Finsupp.single ((0 : Fin 2), l) 1) f * coeff (Finsupp.single s 1) (x l) +
       ∑ l, coeff (Finsupp.single ((1 : Fin 2), l) 1) f * coeff (Finsupp.single s 1) (y l) := by
   have ha := const_two hx hy
-  rw [coeff_single_one s (ev ![x, y] f), pderiv_ev ha, map_sum, Fin.sum_univ_two]
-  simp only [map_sum, map_mul, constantCoeff_ev ha, ← coeff_single_one, Matrix.cons_val_zero,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [coeff_single_one s (ev ![x, y] f), pderiv_ev ha, map_sum, Fin.sum_univ_two]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, constantCoeff_ev ha, ← coeff_single_one, Matrix.cons_val_zero,
     Matrix.cons_val_one]
 
 private lemma coeff_single_pt_eq_ite (j j' : Fin n) (l l' : Fin d) :

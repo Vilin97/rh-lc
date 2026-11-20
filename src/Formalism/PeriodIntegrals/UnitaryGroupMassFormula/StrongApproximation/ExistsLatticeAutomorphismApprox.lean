@@ -19,7 +19,8 @@ theorem local_span_holds : LocSpan := by
   have hsub : Set.range L.ιE ⊆ Submodule.span L.Fp (Set.range (fun i => L.ιE (b i))) := by
     rintro _ ⟨e, rfl⟩
     obtain ⟨c, rfl⟩ := hb e
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Submodule.sum_mem _ (fun i _ => ?_)
     rw [existsLatticeAutomorphismApprox F E sig p L]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)

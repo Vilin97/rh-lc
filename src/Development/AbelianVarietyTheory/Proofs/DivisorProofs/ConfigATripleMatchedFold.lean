@@ -99,7 +99,8 @@ theorem decay : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberField 
   refine le_trans (le_of_eq ?_) ((hCb _ ha).trans (le_max_left _ _))
   have hS : G.M.co.e (a • Matrix.vecMulVec (incV F H.x) (incV F H'.y)) =
       ∑ i, (Algebra.TensorProduct.basis (AF F) b₀).equivFun a i • S i := by
-    simp only [S, ← map_smul, ← map_sum, ← smul_assoc, ← Finset.sum_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [S, ← map_smul, ← map_sum, ← smul_assoc, ← Finset.sum_smul]
     congr 2
     refine ((Algebra.TensorProduct.basis (AF F) b₀).sum_equivFun a).symm.trans ?_
     refine Finset.sum_congr rfl fun i _ => ?_

@@ -359,7 +359,8 @@ theorem conj_lowW (y : C2.LPidx σ.symm → ℂ) :
   rw [permutationMatrix_mul_lowerUnipotent, Matrix.mul_nonsing_inv_cancel_right _ _ hu]
 
 theorem subS_eq (L : Matrix (Fin m) (Fin m) ℂ) : C2.simpleUp Lᴴ = conj (U.subS L) := by
-  simp only [C2.simpleUp, U.subS, map_sum, Matrix.conjTranspose_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [C2.simpleUp, U.subS, map_sum, Matrix.conjTranspose_apply]
   refine Finset.sum_congr rfl fun a _ => ?_
   split_ifs <;> simp
 

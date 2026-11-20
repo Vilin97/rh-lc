@@ -136,7 +136,8 @@ private theorem rowAct_rowAct' {r n : ℕ} (A B : Matrix (Fin r) (Fin r) ℂ)
       Formalism.GradedWeylDivisibility.rowAct ℂ (n := n) (B * A) := by
     apply MvPolynomial.algHom_ext
     intro v
-    simp only [AlgHom.comp_apply, Formalism.GradedWeylDivisibility.rowAct, MvPolynomial.aeval_X, map_sum, map_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [AlgHom.comp_apply, Formalism.GradedWeylDivisibility.rowAct, MvPolynomial.aeval_X, map_sum, map_mul,
       MvPolynomial.aeval_C, MvPolynomial.algebraMap_eq, Matrix.mul_apply,
       Finset.mul_sum, Finset.sum_mul]
     rw [Finset.sum_comm]

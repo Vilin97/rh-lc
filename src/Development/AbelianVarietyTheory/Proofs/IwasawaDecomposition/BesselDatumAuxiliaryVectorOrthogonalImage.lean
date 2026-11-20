@@ -87,7 +87,8 @@ theorem hA_eq (x y : Fin B.rank → AE D) : hA B x y = (fun i => cA D (y i)) ⬝
   simp only [hA, dotProduct, Matrix.mulVec, Matrix.map_apply, Finset.mul_sum, mul_assoc]
 
 theorem hA_herm (x y : Fin B.rank → AE D) : cA D (hA B x y) = hA B y x := by
-  simp only [hA, map_sum, RingHom.map_mul, cA_inc, cA_cA, GlobalTheory.LatVac.gram_star]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hA, map_sum, RingHom.map_mul, cA_inc, cA_cA, GlobalTheory.LatVac.gram_star]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => by ring
 
@@ -203,7 +204,8 @@ theorem hA_iA (hι : HSpace.IsIsomEmb A B ι) (s t : Fin A.rank → AE D) : hA B
   have e : ∀ s, iA ι s = ∑ l, s l • vecA B (ι (A.frame l)) := fun s => by
     rw [iA, GlobalTheory.BesselCompare.frameMat_eq, GlobalTheory.BesselCompare.eMat_mulVec]
   have e2 : ∀ l, hA B (vecA B (ι (A.frame l))) (iA ι t) = ∑ k, cA D (t k) * incA D (A.gram k l) := fun l => by
-    rw [← hA_herm, e, GlobalTheory.BesselCompare.hA_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hA_herm, e, GlobalTheory.BesselCompare.hA_sum, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [hA_smul, RingHom.map_mul, hA_herm, hA_vec]
     congr 2
@@ -216,7 +218,8 @@ theorem hA_iA (hι : HSpace.IsIsomEmb A B ι) (s t : Fin A.rank → AE D) : hA B
   exact Finset.sum_congr rfl fun l _ => by ring
 
 theorem hA_vec_iA {v : B.V} (h : ∀ x, B.hD v (ι x) = 0) (t : Fin A.rank → AE D) : hA B (vecA B v) (iA ι t) = 0 := by
-  rw [← hA_herm, iA, GlobalTheory.BesselCompare.frameMat_eq, GlobalTheory.BesselCompare.eMat_mulVec, GlobalTheory.BesselCompare.hA_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hA_herm, iA, GlobalTheory.BesselCompare.frameMat_eq, GlobalTheory.BesselCompare.eMat_mulVec, GlobalTheory.BesselCompare.hA_sum, map_sum]
   refine Finset.sum_eq_zero fun k _ => ?_
   rw [hA_smul, RingHom.map_mul, hA_herm, hA_vec, h, map_zero, mul_zero]
 

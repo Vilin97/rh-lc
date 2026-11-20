@@ -386,7 +386,8 @@ theorem taylor_poly (b : Bp l a) (p : ZMod a → K⟦X⟧⟦X⟧) (hp : p ∈ PP
   have e4 : (N : OCr l O) * (1 : O) ⊗ₜ[ℤ_[l]] evE t ϖ g ⟨p, hp⟩ = j (fP a ϖ (g : GQ l) b) := by
     rw [← e2, map_mul, map_natCast]
     rfl
-  rw [mul_sub, Finset.mul_sum, e4, Finset.sum_congr rfl fun i _ => taylor_term t ϖ g b p N hpb i (fun τ => hSp τ i),
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [mul_sub, Finset.mul_sum, e4, Finset.sum_congr rfl fun i _ => taylor_term t ϖ g b p N hpb i (fun τ => hSp τ i),
     e3, map_sum]
   exact sub_eq_zero.2 (Finset.sum_congr rfl fun i _ => rfl)
 

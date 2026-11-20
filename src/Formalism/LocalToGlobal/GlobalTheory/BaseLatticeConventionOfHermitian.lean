@@ -23,7 +23,8 @@ theorem std_coords (S : HSpace E) (hS : IsStd S) (N : ℕ) (hN : S.rank = N) :
   refine ⟨b.equivFun.trans (LinearEquiv.funCongrLeft E E (finCongr hN).symm), fun x y => ?_⟩
   have h1 : S.hT x y = ∑ a, star (b.repr x a) * b.repr y a := by
     conv_lhs => rw [← b.sum_repr x, ← b.sum_repr y]
-    simp only [map_sum, LinearMap.sum_apply, map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, hb]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.sum_apply, map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, hb]
     refine Finset.sum_congr rfl fun a _ => ?_
     rw [Finset.sum_eq_single a]
     · simp only [if_true, mul_one]

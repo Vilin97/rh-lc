@@ -70,7 +70,8 @@ theorem hermFam_gram_posSemidef {n : ℕ} (v : Fin n → V) : (h.gram σ v).PosS
     Matrix.of fun i j => b.repr ⟨v i, Submodule.subset_span ⟨i, rfl⟩⟩ j
   have hf : ∀ i, v i = ∑ j, g i j • (b j : V) := fun i => by
     have := congrArg W.subtype (b.sum_repr ⟨v i, Submodule.subset_span ⟨i, rfl⟩⟩).symm
-    rw [map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at this
     simpa [g] using this
   have hG := (h.posDef σ _ _ hb).posSemidef
   let B : Matrix (Fin n) (Fin (Module.finrank K W)) ℂ := Matrix.of fun i j => starRingEnd ℂ (σ (g i j))

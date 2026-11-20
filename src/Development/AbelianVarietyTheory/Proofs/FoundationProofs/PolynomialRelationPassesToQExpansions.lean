@@ -52,6 +52,7 @@ theorem polyRel_qSeries : ∀ (N n : ℕ) (f : ℍ → ℂ) (b : ℕ → ℂ) (p
   simp only [Polynomial.eval_monomial]
   ext m
   have := congrFun hc m
-  simpa [map_sum] using this
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa [map_sum] using this
 
 end GlobalTheory.QFam

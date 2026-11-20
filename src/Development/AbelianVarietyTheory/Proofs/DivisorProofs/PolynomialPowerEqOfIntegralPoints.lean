@@ -10,7 +10,8 @@ theorem linForm_pow_expand {ι : Type} [Fintype ι] (n : ℕ) (Λ : MvPolynomial
     (t : ι → ℝ) :
     Λ ((∑ x, MvPolynomial.C (t x) * MvPolynomial.X x) ^ n) =
       ∑ s : Fin n → ι, (∏ i, t (s i)) * Λ (∏ i, MvPolynomial.X (s i)) := by
-  rw [← Fin.prod_const n (∑ x, MvPolynomial.C (t x) * MvPolynomial.X x), Finset.prod_univ_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Fin.prod_const n (∑ x, MvPolynomial.C (t x) * MvPolynomial.X x), Finset.prod_univ_sum,
     map_sum]
   refine Finset.sum_congr (by simp) fun s _ => ?_
   rw [Finset.prod_mul_distrib, ← map_prod, MvPolynomial.C_mul', map_smul, smul_eq_mul]

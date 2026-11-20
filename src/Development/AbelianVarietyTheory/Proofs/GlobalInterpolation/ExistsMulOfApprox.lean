@@ -34,7 +34,8 @@ omit [Fintype ι] in
 theorem jetLin_eq_sum (J : (DVar ι a b →₀ ℕ) → K) (Q : MvPolynomial ((ι × Fin b × Fin b) ⊕ DVar ι a b) K) :
     jetLin J Q = ∑ μ ∈ Q.support, J (expR μ) • monomial (expL μ) (Q.coeff μ) := by
   conv_lhs => rw [Q.as_sum]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun μ _ => ?_
   rw [jetLin, constr_monomial, smul_monomial, smul_monomial, smul_eq_mul, smul_eq_mul, mul_comm]
 
@@ -66,7 +67,8 @@ theorem ptEval_subD (hab : a ≤ b) (σ : K →+* L) (ap : ι → Matrix (Fin a)
     simp only [map_mul, hp, map_X]
     congr 1
     have h : v.2.2.1 < b := lt_of_lt_of_le v.2.2.2 hab
-    simp only [subD, substAdj, aeval_X, dif_pos h, map_sum, map_mul, ptEval, eval₂Hom_X', Sum.elim_inl, Sum.elim_inr]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [subD, substAdj, aeval_X, dif_pos h, map_sum, map_mul, ptEval, eval₂Hom_X', Sum.elim_inl, Sum.elim_inr]
     exact Finset.sum_congr rfl fun β _ => mul_comm _ _
 
 theorem sum_ptTable (hab : a ≤ b) (σ : K →+* L) (ap : ι → Matrix (Fin a) (Fin b) L) (P : Pol K ι a) :
@@ -74,7 +76,8 @@ theorem sum_ptTable (hab : a ≤ b) (σ : K →+* L) (ap : ι → Matrix (Fin a)
       substAdj hab ap (map σ P) := by
   rw [← ptEval_subD]
   conv_rhs => rw [(subD K ι a b P).as_sum]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_congr rfl fun μ _ => (ptEval_monomial σ ap μ _).symm
 
 theorem jetMap_ptTable (hab : a ≤ b) (ap : ι → Matrix (Fin a) (Fin b) K) (n : ι → ℕ) (P : Pol K ι a) :
@@ -94,14 +97,18 @@ theorem jetMap_mem [Infinite K] (hab : a ≤ b) (n : ι → ℕ) (P : Pol K ι a
       MvPolynomial (DVar ι a b) K) = 0 := by
     refine MvPolynomial.funext fun x => ?_
     have h1 := hφ _ (h fun τ => Matrix.of fun α β => x (τ, β, α))
-    rw [← jetMap_ptTable, jetMap_eq_sum, map_sum] at h1
-    rw [map_zero, map_sum, ← h1]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← jetMap_ptTable, jetMap_eq_sum, map_sum] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_zero, map_sum, ← h1]
     refine Finset.sum_congr rfl fun μ _ => ?_
     rw [eval_monomial, map_smul, smul_eq_mul, mul_comm]
     rfl
   have h2 := congrArg ((basisMonomials (DVar ι a b) K).constr K J) h0
-  rw [map_zero, map_sum] at h2
-  rw [jetMap_eq_sum, map_sum, ← h2]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_zero, map_sum] at h2
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [jetMap_eq_sum, map_sum, ← h2]
   refine Finset.sum_congr rfl fun μ _ => ?_
   rw [constr_monomial, map_smul, smul_eq_mul, smul_eq_mul, mul_comm]
 
@@ -199,7 +206,8 @@ theorem blockAct_substAdj (hab : a ≤ b) (ap : ι → Matrix (Fin a) (Fin b) L)
   have h : (blockAct L g).comp (substAdj hab ap) = substAdj hab (fun τ => ap τ * g τ) := by
     apply MvPolynomial.algHom_ext
     intro x
-    simp only [AlgHom.comp_apply, blockAct, substAdj, aeval_X, map_sum, map_mul, algHom_C, Matrix.mul_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [AlgHom.comp_apply, blockAct, substAdj, aeval_X, map_sum, map_mul, algHom_C, Matrix.mul_apply]
     simp only [algebraMap_eq, Finset.mul_sum, Finset.sum_mul]
     rw [Finset.sum_comm]
     simp [mul_assoc]
@@ -211,7 +219,8 @@ theorem substAdj_blockAct (hab : a ≤ b) (A : ι → Matrix (Fin a) (Fin b) L) 
   have h : (substAdj hab A).comp (blockAct L g) = substAdj hab (fun τ => g τ * A τ) := by
     apply MvPolynomial.algHom_ext
     intro x
-    simp only [AlgHom.comp_apply, blockAct, substAdj, aeval_X, map_sum, map_mul, algHom_C, Matrix.mul_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [AlgHom.comp_apply, blockAct, substAdj, aeval_X, map_sum, map_mul, algHom_C, Matrix.mul_apply]
     simp only [algebraMap_eq, Finset.mul_sum, Finset.sum_mul]
     rw [Finset.sum_comm]
     simp [mul_assoc]
@@ -320,7 +329,8 @@ theorem closureIntegral : ClosureIntegral := by
   set T := blockAct K (n := b) (fun τ => (BW τ : Matrix (Fin b) (Fin b) K)) with hT
   set d := fun μ => T (monomial (expL μ) (Q.coeff μ)) with hd
   have hH : T (jetMap J n (F : Pol K ι a)) = ∑ μ ∈ Q.support, J (expR μ) • d μ := by
-    rw [jetMap_eq_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [jetMap_eq_sum, map_sum]
     exact Finset.sum_congr rfl fun μ _ => map_smul _ _ _
   have hpt : ∀ ap : ι → Matrix (Fin a) (Fin b) L, admitted v σ M MW ap → ∀ p, ∃ z : L, v z ≤ 1 ∧
       ∑ μ ∈ Q.support, ptTable ap (expR μ) * σ ((d μ).coeff p) = σ D * z := by
@@ -330,7 +340,8 @@ theorem closureIntegral : ClosureIntegral := by
       F fun m => (hσ _).mpr (hF m)
     refine ⟨Z.coeff p, hZ p, ?_⟩
     have h1 := congrArg (AddMonoidAlgebra.coeff · p) hZ'
-    rw [← sum_ptTable, map_sum, coeff_sum, coeff_smul, smul_eq_mul] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← sum_ptTable, map_sum, coeff_sum, coeff_smul, smul_eq_mul] at h1
     rw [← h1]
     refine Finset.sum_congr rfl fun μ _ => ?_
     rw [map_smul, coeff_smul, smul_eq_mul, ← map_monomial, ← map_blockAct, coeff_map]
@@ -354,7 +365,8 @@ theorem closureIntegral : ClosureIntegral := by
         refine Finset.sum_congr rfl fun i _ => ?_
         rw [mul_left_comm, ← hz' i, Finset.mul_sum]
         simp only [mul_assoc]
-      rw [hH, coeff_sum, map_sum, map_mul, mul_assoc, h2, Finset.mul_sum, ← Finset.sum_sub_distrib]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hH, coeff_sum, map_sum, map_mul, mul_assoc, h2, Finset.mul_sum, ← Finset.sum_sub_distrib]
       refine Finset.sum_congr rfl fun μ _ => ?_
       rw [coeff_smul, smul_eq_mul, map_mul]
       ring

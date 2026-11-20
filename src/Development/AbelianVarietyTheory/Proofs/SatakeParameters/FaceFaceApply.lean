@@ -46,7 +46,8 @@ theorem d_d {n : ℕ} (f : Cn F n) : d F (n + 1) (d F n f) = 0 := by
   funext s
   change ∑ j : Fin (n + 3), (-1 : ℤ) ^ (j : ℕ) • (F.map (toLast j s)).hom
       (∑ i : Fin (n + 2), (-1 : ℤ) ^ (i : ℕ) • (F.map (toLast i (face j s))).hom (f (face i (face j s)))) = 0
-  simp only [map_sum, map_zsmul, Finset.smul_sum, smul_smul, face_face_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_zsmul, Finset.smul_sum, smul_smul, face_face_apply]
   rw [← Fintype.sum_prod_type']
   refine Finset.sum_involution (fun p _ => (p.1.succAbove p.2, p.2.predAbove p.1)) ?_ ?_ ?_ ?_
   · rintro ⟨j, i⟩ _

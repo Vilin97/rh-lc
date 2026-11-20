@@ -66,12 +66,14 @@ theorem grTri : ∀ (X : Scheme.{0}) (A : X.Opens) (F : X.Modules) (r : ℕ) (s 
     have h1 := ((hs.basis (inf_le_right : W ≤ A)).sum_repr (resM F inf_le_left (e i))).symm
     simp only [IsFrame.basis_apply] at h1
     refine h1.trans ?_
-    rw [← QCoh.appLinear_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← QCoh.appLinear_apply, map_sum]
     refine Finset.sum_congr rfl fun l _ => ?_
     rw [map_smul, QCoh.appLinear_apply, hy]
     rfl
   have hπ : resM _ inf_le_left ((fl.π i).app V te) = c i • resM _ inf_le_right ((fl.π i).app A t) := by
-    rw [← Twist.app_resM, hsum, ← QCoh.appLinear_apply, map_sum, Finset.sum_eq_single i]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Twist.app_resM, hsum, ← QCoh.appLinear_apply, map_sum, Finset.sum_eq_single i]
     · rw [map_smul, QCoh.appLinear_apply]
       simp only [y, lt_irrefl, dif_neg, not_false_eq_true, Twist.app_resM]
     · intro l _ hl

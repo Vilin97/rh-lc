@@ -70,7 +70,8 @@ theorem UnitaryZariskiDense.proof : UnitaryZariskiDense.Statement := by
       rw [eval_aeval_subst]
       refine congrArg (fun f => eval f p) (funext fun ij => ?_)
       rw [Matrix.mul_apply]
-      simp only [map_sum, map_mul, eval_C, eval_X, Matrix.mul_diagonal]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_mul, eval_C, eval_X, Matrix.mul_diagonal]
       exact Finset.sum_congr rfl fun k _ => by ring
     have hr : aeval (fun ij : Fin n × Fin n => ∑ k, C (V ij.1 k * star V k ij.2) * X k) p = 0 :=
       funext_set (fun _ => {z : ℂ | ‖z‖ = 1}) (fun _ => unit_circle_infinite) fun d hd => by

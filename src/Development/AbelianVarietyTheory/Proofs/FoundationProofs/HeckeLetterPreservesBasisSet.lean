@@ -172,7 +172,8 @@ theorem sum_act_inv (X : Tower Ω ε) (l N : ℕ) [Fact l.Prime] {ι : Type} [Fi
       _ = r i1 * γ * ((γ⁻¹ : SL(2, ℤ)) : Matrix (Fin 2) (Fin 2) ℤ) := by rw [e1]
       _ = r i1 := by rw [Matrix.mul_assoc, hγ, Matrix.mul_one]
   have hbij : Function.Bijective f := Finite.injective_iff_bijective.mp hinj
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   have step : ∀ i, X.act l (γ : Matrix (Fin 2) (Fin 2) ℤ) (X.act l (r i) b) = X.act l (r (f i)) b := by
     intro i
     rw [act_act X l _ _ (hdet1 γ) (hr i), he i, ← act_act X l _ _ (hr (f i)) (hdet1 (g i)), hb _ (hg i)]

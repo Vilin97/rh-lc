@@ -43,7 +43,8 @@ theorem contAction_of_qcont {V : Type} [AddCommGroup V] [Module ℚ_[l] V] [Fini
   let b := Module.finBasis ℚ_[l] V
   have e : (fun p : G × V => ρ p.1 p.2) = fun p => ∑ i, b.coord i p.2 • ρ p.1 (b i) := by
     funext p
-    conv_lhs => rw [← b.sum_repr p.2, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [← b.sum_repr p.2, map_sum]
     simp only [map_smul, Basis.coord_apply]
   unfold ReciprocityTheory.Gal.ContAction
   rw [e]

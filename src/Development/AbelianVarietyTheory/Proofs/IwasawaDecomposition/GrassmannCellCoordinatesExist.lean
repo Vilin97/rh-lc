@@ -137,7 +137,8 @@ theorem pr_c (h : LeftInv D c) (i j : Fin m) : pr (D i) (c j) = if i = j then 1 
   split_ifs <;> rfl
 
 theorem pr_sum (h : LeftInv D c) (t : Fin m → K) (i : Fin m) : pr (D i) (∑ j, t j • c j) = t i := by
-  simp [map_sum, map_smul, pr_c h]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, map_smul, pr_c h]
 
 theorem coord (h : LeftInv D c) {b : ℕ} {v : Fin n → K} (hv : v ∈ initSpan K c b) :
     (∀ i : Fin m, b ≤ (i : ℕ) → pr (D i) v = 0) ∧ ∑ i, pr (D i) v • c i = v := by
@@ -161,13 +162,15 @@ theorem exists_cell {a k b : ℕ} (hk : k ≤ m) {u : Fin k → Fin n → K} (ha
     refine Finset.sum_eq_zero fun i _ => ?_
     have := congrFun hg i
     simp only [Finset.sum_apply, Pi.smul_apply, Pi.zero_apply] at this
-    simp only [map_sum, map_smul, this, zero_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, this, zero_smul]
   · rw [LinearIndepOn, Fintype.linearIndependent_iff]
     intro g hg j
     obtain ⟨t, ht⟩ := (Submodule.mem_span_range_iff_exists_fun K).1
       (h1 (Submodule.subset_span ⟨j.1, j.2, rfl⟩ : c j.1 ∈ initSpan K c a))
     have e1 : ∑ i : {i : Fin m | (i : ℕ) < a}, g i * pr (D i.1) (c j.1) = 0 := by
-      simp only [← ht, map_sum, map_smul, smul_eq_mul, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [← ht, map_sum, map_smul, smul_eq_mul, Finset.mul_sum]
       rw [Finset.sum_comm]
       refine Finset.sum_eq_zero fun l _ => ?_
       have := congrFun hg l
@@ -209,7 +212,8 @@ theorem eq_gvec {a k b : ℕ} (hk : k ≤ m) {u : Fin k → Fin n → K} (hak : 
         have htl : ∀ l', t l' = if l' = l then 1 else 0 := by
           intro l'
           have e := congrArg (pr (D (w.1 (Fin.castLE hk l')))) ht
-          simp only [map_sum, map_smul, hδ, smul_eq_mul, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq',
+          set_option synthInstance.maxHeartbeats 100000 in
+            simp only [map_sum, map_smul, hδ, smul_eq_mul, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq',
             Finset.mem_univ, if_true] at e
           rw [e, pr_c h, ← hwl]
           simp
@@ -247,7 +251,8 @@ theorem mem_cell {a k b : ℕ} (hk : k ≤ m) {u : Fin k → Fin n → K} (hak :
     have e := congrFun (congrFun (Matrix.nonsing_inv_mul A hU) l) l'
     rw [Matrix.mul_apply, Matrix.one_apply] at e
     rw [← e]
-    simp only [hu', map_sum, map_smul, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hu', map_sum, map_smul, smul_eq_mul]
     rfl
   refine ⟨x, congrArg (Submodule.span K) ?_⟩
   ext v

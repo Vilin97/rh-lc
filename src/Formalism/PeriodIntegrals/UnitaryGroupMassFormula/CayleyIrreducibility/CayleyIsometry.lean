@@ -93,7 +93,8 @@ theorem eval_hq (G : Matrix (Fin n) (Fin n) ℂ) (p : MvPolynomial (Fin n × Fin
     rw [h2, Matrix.smul_apply, smul_eq_mul, ← mul_assoc, mul_inv_cancel₀ hd, one_mul, ← hMm]
     rfl
   have hdz : eval z (dp G) = det (1 + A) := by rw [eval_dp, hA]
-  rw [hq, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hq, map_sum]
   conv_rhs => rw [eval_eq', Finset.mul_sum]
   refine Finset.sum_congr rfl fun d hdm => ?_
   simp only [map_mul, map_pow, map_prod, eval_C, hdz, hM, mul_pow, Finset.prod_mul_distrib,

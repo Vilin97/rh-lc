@@ -32,7 +32,8 @@ theorem rename_place_mem {R : Type} [CommRing R] {T T' κ : Type} [Fintype κ] {
   refine Harm.mem_rowHighest_iff_rowAdd.2 ⟨fun t a b => ?_, fun t ρ => ?_, fun t ρ ρ' hρ s => ?_⟩ <;>
     obtain ⟨t, rfl⟩ := f.surjective t
   · have := congrArg (MvPolynomial.rename F) (h₁ t a b)
-    rw [map_zero, Harm.laplacian_apply, map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_zero, Harm.laplacian_apply, map_sum] at this
     rw [Harm.laplacian_apply, ← this]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [Harm.xVar, Harm.yVar, ← hFa, ← hFa, MvPolynomial.pderiv_rename F.injective,

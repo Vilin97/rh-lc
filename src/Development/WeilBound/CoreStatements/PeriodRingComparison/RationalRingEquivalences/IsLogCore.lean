@@ -30,7 +30,8 @@ theorem isLogA_iff_of_compat (c : Reformulated.AutPerF.BdRPlus l (OC l) ≃+* Fo
     (ε : PreTilt ↥(PadicComplexInt l) l) (y : Reformulated.AutPerF.BdRPlus l (OC l)) :
     IsLogA l ε y ↔ Formalism.Per6.IsLog l ε (c y) := by
   refine forall_congr' fun n => ?_
-  rw [mem_ker_pow_iff_of_equiv c _ _ hθ, map_sub, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [mem_ker_pow_iff_of_equiv c _ _ hθ, map_sub, map_sum]
   simp only [map_mul, map_pow, map_sub, map_one, ringEquiv_algebraMap_rat, ha]
 
 end Cmp6

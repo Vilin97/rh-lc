@@ -147,7 +147,8 @@ theorem fibre {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ] (ψ 
       ∑ q ∈ s, c q • (fun x => ψ (x ⬝ᵥ q) * G x) := by
     intro G; funext x; simp [Finset.sum_mul, mul_assoc]
   have hT : T (fun x => (∑ q ∈ s, c q * ψ (x ⬝ᵥ q)) * Φ x) = fun x => (∑ q ∈ s, c q * ψ (x ⬝ᵥ q)) * T Φ x := by
-    rw [hsum, hsum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hsum, hsum, map_sum]
     refine Finset.sum_congr rfl fun q hq => ?_
     rw [map_smul, hch q hq]
   have hz : (fun x => (∑ q ∈ s, c q * ψ (x ⬝ᵥ q)) * Φ x) = 0 := funext h0

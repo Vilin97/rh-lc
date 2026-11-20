@@ -86,7 +86,8 @@ theorem frobSub_range (K : Type) [Field K] (p : ℕ) [Fact p.Prime] [CharP K p] 
       · simp [frobVec, h, hp]
     have hu : u = ∑ j, u j • (Pi.single j (1 : K) : Fin d → K) := by
       funext r; simp [Finset.sum_apply, Pi.single_apply]
-    rw [hu, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hu, map_sum]
     refine sum_mem fun j _ => ?_
     rw [map_smul]
     refine Submodule.smul_mem _ _ (Submodule.subset_span ⟨M.mulVec (Pi.single j 1), ⟨_, rfl⟩, ?_⟩)

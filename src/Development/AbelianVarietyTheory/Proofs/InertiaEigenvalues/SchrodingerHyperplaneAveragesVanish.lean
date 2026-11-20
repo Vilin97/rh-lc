@@ -185,7 +185,8 @@ theorem avg_schrodinger_hyperplane : ∀ (D : D7) (G : Type) [Group G] [Fintype 
     fun g hg => by rw [hκ g hg]; exact (hG g hg).choose_spec.2.1
   have h0 := hclean ⟨PP, hPP⟩ (fun j => ρk (a j)) ha' false 1 (Or.inl rfl) ⟨v, hv, hOver⟩ κ hLifts hSupp
   have h1 := congrArg (fun φ' => ℓ (heisO R.ψ (Vc D i) (Wc D i) (σ X) φ')) h0
-  simp only [avgW, GlobalTheory.SplitScalar.heisO_sum, GlobalTheory.SplitScalar.heisO_smul, map_sum, map_smul, smul_eq_mul] at h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [avgW, GlobalTheory.SplitScalar.heisO_sum, GlobalTheory.SplitScalar.heisO_smul, map_sum, map_smul, smul_eq_mul] at h1
   set Fn : GL (Fin D.R.r) (IsLocalRing.ResidueField (OI v)) → ℂ := fun g =>
     ℓ (heisO R.ψ (Vc D i) (Wc D i) (σ ((Matrix.fromBlocks (lift g) 0 0 (1 : Matrix (Fin D.R.t) (Fin D.R.t) (OI v))).map
       (algebraMap (OI v) (Fv D.host.F v)) * X)) f) with hFn

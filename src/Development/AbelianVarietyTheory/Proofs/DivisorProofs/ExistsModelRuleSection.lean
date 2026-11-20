@@ -108,7 +108,8 @@ theorem flatCoord_ne_zero (hP : IsPeriod D ty P) (hE : ∀ x y, (hermForm Hm (P 
   have fx : ∀ k, f (P (x k)) = 0 := fun k => by
     have e : pr (P (x k)) = ∑ b, C k b • V b := funext fun n => by rw [hpr, hC]; simp
     have := congrFun hc k
-    rw [hf, e, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hf, e, map_sum]
     simp only [Matrix.mulVec, dotProduct, Fintype.sum_sum_type, Matrix.of_apply, Sum.elim_inl, Sum.elim_inr] at this
     simp only [hz₀, hermForm, sum_dotProduct, smul_dotProduct, map_smul, hlam, smul_eq_mul, Finset.mul_sum]
     refine Eq.trans (congrArg (· + _) (Finset.sum_congr rfl fun b _ => ?_)) this
@@ -128,7 +129,8 @@ theorem flatCoord_ne_zero (hP : IsPeriod D ty P) (hE : ∀ x y, (hermForm Hm (P 
       · exact h
       · exact Fintype.linearIndependent_iff.1 hx (fun k => t (some k)) ht i)
     have h2 := congrArg (fun y => f (P y)) ht
-    simp only [map_add, map_sum, fa, Option.casesOn'_none, Option.casesOn'_some, fx, mul_zero, Finset.sum_const_zero, add_zero, map_zero] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_add, map_sum, fa, Option.casesOn'_none, Option.casesOn'_some, fx, mul_zero, Finset.sum_const_zero, add_zero, map_zero] at h2
     exact (mul_eq_zero.1 h2).resolve_left (by simpa using h1)
   have both : ∀ z, hermForm Hm z₀ z = 0 ∧ lam (pr z) = 0 := fun z => by
     have h1 := (hf z).symm.trans (LinearMap.congr_fun fz z)
@@ -334,7 +336,8 @@ theorem exists_reading (hU : IsClosed (U : Set (Xo.XF c))) {σb : RuleY Y} {σ :
   refine ⟨v, w, o, m, g, u, Hm', κ, h, hfr, hres ℂ s y v w av aw hfr hf sv sw, hA, hex, hΛ, hE', vV, vW,
     ⟨C, fun k j => ?_, ?_⟩, flatCoord_ne_zero hP hE (by rw [(Fu.sig i).1, (Fu.sig i).2]) hx
       (LinearIndependent.of_comp h.toLinearMap iV) (LinearIndependent.of_comp h.toLinearMap iW) eV eW hC⟩
-  · simp only [← map_smul, ← map_sum, ← map_sub]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [← map_smul, ← map_sum, ← map_sub]
     refine (hh _ _).trans (herm_eq_zero hP hE (fun n hn => ?_) (eV j))
     have := hC k n
     rw [if_pos hn] at this

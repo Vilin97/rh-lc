@@ -25,7 +25,8 @@ theorem gram_det_unit (W : HSp D) : IsUnit W.gram.det := by
       apply W.nondeg.2
       intro x
       rw [← W.frame.sum_repr x]
-      simp only [map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
         RingHom.id_apply, Finset.mul_sum]
       rw [Finset.sum_comm]
       refine Finset.sum_eq_zero fun i _ => ?_

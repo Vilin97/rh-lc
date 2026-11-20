@@ -100,7 +100,8 @@ theorem yG_unitary (τ : E →+* ℂ) (u : Matrix.unitaryGroup (Fin n) ℂ) :
   split_ifs with hw
   · have h2 := congrFun₂ hu i j
     simp only [Matrix.mul_apply, Matrix.star_apply] at h2
-    simp only [← twist_star, ← map_mul, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [← twist_star, ← map_mul, ← map_sum]
     change twist τ (∑ k, star ((u : Matrix (Fin n) (Fin n) ℂ) k i) * (u : Matrix (Fin n) (Fin n) ℂ) k j) = _
     rw [h2, Matrix.one_apply, Matrix.one_apply]
     split_ifs <;> simp

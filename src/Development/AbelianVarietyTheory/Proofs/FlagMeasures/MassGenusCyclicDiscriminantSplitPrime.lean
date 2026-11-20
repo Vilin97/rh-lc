@@ -44,10 +44,12 @@ theorem pd_of_ortho (hK : IsCMUnram K) (h : V →ₗ⋆[K] V →ₗ[K] K) (I : S
     push Not at hn
     exact hx (by simp [hn])
   have e1 : h (∑ i, c i • e i) (∑ i, c i • e i) = ∑ i, star (c i) * c i := by
-    simp only [map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, he,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, he,
       smul_eq_mul, RingHom.id_apply, starRingEnd_apply]
     simp [mul_comm]
-  rw [e1, map_sum, Complex.re_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e1, map_sum, Complex.re_sum]
   have e2 : ∀ i, (τ (star (c i) * c i)).re = Complex.normSq (τ (c i)) := fun i => by
     rw [map_mul, hK.2.1, ← Complex.normSq_eq_conj_mul_self, Complex.ofReal_re]
   simp only [e2]

@@ -101,7 +101,8 @@ theorem isFreeOn_map {M : Lat ξ F} (g : F ≃ₗ[Ω] F') {ρ : 𝓞 E →+* Mod
 
 theorem eigProj_cj (g : F ≃ₗ[Ω] F') (ρ : 𝓞 E →+* Module.End Ω F) (σ : E →+* Ω) (y : F') :
     HT.eigProj (cj g ρ) σ y = g (HT.eigProj ρ σ (g.symm y)) := by
-  simp [HT.eigProj, LinearMap.sum_apply, cj_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [HT.eigProj, LinearMap.sum_apply, cj_apply, map_sum]
 
 theorem mem_eigSp_cj (g : F ≃ₗ[Ω] F') (ρ : 𝓞 E →+* Module.End Ω F) (σ : E →+* Ω) (y : F') :
     y ∈ HT.eigSp (cj g ρ) σ ↔ g.symm y ∈ HT.eigSp ρ σ := by

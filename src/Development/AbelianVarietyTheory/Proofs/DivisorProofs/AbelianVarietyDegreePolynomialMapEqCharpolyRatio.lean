@@ -32,7 +32,8 @@ theorem map_eq_charpoly_vmap : ∀ (K : Type) [Field K] (l : ℕ) [Fact l.Prime]
     obtain ⟨Φ, hΦ, hΦe⟩ := GlobalTheory.T.homDegree_integerCombination_isHomogeneous K A A rfl n (fun i => Polynomial.aeval f (u i))
     refine ⟨Φ, hΦ, fun m => ?_⟩
     rw [hΦe m]
-    simp only [δ, map_sum, map_zsmul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [δ, map_sum, map_zsmul]
   have hPn : ∀ n : ℤ, P.eval (n : ℚ) = δ (Polynomial.C n - Polynomial.X) := by
     intro n
     rw [hP n]

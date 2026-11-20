@@ -26,7 +26,8 @@ theorem residue_linearEquiv_apply_eq_sum {N : ℕ} (φ : (Fin N → k) ≃ₗ[k]
     funext i
     simp [Finset.sum_apply, Pi.single_apply]
   conv_lhs => rw [hv]
-  rw [map_sum, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_apply]
   refine Finset.sum_congr rfl fun l' _ => ?_
   rw [map_smul, Pi.smul_apply, smul_eq_mul, mul_comm]
 

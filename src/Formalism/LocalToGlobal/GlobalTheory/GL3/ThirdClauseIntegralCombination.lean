@@ -73,7 +73,8 @@ def atLogA : D.what₂.Tau × Fin N' × Fin N → MvPowerSeries (Fin r) ℂ_[p] 
 theorem atLogA_hasSubst : MvPowerSeries.HasSubst (atLogA lam Λ C wq b) := by
   apply MvPowerSeries.hasSubst_of_constantCoeff_zero
   intro k
-  simp only [atLogA, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [atLogA, map_sum, map_mul]
   refine Finset.sum_eq_zero fun i _ => ?_
   rw [cc_psubst' (MvPowerSeries.constantCoeff_X i) (cc_flog _ wq), mul_zero]
 

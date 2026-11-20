@@ -102,7 +102,8 @@ theorem main : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (bk : BK K) (τ : Ain
     have h1 : Y1.map (inclW l) = Y.map (inclW l) * Cw := by
       refine Matrix.ext fun i j => ?_
       have := congrArg (fun v => inclW l (v i)) (hc j)
-      simpa [Matrix.mul_apply, Matrix.mulVec, dotProduct, hCw, BK.evW, map_sum] using this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa [Matrix.mul_apply, Matrix.mulVec, dotProduct, hCw, BK.evW, map_sum] using this
     rw [hY1M, hYWm, Matrix.mul_assoc] at h1
     have h2 := congrArg (HMul.hMul M⁻¹) h1
     rw [← Matrix.mul_assoc, ← Matrix.mul_assoc, hMM', Matrix.one_mul, Matrix.one_mul] at h2

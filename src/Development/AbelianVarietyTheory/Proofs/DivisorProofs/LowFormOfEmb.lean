@@ -67,7 +67,8 @@ theorem re_inner_self {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H
 theorem csumAt_conj [NumberField K] [StarRing K] (S : CSD K) (σ : K →+* ℂ) (f g : S.Forms) :
     csumAt S ((starRingEnd ℂ).comp σ) f g = starRingEnd ℂ (csumAt S σ f g) := by
   unfold csumAt
-  simp only [dotProduct, Matrix.mulVec, Matrix.map_apply, Pi.star_apply, map_sum, map_mul, RingHom.comp_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dotProduct, Matrix.mulVec, Matrix.map_apply, Pi.star_apply, map_sum, map_mul, RingHom.comp_apply]
   rfl
 
 end Abstract
@@ -94,7 +95,8 @@ theorem norm_wC (i : Fin D.R.m) (v : InfinitePlace D.what₂.LL) (z : Fin (finra
       (R.HW i (sgAt D.what₂.embLL v)).H)) e0).trans ?_
     refine (congrArg Subtype.val (out_sum _)).trans ((Submodule.coe_sum _ _ _).trans ?_)
     unfold coordMap
-    rw [Fintype.linearCombination_apply, map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Fintype.linearCombination_apply, map_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     show cj (twAt D.what₂.embLL v) (v.embedding (z k)) •
       ((((Real.sqrt (RealDat.nP F false))⁻¹ : ℝ) : ℂ) • (R.FW i).j (sgAt D.what₂.embLL v) (R.bL F false i k)) = _

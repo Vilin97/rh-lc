@@ -163,7 +163,8 @@ theorem clearDen (x : X) (A : Matrix d d (FractionRing O))
         algebraMap O (FractionRing O) (b : O) * cf g := fun g => by rw [ho, Algebra.smul_def]
     ext i j
     rw [← hcf]
-    simp only [Finsupp.sum, Finset.sum_apply, Matrix.map_apply, Matrix.sum_apply, Matrix.smul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Finsupp.sum, Finset.sum_apply, Matrix.map_apply, Matrix.sum_apply, Matrix.smul_apply,
       smul_eq_mul, Algebra.algebraMap_self_apply, map_sum, map_mul, ho', Finset.mul_sum, mul_assoc]
 
 theorem blockDiag_of_mem (x : X) {m : ℕ} (c : d → Fin m) (P : Matrix d d (FractionRing O))
@@ -175,7 +176,8 @@ theorem blockDiag_of_mem (x : X) {m : ℕ} (c : d → Fin m) (P : Matrix d d (Fr
   have hN : ((∑ g ∈ s, fun y => algebraMap O O (cc g y) • r g y) x).map (algebraMap O (FractionRing O)) =
       ∑ g ∈ s, algebraMap O (FractionRing O) (cc g x) • (r g x).map (algebraMap O (FractionRing O)) := by
     ext k l
-    simp [Finset.sum_apply, Matrix.sum_apply, map_sum, Matrix.smul_apply, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Finset.sum_apply, Matrix.sum_apply, map_sum, Matrix.smul_apply, smul_eq_mul]
     refine Finset.sum_congr rfl fun g _ => ?_
     rw [Algebra.smul_def]
   rw [hN, Finset.mul_sum, Finset.sum_mul, Matrix.sum_apply]

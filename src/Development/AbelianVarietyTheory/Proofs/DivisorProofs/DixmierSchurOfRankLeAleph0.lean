@@ -37,7 +37,8 @@ theorem linearIndependent_of_sub_apply_eq {V : Type*} [AddCommGroup V] [Module �
       rw [← Finset.prod_erase_mul s _ hk, ← hw k, map_mul, map_mul, aeval_C, map_sub, aeval_X,
         aeval_C, Module.End.mul_apply, Module.End.mul_apply, Module.algebraMap_end_apply,
         map_smul, map_smul]
-    rw [hqdef, map_sum, LinearMap.sum_apply, Finset.sum_congr rfl h1, ← map_sum, hg, map_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hqdef, map_sum, LinearMap.sum_apply, Finset.sum_congr rfl h1, ← map_sum, hg, map_zero]
   have hq : q = 0 := by
     by_contra hne
     have hu := isUnit_aeval_of_forall_isUnit_sub T h q hne

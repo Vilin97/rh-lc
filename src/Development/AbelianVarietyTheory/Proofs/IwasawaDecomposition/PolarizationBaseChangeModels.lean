@@ -100,7 +100,8 @@ theorem mixChg_map (M' : MChart Z') (M : MChart Z) (x : Sp S ⟶ Z'.X) (h' : ⊤
     (tanEquiv h _)).sum_toMatrix_smul_self
     (lieBasis M (tau (isAffineOpen_mix π M' M) ≫ π) (le_preimage_map π inf_le_right (tau_le _ le_rfl))) j
   have h2 := congrArg (tanPull (G := Z.t.G) _ e') h1
-  rw [map_sum, tanPull_lieBasis M _ e' _ h₀] at h2
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, tanPull_lieBasis M _ e' _ h₀] at h2
   simp only [map_smulₛₗ, Module.Basis.map_apply, tanPull_tanEquiv h _ e e', tanPull_lieBasis M' _ e _ h'] at h2
   rw [Module.Basis.toMatrix_apply, ← h2]
   simp only [← Module.Basis.map_apply]

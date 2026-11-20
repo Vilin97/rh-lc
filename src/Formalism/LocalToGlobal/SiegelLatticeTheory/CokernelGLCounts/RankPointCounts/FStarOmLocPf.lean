@@ -126,7 +126,8 @@ theorem bcP_sp (G : Fin (D.R.rS + 1) → (VS D).V) {Ω : (VS D).V}
     (hΩ : Ω ∈ Submodule.span D.host.E (Set.range G)) :
     baseChange₂ D p Ω ∈ Submodule.span (D.s.atP p).Ep (Set.range (gL Zd p G)) := by
   obtain ⟨c, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun D.host.E).1 hΩ
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Submodule.sum_mem _ fun b _ => ?_
   rw [baseChange_smul₂]
   refine Submodule.smul_mem _ _ ?_
@@ -183,9 +184,11 @@ theorem descend {T : D.host.E} (F0 : FlagG (VS D) D.R.rS T) (c : Fin D.R.rS → 
     intro x
     have e : ℓ x = ∑ i, (VS D).frame.repr x i * ℓ ((VS D).frame i) := by
       conv_lhs => rw [← (VS D).frame.sum_repr x]
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       exact Finset.sum_congr rfl fun i _ => by rw [map_smul, smul_eq_mul]
-    rw [e, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, map_sum]
     simp only [Lp, LinearMap.coe_mk, AddHom.coe_mk, baseChange₂, AddMonoidHom.coe_mk, ZeroHom.coe_mk]
     exact Finset.sum_congr rfl fun i _ => (map_mul _ _ _).symm
   have hℓe : ∀ i : Fin D.R.rS, ℓ (F0.fvec i.castSucc) = 0 := by

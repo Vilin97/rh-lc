@@ -34,7 +34,8 @@ theorem cY_isom : ∀ (D : D7) (X : HidaSetting D) (h : X.B.I = Formalism.L2.SG.
     simp [hb]
   rw [hc, hc, hG]
   conv_rhs => rw [← b.sum_repr y', ← b.sum_repr y]
-  simp only [map_sum, map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, dotProduct, mulVec,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, dotProduct, mulVec,
     Finset.mul_sum, Pi.star_apply]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_

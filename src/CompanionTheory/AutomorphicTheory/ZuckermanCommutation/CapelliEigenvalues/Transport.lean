@@ -35,7 +35,8 @@ theorem qminorOp_rel
     {t : ℕ} (a b : Fin t → Fin n) (u : ℂ) :
     φ (qminorOp Eop a b u f g) = qminorOp Eop' a b u f' g := by
   unfold qminorOp
-  simp only [Finset.sum_apply, Pi.smul_apply, map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finset.sum_apply, Pi.smul_apply, map_sum, map_smul]
   refine Finset.sum_congr rfl fun σ _ => ?_
   congr 1
   exact hg _ _ (foldr_rel Rel hT h t (fun k => u - ((k : ℕ) : ℂ)) (fun k => a (σ k)) b)

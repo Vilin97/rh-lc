@@ -148,7 +148,8 @@ theorem local_norm_nonneg {F E : Type} [Field F] [Field E] [Algebra F E] [Algebr
     have : f = fun t => (∑ i, t i • Algebra.leftMulMatrix B (B i)).det := by
       funext t
       simp only [f]
-      rw [Algebra.norm_eq_matrix_det B, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Algebra.norm_eq_matrix_det B, map_sum]
       simp only [map_smul]
     rw [this]
     exact Continuous.matrix_det (by fun_prop)

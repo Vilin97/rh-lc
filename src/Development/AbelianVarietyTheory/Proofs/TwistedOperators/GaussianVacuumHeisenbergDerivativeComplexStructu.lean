@@ -74,7 +74,8 @@ theorem actsD_zero_of_neg {F E : Type} [Field F] [NumberField F] [Field E] [Numb
             (RingHom.fst (InfiniteAdeleRing F) (FiniteAdeleRing (𝓞 F) F))
         have hevH : ∀ a : AF F, evI F a = evH a := fun a => rfl
         rw [hform, hevH]
-        simp only [dotProduct, map_sub, map_sum, map_mul, a₁, a₂, b₁, b₂, hevH]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [dotProduct, map_sub, map_sum, map_mul, a₁, a₂, b₁, b₂, hevH]
       rw [hev, map_sub] at hneg
       have c1 : (ell b₂) a₁ = Algebra.trace ℝ (mixedEmbedding.mixedSpace F) (a₁ ⬝ᵥ b₂) := rfl
       have c2 : (ell b₁) a₂ = Algebra.trace ℝ (mixedEmbedding.mixedSpace F) (a₂ ⬝ᵥ b₁) := rfl

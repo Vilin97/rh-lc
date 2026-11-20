@@ -232,7 +232,8 @@ theorem moments : ∀ (σ : Type) [Fintype σ] [DecidableEq σ] (S T : Matrix σ
     simp only [hf, mulVec, dotProduct, trace, Matrix.diag_apply, Matrix.mul_apply, transpose_apply, of_apply]
     rw [Finset.mul_sum, ← Finset.sum_add_distrib, ← Finset.sum_add_distrib, ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun l _ => ?_
-    simp only [map_add, map_sum, map_smul, LinearMap.add_apply, LinearMap.sum_apply, LinearMap.smul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_add, map_sum, map_smul, LinearMap.add_apply, LinearMap.sum_apply, LinearMap.smul_apply,
       smul_eq_mul]
     have h1 : ∀ (g : σ → ℂ) (G : σ → σ → ℂ) (c : ℂ), ∑ m, T l m * (c * g m + ∑ k, S l k * G k m) =
         c * ∑ m, T l m * g m + ∑ m, (∑ k, S l k * G k m) * T l m := fun g G c => by

@@ -113,13 +113,16 @@ theorem eps_frob_compat : ∀ (l : ℕ) [Fact l.Prime] (a e : ℕ) [NeZero a] [N
       rcases eq_or_ne i i' with rfl | h
       · simp [bas]
       · simp [bas, Pi.single_eq_of_ne h, h]
-    rw [hy j, map_sum, Finset.sum_apply, Finset.sum_apply, Finset.sum_eq_single i]
-    · rw [map_sum, Finset.sum_apply, Finset.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hy j, map_sum, Finset.sum_apply, Finset.sum_apply, Finset.sum_eq_single i]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [map_sum, Finset.sum_apply, Finset.sum_apply]
       refine Finset.sum_congr rfl fun q _ => ?_
       rw [hl₀, hU0, if_pos rfl, Algebra.smul_def, PowerSeries.algebraMap_apply,
         PowerSeries.algebraMap_apply, mul_comm]
     · intro i' _ h
-      rw [map_sum, Finset.sum_apply, Finset.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Finset.sum_apply, Finset.sum_apply]
       refine Finset.sum_eq_zero fun q _ => ?_
       rw [hl₀, hU0, if_neg (Ne.symm h), mul_zero]
     · intro h; exact absurd (Finset.mem_univ i) h

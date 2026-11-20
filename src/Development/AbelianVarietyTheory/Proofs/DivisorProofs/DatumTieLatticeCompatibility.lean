@@ -40,7 +40,8 @@ theorem isBasisOf_dual (hv : v.Integers O) (B : V →ₗ[C] V →ₗ[C] C)
     exact (mul_eq_zero.1 h1).resolve_left fun h0 => ha (hv.hom_inj (by rw [h0, map_zero]))
   have hsum : ∀ (c : Fin q → C) (i : Fin q), B (z i) (∑ j, c j • x j) = c i := by
     intro c i
-    simp [map_sum, hx]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, hx]
   refine ⟨Fintype.linearIndependent_iff.2 fun c hc i => ?_, le_antisymm ?_ fun m hm => ?_⟩
   · rw [← hsum c i]
     exact k1 _ (hzm i).2 _ (by simpa [map_sum] using hc)
@@ -53,7 +54,8 @@ theorem isBasisOf_dual (hv : v.Integers O) (B : V →ₗ[C] V →ₗ[C] C)
       have e1 : ∀ i, B (c i • z i) (x j) = if i = j then algebraMap O C (c i) else 0 := fun i => by
         rw [← algebraMap_smul C (c i), map_smul, LinearMap.smul_apply, hx, smul_eq_mul, mul_ite,
           _root_.mul_one, mul_zero]
-      rw [LinearMap.flip_apply, map_sum, LinearMap.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [LinearMap.flip_apply, map_sum, LinearMap.sum_apply]
       simp only [e1, Finset.sum_ite_eq', Finset.mem_univ, if_true])
     obtain ⟨t, ht⟩ := rep F
     refine (hM _).2 ⟨t, fun w hw => ht w ▸ hF w hw, ?_⟩
@@ -65,12 +67,14 @@ theorem isBasisOf_dual (hv : v.Integers O) (B : V →ₗ[C] V →ₗ[C] C)
     have h0 : A (e t - ∑ j, algebraMap O C (c j) • x j) = 0 := by
       refine k3 _ (U.sub_mem (heU t) (U.sum_mem fun j _ => U.smul_mem _ (hxU j))) fun w hw hw' => ?_
       obtain ⟨d, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun O).1 (hz.ge ⟨hw, hw'⟩)
-      rw [map_sum, LinearMap.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, LinearMap.sum_apply]
       refine Finset.sum_eq_zero fun i _ => ?_
       rw [← algebraMap_smul C (d i), map_smul, LinearMap.smul_apply, map_sub, hsum,
         heS _ (hzm i).2, hc, sub_self, smul_zero]
     rw [map_sub, sub_eq_zero] at h0
-    rw [h0, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h0, map_sum]
     refine Submodule.sum_mem _ fun j _ => ?_
     rw [map_smul, algebraMap_smul]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨j, rfl⟩)
@@ -110,7 +114,8 @@ variable {p : ℕ} [Fact p.Prime] {O : Type} [CommRing O] [Fact ¬IsUnit (p : O)
 
 theorem bC_incl (u : Fin h → O) : bC C D (incl C h u) = incl C h (D.bb u) := by
   funext i
-  simp [bC, redC, incl, Datum.bb, Matrix.mulVec, dotProduct, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [bC, redC, incl, Datum.bb, Matrix.mulVec, dotProduct, map_sum]
 
 theorem alC_mem_eig (σ : Γ →+* O) {u : Fin h → C} (hu : u ∈ eig C (actT D) σ) :
     alC C D u ∈ eig C (actH D) σ := by
@@ -261,7 +266,8 @@ theorem fil_al_dual : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgCl
   let A : P.V →ₗ[C] (Fin h → C) := alC C D ∘ₗ (φ : P.V →ₗ[C] (Fin h → C))
   have heS : ∀ w ∈ P.eigW τ, ∀ x, P.pairV w (e ψ x) = P.pairV w x := by
     intro w hw x
-    rw [eq_comm, ← sub_eq_zero, ← map_sub, hsplit, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [eq_comm, ← sub_eq_zero, ← map_sub, hsplit, map_sum]
     refine Finset.sum_eq_zero fun i hi => ?_
     obtain ⟨a, ha⟩ := not_forall.1 fun H => Finset.ne_of_mem_erase hi (hinj i ψ H)
     refine pairV_eq_zero P hw.2 (hemem i x) (a := star a) fun H => ha (hv.hom_inj ?_)
@@ -289,7 +295,8 @@ theorem fil_al_dual : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgCl
   have hAr : ∀ x, A x - A (e ψ x) ∈ ⨆ s : {s : ℤ_[p] ⊗[ℤ] 𝓞 E →+* O // s ≠ σ},
       eig C (actH D) s.1 := by
     intro x
-    rw [← map_sub, hsplit, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sub, hsplit, map_sum]
     refine Submodule.sum_mem _ fun i hi => ?_
     let s : ℤ_[p] ⊗[ℤ] 𝓞 E →+* O := (Algebra.TensorProduct.lift (algebraMap ℤ_[p] O).toIntAlgHom
       (embO hv i).toIntAlgHom fun _ _ => Commute.all _ _).toRingHom
@@ -357,7 +364,8 @@ theorem fil_al_dual : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgCl
     exact heS _ (Submodule.sum_mem _ fun j _ => Submodule.smul_mem _ _ (hyS j)) _
   have hgN : g' * N = 1 := by
     ext i l
-    rw [Matrix.one_apply, ← hx, Matrix.mul_apply, map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Matrix.one_apply, ← hx, Matrix.mul_apply, map_sum, LinearMap.sum_apply]
     simp only [map_smul, LinearMap.smul_apply, smul_eq_mul, N, Matrix.of_apply]
   have hNg : N * g' = 1 := mul_eq_one_comm.1 hgN
   refine ⟨fun j => A (∑ l, g' l j • x l), Nᵀ, ?_, ?_, ?_⟩
@@ -365,14 +373,16 @@ theorem fil_al_dual : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgCl
       (fg_latLie T) (fun w hw => exists_smul_mem_latLie T hε hw.1) y hy' _
       (fun j => Submodule.sum_mem _ fun l _ => Submodule.smul_mem _ _ (hemem ψ _))
       (fun i j => ?_) _ hFil
-    rw [← Matrix.one_apply, ← hNg, Matrix.mul_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Matrix.one_apply, ← hNg, Matrix.mul_apply, map_sum]
     exact Finset.sum_congr rfl fun l _ => by rw [map_smul, smul_eq_mul, mul_comm]; rfl
   · have e1 : (fun i => ∑ j, Nᵀ i j • A (∑ l, g' l j • x l)) = fun i => A (x i) := by
       funext i
       have e2 : ∀ l, ∑ j, N j i * g' l j = if l = i then 1 else 0 := fun l => by
         rw [← Matrix.one_apply, ← hgN, Matrix.mul_apply]
         simp only [mul_comm]
-      simp only [map_sum, map_smul, Finset.smul_sum, smul_smul, Matrix.transpose_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, Finset.smul_sum, smul_smul, Matrix.transpose_apply]
       rw [Finset.sum_comm]
       simp only [← Finset.sum_smul, e2]
       simp

@@ -84,7 +84,8 @@ theorem memLocFrom_of (hI : InjV) : MemLocFrom := by
     have hci := congrFun (hc v) i
     simp only [vecV] at hci
     rw [← hci]
-    simp only [y, Finset.sum_apply, map_sum, Pi.smul_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [y, Finset.sum_apply, map_sum, Pi.smul_apply]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [Subring.smul_def, smul_eq_mul]
     change psiV I v (((1 : I.E) ⊗ₜ[I.F] α j) * (g j i ⊗ₜ[I.F] (1 : Formalism.MainNotions.S.Af I.F))) = _

@@ -253,7 +253,8 @@ theorem split_mem {Λ A L B : Submodule (𝓞 E) S.V} (h : Λ = A ⊔ L ⊔ B) {
 theorem frame_symm {n : ℕ} (φ : S.V ≃ₗ[E] S.V) (e : Fin n → S.V) (M N : Matrix (Fin n) (Fin n) E)
     (hMN : M * N = 1) (hφ : ∀ j, φ (e j) = ∑ c, M c j • e c) (j : Fin n) :
     φ.symm (e j) = ∑ c, N c j • e c := by
-  rw [LinearEquiv.symm_apply_eq, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [LinearEquiv.symm_apply_eq, map_sum]
   simp_rw [map_smul, hφ, Finset.smul_sum, smul_smul]
   rw [Finset.sum_comm]
   simp_rw [← Finset.sum_smul]
@@ -267,7 +268,8 @@ theorem hT_span_span (f : Fin r → S.V) (hff : ∀ a b, S.hT (f a) (f b) = 0) {
     (hx : x ∈ Submodule.span E (Set.range f)) (hy : y ∈ Submodule.span E (Set.range f)) : S.hT x y = 0 := by
   obtain ⟨c, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun E).1 hx
   obtain ⟨d, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun E).1 hy
-  simp [map_sum, hff]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, hff]
 
 variable {Λ : Submodule (𝓞 E) S.V} (aa : Fin r → FractionalIdeal (nonZeroDivisors (𝓞 E)) E)
   (e f : Fin r → S.V) (L : Submodule (𝓞 E) S.V)
@@ -481,7 +483,8 @@ theorem exists_eigenvalueGLOne_eq_cuspidalLabel_gen (hUn : Formalism.HermitianLa
       ∀ x ∈ Submodule.span E (Set.range g), S.hT x z = 0 := by
     intro g hg x hx
     obtain ⟨c, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun E).1 hx
-    simp [map_sum, hg]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, hg]
   have ha0 := hzero e he_z a (latSpan_le_spanE aa e ha)
   have hb0 := hzero f (fun i => (hL z hzL i).2) b (latSpan_le_spanE _ f hb)
   rw [map_add, map_add, LinearMap.add_apply, LinearMap.add_apply, ha0, hb0] at hσz
@@ -594,7 +597,8 @@ theorem nLamOnto_holds : TupLift.NLamOnto := by
     congr 1
     refine Finset.sum_congr rfl fun c _ => ?_
     rw [hT_aE_left, hy₀z, mul_one, neg_neg]
-  · rw [hfc, LinearEquiv.mul_apply, heX j, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [hfc, LinearEquiv.mul_apply, heX j, map_sum,
       (hU (Fin.last _) j.castSucc).1 (Fin.castSucc_lt_last j), zero_smul, add_zero]
     refine Finset.sum_congr rfl fun c _ => ?_
     rw [map_smul, hez]

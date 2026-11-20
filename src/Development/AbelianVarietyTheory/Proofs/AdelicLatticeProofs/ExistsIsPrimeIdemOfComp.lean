@@ -66,7 +66,8 @@ theorem mem_intAE_iff (z : Af F ⊗[F] E) :
     obtain ⟨r, hr, e⟩ := Formalism.UG.P.levelaf_decomp g hg hz
     have : z = ∑ j, r j ⊗ₜ[F] (g j : E) := by
       apply (Algebra.TensorProduct.comm F (Af F) E).injective
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       exact e
     rw [this]
     exact sum_mem fun j _ => AddSubgroup.subset_closure ⟨r j, hr j, g j, rfl⟩

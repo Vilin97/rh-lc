@@ -213,7 +213,8 @@ theorem baseFlagComplement_posDef (D : D7) : IsPosDef (D.sp.X 0).hT := by
   rw [Formalism.BasicNotions.hT_expand]
   change Complex.re _ = _
   congr 1
-  simp only [dotProduct, Matrix.mulVec, map_sum, map_mul, hτ, Finset.mul_sum, Matrix.map_apply, Pi.star_apply, mul_assoc]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dotProduct, Matrix.mulVec, map_sum, map_mul, hτ, Finset.mul_sum, Matrix.map_apply, Pi.star_apply, mul_assoc]
   rfl
 
 theorem main : ∀ (D : D7) (u u' : D.what₂.Word) (F0 : Fb D u) (Λ : LatV D), Stand D u u' → IsBase D u F0 → IsRowLat D F0 Λ → WHyp D (lf D F0) (Wsp D) ∧ Function.Injective (D.sp.iXY 0) ∧ IsPosDef (D.sp.X 0).hT ∧ Submodule.IsLattice D.host.E (L0X D Λ (lf D F0)) ∧ Formalism.HermitianLatticesTheory.IsIntegralLat (D.sp.X 0).hT (L0X D Λ (lf D F0)) ∧ detW D (L0X D Λ (lf D F0)) = NT D u ∧ Wb D = Wsp D ⊔ Submodule.span D.host.E {D.zmOf u} := by

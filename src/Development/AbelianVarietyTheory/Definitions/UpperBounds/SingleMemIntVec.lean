@@ -29,7 +29,8 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ} in
 
 theorem _root_.GlobalTheory.Up.Definite.map_herm_one_self (φ : E →+* ℂ) (x : Fin r → E) :
     φ (_root_.ReciprocityTheory.ChartRestriction.G.FD.herm (1 : Matrix (Fin r) (Fin r) E) x x) = ((∑ a, ‖φ (x a)‖ ^ 2 : ℝ) : ℂ) := by
-  rw [_root_.GlobalTheory.Up.Definite.herm_one, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [_root_.GlobalTheory.Up.Definite.herm_one, map_sum]
   push_cast
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [map_mul, _root_.ReciprocityTheory.ChartRestriction.G.FD.emb_cc, Complex.mul_conj, Complex.normSq_eq_norm_sq]

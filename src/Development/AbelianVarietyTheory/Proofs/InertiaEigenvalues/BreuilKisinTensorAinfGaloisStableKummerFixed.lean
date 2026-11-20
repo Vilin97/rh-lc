@@ -190,7 +190,8 @@ theorem act_eb_mem (I : Ident t ϖ P T) (hI : IsBK I) (g : ↥(GK (ϖ.field a)))
 theorem act_MA (I : Ident t ϖ P T) (hI : IsBK I) (g : ↥(GK (ϖ.field a))) :
     ∀ v ∈ MA P, I.act (g : GQ l) g v ∈ MA P := by
   rintro _ ⟨c, rfl⟩
-  rw [pi_eq_sum_univ (inclV l O ι c), map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [pi_eq_sum_univ (inclV l O ι c), map_sum]
   refine sum_mem fun i _ => ?_
   rw [Ident.act_smul]
   change galOW O (g : GQ l) (inclO l O (c i)) • _ ∈ _
@@ -205,7 +206,8 @@ theorem act_LA (I : Ident t ϖ P T) (hI : IsBK I) (g : ↥(GK (ϖ.field a))) :
     conv_lhs => rw [pi_eq_sum_univ (fun i => inclO l O (c i)), Matrix.mulVec_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [Matrix.mulVec_smul, phiW_eb]
-  rw [h1, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h1, map_sum]
   refine sum_mem fun i _ => ?_
   rw [Ident.act_smul, galOW_inclO, Ident.act_phiW]
   refine inclO_smul_mem_LA P _ ?_
@@ -215,7 +217,8 @@ theorem act_LA (I : Ident t ϖ P T) (hI : IsBK I) (g : ↥(GK (ϖ.field a))) :
 
 theorem act_fix (I : Ident t ϖ P T) (hI : IsBK I) (g : ↥(GK (ϖ.field a))) (hg : (g : GQ l) ∈ ϖ.GfieldInf a)
     (v : ME P) : I.act (g : GQ l) g (toW t ϖ P v) = toW t ϖ P v := by
-  conv_lhs => rw [pi_eq_sum_univ (toW t ϖ P v), map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [pi_eq_sum_univ (toW t ϖ P v), map_sum]
   conv_rhs => rw [pi_eq_sum_univ (toW t ϖ P v)]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [Ident.act_smul, toW_apply, ϖ.galOW_iW t K hg]

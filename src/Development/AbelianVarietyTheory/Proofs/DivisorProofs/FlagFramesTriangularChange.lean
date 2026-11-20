@@ -35,7 +35,8 @@ theorem Spans.mem_span {X : Scheme.{0}} {F : X.Modules} {m : ℕ} {fl : Vert.Fla
   obtain ⟨s', -, e'⟩ := h' j.succ
   let i : Fin (j.succ : ℕ) := ⟨j, by simp⟩
   have hj : v' j = GlobalTheory.QCoh.appLinear (fl.ι j.succ) V (s' i) := (e' i).symm
-  rw [hj, ← (hs.basis le_rfl).sum_repr (s' i), map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hj, ← (hs.basis le_rfl).sum_repr (s' i), map_sum]
   refine Submodule.sum_mem _ fun k _ => ?_
   rw [map_smul]
   refine Submodule.smul_mem _ _ (Submodule.subset_span ⟨Fin.castLE j.succ.is_le k, ?_, ?_⟩)

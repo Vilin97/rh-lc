@@ -84,7 +84,8 @@ noncomputable def laplacianElt {ι : Type*} [Fintype ι] (bL : Module.Basis ι �
 
 theorem rightUAction_laplacianElt {ι : Type*} [Fintype ι] (bL : Module.Basis ι ℝ h.lieSubalgebra) :
     h.rightUAction (F := ℂ) (h.laplacianElt bL) = h.laplacian bL := by
-  simp only [laplacianElt, laplacian, map_sum, map_mul, rightUAction_ι]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [laplacianElt, laplacian, map_sum, map_mul, rightUAction_ι]
 
 theorem comp_aeval_eq {V W : Type*} [AddCommGroup V] [Module ℂ V] [AddCommGroup W] [Module ℂ W]
     (Φ : V →ₗ[ℂ] W) {A : Module.End ℂ V} {B : Module.End ℂ W} (hAB : Φ ∘ₗ A = B ∘ₗ Φ) (P : ℂ[X]) :

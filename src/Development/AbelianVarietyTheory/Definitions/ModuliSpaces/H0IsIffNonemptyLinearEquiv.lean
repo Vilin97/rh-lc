@@ -86,7 +86,8 @@ theorem sectionsFinDim_lbPow_O1_projSpace (N e : ℕ) : SectionsHaveFiniteDimens
   have key : ∀ (a : _ → K) j, ∑ i, constFn (PSpace.str K (N + 1)) _ (a i) * (formSec e (b i).1 (b i).2).f j =
       (formSec e (∑ i, a i • b i).1 (∑ i, a i • b i).2).f j := fun a j => by
     erw [formSec_f, formOn_eq_aeval]
-    rw [Submodule.coe_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Submodule.coe_sum, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     erw [formSec_f, formOn_eq_aeval]
     rw [Submodule.coe_smul, map_smul, Algebra.smul_def]

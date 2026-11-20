@@ -74,7 +74,8 @@ theorem exists_idempotents {R : Type*} [CommRing R] {l : ℕ} [Fact l.Prime] [Ne
     rw [he d, mul_sub, mul_one, hmul, ZMod.pow_card_sub_one_eq_one (sub_ne_zero.2 hcd), map_one, mul_one,
       sub_self]
   · have h1 := congrArg (Polynomial.aeval x) (sum_one_sub_pow (l := l))
-    simp only [map_sum, map_sub, map_one, map_pow, Polynomial.aeval_X, Polynomial.aeval_C] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_sub, map_one, map_pow, Polynomial.aeval_X, Polynomial.aeval_C] at h1
     rw [← h1]
     exact Finset.sum_congr rfl fun c _ => he c
 

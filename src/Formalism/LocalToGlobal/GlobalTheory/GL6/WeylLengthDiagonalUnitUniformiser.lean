@@ -567,7 +567,8 @@ theorem row_action_diagonal_homogeneous (d : Fin r → R) (f : MvPolynomial (Fin
     · simp
   conv_lhs => rw [MvPolynomial.as_sum f]
   conv_rhs => rw [MvPolynomial.as_sum f]
-  rw [map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.smul_sum]
   refine Finset.sum_congr rfl fun m hm => ?_
   have hw : Finsupp.weight (Formalism.GradedWeylDivisibility.rowW r n) m = μ := hf (MvPolynomial.mem_support_iff.mp hm)
   simp only [Formalism.GradedWeylDivisibility.rowAct, MvPolynomial.aeval_monomial, hg, Finsupp.prod, mul_pow,
@@ -700,7 +701,8 @@ theorem weyl_length_diagonal_uniformiser (hν : Antitone ν) (K : Type) [Field K
         rw [Submodule.coe_sum] at h1
         simp only [Submodule.coe_smul] at h1
         exact h1.symm
-      rw [hxx, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hxx, map_sum]
       refine Submodule.sum_mem _ fun i _ => ?_
       have : MvPolynomial.map (Int.castRingHom K) (b.repr ⟨x, hx⟩ i • ((b i : Formalism.GradedWeylDivisibility.weyl ℤ r n hn ν) :
           MvPolynomial (Fin r × Fin n) ℤ)) = ((b.repr ⟨x, hx⟩ i : ℤ) : O) • e i := by
@@ -774,7 +776,8 @@ theorem weyl_length_diagonal_unit_uniformiser (hν : Antitone ν) (K : Type) [Fi
         rw [Submodule.coe_sum] at h1
         simp only [Submodule.coe_smul] at h1
         exact h1.symm
-      rw [hxx, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hxx, map_sum]
       refine Submodule.sum_mem _ fun i _ => ?_
       have : MvPolynomial.map (Int.castRingHom K) (b.repr ⟨x, hx⟩ i • ((b i : Formalism.GradedWeylDivisibility.weyl ℤ r n hn ν) :
           MvPolynomial (Fin r × Fin n) ℤ)) = ((b.repr ⟨x, hx⟩ i : ℤ) : O) • e i := by

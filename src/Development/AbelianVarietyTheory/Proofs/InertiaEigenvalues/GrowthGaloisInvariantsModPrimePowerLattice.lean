@@ -121,7 +121,8 @@ theorem exists_basis_comap {O LL V : Type} [CommRing O] [IsDomain O] [IsPrincipa
       let t0 : T₀ := ⟨⟨d • x, hdx⟩, hdxW⟩
       have hmem : d • x ∈ Submodule.span O (Set.range v) := by
         have ht : ι t0 = d • x := rfl
-        rw [← ht, ← b0.sum_repr t0, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [← ht, ← b0.sum_repr t0, map_sum]
         exact Submodule.sum_mem _ fun i _ => by
           rw [map_smul]; exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)
       have hmemLL : d • x ∈ Submodule.span LL (Set.range v) :=

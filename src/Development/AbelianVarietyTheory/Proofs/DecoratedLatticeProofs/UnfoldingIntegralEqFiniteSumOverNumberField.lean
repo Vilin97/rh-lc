@@ -106,7 +106,8 @@ variable {U U' : Type} [Fintype U] [DecidableEq U] [Fintype U'] [DecidableEq U']
 theorem ch_eq (he : IsOrd (yPos (fun a => (d a).val) n) e)
     (he' : IsOrd (yPos (fun a => (d' a).val) n') e') (x : (Fin (n' + (c + 1)) → E) →ₗ[E] (Fin (n + c) → E)) :
     ch (toLoc ι e e' x) = ι (Loc.chArg x) := by
-  simp only [ch, Loc.chArg, toLoc, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [ch, Loc.chArg, toLoc, map_sum]
   rw [← Fin.sum_univ_eq_sum_range (fun i => ι (Loc.atN (x (Loc.eN E (n' + (c + 1)) (n' + i + 1))) (n + i))) c]
   refine Finset.sum_congr rfl fun i _ => ?_
   have h1 : Pi.single (e' (.inr i.succ)) (1 : E) = Loc.eN E (n' + (c + 1)) (n' + i.val + 1) := by
@@ -324,7 +325,8 @@ theorem sumAgree : SumAgree := by
   have key := GlobalTheory.T.integral_periodic_compactSupport_eq_finiteSum k ν hν ϖ hU A B T hT1 hT2 _ F hF1 hF2
   have hL : opE ψ ν 1 Φ X₀ = ∫ u, F u ∂(Measure.pi fun _ => ν) := rfl
   rw [hL, key]
-  simp only [Loc.E1, map_mul, map_pow, map_inv₀, map_natCast, map_sum, hres]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Loc.E1, map_mul, map_pow, map_inv₀, map_natCast, map_sum, hres]
   rw [Fintype.card_congr (freeEquiv hc hoe hoe')]
   congr 1
   symm

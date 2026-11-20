@@ -119,7 +119,8 @@ theorem col_prim {κ : GL ι 𝔸[k]} (hκ : κ ∈ (adStd k).kGL ι) (i₀ : ι
       rw [← Units.val_mul, mul_inv_cancel, Units.val_one, Matrix.one_apply_eq]
     rw [Matrix.mul_apply] at h
     have h2 := congrArg (finPart (k := k)) h
-    rw [map_sum, map_one] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_one] at h2
     refine Eq.trans (Finset.sum_congr rfl fun j _ => ?_) h2
     rw [map_mul]
     exact congrArg (fun x : 𝔸[k] => finPart ((κ : Matrix ι ι 𝔸[k]) i₀ j) * finPart x) (col_apply i₀ κ j)

@@ -241,7 +241,8 @@ theorem covol_ref : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [Add
       have hSB : ∀ a b : Fin r, N.j ≤ a.val → N.j ≤ b.val → H.B (s (N.ist b)) (N.ist a) = S a b := by
         intro a b ha hb
         rw [h b hb]
-        simp only [map_add, map_sum, map_smul, LinearMap.add_apply, LinearMap.sum_apply, LinearMap.smul_apply,
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_add, map_sum, map_smul, LinearMap.add_apply, LinearMap.sum_apply, LinearMap.smul_apply,
           N.ist_iso b a hb ha, N.ist_e _ a ha]
         simp [ha]
       have h3 := fun v => hskew v s _ (hp v) (h10 p h1 v) (h20 p h2 v)

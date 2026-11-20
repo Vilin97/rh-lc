@@ -33,7 +33,8 @@ theorem isCombIn_spMap_comp (Y : Scheme.{0}) (V : Y.Opens) (S S' : Type) [CommRi
   obtain ⟨hu, hc, hw, hx⟩ := hC
   refine ⟨preimage_spMap_comp_eq_top g hu, preimage_spMap_comp_eq_top g hc,
     fun i => preimage_spMap_comp_eq_top g (hw i), fun x => ?_⟩
-  rw [chartHom_spMap_comp V g c hc, chartHom_spMap_comp V g u hu, hx x, map_add, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [chartHom_spMap_comp V g c hc, chartHom_spMap_comp V g u hu, hx x, map_add, map_sum]
   refine congrArg _ (Finset.sum_congr rfl fun i _ => ?_)
   rw [chartHom_spMap_comp V g (w i) (hw i), map_mul, map_sub]
 

@@ -435,7 +435,8 @@ theorem sum_dual_family {r : ℕ} {a a' : Fin r → D.host.E}
   refine GlobalTheory.OrthoCoord.embT_indep
     (fun τ => ∑ k, embT D τ (D.host.conj (a' k)) * embT D σ (a k) - if τ = σ then 1 else 0) (fun t => ?_) τ
   have h1 := congrArg (embT D σ) (h t)
-  rw [map_sum] at h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum] at h1
   have h2 : ∀ k, embT D σ ((Algebra.trace D.host.K D.host.E (t * D.host.conj (a' k))) • a k) =
       ∑ τ, embT D τ (D.host.conj (a' k)) * embT D σ (a k) * embT D τ t := fun k => by
     rw [Algebra.smul_def, map_mul]

@@ -11,7 +11,8 @@ private theorem pi_factor {ι : Type*} [Fintype ι] [DecidableEq ι] {k : ι →
     {K : Type*} [Field K] (φ : (∀ i, k i) →+* K) : ∃ w, ∀ b : ∀ i, k i, b w = 0 → φ b = 0 := by
   have h1 : ∑ i, φ (Pi.single i 1) = 1 := by
     have h : (∑ x, Pi.single x 1 : ∀ i, k i) = 1 := Finset.univ_sum_single (1 : ∀ i, k i)
-    rw [← map_sum, h, map_one]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, h, map_one]
   obtain ⟨w, hw⟩ : ∃ w, φ (Pi.single w 1) ≠ 0 := by
     by_contra! h
     simp [h] at h1

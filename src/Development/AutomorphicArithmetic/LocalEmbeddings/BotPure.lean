@@ -269,7 +269,8 @@ theorem exists_pure (hS : IsSelfDualC S ΛS) (hT : IsSelfDualC T ΛT) {Bs : Base
   have hεa : ∀ i, ε * a i = a i := fun i => by
     rw [hε, Finset.sum_mul, Finset.sum_eq_single i (fun j _ h => horth j i h) (fun h => absurd (Finset.mem_univ _) h), (hid i).1]
   have hinf : infPart D ε = 0 := by
-    rw [hε, map_sum]; exact Finset.sum_eq_zero fun i _ => (hid i).2.2.2.2.2.2
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hε, map_sum]; exact Finset.sum_eq_zero fun i _ => (hid i).2.2.2.2.2.2
   have hinf' : infPart D (cA D ε) = 0 := GlobalTheory.PlaceVec.infPart_cA hinf
   have hco0 : ∀ i, co i 0 = 0 := fun i => by simpa using hco i 0 0
   have hsm : ∀ i u, a i • u ∈ A i := fun i u => (hA i _).2 (GlobalTheory.BigDat.isHalf_smul_self (hid i).1 u)

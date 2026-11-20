@@ -114,7 +114,8 @@ theorem proj_mulVec (hc : ∀ a, c (c a) = a) (hJ : ∀ i j, c (J j i) = -J i j)
   have key : ∀ j, ((J * ι.map c)ᵀ *ᵥ x) j = -c ((ι *ᵥ Pi.single j 1) ⬝ᵥ J *ᵥ fun i => c (x i)) := by
     intro j
     rw [Matrix.mulVec_single_one]
-    simp only [Matrix.mulVec, dotProduct, Matrix.transpose_apply, Matrix.mul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, dotProduct, Matrix.transpose_apply, Matrix.mul_apply,
       Matrix.map_apply, Matrix.col_apply, map_sum, map_mul, hc, hJ]
     simp only [Finset.mul_sum, Finset.sum_mul, neg_mul, mul_neg, Finset.sum_neg_distrib, neg_neg]
     rw [Finset.sum_comm]

@@ -94,7 +94,8 @@ theorem lift_cen (hθ : IsInfFam θ) {S T : HSp D} {x : DefSp S} {y : DefSp T} (
     have key2 : k.om (a, b) (k.pt ψ θ x y P) = l • k.pt ψ θ x y P := by
       rw [key1]
       unfold comb
-      rw [map_sum, Finset.smul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Finset.smul_sum]
       refine Finset.sum_congr rfl fun u _ => ?_
       rw [map_smul, hW.om_heis a b u _ hF, h3, hag a ha b hb.1 _ hF, hv, hl, smul_comm]
       congr 1

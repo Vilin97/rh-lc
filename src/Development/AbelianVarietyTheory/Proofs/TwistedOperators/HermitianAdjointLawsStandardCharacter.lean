@@ -56,7 +56,8 @@ theorem hO_eq (S T : HSp D) (x y : WO S T) : hO S T x y = Matrix.trace (adjO T S
 theorem hO_herm (S T : HSp D) (x y : WO S T) : cA D (hO S T x y) = hO S T y x := by
   rw [hO_eq, hO_eq]
   have e : cA D (Matrix.trace (adjO T S y * x)) = Matrix.trace (((adjO T S y * x).map (cA D))ᵀ) := by
-    rw [Matrix.trace_transpose]; simp only [Matrix.trace, Matrix.diag, map_sum, Matrix.map_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Matrix.trace_transpose]; simp only [Matrix.trace, Matrix.diag, map_sum, Matrix.map_apply]
   rw [e, conjT_mul, adjO_eq, conjT_mul, conjT_mul, conjT_conjT, GlobalTheory.OrientedAdjoint.gram_conj, gramI_conj,
     adjO_eq, Matrix.trace_mul_comm]
   simp only [Matrix.mul_assoc]
@@ -153,7 +154,8 @@ theorem adj_infPart (S T : HSp D) (u : WO T S) (hu : u.map (infPart D) = 0) : (a
     simpa only [Matrix.map_apply, Matrix.zero_apply] using this
   refine Matrix.ext fun i j => ?_
   show infPart D (adjO S T u i j) = 0
-  simp only [adjO_eq, Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, map_sum, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [adjO_eq, Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, map_sum, map_mul,
     GlobalTheory.PlaceIdem.infPart_cA, h0, map_zero, mul_zero, zero_mul, Finset.sum_const_zero]
 
 set_option synthInstance.maxHeartbeats 400000 in
@@ -163,7 +165,8 @@ theorem adj_finPart (S T : HSp D) (u : WO T S) (hu : u.map (finPart D) = 0) : (a
     simpa only [Matrix.map_apply, Matrix.zero_apply] using this
   refine Matrix.ext fun i j => ?_
   show finPart D (adjO S T u i j) = 0
-  simp only [adjO_eq, Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, map_sum, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [adjO_eq, Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, map_sum, map_mul,
     GlobalTheory.PlaceIdem.finPart_cA, h0, map_zero, mul_zero, zero_mul, Finset.sum_const_zero]
 
 def adjHom (S T : HSp D) : WO T S →+ WO S T := AddMonoidHom.mk' (adjO S T) (adj_add S T)

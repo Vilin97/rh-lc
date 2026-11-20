@@ -26,7 +26,8 @@ def HasLetters (P : Pre) : Prop :=
 theorem ipC_conj (B : Base) (u : B.Word)
     (φ ψ : ((ColsModel.cols B).mem u).C.cls 0 → ((ColsModel.cols B).mem u).C.Y 0 → ℂ) :
     ((ColsModel.cols B).fm u).ipC 0 ψ φ = starRingEnd ℂ (((ColsModel.cols B).fm u).ipC 0 φ ψ) := by
-  rw [RowsModel.ipC_cols, RowsModel.ipC_cols, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [RowsModel.ipC_cols, RowsModel.ipC_cols, map_sum]
   exact Finset.sum_congr rfl fun c _ => by simp [mul_comm]
 
 theorem ipC_pos (B : Base) (u : B.Word)

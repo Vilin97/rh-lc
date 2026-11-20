@@ -23,7 +23,8 @@ theorem gs_sub' (r : Z ⟶ X) (z : Z) (U : X.Opens) (h : r z ∈ U) (a b : Γ(X,
 
 theorem gs_sum' (r : Z ⟶ X) (z : Z) (U : X.Opens) (h : r z ∈ U) {ι : Type} [Fintype ι]
     (a : ι → Γ(X, U)) : gs r z U (∑ i, a i) = ∑ i, gs r z U (a i) := by
-  simp only [gs_eq r z U h, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [gs_eq r z U h, map_sum]
 
 theorem gs_one' (r : Z ⟶ X) (z : Z) (U : X.Opens) (h : r z ∈ U) : gs r z U 1 = 1 := by
   simp only [gs_eq r z U h, map_one]
@@ -244,7 +245,8 @@ theorem ker_sup_span_eq_top (f : X ⟶ Y) [IsAffine Y] [UniversallyClosed f] {H 
   have key : gs p₁ z _ ((s j).f k) = ∑ l, gs p₂ z ⊤ (e (MvPolynomial.C (c j l))) *
       (gs p₁ z _ ((t l).f k) - gs p₂ z ⊤ (e (MvPolynomial.X l)) * gs p₁ z _ (t₀.f k)) +
       gs p₂ z ⊤ (e (∑ l, MvPolynomial.C (c j l) * MvPolynomial.X l)) * gs p₁ z _ (t₀.f k) := by
-    rw [hc, gs_sum' _ _ _ hk, map_sum, gs_sum' _ _ _ (mem_top' _), Finset.sum_mul, ← Finset.sum_add_distrib]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hc, gs_sum' _ _ _ hk, map_sum, gs_sum' _ _ _ (mem_top' _), Finset.sum_mul, ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun l _ => ?_
     rw [gs_mul _ _ _ hk, hb, map_mul, gs_mul _ _ _ (mem_top' _)]
     ring
@@ -285,7 +287,8 @@ theorem EmbedsBy.affine_and_surjective {f : X ⟶ Y} [IsAffine Y] [UniversallyCl
     have hρ : ∀ j, IsRatio (s j) t₀ (ψ (lam j)) := fun j => isRatio_of_gs fun x hx => by
       obtain ⟨k, hk⟩ := exists_chart_of_mem t₀ hx
       refine ⟨k, hk, ?_⟩
-      rw [hc, gs_sum' (𝟙 X) x _ hk, hlam, map_sum, gs_sum' (𝟙 X) x _ hx, Finset.sum_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hc, gs_sum' (𝟙 X) x _ hk, hlam, map_sum, gs_sum' (𝟙 X) x _ hx, Finset.sum_mul]
       refine Finset.sum_congr rfl fun l _ => ?_
       rw [map_mul, hψ, MvPolynomial.eval₂Hom_C, MvPolynomial.eval₂Hom_X', gs_mul (𝟙 X) x _ hk,
         gs_mul (𝟙 X) x _ hx, gs_const f _ (𝟙 X) x hk, gs_const f _ (𝟙 X) x hx,

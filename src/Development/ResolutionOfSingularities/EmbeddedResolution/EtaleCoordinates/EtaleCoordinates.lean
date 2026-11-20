@@ -129,7 +129,8 @@ theorem span_range_partialDeriv [Finite ι] :
     have h2 : D.liftKaehlerDifferential
         (∑ i : ι, partialDeriv k ι S i s • KaehlerDifferential.D k S (coord k ι S i))
         = D.liftKaehlerDifferential (KaehlerDifferential.D k S s) := by rw [h1]
-    simp only [map_sum, map_smul, Derivation.liftKaehlerDifferential_comp_D] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, Derivation.liftKaehlerDifferential_comp_D] at h2
     rw [sum_smul_derivation_apply, ← h2]
     exact Finset.sum_congr rfl fun i _ => by rw [smul_eq_mul, mul_comm]
   rw [key]
@@ -150,7 +151,8 @@ theorem eq_sum_smul_partialDeriv [Fintype ι] (D : Derivation k S S) :
       = ∑ i : ι, (basisKaehler k ι S).repr (KaehlerDifferential.D k S s) i
           • basisKaehler k ι S i :=
     ((basisKaehler k ι S).sum_repr (KaehlerDifferential.D k S s)).symm
-  rw [h1, h2, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h1, h2, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_smul, basisKaehler_apply, Derivation.liftKaehlerDifferential_comp_D, smul_eq_mul,
     ← partialDeriv_apply]

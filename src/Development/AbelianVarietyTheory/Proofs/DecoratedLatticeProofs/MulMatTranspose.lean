@@ -98,7 +98,8 @@ theorem gm_mul {N : ℕ} {I : AutInst} (ρ : (InfinitePlace I.F → Fin I.n → 
       rw [vec_smul]
       rfl
     rw [h2]
-  rw [hR, hM j, vec_sum_zsmul, map_sum, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hR, hM j, vec_sum_zsmul, map_sum, Finset.sum_apply]
   simp only [map_zsmul]
   simp only [Matrix.mul_apply, Matrix.map_apply, Pi.smul_apply, zsmul_eq_mul]
   refine Finset.sum_congr rfl fun k _ => ?_

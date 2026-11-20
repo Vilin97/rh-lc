@@ -82,7 +82,8 @@ theorem cocycle_mem_coboundary_add_smul : ∀ (E : Type) [Field E] [NumberField 
   let c' : ∀ i i' : J, Γ(t.G.left, W i ⊓ W i') := fun i i' => c i i' - ∑ k, ρ i i' (r k) * e (y k) i i'
   have hc' : (∀ i i' i'', resG t.G.left (inf_le_left : W i ⊓ W i' ⊓ W i'' ≤ W i ⊓ W i') (c' i i') + resG t.G.left (le_inf (inf_le_left.trans inf_le_right) inf_le_right : W i ⊓ W i' ⊓ W i'' ≤ W i' ⊓ W i'') (c' i' i'') = resG t.G.left (le_inf (inf_le_left.trans inf_le_left) inf_le_right : W i ⊓ W i' ⊓ W i'' ≤ W i ⊓ W i'') (c' i i'')) := by
     intro i i' i''
-    simp only [c', ρ, map_sub, map_sum, map_mul, resG_appLE']
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [c', ρ, map_sub, map_sum, map_mul, resG_appLE']
     rw [← hc i i' i'']
     have := fun k => he (y k) i i' i''
     simp only [← this, mul_add, Finset.sum_add_distrib]

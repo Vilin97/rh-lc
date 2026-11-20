@@ -252,7 +252,8 @@ theorem inert_parts_span_top {v0 : InfinitePlace K} (hv0 : IsConjAt v0) {s : ℕ
   choose yy hyy using key
   have hsum : y = ∑ i, yy i := by
     apply B.toF_injective ℓ Z
-    rw [map_sum, Finset.sum_congr rfl fun i _ => hyy i]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_congr rfl fun i _ => hyy i]
     exact (sum_eigProj hD.comm hs _ hex h1).symm
   rw [hsum]
   refine Submodule.sum_mem _ fun i _ => Submodule.mem_iSup_of_mem i ?_

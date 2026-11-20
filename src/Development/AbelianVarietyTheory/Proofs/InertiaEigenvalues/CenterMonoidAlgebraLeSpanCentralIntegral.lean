@@ -51,7 +51,8 @@ theorem mem_span (R G : Type) [CommRing R] [Group G] [Finite G] (z : MonoidAlgeb
       (MonoidAlgebra.mapRingHom G (Int.castRingHom R) (classSum C)).coeff x =
         if ConjClasses.mk x = C then 1 else 0 := by
     intro C x
-    simp [classSum, map_sum, MonoidAlgebra.mapRangeRingHom_single, coeff_sum, coeff_single,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [classSum, map_sum, MonoidAlgebra.mapRangeRingHom_single, coeff_sum, coeff_single,
       Finsupp.finset_sum_apply, Finsupp.single_apply, apply_ite (Int.cast : ℤ → R)]
   have hz' : z = ∑ C, z.coeff (rep C) • MonoidAlgebra.mapRingHom G (Int.castRingHom R) (classSum C) := by
     apply MonoidAlgebra.ext

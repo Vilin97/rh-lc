@@ -79,10 +79,12 @@ theorem form_coord {La : Type} [AddCommGroup La] (EF : La → La → ℤ) {n : �
     (fun x x' => AddMonoidHom.ext fun y => hl x x' y)
   have d : ∀ w : Fin n → ℤ, bas w = ∑ i, w i • bas (Pi.single i 1) := fun w => by
     conv_lhs => rw [pi_eq_sum_univ' w]
-    simp only [map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul]
   show B (bas u) (bas v) = ∑ i, ∑ j, u i * v j * B (bas (Pi.single i 1)) (bas (Pi.single j 1))
   rw [d u, d v]
-  simp only [map_sum, map_zsmul, AddMonoidHom.finset_sum_apply, AddMonoidHom.smul_apply, smul_eq_mul, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_zsmul, AddMonoidHom.finset_sum_apply, AddMonoidHom.smul_apply, smul_eq_mul, Finset.mul_sum]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 

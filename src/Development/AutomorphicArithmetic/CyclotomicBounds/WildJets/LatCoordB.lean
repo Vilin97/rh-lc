@@ -217,7 +217,8 @@ theorem UpperTheory.WildA.latCoordB :
     have : c = 0 := by simpa using h
     exact hc (this ▸ w.asIdeal.zero_mem)
   refine ⟨∑ i, y i • F i, algebraMap _ D.what₂.LL c * s₀, ?_, mul_ne_zero hc0 hs₀, ?_, ?_⟩
-  · rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum]
     simp only [LinearMap.map_smulₛₗ, hy, hF']
     exact (bVV ℂ lam).sum_repr v
   · have e : vw w (algebraMap _ D.what₂.LL c * s₀) = vw w (algebraMap _ D.what₂.LL c) + vw w s₀ :=

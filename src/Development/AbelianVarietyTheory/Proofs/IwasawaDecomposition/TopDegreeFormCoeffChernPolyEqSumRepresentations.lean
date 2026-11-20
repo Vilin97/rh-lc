@@ -47,11 +47,13 @@ theorem topCoeff_chern_eq_sum_rep : ∀ (ι : Type) [Fintype ι] (m : ι → ℕ
     exact ChernDegree.topCoeff_eq_zero (ChernDegree.aeval_isWeightedHomogeneous h1 c hch) hd
   have e1 : topCoeff (aeval c R) = ∑ d ∈ R.support, topCoeff (aeval c (monomial d (AddMonoidAlgebra.coeff R d))) := by
     conv_lhs => rw [R.as_sum]
-    rw [map_sum, topCoeff_sum']
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, topCoeff_sum']
   have e2 : topCoeff (aeval c (weightedHomogeneousComponent (Prod.snd : ι × ℕ → ℕ) n R)) =
       ∑ d ∈ R.support with Finsupp.weight (Prod.snd : ι × ℕ → ℕ) d = n,
         topCoeff (aeval c (monomial d (AddMonoidAlgebra.coeff R d))) := by
-    rw [weightedHomogeneousComponent_apply, map_sum, topCoeff_sum']
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [weightedHomogeneousComponent_apply, map_sum, topCoeff_sum']
   have e3 : topCoeff (aeval c R) = topCoeff (aeval c (weightedHomogeneousComponent (Prod.snd : ι × ℕ → ℕ) n R)) := by
     rw [e1, e2, Finset.sum_filter]
     refine Finset.sum_congr rfl fun d _ => ?_

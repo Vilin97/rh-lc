@@ -155,7 +155,8 @@ theorem continuous_comp (hθ : IsInfFam θ) (τ : D.what₂.Tau) : Continuous fu
       θ τ (fstA D.host.F (B.coord i z) ⊗ₜ[D.host.F] (1 : D.host.E)) * tauE D τ (b i) := by
     funext z
     conv_lhs => rw [← B.sum_repr z]
-    rw [show ∀ y, θ τ (infPart D y) = ((θ τ).comp (infPart D)).toAddMonoidHom y from fun _ => rfl, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [show ∀ y, θ τ (infPart D y) = ((θ τ).comp (infPart D)).toAddMonoidHom y from fun _ => rfl, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     show θ τ (infPart D _) = _
     rw [Algebra.TensorProduct.basis_apply, TensorProduct.smul_tmul', smul_eq_mul, mul_one, ← (hθ τ).1, ← map_mul,

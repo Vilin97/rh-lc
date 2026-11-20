@@ -24,7 +24,8 @@ theorem locineq_log_sum {ι : Type*} [Fintype ι] (z : ι → ℂ) (T : ℝ) (hT
       simp_rw [e1]
       have e2 : ∑ i, ∑ j, z i ^ n * conj (z j ^ n) * ((T : ℂ) ^ n / n)
           = (∑ i, z i ^ n) * conj (∑ j, z j ^ n) * ((T : ℂ) ^ n / n) := by
-        rw [map_sum, Finset.sum_mul_sum, Finset.sum_mul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum, Finset.sum_mul_sum, Finset.sum_mul]
         simp_rw [Finset.sum_mul]
       rw [e2, Complex.mul_conj, Complex.normSq_eq_norm_sq]
       push_cast; ring

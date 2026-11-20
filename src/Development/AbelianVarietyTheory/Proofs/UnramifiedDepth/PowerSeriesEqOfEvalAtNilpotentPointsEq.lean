@@ -39,7 +39,8 @@ private theorem coeff_box {A κ : Type} [CommRing A] [Fintype κ] [DecidableEq �
     rfl
   have he' : (Finsupp.equivFunOnFinite.symm fun i => ((⟨e i, he i⟩ : Fin N) : ℕ)) = e := by
     ext i; rfl
-  rw [map_sum, Finset.sum_eq_single (fun i => (⟨e i, he i⟩ : Fin N))]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_eq_single (fun i => (⟨e i, he i⟩ : Fin N))]
   · rw [hm, MvPowerSeries.coeff_C_mul, he', MvPowerSeries.coeff_monomial_same, _root_.mul_one]
   · intro b _ hb
     rw [hm, MvPowerSeries.coeff_C_mul, MvPowerSeries.coeff_monomial_ne, mul_zero]
@@ -73,7 +74,8 @@ theorem eq_of_nv_eq : ∀ (R : Type) [CommRing R] (I : Ideal R), IsHausdorff I R
         ∏ i, (MvPowerSeries.X i : MvPowerSeries (Fin n × Fin d) A) ^ (b i : ℕ)) := fun g => by
     letI := (algebraMap R (MvPowerSeries (Fin n × Fin d) A ⧸ J)).toAlgebra
     refine (evBasic_nEval_eq_tEval g (fun q : Fin n × Fin d => Ideal.Quotient.mk J (MvPowerSeries.X q)) N hN).trans ?_
-    simp only [tEval, map_sum, map_mul, map_prod, map_pow]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [tEval, map_sum, map_mul, map_prod, map_pow]
     exact Finset.sum_congr rfl fun b _ => congrArg (· * _) (halg _)
   have h := H (MvPowerSeries (Fin n × Fin d) A ⧸ J) k (fun t ht => by
       rw [halg, Ideal.Quotient.eq_zero_iff_mem.2 ht, map_zero, map_zero]) (fun hR hne => ?_)

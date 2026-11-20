@@ -38,7 +38,8 @@ theorem exists_factor_associated_jacobian : ∀ (O : Type) [CommRing O] [IsDomai
     fun a G hG => map_eq_zero_of_mem_span (e a) _ (hF a) hG
   have hmul : ∀ v a, ev.mulVec v a = u a * e a (∑ k, v k • ρ (p a) k) := by
     intro v a
-    simp only [Matrix.mulVec, dotProduct, hev, map_sum, map_smul, smul_eq_mul, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, dotProduct, hev, map_sum, map_smul, smul_eq_mul, Finset.mul_sum]
     exact Finset.sum_congr rfl fun k _ => by ring
   have hloc := fun y : Y => GlobalTheory.T.exists_basis_discr_associated_prod_jacobian O g {a // p a = y} (F y) (fun a => e a.1)
     (by rintro ⟨a, rfl⟩ i; exact hF a i) (fun a i => hX a.1 i)
@@ -96,7 +97,8 @@ theorem exists_factor_associated_jacobian : ∀ (O : Type) [CommRing O] [IsDomai
     rw [map_sub, sub_eq_zero] at h1
     rw [h1]
     simp only [M, Matrix.of_apply, ite_mul, zero_mul]
-    rw [sum_ite_fibre p (p a) (fun a' => e a (γ a') * ev₀ a' k), map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [sum_ite_fibre p (p a) (fun a' => e a (γ a') * ev₀ a' k), map_sum]
     refine Finset.sum_congr rfl fun x _ => ?_
     rw [hγ, hev₀, map_smul, smul_eq_mul, mul_comm]
   · rw [Matrix.det_mul, hMdet]

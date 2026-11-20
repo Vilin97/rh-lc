@@ -177,7 +177,8 @@ theorem fockDeg_finiteDimensional {a a' : ℕ} (B : Base F E) (G : Geo σ a a') 
       have e : L (D u φ) = derMap φ (fun j => evI F ((G.M.co.e u).1 j), fun j => evI F ((G.M.co.e u).2 j)) := by
         funext x
         exact (hD u hu φ).2 x
-      rw [e, ← bR.sum_repr (_, _), map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [e, ← bR.sum_repr (_, _), map_sum]
       refine Submodule.sum_mem _ fun r _ => ?_
       rw [map_smul]
       refine Submodule.smul_of_tower_mem _ _ (Submodule.subset_span ⟨(i, r), ?_⟩)
@@ -194,7 +195,8 @@ theorem fockDeg_finiteDimensional {a a' : ℕ} (B : Base F E) (G : Geo σ a a') 
         exact this.symm
       subst e1
       refine Submodule.mem_comap.2 ?_
-      rw [e2, map_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [e2, map_sum, map_sum]
       refine Submodule.sum_mem _ fun i _ => ?_
       rw [map_smul, map_smul]
       exact Submodule.smul_mem _ _ (hone _ i rfl u hu)

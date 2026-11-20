@@ -146,7 +146,8 @@ theorem heckeOp_comm (ρ : Representation ℂ G V) (K : Subgroup G) (τ : G → 
     (fun k hk g => by simp only [map_mul, Module.End.mul_apply, hv k hk])
   rw [heckeOp_eq_sum ρ K a (heckeOp ρ K b v), heckeOp_eq_sum ρ K b v,
     heckeOp_eq_sum ρ K b (heckeOp ρ K a v), heckeOp_eq_sum ρ K a v]
-  simpa only [map_sum, map_mul, Module.End.mul_apply] using this
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa only [map_sum, map_mul, Module.End.mul_apply] using this
 
 theorem heckeTerm_eq (ρ : Representation ℂ G V) (K : Subgroup G) (a : G) {v : V}
     (hv : ∀ k ∈ K, ρ k v = v) (y : K) :
@@ -162,7 +163,8 @@ theorem heckeOp_fixed (ρ : Representation ℂ G V) (K : Subgroup G) (a : G)
     [Fintype (K ⧸ (stabSub K a).subgroupOf K)] {v : V} (hv : ∀ k ∈ K, ρ k v = v) :
     ∀ k ∈ K, ρ k (heckeOp ρ K a v) = heckeOp ρ K a v := by
   intro k hk
-  rw [heckeOp_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [heckeOp_apply, map_sum]
   refine Fintype.sum_equiv (MulAction.toPerm (⟨k, hk⟩ : K)) _ _ fun q => ?_
   have hq : (MulAction.toPerm (⟨k, hk⟩ : K) q : K ⧸ (stabSub K a).subgroupOf K) =
       ((⟨k, hk⟩ * q.out : K) : K ⧸ (stabSub K a).subgroupOf K) := by

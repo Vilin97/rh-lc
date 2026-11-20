@@ -64,7 +64,8 @@ theorem csum_eigSum_orth {K : Type} [Field K] [NumberField K] [StarRing K] {G : 
   have hform0 : hform B.S.H (B.S.basis.equivFun f) (B.S.basis.equivFun g) = 0 := by
     apply v.embedding.injective
     rw [map_zero, ← key, RationalHermitianForm.hform_eq_dot, ← emb_mulVec v.embedding B.S.H]
-    simp only [dotProduct, map_sum, map_mul, Pi.star_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [dotProduct, map_sum, map_mul, Pi.star_apply]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [h.conj]
     rfl

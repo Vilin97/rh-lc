@@ -31,7 +31,8 @@ theorem map_invDer {R S : Type} [CommRing R] [CommRing S] (f : R →+* S) {d : �
     (u : Fin d → R) (F : MvPowerSeries (Fin d) R) :
     map f (invDer μ u F) = invDer (fun i => map f (μ i)) (fun i => f (u i)) (map f F) := by
   unfold invDer
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_smul_coeffChange, map_atZero, map_pderiv_coeffChange, map_subst (hasSubst_of_constantCoeff_zero hμ)]
 

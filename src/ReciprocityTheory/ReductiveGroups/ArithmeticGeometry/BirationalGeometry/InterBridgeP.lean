@@ -55,7 +55,8 @@ theorem exists_monic_rel (Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (e 
     induction d using Nat.strong_induction_on with
     | _ d ih =>
       intro f hf
-      rw [f.as_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [f.as_sum, map_sum]
       refine N.sum_mem fun s hs => ?_
       rw [show monomial s (AddMonoidAlgebra.coeff f s) = C (AddMonoidAlgebra.coeff f s) * monomial s 1 by
         rw [C_mul_monomial, mul_one], map_mul]

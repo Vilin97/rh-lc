@@ -70,7 +70,8 @@ theorem UpperTheory.pseudoEisenstein_section_pfun_inBand_slices_reps :
     ext j
     simp [hβ, he, Finset.sum_apply, Pi.single_apply]
   have hFs : ∀ g, F g = ∑ i, bf (β i) (A.sec (e i)) g := fun g => by
-    rw [hF, hexp (HH g), map_sum, Finset.sum_apply, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hF, hexp (HH g), map_sum, Finset.sum_apply, Finset.mul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, Pi.smul_apply, smul_eq_mul, bf]
     have : ((((2 + 2 : ℕ) : ℝ) / 2 * HP 2 2 g : ℝ) : ℂ) = 2 * (HH g : ℂ) := by
@@ -125,5 +126,6 @@ theorem UpperTheory.pseudoEisenstein_section_pfun_inBand_slices_reps :
       refine finsum_sum_comm _ _ fun i _ => ?_
       have hfin := (thBasic μ _ (hB i).1.cont (hB i).1.rat (hB i).2.1).1 {y} isCompact_singleton
       exact hfin.subset fun q hq => ⟨y, rfl, hq⟩
-    rw [hUW, map_sum, hth]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hUW, map_sum, hth]
     exact reps_finsum μ _ _ _ fun i => A.spec (β i) (e i) (W i) (hβc i) (hβs i) (hW i)

@@ -85,7 +85,8 @@ theorem be_sum_left {ι : Type*} (s : Finset ι) (c : ι → R.Kf) (F : ι → V
     (G : Module.Dual R.Kf (Vsp R.Kf lam0)) :
     be p 1 lam0 (∑ i ∈ s, c i • F i) G = ∑ i ∈ s, c i * be p 1 lam0 (F i) G := by
   unfold be
-  rw [Finset.smul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.smul_sum, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [smul_comm, map_smul, smul_eq_mul]
 

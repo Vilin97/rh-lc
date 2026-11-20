@@ -54,7 +54,8 @@ theorem peak_expand (n : ℕ) :
       funext g
       simp only [peak, Pi.add_apply, Pi.smul_apply, Finset.sum_apply, smul_eq_mul, coord]
       push_cast
-      rw [Complex.re_eq_add_conj, ← Finset.mul_sum, Finset.sum_add_distrib, Matrix.trace,
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Complex.re_eq_add_conj, ← Finset.mul_sum, Finset.sum_add_distrib, Matrix.trace,
         map_sum]
       simp only [Matrix.diag, Complex.star_def]
       ring

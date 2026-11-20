@@ -141,7 +141,8 @@ theorem jetR_iter (p : X →L[ℝ] ℂ) {U : Set ℂ} {V : Set X} (hU : IsOpen U
         (hsm (contDiffOn_dZb hU hf) hM2),
       fun_iteratedFDeriv_add_apply (hsm hf hφ') (hsm (contDiffOn_dZ hU hf) hM1),
       e1 f hf, e2 _ (contDiffOn_dZ hU hf), e3 _ (contDiffOn_dZb hU hf)]
-    simp only [map_add, map_sum, Fintype.sum_sum_type, Sum.elim_inl, Sum.elim_inr, LinearMap.comp_apply, wd_append]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_add, map_sum, Fintype.sum_sum_type, Sum.elim_inl, Sum.elim_inr, LinearMap.comp_apply, wd_append]
     simp only [wd, Bool.false_eq_true, ↓reduceIte, add_assoc]
     rfl
 

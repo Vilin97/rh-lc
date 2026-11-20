@@ -72,7 +72,8 @@ theorem SpherePhase.proof (h1 : SphereLawBasic.Statement) (h2 : SphereLawUnitary
     have hcross : ∑ j, (x * p j * (starRingEnd ℂ) (w j)).re = 0 := by
       rw [← Complex.re_sum]
       have : ∑ j, x * p j * (starRingEnd ℂ) (w j) = x * (starRingEnd ℂ) (coordAlong p w) := by
-        simp [coordAlong, map_sum, Finset.mul_sum, mul_comm, mul_assoc]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp [coordAlong, map_sum, Finset.mul_sum, mul_comm, mul_assoc]
       rw [this, hw]; simp
     simp only [Complex.sq_norm, Complex.normSq_add, Complex.normSq_mul, Finset.sum_add_distrib]
     rw [← Finset.mul_sum, hp', ← Finset.mul_sum, hcross]

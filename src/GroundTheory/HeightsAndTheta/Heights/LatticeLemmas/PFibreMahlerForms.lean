@@ -21,12 +21,14 @@ variable {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℂ V] {ι : Type
 theorem apply_eq_sum (b : OrthonormalBasis ι ℂ V) (ℓ : V →ₗ[ℂ] ℂ) (ξ : V) :
     ℓ ξ = ∑ j, inner ℂ (b j) ξ * ℓ (b j) := by
   conv_lhs => rw [← b.sum_repr' ξ]
-  simp only [map_sum, map_smul, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, smul_eq_mul]
 
 theorem apply_repr_symm (b : OrthonormalBasis ι ℂ V) (ℓ : V →ₗ[ℂ] ℂ) (v : ι → ℂ) :
     ℓ (b.repr.symm (WithLp.toLp 2 v)) = ∑ j, ℓ (b j) * v j := by
   rw [← b.sum_repr_symm]
-  simp only [map_sum, map_smul, smul_eq_mul, mul_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, smul_eq_mul, mul_comm]
 
 theorem iSup_norm_ball (b : OrthonormalBasis ι ℂ V) (ℓ : V →ₗ[ℂ] ℂ) :
     ⨆ ξ : {ξ : V // ‖ξ‖ ≤ 1}, ‖ℓ ξ‖ = √(∑ j, ‖ℓ (b j)‖ ^ 2) := by
@@ -39,7 +41,8 @@ theorem iSup_norm_ball (b : OrthonormalBasis ι ℂ V) (ℓ : V →ₗ[ℂ] ℂ)
   have hvv : ‖v‖ = √(∑ j, ‖ℓ (b j)‖ ^ 2) := by
     have h2 : ‖v‖ ^ 2 = ∑ j, ‖ℓ (b j)‖ ^ 2 := by
       rw [@norm_sq_eq_re_inner ℂ, ← hv]
-      simp only [v, map_sum, map_smul, smul_eq_mul, Complex.star_def, Complex.conj_mul',
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [v, map_sum, map_smul, smul_eq_mul, Complex.star_def, Complex.conj_mul',
         ← Complex.ofReal_pow, RCLike.re_to_complex, Complex.ofReal_re]
     rw [← h2, Real.sqrt_sq (norm_nonneg _)]
   rw [← hvv]
@@ -97,7 +100,8 @@ theorem mahler_linear (c : Fin d → ℂ) (hc : ∃ j, c j ≠ 0) :
   have hL : (∑ j, C (star (p j)) * X ((0 : Fin 1), j) : MvPolynomial (Fin 1 × Fin d) ℂ) ≠ 0 := by
     intro h0
     have h1 := congrArg (eval fun ij : Fin 1 × Fin d ↦ p ij.2) h0
-    simp only [map_sum, map_mul, eval_C, eval_X, map_zero, Complex.star_def, Complex.conj_mul'] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, eval_C, eval_X, map_zero, Complex.star_def, Complex.conj_mul'] at h1
     have h2 : ((∑ j, ‖p j‖ ^ 2 : ℝ) : ℂ) = 0 := by push_cast; exact h1
     rw [hp] at h2
     norm_num at h2
@@ -108,7 +112,8 @@ theorem mahler_linear (c : Fin d → ℂ) (hc : ∃ j, c j ≠ 0) :
       Real.log ‖eval u (∑ j, C (star (p j)) * X ((0 : Fin 1), j))‖) =
       fun z ↦ Real.log ‖∑ j, z (0, j) * star (p j)‖ := by
     funext u
-    simp only [map_sum, map_mul, eval_C, eval_X, mul_comm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, eval_C, eval_X, mul_comm]
   unfold mahler
   rw [hfun, hlin]
   ring
@@ -191,7 +196,8 @@ theorem archLin_fibreVec (h : HermitianMetric F W) (τ : K →+* ℂ) (yv : Dual
 theorem archLin_fibreGen (h : HermitianMetric F W) (τ : K →+* ℂ) (yv : DualVec F W K) {n : ℕ}
     (w : Fin n → W) (x : Fin n → ℂ) :
     archLin h τ yv (fibreGen h (τ.comp (algebraMap F K)) w x) = ∑ k, τ (yv (w k)) * x k := by
-  simp only [fibreGen, map_sum, map_smul, archLin_fibreVec, smul_eq_mul, mul_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [fibreGen, map_sum, map_smul, archLin_fibreVec, smul_eq_mul, mul_comm]
 
 theorem archDualNorm_eq (h : HermitianMetric F W) (τ : K →+* ℂ) (yv : DualVec F W K) {ι : Type*}
     [Fintype ι] (b : OrthonormalBasis ι ℂ (FibreSpace h (τ.comp (algebraMap F K)))) :
@@ -233,7 +239,8 @@ theorem FibreMahlerForms.proof : FibreMahlerForms.Statement := by
     set ξ := b.repr.symm (WithLp.toLp 2 fun j ↦ u (0, j))
     have hx : fibreGen h σ w (Function.invFun (fibreGen h σ w) ξ) = ξ :=
       Function.invFun_eq (hsurj ξ)
-    simp only [fibrePoly, map_mul, eval_C, map_prod, map_sum, eval_X]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [fibrePoly, map_mul, eval_C, map_prod, map_sum, eval_X]
     refine congrArg (fun z ↦ Real.log ‖a * z‖) (Finset.prod_congr rfl fun q _ ↦ ?_)
     have h1 := archLin_fibreGen h τ (yv q) w (Function.invFun (fibreGen h σ w) ξ)
     rw [hx] at h1
@@ -248,7 +255,8 @@ theorem FibreMahlerForms.proof : FibreMahlerForms.Statement := by
     obtain ⟨j, hj⟩ := exists_archLin_ne_zero h τ (yv q) (hyv q) b
     have h1 := congrArg (eval fun ij : Fin 1 × Fin (Module.finrank ℂ (FibreSpace h σ)) ↦
       star (archLin h τ (yv q) (b ij.2))) hq
-    simp only [map_sum, map_mul, eval_C, eval_X, map_zero, Complex.star_def, Complex.mul_conj'] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, eval_C, eval_X, map_zero, Complex.star_def, Complex.mul_conj'] at h1
     have h2 : ((∑ j, ‖archLin h τ (yv q) (b j)‖ ^ 2 : ℝ) : ℂ) = 0 := by push_cast; exact h1
     have h3 : ∑ j, ‖archLin h τ (yv q) (b j)‖ ^ 2 = 0 := by exact_mod_cast h2
     rw [Finset.sum_eq_zero_iff_of_nonneg (fun _ _ ↦ by positivity)] at h3

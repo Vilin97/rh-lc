@@ -340,7 +340,8 @@ theorem kp_indep {O Kf V : Type*} [CommRing O] [Field Kf] [Algebra O Kf] [AddCom
   rw [Fintype.linearIndependent_iff]
   intro c hc k
   have h1 := congrArg (fun z => ((u (Pi.single k 1) : A) : Module.Dual Kf V) z) hc
-  simp only [map_sum, map_smul, smul_eq_mul, map_zero] at h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, smul_eq_mul, map_zero] at h1
   have h2 : ∀ j, ∑ i, algebraMap O Kf (M j i) * ((u (Pi.single k 1) : A) : Module.Dual Kf V) (y i) =
       algebraMap O Kf (π ^ D * (Pi.single k 1 : Fin n → O) j) := fun j => hu _ j
   simp only [h2] at h1
@@ -1222,7 +1223,8 @@ theorem nt_equiv (G : GAtP p) (v : Fin G.P.nV) : RestEquiv G v := by
         congrArg (fun s => ((p : G.Kf) ^ G.P.ArV v) • s) hsum.symm
     _ = ((G.lev i).χ γ : G.O) • (G.lev i).actX γ (((p : G.Kf) ^ G.P.ArV v) •
           ∑ A ∈ ef_E G.P v (L v), F (Function.update (β := fun v => Submodule (G.P.W v) (Fin (G.P.m + 1) → G.P.Qq v)) L v A)) := by
-        rw [map_smul, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_smul, map_sum]
         simp only [Finset.smul_sum]
         apply Finset.sum_congr rfl
         intro A _
@@ -2024,10 +2026,12 @@ theorem smith_normal_form_card {W : Type} [CommRing W] [IsDomain W] [IsPrincipal
     have hmem := hpN (bT i)
     have h1 : (p : W) • bT i = ∑ j, (bB.repr ⟨_, hmem⟩ j) • (a j • bT j) := by
       have h2 := congrArg N.subtype (bB.sum_repr ⟨_, hmem⟩)
-      simp only [map_sum, map_smul, Submodule.subtype_apply, hsnf] at h2
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, Submodule.subtype_apply, hsnf] at h2
       exact h2.symm
     have h3 := congrArg (fun z => bT.repr z i) h1
-    simp only [map_smul, map_sum, Module.Basis.repr_self, Finsupp.smul_apply, Finsupp.single_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_smul, map_sum, Module.Basis.repr_self, Finsupp.smul_apply, Finsupp.single_apply,
       Finsupp.coe_finsetSum, Finset.sum_apply, smul_eq_mul, if_true, mul_ite, mul_one, mul_zero,
       Finset.sum_ite_eq', Finset.mem_univ] at h3
     exact ⟨bB.repr ⟨_, hmem⟩ i, h3.trans (mul_comm _ _)⟩
@@ -2606,7 +2610,8 @@ theorem jd_subst_comp (M N : ∀ v, Fin (P.n' v) → Matrix (Fin (P.m + 1)) (Fin
   apply MvPolynomial.algHom_ext
   intro x
   unfold Places.subst
-  simp only [AlgHom.comp_apply, aeval_X, map_sum, map_mul, algHom_C, Matrix.mul_apply, Finset.sum_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [AlgHom.comp_apply, aeval_X, map_sum, map_mul, algHom_C, Matrix.mul_apply, Finset.sum_mul,
     Finset.mul_sum]
   rw [Finset.sum_comm]
   apply Finset.sum_congr rfl
@@ -3003,7 +3008,8 @@ theorem je_twist (G : GAtP p) (v : Fin G.P.nV) (A : GL (Fin (G.P.m + 1)) (G.P.Qq
     twistVec (G.P.ι v) (G.P.σ v) s.val (nt_phi (G.P.W v) A x) =
       (je_g G v A s).mulVec (twistVec (G.P.ι v) (G.P.σ v) s.val x) := by
   funext i
-  simp [twistVec, nt_phi, Matrix.mulVec, dotProduct, je_g, Places.gPos, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [twistVec, nt_phi, Matrix.mulVec, dotProduct, je_g, Places.gPos, map_sum, map_mul]
 
 theorem je_extO (G : GAtP p) (v : Fin G.P.nV) (A : GL (Fin (G.P.m + 1)) (G.P.Qq v)) (s : Fin (G.P.n' v))
     (Lv : Lat G v) :
@@ -3140,7 +3146,8 @@ theorem je_subst_vEmb (G : GAtP p)
   have h : (G.P.subst Gm).comp (G.P.vEmb v) = (G.P.vEmb v).comp (blockAct G.Kf (Gm v)) := by
     apply MvPolynomial.algHom_ext
     intro x
-    simp [Places.subst, Places.vEmb, blockAct, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Places.subst, Places.vEmb, blockAct, map_sum]
   exact congrArg (fun f => f F) h
 
 theorem je_gPos_inv (G : GAtP p) (v : Fin G.P.nV) (A : GL (Fin (G.P.m + 1)) (G.P.Qq v)) (s : Fin (G.P.n' v)) :
@@ -3157,7 +3164,8 @@ theorem je_gPos_inv (G : GAtP p) (v : Fin G.P.nV) (A : GL (Fin (G.P.m + 1)) (G.P
       G.P.ι v ((G.P.σ v ^ s.val) ((((A⁻¹ : GL (Fin (G.P.m + 1)) (G.P.Qq v)) :
         Matrix (Fin (G.P.m + 1)) (Fin (G.P.m + 1)) (G.P.Qq v)) *
         (A : Matrix (Fin (G.P.m + 1)) (Fin (G.P.m + 1)) (G.P.Qq v))) a b)) := by
-    simp only [Places.gPos, je_g, Matrix.mul_apply, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Places.gPos, je_g, Matrix.mul_apply, map_sum, map_mul]
   rw [h2, h1]
   by_cases hab : a = b
   · subst hab; simp
@@ -3626,12 +3634,15 @@ theorem jm_core {I : Type} [Finite I] (b0 : Module.Basis I Kf V) (c : O) (hc : c
     have e1 := hu (Pi.single k 1) j
     have e2 : ∑ i, algebraMap O Kf (M j i) * (u (Pi.single k 1) : Module.Dual Kf V) (f i) =
         (u (Pi.single k 1) : Module.Dual Kf V) (∑ i, M j i • f i) := by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       apply Finset.sum_congr rfl
       intro i _
       rw [LinearMap.map_smul_of_tower, Algebra.smul_def]
-    rw [e2, hcc, map_sum] at e1
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e2, hcc, map_sum] at e1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     have e3 : algebraMap O Kf (q * (Pi.single k (1 : O) : Fin n → O) j) =
         algebraMap O Kf (if j = k then q else 0) := by
       congr 1

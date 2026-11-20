@@ -94,7 +94,8 @@ include hj
 theorem mapJ_mul (A B : Matrix (Fin n) (Fin n) (R' ⊗[F] E)) :
     (A * B).map (Jt j) = A.map (Jt j) * B.map (Jt j) := by
   ext i k
-  simp only [Matrix.map_apply, Matrix.mul_apply, map_sum, Jt_mul hj]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.map_apply, Matrix.mul_apply, map_sum, Jt_mul hj]
 
 theorem eps_smul_mapJ (A : Matrix (Fin n) (Fin n) (R' ⊗[F] E)) : eps (E := E) j • A.map (Jt j) = A.map (Jt j) := by
   ext i k

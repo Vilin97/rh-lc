@@ -126,7 +126,8 @@ theorem pairing_translate_eq_zero (ρ : Representation ℂ G V) (K : Subgroup G)
     rw [hh]
     exact DoubleCoset.mem_doubleCoset.2 ⟨1, K.one_mem, h, h.2, by simp⟩
   have h0 : B y (c • x) = 0 := by simp [hyx]
-  rw [← hc', hsum, map_sum, Finset.sum_congr rfl hterm, Finset.sum_const, nsmul_eq_mul] at h0
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hc', hsum, map_sum, Finset.sum_congr rfl hterm, Finset.sum_const, nsmul_eq_mul] at h0
   have hcard : ((hfin.toFinset.card : ℕ) : ℂ) ≠ 0 :=
     Nat.cast_ne_zero.2 (Finset.card_ne_zero.2 ⟨_, hne⟩)
   exact (mul_eq_zero.1 h0).resolve_left hcard
@@ -241,7 +242,8 @@ theorem mem_of_invariant [TopologicalSpace G] [IsTopologicalGroup G] (ρ : Repre
     exact hW _ _ hy1W
   have hzf : ∀ k ∈ K, ρ k (∑ u ∈ hfin.toFinset, u) = ∑ u ∈ hfin.toFinset, u := by
     intro k hk
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_nbij' (ρ k) (ρ k⁻¹) ?_ ?_ ?_ ?_ (fun _ _ => rfl)
     · intro u hu
       obtain ⟨l, rfl⟩ := (hF u).1 hu
@@ -263,7 +265,8 @@ theorem mem_of_invariant [TopologicalSpace G] [IsTopologicalGroup G] (ρ : Repre
       _ = B y₁ x := hB _ _ _
   have hmem : y₁ ∈ hfin.toFinset := (hF _).2 ⟨1, by simp⟩
   have hBz : B (∑ u ∈ hfin.toFinset, u) x ≠ 0 := by
-    rw [map_sum, LinearMap.sum_apply, Finset.sum_congr rfl hterm, Finset.sum_const, nsmul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, LinearMap.sum_apply, Finset.sum_congr rfl hterm, Finset.sum_const, nsmul_eq_mul]
     exact mul_ne_zero (Nat.cast_ne_zero.2 (Finset.card_ne_zero.2 ⟨_, hmem⟩)) hy1x
   have hc0 : c ≠ 0 := by
     rintro rfl

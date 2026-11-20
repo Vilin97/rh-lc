@@ -82,7 +82,8 @@ theorem abs_main (h1 : ∀ c, ∃ e, ε * κ c = ε * ρ e) (h2 : ∀ e, ∃ c, 
   choose cc hcc using h2
   have hexp : ∀ x, ε • J x = ∑ j, cc (b.repr x j) • v j := by
     intro x
-    conv_lhs => rw [← b.sum_repr x, map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [← b.sum_repr x, map_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [hJ, hM, smul_smul, hcc, smul_smul, mul_comm]
   have hmem : ∀ x, ε • J x ∈ Submodule.span F (Set.range v) := fun x => by
@@ -191,7 +192,8 @@ theorem dim_ker : ∀ {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Typ
     intro y
     choose c hc using fun j => hR.res_surj (y j)
     refine ⟨∑ j, c j • t j, ?_⟩
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     funext a
     simp [qb, Finset.sum_apply, Pi.single_apply, Algebra.smul_def, hc]
   have hg : Function.Surjective g := fun y => by

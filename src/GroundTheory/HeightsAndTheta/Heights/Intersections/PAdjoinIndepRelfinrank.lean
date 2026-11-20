@@ -30,7 +30,8 @@ theorem AdjoinIndepRelfinrank.proof : AdjoinIndepRelfinrank.Statement := by
       ∑ j ∈ s, MvPolynomial.C (b j) * MvPolynomial.map (algebraMap L₀ L') (p j) with hq
     have hq0 : q = 0 := by
       apply ht'.eq_zero_of_aeval_eq_zero
-      rw [hq, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hq, map_sum]
       rw [← hg]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [map_mul, MvPolynomial.aeval_C, MvPolynomial.aeval_map_algebraMap, hp, Subalgebra.smul_def,

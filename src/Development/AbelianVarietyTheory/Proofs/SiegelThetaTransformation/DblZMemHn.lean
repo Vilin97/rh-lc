@@ -72,7 +72,8 @@ theorem aLin_swap (x₁ x₂ : Frame X.Ψ r) (τ : X.Ψ) :
   ext a c
   simp only [aLin, aAnti, map_apply, of_apply]
   split_ifs
-  · simp only [map_sum, map_mul, ← emb_cc, X.Gm_herm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [map_sum, map_mul, ← emb_cc, X.Gm_herm]
     exact Finset.sum_congr rfl fun b _ => mul_comm _ _
   · rw [Complex.conj_conj]
 
@@ -141,7 +142,8 @@ theorem posDef_imH {N : ℕ} {Z : Matrix (Fin N) (Fin N) ℂ}
     congr 1
     simp
   · have e : star v ⬝ᵥ Zᴴ *ᵥ v = conj (star v ⬝ᵥ Z *ᵥ v) := by
-      simp only [dotProduct, mulVec, conjTranspose_apply, Pi.star_apply, Complex.star_def, map_sum,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [dotProduct, mulVec, conjTranspose_apply, Pi.star_apply, Complex.star_def, map_sum,
         map_mul, Complex.conj_conj, Finset.mul_sum]
       rw [Finset.sum_comm]
       exact Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => by ring

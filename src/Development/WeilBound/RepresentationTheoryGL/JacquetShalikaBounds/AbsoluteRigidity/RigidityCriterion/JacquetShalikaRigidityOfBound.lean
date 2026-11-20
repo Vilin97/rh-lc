@@ -115,7 +115,8 @@ theorem jacquet_shalika_rigidity_of_bound : AbsRig → UnitEx → SatTw → DetO
     let φ : Multiset ℂˣ →+ ℂ := Multiset.sumAddMonoidHom.comp (Multiset.mapAddMonoidHom fun z : ℂˣ => (z : ℂ) ^ k)
     have hφ : ∀ M : Multiset ℂˣ, φ M = (M.map fun z : ℂˣ => (z : ℂ) ^ k).sum := fun M => rfl
     have h := congrArg φ (hsum w)
-    rw [map_sum, map_sum] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum] at h
     simp only [hφ, hBi, hBj, sum_pow] at h
     have ev : ∀ τ : ℝ, (((ν τ).val w.1 : ℂˣ) : ℂ) = (nq w : ℂ) ^ (-(τ : ℂ)) := fun τ => (hν τ).2.1 w.1
     simp only [ev] at h

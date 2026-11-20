@@ -326,11 +326,13 @@ theorem tauLatG : TauLatG := by
   · rintro ⟨_, ⟨x, hx, rfl⟩, rfl⟩
     refine ⟨_, ⟨x, hx, rfl⟩, ?_⟩
     funext a
-    simp [embGL_coe, Matrix.mulVec, dotProduct, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [embGL_coe, Matrix.mulVec, dotProduct, map_sum]
   · rintro ⟨_, ⟨x, hx, rfl⟩, rfl⟩
     refine ⟨_, ⟨x, hx, rfl⟩, ?_⟩
     funext a
-    simp [embGL_coe, Matrix.mulVec, dotProduct, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [embGL_coe, Matrix.mulVec, dotProduct, map_sum]
 
 section Adj
 
@@ -394,7 +396,8 @@ theorem pderiv_blockAct [DecidableEq ι] (V : ι → Matrix (Fin n) (Fin n) K) (
   | mul_X p k hp =>
     have hX : pderiv (s, (a, t)) (Formalism.GradedWeylDivisibility.blockAct K V (X k)) =
         if k.1 = s ∧ k.2.2 = t then C (V s k.2.1 a) else 0 := by
-      rw [blockAct_X, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [blockAct_X, map_sum]
       by_cases hk : k.1 = s ∧ k.2.2 = t
       · obtain ⟨h1, h2⟩ := hk
         subst h1; subst h2
@@ -451,9 +454,11 @@ theorem fockL_blockAct_adj (U : ι → Matrix (Fin n) (Fin n) K) (F F' : Pol K �
       rw [map_mul, blockAct_X, Finset.mul_sum]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [smul_eq_C_mul]; ring
-    rw [e1, map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e1, map_sum, LinearMap.sum_apply]
     simp_rw [LinearMap.map_smulₛₗ, LinearMap.smul_apply, fockL_X_pderiv, hp]
-    rw [mul_comm p, fockL_X_pderiv, show v = (v.1, (v.2.1, v.2.2)) from rfl, pderiv_blockAct, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [mul_comm p, fockL_X_pderiv, show v = (v.1, (v.2.1, v.2.2)) from rfl, pderiv_blockAct, map_sum]
     refine Finset.sum_congr rfl fun b _ => ?_
     rw [← smul_eq_C_mul, map_smul, Matrix.conjTranspose_apply, starRingEnd_apply]
 
@@ -640,7 +645,8 @@ theorem fockSQ : FockSQ := by
   intro K _ _ _ σ f g
   have hinj : Function.Injective (algebraMap ℚ K) := (algebraMap ℚ K).injective
   unfold fockS Formalism.GradedWeylDivisibility.fockQ mfact
-  rw [support_map_of_injective _ hinj, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [support_map_of_injective _ hinj, map_sum]
   refine Finset.sum_congr rfl fun m _ => ?_
   simp only [coeff_map, map_mul, map_natCast, eq_ratCast, star_ratCast]
 

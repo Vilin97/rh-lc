@@ -372,7 +372,8 @@ theorem level_zero (hψ : Continuous ψ) (h1 : ψ ≠ 1) (hn : ∀ x, ‖ψ x‖
       Nat.cast_smul_eq_nsmul]
   have hsum : ∀ m : Module.Free.ChooseBasisIndex ℤ (𝓞 F) → ℤ,
       ∑ j, (m j : ℝ) • b j = N • mixedEmbedding F ((∑ j, m j • ω j : 𝓞 F) : F) := fun m => by
-    rw [show ((∑ j, m j • ω j : 𝓞 F) : F) = algebraMap (𝓞 F) F (∑ j, m j • ω j) from rfl, map_sum, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [show ((∑ j, m j • ω j : 𝓞 F) : F) = algebraMap (𝓞 F) F (∑ j, m j • ω j) from rfl, map_sum, map_sum,
       Finset.smul_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [hb, map_zsmul, map_zsmul, Int.cast_smul_eq_zsmul, smul_comm]

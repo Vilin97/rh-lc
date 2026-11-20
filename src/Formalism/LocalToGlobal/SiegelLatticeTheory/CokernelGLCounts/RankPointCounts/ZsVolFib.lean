@@ -16,7 +16,8 @@ theorem act_mul (f : Fin (D.R.rS + 1) → (VS D).V) (s s' : (VS D).V ≃ₗ[D.ho
     (hs : ∀ b, s (f b) = ∑ c, A c b • f c) (hs' : ∀ b, s' (f b) = ∑ c, B c b • f c) (b : Fin (D.R.rS + 1)) :
     (s * s') (f b) = ∑ c, (A * B) c b • f c := by
   show s (s' (f b)) = _
-  rw [hs', map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hs', map_sum]
   simp only [map_smul, hs, Finset.smul_sum, smul_smul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun d _ => ?_

@@ -397,7 +397,8 @@ theorem tr_one (x : VR h) : tr 1 x = (dim h x : ℂ) := by
 @[simp] theorem tr_twist (χ : Weil h →* ℂˣ) (hχ : IsSmooth χ) (τ : Weil h) (x : VR h) :
     tr τ (twist χ hχ x) = χ τ * tr τ x := by
   rw [eq_sum_irr x]
-  simp only [map_sum, map_smul, twist_irr, tr_irr, IrrW.twist, trW_lpTwist, Finset.mul_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, twist_irr, tr_irr, IrrW.twist, trW_lpTwist, Finset.mul_sum,
     mul_smul_comm]
 
 theorem tr_tw (s : ℂ) (τ : Weil h) (x : VR h) :

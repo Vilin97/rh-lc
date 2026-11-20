@@ -156,7 +156,8 @@ theorem schur (hψ : IsCharAF D.host.F ψ) (S T : HSp D) : Schur ψ S T := by
   have htp : ∀ (s : Finset (ratL T S)) (c : ratL T S → ℂ) g, IsThetaFunO ψ S T g →
       A ((∑ a ∈ s, c a • chiR ψ S T a) * g) = (∑ a ∈ s, c a • chiR ψ S T a) * A g := by
     intro s c g hg
-    rw [Finset.sum_mul, Finset.sum_mul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_mul, Finset.sum_mul, map_sum]
     refine Finset.sum_congr rfl fun a _ => ?_
     rw [smul_mul_assoc, smul_mul_assoc, map_smul]
     congr 1
@@ -438,7 +439,8 @@ theorem eq_mul_of_chi (hψ : IsCharAF D.host.F ψ) {m : (WO S T → ℂ) →ₗ[
       exact happ Φ List.mem_cons_self 0
     have hmT : m (tr s c Φ) = κ * tr s c Φ 0 := by
       rw [tr_apply]
-      simp only [tr, map_sum, map_smul, smul_eq_mul, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [tr, map_sum, map_smul, smul_eq_mul, Finset.mul_sum]
       refine Finset.sum_congr rfl fun a _ => ?_
       rw [show chiR ψ S T a = chi ψ S T a from rfl, hκ _ a.2, chi_zero]
       ring

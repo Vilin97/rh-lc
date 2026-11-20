@@ -33,7 +33,8 @@ theorem hs_mul : ∀ (Ω : Type) [Field Ω] (ε : Ω →+* ℂ) (C : ℝ) (φ ψ
     rw [this]; ring
   rw [tsum_subtype (f := fun p : ℚ × ℚ => a p.1 * b p.2)]
   rw [tsum_eq_sum (s := Finset.antidiagonal h.isPWO_support h'.isPWO_support s)]
-  · simp only [HahnSeries.coeff_mul, map_sum, map_mul, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [HahnSeries.coeff_mul, map_sum, map_mul, Finset.sum_mul]
     refine Finset.sum_congr rfl fun p hp => ?_
     rw [Finset.mem_antidiagonal] at hp
     rw [Set.indicator_of_mem (by simpa using hp.2.2)]

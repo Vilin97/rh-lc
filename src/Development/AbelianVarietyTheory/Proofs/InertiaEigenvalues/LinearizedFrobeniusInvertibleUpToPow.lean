@@ -81,7 +81,8 @@ theorem semiBC_frob {Q : Type} [CommRing Q] {d : ℕ} {α β : B →+* Q} (σ : 
   let e : Fin d → Q' := fun i => (W₁ (Pi.single i 1) : Q')
   have he : ∀ z : Fin d → Q, (W₁ z : Q') = ∑ i, σ (z i) • e i := fun z => by
     conv_lhs => rw [pi_eq_sum_univ' z]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun i _ => W₁.map_smul (z i) (Pi.single i 1)
   refine ⟨Fintype.linearCombination Q e, fun x => ?_, fun W' hW' => ?_⟩
   · rw [Fintype.linearCombination_apply]

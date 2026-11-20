@@ -177,7 +177,8 @@ private theorem qdet_map (σ : ℂ ≃+* ℂ) {d : ℕ} (X : Fin a → Fin a →
     ext k l
     simp [f, Matrix.algebraMap_matrix_apply, apply_ite σ]
   change Formalism.REAL.qdet (fun i j => f (X i j)) (σ u) = f _
-  simp only [Formalism.REAL.qdet, Formalism.REAL.qminor, map_sum, map_mul, map_intCast, map_list_prod, List.map_ofFn,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Formalism.REAL.qdet, Formalism.REAL.qminor, map_sum, map_mul, map_intCast, map_list_prod, List.map_ofFn,
     Function.comp_def, Formalism.REAL.Tm, map_add, apply_ite f, hf, map_zero, map_sub, map_natCast]
 
 private theorem map_infChar (σ : ℂ ≃+* ℂ) (Ξ : AlgRep E a) {τ : E →+* ℂ} {m : Multiset ℂ} (h : AlgInfChar Ξ τ m) :

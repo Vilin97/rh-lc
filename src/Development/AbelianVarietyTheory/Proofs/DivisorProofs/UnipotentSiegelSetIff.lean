@@ -42,7 +42,8 @@ theorem adMat_mulVec_eq {d j : ℕ} (J : Matrix (Fin d) (Fin d) E) (hJ : ∀ i l
     (Y : Matrix (Fin d) (Fin j) E) (z : Fin d → AE F E) (k : Fin j) :
     (adMat F (cT (σ : E →+* E) Y * (c • J.map σ)) *ᵥ z) k =
       -(inclR (F := F) (AF F) c) * formA σ J z (incV F fun i => Y i k) := by
-  simp only [mulVec, dotProduct, adMat, map_apply, mul_apply, cT, transpose_apply, Matrix.smul_apply, smul_eq_mul, formA,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [mulVec, dotProduct, adMat, map_apply, mul_apply, cT, transpose_apply, Matrix.smul_apply, smul_eq_mul, formA,
     incM, incV, cA_inclR, map_sum, map_mul, map_neg, hJ, Finset.mul_sum, Finset.sum_mul, RingHom.coe_coe]
   exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
 

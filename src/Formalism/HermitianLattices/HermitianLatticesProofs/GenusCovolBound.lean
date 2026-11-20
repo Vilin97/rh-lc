@@ -70,7 +70,8 @@ theorem genusCovolBound_covol_le (h : V →ₗ⋆[K] V →ₗ[K] K) (N : ℕ)
   let y : n → V := fun j => ∑ k, ((Hq k j : ℚ) : K) • x k
   have hy : ∀ j, ι (y j) = w j := by
     intro j
-    simp only [y, w, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [y, w, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_ratCast_smul ι K ℝ, hxb]
   have hbw : ∀ i j, inner ℝ (b i) (w j) = (((1 : Matrix n n ℚ) i j : ℚ) : ℝ) := by
@@ -223,7 +224,8 @@ theorem genusCovolBound_discr (a : K)
         ∑ j, (NumberField.integralBasis K).repr a j *
           Algebra.trace ℚ K (NumberField.integralBasis K i * NumberField.integralBasis K j) := by
       conv_lhs => rw [← (NumberField.integralBasis K).sum_repr a]
-      rw [Finset.sum_mul, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Finset.sum_mul, map_sum]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [smul_mul_assoc, LinearMap.map_smul, smul_eq_mul,
         mul_comm (NumberField.integralBasis K j)]
@@ -254,7 +256,8 @@ theorem genusCovolBound_discr (a : K)
     rfl
   rw [Submodule.mem_one]
   refine ⟨∑ i, Matrix.mulVec (Matrix.of T).adjugate m i • RingOfIntegers.basis K i, ?_⟩
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   conv_rhs => rw [← (NumberField.integralBasis K).sum_repr a, Finset.mul_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_zsmul, zsmul_eq_mul, ← NumberField.integralBasis_apply, Rat.smul_def]

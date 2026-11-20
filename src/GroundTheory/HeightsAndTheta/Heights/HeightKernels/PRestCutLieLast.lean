@@ -14,7 +14,8 @@ theorem transport_smallPowerSum (f j k m : ℕ) (τ : Fin f) :
     restTransport f j k (k + j) (restLastEquiv j k) (RestTerms.smallPowerSum f k j .last m τ) =
       ∑ b : Fin k, X (τ, Sum.inr b) ^ m := by
   unfold RestTerms.smallPowerSum
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun b _ => ?_
   have he : restLastEquiv j k ⟨j + b.val, by have := b.isLt; omega⟩ = Sum.inr b := by
     have : (finCongr (Nat.add_comm k j)) ⟨j + b.val, by have := b.isLt; omega⟩ = Fin.natAdd j b :=

@@ -327,7 +327,8 @@ private theorem frame {O A K G : Type} [CommRing O] [IsLocalRing O] [CommRing A]
   generalize g * x.1 ^ n = y at e
   have e1 : (r' y).mat.trace = 0 := by
     refine hj ?_
-    rw [map_zero, ← e, trace, trace, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_zero, ← e, trace, trace, map_sum]
     rfl
   have e2 : ∀ i, residue A ((r' y).mat i i) = φ ((r0 η Ψ y).mat i i) := fun i =>
     Ideal.Quotient.eq.2 (hpt.red y i i)

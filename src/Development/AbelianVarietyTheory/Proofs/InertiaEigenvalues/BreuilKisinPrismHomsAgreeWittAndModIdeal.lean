@@ -33,7 +33,8 @@ theorem eq_of_pow_eq_self {A : Type} [CommRing A] {J : Ideal A} (hJ : J ≤ (⊥
     have hxy' : Ideal.Quotient.mk J y = Ideal.Quotient.mk J x := (Ideal.Quotient.eq.2 hxy).symm
     have hq' : (q : A ⧸ J) = 0 := by
       rw [← map_natCast (Ideal.Quotient.mk J), Ideal.Quotient.eq_zero_iff_mem]; exact hq
-    rw [hS, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hS, map_sum]
     simp only [map_mul, map_pow, hxy']
     rcases Nat.eq_zero_or_pos q with h0 | hpos
     · subst h0; simp

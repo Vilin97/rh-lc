@@ -20,7 +20,8 @@ theorem repr_semilinear {V V' : Type} [AddCommGroup V] [Module K V] [AddCommGrou
     b'.repr (F x) j = σ (b.repr x j) := by
   have hx : F x = ∑ k, σ (b.repr x k) • b' k := by
     conv_lhs => rw [← b.sum_repr x]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun k _ => by rw [LinearMap.map_smulₛₗ, h]
   rw [hx, b'.repr_sum_self]
 
@@ -74,7 +75,8 @@ theorem isLatOf_comap (C : ACurve K) {V : Type} [AddCommGroup V] [Module K V] (i
     rw [Fin.sum_univ_add]
     simp only [Fin.addCases_left, Fin.addCases_right, zero_smul, Finset.sum_const_zero, add_zero, h]
     have := congrArg W.subtype (c.sum_repr x)
-    rw [map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at this
     exact this.symm
   have hr : ∀ k, b.repr (x : V) k =
       Fin.addCases (motive := fun _ => K) (fun j => c.repr x j) (fun _ => 0) k := by
@@ -148,9 +150,11 @@ theorem exists_basis_sub (σ : K →+* K) {d n : ℕ} (W : Submodule K (Fin d �
       rintro _ ⟨x, hx, rfl⟩
       have : x = ∑ k, c.repr ⟨x, hx⟩ k • (c k : Fin d → K) := by
         have := congrArg W.subtype (c.sum_repr ⟨x, hx⟩)
-        rw [map_sum] at this
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum] at this
         exact this.symm
-      rw [this, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [this, map_sum]
       refine Submodule.sum_mem _ fun k _ => ?_
       rw [LinearMap.map_smulₛₗ]
       exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨k, rfl⟩)

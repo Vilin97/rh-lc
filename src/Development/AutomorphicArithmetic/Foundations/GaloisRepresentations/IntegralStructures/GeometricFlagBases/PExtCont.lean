@@ -22,7 +22,8 @@ theorem UpperTheory.Gal.Int.Geo.extCont_of :
       intro g
       rw [LinearMap.baseChange_tmul]
       conv_lhs => rw [← b.sum_repr (a g m)]
-      rw [TensorProduct.tmul_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [TensorProduct.tmul_sum, map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [TensorProduct.tmul_smul, ← algebraMap_smul L, map_smul, smul_eq_mul]
       rfl

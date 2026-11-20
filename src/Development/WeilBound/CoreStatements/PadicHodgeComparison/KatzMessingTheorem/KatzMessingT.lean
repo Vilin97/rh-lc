@@ -60,7 +60,8 @@ def CohModel.actQ [Algebra E F] (M : CohModel (k := k) F) {Y : Var k} (e : Corr 
 theorem CohModel.actQ_frob [Algebra E F] (M : CohModel (k := k) F) {Y : Var k} (e : Corr Y →₀ E) (i : ℕ)
     (y : M.H Y i) : M.actQ e i (M.frob Y i y) = M.frob Y i (M.actQ e i y) := by
   unfold CohModel.actQ Finsupp.sum
-  rw [LinearMap.sum_apply, LinearMap.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [LinearMap.sum_apply, LinearMap.sum_apply, map_sum]
   refine Finset.sum_congr rfl fun c _ => ?_
   simp only [LinearMap.smul_apply, map_smul]
   rw [← LinearMap.comp_apply (M.act c i), M.comm c i, LinearMap.comp_apply]

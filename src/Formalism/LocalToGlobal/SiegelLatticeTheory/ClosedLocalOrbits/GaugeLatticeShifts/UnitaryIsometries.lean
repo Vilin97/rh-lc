@@ -40,7 +40,8 @@ theorem hJ_sum_right {ι : Type*} (s : Finset ι) (x : Fin n → ℂ) (c : ι �
 
 theorem hJ_conj (x y : Fin n → ℂ) : hJ ε x y = conj (hJ ε y x) := by
   unfold hJ Formalism.REAL.Jm
-  simp only [Matrix.mulVec_diagonal, dotProduct, Pi.star_apply, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mulVec_diagonal, dotProduct, Pi.star_apply, map_sum, map_mul]
   refine Finset.sum_congr rfl (fun i _ => ?_)
   split_ifs <;> simp <;> ring
 
@@ -58,7 +59,8 @@ theorem hJ_neg_left (x y : Fin n → ℂ) : hJ ε (-x) y = -hJ ε x y := by
 
 theorem hJ_sum_left {ι : Type*} (s : Finset ι) (c : ι → ℂ) (x : ι → Fin n → ℂ) (y : Fin n → ℂ) :
     hJ ε (∑ i ∈ s, c i • x i) y = ∑ i ∈ s, conj (c i) * hJ ε (x i) y := by
-  rw [hJ_conj, hJ_sum_right, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hJ_conj, hJ_sum_right, map_sum]
   simp only [map_mul, ← hJ_conj]
 
 theorem hJ_self_conj (x : Fin n → ℂ) : conj (hJ ε x x) = hJ ε x x := (hJ_conj ε x x).symm

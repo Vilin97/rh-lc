@@ -191,7 +191,8 @@ theorem dual_smul_mem {f : ℕ} (La : Submodule ℤ (crystallineComparison.V f))
     ((Pi.basisFun ℝ _).sum_repr _).symm
   have h : g • Formalism.FourierDecayAlt.P.PairingConjugationLemmas.ψd La m = ∑ j, (m j) • bd j := by
     unfold Formalism.FourierDecayAlt.P.PairingConjugationLemmas.ψd
-    rw [hx, map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hx, map_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_smul, Module.Basis.isUnitSMul_apply, ← Int.cast_smul_eq_zsmul ℝ, smul_comm]
     rfl

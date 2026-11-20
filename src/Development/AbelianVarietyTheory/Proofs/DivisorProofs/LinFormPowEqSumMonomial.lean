@@ -31,7 +31,8 @@ theorem coeff_eq_of_polarisation : ∀ (ι : Type) [Fintype ι] [DecidableEq ι]
       simp [linRoot, smul_eq_C_mul]
     have h2 : ev (fun τ i => x (τ, i)) P = eval x P := rfl
     have h3 : ((-1 : MvPolynomial (ι × Fin N) ℝ)) ^ d = C ((-1 : ℝ) ^ d) := by simp
-    rw [← h2, h1, hl, neg_pow, h3, ← smul_eq_C_mul, linForm_pow_eq_sum_monomial, map_smul, map_sum, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← h2, h1, hl, neg_pow, h3, ← smul_eq_C_mul, linForm_pow_eq_sum_monomial, map_smul, map_sum, map_sum,
       smul_eq_mul, Finset.mul_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_smul, eval_monomial, Finsupp.prod_fintype _ _ (fun _ => pow_zero _), smul_eq_mul]

@@ -27,7 +27,8 @@ theorem arch_part (ξ : Fin 2 → F) (z : Ideles F) (M M' : Matrix (Fin 2) (Fin 
     simpa [rowA, Matrix.vecMul, dotProduct, Matrix.smul_apply] using this
   have hj : sig p (ξ j) = ∑ i, UpperTheory.V.TR.pInf F (v i) p *
       (UpperTheory.V.TR.pInf F ((z⁻¹ : Ideles F) : Ad F) p * UpperTheory.V.TR.pInf F (M' i j) p) := by
-    rw [sig, hj', map_sum, Finset.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [sig, hj', map_sum, Finset.sum_apply]
     simp only [map_mul, Pi.mul_apply]
   set ρ := max |UpperTheory.V.TR.pInf F (v 0) p| |UpperTheory.V.TR.pInf F (v 1) p|
   set ζ := |UpperTheory.V.TR.pInf F ((z⁻¹ : Ideles F) : Ad F) p|

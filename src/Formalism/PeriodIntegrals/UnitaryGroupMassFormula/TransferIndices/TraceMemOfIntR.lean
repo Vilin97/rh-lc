@@ -24,7 +24,8 @@ theorem trace_mem_of_intR (z : MonoidAlgebra K G) (hz : IntR z) :
     LinearMap.trace K W (τ.asAlgebraHom z) ∈ Set.range (algebraMap (𝓞 K) K) := by
   have hz' := intEl_of_intR z hz
   have key : LinearMap.trace K W (τ.asAlgebraHom z) ∈ (algebraMap (𝓞 K) K).range := by
-    rw [Representation.asAlgebraHom_def, MonoidAlgebra.lift_apply, Finsupp.sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Representation.asAlgebraHom_def, MonoidAlgebra.lift_apply, Finsupp.sum, map_sum]
     refine Subring.sum_mem _ fun g _ => ?_
     rw [map_smul, smul_eq_mul]
     exact Subring.mul_mem _ (RingHom.mem_range.mpr (hz' g)) (RingHom.mem_range.mpr (trace_tau_mem τ g))

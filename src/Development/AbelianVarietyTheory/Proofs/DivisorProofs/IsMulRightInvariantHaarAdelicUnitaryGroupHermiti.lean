@@ -191,7 +191,8 @@ theorem exists_compact_subring [TopologicalSpace R] [IsTopologicalRing R] (R₀ 
     show f _ = _
     rw [hf]
     show ∑ i, _ ⊗ₜ[F] algebraMap (𝓞 E) E _ = r ⊗ₜ[F] algebraMap (𝓞 E) E β
-    conv_rhs => rw [← (RingOfIntegers.basis E).sum_repr β, map_sum, TensorProduct.tmul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_rhs => rw [← (RingOfIntegers.basis E).sum_repr β, map_sum, TensorProduct.tmul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_zsmul, TensorProduct.smul_tmul]
   refine ⟨{ C₀ with mul_mem' := ?_ }, ?_, h1⟩

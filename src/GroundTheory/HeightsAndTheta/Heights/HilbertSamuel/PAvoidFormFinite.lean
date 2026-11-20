@@ -224,7 +224,8 @@ theorem eval_cmp_eq_zero {S : Set (MRingOver ℂ ι)} (hS : ∀ s ∈ S, ∃ a, 
   | add x y _ _ hx hy => intro D; rw [map_add, map_add, hx, hy, add_zero]
   | smul a x _ hx =>
     intro D
-    rw [smul_eq_mul, as_sum a, Finset.sum_mul, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [smul_eq_mul, as_sum a, Finset.sum_mul, map_sum, map_sum]
     refine Finset.sum_eq_zero fun ν _ => ?_
     rw [mul_comm, cmp_mul (isMultiHomog_monomial ν _)]
     split_ifs
@@ -361,7 +362,8 @@ theorem rel_direct {S : Set (MRingOver ℂ ι)} {G : MRingOver ℂ ι} {e : K �
 theorem eval_eq_sum_support (p : MRingOver ℂ ι) (z : (Σ k, ι k) → ℂ) :
     eval z p = ∑ ν ∈ p.support, AddMonoidAlgebra.coeff p ν * eval z (monomial ν 1) := by
   conv_lhs => rw [as_sum p]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun ν _ => ?_
   rw [eval_monomial, eval_monomial]
   ring
@@ -383,7 +385,8 @@ theorem rel_all {S : Set (MRingOver ℂ ι)} {G : MRingOver ℂ ι} {e : K → �
       choose! H hH hHev using ih
       refine ⟨∑ ν ∈ h₁.support, C (AddMonoidAlgebra.coeff h₁ ν) * H ν,
         isMultiHomog_sum _ _ fun ν hν => isMultiHomog_C_mul (hH ν (bdeg_of_mem hh₁ hν)) _, fun z hz => ?_⟩
-      rw [hev z hz, eval_eq_sum_support h₁ z, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hev z hz, eval_eq_sum_support h₁ z, map_sum]
       simp only [map_mul, eval_C]
       rw [Finset.sum_mul, Finset.sum_mul, Finset.sum_mul]
       refine Finset.sum_congr rfl fun ν hν => ?_

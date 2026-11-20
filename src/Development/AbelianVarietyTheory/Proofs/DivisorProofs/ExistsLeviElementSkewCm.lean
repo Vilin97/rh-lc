@@ -17,7 +17,8 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 
 theorem form_swap (hσ : ∀ x, σ (σ x) = x) {n : ℕ} {J : Matrix (Fin n) (Fin n) E} (hJ : ∀ i j, σ (J j i) = -J i j)
     (a b : Fin n → E) : form σ J a b = -σ (form σ J b a) := by
-  simp only [form, dotProduct, mulVec, map_sum, map_mul, hσ, hJ, Finset.mul_sum, Finset.sum_neg_distrib, neg_mul, mul_neg, neg_neg]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, mulVec, map_sum, map_mul, hσ, hJ, Finset.mul_sum, Finset.sum_neg_distrib, neg_mul, mul_neg, neg_neg]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun k _ => ?_
   ring
@@ -74,7 +75,8 @@ theorem isUnit_det_low (hσ : ∀ x, σ (σ x) = x) {B : Base F E} {d d₁ r s :
   set z : Fin d → E := H'.ι *ᵥ w' with hz
   have hσz : (fun i => σ (z i)) = H'.ι.map σ *ᵥ w := by
     funext i
-    simp [hz, hw', mulVec, dotProduct, map_sum, map_mul, hσ]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [hz, hw', mulVec, dotProduct, map_sum, map_mul, hσ]
   have hι : ∀ u, form σ W.J (H'.ι *ᵥ u) z = 0 := by
     intro u
     have e : form σ W.J (H'.ι *ᵥ u) z = u ⬝ᵥ (W₁.J *ᵥ w) := by
@@ -132,7 +134,8 @@ theorem exists_proj (hcm : IsCMExt F E σ) {B : Base F E} {d d₁ r s : ℕ} {W 
     have e2 : P *ᵥ (fun i => σ (z i)) = 0 := by rw [hP, ← mulVec_mulVec, e1, mulVec_zero]
     funext j
     have := congrArg σ (congrFun e2 j)
-    simpa [mulVec, dotProduct, map_sum, map_mul, hσ] using this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [mulVec, dotProduct, map_sum, map_mul, hσ] using this
   refine ⟨P.map σ, ?_, ?_, by rw [mm, h2], hz _ fun u => (hA.orth u).1, hz _ fun u => (hA.orth u).2⟩
   · have : P * H'.ι.map σ = 1 := by rw [hP, Matrix.mul_assoc, hA.gram, Matrix.nonsing_inv_mul _ hdet]
     rw [← mm H'.ι, ← mul, this]

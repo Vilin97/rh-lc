@@ -120,7 +120,8 @@ private theorem loc_read (s : SplitPlace L) {n r : ℕ} (h : r ≤ n) {q : ℕ} 
     · exact (hX _ _).symm
     · rfl
   · unfold NX.supSum
-    simp only [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum]
     refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
     split_ifs
     · exact (hr _ _).symm

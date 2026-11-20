@@ -293,7 +293,8 @@ theorem ClInj_holds : ClInj := by
     · have hfin := (Kum.clProd K).2.2.1 α
       rw [finsum_eq_sum_of_support_subset (s := hfin.toFinset) _ ?_]
       · apply hιinj
-        rw [map_zero, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_zero, map_sum]
         have h1 : ∀ P, ι ((ordP P α : ZMod (l ^ ν)) * F θ P) = Kum.ordv P α • θ.1.1 (Kum.primeCl P) := by
           intro P
           rw [ordP_eq_ordv, ← zsmul_eq_mul, map_zsmul, hF]

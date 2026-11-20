@@ -27,7 +27,8 @@ lemma baseChange_apply_baseChange (f : (Fin n → K) →ₗ[K] K) (x : Fin n →
     simp [Finset.sum_apply]
   show ∑ k, φ (x k) * φ (f fun j => if k = j then 1 else 0) = φ (f x)
   conv_rhs => rw [hx]
-  rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum]
   refine Finset.sum_congr rfl (fun k _ => ?_)
   rw [map_smul, smul_eq_mul, map_mul]
 

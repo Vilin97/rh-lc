@@ -135,7 +135,8 @@ theorem alg_core {T : Type} [CommGroup T] [Finite T] [Module.Flat R R']
       fun h => algebraMap R' (FractionRing R') (g (t * h)) := by
     intro t
     funext h
-    simp only [z, map_sum, LinearMap.lTensor_tmul, cW, LinearMap.liftBaseChange_tmul, Finset.sum_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [z, map_sum, LinearMap.lTensor_tmul, cW, LinearMap.liftBaseChange_tmul, Finset.sum_apply,
       Pi.smul_apply]
     rw [Finset.sum_eq_single (t * h)]
     · have := congr($hκ 1)
@@ -177,7 +178,8 @@ theorem alg_core {T : Type} [CommGroup T] [Finite T] [Module.Flat R R']
   let e := ((Algebra.linearMap R R').compLeft T).liftBaseChange R'
   have hez : e z = g := by
     funext h
-    simp only [z, e, map_sum, LinearMap.liftBaseChange_tmul, Finset.sum_apply, Pi.smul_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [z, e, map_sum, LinearMap.liftBaseChange_tmul, Finset.sum_apply, Pi.smul_apply]
     rw [Finset.sum_eq_single h]
     · simp [LinearMap.compLeft_apply]
     · intro b' _ hb'

@@ -53,7 +53,8 @@ theorem rowD_u (b b' : Fin Q) (a : Fin P) (c : Fin S) :
 
 theorem rowD_mS (b b' i : Fin Q) (a : Fin P) :
     rowD b b' (mS P Q S a i) = if i = b then mS P Q S a b' else 0 := by
-  simp only [mS, map_sum, Derivation.leibniz, rowD_X_inr_inr, rowD_u, smul_zero, add_zero, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [mS, map_sum, Derivation.leibniz, rowD_X_inr_inr, rowD_u, smul_zero, add_zero, smul_eq_mul]
   split_ifs <;> simp
 
 theorem rowD_detS (h : Q ≤ S) (b b' : Fin Q) :
@@ -80,7 +81,8 @@ theorem rowD_aeval (b b' : Fin Q) (G : Mdl P Q) :
   | mul_X G v h =>
     obtain ⟨a, i⟩ := v
     rw [map_mul, Derivation.leibniz, h, aeval_X, rowD_mS]
-    simp only [Derivation.leibniz, smul_eq_mul, mul_add, Finset.sum_add_distrib, map_add, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Derivation.leibniz, smul_eq_mul, mul_add, Finset.sum_add_distrib, map_add, map_sum,
       map_mul, aeval_X, pderiv_X, Pi.single_apply, Prod.mk.injEq, Finset.mul_sum]
     refine congrArg₂ (· + ·) ?_ ?_
     · by_cases hi : i = b
@@ -119,7 +121,8 @@ theorem pair_fockAct1_inr_inr_embS (P Q S : ℕ) (h : Q ≤ S) (k' : ℕ) (b b' 
     · rw [add_smul, add_assoc]
     · simp
   rw [e, fockAct1_Eab, LinearMap.sum_apply, Fintype.sum_sum_type, rowD_apply]
-  simp only [GlobalTheory.CompactHarm.omE_pp (Sum.inr _, Sum.inr _) (Sum.inr _, Sum.inr _) rfl rfl,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [GlobalTheory.CompactHarm.omE_pp (Sum.inr _, Sum.inr _) (Sum.inr _, Sum.inr _) rfl rfl,
     Finset.univ_eq_empty, Finset.sum_empty, zero_add, map_sum, map_add, map_smul, LinearMap.sum_apply,
     LinearMap.add_apply, LinearMap.smul_apply, pair_X_pderiv, Finset.sum_add_distrib,
     Prod.mk.injEq, Sum.inr.injEq, and_true, Finset.sum_const, Finset.card_univ, Fintype.card_fin,

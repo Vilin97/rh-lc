@@ -15,7 +15,8 @@ theorem in_top_sum {ι : Type} [Fintype ι] (c : ι → B) (g : ι → MvPowerSe
     In (⊤ : Ideal B) (∑ i, algebraMap B Q (c i) • g i) := by
   choose t ht using fun i => In.top_iff.1 (hg i)
   refine In.top_iff.2 ⟨∑ i, c i • t i, ?_⟩
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [smul_eq_C_mul, map_mul, map_C, ht i, smul_eq_C_mul]
 
@@ -23,7 +24,8 @@ theorem frob_sum (p : ℕ) (hp : p ≠ 0) (s : Q →+* Q) {ι : Type} [Fintype �
     (f : ι → MvPowerSeries σ Q) :
     frob p s (∑ i, c i • f i) = ∑ i, s (c i) • frob p s (f i) := by
   have hX : HasSubst (fun i : σ => (X i : MvPowerSeries σ Q) ^ p) := HasSubst.X_pow hp
-  simp only [frob, ← coe_substAlgHom hX, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [frob, ← coe_substAlgHom hX, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [smul_eq_C_mul, map_mul, map_C, ← smul_eq_C_mul, map_smul]
 
@@ -51,7 +53,8 @@ theorem GlobalTheory.frob_comb_zero_left : ∀ (p : ℕ) [Fact p.Prime] (O : Typ
     rw [hf]
     simp only [smul_sub, Finset.sum_sub_distrib]
     congr 1
-    simp only [comb, Matrix.mulVec, dotProduct, Finset.smul_sum, smul_smul, ← map_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [comb, Matrix.mulVec, dotProduct, Finset.smul_sum, smul_smul, ← map_mul,
       map_sum, Finset.sum_smul]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun l _ => Finset.sum_congr rfl fun i _ => ?_

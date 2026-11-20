@@ -24,7 +24,8 @@ theorem _root_.GlobalTheory.Mass.StdMass.isSymm_of_ortho {K V : Type} [Field K] 
   obtain ⟨c, rfl⟩ := _root_.ReciprocityTheory.ChartRestriction.L3.StandardSymmetricSums.exists_coord hspan x
   obtain ⟨d, rfl⟩ := _root_.ReciprocityTheory.ChartRestriction.L3.StandardSymmetricSums.exists_coord hspan y
   rw [_root_.ReciprocityTheory.ChartRestriction.L3.StandardSymmetricSums.form_sum horth, _root_.ReciprocityTheory.ChartRestriction.L3.StandardSymmetricSums.form_sum horth]
-  simp only [map_sum, starRingEnd_apply, star_mul, star_star]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, starRingEnd_apply, star_mul, star_star]
 
 open NumberField Matrix in
 open scoped ENNReal Classical in

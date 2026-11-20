@@ -59,13 +59,15 @@ private lemma natCast_mul_sum_trace_conj_eq_mul_trace {L G : Type} [Field L] [Gr
     have hx : ∀ x : G, LinearMap.trace L _ (ρ x * ρ b * ρ x⁻¹) = LinearMap.trace L _ (ρ b) := by
       intro x
       rw [LinearMap.trace_mul_comm, ← mul_assoc, ← map_mul, ← map_mul, inv_mul_cancel, one_mul]
-    rw [hTdef, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hTdef, map_sum]
     simp [hx]
   have := congrArg (fun S => LinearMap.trace L _ (ρ a * S)) key
   simp only [mul_smul_comm, map_smul, mul_one, smul_eq_mul] at this
   rw [htr] at this
   rw [← this, hTdef]
-  simp only [Finset.mul_sum, map_sum, map_mul, mul_assoc]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finset.mul_sum, map_sum, map_mul, mul_assoc]
 
 open Module in
 variable {K : Type} [Field K] [CharZero K] {G : Type} [Group G] [Fintype G] in
@@ -94,11 +96,13 @@ private lemma natCast_mul_sum_trace_inv_mul_trace_mul_eq {L G : Type} [Field L] 
     rw [← mul_assoc g, trace_rep_conj_eq, inv_mul_cancel_right]
   have key := natCast_smul_eq_trace_smul_one_of_commute ρ h1 Z hZ
   have htr : LinearMap.trace L _ Z = Fintype.card G := by
-    rw [hZdef, map_sum, ← hpair]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hZdef, map_sum, ← hpair]
     simp
   have := congrArg (fun S => LinearMap.trace L _ (S * ρ b)) key
   simp only [smul_mul_assoc, map_smul, one_mul, smul_eq_mul, htr] at this
-  rw [← this, hZdef, Finset.sum_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← this, hZdef, Finset.sum_mul, map_sum]
   simp [map_mul, smul_mul_assoc]
 
 open Module in
@@ -179,7 +183,8 @@ theorem _root_.GlobalTheory.MultOneRealised.exists_rep_of_mult_one : ∀ (K : Ty
   set ι := algebraMap K (AlgebraicClosure K) with hι
   have hsum' : ∑ h : P, ι (χ h) * ι (((ψ h)⁻¹ : Kˣ) : K) = Fintype.card P := by
     have := congrArg ι hsum
-    simpa only [map_sum, map_mul, map_natCast] using this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa only [map_sum, map_mul, map_natCast] using this
   have hψ : ∀ a b : P, ι (((ψ (a * b))⁻¹ : Kˣ) : K) =
       ι (((ψ a)⁻¹ : Kˣ) : K) * ι (((ψ b)⁻¹ : Kˣ) : K) := by
     intro a b; rw [map_mul, mul_inv, Units.val_mul, map_mul]
@@ -199,7 +204,8 @@ theorem _root_.GlobalTheory.MultOneRealised.exists_rep_of_mult_one : ∀ (K : Ty
       simp only [Equiv.coe_mulRight]
       rw [show k * (y⁻¹ * g)⁻¹ = k * g⁻¹ * y by group, hcyc (k * g⁻¹) y,
         show (y * h⁻¹)⁻¹ = h * y⁻¹ by group, show y * h⁻¹ * (h * k * g⁻¹) = y * (k * g⁻¹) by group]
-    simp only [c, map_sum, map_mul, map_div₀, map_natCast, hn]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [c, map_sum, map_mul, map_div₀, map_natCast, hn]
     set A : AlgebraicClosure K := (n₀ : AlgebraicClosure K) / (Fintype.card G * Fintype.card P) with hA
     calc ∑ y : G, (A * ∑ h : P, ι (((ψ h)⁻¹ : Kˣ) : K) * ι (χ (h * y⁻¹))) *
           (A * ∑ k : P, ι (((ψ k)⁻¹ : Kˣ) : K) * ι (χ (k * (y⁻¹ * g)⁻¹)))
@@ -236,7 +242,8 @@ theorem _root_.GlobalTheory.MultOneRealised.exists_rep_of_mult_one : ∀ (K : Ty
       rw [eq_div_iff hn0, ← hAv h t, mul_comm]
       congr 1
       exact Fintype.sum_equiv (Equiv.inv G) _ _ fun x => by simp [mul_assoc]
-    simp only [c, map_sum, map_mul, map_div₀, map_natCast, hn]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [c, map_sum, map_mul, map_div₀, map_natCast, hn]
     rw [← Finset.mul_sum, Finset.sum_comm]
     simp_rw [← Finset.mul_sum, hx]
     calc (n₀ : AlgebraicClosure K) / (Fintype.card G * Fintype.card P) *

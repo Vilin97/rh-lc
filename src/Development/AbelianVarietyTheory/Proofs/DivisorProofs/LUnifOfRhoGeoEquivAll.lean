@@ -118,7 +118,8 @@ theorem equivFun_eq_crd {F : FormsL L K WL W G} {e : C ≃ₗ[K] F.WK} {n : ℕ}
     (hB : ∀ k, B k = (e (b k) : WL)) (f : C) : B.equivFun (e f : WL) = crd L b f := by
   rw [← LinearEquiv.eq_symm_apply, Basis.equivFun_symm_apply]
   conv_lhs => rw [← b.sum_repr f]
-  simp only [map_sum, map_smul, Submodule.coe_sum, Submodule.coe_smul, crd_apply, hB, algebraMap_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, Submodule.coe_sum, Submodule.coe_smul, crd_apply, hB, algebraMap_smul]
 
 theorem indep_span (F : FormsL L K WL W G) (h : F.IsKsForm) (e : C ≃ₗ[K] F.WK) (σ : L →+* ℂ) {y : C → W σ} {s : ℂ} (hs : s ≠ 0)
     (hy : ∀ f, F.j σ (e f : WL) = s • y f)
@@ -136,7 +137,8 @@ theorem indep_span (F : FormsL L K WL W G) (h : F.IsKsForm) (e : C ≃ₗ[K] F.W
     have h4 := extB_indep σ h3 (hx.map' B.equivFun.toLinearMap B.equivFun.ker)
     convert h4 using 2 with k
     conv_lhs => rw [← B.sum_repr (x k)]
-    simp only [map_sum, map_smulₛₗ]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smulₛₗ]
     rfl
   · rw [eq_top_iff, ← h2, Submodule.span_le]
     rintro _ ⟨f, rfl⟩
@@ -153,7 +155,8 @@ theorem rhoIs_of_form (F : FormsL L K WL W G) (h : F.IsKsForm) (e : C ≃ₗ[K] 
   obtain ⟨n, b, B, hB⟩ := exists_bases F h e
   intro g x
   rw [← B.sum_repr x]
-  simp only [map_sum, map_smulₛₗ, Finset.smul_sum, RingHom.id_apply, hB, hf]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smulₛₗ, Finset.smul_sum, RingHom.id_apply, hB, hf]
   exact Finset.sum_congr rfl fun k _ => smul_comm _ _ _
 
 theorem exists_ext_action (F : FormsL L K WL W G) (h : F.IsKsForm) (e : C ≃ₗ[K] F.WK) (ρC : G →* (C →ₗ[K] C)) :

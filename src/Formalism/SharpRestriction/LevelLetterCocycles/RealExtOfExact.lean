@@ -259,7 +259,8 @@ theorem eΔ_of (C₀ : Coord W I W.one) (e₀ : C₀.V) (he₀ : ∀ i, C₀.t i
     exact C₀.t_Δ i e₀ δ hδ
   calc W.γD W.one δ e = W.γD W.one δ ((∑ i, (letE i : LetA O n)) • e) := by rw [hsum, one_smul]
     _ = (∑ i, (letE i : LetA O n)) • e := by
-      rw [Finset.sum_smul, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Finset.sum_smul, map_sum]
       simp only [key]
     _ = e := by rw [hsum, one_smul]
 

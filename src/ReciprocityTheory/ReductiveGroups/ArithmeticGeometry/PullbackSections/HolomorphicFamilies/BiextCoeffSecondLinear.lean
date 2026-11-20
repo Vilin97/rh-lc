@@ -157,7 +157,8 @@ theorem idem_eig {d : ℕ} {O k : Type} [CommRing O] [CommRing k] (M : O →+* M
     M a * ∑ i, c i • M (b i) = χ a • ∑ i, c i • M (b i) := by
   have h1 : ∀ i, M a * (c i • M (b i)) = ∑ j, (c i * (m i j : k)) • M (b j) := by
     intro i
-    rw [Matrix.mul_smul, ← map_mul, hb i, map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Matrix.mul_smul, ← map_mul, hb i, map_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_zsmul, ← Int.cast_smul_eq_zsmul k, smul_smul]
   rw [Finset.mul_sum, Finset.sum_congr rfl fun i _ => h1 i, Finset.sum_comm, Finset.smul_sum]

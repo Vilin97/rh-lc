@@ -290,7 +290,8 @@ theorem apply_eq_sum [Fintype ι] (h : IsSymplecticBasisOfType B b d) (hB : B.Is
     B x y = ∑ i, d i * (b.repr x (Sum.inl i) * b.repr y (Sum.inr i) -
       b.repr x (Sum.inr i) * b.repr y (Sum.inl i)) := by
   conv_lhs => rw [← b.sum_repr x]
-  simp only [Fintype.sum_sum_type, map_add, map_sum, map_smul, LinearMap.add_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Fintype.sum_sum_type, map_add, map_sum, map_smul, LinearMap.add_apply,
     LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, h.apply_left,
     ← hB.neg_eq y (b (Sum.inr _)), h.apply_right]
   rw [← Finset.sum_add_distrib]
@@ -571,7 +572,8 @@ theorem exists_isSymplecticFamily_of_isotropic {ι : Type*} [Finite ι] (hB : B.
     rw [← hB.neg_eq, hy]; split_ifs <;> simp
   refine ⟨fun i => y i - ∑ j, (if i < j then B (y i) (y j) else 0) • (v j : M), hvv,
     fun i k => ?_, fun i => ?_, fun i k hik => ?_⟩
-  · simp only [map_sub, map_sum, map_smul, LinearMap.sub_apply, LinearMap.sum_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [map_sub, map_sum, map_smul, LinearMap.sub_apply, LinearMap.sum_apply,
       LinearMap.smul_apply, smul_eq_mul, hvv, hy, hy', mul_zero, Finset.sum_const_zero, sub_zero,
       mul_ite, mul_one, mul_neg, Finset.sum_ite_eq', Finset.mem_univ, if_true]
     rcases lt_trichotomy i k with h | rfl | h

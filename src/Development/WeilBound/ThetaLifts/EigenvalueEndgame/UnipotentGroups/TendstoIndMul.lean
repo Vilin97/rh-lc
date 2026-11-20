@@ -271,16 +271,19 @@ theorem match_inf (hA : PositivityTheory.ThKF.ArchOp) (hm : IsMatched B G X om o
   have cof : ∀ {P : Pl F → Prop}, (∀ v ∉ T, P v) → ∀ᶠ v in cofinite, P v := fun h => T.eventually_cofinite_notMem.mono h
   refine ⟨T, hT, m, m', fun i => A (f i), φ, fun i => A' (f' i), φ', fun i => ⟨a2 (one _) hk _ (h1 i).1, (h1 i).2⟩,
     fun i => ⟨b2 (one _) hk _ (h2 i).1, (h2 i).2⟩, ?_, ?_, ?_⟩
-  · rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     obtain ⟨g, hg, e⟩ := PositivityTheory.ThKG.pure_eq_pureA t.geo.hM (φ i) (h1 i).2.1 (cof (h1 i).2.2)
     rw [e, e, a1.1 _ g hg]
-  · rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     obtain ⟨g, hg, e⟩ := PositivityTheory.ThKG.pure_eq_pureA t.geo.hM' (φ' i) (h2 i).2.1 (cof (h2 i).2.2)
     rw [e, e, b1.1 _ g hg]
   · have := congrArg (Op.rTensor _) e
-    simp only [map_sum, LinearMap.rTensor_tmul, o1 _ (h1 _).1, o2 _ (h2 _).1] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.rTensor_tmul, o1 _ (h1 _).1, o2 _ (h2 _).1] at this
     exact this
 
 theorem match_fin (hP : PositivityTheory.ThKF.PureAct) (hm : IsMatched B G X om om' R Rf) {v : Pl F} {h : UA σ G.W.J}
@@ -311,16 +314,19 @@ theorem match_fin (hP : PositivityTheory.ThKF.PureAct) (hm : IsMatched B G X om 
     fun i => Function.update (φ' i) v (ω' (1, h) (φ' i v)),
     fun i => ⟨(h1 i).1, upd (fun _ x => x ∈ SB _) _ _ (h1 i).2.1 (L.pres 1 o h hh _ ((h1 i).2.1 v)), off _ _ _ (h1 i).2.2⟩,
     fun i => ⟨(h2 i).1, upd (fun _ x => x ∈ SB _) _ _ (h2 i).2.1 (L'.pres 1 o' h hh _ ((h2 i).2.1 v)), off _ _ _ (h2 i).2.2⟩, ?_, ?_, ?_⟩
-  · rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     convert (hP F _ v (om (1, h)) (f i) (φ i) (h1 i).2.1 (((cof (h1 i).2.2).and t.geo.hM.std).mono fun _ k => k.1.trans k.2)).2.2 _
       ((L.acts 1 o h hh _ ((h1 i).2.1 v) _).2 rfl)
-  · rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     convert (hP F _ v (om' (1, h)) (f' i) (φ' i) (h2 i).2.1 (((cof (h2 i).2.2).and t.geo.hM'.std).mono fun _ k => k.1.trans k.2)).2.2 _
       ((L'.acts 1 o' h hh _ ((h2 i).2.1 v) _).2 rfl)
   · have := congrArg (Ω.lTensor _) e
-    simp only [map_sum, LinearMap.lTensor_tmul] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.lTensor_tmul] at this
     refine (Finset.sum_congr rfl fun i _ => ?_).trans (this.trans (Finset.sum_congr rfl fun i _ => ?_))
     · rw [hΩ (fun u => Rf.p u (φ i u)) fun u hu => by rw [(h1 i).2.2 u hu], o1 _ ((h1 i).2.1 v)]
       congr 2

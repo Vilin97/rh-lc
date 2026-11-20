@@ -21,7 +21,8 @@ private theorem exists_dual_algHom_smulRight_apply_ne_zero {W V : Type} [AddComm
   calc y = Φ 1 y := by simp
     _ = ∑ i, Φ (ℓ.smulRight (Module.finBasis ℂ W i))
           (Φ (((Module.finBasis ℂ W).coord i).smulRight w) y) := by
-        rw [← sum_smulRight_finBasis_mul_smulRight_eq_one w ℓ h, map_sum, LinearMap.sum_apply]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [← sum_smulRight_finBasis_mul_smulRight_eq_one w ℓ h, map_sum, LinearMap.sum_apply]
         simp only [map_mul, Module.End.mul_apply]
     _ = 0 := by simp [hzero]
 

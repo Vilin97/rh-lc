@@ -181,7 +181,8 @@ lemma gl2a5_expand (I PPs : Finset ℕ) (a : ℕ → ℂ) (c : ℕ → ℝ) (ha 
         ∑ n ∈ I, ∑ n' ∈ I, a n * (starRingEnd ℂ) (a n') *
           ((jacobiSym (n : ℤ) q : ℂ) * (jacobiSym (n' : ℤ) q : ℂ)) := by
       intro q _
-      rw [← Complex.mul_conj', map_sum, Finset.sum_mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← Complex.mul_conj', map_sum, Finset.sum_mul_sum]
       apply Finset.sum_congr rfl; intro n _
       apply Finset.sum_congr rfl; intro n' _
       simp only [map_mul, map_intCast]

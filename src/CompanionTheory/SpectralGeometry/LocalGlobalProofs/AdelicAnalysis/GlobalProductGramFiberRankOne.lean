@@ -178,7 +178,8 @@ theorem map_gram (σ : E →ₐ[F] E) {M n : ℕ} (J : Matrix (Fin M) (Fin M) E)
     (X : Fin n → Fin M → R ⊗[F] E) (a c : Fin n) :
     Algebra.TensorProduct.map φ (AlgHom.id F E) (gramR R σ J X a c) =
       gramR R' σ J (fun a i => Algebra.TensorProduct.map φ (AlgHom.id F E) (X a i)) a c := by
-  simp only [gramR, hR, hform, map_sum, map_mul, map_sigR, JR, Matrix.map_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [gramR, hR, hform, map_sum, map_mul, map_sigR, JR, Matrix.map_apply]
   simp [inclR]
 
 def qF (R : Type) [CommRing R] [Algebra F R] (σ : E →ₐ[F] E) {M : ℕ}
@@ -204,7 +205,8 @@ theorem sig_expand {d : ℕ} (b : Module.Basis (Fin d) F E) (σ : E →ₐ[F] E)
       = sigR R σ (∑ k, ((Algebra.TensorProduct.basis R b).repr p k) ⊗ₜ[F] b k) * inclR R e *
           (∑ l, ((Algebra.TensorProduct.basis R b).repr q l) ⊗ₜ[F] b l) := by rw [hX, hX]
     _ = _ := by
-      rw [map_sum, Finset.sum_mul, Finset.sum_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Finset.sum_mul, Finset.sum_mul]
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [Finset.mul_sum]
       refine Finset.sum_congr rfl fun l _ => ?_
@@ -215,7 +217,8 @@ theorem q_expand [FiniteDimensional F E] {d M : ℕ} (b : Module.Basis (Fin d) F
     qF R σ J X = ∑ i, ∑ j, ∑ k, ∑ l, (Algebra.TensorProduct.basis R b).repr (X 0 i) k *
       (Algebra.TensorProduct.basis R b).repr (X 0 j) l *
         algebraMap F R (1 / 2 * Algebra.trace F E (σ (b k) * J i j * b l)) := by
-  simp only [qF, gramR, hR, hform, JR, Matrix.map_apply, sig_expand b, map_sum, Finset.mul_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [qF, gramR, hR, hform, JR, Matrix.map_apply, sig_expand b, map_sum, Finset.mul_sum,
     trace_tmul', map_mul]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ =>
     Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun l _ => ?_

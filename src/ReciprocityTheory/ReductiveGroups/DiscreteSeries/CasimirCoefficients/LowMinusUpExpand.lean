@@ -168,9 +168,11 @@ lemma Ssum_eq (T : KType ε Λ) (μ : Fin n → ℤ) (x A : Matrix (Fin n) (Fin 
     intro a b
     simp [Matrix.sub_apply, Matrix.mul_apply, Matrix.single_apply]
   congr 1
-  · rw [lowMinusUp_expand hB, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [lowMinusUp_expand hB, map_sum]
     refine Finset.sum_congr rfl fun a _ => ?_
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun b _ => ?_
     rw [map_smul]
   · simp only [← Finset.sum_smul]

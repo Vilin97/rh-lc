@@ -65,7 +65,8 @@ theorem abs_eval_iterate_pderiv_homogeneous_le :
         (∑ m ∈ rr.support, |rr.coeff m|) * (k : ℝ) ^ n * U ^ (k - n) := by
   intro N k n rr i U v hr _ hU hv
   conv_lhs => rw [rr.as_sum]
-  rw [iterate_pderiv_finset_sum, map_sum, Finset.sum_mul, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [iterate_pderiv_finset_sum, map_sum, Finset.sum_mul, Finset.sum_mul]
   refine (Finset.abs_sum_le_sum_abs _ _).trans (Finset.sum_le_sum fun m hm => ?_)
   refine abs_eval_iterate_pderiv_monomial_le m _ i U v ?_ hU hv
   have := hr (mem_support_iff.1 hm)

@@ -75,7 +75,8 @@ theorem commutant_eq_sum {F : Type} [Field F] {A : Type} [CommGroup A] [Finite A
         obtain ⟨v, rfl⟩ := (Φ (m h)).surjective v
         have h1 := hψ h v
         rw [← hc] at h1
-        simp only [LinearMap.sum_apply, LinearMap.smul_apply, LinearEquiv.coe_coe, map_sum, map_smul,
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [LinearMap.sum_apply, LinearMap.smul_apply, LinearEquiv.coe_coe, map_sum, map_smul,
           LinearMap.zero_apply] at h1 ⊢
         simp only [mul_sub, sub_smul, Finset.sum_sub_distrib, mul_one, h1]
         rw [sub_eq_zero]
@@ -111,7 +112,8 @@ theorem commutant_eq_sum {F : Type} [Field F] {A : Type} [CommGroup A] [Finite A
     by_contra h0
     refine hP0 k (LinearMap.ext fun v => ?_)
     have h1 := congrArg (P k) (LinearMap.congr_fun hc v)
-    simp only [LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, LinearMap.zero_apply, map_zero] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, LinearMap.zero_apply, map_zero] at h1
     rw [Finset.sum_eq_single k (fun l _ hl => by rw [hP2 k l v hl.symm, smul_zero]) (by simp), hP1] at h1
     exact (smul_eq_zero.1 h1).resolve_left h0
   have hle : Submodule.span F (Set.range P) ≤ C :=
@@ -232,7 +234,8 @@ theorem proportional_field {F : Type} [Field F] {A : Type} [CommGroup A] [Finite
   refine ⟨c (cl α), fun v => ?_⟩
   rw [← hq' v]
   show f₁ (φ v) = _
-  rw [← hc, LinearMap.sum_apply, map_sum, Finset.sum_eq_single (cl α) (fun l _ hl => by
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hc, LinearMap.sum_apply, map_sum, Finset.sum_eq_single (cl α) (fun l _ hl => by
     rw [LinearMap.smul_apply, map_smul, (hk _).2 (by rw [hP, if_neg hl.symm]), smul_zero]) (by simp),
     LinearMap.smul_apply, map_smul]
   congr 1

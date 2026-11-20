@@ -273,7 +273,8 @@ theorem KoszulCechExact.proof : KoszulCechExact.Statement := by
   have hone : ∀ I : KH.Cell K ι n, ∑ j, v I j * restrict0 (z j) I = 1 := by
     intro I
     simp only [v, restrict0, ← GenTwistGenerated.cellRes_mul]
-    rw [← map_sum, h1, cellRes_one (hle I)]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, h1, cellRes_one (hle I)]
   have key : ∀ {p : ℕ} (φ : KosC S ι V R p n),
       (∀ I, contr (fun j => restrict0 (z j) I) (coeffs φ I) = fun _ => 0) →
       kosD z p n (homotopy v p φ) = φ := by

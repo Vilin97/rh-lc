@@ -122,7 +122,8 @@ def expTr {σ : Type*} (F : MvPowerSeries σ ℂ_[p]) (N : ℕ) : MvPowerSeries 
 theorem coeff_expTr {σ : Type*} (F : MvPowerSeries σ ℂ_[p]) (N : ℕ) (d : σ →₀ ℕ) :
     MvPowerSeries.coeff d (expTr F N) =
       ∑ n ∈ Finset.range N, MvPowerSeries.coeff d (F ^ n) / (n.factorial : ℂ_[p]) := by
-  simp only [expTr, map_sum, map_smul, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [expTr, map_sum, map_smul, smul_eq_mul]
   refine Finset.sum_congr rfl fun n _ => ?_
   rw [div_eq_inv_mul]
 
@@ -155,7 +156,8 @@ theorem expMv_subst {σ τ : Type*} [Finite σ] {s : σ → MvPowerSeries τ ℂ
     MvPowerSeries.coeff_of_lt_order (lt_of_lt_of_le (by exact_mod_cast Nat.lt_succ_self _) hsD)
   rw [MvPowerSeries.subst_sub hs, map_sub, sub_eq_zero] at h0
   rw [h0, coeff_expMv_eq hE e (Nat.lt_succ_self _), expTr, ← MvPowerSeries.coe_substAlgHom hs]
-  simp only [map_sum, map_smul, map_pow, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, map_pow, smul_eq_mul]
   refine Finset.sum_congr rfl fun n _ => ?_
   rw [div_eq_inv_mul]
 

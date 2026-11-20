@@ -63,7 +63,8 @@ theorem exists_sum (p : PtAt ex Csz) (i : Fin D.R.m) (v : Fin (p.R.nW i) → D.w
   obtain ⟨a, ha⟩ := (Submodule.mem_span_range_iff_exists_fun _).1 hv
   refine ⟨n, a, fun k => (⟨(p.nexp.fi i).e.symm (b k), ((p.nexp.fi i).wk _).2 (by
     rw [LinearEquiv.apply_symm_apply]; exact hb k)⟩ : ↥(p.Sx.A ((i : ℕ) + 1)).WK), ?_⟩
-  rw [map_sum, ← ha]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, ← ha]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [map_smul]
   congr 1

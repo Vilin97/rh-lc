@@ -171,7 +171,8 @@ theorem exists_coercive (M : Matrix (Fin g) (Fin g) ℂ)
 
 theorem form_symm {M : Matrix (Fin g) (Fin g) ℂ} (hM : M.IsHermitian) (x y : Fin g → ℂ) :
     y ⬝ᵥ M.mulVec (star x) = (starRingEnd ℂ) (x ⬝ᵥ M.mulVec (star y)) := by
-  simp only [dotProduct, mulVec, Finset.mul_sum, map_sum, map_mul, Pi.star_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dotProduct, mulVec, Finset.mul_sum, map_sum, map_mul, Pi.star_apply]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   have := hM.apply j i

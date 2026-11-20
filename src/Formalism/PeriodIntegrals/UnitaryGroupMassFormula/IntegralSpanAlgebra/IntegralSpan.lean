@@ -47,7 +47,8 @@ theorem intSpan' : IntSpan := by
       ℓ A = ∑ i, ∑ j, A i j * ℓ (Matrix.single i j 1) := by
     intro A
     conv_lhs => rw [Matrix.matrix_eq_sum_single A]
-    simp only [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum]
     refine Finset.sum_congr rfl (fun i _ => Finset.sum_congr rfl (fun j _ => ?_))
     rw [show Matrix.single i j (A i j) = A i j • Matrix.single i j (1 : ℂ) by
       rw [Matrix.smul_single, smul_eq_mul, mul_one], map_smul, smul_eq_mul]

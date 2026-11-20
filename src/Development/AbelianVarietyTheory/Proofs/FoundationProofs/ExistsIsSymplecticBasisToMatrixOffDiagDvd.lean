@@ -436,7 +436,8 @@ theorem IsSymplecticBasis.isSymplecticFamily_iff_toMatrix_mem {b : Basis (l ⊕ 
     ext i j
     rw [← hb.toMatrix_eq hB, of_apply]
     conv_lhs => rw [← b.sum_toMatrix_smul_self v i, ← b.sum_toMatrix_smul_self v j]
-    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
       Matrix.mul_apply, transpose_apply, LinearMap.BilinForm.toMatrix_apply]
     exact Finset.sum_congr rfl fun _ _ => mul_comm _ _
   rw [isSymplecticFamily_iff_gram hB, h, SymplecticGroup.mem_iff', Matrix.mul_neg, Matrix.neg_mul,
@@ -516,7 +517,8 @@ theorem IsSymplecticBasis.exists_adapted [Finite (MaximalSpectrum R)] {b : Basis
   have hy : ∀ i, y i ∈ Q := fun i => Q.sum_mem fun k _ => Q.smul_mem _ (hq k)
   have hxy : ∀ i j, B (x i) (y j) = (1 : Matrix l l R) i j := fun i j => by
     rw [← hUV]
-    simp only [x, y, G, map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [x, y, G, map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
       Matrix.mul_apply, of_apply]
     exact Finset.sum_congr rfl fun _ _ => mul_comm _ _
   obtain ⟨c, hc, hcv⟩ := hb.exists_basis_of_toMatrix_mem hB
@@ -538,7 +540,8 @@ theorem repr_semilinear_of_map_basis {ι : Type*} [Fintype ι] (φ : Λ →ₛ�
     {c : Basis ι R M} (h : ∀ i, φ (b i) = c i) (x : Λ) (i : ι) :
     c.repr (φ x) i = f (b.repr x i) := by
   conv_lhs => rw [← b.sum_repr x]
-  simp only [map_sum φ, φ.map_smulₛₗ, h, c.repr_sum_self]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum φ, φ.map_smulₛₗ, h, c.repr_sum_self]
 
 theorem IsSymplecticBasis.exists_lift (hf : Surjective f) (hB : B.IsAlt) (hB' : B'.IsAlt)
     (φ : Λ →ₛₗ[f] M) {b : Basis (l ⊕ l) S Λ} {b' : Basis (l ⊕ l) R M}
@@ -553,7 +556,8 @@ theorem IsSymplecticBasis.exists_lift (hf : Surjective f) (hB : B.IsAlt) (hB' : 
   obtain ⟨c, hc, hcv⟩ := hb.exists_basis_of_toMatrix_mem hB (hv.symm ▸ hT)
   refine ⟨c, hc, fun j => ?_⟩
   rw [hcv, ← b'.sum_toMatrix_smul_self c' j, ← hT']
-  simp only [map_sum φ, φ.map_smulₛₗ, h, map_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum φ, φ.map_smulₛₗ, h, map_apply]
 
 theorem IsSymplecticBasis.exists_lift_adapted (hf : Surjective f) (hB : B.IsAlt) (hB' : B'.IsAlt)
     (φ : Λ →ₛₗ[f] M) {b : Basis (l ⊕ l) S Λ} {b' : Basis (l ⊕ l) R M}

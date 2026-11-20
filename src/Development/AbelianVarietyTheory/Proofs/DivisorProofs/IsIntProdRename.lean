@@ -168,7 +168,8 @@ theorem subst_col (v : AddValuation C (WithTop ℝ)) {i d : ℕ} (G : LogFGL v d
     funext e; rw [subst_X hEA]; rfl
   rw [h2, ← subst_comp_subst_apply hE (hL b), h1, mvSubst_mvExp (by simp) (hL b)]
   congr 1
-  rw [← coe_substAlgHom (hL b), map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← coe_substAlgHom (hL b), map_sum]
   refine Finset.sum_congr rfl fun e _ => ?_
   rw [map_smul, coe_substAlgHom, subst_X (hL b)]
 

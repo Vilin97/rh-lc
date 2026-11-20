@@ -69,7 +69,8 @@ variable {k : Type} [Field k] {ι : Type} {V : ι → Type} [∀ i, AddCommGroup
 theorem repr_eq_frameMat_mulVec (b g : Frames k V) (i : ι) (v : V i) (c : Fin (finrank k (V i))) :
     (b i).repr v c = (frameMat b g i *ᵥ (g i).equivFun v) c := by
   have h := congrArg (fun w => (b i).repr w c) ((g i).sum_equivFun v)
-  simp only [map_sum, map_smul, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.coe_smul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.coe_smul,
     Pi.smul_apply, smul_eq_mul] at h
   rw [← h]
   simp only [Matrix.mulVec, dotProduct, frameMat]

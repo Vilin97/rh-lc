@@ -77,8 +77,10 @@ theorem pair_int (hcm : IsCMExt F E σ) {a : ℕ} {S T : HermR (Fv F v) σ a} (h
   have hu : u ∈ OEv (E := E) v :=
     sum_mem fun p _ => sum_mem fun q _ => b_mul_mem v (hS p q) (hT q p)
   have hfix : sigR (Fv F v) σ u = u := by
-    rw [hudef, map_sum]
-    simp only [map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hudef, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun p _ => Finset.sum_congr rfl fun q _ => ?_
     rw [← S.2 p q, ← T.2 q p]

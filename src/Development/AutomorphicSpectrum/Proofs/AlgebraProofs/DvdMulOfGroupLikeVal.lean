@@ -213,7 +213,8 @@ theorem exists_diag {C : Type} [Field C] {v : Valuation C NNReal} {O : Type} [Co
   have hsum : ∀ w, w = ∑ j, φ j w • e j := fun w => by
     apply b.equivFun.injective
     funext i
-    rw [map_sum, Finset.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_apply]
     have h := congrFun (Matrix.mulVec_mulVec (b.equivFun w) P⁻¹ P) i
     rw [hPP', Matrix.one_mulVec] at h
     rw [← h]
@@ -250,7 +251,8 @@ theorem exists_diag {C : Type} [Field C] {v : Valuation C NNReal} {O : Type} [Co
         Submodule.sum_mem _ fun k _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨k, rfl⟩)
       have hφx : ∀ i, φ i x = if (j : ℕ) = (i : ℕ) then a i else 0 := fun i => by
         have h1 : φ i x = (P * A * Q) i ⟨j, h⟩ := by
-          rw [Matrix.mul_apply, map_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [Matrix.mul_apply, map_sum]
           refine Finset.sum_congr rfl fun k _ => ?_
           rw [map_smul, hφg, smul_eq_mul, mul_comm]
         rw [h1, hD]

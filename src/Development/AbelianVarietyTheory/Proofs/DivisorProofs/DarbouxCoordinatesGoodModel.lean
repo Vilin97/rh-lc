@@ -76,7 +76,8 @@ theorem locCo_eq {W : Type} [AddCommGroup W] [Module (AF F) W] {B : W → W → 
   have key : ∀ (x : κ ⊕ κ → AF F) (i : κ ⊕ κ), evFin F v ((G.map (algebraMap F (AF F)) *ᵥ x) i) =
       (G.map (algebraMap F (Fv F v)) *ᵥ fun j => evFin F v (x j)) i := by
     intro x i
-    simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Matrix.map_apply, AlgHom.commutes]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Matrix.map_apply, AlgHom.commutes]
   have hs : ∀ a b : κ → AF F, (fun j => evFin F v (Sum.elim a b j)) =
       Sum.elim (fun k => evFin F v (a k)) (fun k => evFin F v (b k)) := by
     intro a b; funext j; cases j <;> rfl

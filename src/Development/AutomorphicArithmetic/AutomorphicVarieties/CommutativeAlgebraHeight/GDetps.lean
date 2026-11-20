@@ -62,7 +62,8 @@ theorem UpperTheory.V.CA.g_detps :
     rw [hIp, Ideal.map_span, Set.image_union, Set.image_singleton, ← Set.range_comp]
     congr 3
     · funext a
-      simp [φ, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [φ, map_sum]
     · rw [RingHom.map_det]
       congr 1
       ext a b

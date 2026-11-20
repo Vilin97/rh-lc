@@ -217,7 +217,8 @@ theorem isCuspOf_map (L : LabelDatum g) (τ : ℂ ≃+* ℂ) {P : (ZMod g)[X]} {
     rw [hr.2, Multiset.mem_map] at hx'
     obtain ⟨w, hw, rfl⟩ := hx'
     rw [Function.comp_apply, hv w hw y hy z hz]
-    simp only [theta_phi, map_mul, map_pow, map_neg, map_one, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [theta_phi, map_mul, map_pow, map_neg, map_one, map_sum]
 
 theorem list_map (L : LabelDatum g) (τ : ℂ ≃+* ℂ) (Q : List ((ZMod g)[X] × Pc g))
     (hQ : ∀ p ∈ Q, IsCuspOf L p.1 p.2.2) :

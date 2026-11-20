@@ -226,7 +226,8 @@ def Gen (n : ℕ) : Set (M2 n) :=
 
 theorem sum_single_mem (W : Submodule ℂ (M2 n)) (Φ : Matrix (Fin n) (Fin n) ℂ →ₗ[ℂ] M2 n)
     (h : ∀ i j a, Φ (Matrix.single i j a) ∈ W) (M : Matrix (Fin n) (Fin n) ℂ) : Φ M ∈ W := by
-  rw [Matrix.matrix_eq_sum_single M, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.matrix_eq_sum_single M, map_sum]
   exact Submodule.sum_mem _ fun i _ => by rw [map_sum]; exact Submodule.sum_mem _ fun j _ => h i j _
 
 def fb11 (n : ℕ) : Matrix (Fin n) (Fin n) ℂ →ₗ[ℂ] M2 n where

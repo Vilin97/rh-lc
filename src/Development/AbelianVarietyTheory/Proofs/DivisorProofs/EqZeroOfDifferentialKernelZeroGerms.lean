@@ -73,7 +73,8 @@ by
     apply fn_ext
     intro y hy
     have hyi : φ (fst y) ∈ Q.W i := hy
-    rw [gs_id _ y hy, gs_id _ y hy, map_zero, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [gs_id _ y hy, gs_id _ y hy, map_zero, map_sum]
     simp only [map_mul]
     have hu : ∀ k, ((pullback p g).presheaf.germ (π ⁻¹ᵁ Q.W i) y hy).hom ((π.app (Q.W i)).hom (Q.u k i)) =
         (fst.stalkMap y).hom (gs φ (fst y) (Q.W i) (Q.u k i)) := by
@@ -99,7 +100,8 @@ by
         (fst.stalkMap y).hom (gs p (fst y) ⊤ (e k) * gs φ (fst y) (Q.W i) (Q.u k i)) := fun k => by
       rw [hc k, hu k, map_mul]
     simp only [hsum]
-    rw [← map_sum, hz (fst y) i hyi, map_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, hz (fst y) i hyi, map_zero]
   have h2 := congrFun (congrArg Subtype.val (E.injective (h1.trans h0.symm))) k
   exact h2
 

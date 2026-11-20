@@ -13,7 +13,8 @@ theorem compl_map_ringHom {R S : Type} [CommRing R] [CommRing S] (f : R →+* S)
   refine Fin.addCases (fun l => ?_) (fun l => ?_) k
   · simp [GlobalTheory.ConstLat.compl]
   · simp only [GlobalTheory.ConstLat.compl, Matrix.map_apply, Matrix.of_apply, Fin.addCases_right]
-    simp [Matrix.mul_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Matrix.mul_apply, map_sum]
 
 theorem compl_mulVec_eq {R : Type} [CommRing R] {g : ℕ}
     (U : Matrix (Fin (g + g)) (Fin g) R) (L : Matrix (Fin g) (Fin (g + g)) R)

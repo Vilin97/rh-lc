@@ -36,7 +36,8 @@ theorem exists_isFrame_sub_of_vanishing {X : Scheme.{0}} {F : X.Modules} {U : X.
   have hincl (V : X.Opens) (h : V ≤ U) (b : Fin l → Γ(X, V)) :
       P.incl.app V (Fintype.linearCombination Γ(X, V) (fun k => resM P.toMod h (e k)) b) =
         ∑ k, b k • resM F h (c (Fin.castLE hl k)) := by
-    rw [Fintype.linearCombination_apply, ← appLinear_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Fintype.linearCombination_apply, ← appLinear_apply, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_smul, appLinear_apply, app_resM]
     rfl

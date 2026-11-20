@@ -160,7 +160,8 @@ theorem exists_covers {k : GQ l} (hk : k ∈ ϖ.GKinf) : ∃ γ : TameGal K l e 
     rw [PiSys.iTot, glue_apply]
     refine Finset.sum_congr rfl fun τ _ => ?_
     rw [hf'' τ, PiSys.iA_equivA]
-  rw [hRHS, PiSys.iTot, glue_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hRHS, PiSys.iTot, glue_apply, map_sum]
   refine Fintype.sum_equiv (Equiv.addRight (m : ZMod a)) _ _ fun σ => ?_
   rw [map_mul, galOA_idem t hm, Equiv.coe_addRight, add_sub_cancel_right]
   change _ * galOA O k (ϖ.evO O ((equivA O K).symm (f σ))) = _

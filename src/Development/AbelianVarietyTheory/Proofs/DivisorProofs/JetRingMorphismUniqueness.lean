@@ -156,7 +156,8 @@ theorem jetFil_isotropic : GlobalTheory.Published.GrothendieckDeformation → Gl
   have key : ∀ x ∈ Fil X.A, ∀ y ∈ Fil X.A, ∀ d d', IsJetElt J X N m x d → IsJetElt J X N m y d' → φ d d' = 0 := by
     intro x hx y hy d d' hdx hdy
     rw [hd x d hdx, hd y d' hdy]
-    simp only [map_add, map_sum, map_smul, LinearMap.add_apply, LinearMap.sum_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_add, map_sum, map_smul, LinearMap.add_apply, LinearMap.sum_apply,
       LinearMap.smul_apply, smul_eq_mul, hb, z0 x hx y hy, z2, map_zero, mul_zero, Finset.sum_const_zero, add_zero,
       zero_add]
     rw [← Finset.sum_add_distrib]

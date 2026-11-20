@@ -30,7 +30,8 @@ private theorem isUnit_chars (b : Module.Basis Ix ℤ R) (χ : Ix → R →+* Ω
     simpa [Finset.sum_apply, Matrix.row] using congrFun hg j
   have : ∑ τ, g τ * χ τ r = 0 := by
     rw [← b.sum_repr r]
-    simp only [map_sum, map_zsmul, Finset.mul_sum, mul_smul_comm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_zsmul, Finset.mul_sum, mul_smul_comm]
     rw [Finset.sum_comm]
     exact Finset.sum_eq_zero fun j _ => by rw [← Finset.smul_sum, hb, smul_zero]
   simpa [Finset.sum_apply] using this

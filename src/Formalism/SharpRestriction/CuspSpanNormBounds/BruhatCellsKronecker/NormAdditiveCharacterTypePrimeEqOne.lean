@@ -46,9 +46,11 @@ theorem htF_sum {k : ℕ} (c : Fin k → Fin k → ℕ) :
   have h0 : htF (0 : Fin k → ℝ) = 0 := by unfold htF; simp
   let φ : (Fin k → ℝ) →+ ℝ := ⟨⟨htF, h0⟩, hadd⟩
   have e : ∀ x, htF x = φ x := fun _ => rfl
-  rw [e, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, map_sum]
   refine Finset.sum_congr rfl (fun a _ => ?_)
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl (fun b _ => ?_)
   rw [← e, hsm, htF_root]
 
@@ -665,7 +667,8 @@ variable {H : HermSp M V} {r : ℕ}
 
 theorem h_sum_right {ι : Type} (s : Finset ι) (c : ι → E) (m : ι → V) (y : V) :
     H.h y (∑ i ∈ s, c i • m i) = ∑ i ∈ s, M.L.cj (c i) * H.h y (m i) := by
-  rw [H.h_herm _ y, h_sum_left, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [H.h_herm _ y, h_sum_left, map_sum]
   refine Finset.sum_congr rfl (fun i _ => ?_)
   rw [map_mul, ← H.h_herm (m i) y]
 

@@ -54,7 +54,8 @@ theorem _root_.GlobalTheory.norm_sum_eigenprojector_le_of_resolvent_bound :
     have hcoe : ((F ζ : VV) : H) = ∑ i, (ζ - lam i)⁻¹ • p i x := by
       simp [F, v]
     have key : ζ • ((F ζ : VV) : H) - T ((F ζ : VV) : H) = x := by
-      rw [hcoe, map_sum, Finset.smul_sum, ← Finset.sum_sub_distrib]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hcoe, map_sum, Finset.smul_sum, ← Finset.sum_sub_distrib]
       conv_rhs => rw [← hsum x hx]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_smul, (hp i x hx).2, smul_smul, smul_smul, ← sub_smul]

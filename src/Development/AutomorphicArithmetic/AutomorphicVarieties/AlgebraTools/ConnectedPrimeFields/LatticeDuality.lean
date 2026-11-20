@@ -83,7 +83,8 @@ theorem UpperTheory.V.AlgebraTools.Conn.bidual :
     rw [map_zero]
     calc algebraMap A K (b none * a l + ∑ i : S, b (some i) * l i)
         = algebraMap A K (Dn : A) * ∑ o, ψ l o * c o := by
-          rw [Fintype.sum_option, mul_add, Finset.mul_sum, map_add, map_mul, map_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [Fintype.sum_option, mul_add, Finset.mul_sum, map_add, map_mul, map_sum]
           congr 1
           · rw [hb, Algebra.smul_def]
             simp only [ψ, Option.elim_none]
@@ -100,6 +101,7 @@ theorem UpperTheory.V.AlgebraTools.Conn.bidual :
     exact hf ((mul_eq_zero.mp h.symm).resolve_left hD0)
   · intro l
     have h := hmain l
-    rw [map_neg, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_neg, map_sum]
     simp only [map_smul, smul_eq_mul]
     linear_combination -h

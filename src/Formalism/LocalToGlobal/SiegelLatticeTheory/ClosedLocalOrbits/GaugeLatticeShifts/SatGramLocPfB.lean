@@ -69,7 +69,8 @@ theorem rc_idem_zero (v : HeightOneSpectrum (𝓞 F)) (f t : E ⊗[F] v.adicComp
     have h := congrArg (f * ·) hq0
     simp only [mul_zero] at h
     rw [Polynomial.eval₂_eq_sum_range, Finset.mul_sum] at h
-    rw [Polynomial.eval_eq_sum_range, map_sum, Finset.mul_sum, ← h]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Polynomial.eval_eq_sum_range, map_sum, Finset.mul_sum, ← h]
     refine Finset.sum_congr rfl (fun i _ => ?_)
     rw [one_pow, mul_one, mul_left_comm, hidem, mul_comm]
   have hsplit : (p.scaleRoots c').eval 1 =

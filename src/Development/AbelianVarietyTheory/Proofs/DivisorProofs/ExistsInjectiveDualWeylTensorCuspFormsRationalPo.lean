@@ -32,7 +32,8 @@ theorem mem_SS_of_isSec {E : Type} [Field E] [NumberField E] [IsCMField E] {r : 
 theorem tval_map {T : Type} [Fintype T] [DecidableEq T] {N : T → ℕ} (la : ∀ t, Fin (N t) → ℕ) {S S' : Type} [CommRing S]
     [CommRing S'] (φ : S →+* S') (x : TIdx la → S) (y : ∀ t, Matrix (Fin (N t)) (Fin (N t)) S) :
     φ (tval la x y) = tval la (fun I => φ (x I)) fun t => (y t).map φ := by
-  simp only [tval, map_sum, map_mul, map_prod]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [tval, map_sum, map_mul, map_prod]
   refine Finset.sum_congr rfl fun I _ => congrArg _ (Finset.prod_congr rfl fun t _ => ?_)
   rw [← GlobalTheory.DualWeyl.evalAt_map, MvPolynomial.map_map, RingHom.ext_int (φ.comp (Int.castRingHom S)) (Int.castRingHom S')]
 

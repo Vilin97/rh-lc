@@ -61,7 +61,8 @@ theorem bijective_one_add {A B : Type} [CommRing A] [CommRing B] (f : A →+* B)
 
 theorem coeff_sum_expand {R : Type} [CommRing R] (n : ℕ) (hn : n ≠ 0) (z : Fin n → R⟦X⟧) (i : Fin n)
     (m : ℕ) : coeff (n * m + i) (∑ j : Fin n, X ^ (j : ℕ) * expand n hn (z j)) = coeff m (z i) := by
-  rw [map_sum, Finset.sum_eq_single i]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_eq_single i]
   · rw [coeff_X_pow_mul, coeff_expand_mul]
   · intro j _ hj
     rw [coeff_X_pow_mul']

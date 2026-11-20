@@ -38,7 +38,8 @@ theorem incM_one {n : ℕ} : incM F (1 : Matrix (Fin n) (Fin n) E) = 1 := by
 
 theorem form_swap {σ : E →ₐ[F] E} (hinv : ∀ t, σ (σ t) = t) {d : ℕ} {J : Matrix (Fin d) (Fin d) E}
     (hskew : ∀ i j, σ (J j i) = -J i j) (x v : Fin d → E) : form σ J x v = -σ (form σ J v x) := by
-  simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hinv, hskew, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hinv, hskew, Finset.mul_sum]
   rw [Finset.sum_comm (f := fun a b => σ (v a) * (-J b a * x b)), ← Finset.sum_neg_distrib]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [← Finset.sum_neg_distrib]
@@ -54,7 +55,8 @@ theorem inner_left {σ : E →ₐ[F] E} {n d d₁ : ℕ} (J : Matrix (Fin d) (Fi
       inclR (F := F) (AF F) (σ (x₀ l)) = 0 := by
     intro m
     have := congrArg (inclR (F := F) (AF F)) (h m)
-    simpa only [map_sum, map_mul, map_zero] using this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa only [map_sum, map_mul, map_zero] using this
   rw [incM_one, Matrix.one_mul]
   simp only [Matrix.mul_apply, Matrix.transpose_apply, incM, Matrix.map_apply, Matrix.vecMulVec_apply, incV,
     map_mul, cA_inclR, Finset.sum_mul]
@@ -75,9 +77,11 @@ theorem inner_right {σ : E →ₐ[F] E} {n d d₁ : ℕ} (J : Matrix (Fin d) (F
       inclR (F := F) (AF F) (σ (ι l m)) = 0 := by
     intro m
     have := congrArg (inclR (F := F) (AF F)) (h m)
-    simpa only [map_sum, map_mul, map_zero] using this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa only [map_sum, map_mul, map_zero] using this
   rw [incM_one, Matrix.one_mul]
-  simp only [Matrix.mul_apply, Matrix.transpose_apply, incM, Matrix.map_apply, Matrix.vecMulVec_apply, incV,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mul_apply, Matrix.transpose_apply, incM, Matrix.map_apply, Matrix.vecMulVec_apply, incV,
     map_mul, map_sum, cA_inclR, Finset.mul_sum]
   rw [sum_three_comm]
   refine Finset.sum_eq_zero fun m _ => ?_

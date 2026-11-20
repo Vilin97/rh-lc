@@ -36,7 +36,8 @@ theorem uncurry_linear_combination (c : Fin dd → C) (f : Fin dd → PS C 1 dd)
   funext μ
   show MvPowerSeries.coeff _ (∑ j, MvPowerSeries.C (c j) * f j) =
     MvPowerSeries.coeff μ (∑ j, MvPowerSeries.C (c j) * un1 (f j))
-  rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [MvPowerSeries.coeff_C_mul, MvPowerSeries.coeff_C_mul]
   rfl
@@ -93,7 +94,8 @@ theorem oActTySt_holds : OActTySt := by
     intro c f
     have e : alongCv γ (∑ j, MvPowerSeries.C (c j) * f j) = ∑ j, alongCv γ (MvPowerSeries.C (c j) * f j) := by
       unfold alongCv
-      rw [← MvPowerSeries.coe_substAlgHom hSγ, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← MvPowerSeries.coe_substAlgHom hSγ, map_sum]
     rw [e]
     exact Finset.sum_congr rfl fun j _ => hsubC (c j) (f j)
 

@@ -491,7 +491,8 @@ abbrev upperMap : MRingOver F (PluckerBlocks n n) →ₐ[F] MvPolynomial (UIdx n
 theorem upperMap_isWeightedHomogeneous (f : MRingOver F (PluckerBlocks n n)) (a : Fin (n - 1) → ℕ)
     (hf : IsWeightedHomogeneous (plWeight n) f a) :
     IsWeightedHomogeneous (rowWeight n) (upperMap F n f) (rowDeg n a) := by
-  rw [f.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [f.as_sum, map_sum]
   apply IsWeightedHomogeneous.sum
   intro m hm
   have ha : a = Finsupp.weight (plWeight n) m := (hf (mem_support_iff.1 hm)).symm
@@ -501,7 +502,8 @@ theorem upperMap_isWeightedHomogeneous (f : MRingOver F (PluckerBlocks n n)) (a 
     exact (upperMap F n).commutes c
   rw [monomial_eq, map_mul, hC, map_finsuppProd]
   apply IsWeightedHomogeneous.C_mul
-  rw [ha, Finsupp.weight_apply, Finsupp.sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [ha, Finsupp.weight_apply, Finsupp.sum, map_sum]
   apply IsWeightedHomogeneous.prod
   intro p _
   show IsWeightedHomogeneous (rowWeight n) (upperMap F n (X p ^ m p)) (rowDeg n (m p • plWeight n p))
@@ -516,7 +518,8 @@ theorem upperMap_weightedHomogeneousComponent (f : MRingOver F (PluckerBlocks n 
   classical
   conv_lhs => rw [← sum_weightedHomogeneousComponent (plWeight n) f,
     finsum_eq_sum _ (weightedHomogeneousComponent_finsupp f)]
-  rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum]
   by_cases ha : weightedHomogeneousComponent (plWeight n) a f = 0
   · rw [ha, map_zero]
     apply Finset.sum_eq_zero

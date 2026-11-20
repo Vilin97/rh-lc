@@ -111,7 +111,8 @@ theorem kernel_eq_sum : ∀ (D : D7) (c : Comm D) (v : VCom c) χ (Q : QAt v χ)
     ring
   refine Eq.trans (funext hΞK) ?_
   show Λ Ξ = _
-  rw [hsum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hsum, map_sum]
   refine Finset.sum_congr rfl fun yb _ => ?_
   refine ((GlobalTheory.T.heisenbergCombination_twoVariableModel_and_lineExtension D Q.k (ofSplit Q.q) c.ψ _ _ _).1 _ _ _ _ _ _ Λ (d₁ yb) (d₂ yb) (E₁ yb) P₁ (E₂ yb) P₂ (E yb) Ξ' hΛ
     (hd₁ yb) (hd₂ yb) rfl rfl (fun _ => rfl) hone).trans ?_

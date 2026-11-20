@@ -22,7 +22,8 @@ theorem coeff_mem_of_mul_eq {s : Type} (K' : Subfield ℂ) (f P Q : MvPolynomial
     ext m
     have hfix : AddMonoidAlgebra.coeff (f * P) m = φ (AddMonoidAlgebra.coeff (f * P) m) := by
       rw [h]; exact (hφ1 ⟨_, hQ m⟩).symm
-    rw [hfix, coeff_mul, coeff_mul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hfix, coeff_mul, coeff_mul, map_sum]
     refine Finset.sum_congr rfl fun x _ => ?_
     rw [hg]
     have hs := φ.map_smul (⟨AddMonoidAlgebra.coeff P x.2, hPK _⟩ : K') (AddMonoidAlgebra.coeff f x.1)

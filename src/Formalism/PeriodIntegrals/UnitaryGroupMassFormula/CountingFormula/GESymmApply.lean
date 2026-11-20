@@ -53,7 +53,8 @@ theorem exists_u (sE : WbQ D F0 →ₗ[D.host.E] perpS (VS D) F0.X) :
     apply hWb_sepR D F0 y
     intro a
     rw [← b.sum_repr a]
-    simp only [map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, hy',
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, hy',
       smul_zero, Finset.sum_const_zero]
   have hMsurj : Function.Surjective M :=
     (LinearMap.injective_iff_surjective_of_finrank_eq_finrank (by simp)).1 hMinj
@@ -69,7 +70,8 @@ theorem exists_u (sE : WbQ D F0 →ₗ[D.host.E] perpS (VS D) F0.X) :
     exact (congrFun h i).symm
   simp only [LinearMap.comp_apply, LinearEquiv.coe_coe]
   rw [← b.sum_repr a]
-  simp only [map_sum, LinearMap.sum_apply, Submodule.coe_sum, LinearMap.map_smulₛₗ,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.sum_apply, Submodule.coe_sum, LinearMap.map_smulₛₗ,
     LinearMap.smul_apply, map_smul, Submodule.coe_smul, key]
 
 end Form

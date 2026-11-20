@@ -188,7 +188,8 @@ theorem series_two_points_eq_sum_mul : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [
         rw [Algebra.TensorProduct.lift_tmul, map_one, _root_.one_mul]
         rfl)
   have hf : Φ f = T (Ψ f) := RingHom.congr_fun key f
-  rw [hf, hxy, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hf, hxy, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [← hg, ← hh]
   exact Algebra.TensorProduct.lift_tmul _ _ _ _ _

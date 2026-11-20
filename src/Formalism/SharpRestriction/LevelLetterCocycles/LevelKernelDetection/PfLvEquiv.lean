@@ -22,7 +22,8 @@ theorem Pf_LvEquiv_grdB_mul (τ : Ks ≃ₐ[LL] Ks) (a : LLˣ) (x y : HahnSeries
   ext i
   rw [HahnSeries.coeff_mul (x := grdB τ a x)]
   change algebraMap LL Ks ((a ^ i : LLˣ) : LL) * τ ((x * y).coeff i) = _
-  rw [HahnSeries.coeff_mul, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [HahnSeries.coeff_mul, map_sum, Finset.mul_sum]
   symm
   refine (Finset.sum_subset (fun ij h => ?_) (fun ij hb hs => ?_)).trans (Finset.sum_congr rfl ?_)
   · rw [Finset.mem_antidiagonal] at h ⊢

@@ -28,7 +28,8 @@ omit hp in
 theorem map_sub_sum_eq_of_eq (F : R →+* R) {n : ℕ} (a L : Fin n → R) (ha : ∀ i, F (a i) = a i)
     (hL : ∀ i, F (L i) = (p : R) * L i) {y : R} (hy : F y = (p : R) * y) :
     F (y - ∑ i, a i * L i) = (p : R) * (y - ∑ i, a i * L i) := by
-  rw [map_sub, map_sum, hy, mul_sub, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sub, map_sum, hy, mul_sub, Finset.mul_sum]
   congr 1
   exact Finset.sum_congr rfl fun i _ => by rw [map_mul, ha, hL]; ring
 
@@ -41,7 +42,8 @@ theorem eq_sum_of_sub_sum_eq (A : ℚ_[p] →+* R) (hA : Function.Injective A) (
       A (c - ∑ i, f i * κ i) * t := by
     have e : ∀ i, g (A (f i) * L i) = A (f i) * L i + A (f i * κ i) * t := fun i => by
       rw [map_mul, hgA, hgL, map_mul]; ring
-    rw [map_sub g, map_sum g, Finset.sum_congr rfl fun i _ => e i, Finset.sum_add_distrib, map_sub A,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub g, map_sum g, Finset.sum_congr rfl fun i _ => e i, Finset.sum_add_distrib, map_sub A,
       map_sum A, sub_mul, Finset.sum_mul]
     linear_combination hy
   have h2 : g (y - ∑ i, A (f i) * L i) - (y - ∑ i, A (f i) * L i) = A (l * (χ - 1)) * t := by
@@ -172,7 +174,8 @@ theorem exists_iotaB_sub_sum_eq {ε : 𝒪♭} (hε : PreTilt.untilt ε = 1)
         algebraMap 𝔹 𝔹dR (algebraMap ℚ_[p] 𝔹 (f i) * iota ℂ_[p] p (logTeich (hx i))) := fun i => by
       rw [map_mul, iotaB_algebraMap_padic, IsScalarTower.algebraMap_apply ℚ_[p] 𝔹 𝔹dR, logTeichB,
         iotaB_algebraMap, iotaPlus_algebraMap, map_mul]
-    rw [map_sub, map_sum, hk, Finset.sum_congr rfl fun i _ => hterm i, ← map_sum, ← map_sub]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_sum, hk, Finset.sum_congr rfl fun i _ => hterm i, ← map_sum, ← map_sub]
   · have h1 : thetaAlgHom p (uBdR p) = 0 := by
       rw [thetaAlgHom_apply, ← RingHom.mem_ker, ← IsPerfectoidField.maximalIdeal_bDeRhamPlus]
       exact uBdR_mem
@@ -181,10 +184,12 @@ theorem exists_iotaB_sub_sum_eq {ε : 𝒪♭} (hε : PreTilt.untilt ε = 1)
       rw [map_mul, AlgHom.commutes, thetaAlgHom_apply, thetaField_iota, hθ]
     have h3 : ((k : PadicAlgCl p) : ℂ_[p]) =
         ∑ i, algebraMap ℚ_[p] ℂ_[p] (f i) * ((g i : PadicAlgCl p) : ℂ_[p]) := by
-      rw [← hfg, coe_padicAlgCl_eq, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hfg, coe_padicAlgCl_eq, map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [Algebra.smul_def, map_mul, ← IsScalarTower.algebraMap_apply, coe_padicAlgCl_eq]
-    rw [map_sub, map_add, h1, thetaAlgHom_algClToBdR, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_add, h1, thetaAlgHom_algClToBdR, map_sum,
       Finset.sum_congr rfl fun i _ => h2 i, h3, zero_add, sub_self]
 
 set_option maxHeartbeats 8000000 in

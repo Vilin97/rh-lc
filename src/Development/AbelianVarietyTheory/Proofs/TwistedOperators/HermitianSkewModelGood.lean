@@ -66,7 +66,8 @@ theorem isExp_piEnd {V : Type} [AddCommGroup V] [Module ℂ V] {L U : Module.End
   have hl : ∀ z : Fin m → V, l z = ∑ i, (l ∘ₗ LinearMap.single ℂ (fun _ : Fin m => V) i) (z i) := by
     intro z
     conv_lhs => rw [← Finset.univ_sum_single z]
-    simp [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum]
   have key : (fun k : ℕ => ((k.factorial : ℂ))⁻¹ * l ((piEnd m L ^ k) y)) =
       fun k => ∑ i, ((k.factorial : ℂ))⁻¹ * (l ∘ₗ LinearMap.single ℂ (fun _ : Fin m => V) i) ((L ^ k) (y i)) := by
     funext k
@@ -273,7 +274,8 @@ theorem kStable_sums : GlobalTheory.FunPr.Hypotheses₂ → ∀ {F E : Type} [Fi
     exact h1 _ hg
   have hsum : om (1, k) (∑ i, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure (Φ (T i)) (φ i)) =
       ∑ i, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure (Φ (U (T i))) (φ i) := by
-    rw [map_sum]; exact Finset.sum_congr rfl fun i _ => hk1 i
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]; exact Finset.sum_congr rfl fun i _ => hk1 i
   refine ⟨?_, fun hQ => ?_⟩
   · rw [hsum]
     exact Submodule.sum_mem _ fun i _ => Submodule.subset_span

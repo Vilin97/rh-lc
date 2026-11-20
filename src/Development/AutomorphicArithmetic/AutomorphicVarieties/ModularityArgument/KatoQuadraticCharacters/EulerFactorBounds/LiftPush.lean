@@ -44,7 +44,8 @@ private theorem lift_push {Ω : Type} [Field Ω] [Algebra ℚ Ω] [IsAlgClosure 
     have hg := hGal (repM M y) _ _ hc
     have e : (l : ℤ_[l]) ^ c • ∑ i, shB X l M (z i) s y = X.galB l (repM M y)
         ((l : ℤ_[l]) ^ c • ∑ i, z i ((repM M y)⁻¹ * s * repM M (y * (cycM M s)⁻¹))) := by
-      simp only [shB, map_smul, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [shB, map_smul, map_sum]
     intro u
     have hu := hg u
     rw [← e] at hu

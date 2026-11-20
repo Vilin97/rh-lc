@@ -43,7 +43,8 @@ theorem delta_Psi_h (K : Type) [Field K] (m : ℕ) (hm : 1 ≤ m) : deltaB K m (
     intro i
     simp only [PsiXY, deltaB, map_mul, aeval_X, Sum.elim_inl, Sum.elim_inr, rename_X, rename_rename, hid,
       rename_id, AlgHom.id_apply]
-  rw [hXY, map_sum, map_sum, Finset.sum_congr rfl fun i _ => h1 i]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hXY, map_sum, map_sum, Finset.sum_congr rfl fun i _ => h1 i]
   exact sum_covY K m hm
 
 end Formalism.MainNotions.flipOneThree.Pf

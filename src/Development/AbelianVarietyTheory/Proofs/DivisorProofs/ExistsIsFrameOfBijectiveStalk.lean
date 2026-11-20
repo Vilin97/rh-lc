@@ -26,10 +26,12 @@ theorem bijective_sumElim_iff {ι κ : Type} [Fintype ι] [Fintype κ] (hf : Fun
   have h1 (a : ι ⊕ κ → R) : Fintype.linearCombination R (Sum.elim (fun i => f (e i)) t) a =
       f (Fintype.linearCombination R e fun i => a (.inl i)) +
         Fintype.linearCombination R t fun j => a (.inr j) := by
-    simp [Fintype.linearCombination_apply, Fintype.sum_sum_type, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Fintype.linearCombination_apply, Fintype.sum_sum_type, map_sum]
   have h2 (b : κ → R) : g (Fintype.linearCombination R t b) =
       Fintype.linearCombination R (fun j => g (t j)) b := by
-    simp [Fintype.linearCombination_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Fintype.linearCombination_apply, map_sum]
   have h3 (b : κ → R) (m m' : M₁) (h : f m + Fintype.linearCombination R t b = f m') : b = 0 := by
     have := congrArg g h
     rw [map_add, hfg.apply_apply_eq_zero, hfg.apply_apply_eq_zero, zero_add, h2] at this
@@ -108,9 +110,11 @@ theorem germ_det [DecidableEq ι] {e : ι → Γ(F, U)} (he : IsFrame e) (v : ι
   ext i j
   rw [Module.Basis.toMatrix_apply]
   conv_rhs => rw [← (he.basis le_rfl).sum_repr (v j)]
-  simp only [map_sum, QCoh.germ_smul, IsFrame.basis_apply, resM_self]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, QCoh.germ_smul, IsFrame.basis_apply, resM_self]
   simp only [← he.stalkBasis_apply x hx]
-  rw [← map_sum, Module.Basis.repr_sum_self]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum, Module.Basis.repr_sum_self]
   rfl
 
 theorem exists_isFrame_of_bijective_stalk {e : ι → Γ(F, U)} (he : IsFrame e) (v : ι → Γ(F, U))

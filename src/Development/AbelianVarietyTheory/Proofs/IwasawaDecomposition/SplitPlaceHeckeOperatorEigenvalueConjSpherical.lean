@@ -51,7 +51,8 @@ theorem tN_eig : ∀ (L : Type) [Field L] [NumberField L] [IsCMField L] (n : ℕ
   have hloc := GlobalTheory.T.splitHeckeOperator_inverse_conjugatePlace_cosetSum L n s ϖ hϖ k hkn i hi σ.ρ R hR1' hR2' e heK
   have key : NG.heckeD J (tSet L n s ϖ k) (T e) = T (GlobalTheory.LFun.heckeVec σ.ρ (GlobalTheory.LFun.KGL (GlobalTheory.HeckeFrob.conjSplit s).w n)
       (fun g => Formalism.UG.Tj ℂ n (Formalism.UG.Ov L (GlobalTheory.HeckeFrob.conjSplit s).w) (i ϖ) k g⁻¹) e) := by
-    rw [hsum, hloc, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hsum, hloc, map_sum]
     exact Finset.sum_congr rfl fun γ hγ => hrt γ (hD γ (hR1' γ hγ))
   obtain ⟨hq1, hq2⟩ := norms_eq s
   by_cases he0 : e = 0

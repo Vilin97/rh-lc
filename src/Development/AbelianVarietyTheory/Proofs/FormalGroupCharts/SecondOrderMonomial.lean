@@ -72,7 +72,8 @@ theorem halfSt : GE.HalfSt := by
     have key := G2.sum_splits_evalTwo_word c hc (Finset.univ : Finset ι).toList (Finset.nodup_toList _) m
       (fun w => constantCoeff (G2.T F u w A))
     simp only [Finset.sum_map_toList] at key
-    rw [dpolyOf_monomial, dmonOf_eq_T_word, map_mul, constantCoeff_C,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [dpolyOf_monomial, dmonOf_eq_T_word, map_mul, constantCoeff_C,
       G2.cc_T_mul_q c F u q hq0 hq1 hq2, secondOrder_monomial, GE.dpolyOf_sum_P, map_sum]
     have hR : ∑ x, constantCoeff (DpolyOf F u
         (∑ y, MvPolynomial.monomial (m - Finsupp.single y 1 - Finsupp.single x 1)
@@ -82,7 +83,8 @@ theorem halfSt : GE.HalfSt := by
             (m - Finsupp.single y 1 - Finsupp.single x 1)) A) := by
       rw [Finset.mul_sum]
       refine Finset.sum_congr rfl fun x _ => ?_
-      rw [GE.dpolyOf_sum_P, map_sum, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [GE.dpolyOf_sum_P, map_sum, Finset.mul_sum]
       refine Finset.sum_congr rfl fun y _ => ?_
       rw [dpolyOf_monomial, dmonOf_eq_T_word, map_mul, constantCoeff_C, mul_assoc]
     rw [hR, ← key]

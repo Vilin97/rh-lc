@@ -103,12 +103,14 @@ lemma tau_eS (T : GoodSet K G) (s : T.S) : (T.tau s).asAlgebraHom (eS T s) = 1 :
         (T.tau s x)) := by
     ext1 X
     rw [LinearMap.sum_apply]
-    simp only [LinearMap.coe_comp, Function.comp_apply, AlgHom.toLinearMap_apply, phiS_apply, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [LinearMap.coe_comp, Function.comp_apply, AlgHom.toLinearMap_apply, phiS_apply, map_sum,
       map_smul, Representation.asAlgebraHom_of]
     refine Finset.sum_congr rfl fun x _ => ?_
     simp [smul_smul]
   have htr := congrArg (LinearMap.trace K (Module.End K (T.W s))) hsum
-  rw [hcomp, map_sum] at htr
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hcomp, map_sum] at htr
   simp only [map_smul, LinearMap.trace_smulRight, LinearMap.coe_comp, Function.comp_apply,
     LinearMap.mulLeft_apply, ← map_mul, inv_mul_cancel, map_one, LinearMap.trace_one, LinearMap.trace_id,
     Module.finrank_linearMap, smul_eq_mul, Finset.sum_const, Finset.card_univ, nsmul_eq_mul] at htr
@@ -217,12 +219,14 @@ lemma trace_mul_eS (T : GoodSet K G) (s : T.S) {V : Type} [AddCommGroup V] [Modu
     rw [h1, h2]
   obtain ⟨c, hc⟩ := scalar_of_comm T s Z hcomm
   refine ⟨c, fun a => ?_⟩
-  rw [mul_eS, phiS_apply, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [mul_eS, phiS_apply, map_sum, map_sum]
   simp only [map_smul, Representation.asAlgebraHom_of, smul_eq_mul]
   have : LinearMap.trace K (T.W s) (Z * (T.tau s).asAlgebraHom a) =
       c * LinearMap.trace K (T.W s) ((T.tau s).asAlgebraHom a) := by
     rw [hc, smul_mul_assoc, one_mul, map_smul, smul_eq_mul]
-  rw [← this, hZ, Finset.sum_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← this, hZ, Finset.sum_mul, map_sum]
   refine Finset.sum_congr rfl fun x _ => ?_
   rw [smul_mul_assoc, map_smul, smul_eq_mul]
   ring

@@ -60,7 +60,8 @@ theorem rep_exists {x : LA W T π' c} (hx : x ∈ LamLA W T π' Eπ h' c ⊤) :
       LcQ W T π' c) := fun j => Submodule.Quotient.mk_surjective _ _
   choose yy hyy using hs
   refine ⟨m, a, fun j => (yy j : W.DD T), ⟨fun j => (yy j).2, ?_⟩⟩
-  rw [← ht, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← ht, map_sum]
   refine Finset.sum_congr rfl (fun j _ => ?_)
   rw [toLA_tmul, ← hyy j]
   rfl
@@ -94,7 +95,8 @@ theorem rep_smul {x : LA W T π' c} {m : ℕ} {a : Fin m → ↥W.AΔ} {y : Fin 
     IsRepL W T π' Eπ h' c (smulLA W T π' c b x) (fun j => ⟨b * a j, W.AΔ.mul_mem hb (a j).2⟩) y := by
   obtain ⟨hy, hx⟩ := h
   refine ⟨hy, ?_⟩
-  rw [smulLA_smulLA, mul_comm, ← smulLA_smulLA, hx, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [smulLA_smulLA, mul_comm, ← smulLA_smulLA, hx, map_sum]
   refine Finset.sum_congr rfl (fun j _ => ?_)
   rw [smulLA_tmul, ← map_mul]
   congr 2

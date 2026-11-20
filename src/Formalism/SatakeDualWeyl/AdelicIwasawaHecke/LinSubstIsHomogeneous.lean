@@ -73,7 +73,8 @@ theorem map_polyAct_pow (g : GL n O) (K : ℕ) :
             MvPolynomial n (MvPolynomial n O)) ^ K := by
   rw [map_pow]
   congr 1
-  simp only [map_sum, map_mul, map_C, map_X, polyAct, linSubst, AlgHom.toRingHom_eq_coe,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, map_C, map_X, polyAct, linSubst, AlgHom.toRingHom_eq_coe,
     RingHom.coe_coe, aeval_X, Finset.sum_mul, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl (fun i _ => Finset.sum_congr rfl (fun j _ => ?_))

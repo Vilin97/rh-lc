@@ -253,7 +253,8 @@ theorem conjForm_eq_zero : ∀ (k : Type) [Field k] [ValuativeRel k] [Topologica
     apply Subtype.ext
     rw [Submodule.coe_sum]
     exact he
-  rw [this, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [this, map_sum]
   simp [key _ (hq _) _ (hp _)]
 
 end GlobalTheory.LineZeroForm

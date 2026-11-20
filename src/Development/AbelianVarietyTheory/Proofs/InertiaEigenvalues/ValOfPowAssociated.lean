@@ -145,7 +145,8 @@ theorem roots_eq_nrm [IsLocalRing O] [IsAdicComplete (IsLocalRing.maximalIdeal O
       have h5 : lvl l O 0 = ∑ i ∈ Finset.range l, ((1 + X) ^ i - C ζ ^ i) := by
         rw [Finset.sum_sub_distrib]
         simp only [← map_pow]
-        rw [← map_sum, hζ.geom_sum_eq_zero (Fact.out : l.Prime).one_lt]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [← map_sum, hζ.geom_sum_eq_zero (Fact.out : l.Prime).one_lt]
         simp [lvl]
       rw [h5]
       refine Finset.dvd_sum fun i _ => ?_

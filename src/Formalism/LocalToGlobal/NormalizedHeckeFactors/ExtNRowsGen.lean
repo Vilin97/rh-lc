@@ -21,7 +21,8 @@ theorem finrank_span_image_le {n : ℕ} (σ : K →+* ℂ) (j : (Fin n → K) �
       have h0 := congrArg (fun v : A => (v : Fin n → K)) (b.sum_repr ⟨x, hx⟩)
       simp only [Submodule.coe_sum, Submodule.coe_smul] at h0
       exact h0.symm
-    rw [e, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, map_sum]
     refine Submodule.sum_mem _ fun k _ => ?_
     rw [LinearMap.map_smulₛₗ]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨k, rfl⟩)

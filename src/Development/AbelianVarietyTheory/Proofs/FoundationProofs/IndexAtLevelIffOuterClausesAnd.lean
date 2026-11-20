@@ -24,7 +24,8 @@ theorem det_eq_algebraMap_det {R K A W : Type} [CommRing R] [IsDomain R] [Field 
     (LinearIndependent.iff_fractionRing R K).1 (b.linearIndependent.map' j (LinearMap.ker_eq_bot.2 hj))
   have hx : ∀ x : A, j x = ∑ i, algebraMap R K (b.repr x i) • j (b i) := by
     intro x
-    conv_lhs => rw [← b.sum_repr x, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [← b.sum_repr x, map_sum]
     exact Finset.sum_congr rfl fun i _ => by rw [map_smul, algebraMap_smul]
   have hsp : ⊤ ≤ Submodule.span K (Set.range fun i => j (b i)) := by
     rw [← hs, Submodule.span_le]
@@ -37,7 +38,8 @@ theorem det_eq_algebraMap_det {R K A W : Type} [CommRing R] [IsDomain R] [Field 
   congr 1
   ext i k
   rw [LinearMap.toMatrix_apply, hc, h, hx]
-  simp only [← hc, map_sum, map_smul, Module.Basis.repr_self, RingHom.mapMatrix_apply, Matrix.map_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← hc, map_sum, map_smul, Module.Basis.repr_self, RingHom.mapMatrix_apply, Matrix.map_apply,
     LinearMap.toMatrix_apply]
   simp [Finsupp.single_apply, Algebra.algebraMap_eq_smul_one]
 

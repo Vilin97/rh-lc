@@ -66,7 +66,8 @@ theorem sum_eq_genVal : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSp
   have hcard := (GlobalTheory.T.card_parahoricDoubleCosetReps_inv_eq k A D g R'' R d'' d hR'' hR).1
   have hT := hx.2.2 s R'' d'' hR''
   have hsum2 : genVal (resCard k) (Fintype.card A) (Fintype.card D) B s.card • b Φ x = R''.card • b Φ (ρ g x) := by
-    rw [← map_smul, hT, map_sum, ← Finset.sum_const]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_smul, hT, map_sum, ← Finset.sum_const]
     refine Finset.sum_congr rfl fun j hj => ?_
     obtain ⟨hjJ, hdj⟩ := hR''.1 j hj
     rw [map_smul, show (mtor ϖ (indic s) : GL (A ⊕ D) k) = g from rfl, map_mul, Module.End.mul_apply,

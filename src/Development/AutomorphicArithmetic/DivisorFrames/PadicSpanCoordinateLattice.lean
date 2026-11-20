@@ -77,7 +77,8 @@ theorem UpperTheory.padic_span_coordinate_lattice :
       rw [e]; rfl
     funext i
     have h1 : ∑ m, a m * j (T (π (v m)) i) = 0 := by
-      simp only [hTw (π _), map_sum, map_mul, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hTw (π _), map_sum, map_mul, Finset.mul_sum]
       rw [Finset.sum_comm]
       refine Finset.sum_eq_zero fun k _ => ?_
       simp only [← mul_assoc]

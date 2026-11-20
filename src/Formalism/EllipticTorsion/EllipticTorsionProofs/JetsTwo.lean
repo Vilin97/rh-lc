@@ -102,7 +102,8 @@ theorem ccd_F (F : MvPowerSeries (Fin 2) K) {x y : MvPowerSeries (Fin 2) K}
     (i : Fin 2) :
     ccd i (F.subst ![x, y]) = ccd 0 F * ccd i x + ccd 1 F * ccd i y := by
   unfold ccd
-  rw [pderiv_subst (hv hx hy), map_sum, Fin.sum_univ_two]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [pderiv_subst (hv hx hy), map_sum, Fin.sum_univ_two]
   simp only [map_mul, Formalism.G.LogP.constantCoeff_subst_of_zero _ (hv hx hy), Matrix.cons_val_zero,
     Matrix.cons_val_one, Matrix.head_cons]
 
@@ -114,7 +115,8 @@ theorem Q_F (F : MvPowerSeries (Fin 2) K) {x y : MvPowerSeries (Fin 2) K}
         ccd 1 F * Q y + ccd 0 y * (ccd 0 (MvPowerSeries.pderiv K 1 F) * ccd 1 x +
           ccd 1 (MvPowerSeries.pderiv K 1 F) * ccd 1 y) := by
   unfold Q
-  rw [pderiv_subst (hv hx hy), map_sum, Fin.sum_univ_two]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [pderiv_subst (hv hx hy), map_sum, Fin.sum_univ_two]
   simp only [Derivation.leibniz, smul_eq_mul, map_add, map_mul]
   rw [pderiv_subst (hv hx hy), pderiv_subst (hv hx hy)]
   simp only [Fin.sum_univ_two, map_add, map_mul, Formalism.G.LogP.constantCoeff_subst_of_zero _ (hv hx hy),

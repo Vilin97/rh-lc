@@ -58,7 +58,8 @@ theorem repr_sigma {n : ℕ} (e : Basis (Fin n) K.E B.A) (he : ∀ i, B.σ (e i)
     e.repr (B.σ y) i = K.c (e.repr y i) := by
   have : B.σ y = ∑ j, K.c (e.repr y j) • e j := by
     conv_lhs => rw [← e.sum_repr y]
-    simp only [map_sum, sigma_smul, he]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, sigma_smul, he]
   rw [this]; simp [Finsupp.single_apply]
 
 theorem norm_eta (a : K.E) : ‖((K.eta a : ℚ) : ℂ)‖ = 1 := by
@@ -122,7 +123,8 @@ theorem tw_fixed {n : ℕ} {φ : K.E ≃+* E} (hs : ∀ y, φ (K.c y) = star (φ
     (e : Basis (Fin n) K.E B.A) (he : ∀ i, B.σ (e i) = e i) (γ : GL (Fin n) F) (j : Fin n) :
     B.σ (tw e (Matrix.GeneralLinearGroup.map (iota F φ) γ) j) =
       tw e (Matrix.GeneralLinearGroup.map (iota F φ) γ) j := by
-  rw [tw_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [tw_apply, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [sigma_smul, he, ← map_inv, Matrix.GeneralLinearGroup.map_apply, c_iota hs]
 
@@ -318,7 +320,8 @@ theorem repr_orth {n : ℕ} {x : B.A} (b : Basis (Fin n) K.E B.A)
   have h2 : ∀ j, (Algebra.trace K.E B.A ∘ₗ LinearMap.mulLeft K.E (x * B.σ (b i))) (b j) = if j = i then 1 else 0 :=
     fun j => by rw [← this, hb]
   rw [this]
-  conv_rhs => rw [← b.sum_repr y, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_rhs => rw [← b.sum_repr y, map_sum]
   simp only [map_smul, h2]
   simp
 

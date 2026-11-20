@@ -236,14 +236,16 @@ theorem coeff_zero_eq_zero : ∀ (F E : Type) [Field F] [NumberField F] [Field E
       refine Finset.sum_congr rfl fun k _ => ?_
       change ((1 : AF F) ⊗ₜ[F] ξ i) * _ = _
       rw [Algebra.TensorProduct.tmul_mul_tmul, one_mul]
-    rw [e1, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e1, map_sum]
     simp_rw [trace_baseChange_tmul']
     rw [hψ.2.2 _ (fun u hu => by
       rw [smul_eq_mul, Finset.mul_sum]
       refine Finset.sum_eq_zero fun k _ => ?_
       simpa [smul_eq_mul] using at_realAd_mul' (s k) (algebraMap F (AF F) (Algebra.trace F E (∑ i, ξ i * b k i))) u hu)]
     congr 3
-    rw [← evH_apply, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← evH_apply, map_sum, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [evH_apply, evI_realAd_mul', map_smul, evI_algebraMap', GlobalTheory.PsiNontriv.trace_mixedEmbedding, smul_eq_mul]
   have hμ0 : μ 0 = 0 := by

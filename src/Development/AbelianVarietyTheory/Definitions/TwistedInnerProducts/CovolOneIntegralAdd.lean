@@ -101,7 +101,8 @@ theorem cT_sig (M : Matrix (Fin m) (Fin n) D.host.E) :
   funext i j; exact map_mul (cA D) a (x j i)
 
 theorem trace_adj (x : Mx D n n) : (adj x).trace = cA D x.trace := by
-  simp only [Matrix.trace, map_sum]; rfl
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.trace, map_sum]; rfl
 
 @[simp] theorem cA_half : cA D (half D) = half D := by
   rw [half, GlobalTheory.DualPairCheck.cA_incA]; congr 1; simp

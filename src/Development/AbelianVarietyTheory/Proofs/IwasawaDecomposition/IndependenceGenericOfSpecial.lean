@@ -76,7 +76,8 @@ theorem lin_pull {T T' T'' : Over S} (h : T' ⟶ T) (m : T'' ⟶ T') {n : ℕ} (
   intro z J hJ
   have hJ' : Good L ((m ▷ G).left z) (fun ψ => J ((m ▷ G).left ≫ ψ)) := fun ψ => hJ ((m ▷ G).left ≫ ψ)
   have e := congrArg ((m ▷ G).left.stalkMap z).hom (hc _ _ hJ')
-  rw [sval_zeroSec, map_zero, map_sum] at e
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [sval_zeroSec, map_zero, map_sum] at e
   rw [sval_zeroSec]
   refine e.trans (Finset.sum_congr rfl fun i _ => ?_)
   rw [map_mul]

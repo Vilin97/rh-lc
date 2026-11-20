@@ -61,7 +61,8 @@ theorem inv_linear_eval (Ψ : Type) [Fintype Ψ] [DecidableEq Ψ] (N j : ℕ) (l
   choose a ha using ha
   choose b hb using hb
   refine ⟨a, b, fun x => ?_⟩
-  rw [← hc, map_sum, Fintype.sum_prod_type, ← Finset.sum_add_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hc, map_sum, Fintype.sum_prod_type, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun τ _ => ?_
   rw [Finset.sum_filter, Finset.mul_sum, Finset.mul_sum, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun i _ => ?_

@@ -317,7 +317,8 @@ theorem d_mkC {n a : ℕ} (z : Cn (modF (AF q V)) n) (hz : InF q V a z) :
   rw [Submodule.coe_sum]
   show _ = Ideal.Quotient.mk _ (∑ i : Fin (n + 2), (-1 : ℤ) ^ (i : ℕ) •
     (tv (AF q V) s z i.succAbove (Fin.strictMono_succAbove i).monotone : (s.obj (Fin.last (n + 1))).obj.B))
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_zsmul]
   rfl

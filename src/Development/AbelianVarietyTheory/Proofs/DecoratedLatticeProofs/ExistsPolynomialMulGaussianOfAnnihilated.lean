@@ -64,7 +64,8 @@ theorem foldr_dirD_eq_zero {T : Type} [Fintype T] [DecidableEq T] {W : Type} [No
   rw [← List.ofFn_get L, foldr_ofFn_dirD hu]
   have hs : L.get = fun i => ∑ τ, Pi.single τ (L.get i τ) := funext fun i => (Finset.univ_sum_single (L.get i)).symm
   simp only [Pi.zero_apply]
-  rw [hs, ContinuousMultilinearMap.map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hs, ContinuousMultilinearMap.map_sum]
   refine Finset.sum_eq_zero fun r _ => ?_
   have e1 : List.ofFn (fun i => (Pi.single (r i) (L.get i (r i)) : T → W)) =
       (List.ofFn fun i => (r i, L.get i (r i))).map (fun q => (Pi.single q.1 q.2 : T → W)) := by

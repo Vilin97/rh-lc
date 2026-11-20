@@ -44,7 +44,8 @@ theorem sum_Eop_diag (i : Fin a) : ∑ τ : E →+* ℂ, Eop τ i i = lieS E a i
       (fun τ => Eop τ i i)
   have h : (∑ τ : E →+* ℂ, Eop τ i i) + ∑ τ : E →+* ℂ, Eop τ i i = lieS E a i i 1 + lieS E a i i 1 := by
     nth_rw 2 [← hs]
-    rw [← Finset.sum_add_distrib, Finset.sum_congr rfl fun τ _ => Eop_add_conjugate τ i, ← map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Finset.sum_add_distrib, Finset.sum_congr rfl fun τ _ => Eop_add_conjugate τ i, ← map_sum,
       sum_atEmb_one, map_add]
   have h2 : (2 : ℂ) • (∑ τ : E →+* ℂ, Eop τ i i) = (2 : ℂ) • lieS E a i i 1 := by
     rw [two_smul, two_smul, h]
@@ -54,7 +55,8 @@ theorem lie_oneL_eq_sum_Eop (E : Type) [Field E] [NumberField E] [IsTotallyCompl
     lie E a (oneL E a) = ∑ τ : E →+* ℂ, ∑ i : Fin a, Eop τ i i := by
   rw [Finset.sum_comm, Finset.sum_congr rfl fun i _ => sum_Eop_diag i]
   simp only [lieS_apply]
-  rw [← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum]
   have hm : ∑ i : Fin a, Matrix.single i i (1 : Cinf E) = 1 := by
     refine Matrix.ext fun p q => ?_
     rw [Matrix.sum_apply, Matrix.one_apply]

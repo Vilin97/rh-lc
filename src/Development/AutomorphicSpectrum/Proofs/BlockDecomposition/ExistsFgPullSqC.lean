@@ -113,7 +113,8 @@ theorem afgA_of_bcOn_finO : BcOn False → FinO → AfgA := by
     | tmul n x => rw [hg]; exact Submodule.mem_iSup_of_mem i (hNmem i n x)
     | add t t' ht ht' => rw [Pi.single_add, map_add]; exact add_mem ht ht'
   have hy : y = ∑ i, g (Pi.single i (g.symm y i)) := by
-    rw [← map_sum, Finset.univ_sum_single, g.apply_symm_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, Finset.univ_sum_single, g.apply_symm_apply]
   rw [hy]
   exact sum_mem fun i _ => hsingle i _
 

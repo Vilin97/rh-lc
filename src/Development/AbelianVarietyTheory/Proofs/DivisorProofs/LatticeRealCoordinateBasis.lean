@@ -25,6 +25,7 @@ theorem GlobalTheory.exists_zlattice_basis_realCoord_integral : ∀ (g : ℕ) (�
       simp [bR, Module.Basis.ofZLatticeBasis_repr_apply]
     simp_rw [hx]
     conv_rhs => rw [← bZ.sum_repr x]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [Int.cast_smul_eq_zsmul, map_zsmul]

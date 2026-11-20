@@ -148,7 +148,8 @@ theorem heckeG_apply {ι : Type} (s : Finset ι) (γ : ι → Formalism.AUTREP.G
 
 theorem mc_heckeG (l : (Formalism.AUTREP.GAf L n → ℂ) →ₗ[ℂ] ℂ) {ι : Type} (s : Finset ι) (γ : ι → Formalism.AUTREP.GAf L n)
     (f : Formalism.AUTREP.GAf L n → ℂ) : mc l (heckeG s γ f) = heckeG s γ (mc l f) := by
-  rw [heckeG_apply, heckeG_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [heckeG_apply, heckeG_apply, map_sum]
   exact Finset.sum_congr rfl fun i _ => mc_rt l (γ i) f
 
 theorem mc_typeVec (l : (Formalism.AUTREP.GAf L n → ℂ) →ₗ[ℂ] ℂ) {J' : Set (Formalism.AUTREP.GAf L n)} {χ' : Formalism.AUTREP.GAf L n → ℂ}
@@ -309,7 +310,8 @@ theorem iso_transfer {π π' : Formalism.L2.NG.FinTyp L n} (hI : π.Iso π') {J'
     have e : (∑ i ∈ s, Formalism.L2.NG.rt L n (γ i) (T x' : Formalism.AUTREP.GAf L n → ℂ)) =
         ((T (∑ i ∈ s, (⟨Formalism.L2.NG.rt L n (γ i) x, π.stable (γ i) x hx⟩ : π.S)) : π'.S) :
           Formalism.AUTREP.GAf L n → ℂ) := by
-      rw [map_sum, Submodule.coe_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Submodule.coe_sum]
       exact Finset.sum_congr rfl fun i _ => (hrt (γ i)).symm
     rw [e]
     have e2 : (∑ i ∈ s, (⟨Formalism.L2.NG.rt L n (γ i) x, π.stable (γ i) x hx⟩ : π.S)) = a • x' := by

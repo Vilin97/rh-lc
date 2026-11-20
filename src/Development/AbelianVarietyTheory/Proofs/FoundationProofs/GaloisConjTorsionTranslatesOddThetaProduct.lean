@@ -231,7 +231,8 @@ theorem Hf_sum (z : VC D N N') (c : Fin r → ℂ) :
       ∑ j, coordB D T b j z * (starRingEnd ℂ) (c j) / (area T.abelian₂ : ℂ) := by
   rw [Hf, ← Finset.sum_div]
   congr 1
-  simp only [coordB, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum, map_mul, embV,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [coordB, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum, map_mul, embV,
     Finset.mul_sum, Finset.sum_mul]
   symm
   rw [Finset.sum_comm]
@@ -248,7 +249,8 @@ include hT
 theorem coordB_sum (c : Fin r → ℂ) (j : Fin r) :
     coordB D T b j (∑ i, c i • embV D T (b i)) = c j := by
   change coordL T b j _ = _
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [map_smul]
   simp [coordL_apply, hT]
 
@@ -335,16 +337,19 @@ theorem torConj_emb (τ : D.what₂.Tau) (x : D.host.E) :
 theorem frameCoordinate_orthonormal_baseTorus (hb : OnB D b) (i j : Fin r) :
     coordB D (tor0 D cc δ) b j (embV D (tor0 D cc δ) (b i)) = if i = j then 1 else 0 := by
   rw [← sum_emb_pair hb]
-  simp only [coordB, embV, tor0, map_sum, map_mul, emb_conj]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [coordB, embV, tor0, map_sum, map_mul, emb_conj]
 
 theorem ortho_torConj (hb : OnB D b) (i j : Fin r) :
     coordB D (torConj D (tor0 D cc δ) ⊤ (topHom s)) b j
       (embV D (torConj D (tor0 D cc δ) ⊤ (topHom s)) (b i)) = if i = j then 1 else 0 := by
   have h := congrArg s (sum_emb_pair hb i j)
-  rw [apply_ite s, map_one, map_zero, map_sum] at h
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [apply_ite s, map_one, map_zero, map_sum] at h
   rw [← h]
   simp only [coordB, embV, torConj_emb, ← emb_conj]
-  simp only [map_sum, map_mul, RingHom.comp_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, RingHom.comp_apply]
 
 theorem conjPair_prod {g g' : Fin r → ℂ → ℂ} (hg : ∀ j, Differentiable ℂ (g j))
     (hg' : ∀ j, Differentiable ℂ (g' j)) (h : ∀ j n, s (coef1 (g j) n) = coef1 (g' j) n) :

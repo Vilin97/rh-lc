@@ -27,7 +27,8 @@ theorem eig_rows_map {k K O : Type} [Field k] [Field K] (i : k →+* K) {m n : �
   have key : ∀ (l : K →ₗ[k] k) {p q : ℕ} (M : Matrix (Fin p) (Fin q) k) (v : Fin p → K),
       (fun j => l ((v ᵥ* M.map i) j)) = (fun j => l (v j)) ᵥ* M := fun l p q M v => by
     funext j
-    simp only [Matrix.vecMul, dotProduct, map_sum, Matrix.map_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.vecMul, dotProduct, map_sum, Matrix.map_apply]
     refine Finset.sum_congr rfl fun s _ => ?_
     rw [_root_.mul_comm (v s), _root_.mul_comm (l _), ← smul_eq_mul (M s j), ← map_smul, Algebra.smul_def]
     rfl

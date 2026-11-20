@@ -84,7 +84,8 @@ theorem pderiv_uncurry (f : PS C 1 dd) (i : Fin dd) :
 theorem uncurry_linear_combination (r : Fin dd → C) (f : Fin dd → PS C 1 dd) :
     un1 (∑ i, MvPowerSeries.C (r i) * f i) = ∑ i, MvPowerSeries.C (r i) * un1 (f i) := by
   simp only [uncurry_eq_subst]
-  rw [← MvPowerSeries.coe_substAlgHom hasSubst_snd, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← MvPowerSeries.coe_substAlgHom hasSubst_snd, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_mul, MvPowerSeries.coe_substAlgHom, MvPowerSeries.subst_C]
 
@@ -112,7 +113,8 @@ theorem ev_pt_dF (Y : FBChart C V O dd) (v : Fin dd → C) (g' : Fin 2) (j : Fin
 theorem pderiv_lin {κ : Type} [Fintype κ] (X : RawChart C d I κ) (g : Fin 2) (k : I g) (i : κ) :
     MvPowerSeries.pderiv C k (∑ c : I g, X.u g c i • (MvPowerSeries.X c : MvPowerSeries (I g) C)) =
       MvPowerSeries.C (X.u g k i) := by
-  rw [map_sum, Finset.sum_eq_single k]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_eq_single k]
   · rw [Derivation.map_smul, MvPowerSeries.pderiv_X_self, MvPowerSeries.smul_eq_C_mul, mul_one]
   · intro c _ hc
     rw [Derivation.map_smul, MvPowerSeries.pderiv_X_of_ne hc, smul_zero]
@@ -135,7 +137,8 @@ theorem pderiv_expG (Y : FBChart C V O dd) (p : PairData Y d I) (hE : ExDerSt Y)
   rw [Formalism.G.LogCR.pderiv_subst hlin0,
     ← MvPowerSeries.subst_comp_subst_apply (MvPowerSeries.hasSubst_of_constantCoeff_zero hx0) hL]
   simp only [pderiv_lin]
-  rw [e1, ← MvPowerSeries.coe_substAlgHom hL, map_sum, MvPowerSeries.coe_substAlgHom]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e1, ← MvPowerSeries.coe_substAlgHom hL, map_sum, MvPowerSeries.coe_substAlgHom]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [MvPowerSeries.subst_mul hL, MvPowerSeries.subst_C, mul_comm]
 
@@ -205,7 +208,8 @@ theorem cEqDer_of
       ∑ j, MvPowerSeries.subst (fun q : Fin 2 × Fin dd => (Y.raw p).expPt q.1 q.2)
           (MvPowerSeries.pderiv C ((1 - g : Fin 2), j) Y.h) *
         MvPowerSeries.subst ((Y.raw p).expPt (1 - g)) (un1 (Y.dF ((Y.raw p).u (1 - g) k) j)) := by
-    rw [← MvPowerSeries.coe_substAlgHom hES, map_sum, MvPowerSeries.coe_substAlgHom]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← MvPowerSeries.coe_substAlgHom hES, map_sum, MvPowerSeries.coe_substAlgHom]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [MvPowerSeries.subst_mul hES, subst_exp_eval_two _ hE0, mul_comm]
   have hJ : IntS V J := by

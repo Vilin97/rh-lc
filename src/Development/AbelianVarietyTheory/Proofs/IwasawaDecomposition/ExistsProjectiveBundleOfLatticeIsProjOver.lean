@@ -42,11 +42,13 @@ theorem eq_top_of_genPt_mem (j₀ : J) (K : Subfield (FractionRing (MvPolynomial
 theorem eq_zero_of_sum_genPt (j₀ : J) (b : J → Ω) (h : ∑ j, algebraMap Ω _ (b j) * genPt Ω j₀ j = 0) : b = 0 := by
   have h' : ∑ j, MvPolynomial.C (b j) * genPoly Ω j₀ j = 0 := by
     apply IsFractionRing.injective _ (FractionRing (MvPolynomial {j // j ≠ j₀} Ω))
-    rw [map_zero, map_sum, ← h]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_zero, map_sum, ← h]
     exact Finset.sum_congr rfl fun j _ => by rw [map_mul]; rfl
   have e : ∀ x : J → Ω, x j₀ = 1 → ∑ j, b j * x j = 0 := fun x hx => by
     have := congrArg (MvPolynomial.eval fun j : {j // j ≠ j₀} => x j.1) h'
-    rw [map_zero, map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_zero, map_sum] at this
     rw [← this]
     refine Finset.sum_congr rfl fun j _ => ?_
     by_cases hj : j = j₀

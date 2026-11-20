@@ -29,7 +29,8 @@ theorem notOff (S : GridChoice W U) {t : T} (ht : t ∈ U) {w : Pl D.host.E} (hw
 theorem cpt_supp_zero {S : Finset ℕ} {w : Pl D.host.E} (hw : ¬ Off S w) {P : Finset (Pl D.host.E)} {e : AE D}
     (he : IsIdemSum e P) (hoff : ∀ w' ∈ P, Off S w') : cpt w (toEAf D (e + cA D e)) = 0 := by
   obtain ⟨⟨es, hes, rfl⟩, -⟩ := he
-  rw [map_sum, ← Finset.sum_add_distrib, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, ← Finset.sum_add_distrib, map_sum, map_sum]
   refine Finset.sum_eq_zero fun w' hw' => ?_
   obtain ⟨hne, hnc⟩ := GlobalTheory.StdHalfLat.ne_and_not_conj hw (hoff w' hw')
   rw [map_add, map_add, (cpt_of_isIdemAt (hes w' hw')).2 w hne,

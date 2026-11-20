@@ -53,7 +53,8 @@ theorem formal_group_lin_generation : PI.FglPtW.LinGen := by
       rw [Finset.sum_insert hi]
       have hw : MvPowerSeries.constantCoeff
           (∑ j ∈ s, MvPowerSeries.C (c j) * PowerSeries.subst (a j) l) = 0 := by
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         exact Finset.sum_eq_zero fun j _ => hcc j
       have hy := PI.FglPtW.Wk.mulGen_thm K S l ex hex hl (c i) (hc i) σ (a i) (ha i)
       have h := PI.FglPtW.Wk.addGen_thm K S l ex hex hl hadd σ _ _ hy ih

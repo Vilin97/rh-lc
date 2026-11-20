@@ -304,7 +304,8 @@ theorem mem_raise_fam (hm : ∀ x y, st (x * y) = st y * st x) (hi : ∀ x, st (
       rw [mul_sub, mul_one, Finset.mul_sum, sub_eq_self]
       exact Finset.sum_eq_zero fun j _ => he.ortho (ha j)
     have l3 : ∀ b, (∀ j, some (.inr j) ≠ b) → (1 - st (∑ j, u j)) * fam st u b = fam st u b := fun b hb => by
-      rw [sub_mul, one_mul, map_sum, Finset.sum_mul, sub_eq_self]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [sub_mul, one_mul, map_sum, Finset.sum_mul, sub_eq_self]
       exact Finset.sum_eq_zero fun j _ => he.ortho (hb j)
     have l : ∀ a b, (∀ j, a ≠ some (.inl j)) → (∀ j, some (.inr j) ≠ b) → fam st u a * x * fam st u b = 0 :=
       fun a b ha hb => by

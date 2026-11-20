@@ -57,7 +57,8 @@ theorem ex_lin (Y : FBChart C V O dd) (i m : Fin dd) :
       constantCoeff (pderiv C ((0 : Fin 1), i) (pt C (n := 1) dd 0 m)) := by
     rw [Y.lg_ex]
   unfold comp1 at h
-  rw [pderiv_eval_single hZ, map_sum] at h
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [pderiv_eval_single hZ, map_sum] at h
   simp only [map_mul, constantCoeff_ev hZ, constantCoeff_pderiv] at h
   have hl : ∀ k, coeff (Finsupp.single ((0 : Fin 1), k) 1) (Y.lg m) = if k = m then 1 else 0 := by
     intro k

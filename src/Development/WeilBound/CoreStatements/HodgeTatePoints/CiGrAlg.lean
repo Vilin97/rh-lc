@@ -35,7 +35,8 @@ theorem step_basis (β : Module.Basis (Fin n) K V) {s : ℕ} (hs : s ≤ n) {W :
       β.repr x l = ∑ k, γ.repr x k * (if Fin.castLE hs k = l then 1 else 0) := by
     intro x l
     conv_lhs => rw [← γ.sum_repr x]
-    simp only [Submodule.coe_sum, Submodule.coe_smul, hγ, map_sum, map_smul, Finsupp.coe_finset_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Submodule.coe_sum, Submodule.coe_smul, hγ, map_sum, map_smul, Finsupp.coe_finset_sum,
       Finset.sum_apply, Finsupp.smul_apply, Module.Basis.repr_self, Finsupp.single_apply, smul_eq_mul]
   refine ⟨γ, hγ, fun x k => ?_, fun x l hl => ?_⟩
   · rw [key, Finset.sum_eq_single k]
@@ -80,7 +81,8 @@ private theorem v_repr_le_one_of_basis_change (C : ACurve K) (i : C.I) {ι ι' :
     (x : V) (hx : ∀ k, C.v i (e.repr x k) ≤ 1) (l : ι') : C.v i (e'.repr x l) ≤ 1 := by
   have hsum : e'.repr x l = ∑ k, e.repr x k * e'.repr (e k) l := by
     conv_lhs => rw [← e.sum_repr x]
-    simp only [map_sum, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.smul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.smul_apply,
       smul_eq_mul]
   rw [hsum]
   apply Valuation.map_sum_le

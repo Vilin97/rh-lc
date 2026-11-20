@@ -41,7 +41,8 @@ private lemma linearIndependent_map_ringHom_complex {E : Type} [Field E] {n : �
     · simp [hki]
   have h4 := congrArg (fun w => ((LinearMap.toMatrix' L).map φ *ᵥ w) j) hc
   simp only [Matrix.mulVec_zero, Pi.zero_apply] at h4
-  rw [← h4, ← Matrix.mulVecLin_apply, map_sum, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← h4, ← Matrix.mulVecLin_apply, map_sum, Finset.sum_apply]
   simp only [map_smul, Pi.smul_apply, Matrix.mulVecLin_apply, hcol, smul_eq_mul, mul_ite, mul_one,
     mul_zero, Finset.sum_ite_eq, Finset.mem_univ, if_true]
 

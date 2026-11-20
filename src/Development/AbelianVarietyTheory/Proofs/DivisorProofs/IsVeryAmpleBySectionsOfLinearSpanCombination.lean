@@ -43,7 +43,8 @@ theorem iSup_nonzeroLocus_of_span {R : Type} [CommRing R] {X : Scheme.{0}} (f : 
     rw [hst i, GlobalTheory.LinChange.sum_f]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [GlobalTheory.LB.smul_f, GlobalTheory.LinChange.resG_cst]
-  rw [e, map_sum] at hu
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, map_sum] at hu
   refine (IsLocalRing.mem_maximalIdeal _).1 (Ideal.sum_mem _ fun j _ => ?_) hu
   rw [map_mul]
   exact Ideal.mul_mem_left _ _ ((IsLocalRing.mem_maximalIdeal _).2 (hnu j))

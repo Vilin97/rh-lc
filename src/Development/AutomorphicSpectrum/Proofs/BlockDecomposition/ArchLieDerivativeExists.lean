@@ -146,7 +146,8 @@ theorem sliceL_aeval_lapOp {d : ℕ} (b : Module.Basis (Fin d) ℝ (isExpLieAlge
     sliceL g (smL E a (Polynomial.aeval (lapOp (⇑b)) P ψ)) =
       Polynomial.aeval ((isExpLieAlgebra E a).laplacian (F := ℂ) b) P (sliceL g (smL E a ψ)) := by
   refine AutomorphicForm.map_aeval_apply_of_intertwine ((sliceL g).comp (smL E a)) (fun m => ?_) P ψ
-  simp only [LinearMap.comp_apply, smL_lapOp, map_sum, sliceL_uAction,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [LinearMap.comp_apply, smL_lapOp, map_sum, sliceL_uAction,
     IsExpLieAlgebra.laplacian, LinearMap.sum_apply, Module.End.mul_apply,
     IsExpLieAlgebra.rightUAction_ι]
 

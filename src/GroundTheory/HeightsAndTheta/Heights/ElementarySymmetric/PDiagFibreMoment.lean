@@ -40,9 +40,11 @@ theorem continuous_coeff_aeval (Q : MvPolynomial (Fin 2) ℝ) (m : Fin 3 →₀ 
   have hv : ![dotPoly (Prod.fst : S2 × S2 → S2), dotPoly Prod.snd] = fun r => mapAlgHom φ (v r) := by
     funext r
     fin_cases r
-    · simp only [Fin.zero_eta, Matrix.cons_val_zero, v, dotPoly, mapAlgHom_apply, map_sum, map_mul, map_X, map_C]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp only [Fin.zero_eta, Matrix.cons_val_zero, v, dotPoly, mapAlgHom_apply, map_sum, map_mul, map_X, map_C]
       rfl
-    · simp only [Fin.mk_one, Matrix.cons_val_one, Matrix.cons_val_fin_one, v, dotPoly, mapAlgHom_apply, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp only [Fin.mk_one, Matrix.cons_val_one, Matrix.cons_val_fin_one, v, dotPoly, mapAlgHom_apply, map_sum,
         map_mul, map_X, map_C]
       rfl
   rw [hv, ← comp_aeval, AlgHom.comp_apply, mapAlgHom_apply, coeff_map]
@@ -62,7 +64,8 @@ theorem sum_diagWordMomentPoly (k : ℕ) :
   simp only [diagWordMomentPoly]
   rw [← momentPoly_sum _ _ _ _ fun i _ m =>
     FibreLocal.integrable_mul _ (continuous_coeff_aeval _ m)]
-  rw [← map_sum, ← map_sum, ← map_sum, sum_words]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum, ← map_sum, ← map_sum, sum_words]
   rfl
 
 theorem fibreMomentPoly_eq (k : ℕ) :
@@ -73,7 +76,8 @@ theorem fibreMomentPoly_eq (k : ℕ) :
 theorem proof (h : DiagFibreFubini.Statement) : DiagFibreMoment.Statement := by
   intro D S X A X₀ X₁ A₀ hX hA hAb p0 p1 pA k hk hkD
   obtain ⟨Λ, hw, hp⟩ := h D S X A X₀ X₁ A₀ hX hA hAb p0 p1 pA k hk hkD
-  rw [Finset.sum_congr rfl fun i hi => hw i (Finset.mem_range.1 hi), ← Finset.mul_sum, ← map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.sum_congr rfl fun i hi => hw i (Finset.mem_range.1 hi), ← Finset.mul_sum, ← map_sum,
     sum_diagWordMomentPoly, fibreMomentPoly_eq, hp, FibreLocal.pushMomentPoly_eq k hk, C_mul', map_smul,
     map_neg, smul_eq_mul]
   ring

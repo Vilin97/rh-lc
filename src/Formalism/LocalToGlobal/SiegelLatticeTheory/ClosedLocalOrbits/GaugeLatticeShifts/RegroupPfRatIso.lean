@@ -35,7 +35,8 @@ theorem rational_isomorphism_holds : RatIsoC := by
     funext i
     show X.ιE.symm (X.bas.repr (Matrix.toLin X.bas X.bas Mg y) i) = _
     rw [Matrix.toLin_apply, Module.Basis.repr_sum_self]
-    simp [Mg, φ, Matrix.mulVec, dotProduct, Formalism.L2.SG.HidaSetting.HidaSetting.crd,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Mg, φ, Matrix.mulVec, dotProduct, Formalism.L2.SG.HidaSetting.HidaSetting.crd,
       Formalism.L2.SG.HidaSetting.crdOf, map_sum, map_mul]
   refine ⟨σ, ⟨g, hgU, h1, h2, hcrd⟩, fun x y => ?_⟩
   rw [← Formalism.L2.SG.PoincareInHH.Cut.hform_crd (X := X) (σ x) (σ y),

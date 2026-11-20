@@ -56,7 +56,8 @@ theorem GlobalTheory.BSP.BK.descent_step : ∀ (l : ℕ) [Fact l.Prime] (K : Fin
           i' (cc (x j)) = ∑ i, i' (cc (x i)) ^ l * i' (cc (c i j)) + i' (cc (b j)) := by
         intro i'
         conv_lhs => rw [hx j]
-        rw [RingHom.map_add cc, map_sum cc, RingHom.map_add i', map_sum i']
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [RingHom.map_add cc, map_sum cc, RingHom.map_add i', map_sum i']
         refine congrArg (· + _) (Finset.sum_congr rfl fun i _ => ?_)
         rw [RingHom.map_mul cc, RingHom.map_mul i', constantCoeff_frobW, RingHom.map_pow i']
       have e2 : ∀ i, i₂ (cc (c i j)) = i₁ (cc (c i j)) := fun i => (h12 _ (hmemc _ (hc i j))).symm

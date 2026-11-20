@@ -60,7 +60,8 @@ private theorem grSpan_small {Λ : Type} [CommRing Λ] {σ : Type} [Fintype σ] 
     MvPowerSeries.coeff n (f - ∑ α : (∀ s, Fin (d s)),
       MvPowerSeries.coeff (Finsupp.equivFunOnFinite.symm fun s => (α s : ℕ)) f •
         (∏ s, MvPowerSeries.X s ^ (α s : ℕ) : MvPowerSeries σ Λ)) = 0 := by
-  rw [map_sub, map_sum, sub_eq_zero]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sub, map_sum, sub_eq_zero]
   simp only [grSpan_prod, map_smul, MvPowerSeries.coeff_monomial, smul_eq_mul, mul_ite, mul_one, mul_zero]
   rw [Finset.sum_eq_single (fun s => ⟨n s, hn s⟩ : ∀ s, Fin (d s))]
   · simp [Finsupp.equivFunOnFinite_symm_coe]
@@ -135,7 +136,8 @@ theorem UpperTheory.V.AlgebraTools.mvPowerSeries_span_monomials :
     rw [Submodule.restrictScalars_top] at h2
     rw [← h2, Submodule.restrictScalars_mem]
     exact h1
-  · rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum]
     refine Submodule.sum_mem _ fun α _ => ?_
     have e := map_smul (Ideal.Quotient.mkₐ Λ (Ideal.span (Set.range w)))
       (MvPowerSeries.coeff (Finsupp.equivFunOnFinite.symm fun s => (α s : ℕ)) f)

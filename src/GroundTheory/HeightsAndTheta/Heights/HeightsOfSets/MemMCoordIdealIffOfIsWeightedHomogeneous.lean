@@ -40,7 +40,8 @@ theorem mConeMap_of_isWeightedHomogeneous {Ω : Type*} [Field Ω] (y : Coord n �
   classical
   conv_lhs => rw [g.as_sum]
   conv_rhs => rw [g.as_sum]
-  rw [map_sum, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, map_sum]
   refine Finset.sum_congr rfl fun d hd ↦ ?_
   rw [mConeMap_monomial, hg (mem_support_iff.mp hd)]
 
@@ -88,7 +89,8 @@ theorem mem_mCoordIdeal_iff {Ω : Type*} [Field Ω] (y : Coord n → Ω)
     have hm₀ : m₀ ∈ compDegs f := (Set.Finite.mem_toFinset _).mpr h0
     have hk := congrArg (AddMonoidAlgebra.coeff · (Finsupp.equivFunOnFinite.symm m₀))
       (show Geo.mConeMap (ι := blockIdx n) y f = 0 from hf)
-    rw [← sum_compDegs f, map_sum, coeff_sum, coeff_zero,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← sum_compDegs f, map_sum, coeff_sum, coeff_zero,
       Finset.sum_eq_single m₀] at hk
     · rwa [mConeMap_of_isWeightedHomogeneous y
         (weightedHomogeneousComponent_isWeightedHomogeneous m₀ f), coeff_monomial, if_pos rfl] at hk

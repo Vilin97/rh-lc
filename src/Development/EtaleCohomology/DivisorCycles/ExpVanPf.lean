@@ -15,7 +15,8 @@ theorem deriv_E (Y : Mat C N) (p : Fin N × Fin N) :
     PowerSeries.derivative C (E Y p) = MvPolynomial.aeval (E Y) (DX Y (MvPolynomial.X p)) := by
   rw [DX, MvPolynomial.mkDerivation_X]
   ext n
-  rw [PowerSeries.coeff_derivative, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [PowerSeries.coeff_derivative, map_sum, map_sum]
   simp only [E, PowerSeries.coeff_mk, map_mul, MvPolynomial.aeval_C, MvPolynomial.aeval_X]
   simp only [Matrix.smul_apply, smul_eq_mul]
   rw [pow_succ', Matrix.mul_apply, Finset.mul_sum, Finset.sum_mul]

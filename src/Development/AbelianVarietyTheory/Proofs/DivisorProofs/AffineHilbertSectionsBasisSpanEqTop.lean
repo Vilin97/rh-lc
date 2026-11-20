@@ -71,7 +71,8 @@ theorem span_gen_eq_top (A B : Type) [CommRing A] [CommRing B] [Algebra A B] (N 
       (W : Z.Opens))).hom (algebraMap S Q ((Scheme.ΓSpecIso (CommRingCat.of B)).inv.hom b))) ∈
       Submodule.span Γ(Z, W) (Set.range fun j => gen A B y W (e j)) := by
     intro b
-    rw [← e.sum_repr b, map_sum, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← e.sum_repr b, map_sum, map_sum, map_sum]
     refine Submodule.sum_mem _ fun j _ => ?_
     rw [Algebra.smul_def, term]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨j, rfl⟩)

@@ -57,7 +57,8 @@ theorem ddConst_eq (f j k : ℕ) (G : IndefiniteRowSideFullHecke.RestTerms.Roots
 theorem rename_psumAt (f j k m : ℕ) (τ : Fin f) (w : Fin f → Equiv.Perm (Fin (j + k))) :
     rename (Equiv.prodCongrRight w) (IndefiniteRowSideFullHecke.RestTerms.psumAt f j k m τ) =
       IndefiniteRowSideFullHecke.RestTerms.psumAt f j k m τ := by
-  simp only [IndefiniteRowSideFullHecke.RestTerms.psumAt, map_sum, map_pow, rename_X, Equiv.prodCongrRight_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [IndefiniteRowSideFullHecke.RestTerms.psumAt, map_sum, map_pow, rename_X, Equiv.prodCongrRight_apply]
   exact Equiv.sum_comp (w τ) (fun i => (X (τ, i) : IndefiniteRowSideFullHecke.RestTerms.Roots f j k) ^ m)
 
 def antisym (f j k : ℕ) (G : IndefiniteRowSideFullHecke.RestTerms.Roots f j k) : IndefiniteRowSideFullHecke.RestTerms.Roots f j k :=
@@ -81,7 +82,8 @@ theorem rename_antisym (f j k : ℕ) (u : Fin f → Equiv.Perm (Fin (j + k)))
     congr 1
   have hs : ((permSign f (j + k) u : ℤ) : ℝ) * ((permSign f (j + k) u : ℤ) : ℝ) = 1 := by
     exact_mod_cast permSign_mul_self u
-  simp only [antisym, map_sum, map_smul, hcomp, smul_sum, smul_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [antisym, map_sum, map_smul, hcomp, smul_sum, smul_smul]
   refine Fintype.sum_equiv (Equiv.mulLeft u) _ _ (fun w => ?_)
   simp only [Equiv.coe_mulLeft, permSign_mul]
   push_cast

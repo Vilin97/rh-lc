@@ -181,7 +181,8 @@ theorem coc3 (i : Fin 3 → ι) (W : X.Opens) (hW : W ≤ capO U i) (h₁ : W �
       refine Finset.sum_congr rfl fun k' _ => ?_
       rw [V.e_chg 2 1 2 x i k', Finset.mul_sum]
       exact Finset.sum_congr rfl fun k'' _ => mul_assoc _ _ _) v
-  simp only [map_sum, map_mul, rs_trans, Finset.sum_mul] at key
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, rs_trans, Finset.sum_mul] at key
   simp only [Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Eq.trans (Finset.sum_congr rfl fun k'' _ => Finset.sum_congr rfl fun k' _ => (mul_assoc _ _ _).symm) key
@@ -317,7 +318,8 @@ theorem finite_H_cx : ∀ {O : Type} [CommRing O] [IsNoetherianRing O] {X : Sche
     funext i
     rw [d_apply]
     change secRes V.g (inter_le_capO U i) (toSec V (n + 1) (K.d n x) i) = _
-    rw [Cos.d_apply, map_sum, Finset.sum_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Cos.d_apply, map_sum, Finset.sum_apply, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_zsmul, Pi.smul_apply, map_zsmul, toSec_δ]
     have H := (inter_le_comp (X := X.toTopCat) U i k.succAbove).trans (inter_le_capO U (i ∘ k.succAbove))

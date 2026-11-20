@@ -122,7 +122,8 @@ theorem eP_secB (hn : n ≤ n1) (y : EE) : eP a n1 (secB b a y) = secB b a y := 
 theorem coord_of_prB (h : n ≤ a) {u : En a} (hu : prB b a h u = 0) (k : Fin n) : u (Fin.castLE h k) = 0 := by
   have h2 := congrArg (fun z => b.repr z k) hu
   have h3 : prB b a h u = ∑ k : Fin n, u (Fin.castLE h k) • b k := rfl
-  simp only [h3, map_sum, map_smul, b.repr_self, map_zero] at h2
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [h3, map_sum, map_smul, b.repr_self, map_zero] at h2
   simpa [Finset.sum_apply, Pi.single_apply] using h2
 
 theorem inner_secB_of_ker (h : n ≤ a) {u : En a} (hu : prB b a h u = 0) (y : EE) :

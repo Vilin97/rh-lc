@@ -205,7 +205,8 @@ theorem exists_basis_of_kaehler {K R : Type} [Field K] [CharZero K] [CommRing R]
       have h3 := congrFun this r
       rw [Finset.sum_apply] at h3
       refine Eq.trans ?_ h3.symm
-      rw [← hD', ← D'.liftKaehlerDifferential_comp_D r, ← bΩ.sum_repr (KaehlerDifferential.D K R r), map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hD', ← D'.liftKaehlerDifferential_comp_D r, ← bΩ.sum_repr (KaehlerDifferential.D K R r), map_sum]
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [map_smul, hb, D'.liftKaehlerDifferential_comp_D, hD']
       simp [hd', mul_comm]) e he M hM
@@ -225,7 +226,8 @@ theorem exists_basis_map {k A B : Type} [CommRing k] [CommRing A] [CommRing B] [
   let v : Fin n → Ω[B⁄k] := fun i => KaehlerDifferential.D k B (algebraMap A B (z i))
   have hv : ∀ i, v i = ∑ l, algebraMap A B (c i l) • hbc.basis b l := by
     intro i
-    simp only [v, ← KaehlerDifferential.map_D k k A B, hc, map_sum, map_smul, IsBaseChange.basis_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [v, ← KaehlerDifferential.map_D k k A B, hc, map_sum, map_smul, IsBaseChange.basis_apply,
       algebraMap_smul]
   have hm : (hbc.basis b).toMatrix v = (c.map (algebraMap A B)).transpose := by
     ext l i
@@ -288,7 +290,8 @@ theorem exists_coords {k : Type} [Field k] [CharZero k] {X : Scheme.{0}} [IsLoca
       funext j
       rw [Function.comp_apply, Fintype.linearCombination_apply, ← hz₀ j]
       have e1 := congrArg (KaehlerDifferential.map k k Γ(X, U) (X.presheaf.stalk y)) (ha j)
-      rw [map_sum] at e1
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum] at e1
       change KaehlerDifferential.map k k Γ(X, U) (X.presheaf.stalk y)
         (KaehlerDifferential.D k Γ(X, U) (z₀ j)) = _ at e1
       rw [KaehlerDifferential.map_D] at e1

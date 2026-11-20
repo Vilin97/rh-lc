@@ -75,7 +75,8 @@ theorem lft_mem (cc : Ideal (𝓞 D.host.K)) (δ : ℂ) (P : Matrix (Fin N') (Fi
   · intro A
     funext τ i j
     show ∑ k, embT D τ (P i k) * embT D τ (A k j) = embT D τ ((P * A) i j)
-    simp only [Matrix.mul_apply, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mul_apply, map_sum, map_mul]
   · intro A hA x hx
     show (P * A).mulVec x ∈ M'
     rw [← Matrix.mulVec_mulVec]
@@ -90,7 +91,8 @@ theorem rgt_mem (cc : Ideal (𝓞 D.host.K)) (δ : ℂ) (P : Matrix (Fin N) (Fin
   · intro A
     funext τ i j
     show ∑ k, embT D τ (A i k) * embT D τ (P k j) = embT D τ ((A * P) i j)
-    simp only [Matrix.mul_apply, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mul_apply, map_sum, map_mul]
   · intro A hA x hx
     show (A * P).mulVec x ∈ L'
     rw [← Matrix.mulVec_mulVec]

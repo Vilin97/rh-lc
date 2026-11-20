@@ -86,7 +86,8 @@ theorem exists_coord {σ : K →+* ℂ} {y : Sp ℂ ⟶ M.Z} (hy : y ≫ M.s = s
       map_add' := fun a b => by rw [map_add, add_div]; exact val_add hr (hall a) (hall b) }
   refine ⟨fun j => ℓ (b j), fun v => ?_⟩
   change ℓ v = _
-  conv_lhs => rw [← b.sum_repr v, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [← b.sum_repr v, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   change M.val y _ = _
   rw [hsm, val_mul hr (const_val hy _).1 (hall _), (const_val hy _).2]

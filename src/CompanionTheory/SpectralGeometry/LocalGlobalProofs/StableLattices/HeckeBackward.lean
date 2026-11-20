@@ -148,7 +148,8 @@ theorem IsPol.scalar {F : ℂ → Module.End ℂ M} (h : IsPol F) (v : M) (φ : 
   have e : ∀ i, (p.coeff i * (algebraMap ℂ (Module.End ℂ M) x) ^ i) v = x ^ i • (p.coeff i v) := by
     intro i
     rw [← map_pow, Module.End.mul_apply, Module.algebraMap_end_apply, map_smul]
-  rw [hp, eval₂_eq_sum_range, LinearMap.sum_apply, map_sum, Polynomial.eval_finsetSum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hp, eval₂_eq_sum_range, LinearMap.sum_apply, map_sum, Polynomial.eval_finsetSum]
   refine Finset.sum_congr rfl fun i _ => ?_
   simp only [RingHom.id_apply, e, map_smul, smul_eq_mul, eval_mul, eval_C, eval_pow, eval_X, mul_comm]
 
@@ -351,7 +352,8 @@ theorem central (X : GMod n) (N : Module.End ℂ X.V) (Y c : ℂ)
 theorem commute_om_compLeft (X : GMod n) (N : Module.End ℂ X.V) (hc : ∀ a b, Commute N (X.E a b)) :
     Commute (om X) (N.compLeft (Fin n)) := by
   refine LinearMap.ext fun u => funext fun b => ?_
-  simp only [Module.End.mul_apply, om_apply, LinearMap.compLeft_apply, Function.comp_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Module.End.mul_apply, om_apply, LinearMap.compLeft_apply, Function.comp_apply, map_sum]
   refine Finset.sum_congr rfl fun a _ => ?_
   exact (LinearMap.congr_fun (hc a b).eq (u a)).symm
 

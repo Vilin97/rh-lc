@@ -53,7 +53,8 @@ theorem cT_diagonal (σ : A →+* A) (u : Fin n → A) :
 theorem comp_mulVec (σ : A →+* A) (M : Matrix (Fin n) (Fin n) A) (x : Fin n → A) :
     (fun i => σ ((M *ᵥ x) i)) = (fun i => σ (x i)) ᵥ* Formalism.UG.cT σ M := by
   funext i
-  simp only [Matrix.mulVec, Matrix.vecMul, dotProduct, map_sum, map_mul, Formalism.UG.cT, Matrix.transpose_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mulVec, Matrix.vecMul, dotProduct, map_sum, map_mul, Formalism.UG.cT, Matrix.transpose_apply,
     Matrix.map_apply, mul_comm]
 
 theorem smul_congr_left {ε : A} {M N : Matrix (Fin n) (Fin n) A} (X : Matrix (Fin n) (Fin n) A)

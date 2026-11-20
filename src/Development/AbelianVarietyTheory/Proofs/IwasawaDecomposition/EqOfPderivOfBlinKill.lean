@@ -146,10 +146,12 @@ theorem pderiv_blin (M : K → K' → ℤ) (F : MvPowerSeries (K × ρ) S) (j : 
   rw [blin, GlobalTheory.FormalCalc.pderiv_subst (hasSubst_blinV M), Fintype.sum_prod_type]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [Finset.sum_eq_single r]
-  · simp only [blinV, map_sum, map_zsmul, GlobalTheory.FormalCalc.pderiv_X_ite, Prod.mk.injEq]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [blinV, map_sum, map_zsmul, GlobalTheory.FormalCalc.pderiv_X_ite, Prod.mk.injEq]
     simp [smul_ite, Finset.sum_ite_eq', blin, mul_comm]
   · intro s _ hs
-    simp only [blinV, map_sum, map_zsmul, GlobalTheory.FormalCalc.pderiv_X_ite, Prod.mk.injEq]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [blinV, map_sum, map_zsmul, GlobalTheory.FormalCalc.pderiv_X_ite, Prod.mk.injEq]
     simp [hs]
   · simp
 

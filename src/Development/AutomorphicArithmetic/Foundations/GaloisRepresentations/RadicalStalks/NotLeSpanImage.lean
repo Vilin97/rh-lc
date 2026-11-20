@@ -29,7 +29,8 @@ private lemma not_le_span_image {k P : Type*} [Field k] [AddCommGroup P] [Module
       have h : ((∑ i, b.repr ⟨y, hy⟩ i • b i : K) : P) = y := by rw [b.sum_repr]
       rw [Submodule.coe_sum] at h
       simpa only [Submodule.coe_smul] using h.symm
-    rw [e, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, map_sum]
     refine Submodule.sum_mem _ fun i _ => ?_
     rw [hA]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)

@@ -112,7 +112,8 @@ theorem sum_al₀_actT : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] 
   have key := (hu.2 _ (algebraMap 𝓞_ℂ_[p] ℂ_[p]) _ (isTanAtG_of_comb hT c1)).unique c1 c2
   have hv : ∀ i, (Q.al₀ (Q.actT (star o) s)).1 (v i) = ∑ j, M i j * (Q.al₀ s).1 (v j) := fun i => by
     rw [Q.al₀_act, omegaAct_apply, star_star, eq_combLie hπ hvu (hM i) (iTie_act hact (hvu i) o), omega_combLie]
-  simp only [hv, map_sum, map_mul, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hv, map_sum, map_mul, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun j _ => ?_
   have k := congrFun key j

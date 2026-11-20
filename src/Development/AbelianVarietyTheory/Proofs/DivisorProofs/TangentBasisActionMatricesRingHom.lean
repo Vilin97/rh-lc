@@ -47,7 +47,8 @@ theorem actMat_ringHom : ∀ {E : Type} [Field E] [NumberField E] [IsCMField E] 
   · intro a b
     ext i j
     have e : ∑ k, A (a * b) i k • T k = ∑ k, (A a * A b) i k • T k := by
-      rw [← hact, mul_comm a b, map_mul, Module.End.mul_apply, hact, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hact, mul_comm a b, map_mul, Module.End.mul_apply, hact, map_sum]
       simp only [map_smul, hact, Finset.smul_sum, smul_smul, Matrix.mul_apply, Finset.sum_smul]
       exact Finset.sum_comm
     exact congrFun (uniq _ _ e) j

@@ -513,7 +513,8 @@ theorem exists_pow_sub_pow {X Y v : Γ} (hX : X ∈ T.int) (hY : Y ∈ T.int) (h
       intro i hi
       rw [map_mul, map_pow, map_pow, hXY, ← pow_add]
       congr 1; have := Finset.mem_range.1 hi; omega
-    rw [map_sum, Finset.sum_congr rfl this, Finset.sum_const, Finset.card_range, nsmul_eq_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_congr rfl this, Finset.sum_const, Finset.card_range, nsmul_eq_mul,
       CharP.cast_eq_zero, zero_mul]
   obtain ⟨g, hg, hGg⟩ := T.exists_eq_π_mul _ hG hGred
   refine ⟨g * v, mul_mem hg hv, ?_⟩

@@ -45,7 +45,8 @@ theorem sum_act {W : Type} [Fintype W] (v : W → Pl D) (hv : Function.Injective
   have h4 : algebraMap (AF D.host.F) (AE D) (pairA D.host.F 1 0) * y = 0 :=
     GlobalTheory.SplitScalar.adele_ext (by rw [RingHom.map_mul, h1', mul_zero, RingHom.map_zero])
       (by rw [RingHom.map_mul, h0, zero_mul, RingHom.map_zero])
-  rw [map_sub, map_sub, map_one, map_sum] at h3
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sub, map_sub, map_one, map_sum] at h3
   linear_combination h3 + h4
 
 theorem pr_sum {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (q : SplitPt D k) :

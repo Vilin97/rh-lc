@@ -102,7 +102,8 @@ theorem altPoint_sq {m : ℕ} {Y : Fin m → Mat E a} (hY : ∀ i j, Y i * Y j =
 theorem toL_altPoint {m : ℕ} (Y : Fin m → Mat E a) (ε : Fin m → Bool) :
     toL (altPoint Y ε) = altPoint (fun i => toL (Y i)) ε := by
   unfold altPoint
-  rw [← toLA_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← toLA_apply, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   split_ifs <;> simp [toLA_apply]
 

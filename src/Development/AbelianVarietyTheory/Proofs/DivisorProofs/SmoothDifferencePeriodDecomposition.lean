@@ -105,6 +105,7 @@ theorem hadamard : ∀ {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] {g 
     generalize meanD f (P.2 + ψ b, ψ P.1 - ψ b) = L
     generalize ψ P.1 - ψ b = δ
     conv_lhs => rw [eq_sum_single δ]
-    simp only [map_add, map_sum, map_smul, Complex.coe_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_add, map_sum, map_smul, Complex.coe_smul]
 
 end GlobalTheory.TorsionForm.Hadamard

@@ -39,7 +39,8 @@ private theorem UpperTheory.mem_vanishing_coordinates (ch : ι → VB.Chart M r)
   · have := hs k V le_rfl h a ha
     rwa [resM_self] at this
   · rw [← ((ch k).isFrame.basis (h₁.trans h)).sum_repr (resM M h₁ s)]
-    simp only [map_sum, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.smul_apply, smul_eq_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.smul_apply, smul_eq_mul,
       IsFrame.basis_apply]
     refine Finset.sum_eq_zero fun b _ => ?_
     by_cases hb : n ≤ (b : ℕ)
@@ -76,13 +77,15 @@ private theorem UpperTheory.flag_charts_frames (N : VB.Sub M) (n : ℕ) (c : VB.
   refine ⟨hm, ⟨fun a => N.mkSec (c.e a) (hm a a.2), fun V h => ⟨?_, fun t => ?_⟩⟩, ?_⟩
   · refine (injective_iff_map_eq_zero _).2 fun a ha => ?_
     have h0 := congrArg (N.incl.app V) ha
-    simp only [Fintype.linearCombination_apply, map_sum, Scheme.Modules.Hom.app_smul, app_resM,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Fintype.linearCombination_apply, map_sum, Scheme.Modules.Hom.app_smul, app_resM,
       VB.Sub.incl_app_mkSec, map_zero] at h0
     have hli := ((VB.isFrame_iff.1 c.isFrame V h).1).comp (Subtype.val : {a : Fin r // (a : ℕ) < n} → _)
       Subtype.val_injective
     exact funext (Fintype.linearIndependent_iff.1 hli a h0)
   · refine ⟨fun a => (c.isFrame.basis h).repr (N.incl.app V t) a, N.incl_app_injective V ?_⟩
-    simp only [Fintype.linearCombination_apply, map_sum, Scheme.Modules.Hom.app_smul, app_resM,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Fintype.linearCombination_apply, map_sum, Scheme.Modules.Hom.app_smul, app_resM,
       VB.Sub.incl_app_mkSec]
     refine Eq.symm ((hsplit V h _).trans ?_)
     rw [add_eq_left]
@@ -90,11 +93,13 @@ private theorem UpperTheory.flag_charts_frames (N : VB.Sub M) (n : ℕ) (c : VB.
     rw [(hN V h _).1 (N.incl_app_mem t) a (not_lt.1 a.2), zero_smul]
   · refine CokerFrame.isFrame_of_injective_of_local (fun V h => ?_) (fun V h s x hx => ?_)
     · refine (injective_iff_map_eq_zero _).2 fun a ha => ?_
-      simp only [Fintype.linearCombination_apply, ← app_resM, ← Scheme.Modules.Hom.app_smul,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Fintype.linearCombination_apply, ← app_resM, ← Scheme.Modules.Hom.app_smul,
         ← map_sum] at ha
       funext b
       have h1 := (hN V h _).1 (N.cokernel_π_app_eq_zero_iff.1 ha) b (not_lt.1 b.2)
-      simp only [← c.isFrame.basis_apply h, map_sum, map_smul, Module.Basis.repr_self, Finsupp.coe_finset_sum,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [← c.isFrame.basis_apply h, map_sum, map_smul, Module.Basis.repr_self, Finsupp.coe_finset_sum,
         Finset.sum_apply, Finsupp.smul_apply, Finsupp.single_apply, Subtype.val_inj, smul_eq_mul, mul_ite,
         mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true] at h1
       exact h1
@@ -102,7 +107,8 @@ private theorem UpperTheory.flag_charts_frames (N : VB.Sub M) (n : ℕ) (c : VB.
       refine ⟨W, hWV, hxW, fun a => (c.isFrame.basis (hWV.trans h)).repr t a, ?_⟩
       rw [← ht, Fintype.linearCombination_apply]
       conv_rhs => rw [hsplit W (hWV.trans h) t]
-      rw [map_add, N.cokernel_π_app_eq_zero_iff.2
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_add, N.cokernel_π_app_eq_zero_iff.2
         (Submodule.sum_mem _ fun (a : {a : Fin r // (a : ℕ) < n}) _ =>
           Submodule.smul_mem _ _ (hmem W (hWV.trans h) a.1 a.2)), zero_add, map_sum]
       simp only [Scheme.Modules.Hom.app_smul, app_resM]

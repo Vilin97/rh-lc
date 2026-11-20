@@ -95,7 +95,8 @@ theorem Herm4.linInd (H : Herm4 c h) {ι : Type} [Fintype ι] [DecidableEq ι] (
   rw [linearIndependent_iff']
   intro s g hg i hi
   have h1 : H.hl (v i) (∑ j ∈ s, g j • v j) = 0 := by rw [hg, map_zero]
-  rw [map_sum] at h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum] at h1
   simp only [map_smul, smul_eq_mul] at h1
   rw [Finset.sum_eq_single i] at h1
   · exact (mul_eq_zero.mp h1).resolve_right (H.pos (v i) (hv0 i)).1
@@ -123,7 +124,8 @@ private theorem coord_lemma (H : Herm4 c h) {n : Type} [Fintype n] [DecidableEq 
   have e : h v (b i) = H.hl (b i) (∑ j, b.repr v j • b j) := by
     rw [b.sum_repr v]
     rfl
-  rw [e, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, map_sum]
   simp only [map_smul, smul_eq_mul]
   rw [Finset.sum_eq_single i]
   · rfl
@@ -139,7 +141,8 @@ theorem Herm4.form_repr (H : Herm4 c h) {n : Type} [Fintype n] [DecidableEq n] (
   have e : h u v = H.hl v (∑ i, b.repr u i • b i) := by
     rw [b.sum_repr u]
     rfl
-  rw [e, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_smul, smul_eq_mul]
   show b.repr u i * h (b i) v = _
@@ -194,7 +197,8 @@ theorem Herm4.iso_of (H : Herm4 c h) {n : Type} [Fintype n] [DecidableEq n] (b :
   have hc : ∀ (i : n) β, c (∑ a, qM (p i) (q i) (r i) (s i) β a * b.repr (y a) i) =
       ∑ a, qM (p i) (q i) (r i) (s i) β a * c (b.repr (y a) i) := by
     intro i β
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun a _ => ?_
     rw [map_mul, qM_fix c (hp i) (hq i) (hr i) (hs i)]
   simp only [Φ, LinearMap.coe_mk, AddHom.coe_mk]

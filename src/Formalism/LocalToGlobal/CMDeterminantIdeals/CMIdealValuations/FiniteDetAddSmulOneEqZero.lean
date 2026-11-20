@@ -354,7 +354,8 @@ theorem subst_homogeneous : SubstHomog := by
       (∑ j, MvPolynomial.C (U v.1 j v.2.2) * MvPolynomial.X (⟨v.1, (v.2.1, j)⟩ : FrVar m)) =
       2 * MvPolynomial.eval x (∑ j, MvPolynomial.C (U v.1 j v.2.2) * MvPolynomial.X (⟨v.1, (v.2.1, j)⟩ : FrVar m)) := by
     intro v
-    simp only [map_sum, map_mul, MvPolynomial.eval_C, MvPolynomial.eval_X, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, MvPolynomial.eval_C, MvPolynomial.eval_X, Finset.mul_sum]
     exact Finset.sum_congr rfl fun j _ => by ring
   simp only [hlin]
   exact eval_scale_of_degree P N hP 2 _

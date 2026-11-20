@@ -45,7 +45,8 @@ theorem generic_section_not_mem [CharZero K] (htr : Algebra.trdeg K Ω = D) (x :
     intro k
     simp only [gs, xv, if_neg (hz k), dif_neg (hz k)]
   have h2' : ∑ k, X ⟨((0 : Fin (D + 1)), k), hz k⟩ * C (x k) = (0 : CT Ω D k₀) := by
-    rw [← h2, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← h2, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_mul, psi_X, hg]
     congr 1
@@ -53,7 +54,8 @@ theorem generic_section_not_mem [CharZero K] (htr : Algebra.trdeg K Ω = D) (x :
   have h3 := congrArg (MvPolynomial.eval
     (fun q : {p : Fin (D + 1) × Fin m // ¬ Zs k₀ p} =>
       if q.1 = ((0 : Fin (D + 1)), k₀) then (1 : Ω) else 0)) h2'
-  simp only [map_sum, map_mul, MvPolynomial.eval_X, MvPolynomial.eval_C, map_zero] at h3
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, MvPolynomial.eval_X, MvPolynomial.eval_C, map_zero] at h3
   rw [Finset.sum_eq_single k₀] at h3
   · simp [hx₁] at h3
   · intro b _ hb
@@ -111,7 +113,8 @@ theorem s1T [CharZero K] (hfg : (⊤ : IntermediateField K Ω).FG) (htr : Algebr
     exact congrArg (fun f => f q) this
   have he0sec : ∀ i : Fin D, e0 (sec v i) = tsec K Kl t v i.succ := by
     intro i
-    simp only [sec, tsec, map_sum, map_mul, e0, MvPolynomial.eval₂Hom_X', MvPolynomial.eval₂Hom_C]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [sec, tsec, map_sum, map_mul, e0, MvPolynomial.eval₂Hom_X', MvPolynomial.eval₂Hom_C]
     refine Finset.sum_congr rfl fun k _ => ?_
     show (t (i.succ, k) ⊗ₜ[Kl] (1 : Kl ⊗[K] Ω)) * ((1 : K') ⊗ₜ[Kl] ((1 : Kl) ⊗ₜ[K] v k)) = _
     rw [Algebra.TensorProduct.tmul_mul_tmul, mul_one, one_mul]

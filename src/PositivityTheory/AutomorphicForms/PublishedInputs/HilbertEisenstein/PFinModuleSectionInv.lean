@@ -68,14 +68,16 @@ theorem vInf_rowv (g : GA F 2) (a : Ideles F) (ξ : Fin 2 → F) :
     vInf (rowv g a ξ) = (fun i => UpperTheory.V.TR.pInf F ((a : Ad F) * algebraMap F (Ad F) (ξ i))) ᵥ*
       (g : Matrix (Fin 2) (Fin 2) (Ad F)).map (UpperTheory.V.TR.pInf F) := by
   funext j
-  simp only [vInf, rowv_eq, Matrix.vecMul, dotProduct, Finset.mul_sum, map_sum, map_mul, Matrix.map_apply, rowA]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [vInf, rowv_eq, Matrix.vecMul, dotProduct, Finset.mul_sum, map_sum, map_mul, Matrix.map_apply, rowA]
   refine Finset.sum_congr rfl fun i _ => by ring
 
 theorem vInf_colv (g : GA F 2) (a : Ideles F) (ξ : Fin 2 → F) :
     vInf (colv g a ξ) = ((g⁻¹ : GA F 2) : Matrix (Fin 2) (Fin 2) (Ad F)).map (UpperTheory.V.TR.pInf F) *ᵥ
       (fun i => UpperTheory.V.TR.pInf F (((a⁻¹ : Ideles F) : Ad F) * algebraMap F (Ad F) (ξ i))) := by
   funext j
-  simp only [vInf, colv_eq, Matrix.mulVec, dotProduct, Finset.mul_sum, map_sum, map_mul, Matrix.map_apply, rowA]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [vInf, colv_eq, Matrix.mulVec, dotProduct, Finset.mul_sum, map_sum, map_mul, Matrix.map_apply, rowA]
   refine Finset.sum_congr rfl fun i _ => by ring
 
 theorem map_pInf_mul_inv (g : GA F 2) :

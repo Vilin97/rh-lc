@@ -148,7 +148,8 @@ theorem eEnd_actG (i : C.Tw) (j : ℕ) (b : Bool) (hst : RhoStab C j) (eC : C.G 
     (hcl : ∀ u g, eC (u * g * u⁻¹) = eC g) (u : C.G) (x : Fm C i j b) :
     eEnd C i j b hst eC (actG C i j b hst u x) = actG C i j b hst u (eEnd C i j b hst eC x) := by
   unfold eEnd
-  rw [LinearMap.sum_apply, LinearMap.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [LinearMap.sum_apply, LinearMap.sum_apply, map_sum]
   simp only [LinearMap.smul_apply, LinearEquiv.coe_coe, map_smul]
   rw [← (MulAut.conj u).toEquiv.sum_comp]
   refine Finset.sum_congr rfl fun g _ => ?_

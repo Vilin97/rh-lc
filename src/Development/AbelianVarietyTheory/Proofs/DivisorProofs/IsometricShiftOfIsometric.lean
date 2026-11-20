@@ -84,7 +84,8 @@ end Shift
 
 theorem rename_lin_swap {κ : Type} [Fintype κ] [DecidableEq κ] (x y : κ) (c : κ → ℝ) :
     rename (Equiv.swap x y) (lin c) = lin fun z => c (Equiv.swap x y z) := by
-  simp only [lin, map_sum, map_mul, rename_C, rename_X]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [lin, map_sum, map_mul, rename_C, rename_X]
   exact Fintype.sum_equiv (Equiv.swap x y) _ _ fun z => by simp [Equiv.swap_apply_self]
 
 theorem cast_triple (u v : ℤ) : (fun j => (((![u, v, 1] : Fin 3 → ℤ) j : ℤ) : ℝ)) = ![(u : ℝ), v, 1] := by

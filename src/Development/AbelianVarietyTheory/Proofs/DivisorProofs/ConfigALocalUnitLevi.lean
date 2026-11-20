@@ -22,7 +22,8 @@ theorem sigma_invol {σ : E →ₐ[F] E} (hcm : IsCMExt F E σ) (x : E) : σ (σ
 
 theorem form_swap {σ : E →ₐ[F] E} (hσ : ∀ x, σ (σ x) = x) {n : ℕ} (J : Matrix (Fin n) (Fin n) E)
     (hJ : ∀ i j, σ (J j i) = -J i j) (a b : Fin n → E) : form σ J a b = -σ (form σ J b a) := by
-  simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, hJ, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, hJ, Finset.mul_sum]
   rw [Finset.sum_comm, ← Finset.sum_neg_distrib]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [← Finset.sum_neg_distrib]
@@ -157,7 +158,8 @@ theorem symp_shift_zero {n d : ℕ} (JA : Matrix (Fin n) (Fin n) E) (JB : Matrix
   have hc : ∀ e : E, cA σ (inclR (F := F) (AF F) e) = inclR (F := F) (AF F) (σ e) := fun e => rfl
   have h0 : (∑ j, ∑ l, incV F y j * incM F JB j l * cA σ (incV F y l)) = 0 := by
     have e : (∑ j, ∑ l, incV F y j * incM F JB j l * cA σ (incV F y l)) = inclR (F := F) (AF F) (form σ JB y y) := by
-      simp only [form, dotProduct, Matrix.mulVec, incV, incM, Matrix.map_apply, hc, map_sum, map_mul, Finset.mul_sum,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [form, dotProduct, Matrix.mulVec, incV, incM, Matrix.map_apply, hc, map_sum, map_mul, Finset.mul_sum,
         mul_assoc]
     rw [e, hy, map_zero]
   have hs : c • Matrix.vecMulVec (incV F x) (incV F y) = Matrix.vecMulVec (c • incV F x) (incV F y) := by

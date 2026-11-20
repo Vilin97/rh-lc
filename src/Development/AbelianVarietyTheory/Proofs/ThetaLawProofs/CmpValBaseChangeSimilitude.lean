@@ -153,7 +153,8 @@ theorem row_move {R' : Type} [CommRing R'] {x : KeyIn R} {x' : KeyIn R'} {f : R 
           ((b' (I' c)).f (J' (Out.powPr x'.P.A c).left)) := by
   choose J hJ using fun χ : (Out.powObj x'.P.A 4).left ⟶ x.P.A.left => exists_chart x.P.isLB (χ z)
   have E := congrArg (ψ.stalkMap z).hom (H (ψ z) _ (good_comp hJ ψ))
-  rw [map_prod, map_mul, map_sum] at E
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_prod, map_mul, map_sum] at E
   have hv := (val_comp w (𝟙 _) ψ hJ).trans ((congrArg (fun r => val w r z J)
     ((Category.comp_id ψ).trans (Category.id_comp ψ).symm)).trans
     (val_move (by rintro (r | c); exacts [ha r, hc c]) P (𝟙 _) z hJ hJ'))

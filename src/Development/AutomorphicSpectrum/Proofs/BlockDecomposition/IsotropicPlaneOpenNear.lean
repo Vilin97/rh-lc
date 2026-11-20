@@ -31,7 +31,8 @@ variable {c Jm}
 
 theorem form_conj (hc : ∀ t, c (c t) = t) (hJ : ∀ i j, c (Jm j i) = Jm i j) (x y : Fin M → R) :
     c (Formalism.UG.hform c Jm x y) = Formalism.UG.hform c Jm y x := by
-  simp only [Formalism.UG.hform, map_sum, map_mul, hc]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Formalism.UG.hform, map_sum, map_mul, hc]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
   rw [hJ a b]

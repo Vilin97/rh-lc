@@ -174,11 +174,13 @@ theorem latt_eq_rowSpace : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [Is
       intro t
       have ht : t = ∑ i, e t i • e.symm (Pi.single i 1) := by
         apply e.injective
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         ext j
         simp [Finset.sum_apply, Pi.single_apply]
       conv_lhs => rw [ht]
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simp only [LinearMap.map_smulₛₗ, dotProduct, toA, smul_eq_mul, s]
       exact Finset.sum_congr rfl fun i _ => mul_comm _ _
     have hdiv : ∀ j, Sandwich.mu ε ∣ (s ᵥ* D.G) j := by

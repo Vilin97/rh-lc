@@ -33,7 +33,8 @@ theorem hermC_mulVec {E : Type} [Field E] {r : ℕ} (τ : E →+* ℂ) (G : Matr
   calc ∑ p, ∑ q, (x *ᵥ a) p * τ (G p q) * conj ((x *ᵥ b) q)
       = ∑ p, ∑ q, ∑ i, ∑ j, a i * (x p i * τ (G p q) * conj (x q j)) * conj (b j) := by
         refine Finset.sum_congr rfl fun p _ => Finset.sum_congr rfl fun q _ => ?_
-        simp only [Matrix.mulVec, dotProduct, map_sum, map_mul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [Matrix.mulVec, dotProduct, map_sum, map_mul]
         rw [Finset.sum_mul, Finset.sum_mul_sum]
         refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
         ring
@@ -103,7 +104,8 @@ theorem frame_decomp : ∀ (D : D7) (S T : HSp D) (C : Ctx S T) (B : C.Bas), C.I
     have hstep : FD.mat (C.xB (C.mvB a B)) σ
         = (compAt C.θ (C.m.e.symm σ) (Formalism.L2.Theta.mt T a)).map conj * FD.mat (C.xB B) σ := by
       ext i j
-      simp [GlobalTheory.Ker.Ctx.xB, GlobalTheory.Ker.Ctx.mvB, FD.mat, Matrix.mul_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [GlobalTheory.Ker.Ctx.xB, GlobalTheory.Ker.Ctx.mvB, FD.mat, Matrix.mul_apply, map_sum]
     rw [hσ, Matrix.mul_assoc, Matrix.nonsing_inv_mul _ (isUnit_iff_ne_zero.mpr (hdet σ)),
       Matrix.mul_one] at hstep
     exact hstep

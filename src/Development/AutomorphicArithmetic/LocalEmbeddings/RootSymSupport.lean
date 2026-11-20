@@ -78,7 +78,8 @@ def expoHom (Dw : Datum H) : (Pad.Sym E →₀ ℤ) →+ (Letter Dw → ℤ) :=
 theorem expo_sum_zsmul {ι : Type} [Fintype ι] (n : ι → ℤ) (w : ι → Pad.Sym E →₀ ℤ) :
     expo Dw (∑ i, n i • w i) = ∑ i, n i • expo Dw (w i) := by
   change expoHom Dw _ = ∑ i, n i • expoHom Dw (w i)
-  simp only [map_sum, map_zsmul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_zsmul]
 
 end Expo
 

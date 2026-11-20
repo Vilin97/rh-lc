@@ -52,7 +52,8 @@ theorem SectionsHaveFiniteDimension.le {p : X ⟶ Sp K} {M : LB X} {r r' : ℕ} 
   have hc : ∀ (U : X.Opens) (a : K), constFn p U a = AbLaw.cst p U a := fun _ _ => rfl
   choose B hB hBu using fun i => hs' (s i)
   let t : (Fin r → K) → M.Sec := fun a => ⟨fun j => ∑ i, AbLaw.cst p _ (a i) * (s i).f j, fun j k => by
-    rw [map_sum, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_mul, map_mul, (s i).compat j k]
     erw [AbLaw.rs_cst, AbLaw.rs_cst]
@@ -66,7 +67,8 @@ theorem SectionsHaveFiniteDimension.le {p : X ⟶ Sp K} {M : LB X} {r r' : ℕ} 
       simp_rw [hB', Finset.mul_sum, ← _root_.mul_assoc, ← map_mul]
       rw [Finset.sum_comm]
       refine Finset.sum_eq_zero fun k _ => ?_
-      rw [← Finset.sum_mul, ← map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← Finset.sum_mul, ← map_sum]
       have : ∑ i, a i * B i k = 0 := congrFun ha k
       rw [this, map_zero, zero_mul]
     refine (hs (t a)).unique (fun j => rfl) fun j => ?_

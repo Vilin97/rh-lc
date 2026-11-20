@@ -39,7 +39,8 @@ theorem away_relation {K : Type} [Field K] {N : ℕ} {g : MvPolynomial (Fin (N +
   simp only [HomogeneousLocalization.val_add, HomogeneousLocalization.val_pow,
     HomogeneousLocalization.val_mul, val_sum, away_val_mk]
   rw [hFe]
-  simp only [map_add, map_sum, map_mul, map_pow, add_mul, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_add, map_sum, map_mul, map_pow, add_mul, Finset.sum_mul]
   congr 1
   · rw [mul_pow, ← pow_mul, mul_comm s r]
   · refine Finset.sum_congr rfl fun l hl => ?_
@@ -107,7 +108,8 @@ theorem isIntegral_torusS : ∀ {K : Type} [Field K] {X : Scheme.{0}} {N d e : �
     have hid := away_relation hg r s f hf (fun l => MvPolynomial.aeval y (c l)) hcm _ hF rfl
     have hzero := GlobalTheory.CompanionTheory.GeoVanish.homIdeal_vanish i hD hg hF hrel V hS
     rw [← hid] at hzero
-    rw [map_add, map_sum] at hzero
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_add, map_sum] at hzero
     simp only [map_mul, map_pow] at hzero
     have hco := fun l => GlobalTheory.CompanionTheory.GeoTorus.aeval_mem_torusS i y hy hV he q hq S hS ht (c l) (hc' l)
     refine ⟨Polynomial.X ^ s + ∑ l ∈ Finset.range s,

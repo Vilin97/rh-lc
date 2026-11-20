@@ -57,7 +57,8 @@ theorem exists_semilinear_descent_to_baseChange :
     rw [map_smul, Finsupp.smul_apply, smul_eq_mul, hπx, map_mul, mul_smul]
   · intro f fr hf x
     conv_lhs => rw [← B.sum_repr x]
-    rw [map_sum, map_sum, hΦ x, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum, hΦ x, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_smul, hB, ← hf ⟨bs k, hb k⟩, key, map_smul, LinearMap.baseChange_tmul]
   · intro w

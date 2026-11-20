@@ -131,7 +131,8 @@ namespace GlobalTheory.LineForm.ChernFibre
 theorem evalF_sum_C_mul {M : Type} [TopologicalSpace M] {n : ℕ} (A : HolAtlas M n) {ι κ : Type} (w : ι → A.Pt → Ev n)
     (S : Finset κ) (r : κ → ℝ) (P : κ → MvPolynomial ι ℝ) :
     evalF A w (∑ a ∈ S, C (r a) * P a) = ∑ a ∈ S, ((r a : ℝ) : ℂ) • evalF A w (P a) := by
-  rw [evalF_eq, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [evalF_eq, map_sum, map_sum]
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [map_mul, aeval_C, map_mul, evalF_eq, IsScalarTower.algebraMap_apply ℝ ℂ (A.Pt → Ev n), AlgHom.commutes,
     ← Algebra.smul_def]
@@ -143,7 +144,8 @@ theorem downP_expand {ι : Type} (s : Finset ι) (m : ι → ℕ) (W : ι → Mv
   unfold downP
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [← GlobalTheory.T.alternating_binomial_sum_eq_polynomial (m i)]
-  simp only [map_sum, map_mul, map_pow, aeval_C, aeval_X, Finset.sum_mul, MvPolynomial.algebraMap_eq]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, map_pow, aeval_C, aeval_X, Finset.sum_mul, MvPolynomial.algebraMap_eq]
   refine Finset.sum_congr rfl fun j _ => ?_
   simp only [Matrix.cons_val_zero]
   ring
@@ -227,7 +229,8 @@ theorem fibre_integral_eq : ∀ (k : Type) [CommRing k] (B Y : Scheme.{0}) [IsIn
     intro i j
     simp only [hT, hpT, fld_eq, map_mul, map_pow, map_add]
   have hup : aeval x (upperParabolic s m W) = ∑ i ∈ s, (x 0 * (x 3 + x 4 - x 0)) ^ m i * aeval ![x 2, x 3, x 4] (W i) := by
-    simp only [upperParabolic, map_sum, map_mul, map_pow, map_add, map_sub, aeval_X]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [upperParabolic, map_sum, map_mul, map_pow, map_add, map_sub, aeval_X]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [aeval_aeval']
     have e : (fun t : Fin 3 => aeval x ((![X 2, X 3, X 4] : Fin 3 → MvPolynomial (Fin 5) ℝ) t)) =
@@ -236,11 +239,13 @@ theorem fibre_integral_eq : ∀ (k : Type) [CommRing k] (B Y : Scheme.{0}) [IsIn
     rw [e]
   have hY1 : fld _ ω * evalF _ x (upperParabolic s m W) =
       ∑ i ∈ s, ∑ j ∈ Finset.range (m i + 1), ((cf i j : ℝ) : ℂ) • T i j := by
-    rw [evalF_eq, fld_eq, ← map_mul, hup, Finset.mul_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [evalF_eq, fld_eq, ← map_mul, hup, Finset.mul_sum, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [← mul_assoc]
     refine (congrArg (fldA (hY.atlas σ)) (expand_line ω (x 0) (x 3 + x 4) (aeval ![x 2, x 3, x 4] (W i)) hωω (m i))).trans ?_
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_smul, hT']
   have hIY : (hY.atlas σ).integral (fld _ ω * evalF _ x (upperParabolic s m W)) =

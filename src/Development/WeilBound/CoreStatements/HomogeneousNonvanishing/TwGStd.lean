@@ -15,7 +15,8 @@ theorem hermitian_form_standard_basis (Z R : Type) [CommRing Z] [CommRing R] [Al
   refine ⟨Matrix.toLinearEquiv' (g.map σ) (Matrix.invertibleOfIsUnitDet (g.map σ) hM), fun x y => ?_⟩
   have hs : (fun j => σ (Matrix.mulVec (g.map σ) y j)) = Matrix.mulVec g (fun k => σ (y k)) := by
     ext j
-    simp [Matrix.mulVec, dotProduct, map_sum, map_mul, hσ]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Matrix.mulVec, dotProduct, map_sum, map_mul, hσ]
   have key : ∀ u w : Fin N → R, ∑ i, ∑ j, u i * A i j * w j = dotProduct u (Matrix.mulVec A w) := by
     intro u w
     simp [dotProduct, Matrix.mulVec, Finset.mul_sum, mul_assoc]

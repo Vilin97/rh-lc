@@ -38,7 +38,8 @@ theorem eigenSub_eq_range_tensorAction_of_le_span {O R Λ : Type} [CommRing O] [
       have h1 := LinearMap.congr_fun hs l
       simp only [LinearMap.comp_apply, LinearMap.id_apply] at h1
       conv_rhs => rw [← h1]
-      rw [← Finset.univ_sum_single (s l), map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← Finset.univ_sum_single (s l), map_sum]
       refine Finset.sum_congr rfl fun k _ => ?_
       simp only [lam, ← map_smul]
       congr 1
@@ -65,7 +66,8 @@ theorem eigenSub_eq_range_tensorAction_of_le_span {O R Λ : Type} [CommRing O] [
       Submodule.mem_span_singleton.1 (hspan ((hF k).map_mem hx))
     choose c hc using hc
     refine ⟨∑ k, c k • (1 ⊗ₜ lam k), ?_⟩
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     conv_rhs => rw [hid x]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [← hc k, map_smul, map_smul, LinearMap.smul_apply]

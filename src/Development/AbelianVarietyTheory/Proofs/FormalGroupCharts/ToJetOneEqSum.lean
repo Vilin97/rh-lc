@@ -88,7 +88,8 @@ theorem dLinSt (hR : RepSt) : DLinSt := by
     rw [AlgHom.comp_apply, hψ₀, dualLift_zR]
     exact (congrArg l (toJet_X 1 _)).trans (hl _)
   have e2 : l.comp ψ' = dualLift ((dLin φ).mulVec c) := jet_ext fun j => by
-    rw [AlgHom.comp_apply, hψ', dualLift_zR, toJet_one_eq_sum _ (hφ.1 j), map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [AlgHom.comp_apply, hψ', dualLift_zR, toJet_one_eq_sum _ (hφ.1 j), map_sum]
     simp only [map_smul, hl, ← TrivSqZeroExt.inr_smul, smul_eq_mul]
     rw [← TrivSqZeroExt.inr_sum, Fintype.sum_prod_type, Fin.sum_univ_one]
     rfl

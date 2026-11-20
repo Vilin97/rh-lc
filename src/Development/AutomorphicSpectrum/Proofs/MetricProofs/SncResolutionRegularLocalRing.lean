@@ -249,7 +249,8 @@ theorem exists_span_of_derivations (S : Type) [CommRing S] [Algebra ℚ S] (σ :
   have key : ∀ q, (Φ (u q)).snd = ∑ i, ψ (c q i) * (Φ (z i)).snd := by
     intro q
     have h := congrArg d.liftKaehlerDifferential (hc q)
-    rw [Derivation.liftKaehlerDifferential_comp_D, map_sum] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Derivation.liftKaehlerDifferential_comp_D, map_sum] at h
     rw [← hd, ← h]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, Derivation.liftKaehlerDifferential_comp_D, hsm, hd]
@@ -388,7 +389,8 @@ theorem card_le_finrank_jacSpanAt (K : Type) [Fintype K] (ι : K → Type) [∀ 
     by_contra hcon
     push Not at hcon
     have h0 := hkerw (∑ l, A l * F l - 1) (by
-      simp only [map_sub, map_sum, map_mul, map_one, hF, hA]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sub, map_sum, map_mul, map_one, hF, hA]
       rw [hsum, sub_self])
     simp [hcon] at h0
   have hfl : f l ≠ 0 := fun h0 => hl (hkerw _ (by rw [hF, h0]))

@@ -29,7 +29,8 @@ private theorem lc_chi {n : ℕ} {R R' G : Type} [CommRing R] [CommRing R'] [Gro
 
 private theorem lc_pol {A B : Type} [CommRing A] [CommRing B] (f : A →+* B) (n q : ℕ) (a : ℕ → A) :
     (Hi.heckePol n q a).map f = Hi.heckePol n q fun j => f (a j) := by
-  simp [Hi.heckePol, Polynomial.map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Hi.heckePol, Polynomial.map_sum]
 
 section
 variable {L Ω : Type} [Field L] [NumberField L] [Field Ω] [Algebra L Ω] [IsAlgClosure L Ω] {l : ℕ} [Fact l.Prime]

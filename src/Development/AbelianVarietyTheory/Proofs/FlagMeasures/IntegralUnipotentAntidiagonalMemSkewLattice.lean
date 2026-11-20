@@ -163,7 +163,8 @@ private lemma modelEntry_eq_sq_mul_pairing_lemma_6 (σ : E →+* E) {k r : ℕ}
       ((s a : ℂ))⁻¹ * (A w *ᵥ (γ.map w.embedding *ᵥ fw)) (_root_.Formalism.QuantumDeterminants.eI k r a) := by
     have e1 : w.embedding ((fun i => σ (f i a)) ⬝ᵥ (J *ᵥ (γ *ᵥ fun i => f i a))) =
         star fw ⬝ᵥ (J.map w.embedding *ᵥ (γ.map w.embedding *ᵥ fw)) := by
-      simp [dotProduct, Matrix.mulVec, map_sum, hconj, hfw]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [dotProduct, Matrix.mulVec, map_sum, hconj, hfw]
     rw [e1, ← hA, ← Matrix.mulVec_mulVec, ← Matrix.mulVec_mulVec, Matrix.dotProduct_mulVec,
       ← Matrix.star_mulVec, hf, star_smul, smul_dotProduct,
       show star (Pi.single (_root_.Formalism.QuantumDeterminants.esI k r a) 1 : Fin (2 * r + k + 1) → ℂ) =

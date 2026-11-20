@@ -33,11 +33,13 @@ theorem ps_blockAct_injective {K : Type} [Field K] {ι : Type} [Fintype ι] {n :
     apply MvPolynomial.algHom_ext
     rintro ⟨τ, a, j⟩
     have hBB : B τ * Bi τ = 1 := Matrix.mul_nonsing_inv _ (hB τ)
-    simp only [AlgHom.comp_apply, Formalism.GradedWeylDivisibility.blockAct, aeval_X, map_sum, map_mul, aeval_C, AlgHom.id_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [AlgHom.comp_apply, Formalism.GradedWeylDivisibility.blockAct, aeval_X, map_sum, map_mul, aeval_C, AlgHom.id_apply,
       MvPolynomial.algebraMap_eq]
     simp only [Finset.mul_sum, ← mul_assoc, ← map_mul]
     rw [Finset.sum_comm]
-    simp only [← Finset.sum_mul, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [← Finset.sum_mul, ← map_sum]
     have hc : ∀ c : Fin n, ∑ b : Fin n, B τ a b * Bi τ b c = (1 : Matrix (Fin n) (Fin n) K) a c := by
       intro c
       rw [← hBB, Matrix.mul_apply]
@@ -108,7 +110,8 @@ theorem pairingPositive_holds : PairPos := by
   · intro x hx
     have e : star x ⬝ᵥ (Matrix.of fun i j : VVIdx lam => φ (pairK lam G (bVV K lam i) (bVV K lam j))) *ᵥ x =
         c * Formalism.L2.Col.nfL lam (∑ i, x i • P i) (∑ j, x j • P j) := by
-      simp only [dotProduct, Matrix.mulVec, Matrix.of_apply, hM, map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [dotProduct, Matrix.mulVec, Matrix.of_apply, hM, map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ,
         LinearMap.smul_apply, map_smul, smul_eq_mul, Finset.mul_sum, Pi.star_apply, starRingEnd_apply]
       rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
@@ -209,7 +212,8 @@ theorem ps_fock_sep {K : Type} [Field K] [StarRing K] [CharZero K] {ι : Type} [
     rw [Fintype.linearIndependent_iff]
     intro g hg i
     have h1 := congrArg (map (algebraMap ℚ K)) hg
-    simp only [map_sum, smul_eq_C_mul, map_mul, map_C, ← hq, map_zero] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, smul_eq_C_mul, map_mul, map_C, ← hq, map_zero] at h1
     simp only [← smul_eq_C_mul] at h1
     have h2 := Fintype.linearIndependent_iff.mp (bVVfun_spec K lam).1 (fun i => algebraMap ℚ K (g i)) h1 i
     exact (map_eq_zero (algebraMap ℚ K)).mp h2
@@ -228,7 +232,8 @@ theorem ps_fock_sep {K : Type} [Field K] [StarRing K] [CharZero K] {ι : Type} [
     funext j
     have h1 := h (bVVfun K lam j) (by rw [← bVV_coe]; exact (bVV K lam j).2)
     rw [hxc] at h1
-    simp only [map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul,
       starRingEnd_apply] at h1
     simp only [Matrix.vecMul, dotProduct, RingHom.mapMatrix_apply, Matrix.map_apply, hQ, Matrix.of_apply, Pi.zero_apply]
     rw [← h1]

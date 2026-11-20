@@ -22,7 +22,8 @@ theorem archInt_congr {A B : HermLB q} (h : A.Isometric B) (M : HermLB q) (e : �
 
 theorem lin_comb {ι κ : Type} [Fintype ι] [Fintype κ] (m : κ → ι → ℤ) (n : κ → ℤ) :
     (lin fun i => ((∑ j, n j * m j i : ℤ) : ℝ)) = ∑ j, (n j : ℝ) • lin fun i => (m j i : ℝ) := by
-  simp only [lin, Int.cast_sum, Int.cast_mul, map_sum, map_mul, Finset.sum_mul, smul_eq_C_mul, Finset.mul_sum, mul_assoc]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [lin, Int.cast_sum, Int.cast_mul, map_sum, map_mul, Finset.sum_mul, smul_eq_C_mul, Finset.mul_sum, mul_assoc]
   exact Finset.sum_comm
 
 theorem lin_add {ι : Type} [Fintype ι] (m n : ι → ℤ) :

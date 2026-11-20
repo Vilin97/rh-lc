@@ -89,7 +89,8 @@ theorem _root_.GlobalTheory.evImg_isLat_subring :
       have hsum : Ψ (∑ j, v j • b j) = 0 := by
         rw [← hv]
         funext x
-        simp [Matrix.mulVec, dotProduct, map_sum, map_smul, mul_comm]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp [Matrix.mulVec, dotProduct, map_sum, map_smul, mul_comm]
       have h1 : ∑ j, v j • b j = 0 := hinjΨ (by rw [hsum, map_zero])
       funext j
       exact Fintype.linearIndependent_iff.1 b.linearIndependent v h1 j

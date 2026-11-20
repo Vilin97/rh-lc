@@ -98,7 +98,8 @@ theorem exists_congr (S V : HSp D) (hS : S.SigOK) (hV : V.SigOK) (hr : S.rank = 
   have h : V.hT (φ (S.frame k)) (φ (S.frame l)) = S.gram k l := hφ _ _
   rw [← h]
   conv_rhs => rw [← V.frame.sum_repr (φ (S.frame k)), ← V.frame.sum_repr (φ (S.frame l))]
-  simp only [Matrix.mul_apply, conjTranspose_apply, of_apply, HSpace.gram, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mul_apply, conjTranspose_apply, of_apply, HSpace.gram, map_sum,
     LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, map_smul, smul_eq_mul,
     starRingEnd_apply, Finset.sum_mul, Finset.mul_sum]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_

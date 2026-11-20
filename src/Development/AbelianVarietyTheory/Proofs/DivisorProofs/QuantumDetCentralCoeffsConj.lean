@@ -68,9 +68,11 @@ theorem qdet_frame_mem_invAlg (ρ : Matrix (Fin n) (Fin n) ℂ →ₗ[ℂ] A) (h
         = (P * P') * g * P * Matrix.single a b 1 * P' * g' * (P * P') := by
           rw [h, Matrix.one_mul, Matrix.mul_one]; simp only [Matrix.mul_assoc]
       _ = _ := by simp only [Matrix.mul_assoc]
-  rw [e, conj_single, Matrix.mul_sum, Matrix.sum_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, conj_single, Matrix.mul_sum, Matrix.sum_mul, map_sum]
   refine Finset.sum_congr rfl fun c _ => ?_
-  rw [Matrix.mul_sum, Matrix.sum_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.mul_sum, Matrix.sum_mul, map_sum]
   refine Finset.sum_congr rfl fun d _ => ?_
   rw [Matrix.mul_smul, Matrix.smul_mul, map_smul]
 

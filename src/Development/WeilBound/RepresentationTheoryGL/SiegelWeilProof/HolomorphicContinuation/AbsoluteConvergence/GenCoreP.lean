@@ -165,9 +165,11 @@ theorem genCore_of (hP : ProjOp) (hT : TSGenC) (hB : Basis) (hFar : FarRightC) (
   have hIP : ∑ j, cc j * I (QQ j) g = I P g := by
     have hs : ∀ y, sL P y = sL (∑ j, cc j • QQ j) y := fun y => by
       rw [hPsum y]
-      simp [map_sum, Finset.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [map_sum, Finset.sum_apply]
     rw [I_eq_of_sL' hS hLC hL hD hs g]
-    simp [map_sum, Finset.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, Finset.sum_apply]
   obtain ⟨NumL, hNumL⟩ : ∃ F : ℂ → ℂ, ∀ z,
       F z = ∑ j, cc j * ∑ i, (M (z - s₀)).adjugate j i * Λ i z := ⟨_, fun _ => rfl⟩
   obtain ⟨Num, hNum⟩ : ∃ F : ℂ → ℂ, ∀ z,

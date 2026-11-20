@@ -26,7 +26,8 @@ lemma gens_of_len {M : Type} [AddCommGroup M] [Module R M] {m : ℕ} {c : Fin m 
   refine ⟨fun i => e.symm (Pi.single i 1), fun i => ?_, fun x => ⟨fun i => Quotient.out (e x i), ?_⟩⟩
   · rw [← map_smul, single_smul_self, map_zero]
   · apply e.injective
-    simp only [map_sum, map_smul, LinearEquiv.apply_symm_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, LinearEquiv.apply_symm_apply]
     exact eq_sum_single c (e x)
 
 lemma len_mul_le (hv : v.Integers R) {A B D : Type} [AddCommGroup A] [Module R A] [AddCommGroup B]
@@ -174,7 +175,8 @@ theorem om_split : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgClose
       rw [← hg i]
       refine congrArg Submodule.Quotient.mk (Subtype.ext ?_)
       show projL (σ ^ ((i : ℕ) + 1)) (∑ i, (g i : N → C)) = g i
-      rw [map_sum, Finset.sum_eq_single i, projL_self _ (g i).2]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Finset.sum_eq_single i, projL_self _ (g i).2]
       · intro j _ hj
         refine projL_ne (fun h => hj ?_) (g j).2
         rw [pow_succ, pow_succ] at h

@@ -59,7 +59,8 @@ theorem count_between (P : Submodule (𝓞 K) V) (n : Ideal (𝓞 K)) (hn : n �
     obtain ⟨s, hs, t, ht, hst⟩ := Submodule.mem_sup.1 (hP x.2)
     obtain ⟨c, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun _).1 ht
     refine ⟨c, ?_⟩
-    simp only [w, ← map_smul, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [w, ← map_smul, ← map_sum]
     rw [Submodule.mkQ_apply, Submodule.mkQ_apply, Submodule.Quotient.eq]
     show ((x - ∑ i, c i • (⟨v i, hv i⟩ : P) : P) : V) ∈ n • P
     simp only [Submodule.coe_sub, Submodule.coe_sum, Submodule.coe_smul, ← hst, add_sub_cancel_right]

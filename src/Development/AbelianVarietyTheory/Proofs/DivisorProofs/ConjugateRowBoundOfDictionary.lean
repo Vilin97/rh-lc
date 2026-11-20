@@ -117,7 +117,8 @@ theorem taylor_fnConj_comb (D : D7) (hI : GlobalTheory.NormSum.Inp D) (cc : Idea
   have hF : ∀ i, Differentiable ℂ (U D (tor0 D cc δ) (s i) G) := fun i => GlobalTheory.ConjJet.U_diff D _ _ _ hGT.1
   have hsum : ∀ (c : Fin n → ℂ) (F : Fin n → VC D a b → ℂ), (∀ i, Differentiable ℂ (F i)) →
       TaylorLogMetric.taylor D (fun z => ∑ i, c i * F i z) α = ∑ i, c i * TaylorLogMetric.taylor D (F i) α := fun c F hF => by
-    rw [GlobalTheory.ConjSeries.taylor_eq_coeff, taylorDir_sum _ _ fun i _ =>
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [GlobalTheory.ConjSeries.taylor_eq_coeff, taylorDir_sum _ _ fun i _ =>
       GlobalTheory.ProdThetaConj.an0 ((hF i).const_mul (c i : ℂ)), map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [← GlobalTheory.ConjSeries.taylor_eq_coeff, GlobalTheory.ProdThetaConj.taylor_const_mul (hF i)]
@@ -126,7 +127,8 @@ theorem taylor_fnConj_comb (D : D7) (hI : GlobalTheory.NormSum.Inp D) (cc : Idea
   have e : (∑ i, ((⟨κ, hκ1⟩ * r i : Qbar) : ℂ) * TaylorLogMetric.taylor D (U D (tor0 D cc δ) (s i) G) α) =
       ((∑ i, (⟨κ, hκ1⟩ * r i) * ⟨_, hAU _ (hq i) α⟩ : Qbar) : ℂ) := by
     push_cast; rfl
-  rw [e, hcj, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, hcj, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [(GlobalTheory.ConjSeries.taylor_fnConj D a b Qbar ρ _ (hd i) (h0 i)).1 α, map_mul ρ _ ⟨_, hAU _ (hq i) α⟩,
     ← hcj ⟨_, hAU _ (hq i) α⟩]

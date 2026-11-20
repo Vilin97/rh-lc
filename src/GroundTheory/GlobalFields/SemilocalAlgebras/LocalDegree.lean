@@ -118,7 +118,8 @@ theorem valued_sum_eq_one (ω : ι → 𝓞 L)
         ∑ j, algebraMap (v.adicCompletion K) (w.adicCompletion L)
           (d j - algebraMap (𝓞 K) (v.adicCompletion K) (r j)) *
           algebraMap (𝓞 L) (w.adicCompletion L) (ω j) := by
-      rw [← Finset.sum_sub_distrib, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← Finset.sum_sub_distrib, map_sum]
       refine Finset.sum_congr rfl fun j _ ↦ ?_
       rw [map_mul, map_sub, algebraMap_completion_algebraMap_int]
       ring
@@ -131,7 +132,8 @@ theorem valued_sum_eq_one (ω : ι → 𝓞 L)
           w.asIdeal.ramificationIdx (𝓞 K) * 1 :=
           mul_le_mul' le_rfl (valued_algebraMap_int_le_one w (ω j))
       _ < 1 := by rw [mul_one]; exact pow_lt_one' (hr j) he0
-  rw [valued_algebraMap_int_lt_one_iff, ← Ideal.Quotient.eq_zero_iff_mem, map_sum] at h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [valued_algebraMap_int_lt_one_iff, ← Ideal.Quotient.eq_zero_iff_mem, map_sum] at h1
   have hsum : ∑ j, Ideal.Quotient.mk v.asIdeal (r j) • Ideal.Quotient.mk w.asIdeal (ω j) = 0 := by
     rw [← h1]
     refine Finset.sum_congr rfl fun j _ ↦ ?_

@@ -28,7 +28,8 @@ def deltaLocus {A B : Type} [CommRing A] [CommRing B] (D : Delta l A) (D' : Delt
     have e2 := D'.δ_add (c a) (-c a)
     rw [add_neg_cancel, D.δ_zero] at e1
     rw [add_neg_cancel, D'.δ_zero] at e2
-    simp only [map_zero, map_sub, map_add, map_sum, map_mul, map_pow, map_natCast, map_neg, ha] at e1 ⊢
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_zero, map_sub, map_add, map_sum, map_mul, map_pow, map_natCast, map_neg, ha] at e1 ⊢
     linear_combination e2 - e1
 
 open CategoryTheory in

@@ -60,7 +60,8 @@ theorem Dtot_Dtot (d : E →+ E) (hd : ∀ x, d (d x) = 0) (c : Finset ι → E)
     rfl
   have e2 : d (delta c t) = ∑ i ∈ t, cubeSign t i • d (c (t.erase i)) := by
     show d (∑ i ∈ t, cubeSign t i • c (t.erase i)) = _
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun i _ => map_zsmul d _ _
   show delta (Dtot d c) t + (-1 : ℤ) ^ t.card • d (Dtot d c t) = 0
   rw [e1, delta_delta, hDt, map_add, map_zsmul, hd, smul_zero, add_zero, e2, Finset.smul_sum,

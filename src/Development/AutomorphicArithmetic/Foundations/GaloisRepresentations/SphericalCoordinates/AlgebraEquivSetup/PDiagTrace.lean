@@ -17,4 +17,5 @@ theorem UpperTheory.Gal.W2.Seed.pDiagTrace :
     intro k
     rw [LinearMap.trace_comp_comm', LinearMap.comp_assoc, LinearMap.proj_comp_single_same,
       LinearMap.comp_id, ← Algebra.trace_complex_apply, Algebra.trace_apply]
-  rw [hdec, map_sum, Finset.sum_congr rfl (fun k _ => hk k), Complex.re_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hdec, map_sum, Finset.sum_congr rfl (fun k _ => hk k), Complex.re_sum, Finset.mul_sum]

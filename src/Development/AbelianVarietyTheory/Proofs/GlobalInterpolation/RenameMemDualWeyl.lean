@@ -109,7 +109,8 @@ theorem _root_.GlobalTheory.SubstMem.substAdj_blockEmb {ι : Type} {a b : ℕ} (
         (rename (Prod.map (Fin.castLE hab) (Fin.castLE hab)))) := by
     apply MvPolynomial.algHom_ext
     intro v
-    simp [_root_.GlobalTheory.IndefiniteRowSideFullHecke.SubstitutionAdjoint.substAdj, _root_.Formalism.GradedWeylDivisibility.blockEmb, _root_.Formalism.GradedWeylDivisibility.rowAct, _root_.GlobalTheory.SubstMem.padRows, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [_root_.GlobalTheory.IndefiniteRowSideFullHecke.SubstitutionAdjoint.substAdj, _root_.Formalism.GradedWeylDivisibility.blockEmb, _root_.Formalism.GradedWeylDivisibility.rowAct, _root_.GlobalTheory.SubstMem.padRows, map_sum]
   exact DFunLike.congr_fun key f
 
 open NumberField IsDedekindDomain MvPolynomial in
@@ -135,7 +136,8 @@ private theorem isWeightedHomogeneous_colW_rowAct_of_isWeightedHomogeneous {R : 
     (hf : IsWeightedHomogeneous (_root_.Formalism.GradedWeylDivisibility.colW r n) f ν) :
     IsWeightedHomogeneous (_root_.Formalism.GradedWeylDivisibility.colW r n) (_root_.Formalism.GradedWeylDivisibility.rowAct R g f) ν := by
   rw [← mem_weightedHomogeneousSubmodule]
-  rw [← support_sum_monomial_coeff f, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← support_sum_monomial_coeff f, map_sum]
   refine Submodule.sum_mem _ fun d hd => ?_
   rw [mem_weightedHomogeneousSubmodule, ← hf (mem_support_iff.1 hd)]
   have e : _root_.Formalism.GradedWeylDivisibility.rowAct R g (monomial d (AddMonoidAlgebra.coeff f d)) =

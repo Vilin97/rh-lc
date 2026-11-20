@@ -81,7 +81,8 @@ theorem eval_applyAt0 (Th : MvPowerSeries (Lt × Fin N0 × Fin N1) ℂ_[l])
     (x : Lt × ℕ × Fin N0 → ℂ_[l]) (P : MvPolynomial (PI.WwEval.KM.XZ Lt N0 N1) ℤ) :
     eval x (PI.WwEval.KM.applyAt0 N0 N1 l Th P) = Lsum (wt Th) (peval x P) := by
   conv_rhs => rw [as_sum P]
-  rw [map_sum, Lsum_finset_sum, PI.WwEval.KM.applyAt0, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Lsum_finset_sum, PI.WwEval.KM.applyAt0, map_sum]
   refine Finset.sum_congr rfl fun μ _ => ?_
   rw [peval_monomial, Lsum_monomial, eval_monomial, wt]
   ring

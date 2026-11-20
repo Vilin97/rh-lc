@@ -191,7 +191,8 @@ theorem FourPieces.adelicPairing₂_adelicCoord_symm [FiniteDimensional K P₂] 
     rw [h, FourPieces.a₂_a₂PairedBasis, mul_one, map_mul]
     split_ifs <;> simp
   rw [adelicCoord_symm_apply, adelicCoord_symm_apply]
-  simp only [FourPieces.adelicPairing₂, map_sum, map_smul, LinearMap.sum_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [FourPieces.adelicPairing₂, map_sum, map_smul, LinearMap.sum_apply,
     LinearMap.smul_apply, smul_eq_mul, hij, mul_ite, mul_zero, mul_one,
     Finset.mem_univ, if_true, Finset.sum_ite_eq']
   rw [Finset.mul_sum]
@@ -202,7 +203,8 @@ theorem adelicCoord_prod_symm_sumElim [FiniteDimensional K P₁] [FiniteDimensio
     (adelicCoord (b₁.prod b₂)).symm (Sum.elim a x) =
       (adelicProdEquiv K P₁ P₂).symm ((adelicCoord b₁).symm a, (adelicCoord b₂).symm x) := by
   apply (adelicProdEquiv K P₁ P₂).injective
-  rw [LinearEquiv.apply_symm_apply, adelicCoord_symm_apply, adelicCoord_symm_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [LinearEquiv.apply_symm_apply, adelicCoord_symm_apply, adelicCoord_symm_apply,
     adelicCoord_symm_apply, map_sum, Fintype.sum_sum_type]
   ext <;> simp [Basis.prod_apply, Prod.fst_sum, Prod.snd_sum]
 

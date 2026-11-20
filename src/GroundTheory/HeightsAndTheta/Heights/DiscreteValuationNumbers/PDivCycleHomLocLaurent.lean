@@ -184,7 +184,8 @@ theorem ev_comp_psi : (ev T hPW hT).comp (psi T hT) = fr P := by
 theorem psi_monomial (s : (Σ k, ι k) →₀ ℕ) (c : R) :
     psi T hT (monomial s c) = AddMonoidAlgebra.single (nz (Finsupp.weight (blockWeight ι) s))
       (constHom P W c * s.prod fun v n => uu T hT v ^ n) := by
-  simp only [psi, coe_eval₂Hom, eval₂_monomial, RingHom.comp_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [psi, coe_eval₂Hom, eval₂_monomial, RingHom.comp_apply,
     AddMonoidAlgebra.singleZeroRingHom_apply, Finsupp.prod, AddMonoidAlgebra.single_pow,
     AddMonoidAlgebra.prod_single, AddMonoidAlgebra.single_mul_single, zero_add, Finsupp.weight_apply,
     Finsupp.sum, map_sum, map_nsmul]
@@ -202,7 +203,8 @@ theorem psi_homog_exists {f : MRing ι R} {b : K → ℕ} (hf : IsMultiHomog f b
     ∃ a, psi (P := P) T hT f = AddMonoidAlgebra.single (nz b) a := by
   refine ⟨∑ s ∈ f.support, constHom P W (AddMonoidAlgebra.coeff f s) * s.prod fun v n => uu T hT v ^ n, ?_⟩
   conv_lhs => rw [f.as_sum]
-  rw [map_sum, ← AddMonoidAlgebra.singleAddHom_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, ← AddMonoidAlgebra.singleAddHom_apply, map_sum]
   refine Finset.sum_congr rfl fun s hs => ?_
   rw [psi_monomial, AddMonoidAlgebra.singleAddHom_apply]
   congr 2

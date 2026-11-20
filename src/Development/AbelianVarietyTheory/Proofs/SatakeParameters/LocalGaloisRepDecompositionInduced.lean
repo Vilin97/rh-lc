@@ -231,7 +231,8 @@ theorem finite_of_decomp [FiniteDimensional ↥(MaximalUnramifiedExtension l) (D
         show toUr P ρ' (∑ i, e i • dMap P he (mulD P ρ c ((toUr P ρ).symm (t i)))) =
           toUr P ρ' (mulD P ρ' c (∑ i, e i • dMap P he ((toUr P ρ).symm (t i))))
         congr 1
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         exact Finset.sum_congr rfl fun i _ => by rw [dMap_mulD, map_smul] }
   have hT : Function.Surjective T := fun y => by
     refine ⟨fun i => toUr P ρ (dMap P (hA i) ((toUr P ρ').symm y)), ?_⟩
@@ -356,7 +357,8 @@ theorem exists_decomp : ∃ (n : ℕ) (e : Fin n → ↥L'.1) (A : Fin n → (Fi
   · intro i g y
     funext j
     show b.coord i (∑ k : Fin m, _) = ∑ k : Fin m, _
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     have e1 : ∀ (c : ↥L.1) (z : ↥L'.1), (IntermediateField.inclusion hL) c * z = c • z :=
       fun c z => (Algebra.smul_def c z).symm

@@ -144,7 +144,8 @@ theorem close_on_lattice : ∀ {F E : Type} [Field F] [NumberField F] [Field E] 
     have hl' : l = w + ∑ q, α q • Sum.elim G.f G.f' q := by simp only [w, sub_add_cancel]
     have hsplit : h (A.bc p l) - A.bc p l = ∑ q, (A.loc p).ιE (α q) •
         (h (A.bc p (Sum.elim G.f G.f' q)) - A.bc p (Sum.elim G.f G.f' q)) := by
-      rw [hl', bc_add, bc_sum, map_add, map_sum, hhw]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hl', bc_add, bc_sum, map_add, map_sum, hhw]
       simp only [bc_smul, map_smul, smul_sub, Finset.sum_sub_distrib]
       abel
     have hα : ∀ q, ∃ o : 𝓞 E, (D : E) ^ 2 * α q = o := by

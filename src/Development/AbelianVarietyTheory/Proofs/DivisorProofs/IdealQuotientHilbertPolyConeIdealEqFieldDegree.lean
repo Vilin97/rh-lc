@@ -36,7 +36,8 @@ theorem aeval_mem_map_homogeneousSubmodule {K Ω : Type} [Field K] [Field Ω] [A
     (hn : g.totalDegree ≤ n) :
     aeval y g ∈ (homogeneousSubmodule (Fin N) K n).map
         (aeval y : MvPolynomial (Fin N) K →ₐ[K] Ω).toLinearMap := by
-  rw [← sum_homogeneousComponent g, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← sum_homogeneousComponent g, map_sum]
   refine Submodule.sum_mem _ fun i hi => ?_
   have hi' : i ≤ n := by
     have := Finset.mem_range.1 hi

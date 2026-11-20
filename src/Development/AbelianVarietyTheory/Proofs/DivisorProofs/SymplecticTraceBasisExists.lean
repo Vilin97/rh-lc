@@ -35,7 +35,8 @@ theorem hTens_incM (σ : E →ₐ[F] E) {n d : ℕ} (JA : Matrix (Fin n) (Fin n)
     (A B : Matrix (Fin n) (Fin d) E) :
     hTens (cA σ) (incM F JA) (incM F JB) (incM F A) (incM F B) = inclR (F := F) (AF F) (hTens σ JA JB A B) := by
   have hc : ∀ e : E, cA σ (inclR (F := F) (AF F) e) = inclR (F := F) (AF F) (σ e) := fun e => rfl
-  simp only [hTens, incM, Matrix.map_apply, hc, map_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hTens, incM, Matrix.map_apply, hc, map_mul, map_sum]
 
 theorem lhs_eq {n d : ℕ} (b : E) (x : Fin n → E) (y' : Fin d → E) :
     inclR (F := F) (AF F) b • Matrix.vecMulVec (incV F x) (incV F y') = incM F (Matrix.vecMulVec (b • x) y') := by

@@ -27,7 +27,8 @@ theorem alternatingMap_apply_eq_sum_minors {n : Type*} [Fintype n] [LinearOrder 
   classical
   let b := Pi.basisFun R n
   have h := (b.exteriorPower i).sum_repr (exteriorPower.ιMulti R i A)
-  rw [← exteriorPower.alternatingMapLinearEquiv_apply_ιMulti f A, ← h, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← exteriorPower.alternatingMapLinearEquiv_apply_ιMulti f A, ← h, map_sum]
   refine Finset.sum_congr rfl fun S _ => ?_
   rw [map_smul, exteriorPower.basis_repr_apply, exteriorPower.ιMultiDual_apply_ιMulti,
     exteriorPower.basis_apply, exteriorPower.ιMulti_family,

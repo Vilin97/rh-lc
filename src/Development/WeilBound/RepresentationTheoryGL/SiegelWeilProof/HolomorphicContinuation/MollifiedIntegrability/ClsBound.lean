@@ -207,7 +207,8 @@ theorem dirC_evUV {s : ℂ} (hs : s = 1 ∨ s = -1) (y : E n) (k l : Fin n) (R :
     dirC (evUV s R) (vkl k l) y = evUV s (∑ e, MvPolynomial.pderiv e R * dEnt s k l e) y := by
   rw [show evUV s R = fun y => MvPolynomial.eval (fun e => ent s e y) R from rfl,
     dirC_eval (fun e y => ent s e y) (contDiff_ent hs) (vkl k l) y R, evUV_eq]
-  simp only [map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul]
   exact Finset.sum_congr rfl fun e _ => by rw [dirC_ent hs]
 
 def dR (s z : ℂ) (p q : ℕ) (k l : Fin n) (R : MvPolynomial (Bool × Fin n × Fin n) ℂ) :

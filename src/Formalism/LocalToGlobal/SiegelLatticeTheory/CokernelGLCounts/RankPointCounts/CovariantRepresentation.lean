@@ -58,7 +58,8 @@ theorem rv_ratLink {x : X.B.I.GA} {γ : (VS D).V ≃ₗ[D.host.E] (VS D).V} (hl 
       (M : Matrix (Fin X.B.I.n) (Fin X.B.I.n) X.B.I.E).map (X.B.I.φ v) *ᵥ
         fun i => X.B.I.φ v (X.crd y i) := by
     funext i
-    simp [Matrix.mulVec, dotProduct, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Matrix.mulVec, dotProduct, map_sum, map_mul]
   rw [hw, Matrix.mulVec_mulVec, Matrix.mulVec_mulVec]
   congr 1
   by_cases hP : IsUnit (X.B.I.P v).det

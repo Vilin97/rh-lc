@@ -70,7 +70,8 @@ private theorem integrated_sum {H : Type*} [NormedAddCommGroup H] [InnerProductS
     (ν : Measure G) [IsFiniteMeasureOnCompacts ν] (π : UnitaryRep G H) (s : Finset ι) (a : ι → ℂ)
     (f : ι → CompactlySupportedContinuousMap G ℂ) :
     π.integrated ν (UnitaryRep.ccToL1 ν (∑ i ∈ s, a i • f i)) = ∑ i ∈ s, a i • π.integrated ν (UnitaryRep.ccToL1 ν (f i)) := by
-  rw [ccToL1_finsetSum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [ccToL1_finsetSum, map_sum]
   simp only [ccToL1_smul, map_smul]
 
 private theorem Ofin_sum {K : Type} [Field K] [NumberField K] {n : ℕ} (μ : Measure (normOneGL K n)) [μ.IsHaarMeasure]

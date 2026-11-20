@@ -115,7 +115,8 @@ theorem measurable_sum_embeddings_over_generic_point :
     · rw [hρ]
       have hmon : (minpoly F pb.gen).Monic := minpoly.monic pb.isIntegral_gen
       conv_rhs => rw [hmon.as_sum, pb.natDegree_minpoly]
-      rw [Polynomial.map_add, Polynomial.map_pow, Polynomial.map_X, Polynomial.map_sum,
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Polynomial.map_add, Polynomial.map_pow, Polynomial.map_X, Polynomial.map_sum,
         Finset.sum_range]
       simp [cf, hτ]
     · intro P hP
@@ -123,7 +124,8 @@ theorem measurable_sum_embeddings_over_generic_point :
       congr 1
       funext i
       conv_lhs => rw [← pb.basis.sum_repr (b i)]
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun l _ => ?_
       rw [Algebra.smul_def, map_mul, pb.basis_eq_pow, map_pow, ← hτ, ← hP]
       rfl

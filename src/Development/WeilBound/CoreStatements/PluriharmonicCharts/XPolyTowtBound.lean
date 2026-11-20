@@ -30,7 +30,8 @@ theorem gen {σ : Type} [Fintype σ] (f : σ → MvPolynomial σ ℝ) (hf : ∀ 
       exact (mem_support_iff.mp hd) (hQ.coeff_eq_zero (by omega))
     have e : AddMonoidAlgebra.coeff (aeval f Q) m = ∑ d ∈ Q.support, AddMonoidAlgebra.coeff Q d * AddMonoidAlgebra.coeff (aeval f (monomial d (1 : ℝ))) m := by
       conv_lhs => rw [Q.as_sum]
-      rw [map_sum, coeff_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, coeff_sum]
       refine Finset.sum_congr rfl fun d _ => ?_
       rw [← coeff_C_mul]
       congr 1

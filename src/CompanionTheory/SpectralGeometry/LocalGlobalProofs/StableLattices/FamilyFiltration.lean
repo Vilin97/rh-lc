@@ -175,10 +175,12 @@ theorem left_expand {i : ι} {l : Fin n → Fin n → ι →₀ ℂ}
     rw [show Matrix.single a b (Y a b) = Y a b • Matrix.single a b (1 : ℂ) by simp [Matrix.smul_single],
       Matrix.mul_smul, Matrix.smul_mul]
   have hL : c i (actM X.E Y u) g = ∑ a, ∑ b, Y a b * Φ (g * Matrix.single a b (1 : ℂ) * g⁻¹) := by
-    simp only [hΦ, ← hl _ _ u g hg, actM, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hΦ, ← hl _ _ u g hg, actM, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul,
       Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
   rw [hL, ← hΦ, hY]
-  simp only [map_sum, map_smul, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, smul_eq_mul]
 
 theorem wInt_shift {f h : ℝ → ℂ} {k s : ℝ} (hp : ∀ t, f t = ((Real.exp (k * t) : ℝ) : ℂ) * h t) :
     wInt f (s + k) = wInt h s := by

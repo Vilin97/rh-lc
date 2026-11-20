@@ -78,13 +78,15 @@ theorem exists_compl_proj (ρ : Representation ℂ H W) (B : W →ₗ⋆[ℂ] W 
     exact Z.apply_mem_toSubmodule _ hz
   have heF : ∑ o ∈ s, o ∈ GlobalTheory.PRep.fixed ρ K := by
     refine memF _ (fun k hk => ?_)
-    rw [map_sum, hperm k hk]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, hperm k hk]
   have h0 := hm _ ⟨heZ, heF⟩
   have hterm : ∀ o ∈ s, B o (v - m) = B z (v - m) := by
     intro o ho
     obtain ⟨k', rfl⟩ := hmem o ho
     rw [← hinv k' z (v - m), hwK k' k'.2]
-  rw [map_sum, LinearMap.sum_apply, Finset.sum_congr rfl hterm, Finset.sum_const] at h0
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, LinearMap.sum_apply, Finset.sum_congr rfl hterm, Finset.sum_const] at h0
   have hz1 : z ∈ s := by
     simp only [s, Set.Finite.mem_toFinset, Set.mem_range]
     exact ⟨1, by simp⟩

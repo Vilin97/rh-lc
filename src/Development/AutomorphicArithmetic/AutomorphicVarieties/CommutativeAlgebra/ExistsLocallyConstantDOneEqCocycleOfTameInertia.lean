@@ -65,7 +65,8 @@ private theorem second_cohomology_transfer {k Γ M : Type} [Field k] [Group Γ] 
       have : (QuotientGroup.mk (t * x.out) : Γ ⧸ H) = t • x := MulAction.Quotient.mk_smul_out H t x
       simp only [σ, this, MulAction.toPerm_apply]
     rw [e1]
-    simp only [A, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [A, map_sum]
     rw [← Finset.sum_add_distrib, ← Finset.sum_sub_distrib]
     rw [Finset.sum_congr rfl (g := fun _ => κ (s, t)) (fun x _ => by rw [add_comm, hD]; abel)]
     rw [Finset.sum_const, Finset.card_univ, Subgroup.index, Nat.card_eq_fintype_card, Nat.cast_smul_eq_nsmul]

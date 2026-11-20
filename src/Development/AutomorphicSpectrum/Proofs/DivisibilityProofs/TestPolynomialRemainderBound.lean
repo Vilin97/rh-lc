@@ -223,7 +223,8 @@ theorem flagI_rl (e : Ψ ≃ Fin f) (F : RP Ψ (j + k)) : flagI e j k (rl e j k 
 omit [Fintype Ψ] [DecidableEq Ψ] in
 theorem psumAt_eq (e : Ψ ≃ Fin f) (m : ℕ) (τ : Ψ) :
     RestTerms.psumAt f j k m (e τ) = rl e j k (pk τ m) := by
-  simp only [RestTerms.psumAt, pk, map_sum, map_pow, rl_X]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [RestTerms.psumAt, pk, map_sum, map_pow, rl_X]
 
 theorem isFlag (e : Ψ ≃ Fin f) (hf : Fintype.card Ψ = f) : RestTerms.IsFlagIntegral f j k (flagI e j k) where
   kills m τ G h1 _ _ := by
@@ -248,10 +249,12 @@ theorem lie_eq (e : Ψ ≃ Fin f) (m : ℕ) (s : Ψ ⊕ Ψ) :
     RestTerms.lieClass f j k m (conv e s) = rl e j k (pLie j m s) := by
   cases s with
   | inl t =>
-    simp only [conv, RestTerms.lieClass, pLie, pkLow, sum_low, map_sum, map_pow, rl_X]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [conv, RestTerms.lieClass, pLie, pkLow, sum_low, map_sum, map_pow, rl_X]
     simp
   | inr t =>
-    simp only [conv, RestTerms.lieClass, pLie, sum_high, map_sum, map_pow, map_neg, rl_X, if_true]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [conv, RestTerms.lieClass, pLie, sum_high, map_sum, map_pow, map_neg, rl_X, if_true]
     rw [Finset.mul_sum]
     exact Finset.sum_congr rfl fun b _ => (neg_pow _ m).symm
 
@@ -263,10 +266,12 @@ theorem mu_eq (e : Ψ ≃ Fin f) (bot : Bool) (hbot : bot = decide (k ≤ j)) :
   by_cases h : k ≤ j
   · have hb : bot = true := by simp [hbot, h]
     rw [if_pos (by rw [hk]; exact h), hb]
-    simp only [RestTerms.smallPsum, if_true, sum_high, map_sum, rl_X, pow_one]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [RestTerms.smallPsum, if_true, sum_high, map_sum, rl_X, pow_one]
   · have hb : bot = false := by simp [hbot, h]
     rw [if_neg (by rw [hk]; exact h), hb]
-    simp only [RestTerms.smallPsum, pkLow, sum_low, map_neg, map_sum, rl_X, pow_one]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [RestTerms.smallPsum, pkLow, sum_low, map_neg, map_sum, rl_X, pow_one]
     simp
 
 theorem fib_sg (e : Ψ ≃ Fin f) (bot : Bool) :
@@ -337,7 +342,8 @@ theorem finite_bound [Nonempty Ψ] (hj : 1 ≤ j) (hk : 1 ≤ k) (frob : ℕ →
       simp only [Q', smul_eq_C_mul]
       exact h3
     · rw [hrest, hQ.2, (Equiv.sum_comp e _).symm]
-      simp only [Q', map_sum, Finset.smul_sum, map_mul, Equiv.symm_apply_apply, psumAt_eq,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Q', map_sum, Finset.smul_sum, map_mul, Equiv.symm_apply_apply, psumAt_eq,
         mul_smul_comm]
   let σ : ℕ → ℕ → Fin (Fintype.card Ψ) → Fin (Fintype.card Ψ) × Bool :=
     fun p n τ => conv e (frob p (e.symm τ) (n - 1))

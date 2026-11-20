@@ -17,11 +17,13 @@ theorem UpperTheory.V.Th.Coc.liftOfS :
               ring }, fun a a' => ?_, fun r a => ?_, fun a => ?_⟩
   · ext i k
     have h1 := congrArg δ (congrFun (congrFun (hs a a') i) k)
-    rw [Matrix.mul_apply, map_sum, Matrix.smul_apply, smul_eq_mul, hδ β, hβ, hx'] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Matrix.mul_apply, map_sum, Matrix.smul_apply, smul_eq_mul, hδ β, hβ, hx'] at h1
     simp only [hδ _ _, hx', sm, map_mul] at h1
     simp only [AddMonoidHom.coe_mk, ZeroHom.coe_mk, Matrix.add_apply, Matrix.mul_apply, en, Matrix.map_apply]
     rw [mul_sub, eq_sub_of_add_eq h1.symm]
-    simp only [Matrix.mul_apply, map_mul, map_sum, Finset.mul_sum, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mul_apply, map_mul, map_sum, Finset.mul_sum, Finset.sum_mul]
     rw [← Finset.sum_sub_distrib, ← Finset.sum_sub_distrib, ← Finset.sum_add_distrib]
     exact Finset.sum_congr rfl fun j _ => by ring
   · ext i j

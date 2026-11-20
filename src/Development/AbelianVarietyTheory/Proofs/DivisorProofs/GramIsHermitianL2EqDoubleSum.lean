@@ -16,7 +16,8 @@ open scoped ComplexOrder Matrix in
 private lemma ofReal_norm_sum_mul_sq_eq_double_sum_conj {ι : Type} [Fintype ι] (c w : ι → ℂ) :
     ((‖∑ i, c i * w i‖ ^ 2 : ℝ) : ℂ) =
       ∑ i, ∑ j, c i * (starRingEnd ℂ) (c j) * (w i * (starRingEnd ℂ) (w j)) := by
-  rw [Complex.ofReal_pow, ← Complex.mul_conj', map_sum, Finset.sum_mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Complex.ofReal_pow, ← Complex.mul_conj', map_sum, Finset.sum_mul_sum]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   rw [map_mul]
   ring

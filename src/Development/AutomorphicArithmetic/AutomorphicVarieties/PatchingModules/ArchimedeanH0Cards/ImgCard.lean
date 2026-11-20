@@ -179,7 +179,8 @@ private theorem img_card {l : ℕ} [Fact l.Prime] {F : GFrame l} {n : ℕ} (x : 
     refine ⟨(fun j => π (c j), fun g => (b g).map π), ⟨Set.mem_univ _, hred b hb⟩, ?_⟩
     funext g
     ext i j
-    simp [Φ, Matrix.sum_apply, map_sum, Finset.sum_apply, Matrix.map_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Φ, Matrix.sum_apply, map_sum, Finset.sum_apply, Matrix.map_apply]
   have hfinB : Bm.Finite := by
     refine (Set.finite_range (fun Y : Matrix (Fin n) (Fin n) (x.Am m) => dY F (x.ρX (x.Am m)) Y)).subset ?_
     rintro z ⟨Y, _, _, rfl⟩

@@ -46,7 +46,8 @@ theorem exists_adjoint_herm : ∀ {L V : Type} [NontriviallyNormedField L] [AddC
     rw [Fintype.linearIndependent_iff]
     intro c hc i
     have h0 : ψ (∑ j, s (c j) • b j) = 0 := by
-      rw [map_sum, ← hc]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, ← hc]
       refine Finset.sum_congr rfl (fun j _ => ?_)
       rw [ψ_smul, hss]
     have h1 := ψ_inj _ h0
@@ -63,7 +64,8 @@ theorem exists_adjoint_herm : ∀ {L V : Type} [NontriviallyNormedField L] [AddC
       rw [hspan]; trivial
     obtain ⟨c, hc⟩ := (Submodule.mem_span_range_iff_exists_fun L).mp hf
     refine ⟨∑ j, s (c j) • b j, ?_⟩
-    rw [map_sum, ← hc]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, ← hc]
     refine Finset.sum_congr rfl (fun j _ => ?_)
     rw [ψ_smul, hss]
   choose z hz using fun y => ψ_surj ((ψ y).comp g)

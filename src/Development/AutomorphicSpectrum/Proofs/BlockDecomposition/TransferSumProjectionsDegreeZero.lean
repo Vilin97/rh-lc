@@ -45,7 +45,8 @@ theorem Con_prA {p p' q : ℕ} [Finite (Fin (p + 1) ⥤ C)] [Finite (Fin (p' + 1
 
 theorem Con_dn {p n : ℕ} [Finite (Fin (p + 1) ⥤ C)] (Ξ : Cn F p →ₗ[R] R) (B : Bi F p n) :
     Con F Ξ (n + 1) (∑ j : Fin (n + 1 + 1), ((-1 : R) ^ (j : ℕ)) • prB F (dl j) B) = dn F n (Con F Ξ n B) := by
-  rw [map_sum, GlobalTheory.CompanionTheory.HopfC.dn_eq]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, GlobalTheory.CompanionTheory.HopfC.dn_eq]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_smul, GlobalTheory.CompanionTheory.HopfC.Con_prB]
 

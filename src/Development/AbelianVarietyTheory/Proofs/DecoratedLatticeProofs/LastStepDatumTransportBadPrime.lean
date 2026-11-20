@@ -37,7 +37,8 @@ theorem locTop_shiftQ (hc : cst.Ok) {P : rowSG Pr sel mu} (hP : P.1 ∉ Pr.vGs) 
   · congr 1
     have ev : ∀ z : Sp X.E (R.N (m2 + 1)), η z = ∑ j, z j * η (Pi.single j 1) := fun z => by
       conv_lhs => rw [pi_eq_sum_univ' z]
-      simp [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [map_sum]
     have he : IntAt P.1 ((epsSg : ℤ) : X.E) := intCast_mem (intRing P.1) _
     have hd : IntAt P.1 ((epsSg : X.E) * η (b - a)) := by
       rw [ev]
@@ -189,7 +190,8 @@ theorem locTop_transport_tw : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X) (l 
       exact Ideal.mul_mem_right _ _ GlobalTheory.TopStep.qOf_mem
     have H := GlobalTheory.Transport.Last.read_cong hp hN hp' hN' hq hq' ⟨P.1, hP⟩ x x₀ (fun r s => by
       refine lt_of_eq_of_lt (congrArg Valued.v ?_) ((hx r s).trans_lt hv)
-      simp only [GlobalTheory.Transport.Last.locM, GlobalTheory.Transport.Last.ratM, Matrix.sub_apply, Matrix.mul_apply, Matrix.map_apply, map_sub,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [GlobalTheory.Transport.Last.locM, GlobalTheory.Transport.Last.ratM, Matrix.sub_apply, Matrix.mul_apply, Matrix.map_apply, map_sub,
         map_sum, map_mul, adAt_inclE])
     have f1 : ∀ {j : ℕ} (r : Formalism.L2.Col.ChPt (R := B.R) I.sel (I.tup a) u j),
         Formalism.L2.Col.frsF I.sel (I.tup a) r P = r.deco.1.liftFr ⟨P.1, hP⟩ := fun r => dif_pos hP

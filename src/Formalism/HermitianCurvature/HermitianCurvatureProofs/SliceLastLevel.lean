@@ -1356,7 +1356,8 @@ lemma aB_apply (i : Formalism.FourierDecayAlt.P.Ux10.J k r) (x e : Fin d → ℝ
   have e1 : (bmap k r cx μx x)⁻¹ * fderiv ℝ (bmap k r cx μx) x e =
       ∑ b, e b • ((bmap k r cx μx x)⁻¹ * fderiv ℝ (bmap k r cx μx) x (ebd b)) := by
     conv_lhs => rw [he]
-    rw [map_sum, Matrix.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Matrix.mul_sum]
     refine Finset.sum_congr rfl fun b _ => ?_
     rw [map_smul, Matrix.mul_smul]
   rw [e1, Formalism.FourierDecayAlt.P.Ux10.kc_sum]
@@ -1434,7 +1435,8 @@ theorem hasFDeriv_slice (hO : IsOpen O) (hcx : ContDiffOn ℝ ∞ cx O) (hμx : 
       fderiv ℝ h' c (c * (n'⁻¹ * Formalism.FourierDecayAlt.P.Ux10.Lt i * n')) := fun i =>
     Formalism.FourierDecayAlt.P.B4.op_eq_op' 0 false hU (by simpa using hcd) hff
       (Formalism.FourierDecayAlt.P.BetaSesquilinearity.lie_conj (Formalism.FourierDecayAlt.P.Ux10.Lt_unit i).1 hn') c hcU hcG
-  simp_rw [hop, ← map_smul, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp_rw [hop, ← map_smul, ← map_sum]
   congr 1
   set T := fderiv ℝ (bmap k r cx μx) x e with hT
   set Xv := b⁻¹ * T with hXv

@@ -18,7 +18,8 @@ theorem sum_inner_change {E F ι κ : Type*} [NormedAddCommGroup E] [InnerProduc
       ∑ i, ∑ i', (inner ℂ (b i) (e k) * inner ℂ (e k) (b i')) * inner ℂ (A (b i')) (B (b i)) := by
     intro k
     conv_lhs => rw [← hexp (e k)]
-    simp only [map_sum, map_smul, sum_inner, inner_sum, inner_smul_left, inner_smul_right,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, sum_inner, inner_sum, inner_smul_left, inner_smul_right,
       inner_conj_symm, Finset.mul_sum]
     exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun i' _ => by ring
   simp only [key]

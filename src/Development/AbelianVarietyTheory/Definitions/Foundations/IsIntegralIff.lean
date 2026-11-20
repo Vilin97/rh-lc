@@ -44,7 +44,8 @@ theorem hf_symm (L : LocE F E) {n : ℕ} {H : Matrix (Fin n) (Fin n) E} (h : IsH
     (x y : Fin n → E) : hf L H y x = L.cj (hf L H x y) := by
   have hH : ∀ i j, L.cj (H j i) = H i j := fun i j => congrFun (congrFun h i) j
   unfold hf
-  simp only [map_sum, map_mul, L.cj_cj, hH]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, L.cj_cj, hH]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   ring

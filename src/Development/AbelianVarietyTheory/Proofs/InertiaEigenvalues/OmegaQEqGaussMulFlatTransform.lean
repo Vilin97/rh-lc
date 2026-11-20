@@ -22,7 +22,8 @@ open GlobalTheory.FlatConj
 theorem gaussGL_inv {k : Type} [Field k] [Fintype k] (ψ : AddChar k ℂ) (ξ : kˣ →* ℂˣ) (r : ℕ) :
     gaussGL ψ⁻¹ ξ⁻¹ r = (starRingEnd ℂ) (gaussGL ψ ξ r) := by
   unfold gaussGL
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun x _ => ?_
   rw [map_mul, AddChar.inv_apply, AddChar.map_neg_eq_conj]
   congr 1

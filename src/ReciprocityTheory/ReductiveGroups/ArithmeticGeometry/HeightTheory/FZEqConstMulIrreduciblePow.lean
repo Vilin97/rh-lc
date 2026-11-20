@@ -66,7 +66,8 @@ theorem relation_section_identity (hd : d.AxH 𝒜) (c : ι) (i : Fin (d.D + 1))
       simp only [sImg, hS1]
     rw [hsum, hA]
     simp only [hB]
-    rw [map_neg, map_sum, neg_add_eq_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_neg, map_sum, neg_add_eq_zero]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_mul, IsScalarTower.algebraMap_apply (Ω c) (MvPolynomial (SVar d.D d.N) (Ω c))
       (OmS (Ω c) d.D d.N), MvPolynomial.algebraMap_eq]
@@ -116,7 +117,8 @@ theorem relation_ker_le_valuation_prime (hd : d.AxH 𝒜) (c : ι) (p : Ideal (K
         rw [hr]
         split_ifs with hj
         · subst hj
-          rw [map_neg, map_sum, sub_neg_eq_add]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [map_neg, map_sum, sub_neg_eq_add]
           simp only [map_mul, hΨs, hΨC]
           rw [relation_section_identity d hd c i]
           split_ifs with hi
@@ -159,7 +161,8 @@ theorem ker_relation_map_ne_bot (hd : d.AxH 𝒜) (c : ι) : RingHom.ker (d.rela
     simp only [Data.relationEliminateColumn, φ, AlgHom.comp_apply, AlgHom.restrictScalars_apply, MvPolynomial.aeval_X]
     by_cases hj : j = d.jc c
     · subst hj
-      simp only [if_true, Fin.insertNth_apply_same, map_neg, map_sum, map_mul, MvPolynomial.rename_X,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [if_true, Fin.insertNth_apply_same, map_neg, map_sum, map_mul, MvPolynomial.rename_X,
         MvPolynomial.rename_C, g]
       congr 1
       have e1 := Finset.add_sum_erase Finset.univ (fun k => (MvPolynomial.X (i, k) :

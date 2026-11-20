@@ -37,7 +37,8 @@ theorem typeVec_fixed : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T0 : 
     exact Formalism.IndefR.Fin.idem_orth ((hQpl P' hP').2 P' hP') (hesQ P' hP') (hesg P hP)
       (fun h => Finset.disjoint_left.1 hdisj hP (h ▸ hQt hP'))
   have h2 : eQ * cA D eg = 0 := by
-    rw [hegs, heQs, map_sum, Finset.sum_mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hegs, heQs, map_sum, Finset.sum_mul_sum]
     refine Finset.sum_eq_zero fun P' hP' => Finset.sum_eq_zero fun P hP => ?_
     refine Formalism.IndefR.Fin.idem_orth_conj ((hQpl P' hP').2 P' hP') (hesQ P' hP') (hesg P hP) fun hc => ?_
     obtain ⟨⟨q, hq, hcard, -, hqg⟩, -⟩ := hQpl P' hP'

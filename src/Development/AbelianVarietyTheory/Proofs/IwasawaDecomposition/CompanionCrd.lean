@@ -33,7 +33,8 @@ theorem std_of_gram (S : HSpace E) {m : ℕ} (h : S.rank = m) (hg : S.gram.reind
     have := congrFun (congrFun hg a) b
     simpa [HSpace.gram, Matrix.one_apply] using this
   conv_rhs => rw [← S.frame.sum_repr x, ← S.frame.sum_repr y]
-  simp only [map_sum, LinearMap.map_smulₛₗ₂, LinearMap.map_smul, LinearMap.sum_apply, hg',
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.map_smulₛₗ₂, LinearMap.map_smul, LinearMap.sum_apply, hg',
     smul_eq_mul, mul_ite, mul_one, mul_zero]
   simp [stdH, Crd.co, starRingEnd_apply]
 

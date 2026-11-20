@@ -35,7 +35,8 @@ theorem pv_add_right : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpa
     funext x
     rw [Finset.sum_apply]
     exact Finset.sum_congr rfl (fun i hi => by rw [hΦ i hi])
-  rw [pv_eq Bf ⟨_, h₁⟩ (∑ i ∈ s, Φ i) rfl hsum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [pv_eq Bf ⟨_, h₁⟩ (∑ i ∈ s, Φ i) rfl hsum, map_sum]
   exact Finset.sum_congr rfl (fun i hi => (pv_eq Bf ⟨_, h₁⟩ (Φ i) rfl (hΦ i hi)).symm)
 
 end GlobalTheory

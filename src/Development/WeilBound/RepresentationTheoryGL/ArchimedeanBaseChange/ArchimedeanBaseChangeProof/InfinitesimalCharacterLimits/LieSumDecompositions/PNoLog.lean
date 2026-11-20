@@ -168,10 +168,12 @@ theorem trace_ss (hm : ∀ τ, (m τ).Nodup ∧ Multiset.card (m τ) = r + s) (�
     intro u
     have e1 : (∑ k ∈ Finset.range (s + 1), (u + 0) ^ k • π (bP k)) =
         π ⟨capS r s τ (u + (r : ℂ) / 2), capS_mem_Pa r s m τ _⟩ := by
-      rw [hSP, map_sum]; simp [map_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hSP, map_sum]; simp [map_smul]
     have e2 : (∑ k ∈ Finset.range (r + 1), (u + 0) ^ k • π (aP k)) =
         π ⟨capR r s τ (u - (s : ℂ) / 2), capR_mem_Pa r s m τ _⟩ := by
-      rw [hRP, map_sum]; simp [map_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hRP, map_sum]; simp [map_smul]
     have e3 : π (⟨capS r s τ (u + (r : ℂ) / 2), capS_mem_Pa r s m τ _⟩ *
         ⟨capR r s τ (u - (s : ℂ) / 2), capR_mem_Pa r s m τ _⟩) = algebraMap ℂ _ ((m τ).map (u + ·)).prod := by
       refine piQ_eq_algebraMap V I _ fun v hv => ⟨V.sub_mem (((Pa V I).mul_mem (capS_mem_Pa r s m τ _)
@@ -194,7 +196,8 @@ theorem trace_ss (hm : ∀ τ, (m τ).Nodup ∧ Multiset.card (m τ) = r + s) (�
       hrel k).2 hk
 
   have hR : ∀ u, IsSS (π ⟨capR r s τ u, capR_mem_Pa r s m τ u⟩) := fun u => by
-    rw [hRP, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hRP, map_sum]
     refine IsSS.sum _ _ (fun k hk => ?_) (fun i _ j _ => ?_)
     · rw [map_smul]
       exact (hss k (Nat.lt_succ_iff.1 (Finset.mem_range.1 hk))).smul _
@@ -236,7 +239,8 @@ theorem key (hm : ∀ τ, (m τ).Nodup ∧ Multiset.card (m τ) = r + s) :
   have hc : ∀ τ τ', Commute (π (TP τ)) (π (TP τ')) := fun τ τ' =>
     (commute_val r s m (by rw [hTP1, hTP1]; exact Tr1_comm r s τ τ')).map π
   have hss : IsSS (π LZ) := by
-    simp only [LZ, map_sum, map_add]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [LZ, map_sum, map_add]
     refine IsSS.sum _ _ (fun w _ => (hTP2 _).add (hTP2 _) (hc _ _)) (fun w _ w' _ => ?_)
     exact ((hc _ _).add_left (hc _ _)).add_right ((hc _ _).add_left (hc _ _))
   obtain ⟨S, hS⟩ := hss

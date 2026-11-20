@@ -38,18 +38,22 @@ theorem rel_transfer {T E F₁ FH Ω : Type} [CommRing T] [IsDomain T] [IsPrinci
       simpa [Algebra.smul_def] using hs)
     exact funext hli) (fun t => ∑ i, r i * b (B.repr (x' i) t)) (by
       rw [← h]
-      simp only [map_sum, map_mul, Finset.sum_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_mul, Finset.sum_mul]
       rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun i _ => ?_
       conv_rhs => rw [hx i]
-      simp only [AddSubmonoidClass.coe_finsetSum, Submodule.coe_smul, Algebra.smul_def, map_sum, map_mul, hb,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [AddSubmonoidClass.coe_finsetSum, Submodule.coe_smul, Algebra.smul_def, map_sum, map_mul, hb,
         Finset.mul_sum, _root_.mul_assoc])
   have h1 : ∑ i, v (r i) * lam (x i) = ∑ t, v (∑ i, r i * b (B.repr (x' i) t)) * lam (B t) := by
-    simp only [map_sum, map_mul, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, Finset.sum_mul]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun i _ => ?_
     conv_lhs => rw [hx i]
-    simp only [map_sum, map_smul, Algebra.smul_def, hvb, Finset.mul_sum, _root_.mul_assoc]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, Algebra.smul_def, hvb, Finset.mul_sum, _root_.mul_assoc]
   rw [h1]
   refine Finset.sum_eq_zero fun t _ => ?_
   rw [show (∑ i, r i * b (B.repr (x' i) t)) = 0 from congrFun h0 t, map_zero, zero_mul]
@@ -69,7 +73,8 @@ theorem key_of_gauss {T E F F₁ FH Ω : Type} [CommRing T] [IsDomain T] [IsPrin
   have hθ' : ∀ t, θa (θ t) = θb (θ t) := fun t => RingHom.congr_fun hθ t
   have h1 : cE (a π) * θa y = ∑ i, cE (a (r i)) * θb (θ (w i)) := by
     have := congrArg θa h
-    simp only [map_sum, map_mul, ha', hθ'] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, ha', hθ'] at this
     exact this.symm
   obtain ⟨s, hs, m, r', t, ht, e⟩ :=
     (hG (θa y) ⟨a π, hπ, n, fun i => a (r i), fun i => θb (θ (w i)), fun i => ⟨_, rfl⟩, h1⟩).1 (hW y hy)

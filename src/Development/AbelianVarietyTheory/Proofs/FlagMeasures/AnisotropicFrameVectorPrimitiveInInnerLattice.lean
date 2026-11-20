@@ -36,7 +36,8 @@ theorem exists_quad (L : Formalism.MainNotions.S.Loc.LocE F E) (d : E) : ∃ t n
   have hs := hmon.as_sum
   rw [hdeg] at hs
   rw [hs] at h0
-  simp only [map_add, map_pow, aeval_X, map_sum, map_mul, aeval_C, Finset.sum_range_succ, Finset.sum_range_zero,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_add, map_pow, aeval_X, map_sum, map_mul, aeval_C, Finset.sum_range_succ, Finset.sum_range_zero,
     zero_add, pow_zero, pow_one, mul_one] at h0
   refine ⟨-f.charpoly.coeff 1, f.charpoly.coeff 0, ?_⟩
   rw [map_neg]

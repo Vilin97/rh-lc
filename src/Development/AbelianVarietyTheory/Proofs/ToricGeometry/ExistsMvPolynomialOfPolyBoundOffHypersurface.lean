@@ -219,7 +219,8 @@ theorem _root_.GlobalTheory.exists_mvPolynomial_of_poly_bound_off_hypersurface :
         induction φ using Polynomial.induction_on' with
         | add p₁ p₂ h₁ h₂ => simp only [map_add, Polynomial.eval_add, h₁, h₂]
         | monomial n a => simp [Polynomial.aeval_monomial, Polynomial.eval_monomial]
-      rw [hPmdef, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hPmdef, map_sum]
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [map_mul, MvPolynomial.eval_rename, hA]
       rfl

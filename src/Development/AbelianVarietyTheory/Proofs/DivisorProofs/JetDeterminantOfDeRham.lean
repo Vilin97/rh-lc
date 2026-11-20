@@ -66,12 +66,14 @@ theorem exists_det_formula (H : GlobalTheory.Published.AbelianDeRham) {F : Type}
       congr 1
       simp only [LinearMap.smul_apply, hh' _ z]
       conv_lhs => rw [hc z]
-      simp only [map_sum, LinearMap.map_smulₛₗ, map_smul, smul_eq_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, LinearMap.map_smulₛₗ, map_smul, smul_eq_mul]
       exact Finset.sum_congr rfl fun a _ ↦ mul_comm _ _
   have hv' : v = fun j ↦ ∑ a, x j (m.pull (c a)) • L'.toLie X'.rm (h' a) := funext fun j ↦ by
     rw [← (L'.toLie_eq_iff X'.rm).2 (hv j)]
     conv_lhs => rw [hx (x j)]
-    simp only [map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul]
   rw [hv']
   refine (δ'.toMultilinearMap.map_sum _).trans (Finset.sum_congr rfl fun a _ ↦ ?_)
   refine (δ'.toMultilinearMap.map_smul_univ _ _).trans ?_
@@ -152,7 +154,8 @@ theorem pair_comb {g : ℕ} (Λ : Submodule ℤ (Fin g → ℂ)) {M : Type 1} [A
       congr 1
       exact Finset.sum_congr rfl fun a _ ↦ by ring
     | single x' r' =>
-      simp only [Finsupp.linearCombination_single, map_smul, LinearMap.smul_apply, hψ, smul_eq_mul, Pi.smul_apply,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Finsupp.linearCombination_single, map_smul, LinearMap.smul_apply, hψ, smul_eq_mul, Pi.smul_apply,
         Complex.im_eq_sub_conj, dotProduct, Matrix.mulVec_diagonal, map_sum, map_mul, Pi.star_apply, RCLike.star_def,
         Complex.conj_ofReal, Complex.conj_conj, ← Finset.sum_sub_distrib, Finset.mul_sum, Finset.sum_div]
       exact Finset.sum_congr rfl fun a _ ↦ by ring
@@ -315,7 +318,8 @@ theorem coeff_origin (H : GlobalTheory.Published.AbelianDeRham) {P : T.U.u.Λ �
   have hL : ∀ j, IsLieImage (crysToDR J.κ Y.pull.grp (D' j)) (L'.toLie Y.X'.rm (crysToDR J.κ Y.pull.grp (D' j))).hom :=
     fun j ↦ (L'.toLie_eq_iff Y.X'.rm).1 rfl
   have hJ : ∀ j, IsJetElt J T.X T.low Y.mor (Finsupp.linearCombination ℂ P (d j)) (D' j) := fun j cc ↦ by
-    rw [hD', Finset.sum_eq_zero (s := Finset.univ) fun i _ ↦ by rw [hlow, LinearMap.zero_apply, map_zero, mul_zero], add_zero,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hD', Finset.sum_eq_zero (s := Finset.univ) fun i _ ↦ by rw [hlow, LinearMap.zero_apply, map_zero, mul_zero], add_zero,
       Finsupp.linearCombination_apply, Finsupp.sum, LinearMap.sum_apply, map_sum]
     refine Finset.sum_congr rfl fun x _ ↦ ?_
     rw [hD x cc, ← map_mul]

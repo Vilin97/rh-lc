@@ -101,7 +101,8 @@ theorem exists_ev_ne_zero [Finite ι] {wL : WeightFamilies.Wt D j}
   have := Fintype.ofFinite ι
   choose g h1 h2 using hs
   refine ⟨∑ Z, g Z, fun Z => ?_⟩
-  rw [map_sum, map_sum, Finset.sum_eq_single Z (fun Z' _ e => h2 Z' Z e.symm) (fun h => absurd (Finset.mem_univ _) h)]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, Finset.sum_eq_single Z (fun Z' _ e => h2 Z' Z e.symm) (fun h => absurd (Finset.mem_univ _) h)]
   exact h1 Z
 
 end Record

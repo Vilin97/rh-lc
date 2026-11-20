@@ -31,7 +31,8 @@ theorem toEAf_cA_mul_mem {e : AE D} {P : Finset (Formalism.L2.DIV.Pl D.host.E)} 
     (hP : ∀ PP ∈ P, ((GlobalTheory.Tow.badN D : ℕ) : 𝓞 D.host.E) ∉ PP.asIdeal) {a : D.host.E} (ha : a ∈ D.host.AA) :
     toEAf D (cA D e * incA D a) ∈ Formalism.L2.Herm.intAf D.host.F D.host.E := by
   obtain ⟨⟨es, hes, rfl⟩, -⟩ := he
-  rw [map_sum, Finset.sum_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_mul, map_sum]
   refine sum_mem fun PP hPP => ?_
   refine GlobalTheory.ConjHalfInt.toEAf_mul_mem (GlobalTheory.IdemSupport.Comparison₂.conj ((hes PP hPP).2 : GlobalTheory.IdemSupport.Comparison₂ PP (es PP))) ?_ ha
   exact GlobalTheory.HalfCompare.primeToAA_of_not_mem ((GlobalTheory.StdFrames.natCast_mem_cP PP _).not.2 (hP PP hPP))

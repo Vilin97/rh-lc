@@ -44,7 +44,8 @@ private theorem shift_mul {r : ℝ} {χ : HChar E} (hχ : IsTw (a := a) r χ) (X
 
 private theorem casA_mul {r : ℝ} {χ : HChar E} (hχ : IsTw (a := a) r χ) (c : ℝ) {n : ℕ} (e : Fin n → Herm E a)
     (φ : Sm E a) : casA 0 c e (mulChi a χ φ) = mulChi a χ (casA r c e φ) := by
-  simp only [casA, cas, LinearMap.sub_apply, LinearMap.sum_apply, Module.End.mul_apply, LinearMap.smul_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [casA, cas, LinearMap.sub_apply, LinearMap.sum_apply, Module.End.mul_apply, LinearMap.smul_apply,
     Module.End.one_apply, map_sub, map_sum, map_smul, shift_mul hχ]
 
 private theorem locLim_mul (χ : HChar E) {f : ℕ → Sm E a} {φ : Sm E a}

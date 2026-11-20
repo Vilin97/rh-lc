@@ -27,7 +27,8 @@ private theorem sum_over_quotient_fixed_of_fixed {R X M : Type} [CommRing R] [Ad
   intro b hb
   have hstep : ∀ x s : X, x ∈ A → s ∈ S → W (x + s) y = W x y := fun x s hx hs => by
     rw [← hW.comp_of_mem hA hx (hSA s hs), hy s hs]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   let b' : ↥A.toAddSubgroup := ⟨b, hb⟩
   refine Fintype.sum_equiv
     (Equiv.addLeft (QuotientAddGroup.mk b' : ↥A.toAddSubgroup ⧸ S.addSubgroupOf A.toAddSubgroup))
@@ -110,7 +111,8 @@ theorem _root_.GlobalTheory.FinWeil.span_translates_vacua : ∀ {R X M : Type} [
         W (-t) (c⁻¹ • ∑ q : ↥A.toAddSubgroup ⧸ S.addSubgroupOf A.toAddSubgroup,
           W ((Quotient.out q : ↥A.toAddSubgroup) : X) (W t v)) := by
       symm
-      rw [map_smul, map_sum, Finset.smul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_smul, map_sum, Finset.smul_sum]
       refine Finset.sum_congr rfl fun q _ => ?_
       rw [hW.comm _ t v, map_smul, hW.neg_comp,
         ← hc_def, smul_smul, smul_smul, mul_comm c⁻¹, mul_assoc, inv_mul_cancel₀ hc, mul_one]

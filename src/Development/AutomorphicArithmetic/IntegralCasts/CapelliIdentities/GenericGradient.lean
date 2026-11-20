@@ -103,7 +103,8 @@ private theorem UpperTheory.Reformulated.B.Qf34.mem_sup_sq {k A K ι : Type*} [C
     p f c hp hf hc
   choose a ha using fun i => Ideal.Quotient.mk_surjective (I := m * m) (σ (c i))
   have h2 : φ p - ∑ i, a i * φ (f i) ∈ m * m := by
-    rw [← Ideal.Quotient.eq, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Ideal.Quotient.eq, map_sum]
     simpa [← ha] using key
   rw [← add_sub_cancel (∑ i, a i * φ (f i)) (φ p)]
   refine Submodule.add_mem_sup (Ideal.sum_mem _ fun i _ => ?_) h2

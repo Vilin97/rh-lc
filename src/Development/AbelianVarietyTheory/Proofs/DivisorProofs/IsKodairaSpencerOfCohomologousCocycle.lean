@@ -43,9 +43,11 @@ theorem isKS_of_cohomologous : ∀ (E : Type) [Field E] [NumberField E] [IsCMFie
         ((valR (w b) (W r) (α r).val).snd * valR g (W r) (α r)⁻¹.val) * (valR (w a) O f).snd := by
       intro r hr
       have hgr := le_preimage_mono g hr hgO
-      rw [valR_eq _ _ hgO, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [valR_eq _ _ hgO, map_sum]
       refine Finset.sum_congr rfl fun a _ => ?_
-      rw [← valR_eq _ _ hgO, smulFld_of_le hr, valR_mul _ _ hgO, valR_res _ hr hgO,
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← valR_eq _ _ hgO, smulFld_of_le hr, valR_mul _ _ hgO, valR_res _ hr hgO,
         hdv a O (hr.trans (hWU r)) f S φ g (w a) hg hgO (hw a), valR_eq _ _ hgr, map_neg, map_sum, neg_mul,
         Finset.sum_mul]
       refine congrArg Neg.neg (Finset.sum_congr rfl fun b _ => ?_)

@@ -187,7 +187,8 @@ def HermitianMetric.standard (ι : Type*) [Fintype ι] [DecidableEq ι] :
     HermitianMetric K (ι → 𝓞 K) where
   form σ := coreOfInjective (standardCoord K σ ι).toLinearMap (standardCoord K σ ι).injective
   form_conj σ x y := by
-    simp only [coreOfInjective_inner, LinearEquiv.coe_coe, PiLp.inner_apply, RCLike.inner_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [coreOfInjective_inner, LinearEquiv.coe_coe, PiLp.inner_apply, RCLike.inner_apply,
       standardCoord_conjMap, map_sum, map_mul, Complex.conj_conj]
 
 theorem HermitianMetric.standard_inner (ι : Type*) [Fintype ι] [DecidableEq ι] (σ : K →+* ℂ)

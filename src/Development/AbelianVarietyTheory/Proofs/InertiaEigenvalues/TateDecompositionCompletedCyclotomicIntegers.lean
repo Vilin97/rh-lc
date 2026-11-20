@@ -259,7 +259,8 @@ theorem step (K : FinExt l) {i : ℕ} (hi : 2 ≤ i) {z : PadicComplex l} (hz : 
     ⟨⟨y a, (h1 a).1, rfl⟩, (norm_io _).le.trans (h1 a).2⟩
   refine ⟨io l (y ⟨0, hp.pos⟩), h3 _, ?_⟩
   rw [h2, ← Finset.add_sum_erase _ _ (Finset.mem_univ ⟨0, hp.pos⟩)]
-  simp only [pow_zero, one_mul, map_add, add_sub_cancel_left, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [pow_zero, one_mul, map_add, add_sub_cancel_left, map_sum, map_mul]
   refine sum_mem fun a ha => AddSubgroup.subset_closure ⟨_, _, ?_, h3 a, rfl⟩
   refine (hζ.pow_of_coprime a ?_).map_of_injective (io l).injective
   refine Nat.Coprime.pow_right _ (Nat.Coprime.symm ((Nat.Prime.coprime_iff_not_dvd hp).2 ?_))

@@ -43,7 +43,8 @@ theorem trM_injective (j : k ≃+* k') (eR : R' ≃ R) (eC : C' ≃ C) : Functio
 theorem trM_mul {M M' : Type} [Fintype M] [Fintype M'] (j : k ≃+* k') (eR : R' ≃ R) (eM : M' ≃ M) (eC : C' ≃ C)
     (X : Matrix R M k) (Y : Matrix M C k) : trM j eR eC (X * Y) = trM j eR eM X * trM j eM eC Y := by
   ext r c
-  simp only [trM_apply, Matrix.mul_apply, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [trM_apply, Matrix.mul_apply, map_sum, map_mul]
   exact (Fintype.sum_equiv eM _ _ fun m => rfl).symm
 
 end Matrices

@@ -188,7 +188,8 @@ theorem gram_re_posSemidef {n : ℕ} (u : Fin n → Fin g → ℂ) :
     have e : (R.ip (∑ i, x i • u i) (∑ i, x i • u i)).re =
         star x ⬝ᵥ (Matrix.of fun i j => (R.ip (u i) (u j)).re) *ᵥ x := by
       rw [← reForm_apply_alt]
-      simp only [map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply, reForm_apply_alt]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply, reForm_apply_alt]
       simp [dotProduct, mulVec, Finset.mul_sum, mul_assoc]
       rw [Finset.sum_comm]
       exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
@@ -263,13 +264,15 @@ theorem neg_log_covolume_le {σ : Ψ → (𝓞 E →+* ℂ)} {m : ℕ} (hσ : Is
       have := pow_le_pow_left₀ hlam.le h1 2
       rwa [Real.sq_sqrt (R.normSq_nonneg_bis w)] at this
     have h3 : R.P w = ∑ i, (c i : ℝ) • R.P (b i : Λ) := by
-      rw [hw, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hw, map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_zsmul, Int.cast_smul_eq_zsmul]
     have h4 : R.normSq w = ∑ i, ∑ j, (c i : ℝ) * (c j : ℝ) * G i j := by
       show (R.ip (R.P w) (R.P w)).re = _
       rw [h3, ← reForm_apply_alt]
-      simp only [map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply, reForm_apply_alt]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply, reForm_apply_alt]
       simp only [smul_eq_mul, Finset.mul_sum, hG, of_apply]
       rw [Finset.sum_comm]
       exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring

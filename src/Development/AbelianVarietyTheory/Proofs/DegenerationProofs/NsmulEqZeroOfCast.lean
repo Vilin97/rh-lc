@@ -101,7 +101,8 @@ theorem span_gens_eq [IsDomain o] {U₀ : M.Z.Opens} (hA : S.admitted M U₀) (z
     have e : (Pi.single i (1 : Ω) : S.J → Ω) =
         ∑ c : S.TT M z →+ ZMod S.N, fun j => algebraMap o Ω (S.proj _ c j i) := by
       ext j
-      rw [Finset.sum_apply, ← map_sum, ← Matrix.sum_apply, sum_proj S _ hT]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Finset.sum_apply, ← map_sum, ← Matrix.sum_apply, sum_proj S _ hT]
       simp [Matrix.one_apply, Pi.single_apply]
     show (Pi.single i (1 : Ω) : S.J → Ω) ∈ Submodule.span (M.O ξ) (gens S M z)
     rw [e]

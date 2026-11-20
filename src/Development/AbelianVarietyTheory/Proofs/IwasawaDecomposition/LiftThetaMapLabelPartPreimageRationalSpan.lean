@@ -31,7 +31,8 @@ theorem mem_span_rat {K V E : Type} [Field K] [AddCommGroup V] [Module ℂ V] [A
       funext j
       simp [Finset.sum_apply, Pi.single_apply]
     conv_lhs => rw [ha]
-    simp only [map_sum, map_smulₛₗ]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smulₛₗ]
   have hsp : ∀ z ∈ Submodule.span ℂ (Set.range u), ∃ c : Fin n → ℂ, z = ∑ k, c k • u (Pi.single k 1) := by
     intro z hz
     have hle : Submodule.span ℂ (Set.range u) ≤ Submodule.span ℂ (Set.range fun k => u (Pi.single k 1)) := by
@@ -96,7 +97,8 @@ theorem mem_span_part : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 I0 T 
       funext j
       simp [Finset.sum_apply, Pi.single_apply]
     refine Eq.trans ?_ (congrArg ((R.toCx3 F).tC F.cr false i t) hc).symm
-    rw [map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum]
     refine Eq.trans ?_ (map_sum ((R.toCx3 F).tC F.cr false i t) (fun k => cj (twAt D.what₂.embLL A3.A.v0) (c k) • (Pi.single k 1 : Fin _ → ℂ)) Finset.univ).symm
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_smul, map_smulₛₗ]

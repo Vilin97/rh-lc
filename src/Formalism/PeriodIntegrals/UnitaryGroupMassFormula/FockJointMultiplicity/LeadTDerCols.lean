@@ -77,7 +77,8 @@ variable {σ : Type*} {m n : ℕ}
 
 theorem derSum_apply {ι : Type*} (t : Finset ι) (D : ι → Derivation ℂ (MvPolynomial σ ℂ) (MvPolynomial σ ℂ))
     (f : MvPolynomial σ ℂ) : (∑ c ∈ t, D c) f = ∑ c ∈ t, D c f := by
-  rw [← Derivation.coeFnAddMonoidHom_apply, map_sum, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Derivation.coeFnAddMonoidHom_apply, map_sum, Finset.sum_apply]
   rfl
 
 def rowD (ι : Fin m × Fin n → σ) (a b : Fin m) : Derivation ℂ (MvPolynomial σ ℂ) (MvPolynomial σ ℂ) :=

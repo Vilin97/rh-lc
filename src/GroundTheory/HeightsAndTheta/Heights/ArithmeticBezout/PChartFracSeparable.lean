@@ -73,7 +73,8 @@ theorem ChartFracSeparable.proof (h : ChartPointSeparable.Statement) : ChartFrac
     have hmem : ∑ m, X (Sum.inr (i, m)) * X (Sum.inl m) ∈ chartIncIdeal I t e :=
       Ideal.mem_sup_right (Ideal.subset_span ⟨i, rfl⟩)
     have := congrArg ψ (hmk0 _ hmem)
-    rw [map_zero, map_sum, map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_zero, map_sum, map_sum] at this
     rw [← this]
     refine Finset.sum_congr rfl fun m _ => ?_
     rw [map_mul, map_mul, hXr, hXl]

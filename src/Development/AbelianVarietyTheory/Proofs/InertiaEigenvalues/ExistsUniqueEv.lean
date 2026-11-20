@@ -105,7 +105,8 @@ theorem ev_bounded (hi : ∀ r : O, ‖i (algebraMap O L r)‖ ≤ 1) {c : O} (h
     · choose! B hB using ih
       refine ⟨∑ p ∈ Finset.HasAntidiagonal.antidiagonal k, ‖i (coeff p.1 z)‖ * B p.2, fun b => ?_⟩
       obtain ⟨r, q, hq⟩ := hz b
-      rw [hq ev h, map_add, coeff_succ_X_mul, coeff_C, if_neg k.succ_ne_zero, zero_add, coeff_mul,
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hq ev h, map_add, coeff_succ_X_mul, coeff_C, if_neg k.succ_ne_zero, zero_add, coeff_mul,
         map_sum]
       refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun p hp => ?_)
       rw [map_mul, norm_mul]

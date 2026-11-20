@@ -95,10 +95,12 @@ theorem continuous_conjBack [Algebra.IsAlgebraic F Ω] : Continuous (conjBack σ
     rw [conjBack_apply, this, RingEquiv.symm_apply_apply]
   have hx' : x = ∑ i, b.repr ⟨x, hx⟩ i • (b i : Ω) := by
     have := congrArg E.val (b.sum_repr ⟨x, hx⟩)
-    rw [map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at this
     simp only [map_smul] at this
     exact this.symm
-  rw [hx', map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hx', map_sum]
   exact Finset.sum_congr rfl fun i _ => by rw [map_smul, hb]
 
 omit hA in

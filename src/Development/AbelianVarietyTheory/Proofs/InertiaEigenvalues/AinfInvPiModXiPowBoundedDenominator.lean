@@ -43,7 +43,8 @@ theorem geom_ring {R : Type*} [CommRing R] {l : ℕ} (hl : l.Prime) (y : R) :
   obtain ⟨v, hv⟩ := geom_poly hl
   refine ⟨Polynomial.aeval y v, ?_⟩
   have h := congrArg (Polynomial.aeval y) hv
-  simpa [map_sum] using h
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa [map_sum] using h
 
 theorem pow_mem_span {R : Type*} [CommRing R] (y ξ c v : R) (a k n M : ℕ)
     (hξ : ξ = y ^ a + c * (1 + y * v)) (hM : 1 ≤ M) (hk : k ≤ a * n) :

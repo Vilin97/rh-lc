@@ -19,7 +19,8 @@ theorem trace_mul_ent {n : ℕ} (M : KMod n) (A B : M.V →L[ℂ] M.V) :
   have h : ((A * B : M.V →L[ℂ] M.V) : M.V →ₗ[ℂ] M.V) (stdOrthonormalBasis ℂ M.V i) =
       A (∑ j, inner ℂ (stdOrthonormalBasis ℂ M.V j) (B (stdOrthonormalBasis ℂ M.V i)) • stdOrthonormalBasis ℂ M.V j) := by
     rw [(stdOrthonormalBasis ℂ M.V).sum_repr']; rfl
-  rw [h, map_sum, inner_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h, map_sum, inner_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_smul, inner_smul_right, ent, ent, mul_comm]
 

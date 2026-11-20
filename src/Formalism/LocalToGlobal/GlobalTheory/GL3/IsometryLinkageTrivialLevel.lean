@@ -47,7 +47,8 @@ theorem herm : FS.Herm4 (cK D) (hK D) where
     apply D.host.φ₀.injective
     show D.host.φ₀ ((Algebra.trace D.host.K D.host.E (y * D.host.conj x) : D.host.K) : D.host.E)
       = D.host.φ₀ (D.host.conj ((Algebra.trace D.host.K D.host.E (x * D.host.conj y) : D.host.K) : D.host.E))
-    rw [CU.emb_conj, ← FL.sum_tau_trace, ← FL.sum_tau_trace, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [CU.emb_conj, ← FL.sum_tau_trace, ← FL.sum_tau_trace, map_sum]
     refine Finset.sum_congr rfl fun τ _ => ?_
     rw [map_mul, map_mul, map_mul, CU.emb_conj, CU.emb_conj, Complex.conj_conj, mul_comm]
   pos x hx := by
@@ -96,7 +97,8 @@ theorem iso0 : Nonempty (IsoK D) := by
   refine ⟨⟨g, fun x y => ?_⟩⟩
   have h := hg x y
   have h2 : (∑ a, Algebra.trace D.host.K D.host.E (x a * D.host.conj (y a))) = ∑ w, g x w * cK D (g y w) := h.symm
-  rw [h2, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h2, map_sum]
   refine Finset.sum_congr rfl fun w _ => ?_
   rw [map_mul]
   rfl

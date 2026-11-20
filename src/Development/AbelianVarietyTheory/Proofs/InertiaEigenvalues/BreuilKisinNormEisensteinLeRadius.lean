@@ -31,10 +31,12 @@ theorem norm_E_le_radius : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (bk : BK 
       conv_lhs => rw [bk.monic.as_sum]
       simp only [Polynomial.coe_add, Polynomial.coe_pow, Polynomial.coe_X]
       congr 1
-      rw [← Polynomial.coeToPowerSeries.ringHom_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← Polynomial.coeToPowerSeries.ringHom_apply, map_sum]
       simp
     have hmem : algebraMap A (PreDisc l (s X) bk.ρ₀) (s bk.E) ∈ ball l (s X) bk.ρ₀ (l : ℝ)⁻¹ := by
-      rw [hE, map_add, map_add, map_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hE, map_add, map_add, map_sum, map_sum]
       refine add_mem ?_ (Submodule.sum_mem _ fun i hi => ?_)
       · refine Submodule.subset_span ⟨0, bk.Ep.natDegree, 0, ?_, ?_⟩
         · simp [hρe]

@@ -103,7 +103,8 @@ theorem mem_allRad_of_tildeFrob_eq {m : ℕ} (C : Matrix (Fin m) (Fin m) (𝓣).
       rw [Function.iterate_succ_apply']
       have e : y j = ∑ k, (frob ℂ_[p] p).tildeFrobSymm (C j k) *
           (frob ℂ_[p] p).tildeFrobSymm (y k) := by
-        conv_lhs => rw [← (frob ℂ_[p] p).tildeFrobSymm_tildeFrob (y j), hy j, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          conv_lhs => rw [← (frob ℂ_[p] p).tildeFrobSymm_tildeFrob (y j), hy j, map_sum]
         simp only [map_mul]
       rw [e]
       refine Subring.sum_mem _ fun k _ => Subring.mul_mem _ ?_ (tildeFrobSymm_mem_range (ih k))
@@ -193,7 +194,8 @@ theorem extFrob_rep (i : Fin m) (σ : Set.Ioo (0 : ℝ) 1) :
       awayToExt p ((frob ℂ_[p] p).powRadius σ) (algebraMap _ 𝔸 (C i j)) *
         rep (ha j) ((frob ℂ_[p] p).powRadius σ) := by
   apply (𝓣).ofRad_injective
-  rw [← (frob ℂ_[p] p).tildeFrob_ofRad, ofRad_rep, hy i, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← (frob ℂ_[p] p).tildeFrob_ofRad, ofRad_rep, hy i, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_mul, map_mul, map_natCast, ofRad_rep, ← ainfTilde_eq]
 

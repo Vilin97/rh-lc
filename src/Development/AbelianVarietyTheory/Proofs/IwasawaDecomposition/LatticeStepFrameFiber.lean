@@ -52,7 +52,8 @@ theorem tanEv_incl_sum {B : Mdl Y i₀} (L : Lat B) {k : Type} [CommRing k] {x :
       ∑ i, (Scheme.ΓSpecIso (.of k)).hom (x.appLE O ⊤ hO (c i)) * tanEv B.t hv hO (L.N.incl.app O (s i)) := by
   let f : Γ(B.om, O) →+ k := AddMonoidHom.mk' (tanEv B.t hv hO) (tanEv_add B.t hv hO)
   have e : tanEv B.t hv hO (L.N.incl.app O (∑ i, c i • s i)) = f (L.N.incl.app O (∑ i, c i • s i)) := rfl
-  rw [e, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, map_sum, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [Scheme.Modules.Hom.app_smul]
   exact tanEv_smul B.t hv hO _ _
@@ -111,7 +112,8 @@ theorem stepAt_of_frame : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E]
   have e₃ : ∀ l, φ (a j l) = ∑ l', φ (GlobalTheory.LocM.StepFrame.resR hUU' (a' j l')) * φ (gU (T l l')) := fun l => by
     have ea : (a : Matrix (Fin n) (Fin n) Γ(Z.X, U)) = (Matrix.GeneralLinearGroup.map (GlobalTheory.LocM.StepFrame.resR hUU') a' :
         Matrix (Fin n) (Fin n) Γ(Z.X, U)) * (Mu : Matrix (Fin n) (Fin n) Γ(Z.X, U)) := Units.val_mul _ _
-    rw [ea, Matrix.mul_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [ea, Matrix.mul_apply, map_sum]
     refine Finset.sum_congr rfl fun l' _ => ?_
     rw [map_mul]
     rfl

@@ -96,7 +96,8 @@ theorem comparison_of_reduction {T : LocLat G Qp LL O} (C : Coord W (baseIdOf hR
     rw [hzeq]
     abel
   have hF := congrArg (comparisonOnLetter C i) key
-  rw [map_add, map_sum] at hF
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_add, map_sum] at hF
   have hC : ∀ k, comparisonOnLetter C i (PowerSeries.C (a k) • (⟨e k, he k⟩ : ↥((latOf C).N i))) =
       algebraMap O LL (a k) • W.cmp T ⟨C.t i (e k), he k⟩ := by
     intro k

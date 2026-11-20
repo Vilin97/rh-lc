@@ -121,7 +121,8 @@ lemma qb_equiv_apply {M : GLMod n} (CF : ColFam M) (j : CF.J) (i : M.ι) (K : TI
 theorem qb_prMu_ph {M : GLMod n} (CF : ColFam M) (j : CF.J) (nu : Fin n → ℤ) (i : M.ι) (K : TIdx (CF.mu j)) :
     ∑ k, prMu M nu i k * CF.ph j k K = if qb_wtT (CF.mu j) K = nu then CF.ph j i K else 0 := by
   have h := congrArg (evGL (torusPt n)) (qb_equiv_apply CF j i K)
-  simp only [map_sum, map_mul, Int.coe_castRingHom, map_intCast,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, Int.coe_castRingHom, map_intCast,
     qb_evGL_torus_TMat, mul_ite, mul_zero, sum_ite_eq', mem_univ, if_true] at h
   have h2 := congrArg (fun x => x.coeff nu) h
   simp only [← zsmul_eq_mul', ← zsmul_eq_mul, AddMonoidAlgebra.coeff_sum, Finsupp.finsetSum_apply,

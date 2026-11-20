@@ -96,7 +96,8 @@ theorem core (hA : IsAbelianScheme A₀) {O : Type} [CommRing O] (act : O → (A
     simp only [hw1, hw2, LinearMap.proj_pi]
     refine ⟨(hs j₀).1, fun j ↦ ?_⟩
     convert (hs j).2 using 1
-    simp only [Finset.sum_add_distrib, map_sub, map_sum, Finset.sum_sub_distrib]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Finset.sum_add_distrib, map_sub, map_sum, Finset.sum_sub_distrib]
     abel
 
 end Core

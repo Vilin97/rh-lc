@@ -111,7 +111,8 @@ theorem hsInner_rankOne (A : Wp →L[ℂ] Wp) (A' : Wq →L[ℂ] Wq) (a : Wp) (a
   have hs : ⟪a', A' a'⟫_ℂ = ∑ i, ⟪stdOrthonormalBasis ℂ Wq i, a'⟫_ℂ * ⟪a', A' (stdOrthonormalBasis ℂ Wq i)⟫_ℂ := by
     conv_lhs => rw [← (stdOrthonormalBasis ℂ Wq).sum_repr' a']
     conv_lhs => enter [2]; rw [(stdOrthonormalBasis ℂ Wq).sum_repr' a']
-    rw [map_sum, inner_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, inner_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, inner_smul_right]
   rw [hs, Finset.mul_sum, Finset.mul_sum]

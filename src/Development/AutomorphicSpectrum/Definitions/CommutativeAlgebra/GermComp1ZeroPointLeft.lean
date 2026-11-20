@@ -324,7 +324,8 @@ theorem bil_sy_gauge (B : FB R d O) (h : PS k 2 d) (hc : B.IsCanonGauge k h) (i 
 theorem pairH_gauge (B : FB R d O) (h : PS k 2 d) (hc : B.IsCanonGauge k h) (y y' : (Fin d → R) × (Fin d → R)) :
     algebraMap R k (pairH B y y') = betaH k (toHk k h y) (toHk k h y') := by
   rw [toHk, toHk, betaH_expand]
-  simp only [← bil_sy_gauge k B h hc, pairH, dotProduct, Matrix.mulVec, map_add, map_sub, map_sum, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← bil_sy_gauge k B h hc, pairH, dotProduct, Matrix.mulVec, map_add, map_sub, map_sum, map_mul,
     Finset.sum_sub_distrib, Finset.mul_sum]
   congr 1
   exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring

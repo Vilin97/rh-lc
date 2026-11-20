@@ -129,7 +129,8 @@ private theorem pm_act (X : Tower Ω ε) (l : ℕ) [Fact l.Prime] (w n : ℕ) (m
   convert h using 1
   funext u
   show X.kmap l _ (t _) = _
-  rw [ht, map_sum, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [ht, map_sum, Finset.sum_apply]
   exact Finset.sum_congr rfl fun i _ => by rw [map_smul]; rfl
 
 private theorem pm_down (X : Tower Ω ε) (l : ℕ) [Fact l.Prime] (w n : ℕ) (t : X.Fn l)

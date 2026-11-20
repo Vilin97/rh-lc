@@ -36,7 +36,8 @@ theorem exists_gens (R M : Type) [CommRing R] [IsDomain R] [AddCommGroup M] [Mod
   refine ⟨t, fun N hN hI => eq_top_iff.2 fun m _ => ?_⟩
   choose a ha using fun i => Ideal.Quotient.mk_surjective (b.repr (TensorProduct.mk R (R ⧸ I) M 1 m) i)
   have h0 : TensorProduct.mk R (R ⧸ I) M 1 (m - ∑ i, a i • t i) = 0 := by
-    rw [map_sub, map_sum, sub_eq_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_sum, sub_eq_zero]
     conv_lhs => rw [← b.sum_repr (TensorProduct.mk R (R ⧸ I) M 1 m)]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, ht, ← ha, ← Ideal.Quotient.algebraMap_eq, algebraMap_smul]

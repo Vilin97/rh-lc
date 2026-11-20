@@ -86,7 +86,8 @@ private theorem cc_expand [Fintype σ] (g : MvPowerSeries σ E) :
     Low 2 (g - (constantCoeff g • 1 + ∑ s, coeff (Finsupp.single s 1) g • X s)) := by
   classical
   refine cc_low_two (by simp [map_sum]) fun i => ?_
-  simp [map_sum, cc_coeff_X, coeff_one]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, cc_coeff_X, coeff_one]
 
 private theorem coeff_low_degree_algHom_apply_eq [Fintype σ] (ψ : MvPowerSeries σ E →ₐ[E] MvPowerSeries τ E)
     (h2 : ∀ f, Low 2 f → Low 2 (ψ f)) (f : MvPowerSeries σ E) (d : τ →₀ ℕ)
@@ -96,7 +97,8 @@ private theorem coeff_low_degree_algHom_apply_eq [Fintype σ] (ψ : MvPowerSerie
   have hr := h2 _ (cc_expand f) d hd
   simp only [map_sub, sub_eq_zero] at hr
   rw [hr]
-  simp only [map_add, map_sum, map_smul, map_one, coeff_smul, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_add, map_sum, map_smul, map_one, coeff_smul, smul_eq_mul]
 
 private theorem cc_fix [Fintype σ] {w : σ → Y} {w' : τ → Y} {G : σ → MvPowerSeries τ E}
     {g : σ → MvPowerSeries σ E} (hG : ∀ j, Low 1 (G j)) (hg : ∀ j, Low 2 (g j))
@@ -221,7 +223,8 @@ private theorem cc_ift {κ τ' : Type} [Fintype σ] [Fintype κ] [Fintype τ'] [
     have hzk : z k = h k + X (e (.inl k)) + ∑ i, b k i • X (e (.inr i)) := by
       rw [hh]
       abel
-    rw [hzk, map_add, map_add, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hzk, map_add, map_add, map_sum]
     simp only [map_smul, hψr, hψl]
     abel
   · intro f i
@@ -355,7 +358,8 @@ private theorem cc_series {E τ κ Y : Type} [Field E] [Fintype τ] [Fintype κ]
     intro k k'
     have h := congrFun (congrFun hN k) k'
     rw [Matrix.mul_apply, Matrix.one_apply] at h
-    rw [he1, hz', map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [he1, hz', map_sum]
     simp only [coeff_smul]
     exact h
   obtain ⟨ψ, hψw, hψz, hψc, hψlin⟩ := cc_ift wt e z' hz'w hz'0 hδ
@@ -373,7 +377,8 @@ private theorem cc_series {E τ κ Y : Type} [Field E] [Fintype τ] [Fintype κ]
       rw [Finset.sum_comm]
       simp only [← Finset.sum_smul, h, ite_smul, one_smul, zero_smul, Finset.sum_ite_eq,
         Finset.mem_univ, if_true]
-    rw [hzz, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hzz, map_sum]
     simp [map_smul, hψz]
   · intro f i hf i'
     have h0 : ∀ k, coeff (Finsupp.single (s k) 1) f = 0 := fun k =>
@@ -392,7 +397,8 @@ private theorem cc_series {E τ κ Y : Type} [Field E] [Fintype τ] [Fintype κ]
     have hzi : ∀ k, coeff (Finsupp.single i 1) (z' k) =
         ∑ k', N k k' * coeff (Finsupp.single i 1) (z k') := by
       intro k
-      rw [hz', map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hz', map_sum]
       simp only [coeff_smul]
     have step : coeff (Finsupp.single i 1) f =
         ∑ k, coeff (Finsupp.single (s k) 1) f * coeff (Finsupp.single i 1) (z' k) := by
@@ -446,15 +452,18 @@ theorem UpperTheory.V.Alg.chart_cut :
     choose a ha using fun k => hdint k (Finset.mem_univ k)
     have hmem : ∑ k, a k • g k ∈ satSq x := by
       apply hφ.inj
-      · simp [map_sum, (hg _).2]
+      set_option synthInstance.maxHeartbeats 100000 in
+        · simp [map_sum, (hg _).2]
       · intro i
         have hi := congrFun hβ i
         simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Pi.zero_apply] at hi
-        rw [map_sum, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum, map_sum]
         simp only [cc_smul, ha]
         simp only [Algebra.smul_def, mul_assoc, ← Finset.mul_sum, hi, mul_zero]
     have hq : (satSq x).mkQ (∑ k, a k • g k) = 0 := (Submodule.Quotient.mk_eq_zero _).mpr hmem
-    rw [map_sum] at hq
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at hq
     simp only [map_smul] at hq
     have h0 := Fintype.linearIndependent_iff.mp hli a hq
     have := ha k0
@@ -513,9 +522,11 @@ theorem UpperTheory.V.Alg.chart_cut :
     choose a ha using fun k => hdint k (Finset.mem_univ k)
     have hF : d • f - ∑ k, a k • g k ∈ satSq x := by
       apply hφ.inj
-      · simp [map_sum, (hg _).2, hxf]
+      set_option synthInstance.maxHeartbeats 100000 in
+        · simp [map_sum, (hg _).2, hxf]
       · intro i
-        rw [map_sub, map_sub, map_sum, map_sum, cc_smul, hβ i, Finset.mul_sum, sub_eq_zero]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sub, map_sub, map_sum, map_sum, cc_smul, hβ i, Finset.mul_sum, sub_eq_zero]
         refine Finset.sum_congr rfl fun k _ => ?_
         rw [cc_smul, ha, Algebra.smul_def, mul_assoc]
     obtain ⟨e, he, heF⟩ := hF
@@ -537,5 +548,6 @@ theorem UpperTheory.V.Alg.chart_cut :
       rw [← Ideal.map_pow]
       exact Ideal.mem_map_of_mem p heF
     have h2 : p (e • (d • f - ∑ k, a k • g k)) = (e * d) • p f := by
-      simp [map_sub, map_sum, map_smul, hpg, mul_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [map_sub, map_sum, map_smul, hpg, mul_smul]
     rwa [h2] at h1

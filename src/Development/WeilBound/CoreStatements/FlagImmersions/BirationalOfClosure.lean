@@ -174,10 +174,12 @@ theorem zeros_proj {Ω₀ Ω : Type} [Field Ω₀] [Field Ω] (y₀ : (Σ k, J�
             GlobalTheory.CompanionTheory.Ar.Rel.pow_mul_pow_sub_eq _ _ hMy hjn, Algebra.smul_def, map_mul]
           show _ = _ * (i (p.coeff j) * α ^ j)
           ring
-        simp only [Φ, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [Φ, map_sum]
         rw [Finset.sum_congr rfl hterm, ← Finset.mul_sum, hpa, mul_zero]
       have hev := hz.2 Φ (mem_mCoordIdeal_of_aeval_eq_zero y hΦh hΦy)
-      simp only [Φ, map_sum, map_mul, map_pow, hFz] at hev
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Φ, map_sum, map_mul, map_pow, hFz] at hev
       rw [Finset.sum_eq_single 0 (fun j _ hj => by simp [hj]) (by simp), eval_map_rename'] at hev
       have hMz : eval z (map (Int.castRingHom ℂ) M) ≠ 0 := by
         simp only [M, map_prod, map_pow, map_X, eval_X]

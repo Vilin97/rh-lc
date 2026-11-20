@@ -196,7 +196,8 @@ theorem slice_of : Slice := by
     (fun j => M.co.e (incM F (z j))) (fun j a Φ hΦ => by rw [← map_smul]; exact he.inv _ (hD.mem j a) Φ hΦ)
     (fun i j => by rw [← M.co.form]; convert hD.pair i j) hφ
   refine ⟨r, φ₁, C, A, h1, h2, h3, fun y f => ?_, h5⟩
-  rw [← h4, Darboux.rho, lin, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← h4, Darboux.rho, lin, map_sum]
   simp only [map_smul]
 
 theorem evAdm_of : EvAdm := by

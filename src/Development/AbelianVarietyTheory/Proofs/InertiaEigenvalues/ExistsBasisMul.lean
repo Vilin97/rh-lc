@@ -32,7 +32,8 @@ theorem bil_expand {R M M' M'' : Type} [CommRing R] [AddCommGroup M] [Module R M
     [Module R M'] [AddCommGroup M''] [Module R M''] (b : M →ₗ[R] M' →ₗ[R] M'') {ι κ : Type}
     [Fintype ι] [Fintype κ] (u : ι → R) (x : ι → M) (u' : κ → R) (y : κ → M') :
     b (∑ i, u i • x i) (∑ k, u' k • y k) = ∑ q : ι × κ, (u q.1 * u' q.2) • b (x q.1) (y q.2) := by
-  simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply,
     Fintype.sum_prod_type, mul_smul, Finset.smul_sum]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => smul_comm _ _ _
@@ -44,7 +45,8 @@ theorem exists_frob_mat (hm : ∀ m : Ideal W.EE, m.IsMaximal → m.map E.ioE.to
   choose U hU using fun a => (Submodule.mem_span_range_iff_exists_fun W.EE).1
     ((exists_frob_inv E hm hφ T e).ge (Submodule.mem_top (x := e a)))
   refine ⟨U, fun a => ?_⟩
-  conv_lhs => rw [← hU a, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [← hU a, map_sum]
   exact Finset.sum_congr rfl fun b _ => by rw [E.jD_smul, E.jD_φ]
 
 theorem exists_bases {T : LocLat G Qp LL O} {r : ℕ} {b : Fin r → W.DD T} (hb : IsWachBasis W T b) :
@@ -137,7 +139,8 @@ theorem exists_basis_mul (hm : ∀ m : Ideal W.EE, m.IsMaximal → m.map E.ioE.t
     have h1 : ∀ x y, mulL RW m.toLinearMap x y ∈ S := by
       intro x y
       rw [← c.sum_repr x, ← c'.sum_repr y]
-      simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply]
       refine Submodule.sum_mem _ fun k _ => Submodule.smul_mem _ _
         (Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _ ?_)
       rw [hc, hc', ← hμ]

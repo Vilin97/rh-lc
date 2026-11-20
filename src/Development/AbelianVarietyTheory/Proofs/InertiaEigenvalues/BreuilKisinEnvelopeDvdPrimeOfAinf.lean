@@ -39,7 +39,8 @@ theorem coeff_map {S A S' A' ι : Type} [CommRing S] [CommRing A] [CommRing S'] 
   have hc := c_mem_of_mem_map TB' _ α hm
   have e : TB'.c α (qf (x - ∑ i ∈ (TB.fin x n).toFinset ∪ {α}, s (TB.c i x) * TB.b i)) =
       TB'.c α (qf x) - g (TB.c α x) := by
-    rw [map_sub, map_sub, map_sum, map_sum, Finset.sum_eq_single α]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_sub, map_sum, map_sum, Finset.sum_eq_single α]
     · rw [map_mul, hq, hb, TB'.c_mul, TB'.c_self, mul_one]
     · intro i _ hi
       rw [map_mul, hq, hb, TB'.c_mul, TB'.c_ne α i (Ne.symm hi), mul_zero]

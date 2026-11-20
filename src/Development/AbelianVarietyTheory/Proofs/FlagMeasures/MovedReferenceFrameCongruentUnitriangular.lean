@@ -23,7 +23,8 @@ theorem bc_sum {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] 
     (B : Fin (r + 1) → E) (v : Fin (r + 1) → Fin N → E) :
     A.bc p (∑ a, B a • v a) = ∑ a, (A.loc p).ιE (B a) • A.bc p (v a) := by
   funext i
-  simp [GlobalTheory.HL.Places.bc, Finset.sum_apply, map_sum, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [GlobalTheory.HL.Places.bc, Finset.sum_apply, map_sum, smul_eq_mul]
 
 theorem loc_cong : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u u' : D.what₂.Word), Formalism.MainNotions.S.Cnt.Stand D u u' → 4 * D.R.rS + 7 ≤ D.R.k → ∀ (w : Point D.host.E (D.R.rS + 1)) (F00 : LFlag (VS D) D.R.rS ((Tu D u : ℕ) : D.host.E)) (F'0 : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E)) (FP : ∀ p : PlF D, LocNG.FPair (locH (⟨Y.δ, Y.M, Y.agree⟩ : LocDat D) p) D.R.rS), ZhatOM (ZhatL F00 F'0) = ptMat w → Gval F00 F'0 ≠ 0 → (∀ p, AtBase (⟨Y.δ, Y.M, Y.agree⟩ : LocDat D) p F00 F'0 (Tu D u) (Tu D u') (FP p) ∧ (FP p).RelG (LocNG.theta (Y.M p))) → ∀ (G : GFrames (placesOf (⟨Y.δ, Y.M, Y.agree⟩ : LocDat D)) D.R.rS D.R.k) (c : GCoord (⟨Y.δ, Y.M, Y.agree⟩ : LocDat D) F00 F'0 FP G), ∀ (t₀ : TauC Y u u') (ρ : ((VS D).V ≃ₗ[D.host.E] (VS D).V)) (U U' : Formalism.L2.SG.PairVal.MatR D), MovesTo F00 F'0 (lf D (X.Fu u)) t₀.frame ρ U U' → ∀ n m, n ∈ NRat (lf D (X.Fu u)) → m ∈ NRat (lf D (X.Fu u')) → Formalism.HermitianLatticesTheory.gmap (n⁻¹ * t₀.lin * m) t₀.lam' = t₀.lam → (∃ d, G.IsTerm d (c.lat (ρ * n) t₀.lam)) → ∀ P : IsDedekindDomain.HeightOneSpectrum (𝓞 D.host.E), ((gS D : ℕ) : 𝓞 D.host.E) ∈ P.asIdeal → ∃ ξ : Matrix (Fin (D.R.rS + 1)) (Fin (D.R.rS + 1)) (𝓞 D.host.E), (∀ a b, b < a → ξ a b = 0) ∧ (∀ a, ξ a a = 1) ∧ ∀ b, frame (mapLF (n⁻¹ * t₀.lin * m) (lf D (X.Fu u'))) b - frameAct (frame (lf D (X.Fu u))) ξ b ∈ (haveI := P.isPrime; Formalism.HermitianLatticesTheory.localization₂ P.asIdeal (Ideal.span {((gS D : ℕ) : 𝓞 D.host.E)} • t₀.lam)) := by
   intro D X Y u u' hSt hk w F00 F'0 FP hZ hG hFP G c t₀ ρ U U' hMov n m hn hm hgm hterm P hP
@@ -55,11 +56,13 @@ theorem loc_cong : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u u' : D.what�
     exact Submodule.mem_map_of_mem (GlobalTheory.T.fixedFrame_mem_rowLattices_of_word D X Y u' t₀.lam' t₀.mem' b)
   have hy : ∀ b, c.e ((ρ * n) (frame (lf D (X.Fu u)) b)) = ∑ a, B a b • G.f a := by
     intro b
-    rw [LinearEquiv.mul_apply, (hBB b).1, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [LinearEquiv.mul_apply, (hBB b).1, map_sum]
     simp only [map_smul, c.f_eq]
   have hx : ∀ b, c.e ((ρ * n) (frame (mapLF (n⁻¹ * t₀.lin * m) (lf D (X.Fu u'))) b)) = ∑ a, B' a b • G.f' a := by
     intro b
-    rw [LinearEquiv.mul_apply, (hBB b).2, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [LinearEquiv.mul_apply, (hBB b).2, map_sum]
     simp only [map_smul, c.f'_eq]
   have hmemc : ∀ v ∈ t₀.lam, c.e ((ρ * n) v) ∈ c.lat (ρ * n) t₀.lam := fun v hv =>
     Submodule.mem_map.2 ⟨v, hv, rfl⟩
@@ -92,7 +95,8 @@ theorem loc_cong : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u u' : D.what�
   have hφ : c.e ((ρ * n) (frame (mapLF (n⁻¹ * t₀.lin * m) (lf D (X.Fu u'))) b)) -
       ∑ a, ((ξ a b : 𝓞 D.host.E) : D.host.E) • c.e ((ρ * n) (frame (lf D (X.Fu u)) a)) = c.e ((ρ * n) v) := by
     rw [hv, map_sub, map_sub]
-    simp only [frameAct, map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [frameAct, map_sum, map_smul]
   rw [hφ] at h
   have hmap : Ideal.span {((gS D : ℕ) : 𝓞 D.host.E)} • c.lat (ρ * n) t₀.lam =
       (Ideal.span {((gS D : ℕ) : 𝓞 D.host.E)} • t₀.lam).map

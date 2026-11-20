@@ -38,7 +38,8 @@ theorem admissible_integral_exchange {F : Type} [Field F] [NumberField F] {κ T 
   rw [e]
   refine ⟨Submodule.sum_mem _ fun j _ => Submodule.subset_span ⟨g j, φ j, hφ j, rfl⟩, fun l hl => ?_⟩
   choose L hLl using fun j => hl (φ j) (hφ j)
-  simp only [hD, map_sum, hLl]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hD, map_sum, hLl]
   refine ⟨integrable_finset_sum _ fun j _ => (hL j _).1, ?_⟩
   rw [integral_finset_sum _ fun j _ => (hL j _).1]
   exact Finset.sum_congr rfl fun j _ => (hL j _).2

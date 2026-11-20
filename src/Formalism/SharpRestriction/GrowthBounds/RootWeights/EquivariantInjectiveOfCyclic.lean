@@ -188,7 +188,8 @@ theorem equivariant_injective_of_cyclic (D : Formalism.BasicNotions.D7) (h2 : ad
       H (EG a b y) = (t + (((a : ℕ) : K) - ((b : ℕ) : K))) • EG a b y := by
     intro a b y t hy
     have e1 : ∑ c : Fin n, ((c : ℕ) : K) • EG a b (EG c c y) = EG a b (H y) := by
-      rw [hHapp, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hHapp, map_sum]
       simp only [map_smul]
     have e2 : ∑ c : Fin n, ((c : ℕ) : K) • (if c = a then EG c b y else 0) =
         ((a : ℕ) : K) • EG a b y := by

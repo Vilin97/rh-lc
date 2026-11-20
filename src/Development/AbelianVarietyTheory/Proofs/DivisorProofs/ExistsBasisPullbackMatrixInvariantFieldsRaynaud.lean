@@ -50,7 +50,8 @@ theorem exists_basis_pull_matrix : ∀ (R : Type) [CommRing R] [IsDomain R] [IsL
     simp only [Matrix.mul_apply, Matrix.of_apply]
     have h1 : w.repr (L (s c')) c = ∑ b, w.repr (L (v b)) c * v.repr (s c') b := by
       conv_lhs => rw [← v.sum_repr (s c')]
-      rw [map_sum, map_sum, Finsupp.coe_finset_sum, Finset.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, map_sum, Finsupp.coe_finset_sum, Finset.sum_apply]
       refine Finset.sum_congr rfl fun b _ => ?_
       rw [map_smul, map_smul, Finsupp.smul_apply, smul_eq_mul, mul_comm]
     rw [← h1, hs', w.repr_self, Matrix.one_apply, Finsupp.single_apply]

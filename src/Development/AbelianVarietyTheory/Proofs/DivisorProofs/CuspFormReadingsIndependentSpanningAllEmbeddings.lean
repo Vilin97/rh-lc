@@ -17,7 +17,8 @@ theorem span_range_le {F U H : Type} [Field F] [AddCommGroup U] [Module F U] [Ad
     Submodule.span ℂ (Set.range j) ≤ Submodule.span ℂ (Set.range fun k => j (b k)) := by
   rw [Submodule.span_le]
   rintro _ ⟨u, rfl⟩
-  rw [← b.sum_repr u, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← b.sum_repr u, map_sum]
   refine Submodule.sum_mem _ fun k _ => ?_
   rw [map_smulₛₗ]
   exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨k, rfl⟩)
@@ -49,9 +50,11 @@ theorem indep_of_conj {H X : Type} [AddCommGroup H] [Module ℂ H] {m : ℕ} (ev
   have h1 : ∑ k, starRingEnd ℂ (a k) • φ k = 0 := by
     funext g
     have h2 := congrFun (congrArg E ha) g
-    rw [map_sum, map_zero, Finset.sum_apply] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero, Finset.sum_apply] at h2
     have h3 := congrArg (starRingEnd ℂ) h2
-    rw [map_sum, Pi.zero_apply, map_zero] at h3
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Pi.zero_apply, map_zero] at h3
     rw [Finset.sum_apply, Pi.zero_apply, ← h3]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_smul]

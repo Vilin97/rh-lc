@@ -151,7 +151,8 @@ theorem bdd_det_submatrix {A B : Matrix (Fin n) (Fin n) F} (hA : ∀ i j, A i j 
   rw [← det_transpose, hT]
   change Bdd F _ ((detRowAlternating : (Fin m → F) [⋀^Fin m]→ₗ[F] F).toMultilinearMap
     (fun j => ∑ l, (d l * B l (c j)) • vec l))
-  rw [MultilinearMap.map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [MultilinearMap.map_sum]
   refine bdd_sum _ fun p _ => ?_
   rw [MultilinearMap.map_smul_univ, smul_eq_mul]
   by_cases hp : Function.Injective p

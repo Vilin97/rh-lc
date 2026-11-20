@@ -79,7 +79,8 @@ theorem isAbsIrrChar_of_isIrr : ∀ (K : Type) [Field K] (σ : K →+* ℂ) (G :
     hinj (by rw [hτ]; exact (hρ t).symm)
   refine ⟨n, ρ, isIrreducible_of_norm_one ρ (hinj ?_), hρ'⟩
   have hn := (FDRep.simple_iff_char_is_norm_one V).1 hV
-  rw [map_natCast, ← hn, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_natCast, ← hn, map_sum]
   refine Finset.sum_congr rfl fun g _ => ?_
   rw [map_mul, hρ', hρ', hτ, hτ, hχ, hχ]
 

@@ -39,7 +39,8 @@ theorem herm_add_right (G : Matrix (Fin r) (Fin r) E) (u v v' : Fin r → E) :
 theorem cc_herm {G : Matrix (Fin r) (Fin r) E} (hG : ∀ a b, cc (G a b) = G b a) (u v : Fin r → E) :
     cc (herm G u v) = herm G v u := by
   have h : cc (herm G u v) = ∑ a, ∑ b, cc (u a * G a b * cc (v b)) := by
-    simp only [herm, cc, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [herm, cc, map_sum]
   rw [h, herm, Finset.sum_comm]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
   rw [cc_mul, cc_mul, cc_cc, hG]; ring

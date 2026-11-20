@@ -32,7 +32,8 @@ theorem act_map {R N N' ι : Type} [CommRing R] [AddCommGroup N] [Module R N] [A
     [Module R N'] [Fintype ι] (f : N →ₗ[R] N') (P : Matrix ι ι R) (v : ι → N) :
     (fun a => f (act P v a)) = act P (fun a => f (v a)) := by
   funext a
-  simp [act, map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [act, map_sum, map_smul]
 
 section
 

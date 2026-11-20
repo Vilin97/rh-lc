@@ -20,7 +20,8 @@ theorem sub_sub_smul_eq_zero_of_smul_eq_zero {Λ N : Type} [CommRing Λ] [AddCom
     rw [hd, smul_smul, mul_comm, h0, zero_smul]
   have hsum : γ z - z - c • z = ∑ j, a 0 j • (γ (y j) - y j - c • y j) := by
     conv_lhs => rw [hz']
-    simp only [map_sum, map_smul, Finset.smul_sum, smul_sub, Finset.sum_sub_distrib]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, Finset.smul_sum, smul_sub, Finset.sum_sub_distrib]
     congr 1
     exact Finset.sum_congr rfl (fun j _ => smul_comm _ _ _)
   rw [hsum]

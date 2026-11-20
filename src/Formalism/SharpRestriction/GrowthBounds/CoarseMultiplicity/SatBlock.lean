@@ -108,7 +108,8 @@ theorem sat_block (x : MvPolynomial (BVar N r D.T.t) (KK O))
   have hv := Ltot_apply D v
   set B := ∑ i : ↥(IF (r := r) D), base D i.1.1 i.1.2 (v i : MvPolynomial (Fin N × Fin r) (KK O)) with hB
   have hT : Ltot D v = tau D B := by
-    rw [hv, hB, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hv, hB, map_sum]
     exact Finset.sum_congr rfl fun i _ => ell_eq_tau D _ _ _
   have h1 : aeval (beF (O := O) (r := r) D) B ∈ IntAlg O (BVar N r D.T.t) := by
     rw [← gi_be_tau D B, ← hT]
@@ -126,7 +127,8 @@ theorem sat_block (x : MvPolynomial (BVar N r D.T.t) (KK O))
   have hint : ∀ i0 : ↥(IF (r := r) D), (v i0 : MvPolynomial (Fin N × Fin r) (KK O)) ∈ IntAlg O (Fin N × Fin r) := by
     intro i0
     have h2 := ppi_int D q (eExp D i0.1.1 i0.1.2)
-    rw [hq', ppi_be, hB, map_sum] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hq', ppi_be, hB, map_sum] at h2
     simp only [ppi_base] at h2
     rw [coeff_sum, Finset.sum_eq_single i0] at h2
     · rwa [coeff_monomial, if_pos rfl] at h2

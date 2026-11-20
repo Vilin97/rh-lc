@@ -158,7 +158,8 @@ theorem trace_restrict_invariants (I : Subgroup G) (B : Module.End ℂ V)
     intro x
     rw [mem_invariants_comp_subtype_iff]
     intro j hj
-    rw [he_apply, map_smul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [he_apply, map_smul, map_sum]
     congr 1
     exact Fintype.sum_equiv (Equiv.mulLeft (⟨j, hj⟩ : I)) _ _ (fun i => by
       simp only [Equiv.coe_mulLeft, Subgroup.coe_mul, map_mul, Module.End.mul_apply])
@@ -175,7 +176,8 @@ theorem trace_restrict_invariants (I : Subgroup G) (B : Module.End ℂ V)
   have h2 : W.subtype ∘ₗ (e' ∘ₗ B) = e ∘ₗ B := by
     ext x
     rfl
-  rw [h1, LinearMap.trace_comp_comm', h2, finsum_eq_sum_of_fintype, he, LinearMap.smul_comp,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h1, LinearMap.trace_comp_comm', h2, finsum_eq_sum_of_fintype, he, LinearMap.smul_comp,
     map_smul, smul_eq_mul, ← Module.End.mul_eq_comp, Finset.sum_mul, map_sum]
   congr 1
   refine Finset.sum_congr rfl fun i _ => ?_

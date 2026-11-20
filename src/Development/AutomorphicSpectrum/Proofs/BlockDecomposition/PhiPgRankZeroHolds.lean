@@ -174,20 +174,23 @@ theorem ker_abs {X E A : Type} [AddCommGroup X] [Module ℂ X] [AddCommGroup E] 
   have hf1 : f = ∑ x ∈ R, tr (-x) (b (r f x)) := by
     apply hinj
     funext v
-    rw [map_sum, Finset.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_apply]
     conv_lhs => rw [hR v]
     refine Finset.sum_congr rfl fun x _ => ?_
     rw [hr, hb, sub_eq_add_neg]
   have hbsum : ∑ x ∈ R, χ (-x) • b (r f x) = b w := by
     apply hinj
     funext v
-    rw [map_sum, Finset.sum_apply, hb]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_apply, hb]
     simp only [map_smul, Pi.smul_apply, hb]
     by_cases hv : L v
     · simp [hv, hw]
     · simp [hv]
   have hTf : T f = c • w := by
-    rw [hf1, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hf1, map_sum]
     simp only [hT1, hTb]
     rw [hw, Finset.smul_sum]
     refine Finset.sum_congr rfl fun x _ => ?_

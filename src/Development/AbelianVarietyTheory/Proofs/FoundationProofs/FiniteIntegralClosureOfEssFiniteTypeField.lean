@@ -30,7 +30,8 @@ theorem finiteDimensional_algebraicClosure_of_essFiniteType (K L : Type*) [Field
     choose q hq using hq
     have h1 : ∑ j ∈ t, MvPolynomial.map (algebraMap K E) (q j) * MvPolynomial.C (b j) = 0 := by
       apply algebraicIndependent_iff.mp hE
-      rw [map_sum, ← hg]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, ← hg]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [map_mul, MvPolynomial.aeval_map_algebraMap, hq, MvPolynomial.aeval_C]
       rfl
@@ -189,7 +190,8 @@ theorem coneHom_of_isHomogeneous (ρ : σ → L) {p : MvPolynomial σ o} {n : �
     (hp : p.IsHomogeneous n) : coneHom o ρ p = C (MvPolynomial.aeval ρ p) * X ^ n := by
   conv_lhs => rw [p.as_sum]
   conv_rhs => rw [p.as_sum]
-  rw [map_sum, map_sum, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun m hm => ?_
   have hmn : m.degree = n := by
     by_contra hne
@@ -209,7 +211,8 @@ theorem isHomogeneous_ker_coneHom (ρ : σ → L) :
   rw [h1, RingHom.mem_ker]
   by_cases hn : n < p.totalDegree + 1
   · have h2 := congrArg (fun q => q.coeff n) (RingHom.mem_ker.mp hp)
-    rw [← MvPolynomial.sum_homogeneousComponent p, map_sum] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← MvPolynomial.sum_homogeneousComponent p, map_sum] at h2
     simp only [coneHom_of_isHomogeneous ρ (MvPolynomial.homogeneousComponent_isHomogeneous _ p),
       Polynomial.finsetSum_coeff, coeff_C_mul_X_pow, Finset.sum_ite_eq, Finset.mem_range, hn, if_true,
       coeff_zero] at h2

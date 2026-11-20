@@ -91,7 +91,8 @@ theorem adj_frame_blockTri : ∀ (F E : Type) [Field F] [NumberField F] [Field E
     exact Finset.sum_comm
   have hskew : ∀ u v : Fin n → E, form σ Y.J u v = -σ (form σ Y.J v u) := by
     intro u v
-    simp only [form, dotProduct, mulVec, map_sum, map_mul, hσ, Finset.mul_sum, ← Finset.sum_neg_distrib]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [form, dotProduct, mulVec, map_sum, map_mul, hσ, Finset.mul_sum, ← Finset.sum_neg_distrib]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
     rw [hsk]; ring
@@ -116,7 +117,8 @@ theorem adj_frame_blockTri : ∀ (F E : Type) [Field F] [NumberField F] [Field E
   have hA'e : ∀ a b, (((frame H).map τ)ᴴ * (c • Y.J.map σ).map τ * (frame H).map τ) a b =
       τ c * star (τ (((frame H)ᵀ * Y.J * (frame H).map σ) a b)) := by
     intro a b
-    simp only [Matrix.mul_apply, conjTranspose_apply, Matrix.map_apply, Matrix.smul_apply, smul_eq_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mul_apply, conjTranspose_apply, Matrix.map_apply, Matrix.smul_apply, smul_eq_mul,
       transpose_apply, map_mul, map_sum, h.2.2.2, star_sum, star_mul', star_star, Finset.mul_sum, Finset.sum_mul]
     exact Finset.sum_congr rfl fun x _ => Finset.sum_congr rfl fun y _ => by ring
   have hA's : ∀ a b, blk n₁ a + blk n₁ b ≠ 2 →

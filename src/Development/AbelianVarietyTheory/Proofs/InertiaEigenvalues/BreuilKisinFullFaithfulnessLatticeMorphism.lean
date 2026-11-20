@@ -89,8 +89,10 @@ theorem exists_isMapOf (I : Ident t ϖ P T) (I' : Ident t ϖ Q T') (f : LatHom T
       ext1 i
       rw [Finset.sum_apply]
       exact Finset.sum_congr rfl fun j _ => mul_comm _ _
-    conv_rhs => rw [pi_eq_sum_univ' v, map_sum, map_sum]
-    rw [h1, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_rhs => rw [pi_eq_sum_univ' v, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h1, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_smul I.j, latW_smul, hmj, hY, map_smul I'.j]
   have hmat : Y * frobMat t ϖ P = frobMat t ϖ Q * Y.map (frobOW l O) := by
@@ -110,7 +112,8 @@ theorem exists_isMapOf (I : Ident t ϖ P T) (I' : Ident t ϖ Q T') (f : LatHom T
     ∑ k, ϖ.iW t K _ * frobOW l O (inclO l O (ϖ.iTot t K _)) at h1
   simp only [frobOW_inclO, ← PiSys.iTot_frob] at h1
   simp only [← ϖ.iW_of_mem t K, ← map_mul] at h1
-  rw [← map_sum, ← map_sum] at h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum, ← map_sum] at h1
   have h2 := congrArg Subtype.val (congrFun (ϖ.iW_injective t K h1) τ)
   rw [Finset.sum_apply, Finset.sum_apply, AddSubmonoidClass.coe_finsetSum,
     AddSubmonoidClass.coe_finsetSum] at h2

@@ -89,7 +89,8 @@ theorem UpperTheory.Gal.Gen.frameW_pf :
     have hR0 : 0 ≤ R := (norm_nonneg _).trans (hF g i)
     have e : opOf (RU E a) (t j) (F (b g i)) g = ∑ h ∈ (t j).support, t j h * F (b g i) (g * h) := by
       simp only [opOf, Finsupp.sum, Finset.sum_apply, Pi.smul_apply, RU_apply, smul_eq_mul]
-    rw [e, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, map_sum]
     refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg hR0 fun h hh => ?_
     obtain ⟨hfin, d, hd, hn⟩ := ht j h hh
     have hMh : M g = M (g * h) * (κ h)⁻¹ := by

@@ -125,7 +125,8 @@ theorem exists_theta_eq_sum_prod : ∀ (q : ℕ) (g : ℕ) (S : Setup g) (x : Fi
   have hφψ : ∀ v, ∑ i, ψ v i • x i = v := fun v => by simp only [hψ]; exact (c1 v).symm
   have hψφ : ∀ z : Fin g → ℂ, ψ (∑ i, z i • x i) = z := fun z => by
     funext i
-    rw [map_sum, Finset.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_apply]
     simp only [map_smul]
     simp only [Pi.smul_apply, hψ, hβ, smul_eq_mul]
     rw [Finset.sum_eq_single i (fun j _ h => by simp [h]) (by simp)]

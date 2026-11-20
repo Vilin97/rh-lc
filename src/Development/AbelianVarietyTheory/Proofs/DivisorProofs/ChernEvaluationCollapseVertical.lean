@@ -109,10 +109,12 @@ theorem evC_sub_collapseQ_mem : ∀ (D : D7) (A : Amb D) (N j : ℕ) (S : Sig A 
       · rfl
       · exact Ideal.Quotient.eq.2 (c1_rootOf_sub_mem z jc r)
     · cases b
-      · simp only [AlgHom.comp_apply, evV, GlobalTheory.ConsNumber.collapseQ, GlobalTheory.ConsNumber.colVar, aeval_X, aeval_C,
+      set_option synthInstance.maxHeartbeats 100000 in
+        · simp only [AlgHom.comp_apply, evV, GlobalTheory.ConsNumber.collapseQ, GlobalTheory.ConsNumber.colVar, aeval_X, aeval_C,
           Ideal.Quotient.mkₐ_eq_mk, map_mul, map_add, map_sum, map_pow, map_neg]
         rw [hsum]
-      · simp only [AlgHom.comp_apply, evV, GlobalTheory.ConsNumber.collapseQ, GlobalTheory.ConsNumber.colVar, aeval_X, aeval_C,
+      set_option synthInstance.maxHeartbeats 100000 in
+        · simp only [AlgHom.comp_apply, evV, GlobalTheory.ConsNumber.collapseQ, GlobalTheory.ConsNumber.colVar, aeval_X, aeval_C,
           Ideal.Quotient.mkₐ_eq_mk, map_mul, map_add, map_sum, map_pow, map_neg, hA', hB']
         rw [hsum]
   have h := AlgHom.congr_fun key G

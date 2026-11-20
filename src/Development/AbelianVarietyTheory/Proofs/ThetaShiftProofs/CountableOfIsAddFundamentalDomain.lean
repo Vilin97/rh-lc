@@ -285,7 +285,8 @@ theorem eq_zero_iff (L : Submodule ℤ W) [DiscreteTopology L] [IsZLattice ℝ L
       ext t
       rw [mul_comm, eNeg]
       congr 2
-      simp only [map_sum, map_smul, hχω, smul_eq_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, hχω, smul_eq_mul]
       push_cast
       simp only [mul_comm (m _ : ℂ), neg_mul])
   ext x

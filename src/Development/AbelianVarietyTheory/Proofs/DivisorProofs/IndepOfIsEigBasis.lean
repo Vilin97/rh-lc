@@ -35,7 +35,8 @@ theorem repr_change {V V' : Bs.Opens} {f : Fin m → Γ(M, V)} {f' : Fin m → �
     rw [IsFrame.basis_apply]
     exact ((QCoh.pullbackSections_res π M h'' inf_le_right _).trans (QCoh.res_pullbackSections π M _ _ _).symm).symm
   conv_lhs => rw [← ((hf'.pullback π).basis h').sum_repr s]
-  rw [map_sum, Finsupp.finsetSum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finsupp.finsetSum_apply]
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [map_smul, Finsupp.smul_apply, smul_eq_mul, mul_comm, e]
   exact congrArg (· * _) (hf.pullback_basis_repr π inf_le_left h'' _ b)
@@ -64,7 +65,8 @@ theorem coord_rel (fl : Vert.Flag ((Scheme.Modules.pullback π).obj M) m) (y : S
     rw [← Twist.app_resM, ← Twist.app_resM, ← map_sub, ← hs, ← fl.step_ι i]
     rfl
   have h2 : W ⊓ W' ≤ π ⁻¹ᵁ (V ⊓ V') := fun p hp => ⟨hWV hp.1, hWV' hp.2⟩
-  rw [h1, map_sub, Finsupp.sub_apply, map_sub, IsFrame.repr_resM _ hWV inf_le_left, evalPt_res y _ hx, add_sub_cancel,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h1, map_sub, Finsupp.sub_apply, map_sub, IsFrame.repr_resM _ hWV inf_le_left, evalPt_res y _ hx, add_sub_cancel,
     repr_change π hf hf' _ (inf_le_right.trans hWV') h2, map_sum]
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [map_mul, evalPt_appLE π y _ _ h2 hx'' hxx, IsFrame.repr_resM _ hWV' inf_le_right, evalPt_res y _ hx']

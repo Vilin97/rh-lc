@@ -57,7 +57,8 @@ theorem dchi_neg_star {μ : HChar E} {e : InfinitePlace E → ℤ} (h : IsMu μ 
     dchi μ (-star z) = dchi μ z := by
   conv_lhs => rw [← Finset.univ_sum_single (-star z)]
   conv_rhs => rw [← Finset.univ_sum_single z]
-  rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum]
   refine Finset.sum_congr rfl fun v _ => ?_
   rw [dchi_single h v, dchi_single h v (z v), Pi.neg_apply, Pi.star_apply, Complex.neg_im, Complex.star_def, Complex.conj_im, neg_neg]
 

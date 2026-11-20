@@ -384,7 +384,8 @@ def constTate (b : Module.Basis (Fin GG.height) ℤ Dw.La) : ConstTate ε GG whe
 
 theorem toTate_repr (b : Module.Basis (Fin GG.height) ℤ Dw.La) (x : Dw.La) :
     (h.constTate b).toTate (fun i => (b.repr x i : ℤ_[p])) = τ x := by
-  conv_rhs => rw [← b.sum_repr x, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_rhs => rw [← b.sum_repr x, map_sum]
   simp only [ConstTate.toTate, Fintype.linearCombination_apply, map_zsmul, Int.cast_smul_eq_zsmul]
   rfl
 

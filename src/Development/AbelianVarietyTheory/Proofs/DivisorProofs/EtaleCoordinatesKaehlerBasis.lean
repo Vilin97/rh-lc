@@ -93,7 +93,8 @@ theorem exists_away_etale : ∀ (R B K : Type) [CommRing R] [CommRing B] [Field 
     choose c hc using fun j => hbint j (Finset.mem_univ j)
 
     have h1 : f (∑ j, c j • D R B (t j)) = 0 := by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simp only [map_smul, hfw, hsB, hc]
       simp only [smul_assoc, ← Finset.smul_sum, ha, smul_zero]
     obtain ⟨⟨s, hs⟩, hs0⟩ := IsLocalizedModule.exists_of_eq (S := Submonoid.powers g) (f := f)

@@ -139,7 +139,8 @@ theorem subdeg_ses : ∀ (K : Type) [Field K] (C : ACurve K) (V : Type) [AddComm
 theorem exists_dot {K : Type} [Field K] {d : ℕ} (ψ : Module.Dual K (Fin d → K)) :
     ∃ u : Fin d → K, ∀ x, u ⬝ᵥ x = ψ x := by
   refine ⟨fun j => ψ (Pi.single j 1), fun x => ?_⟩
-  conv_rhs => rw [pi_eq_sum_univ' x, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_rhs => rw [pi_eq_sum_univ' x, map_sum]
   simp [dotProduct, mul_comm]
 
 theorem subdeg_orth : ∀ (K : Type) [Field K] (C : ACurve K) (d : ℕ) (L : C.I → AddSubgroup (Fin d → K)) (W X : Submodule K (Fin d → K)), IsBun C L → (∀ u, u ∈ W ↔ ∀ φ ∈ X, u ⬝ᵥ φ = 0) → subDeg C (dotDual C L) X = deg C (dotDual C L) + subDeg C L W := by

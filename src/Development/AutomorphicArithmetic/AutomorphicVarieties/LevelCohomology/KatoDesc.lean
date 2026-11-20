@@ -20,7 +20,8 @@ theorem UpperTheory.V.X.Kato.desc :
     funext j
     show π i (∑ k, ((r g : Matrix (Fin n) (Fin n) ↥E) j k : Qbar l) * x k) =
       ∑ k, (r g : Matrix (Fin n) (Fin n) ↥E) j k * π i (x k)
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     exact (π i).map_smul ((r g : Matrix (Fin n) (Fin n) ↥E) j k) (x k)
   have hfc : ∀ i, Continuous fun g => f i (c g) := fun i =>

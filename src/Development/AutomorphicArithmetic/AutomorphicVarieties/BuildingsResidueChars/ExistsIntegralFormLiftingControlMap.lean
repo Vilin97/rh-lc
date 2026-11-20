@@ -49,7 +49,8 @@ theorem UpperTheory.exists_integral_form_lifting_controlMap :
     choose a ha hae using fun j => hξ y⁻¹ (inv_mem hy) 0 j
     have h1 : f (g * (1, y)) i - f g i = ∑ j, a j * v i g j := by
       apply hinj
-      rw [map_sub, hs y 1 (by rw [one_smul]; exact hE.2.1 y hyc) g i, hf0, one_mul, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, hs y 1 (by rw [one_smul]; exact hE.2.1 y hyc) g i, hf0, one_mul, map_sum]
       simp only [hae, add_mul, Finset.sum_add_distrib, ite_mul, one_mul, zero_mul, Finset.sum_ite_eq, Finset.mem_univ, if_true, map_mul]
       ring
     show f (g * (1, y)) i - f g i ∈ maximalIdeal O ^ k

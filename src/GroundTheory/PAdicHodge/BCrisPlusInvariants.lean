@@ -81,7 +81,8 @@ theorem eq_of_pow_eq_one_of_theta_eq {u v : 𝔹} {m : ℕ} (hm : 0 < m) (hu : u
   have hS : ∑ i ∈ Finset.range m, u ^ i * v ^ (m - 1 - i) ≠ 0 := by
     intro hS
     have h1 := congrArg (thetaAlgHom p) hS
-    rw [map_zero, map_sum] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_zero, map_sum] at h1
     simp only [map_mul, map_pow, hθ] at h1
     rw [Finset.sum_congr rfl fun i hi => (by
       rw [← pow_add]; congr 1; have := Finset.mem_range.1 hi; omega :

@@ -103,7 +103,8 @@ private lemma h1A {A : Type} [CommRing A] {TW H : Type 1} [AddCommGroup TW] [Add
     (h : (l ^ b : ℕ) • p = (l ^ (s + b) : ℕ) • ∑ a, q a) (hp : Ψ p = p') (hq : ∀ a, Ψ (q a) = q' a) :
     ((l : A) ^ b) • p' = ((l : A) ^ (s + b)) • ∑ a, q' a := by
   have h' := congrArg Ψ h
-  rw [map_nsmul, map_nsmul, map_sum, hp] at h'
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_nsmul, map_nsmul, map_sum, hp] at h'
   simp only [hq] at h'
   rw [natS (A := A), natS (A := A)] at h'
   exact h'

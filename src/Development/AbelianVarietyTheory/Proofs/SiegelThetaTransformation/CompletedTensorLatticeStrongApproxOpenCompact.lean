@@ -179,8 +179,10 @@ theorem eq_sum_coord (z : AF F ⊗[F] E) : z = ∑ j, (Algebra.TensorProduct.bas
 theorem fin_sub (w : Matrix (Fin r) (Fin n) (AF F ⊗[F] E)) :
     (w - ∑ p, fT F (co b p w) (sgl b p)).map (finG F E) = 0 := by
   refine Matrix.ext fun a k => ?_
-  rw [Matrix.map_apply, Matrix.sub_apply, map_sub, sum_fT, Matrix.zero_apply, sub_eq_zero, map_sum]
-  conv_lhs => rw [eq_sum_coord b (w a k), map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.map_apply, Matrix.sub_apply, map_sub, sum_fT, Matrix.zero_apply, sub_eq_zero, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [eq_sum_coord b (w a k), map_sum]
   rfl
 
 theorem fst_coord (z : AF F ⊗[F] E) (j) : fstA F ((Algebra.TensorProduct.basis (AF F) b).repr z j) =
@@ -229,7 +231,8 @@ theorem exists_gen (hfg : A.toIntSubmodule.FG) : ∃ (m : ℕ) (x : Fin m → Ma
       have hv' : v ∈ Submodule.span ℤ (Set.range x) := by rw [hx]; exact hv
       obtain ⟨c, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun ℤ).1 hv'
       refine ⟨fun k => c k • a, fun k => zsmul_mem (show a ∈ intG F from ha) _, ?_⟩
-      simp only [map_sum, map_zsmul, LinearMap.smul_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_zsmul, LinearMap.smul_apply]
     | zero => exact ⟨0, fun k => zero_mem _, by simp⟩
     | add y z _ _ hy hz =>
       obtain ⟨c, hc, rfl⟩ := hy
@@ -293,7 +296,8 @@ theorem exists_rat (hden : ∀ y, ∃ N : ℕ, 0 < N ∧ N • y ∈ A) {u : Mat
   obtain ⟨N, hN, hA⟩ := exists_common A (sgl b) fun p => hden _
   choose x a ha hx using fun p => (GlobalTheory.AdLat.strong_approximation_mod_nat F N hN).1 (co b p u)
   refine ⟨∑ p, x p • sgl b p, ?_⟩
-  rw [eq_sum_of_fin b hu, map_sum, ← Finset.sum_sub_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [eq_sum_of_fin b hu, map_sum, ← Finset.sum_sub_distrib]
   refine sum_mem fun p _ => ?_
   rw [hx, map_add, LinearMap.add_apply, fT_algebraMap, add_sub_cancel_left, map_nsmul, LinearMap.smul_apply,
     ← map_nsmul]

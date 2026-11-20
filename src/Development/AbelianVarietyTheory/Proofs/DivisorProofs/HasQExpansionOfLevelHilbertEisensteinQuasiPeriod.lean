@@ -242,7 +242,8 @@ theorem _root_.GlobalTheory.HilbFam.ExpH.hasQ_hfun : ∀ (F : Type) [Field F] [N
     rw [hv]
     refine hs.congr_fun fun n => ?_
     unfold _root_.GlobalTheory.HilbFam.hser
-    simp only [PowerSeries.coeff_smul, map_sum, smul_eq_mul, Finset.mul_sum, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [PowerSeries.coeff_smul, map_sum, smul_eq_mul, Finset.mul_sum, Finset.sum_mul]
     refine Finset.sum_congr rfl fun μ _ => ?_
     push_cast
     ring

@@ -51,7 +51,8 @@ theorem lin_subst {R : Type} [CommRing R] {d e : ℕ} (a : Fin e → MvPowerSeri
     (Finsupp.single i 1)).1 (by rw [Finsupp.degree_single]; norm_num)
   rw [subst_sub ha', map_sub, sub_eq_zero] at key
   unfold lin pullLin
-  rw [key, hf1, subst_add ha', subst_C, map_add, coeff_C, if_neg (Finsupp.single_ne_zero.2 one_ne_zero),
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [key, hf1, subst_add ha', subst_C, map_add, coeff_C, if_neg (Finsupp.single_ne_zero.2 one_ne_zero),
     zero_add, ← coe_substAlgHom ha', map_sum, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_mul, coe_substAlgHom ha', subst_C, subst_X ha', coeff_C_mul]
@@ -143,9 +144,11 @@ theorem quasiLog_pull : ∀ (p : ℕ) [Fact p.Prime] (k : Type) [Field k] [CharP
     rw [lin_subst _ hΦ0]
     choose a ha ha' using hw
     refine ⟨∑ j, a j * WittVector.teichmuller p (lin (φ j) i), ?_, ?_⟩
-    · simp only [pullLin, map_sum, map_mul, ha]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp only [pullLin, map_sum, map_mul, ha]
       rfl
-    · simp only [pullLin, map_sum, map_mul, ha', WittVector.teichmuller_coeff_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp only [pullLin, map_sum, map_mul, ha', WittVector.teichmuller_coeff_zero]
       rfl
 
 end GlobalTheory.KatzPull

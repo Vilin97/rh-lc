@@ -55,7 +55,8 @@ theorem dC_expand_units : PI.KFinSmooth → ∀ (k r : ℕ) (ε : Fin (2 * r + k
     obtain ⟨L, hLv⟩ := hL v
     rw [← hLv]
     conv_lhs => rw [conj_expand_units Q Y hQ]
-    simp only [map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul]
     simp only [hLv, hE _ _ v]
   refine ⟨?_, hexp, fun X hXl v => ?_⟩
   · intro a b c d

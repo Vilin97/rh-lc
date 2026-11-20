@@ -144,9 +144,11 @@ theorem map_mem_unip (i : κ ≃+* κ') (g : GL (Fin r) κ) :
 theorem edgeSum_map (i : κ ≃+* κ') (g : GL (Fin r) κ) :
     edgeSum supEdge (Matrix.GeneralLinearGroup.map (i : κ →+* κ') g) = i (edgeSum supEdge g) := by
   unfold edgeSum
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun a _ => ?_
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun b _ => ?_
   split_ifs
   · rfl
@@ -374,7 +376,8 @@ theorem isCentralIdempotent_of_goodSeriesIdempotent {D : D7} {LL : Type} [Field 
       (Subalgebra.mem_center_iff.1 hc (MonoidAlgebra.single x (1 : ℂ)))
     simp only [MonoidAlgebra.coeff_single_mul_apply, MonoidAlgebra.coeff_mul_single_apply, inv_mul_cancel_left, one_mul, mul_one] at this
     rw [h, h, this]
-  · rw [map_sum, h, ← hi, GlobalTheory.MemN.TypesInhab.coeff_mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum, h, ← hi, GlobalTheory.MemN.TypesInhab.coeff_mul_sum]
     exact Finset.sum_congr rfl fun x _ => by rw [map_mul, h, h]
 
 theorem isKappa_unique {D : D7} {j : ℕ} {w w' : WeightFamilies.Wt D j} (h : IsKappa D j w) (h' : IsKappa D j w') : w = w' := by

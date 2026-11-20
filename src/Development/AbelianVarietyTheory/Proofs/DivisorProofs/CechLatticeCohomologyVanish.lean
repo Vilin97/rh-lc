@@ -32,7 +32,8 @@ theorem delta_toFam {m : ℕ} (hm : 0 < m)
   funext t
   unfold DI.delta toFam
   by_cases ht : t.card = m + 1
-  · rw [dif_pos ht, Cube.d_apply, map_sum, ← Finset.sum_coe_sort t]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [dif_pos ht, Cube.d_apply, map_sum, ← Finset.sum_coe_sort t]
     refine Finset.sum_congr rfl fun i _ => ?_
     have hc : (t.erase i.1).card = m := by rw [Finset.card_erase_of_mem i.2, ht]; rfl
     rw [dif_pos hc, map_zsmul, hres _ _ _ (nonempty_of_card hm hc)]

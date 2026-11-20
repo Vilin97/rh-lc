@@ -43,7 +43,8 @@ theorem swapTD_sumPl (L' : ∀ w, Module.End ℂ (Formalism.BasicNotions.TH.Pol 
       L w (GlobalTheory.RealLift.LieFirstPf.swapE (P w) (Q w) (R w) (S w) f))
     (T : ⨂[ℂ] w : ι, Formalism.BasicNotions.TH.Pol (R w) (S w) (P w) (Q w)) :
     swapTD P Q R S (sumPl L' T) = sumPl L (swapTD P Q R S T) := by
-  simp only [sumPl, LinearMap.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [sumPl, LinearMap.sum_apply, map_sum]
   exact Finset.sum_congr rfl fun w _ => swapTD_atPl w (L' w) (L w) (h w) T
 
 end Tensor

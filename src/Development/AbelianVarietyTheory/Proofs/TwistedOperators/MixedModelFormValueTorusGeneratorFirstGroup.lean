@@ -335,7 +335,8 @@ theorem value_torus_first : ∀ (L : Type) [Field L] [Valued L (WithZero (Multip
       have h3 := (sub_mem_iff hU hϖ0 (z := 0) (by rw [mul_zero]; exact zero_mem _) (y r)).1
         (by rw [zero_sub]; exact neg_mem h1)
       exact hyr (h3.trans ((Ideal.Quotient.eq_zero_iff_mem).2 ((Valuation.mem_maximalIdeal_iff _ _).2 (by simp))))
-  rw [hv, map_smul, hsum, map_sum, hev, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hv, map_smul, hsum, map_sum, hev, smul_eq_mul]
   simp_rw [hterm]
   have hc : (∑ y : Fin n' → ResF L, (if ∀ r : Fin n', n' / 2 ≤ r.val → y r = 0 then (1 : ℂ) else 0)) =
       ((Fintype.card (ResF L) : ℕ) : ℂ) ^ (n' / 2) := by

@@ -112,7 +112,8 @@ theorem bd_coord (D : D7) {a d n : ℕ} {A B : ℝ} (hA : 0 ≤ A) (hB : 0 ≤ B
     congr 1
     funext τ s t
     simp [embV, hT]
-  rw [h1, φ.map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h1, φ.map_sum]
   refine Bd.sum (by positivity) _ _ fun r _ => ?_
   rw [φ.map_smul_univ, smul_eq_mul]
   exact (Bd.prod_coe (fun i => c (f i) (r i)) fun i => hc _ _).mul (h _ fun i => hy _ _)

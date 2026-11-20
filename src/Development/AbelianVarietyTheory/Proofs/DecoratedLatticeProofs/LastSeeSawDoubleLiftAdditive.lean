@@ -36,8 +36,10 @@ theorem ker_sum {n : ℕ} (C : Fin n → WO A S → WO S X → ℂ) (h₀ : GA D
     funext v
     have e : (fun u => (∑ i, C i) u v) = ∑ i, fun u => C i u v := by
       funext u; simp only [Finset.sum_apply]
-    rw [e, map_sum]; simp only [Finset.sum_apply]
-  rw [e1, map_sum]; simp only [Finset.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, map_sum]; simp only [Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e1, map_sum]; simp only [Finset.sum_apply]
 
 theorem ker_cont (hB : BiAct D) (hwa : IsWeilDatumO ψ A S χA χS oma) (hwX : IsWeilDatumO ψ S X χS' χX omX)
     {C : WO A S → WO S X → ℂ} (hC : IsBiTheta ψ A S X C) :

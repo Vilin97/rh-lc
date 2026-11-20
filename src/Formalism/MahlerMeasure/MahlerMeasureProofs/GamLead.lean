@@ -390,11 +390,13 @@ theorem decomp (hr : 1 ≤ r) : ∀ (a b : ℕ) (y : MvPolynomial σ K), BiHom w
         have hc := hwc l hl
         exact F_E_pow hw he hwe _ _ _ (euler_w_of_biHom w e hc.2.1) (euler_e_of_biHom w e hc.2.1) hc.1 l
       have hEx : tieE w e x = ∑ l ∈ range (a + 1), ((κ l : K))⁻¹ • (tieE w e ^ (l + 1)) (wl l) := by
-        simp only [x, map_sum, map_smul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [x, map_sum, map_smul]
         refine Finset.sum_congr rfl (fun l _ => ?_)
         rw [pow_succ', Module.End.mul_apply]
       have hFEx : tieF w e (tieE w e x) = tieF w e y := by
-        rw [hEx, map_sum, hwl]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [hEx, map_sum, hwl]
         refine Finset.sum_congr rfl (fun l hl => ?_)
         rw [map_smul, hFE l hl, smul_smul, inv_mul_cancel₀ (hκ l), one_smul]
       have hxB : BiHom w e a b' x := by
@@ -528,7 +530,8 @@ theorem decompE {K : Type} [Field K] [CharZero K] (hr : 1 ≤ r) (A B : ℕ) (y 
     simp only [Nat.add_sub_cancel] at hy ⊢
     obtain ⟨yl, hyl, hc⟩ := decomp hw he hwe hr A' (B - 1) y hy
     refine ⟨yl, ?_, fun l hl => ⟨(hc l hl).1, (hc l hl).2.1⟩⟩
-    rw [hyl, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hyl, map_sum]
     refine Finset.sum_congr rfl (fun l _ => ?_)
     rw [pow_succ', Module.End.mul_apply]
 
@@ -584,7 +587,8 @@ theorem core (hr : 1 ≤ r) (o n z t : ℕ) (ht : t ≤ o) (hon : o < n)
   let c : ℕ → ℝ := fun l => ((z + (t + l)).choose (t + l) : ℝ) / ((o + n + r + z - 1).choose (t + l) : ℝ)
   have hphi : tiePhi w e o n z ((tieE w e ^ t) (v0 + tieE w e y)) =
       ∑ l ∈ range (A + 1), c l • (tieE w e ^ (t + l)) (u l) := by
-    rw [hv, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hv, map_sum, map_sum]
     refine Finset.sum_congr rfl (fun l hl => ?_)
     have hlA : l ≤ A := Nat.lt_succ_iff.mp (Finset.mem_range.mp hl)
     rw [show (tieE w e ^ t) ((tieE w e ^ l) (u l)) = (tieE w e ^ (t + l)) (u l) by
@@ -594,7 +598,8 @@ theorem core (hr : 1 ≤ r) (o n z t : ℕ) (ht : t ≤ o) (hon : o < n)
     exact Formalism.GM.Top.levelAct ℝ σ r w e hw he hwe hr o n z (t + l) (u l) (by omega) (by omega) (hu l hl).2 hB
   have hEt : (tieE w e ^ t) (v0' + tieE w e y') =
       ∑ l ∈ range (A + 1), (fun _ => (1 : ℝ)) l • (tieE w e ^ (t + l)) (u' l) := by
-    rw [hv', map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hv', map_sum]
     refine Finset.sum_congr rfl (fun l _ => ?_)
     rw [one_smul, pow_add, Module.End.mul_apply]
   have hBform := fk_levels hw he hwe hr t (range (A + 1)) u u' c (fun _ => 1)
@@ -631,7 +636,8 @@ theorem core (hr : 1 ≤ r) (o n z t : ℕ) (ht : t ≤ o) (hon : o < n)
       tieE w e (tieF w e (∑ l ∈ range (A + 1), (tieE w e ^ l) (xx l))) =
         ∑ l ∈ range (A + 1), ((κ l : ℕ) : ℝ) • (tieE w e ^ l) (xx l) := by
     intro xx hxx
-    rw [map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum]
     refine Finset.sum_congr rfl (fun l hl => ?_)
     by_cases h0 : l = 0
     · subst h0; simp [(hxx 0 hl).2, κ]
@@ -978,7 +984,8 @@ theorem pderiv_W_fSub (hv : LL.vec (Fin.last N) = true) (x : Fin (N + 1) × Fin 
   by_cases hvi : LL.vec i = true <;> by_cases hc : c = ρ
   · rw [if_pos hvi, if_pos hc]
     have hi : i ≠ Fin.last N := fun h => hx (by rw [h, hc])
-    rw [map_sum]; refine Finset.sum_eq_zero (fun c' _ => ?_)
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]; refine Finset.sum_eq_zero (fun c' _ => ?_)
     rw [Derivation.leibniz, hXcs c' (fun h => absurd h hi), hXe]; simp
   · rw [if_pos hvi, if_neg hc, Derivation.leibniz, hXcs c (fun _ => hc), hXe]; simp
   · have hi : i ≠ Fin.last N := fun h => hvi (h ▸ hv)
@@ -1110,7 +1117,8 @@ theorem kill_fSub (x : Fin (N + 1) × Fin r) :
   have he : ∀ c', Pη (N := N) ρ (Fin.last (N + 1), c') ↔ c' ≠ ρ := fun c' => by simp [Pη]
   simp only [fSub, cs']
   by_cases hvi : LL.vec i = true <;> by_cases hc : c = ρ
-  · rw [if_pos hvi, if_pos hc, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [if_pos hvi, if_pos hc, map_sum]
     simp only [map_mul, kill_X, hcs, if_false, he, ite_not]
     rw [Finset.sum_eq_single ρ]
     · subst hc; simp [mul_comm]
@@ -1745,10 +1753,12 @@ theorem map_frz_monomial {N r : ℕ} (LL : M.Letters N) (ρ : Fin r) (n : ℕ) (
 variable {σ : Type} [Fintype σ] [DecidableEq σ] {r : ℕ} (w e : Fin r → σ)
 
 theorem map_tieE (g : MvPolynomial σ ℚ) : map ι (tieE w e g) = tieE w e (map ι g) := by
-  simp [tieE_apply', map_mul, map_sum, map_X]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [tieE_apply', map_mul, map_sum, map_X]
 
 theorem map_tieF (g : MvPolynomial σ ℚ) : map ι (tieF w e g) = tieF w e (map ι g) := by
-  simp [tieF_apply', map_sum, pderiv_map]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [tieF_apply', map_sum, pderiv_map]
 
 theorem map_tieE_pow (j : ℕ) (g : MvPolynomial σ ℚ) :
     map ι ((tieE w e ^ j) g) = (tieE w e ^ j) (map ι g) := by
@@ -1768,7 +1778,8 @@ theorem map_smul' (c : ℚ) (g : MvPolynomial σ ℚ) : map ι (c • g) = (ι c
 theorem map_tiePhi (o n z : ℕ) (g : MvPolynomial σ ℚ) :
     map ι (tiePhi w e o n z g) = tiePhi w e o n z (map ι g) := by
   unfold tiePhi
-  simp only [LinearMap.sum_apply, LinearMap.smul_apply, LinearMap.comp_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [LinearMap.sum_apply, LinearMap.smul_apply, LinearMap.comp_apply, map_sum]
   refine Finset.sum_congr rfl (fun j _ => ?_)
   rw [map_smul', map_tieE_pow, map_tieF_pow]
   congr 1
@@ -1779,7 +1790,8 @@ theorem map_wf (m : σ →₀ ℕ) : ι (wf m) = (wf m : K) := by
 
 theorem fk_map (F G : MvPolynomial σ ℚ) : fk (map ι F) (map ι G) = ι (fk F G) := by
   unfold fk
-  rw [support_map_of_injective _ (algebraMap ℚ K).injective, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [support_map_of_injective _ (algebraMap ℚ K).injective, map_sum]
   refine Finset.sum_congr rfl (fun m _ => ?_)
   rw [coeff_map, coeff_map, map_mul, map_mul, map_wf]
 
@@ -1813,14 +1825,16 @@ theorem as_sum_smul {σ : Type} (f : MvPolynomial σ K) :
 theorem frz_sum {N r : ℕ} (LL : M.Letters N) (ρ : Fin r) (n : ℕ) (f : MvPolynomial (Fin N × Fin r) K) :
     frz K LL ρ n f = ∑ m ∈ f.support, f.coeff m • frz K LL ρ n (monomial m 1) := by
   conv_lhs => rw [as_sum_smul f]
-  simp only [frz, map_sum, map_smul, Finset.mul_sum, mul_smul_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [frz, map_sum, map_smul, Finset.mul_sum, mul_smul_comm]
 
 theorem gamK_bil {N r : ℕ} (LL : M.Letters (N + 1)) (ρ : Fin r) (z n : ℕ)
     (f f' : MvPolynomial (Fin (N + 1) × Fin r) K) :
     gamK K LL ρ z n f f' = ∑ m ∈ f.support, ∑ m' ∈ f'.support,
       f.coeff m * f'.coeff m' * gamK K LL ρ z n (monomial m 1) (monomial m' 1) := by
   unfold gamK
-  rw [frz_sum LL ρ n f, frz_sum LL ρ n f', map_sum, fk_sum_left]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [frz_sum LL ρ n f, frz_sum LL ρ n f', map_sum, fk_sum_left]
   simp only [map_smul, fk_smul_left, fk_sum_right, fk_smul_right, Finset.mul_sum, Finset.sum_div]
   refine Finset.sum_congr rfl (fun m _ => Finset.sum_congr rfl (fun m' _ => ?_))
   ring
@@ -1896,13 +1910,15 @@ theorem gamma_leading_term : M.GamLead := by
       rw [Polynomial.coeff_eq_zero_of_natDegree_lt this, map_zero]
   have hReval : ∀ q : ℚ, Rψ.eval q = ψ (P.eval (algebraMap ℚ ℚ_[p] q)) := by
     intro q
-    rw [Polynomial.eval_eq_sum_range (p := P), map_sum, hR, Polynomial.eval_finsetSum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Polynomial.eval_eq_sum_range (p := P), map_sum, hR, Polynomial.eval_finsetSum]
     refine Finset.sum_congr rfl (fun k _ => ?_)
     rw [Polynomial.eval_mul, Polynomial.eval_C, Polynomial.eval_pow, Polynomial.eval_X, ← map_pow, hψ]
     ring
   have hRn : ∀ n : ℕ, S ≤ n → Rψ.eval (n : ℚ) = ∑ i ∈ I, γ i n * ψ (c i) := by
     intro n hn
-    rw [hReval, map_natCast, ← hP n hn, hexp, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hReval, map_natCast, ← hP n hn, hexp, map_sum]
     exact Finset.sum_congr rfl (fun i _ => hψ _ _)
 
   have hmem : ∀ i ∈ I, M.MultiDeg LL i.1 ∧ M.MultiDeg LL i.2 ∧ e ≤ i.1 (Fin.last N, ρ) ∧ e ≤ i.2 (Fin.last N, ρ) := by
@@ -1927,7 +1943,8 @@ theorem gamma_leading_term : M.GamLead := by
       rfl
     refine (tendsto_finsetSum I each).congr' ?_
     filter_upwards [eventually_ge_atTop S] with n hn
-    rw [hRr, Polynomial.eval_natCast_map, hRn n hn, map_sum, Finset.sum_div]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hRr, Polynomial.eval_natCast_map, hRn n hn, map_sum, Finset.sum_div]
     refine Finset.sum_congr rfl (fun i _ => ?_)
     rw [gamK_map ℝ]
     simp only [hγ, eq_ratCast]
@@ -1937,12 +1954,14 @@ theorem gamma_leading_term : M.GamLead := by
   rw [hRr, Polynomial.coeff_map, hRcoeff] at hcoef
   have hq : ψ (P.coeff D) = ∑ i ∈ I, Lq i * ψ (c i) := by
     apply (algebraMap ℚ ℝ).injective
-    rw [hcoef, map_sum (algebraMap ℚ ℝ)]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hcoef, map_sum (algebraMap ℚ ℝ)]
     refine Finset.sum_congr rfl (fun i _ => ?_)
     simp only [eq_ratCast]
     push_cast
     ring
-  rw [map_sub, hq, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sub, hq, map_sum]
   rw [sub_eq_zero]
   exact Finset.sum_congr rfl (fun i _ => (hψ _ _).symm)
 

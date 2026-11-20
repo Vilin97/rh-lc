@@ -35,9 +35,11 @@ theorem finite_not_mapsTo {V V' : Type} [AddCommGroup V] [Module K V] [AddCommGr
   intro x hx q
   have hx' : f x = ∑ r, b.repr x r • f (b r) := by
     conv_lhs => rw [← b.sum_repr x]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [map_smul]
-  rw [hx', map_sum, Finsupp.finset_sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hx', map_sum, Finsupp.finset_sum_apply]
   refine (C.v i).map_sum_le fun r _ => ?_
   rw [map_smul, Finsupp.smul_apply, smul_eq_mul, (C.v i).map_mul]
   exact mul_le_one' (hx r) (hcon q r)

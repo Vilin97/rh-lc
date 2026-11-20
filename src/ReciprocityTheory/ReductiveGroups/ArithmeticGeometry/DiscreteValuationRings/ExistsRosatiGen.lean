@@ -157,7 +157,8 @@ lemma gram_int_pos (hQ : IsQ D.toPre ϖ Q) {d : ℕ} (b : Module.Basis (Fin d) �
   have lin : ∀ (a : D.toPre.X) (c : Fin d → ℤ),
       bOf D.toPre Q a (∑ i, c i • b i) = ∑ i, c i * bOf D.toPre Q a (b i) := by
     intro a c
-    rw [← bHom_apply hϖ D hQ, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← bHom_apply hϖ D hQ, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_zsmul, bHom_apply hϖ D hQ]
     first

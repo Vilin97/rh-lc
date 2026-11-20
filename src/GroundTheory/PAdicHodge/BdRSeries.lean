@@ -119,7 +119,8 @@ theorem mk_seriesEval {z : B} (hz : z ∈ I) (f : ℚ⟦X⟧) (n : ℕ) :
   have h := IsAdicComplete.mk_liftAlgHom I
     (fun n => truncEval (Ideal.Quotient.mk (I ^ n) z) (pow_mk_eq_zero I hz n))
     (fun hle => factorₐ_comp_truncEval I hz hle) n f
-  rw [seriesEval, h, truncEval_eq_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [seriesEval, h, truncEval_eq_sum, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_mul, map_pow, ← Ideal.Quotient.algebraMap_eq, ← IsScalarTower.algebraMap_apply]
 
@@ -173,7 +174,8 @@ theorem map_partialSum {B' : Type*} [CommRing B'] [Algebra ℚ B'] (F : B →+* 
     (f : ℚ⟦X⟧) (n : ℕ) :
     F (∑ i ∈ Finset.range n, algebraMap ℚ B (coeff i f) * z ^ i) =
       ∑ i ∈ Finset.range n, algebraMap ℚ B' (coeff i f) * F z ^ i := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_mul, map_pow, RingHom.map_rat_algebraMap]
 

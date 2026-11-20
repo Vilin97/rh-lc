@@ -117,7 +117,8 @@ theorem integral_of_coords (X : CMObj H K ρ σ₁ p 0) (gP : Matrix (Fin p) (Fi
   have h4 := GlobalTheory.T.scalar_eq_of_weilPairing_eq_principalCMTriple E H K ρ σ₁ (X.A true) X.ρ_sq X.typeP _ _ h3
   refine ⟨r, ?_⟩
   have h5 := congrArg (fun z : 𝓞 E => (z : E)) h4
-  simp only [map_mul, map_natCast, map_sum] at h5
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_mul, map_natCast, map_sum] at h5
   have hnm : ((n * m : ℕ) : E) ≠ 0 := Nat.cast_ne_zero.2 (Nat.mul_pos hn hm).ne'
   apply mul_left_cancel₀ hnm
   rw [h5]

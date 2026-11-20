@@ -78,7 +78,8 @@ theorem extend_frame : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Num
     have hX0 : ∑ i, s (g i) • y i = 0 := by
       funext l
       have := congrArg s (congrFun hv l)
-      simp only [w, map_sum, map_mul, hss, Pi.zero_apply, map_zero] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [w, map_sum, map_mul, hss, Pi.zero_apply, map_zero] at this
       simpa [Finset.sum_apply, Pi.smul_apply, smul_eq_mul] using this
     have := Fintype.linearIndependent_iff.1 hy _ hX0 i
     have e2 := congrArg s this

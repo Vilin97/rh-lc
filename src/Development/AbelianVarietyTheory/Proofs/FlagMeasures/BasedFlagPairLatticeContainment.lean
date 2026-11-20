@@ -297,14 +297,16 @@ theorem dual_part : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u u' : D.what
       intro j
       have := congrFun hα j
       simp only [Matrix.vecMul, dotProduct, Pi.zero_apply, B] at this
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simpa [map_smul, smul_eq_mul, mul_comm] using this
     have hxW : (∑ i, α i • (i : (VS D).V)) ∈ orth (VS D) U :=
       Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _ (hvW i)
     have hxx : ∀ x', (∀ j : b, (VS D).hT (j : (VS D).V) x' = 0) →
         (VS D).hT (∑ i, α i • (i : (VS D).V)) x' = 0 := by
       intro x' hx'
-      rw [map_sum, LinearMap.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, LinearMap.sum_apply]
       refine Finset.sum_eq_zero fun i _ => ?_
       rw [LinearMap.map_smulₛₗ, LinearMap.smul_apply, hx' i, smul_zero]
     have h0' := hdef _ hxW (hxx _ hj)
@@ -338,7 +340,8 @@ theorem dual_part : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u u' : D.what
     have ha' : a ∈ Submodule.span D.host.E (Set.range (fun i : b => (i : (VS D).V))) := by
       rwa [Subtype.range_coe]
     obtain ⟨α, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun D.host.E).1 ha'
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Submodule.sum_mem _ fun i _ => by
       rw [baseChange_smul₂]; exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)
   have htop : ∀ z : Vp D p, z ∈ Sb ⊔ SU := by

@@ -107,7 +107,8 @@ theorem strN_pullOp {n g : ℕ} (a : Fin n → ℂ) (K : Ext (n + n + g) →L[�
       (fun S' : Finset (Fin (n + n)) => K (Pi.single (join ∅ I) 1) (join S' I)) := by
     funext S'
     simp [strN, Finset.sum_apply, smul_eq_mul]
-  rw [h, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h, map_sum]
   funext S
   rw [Finset.sum_apply]
   simp only [strN, pullOp_single, pullFull_join, map_smul, Pi.smul_apply, smul_eq_mul]

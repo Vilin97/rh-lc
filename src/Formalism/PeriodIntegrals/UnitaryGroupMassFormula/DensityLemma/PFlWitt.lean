@@ -82,7 +82,8 @@ theorem wittHpk (k r : ℕ) {ι : Type} [Fintype ι] (x y : ι → Fin (2 * r + 
   have hfsum : ∀ u : U, f u = ∑ a, bU.repr u a • y a := by
     intro u
     conv_lhs => rw [← bU.sum_repr u]
-    rw [map_sum]; simp only [map_smul, hf]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]; simp only [map_smul, hf]
   have husum : ∀ u : U, (u : Fin (2 * r + k + 1) → ℂ) = ∑ a, bU.repr u a • x a := by
     intro u
     conv_lhs => rw [← bU.sum_repr u]

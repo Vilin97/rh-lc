@@ -35,7 +35,8 @@ theorem lin_map_eval {K σ τ : Type} [Field K] (ℓ : MvPolynomial σ K →ₗ[
     ℓ (MvPolynomial.map (MvPolynomial.eval p) U) =
       MvPolynomial.eval p (∑ m ∈ U.support, U.coeff m * MvPolynomial.C (ℓ (MvPolynomial.monomial m 1))) := by
   conv_lhs => rw [U.as_sum]
-  simp only [map_sum, MvPolynomial.map_monomial, map_mul, MvPolynomial.eval_C]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, MvPolynomial.map_monomial, map_mul, MvPolynomial.eval_C]
   refine Finset.sum_congr rfl fun m _ => ?_
   have e : ∀ c : K, MvPolynomial.monomial m c = c • MvPolynomial.monomial m (1 : K) := by
     intro c; rw [MvPolynomial.smul_monomial, smul_eq_mul, mul_one]

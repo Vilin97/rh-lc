@@ -71,7 +71,8 @@ theorem div_mem_intL {ϖ x : K} (hϖ : Valued.v ϖ = WithZero.exp (-1 : ℤ))
 theorem map_mul_mat (g : K ≃+* K) {n : ℕ} (A B : Matrix (Fin n) (Fin n) K) :
     (A * B).map g = A.map g * B.map g := by
   ext i j
-  simp [Matrix.mul_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Matrix.mul_apply, map_sum]
 
 end Local
 

@@ -37,7 +37,8 @@ theorem sum_single_smul (v : Fin r → O) : ∑ i, v i • (Pi.single i (1 : O) 
 theorem coordA_cst (b : Module.Basis (Fin r) O (Fin r → O)) (j : Fin r) (v : Fin r → O) :
     coordA b j (cst v) = C (b.repr v j) := by
   conv_rhs => rw [← sum_single_smul v]
-  simp [coordA, cst, map_sum, mul_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [coordA, cst, map_sum, mul_comm]
 
 theorem sum_coordA (b : Module.Basis (Fin r) O (Fin r → O)) (w : Fin r → PowerSeries O) :
     ∑ j, coordA b j w • cst (b j) = w := by
@@ -49,7 +50,8 @@ theorem sum_coordA (b : Module.Basis (Fin r) O (Fin r → O)) (w : Fin r → Pow
     intro i
     have h := congrFun (b.sum_repr (Pi.single i 1)) k
     rw [← h]
-    simp [Finset.sum_apply, map_sum, Finset.mul_sum, mul_comm, mul_left_comm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Finset.sum_apply, map_sum, Finset.mul_sum, mul_comm, mul_left_comm]
   simp_rw [hi]
   simp [Pi.single_apply]
 

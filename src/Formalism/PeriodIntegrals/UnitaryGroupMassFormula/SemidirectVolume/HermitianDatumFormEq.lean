@@ -55,12 +55,14 @@ theorem Bf_smul_right (c : A) (u v : Fin M → A ⊗[F] E) : Bf σ J u (c • v)
 theorem Bf_sum_left {k : ℕ} (x : Fin k → Fin M → A ⊗[F] E) (v : Fin M → A ⊗[F] E) :
     Bf σ J (∑ a, x a) v = ∑ a, Bf σ J (x a) v := by
   have h : hR A σ J (∑ a, x a) v = ∑ a, hR A σ J (x a) v := by
-    simp only [hR, Formalism.UG.hform, Finset.sum_apply, _root_.map_sum, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hR, Formalism.UG.hform, Finset.sum_apply, _root_.map_sum, Finset.sum_mul]
     conv_rhs => rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun i _ => ?_
     exact Finset.sum_comm
   unfold Bf
-  rw [h, _root_.map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h, _root_.map_sum]
 
 theorem Bf_sum_right {k : ℕ} (u : Fin M → A ⊗[F] E) (y : Fin k → Fin M → A ⊗[F] E) :
     Bf σ J u (∑ a, y a) = ∑ a, Bf σ J u (y a) := by
@@ -70,7 +72,8 @@ theorem Bf_sum_right {k : ℕ} (u : Fin M → A ⊗[F] E) (y : Fin k → Fin M �
     refine Finset.sum_congr rfl fun i _ => ?_
     exact Finset.sum_comm
   unfold Bf
-  rw [h, _root_.map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h, _root_.map_sum]
 
 theorem Bf_expand {k : ℕ} (b : Fin k → Fin M → A ⊗[F] E) (x y : Fin k → A) :
     Bf σ J (∑ a, x a • b a) (∑ c, y c • b c) = ∑ a, ∑ c, x a * (Bf σ J (b a) (b c) * y c) := by
@@ -93,7 +96,8 @@ theorem Bf_lin (g : HA A σ J) (u v : Fin M → A ⊗[F] E) :
         Matrix.vecMul (fun i => sigR A σ (x i)) (Formalism.UG.cT (sigR A σ) P) := by
     intro P x
     funext j
-    simp only [Matrix.mulVec, Matrix.vecMul, dotProduct, Formalism.UG.cT, Matrix.transpose_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, Matrix.vecMul, dotProduct, Formalism.UG.cT, Matrix.transpose_apply,
       Matrix.map_apply, _root_.map_sum, map_mul]
     exact Finset.sum_congr rfl fun i _ => mul_comm _ _
   have hg : (HA.mat A σ J g) ∈ HR A σ J := (show ↥(HR A σ J) from g).2

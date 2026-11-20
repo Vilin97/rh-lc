@@ -123,12 +123,14 @@ theorem key (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarc
   calc ∑ i ∈ s, Bf (A i) (B i)
       = ∑ i ∈ s, ∑ w ∈ T, (starRingEnd ℂ) (w i) * Bf (A i) (E w) := by
         refine Finset.sum_congr rfl fun i hi => ?_
-        rw [hdec i hi, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [hdec i hi, map_sum]
         simp
     _ = ∑ w ∈ T, Bf (∑ i ∈ s, (starRingEnd ℂ) (w i) • A i) (E w) := by
         rw [Finset.sum_comm]
         refine Finset.sum_congr rfl fun w _ => ?_
-        rw [map_sum, LinearMap.sum_apply]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum, LinearMap.sum_apply]
         simp
     _ = 0 := by
         refine Finset.sum_eq_zero fun w _ => hloc _ _ fun Y hY => ?_

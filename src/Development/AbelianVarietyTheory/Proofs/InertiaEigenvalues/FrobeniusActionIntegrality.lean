@@ -213,7 +213,8 @@ theorem GlobalTheory.ZRep.central_reps : ∀ (D : D7) (G : Type) [Group G] [Fint
   have hce_idem : cA D e * cA D e = cA D e := by rw [← map_mul, he_idem]
   have hcc : cA D e * cA D (cA D e) = 0 := by rw [cA_cA, mul_comm, hc]
   have hπi : toEAf D π ∈ Formalism.L2.Herm.intAf D.host.F D.host.E := by
-    rw [hπ, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hπ, map_sum]
     exact sum_mem fun PP hPP => by
       rw [map_mul]
       exact mul_mem (GlobalTheory.IdemRes.resS_idem_eq_one D _ PP (hes PP hPP)).1 (GlobalTheory.IdemIntegral.eToEAf_int D (ϖ PP))

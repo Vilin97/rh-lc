@@ -92,7 +92,8 @@ theorem downP_subst (i : ℕ) (R : MvPolynomial (Fin 3) ℝ) :
   intro x
   rw [← coe_aeval_eq_eval]
   change aeval x _ = aeval x _
-  simp only [downP, coefE, map_sum, map_mul, map_pow, map_add, map_sub, aeval_rename, rename_C, rename_X, aeval_C, aeval_X, id]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [downP, coefE, map_sum, map_mul, map_pow, map_add, map_sub, aeval_rename, rename_C, rename_X, aeval_C, aeval_X, id]
   simp only [← AlgHom.comp_apply, comp_aeval]
   have e₁ : (fun l => (aeval fun l => (aeval x) ((![X 0, X 1, X 2, X 1 * X 2] : Fin 4 → MvPolynomial (Fin 4) ℝ) l))
       ((![X 1 + X 2, X 3] : Fin 2 → MvPolynomial (Fin 4) ℝ) l)) = ![x 1 + x 2, x 1 * x 2] := by

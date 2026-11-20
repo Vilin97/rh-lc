@@ -88,7 +88,8 @@ theorem secCoord_mk {x : Sp T ⟶ X} {v : σ → T} (t : ∀ j : PUnit → M.ι,
 
 theorem gs_sum {Y : Scheme.{0}} (f : Y ⟶ X) (y : Y) (U : X.Opens) (h : f y ∈ U) {κ : Type} (s : Finset κ)
     (a : κ → Γ(X, U)) : gs f y U (∑ i ∈ s, a i) = ∑ i ∈ s, gs f y U (a i) := by
-  simp only [gs_eq f y U h, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [gs_eq f y U h, map_sum]
 
 theorem exists_comb {v : σ → T} (hv : Ideal.span (Set.range v) = ⊤) :
     ∃ (s : Finset σ) (c : σ → T), ∑ i ∈ s, c i * v i = 1 := by
@@ -101,7 +102,8 @@ theorem secCoord_of_loc {x : Sp T ⟶ X} {v : σ → T} (hv : Ideal.span (Set.ra
   obtain ⟨s, c, hc⟩ := exists_comb hv
   have key : ∀ y j, x y ∈ M.U j → ∀ u : ((Sp T).presheaf.stalk y)ˣ, (∀ i, gs x y _ ((th i).f j) = ev y (v i) * u) →
       ∑ i ∈ s, ev y (c i) * gs x y _ ((th i).f j) = u := fun y j _ u hu => by
-    simp only [hu, ← mul_assoc, ← map_mul, ← Finset.sum_mul, ← map_sum, hc, map_one, one_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hu, ← mul_assoc, ← map_mul, ← Finset.sum_mul, ← map_sum, hc, map_one, one_mul]
   refine secCoord_mk (fun j => ∑ i ∈ s, resG (Sp T) le_top ((Scheme.ΓSpecIso (CommRingCat.of T)).inv.hom (c i)) *
     (x.appLE _ _ (fun z hz => mem_pull.1 hz)).hom ((th i).f (j PUnit.unit)))
     (fun y j => ∑ i ∈ s, ev y (c i) * gs x y _ ((th i).f j)) (fun j y hy => ?_) (fun y j hy => ?_)
@@ -156,8 +158,10 @@ theorem Loc.unique (hM : M.IsLB) {x : Sp T ⟶ X} {v w : σ → T} (h : Loc M th
     have e : ∀ i, ev y (w i) = (u * u'⁻¹ :).val * ev y (v i) := fun i => by
       rw [Units.val_mul, mul_comm, ← mul_assoc, ← hu, hu', Units.mul_inv_cancel_right]
     refine ⟨u * u'⁻¹, e, ?_⟩
-    simp only [map_sum, map_mul, e, mul_left_comm _ (u * u'⁻¹ :).val]
-    simp only [← map_mul, ← Finset.mul_sum, ← map_sum, hc, map_one, mul_one]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, e, mul_left_comm _ (u * u'⁻¹ :).val]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [← map_mul, ← Finset.mul_sum, ← map_sum, hc, map_one, mul_one]
   refine ⟨∑ i ∈ s, c i * w i, isUnit_of_ev fun y => ?_, fun i => ev_ext fun y => ?_⟩
   · obtain ⟨u, -, e⟩ := key y
     rw [e]; exact u.isUnit

@@ -112,7 +112,8 @@ theorem exists_deco_of_frames : ∀ (E : Type) [Field E] [NumberField E] [StarRi
         have h5 : s • y ∈ w.1.asIdeal • d.1.at w.1 := by
           have : s • y = f w (s • (f w).symm y) := by
             rw [equiv_osmul, LinearEquiv.apply_symm_apply]
-          rw [this, h4, map_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [this, h4, map_sum]
           refine Submodule.sum_mem _ fun i _ => ?_
           rw [equiv_osmul]
           exact Submodule.smul_mem_smul (hmem i)

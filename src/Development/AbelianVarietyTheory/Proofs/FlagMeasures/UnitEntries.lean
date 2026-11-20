@@ -313,12 +313,14 @@ theorem pair_comb {L : LocE F E} {r k : ℕ} (S : Frames L r k)
   have key : ∀ (α : Fin (r + 1) → E) (g : Fin (r + 1) → S.V) (y : S.V),
       hf L S.Hm (∑ i, α i • g i) y = ∑ i, α i * hf L S.Hm (g i) y := fun α g y => by
     change GlobalTheory.FrameBasic.hfL L S.Hm y _ = _
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun i _ => by rw [map_smul]; rfl
   simp only [Frames.h, Matrix.mul_apply, Frames.Zh, Matrix.of_apply, cT]
   rw [key]
   refine Finset.sum_congr rfl fun i _ => ?_
-  rw [GlobalTheory.FrameBasic.hf_conj L S.herm.1, key, map_sum, mul_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [GlobalTheory.FrameBasic.hf_conj L S.herm.1, key, map_sum, mul_comm]
   congr 1
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_mul, ← GlobalTheory.FrameBasic.hf_conj L S.herm.1]

@@ -25,7 +25,8 @@ theorem span_image_le_span_range_of_isUnit {R S : Type} [CommRing R] [CommRing S
   obtain ⟨n, hn⟩ := hb u hu
   obtain ⟨a, ha⟩ := (Submodule.mem_span_range_iff_exists_fun R).1 hn
   have h1 : σ g ^ n • piMap σ (Fin h) u ∈ Submodule.span S (Set.range fun l => piMap σ (Fin h) (b l)) := by
-    rw [← map_pow, ← LinearMap.map_smulₛₗ, ← ha, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_pow, ← LinearMap.map_smulₛₗ, ← ha, map_sum]
     refine Submodule.sum_mem _ fun l _ => ?_
     rw [LinearMap.map_smulₛₗ]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨l, rfl⟩)
@@ -94,7 +95,8 @@ theorem isVB_glueSub (Y : Scheme.{0}) [IsIntegral Y] (h : ℕ) (I : Type) (V : I
   have hφc : ∀ a : Fin h → Γ(Y, W), φ (Fintype.linearCombination Γ(Y, W)
       (fun l => resM _ hW0 ((glueSub V P).mkSec _ (hmem l))) a) = ∑ l, a l • piMap (resG Y hWi) (Fin h) (b l) := by
     intro a
-    simp only [Fintype.linearCombination_apply, map_sum, map_smul, hφe]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Fintype.linearCombination_apply, map_sum, map_smul, hφe]
   constructor
   · rw [injective_iff_map_eq_zero]
     intro a ha

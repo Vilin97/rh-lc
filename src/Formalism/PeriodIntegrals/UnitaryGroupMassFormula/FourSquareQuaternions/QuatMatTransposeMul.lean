@@ -53,7 +53,8 @@ theorem quat_herm {L F : Type*} [Field L] [CharZero L] [FunLike F L L] [RingHomC
     ∑ b, (∑ j, (Q b j : L) * x j) * c (∑ k, (Q b k : L) * y k) = (a : L) * ∑ j, x j * c (y j) := by
   have hc : ∀ b, c (∑ k, (Q b k : L) * y k) = ∑ k, (Q b k : L) * c (y k) := by
     intro b
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_mul, map_ratCast]
   simp_rw [hc, Finset.sum_mul_sum]

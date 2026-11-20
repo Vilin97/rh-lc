@@ -103,7 +103,8 @@ theorem exists_isGen [Unram F E] (r : ℕ) (p : Fin r → F)
     have := AdjoinRoot.aeval_eq (f := P) P
     rw [AdjoinRoot.mk_self] at this
     have h2 : aeval (AdjoinRoot.root P) (X ^ r + ∑ i, C (p i) * X ^ (i : ℕ) : F[X]) = 0 := this
-    simp only [map_add, map_pow, map_sum, map_mul, aeval_X, aeval_C] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_add, map_pow, map_sum, map_mul, aeval_X, aeval_C] at h2
     simpa only [Algebra.smul_def] using h2
 
 theorem exists_et : ∀ (F E : Type) [NontriviallyNormedField F] [NontriviallyNormedField E] [NormedAlgebra F E]

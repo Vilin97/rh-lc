@@ -61,7 +61,8 @@ def S : Subring (ℚ_[ℓ] ⊗[ℚ] K) where
       rw [Finset.sum_mul_sum]
       simp only [smul_mul_smul_comm]
     rw [e]
-    simp only [map_sum, map_smul, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.smul_apply, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.smul_apply, smul_eq_mul]
     refine Subring.sum_mem _ fun j _ => Subring.sum_mem _ fun k _ =>
       Subring.mul_mem _ (Subring.mul_mem _ (ha j) (hb k)) ?_
     rw [BA_apply, BA_apply, Algebra.TensorProduct.tmul_mul_tmul, one_mul, BA_repr_tmul]

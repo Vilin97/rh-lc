@@ -21,7 +21,8 @@ lemma qd_vander {σ : Type} (W : Submodule ℚ (MvPolynomial σ ℚ)) (p : Polyn
   set q : Polynomial ℚ := ∑ i ∈ range (p.natDegree + 1), Polynomial.monomial i (ψ (p.coeff i)) with hq
   have hev : ∀ t : ℕ, q.eval (t : ℚ) = 0 := by
     intro t
-    rw [← hW _ (h t), Polynomial.eval_eq_sum_range (p := p), map_sum, hq, Polynomial.eval_finsetSum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hW _ (h t), Polynomial.eval_eq_sum_range (p := p), map_sum, hq, Polynomial.eval_finsetSum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [Polynomial.eval_monomial, ← map_pow, mul_comm (p.coeff i), ← smul_eq_C_mul, map_smul, smul_eq_mul, mul_comm]
   have hq0 : q = 0 := by
@@ -135,7 +136,8 @@ lemma qd_aeval_mul {R' : Type} [CommRing R'] [Algebra ℚ R'] (x : GL (Fin n) R'
       = (aeval (R := ℚ) (fun v : Fin n × Fin n => x.val v.2 v.1)).comp (rowAct ℚ γ.val.transpose) := by
     apply MvPolynomial.algHom_ext
     intro v
-    rw [AlgHom.comp_apply, rowAct, aeval_X, aeval_X, map_sum, Units.val_mul, Matrix.mul_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [AlgHom.comp_apply, rowAct, aeval_X, aeval_X, map_sum, Units.val_mul, Matrix.mul_apply]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_mul, aeval_X, aeval_C, Matrix.transpose_apply, mul_comm]
     rfl
@@ -182,7 +184,8 @@ lemma qd_Lam_apply (mu : Fin n → ℤ) (w : TIdx mu → ℚ) :
   rw [qd_Lam, Fintype.linearCombination_apply]
 
 lemma qd_Lam_L (mu : Fin n → ℤ) (w : TIdx mu → ℚ) : qd_Lam mu w = qd_L mu (∑ K, w K • qd_P mu K) := by
-  rw [qd_Lam_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [qd_Lam_apply, map_sum]
   refine Finset.sum_congr rfl fun K _ => ?_
   rw [map_smul, qd_L_P]
 
@@ -192,7 +195,8 @@ lemma qd_translate (mu : Fin n → ℤ) (γ : GL (Fin n) ℚ) :
     ∑ K, qd_gcan mu γ K • qd_P mu K =
       ((Matrix.GeneralLinearGroup.det γ ^ mu (lastIdx n) : ℚˣ) : ℚ) • rowAct ℚ γ.val.transpose (qd_P mu (canT mu)) := by
   apply qd_L_inj mu
-  rw [← qd_ev_L_mul, qd_L_P, qd_evGLR_mapCoord, brk, qc_TMat_mul, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← qd_ev_L_mul, qd_L_P, qd_evGLR_mapCoord, brk, qc_TMat_mul, map_sum, map_sum]
   refine Finset.sum_congr rfl fun K _ => ?_
   rw [map_smul, qd_L_P, Algebra.smul_def, map_mul, qd_evGLR_mapCoord, qd_evGL_map, mul_comm]
   rw [qd_ev_algebraMap]

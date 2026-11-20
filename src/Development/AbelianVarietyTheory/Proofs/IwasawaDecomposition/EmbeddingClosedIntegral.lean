@@ -15,7 +15,8 @@ theorem norm_le_one (f : O →+* PadicAlgCl l)
   rw [Polynomial.eval₂_eq_sum_range, Finset.sum_range_succ, hp.coeff_natDegree, map_one,
     one_mul] at hp0
   have hp1 := congrArg f hp0
-  simp only [map_add, map_sum, map_mul, map_pow, map_zero, hf] at hp1
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_add, map_sum, map_mul, map_pow, map_zero, hf] at hp1
   set y := f a
   have h1 : y ^ p.natDegree =
       - ∑ i ∈ Finset.range p.natDegree,

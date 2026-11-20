@@ -23,7 +23,8 @@ theorem ballPot_ballPt_eq : ∀ (Ψ : Type) [Fintype Ψ] (j j' n : ℕ) (q : Ψ 
     simp [ballMat, ballPt]
   have key : 1 - ((W τ)ᵀ)ᴴ * (W τ)ᵀ = (starRingEnd ℂ).mapMatrix (1 - W τ * (W τ)ᴴ) := by
     ext a b
-    simp only [Matrix.sub_apply, RingHom.mapMatrix_apply, Matrix.map_apply, Matrix.mul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.sub_apply, RingHom.mapMatrix_apply, Matrix.map_apply, Matrix.mul_apply,
       Matrix.conjTranspose_apply, Matrix.transpose_apply, map_sub, map_sum, map_mul]
     congr 1
     · by_cases h : a = b <;> simp [Matrix.one_apply, h]

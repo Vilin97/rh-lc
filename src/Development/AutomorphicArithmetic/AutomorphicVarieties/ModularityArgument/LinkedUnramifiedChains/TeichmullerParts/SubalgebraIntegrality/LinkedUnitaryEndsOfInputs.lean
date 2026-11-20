@@ -238,7 +238,8 @@ private theorem zd_C {J : Type} [Fintype J] (Y : J → Submodule ℂ (Fin H.m �
   · rw [hlev]
     exact (hB i (hy i).1).2
   · have h := h3 v a z
-    rw [map_sum, Finset.smul_sum] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.smul_sum] at h
     refine sub_eq_zero.1 (zd_zero Y hY (fun i => H.X.rpF ℂ d H.m (eV n H.Sl v a z : H.X.I.T) (y i) -
       (ι (H.finPart θ x lam v a z))⁻¹ • y i) (fun i => (Y i).sub_mem (hrp i _ _ (hy i).1) ((Y i).smul_mem _ (hy i).1)) ?_ i)
     rw [Finset.sum_sub_distrib, h, sub_self]

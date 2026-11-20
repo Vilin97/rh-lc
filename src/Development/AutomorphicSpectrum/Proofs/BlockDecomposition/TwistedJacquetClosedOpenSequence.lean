@@ -166,7 +166,8 @@ theorem exists_avg (H : Subgroup G) (σ : Representation ℂ H Z) {L : Subgroup 
     have : evC H σ x (cInd H σ ((r i : L) : G) f) = 0 := hcon _ (r i).2
     simp only [twOrbit, map_smul, this, smul_zero]
   have : evC H σ x (c • ∑ i, twOrbit (cInd H σ) L χ f (r i)) = 0 := by
-    rw [map_smul, map_sum, Finset.sum_eq_zero fun i _ => hz i, smul_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_smul, map_sum, Finset.sum_eq_zero fun i _ => hz i, smul_zero]
   exact this
 
 def Good (H : Subgroup G) (σ : Representation ℂ H Z) (U : Subgroup G) (θ : U →* ℂˣ) (f : cIndSpace H σ)

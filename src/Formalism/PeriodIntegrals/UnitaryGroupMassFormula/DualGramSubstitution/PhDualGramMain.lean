@@ -27,7 +27,8 @@ theorem phDualGram_main : PhDualGram := by
     rcases E.symm j with e | e
     exacts [hb e i, hb' e i]
   have h := simeq_ren (p := p) E.symm (hG κ _ (fun j => Sum.elim b b' (E.symm j)) hS)
-  rw [ren_PhOn hex0 hl0 E (Sum.elim b b'), gramRhs_dual hex0 hph0 hl0 hinvl b b' hI E hE,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [ren_PhOn hex0 hl0 E (Sum.elim b b'), gramRhs_dual hex0 hph0 hl0 hinvl b b' hI E hE,
     map_sum] at h
   refine (congrArg (Simeq _) ?_).mp h
   unfold beSum

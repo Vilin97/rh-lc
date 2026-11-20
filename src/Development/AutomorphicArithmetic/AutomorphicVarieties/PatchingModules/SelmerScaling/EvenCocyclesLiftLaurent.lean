@@ -33,6 +33,7 @@ theorem UpperTheory.V.Pa.k2F :
       simpa using e
     show f ((Ψ γ a b).ep' j) = _
     rw [hΨe j γ a b]
-    simp only [Matrix.sum_apply, Finset.sum_apply, Pi.smul_apply, Matrix.smul_apply, smul_eq_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.sum_apply, Finset.sum_apply, Pi.smul_apply, Matrix.smul_apply, smul_eq_mul,
       map_sum, map_mul, hz2]
     refine Finset.sum_congr rfl fun i _ => by ring

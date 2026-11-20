@@ -1123,7 +1123,8 @@ theorem reg_avg (x : Fin (regCSD ℚ G).dim → ℚ) (c : G) :
     ((regCSD ℚ G).I ((regE G).mulVec x) : G → ℚ) c =
       (Fintype.card G : ℚ)⁻¹ * ∑ g : G, ((regCSD ℚ G).I x : G → ℚ) g := by
   unfold regE CSD.gaMat
-  rw [Matrix.sum_mulVec, map_sum, Finset.sum_apply, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.sum_mulVec, map_sum, Finset.sum_apply, Finset.mul_sum]
   rw [← Equiv.sum_comp (Equiv.mulLeft c) (fun g => (Fintype.card G : ℚ)⁻¹ * ((regCSD ℚ G).I x : G → ℚ) g)]
   refine Finset.sum_congr rfl fun t _ => ?_
   rw [Matrix.smul_mulVec, map_smul, reg_coeff, CSD.I_actMat]

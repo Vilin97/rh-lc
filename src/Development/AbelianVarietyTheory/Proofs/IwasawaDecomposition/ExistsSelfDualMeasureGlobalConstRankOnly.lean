@@ -87,7 +87,8 @@ theorem hR_one_mulVec' (J : Matrix (Fin M) (Fin M) E) (hJ : ∀ i j, σ (J j i) 
     (x y : Fin M → R ⊗[F] E) :
     hR R σ (1 : Matrix (Fin M) (Fin M) E) ((JR R J).mulVec x) y = hR R σ J x y := by
   rw [hR_one]
-  simp only [hR, Formalism.UG.hform, Matrix.mulVec, dotProduct, map_sum, map_mul, Finset.sum_mul, JR,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hR, Formalism.UG.hform, Matrix.mulVec, dotProduct, map_sum, map_mul, Finset.sum_mul, JR,
     Matrix.map_apply, sigR_inclR, hJ]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring

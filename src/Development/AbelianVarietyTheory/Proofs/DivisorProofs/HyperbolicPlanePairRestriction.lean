@@ -129,7 +129,8 @@ theorem hTens_eq_zero {F E : Type} [Field F] [NumberField F] [Field E] [NumberFi
     rw [← h1]
     simp only [form, dotProduct, Matrix.mulVec_single_one, Matrix.col_apply, incM, incV, Matrix.map_apply,
       GlobalTheory.ThKCptBoundX.cA_inclR]
-    simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Finset.mul_sum, mul_assoc]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Finset.mul_sum, mul_assoc]
   have h2 : hTens (cA σ) (incM F JX) JW (incM F ι * z) (Matrix.vecMulVec (incV F y) w) =
       ∑ a, ∑ j, ∑ l, (z a j * JW j l * cA σ (w l)) * ∑ i, ∑ k, incM F ι i a * incM F JX i k * cA σ (incV F y k) := by
     simp only [hTens, Matrix.mul_apply, Matrix.vecMulVec_apply, map_mul, Finset.sum_mul, Finset.mul_sum]

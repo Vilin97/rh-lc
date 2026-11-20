@@ -142,7 +142,8 @@ theorem hermC_sum_right {ι : Type} (τ : E →+* ℂ) (G : Matrix (Fin r) (Fin 
 theorem hermC_conj (τ : E →+* ℂ) {G : Matrix (Fin r) (Fin r) E} (hG : ∀ a b, cc (G a b) = G b a)
     (u v : Fin r → ℂ) : conj (hermC τ G u v) = hermC τ G v u := by
   unfold hermC
-  simp only [map_sum, map_mul, Complex.conj_conj]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, Complex.conj_conj]
   conv_lhs => rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   rw [← emb_cc, hG]
@@ -470,7 +471,8 @@ theorem hermC_emb {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ} (
     (G : Matrix (Fin r) (Fin r) E) (u v : Fin r → E) :
     hermC τ G (Data.emb τ u) (Data.emb τ v) = τ (herm G u v) := by
   unfold hermC herm Data.emb
-  simp only [map_sum, map_mul, emb_cc]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, emb_cc]
 
 theorem emb_ne_zero {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ} (τ : E →+* ℂ)
     {u : Fin r → E} (hu : u ≠ 0) : Data.emb τ u ≠ 0 := by

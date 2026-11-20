@@ -161,7 +161,8 @@ private theorem cc_d_ev_lemma_4 {m n : ℕ} {a : Fin m → Pt R n d} (ha : ZZ a)
     simp [map_add, Finsupp.degree_single]
   have hR : coeff e (∑ p : Fin m × Fin d,
       ev a (pderiv R p (f - (P : PS R m d))) * pderiv R t (a p.1 p.2)) = 0 := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_eq_zero fun p _ => ?_
     rw [coeff_mul]
     refine Finset.sum_eq_zero fun x hx => ?_
@@ -185,7 +186,8 @@ private theorem cc_d_ev_lemma_4 {m n : ℕ} {a : Fin m → Pt R n d} (ha : ZZ a)
 theorem cc_d_ev {m n : ℕ} {a : Fin m → Pt R n d} (ha : ZZ a) (t : Fin n × Fin d) (f : PS R m d) :
     constantCoeff (pderiv R t (ev a f)) =
       ∑ p : Fin m × Fin d, constantCoeff (pderiv R p f) * constantCoeff (pderiv R t (a p.1 p.2)) := by
-  rw [cc_d_ev_lemma_4 ha t f, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [cc_d_ev_lemma_4 ha t f, map_sum]
   refine Finset.sum_congr rfl fun p _ => ?_
   rw [map_mul, cc_ev ha]
 
@@ -194,7 +196,8 @@ theorem cc_dd_ev {m n : ℕ} {a : Fin m → Pt R n d} (ha : ZZ a) (s t : Fin n �
     constantCoeff (pderiv R s (pderiv R t (ev a f))) =
       ∑ p : Fin m × Fin d, (∑ q : Fin m × Fin d, constantCoeff (pderiv R q (pderiv R p f)) *
         constantCoeff (pderiv R s (a q.1 q.2))) * constantCoeff (pderiv R t (a p.1 p.2)) := by
-  rw [ReciprocityTheory.ChartRestriction.G.TB.ChartChgPfTP.pderiv_ev a ha, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [ReciprocityTheory.ChartRestriction.G.TB.ChartChgPfTP.pderiv_ev a ha, map_sum, map_sum]
   refine Finset.sum_congr rfl fun p _ => ?_
   rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul, map_add, map_mul, map_mul, cc_ev ha, hf, zero_mul, zero_add,
     cc_d_ev ha, mul_comm]

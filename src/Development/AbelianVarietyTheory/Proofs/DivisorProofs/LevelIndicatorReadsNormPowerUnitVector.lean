@@ -169,7 +169,8 @@ theorem reads_level : ∀ {D : D7} (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam
   have hee := GlobalTheory.PlaceVec.idemSum_mul_self he.1
   have hTmΦ : Tm (cosetFn (cA D e) I 0) = ((Ideal.absNorm I ^ (S.rank * T.rank) : ℕ) : ℂ)⁻¹ •
       ∑ q, heisO ψ S T (finPt rfl rfl 1 (2 • z q)) vac := by
-    rw [hfun, map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hfun, map_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl fun q _ => ?_
     have e1 : finPt (rfl : S.rank = S.rank) (rfl : T.rank = T.rank) 1 (2 • z q) = GlobalTheory.VacUnique.finRat S T (2 • -z q) := by
       unfold finPt

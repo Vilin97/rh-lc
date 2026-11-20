@@ -114,7 +114,8 @@ theorem arc_single_type_bound [NeZero n] [Fintype (K →ₐ[Qp] LL)] [IsDomain O
     have e1 : dvO W T₁ ((arcOf b w S η up size).len c) b₁ (fun m => PowerSeries.constantCoeff
         (a m (c - (((arcOf b w S η up size).len c : ℕ) : ZMod n)))) =
         ((φVB PD (LL := LL) (V := T₁.V)) ^ ((arcOf b w S η up size).len c)) (cmpD W T₁ x₁) := by
-      rw [hcmp, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hcmp, map_sum]
       simp only [map_smul]
       rfl
     have e2 : dv W T₂ ((arcOf b w S η up size).len c) bb (Pi.single k₀ 1) =

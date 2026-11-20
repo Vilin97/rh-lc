@@ -40,7 +40,8 @@ theorem ident_lincomb_k (hT : _root_.PositivityTheory.SiegelWeilFormula.TAll_k) 
   choose tt htt using hconv
   have hsec : d.sec0 (∑ i, a i • Ψ i) = fun y => ∑ i, a i * d.sec0 (Ψ i) y := by
     funext y
-    rw [← _root_.PositivityTheory.SiegelWeilFormula.KMain.secl_apply_k, map_sum, Finset.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← _root_.PositivityTheory.SiegelWeilFormula.KMain.secl_apply_k, map_sum, Finset.sum_apply]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul]
     rfl

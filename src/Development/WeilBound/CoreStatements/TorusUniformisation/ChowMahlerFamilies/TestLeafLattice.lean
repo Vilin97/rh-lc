@@ -46,10 +46,12 @@ theorem leaf_of_afLat (p : ℕ) [Fact p.Prime] (cp : R) {I : Type} [Fintype I] [
     rw [← Ideal.Quotient.eq]
     have h2 : fb x = ∑ i, (x i).val • fb (Pi.single i 1) := by
       conv_lhs => rw [hx]
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       exact Finset.sum_congr rfl fun i _ => map_nsmul _ _ _
     have h3 : fb x = Ideal.Quotient.mk _ (f x) := rfl
-    rw [← h3, h2, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← h3, h2, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [mul_comm, map_mul, map_natCast, nsmul_eq_mul]
     rfl

@@ -69,7 +69,8 @@ theorem exists_valF_secLin {F : Type} [Field F] {X Y : Scheme.{0}} {L : LB X} (h
     (fun _ => (k : ℤ)) r z (fun _ => l) (fun _ => l'))
   refine ⟨τ, τ0, fun σ' n cc σ hσ => (toStkA z).injective ?_⟩
   refine (toStkA_valR_eq_gs r _ z hl₁ _).trans ((sec_trans σ' r z (hl₁ trivial) hl₂).trans ?_)
-  rw [map_mul, hτ, map_sum, ← sval_of σ' r z J (fun _ => l') (fun _ => eJ), ExpGTrans.secLin_val hσ r z hJ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_mul, hτ, map_sum, ← sval_of σ' r z J (fun _ => l') (fun _ => eJ), ExpGTrans.secLin_val hσ r z hJ]
   refine congrArg (_ * ·) (Finset.sum_congr rfl fun i _ => ?_)
   rw [map_mul, sval_of (σ i) _ z J (fun _ => l') (fun _ => by rw [Category.comp_id, eJ])]
   exact congrArg₂ (· * ·) (gs_scal _ r hq z _)
@@ -97,7 +98,8 @@ theorem exists_coef_secLin {R : Type} [CommRing R] [IsDomain R] (D : DegPre R) (
     (((CoefBasic.coef_basic R D F k g).2.2 w hw).1 χ (s.s χ)).exists
   have e := hcf z J hJ
   have a₁ : sval (s.s χ) rb z J = toStkA z (∑ i, cc i * valR b _ ((f i).f jf)) := by
-    rw [ExpGTrans.secLin_val hs rb z hJ, hrb, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [ExpGTrans.secLin_val hs rb z hJ, hrb, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_mul, sval_of (f i) _ z J jf hjf]
     refine congrArg₂ (· * ·) (gs_scal _ rb hrb' z _) (toStkA_valR_eq_gs b _ z (top_le_of_mem _ _ z ?_) _).symm

@@ -27,7 +27,8 @@ private def sS (z w : VC D N N') : ℂ := ∑ τ, ∑ i, ∑ j, z τ i j * (star
 private theorem Hf_eq (T : Tor D) (z w : VC D N N') : Formalism.L2.Ker.Cd.TaylorLogMetric.Hf D T z w = sS z w / (area T.abelian₂ : ℂ) := rfl
 
 private theorem sS_swap (z w : VC D N N') : sS w z = (starRingEnd ℂ) (sS z w) := by
-  simp only [sS, map_sum, map_mul, Complex.conj_conj]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [sS, map_sum, map_mul, Complex.conj_conj]
   refine Finset.sum_congr rfl fun τ _ => Finset.sum_congr rfl fun i _ =>
     Finset.sum_congr rfl fun j _ => mul_comm _ _
 
@@ -197,7 +198,8 @@ theorem sum_emb_zero {ι : Type*} [Fintype ι] (b : ι → D.host.E) (g : ι →
   · rw [hτ]; exact h τ
   · rw [hτ]
     have := congrArg (starRingEnd ℂ) (h τ)
-    simpa [map_sum, map_mul, Complex.conj_ofReal] using this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [map_sum, map_mul, Complex.conj_ofReal] using this
 
 theorem card_tau : Fintype.card D.what₂.Tau = 2 * D.R.ord := by
   rw [← Nat.card_eq_fintype_card, Nat.card_congr D.eTau, Formalism.HC.Frame.natCard_Psi]

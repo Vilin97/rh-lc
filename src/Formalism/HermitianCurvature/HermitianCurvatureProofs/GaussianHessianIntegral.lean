@@ -126,7 +126,8 @@ theorem takMap_apply {d : ℕ} (H : Matrix (Fin d) (Fin d) ℂ) (x : EuclideanSp
 
 theorem takMap_symm {d : ℕ} (H : Matrix (Fin d) (Fin d) ℂ) (hH : H.IsSymm)
     (x y : EuclideanSpace ℂ (Fin d)) : ⟪takMap H x, y⟫_ℂ = ⟪takMap H y, x⟫_ℂ := by
-  simp only [PiLp.inner_apply, takMap_apply, RCLike.inner_apply, map_sum, map_mul, Complex.conj_conj,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [PiLp.inner_apply, takMap_apply, RCLike.inner_apply, map_sum, map_mul, Complex.conj_conj,
     Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_

@@ -23,7 +23,8 @@ theorem hYY_herm (D : D7) (h : TraceMapNormalisation D) {N N' : ℕ} (x y : Matr
     fun φ z => D.host.conjE_apply φ z
   unfold hYY
   rw [← h, ← h]
-  simp only [map_sum, map_mul, hc, Complex.conj_conj]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, hc, Complex.conj_conj]
   refine Finset.sum_congr rfl fun τ _ => Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   ring
 
@@ -34,7 +35,8 @@ theorem onB_expand (D : D7) {N N' r : ℕ} (b : Fin r → Matrix (Fin N') (Fin N
   have h1 : ∀ k, hYY D x (b k) = c k := by
     intro k
     change hYYLeft D (b k) x = c k
-    rw [← hc, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hc, map_sum]
     have h2 : ∀ i, hYYLeft D (b k) (c i • b i) = if i = k then c i else 0 := by
       intro i
       rw [map_smul]
@@ -54,12 +56,14 @@ theorem onB_parseval (D : D7) (h : TraceMapNormalisation D) {N N' r : ℕ} (b : 
   have h1 : hYY D x y = ∑ i, hYY D x (b i) * hYY D (b i) y := by
     change hYYLeft D y x = _
     conv_lhs => rw [onB_expand D b hb x]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul]
     rfl
   have h2 := congrArg (D.host.φ₀.comp (algebraMap D.host.K D.host.E)) h1
-  rw [map_sum] at h2
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum] at h2
   refine h2.trans (Finset.sum_congr rfl fun i _ => ?_)
   rw [map_mul, ← hYY_herm D h y (b i)]
   rfl

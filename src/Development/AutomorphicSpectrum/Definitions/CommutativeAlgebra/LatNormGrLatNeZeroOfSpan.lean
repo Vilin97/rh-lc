@@ -225,7 +225,8 @@ theorem repr_eq_trace (a : 𝓞 E) (k) :
     (((RingOfIntegers.basis E).repr a k : ℤ) : ℚ) = Algebra.trace ℚ E (dualInt E k * (a : E)) := by
   classical
   conv_rhs => rw [← (RingOfIntegers.basis E).sum_repr a]
-  simp only [map_sum, RingOfIntegers.coe_eq_algebraMap, Finset.mul_sum, map_zsmul, mul_smul_comm,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, RingOfIntegers.coe_eq_algebraMap, Finset.mul_sum, map_zsmul, mul_smul_comm,
     ← integralBasis_apply, trace_dualInt]
   simp
 
@@ -240,19 +241,22 @@ theorem eigProj_mem (ρ : 𝓞 E →+* Module.End K V) (σ : E →+* K) (x : V) 
       ∑ j, σ ((Algebra.trace ℚ E (dualInt E j * (a : E) * integralBasis E k) : ℚ) : E) •
         ρ (b j) x := by
     intro k
-    rw [← Module.End.mul_apply, ← map_mul, ← b.sum_repr (a * b k), map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Module.End.mul_apply, ← map_mul, ← b.sum_repr (a * b k), map_sum, LinearMap.sum_apply]
     refine Finset.sum_congr rfl fun j _ => ?_
     have := repr_eq_trace (a * b k) j
     rw [map_zsmul, mul_assoc, integralBasis_apply]
     rw [RingOfIntegers.coe_eq_algebraMap, map_mul (algebraMap (𝓞 E) E)] at this
     rw [RingOfIntegers.coe_eq_algebraMap, ← this]
     simp [Int.cast_smul_eq_zsmul, b]
-  simp only [eigProj, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [eigProj, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul]
   change ∑ k, σ (dualInt E k) • ρ a (ρ (b k) x) = _
   simp only [e1, Finset.smul_sum, smul_smul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun j _ => ?_
-  rw [← Finset.sum_smul, ← map_mul, mul_comm (a : E), expand_dual (dualInt E j * (a : E)), map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Finset.sum_smul, ← map_mul, mul_comm (a : E), expand_dual (dualInt E j * (a : E)), map_sum]
   congr 1
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [← expand_dual, ← map_mul, Rat.smul_def, mul_comm]
@@ -262,13 +266,15 @@ theorem sum_dualInt_mul : ∑ k, dualInt E k * integralBasis E k = 1 := by
   rw [← sub_eq_zero]
   apply (traceForm_nondegenerate ℚ E).1
   intro y
-  rw [Algebra.traceForm_apply, sub_mul, one_mul, map_sub, sub_eq_zero, Finset.sum_mul, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Algebra.traceForm_apply, sub_mul, one_mul, map_sub, sub_eq_zero, Finset.sum_mul, map_sum,
     Algebra.trace_eq_matrix_trace (integralBasis E) y, Matrix.trace]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [Matrix.diag_apply, Algebra.leftMulMatrix_eq_repr_mul, mul_assoc, mul_comm _ y]
   generalize y * integralBasis E k = z
   conv_lhs => rw [← (integralBasis E).sum_repr z]
-  simp only [Finset.mul_sum, map_sum, mul_smul_comm, map_smul, trace_dualInt]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finset.mul_sum, map_sum, mul_smul_comm, map_smul, trace_dualInt]
   simp
 
 theorem eigProj_of_mem {ρ : 𝓞 E →+* Module.End K V} {σ : E →+* K} {x : V} (hx : x ∈ eigSp ρ σ) :
@@ -277,7 +283,8 @@ theorem eigProj_of_mem {ρ : 𝓞 E →+* Module.End K V} {σ : E →+* K} {x : 
   simp only [eigProj, LinearMap.sum_apply, LinearMap.smul_apply, hx, smul_smul]
   rw [← Finset.sum_smul]
   have : ∑ k, σ (dualInt E k) * σ ((RingOfIntegers.basis E k : 𝓞 E) : E) = 1 := by
-    rw [← map_one σ, ← sum_dualInt_mul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_one σ, ← sum_dualInt_mul, map_sum]
     simp
   rw [this, one_smul]
 
@@ -333,11 +340,13 @@ example (σ : E →+* K) : eigProj (regAct K E) σ 1 ≠ 0 := by
   let φ : K ⊗[ℤ] 𝓞 E →ₐ[K] K := Algebra.TensorProduct.lift (AlgHom.id K K)
     (σ.comp (algebraMap (𝓞 E) E)).toIntAlgHom (fun _ _ => Commute.all _ _)
   have h1 := congrArg φ h
-  simp only [eigProj, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, regAct_basis,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [eigProj, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, regAct_basis,
     Algebra.TensorProduct.basis_apply, map_zero] at h1
   have h2 : ∑ k, σ (dualInt E k * integralBasis E k) = 0 := by
     simpa [φ] using h1
-  rw [← map_sum, sum_dualInt_mul, map_one] at h2
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum, sum_dualInt_mul, map_one] at h2
   exact one_ne_zero h2
 
 omit [NumberField E] in

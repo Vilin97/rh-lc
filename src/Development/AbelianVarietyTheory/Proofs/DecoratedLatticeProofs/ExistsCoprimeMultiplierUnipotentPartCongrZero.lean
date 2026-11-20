@@ -88,7 +88,8 @@ local notation "RA" => X.B.I.E ⊗[X.B.I.F] Formalism.MainNotions.S.Af X.B.I.F
 
 theorem hA_sum_right (p : VA X.B.I) (v : Fin D.R.rS → VA X.B.I) :
     hA X.B.I p (∑ b, v b) = ∑ b, hA X.B.I p (v b) := by
-  simpa only [hL_apply] using map_sum (hL X.B.I p) v Finset.univ
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa only [hL_apply] using map_sum (hL X.B.I p) v Finset.univ
 
 theorem core (u : D.what₂.Word) (m : X.B.I.Gf) (hmK : m ∈ X.B.I.Kset) (hmN : m ∈ X.NfinU u) (c : ℕ)
     (hc : ∀ b : Fin D.R.rS, (c : RA) • (X.e0 b - incl X.B.I (X.eR b)) ∈ mL X.B.I X.B.g ∧

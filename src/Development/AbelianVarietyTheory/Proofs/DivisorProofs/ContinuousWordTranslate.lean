@@ -296,12 +296,14 @@ theorem continuous_word [CompleteSpace H] [Nontrivial H] (hσ : IsURepOn (UJset 
         ∑ j, ((b.repr ⟨f x, hf x⟩ j : ℝ) : ℂ) • ⟨dRep σ (b j) w, dRep_mem hσ hw (b j).2⟩ := by
       apply Subtype.ext
       have := congrArg dX (b.sum_repr ⟨f x, hf x⟩).symm
-      rw [map_sum] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum] at this
       simpa [dX, -Module.Basis.sum_repr] using this
     have e2 := hL ⟨dRep σ (f x) w, dRep_mem hσ hw (hf x)⟩
     rw [List.map_append, List.foldr_append]
     refine e2.symm.trans ?_
-    rw [e, map_sum, Submodule.coe_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, map_sum, Submodule.coe_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_smul, Submodule.coe_smul, hL]
 
@@ -372,7 +374,8 @@ theorem exists_sum_of_sobCont (hσ : IsURepOn (UJset ε) σ) {ℓ : H →ₗ[ℂ
     exact mul_le_mul_of_nonneg_left h1 (abs_nonneg C)
   refine ⟨S.length, S.get, fun i => f.comp (ContinuousLinearMap.single ℂ (fun _ => H) i), hl, fun w hw => ?_⟩
   refine (hf ⟨w, hw⟩).symm.trans ?_
-  conv_lhs => rw [← Finset.univ_sum_single (J ⟨w, hw⟩), map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [← Finset.univ_sum_single (J ⟨w, hw⟩), map_sum]
   exact Finset.sum_congr rfl fun i _ => by rw [hJ]; rfl
 
 variable {φ : Matrix (Fin n) (Fin n) ℂ → ℝ}

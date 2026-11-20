@@ -196,7 +196,8 @@ private theorem isSplitting_of_splits {E₁ K₁ : Type} [Field E₁] [NumberFie
       ∑ i, ((b.repr x i : ℤ) : K₁) * ((algebraMap (𝓞 K₁) K₁).comp τ) (b i) := by
     intro τ
     conv_lhs => rw [← b.sum_repr x]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     apply Finset.sum_congr rfl
     intro i _
     rw [map_zsmul, zsmul_eq_mul]

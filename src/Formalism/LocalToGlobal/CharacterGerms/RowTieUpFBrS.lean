@@ -39,7 +39,8 @@ variable {R : Type} [CommRing R] [Algebra R C]
 theorem linAct_toC {Y : FBChart C V OE dd} (actR : OE → Fin dd → PS R 1 dd)
     (hact : ∀ a i, Y.B.A.act a i = toC (actR a i)) (x : OE) (v : Fin dd → R) (i : Fin dd) :
     algebraMap R C ((linPart (actR x)).mulVec v i) = linAct (Y.B.A.act x) (fun j => algebraMap R C (v j)) i := by
-  simp only [linAct, hact, toC, MvPowerSeries.coeff_map, linPart, Matrix.mulVec, dotProduct, Matrix.of_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [linAct, hact, toC, MvPowerSeries.coeff_map, linPart, Matrix.mulVec, dotProduct, Matrix.of_apply,
     map_sum, map_mul]
 
 theorem eig_at {Y : FBChart C V OE dd} (p : PairData Y d I) (hinj : Function.Injective (algebraMap R C))
@@ -94,7 +95,8 @@ theorem eig_at {Y : FBChart C V OE dd} (p : PairData Y d I) (hinj : Function.Inj
     refine ⟨fun k => lift (b (e k)) (hbint (e k)), ?_, ?_⟩
     · funext j
       apply hinj
-      simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum, map_mul, hlift, hu]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum, map_mul, hlift, hu]
       rw [← hsum (fun c => b c * p.u g c j) (fun c hc => by rw [hbsupp c hc, zero_mul]), ← hvb', hvC]
     · intro c' hc'
       funext k
@@ -103,7 +105,8 @@ theorem eig_at {Y : FBChart C V OE dd} (p : PairData Y d I) (hinj : Function.Inj
       have h2 : ∀ j, vC j = ∑ m, algebraMap R C (c' m) * p.u g (e m) j := by
         intro j
         rw [hvC, ← hc']
-        simp [Finset.sum_apply, map_sum, hu]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp [Finset.sum_apply, map_sum, hu]
       simp_rw [h2, Finset.sum_mul]
       rw [Finset.sum_comm]
       simp_rw [mul_assoc, ← Finset.mul_sum, hw2]

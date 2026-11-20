@@ -108,7 +108,8 @@ theorem tensor_integral_torsion : TensZEt := by
         simp [Finset.sum_apply, Pi.single_apply]
       ext w
       conv_rhs => rw [hy]
-      simp [Matrix.mulVec, dotProduct, map_sum, map_smul, Finset.sum_apply, M₀, mul_comm]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [Matrix.mulVec, dotProduct, map_sum, map_smul, Finset.sum_apply, M₀, mul_comm]
     have hF : AnalyticAt ℂ (opU (matH h) t θ) 0 :=
       heisenbergAnalytic (n → ℂ) (matH h) t θ hθ.1 0 (Set.mem_univ _)
     have hth0 := (Formalism.L2.Th1.F.th0Basic _ _ hStd.per hStd.half).1

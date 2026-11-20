@@ -640,7 +640,8 @@ theorem cochBC_d (i : ℕ) (x : Cech.Cochain (locSys S N M) i) :
     Cech.d (locSys S' N M') locResS i (cochBC f hX hf i (1 ⊗ₜ x)) =
       cochBC f hX hf (i + 1) (1 ⊗ₜ Cech.d (locSys S N M) locResS i x) := by
   funext J
-  rw [Cech.d_apply, cochBC_one_tmul, Cech.d_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Cech.d_apply, cochBC_one_tmul, Cech.d_apply, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [cochBC_one_tmul, map_zsmul]
   congr 1

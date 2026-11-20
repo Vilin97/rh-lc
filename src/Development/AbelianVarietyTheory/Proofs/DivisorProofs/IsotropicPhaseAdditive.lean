@@ -25,7 +25,8 @@ theorem hA_smul_add_left (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin
 theorem cA_mulVec (σ : E →ₐ[F] E) {n : ℕ} (M : Matrix (Fin n) (Fin n) (AE F E)) (w : Fin n → AE F E) :
     (fun i => cA σ ((M *ᵥ w) i)) = M.map (cA σ) *ᵥ fun i => cA σ (w i) := by
   ext i
-  simp [Matrix.mulVec, dotProduct, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Matrix.mulVec, dotProduct, map_sum, map_mul]
 
 theorem hA_mat_mulVec (σ : E →ₐ[F] E) {n : ℕ} {J : Matrix (Fin n) (Fin n) E} (g : UA σ J) (v w : Fin n → AE F E) :
     GlobalTheory.UnipMass.hA σ J (mat g *ᵥ v) (mat g *ᵥ w) = GlobalTheory.UnipMass.hA σ J v w := by

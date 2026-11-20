@@ -170,7 +170,8 @@ theorem matVec_one (x : ι → 𝔸[K]) : matVec (1 : Matrix ι ι K) x = x := b
 theorem matVec_algebraMap (M : Matrix ι ι K) (ξ : ι → K) :
     matVec M (fun i => algebraMap K 𝔸[K] (ξ i)) = fun i => algebraMap K 𝔸[K] (M.mulVec ξ i) := by
   funext i
-  simp [matVec_apply, Matrix.mulVec, dotProduct, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [matVec_apply, Matrix.mulVec, dotProduct, map_sum]
 
 theorem continuous_matVec (M : Matrix ι ι K) : Continuous (matVec M) := by
   refine continuous_pi fun i => ?_

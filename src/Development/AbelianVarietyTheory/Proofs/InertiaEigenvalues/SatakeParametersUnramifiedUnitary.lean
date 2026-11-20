@@ -150,7 +150,8 @@ theorem GlobalTheory.InertHeckeEigen.heckeVec_eq_satU_of_fixed : ∀ (L : Type) 
     rw [((hsat.2 v hvK hv0).2.2 h hh)] at e2
     rw [← hT (fi i v), heckeVec_eq_sum _ _ _ _ hS]
     calc _ = fi i (∑ c ∈ hfin.toFinset, h (p c.out) • (σ.ρ.comp p) c.out v) := by
-          rw [map_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [map_sum]
           refine Finset.sum_congr rfl fun c _ => ?_
           rw [map_smul, hfi]
       _ = lam • fi i v := by rw [e2, map_smul]

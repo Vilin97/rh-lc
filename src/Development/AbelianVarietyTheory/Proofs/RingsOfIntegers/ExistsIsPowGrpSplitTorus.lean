@@ -66,7 +66,8 @@ theorem incl_apply {j : ℕ} (xe : X' ≃+ (Fin j → X)) (i : Fin j) (χ : X) :
 
 theorem sum_incl {j : ℕ} (xe : X' ≃+ (Fin j → X)) (x : X') : ∑ i, incl xe i (xe x i) = x := by
   simp only [incl_apply]
-  rw [← map_sum, Finset.univ_sum_single, AddEquiv.symm_apply_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum, Finset.univ_sum_single, AddEquiv.symm_apply_apply]
 
 theorem hom_ext_incl {M : Type} [CommGroup M] {j : ℕ} (xe : X' ≃+ (Fin j → X))
     {u v : Multiplicative X' →* M}

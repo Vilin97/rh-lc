@@ -49,7 +49,8 @@ theorem GlobalTheory.TypeSum.CoefClos.eq_coef_of_closure : GlobalTheory.Publishe
       simp only [fun i => hB2 (u i) y hy]
       rw [← Finset.sum_eq_zero (s := (Finset.univ : Finset (Fin d))) (f := fun a => L a (σ y (∑ i, c i • wordV σ (u i) (w a))))
         (fun a _ => by rw [hcu a, map_zero, map_zero])]
-      simp only [map_sum, map_smul, smul_eq_mul, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, smul_eq_mul, Finset.mul_sum]
       exact Finset.sum_comm)
     apply Subtype.ext
     funext g

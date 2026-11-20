@@ -36,7 +36,8 @@ theorem sumF_algebraMap {R : Type} [CommRing R] [IsDomain R] (I : Ideal R) (F : 
   refine ⟨S, fun T hT => ?_⟩
   have := Submodule.mem_map_of_mem (f := φ) (hS T hT)
   rw [Submodule.map_smul''] at this
-  simpa [φ, map_sub, map_sum] using this
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa [φ, map_sub, map_sum] using this
 
 theorem exists_frm_pull {R : Type} [CommRing R] [IsDomain R] (D : DegPre R) (F : Type) [Field F]
     [Algebra (FractionRing R) F] {k : ℕ} (g : GtPtF D (FractionRing R)) (w : Frm D (FractionRing R) k g.b)
@@ -117,7 +118,8 @@ theorem liesOver_ext : ∀ (R : Type) [CommRing R] [IsDomain R] [CharZero R] (I 
         map_smul' := fun c s => by simpa [h0] using lin s 0 c χ }
     rw [hc χ, hσ]
     show Lc _ = _
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, smul_eq_mul]
     exact congrArg (c i * ·) (GlobalTheory.T.fourierCoefficient_familyPullback_fractionField R D.toPre F hG k (σ i) g wk wkF hwk hwkF
@@ -126,7 +128,8 @@ theorem liesOver_ext : ∀ (R : Type) [CommRing R] [IsDomain R] [CharZero R] (I 
   let u : Fin n → AbSec A F k := fun i => abPull (FractionRing R) F A k (e.symm (σ i))
   have hs : (s : AbSec A F k) = ∑ i, c i • u i := by
     apply e'.injective
-    rw [(he' _ _).1 hexp, map_sum, hσ]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [(he' _ _).1 hexp, map_sum, hσ]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, cc, e.apply_symm_apply]
   have hcomb : IsComb u c s := fun j => by

@@ -293,7 +293,8 @@ private theorem locCo_form {W : Type} [AddCommGroup W] [Module (AF F) W] {Bf : W
     evFin F v (Bf u u') = (GlobalTheory.LatVac.locCo co v u).1 ⬝ᵥ (GlobalTheory.LatVac.locCo co v u').2 -
       (GlobalTheory.LatVac.locCo co v u').1 ⬝ᵥ (GlobalTheory.LatVac.locCo co v u).2 := by
   rw [co.form, map_sub]
-  simp [GlobalTheory.LatVac.locCo, dotProduct, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [GlobalTheory.LatVac.locCo, dotProduct, map_sum, map_mul]
 
 private theorem conj_conj {σ : E →ₐ[F] E} (h : IsCMExt F E σ) (x : E) : σ (σ x) = x := by
   obtain ⟨τ⟩ : Nonempty (E →+* ℂ) := inferInstance
@@ -310,7 +311,8 @@ private theorem cA_cA {σ : E →ₐ[F] E} (h : IsCMExt F E σ) (z : AE F E) : c
 
 private theorem form_swap {σ : E →ₐ[F] E} (h : IsCMExt F E σ) {d : ℕ} {J : Matrix (Fin d) (Fin d) E}
     (hJ : ∀ i j, σ (J j i) = -J i j) (x y : Fin d → E) : form σ J y x = -σ (form σ J x y) := by
-  simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hJ, conj_conj h, Finset.mul_sum, ← Finset.sum_neg_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hJ, conj_conj h, Finset.mul_sum, ← Finset.sum_neg_distrib]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 
@@ -322,7 +324,8 @@ private theorem pairAt_nondeg {σ : E →ₐ[F] E} (h : IsCMExt F E σ) {n d : �
     have := congrArg (inclR (F := F) (AF F)) hw
     rw [map_neg, map_one] at this
     rw [← this]
-    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, Finset.mul_sum, mul_assoc]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, Finset.mul_sum, mul_assoc]
     rfl
   have h1 : ∀ u, evFin F v (symp (R := AF F) (cA σ) (-1) (incM F X.J) (incM F W.J) (ptAt v x w') u) = 0 := by
     intro u

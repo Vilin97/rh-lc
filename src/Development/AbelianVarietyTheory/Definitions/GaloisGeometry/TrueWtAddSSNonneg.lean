@@ -43,7 +43,8 @@ theorem jetMap_sum {α : Type} (s : Finset α) (r : α → K) (J : α → (DVar 
     jetMap (∑ x ∈ s, r x • J x) n = ∑ x ∈ s, r x • jetMap (J x) n := by
   have h : jetLin (∑ x ∈ s, r x • J x) = ∑ x ∈ s, r x • jetLin (J x) := by
     refine (basisMonomials _ K).ext fun μ => ?_
-    simp only [coe_basisMonomials, LinearMap.sum_apply, LinearMap.smul_apply, jetLin_monomial, one_mul, Finset.sum_apply, Pi.smul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [coe_basisMonomials, LinearMap.sum_apply, LinearMap.smul_apply, jetLin_monomial, one_mul, Finset.sum_apply, Pi.smul_apply,
       map_sum, smul_monomial]
   refine LinearMap.ext fun P => ?_
   simp only [jetMap, h, LinearMap.comp_apply, LinearMap.sum_apply, LinearMap.smul_apply]
@@ -72,7 +73,8 @@ theorem map_jetMap {L : Type} [Field L] (s : K →+* L) (J : (DVar ι a b →₀
   generalize subD K ι a b (P * ∏ τ, frDet K a τ ^ n τ) = Q at h
   conv_lhs => rw [Q.as_sum]
   conv_rhs => rw [Q.as_sum]
-  simp only [map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Finset.smul_sum]
   refine Finset.sum_congr rfl fun μ hμ => ?_
   rw [jetLin_monomial, map_monomial, map_monomial, jetLin_monomial, smul_monomial, map_mul, h μ hμ, smul_eq_mul, mul_left_comm]
 
@@ -95,7 +97,8 @@ theorem eval_jetMap (cD : ι → K) (T : (DVar ι a b →₀ ℕ) → K) (Q : Fo
     refine AlgHom.congr_fun (MvPolynomial.algHom_ext fun v => ?_) Q
     simp only [subD, φ, AlgHom.comp_apply, aeval_X]
     split_ifs
-    · simp only [map_sum, map_mul, aeval_X, Sum.elim_inl, Sum.elim_inr]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp only [map_sum, map_mul, aeval_X, Sum.elim_inl, Sum.elim_inr]
       exact Finset.sum_congr rfl fun β _ => by ring
     · simp
   have h2 : ∀ S, eval (fun v : ι × Fin b × Fin b => y' v.1 v.2.1 v.2.2) (jetLin (fun q => (q.prod fun k n => cD k.1 ^ n) * T q) S) =
@@ -117,7 +120,8 @@ theorem eval_jetMap (cD : ι → K) (T : (DVar ι a b →₀ ℕ) → K) (Q : Fo
       jetLin (fun q => (q.prod fun k n => cD k.1 ^ n) * T q) (subD K ι a b Q) := by simp [jetMap]
   rw [e0, h2, h1]
   conv_lhs => rw [(derPol cD Q y').as_sum]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_congr rfl fun q _ => hl _ _
 
 theorem eval_jetMap_jetC (D : D7) {a b : ℕ} (cD : D.what₂.Tau → ℂ) (G : Formalism.MainNotions.TaylorLogMetric.VC D a b → ℂ)
@@ -233,7 +237,8 @@ theorem ev_injective (i : ℕ) : Function.Injective (A.ev σ i) :=
 
 theorem ev_sum (i : ℕ) {J : Type} [Fintype J] (a : J → X.K) (v : J → (A.F i).V) :
     A.ev σ i (∑ j, a j • v j) = ∑ j, σ (a j) • A.ev σ i (v j) := by
-  simp only [← evS_apply, map_sum, map_smulₛₗ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← evS_apply, map_sum, map_smulₛₗ]
 
 theorem emb_injective (i : ℕ) : Function.Injective (A.emb σ i) := fun φ ψ h =>
   ((A.F i).resOf (A.ok i) fun b => ((A.F i).mem b).outSec).injective
@@ -251,7 +256,8 @@ theorem exists_ext (i : ℕ) (c : (A.F i).Cl) (c' : (A.F (i + 1)).Cl) :
     have := LinearMap.congr_fun hL (Finsupp.single j 1)
     simpa using this
   rw [← (A.F i).bV.sum_repr x, ev_sum]
-  simp only [map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul]
   rw [ev_sum]
   simp [hj]
 
@@ -307,9 +313,11 @@ theorem K_emb (hc : X.Tau → HCParam R) (i : ℕ) (hi : i < R.m) (φ : (A.F i).
       @Finset.sum _ _ _ (@Finset.univ _ (A.ok i).fintypeCl) fun c : (A.F i).Cl =>
         (A.chain σ hc).wt i c • (A.chain σ hc).Kmap i c c' (A.emb σ i φ c) := rfl
   letI : ∀ b, Fintype ((A.F i).mem b).Cl := fun b => (A.ok i b).fintypeCl
-  rw [hL, hR, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hL, hR, map_sum]
   refine (Fintype.sum_sigma _).trans (Finset.sum_congr rfl fun b _ => ?_)
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun c _ => ?_
   rw [LinearMap.map_smulₛₗ, map_inv₀, map_natCast]
   refine congrArg₂ (fun (a : ℂ) (f : Fr X σ (R.N (i + 1)) → ℂ) => a • f) ?_ (A.Kmap_ev σ hc i hi ⟨b, c⟩ c' _)

@@ -119,7 +119,8 @@ theorem mem_map_latF_iff_frames (D : D7) (S T : HSp D) (v : HeightOneSpectrum (�
           lam * π (a1 * t i * ∑ k, star (s k) * S.gram k j) := compAt_tmul w α _
       rw [Matrix.map_apply, Matrix.of_apply, e1, Matrix.smul_apply, smul_eq_mul, Matrix.vecMulVec_apply]
       have hconj : ∀ y, c (π y) = π (star y) := fun y => InertChart.conj_algebraMap hc y
-      simp only [map_mul, map_sum, Matrix.vecMul, dotProduct, hG, Matrix.map_apply, hconj]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_mul, map_sum, Matrix.vecMul, dotProduct, hG, Matrix.map_apply, hconj]
       ring_nf
     have hy : ∀ p, ((a⁻¹ : GL (Fin T.rank) (w.adicCompletion D.host.E)).1 *ᵥ fun i => π (t i)) p ∈ Formalism.UG.Ov D.host.E w := by
       refine (ha _).2 ?_
@@ -222,7 +223,8 @@ theorem relIndex_intMat_rmul_cT {L : Type} [Field L] [Valued L (WithZero (Multip
   have hcomm : ψ.comp (rmul (Formalism.UG.cT c k)) = (lmul k).comp ψ := by
     refine AddMonoidHom.ext fun X => ?_
     ext i j
-    simp only [ψ, AddMonoidHom.coe_comp, AddMonoidHom.coe_mk, ZeroHom.coe_mk, Function.comp_apply, rmul_apply, lmul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [ψ, AddMonoidHom.coe_comp, AddMonoidHom.coe_mk, ZeroHom.coe_mk, Function.comp_apply, rmul_apply, lmul_apply,
       Formalism.UG.cT, Matrix.transpose_apply, Matrix.map_apply, Matrix.mul_apply, map_sum, map_mul, hcc]
     exact Finset.sum_congr rfl fun l _ => mul_comm _ _
   rw [← AddSubgroup.relIndex_map_map_of_injective _ _ hψ, AddSubgroup.map_map, hcomm, ← AddSubgroup.map_map]

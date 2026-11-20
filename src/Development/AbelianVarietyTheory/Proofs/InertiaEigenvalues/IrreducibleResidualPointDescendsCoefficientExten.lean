@@ -50,7 +50,8 @@ theorem span_eq_top_of_map {ι k K : Type} [Field k] [Field K] (f : k →+* K) {
   have hexp : ∀ Y : Matrix (Fin r) (Fin r) k, l Y = ∑ p, ∑ q, Y p q * l (Matrix.single p q 1) := by
     intro Y
     conv_lhs => rw [Matrix.matrix_eq_sum_single Y]
-    simp only [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum]
     refine Finset.sum_congr rfl fun p _ => Finset.sum_congr rfl fun q _ => ?_
     rw [← smul_eq_mul, ← map_smul, Matrix.smul_single, smul_eq_mul, mul_one]
   have key : ∀ Y : Matrix (Fin r) (Fin r) K, ∑ p, ∑ q, Y p q * f (l (Matrix.single p q 1)) = 0 := by
@@ -61,7 +62,8 @@ theorem span_eq_top_of_map {ι k K : Type} [Field k] [Field K] (f : k →+* K) {
       obtain ⟨g, rfl⟩ := hY
       have h0 : l (M g) = 0 := hl (Submodule.subset_span ⟨g, rfl⟩)
       have := congrArg f ((hexp (M g)).symm.trans h0)
-      simpa [map_sum] using this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa [map_sum] using this
     | zero => simp
     | add Y Z _ _ hY hZ => simp only [Matrix.add_apply, add_mul, Finset.sum_add_distrib, hY, hZ, add_zero]
     | smul a Y _ hY => simp only [Matrix.smul_apply, smul_eq_mul, mul_assoc, ← Finset.mul_sum, hY, mul_zero]
@@ -95,7 +97,8 @@ theorem trace_of_isDecomp {Γ A : Type} [Group Γ] [CommRing A] [IsDomain A] [Is
   have h2 := congrArg (LinearMap.trace _ _) h1
   rw [LinearMap.trace_conj', LinearMap.trace_prodMap', Matrix.trace_toLin'_eq, Matrix.trace_toLin'_eq,
     Matrix.trace_toLin'_eq, Matrix.trace_diagonal] at h2
-  rw [map_add, map_sum, AddMonoidHom.map_trace, AddMonoidHom.map_trace]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_add, map_sum, AddMonoidHom.map_trace, AddMonoidHom.map_trace]
   exact h2
 
 section Record
@@ -156,7 +159,8 @@ theorem live_of_locExt : GlobalTheory.TwSys.Cheb → ∀ {R : Ranks} {H : Host R
   have htr : ∀ g, a.φ (mat ρ₀ (a.γ g)).trace = (mat ρ g).trace := by
     intro g
     have h := trace_eq hC a π _ r (hr₀ _) hr g
-    rw [trace_of_isDecomp _ _ _ hd₀, trace_of_isDecomp _ _ _ hd, map_add, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [trace_of_isDecomp _ _ _ hd₀, trace_of_isDecomp _ _ _ hd, map_add, map_sum,
       Finset.sum_congr rfl fun (c : Fin R.t) _ => a.chi ((c : ℕ) + 1) (by omega) c.2 g] at h
     exact add_right_cancel h
   haveI := isLocalHom_φ a

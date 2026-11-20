@@ -16,7 +16,8 @@ theorem iterate_pderiv_mul {σ : Type} (i : σ) (n : ℕ) (P Q : MvPolynomial σ
   induction n with
   | zero => simp
   | succ n ih =>
-    rw [Finset.sum_antidiagonal_choose_succ_mul
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_antidiagonal_choose_succ_mul
       (fun a b => (pderiv i)^[a] P * (pderiv i)^[b] Q) n, Function.iterate_succ_apply', ih, map_sum,
       ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun ij hij => ?_
@@ -91,7 +92,8 @@ theorem abs_kap_le : ∀ (ι : Type) [Fintype ι] [DecidableEq ι] (N : ℕ) (u 
       · intro a ha
         have : w i - w a = u τ' i - u τ' a := by simp only [hw]; ring
         rw [this]; exact hsep a ha
-    rw [abs_neg, hE0, hRn, hR, iterate_pderiv_mul, map_sum, Finset.sum_div]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [abs_neg, hE0, hRn, hR, iterate_pderiv_mul, map_sum, Finset.sum_div]
     refine (Finset.abs_sum_le_sum_abs _ _).trans ?_
     have e : (N : ℝ) * (1 + U / g) = N + U * (N / g) := by ring
     rw [e, Commute.add_pow' (Commute.all _ _), Finset.mul_sum]

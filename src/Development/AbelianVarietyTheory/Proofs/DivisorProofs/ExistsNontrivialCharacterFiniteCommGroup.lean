@@ -161,7 +161,8 @@ theorem mulsharp (K : Type) [CommRing K] (B : Type) [CommRing B] [HopfAlgebra K 
     ((Spec.map (CommRingCat.ofHom (Bialgebra.comulAlgHom K B).toRingHom)).appTop.hom _)) = _
   rw [← nC]
   change (lift f g).left.appTop.hom (secMap K B B (Bialgebra.comulAlgHom K B b)) = _
-  rw [Bialgebra.comulAlgHom_apply, hb, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Bialgebra.comulAlgHom_apply, hb, map_sum, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   exact secMap_lift K B B Y f g (x i) (y i)
 
@@ -216,7 +217,8 @@ theorem bridge (K : Type) [Field K] (B D : Type) [CommRing B] [HopfAlgebra K B] 
     | tmul b d =>
       rw [hΦY]
       obtain ⟨S, hS⟩ := TensorProduct.exists_finset (Coalgebra.comul (R := K) b)
-      rw [mulsharp K B Y _ _ b S (fun i => i.1) (fun i => i.2) hS, TensorProduct.comm_tmul,
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [mulsharp K B Y _ _ b S (fun i => i.1) (fun i => i.2) hS, TensorProduct.comm_tmul,
         LinearMap.lTensor_tmul, hS, TensorProduct.tmul_sum, map_sum, Finset.sum_mul]
       refine Finset.sum_congr rfl fun i _ => ?_
       simp only [Θ, Algebra.TensorProduct.lift_tmul]

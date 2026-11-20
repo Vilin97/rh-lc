@@ -83,7 +83,8 @@ theorem dpullG (b0 : Fin n) (u : Fin dd → C) (c : Var → C)
         linPull Y M (MvPowerSeries.pderiv C (b, j) F) := by
     intro b j
     simp_rw [← hc b]
-    simp only [map_sum, map_mul, Finset.sum_mul, Finset.mul_sum, MvPowerSeries.smul_eq_C_mul, mul_assoc]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, Finset.sum_mul, Finset.mul_sum, MvPowerSeries.smul_eq_C_mul, mul_assoc]
     exact Finset.sum_comm
   rw [linPull_DofN]
   simp only [pderiv_linPull, Finset.smul_sum]
@@ -145,7 +146,8 @@ theorem logCoordG {ι : Type} [Fintype ι] (cp : ι → Fin n) (uv : ι → Fin 
     exact h1
   unfold DpolyN
   conv_rhs => rw [MvPolynomial.as_sum P]
-  simp only [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum]
   rw [tpjet_jetAt0_sum]
   refine Finset.sum_congr rfl (fun m hm => ?_)
   rw [MvPolynomial.aeval_monomial, map_mul, MvPowerSeries.constantCoeff_C, hD m hm, MvPolynomial.algebraMap_eq,

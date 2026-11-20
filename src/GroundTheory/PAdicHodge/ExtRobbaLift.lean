@@ -29,7 +29,8 @@ theorem mem_int_of_map_mem_int (ψ : Γ →+* Γ) (g : L →+* L) (hg : ∀ c, �
     have := Nat.find_min hyint hi; push_neg at this; exact this
 
   have hA : ψ (T.partialSum y n0) ∈ T.int := by
-    simp only [partialSum, finSum, map_sum, map_mul, map_pow, hπ, hteich]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [partialSum, finSum, map_sum, map_mul, map_pow, hπ, hteich]
     refine Subring.sum_mem _ fun i hi => mul_mem (pow_mem (mul_mem T.π_mem_int hu) _) ?_
     exact T.teich_mem_int ((hg _).2 (hlow i (Finset.mem_range.1 hi)))
 

@@ -15,7 +15,8 @@ def negReal (N : ℕ) : MvPolynomial (Fin N) ℤ →ₐ[ℤ] MvPolynomial (Fin N
 theorem negReal_hsymm (N a : ℕ) :
     negReal N (hsymm (Fin N) ℤ a) =
       aeval (fun i => (-X i : MvPolynomial (Fin N) ℝ)) (hsymm (Fin N) ℝ a) := by
-  simp only [negReal, hsymm, map_sum, map_multiset_prod, Multiset.map_map, Function.comp_def, aeval_X]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [negReal, hsymm, map_sum, map_multiset_prod, Multiset.map_map, Function.comp_def, aeval_X]
 
 theorem negReal_isHomogeneous {N n : ℕ} {P : MvPolynomial (Fin N) ℤ} (hP : P.IsHomogeneous n) :
     (negReal N P).IsHomogeneous n := by
@@ -25,7 +26,8 @@ theorem negReal_isHomogeneous {N n : ℕ} {P : MvPolynomial (Fin N) ℤ} (hP : P
 
 theorem negReal_psum (N k : ℕ) :
     negReal N (psum (Fin N) ℤ k) = (-1) ^ k * ∑ i, (X i ^ k : MvPolynomial (Fin N) ℝ) := by
-  simp only [negReal, psum, map_sum, map_pow, aeval_X, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [negReal, psum, map_sum, map_pow, aeval_X, Finset.mul_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [neg_pow]
 

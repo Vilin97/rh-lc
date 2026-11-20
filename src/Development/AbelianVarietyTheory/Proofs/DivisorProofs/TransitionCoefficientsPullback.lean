@@ -17,8 +17,10 @@ theorem repr_pulled_frame {X X' : Scheme.{0}} (g : X' ⟶ X) {F : X.Modules} [F.
     rw [GlobalTheory.VB.IsFrame.basis_apply, GlobalTheory.VB.IsFrame.basis_apply]
     exact (pullbackSections_res g F hT hW _).trans (res_pullbackSections g F _ _ _).symm
   conv_lhs => rw [← (he.basis hW).sum_repr t]
-  simp only [map_sum, pullbackSections_smul, hb]
-  rw [← map_sum, Module.Basis.repr_sum_self]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, pullbackSections_smul, hb]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum, Module.Basis.repr_sum_self]
 
 theorem coef_pulled_frames {X X' : Scheme.{0}} (g : X' ⟶ X) {F : X.Modules} [F.IsQuasicoherent] {r : ℕ} (d : Bool)
     {V V' : X.Opens} {U U' : X'.Opens} (hU : U ≤ g ⁻¹ᵁ V) (hU' : U' ≤ g ⁻¹ᵁ V') {e : Fin r → Γ(F, V)}

@@ -17,7 +17,8 @@ def cG (T : GoodSet K G) (x : G) : K := ∑ s, cS T s x
 
 theorem asAlg_eG {V : Type} [AddCommGroup V] [Module K V] (ρ : Representation K G V)
     (T : GoodSet K G) : ρ.asAlgebraHom (eG T) = ∑ x : G, cG T x • ρ x := by
-  rw [eG, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [eG, map_sum]
   simp_rw [asAlg_eS]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun x _ => ?_
@@ -42,7 +43,8 @@ theorem cG_integral [CharZero K] (T : GoodSet K G) (x : G) :
 
 theorem star_cG (σ : K →+* ℂ) (T : GoodSet K G) (g : G) :
     star (σ (cG T g)) = σ (cG T g⁻¹) := by
-  simp only [cG, cS, map_sum, map_mul, map_div₀, map_natCast, star_sum, star_mul', star_div₀,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [cG, cS, map_sum, map_mul, map_div₀, map_natCast, star_sum, star_mul', star_div₀,
     star_natCast, PI.Dv.GLPTr.star_map_trace_rep, inv_inv]
 
 theorem glatProj : PI.Dv.GLatProj := by

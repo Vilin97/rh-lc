@@ -62,7 +62,8 @@ theorem second_kernel_coupled (t : KerEntTied ex) {σ : D.what₂.LL →+* X.G.K
         funext c1 y1
         rw [compatible_lift_exists D L hT Gi Gl Kc0 Dx cX ex t u μ j hj _ _ hQ.1 hQ.2 c1 y1]
         simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, entRec]
-      rw [hCh x y hy, hRd y c' L' hL, hy, hsum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hCh x y hy, hRd y c' L' hL, hy, hsum, map_sum]
       refine Finset.sum_congr rfl fun c _ => ?_
       rw [map_smulₛₗ, map_inv₀, map_natCast, hDel c x c' L' hL,
         kernel_of_smul p X Y j (lp c) (c', L') _ (hSer c c' L' hL), mul_smul])

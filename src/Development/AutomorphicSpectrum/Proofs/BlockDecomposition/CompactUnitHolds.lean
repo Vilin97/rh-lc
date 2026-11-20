@@ -126,7 +126,8 @@ theorem hform_one_ne_zero {n : ℕ} (x : Fin n → E) (hx : x ≠ 0) :
       ∑ i, IsCMField.complexConj E (x i) * x i := by
     simp [Formalism.UG.hform, Matrix.one_apply]
   have h1 := congrArg τ (e.symm.trans h)
-  rw [map_sum, map_zero] at h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_zero] at h1
   have h2 : ∑ i, ((Complex.normSq (τ (x i)) : ℝ) : ℂ) = 0 := by
     rw [← h1]
     refine Finset.sum_congr rfl fun i _ => ?_

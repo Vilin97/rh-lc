@@ -83,7 +83,8 @@ theorem latAtV_param : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [Num
       obtain ⟨c', rfl⟩ := (memY y).1 hy
       refine ⟨fun m => (c m.1 * c' m.2) • ⟨_, hav⟩, ?_⟩
       beta_reduce
-      rw [vecMulVec_sum_zsmul, hφ, map_sum, Finset.smul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [vecMulVec_sum_zsmul, hφ, map_sum, Finset.smul_sum]
       refine Finset.sum_congr rfl fun m _ => ?_
       rw [map_zsmul, smul_comm, AddSubgroupClass.coe_zsmul, map_zsmul, smul_assoc, ← hsupp a ha, hφ]
     | zero => exact ⟨0, by simp⟩

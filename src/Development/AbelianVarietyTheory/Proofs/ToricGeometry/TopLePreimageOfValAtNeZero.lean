@@ -91,7 +91,8 @@ theorem valAt'_sub (x : Sp ℂ ⟶ X) (U : X.Opens) (f g : Γ(X, U)) :
 theorem valAt'_sum {κ : Type*} (x : Sp ℂ ⟶ X) (U : X.Opens) (s : Finset κ) (f : κ → Γ(X, U)) :
     valAt' x U (∑ i ∈ s, f i) = ∑ i ∈ s, valAt' x U (f i) := by
   by_cases h : ⊤ ≤ x ⁻¹ᵁ U
-  · simp only [valAt'_eq_valAtHom x h, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [valAt'_eq_valAtHom x h, map_sum]
   · simp only [valAt'_of_not_le x h, Finset.sum_const_zero]
 
 theorem valAt'_one (x : Sp ℂ ⟶ X) {U : X.Opens} (h : ⊤ ≤ x ⁻¹ᵁ U) : valAt' x U 1 = 1 := by

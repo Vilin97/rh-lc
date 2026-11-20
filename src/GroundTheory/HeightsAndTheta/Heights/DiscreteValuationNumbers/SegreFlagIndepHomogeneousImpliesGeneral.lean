@@ -125,7 +125,8 @@ theorem polyNum_mul_monomial {N r : ℕ} (d : Fin N → K → ℤ) (Y : Fin r �
     polyNum I V e (Fin.append d Y) (rename (Fin.castAdd r) A * rename (Fin.natAdd N) (monomial ν 1)) =
       ∑ α ∈ A.support, A.coeff α * listNum I V e (monoList d α ++ monoList Y ν) := by
   conv_lhs => rw [as_sum A]
-  rw [map_sum, Finset.sum_mul, ← polyNumHom_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_mul, ← polyNumHom_apply, map_sum]
   refine Finset.sum_congr rfl fun α _ => ?_
   rw [rename_monomial, rename_monomial, monomial_mul, polyNumHom_apply, polyNum_monomial,
     monoList_append, mul_one]
@@ -136,7 +137,8 @@ theorem polyNum_mul_eq_sum {N r : ℕ} (d : Fin N → K → ℤ) (Y : Fin r → 
       ∑ ν ∈ R.support, R.coeff ν *
         polyNum I V e (Fin.append d Y) (rename (Fin.castAdd r) A * rename (Fin.natAdd N) (monomial ν 1)) := by
   conv_lhs => rw [as_sum R]
-  rw [map_sum, Finset.mul_sum, ← polyNumHom_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.mul_sum, ← polyNumHom_apply, map_sum]
   refine Finset.sum_congr rfl fun ν _ => ?_
   have : monomial ν (R.coeff ν) = R.coeff ν • monomial ν (1 : ℤ) := by
     rw [smul_monomial, smul_eq_mul, mul_one]
@@ -177,7 +179,8 @@ theorem segreFlagIndep_homogeneous_implies_general (h : IndefiniteRowSideFullHec
           (rename (Fin.castAdd r) (homogeneousComponent c G) * rename (Fin.natAdd N) R) := by
     intro d
     conv_lhs => rw [← sum_homogeneousComponent G]
-    rw [map_sum, Finset.sum_mul, ← polyNumHom_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_mul, ← polyNumHom_apply, map_sum]
     rfl
   rw [hsplit, hsplit]
   refine Finset.sum_congr rfl fun c _ => ?_

@@ -148,7 +148,8 @@ theorem pair_vec (V : HSp D) {p : ℕ} (U : Matrix (Fin V.rank) (Fin p) D.host.E
       V.hT (V.frame.equivFun.symm fun k => U k i) (V.frame.equivFun.symm w) := by
   have hsig : ∀ x : D.host.E, (D.sp.cm.sig : D.host.E →+* D.host.E) x = starRingEnd D.host.E x :=
     fun _ => rfl
-  simp only [Module.Basis.equivFun_symm_apply, map_sum, LinearMap.map_smulₛₗ, LinearMap.map_smulₛₗ₂,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Module.Basis.equivFun_symm_apply, map_sum, LinearMap.map_smulₛₗ, LinearMap.map_smulₛₗ₂,
     LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, Matrix.mulVec,
     dotProduct, Matrix.mul_apply, Formalism.UG.cT, Matrix.transpose_apply, Matrix.map_apply, hsig,
     Formalism.BasicNotions.HSpace.gram, Finset.mul_sum, Finset.sum_mul, RingHom.id_apply]

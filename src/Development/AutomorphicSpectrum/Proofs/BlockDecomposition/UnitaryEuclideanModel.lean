@@ -25,7 +25,8 @@ def dualCoord (E : KMod n) :
     ext x
     have hx := (stdOrthonormalBasis ℂ E.V).sum_repr' x
     conv_rhs => rw [← hx]
-    simp [map_sum, mul_comm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, mul_comm]
   right_inv v := by
     ext j
     have ho := (stdOrthonormalBasis ℂ E.V).orthonormal

@@ -46,7 +46,8 @@ private theorem exists_decomp {O σ : Type} [CommRing O] [Finite σ] (w : σ →
     rw [map_add] at e1
     omega
   · ext n
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp_rw [MvPowerSeries.coeff_monomial_mul, one_mul]
     by_cases hn : n ∈ S
     · rw [Finset.sum_eq_single (c n)]
@@ -136,7 +137,8 @@ private theorem part_decomp {O R : Type} [CommRing O] [CommRing R] [Algebra O R]
   refine ⟨B, le_antisymm ?_ (iSup₂_le fun b hb => ?_)⟩
   · rintro _ ⟨f, hf, rfl⟩
     obtain ⟨g, hg, rfl⟩ := hd f hf
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine sum_mem fun b hb => ?_
     refine Submodule.mem_iSup_of_mem b (Submodule.mem_iSup_of_mem hb ⟨W.π (g b), ⟨g b, hg b hb, rfl⟩, ?_⟩)
     simp
@@ -271,7 +273,8 @@ private theorem part_zero_le {O R : Type} [CommRing O] [IsLocalRing O] [CommRing
       ring
     have hval : W.π.toLinearMap f = algebraMap O R c + ∑ b ∈ B, zz b * W.π (g b) := by
       show W.π f = _
-      rw [hf2, map_add, map_sum, MvPowerSeries.c_eq_algebraMap, W.π.commutes]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hf2, map_add, map_sum, MvPowerSeries.c_eq_algebraMap, W.π.commutes]
       simp only [map_mul, zz]
     show _ ∈ N ⊔ I • N'
     rw [hval]

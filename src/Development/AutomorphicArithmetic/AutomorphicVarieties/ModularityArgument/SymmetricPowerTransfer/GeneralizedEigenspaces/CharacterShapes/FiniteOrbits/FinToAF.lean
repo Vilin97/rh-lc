@@ -125,7 +125,8 @@ private theorem core {G H V : Type} [Group G] [Group H] [AddCommGroup V] [Module
       intro r
       rw [hmulR, map_mul, hc _ r.2, mul_one]
     simp only [this]
-    rw [← map_sum, hE, Pi.smul_apply, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, hE, Pi.smul_apply, map_smul]
 
 theorem UpperTheory.V.Z.Sym.So.finToAF :
     UpperTheory.V.Z.Sym.So.FinToAF := by

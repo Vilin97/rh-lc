@@ -17,7 +17,8 @@ private theorem comb_gen {E E' : Type} [AddCommGroup E] [Module ℂ E] [AddCommG
     (g : Y.H →ₗ[ℂ] X.H) (hinj : Function.Injective Y.e) (v : Y.H) {n : ℕ} (s : Fin n → ℂ) (u : Fin n → Y.H)
     (hv : HEq (Y.e v) (∑ k, s k • Y.e (u k))) (p : Fin n → X.H) (hp : ∀ k, HEq (p k) (g (u k))) : ∑ k, s k • p k = g v := by
   have e : v = ∑ k, s k • u k := hinj (by rw [eq_of_heq hv, map_sum]; simp only [map_smul])
-  rw [e, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, map_sum]
   exact Finset.sum_congr rfl fun k _ => by rw [map_smul, eq_of_heq (hp k)]
 
 section Comparison₂

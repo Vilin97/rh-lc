@@ -107,14 +107,16 @@ private theorem lin_ex (σ : E ≃+* E) (q : ℕ) (hi : ∀ x, valuation E (σ x
   · intro x y
     simp only [hadd, mul_add, Finset.sum_add_distrib, add_div]
   · intro x
-    simp only [AddMonoidHom.mk'_apply, map_div₀, map_natCast, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [AddMonoidHom.mk'_apply, map_div₀, map_natCast, map_sum]
     congr 1
     have h1 := Finset.sum_range_succ (fun j => σ^[j] x) q
     have h2 := Finset.sum_range_succ' (fun j => σ^[j] x) q
     simp only [Function.iterate_succ_apply', Function.iterate_zero, id, ho] at h1 h2
     exact add_right_cancel (h2.symm.trans h1)
   · intro x
-    simp only [AddMonoidHom.mk'_apply, map_div₀, map_natCast, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [AddMonoidHom.mk'_apply, map_div₀, map_natCast, map_sum, map_mul]
     have h1 := Finset.sum_range_succ (fun j => (j : E) * σ^[j] x) q
     have h2 := Finset.sum_range_succ' (fun j => (j : E) * σ^[j] x) q
     have h3 := Finset.sum_range_succ (fun j => σ^[j] x) q

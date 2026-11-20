@@ -30,7 +30,8 @@ private theorem exists_pow_sub_pow_eq_mul_sub_of_constantCoeff_eq_one (l : ℕ) 
     (hx : constantCoeff x = 1) (hy : constantCoeff y = 1) :
     ∃ S : O⟦X⟧, constantCoeff S = l ∧ x ^ l - y ^ l = S * (x - y) := by
   refine ⟨∑ i ∈ Finset.range l, x ^ i * y ^ (l - 1 - i), ?_, ?_⟩
-  · simp [map_sum, hx, hy]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp [map_sum, hx, hy]
   · first
     | exact (geom_sum₂_mul x y l).symm
     | exact ((Commute.all x y).geom_sum₂_mul l).symm

@@ -35,7 +35,8 @@ private theorem exists_ext {W La V : Type} [AddCommGroup W] [Module ℚ W] [AddC
   have hsp : ⊤ ≤ Submodule.span ℚ (Set.range (j ∘ b)) := by
     rw [← hs, Submodule.span_le]
     rintro _ ⟨z, rfl⟩
-    rw [← b.sum_repr z, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← b.sum_repr z, map_sum]
     refine Submodule.sum_mem _ fun i _ => ?_
     rw [map_zsmul]
     exact Submodule.smul_of_tower_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)

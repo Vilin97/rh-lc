@@ -15,13 +15,16 @@ theorem trace_mul_star_eq_sum (z z' : Fld P) :
       Algebra.trace E (Fld P) (z * star' P z') := by
   have hs : star' P z' = ∑ i, σ ((powB P).repr z' i) • star' P (powB P i) := by
     conv_lhs => rw [← (powB P).sum_repr z']
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun i _ => by
       rw [Algebra.smul_def, map_mul, star'_algebraMap, ← Algebra.smul_def]
-  rw [hs, Finset.mul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hs, Finset.mul_sum, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   conv_rhs => rw [← (powB P).sum_repr z]
-  rw [Finset.sum_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.sum_mul, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [smul_mul_smul_comm, map_smul, smul_eq_mul, gramOne, Matrix.of_apply]
   ring

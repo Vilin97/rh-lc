@@ -52,7 +52,8 @@ theorem psJet_map {R R' : Type} [CommRing R] [CommRing R'] (f : R →+* R') {κ 
   rw [Ideal.Quotient.lift_mk, RingHom.comp_apply]
   congr 1
   unfold psTrunc
-  simp [map_sum, MvPolynomial.map_monomial, MvPowerSeries.coeff_map]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, MvPolynomial.map_monomial, MvPowerSeries.coeff_map]
 
 theorem germA_comb {V : Type} [CommRing V] [IsDomain V] {I : Ideal V} {D : DegData V I}
     {A : PolAV (Spec (CommRingCat.of (FractionRing V)))} {G : Over (Sp V)} [GrpObj G] [IsCommMonObj G]

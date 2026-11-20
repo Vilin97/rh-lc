@@ -565,7 +565,8 @@ private theorem jetFun_mul_eq_iteratedDeriv : ∀ (K'' : Type) [Field K''] [Numb
   let B : ℂ → ℂ := fun t => ∑ a, σ (c a) * Bv a t
   have hB : AnalyticAt ℂ B 0 := Finset.analyticAt_fun_sum _ fun a _ => analyticAt_const.mul (hBv a)
   have hjet : ∀ m, iteratedDeriv m B 0 = σ (rigVal w i₀) * σ (jetFun y i₀ (rigVal w i₀) b m c) := fun m => by
-    rw [show iteratedDeriv m B 0 = _ from iteratedDeriv_fun_sum (f := fun a t => σ (c a) * Bv a t)
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [show iteratedDeriv m B 0 = _ from iteratedDeriv_fun_sum (f := fun a t => σ (c a) * Bv a t)
       (fun a _ => (analyticAt_const.mul (hBv a)).contDiffAt), jetFun_apply, map_sum,
       Finset.mul_sum]
     refine Finset.sum_congr rfl fun a _ => ?_

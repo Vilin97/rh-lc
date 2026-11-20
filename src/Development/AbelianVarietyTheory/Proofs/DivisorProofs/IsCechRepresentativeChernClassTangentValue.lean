@@ -234,7 +234,8 @@ private theorem chern_cob_lemma_10 {K : Type} [Field K] {A : Over (Sp K)} [GrpOb
       (∑ k, cupZ _ (c k) (ω k).1)).1 - d1 _ β := by
   have hsum : (∑ k, cup _ (H1.mk _ (c k)) (Form.cl _ (ω k))) =
       H2.mk (O (dp0 K) (A.hom ≫ 𝟙 (Sp K))) (∑ k, cupZ _ (c k) (ω k).1) := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun k _ ↦ ?_
     rw [← cup_mk]
     rfl
@@ -253,10 +254,12 @@ private theorem prism_eq_of_pullback_cup_sub_d1 {K : Type} [Field K] {A : Over (
     ev (∑ k, tanVal v (ω k) • c k) φ.triv =
       (N Q - ∑ k, cupContractionCorrectionTerm (c k) (ω k) hv Q - G3 Q + cochainTangentDiffCoeff β hv Q) -
         φ.ρ (N P - ∑ k, cupContractionCorrectionTerm (c k) (ω k) hv P - G3 P + cochainTangentDiffCoeff β hv P) := by
-  rw [hℓ1, prism_sub', map_sum, prism_sumZ', prismContractionTwoCochain_coboundary β hv φ hex] at hN
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hℓ1, prism_sub', map_sum, prism_sumZ', prismContractionTwoCochain_coboundary β hv φ hex] at hN
   simp only [prism_cup' hA] at hN
   rw [ev_sum_smul']
-  simp only [map_sub, map_add, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sub, map_add, map_sum]
   have hsm : ∀ k, tanVal v (ω k) • ev (c k) φ.triv =
       ev (c k) φ.triv * algebraMap K Q.B (tanVal v (ω k)) := fun k ↦ by
     rw [Algebra.smul_def, mul_comm]

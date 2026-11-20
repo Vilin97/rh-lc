@@ -211,7 +211,8 @@ theorem eulL_mul {s : ℕ} (t : Fin s → σ) (f g : MvPolynomial σ k) :
 
 theorem eulL_pderiv_notMem {s : ℕ} (t : Fin s → σ) (v : σ) (hv : ∀ c, t c ≠ v) (h : MvPolynomial σ k) :
     eulL t (pderiv v h) = pderiv v (eulL t h) := by
-  rw [eulL_apply, eulL_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [eulL_apply, eulL_apply, map_sum]
   refine Finset.sum_congr rfl (fun c _ => ?_)
   rw [MvPolynomial.pderiv_mul, mvPolynomial_pderiv_X_eq_zero_of_ne (hv c), zero_mul, zero_add, pderiv_comm]
 
@@ -219,7 +220,8 @@ theorem eulL_pderiv_mem {s : ℕ} (t : Fin s → σ) (ht : Function.Injective t)
     (h : MvPolynomial σ k) :
     eulL t (pderiv (t c0) h) = pderiv (t c0) (eulL t h) - pderiv (t c0) h := by
   have key : pderiv (t c0) (eulL t h) = pderiv (t c0) h + eulL t (pderiv (t c0) h) := by
-    rw [eulL_apply, eulL_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [eulL_apply, eulL_apply, map_sum]
     have hc : ∀ c, pderiv (t c0) (X (t c) * pderiv (t c) h) =
         (if c = c0 then pderiv (t c) h else 0) + X (t c) * pderiv (t c) (pderiv (t c0) h) := by
       intro c
@@ -243,7 +245,8 @@ theorem eulL_tieF {s r : ℕ} (t : Fin s → σ) (ht : Function.Injective t) (w 
     (hmix : ∀ c, ((∃ d, t d = w c) ∧ ∀ d, t d ≠ e c) ∨ ((∀ d, t d ≠ w c) ∧ ∃ d, t d = e c))
     (g : MvPolynomial σ k) :
     eulL t (tieF w e g) = tieF w e (eulL t g) - tieF w e g := by
-  simp only [Formalism.GM.tieF_apply', map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Formalism.GM.tieF_apply', map_sum]
   rw [← Finset.sum_sub_distrib]
   exact Finset.sum_congr rfl (fun c _ => eulL_pderiv_pair t ht (w c) (e c) (hmix c) g)
 
@@ -259,7 +262,8 @@ theorem eulL_tieF_pow {s r : ℕ} (t : Fin s → σ) (ht : Function.Injective t)
 
 theorem tieF_pderiv {r : ℕ} (w e : Fin r → σ) (v : σ) (g : MvPolynomial σ k) :
     tieF w e (pderiv v g) = pderiv v (tieF w e g) := by
-  simp only [Formalism.GM.tieF_apply', map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Formalism.GM.tieF_apply', map_sum]
   refine Finset.sum_congr rfl (fun c _ => ?_)
   rw [pderiv_comm (e c) v, pderiv_comm (w c) v]
 
@@ -619,12 +623,14 @@ theorem eig_P (hv : M.TieVars w e zv sv) (hy : BiHom w e o n y) (hz : M.ZSFree z
   have he' := tv_e hv
   have hd := tv_we hv
   constructor
-  · rw [map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl (fun l _ => ?_)
     have h1 := eig_v (z := z) hv hy hz l
     have h2 := (eulL_tieE_pow hw' he' hd _ _ _ h1.1 h1.2.1 l).1
     rw [map_smul, h2, sub_add_cancel, smul_comm]
-  · rw [map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl (fun l _ => ?_)
     have h1 := eig_v (z := z) hv hy hz l
     have h2 := (eulL_tieE_pow hw' he' hd _ _ _ h1.1 h1.2.1 l).2
@@ -724,7 +730,8 @@ theorem fh_P [CharZero k] (hv : M.TieVars w e zv sv) (hr : 1 ≤ r) {o n z : ℕ
   have hF : (Formalism.GM.tieE (Fin.cons zv w : Fin (r + 1) → σ) (Fin.cons sv e) ^ o)
       ((Formalism.GM.tieF w e ^ (o + 1)) (X zv ^ z * y)) = 0 := by
     rw [v_top hv hy hz, map_zero]
-  rw [tieP_eq, map_sum, Finset.sum_range_succ']
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [tieP_eq, map_sum, Finset.sum_range_succ']
   simp only [map_smul, hTs, hT0]
   exact sum_range_smul_add_smul_eq_zero_of_recurrence
     (fun l => ((-1 : k) ^ l) / (((l.factorial : k) ^ 2) * ((o + n + r + z - 1).choose l : k)))
@@ -784,11 +791,13 @@ theorem fockForm_augLift_augLift [CharZero k] (hv : M.TieVars w e zv sv) (hr : 1
     rw [tieF_pow_X_pow_mul w e zv hzz z y' l, tieE_pow_apply_eq_sum_X_mul_X_pow_mul, tieE_pow_apply_eq_sum_X_mul_X_pow_mul, mul_smul_comm,
       mul_left_comm]
   have hRs : pderiv zv (∑ d, X (w d) * X (e d) : MvPolynomial σ k) = 0 := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_eq_zero (fun d _ => ?_)
     rw [MvPolynomial.pderiv_mul, mvPolynomial_pderiv_X_eq_zero_of_ne (hzz d).1, mvPolynomial_pderiv_X_eq_zero_of_ne (hzz d).2, zero_mul, mul_zero, add_zero]
   have hPd : pderiv zv (Formalism.GM.tiePhi w e o n z y') = 0 := by
-    rw [tiePhi_eq_sum_range_neg_one_pow_div_tieE_pow_tieF_pow, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [tiePhi_eq_sum_range_neg_one_pow_div_tieE_pow_tieF_pow, map_sum]
     refine Finset.sum_eq_zero (fun l _ => ?_)
     rw [Derivation.map_smul, tieE_pow_apply_eq_sum_X_mul_X_pow_mul, MvPolynomial.pderiv_mul, Derivation.leibniz_pow, hRs, smul_zero,
       smul_zero, zero_mul, zero_add, ← tieF_pow_pderiv,

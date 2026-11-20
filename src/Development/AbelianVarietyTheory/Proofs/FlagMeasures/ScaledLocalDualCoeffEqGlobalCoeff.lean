@@ -50,7 +50,8 @@ theorem scaled_local_coef_eq :
     | insert b s hb ih => rw [Finset.sum_insert hb, Finset.sum_insert hb, (locH Z p).h_add_left, ih]
   have hbc : baseChange₂ D p x = ∑ b, (D.s.atP p).ιE (G.fl.coefX x b) • baseChange₂ D p (G.fl.e b) := by
     conv_lhs => rw [hexp]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun b _ => baseChange_smul₂ p _ _
   rw [hbc, hsum, Finset.mul_sum, Finset.sum_eq_single a]
   · rw [(locH Z p).h_smul_left, mul_left_comm, hes a, if_pos rfl, mul_one]

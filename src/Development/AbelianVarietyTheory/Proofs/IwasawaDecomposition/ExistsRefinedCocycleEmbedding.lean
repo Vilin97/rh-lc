@@ -65,7 +65,8 @@ theorem Coc.exists_emb_of_ratio (C : Coc Z) [Finite C.A] (r : ∀ d : C.A, C.A �
     have e₁ : ∀ (S : Type) [CommRing S] (z : Sp S ⟶ Z) (hd : ⊤ ≤ z ⁻¹ᵁ C.B d) (he : ⊤ ≤ z ⁻¹ᵁ C.B e),
         ev z _ (le_preimage_inf hd he) (((Y g d).map (resG Z (inf_le_left : C.B d ⊓ C.B e ≤ C.B d)) * C.T d e) i j) =
           ((Y g d).map (ev z _ hd) * C.tr d e z hd he) i j := fun S _ z hd he => by
-      rw [Matrix.mul_apply, Matrix.mul_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Matrix.mul_apply, Matrix.mul_apply, map_sum]
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [map_mul, Matrix.map_apply, ev_res z _ _ hd]
       rfl

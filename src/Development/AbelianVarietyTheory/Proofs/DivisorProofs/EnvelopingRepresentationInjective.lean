@@ -31,7 +31,8 @@ theorem aeval_matDer_single {T : Type} {n : ℕ} (τ τ' : T) (a b c d : Fin n) 
   rw [map_sub, MvPolynomial.derivation_C, sub_zero, matDer_X]
   by_cases h : τ' = τ
   · subst h
-    simp only [if_true, map_sum, map_mul, MvPolynomial.aeval_X, MvPolynomial.aeval_C, Matrix.single_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [if_true, map_sum, map_mul, MvPolynomial.aeval_X, MvPolynomial.aeval_C, Matrix.single_apply,
       Algebra.algebraMap_self, RingHom.id_apply, ite_mul, one_mul, zero_mul, Finset.sum_ite_eq, Finset.mem_univ,
       if_true, Prod.mk.injEq, true_and]
   · simp only [h, if_false, map_zero]

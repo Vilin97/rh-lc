@@ -25,7 +25,8 @@ theorem hermC_mulVec' (τ : E →+* ℂ) (G : Matrix (Fin r) (Fin r) E) (x : Mat
 
 theorem hermC_symm' (τ : E →+* ℂ) (G : Matrix (Fin r) (Fin r) E) (hG : ∀ a b, cc (G a b) = G b a)
     (u v : Fin r → ℂ) : hermC τ G u v = conj (hermC τ G v u) := by
-  simp only [hermC, map_sum, map_mul, Complex.conj_conj]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hermC, map_sum, map_mul, Complex.conj_conj]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
   have h1 : conj (τ (G a b)) = τ (G b a) := by rw [← tau_cc, hG]
@@ -40,12 +41,14 @@ theorem ortho_gram' (X : Data E r) (x : Frame X.Ψ r) (hx : X.IsOrtho x) (τ : X
 
 theorem tau_herm (τ : E →+* ℂ) (G : Matrix (Fin r) (Fin r) E) (v w : Fin r → E) :
     τ (herm G v w) = hermC τ G (Data.emb τ v) (Data.emb τ w) := by
-  simp only [herm, hermC, Data.emb, map_sum, map_mul, tau_cc]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [herm, hermC, Data.emb, map_sum, map_mul, tau_cc]
 
 theorem hermC_mulVec_right (τ : E →+* ℂ) (G : Matrix (Fin r) (Fin r) E) (hG : ∀ a b, cc (G a b) = G b a)
     (x : Matrix (Fin r) (Fin r) ℂ) (u y : Fin r → ℂ) :
     hermC τ G u (x.mulVec y) = ∑ b, conj (y b) * hermC τ G u (col x b) := by
-  rw [hermC_symm' τ G hG, hermC_mulVec', map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hermC_symm' τ G hG, hermC_mulVec', map_sum]
   refine Finset.sum_congr rfl fun b _ => ?_
   rw [map_mul, ← hermC_symm' τ G hG]
 

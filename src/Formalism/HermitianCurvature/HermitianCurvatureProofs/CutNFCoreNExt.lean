@@ -17,7 +17,8 @@ theorem nf_coef_unique {E : Type*} [AddCommGroup E] [Module ℂ E] (M : ℕ) (a 
     refine Set.Infinite.mono ?_ hS
     intro s hs
     have hfs := congrArg f (h s hs)
-    simp only [map_sum, map_smul, map_zero, smul_eq_mul] at hfs
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, map_zero, smul_eq_mul] at hfs
     simp only [Set.mem_setOf_eq, Polynomial.IsRoot.def, Polynomial.eval_finset_sum, Polynomial.eval_mul,
       Polynomial.eval_C, Polynomial.eval_pow, Polynomial.eval_X]
     rw [← hfs]

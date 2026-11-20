@@ -53,7 +53,8 @@ theorem pairSum_gam (U : Set I) (p : I → ℂ) (h0 : ∀ x, x ∉ U → p x = 0
     simp
   rw [hsw]
   unfold gamOf
-  rw [map_mul, map_inv₀, map_natCast, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_mul, map_inv₀, map_natCast, map_sum]
   field_simp
 
 private lemma orbit_lemma_2 {C : Type*} [Fintype C] (A U : Set I) (s : C → I)

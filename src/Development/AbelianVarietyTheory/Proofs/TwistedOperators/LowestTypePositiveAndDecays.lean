@@ -65,7 +65,8 @@ theorem funSchmid_ps (hl : IsHCParam lam) (hτ : IsTau ε (lowK ε lam) τ w) (h
     · have : Matrix.single p.2 p.1 (1 : ℂ) i i' = 0 :=
         Matrix.single_apply_of_ne _ _ _ _ _ fun h => hp (Prod.ext h.2 h.1)
       rw [thE, Matrix.smul_apply, Matrix.smul_apply, this, smul_zero, smul_zero])
-  rw [← he, Matrix.mul_sum, map_sum] at h0
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← he, Matrix.mul_sum, map_sum] at h0
   have e : ∀ p, (toMK k)⁻¹ * z * toMK k * (⟪τ (toMK k) w, G p⟫_ℂ • ((toMK k)⁻¹ * thE ε p * toMK k)) =
       ⟪τ (toMK k) w, G p⟫_ℂ • ((toMK k)⁻¹ * (z * thE ε p) * toMK k) := fun p => by
     rw [Matrix.mul_smul]
@@ -194,7 +195,8 @@ def unitOp (e : Ix p q ≃ Fin n) (act : Mat p q →ₗ[ℂ] Module.End ℂ V) (
 theorem act_eq_sum (act : Mat p q →ₗ[ℂ] Module.End ℂ V) (Z : Mat p q) :
     act Z = ∑ a, ∑ b, Z a b • act (Eab a b) := by
   conv_lhs => rw [Matrix.matrix_eq_sum_single Z]
-  simp only [map_sum, Eab, ← map_smul, Matrix.smul_single, smul_eq_mul, mul_one]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Eab, ← map_smul, Matrix.smul_single, smul_eq_mul, mul_one]
 
 theorem actM_unitOp (act : Mat p q →ₗ[ℂ] Module.End ℂ V) (Z : Mat p q) :
     actM (unitOp e act) (Matrix.reindex e e Z) = act Z := by

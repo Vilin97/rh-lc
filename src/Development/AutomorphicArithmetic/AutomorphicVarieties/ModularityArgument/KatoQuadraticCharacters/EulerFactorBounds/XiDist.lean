@@ -319,7 +319,8 @@ theorem UpperTheory.V.Z.Kato.Nb.sXiDist :
   obtain ⟨-, -, -, -, a5, -⟩ := sApi Ω ε X l n
   obtain ⟨c1, -, -, c4, -⟩ := sCls Ω ε X l n
   simp only [Xi]
-  rw [map_sub, sub_eq_zero, map_sum, map_sum, eq_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sub, sub_eq_zero, map_sum, map_sum, eq_comm]
   refine Eq.trans ?_ (Finset.sum_fiberwise_of_maps_to (g := red h)
     (t := Finset.univ.filter (fun m : GL (Fin 2) (ZMod (N * M₀)) =>
       Cnd l N g (m : Matrix (Fin 2) (Fin 2) (ZMod (N * M₀))) ∧ P (Matrix.GeneralLinearGroup.det m))) ?_ _)
@@ -338,7 +339,8 @@ theorem UpperTheory.V.Z.Kato.Nb.sXiDist :
       (y ᵥ* cD N (l * M₀) (m' : Matrix (Fin 2) (Fin 2) (ZMod (N * (l * M₀))))) : X.K))) (wt_red dl h m' w u)
     rewrite [map_sub, sub_eq_zero, (Finset.mem_filter.mp hm').2] at e
     exact e)) ?_
-  rw [← map_sum, ← Finset.smul_sum, sum_fibre cop hl h x y hB.2 m hm10 (fun x' y' => clsK X l n (slD X N (a x' y' : X.K))),
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum, ← Finset.smul_sum, sum_fibre cop hl h x y hB.2 m hm10 (fun x' y' => clsK X l n (slD X N (a x' y' : X.K))),
     map_smul, map_smul]
   congr 1
   rw [← sub_eq_zero, ← map_sub]

@@ -248,7 +248,8 @@ def gramMat (G : Matrix (Fin r) (Fin r) E) (v : Fin r → Fin r → E) : Matrix 
 theorem gram_basisMat (τ : E →+* ℂ) (G : Matrix (Fin r) (Fin r) E) (v : Fin r → Fin r → E) :
     gram τ G (basisMat τ v) = (gramMat G v).map τ := by
   ext a b
-  simp only [ReciprocityTheory.ChartRestriction.G.FD.gram, gramMat, basisMat, hermC, herm, ReciprocityTheory.ChartRestriction.G.FD.col, Matrix.of_apply, Matrix.map_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [ReciprocityTheory.ChartRestriction.G.FD.gram, gramMat, basisMat, hermC, herm, ReciprocityTheory.ChartRestriction.G.FD.col, Matrix.of_apply, Matrix.map_apply,
     Matrix.transpose_apply, map_sum, map_mul, cc, NumberField.IsCMField.complexEmbedding_complexConj]
 
 omit [NumberField E] [IsCMField E] in

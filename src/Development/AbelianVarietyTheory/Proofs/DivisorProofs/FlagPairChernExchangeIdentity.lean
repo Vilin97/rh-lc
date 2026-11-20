@@ -67,7 +67,8 @@ theorem bracket_eq (Z : ITh)
   have hterm : ∀ i, Z.capDeg (Dd i) (aeval (fun j => Z.cD (Dd j)) (G i) * Q) -
       Z.capDeg (Dd i) (aeval (fun j => Z.cD (Dd j)) (G' i) * Q) = ∑ j, t i j := by
     intro i
-    rw [← map_sub, ← sub_mul, ← map_sub, hG i, map_sum, Finset.sum_mul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sub, ← sub_mul, ← map_sub, hG i, map_sum, Finset.sum_mul, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [_root_.map_mul (aeval (fun j => Z.cD (Dd j))) (X j) (H i j), aeval_X, mul_assoc]
   have hsw : ∀ i j, t i j = - t j i := by
@@ -90,7 +91,8 @@ namespace GlobalTheory.FlagRankTwo
 
 theorem aeval_gs {n : ℕ} {S : Type*} [CommRing S] (f : Fin n → S) (k : ℕ) (x y : MvPolynomial (Fin n) S) :
     aeval f (gs k x y) = gs k (aeval f x) (aeval f y) := by
-  simp [gs, map_sum, map_mul, map_pow]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [gs, map_sum, map_mul, map_pow]
 
 theorem core (Z : ITh)
     (hc : ∀ (E E' : Z.VDiv) (a : Z.Ch), Z.capDeg E (Z.cD E' * a) = Z.capDeg E' (Z.cD E * a))

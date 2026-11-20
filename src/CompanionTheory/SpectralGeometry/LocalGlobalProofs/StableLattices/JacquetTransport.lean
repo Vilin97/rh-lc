@@ -158,7 +158,8 @@ theorem block_raise (hS : StepChar) (hT : TensDecomp) (P Q : GMod n) (d : Fin 3 
   have hΦa : ∀ u, Φ u = ∑ a, θ (ι a) (incl (u a)) := fun u => by simp [Φ, LinearMap.sum_apply]
   have hΦ : ∀ a b u, Φ (tensE M a b u) = bops Q d h k a b (Φ u) := by
     intro a b u
-    rw [hΦa, hΦa, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hΦa, hΦa, map_sum]
     have e1 : ∀ p, θ (ι p) (incl (tensE M a b u p)) =
         θ (ι p) (P.E (ι a) (ι b) (incl (u p))) + if p = a then θ (ι a) (incl (u b)) else 0 := by
       intro p
@@ -188,7 +189,8 @@ theorem block_raise (hS : StepChar) (hT : TensDecomp) (P Q : GMod n) (d : Fin 3 
   obtain ⟨r, _, ⟨u, rfl⟩, hw0, hwq⟩ := GlobalTheory.T.tensor_quotient_quantum_determinant_eigen hS hT M χ' hchar (bops Q d h k) (glRel_inj Q.gl hι) Φ hΦ hΦne
   refine ⟨Φ u, hw0, ?_, (e' r).1, ?_⟩
   · intro a b hab
-    rw [hΦa, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hΦa, map_sum]
     refine Finset.sum_eq_zero fun p _ => ?_
     rw [hθ, (hincl (u p)).1 a b hab, map_zero, zero_add]
     split_ifs with hp
@@ -221,7 +223,8 @@ theorem block_raise (hS : StepChar) (hT : TensDecomp) (P Q : GMod n) (d : Fin 3 
         have hti : L t = i := (Finset.mem_filter.1 ht).2
         have : t ≠ (e' r).1 := fun h0 => hik (by rw [← hti, h0]; exact (e' r).2)
         simp [Pi.single_apply, this]
-      rw [h8, hΦa, map_sum, Finset.smul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [h8, hΦa, map_sum, Finset.smul_sum]
       refine Finset.sum_congr rfl fun p _ => ?_
       have h9 := qdet_lin (θ (ι p)) (bops P d h i) (bops Q d h i) (fun a b y => by
         simp only [bops]
@@ -411,7 +414,8 @@ theorem component_zero_matrix_unit (i a b : Fin n) (u : (step X z).V) :
 
 theorem component_zero_matrix_action (i : Fin n) (Y : Matrix (Fin n) (Fin n) ℂ) (u : (step X z).V) :
     comp0 X z i (actM (step X z).E Y u) = actM X.E Y (comp0 X z i u) + ∑ b, Y i b • comp0 X z b u := by
-  simp only [actM, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, component_zero_matrix_unit, smul_add,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [actM, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, component_zero_matrix_unit, smul_add,
     Finset.sum_add_distrib]
   congr 1
   simp [smul_ite]
@@ -425,7 +429,8 @@ theorem coordB_Eb (p a b : Fin n) (u : (step X z).V) :
     rw [Matrix.mul_apply, Matrix.one_apply] at this
     exact this
   rw [coordB_apply, coordB_apply]
-  simp only [Eb, component_zero_matrix_action, smul_add, Finset.sum_add_distrib, map_sum, map_smul, hY]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Eb, component_zero_matrix_action, smul_add, Finset.sum_add_distrib, map_sum, map_smul, hY]
   congr 1
   simp only [Finset.smul_sum, smul_smul]
   rw [Finset.sum_comm]
@@ -513,7 +518,8 @@ theorem E_eq_sum (B : GradBasis A) (a b : Fin n) :
           exact Finset.sum_congr rfl fun p _ => Finset.sum_congr rfl fun q _ => by ring
   rw [← actM_single X.E a b, hM]
   change actML X.E _ = _
-  simp only [map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul]
   rfl
 
 theorem W_E (F : Filt X A) (B : GradBasis A) (a b : Fin n) {φ : Module.Dual ℂ X.V} (hφ : φ ∈ W F) :
@@ -521,7 +527,8 @@ theorem W_E (F : Filt X A) (B : GradBasis A) (a b : Fin n) {φ : Module.Dual ℂ
   have e : (X.E a b).dualMap φ = ∑ p, ∑ q, (B.Ui p a * B.U b q) • (Eb X B p q).dualMap φ := by
     change dualL X.V (X.E a b) φ = _
     rw [E_eq_sum B a b]
-    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply]
     rfl
   rw [e]
   exact Submodule.sum_mem _ fun p _ => Submodule.sum_mem _ fun q _ => Submodule.smul_mem _ _ (W_Eb F B p q hφ)
@@ -532,7 +539,8 @@ theorem stable_act (X : GMod n) (T : Submodule ℂ (Module.Dual ℂ X.V)) (hT : 
     (Y : Matrix (Fin n) (Fin n) ℂ) {φ : Module.Dual ℂ X.V} (hφ : φ ∈ T) : (actM X.E Y).dualMap φ ∈ T := by
   have e : (actM X.E Y).dualMap φ = ∑ a, ∑ b, Y a b • (-(contraE X a b φ)) := by
     change dualL X.V (actM X.E Y) φ = _
-    simp only [actM, map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, contraE, LinearMap.neg_apply, neg_neg]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [actM, map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, contraE, LinearMap.neg_apply, neg_neg]
     rfl
   rw [e]
   exact Submodule.sum_mem _ fun a _ => Submodule.sum_mem _ fun b _ => Submodule.smul_mem _ _ (T.neg_mem (hT a b φ hφ))
@@ -613,7 +621,8 @@ theorem transport : Transport := by
       refine (hΨ1 u).symm.trans ?_
       rw [LinearMap.sum_apply]
       simp only [LinearMap.dualMap_apply, LinearMap.comp_apply]
-      rw [← map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← map_sum]
       refine congrArg Ψ ?_
       let u' : stepSub X (χ s) := u
       exact (Finset.univ_sum_single (u' : Fin n → X.V)).symm

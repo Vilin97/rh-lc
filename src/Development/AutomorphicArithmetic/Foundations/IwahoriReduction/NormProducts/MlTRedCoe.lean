@@ -38,7 +38,8 @@ private theorem UpperTheory.Kd.K4.mlT_topSum (hA : SApi) (hI : SInvApi) {Ω : Ty
   refine ⟨fun σ hσ => ?_, fun σ hσ τ hτ => ?_, ?_⟩
   · exact (hI Ω ε X l N w n).2.2.2.2.1 ι S _ fun i hi => (h i hi).inv σ hσ
   · have e : (∑ i ∈ S, z i σ) + X.galB l σ (∑ i ∈ S, z i τ) = ∑ i ∈ S, (z i σ + X.galB l σ (z i τ)) := by
-      rw [map_sum, Finset.sum_add_distrib]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Finset.sum_add_distrib]
     rw [e]
     exact hsum ι S _ _ fun i hi => (h i hi).coc σ hσ τ hτ
   · choose! T hT using fun i hi => (h i hi).loc
@@ -61,7 +62,8 @@ private theorem UpperTheory.Kd.K4.mlT_shSum {Ω : Type} [Field Ω] [Algebra ℚ 
     (M : ℕ) {ι : Type} (S : Finset ι) (z : ι → (Ω ≃ₐ[ℚ] Ω) → X.Fn l) :
     shB X l M (fun σ => ∑ i ∈ S, z i σ) = ∑ i ∈ S, shB X l M (z i) := by
   funext s y
-  simp [shB, Finset.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [shB, Finset.sum_apply, map_sum]
 
 private theorem UpperTheory.Kd.K4.mlT_pushSum {Γ : Type} [Group Γ] {B A M ι : Type} [Fintype B] [DecidableEq A] [AddCommMonoid M]
     (π : B → A) (S : Finset ι) (f : ι → Γ → B → M) :

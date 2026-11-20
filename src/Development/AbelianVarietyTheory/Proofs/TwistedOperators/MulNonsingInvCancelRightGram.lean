@@ -66,11 +66,13 @@ theorem quad_basis {ι A : Type} [Fintype ι] [DecidableEq ι] [Ring A] [Algebra
     funext b
     simp [Finset.sum_apply, Pi.single_apply]
   have e1 : ∀ l, y ((U * Δ * Uᴴ) *ᵥ Pi.single l 1) = ∑ a, U l a • y ((U * Δ) *ᵥ Pi.single a 1) := fun l => by
-    rw [← mulVec_mulVec, e Uᴴ, mulVec_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← mulVec_mulVec, e Uᴴ, mulVec_sum, map_sum]
     refine Finset.sum_congr rfl fun a _ => ?_
     rw [mulVec_smul, map_smulₛₗ, conjTranspose_apply, star_def, conj_conj]
   have e2 : ∀ k, x (U *ᵥ Pi.single k 1) = ∑ a, U a k • x (Pi.single a 1) := fun k => by
-    rw [e, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, map_sum]
     simp only [map_smul]
   simp only [e1, e2]
   calc _ = ∑ k, ∑ a, (X * U) k a • (x (Pi.single k 1) * c • y ((U * Δ) *ᵥ Pi.single a 1)) := by
@@ -119,7 +121,8 @@ theorem exists_der {ι : Type} [Fintype ι] [DecidableEq ι] (H : Matrix ι ι �
       simpa only [LinearMap.add_apply, map_add, Module.End.mul_apply, hd, LinearMap.smul_apply, map_smul,
         Module.End.one_apply] using this))
   refine ⟨d, x, y, hd, fun v => by simpa using hsm (-1) v, hx, hy, c1, c2, c3, fun X f => ?_⟩
-  simp only [nOp, xOp, dOp, LinearMap.sum_apply, LinearMap.smul_apply, Module.End.mul_apply, map_sum, hx, hy,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [nOp, xOp, dOp, LinearMap.sum_apply, LinearMap.smul_apply, Module.End.mul_apply, map_sum, hx, hy,
     LinearMap.sub_apply, LinearMap.add_apply]
   refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun l _ => ?_
   simp only [← hd, ← map_smul, ← map_add, ← map_sub]
@@ -469,7 +472,8 @@ theorem lift_quad {M N ι κ : Type} [AddCommGroup M] [Module ℂ M] [AddCommGro
     E ((∑ i, ∑ k, Y i k • ∑ j, (r i j * l k j + if i = k then (1 / 2 : ℂ) • 1 else 0)) P) =
       (∑ i, ∑ k, Y i k • ∑ j, R i j * L k j) (E P) +
         (∑ i, ∑ k, Y i k * ∑ _j : κ, if i = k then (1 / 2 : ℂ) else 0) • E P := by
-  simp only [LinearMap.sum_apply, LinearMap.smul_apply, LinearMap.add_apply, Module.End.mul_apply, map_sum, map_smul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [LinearMap.sum_apply, LinearMap.smul_apply, LinearMap.add_apply, Module.End.mul_apply, map_sum, map_smul,
     map_add, hr, hl, Finset.sum_smul, mul_smul, ← Finset.sum_add_distrib, ← smul_add]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun k _ => congrArg _ (Finset.sum_congr rfl fun j _ => ?_)
   split_ifs <;> simp

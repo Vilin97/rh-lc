@@ -50,7 +50,8 @@ theorem exists_perp_matrix {F E : Type} [Field F] [NumberField F] [Field E] [Num
   · have h : ι (W'.frame j) ∈ LinearMap.ker (W.hT x) := hr ▸ LinearMap.mem_range_self _ _
     exact (hd x (ι (W'.frame j))).trans h
   · refine (hL _).trans (iff_of_eq (congrArg (· ∈ W.L0) ?_))
-    simp only [map_sum, map_smul, Matrix.mulVec, dotProduct, Matrix.of_apply, Finset.sum_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, Matrix.mulVec, dotProduct, Matrix.of_apply, Finset.sum_smul]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun j _ => ?_
     conv_lhs => rw [← W.frame.sum_repr (ι (W'.frame j)), Finset.smul_sum]
@@ -67,7 +68,8 @@ theorem perp_matrix_map {F E : Type} [Field F] [NumberField F] [Field E] [Number
     exact (h.2.2.2 τ _).symm
   refine ⟨by rw [e, ← hB, Matrix.map_mul, Matrix.map_mul], funext fun j => ?_⟩
   have h1 := congrArg (fun z => star (τ z)) (hx j)
-  simp only [hE, Formalism.UG.hform, map_sum, map_mul, star_sum, star_mul', map_zero, star_zero] at h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hE, Formalism.UG.hform, map_sum, map_mul, star_sum, star_mul', map_zero, star_zero] at h1
   simp only [Matrix.mulVec, dotProduct, Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.map_apply,
     Finset.sum_mul, Pi.zero_apply]
   rw [← h1]

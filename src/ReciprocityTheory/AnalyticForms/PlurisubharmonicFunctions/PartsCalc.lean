@@ -225,7 +225,8 @@ theorem mdisc_update_expand {D : ℕ} (A : Fin D → Matrix (Fin D) (Fin D) ℂ)
     rw [MultilinearMap.toLinearMap_apply, hM]
   rw [h]
   conv_lhs => rw [hX]
-  simp only [map_sum, map_smul, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, smul_eq_mul]
   simp only [← h]
 
 theorem mdisc_sum_row {D : ℕ} (A : Fin D → Matrix (Fin D) (Fin D) ℂ) (p q : Fin D) (hpq : p ≠ q)

@@ -12,7 +12,8 @@ theorem mvPowerSeries_subst_linearForm {σ τ : Type} [Fintype σ] {K : Type} [F
     (ha : MvPowerSeries.HasSubst a) (α : σ → K) :
     MvPowerSeries.subst a (∑ j, MvPowerSeries.C (α j) * MvPowerSeries.X j : MvPowerSeries σ K) =
       ∑ j, MvPowerSeries.C (α j) * a j := by
-  rw [← MvPowerSeries.coe_substAlgHom ha, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← MvPowerSeries.coe_substAlgHom ha, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [MvPowerSeries.coe_substAlgHom ha, MvPowerSeries.subst_mul ha, MvPowerSeries.subst_X ha, MvPowerSeries.subst_C]
 

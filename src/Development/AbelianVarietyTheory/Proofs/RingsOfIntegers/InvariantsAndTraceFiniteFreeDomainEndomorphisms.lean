@@ -44,7 +44,8 @@ theorem invariants_and_trace_of_card_eq_finrank :
     simp only [M, Matrix.of_apply, Matrix.map_apply, Algebra.leftMulMatrix_eq_repr_mul]
     rw [← map_mul]
     conv_lhs => rw [← b.sum_repr (x * b j)]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, Algebra.smul_def, mul_comm]
   have key2 : ∀ x : R, M.adjugate * (Matrix.diagonal (fun g : G => g.1 x) * M) =

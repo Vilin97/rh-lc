@@ -59,7 +59,8 @@ theorem exists_coord : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Num
       (continuous_apply i).comp (continuous_const.matrix_mulVec (continuous_apply ρ)))
   · refine Eq.trans ?_ (form_eq (A ρ) (fun i => θ ρ (X 0 i)) (fun i => θ ρ (Y 0 i)))
     rw [hA]
-    simp only [hR, Formalism.UG.hform, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hR, Formalism.UG.hform, map_sum, map_mul]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
     rw [GlobalTheory.Mem.VolInfIso.infEmb_sigR σ (τ ρ) (θ ρ) h (hθ ρ)]
     congr 2

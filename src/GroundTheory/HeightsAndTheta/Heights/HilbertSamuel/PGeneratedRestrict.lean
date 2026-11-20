@@ -79,7 +79,8 @@ theorem cechD_cechMap {M N : Type*} [AddCommGroup M] [Module (MRingOver S ι) M]
     [Module (MRingOver S ι) N] (g : M →ₗ[MRingOver S ι] N) (n : ℕ) (f : KH.CechC S ι M n) :
     KH.cechD S ι N n (KH.cechMap S ι g n f) = KH.cechMap S ι g (n + 1) (KH.cechD S ι M n f) := by
   funext I
-  simp only [KH.cechD, KH.cechMap, LinearMap.pi_apply, LinearMap.comp_apply, LinearMap.proj_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [KH.cechD, KH.cechMap, LinearMap.pi_apply, LinearMap.comp_apply, LinearMap.proj_apply,
     LinearMap.sum_apply, map_sum]
   refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun i _ => ?_
   split_ifs with h
@@ -125,7 +126,8 @@ theorem GeneratedRestrict.proof : GeneratedRestrict.Statement := by
     · exact locMap_mem_locPart hVW _ ((Submodule.mem_pi.mp hzc) J (Set.mem_univ _))
     · rw [cechD_cechMap, LinearMap.mem_ker.mp hzd, map_zero]
   · have hc : ∀ j, KH.cechMap S ι (quotMap hVW) 0 (z j) I = locMap _ (quotMap hVW) (z j I) := fun j => rfl
-    simp only [hc, ← locMap_mul, ← map_sum, h1, locMap_one]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hc, ← locMap_mul, ← map_sum, h1, locMap_one]
 
 end
 

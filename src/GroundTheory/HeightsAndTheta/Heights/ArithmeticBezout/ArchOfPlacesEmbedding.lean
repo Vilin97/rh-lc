@@ -78,7 +78,8 @@ theorem conjNorm_norm_star (h : HermNorm n) (u : Fin n → ℂ) :
   congr 1
   refine Finset.sum_congr rfl fun i _ => ?_
   have : ((h.mat.map (starRingEnd ℂ)) *ᵥ star u) i = starRingEnd ℂ ((h.mat *ᵥ u) i) := by
-    simp [Matrix.mulVec, dotProduct, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Matrix.mulVec, dotProduct, map_sum, map_mul]
   rw [this, Complex.norm_conj]
 
 open Classical in

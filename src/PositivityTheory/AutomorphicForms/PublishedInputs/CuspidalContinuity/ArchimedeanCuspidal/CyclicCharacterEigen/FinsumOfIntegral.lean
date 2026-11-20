@@ -97,7 +97,8 @@ theorem oneL_eq : TR.oneL ℚ 3 = ∑ i : Fin 3, TR.toL (Matrix.single i i 1) :=
   rfl
 
 theorem lie_oneL (v : InfinitePlace ℚ) : TR.lie ℚ 3 (TR.oneL ℚ 3) = ∑ i : Fin 3, TR.Eop v i i := by
-  rw [oneL_eq, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [oneL_eq, map_sum]
   simp only [Eop_eq v]
 
 variable {V : Submodule ℂ (Ad3.G3 → ℂ)} (hV : Ad3.WhA V)
@@ -142,14 +143,17 @@ theorem trace_form (htr : ∀ W (hW : W ∈ V), (∑ i, Ad3.EA i i) ⟨W, hV.arc
   obtain ⟨v⟩ : Nonempty (InfinitePlace ℚ) := inferInstance
   have h1 : ∑ i, DV hV i i W = 0 := by
     refine incl_injective hV ?_
-    rw [map_sum, map_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero]
     simp only [incl_DV]
     rw [← LinearMap.sum_apply]
     exact htr W.1 W.2
   refine (Fb.smEq ℚ 3).injective ?_
-  rw [lie_oneL v, LinearMap.sum_apply, map_sum, map_zero]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [lie_oneL v, LinearMap.sum_apply, map_sum, map_zero]
   simp only [smEq_Eop, LinearEquiv.apply_symm_apply]
-  rw [← Finset.sum_congr rfl fun i _ => hU W i i, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Finset.sum_congr rfl fun i _ => hU W i i, ← map_sum]
   convert map_zero U
   exact h1
 
@@ -364,7 +368,8 @@ private theorem lie_eq_sum (X : Matrix (Fin a) (Fin a) (TR.Rinf F)) :
     simp [Matrix.sum_apply, Matrix.single_apply, ite_and, Pi.single_apply, ite_apply]
   change L X = _
   conv_lhs => rw [e]
-  simp only [map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul]
   rfl
 
 private theorem rt_Eop (y : GL (Fin a) (TR.Rinf F)) (v : InfinitePlace F) (i j : Fin a) :
@@ -651,7 +656,8 @@ theorem phi_loc (D : Ad3.Dat) (w : Ad3.Pl) (hg : UpperTheory.V.Af.Smo.GoodAt w (
       simp only [Submodule.coe_sum, Submodule.coe_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
       exact h1
     have h2 := congrArg (fun W' : V => (U W' : Ad3.G3 → ℂ) g) hsum
-    simp only [map_sum, map_smul, Submodule.coe_sum, Submodule.coe_smul, Finset.sum_apply, Pi.smul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, Submodule.coe_sum, Submodule.coe_smul, Finset.sum_apply, Pi.smul_apply,
       smul_eq_mul] at h2
     rw [finsum_tj_mul w j (fun c => (U W : Ad3.G3 → ℂ) (g * fg c.out)), ← h2]
     refine Finset.sum_congr rfl fun c _ => ?_

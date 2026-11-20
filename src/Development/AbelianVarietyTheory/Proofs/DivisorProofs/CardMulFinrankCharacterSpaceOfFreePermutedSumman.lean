@@ -26,7 +26,8 @@ theorem card_mul_finrank_eig_of_free : ∀ (K Γ V X : Type) [Field K] [CharZero
     · intro v
       rw [mem_eig]
       intro g
-      simp only [P, LinearMap.smul_apply, LinearMap.sum_apply, map_smul, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [P, LinearMap.smul_apply, LinearMap.sum_apply, map_smul, map_sum]
       rw [smul_comm]
       congr 1
       rw [Finset.smul_sum]
@@ -41,7 +42,8 @@ theorem card_mul_finrank_eig_of_free : ∀ (K Γ V X : Type) [Field K] [CharZero
       simp only [P, LinearMap.smul_apply, LinearMap.sum_apply, hv, smul_smul, ← Units.val_mul, inv_mul_cancel, Units.val_one, one_smul, Finset.sum_const, Finset.card_univ]
       rw [← Nat.cast_smul_eq_nsmul K, smul_smul, ← hn, inv_mul_cancel₀ hn0, one_smul]
   have htr : LinearMap.trace K V P = n⁻¹ * (finrank K V : K) := by
-    simp only [P, map_smul, map_sum, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [P, map_smul, map_sum, smul_eq_mul]
     congr 1
     rw [Finset.sum_eq_single 1]
     · simp [LinearMap.trace_one]

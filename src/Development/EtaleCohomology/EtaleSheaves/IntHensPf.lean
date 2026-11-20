@@ -13,7 +13,8 @@ theorem mem_sub (A B : Type) [CommRing A] [CommRing B] [Algebra A B] (m : Ideal 
   refine ⟨∑ i, ⟨c i, hc i⟩ * algebraMap A S (a i), Ideal.sum_mem _ fun i _ =>
     Ideal.mul_mem_left _ _ (Ideal.mem_map_of_mem _ (ha i)), ?_⟩
   change S.val _ = _
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_mul, smul_eq_mul, ← hag]; rfl
 

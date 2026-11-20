@@ -92,7 +92,8 @@ theorem E_nabla (B : FB R d O) (h : PS k 2 d) (hax : ev (n := 1) ![0, pt k d 0] 
   have hb : HasSubst (bE k h) := hasSubst_of_constantCoeff_zero hc
   have hfm : subst (bE k h) (fm k h u) = 0 := by
     unfold fm
-    rw [← coe_substAlgHom hb, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← coe_substAlgHom hb, map_sum]
     refine Finset.sum_eq_zero fun i _ => ?_
     rw [map_mul, map_sub, coe_substAlgHom hb, subst_X hb, E_liftX k h hax]
     simp [bE]
@@ -102,7 +103,8 @@ theorem E_nabla (B : FB R d O) (h : PS k 2 d) (hax : ev (n := 1) ![0, pt k d 0] 
       exact (Dof_X k (B.FK k) u j).symm
     · rw [cf_inr, Pi.zero_apply, map_zero, add_zero, E_liftX k h hax]
       rfl
-  rw [nabla_eq, vf, ← coe_substAlgHom hb, map_sub, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [nabla_eq, vf, ← coe_substAlgHom hb, map_sub, map_sum]
   simp only [map_mul, coe_substAlgHom hb, hfm, hE, mul_zero, zero_mul, sub_zero]
   unfold Dof
   simp only [LogPf.pderiv_subst hc, Finset.mul_sum]
@@ -135,7 +137,8 @@ theorem E_nablaPoly (B : FB R d O) (h : PS k 2 d) (hax : ev (n := 1) ![0, pt k d
     subst (bE k h) (nablaPoly k B h m u P G) = DpolyOf (B.FK k) u P (subst (bE k h) G) := by
   have hb : HasSubst (bE k h) := hasSubst_lemma (bE_const k h hax)
   unfold nablaPoly DpolyOf DmonOf
-  rw [← coe_substAlgHom hb, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← coe_substAlgHom hb, map_sum]
   refine Finset.sum_congr rfl (fun n _ => ?_)
   rw [map_mul, coe_substAlgHom hb, mvPowerSeries_subst_C hb, E_foldr B h hax m u n]
 

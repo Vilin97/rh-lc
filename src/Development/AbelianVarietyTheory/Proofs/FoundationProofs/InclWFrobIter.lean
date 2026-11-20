@@ -173,7 +173,8 @@ theorem cf_sum {J : Type} [Fintype J] (o : Module.Basis J Z O) (x : O ⊗[Z] R) 
 theorem cf_basis {J : Type} [Fintype J] (o : Module.Basis J Z O) (w : J → R) (j : J) :
     cf (o.coord j) (∑ k, o k ⊗ₜ[Z] w k) = w j := by
   classical
-  simp [map_sum, cf_tmul, Finsupp.single_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, cf_tmul, Finsupp.single_apply]
 
 end Comp
 

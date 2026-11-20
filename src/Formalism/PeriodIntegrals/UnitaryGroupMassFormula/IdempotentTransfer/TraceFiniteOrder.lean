@@ -41,7 +41,8 @@ lemma trace_finite_order (f : Module.End K W) (m : ℕ) (hm : 0 < m) (hf : f ^ m
   set B : Matrix (Fin (finrank K W)) (Fin (finrank K W)) ℂ := σ.mapMatrix A with hBdef
   have htr : σ (LinearMap.trace K W f) = B.trace := by
     rw [LinearMap.trace_eq_matrix_trace K b, hBdef]
-    simp [Matrix.trace, map_sum, RingHom.mapMatrix_apply, hAdef]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Matrix.trace, map_sum, RingHom.mapMatrix_apply, hAdef]
   have hApow : ∀ k : ℕ, A ^ k = LinearMap.toMatrix b b (f ^ k) := by
     intro k
     induction k with

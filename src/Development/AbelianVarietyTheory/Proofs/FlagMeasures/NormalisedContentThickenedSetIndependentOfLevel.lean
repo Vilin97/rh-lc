@@ -90,7 +90,8 @@ variable {E : Type} [CommRing E] [Algebra F E] [TopologicalSpace E]
 theorem cT_mul (L : LocE F E) {m : ℕ} (A B : Matrix (Fin m) (Fin m) E) :
     cT L (A * B) = cT L B * cT L A := by
   ext i j
-  simp [cT, Matrix.mul_apply, map_sum, mul_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [cT, Matrix.mul_apply, map_sum, mul_comm]
 
 theorem rmul_rmul {n m : ℕ} (x : Fin m → Fin n → E) (A B : Matrix (Fin m) (Fin m) E) :
     rmul (rmul x A) B = rmul x (A * B) := by
@@ -109,7 +110,8 @@ theorem gramT_rmul (L : LocE F E) {n m : ℕ} (Hm : Matrix (Fin n) (Fin n) E) (x
     ring
   have h2 : ∀ (y : Fin n → E) (a : Fin m), hf L Hm y (rmul x A a) = ∑ k, L.cj (A k a) * hf L Hm y (x k) := by
     intro y b
-    simp only [hf, rmul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Finset.mul_sum, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hf, rmul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Finset.mul_sum, map_sum, map_mul]
     rw [Finset.sum_congr rfl fun i _ => Finset.sum_comm, Finset.sum_comm]
     refine Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => ?_
     ring

@@ -15,7 +15,8 @@ theorem adele_eq_sInf_add_sFin {E : Type} [Field E] [NumberField E] [IsTotallyCo
 theorem psiN_split : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (n : ℕ) (u : GA E n), GlobalTheory.JSW.psiN u = psiInf (sdM ((GeneralLinearGroup.map (pInf E) u : GL (Fin n) (Cinf E)) : Matrix (Fin n) (Fin n) (Cinf E))) * psiFin (GlobalTheory.Whittaker.superDiag (GeneralLinearGroup.map (pFin E) u)) := by
   intro E _ _ _ n u
   have h : GlobalTheory.Whittaker.superDiag u = sInf E (sdM ((GeneralLinearGroup.map (pInf E) u : GL (Fin n) (Cinf E)) : Matrix (Fin n) (Fin n) (Cinf E))) + sFin E (GlobalTheory.Whittaker.superDiag (GeneralLinearGroup.map (pFin E) u)) := by
-    simp only [GlobalTheory.Whittaker.superDiag, sdM, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [GlobalTheory.Whittaker.superDiag, sdM, map_sum]
     rw [← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [← Finset.sum_add_distrib]

@@ -78,7 +78,8 @@ theorem exists_dual_family_hom : ∀ (D : D7), (∃ (r : ℕ) (a a' : Fin r → 
       z t = ∑ i, (∑ b, z b * u' i b) * D.host.conj (u i t) := by
     intro z t
     have := congrArg D.host.conj (eu (fun b => D.host.conj (z b)) t)
-    simpa only [map_sum, map_mul, conj_conj] using this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa only [map_sum, map_mul, conj_conj] using this
   have hT : ∀ j i k, hYY D x (Y' (j, i, k)) = Algebra.trace D.host.K D.host.E
       ((∑ b, (∑ c, x c b * D.host.conj (v' j c)) * u' i b) * D.host.conj (a' k)) := by
     intro j i k

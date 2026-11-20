@@ -88,7 +88,8 @@ lemma coeff_ev (ρ : Fin r) (n : ℕ) (F : MvPolynomial (Fin (N + 1) × Fin r) �
     AddMonoidAlgebra.coeff (ev p ρ F) m' = AddMonoidAlgebra.coeff F (ext n ρ m') := by
   classical
   conv_lhs => rw [F.as_sum]
-  rw [map_sum, MvPolynomial.coeff_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, MvPolynomial.coeff_sum]
   simp only [ev_monomial]
   rw [Finset.sum_eq_single (ext n ρ m')]
   · rw [if_pos (fun c hc => by rw [ext_last, if_neg hc]), res_ext, MvPolynomial.coeff_monomial, if_pos rfl]
@@ -162,7 +163,8 @@ lemma glAct_freezeSub (LL : Letters N) (n : ℕ) (ρ c : Fin r) (hc : c ≠ ρ) 
     glAct p (LL.snoc n) (N + 1) c ρ (freezeSub p LL ρ v) = 0 := by
   rcases v with ⟨i, c0⟩
   by_cases hv : LL.vec i <;> by_cases hc0 : c0 = ρ <;>
-    simp [freezeSub, hv, hc0, glAct_mul, glAct_X, map_sum, map_sub, Ne.symm hc, hc, mul_ite,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [freezeSub, hv, hc0, glAct_mul, glAct_X, map_sum, map_sub, Ne.symm hc, hc, mul_ite,
       Finset.sum_add_distrib, Finset.sum_ite_eq', Finset.sum_ite_eq] <;> ring
 
 lemma glAct_aeval_freezeSub (LL : Letters N) (n : ℕ) (ρ c : Fin r) (hc : c ≠ ρ)
@@ -227,7 +229,8 @@ lemma hom_aeval (LL : Letters N) (ρ : Fin r) (f : MvPolynomial (Fin N × Fin r)
     (hf : f ∈ Pol p r LL) :
     IsWeightedHomogeneous (wL N r) (aeval (freezeSub p LL ρ) f) LL.total := by
   have hsupp := (MvPolynomial.mem_restrictSupport_iff ℚ_[p]).1 hf
-  rw [f.as_sum, map_sum, ← MvPolynomial.mem_weightedHomogeneousSubmodule]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [f.as_sum, map_sum, ← MvPolynomial.mem_weightedHomogeneousSubmodule]
   refine Submodule.sum_mem _ fun m hm => ?_
   rw [MvPolynomial.mem_weightedHomogeneousSubmodule, MvPolynomial.aeval_monomial]
   have hdeg : MultiDeg LL m := hsupp (Finset.mem_coe.2 hm)

@@ -153,8 +153,10 @@ theorem idelesCohomologySum_surjective {n : ℕ} (hn : 1 ≤ n) :
       DirectSum.of (fun v => cohomology (placeRep L v) n) (Sum.inr v.1)
       ((cohomologyMap (sProj (L := L) S (Sum.inr (Sum.inl v))) n).hom y :
         cohomology (Rep.of (finiteUnitsAboveRep L v.1)) n), ?_⟩
-  rw [map_add, map_sum, map_sum]
-  conv_rhs => rw [hy, map_sum, Finset.sum_map, Fintype.sum_sum_type]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_add, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_rhs => rw [hy, map_sum, Finset.sum_map, Fintype.sum_sum_type]
   congr 1
   · refine Finset.sum_congr rfl fun v _ => ?_
     exact (subtype_sEmbInf S n v _).symm

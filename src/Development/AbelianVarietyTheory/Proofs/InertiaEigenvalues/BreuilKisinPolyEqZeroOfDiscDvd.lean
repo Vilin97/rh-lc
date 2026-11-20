@@ -38,7 +38,8 @@ theorem coeff_mul_disc (l : ℕ) {R : Type} [CommRing R] (ρ : ℝ≥0)
     rw [nsmul_eq_mul, Nat.cast_pow, mul_comm]
     exact this
   refine ((isUnit_l_disc l (0 : R) 1).pow k).mul_left_cancel ?_
-  rw [← Nat.cast_pow, ← nsmul_eq_mul, ← nsmul_eq_mul, ← map_nsmul, ← mul_smul_comm, h', ← map_mul, h1,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Nat.cast_pow, ← nsmul_eq_mul, ← nsmul_eq_mul, ← map_nsmul, ← mul_smul_comm, h', ← map_mul, h1,
     coeff_mul, map_sum, Finset.smul_sum]
   refine Finset.sum_congr rfl fun p _ => ?_
   rw [← mul_smul_comm, ← map_nsmul, h', h1, map_mul]

@@ -117,8 +117,10 @@ theorem cup_tmul_injective : ∀ (K : Type) [Field K] (X Y : Over (Sp K)), IsSep
   choose y' hy' using fun i ↦ H1.mk_surjective G (rV.pull1 (y i))
   have hz : H2.mk E (∑ i, cupZ E (n₁.pullbackOneCocycle (x' i)) (n₂.pullbackOneCocycle (y' i))) = 0 := by
     have h0 := congrArg rE.pull2 hsum
-    rw [map_zero, map_sum] at h0
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_zero, map_sum] at h0
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Eq.trans (Finset.sum_congr rfl fun i _ ↦ ?_) h0
     rw [CoefMap.pullCohomologyTwo_cup, key₁, key₂, ← hx', ← hy']
     rfl
@@ -132,7 +134,8 @@ theorem cup_tmul_injective : ∀ (K : Type) [Field K] (X Y : Over (Sp K)), IsSep
   let eU := LinearEquiv.ofBijective rU.pull1 hbU
   let eV := LinearEquiv.ofBijective rV.pull1 hbV
   apply (TensorProduct.congr eU eV).injective
-  rw [map_sum, map_zero]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_zero]
   exact e
 
 end GlobalTheory.Kunneth

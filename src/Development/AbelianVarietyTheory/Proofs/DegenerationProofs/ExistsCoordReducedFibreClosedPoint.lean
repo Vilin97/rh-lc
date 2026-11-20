@@ -27,7 +27,8 @@ theorem exists_local_generators {K B : Type} [Field K] [CommRing B] [Algebra K B
   have hle : m ≤ J ⊔ m • m := by
     intro b hb
     have h1 : AugCot.d χ (b - ∑ i, e.repr (AugCot.d χ b) i • (t i : B)) = 0 := by
-      rw [map_sub, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, map_sum]
       simp only [map_smul, AugCot.d_coe]
       have := e.sum_repr (AugCot.d χ b)
       rw [sub_eq_zero]
@@ -37,7 +38,8 @@ theorem exists_local_generators {K B : Type} [Field K] [CommRing B] [Algebra K B
     have h2 : χ (b - ∑ i, e.repr (AugCot.d χ b) i • (t i : B)) = 0 := by
       have hb' : χ b = 0 := hb
       have ht' : ∀ i, χ (t i) = 0 := fun i => (t i).2
-      simp [map_sum, hb', ht']
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [map_sum, hb', ht']
     rw [h2, map_zero, sub_zero, pow_two] at h1
     have h3 : ∑ i, e.repr (AugCot.d χ b) i • (t i : B) ∈ J :=
       Ideal.sum_mem _ fun i _ => by

@@ -6,7 +6,8 @@ open scoped TensorProduct
 private theorem hd_map {Γ M N : Type} [AddCommGroup M] [Module ℂ M] [AddCommGroup N] [Module ℂ N] (P : M →ₗ[ℂ] N)
     (b : List Γ → M) : hd (fun z => P (b z)) = fun z => P (hd b z) := by
   funext z
-  simp only [hd, map_sum, map_zsmul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hd, map_sum, map_zsmul]
 
 private theorem zig_map {Γ V S S' : Type} [Group Γ] [NormedAddCommGroup V] [NormedSpace ℝ V] {d : ℕ}
     (G : Dr.Geo Γ V S d) (G' : Dr.Geo Γ V S' d) (f : S' → S) (P : ∀ q, G.Om q →ₗ[ℂ] G'.Om q)
@@ -110,7 +111,8 @@ theorem UpperTheory.V.Lit.Geo.perNat :
     | smul s y _ hy => rw [map_smul]; exact Submodule.smul_mem _ s hy
   · refine AlternatingMap.ext fun X => ?_
     change _ = (act (.fin x)).rTensor (Fin Ξ.d → ℂ) (dCo (smLie Ξ) α X)
-    simp only [dCo, AlternatingMap.alternatizeUncurryFin_apply, map_sum, map_zsmul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [dCo, AlternatingMap.alternatizeUncurryFin_apply, map_sum, map_zsmul]
     refine Finset.sum_congr rfl fun i _ => congrArg _ ?_
     exact (rT_lie Ξ x _ _).symm
   · obtain ⟨ho, w, hw, hz⟩ := h

@@ -69,7 +69,8 @@ theorem exists_universal_pi {w : O} (hw : w + star w = 1) [Module.Finite O X]
   let e : Fin n → X := fun i => f (Pi.single i 1)
   have he (x : X) : ∑ i, c i x • e i = x := by
     have h1 : f (g x) = x := congr($hfg x)
-    conv_rhs => rw [← h1, pi_eq_sum_univ' (g x), map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_rhs => rw [← h1, pi_eq_sum_univ' (g x), map_sum]
     simp [c, e]
   let Φ : Bil X (Fin n × Fin n → O) :=
     LinearMap.mk₂ ℤ (fun y x ij => pairForm (c ij.1) (c ij.2) y x)
@@ -83,9 +84,11 @@ theorem exists_universal_pi {w : O} (hw : w + star w = 1) [Module.Finite O X]
   have key (y x : X) : ∑ ij : Fin n × Fin n,
       τ ((w * (c ij.1 y * star (c ij.2 x))) • e ij.1) (e ij.2) = τ (w • y) x := by
     conv_rhs => rw [← he y, ← he x]
-    rw [Fintype.sum_prod_type, Finset.smul_sum, map_sum τ, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Fintype.sum_prod_type, Finset.smul_sum, map_sum τ, LinearMap.sum_apply]
     refine Finset.sum_congr rfl fun i _ => ?_
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [hτ.2.right, smul_smul, smul_smul]
     congr 3

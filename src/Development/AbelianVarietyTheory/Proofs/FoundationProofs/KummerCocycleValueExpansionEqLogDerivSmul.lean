@@ -162,7 +162,8 @@ theorem geo_cob : ∀ (p : ℕ) [Fact p.Prime], p ≠ 2 → ∃ c : ℕ, ∀ (Ω
     rw [Derivation.leibniz]
     linear_combination (norm := module) (eS t * qLi) • h - (eS t * hqL) • D (AS t)
   have hd : D wS = (w'S * qLi) • D qL + ∑ t, AS t • D (eS t) := by
-    rw [hwS, map_sum, Finset.sum_congr rfl (fun t _ => hterm t), Finset.sum_add_distrib,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hwS, map_sum, Finset.sum_congr rfl (fun t _ => hterm t), Finset.sum_add_distrib,
       ← Finset.sum_smul, hw'S, Finset.sum_mul]
   let η := (1 * r' ^ (p ^ n - 1)) • D r' - (w'S * qLi * qN ^ (p ^ n - 1)) • D qN -
     ∑ t, (AS t * yS t ^ (p ^ n - 1)) • D (yS t)
@@ -203,11 +204,13 @@ theorem geo_cob : ∀ (p : ℕ) [Fact p.Prime], p ≠ 2 → ∃ c : ℕ, ∀ (Ω
     rw [← e0, map_pow, hgL.2]
   have hgqinv : g (algebraMap (O0 p) Ω qinv) = algebraMap (O0 p) Ω qinv := AlgEquiv.commutes g qinv
   have hgw : g w = w := by
-    rw [hwe, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hwe, map_sum]
     refine Finset.sum_congr rfl fun t _ => ?_
     rw [map_mul, hgeo _ (he t).2, psi_fix hψ hgL.2]
   have hgw' : g w' = w' := by
-    rw [hw'e, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hw'e, map_sum]
     refine Finset.sum_congr rfl fun t _ => ?_
     rw [map_mul, hgeo _ (he t).2, psi_fix hψ hgL.2]
   let gS := (g.toAlgHom).mapIntegralClosure
@@ -235,7 +238,8 @@ theorem geo_cob : ∀ (p : ℕ) [Fact p.Prime], p ≠ 2 → ∃ c : ℕ, ∀ (Ω
   let Aval : integralClosure (O0 p) Ω := ((a g).val : integralClosure (O0 p) Ω) -
     w'S * wiS * ((lq g).val : integralClosure (O0 p) Ω)
   have hσE : σ (∑ t, (AS t * yS t ^ (p ^ n - 1)) • D (yS t)) = ∑ t, (AS t * yS t ^ (p ^ n - 1)) • D (yS t) := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun t _ => ?_
     rw [hσ, map_mul, map_pow, hgAS, hgyS]
   have hση : σ η = η + (wS * zi * Aval) • D z := by

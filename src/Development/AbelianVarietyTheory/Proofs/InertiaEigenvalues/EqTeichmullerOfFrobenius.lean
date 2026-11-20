@@ -154,7 +154,8 @@ theorem let_exists {n : ℕ} [NeZero n] (y : S) [IsAdicComplete (Ideal.span {y})
   obtain ⟨ev, hev⟩ := GlobalTheory.Cyc.IoMap.algHom_exists (R := O) y
     (GlobalTheory.Per.AinfComplete.summ_of_precomplete y) (sep_of_haus y)
   have h1 : ∑ i, u (Pi.single i 1) = 1 := by
-    rw [← map_sum, Finset.univ_sum_single (fun _ : ZMod n => (1 : O))]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, Finset.univ_sum_single (fun _ : ZMod n => (1 : O))]
     exact map_one u
   have h2 : ∀ i j, u (Pi.single i 1) * u (Pi.single j 1) = if i = j then u (Pi.single i 1) else 0 := by
     intro i j
@@ -168,7 +169,8 @@ theorem let_exists {n : ℕ} [NeZero n] (y : S) [IsAdicComplete (Ideal.span {y})
       · simp [hk]
   have h3 : ∀ o : ZMod n → O, ∑ i, u (Pi.single i 1) * algebraMap O S (o i) = u o := by
     intro o
-    conv_rhs => rw [← Finset.univ_sum_single o, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_rhs => rw [← Finset.univ_sum_single o, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [mul_comm, ← Algebra.smul_def, ← map_smul, ← Pi.single_smul, smul_eq_mul, mul_one]
   have h4 : ∀ r : O, ev (C r) = algebraMap O S r := fun r => by

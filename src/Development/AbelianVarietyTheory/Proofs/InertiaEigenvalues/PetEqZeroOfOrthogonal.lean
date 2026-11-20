@@ -161,7 +161,8 @@ theorem chart_lie (X : Lie E a) (φ : Sm E a) (g : GA E a) (z : Lie E a) :
   unfold chart
   split_ifs
   · conv_lhs => rw [← (bas E a).sum_repr X]
-    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, Submodule.coe_sum, Finset.sum_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, Submodule.coe_sum, Finset.sum_apply,
       Module.Basis.coord_apply]
     rfl
   · simp

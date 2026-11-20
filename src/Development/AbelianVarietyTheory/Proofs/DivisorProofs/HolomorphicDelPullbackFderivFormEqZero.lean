@@ -37,7 +37,8 @@ theorem repr_ι (x : Fin n ⊕ Fin n → ℂ) (S : Finset (Fin (n + n))) :
     (bas n).repr (ExteriorAlgebra.ι ℂ x) S =
       ∑ i, x i * (bas n).repr (ExteriorAlgebra.ι ℂ (Pi.single i 1)) S := by
   conv_lhs => rw [← Finset.univ_sum_single x]
-  simp only [map_sum, Finsupp.finset_sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Finsupp.finset_sum_apply]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [show (Pi.single i (x i) : Fin n ⊕ Fin n → ℂ) = x i • Pi.single i 1 by
     ext j; simp [Pi.single_apply]]
@@ -120,7 +121,8 @@ theorem delAt_pull_fderiv_ι {φ : V n → V n} {v : V n} (hφ : ContDiffAt ℂ 
       rw [del_sum (fun c _ => (hEc b c).mul_const _), ContinuousLinearMap.sum_apply]
       simp [del_mul_const (hEc _ _), hdelc, Finset.sum_apply, Pi.single_apply]
   rw [hF, delAt_ι hu]
-  simp only [hw, map_sum, map_smul, Finset.mul_sum, mul_smul_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hw, map_sum, map_smul, Finset.mul_sum, mul_smul_comm]
   exact sum_symm_dz_mul s fun a b => by simp only [hs, hsymm (coordVec a) (coordVec b)]
 
 theorem delAt_pull_fderiv : ∀ {n : ℕ} {φ : ReciprocityTheory.L2DbarEstimates.V n → ReciprocityTheory.L2DbarEstimates.V n} {v : ReciprocityTheory.L2DbarEstimates.V n},

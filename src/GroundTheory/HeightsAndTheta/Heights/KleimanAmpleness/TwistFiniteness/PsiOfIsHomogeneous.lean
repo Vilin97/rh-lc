@@ -79,7 +79,8 @@ theorem psi_mem_tgr (s : Sy S r) : psi η S s ∈ tgr 0 := by
 theorem phi_mem_tgr {p : Poly (Sy S r) N} {d : ℕ} (hp : p.IsHomogeneous d) :
     phi x η S p ∈ tgr (d : ℤ) := by
   classical
-  rw [p.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [p.as_sum, map_sum]
   refine Submodule.sum_mem _ fun μ hμ => ?_
   have hdeg : ∑ i ∈ μ.support, μ i = d := by
     have := hp (mem_support_iff.mp hμ)

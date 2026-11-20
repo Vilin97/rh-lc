@@ -91,14 +91,16 @@ theorem inv_mulVec_mulVec (m : GL ι 𝔸[K]) (y : ι → 𝔸[K]) :
 theorem fin_mulVec (M : Matrix ι ι 𝔸[K]) (z : ι → 𝔸[K]) (i : ι) :
     ((M *ᵥ z) i).2 = ∑ j, Adele2.finRingHom (M i j) * (z j).2 := by
   show Adele2.finRingHom (∑ j, M i j * z j) = _
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_congr rfl fun j _ ↦ map_mul _ _ _
 
 theorem inf_mulVec (M : Matrix ι ι 𝔸[K]) (z : ι → 𝔸[K]) (i : ι) :
     homeomorphMixedSpace K ((M *ᵥ z) i).1 =
       ∑ j, Adele2.infRingHom (M i j) * homeomorphMixedSpace K (z j).1 := by
   show Adele2.infRingHom (∑ j, M i j * z j) = _
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_congr rfl fun j _ ↦ map_mul _ _ _
 
 theorem majorant_tensor (φ : 𝓢(ι → mixedSpace K, ℂ)) (I : (FractionalIdeal (𝓞 K)⁰ K)ˣ)

@@ -23,7 +23,8 @@ theorem exists_gen_mod {R W : Type} [CommRing R] [IsDomain R] [AddCommGroup W] [
   obtain ⟨r, hr⟩ := (Submodule.mem_span_range_iff_exists_fun R).1 h1
   have h2 : (Submodule.Quotient.mk (∑ i, r i • c i) : C ⧸ (Ideal.span {(m : R)} • (⊤ : Submodule R C))) =
       Submodule.Quotient.mk ⟨y, hy⟩ := by
-    rw [← hr, ← Submodule.mkQ_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hr, ← Submodule.mkQ_apply, map_sum]
     simp [hc]
   have h3 := (Submodule.Quotient.eq _).1 h2.symm
   rw [Submodule.ideal_span_singleton_smul, Submodule.mem_smul_pointwise_iff_exists] at h3

@@ -116,7 +116,8 @@ theorem gram_re_posdef_adj : ∀ (O : Type) [Ring O] (bar : O → O) (g : ℕ) (
     have hexp : ∀ x : Fin r → ℝ, B (∑ j, x j • P (e j)) (∑ j, x j • P (e j)) =
         ∑ i, ∑ j, B (P (e i)) (P (e j)) * (x i * x j) := by
       intro x
-      simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, Finset.mul_sum]
       refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
       rw [hBsymm (P (e j))]
       ring
@@ -150,15 +151,18 @@ theorem gram_re_posdef_adj : ∀ (O : Type) [Ring O] (bar : O → O) (g : ℕ) (
         rw [← hlin, ← hlin, hE, hE, D.adj])
     have hexpand : ∀ v : D.La, P v = ∑ k, e.repr v k • P (e k) := fun v => by
       conv_lhs => rw [← e.sum_repr v]
-      simp only [map_sum, map_zsmul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_zsmul]
     ext i j
     simp only [Matrix.mul_apply, Matrix.of_apply, actM, Matrix.conjTranspose_apply, star_intCast]
     have h1 : B (P (e i)) (P (bar a • e j)) = ∑ k, B (P (e i)) (P (e k)) * (e.repr (bar a • e j) k : ℝ) := by
-      rw [hexpand (bar a • e j), map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hexpand (bar a • e j), map_sum]
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [map_zsmul, zsmul_eq_mul, mul_comm]
     have h2 : B (P (a • e i)) (P (e j)) = ∑ k, (e.repr (a • e i) k : ℝ) * B (P (e k)) (P (e j)) := by
-      rw [hBsymm, hexpand (a • e i), map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hBsymm, hexpand (a • e i), map_sum]
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [map_zsmul, zsmul_eq_mul, hBsymm]
     have h3 : B (P (e i)) (P (bar a • e j)) = B (P (a • e i)) (P (e j)) := by

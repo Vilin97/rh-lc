@@ -24,7 +24,8 @@ theorem diagonal_derivation_monomial (LL : Letters ι) (S : Set ι) (a : Fin n) 
   rw [gl_derivation_monomial]
   simp only [monomial_shift_cancel]
   unfold wtS
-  rw [Int.cast_sum, Finset.sum_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Int.cast_sum, Finset.sum_mul, map_sum]
   refine Finset.sum_congr rfl fun l _ => ?_
   split_ifs <;> simp [mul_comm]
 

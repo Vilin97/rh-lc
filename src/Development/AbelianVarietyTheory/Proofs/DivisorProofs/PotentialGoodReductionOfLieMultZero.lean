@@ -147,7 +147,8 @@ theorem finrank_zero (W : Type) [CommRing W] [IsDomain W] [IsDiscreteValuationRi
       have := congrArg (fun P => ((residue W).mapMatrix P) *ᵥ c) hsum
       have hsm : ∀ i, (w i • Mr (b i)).map (residue W) = residue W (w i) • (Mr (b i)).map (residue W) := by
         intro i; ext; simp
-      simpa [map_sum, Matrix.sum_mulVec, hsm, Matrix.smul_mulVec] using this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa [map_sum, Matrix.sum_mulVec, hsm, Matrix.smul_mulVec] using this
     have hL : (∑ i, (AddMonoidHom.mulLeft (residue W (w i))).comp (l.comp (ρ (b i)).toAddMonoidHom)) = 0 := by
       apply Uinj
       rw [prod_of_add U U0 Uadd, U0, Finset.prod_congr rfl (fun i _ => step i), ← prod_of_add T' T'0 T'add, hv, T'0]

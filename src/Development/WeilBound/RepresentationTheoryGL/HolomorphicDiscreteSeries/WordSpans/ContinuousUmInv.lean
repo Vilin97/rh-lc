@@ -82,9 +82,11 @@ theorem gen_step (hS : IsSmMod ε σ S E) (hU : IsURepOn (UJset ε) σ) (g : UJ 
   rw [um_inv_inv] at h
   have h2 := congrArg (σ (um g)) h
   rw [inv_cancel' hU] at h2
-  rw [h2, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h2, map_sum]
   refine Finset.sum_congr rfl fun c _ => ?_
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_congr rfl fun d _ => map_smul _ _ _
 
 theorem continuous_um : Continuous fun g : UJ ε => um g := Units.continuous_val.comp continuous_subtype_val
@@ -116,9 +118,11 @@ theorem word_growth (hS : IsSmMod ε σ S E) (hU : IsURepOn (UJset ε) σ) (w : 
         rfl
       simp only [wp, List.map_append, List.map_cons, List.map_nil, List.prod_append, List.prod_cons, List.prod_nil,
         mul_one, Module.End.mul_apply]
-      rw [hx, map_sum, Submodule.coe_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hx, map_sum, Submodule.coe_sum]
       refine Finset.sum_congr rfl fun c _ => ?_
-      rw [map_sum, Submodule.coe_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Submodule.coe_sum]
       refine Finset.sum_congr rfl fun d _ => ?_
       rw [map_smul, Submodule.coe_smul]
     choose hc C hC0 hC using fun c d => ih (E c d v)

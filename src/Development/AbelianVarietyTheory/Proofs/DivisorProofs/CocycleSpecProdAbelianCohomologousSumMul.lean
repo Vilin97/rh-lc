@@ -67,9 +67,11 @@ theorem GlobalTheory.PtExt.cohom_sumMul_fv_of_abelian : GlobalTheory.Published.A
   let S : Z1 (O (dp0 D) (B'.hom ≫ 𝟙 _)) := ∑ i, d i • mB.coef.pullbackOneCocycle (β i)
   have hcl : H1.mk _ f' = H1.mk _ S := by
     have e := congrArg Subtype.val hz
-    simp only [map_sum, liftSemi_tmul] at e
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, liftSemi_tmul] at e
     rw [← e]
-    simp only [S, map_sum, map_smul, Submodule.coe_sum, Submodule.coe_smul, GrpMor.coe_pull]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [S, map_sum, map_smul, Submodule.coe_sum, Submodule.coe_smul, GrpMor.coe_pull]
     refine Finset.sum_congr rfl fun i _ ↦ ?_
     rw [← hβ i]
     rfl

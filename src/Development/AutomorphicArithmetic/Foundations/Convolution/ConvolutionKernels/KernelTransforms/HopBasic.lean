@@ -83,7 +83,8 @@ private theorem hop_abs {G H : Type*} [Group G] [NormedAddCommGroup H] [InnerPro
     intro v
     rw [hfix]
     intro k hk
-    rw [hApply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hApply, map_sum]
     refine Finset.sum_equiv (MulAction.toPerm k) (fun c => ?_) (fun c _ => ?_)
     · simp only [Set.Finite.mem_toFinset, MulAction.toPerm_apply]
       refine ⟨hsm k hk c, fun h => ?_⟩

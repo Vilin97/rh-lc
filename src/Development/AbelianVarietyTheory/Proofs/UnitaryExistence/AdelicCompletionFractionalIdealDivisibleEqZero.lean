@@ -166,7 +166,8 @@ theorem lim_exists_matrix (L : Submodule (𝓞 E) (Fin n → E))
       simp [hj.symm]
     · simp
   apply lim_nsmul_cancel F hD
-  rw [← map_nsmul, ha, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_nsmul, ha, map_sum]
   funext i
   simp only [hφ, Pi.smul_apply, Matrix.mulVec, dotProduct, Finset.sum_apply, Finset.smul_sum,
     Matrix.of_apply, fv, smul_eq_mul]

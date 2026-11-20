@@ -96,7 +96,8 @@ theorem coeff_jet (J : JetRing ℂ I n) {f : (I → ℂ) → ℂ} (hf : Analytic
     (hu : ∀ i, u.count i = ν.1 i) : J.b.repr (jet J f) ν = iterD u f 0 := by
   set K := ∑ i, ν.1 i with hK
   have hKn : K ≤ n + 1 := ν.2
-  simp only [jet, GlobalTheory.PeriodFamily.taylor, map_sum, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [jet, GlobalTheory.PeriodFamily.taylor, map_sum, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply,
     Finsupp.smul_apply, smul_eq_mul, repr_prod_t_eq_ite_factorial]
   rw [Finset.sum_eq_single_of_mem K (Finset.mem_range.2 (by omega))]
   · have step : ∀ s : Fin K → I, ((K.factorial : ℂ)⁻¹ * iteratedFDeriv ℂ K f 0 (fun a => (Pi.single (s a) 1 : I → ℂ))) *

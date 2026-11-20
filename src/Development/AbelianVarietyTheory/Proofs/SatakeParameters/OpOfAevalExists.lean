@@ -29,7 +29,9 @@ def conv (F f : G →₀ ℂ) : G →₀ ℂ :=
 
 theorem opOf_conv (F f : G →₀ ℂ) (v : V) : opOf ρ (conv F f) v = opOf ρ F (opOf ρ f v) := by
   rw [← opHom_apply]
-  simp only [conv, Finsupp.sum, map_sum, opHom_apply, opOf_single]
-  simp only [opOf, Finsupp.sum, map_sum, map_smul, Finset.smul_sum, mul_smul, map_mul, Module.End.mul_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [conv, Finsupp.sum, map_sum, opHom_apply, opOf_single]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [opOf, Finsupp.sum, map_sum, map_smul, Finset.smul_sum, mul_smul, map_mul, Module.End.mul_apply]
 
 end GlobalTheory.Cong.OpPoly

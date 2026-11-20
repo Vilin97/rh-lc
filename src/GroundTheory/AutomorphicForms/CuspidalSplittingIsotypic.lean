@@ -346,7 +346,8 @@ theorem exists_sub_mem_isotypicKernel (u : U) :
     choose c hcx using hc
     have hΦ : ∀ y : Fin m → V, Φ y = ∑ i, c i • y i := fun y => by
       conv_lhs => rw [← Finset.univ_sum_single y]
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       exact Finset.sum_congr rfl fun i _ => hcx i (y i)
     have hzero : ∑ i, c i • bE i = 0 := by
       have h1 : Φ (Γ u) = 0 := hΦR _ ((hRmem _).2 ⟨⟨u, huW0⟩, rfl⟩)
@@ -367,7 +368,8 @@ theorem exists_sub_mem_isotypicKernel (u : U) :
   have hGu' : ∀ i, Gs i u' = Gs i u := by
     intro i
     have h2 : Γ0 (∑ k, s k (Gs k u)) = Γ u := by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       have h3 : ∀ k, Γ0 (s k (Gs k u)) = Pi.single k (Gs k u) := fun k => by
         rw [← Representation.IntertwiningMap.comp_apply, hs]
         rfl

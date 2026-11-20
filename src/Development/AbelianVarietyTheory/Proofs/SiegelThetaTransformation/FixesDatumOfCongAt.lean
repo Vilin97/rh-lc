@@ -120,7 +120,8 @@ theorem map_pushLet (g : Matrix (Fin n) (Fin n) E) (P : MvPolynomial (LtN Dw n) 
   | mul_X p i hp =>
     simp only [map_mul, hp, MvPolynomial.map_X]
     congr 1
-    simp only [pushLet, MvPolynomial.aeval_X, letB, map_sum, map_mul, MvPolynomial.map_C, MvPolynomial.map_X, he]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [pushLet, MvPolynomial.aeval_X, letB, map_sum, map_mul, MvPolynomial.map_C, MvPolynomial.map_X, he]
 
 end Cover
 

@@ -29,7 +29,8 @@ theorem map_zero_change {A B V W : HSp D} (κ : WA A B →+ WA V W) (hκ : ∀ (
   classical
   ext k l
   rw [Matrix.matrix_eq_sum_single x]
-  simp only [map_sum, Matrix.map_apply, Matrix.sum_apply, Matrix.zero_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Matrix.map_apply, Matrix.sum_apply, Matrix.zero_apply]
   refine Finset.sum_eq_zero fun i _ => Finset.sum_eq_zero fun j _ => ?_
   have e : Matrix.single i j (x i j) = x i j • Matrix.single i j (1 : AE D) := by
     rw [Matrix.smul_single, smul_eq_mul, mul_one]

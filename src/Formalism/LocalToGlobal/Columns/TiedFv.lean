@@ -32,7 +32,8 @@ theorem fv_prV_pullV (y : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) (z : Fin
   unfold pullV
   rw [← map_inv]
   simp only [Matrix.mulVec, dotProduct]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_mul, afsplit_prV_inclE]
   rfl

@@ -21,7 +21,8 @@ theorem lvlPoly_coe (k : ℕ) : ((lvlPoly l R k : Polynomial R) : R⟦X⟧) = lv
   simp
 
 theorem lvlPoly_map (j : R →+* S) (k : ℕ) : (lvlPoly l R k).map j = lvlPoly l S k := by
-  simp [lvlPoly, Polynomial.map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [lvlPoly, Polynomial.map_sum]
 
 theorem lvlPoly_mul (k : ℕ) :
     lvlPoly l R k * ((1 + Polynomial.X) ^ l ^ k - 1) = (1 + Polynomial.X) ^ l ^ (k + 1) - 1 := by

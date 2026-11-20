@@ -71,7 +71,8 @@ theorem exists_poly_of_commute {O : Type} [CommRing O] [IsLocalRing O] {n : ℕ}
   set c : Fin n → O := K⁻¹ *ᵥ (x *ᵥ v) with hcdef
   let p : O[X] := ∑ i : Fin n, C (c i) * X ^ (i : ℕ)
   have hp : aeval M p = ∑ i : Fin n, c i • M ^ (i : ℕ) := by
-    simp only [p, map_sum, map_mul, aeval_C, aeval_X_pow, Algebra.smul_def]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [p, map_sum, map_mul, aeval_C, aeval_X_pow, Algebra.smul_def]
   have hpv : aeval M p *ᵥ v = x *ᵥ v := by
     have h1 : aeval M p *ᵥ v = K *ᵥ c := by
       rw [hp]

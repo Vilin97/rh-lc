@@ -345,7 +345,8 @@ theorem zhat_rel {T T' : E} (F : LFlag S r T) {F₁ F₂ : LFlag S r T'} (h : DC
       rw [hfr b, ← hiso (n⁻¹ (frame F a)) (m (frame F₁ b))]
       simp
     rw [e1, hα a, hβ b]
-    simp only [Matrix.mul_apply, ZhatL, Zhat, brS, map_sum, map_smulₛₗ, LinearMap.sum_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mul_apply, ZhatL, Zhat, brS, map_sum, map_smulₛₗ, LinearMap.sum_apply,
       LinearMap.smul_apply, smul_eq_mul, Matrix.map_apply, Matrix.transpose_apply, starRingEnd_apply]
     simp only [Finset.mul_sum, Finset.sum_mul, RingHom.id_apply]
     refine Finset.sum_congr rfl (fun _ _ => Finset.sum_congr rfl (fun _ _ => ?_))

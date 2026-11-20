@@ -84,7 +84,8 @@ private theorem coef_bound : Hyps → ∀ (k r : ℕ) (ε : Fin (2 * r + k + 1) 
   obtain ⟨co, hco, ea⟩ := hxa a ha (by omega)
   obtain ⟨co', hco', eb⟩ := hyb b hb (by omega)
   have pg' : 0 < B.gN g ^ (aOf r h - 1) := Real.rpow_pos_of_pos (GlobalTheory.BesselDecay.gN_pos' hg) _
-  rw [ea, eb, map_sum, sum_inner]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [ea, eb, map_sum, sum_inner]
   refine (mul_le_mul_of_nonneg_left (norm_sum_le _ _) pg'.le).trans ?_
   rw [Finset.mul_sum]
   refine Finset.sum_le_sum fun i _ => ?_

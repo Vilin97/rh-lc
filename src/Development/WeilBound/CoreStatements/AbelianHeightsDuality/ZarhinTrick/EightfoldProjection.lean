@@ -192,7 +192,8 @@ omit [GrpObj A] [GrpObj B] in
 theorem zcPair_pull {P : LB (A ⊗ B).left} (hP : P.IsLB) (l : A ⟶ B) (mu : B ⟶ A) (α : Matrix (Fin 4) (Fin 4) ℤ)
     {Y Y' : Over S} (h : Y' ⟶ Y) (u u' : Y ⟶ G4 (A ⊗ B)) :
     pull h.left (zcPair hP l mu α u u') = zcPair hP l mu α (h ≫ u) (h ≫ u') := by
-  simp only [zcPair, map_add, map_sum, map_zsmul, map_nsmul, pull_evc, Category.assoc]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [zcPair, map_add, map_sum, map_zsmul, map_nsmul, pull_evc, Category.assoc]
 
 private theorem zpow_fin_sum_eq_prod_zpow {M : Type*} [CommGroup M] (a : M) (f : Fin 4 → ℤ) :
     a ^ (∑ k, f k) = ∏ k, a ^ f k := by

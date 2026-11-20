@@ -63,7 +63,8 @@ theorem infGL_mem_NA {u : GL (Fin a) (Cinf E)} (hu : u ∈ GlobalTheory.SmGL.uni
 theorem psiN_infGL (u : GL (Fin a) (Cinf E)) :
     GlobalTheory.JSW.psiN (infGL E a u) = (𝐞 (-∑ w, 2 * (GlobalTheory.Whittaker.superDiag u w).re) : ℂ) := by
   have hs : GlobalTheory.Whittaker.superDiag (infGL E a u) = sInf E (GlobalTheory.Whittaker.superDiag u) := by
-    simp only [GlobalTheory.Whittaker.superDiag, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [GlobalTheory.Whittaker.superDiag, map_sum]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j hj => ?_
     have hij : i ≠ j := by
       intro e; subst e; simp at hj

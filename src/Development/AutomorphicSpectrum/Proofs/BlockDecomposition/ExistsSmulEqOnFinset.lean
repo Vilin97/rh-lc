@@ -15,7 +15,8 @@ theorem exists_smul_eq_on_finset {R ι : Type} [Ring R] [Fintype ι] (M : ι →
     intro φ m i
     have hm : m = ∑ j, Pi.single j (m j) := (Finset.univ_sum_single m).symm
     conv_lhs => rw [hm]
-    rw [map_sum, Finset.sum_apply, Finset.sum_eq_single i]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_apply, Finset.sum_eq_single i]
     · rfl
     · intro j _ hj
       have := hne j i hj ((LinearMap.proj i) ∘ₗ φ ∘ₗ LinearMap.single R M j)

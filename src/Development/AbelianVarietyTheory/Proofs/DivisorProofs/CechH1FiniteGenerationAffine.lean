@@ -65,7 +65,8 @@ theorem cechFG_of_finite (R : Type) [CommRing R] (Z : Scheme.{0}) (s : Z ⟶ Sp 
   have hmem : H1.mk (OAff s) f ∈ Submodule.span R (Set.range v) := hv ▸ Submodule.mem_top
   obtain ⟨r, hr⟩ := (Submodule.mem_span_range_iff_exists_fun R).1 hmem
   have hcl : H1.mk (OAff s) f = H1.mk (OAff s) (∑ k, r k • fk k) := by
-    rw [map_sum, ← hr]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, ← hr]
     simp only [map_smul, hfk]
   obtain ⟨g, hg⟩ := H1.mk_eq_mk.1 hcl
   have e1 : f.1 = (∑ k, r k • (fk k).1) + d0 (OAff s) g := by

@@ -69,7 +69,8 @@ theorem laB_eq_comap : ∀ (D : D7) (cc : Ideal (𝓞 D.host.K)) (δ : ℂ) (B :
       rw [LinearEquiv.symm_apply_eq, phi_embV_bas, Equiv.apply_symm_apply]
     have hxe : x = ∑ p, phi B n n' x p • TaylorLogMetric.embV D (TaylorLogMetric.tor0 D cc δ) (bas B n n' ((ixE D n n').symm p)) := by
       conv_lhs => rw [← (phi B n n').symm_apply_apply x, hsum]
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun p _ => ?_
       rw [map_smul, hsing]
     rw [hxe]

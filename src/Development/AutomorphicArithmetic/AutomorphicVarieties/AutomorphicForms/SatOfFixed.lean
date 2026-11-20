@@ -38,7 +38,8 @@ theorem hasFixed_of_sum {G V W : Type} [Group G] [TopologicalSpace G] [IsTopolog
       haveI := Fintype.ofFinite (K ⧸ stab σ K y)
       have := congrArg f (hz y)
       rw [avg_eq ρ K hle, ← map_zero f, ← this]
-      simp only [avg, avgH, cv, finsum_eq_sum_of_fintype, map_smul, map_sum, hf]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [avg, avgH, cv, finsum_eq_sum_of_fintype, map_smul, map_sum, hf]
     · have : stab ρ K (0 : W) = ⊤ := eq_top_iff.2 fun l _ => by rw [mem_stab, map_zero]
       have h1 : (stab ρ K (0 : W)).FiniteIndex := this ▸ inferInstance
       exact ⟨h1, avg_fixed ρ K h1 fun l _ => map_zero _⟩

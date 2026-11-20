@@ -29,7 +29,8 @@ theorem apolar_apply (P : MvPolynomial σ ℂ) (F : MvPowerSeries σ ℂ) :
     apolar P F = ∑ m ∈ P.support,
       P.coeff m * ((∏ i, (m i).factorial : ℕ) : ℂ) * MvPowerSeries.coeff m F := by
   conv_lhs => rw [P.as_sum]
-  simp only [map_sum, LinearMap.sum_apply, apolar_monomial]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.sum_apply, apolar_monomial]
 
 theorem prod_factorial_add_single [DecidableEq σ] (m : σ →₀ ℕ) (i : σ) :
     (∏ j, ((m + Finsupp.single i 1 : σ →₀ ℕ) j).factorial : ℕ) =
@@ -81,10 +82,12 @@ theorem apolar_quad_mul (P : MvPolynomial σ ℂ) (β : σ → σ → ℂ)
     (F : MvPowerSeries σ ℂ) :
     apolar P ((∑ s, ∑ t, β s t • (MvPowerSeries.X t * MvPowerSeries.X s)) * F) = 0 := by
   have h := congrArg (fun Q => apolar Q F) hP
-  simp only [map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply, map_zero,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply, map_zero,
     LinearMap.zero_apply] at h
   rw [← h]
-  simp only [Finset.sum_mul, map_sum, smul_mul_assoc, map_smul, mul_assoc, apolar_mul_X]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finset.sum_mul, map_sum, smul_mul_assoc, map_smul, mul_assoc, apolar_mul_X]
 
 theorem apolar_eq_zero_of_mem_span {ι : Type*} (v : ι → σ → ℂ) (F : MvPowerSeries σ ℂ)
     (hF : ∀ k, ∑ s, v k s • MvPowerSeries.pderiv ℂ s F = 0) {P : MvPolynomial σ ℂ}
@@ -96,9 +99,11 @@ theorem apolar_eq_zero_of_mem_span {ι : Type*} (v : ι → σ → ℂ) (F : MvP
     obtain ⟨k, rfl⟩ := hP
     intro Q
     have h := congrArg (apolar Q) (hF k)
-    simp only [map_sum, map_smul, map_zero] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, map_zero] at h
     rw [← h]
-    simp only [Finset.sum_mul, map_sum, smul_mul_assoc, map_smul, LinearMap.sum_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Finset.sum_mul, map_sum, smul_mul_assoc, map_smul, LinearMap.sum_apply,
       LinearMap.smul_apply, apolar_X_mul]
   | zero => simp
   | add P P' _ _ h h' => intro Q; rw [add_mul, map_add, LinearMap.add_apply, h, h', add_zero]
@@ -114,9 +119,11 @@ theorem taylor_quad [DecidableEq σ] (β : σ → σ → ℂ) :
     taylor (fun z : σ → ℂ => ∑ s, ∑ t, β s t * z s * z t) =
       ∑ s, ∑ t, β s t • (MvPowerSeries.X t * MvPowerSeries.X s) := by
   have h := taylor_eval (∑ s, ∑ t, MvPolynomial.C (β s t) * MvPolynomial.X s * MvPolynomial.X t)
-  simp only [map_sum, map_mul, MvPolynomial.eval_C, MvPolynomial.eval_X] at h
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, MvPolynomial.eval_C, MvPolynomial.eval_X] at h
   rw [h, ← MvPolynomial.coeToMvPowerSeries.ringHom_apply]
-  simp only [map_sum, map_mul, MvPolynomial.coeToMvPowerSeries.ringHom_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, MvPolynomial.coeToMvPowerSeries.ringHom_apply,
     MvPolynomial.coe_C, MvPolynomial.coe_X, MvPowerSeries.smul_eq_C_mul]
   refine Finset.sum_congr rfl fun s _ => Finset.sum_congr rfl fun t _ => by ring
 

@@ -16,7 +16,8 @@ theorem aeval_scale {R S : Type} [CommRing R] [CommRing S] [Algebra R S] {r n : 
   classical
   conv_lhs => rw [f.as_sum]
   conv_rhs => rw [f.as_sum]
-  rw [map_sum, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun d hd => ?_
   have hw : Finsupp.weight (colW r n) d = ν := hf (mem_support_iff.mp hd)
   have hs : ∑ i, ν i = ∑ v, d v := by

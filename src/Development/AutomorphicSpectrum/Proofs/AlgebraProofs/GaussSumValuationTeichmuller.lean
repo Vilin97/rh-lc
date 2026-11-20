@@ -135,7 +135,8 @@ theorem gauss_value : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgCl
   have hG : ∑ b, algebraMap R C (σ⁻¹ b) * ψ₀ b =
       (algebraMap R C z - 1) * (algebraMap R C y - 1) := by
     have := congrArg (algebraMap R C) hy
-    simp only [map_sum, map_mul, map_pow, map_sub, map_one] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, map_pow, map_sub, map_one] at this
     rw [← this]
     exact Finset.sum_congr rfl fun a _ => by rw [hψ₀]
   have hvy : v (algebraMap R C y - 1) = 1 := by

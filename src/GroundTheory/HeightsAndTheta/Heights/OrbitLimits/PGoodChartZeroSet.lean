@@ -29,7 +29,8 @@ theorem eval_homogenize {m : ℕ} (f : MvPolynomial (Fin m) ℂ) {D : ℕ} (hD :
     refine Finset.sum_subset (Finset.range_subset_range.2 (by omega)) fun d _ hd' => ?_
     exact homogeneousComponent_eq_zero (n := d) (φ := f) (by simp at hd'; omega)
   conv_rhs => rw [hf]
-  rw [map_mul, map_sum, map_sum, eval_X, Finset.mul_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_mul, map_sum, map_sum, eval_X, Finset.mul_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun d hd => ?_
   have hdD : d ≤ D := by simp at hd; omega
   rw [eval_smul_of_isHomogeneous (homogeneousComponent_isHomogeneous d f), map_mul, map_pow, eval_X]
@@ -64,7 +65,8 @@ theorem eval_linForm {m e : ℕ} (σ : Fin m ≃ ((k : K) → ι k))
     rw [pi_eq_sum_univ (fun i' => x (σ.symm i'))]
     exact (Equiv.sum_comp σ _).symm.trans (by simp)
   rw [hv]
-  simp only [map_sum, Finset.sum_apply, map_smul, Pi.smul_apply, smul_eq_mul, map_mul, eval_C, eval_X]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Finset.sum_apply, map_smul, Pi.smul_apply, smul_eq_mul, map_mul, eval_C, eval_X]
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [mul_comm]
 

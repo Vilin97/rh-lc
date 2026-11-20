@@ -62,7 +62,8 @@ theorem self_adj (hL : LgFacts) (hU : Unimod) (hR : RCalc) (hS : WaveSpeed) (hE 
         (ap.1.sub (continuousOn_finset_sum _ fun i _ => (aK i).1.const_smul (c i)))
         (by
           intro y hy k₂
-          simp only [ap.2 y hy k₂, (aK _).2 y hy k₂, map_sub, map_sum, map_smul])
+          set_option synthInstance.maxHeartbeats 100000 in
+            simp only [ap.2 y hy k₂, (aK _).2 y hy k₂, map_sub, map_sum, map_smul])
         (by
           intro h hh ch
           have int1 := pair_integrable μ hL ap.1 hh.1.continuousOn ch

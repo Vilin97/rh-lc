@@ -107,7 +107,8 @@ theorem HasCoord.exists_selfDual {V : Type} [AddCommGroup V] [TopologicalSpace V
     have h2 : β x y = l x (e y) := by rw [hl, e.symm_apply_apply]
     rw [h2]
     conv_lhs => rw [h1]
-    simp only [map_sum, map_smul, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, smul_eq_mul]
     rfl
   let A : Matrix (Fin N) (Fin N) ℝ := fun i j =>
     β (e.symm (Pi.single i 1)) (e.symm (Pi.single j 1))
@@ -182,7 +183,8 @@ theorem trace_nondeg [Algebra.IsSeparable F E] (z : R ⊗[F] E)
   have hc : ∀ j, c.repr z j = 0 := by
     intro j
     have h1 := h ((1 : R) ⊗ₜ[F] b' j)
-    rw [hz, Finset.sum_mul, map_sum] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hz, Finset.sum_mul, map_sum] at h1
     simp only [Algebra.TensorProduct.tmul_mul_tmul, mul_one, trace_tmul] at h1
     rw [Finset.sum_eq_single j] at h1
     · have h2 : Algebra.trace F E (b j * b' j) = 1 := by
@@ -214,7 +216,8 @@ theorem sigR_JR {M : ℕ} {J : Matrix (Fin M) (Fin M) E} (hJ : ∀ i j, σ (J j 
 theorem sigR_hR (hσ : ∀ x, σ (σ x) = x) {M : ℕ} {J : Matrix (Fin M) (Fin M) E}
     (hJ : ∀ i j, σ (J j i) = J i j) (x y : Fin M → R ⊗[F] E) :
     sigR R σ (hR R σ J x y) = hR R σ J y x := by
-  simp only [hR, hform, map_sum, map_mul, sigR_invol R σ hσ, sigR_JR R σ hJ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hR, hform, map_sum, map_mul, sigR_invol R σ hσ, sigR_JR R σ hJ]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 

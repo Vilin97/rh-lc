@@ -41,7 +41,8 @@ private theorem yv_mapFlag {T0 T1 : E} {γ : S.V ≃ₗ[E] S.V} (h : γ ∈ Form
     (F : FlagG S r T0) (F' : FlagG S r T1) :
     yv (mapFlag γ h F) (mapFlag γ h F') = γ (yv F F') := by
   simp only [yv, omp, Dl, Zhat_mapFlag', mapFlag_fvec']
-  simp [map_sum, map_smul, mapFlag]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, map_smul, mapFlag]
 
 private theorem mapFlag_X' {T0 : E} {γ : S.V ≃ₗ[E] S.V} (h : γ ∈ Formalism.HermitianLatticesTheory.isom S.hT)
     (F : FlagG S r T0) : (mapFlag γ h F).X = F.X.map (γ : S.V →ₗ[E] S.V) := by

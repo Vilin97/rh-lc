@@ -163,7 +163,8 @@ theorem sum_mem_of_isPushout [Algebra k k'] {A A' : Type} [CommRing A] [CommRing
     exact Submodule.smul_induction_on hy' (fun r hr y _ => by
       rw [map_smul]; exact J.mul_mem_right _ hr) fun y y' h h' => by
         rw [map_add]; exact add_mem h h'
-  simpa only [map_sum, hl] using hJ _ h
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa only [map_sum, hl] using hJ _ h
 
 include hI in
 
@@ -185,7 +186,8 @@ theorem vanishesTo_sum_of_baseChange [Algebra k k'] (H : IsPullback φ p' p (spM
       rw [Ideal.map_map, e, ← Ideal.map_map, Ideal.map_pow, ← ds_stalkId_eq_map I W _ hz.1,
         Ideal.map_pow, ← hI]
       convert Ideal.mul_mem_left _ ((φ.stalkMap z).hom (tr B (φ z) i (a.idx j)).val) h₁ using 1
-      simp only [map_sum, map_mul, germ_smul, germ_pullChart, ger_algX, ger_appLE, ger_resG,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_mul, germ_smul, germ_pullChart, ger_algX, ger_appLE, ger_resG,
         Finset.mul_sum]
       refine Finset.sum_congr rfl fun t _ => ?_
       rw [mul_left_comm, ← map_mul]
@@ -193,9 +195,11 @@ theorem vanishesTo_sum_of_baseChange [Algebra k k'] (H : IsPullback φ p' p (spM
         (germ_change i _ _ (hW hz.1).1 (hW hz.1).2 (a.le j hj) (f t))))
   convert key using 1
   refine fun_ext_ger fun y hy => ?_
-  simp only [map_sum, map_mul, ger_algX, ger_resG]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, ger_algX, ger_resG]
   change germ i y (hW hy).1 (hW hy).2 _ = _
-  simp only [map_sum, germ_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, germ_smul]
   rfl
 
 include hI in
@@ -217,7 +221,8 @@ theorem Fil_span_pullChart_of_free [Algebra k k'] [Module.Free k k']
       exact Finset.sum_congr rfl fun j _ => by rw [Algebra.smul_def, mul_comm]; rfl
     have e : ∑ t : S, c t • pullChart a H.w le_rfl t.1 =
         ∑ j ∈ N, b j • pullChart a H.w le_rfl (∑ t : S, b.coord j (c t) • t.1) := by
-      simp only [map_sum, map_smulₛₗ, Finset.smul_sum, smul_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smulₛₗ, Finset.smul_sum, smul_smul]
       rw [Finset.sum_comm]
       exact Finset.sum_congr rfl fun t _ => by rw [← Finset.sum_smul, ← hc]
     rw [e]
@@ -320,7 +325,8 @@ theorem LeadAt.map {R S R' S' : Type*} [CommRing R] [CommRing S] [CommRing R'] [
   refine ⟨fun α => θ (m α), fun α => by rw [e, hm], ?_⟩
   have := Ideal.mem_map_of_mem θ hf
   rw [Ideal.map_pow, Ideal.map_span, ← Set.range_comp] at this
-  simp only [map_sub, map_sum, map_mul, map_monoVal] at this
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sub, map_sum, map_mul, map_monoVal] at this
   exact this
 
 section Lead

@@ -21,7 +21,8 @@ attribute [local instance] MvPolynomial.gradedAlgebra in
 private lemma homogeneousComponent_add_X_pow_mul {K : Type} [Field K] {N : ℕ} (j : Fin N) (m n : ℕ)
     (g : MvPolynomial (Fin N) K) :
     homogeneousComponent (n + m) (X j ^ m * g) = X j ^ m * homogeneousComponent n g := by
-  conv_lhs => rw [← sum_homogeneousComponent g, Finset.mul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [← sum_homogeneousComponent g, Finset.mul_sum, map_sum]
   have hterm : ∀ i, homogeneousComponent (n + m) (X j ^ m * homogeneousComponent i g) =
       if n + m = m + i then X j ^ m * homogeneousComponent i g else 0 := fun i =>
     homogeneousComponent_of_mem
@@ -126,9 +127,11 @@ private lemma exists_homogeneous_mem_of_X_pow_mul_mem_of_homogeneous {K : Type} 
     rw [homogeneousComponent_of_mem hh, if_pos rfl]
   rw [← hG] at hQ
   obtain ⟨f, -, hf⟩ := Submodule.mem_span_finset.mp hQ
-  rw [hhn, ← hf, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hhn, ← hf, map_sum]
   refine I.sum_mem fun g hgG => ?_
-  rw [smul_eq_mul, as_sum (f g), Finset.sum_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [smul_eq_mul, as_sum (f g), Finset.sum_mul, map_sum]
   refine I.sum_mem fun e _ => ?_
   by_cases hdeg : B ≤ (e.sum fun _ k => k)
   · exact hI _ (hkey g hgG e hdeg _) n

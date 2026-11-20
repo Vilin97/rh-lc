@@ -78,7 +78,8 @@ theorem trunc_split (n : ℕ) (U : MvPowerSeries σ K) :
   refine ⟨Q.support, U - (Q : MvPowerSeries σ K), ?_, ?_⟩
   · have hQ : (Q : MvPowerSeries σ K) = ∑ k ∈ Q.support, MvPowerSeries.monomial k (MvPowerSeries.coeff k U) := by
       conv_lhs => rw [Q.as_sum]
-      rw [show ((∑ k ∈ Q.support, MvPolynomial.monomial k (AddMonoidAlgebra.coeff Q k) : MvPolynomial σ K) :
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [show ((∑ k ∈ Q.support, MvPolynomial.monomial k (AddMonoidAlgebra.coeff Q k) : MvPolynomial σ K) :
           MvPowerSeries σ K) = ∑ k ∈ Q.support, ((MvPolynomial.monomial k (AddMonoidAlgebra.coeff Q k) :
           MvPolynomial σ K) : MvPowerSeries σ K) from map_sum (MvPolynomial.coeToMvPowerSeries.ringHom) _ _]
       refine Finset.sum_congr rfl fun k hk => ?_

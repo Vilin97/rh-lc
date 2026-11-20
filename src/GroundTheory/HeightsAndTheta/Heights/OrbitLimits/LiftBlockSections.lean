@@ -35,7 +35,8 @@ theorem secM_le_chartLat [DecidableEq K] {r : ℕ} (y : (Σ k, ι k) → Ω) (v 
     rw [Submodule.span_le]
     rintro _ ⟨g, hg, rfl⟩
     show aeval (addBlock y v) g ∈ chartLat y (n • b) 1
-    rw [g.as_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [g.as_sum, map_sum]
     refine AddSubgroup.sum_mem _ fun m hm => ?_
     have hold : ∀ (k : K) (i : ι k), m ⟨some k, i⟩ = 0 := by
       intro k i

@@ -218,9 +218,11 @@ theorem dpoly_mul (S : Finset (Fin n)) (P₁ P₂ : MvPolynomial ι R) (h1 : ∀
   calc DpolyN F cp u (P₁ * P₂) (A * B) = dpolyHom F cp u (A * B) (P₁ * P₂) := rfl
     _ = ∑ m1 ∈ P₁.support, ∑ m2 ∈ P₂.support,
           C (P₁.coeff m1) * DmonN F cp u m1 A * (C (P₂.coeff m2) * DmonN F cp u m2 B) := by
-      rw [e, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [e, map_sum]
       refine Finset.sum_congr rfl fun m1 hm1 => ?_
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun m2 hm2 => ?_
       have hq1 : ∀ l, m1 l ≠ 0 → cp l ∈ S := fun l hl =>
         h1 l ((MvPolynomial.mem_vars_iff_mem_support l).2 ⟨m1, hm1, Finsupp.mem_support_iff.2 hl⟩)
@@ -277,7 +279,8 @@ theorem columnsStatement_holds : ColumnsStatement := by
   have xcc : ∀ T : Finset (Fin n),
       constantCoeff ((m : k) • ∑ b ∈ T, ev (n := n) ![pt k d b] (B.hL k h w0)) = 0 := by
     intro T
-    rw [smul_eq_C_mul, map_mul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [smul_eq_C_mul, map_mul, map_sum]
     simp [gcc]
   have xmem : ∀ T : Finset (Fin n),
       ((m : k) • ∑ b ∈ T, ev (n := n) ![pt k d b] (B.hL k h w0)) ∈ subV k (Vc d T) :=

@@ -27,8 +27,10 @@ theorem aeval_homog {F : Type} [Field F] [Algebra ℤ F] (c : ∀ k, ι k) (p : 
   have hsum : aeval (fun j ↦ w (p j) / w ⟨(p j).1, c (p j).1⟩) f =
       ∑ m ∈ f.support, aeval (fun j ↦ w (p j) / w ⟨(p j).1, c (p j).1⟩) (monomial m (AddMonoidAlgebra.coeff f m)) := by
     conv_lhs => rw [f.as_sum]
-    rw [map_sum]
-  rw [hsum, Finset.mul_sum, homog, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hsum, Finset.mul_sum, homog, map_sum]
   refine Finset.sum_congr rfl fun m hm ↦ ?_
   have hle : ∀ j, m j ≤ f.totalDegree := fun j ↦
     (monomial_le_degreeOf j hm).trans (degreeOf_le_totalDegree f j)

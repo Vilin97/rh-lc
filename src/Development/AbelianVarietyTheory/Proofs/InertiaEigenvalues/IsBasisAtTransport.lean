@@ -85,7 +85,8 @@ theorem map_mem_one_iff (a : K') : e a ∈ (1 : Submodule (𝓞 K) K) ↔ a ∈ 
 theorem mem_dualFr_iff {n : ℕ} (L : Submodule (𝓞 K') (Fin n → K')) (L2 : Submodule (𝓞 K) (Fin n → K))
     (hL : ∀ x, vmE e n x ∈ L2 ↔ x ∈ L) (y : Fin n → K') : vmE e n y ∈ dualFr L2 ↔ y ∈ dualFr L := by
   have hd : ∀ x : Fin n → K', vmE e n y ⬝ᵥ vmE e n x = e (y ⬝ᵥ x) := fun x => by
-    simp only [dotProduct, map_sum, map_mul, vmE_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [dotProduct, map_sum, map_mul, vmE_apply]
   rw [mem_dualFr', mem_dualFr']
   constructor
   · intro hy x hx

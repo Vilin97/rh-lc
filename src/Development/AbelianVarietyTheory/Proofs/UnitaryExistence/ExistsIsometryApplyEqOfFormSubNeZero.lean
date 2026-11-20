@@ -164,7 +164,8 @@ private theorem matForm_single {r : ℕ} (M : Matrix (Fin r) (Fin r) ℂ) (i j :
 
 private theorem matForm_symm {r : ℕ} {M : Matrix (Fin r) (Fin r) ℂ} (hM : M.IsHermitian)
     (x y : Fin r → ℂ) : matForm M y x = (starRingEnd ℂ) (matForm M x y) := by
-  simp only [matForm_apply, map_sum, map_mul, Complex.conj_conj]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [matForm_apply, map_sum, map_mul, Complex.conj_conj]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun l _ => ?_
   have : (starRingEnd ℂ) (M k l) = M l k := hM.apply l k

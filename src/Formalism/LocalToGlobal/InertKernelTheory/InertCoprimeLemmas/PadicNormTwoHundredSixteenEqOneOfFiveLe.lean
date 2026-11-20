@@ -215,7 +215,8 @@ theorem s2_in_unramified_closure (dK : ℕ) (L : PeriodPair) (hsq : Squarefree d
   have key : lam ^ 2 * ι (Formalism.L2.Th1.F.s2 L)
       = -(((2 * dK : ℕ) : ℂ_[l])⁻¹ * ∑ P ∈ S, lam ^ 2 * ι (L.weierstrassP P)) := by
     have h := congrArg ι hsum'
-    rw [map_mul, map_neg, map_mul, map_sum, map_ofNat, map_natCast] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_mul, map_neg, map_mul, map_sum, map_ofNat, map_natCast] at h
     rw [← Finset.mul_sum, ← h]
     push_cast
     push_cast at hN0

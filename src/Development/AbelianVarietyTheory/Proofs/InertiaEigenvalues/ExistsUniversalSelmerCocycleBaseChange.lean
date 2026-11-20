@@ -35,7 +35,8 @@ theorem univ_ker {B : Type} [CommRing B] {a : ℕ} (Ψ : Matrix (Fin a) (Fin a) 
     simp [Finset.sum_apply, Pi.single_apply]
   have h2 : (Submodule.Quotient.mk (Ψ c) : (Fin a → B) ⧸ what₂ Ψ) = 0 :=
     (Submodule.Quotient.mk_eq_zero _).2 (Submodule.subset_span ⟨c, rfl⟩)
-  rw [← h, ← Submodule.mkQ_apply, map_sum] at h2
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← h, ← Submodule.mkQ_apply, map_sum] at h2
   simpa [matAct] using h2
 
 theorem tors {D : Formalism.BasicNotions.D7} {N : NData D.R D.host D.what₂} {X : NTw D.R D.host D.what₂ D.LL0 N} (i : X.Tw)

@@ -74,7 +74,8 @@ theorem hasStrictFDerivAt_expProd {d : ℕ} (b : Fin d → Matrix (Fin n) (Fin n
       exact expProd_line b j r
     exact h1.unique h2
   ext1 v
-  rw [pi_eq_sum_univ v, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [pi_eq_sum_univ v, map_sum, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   have e1 : (fun k => if j = k then (1 : ℝ) else 0) = Pi.single j 1 := by
     ext k; simp [Pi.single_apply, eq_comm]

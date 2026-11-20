@@ -29,7 +29,8 @@ lemma cmp_zero {D : ℕ} (β : Fin D →₀ ℕ) : cmp β (0 : P D) = 0 := by si
 lemma sum_cmp {D : ℕ} (f : P D) (B : Finset (Fin D →₀ ℕ)) (hB : (Ex D f).support ⊆ B) :
     ∑ β ∈ B, inx (monomial β 1) * cmp β f = f := by
   apply (Ex D).injective
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   have h : ∀ β ∈ B, Ex D (inx (monomial β 1) * cmp β f) = monomial β (AddMonoidAlgebra.coeff (Ex D f) β) := by
     intro β _
     rw [map_mul, inx, cmp, Ex_inl, Ex_inr, map_monomial, map_one, mul_comm, C_mul_monomial, mul_one]

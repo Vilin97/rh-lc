@@ -404,7 +404,8 @@ theorem lcq_finite_local (hπ0 : ∀ i, PowerSeries.constantCoeff (π' i) = 0)
     have : Submodule.Quotient.mk x = ∑ j, κ j • g j := by
       have hy : ∑ j, κ j • g j =
           Submodule.Quotient.mk (∑ j, κ j • (⟨e • b j, hgen j⟩ : ↥(NcS W T (c - 1)))) := by
-        rw [← Submodule.mkQ_apply, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [← Submodule.mkQ_apply, map_sum]
         simp only [map_smul, Submodule.mkQ_apply, g]
       rw [hy, Submodule.Quotient.eq, Submodule.mem_comap, Submodule.coe_subtype, Submodule.coe_sub,
         Submodule.coe_sum]

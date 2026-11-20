@@ -18,7 +18,8 @@ theorem coeff_mem_of_eval {σ : Type*} (U : Submodule ℂ (MvPolynomial σ ℂ))
     intro n
     have h1 : (φ.comp U.mkQ) (p.eval (C (n : ℂ))) = 0 := by
       rw [LinearMap.comp_apply, Submodule.mkQ_apply, (Submodule.Quotient.mk_eq_zero U).mpr (h n), map_zero]
-    rw [Polynomial.eval_eq_sum_range, map_sum] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Polynomial.eval_eq_sum_range, map_sum] at h1
     rw [hq, Polynomial.eval_finsetSum, ← h1]
     refine Finset.sum_congr rfl (fun i _ => ?_)
     rw [Polynomial.eval_mul, Polynomial.eval_C, Polynomial.eval_pow, Polynomial.eval_X, ← MvPolynomial.C_pow,

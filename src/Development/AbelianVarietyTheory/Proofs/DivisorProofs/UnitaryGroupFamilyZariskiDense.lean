@@ -201,7 +201,8 @@ theorem eval_clearQ (Q : MvPolynomial (ι × Fin a × Fin a) ℂ) (x : ι × Fin
     rw [cay, Matrix.inv_def, Ring.inverse_eq_inv', Matrix.mul_smul, Matrix.smul_apply, smul_eq_mul]
     field_simp [hdet v.1, hE]
   rw [hfun, eval_div_mul_pow_totalDegree_clear_denominators Q _ _ hD]
-  simp only [clearQ, map_sum, map_mul, map_prod, map_pow, eval_C]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [clearQ, map_sum, map_mul, map_prod, map_pow, eval_C]
 
 theorem unitary_zariski_dense : ∀ {ι : Type} [Fintype ι] {a : ℕ} (Q : MvPolynomial (ι × Fin a × Fin a) ℂ),
     (∀ g : ι → Matrix.unitaryGroup (Fin a) ℂ,

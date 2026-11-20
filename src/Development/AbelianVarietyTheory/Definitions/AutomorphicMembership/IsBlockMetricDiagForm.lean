@@ -24,7 +24,8 @@ def gramOf (h : M →ₗ[ℂ] M →ₗ⋆[ℂ] ℂ) (u : n → M) : Matrix n n �
 
 theorem form_sum (h : M →ₗ[ℂ] M →ₗ⋆[ℂ] ℂ) (u : n → M) (v w : n → ℂ) :
     h (∑ a, v a • u a) (∑ a, w a • u a) = star w ⬝ᵥ gramOf h u *ᵥ v := by
-  simp only [map_sum, map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, RingHom.id_apply, smul_eq_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, RingHom.id_apply, smul_eq_mul,
     dotProduct, mulVec, gramOf, of_apply, Pi.star_apply, Finset.mul_sum, RCLike.star_def]
   exact Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => by ring
 
@@ -202,7 +203,8 @@ theorem exists_isBlockMetric (y : Sp ℂ ⟶ X) : ∃ h : TanM y t.G →ₗ[ℂ]
   have hf : ∀ v w, (∑ τ, (g.compl₂ (e τ)).comp (e τ)) v w = ∑ τ, g (e τ v) (e τ w) := fun v w => by
     simp [LinearMap.sum_apply]
   refine ⟨∑ τ, (g.compl₂ (e τ)).comp (e τ), fun v w => ?_, fun v hv => ?_, fun ρ ρ' v w h hv hw => ?_⟩
-  · rw [hf, hf, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [hf, hf, map_sum]
     exact Finset.sum_congr rfl fun τ _ => diagForm_symm _ _ _ _
   · obtain ⟨τ, hτ⟩ : ∃ τ, e τ v ≠ 0 := by
       by_contra! h

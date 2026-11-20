@@ -130,7 +130,8 @@ theorem ext_basis (i : Ω →+* Ω') (j : E →+ F) (hj : IsExtOver i j) (V : Su
   have hJsum : ∀ v : V, J v = ∑ k, i (b₀.repr v k) • J (b₀ k) := by
     intro v
     conv_lhs => rw [← b₀.sum_repr v]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [hJs]
   have hJli : LinearIndependent Ω' (J ∘ b₀) := by
     apply LinearIndependent.of_comp (Submodule.span Ω' (j '' (V : Set E))).subtype

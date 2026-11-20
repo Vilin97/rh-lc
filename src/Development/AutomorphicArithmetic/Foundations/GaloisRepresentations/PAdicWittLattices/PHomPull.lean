@@ -63,4 +63,5 @@ theorem UpperTheory.Gal.G3.pHomPull :
     rw [GlobalTheory.CechPic.cls_linComb o₁'.isLB, GlobalTheory.CechPic.cls_pull o₂'.isLB, hP1, hP2]
     simp only [GlobalTheory.CechPic.pull_id]
     rw [← GlobalTheory.CechPic.pull_comp, ← hsq, GlobalTheory.CechPic.pull_comp, ← h1]
-    simp [map_sum, map_zsmul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, map_zsmul]

@@ -83,7 +83,8 @@ theorem nefOver_comb_of_antitone : ∀ {k : Type} [CommRing k] {X : Scheme.{0}} 
     exact HtTensCurve.topSelf_one_pull_tens hproj hd i L.isLB L'.isLB)
   have key (e : T × Fin N → ℤ) : topSelfIntersection κ ((ArInt.comb M e).B.pull i) 1 = ∑ x, e x * F (M x).icls := by
     change F (ArInt.comb M e).icls = _
-    rw [icls_comb, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [icls_comb, map_sum]
     exact Finset.sum_congr rfl fun x _ => by rw [map_zsmul, smul_eq_mul]
   rw [key]
   exact sum_neg_mul_nonneg T N _ (fun τ j hj => key _ ▸ h₁ τ j hj Z i κ hd) (fun τ => key _ ▸ (h₂ τ).1 Z i κ hd)

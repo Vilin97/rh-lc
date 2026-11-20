@@ -218,7 +218,8 @@ theorem degree_le_totalDegree {R : Type*} [CommSemiring R] {P : MvPolynomial σ 
 theorem l1Norm_bind_le_sum_norm_coeff_mul_pow_degree [NormOneClass K] (f : σ → MvPolynomial τ K) (P : MvPolynomial σ K)
     {R : ℝ} (h : ∀ i, l1Norm (f i) ≤ R) :
     l1Norm (bind₁ f P) ≤ ∑ α ∈ P.support, ‖P.coeff α‖ * R ^ α.degree := by
-  conv_lhs => rw [P.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [P.as_sum, map_sum]
   refine (l1Norm_sum_le _ _).trans (sum_le_sum fun α _ ↦ ?_)
   rw [bind₁_monomial]
   refine (l1Norm_mul_le _ _).trans ?_
@@ -472,7 +473,8 @@ theorem fockInner_eq_sum_of_subset_right (P : MvPolynomial σ 𝕜) {Q : MvPolyn
 
 theorem fockInner_conj_symm (P Q : MvPolynomial σ 𝕜) :
     starRingEnd 𝕜 (fockInner P Q) = fockInner Q P := by
-  rw [fockInner_eq_sum_of_subset_right Q (subset_refl P.support), fockInner, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [fockInner_eq_sum_of_subset_right Q (subset_refl P.support), fockInner, map_sum]
   exact sum_congr rfl fun α _ ↦ by simp [mul_comm]
 
 theorem fockInner_add_left (P P' Q : MvPolynomial σ 𝕜) :

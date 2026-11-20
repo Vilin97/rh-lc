@@ -85,7 +85,8 @@ theorem fibre_exp {g : ℕ} {A : Matrix (Fin g) (Fin g) ℂ} (hA : (A.map Comple
     exact is_const_of_fderiv_eq_zero hdk (fun z => (hkd z).fderiv) z 0
   have hMz : M z = (fun k => (f 0)⁻¹ * L (Pi.single k 1)) ⬝ᵥ z := by
     conv_lhs => rw [pi_eq_sum_univ z]
-    simp [hM, dotProduct, map_sum, mul_comm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [hM, dotProduct, map_sum, mul_comm]
     refine Finset.sum_congr rfl fun x _ => ?_
     congr 3
     funext j

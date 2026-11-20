@@ -57,7 +57,8 @@ theorem scalar_of_basis : ∀ {K V W ι : Type} [Field K] [AddCommGroup V] [Modu
     intro i
     have e1 : c (φ (b i)) = ∑ k, σ (b.repr (φ (b i)) k) • c (b k) := by
       conv_lhs => rw [← b.sum_repr (φ (b i))]
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simp only [LinearMap.map_smulₛₗ]
     have e2 : ∑ k, (if k = i then ζ else 0) • c (b k) = ζ • c (b i) := by
       simp [ite_smul]

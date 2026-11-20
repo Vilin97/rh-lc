@@ -15,7 +15,8 @@ private theorem crd_toLin_map_eq_mulVec_crd {D : D7} (X : HidaSetting D) (M : Ma
   have h := LinearMap.toMatrix_mulVec_repr X.bas X.bas (Matrix.toLin X.bas X.bas (M.map X.ιE)) y
   rw [LinearMap.toMatrix_toLin] at h
   funext i
-  simp only [Formalism.L2.SG.HidaSetting.HidaSetting.crd, Formalism.L2.SG.HidaSetting.crdOf, ← h, Matrix.mulVec, dotProduct,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Formalism.L2.SG.HidaSetting.HidaSetting.crd, Formalism.L2.SG.HidaSetting.crdOf, ← h, Matrix.mulVec, dotProduct,
     Matrix.map_apply, map_sum, map_mul, RingEquiv.symm_apply_apply]
 
 theorem memIsomOf_holds : MemIsomOf := by

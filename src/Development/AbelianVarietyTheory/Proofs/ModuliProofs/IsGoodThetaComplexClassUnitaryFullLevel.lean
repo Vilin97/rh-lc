@@ -72,7 +72,8 @@ theorem goodClass_pelClass : Out.Laws → Out.Laws2 → (∀ (S : Scheme.{0}) (P
   have hMat : ∀ j i, a j • bas (Pi.single i 1) = ∑ i', Mat j i' i • bas (Pi.single i' 1) := by
     intro j i
     apply bas.symm.injective
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [map_smul, LinearEquiv.symm_apply_apply]
     ext i₀
     simp [Mat, Finset.sum_apply, Pi.single_apply]
@@ -104,7 +105,8 @@ theorem goodClass_pelClass : Out.Laws → Out.Laws2 → (∀ (S : Scheme.{0}) (P
       apply exp_eq_zpow _ hk
       rw [← hbas]
       exact (hfam i).1.2.2.2.2 _ hk _ _
-    · rw [smul_zero, add_zero, ← map_smul, hMat, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [smul_zero, add_zero, ← map_smul, hMat, map_sum]
       simp only [map_zsmul]
     · exact ConjBound.exists_action_lt E H (Di i) g ty (P i bb) (Hm i bb) (a j₁) κ ((hBh i).1 bb hb).1 (hHm i bb hb)
         (hκ j₁)

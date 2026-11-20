@@ -36,7 +36,8 @@ theorem inner_apply_of_adjoint_eq {H W : Type} [NormedAddCommGroup H] [InnerProd
 theorem conj_csumAt {K : Type} [Field K] [NumberField K] [StarRing K] (S : CSD K) (σ : K →+* ℂ) (f g : S.Forms) :
     starRingEnd ℂ (GlobalTheory.LiftLower.csumAt S ((starRingEnd ℂ).comp σ) f g) = GlobalTheory.LiftLower.csumAt S σ f g := by
   unfold GlobalTheory.LiftLower.csumAt
-  simp only [dotProduct, Matrix.mulVec, Matrix.map_apply, Pi.star_apply, RingHom.comp_apply, map_sum, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dotProduct, Matrix.mulVec, Matrix.map_apply, Pi.star_apply, RingHom.comp_apply, map_sum, map_mul,
     Complex.star_def, Complex.conj_conj]
 
 end GlobalTheory.ConjScalar

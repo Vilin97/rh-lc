@@ -45,7 +45,8 @@ variable {K : Type*} [Field K] [NumberField K]
 theorem coordMap_coordInv (r : ℕ) (σ : K →+* ℂ) (w : Fin r → ℂ) :
     coordMap r σ (coordInv σ w) = w := by
   funext j
-  simp only [coordInv, map_sum, Finset.sum_apply, coordMap_tmul, AlgEquiv.symm_apply_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [coordInv, map_sum, Finset.sum_apply, coordMap_tmul, AlgEquiv.symm_apply_apply,
     Pi.single_apply]
   simp
 

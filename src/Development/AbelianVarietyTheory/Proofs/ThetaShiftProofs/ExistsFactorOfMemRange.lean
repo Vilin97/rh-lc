@@ -68,7 +68,8 @@ theorem tsum_mem_range_of_norm_cut (T : CDVR) {K : Type} [NormedField K] [Comple
     have h3 := hL n
     rw [SModEq.sub_mem, smul_eq_mul, Ideal.mul_top] at h3
     have h4 := hpow n _ h3
-    simpa [S, map_sub, map_sum] using h4
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [S, map_sub, map_sum] using h4
   exact tendsto_nhds_unique h2 h1
 
 theorem exists_factor_of_mem_range {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f : A →+* C) (g : B →+* C)

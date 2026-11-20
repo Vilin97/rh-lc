@@ -104,7 +104,8 @@ theorem endoCurve_of_endoZ [CharZero K] [CharZero K'] (W : WeierstrassCurve K) {
     apply mul_left_cancel₀ h2'
     linear_combination h4
   apply PowerSeries.map_injective φ φ.injective
-  rw [map_mul, PowerSeries.map_C, map_pow, map_rescale, h3, map_add, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_mul, PowerSeries.map_C, map_pow, map_rescale, h3, map_add, map_sum]
   simp only [map_sub, PowerSeries.map_C, Finset.sum_sub_distrib]
   rw [hsum]
 
@@ -400,7 +401,8 @@ theorem NRDense_of (hSq : SqrtKur) : NRDense := by
   have hs : α * (α - σ α) * s2 = ∑ P, xP P := by
     apply Subtype.ext
     have h := congrArg ι hs2C
-    simp only [map_mul, map_add, map_sub, map_intCast, map_one, map_sum] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_mul, map_add, map_sub, map_intCast, map_one, map_sum] at h
     rw [hσα, hαw]
     push_cast
     rw [hwc, hs2, h]

@@ -41,7 +41,8 @@ theorem isLattice_of_hat (Lb Lc : Submodule (𝓞 E) (Fin n → E)) (hfin : Modu
   set aA : Fin n → E ⊗[F] FiniteAdeleRing (𝓞 F) F := fun i => ι (a i) with haA
   have hdot : ∀ z : Fin n → E, aA ⬝ᵥ (fun i => ι (z i)) = ι (f z) := by
     intro z
-    rw [hfa, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hfa, map_sum]
     exact Finset.sum_congr rfl fun i _ => (map_mul ι _ _).symm
   have c1 : ∀ x ∈ latS (F := F) (FiniteAdeleRing (𝓞 F) F)
       (tensInt (F := F) (FiniteAdeleRing (𝓞 F) F) (intOE E) (intAd F)) Lc, aA ⬝ᵥ x = 0 := by

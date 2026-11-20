@@ -63,7 +63,8 @@ private theorem gc_mem_pow_iff {E σ : Type} [Field E] [Finite σ] (N : ℕ) (g 
           fun i e => rfl
         have hdecomp : g = ∑ i, X i * gi i := by
           ext e
-          rw [map_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [map_sum]
           simp only [X, coeff_monomial_mul, one_mul]
           by_cases he : e = 0
           · subst he
@@ -113,7 +114,8 @@ private theorem gc_lin {A σ : Type} [CommRing A] [Fintype σ] (f : MvPowerSerie
     (hd : d.degree < 2) :
     coeff d (f - algebraMap A _ (constantCoeff f) - ∑ i, coeff (Finsupp.single i 1) f • (X i : MvPowerSeries σ A)) = 0 := by
   classical
-  simp [MvPowerSeries.algebraMap_apply, coeff_C, coeff_X, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [MvPowerSeries.algebraMap_apply, coeff_C, coeff_X, map_sum]
   by_cases hd0 : d = 0
   · subst hd0
     have hne : ∀ x : σ, ¬ (0 : σ →₀ ℕ) = Finsupp.single x 1 :=
@@ -311,7 +313,8 @@ private lemma gc_graded [IsDomain O] [IsFractionRing O E] [Finite τ] (W : WPres
   have hF : φ (W.π (d • f - ∑ e' ∈ T, a e' • Pm e')) ∈ maximalIdeal (MvPowerSeries τ E) ^ N := by
     rw [gc_mem_pow_iff]
     intro e'' he''
-    rw [map_sub, map_sub, map_sum, map_sum, map_smul, map_smul, map_sub, map_sum, hcs]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_sub, map_sum, map_sum, map_smul, map_smul, map_sub, map_sum, hcs]
     simp only [map_smul, hψ, hcs, coeff_monomial, smul_ite, smul_zero]
     rw [Finset.sum_ite_eq T e'' (fun e' => a e' • (1 : E)), if_pos (hTmem e'' he''),
       ← Algebra.algebraMap_eq_smul_one, ha e'' (hTmem e'' he''), sub_self]
@@ -324,14 +327,17 @@ private lemma gc_graded [IsDomain O] [IsFractionRing O E] [Finite τ] (W : WPres
   have hwF : wcomp O W.wt (Finsupp.weight (fun i => W.wt (u i)) e) (d • f - ∑ e' ∈ T, a e' • Pm e') =
       -∑ e' ∈ T.filter (fun e' => Finsupp.weight (fun i => W.wt (u i)) e' =
         Finsupp.weight (fun i => W.wt (u i)) e), a e' • Pm e' := by
-    rw [Finset.sum_filter, map_sub, map_smul, map_sum, gc_wcomp_ne W.wt hjk hf, smul_zero, zero_sub]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_filter, map_sub, map_smul, map_sum, gc_wcomp_ne W.wt hjk hf, smul_zero, zero_sub]
     congr 1
     refine Finset.sum_congr rfl (fun e' _ => ?_)
     rw [map_smul, hwP, smul_ite, smul_zero]
   have hW := gc_homog W h hφ hy hF (Finsupp.weight (fun i => W.wt (u i)) e)
-  rw [hwF, map_neg, map_neg, Ideal.neg_mem_iff, map_sum, map_sum] at hW
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hwF, map_neg, map_neg, Ideal.neg_mem_iff, map_sum, map_sum] at hW
   have hc := (gc_mem_pow_iff N _).mp hW e (by omega)
-  simp only [map_smul, hψ, map_sum, hcs, coeff_monomial, smul_ite, smul_zero] at hc
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_smul, hψ, map_sum, hcs, coeff_monomial, smul_ite, smul_zero] at hc
   rw [Finset.sum_ite_eq _ e (fun e' => a e' • (1 : E))] at hc
   have heT : e ∈ T.filter (fun e' => Finsupp.weight (fun i => W.wt (u i)) e' =
       Finsupp.weight (fun i => W.wt (u i)) e) :=
@@ -381,7 +387,8 @@ private lemma gc_span [IsDomain O] [FaithfulSMul O E] {n : ℕ} (W : WPres O Y R
       exact zero_mem _
     · rw [AlgHom.commutes, AlgHom.commutes, hC]
       exact zero_mem _
-    · rw [map_sum, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [map_sum, map_sum, map_sum]
       refine Submodule.sum_mem _ (fun k _ => ?_)
       rw [map_smul, map_smul, hlinO]
       exact Submodule.smul_mem _ _ (hv k)
@@ -482,7 +489,8 @@ private lemma gc_der [IsDomain O] [IsFractionRing O E] [Fintype τ] (x : R →�
   set F' : MvPowerSeries τ E := d • φ a with hF'
   have key : φ (d • a - algebraMap O R (d * x a) - ∑ i, b i • z i) =
       F' - algebraMap E _ (constantCoeff F') - ∑ i, coeff (Finsupp.single i 1) F' • X i := by
-    rw [map_sub, map_sub, map_sum, map_smul, AlgHom.commutes]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_sub, map_sum, map_smul, AlgHom.commutes]
     congr 1
     · congr 1
       rw [IsScalarTower.algebraMap_apply O E (MvPowerSeries τ E)]
@@ -498,7 +506,8 @@ private lemma gc_der [IsDomain O] [IsFractionRing O E] [Fintype τ] (x : R →�
   have h1 := hDs _ hcm
   rw [map_smul, Algebra.smul_def] at h1
   have h2 := (mul_eq_zero.mp h1).resolve_left (fun h => hc (hinj (by rw [h, map_zero])))
-  rw [map_sub, map_sub, map_sum, hDc, map_smul] at h2
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sub, map_sub, map_sum, hDc, map_smul] at h2
   simp only [map_smul, h0, smul_zero, Finset.sum_const_zero, sub_zero] at h2
   rw [Algebra.smul_def] at h2
   exact (mul_eq_zero.mp h2).resolve_left (fun h => hd0 (hinj (by rw [h, map_zero])))

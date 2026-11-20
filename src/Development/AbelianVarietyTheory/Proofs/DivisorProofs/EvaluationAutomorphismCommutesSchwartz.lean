@@ -67,7 +67,8 @@ theorem isTame_symm : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Numb
     have h2 : (fun v => ev v (ψ j v)) = φ j := funext fun v => hψev j v
     rw [h2] at h1
     exact h1.symm
-  rw [LinearEquiv.coe_toLinearMap, hsplit, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [LinearEquiv.coe_toLinearMap, hsplit, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_smul, hφe j, hA _ (Submodule.subset_span ⟨S f, _, hG j, rfl⟩)]
   funext x

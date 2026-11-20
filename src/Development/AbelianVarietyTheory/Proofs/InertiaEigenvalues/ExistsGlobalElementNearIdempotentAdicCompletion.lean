@@ -22,12 +22,14 @@ theorem exists_global_near_idempotent (E E' : Type) [Field E] [NumberField E] [F
   have hrepr : ∀ t, B.repr (Φ t) = Finsupp.equivFunOnFinite.symm t := by
     intro t
     ext i
-    simp [hΦ, map_sum, Finsupp.smul_apply, Finsupp.single_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [hΦ, map_sum, Finsupp.smul_apply, Finsupp.single_apply]
   have hM : Continuous fun t => Algebra.leftMulMatrix B (Φ t) := by
     have h : (fun t => Algebra.leftMulMatrix B (Φ t)) =
         fun t => ∑ i, t i • Algebra.leftMulMatrix B (B i) := by
       funext t
-      simp only [hΦ, map_sum, map_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hΦ, map_sum, map_smul]
     rw [h]
     exact continuous_finsetSum _ fun i _ => (continuous_apply i).smul continuous_const
 

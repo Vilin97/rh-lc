@@ -91,7 +91,8 @@ theorem sum_eq_zero_of_eigen (T : Module.End k V) {I : Type} [DecidableEq I] (s 
     intro w l hw hl hT
     rw [Finset.sum_insert hj] at hT ⊢
     have e : ∑ i ∈ s, (l i - l j) • w i = T (w j + ∑ i ∈ s, w i) - l j • (w j + ∑ i ∈ s, w i) := by
-      rw [map_add, map_sum, hw j (Finset.mem_insert_self j s), smul_add, Finset.smul_sum,
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_add, map_sum, hw j (Finset.mem_insert_self j s), smul_add, Finset.smul_sum,
         Finset.sum_congr rfl (fun i hi => hw i (Finset.mem_insert_of_mem hi))]
       simp only [sub_smul, Finset.sum_sub_distrib]
       abel

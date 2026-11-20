@@ -41,7 +41,8 @@ theorem fR_smul_right (r : R) (u v : Fin n → R) : fR c J u (r • v) = c r * f
 
 theorem fR_skew (hc : ∀ r, c (c r) = r) (hJ : ∀ i j, c (J j i) = -J i j) (u v : Fin n → R) :
     c (fR c J u v) = -fR c J v u := by
-  simp only [fR, dotProduct, Matrix.mulVec, map_sum, map_mul, hc, Finset.mul_sum, ← Finset.sum_neg_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [fR, dotProduct, Matrix.mulVec, map_sum, map_mul, hc, Finset.mul_sum, ← Finset.sum_neg_distrib]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   rw [hJ]; ring
@@ -140,7 +141,8 @@ theorem sigma_invol {σ : E →ₐ[F] E} (hcm : IsCMExt F E σ) (e : E) : σ (σ
 
 theorem fR_inc (σ : E →ₐ[F] E) {d : ℕ} (J : Matrix (Fin d) (Fin d) E) (a b : Fin d → E) :
     fR (cA σ).toRingHom (incM F J) (incV F a) (incV F b) = inclR (AF F) (form σ J a b) := by
-  simp [fR, form, incV, incM, dotProduct, Matrix.mulVec, map_sum, map_mul, cA_incl]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [fR, form, incV, incM, dotProduct, Matrix.mulVec, map_sum, map_mul, cA_incl]
 
 end Main
 

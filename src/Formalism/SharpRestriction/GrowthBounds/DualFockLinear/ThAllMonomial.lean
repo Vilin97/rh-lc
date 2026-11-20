@@ -113,7 +113,8 @@ theorem famG_sum [Fintype (∀ s, Aset (m + 1) (d s))] (Q : MvPolynomial (Fin n'
       ∑ a : (∀ s, Aset (m + 1) (d s)), AddMonoidAlgebra.coeff Q (glue a) •
         ∏ s, blockEmb F s (∏ c, Nv F m (vec s) c ^ (a s).1 c) := by
     conv_lhs => rw [e]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun a _ => thAll_monomial F n' m vec d a _
   rw [e2, Finset.sum_mul]
   refine Finset.sum_congr rfl fun a _ => ?_

@@ -16,7 +16,8 @@ namespace GlobalTheory.Member
 theorem hT_symm_equivFun {D : D7} (V : HSp D) (x y : Fin V.rank → D.host.E) :
     V.hT (V.frame.equivFun.symm x) (V.frame.equivFun.symm y) =
       ∑ a, ∑ b, y a * V.gramᵀ a b * star (x b) := by
-  simp only [Module.Basis.equivFun_symm_apply, map_sum, LinearMap.sum_apply, map_smulₛₗ,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Module.Basis.equivFun_symm_apply, map_sum, LinearMap.sum_apply, map_smulₛₗ,
     LinearMap.smul_apply, smul_eq_mul, starRingEnd_apply, Finset.mul_sum, RingHom.id_apply]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
   simp only [Matrix.transpose_apply, HSpace.gram]

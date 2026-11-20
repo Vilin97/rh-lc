@@ -150,7 +150,8 @@ theorem pdA_casF_clm {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] {ε :
     Formalism.REAL.CasF ε (fun x => φ (f x)) g = φ (S7.casimirV ε f g) := by
   have hE : ∀ (F : Matrix (Fin n) (Fin n) ℂ → E) (a b : Fin n),
       S7.EabV ε a b F = Formalism.REAL.EabV ε a b F := fun _ _ _ => rfl
-  simp only [Formalism.REAL.CasF, S7.casimirV, map_sum, hE]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Formalism.REAL.CasF, S7.casimirV, map_sum, hE]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
   rw [pdA_eabV_clm φ (pdA_smooth_eabV hf b a) a b hg]
   exact pdA_eabV_congr (f := Formalism.REAL.Eab ε b a fun x => φ (f x))

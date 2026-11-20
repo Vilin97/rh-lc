@@ -25,7 +25,8 @@ theorem sigR_map_mulVec {a b : ℕ} (A : Matrix (Fin a) (Fin b) E) (y : Fin b �
     (fun i => sigR R σ ((A.map (inclR R) *ᵥ y) i)) =
       (fun k => sigR R σ (y k)) ᵥ* (Formalism.UG.cT (σ : E →+* E) A).map (inclR R) := by
   funext i
-  simp only [Matrix.mulVec, Matrix.vecMul, dotProduct, map_sum, map_mul, Formalism.UG.cT, Matrix.map_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mulVec, Matrix.vecMul, dotProduct, map_sum, map_mul, Formalism.UG.cT, Matrix.map_apply,
     Matrix.transpose_apply, sigR_inclR, RingHom.coe_coe]
   exact Finset.sum_congr rfl fun k _ => mul_comm _ _
 
@@ -85,7 +86,8 @@ theorem hE_mulVec {a b c : ℕ} (J : Matrix (Fin a) (Fin a) E) (A : Matrix (Fin 
     hE σ J (A *ᵥ α) (C *ᵥ β) = (fun i => σ (α i)) ⬝ᵥ ((Formalism.UG.cT (σ : E →+* E) A * J * C) *ᵥ β) := by
   have hs : (fun i => σ ((A *ᵥ α) i)) = (fun k => σ (α k)) ᵥ* Formalism.UG.cT (σ : E →+* E) A := by
     funext i
-    simp only [Matrix.mulVec, Matrix.vecMul, dotProduct, Formalism.UG.cT, map_sum, map_mul, Matrix.transpose_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, Matrix.vecMul, dotProduct, Formalism.UG.cT, map_sum, map_mul, Matrix.transpose_apply,
       Matrix.map_apply, RingHom.coe_coe]
     exact Finset.sum_congr rfl fun k _ => mul_comm _ _
   rw [hE_eq_dot, hs, ← Matrix.dotProduct_mulVec, Matrix.mulVec_mulVec, Matrix.mulVec_mulVec, Matrix.mul_assoc]
@@ -208,7 +210,8 @@ theorem isSelfDualAt_restrictedLattice : ∀ (F E : Type) [Field F] [NumberField
     ∀ v, IsSelfDualAt σ (J0 σ J X Y) (L0 σ J X Y L) v := by
   intro F E _ _ _ _ _ σ n J r X Y hσ hJ hW L a hA v
   have hswap : ∀ z w : Fin n → E, hE σ J w z = σ (hE σ J z w) := fun z w => by
-    simp only [hE, Formalism.UG.hform, map_sum, map_mul, RingHom.coe_coe, sigma_sigma hσ, hJ.1]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hE, Formalism.UG.hform, map_sum, map_mul, RingHom.coe_coe, sigma_sigma hσ, hJ.1]
     rw [Finset.sum_comm]
     exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
   have hxx : hE σ J (firstColumn X) (firstColumn X) = 0 := by rw [hE_firstColumn, hW.xx]; rfl

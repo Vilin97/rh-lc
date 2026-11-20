@@ -62,9 +62,11 @@ theorem norm_FF_le {p : ℕ} [Fact p.Prime] (y : S.R →+* PadicAlgCl p)
     apply Subtype.ext
     simp only [ThetaSys.FF, finsum_eq_sum_of_fintype, AddSubmonoidClass.coe_finset_sum,
       MulMemClass.coe_mul, SubalgebraClass.coe_algebraMap]
-  rw [h1, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h1, map_sum]
   refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg hB fun t _ => ?_
-  rw [map_mul, norm_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_mul, norm_mul, map_sum]
   simp_rw [map_mul]
   exact (mul_le_of_le_one_left (norm_nonneg _) (hy _)).trans (h t)
 
@@ -83,7 +85,8 @@ theorem thetaSys_norm_FF_le_exp :
   refine ⟨fun h1 h2 α hα hc => ?_, fun h1 => ?_⟩
   · refine norm_FF_le S y hy T c k hk (hpos α) fun t => ?_
     rw [← proj_mul_proj S T _ h1 hT.1 τ.isoFree c (τ.wt α) fun u => (hc u (h1 u.2) u.2).symm]
-    simp_rw [Matrix.mul_apply, map_sum, map_mul, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp_rw [Matrix.mul_apply, map_sum, map_mul, Finset.sum_mul]
     rw [Finset.sum_comm]
     refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg (hpos α) fun l _ => ?_
     simp_rw [mul_right_comm _ (y (algebraMap o S.R (S.proj T c l k.1)))]
@@ -108,7 +111,8 @@ theorem thetaSys_norm_FF_le_exp :
       rfl
     · refine norm_FF_le S y hy T c k hk (hpos _) fun t => ?_
       rw [href _ T h1 τ.isoFree hT c, finsum_mem_eq_finite_toFinset_sum _ (Set.toFinite _)]
-      simp_rw [Matrix.sum_apply, map_sum, Finset.sum_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp_rw [Matrix.sum_apply, map_sum, Finset.sum_mul]
       rw [Finset.sum_comm]
       refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg (hpos _) fun c' hc' => ?_
       have ht : (t : S.Gam) ∈ τ.yy.ker := by

@@ -249,7 +249,8 @@ theorem toUntilt_finSum {a : ℕ → L} {N : ℕ} (ha : ∀ i, ‖a i‖ ≤ 1) 
     apply Subtype.ext
     simp only [finSum, AddSubmonoidClass.coe_finset_sum, Subring.coe_mul, SubmonoidClass.coe_pow,
       coe_πInt, coe_teichInt]
-  rw [e, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, map_sum, map_sum]
   refine Finset.sum_congr rfl fun n _ => ?_
   rw [map_mul, map_mul, map_pow, map_pow, T.ptSharp_of_le hξ (ha n), zpow_natCast]
   rfl

@@ -33,7 +33,8 @@ theorem invariant_coord_bounds : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (
       simp only [M, qRep, Matrix.mulVec, dotProduct, Matrix.map_apply, Algebra.smul_def, map_mul,
         AlgEquiv.commutes, MonoidHom.coe_comp, Function.comp_apply]
       change algebraMap ℚ_[l] P.R.BdR ((((ρ g).val.map (algebraMap ℤ_[l] ℚ_[l])) *ᵥ v) i) * _ = _
-      simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum, map_mul, Finset.sum_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum, map_mul, Finset.sum_mul]
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [PadicInt.algebraMap_apply]
       ring
@@ -42,7 +43,8 @@ theorem invariant_coord_bounds : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (
       congr 1; funext i; simp
   set x : (Fin d → ℚ_[l]) ⊗[ℚ_[l]] P.R.BdR := ∑ i, Pi.single i (1 : ℚ_[l]) ⊗ₜ c i with hx
   have hex : e x = c := by
-    rw [hx, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hx, map_sum]
     funext j
     simp only [he_tmul, Finset.sum_apply, Pi.single_apply, ite_smul, one_smul, zero_smul]
     simp

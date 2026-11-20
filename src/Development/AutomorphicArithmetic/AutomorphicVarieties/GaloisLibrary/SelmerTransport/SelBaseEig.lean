@@ -21,7 +21,8 @@ variable {b} {J : N →+ N'} {C : ι → N' →+ N}
 private theorem Coords.comm (h : Coords b J C) (f : N → N) (f' : N' →ₗ[O] N') (hf : ∀ x, J (f x) = f' (J x))
     (i : ι) (y : N') : C i (f' y) = f (C i y) := by
   conv_lhs => rw [← h.sum y]
-  simp only [map_sum, LinearMap.map_smul, ← hf, h.coord, Module.Basis.repr_self]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.map_smul, ← hf, h.coord, Module.Basis.repr_self]
   rw [Finset.sum_eq_single i]
   · simp
   · intro k _ hk
@@ -61,7 +62,8 @@ private theorem Coords.length [IsLocalRing R] [IsLocalRing O] [IsLocalHom (algeb
       rw [hs, ht]
   have hφψ : ∀ y, φ (ψ y) = y := by
     intro y
-    simp only [ψ, map_sum, hφ, h.sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [ψ, map_sum, hφ, h.sum]
   have hφs : ∀ (o : O) t, φ (o • t) = o • φ t := by
     intro o t
     induction t using TensorProduct.induction_on with

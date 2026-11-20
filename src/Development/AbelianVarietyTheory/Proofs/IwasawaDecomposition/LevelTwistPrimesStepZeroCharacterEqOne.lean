@@ -454,9 +454,11 @@ theorem supSum_inv {κ : Type} [CommRing κ] {n a : ℕ} (S : Finset ℕ) {g : G
 
 theorem lamJ_zero {κ L : Type} [CommRing κ] [Field L] (ρ : κ →+* L) (ψ : AddChar L ℂ) (χ : ℕ → MulChar L ℂ) {n : ℕ} (k m t : ℕ)
     (A : Matrix (Fin n) (Fin n) κ) : Formalism.L2.Forms.lamJ ψ χ k t 0 k (A.map ρ) = ψ (ρ (supSum k (SX k m 0) A)) := by
-  rw [Formalism.L2.Forms.lamJ, Finset.range_zero, Finset.prod_empty, mul_one, supSum, map_sum ρ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Formalism.L2.Forms.lamJ, Finset.range_zero, Finset.prod_empty, mul_one, supSum, map_sum ρ]
   refine congrArg ψ (Finset.sum_congr rfl fun x _ => ?_)
-  rw [map_sum ρ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum ρ]
   refine Finset.sum_congr rfl fun y _ => ?_
   rw [apply_ite ρ, map_zero]
   refine if_congr (and_congr_right fun h1 => and_congr_right fun h2 => ?_) rfl rfl

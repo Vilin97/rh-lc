@@ -73,7 +73,8 @@ theorem finrank_ker_of_diag [IsDomain O] [IsPrincipalIdealRing O] [IsFractionRin
     · intro x hx
       rw [b.mem_span_image]
       intro s hs
-      rw [LinearMap.mem_ker, ← b.sum_repr x, map_sum] at hx
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [LinearMap.mem_ker, ← b.sum_repr x, map_sum] at hx
       simp only [map_smul, h2, smul_smul] at hx
       have := Fintype.linearIndependent_iff.1 b.linearIndependent _ hx s
       exact (sub_eq_zero.1 ((mul_eq_zero.1 this).resolve_left (Finsupp.mem_support_iff.1 hs))).symm

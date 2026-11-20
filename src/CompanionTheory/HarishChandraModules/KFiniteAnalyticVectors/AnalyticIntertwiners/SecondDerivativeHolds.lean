@@ -86,8 +86,10 @@ theorem intertwiner_actM_pow_comm {W W' : Submodule ℂ (smD ε σ)} (hW : IsKSt
       by_cases hab : ε a = ε b
       · rw [resB_apply hW hab]
       · rw [inK_apply_eq_zero hZ hab, zero_smul, zero_smul]
-    rw [e1, map_sum]
-    simp only [map_sum, map_smul, Submodule.coe_sum, Submodule.coe_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e1, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, Submodule.coe_sum, Submodule.coe_smul]
     rw [pow_succ', Module.End.mul_apply, ← ih x]
     simp only [actM, LinearMap.sum_apply, LinearMap.smul_apply]
     refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_

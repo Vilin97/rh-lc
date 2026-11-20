@@ -57,7 +57,8 @@ theorem ker_p_line : GlobalTheory.FunPr.Hypotheses₂ → ∀ (D : D7) (ψ : Add
       rw [Finset.sum_insert ha, Finset.sum_insert ha]
       exact CoinvPass.isDatum_add hψ (hΦ'D a) ih
   have hΦ₁ : Φ₁ = ∑ i, Φ' i := IsDatum.fun_eq Γ.M ψ cA cA.surjective hD₁ (hsum ▸ hsumD Finset.univ)
-  rw [hΦ₁, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hΦ₁, map_sum]
   refine Finset.sum_eq_zero fun i _ => ?_
   have hi := hl _ (List.get_mem l i)
   rw [hm.mapA.eql _ _ hi Φ hΦF (Φ' i) (hΦ'F i)

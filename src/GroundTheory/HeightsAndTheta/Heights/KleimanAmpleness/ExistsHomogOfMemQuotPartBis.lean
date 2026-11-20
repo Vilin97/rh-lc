@@ -92,7 +92,8 @@ theorem mConeMapOver_homog {g : MRingOver S ι} {d : K → ℕ} (hg : IsMultiHom
   classical
   conv_lhs => rw [g.as_sum]
   conv_rhs => rw [g.as_sum]
-  simp only [map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun μ hμ => ?_
   have hX : ∏ p : Σ k, ι k, (X p.1 : MvPolynomial K Ω) ^ μ p = ∏ k, (X k : MvPolynomial K Ω) ^ d k := by
     rw [Fintype.prod_sigma]
@@ -321,7 +322,8 @@ theorem prod_pow_add (c : ∀ k, ι k) (b b' : K → ℕ) :
 theorem aeval_div_mem_chartRing (c : ∀ k, ι k) {p : MRingOver S ι} {d : K → ℕ} (hp : IsMultiHomog p d) :
     aeval y p / ∏ k, y ⟨k, c k⟩ ^ d k ∈ chartRingOver S y c := by
   classical
-  rw [p.as_sum, map_sum, Finset.sum_div]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [p.as_sum, map_sum, Finset.sum_div]
   refine Subalgebra.sum_mem _ fun μ hμ => ?_
   have hdeg := hp μ hμ
   rw [aeval_monomial, Finsupp.prod_fintype _ _ (fun _ => pow_zero _)]

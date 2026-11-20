@@ -147,7 +147,8 @@ theorem selfDual_pi_of_form [LocallyCompactSpace A] (e : A ≃+* (P → ℝ)) (h
       fun x y => χ (x ⬝ᵥ y) := by
     funext x y
     have hdot : ∀ w, e (x ⬝ᵥ y) w = ∑ i, e (x i) w * e (y i) w := fun w => by
-      simp [dotProduct, map_sum, Finset.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [dotProduct, map_sum, Finset.sum_apply]
     have hs : ∑ q : ι × P, a q.2 * (eqvPi e he he' ι x q * eqvPi e he he' ι y q) =
         ∑ w, a w * e (x ⬝ᵥ y) w := by
       simp only [eqvPi_apply, hdot, Finset.mul_sum]

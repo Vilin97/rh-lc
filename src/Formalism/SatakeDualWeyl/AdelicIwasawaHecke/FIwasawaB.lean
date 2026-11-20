@@ -65,7 +65,8 @@ theorem fIwasawa_E_un (hσ : ∀ x, σ (σ x) = x) (e z : Fin n → L) (c : L)
     exact Finset.sum_congr rfl fun j _ => by ring
   have Hsym : ∀ x y : Fin n → L, fIwasawaH σ y x = σ (fIwasawaH σ x y) := by
     intro x y
-    simp only [fIwasawaH, map_sum, map_mul, hσ]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [fIwasawaH, map_sum, map_mul, hσ]
     exact (Fintype.sum_equiv Fin.revPerm _ _ fun j => by simp [mul_comm]).symm
   apply fIwasawa_un_of_isometry
   intro w w'

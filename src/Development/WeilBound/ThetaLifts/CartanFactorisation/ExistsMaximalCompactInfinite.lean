@@ -62,7 +62,8 @@ theorem bA_mul (i j : Ix E) : ∃ c : Ix E → ℤ, bA F i * bA F j = ∑ k, c k
   refine ⟨fun k => (RingOfIntegers.basis E).repr (RingOfIntegers.basis E i * RingOfIntegers.basis E j) k, ?_⟩
   have h := congrArg (fun x : 𝓞 E => inclR (F := F) (AF F) (algebraMap (𝓞 E) E x))
     ((RingOfIntegers.basis E).sum_repr (RingOfIntegers.basis E i * RingOfIntegers.basis E j))
-  simp only [map_sum, map_zsmul, map_mul] at h
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_zsmul, map_mul] at h
   simp only [bA, integralBasis_apply]
   exact h.symm
 

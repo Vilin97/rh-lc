@@ -73,7 +73,8 @@ theorem intHom_iff {P : HeightOneSpectrum (𝓞 E)} {a b : ℕ} (y : (Fin a → 
     conv_lhs => rw [show v = ∑ s, v s • (Pi.single s (1 : E) : Fin a → E) from by
       funext k
       simp [Finset.sum_apply, Pi.single_apply]]
-    simp only [map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul]
   rw [e, Finset.sum_apply]
   exact intAt_sum _ _ fun s _ => (hv s).mul (h s l)
 

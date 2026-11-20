@@ -42,7 +42,8 @@ theorem tendsto_zero_linRoot_pow_of_isOpen {α : Type} (l : Filter α) {ι : Typ
     Polynomial.monomial k ((d.choose k : ℝ) * φ (linRoot w ^ k * linRoot u₀ ^ (d - k)))
   have hq : ∀ t : ℝ, q.eval t = φ (linRoot (u₀ + t • w) ^ d) := by
     intro t
-    rw [linRoot_add_smul_pow, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [linRoot_add_smul_pow, map_sum]
     simp only [q, Polynomial.eval_finset_sum, Polynomial.eval_monomial, map_smul, smul_eq_mul]
     refine Finset.sum_congr rfl fun k _ => ?_
     ring

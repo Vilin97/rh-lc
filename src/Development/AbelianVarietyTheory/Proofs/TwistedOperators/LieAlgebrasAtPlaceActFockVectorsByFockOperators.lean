@@ -130,7 +130,8 @@ theorem derAll_of_one (hψ : IsStdChar D ψ (-1)) (hθ : IsInfFam θ) {τ : D.wh
     have e : ptAt ψ θ S T τ sS sT frS⁻¹ frT⁻¹ g ((∑ i, c i • L (z i) (L (z' i) P)) + lam • P) =
         (∑ i, c i • ptAt ψ θ S T τ sS sT frS⁻¹ frT⁻¹ g (L (z i) (L (z' i) P))) +
           lam • ptAt ψ θ S T τ sS sT frS⁻¹ frT⁻¹ g P := by
-      simp only [ptAt, map_add, map_sum, map_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [ptAt, map_add, map_sum, map_smul]
     rw [e]
     exact h
   have e : P' = (∑ i, c i • L (z i) (L (z' i) P)) + lam • P := by

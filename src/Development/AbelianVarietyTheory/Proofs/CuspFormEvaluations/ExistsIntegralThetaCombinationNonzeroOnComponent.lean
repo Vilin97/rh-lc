@@ -98,7 +98,8 @@ theorem exists_mem_Mlat_ne_zero {D : D7} {B : WeightFamilies.Prov D} {P : Moduli
     intro c
     let φ : B.Cusp j w →+ ℂ := AddMonoidHom.mk' (ρ c) (hadd c)
     have hφ : ∀ x, φ x = ρ c x := fun _ => rfl
-    rw [hG, ← hφ, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hG, ← hφ, map_sum]
     refine Finset.sum_congr rfl (fun i _ => ?_)
     rw [map_nsmul, hφ, nsmul_eq_mul]
   have hsne : ((s : B.KO)) ≠ 0 := fun h => hs0 (by exact_mod_cast h)

@@ -109,7 +109,8 @@ theorem isotropic_quotient_lattice : ∀ (E : Type) [Field E] [NumberField E] [I
     refine le_antisymm (Submodule.span_le.2 ?_) (Submodule.span_mono ?_)
     · rintro _ ⟨x, hx, rfl⟩
       obtain ⟨c, rfl⟩ := hsp x hx
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Submodule.sum_mem _ fun b _ => ?_
       rw [map_zsmul]
       have h : R.P (i b) ∈ Submodule.span ℂ (Set.range fun b => R.P (i b)) := Submodule.subset_span ⟨b, rfl⟩

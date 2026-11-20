@@ -156,7 +156,8 @@ theorem UpperTheory.V.U3.modelIdeal_finiteness_of_weightZero_finite :
     rw [hcomp, Fintype.sum_prod_type, ← hx2]
     refine Finset.sum_congr rfl (fun i _ => ?_)
     simp only [F]
-    rw [← Finset.sum_mul, ← map_sum, Algebra.smul_def, ← hz i]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Finset.sum_mul, ← map_sum, Algebra.smul_def, ← hz i]
     congr 2
     refine Finset.sum_congr rfl (fun j _ => ?_)
     rw [Algebra.smul_def]

@@ -44,7 +44,8 @@ theorem exists_basis_near_prime : ∀ (R : Type) [CommRing R] [IsDomain R] (h : 
     intro t g hg i hi
     have h0 := hL t (fun i => algebraMap R L (g i)) (by
       have h1 := congrArg f hg
-      rw [map_sum, map_zero] at h1
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, map_zero] at h1
       rw [← h1]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [map_smul, algebraMap_smul, hβ' j]) i hi
@@ -57,7 +58,8 @@ theorem exists_basis_near_prime : ∀ (R : Type) [CommRing R] [IsDomain R] (h : 
       (Finset.univ : Finset ι) (fun i => β'.repr (f ⟨u, hu⟩) i)
     choose z hz using fun i => hd i (Finset.mem_univ i)
     have h1 : f ((d : R) • (⟨u, hu⟩ : P)) = f (∑ i, z i • p i) := by
-      rw [map_smul, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_smul, map_sum]
       conv_lhs => rw [← β'.sum_repr (f ⟨u, hu⟩)]
       rw [Finset.smul_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
@@ -68,7 +70,8 @@ theorem exists_basis_near_prime : ∀ (R : Type) [CommRing R] [IsDomain R] (h : 
     have hk' : r ^ k = (e : R) * (d : R) := hk
     have he' : (e : R) • (d : R) • u = (e : R) • ∑ i, z i • b₀ i := by
       have h2 := congrArg P.subtype he
-      rw [Submonoid.smul_def, Submonoid.smul_def, map_smul, map_smul, map_smul, map_sum] at h2
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Submonoid.smul_def, Submonoid.smul_def, map_smul, map_smul, map_smul, map_sum] at h2
       simpa only [map_smul, Submodule.subtype_apply] using h2
     rw [hk', mul_smul, he']
     exact Submodule.smul_mem _ _ (Submodule.sum_mem _ fun i _ =>

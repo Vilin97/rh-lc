@@ -102,7 +102,8 @@ theorem repr_centralizer_eq_zero (N : W →ₗ[E] W) {ι : Type} [Fintype ι] (l
     (A : W →ₗ[E] W) (hA : A ∘ₗ N = N ∘ₗ A) (a : ι) (i : Fin (l a)) (hi : (i : ℕ) < s a) :
     B.repr (A v) ⟨a, i⟩ = 0 := by
   have hc : Commute A N := hA
-  rw [hv, map_sum, map_sum, Finsupp.finsetSum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hv, map_sum, map_sum, Finsupp.finsetSum_apply]
   apply Finset.sum_eq_zero
   intro b _
   by_cases hb : s b < l b

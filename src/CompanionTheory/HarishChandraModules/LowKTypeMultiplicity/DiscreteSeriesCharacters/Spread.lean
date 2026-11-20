@@ -15,7 +15,8 @@ open Formalism.REAL Formalism.FourierDecayAlt.Q
 theorem map_qminor {A B : Type} [Ring A] [Algebra ℂ A] [Ring B] [Algebra ℂ B] (f : A →ₐ[ℂ] B) {n t : ℕ}
     (E : Fin n → Fin n → A) (a b : Fin t → Fin n) (u : ℂ) :
     f (qminor E a b u) = qminor (fun c d => f (E c d)) a b u := by
-  simp only [qminor, map_sum, map_mul, map_intCast, map_list_prod, List.map_ofFn]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [qminor, map_sum, map_mul, map_intCast, map_list_prod, List.map_ofFn]
   refine Finset.sum_congr rfl fun σ _ => ?_
   congr 3
   split_ifs <;> simp

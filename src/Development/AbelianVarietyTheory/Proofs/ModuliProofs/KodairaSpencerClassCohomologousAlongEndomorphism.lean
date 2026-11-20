@@ -108,7 +108,8 @@ theorem pbT_ι_comb {m : Y ⟶ X} (dd : Fin g → ∀ O : Y.Opens, Γ(Y, O) → 
     ∑ a, rsT (pbT O.ι (c a) (((O.ι ≫ y) ≫ m) ⁻¹ᵁ W₀)) _ * pbT (O.ι ≫ y) (dd a (m ⁻¹ᵁ W) ((m.app W).hom f)) _ := by
   have hL : ((O.ι ≫ y) ≫ m) ⁻¹ᵁ W ≤ O.ι ⁻¹ᵁ (O ⊓ y ⁻¹ᵁ m ⁻¹ᵁ W) := le_of_eq (pre_ι_eq O y m W)
   have hL₀ : ((O.ι ≫ y) ≫ m) ⁻¹ᵁ W ≤ ((O.ι ≫ y) ≫ m) ⁻¹ᵁ W₀ := Scheme.Hom.preimage_mono _ hW
-  rw [pbT_eq_appLE_hom _ hL, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [pbT_eq_appLE_hom _ hL, map_sum]
   refine Finset.sum_congr rfl (fun a _ => ?_)
   rw [map_mul, ← pbT_eq_appLE_hom _ hL, ← pbT_eq_appLE_hom _ hL]
   congr 1
@@ -267,14 +268,16 @@ private lemma rsT_constFn_of_le {Y : Scheme.{0}} {R : Type} [CommRing R] (q : Y 
 
 private lemma rsT_sum_mul {Y : Scheme.{0}} {n : ℕ} {O O' : Y.Opens} (h : O' ≤ O) (u v : Fin n → Γ(Y, O)) :
     rsT (∑ a, u a * v a) O' = ∑ a, rsT (u a) O' * rsT (v a) O' := by
-  rw [← resG_eq h, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← resG_eq h, map_sum]
   simp only [map_mul]
   simp only [resG_eq h]
 
 private lemma pbT_sum_mul {Y Z : Scheme.{0}} {n : ℕ} (f : Z ⟶ Y) {O : Y.Opens} {V : Z.Opens}
     (h : V ≤ f ⁻¹ᵁ O) (u v : Fin n → Γ(Y, O)) :
     pbT f (∑ a, u a * v a) V = ∑ a, pbT f (u a) V * pbT f (v a) V := by
-  rw [pbT_eq_appLE_hom f h, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [pbT_eq_appLE_hom f h, map_sum]
   simp only [map_mul]
   simp only [← pbT_eq_appLE_hom f h]
 

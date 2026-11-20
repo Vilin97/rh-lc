@@ -70,8 +70,10 @@ theorem projT_mem_TMod {m : Amb x η} (hm : m ∈ TMod x η S n0 d0 g0) (c : ℤ
   | smul p m _ hm =>
     have hsum : toA x η (p • m) = ∑ d ∈ Finset.range (p.totalDegree + 1),
         phi x η S (homogeneousComponent d p) * toA x η m := by
-      rw [toA_smulP, ← Finset.sum_mul, ← map_sum, sum_homogeneousComponent]
-    rw [hsum, map_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [toA_smulP, ← Finset.sum_mul, ← map_sum, sum_homogeneousComponent]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hsum, map_sum, map_sum]
     refine Submodule.sum_mem _ fun d _ => ?_
     rw [projT_mul_of_mem (phi_mem_tgr x η S (homogeneousComponent_isHomogeneous d p))]
     have h := Submodule.smul_mem _ (homogeneousComponent d p) (hm (c - d))
@@ -135,8 +137,10 @@ theorem isInternal_pieceM : DirectSum.IsInternal (pieceM x η S n0 d0 g0) := by
         rw [AddEquiv.apply_symm_apply]; exact projT_mem c _⟩, ?_⟩
     apply Subtype.ext
     apply (toA x η).injective
-    rw [map_sum]
-    simp only [DirectSum.coeAddMonoidHom_of, Submodule.coe_sum, map_sum, AddEquiv.apply_symm_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [DirectSum.coeAddMonoidHom_of, Submodule.coe_sum, map_sum, AddEquiv.apply_symm_apply]
     exact hF
 
 def tgraded : GradedPMod (Sy S r) N (TMod x η S n0 d0 g0) where

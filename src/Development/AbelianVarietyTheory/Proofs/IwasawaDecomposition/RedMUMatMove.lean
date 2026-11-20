@@ -23,7 +23,8 @@ theorem adj_move (φ : A →+* R) (C : Matrix (Fin m) (Fin m) R) (B Y : Matrix (
   have e : (Matrix.of Z).map φ + M • (Matrix.of w).map φ = (Matrix.of Z').map φ * (u.map φ)ᵀ := by
     ext b a
     have := congrArg φ (congrFun (hZ b) a)
-    simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Pi.add_apply, Pi.smul_apply, map_add, map_nsmul] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Pi.add_apply, Pi.smul_apply, map_add, map_nsmul] at this
     simp only [Matrix.add_apply, Matrix.smul_apply, Matrix.map_apply, Matrix.of_apply, Matrix.mul_apply,
       Matrix.transpose_apply, ← this, mul_comm]
   unfold adj
@@ -44,7 +45,8 @@ theorem red_eq (S : Subring R) (ρ : S →+* k) (M : ℕ) (hM : (M : k) = 0) (X 
   have e : (⟨X' i j, hX' i j⟩ : S) = ∑ a, (⟨X i a, hX i a⟩ + M • ⟨W i a, hW i a⟩) * y a j := by
     apply Subtype.ext
     simp [h, Matrix.mul_apply]
-  rw [e, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, map_sum]
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [map_mul, map_add, map_nsmul, nsmul_eq_mul, hM, zero_mul, add_zero]
 

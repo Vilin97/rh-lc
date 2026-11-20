@@ -109,7 +109,8 @@ variable {σ}
 
 private theorem sigma_form (hσ : ∀ x, σ (σ x) = x) {J : Matrix (Fin n) (Fin n) E} (herm : ∀ i j, σ (J j i) = J i j)
     (e : Fin n → E) : σ (e ⬝ᵥ J *ᵥ sv σ e) = e ⬝ᵥ J *ᵥ sv σ e := by
-  simp only [dotProduct, mulVec, sv, map_sum, map_mul, hσ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dotProduct, mulVec, sv, map_sum, map_mul, hσ]
   simp only [Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
@@ -118,7 +119,8 @@ private theorem sigma_form (hσ : ∀ x, σ (σ x) = x) {J : Matrix (Fin n) (Fin
 
 private theorem sigma_mulVec (hσ : ∀ x, σ (σ x) = x) {J : Matrix (Fin n) (Fin n) E} (herm : ∀ i j, σ (J j i) = J i j)
     (e : Fin n → E) (k : Fin n) : σ ((J *ᵥ sv σ e) k) = (e ᵥ* J) k := by
-  simp only [mulVec, vecMul, dotProduct, sv, map_sum, map_mul, hσ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [mulVec, vecMul, dotProduct, sv, map_sum, map_mul, hσ]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [herm]
   ring

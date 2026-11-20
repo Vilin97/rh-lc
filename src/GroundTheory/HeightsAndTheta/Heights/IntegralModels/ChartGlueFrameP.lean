@@ -121,7 +121,8 @@ theorem frame_at_prime {i : τ} (hi : x i ≠ 0)
     obtain ⟨κ, rfl⟩ := (Submonoid.mem_powers_iff _ _).1 ht₀
     have hrepr_e : bb.repr e q = ∑ j, β j * bb.repr (Gn j) q := by
       conv_lhs => rw [heβ]
-      simp [map_sum, map_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [map_sum, map_smul]
     have hii : (σ₂ : Ω) * (((((p : Nat.Primes) : ℕ) : ℤ) : Ω) * ((t : Ω) * g l)) ^ n₂ * (((primeProd S : ℤ) : Ω) ^ κ * bb.repr e q) ∈ (chartRing ℤ x i) := by
       rw [hrepr_e, Finset.mul_sum, Finset.mul_sum]
       refine sum_mem fun j _ => ?_

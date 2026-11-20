@@ -118,7 +118,8 @@ theorem exists_basis [IsLocalRing O] (hj : ∀ a, algebraMap O C (j a) = i a) (h
     obtain ⟨-, ht', hcomp, -⟩ := LieComb.lieComb_algebra K F.P₀.A _ F.v F.basis.1
     refine ⟨_, h₄, funext fun l => ?_⟩
     rw [(F.basis.2 w (ht' _ _ hc)).unique hc (hcomp _ (M t) e₀ _ w hM₀ h₃)]
-    rw [Function.comp_apply, Finset.sum_apply, Finset.sum_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Function.comp_apply, Finset.sum_apply, Finset.sum_apply, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [Pi.smul_apply, Pi.smul_apply, smul_eq_mul, map_mul, Algebra.smul_def]
     exact congrArg (· * i (M t k l)) (RingHom.congr_fun hψi (a k)).symm

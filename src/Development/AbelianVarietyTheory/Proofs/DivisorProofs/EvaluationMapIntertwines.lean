@@ -36,7 +36,8 @@ theorem finite_heisenberg_op_trivial (ψ : AddChar (AF F) ℂ) (g : (κ → Af F
 theorem finite_part_sum_smul_zero {ι : Type} [Fintype ι] (x : ι → AF F) (hx : ∀ i, p2 (x i) = 0) (S : ι → (κ → AF F) × (κ → AF F)) :
     (∀ a, p2 ((∑ i, x i • S i).1 a) = 0) ∧ ∀ a, p2 ((∑ i, x i • S i).2 a) = 0 := by
   constructor <;> intro a <;>
-    simp only [Prod.fst_sum, Prod.snd_sum, Finset.sum_apply, Prod.smul_fst, Prod.smul_snd, Pi.smul_apply, smul_eq_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Prod.fst_sum, Prod.snd_sum, Finset.sum_apply, Prod.smul_fst, Prod.smul_snd, Pi.smul_apply, smul_eq_mul,
       map_sum, map_mul, hx, zero_mul, Finset.sum_const_zero]
 
 theorem scalar_decay_pure {ι : Type} [Fintype ι] (ψ : AddChar (AF F) ℂ) (hψ : IsStd ψ)
@@ -144,7 +145,8 @@ theorem form_swap_herm {σ : E →ₐ[F] E} (hcm : IsCMExt F E σ) {n : ℕ} {J 
   have hσ : ∀ z, σ (σ z) = z := fun z => by
     obtain ⟨τ⟩ : Nonempty (E →+* ℂ) := inferInstance
     exact τ.injective (by rw [hcm.2.2.2, hcm.2.2.2, star_star])
-  simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, hJ, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, hJ, Finset.mul_sum]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by rw [← hJ j i]; ring
 
@@ -218,7 +220,8 @@ theorem vecMulVec_sum {n d : ℕ} (y : Fin n → E) (w : Fin d → E) :
   have hw : ∀ k, inclR (F := F) (AF F) (w k) = ∑ j, algebraMap F (AF F) ((Module.finBasis F E).repr (w k) j) •
       inclR (F := F) (AF F) (Module.finBasis F E j) := fun k => by
     conv_lhs => rw [← (Module.finBasis F E).sum_repr (w k)]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     show (1 : AF F) ⊗ₜ[F] (_ • _) = _ • ((1 : AF F) ⊗ₜ[F] _)
     rw [← TensorProduct.smul_tmul, TensorProduct.smul_tmul', Algebra.smul_def, mul_one, smul_eq_mul, mul_one]
@@ -345,7 +348,8 @@ theorem thetaSum_arch_decay : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F]
   have hx : ∀ p, p2 (x p) = 0 := fun p => real_adele_mul_finite_part_zero _
   have hrho : M₁.co.rho B.ψ (realAd F 1 • Matrix.vecMulVec (incV F H.y) (incV F w)) Φ =
       schr B.ψ (∑ p, x p • M₁.co.e (Sm p)) Φ := by
-    rw [Darboux.rho, vecMulVec_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Darboux.rho, vecMulVec_sum, map_sum]
     simp only [map_smul]
     rfl
   have hθ : thetaSum F (e' (M₁.co.rho B.ψ (realAd F 1 • Matrix.vecMulVec (incV F H.y) (incV F w)) Φ)) =

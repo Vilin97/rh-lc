@@ -130,7 +130,8 @@ theorem exists_lift_retract : ∀ (A K : Type) [CommRing A] [IsDomain A] [IsNoet
     have h1 : vec (r y) = vecL (r y) := rfl
     rw [h1]
     conv_rhs => rw [hy]
-    rw [map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum]
     simp only [Rr, Fintype.linearCombination_apply, map_smul, hsmul]
     rfl
   refine ⟨G, Rr, fun e he => ?_, fun k => ?_, fun e he => ?_⟩

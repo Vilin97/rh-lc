@@ -108,7 +108,8 @@ theorem pbf_disc_model : ∀ (q : ℕ) [NeZero q] (N : ℕ) (i : ℤ), ∃ (J : 
     fun {K L m} => AddMonoidHom.mk' CohomologyClass.mk CohomologyClass.mk_add
   have hL : (∑ j, cpost _ (ψ j) (n - 2 * ((j : ℕ) : ℤ)) n (by omega) (a j)) =
       CohomologyClass.mk (∑ j, zcomp (α j) (ψ j) (show n - 2 * ((j : ℕ) : ℤ) + 2 * ((j : ℕ) : ℤ) = n by ring)) := by
-    rw [show CohomologyClass.mk (∑ j, zcomp (α j) (ψ j) (show n - 2 * ((j : ℕ) : ℤ) + 2 * ((j : ℕ) : ℤ) = n by ring)) =
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [show CohomologyClass.mk (∑ j, zcomp (α j) (ψ j) (show n - 2 * ((j : ℕ) : ℤ) + 2 * ((j : ℕ) : ℤ) = n by ring)) =
       mkH (∑ j, zcomp (α j) (ψ j) _) from rfl, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [← hαa j]
@@ -116,7 +117,8 @@ theorem pbf_disc_model : ∀ (q : ℕ) [NeZero q] (N : ℕ) (i : ℤ), ∃ (J : 
   have hR : (∑ j : Fin N, ((cup q (pull _ (prod.fst : disc.obj F ⨯ fibQ q N ⟶ _) _ _ (a j))
       (pull _ (prod.snd : disc.obj F ⨯ fibQ q N ⟶ _) _ _ (cpow q (c1 q (lineQ q N)) j))).cast (by ring) (by ring) :
         Ht q _ n i)) = CohomologyClass.mk (∑ j, γ' j) := by
-    rw [show CohomologyClass.mk (∑ j, γ' j) = mkH (∑ j, γ' j) from rfl, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [show CohomologyClass.mk (∑ j, γ' j) = mkH (∑ j, γ' j) from rfl, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     change _ = CohomologyClass.mk (γ' j)
     rw [hγ'c j, hγc j, hαa j, hz j]

@@ -101,9 +101,11 @@ theorem good_transport {K K' G G' : Type} [Field K] [Field K'] [CharZero K] [Cha
     apply MonoidAlgebra.ext
     ext t
     apply σ'.injective
-    rw [hX2', coeff_idemOf, Finset.sum_image fun a _ b _ h => hinj h, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hX2', coeff_idemOf, Finset.sum_image fun a _ b _ h => hinj h, map_sum]
     have := hX2 (e.symm t)
-    rw [coeff_idemOf, map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [coeff_idemOf, map_sum] at this
     rw [← hc (e.symm t), MulEquiv.apply_symm_apply] at this
     rw [← this]
     refine Finset.sum_congr rfl fun χ _ => ?_

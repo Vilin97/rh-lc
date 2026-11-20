@@ -86,7 +86,8 @@ theorem comp_mul_add [Fintype K] {c d : K → ℕ} {s : MRing ι R} (hs : IsMult
 
 theorem comp_mul_of_ne [Fintype K] {c b : K → ℕ} {s : MRing ι R} (hs : IsMultiHomog s c) (h : MRing ι R)
     (hb : ∀ d, b ≠ c + d) : weightedHomogeneousComponent (blockWeight ι) b (s * h) = 0 := by
-  rw [← sum_weightedHomogeneousComponent (blockWeight ι) h,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← sum_weightedHomogeneousComponent (blockWeight ι) h,
     finsum_eq_sum _ (weightedHomogeneousComponent_finsupp h), Finset.mul_sum, map_sum]
   exact Finset.sum_eq_zero fun d _ => IsWeightedHomogeneous.weightedHomogeneousComponent_ne b
     (IsWeightedHomogeneous.mul hs (weightedHomogeneousComponent_isWeightedHomogeneous d h)) (hb d)

@@ -25,7 +25,8 @@ theorem pull_matForm {n d : ℕ} (F : V n →L[ℂ] V d) (K : Matrix (Fin d) (Fi
       Matrix.of (fun a l => conj (F (coordVec l) a))) : Alt n) := by
   rw [coe_matForm, coe_matForm, map_smul]
   congr 1
-  simp only [map_sum, map_smul, map_mul, (pull_dz F _).1, (pull_dz F _).2, Finset.sum_mul, Finset.mul_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, map_mul, (pull_dz F _).1, (pull_dz F _).2, Finset.sum_mul, Finset.mul_sum,
     smul_mul_smul_comm, Finset.smul_sum, smul_smul, Matrix.mul_apply, Matrix.of_apply, Finset.sum_smul]
   simp only [← Finset.sum_product']
   refine Finset.sum_nbij' (fun x => (x.2.2.2, x.2.2.1, x.2.1, x.1)) (fun y => (y.2.2.2, y.2.2.1, y.2.1, y.1))

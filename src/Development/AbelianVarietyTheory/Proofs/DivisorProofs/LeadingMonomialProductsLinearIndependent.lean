@@ -43,7 +43,8 @@ theorem coeff_zero {n : ℕ} (A : Finset (Fin n → ℕ)) (b : (Fin n → ℕ) �
   have hp : p = 0 := by
     apply MvPolynomial.funext
     intro y
-    rw [hpdef, map_sum, map_zero, ← h y]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hpdef, map_sum, map_zero, ← h y]
     refine Finset.sum_congr rfl fun α _ => ?_
     rw [MvPolynomial.eval_monomial, Finsupp.prod_fintype _ _ (fun i => pow_zero _)]
     simp

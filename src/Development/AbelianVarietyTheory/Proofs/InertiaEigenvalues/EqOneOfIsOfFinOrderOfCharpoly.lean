@@ -239,7 +239,8 @@ theorem IsTripleOf.adm8 (h : IsTripleOf Y) : adm8 X Y := by
     · refine Or.inr fun g hI => (matW_of_mem_Ine hu hl hg hA hI).trans ?_
       rw [chiS, X.twistCharacterFamily_at_auxiliaryPlaces i _ _ v hv A hA g hI, hb, if_pos rfl]
   · change _ = algebraMap (X.O0 i) (X.O i) (1 - matW s g).det
-    rw [← sum_coeff_charpolyRev, map_sum, matW_eq]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← sum_coeff_charpolyRev, map_sum, matW_eq]
     exact Finset.sum_congr rfl fun k hk => h.hkFrob hi s P hS hP g hF k (Nat.lt_succ_iff.1 (Finset.mem_range.1 hk))
 
 theorem satake_identity_of_isTriple (D : D7) (h : IsTriple D) :

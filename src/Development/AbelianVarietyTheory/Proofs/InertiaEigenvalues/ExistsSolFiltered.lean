@@ -118,9 +118,11 @@ theorem _root_.GlobalTheory.ExpImage.solve_mod_pow : ∀ (l : ℕ) [Fact l.Prime
       coeff j (T (mk c)) = ∑ i ∈ Finset.range (j + 1), c i * coeff j (T (X ^ i)) := by
     intro c j
     rw [hloc (mk c) (∑ i ∈ Finset.range (j + 1), c i • X ^ i) j]
-    · simp [map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp [map_sum, map_smul]
     · intro i hi
-      simp [coeff_mk, map_sum, coeff_X_pow, Finset.mem_range.2 hi]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [coeff_mk, map_sum, coeff_X_pow, Finset.mem_range.2 hi]
 
   have hv0 : constantCoeff v = 1 + (l : ℤ_[l]) ^ s := by
     have h := congrArg (coeff 1) hv

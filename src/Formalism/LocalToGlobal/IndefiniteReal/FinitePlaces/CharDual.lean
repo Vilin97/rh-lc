@@ -132,7 +132,8 @@ theorem symplO_ratW_ratW (e γ : Matrix (Fin T.rank) (Fin S.rank) D.host.E) :
     symplO S T (ratW T S e) (ratW T S γ) = algebraMap D.host.F (AF D.host.F) (betaO S T e γ) := by
   have h : hO S T (ratW T S e) (ratW T S γ) = incA D (hE S T e γ) := by
     unfold hO hE
-    simp only [map_sum, map_mul, ratW, Matrix.map_apply, Brg.cA_inc]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, ratW, Matrix.map_apply, Brg.cA_inc]
   unfold symplO betaO
   rw [h, ← map_mul, trace_incA]
 
@@ -300,7 +301,8 @@ theorem ratL_of_perp {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D ψ (-1)
       ∑ a, Formalism.IndefR.PHeisTh.Co T S x a * algebraMap D.host.F (AF D.host.F) (LamO S T γ a) := by
     intro γ
     have := congrArg (symplLin S T (ratW T S γ)) hx'
-    rw [map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at this
     simp only [map_smul, smul_eq_mul] at this
     rw [show symplO S T x (ratW T S γ) = symplLin S T (ratW T S γ) x from rfl, this]
     refine Finset.sum_congr rfl fun a _ => ?_
@@ -321,7 +323,8 @@ theorem ratL_of_perp {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D ψ (-1)
   refine (mem_ratL_iff S T x).2 ⟨∑ a, r a • epsO S T a, ?_⟩
   rw [hx']
   show ratWHom (∑ a, r a • epsO S T a) = _
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun a _ => ?_
   show ratW T S (r a • epsO S T a) = _
   rw [hr a, smul_ratW]

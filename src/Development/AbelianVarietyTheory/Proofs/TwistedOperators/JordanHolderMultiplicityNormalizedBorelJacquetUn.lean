@@ -52,7 +52,8 @@ private lemma pres_iterate_zero {G V : Type} [Group G] [TopologicalSpace G] [IsT
   refine ⟨GlobalTheory.LocGL.idem hρ hH v, GlobalTheory.LocGL.idem_mem hρ hH v, ?_, ?_⟩
   · rw [GlobalTheory.LocGL.idem_eq_cosetSum hρ hH U hUv]
     exact S.toSubmodule.smul_mem _ (S.toSubmodule.sum_mem fun q _ => S.apply_mem_toSubmodule _ hv)
-  · rw [GlobalTheory.LocGL.idem_eq_cosetSum hρ hH U hUv, map_smul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [GlobalTheory.LocGL.idem_eq_cosetSum hρ hH U hUv, map_smul, map_sum]
     have hq : ∀ q : H ⧸ U, f (ρ (q.out : H) v) = f v := fun q => by
       rw [hf _ v hv, ofChar_apply, hθ _ (q.out).2, Units.val_one, one_mul]
     have hc : (Fintype.card (H ⧸ U) : ℂ) ≠ 0 := Nat.cast_ne_zero.2 Fintype.card_ne_zero

@@ -209,7 +209,8 @@ theorem eq_zero_of_alt [Module.Finite R V] [Module.Projective R V] (τ : ⋀[R]^
     exact this
   have hw : ∀ a b, wd (R := R) a b = ∑ i, ∑ j, (l i a * l j b) • wd (R := R) (x i) (x j) := fun a b ↦ by
     refine (congrArg₂ (fun y y' ↦ wd (R := R) y y') (hx a) (hx b)).trans ?_
-    simp only [map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply, Finset.smul_sum, smul_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply, Finset.smul_sum, smul_smul]
     rw [Finset.sum_comm]
     exact Finset.sum_congr rfl fun i _ ↦ Finset.sum_congr rfl fun j _ ↦ by rw [mul_comm]
   have key : (LinearMap.id : ⋀[R]^2 V →ₗ[R] ⋀[R]^2 V) = ∑ i, ∑ j, if i < j then

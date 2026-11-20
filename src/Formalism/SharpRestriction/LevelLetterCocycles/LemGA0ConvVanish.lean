@@ -34,7 +34,8 @@ theorem lemGA0_cc_π₀₁ (W : LocWach PD LL O v n) (hcard : W.DelF.card = PD.p
     PowerSeries.constantCoeff W.π₀₁ = 0 := by
   unfold LocWach.π₀₁
   have h2 : ∀ δ, PowerSeries.constantCoeff (W.γ₀ δ PowerSeries.X) = (0 : O) := fun δ => (W.γ₀_X δ).1
-  simp only [map_add, map_sub, map_one, map_natCast, map_sum, h2, add_zero, Finset.sum_const,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_add, map_sub, map_one, map_natCast, map_sum, h2, add_zero, Finset.sum_const,
     nsmul_eq_mul, mul_one, hcard]
   push_cast [Nat.cast_sub hp]
   ring

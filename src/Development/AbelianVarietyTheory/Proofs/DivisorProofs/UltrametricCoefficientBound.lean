@@ -15,7 +15,8 @@ open GlobalTheory.VB (IsFrame)
 theorem repr_eq_sum {R M ι : Type} [CommRing R] [AddCommGroup M] [Module R M] [Fintype ι]
     (b b' : Module.Basis ι R M) (u : M) (m : ι) : b'.repr u m = ∑ l, b.repr u l * b'.repr (b l) m := by
   conv_lhs => rw [← b.sum_repr u]
-  simp only [map_sum, map_smul, Finsupp.finsetSum_apply, Finsupp.smul_apply, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, Finsupp.finsetSum_apply, Finsupp.smul_apply, smul_eq_mul]
 
 theorem exists_transition {X : Scheme.{0}} {F : X.Modules} {r : ℕ} (d : Bool) {V V₁ V' : X.Opens}
     {e : Fin r → Γ(F, V)} {e₁ : Fin r → Γ(F, V₁)} {s : Fin r → Γ(F, V')} (he : IsFrame e) (he₁ : IsFrame e₁)
@@ -77,7 +78,8 @@ theorem norm_le_of_norm_le {X : Scheme.{0}} {F : X.Modules} {r : ℕ} (d : Bool)
     have key : ∀ i, valF (spMap (intO C).subtype ≫ w) _ (coef d he₁ hs m i) =
         ∑ l, valF (spMap (intO C).subtype ≫ w) _ (B m l) *
           valF (spMap (intO C).subtype ≫ w) _ (coef d he hs l i) := fun i => by
-      rw [← valHom_resG _ h₁ hU, hB _ h₀ h h₁, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← valHom_resG _ h₁ hU, hB _ h₀ h h₁, map_sum]
       refine Finset.sum_congr rfl fun l _ => ?_
       rw [map_mul, valHom_resG, valHom_resG]
     have eq : ∑ i, cf i * valF (spMap (intO C).subtype ≫ w) _ (coef d he₁ hs m i) =

@@ -90,7 +90,8 @@ theorem biproduct_push : ∀ (R : Type) [CommRing R] {ι : Type} [Fintype ι] (L
               right_inv := ?_ }, ?_⟩
     · intro a
       funext k
-      simp only [map_sum, ← cpush_comp]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, ← cpush_comp]
       rw [Finset.sum_eq_single k]
       · rw [biproduct.ι_π_self, cpush_id]
       · intro j _ hj
@@ -101,7 +102,8 @@ theorem biproduct_push : ∀ (R : Type) [CommRing R] {ι : Type} [Fintype ι] (L
       rw [← cpush_sum, biproduct.total, cpush_id]
     · intro a
       change cpush K (biproduct.desc g) n (∑ j, cpush K (biproduct.ι L j) n (a j)) = _
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simp only [← cpush_comp, biproduct.ι_desc]
 
 end GlobalTheory.BiprodPush

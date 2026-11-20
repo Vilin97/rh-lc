@@ -52,7 +52,8 @@ theorem pair_integral {E : Type} [Field E] [NumberField E] [StarRing E] {N N' : 
     exact (hL'dual _).1 (hB _ (hψ k)) _ (hA _ (hx k))
   have h2 : ∑ i, (A.mulVec (x k)) i * star ((B.mulVec (ψ k)) i) =
       starRingEnd E (∑ i, star ((A.mulVec (x k)) i) * (B.mulVec (ψ k)) i) := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_mul, starRingEnd_apply, starRingEnd_apply, star_star, mul_comm]
   rw [h2]

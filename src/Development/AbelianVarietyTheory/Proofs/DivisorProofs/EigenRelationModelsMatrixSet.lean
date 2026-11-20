@@ -42,7 +42,8 @@ theorem symp_vecMulVec {n d : ℕ} (JX : Matrix (Fin n) (Fin n) E) (JW : Matrix 
       (Matrix.vecMulVec (T • incV F β) (incV F x)) =
       algebraMap (AF F) (AE F E) T * inclR (F := F) (AF F) (form σ JX ξ β * form σ JW y x) := by
     simp only [hTens, Matrix.vecMulVec_apply, Pi.smul_apply, incM, incV, Matrix.map_apply]
-    simp only [form, dotProduct, Matrix.mulVec, Algebra.smul_def, map_mul, cA_inclR, AlgHom.commutes, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [form, dotProduct, Matrix.mulVec, Algebra.smul_def, map_mul, cA_inclR, AlgHom.commutes, map_sum,
       Finset.mul_sum, Finset.sum_mul]
     symm
     refine (Finset.sum_congr rfl fun j _ => Finset.sum_comm).trans ?_
@@ -106,7 +107,8 @@ theorem GlobalTheory.ExpandXDenom.main : GlobalTheory.ThK.KP → ∀ (F E : Type
   have hxy : form σ X.J H.y H.x = 1 := by
     have h1 := hH.xy
     have e1 : form σ X.J H.y H.x = σ (form σ X.J H.x H.y) := by
-      simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσσ]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσσ]
       simp only [Finset.mul_sum]
       rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_

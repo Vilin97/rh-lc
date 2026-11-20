@@ -76,7 +76,8 @@ theorem exists_map_eq_of_eval {d N : ℕ} (U : Set (Fin d → ℂ)) (S : (Fin d 
     have := Finset.mem_range.1 hi
     exact_mod_cast (by omega : N - 1 < N)
   · intro x hx
-    rw [Lagrange.eq_interpolate (f := S x) hinj (by simpa using hdeg x hx),
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Lagrange.eq_interpolate (f := S x) hinj (by simpa using hdeg x hx),
       Lagrange.interpolate_apply, Polynomial.map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [Polynomial.map_mul, Polynomial.map_C, Polynomial.map_map, hg _ x hx]

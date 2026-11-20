@@ -144,7 +144,8 @@ theorem isOpen_intSet : IsOpen (intSet L) := by
     intro c hc'
     simp only [Set.mem_pi, Set.mem_univ, true_implies, Set.mem_setOf_eq] at hc'
     change (swapAd L).symm (B.equivFun.symm c) ∈ ReciprocityTheory.Aut.ALint L
-    rw [Module.Basis.equivFun_symm_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Module.Basis.equivFun_symm_apply, map_sum]
     refine Subring.sum_mem _ fun i _ => ?_
     rw [Algebra.TensorProduct.basis_apply, TensorProduct.smul_tmul', smul_eq_mul, mul_one, flip_symm_tmul]
     have : b i ⊗ₜ[maximalRealSubfield L] c i =

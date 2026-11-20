@@ -64,7 +64,8 @@ theorem sum_lnGrP_eq_neg_log_norm_det (K : Type) [Field K] [NumberField K] (g p 
       have := congrFun hb i'
       simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul] at this
       simp only [B, mulVec, dotProduct, RingHom.mapMatrix_apply, map_apply, X, of_apply, Pi.smul_apply, smul_eq_mul]
-      rw [← map_natCast j s, ← map_mul, ← this, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← map_natCast j s, ← map_mul, ← this, map_sum]
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [Algebra.smul_def, ← map_mul, mul_comm]
     have h2 : (s : ℂ_[p]) • (H *ᵥ fun i => j (v i)) = fun k => j (b k : K) := by

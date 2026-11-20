@@ -230,7 +230,8 @@ theorem heckeVec_multiProd (hK : IsCommensurated (KO k n)) {h : GL n k → ℂ} 
       Submodule.subtype _ ∘ₗ Submodule.subtype _
   refine (map_idem_of_fixed hs (fun _ => GlobalTheory.SplitFlip.isCompact_KO) (apply_one_fixed e hf')).symm.trans ?_
   show L (heckeVec (multiProd e π) (KO k n) h f) = (_ : ℂ) • f.1.1 1
-  rw [heckeVec_eq_of_section hh.1 hf _ hp, finsum_eq_sum_of_support_subset (s := hfin.toFinset),
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [heckeVec_eq_of_section hh.1 hf _ hp, finsum_eq_sum_of_support_subset (s := hfin.toFinset),
     finsum_eq_sum_of_support_subset (s := hfin.toFinset), map_sum, Finset.sum_smul]
   · refine Finset.sum_congr rfl fun c hc => ?_
     rw [map_smul, mul_assoc, mul_smul]

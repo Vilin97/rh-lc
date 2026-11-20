@@ -165,7 +165,8 @@ theorem exists_coords {F E : Type} [Field F] [NumberField F] [Field E] [NumberFi
           Finset.sum_const_zero, add_zero, hG2, mul_zero, Pi.zero_apply]
   have hW₁s : ∀ i j, σ (W₁.J j i) = -W₁.J i j := fun i j => by
     rw [← hH.gram]
-    simp only [Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, map_sum, map_mul, hσ, hW.skew,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, map_sum, map_mul, hσ, hW.skew,
       Finset.sum_mul, ← Finset.sum_neg_distrib]
     rw [Finset.sum_comm]
     exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
@@ -390,7 +391,8 @@ theorem det_compl {n d₂ : ℕ} {J : Matrix (Fin n) (Fin n) E} (hσ : ∀ x, σ
   have hzero : ∀ w, form σ J 0 w = 0 := fun w => by simp only [form, zero_dotProduct]
   have hswap : ∀ a b, form σ J a b = σ (form σ J b a) := fun a b => by
     unfold form
-    simp only [dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, Finset.mul_sum]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
     rw [hJ]; ring
@@ -525,7 +527,8 @@ theorem coord_facts {n d₂ : ℕ} (X : Spc F E n) (hσ : ∀ x, σ (σ x) = x) 
     simp only [A]
     rw [e]
     funext k
-    simp [incV, incM, Matrix.vecMul, dotProduct, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [incV, incM, Matrix.vecMul, dotProduct, map_sum, map_mul]
 
 end Unip
 
@@ -556,7 +559,8 @@ theorem mean_theta_eq : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [Numb
     exact det_compl hσ hP.herm.herm (GlobalTheory.LeviModulus.HCoord.det_ne_of_sig_c B X.J hP.herm.sig) H hH
   have hherm : ∀ i j, σ (V₁.J j i) = V₁.J i j := fun i j => by
     rw [hV₁]
-    simp only [Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, map_sum, map_mul, hσ, hP.herm.herm,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, map_sum, map_mul, hσ, hP.herm.herm,
       Finset.sum_mul]
     rw [Finset.sum_comm]
     exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring

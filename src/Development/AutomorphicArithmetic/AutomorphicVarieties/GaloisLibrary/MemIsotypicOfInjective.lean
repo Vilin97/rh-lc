@@ -96,7 +96,8 @@ private theorem exists_equivariant_projection_onto_invariant_submodule {R V ι :
     have hvs : ∀ i ∈ s, ∀ t, T t (v i) = χ i t • v i :=
       fun i hi => hv i (Finset.mem_insert_of_mem hi)
     have key : (a t - χ b t) • ∑ i ∈ insert b s, v i = ∑ i ∈ s, (χ i t - χ b t) • v i := by
-      rw [sub_smul, ← hx t, Finset.sum_insert hb, map_add, map_sum,
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [sub_smul, ← hx t, Finset.sum_insert hb, map_add, map_sum,
         Finset.sum_congr rfl (fun i hi => hvs i hi t), hv b (Finset.mem_insert_self b s) t]
       simp only [sub_smul, Finset.sum_sub_distrib, Finset.smul_sum, smul_add]
       abel

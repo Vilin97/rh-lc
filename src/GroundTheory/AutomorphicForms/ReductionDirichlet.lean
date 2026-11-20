@@ -103,7 +103,8 @@ theorem exists_dirichlet_box : ∃ B : ℝ, 0 < B ∧ ∀ (a : 𝔸[K]) (N : ℕ
   have hlamK : ∀ p, ((lam p : 𝓞 K) : K) = ∑ i, (((p i : ℕ) : ℤ) • ((bZ i : 𝓞 K) : K)) := by
     intro p
     change algebraMap (𝓞 K) K (bZ.equivFun.symm _) = _
-    rw [Module.Basis.equivFun_symm_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Module.Basis.equivFun_symm_apply, map_sum]
     simp
   refine ⟨lam m - lam m', sub_ne_zero.2 (hlam_inj.ne hne), ?_, ?_⟩
   · intro w
@@ -121,7 +122,8 @@ theorem exists_dirichlet_box : ∃ B : ℝ, 0 < B ∧ ∀ (a : 𝔸[K]) (N : ℕ
       have : |(((m i : ℕ) : ℤ) - ((m' i : ℕ) : ℤ))| ≤ (N : ℤ) := by
         rw [abs_le]; constructor <;> omega
       exact_mod_cast this
-    rw [hφ, hcast, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hφ, hcast, map_sum]
     calc ‖∑ i, φ ((((m i : ℕ) : ℤ) - ((m' i : ℕ) : ℤ)) • ((bZ i : 𝓞 K) : K))‖
         ≤ ∑ i, ‖φ ((((m i : ℕ) : ℤ) - ((m' i : ℕ) : ℤ)) • ((bZ i : 𝓞 K) : K))‖ := norm_sum_le _ _
       _ ≤ ∑ i, (N : ℝ) * ‖φ ((bZ i : 𝓞 K) : K)‖ := Finset.sum_le_sum fun i _ => by
@@ -164,7 +166,8 @@ theorem exists_dirichlet_box : ∃ B : ℝ, 0 < B ∧ ∀ (a : 𝔸[K]) (N : ℕ
         change GroundTheory.Global.homeomorphMixedSpace K (algebraMap K (InfiniteAdeleRing K) (F : K)) = _
         rw [GroundTheory.Global.homeomorphMixedSpace_algebraMap]
         change mixedEmbedding K (algebraMap (𝓞 K) K F) = _
-        simp only [F, map_sum, map_zsmul, hb, Int.cast_smul_eq_zsmul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [F, map_sum, map_zsmul, hb, Int.cast_smul_eq_zsmul]
       have hhom : GroundTheory.Global.homeomorphMixedSpace K
           (e (lam m) - e (lam m') - algebraMap K 𝔸[K] (F : K)).1 =
           ∑ i, (Int.fract (sm i) - Int.fract (sm' i)) • b i := by

@@ -92,7 +92,8 @@ theorem exists_nonzero_zero_polynomial_of_isAlgClosed (k : Type) [Field k] [IsAl
     (fun j => ⟨d, hd, hP j⟩) (by nlinarith)
   let x : Fin n → k[X] := fun i => (y i).map (MvPolynomial.eval c)
   have hx : ∀ i, x i = ∑ m : Fin (D + 1), monomial (m : ℕ) (c (finProdFinEquiv (i, m))) := fun i => by
-    simp [x, y, Polynomial.map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [x, y, Polynomial.map_sum]
   have hdeg : ∀ i, (x i).natDegree ≤ D := fun i => by
     rw [hx]
     exact natDegree_sum_le_of_forall_le _ _ fun m _ =>

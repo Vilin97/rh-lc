@@ -108,7 +108,8 @@ theorem map_rel {Ω Ω₂ : Type} [Field Ω] [Field Ω₂] (φ : Ω →+* Ω₂)
     (h : ∀ m I', P I' → ∑ I, u₁ m I * minorIJ (T₁⁻¹ * T₂) I I' = ρ * u₂ m I') :
     ∀ m I', P I' → ∑ I, φ (u₁ m I) * minorIJ ((T₁.map φ)⁻¹ * T₂.map φ) I I' = φ ρ * φ (u₂ m I') :=
   fun m I' hI' => by
-    rw [← map_inv_eq φ T₁ h₁, ← Matrix.map_mul, ← map_mul, ← h m I' hI', map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_inv_eq φ T₁ h₁, ← Matrix.map_mul, ← map_mul, ← h m I' hI', map_sum]
     exact Finset.sum_congr rfl fun I _ => by rw [map_mul, minorIJ_map]
 
 section Values
@@ -175,7 +176,8 @@ theorem main : ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (ι 
       ∑ m : ι k, φ (F.u' (stepCols N j p.2) ⟨k, m⟩) * φ (F.u ⟨k, m⟩ (stepCols N j p.2)) = 1 := fun F hF => by
     have e := hF.2.2.1 p k hp _ _ hstep hstep
     rw [if_pos rfl] at e
-    rw [← map_one φ, ← e, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_one φ, ← e, map_sum]
     exact Finset.sum_congr rfl fun m _ => (map_mul φ _ _).symm
   have hrel := map_rel φ (fun (m : ι k) I => F₁.u ⟨k, m⟩ I) (fun (m : ι k) I => F₂.u ⟨k, m⟩ I) _ _ hd₁ ρ
     (IsStepRows N j p.2) hρ

@@ -17,13 +17,15 @@ theorem trace_sigma {K : UQ} (B : InvAlg K) (w : B.A) :
   have hsp : ∀ y : B.A, B.σ y = ∑ j, K.c (b.repr y j) • B.σ (b j) := by
     intro y
     conv_lhs => rw [← b.sum_repr y]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [sigma_smul]
   have li : LinearIndependent K.E (fun i => B.σ (b i)) := by
     rw [Fintype.linearIndependent_iff]
     intro g hg i
     have h1 := congrArg B.σ hg
-    rw [map_sum, map_zero] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero] at h1
     simp only [sigma_smul, B.σ_σ] at h1
     have h2 := Fintype.linearIndependent_iff.1 b.linearIndependent (fun j => K.c (g j)) h1 i
     simpa using h2
@@ -41,7 +43,8 @@ theorem trace_sigma {K : UQ} (B : InvAlg K) (w : B.A) :
     simp only [← hb']
     rw [b'.repr_sum_self]
   rw [Algebra.trace_eq_matrix_trace b' (B.σ w), Algebra.trace_eq_matrix_trace b w]
-  simp only [Matrix.trace, Matrix.diag, Algebra.leftMulMatrix_eq_repr_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.trace, Matrix.diag, Algebra.leftMulMatrix_eq_repr_mul, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [hb', ← map_mul, hrep]
 
@@ -260,7 +263,8 @@ theorem exists_basis_of_orthonormal {K : UQ} {V : Type} [AddCommGroup V] [Module
     rw [Fintype.linearIndependent_iff]
     intro g hg i
     have h1 := congrArg (ℓ (v i)) hg
-    rw [map_sum, map_zero] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero] at h1
     simp only [map_smul, smul_eq_mul] at h1
     change ∑ j, g j * h (v j) (v i) = 0 at h1
     simpa [hv] using h1
@@ -292,7 +296,8 @@ theorem exists_model : ∀ (K : GlobalTheory.UnitLemma.UQ) (B : GlobalTheory.Uni
   have hexp : ∀ y w, B.herm x y w = ∑ i, b.repr y i * B.herm x (b i) w := by
     intro y w
     have h1 : ℓ w y = ℓ w (∑ i, b.repr y i • b i) := by rw [b.sum_repr]
-    rw [map_sum] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at h1
     simp only [map_smul, smul_eq_mul] at h1
     exact h1
   have hcol : ∀ i z, B.herm x (b i) z = K.c (b.repr z i) := by

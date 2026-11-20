@@ -57,7 +57,8 @@ private theorem alt_sb {R : Type} [CommRing R] {n : ℕ} {i j : Fin n} (h : i �
     · by_cases h2 : k = j
       · subst h2; simp [sb]
       · rw [swap_apply_of_ne_of_ne h1 h2]
-  rw [alt, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [alt, map_sum]
   refine Finset.sum_involution (fun w _ => swap i j * w) (fun w _ => ?_) (fun w _ _ e => ?_)
     (fun w _ => Finset.mem_univ _) (fun w _ => ?_)
   · have e : sb i j ∘ (swap i j * w : Perm (Fin n)) = sb i j ∘ w := funext fun k => hs _

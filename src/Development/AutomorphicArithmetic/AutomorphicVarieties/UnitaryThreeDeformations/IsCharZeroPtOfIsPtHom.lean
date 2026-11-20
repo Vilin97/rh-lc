@@ -243,7 +243,8 @@ private theorem ev_eq {O R K : Type} [CommRing O] [CommRing R] [Algebra O R] [No
           exact he'
         have he3 : Φ f - ψ ⟨f, hP hf⟩ =
             ∑ m ∈ μ, (Φ (b m) - ψ ⟨_, hP (hb m)⟩) * Φ (MvPowerSeries.monomial m 1) := by
-          rw [he2, congrArg Φ he', map_add, map_add, AlgHom.commutes, AlgHom.commutes, add_sub_add_left_eq_sub,
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [he2, congrArg Φ he', map_add, map_add, AlgHom.commutes, AlgHom.commutes, add_sub_add_left_eq_sub,
             map_sum, map_sum, ← Finset.sum_sub_distrib]
           refine Finset.sum_congr rfl fun m hm => ?_
           rw [map_mul, map_mul, sub_mul, hmono m, congrArg (t ^ ·) (hμ hm).2]
@@ -261,7 +262,8 @@ private theorem ev_eq {O R K : Type} [CommRing O] [CommRing R] [Algebra O R] [No
     apply Subtype.ext
     rw [AddSubmonoidClass.coe_finset_sum]
     exact he
-  rw [he2, congrArg Φ he, map_sum, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [he2, congrArg Φ he, map_sum, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun m hm => ?_
   have hm' : Finsupp.weight W.wt m = j := hμ hm
   rw [map_mul, map_mul, h0 _ (hb m), hmono m, congrArg (t ^ ·) hm']

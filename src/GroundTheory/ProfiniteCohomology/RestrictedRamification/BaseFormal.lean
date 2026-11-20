@@ -584,7 +584,8 @@ theorem injective_two (h : 2 + 1 = 3) : Function.Injective (compactZmodDualityMa
       change lam y = _
       rw [← hΛ, AddMonoidHom.comp_apply]
       conv_lhs => rw [← Finset.univ_sum_single ((globalToLocal φ D _ (fun _ => 𝟙 _) 1).hom.toAddMonoidHom y)]
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun v _ => ?_
       have := DFunLike.congr_fun (hξ v) ((cohomologyMapAlong (φ v).toMonoidHom (continuous_toMonoidHom (φ v))
         (𝟙 _) 1).hom y)
@@ -644,7 +645,8 @@ theorem surjective_two (h : 2 + 1 = 3) : Function.Surjective (compactZmodDuality
       rw [← hξ', cohomologyMapAlong_h0Class, ← cupPairing_pairingRes_zmodMulPairing_two_zero (φ v).toMonoidHom D hD
         (show 2 + 0 = 2 from rfl), cupPairing_h0Class]
       exact congrArg (fun f => t v ((cohomologyMap f 2).hom (ξ v))) (resFunctor_map_zmodToCyclic hyp e v _)
-    rw [Finset.sum_congr rfl fun v _ => e1 v, ← map_sum, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_congr rfl fun v _ => e1 v, ← map_sum, ← map_sum]
     have e2 : ∑ v, Pi.single v ((cohomologyMapAlong (φ v).toMonoidHom (continuous_toMonoidHom (φ v)) (𝟙 _) 0).hom
         (h0Class D (e.symm 1) hζ)) = (globalToLocal φ D (fun v => Rep.res (φ v).toMonoidHom D) (fun _ => 𝟙 _) 0).hom
           (h0Class D (e.symm 1) hζ) := Finset.univ_sum_single _
@@ -689,7 +691,8 @@ theorem surjective_two (h : 2 + 1 = 3) : Function.Surjective (compactZmodDuality
     intro η
     rw [compactZmodDualityMap_apply, hyp.T_compactCupRes_localToCompact_zero]
     conv_lhs => rw [← Finset.univ_sum_single η]
-    rw [map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum]
     refine Finset.sum_congr rfl fun v _ => ?_
     rw [← hξ', hres v]
 

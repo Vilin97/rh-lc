@@ -138,7 +138,8 @@ theorem HeightOfCycle.proof (h1 : HeightOfPoint.Statement) (h2 : FibreMahlerForm
     have e2 : P.map (τ.comp (algebraMap E K)) =
         C (τ c) * ∏ q, ∑ k, C (τ (yv q (w k))) * X k := by
       rw [← MvPolynomial.map_map, hP]
-      simp only [map_mul, map_prod, map_sum, map_C, map_X]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_mul, map_prod, map_sum, map_C, map_X]
     rw [e1, e2, h2 F W h n w hw K τ m yv hyv (τ c) ((map_ne_zero τ).mpr hc)]
     simp only [Finset.sum_sub_distrib, Finset.sum_const, Finset.card_univ, Fintype.card_fin,
       nsmul_eq_mul]

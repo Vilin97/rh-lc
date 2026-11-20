@@ -268,7 +268,8 @@ lemma qminor_clm (hD : IsOpen D) {t : ℕ} (α β : Fin t → Fin (mdim k r i)) 
     qminorOp (EH k r) (fun j => posL k r i (α j)) (fun j => posL k r i (β j)) u (fun y => L (f y)) g =
       L (qminorOp (EH k r) (fun j => posL k r i (α j)) (fun j => posL k r i (β j)) u f g) := by
   rw [qminor_eq, qminor_eq]
-  simp only [Finset.sum_apply, Pi.smul_apply, map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finset.sum_apply, Pi.smul_apply, map_sum, map_smul]
   refine Finset.sum_congr rfl fun σ _ => ?_
   rw [iteratedOperator_clm_comp hD _ L f hf g hg]
 

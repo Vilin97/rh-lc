@@ -13,7 +13,8 @@ private theorem finPart_mulVec {F : Type} [Field F] [NumberField F] (M : Matrix 
   let s : A F →+* FiniteAdeleRing (𝓞 F) F := RingHom.snd (InfiniteAdeleRing F) (FiniteAdeleRing (𝓞 F) F)
   have e'' : ∀ j, s (v j) = s (v' j) := e'
   change s ((M *ᵥ v) i) = s ((M *ᵥ v') i)
-  simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, e'']
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, e'']
 
 theorem UpperTheory.ConvolutionTheory.R2.Fo.vacL :
     ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [IsTotallyComplex E] (D : Dat F E) (W : Weil D) (h : GL (Fin 2) (A E)), (Matrix.GeneralLinearGroup.map (pInf E) h).val ∈ Matrix.unitaryGroup (Fin 2) (Cinf E) →

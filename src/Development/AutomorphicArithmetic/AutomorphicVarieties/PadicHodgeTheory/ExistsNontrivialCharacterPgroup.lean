@@ -66,7 +66,8 @@ private theorem exists_eigenvector_tame_inertia {p : ℕ} [Fact p.Prime] {G : Ty
     Units.ne_zero _ (hli _ h 1)
   obtain ⟨z, hz⟩ := Function.ne_iff.1 hne
   refine ⟨_, hz, fun τ => ?_⟩
-  simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum, map_mul, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum, map_mul, Finset.mul_sum]
   refine Fintype.sum_equiv (Equiv.mulLeft (c.rangeRestrict τ)) _ _ fun q => ?_
   have e1 : φ τ (((q : (Om p)ˣ)⁻¹ : (Om p)ˣ) : Om p) = (((q : (Om p)ˣ)⁻¹ : (Om p)ˣ) : Om p) := by
     rw [← hs, ← map_inv, hfix]
@@ -145,7 +146,8 @@ private theorem matrix_pow_l_congruence_succ {A : Type} [CommRing A] (I : Ideal 
     exact Ideal.Quotient.eq_zero_iff_mem.2 (Ideal.pow_le_self (Nat.succ_ne_zero k) (h a b))
   have h2 : (Ideal.Quotient.mk I).mapMatrix
       (∑ i ∈ Finset.range l, M ^ i * Matrix.scalar (Fin n) c ^ (l - 1 - i)) = 0 := by
-    simp only [map_sum, map_mul, map_pow, h1]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, map_pow, h1]
     rw [geom_sum₂_self, ← nsmul_eq_mul, ← Nat.cast_smul_eq_nsmul (A ⧸ I), ← map_natCast (Ideal.Quotient.mk I),
       Ideal.Quotient.eq_zero_iff_mem.2 hl, zero_smul]
   exact Ideal.Quotient.eq_zero_iff_mem.1 (congrFun (congrFun h2 i) a)

@@ -371,7 +371,8 @@ theorem coeffToRegular_perm [Group Γ] (τ : Γ) (c : Γ → O) :
   apply MonoidAlgebra.coeff_injective
   ext ρ
   rw [piRep_apply, coeff_coeffToRegular]
-  simp only [coeffToRegular, AddMonoidHom.coe_mk, ZeroHom.coe_mk, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [coeffToRegular, AddMonoidHom.coe_mk, ZeroHom.coe_mk, map_sum,
     Representation.ofMulAction_single, smul_eq_mul, MonoidAlgebra.coeff_sum,
     MonoidAlgebra.coeff_single, Finset.sum_apply', Finsupp.single_apply]
   rw [Finset.sum_eq_single (τ⁻¹ * ρ)]

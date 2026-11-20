@@ -54,14 +54,16 @@ private theorem eSum_mem_blockInv (a b : ι) : eSum r b ∈ blockInv r a := by
         ∑ z, f z = f i + f i' + ∑ z ∈ (Finset.univ.erase i).erase i', f z := by
       rw [add_assoc, Finset.add_sum_erase _ _ (Finset.mem_erase.2 ⟨hne.symm, Finset.mem_univ _⟩),
         Finset.add_sum_erase _ _ (Finset.mem_univ _)]
-    rw [eSum, map_sum, key, key fun j => X ⟨b, j⟩]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [eSum, map_sum, key, key fun j => X ⟨b, j⟩]
     simp only [mid_X_left, mid_X_right]
     rw [Finset.sum_congr rfl fun z hz => mid_X_of_ne (hinj.ne (Finset.mem_erase.1 (Finset.mem_erase.1 hz).2).1)
       (hinj.ne (Finset.mem_erase.1 hz).1)]
     have h2 : (2 : MvPolynomial (Σ a, Fin (r a)) ℝ) * C (1 / 2) = 1 := by
       rw [← map_ofNat C 2, ← map_mul]; simp
     linear_combination (X ⟨b, i⟩ + X ⟨b, i'⟩) * h2
-  · rw [eSum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [eSum, map_sum]
     simp only [rename_X, hinj.swap_apply]
     exact Equiv.sum_comp (Equiv.swap i i') fun j => (X ⟨b, j⟩ : MvPolynomial (Σ a, Fin (r a)) ℝ)
 
@@ -97,7 +99,8 @@ private theorem rename_vdm (a : ι) : rename (@Sigma.mk ι (fun a => Fin (r a)) 
   simp only [map_prod, map_sub, rename_X, vdm]
 
 private theorem rename_eSum (a : ι) : rename (@Sigma.mk ι (fun a => Fin (r a)) a) (∑ i : Fin (r a), X i) = eSum r a := by
-  simp only [map_sum, rename_X, eSum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, rename_X, eSum]
 
 private theorem alt_vdm (Ψ : MvPolynomial (Σ a, Fin (r a)) ℝ →ₗ[ℝ] ℝ) (a : ι)
     (hΨ : ∀ i i' : Fin (r a), (i' : ℕ) = i + 1 → ∀ P,
@@ -108,7 +111,8 @@ private theorem alt_vdm (Ψ : MvPolynomial (Σ a, Fin (r a)) ℝ →ₗ[ℝ] ℝ
   have hF (P) : ψ P = Ψ (Q * rename (@Sigma.mk ι (fun a => Fin (r a)) a) P) := rfl
   have halt := alt_of_adj' ψ fun i i' hi P => restrict_swap r Ψ a hΨ Q (fun i i' hi => ((mem_blockInv r).1 hQ i i' hi).2) i i' hi P
   have h₁ : Ψ (Q * vdm r a) = (r a).factorial * Ψ (Q * monPt r a) := by
-    rw [← rename_vdm, ← rename_monPt, ← hF, ← hF, GlobalTheory.prod_Ioi_sub_eq_antisymm_monomial, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← rename_vdm, ← rename_monPt, ← hF, ← hF, GlobalTheory.prod_Ioi_sub_eq_antisymm_monomial, map_sum]
     rw [Finset.sum_congr rfl (g := fun _ => ψ (∏ i : Fin (r a), (-X i) ^ (r a - 1 - (i : ℕ)))) fun σ _ => ?_]
     · rw [Finset.sum_const, Finset.card_univ, Fintype.card_perm, Fintype.card_fin, nsmul_eq_mul]
     · have s2 : ((Equiv.Perm.sign σ : ℤ) : ℝ) * ((Equiv.Perm.sign σ : ℤ) : ℝ) = 1 := by
@@ -136,7 +140,8 @@ private theorem block_square_telescoping_harmonic (Φ Ψ : MvPolynomial (Σ a, F
   have hQs (i i' : Fin (r a)) (hi : (i' : ℕ) = i + 1) := ((mem_blockInv r).1 hQ i i' hi).2
   have hps (i i' : Fin (r a)) (hi : (i' : ℕ) = i + 1) :
       rename (Equiv.swap (⟨a, i⟩ : Σ a, Fin (r a)) ⟨a, i'⟩) (sq2 r * Q) = sq2 r * Q := by
-    rw [map_mul (rename _), hQs i i' hi, sq2, map_sum (rename _)]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_mul (rename _), hQs i i' hi, sq2, map_sum (rename _)]
     simp only [map_pow, rename_X]
     rw [Equiv.sum_comp (Equiv.swap (⟨a, i⟩ : Σ a, Fin (r a)) ⟨a, i'⟩) fun z => (X z ^ 2 : MvPolynomial _ ℝ)]
   have key := block_algebra (r a) (F Φ (sq2 r * Q)) (F Ψ Q) (restrict_swap r Ψ a hΨ Q hQs) fun i i' hi k d M hM hd => by

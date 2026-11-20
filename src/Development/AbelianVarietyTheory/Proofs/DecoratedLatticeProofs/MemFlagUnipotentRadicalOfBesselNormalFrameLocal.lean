@@ -98,7 +98,8 @@ theorem frame_cols {σ : ℕ} (B : BesLev D σ) (s : k) {n : Type} [Fintype n] [
         · rfl
       · rw [h3 j heq]
         change s * Witness.prH p (∑ w, B.d.i₀ u w * vecB B.o B.ζ w) = _
-        rw [map_sum, Finset.mul_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum, Finset.mul_sum]
         simp [wJ, mul_left_comm]
     · have hi : 2 * σ - j.val < σ := by omega
       refine ⟨Pi.single (Sum.inr (Sum.inr ⟨_, hi⟩))

@@ -174,7 +174,8 @@ theorem twTr_linearIndependent : ∀ (G : Type) [Group G] [TopologicalSpace G] [
     rw [hf, levOp_hfun K' U s _ (σ i).ρ K v hv]
     congr 1
     refine Finset.sum_congr rfl fun q _ => ?_
-    rw [Representation.asAlgebraHom_def, MonoidAlgebra.lift_apply, Finsupp.sum, LinearMap.sum_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Representation.asAlgebraHom_def, MonoidAlgebra.lift_apply, Finsupp.sum, LinearMap.sum_apply, map_sum]
     refine Finset.sum_congr rfl fun g _ => ?_
     simp [map_mul, Module.End.mul_apply]
   have hbasis : ∀ i k, levOp (σ i).ρ K K' f LinearMap.id (b i k : (σ i).V) =

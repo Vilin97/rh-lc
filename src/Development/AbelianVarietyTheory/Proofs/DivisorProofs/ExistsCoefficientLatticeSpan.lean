@@ -46,7 +46,8 @@ theorem clSum_trU_of_lift {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T0 : Ty
     clSum (presV R i t) (kern R i t) (trU (A.leftGroupActionLift i t) U ψ f) v =
       levelTrace R i U ψ (clSum (presV R i t) (kern R i t) f v) := by
   unfold levelTrace gaL
-  rw [trU_apply, map_sum, Finset.sum_apply, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [trU_apply, map_sum, Finset.sum_apply, LinearMap.sum_apply]
   refine Finset.sum_congr rfl fun g _ => ?_
   rw [map_smulₛₗ, clSum_equiv_of_lift hS hl, LinearMap.smul_apply, invChar, apply_dite D.what₂.embLL, map_zero]
   rfl

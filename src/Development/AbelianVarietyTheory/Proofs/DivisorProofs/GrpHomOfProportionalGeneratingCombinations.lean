@@ -20,7 +20,8 @@ variable {A₀ B₀ X Z T : Scheme.{0}} {N : LB A₀} {H : LB B₀} {mA mB : ℕ
 theorem comb_pull (a : Fin mA → LB.Sec N) (φ : X ⟶ A₀) (p : X ⟶ T) (c : Fin mA → Fin mB → Γ(T, ⊤))
     (r : Z ⟶ X) (z : Z) (q : N.ι) (h : φ (r z) ∈ N.U q) (j : Fin mB) :
     comb a (r ≫ φ) (r ≫ p) c z q j = (r.stalkMap z).hom (comb a φ p c (r z) q j) := by
-  simp only [comb, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [comb, map_sum, map_mul]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [gs_comp r p z ⊤ trivial, gs_comp r φ z _ h]
 
@@ -58,7 +59,8 @@ theorem proport_zero {S : Scheme.{0}} {a : Fin mA → LB.Sec N} {b : Fin mB → 
         gs (𝟙 T) z ⊤ (t.appTop (α i)) * (t.stalkMap z).hom (uA (t z) q).val := by
       intro i
       rw [gs_comp t eA z _ hq, ha i (t z) q hq, map_mul, gs_top_comp]
-    simp only [e, hn j, gs_eq (𝟙 T) z ⊤ trivial, map_sum, map_mul, Finset.sum_mul, _root_.mul_assoc]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [e, hn j, gs_eq (𝟙 T) z ⊤ trivial, map_sum, map_mul, Finset.sum_mul, _root_.mul_assoc]
   have hbj : ∀ j, gs (t ≫ eB) z (H.U k) ((b j).f k) =
       gs (𝟙 T) z ⊤ (t.appTop (β j)) * (t.stalkMap z).hom (uB (t z) k).val := by
     intro j

@@ -24,7 +24,8 @@ theorem gramTri_form_sum_right (h : HermFam K V) (σ : K →+* ℂ) (x : V) {ι 
 
 theorem gramTri_form_sum_left (h : HermFam K V) (σ : K →+* ℂ) (z : V) {ι : Type} (s : Finset ι)
     (f : ι → V) : h.form σ (∑ k ∈ s, f k) z = ∑ k ∈ s, h.form σ (f k) z := by
-  rw [← h.conj_symm σ z, gramTri_form_sum_right, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← h.conj_symm σ z, gramTri_form_sum_right, map_sum]
   simp only [h.conj_symm]
 
 theorem hermFam_gram_matrix_change (h : HermFam K V) (σ : K →+* ℂ) {n : ℕ} (e : Fin n → V)

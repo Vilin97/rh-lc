@@ -117,7 +117,8 @@ theorem goodGeneric_linear {K : Type} [Field K] [CharZero K] {G : Type} [Group G
   have hG : (Fintype.card G : K) ≠ 0 := Nat.cast_ne_zero.mpr Fintype.card_ne_zero
   have hP : (Nat.card P : K) ≠ 0 := Nat.cast_ne_zero.mpr Nat.card_pos.ne'
   have key := congrArg (MonoidAlgebra.lift K K G ((Units.coeHom K).comp ψ)) h0
-  rw [map_mul, map_zero, chiIdem, lvlIdem, map_sum, map_sum] at key
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_mul, map_zero, chiIdem, lvlIdem, map_sum, map_sum] at key
   simp only [MonoidAlgebra.lift_single, MonoidHom.comp_apply, Units.coeHom_apply, Subgroup.coe_subtype,
     map_inv, map_one, Units.val_one, smul_eq_mul, mul_assoc, Units.inv_mul, mul_one, Finset.sum_const,
     Finset.card_univ, nsmul_eq_mul] at key

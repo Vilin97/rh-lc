@@ -33,7 +33,8 @@ theorem gauss_sum_conjugation : T4 := by
   let u : (ZMod d)ˣ :=
     ⟨2 * (M : ZMod d) * (c' : ZMod d), -(b : ZMod d) * 2 * (M : ZMod d),
       by linear_combination h1, by linear_combination h1⟩
-  rw [GS_eq_sum_zmod, GS_eq_sum_zmod, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [GS_eq_sum_zmod, GS_eq_sum_zmod, map_sum,
     ← Equiv.sum_comp (Units.mulLeft u) (fun y : ZMod d =>
       (starRingEnd ℂ) (ZMod.stdAddChar ((b : ZMod d) * y ^ 2)))]
   refine Finset.sum_congr rfl fun y _ => ?_

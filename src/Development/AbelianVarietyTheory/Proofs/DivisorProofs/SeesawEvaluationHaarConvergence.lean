@@ -129,7 +129,8 @@ private theorem symp_right_zero {n d : ℕ} (JX : Matrix (Fin n) (Fin n) E) (JW 
   have hc : ∀ e : E, cA σ (inclR (F := F) (AF F) e) = inclR (F := F) (AF F) (σ e) := fun e => rfl
   have h0 : (∑ j, incV F x j * ∑ l, incM F JW j l * cA σ (incV F x l)) = 0 := by
     have : (∑ j, incV F x j * ∑ l, incM F JW j l * cA σ (incV F x l)) = inclR (F := F) (AF F) (form σ JW x x) := by
-      simp only [incV, incM, Matrix.map_apply, hc, form, dotProduct, Matrix.mulVec, map_sum, map_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [incV, incM, Matrix.map_apply, hc, form, dotProduct, Matrix.mulVec, map_sum, map_mul]
     rw [this, hx, map_zero]
   have h1 : hTens (cA σ) (incM F JX) (incM F JW) (Matrix.vecMulVec p (incV F x)) (Matrix.vecMulVec q (incV F x)) = 0 := by
     rw [GlobalTheory.ArchSchB.TensForm.hTens_vmv_right]

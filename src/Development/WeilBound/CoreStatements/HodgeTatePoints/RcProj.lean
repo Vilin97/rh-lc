@@ -112,7 +112,8 @@ lemma projL_ne [IsDomain R] {χ χ' : MulChar F R} (hne : χ ≠ χ') {M : Submo
     exact DFunLike.congr_fun h1 a
   rw [projL_apply]
   simp only [h]
-  rw [← Finset.sum_mul, ← map_sum, h0, map_zero, zero_mul, mul_zero, Pi.zero_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Finset.sum_mul, ← map_sum, h0, map_zero, zero_mul, mul_zero, Pi.zero_apply]
 
 lemma sum_projL [CharZero C] [IsDomain R] (σ : MulChar F R)
     (hσ : ∀ a : Fˣ, σ (a : F) = 1 → a = 1) (g : N → C) :
@@ -137,7 +138,8 @@ lemma sum_projL [CharZero C] [IsDomain R] (σ : MulChar F R)
   rw [Finset.sum_apply]
   simp only [projL_apply]
   rw [← Finset.mul_sum, Finset.sum_comm]
-  simp only [← Finset.sum_mul, ← map_sum, h]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← Finset.sum_mul, ← map_sum, h]
   rw [Finset.sum_eq_single 1 (fun a _ ha => by simp [ha]) (by simp)]
   rw [if_pos rfl, map_natCast, Units.val_one, one_smul, ← mul_assoc,
     inv_mul_cancel₀ (Nat.cast_ne_zero.2 Fintype.card_ne_zero), one_mul]

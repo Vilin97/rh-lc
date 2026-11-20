@@ -95,7 +95,8 @@ theorem im_hx_perC (hs : IsSympl X bas) {x : Frame X.Ψ r} (hx : x ∈ X.dom) (u
     rw [EF_def, TraceFormIndependence.trace_re X]
     refine Finset.sum_congr rfl fun τ _ => ?_
     have h2 : τ.1 (herm X.Gm a b) = hermC τ.1 X.Gm (Data.emb τ.1 a) (Data.emb τ.1 b) := by
-      simp only [herm, hermC, map_sum, map_mul, Data.emb, cc, IsCMField.complexEmbedding_complexConj]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [herm, hermC, map_sum, map_mul, Data.emb, cc, IsCMField.complexEmbedding_complexConj]
     rw [map_mul, h2]
   rw [hx_eq_hermForm]
   exact LinearMap.congr_fun₂ hB u v

@@ -237,7 +237,8 @@ theorem intS_inv [Fintype σ] (Φ t : σ → MvPowerSeries σ C) (hΦ0 : ∀ x, 
     · exact hLent k l
   have hNint : ∀ x, IntS v (Φ x - ∑ y, L x y • (X y : MvPowerSeries σ C)) := by
     intro x d
-    rw [map_sub, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_sum]
     refine intC_sub (hΦ x d) (intC_sum _ fun y _ => ?_)
     rw [coeff_smul, coeff_X]
     split_ifs
@@ -249,7 +250,8 @@ theorem intS_inv [Fintype σ] (Φ t : σ → MvPowerSeries σ C) (hΦ0 : ∀ x, 
     intro x d hd
     by_cases h1 : d.degree = 1
     · obtain ⟨z, rfl⟩ := deg_one_single d h1
-      rw [map_sub, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, map_sum]
       have hs : ∀ y, coeff (Finsupp.single z 1) (L x y • (X y : MvPowerSeries σ C)) =
           if y = z then L x y else 0 := by
         intro y
@@ -264,7 +266,8 @@ theorem intS_inv [Fintype σ] (Φ t : σ → MvPowerSeries σ C) (hΦ0 : ∀ x, 
         hLdef, Matrix.of_apply, sub_self]
     · have hd0 := hdeg0 d (by omega)
       subst hd0
-      rw [map_sub, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, map_sum]
       simp only [coeff_smul, coeff_zero_X, mul_zero, Finset.sum_const_zero, sub_zero]
       rw [coeff_zero_eq_constantCoeff_apply, hΦ0]
   have hsplit : ∀ x, (X x : MvPowerSeries σ C) =
@@ -276,7 +279,8 @@ theorem intS_inv [Fintype σ] (Φ t : σ → MvPowerSeries σ C) (hΦ0 : ∀ x, 
         (Φ x - ∑ y, L x y • (X y : MvPowerSeries σ C)) by ring]
       rw [← coe_substAlgHom hts, map_add]
     have e2 : subst t (∑ y, L x y • (X y : MvPowerSeries σ C)) = ∑ y, L x y • t y := by
-      rw [← coe_substAlgHom hts, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← coe_substAlgHom hts, map_sum]
       refine Finset.sum_congr rfl fun y _ => ?_
       rw [map_smul, coe_substAlgHom, subst_X hts]
     rw [← heq x, e1, e2]
@@ -301,7 +305,8 @@ theorem intS_inv [Fintype σ] (Φ t : σ → MvPowerSeries σ C) (hΦ0 : ∀ x, 
       have hLw : ∀ x, IntC v ((Matrix.mulVec L fun y => coeff μ (t y)) x) := by
         intro x
         have hc := congrArg (coeff μ) (hsplit x)
-        rw [map_add, map_sum] at hc
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_add, map_sum] at hc
         simp only [coeff_smul] at hc
         have hmv : (Matrix.mulVec L fun y => coeff μ (t y)) x = ∑ y, L x y * coeff μ (t y) := rfl
         have hval : (Matrix.mulVec L fun y => coeff μ (t y)) x = coeff μ (X x : MvPowerSeries σ C) -

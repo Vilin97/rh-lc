@@ -29,7 +29,8 @@ theorem symplectic_isotropic_plane_vanishes (F E : Type) [Field F] [NumberField 
     have h1 := congrArg (inclR (F := F) (AF F)) h0
     rw [map_zero] at h1
     rw [← h1]
-    simp only [form, incV, incM, Matrix.map_apply, hc, dotProduct, Matrix.mulVec, Finset.mul_sum, map_sum, map_mul, mul_assoc]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [form, incV, incM, Matrix.map_apply, hc, dotProduct, Matrix.mulVec, Finset.mul_sum, map_sum, map_mul, mul_assoc]
   rw [symp, hTens_vecMulVec, h, mul_zero, mul_zero, map_zero]
 
 end GlobalTheory.MixedLagr

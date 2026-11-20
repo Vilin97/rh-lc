@@ -146,7 +146,8 @@ theorem deg_snoc (h : HermFam K V) (E : Submodule (𝓞 K) V) {r : ℕ} (v : Fin
     rw [this, hli.repr_eq_single k _ rfl, Finsupp.single_apply]
   have hgsum : ∀ c : Fin (r + 1) → K, g (∑ k, c k • v k) = c (Fin.last r) := by
     intro c
-    simp [map_sum, hgv]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, hgv]
   have hrep : ∀ x ∈ Submodule.span K (Set.range v), ∃ c : Fin (r + 1) → K, x = ∑ k, c k • v k := by
     intro x hx
     obtain ⟨c, hc⟩ := (Submodule.mem_span_range_iff_exists_fun K).1 hx

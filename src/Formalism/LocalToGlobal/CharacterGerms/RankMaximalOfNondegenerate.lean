@@ -197,7 +197,8 @@ theorem lgCv_agr (Y : FBChart C V O dd) (p : PairData Y d I) {g : Fin 2} {w : I 
   obtain ⟨n, rfl⟩ : ∃ n, e = Finsupp.single () n := ⟨e (), Finsupp.unique_single e⟩
   rw [Finsupp.degree_single] at he
   change PowerSeries.coeff n _ = PowerSeries.coeff n _
-  rw [map_sum, map_smul, coeffX']
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_smul, coeffX']
   simp only [map_smul, smul_eq_mul, tyS_good_coeff h0 h1 hl _ n he]
   by_cases hn1 : n = 1
   · simp [hn1]

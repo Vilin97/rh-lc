@@ -257,7 +257,8 @@ theorem quad_int {F : Pt k 2 d} (iF : IP φ F) (hU : evP (n := 1) ![pt k d 0, 0]
     (sum_mem (t := Finset.univ) fun i _ => mul_mem (int_C (hv i)) (ha i))) (dof_int iF hu hE)
   convert h using 1
   rw [hD, dof_sub, GE.dof_add, GE.dof_sum, GE.dof_sum]
-  simp only [GE.dof_C_mul, mul_sub, Finset.sum_sub_distrib, ← map_mul, ← map_sum, map_add, lin,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [GE.dof_C_mul, mul_sub, Finset.sum_sub_distrib, ← map_mul, ← map_sum, map_add, lin,
     const_pderiv]
   ring
 
@@ -351,7 +352,8 @@ theorem canonGauge_dmonOf_hL_integral :
   · rw [e, hq, gt_const_ev _ (pair_points_zero_constant (gp_pt 0) hw) _ c0]
     exact zero_mem _
   · rw [e, hq, Dof]
-    simp only [map_sum, map_mul, constantCoeff_pderiv_formalSubst_two _ _ (gp_pt 0) hw, c1, zero_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, constantCoeff_pderiv_formalSubst_two _ _ (gp_pt 0) hw, c1, zero_mul,
       Finset.sum_const_zero, add_zero, mul_zero]
     exact zero_mem _
   · exact int_const e

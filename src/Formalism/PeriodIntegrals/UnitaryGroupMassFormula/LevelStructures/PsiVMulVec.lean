@@ -86,7 +86,8 @@ theorem level_congruence_typed_places : LevelCongruenceTypedPlaces := by
     rw [← sub_eq_zero]
     apply PI.FinKW.local_vector_injective X.B.I
     intro v
-    rw [map_sub, psiV_mulVec X hb κ v w i, Finset.sum_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, psiV_mulVec X hb κ v w i, Finset.sum_apply, map_sum]
     simp only [Pi.smul_apply]
     have hs : ∀ p : TypX X, PI.FinKW.psiV X.B.I v ((idemT X p.1 • ((X.B.I.fmat (κ' p) - 1) *ᵥ w)) i) =
         (if v = p.1 then 1 else 0) * ((((HA.mat (Fv X.B.I.F v) X.B.I.cm.sig X.B.I.J

@@ -74,7 +74,8 @@ theorem hR_snd_zero (hsig : ∀ x, sp (sigR σ (v.adicCompletion F) x) = swapR _
     (J : Matrix (Fin n) (Fin n) E) (x y : Fin n → E ⊗[F] v.adicCompletion F) (hx : ∀ a, (sp (x a)).1 = 0) :
     (sp (hR σ J (v.adicCompletion F) x y)).2 = 0 := by
   unfold hR hform
-  simp only [map_sum, map_mul, Prod.snd_sum, Prod.snd_mul, hsig]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, Prod.snd_sum, Prod.snd_mul, hsig]
   simp [swapR, hx]
 
 theorem fst_mulVec {n : ℕ} (y : GL (Fin n) (E ⊗[F] v.adicCompletion F))
@@ -91,7 +92,8 @@ theorem fst_mulVec {n : ℕ} (y : GL (Fin n) (E ⊗[F] v.adicCompletion F))
   rw [Matrix.mul_apply, Matrix.mul_apply] at hV
   simp only [hfr, Matrix.of_apply] at hV
   rw [hV]
-  simp only [Matrix.mulVec, dotProduct, map_sum, Prod.fst_sum, map_mul, Prod.fst_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mulVec, dotProduct, map_sum, Prod.fst_sum, map_mul, Prod.fst_mul]
   apply Finset.sum_congr rfl
   intro d _
   simp [bc]
@@ -223,7 +225,8 @@ theorem local_frame_first_factor : ∀ (F E : Type) [Field F] [NumberField F] [F
       apply sp.injective
       rw [RingEquiv.apply_symm_apply]
       unfold supSum
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Prod.ext ?_ ?_
       · rw [Prod.fst_sum, hR0, hW0, Finset.mul_sum, ← Finset.sum_add_distrib]
         refine Finset.sum_congr rfl fun i _ => ?_
@@ -252,7 +255,8 @@ theorem local_frame_first_factor : ∀ (F E : Type) [Field F] [NumberField F] [F
         if (x : ℕ) + 1 = y ∧ (y : ℕ) < n ∧ (y : ℕ) ≠ n then redM F v M x y else 0) =
         IsLocalRing.residue _ (⟨R0, hR0i⟩ : v.adicCompletionIntegers F) := by
       have hsub : (⟨R0, hR0i⟩ : v.adicCompletionIntegers F) = ∑ i, ⟨_, hr i⟩ := Subtype.ext (by simp [hR0])
-      rw [hsub, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hsub, map_sum]
       refine Finset.sum_congr rfl fun x _ => ?_
       by_cases hx : x.1 + 1 < n
       · rw [Finset.sum_eq_single ⟨x.1 + 1, hx⟩]

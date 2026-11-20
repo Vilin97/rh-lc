@@ -114,9 +114,11 @@ theorem exists_adeleMap_eq_sum_smul (y : 𝔸[L]) :
     rw [Algebra.smul_def, algebraMap_adeleRing, adeleBasis_apply]
   conv_rhs => rw [hy]
   simp only [Finset.smul_sum, smul_mul', smul_adeleMap, smul_algebraMap]
-  rw [Finset.sum_comm, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.sum_comm, map_sum]
   refine Finset.sum_congr rfl fun i _ ↦ ?_
-  rw [← Finset.mul_sum, ← map_sum, ← trace_eq_sum_automorphisms, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Finset.mul_sum, ← map_sum, ← trace_eq_sum_automorphisms, map_mul,
     adeleMap_algebraMap]
 
 theorem forall_smul_eq_iff_mem_range (y : 𝔸[L]) :

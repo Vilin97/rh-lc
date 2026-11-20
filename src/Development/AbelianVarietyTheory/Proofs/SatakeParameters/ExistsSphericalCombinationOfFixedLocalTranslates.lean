@@ -101,7 +101,8 @@ theorem fixed_comb {K : Subgroup G} {ι : Type} (s : Finset ι) (g : ι → G) (
   have main : (Fintype.card (K ⧸ N) : ℂ) • ∑ i ∈ s, a i • π (g i) u = ∑ i ∈ s, a i • T i := by
     have e : ∀ q : K ⧸ N, π (q.out : G) (∑ i ∈ s, a i • π (g i) u) = ∑ i ∈ s, a i • π ((q.out : G) * g i) u := by
       intro q
-      simp only [map_sum, map_smul, map_mul, Module.End.mul_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, map_mul, Module.End.mul_apply]
     calc (Fintype.card (K ⧸ N) : ℂ) • ∑ i ∈ s, a i • π (g i) u
         = ∑ q : K ⧸ N, π (q.out : G) (∑ i ∈ s, a i • π (g i) u) := by
           rw [Nat.cast_smul_eq_nsmul ℂ, ← Finset.card_univ, ← Finset.sum_const]

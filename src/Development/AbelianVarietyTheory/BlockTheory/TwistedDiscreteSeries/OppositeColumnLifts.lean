@@ -237,7 +237,8 @@ theorem absF_one : absF (1 : (AE D)ˣ) = 1 := by
 theorem sum_divisible_eq_sum_mul {A B : Type} [CommRing A] [CommRing B] (φ : A →+* B) (e : A) {p q : ℕ} (u v : Fin p → A) (u' v' : Fin q → A)
     (h : ∑ i, u i * v i + ∑ i, u' i * v' i = 0) : ∑ i, φ (e * u i) * φ (e * v i) + ∑ i, φ (e * u' i) * φ (e * v' i) = 0 := by
   have h2 := congrArg (fun z => φ (e * e * z)) h
-  simp only [mul_zero, map_zero, mul_add, Finset.mul_sum, map_add, map_sum] at h2
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [mul_zero, map_zero, mul_add, Finset.mul_sum, map_add, map_sum] at h2
   rw [← h2]
   congr 1 <;> refine Finset.sum_congr rfl fun i _ => ?_ <;> rw [← map_mul] <;> congr 1 <;> ring
 

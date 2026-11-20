@@ -123,7 +123,8 @@ theorem coeffs_mem [Infinite K] {V : Type*} [AddCommGroup V] [Module K V] (S : S
     simp only [Set.mem_compl_iff, Set.mem_singleton_iff] at hs
     have h1 : S.mkQ (∑ k ∈ Finset.range N, s ^ k • f k) = 0 := (Submodule.Quotient.mk_eq_zero S).2 (h s hs)
     have h2 := congrArg ψ h1
-    rw [map_sum, map_sum, map_zero] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum, map_zero] at h2
     simp only [map_smul, Submodule.mkQ_apply, smul_eq_mul] at h2
     show Polynomial.IsRoot p s
     rw [Polynomial.IsRoot.def]
@@ -159,7 +160,8 @@ theorem coeff_sc (w : σ → ℕ) (c : K) (F : MvPolynomial σ K) (m : σ →₀
     AddMonoidAlgebra.coeff (sc w c F) m = c ^ Finsupp.weight w m * AddMonoidAlgebra.coeff F m := by
   classical
   conv_lhs => rw [F.as_sum]
-  rw [map_sum, coeff_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, coeff_sum]
   simp only [sc_monomial, coeff_monomial]
   rw [Finset.sum_ite_eq']
   split_ifs with h

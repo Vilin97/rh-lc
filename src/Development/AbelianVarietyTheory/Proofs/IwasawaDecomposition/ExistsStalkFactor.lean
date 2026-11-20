@@ -39,7 +39,8 @@ theorem finrank_range_idem' {V k : Type} [CommRing V] [IsLocalRing V] [CommRing 
     rw [← (LinearMap.IsIdempotentElem.isProj_range e he).trace, LinearMap.trace_eq_matrix_trace R (Pi.basisFun R (Fin n))]
     simp [Matrix.trace, LinearMap.toMatrix_apply]
   refine Nat.cast_injective (R := k) ?_
-  rw [← tr e' he', ← map_natCast f, ← tr e he, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← tr e' he', ← map_natCast f, ← tr e he, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [show (Pi.single i 1 : Fin n → k) = f ∘ Pi.single i 1 from funext fun j => by
     by_cases hj : j = i <;> simp [hj, Pi.single_apply], h]

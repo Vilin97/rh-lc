@@ -72,7 +72,8 @@ theorem exists_algExp {D : D7} {Γ : Type} [Group Γ] [Fintype Γ] {Pl0 I0 T : T
       rw [Submodule.coe_sum]
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [Submodule.coe_smul, hbK, algebraMap_smul]
-    rw [e, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [evW_smul]
     rfl

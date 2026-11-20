@@ -126,7 +126,8 @@ theorem _root_.GlobalTheory.PlaceInt.placeIdem : _root_.ReciprocityTheory.ChartR
   refine ⟨g.natDegree + 1, fun j => b ^ (j : ℕ), fun j => g.coeff j, fun ψ => ?_⟩
   have hsum : ∑ j : Fin (g.natDegree + 1), algebraMap V k (g.coeff j) * ψ ((b ^ (j : ℕ) : 𝓞 E) : E)
       = algebraMap V k (g.eval (σ ψ b)) := by
-    rw [eval_eq_sum_range' (Nat.lt_succ_self _), map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [eval_eq_sum_range' (Nat.lt_succ_self _), map_sum,
       ← Fin.sum_univ_eq_sum_range (fun j => algebraMap V k (g.coeff j * σ ψ b ^ j))]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [← hσ]

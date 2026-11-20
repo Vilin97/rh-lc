@@ -13,7 +13,8 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 theorem zOf_repr {d : ℕ} (b : Module.Basis (Fin d) F E) (v : HeightOneSpectrum (𝓞 F))
     (w : Fin 1 × Fin d → v.adicCompletionIntegers F) (k : Fin d) :
     (Algebra.TensorProduct.basis (Fv F v) b).repr (zOf b v w) k = (w (0, k) : Fv F v) := by
-  simp [zOf, map_sum, Finsupp.single_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [zOf, map_sum, Finsupp.single_apply]
 
 theorem zOf_mem' {d : ℕ} (b : Module.Basis (Fin d) F E) (v : HeightOneSpectrum (𝓞 F))
     (w : Fin 1 × Fin d → v.adicCompletionIntegers F) : zOf b v w ∈ Rv b v := by

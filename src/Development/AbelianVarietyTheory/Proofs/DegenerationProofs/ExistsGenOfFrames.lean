@@ -56,7 +56,8 @@ theorem lin_all (hL : L.IsLB) {T T' : Over Z} {h : T' ⟶ T} {n : ℕ} {b : Fin 
   obtain ⟨J', hJ', e⟩ := exists_good L hL (r z) (K := PUnit) (fun _ => (snd T' G).left)
     (fun _ => J (r ≫ (snd T' G).left)) (fun _ _ _ => rfl) (fun _ => hJ (r ≫ (snd T' G).left))
   have e₀ := congrArg (r.stalkMap z).hom (H (r z) J' hJ')
-  rw [map_sum] at e₀
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum] at e₀
   have e₁ := sv_stalk G L N s (𝟙 _) r z hJ' (J' := J) (by simpa only [Category.id_comp] using e PUnit.unit)
   rw [Category.comp_id] at e₁
   refine e₁.symm.trans (e₀.trans (Finset.sum_congr rfl fun i _ => ?_))
@@ -99,7 +100,8 @@ theorem Rel.pull {M} (H : Rel G L N h₁ a h₂ b M) (g : T' ⟶ T) :
 theorem Rel.trans {M P} (H : Rel G L N h₁ a h₂ b M) (H' : Rel G L N h₂ b h₃ c P) : Rel G L N h₁ a h₃ c (M * P) := by
   intro k Y r z J hJ
   rw [H k Y r z J hJ]
-  simp only [H' _ Y r z J hJ, Matrix.mul_apply, map_sum, map_mul, Finset.mul_sum, Finset.sum_mul, _root_.mul_assoc]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [H' _ Y r z J hJ, Matrix.mul_apply, map_sum, map_mul, Finset.mul_sum, Finset.sum_mul, _root_.mul_assoc]
   exact Finset.sum_comm
 
 theorem Rel.refl : Rel G L N h₁ a h₁ a 1 := by

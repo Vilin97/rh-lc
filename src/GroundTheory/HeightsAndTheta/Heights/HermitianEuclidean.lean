@@ -63,7 +63,8 @@ theorem realToFibre_integers_eq_zero (x : ℝ ⊗[ℤ] 𝓞 K)
     · exact_mod_cast h0
     funext σ
     have hσ := congrArg (integersCoord K σ) (hx σ)
-    rw [hxB, map_sum, map_sum, map_zero] at hσ
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hxB, map_sum, map_sum, map_zero] at hσ
     simp only [Finset.sum_apply, Pi.smul_apply, canonicalEmbedding.latticeBasis_apply,
       canonicalEmbedding.apply_at, integralBasis_apply, Pi.zero_apply, smul_eq_mul]
     rw [← hσ]

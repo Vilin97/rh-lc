@@ -17,7 +17,8 @@ private theorem finrank_quotient_le_of_forall_dependent_mod {F V : Type} [Field 
     have : U.mkQ (∑ i, c i • z i) = 0 := by
       rw [Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero]
       exact hc
-    simpa [map_sum, map_smul, hz] using this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [map_sum, map_smul, hz] using this
   exact hc0 (funext fun i => Fintype.linearIndependent_iff.1 hli c hsum i)
 
 private theorem exists_spanning_family_of_finrank_le {F V : Type} [Field F] [AddCommGroup V] [Module F V] (N : ℕ)
@@ -57,7 +58,8 @@ theorem UpperTheory.V.Pa.linAlg :
   have hrow : ∀ a ∈ U, ∀ i, ∑ j, φ i j (a j) = 0 := by
     intro a ha i
     simp only [hφ]
-    rw [← map_sum, Finset.univ_sum_single]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, Finset.univ_sum_single]
     exact (Submodule.mem_dualAnnihilator _).1 (hΦA i) a ha
   set W : Submodule F T := ⨅ j : Fin g, U.comap (LinearMap.single F (fun _ : Fin g => T) j) with hWdef
   have hW : Module.finrank F W + g * g ≤ D0 := by

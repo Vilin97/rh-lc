@@ -39,7 +39,8 @@ theorem eq_one_of_pow_eq_one {m : ℕ} (hm : (m : 𝓀[K]) ≠ 0) {u : 𝒪[K]ˣ
   rw [← Units.val_pow_eq_pow_val, h, Units.val_one, sub_self] at hgeom
   have hS : IsUnit (∑ i ∈ Finset.range m, (u : 𝒪[K]) ^ i) := by
     rw [← residue_ne_zero_iff_isUnit]
-    simpa [map_sum, hres] using hm
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [map_sum, hres] using hm
   have := (hS.mul_right_eq_zero).mp hgeom
   ext
   simpa [sub_eq_zero] using this

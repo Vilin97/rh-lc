@@ -34,7 +34,8 @@ theorem map_conj_substF {ι : Type} {N n : ℕ} (h : ι → Matrix (Fin N) (Fin 
       map_mul (MvPolynomial.map (starRingEnd ℂ)), map_mul, MvPolynomial.map_X, GlobalTheory.CompactHowe.substF_X,
       GlobalTheory.CompactHowe.substF_X]
     congr 1
-    simp only [map_sum, map_mul, MvPolynomial.map_C, MvPolynomial.map_X, Matrix.map_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, MvPolynomial.map_C, MvPolynomial.map_X, Matrix.map_apply]
 
 theorem map_conj_conj {σ : Type} (P : MvPolynomial σ ℂ) :
     MvPolynomial.map (starRingEnd ℂ) (MvPolynomial.map (starRingEnd ℂ) P) = P := by

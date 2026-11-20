@@ -113,7 +113,8 @@ theorem lie_rho_decomp (o₀ : GlobalTheory.UPel.HT.Obj b N t) (β : R →+* k) 
     have := hw j c
     rw [← HL.ker_toLie (o₀.act.toF D), LinearMap.mem_ker, map_sub, map_smul, toLie_crys', sub_eq_zero] at this
     exact this
-  · rw [← HL.ker_toLie (o₀.act.toF D), LinearMap.mem_ker, map_sub, map_sum, sub_eq_zero] at hs
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [← HL.ker_toLie (o₀.act.toF D), LinearMap.mem_ker, map_sub, map_sum, sub_eq_zero] at hs
     exact hs
 
 theorem lie_decomp (o₀ : GlobalTheory.UPel.HT.Obj b N t) (β : R →+* k) (ht : t = spMap β) (HL : LieExact o₀.A)
@@ -191,7 +192,8 @@ theorem jSub_le (o₀ : GlobalTheory.UPel.HT.Obj b N t) (β : R →+* k) (ht : t
       simp_rw [← Finset.sum_smul, hc', zero_smul, Finset.sum_const_zero]
     calc HL.toLie (o₀.act.toF D) (∑ l, lam l • GlobalTheory.HTCount.crysAct o₀ (algebraMap (𝓞 D.F) D.O (c l)) x)
         = ∑ l, lam l • c l • HL.toLie (o₀.act.toF D) x := by
-          simp only [map_sum, map_smul, toLie_crys]
+          set_option synthInstance.maxHeartbeats 100000 in
+            simp only [map_sum, map_smul, toLie_crys]
       _ = ∑ l, lam l • c l • u + ∑ l, lam l • ∑ j, β (b.t j (c l)) • w j := by
           rw [hs, ← Finset.sum_add_distrib]
           refine Finset.sum_congr rfl fun l _ => ?_

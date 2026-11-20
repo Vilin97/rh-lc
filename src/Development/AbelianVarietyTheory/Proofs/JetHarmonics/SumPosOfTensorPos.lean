@@ -27,7 +27,8 @@ theorem evalOn_tensorCoord (B : Y →ₗ[ℤ] Y →ₗ[ℤ] ℝ) (x y : Y) :
     evalOn b B (tensorCoord b x y) = B x y := by
   conv_rhs => rw [← b.sum_repr x, ← b.sum_repr y]
   change ∑ p : ι × ι, ((b.repr x p.1 * b.repr y p.2 : ℤ) : ℝ) * B (b p.1) (b p.2) = _
-  simp only [map_sum, map_zsmul, LinearMap.sum_apply, LinearMap.smul_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_zsmul, LinearMap.sum_apply, LinearMap.smul_apply,
     Fintype.sum_prod_type, Int.cast_mul, zsmul_eq_mul, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
@@ -85,10 +86,12 @@ theorem exists_eq_sum_eval : ∀ (Y : Type) [AddCommGroup Y] [Module.Free ℤ Y]
     simp only [Submodule.coe_smul, LinearMap.smul_apply, hγ, smul_eq_mul]
     rw [← evalOn_tensorCoord b (β : Y →ₗ[ℤ] Y →ₗ[ℤ] ℝ) x y, ← hψ]
     conv_lhs => rw [← eb.sum_repr (Submodule.Quotient.mk (tensorCoord b x y))]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_zsmul, zsmul_eq_mul, mul_comm]
-  rw [congrArg l hβ, map_sum, ← hψ, hn, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [congrArg l hβ, map_sum, ← hψ, hn, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [map_smul, hz, smul_eq_mul, map_zsmul, zsmul_eq_mul, mul_comm]
 
@@ -150,7 +153,8 @@ theorem sum_pos_of_tensor_pos : ∀ (Y : Type) [AddCommGroup Y] [Module.Free ℤ
   let G : Matrix _ _ ℝ := Matrix.of fun p q => γ (b p) (b q)
   have hG : G.PosSemidef := posSemidef_of_int (by ext p q; simp [G, hγ (b p) (b q)]) fun x => by
     convert h0 (∑ p, x p • b p) using 1
-    simp only [dotProduct, mulVec, G, Matrix.of_apply, map_sum, map_zsmul, LinearMap.sum_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [dotProduct, mulVec, G, Matrix.of_apply, map_sum, map_zsmul, LinearMap.sum_apply,
       LinearMap.smul_apply, zsmul_eq_mul, Finset.mul_sum]
     refine Finset.sum_congr rfl fun p _ => Finset.sum_congr rfl fun q _ => ?_
     rw [hγ (b p) (b q)]; ring
@@ -211,7 +215,8 @@ theorem exists_traceDual : ∀ (E : Type) [Field E] [NumberField E], ∃ (N : �
     intro g α
     have : (Algebra.trace ℤ (𝓞 E)) ∘ₗ LinearMap.mulRight ℤ (∑ s, g (ω s) • θ s) = (k * k) • g :=
       ω.ext fun t => by
-        simp only [LinearMap.comp_apply, LinearMap.mulRight_apply, Finset.mul_sum, mul_smul_comm,
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [LinearMap.comp_apply, LinearMap.mulRight_apply, Finset.mul_sum, mul_smul_comm,
           map_sum, map_smul, hθ, LinearMap.smul_apply, smul_eq_mul]
         simp [mul_comm]
     exact LinearMap.congr_fun this α
@@ -226,7 +231,8 @@ theorem exists_traceDual : ∀ (E : Type) [Field E] [NumberField E], ∃ (N : �
       simp only [Module.Basis.coord_apply, Module.Basis.repr_self, Finsupp.single_apply, ite_smul,
         one_smul, zero_smul, Finset.sum_ite_eq', Finset.mem_univ, if_true] at this
       rw [← this, mul_comm (θ s), mul_assoc]
-    rw [mul_sub, map_sub, Finset.mul_sum, map_sum, mul_comm α (_ : 𝓞 E), ← nsmul_eq_mul, map_nsmul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [mul_sub, map_sub, Finset.mul_sum, map_sum, mul_comm α (_ : 𝓞 E), ← nsmul_eq_mul, map_nsmul,
       nsmul_eq_mul, hN, Algebra.trace_eq_matrix_trace ω α]
     simp only [h4, Matrix.trace, Matrix.diag, Algebra.leftMulMatrix_eq_repr_mul, Finset.mul_sum, sub_self]
 

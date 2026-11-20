@@ -47,7 +47,8 @@ theorem cj_mem_mcPts {P : Ideal (MRing ι)} {z : (Σ k, ι k) → ℂ} (hz : z �
   have h := hz.2 f hf
   have key : eval (cj z) (map (Int.castRingHom ℂ) f) =
       starRingEnd ℂ (eval z (map (Int.castRingHom ℂ) f)) := by
-    rw [MvPolynomial.eval_map, MvPolynomial.eval_map, MvPolynomial.eval₂_eq, MvPolynomial.eval₂_eq,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [MvPolynomial.eval_map, MvPolynomial.eval_map, MvPolynomial.eval₂_eq, MvPolynomial.eval₂_eq,
       map_sum]
     refine Finset.sum_congr rfl fun d _ => ?_
     simp [map_mul, map_prod, map_pow]

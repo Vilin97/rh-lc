@@ -28,7 +28,8 @@ theorem mem_of_avg {K : Type} [Field K] (σ : K →+* ℂ) {V : Type} [AddCommGr
   have hmap : ∀ v, Pj (j v) ∈ S := by
     intro v
     have e : Pj (j v) = j ((Nat.card P : K)⁻¹ • ∑ p : P, ((ψ p⁻¹ : Kˣ) : K) • r p v) := by
-      rw [hPj, map_smulₛₗ, map_sum, map_inv₀, map_natCast]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hPj, map_smulₛₗ, map_sum, map_inv₀, map_natCast]
       congr 1
       refine Finset.sum_congr rfl fun p _ => ?_
       rw [map_smulₛₗ, hT]

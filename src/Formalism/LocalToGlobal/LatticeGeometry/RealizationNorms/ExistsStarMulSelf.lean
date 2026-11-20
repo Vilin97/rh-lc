@@ -124,7 +124,8 @@ theorem psd_map {m : ℕ} (cj : K → K) (σ : K →+* ℂ) (hσ : ∀ z, σ (cj
   have key : ∀ l : Fin m → K, σ (∑ i, ∑ k, l i * A i k * cj (l k)) =
       star (fun k => star (σ (l k))) ⬝ᵥ (A.map σ) *ᵥ (fun k => star (σ (l k))) := by
     intro l
-    simp only [map_sum, map_mul, hσ, dotProduct, mulVec, map_apply, Pi.star_apply, star_star, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, hσ, dotProduct, mulVec, map_apply, Pi.star_apply, star_star, Finset.mul_sum]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun k _ => by ring
   have hden : DenseRange (fun l : Fin m → K => fun k => star (σ (l k))) := by
     have h1 : DenseRange (fun z : K => star (σ z)) :=

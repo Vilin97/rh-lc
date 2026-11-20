@@ -161,7 +161,8 @@ theorem cval_δ (hn : Even n) (hz : δ n (n + 1) z = 0) {U : Scheme.{0}} {m w w'
       (Sx.map prod.snd y)
     rw [hz, ev_zero, Int.negOnePow_succ, Int.negOnePow_even n hn, Units.neg_smul, one_smul, eq_comm,
       add_neg_eq_zero] at hzS
-    rw [hzS, map_sum, ← map_res]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hzS, map_sum, ← map_res]
     have hs : w'.negOnePow = -m.negOnePow := by
       rw [← hw', Int.negOnePow_add, Int.negOnePow_succ, Int.negOnePow_even n hn, mul_one]
     simp only [map_zsmul]

@@ -15,7 +15,8 @@ theorem finrank_le_of_subset_closure_range {l : ℕ} [Fact l.Prime] {E : Type} [
   have hcl : IsClosed (S : Set (PadicAlgCl l)) := Submodule.closed_of_finiteDimensional S
   have hsub : Set.range J ⊆ S := by
     rintro _ ⟨x, rfl⟩
-    rw [← b.sum_repr x, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← b.sum_repr x, map_sum]
     refine S.sum_mem fun k _ => ?_
     have e : J (b.repr x k • b k) = ((b.repr x k : ℚ) : ℚ_[l]) • J (b k) := by
       rw [Rat.smul_def, map_mul, map_ratCast, Algebra.smul_def, map_ratCast]

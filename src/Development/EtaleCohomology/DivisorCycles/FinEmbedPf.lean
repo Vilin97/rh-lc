@@ -188,7 +188,8 @@ theorem FinEmbed_of : FinEmbed := by
   · have h1 : ∑ j, f j • (t' j ∘ₗ t j) = LinearMap.id := by
       rw [← hsum]; exact Finset.sum_congr rfl fun j _ => by rw [hEq]
     have h2 := congrArg LinearMap.toMatrix' h1
-    rw [map_sum, LinearMap.toMatrix'_id] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, LinearMap.toMatrix'_id] at h2
     rw [← h2]
     exact Finset.sum_congr rfl fun j _ => by
       rw [map_smul, LinearMap.toMatrix'_comp, smul_mul]

@@ -212,7 +212,8 @@ theorem Ich_bound (hω : X.IsLZBasis g ω)
     rw [← hβ i k, cc, NumberField.IsCMField.complexEmbedding_complexConj]
   have hBv : ∀ t : Fin (4 * Fintype.card X.Ψ) → ℝ, IsHermFam (Bv ω t) := by
     intro t τ i k
-    simp only [Bv, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum, map_mul, Complex.conj_ofReal]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Bv, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum, map_mul, Complex.conj_ofReal]
     exact Finset.sum_congr rfl fun j _ => by rw [hωh j τ i k]
   have hfac : ∀ b, IsHermFam b → fac X la (X.Zb u b x) = fac X la x := by
     intro b hb

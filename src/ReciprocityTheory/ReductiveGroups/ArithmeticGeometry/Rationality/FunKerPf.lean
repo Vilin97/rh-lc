@@ -149,7 +149,8 @@ theorem funKer_holds : FunKerStatement := by
     have hxb := (bK.sum_repr ⟨x, hx⟩)
     have hx' : x = ∑ k, bK.repr ⟨x, hx⟩ k • ((bK k : K₁) : Ω) := by
       have := congrArg K₁.val.toLinearMap hxb
-      rw [map_sum] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum] at this
       simp only [map_smul] at this
       exact this.symm
     rw [hx']

@@ -13,7 +13,8 @@ theorem isExt_KT : ∀ (D : D7) (u : D.what₂.Word) (X : Ch D u) (i : ℕ) (M :
     rw [Submodule.coe_sum]
     refine Finset.sum_congr rfl fun c _ => ?_
     rw [hΦ.1 c, K.Kmap_eq, Submodule.coe_smul]
-  · simp only [map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [map_sum, map_smul]
     refine Finset.sum_congr rfl fun c _ => ?_
     rw [hK g']
 

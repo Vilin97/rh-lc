@@ -35,7 +35,8 @@ theorem selfDual_core {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} (G : Gri
 theorem finPart_mul_inv_mem {D : D7} {e : AE D} {S : Finset (Pl D.host.E)} (he : IsIdemSum e S) (s : 𝓞 D.host.E)
     (hs : ∀ P ∈ S, s ∉ P.asIdeal) (hs0 : s ≠ 0) : finPart D (e * incA D ((s : D.host.E))⁻¹) ∈ intAE D := by
   obtain ⟨⟨es, hes, rfl⟩, -⟩ := he
-  rw [Finset.sum_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.sum_mul, map_sum]
   refine sum_mem fun PP hPP => ?_
   by_contra h
   exact hs PP hPP (((hes PP hPP).2 s hs0).2 h)

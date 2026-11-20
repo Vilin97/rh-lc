@@ -15,7 +15,8 @@ theorem norm_map_of_basis {F L A B ι : Type} [CommRing F] [CommRing L] [CommRin
     intro x i
     have h1 : ψ x = ∑ j, φ (b.repr x j) • b' j := by
       conv_lhs => rw [← b.sum_repr x]
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [Algebra.smul_def, Algebra.smul_def, map_mul, hψ, hb]
     rw [h1, b'.repr_sum_self]

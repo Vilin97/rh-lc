@@ -65,7 +65,8 @@ theorem symp_add_self_expand : ∀ {F E : Type} [Field F] [NumberField F] [Field
   have hconj : ∀ x y : Matrix (Fin n) (Fin d) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE F E),
       c (GlobalTheory.WeilM.hTens c A Bm x y) = -GlobalTheory.WeilM.hTens c A Bm y x := by
     intro x y
-    simp only [GlobalTheory.WeilM.hTens, map_sum, map_mul, hcc, hA, hBm, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM, Matrix.map_apply, hcI,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [GlobalTheory.WeilM.hTens, map_sum, map_mul, hcc, hA, hBm, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM, Matrix.map_apply, hcI,
       hX.herm, hY.skew, map_neg]
     rw [key, ← Finset.sum_neg_distrib]
     refine Finset.sum_congr rfl fun k _ => ?_

@@ -210,7 +210,8 @@ theorem dot_cuspMat (u : Fin g → ℝ) (τ : X.Ψ) :
   have h : ‖∑ j, (u j : ℂ) * cuspLin X bas ξ τ j‖ ^ 2 = ((∑ j, (u j : ℂ) * cuspLin X bas ξ τ j) *
       conj (∑ j, (u j : ℂ) * cuspLin X bas ξ τ j)).re := by
     rw [mul_conj, normSq_eq_norm_sq, ofReal_re]
-  rw [cuspNu, h, map_sum, Finset.sum_mul_sum, re_sum, ← mul_assoc, Finset.mul_sum, dotProduct]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [cuspNu, h, map_sum, Finset.sum_mul_sum, re_sum, ← mul_assoc, Finset.mul_sum, dotProduct]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [re_sum, mulVec, dotProduct, Finset.mul_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
@@ -598,7 +599,8 @@ theorem IsAdapted.flowCoeff_eq_zero (hξ : X.IsIso ξ) (n : ℕ) (a b : Fin n �
   rw [Finset.sum_apply, Finset.sum_eq_zero_iff_of_nonneg fun k _ => cuspNu_nonneg X bas ξ _ τ] at hm
   have h1 (k) := (cuspNu_eq_zero_iff X bas ξ _ τ).1 (hm k (Finset.mem_univ _))
   have h2 (k) := congrArg conj (h1 k)
-  simp only [map_sum, map_mul, conj_ofReal, map_zero] at h2
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, conj_ofReal, map_zero] at h2
   push_cast at h1 h2
   refine mul_eq_zero_of_right _ ?_
   rcases hc with ⟨i, hi, hc⟩ | ⟨i, hi, hc⟩

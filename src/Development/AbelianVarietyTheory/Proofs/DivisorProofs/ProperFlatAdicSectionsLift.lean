@@ -35,7 +35,8 @@ theorem loc_map {f : Y ⟶ Spec (CommRingCat.of R)} {M : LB Y} (P : Perf f M)
     loc P π₁ f₁ (φ ∘ v) i = rs X₁ le ((a.app _).hom (loc P π₂ f₂ v i)) := by
   subst hπ
   refine Eq.trans ?_ (rs_self _ _).symm
-  simp only [loc, map_sum, map_mul, app_cst w, Function.comp_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [loc, map_sum, map_mul, app_cst w, Function.comp_apply]
   refine Finset.sum_congr rfl fun k _ => ?_
   rfl
 

@@ -267,7 +267,8 @@ variable {K : Type} [Field K] [CharZero K] {k : ℕ}
 theorem linearSubst_pairing (g : GL (Fin k) K) : glAct g (hXY K k) = hXY K k := by
   have hg : ((g⁻¹ : GL (Fin k) K) : Matrix (Fin k) (Fin k) K) * (g : Matrix (Fin k) (Fin k) K) = 1 := by
     rw [← Matrix.GeneralLinearGroup.coe_mul]; simp
-  simp only [glAct, hXY, map_sum, map_mul, aeval_X, Sum.elim_inl, Sum.elim_inr]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [glAct, hXY, map_sum, map_mul, aeval_X, Sum.elim_inl, Sum.elim_inr]
   simp only [Finset.sum_mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun j _ => ?_
@@ -276,7 +277,8 @@ theorem linearSubst_pairing (g : GL (Fin k) K) : glAct g (hXY K k) = hXY K k := 
       (C (((g⁻¹ : GL (Fin k) K) : Matrix (Fin k) (Fin k) K) l i) * X (Sum.inr l)) =
       C ((1 : Matrix (Fin k) (Fin k) K) l j) * ((X (Sum.inl j) : PolXY K k) * X (Sum.inr l)) := by
     intro l
-    rw [← hg, Matrix.mul_apply, map_sum, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hg, Matrix.mul_apply, map_sum, Finset.sum_mul]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [C_mul]; ring
   simp only [this, Matrix.one_apply]
@@ -309,7 +311,8 @@ theorem pderiv_inl_linearSubst (g : GL (Fin k) K) (j : Fin k) (f : PolXY K k) :
   classical
   unfold glAct
   rw [pderiv_aeval_eq_sum_chain_rule, Fintype.sum_sum_type]
-  simp only [Sum.elim_inl, Sum.elim_inr, map_sum, pderiv_C_mul, pderiv_X, Pi.single_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Sum.elim_inl, Sum.elim_inr, map_sum, pderiv_C_mul, pderiv_X, Pi.single_apply]
   simp [mul_comm]
 
 theorem pderiv_inr_linearSubst (g : GL (Fin k) K) (j : Fin k) (f : PolXY K k) :
@@ -318,7 +321,8 @@ theorem pderiv_inr_linearSubst (g : GL (Fin k) K) (j : Fin k) (f : PolXY K k) :
   classical
   unfold glAct
   rw [pderiv_aeval_eq_sum_chain_rule, Fintype.sum_sum_type]
-  simp only [Sum.elim_inl, Sum.elim_inr, map_sum, pderiv_C_mul, pderiv_X, Pi.single_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Sum.elim_inl, Sum.elim_inr, map_sum, pderiv_C_mul, pderiv_X, Pi.single_apply]
   simp [mul_comm]
 
 theorem laplacian_apply' (f : PolXY K k) :
@@ -328,8 +332,10 @@ theorem laplacian_apply' (f : PolXY K k) :
 theorem laplacian_linearSubst (g : GL (Fin k) K) (f : PolXY K k) : ctrF K k (glAct g f) = glAct g (ctrF K k f) := by
   have hg : (g : Matrix (Fin k) (Fin k) K) * ((g⁻¹ : GL (Fin k) K) : Matrix (Fin k) (Fin k) K) = 1 := by
     rw [← Matrix.GeneralLinearGroup.coe_mul]; simp
-  rw [laplacian_apply', laplacian_apply', map_sum]
-  simp only [pderiv_inr_linearSubst, map_sum, pderiv_C_mul, pderiv_inl_linearSubst, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [laplacian_apply', laplacian_apply', map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [pderiv_inr_linearSubst, map_sum, pderiv_C_mul, pderiv_inl_linearSubst, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [Finset.sum_comm]
@@ -337,7 +343,8 @@ theorem laplacian_linearSubst (g : GL (Fin k) K) (f : PolXY K k) : ctrF K k (glA
         (C ((g : Matrix (Fin k) (Fin k) K) l j) * glAct g (pderiv (Sum.inl l) (pderiv (Sum.inr i) f))) =
       C ((1 : Matrix (Fin k) (Fin k) K) l i) * glAct g (pderiv (Sum.inl l) (pderiv (Sum.inr i) f)) := by
     intro l
-    rw [← hg, Matrix.mul_apply, map_sum, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hg, Matrix.mul_apply, map_sum, Finset.sum_mul]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [C_mul]; ring
   simp only [this, Matrix.one_apply]

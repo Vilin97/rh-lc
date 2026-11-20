@@ -27,9 +27,11 @@ theorem mul_mem_QSet_of_mem : ∀ (l : ℕ) [Fact l.Prime] (a e : ℕ) [NeZero a
       (w (q.1, r.1) * w' (q.2, r.2)), ?_⟩
   funext τ
   ext i n
-  rw [coeff_ofW, Pi.mul_apply, coeff_mul, map_sum, map_sum, map_sum, Finset.sum_div]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [coeff_ofW, Pi.mul_apply, coeff_mul, map_sum, map_sum, map_sum, Finset.sum_div]
   refine Finset.sum_congr rfl fun q hq => ?_
-  rw [coeff_mul, map_sum, map_sum, Finset.sum_div]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [coeff_mul, map_sum, map_sum, Finset.sum_div]
   refine Finset.sum_congr rfl fun r hr => ?_
   rw [coeff_ofW, coeff_ofW]
   simp only [map_mul, map_natCast]

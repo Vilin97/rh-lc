@@ -198,7 +198,8 @@ theorem main : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ (-1
     · rw [hcomm e he u (latO_mxAt hu), hf.2.2 e' he' u hu hh]
   · intro χS χT om hom e he g hg h hh f hf
     unfold comb
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun u hu => ?_
     rw [map_smul, hom.om_heis g h u f hf, actO_off hg hh (he u hu)]
   · intro e e' he he'

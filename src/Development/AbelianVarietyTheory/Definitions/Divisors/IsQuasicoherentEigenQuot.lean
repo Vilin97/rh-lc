@@ -332,9 +332,11 @@ variable [Fintype ι]
 
 theorem sum_proj_ι : ∑ j, h.proj ρ j ≫ eigenι _ _ = 𝟙 F := by
   have : ∑ j, h.idem j = 1 := h.1 (by
-    rw [map_sum, map_one]; simp only [splitMap_idem]; exact Finset.univ_sum_single (1 : ι → k))
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_one]; simp only [splitMap_idem]; exact Finset.univ_sum_single (1 : ι → k))
   have e := congrArg (tensorAct k ρ) this
-  rw [map_sum, map_one] at e
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_one] at e
   exact e
 
 def decompose [HasBiproduct fun j => eigen ρ (scal X (σ j))] :
@@ -371,7 +373,8 @@ theorem isIso_pullbackEigenHom (f : Y ⟶ X) (j : ι) :
     have := ((sub_ne_zero.2 ha).isUnit.map (algebraMap k Γ(X, ⊤))).map f.appTop.hom
     rwa [map_sub, map_sub] at this
   · simp only [← Functor.map_comp]
-    rw [← Functor.map_sum, sum_proj_ι, CategoryTheory.Functor.map_id]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Functor.map_sum, sum_proj_ι, CategoryTheory.Functor.map_id]
   · rw [← Functor.map_comp, ι_proj, CategoryTheory.Functor.map_id]
   · rw [act_pullAct, ← Functor.map_comp, act_proj, pullback_map_smul]; rfl
   · rw [act_pullAct, ← Functor.map_comp, eigenι_act, pullback_map_smul]; rfl

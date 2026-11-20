@@ -392,7 +392,8 @@ theorem real_translate : ∀ {D : D7} {T : Type} [Finite T] {L : LevCh D T} {μ�
     simp only [hPT]
     rw [e, Module.End.mul_apply, e1r, hact]
     conv_lhs => rw [hQs]
-    rw [map_sum, Finset.smul_sum, map_sum, Finset.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.smul_sum, map_sum, Finset.sum_apply]
     refine Finset.sum_congr rfl fun k' _ => ?_
     simp only [map_smul, Pi.smul_apply, smul_eq_mul, mul_assoc]
   have hint := (hX.integrable t).1

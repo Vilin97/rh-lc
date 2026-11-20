@@ -431,7 +431,8 @@ theorem exists_topForm (h : DiffVanish (d + 1) φ) : ∃ l : SymQ G →ₗ[ℚ] 
   refine (congrArg (fun x => (J.restrictScalars ℚ).liftQ l hJ
     ((Submodule.Quotient.restrictScalarsEquiv ℚ J).symm x)) e).trans ((hl _).trans ?_)
   have e' : Finsupp.toMultiset (∑ i, Finsupp.single (g i) 1) = Finset.univ.val.map g := by
-    simp only [map_sum, Finsupp.toMultiset_single, one_nsmul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, Finsupp.toMultiset_single, one_nsmul]
     rw [Finset.sum_eq_multiset_sum, ← Multiset.sum_map_singleton (Finset.univ.val.map g),
       Multiset.map_map]
     rfl

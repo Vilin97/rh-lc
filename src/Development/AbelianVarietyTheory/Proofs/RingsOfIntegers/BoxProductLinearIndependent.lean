@@ -102,7 +102,8 @@ theorem exists_test {F : Type} [Field F] (p : X ⟶ Spec (CommRingCat.of F)) (x 
     exact (em i).commutes a
   · funext a
     refine Fintype.linearIndependent_iff.1 h c (eq_zero_of_germOf (B := CommRingCat.of B) _ fun z => ?_) a
-    rw [← hc z, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hc z, map_sum]
     refine Finset.sum_congr rfl fun a _ => ?_
     rw [Algebra.smul_def, map_mul, map_prod]
     congr 1

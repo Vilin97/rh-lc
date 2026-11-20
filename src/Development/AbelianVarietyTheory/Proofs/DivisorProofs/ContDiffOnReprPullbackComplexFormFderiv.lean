@@ -10,7 +10,8 @@ theorem repr_mul {m : ℕ} (a b : Alt m) (S : Finset (Fin (m + m))) :
     (bas m).repr (a * b) S = ∑ S₁, ∑ S₂, (bas m).repr a S₁ * (bas m).repr b S₂ *
       (bas m).repr (bas m S₁ * bas m S₂) S := by
   conv_lhs => rw [← (bas m).sum_repr a, ← (bas m).sum_repr b]
-  simp only [Finset.sum_mul, Finset.mul_sum, smul_mul_smul_comm, map_sum, map_smul, Finsupp.coe_finset_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finset.sum_mul, Finset.mul_sum, smul_mul_smul_comm, map_sum, map_smul, Finsupp.coe_finset_sum,
     Finset.sum_apply, Finsupp.smul_apply, smul_eq_mul]
   rw [Finset.sum_comm]
 

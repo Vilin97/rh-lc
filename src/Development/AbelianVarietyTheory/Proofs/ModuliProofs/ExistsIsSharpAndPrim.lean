@@ -45,7 +45,8 @@ theorem existsUnique_label {H Λ I : Type} [CommGroup H] [AddCommGroup Λ] {m k 
     have : (fun i => (n i : ℤ)) = ∑ i, n i • (Pi.single i 1 : Fin m → ℤ) := by
       ext j
       simp [Finset.sum_apply, Pi.single_apply]
-    rw [this, map_sum, Finset.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [this, map_sum, Finset.sum_apply]
     refine Eq.trans ?_ (congrArg Additive.toMul (map_sum F _ _)).symm
     rw [toMul_sum]
     refine Finset.prod_congr rfl fun i _ => ?_

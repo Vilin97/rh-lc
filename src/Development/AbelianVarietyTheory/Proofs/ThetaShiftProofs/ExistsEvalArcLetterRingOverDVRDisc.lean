@@ -79,7 +79,8 @@ theorem hasSum_lcoeffPoly {σ : Type} (Y : σ → K) {P : MvPolynomial σ (Laure
   refine Eq.mpr (congrArg (HasSum · _) (funext fun m => ?_))
     (hasSum_sum fun μ (_ : μ ∈ s) =>
       (hasSum_laurent_of_mul_eq a ι hi hϖ ht0 ht (hμ μ)).mul_right (∏ k ∈ μ.support, Y k ^ μ k))
-  rw [hP, map_sum, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hP, map_sum, map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun μ _ => ?_
   rw [MvPolynomial.map_monomial, MvPolynomial.eval_monomial, Finsupp.prod]
   ring

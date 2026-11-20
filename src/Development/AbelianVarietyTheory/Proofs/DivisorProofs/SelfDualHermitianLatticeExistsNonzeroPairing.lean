@@ -10,7 +10,8 @@ theorem sesquilinearFormOfGram_eq_conj_swap : ∀ (F E : Type) [Field F] [Number
     (∀ e, σ (σ e) = e) → ∀ (n : ℕ) (J : Matrix (Fin n) (Fin n) E) (x w : Fin n → E),
     (∀ i j, σ (J j i) = J i j) → form σ J x w = σ (form σ J w x) := by
   intro F E _ _ _ _ _ σ hσ n J x w hJ
-  simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, hJ, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, hJ, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   ring

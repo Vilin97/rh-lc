@@ -248,7 +248,8 @@ theorem exists_pow_mul_eq_algebraMap {A B : Type} [CommRing A] [CommRing B] [Alg
       rw [this]; simp
   choose! a ha using hterm
   refine ⟨∑ i ∈ Finset.range (K + 1), a i, ?_⟩
-  rw [map_sum, Finset.sum_congr rfl ha, hc, add_comm (algebraMap A B f), add_pow, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_congr rfl ha, hc, add_comm (algebraMap A B f), add_pow, Finset.sum_mul]
   refine Finset.sum_congr rfl fun i hi => ?_
   ring
 

@@ -111,7 +111,8 @@ theorem diag_of_homog (d : ℕ) {f : MvPolynomial (Σ k, ι k) ℂ}
     refine (totalDegree_mul _ _).trans ?_
     rw [totalDegree_C, zero_add]
     exact (hGf m hm).1
-  · rw [eval_eq', map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [eval_eq', map_sum]
     refine Finset.sum_congr rfl fun m hm => ?_
     rw [eval_mul, eval_C, (hGf m hm).2 z]
 

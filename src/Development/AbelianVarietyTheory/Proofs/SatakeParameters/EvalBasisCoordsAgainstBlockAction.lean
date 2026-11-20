@@ -22,7 +22,8 @@ theorem substR_substR (R : Type) [CommRing R] (G G' : ∀ v, Fin (P.n' v) → Ma
   have hc : (substR P R G).comp (substR P R G') = substR P R (fun v s => G' v s * G v s) := by
     apply MvPolynomial.algHom_ext
     rintro ⟨v, s, a, t⟩
-    simp only [AlgHom.comp_apply, substR, MvPolynomial.aeval_X, map_sum, map_mul, MvPolynomial.aeval_C,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [AlgHom.comp_apply, substR, MvPolynomial.aeval_X, map_sum, map_mul, MvPolynomial.aeval_C,
       MvPolynomial.algebraMap_eq, Matrix.mul_apply, Finset.mul_sum, Finset.sum_mul]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun c _ => Finset.sum_congr rfl fun b _ => ?_

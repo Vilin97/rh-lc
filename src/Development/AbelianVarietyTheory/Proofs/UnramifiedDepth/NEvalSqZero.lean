@@ -68,6 +68,7 @@ theorem nv_calculus : ∀ (R S : Type) [CommRing R] [CommRing S] (s : R →+* S)
   · rw [nv_eq_sum _ _ a N hN, nv_eq_sum _ _ a N hN]
     simp only [MvPowerSeries.coeff_map, RingHom.comp_apply]
   · rw [nv_eq_sum _ _ a N hN, nv_eq_sum _ _ _ N (fun q => by rw [← map_pow, hN q, map_zero])]
-    simp only [map_sum, map_mul, map_prod, map_pow, RingHom.comp_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, map_prod, map_pow, RingHom.comp_apply]
 
 end GlobalTheory.ChF

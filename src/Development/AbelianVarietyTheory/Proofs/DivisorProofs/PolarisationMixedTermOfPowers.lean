@@ -24,10 +24,12 @@ theorem polarisation_mixed_term_of_powers : ∀ (A : Type) [CommRing A] (θ : A 
     intro t
     have ht := h (fun o => Option.elim o t n)
     have hlin : lin (fun o => ((Option.elim o t n : ℤ) : ℝ)) = MvPolynomial.C (t : ℝ) * Y + L := by
-      simp only [lin, Fintype.sum_option, Option.elim, hY, hL, map_sum, map_mul, rename_C, rename_X]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [lin, Fintype.sum_option, Option.elim, hY, hL, map_sum, map_mul, rename_C, rename_X]
     have hsum : (∑ o, (Option.elim o t n) • x o) = (t : A) * x none + y := by
       simp only [Fintype.sum_option, Option.elim, hy, zsmul_eq_mul]
-    rw [hlin, hsum, add_pow, add_pow, map_sum, map_sum] at ht
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hlin, hsum, add_pow, add_pow, map_sum, map_sum] at ht
     simp only [hP, hQ, Polynomial.eval_finset_sum, Polynomial.eval_mul, Polynomial.eval_C,
       Polynomial.eval_pow, Polynomial.eval_X]
     have e1 : ∀ a : ℕ, Φ ((MvPolynomial.C (t : ℝ) * Y) ^ a * L ^ (D + 1 - a) * (((D + 1).choose a : ℕ) : MvPolynomial (Option ι) ℝ))

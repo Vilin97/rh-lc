@@ -108,7 +108,8 @@ theorem emb_mem_unip : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Num
     intro i _
     have e := congrFun (congrFun hWF.xx j) i
     have e2 : sx j ⬝ᵥ (J.map t *ᵥ tx i) = t ((Formalism.UG.cT (σ : E →+* E) Xf * J * Xf) j i) := by
-      simp only [hsx, htx, dotProduct, mulVec, Matrix.mul_apply, Formalism.UG.cT, Matrix.map_apply, Matrix.transpose_apply,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hsx, htx, dotProduct, mulVec, Matrix.mul_apply, Formalism.UG.cT, Matrix.map_apply, Matrix.transpose_apply,
         map_sum, map_mul, AlgHom.comp_apply, Finset.mul_sum, Finset.sum_mul, mul_assoc]
       rw [Finset.sum_comm]
       rfl

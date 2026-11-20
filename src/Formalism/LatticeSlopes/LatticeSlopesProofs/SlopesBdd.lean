@@ -93,7 +93,8 @@ theorem slopesBdd_of (hG : GramDetLe.{u, 0, 0}) : SlopesBdd.{u} := by
       ‖∑ j, c j • w j‖ ≤ (K : ℝ) * ‖∑ j, c j • (f j : E)‖ := by
     intro c
     have h1 : S (∑ j, c j • w j) = ∑ j, c j • (f j : E) := by
-      simp only [map_sum, map_smul, hSw]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, hSw]
     rw [← h1]
     simpa [dist_eq_norm] using hK.le_mul_dist (∑ j, c j • w j) 0
   have hdet := hG E (EuclideanSpace ℝ (Fin (Module.finrank ℤ L))) (Fin (Module.finrank ℤ N))
@@ -105,7 +106,8 @@ theorem slopesBdd_of (hG : GramDetLe.{u, 0, 0}) : SlopesBdd.{u} := by
     intro c hc
     have h2 : ∑ j, c j • (f j : E) = 0 := by
       rw [← map_zero S, ← hc]
-      simp only [map_sum, map_smul, hSw]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, hSw]
     exact Fintype.linearIndependent_iff.mp (linearIndependent_coe_basis' N f) c h2
   have hwpos : 0 < (Matrix.gram ℝ w).det := (Matrix.posDef_gram_of_linearIndependent hwli).det_pos
   rw [gram_intMatrix_eq_map M, ← RingHom.map_det] at hwpos

@@ -27,7 +27,8 @@ omit [DecidableEq ι] in
 
 theorem hermitian_congr (hc : ∀ x, c (c x) = x) {G : Matrix ι ι R} (hG : ∀ a b, c (G a b) = G b a)
     (P : Matrix ι ι R) (a b : ι) : c ((Pᵀ * G * P.map c) a b) = (Pᵀ * G * P.map c) b a := by
-  simp only [Matrix.mul_apply, transpose_apply, map_apply, map_sum, map_mul, hc, hG,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mul_apply, transpose_apply, map_apply, map_sum, map_mul, hc, hG,
     Finset.sum_mul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_

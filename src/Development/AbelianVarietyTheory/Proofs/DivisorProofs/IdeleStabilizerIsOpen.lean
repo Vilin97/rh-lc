@@ -51,7 +51,8 @@ theorem isOpen_stab (F E : Type) [Field F] [NumberField F] [Field E] [NumberFiel
     have hx' : x = ∑ j, B.equivFun x j • B j := (B.sum_equivFun x).symm
     have e : B.equivFun (y * x) k = ∑ j, B.equivFun x j * B.equivFun (y * B j) k := by
       conv_lhs => rw [hx', Finset.mul_sum]
-      simp only [mul_smul_comm, map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [mul_smul_comm, map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
     rw [e]
     exact Finset.sum_induction _ (· ∈ O) hOadd hO0 fun j _ => hOmul _ _ (hx j) (hy j k)
   have key : ∀ w : AE F E, w - 1 ∈ V → ∀ z ∈ lat F E, w * z ∈ lat F E := fun w hw z hz => by

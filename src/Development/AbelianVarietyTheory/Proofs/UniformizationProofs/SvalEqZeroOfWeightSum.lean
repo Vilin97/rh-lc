@@ -92,7 +92,8 @@ theorem sval_eq_zero_of_sum {S B : Scheme.{0}} (X : Type) [AddCommGroup X] (Y : 
       (fun a => Set.mem_iInter.1 (hV _ a.1.2 hw) a.2)
     have E := H w J' hJ'
     have hw' : (𝟙 (splitTorus S X ⊗ Y).left : _ ⟶ _) w ∈ (snd (splitTorus S X) Y).left ⁻¹ᵁ V := hw
-    rw [gs_eq _ w _ hw', gs_eq _ w _ hw', map_zero, map_zero, map_sum, map_sum, ← E]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [gs_eq _ w _ hw', gs_eq _ w _ hw', map_zero, map_zero, map_sum, map_sum, ← E]
     refine Finset.sum_congr rfl fun β hβ => ?_
     rw [← gs_eq _ w _ hw', gs_mul _ w _ hw', gs_res _ w _ hw', gs_pull (𝟙 _) (snd (splitTorus S X) Y).left w V hw, Category.id_comp,
       hc β hβ _ _ w hw, sval_of (s β) _ w J' (j β) (fun k => e (⟨β, hβ⟩, k))]) α hα

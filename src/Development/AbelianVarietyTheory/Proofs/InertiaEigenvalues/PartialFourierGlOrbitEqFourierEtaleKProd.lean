@@ -199,7 +199,8 @@ theorem fourG_act_pt_eq_fourK : ∀ (F E : Type) [NontriviallyNormedField F] [No
     intro x y
     rw [he₁, he₂, dotProduct_comm, ← dotProduct_mulVec, mulVec_mulVec, hgig, one_mulVec]
     conv_rhs => rw [← (bas A hG).sum_equivFun x]
-    rw [Finset.sum_mul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_mul, map_sum]
     simp only [dotProduct]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [bas_apply, smul_mul_assoc, map_smul, smul_eq_mul, mul_comm]

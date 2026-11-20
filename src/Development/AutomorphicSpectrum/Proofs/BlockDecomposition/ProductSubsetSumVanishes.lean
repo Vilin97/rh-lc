@@ -164,7 +164,8 @@ theorem gen_natDegree {S : Type*} [CommRing S] [Nontrivial S] (d : ℕ) (c : Fin
 
 theorem gen_map {S T : Type*} [CommRing S] [CommRing T] (f : S →+* T) (d : ℕ) (c : Fin d → S) :
     (gen d c).map f = gen d (fun i => f (c i)) := by
-  simp [gen, Polynomial.map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [gen, Polynomial.map_sum]
 
 theorem eq_gen {T : Type*} [CommRing T] (P : T[X]) (hP : P.Monic) (d : ℕ) (hd : P.natDegree = d) :
     P = gen d (fun i => P.coeff i) := by

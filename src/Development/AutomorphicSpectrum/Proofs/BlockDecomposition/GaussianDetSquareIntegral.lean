@@ -112,7 +112,8 @@ def rowF (G : Matrix β (Fin d) ℂ) (a c : Fin d) (r : β → ℂ) : ℂ :=
 
 theorem rowF_eq (G : Matrix β (Fin d) ℂ) (a c : Fin d) (r : β → ℂ) :
     rowF G a c r = ∑ i, ∑ j, (G i a * conj (G j c)) * (r i * conj (r j) * eR r) := by
-  rw [rowF, map_sum, Finset.sum_mul_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [rowF, map_sum, Finset.sum_mul_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [Finset.sum_mul]
   refine Finset.sum_congr rfl fun j _ => ?_
@@ -152,7 +153,8 @@ theorem det_expand (G : Matrix β (Fin d) ℂ) (C : Fin d → β → ℂ) :
     simp [Matrix.transpose_apply]
   have hc : conj M.det =
       ∑ τ : Equiv.Perm (Fin d), ((Equiv.Perm.sign τ : ℤ) : ℂ) * ∏ k, conj (M k (τ k)) := by
-    rw [hd, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hd, map_sum]
     refine Finset.sum_congr rfl fun τ _ => ?_
     rw [map_mul, map_prod]
     simp

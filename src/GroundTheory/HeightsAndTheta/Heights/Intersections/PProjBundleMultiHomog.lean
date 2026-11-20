@@ -98,7 +98,8 @@ theorem genMap_eq_comp [DecidableEq K] (P : Ideal (MRing ι)) {N1 : ℕ} (V : S 
   rintro ⟨k | u, i⟩
   · simp [genMap, genericSubstitution, genericEvaluation, genPt, toFn]
   · change Fin N1 at i
-    simp only [genMap, genericSubstitution, RingHom.coe_comp, Function.comp_apply, eval₂Hom_X', AlgHom.toRingHom_eq_coe,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [genMap, genericSubstitution, RingHom.coe_comp, Function.comp_apply, eval₂Hom_X', AlgHom.toRingHom_eq_coe,
       RingHom.coe_coe, aeval_X, map_sum, map_mul, genericEvaluation_rename_inr]
     refine Finset.sum_congr rfl fun s _ => ?_
     simp [genericEvaluation]

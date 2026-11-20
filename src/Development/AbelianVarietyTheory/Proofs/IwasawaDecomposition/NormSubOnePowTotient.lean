@@ -194,7 +194,8 @@ theorem GlobalTheory.CycTrace.normalised_trace_bound (l : ℕ) [hl : Fact l.Prim
     rw [add_mul] at h3
     omega
   have hev : aeval z P = ∑ i, a i * z ^ (i : ℕ) := by
-    rw [hPdef, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hPdef, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_mul, expand_aeval, hp2]; simp
   have hco : ∀ j, P.coeff (j * l ^ m) = (p ⟨0, hM⟩).coeff j := by

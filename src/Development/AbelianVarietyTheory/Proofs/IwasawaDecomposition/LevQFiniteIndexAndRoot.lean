@@ -81,7 +81,8 @@ theorem finiteIndex_of_cong {n c : ℕ} (hc : (c : E) ≠ 0) (H : Subgroup (GLin
     have e2 : ((c : E)⁻¹ • (b.1 x - a.1 x)) l =
         ∑ i, x i * ((c : E)⁻¹ * (b.1 (Pi.single i 1) l - a.1 (Pi.single i 1) l)) := by
       conv_lhs => rw [ex]
-      simp only [map_sum, map_smul, Pi.smul_apply, Pi.sub_apply, Finset.sum_apply, smul_eq_mul, ← Finset.sum_sub_distrib,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, Pi.smul_apply, Pi.sub_apply, Finset.sum_apply, smul_eq_mul, ← Finset.sum_sub_distrib,
         Finset.mul_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       ring

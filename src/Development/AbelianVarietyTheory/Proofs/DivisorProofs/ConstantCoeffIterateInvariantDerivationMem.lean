@@ -81,7 +81,8 @@ theorem _root_.GlobalTheory.LawDer.Kernel.constantCoeff_iterate_invDer_mem : ∀
     intro F β
     rw [hD]
     unfold _root_.GlobalTheory.LawDer.invDer
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [coeff_smul, coeff_atZero_eq_coeff_mapDomain_inl, coeff_pderiv]
   have hP : ∀ F : MvPowerSeries (Fin d) Q, (∀ α, coeff α F ∈ S) → ∀ β, coeff β (D F) ∈ S := by

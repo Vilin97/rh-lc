@@ -384,7 +384,8 @@ theorem gram_det_eq_of_span_eq {g q k : ℕ} (Y : Matrix (Fin g) (Fin g) ℝ)
     ext i l
     rw [Matrix.of_apply, ← hc i, ← hc l]
     show realIPForm Y (∑ j, c i j • v j) (∑ j, c l j • v j) = _
-    simp only [map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.sum_apply]
     simp only [map_zsmul, LinearMap.smul_apply]
     simp only [zsmul_eq_mul, realIPForm_apply, Matrix.mul_apply, Matrix.map_apply,
       Matrix.of_apply, Matrix.transpose_apply, Finset.sum_mul]

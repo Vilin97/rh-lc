@@ -34,7 +34,8 @@ theorem UpperTheory.V.GradeZeroInterpolatingElement.eptInt :
     refine ⟨b.support, fun g => y (b g), fun g => hy' _, ?_⟩
     ext p q
     have h2 := congrArg y (congrFun (congrFun hb p) q)
-    rw [Finsupp.sum, Matrix.sum_apply, map_sum] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finsupp.sum, Matrix.sum_apply, map_sum] at h2
     rw [Matrix.sum_apply]
     simp only [Matrix.smul_apply, smul_eq_mul, map_mul] at h2 ⊢
     have h3 : y (Matrix.single i i (1 : R) p q) = Matrix.single i i (1 : PadicAlgCl l) p q := by

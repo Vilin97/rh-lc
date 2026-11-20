@@ -27,7 +27,8 @@ theorem gxSeries_mul (l : Fin n → ℂ) (r : Fin n) :
   ext k
   rcases k with _ | k
   · simp [gxSeries, gx]
-  · rw [show gxSeries l r * (1 - PowerSeries.C (l r) * PowerSeries.X) =
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [show gxSeries l r * (1 - PowerSeries.C (l r) * PowerSeries.X) =
         gxSeries l r - PowerSeries.C (l r) * (gxSeries l r * PowerSeries.X) by ring,
       map_sub, PowerSeries.coeff_C_mul, PowerSeries.coeff_succ_mul_X, map_sub,
       PowerSeries.coeff_succ_X_mul, map_sum]
@@ -74,7 +75,8 @@ theorem gelfandSeries_eq (l : Fin n → ℂ) :
   ring
 
 theorem sum_gx_eq_gval (l : Fin n → ℂ) (k : ℕ) : ∑ r, gx l k r = gval l k := by
-  rw [gval, gelfandSeries_eq, PowerSeries.coeff_succ_X_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [gval, gelfandSeries_eq, PowerSeries.coeff_succ_X_mul, map_sum]
   simp [gxSeries]
 
 theorem gval_perm (l : Fin n → ℂ) (σ : Equiv.Perm (Fin n)) (k : ℕ) : gval (l ∘ σ) k = gval l k := by

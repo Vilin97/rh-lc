@@ -61,7 +61,8 @@ theorem norm_sq_le (ι : Q →ₗ[ℂ] E) {Ix : Type} [Fintype Ix] (Qp : Ix → 
   have hsum : ⟪ι F, ι F⟫_ℂ - (smin : ℂ) * ⟪F, F⟫_ℂ =
       ⟪∑ p, ((Real.sqrt (s p - smin) : ℝ) : ℂ) • y p,
         ∑ p, ((Real.sqrt (s p - smin) : ℝ) : ℂ) • y p⟫_ℂ := by
-    simp only [hFy, map_sum, sum_inner, inner_sum, Finset.mul_sum, ← Finset.sum_sub_distrib]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hFy, map_sum, sum_inner, inner_sum, Finset.mul_sum, ← Finset.sum_sub_distrib]
     refine Finset.sum_congr rfl (fun a _ => Finset.sum_congr rfl (fun b _ => ?_))
     first
       | exact hkey a b

@@ -86,7 +86,8 @@ theorem hTens_eq_zero : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Nu
     funext m
     have := congrArg (inclR (F := F) (AF F)) (congrFun e m)
     have hc : ∀ e : E, cA σ (inclR (F := F) (AF F) e) = inclR (F := F) (AF F) (σ e) := fun e => rfl
-    simpa [hv, incM, incV, Matrix.mulVec, dotProduct, map_sum, map_mul, hc] using this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [hv, incM, incV, Matrix.mulVec, dotProduct, map_sum, map_mul, hc] using this
   have h1 : (incM F H.ι * z)ᵀ *ᵥ v = 0 := by
     rw [Matrix.transpose_mul, ← Matrix.mulVec_mulVec, h0, Matrix.mulVec_zero]
   set b := incM F H.ι * z with hb

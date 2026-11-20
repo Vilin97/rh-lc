@@ -207,14 +207,16 @@ private lemma genericSection_baseChange_surjective_ker_lemma (K Ω : Type) [Fiel
     exact Ideal.mul_mem_left _ _ hιw
   · rw [Ideal.span_le]
     rintro _ ⟨i, rfl⟩
-    rw [SetLike.mem_coe, RingHom.mem_ker, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [SetLike.mem_coe, RingHom.mem_ker, map_sum]
     have h : ∀ j, Φ₀ (algebraMap KTp KTf (X (i.succ, j)) ⊗ₜ[K] y j) =
         algebraMap P OmS (_root_.GlobalTheory.sPolyImg j₀ x (i.succ, j) * C (y j)) := by
       intro j
       rw [hΦ₀, hcomp, hsh, map_mul, AlgHom.comp_apply, aeval_X,
         IsScalarTower.algebraMap_apply Ω P OmS]
       rfl
-    rw [Finset.sum_congr rfl fun j _ => h j, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_congr rfl fun j _ => h j, ← map_sum]
     refine (congrArg (algebraMap P OmS) ?_).trans (map_zero _)
     simp [Fin.sum_univ_succAbove _ j₀, _root_.GlobalTheory.sPolyImg, hy₀, hy, Fin.succ_ne_zero]
 
@@ -257,7 +259,8 @@ theorem _root_.GlobalTheory.genericSection_quotient : ∀ (K Ω K' : Type) [Fiel
       have hP : (∑ j, _root_.ReciprocityTheory.ChartRestriction.G.T0.sHom (K := K) j₀ x (X (0, j)) * algebraMap Ω (_root_.ReciprocityTheory.ChartRestriction.G.T0.OmS Ω D N) (y j)) =
           algebraMap (MvPolynomial (_root_.ReciprocityTheory.ChartRestriction.G.T0.SVar D N) Ω) (_root_.ReciprocityTheory.ChartRestriction.G.T0.OmS Ω D N)
             (∑ j, _root_.GlobalTheory.sPolyImg j₀ x (0, j) * C (y j)) := by
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         refine Finset.sum_congr rfl fun j _ => ?_
         unfold _root_.ReciprocityTheory.ChartRestriction.G.T0.sHom
         rw [aeval_X, map_mul]
@@ -274,7 +277,8 @@ theorem _root_.GlobalTheory.genericSection_quotient : ∀ (K Ω K' : Type) [Fiel
     have hsum : (M.toRingHom.comp e.symm.toRingHom) (∑ j, T (0, j) ⊗ₜ[K] y j) =
         Algebra.TensorProduct.includeRight
           (∑ j, _root_.ReciprocityTheory.ChartRestriction.G.T0.sHom (K := K) j₀ x (X (0, j)) * algebraMap Ω (_root_.ReciprocityTheory.ChartRestriction.G.T0.OmS Ω D N) (y j)) := by
-      rw [map_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, map_sum]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [hform, hT, Algebra.algebraMap_eq_smul_one, TensorProduct.smul_tmul, ← hcomp,
         Algebra.smul_def]

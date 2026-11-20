@@ -72,7 +72,8 @@ theorem ck_add (hc : ∀ (E E' : Z.VDiv) (a : Z.Ch), Z.capDeg E (Z.cD E' * a) = 
 theorem ck_scalar {r : ℕ} (P : FPair Z r) (v : ℚ) (h : ∀ i, P.Dv i = v • Z.divP) (k : ℕ) (Q : Z.Ch) :
     ck P k Q = (k : ℚ) * v * Z.capDeg Z.divP ((∑ i, Z.c1 (P.x i) ^ (k - 1)) * Q) := by
   unfold ck
-  rw [Finset.sum_mul, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.sum_mul, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   have hP := P.hx i
   rw [h, map_smul, Z.cD_divP, smul_zero, sub_zero] at hP

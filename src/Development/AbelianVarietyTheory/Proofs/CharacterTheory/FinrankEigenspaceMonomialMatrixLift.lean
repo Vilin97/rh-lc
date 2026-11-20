@@ -117,7 +117,8 @@ theorem finrank_eq_card (E : Submodule K (Fin n → K))
     choose u hu h1 h0 using fun s : {j // GoodRep σ a j} => exists_vec σ a s.2
     refine ⟨∑ s, w s • ⟨u s, (hE _).2 (hu s)⟩, ?_⟩
     ext t
-    rw [map_sum, Finset.sum_apply, Finset.sum_eq_single t]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_apply, Finset.sum_eq_single t]
     · simp [hf, h1]
     · intro s _ hst
       simp [hf, h0 s t.1 t.2 (fun h => hst (Subtype.ext h).symm)]

@@ -73,7 +73,8 @@ theorem gram_apply (σ : E →ₐ[F] E) {N : ℕ} {ι₁ ι₂ : Type*} (J : Mat
 theorem form_skew {σ : E →ₐ[F] E} (hσ : ∀ e, σ (σ e) = e) {N : ℕ} {J : Matrix (Fin N) (Fin N) E}
     (hsk : ∀ i j, σ (J j i) = -J i j) (a b : Fin N → E) :
     GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.form σ J a b = -σ (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.form σ J b a) := by
-  simp only [GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.form, dotProduct, mulVec, map_sum, map_mul, hσ, Finset.mul_sum, ← Finset.sum_neg_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.form, dotProduct, mulVec, map_sum, map_mul, hσ, Finset.mul_sum, ← Finset.sum_neg_distrib]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   rw [hsk]; ring

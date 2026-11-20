@@ -145,7 +145,8 @@ theorem mem_latHT_iff : HTBoundSt → ∀ (E : Type) [Field E] [NumberField E] [
     have h3 : ∑ i, (D i : C) * a i = r := by
       apply mul_right_cancel₀ (pow_ne_zero m hp0)
       have := congrArg (intO C).subtype hr
-      simp only [map_mul, map_pow, map_natCast, map_sum, Subring.subtype_apply, hb] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_mul, map_pow, map_natCast, map_sum, Subring.subtype_apply, hb] at this
       rw [this, Finset.sum_mul]
       exact Finset.sum_congr rfl fun i _ => by ring
     have h4 : ∑ i, (h j i : C) * a i = r - ∑ i, (δ i : C) * ((p : C) * a i) := by
@@ -176,7 +177,8 @@ theorem mem_latHT_iff : HTBoundSt → ∀ (E : Type) [Field E] [NumberField E] [
     let s : ↥(intO C) := ⟨∑ i, (h j i : C) * a i, h1 j⟩
     have h3 : ∑ i, D i * b i = (s + ∑ i, δ i * b i) * (p : ↥(intO C)) ^ 1 := by
       apply (intO C).subtype_injective
-      simp only [map_mul, map_pow, map_natCast, map_sum, map_add, Subring.subtype_apply, s, b]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_mul, map_pow, map_natCast, map_sum, map_add, Subring.subtype_apply, s, b]
       rw [← Finset.sum_add_distrib, Finset.sum_mul]
       refine Finset.sum_congr rfl fun i _ => ?_
       have := congrArg (intO C).subtype (hδ i)

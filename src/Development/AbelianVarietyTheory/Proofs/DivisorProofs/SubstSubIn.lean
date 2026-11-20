@@ -26,7 +26,8 @@ def scaledIdeal (τ : Type) (K : Ideal B) (c : Q) : Ideal (MvPowerSeries τ B) w
   zero_mem' γ := ⟨0, K.zero_mem, by simp⟩
   smul_mem' r x hx γ := by
     classical
-    rw [smul_eq_mul, coeff_mul, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [smul_eq_mul, coeff_mul, map_sum, Finset.mul_sum]
     have key : ∀ q ∈ Finset.HasAntidiagonal.antidiagonal γ, ∃ b ∈ K,
         c * algebraMap B Q (coeff q.1 r * coeff q.2 x) = algebraMap B Q b := by
       intro q _
@@ -34,7 +35,8 @@ def scaledIdeal (τ : Type) (K : Ideal B) (c : Q) : Ideal (MvPowerSeries τ B) w
       exact ⟨coeff q.1 r * b, K.mul_mem_left _ hb, by rw [map_mul, map_mul, ← eb]; ring⟩
     choose! g hg eg using key
     exact ⟨∑ q ∈ Finset.HasAntidiagonal.antidiagonal γ, g q, K.sum_mem hg, by
-      rw [map_sum]; exact Finset.sum_congr rfl eg⟩
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]; exact Finset.sum_congr rfl eg⟩
 
 end GlobalTheory.KatzCongr
 

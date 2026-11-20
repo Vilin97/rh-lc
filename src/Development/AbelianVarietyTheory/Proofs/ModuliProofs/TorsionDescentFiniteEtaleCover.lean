@@ -43,7 +43,8 @@ theorem mem_of_integral (S K F B : Type) [CommRing S] [IsDomain S] [IsIntegrally
     | zero => simp
     | tmul a b =>
       have hb : b = ∑ i, s b i • p (Pi.single i 1) := by
-        conv_lhs => rw [← LinearMap.id_apply (R := S) b, ← hps, LinearMap.comp_apply, pi_eq_sum_univ' (s b), map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          conv_lhs => rw [← LinearMap.id_apply (R := S) b, ← hps, LinearMap.comp_apply, pi_eq_sum_univ' (s b), map_sum]
         simp
       conv_lhs => rw [hb, TensorProduct.tmul_sum]
       simp [ev, TensorProduct.smul_tmul]

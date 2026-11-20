@@ -17,11 +17,13 @@ theorem exists_dual {q : ℕ} {w : Fin q → W} (hw : LinearIndependent K w) :
 
 theorem form_eigProj {ρ : 𝓞 E →+* Module.End K W} {τ : E →+* K} {φ : Module.Dual K W}
     (h : ∀ (b : 𝓞 E) x, φ (ρ b x) = τ (b : E) * φ x) (x : W) : φ (HT.eigProj ρ τ x) = φ x := by
-  simp only [HT.eigProj, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, h, smul_eq_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [HT.eigProj, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, h, smul_eq_mul,
     ← mul_assoc]
   rw [← Finset.sum_mul]
   have : ∑ k, τ (HT.dualInt E k) * τ ((RingOfIntegers.basis E k : 𝓞 E) : E) = 1 := by
-    rw [← map_one τ, ← HT.LatBasic.sum_dualInt_mul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_one τ, ← HT.LatBasic.sum_dualInt_mul, map_sum]
     simp
   rw [this, one_mul]
 

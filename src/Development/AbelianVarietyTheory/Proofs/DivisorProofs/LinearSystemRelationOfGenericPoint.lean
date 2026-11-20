@@ -34,7 +34,8 @@ theorem valR_relFn {K : Type} [Field K] (x : Sp K ⟶ S.Y) (c : S.L.ι) (hx : pt
   have hc : (valMap x _ h).hom.comp ((resG S.Y le_top).comp (algebraMap F Γ(S.Y, ⊤))) = S.baseHom x := by
     ext b
     exact ((valR_eq x _ h _).symm.trans (valR_res x le_top h _)).trans (S.valR_algebraMap x b)
-  simp only [relFn, valR_eq x _ h, map_add, map_sum, map_mul, map_pow, eval₂_comp_left, hc]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [relFn, valR_eq x _ h, map_add, map_sum, map_mul, map_pow, eval₂_comp_left, hc]
   rfl
 
 theorem relation_of_generic (F : Type) [Field F] (S : LinSys F) (hY : AlgebraicGeometry.IsIntegral S.Y)

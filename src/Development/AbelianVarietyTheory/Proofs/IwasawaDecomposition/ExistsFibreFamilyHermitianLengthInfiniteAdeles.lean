@@ -349,7 +349,8 @@ theorem exists_line [Nontrivial R] (h : IsCMExt F E σ) (hM : 1 ≤ M) (hJ : IsH
   have hs : ∀ e : E, sigR R σ (inclR R e) = inclR R (σ e) := fun e => rfl
   have hyy : hR R σ J y y = algebraMap R (R ⊗[F] E) (algebraMap F R a) := by
     have : hR R σ J y y = inclR R (hE σ J y0 y0) := by
-      simp only [hR, hE, Formalism.UG.hform, map_sum, map_mul, y, hs, JR, Matrix.map_apply,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hR, hE, Formalism.UG.hform, map_sum, map_mul, y, hs, JR, Matrix.map_apply,
         RingHom.coe_coe]
     rw [this, hy0, ← IsScalarTower.algebraMap_apply]
     exact (Algebra.TensorProduct.includeRight : E →ₐ[F] R ⊗[F] E).commutes a

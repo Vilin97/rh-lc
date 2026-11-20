@@ -59,7 +59,8 @@ theorem exists_tensor (ι : V →ₗ[ℂ] H) (β : V →ₛₗ[starRingEnd ℂ] 
   have hpre : ∀ k, ∃ e : V, e ∈ E ∧ ι e = (b k : H) := fun k => Submodule.mem_map.mp (b k).2
   choose e heE he using hpre
   refine ⟨∑ k, β (e k) ⊗ₜ[ℂ] e k, fun y => ?_⟩
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [contr_tmul, he]
 
   set z : V := ∑ k, ⟪(b k : H), ι y⟫_ℂ • e k with hz
@@ -74,11 +75,13 @@ theorem exists_tensor (ι : V →ₗ[ℂ] H) (β : V →ₛₗ[starRingEnd ℂ] 
       rw [inner_sum]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [inner_smul_right, mul_comm]
-    simp only [hz, map_sub, map_sum, map_smul, he, inner_sub_left, sum_inner, inner_smul_left, inner_conj_symm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hz, map_sub, map_sum, map_smul, he, inner_sub_left, sum_inner, inner_smul_left, inner_conj_symm]
     rw [key, sub_self]
   have hyz := h (y - z) hperp
   rw [map_sub, sub_eq_zero] at hyz
-  rw [hyz, hz, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hyz, hz, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [LinearMap.map_smulₛₗ, inner_conj_symm]
 

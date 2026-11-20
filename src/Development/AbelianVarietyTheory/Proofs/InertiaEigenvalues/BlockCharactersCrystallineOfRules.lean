@@ -226,7 +226,8 @@ theorem finrank_coordInv {LL : Type} [Field LL] [Algebra Qp LL]
         conv_lhs => rw [← e.sum_repr v]
         have : ∀ j, ρ g (e.repr v j • e j) = e.repr v j • ρ g (e j) := fun j =>
           (ρ g).map_smul_of_tower _ _
-        simp only [map_sum, this, map_smul, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.smul_apply,
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, this, map_smul, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.smul_apply,
           smul_eq_mul, hA, mul_comm]
       rw [h1, hΦ, h2, Finset.sum_smul]
       change _ = ∑ j, algebraMap Qp B (A g i j) * PD.actB g (Φ (v ⊗ₜ b) j)
@@ -468,7 +469,8 @@ theorem charCrysAt_of_constituent
       (congrFun (hg (decS D.nd w (Br.iota D.nbr i w hw g))) a)
     have h2 : (mapM (toK D.nd i) M (decS D.nd w (Br.iota D.nbr i w hw g))).mulVec v a =
         ∑ b, toK D.nd i (M (decS D.nd w (Br.iota D.nbr i w hw g)) a b) * v b := rfl
-    rw [h2, map_sum, Pi.smul_apply, smul_eq_mul, map_mul, WordJumpsCompare.toLLK_toK] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h2, map_sum, Pi.smul_apply, smul_eq_mul, map_mul, WordJumpsCompare.toLLK_toK] at h1
     simp only [map_mul, WordJumpsCompare.toLLK_toK] at h1
     rw [Pi.smul_apply, smul_eq_mul, WordJumpsCompare.locChi_apply]
     exact h1

@@ -45,7 +45,8 @@ theorem expConj : GlobalTheory.Published.CuspRapidDecay → GlobalTheory.Publish
       ν • ρ.theta ((Fm.ex x hx i).nch.twI w) j ((Fm.ex x hx i).nch.sd w) h P := by
     rw [← hf]
     change _ = ν • ν⁻¹ • evK p.nexp p.v₀ hρ _ j _ (p.nexp.eF _ _ _ (Nat.le_add_left _ _) j.2 f)
-    rw [smul_inv_smul₀ hν, hfe, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [smul_inv_smul₀ hν, hfe, map_sum]
     rfl
   have h0 := a2 τ hfix (n + n')
     (Fin.append (fun k => ρ.e ((Fm.ex x hx i).nch.twI w) ((Fm.ex x hx i).nch.sd w) (a k)) (fun k => -b k))

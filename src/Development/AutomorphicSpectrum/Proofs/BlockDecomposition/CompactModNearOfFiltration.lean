@@ -17,7 +17,8 @@ variable {S T : Type} [Ring S] [TopologicalSpace S] [IsTopologicalRing S] [Ring 
   [IsTopologicalRing T] {st : S →+ S}
 
 theorem map_cay (π : S →+* T) (M : ℕ) (y : S) : π (cay M y) = cay M (π y) := by
-  simp [cay, map_sum, map_pow]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [cay, map_sum, map_pow]
 
 theorem compact_mod_near_of_filtration (S₀ : Subring S) (h : S)
     (N : ℕ → AddSubgroup S) (p : ℕ → S →+ S) (m : ℕ) (hcont : Continuous st)
@@ -228,7 +229,8 @@ theorem compact_mod_near_of_weights (S₀ : Subring S) (h : S)
     exact Finset.sum_eq_zero fun ab _ => hx _ _ (hmb _ _)
   · exact continuous_finsetSum _ fun ab _ => by fun_prop
   · show π (∑ ab ∈ _, _) = ∑ ab ∈ _, _
-    simp only [map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul]
 
 end Abstract
 

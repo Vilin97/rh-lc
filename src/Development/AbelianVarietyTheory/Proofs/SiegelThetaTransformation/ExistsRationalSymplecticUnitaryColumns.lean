@@ -72,7 +72,8 @@ theorem sum_herm_mul {h : Matrix (Fin n) (Fin n) E} (hu : ccT h * h = 1) (G : Ma
 theorem sum_EF_mul {h : Matrix (Fin n) (Fin n) E} (hu : ccT h * h = 1)
     (y y' : Matrix (Fin n) (Fin r) E) :
     ∑ k, EF X ((h * y) k) ((h * y') k) = ∑ k, EF X (y k) (y' k) := by
-  simp only [EF_def, ← map_sum, ← Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [EF_def, ← map_sum, ← Finset.mul_sum]
   rw [sum_herm_mul hu]
 
 private theorem crd_dotProduct_sub_eq_neg_sum_EF (hs : IsSympl X bas) (Z Z' : Matrix (Fin n) (Fin r) E) :

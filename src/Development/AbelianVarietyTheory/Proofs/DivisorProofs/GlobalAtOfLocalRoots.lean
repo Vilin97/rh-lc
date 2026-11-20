@@ -107,7 +107,8 @@ theorem globAt_of_local : ∀ (D : D7) (Y : ShimX D.what₂.Tau) (p : ℕ) [Fact
     have := ((hA la).1 τ (τ' la) (hτ' la)).2 (Fin.cast (hrk' la).symm l) ⟨Y.j + l, by omega⟩ rfl
     rw [evC_mul, evC_divDiff, this.1, this.2]
     rfl
-  rw [LinearMap.comp_apply, LinearMap.mulLeft_apply, tag_sub, map_smul, map_sum, sum_split Y.j, hlow, hhigh,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [LinearMap.comp_apply, LinearMap.mulLeft_apply, tag_sub, map_smul, map_sum, sum_split Y.j, hlow, hhigh,
     ← mul_add, smul_eq_mul, mul_left_comm, ← Finset.sum_add_distrib, Finset.mul_sum]
   congr 1
   refine mean_one w hT.sum_w _ _ _ (fun la => by rw [← mul_add, mul_left_comm]) fun la => ?_

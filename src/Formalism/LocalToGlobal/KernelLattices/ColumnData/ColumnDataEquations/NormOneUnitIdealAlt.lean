@@ -15,7 +15,8 @@ open Formalism.MainNotions Formalism.L2.Th1.H
 
 theorem formV_herm' (A : ℝ) (n : Type) [Fintype n] (N N' : ℕ) : IsHerm (Ker.formV A n N N') := by
   intro x y
-  simp [Ker.formV, map_sum, mul_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Ker.formV, map_sum, mul_comm]
 
 theorem mem_ThSp_of' (D : Car) (T : TaylorLogMetric.Tor D) {N N' : ℕ} (La' : AddSubgroup (TaylorLogMetric.VC D N N'))
     (G : TaylorLogMetric.VC D N N' → ℂ)

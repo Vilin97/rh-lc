@@ -66,7 +66,8 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 theorem q_genOp {q : Tens F P Q R S →ₗ[ℂ] Z} (hq : Function.Surjective q)
     (hK : ∀ w X, Keeps q (atPl w (fockAct2 P Q R S X))) (Yg : InfinitePlace F → Mat R S) (T : Tens F P Q R S) :
     q (genOp P Q c Yg T) = (∑ w, (fockOp q w (Yg w) + (c w * (Yg w).trace) • 1)) (q T) := by
-  rw [genOp_apply, map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [genOp_apply, map_sum, LinearMap.sum_apply]
   refine Finset.sum_congr rfl fun w _ => ?_
   rw [map_add, map_smul, LinearMap.add_apply, fockOp_apply hq (hK w)]
   rfl

@@ -123,7 +123,8 @@ theorem log_add : ∀ (l : ℕ) [Fact l.Prime], ∀ (e e' : Per.Fl l) (y y' z : 
   generalize algebraMap (Per.Ainf l) (Per.AinfP l) (Per.tm e - 1) = a at key ⊢
   generalize algebraMap (Per.Ainf l) (Per.AinfP l) (Per.tm e' - 1) = b at key ⊢
   change q _ = q _ + q _
-  simp only [map_sum, map_mul, map_pow, map_neg, map_one, map_natCast, map_add]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, map_pow, map_neg, map_one, map_natCast, map_add]
   exact key
 
 end GlobalTheory.MemLoc.LogAdd

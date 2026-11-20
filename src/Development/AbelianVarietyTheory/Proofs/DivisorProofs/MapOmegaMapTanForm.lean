@@ -26,7 +26,8 @@ theorem dualMap_coord {X : Scheme.{0}} {F : X.Modules} {U : X.Opens} {r : ℕ} {
   rw [dualApp_dualMap, dualApp_smul, LinearMap.smul_apply, IsFrame.dualApp_coord, IsFrame.dualApp_coord]
   have k : u.app W s = ∑ j, ((he.basis hW).repr s j * resG X hW (c j)) • he.basis hW j := by
     conv_lhs => rw [← (he.basis hW).sum_repr s]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [Scheme.Modules.Hom.app_smul, IsFrame.basis_apply, app_resM, hu, resM_smul, smul_smul]
   rw [k, (he.basis hW).repr_sum_self, smul_eq_mul, mul_comm]

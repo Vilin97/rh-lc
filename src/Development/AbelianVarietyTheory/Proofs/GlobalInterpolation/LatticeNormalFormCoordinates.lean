@@ -88,7 +88,8 @@ theorem R1cond_of {r : (Fin (n + c) → F) ≃ₗ[F] (Fin (n + c) → F)}
     (h3 : ∀ i : Fin c, r (Loc.eN F (n + c) (n + i.1)) - Loc.eN F (n + c) (n + i.1) ∈ Loc.Ufl F n c i.1) :
     Loc.R1cond F n c r := by
   refine ⟨fun i v hv => ?_, ?_, fun i => ?_⟩
-  · rw [decomp v, map_add, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [decomp v, map_add, map_sum]
     refine add_mem (Ufl_mono (Nat.zero_le i) (h1 _)) (Submodule.sum_mem _ fun j _ => ?_)
     by_cases hj : j.1 < i
     · rw [map_smul]

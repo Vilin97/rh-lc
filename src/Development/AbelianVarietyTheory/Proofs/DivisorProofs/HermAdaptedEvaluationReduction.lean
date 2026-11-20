@@ -52,7 +52,8 @@ theorem symp_pair {σ : E →ₐ[F] E} {n n₁ d₁ : ℕ} (hσ : ∀ e, σ (σ 
       (Matrix.vecMulVec (incV F H.x) z) = -Algebra.trace (AF F) (AE F E) (GlobalTheory.UnipMass.hA σ JW (incV F w) z) := by
   have hyx : form σ J H.y H.x = 1 := by
     have h1 : σ (form σ J H.x H.y) = form σ J H.y H.x := by
-      simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, hJ]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, hJ]
       simp_rw [Finset.mul_sum]
       rw [Finset.sum_comm]
       exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
@@ -60,7 +61,8 @@ theorem symp_pair {σ : E →ₐ[F] E} {n n₁ d₁ : ℕ} (hσ : ∀ e, σ (σ 
   have h0 : (∑ i, ∑ k, incV F H.y i * incM F J i k * cA σ (incV F H.x k)) = 1 := by
     have : (∑ i, ∑ k, incV F H.y i * incM F J i k * cA σ (incV F H.x k)) =
         inclR (F := F) (AF F) (form σ J H.y H.x) := by
-      simp only [incV, incM, Matrix.map_apply, GlobalTheory.ThK.UnipDom.Inverse.cA_inclR, form, dotProduct, Matrix.mulVec,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [incV, incM, Matrix.map_apply, GlobalTheory.ThK.UnipDom.Inverse.cA_inclR, form, dotProduct, Matrix.mulVec,
         map_sum, map_mul, Finset.mul_sum, mul_assoc]
     rw [this, hyx, map_one]
   have h2 : (∑ j, ∑ l, incV F w j * incM F JW j l * cA σ (z l)) = GlobalTheory.UnipMass.hA σ JW (incV F w) z := by

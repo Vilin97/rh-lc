@@ -44,7 +44,8 @@ theorem exists_comb_ker {R R' : Type} [CommRing R] [CommRing R'] [Algebra R R'] 
   have key : ∀ (n : ℕ) (c : Fin n → R') (v : Fin n → ∀ a, A a), t = ∑ i, c i ⊗ₜ v i →
       ∀ a, x a = ∑ i, e a (c i ⊗ₜ v i a) := fun n c v h a => by
     have := congrFun ht a
-    rw [h, map_sum, Finset.sum_apply, AddEquiv.eq_symm_apply, map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h, map_sum, Finset.sum_apply, AddEquiv.eq_symm_apply, map_sum] at this
     rw [← this]
     rfl
   have h0 : d.lTensor R' t = 0 := by
@@ -52,12 +53,14 @@ theorem exists_comb_ker {R R' : Type} [CommRing R] [CommRing R'] [Algebra R R'] 
     apply (TensorProduct.piRight R R R' B).injective
     funext b
     apply (e' b).injective
-    rw [map_zero, Pi.zero_apply, map_zero, ← hx n c v (key n c v h) b, h, map_sum, map_sum, Finset.sum_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_zero, Pi.zero_apply, map_zero, ← hx n c v (key n c v h) b, h, map_sum, map_sum, Finset.sum_apply, map_sum]
     rfl
   obtain ⟨w, hw⟩ := (Module.Flat.lTensor_exact R' (LinearMap.exact_subtype_ker_map d) t).1 h0
   obtain ⟨n, c, v, rfl⟩ := TensorProduct.exists_sum_tmul_eq w
   refine ⟨n, c, fun i => (v i).1, key n c _ ?_, fun i => (v i).2⟩
-  rw [← hw, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hw, map_sum]
   rfl
 
 variable {R R' : Type} [CommRing R] [CommRing R'] {X X' Z : Scheme.{0}}

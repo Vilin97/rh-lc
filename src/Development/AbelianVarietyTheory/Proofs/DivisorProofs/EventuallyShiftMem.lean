@@ -98,7 +98,8 @@ theorem GlobalTheory.AnPer.close_of_sliceTaylor : ∀ {I : Type} [Fintype I] [De
       (by rintro (i | b) (j | c) <;> simp [hnn]) _ (analyticAt_shifted h (hW p hp))
     obtain ⟨-, -, -, hcongr, -, -⟩ :=
       GlobalTheory.PeriodFamily.taylor_formal_properties N (Sum.elim t fun b ↦ ∑ j, n j b)
-    rw [RingHom.coe_coe, hρ', map_add, map_sum, h₁, e]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [RingHom.coe_coe, hρ', map_add, map_sum, h₁, e]
     simp only [map_mul, h₁, shift_eq]
     rw [hs, Fintype.sum_sum_type]
     simp only [Sum.elim_inl, Sum.elim_inr, mul_zero, Finset.sum_const_zero, zero_add]

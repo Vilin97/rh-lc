@@ -28,7 +28,8 @@ def Pres (Λ : Submodule (𝓞 E) S.V) (f : Fin n → S.V) (g : Matrix (Fin n) (
 theorem comp_sum (f : Fin n → S.V) (s : S.V ≃ₗ[E] S.V) (uu : Matrix (Fin n) (Fin n) E)
     (hu : ∀ b, s (f b) = ∑ c, uu c b • f c) (y : Fin n → E) :
     ∑ c, (uu *ᵥ y) c • f c = s (∑ b, y b • f b) := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [LinearEquiv.map_smul, hu, Finset.smul_sum, smul_smul, Matrix.mulVec, dotProduct,
     Finset.sum_smul]
   rw [Finset.sum_comm]
@@ -133,7 +134,8 @@ theorem volume_index_b_bounded (D : D7) (u u' : D.what₂.Word)
     rw [this]; exact nat_smul_mem _ _ (hmcL c)
   have hcoord : ∀ y : Fin (D.R.rS + 1) → D.host.E, ∀ i, φ i (∑ c, y c • F0.fvec c) = y i := by
     intro y i
-    simp [map_sum, hφ]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, hφ]
   obtain ⟨mL, hmL, hbL⟩ := den_mat L
   obtain ⟨mL', hmL', hbL'⟩ := den_mat L⁻¹
   refine ⟨mL' * (m1 * m2) * mL, by positivity, ?_⟩

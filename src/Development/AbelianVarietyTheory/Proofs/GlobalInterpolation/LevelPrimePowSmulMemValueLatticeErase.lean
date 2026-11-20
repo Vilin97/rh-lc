@@ -106,7 +106,8 @@ theorem rowDiv_shift (R : Type) [CommRing R] {r n : ℕ} (H : Fin r → ℤ) (a 
     IsWeightedHomogeneous (rowZ r n) (rowDiv R a b k f) (H + k • (Pi.single a 1 - Pi.single b 1)) := by
   unfold rowDiv
   conv => enter [2, 1, 2]; rw [f.as_sum]
-  rw [map_sum, Polynomial.finsetSum_coeff]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Polynomial.finsetSum_coeff]
   refine IsWeightedHomogeneous.sum _ _ _ fun d hd => ?_
   have := shift_rowGen_monomial R a b d (AddMonoidAlgebra.coeff f d) k
   rwa [hf (mem_support_iff.mp hd)] at this
@@ -385,7 +386,8 @@ theorem exists_frame_adapted (hn : 0 < n) (p : LocF.PP Lc n) : ∃ (h : GL (Fin 
   have h0' : c ⟨0, hn⟩ ≠ 0 := h0
   have e2 : ∑ a, Lc.res (N₀.mulVec x a) * c a = ∑ d ∈ Finset.univ.erase ⟨0, hn⟩, -(Lc.res (x d) * c d) := by
     rw [Finset.sum_eq_single ⟨0, hn⟩]
-    · rw [Matrix.mulVec, dotProduct, map_sum, Finset.sum_mul, ← Finset.sum_erase (a := ⟨0, hn⟩) _ (by simp [N₀])]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [Matrix.mulVec, dotProduct, map_sum, Finset.sum_mul, ← Finset.sum_erase (a := ⟨0, hn⟩) _ (by simp [N₀])]
       refine Finset.sum_congr rfl fun d hd => ?_
       have hd' := Finset.ne_of_mem_erase hd
       simp only [N₀, Matrix.of_apply, true_and, ne_eq, hd', not_false_eq_true, if_true, map_mul, hb]

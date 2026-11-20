@@ -546,7 +546,8 @@ theorem differentiableAt_of_tendstoLocallyUniformly_directional :
     intro T
     ext x
     conv_lhs => rw [← hc x]
-    simp [map_sum, map_smul, mul_comm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, map_smul, mul_comm]
   have hlim := tendstoLocallyUniformly_sum_smul_const (F := E →L[ℝ] ℂ) Finset.univ
     (fun a => (c a).smulRight (1 : ℂ)) (fun a j y => fderiv ℝ (g j) y (v a)) ψ hψ
   have hlim' : TendstoLocallyUniformly (fun j y => fderiv ℝ (g j) y)
@@ -600,7 +601,8 @@ theorem contDiff_of_class_tendstoLocallyUniformly : ∀ {E : Type} [NormedAddCom
     funext y
     ext x
     conv_lhs => rw [← hc x]
-    simp only [map_sum, map_smul, (h y).2, ContinuousLinearMap.sum_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, (h y).2, ContinuousLinearMap.sum_apply,
       ContinuousLinearMap.smul_apply, ContinuousLinearMap.smulRight_apply]
     refine Finset.sum_congr rfl fun a _ => ?_
     simp only [Complex.real_smul, smul_eq_mul]

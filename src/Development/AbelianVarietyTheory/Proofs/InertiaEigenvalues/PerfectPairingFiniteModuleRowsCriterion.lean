@@ -88,7 +88,8 @@ theorem charDual_cogenerator : ∀ (A : Type) [CommRing A] [Finite A] (n : ℕ),
       intro w b
       rw [AddMonoidHom.finset_sum_apply]
       have : (fun k => w k * b) = ∑ j, Pi.single j (w j * b) := (Finset.univ_sum_single _).symm
-      rw [this, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [this, map_sum]
       rfl
     have hx : matAct Φ x = 0 := by
       funext i

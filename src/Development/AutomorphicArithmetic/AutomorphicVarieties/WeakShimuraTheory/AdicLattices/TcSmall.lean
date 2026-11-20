@@ -107,7 +107,8 @@ theorem UpperTheory.V.Ws.Lat.tcSmall :
       map_mul' := fun γ δ => by
         ext i j
         apply hinj
-        rw [Matrix.map_apply, hE, map_mul, Matrix.mul_apply, Matrix.mul_apply, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [Matrix.map_apply, hE, map_mul, Matrix.mul_apply, Matrix.mul_apply, map_sum]
         simp only [Matrix.map_apply, map_mul, hE] }
   let P₁' : PD ι Γ A' := ⟨r₁, fun v => (P'.n v).map e⟩
   refine ⟨A', inferInstance, inferInstance, inferInstance, f', P₁', hf', ?_, ?_⟩

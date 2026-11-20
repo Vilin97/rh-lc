@@ -16,7 +16,8 @@ namespace GlobalTheory.PeriodChart
 theorem clm_apply_eq_sum {g : ℕ} (L : (Fin g → ℂ) →L[ℂ] ℂ) (v : Fin g → ℂ) :
     L v = ∑ b, v b * L (Pi.single b 1) := by
   conv_lhs => rw [← Finset.univ_sum_single v]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun b _ => ?_
   have : Pi.single b (v b) = v b • (Pi.single b (1 : ℂ) : Fin g → ℂ) := by
     rw [← Pi.single_smul, smul_eq_mul, _root_.mul_one]

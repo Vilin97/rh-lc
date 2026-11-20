@@ -116,7 +116,8 @@ theorem germ_differentiableOn (G : Mero) (a b : ℂ → ℂ) (ha : Differentiabl
       congr 1
       ext w
       simp [Finset.sum_apply]
-    rw [e1, map_add, map_pow, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e1, map_add, map_pow, map_sum]
     simp_rw [map_mul, map_pow]
     change (g : Mero) ^ n + ∑ i ∈ Finset.range n, (c i : Mero) * (g : Mero) ^ i = 0
     rw [← hG]

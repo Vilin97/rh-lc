@@ -43,7 +43,8 @@ theorem single_conj (F : SemiFib K) (h : HermFam K (Fin F.P₀.g → K))
   unfold hermForm
   rw [map_mul, Complex.conj_ofReal, star_star]
   congr 1
-  simp [dotProduct, Matrix.mulVec, map_sum, Complex.star_def]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [dotProduct, Matrix.mulVec, map_sum, Complex.star_def]
 
 theorem conjInv : ∀ (K : Type) [Field K] [NumberField K] (F : SemiFib K) (h : HermFam K (Fin F.P₀.g → K)),
     F.IsHerm h → GlobalTheory.Published.ConjInv h :=

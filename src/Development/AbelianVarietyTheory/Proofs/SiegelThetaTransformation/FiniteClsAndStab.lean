@@ -207,7 +207,8 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ} in
 private lemma norm_embedding_entry_le_one_of_unitary {h : Matrix (Fin n) (Fin n) E}
     (hh : _root_.GlobalTheory.SW.ccT h * h = 1) (τ : E →+* ℂ) (k a : Fin n) : ‖τ (h k a)‖ ≤ 1 := by
   have key := congrArg τ (sum_conj_mul_eq_of_unitary hh a a)
-  simp only [map_sum, map_mul, _root_.GlobalTheory.SW.Base.map_cc, Matrix.one_apply_eq, map_one] at key
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, _root_.GlobalTheory.SW.Base.map_cc, Matrix.one_apply_eq, map_one] at key
   have hsum : ∑ b, ‖τ (h b a)‖ ^ 2 = 1 := by
     have : ((∑ b, ‖τ (h b a)‖ ^ 2 : ℝ) : ℂ) = 1 := by
       push_cast
@@ -254,7 +255,8 @@ private lemma herm_one_mulVec_of_unitary {h : Matrix (Fin n) (Fin n) E}
   rw [_root_.GlobalTheory.SW.Base.herm_one, _root_.GlobalTheory.SW.Base.herm_one]
   calc ∑ a, (h *ᵥ x) a * _root_.ReciprocityTheory.ChartRestriction.G.FD.cc ((h *ᵥ y) a)
       = ∑ i, ∑ j, x i * _root_.ReciprocityTheory.ChartRestriction.G.FD.cc (y j) * ∑ a, _root_.ReciprocityTheory.ChartRestriction.G.FD.cc (h a j) * h a i := by
-        simp only [Matrix.mulVec, dotProduct, _root_.ReciprocityTheory.ChartRestriction.G.FD.cc, map_sum, map_mul, Finset.sum_mul,
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [Matrix.mulVec, dotProduct, _root_.ReciprocityTheory.ChartRestriction.G.FD.cc, map_sum, map_mul, Finset.sum_mul,
           Finset.mul_sum]
         have e : ∀ f : Fin n → Fin n → Fin n → E,
             ∑ a, ∑ i, ∑ j, f a i j = ∑ j, ∑ i, ∑ a, f a i j := fun f => by

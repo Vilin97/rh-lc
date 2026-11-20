@@ -32,7 +32,8 @@ theorem UpperTheory.V.AlgebraTools.Det.polarInj :
   let u : MonoidAlgebra (MvPolynomial F.G₀ R) F.G₀ := y.coeff.support.sum fun g => MonoidAlgebra.single g (MvPolynomial.X g)
   let ev : MvPolynomial F.G₀ R →ₐ[R] B := MvPolynomial.aeval fun g => y.coeff g
   have hev : MonoidAlgebra.mapRingHom F.G₀ (ev : MvPolynomial F.G₀ R →+* B) u = y := by
-    simp only [u, map_sum, MonoidAlgebra.mapRingHom_single]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [u, map_sum, MonoidAlgebra.mapRingHom_single]
     simp only [ev, AlgHom.coe_toRingHom, MvPolynomial.aeval_X]
     exact y.sum_single
   have hevO : (ev : MvPolynomial F.G₀ R →+* B).comp (algebraMap O (MvPolynomial F.G₀ R)) = algebraMap O B := by

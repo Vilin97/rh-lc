@@ -38,10 +38,12 @@ private theorem exists_int_ne_zero_mul_repr_mem_range {n : ℕ} (b : Module.Basi
   rintro _ ⟨z, rfl⟩ i
   have hz : algebraMap (𝓞 E) E z = ∑ j, g.repr z j • algebraMap (𝓞 E) E (g j) := by
     conv_lhs => rw [← g.sum_repr z]
-    simp only [map_sum, map_zsmul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_zsmul]
   have key : (y : F) * b.repr (algebraMap (𝓞 E) E z) i
       = ∑ j, g.repr z j • ((y : F) * b.repr (algebraMap (𝓞 E) E (g j)) i) := by
-    rw [hz, map_sum, Finsupp.finsetSum_apply, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hz, map_sum, Finsupp.finsetSum_apply, Finset.mul_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_zsmul, Finsupp.smul_apply, mul_smul_comm]
   rw [key]

@@ -149,7 +149,8 @@ theorem exists_lift {k : Type} [Field k] {ρ : ℕ} (f : k →+ AE D) (α : Matr
     rw [Matrix.isUnit_iff_isUnit_det, Matrix.det_of_upperTriangular (fun i j h => u0 i j h)]
     simp [u1]
   refine ⟨hU.unit, fun i j => ⟨u0 i j, u1 i⟩, fun _ _ => rfl, ?_⟩
-  simp only [upSum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [upSum, map_sum]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   split_ifs with h
   · have : i ≠ j := fun e => by rw [e] at h; omega

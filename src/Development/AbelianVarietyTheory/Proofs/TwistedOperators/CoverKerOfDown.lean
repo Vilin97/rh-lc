@@ -222,7 +222,8 @@ theorem coverKer_of_down : ∀ (X : ProvA) (p q r s : ℕ) (lam : Ix p q → ℚ
   · intro n a b hsum
     have hwN : ∑ i, B' (a i) (b i) ∈ N := Submodule.sum_mem _ fun i _ => memN (a i) (b i)
     have h1 : ψ₁ (∑ i, B' (a i) (b i)) = 0 := by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simp only [hψ₁]
       exact hsum
     have hz : e.symm ⟨_, hwN⟩ ∈ N' := by
@@ -235,7 +236,8 @@ theorem coverKer_of_down : ∀ (X : ProvA) (p q r s : ℕ) (lam : Ix p q → ℚ
       rw [LinearEquiv.apply_symm_apply, map_zero] at h3
       exact congrArg Subtype.val h3
     have h2 := congrArg ψ₂ h0
-    rw [map_sum, map_zero] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero] at h2
     simp only [hψ₂] at h2
     exact h2
   · exfalso

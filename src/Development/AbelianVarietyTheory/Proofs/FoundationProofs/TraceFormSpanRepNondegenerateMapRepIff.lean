@@ -58,7 +58,8 @@ theorem map_linearForm_mem_span_of_mem_span_map (A : ι → Matrix (Fin a) (Fin 
 theorem trace_map_linearForm_mul (φ : L →ₗ[K] K) (y : Matrix (Fin a) (Fin a) L)
     (m : Matrix (Fin a) (Fin a) K) :
     (y.map φ * m).trace = φ ((y * m.map (algebraMap K L)).trace) := by
-  simp only [Matrix.trace, Matrix.diag_apply, Matrix.mul_apply, map_sum, Matrix.map_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.trace, Matrix.diag_apply, Matrix.mul_apply, map_sum, Matrix.map_apply]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   rw [mul_comm (y i j), ← Algebra.smul_def, map_smul, smul_eq_mul, mul_comm]
 

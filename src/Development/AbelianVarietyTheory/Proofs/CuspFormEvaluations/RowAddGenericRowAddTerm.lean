@@ -38,7 +38,8 @@ theorem rowAddGeneric_rowAddTerm (u w : ι → σ) (huw : ∀ k l, u k ≠ w l) 
     simp [rowAddTerm, huw k]
   conv_lhs => rw [rowAddTerm]
   conv_rhs => rw [rowAddTerm]
-  rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   split_ifs
   · simp [rowAddGeneric, h0]

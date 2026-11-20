@@ -42,7 +42,8 @@ theorem linSub_sqSum {K : Type} [Field K] {n m : Type} [Fintype n] [Fintype m] (
       ∑ i, MvPowerSeries.C (c i) * (∑ x, MvPowerSeries.C (A i x) * MvPowerSeries.X x) ^ 2 := by
   have ha := hasSubst_lin A
   unfold linSub sqSum
-  rw [← MvPowerSeries.coe_substAlgHom ha, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← MvPowerSeries.coe_substAlgHom ha, map_sum]
   refine Finset.sum_congr rfl (fun i _ => ?_)
   rw [map_mul, map_pow, MvPowerSeries.coe_substAlgHom, MvPowerSeries.subst_X ha]
   congr 1

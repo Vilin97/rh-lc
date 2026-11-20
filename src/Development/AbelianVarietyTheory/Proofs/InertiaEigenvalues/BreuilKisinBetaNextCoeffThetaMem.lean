@@ -87,7 +87,8 @@ theorem GlobalTheory.BKLim.beta_step : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt 
   have hP : ∀ a c, Per.θ l (P a c) = if a = c then 1 else 0 := by
     intro a b
     have h := (theta_eq_zero_iff bk _).2 ((dvd_pow_self _ hm.ne').trans (hent a b))
-    simp only [σ, map_sub, map_sum, map_mul, GlobalTheory.BKLim.BetaBd.θ_σA_ev, hθβ, mul_ite, mul_one, mul_zero,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [σ, map_sub, map_sum, map_mul, GlobalTheory.BKLim.BetaBd.θ_σA_ev, hθβ, mul_ite, mul_one, mul_zero,
       Finset.sum_ite_eq', Finset.mem_univ, if_true] at h
     rw [sub_eq_zero] at h
     have hl := pow_ne_zero k hlOC
@@ -131,7 +132,8 @@ theorem GlobalTheory.BKLim.beta_step : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt 
       exact (pow_dvd_pow _ him).trans (hent p q)
     exact (mul_dvd_mul_iff_left (pow_ne_zero i (evE_ne_zero bk))).1 h1
   rw [← theta_eq_zero_iff] at hX
-  simp only [σ, map_add, map_sub, map_mul, map_pow, map_natCast, map_sum, GlobalTheory.BKLim.BetaBd.θ_σA_ev, hP,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [σ, map_add, map_sub, map_mul, map_pow, map_natCast, map_sum, GlobalTheory.BKLim.BetaBd.θ_σA_ev, hP,
     ite_mul, one_mul, zero_mul, Finset.sum_ite_eq, Finset.mem_univ, if_true] at hX
   refine ⟨-Per.θ l (η p q), ?_⟩
   simp only [Matrix.of_apply]

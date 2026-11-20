@@ -144,7 +144,8 @@ theorem sesq_conj {n M : ℕ} {J : Matrix (Fin M) (Fin M) ℂ} {b : Matrix (Fin 
     rw [starRingEnd_apply]; exact hJ.apply j i
   have hb' : ∀ i j, (starRingEnd ℂ) (b i j) = b j i := fun i j => by
     rw [starRingEnd_apply]; exact hb.apply j i
-  simp only [sesq, map_sum, map_mul, Complex.conj_conj, hJ', hb']
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [sesq, map_sum, map_mul, Complex.conj_conj, hJ', hb']
   refine Eq.trans ?_ (sum_four_swap_pairs_alt _).symm
   exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ =>
     Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring

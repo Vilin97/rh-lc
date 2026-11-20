@@ -108,7 +108,8 @@ theorem rowsLift_X_inf_Wb (D : D7) (x : (hS D).V)
       intro i
       rw [← (hS D).herm.eq (D.sp.hypE i) (D.sp.hypF j), D.sp.hyp_ef]
       split_ifs <;> simp
-    rw [map_sum] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at h1
     simpa [hs] using h1
   simp [hc]
 

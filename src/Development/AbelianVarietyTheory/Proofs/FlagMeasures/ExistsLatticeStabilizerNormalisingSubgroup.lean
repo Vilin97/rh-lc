@@ -118,7 +118,8 @@ theorem uni_mul {m : ℕ} {s t : Matrix (Fin m) (Fin m) E} (hs : IsUni s) (ht : 
 theorem map_comb {m : ℕ} (g : Fin m → V) (h : V ≃ₗ[E] V) (s t : Matrix (Fin m) (Fin m) E)
     (hs : ∀ j, h (g j) = ∑ i, s i j • g i) (j : Fin m) :
     h (∑ i, t i j • g i) = ∑ i, (s * t) i j • g i := by
-  simp only [map_sum, map_smul, hs, Matrix.mul_apply, Finset.smul_sum, Finset.sum_smul, smul_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, hs, Matrix.mul_apply, Finset.smul_sum, Finset.sum_smul, smul_smul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun l _ => ?_
   rw [mul_comm]

@@ -112,7 +112,8 @@ theorem comp_eq_zero (F : FlagG S r T) (F' : FlagG S r T') (hG : Gflag F F' ≠ 
     have := h _ (Submodule.mem_sup_right (fvec_mem_Xplus F' i))
     rw [map_add, hT_fvec_sum, add_neg_eq_zero] at this
     rw [← this]
-    simp only [Matrix.mulVec, dotProduct, Zhat, brS, map_sum, map_smul, Matrix.conjTranspose_apply, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, dotProduct, Zhat, brS, map_sum, map_smul, Matrix.conjTranspose_apply, smul_eq_mul]
     exact Finset.sum_congr rfl fun j _ => by rw [mul_comm, ← S.herm.eq (F.fvec j), starRingEnd_apply])
   simp [this.1, this.2]
 

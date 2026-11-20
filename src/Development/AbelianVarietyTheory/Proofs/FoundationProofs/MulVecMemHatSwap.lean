@@ -36,7 +36,8 @@ theorem mulVec_mem_hat {β : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)} {Λ :
   convert h using 1
   funext i
   rw [AlgEquiv.eq_symm_apply]
-  simp only [Matrix.mulVec, dotProduct, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mulVec, dotProduct, map_sum, map_mul]
   rfl
 
 omit [NumberField F] [NumberField E] in

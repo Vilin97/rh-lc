@@ -140,7 +140,8 @@ theorem FBChart.raw_sg (v : Fin dd → C) : (Y.raw p).sg v = un1 (Y.sgP v) := by
   show -∑ i, v i * MvPowerSeries.coeff (μ.mapDomain (fun x : Fin dd => ((0 : Fin 2), x)) +
       Finsupp.single ((1 : Fin 2), i) 1) Y.h =
     MvPowerSeries.coeff (μ.mapDomain fun x : Fin dd => ((0 : Fin 1), x)) (Y.sgP v)
-  simp only [FBChart.sgP, map_neg, map_sum, MvPowerSeries.coeff_C_mul, coeff_eval_second_zero]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [FBChart.sgP, map_neg, map_sum, MvPowerSeries.coeff_C_mul, coeff_eval_second_zero]
   congr 1
   refine Finset.sum_congr rfl fun i _ => ?_
   congr 1

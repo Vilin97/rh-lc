@@ -62,11 +62,13 @@ theorem exists_proj {K : Type} [Field K] (c : K →+* K) (hc : ∀ x, c (c x) = 
   have hyx : y ⬝ᵥ x = d := by rw [hd, dotProduct_mulVec]
   have hcy : c ∘ y = J *ᵥ x := by
     funext i
-    simp [hy, vecMul, mulVec, dotProduct, map_sum, hc, hJ', mul_comm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [hy, vecMul, mulVec, dotProduct, map_sum, hc, hJ', mul_comm]
   have hcd : c d = d := by
     conv_lhs => rw [← hyx]
     rw [hd, ← hcy]
-    simp [dotProduct, map_sum, mul_comm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [dotProduct, map_sum, mul_comm]
   refine ⟨d⁻¹ • vecMulVec x y, ?_, ?_, fun a => ?_⟩
   · rw [smul_mul_assoc, mul_smul_comm, vecMulVec_mul_vecMulVec, hyx, vecMulVec_smul, smul_smul d⁻¹ d,
       inv_mul_cancel₀ hx, one_smul]

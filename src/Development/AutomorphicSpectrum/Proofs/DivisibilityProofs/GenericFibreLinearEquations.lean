@@ -244,7 +244,8 @@ theorem tF_mem_rest (j : K → FlBlock Ψ N) {k₀ k : K} (hk : k ≠ k₀) : tF
 
 theorem det_mem {R E S : Type} [CommRing R] [Field E] [SetLike S E] [SubringClass S E] (A : S) (θ : R →+* E) {n : ℕ}
     (M : Matrix (Fin n) (Fin n) R) (h : ∀ a b, θ (M a b) ∈ A) : θ M.det ∈ A := by
-  rw [Matrix.det_apply', map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.det_apply', map_sum]
   refine sum_mem fun σ _ => ?_
   rw [map_mul, map_prod]
   refine mul_mem ?_ (prod_mem fun i _ => h _ _)
@@ -327,7 +328,8 @@ theorem xP_mem_span (j : K → FlBlock Ψ N) (k₀ : K) (w : CF Ψ N K) (hw0 : w
       thF Ψ N K (minorPolynomial Ψ N (j k₀).1 (j k₀).2 (by have := (j k₀).2.2; omega) B) * w ∈ PhiF j k₀)
     (A : PIdx j k₀) : xP j ⟨k₀, A⟩ ∈ Submodule.span (PhiF j k₀) (Set.range (uF j k₀ w)) := by
   simp only [xP]
-  rw [minorPolynomial_succ, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [minorPolynomial_succ, map_sum, Finset.sum_mul]
   refine Submodule.sum_mem _ fun b _ => ?_
   have hm := hB (fun a => A.1 (b.succAbove a)) (A.2.comp (Fin.strictMono_succAbove b))
   have hs : ((-1 : CF Ψ N K) ^ (((j k₀).2 : ℕ) + (b : ℕ))) ∈ PhiF j k₀ := pow_mem (neg_mem (one_mem _)) _

@@ -77,7 +77,8 @@ theorem solvable_transfer (F σ τ : Type) [Field F] [Finite σ] [Finite τ]
     choose c' hc' using hc
     have hid : ∑ i, c' i * partialEval uA (g' i) = 1 := by
       apply MvPolynomial.map_injective (A.val : A →+* Ω) Subtype.val_injective
-      rw [map_one, ← hsum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_one, ← hsum, map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_mul, hc', map_partialEval, smul_eq_mul, ← hg' i]
       rfl
@@ -90,7 +91,8 @@ theorem solvable_transfer (F σ τ : Type) [Field F] [Finite σ] [Finite τ]
       have := DFunLike.congr_fun (MvPolynomial.comp_aeval uA ψ) p
       rw [← this, AlgHom.comp_apply, h0, map_zero])
     have := congrArg (eval₂Hom (ψ : A →+* AlgebraicClosure F) y) hid
-    rw [map_one, map_sum, Finset.sum_eq_zero] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_one, map_sum, Finset.sum_eq_zero] at this
     · exact zero_ne_one this
     · intro i _
       rw [map_mul, eval₂Hom_partialEval, hy _ (hg'J i), mul_zero]

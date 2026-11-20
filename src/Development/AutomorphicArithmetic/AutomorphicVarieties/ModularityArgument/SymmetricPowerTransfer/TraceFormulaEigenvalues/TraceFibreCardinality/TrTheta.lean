@@ -204,7 +204,8 @@ theorem UpperTheory.V.Z.Sym.Tf.trTheta :
   · intro a
     have decomp : u a * Θ = ∑ χ ∈ F, u a * Θ * P χ := by
       rw [← Finset.mul_sum, sumP, mul_one]
-    rw [decomp, map_sum, Finset.sum_filter]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [decomp, map_sum, Finset.sum_filter]
     refine Finset.sum_congr rfl fun χ hχ => ?_
     split_ifs with hfix
     · have hg : ∀ ψ, Set.MapsTo (u a * Θ * P χ) (V ψ) (V ψ) := by

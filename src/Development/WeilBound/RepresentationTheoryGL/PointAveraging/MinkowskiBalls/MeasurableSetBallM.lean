@@ -322,7 +322,8 @@ theorem decomp_smul (ν : Measure k) (hν : IsUnitVol ν) {n r : ℕ} {V W : Typ
     rw [Submodule.coe_smul, hI]
   have hB : B Ψ w = (∑ x ∈ S, Ψ.1 x) • B (I c' x₀) w := by
     conv_lhs => rw [hΨ]
-    rw [map_sum, LinearMap.sum_apply, Finset.sum_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, LinearMap.sum_apply, Finset.sum_smul]
     refine Finset.sum_congr rfl fun x hx => ?_
     rw [map_smul, LinearMap.smul_apply, hA x (hS x hx)]
   have hfun : ∀ y, Ψ.1 y = ∑ x ∈ S, Ψ.1 x • (ballM c' x).indicator (fun _ => (1 : ℂ)) y := by

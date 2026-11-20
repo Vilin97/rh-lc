@@ -189,7 +189,8 @@ end Lines
 
 theorem eval_formPoly {σ : Type} [Fintype σ] (d : ℕ) (a : (Fin d → σ) → ℝ) (c : σ → ℝ) :
     eval c (PB.formPoly d a) = ∑ w, a w * ∏ j, c (w j) := by
-  simp [PB.formPoly, map_sum, map_prod]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [PB.formPoly, map_sum, map_prod]
 
 theorem polar_swap {J : Type} [Fintype J] [DecidableEq J] {d : ℕ} (c : J → ℝ) (nn : J → J → ℝ)
     (I : (Fin d → J) → ℝ) :
@@ -206,7 +207,8 @@ def cS (lam : Wt Ψ N) (s : ℝ) : Option (Ψ × Fin N) → ℝ := fun o => o.el
 
 theorem linA_eq (lam : Wt Ψ N) (s : ℝ) : linA lam s = ∑ j, C (cS lam s j) * X j := by
   rw [Fintype.sum_option]
-  simp [linA, toA, linRoot, cS, map_sum, add_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [linA, toA, linRoot, cS, map_sum, add_comm]
 
 variable (M : RootModel Ψ N) (II : IntersectionSystem)
 

@@ -107,7 +107,8 @@ theorem hilbert90_local_of_cocycle : ∀ (R S : Type) [CommRing R] [CommRing S] 
     obtain ⟨T, hT⟩ := ((Module.Invertible.linearEquiv R (invariants θ)).symm 1).exists_finset
     have h1 : (1 : R) = ∑ i ∈ T, i.1 i.2 := by
       have := congrArg (Module.Invertible.linearEquiv R (invariants θ)) hT
-      simpa [Module.Invertible.linearEquiv, map_sum] using this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa [Module.Invertible.linearEquiv, map_sum] using this
     exact hp.ne_top ((Ideal.eq_top_iff_one _).2 (h1 ▸ Ideal.sum_mem _ fun i _ => hcon i.1 i.2))
   have hcomm : ∀ x : invariants θ, f m • x = f x • m := by
     intro x

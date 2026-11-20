@@ -36,7 +36,8 @@ theorem redM_part_eq {D : D7} (S T : HSp D) (βS : GL (Fin S.rank) (EAf D))
   have hc : toEAf D f ∈ Formalism.L2.Herm.intAf (↥D.host.F) D.host.E := by
     rw [← GlobalTheory.ExportSeries.idem_eq hR]
     unfold GlobalTheory.ExportSeries.idem
-    rw [show (toEAf D) (∑ Q ∈ R, GlobalTheory.ExportSeries.idemAt Q) = ∑ Q ∈ R, (toEAf D) (GlobalTheory.ExportSeries.idemAt Q) from
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [show (toEAf D) (∑ Q ∈ R, GlobalTheory.ExportSeries.idemAt Q) = ∑ Q ∈ R, (toEAf D) (GlobalTheory.ExportSeries.idemAt Q) from
       map_sum (toEAf D).toAddMonoidHom _ _]
     exact sum_mem (fun Q hQ => GlobalTheory.RedHalfDrop.int_idemAt ⟨f, hR⟩ hQ)
   rw [eq_sub_of_add_eq h1.symm]

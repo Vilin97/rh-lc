@@ -45,6 +45,7 @@ theorem eval_linSubst {B N : ℕ} (A : Matrix (Fin N) (Fin N) ℂ) (h : MvPolyno
     eval x (linSubst A h) = eval (fun q => A.mulVec (fun k => x (q.1, k)) q.2) h := by
   unfold linSubst
   rw [eval_aeval_alt]
-  simp only [map_sum, map_mul, eval_C, eval_X, Matrix.mulVec, dotProduct]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, eval_C, eval_X, Matrix.mulVec, dotProduct]
 
 end GlobalTheory.MaxPoint

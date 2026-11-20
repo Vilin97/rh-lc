@@ -40,7 +40,8 @@ theorem ksForm_tensor_linearIndependent : ∀ (Ks L0 L WL : Type) [Field Ks] [Fi
   have hx_eq : ∀ a, ι (x a) = ∑ b, algebraMap L0 L (M a b) • bs b := by
     intro a
     conv_lhs => rw [← B0.sum_equivFun (x a)]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun b _ => ?_
     rw [hιs, Algebra.TensorProduct.basis_apply, hι]
     simp [bK, Module.Basis.span_apply, M]

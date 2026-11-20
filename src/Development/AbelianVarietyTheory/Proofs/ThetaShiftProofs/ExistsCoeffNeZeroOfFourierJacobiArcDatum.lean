@@ -157,7 +157,8 @@ theorem exists_cfOf_ne_zero : Known → ∀ (E : Type) [Field E] [NumberField E]
   obtain ⟨e₂, y, he₂, hy, hval⟩ := key (fun v => Xm v.1 v.2.1 v.2.2) hXd
   obtain ⟨x', κ, L, gm, hlie, hgm, -, hLz, ⟨t₂, ht₂, ht₂'⟩, hκ, hco⟩ := hmain e₂ _ y hy he₂
   have hL₀z : ∀ τ i, L₀ (∑ j, Xm τ i j • z₁ τ j) = Pi.single (Uw.e.symm ⟨τ, i⟩) 1 := fun τ i => by
-    rw [← hXm τ i, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hXm τ i, map_sum]
     simp only [map_smul]
   have hLL : ∀ z, L z = L₀ z := fun z => by
     have := linear_ext Uw.e (A := L.toLinearMap ∘ₗ L₀.symm.toLinearMap) (B := LinearMap.id) fun t => by

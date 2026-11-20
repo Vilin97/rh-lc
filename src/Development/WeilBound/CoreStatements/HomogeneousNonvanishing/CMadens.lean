@@ -45,7 +45,8 @@ theorem c_madens : ∀ (D : ℕ) (φ : Fin D → (Fin D → ℂ) → ℝ) (y : F
   have key : ∀ A : Fin D → Matrix (Fin D) (Fin D) ℂ,
       mixedDisc (fun k => (A k).map (starRingEnd ℂ)) = starRingEnd ℂ (mixedDisc A) := by
     intro A
-    simp only [mixedDisc, map_mul, map_div₀, map_one, map_natCast, map_sum, map_pow, map_neg]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [mixedDisc, map_mul, map_div₀, map_one, map_natCast, map_sum, map_pow, map_neg]
     congr 1
     refine Finset.sum_congr rfl fun S _ => ?_
     congr 1

@@ -116,7 +116,8 @@ theorem exists_isMetricOn_top : ∀ (F : Type) [Field F] (σ : F →+* ℂ) (X :
       have e : (fun z => g ((∑ j, ((χ j z : ℝ) : ℂ) • (T j B z τ * (T j B z τ)ᴴ)) i k)) =
           fun z => ∑ j ∈ Finset.univ, χ j z * g ((T j B z τ * (T j B z τ)ᴴ) i k) := by
         funext z
-        rw [Matrix.sum_apply, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [Matrix.sum_apply, map_sum]
         refine Finset.sum_congr rfl fun j _ => ?_
         rw [Matrix.smul_apply, smul_eq_mul, ← Complex.real_smul, map_smul, smul_eq_mul]
       rw [e]

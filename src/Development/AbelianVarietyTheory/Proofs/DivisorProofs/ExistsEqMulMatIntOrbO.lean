@@ -130,7 +130,8 @@ theorem exists_eq_mul_matInt_orbO : ∀ (k : Type) [Field k] [ValuativeRel k] [T
     simpa using comp_mem_fullRk (1 : GL (Fin n) k) q.out.val hφ
   have eΛ := congrArg Λ hsum
   have eI := congrArg (matInt ν) hsum
-  rw [map_sum, map_smul, smul_eq_mul, Finset.sum_congr rfl fun q _ => hΛ _ q.out.2 φ hφ] at eΛ
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_smul, smul_eq_mul, Finset.sum_congr rfl fun q _ => hΛ _ q.out.2 φ hφ] at eΛ
   have hI : ∀ q, matInt ν (f q) = matInt ν φ := fun q => by
     have := matInt_comp ν (1 : GL (Fin n) k) q.out.val φ
     rw [show nabs k (gdet q.out.val) = 1 from GlobalTheory.LGrp.nabs_det_of_mem_KO q.out.2] at this

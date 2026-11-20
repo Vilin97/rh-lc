@@ -278,7 +278,8 @@ theorem exists_coord (hq : IsQuad c δ) : ∃ (e : (Fin 2 → E) ≃ₗ[k] (Fin 
   let f : (Fin 2 → E) →ₗ[k] (Fin 4 → k) := LinearMap.pi fun i => trB c (β i)
   have hf : ∀ u v, β.equivFun u ⬝ᵥ f v = trB c u v := fun u v => by
     conv_rhs => rw [← β.sum_equivFun u]
-    simp only [map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply]
     rfl
   have ht : Algebra.trace k E 1 ≠ 0 := by
     rw [← map_one (algebraMap k E), Algebra.trace_algebraMap, h2, nsmul_eq_mul, mul_one]

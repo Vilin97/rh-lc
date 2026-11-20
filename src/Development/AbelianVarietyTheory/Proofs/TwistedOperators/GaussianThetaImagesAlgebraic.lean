@@ -34,13 +34,15 @@ theorem det_gram_ne_zero (V : HSp D) : V.gram.det ≠ 0 := by
   have hb : ∀ i, V.hT (V.frame i) (∑ j, v j • V.frame j) = 0 := by
     intro i
     have hi : V.hT (V.frame i) (∑ j, v j • V.frame j) = (V.gram *ᵥ v) i := by
-      simp only [map_sum, map_smul, smul_eq_mul, Matrix.mulVec, dotProduct, Formalism.BasicNotions.HSpace.gram]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, smul_eq_mul, Matrix.mulVec, dotProduct, Formalism.BasicNotions.HSpace.gram]
       exact Finset.sum_congr rfl fun j _ => mul_comm _ _
     rw [hi, hv]
     rfl
   have hy : (∑ j, v j • V.frame j) = 0 := by
     refine V.nondeg.2 _ fun x => ?_
-    rw [← V.frame.sum_repr x, map_sum V.hT, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← V.frame.sum_repr x, map_sum V.hT, LinearMap.sum_apply]
     exact Finset.sum_eq_zero fun i _ => by rw [map_smulₛₗ, LinearMap.smul_apply, hb, smul_zero]
   exact hv0 (funext (Fintype.linearIndependent_iff.mp V.frame.linearIndependent v hy))
 

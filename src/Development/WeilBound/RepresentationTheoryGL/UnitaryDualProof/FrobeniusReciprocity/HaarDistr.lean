@@ -78,7 +78,8 @@ theorem exists_sum_eq (K : OpenSubgroup G) (hKc : IsCompact (K : Set G)) (f : SB
       rw [Set.indicator_of_notMem hy, Set.indicator_of_notMem hy', mul_zero]
   refine ⟨∑ x ∈ t, (f : G → ℂ) x.out, fun Φ hΦ => ?_⟩
   conv_lhs => rw [key]
-  rw [_root_.map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [_root_.map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun x _ => ?_
   rw [map_smul, hΦ, smul_eq_mul]
 

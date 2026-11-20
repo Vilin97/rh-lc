@@ -38,11 +38,13 @@ theorem exists_nabValN_eq_of_map {R K O : Type} [CommRing R] [Algebra ℚ R] [Co
   have gp : ∀ b : Fin n, ∀ j : Fin 1, GP ((![pt R d b] : Fin 1 → Pt R n d) j) := by
     intro b j; fin_cases j; exact gp_pt b
   have cS : MvPowerSeries.constantCoeff S = 0 := by
-    rw [hS, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hS, map_sum]
     exact Finset.sum_eq_zero fun b _ => gt_const_ev _ (gp b) _ cL
   have eS : MvPowerSeries.map (algebraMap R K) S =
       ∑ b : Fin n, ev (n := n) ![pt K d b] (B.hL K (FB.toK K h) w0) := by
-    rw [hS, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hS, map_sum]
     refine Finset.sum_congr rfl fun b _ => ?_
     rw [GlobalTheory.QuadDeriv.map_ev _ _ (gp b), eL]
     congr 1

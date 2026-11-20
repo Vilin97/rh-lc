@@ -47,7 +47,8 @@ theorem main_alt_alt : GlobalTheory.Published.AutomorphicFormsFiniteGL → ∀ (
       c • X.fn hμ j f' ((hAg.PV j).ψ w) := by
     intro w
     apply (hAg.eW (D.nd.mu i) hμ j).injective
-    rw [map_sum, map_smul, hreal]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_smul, hreal]
     have e1 : ∀ γ ∈ GlobalTheory.Hk3.rep (Formalism.IndefR.Links.Vc D j) Pp d, hAg.eW (D.nd.mu i) hμ j (X.fn hμ j f' ((hAg.PV j).ψ w * γ)) =
         Formalism.L2.NG.rt D.host.E D.R.nV (Formalism.IndefR.principalLevelFrame.pre (hAg.PV j) γ)
           ((P.M (D.nd.mu i) (j.1 + 1) (by omega) (by omega)).real f') (hAg.a j * w) := by

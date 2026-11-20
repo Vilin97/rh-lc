@@ -69,7 +69,8 @@ theorem frob_matrix_isUnit : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [
         cases m <;> simp
       rw [hsplit, map_sub]
       refine Ideal.sub_mem _ ((hm _).1 (hw l)) ?_
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Ideal.sum_mem _ fun m _ => ?_
       rw [map_mul]
       refine Ideal.mul_mem_left _ _ (hσm _ ?_)
@@ -106,7 +107,8 @@ theorem frob_matrix_isUnit : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [
     rw [hm, ← IsLocalRing.residue_eq_zero_iff]
     have := congrFun hx l
     simp only [Matrix.mulVec, dotProduct, hMdef, Matrix.map_apply, Pi.zero_apply] at this ⊢
-    rw [map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum]
     simpa [hres, hw] using this)
   apply hx0
   funext l

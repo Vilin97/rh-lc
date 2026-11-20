@@ -104,7 +104,8 @@ theorem eq_sum_of_mem_span
   refine Finset.sum_congr rfl fun i _ => ?_
   congr 1
 
-  simp [map_sum, ipL_apply, hE]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, ipL_apply, hE]
 
 theorem ipL_eq_zero_of_mem
     (hE : ∀ i k, ((E i * (E k)ᴴ).trace).re = if i = k then 1 else 0) (hG : ∀ i, inG ε (E i))

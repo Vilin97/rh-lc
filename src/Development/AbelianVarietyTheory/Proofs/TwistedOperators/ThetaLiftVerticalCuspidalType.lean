@@ -91,7 +91,8 @@ theorem approx : GlobalTheory.IndefiniteRowSideFullHecke.CuspAlongSmoothLifts.Li
     rw [← integral_finset_sum _ (fun l _ => hintl l),
       ← integral_sub (hint h) (integrable_finset_sum _ fun l _ => hintl l)]
     refine integral_congr_ae (Filter.Eventually.of_forall fun g => ?_)
-    simp only [thetaKO, hg0eq, map_sub, map_sum, Pi.sub_apply, Finset.sum_apply, sub_mul, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [thetaKO, hg0eq, map_sub, map_sum, Pi.sub_apply, Finset.sum_apply, sub_mul, Finset.sum_mul]
   rw [hdiff]
   have hΞ : Φ - g0 ∈ GlobalTheory.Size.thetaLevel R.ψ _ _ U := sub_mem hΦU hg0U
   obtain ⟨hsT, hbd⟩ := hCk _ _ _ hw μW 𝓕W hμW (Φ - g0) hΞ

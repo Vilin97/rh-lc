@@ -270,7 +270,8 @@ theorem eval_cpP (N : ℕ) (A : Matrix (Fin N) (Fin N) ℂ) (t : ℂ) :
     (cpP N A).map (eval t) = ∑ k ∈ Finset.range N, (t ^ k * ((k.factorial : ℂ)⁻¹)) • A ^ k := by
   ext i j
   simp only [cpP, Matrix.map_apply, Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul]
-  rw [← coe_evalRingHom, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← coe_evalRingHom, map_sum]
   simp [mul_assoc]
 
 theorem det_gramPolyMinor_coeff_zero_one (N : ℕ) (hd : Fin N → ℝ) (m : ℕ) (hm : m ≤ N) (v : Pairs N → ℂ) :

@@ -444,7 +444,8 @@ theorem interpolation_inverse_matrix_sum_identity {M N : Type*} [AddCommGroup M]
     intro j hj x
     have e1 : e ((∑ i : Fin m, W ⟨j, hj⟩ i • F (v i)) x) =
         ∑ i : Fin m, W ⟨j, hj⟩ i • ∑ l : Fin m, (v i) ^ (l : ℕ) • c l x := by
-      rw [LinearMap.sum_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [LinearMap.sum_apply, map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [LinearMap.smul_apply, map_smul, h]
       simp only [Finset.sum_range]
@@ -464,7 +465,8 @@ theorem interpolation_inverse_matrix_sum_identity {M N : Type*} [AddCommGroup M]
       exact absurd (Finset.mem_univ _) hn
   refine ⟨fun j => if hj : j < m then ∑ i : Fin m, W ⟨j, hj⟩ i • F (v i) else 0, fun Y => ?_⟩
   refine LinearMap.ext fun x => he ?_
-  rw [h, LinearMap.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h, LinearMap.sum_apply, map_sum]
   refine Finset.sum_congr rfl fun j hj => ?_
   have hj' : j < m := Finset.mem_range.1 hj
   rw [LinearMap.smul_apply, map_smul]

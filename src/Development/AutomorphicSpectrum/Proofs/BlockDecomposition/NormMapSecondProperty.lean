@@ -12,7 +12,8 @@ variable {O O' : Type} [CommRing O] [CommRing O'] [Algebra O O']
 
 theorem trace_fixed (ℓ : ℕ) (τ : O' ≃ₐ[O] O') (hτ : τ ^ ℓ = 1) (u : O') :
     τ (∑ j ∈ Finset.range ℓ, (τ ^ j) u) = ∑ j ∈ Finset.range ℓ, (τ ^ j) u := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   have e := (Finset.sum_range_succ' (fun j => (τ ^ j) u) ℓ).symm.trans
     (Finset.sum_range_succ (fun j => (τ ^ j) u) ℓ)
   rw [hτ, pow_zero] at e

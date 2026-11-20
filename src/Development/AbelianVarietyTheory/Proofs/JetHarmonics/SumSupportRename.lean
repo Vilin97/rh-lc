@@ -120,9 +120,11 @@ theorem ev_axis (b : Fin n) (g : PS k 2 d) :
 theorem dofN_inCol (F : Fin d → PS k 2 d) (b : Fin n) (u : Fin d → k) (f : PS k 1 d) :
     DofN F b u (inCol b f) = inCol b (Dof F u f) := by
   unfold DofN Dof
-  rw [← inColHom_apply b (∑ _, _), map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← inColHom_apply b (∑ _, _), map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
-  rw [map_mul, map_sum, pderiv_inCol, if_pos rfl, inColHom_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_mul, map_sum, pderiv_inCol, if_pos rfl, inColHom_apply]
   congr 1
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_mul, inColHom_apply, inColHom_apply, inCol_C, ev_axis]
@@ -209,7 +211,8 @@ theorem cc_inCol (b : Fin n) (f : PS k 1 d) : constantCoeff (inCol b f) = consta
 
 theorem sum_support_eq {ι : Type} (φ : (ι →₀ ℕ) → k) (P : MvPolynomial ι k) :
     ∑ m ∈ P.support, P.coeff m * φ m = (MvPolynomial.basisMonomials ι k).constr k φ P := by
-  conv_rhs => rw [P.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_rhs => rw [P.as_sum, map_sum]
   refine Finset.sum_congr rfl fun m _ => ?_
   have : MvPolynomial.monomial m (P.coeff m) = P.coeff m • MvPolynomial.basisMonomials ι k m := by
     simp [MvPolynomial.smul_monomial]
@@ -219,7 +222,8 @@ theorem sum_support_rename {ι κ : Type} (e : ι → κ) (φ : (κ →₀ ℕ) 
     ∑ m ∈ (MvPolynomial.rename e P).support, (MvPolynomial.rename e P).coeff m * φ m =
       ∑ m ∈ P.support, P.coeff m * φ (Finsupp.mapDomain e m) := by
   rw [sum_support_eq]
-  conv_lhs => rw [P.as_sum, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [P.as_sum, map_sum, map_sum]
   refine Finset.sum_congr rfl fun m _ => ?_
   have : MvPolynomial.monomial (Finsupp.mapDomain e m) (P.coeff m) =
       P.coeff m • MvPolynomial.basisMonomials κ k (Finsupp.mapDomain e m) := by
@@ -269,7 +273,8 @@ theorem nabValN_boxSer : NabColSt := by
     exact (gt_ev_expS _ (gp b) _ hq0).symm
   unfold nabValN DpolyN
   rw [hprod]
-  simp only [map_sum, map_mul, constantCoeff_C]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, constantCoeff_C]
   rw [sum_support_rename e (fun m => constantCoeff (DmonN (B.FK k) cp u' m
     (∏ b, inCol b (f b * FB.expS k ((q : k) • B.hL k h w0)))))]
   refine Finset.sum_congr rfl fun mo _ => ?_
@@ -278,7 +283,8 @@ theorem nabValN_boxSer : NabColSt := by
   refine Finset.prod_congr rfl fun b _ => ?_
   rw [cc_inCol, fo_col (B.FK k) (fun v w g => FormalConnection.invariantDerivations_commute_formal_connection R d O k B v w g) e cp u u' hcp hu]
   unfold FB.nabVal DpolyOf
-  simp only [map_sum, map_mul, constantCoeff_C]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, constantCoeff_C]
   rw [sum_support_eq (fun m => constantCoeff (DmonOf (B.FK k) u m (f b * FB.expS k ((q : k) • B.hL k h w0))))]
   have hb : (MvPolynomial.monomial (colM mo b) 1 : MvPolynomial Λ k) = MvPolynomial.basisMonomials Λ k (colM mo b) := by
     simp

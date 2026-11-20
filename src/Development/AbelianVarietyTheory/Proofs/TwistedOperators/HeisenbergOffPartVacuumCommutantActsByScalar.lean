@@ -104,7 +104,8 @@ theorem heisO_offPart_vac : All fun {D} _ _ _ {G} W _ => ∀ i, i < D.R.m → �
       ext a b
       rw [Matrix.smul_apply, smul_eq_mul]
       exact GlobalTheory.SelfDualAt.algebraMap_placeIdempotent_mul _ _ (GlobalTheory.FinPl.LatMem.latO_mxAt hv a b)
-    rw [← hvc, hdec, map_add, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hvc, hdec, map_add, map_sum]
     refine hadd _ _ ?_ ?_
     · have hβ := GlobalTheory.FinPl.FlatFix.int_alg_pair (D := D) (GlobalTheory.FinPl.FlatFix.halfOff_int (D := D) fun _ => True)
       have e2 : algebraMap (AF D.host.F) (AE D) (pairA D.host.F 0 (GlobalTheory.FinPl.FlatFix.halfOff (fun _ => True) +

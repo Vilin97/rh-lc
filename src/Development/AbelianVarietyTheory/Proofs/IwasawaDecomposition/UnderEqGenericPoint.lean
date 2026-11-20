@@ -245,7 +245,8 @@ theorem step_of_linear {R : Type*} [CommRing R] [Algebra ℝ R] (Φ : R →ₗ[�
     monomial j (((D + 1).choose j : ℝ) * Φ (x ^ j * ((b : ℝ) • y + z) ^ (D + 1 - j)))
   have hinf : (Set.range (Int.cast : ℤ → ℝ)).Infinite := Set.infinite_range_of_injective Int.cast_injective
   have h₁ (a b : ℤ) : (P b).eval (a : ℝ) = G (a + b) := by
-    rw [← hG, add_pow, map_sum, eval_finset_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hG, add_pow, map_sum, eval_finset_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [eval_monomial, _root_.smul_pow, mul_comm _ ((D + 1).choose j : R), ← nsmul_eq_mul (α := R), map_nsmul, smul_mul_assoc,
       map_smul, nsmul_eq_mul, smul_eq_mul]

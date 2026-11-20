@@ -35,7 +35,8 @@ theorem exists_eq_sum_tensorCoeff (t : M ⊗[R] R[X]) :
     | tmul m p => simp [E, finsuppScalarRight_apply_tmul_apply]
   refine ⟨(E t).support, fun x hx => by rw [← hE]; simpa using hx, E.injective ?_⟩
   ext y
-  rw [map_sum, Finsupp.finsetSum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finsupp.finsetSum_apply]
   simp only [hE, tensorCoeff_tmul_single_one]
   rw [Finset.sum_ite_eq']
   split_ifs with h
@@ -114,7 +115,8 @@ theorem IsCoaction.isInternal_torusWeightSpace {ρ : M →ₗ[R] M ⊗[R] R[X]} 
     rw [← key, e, key]
   · obtain ⟨s, e⟩ := h.exists_eq_sum m
     refine ⟨∑ x ∈ s, DirectSum.of (fun x => torusWeightSpace ρ x) x ⟨_, h.tensorCoeff_mem x m⟩, ?_⟩
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [coeAddMonoidHom_of]
     exact e.symm
 

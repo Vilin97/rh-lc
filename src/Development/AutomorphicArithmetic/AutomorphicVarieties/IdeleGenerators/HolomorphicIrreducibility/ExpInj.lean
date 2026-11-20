@@ -52,7 +52,8 @@ private theorem lie_rot {k : ℕ} {φ : TR.Sm F 2} (hw : ∀ v, TR.Eop v 0 1 φ 
       TR.toL (Matrix.single 1 0 (Pi.single v 1))) := by
     ext i j w
     fin_cases i <;> fin_cases j <;> simp [Finset.sum_apply, Matrix.single, Pi.single_apply]
-  rw [e, map_sum, LinearMap.sum_apply, Complex.ofReal_sum, Finset.mul_sum, Finset.sum_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, map_sum, LinearMap.sum_apply, Complex.ofReal_sum, Finset.mul_sum, Finset.sum_smul]
   refine Finset.sum_congr rfl fun v _ => ?_
   rw [map_smul, map_sub, LinearMap.smul_apply, LinearMap.sub_apply, mul_comm, mul_smul, ← hw v]
   simp only [TR.Eop]

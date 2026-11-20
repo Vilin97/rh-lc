@@ -312,7 +312,8 @@ theorem normal_coords_base : ∀ (n r D : ℕ) (ε : Fin D ≃ Fin n ⊕ Low r) 
     rw [show (fun v => (ψ (base ε v) : ℂ)) = fun v => (fun w => (ψ w : ℂ)) (bL v) from rfl,
       ddbar_comp_holo (contDiffAt_ofReal_comp hψb) bL.contDiff.contDiffAt, bL.fderiv, ← hbL, hbp, hbLv, hbLv,
       show (0 : Matrix (Low r) (Low r) ℂ) = diagonal 0 from diagonal_zero.symm, hchg]
-    simp only [map_sum, map_smul, map_smulₛₗ, ContinuousLinearMap.sum_apply, ContinuousLinearMap.smul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, map_smulₛₗ, ContinuousLinearMap.sum_apply, ContinuousLinearMap.smul_apply,
       Pi.zero_apply, zero_mul, Finset.sum_const_zero, add_zero, smul_eq_mul, Finset.mul_sum]
     conv_lhs => rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_

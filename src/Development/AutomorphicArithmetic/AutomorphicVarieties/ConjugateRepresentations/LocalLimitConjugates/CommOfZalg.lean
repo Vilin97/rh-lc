@@ -70,7 +70,8 @@ theorem UpperTheory.V.Cj.H.casOp :
     exact N.sub_mem (N.sum_mem fun j _ => N.sub_mem (hs _ _ (hs _ _ hφ)) (hs _ _ (hs _ _ hφ))) (N.smul_mem _ hφ)
   · have ht : ∀ X, ∀ φ ∈ N, shift (lie E a) r X (T φ) = T (shift (lie E a) r X φ) := fun X φ hφ => by
       rw [sh_apply, sh_apply, hT.lie X φ hφ, map_add, map_smul]
-    simp only [casA, cas, LinearMap.sub_apply, LinearMap.sum_apply, Module.End.mul_apply, LinearMap.smul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [casA, cas, LinearMap.sub_apply, LinearMap.sum_apply, Module.End.mul_apply, LinearMap.smul_apply,
       Module.End.one_apply, map_sub, map_sum, map_smul]
     congr 1
     refine Finset.sum_congr rfl fun j _ => ?_

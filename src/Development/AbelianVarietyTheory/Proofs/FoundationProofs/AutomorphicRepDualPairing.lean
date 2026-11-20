@@ -182,7 +182,8 @@ theorem exists_autRep_projection : ∀ (E : Type) [Field E] [NumberField E] [IsC
     rw [Submodule.coe_sum, LinearMap.sum_apply, Submodule.coe_smul, LinearMap.smul_apply, ← hsum w]
     exact Finset.sum_attach R (fun i => RU E n (s i) (f w))
   have hB := congrArg P hA
-  rw [map_sum, map_smul] at hB
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_smul] at hB
   simp only [hPeq] at hB
   have := LinearMap.congr_fun (congrArg Subtype.val hB) v
   rw [Submodule.coe_sum, LinearMap.sum_apply, Submodule.coe_smul, LinearMap.smul_apply] at this

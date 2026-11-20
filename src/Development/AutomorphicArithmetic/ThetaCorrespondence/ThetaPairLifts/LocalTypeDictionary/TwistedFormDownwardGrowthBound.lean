@@ -134,7 +134,8 @@ theorem downward_growth_approximation : _root_.GlobalTheory.FunPr.ThetaLocalInpu
     rw [← integral_finset_sum _ fun l _ => hint l k hk h,
       ← integral_sub (hMb Φ hΦU k hk h).1 (integrable_finset_sum _ fun l _ => hint l k hk h)]
     refine integral_congr_ae (.of_forall fun g => ?_)
-    simp only [thetaKO, map_sub, map_sum, Pi.sub_apply, Finset.sum_apply, sub_mul, Finset.sum_mul, hpt]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [thetaKO, map_sub, map_sum, Pi.sub_apply, Finset.sum_apply, sub_mul, Finset.sum_mul, hpt]
   have hsw : ∀ h, ∑ j ∈ Finset.range n, ∑ k ∈ K, ∫ g in (G.mP (i + 1)).fd, thetaKO (G.dn i).ω g h
         (fock R.ψ R.θ true (G.P (i + 1)) (G.P i) (f' j) (p' j)) * Fm k (v k) g ∂(G.mP (i + 1)).ν =
       ∑ k ∈ K, ∑ l, ∫ g in (G.mP (i + 1)).fd, thetaKO (G.dn i).ω g h

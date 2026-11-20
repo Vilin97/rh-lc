@@ -25,7 +25,8 @@ theorem dualExists : DualExists := by
     set w : S.V := ∑ k, star (lam k) • u k with hw
     have hw0 : w = 0 := by
       refine S.nondeg.1 w (fun v => ?_)
-      rw [hw, map_sum, LinearMap.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hw, map_sum, LinearMap.sum_apply]
       rw [← hfv v]
       refine Finset.sum_congr rfl (fun k _ => ?_)
       rw [LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, starRingEnd_apply, star_star,

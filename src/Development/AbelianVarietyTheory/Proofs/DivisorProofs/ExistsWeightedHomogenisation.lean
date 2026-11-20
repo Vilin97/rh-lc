@@ -27,7 +27,8 @@ theorem exists_weightedHomogenisation {L : Type} [Field L] (Q : Subring L) (r : 
     simp only [e, Finsupp.cons_zero, Finsupp.cons_succ, hwt, smul_eq_mul, mul_one]
     change N - d α + d α = N
     omega
-  · rw [eval₂_eq', Finset.mul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [eval₂_eq', Finset.mul_sum, map_sum]
     push_cast
     refine Finset.sum_congr rfl fun α hα => ?_
     rw [eval_monomial, Finsupp.prod_fintype _ _ (by simp), Fin.prod_univ_succ]

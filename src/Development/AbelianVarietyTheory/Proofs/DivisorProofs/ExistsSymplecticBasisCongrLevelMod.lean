@@ -64,7 +64,8 @@ theorem exists_symplectic_equiv_congr : ∀ (h k : ℕ) (M : Type) [AddCommGroup
     simp only [hr, omegaStd]
   · have hla : l a = ∑ j, a j • v j := by
       conv_lhs => rw [← Finset.univ_sum_single a]
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [hv, ← map_smul, ← Pi.single_smul, smul_eq_mul, mul_one]
     rw [hla, c.equivFun_symm_apply, ← Finset.sum_sub_distrib, Finset.smul_sum]

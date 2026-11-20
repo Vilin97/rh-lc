@@ -91,7 +91,8 @@ theorem kill_tens {X V : Type} [TopologicalSpace X] [T2Space X] [AddCommGroup V]
     · intro h
       rw [hx, image_eq_zero_of_notMem_tsupport (f := F) (x := (x, v)), zero_mul]
       exact fun hs => h (hfin.mem_toFinset.2 ⟨_, hs, rfl⟩)
-  rw [this, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [this, map_sum]
   refine Finset.sum_eq_zero fun q _ => ?_
   exact h (fun x => F (x, q.out)) (sb_comp (fun x => (x, q.out)) Prod.fst (by fun_prop) (by fun_prop) (fun _ => rfl) hF)
     (fun x hx => hS _ hx) (fun v => Set.indicator (K : Set V) (fun _ => (1 : ℂ)) (v + -q.out))

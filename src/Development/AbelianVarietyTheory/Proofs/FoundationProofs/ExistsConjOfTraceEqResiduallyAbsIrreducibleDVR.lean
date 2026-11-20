@@ -72,7 +72,8 @@ theorem exists_conj_of_surjective {O A : Type} [CommRing O] [IsLocalRing O] [Rin
       simp [Matrix.sum_apply, Matrix.single_apply]
     · rw [Matrix.mul_single_apply_of_ne _ _ _ _ _ hq]
       simp [Matrix.sum_apply, Matrix.single_apply, Ne.symm hq]
-  rw [h2, hmul, h3, map_sum, Matrix.sum_apply, Matrix.mul_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h2, hmul, h3, map_sum, Matrix.sum_apply, Matrix.mul_apply]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [map_smul, Matrix.smul_apply, smul_eq_mul, mul_comm]
   rfl

@@ -51,10 +51,12 @@ theorem termW_eq (R : ℝ) (c : O.s.Comp) : termW O c R =
   · refine (congrArg _ e2).trans ?_
     rw [map_mul, map_mul, rename_rename]
     congr 1
-    simp only [ArIn.mixEv, aeval_X, EigWhole.update_ind_one ∅ hT, map_sum, map_pow, rename_X, map_mul, algHom_C]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [ArIn.mixEv, aeval_X, EigWhole.update_ind_one ∅ hT, map_sum, map_pow, rename_X, map_mul, algHom_C]
     norm_num
     rfl
-  · rw [map_pow, map_sum, ← e0]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_pow, map_sum, ← e0]
     simp only [rename_X]
     rfl
 
@@ -101,7 +103,8 @@ theorem aeval_pol : aeval (fun i => (C (RelabDR.sg O i : ℝ) * X (RelabDR.ix O 
       MvPolynomial (Letter O.S.Dw ⊕ Letter O.S.Dw) ℝ)) (∑ x, X (Sum.inl x) ^ 2 : MvPolynomial (EigWhole.Var O) ℝ) =
       ∑ z, X (Sum.inl z) ^ 2 := by
     rw [← hR]
-    simp only [map_sum, map_pow, aeval_X, hsq]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_pow, aeval_X, hsq]
     rfl
   rw [map_sub, h1', sub_left_inj] at h1
   have hc : ((fun i => (C (RelabDR.sg O i : ℝ) * X (RelabDR.ix O i) : MvPolynomial (Letter O.S.Dw ⊕ Letter O.S.Dw) ℝ)) ∘
@@ -116,7 +119,8 @@ theorem aeval_pol : aeval (fun i => (C (RelabDR.sg O i : ℝ) * X (RelabDR.ix O 
   have h3 : aeval (fun i => (C (RelabDR.sg O i : ℝ) * X (RelabDR.ix O i) :
       MvPolynomial (Letter O.S.Dw ⊕ Letter O.S.Dw) ℝ))
       (∑ i : Fin (D.R.f * O.N), X (Sum.inr (Sum.inr i)) : MvPolynomial (EigWhole.Var O) ℝ) = -∑ z, X (Sum.inr z) := by
-    rw [← ((RelabDR.wholeL_bijective_sqs O).comp Fin.revPerm.bijective).sum_comp
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← ((RelabDR.wholeL_bijective_sqs O).comp Fin.revPerm.bijective).sum_comp
       (fun z => (X (Sum.inr z) : MvPolynomial (Letter O.S.Dw ⊕ Letter O.S.Dw) ℝ)), ← Finset.sum_neg_distrib, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     simp [RelabDR.sg, RelabDR.ix]
@@ -183,7 +187,8 @@ theorem termW_read : ArCalc → ArDegree → ∀ (D : D7) (O : Setup D), O.Core 
       Φ ((∏ σ, ((O.S.Dw.mult σ).factorial : ℝ))⁻¹ • pairPol O.S.Dw.mult (dimGr D.what₂.Tau O.N O.j - 1)) / V.ν := by
     rw [map_smul, smul_eq_mul, inv_mul_eq_div, div_div]
   refine (termW_eq O R c).trans (key.trans ?_)
-  rw [hfin, ← halg, ← hs, map_sum, Finset.sum_div, map_sum, map_sum, Finset.sum_div]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hfin, ← halg, ← hs, map_sum, Finset.sum_div, map_sum, map_sum, Finset.sum_div]
   refine Finset.sum_congr rfl fun j _ => ?_
   have := hcmp (b j)
   rw [hdim] at this ⊢

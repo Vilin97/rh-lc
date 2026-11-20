@@ -441,7 +441,8 @@ theorem th_Ip {u : G.St} {g : G.G₀} (hg : g ∈ r.Ip u) {f : B.B →+* Q}
       algebraMap (ResidueField Q) _ (p.eval 1) + (x - 1) * aeval x ((p - C (p.eval 1)) /ₘ (X - C 1)) := by
     have e := congrArg (aeval x) hq
     rw [map_mul, map_sub, aeval_C, aeval_X, map_one] at e
-    rw [e, map_sub, aeval_C, add_sub_cancel, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, map_sub, aeval_C, add_sub_cancel, map_sum, map_sum]
     exact Finset.sum_congr rfl fun i _ => by rw [map_pow, aeval_X_pow]
   have hunit : IsUnit (∑ i ∈ Finset.range m, M ^ i) := by
     rw [Matrix.isUnit_iff_isUnit_det, ← IsLocalRing.residue_ne_zero_iff_isUnit, RingHom.map_det]

@@ -122,7 +122,8 @@ variable {E : Type} [Field E] [NumberField E] [StarRing E]
 theorem p_hT_expand (S : HSpace E) (x y : S.V) :
     S.hT x y = ∑ a, ∑ b, star (S.frame.repr x a) * S.gram a b * S.frame.repr y b := by
   conv_lhs => rw [← S.frame.sum_repr x, ← S.frame.sum_repr y]
-  simp only [map_sum, LinearMap.sum_apply, map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.sum_apply, map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul,
     starRingEnd_apply, HSpace.gram, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
@@ -163,7 +164,8 @@ theorem p_family_neg (S : HSpace E) (τ : E →+* ℂ) (hτ : ∀ a, τ (star a)
         ext a
         have := congrFun hx a
         simp only [mulVec, dotProduct, hCdef, Matrix.of_apply, Pi.zero_apply] at this
-        simp only [map_sum, map_smul, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.coe_smul,
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, map_smul, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.coe_smul,
           Pi.smul_apply, smul_eq_mul, map_zero, Finsupp.coe_zero, Pi.zero_apply]
         rw [← this]
         exact Finset.sum_congr rfl fun i _ => mul_comm _ _
@@ -212,7 +214,8 @@ theorem p_posX_gen (S : HSpace E) (hτ : StarConj E) (hS : S.SigOK) {r : ℕ}
       Matrix.cons_val_zero, Matrix.cons_val_one] at hc
     have hcz : c (Sum.inr 0) = 0 := by
       have := congrArg (S.hT F.fl.z) hc
-      simp only [map_add, map_sum, map_smul, hze, hzy, F.fl.z_norm, smul_eq_mul, mul_zero,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_add, map_sum, map_smul, hze, hzy, F.fl.z_norm, smul_eq_mul, mul_zero,
         Finset.sum_const_zero, zero_add, add_zero, map_zero] at this
       rcases mul_eq_zero.1 this with h | h
       · exact h
@@ -752,7 +755,8 @@ theorem double_span_is_compl_orth {T T' : E} (F : LFlag S r T) (F' : LFlag S r T
     rw [← a_span_two]
     apply a_orth_of_frame
     intro i
-    rw [map_sub, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_sum]
     have : ∑ j, S.hT (v i) (c j • v j) = M.mulVec c i := by
       simp only [Matrix.mulVec, dotProduct, hM, Matrix.of_apply, map_smul, smul_eq_mul]
       exact Finset.sum_congr rfl (fun j _ => mul_comm _ _)
@@ -936,7 +940,8 @@ theorem b_om_pair {T T' : E} (F : LFlag S r T) (F' : LFlag S r T') (a : Fin (r +
     ← discriminant_eq_det_lift] at h
   rw [← h]
   unfold b_om
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun b _ => ?_
   rw [map_smul, smul_eq_mul, b_Zhat_apply, mul_comm]
 
@@ -1033,7 +1038,8 @@ theorem b_cramer {T T' : E} (F : LFlag S r T) (F' : LFlag S r T') (hz : F.zt = F
       linear_combination h0
   have hpair2 : ∀ a, S.hT (frame F a) w = ∑ b, ZhatL F F' a b * c' b := by
     intro a
-    rw [hw, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hw, map_sum]
     refine Finset.sum_congr rfl fun b _ => ?_
     rw [map_smul, smul_eq_mul, b_Zhat_apply, mul_comm]
   have hcof := Formalism.HermitianLatticeCounting.Final.LocalIntegralStructure.cofactorVec E r (ZhatL F F')
@@ -2419,7 +2425,8 @@ theorem c_finrank_orth_ge (U : Submodule E S.V) :
         _ = ((∑ i, b.repr ⟨x, hx⟩ i • b i : U) : S.V) := by rw [b.sum_repr]
         _ = ∑ i, b.repr ⟨x, hx⟩ i • (b i : S.V) := by
           simp only [Submodule.coe_sum, Submodule.coe_smul]
-    rw [hx'', map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hx'', map_sum, LinearMap.sum_apply]
     refine Finset.sum_eq_zero fun i _ => ?_
     simp [hy' i]
   have h1 := LinearMap.finrank_range_add_finrank_ker φ
@@ -2652,7 +2659,8 @@ theorem c_finrank_orth_le (U : Submodule E S.V) :
     have hx0 : (∑ i, star (c i) • (b i : S.V)) = 0 := by
       apply S.nondeg.1
       intro y
-      rw [map_sum, LinearMap.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, LinearMap.sum_apply]
       have := hfy y
       rw [hsum] at this
       rw [← this]
@@ -2729,7 +2737,8 @@ theorem c_rad_le {V : Type} [AddCommGroup V] [Module E V] [FiniteDimensional E V
           _ = ∑ i, b.repr ⟨c, hc⟩ i • ((b i : A) : V) := by
             simp only [Submodule.coe_sum, Submodule.coe_smul]
       show q y (c : V) = 0
-      rw [hc'', map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hc'', map_sum]
       refine Finset.sum_eq_zero fun i _ => ?_
       simp [hyi i]
     have hLk : LA.comap A.subtype ≤ (LinearMap.ker (q y)).comap A.subtype := by
@@ -4762,7 +4771,8 @@ theorem e_exists_K (hΛ : Submodule.IsLattice E Λ) (hg : 0 < g) (hz : IsLift Λ
   have hΦ : ∀ c, Φ c = 0 ↔ ∑ b, c b • lam b ∈ UU Λ F F' := by
     intro c
     have e1 : Φ c = ((UU Λ F F').comap (BLat Λ F F').subtype).mkQ (∑ b, c b • w b) := by
-      simp only [Φ, Fintype.linearCombination_apply, map_sum, map_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Φ, Fintype.linearCombination_apply, map_sum, map_smul]
     rw [e1, Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero, Submodule.mem_comap]
     simp [w]
   have hker : LinearMap.ker Φ =
@@ -7153,7 +7163,8 @@ theorem j_arch (τ : E →+* ℂ) (hτ : ∀ x : E, τ (star x) = starRingEnd �
     set σ : ℝ := ∑ i, ‖τ (B i j)‖ ^ 2 / ra i with hσ
     have hσ0 : 0 ≤ σ := Finset.sum_nonneg fun i _ => div_nonneg (by positivity) (pa i).le
     have e1 : τ (∑ i, star (B i j / a i) * B i j) = (σ : ℂ) := by
-      rw [map_sum, hσ]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, hσ]
       push_cast
       apply Finset.sum_congr rfl
       intro i _
@@ -7271,10 +7282,12 @@ variable {E : Type} [Field E] [NumberField E] [StarRing E] {S : HSpace E} {e : �
 
 theorem j_hT_iota {u : Fin e → S.V} (hou : ∀ i j, i ≠ j → S.hT (u i) (u j) = 0) (x y : Fin e → E) :
     S.hT (j_iota u x) (j_iota u y) = ∑ i, star (x i) * S.hT (u i) (u i) * y i := by
-  rw [j_iota_apply, j_iota_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [j_iota_apply, j_iota_apply, map_sum]
   apply Finset.sum_congr rfl
   intro j _
-  rw [map_smul, map_sum, LinearMap.sum_apply, Finset.sum_eq_single j]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_smul, map_sum, LinearMap.sum_apply, Finset.sum_eq_single j]
   · rw [map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, smul_eq_mul]
     simp only [starRingEnd_apply]
     ring
@@ -7624,7 +7637,8 @@ theorem j_nrm_iota (hS : StarConj E) {u : Fin e → S.V} (hou : ∀ i j, i ≠ j
     (τ : E →+* ℂ) (x : Fin e → E) :
     nrm S τ (j_iota u x) = ∑ i, ‖τ (x i)‖ ^ 2 * nrm S τ (u i) := by
   unfold nrm
-  rw [j_hT_iota hou, map_sum, Complex.re_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [j_hT_iota hou, map_sum, Complex.re_sum]
   apply Finset.sum_congr rfl
   intro i _
   rw [map_mul, map_mul, hS, c_nrm_real hS]
@@ -7639,7 +7653,8 @@ theorem j_nrm_iota (hS : StarConj E) {u : Fin e → S.V} (hou : ∀ i j, i ≠ j
 theorem j_bForm_iota_left {β : S.V ≃ₗ[E] S.V} (u : Fin e → S.V) (x : Fin e → E) (v : S.V) :
     bForm β (j_iota u x) v = ∑ i, star (x i) * bForm β (u i) v := by
   unfold bForm
-  rw [j_iota_apply, map_sum, map_sum, map_sum, LinearMap.sum_apply, LinearMap.sum_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [j_iota_apply, map_sum, map_sum, map_sum, LinearMap.sum_apply, LinearMap.sum_apply,
     ← Finset.sum_sub_distrib]
   apply Finset.sum_congr rfl
   intro i _
@@ -7651,7 +7666,8 @@ theorem j_bForm_iota_left {β : S.V ≃ₗ[E] S.V} (u : Fin e → S.V) (x : Fin 
 theorem j_bForm_iota_right {β : S.V ≃ₗ[E] S.V} (w : Fin e → S.V) (y : Fin e → E) (v : S.V) :
     bForm β v (j_iota w y) = ∑ j, bForm β v (w j) * y j := by
   unfold bForm
-  rw [j_iota_apply, map_sum, map_sum, ← Finset.sum_sub_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [j_iota_apply, map_sum, map_sum, ← Finset.sum_sub_distrib]
   apply Finset.sum_congr rfl
   intro j _
   rw [map_smul, map_smul, smul_eq_mul, smul_eq_mul]
@@ -7680,7 +7696,8 @@ theorem j_bLin_apply (β : S.V ≃ₗ[E] S.V) (x y : S.V) : j_bLin S β x y = bF
 
 theorem j_form_left (bb : S.V →ₗ⋆[E] S.V →ₗ[E] E) (u : Fin e → S.V) (x : Fin e → E) (v : S.V) :
     bb (j_iota u x) v = ∑ i, star (x i) * bb (u i) v := by
-  rw [j_iota_apply, map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [j_iota_apply, map_sum, LinearMap.sum_apply]
   apply Finset.sum_congr rfl
   intro i _
   rw [map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul]
@@ -7688,7 +7705,8 @@ theorem j_form_left (bb : S.V →ₗ⋆[E] S.V →ₗ[E] E) (u : Fin e → S.V) 
 
 theorem j_form_right (bb : S.V →ₗ⋆[E] S.V →ₗ[E] E) (w : Fin e → S.V) (y : Fin e → E) (v : S.V) :
     bb v (j_iota w y) = ∑ j, bb v (w j) * y j := by
-  rw [j_iota_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [j_iota_apply, map_sum]
   apply Finset.sum_congr rfl
   intro j _
   rw [map_smul, smul_eq_mul, mul_comm]

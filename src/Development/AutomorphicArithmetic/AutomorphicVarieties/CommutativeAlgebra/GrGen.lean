@@ -36,7 +36,8 @@ private theorem exists_decomp {O σ X : Type} [CommRing O] [Fintype σ] [AddComm
     rw [map_add, hm] at hkm
     simpa using hkm
   · ext n
-    rw [map_sum, Finset.sum_congr rfl
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_congr rfl
       (g := fun m => if c n = m then (if coeff n f ≠ 0 then coeff n f else 0) else 0),
       Finset.sum_ite_eq]
     · by_cases hn : coeff n f ≠ 0
@@ -100,7 +101,8 @@ theorem UpperTheory.V.Alg.gr_gen :
     apply Subtype.ext
     simp only [AddSubmonoidClass.coe_finset_sum, MulMemClass.coe_mul, SubmonoidClass.coe_finset_prod,
       SubmonoidClass.coe_pow, e, WPres.zA, WPres.z]
-    rw [AlgHom.toLinearMap_apply, hfe, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [AlgHom.toLinearMap_apply, hfe, map_sum]
     refine Finset.sum_congr rfl fun m hm => ?_
     rw [if_pos hm, map_mul, monomial_eq_prod, map_prod]
     simp only [map_pow]

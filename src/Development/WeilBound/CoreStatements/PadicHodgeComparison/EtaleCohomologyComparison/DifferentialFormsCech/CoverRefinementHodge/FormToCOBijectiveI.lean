@@ -73,7 +73,8 @@ theorem isoI_nat (hG : type_of% (@CrystallineSemistableComparison.Om.Glob.glob_i
       { toFun := fun f => f (τ ∘ i), map_zero' := rfl, map_add' := fun _ _ => rfl }
     change evU (Cos.d (formCos q U.U a) j c') =
       formRes q (hτ' (j + 1) i) a (formPull hu (Pb.capO W.U (τ ∘ i)) a (evW (Cos.d (formCos p W.U a) j c)))
-    rw [Cos.d_apply, Cos.d_apply, map_sum, map_sum, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Cos.d_apply, Cos.d_apply, map_sum, map_sum, map_sum, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_zsmul, map_zsmul, map_zsmul, map_zsmul]
     congr 1

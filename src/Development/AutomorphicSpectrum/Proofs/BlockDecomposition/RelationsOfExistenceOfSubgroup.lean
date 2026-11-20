@@ -46,13 +46,15 @@ theorem trace_eq_of_pos {V V' : Type*} [AddCommGroup V] [Module ℂ V] [FiniteDi
     have h := LinearMap.aeval_self_charpoly B
     rw [aeval_eq_sum_range] at h
     have := congrArg (fun T => LinearMap.trace ℂ V (A * T)) h
-    simpa [Finset.mul_sum, map_sum, mul_smul_comm] using this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [Finset.mul_sum, map_sum, mul_smul_comm] using this
   have e2 : ∑ i ∈ Finset.range (B.charpoly.natDegree + 1),
       B.charpoly.coeff i * LinearMap.trace ℂ V' (A' * B' ^ i) = 0 := by
     have h := LinearMap.aeval_self_charpoly B'
     rw [aeval_eq_sum_range, ← hB] at h
     have := congrArg (fun T => LinearMap.trace ℂ V' (A' * T)) h
-    simpa [Finset.mul_sum, map_sum, mul_smul_comm] using this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [Finset.mul_sum, map_sum, mul_smul_comm] using this
   rw [Finset.sum_range_succ'] at e1 e2
   have e3 : ∑ i ∈ Finset.range B.charpoly.natDegree,
       B.charpoly.coeff (i + 1) * LinearMap.trace ℂ V (A * B ^ (i + 1)) =

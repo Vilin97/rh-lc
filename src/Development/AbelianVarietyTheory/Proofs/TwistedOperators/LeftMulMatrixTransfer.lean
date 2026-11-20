@@ -59,7 +59,8 @@ theorem exists_cyclic_field {K : Type} [Field K] {r : ℕ} (g : Matrix (Fin r) (
   have hqv : aeval g q *ᵥ v = 0 := by
     rw [← hw]
     ext i
-    simp [q, krylov, map_sum, aeval_monomial, Matrix.sum_mulVec, Algebra.algebraMap_eq_smul_one,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [q, krylov, map_sum, aeval_monomial, Matrix.sum_mulVec, Algebra.algebraMap_eq_smul_one,
       Matrix.smul_mulVec, Matrix.mulVec.eq_def (Matrix.of _), dotProduct, mul_comm]
   have hmem : q ∈ Module.annihilator K[X] (Module.AEval' (Matrix.toLin' g)) := by
     rw [← hx, LinearMap.mem_ker, LinearMap.toSpanSingleton_apply]
@@ -129,7 +130,8 @@ theorem leftMulMatrix_transfer (f : R →+* A) (ψ : S →+* B)
     ← hb, ← map_mul]
   generalize x * b j = y
   conv_lhs => rw [← b.sum_repr y]
-  simp only [map_sum, Algebra.smul_def, map_mul, h, hb]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Algebra.smul_def, map_mul, h, hb]
   simp only [← Algebra.smul_def, map_smul, Module.Basis.repr_self]
   simp [Finsupp.finsetSum_apply, Finsupp.single_apply]
 
@@ -190,7 +192,8 @@ theorem exists_UJ (J : Matrix (Fin r) (Fin r) A) (t : (Fin r → A) ≃ₗ[A] (F
 theorem hform_symm (hσ : ∀ a, σ (σ a) = a) {J : Matrix (Fin r) (Fin r) A} (hJ : IsHerm σ J)
     (x y : Fin r → A) : hform σ J y x = σ (hform σ J x y) := by
   have h : ∀ i j, σ (J i j) = J j i := fun i j => congrFun (congrFun hJ j) i
-  simp only [hform, map_sum, map_mul, hσ, h]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hform, map_sum, map_mul, hσ, h]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 
@@ -470,7 +473,8 @@ theorem gram_eq (x : B) (e : Module.Basis (Fin r) A B) :
   simp only [gram, tf, Matrix.of_apply, Matrix.mul_apply, Matrix.transpose_apply,
     Algebra.leftMulMatrix_eq_repr_mul, one_mul]
   conv_lhs => rw [← e.sum_repr (x * e i)]
-  simp only [Finset.sum_mul, map_sum, smul_mul_assoc, map_smul, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finset.sum_mul, map_sum, smul_mul_assoc, map_smul, smul_eq_mul]
 
 theorem det_gram (x : B) (e : Module.Basis (Fin r) A B) :
     (gram τ x e).det = Algebra.norm A x * (gram τ 1 e).det := by
@@ -482,7 +486,8 @@ theorem HidaSetting.gram_change (S : HidaSetting σ τ α b) (x : B) (e e' : Mod
   simp only [gram, tf, Matrix.of_apply, Matrix.mul_apply, Matrix.transpose_apply,
     Matrix.map_apply, Module.Basis.toMatrix_apply]
   conv_lhs => rw [← e.sum_repr (e' i), ← e.sum_repr (e' j)]
-  simp only [map_sum, Finset.sum_mul, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Finset.sum_mul, Finset.mul_sum]
   refine Finset.sum_congr rfl fun p _ => Finset.sum_congr rfl fun q _ => ?_
   have : x * (e.repr (e' i) q • e q) * τ (e.repr (e' j) p • e p)
       = (e.repr (e' i) q * σ (e.repr (e' j) p)) • (x * e q * τ (e p)) := by
@@ -510,9 +515,11 @@ theorem HidaSetting.isUnit_det_gram (S : HidaSetting σ τ α b) {x : B} (hx : I
     ext i j
     have e : b j = ∑ p, σ (N p j) • τ (b p) := by
       conv_lhs => rw [← S.hτ (b j), hN j]
-      simp only [map_sum, Algebra.smul_def, map_mul, S.comp]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, Algebra.smul_def, map_mul, S.comp]
     have e2 := congrArg (fun y => b.repr y i) e
-    simp only [map_sum, map_smul, Module.Basis.repr_self] at e2
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, Module.Basis.repr_self] at e2
     rw [Matrix.mul_apply, Matrix.one_apply]
     simpa [Finsupp.single_apply, eq_comm, N, mul_comm] using e2.symm
   rw [h1, Matrix.det_mul]
@@ -563,7 +570,8 @@ theorem exists_basis_tensor {ι : Type} [Fintype ι] (b : Module.Basis ι E (Adj
   · rw [Fintype.linearIndependent_iff]
     intro g hg j
     have := congrArg (TensorProduct.map ((b.coord j).restrictScalars F) LinearMap.id) hg
-    simp only [map_sum, map_smul_tensor, map_zero] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul_tensor, map_zero] at this
     rw [Finset.sum_eq_single j] at this
     · simpa [← Algebra.TensorProduct.one_def] using this
     · intro i _ hij; simp [Finsupp.single_apply, hij]
@@ -593,7 +601,8 @@ theorem trace_tmul_one {ι : Type} [Fintype ι] (b : Module.Basis ι E (AdjoinRo
 theorem trLk_eq {ι : Type} [Fintype ι] (b : Module.Basis ι E (AdjoinRoot P))
     (y : AdjoinRoot P ⊗[F] k) : trLk k P y = Algebra.trace (E ⊗[F] k) (AdjoinRoot P ⊗[F] k) y := by
   obtain ⟨b', hb'⟩ := exists_basis_tensor (F := F) k b
-  rw [← b'.sum_repr y, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← b'.sum_repr y, map_sum, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [trLk, map_smul_tensor, map_smul, hb', trace_tmul_one k b]
   simp
@@ -728,7 +737,8 @@ theorem exists_basis_plus [CharZero E] (hP : IsPPol c r P) (hc : ∀ e, c (c e) 
   · have key : ∀ g : ι → E, ∑ i, g i • (b i : AdjoinRoot P) = 0 → ∀ j, g j + c (g j) = 0 := by
       intro g hg j
       have h1 := congrArg (starL hP) hg
-      simp only [map_sum, hsm, hfix, map_zero] at h1
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, hsm, hfix, map_zero] at h1
       choose a ha using fun i => hF (g i + c (g i)) (by rw [map_add, hc, add_comm])
       have h2 : ∑ i, a i • b i = 0 := by
         apply Subtype.val_injective

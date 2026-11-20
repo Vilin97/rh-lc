@@ -46,7 +46,8 @@ theorem HasWt.sum {ι : Type*} (s : Finset ι) {F : ι → MvPowerSeries Z k}
     (h : ∀ i ∈ s, HasWt v r w (F i)) : HasWt v r w (∑ i ∈ s, F i) := by
   rw [hasWt_iff]
   intro A
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact v.map_le_sum fun i hi => (hasWt_iff.1 (h i hi)) A
 
 theorem HasWt.mul (hf : HasWt v r w1 f) (hg : HasWt v r w2 g) : HasWt v r (w1 + w2) (f * g) := by
@@ -222,7 +223,8 @@ theorem hasWt_sum_pow_sub {ι : Type*} {l e : ℕ} (hl : l.Prime) (hv : v (l : k
 theorem coeff_sum_C_mul_X_pow [Fintype Z] [DecidableEq Z] (y : Z → k) (M : ℕ) (B : Z →₀ ℕ) :
     coeff B (∑ d, C (y d) * X d ^ M : MvPowerSeries Z k)
       = ∑ d, if B = Finsupp.single d M then y d else 0 := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun d _ => ?_
   rw [coeff_C_mul, coeff_X_pow]
   split_ifs <;> simp

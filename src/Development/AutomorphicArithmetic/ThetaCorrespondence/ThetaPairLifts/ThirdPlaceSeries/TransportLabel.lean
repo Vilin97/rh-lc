@@ -36,7 +36,8 @@ theorem is_split_of_hk3_good_transport_label : GlobalTheory.Published.Automorphi
     intro k ek k1 k2 g
     subst ek
     have hr := hA.real (D.nd.mu i) hμ j φ
-    rw [hr g, ← map_smul, ← hc, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hr g, ← map_smul, ← hc, map_sum]
     refine Finset.sum_congr rfl fun γ hγ => ?_
     rw [hr, ← mul_assoc, map_mul, hpre γ hγ]
   have hty : (P.M.loc i).real (hj ▸ φ) ∈ NG.TypeSp (P.M.loc i).wt.ρ (P.M.loc i).J (P.M.loc i).χ := by

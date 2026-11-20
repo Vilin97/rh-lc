@@ -40,7 +40,8 @@ theorem prj_perp {y : S.V} (hy : ∀ a, S.hT (e a) y = 0 ∧ S.hT (f a) y = 0) :
 
 theorem pair_prj {y : S.V} (hy : ∀ a, S.hT (e a) y = 0 ∧ S.hT (f a) y = 0) (x : S.V) :
     S.hT (prj e f x) y = S.hT x y := by
-  rw [prj_apply]; simp [map_sub, map_sum, (hy _).1, (hy _).2]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [prj_apply]; simp [map_sub, map_sum, (hy _).1, (hy _).2]
 
 include hee hef in
 theorem prj_spanE {s : S.V} (hs : s ∈ Submodule.span E (Set.range e)) : prj e f s = 0 := by

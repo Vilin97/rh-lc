@@ -95,7 +95,8 @@ theorem algHom_matrix_mul_leftMulMatrix (e : Basis ι R S) (P : ι → (S →ₐ
     (Matrix.of fun j i => P j (e i)) * (Algebra.leftMulMatrix e x).map (algebraMap R L) =
       Matrix.diagonal (fun j => P j x) * Matrix.of fun j i => P j (e i) := by
   ext j k
-  rw [Matrix.diagonal_mul, Matrix.of_apply, ← map_mul, ← e.sum_repr (x * e k), map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.diagonal_mul, Matrix.of_apply, ← map_mul, ← e.sum_repr (x * e k), map_sum,
     Matrix.mul_apply]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_smul, Algebra.smul_def, Matrix.map_apply, Algebra.leftMulMatrix_eq_repr_mul,

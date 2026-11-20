@@ -55,7 +55,8 @@ theorem lamBd : LamBd := by
   have htr : ∀ X : Matrix (Fin d.n) (Fin d.n) E,
       Matrix.trace (incM F X) = inclR (AF F) (Matrix.trace X) := by
     intro X
-    simp [incM, Matrix.trace, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [incM, Matrix.trace, map_sum]
   have hχF : ∀ γ ∈ nF σ d.Y d.b, χ γ = 1 := by
     intro γ hγ
     obtain ⟨G0, hG0⟩ := (mem_nF_iff γ).1 hγ

@@ -99,7 +99,8 @@ variable {f}
 def Cc.δ {M : PMod R} {U : Scheme.{0}} {π : U ⟶ X} {p : ℕ} : Cc f M π p →+ Cc f M π (p + 1) where
   toFun c := ⟨fun W x => ∑ i : Fin (p + 1), (-1 : ℤ) ^ (i : ℕ) • c.1 W (x.face i), by
     intro W' W k x
-    simp only [rs, map_sum, map_zsmul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [rs, map_sum, map_zsmul]
     exact Finset.sum_congr rfl fun i _ => congrArg _ (c.2 W' W k _)⟩
   map_zero' := by ext W x; simp
   map_add' a b := by ext W x; simp [Finset.sum_add_distrib]

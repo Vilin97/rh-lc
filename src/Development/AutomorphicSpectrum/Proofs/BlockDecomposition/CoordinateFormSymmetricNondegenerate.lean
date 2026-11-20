@@ -38,7 +38,8 @@ theorem traceGram_det_ne_zero {F E : Type} [Field F] [NumberField F] [Field E] [
     intro k
     have := congrFun hmul k
     simp only [Matrix.mulVec, dotProduct, Matrix.of_apply, Pi.zero_apply] at this
-    rw [hy, map_sum, Finset.mul_sum, map_sum, ← this]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hy, map_sum, Finset.mul_sum, map_sum, ← this]
     refine Finset.sum_congr rfl fun l _ => ?_
     have hsm : σ (v l • b l) = v l • σ (b l) := by
       rw [Algebra.smul_def, map_mul, AlgHom.commutes, ← Algebra.smul_def]
@@ -46,7 +47,8 @@ theorem traceGram_det_ne_zero {F E : Type} [Field F] [NumberField F] [Field E] [
   have hz : ∀ x, Algebra.traceForm F E (σ y) x = 0 := by
     intro x
     rw [← b.sum_repr x]
-    simp only [map_sum, map_smul, Algebra.traceForm_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, Algebra.traceForm_apply]
     refine Finset.sum_eq_zero fun k _ => ?_
     rw [mul_comm (σ y), hk, smul_zero]
   have hσy : σ y = 0 := (traceForm_nondegenerate F E).1 _ hz

@@ -52,7 +52,8 @@ private theorem fin_quot (A B : Type) [CommRing A] [IsDomain A] [IsDiscreteValua
       have hk : ∑ i, Ideal.Quotient.mk (maximalIdeal A) (d i) •
           (i : B ⧸ (maximalIdeal A • ⊤ : Submodule A B)) = 0 := by
         have h2 := congrArg (Submodule.mkQ (maximalIdeal A • ⊤ : Submodule A B)) hsum'
-        simp only [map_sum, map_zero, map_smul, Submodule.mkQ_apply] at h2
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, map_zero, map_smul, Submodule.mkQ_apply] at h2
         rw [← h2]
         refine Finset.sum_congr rfl fun i _ => ?_
         rw [← hb i]

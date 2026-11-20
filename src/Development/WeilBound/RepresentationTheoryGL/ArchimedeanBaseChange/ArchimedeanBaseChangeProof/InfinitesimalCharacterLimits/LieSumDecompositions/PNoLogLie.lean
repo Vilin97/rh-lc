@@ -73,14 +73,16 @@ theorem lie_Zr (r s : ℕ) : lie E (r + s) (Zr (r + s) r) =
   classical
   simp only [Tr1, ← Finset.sum_add_distrib, Eop_add_Eop_conj]
   rw [Finset.sum_comm]
-  simp only [← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← map_sum]
   have h1 : ∑ w : InfinitePlace E, atEmb w.embedding (1 : ℂ) = (1 : Cinf E) := by
     have e : ∀ w : InfinitePlace E, atEmb w.embedding (1 : ℂ) = Pi.single w ((fun _ => (1 : ℂ)) w) := by
       intro w; simp [atEmb, InfinitePlace.mk_embedding]
     simp only [e]
     exact Finset.univ_sum_single _
   rw [h1]
-  simp only [lieS_apply, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [lieS_apply, ← map_sum]
   congr 1
   funext a b
   simp only [Zr, toL, Finset.sum_apply, Matrix.of_symm_apply, Matrix.single_apply]

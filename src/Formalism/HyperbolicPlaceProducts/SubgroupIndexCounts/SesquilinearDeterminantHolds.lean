@@ -19,12 +19,14 @@ lemma row_sq_le (B : V₁ →ₗ[ℂ] V₂ →ₗ⋆[ℂ] ℂ) (c : ℝ) (hB : �
   set S : ℝ := ∑ l, ‖a l‖ ^ 2 with hS
   have hS0 : 0 ≤ S := Finset.sum_nonneg fun l _ => by positivity
   have h1 : B x y = (S : ℂ) := by
-    rw [hy, map_sum, hS]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hy, map_sum, hS]
     push_cast
     refine Finset.sum_congr rfl fun l _ => ?_
     rw [LinearMap.map_smulₛₗ, smul_eq_mul, Complex.conj_mul']
   have h2 : ‖y‖ ^ 2 = S := by
-    rw [@norm_sq_eq_re_inner ℂ, hy, hf.inner_sum, hS, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [@norm_sq_eq_re_inner ℂ, hy, hf.inner_sum, hS, map_sum]
     refine Finset.sum_congr rfl fun l _ => ?_
     rw [Complex.conj_mul']
     norm_cast
@@ -84,7 +86,8 @@ lemma bmat_eq_of_decomp (B : V₁ →ₗ[ℂ] V₂ →ₗ⋆[ℂ] ℂ) {m : ℕ}
     (Matrix.of fun i j => B (u i) (w j)) = A * (Matrix.of fun k l => B (e k) (f l)) * Cᴴ := by
   ext i j
   rw [Matrix.of_apply, hu i, hw j, Matrix.mul_apply]
-  simp only [map_sum, LinearMap.map_smul, LinearMap.sum_apply, LinearMap.smul_apply, LinearMap.map_smulₛₗ,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.map_smul, LinearMap.sum_apply, LinearMap.smul_apply, LinearMap.map_smulₛₗ,
     Matrix.mul_apply, Matrix.of_apply, Matrix.conjTranspose_apply, smul_eq_mul, Finset.sum_mul, Finset.mul_sum,
     starRingEnd_apply, RingHom.id_apply]
   refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun l _ => ?_
@@ -112,7 +115,8 @@ theorem sesquilinear_determinant_holds : Formalism.SLP.SesqDet := by
         · ext i
           simp only [Matrix.mulVec, dotProduct, Matrix.of_apply, Pi.zero_apply]
           have := congrArg (B (u i)) hg
-          simp only [map_sum, LinearMap.map_smulₛₗ, smul_eq_mul, map_zero, starRingEnd_apply] at this
+          set_option synthInstance.maxHeartbeats 100000 in
+            simp only [map_sum, LinearMap.map_smulₛₗ, smul_eq_mul, map_zero, starRingEnd_apply] at this
           rw [← this]
           exact Finset.sum_congr rfl fun j _ => mul_comm _ _
       rw [hdet, norm_zero]
@@ -124,7 +128,8 @@ theorem sesquilinear_determinant_holds : Formalism.SLP.SesqDet := by
       ext j
       simp only [Matrix.vecMul, dotProduct, Matrix.of_apply, Pi.zero_apply]
       have := congrArg (fun x => B x (w j)) hg
-      simp only [map_sum, LinearMap.map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, LinearMap.map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
         map_zero, LinearMap.zero_apply] at this
       exact this
     rw [hdet, norm_zero]

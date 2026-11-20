@@ -105,7 +105,8 @@ private theorem exists_linearEquiv_diagonal_chars_of_eigenbasis {G : Type} [Grou
     have hli := linearIndependent_monoidHom G ℂ
     set l : (G →* ℂ) →₀ ℂ := ∑ j, Finsupp.single (ψ j) 1 - ∑ i, Finsupp.single (χ' i) 1 with hl
     have hlc : Finsupp.linearCombination ℂ (fun f : G →* ℂ => (f : G → ℂ)) l = 0 := by
-      rw [hl, map_sub, map_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hl, map_sub, map_sum, map_sum]
       simp only [Finsupp.linearCombination_single, one_smul]
       funext g
       simp only [Pi.sub_apply, Finset.sum_apply, Pi.zero_apply]

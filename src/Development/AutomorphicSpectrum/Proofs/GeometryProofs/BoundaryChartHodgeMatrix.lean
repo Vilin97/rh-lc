@@ -323,7 +323,8 @@ theorem local_marking {Xo : Moduli D l} {σ : KA l →+* ℂ} {n a : ℕ} (C : B
         simp [Finset.sum_apply, Pi.single_apply]
       show hl z (P₀ z x) = _
       conv_lhs => rw [this]
-      simp only [map_sum, map_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul]
     simp only [hsum]
     exact DifferentiableOn.fun_sum fun k _ =>
       DifferentiableOn.smul ((differentiableOn_pi.1 (hP.2 x)) k) (hlhol _)

@@ -94,7 +94,8 @@ theorem inj_of_li {ι : Type*} (b : Basis ι K V) (f : V →ₛₗ[σ] E)
   have e := b.linearCombination_repr v
   rw [Finsupp.linearCombination_apply, Finsupp.sum] at e
   have h3 : ∑ i ∈ (b.repr v).support, σ (b.repr v i) • f (b i) = f v := by
-    rw [← congrArg f e, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← congrArg f e, map_sum]
     simp only [map_smulₛₗ]
   have hall := linearIndependent_iff'.1 h _ _ (h3.trans hv)
   have hr : b.repr v = 0 := by
@@ -135,7 +136,8 @@ theorem iC_cpt_eq (t : Bs.Tup) (x : Fin ((lv (fc X.zs) b).dQ t) → K) :
     funext i
     simp [Finset.sum_apply, Pi.single_apply]
   conv_rhs => rw [hx]
-  simp only [map_sum, map_smul, map_smulₛₗ, CxData.iC, lin, Fintype.linearCombination_apply, cpt]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, map_smulₛₗ, CxData.iC, lin, Fintype.linearCombination_apply, cpt]
 
 theorem tC_cpt_eq (j : Bs.J) (t : Bs.Tup) (x : Fin ((lv (fc X.zs) b).dZ j t) → K) :
     X.tC cr b j t (cpt Bs.v0.embedding x) = X.θ' j t (X.jL j t (cr.toL X.zs b j t x)) := by
@@ -143,7 +145,8 @@ theorem tC_cpt_eq (j : Bs.J) (t : Bs.Tup) (x : Fin ((lv (fc X.zs) b).dZ j t) →
     funext i
     simp [Finset.sum_apply, Pi.single_apply]
   conv_rhs => rw [hx]
-  simp only [map_sum, map_smul, map_smulₛₗ, CxData.tC, lin, Fintype.linearCombination_apply, cpt]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, map_smulₛₗ, CxData.tC, lin, Fintype.linearCombination_apply, cpt]
 
 end CxData
 

@@ -20,7 +20,8 @@ theorem isBaseChange_subtype_of_basis_after_extension : ∀ (S A EE O W RW D Y :
   have hjsum : ∀ e : Fin (d * r) → EE, ∀ v : Fin (d * r) → D,
       jD (∑ i, e i • v i) = ∑ i, ι (e i) • jD (v i) := by
     intro e v
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun i _ => hjD _ _
 
   have hspan : ∀ y : D, y ∈ Submodule.span EE (Set.range x) := by
@@ -49,7 +50,8 @@ theorem isBaseChange_subtype_of_basis_after_extension : ∀ (S A EE O W RW D Y :
       ext i m
       have h1 : jD (x i) = ∑ m, c ((C * Matrix.of B) i m) • jD (x m) := by
         conv_lhs => rw [hx i, hjsum]
-        simp only [Matrix.mul_apply, map_sum, map_mul, Finset.sum_smul, Matrix.of_apply]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [Matrix.mul_apply, map_sum, map_mul, Finset.sum_smul, Matrix.of_apply]
         rw [Finset.sum_comm]
         refine Finset.sum_congr rfl fun l _ => ?_
         rw [hB l, Finset.smul_sum, ← hCC]
@@ -147,7 +149,8 @@ theorem isBaseChange_subtype_of_basis_after_extension : ∀ (S A EE O W RW D Y :
       obtain ⟨e, he, rfl⟩ := hnf t
       choose w hw using he
       have h1 : ∑ i, e i • x i = 0 := by
-        simpa [map_sum, LinearMap.liftBaseChange_tmul] using ht
+        set_option synthInstance.maxHeartbeats 100000 in
+          simpa [map_sum, LinearMap.liftBaseChange_tmul] using ht
       have h2 : (0 : Y) = ∑ i, c (w i) • jD (x i) := by
         simp only [hw]
         rw [← hjsum, h1, map_zero]

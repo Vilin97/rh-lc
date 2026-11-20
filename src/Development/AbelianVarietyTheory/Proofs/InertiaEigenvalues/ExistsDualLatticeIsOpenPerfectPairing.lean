@@ -83,7 +83,8 @@ theorem exists_dualLat_isOpen : ∀ {G : Type} [Group G] [TopologicalSpace G] {Q
         exact h2.symm
       obtain ⟨c, hcx⟩ : ∃ c : Module.Free.ChooseBasisIndex O LT.T → O, x = ∑ i, c i • e i := ⟨_, hx'⟩
       refine ⟨∑ i, c i * a i, ?_⟩
-      rw [hcx, map_sum, LinearMap.sum_apply, map_sum (algebraMap O LL)]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hcx, map_sum, LinearMap.sum_apply, map_sum (algebraMap O LL)]
       refine Finset.sum_congr rfl (fun i _ => ?_)
       rw [← algebraMap_smul LL (c i) (e i), map_smul, LinearMap.smul_apply, ← ha i,
         smul_eq_mul, map_mul]
@@ -100,7 +101,8 @@ theorem exists_dualLat_isOpen : ∀ {G : Type} [Group G] [TopologicalSpace G] {Q
       have hy' : y = ∑ i, a i • bf i := by
         apply hφinj
         funext j
-        rw [hφ, hφ, map_sum, ← ha j]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [hφ, hφ, map_sum, ← ha j]
         simp_rw [← algebraMap_smul LL (a _) (bf _), map_smul, hφf, Pi.single_apply, smul_eq_mul,
           mul_ite, mul_one, mul_zero]
         simp

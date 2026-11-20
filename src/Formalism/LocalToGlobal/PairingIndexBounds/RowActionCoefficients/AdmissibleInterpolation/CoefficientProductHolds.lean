@@ -66,7 +66,8 @@ lemma rename_prod_expand [DecidableEq B] (em : B → σ → τ) (F : B → MvPol
       = ∏ b, ∑ m ∈ (F b).support, rename (em b) (monomial m (AddMonoidAlgebra.coeff (F b) m)) := by
         refine Finset.prod_congr rfl fun b _ => ?_
         conv_lhs => rw [(F b).as_sum]
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
     _ = ∑ p ∈ Fintype.piFinset (fun b => (F b).support),
           ∏ b, rename (em b) (monomial (p b) (AddMonoidAlgebra.coeff (F b) (p b))) := Finset.prod_univ_sum _ _
     _ = _ := Finset.sum_congr rfl fun p _ => by

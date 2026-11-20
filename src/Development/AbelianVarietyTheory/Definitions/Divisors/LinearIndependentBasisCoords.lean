@@ -46,7 +46,8 @@ theorem cnrm_one (x : V) : cnrm h σ (fun _ : Unit => 1) (fun _ => x) = h.nrm σ
 
 theorem csq_comb {κ : Type*} [Fintype κ] (c : ι → ℂ) (a : ι → κ → K) (b : κ → V) :
     csq h σ c (fun i => ∑ k, a i k • b k) = csq h σ (fun k => ∑ i, c i * σ (a i k)) b := by
-  simp only [csq, h.form_sum_left, h.form_sum_right, h.form_smul_left, h.smul_right, map_sum, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [csq, h.form_sum_left, h.form_sum_right, h.form_smul_left, h.smul_right, map_sum, map_mul,
     Finset.mul_sum, Finset.sum_mul]
   refine congrArg _ ?_
   simp only [← Fintype.sum_prod_type']
@@ -166,7 +167,8 @@ variable {ι : V →ₛₗ[j] V'} (hι : IsExtension ι)
 def IsExtension.basis {n : ℕ} (b : Module.Basis (Fin n) K V) : Module.Basis (Fin n) E V' :=
   Module.Basis.mk (hι.indep n b b.linearIndependent) (hι.span.ge.trans (Submodule.span_le.2 (by
     rintro _ ⟨x, rfl⟩
-    rw [← b.sum_repr x, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← b.sum_repr x, map_sum]
     exact Submodule.sum_mem _ fun i _ => by
       rw [map_smulₛₗ]; exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩))))
 
@@ -191,7 +193,8 @@ theorem form_extend (h : HermFam K V) (τ : E →+* ℂ) (x y : V) :
     rw [← hι.basis_apply, ← hι.basis_apply]
     exact form_ofGram _ _ _ τ i k
   rw [← b.sum_repr x, ← b.sum_repr y]
-  simp only [map_sum, map_smulₛₗ, HermFam.form_sum_left, HermFam.form_sum_right, HermFam.form_smul_left,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smulₛₗ, HermFam.form_sum_left, HermFam.form_sum_right, HermFam.form_smul_left,
     HermFam.smul_right, e, RingHom.comp_apply]
 
 theorem nrm_extend (h : HermFam K V) (τ : E →+* ℂ) (x : V) : (extend hι h).nrm τ (ι x) = h.nrm (τ.comp j) x :=

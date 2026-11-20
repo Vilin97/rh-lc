@@ -66,7 +66,8 @@ theorem jetN_psum {n g : ℕ} (m : ℕ) (I : Finset (Fin n)) (j : Fin g) :
     funext v
     rw [psumL_apply, Finset.sum_apply]; rfl
   rw [jetN, this, jetOf_sum_coord, renN, GermD.jetMap_mk]
-  simp only [map_sum, MvPolynomial.aeval_X, Equiv.symm_apply_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, MvPolynomial.aeval_X, Equiv.symm_apply_apply]
 
 theorem sameSum_of_factor {X Y : Scheme.{0}} {K K' J : Type} [Fintype K] [Fintype K'] [Fintype J] [DecidableEq J]
     (φ : K → (Y ⟶ X)) (ε : K → ℤ) (φ' : K' → (Y ⟶ X)) (ε' : K' → ℤ) (F : J → (Y ⟶ X)) (σ : K → J) (σ' : K' → J)

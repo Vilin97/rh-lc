@@ -150,7 +150,8 @@ theorem nonempty_wCmp [NeZero n] (Dc : Disc R b₀ tS zS) (Mo : WN E zl) {ιdR :
       intro j hj
       have : (k - m).toNat + 1 ≤ j := by simpa using hj
       exact hm _ (by omega)
-    rw [hN, hsmul, finsum_eq_sum_of_support_subset (s := Finset.range ((k - m).toNat + 1)),
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hN, hsmul, finsum_eq_sum_of_support_subset (s := Finset.range ((k - m).toNat + 1)),
       finsum_eq_sum_of_support_subset (s := Finset.range ((k - m).toNat + 1)), map_sum]
     · simp only [map_smul, hN]
     · intro j hj

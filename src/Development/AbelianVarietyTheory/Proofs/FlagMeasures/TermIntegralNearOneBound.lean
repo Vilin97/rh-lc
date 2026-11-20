@@ -76,7 +76,8 @@ theorem hf_smulr (L : LocE F E) {n : ℕ} (H : Matrix (Fin n) (Fin n) E) (c : E)
 theorem hf_cj (L : LocE F E) {n : ℕ} (H : Matrix (Fin n) (Fin n) E) (hH : IsHerm L H) (a y : Fin n → E) :
     L.cj (hf L H a y) = hf L H y a := by
   have h : ∀ i j, L.cj (H i j) = H j i := fun i j => congrFun (congrFun hH j) i
-  simp only [hf, map_sum, map_mul, L.cj_cj, h]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hf, map_sum, map_mul, L.cj_cj, h]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 

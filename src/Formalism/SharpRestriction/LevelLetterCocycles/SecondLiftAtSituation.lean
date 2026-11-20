@@ -348,7 +348,8 @@ theorem second_lift_at_situation [NeZero n] (W : LocWach PD LL O v n) (hZ : TToo
       (fun c' => tL c' f₁) d) = liftCorrectionSum W T₂ s₁ σ (y f) (fun c' => ms c' f) (fun c' => tL c' f₁) d := by
     intro δ hδ
     unfold liftCorrectionSum
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun c hc => ?_
     have h1 : W.γD T₂ δ (liftCorrection W T₂ s₁ σ (y f) (fun c' => ms c' f) (fun c' => tL c' f₁) c) =
         liftCorrection W T₂ s₁ σ (y f) (fun c' => ms c' f) (fun c' => tL c' f₁) c := (hmhDL c hc f₁).2 δ hδ

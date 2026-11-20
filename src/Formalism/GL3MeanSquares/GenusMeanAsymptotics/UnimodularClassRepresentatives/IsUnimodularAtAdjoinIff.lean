@@ -232,7 +232,8 @@ theorem exists_vecSplit_ortho' {I : Submodule (𝓞 K) V} {I' : Submodule (𝓞 
     intro v
     refine ⟨b.repr v 0, ∑ j : Fin n, b.repr v j.succ • e' j, ?_⟩
     conv_lhs => rw [← b.sum_repr v]
-    rw [Fin.sum_univ_succ, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Fin.sum_univ_succ, map_sum]
     simp only [b, Basis.mk_apply, map_smul, hιe]
   refine ⟨⟨e 0, ι, hinj, ?_, hisom, horthι, hcover⟩, ?_, ?_⟩
   · rw [horth 0 0]

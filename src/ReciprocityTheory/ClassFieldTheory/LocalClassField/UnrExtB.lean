@@ -24,7 +24,8 @@ theorem norm_sum_eq_one {K : IntermediateField ℚ_[p] (PadicAlgCl p)} {ι : Typ
   rw [hs]
   refine le_antisymm (norm_le_one _) (not_lt.1 fun hlt => ?_)
   have h0 := (res_eq_zero_iff _).2 hlt
-  rw [map_sum] at h0
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum] at h0
   let c : ι → resK p K := fun j => ⟨res (b j), (mem_resK_iff K _).2 ⟨b j, hb j, rfl⟩⟩
   have h1 : ∑ j, c j • IsLocalRing.residue (Obar p) (ω j) = 0 := by
     rw [← h0]

@@ -103,7 +103,8 @@ private lemma lin_subst_lemma_3 {σ τ : Type} [Fintype σ] {a : σ → MvPowerS
   have ha : HasSubst a := ⟨fun s => by rw [ha0 s]; exact IsNilpotent.zero, fun _ => Set.toFinite _⟩
   have hR : Low 2 (f - ∑ s, coeff (Finsupp.single s 1) f • X s) := by
     apply low_two_of_lemma
-    · rw [← coeff_zero_eq_constantCoeff_apply, map_sub, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [← coeff_zero_eq_constantCoeff_apply, map_sub, map_sum]
       simp only [map_smul, coeff_zero_X, smul_zero, Finset.sum_const_zero, sub_zero]
       rw [coeff_zero_eq_constantCoeff_apply]
       exact hf0
@@ -112,10 +113,12 @@ private lemma lin_subst_lemma_3 {σ τ : Type} [Fintype σ] {a : σ → MvPowerS
   have hS := low_subst' (fun s => (low_one_iff _).2 (ha0 s)) hR
   have hsplit : subst a f = subst a (f - ∑ s, coeff (Finsupp.single s 1) f • X s) +
       ∑ s, coeff (Finsupp.single s 1) f • a s := by
-    rw [← coe_substAlgHom ha, map_sub, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← coe_substAlgHom ha, map_sub, map_sum]
     simp only [map_smul]
     simp only [coe_substAlgHom, subst_X ha, sub_add_cancel]
-  rw [hsplit, map_add, hS (Finsupp.single w 1) (by simp), zero_add, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hsplit, map_add, hS (Finsupp.single w 1) (by simp), zero_add, map_sum]
   simp only [map_smul, smul_eq_mul]
 
 theorem dLin_logOf (G : FGLaw S d) : ReciprocityTheory.ChartRestriction.G.TB.dLin (fun i => ReciprocityTheory.ChartRestriction.G.TB.LogPf.logOf G i) = 1 := by
@@ -258,8 +261,10 @@ theorem psTrunc_two_twist (G : FGLaw S d) (c : Fin d → Fin d → S) :
   have hcoe : ((1 + ∑ i, ∑ l, MvPolynomial.C (c i l) * (MvPolynomial.X ((0 : Fin 2), i) * MvPolynomial.X ((1 : Fin 2), l)) :
         MvPolynomial (Fin 2 × Fin d) S) : MvPowerSeries (Fin 2 × Fin d) S) =
       1 + ∑ i, ∑ l, c i l • (X ((0 : Fin 2), i) * X ((1 : Fin 2), l)) := by
-    rw [← MvPolynomial.coeToMvPowerSeries.ringHom_apply, map_add, map_one, map_sum]
-    simp only [map_sum, map_mul, MvPolynomial.coeToMvPowerSeries.ringHom_apply, MvPolynomial.coe_C,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← MvPolynomial.coeToMvPowerSeries.ringHom_apply, map_add, map_one, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, MvPolynomial.coeToMvPowerSeries.ringHom_apply, MvPolynomial.coe_C,
       MvPolynomial.coe_X, MvPowerSeries.smul_eq_C_mul]
   have hdiff : Low 3 (CIndFrFix.expP (CIndFrFix.bilL G c) - ((1 + ∑ i, ∑ l, MvPolynomial.C (c i l) * (MvPolynomial.X ((0 : Fin 2), i) * MvPolynomial.X ((1 : Fin 2), l)) :
         MvPolynomial (Fin 2 × Fin d) S) : MvPowerSeries (Fin 2 × Fin d) S)) := by
@@ -309,11 +314,13 @@ theorem psTrunc_two_twist (G : FGLaw S d) (c : Fin d → Fin d → S) :
   · rw [if_pos hd, ← MvPolynomial.coeff_coe]
     have h := hdiff e (by omega)
     rwa [map_sub, sub_eq_zero] at h
-  · rw [if_neg hd, ← MvPolynomial.coeff_coe, hcoe, map_add, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [if_neg hd, ← MvPolynomial.coeff_coe, hcoe, map_add, map_sum]
     have h2 : 2 < e.degree := by omega
     have hz : ∀ a b : Fin 2 × Fin d, coeff e (X a * X b : MvPowerSeries (Fin 2 × Fin d) S) = 0 :=
       fun a b => hXX a b e h2
-    simp only [map_sum, map_smul, hz, smul_zero, Finset.sum_const_zero, add_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, hz, smul_zero, Finset.sum_const_zero, add_zero]
     rw [coeff_one, if_neg]
     rintro rfl
     simp at hd

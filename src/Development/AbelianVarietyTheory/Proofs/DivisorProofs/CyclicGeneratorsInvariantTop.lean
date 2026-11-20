@@ -101,7 +101,8 @@ theorem GlobalTheory.DetInv.exists_generators_of_charpoly_eq_pow : ∀ (k : Type
     obtain ⟨p, hp⟩ := hgen ((LinearMap.range t').mkQ v)
     refine ⟨∑ j, aeval T' (p j) (xs j), U.sum_mem fun j _ => hUa _ _ (hU j), ?_⟩
     have h0 : (LinearMap.range t').mkQ (v - ∑ j, aeval T' (p j) (xs j)) = 0 := by
-      rw [map_sub, map_sum, hp, sub_eq_zero]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, map_sum, hp, sub_eq_zero]
       exact Finset.sum_congr rfl fun j _ => by rw [← hmk, hxs]
     rw [Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero] at h0
     obtain ⟨w, hw⟩ := h0

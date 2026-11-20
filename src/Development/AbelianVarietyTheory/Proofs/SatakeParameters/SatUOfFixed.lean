@@ -106,7 +106,8 @@ theorem satU_of_fixed : ∀ (L : Type) [Field L] [NumberField L] [IsCMField L] (
       show (∑ γ ∈ R x, ρ γ) (NG.rt L n b f₀) ∈ W'
       rw [LinearMap.sum_apply]
       have e : ∑ γ ∈ R x, ρ γ (NG.rt L n b f₀) = NG.rt L n b (∑ γ ∈ R x, NG.rt L n γ f₀) := by
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         exact Finset.sum_congr rfl fun γ hγ' => hrtc f₀ γ b (hγ γ hγ') hb
       rw [e, hχ x hx, map_smul]
       exact W'.smul_mem _ (hgen b hb)

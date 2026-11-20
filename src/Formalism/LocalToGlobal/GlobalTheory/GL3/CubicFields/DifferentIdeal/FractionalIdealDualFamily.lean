@@ -129,7 +129,8 @@ lemma trace_dual_of_functional (K E : Type) [Field K] [Field E] [NumberField K] 
     refine Finset.sum_congr rfl fun l _ => ?_
     rw [← algebraMap_smul K (c l), hc l, ← algebraMap_smul K (d : 𝓞 K), smul_smul]
   have hf := congrArg (fun z => algebraMap (𝓞 K) K (f z)) hdy
-  simp only [map_smul, map_sum, smul_eq_mul, map_mul] at hf
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_smul, map_sum, smul_eq_mul, map_mul] at hf
   have hd0 : algebraMap (𝓞 K) K (d : 𝓞 K) ≠ 0 := by
     rw [Ne, ← map_zero (algebraMap (𝓞 K) K), (IsFractionRing.injective (𝓞 K) K).eq_iff]
     exact nonZeroDivisors.ne_zero d.2
@@ -183,10 +184,12 @@ theorem mem_mmR_iff (K E : Type) [Field K] [Field E] [NumberField K] [NumberFiel
     rw [← hdb]
     have h1 : ∀ l, ψ k (e l) = ∑ j, φM (Algebra.traceForm K E (b j) (e l)) * ψ k (g j) := fun l => by
       conv_lhs => rw [hid (e l) (he l)]
-      rw [map_sum]; simp only [hψK]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]; simp only [hψK]
     have h2 : ∀ j, ψ i (b j) = ∑ l, φM (Algebra.traceForm K E (b j) (e l)) * ψ i (e' l) := fun j => by
       conv_lhs => rw [hbexp j]
-      rw [map_sum]; simp only [hψK]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]; simp only [hψK]
     simp only [h1, h2, Finset.sum_mul]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun l _ => Finset.sum_congr rfl fun j _ => ?_

@@ -208,7 +208,8 @@ theorem applyAt0_mul {A1 A2 : Set Lt} (hA : Disjoint A1 A2) {T1 T2 : MvPowerSeri
     simp only [MvPolynomial.monomial_mul]
   rw [hprod]
   conv_rhs => rw [e1, e2]
-  simp only [← applyHom_apply, map_sum, Finset.sum_mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← applyHom_apply, map_sum, Finset.sum_mul_sum]
   refine Finset.sum_congr rfl fun μ hμ => Finset.sum_congr rfl fun μ' hμ' => ?_
   simp only [applyHom_apply, applyAt0_monomial]
   exact applyTerm_mul l hA h1 h2 (hv1 μ hμ) (hv2 μ' hμ') _ _

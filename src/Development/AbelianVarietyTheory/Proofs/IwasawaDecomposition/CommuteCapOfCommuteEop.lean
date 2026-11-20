@@ -48,7 +48,8 @@ theorem commute_cap_lieS (τ : E →+* ℂ) (u : ℂ) (i j : Fin a) (x : Cinf E)
     refine Finset.sum_congr rfl fun w _ => ?_
     unfold atEmb
     rw [InfinitePlace.mk_embedding, if_pos rfl]
-  rw [hx, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hx, map_sum]
   refine Commute.sum_right _ _ _ fun w _ => ?_
   rw [atEmb_eq, map_add, map_smul, map_smul, lieS_atEmb_one, lieS_atEmb_I]
   exact (((commute_cap_Eop τ _ u i j).add_right (commute_cap_Eop τ _ u i j)).smul_right _).add_right
@@ -56,7 +57,8 @@ theorem commute_cap_lieS (τ : E →+* ℂ) (u : ℂ) (i j : Fin a) (x : Cinf E)
 
 theorem commute_cap_lie (τ : E →+* ℂ) (u : ℂ) (X : Lie E a) : Commute (cap τ u) (lie E a X) := by
   have hX : lie E a X = ∑ i, ∑ j, lieS E a i j (X i j) := by
-    simp only [lieS_apply, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [lieS_apply, ← map_sum]
     exact congrArg _ (Matrix.matrix_eq_sum_single (Matrix.of X))
   rw [hX]
   exact Commute.sum_right _ _ _ fun i _ => Commute.sum_right _ _ _ fun j _ => commute_cap_lieS τ u i j _

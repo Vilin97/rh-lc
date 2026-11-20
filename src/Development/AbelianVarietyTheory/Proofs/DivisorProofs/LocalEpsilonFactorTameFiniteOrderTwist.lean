@@ -116,10 +116,12 @@ theorem exists_gaussSumAt_dvd {K : Type} [Field K] [NumberField K] (σ : K →+*
   have hgi : IsIntegral ℤ (∑ y, X y) := IsIntegral.sum _ fun y _ => hXi y
   have hgi' : IsIntegral ℤ (∑ y, (X y)⁻¹) := IsIntegral.sum _ fun y _ => hXi' y
   have hσg : σ (∑ y, X y) = gaussSumAt ξ w 1 c := by
-    rw [map_sum, gaussSumAt, finsum_eq_sum_of_fintype]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, gaussSumAt, finsum_eq_sum_of_fintype]
     exact Finset.sum_congr rfl fun y _ => (hX y).1
   have hσg' : σ (∑ y, (X y)⁻¹) = starRingEnd ℂ (gaussSumAt ξ w 1 c) := by
-    rw [← hσg, map_sum, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hσg, map_sum, map_sum, map_sum]
     exact Finset.sum_congr rfl fun y _ => by rw [map_inv₀, Complex.inv_eq_conj (hnorm y)]
   have hu : IsUnitary ξ := isUnitary_of_orderDvd hN hξN
   have hG := GlobalTheory.GaussMod.gaussSumAt_normSq ξ w 1 c one_ne_zero hξ hu (valuation_unif_pow w _)

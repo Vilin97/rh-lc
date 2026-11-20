@@ -261,7 +261,8 @@ theorem sigR_hR (h : IsCMExt F E σ) (hJ : IsHermND σ J) (x y : Fin M → R ⊗
     intro i j
     show (1 : R) ⊗ₜ[F] σ (J j i) = (1 : R) ⊗ₜ[F] J i j
     rw [hJ.1]
-  simp only [hR, Formalism.UG.hform, map_sum, map_mul, sigR_sigR R h]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hR, Formalism.UG.hform, map_sum, map_mul, sigR_sigR R h]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   rw [hJ']

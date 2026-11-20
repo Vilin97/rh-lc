@@ -515,7 +515,8 @@ theorem hur_PhAt {X : Sys p} (Y : Pend X) (h : BeJetInt p Y.be) (j : ℕ) (v : X
   classical
   unfold Pend.PhAt
   refine ⟨hur_sum (Wr p) _ _ fun e _ => (hurwitz_substitute_two_series h _ _).1, ?_⟩
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_eq_zero fun e _ => (hurwitz_substitute_two_series h _ _).2
 
 theorem hur_coordZA {X : Sys p} (Y : Pend X) (j : ℕ) (e : X.EA j ⊕ X.EA j) :

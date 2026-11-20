@@ -22,7 +22,8 @@ theorem pullCol_res {B Y : Scheme.{0}} (π : Y ⟶ B) {E : B.Modules} {U : B.Ope
     (e : Fin m → Γ(E, U)) {V V' : Y.Opens} (hV : V ≤ π ⁻¹ᵁ U) (h : V' ≤ V)
     (M : Matrix (Fin m) (Fin m) Γ(Y, V)) (j : Fin m) :
     resM _ h (pullCol π e hV M j) = pullCol π e (h.trans hV) (M.map (resG Y h)) j := by
-  simp only [pullCol, map_sum, resM_smul, Matrix.map_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [pullCol, map_sum, resM_smul, Matrix.map_apply]
   refine Finset.sum_congr rfl fun l _ => ?_
   exact congrArg (resG Y h (M l j) • ·) (QCoh.res_pullbackSections π E hV h (e l))
 

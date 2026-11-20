@@ -53,7 +53,8 @@ theorem hform_gram {K : Type} [Field K] [StarRing K] {n : Type} [Fintype n] [Dec
     funext k
     simp [Finset.sum_apply, Pi.single_apply]
   conv_lhs => rw [hx x, hx y]
-  simp only [map_sum, map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, map_smul, smul_eq_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, map_smul, smul_eq_mul,
     Finset.mul_sum]
   unfold Formalism.UG.hform Formalism.UG.gram
   conv_lhs => rw [Finset.sum_comm]

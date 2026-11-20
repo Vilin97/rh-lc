@@ -134,7 +134,8 @@ private theorem bc_eq (τ : ι) (Q : Pol ι N) :
     · simp
     · intro s _ hs; simp [hs]
     · simp
-  rw [formDeg, h, Finset.sum_mul, coeff_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [formDeg, h, Finset.sum_mul, coeff_sum, map_sum]
   congr 1
   refine Finset.sum_congr rfl fun e he => ?_
   split_ifs
@@ -185,7 +186,8 @@ private theorem rename_sum (τ : ι) {σ : ι} {a b : Fin N} (hab : (b : ℕ) = 
         if e.1 = τ then ∏ e' ∈ ((pairs ι N).erase (σ, a, b)).erase e, rt e' else 0) =
       ∑ e ∈ (pairs ι N).erase (σ, a, b),
         if e.1 = τ then ∏ e' ∈ ((pairs ι N).erase (σ, a, b)).erase e, rt e' else 0 := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_bij' (fun e _ => sw σ a b e) (fun e _ => sw σ a b e) (fun e he => sw_mem hab he)
     (fun e he => sw_mem hab he) (fun e _ => sw_invol σ a b e) (fun e _ => sw_invol σ a b e)
     (fun e _ => ?_)
@@ -218,7 +220,8 @@ private theorem rename_pSum (τ σ : ι) (a b : Fin N) (k : ℕ) :
     rename (swapAt σ a b) (pSum τ k : Pol ι N) = pSum τ k := by
   by_cases h : τ = σ
   · subst h
-    simp only [pSum, map_sum, map_pow, rename_X, swapAt, if_true]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [pSum, map_sum, map_pow, rename_X, swapAt, if_true]
     exact Equiv.sum_comp (Equiv.swap a b) fun i => (X (τ, i) : Pol ι N) ^ k
   · simp [pSum, swapAt, h]
 
@@ -233,7 +236,8 @@ private theorem apolar_pSum (τ : ι) (G : Pol ι N) : apolar (∏ e ∈ pairs �
   have hL (P : Pol ι N) : L P = degFl ι N (pSum τ 2 * P) * (superFact N : ℝ) ^ Fintype.card ι := by
     rw [deg_eq, div_mul_cancel₀ _ hc]; rfl
   show L G = 0
-  rw [← sum_homogeneousComponent G, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← sum_homogeneousComponent G, map_sum]
   refine Finset.sum_eq_zero fun k _ => ?_
   have hk := homogeneousComponent_isHomogeneous k G
   by_cases e : k < dimFl ι N
@@ -267,7 +271,8 @@ omit [Fintype ι] in
 private theorem pSum_eq (τ σ : ι) {a b : Fin N} (hab : a ≠ b) :
     (pSum τ 2 : Pol ι N) = mid (σ, a) (σ, b) (pSum τ 2) +
       C (if σ = τ then 1 / 2 else 0) * (X (σ, b) - X (σ, a)) ^ 2 := by
-  rw [← sub_eq_iff_eq_add', pSum, map_sum, ← Finset.sum_sub_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← sub_eq_iff_eq_add', pSum, map_sum, ← Finset.sum_sub_distrib]
   split_ifs with h
   · subst h
     have h2 : (C (1 / 2) : Pol ι N) * 2 = 1 := by

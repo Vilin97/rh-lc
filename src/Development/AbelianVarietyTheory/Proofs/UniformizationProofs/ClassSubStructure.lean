@@ -71,7 +71,8 @@ theorem exists_proj [Module.Finite ℤ X] [IsAlgClosed F] (hN : (N : F) ≠ 0) (
   have key : ∀ β, S β ((Nat.card (TorChar X F N) : F)⁻¹ • ∑ τ, (((evalChar F N α τ)⁻¹ : Fˣ) : F) • l τ v) =
       ((Nat.card (TorChar X F N) : F)⁻¹ * ∑ τ, ((Units.coeHom F).comp (evalChar F N β / evalChar F N α)) τ) • S β v :=
     fun β => by
-      rw [map_smul, map_sum, mul_smul, Finset.sum_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_smul, map_sum, mul_smul, Finset.sum_smul]
       refine congrArg _ (Finset.sum_congr rfl fun τ _ => ?_)
       rw [map_smul, hl, smul_smul, ← Units.val_mul, mul_comm, ← div_eq_mul_inv]
       rfl

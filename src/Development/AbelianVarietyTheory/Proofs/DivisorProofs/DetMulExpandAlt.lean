@@ -13,7 +13,8 @@ theorem det_mul_expand {V : Type} [inst : CommRing V] {m g : ℕ}
   let f : MultilinearMap V (fun _ : Fin m => Fin m → V) V :=
     (Matrix.detRowAlternating : (Fin m → V) [⋀^Fin m]→ₗ[V] V).toMultilinearMap
   have hf : ∀ A : Matrix (Fin m) (Fin m) V, Matrix.det A = f A := fun A => rfl
-  rw [hf, h, f.map_sum (fun i k => M i k • C k)]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hf, h, f.map_sum (fun i k => M i k • C k)]
   refine Finset.sum_congr rfl fun J _ => ?_
   rw [f.map_smul_univ (fun i => M i (J i)) (fun i => C (J i)), hf, smul_eq_mul]
   rfl

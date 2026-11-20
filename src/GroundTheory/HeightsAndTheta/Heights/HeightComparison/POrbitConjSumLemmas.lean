@@ -46,7 +46,8 @@ theorem mem_orbitIdeal_of_homog (x : Cone n (AlgebraicClosure ℚ)) {f : MvPolyn
       C (aeval (flatCone x) f) * ∏ k, (X k : MvPolynomial ι (AlgebraicClosure ℚ)) ^ d k := by
     conv_lhs => rw [f.as_sum]
     conv_rhs => rw [f.as_sum]
-    rw [map_sum, map_sum, map_sum, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum, map_sum, Finset.sum_mul]
     refine Finset.sum_congr rfl fun m hm => ?_
     have hX : ∏ p : Coord n, (X p.1 : MvPolynomial ι (AlgebraicClosure ℚ)) ^ m p =
         ∏ k, (X k : MvPolynomial ι (AlgebraicClosure ℚ)) ^ d k := by
@@ -141,7 +142,8 @@ theorem aeval_chartHomog {F : Type*} [Field F] (c : (k : ι) → Fin (n k + 1))
       ∑ m ∈ P.support, aeval (fun p ↦ w p / w ⟨p.1, c p.1⟩) (monomial m (P.coeff m)) := by
     conv_lhs => rw [P.as_sum]
     exact map_sum _ _ _
-  rw [hP, chartHomog, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hP, chartHomog, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun m hm ↦ ?_
   have hden : ∏ p : Coord n, w ⟨p.1, c p.1⟩ ^ m p = ∏ k, w ⟨k, c k⟩ ^ ∑ i, m ⟨k, i⟩ := by
     rw [Fintype.prod_sigma]

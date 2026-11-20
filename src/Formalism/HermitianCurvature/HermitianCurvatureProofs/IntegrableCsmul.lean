@@ -755,14 +755,16 @@ open Formalism.FourierDecayAlt.P.CapelliWordSumExpansion in
 theorem qminor_clm (L : E →L[ℂ] E) {t : ℕ} (a b : Fin t → Fin (2 * r + k + 1)) (u : ℂ) (f : Mat k r → E)
     {g : Mat k r} (hg : g ∈ GV k r) (hf : Loc (t : ℕ∞) f g) (hLf : Loc (t : ℕ∞) (fun x => L (f x)) g) :
     qminorOp (EabH (Hpk k r)) a b u (fun x => L (f x)) g = L (qminorOp (EabH (Hpk k r)) a b u f g) := by
-  rw [qminor_foldT, qminor_foldT, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [qminor_foldT, qminor_foldT, map_sum]
   refine Finset.sum_congr rfl fun σ _ => ?_
   rw [map_smul, foldT_clm L _ f hg (by simpa using hf) (by simpa using hLf)]
 
 theorem AAop_clm (L : E →L[ℂ] E) (m : ℕ) (hm : m ≤ r) (u : ℂ) (f : Mat k r → E) {g : Mat k r} (hg : g ∈ GV k r)
     (hf : Formalism.FourierDecayAlt.P.CapelliWordSumExpansion.Loc (m : ℕ∞) f g) (hLf : Formalism.FourierDecayAlt.P.CapelliWordSumExpansion.Loc (m : ℕ∞) (fun x => L (f x)) g) :
     C3.AAop k r m hm u (fun x => L (f x)) g = L (C3.AAop k r m hm u f g) := by
-  simp only [C3.AAop, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [C3.AAop, map_sum]
   refine Finset.sum_congr rfl fun c _ => ?_
   split_ifs
   · rw [map_smul, qminor_clm L _ _ u f hg hf hLf]
@@ -772,7 +774,8 @@ theorem AAvop_clm (L : E →L[ℂ] E) (m : ℕ) (hm : m ≤ r) (ell : ℂ) (f : 
     (hg : g ∈ GV k r) (hf : Formalism.FourierDecayAlt.P.CapelliWordSumExpansion.Loc (m : ℕ∞) f g)
     (hLf : Formalism.FourierDecayAlt.P.CapelliWordSumExpansion.Loc (m : ℕ∞) (fun x => L (f x)) g) :
     C3.AAvop k r m hm ell (fun x => L (f x)) g = L (C3.AAvop k r m hm ell f g) := by
-  simp only [C3.AAvop, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [C3.AAvop, map_sum]
   refine Finset.sum_congr rfl fun c _ => ?_
   split_ifs
   · rw [map_smul, qminor_clm L _ _ _ f hg hf hLf]

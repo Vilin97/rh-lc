@@ -20,7 +20,8 @@ theorem bsum {K C V : Type*} [Field K] [CommRing C] [AddCommGroup V] [Module K V
     (f : Module.Dual K V →+ C) (hf : ∀ (k : K) φ, f (k • φ) = κ k * f φ) {m : ℕ} (b : Module.Basis (Fin m) K V)
     (F : Module.Dual K V) : ∑ s, f (b.coord s) * κ (F (b s)) = f F := by
   conv_rhs => rw [← b.sum_dual_apply_smul_coord F]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun s _ => ?_
   rw [hf, mul_comm]
 
@@ -29,7 +30,8 @@ theorem esum {K C V : Type*} [Field K] [CommRing C] [AddCommGroup V] [Module K V
   have : F e = ∑ s, b.coord s e * F (b s) := by
     calc F e = F (∑ s, b.repr e s • b s) := by rw [b.sum_repr]
       _ = _ := by rw [map_sum]; simp only [map_smul, smul_eq_mul, Module.Basis.coord_apply]
-  rw [this, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [this, map_sum]
   simp [map_mul]
 
 variable {l : ℕ} [Fact l.Prime] {K : IntermediateField ℚ_[l] (PadicAlgCl l)}

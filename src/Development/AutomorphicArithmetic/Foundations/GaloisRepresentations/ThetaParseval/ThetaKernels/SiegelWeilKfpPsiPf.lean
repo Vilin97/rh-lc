@@ -134,7 +134,8 @@ theorem frame_hermForm_real_sign (R : _root_.PositivityTheory.SiegelWeilFormula.
 theorem eps_zeta_k (R : _root_.PositivityTheory.SiegelWeilFormula.RD_k d) : ((R.ε : ℤ) : ℂ) * star R.ζ * R.ζ⁻¹ = -1 := by
   rcases R.hζ with ⟨h1, h2⟩ | ⟨h1, h2⟩ <;> simp [h1, h2]
 theorem piInf_trace_k (w : InfinitePlace F) {ι : Type} [Fintype ι] (M : Matrix ι ι (AE F E)) : piInf (d.B.emb w) M.trace = (d.cw w M).trace := by
-  simp [Matrix.trace, _root_.PositivityTheory.SiegelWeilFormula.SD_k.cw, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Matrix.trace, _root_.PositivityTheory.SiegelWeilFormula.SD_k.cw, map_sum]
 theorem dbl_incM_k : dbl (incM F d.Y.J) = incM F (dbl d.Y.J) := by
   ext (i | i) (j | j) <;> simp [dbl, incM, Matrix.fromBlocks]
 theorem piInf_hT_k (R : _root_.PositivityTheory.SiegelWeilFormula.RD_k d) (W : Mx F E d.m d.n) (s t : ℝ) (w : InfinitePlace F) :

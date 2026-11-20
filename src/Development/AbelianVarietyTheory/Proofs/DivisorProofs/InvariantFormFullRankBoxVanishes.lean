@@ -164,7 +164,8 @@ theorem chart_form_eq_zero : GlobalTheory.ThK.KP → ∀ (k : Type) [Field k] [V
   let θq : (box T (Fin ρ) a ⧸ (box T (Fin ρ) b).addSubgroupOf (box T (Fin ρ) a)) → fullRk k ρ d := fun q =>
     ⟨_, hθmem ((q.out : box T (Fin ρ) a) : Matrix T (Fin ρ) k)⟩
   let Φ : SB (Matrix (Fin ρ ⊕ T) (Fin d) k) := ∑ q, e ((q.out : box T (Fin ρ) a) : Matrix T (Fin ρ) k) (θq q)
-  rw [key Ψ₀ f Φ ?_, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [key Ψ₀ f Φ ?_, map_sum]
   · exact Finset.sum_eq_zero fun q _ => hD _ _ _
   intro Y hY
   simp only [Φ, Submodule.coe_sum, Finset.sum_apply]

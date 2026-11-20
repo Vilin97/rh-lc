@@ -429,7 +429,8 @@ theorem ideal_le_comap_pow_succ_of_map_le_span_pow_mul {A B : Type*} [CommRing A
     rw [← hfeq i hi]
   have hφa : φ a = y s ^ c *
       ∑ i ∈ cf.support, φ (cf i) * powProd (fun t : ↥(S.erase s) => y t.1) (fsel i) := by
-    rw [ha', map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [ha', map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl ?_
     intro i hi
     rw [map_mul, map_chartMonomial φ x y S s hφs hφ c (fsel i) (hfdeg i hi)]
@@ -449,7 +450,8 @@ theorem ideal_le_comap_pow_succ_of_map_le_span_pow_mul {A B : Type*} [CommRing A
         powProd (fun t : ↥(S.erase s) => y t.1) (fsel i))
       = ∑ i ∈ cf.support, MvPolynomial.monomial (fsel i)
           (Ideal.Quotient.mk (Ideal.span (x '' (S : Set (Fin m)))) (cf i)) := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl ?_
     intro i _
     rw [map_mul, hΨC, map_powProd, hfun]

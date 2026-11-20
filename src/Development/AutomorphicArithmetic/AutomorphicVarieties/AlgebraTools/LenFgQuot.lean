@@ -45,7 +45,8 @@ private theorem UpperTheory.V.AlgebraTools.length_quotient_fg_bounds {A : Type} 
       rw [hφ, Pi.zero_apply, Submodule.Quotient.mk_eq_zero] at this
       exact this
     have hsN : s (π h) ∈ N := by
-      rw [pi_eq_sum_univ (π h), map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [pi_eq_sum_univ (π h), map_sum]
       refine Submodule.sum_mem _ fun i _ => ?_
       rw [map_smul]
       exact Submodule.smul_mem_smul (hI i) trivial

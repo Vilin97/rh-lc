@@ -58,7 +58,8 @@ theorem exists_dualBasis {Λ : Submodule (𝓞 E) (Matrix (Fin nT) (Fin nS) E)} 
   have hM : ∀ x : M, (x : Matrix (Fin nT) (Fin nS) E) = ∑ j, l j x • ((g (Finsupp.single j 1) : M) : Matrix (Fin nT) (Fin nS) E) := by
     intro x
     have h1 : x = g (f x) := LinearMap.congr_fun e x
-    conv_lhs => rw [h1, ← (f x).univ_sum_single, map_sum, Submodule.coe_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [h1, ← (f x).univ_sum_single, map_sum, Submodule.coe_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [show l j x = f x j from hl₀ j x, ← Finsupp.smul_single_one, map_smul, Submodule.coe_smul]
     exact (algebraMap_smul F _ _).symm
@@ -157,7 +158,8 @@ theorem coordM_tm (l : Matrix (Fin nT) (Fin nS) E →ₗ[F] F) (a : R) (γ : Mat
     coordM R l (tm F a γ) = l γ • a := by
   have h : l γ = ∑ i, ∑ k, l (sng (F := F) i k (γ i k)) := by
     conv_lhs => rw [← sum_sngG γ]
-    simp only [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum]
     rfl
   rw [h, Finset.sum_smul]
   refine Finset.sum_congr rfl fun i _ => ?_

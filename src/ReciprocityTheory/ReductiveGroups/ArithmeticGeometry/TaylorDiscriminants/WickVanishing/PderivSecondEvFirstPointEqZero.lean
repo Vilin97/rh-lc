@@ -302,7 +302,8 @@ theorem logDerivSt : LogDerivSt := by
   have step : ∀ c, ∑ i, C (u i) * ∑ j, pderiv k ((0 : Fin 1), j) (ℓ c) * Jac G j i = (C (u c) : PS k 1 d) := by
     intro c
     simp only [DJ, ← map_mul, mul_ite, mul_one, mul_zero]
-    rw [← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum]
     simp [Finset.sum_ite_eq]
   show ∑ j : Fin d, (∑ i : Fin d, C (u i) * Jac G j i) * pderiv k ((0 : Fin 1), j) (ev (n := 1) ![ℓ] g) = _
   simp only [hch]

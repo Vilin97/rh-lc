@@ -111,7 +111,8 @@ private theorem hi_act (N p : ℕ) (hN : 0 < N) (hp : p.Prime) (hc : Nat.Coprime
   choose g hg he using hπ
   refine ⟨π, g, hg, fun a => ?_⟩
   have hd1 : ∀ δ : SL(2, ℤ), 0 < (δ : Matrix (Fin 2) (Fin 2) ℤ).det := fun δ => by rw [δ.det_coe]; exact one_pos
-  rw [hi_sum X l N p a, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hi_sum X l N p a, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [GlobalTheory.KZ.Tower.act_act Ω ε X l _ _ (hi_det p hp.pos _ i) (hd1 γ), GlobalTheory.KZ.Tower.act_act Ω ε X l _ _ (hd1 (g i)) (hi_det p hp.pos _ (π i)), he i]
 

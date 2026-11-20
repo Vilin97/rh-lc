@@ -145,7 +145,8 @@ theorem exists_bound_at (h : ClassTermBound) {i : X.Tw} {ι : ℂ →+* Kbar X i
   have hs : IsIntegral (X.O i) (∑ q ∈ hf.toFinset, ι (((X.l i : ℕ) : ℂ) ^ n * (T q / Ω))) :=
     IsIntegral.sum _ fun q _ => isIntegral_of_intAt (X.O_l i) ι (hn _ h1 h2 _ _ (hT q))
   refine (congrArg (IsIntegral (X.O i)) ?_).mpr (hM.mul hs)
-  rw [map_mul, map_pow, map_natCast, hδ, finsum_mem_eq_finite_toFinset_sum _ hf, ← map_sum, ← Finset.mul_sum, ← Finset.sum_div,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_mul, map_pow, map_natCast, hδ, finsum_mem_eq_finite_toFinset_sum _ hf, ← map_sum, ← Finset.mul_sum, ← Finset.sum_div,
     map_mul, map_pow, map_natCast, map_div₀]
   have : ι Ω ≠ 0 := (map_ne_zero ι).2 hΩ
   field_simp

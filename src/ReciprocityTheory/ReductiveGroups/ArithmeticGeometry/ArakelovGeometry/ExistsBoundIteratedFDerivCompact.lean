@@ -126,7 +126,8 @@ theorem integrable_normSq_combination {X : Type*} [MeasurableSpace X] {μ : Meas
   refine hg.re.congr (ae_of_all _ fun x => ?_)
   have h : ((‖∑ i, c i * s i x‖ ^ 2 * w x : ℝ) : ℂ) = ∑ i, ∑ j, (starRingEnd ℂ (c i) * c j) *
       (starRingEnd ℂ (s i x) * s j x * (w x : ℂ)) := by
-    rw [Complex.ofReal_mul, ← Complex.normSq_eq_norm_sq, Complex.normSq_eq_conj_mul_self, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Complex.ofReal_mul, ← Complex.normSq_eq_norm_sq, Complex.normSq_eq_conj_mul_self, map_sum,
       Finset.sum_mul_sum, Finset.sum_mul]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [Finset.sum_mul]

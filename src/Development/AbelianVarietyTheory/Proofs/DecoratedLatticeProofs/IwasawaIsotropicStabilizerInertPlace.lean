@@ -31,7 +31,8 @@ theorem exists_minor_ne_zero [Nontrivial A] {X : Matrix (Fin n) (Fin r) A} {P : 
     congr 1
     ext i j
     simp [Matrix.mul_apply]
-  rw [h, det_one, MultilinearMap.map_sum] at e
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h, det_one, MultilinearMap.map_sum] at e
   refine one_ne_zero (e.trans (Finset.sum_eq_zero fun f _ => ?_))
   rw [MultilinearMap.map_smul_univ]
   exact (congrArg (_ • ·) (hc f)).trans (smul_zero _)
@@ -163,7 +164,8 @@ theorem glue_mul_rect {A B : Type} [CommRing A] [CommRing B] (j : B →ₙ+* A) 
   congr 1
   ext a b
   have := congrArg j (congrFun (congrFun h a) b)
-  simp only [Matrix.mul_apply, map_sum, mul_comm (X _ _), hj] at this
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mul_apply, map_sum, mul_comm (X _ _), hj] at this
   simp only [Matrix.mul_apply, Matrix.map_apply, mul_comm (X' _ _), this]
 
 theorem extH_stab (j : R →ₗ[F] R') (hj : ∀ a b, j (a * b) = j a * j b) (e : Matrix (Fin n) (Fin r) E) (g : HA R σ J)

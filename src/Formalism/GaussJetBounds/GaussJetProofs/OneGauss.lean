@@ -35,7 +35,8 @@ lemma cc_expo (v : τ → MvPowerSeries ι K) (hv : ∀ x, MvPowerSeries.constan
     MvPowerSeries.constantCoeff (expo v sgn ep be) = 0 := by
   unfold expo
   refine cc_smul _ ?_
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_eq_zero fun x _ => ?_
   exact MvPowerSeries.constantCoeff_subst_eq_zero
     (MvPowerSeries.hasSubst_of_constantCoeff_zero fun s => cc_smul _ (hv x))
@@ -47,7 +48,8 @@ lemma subst_expo {ι' : Type} {a : ι → MvPowerSeries ι' K} (hs : MvPowerSeri
     MvPowerSeries.subst a (expo v sgn ep be) =
       expo (fun x => MvPowerSeries.subst a (v x)) sgn ep be := by
   unfold expo
-  rw [MvPowerSeries.subst_smul hs, ← MvPowerSeries.substAlgHom_apply hs, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [MvPowerSeries.subst_smul hs, ← MvPowerSeries.substAlgHom_apply hs, map_sum]
   congr 1
   refine Finset.sum_congr rfl fun x _ => ?_
   have h : ∀ s : ZMod 2,
@@ -69,7 +71,8 @@ lemma map_expo {F : Type} [Field F] (φ : F →+* K) (v : τ → MvPowerSeries �
       MvPowerSeries.map φ (c • f) = φ c • MvPowerSeries.map φ f := by
     intro c f
     rw [MvPowerSeries.smul_eq_C_mul, map_mul, MvPowerSeries.map_C, MvPowerSeries.smul_eq_C_mul]
-  rw [hs, map_sum, map_div₀, map_ofNat]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hs, map_sum, map_div₀, map_ofNat]
   congr 1
   refine Finset.sum_congr rfl fun x _ => ?_
   have h : ∀ s : ZMod 2,
@@ -89,7 +92,8 @@ lemma map_oneLog {F K : Type} [Field F] [Field K] (φ : F →+* K) {τ : Type} [
   ext n
   rw [MvPowerSeries.coeff_map]
   change φ (oneLog (K := F) l x n) = oneLog (K := K) l x n
-  simp [oneLog, map_sum, apply_ite]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [oneLog, map_sum, apply_ite]
 
 section Theta
 

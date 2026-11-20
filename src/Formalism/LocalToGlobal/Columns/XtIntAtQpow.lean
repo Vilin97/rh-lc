@@ -102,7 +102,8 @@ theorem xtLocal {q : ℕ} (hq : ((q : ℕ) : 𝓞 E) ∈ P.asIdeal) (hu : ((q : 
     conv_lhs => rw [show y' = ∑ j, y' j • (Pi.single j (1 : E) : Sp E n') by
       ext i
       simp [Finset.sum_apply, Pi.single_apply]]
-    simp [map_sum, map_smul, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, map_smul, smul_eq_mul]
   by_cases hall : ∀ j : Fin n', ∀ i, IntAt P (zA (Pi.single j 1) i)
   · have hB := fun j => (H j).1.1 (hall j)
     have hl := fun j => ((hsplit _).1 (hall j)).2

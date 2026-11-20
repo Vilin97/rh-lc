@@ -51,7 +51,8 @@ theorem nabVal_C_mul [Algebra ℚ k] {R : Type} [CommRing R] [Algebra R k] {O : 
     (u : κ → Fin d → k) (P : MvPolynomial κ k) :
     B.nabVal k h w0 q (MvPowerSeries.C c * f) u P = c * B.nabVal k h w0 q f u P := by
   unfold Germ.FB.nabVal Germ.DpolyOf
-  rw [_root_.mul_assoc, map_sum, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [_root_.mul_assoc, map_sum, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun m _ => ?_
   rw [dmon_C_mul]
   simp only [map_mul, MvPowerSeries.constantCoeff_C]

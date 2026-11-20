@@ -23,6 +23,7 @@ omit [NumberField E] [IsCMField E] in
 theorem emb_mulVec {r : ℕ} (τ : E →+* ℂ) (M : Matrix (Fin r) (Fin r) E) (v : Fin r → E) :
     Data.emb τ (M.mulVec v) = (M.map τ).mulVec (Data.emb τ v) := by
   funext a
-  simp [Data.emb, Matrix.mulVec, dotProduct, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Data.emb, Matrix.mulVec, dotProduct, map_sum, map_mul]
 
 end GlobalTheory.FirstMinimum

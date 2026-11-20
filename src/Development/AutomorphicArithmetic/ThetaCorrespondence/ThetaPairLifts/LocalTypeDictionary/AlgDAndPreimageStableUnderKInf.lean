@@ -127,7 +127,8 @@ theorem kStable_subspace_sums : _root_.GlobalTheory.FunPr.ThetaLocalInputs → �
     exact h1 _ hg
   have hsum : om (1, k) (∑ i, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure (Φ (T i)) (φ i)) =
       ∑ i, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure (Φ (U (T i))) (φ i) := by
-    rw [map_sum]; exact Finset.sum_congr rfl fun i _ => hk1 i
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]; exact Finset.sum_congr rfl fun i _ => hk1 i
   refine ⟨?_, fun hQ => ?_⟩
   · rw [hsum]
     exact Submodule.sum_mem _ fun i _ => Submodule.subset_span

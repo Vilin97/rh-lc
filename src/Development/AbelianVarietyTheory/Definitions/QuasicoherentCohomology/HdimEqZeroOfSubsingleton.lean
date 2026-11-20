@@ -258,7 +258,8 @@ variable (R : Type v) [CommRing R] [Algebra R Γ(X, ⊤)] {ι : Type t} (U : X.O
     (by
       classical
       refine LinearMap.ext fun x ↦ funext fun i ↦ ?_
-      simp only [LinearMap.comp_apply, LinearMap.pi_apply, LinearMap.sum_apply, map_sum,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [LinearMap.comp_apply, LinearMap.pi_apply, LinearMap.sum_apply, map_sum,
         LinearMap.proj_apply, LinearMap.id_apply, map_map]
       rw [Finset.sum_eq_single i]
       · rw [bicone_ι_π_self, map_id, LinearMap.id_apply]

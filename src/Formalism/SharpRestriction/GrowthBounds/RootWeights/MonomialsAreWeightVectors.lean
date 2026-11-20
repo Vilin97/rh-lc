@@ -30,7 +30,8 @@ theorem v2con_diag {R : Type*} [CommRing R] {ι : Type*} [Fintype ι] {n : ℕ} 
   unfold glAct wtS
   rw [LinearMap.sum_apply]
   simp only [Int.cast_sum, Finset.sum_mul]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl (fun l _ => ?_)
   by_cases h1 : l ∈ S <;> by_cases h2 : LL.vec l = true <;>
     simp [h1, h2, -pderiv_monomial, v2con_X_pderiv_self, mul_comm]
@@ -100,7 +101,8 @@ theorem v2con_stable {R : Type*} [CommRing R] {ι : Type*} [Fintype ι] {n : ℕ
         exact this
       rw [map_add, Finsupp.degree_single]
       omega
-  rw [x.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [x.as_sum, map_sum]
   refine Submodule.sum_mem _ (fun m hm => ?_)
   have hdeg : m.degree ≤ N := hx hm
   unfold glAct

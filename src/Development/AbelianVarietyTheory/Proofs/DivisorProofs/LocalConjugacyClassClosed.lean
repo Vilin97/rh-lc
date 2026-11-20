@@ -30,7 +30,8 @@ theorem eq_zero_of_isNilpotent (n : ℕ) (x₀ : B) (hsep : (minpoly F x₀).Sep
     let e : K ⊗[F] B := (1 : K) ⊗ₜ[F] x₀
     let hp : K[X] := ∑ j : Fin n, C (ψ (c j) i) * X ^ (j : ℕ)
     have hΦw : Φ (∑ j, cen S F B (c j) * ((1 : S) ⊗ₜ[ℚ] x₀) ^ (j : ℕ)) i = aeval e hp := by
-      simp only [hp, map_sum, map_mul, map_pow, Finset.sum_apply, Pi.mul_apply, Pi.pow_apply, hΦ2, hΦ1,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hp, map_sum, map_mul, map_pow, Finset.sum_apply, Pi.mul_apply, Pi.pow_apply, hΦ2, hΦ1,
         aeval_C, aeval_X, e]
       rfl
     obtain ⟨m, hm⟩ := h
@@ -118,12 +119,14 @@ theorem exists_conj_of_traces [Algebra.IsCentral F B] [IsSimpleRing B] (n : ℕ)
     rfl
   have htr : ∀ H : (S ⊗[ℚ] F)[X], trL S B (ev y H) = trL S B (ev e₀ H) := by
     intro H
-    rw [hev, hev, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hev, hev, map_sum, map_sum]
     exact Finset.sum_congr rfl fun k _ => hT _ k
   let R : (S ⊗[ℚ] F)[X] := ∑ j : Fin n, C (c j) * X ^ (j : ℕ)
   have hevR : ∀ u, ev u R = ∑ j : Fin n, cen S F B (c j) * u ^ (j : ℕ) := by
     intro u
-    simp only [R, map_sum, map_mul, map_pow]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [R, map_sum, map_mul, map_pow]
     refine Finset.sum_congr rfl fun j _ => ?_
     show Polynomial.eval₂ _ u (C (c j)) * Polynomial.eval₂ _ u X ^ (j : ℕ) = _
     rw [Polynomial.eval₂_C, Polynomial.eval₂_X]

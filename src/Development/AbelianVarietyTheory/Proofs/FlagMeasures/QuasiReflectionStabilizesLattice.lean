@@ -46,7 +46,8 @@ theorem hf_sum_right {ι : Type} (s : Finset ι) (f : ι → Fin n → E) (y : F
 
 theorem cj_hf (hH : IsHerm L Hm) (x y : Fin n → E) : L.cj (hf L Hm x y) = hf L Hm y x := by
   have h : ∀ i j, L.cj (Hm i j) = Hm j i := fun i j => congrFun (congrFun hH j) i
-  simp only [hf, map_sum, map_mul, L.cj_cj, h]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hf, map_sum, map_mul, L.cj_cj, h]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 

@@ -30,7 +30,8 @@ theorem comp_d (r n : ℕ) (c : Cn Φ.rees n) :
     Pi.evalAddMonoidHom (fun r => (Φ.S r).S (s.obj (Fin.last (n + 1)))) r
   change e (∑ i : Fin (n + 2), (-1 : ℤ) ^ (i : ℕ) • (Φ.rees.map (toLast i s)).hom (c (face i s))) =
     ∑ i : Fin (n + 2), (-1 : ℤ) ^ (i : ℕ) • ((Φ.S r).fn.map (toLast i s)).hom (comp Φ r c (face i s))
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_zsmul]
   rfl

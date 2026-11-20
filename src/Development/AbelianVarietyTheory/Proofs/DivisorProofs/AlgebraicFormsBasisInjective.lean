@@ -41,7 +41,8 @@ theorem lin_injective (hj : IsForm j) {n : ℕ} (f : (Fin n → K) →ₗ[K] X) 
   set u : E := ∑ k, c k • j (f (Pi.single k 1)) with hu
   have h3 : u ∈ LinearMap.ker θ := by
     rw [Formalism.IndefR.Cx.lin_apply] at hc
-    rw [LinearMap.mem_ker, hu, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [LinearMap.mem_ker, hu, map_sum]
     simpa only [map_smul] using hc
   have h4 : u ∈ (LinearMap.ker θ)ᗮ := by
     rw [LinearMap.orthogonal_ker]

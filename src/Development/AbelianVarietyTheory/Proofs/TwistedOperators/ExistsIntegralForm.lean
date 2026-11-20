@@ -100,7 +100,8 @@ theorem exists_factor {G : ι → Type} (c : ∀ i, G i → Module.End ℂ (P i)
   obtain ⟨hs, hf⟩ := GlobalTheory.Chain.IoLift.Factor.factor ι K P Y A hAs
   obtain ⟨T, hT⟩ := hf Z B fun i => (hk i (L i) (hL i) p₀ y₀ (hA i)).2
   obtain ⟨Φ, hΦ⟩ := hf _ I fun i p y n x z h => eq_zero_of_isContr i fun L' hL' => by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact (hk i (L i) (hL i) p₀ y₀ (hA i)).1 L' hL' p y n x z h
   obtain ⟨r, hr⟩ := GlobalTheory.Chain.IoLift.Scal.scalar_of_comm ι K G a ha Φ fun i g => by
     refine LinearMap.ext_on hs ?_
@@ -313,7 +314,8 @@ theorem exists_factor_kFin (hdec : GlobalTheory.Published.CuspDecaySobolev) {θ 
     fun τ L hL p y hne => ⟨fun L' hL' p' y' => hker τ _ _ _ _ (pI τ L hL p y) (pI τ L' hL' p' y') hne,
       fun p' y' n x z h => by
         refine (hE0 _ (GlobalTheory.Chain.CuspGrowSpace.isCuspGrow_of_mem_span D θ V _ (sum_mem fun i _ => Submodule.subset_span (hBg _ _)))).2 ?_
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         exact hker τ _ _ _ _ (pI τ L hL p y) (pB τ p' y') hne n x z h⟩
   refine ⟨⟨T, fun φ y => ?_⟩, eq_top_iff.2 (hs ▸ Submodule.span_mono ?_)⟩
   · have := span_multi (I.compr₂ T - B) fun p y => sub_eq_zero.2 (hT p y)

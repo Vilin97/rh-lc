@@ -56,7 +56,8 @@ theorem ι_mul (a : AE D) (x : k) : p.ι (p.π a * x) = a * p.ι x := by
 theorem mul_map_ι {m l n : Type} [Fintype l] (N : Matrix m l (AE D)) (M : Matrix l n k) :
     N * M.map p.ι = (N.map p.π * M).map p.ι := by
   ext i j
-  simp only [Matrix.mul_apply, Matrix.map_apply, map_sum, ι_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mul_apply, Matrix.map_apply, map_sum, ι_mul]
 
 variable {ρ : ℕ} (B : BesLev D ρ) (S : HSp D) {s : k} {n n' : Type} [Fintype n] [DecidableEq n] [Fintype n'] [DecidableEq n']
   {FA : Frame k B.A.rank n'} {F₀ : Frame k B.V₀.rank (n' ⊕ Unit)} (FS : Frame k S.rank n)
@@ -70,7 +71,8 @@ theorem beta_eq (hF : p.IsCoreFrame B s FA F₀) :
 theorem col_eq : (Matrix.of fun r (_ : Unit) => s * prH p (vecB B.o B.ζ r)) =
     s • (B.o.iB.map (prH p) * Matrix.of fun j (_ : Unit) => prH p (B.ζ j)) := by
   ext r u
-  simp [Matrix.mul_apply, vecB, Matrix.mulVec, dotProduct, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Matrix.mul_apply, vecB, Matrix.mulVec, dotProduct, map_sum, map_mul]
 
 theorem qA_beta (hF : p.IsCoreFrame B s FA F₀) : B.o.qA.map (prH p) * F₀.β = fromCols FA.β 0 := by
   rw [beta_eq p B hF, col_eq, Matrix.mul_fromCols, Matrix.mul_smul, ← Matrix.mul_assoc, ← Matrix.mul_assoc,

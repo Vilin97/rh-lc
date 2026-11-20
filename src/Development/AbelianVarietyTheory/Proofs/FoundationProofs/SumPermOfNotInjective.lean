@@ -21,7 +21,8 @@ theorem map_det_eq {C W : Type} [CommRing C] [Ring W] {n : ℕ} (f : C →+* W)
     (M : Matrix (Fin n) (Fin n) C) :
     f M.det = ∑ p : Equiv.Perm (Fin n), ((Equiv.Perm.sign p : ℤˣ) : ℤ) •
       (List.ofFn fun j : Fin n => f (M (p j) j)).prod := by
-  rw [Matrix.det_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.det_apply, map_sum]
   refine Finset.sum_congr rfl fun p _ => ?_
   rw [Units.smul_def, map_zsmul, ← List.prod_ofFn, map_list_prod, List.map_ofFn]
   rfl

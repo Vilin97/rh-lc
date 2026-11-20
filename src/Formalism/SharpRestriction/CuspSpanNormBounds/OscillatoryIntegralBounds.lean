@@ -1130,7 +1130,8 @@ theorem posDef_of_measure {d : ℕ} (φ : (Fin d → ℤ) → ℂ) (μ : Measure
     have : ∀ x : Tor d, ((Complex.normSq (∑ n ∈ a.support, a n * ch n x) : ℝ) : ℂ) =
         ∑ m ∈ a.support, ∑ n ∈ a.support, star (a m) * a n * ch (n - m) x := by
       intro x
-      rw [Complex.normSq_eq_conj_mul_self, map_sum, Finset.sum_mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Complex.normSq_eq_conj_mul_self, map_sum, Finset.sum_mul_sum]
       refine Finset.sum_congr rfl fun m _ => Finset.sum_congr rfl fun n _ => ?_
       rw [ch_sub, map_mul]
       simp only [Complex.star_def]
@@ -1279,7 +1280,8 @@ theorem int_conj_fej_ch {d : ℕ} (φ : (Fin d → ℤ) → ℂ) (N : ℕ) (n : 
   have e : ∀ x : Tor d, conj (fej φ N x) * ch n x =
       ∑ σ ∈ box d N, (((fw N σ : ℝ) : ℂ) * conj (φ (-σ))) * ch (-σ + n) x := by
     intro x
-    rw [fej, map_sum, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [fej, map_sum, Finset.sum_mul]
     refine Finset.sum_congr rfl fun σ _ => ?_
     rw [ch_add, ch_neg, map_mul, map_mul, Complex.conj_ofReal]
     ring
@@ -2531,7 +2533,8 @@ theorem ip_smul (k : ℕ) (s : ℂ) (x y : Fin (k + 1) → ℂ) :
 
 theorem ip_conj (k : ℕ) (x y : Fin (k + 1) → ℂ) :
     herm (Hb k) y x = starRingEnd ℂ (herm (Hb k) x y) := by
-  simp only [herm_Hb, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [herm_Hb, map_sum, map_mul]
   refine Finset.sum_congr rfl fun j _ => ?_
   split_ifs <;> simp [mul_comm]
 
@@ -5989,7 +5992,8 @@ theorem opKer_posSemidef {α : Type} {K : α → α → ℂ} (hK : PSDK K) : (op
   · have h := hK vv.support (fun p => vv p)
     have h2 : (vv.sum fun x w => vv.sum fun x' w' => ⟪opKer K x' x w, w'⟫_ℂ) =
         conj (∑ p ∈ vv.support, ∑ q ∈ vv.support, star (vv p) * K p q * vv q) := by
-      simp only [Finsupp.sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Finsupp.sum, map_sum]
       rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun p _ => Finset.sum_congr rfl fun q _ => ?_
       simp [opKer, RCLike.inner_apply]
@@ -6062,7 +6066,8 @@ theorem PSDK.rankOne {α : Type*} (w : α → ℂ) : PSDK (fun p q => w p * conj
   intro X a
   have e : (∑ p ∈ X, ∑ q ∈ X, star (a p) * (w p * conj (w q)) * a q) =
       (∑ p ∈ X, star (a p) * w p) * conj (∑ p ∈ X, star (a p) * w p) := by
-    rw [map_sum, Finset.sum_mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_mul_sum]
     refine Finset.sum_congr rfl fun p _ => Finset.sum_congr rfl fun q _ => ?_
     simp only [map_mul, Complex.star_def, Complex.conj_conj]
     ring

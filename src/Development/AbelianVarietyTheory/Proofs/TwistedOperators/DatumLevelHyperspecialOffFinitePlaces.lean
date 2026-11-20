@@ -36,7 +36,8 @@ theorem ind_tmul_mul (Sb : Finset (HeightOneSpectrum (𝓞 F))) (z : Af F ⊗[F]
     rw [← TensorProduct.sum_tmul]
     congr 1
     refine GlobalTheory.AdelicU.af_ext fun u => ?_
-    rw [map_mul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_mul, map_sum]
     by_cases hu : u ∈ Sb
     · rw [Finset.sum_eq_single u (fun v _ hv => GlobalTheory.AdelicU.evalV_singleFin_ne (Ne.symm hv) _)
         (fun h => absurd hu h), GlobalTheory.AdelicU.evalV_singleFin_self]

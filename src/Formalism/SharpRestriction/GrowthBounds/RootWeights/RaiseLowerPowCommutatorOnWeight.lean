@@ -87,7 +87,8 @@ theorem raise_pow_lower_pow_expansion {E : GLOps n (KK O) V} (hE : IsGLRep E) {a
       congr 1
       · rw [← Module.End.mul_apply (E a b), ← pow_succ', show k - j + 1 = k + 1 - j by omega]
       · rw [show l - j - 1 = l - (j + 1) by omega, show k + 1 - (j + 1) = k - j by omega]
-    rw [pow_succ', Module.End.mul_apply, ih, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [pow_succ', Module.End.mul_apply, ih, map_sum]
     simp only [map_smul]
     refine (Finset.sum_congr rfl (fun j hj => ?_)).trans
       (weighted_sum_shift_recombine (fun j => ((k.choose j * l.descFactorial j : ℕ) : KK O) *

@@ -85,7 +85,8 @@ theorem tensHom : TensHom := by
       _ = f (∑ e', E.ρ g e e' • CompanionTheory.Zuck.act (F, U) g (fun c => x (c, e'))) c' :=
           congrArg (fun y => f y c') h2
       _ = ∑ e', E.ρ g e e' • CompanionTheory.Zuck.act (F', U') g (f (fun c => x (c, e'))) c' := by
-          rw [map_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [map_sum]
           simp only [map_smul, Finset.sum_apply, Pi.smul_apply]
           refine Finset.sum_congr rfl fun e' _ => ?_
           have hq := LinearMap.congr_fun (hf.equiv g hg) (fun c => x (c, e'))
@@ -123,7 +124,8 @@ theorem tensHom : TensHom := by
       _ = f (∑ e', E.ρ g e e' • CompanionTheory.Zuck.act (F, U) g (fun c => x (e', c))) c' :=
           congrArg (fun y => f y c') h2
       _ = ∑ e', E.ρ g e e' • CompanionTheory.Zuck.act (F', U') g (f (fun c => x (e', c))) c' := by
-          rw [map_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [map_sum]
           simp only [map_smul, Finset.sum_apply, Pi.smul_apply]
           refine Finset.sum_congr rfl fun e' _ => ?_
           have hq := LinearMap.congr_fun (hf.equiv g hg) (fun c => x (e', c))

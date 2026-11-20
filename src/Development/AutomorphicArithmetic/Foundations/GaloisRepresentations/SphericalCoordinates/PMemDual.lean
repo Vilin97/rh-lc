@@ -38,7 +38,8 @@ theorem UpperTheory.Gal.W2.memDual_of :
     unfold pairL
     apply IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg zero_le_one
     intro w _
-    simp only [dotProduct, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [dotProduct, map_sum]
     apply IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg zero_le_one
     intro i _
     have hai : ‖((a w i * d w : G.Fw w) : PadicAlgCl p)‖ ≤ 1 := by

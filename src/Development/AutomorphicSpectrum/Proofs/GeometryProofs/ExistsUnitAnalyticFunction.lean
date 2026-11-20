@@ -57,7 +57,8 @@ theorem det_chg (T : (Fin g → ℂ) →ₗ[ℂ] (Fin g → ℂ)) (Pe Tc : Fin p
     have : ∑ m, (A * C) a m • Pe m = ∑ b, A a b • ∑ m, C b m • Pe m := by
       simp only [Matrix.mul_apply, Finset.sum_smul, Finset.smul_sum, smul_smul]
       exact Finset.sum_comm
-    rw [this, map_sum, hV a]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [this, map_sum, hV a]
     exact Finset.sum_congr rfl fun b _ => by rw [map_smul, hC b]
   obtain ⟨C₀, hC₀⟩ := k6
   have hA : A.det ≠ 0 := by

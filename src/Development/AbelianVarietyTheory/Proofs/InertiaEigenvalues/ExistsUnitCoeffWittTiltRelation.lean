@@ -123,7 +123,8 @@ theorem exists_norm_coeff_eq_one : ∀ {l : ℕ} [Fact l.Prime] {a : ℕ} [NeZer
     refine IsIdempotentElem.eq_zero_of_isNilpotent ?_ ?_
     · show _ * _ = _
       rw [← map_mul, hidem.eq]
-    · rw [hsum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [hsum, map_sum]
       refine isNilpotent_sum fun s _ => ?_
       rw [map_mul]
       exact (Commute.all _ _).isNilpotent_mul_left (hnil s)

@@ -34,7 +34,8 @@ theorem exists_forms_eq {n : ℕ} {b : Fin n → Module.Dual Ω V} (hb : LinearI
       have h2 : (LinearMap.pi b : V →ₗ[Ω] (Fin n → Ω)) u = ∑ k, b k u • (Pi.single k 1 : Fin n → Ω) := by
         ext m
         simp [Finset.sum_apply, Pi.single_apply]
-      rw [LinearMap.dualMap_apply, h2, map_sum] at h1
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [LinearMap.dualMap_apply, h2, map_sum] at h1
       simpa [mul_comm] using h1
     have h0 := Fintype.linearIndependent_iff.1 hb _ hc
     refine LinearMap.pi_ext fun k x => ?_
@@ -76,7 +77,8 @@ theorem exists_adjoint {Ω Ω' : Type} [Field Ω] [Field Ω'] {V V' : Type} [Add
   let v := Module.finBasis Ω V
   have hexp : ∀ u, j u = ∑ k, i (v.repr u k) • j (v k) := fun u => by
     conv_lhs => rw [← v.sum_repr u]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun k _ => hj.1 _ _
   have hli : LinearIndependent Ω' fun k => j (v k) := by
     have h0 := hj.2 _ v v.linearIndependent
@@ -101,7 +103,8 @@ theorem exists_adjoint {Ω Ω' : Type} [Field Ω] [Field Ω'] {V V' : Type} [Add
   have hadj : ∀ w u, jd w (j u) = i (w u) := fun w u => by
     rw [hexp u]
     conv_rhs => rw [← v.sum_repr u]
-    simp only [map_sum, map_smul, ← hv', hjd, smul_eq_mul, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, ← hv', hjd, smul_eq_mul, map_mul]
   refine ⟨?_, jd, hadj, fun a w => v'.ext fun k => ?_, ?_⟩
   · rw [Module.finrank_eq_card_basis v']
     simp

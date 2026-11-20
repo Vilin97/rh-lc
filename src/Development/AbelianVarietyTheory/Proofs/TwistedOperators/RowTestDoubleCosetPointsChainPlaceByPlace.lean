@@ -191,7 +191,8 @@ theorem idem_sum (he : IsIdemSum e P) (h : ∀ w, Formalism.L2.NTheta.IsIdemAt (
   · rw [Finset.sum_mul_sum]
     refine Finset.sum_congr rfl fun u hu => ?_
     rw [Finset.sum_eq_single u (fun v _ hv => orth he h (Ne.symm hv)) (fun hu' => absurd hu hu'), (hi u).1]
-  · rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum]
     exact Finset.sum_congr rfl fun u _ => (hi u).2
 
 theorem sum_orth (he : IsIdemSum e P) (h : ∀ w, Formalism.L2.NTheta.IsIdemAt (eL w) w.1) {S : Finset P} {w : P} (hw : w ∉ S) :
@@ -216,7 +217,8 @@ theorem cutS_one (he : IsIdemSum e P) (h : ∀ w, Formalism.L2.NTheta.IsIdemAt (
 theorem cutS_univ (he : IsIdemSum e P) (h : ∀ w, Formalism.L2.NTheta.IsIdemAt (eL w) w.1) {V : HSp D} {g : GA D V}
     (hg : SuppAt e V g) : cutS eL Finset.univ g = g := by
   have hs : ∑ w ∈ (Finset.univ : Finset P), (eL w + cA D (eL w)) = e + cA D e := by
-    rw [Finset.sum_add_distrib, ← map_sum, ← eq_sum he h]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_add_distrib, ← map_sum, ← eq_sum he h]
   have hi := idem_sum he h Finset.univ
   unfold cutS
   rw [hs] at hi ⊢

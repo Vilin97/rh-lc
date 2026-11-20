@@ -183,7 +183,8 @@ theorem ratC_sum (T : Forms0 D u) {ι : Type} (s : Finset ι) (h : ι → (D.mem
     (hh : ∀ i ∈ s, RatC T (h i)) : RatC T (∑ i ∈ s, h i) := by
   choose! P hP hPe using hh
   refine ⟨∑ i ∈ s, P i, AddSubgroup.sum_mem _ fun i hi => hP i hi, fun z => ?_⟩
-  rw [map_sum, Finset.sum_apply, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_apply, Finset.sum_apply]
   exact Finset.sum_congr rfl fun i hi => hPe i hi z
 
 theorem fnOf_trR (s : D.what₂.Tau → ℤ) (M : D.what₂.Tau → Matrix (Fin (D.R.N 0)) (Fin (D.R.N 0)) ℂ)

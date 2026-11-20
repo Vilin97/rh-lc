@@ -184,7 +184,8 @@ theorem sA_comm_sES (ε : Fin n → Bool) (E : Fin n → Fin n → Module.End �
   apply Finsupp.lhom_ext
   rintro ⟨w, c⟩ v
   simp only [Module.End.mul_apply]
-  rw [sES_single, map_sum, sA_single, dif_pos hab, map_add, map_add, sES_Bc, sES_single]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [sES_single, map_sum, sA_single, dif_pos hab, map_add, map_add, sES_Bc, sES_single]
   simp only [sA_single, dif_pos hab, adLW_cons, map_add, Bc_adL, Finset.sum_add_distrib]
   by_cases hcb : c = b
   · subst hcb

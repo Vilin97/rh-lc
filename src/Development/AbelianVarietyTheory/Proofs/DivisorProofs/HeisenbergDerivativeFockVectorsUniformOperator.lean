@@ -88,7 +88,8 @@ theorem dRho_ptF_uniform : ∀ {D : D7} {V W : HSp D} (A : GlobalTheory.ChainFr.
           Formalism.IndefR.Datum.aPlus (heisO ψ V W) θ τ (cplxO (A.cart τ) (B.cart τ))
             (Formalism.IndefR.Datum.unitMap (A.onb τ) (B.onb τ) i j) (GlobalTheory.ChainFr.ptF ψ θ A B f P) := by
       unfold GlobalTheory.ChainFr.ptF pureTensorO
-      simp only [map_smul, map_sum, hX]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_smul, map_sum, hX]
       rfl
     rw [h2]
     congr 1

@@ -133,7 +133,8 @@ theorem ringHom_ext_wittVector_preTilt {f g : WittVector p 𝒪K♭ →+* normIn
     rw [hw] at hc
     have hS : f (∑ i ∈ Finset.Iic n, WittVector.teichmuller p (a i) * (p : WittVector p 𝒪K♭) ^ i) =
         g (∑ i ∈ Finset.Iic n, WittVector.teichmuller p (a i) * (p : WittVector p 𝒪K♭) ^ i) := by
-      simp only [map_sum, map_mul, map_pow, map_natCast, h]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_mul, map_pow, map_natCast, h]
     have hfw : f w = f (∑ i ∈ Finset.Iic n, WittVector.teichmuller p (a i) * (p : WittVector p 𝒪K♭) ^ i)
         + (p : normInteger L) ^ (n + 1) * f c := by
       rw [← map_natCast f p, ← map_pow, ← map_mul, ← hc, ← map_add, add_sub_cancel]

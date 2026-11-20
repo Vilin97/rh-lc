@@ -40,7 +40,8 @@ variable {V : Type*} [AddCommGroup V] [Module ℚ V] {d : ℕ}
 
 theorem bilinear_sum_smul_expand (B : V →ₗ[ℚ] V →ₗ[ℚ] ℚ) (b : Fin d → V) (c c' : Fin d → ℚ) :
     B (∑ i, c i • b i) (∑ j, c' j • b j) = ∑ i, ∑ j, c i * c' j * B (b i) (b j) := by
-  simp only [map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply, smul_eq_mul, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply, smul_eq_mul, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 
@@ -157,7 +158,8 @@ theorem rational_transference_short_basis (hT : PI.TransferenceMinima) (hd : 0 <
       rw [Matrix.mulVec_mulVec, Matrix.mul_nonsing_inv _ (isUnit_iff_ne_zero.mpr hdetq), Matrix.one_mulVec]
     have h2 := congrFun h1 j
     rw [← h2]
-    simp only [map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply, smul_eq_mul]
     conv_rhs => rw [Matrix.mulVec, dotProduct]
     refine Finset.sum_congr rfl fun i _ => by
       rw [hsymm (b i) (b j)]

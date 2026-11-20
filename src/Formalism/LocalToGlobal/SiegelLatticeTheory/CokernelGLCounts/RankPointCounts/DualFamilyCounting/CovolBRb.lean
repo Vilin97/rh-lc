@@ -130,7 +130,8 @@ theorem Lsharp {z : (VS D).V} (hz : z ∈ Wb X) (hd : ∀ y ∈ X.Lb, ∃ o : �
     obtain ⟨α, β, l, hl, rfl⟩ := decomp X hy
     obtain ⟨o, ho⟩ := hd l hl
     have e : (VS D).hT (∑ c, α c • X.eX c + l + ∑ c, β c • X.fY c) z = (VS D).hT l z := by
-      simp [map_add, map_sum, LinearMap.map_smulₛₗ₂, (hzW _).1, (hzW _).2]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [map_add, map_sum, LinearMap.map_smulₛₗ₂, (hzW _).1, (hzW _).2]
     rw [Submodule.mem_one]
     exact ⟨o, by rw [e]; exact ho⟩
   obtain ⟨α, β, l, hl, hzeq⟩ := decomp X hzL
@@ -139,13 +140,15 @@ theorem Lsharp {z : (VS D).V} (hz : z ∈ Wb X) (hd : ∀ y ∈ X.Lb, ∃ o : �
     intro c
     have := (hzW c).2
     rw [hzeq] at this
-    simp [map_add, map_sum, map_smul, Formalism.L2.SG.Pf.NcReal.JX.NOf.Ex.h_fe, X.ff, (hlW c).2, Finset.sum_ite_eq] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_add, map_sum, map_smul, Formalism.L2.SG.Pf.NcReal.JX.NOf.Ex.h_fe, X.ff, (hlW c).2, Finset.sum_ite_eq] at this
     exact this
   have hβ : ∀ c, β c = 0 := by
     intro c
     have := (hzW c).1
     rw [hzeq] at this
-    simp [map_add, map_sum, map_smul, X.ef, X.ee, (hlW c).1, Finset.sum_ite_eq] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_add, map_sum, map_smul, X.ef, X.ee, (hlW c).1, Finset.sum_ite_eq] at this
     exact this
   rw [hzeq]
   simp only [hα, hβ, zero_smul, Finset.sum_const_zero, zero_add, add_zero]
@@ -469,13 +472,15 @@ theorem trB_zsmul_right (z : ℤ) (x y : (VS D).V) :
 theorem trB_sum_left {N : ℕ} (c : Fin N → ℤ) (w : Fin N → (VS D).V) (y : (VS D).V) :
     Algebra.trace ℚ D.host.E ((VS D).hT (∑ i, c i • w i) y) =
       ∑ i, (c i : ℚ) * Algebra.trace ℚ D.host.E ((VS D).hT (w i) y) := by
-  rw [map_sum, LinearMap.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, LinearMap.sum_apply, map_sum]
   exact Finset.sum_congr rfl fun i _ => trB_zsmul_left (c i) (w i) y
 
 theorem trB_sum_right {N : ℕ} (c : Fin N → ℤ) (w : Fin N → (VS D).V) (x : (VS D).V) :
     Algebra.trace ℚ D.host.E ((VS D).hT x (∑ i, c i • w i)) =
       ∑ i, (c i : ℚ) * Algebra.trace ℚ D.host.E ((VS D).hT x (w i)) := by
-  rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum]
   exact Finset.sum_congr rfl fun i _ => trB_zsmul_right (c i) x (w i)
 
 theorem gr_change {N : ℕ} (w w' : Fin N → (VS D).V) (A : Matrix (Fin N) (Fin N) ℤ)

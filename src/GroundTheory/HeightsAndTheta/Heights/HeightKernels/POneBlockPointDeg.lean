@@ -87,8 +87,10 @@ theorem OneBlockPointDeg.proof : OneBlockPointDeg.Statement := by
       Polynomial.monomial i ⟨aeval r (homogeneousComponent i f), hmem _⟩
     have hP : Polynomial.aeval (w ⟨k₀, c k₀⟩) P = 0 := by
       have h0 := RingHom.mem_ker.mp hf
-      rw [← sum_homogeneousComponent f, map_sum] at h0
-      rw [← h0, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← sum_homogeneousComponent f, map_sum] at h0
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← h0, map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [Polynomial.aeval_monomial, ← aeval_homog hK hc (homogeneousComponent_isHomogeneous i f)]
       rfl

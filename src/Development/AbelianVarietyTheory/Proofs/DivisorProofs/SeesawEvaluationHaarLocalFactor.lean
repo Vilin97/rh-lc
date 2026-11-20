@@ -47,7 +47,8 @@ theorem exists_support {n d : ℕ} {X : Spc F E n} {W : Spc F E d} (M : Model σ
       · linear_combination (pairA F 0 a * x j) * this
       · linear_combination (pairA F 0 a * x j) * this
     rw [M.co.form]
-    simp only [map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul]
     rw [Prod.fst_sum, Prod.snd_sum, sum_dotProduct, dotProduct_sum, ← Finset.sum_sub_distrib]
     simp only [this, Finset.sum_ite_eq, Finset.mem_univ, if_true]
   rw [ha i k hk, map_smul, hinv _ _ _ (GlobalTheory.HeisSchA.rho_mem_schA M ψ hψ _ _ (hΨ k)), hω] at h1
@@ -71,7 +72,8 @@ theorem exists_decay {n d : ℕ} {X : Spc F E n} {W : Spc F E d} (M : Model σ X
   have hSU' : ∀ i j, (M.co.e (S j)).1 ⬝ᵥ (M.co.e (U i)).2 - (M.co.e (U i)).1 ⬝ᵥ (M.co.e (S j)).2 =
       if i = j then 1 else 0 := fun i j => by rw [← M.co.form, hSU]
   have hrho : ∀ x : ι → AF F, M.co.rho ψ (∑ i, x i • S i) = schr ψ (∑ i, x i • M.co.e (S i)) := fun x => by
-    simp only [Darboux.rho, map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Darboux.rho, map_sum, map_smul]
   obtain ⟨m, g, f, hg, hdec, hf⟩ := exists_decomp (fun k : K => om (k.1, h) Φ)
     (fun k => hw.isUSplitting.pres (k.1, h) Φ hΦ) fun l hl => by
       have hc := (hw.2.2 l hl Φ hΦ).comp
@@ -89,7 +91,8 @@ theorem exists_decay {n d : ℕ} {X : Spc F E n} {W : Spc F E d} (M : Model σ X
     simp only at h1
     rw [h1, hrho]
     change coeL (∑ j, f₁ j) = e (schrL ψ _ _)
-    rw [map_sum, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum, map_sum]
     exact Finset.sum_congr rfl fun j _ => hf₁ j
   · rw [Finset.sum_mul]
     exact (Finset.le_sum_of_subadditive _ (map_zero _).le (map_add_le_add _) _ _).trans (Finset.sum_le_sum fun j _ => hb₁ j)

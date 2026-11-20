@@ -161,7 +161,8 @@ theorem dlogIs {n : ℕ} {c : TorsChar tX (spMap (algebraMap A O) ≫ x) (p ^ n)
         rfl
   intro a w hw w' hw'
   rw [hD a w hw w' hw']
-  simp only [map_sum, map_mul, key]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, key]
 
 theorem exists_comb [IsDomain A] {Dw : Datum H} {act : PDivGroup.Action (𝓞 E) GG} {pol : GG ≅ GG.dual}
     {θ : TorsionMap t.G GG} {ε : (PDivGroup.mu p A).Tate} {τ : Dw.La →+ GG.Tate} (hP : IsPropG Dw t GG act pol θ ε τ)
@@ -200,7 +201,8 @@ theorem exists_comb [IsDomain A] {Dw : Datum H} {act : PDivGroup.Action (𝓞 E)
       rintro _ ⟨i, rfl⟩
       refine congrArg Additive.ofMul (((hk' i).symm.trans ?_ : (f (s (b i)).1 : K) = _))
       have h : pairing GG A (τ (b i)) χ = k i • ε := by
-        rw [map_sum, Finset.sum_eq_single i (fun j _ hj => ?_) (by simp)]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum, Finset.sum_eq_single i (fun j _ hj => ?_) (by simp)]
         · rw [map_nsmul]
           exact congrArg _ (((hP.constTate b).pair i i).trans (if_pos rfl))
         · rw [map_nsmul]
@@ -266,7 +268,8 @@ theorem htSt : HTSt := by
       DlogIs tX p 1 χ (fun i => spMap (dualMap κ) ≫ (u i).1.left ≫ φ)
         fun i => κ ((∑ j, (k j : ℕ) • om j).1 (u i)) := fun k χ h =>
     dlogIs θ h (hc 1) _ (by
-      rw [← dlog_val, map_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← dlog_val, map_sum, map_sum]
       refine (map_sum (LinearMap.proj 1 ∘ₗ GG.omegaSub.subtype) _ _).trans (Finset.sum_congr rfl fun j _ => ?_)
       rw [map_nsmul, map_nsmul, map_nsmul]
       exact congrArg _ (hom₁ j).symm) u he.1
@@ -283,7 +286,8 @@ theorem htSt : HTSt := by
   refine and_congr_left fun _ => ?_
   have ev : ∀ k : Fin GG.height → Fin p, ∑ i, (κ ((∑ j, (k j : ℕ) • om j).1 (u i)) : ↥C.S) * a i =
       ∑ j, (k j : ℕ) • ∑ i, (κ ((om j).1 (u i)) : ↥C.S) * a i := fun k => by
-    simp only [AddSubmonoidClass.coe_finsetSum, Finset.sum_apply, AddSubmonoidClass.coe_nsmul, Pi.smul_apply, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [AddSubmonoidClass.coe_finsetSum, Finset.sum_apply, AddSubmonoidClass.coe_nsmul, Pi.smul_apply, map_sum,
       map_nsmul, Finset.sum_mul, Finset.smul_sum, smul_mul_assoc]
     exact Finset.sum_comm
   simp only [ev]

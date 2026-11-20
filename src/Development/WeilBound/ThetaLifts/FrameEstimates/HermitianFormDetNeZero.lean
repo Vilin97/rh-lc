@@ -120,7 +120,8 @@ theorem soCut_of : SoCut := by
     conv_lhs => rw [← epU, map_smul]
     simp only [Prod.smul_fst, Prod.smul_snd, smul_dotProduct, dotProduct_smul, smul_eq_mul, mul_sub]
   refine ⟨m, χ, hι.bij.injOn hφ (Submodule.sum_mem _ fun i _ => hχ i) ?_, fun i => ⟨⟨hχ i, ι, hι, fun Y hY => ?_⟩, ?_⟩⟩
-  · rw [map_sum, hsum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum, hsum]
     exact Finset.sum_congr rfl fun i _ => (hχg i).symm
   · rw [hχg]
     exact (hg i).2.1 Y (hz Y hY)

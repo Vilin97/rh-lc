@@ -42,7 +42,8 @@ theorem isFrame_sum_smul {X : Scheme.{0}} {F : X.Modules} {V : X.Opens} {m : ℕ
   have key : ⇑(Fintype.linearCombination Γ(X, W) fun j => resM F h (∑ l, M l j • e l)) =
       ⇑(Fintype.linearCombination Γ(X, W) fun i => resM F h (e i)) ∘ (M.map (resG X h)).mulVec := by
     funext a
-    simp only [Function.comp_apply, Fintype.linearCombination_apply, map_sum, GlobalTheory.Twist.resM_smul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Function.comp_apply, Fintype.linearCombination_apply, map_sum, GlobalTheory.Twist.resM_smul,
       Finset.smul_sum, Matrix.mulVec, dotProduct, Finset.sum_smul, Matrix.map_apply, smul_smul]
     rw [Finset.sum_comm]
     simp only [mul_comm]
@@ -64,7 +65,8 @@ theorem exists_isTri_of_mul_coef : ∀ (X : Scheme.{0}) (A V V' : X.Opens) (h : 
   have hQ : be.toMatrix (fun i => resM F inf_le_left (e' i)) = Q.map (resG X (inf_le_left : V' ⊓ A ≤ V')) := by
     ext l j : 1
     rw [Matrix.map_apply, Module.Basis.toMatrix_apply]
-    simp only [e', map_sum (resM F _), GlobalTheory.Twist.resM_smul, GlobalTheory.Twist.resM_resM]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [e', map_sum (resM F _), GlobalTheory.Twist.resM_smul, GlobalTheory.Twist.resM_resM]
     simp only [← he.basis_apply hVA]
     rw [Module.Basis.repr_sum_self]
   have hUN : ((P : Matrix (Fin r) (Fin r) Γ(X, V')).map (resG X (inf_le_left : V' ⊓ A ≤ V')) *

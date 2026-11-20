@@ -105,7 +105,8 @@ theorem exists_generator : ∃ ξ : Ainf l, RingHom.ker (Per.θ l) = Ideal.span 
     have h2 : Per.θ l (WittVector.frobenius (Per.tm ((frobeniusEquiv (Per.Fl l) l).symm e))) = 1 := by
       rw [WittVector.frobenius_eq_map_frobenius, WittVector.map_teichmuller, frobenius_def,
         frobeniusEquiv_symm_pow_p, WittVector.fontaineTheta_teichmuller, he]
-    simp only [GlobalTheory.MemLoc.xi, map_sum, map_pow, h2]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [GlobalTheory.MemLoc.xi, map_sum, map_pow, h2]
     simp
   refine ⟨GlobalTheory.MemLoc.xi e, GlobalTheory.MemLoc.ker_theta_eq_span_xi hE, fun h0 => ?_, h⟩
   rw [h0, map_zero, map_zero] at h
@@ -386,7 +387,8 @@ theorem SemiBC.finite_projective {A B M N : Type} [CommRing A] [CommRing B] [Add
     have h1 : x = ∑ i, s x i • p (Pi.single i 1) := by
       conv_lhs => rw [← LinearMap.id_apply (R := A) x, ← hps, LinearMap.comp_apply, pi_eq_sum_univ' (s x)]
       simp
-    conv_rhs => rw [h1, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_rhs => rw [h1, map_sum]
     exact Finset.sum_congr rfl fun i _ => (u.map_smulₛₗ _ _).symm
   exact ⟨Module.Finite.of_surjective Q fun y => ⟨S y, LinearMap.congr_fun hQ y⟩,
     Module.Projective.of_split S Q hQ⟩

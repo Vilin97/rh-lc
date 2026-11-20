@@ -49,7 +49,8 @@ theorem sec_mul (pr_sec : ∀ a, pr (sec a) = a) (sec_pr : ∀ x, sec (pr x) = e
 theorem secM_mul (pr_sec : ∀ a, pr (sec a) = a) (sec_pr : ∀ x, sec (pr x) = e * x) (Z W : Matrix m m k) :
     (Z * W).map sec = Z.map sec * W.map sec := by
   ext i j
-  simp only [Matrix.map_apply, Matrix.mul_apply, map_sum, sec_mul e pr sec pr_sec sec_pr]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.map_apply, Matrix.mul_apply, map_sum, sec_mul e pr sec pr_sec sec_pr]
 
 theorem secM_one (pr_sec : ∀ a, pr (sec a) = a) (sec_pr : ∀ x, sec (pr x) = e * x) :
     (1 : Matrix m m k).map sec = e • (1 : Matrix m m A) := by

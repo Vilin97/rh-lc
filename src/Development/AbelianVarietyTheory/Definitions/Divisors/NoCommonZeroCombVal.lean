@@ -574,7 +574,8 @@ omit [DecidableEq α] in
 
 theorem combVal_eq (b : α → B.Sec) (M : Matrix α α ℂ) (a : α) :
     combVal p σ b M a = SecC.val (∑ j, M j a • SecC.of p σ (b j)) := by
-  simp only [combVal, map_sum, map_smul, SecC.val_of]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [combVal, map_sum, map_smul, SecC.val_of]
 
 theorem noCommonZero_combVal {b : α → B.Sec} (hb : ⨆ j, nonzeroLocus (b j) = ⊤)
     {M : Matrix α α ℂ} (hM : M.det ≠ 0) : NoCommonZero (combVal p σ b M) := by

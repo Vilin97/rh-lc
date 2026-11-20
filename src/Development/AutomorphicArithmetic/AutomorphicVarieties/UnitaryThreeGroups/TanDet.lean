@@ -24,7 +24,8 @@ private theorem sndL_one (F : R →ₐ[O] DualNumber κ) : sndL F 1 = 0 := by
 private theorem map_sndL_mul {m : ℕ} (F : R →ₐ[O] DualNumber κ) (A B : Matrix (Fin m) (Fin m) R) :
     (A * B).map (sndL F) = A.map (sndL F) * B.map (dualFst F) + A.map (dualFst F) * B.map (sndL F) := by
   ext i j
-  simp only [Matrix.map_apply, Matrix.mul_apply, Matrix.add_apply, map_sum, sndL_mul, ← Finset.sum_add_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.map_apply, Matrix.mul_apply, Matrix.add_apply, map_sum, sndL_mul, ← Finset.sum_add_distrib]
   exact Finset.sum_congr rfl fun k _ => by ring
 
 private theorem map_sndL_one {m : ℕ} (F : R →ₐ[O] DualNumber κ) :

@@ -39,7 +39,8 @@ theorem PhiSeq_smulS (hp : (PD.p : LL) ≠ 0) {T : LocLat G Qp LL O} {m : ℤ} {
     ⟨Int.toNat (k - m) + 1, by have := Int.self_le_toNat (k - m); push_cast; omega⟩
   rw [smulS_eq_sum (LB_PhiSeq hd) _ k N hN]
   simp only [PhiSeq]
-  rw [smulS_eq_sum hd g k N hN, map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [smulS_eq_sum hd g k N hN, map_sum, Finset.smul_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_smul, smul_smul, PowerSeries.coeff_rescale, smul_smul]
   congr 1
@@ -348,7 +349,8 @@ theorem key_idJ {T : LocLat G Qp LL O} (Φ : W.DD T →ₗ[O] W.DD T) (ψ : LetA
         L ^ (σ + (J - e y)) • (r y • Φ (cc y)) := by
     intro y _
     rw [sub_smul, smul_sub, smul_smul (L ^ σ), ← pow_add]
-  rw [lO_smul, map_sub, map_sum, hΦL, Finset.sum_congr rfl fun y _ => hφ y, smul_sub, smul_sub,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [lO_smul, map_sub, map_sum, hΦL, Finset.sum_congr rfl fun y _ => hφ y, smul_sub, smul_sub,
     Finset.smul_sum, Finset.smul_sum, Finset.sum_congr rfl ht, Finset.sum_congr rfl hs,
     Finset.sum_sub_distrib, smul_smul, smul_smul, mul_comm (L ^ J)]
   abel
@@ -412,7 +414,8 @@ theorem expH (hA : Formalism.MainNotions.LiftingTheory.CaseA W) (hR : RingA W) (
           (⟨cc y, hcc y⟩ : ↥(W.N T)) := by
       apply Subtype.ext
       simp only [hh, Submodule.coe_sub, Submodule.coe_smul, Submodule.coe_sum, smul_smul]
-    rw [hhsub, levB_sub, map_sum, Pi.sub_apply, Finset.sum_apply, levB_smul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hhsub, levB_sub, map_sum, Pi.sub_apply, Finset.sum_apply, levB_smul,
       smulSeries_apply_zero (laurentBounded_zero_of_trivial_twist C hs h4 i _)]
     have h0 : ∀ y ∈ Finset.range K, C.levB T i 1 ((((PD.p : ℕ) : LetA O n) ^ (J - e y) * W.π₀ ^ y) •
         (⟨cc y, hcc y⟩ : ↥(W.N T))) 0 = 0 := by
@@ -602,7 +605,8 @@ theorem tHor_of (Ct : CmpTie W E ιdR p1 tS zS) (hinj : Function.Injective (alge
       smulS (W.lev (i + ((j' + 1 : ℕ) : ZMod n)) ζ Bb)
         (smulS (W.lev (i + ((j' + 1 : ℕ) : ZMod n)) ζ (Formalism.MainNotions.LiftingTheory.qp W ^ k * a)) Stuff) := by
     simp only [U]
-    rw [levB_smul, levB_add, map_sum, levB_smul, hEBh,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [levB_smul, levB_add, map_sum, levB_smul, hEBh,
       Finset.sum_congr rfl fun y hy => by rw [levB_smul, hLxc y hy]]
     rw [smulS_comm hΦh, Finset.sum_congr rfl fun y _ => smulS_comm (hΦc y) _ _,
       ← smulS_sum _ _ (fun y _ => LB_smulS (hΦc y) _),

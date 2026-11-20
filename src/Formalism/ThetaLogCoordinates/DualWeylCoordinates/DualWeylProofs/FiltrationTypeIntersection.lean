@@ -36,12 +36,14 @@ lemma qd_A_can {M : GLMod n} (CF : ColFam M) (j : CF.J) (g : GL (Fin n) ℚ) :
       qd_phQ CF j (qd_gcan (CF.mu j) g) := by
   funext i
   have h := congrArg (evGL g) (qb_equiv_apply CF j i (canT (CF.mu j)))
-  simp only [map_sum, map_mul, map_intCast] at h
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, map_intCast] at h
   simpa [Matrix.mulVec, dotProduct, ColFam.vec, qd_phQ, qd_gcan] using h
 
 lemma qd_ev_phQ {M : GLMod n} (CF : ColFam M) (j : CF.J) (nu : Fin n → ℤ) (w : TIdx (CF.mu j) → ℚ) (i : M.ι) :
     qb_ev M ℚ nu (qd_phQ CF j w) i = ∑ I, w I • qb_ev M ℚ nu (fun i => (CF.vec j I i : ℚ)) i := by
-  rw [qd_phQ_eq, ← qb_evL_apply, map_sum, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [qd_phQ_eq, ← qb_evL_apply, map_sum, Finset.sum_apply]
   simp only [map_smul, qb_evL_apply, Pi.smul_apply]
 
 lemma qd_ev_phQ_zero {M : GLMod n} (CF : ColFam M) (j : CF.J) (nu : Fin n → ℤ) (h : ¬ DomLE nu (CF.mu j))

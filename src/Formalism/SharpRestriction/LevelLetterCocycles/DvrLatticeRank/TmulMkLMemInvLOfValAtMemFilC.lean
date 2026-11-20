@@ -323,7 +323,8 @@ theorem compare {ρ : ℕ} (hW : WKill W F ρ) (hNL : NinLam W T₁ Eπ h') (V�
       smulLA W T π' c (Eπ ^ h') (∑ j, e j ⊗ₜ z j) =
         ∑ j, algebraMap (LetA O n) W.EE ((letE c : LetA O n) * a j) ⊗ₜ z j := by
     intro T z
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [ModelFPf.smulLA_tmul, he, ← mul_assoc, hΛu.mul_val_inv, one_mul]
   have hinjΛ : Function.Injective (smulLA W T₁ π' c (Eπ ^ h')) := by

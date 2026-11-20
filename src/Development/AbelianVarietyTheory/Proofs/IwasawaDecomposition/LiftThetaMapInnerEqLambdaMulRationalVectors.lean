@@ -46,7 +46,8 @@ theorem inner_theta_rat_eq_lam : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (
       (BlockDat.XQ_herm hOk.conj (hOk.lifts i t) hOk.irr).2
     show Formalism.HermitianLatticesTheory.majAt (Pi.basisFun D.what₂.LL _) ((A3.A.fam.L i t).XQ (A3.A.fam.lvlA F.P0 F.ψ0) ((A3.fam3.toSub2 (zsOf R F)).Zl i t)) A3.A.v0 a b = _
     rw [Formalism.L2.DIV.majAt_eq, hm]
-    simp only [dotProduct, Matrix.mulVec, Pi.star_apply, map_sum, map_mul, Matrix.map_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [dotProduct, Matrix.mulVec, Pi.star_apply, map_sum, map_mul, Matrix.map_apply]
     refine Finset.sum_congr rfl fun k _ => ?_
     have hc : A3.A.v0.embedding (star (a k)) = starRingEnd ℂ (A3.A.v0.embedding (a k)) := hOk.conj (a k)
     rw [hc]

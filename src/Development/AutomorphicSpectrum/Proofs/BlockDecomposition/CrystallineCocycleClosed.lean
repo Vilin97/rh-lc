@@ -21,7 +21,8 @@ variable {A A' : Type} [CommRing A] [CommRing A'] {J : Ideal A} {J' : Ideal A'}
 theorem dlog_map {δ : DividedPowers J} {δ' : DividedPowers J'} {f : A →+* A'} (hf : IsDPMorphism δ δ' f)
     (N : ℕ) {v : A} (hv : v - 1 ∈ J) : f (dlog δ N v) = dlog δ' N (f v) := by
   unfold dlog
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   have e : f v - 1 = f (v - 1) := by rw [map_sub, map_one]
   rw [e, hf.dpow_comp _ hv]

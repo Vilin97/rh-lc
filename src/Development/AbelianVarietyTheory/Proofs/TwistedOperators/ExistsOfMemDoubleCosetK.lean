@@ -21,7 +21,8 @@ theorem inclVec_apply (v : Fin n → O) (i : Fin n) : inclVec O F n v i = algebr
 theorem inclVec_mulVec (A : Matrix (Fin n) (Fin n) O) (v : Fin n → O) :
     inclVec O F n (A *ᵥ v) = A.map (algebraMap O F) *ᵥ inclVec O F n v := by
   funext i
-  simp [inclVec_apply, Matrix.mulVec, dotProduct, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [inclVec_apply, Matrix.mulVec, dotProduct, map_sum]
 
 theorem mem_scaleBy (a : O) (L : Submodule O (Fin n → F)) (x : Fin n → F) :
     x ∈ scaleBy O a L ↔ ∃ y ∈ L, a • y = x := Iff.rfl
@@ -128,7 +129,8 @@ theorem inclVec_injective (hinj : Function.Injective (algebraMap O F)) :
 theorem residue_mulVec (A : Matrix (Fin n) (Fin n) O) (v : Fin n → O) :
     (fun i => residue O ((A *ᵥ v) i)) = A.map (residue O) *ᵥ fun i => residue O (v i) := by
   funext i
-  simp [Matrix.mulVec, dotProduct, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Matrix.mulVec, dotProduct, map_sum]
 
 theorem reduction_intLattice (hinj : Function.Injective (algebraMap O F))
     (A : Matrix (Fin n) (Fin n) O) :

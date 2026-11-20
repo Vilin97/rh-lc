@@ -80,14 +80,16 @@ theorem finrank_le_card_mul_finrank_eig_baseChange : ∀ (K L Γ R W : Type) [Fi
     intro w
     rw [mem_eig]
     intro k
-    simp only [T, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [T, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, Finset.smul_sum]
     refine Fintype.sum_equiv (Equiv.mulLeft k) _ _ (fun g => ?_)
     rw [Equiv.coe_mulLeft, Subgroup.coe_mul, map_mul ρ', Module.End.mul_apply, smul_smul, map_mul lam]
     congr 1
     rw [← Units.val_mul, mul_inv, mul_inv_cancel_left]
   have hjT : ∀ w, j (T w) = ∑ g : H, (((lam g)⁻¹ : Lˣ) : L) • actL g (j w) := by
     intro w
-    simp only [T, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, hj]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [T, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, hj]
   let Ψ : L ⊗[K] Vm →ₗ[L] (H → eig ρ' H lam) :=
     LinearMap.pi fun h => LinearMap.codRestrict (eig ρ' H lam) (T ∘ₗ e.toLinearMap ∘ₗ (A h).baseChange L)
       (fun y => hT _)

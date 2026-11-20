@@ -44,7 +44,8 @@ private theorem sqf_smul_right {n : ℕ} (J : Matrix (Fin n) (Fin n) R) (r : R) 
 
 private theorem sqf_symm (hc : ∀ z, c (c z) = z) {n : ℕ} (J : Matrix (Fin n) (Fin n) R) (hJ : ∀ i j, c (J j i) = J i j)
     (a b : Fin n → R) : sqf c J b a = c (sqf c J a b) := by
-  simp only [sqf, dotProduct, Matrix.mulVec, map_sum, map_mul, hc, hJ, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [sqf, dotProduct, Matrix.mulVec, map_sum, map_mul, hc, hJ, Finset.mul_sum]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 
@@ -181,7 +182,8 @@ private theorem UpperTheory.exists_plane_projection_frame {F E : Type} [Field F]
     rw [e.symm_apply_apply]
   have hyx : form σ X.J H.y H.x = 1 := by
     have : form σ X.J H.y H.x = σ (form σ X.J H.x H.y) := by
-      simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, hX.herm, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, hX.herm, Finset.mul_sum]
       rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun k _ => ?_
       ring

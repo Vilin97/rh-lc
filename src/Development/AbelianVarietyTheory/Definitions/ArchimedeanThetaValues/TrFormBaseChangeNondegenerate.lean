@@ -123,7 +123,8 @@ theorem trForm_baseChange_self_eq_sum (H : Host E) (v : ℝ ⊗[ℤ] 𝓞 E) :
 theorem trForm_baseChange_symm (H : Host E) (v w : ℝ ⊗[ℤ] 𝓞 E) :
     (trForm H).baseChange ℝ v w = (trForm H).baseChange ℝ w v := by
   apply Complex.ofReal_injective
-  rw [← Complex.conj_ofReal ((trForm H).baseChange ℝ w v), trForm_baseChange_eq_sum, trForm_baseChange_eq_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Complex.conj_ofReal ((trForm H).baseChange ℝ w v), trForm_baseChange_eq_sum, trForm_baseChange_eq_sum, map_sum]
   exact Finset.sum_congr rfl fun τ _ => by rw [map_mul, Complex.conj_conj, mul_comm]
 
 theorem trForm_baseChange_adj (H : Host E) (a : 𝓞 E) (v w : ℝ ⊗[ℤ] 𝓞 E) :

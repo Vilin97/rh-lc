@@ -191,7 +191,8 @@ theorem wK_dOp (hσ : IsURepOn (UJset ε) σ) (hD : IsDerivedOn ε σ D E) {k : 
     wK hD hk * dOp ε (eT E) cpT = dOp ε (eT E) cpT * wK hD hk := by
   apply TensorProduct.ext'
   intro v f
-  simp only [Module.End.mul_apply, dOp, LinearMap.sum_apply, map_sum, eT, cpT, TensorProduct.map_tmul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Module.End.mul_apply, dOp, LinearMap.sum_apply, map_sum, eT, cpT, TensorProduct.map_tmul,
     LinearMap.id_apply, wK, AlgHom.toLinearMap_apply]
   have key : ∀ i a, sigD hD hk (E a i v) ⊗ₜ[ℂ] ff ε k (cpFock i a f) =
       ∑ c, ∑ d, ∑ x : Fin n × Fin n,
@@ -228,7 +229,8 @@ theorem wK_dOp' (hσ : IsURepOn (UJset ε) σ) (hD : IsDerivedOn ε σ D E) {k :
     wK hD hk * dOp' ε (eT E) cmT = dOp' ε (eT E) cmT * wK hD hk := by
   apply TensorProduct.ext'
   intro v f
-  simp only [Module.End.mul_apply, dOp', LinearMap.neg_apply, map_neg, LinearMap.sum_apply, map_sum, eT, cmT,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Module.End.mul_apply, dOp', LinearMap.neg_apply, map_neg, LinearMap.sum_apply, map_sum, eT, cmT,
     TensorProduct.map_tmul, LinearMap.id_apply, wK, AlgHom.toLinearMap_apply]
   congr 1
   have key : ∀ i a, sigD hD hk (E i a v) ⊗ₜ[ℂ] ff ε k (cmFock i a f) =

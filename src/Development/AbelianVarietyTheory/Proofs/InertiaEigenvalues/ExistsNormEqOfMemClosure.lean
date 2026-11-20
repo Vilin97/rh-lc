@@ -45,7 +45,8 @@ theorem exists_finite {F : Type} [Field F] [NumberField F] (ψ : F →+* PadicAl
   let b := Module.finBasis ℚ F
   refine ⟨IntermediateField.adjoin ℚ_[p] (Set.range fun i => ψ (b i)), ?_, fun a => ?_, fun x hx => ?_⟩
   · exact IntermediateField.finiteDimensional_adjoin fun x _ => Algebra.IsIntegral.isIntegral x
-  · rw [← b.sum_repr a, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [← b.sum_repr a, map_sum]
     refine sum_mem fun i _ => ?_
     rw [Rat.smul_def, map_mul, map_ratCast]
     exact mul_mem (SubfieldClass.ratCast_mem _ _) (IntermediateField.subset_adjoin _ _ ⟨i, rfl⟩)

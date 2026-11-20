@@ -334,7 +334,8 @@ theorem sp_eval_colSub (β : ι → Matrix (Fin a) (Fin a) ℂ) (x : ι → Matr
   | mul_X p v hp =>
     rw [map_mul, map_mul, hp, map_mul]
     congr 1
-    simp only [colSub, aeval_X, map_sum, map_mul, eval_C, eval_X]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [colSub, aeval_X, map_sum, map_mul, eval_C, eval_X]
     exact Finset.sum_congr rfl fun r _ => mul_comm _ _
 
 theorem sp_det_bor {β : ι → Matrix (Fin a) (Fin a) ℂ} (hβ : IsBor β) (τ : ι) : (β τ).det = ∏ r, β τ r r :=

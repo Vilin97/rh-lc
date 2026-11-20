@@ -112,7 +112,8 @@ theorem generic_minor_norm {K : Type u} [NormedField K] {l d N0 n : ℕ} (hl : l
       = Matrix.of fun (r c : Fin n) =>
         (MvPolynomial.X (t r, z, e c) : MvPolynomial (ZMod d × Fin N0 × Fin N0) (ZMod l)) ^ (L r) := by
     ext i i'
-    simp only [AlgHom.mapMatrix_apply, Matrix.map_apply, Matrix.of_apply, map_sum, map_mul, map_pow,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [AlgHom.mapMatrix_apply, Matrix.map_apply, Matrix.of_apply, map_sum, map_mul, map_pow,
       MvPolynomial.bind₁_X_right, f, if_neg (hts i), if_true]
     rw [Finset.sum_eq_single (e i')]
     · simp

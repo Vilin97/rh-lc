@@ -108,7 +108,8 @@ theorem exists_coeff (d : DecoSet E n ST SG) (P : ST) (h : d.1.at P.1 = stdAt E 
   have h3 := d.2.f_smul P s x (h ▸ hx)
   rw [h2, h1] at h3
   have h4 : algebraMap (𝓞 E) E (∑ j, c j * r j) = algebraMap (𝓞 E) E s * ∑ j, algebraMap (𝓞 E) E (c j) * x j := by
-    rw [map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_mul, hr, Pi.smul_apply, Algebra.smul_def]
     ring
@@ -259,7 +260,8 @@ theorem ptMat_mulVec (ι : X.K →+* ℂ_[p]) (un : X.Tau → ℂ_[p]) (x : HomE
     ptMat ι un x τ *ᵥ (fun i => ι (X.emb τ (y i))) = un τ • fun i => ι (X.emb τ (adj x y i)) := by
   funext α
   conv_rhs => rw [← LinearMap.toMatrix'_mulVec]
-  simp only [ptMat, Matrix.mulVec, dotProduct, Matrix.of_apply, Pi.smul_apply, smul_eq_mul, map_sum, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [ptMat, Matrix.mulVec, dotProduct, Matrix.of_apply, Pi.smul_apply, smul_eq_mul, map_sum, map_mul,
     LinearMap.toMatrix'_apply, Finset.mul_sum, mul_assoc]
 
 theorem admissible_adjointRationalPointPadicMatrix {ι : X.K →+* ℂ_[p]} {w : HeightOneSpectrum (𝓞 X.K)} (h : Induces ι w) {un : X.Tau → ℂ_[p]}

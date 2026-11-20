@@ -320,7 +320,8 @@ theorem lamS_comp_symm (σ : Equiv.Perm (Fin n)) (S : Finset (Fin n)) :
   simp only [Function.comp_apply, lamS_apply, Finset.mem_map_equiv]
 
 theorem permAct_esymmL (r : ℕ) (σ : Equiv.Perm (Fin n)) : permAct σ (esymmL n r) = esymmL n r := by
-  rw [esymmL, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [esymmL, map_sum]
   simp only [permAct_monomial, lamS_comp_symm]
   refine Finset.sum_nbij' (fun S => S.map σ.toEmbedding) (fun S => S.map σ.symm.toEmbedding)
     ?_ ?_ ?_ ?_ (fun _ _ => rfl)

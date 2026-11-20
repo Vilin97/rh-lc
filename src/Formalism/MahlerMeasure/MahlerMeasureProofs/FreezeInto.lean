@@ -173,7 +173,8 @@ theorem freeze_inv (p : ℕ) [Fact p.Prime] {N r : ℕ} (LL : M.Letters N) (ρ :
     simp only [M.freezeSub]
     by_cases hv : LL.vec i
     · by_cases hc' : c' = ρ
-      · rw [if_pos hv, if_pos hc', _root_.map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        · rw [if_pos hv, if_pos hc', _root_.map_sum]
         simp only [glAct_full_mul, hX, snoc_vec_castSucc, snoc_vec_last, hv, if_true, Bool.false_eq_true,
           if_false, mul_ite, mul_zero, mul_neg, Finset.sum_add_distrib, Finset.sum_ite_eq', Finset.mem_univ]
         ring

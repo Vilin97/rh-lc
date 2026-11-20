@@ -83,7 +83,8 @@ theorem fock_lattice_linear_map_closed {p : ℕ} (hV : ValuationProperties p O) 
     (u : MvPolynomial σ (KK O) →ₗ[KK O] MvPolynomial σ (KK O))
     (h : ∀ m c, InBB (O := O) p (monomial m c) → InBB (O := O) p (u (monomial m c)))
     (F : MvPolynomial σ (KK O)) (hF : InBB (O := O) p F) : InBB (O := O) p (u F) := by
-  rw [← F.support_sum_monomial_coeff, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← F.support_sum_monomial_coeff, map_sum]
   exact fock_lattice_sum_mem hV _ _ fun m _ => h m _ ((fock_lattice_iff_monomials hV F).1 hF m)
 
 theorem valuation_intCast_padicVal {p : ℕ} (hV : ValuationProperties p O) (z : ℤ) (hz : z ≠ 0) :
@@ -139,7 +140,8 @@ theorem mem_integral_poly_iff_coeff {σ : Type} (F : MvPolynomial σ (KK O)) :
   · intro h
     choose g hg using h
     refine ⟨∑ m ∈ F.support, monomial m (g m), ?_⟩
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     conv_rhs => rw [← F.support_sum_monomial_coeff]
     refine Finset.sum_congr rfl fun m _ => ?_
     rw [map_monomial, hg]
@@ -151,7 +153,8 @@ theorem integral_poly_linear_map_closed {σ : Type} (u : MvPolynomial σ (KK O) 
     (h : ∀ m, u (monomial m 1) ∈ IntPol O σ) (F : MvPolynomial σ (KK O)) (hF : F ∈ IntPol O σ) :
     u F ∈ IntPol O σ := by
   choose g hg using (mem_integral_poly_iff_coeff F).1 hF
-  rw [← F.support_sum_monomial_coeff, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← F.support_sum_monomial_coeff, map_sum]
   refine Submodule.sum_mem _ fun m _ => ?_
   have e : monomial m (F.coeff m) = (algebraMap O (KK O) (g m)) • monomial m (1 : KK O) := by
     rw [smul_monomial, smul_eq_mul, mul_one, hg]

@@ -34,7 +34,8 @@ theorem wseed_of_seed : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (bk : BK K) 
     have h2 := (hu.dvd_mul_left).1 h1
     convert h2 using 1
     · simp only [BK.iS, RingHom.comp_apply, map_pow]
-    · simp only [Matrix.mul_apply, Matrix.map_apply, map_sum, map_mul, BK.iS, RingHom.comp_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp only [Matrix.mul_apply, Matrix.map_apply, map_sum, map_mul, BK.iS, RingHom.comp_apply]
   · intro m
     refine ⟨0, 1, fun i j => by simp, fun g G hG i j => ?_⟩
     simp [Matrix.map_one]

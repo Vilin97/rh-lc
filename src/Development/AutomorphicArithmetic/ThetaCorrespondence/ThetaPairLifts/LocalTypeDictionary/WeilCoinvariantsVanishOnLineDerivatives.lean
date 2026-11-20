@@ -57,7 +57,8 @@ theorem coinvariants_kill_line_derivative : _root_.GlobalTheory.FunPr.ThetaLocal
         refine ⟨_, ⟨G, z, hG', rfl⟩, fun g => ?_⟩
         have := h (g, 1) z
         simpa only [MonoidHom.inl_apply, Prod.mk_mul_mk, mul_one] using this
-  rw [hsum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hsum, map_sum]
   exact Finset.sum_eq_zero fun τ _ => hk τ
 end GlobalTheory.CoinvLine
 end

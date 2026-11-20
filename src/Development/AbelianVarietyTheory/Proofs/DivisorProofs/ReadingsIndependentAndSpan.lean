@@ -34,7 +34,8 @@ theorem card_le_finrank_of_semilinear {K C Y : Type} [Field K] [AddCommGroup C] 
   have hle : Submodule.span ℂ (Set.range j) ≤ Submodule.span ℂ (Set.range fun k => j (b k)) := by
     refine Submodule.span_le.2 ?_
     rintro _ ⟨x, rfl⟩
-    rw [← b.sum_repr x, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← b.sum_repr x, map_sum]
     refine Submodule.sum_mem _ fun k _ => ?_
     rw [map_smulₛₗ]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨k, rfl⟩)
@@ -50,7 +51,8 @@ theorem linearIndependent_conj {ι : Type} {m : ℕ} {f : Fin m → ι → ℂ} 
   intro c hc k
   have h := hf (fun k => starRingEnd ℂ (c k)) (funext fun x => by
     have := congrArg (starRingEnd ℂ) (congrFun hc x)
-    simpa [Finset.sum_apply, map_sum] using this) k
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [Finset.sum_apply, map_sum] using this) k
   simpa using h
 
 theorem eval_eq_zero {D : D7} {V : HSp D} {S : D.what₂.Tau → SPar} (M : DSModel V S) {H : Type} [NormedAddCommGroup H]

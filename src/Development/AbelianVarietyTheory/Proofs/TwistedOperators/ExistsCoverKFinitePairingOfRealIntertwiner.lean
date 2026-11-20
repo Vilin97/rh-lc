@@ -38,7 +38,8 @@ private theorem barMat_map_conj_eq_reindex {p q n : ℕ} (e : Ix p q ≃ Fin n) 
 
 private theorem trace_map_conj' {p q : ℕ} (Z : Mat p q) :
     (Z.map (starRingEnd ℂ)).trace = (starRingEnd ℂ) Z.trace := by
-  rw [Matrix.trace, Matrix.trace, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.trace, Matrix.trace, map_sum]
   rfl
 
 private theorem norm_apply_sub_I_smul_apply (U : E ≃ₗᵢ⋆[ℂ] F) (x y : E) :

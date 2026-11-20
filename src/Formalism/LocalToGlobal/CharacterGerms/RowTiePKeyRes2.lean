@@ -155,7 +155,8 @@ theorem exists_lift (p : ℕ) [Fact p.Prime] [CharP k p] (Q : k[X]) (hQ : ∀ i,
   classical
   choose f hf using fun i => fixed_nat p (Q.coeff i) (hQ i)
   refine ⟨∑ i ∈ Q.support, Polynomial.monomial i ((f i : ℕ) : ℤ), ?_⟩
-  rw [Polynomial.map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Polynomial.map_sum]
   conv_rhs => rw [Q.as_sum_support]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [Polynomial.map_monomial, hf i]

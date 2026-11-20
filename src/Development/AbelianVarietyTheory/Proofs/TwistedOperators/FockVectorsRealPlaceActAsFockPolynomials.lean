@@ -72,7 +72,8 @@ private theorem a_dI_add_trace_smul_of_weight {p q : ℕ} {V : Type} [AddCommGro
     a (dI x) v + ((c : ℂ) * (dI x).trace) • v =
       (((∑ j, ((μ j + c : ℚ) : ℝ) * x j : ℝ) : ℂ) * Complex.I) • v := by
   have htr : (dI x).trace = ∑ j, (x j : ℂ) * Complex.I := Matrix.trace_diagonal _
-  rw [htr, dI_eq_sum x, map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [htr, dI_eq_sum x, map_sum, LinearMap.sum_apply]
   simp only [map_smul, LinearMap.smul_apply, hw, smul_smul, ← Finset.sum_smul, ← add_smul]
   congr 1
   push_cast
@@ -297,7 +298,8 @@ theorem trace_bar {p q : ℕ} {Y : Mat p q} (hY : Y ∈ upq p q) : (Y.map (starR
     rw [← Matrix.trace_neg, ← h1, Matrix.trace_mul_comm, ← Matrix.mul_assoc, hJJ, Matrix.one_mul,
       Matrix.trace_conjTranspose]
   have h3 : (Y.map (starRingEnd ℂ)).trace = starRingEnd ℂ Y.trace := by
-    simp [Matrix.trace, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Matrix.trace, map_sum]
   rw [h3, h2]
   rfl
 

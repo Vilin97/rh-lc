@@ -32,7 +32,8 @@ theorem height_comb_horizontal (hC : ArCalc) {k : Type} [CommRing k] {Y : Scheme
   refine ⟨Ψ, fun n g hg => ?_⟩
   have e₁ : ((comb L n).restr i).Isometric (comb (fun j => (L j).restr i) n) := by
     refine HermLB.icls_eq_iff.1 ?_
-    rw [HermLB.icls_pull, icls_comb, icls_comb, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [HermLB.icls_pull, icls_comb, icls_comb, map_sum]
     simp only [map_zsmul, ← HermLB.icls_pull]
   exact (e₁.isSelfInter hZ (hg.isSelfInter_restrict hY i rfl)).unique hZ (hΨ.1 n)
 
@@ -129,19 +130,22 @@ theorem mix_general (hC : ArCalc) {k : Type} [CommRing k] {Y : Scheme.{0}} [IsIn
         exact ⟨T, fun n g hg => (hT n g hg).trans (by rw [he'])⟩
     have hmove (n : Fin 5 → ℤ) : ((comb L n).restr i).Isometric ((comb L (moveExp n)).restr i) := by
       refine HermLB.icls_eq_iff.1 ?_
-      rw [HermLB.icls_pull, HermLB.icls_pull, icls_comb, icls_comb, map_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [HermLB.icls_pull, HermLB.icls_pull, icls_comb, icls_comb, map_sum, map_sum]
       simp only [map_zsmul]
       exact sum_moveExp (fun j => HermLB.IsomClass.pull i rfl (L j).icls) (HermLB.icls_eq_iff.2 e03) e14 n
     have hsum : ∑ n ∈ s, c n * ht n (i (genericPoint Z)) = T (aeval (![X 3, X 4, X 2, X 3, X 4] :
         Fin 5 → MvPolynomial (Fin 5) ℝ) F) := by
-      rw [hFs, map_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hFs, map_sum, map_sum]
       refine Finset.sum_congr rfl fun n _ => ?_
       rw [map_smul, map_pow, aeval_lin_moveExp, map_smul, smul_eq_mul,
         GlobalTheory.AdjFlag.height_eq hp (hht n) (hht (moveExp n)) i (hmove n), hT _ _ (hht (moveExp n))]
     rw [hsum, hF, map_zero, mul_zero]
 
   have e₁ : Φ ((X 4 - X 0) * F) = ∑ n ∈ s, c n * Φ' (X none * rename some (lin fun i => (n i : ℝ)) ^ (d + 1)) := by
-    rw [hFs, Finset.mul_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hFs, Finset.mul_sum, map_sum]
     refine Finset.sum_congr rfl fun n _ => ?_
     rw [mul_smul_comm, map_smul, smul_eq_mul, ← map_pow, key]
   have e₂ : ∑ n ∈ s, c n * ∑ᶠ z, ((((L 0).dual.tens (L 4)).div hr).mult z : ℝ) * ht n z = 0 := by

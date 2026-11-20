@@ -87,7 +87,8 @@ theorem main : ∀ {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] [I
       if a = Fin.last r then 1 else 0 := fun a => by
     have : hf L S.Hm (S.f a) (∑ b, P b (Fin.last r) • S.f' b) =
         L.cj ((S.Zh * P) a (Fin.last r)) := by
-      rw [hf_sum_right, Matrix.mul_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hf_sum_right, Matrix.mul_apply, map_sum]
       refine Finset.sum_congr rfl fun b _ => ?_
       rw [hf_smul_right, map_mul, mul_comm, hf_symm L hh]
       rfl

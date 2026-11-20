@@ -240,7 +240,8 @@ theorem pf_GRDual : GRDual := by
     exact hk1.le
   have hsum : evR z (∑ᶠ k : ℤ, rho ((4 : ℝ) ^ k * μ h) • term ((4 : ℝ) ^ k) h) ≤ 32 * s / m := by
     by_cases hfin : (Function.support fun k : ℤ => rho ((4 : ℝ) ^ k * μ h) • term ((4 : ℝ) ^ k) h).Finite
-    · rw [finsum_eq_sum _ hfin, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [finsum_eq_sum _ hfin, map_sum]
       refine (Finset.sum_le_sum fun k _ => hterm k).trans ?_
       rw [← Finset.mul_sum]
       calc _ ≤ 4 * s * (2 * (4 / m)) :=

@@ -93,7 +93,8 @@ theorem isWeightedHomogeneous_sepBlock (k₀ : ι) {q : MvPolynomial (Coord n) �
     (hq : IsWeightedHomogeneous (coordDeg n) q m) :
     IsWeightedHomogeneous (coordDeg n) (sepBlock k₀ q) (Function.update m k₀ 0) := by
   classical
-  rw [q.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [q.as_sum, map_sum]
   refine IsWeightedHomogeneous.sum _ _ _ fun ν hν ↦ ?_
   have hw : Finsupp.weight (coordDeg n) ν = m := hq (mem_support_iff.mp hν)
   have hvar : ∀ v : Coord n, IsWeightedHomogeneous (coordDeg n)
@@ -259,7 +260,8 @@ theorem coeffVec_atBlock_mem (P : ArithVariety n) (k₀ : ι) (w : Cone (fun _ :
   classical
   have hp' := finsum_weightedHomogeneousComponent (coordDeg n) p
   rw [finsum_eq_sum _ (weightedHomogeneousComponent_finsupp p)] at hp'
-  rw [← hp', map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hp', map_sum, map_sum]
   refine Submodule.sum_mem _ fun m _ ↦ ?_
   have hqP : weightedHomogeneousComponent (coordDeg n) m p ∈ P.ideal := P.homogeneous p hp m
   have hqh := isWeightedHomogeneous_sepBlock k₀
@@ -341,7 +343,8 @@ theorem det_mem_projIdeal (P : ArithVariety n) (k₀ : ι) (D : ℕ)
     mem_offMonos.mpr ((hq i).2 (MvPolynomial.mem_support_iff.mp hν))
   have hexp : ∀ i, q i = ∑ μ : offMonos n k₀ D, rename (blockIncl k₀) (Bm i μ) * monomial μ.1 1 := by
     intro i
-    conv_lhs => rw [← joinBlock_sepBlock k₀ (q i), (sepBlock k₀ (q i)).as_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [← joinBlock_sepBlock k₀ (q i), (sepBlock k₀ (q i)).as_sum, map_sum]
     rw [Finset.sum_subset (hsupp i) ?_, ← Finset.sum_coe_sort (offMonos n k₀ D)]
     · refine Finset.sum_congr rfl fun μ _ ↦ ?_
       rw [joinBlock, coe_eval₂Hom, eval₂_monomial, monomial_eq, C_1, one_mul]
@@ -367,7 +370,8 @@ theorem det_mem_projIdeal (P : ArithVariety n) (k₀ : ι) (D : ℕ)
   choose r hr using P.relevant
   let μs : Coord n →₀ ℕ := ∑ k ∈ Finset.univ.erase k₀, Finsupp.single ⟨k, r k⟩ D
   have hμs : μs ∈ offMonos n k₀ D := by
-    rw [mem_offMonos, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [mem_offMonos, map_sum]
     funext j
     rw [Finset.sum_apply]
     simp only [Finsupp.weight_single, coordDeg, Pi.smul_apply, Pi.single_apply, smul_eq_mul, mul_ite,

@@ -366,7 +366,8 @@ private theorem logAt_top_lemma_6 {X : Scheme.{0}} [IsIntegral X] (Z : Set X) (G
     intro g hg i
     obtain ⟨u, m, hu, rfl⟩ := (hlog g).1 hg
     rw [dlog_prod_lemma_4]
-    simp only [map_add, map_sum, Finsupp.add_apply, Finsupp.finset_sum_apply, mul_add, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_add, map_sum, Finsupp.add_apply, Finsupp.finset_sum_apply, mul_add, Finset.mul_sum]
     refine add_mem ?_ (sum_mem fun j hj => ?_)
     · rw [show dlog u = ((u⁻¹ : X.functionFieldˣ) : X.functionField) • dK (u : X.functionField) from rfl,
         map_smul, Finsupp.smul_apply, smul_eq_mul]

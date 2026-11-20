@@ -96,14 +96,16 @@ theorem span_eq_of_basis {w : Valuation C ℝ≥0} {v : AddValuation C (WithTop 
         have := congrArg Subtype.val hrep
         simp only [Submodule.coe_sum, Submodule.coe_smul] at this
         exact this.symm
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       conv_lhs => rw [h2]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_smul, hxs i]
     rw [hwd _ _ hπ]
     have : g (∑ i, b.repr ⟨π x, hxM⟩ i • xs i) = ∑ i, ((b.repr ⟨π x, hxM⟩ i : Int0 v) : C) • g (xs i) := by
       change gh _ = _
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       exact Finset.sum_congr rfl fun i _ => hsmul _ _
     rw [this]
     refine Submodule.sum_mem _ fun i _ => ?_
@@ -132,7 +134,8 @@ theorem linearIndependent_mkQ {p q : ℕ} (F : Submodule C (Fin (p + q) → C))
   intro s c hs i hi
   have h1 : ∑ j ∈ s, c j • u j ∈ F := by
     have : F.mkQ (∑ j ∈ s, c j • u j) = 0 := by
-      rw [map_sum]; simp only [map_smul]; exact hs
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]; simp only [map_smul]; exact hs
     exact (Submodule.Quotient.mk_eq_zero F).1 this
   rw [← hspan, Submodule.mem_span_range_iff_exists_fun] at h1
   obtain ⟨d, hd⟩ := h1

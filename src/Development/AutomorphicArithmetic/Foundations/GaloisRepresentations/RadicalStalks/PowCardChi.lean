@@ -98,7 +98,8 @@ private theorem semi_surj [IsAlgClosed k] {p : ℕ} (hp : 0 < p) [FiniteDimensio
   let v : Fin (Module.finrank k A) → B := fun i => ⟨Φ (b i : P), hm _ (b i).2⟩
   have hsum : ∀ m : Fin (Module.finrank k A) → k,
       Φ (∑ i, m i • (b i : P)) = ∑ i, m i ^ p • Φ (b i : P) := fun m => by
-    rw [map_sum]; exact Finset.sum_congr rfl fun i _ => semi _ _
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]; exact Finset.sum_congr rfl fun i _ => semi _ _
   have hli : LinearIndependent k v := by
     rw [Fintype.linearIndependent_iff]
     intro g hg i

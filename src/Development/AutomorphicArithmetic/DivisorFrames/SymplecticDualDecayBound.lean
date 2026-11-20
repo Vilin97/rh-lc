@@ -79,13 +79,15 @@ theorem UpperTheory.theta_geometry_triple_vanishing :
   refine ⟨∑ j, D₀ j, fun p hp l hl => ?_⟩
   choose f₁ hf₁ hb₁ using fun j => hCb j ⟨p, hp⟩ (GlobalTheory.XTermMaj.crd F E (l : AE F E)) hl
   have hS : G.M'.co.e (shiftB σ H H' l) = ∑ i, GlobalTheory.XTermMaj.crd F E (l : AE F E) i • S i := by
-    simp only [S, ← map_smul, ← map_sum, ← smul_assoc, ← Finset.sum_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [S, ← map_smul, ← map_sum, ← smul_assoc, ← Finset.sum_smul]
     congr 1
     rw [shiftB]
     congr 1
     refine (congrArg (cA σ)
       ((Algebra.TensorProduct.basis (AF F) (Module.finBasis F E)).sum_equivFun (l : AE F E)).symm).trans ?_
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, Algebra.TensorProduct.basis_apply]
     rfl
@@ -94,7 +96,8 @@ theorem UpperTheory.theta_geometry_triple_vanishing :
     simp only at h1
     rw [h1, Darboux.rho, hS]
     change coeL (∑ j, f₁ j) y = (sliceL c ∘ₗ e) (schrL B.ψ _ _) y
-    rw [map_sum, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum, map_sum]
     exact congrFun (Finset.sum_congr rfl fun j _ => hf₁ j) y
   · rw [Finset.sum_mul]
     exact (Finset.le_sum_of_subadditive _ (map_zero _).le (map_add_le_add _) _ _).trans (Finset.sum_le_sum fun j _ => hb₁ j)

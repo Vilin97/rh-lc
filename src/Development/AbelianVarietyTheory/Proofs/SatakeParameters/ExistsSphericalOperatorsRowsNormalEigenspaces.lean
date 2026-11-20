@@ -148,7 +148,8 @@ theorem exists_ops (J : Subgroup (GA D V)) (χ : GA D V → ℂ) (SF : Finset (H
     ext x
     apply hi
     rw [hh P c hP, postOn_hk]
-    simp only [Finsupp.sum, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, hh P _ hP]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Finsupp.sum, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, hh P _ hP]
   have hzero : ∀ P, ok P → ∀ d, ¬ IsLab V P d → h P (Finsupp.single d 1) = 0 := by
     intro P hP d hd
     ext x
@@ -194,7 +195,8 @@ theorem exists_ops (J : Subgroup (GA D V)) (χ : GA D V → ℂ) (SF : Finset (H
   · rw [hlin P hP c, hlin P' hP' c']
     exact Commute.sum_left _ _ _ fun d _ => Commute.sum_right _ _ _ fun d' _ =>
       ((hcomm1 P P' hP hP' d d').smul_left _).smul_right _
-  · rw [hlin P hP c, hlin P hP (dualC _), dualC, Finsupp.sum_mapDomain_index (by simp) (by intros; rw [add_smul]),
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [hlin P hP c, hlin P hP (dualC _), dualC, Finsupp.sum_mapDomain_index (by simp) (by intros; rw [add_smul]),
       Finsupp.sum_mapRange_index (by simp), Finsupp.sum, Finsupp.sum, map_sum]
     refine Finset.sum_congr rfl fun d _ => ?_
     rw [LinearEquiv.map_smulₛₗ, hadj1 P hP]
@@ -246,7 +248,8 @@ theorem exists_opsE : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Typ
         rw [mult_lev hU1 v k ((lev P hP).1 k hk).1 g, ((lev P hP).1 k hk).2, one_mul]
       rw [postOn_apply]
       conv_rhs => rw [← hU2 v]
-      simp only [RealDat.e0, gaL, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [RealDat.e0, gaL, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul]
       refine Finset.sum_congr rfl fun g _ => ?_
       congr 1
       exact (lev P hP).2.2.2.1 c _ _ hfix)

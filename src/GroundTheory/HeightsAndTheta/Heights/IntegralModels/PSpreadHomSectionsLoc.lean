@@ -70,7 +70,8 @@ lemma exists_pull_eq_nsmul_hom (hp : p.Prime) (h₂ : PullbackBasis.Statement.{0
   obtain ⟨r, rfl⟩ := (he V hV).2 s
   refine ⟨∑ i, r i • (G.presheaf.map (homOfLE hV).op).hom ((∏ j ∈ Finset.univ.erase i, N j) • τ i), ?_⟩
   have hV' : π ⁻¹ᵁ V ≤ π ⁻¹ᵁ W := (Opens.map π.base).monotone hV
-  rw [pullSectionOn_sum, pullSectionOn_sum, map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [pullSectionOn_sum, pullSectionOn_sum, map_sum, Finset.smul_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [Scheme.Modules.Hom.app_smul, smul_comm]
   congr 1

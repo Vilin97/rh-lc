@@ -42,7 +42,8 @@ theorem eq_zero_of_eval (R : A[X]) (h : ∀ y : ℂ, R.eval (algebraMap ℂ A y)
   have hr : ∀ y, r.eval y = 0 := by
     intro y
     have hy := congrArg φ (h y)
-    rw [eval_eq_sum, sum_def, map_sum, map_zero] at hy
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [eval_eq_sum, sum_def, map_sum, map_zero] at hy
     rw [← hy]
     simp only [r, eval_finsetSum, eval_monomial]
     refine Finset.sum_congr rfl fun i _ => ?_
@@ -137,7 +138,8 @@ theorem commute_qdet_om (M : GMod n) (u : ℂ) : Commute ((qdet M.E u).compLeft 
   have hc : ∀ (a : Fin n) (x : M.V), qdet M.E u (M.E a b x) = M.E a b (qdet M.E u x) := fun a x =>
     LinearMap.congr_fun (qDetCentral _ n M.E M.gl u a b) x
   show (qdet M.E u) (om M f b) = ∑ a, M.E a b (qdet M.E u (f a))
-  rw [om_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [om_apply, map_sum]
   simp only [hc]
 
 theorem commute_coeff_om (M : GMod n) (p : (Module.End ℂ (Fin n → M.V))[X])

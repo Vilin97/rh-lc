@@ -122,10 +122,12 @@ theorem smul_proj_mem [DecidableEq (E →+* C)] (hv : v.Integers O) {U : Type} [
   obtain ⟨ι, _, b, c, h⟩ := exists_sum_eq (C := C) hd
   have e : φ d • idem (isSplitting_embO hv) φ = ∑ i, φ (b i) ⊗ₜ[ℤ] c i := (isSplitting_embO hv).1 (by
     ext ψ
-    rw [map_smul, splitMap_idem, map_sum, Finset.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_smul, splitMap_idem, map_sum, Finset.sum_apply]
     simp only [splitMap_tmul, RingHom.comp_apply, algebraMap_embO, h, Pi.smul_apply, Pi.single_apply]
     split_ifs <;> simp)
-  rw [← algebraMap_smul C, algebraMap_embO, proj, ← LinearMap.smul_apply, ← map_smul, e, map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← algebraMap_smul C, algebraMap_embO, proj, ← LinearMap.smul_apply, ← map_smul, e, map_sum, LinearMap.sum_apply]
   refine X.sum_mem fun i _ => ?_
   rw [tensorAction_tmul, ← algebraMap_embO hv, algebraMap_smul]
   exact X.smul_mem _ (hX _ _ hx)
@@ -178,7 +180,8 @@ theorem smul_mem_wRec (hHT : HTChar p v P.Gt) {a : O} (ha0 : a ≠ 0) (ha : v (a
       map_smul' := fun b c => by rw [hsm, P.bLie_scale]; rfl }
   have hL : ∀ y, P.bLie y = ∑ i, e.symm y i • L (Pi.single i 1) := fun y => by
     have h : L (e.symm y) = P.bLie y := congrArg P.bLie (e.apply_symm_apply y)
-    simp only [← map_smul, ← map_sum, ← h, ← Pi.single_smul, smul_eq_mul, _root_.mul_one, Finset.univ_sum_single]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [← map_smul, ← map_sum, ← h, ← Pi.single_smul, smul_eq_mul, _root_.mul_one, Finset.univ_sum_single]
   have ht : ∀ i, ∃ s : O ⊗[ℤ_[p]] P.T, ∀ y, P.pairV (P.bLie y) (P.inclT s) = algebraMap O C (a * e.symm y i) := fun i => by
     have hf : (fun y => e.symm y i) ∈ omega P.Gt := ⟨fun y z h => by
         obtain ⟨c, rfl⟩ := e.surjective y
@@ -201,7 +204,8 @@ theorem smul_mem_wRec (hHT : HTChar p v P.Gt) {a : O} (ha0 : a ≠ 0) (ha : v (a
   choose o ho using fun i => pairV_inclT P hg (s i)
   have key : P.bLie (e o) = a • ∑ j, g j • P.bLie (x j) := by
     rw [hL, e.symm_apply_apply]
-    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, hs] at ho
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, hs] at ho
     simp only [hL (x _), Finset.smul_sum]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun i _ => ?_

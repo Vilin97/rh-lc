@@ -184,7 +184,8 @@ theorem columnInduction : Big fun {D} _ _ _ _ {T} _ _ _ _ _ _ ch => ∀ (s : ℤ
             (∏ w' ∈ S₀, ζ w') * ∑ a ∈ SJ, xJ a * evT (combC ch.W ((fun j => if h : j < D.R.m then cF (i, a) ⟨j, h⟩ else 0), 0)
               (conAt ch.W hM (fockD ch.W t (fun j => ch.rm.vT D.R.m j) P) (p * b₀))) 1 u 0 := by
           intro i hi
-          rw [congrFun (hTc (c w i) _) u, hIH, map_smul, map_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [congrFun (hTc (c w i) _) u, hIH, map_smul, map_sum]
           simp only [map_smul, Pi.smul_apply, Finset.sum_apply, smul_eq_mul]
           congr 1
           refine Finset.sum_congr rfl fun a ha => ?_

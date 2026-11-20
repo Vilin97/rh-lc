@@ -20,7 +20,8 @@ theorem exists_eval {ι : Type} [Finite ι] (f : (ι → ℝ) →+* ℝ) : ∃ j
   classical
   have := Fintype.ofFinite ι
   have hsum : ∑ j, f (Pi.single j 1) = 1 := by
-    rw [← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum]
     have e : ∑ j, (Pi.single j (1 : ℝ) : ι → ℝ) = 1 := Finset.univ_sum_single (1 : ι → ℝ)
     rw [e, map_one]
   obtain ⟨j, -, hj⟩ := Finset.exists_ne_zero_of_sum_ne_zero (hsum.symm ▸ one_ne_zero : ∑ j, f (Pi.single j 1) ≠ 0)

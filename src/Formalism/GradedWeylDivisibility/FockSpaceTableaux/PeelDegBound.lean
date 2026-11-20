@@ -53,7 +53,8 @@ private theorem le_and_degreeOf_top_le_of_degreeOf_sum_le {B τ : Type} [CommRin
     simp [(hW k i hi).1, (hW k i hi).2]
   have hsum : aeval (fun v : τ => if v = x then (1 : MvPolynomial τ B) else if v = y then -X c
       else X v) Q = W K := by
-    rw [hQ, map_sum, Finset.sum_eq_single K]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hQ, map_sum, Finset.sum_eq_single K]
     · rw [Nat.sub_self, pow_zero, mul_one, map_mul, map_pow, hWσ, aeval_X]
       simp
     · intro k hk hkK
@@ -172,7 +173,8 @@ theorem peelDegBound_of (hE : EvalDeg) : PeelDegBound := by
       (X (some (a0, j)) + X none * X (some (a0, l))) ^ e * ∑ k ∈ Finset.range (K + 1),
         X (some (a0, l)) ^ k * (X (some (a0, j)) + X none * X (some (a0, l))) ^ (K - k) *
           colAddGen B l j (w k) := by
-    rw [map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_mul, map_mul, map_pow, map_pow, e1, e2, pow_add]
     ring

@@ -134,7 +134,8 @@ theorem frob_ser {A B : PowerSeries C} (hA : ∀ n, V.Ge 0 (PowerSeries.coeff n 
       rw [mul_comm, Nat.cast_smul_eq_nsmul, nsmul_eq_mul]
     rw [Finset.sum_congr rfl hsm]
     ring
-  rw [hmid, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hmid, map_sum]
   unfold VF.MM
   refine lt_of_lt_of_le zero_lt_one (AddValuation.map_le_sum _ fun i hi => ?_)
   rw [LinearMap.map_smul, smul_eq_mul, AddValuation.map_mul]

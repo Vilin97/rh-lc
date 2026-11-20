@@ -430,7 +430,8 @@ theorem entB_comp {N'' N k₀ c'' n'' c' n' c n : ℕ} (hk : k₀ ≤ n') (ex'' 
     simp [Finset.sum_apply, eN, Fin.val_inj]
   have h3 : atN (x v) (fIdx k₀ c n p) =
       ∑ l : Fin (n' + c'), v (fPerm c' hk l) * atN (x (eN E (n' + c') (fPerm c' hk l).1)) (fIdx k₀ c n p) := by
-    conv_lhs => rw [h2, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [h2, map_sum]
     unfold atN
     split_ifs
     · simp [Finset.sum_apply]

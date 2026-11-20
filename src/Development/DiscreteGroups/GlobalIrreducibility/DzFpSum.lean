@@ -88,16 +88,19 @@ theorem corner_fixed {m : ℕ} (ρ : Representation ℂ (GL (Fin (m + 1)) k) V) 
     (hb' : b' ∈ lowB k m) :
     ρ (corner b') (∑ᶠ b : lowB k m, ρ (corner (b : GL (Fin m) k)) v) = ∑ᶠ b : lowB k m, ρ (corner (b : GL (Fin m) k)) v := by
   classical
-  rw [finsum_eq_sum_of_fintype, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [finsum_eq_sum_of_fintype, map_sum]
   refine Fintype.sum_equiv (Equiv.mulLeft (⟨b', hb'⟩ : lowB k m)) _ _ fun b => ?_
   simp only [Equiv.coe_mulLeft, Subgroup.coe_mul, corner_mul, map_mul, Module.End.mul_apply]
 
 theorem map_finsum_lower {m : ℕ} (f : V →ₗ[ℂ] ℂ) (F : lowB k m → V) : f (∑ᶠ b, F b) = ∑ᶠ b, f (F b) := by
   classical
-  rw [finsum_eq_sum_of_fintype, finsum_eq_sum_of_fintype, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [finsum_eq_sum_of_fintype, finsum_eq_sum_of_fintype, map_sum]
 
 theorem map_finsum_lower' {m : ℕ} (f : V →ₗ[ℂ] V) (F : lowB k m → V) : f (∑ᶠ b, F b) = ∑ᶠ b, f (F b) := by
   classical
-  rw [finsum_eq_sum_of_fintype, finsum_eq_sum_of_fintype, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [finsum_eq_sum_of_fintype, finsum_eq_sum_of_fintype, map_sum]
 
 end DiscreteGroups.sglob.DzFp

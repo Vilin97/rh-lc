@@ -175,7 +175,8 @@ theorem unr_of_limit_spec : ∀ (l : ℕ) [Fact l.Prime] (Ω : Type) [Field Ω] 
       Units.map (ZMod.castHom (pow_dvd_pow l (Nat.le_succ r)) (ZMod (l ^ r))).toMonoidHom x' = x),
       (cob W c (Ine (F := ℚ) B)).mkQ (z (r + 1) x') := by
     intro r x
-    rw [← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum]
     congr 1
     funext s
     rw [Finset.sum_apply]

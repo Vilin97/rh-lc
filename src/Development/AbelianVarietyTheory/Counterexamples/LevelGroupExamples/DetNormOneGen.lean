@@ -46,7 +46,8 @@ theorem gram_det_ne_zero (V : HSp D) : V.gram.det ≠ 0 := by
       refine V.frame.ext fun i => ?_
       have := congrFun hm i
       simp only [Matrix.mulVec, dotProduct, HSpace.gram, Pi.zero_apply] at this
-      simp only [LinearMap.flip_apply, Module.Basis.equivFun_symm_apply, map_sum, map_smul, smul_eq_mul,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [LinearMap.flip_apply, Module.Basis.equivFun_symm_apply, map_sum, map_smul, smul_eq_mul,
         LinearMap.zero_apply, LinearMap.sum_apply, LinearMap.smul_apply]
       refine Eq.trans (Finset.sum_congr rfl fun j _ => ?_) this
       exact mul_comm (v j) _

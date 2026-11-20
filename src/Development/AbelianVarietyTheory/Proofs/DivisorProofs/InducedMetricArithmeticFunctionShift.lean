@@ -447,7 +447,8 @@ theorem powerSum_two_eq : Hypotheses2 → GlobalTheory.Published.RegularAlterati
         fun p hp => ⟨rep_of_reads (hS p hp).1 hπ hl ((hc p hp).1 a).2 (hL' (s' a)),
           GlobalTheory.T.reads_compare_of_scaled_local_norms F Y _ V' _ _ _ _ (hN a) p m (hS p hp).1 (A (s a)) (A (s' a)) _ _ (hD a)
             (reads_pf hπ hl ((hc p hp).1 a).1) (reads_pf hπ hl ((hc p hp).1 a).2) fun _ _ _ _ => rfl⟩⟩
-    · rw [sub_mul, Finset.sum_mul, Finset.sum_mul, map_sub, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [sub_mul, Finset.sum_mul, Finset.sum_mul, map_sub, map_sum, map_sum]
       simp only [hterm]
       exact sub_eq_zero.2 key
     · have := neg_mem (add_mem (rt (L' (s a)) (L' (s' a)).dual) (rd (L' (s' a))))

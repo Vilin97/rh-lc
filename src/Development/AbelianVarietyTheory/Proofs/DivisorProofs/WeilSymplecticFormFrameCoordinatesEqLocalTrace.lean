@@ -64,7 +64,8 @@ theorem GlobalTheory.InertLocSymp.psi_symp_eq :
       ι (∑ i, ∑ j, ∑ k, ∑ l, ((PV : Matrix (Fin n) (Fin n) L) * xᵀ * (PW : Matrix (Fin d) (Fin d) L)ᵀ) i j *
         GlobalTheory.InertLocFrame.tJ ι X.J i k * GlobalTheory.InertLocFrame.tJ ι W.J j l *
         σL (((PV : Matrix (Fin n) (Fin n) L) * yᵀ * (PW : Matrix (Fin d) (Fin d) L)ᵀ) k l)) := by
-    simp only [hTens, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hTens, map_sum]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ =>
       Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun l _ => ?_
     simp only [GlobalTheory.InertLocFrame.xm_apply, incM, Matrix.map_apply, ← hσ]

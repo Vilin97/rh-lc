@@ -30,7 +30,8 @@ theorem herm_entry (hJ : cT σ J = J) (i j : Fin n) : σ (J j i) = J i j := by
 
 theorem form_conj (hσ : ∀ x, σ (σ x) = x) (hJ : cT σ J = J) (v w : Fin n → E) :
     form σ J w v = σ (form σ J v w) := by
-  simp only [form, dotProduct, mulVec, map_sum, map_mul, hσ, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, mulVec, map_sum, map_mul, hσ, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   rw [show J j i = σ (J i j) from (herm_entry hJ j i).symm]
@@ -43,7 +44,8 @@ theorem form_add_right (v w w' : Fin n → E) : form σ J v (w + w') = form σ J
 theorem conj_mulVec (B : Matrix (Fin n) (Fin n) E) (w : Fin n → E) :
     (fun i => σ ((B *ᵥ w) i)) = (fun i => σ (w i)) ᵥ* cT σ B := by
   funext k
-  simp [mulVec, vecMul, dotProduct, cT, map_sum, map_mul, mul_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [mulVec, vecMul, dotProduct, cT, map_sum, map_mul, mul_comm]
 
 theorem form_mulVec (A B : Matrix (Fin n) (Fin n) E) (v w : Fin n → E) :
     form σ J (A *ᵥ v) (B *ᵥ w) = (fun i => σ (w i)) ⬝ᵥ ((cT σ B * J * A) *ᵥ v) := by

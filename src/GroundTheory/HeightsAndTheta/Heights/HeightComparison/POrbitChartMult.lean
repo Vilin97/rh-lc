@@ -119,7 +119,8 @@ theorem betaB_mem_maximalIdeal_iff
   have hcone : γ F = ∑ e ∈ hfin.toFinset,
       C (ε (weightedHomogeneousComponent (coordDeg n) e F)) * ∏ k, X k ^ e k := by
     conv_lhs => rw [hsum]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun e _ ↦ hγ (weightedHomogeneousComponent_isWeightedHomogeneous e F)
   rw [betaB, RingHom.comp_apply,
     IsLocalization.AtPrime.to_map_mem_maximal_iff (locB ι (V.map ε)) (fibO ι (V.map ε)), hcone]

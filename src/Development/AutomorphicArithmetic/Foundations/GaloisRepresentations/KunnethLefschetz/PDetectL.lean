@@ -83,7 +83,8 @@ theorem detectL_holds : DetectL := by
     _ = Λ (cupV l _ (by ring : n + 2 * (d : ℤ) = 2 * d + n) (pb l (pullback.fst p p) n x) δ) := by
         rw [hswap n _ (by ring) rfl x]
     _ = 0 := by
-        rw [← hsum, map_sum, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [← hsum, map_sum, map_sum]
         apply Finset.sum_eq_zero
         intro t _
         rw [map_smul, map_smul, hUW t,

@@ -193,7 +193,8 @@ theorem word_Pw (comm : ∀ a b c d, T a b * T c d - T c d * T a b =
       exact Z.zero_mem
   | succ m ih =>
     intro a b p hp
-    simp only [Pw, LinearMap.sum_apply, Module.End.mul_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Pw, LinearMap.sum_apply, Module.End.mul_apply, map_sum]
     refine Z.sum_mem fun c _ => ?_
     have e : wordOp T p (T a c (Pw T m c b f)) = wordOp T (p ++ [(a, c)]) (Pw T m c b f) := by
       simp [wordOp_append, wordOp_cons, wordOp_nil]

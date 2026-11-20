@@ -17,7 +17,8 @@ theorem ev_mul {a : Fin m → Pt R n d} (ha : ∀ j i, constantCoeff (a j i) = 0
 theorem ev_sum {a : Fin m → Pt R n d} (ha : ∀ j i, constantCoeff (a j i) = 0) {ι : Type}
     (t : Finset ι) (f : ι → PS R m d) : ev a (∑ i ∈ t, f i) = ∑ i ∈ t, ev a (f i) := by
   unfold ev
-  rw [← coe_substAlgHom (hasSubst_pts ha), map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← coe_substAlgHom (hasSubst_pts ha), map_sum]
 
 theorem ev_self_one (f : PS R 1 d) : ev (n := 1) ![pt R d 0] f = f := by
   have e : (fun q : Fin 1 × Fin d => (![pt R d 0] : Fin 1 → Pt R 1 d) q.1 q.2) = X := by
@@ -73,7 +74,8 @@ theorem main :
     ev (n := 2) ![G.add (pt R d 0) (pt R d 1)] s = ev (n := 2) ![pt R d 0] s * ev (n := 2) ![pt R d 1] s →
     ∀ u : Fin d → R, Dof G.F u s = C (∑ i, u i * coeff (Finsupp.single ((0 : Fin 1), i) 1) s) * s) := by
   intro R _ d G s h u
-  rw [Dof, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Dof, map_sum, Finset.sum_mul]
   simp only [Finset.sum_mul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => ?_

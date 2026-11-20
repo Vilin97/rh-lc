@@ -83,7 +83,8 @@ theorem aeval_pm (m : ℕ) (a b : ℝ) :
     ring
   simp_rw [hI]
   rw [intervalIntegral.integral_finsetSum fun j _ => by apply Continuous.intervalIntegrable; fun_prop]
-  simp only [pm, map_sum, map_mul, map_pow, map_sub, map_ofNat, aeval_C, aeval_X, Matrix.cons_val_zero,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [pm, map_sum, map_mul, map_pow, map_sub, map_ofNat, aeval_C, aeval_X, Matrix.cons_val_zero,
     Matrix.cons_val_one, Matrix.head_cons, Algebra.algebraMap_self, RingHom.id_apply]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [intervalIntegral.integral_const_mul, beta]
@@ -94,7 +95,8 @@ theorem pm_eq_fibPoly_val (m : ℕ) (a b : ℝ) : aeval ![a + b, a * b] (pm m) =
 
 theorem downP_eq_baseT (d : ℕ) (R : ℕ → MvPolynomial (Fin 2) ℝ) (A a b : ℝ) :
     aeval ![A, a, b, a * b] (downP (idx d) expo (coefW R)) = aeval ![a + b, a * b, A] (baseT d R) := by
-  simp only [downP, baseT, coefW, map_sum, map_mul, map_pow]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [downP, baseT, coefW, map_sum, map_mul, map_pow]
   refine Finset.sum_congr rfl fun x _ => ?_
   simp only [← AlgHom.comp_apply, comp_aeval]
   have e₁ : (fun i => (aeval ![A, a, b, a * b]) ((![X 1 + X 2, X 3] : Fin 2 → MvPolynomial (Fin 4) ℝ) i)) = ![a + b, a * b] := by

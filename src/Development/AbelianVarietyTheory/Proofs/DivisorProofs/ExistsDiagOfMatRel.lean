@@ -31,7 +31,8 @@ theorem act_one {X : Type} [AddCommGroup X] (c : Fin 8 → X) : act 1 X c = c :=
 theorem act_comp {X₀ X₁ : Type} [AddCommGroup X₀] [AddCommGroup X₁] (M : Matrix (Fin 8) (Fin 8) ℤ)
     (π : X₀ →+ X₁) (c : Fin 8 → X₀) : act M X₁ (fun u => π (c u)) = fun u => π (act M X₀ c u) := by
   ext v
-  simp [act_apply, map_sum, map_zsmul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [act_apply, map_sum, map_zsmul]
 
 theorem matRel_iff (W : Matrix (Fin 8) (Fin 8) ℤ) {X : Type} [AddCommGroup X] (a b : Fin 8) (y y' : Fin 8 → X) :
     MatRel W a b y y' ↔ act (W + W.transpose) X y' = Pi.single b (act (W + W.transpose) X y a) := by
@@ -73,7 +74,8 @@ theorem GlobalTheory.Poinc.Eq8.exists_diag_of_matRel : ∀ (W : Matrix (Fin 8) (
   have hdiag : ∀ c, Ψ c = fun u => π (c u) := by
     intro c
     conv_lhs => rw [← Finset.univ_sum_single c]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [hπ]
     rw [← Finset.univ_sum_single (fun u => π (c u))]
   have key : ∀ y u, ρ y u = π (e₀ y u) := by

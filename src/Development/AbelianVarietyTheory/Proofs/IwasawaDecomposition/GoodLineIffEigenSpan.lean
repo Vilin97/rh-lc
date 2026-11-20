@@ -73,7 +73,8 @@ theorem mem_goodL_iff_iotaR (R : RealDat3 D A3 Ks) (F : Face3 D A3) (cG : G0 R.P
       ∑ g : G, sg0 D A3.A ((idemOf A3.A.X).coeff g) •
         postOn _ (Links.actL (Wc D (idxOf D j)) (R.βW (idxOf D j)) (R.datWp (idxOf D j) R.triv) (R.eG g))
           ((R.HW (idxOf D j) (sg0 D A3.A)).e ((R.FW (idxOf D j)).j (sg0 D A3.A) v)) := by
-    rw [map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum]
     refine Finset.sum_congr rfl fun g _ => ?_
     rw [map_smulₛₗ, map_smul]
     exact congrArg _ (hact g v)

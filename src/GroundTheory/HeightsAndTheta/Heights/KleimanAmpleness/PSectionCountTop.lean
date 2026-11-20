@@ -43,7 +43,8 @@ theorem aeval_mem_pow (Q : SubSystem k x Ω) {r : ℕ} {h : Fin (r + 1) → Ω} 
     | insert j s hj ih =>
       rw [Finset.prod_insert hj, Finset.sum_insert hj, mul_comm, add_comm]
       exact mul_pow_mem_pow Q I ih (hI j) (α j)
-  rw [f.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [f.as_sum, map_sum]
   refine Submodule.sum_mem _ fun α hα => ?_
   rw [aeval_monomial]
   have hdeg : ∑ i ∈ α.support, α i = n := by

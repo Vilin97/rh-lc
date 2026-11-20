@@ -273,7 +273,8 @@ theorem exists_phi_eq_X_pow_smul_of_mem_uPow {η : ℕ}
     exact P.smul_tot_mem_ext (fun τ => hG i _)
       (hη _ (P.ext_mono (A_le_S l e) (P.phi_mem_L (P.bas_mem_M i))))
   · conv_lhs => rw [P.eq_sum_phi_bas w]
-    rw [map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [phi_smul_tot]
     ext τ j

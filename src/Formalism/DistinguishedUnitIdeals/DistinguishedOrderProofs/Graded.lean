@@ -116,7 +116,8 @@ lemma fixed_const (T : Set (Ks ≃ₐ[LL] Ks))
   refine ⟨∑ i ∈ ((Algebra.TensorProduct.basis Ks b).repr y).support, a i • b i, ?_⟩
   apply (Algebra.TensorProduct.basis Ks b).repr.injective
   ext j
-  rw [Algebra.TensorProduct.basis_repr_tmul, one_smul, Finsupp.mapRange_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Algebra.TensorProduct.basis_repr_tmul, one_smul, Finsupp.mapRange_apply, map_sum]
   first
     | (simp only [map_smul, Module.Basis.repr_self, Finsupp.coe_finset_sum, Finset.sum_apply,
         Finsupp.smul_apply, Finsupp.single_apply, smul_eq_mul, mul_ite, mul_one, mul_zero,
@@ -271,7 +272,8 @@ lemma aeval_projectionPoly_of_pow_eq_one (T : Module.End LL W) (u : LLˣ) (ℓ E
   have key := aeval_prod_one T (ℓ ^ E) hT (JS.erase 0)
     (fun i => ((u ^ (i * ((ℓ ^ E : ℕ) : ℤ)) : LLˣ) : LL))
   unfold PPoly
-  rw [map_mul, key, Algebra.algebraMap_eq_smul_one, smul_mul_assoc, one_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_mul, key, Algebra.algebraMap_eq_smul_one, smul_mul_assoc, one_mul,
     LinearMap.smul_apply, map_sum]
   first
     | (rw [LinearMap.sum_apply]
@@ -280,7 +282,8 @@ lemma aeval_projectionPoly_of_pow_eq_one (T : Module.End LL W) (u : LLˣ) (ℓ E
 
 lemma sum_pow_fix (T : Module.End LL W) (N : ℕ) (hT : T ^ N = 1) (v : W) :
     T (∑ k ∈ Finset.range N, (T ^ k) v) = ∑ k ∈ Finset.range N, (T ^ k) v := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   have h1 : ∀ k : ℕ, T ((T ^ k) v) = (T ^ (k + 1)) v := fun k => by rw [pow_succ']; rfl
   simp only [h1]
   have h2 := Finset.sum_range_succ' (fun k => (T ^ k) v) N
@@ -645,7 +648,8 @@ lemma trace_sum_descends_to_base (Lev : Level LL Ks Δ) (ℓ s E : ℕ) (h1 : Le
   have hτS : ∀ j, tD D (Lev.τ j) (∑ k ∈ Finset.range (ℓ ^ E), (tD D Lev.σ ^ k) v) =
       ∑ k ∈ Finset.range (ℓ ^ E), (tD D Lev.σ ^ k) v := by
     intro j
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [hcomm, hτ j]
   obtain ⟨w, hw⟩ := fixed_all Lev ℓ s h1 _ hσS hτS
@@ -927,7 +931,8 @@ theorem graded_semilinear_holds : GrdSemi := by
   intro n
   rw [cf_grd]
   unfold cf
-  rw [HahnModule.coeff_smul, HahnModule.coeff_smul, map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [HahnModule.coeff_smul, HahnModule.coeff_smul, map_sum, Finset.smul_sum]
   symm
   have hsub : ∀ ij : ℤ × ℤ, ij ∈ Finset.VAddAntidiagonal n
       (Set.VAddAntidiagonal.finite_of_isPWO (grdB τ a x).isPWO_support
@@ -969,7 +974,8 @@ namespace SlopeTestRemainingChoices
 lemma PPoly_map {R R' : Type} [CommRing R] [CommRing R'] (φ : R →+* R') (u : Rˣ) (ℓ E : ℕ)
     (JS : Finset ℤ) : (PPoly u ℓ E JS).map φ = PPoly (Units.map (φ : R →* R') u) ℓ E JS := by
   simp only [PPoly, Polynomial.map_mul]
-  rw [← Polynomial.coe_mapRingHom, map_prod, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Polynomial.coe_mapRingHom, map_prod, map_sum]
   simp
   congr 1
   refine Finset.prod_congr rfl fun x _ => ?_
@@ -1021,7 +1027,8 @@ lemma pr_polyAct (R : LevelModel S LL Ks Δ D) (s : ℕ) (hs : s < ell) (P : Pol
     R.pr s (E.polyAct P (S.gE s) e) =
       (R.lev s).pAct (P.map (algebraMap O LL)) (R.pr s e) := by
   unfold E.polyAct Level.pAct
-  rw [Polynomial.sum_over_range' P (fun k => by simp) (P.natDegree + 1) (Nat.lt_succ_self _),
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Polynomial.sum_over_range' P (fun k => by simp) (P.natDegree + 1) (Nat.lt_succ_self _),
     Polynomial.sum_over_range' (P.map (algebraMap O LL)) (fun k => by simp) (P.natDegree + 1)
       (Nat.lt_succ_of_le Polynomial.natDegree_map_le), map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_

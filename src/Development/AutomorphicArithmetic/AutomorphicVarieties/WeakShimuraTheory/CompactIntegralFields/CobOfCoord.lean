@@ -72,7 +72,8 @@ private theorem lattice {O : Type} [CommRing O] [IsDomain O] [IsLocalRing O] {H 
     have e5 : residue O (r h s s) = residue O (r h s s) - residue O 0 := by simp
     rw [← e4, e5, ← e3]
     conv_rhs => rw [← e2]
-    simp only [map_sum, map_mul, hm, ← Finset.sum_sub_distrib, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, hm, ← Finset.sum_sub_distrib, Finset.mul_sum]
     refine Finset.sum_congr rfl fun g _ => ?_
     ring
   have c1 : c 1 = 0 := by
@@ -307,7 +308,8 @@ theorem UpperTheory.V.Ws.triV :
     have e : Matrix.single i i (1 : R') = ∑ g ∈ b.support, y (b g) • mapRep y ρ g := by
       ext p q
       have h2 := congrArg y (congrFun (congrFun hb p) q)
-      rw [Finsupp.sum, Matrix.sum_apply, map_sum] at h2
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Finsupp.sum, Matrix.sum_apply, map_sum] at h2
       rw [Matrix.sum_apply]
       simp only [Matrix.smul_apply, smul_eq_mul, map_mul, mapRep_apply] at h2 ⊢
       rw [h2, Matrix.single_apply, Matrix.single_apply]

@@ -64,7 +64,8 @@ theorem constantCoeff_sumE {K ι : Type} [Field K] [Fintype ι] {N0 N1 : ℕ} (b
     (h : MvPowerSeries.constantCoeff be = 0) :
     MvPowerSeries.constantCoeff (sumE (ι := ι) (N0 := N0) (N1 := N1) be) = 0 := by
   unfold sumE
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_eq_zero fun e _ => ?_
   refine MvPowerSeries.constantCoeff_subst_eq_zero ?_ ?_ h
   · exact MvPowerSeries.hasSubst_of_constantCoeff_zero (fun a => by simp)

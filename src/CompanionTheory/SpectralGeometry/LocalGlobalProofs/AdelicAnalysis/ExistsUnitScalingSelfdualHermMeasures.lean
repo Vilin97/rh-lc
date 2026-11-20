@@ -80,11 +80,13 @@ theorem gramB_det [FiniteDimensional F E] [Algebra.IsSeparable F E] {σ : E →�
       intro k
       have := congrFun hv0 k
       simp only [Matrix.mulVec, dotProduct, gramB, Pi.zero_apply] at this
-      rw [hw, map_sum, Finset.mul_sum, map_sum, ← this]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hw, map_sum, Finset.mul_sum, map_sum, ← this]
       refine Finset.sum_congr rfl fun l _ => ?_
       rw [map_smul, mul_smul_comm, map_smul, smul_eq_mul, mul_comm]
     have hx := b.sum_repr x
-    rw [← hx, Finset.sum_mul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hx, Finset.sum_mul, map_sum]
     refine Finset.sum_eq_zero fun k _ => ?_
     rw [smul_mul_assoc, map_smul, hk, smul_zero]
   have hs : σ w = 0 := (traceForm_nondegenerate F E).2 _ fun x => by
@@ -168,15 +170,18 @@ theorem off_diag [FiniteDimensional F E] [CharZero F] {σ : E →ₐ[F] E} (hinv
     simp [hC, Algebra.TensorProduct.basis_apply]
   have hy : sigR R σ y = ∑ l, C.repr y l • ((1 : R) ⊗ₜ[F] σ (b l)) := by
     conv_lhs => rw [← C.sum_repr y]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun l _ => ?_
     rw [hC, Algebra.TensorProduct.basis_apply, TensorProduct.smul_tmul', TensorProduct.smul_tmul',
       HaarCoord.sigR_tmul]
   rw [hy]
   conv_lhs => rw [hx]
-  rw [Finset.sum_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.sum_mul, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
-  rw [smul_mul_assoc, map_smul, smul_eq_mul, Finset.mul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [smul_mul_assoc, map_smul, smul_eq_mul, Finset.mul_sum, map_sum]
   congr 1
   refine Finset.sum_congr rfl fun l _ => ?_
   rw [mul_smul_comm, map_smul, Algebra.TensorProduct.tmul_mul_tmul, one_mul, trace_tmul, one_mul,
@@ -193,7 +198,8 @@ theorem pair_eq [FiniteDimensional F E] [CharZero F] {σ : E →ₐ[F] E} (hinv 
   have hT : ∀ a c, (T : Matrix (Fin n) (Fin n) (R ⊗[F] E)) c a =
       sigR R σ ((T : Matrix (Fin n) (Fin n) (R ⊗[F] E)) a c) := fun a c => (T.2 c a).symm
   unfold pairHerm
-  rw [sum_square, map_add, mul_add, map_sum, map_sum, Finset.mul_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [sum_square, map_add, mul_add, map_sum, map_sum, Finset.mul_sum, Finset.mul_sum]
   simp only [dotProduct, Fintype.sum_sum_type, Fintype.sum_prod_type, formB_mulVec_inl,
     formB_mulVec_inr]
   congr 1

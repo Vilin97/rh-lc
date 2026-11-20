@@ -72,13 +72,15 @@ theorem Ev.smul {y a e : K⟦X⟧} (c : K) (he : Ev y a e) : Ev y (c • a) (c �
 
 theorem coeff_aeval_trunc (y a : K⟦X⟧) (k m : ℕ) :
     coeff k (Polynomial.aeval y (trunc m a)) = ∑ i ∈ range m, coeff i a * coeff k (y ^ i) := by
-  rw [Polynomial.aeval_def, eval₂_trunc_eq_sum_range, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Polynomial.aeval_def, eval₂_trunc_eq_sum_range, map_sum]
   refine sum_congr rfl fun i _ => ?_
   rw [← Algebra.smul_def, map_smul, smul_eq_mul]
 
 theorem ev_coe (y : K⟦X⟧) (p : Polynomial K) : Ev y (p : K⟦X⟧) (Polynomial.aeval y p) := fun k => by
   have h : coeff k (Polynomial.aeval y p) = ∑ m ∈ p.support, coeff m (p : K⟦X⟧) * coeff k (y ^ m) := by
-    rw [Polynomial.aeval_def, Polynomial.eval₂_eq_sum, Polynomial.sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Polynomial.aeval_def, Polynomial.eval₂_eq_sum, Polynomial.sum, map_sum]
     refine sum_congr rfl fun i _ => ?_
     rw [← Algebra.smul_def, map_smul, smul_eq_mul, Polynomial.coeff_coe]
   rw [h]

@@ -38,7 +38,8 @@ theorem PositivityTheory.Xgp.t_c_fm_exists_flags_pullmap : ∀ (X X' : Scheme.{0
     exact h2 h1
   refine ⟨U, hU, fun k => T (b k), fun i => ?_, fun q hq hqU => ?_⟩
   · rw [c_fm_exists_flags_pullmap.flagStep_comp, hb, ← c_fm_exists_flags_pullmap.flagStep_comp]
-    simp only [map_sum, map_smul, hT]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, hT]
   · obtain ⟨hli, hsp⟩ := hfr q hq hqU
     refine ⟨LinearIndependent.of_comp T' ?_, ?_⟩
     · have : (T' ∘ fun k => T (b k)) = b := funext hbk

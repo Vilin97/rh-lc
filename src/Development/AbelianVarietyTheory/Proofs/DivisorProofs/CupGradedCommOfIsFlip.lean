@@ -70,7 +70,8 @@ theorem phi_d₁ (w : ℤ) {N : ℕ} (x : Sx E N U) (p r : ℕ) (a' : SimplexCat
     change phi μ a b w x (∑ i : Fin (p + 2), Finsupp.single ⟨p, r, SimplexCategory.δ i ≫ a', b'⟩ ((-1) ^ (i : ℕ))) = _
     have e : sg (m * ((p + 1 : ℕ) : ℤ) + m) = sg (m * p) := by
       rw [show m * ((p + 1 : ℕ) : ℤ) + m = m * p + (m + m) by push_cast; ring, sg_add, sg_add, sg_sq, mul_one]
-    rw [map_sum, bdL, e, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, bdL, e, Finset.smul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [phi_single, face_eq, along_along, smul_comm]
 
@@ -83,7 +84,8 @@ theorem phi_d₂ (w : ℤ) {N : ℕ} (x : Sx E N U) (p r : ℕ) (a' : SimplexCat
     simp [bdR]
   | succ r =>
     change phi μ a b w x (∑ j : Fin (r + 2), Finsupp.single ⟨p, r, a', SimplexCategory.δ j ≫ b'⟩ ((-1) ^ (j : ℕ))) = _
-    rw [map_sum, bdR, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, bdR, Finset.smul_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [phi_single, face_eq, along_along, smul_comm]
 
@@ -155,7 +157,8 @@ theorem sg_eq_of_even (c d : ℤ) (h : Even (c - d)) : sg c = sg d := by
 theorem phi_aw {k : ℤ} (hk : n + m = k) {a : Cochain ((chains R).obj E) I n} {b : Cochain ((chains R).obj E) J m}
     {c : Cochain ((chains R).obj E) K k} (hc : μ.IsAW hk a b c) (N : ℕ) (w : ℤ) (h : -(N : ℤ) + k = w) (x : Sx E N U) :
     phi μ a b w x (Pr.aw N) = ev c N w h U x := by
-  rw [hc N w h U x, Pr.aw, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hc N w h U x, Pr.aw, map_sum]
   refine Finset.sum_congr rfl fun p _ => ?_
   rw [phi_single, one_smul]
   dsimp only
@@ -166,7 +169,8 @@ theorem phi_wa {ν : Pair J I K} (hf : μ.IsFlip ν) {k : ℤ} (h' : m + n = k) 
     {b : Cochain ((chains R).obj E) J m} {c : Cochain ((chains R).obj E) K k} (hc : ν.IsAW h' b a c) (N : ℕ) (w : ℤ)
     (h : -(N : ℤ) + k = w) (x : Sx E N U) :
     phi μ a b w x (Pr.wa N) = sg (n * m) • ev c N w h U x := by
-  rw [hc N w h U x, Pr.wa, map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hc N w h U x, Pr.wa, map_sum, Finset.smul_sum]
   refine Finset.sum_congr rfl fun p _ => ?_
   rw [phi_single]
   dsimp only
@@ -213,7 +217,8 @@ theorem GlobalTheory.EtC.Pair.cup_flip : ∀ (R : Type) [CommRing R] {I J K : Cx
     | succ N =>
       have hb : phi μ α.1 β.1 t x (Pr.bd (hh N)) =
           ∑ i : Fin (N + 2), (-1 : ℤ) ^ (i : ℕ) • ev θ N t (by omega) U (x.face i) := by
-        rw [Pr.bd, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [Pr.bd, map_sum]
         refine Finset.sum_congr rfl fun i _ => ?_
         rw [map_zsmul, hθ, face_eq, phi_along]
       rw [ev_δ_succ (by omega) θ U N (t - 1) t (by omega) ht x, hθ, phi_d μ α β (t - 1) t (by omega), ← hb, h, sg_smul,

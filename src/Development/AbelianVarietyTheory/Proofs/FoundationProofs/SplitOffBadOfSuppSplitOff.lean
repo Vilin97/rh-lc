@@ -169,14 +169,16 @@ theorem suppSplitOff_of_splitOffBad (V : HSp D) (N : ℕ) (h : GA D V) (hs : FWT
   obtain ⟨-, e, P, ⟨⟨es, hes, rfl⟩, -⟩, hN, hsupp⟩ := hs
   choose pv h1 h2 h3 using fun PP : P => exists_splitAt_of_isIdemAt (hes PP.1 PP.2)
   have hsum : ∑ PP ∈ P, es PP + cA D (∑ PP ∈ P, es PP) = fj D (∑ PP : P, singleV D.host.F (pv PP) 1) := by
-    rw [map_sum, map_sum, ← Finset.sum_add_distrib, ← Finset.sum_coe_sort P]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum, ← Finset.sum_add_distrib, ← Finset.sum_coe_sort P]
     exact Finset.sum_congr rfl fun PP _ => (h1 PP).2.2
   refine ⟨Finset.univ.image pv, fun v hv => ?_, fun v hv => ?_⟩
   · obtain ⟨PP, -, rfl⟩ := Finset.mem_image.1 hv
     refine ⟨(isSplitPl_iff _).2 (h2 PP), fun hm => hN PP.1 PP.2 ?_⟩
     rwa [← h3, Ideal.mem_comap, map_natCast] at hm
   · have h0 : evalV D.host.F v (∑ PP : P, singleV D.host.F (pv PP) 1) = 0 := by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       exact Finset.sum_eq_zero fun PP _ => evalV_singleV_ne _ _ _ fun e =>
         hv (Finset.mem_image.2 ⟨PP, Finset.mem_univ _, e.symm⟩)
     generalize (∑ PP : P, singleV D.host.F (pv PP) 1) = α at hsum h0

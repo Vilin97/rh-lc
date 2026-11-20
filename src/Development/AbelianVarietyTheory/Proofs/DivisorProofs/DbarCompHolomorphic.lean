@@ -17,10 +17,12 @@ theorem sum_dbar_comp_smul_dzb {n m : ℕ} {φ : V n → V m} {c : V m → ℂ} 
     have hw : w = ∑ b, w b • coordVec b := by
       simpa using ((EuclideanSpace.basisFun (Fin m) ℂ).sum_repr w).symm
     conv_lhs => rw [hw]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun b _ => ?_
     rw [map_smulₛₗ, smul_eq_mul, mul_comm]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [map_smul, (pull_dz _ _).2, Finset.smul_sum, smul_smul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun a _ => ?_

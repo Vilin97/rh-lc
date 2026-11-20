@@ -32,7 +32,8 @@ theorem exists_piInf_le_crd (τ : ∀ w : InfinitePlace F, EmbOver E w) :
   have h1 : ∑ w, ‖piInf (τ w) z‖ ≤ A * ∑ i, ∑ v : InfinitePlace F, ‖(x i).1 v‖ := by
     rw [Finset.sum_comm, Finset.mul_sum]
     refine Finset.sum_le_sum fun w _ => ?_
-    conv_lhs => rw [hz, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [hz, map_sum]
     rw [Finset.mul_sum]
     refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun i _ => ?_)
     change ‖InfinitePlace.Completion.extensionEmbedding w ((x i).1 w) * (τ w).1 _‖ ≤ _
@@ -83,7 +84,8 @@ theorem shift_decay {B : Base F E} {b a' : ℕ} {G : Geo σ (b + 2) a'} {G₁ : 
     rw [h1, one_mul]
   obtain ⟨f₁, hf₁, hb⟩ := hCb k (fun i => realAd F 1 * x i) (funext fun i => show (0 : Af F) * (x i).2 = 0 from zero_mul _)
   have hS : G.M.co.e (partInf F (shiftA H H' l)) = ∑ i, (realAd F 1 * x i) • S i := by
-    simp only [S, mul_smul, ← Finset.smul_sum, ← map_smul, ← map_sum, ← smul_assoc (x _), ← Finset.sum_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [S, mul_smul, ← Finset.smul_sum, ← map_smul, ← map_sum, ← smul_assoc (x _), ← Finset.sum_smul]
     rw [partInf, shiftA]
     congr 3
     refine ((Algebra.TensorProduct.basis (AF F) (Module.finBasis F E)).sum_equivFun (l : AE F E)).symm.trans ?_

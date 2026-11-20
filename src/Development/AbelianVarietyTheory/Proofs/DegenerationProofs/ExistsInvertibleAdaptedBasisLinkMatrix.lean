@@ -23,7 +23,8 @@ open GlobalTheory.VVRank GlobalTheory.EmbPull GlobalTheory.FieldBaseChange
 
 theorem gs_sum' {Y Z : Scheme.{0}} (r : Z ⟶ Y) (z : Z) (U : Y.Opens) (h : r z ∈ U) {J : Type} [Fintype J]
     (a : J → Γ(Y, U)) : gs r z U (∑ i, a i) = ∑ i, gs r z U (a i) := by
-  simp only [gs_eq r z U h, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [gs_eq r z U h, map_sum]
 
 def constRing {R : Type} [CommRing R] {Z : Scheme.{0}} (π : Z ⟶ Sp R) (z : Z) : R →+* Z.presheaf.stalk z :=
   ((Z.presheaf.germ (π ⁻¹ᵁ ⊤) z trivial).hom.comp (π.app ⊤).hom).comp (Scheme.ΓSpecIso (CommRingCat.of R)).inv.hom
@@ -108,7 +109,8 @@ theorem exists_comb (hS : SecBaseChangeAnySt) {R K : Type} [CommRing R] [Field K
       refine Subtype.ext (funext fun j => ?_)
       rw [Submodule.coe_sum, Finset.sum_apply]
       exact hc j
-    rw [this, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [this, map_sum]
     exact Submodule.sum_mem _ fun i _ => by
       rw [LinearMap.map_smulₛₗ]
       exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)
@@ -176,12 +178,14 @@ theorem linearIndependent_generic {R : Type} [CommRing R] [IsDomain R] {I : Idea
     have : x.2 = ∑ i, a i • f i := Prod.snd_sum
     rw [this, Finset.sum_apply]; rfl
   have g₁ : genericSec U.toUnifPre k x.1 = 0 := by
-    rw [x₁, map_sum, ← smul_zero (algebraMap R (FractionRing R) d), ← hc, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [x₁, map_sum, ← smul_zero (algebraMap R (FractionRing R) d), ← hc, Finset.smul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smulₛₗ, ha, smul_smul, Algebra.smul_def]
   have g₂ : ∀ α, genericTerm D k α (x.2 α) =
       famProj D.toPre _ k α (∑ i, algebraMap R (FractionRing R) (a i) • F i) := fun α => by
-    rw [x₂, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [x₂, map_sum, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smulₛₗ, map_smul, hF']
   have E₁ := (expands_iff U.toUnifPre k 0 (∑ i, algebraMap R (FractionRing R) (a i) • F i)).2
@@ -200,10 +204,12 @@ theorem linearIndependent_generic {R : Type} [CommRing R] [IsDomain R] {I : Idea
     exact h (by rw [hz i i₀ h', smul_zero])
   have z₃ := (hB i₀ (0 : IntTerm D k (cls i₀))).unique (y₁ := fun i => a i) (y₂ := 0) (fun j => by
     have := congrArg (chartLin _ _ j) z₂
-    rw [map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at this
     exact this.symm) (fun j => by
     have := congrArg (chartLin _ _ j) (show ∑ i : {i // cls i = cls i₀}, (0 : R) • f i (cls i₀) = 0 by simp)
-    rw [map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at this
     exact this.symm)
   have z₄ : a i₀ = 0 := congrFun z₃ ⟨i₀, rfl⟩
   have := ha i₀
@@ -268,7 +274,8 @@ theorem exists_link : GlobalTheory.UT.LL → ∀ (o Ω : Type) [CommRing o] [Fie
     rw [Finset.sum_comm]
     refine Finset.sum_eq_zero fun j _ => ?_
     have : ∑ i, c i * b i j = 0 := congrFun hc j
-    rw [← Finset.sum_mul, ← map_sum, this, map_zero, zero_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Finset.sum_mul, ← map_sum, this, map_zero, zero_mul]
   · let r : Sp (PadicAlgCl p) ⟶ pullback u.G.hom (jK u.V) := a.left
     let z : Sp (PadicAlgCl p) := IsLocalRing.closedPoint (PadicAlgCl p)
     have s₁ : a' ≫ (snd (baseOver (Sp S.R)) ρ.P.A).left = (r ≫ h) ≫ (snd (baseOver (Sp S.R)) ρ.P.A).left := by
@@ -296,7 +303,8 @@ theorem exists_link : GlobalTheory.UT.LL → ∀ (o Ω : Type) [CommRing o] [Fie
       rw [this, ← constVal_eq, ← constVal_eq, constVal_specMap]
     rw [Units.val_mul, _root_.mul_assoc, map_mul, map_mul, t₂]
     refine Eq.trans ?_ (congrArg _ ((congrArg (· * _) t₁).trans (key i _ r z a₁ l' m₁ m₂))).symm
-    rw [Finset.mul_sum, Matrix.mulVec, dotProduct, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.mul_sum, Matrix.mulVec, dotProduct, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [hv j, map_mul, map_mul, t₃, mul_left_comm]
     exact congrArg₂ (· * ·) rfl (congrArg₂ (· * ·) rfl (constRing_valR (r ≫ h) _ hl' _ z))

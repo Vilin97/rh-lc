@@ -22,7 +22,8 @@ theorem arch_bound_functional (F E : Type) [Field F] [NumberField F] [Field E] [
     simp only [Matrix.smul_single]
     exact map_sum (Matrix.singleAddMonoidHom k l) _ _
   rw [hx']
-  simp only [map_sum, map_smul, smul_eq_mul, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, smul_eq_mul, map_mul]
   rw [Finset.mul_sum]
   refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun k _ => ?_)
   rw [Finset.mul_sum]

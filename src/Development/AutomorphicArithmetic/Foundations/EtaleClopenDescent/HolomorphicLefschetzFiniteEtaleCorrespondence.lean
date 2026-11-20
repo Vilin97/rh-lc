@@ -152,4 +152,5 @@ theorem UpperTheory.Cb.holomorphic_lefschetz_finiteEtale_correspondence :
   change _ = ∑ y ∈ F, g y
   rw [← hsum, ← Finset.sum_congr rfl (fun m _ => (key m).2), Finset.sum_comm]
   refine Finset.sum_congr rfl fun b _ => ?_
-  rw [hu b, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hu b, map_sum, Finset.mul_sum]

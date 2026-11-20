@@ -115,7 +115,8 @@ theorem key (𝓗 : HodgeLat L ρ bar (p + q)) {σ σ' : E →+* Ω} {v : Fin p 
   have hψinv : ∀ j, ψ j ∘ₗ HT.eigProj ρ σ' = ψ j := fun j => hinv (ψ j) (hc j ▸ hceig j)
   have hψb : ∀ j l, ψ j (b l) = if j = l then 1 else 0 := fun j l => by
     have e1 : ∀ k, φ k (b l) = Q l k := fun k => by
-      simp only [b, map_sum, map_smul, φ, (had.2.2 k).2, smul_eq_mul, mul_ite, mul_one, mul_zero]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [b, map_sum, map_smul, φ, (had.2.2 k).2, smul_eq_mul, mul_ite, mul_one, mul_zero]
       simp
     have e2 : ψ j (b l) = (C * Q.transpose) j l := by
       simp only [ψ, LinearMap.sum_apply, LinearMap.smul_apply, e1, smul_eq_mul, Matrix.mul_apply,
@@ -138,7 +139,8 @@ theorem key (𝓗 : HodgeLat L ρ bar (p + q)) {σ σ' : E →+* Ω} {v : Fin p 
     have e2 : HT.eigProj ρ σ' z ∈ (L.inter (HT.eigSp ρ σ')) x := ⟨hL' z hz, HT.LatBasic.eigProj_mem ρ σ' z⟩
     rw [hQ.2] at e2
     obtain ⟨r, hr⟩ := (Submodule.mem_span_range_iff_exists_fun _).1 e2
-    rw [e1, ← hr, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e1, ← hr, map_sum]
     refine sum_mem fun l _ => ?_
     have e3 : ψ j ((r l) • b l) = (r l : Ω) * ψ j (b l) := by
       change ψ j ((r l : Ω) • b l) = _
@@ -167,9 +169,11 @@ theorem key (𝓗 : HodgeLat L ρ bar (p + q)) {σ σ' : E →+* Ω} {v : Fin p 
         have e1 : θ z = θ (HT.eigProj ρ σ' z) := (LinearMap.congr_fun hθ z).symm
         have e2 : ∀ j, ψ j z = d j := fun j => by
           have : ψ j z = ψ j (HT.eigProj ρ σ' z) := (LinearMap.congr_fun (hψinv j) z).symm
-          rw [this, ← hd, map_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [this, ← hd, map_sum]
           simp [hψb]
-        rw [e1, ← hd, map_sum, LinearMap.sum_apply]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [e1, ← hd, map_sum, LinearMap.sum_apply]
         refine Finset.sum_congr rfl fun j _ => ?_
         simp only [LinearMap.smul_apply, map_smul, e2, smul_eq_mul]
         exact mul_comm _ _

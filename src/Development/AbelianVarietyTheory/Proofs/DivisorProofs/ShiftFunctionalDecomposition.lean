@@ -11,7 +11,8 @@ theorem pderiv_pSum_eq {ι : Type} [Fintype ι] [DecidableEq ι] {N : ℕ} (τ �
     pderiv (τ, i) (pSum σ k : Pol ι N) =
       if σ = τ then C (k : ℝ) * X (τ, i) ^ (k - 1) else 0 := by
   unfold pSum
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [Derivation.leibniz_pow, pderiv_X, Pi.single_apply, Prod.mk.injEq]
   by_cases h : σ = τ
   · subst h
@@ -29,8 +30,10 @@ theorem degFl_pderiv_powerComb {ι : Type} [Fintype ι] [DecidableEq ι] {N : �
   have h1 : ∀ i : Fin N, degFl ι N (pderiv (τ, i) (∑ σ : ι, ∑ k ∈ Finset.Icc 1 N, pSum σ k * Q σ k)) =
       ∑ k ∈ Finset.Icc 1 N, (k : ℝ) * degFl ι N (X (τ, i) ^ (k - 1) * Q τ k) := by
     intro i
-    rw [map_sum, PPowSum.degFl_sum, Finset.sum_eq_single τ]
-    · rw [map_sum, PPowSum.degFl_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, PPowSum.degFl_sum, Finset.sum_eq_single τ]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [map_sum, PPowSum.degFl_sum]
       refine Finset.sum_congr rfl fun k hk => ?_
       have hk1 : 1 ≤ k := (Finset.mem_Icc.mp hk).1
       have hz : degFl ι N (pSum τ k * pderiv (τ, i) (Q τ k)) = 0 :=
@@ -38,7 +41,8 @@ theorem degFl_pderiv_powerComb {ι : Type} [Fintype ι] [DecidableEq ι] {N : �
       rw [pderiv_mul, PPowSum.degFl_add, hz, add_zero, pderiv_pSum_eq, if_pos rfl, mul_assoc,
         PPowSum.degFl_C_mul]
     · intro σ _ hσ
-      rw [map_sum, PPowSum.degFl_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, PPowSum.degFl_sum]
       refine Finset.sum_eq_zero fun k hk => ?_
       have hk1 : 1 ≤ k := (Finset.mem_Icc.mp hk).1
       have hz : degFl ι N (pSum σ k * pderiv (τ, i) (Q σ k)) = 0 :=

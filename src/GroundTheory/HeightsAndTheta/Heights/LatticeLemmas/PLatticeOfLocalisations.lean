@@ -270,7 +270,8 @@ theorem mem_localLattice_latticeOfLocal (M₁ : FullLattice K V)
       (algebraMap K (u.adicCompletion K) (D : K))⁻¹ •
         ∑ i, algebraMap K (u.adicCompletion K) (b i : K) • toLocal u (g i) := by
     intro u
-    rw [hx_def, map_smul, map_sum, ← algebraMap_smul (u.adicCompletion K) (D : K)⁻¹, map_inv₀]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hx_def, map_smul, map_sum, ← algebraMap_smul (u.adicCompletion K) (D : K)⁻¹, map_inv₀]
     simp only [toLocal_smul']
   set m : v.adicCompletion K ⊗[K] V := ∑ i, o i • toLocal v (g i) with hm_def
   have hm : m ∈ localLattice v M₁.carrier := by

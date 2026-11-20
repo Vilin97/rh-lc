@@ -71,7 +71,8 @@ theorem absIrrSub_top_of_irred {k L : Type} [Field k] [Field L] [IsAlgClosed L] 
     have hθv : ∀ v : Fin a → K, θ v = ∑ i, v i * θ (Pi.single i 1) := by
       intro v
       conv_lhs => rw [← Finset.univ_sum_single v]
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [show (Pi.single i (v i) : Fin a → K) = v i • (Pi.single i (1 : K) : Fin a → K) by
         ext j; by_cases hij : j = i <;> simp [Pi.single_apply, hij], map_smul, smul_eq_mul]
@@ -82,7 +83,8 @@ theorem absIrrSub_top_of_irred {k L : Type} [Field k] [Field L] [IsAlgClosed L] 
         obtain ⟨u, hu, rfl⟩ := hx
         have h0 : θ u = 0 := hθ hu
         have := congrArg ψ (hθv u)
-        rw [h0, map_zero, map_sum] at this
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [h0, map_zero, map_sum] at this
         rw [this]
         refine Finset.sum_congr rfl fun i _ => ?_
         simp [c]

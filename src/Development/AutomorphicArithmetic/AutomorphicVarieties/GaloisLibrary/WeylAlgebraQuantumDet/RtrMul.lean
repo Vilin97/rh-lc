@@ -18,7 +18,8 @@ theorem UpperTheory.V.Weyl.rtrMul :
       apply MvPolynomial.algHom_ext
       rintro ⟨i, j⟩
       rw [AlgHom.comp_apply]
-      simp only [rtr, MvPolynomial.aeval_X, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [rtr, MvPolynomial.aeval_X, map_sum]
       have hx : ∀ x, (MvPolynomial.aeval (fun ij : Fin n × Fin n => ∑ k, MvPolynomial.X (ij.1, k) *
           MvPolynomial.C (g k ij.2)) : MvPolynomial (Fin n × Fin n) ℂ →ₐ[ℂ] MvPolynomial (Fin n × Fin n) ℂ)
           (MvPolynomial.X (i, x) * MvPolynomial.C (h x j)) =
@@ -26,7 +27,8 @@ theorem UpperTheory.V.Weyl.rtrMul :
         intro x
         rw [map_mul, MvPolynomial.aeval_X, MvPolynomial.aeval_C, MvPolynomial.algebraMap_eq, Finset.sum_mul]
         simp only [mul_assoc, ← map_mul]
-      simp only [hx, Matrix.mul_apply, map_sum, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hx, Matrix.mul_apply, map_sum, Finset.mul_sum]
       rw [Finset.sum_comm]
     rw [e]
     rfl

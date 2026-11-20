@@ -30,7 +30,8 @@ theorem hform_smul_right (σ : A →+* A) (J : Matrix (Fin n) (Fin n) A) (c : A)
 theorem hform_swap (σ : A →+* A) (hσ : ∀ a, σ (σ a) = a) (J : Matrix (Fin n) (Fin n) A)
     (hJ : ∀ i j, σ (J j i) = J i j) (x y : Fin n → A) :
     hform σ J y x = σ (hform σ J x y) := by
-  simp only [hform, map_sum, map_mul, hσ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hform, map_sum, map_mul, hσ]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   rw [hJ]

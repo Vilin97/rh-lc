@@ -22,7 +22,8 @@ omit [NumberField F] [NumberField E] in
 theorem conj_form {ι κ : Type} [Fintype ι] [Fintype κ] (hσ : ∀ x, σ (σ x) = x) (M : Matrix κ κ E) (b : Matrix κ ι E)
     (s : E) (hM : ∀ k l, σ (M l k) = s * M k l) (i j : ι) :
     σ ((bᵀ * M * b.map σ) j i) = s * (bᵀ * M * b.map σ) i j := by
-  simp only [Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, map_sum, map_mul, hσ, hM, Finset.mul_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, map_sum, map_mul, hσ, hM, Finset.mul_sum,
     Finset.sum_mul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun l _ => ?_

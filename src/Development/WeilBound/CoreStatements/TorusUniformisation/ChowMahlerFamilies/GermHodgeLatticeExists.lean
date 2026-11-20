@@ -67,7 +67,8 @@ theorem span_stdLat (A : Subring Ω) (T : ((Fin d → Ω) × (Fin d → Ω)) →
   rw [eq_top_iff]
   rintro y -
   obtain ⟨y, rfl⟩ := hT y
-  rw [decomp y, map_add, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [decomp y, map_add, map_sum, map_sum]
   refine Submodule.add_mem _ (Submodule.sum_mem _ fun i _ => ?_) (Submodule.sum_mem _ fun i _ => ?_) <;>
     rw [map_smul] <;> refine Submodule.smul_mem _ _ (Submodule.subset_span (Submodule.subset_span ?_))
   · exact ⟨_, fun j => ⟨single_mem A i j, A.zero_mem⟩, rfl⟩
@@ -93,13 +94,15 @@ theorem exists_finite (f : R →+* Ω) {J : Type} [Fintype J] (w : J → (Fin d 
     fun A hA T => le_antisymm ?_ ?_⟩
   · have key : ∀ y, (∀ k, f (c y k) ∈ A) → T (mp f y) ∈ Submodule.span A (Set.range fun i => T (mp f (w i))) := by
       intro y hy
-      rw [← hc y, mp_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hc y, mp_sum, map_sum]
       refine Submodule.sum_mem _ fun k _ => ?_
       rw [map_smul]
       exact Submodule.smul_mem _ (⟨_, hy k⟩ : A) (Submodule.subset_span ⟨k, rfl⟩)
     rw [stdLat, Submodule.span_le]
     rintro _ ⟨y, hy, rfl⟩
-    rw [decomp y, map_add, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [decomp y, map_add, map_sum, map_sum]
     refine Submodule.add_mem _ (Submodule.sum_mem _ fun i _ => ?_) (Submodule.sum_mem _ fun i _ => ?_) <;>
       rw [map_smul]
     · refine Submodule.smul_mem _ (⟨_, (hy i).1⟩ : A) ?_

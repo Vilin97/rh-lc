@@ -89,7 +89,8 @@ def HermSub (E : Type) [Field E] [NumberField E] [IsCMField E] (N : ℕ) :
     rw [cc_smul, h1]
 
 theorem cc_trace {N : ℕ} (X : Matrix (Fin N) (Fin N) E) : cc X.trace = (ccT X).trace := by
-  simp only [Matrix.trace, diag_apply, ccT, transpose_apply, map_apply, cc, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.trace, diag_apply, ccT, transpose_apply, map_apply, cc, map_sum]
 
 theorem cc_trace_mul {N : ℕ} (X Y : HermSub E N) : cc (X.1 * Y.1).trace = (X.1 * Y.1).trace := by
   have hX : ccT X.1 = X.1 := X.2
@@ -115,7 +116,8 @@ theorem form_self {Ψ : Finset (E →+* ℂ)} (hΨ : IsType Ψ) {N : ℕ} (X : H
   have hX : ccT X.1 = X.1 := X.2
   have h2 : ∀ τ : Ψ, τ.1 (X.1 * X.1).trace =
       ((∑ a, ∑ b, normSq (τ.1 (X.1 a b)) : ℝ) : ℂ) := fun τ => by
-    simp only [Matrix.trace, diag_apply, mul_apply, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.trace, diag_apply, mul_apply, map_sum, map_mul]
     push_cast
     refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
     have h3 : cc (X.1 a b) = X.1 b a := congrFun (congrFun hX b) a
@@ -177,7 +179,8 @@ theorem functional_eq_zero {Ψ : Finset (E →+* ℂ)} (hΨ : IsType Ψ) {N : �
             apply_ite cc, cc_cc, cc_zero, and_comm]
           rw [add_comm]
         rw [← h ⟨_, hm⟩]
-        simp only [← smul_eq_mul, ← map_smul, ← map_add, ← map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [← smul_eq_mul, ← map_smul, ← map_add, ← map_sum]
         congr 1
         funext σ
         rw [Finset.sum_apply, Finset.sum_eq_single σ]
@@ -198,7 +201,8 @@ theorem functional_eq_zero {Ψ : Finset (E →+* ℂ)} (hΨ : IsType Ψ) {N : �
       exact Matrix.matrix_eq_sum_single Z
     · simp [Finset.sum_apply, Pi.single_eq_of_ne hσ]
   rw [hZ]
-  simp only [map_sum, map_smul, key, smul_zero, Finset.sum_const_zero]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, key, smul_zero, Finset.sum_const_zero]
   simp
 
 theorem exists_basis : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (Ψ : Finset (E →+* ℂ)), IsType Ψ → ∀ N R : ℕ, 0 < R → ∃ (m : ℕ) (β T : Fin m → Matrix (Fin N) (Fin N) E) (c : ℕ), 0 < c ∧ (∀ i, ccT (β i) = β i ∧ ccT (T i) = T i ∧ Den c (T i) ∧ ∃ y : Matrix (Fin N) (Fin N) E, IntM y ∧ ccT y = y ∧ β i = (R : E) • y) ∧ (∀ i j, ∑ τ : Ψ, τ.1 (T i * β j).trace = if i = j then 1 else 0) ∧ ∀ Z : CM Ψ N N, Z = fun τ => ∑ j, (∑ σ : Ψ, ((T j).map σ.1 * Z σ).trace) • (β j).map τ.1 := by
@@ -227,7 +231,8 @@ theorem exists_basis : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (�
     split_ifs <;> simp
   · have hrep : ∀ (X : HermSub E N) j, b.repr X j = form E N (t j) X := fun X j => by
       conv_rhs => rw [← b.sum_repr X]
-      simp only [map_sum, map_smul, ht, smul_eq_mul, mul_ite, mul_one, mul_zero,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, ht, smul_eq_mul, mul_ite, mul_one, mul_zero,
         Finset.sum_ite_eq, Finset.mem_univ, if_true]
     funext τ
     ext k l

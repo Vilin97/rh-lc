@@ -152,7 +152,8 @@ private theorem taylor (F : Sm E (r + s)) (g : GA E (r + s)) {K : ℝ}
 
 private theorem exists_casimir_center : ∃ u : UC E (r + s), j1 E r s = uC E (r + s) u :=
   ⟨((r * Module.finrank ℚ E : ℕ) : ℂ)⁻¹ • ∑ τ : E →+* ℂ, ∑ i : Fin r, genC τ (Fin.castAdd s i) (Fin.castAdd s i), by
-    simp only [j1, map_smul, map_sum, uC_genC]⟩
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [j1, map_smul, map_sum, uC_genC]⟩
 
 end UpperTheory.ConvolutionTheory.BW
 

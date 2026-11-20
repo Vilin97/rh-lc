@@ -24,7 +24,8 @@ theorem eq_sum_fn_mul {N : ℕ} (χ : Fin N → M → ℝ) (hχ : ∀ y, ∑ j, 
   have : (∑ j, A.fn (χ j)) = 1 := by
     funext x
     simp only [Finset.sum_apply, HolAtlas.fn, Pi.one_apply]
-    rw [← map_sum, ← Complex.ofReal_sum, hχ, Complex.ofReal_one, map_one]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, ← Complex.ofReal_sum, hχ, Complex.ofReal_one, map_one]
   rw [this, one_mul]
 
 theorem dbar_sum {N : ℕ} (α : Fin N → A.Fld) (hα : ∀ j, A.IsForm (α j)) :

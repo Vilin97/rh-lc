@@ -39,7 +39,8 @@ theorem bc_ringEquiv_mulVec {r : ℕ} {K K' : Type} [CommRing K] [CommRing K'] (
   funext j
   have h1 : ∀ i j, ((Formalism.UG.bc (e : K →+* K') h : GL (Fin r) K') : Matrix (Fin r) (Fin r) K') i j
       = e ((h : Matrix (Fin r) (Fin r) K) i j) := fun _ _ => rfl
-  simp only [Matrix.mulVec, dotProduct, h1, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mulVec, dotProduct, h1, map_sum, map_mul]
 
 theorem det_bc_ringEquiv {r : ℕ} {K K' : Type} [CommRing K] [CommRing K'] (e : K ≃+* K') (h : GL (Fin r) K) :
     Matrix.GeneralLinearGroup.det (Formalism.UG.bc (e : K →+* K') h) =
@@ -72,7 +73,8 @@ theorem mirSet_iff_bc {g : ℕ} [Fact g.Prime] {r : ℕ} {K' : Type} [CommRing K
     rw [bc_ringEquiv_mulVec]
     refine imp_congr ?_ ?_
     · rw [← e.injective.eq_iff (b := 0), map_zero]
-      simp only [dotProduct, map_sum, map_mul, e.apply_symm_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [dotProduct, map_sum, map_mul, e.apply_symm_apply]
     · simp only [funext_iff, e.injective.eq_iff]
 
 theorem mirC_eq_coeff_mirEl : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T : Type) (A : FamIn D.what₂.LL G Pl0 T D.R.m)

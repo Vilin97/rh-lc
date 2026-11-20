@@ -85,7 +85,8 @@ theorem reading_iff (hL : ActLev (Xo := Xo) c lev) (U : ∀ σ : c.F →+* ℂ, 
   constructor
   · intro h f' hf'
     obtain ⟨m, as, fs, hfs, hBC⟩ := GlobalTheory.SecFieldChange.cuspBC_holds hle U a n f' hf'
-    rw [rdU_unfBC hle U σ' hBC, rdU_unfBC hle U σ' (hB a n g m as fs f' hf'.1 (fun i => (hfs i).1) hBC), map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [rdU_unfBC hle U σ' hBC, rdU_unfBC hle U σ' (hB a n g m as fs f' hf'.1 (fun i => (hfs i).1) hBC), map_sum, map_sum]
     exact Finset.sum_congr rfl fun i _ => by rw [map_smul, map_smul, h _ (hfs i)]
   · intro h f hf
     have h1 := ((rulBC_cusp _ H Dw l Xo c c' hle r U a n f hf.1).2).2 hf

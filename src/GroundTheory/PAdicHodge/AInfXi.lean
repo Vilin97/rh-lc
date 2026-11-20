@@ -81,7 +81,8 @@ theorem mu_eq_xi_mul (ε : 𝒪♭) : mu ε = xi ε * (φ).symm (mu ε) := by
 
 theorem frobeniusEquiv_xi (ε : 𝒪♭) :
     φ (xi ε) = ∑ i ∈ Finset.range p, teichmuller p ε ^ i := by
-  rw [xi, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [xi, map_sum]
   simp only [map_pow, WittVector.frobeniusEquiv_teichmuller, frobeniusEquiv_symm_pow_p]
 
 theorem fontaineTheta_frobeniusEquiv_symm_pow_mu (ε : 𝒪♭) (n : ℕ) :
@@ -97,7 +98,8 @@ theorem untilt_frobeniusEquiv_symm_pow_p {ε : 𝒪♭} (hε : PreTilt.untilt ε
 
 theorem fontaineTheta_xi {ε : 𝒪♭} (hε : PreTilt.untilt ε = 1)
     (hζ : PreTilt.untilt ((_root_.frobeniusEquiv 𝒪♭ p).symm ε) ≠ 1) : θ (xi ε) = 0 := by
-  rw [xi, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [xi, map_sum]
   simp only [map_pow, fontaineTheta_teichmuller]
   have h := mul_geom_sum (PreTilt.untilt ((_root_.frobeniusEquiv 𝒪♭ p).symm ε)) p
   rw [untilt_frobeniusEquiv_symm_pow_p hε, sub_self] at h
@@ -188,7 +190,8 @@ theorem norm_natCast_ne_zero {ε : 𝒪♭} (hε : PreTilt.untilt ε = 1)
 theorem xi_coeff_zero (ε : 𝒪♭) :
     (xi ε).coeff 0 = ∑ i ∈ Finset.range p, (_root_.frobeniusEquiv 𝒪♭ p).symm ε ^ i := by
   change WittVector.constantCoeff (xi ε) = _
-  rw [xi, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [xi, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_pow]
   exact congrArg (· ^ i) (teichmuller_coeff_zero p _)

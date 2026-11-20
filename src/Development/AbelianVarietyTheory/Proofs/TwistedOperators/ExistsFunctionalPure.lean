@@ -61,7 +61,8 @@ theorem sum_prod_apply {ι P : Type} {X : P → Type} [∀ v, Nonempty (X v)] (s
         ring
 
       have h2 := congrArg (l w) hfun
-      rw [map_sum, map_zero] at h2
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, map_zero] at h2
       simp only [map_smul, smul_eq_mul] at h2
       rw [← h2]
       refine Finset.sum_congr rfl fun i _ => ?_
@@ -173,7 +174,8 @@ theorem exists_functional_pure {F : Type} [Field F] [NumberField F] {κ : Type} 
         refine Finset.sum_congr rfl fun q _ => ?_
         ring
       have h0 := congrArg lam hz
-      rw [map_sum, map_zero] at h0
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, map_zero] at h0
       simp only [map_smul, smul_eq_mul] at h0
       rw [← h0]
       refine Finset.sum_congr rfl fun q _ => ?_

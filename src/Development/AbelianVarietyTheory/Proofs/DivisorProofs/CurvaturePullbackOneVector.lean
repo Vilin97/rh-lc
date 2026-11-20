@@ -67,12 +67,14 @@ def d01ConjLinear (f : V → W) (P : V) : V →ₗ⋆[ℂ] W where
 theorem d10_finset_sum' {n : ℕ} (f : V → W) (P : V) (a : Fin n → ℂ) (v : Fin n → V) :
     d10 f P (∑ i, a i • v i) = ∑ i, a i • d10 f P (v i) := by
   show d10Linear f P _ = _
-  rw [map_sum]; simp only [map_smul]; rfl
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]; simp only [map_smul]; rfl
 
 theorem d01_sum {n : ℕ} (f : V → W) (P : V) (a : Fin n → ℂ) (v : Fin n → V) :
     d01 f P (∑ i, a i • v i) = ∑ i, star (a i) • d01 f P (v i) := by
   show d01ConjLinear f P _ = _
-  rw [map_sum]; simp only [map_smulₛₗ]; rfl
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]; simp only [map_smulₛₗ]; rfl
 
 theorem d10_comp_continuousLinearMap {m m' : ℕ} (L : Ext m →L[ℂ] Ext m') (s : V → Ext m) (P v : V)
     (hs : DifferentiableAt ℝ s P) : d10 (fun Q => L (s Q)) P v = L (d10 s P v) := by
@@ -96,7 +98,8 @@ theorem hor_sum {n : ℕ} (τ : E → Matrix (Fin g) (Fin g) ℂ) (P : Pt E g) (
   unfold hor
   ext1
   · simp [Prod.fst_sum]
-  · simp [Prod.snd_sum, map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp [Prod.snd_sum, map_sum, map_smul]
 
 theorem nab10_sum {m n : ℕ} (h : Pt E g → ℝ) (s : Pt E g → Ext (m + m + g)) (P : Pt E g) (a : Fin n → ℂ)
     (v : Fin n → Pt E g) : pointDifference h s P (∑ i, a i • v i) = ∑ i, a i • pointDifference h s P (v i) := by
@@ -398,7 +401,8 @@ theorem connForm_L {n : ℕ} (τ : E → Matrix (Fin g) (Fin g) ℂ) (b v : E)
     (hzc : ∀ c x, contr (dzb 1 c) (L x) = ε • L (contr (dzb n c) x)) (x : Ext (n + n + g)) :
     connForm τ b v (L x) = L (connForm τ b v x) := by
   unfold connForm
-  simp only [hzc, wedge_smul', hzw, smul_smul, hε, one_smul, map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hzc, wedge_smul', hzw, smul_smul, hε, one_smul, map_sum, map_smul]
 
 theorem superconn_comp {n : ℕ} (τ : E → Matrix (Fin g) (Fin g) ℂ) (h : Pt E g → ℝ) (β : Fin n → E)
     (a : Fin n → ℂ) (L : Ext (n + n + g) →L[ℂ] Ext (1 + 1 + g)) (ε : ℂ) (hε : ε * ε = 1)
@@ -415,15 +419,19 @@ theorem superconn_comp {n : ℕ} (τ : E → Matrix (Fin g) (Fin g) ℂ) (h : Pt
     rw [nab10_comp h L s P _ hs, d01_comp_continuousLinearMap L s P _ hs, connForm_L τ P.1 _ L ε hε hzw hzc, hor_sum,
       nab10_sum, d01_sum, connForm_sum, ← map_add, ← Finset.sum_add_distrib]
     simp only [← smul_add]
-    simp only [map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul]
     simp only [wedge_sum', wedge_smul', hdt, hdtb]
-    simp only [map_sum, Finset.smul_sum, map_add, smul_add, Finset.sum_add_distrib]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, Finset.smul_sum, map_add, smul_add, Finset.sum_add_distrib]
   have hdbar : dbarV (fun Q => L (s Q)) P = ε • L (dbarV s P) := by
     unfold dbarV
-    simp only [d01_comp_continuousLinearMap L s P _ hs, hzw, map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [d01_comp_continuousLinearMap L s P _ hs, hzw, map_sum, Finset.smul_sum]
   have hadj : dbarAdj τ h (fun Q => L (s Q)) P = ε • L (dbarAdj τ h s P) := by
     unfold dbarAdj
-    simp only [nab10_comp h L s P _ hs, hzc, map_neg, map_sum, map_smul, smul_neg, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [nab10_comp h L s P _ hs, hzc, map_neg, map_sum, map_smul, smul_neg, Finset.smul_sum]
     congr 1
     refine Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => ?_
     rw [smul_comm]

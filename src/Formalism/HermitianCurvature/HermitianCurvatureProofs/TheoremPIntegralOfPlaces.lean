@@ -899,9 +899,11 @@ theorem thmPInt_of_covolume_prod (E : Type) [Field E] [NumberField E] [IsCMField
         (⟨C.loc (S.σ v) h, by simp⟩ : ({C.loc (S.σ v) h, C.loc (S.σ v) h'} : Finset C.LPt))
     set X : ℂ := ∑ h ∈ Y, ∑ h' ∈ Y, κ h h' * S.gram ε (i - 1) w.1 h h' with hX
     have hXr : ((X.re : ℝ) : ℂ) = X := by
-      rw [← Complex.conj_eq_iff_re, hX, map_sum, Finset.sum_comm]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← Complex.conj_eq_iff_re, hX, map_sum, Finset.sum_comm]
       refine Finset.sum_congr rfl fun h' hh' => ?_
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun h hh => ?_
       rw [map_mul, hκH h' hh' h hh, hgH h' h]
     have hN0 : ((S.base.N0 ε (i - 1) w Y κ : ℝ) : ℂ) = X / sz := by

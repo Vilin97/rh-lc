@@ -74,10 +74,12 @@ theorem glue_ratios {R C : Type} [CommRing R] (Ω : C → Type) [∀ Z, Field (�
   choose! p hp q hq h1 h2 using hK'
   refine ⟨K, ∑ Z ∈ S, p Z, sum_mem hp, ∑ Z ∈ S, q Z, sum_mem hq, fun Z hZ => ?_⟩
   have ep : e Z (∑ Z ∈ S, p Z) = e Z (p Z) := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_eq_single_of_mem Z hZ fun b hb hne => (h2 b hb Z hne.symm).1
   have eq : e Z (∑ Z ∈ S, q Z) = e Z (q Z) := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_eq_single_of_mem Z hZ fun b hb hne => (h2 b hb Z hne.symm).2
   rw [ep, eq]
   exact h1 Z hZ
@@ -158,7 +160,8 @@ theorem exists_gen_ne_zero {D : D7} {B : WeightFamilies.Prov D} {P : ModuliInteg
   by_contra hc
   push Not at hc
   apply hs.s0.ne_zero
-  rw [Formalism.MainNotions.Gaps.EtaleWeightGaps.sec, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Formalism.MainNotions.Gaps.EtaleWeightGaps.sec, map_sum]
   refine Finset.sum_eq_zero fun k _ => ?_
   rw [Algebra.smul_def, map_mul]
   exact mul_eq_zero_of_right _ (hc k)

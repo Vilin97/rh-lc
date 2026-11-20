@@ -218,7 +218,8 @@ theorem cechD_extC {i : ℕ} (v : Kleiman.Cech.Cochain (Kleiman.locSys S N M) i)
   · have hg : (IndefiniteRowSideFullHecke.Kleiman.gradedSys S N M G c).good J := hJ
     refine (cechD_apply_pos _ _ J hg).trans ?_
     by_cases hc : J.card = i + 1 + 1
-    · rw [extC_apply_pos G c _ J ⟨hJ, hc⟩, Kleiman.Cech.d_apply, map_sum, ← Finset.sum_coe_sort J]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [extC_apply_pos G c _ J ⟨hJ, hc⟩, Kleiman.Cech.d_apply, map_sum, ← Finset.sum_coe_sort J]
       refine Finset.sum_congr rfl fun j _ => ?_
       have hj : (J.erase j).Nonempty ∧ (J.erase j).card = i + 1 := by
         rw [Finset.card_erase_of_mem j.2, hc]

@@ -55,7 +55,8 @@ theorem isSSRep_of_finiteIndex {Γ k : Type} [Group Γ] [Field k] [CharZero k] {
     rw [← hTN (h * q.out) _ hm, mul_inv_cancel_left]
   have hS : ∀ h v, ρ h (S v) = S (ρ h v) := by
     intro h v
-    simp only [S, LinearMap.sum_apply, map_sum, hTc h]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [S, LinearMap.sum_apply, map_sum, hTc h]
     rw [← Equiv.sum_comp (MulAction.toPerm h : Equiv.Perm (Γ ⧸ N)) (fun q => T (Quotient.out q) (ρ h v))]
     refine Finset.sum_congr rfl fun q _ => ?_
     simp only [MulAction.toPerm_apply]

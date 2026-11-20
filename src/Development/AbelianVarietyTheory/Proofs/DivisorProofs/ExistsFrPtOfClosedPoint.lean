@@ -180,7 +180,8 @@ theorem eig_of_comb (hv : ∀ i, IsTanAtG t x (v i)) {s : 𝓞 E →+* S} (he : 
     rw [← GlobalTheory.ShFam.Pad.Pull.eig_iff]
     exact he i b
   rw [GlobalTheory.ShFam.Pad.Pull.eig_iff]
-  simp only [map_sum, map_smul, h1, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, h1, Finset.smul_sum]
   exact Finset.sum_congr rfl fun i _ => smul_comm _ _ _
 
 theorem isEigG_push {X' : Scheme.{0}} {t' : SAB H X'} {f : X' ⟶ X} (ν : SABMap t' t f) {x' : Sp S ⟶ X'}

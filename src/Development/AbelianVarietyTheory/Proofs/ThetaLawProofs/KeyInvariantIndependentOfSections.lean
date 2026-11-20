@@ -37,7 +37,8 @@ theorem exists_coords {R : Type} [CommRing R] (x : KeyIn R) {l N : ℕ} (b : Fin
     intro V W h a
     simp only [AbLaw.cst, RingHom.comp_apply]
     exact GlobalTheory.KeyVia.res_appLE (φ := x.P.A.hom) (U := ⊤) _ h _
-  simp only [map_sum, map_mul, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, Finset.mul_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   have e3 := (b k).compat i j
   rw [e4, e4, e3]

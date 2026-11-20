@@ -154,7 +154,8 @@ def conjMat : Matrix κ κ R := fun k => coords b R (conjBase K E R (baseBasis b
 theorem coords_conjBase (z : R ⊗[K] E) :
     coords b R (conjBase K E R z) = coords b R z ᵥ* conjMat b R := by
   conv_lhs => rw [eq_sum_coords b R z]
-  rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum]
   funext l
   simp only [conjBase_smul, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, vecMul,
     dotProduct, conjMat]

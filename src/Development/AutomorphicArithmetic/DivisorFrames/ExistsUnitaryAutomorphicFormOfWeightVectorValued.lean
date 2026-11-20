@@ -84,6 +84,7 @@ theorem UpperTheory.exists_unitaryAutomorphicForm_of_weightVectorValued :
   refine ⟨π, hπ, UpperTheory.hasWeightAt_of_ne_zero_intertwining E n ι emb hinj lam π f' hf'0 hf'π (fun x hx v => hf'e ⟨x, hx⟩ v), f' v, hf'π v, hv,
     fun κ s y c hy hs => hsum κ s y c hy (fun w => ?_) v⟩
   funext g
-  rw [Finset.sum_apply, Pi.smul_apply, hf, ← map_smul, ← map_smul, ← hs g, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.sum_apply, Pi.smul_apply, hf, ← map_smul, ← map_smul, ← hs g, map_sum, map_sum]
   refine Finset.sum_congr rfl fun i hi => ?_
   rw [hRU, hf, mul_inv_rev, map_mul, hRfin _ ((finU E n).inv_mem (hy i hi)), one_mul]

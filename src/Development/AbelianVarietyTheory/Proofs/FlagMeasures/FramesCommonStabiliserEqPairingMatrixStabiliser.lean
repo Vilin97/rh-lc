@@ -256,7 +256,8 @@ theorem stab_eq : ∀ {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F]
         apply Matrix.vecMul_injective_of_isUnit ((Matrix.isUnit_iff_isUnit_det _).2 hU')
         funext a
         have h1 := congrArg L.cj (h0 _ (mem_spanTo S S.f' a.2))
-        rw [hf_sum_l, map_zero, map_sum] at h1
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [hf_sum_l, map_zero, map_sum] at h1
         simp only [map_mul, hf_cj L S.herm.1] at h1
         simp only [Matrix.zero_vecMul, Pi.zero_apply]
         exact h1

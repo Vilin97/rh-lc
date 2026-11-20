@@ -40,11 +40,13 @@ theorem locFree_map_equiv (R : Subalgebra o Ω) {E E' : Type} [AddCommGroup E] [
       · rintro ⟨a, ha, hv⟩
         refine ⟨a, ha, ?_⟩
         have := congrArg e hv
-        simpa [map_sum] using this
+        set_option synthInstance.maxHeartbeats 100000 in
+          simpa [map_sum] using this
       · rintro ⟨a, ha, hv⟩
         refine ⟨a, ha, ?_⟩
         rw [hv]
-        simp [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp [map_sum]
 
 theorem mem_stdLat (R : Subalgebra o Ω) {ι : Type} {v : ι → Ω} :
     v ∈ stdLat R ι ↔ ∀ j, v j ∈ R := by

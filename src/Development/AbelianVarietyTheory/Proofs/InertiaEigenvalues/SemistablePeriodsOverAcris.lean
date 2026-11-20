@@ -68,7 +68,8 @@ theorem kap_map (C : Core l) {K : FinExt l} (bk : BK K) {d : ℕ} (k₀ k : ℕ)
     show C.qB _ = _
     rw [GlobalTheory.SstPer.ecoefQ, map_mul, map_pow, map_natCast]
   unfold GlobalTheory.SstPer.kap
-  rw [← RingHom.mapMatrix_apply, map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← RingHom.mapMatrix_apply, map_sum, Finset.smul_sum]
   refine Finset.sum_congr rfl fun i hi => ?_
   rw [RingHom.mapMatrix_apply, map_smul_ring, ← RingHom.mapMatrix_apply, map_pow, RingHom.mapMatrix_apply, hM,
     smul_smul]

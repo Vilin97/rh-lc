@@ -394,7 +394,8 @@ variable [LinearOrder K] [∀ k, LinearOrder (ι k)] (y : (Σ k, ι k) → Ω) (
 theorem redCoch_cechD (n : ℕ) (w : KH.CechC ℤ ι (MRingOver ℤ ι ⧸ GenOnFibres.idealOver y ℤ) n) :
     redCoch y p (n + 1) (KH.cechD ℤ ι _ n w) = KH.cechD (ZMod p) ι _ n (redCoch y p n w) := by
   funext I
-  simp only [redCoch_apply, KH.cechD, LinearMap.pi_apply, LinearMap.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [redCoch_apply, KH.cechD, LinearMap.pi_apply, LinearMap.sum_apply, map_sum]
   refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun i _ => ?_
   split_ifs with h
   · have hJ : ∀ l, Function.update I.1 k ((I.1 k).erase i) l ⊆ I.1 l := by

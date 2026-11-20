@@ -68,7 +68,8 @@ theorem isOpen_integral_everywhere : IsOpen {z : AE F E | ∀ v : Pl F, compFin 
       (isOpen_set_pi Set.finite_univ fun _ _ => ho)
   have hsub : φ '' (Set.univ.pi fun _ => W) ⊆ (S : Set (AE F E)) := by
     rintro _ ⟨a, ha, rfl⟩ v
-    rw [hφ, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hφ, map_sum]
     refine sum_mem fun i _ => ?_
     rw [show b i = ((RingOfIntegers.basis E i : 𝓞 E) : E) from integralBasis_apply E i]
     exact tmul_mem_intLoc (ha i (Set.mem_univ i) v) _

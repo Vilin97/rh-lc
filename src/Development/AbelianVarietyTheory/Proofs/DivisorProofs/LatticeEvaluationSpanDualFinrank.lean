@@ -15,7 +15,8 @@ theorem span_eval_eq_top_and_finrank_dual : ∀ (W : Type 1) [AddCommGroup W] [M
     intro w hw
     apply hinj
     intro l
-    rw [← b.sum_repr l, map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← b.sum_repr l, map_sum, LinearMap.sum_apply]
     refine Finset.sum_eq_zero fun i _ => ?_
     rw [map_zsmul, LinearMap.smul_apply, ← hΦ, hw]
     simp

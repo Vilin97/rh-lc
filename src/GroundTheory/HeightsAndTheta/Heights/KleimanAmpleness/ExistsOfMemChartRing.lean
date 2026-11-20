@@ -37,7 +37,8 @@ theorem prod_pow_add (c : ∀ k, ι k) (b b' : K → ℕ) :
 theorem aeval_div_mem_chartRing (c : ∀ k, ι k) {p : MRingOver F ι} {d : K → ℕ} (hp : IsMultiHomog p d) :
     aeval y p / ∏ k, y ⟨k, c k⟩ ^ d k ∈ chartRingOver F y c := by
   classical
-  rw [p.as_sum, map_sum, Finset.sum_div]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [p.as_sum, map_sum, Finset.sum_div]
   refine Subalgebra.sum_mem _ fun μ hμ => ?_
   have hdeg := hp μ hμ
   rw [aeval_monomial, Finsupp.prod_fintype _ _ (fun _ => pow_zero _)]

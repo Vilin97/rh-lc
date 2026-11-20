@@ -215,7 +215,8 @@ theorem adjZ_apply (Z : Mat P Q) (a b : Ix P Q) :
 
 theorem inner_oscAct (h : IsFockIP ι) (Z : Mat P Q) (f g : OscPol P Q) :
     inner ℂ (ι (oscAct P Q Z f)) (ι g) = inner ℂ (ι f) (ι (oscAct P Q (adjZ Z) g)) := by
-  simp only [oscAct_apply, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, sum_inner, inner_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [oscAct_apply, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, sum_inner, inner_sum,
     inner_smul_left, inner_smul_right, inner_unitOp h, adjZ_apply]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => by ring
@@ -246,7 +247,8 @@ theorem renum_omE (l l' : Ln p q r s) (f : Pol p q r s) :
 theorem renum_omAct (Z : Mat (p * r + q * s) (p * s + q * r)) (f : Pol p q r s) :
     renum p q r s (omAct p q r s (Matrix.reindex (lineEquiv p q r s).symm (lineEquiv p q r s).symm Z) f) =
       oscAct _ _ Z (renum p q r s f) := by
-  simp only [omAct_apply, oscAct_apply, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, renum_omE,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [omAct_apply, oscAct_apply, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, renum_omE,
     Matrix.reindex_apply, Equiv.symm_symm, Matrix.submatrix_apply]
   rw [← (lineEquiv p q r s).sum_comp]
   exact Finset.sum_congr rfl fun l _ => (lineEquiv p q r s).sum_comp

@@ -19,7 +19,8 @@ theorem pdet_ne {Ω : Type} [Field Ω] {n N : ℕ} {j0 : Fin (N + 1)} {B : Set {
   have h2 : (eval (fun q : Fin n × {j // j ≠ j0} => if q.2 = (e q.1).1 then (1 : Ω) else 0)).mapMatrix
       (Matrix.of fun i k : Fin n => ∑ j : {j // j ≠ j0}, X (i, j) * C (a j (e k))) = 1 := by
     ext i k
-    simp only [RingHom.mapMatrix_apply, Matrix.map_apply, Matrix.of_apply, map_sum, map_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [RingHom.mapMatrix_apply, Matrix.map_apply, Matrix.of_apply, map_sum, map_mul,
       eval_X, eval_C, ite_mul, one_mul, zero_mul, Finset.sum_ite_eq', Finset.mem_univ, if_true, ha,
       Matrix.one_apply]
     rw [Pi.single_apply]

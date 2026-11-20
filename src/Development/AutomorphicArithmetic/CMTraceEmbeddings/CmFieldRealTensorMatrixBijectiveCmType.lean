@@ -73,7 +73,8 @@ theorem UpperTheory.cmField_real_tensor_matrix_bijective_cmType :
     choose w hw using fun i j => hb.2 (fun τ => f τ i j)
     refine ⟨∑ i, ∑ j, (sgL i j).baseChange ℝ (w i j), ?_⟩
     funext τ
-    simp only [map_sum, evM_sg]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, evM_sg]
     have hw' : ∀ i j, ev1 τ.1 (w i j) = f τ i j := fun i j => congrFun (hw i j) τ
     simp only [hw']
     exact (Matrix.matrix_eq_sum_single (f τ)).symm

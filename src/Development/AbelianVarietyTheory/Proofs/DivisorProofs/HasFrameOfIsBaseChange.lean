@@ -19,7 +19,8 @@ theorem hasFrame_of_isBaseChange : ∀ (R : Type) [CommRing R] (C : Type) [Categ
     conv_lhs => rw [← this]
     conv_lhs => rw [show σ x = ∑ i, σ x i • Pi.single i (1 : R) from by
       ext k; simp [Finset.sum_apply, Pi.single_apply]]
-    simp [map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, map_smul]
   choose e he hb using h
   let l : Fin n → W →ₗ[R] R := fun i ↦ LinearMap.proj i ∘ₗ σ
   let δ : Fin n → ∀ T : C, Ω[F.obj T⁄R] →ₗ[F.obj T] F.obj T :=
@@ -46,7 +47,8 @@ theorem hasFrame_of_isBaseChange : ∀ (R : Type) [CommRing R] (C : Type) [Categ
     · intro x
       simp_rw [hδ, ← he T, algebraMap_smul]
       conv_lhs => rw [hw x]
-      rw [map_sum]; simp_rw [map_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]; simp_rw [map_smul]
     · intro s ω hω
       conv_lhs => rw [hω]
       simp_rw [LinearMap.map_smul, Finset.smul_sum, smul_eq_mul, mul_smul]

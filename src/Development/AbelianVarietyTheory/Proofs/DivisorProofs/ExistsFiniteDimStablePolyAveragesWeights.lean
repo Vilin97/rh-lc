@@ -18,7 +18,8 @@ variable {n : ℕ}
 theorem totalDegree_bind_le {α β : Type} (g : α → MvPolynomial β ℂ) (hg : ∀ i, (g i).totalDegree ≤ 1)
     (Q : MvPolynomial α ℂ) : (bind₁ g Q).totalDegree ≤ Q.totalDegree := by
   classical
-  conv_lhs => rw [Q.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [Q.as_sum, map_sum]
   refine totalDegree_finsetSum_le fun s hs => ?_
   rw [bind₁_monomial]
   refine (totalDegree_mul _ _).trans ?_
@@ -149,7 +150,8 @@ theorem polyAvg : ∀ (n : ℕ) (ε : Fin n → Bool) (d : ℕ), ∃ A : Set (Fi
     have hP' : P.totalDegree ≤ d := (mem_restrictTotalDegree _ _ _).1 hP
     rw [← inner_self_eq_zero (𝕜 := ℂ)]
     have e : avg hσ u P = ∑ s ∈ P.support, AddMonoidAlgebra.coeff P s • avg hσ u (monomial s 1) := by
-      conv_lhs => rw [P.as_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        conv_lhs => rw [P.as_sum, map_sum]
       refine Finset.sum_congr rfl fun s _ => ?_
       rw [← map_smul, smul_monomial, smul_eq_mul, mul_one]
     generalize avg hσ u P = v at e hw

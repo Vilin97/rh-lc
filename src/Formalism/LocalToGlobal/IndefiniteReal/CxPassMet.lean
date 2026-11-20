@@ -744,7 +744,8 @@ theorem iC_cpt {Bs : DefBase K} {A : DefAmb Bs} (X : CxData A) {fc : DefSub A �
   have hx : x = ∑ k, x k • (Pi.single k (1 : K) : Fin ((lv (fc X.zs) b).dQ t) → K) := by
     funext i; simp [Finset.sum_apply, Pi.single_apply]
   conv_rhs => rw [hx]
-  simp only [map_sum, map_smul, LinearMap.map_smulₛₗ, CxData.iC, lin_apply, cpt]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, LinearMap.map_smulₛₗ, CxData.iC, lin_apply, cpt]
 
 theorem gramE_unit' {Bs : DefBase K} {A : DefAmb Bs} (X : CxData A) {fc : DefSub A → DefFace Bs} (cr : Crd A fc) (b : Bool)
     (h1 : Function.Injective (X.iC cr b Bs.μ0)) (hn : 0 < X.nP b) : IsUnit (frameOf (X.gramE cr b)).det :=

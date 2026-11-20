@@ -132,7 +132,8 @@ theorem lemmaDN_core {d : ℕ} {T₁ T₂ : LocLat G Qp LL O} {F : LatHom T₁.L
       rw [LinearMap.mem_ker]
       have hv : Matrix.toLin' QQ v = red (∑ k', v k' • cols k') := by
         ext l'
-        simp [Matrix.toLin'_apply, Matrix.mulVec, dotProduct, map_sum, map_smul, QQ, mul_comm]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp [Matrix.toLin'_apply, Matrix.mulVec, dotProduct, map_sum, map_smul, QQ, mul_comm]
       have he : e.symm (red (∑ k', v k' • cols k')) =
           Submodule.Quotient.mk (∑ k', v k' • cols k') := by
         rw [LinearEquiv.symm_apply_eq]

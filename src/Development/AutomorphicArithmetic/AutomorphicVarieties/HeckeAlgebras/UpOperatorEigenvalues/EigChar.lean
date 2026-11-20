@@ -29,7 +29,8 @@ theorem eigChar {A M ι K E T : Type} [CommRing A] [AddCommGroup M] [Module A M]
   have hs : ∀ y : Y, sp y = L fun i => φ (b.repr y i) := by
     intro y
     have : s y = s (∑ i, b.repr y i • b i) := by rw [b.sum_repr]
-    rw [map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at this
     simp only [map_smulₛₗ] at this
     exact this
   obtain ⟨w, rfl⟩ : F ∈ LinearMap.range L := by

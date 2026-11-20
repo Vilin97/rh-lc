@@ -32,7 +32,8 @@ theorem cA_inc (a : E) : cA σ (inclR (F := F) (AF F) a) = inclR (F := F) (AF F)
 
 theorem bf_inc (J : Matrix (Fin n) (Fin n) E) (u v : Fin n → E) :
     bf (cA σ).toRingHom (incM F J) (incV F u) (incV F v) = inclR (F := F) (AF F) (form σ J u v) := by
-  simp only [bf, form, dotProduct, Matrix.mulVec, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [bf, form, dotProduct, Matrix.mulVec, map_sum, map_mul]
   rfl
 
 theorem inc_mulVec {m : ℕ} (A : Matrix (Fin n) (Fin m) E) (u : Fin m → E) : incM F A *ᵥ incV F u = incV F (A *ᵥ u) :=

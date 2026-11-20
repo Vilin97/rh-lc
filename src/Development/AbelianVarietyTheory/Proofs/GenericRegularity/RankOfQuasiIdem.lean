@@ -73,7 +73,8 @@ theorem exists_projector (E K : Type) [Field E] [NumberField E] [Field K] (emb :
   have hp : (∑ k, α (t k) • ρ (a k)).map f = f (α N) • π := by
     ext i j
     have ht' : ∀ i, algebraMap O K (t i) = algebraMap O K N * κ i := fun i => (ht i).trans (Algebra.smul_def _ _)
-    simp only [hπ, Matrix.map_apply, Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul, map_sum, map_mul, hf', ht',
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hπ, Matrix.map_apply, Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul, map_sum, map_mul, hf', ht',
       Finset.mul_sum, RingHom.comp_apply, RingHom.mapMatrix_apply, mul_assoc]
   have hu : IsUnit (f (α N)) := by
     rw [hf']

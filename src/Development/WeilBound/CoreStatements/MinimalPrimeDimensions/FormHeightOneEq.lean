@@ -69,7 +69,8 @@ private theorem coneMap_comp_coordSubst {K Ω : Type} [Field K] [Field Ω] [Alge
       GlobalTheory.CompHt.coneMap K (fun k => ∑ j, algebraMap K Ω (M j k) * y j) := by
   apply MvPolynomial.algHom_ext
   intro k
-  simp only [AlgHom.comp_apply, GlobalTheory.CompHt.coordSubst, GlobalTheory.CompHt.coneMap, MvPolynomial.aeval_X, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [AlgHom.comp_apply, GlobalTheory.CompHt.coordSubst, GlobalTheory.CompHt.coneMap, MvPolynomial.aeval_X, map_sum,
     map_mul, MvPolynomial.aeval_C, Polynomial.algebraMap_apply, Finset.mul_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   ring
@@ -97,7 +98,8 @@ private theorem sum_algebraMap_mul_sum_eq_matrix_mul {K L : Type} [Field K] [Com
     (M : Matrix (Fin a) (Fin b) K) (P : Matrix (Fin b) (Fin c) K) (z : Fin a → L) (k : Fin c) :
     ∑ j : Fin b, algebraMap K L (P j k) * ∑ i : Fin a, algebraMap K L (M i j) * z i =
       ∑ i, algebraMap K L ((M * P) i k) * z i := by
-  simp only [Matrix.mul_apply, map_sum, map_mul, Finset.mul_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mul_apply, map_sum, map_mul, Finset.mul_sum, Finset.sum_mul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 

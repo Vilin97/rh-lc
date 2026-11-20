@@ -101,7 +101,8 @@ theorem UpperTheory.ConvolutionTheory.H.polyAlg :
       obtain ⟨c, -, rfl⟩ := Finset.mem_image.1 hy
       exact polynomialEmbed_symmetric_mem _
     · intro p hp
-      rw [p.as_sum, map_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [p.as_sum, map_sum, map_sum]
       refine Submodule.sum_mem _ fun s hs => ?_
       have hle : ∀ i, s i < D + 1 := fun i => by
         have h1 : s.degree ≤ p.totalDegree := MvPolynomial.le_totalDegree hs

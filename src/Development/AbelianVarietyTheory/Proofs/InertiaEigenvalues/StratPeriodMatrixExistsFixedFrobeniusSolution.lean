@@ -14,7 +14,8 @@ variable {l : ℕ} [hl : Fact l.Prime]
 theorem BK.X_pow_natDegree_mem {K : FinExt l} (bk : BK K) :
     (X : bk.S) ^ bk.Ep.natDegree ∈ Ideal.span {(l : bk.S)} ⊔ Ideal.span {bk.E} := by
   have h := congrArg (Polynomial.coeToPowerSeries.ringHom (R := Wq l bk.a)) bk.monic.as_sum
-  simp only [map_add, map_sum, map_mul, map_pow, Polynomial.coeToPowerSeries.ringHom_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_add, map_sum, map_mul, map_pow, Polynomial.coeToPowerSeries.ringHom_apply,
     Polynomial.coe_C, Polynomial.coe_X] at h
   have hs : ∑ i ∈ Finset.range bk.Ep.natDegree, C (bk.Ep.coeff i) * (X : bk.S) ^ i ∈
       Ideal.span {(l : bk.S)} := by

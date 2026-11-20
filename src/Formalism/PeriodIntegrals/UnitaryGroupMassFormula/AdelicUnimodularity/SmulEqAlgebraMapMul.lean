@@ -108,7 +108,8 @@ theorem intC_nsmul {x : E ⊗[F] Af} (hx : IntC b x) (m : ℕ) : IntC b (m • x
 theorem intC_sum {κ : Type*} (s : Finset κ) {f : κ → E ⊗[F] Af} (hf : ∀ i ∈ s, IntC b (f i)) :
     IntC b (∑ i ∈ s, f i) := by
   intro k
-  rw [map_sum, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_apply]
   exact ohat_sum s fun i hi => hf i hi k
 
 theorem smul_eq_algebraMap_mul (c : F) (a : Af) : c • a = algebraMap F Af c * a :=

@@ -57,11 +57,13 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 theorem sum_form {K : Type} [Field K] [Algebra F K] (σ : E →ₐ[F] E) (t : E →ₐ[F] K) {n : ℕ}
     (J : Matrix (Fin n) (Fin n) E) (z w : Fin n → E) :
     ∑ r, t (z r) * (J.map t *ᵥ fun s => t (σ (w s))) r = t (form σ J z w) := by
-  simp only [form, dotProduct, Matrix.mulVec, Matrix.map_apply, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, Matrix.mulVec, Matrix.map_apply, map_sum, map_mul]
 
 theorem form_swap_skew {σ : E →ₐ[F] E} (hcm : IsCMExt F E σ) {n : ℕ} (J : Matrix (Fin n) (Fin n) E)
     (hJ : ∀ i j, σ (J j i) = -J i j) (x y : Fin n → E) : form σ J y x = -σ (form σ J x y) := by
-  simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, cm_conj_conj hcm, hJ, Finset.mul_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, cm_conj_conj hcm, hJ, Finset.mul_sum,
     ← Finset.sum_neg_distrib]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_

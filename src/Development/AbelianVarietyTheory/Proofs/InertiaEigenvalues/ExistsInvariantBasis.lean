@@ -21,7 +21,8 @@ theorem coeff_mul_apply (hγ : constantCoeff (γ X) = 0) (g c : K⟦X⟧) (n : �
   have hc : c = X ^ (n + 1) * (PowerSeries.mk fun i ↦ coeff (i + (n + 1)) c) +
       ∑ d ∈ Finset.range (n + 1), coeff d c • X ^ d := by
     ext m
-    rw [map_add, coeff_X_pow_mul', map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_add, coeff_X_pow_mul', map_sum]
     simp only [coeff_smul, coeff_X_pow, smul_eq_mul, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq,
       Finset.mem_range, coeff_mk]
     split_ifs with h1 h2 h2
@@ -30,7 +31,8 @@ theorem coeff_mul_apply (hγ : constantCoeff (γ X) = 0) (g c : K⟦X⟧) (n : �
     · rw [zero_add]
     · omega
   conv_lhs => rw [hc]
-  rw [map_add, mul_add, map_add, map_mul γ, map_pow γ, map_sum γ, Finset.mul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_add, mul_add, map_add, map_mul γ, map_pow γ, map_sum γ, Finset.mul_sum, map_sum]
   have h0 : ∀ b : K⟦X⟧, coeff n (g * (γ X ^ (n + 1) * b)) = 0 := fun b => by
     rw [ha, mul_pow, show g * (X ^ (n + 1) * a ^ (n + 1) * b) = X ^ (n + 1) * (g * a ^ (n + 1) * b) by ring,
       coeff_X_pow_mul', if_neg (by omega)]
@@ -48,7 +50,8 @@ theorem coeff_mul_pow_self (hγ : constantCoeff (γ X) = 0) (g : K⟦X⟧) (n : 
 theorem coeff_op (hγ : constantCoeff (γ X) = 0) (hG : G.map constantCoeff = 1) (c : ι → K⟦X⟧) (i : ι)
     (n : ℕ) : coeff n (G.mulVec (fun j => γ (c j)) i) = coeff 1 (γ X) ^ n * coeff n (c i) +
       ∑ j, ∑ d ∈ Finset.range n, coeff n (G i j * γ X ^ d) * coeff d (c j) := by
-  simp only [Matrix.mulVec, dotProduct, map_sum, coeff_mul_apply γ hγ, Finset.sum_range_succ,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mulVec, dotProduct, map_sum, coeff_mul_apply γ hγ, Finset.sum_range_succ,
     Finset.sum_add_distrib, coeff_mul_pow_self γ hγ]
   rw [add_comm]
   congr 1
@@ -185,7 +188,8 @@ theorem exists_basis {K O : Type} [NormedField K] [IsUltrametricDist K] [CommRin
     have hγv : (fun j => γ (U.mulVec (fun i => C (constantCoeff (b i))) j)) =
         (U.map γ).mulVec fun i => C (constantCoeff (b i)) := by
       funext j
-      simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, apply_C, Matrix.map_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, apply_C, Matrix.map_apply]
     refine sol_eq_zero γ _ hγ (hmap G hG) hu _ (fun i => ?_) ?_
     · have : ∀ j, constantCoeff (U i j) = (1 : Matrix ι ι K) i j := fun j => by rw [← hU0]; rfl
       simp [Matrix.mulVec, dotProduct, this, Matrix.one_apply]

@@ -63,7 +63,8 @@ theorem derivAt0_smulG (b : K) (P : MvPolynomial σ K) (g : MvPowerSeries σ K) 
 theorem derivAt0_sumG {κ : Type} (s : Finset κ) (P : MvPolynomial σ K) (f : κ → MvPowerSeries σ K) :
     derivAt0 P (∑ i ∈ s, f i) = ∑ i ∈ s, derivAt0 P (f i) := by
   unfold derivAt0
-  simp_rw [map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp_rw [map_sum, Finset.mul_sum]
   exact Finset.sum_comm
 
 theorem derivAt0_C' (a : K) (g : MvPowerSeries σ K) :
@@ -98,7 +99,8 @@ private theorem constantCoeff_subst_of_constantCoeff_zero' {K ι Λ : Type} [Fie
 private theorem pderiv_sum_smul_X_eq_C {K ι Λ : Type} [Field K] [Fintype Λ] [DecidableEq Λ] (β : Λ → ι → K)
     (lam : Λ) (l : ι) :
     pderiv K lam (∑ lam', β lam' l • (X lam' : MvPowerSeries Λ K)) = C (β lam l) := by
-  rw [map_sum, Finset.sum_eq_single lam]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_eq_single lam]
   · rw [Derivation.map_smul, pderiv_X_self, MvPowerSeries.smul_eq_C_mul, mul_one]
   · intro b _ hb
     rw [Derivation.map_smul, pderiv_X_of_ne hb, smul_zero]

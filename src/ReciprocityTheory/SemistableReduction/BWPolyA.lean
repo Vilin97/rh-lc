@@ -59,7 +59,8 @@ theorem bwp_sepPoly_fin (k : ℕ) : ∀ (n : ℕ) (G : (Fin n → ℂ) → ℂ),
       exact Fin.update_cons_zero _ _ _
     have h1 : G y = Q.eval (y 0) := by
       rw [← hQt]; simp
-    rw [h1, bwp_eval_eq_lagrange S Q k hS hQ, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h1, bwp_eval_eq_lagrange S Q k hS hQ, map_sum]
     refine Finset.sum_congr rfl fun c _ => ?_
     rw [map_mul, bwp_eval_aeval_X, MvPolynomial.eval_rename, ← hQt c, hy c, hFc c]
     rfl

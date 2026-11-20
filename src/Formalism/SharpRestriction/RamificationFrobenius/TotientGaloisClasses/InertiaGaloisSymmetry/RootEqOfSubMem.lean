@@ -20,7 +20,8 @@ theorem root_eq_of_sub_mem {S : Type*} [CommRing S] [IsDomain S] (P : Ideal S) [
   · exfalso
     have hq : Ideal.Quotient.mk P x = Ideal.Quotient.mk P y := Ideal.Quotient.eq.2 hxy
     have h1 := congrArg (Ideal.Quotient.mk P) hG
-    rw [map_sum, map_zero] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero] at h1
     simp only [map_mul, map_pow, hq] at h1
     have h2 : ∀ i ∈ Finset.range m, (Ideal.Quotient.mk P y) ^ i * (Ideal.Quotient.mk P y) ^ (m - 1 - i) =
         (Ideal.Quotient.mk P y) ^ (m - 1) := by

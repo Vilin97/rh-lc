@@ -192,7 +192,8 @@ theorem _root_.GlobalTheory.UnitFrame.im_hermForm_eq :
   have hherm : ∀ (τ : E →+* ℂ) (a b : Fin r → E),
       τ (_root_.ReciprocityTheory.ChartRestriction.G.FD.herm Gm a b) = _root_.ReciprocityTheory.ChartRestriction.G.FD.hermC τ Gm (_root_.ReciprocityTheory.ChartRestriction.G.FD.Data.emb τ a) (_root_.ReciprocityTheory.ChartRestriction.G.FD.Data.emb τ b) := by
     intro τ a b
-    simp [_root_.ReciprocityTheory.ChartRestriction.G.FD.herm, _root_.ReciprocityTheory.ChartRestriction.G.FD.hermC, _root_.ReciprocityTheory.ChartRestriction.G.FD.Data.emb, _root_.ReciprocityTheory.ChartRestriction.G.FD.cc, map_sum, map_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [_root_.ReciprocityTheory.ChartRestriction.G.FD.herm, _root_.ReciprocityTheory.ChartRestriction.G.FD.hermC, _root_.ReciprocityTheory.ChartRestriction.G.FD.Data.emb, _root_.ReciprocityTheory.ChartRestriction.G.FD.cc, map_sum, map_mul,
       IsCMField.complexEmbedding_complexConj]
   have hre : ∀ τ : Ψ, (τ.1 (ξ * _root_.ReciprocityTheory.ChartRestriction.G.FD.herm Gm (φ v) (φ w))).re
       = -‖τ.1 ξ‖ * (_root_.ReciprocityTheory.ChartRestriction.G.FD.hermC τ.1 Gm (_root_.ReciprocityTheory.ChartRestriction.G.FD.Data.emb τ.1 (φ v)) (_root_.ReciprocityTheory.ChartRestriction.G.FD.Data.emb τ.1 (φ w))).im := by

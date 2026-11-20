@@ -100,7 +100,8 @@ theorem comp_capelli {M N : Type} [AddCommGroup M] [Module ℂ M] [AddCommGroup 
   rw [← Matrix.det_diagonal, Matrix.det_apply, Finset.sum_smul]
   unfold capelliC cminor
   ext v
-  simp only [LinearMap.comp_apply, LinearMap.sum_apply, map_sum, LinearMap.smul_apply, map_zsmul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [LinearMap.comp_apply, LinearMap.sum_apply, map_sum, LinearMap.smul_apply, map_zsmul]
   refine Finset.sum_congr rfl fun σ _ => ?_
   have := LinearMap.congr_fun (comp_prod q (fun j : Fin n => capEntry E (x - ((j : ℕ) : ℂ)) (id (σ j)) (id j))
     (fun j => if σ j = j then y + (x - (j : ℕ)) else 0) (fun j => h1 _ _ _)) v
@@ -329,7 +330,8 @@ theorem killed_capelli (hψ : IsStdChar D ψ (-1)) (hθ : IsInfFam θ) (A : Fr V
       Q i) P) = ∑ i, ∑ a, (GlobalTheory.IndefiniteRowSideFullHecke.RaisingLoweringOperators.sgn (A.ε τ a) * (v ᵥ* A.onb τ) a) •
         ptF ψ θ A B f (raiO τ (A.ε τ) (B.ε τ) i a (Q i P)) := by
     unfold ptF
-    simp only [LinearMap.sum_apply, Module.End.mul_apply, LinearMap.smul_apply, map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [LinearMap.sum_apply, Module.End.mul_apply, LinearMap.smul_apply, map_sum, map_smul]
   rw [e]
   refine Submodule.sum_mem _ fun i _ => ?_
   have hg := GlobalTheory.FockAdjoint.ptF_theta hψ hθ A B hf.1 (Q i P)

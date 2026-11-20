@@ -20,7 +20,8 @@ theorem linearIndependent_span_of_dual_unit :
     have h1 : f j (u i) = ∑ k, b.repr (u i) k * f j (b k) := by
       calc f j (u i) = f j (∑ k, b.repr (u i) k • b k) := by rw [b.sum_repr]
         _ = ∑ k, b.repr (u i) k * f j (b k) := by
-          simp only [map_sum, map_smul, smul_eq_mul]
+          set_option synthInstance.maxHeartbeats 100000 in
+            simp only [map_sum, map_smul, smul_eq_mul]
     simp only [Matrix.mul_apply, U, F, Matrix.of_apply, Matrix.smul_apply, Matrix.one_apply,
       smul_eq_mul]
     rw [← h1, hf]

@@ -115,7 +115,8 @@ theorem stable_EN {κ : Type} [Fintype κ] (Ξ : κ → ι → AhatE O K l e) (�
     have h2 : ∑ j, w j * Γ j i = ∑ k, φ (g k) * ∑ j, Ξ k j * Γ j i := by
       simp only [hw, Finset.sum_mul, Finset.mul_sum, mul_assoc]
       exact Finset.sum_comm
-    rw [h2, hw, map_sum, ← Finset.sum_add_distrib, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h2, hw, map_sum, ← Finset.sum_add_distrib, Finset.mul_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul, NHatE_algebraMap, map_mul]
     linear_combination (-(s * φ (g k))) * hΞ k i
@@ -129,7 +130,8 @@ theorem stable_EN {κ : Type} [Fintype κ] (Ξ : κ → ι → AhatE O K l e) (�
   have h5 := mul_derivation_pow (NHatE O K l e) s N
   rw [hν] at h4 h5
   have h6 : s ^ N * (s * ∑ j, w j * Γ j i) = s ^ p * φ (∑ j, x j * γ j i) := by
-    rw [map_sum, Finset.mul_sum, Finset.mul_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.mul_sum, Finset.mul_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_mul, hγ]
     linear_combination (-(s * Γ j i)) * hx' j
@@ -192,7 +194,8 @@ theorem grading [NeZero a] (P : PhiMod O K l e a ι) (hP : ∀ m ∈ P.M, P.EN m
     exact IsUnit.map (algebraMap K _) (IsUnit.mk0 _ (natCast_ne_zero' (K := K) l n.succ_ne_zero))
   · refine ⟨Ehat O K l e ^ N * ψ w ^ (α + p) * ∑ k, ψ (h k) * ξ (k, i), ?_⟩
     have hξ' (k) : φ (ξ (k, i)) = φ (Ehat O K l e) ^ α * Ξ k i := (hξ (k, i)).trans (by rw [map_pow])
-    simp only [Pi.smul_apply, smul_eq_mul, map_mul, map_sum, map_pow, Finset.mul_sum, hξ']
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Pi.smul_apply, smul_eq_mul, map_mul, map_sum, map_pow, Finset.mul_sum, hξ']
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [show ψ X = _ from hw, map_mul]
     ring
@@ -220,7 +223,8 @@ theorem hat_mulVec {Y : Matrix ι ι K⟦X⟧} (hY : ∀ i j, Y i j ∈ RpiE O K
       ∑ j, hat O l e (Y i j) * algebraMap _ _ (toHat O K l e ⟨m j, hm j⟩) := by
   have : (Y *ᵥ m) i = ((∑ j, ⟨Y i j, hY i j⟩ * ⟨m j, le_away _ _ (hm j)⟩ : RpiE O K l e) : K⟦X⟧) := by
     simp [Matrix.mulVec, dotProduct]
-  rw [this, hat_coe, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [this, hat_coe, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_mul, hat_of_mem l e (hY i j),
     toHatE_eq l e (f := ⟨m j, le_away _ _ (hm j)⟩) (g := ⟨m j, hm j⟩) rfl]
@@ -301,7 +305,8 @@ theorem not_next [NeZero a] (P : PhiMod O K l e a ι) (i : ℤ) {y : Vec K a ι}
   have h3 : P.hatTot y τ j = constPart P y τ j + φ (Ehat O K l e) *
       ∑ j', hat O l e (P.mx τ j j') * φ (∑ k, r k τ * toHat O K l e ⟨m k τ j', hm k τ j'⟩) := by
     rw [hatTot_eq_hsum P (xiExt_symm_mem P hy), constPart, hsum, hsum]
-    simp only [map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, Finset.mul_sum]
     rw [Finset.sum_comm, ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun k _ => ?_
     have h4 : P.hatTot (xiVec P k) τ j =
@@ -316,7 +321,8 @@ theorem not_next [NeZero a] (P : PhiMod O K l e a ι) (i : ℤ) {y : Vec K a ι}
     ring
   have h5 : ∑ j', hat O l e (P.mx τ j j') * φ (∑ k, r k τ * toHat O K l e ⟨m k τ j', hm k τ j'⟩) =
       hat O l e (z τ j) + φ (Ehat O K l e) ^ p * φ (∑ j', μ (τ, j, j') * s τ j') := by
-    rw [h2, map_sum, Finset.mul_sum, ← Finset.sum_add_distrib]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h2, map_sum, Finset.mul_sum, ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun j' _ => ?_
     have h6 : φ (μ (τ, j, j')) = φ (Ehat O K l e) ^ α * hat O l e (P.mx τ j j') :=
       (hμ (τ, j, j')).trans (by rw [map_pow])

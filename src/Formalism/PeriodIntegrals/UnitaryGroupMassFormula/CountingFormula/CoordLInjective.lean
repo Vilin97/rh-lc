@@ -127,7 +127,8 @@ theorem coordL_injective (hf : PartnerOK D F0 f) : Function.Injective (coordL D 
   have hc0 : ∀ a, c a = 0 := by
     intro a
     have h := ha a
-    rw [← hc, map_sum] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hc, map_sum] at h
     have e : ∀ b, (VS D).hT (f a) (c b • F0.e b) = c b * (if b = a then 1 else 0) := by
       intro b
       rw [map_smul, smul_eq_mul, ← (VS D).herm.eq (F0.e b) (f a), hf.1 b a]

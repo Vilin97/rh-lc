@@ -66,7 +66,8 @@ end Pull
 theorem form_sum₂ {M : Type} [AddCommGroup M] [Module ℂ M] (h : M →ₗ[ℂ] M →ₗ⋆[ℂ] ℂ) {J : Type} [Fintype J]
     (u : J → M) (c d : J → ℂ) : h (∑ a, c a • u a) (∑ a, d a • u a) =
       ∑ a, ∑ a', (c a * starRingEnd ℂ (d a')) * h (u a) (u a') := by
-  simp only [map_sum, map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, RingHom.id_apply, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, RingHom.id_apply, smul_eq_mul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [Finset.mul_sum]
@@ -191,7 +192,8 @@ theorem exists_family {U : Formalism.L2.PjFree.Unf Xo c σ r} (hU : Formalism.L2
     exact isDerivAt0_comp_hom h4 Z.m.φ
   have hsum : ∑ i, cf i • frB Z y (q i) =
       lieC Z y (∑ i, cf i • frVec y (q i)) := by
-    simp only [map_sum, map_smul, frB, Module.Basis.map_apply, Module.Basis.mk_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, frB, Module.Basis.map_apply, Module.Basis.mk_apply]
   rw [hsum]
   refine hT _ _ ?_
   have e0 : (F.ex (ik k) (P (x b)) 0).left = (1 : Over.mk (xC y) ⟶ Xo.univ.t.G).left := by

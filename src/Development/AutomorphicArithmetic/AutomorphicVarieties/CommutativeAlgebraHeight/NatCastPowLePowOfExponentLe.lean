@@ -168,7 +168,8 @@ private theorem dual_offdiag_corner_cocycle {n : ℕ} {k E G : Type} [Field k] [
     refine Finset.sum_congr rfl (fun l _ => ?_)
     calc e i * ρ g * e l * ρ h * e j = e i * ρ g * (e l * e l) * ρ h * e j := by rw [hid]
       _ = e i * ρ g * e l * (e l * ρ h * e j) := by simp only [mul_assoc]
-  rw [hexp, map_sum, Fintype.sum_eq_add i j hij]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hexp, map_sum, Fintype.sum_eq_add i j hij]
   · rw [idempotent_corner_eq_proj_smul e π hπe hc i (ρ g), idempotent_corner_eq_proj_smul e π hπe hc j (ρ h), hπρ, hπρ]
     rw [smul_mul_assoc, mul_smul_comm, map_smul, map_smul, smul_eq_mul, smul_eq_mul]
     have t1 : e i * (e i * ρ h * e j) = e i * ρ h * e j := by
@@ -190,9 +191,11 @@ private theorem dual_vanishes_on_ker_of_offdiag_vanishing {n : ℕ} {k E G : Typ
     (hπe : ∀ i, π (e i) = Pi.single i 1) (hc : ∀ i x, ∃ a : k, e i * x * e i = a • e i)
     (f : Module.Dual k E) (hf : ∀ i j, i ≠ j → ∀ g, f (e i * ρ g * e j) = 0)
     (x : E) (hx : π x = 0) : f x = 0 := by
-  rw [eq_sum_idempotent_corners e hce x, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [eq_sum_idempotent_corners e hce x, map_sum]
   refine Finset.sum_eq_zero (fun i _ => ?_)
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_eq_zero (fun j _ => ?_)
   by_cases hij : i = j
   · subst hij

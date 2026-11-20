@@ -21,7 +21,8 @@ variable {X X' Y Z : Scheme.{0}}
 
 theorem gs_sum (r : Z ⟶ X) (z : Z) (U : X.Opens) (h : r z ∈ U) {I : Type} [Fintype I] (a : I → Γ(X, U)) :
     gs r z U (∑ i, a i) = ∑ i, gs r z U (a i) := by
-  simp only [gs_eq r z U h, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [gs_eq r z U h, map_sum]
 
 theorem sec_ext {M : LB X} {s s' : LB.Sec M} (h : ∀ j, s.f j = s'.f j) : s = s' := by
   obtain ⟨f, _⟩ := s
@@ -103,7 +104,8 @@ theorem Rep.sum {c : R' →+* Γ(X', ⊤)} {I : Type} [Fintype I] {w : I → Fin
   have hm : r z ∈ LB.wchart L ψ (F.ch i) := (mem_wchart_iff L φ π ψ e _ _).2 (F.le i hi)
   have ht : r z ∈ (⊤ : X'.Opens) := trivial
   rw [gs_sum r z _ hm]
-  simp only [map_sum, map_mul, gs_sum r z _ ht, gs_mul r z _ ht, gs_mul r z _ hm, gs_res r z le_top hm,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, gs_sum r z _ ht, gs_mul r z _ ht, gs_mul r z _ hm, gs_res r z le_top hm,
     fun l => h l Z r z i hi, Finset.mul_sum, Finset.sum_mul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun l _ => by ring

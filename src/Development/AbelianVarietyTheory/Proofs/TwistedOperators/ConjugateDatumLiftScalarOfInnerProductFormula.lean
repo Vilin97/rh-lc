@@ -25,7 +25,8 @@ theorem adjoint_projH (hC : GlobalTheory.Hk3.Core R F) (hX : ∀ χ ∈ A.X, IsA
   have hc : ∀ g, starRingEnd ℂ (RealDat.eC (A := A) σ g) = RealDat.eC (A := A) σ g⁻¹ := by
     intro g
     unfold RealDat.eC
-    rw [coeff_idemOf, coeff_idemOf, map_sum, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [coeff_idemOf, coeff_idemOf, map_sum, map_sum, map_sum]
     refine Finset.sum_congr rfl fun χ hχ => ?_
     have h1 := (hX χ hχ).map_inv σ 1
     have h2 := (hX χ hχ).map_inv σ g⁻¹
@@ -47,10 +48,12 @@ theorem projH_projH (hX : ∀ χ ∈ A.X, IsAbsIrrChar χ) (i : Fin D.R.m) (σ :
     intro g
     unfold RealDat.eC
     conv_rhs => rw [← idemOf_mul_self A.X hX]
-    rw [MonoidAlgebra.coeff_mul_apply_left, Finsupp.sum_fintype _ _ (by simp), map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [MonoidAlgebra.coeff_mul_apply_left, Finsupp.sum_fintype _ _ (by simp), map_sum]
     simp only [map_mul]
   unfold GlobalTheory.LiftLower.projH
-  simp only [LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, Finset.smul_sum, smul_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, Finset.smul_sum, smul_smul]
   rw [Finset.sum_comm]
   conv_rhs => rw [Finset.sum_congr rfl fun g _ => by rw [← h1 g, Finset.sum_smul]]
   rw [Finset.sum_comm (f := fun g a => (RealDat.eC (A := A) σ a * RealDat.eC (A := A) σ (a⁻¹ * g)) • R.gW i σ g x)]

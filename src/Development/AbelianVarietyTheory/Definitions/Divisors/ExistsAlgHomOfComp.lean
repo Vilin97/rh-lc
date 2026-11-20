@@ -196,7 +196,8 @@ theorem vec_iff_toModel {M : MChart Y} {x : Sp S ⟶ Y.X} (h : ⊤ ≤ x ⁻¹�
         ((congrArg (· ≫ x) (Spec.map_id _)).trans (Category.id_comp _)).trans (spMap_ev x M.hU h).symm
       have hl : ∀ v : TanM x Y.t.G, (tv (tanPull (RingHom.id S) hid v)).left = (tv v).left := fun v =>
         (congrArg (· ≫ (tv v).left) (GlobalTheory.ModelChart.spMap_dualMapR_id S)).trans (Category.id_comp _)
-      rw [← hl, vec_apply, map_sum, tv_sum']
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hl, vec_apply, map_sum, tv_sum']
       refine congrArg Over.Hom.left (Finset.prod_congr rfl fun j _ => ?_)
       rw [map_smulₛₗ, PullbackSections.tv_smul]
       congr 1
@@ -392,7 +393,8 @@ theorem frBor_of_frVec {M : MChart Y} {x : Sp S ⟶ Y.X} (h : ⊤ ≤ x ⁻¹ᵁ
       (fun j => (vec M x h).symm (frVec Y P hx σ j)) (P.u σ) _ _ fun j =>
         (vec_iff_toModel h Λ eΛ (frX_fst P) hx _ (P.tan σ j)).2 (LinearEquiv.apply_symm_apply _ _).symm).2 ?_
     refine (vec_iff_toModel h Λ eΛ (frX_fst P) hx _ (e ▸ P'.tan σ i)).2 ?_
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [map_smul, LinearEquiv.apply_symm_apply]
     rw [← hv]
     obtain ⟨u, hu⟩ := (toModel_eq_iff _ (frX_fst P') hx' (P'.tan σ i) _).1 rfl
@@ -419,7 +421,8 @@ theorem frVec_of_frBor {M : MChart Y} {x : Sp S ⟶ Y.X} (h : ⊤ ≤ x ⁻¹ᵁ
       (fun j => (vec M x h).symm (frVec Y P hx σ j)) (P.u σ) _ _ fun j =>
         (vec_iff_toModel h Λ eΛ (frX_fst P) hx _ (P.tan σ j)).2 (LinearEquiv.apply_symm_apply _ _).symm).1 (h3 i)
   have h5 := (vec_iff_toModel h Λ eΛ (frX_fst P) hx _ (e ▸ P'.tan σ i)).1 h4
-  rw [map_sum] at h5
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum] at h5
   simp only [map_smul, LinearEquiv.apply_symm_apply] at h5
   rw [← h5]
   obtain ⟨u, hu⟩ := (toModel_eq_iff _ (frX_fst P') hx' (P'.tan σ i) _).1 rfl

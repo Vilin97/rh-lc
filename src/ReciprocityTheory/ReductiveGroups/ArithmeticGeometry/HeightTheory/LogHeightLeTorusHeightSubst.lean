@@ -82,7 +82,8 @@ theorem coeffIn_map {S : Type*} [CommRing S] (φ : R →+* S) (hφ : Function.In
     ReciprocityTheory.MultiplicativeHeights.coeffIn i k (MvPolynomial.map φ P) =
       MvPolynomial.map φ (ReciprocityTheory.MultiplicativeHeights.coeffIn i k P) := by
   unfold ReciprocityTheory.MultiplicativeHeights.coeffIn
-  rw [MvPolynomial.support_map_of_injective _ hφ, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [MvPolynomial.support_map_of_injective _ hφ, map_sum]
   refine Finset.sum_congr rfl fun s _ => ?_
   rw [MvPolynomial.map_monomial, MvPolynomial.coeff_map]
 
@@ -161,7 +162,8 @@ theorem polyIn_substitution_leading {D N : ℕ} (f : KTp K D N) (a : Fin (D + 1)
   rw [hEG]
   conv_lhs => rw [f.as_sum]
   conv_rhs => rw [f.as_sum]
-  rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum]
   refine ⟨Polynomial.natDegree_sum_le_of_forall_le _ _ fun s hs => (hterm s hs).1, ?_⟩
   rw [Polynomial.finsetSum_coeff]
   exact Finset.sum_congr rfl fun s hs => (hterm s hs).2

@@ -225,7 +225,8 @@ theorem UpperTheory.Gal.productCup_of_system.kunDec_of :
   choose q a' b' hq hj using hs
   refine ⟨m, q, a', b', fun l => hq l, ?_⟩
   have key := kdUn_mem_acx_B_of_mem_bicech_B hU A B d _ hB'
-  rw [map_sub, kdUn_tw hU, map_sum] at key
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sub, kdUn_tw hU, map_sum] at key
   have e : ∑ l, kdUn (boxC (TensorProduct.mk ℂ E E') (a l) (b l)) =
       ∑ l, join (TensorProduct.mk ℂ E E') (a' l) (b' l) :=
     Finset.sum_congr rfl fun l _ => (hj l).symm

@@ -106,7 +106,8 @@ theorem actM_rsM {n : ℕ} (X : Matrix (Fin n) (Fin n) ℂ) :
       Finset.sum_eq_single j (fun c _ hc => by simp [hc]) (by simp)]
     simp
   unfold actM
-  simp only [h1, ← map_sum, h2]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [h1, ← map_sum, h2]
   rfl
 
 private lemma ss_lemma {n : ℕ} (a b c d : Fin n) :

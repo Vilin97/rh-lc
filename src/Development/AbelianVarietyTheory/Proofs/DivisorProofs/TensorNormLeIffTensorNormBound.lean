@@ -32,7 +32,8 @@ theorem fockS_re_pos' {σ : Type} {f : MvPolynomial σ ℂ} (hf : f ≠ 0) : 0 <
 
 theorem fockS_conj_symm {σ : Type} (f g : MvPolynomial σ ℂ) : (starRingEnd ℂ) (fockS g f) = fockS f g := by
   classical
-  rw [fockS_eq_sum g f (f.support ∪ g.support) Finset.subset_union_right,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [fockS_eq_sum g f (f.support ∪ g.support) Finset.subset_union_right,
     fockS_eq_sum f g (f.support ∪ g.support) Finset.subset_union_left, map_sum]
   refine Finset.sum_congr rfl fun m _ => ?_
   simp only [map_mul, map_natCast, Complex.star_def, Complex.conj_conj]

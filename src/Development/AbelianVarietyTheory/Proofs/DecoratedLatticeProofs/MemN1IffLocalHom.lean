@@ -21,7 +21,8 @@ theorem apply_eq_sum (x : (Fin (M + c) → E) ≃ₗ[E] (Fin (M + c) → E)) (w 
     x w l = ∑ v, w v * x (Pi.single v 1) l := by
   have hw : w = ∑ v, Pi.single v (w v) := (Finset.univ_sum_single w).symm
   conv_lhs => rw [hw]
-  rw [map_sum, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_apply]
   refine Finset.sum_congr rfl fun v _ => ?_
   have h : (Pi.single v (w v) : Fin (M + c) → E) = w v • (Pi.single v (1 : E) : Fin (M + c) → E) := by
     ext j; simp [Pi.single_apply]

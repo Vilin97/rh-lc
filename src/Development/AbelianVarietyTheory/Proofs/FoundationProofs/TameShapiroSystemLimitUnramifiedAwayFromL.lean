@@ -66,7 +66,8 @@ theorem mem_of_fibre_sums {l : ℕ} [Fact l.Prime] {X : ℕ → Type} [∀ r, Gr
       exact mul_le_of_le_one_right (by positivity) (IsUltrametricDist.norm_natCast_le_one _ m)
     exact lt_of_mul_lt_mul_left (this.trans_lt hk) hE0.le
   refine ⟨b - o • y, ?_, ?_⟩
-  · rw [← map_sum, ← map_sum, ← map_nsmul] at h3
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [← map_sum, ← map_sum, ← map_nsmul] at h3
     have := Wo.add_mem (hb r) ((Submodule.Quotient.eq Wo).1 h3)
     rwa [sub_add_sub_cancel] at this
   · rw [dist_eq_norm, sub_sub_cancel, ← Nat.cast_smul_eq_nsmul (Qbar l), norm_smul]

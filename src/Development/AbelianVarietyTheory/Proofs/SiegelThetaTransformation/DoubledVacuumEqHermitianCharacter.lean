@@ -429,7 +429,8 @@ theorem eq_of_law (w : E) {L₁ L₂ : Lt E r} {β : Matrix (Fin r) (Fin r) E} (
       simp only [GlobalTheory.SW.heisH, sub_zero] at key
       have hq : Algebra.trace ℚ E (∑ k, ∑ a, (y * skew X) k a *
           (2 * cc (x k a) - cc ((0 : Matrix (Fin n) (Fin r) E) k a))) = -2 * rowForm X n y x := by
-        rw [rowForm_apply, Finset.mul_sum, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [rowForm_apply, Finset.mul_sum, map_sum]
         refine Finset.sum_congr rfl fun k _ => ?_
         have hin : ∑ a, (y * skew X) k a * (2 * cc (x k a) - cc ((0 : Matrix (Fin n) (Fin r) E) k a)) =
             pair (y k ᵥ* skew X) (x k) + pair (y k ᵥ* skew X) (x k) := by

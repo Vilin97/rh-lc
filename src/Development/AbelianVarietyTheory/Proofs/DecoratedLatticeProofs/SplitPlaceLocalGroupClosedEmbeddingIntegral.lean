@@ -156,7 +156,8 @@ theorem hermAt_unitary (g : GA D V) (x y : Fin V.rank → AE D) :
     hermAt V (Formalism.L2.Theta.mt V g *ᵥ x) (Formalism.L2.Theta.mt V g *ᵥ y) = hermAt V x y := by
   have h : (fun i => cA D ((Formalism.L2.Theta.mt V g *ᵥ y) i)) = (fun i => cA D (y i)) ᵥ* adj (Formalism.L2.Theta.mt V g) := by
     funext i
-    simp only [Matrix.mulVec, Matrix.vecMul, dotProduct, map_sum, RingHom.map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, Matrix.vecMul, dotProduct, map_sum, RingHom.map_mul]
     exact Finset.sum_congr rfl fun j _ => mul_comm _ _
   rw [hermAt_eq, h, ← Matrix.dotProduct_mulVec, Matrix.mulVec_mulVec, Matrix.mulVec_mulVec, Matrix.mul_assoc, mt_unitary,
     hermAt_eq]

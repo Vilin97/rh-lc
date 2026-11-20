@@ -53,7 +53,8 @@ theorem map_laK {K' : Type} [Field K'] (σ : K →+* K') (j : ZMod d) :
   ext n
   rw [coeff_map, coeff_apply, coeff_apply]
   unfold laK
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun e _ => ?_
   split_ifs <;> simp
 

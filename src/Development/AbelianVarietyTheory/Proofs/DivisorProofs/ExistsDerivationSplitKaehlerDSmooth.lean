@@ -10,7 +10,8 @@ theorem bertini_derivation_split : ∀ (k A : Type) [Field k] [CommRing A] [Alge
   simp only [LinearMap.comp_apply, LinearMap.id_apply] at h
   conv_lhs => rw [← h]
   conv_lhs => rw [pi_eq_sum_univ (g (KaehlerDifferential.D k A a))]
-  simp only [map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul]
   refine Finset.sum_congr rfl fun l _ => ?_
   congr 2
   ext j

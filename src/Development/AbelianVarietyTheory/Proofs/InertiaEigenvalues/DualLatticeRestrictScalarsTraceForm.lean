@@ -71,7 +71,8 @@ theorem dualLat_resQ : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (K : FinExt
       have ho : ∀ i, ∃ o : O, algebraMap O LL o = algebraMap ℚ_[l] LL (z i : ℚ_[l]) := fun i => h1 (z i)
       choose o ho using ho
       refine ⟨∑ i, o i * e i, ?_⟩
-      rw [h3 (Pr x y), map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [h3 (Pr x y), map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [hz i, map_mul, ho i, Algebra.smul_def]
 

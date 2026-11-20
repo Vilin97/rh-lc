@@ -21,7 +21,8 @@ private theorem key {E : Type} [Field E] [NumberField E] {a : ℕ} (g : GA E a) 
     refine pow_le_pow_left₀ (norm_nonneg _) ?_ _
     have h1 : ((c * x : E) : w.Completion) = ∑ j, ((c : w.Completion) * (y j).1 w) * ((infAt w g)⁻¹).val j i := by
       have := congrArg (infEval w) e
-      rw [map_sum] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum] at this
       refine Eq.trans this (Finset.sum_congr rfl fun j _ => ?_)
       rw [map_mul, map_mul, ← infAt_inv]
       rfl
@@ -37,7 +38,8 @@ private theorem key {E : Type} [Field E] [NumberField E] {a : ℕ} (g : GA E a) 
     have h1 : ((c * x : E) : p.adicCompletion E) =
         ∑ j, (algebraMap E (Ad E) c * y j).2 p * ((finAt p g)⁻¹).val j i := by
       have := congrArg (finEval p) e
-      rw [map_sum] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum] at this
       refine Eq.trans this (Finset.sum_congr rfl fun j _ => ?_)
       rw [map_mul, ← finAt_inv]
       rfl
@@ -71,11 +73,13 @@ theorem UpperTheory.global_geometric_estimate_of_local :
     exact (congrFun this i).symm
   have hF : ∀ j, (y j).2 = ptF g v j := fun j => by
     change pFin E (∑ k, ratVec v k * g.val k j) = ∑ k, vFin v k * pFin E (g.val k j)
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun k _ => by rw [map_mul]; rfl
   have hI : ∀ j, pInf E (y j) = pt g v j := fun j => by
     change pInf E (∑ k, ratVec v k * g.val k j) = ∑ k, vInf v k * pInf E (g.val k j)
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun k _ => by rw [map_mul]; rfl
   have hn : ∀ (x : Ad E) (w : InfinitePlace E), ‖pInf E x w‖ = ‖x.1 w‖ := fun x w =>
     (AddMonoidHomClass.isometry_iff_norm (InfinitePlace.Completion.extensionEmbedding w)).1

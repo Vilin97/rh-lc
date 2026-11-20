@@ -42,9 +42,11 @@ theorem dot_left (a : κ → Af F) (z : κ → AF F) :
   have h2 : ∀ y, sndA F (pairA F 0 y) = y := fun _ => rfl
   refine Prod.ext ?_ ?_
   · show fstA F (∑ x, pairA F 0 (a x) * z x) = 0
-    rw [map_sum]; simp [map_mul, h1]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]; simp [map_mul, h1]
   · show sndA F (∑ x, pairA F 0 (a x) * z x) = ∑ x, (z x).2 * a x
-    rw [map_sum]; refine Finset.sum_congr rfl fun x _ => ?_
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]; refine Finset.sum_congr rfl fun x _ => ?_
     rw [map_mul, h2, mul_comm]; rfl
 
 theorem dot_right (a : κ → Af F) (z : κ → AF F) :

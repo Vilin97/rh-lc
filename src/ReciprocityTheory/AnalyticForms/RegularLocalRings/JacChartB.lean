@@ -42,12 +42,14 @@ theorem toCot_psi {a : MvPolynomial (Fin n) ℂ} (ha : a ∈ ptI p)
           maximalIdeal (locR K p)) := by
       apply Subtype.ext
       simp only [AddSubmonoidClass.coe_finsetSum, SetLike.val_smul, smul_eq_mul]
-    rw [e2, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e2, map_sum]
     simp only [Phi, LinearMap.coe_mk, AddHom.coe_mk]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, ← algebraMap_eq_psi, algebraMap_smul]
   rw [e, Ideal.toCotangent_eq]
-  simpa [map_sub, map_sum, map_mul] using hsq
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa [map_sub, map_sum, map_mul] using hsq
 
 theorem ker_Phi : LinearMap.ker (Phi p K) = jacS K p := by
   have hK : K ≤ ptI p := le_ptIdeal_of_nontrivial (K := K) (p := p)

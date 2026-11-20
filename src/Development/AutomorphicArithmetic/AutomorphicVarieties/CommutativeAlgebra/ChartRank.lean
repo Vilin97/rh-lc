@@ -98,7 +98,8 @@ theorem UpperTheory.V.Alg.chart_rank :
       rw [Fintype.linearIndependent_iff]
       intro c hc i
       have h1 := congrFun (congrArg ψ hc) i
-      rw [map_sum, Finset.sum_apply, Finset.sum_eq_single i, map_zero, map_smul, Pi.smul_apply, hψ,
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Finset.sum_apply, Finset.sum_eq_single i, map_zero, map_smul, Pi.smul_apply, hψ,
         hpl _ _ i.2] at h1
       · exact (smul_eq_zero.1 h1).resolve_right (hg i.1)
       · intro k _ hk

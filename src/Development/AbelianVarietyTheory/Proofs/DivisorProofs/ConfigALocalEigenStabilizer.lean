@@ -110,7 +110,8 @@ theorem cone_as_integral : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type)
     exact this
   have h2 := hsumL (l.smulRight (1 : (Fin b × Fin (b + a') → Fv F v) → ℂ)) 0
   simp only [LinearMap.smulRight_apply, Pi.smul_apply, Pi.one_apply, smul_eq_mul, mul_one] at h2
-  rw [h1, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h1, map_sum]
   simp only [map_smul, smul_eq_mul]
   rw [← h2]
   refine integral_congr_ae (Eventually.of_forall fun k => ?_)

@@ -95,7 +95,8 @@ theorem hf_smul_right (a : K) (v w : ι → K) : hf c v (a • w) = c a * hf c v
 theorem hf_zero_left (w : ι → K) : hf c 0 w = 0 := by simp [hf]
 
 theorem hf_symm (hc : ∀ x, c (c x) = x) (v w : ι → K) : hf c w v = c (hf c v w) := by
-  simp only [hf, map_sum, map_mul, hc]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hf, map_sum, map_mul, hc]
   exact Finset.sum_congr rfl fun i _ => mul_comm _ _
 
 theorem hf_single_left [DecidableEq ι] (i : ι) (a : K) (w : ι → K) :

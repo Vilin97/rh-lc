@@ -27,7 +27,8 @@ private theorem exists_op {K : Type*} {M : Type*} [Group K] [AddCommGroup M] [Mo
   refine ⟨((Fintype.card (K ⧸ H) : ℕ) : ℂ)⁻¹ • ∑ q : K ⧸ H, (ρ q.out : M →ₗ[ℂ] M),
     ?_, ?_, ?_, ?_⟩
   · intro m hm k
-    rw [hA, map_smul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hA, map_smul, map_sum]
     congr 1
     refine Fintype.sum_equiv (Equiv.mulLeft (k : K ⧸ H)) _ _ fun q => ?_
     rw [← Module.End.mul_apply, ← map_mul, key m hm]

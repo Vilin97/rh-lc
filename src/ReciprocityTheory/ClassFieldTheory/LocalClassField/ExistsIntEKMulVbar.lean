@@ -136,11 +136,13 @@ theorem resGK_continuous (h : K ≤ L) : Continuous (resGK h) := by
   intro x hx
   have hx' : x = ∑ i, b.repr ⟨x, hx⟩ i • (b i : PadicAlgCl p) := by
     have := congrArg E.val (b.sum_repr ⟨x, hx⟩)
-    rw [map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at this
     exact this.symm
   rw [hx']
   show resGK h σ _ = _
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [Algebra.smul_def, map_mul, AlgEquiv.commutes]
   exact congrArg _ (Set.mem_iInter.1 hσ i)

@@ -30,6 +30,7 @@ theorem transposedRegularRep_ringHom_trace :
     simp
   · intro a
     rw [Algebra.trace_eq_matrix_trace b a, ← Matrix.trace_transpose (Algebra.leftMulMatrix b a)]
-    simp [Matrix.trace, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Matrix.trace, map_sum]
 
 end GlobalTheory

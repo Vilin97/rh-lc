@@ -362,7 +362,8 @@ theorem isoProj_mem {P : PhiMod O K l e a ι} (Δ : Descent P) (c : ZMod e) (v :
   intro ξ τ
   have h1 : Δ.act (TameGal.inertia ξ) (isoProj Δ c v) =
       ∑ ζ, isoCoef l a c (ξ⁻¹ * ζ) • Δ.act (TameGal.inertia ζ) v := by
-    rw [isoProj_def, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [isoProj_def, map_sum]
     refine Fintype.sum_equiv (Equiv.mulLeft ξ) _ _ fun ζ => ?_
     rw [Δ.act_smul_tot, ringAct_isoCoef, Equiv.coe_mulLeft, inv_mul_cancel_left]
     simp only [map_mul, Module.End.mul_apply]
@@ -479,7 +480,8 @@ theorem isoProj_mem_uL {P : PhiMod O K l e a ι} (Δ : Descent P) (c : ZMod e) (
 theorem isoProj_app {P : PhiMod O K l e a ι} {Q : PhiMod O K l e a κ} {Δ₁ : Descent P}
     {Δ₂ : Descent Q} (F : Descent.Hom Δ₁ Δ₂) (c : ZMod e) (y : Vec K a ι) :
     isoProj Δ₂ c (F.app y) = F.app (isoProj Δ₁ c y) := by
-  simp only [isoProj_def, map_sum, BK.Hom.app_smul_tot, F.app_act]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [isoProj_def, map_sum, BK.Hom.app_smul_tot, F.app_act]
 
 theorem conn_mem_isotypic {P : PhiMod O K l e a ι} (Δ : Descent P) (c : ZMod e) {v : Vec K a ι}
     (hv : v ∈ Δ.isotypic c) : P.conn v ∈ Δ.isotypic c := by

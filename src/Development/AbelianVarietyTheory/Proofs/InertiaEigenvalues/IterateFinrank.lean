@@ -55,7 +55,8 @@ theorem exists_eps [FiniteDimensional F E] [CharZero F] : ∃ ε : K ⊗[F] B,
       rw [AlgHom.comp_apply, AlgHom.comp_apply, h2, map_one] at this
       exact this
     have h4 := congrArg n h
-    rw [map_mul, h3, one_mul, map_sum, map_zero] at h4
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_mul, h3, one_mul, map_sum, map_zero] at h4
     have h5 := congrArg (fun x => TensorProduct.lid E B (LinearMap.rTensor B (b.coord i) x)) h4
     simpa [n, Finsupp.single_apply] using h5
 
@@ -85,7 +86,8 @@ theorem exists_section [FiniteDimensional F E] [CharZero F] :
     fun ι _ b a h => h3 ι b a ?_, fun x h0 => ?_, fun x c => ?_, fun s hs => ?_⟩
   · change q (1 ⊗ₜ _) = q (_ ⊗ₜ 1)
     rw [hq, mul_comm, ← h1, mul_comm]
-  · rw [← mul_zero ε, ← hq, map_zero, ← h, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [← mul_zero ε, ← hq, map_zero, ← h, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     change _ = q (1 ⊗ₜ _) * q (_ ⊗ₜ 1)
     rw [← map_mul q, Algebra.TensorProduct.tmul_mul_tmul, one_mul, mul_one]
@@ -147,7 +149,8 @@ theorem exists_vec [FiniteDimensional F E] {W : Type} [AddCommGroup W] [Module K
       refine (Submodule.span_le (p := LinearMap.ker (Fintype.linearCombination K fun i => a i • w i))).2 ?_ hx
       rintro _ ⟨c, rfl⟩
       have := congrArg (m c) ha
-      simp only [map_sum, map_smul, hw, map_zero] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, hw, map_zero] at this
       change ∑ i, τ i c • a i • w i = 0
       simpa only [smul_comm (a _)] using this
     have h2 := h1 (Pi.single i 1)
@@ -155,12 +158,14 @@ theorem exists_vec [FiniteDimensional F E] {W : Type} [AddCommGroup W] [Module K
     exact (smul_eq_zero.1 h2).resolve_right (hw0 i)
   refine ⟨∑ i, w i, D.sum_mem fun i _ => ?_, ?_, ?_⟩
   · exact Module.End.pow_apply_mem_of_forall_mem _ hD v hvD
-  · rw [map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [← Module.End.mul_apply, ← pow_add, add_comm, pow_add, Module.End.mul_apply, hπ, map_smul]
   · have h1 : (fun c => m c (∑ i, w i)) = Fintype.linearCombination K w ∘ flip τ := by
       funext c
-      simp only [map_sum, hw]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, hw]
       rfl
     rw [h1, Set.range_comp, Submodule.span_image, hspan, Submodule.map_top,
       LinearMap.finrank_range_of_inj hli.fintypeLinearCombination_injective]
@@ -189,7 +194,8 @@ theorem exists_basis (κ : W0 K → ↥(K0 K))
     (hκ : ∀ w, algebraMap ↥(K0 K) ↥K.1 (κ w) = oK K (thetaW (fK K) K w)) {ι : Type} [Fintype ι]
     (b : Module.Basis ι (W0 K) ↥(OL K)) : ∃ b' : Module.Basis ι ↥(K0 K) ↥K.1, ∀ i, b' i = oK K (b i) := by
   have hO : ∀ c : ↥(OL K), oK K c ∈ Submodule.span ↥(K0 K) (Set.range fun i => oK K (b i)) := fun c => by
-    rw [← b.sum_repr c, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← b.sum_repr c, map_sum]
     refine Submodule.sum_mem _ fun i _ => ?_
     rw [Algebra.smul_def, map_mul, algebraMap_WO, ← hκ, ← Algebra.smul_def]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)
@@ -210,7 +216,8 @@ theorem exists_basis (κ : W0 K → ↥(K0 K))
 theorem exists_coord {ι : Type} [Fintype ι] (b : Module.Basis ι (W0 K) ↥(OL K)) (y : CK K) :
     ∃ a : ι → Per.Acris l, y = ∑ i, inC K (a i) * inI K (b i) :=
   AcrisK.induction_on y (fun a c => ⟨fun i => a * aC l (wA l (fK K) (b.repr c i)), by
-    conv_lhs => rw [← b.sum_repr c, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [← b.sum_repr c, map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [Algebra.smul_def, map_mul, map_mul, inC_wA, algebraMap_WO, mul_assoc]⟩)
     fun x y ⟨a, ha⟩ ⟨a', ha'⟩ => ⟨a + a', by
@@ -243,7 +250,8 @@ theorem exists_lift (u : Per.Acris l →+* B) (hu : Function.Injective u) (κ : 
     obtain ⟨b', hb'⟩ := exists_basis K κ hκ b
     obtain ⟨a, ha⟩ := exists_coord K b y
     have h6 : ψ (toB K y) = ∑ i, iR (u (a i)) * iL (b' i) := by
-      rw [ha, map_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [ha, map_sum, map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_mul, map_mul, ← inK_oK, hψC, hψK, hb']
     rw [← hy, map_mul, h3 _ h0, mul_zero] at h6

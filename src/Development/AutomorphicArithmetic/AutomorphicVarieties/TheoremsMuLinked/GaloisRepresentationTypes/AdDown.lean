@@ -28,7 +28,8 @@ private theorem avg {Γ k M : Type} [Group Γ] [Field k] [CharZero k] [AddCommGr
       induction q using QuotientGroup.induction_on with
       | H a => rw [MulAction.Quotient.smul_mk, he, he, smul_eq_mul, hd]
     conv_lhs => rw [← Equiv.sum_comp (MulAction.toPerm g) e]
-    simp only [MulAction.toPerm_apply, h1, Finset.sum_add_distrib, Finset.sum_const, Finset.card_univ, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [MulAction.toPerm_apply, h1, Finset.sum_add_distrib, Finset.sum_const, Finset.card_univ, map_sum,
       Nat.cast_smul_eq_nsmul]
   have hn : (Fintype.card (Γ ⧸ H) : k) ≠ 0 := Nat.cast_ne_zero.2 Fintype.card_ne_zero
   refine ⟨X - (Fintype.card (Γ ⧸ H) : k)⁻¹ • ∑ q, e q, fun g => ?_⟩

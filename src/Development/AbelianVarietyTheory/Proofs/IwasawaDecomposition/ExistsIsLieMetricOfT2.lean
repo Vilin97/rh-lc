@@ -96,7 +96,8 @@ theorem exists_smooth [T2Space (CxPts p σ)] [SecondCountableTopology (CxPts p �
   have hm : ∀ y, ∀ i ∈ χ.finsupport y, y ∈ ptsIn p σ (V i).1 := fun y i hi =>
     hχ i (subset_tsupport _ ((χ.mem_finsupport y).1 hi))
   refine ⟨G, fun y => ⟨fun v w => ?_, fun v hv => ?_⟩, fun W v w y hy => ?_⟩
-  · rw [hG, hG, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [hG, hG, map_sum]
     refine Finset.sum_congr rfl fun i hi => ?_
     rw [(hg i y (hm y i hi)).1 v w]
     simp
@@ -143,7 +144,8 @@ theorem exists_isLieMetric_of_t2 [T2Space (CxPts p σ)] [SecondCountableTopology
       simp only [LinearMap.smul_apply, map_pow]
       rfl⟩
   refine ⟨G, fun y => ⟨fun v w => ?_, fun v hv => ?_, fun ρ ρ' v w h hv hw => ?_⟩, fun W v w => ?_⟩
-  · rw [hf, hf, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [hf, hf, map_sum]
     exact Finset.sum_congr rfl fun τ _ => (hg y).1 _ _
   · obtain ⟨τ, hτ⟩ : ∃ τ, e y τ v ≠ 0 := by
       by_contra! h
@@ -165,7 +167,8 @@ theorem exists_isLieMetric_of_t2 [T2Space (CxPts p σ)] [SecondCountableTopology
         (starRingEnd ℂ (c τ l) * c τ j) * pairFn g (actR t.act (α ^ j) v) (actR t.act (α ^ l) w) y)
         (contMDiffOn_finsetSum fun τ _ => contMDiffOn_finsetSum fun l _ => contMDiffOn_finsetSum fun j _ =>
           (contDiff_const.mul contDiff_id).contMDiff.comp_contMDiffOn (hs W _ _)) fun y hy => ?_
-      simp only [pairFn_eq _ _ _ hy, hf, hc, valAt_act, map_sum, map_smulₛₗ, LinearMap.sum_apply,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [pairFn_eq _ _ _ hy, hf, hc, valAt_act, map_sum, map_smulₛₗ, LinearMap.sum_apply,
         LinearMap.smul_apply, RingHom.id_apply, smul_eq_mul, Finset.mul_sum, _root_.mul_assoc]
     exact ⟨pairFn G v w,
       (AnRead.smoothOn_iff_contMDiffOn (isOpen_ptsIn _)).2 (Complex.reCLM.contDiff.contMDiff.comp_contMDiffOn key),

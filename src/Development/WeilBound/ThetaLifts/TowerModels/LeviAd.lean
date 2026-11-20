@@ -50,9 +50,11 @@ theorem exists_inf (h : IsCMExt F E σ) (τ : ∀ w : InfinitePlace F, EmbOver E
     ∃ a : AE F E, (∀ w, piInf (τ w) a = z w) ∧ ∀ v, compFin F E v a = 1 := by
   choose b hb using fun w => (infEmb_bijective h (τ w)).2 (z w - 1)
   refine ⟨1 + ∑ w, TensorProduct.map (sgI w) LinearMap.id (b w), fun w => ?_, fun v => ?_⟩
-  · rw [map_add, map_one, piInf, RingHom.comp_apply, map_sum, Finset.sum_eq_single w (fun u _ hu => compInf_sgI_ne hu.symm _)
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_add, map_one, piInf, RingHom.comp_apply, map_sum, Finset.sum_eq_single w (fun u _ hu => compInf_sgI_ne hu.symm _)
       (fun h => absurd (Finset.mem_univ w) h), compInf_sgI_self, hb, add_sub_cancel]
-  · simp [map_sum, compFin_sgI]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp [map_sum, compFin_sgI]
 
 theorem ad_ext (h : IsCMExt F E σ) (τ : ∀ w : InfinitePlace F, EmbOver E w) {a b : AE F E}
     (h1 : ∀ w, piInf (τ w) a = piInf (τ w) b) (h2 : ∀ v, compFin F E v a = compFin F E v b) : a = b :=
@@ -150,7 +152,8 @@ theorem det_ne_zero (hW : W.IsSkew σ B r s) : W.J.det ≠ 0 := by
 omit [NumberField F] [NumberField E] in
 theorem form_skew (hs : ∀ x, σ (σ x) = x) {J : Matrix (Fin d) (Fin d) E} (hJ : ∀ i j, σ (J j i) = -J i j) (x y : Fin d → E) :
     form σ J x y = -σ (form σ J y x) := by
-  simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, Finset.mul_sum, hs, hJ, ← Finset.sum_neg_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, Finset.mul_sum, hs, hJ, ← Finset.sum_neg_distrib]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 

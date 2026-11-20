@@ -17,7 +17,8 @@ theorem map_mulVec_incl {E A : Type} [Field E] [CommRing A] (ι : E →+* A) {n 
     (M : Matrix (Fin n) (Fin n) E) (w : Fin n → E) :
     M.map ι *ᵥ (fun i => ι (w i)) = fun i => ι ((M *ᵥ w) i) := by
   funext i
-  simp [Matrix.mulVec, dotProduct, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Matrix.mulVec, dotProduct, map_sum]
 
 theorem map_mulVec_span {E A : Type} [Field E] [CommRing A] (ι : E →+* A) {n : ℕ}
     (M : Matrix (Fin n) (Fin n) E) (S : Set (Fin n → E)) (T : Submodule A (Fin n → A))

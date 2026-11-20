@@ -72,7 +72,8 @@ theorem exists_half_redM_eq : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0
     have hsub : (⟨frMapAdj (Vc D i) (Wc D i) (R.βV i) (R.βW i) x j k, by rw [hent]; exact Subtype.prop _⟩ :
         Formalism.L2.Herm.intAf D.host.F D.host.E) = ⟨toEAf D e, hi⟩ * ∑ PP ∈ (R.Pg ∪ R.Q t).attach,
         ⟨toEAf D (es PP.1), hk PP.1 PP.2⟩ * Formalism.L2.DIV.oToS D.host.F D.host.E (a PP.1 j k) := Subtype.ext (hent j k)
-    rw [hsub, RingHom.map_mul, hres PP hPP, one_mul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hsub, RingHom.map_mul, hres PP hPP, one_mul, map_sum]
     simp_rw [RingHom.map_mul, Formalism.L2.DIV.resS_oToS]
     rw [Finset.sum_eq_single ⟨PP, hPP⟩]
     · rw [hdel PP hPP PP hPP, if_pos rfl, one_mul, ha]

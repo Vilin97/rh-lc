@@ -33,7 +33,8 @@ theorem derived_adjoint_and_casimir (p q : ℕ) (T : GrpData p q) (πU : URep T)
       inner_neg_right, hreal X hX, hreal Y hY]
     rfl
   refine ⟨hZ, fun x y => ?_⟩
-  simp only [casimir, LinearMap.sum_apply, map_sum, sum_inner, inner_sum, Module.End.mul_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [casimir, LinearMap.sum_apply, map_sum, sum_inner, inner_sum, Module.End.mul_apply]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
   rw [hZ, hZ, adjZ_Eab, adjZ_Eab]
   simp only [map_smul, LinearMap.smul_apply, inner_smul_right]

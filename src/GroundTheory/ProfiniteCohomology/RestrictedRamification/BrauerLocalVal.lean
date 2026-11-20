@@ -159,7 +159,8 @@ theorem exists_level_cocycle (f : (Fin 2 → galUnramifiedOutside K.1 ℚ̄ S) �
       simp only [IntermediateField.coe_sum, IntermediateField.coe_smul] at this
       exact this.symm
     have h1 : σ' x = σ x := by
-      rw [hsum, map_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hsum, map_sum, map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       have hs : ∀ (τ : galUnramifiedOutside K.1 ℚ̄ S) (r : K.1) (y : maxUnramifiedOutside K.1 ℚ̄ S),
           τ (r • y) = r • τ y := fun τ r y => τ.toLinearEquiv.map_smul r y

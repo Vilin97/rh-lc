@@ -21,12 +21,14 @@ theorem h_e_pX (H : D.Hyp) (b : Fin r) (u : n → A) : D.h (D.e b) (D.pX u) = 0 
   have key : ∀ x y, D.h x y = D.hL x y := fun _ _ => rfl
   have H3 : ∀ a c, D.hL (D.e a) (D.e c) = 0 := fun a c => H.3 a c
   rw [key]
-  simp only [Dat.pX.eq_1, LinearMap.sum_apply, LinearMap.smulRight_apply, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Dat.pX.eq_1, LinearMap.sum_apply, LinearMap.smulRight_apply, map_sum,
     map_smul, H3, smul_zero, Finset.sum_const_zero]
 
 theorem h_pX_left {y : n → A} (hy : ∀ b, D.h (D.e b) y = 0) (u : n → A) : D.h (D.pX u) y = 0 := by
   have hy' : ∀ b, ∑ x, ∑ x_1, D.σA (D.e b x) * D.JA x x_1 * y x_1 = 0 := fun b => hy b
-  simp only [Dat.h, hform, Dat.pX.eq_1, LinearMap.sum_apply, LinearMap.smulRight_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Dat.h, hform, Dat.pX.eq_1, LinearMap.sum_apply, LinearMap.smulRight_apply,
     Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum, map_mul, Finset.sum_mul]
   simp_rw [Finset.sum_comm (s := (Finset.univ : Finset n)) (t := (Finset.univ : Finset (Fin r)))]
   refine Finset.sum_eq_zero fun d _ => ?_
@@ -42,7 +44,8 @@ theorem h_pX_right (H : D.Hyp) {y : n → A} (hy : ∀ b, D.h (D.e b) y = 0) (u 
 
 theorem S_pX {S : (n → A) →ₗ[A] (n → A)} (hS : ∀ a, S (D.e a) = D.e a) (u : n → A) :
     S (D.pX u) = D.pX u := by
-  simp only [Dat.pX.eq_1, LinearMap.sum_apply, LinearMap.smulRight_apply, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Dat.pX.eq_1, LinearMap.sum_apply, LinearMap.smulRight_apply, map_sum,
     map_smul, hS]
 
 theorem h_e_S {S : (n → A) →ₗ[A] (n → A)} (hS : D.FixEZ S) (hU : D.Uni S) (b : Fin r)
@@ -135,7 +138,8 @@ theorem Pi_of_fix (H : D.Hyp) {S : (n → A) →ₗ[A] (n → A)} (hS : D.FixEZ 
       rw [pz_apply, pz_apply, h_z_S hS hU]
     rw [pU_apply, a1, a2, a3]; rfl
   have h2 : S (D.pU v) = D.pU v := by
-    rw [pU_apply, map_add, map_add, S_pX hS.1, pXv_apply, pz_apply, map_sum, map_smul, hS.2]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [pU_apply, map_add, map_add, S_pX hS.1, pXv_apply, pz_apply, map_sum, map_smul, hS.2]
     simp only [map_smul, hf]
   have h3 : S (D.pW v) = S v - D.pU v := by rw [pW_apply, map_sub, h2]
   rw [Pi_apply, h3, pW_apply, map_sub, h1, pU_pU H]

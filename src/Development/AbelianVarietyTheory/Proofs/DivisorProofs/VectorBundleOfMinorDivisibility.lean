@@ -99,12 +99,14 @@ theorem isVB_image_of_minor (Y : Scheme.{0}) [IsIntegral Y] (F E : Y.Modules) (�
   have hιt : ∀ (W : Y.Opens) (h : W ≤ V) (k : Fin r),
       (image.ι φ).app W (resM _ h (t k)) = ∑ i, resG Y h (a i (J k)) • resM E h (eE i) := by
     intro W h k
-    rw [app_resM, hι, hφ, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [app_resM, hι, hφ, map_sum]
     simp only [resM_smul]
   have hpt : ∀ j, (factorThruImage φ).app V (eF j) = ∑ k, c j k • t k := by
     intro j
     apply hinj
-    rw [hι, hφ, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hι, hφ, map_sum]
     simp only [Scheme.Modules.Hom.app_smul, t, hι, hφ, Finset.smul_sum, smul_smul]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun i _ => ?_
@@ -112,7 +114,8 @@ theorem isVB_image_of_minor (Y : Scheme.{0}) [IsIntegral Y] (F E : Y.Modules) (�
   refine ⟨V, t, hy, isFrame_of_inj_of_local (fun W h => ?_) (fun W h s x hx => ?_)⟩
   · refine (injective_iff_map_eq_zero _).2 fun x hx => ?_
     have h1 := congrArg ((image.ι φ).app W) hx
-    rw [map_zero, Fintype.linearCombination_apply, map_sum] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_zero, Fintype.linearCombination_apply, map_sum] at h1
     simp only [Scheme.Modules.Hom.app_smul, hιt, Finset.smul_sum, smul_smul] at h1
     rw [Finset.sum_comm] at h1
     simp only [← Finset.sum_smul] at h1
@@ -132,8 +135,10 @@ theorem isVB_image_of_minor (Y : Scheme.{0}) [IsIntegral Y] (F E : Y.Modules) (�
   · obtain ⟨W', h', hxW', f, hf⟩ := GlobalTheory.VB.exists_app_eq_of_epi (factorThruImage φ) s hx
     obtain ⟨b, rfl⟩ := (hF W' (h'.trans h)).2 f
     refine ⟨W', h', hxW', fun k => ∑ j, b j * resG Y (h'.trans h) (c j k), ?_⟩
-    rw [← hf, Fintype.linearCombination_apply, Fintype.linearCombination_apply, map_sum]
-    simp only [Scheme.Modules.Hom.app_smul, app_resM, hpt, map_sum, resM_smul, Finset.smul_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hf, Fintype.linearCombination_apply, Fintype.linearCombination_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Scheme.Modules.Hom.app_smul, app_resM, hpt, map_sum, resM_smul, Finset.smul_sum,
       smul_smul, Finset.sum_smul]
     rw [Finset.sum_comm]
 

@@ -41,7 +41,8 @@ theorem eval_smul_of_isHomogeneous {φ : MvPolynomial (Fin n) ℂ} {m : ℕ} (h�
 theorem smul_mem_zeroSet {W : Ideal (MvPolynomial (Fin n) ℂ)} (hW : IsHomogIdeal W)
     {x : Fin n → ℂ} (hx : ∀ q ∈ W, eval x q = 0) (t : ℂ) : ∀ q ∈ W, eval (t • x) q = 0 := by
   intro q hq
-  rw [← sum_homogeneousComponent q, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← sum_homogeneousComponent q, map_sum]
   refine Finset.sum_eq_zero fun d _ => ?_
   rw [eval_smul_of_isHomogeneous (homogeneousComponent_isHomogeneous d q), hx _ (hW q hq d), mul_zero]
 
@@ -125,7 +126,8 @@ theorem chowForm_vanish {W : Ideal (MvPolynomial (Fin n) ℂ)} {g : MvPolynomial
       simp [hy q hq]
     · intro i
       obtain rfl := Subsingleton.elim i 0
-      simp only [Function.comp_apply, ← map_mul, ← map_sum, hu', map_zero]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Function.comp_apply, ← map_mul, ← map_sum, hu', map_zero]
   have h := (hg.2 g).mpr dvd_rfl _ hinc
   rw [aeval_algebraMap_apply] at h
   simpa using h

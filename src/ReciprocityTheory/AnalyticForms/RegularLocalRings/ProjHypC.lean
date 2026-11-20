@@ -149,7 +149,8 @@ theorem val_polyToAway_mul_pow {f : MvPolynomial (Σ k, ι k) ℂ} {a : K → �
     simp only [map_pow, ← mul_pow, hX, hC]
   show ψ f * W ^ (∑ k, a k) = τ f
   calc ψ f * W ^ (∑ k, a k) = (∑ m ∈ f.support, ψ (monomial m (AddMonoidAlgebra.coeff f m))) * W ^ (∑ k, a k) := by
-        rw [← map_sum, ← f.as_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [← map_sum, ← f.as_sum]
     _ = ∑ m ∈ f.support, ψ (monomial m (AddMonoidAlgebra.coeff f m)) * W ^ (∑ k, a k) := Finset.sum_mul _ _ _
     _ = ∑ m ∈ f.support, τ (monomial m (AddMonoidAlgebra.coeff f m)) := Finset.sum_congr rfl key
     _ = τ f := by rw [← map_sum, ← f.as_sum]
@@ -207,7 +208,8 @@ theorem val_polyToAway_segre_mul_pow {g : MvPolynomial ((k : K) → ι k) ℂ} {
     simp only [map_pow, ← mul_pow, hA, hC]
   show ψ' g * W ^ d = σ' g
   calc ψ' g * W ^ d = (∑ m ∈ g.support, ψ' (monomial m (AddMonoidAlgebra.coeff g m))) * W ^ d := by
-        rw [← map_sum, ← g.as_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [← map_sum, ← g.as_sum]
     _ = ∑ m ∈ g.support, ψ' (monomial m (AddMonoidAlgebra.coeff g m)) * W ^ d := Finset.sum_mul _ _ _
     _ = ∑ m ∈ g.support, σ' (monomial m (AddMonoidAlgebra.coeff g m)) := Finset.sum_congr rfl key
     _ = σ' g := by rw [← map_sum, ← g.as_sum]

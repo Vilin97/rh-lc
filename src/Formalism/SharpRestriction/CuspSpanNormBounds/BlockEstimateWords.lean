@@ -686,7 +686,8 @@ theorem hermitian_form_pullback_fiber {β γ : Type} (P : Finset β) (Q : Finset
     intro u
     rw [← sum_over_fibers P Q e hm (k u) b, mul_comm, Finset.mul_sum]
     have h2 : conj (∑ x ∈ Q, if e x = u then b x else 0) = ∑ x ∈ Q, if e x = u then conj (b x) else 0 := by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun x _ => ?_
       split_ifs <;> simp
     rw [h2]
@@ -701,8 +702,10 @@ theorem hermitian_form_pullback_fiber {β γ : Type} (P : Finset β) (Q : Finset
 theorem hermitian_quadratic_form_real {β : Type} (P : Finset β) (k : β → β → ℂ) (hk : ∀ x ∈ P, ∀ y ∈ P, k y x = conj (k x y))
     (b : β → ℂ) : (∑ x ∈ P, ∑ y ∈ P, conj (b x) * k x y * b y).im = 0 := by
   apply Complex.conj_eq_iff_im.1
-  rw [map_sum]
-  simp_rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp_rw [map_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun y hy => Finset.sum_congr rfl fun x hx => ?_
   rw [hk x hx y hy]
@@ -2551,7 +2554,8 @@ theorem dual_of_full {D : D7} (a : ℕ → ℕ → D.what₂.Tau → ℂ) {δ : 
   have hm : ∀ j, Algebra.trace ℚ D.host.E (m * bs j) = q j := by
     intro j
     rw [← Algebra.traceForm_apply]
-    simp only [m, map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [m, map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply,
       LinearMap.BilinForm.apply_dualBasis_left, smul_eq_mul, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq,
       Finset.mem_univ, if_true]
   let Φ2 : D.host.E →ₗ[ℚ] ℝ := (Algebra.linearMap ℚ ℝ).comp ((Algebra.traceForm ℚ D.host.E) m)

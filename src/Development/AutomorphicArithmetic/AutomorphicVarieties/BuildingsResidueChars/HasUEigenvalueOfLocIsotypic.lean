@@ -74,7 +74,8 @@ private theorem dc_eigen_descend {G V U ι : Type} [Group G] [AddCommGroup V] [M
     (fun j : Option K => j.elim (Hi.dc σ K K x - lam • LinearMap.id) fun k => σ k - LinearMap.id)
     (by
       rintro (_ | k) i u
-      · simp only [Option.elim, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.id_apply, map_sub, map_smul, hs,
+      set_option synthInstance.maxHeartbeats 100000 in
+        · simp only [Option.elim, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.id_apply, map_sub, map_smul, hs,
           map_sum, hf]
       · simp only [Option.elim, LinearMap.sub_apply, LinearMap.id_apply, map_sub, hf])
     (by

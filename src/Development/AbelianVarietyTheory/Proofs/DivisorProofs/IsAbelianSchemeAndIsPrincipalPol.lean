@@ -134,7 +134,8 @@ theorem apply_powerSum_mul {N : ℕ} {φ : G → ℤ} (h : DiffVanish (N + 2 + 1
     rw [Finset.sum_comm]
     refine Finset.sum_eq_zero fun S _ => ?_
     rw [← Finset.smul_sum, hu, smul_zero]
-  rw [LinearMap.comp_apply, LinearMap.mulLeft_apply, Finset.sum_mul, map_sum, Finset.sum_congr rfl fun j _ => e₁ j,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [LinearMap.comp_apply, LinearMap.mulLeft_apply, Finset.sum_mul, map_sum, Finset.sum_congr rfl fun j _ => e₁ j,
     ← Finset.sum_mul, ← Int.cast_sum, e₂, Int.cast_zero, zero_mul]
 
 end Differences
@@ -394,7 +395,8 @@ theorem val_eq_zero (hC : ArCalc) {k : Type} [CommRing k] {X : Scheme.{0}} [IsIn
     (fun n => ?_) hΦ.2 some (fun w => ?_) _
   · obtain ⟨g, hg, e'⟩ := hΦ.1 n
     have hL := LB.isLB_pull (comb (F.fam H N) n).isLB (redι (clo y))
-    rw [← e', ← congrArg g hgen, hg.vertical _ (redι (clo y)) (ZMod ℓ) _ hdim, Nat.card_zmod, topSelf_def,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← e', ← congrArg g hgen, hg.vertical _ (redι (clo y)) (ZMod ℓ) _ hdim, Nat.card_zmod, topSelf_def,
       interNum_eq_multiDiff _ _ fun _ => hL, cls_pull (comb (F.fam H N) n).isLB, GenFibreSecs.cls_comb, map_sum]
     simp only [map_zsmul]
   · have a (i : Fin r) : pull (redι (clo y)) (cls _ (F.fam H N (some i)).isLB) =

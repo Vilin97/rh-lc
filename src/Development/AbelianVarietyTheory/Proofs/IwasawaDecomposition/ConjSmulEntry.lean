@@ -83,7 +83,8 @@ theorem redM_adj_congr : ∀ (D : D7) (S T : HSp D) (βS : GL (Fin S.rank) (EAf 
     · intro u v hu hv
       rw [Pi.single_add, map_add, hu, hv, add_zero]
   have h3 : g (x - x') = 0 := by
-    rw [← Finset.univ_sum_single (x - x'), map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Finset.univ_sum_single (x - x'), map_sum]
     exact Finset.sum_eq_zero fun b _ => h0 b _ (hx b)
   rw [hg, hg]
   rw [map_sub, sub_eq_zero] at h3

@@ -105,7 +105,8 @@ theorem const_lg (G : FGLaw S d) {n : ℕ} (j : Fin n) (i : Fin d) :
   exact ReciprocityTheory.ChartRestriction.G.TB.LogPf.constantCoeff_prim _
 
 theorem const_bilL (G : FGLaw S d) (cc : Fin d → Fin d → S) : MvPowerSeries.constantCoeff (bilL G cc) = 0 := by
-  simp only [Formalism.MainNotions.ModuliIntegralCharts.H1.CIndFrFix.bilL, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Formalism.MainNotions.ModuliIntegralCharts.H1.CIndFrFix.bilL, map_sum]
   refine Finset.sum_eq_zero fun i _ => Finset.sum_eq_zero fun l _ => ?_
   have h0 : MvPowerSeries.constantCoeff (lg G (0 : Fin 2) i * lg G (1 : Fin 2) l) = 0 := by
     rw [map_mul, const_lg, zero_mul]

@@ -28,7 +28,8 @@ theorem symp_vecMulVec_self_eq_zero (F E : Type) [Field F] [NumberField F] [Fiel
   have h0 : (∑ i, ∑ k, incV F x i * incM F J i k * cA σ (incV F x k)) = 0 := by
     have e : (∑ i, ∑ k, incV F x i * incM F J i k * cA σ (incV F x k)) =
         inclR (F := F) (AF F) (form σ J x x) := by
-      simp only [form, dotProduct, Matrix.mulVec, incV, incM, Matrix.map_apply, hc, map_sum, map_mul,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [form, dotProduct, Matrix.mulVec, incV, incM, Matrix.map_apply, hc, map_sum, map_mul,
         Finset.mul_sum, mul_assoc]
     rw [e, hx, map_zero]
   rw [GlobalTheory.WeilM.symp, hTens_vecMulVec_gen, h0, zero_mul, mul_zero, map_zero]

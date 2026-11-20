@@ -19,7 +19,8 @@ lemma regMax_fderiv_sum [DecidableEq ι] {η : ℝ} (hη : 0 < η) (t : ι → �
     ∑ j, fderiv ℝ (regMax (ι := ι) η) t (Pi.single j 1) = 1 := by
   have hd : DifferentiableAt ℝ (regMax (ι := ι) η) t :=
     (regMax_contDiff hη).differentiable (by simp) t
-  rw [← map_sum, Finset.univ_sum_single (fun _ : ι => (1 : ℝ))]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum, Finset.univ_sum_single (fun _ : ι => (1 : ℝ))]
   have hl : HasDerivAt (fun c : ℝ => t + c • (fun _ : ι => (1 : ℝ))) (fun _ => 1) 0 := by
     simpa using ((hasDerivAt_id (0 : ℝ)).smul_const (fun _ : ι => (1 : ℝ))).const_add t
   have h1 := hd.hasFDerivAt.comp_hasDerivAt_of_eq (0 : ℝ) hl (by simp)
@@ -320,7 +321,8 @@ lemma regMax_fderiv2_nonneg {η : ℝ} (hη : 0 < η) (p a : ι → ℝ) :
 lemma clm_apply_eq_sum [DecidableEq ι] (L : (ι → ℝ) →L[ℝ] ℝ) (c : ι → ℝ) :
     L c = ∑ j, c j * L (Pi.single j 1) := by
   conv_lhs => rw [← Finset.univ_sum_single c]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   have : (Pi.single j (c j) : ι → ℝ) = c j • (Pi.single j 1 : ι → ℝ) := by
     funext k; by_cases h : k = j <;> simp [h]

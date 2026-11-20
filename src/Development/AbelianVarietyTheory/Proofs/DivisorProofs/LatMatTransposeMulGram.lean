@@ -81,10 +81,12 @@ theorem latMat_transpose_mul_gram {n : ℕ} (b : Module.Basis (Fin n) ℤ Dw.La)
   simp only [Matrix.mul_apply, Matrix.transpose_apply, latMat_apply, gram, Matrix.of_apply]
   have h1 : Dw.EF (a • b i) (b j) = ∑ m, b.repr (a • b i) m * Dw.EF (b m) (b j) := by
     conv_lhs => rw [← b.sum_repr (a • b i)]
-    simp only [map_sum, LinearMap.sum_apply, map_zsmul, LinearMap.smul_apply, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.sum_apply, map_zsmul, LinearMap.smul_apply, smul_eq_mul]
   have h2 : Dw.EF (b i) (H.bar a • b j) = ∑ m, Dw.EF (b i) (b m) * b.repr (H.bar a • b j) m := by
     conv_lhs => rw [← b.sum_repr (H.bar a • b j)]
-    simp only [map_sum, map_zsmul, smul_eq_mul, mul_comm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_zsmul, smul_eq_mul, mul_comm]
   rw [← h1, ← h2, Dw.adj]
 
 theorem bar_bar (a : 𝓞 E) : H.bar (H.bar a) = a := by

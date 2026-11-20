@@ -22,7 +22,8 @@ theorem emb_hD (S : HSpace E) (τ : E →+* ℂ) (hτ : ∀ a, τ (star a) = sta
     τ (S.hD x x) = star (fun a => τ (S.frame.repr x a)) ⬝ᵥ
       (S.gram.map τ *ᵥ fun a => τ (S.frame.repr x a)) := by
   rw [HSpace.hD, hT_expand]
-  simp only [map_sum, map_mul, hτ, dotProduct, mulVec, Finset.mul_sum, Pi.star_apply, Matrix.map_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, hτ, dotProduct, mulVec, Finset.mul_sum, Pi.star_apply, Matrix.map_apply,
     mul_assoc]
   rfl
 

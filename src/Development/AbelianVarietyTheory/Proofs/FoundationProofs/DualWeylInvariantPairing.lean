@@ -31,7 +31,8 @@ theorem rowAct_comp {n : ℕ} (g h : Matrix (Fin n) (Fin n) ℂ) :
       Formalism.GradedWeylDivisibility.rowAct ℂ (n := n) (h * g) := by
   apply MvPolynomial.algHom_ext
   intro v
-  simp only [AlgHom.comp_apply, Formalism.GradedWeylDivisibility.rowAct, aeval_X, map_sum, map_mul, aeval_C,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [AlgHom.comp_apply, Formalism.GradedWeylDivisibility.rowAct, aeval_X, map_sum, map_mul, aeval_C,
     Matrix.mul_apply, map_sum, Finset.sum_mul, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun b _ => Finset.sum_congr rfl fun c _ => ?_
@@ -55,9 +56,11 @@ theorem pair_conj_self {σ : Type} [Fintype σ] (u : MvPolynomial σ ℂ) :
       ((∑ α ∈ u.support, (∏ i, ((α i).factorial : ℝ)) * Complex.normSq (AddMonoidAlgebra.coeff u α) : ℝ) : ℂ) := by
   have hv : map (starRingEnd ℂ) u = ∑ α ∈ u.support, monomial α (starRingEnd ℂ (AddMonoidAlgebra.coeff u α)) := by
     conv_lhs => rw [u.as_sum]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [map_monomial]
-  rw [hv, map_sum, LinearMap.sum_apply, Complex.ofReal_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hv, map_sum, LinearMap.sum_apply, Complex.ofReal_sum]
   refine Finset.sum_congr rfl fun α _ => ?_
   rw [pair_monomial, Complex.ofReal_mul, Complex.ofReal_prod, wt]
   push_cast

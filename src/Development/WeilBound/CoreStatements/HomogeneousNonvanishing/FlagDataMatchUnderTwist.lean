@@ -77,6 +77,7 @@ theorem flag_data_match_under_twist : ∀ (E : Type) [Field E] [NumberField E] [
   rw [h1 k, h2 k, fm_flagStep_map]
   congr 1
   funext a
-  simp [map_sum, map_smul, hj]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, map_smul, hj]
 
 end PositivityTheory.UnitarySelfGeneration

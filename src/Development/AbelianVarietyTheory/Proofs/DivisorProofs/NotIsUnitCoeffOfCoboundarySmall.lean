@@ -96,9 +96,11 @@ theorem linear_coeff_law (μ : Fin d → MvPowerSeries (Fin d ⊕ Fin d) O) (hμ
     have h := congrFun hμ.unit s
     change subst yZero (μ s) = X s at h
     have h2 := congrArg (fun f => constantCoeff (pderiv O j f)) h
-    rw [ReciprocityTheory.ChartRestriction.G.TB.ChartChgPfTP.pderiv_subst _ yZero_const, map_sum] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [ReciprocityTheory.ChartRestriction.G.TB.ChartChgPfTP.pderiv_subst _ yZero_const, map_sum] at h2
     simp only [map_mul, constantCoeff_subst_of yZero_const] at h2
-    simp only [Fintype.sum_sum_type, yZero,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Fintype.sum_sum_type, yZero,
       Sum.elim_inl, Sum.elim_inr, map_zero, mul_zero, Finset.sum_const_zero, add_zero, pderiv_X, map_sum, map_mul] at h2
     simp only [Pi.single_apply, apply_ite, map_one, map_zero, mul_ite, mul_one, mul_zero,
       Finset.sum_ite_eq', Finset.mem_univ, if_true] at h2
@@ -109,7 +111,8 @@ theorem linear_coeff_law (μ : Fin d → MvPowerSeries (Fin d ⊕ Fin d) O) (hμ
   have h := hμ.comm s
   unfold swap at2 at h
   have h2 := congrArg (fun f => constantCoeff (pderiv O (Sum.inr j) f)) h
-  rw [ReciprocityTheory.ChartRestriction.G.TB.ChartChgPfTP.pderiv_subst _ hsw, map_sum] at h2
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [ReciprocityTheory.ChartRestriction.G.TB.ChartChgPfTP.pderiv_subst _ hsw, map_sum] at h2
   simp only [map_mul, constantCoeff_subst_of hsw] at h2
   simp only [Fintype.sum_sum_type, Sum.elim_inl, Sum.elim_inr, pderiv_X, Pi.single_apply, Sum.inr.injEq,
     reduceCtorEq, if_false, map_zero, mul_zero, Finset.sum_const_zero, add_zero, apply_ite, map_one, mul_ite,
@@ -167,9 +170,11 @@ theorem GlobalTheory.Katz.not_isUnit_coeff_of_coboundary_small : ∀ (p : ℕ) [
   have hvec : Matrix.vecMul w N = 0 := by
     funext j
     have e := congrArg (fun F => map π (subst yZero F)) (pderiv_right_formalGroupLawCoboundaryOne μ hμ.const t j)
-    rw [map_subst hasSubst_yZero, hG j, ← coe_substAlgHom (hasSubst_yZero.map π), map_zero,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_subst hasSubst_yZero, hG j, ← coe_substAlgHom (hasSubst_yZero.map π), map_zero,
       ← coe_substAlgHom hasSubst_yZero, map_sub, map_sum] at e
-    simp only [map_mul, coe_substAlgHom, yZero_subst μ hμ, yZero_inR, constantCoeff_pderiv, map_sub, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_mul, coe_substAlgHom, yZero_subst μ hμ, yZero_inR, constantCoeff_pderiv, map_sub, map_sum,
       map_C] at e
     have hl : π (coeff (Finsupp.single j 1) t) = 0 := (hmem _).2 (hlin j)
     rw [hl, map_zero, sub_zero] at e

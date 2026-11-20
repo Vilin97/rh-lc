@@ -204,7 +204,8 @@ theorem qminorOp_cf (hσ : IsURepOn (UJset ε) σ) (hQP : Q * P = 1) (hPQ : P * 
     Formalism.QuantumDeterminants.qminorOp (Formalism.QuantumDeterminants.EabH (Pᴴ * Jm ε * P)) ra cb u f g =
       (inner ℂ a (σ (P * g * Q) ((Formalism.REAL.qminor (Ec ε σ P Q) ra cb u x : smD ε σ) : H))) • T := by
   unfold Formalism.QuantumDeterminants.qminorOp Formalism.REAL.qminor
-  rw [Finset.sum_apply, LinearMap.sum_apply, Submodule.coe_sum, map_sum, inner_sum, Finset.sum_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.sum_apply, LinearMap.sum_apply, Submodule.coe_sum, map_sum, inner_sum, Finset.sum_smul]
   refine Finset.sum_congr rfl fun s _ => ?_
   have hL1 : (List.ofFn fun k : Fin t => Formalism.QuantumDeterminants.Top (E := E) (Formalism.QuantumDeterminants.EabH (Pᴴ * Jm ε * P)) (u - ((k : ℕ) : ℂ))
       (ra (s k)) (cb k)) = (List.ofFn fun k : Fin t => ((u - ((k : ℕ) : ℂ)), ra (s k), cb k)).map

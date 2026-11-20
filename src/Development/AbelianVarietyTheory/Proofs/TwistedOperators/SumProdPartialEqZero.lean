@@ -34,7 +34,8 @@ theorem sum_prod_partial_eq_zero (s : Finset δ) (a : δ → ℂ) (F : δ → �
         Finset.prod_congr rfl fun i hi => by rw [Function.update_of_ne (Finset.ne_of_mem_erase hi)]
       rw [this]; ring
     have h2 := congrArg (fun f => T b f (y b)) hφ
-    simp only [map_sum, map_smul, map_zero, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Pi.zero_apply] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, map_zero, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Pi.zero_apply] at h2
     rw [← h2]
     refine Finset.sum_congr rfl fun d _ => ?_
     rw [Finset.prod_insert hb, hc]; ring

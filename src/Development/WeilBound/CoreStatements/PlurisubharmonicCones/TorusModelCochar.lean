@@ -124,7 +124,8 @@ theorem closure_basis {X V : Type} [AddCommGroup X] [AddCommGroup V] {r : ℕ} (
   · intro hx
     exact (AddSubgroup.closure_le κ.range).2 (by rintro _ ⟨i, rfl⟩; exact ⟨_, rfl⟩) hx
   · rintro ⟨δ, rfl⟩
-    rw [← bs.sum_repr δ, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← bs.sum_repr δ, map_sum]
     refine AddSubgroup.sum_mem _ fun i _ => ?_
     rw [map_zsmul]
     exact AddSubgroup.zsmul_mem _ (AddSubgroup.subset_closure (Set.mem_range_self i)) _

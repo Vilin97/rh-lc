@@ -129,7 +129,8 @@ lemma finite_decomp (ψ : AddChar (AF F) ℂ) (hunr : ∀ᶠ v in cofinite, PsiU
     exact hv (hS.mem_toFinset.2 h)
   · apply RestrictedProduct.ext; intro w
     show evalV F w x = evalV F w (_ + _)
-    rw [map_add, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_add, map_sum]
     have hsame : ∀ (t : Fv F w), evalV F w (singleFin w t) = t := fun t =>
       RestrictedProduct.single_eq_same (fun v => HeightOneSpectrum.adicCompletionIntegers F v) w t
     have hne : ∀ v (t : Fv F v), v ≠ w → evalV F w (singleFin v t) = 0 := fun v t h =>
@@ -196,7 +197,8 @@ theorem psi_eq_inf_mul_finprod : ∀ (F : Type) [Field F] [NumberField F] (ψ : 
     show (u.1 * a.1, u.2 * 0) = ((0 : AF F))
     rw [hu1, zero_mul, mul_zero]; rfl
   have hfin : ψ (j a.2) = ∏ v ∈ S, psiLoc ψ v (evFin F v a) := by
-    rw [hx, map_add, map_sum, AddChar.map_add_eq_mul, addChar_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hx, map_add, map_sum, AddChar.map_add_eq_mul, addChar_sum]
     rw [show ψ (j (ofInt q)) = 1 from psi_ofInt ψ hstd.1 q hq, one_mul]
     refine Finset.prod_congr rfl fun v _ => ?_
     rfl

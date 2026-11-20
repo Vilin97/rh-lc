@@ -104,7 +104,8 @@ theorem frame_basis [IsCommMonObj G] [Smooth G.hom] (hξ : IsCptGen ξ) (M : Lie
       apply Subtype.ext
       rw [Submodule.coe_sum]
       exact (B.sum_repr e).symm
-    rw [e1, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e1, map_sum]
     exact Finset.sum_congr rfl fun i _ => hsm _ _ _ (hc i)
   have hspan : ⊤ ≤ Submodule.span ℂ (Set.range b) := by
     rw [← hsp, Submodule.span_le]
@@ -150,7 +151,8 @@ theorem co_iff (M : LieModel G ξ Li) (B : Fin r → Li) (z : Sp ℂ ⟶ X) {V :
     have h1 : ∀ i, ψ (b i) = β i := fun i => (hβ i _).1 (by rw [hψ]; exact hb i)
     have h2 : u = ∑ i, c i • β i := by
       apply Mz.inj
-      rw [hv, ← hψ, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hv, ← hψ, map_sum]
       simp only [map_smul, h1]
     rw [h2]
     exact (β.repr_sum_self c).symm
@@ -220,7 +222,8 @@ theorem co_map [IsCommMonObj G] (τ : ℂ →+* ℂ) (M : LieModel G ξ Li) (B :
   refine ⟨V', inferInstance, inferInstance, M', fun i => j (b i),
     fun i => valAt_map τ M hz _ _ _ (hj _) (hb i), Over.OverMorphism.ext ?_⟩
   have : ∑ i, τ (c i) • j (b i) = j (∑ i, c i • b i) := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [hjs]
   rw [this, hj, hv', hv]
 
@@ -289,7 +292,8 @@ theorem exists_core {V : Type} [AddCommGroup V] [Module ℂ V] {Λ : Type} [Fint
             add_left := fun a b c => ?_
             smul_left := fun a b c => ?_
             definite := fun a ha => ?_ }, fun _ _ => rfl⟩
-  · simp only [map_sum, map_mul, Complex.conj_ofReal, Complex.conj_conj, mul_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [map_sum, map_mul, Complex.conj_ofReal, Complex.conj_conj, mul_comm]
   · show 0 ≤ (∑ l, (ρ l : ℂ) * ∑ i, starRingEnd ℂ (f l a i) * f l a i).re
     rw [hre, Complex.ofReal_re]
     exact Finset.sum_nonneg fun l _ => hnn a l

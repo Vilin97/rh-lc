@@ -48,7 +48,8 @@ theorem pull_cls_e8LB (W : Matrix (Fin 8) (Fin 8) ℤ) (h : (e8LB G₀ L W).IsLB
     GlobalTheory.CechPic.pull u.left (GlobalTheory.CechPic.cls _ h) = formPair hL W u u := by
   rw [cls_e8LB hL W h]
   unfold formPair
-  simp only [map_sum, map_zsmul, GlobalTheory.CechPic.pull_lam, Category.id_comp]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_zsmul, GlobalTheory.CechPic.pull_lam, Category.id_comp]
 
 variable (hΘ : ∃ t : LB.Gen (ReciprocityTheory.ChartRestriction.G.Semi.Theta G₀ L), t.IsGen)
 include hΘ

@@ -110,7 +110,8 @@ theorem witt_gen {σ : E →ₐ[F] E} {n : ℕ} {J : Matrix (Fin n) (Fin n) E} {
     · intro i
       rw [hkstd, SD.fst_proj_split_matrix_mulVec]
       have := congrArg (fun M => f (M i a)) hk1A
-      simp only [Matrix.mul_apply, map_sum, map_mul] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Matrix.mul_apply, map_sum, map_mul] at this
       simp only [mulVec, dotProduct, Matrix.map_apply]
       exact this
     · intro i
@@ -118,7 +119,8 @@ theorem witt_gen {σ : E →ₐ[F] E} {n : ℕ} {J : Matrix (Fin n) (Fin n) E} {
         rw [← hk1B, ← Matrix.mul_assoc, e3, Matrix.one_mul]
       rw [hkstd, SD.snd_proj_split_matrix_mulVec]
       have := congrArg (fun M => f (M i a)) hB
-      simp only [Matrix.mul_apply, map_sum, map_mul] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Matrix.mul_apply, map_sum, map_mul] at this
       simp only [mulVec, dotProduct, Matrix.map_apply]
       exact this
 

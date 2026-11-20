@@ -80,8 +80,10 @@ theorem exists_form : ∀ (R : Type) [CommRing R] (I : Ideal R), ∀ (Y : ∀ e 
       (J.mul_mem_left _ (J.sum_mem fun d _ => J.mul_mem_left _ (hGc d)))
   · have hsum : C.ev e i (∑ d ∈ Finset.range (G.totalDegree + 1),
         X i ^ (k + N + N₁ - d) * homogeneousComponent d G) = C.ev e i G := by
-      rw [map_sum]
-      conv_rhs => rw [← sum_homogeneousComponent G, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        conv_rhs => rw [← sum_homogeneousComponent G, map_sum]
       refine Finset.sum_congr rfl fun d _ => ?_
       rw [map_mul, map_pow, hX, hfix]
     rw [map_mul, hsum, map_mul, hN₁, map_pow, map_pow, hX, ← mul_assoc, ← pow_add,

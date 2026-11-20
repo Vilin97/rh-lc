@@ -11,7 +11,8 @@ theorem exists_mvPolynomial_ev_eq_act : ∀ (ι : Type) [Fintype ι] [DecidableE
   refine ⟨fun k => ∑ a : Fin (d k.1) → ι,
     MvPolynomial.C (t ⟨k.1, a⟩) * ∏ i, MvPolynomial.X (a i, k.2 i), ?_⟩
   intro R _ _ y k
-  simp [ev, act, tpow, Matrix.vecMul, dotProduct, map_sum, map_prod,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [ev, act, tpow, Matrix.vecMul, dotProduct, map_sum, map_prod,
     MvPolynomial.aeval_X]
 
 end GlobalTheory.ClassFin

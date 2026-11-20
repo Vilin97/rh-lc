@@ -43,7 +43,8 @@ theorem isIntegral_of_homogeneous_relation {K R S ι : Type*} [Field K] [CommRin
     have := (prod_pow_lead Finset.univ d g _ hgd hgc).1
     rwa [hdeg d hd] at this
   have hpc : p.coeff n = algebraMap K R (eval a F) := by
-    rw [hp, eval_eq', map_sum, Polynomial.finset_sum_coeff]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hp, eval_eq', map_sum, Polynomial.finset_sum_coeff]
     refine Finset.sum_congr rfl fun d hd => ?_
     have := (prod_pow_lead Finset.univ d g _ hgd hgc).2
     rw [hdeg d hd] at this
@@ -77,7 +78,8 @@ theorem homogeneousComponent_aeval {K σ ι : Type*} [Field K] (l : ι → MvPol
     rw [one_mul] at h
     exact homogeneousComponent_of_mem h
   conv_lhs => rw [← sum_homogeneousComponent F]
-  rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum]
   simp only [key, Finset.sum_ite_eq, Finset.mem_range]
   split_ifs with h
   · rfl

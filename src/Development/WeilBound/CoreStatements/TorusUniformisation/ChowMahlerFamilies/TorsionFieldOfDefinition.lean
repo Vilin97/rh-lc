@@ -44,7 +44,8 @@ theorem exists_field_alg (C : Type) [CommRing C] [Algebra ℚ C] [Module.Finite 
     obtain ⟨-, hz0⟩ := Polynomial.mem_aroots.mp hzi
     exact ⟨minpoly ℚ (bs i), minpoly.monic (hint _), by rwa [← Polynomial.aeval_def]⟩
   · intro ψ c
-    rw [← bs.sum_repr c, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← bs.sum_repr c, map_sum]
     refine sum_mem (fun i _ => ?_)
     rw [map_rat_smul]
     exact IntermediateField.smul_mem _ (IntermediateField.subset_adjoin ℚ _ (hroot ψ i))

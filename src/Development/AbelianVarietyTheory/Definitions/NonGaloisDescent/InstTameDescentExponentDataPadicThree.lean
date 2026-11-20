@@ -372,7 +372,8 @@ theorem act_mem_uPow {m : ℕ} {v : Vec K a ι} (hv : v ∈ uPow K a ι m) :
 
 theorem act_mem_Mext {B : Subalgebra O K⟦X⟧} (hA : A O K ≤ B) (hB : Rot e B) {v : Vec K a ι}
     (hv : v ∈ P.Mext B) : Δ.act g v ∈ P.Mext B := by
-  rw [eq_sum_bas v, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [eq_sum_bas v, map_sum]
   refine Submodule.sum_mem _ fun i _ => ?_
   rw [act_smul_tot]
   exact P.smul_tot_mem_Mext (hB.ringAct_mem g fun τ => mem_tot.1 hv τ i)
@@ -380,7 +381,8 @@ theorem act_mem_Mext {B : Subalgebra O K⟦X⟧} (hA : A O K ≤ B) (hB : Rot e 
 
 theorem act_mem_ext {B : Subalgebra O K⟦X⟧} (hA : A O K ≤ B) (hB : Rot e B) {v : Vec K a ι}
     (hv : v ∈ P.ext B) : Δ.act g v ∈ P.ext B := by
-  rw [P.eq_sum_phi_bas v, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [P.eq_sum_phi_bas v, map_sum]
   refine Submodule.sum_mem _ fun i _ => ?_
   rw [act_smul_tot, act_phi]
   exact P.smul_tot_mem_ext (hB.ringAct_mem g fun τ => P.mem_extc_iff.1 (mem_tot.1 hv τ) i)

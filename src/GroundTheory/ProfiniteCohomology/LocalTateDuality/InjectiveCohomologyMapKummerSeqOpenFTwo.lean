@@ -27,7 +27,8 @@ theorem coindMap_res_comp_coindTrace (U : OpenSubgroup G) {A B : Rep.{u} k G} (�
   change (coindTrace (U : Subgroup G) B).hom
       ((Rep.coindMap (U : Subgroup G).subtype ((Rep.resFunctor (U : Subgroup G).subtype).map φ)).hom f) =
     φ.hom ((coindTrace (U : Subgroup G) A).hom f)
-  rw [coindTrace_hom_apply, coindTrace_hom_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [coindTrace_hom_apply, coindTrace_hom_apply, map_sum]
   refine Finset.sum_congr rfl fun c _ => ?_
   induction c using QuotientGroup.induction_on with
   | H x =>

@@ -40,7 +40,8 @@ theorem jwGramW_of (hIC : IdxChange) : JwGramW := by
     have hmul : M * M⁻¹ = 1 := Matrix.mul_nonsing_inv M hMu
     have := congrFun (congrFun hmul a) b
     rw [Matrix.mul_apply, Matrix.one_apply] at this
-    rw [← this, hfs, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← this, hfs, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_smul, smul_eq_mul, mul_comm]
     rfl
@@ -48,7 +49,8 @@ theorem jwGramW_of (hIC : IdxChange) : JwGramW := by
     rw [Fintype.linearIndependent_iff]
     intro g hg i
     have := congrArg (h (f i)) hg
-    rw [map_sum, map_zero] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero] at this
     simp only [map_smul, hpair, smul_eq_mul, mul_ite, mul_one, mul_zero,
       Finset.sum_ite_eq, Finset.mem_univ, if_true] at this
     exact this
@@ -166,7 +168,8 @@ theorem gram_hermAt {d : ℕ} (H : Matrix (Fin d) (Fin d) K)
   rw [gramR, RingHom.map_det]
   congr 1
   ext a b
-  simp only [gram, Formalism.HN.gramPl, Matrix.of_apply, StepBAux.majAt_eq, hm, RingHom.mapMatrix_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [gram, Formalism.HN.gramPl, Matrix.of_apply, StepBAux.majAt_eq, hm, RingHom.mapMatrix_apply,
     Matrix.map_apply, dotProduct, Matrix.mulVec, cvec, Pi.star_apply, map_sum, map_mul]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [hv0, Complex.star_def]

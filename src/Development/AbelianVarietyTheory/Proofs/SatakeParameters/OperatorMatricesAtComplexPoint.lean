@@ -103,7 +103,8 @@ theorem evD_blockMats {p : ℕ} [Fact p.Prime] (X : Sys p) (D : D7) (pos : (Σ v
       simp only [Fin.val_rev, Fin.coe_cast, Fin.coe_castLE, shiftI]
       omega
     ext t a
-    simp only [Matrix.mul_apply, Matrix.submatrix_apply, Matrix.map_apply, Matrix.smul_apply, Matrix.transpose_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mul_apply, Matrix.submatrix_apply, Matrix.map_apply, Matrix.smul_apply, Matrix.transpose_apply,
       Function.comp_apply, id, smul_eq_mul, dfr, map_mul, map_sum]
     rw [hrev, Finset.mul_sum]
     refine Fintype.sum_equiv (finCongr hN.2.symm) _ _ (fun b => ?_)

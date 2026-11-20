@@ -121,7 +121,8 @@ theorem acts_indicator {κ : Type} [Fintype κ] (ψ : AddChar (AF F) ℂ) (v : H
     have hA : At (evFin F v) (x ⬝ᵥ w.2 + ⅟(2 : AF F) * (w.1 ⬝ᵥ w.2)) :=
       hAtAdd (hAtSum _ fun i => hAt (hw i).2.2.1 _) (hAt (hAtSum _ fun i => hAt (hw i).2.2.1 _) _)
     have hI : evFin F v (x ⬝ᵥ w.2 + ⅟(2 : AF F) * (w.1 ⬝ᵥ w.2)) ∈ v.adicCompletionIntegers F := by
-      simp only [dotProduct, map_add, map_mul, map_sum, h2']
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [dotProduct, map_add, map_mul, map_sum, h2']
       exact add_mem (sum_mem fun i _ => mul_mem (hx i) (hw i).2.2.2)
         (mul_mem h2 (sum_mem fun i _ => mul_mem (hw i).2.1 (hw i).2.2.2))
     rw [hpsi1 _ hA hI, one_mul]

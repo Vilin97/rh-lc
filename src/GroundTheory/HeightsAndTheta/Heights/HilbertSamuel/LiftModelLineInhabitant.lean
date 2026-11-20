@@ -188,7 +188,8 @@ theorem poly_mem (c : Unit → ℤ) (hc : 0 ≤ c ()) (i j : ℕ) (p : MRingOver
   let φ : QM S →+ LocalizedModule (KH.cellMon S c01.1) (QM S) :=
     AddMonoidHom.mk' (fun m => LocalizedModule.mk m ⟨_, hT⟩) fun a b => mk_add_same a b _
   have hφ : ∀ m, LocalizedModule.mk m (⟨_, hT⟩ : KH.cellMon S c01.1) = φ m := fun _ => rfl
-  rw [hφ, p.as_sum, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hφ, p.as_sum, map_sum, map_sum]
   refine Submodule.sum_mem _ fun μ hμ => ?_
   rw [← hφ]
   have hdeg : μ ⟨(), 0⟩ + μ ⟨(), 1⟩ = (c ()).toNat + (i + j) := by

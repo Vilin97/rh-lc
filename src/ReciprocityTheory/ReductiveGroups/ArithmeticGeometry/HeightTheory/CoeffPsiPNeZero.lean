@@ -45,12 +45,14 @@ theorem psiP_eq_of_isWeightedHomogeneous (n : ℕ) (f : MvPolynomial σ K) (hf :
       = Polynomial.C (monomial s (AddMonoidAlgebra.coeff f s)) * Polynomial.X ^ n := fun s hs => by
     rw [psiP_monomial, hf s hs]
   conv_lhs => rw [f.as_sum]
-  rw [map_sum, Finset.sum_congr rfl h, ← Finset.sum_mul, ← map_sum, ← f.as_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_congr rfl h, ← Finset.sum_mul, ← map_sum, ← f.as_sum]
 
 private theorem psiP_eq_sum_monomial (f : MvPolynomial σ K) :
     psiP p f = ∑ s ∈ f.support, Polynomial.C (monomial s (AddMonoidAlgebra.coeff f s)) * Polynomial.X ^ wt p s := by
   conv_lhs => rw [f.as_sum]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [psiP_monomial]
 
 private theorem coeff_psiP (f : MvPolynomial σ K) (k : ℕ) :

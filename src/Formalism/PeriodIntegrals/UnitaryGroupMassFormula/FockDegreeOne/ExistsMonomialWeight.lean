@@ -119,9 +119,11 @@ theorem sum_SS (v : Pol p q r s)
 
 theorem SS_swap (v : Pol p q r s) (a b : Ix p q) : SS v a b = starRingEnd ℂ (SS v b a) := by
   unfold SS
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun c _ => ?_
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun d _ => ?_
   exact fockInner_swap _ _
 

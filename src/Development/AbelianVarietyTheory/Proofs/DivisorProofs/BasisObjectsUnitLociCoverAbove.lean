@@ -44,7 +44,8 @@ private lemma covBy_of_covBy_localizations {R : Type} [CommRing R] {C : Type} [C
       ring
     have hz : _root_.GlobalTheory.CatCoh.mp F (l j)
         (c j ^ (∑ k', (N' k' + N j k')) - ∑ k, s k * x j k * c j ^ q k) = 0 := by
-      rw [map_sub, map_sum, Finset.sum_congr rfl (fun k _ => hterm k), ← Finset.sum_mul, hr,
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, map_sum, Finset.sum_congr rfl (fun k _ => hterm k), ← Finset.sum_mul, hr,
         one_mul, map_pow, sub_self]
     obtain ⟨M, hM⟩ := hker j _ hz
     refine ⟨M + (∑ k', (N' k' + N j k')) + 1, ?_⟩

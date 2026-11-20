@@ -85,10 +85,12 @@ theorem psiC_delta_lin {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : Gr
     psiC (rp.delta cl (∑ i, w i • b i)) x = ∑ i, D.what₂.embLL (w i) • psiC (rp.delta cl (b i)) x := by
   have hA := delta_fin G x hx (rp.x cl)
   have e : rp.delta cl (∑ i, w i • b i) (finG (Xp G) x) = ∑ i, w i • rp.delta cl (b i) (finG (Xp G) x) := by
-    simp only [ClassReps.delta, deltaForm_sum _ _ _ _ _ hA, map_sum, map_smul, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [ClassReps.delta, deltaForm_sum _ _ _ _ _ hA, map_sum, map_smul, Finset.smul_sum]
     exact Finset.sum_comm
   apply Subtype.ext
-  simp only [psiC, e, map_sum, LinearMap.map_smulₛₗ, Submodule.coe_sum, Submodule.coe_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [psiC, e, map_sum, LinearMap.map_smulₛₗ, Submodule.coe_sum, Submodule.coe_smul]
 
 def RatLe {D : D7} (σ : D.what₂.LL →+* ℂ) (z : ℂ) (r : ℝ) : Prop := ∃ y, D.what₂.embLL y = z ∧ ‖σ y‖ ≤ r
 
@@ -166,7 +168,8 @@ theorem classSum_lin (h : S.SumOK t Φ) (β : CosFam G t) (τ : PureDat G t →�
   simp only [GridChoice.classSum, finsum_eq_sum_of_fintype, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun c _ => ?_
-  rw [hΨ c, map_sum, LinearMap.sum_apply, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hΨ c, map_sum, LinearMap.sum_apply, Finset.mul_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_smul, LinearMap.smul_apply, smul_eq_mul]
   ring
@@ -401,7 +404,8 @@ theorem valAt_eq (c : Fin N → K) (b : C) : valAt lam e b c = ∑ k, c (e.symm 
 
 theorem mapVV_valAt (c : Fin N → K) (b : C) :
     GlobalTheory.CoefModel.mapVV σ lam (valAt lam e b c) = blk σ lam e (fun a => σ (c a)) b := by
-  rw [valAt_eq, blk, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [valAt_eq, blk, map_sum]
   exact Finset.sum_congr rfl fun k _ => LinearMap.map_smulₛₗ _ _ _
 
 theorem form_eq [Fintype C] (c : Fin N → ℂ) :
@@ -419,7 +423,8 @@ theorem form_eq [Fintype C] (c : Fin N → ℂ) :
   have hR : ∀ b, pairK lam (fun τ => (Gd τ).map σ) (blk σ lam e c b) (blk σ lam e c b) =
       ∑ k, ∑ k', star (c (e.symm (b, k))) * (pk k k' * c (e.symm (b, k'))) := by
     intro b
-    simp only [blk, map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, map_smul, smul_eq_mul, hpk, hm,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [blk, map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, map_smul, smul_eq_mul, hpk, hm,
       RingHom.id_apply, Finset.mul_sum]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun k' _ => ?_
@@ -647,7 +652,8 @@ theorem test_bound (C sb : ℝ) (hm : 0 < D.R.m) (hA : 0 ≤ D.R.m * aOne ch.G C
       (Bu := nb b) (Bf := Bf) (fun x => hPsi σ b.2 _ x) hv
     refine ⟨z, ?_, ?_⟩
     · apply D.what₂.embLL.injective
-      rw [ez, valAt_eq, vPair_delta_lin ch hm hOKb b.2 u, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [ez, valAt_eq, vPair_delta_lin ch hm hOKb b.2 u, map_sum]
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [map_mul, hy]
       simp
@@ -663,7 +669,8 @@ theorem test_bound (C sb : ℝ) (hm : 0 < D.R.m) (hA : 0 ≤ D.R.m * aOne ch.G C
     simp only [dotProduct]
     rw [← Equiv.sum_comp ch.e.symm, Fintype.sum_prod_type]
     refine Finset.sum_congr rfl fun b _ => ?_
-    rw [hz, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hz, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_mul, mul_comm]
   have hcard : (Fintype.card (TestIx ch.G) : ℝ) ≤ ea * ea := by

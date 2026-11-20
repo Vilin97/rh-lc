@@ -88,7 +88,8 @@ theorem phi_basis_of_tie {W : LocWach PD LL O v n} (E : EtTie W RA RW inclR φR 
   have hjD : ∀ x : W.DD T, E.jD T x = ∑ i, E.ioE (b.repr x i) • c i := by
     intro x
     conv_lhs => rw [← b.sum_repr x]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun i _ => by rw [E.jD_smul, hcdef]
   have hc : Submodule.span RW (Set.range c) = ⊤ := by
     rw [eq_top_iff, ← E.jD_span T, Submodule.span_le]
@@ -104,7 +105,8 @@ theorem phi_basis_of_tie {W : LocWach PD LL O v n} (E : EtTie W RA RW inclR φR 
     intro x
     have hx : x ∈ Submodule.span RW (Set.range c) := by rw [hc]; exact Submodule.mem_top
     obtain ⟨a, ha⟩ := (Submodule.mem_span_range_iff_exists_fun RW).1 hx
-    rw [← ha, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← ha, map_sum]
     refine Submodule.sum_mem _ fun i _ => ?_
     rw [twmap_smul, ← hc'def]
     exact Submodule.smul_mem _ _ (Submodule.subset_span (Set.mem_range_self i))

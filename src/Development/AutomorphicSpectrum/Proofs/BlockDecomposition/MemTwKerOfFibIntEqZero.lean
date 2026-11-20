@@ -105,7 +105,8 @@ theorem exists_sum_eq_zero_abs (n : ℕ) {X Y : Type} [AddCommGroup X] [Module �
   refine ⟨T.image Subtype.val, hTn.image _, ?_⟩
   rw [Finset.sum_image (fun a _ b _ h => Subtype.ext h)]
   refine hinj _ fun κ hκ => ?_
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   have hsmooth : IsSmooth (MonoidHom.comp ρ (mulH κ)) := fun v =>
     (hρ v).preimage (continuous_mulH κ)
   have key := GlobalTheory.T.sum_over_compact_cosets_jacquet_kernel (MonoidHom.comp ρ (mulH κ)) hsmooth (Lc n c) hcomp (F κ x)

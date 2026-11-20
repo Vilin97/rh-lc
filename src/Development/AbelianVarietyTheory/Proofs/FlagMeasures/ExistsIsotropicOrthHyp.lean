@@ -28,7 +28,8 @@ theorem exists_norm_one {E : Type} [Field E] [NumberField E] [StarRing E] (S : H
     rw [hprod, hCM]
     simp
   rw [← key]
-  simp only [map_sum, map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
     Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.reindex_apply, Matrix.submatrix_apply,
     HSpace.gram, starRingEnd_apply]
   simp only [Finset.mul_sum, Finset.sum_mul, RingHom.id_apply]

@@ -35,7 +35,8 @@ theorem gl_smul_pi_one {k : Type} [Field k] [ValuativeRel k] {n : Type} [Fintype
     intro i _
     refine Submodule.mem_one.2 ⟨∑ j, h.1 i j * c j, ?_⟩
     show _ = ((Matrix.GeneralLinearGroup.map (algebraMap 𝒪[k] k) h).1 *ᵥ y) i
-    simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, ← hc]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, ← hc]
     rfl
   refine Submodule.ext fun x => (Submodule.mem_smul_pointwise_iff_exists x _ _).trans ⟨?_, ?_⟩
   · rintro ⟨y, hy, rfl⟩

@@ -21,9 +21,11 @@ variable {F E K : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Sta
 theorem emb_hform (σ : E →+* ℂ) (hσ : ∀ a, σ (star a) = starRingEnd ℂ (σ a)) {n : ℕ} (H : Matrix (Fin n) (Fin n) E)
     (x y : Fin n → E) :
     σ (Formalism.DivisionValues.hform H x y) = ∑ i, ∑ j, starRingEnd ℂ (σ (x i)) * σ (H i j) * σ (y j) := by
-  rw [Formalism.DivisionValues.hform, Matrix.toLinearMapₛₗ₂'_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Formalism.DivisionValues.hform, Matrix.toLinearMapₛₗ₂'_apply, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [smul_eq_mul, smul_eq_mul, map_mul, map_mul, starRingEnd_apply, hσ, RingHom.id_apply]
   ring
@@ -62,7 +64,8 @@ private theorem hform_crd_lemma (S : HSpace E) (y : S.V) :
   unfold crd
   conv_rhs => rw [← S.frame.sum_equivFun y]
   rw [Formalism.DivisionValues.hform, Matrix.toLinearMapₛₗ₂'_apply]
-  simp only [map_sum, LinearMap.sum_apply, map_smulₛₗ, LinearMap.smul_apply, Finset.smul_sum, Formalism.BasicNotions.HSpace.gram,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.sum_apply, map_smulₛₗ, LinearMap.smul_apply, Finset.smul_sum, Formalism.BasicNotions.HSpace.gram,
     smul_eq_mul, RingHom.id_apply, Finset.mul_sum]
   conv_rhs => rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
@@ -118,7 +121,8 @@ theorem bc_mu (hc : CMData F E) (S : HSpace E) (hsig : S.SigOK) (hpos : S.IsPosD
     intro y
     show ∑ a, algebraMap E K (crd S y a) • bc (S.frame a) = bc y
     conv_rhs => rw [← S.frame.sum_repr y]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun a _ => (bc_smul _ _).symm
   have hset : bc '' (L : Set S.V) = f '' (ιm '' (crdLat S L : Set (Fin S.rank → E))) := by
     ext z

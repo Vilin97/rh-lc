@@ -54,7 +54,8 @@ theorem algHom_sub_dvd {O : Type} [CommRing O] (f : O⟦X⟧ →ₐ[O] O⟦X⟧)
     obtain ⟨r, hr⟩ := hr N
     have h1 : f a = ∑ n ∈ Finset.range N, C (coeff n a) * y ^ n + y ^ N * f r := by
       conv_lhs => rw [hr]
-      simp only [map_add, map_sum, map_mul, map_pow, ← hy]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_add, map_sum, map_mul, map_pow, ← hy]
       congr 1
       refine Finset.sum_congr rfl fun n _ => ?_
       congr 1
@@ -93,7 +94,8 @@ theorem geom_sum_one_add_prime {R : Type} [CommRing R] {p : ℕ} (hp : p.Prime) 
     linear_combination h
   refine ⟨Polynomial.aeval x r, ?_⟩
   have := congrArg (Polynomial.aeval x) h1
-  simpa [map_sum] using this
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa [map_sum] using this
 
 variable (l : ℕ) [Fact l.Prime] (O : Type) [CommRing O] [Algebra ℤ_[l] O]
 
@@ -166,13 +168,15 @@ theorem XX_QQ_properties : ∀ (l : ℕ) [Fact l.Prime] (O : Type) [CommRing O] 
   have hψ : act l O ((l ^ (s - 1) : ℕ) : ℤ_[l]) PowerSeries.X = XX l O s := act_nat_X l O _
   have hψQ : act l O ((l ^ (s - 1) : ℕ) : ℤ_[l]) (QQ l O 1) = QQ l O s := by
     have : XX l O 1 = PowerSeries.X := by simp [XX]
-    simp only [QQ, this, map_sum, map_pow, map_add, map_one, hψ]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [QQ, this, map_sum, map_pow, map_add, map_one, hψ]
   have h0 : PowerSeries.constantCoeff (XX l O s) = 0 := by simp [XX]
   refine ⟨?_, phi_pow_X l O _, ?_, ?_, ?_, fun c => ⟨?_, ?_⟩, ?_⟩
   · rw [XX_mul_QQ' l O s hs, XX]
     simp only [map_sub, map_pow, map_add, map_one, phi, act_nat_X]
     rw [add_sub_cancel, ← pow_mul, ← pow_succ', Nat.sub_add_cancel hs]
-  · simp [QQ, map_sum, h0]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp [QQ, map_sum, h0]
   · obtain ⟨r, hr⟩ := geom_sum_one_add_prime hp (XX l O s)
     obtain ⟨t, ht⟩ := exists_add_pow_prime_pow_eq hp (PowerSeries.X : PowerSeries O) 1 (s - 1)
     have h1 : (l : PowerSeries O) ∣ XX l O s - PowerSeries.X ^ l ^ (s - 1) :=

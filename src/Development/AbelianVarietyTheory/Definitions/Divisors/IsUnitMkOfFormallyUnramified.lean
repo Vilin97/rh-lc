@@ -797,7 +797,8 @@ theorem resG_jacSec_f (s : Fin (D + 1) → LB.Sec L) (c : (K.adj L (D + 1)).ι)
 theorem map_coeff_jacOn {R : Type*} [CommRing R] (i : K.bundle.ι) (h : V ≤ K.bundle.U i)
     (ψ : Γ(Y, V) →+* R) (f : Fin (D + 1) → Γ(Y, V)) (hf : ∀ a : Fin D, ψ (f a.succ) = 0) :
     ψ (K.coeff i h (jacOn p f)) = ψ (f 0) * ψ (K.jacobian i h fun a => f a.succ) := by
-  rw [jacOn_eq, map_sum, map_sum, Fin.sum_univ_succ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [jacOn_eq, map_sum, map_sum, Fin.sum_univ_succ]
   simp only [map_smul, smul_eq_mul, map_mul, hf, mul_zero, zero_mul, Finset.sum_const_zero, add_zero,
     Fin.val_zero, pow_zero, one_mul, Fin.succAbove_zero]
   rfl

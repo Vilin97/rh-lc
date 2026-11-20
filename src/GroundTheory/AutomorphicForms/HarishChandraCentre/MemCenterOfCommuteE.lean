@@ -61,7 +61,8 @@ theorem eq_sum_E (X : gl n) : X = ∑ a : Fin n × Fin n, X a.1 a.2 • E a := b
 theorem ι_eq_sum_e (X : gl n) :
     UniversalEnvelopingAlgebra.ι ℂ X = ∑ a : Fin n × Fin n, X a.1 a.2 • e (n := n) a := by
   conv_lhs => rw [eq_sum_E X]
-  simp [e, map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [e, map_sum, map_smul]
 
 theorem U.induction {C : U n → Prop}
     (halg : ∀ r : ℂ, C (algebraMap ℂ _ r)) (hι : ∀ x, C (UniversalEnvelopingAlgebra.ι ℂ x))

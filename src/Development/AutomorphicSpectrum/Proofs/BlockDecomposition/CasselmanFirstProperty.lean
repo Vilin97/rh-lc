@@ -25,7 +25,8 @@ theorem hecke_dominant_mul_abstract (G : Type) [Group G] [TopologicalSpace G] [I
     exact hfx _ hconj _
   have hr0 : (r : ℂ) ≠ 0 := Nat.cast_ne_zero.mpr hr.ne'
   have hUU : ((((U * U') v : fixed π D.J)) : V) = ((U (U' v) : fixed π D.J) : V) := rfl
-  rw [hUU, ← hU (U' v) f hf, hform, map_smul, map_smul, map_sum, map_sum, Finset.sum_congr rfl (fun i _ => hterm i)]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hUU, ← hU (U' v) f hf, hform, map_smul, map_smul, map_sum, map_sum, Finset.sum_congr rfl (fun i _ => hterm i)]
   simp [hr0]
 
 end GlobalTheory.CompanionTheory.Casselman

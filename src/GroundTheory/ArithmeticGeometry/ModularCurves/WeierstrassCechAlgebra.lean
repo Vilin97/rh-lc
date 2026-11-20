@@ -25,7 +25,8 @@ theorem eq_sum_coordA [Nontrivial R] (a : W.toAffine.CoordinateRing) :
     a = ∑ i : Fin 3, (coordA W a i).eval₂ (algebraMap R _) (yC W) * xC W ^ (i : ℕ) := by
   apply (xAlgEquiv W).injective
   conv_lhs => rw [← (basisX W).sum_repr (xAlgEquiv W a)]
-  simp only [map_sum, map_mul, map_pow, xAlgEquiv_xC, basisX_apply, coordA]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, map_pow, xAlgEquiv_xC, basisX_apply, coordA]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [Algebra.smul_def]
   congr 1
@@ -68,7 +69,8 @@ theorem coordA_sum (P : Fin 3 → R[X]) :
     rfl
   have h : xAlgEquiv W (∑ i : Fin 3, (P i).eval₂ (algebraMap R _) (yC W) * xC W ^ (i : ℕ)) =
       (basisX W).equivFun.symm P := by
-    simp only [map_sum, map_mul, map_pow, e, xAlgEquiv_xC, Module.Basis.equivFun_symm_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, map_pow, e, xAlgEquiv_xC, Module.Basis.equivFun_symm_apply,
       basisX_apply, Algebra.smul_def]
   rw [coordA, h]
   ext i : 1
@@ -138,7 +140,8 @@ theorem infToOverlap_eq (b : InfChart W) :
     infToOverlap W b = ∑ i : Fin 3, (coordI W b i).eval₂ (algebraMap R (Overlap W)) (yInv W) *
       (algebraMap _ (Overlap W) (xC W) * yInv W) ^ (i : ℕ) := by
   have h := congrArg (infToOverlap W) (eq_sum_coordI W b)
-  rw [h, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_mul, map_pow, infToOverlap_xI, infToOverlap_eval₂]
 
@@ -147,7 +150,8 @@ theorem yC_pow_mul_infToOverlap (b : InfChart W) (N : ℕ)
     algebraMap _ (Overlap W) (yC W) ^ N * infToOverlap W b =
       algebraMap _ (Overlap W) (∑ i : Fin 3, (reflect (N - i) (coordI W b i)).eval₂
         (algebraMap R _) (yC W) * xC W ^ (i : ℕ)) := by
-  rw [infToOverlap_eq, Finset.mul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [infToOverlap_eq, Finset.mul_sum, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   have hq : (coordI W b i).natDegree ≤ N - i := by have := hN i; omega
   have hNi : N = (N - i) + i := by have := hN i; omega

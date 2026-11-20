@@ -66,7 +66,8 @@ theorem frameCls_smul (h : S.GLV) (g g' : Fin (r + 1) → S.V) :
       (h⁻¹ • y = ∑ i, c i • g0 i) ↔ y = ∑ i, c i • h (g0 i) := by
     intro y c g0
     have hs : ∑ i, c i • h (g0 i) = h (∑ i, c i • g0 i) := by
-      simp only [map_sum, LinearEquiv.map_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, LinearEquiv.map_smul]
     rw [hs]
     constructor
     · intro e
@@ -89,7 +90,8 @@ theorem lev_smul (h : S.GLV) (g g' : Fin (r + 1) → S.V) (b : S.V) :
   have hs : ∀ al al' : Fin (r + 1) → E, (∑ i, al i • h (g i) + ∑ i, al' i • h (g' i)) =
       h (∑ i, al i • g i + ∑ i, al' i • g' i) := by
     intro al al'
-    simp only [map_add, map_sum, LinearEquiv.map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_add, map_sum, LinearEquiv.map_smul]
   simp only [hs, h.injective.eq_iff]
 
 theorem spanTo_map (g : Fin (r + 1) → S.V) (t : E)

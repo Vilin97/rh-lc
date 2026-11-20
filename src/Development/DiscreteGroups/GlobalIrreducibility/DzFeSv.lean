@@ -42,7 +42,8 @@ theorem sv_mul_right (x : Mt g (m + 1)) (a : Gn g (m + 1)) (v : τ) :
 theorem sv_mul_left (a : Gn g (m + 1)) (x : Mt g (m + 1)) (v : τ) :
     sv ψ₀ τ ((a : Mt g (m + 1)) * x) v = τ.ρ a (sv ψ₀ τ x v) := by
   unfold sv
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Fintype.sum_equiv (Equiv.mulRight a) _ _ (fun y => ?_)
   have ht : trace ((a : Mt g (m + 1)) * x * (y : Mt g (m + 1))) =
       trace (x * ((y * a : Gn g (m + 1)) : Mt g (m + 1))) := by
@@ -65,7 +66,8 @@ theorem sv_unit {γ : ℂ}
 theorem sv_sum {ι : Type} (s : Finset ι) (x : Mt g (m + 1)) (f : ι → τ) :
     sv ψ₀ τ x (∑ i ∈ s, f i) = ∑ i ∈ s, sv ψ₀ τ x (f i) := by
   unfold sv
-  simp_rw [map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp_rw [map_sum, Finset.smul_sum]
   rw [Finset.sum_comm]
 
 theorem sv_zero (x : Mt g (m + 1)) : sv ψ₀ τ x 0 = 0 := by

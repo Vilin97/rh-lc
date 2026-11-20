@@ -56,7 +56,8 @@ theorem lin_bil (hP : ∀ i, constantCoeff (P i) = 0) (hQ : ∀ i, constantCoeff
 theorem quad_bil (hP : ∀ i, constantCoeff (P i) = 0) (hQ : ∀ i, constantCoeff (Q i) = 0) (v w : Fin n × Fin d) :
     quad v w (bil c P Q) =
       ∑ i, ∑ l, c i l * (lin v (P i) * lin w (Q l) + lin w (P i) * lin v (Q l)) := by
-  simp only [bil, lin, quad, map_sum, Derivation.map_smul, Derivation.leibniz, smul_eq_mul, map_add, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [bil, lin, quad, map_sum, Derivation.map_smul, Derivation.leibniz, smul_eq_mul, map_add, map_mul,
     constantCoeff_smul, hP, hQ]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun l _ => ?_
   ring
@@ -85,7 +86,8 @@ theorem lin_comp1 (φ : Pt S 1 d) {a : Pt S n d} (ha : ∀ i, constantCoeff (a i
     lin v (comp1 φ a i) = ∑ j, dLin φ i j * lin v (a j) := by
   have hz : CZ (![a] : Fin 1 → Pt S n d) := fun j i => by fin_cases j; exact ha i
   unfold comp1
-  rw [lin, TB.LogPf.pderiv_ev hz, Fintype.sum_prod_type, Fin.sum_univ_one, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [lin, TB.LogPf.pderiv_ev hz, Fintype.sum_prod_type, Fin.sum_univ_one, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_mul, TB.LogPf.cc_ev hz]
   congr 1

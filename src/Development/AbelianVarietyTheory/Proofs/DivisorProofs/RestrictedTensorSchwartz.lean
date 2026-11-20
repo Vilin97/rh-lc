@@ -241,13 +241,15 @@ theorem exists_const_tensor : ∀ (F : Type) [Field F] [NumberField F] (κ : Typ
     rw [hT i v h2, h1]
   have heΦ : e (∑ i, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure (f i) (φ i)) =
       ∑ i, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure (ei (f i)) (fun v => ev v (φ i v)) := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun i _ => he _ _ (hSB i) (hvacφ i)
   rw [heΦ]
   have hexp : ∀ (g : Fin m → (κ → AF F) → ℂ) (x : κ → AF F),
       (∑ i, g i) x * conj ((∑ i, g i) x) = ∑ i, ∑ j, g i x * conj (g j x) := by
     intro g x
-    simp only [Finset.sum_apply, map_sum, Finset.sum_mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Finset.sum_apply, map_sum, Finset.sum_mul_sum]
   have hint1 : ∀ i j, Integrable (fun x => GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure (f i) (φ i) x *
       conj (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure (f j) (φ j) x)) μ := fun i j =>
     (hcross (f i) (f j) (φ i) (φ j) (hSB i) (hvacφ i) (hSB j) (hvacφ j)).1

@@ -83,7 +83,8 @@ theorem foldr_phi (s : ℂ) (m : ℕ) (b : Bool) {ρ : ℕ} (I J : Fin ρ ↪ Fi
 
 theorem minorOp_phi (s : ℂ) (m : ℕ) (b : Bool) {ρ : ℕ} (I J : Fin ρ ↪ Fin n) (f : Pm (Polynomial ℂ) ρ) :
     minorOp s m b I J (phi b I J f) = (-(cMn s b)) ^ ρ • phi b I J (detE (alMn m b) f) := by
-  simp only [minorOp, detE, LinearMap.sum_apply, LinearMap.smul_apply, foldr_phi, List.length_finRange, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [minorOp, detE, LinearMap.sum_apply, LinearMap.smul_apply, foldr_phi, List.length_finRange, map_sum,
     map_smul, Finset.smul_sum]
   refine Finset.sum_congr rfl fun σ _ => ?_
   rw [Int.cast_smul_eq_zsmul, Int.cast_smul_eq_zsmul, smul_comm]

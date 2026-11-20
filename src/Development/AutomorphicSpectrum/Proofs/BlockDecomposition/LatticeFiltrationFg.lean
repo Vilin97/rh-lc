@@ -151,7 +151,8 @@ theorem dividedPowerFiltration_fg : ∀ {W B : Type} [CommRing W] [CommRing B] [
       obtain ⟨c, hc0, hxc⟩ := exists_coeff M h hxs (Ideal.mem_comap.1 hx) r le_rfl
       have hx' : x = ∑ i ∈ Finset.range m, Lat.ofW f ξ l M (c i) * Lat.dpA f ξ l M i := by
         apply Lat.ι_injective f ξ l M
-        rw [hxc, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [hxc, map_sum]
         refine Finset.sum_congr rfl fun i _ => ?_
         rw [map_mul, Lat.ι_ofW, Lat.ι_dpA]
       rw [hx']

@@ -115,9 +115,11 @@ theorem coeffMap_mem_imageIdeal (E : Type) [Field E] [Algebra k E] {g : MvPolyno
     have b := (S.bcFst E).map_appLE (U := W) (V := S.bcFst E ⁻¹ᵁ W) le_rfl (homOfLE hle).op
     exact congrArg (fun g => g.hom ((S.b j).f i)) (a.trans b.symm)
   have e₂ := congrArg Λ e
-  rw [map_zero, map_sum] at e₂
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_zero, map_sum] at e₂
   refine (resG_chartEval k S.b i le_rfl hle _).trans (Eq.trans ?_ (e₂.trans (map_zero _).symm))
-  rw [coeffMap, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [coeffMap, map_sum]
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [chartEval, eval₂Hom_monomial]
   refine Eq.trans (hΛ (AddMonoidAlgebra.coeff g a) (a.prod fun j n => resG S.Y hle ((S.b j).f i) ^ n)).symm (congrArg Λ ?_)

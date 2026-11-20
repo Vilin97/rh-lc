@@ -165,7 +165,8 @@ theorem differentiableOn_mul {E : Type*} [NormedAddCommGroup E] [NormedSpace ℂ
       ∑ j, ∑ i, b.coord i (F z) * b.coord j (G z) * lam (b i * b j) := by
     funext z
     conv_lhs => rw [← b.sum_repr (F z), ← b.sum_repr (G z)]
-    simp only [Finset.sum_mul, Finset.mul_sum, smul_mul_smul_comm, map_sum, map_smul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Finset.sum_mul, Finset.mul_sum, smul_mul_smul_comm, map_sum, map_smul,
       smul_eq_mul, Module.Basis.coord_apply]
   rw [key]
   refine DifferentiableOn.fun_sum fun j _ => DifferentiableOn.fun_sum fun i _ => ?_

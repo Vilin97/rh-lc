@@ -80,7 +80,8 @@ theorem mulVec_sec (α : Frame p S n') (β : Frame p T n) {t : WO S T} (ht : IsH
   funext i
   conv_lhs => rw [← GlobalTheory.FinPl.HalfInd.wr_rd α β ht]
   simp only [Matrix.mulVec, dotProduct, GlobalTheory.FinPl.HalfInd.wr_apply]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_congr rfl fun j _ => (sec_mul p _ _).symm
 
 theorem mem_latO_iff_rd (α : Frame p S n') (β : Frame p T n) {LS : Lat S} {LT : Lat T} (hS : IsSelfDualC S LS)

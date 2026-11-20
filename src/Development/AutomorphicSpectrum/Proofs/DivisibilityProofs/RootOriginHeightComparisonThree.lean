@@ -86,7 +86,8 @@ theorem isMultiHomog_rename [DecidableEq K] {κ : K' → K} {u : (Σ k, ι k) �
   intro m hm k
   have e : (rename u G : MRing J) = ∑ m' ∈ G.support, monomial (m'.mapDomain u) (AddMonoidAlgebra.coeff G m') := by
     conv_lhs => rw [G.as_sum]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [rename_monomial]
   have hm' : m ∈ (rename u G : MRing J).support := hm
   rw [e] at hm'

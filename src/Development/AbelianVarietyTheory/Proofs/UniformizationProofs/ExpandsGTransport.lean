@@ -24,7 +24,8 @@ variable {X X' Y Y' Y₁ Y₁' Z : Scheme.{0}} {L : LB X} {L' : LB X'} {F : X' �
 
 private theorem gs_sum_lemma {Y Z : Scheme.{0}} (f : Z ⟶ Y) (z : Z) (U : Y.Opens) (h : f z ∈ U) {n : ℕ}
     (a : Fin n → Γ(Y, U)) : gs f z U (∑ i, a i) = ∑ i, gs f z U (a i) := by
-  simp only [gs_eq _ _ _ h, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [gs_eq _ _ _ h, map_sum]
 
 theorem secLin_val {φ₁ : K' → (Y₁ ⟶ X)} {ε₁ : K' → ℤ} {s₁ : LB.Sec (LB.LinComb L φ₁ ε₁)} {φ : K → (Y ⟶ X)}
     {ε : K → ℤ} {n : ℕ} {s : Fin n → LB.Sec (LB.LinComb L φ ε)} {h : Y₁ ⟶ Y} {c : Fin n → Γ(Y₁, ⊤)}

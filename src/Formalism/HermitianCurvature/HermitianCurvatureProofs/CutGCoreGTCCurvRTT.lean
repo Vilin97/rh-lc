@@ -42,7 +42,8 @@ theorem curv_top_zero {E : Type*} [AddCommGroup E] [Module ℂ E] (n : ℕ) (c :
     apply Polynomial.funext
     intro u
     have hu := congrArg φ (h u)
-    simp only [map_smul, map_sum, smul_eq_mul] at hu
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_smul, map_sum, smul_eq_mul] at hu
     simp only [hpdef, Polynomial.eval_sub, Polynomial.eval_mul, Polynomial.eval_C, Polynomial.eval_pow,
       Polynomial.eval_X, Polynomial.eval_finsetSum, Polynomial.eval_zero]
     rw [mul_comm (φ c), hu, sub_eq_zero]

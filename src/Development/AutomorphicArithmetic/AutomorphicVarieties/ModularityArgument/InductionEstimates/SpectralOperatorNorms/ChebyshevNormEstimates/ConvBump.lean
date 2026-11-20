@@ -163,7 +163,8 @@ private theorem Loc.der {ψ : Sm E (2 + 2)} {a : ℂ} (h : Loc b b' ψ a) (j : F
     Loc b b' ((dat2 b b').J j ψ) ((![1, -1] j : ℝ) * a) := by
   refine ⟨?_, fun t ht => der_loc ((dat2 b b').comp ψ.1) a h.2 j t ht _ ((BW.compShift E S _ (dat2 b b') ψ t h.1).2 j)⟩
   have : ∃ u, (dat2 b b').J j = uC E (2 + 2) u := by
-    simp only [BW.Dat.J, ← uC_genC, ← map_sum, ← map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [BW.Dat.J, ← uC_genC, ← map_sum, ← map_smul]
     exact ⟨_, rfl⟩
   obtain ⟨u, hu⟩ := this
   rw [hu]
@@ -213,7 +214,8 @@ private theorem Loc.capelli {ψ : Sm E (2 + 2)} {a : ℂ} (h : Loc b b' ψ a) (�
 private theorem zop_X {n : ℕ} (y : Ix E n) : BW.zop (X y) = ∑ j : Fin (n + 1),
     (Lagrange.basis Finset.univ (fun j : Fin (n + 1) => ((j : ℕ) : ℂ)) j).coeff (n - (y.2 + 1)) •
       (cap y.1 ((j : ℕ) : ℂ) : Module.End ℂ (Sm E n)) := by
-  simp only [BW.zop, BW.evZ, aeval_X, BW.zC, map_sum, map_smul, uC_capC]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [BW.zop, BW.evZ, aeval_X, BW.zC, map_sum, map_smul, uC_capC]
 
 private theorem Loc.z {ψ : Sm E (2 + 2)} {a : ℂ} (h : Loc b b' ψ a) (y : Ix E (2 + 2)) :
     Loc b b' (BW.zop (X y) ψ) ((Finset.univ.val.map ((dat2 b b').lam y.1)).esymm (y.2 + 1) * a) := by

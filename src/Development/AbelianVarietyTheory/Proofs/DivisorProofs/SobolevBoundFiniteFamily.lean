@@ -175,7 +175,8 @@ theorem lintegral_thetaSum_le (hKP : KP) (F E : Type) [Field F] [NumberField F] 
   calc ∫⁻ g₀ in G₁.M.dom, ‖thetaSum F (om₁ (g₀, 1) (∑ j, pureA F (f j) (φ j)))‖ₑ ∂G₁.M.μ
       ≤ ∫⁻ g₀ in G₁.M.dom, ∑ j, ‖theta om₁ (pureA F (f j) (φ j)) g₀ 1‖ₑ ∂G₁.M.μ := by
         refine lintegral_mono fun g₀ => ?_
-        rw [map_sum, thetaSum_finset_sum _ _ fun j _ => pres _ _ (memA j)]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum, thetaSum_finset_sum _ _ fun j _ => pres _ _ (memA j)]
         exact enorm_sum_le _ _
     _ = ∑ j, ∫⁻ g₀ in G₁.M.dom, ‖theta om₁ (pureA F (f j) (φ j)) g₀ 1‖ₑ ∂G₁.M.μ :=
         lintegral_finset_sum _ fun j _ => (cont j).enorm.measurable

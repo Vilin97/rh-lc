@@ -77,12 +77,14 @@ theorem isClosed_range_iota : IsClosed (Set.range (iotaOQ N A i)) := by
       have hb : b ∈ Submodule.span ℤ_[N.l i] (s : Set (N.O i)) := hs ▸ Submodule.mem_top
       obtain ⟨c, -, rfl⟩ := Submodule.mem_span_finset.1 hb
       refine ⟨fun y => c y, ?_⟩
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simp only [f, iota_smul]
       exact Finset.sum_coe_sort s (fun y => algebraMap ℚ_[N.l i] (Qbar (N.l i)) (c y : ℚ_[N.l i]) * iotaOQ N A i y)
     · rintro ⟨c, rfl⟩
       refine ⟨∑ y : s, c y • (y : N.O i), ?_⟩
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simp only [f, iota_smul]
   rw [hr]
   exact (isCompact_range hf).isClosed

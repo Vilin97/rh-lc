@@ -142,7 +142,8 @@ theorem linIndep_orth (hs : IsSq σ h) {n : ℕ} (f : Fin n → V)
   rw [Fintype.linearIndependent_iff]
   intro g hg i
   have e1 := congrArg (hs.lin (f i)) hg
-  rw [map_sum, map_zero] at e1
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_zero] at e1
   simp only [map_smul, IsSq.lin_apply, smul_eq_mul] at e1
   rw [Finset.sum_eq_single i] at e1
   · exact (mul_eq_zero.1 e1).resolve_right (h2 i)

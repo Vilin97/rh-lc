@@ -169,7 +169,8 @@ theorem pstep_rank [IsDomain O] [IsPrincipalIdealRing O] {LL : Type} [Field LL] 
       exact ⟨a, ha⟩
     choose a ha using hint
     have hsum : φ (∑ j, a j • xr j) = 0 := by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simp only [hφ, ha]
       simp only [Algebra.smul_def, mul_smul]
       rw [← Finset.smul_sum]
@@ -179,7 +180,8 @@ theorem pstep_rank [IsDomain O] [IsPrincipalIdealRing O] {LL : Type} [Field LL] 
       have : K.mkQ (∑ j, a j • xr j) = 0 := by
         rw [Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero]
         exact hsum
-      rw [map_sum] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum] at this
       simpa [hxr] using this
     have hai : a i = 0 := (Fintype.linearIndependent_iff.1 bQ.linearIndependent) a hQ i
     have hd0 : algebraMap O LL (d : O) ≠ 0 := by

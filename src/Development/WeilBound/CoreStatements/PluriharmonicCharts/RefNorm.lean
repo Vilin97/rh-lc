@@ -76,7 +76,8 @@ theorem Rel.conj
     exact (map_ne_zero _).2 dh
   · rcases ht with ⟨k, a, hk, ha, hz, rfl⟩ | ⟨hk, rfl⟩
     · refine Or.inl ⟨k, starRingEnd ℂ a, hk, (map_ne_zero _).2 ha, fun m => ?_, by simp⟩
-      rw [conjVec, hz m, map_mul, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [conjVec, hz m, map_mul, map_sum]
       congr 1
       refine Finset.sum_congr rfl fun I _ => ?_
       rw [map_mul, eb, valAt_conj hw hw' (gd.2.1 _ I).1, minorIJ_map]

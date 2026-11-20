@@ -60,7 +60,8 @@ theorem exists_frame_step
     (pullbackSections_image_top c _ hc _).trans congr(($(ρ.inv_hom_id_app ((fl a).F l))).app ⊤ (s k))
   refine ((congrArg _ ((pullback_map_app_pullbackSections c ((fl a).ι l) hc _).symm.trans (congrArg _ e₁))).trans
     (h k)).trans ?_
-  rw [Taut.colSec, colP, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Taut.colSec, colP, map_sum, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   erw [pullbackSections_smul]
   rw [Scheme.Modules.Hom.app_smul]
@@ -126,7 +127,8 @@ theorem minor_eq_mul_detUnit (fl : ∀ _ : ι, Vert.Flag ((Scheme.Modules.pullba
   have hcol (v : ι → Equiv.Perm (Fin N)) (hv : cellU w ⊓ cellU w' ≤ cellU v) (i j : Fin N) :
       B.repr (resM _ hv (colP v a j)) i = resG (Fl ι N) hv ((cellMat v a).1 i j) := by
     have : resM _ hv (colP v a j) = ∑ i, resG (Fl ι N) hv ((cellMat v a).1 i j) • B i := by
-      rw [colP, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [colP, map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [resM_smul, VB.IsFrame.basis_apply]
       exact congrArg _ ((res_pullbackSections _ _ _ _ _).trans (res_pullbackSections _ _ _ _ _).symm)
@@ -136,9 +138,11 @@ theorem minor_eq_mul_detUnit (fl : ∀ _ : ι, Vert.Flag ((Scheme.Modules.pullba
   ext i j
   have h₁ := congrArg (((fl a).ι l).app _)
     ((he.basis (inf_le_left : cellU w ⊓ cellU w' ≤ _)).sum_repr (resM _ inf_le_right (e' j)))
-  simp only [map_sum, Scheme.Modules.Hom.app_smul, VB.IsFrame.basis_apply, app_resM, hP, hP'] at h₁
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Scheme.Modules.Hom.app_smul, VB.IsFrame.basis_apply, app_resM, hP, hP'] at h₁
   have h₂ := congrArg (fun s => B.repr s (subsetEnum I i)) h₁
-  simp only [map_sum, map_smul, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.smul_apply, hcol, smul_eq_mul] at h₂
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.smul_apply, hcol, smul_eq_mul] at h₂
   refine h₂.symm.trans ?_
   rw [Matrix.mul_apply]
   exact Finset.sum_congr rfl fun k _ => mul_comm _ _

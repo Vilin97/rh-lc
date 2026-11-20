@@ -148,17 +148,21 @@ theorem isotropic_zero (D : Formalism.BasicNotions.D7) (w : (VS D).V) (hE : ∀ 
     ((VS D).hT D.sp.zm x / (VS D).hT D.sp.zm D.sp.zm) • D.sp.zm with hxW
   have hWE : ∀ b, (VS D).hT (D.sp.hypE b) xW = 0 := by
     intro b
-    simp [hxW, map_sub, map_sum, map_add, map_smul, D.sp.hyp_ee, D.sp.hyp_ef, hEz]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [hxW, map_sub, map_sum, map_add, map_smul, D.sp.hyp_ee, D.sp.hyp_ef, hEz]
   have hWF : ∀ b, (VS D).hT (D.sp.hypF b) xW = 0 := by
     intro b
-    simp [hxW, map_sub, map_sum, map_add, map_smul, D.sp.hyp_ff, hFE, hFz]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [hxW, map_sub, map_sum, map_add, map_smul, D.sp.hyp_ff, hFE, hFz]
   have hWz : (VS D).hT D.sp.zm xW = 0 := by
-    simp [hxW, map_sub, map_sum, map_add, map_smul, (D.sp.hyp_orthz _).1, (D.sp.hyp_orthz _).2, hzz]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [hxW, map_sub, map_sum, map_add, map_smul, (D.sp.hyp_orthz _).1, (D.sp.hyp_orthz _).2, hzz]
   have h1 := orthW xW hWE hWF hWz
   have hwE : ∀ a, (VS D).hT w (D.sp.hypE a) = 0 := fun a => hzero_swap D (hE a)
   have hwF : ∀ a, (VS D).hT w (D.sp.hypF a) = 0 := fun a => hzero_swap D (hF a)
   have hwz : (VS D).hT w D.sp.zm = 0 := hzero_swap D hz
-  simpa [hxW, map_sub, map_sum, map_add, map_smul, hwE, hwF, hwz] using h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa [hxW, map_sub, map_sum, map_add, map_smul, hwE, hwF, hwz] using h1
 
 theorem weights_are_positive : WPos := by
   intro D w hE hF hz hw

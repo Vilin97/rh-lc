@@ -31,7 +31,8 @@ private theorem sum_zero {R : Representation ℂ G X} {Gi : Subgroup G} {τ : G 
     | mem a ha =>
       obtain ⟨x, rfl⟩ := ha
       have h1 := congrArg (R x) h
-      rw [map_sum, map_zero] at h1
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, map_zero] at h1
       rw [← h1]
       exact Finset.sum_congr rfl fun i _ => (hΦ i x x.2 _).symm
     | zero => simp
@@ -63,14 +64,16 @@ private theorem sum_ex {R : Representation ℂ G X} {Gi Gf : Subgroup G} {τ : G
   have hval : ∀ Φ ∈ eqv R Gi τ, (∀ v, Φ v ∈ σ) → ∀ v, Φ v ∈ N := fun Φ a1 a2 v =>
     ⟨fun i => b.repr v i • Φ, fun i => Submodule.smul_mem _ _ a1, fun i w => σ.smul_mem _ (a2 w), by
       conv_rhs => rw [← b.sum_repr v]
-      simp only [map_sum, map_smul, LinearMap.smul_apply]⟩
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, LinearMap.smul_apply]⟩
   have hle : N ≤ σ := by
     rintro _ ⟨A, -, a2, rfl⟩
     exact Submodule.sum_mem _ fun i _ => a2 i _
   have hN : ∀ g, ∀ φ ∈ N, R g φ ∈ N := by
     rintro g _ ⟨A, a1, a2, rfl⟩
     obtain ⟨k, hk, x, hx, rfl⟩ := hsp g
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Submodule.sum_mem _ fun i _ => ?_
     rw [map_mul, Module.End.mul_apply, a1 i x hx]
     refine hval (R k ∘ₗ A i) (fun y hy v => ?_) (fun v => hst _ _ (a2 i v)) _
@@ -108,7 +111,8 @@ private theorem rank_eq {R : Representation ℂ G X} {Gi Gf : Subgroup G} {τ : 
       refine sum_zero (R := R) hτ b (fun i => R k ∘ₗ Φ i - Φ i) (fun i => sub_mem (fun y hy v => ?_) (a1 i)) ?_ j
       · rw [LinearMap.comp_apply, LinearMap.comp_apply, ← a1 i y hy, ← Module.End.mul_apply, ← map_mul,
           ← hcm k k.2 y hy, map_mul, Module.End.mul_apply]
-      · simp only [LinearMap.sub_apply, LinearMap.comp_apply, Finset.sum_sub_distrib, ← map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        · simp only [LinearMap.sub_apply, LinearMap.comp_apply, Finset.sum_sub_distrib, ← map_sum]
         rw [((hN _).1 hφ).2 k hk, sub_self]
     choose F hF hF' using fun j => hsur (Φ j) (a1 j) fun v =>
       (hN _).2 ⟨a2 j v, fun k hk => LinearMap.congr_fun (sub_eq_zero.1 (hfix k hk j)) v⟩

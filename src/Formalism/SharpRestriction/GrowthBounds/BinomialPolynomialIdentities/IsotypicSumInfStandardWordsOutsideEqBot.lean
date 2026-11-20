@@ -18,7 +18,8 @@ theorem coeff_multidegreeProj_of_multidegree_eq (d : ι → ℕ) (H : MvPolynomi
     (h : ∀ i, multideg m i = d i) : AddMonoidAlgebra.coeff (polProj K d H) m = AddMonoidAlgebra.coeff H m := by
   classical
   conv_lhs => rw [H.as_sum]
-  rw [map_sum, MvPolynomial.coeff_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, MvPolynomial.coeff_sum]
   simp only [polProj_monomial]
   rw [Finset.sum_eq_single m]
   · rw [if_pos h]

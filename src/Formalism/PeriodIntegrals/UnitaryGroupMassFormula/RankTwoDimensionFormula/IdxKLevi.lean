@@ -84,7 +84,8 @@ theorem idxDLevi : IdxDLevi := by
     rw [sMat_mulVec]
     simp only [hh]
     rw [← unitaryCongruence.hL_apply]
-    simp only [map_add, map_sum, map_smul, unitaryCongruence.hL_apply, smul_eq_mul, hzero, mul_zero, zero_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_add, map_sum, map_smul, unitaryCongruence.hL_apply, smul_eq_mul, hzero, mul_zero, zero_mul,
       add_zero]
   rw [hexp]
   have hCm : ∀ p q, (C - 1) p q ∈ IntAf X.B.I.F X.B.I.E := by

@@ -132,9 +132,11 @@ theorem kap_abs (hR : R.Facts) (hi : ∀ c, R.i c ∈ R.P) (hS : S.Good) (P : Rh
     obtain ⟨f, hf⟩ := P.ex a hM i m x
     obtain ⟨g, hg⟩ := P.ex a hM j m y
     obtain ⟨hh, hhh⟩ := P.ex a hM (i + j) m z
-    rw [hkP a hM (i + j) m z hh hhh, P.cup a hM m x y z f g hh hf hg hhh hc b b' φ, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hkP a hM (i + j) m z hh hhh, P.cup a hM m x y z f g hh hf hg hhh hc b b' φ, map_sum]
     refine Finset.sum_congr rfl fun s _ => ?_
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun s' _ => ?_
     rw [map_mul, map_mul, hkP a hM i m x f hf, hkP a hM j m y g hg,
       (hS.lev m).toB_K (φ (cupK M.q rfl (b s) (b' s'))) ⟨_, hR.o_mem _⟩ rfl]

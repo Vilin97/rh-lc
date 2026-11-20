@@ -141,17 +141,21 @@ theorem isoZeroG (h : Dual e y z N) (hN : 0 < N) (τ : E →+* ℂ) (hτ : ∀ a
   have hzF : ∀ a, S.hT z (y a) = 0 := fun a => hsw0 S (h.yz a)
   have hWE : ∀ b, S.hT (e b) xW = 0 := by
     intro b
-    simp [hxW, map_sub, map_sum, map_add, map_smul, h.ee, h.ey, h.ez]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [hxW, map_sub, map_sum, map_add, map_smul, h.ee, h.ey, h.ez]
   have hWF : ∀ b, S.hT (y b) xW = 0 := by
     intro b
-    simp [hxW, map_sub, map_sum, map_add, map_smul, h.yy, h.ye, h.yz]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [hxW, map_sub, map_sum, map_add, map_smul, h.yy, h.ye, h.yz]
   have hWz : S.hT z xW = 0 := by
-    simp [hxW, map_sub, map_sum, map_add, map_smul, hzE, hzF, hzz]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [hxW, map_sub, map_sum, map_add, map_smul, hzE, hzF, hzz]
   have h1 := orthW xW ⟨hWE, hWF, hWz⟩
   have hwE : ∀ a, S.hT w (e a) = 0 := fun a => hsw0 S (hE a)
   have hwF : ∀ a, S.hT w (y a) = 0 := fun a => hsw0 S (hF a)
   have hwz : S.hT w z = 0 := hsw0 S hz
-  simpa [hxW, map_sub, map_sum, map_add, map_smul, hwE, hwF, hwz] using h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa [hxW, map_sub, map_sum, map_add, map_smul, hwE, hwF, hwz] using h1
 
 end Gen
 

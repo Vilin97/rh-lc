@@ -17,7 +17,8 @@ private theorem re_inner_basis_lemma {E ι : Type*} [NormedAddCommGroup E] [Inne
   have hx : x = ∑ i, (inner ℂ (b i) x) • b i := (b.sum_repr' x).symm
   have hTx : T x = ∑ i, (inner ℂ (b i) x * (lam i : ℂ)) • b i := by
     conv_lhs => rw [hx]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, hb, smul_smul]
   have h1 : inner ℂ (T x) x =

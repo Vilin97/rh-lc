@@ -194,7 +194,8 @@ theorem exists_eq_sum_X_mul [Fintype σ] {n : ℕ} {g : MvPowerSeries σ R}
     have h₂ : coeff (single i 1 + d) g = 0 := hg _ (by simp; omega)
     simp [h₂]
   · ext d
-    simp only [← hh, map_sum, hpart]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [← hh, map_sum, hpart]
     by_cases hd : d = 0
     · subst hd
       simpa using hg 0 (by simp)

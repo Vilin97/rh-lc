@@ -127,13 +127,15 @@ theorem t_sub_log (T : LocTied l P AI) (M : ℕ) :
     · refine (GlobalTheory.RingIface.mem_filtration_iff_mem_kerTheta_pow l M _).2 ?_
       rw [map_sub, GlobalTheory.ThetaTie.ev_alg, map_mul, map_natCast,
         GlobalTheory.CrisIncl.factorial_mul_ev l _ y (GlobalTheory.ThetaTie.isEps AI).1 hy M, sub_self]
-    · simp only [map_sub, map_mul, map_natCast, map_sum, map_pow, map_neg, e, io_eq]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp only [map_sub, map_mul, map_natCast, map_sum, map_pow, map_neg, e, io_eq]
       simp only [map_one]
       simp only [aDp, mu, RingHom.comp_apply, map_sub, map_one]
   have h0 : ((M.factorial : ℕ) : ℚ_[l]) ≠ 0 := by exact_mod_cast M.factorial_ne_zero
   have := qB_mul_mem ((M.factorial : ℕ) : ℚ_[l])⁻¹ h
   convert this using 1
-  rw [mul_sub, ← mul_assoc, ← map_natCast (qB P), ← map_mul, inv_mul_cancel₀ h0, map_one, one_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [mul_sub, ← mul_assoc, ← map_natCast (qB P), ← map_mul, inv_mul_cancel₀ h0, map_one, one_mul,
     logT, map_sum, Finset.mul_sum]
   congr 1
   refine Finset.sum_congr rfl fun k hk => ?_
@@ -157,7 +159,8 @@ theorem eps_sub_exp (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l P)
   have hd := t_sub_log T M
   obtain ⟨Q, hQ⟩ := exp_log_dvd ℚ_[l] M
   have h1 := congrArg (aeval (io AI (mu AI.ε))) hQ
-  simp only [map_sub, map_add, map_one, aeval_X, map_sum, map_mul, aeval_C, map_pow] at h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sub, map_add, map_one, aeval_X, map_sum, map_mul, aeval_C, map_pow] at h1
   have h2 := FilB_zero_mul (aeval_mem hm0 Q) (FilB_pow hm M)
   rw [mul_one, mul_comm, ← h1] at h2
   generalize aeval (io AI (mu AI.ε)) (logT ℚ_[l] M) = L at hL hd h2

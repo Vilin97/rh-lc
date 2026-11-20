@@ -24,7 +24,8 @@ theorem eq_one_of_pow_eq_one_of_localHom {W Ω : Type} [CommRing W] [IsLocalRing
   have hu : IsUnit (∑ i ∈ Finset.range N, ζ ^ i) := by
     refine isUnit_of_map_unit f _ ?_
     have := hN.map f
-    simpa [map_sum, hf] using this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [map_sum, hf] using this
   have := geom_sum_mul ζ N
   rw [h, sub_self] at this
   exact sub_eq_zero.1 ((hu.mul_right_eq_zero).1 this)

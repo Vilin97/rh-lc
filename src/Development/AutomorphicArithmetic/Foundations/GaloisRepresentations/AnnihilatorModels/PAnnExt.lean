@@ -35,7 +35,8 @@ theorem UpperTheory.Gal.crystallineComparison.annExt_of :
       rw [← hD]
       exact Submodule.mem_map_of_mem hx
     apply (AlgebraTensorModule.assoc F F L L V B).injective
-    rw [map_sum, map_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero]
     simp only [map_zsmul, comm]
     obtain ⟨z, hz⟩ := Submodule.toBaseChange_surjective' L (Dinv σ ρ) hmem
     rw [← hz]
@@ -46,6 +47,7 @@ theorem UpperTheory.Gal.crystallineComparison.annExt_of :
       simp only [Submodule.coe_toBaseChange_tmul, LinearMap.lTensor_tmul]
       have := hA w w.2
       calc _ = TensorProduct.mk F L (V ⊗[F] B) a (∑ j ∈ Finset.range (n + 1), ((-1) ^ j * (q : ℤ) ^ j.choose 2) • (AlgebraTensorModule.map (T j) (ψ ^ (n - j))) w) := by
-            simp only [map_sum, map_zsmul, TensorProduct.mk_apply]
+            set_option synthInstance.maxHeartbeats 100000 in
+              simp only [map_sum, map_zsmul, TensorProduct.mk_apply]
         _ = 0 := by rw [this, map_zero]
     | add z₁ z₂ h₁ h₂ => simp only [map_add, Submodule.coe_add, Finset.sum_add_distrib, smul_add, h₁, h₂, add_zero]

@@ -40,9 +40,11 @@ theorem frame_mat_le_one : ∀ (D : D7) (V : HSp D) (β : GL (Fin V.rank) (EAf D
     exact (cpt_cjA_le_iff Q _).2 (h j i)
   have hint : ∀ x ∈ GlobalTheory.StdFrames.OA D, Valued.v (cpt (GlobalTheory.IdemSupport.cP Q) x) ≤ 1 :=
     fun x hx => (mem_OA x).1 hx (GlobalTheory.IdemSupport.cP Q)
-  rw [hY, Matrix.mul_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hY, Matrix.mul_apply, map_sum]
   refine Valuation.map_sum_le _ fun j _ => ?_
-  rw [map_mul, Valuation.map_mul, Matrix.mul_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_mul, Valuation.map_mul, Matrix.mul_apply, map_sum]
   refine mul_le_one' ?_ (hint _ (hGi j b))
   refine Valuation.map_sum_le _ fun i _ => ?_
   rw [map_mul, Valuation.map_mul]

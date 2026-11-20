@@ -40,7 +40,8 @@ theorem herm_gmW (V : HSp D) (hr : V.rank = r) (x y : Fin V.rank → D.host.E) :
     herm (gmW V hr) (x ∘ Fin.cast hr.symm) (y ∘ Fin.cast hr.symm) =
       -V.hT (V.frame.equivFun.symm y) (V.frame.equivFun.symm x) := by
   subst hr
-  simp only [herm, gmW, Module.Basis.equivFun_symm_apply, map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ₂, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [herm, gmW, Module.Basis.equivFun_symm_apply, map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ₂, map_smul]
   rw [← Finset.sum_neg_distrib]
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [Finset.smul_sum, ← Finset.sum_neg_distrib]

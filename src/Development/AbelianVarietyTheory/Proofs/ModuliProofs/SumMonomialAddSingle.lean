@@ -140,7 +140,8 @@ theorem exists_vol_poly : Out.Laws → Out.Laws2 → ∀ (K : Type) [Field K] [I
       · let ε : Fin r × ULift.{0} (Finset (Fin 2)) → ℤ := fun p => a p.1 * (-1) ^ (2 - p.2.down.card)
         have hC : (LB.LinComb P.L φ ε).IsLB := LB.isLB_linComb P.isLB _ _
         have e : CechPic.cls _ (hB (∑ i : Fin r, Polynomial.monomial (i : ℕ) (a i))) = CechPic.cls _ hC := by
-          rw [← hb, map_sum, CechPic.cls_linComb P.isLB, Fintype.sum_prod_type]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [← hb, map_sum, CechPic.cls_linComb P.isLB, Fintype.sum_prod_type]
           refine Finset.sum_congr rfl fun i _ => ?_
           have : Polynomial.monomial (i : ℕ) (a i) = a i • Polynomial.monomial (i : ℕ) (1 : ℤ) := by
             rw [Polynomial.smul_monomial, smul_eq_mul, _root_.mul_one]

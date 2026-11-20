@@ -29,7 +29,8 @@ private lemma iso_inv_injective {A B : ModuleCat.{u} R} (e : A ≅ B) : Function
 
 lemma repHom_norm_apply {X Y : Rep.{u} R G} (f : X ⟶ Y) (m : X) :
     f.hom (X.ρ.norm m) = Y.ρ.norm (f.hom m) := by
-  simp [Representation.norm, map_sum, Rep.hom_comm_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Representation.norm, map_sum, Rep.hom_comm_apply]
 
 lemma range_norm_le_invariants (M : Rep.{u} R G) :
     LinearMap.range M.ρ.norm ≤ M.ρ.invariants := by

@@ -61,7 +61,8 @@ theorem X_pow_dvd_mk_sub_sum {O : Type} [CommRing O] (c : ℕ → O) (N : ℕ) :
     (X : O⟦X⟧) ^ N ∣ PowerSeries.mk c - ∑ k ∈ Finset.range N, C (c k) * X ^ k := by
   rw [X_pow_dvd_iff]
   intro m hm
-  simp [map_sum, hm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, hm]
 
 theorem injective_and_range_eq_invariants {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O]
     [IsDomain O] [CharZero O] [Algebra ℤ_[l] O] (Δ : Subgroup ℤ_[l]ˣ) [Finite Δ]
@@ -132,7 +133,8 @@ theorem injective_and_range_eq_invariants {l : ℕ} [Fact l.Prime] {O : Type} [C
     have hjsum : ∀ N, j (∑ k ∈ Finset.range N, C (c k) * X ^ k) =
         ∑ k ∈ Finset.range N, C (c k) * j X ^ k := by
       intro N
-      simp [map_sum, algHom_C]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [map_sum, algHom_C]
     have hdvd : ∀ N, (X : O⟦X⟧) ^ N ∣ j (PowerSeries.mk c) - a := by
       intro N
       obtain ⟨r, hr⟩ := X_pow_dvd_mk_sub_sum c N

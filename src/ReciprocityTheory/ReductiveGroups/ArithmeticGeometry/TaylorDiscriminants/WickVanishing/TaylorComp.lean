@@ -249,17 +249,20 @@ theorem isTayF_subst {τ : Type} [Fintype τ] (f : (Fin g → ℂ) → ℂ) (hf 
       mD f 0 ((∑ p, c p • (Pi.single p.2 1 : Fin g → ℂ)) ::ₘ T) =
         ∑ p, c p * mD f 0 ((Pi.single p.2 1 : Fin g → ℂ) ::ₘ T) := by
     intro c T
-    simp only [mD_cons hf, map_sum, map_smul, ContinuousMultilinearMap.sum_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [mD_cons hf, map_sum, map_smul, ContinuousMultilinearMap.sum_apply,
       ContinuousMultilinearMap.smul_apply, smul_eq_mul]
   refine isTayF_family f _ (fun s => subst L (tay f s)) (fun q s => ?_) (fun s => ?_)
   · beta_reduce
     have htay : tay f ((∑ p, a p q • (Pi.single p.2 1 : Fin g → ℂ)) ::ₘ s) =
         ∑ p, a p q • tay f ((Pi.single p.2 1 : Fin g → ℂ) ::ₘ s) := by
       ext k
-      simp only [map_sum, map_smul, hcf, smul_eq_mul, Multiset.add_cons, lin, Finset.sum_div, mul_div_assoc]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, hcf, smul_eq_mul, Multiset.add_cons, lin, Finset.sum_div, mul_div_assoc]
     rw [ReciprocityTheory.ChartRestriction.G.TB.LogPf.pderiv_subst hL0]
     simp only [hLd]
-    rw [htay, ← MvPowerSeries.coe_substAlgHom hL, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [htay, ← MvPowerSeries.coe_substAlgHom hL, map_sum]
     simp only [map_smul]
     rw [MvPowerSeries.coe_substAlgHom hL]
     refine Finset.sum_congr rfl (fun p _ => ?_)

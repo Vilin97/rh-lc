@@ -59,14 +59,16 @@ private theorem exists_integral_matrix_toMatrix_mul_eq_of_isFrame {Nm : (K →+*
   refine ⟨Matrix.of fun i k => c k i, ?_⟩
   ext j k
   have hk := congr_arg (fun x => b.repr x j) (hc k)
-  simp only [map_sum, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.coe_smul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.coe_smul,
     Pi.smul_apply, smul_eq_mul] at hk
   simp only [Matrix.mul_apply, Matrix.map_apply, Matrix.of_apply, Basis.toMatrix_apply]
   rw [show (∑ x, (b.repr (b' x)) j * w' x k) = ∑ x, w' x k * (b.repr (b' x)) j from
     Finset.sum_congr rfl fun _ _ => mul_comm _ _, ← hk]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [← IsScalarTower.algebraMap_smul K (c k i), map_smul, Finsupp.smul_apply, smul_eq_mul]
-  simp [map_sum, Finsupp.single_apply, mul_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, Finsupp.single_apply, mul_comm]
 
 set_option autoImplicit false in
 open MvPolynomial NumberField Module in
@@ -196,7 +198,8 @@ private theorem gaussAbs_aeval_le_of_gaussAbs_le_one {ι κ : Type} (v : FiniteP
     (hψ : ∀ i, _root_.ReciprocityTheory.MultiplicativeHeights.gaussAbs v (ψ i) ≤ 1) (g : MvPolynomial ι K) :
     _root_.ReciprocityTheory.MultiplicativeHeights.gaussAbs v (aeval ψ g) ≤ _root_.ReciprocityTheory.MultiplicativeHeights.gaussAbs v g := by
   conv_lhs => rw [g.as_sum]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine gaussAbs_finset_sum_le_of_forall_le v _ _ (gaussAbs_nonneg' v g) fun s _ => ?_
   rw [aeval_monomial, algebraMap_eq]
   refine (gaussAbs_C_mul_le' v _ _).trans ?_

@@ -222,7 +222,8 @@ theorem cong_of_redM {P : HeightOneSpectrum (𝓞 E)} (hU : UnifAt P) {N : ℕ} 
     rw [key]
     exact h3
   have hTx : T x ∈ LocE.sclLat P (qOf P) N e := by
-    rw [← sum_basV P N e x, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← sum_basV P N e x, map_sum]
     refine Submodule.sum_mem _ fun l _ => ?_
     rw [map_smul]
     exact smul_mem_sclLat ((mem_sclLat P _ N e x).1 hx l) (hbas l)

@@ -17,7 +17,8 @@ variable {F E : Type} [Field F] [Field E] [Algebra F E] {R : Type} [CommRing R] 
 theorem parabolic_preserves_isotropic {s : HA R σ J} (hs : s ∈ Ssub R σ J P) {x : Fin n → R ⊗[F] E}
     (hx : x ∈ spanR (F := F) R P.e Set.univ) : lin R σ J s x ∈ spanR (F := F) R P.e Set.univ := by
   obtain ⟨d, rfl⟩ := mem_tensor_span_iff R P.e x hx
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Submodule.sum_mem _ fun b _ => ?_
   rw [map_smul]
   refine Submodule.smul_mem _ _ ?_

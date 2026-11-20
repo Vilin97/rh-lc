@@ -25,7 +25,8 @@ theorem formEq_of_fs {K K' : Type} [Fintype K] [Fintype K'] {φ : K → (Y ⟶ X
     {φ' : K' → (Y ⟶ X)} {ε' : K' → ℤ} (h : fs φ ε = fs φ' ε') : FormEq φ ε φ' ε' := by
   intro U _ g
   have e := congrArg (FreeAbelianGroup.lift (fun ψ => Additive.ofMul (g ψ))) h
-  simp only [fs, map_sum, map_zsmul, FreeAbelianGroup.lift_apply_of] at e
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [fs, map_sum, map_zsmul, FreeAbelianGroup.lift_apply_of] at e
   apply Additive.ofMul.injective
   simpa [ofMul_prod, ofMul_zpow] using e
 
@@ -69,7 +70,8 @@ theorem exists_cl (hL : L.IsLB) (Y : Scheme.{0}) : ∃ (U : Type) (_ : CommGroup
     fun ψ => Multiplicative.ofAdd (QuotientAddGroup.mk' _ (FreeAbelianGroup.of ψ)), fun K _ φ ε => ?_⟩
   have e : ∏ k, Multiplicative.ofAdd (QuotientAddGroup.mk' (genSub L Y) (FreeAbelianGroup.of (φ k))) ^ ε k =
       Multiplicative.ofAdd (QuotientAddGroup.mk' (genSub L Y) (fs φ ε)) := by
-    simp only [fs, map_sum, map_zsmul, ofAdd_sum, ofAdd_zsmul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [fs, map_sum, map_zsmul, ofAdd_sum, ofAdd_zsmul]
   rw [e, ofAdd_eq_one, QuotientAddGroup.mk'_apply, QuotientAddGroup.eq_zero_iff]
   exact ⟨fun ⟨t, ht⟩ => mem_of_gen t ht, gen_of_mem hL⟩
 

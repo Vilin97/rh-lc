@@ -133,7 +133,8 @@ theorem d_mk (F₁ F₂ : SubSystem S x E) (u : Cech.Idx (support x) 0 → E) (h
       ∑ j : J.1.1, Cech.sgn J.1.1 j • F₁.res _ J.1 (Cech.face_subset J j) ⟨u (Cech.face J j), hu _⟩ := by
     apply Subtype.ext
     simp [SubSystem.res]
-  rw [this, ← Submodule.mkQ_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [this, ← Submodule.mkQ_apply, map_sum]
   simp only [map_zsmul]
   rfl
 

@@ -184,7 +184,8 @@ theorem equivar_thm : Equivar := by
       iteratedFDeriv_comp_clm F hF L _ _
     rw [h1]
     simp_rw [mul_single_eq]
-    rw [ContinuousMultilinearMap.map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [ContinuousMultilinearMap.map_sum]
     refine Finset.sum_congr rfl fun r _ => ?_
     rw [ContinuousMultilinearMap.map_smul_univ, smul_eq_mul]
   have hswap : detD (fun T => F (A * T)) = ∑ r : Fin (Fintype.card ι) → ι,

@@ -92,7 +92,8 @@ private theorem dec_map {K : Type} [CommRing K] (f : K →+* R) {x y : Fin n →
   have h1 : t i = ∑ k, t k * f ((Pi.single k 1 : Fin n → K) i) := by
     rw [Finset.sum_eq_single i] <;> simp +contextual [Pi.single_apply, eq_comm]
   rw [h1]
-  simp only [h, Pi.add_apply, Pi.smul_apply, smul_eq_mul, Matrix.mulVec, dotProduct, map_add, map_mul, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [h, Pi.add_apply, Pi.smul_apply, smul_eq_mul, Matrix.mulVec, dotProduct, map_add, map_mul, map_sum,
     Matrix.map_apply, Finset.mul_sum, Finset.sum_mul, mul_add, Finset.sum_add_distrib]
   rw [Finset.sum_comm (s := (Finset.univ : Finset (Fin m)))]
   congr 1
@@ -207,7 +208,8 @@ private theorem tens_cocompact (F E : Type) [Field F] [NumberField F] [Field E] 
   choose x hx using fun i => h (e z i)
   refine ⟨∑ i, x i • b i, fun i => e z i - algebraMap F _ (x i), fun i _ => hx i, ?_⟩
   have : (fun i => e z i - algebraMap F (AF F) (x i)) = e z - fun i => algebraMap F (AF F) (x i) := rfl
-  rw [this, map_sub, LinearEquiv.symm_apply_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [this, map_sub, LinearEquiv.symm_apply_apply, map_sum]
   congr 1
   rw [Module.Basis.equivFun_symm_apply]
   refine Finset.sum_congr rfl fun i _ => ?_

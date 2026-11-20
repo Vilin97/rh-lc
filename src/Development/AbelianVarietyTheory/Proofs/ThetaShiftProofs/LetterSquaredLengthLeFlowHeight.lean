@@ -132,14 +132,16 @@ theorem exists_pull_form {g : ℕ} (Hm : Matrix (Fin g) (Fin g) ℂ) (hH : Hm.Is
 theorem eq_zero_of_trace {E : Type} [Field E] [NumberField E] {x : E}
     (h : ∀ a : 𝓞 E, Algebra.trace ℚ E ((a : E) * x) = 0) : x = 0 := by
   refine (traceForm_nondegenerate ℚ E).1 x fun y => ?_
-  rw [← (integralBasis E).sum_repr y, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← (integralBasis E).sum_repr y, map_sum]
   refine Finset.sum_eq_zero fun i _ => ?_
   rw [map_smul, Algebra.traceForm_apply, integralBasis_apply, _root_.mul_comm x]
   exact smul_eq_zero_of_right _ (h _)
 
 theorem herm_swap {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ} (X : Data E r) (u v : Fin r → E) :
     herm X.Gm v u = cc (herm X.Gm u v) := by
-  simp only [herm, cc, map_sum, map_mul, IsCMField.complexConj_apply_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [herm, cc, map_sum, map_mul, IsCMField.complexConj_apply_apply]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
   rw [← X.Gm_herm a b, cc]

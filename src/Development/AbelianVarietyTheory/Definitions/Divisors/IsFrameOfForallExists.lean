@@ -26,7 +26,8 @@ theorem resM_linearCombination (e : ι → Γ(F, U)) (h : V ≤ U) (h' : W ≤ V
     resM F h' (Fintype.linearCombination Γ(X, V) (fun i => resM F h (e i)) a) =
       Fintype.linearCombination Γ(X, W) (fun i => resM F (h'.trans h) (e i))
         fun i => resG X h' (a i) := by
-  simp only [Fintype.linearCombination_apply, map_sum, resM_smul, resM_resM]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Fintype.linearCombination_apply, map_sum, resM_smul, resM_resM]
 
 namespace IsFrame
 
@@ -53,9 +54,11 @@ theorem coe_basis (he : IsFrame e) (h : V ≤ U) : ⇑(he.basis h) = fun i => re
 theorem repr_resM (he : IsFrame e) (h : V ≤ U) (h' : W ≤ V) (s : Γ(F, V)) (i : ι) :
     (he.basis (h'.trans h)).repr (resM F h' s) i = resG X h' ((he.basis h).repr s i) := by
   conv_lhs => rw [← (he.basis h).sum_repr s]
-  simp only [map_sum, resM_smul, basis_apply, resM_resM]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, resM_smul, basis_apply, resM_resM]
   simp only [← he.basis_apply (h'.trans h)]
-  rw [← map_sum, Module.Basis.repr_sum_self]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum, Module.Basis.repr_sum_self]
 
 theorem res (he : IsFrame e) (h : V ≤ U) : IsFrame fun i => resM F h (e i) := fun W h' => by
   simpa only [resM_resM] using he W (h'.trans h)
@@ -136,7 +139,8 @@ theorem bijective_stalk (he : IsFrame e) (x : X) (hx : x ∈ U) :
         Fintype.linearCombination (X.presheaf.stalk x)
           (fun i => (F.presheaf.germ U x hx (e i) : (F.presheaf.stalk x :)))
           fun i => X.presheaf.germ V x hxV (a i) := by
-    simp only [Fintype.linearCombination_apply, map_sum, QCoh.germ_smul, germ_resM]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Fintype.linearCombination_apply, map_sum, QCoh.germ_smul, germ_resM]
   constructor
   · refine (injective_iff_map_eq_zero _).2 fun a ha => ?_
     choose W hW b hb using fun i => X.presheaf.exists_germ_eq (a i)
@@ -207,7 +211,8 @@ theorem equiv_resM_frame (he : IsFrame e) (he' : IsFrame e') (h : V ≤ U) (i : 
 theorem equiv_resM (he : IsFrame e) (he' : IsFrame e') (h : V ≤ U) (h' : W ≤ V) (s : Γ(F, V)) :
     he.equiv he' (h'.trans h) (resM F h' s) = resM G h' (he.equiv he' h s) := by
   obtain ⟨a, rfl⟩ := (he V h).2 s
-  simp only [Fintype.linearCombination_apply, map_sum, resM_smul, resM_resM, map_smul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Fintype.linearCombination_apply, map_sum, resM_smul, resM_resM, map_smul,
     equiv_resM_frame]
 
 def restrictIso (he : IsFrame e) (he' : IsFrame e') (g : Y ⟶ X) [IsOpenImmersion g]

@@ -84,7 +84,8 @@ theorem trace_swap {p q : ℕ} (A : Matrix (Fin p) (Fin q) (Big n)) (B : Matrix 
 
 theorem val_trace {r : Type*} [Fintype r] (M : Matrix r r (EvenPart n)) :
     ((EvenPart n).val M.trace) = (M.map (EvenPart n).val).trace := by
-  simp [Matrix.trace, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Matrix.trace, map_sum]
 
 theorem val_pow {r : Type*} [Fintype r] [DecidableEq r] (M : Matrix r r (EvenPart n)) (k : ℕ) :
     (M ^ k).map (EvenPart n).val = (M.map (EvenPart n).val) ^ k :=
@@ -103,10 +104,12 @@ theorem GlobalTheory.GrassModel.trace_pow_blockPoly_add_trace_pow_neg_blockPolyB
   have hB : ∀ b i, ∃ a, B b i = (1 : Ext n) ⊗ₜ vec n a := fun b i => ⟨e (i, b), rfl⟩
   have hL : ((blockPoly e).map (toEven n)).map (EvenPart n).val = A * B := by
     ext i j
-    simp [A, B, blockPoly, toEven, gen, Matrix.mul_apply, map_sum, Algebra.TensorProduct.tmul_mul_tmul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [A, B, blockPoly, toEven, gen, Matrix.mul_apply, map_sum, Algebra.TensorProduct.tmul_mul_tmul]
   have hD : (Matrix.transpose ((blockPolyBar e).map (toEven n))).map (EvenPart n).val = B * A := by
     ext i j
-    simp [A, B, blockPolyBar, toEven, gen, Matrix.mul_apply, map_sum, Algebra.TensorProduct.tmul_mul_tmul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [A, B, blockPolyBar, toEven, gen, Matrix.mul_apply, map_sum, Algebra.TensorProduct.tmul_mul_tmul]
   have hneg : (-blockPolyBar e).map (toEven n) = -((blockPolyBar e).map (toEven n)) := by
     ext i j; simp
   apply Subtype.val_injective

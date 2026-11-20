@@ -217,7 +217,8 @@ theorem exists_invariant_preimage_average (hΔ : IsUnit ((W.DelF.card : ℕ) : O
   have hyN : r • s ∈ W.N T₁ := (W.N T₁).smul_mem r hsN
   have hsΔ : ∀ δ' ∈ W.DelF, W.γD T₁ δ' s = s := by
     intro δ' hδ'
-    rw [hs, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hs, map_sum]
     refine Finset.sum_nbij' (δ' * ·) (δ'⁻¹ * ·) (fun a ha => hclos _ hδ' _ ha)
       (fun a ha => hclos _ (hinv _ hδ') _ ha) (fun a _ => by simp) (fun a _ => by simp) ?_
     intro a _
@@ -236,7 +237,8 @@ theorem exists_invariant_preimage_average (hΔ : IsUnit ((W.DelF.card : ℕ) : O
   have hterm : ∀ δ ∈ W.DelF, W.map F (W.γD T₁ δ y₀) = t := by
     intro δ hδ
     rw [hmγ, hF, ht δ hδ]
-  rw [map_letA_smul_comm W F r s, hs, map_sum, Finset.sum_congr rfl hterm, Finset.sum_const,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_letA_smul_comm W F r s, hs, map_sum, Finset.sum_congr rfl hterm, Finset.sum_const,
     ← Nat.cast_smul_eq_nsmul (LetA O n), smul_smul, hr, ← map_natCast (algebraMap O (LetA O n)),
     ← map_mul, ← huc, Units.inv_mul, map_one, one_smul]
 

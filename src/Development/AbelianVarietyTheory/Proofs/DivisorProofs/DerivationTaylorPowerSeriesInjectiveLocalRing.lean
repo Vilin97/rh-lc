@@ -204,12 +204,14 @@ theorem step (ev : A →+* R) (ds : Fin n → Derivation ℤ A A) (T : A →+* M
   have hcoef : ∀ α : Fin n →₀ ℕ, α.degree = k →
       coeff α (T (MvPolynomial.eval z p)) = coeff α G := by
     intro α hα
-    rw [← sub_eq_zero, ← map_sub, hev, map_sum, hGdef, ← Finset.sum_sub_distrib, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← sub_eq_zero, ← map_sub, hev, map_sum, hGdef, ← Finset.sum_sub_distrib, map_sum]
     refine Finset.sum_eq_zero fun β hβ => coeff_of_lt_order ?_
     exact lt_of_lt_of_le (by rw [hα]; exact_mod_cast Nat.lt_succ_self k) (hrel β hβ).2
   have hG : ∀ α, coeff α G = ev (p.coeff α) := by
     intro α
-    simp only [hGdef, map_sum, coeff_monomial, Finset.sum_ite_eq]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hGdef, map_sum, coeff_monomial, Finset.sum_ite_eq]
     split_ifs with h
     · rfl
     · rw [MvPolynomial.mem_support_iff, not_not] at h; rw [h, map_zero]

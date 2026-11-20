@@ -87,7 +87,8 @@ theorem ConeVarNumerator.proof (hDZ : DegZeroLocQuot.Statement.{u}) :
       rw [map_mul, Subalgebra.coe_mul, hx, eval₂_mul, eval₂_X, coneVarMap, aeval_X]
       rfl
   rw [hφ, eval₂_eq']
-  simp only [map_sum, map_mul, map_prod, map_pow, Finset.sum_div]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, map_prod, map_pow, Finset.sum_div]
   refine Finset.sum_congr rfl fun d hd => ?_
   rw [mul_div_right_comm, ← hD d hd]
   rfl

@@ -167,7 +167,8 @@ theorem matrixCoeffBounds_imply_bound : MatrixCoeffBoundsImplyBound := by
     (fun X X' => by simp [stJ, Matrix.mul_add, Matrix.add_mul])
     (fun X => by
       show trace (dMat d * stJ ε X) = starRingEnd ℂ (trace (dMat d * X))
-      rw [trace_dMat, trace_dMat, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [trace_dMat, trace_dMat, map_sum]
       refine sum_congr rfl fun a _ => ?_
       rw [stJ_apply]; split_ifs <;> simp)
     Yl Yp Ym (Y * Ym - Ym * Y)

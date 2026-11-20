@@ -136,7 +136,8 @@ theorem kerBig_eq : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : G
       (GlobalTheory.RecDict.exists_isDetRoot D _ g).choose_spec (GlobalTheory.RecDict.exists_isDetRoot D _ g₁).choose_spec
     rw [(hadj _ (hd d hdm).2).2, cV, cV₁] at k
     exact k
-  simp only [thetaKO, GlobalTheory.SquareDict.datumA, kerBig, Finsupp.sum, map_sum, map_smul, Finset.sum_apply, Pi.smul_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [thetaKO, GlobalTheory.SquareDict.datumA, kerBig, Finsupp.sum, map_sum, map_smul, Finset.sum_apply, Pi.smul_apply,
     smul_eq_mul, Finset.mul_sum]
   refine Finset.sum_congr rfl fun d hdm => ?_
   rw [e d hdm]

@@ -119,7 +119,8 @@ theorem decSys_congr {W : I → Submodule K V} {e e' : I → Module.End K V} (h 
   obtain ⟨T, hT⟩ := h.cover x
   have a : e' mu x = ∑ nu ∈ T, e' mu (e nu x) := by
     conv_lhs => rw [hT]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
   rw [a]
   by_cases hmu : mu ∈ T
   · rw [Finset.sum_eq_single_of_mem mu hmu fun nu _ hne => h2 mu nu hne _ (h.mem nu x)]
@@ -1284,7 +1285,8 @@ theorem isWeightedHomogeneous_of_column_scaling {R : Type} [CommRing R] {m n : �
   have hL : AddMonoidAlgebra.coeff (aeval (fun v : Fin m × Fin n =>
         (X (Sum.inr v.2) * X (Sum.inl v) : MvPolynomial ((Fin m × Fin n) ⊕ Fin n) R)) Q) (E d0) = AddMonoidAlgebra.coeff Q d0 := by
     conv_lhs => rw [Q.as_sum]
-    rw [map_sum, coeff_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, coeff_sum]
     simp_rw [hmono, coeff_monomial]
     rw [Finset.sum_eq_single d0]
     · simp

@@ -13,7 +13,8 @@ theorem oLatTie_fg_span_top : ∀ {K : Type} [Field K] [NumberField K] [StarRing
   have hj : ∀ x, j x = ∑ i, σ (x i) • j (Pi.single i 1) := by
     intro x
     conv_lhs => rw [← (Pi.basisFun K (Fin n)).sum_repr x]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smulₛₗ]
     simp
@@ -36,7 +37,8 @@ theorem oLatTie_fg_span_top : ∀ {K : Type} [Field K] [NumberField K] [StarRing
     rw [hmem, Submodule.mem_span_image_finset_iff_exists_fun']
     refine exists_congr fun a => ?_
     have : ∑ v ∈ M.gen, σ ((a v : 𝓞 K) : K) • v = j (∑ v ∈ M.gen, a v • pre v) := by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun v hv => ?_
       rw [← algebraMap_smul K (a v) (pre v), map_smulₛₗ, hpre v hv]
     rw [this]
@@ -58,9 +60,11 @@ theorem oLatTie_fg_span_top : ∀ {K : Type} [Field K] [NumberField K] [StarRing
     simp [F0]
   have hF : ∀ x, F (j x) = σ (f x) := by
     intro x
-    rw [hj, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hj, map_sum]
     conv_rhs => rw [← (Pi.basisFun K (Fin n)).sum_repr x]
-    rw [map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, hFe]
     simp

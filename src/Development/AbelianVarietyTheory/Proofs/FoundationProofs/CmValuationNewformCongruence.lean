@@ -164,7 +164,8 @@ theorem inChi_avg {ε : Ω →+* ℂ} (X : Tower Ω ε) {N : ℕ} [NeZero N] (hN
     GlobalTheory.KummerEisensteinGalois.InChi X N w χ (∑ δ : (ZMod N)ˣ, u δ • X.diam N l (δ : ZMod N).val f) := by
   refine ⟨Submodule.sum_mem _ fun δ _ => Submodule.smul_mem _ _
     (GlobalTheory.CyclotomicQExpansion.ThnEx.diam_B X N l w _ (NeZero.pos N) hNl (ZMod.val_coe_unit_coprime δ) f hf), fun d hd => ?_⟩
-  rw [map_sum, Finset.smul_sum, ← Equiv.sum_comp (Equiv.mulRight (ZMod.unitOfCoprime d hd))
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.smul_sum, ← Equiv.sum_comp (Equiv.mulRight (ZMod.unitOfCoprime d hd))
     (fun δ => χ d • u δ • X.diam N l (δ : ZMod N).val f)]
   refine Finset.sum_congr rfl fun δ _ => ?_
   have hk : ((δ * ZMod.unitOfCoprime d hd : (ZMod N)ˣ) : ZMod N).val ≡ (δ : ZMod N).val * d [MOD N] := by

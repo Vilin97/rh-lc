@@ -25,7 +25,8 @@ private theorem sig_eq_star' (a : D.host.E) : D.sp.cm.sig a = star a := by rfl
 theorem form_Jc (x y : Fin (2 * D.R.rS + D.R.k + 1) → D.host.E) :
     GlobalTheory.SgAlg.form (D.sp.cm.sig : D.host.E →+* D.host.E) (Jc X) x y = (VS D).hT (vecOf X y) (vecOf X x) := by
   rw [vecOf_apply, vecOf_apply]
-  simp only [GlobalTheory.SgAlg.form, dotProduct, Matrix.mulVec, Jc, map_sum, map_smulₛₗ,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [GlobalTheory.SgAlg.form, dotProduct, Matrix.mulVec, Jc, map_sum, map_smulₛₗ,
     LinearMap.sum_apply, LinearMap.smul_apply, RingHom.id_apply, smul_eq_mul, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun i _ => ?_

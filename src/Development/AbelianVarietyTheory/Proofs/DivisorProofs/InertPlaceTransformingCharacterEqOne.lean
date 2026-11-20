@@ -182,7 +182,8 @@ theorem char_eq_one : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Numb
     rw [G.M'.co.form] at h0
     have h1 := congrArg (evFin F v) h0
     rw [← sub_eq_zero, ← (hζ y).2, ← (hζ y').2]
-    simpa [locCo, dotProduct, map_sum, map_mul, map_sub] using h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [locCo, dotProduct, map_sum, map_mul, map_sub] using h1
 
   have hHeis : ∀ φ₂ ∈ SB (Fin a' × Fin (a + a') → Fv F v), HeisInv G.M' B.ψ v C (Λ ∘ₗ boxL φ₂) := by
     rintro φ₂ hφ₂ u ⟨hu, z, hz⟩ φ hφ φ₁ hφ₁ hA

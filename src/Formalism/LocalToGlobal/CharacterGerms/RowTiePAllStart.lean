@@ -109,10 +109,12 @@ theorem allStart_of_proj (Y : FBChart C V O dd) (p : PairData Y d I) (hP : ProjS
       rw [eval_single_eq_subst, MvPowerSeries.subst_comp_subst_apply heS hPS]
     rw [h1, OActLog.log_endo Y.B.G Y.lg Y.lg_lin Y.lg_add (e g) (he0 g) (hhom g) i]
     simp only [← MvPowerSeries.smul_eq_C_mul]
-    rw [← MvPowerSeries.coe_substAlgHom hPS, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← MvPowerSeries.coe_substAlgHom hPS, map_sum]
     simp only [map_smul, MvPowerSeries.coe_substAlgHom hPS]
     refine PowerSeries.ext fun n => ?_
-    simp only [map_sum, map_smul, smul_eq_mul, PowerSeries.coeff_mk]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, smul_eq_mul, PowerSeries.coeff_mk]
     exact hkey n i
   let RHS : JJ I g → PowerSeries C := fun q =>
     (0 : PowerSeries C) - alongCv γ ((Y.raw p).sg ((Y.raw p).u (1 - g) q)) +

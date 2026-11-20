@@ -86,7 +86,8 @@ theorem UpperTheory.crystalline_period_matrix_relation :
       exact Finset.sum_congr rfl fun k _ => by ring)
     ((φVB ((PP l).PD K) (LL := ℚ_[l]) (V := V) : Module.End ℚ_[l] (V ⊗[ℚ_[l]] Bcr l)) ^ f) F
     (fun c => by
-      simp only [Φ, map_sum, hT]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Φ, map_sum, hT]
       refine Finset.sum_congr rfl fun i _ => ?_
       congr 1
       rw [← hψ, RingHom.map_mulVec, hψ, hF, ← Matrix.mulVec_mulVec]

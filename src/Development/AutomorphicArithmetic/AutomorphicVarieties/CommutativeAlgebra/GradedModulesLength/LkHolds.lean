@@ -35,7 +35,8 @@ theorem UpperTheory.V.Alg.M.lk_holds :
         rw [map_zero φ]; exact zero_mem _
       smul_mem' := fun c p hp μ => by
         show φ (AddMonoidAlgebra.coeff (c.1 * p.1) μ) ∈ _
-        rw [MvPolynomial.coeff_mul, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [MvPolynomial.coeff_mul, map_sum]
         refine Submodule.sum_mem _ fun d hd => ?_
         rw [map_mul]
         have h1 := hmul _ _ _ _ (hlat d.1 _ (c.2 d.1)).2 (hp d.2)

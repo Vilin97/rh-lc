@@ -122,7 +122,8 @@ theorem LeadAt.sum {ι : Type*} {w : σ → M} (T : Finset ι) (v : ι → M) (t
     by_cases hmt : m = top
     · rw [hmt]
     · exact (hlt m hm hmt).le
-  · rw [map_sum, Finset.sum_eq_single top]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum, Finset.sum_eq_single top]
     · exact (Formalism.InvariantFactorPaths.GelfandTsetlinBases.A1.LeadAt.of_hom (ht top htop)).2
     · intro m hm hmt
       exact (Formalism.InvariantFactorPaths.GelfandTsetlinBases.A1.LeadAt.of_hom (ht m hm)).comp_eq_zero (hlt m hm hmt)
@@ -619,7 +620,8 @@ theorem psi_lead (R : Type) [CommRing R] {n N : ℕ} {isVec : ℕ → Bool} {B :
   have hsum : ∑ c ∈ S, Dc μ N c = DD μ N := sum_Dc hp S hSc
   have hlev : ∑ c ∈ S, Finsupp.weight (wt n N (isVec N)) (Dc μ N c) =
       rho n N (isVec N) (DD μ N) := by
-    rw [← map_sum, hsum, weight_wt]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, hsum, weight_wt]
   have hterm : ∏ c ∈ S, ((a c : MvPolynomial (ℕ × Fin n) R) *
       Formalism.InvariantFactorPaths.GelfandTsetlinBases.pathWord isVec μ c (XR R n) N (Formalism.InvariantFactorPaths.GelfandTsetlinBases.canIdx (μ N) c) * monomial (Dc μ N c) 1) =
       ((∏ c ∈ S, a c : ℤ) : MvPolynomial (ℕ × Fin n) R) * Formalism.InvariantFactorPaths.GelfandTsetlinBases.psiPath R isVec μ N (Formalism.InvariantFactorPaths.GelfandTsetlinBases.canIdx (μ N)) *
@@ -653,7 +655,8 @@ theorem li_of_lead {k V V' ι O : Type*} [Field k] [AddCommGroup V] [Module k V]
   obtain ⟨j, hj, hjmax⟩ := (s.filter fun j => g j ≠ 0).exists_max_image Γ hne
   have hsum : ∑ k ∈ s, g k • π (Γ j) (v k) = 0 := by
     have := congrArg (π (Γ j)) hg
-    simpa only [map_sum, map_smul, map_zero] using this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa only [map_sum, map_smul, map_zero] using this
   have hsum2 : ∑ k ∈ s.filter (fun k => Γ k = Γ j), g k • π (Γ j) (v k) = 0 := by
     rw [Finset.sum_filter]
     refine Eq.trans (Finset.sum_congr rfl fun k hk => ?_) hsum

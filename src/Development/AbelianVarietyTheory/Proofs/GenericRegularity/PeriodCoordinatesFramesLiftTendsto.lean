@@ -92,7 +92,8 @@ theorem hermC_emb_inv_col {E : Type} [Field E] [NumberField E] [IsCMField E] {r 
   have e : ∀ a, ∑ b, u a * τ (G a b) * (starRingEnd ℂ) (τ (cc (G⁻¹ b k))) =
       u a * τ ((G * G⁻¹) a k) := by
     intro a
-    rw [Matrix.mul_apply, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Matrix.mul_apply, map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun b _ => ?_
     rw [cc, IsCMField.complexEmbedding_complexConj, Complex.conj_conj, map_mul, mul_assoc]
   simp only [hermC, Data.emb, e]

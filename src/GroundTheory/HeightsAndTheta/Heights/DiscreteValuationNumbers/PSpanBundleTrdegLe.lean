@@ -119,7 +119,8 @@ theorem SpanBundleTrdegLe.proof : SpanBundleTrdegLe.Statement := by
       calc G l m' = Matrix.of G l m' := rfl
         _ = _ := h.symm
         _ = _ := Finset.sum_congr rfl fun m _ => by rw [hGm]
-    simp_rw [hG, map_sum, map_mul, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp_rw [hG, map_sum, map_mul, Finset.mul_sum]
     rw [Finset.sum_comm]
     exact Finset.sum_congr rfl fun m _ => Finset.sum_congr rfl fun m' _ => by ring
   have hnone : ∀ l : Fin M, gz ⟨none, l⟩ = ∑ m, κ (g l m) * w m := by
@@ -130,7 +131,8 @@ theorem SpanBundleTrdegLe.proof : SpanBundleTrdegLe.Statement := by
     have e2 : gz ⟨none, l⟩ = κΦ (∑ m', s m' * algebraMap Ω Φ (G l m')) * Xo none := by
       simp only [gz, e1, map_mul]
       rfl
-    rw [e2, hΦ l, map_sum, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e2, hΦ l, map_sum, Finset.sum_mul]
     refine Finset.sum_congr rfl fun m _ => ?_
     simp only [w, κ, RingHom.comp_apply, map_mul]
     ring

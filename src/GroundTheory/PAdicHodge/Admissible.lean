@@ -74,7 +74,8 @@ theorem repr_baseChangeRep {ι : Type*} [Fintype ι] [DecidableEq ι] (v : Basis
     simp only [Algebra.TensorProduct.basis_repr_tmul, Finsupp.smul_apply, Finsupp.mapRange_apply,
       smul_eq_mul, smul_mul', smul_algebraMap]
     rw [← LinearMap.toMatrix_mulVec_repr v v (ρ g) w]
-    simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Finset.mul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     ring
   | add x y hx hy =>
@@ -158,7 +159,8 @@ theorem linearIndependent {ι : Type*} {d : ι → DB B ρ}
   have hgsum : ∀ g : G, ∑ i ∈ s, (g • c i) • (d i : B ⊗[F] V) = 0 := by
     intro g
     have := congrArg (baseChangeRep B ρ g) hc
-    rw [map_sum, map_zero] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero] at this
     rw [← this]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [baseChangeRep_smul, (mem_DB B ρ).1 (d i).2 g]
@@ -281,7 +283,8 @@ theorem comparison_surjective [FiniteDimensional F V] (hadm : IsAdmissible B ρ)
       ext k
       have hk := congrFun hw0 k
       rw [Pi.zero_apply] at hk
-      rw [map_zero, Finsupp.zero_apply, map_sum, ← hk]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_zero, Finsupp.zero_apply, map_sum, ← hk]
       simp only [Finsupp.coe_finsetSum, Finset.sum_apply, map_smul, Finsupp.smul_apply,
         smul_eq_mul, Matrix.mulVec, dotProduct, a, Basis.toMatrix_apply, mul_comm]
     exact funext fun j => Fintype.linearIndependent_iff.1 hli w hsum j

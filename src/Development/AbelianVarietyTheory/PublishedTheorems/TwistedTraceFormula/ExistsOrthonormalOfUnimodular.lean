@@ -74,7 +74,8 @@ theorem exists_represent_of_five (h2 : (2 : K) ≠ 0)
   rw [Fintype.sum_option, Fintype.sum_sum_type] at hw0
   have hw1 := congrArg (algebraMap K L) hw0
   have hw2 : algebraMap K L (w none) ≠ 0 := (map_ne_zero _).2 hw
-  simp only [a, Option.elim, Sum.elim_inl, Sum.elim_inr, map_add, map_mul, map_neg, map_pow, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [a, Option.elim, Sum.elim_inl, Sum.elim_inr, map_add, map_mul, map_neg, map_pow, map_sum,
     hγ', hκ', hd, map_zero] at hw1
   have hs : ∀ s : K, c (algebraMap K L s) = algebraMap K L s := fun s => (hF _).2 ⟨s, rfl⟩
   refine ⟨fun i => (algebraMap K L (w (some (Sum.inl i))) +
@@ -261,7 +262,8 @@ theorem isotropic_five_of_localField (K : Type*) [Field K] [ValuativeRel K] [Top
       exact (IsLocalRing.residue_eq_zero_iff _).2 ((hmax _).2 ((hlt1 _).1 h))
     · have hmem : (∑ i, ∑ j, r i j * y i * y j) ∈ 𝓂[K] := by
         rw [← IsLocalRing.residue_eq_zero_iff, ← hx]
-        simp only [map_sum, map_mul, hy]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, map_mul, hy]
       rw [hlt1]
       simpa [r] using (hmax _).1 hmem
 

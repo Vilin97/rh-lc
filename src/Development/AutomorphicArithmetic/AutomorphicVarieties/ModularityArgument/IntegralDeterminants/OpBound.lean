@@ -204,7 +204,8 @@ private theorem expand {V : Type} [Fintype V] {W : V → Type} [∀ v, AddCommGr
   have h : ∀ v, T v (e v (i v)) = ∑ b, LinearMap.toMatrix (e v) (e v) (T v) b (i v) • e v b := fun v => by
     simp only [LinearMap.toMatrix_apply]
     exact ((e v).sum_repr _).symm
-  rw [show (fun v => T v (e v (i v))) = fun v => ∑ b, LinearMap.toMatrix (e v) (e v) (T v) b (i v) • e v b from funext h,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [show (fun v => T v (e v (i v))) = fun v => ∑ b, LinearMap.toMatrix (e v) (e v) (T v) b (i v) • e v b from funext h,
     MultilinearMap.map_sum]
   exact Finset.sum_congr rfl fun j _ => f.map_smul_univ _ _
 

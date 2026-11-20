@@ -24,7 +24,8 @@ omit [IsUltrametricDist K] in
 theorem eq_sum_monomial_add (x : K⟦X⟧) (N : ℕ) : x = ∑ n ∈ Finset.range N, monomial n (coeff n x) +
     X ^ N * PowerSeries.mk fun n => coeff (n + N) x := by
   ext n
-  simp only [map_add, map_sum, coeff_monomial, coeff_X_pow_mul', coeff_mk, Finset.sum_ite_eq,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_add, map_sum, coeff_monomial, coeff_X_pow_mul', coeff_mk, Finset.sum_ite_eq,
     Finset.mem_range]
   split_ifs with h1 h2 h2
   · omega
@@ -52,7 +53,8 @@ theorem exists_sum_monomial_add {x : K⟦X⟧} (hx : x ∈ S O K e) (m : ℕ) : 
     rw [coeff_mk, if_neg (by omega), norm_mul, mul_assoc]
   · ext n
     rw [← map_natCast (C : K →+* K⟦X⟧), ← map_pow]
-    simp only [map_add, map_sum, coeff_monomial, coeff_C_mul, coeff_mk, Finset.sum_ite_eq, Finset.mem_range]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_add, map_sum, coeff_monomial, coeff_C_mul, coeff_mk, Finset.sum_ite_eq, Finset.mem_range]
     split_ifs with h
     · simp
     · rw [zero_add, mul_inv_cancel_left₀ h0]
@@ -153,7 +155,8 @@ theorem exists_extend_S (htf : ∀ x : R, (l : R) * x = 0 → x = 0) [IsAdicComp
           uIn _ ^ (e * l ^ k) * ⟨_, k, hk'⟩ := Subtype.ext (by
       simpa using eq_sum_monomial_add x (e * l ^ k))
     change F ⟨x, k, hk⟩ ∈ j.range
-    rw [h3, map_add, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h3, map_add, map_sum]
     refine add_mem (sum_mem fun n _ => h1 n _ (hx.1 n)) ?_
     obtain ⟨d, hd⟩ := hd (l ^ k)
     obtain ⟨m, hm⟩ := Nat.dvd_factorial (pow_pos hl.out.pos k) le_rfl
@@ -510,7 +513,8 @@ theorem taylor_S (g : ↥(GK (ϖ.field a))) (f : S O K e) (r : ℕ) : ∃ M₀, 
     have h3 : (l : K⟦X⟧) ^ r = C ((l : K) ^ r) := by simp
     have h4 : ∀ n : ℕ, (n : K⟦X⟧) = C (n : K) := fun n => by simp
     change descN K i f = _
-    conv_lhs => rw [hf, map_add, map_sum, h3, ← smul_eq_C_mul, map_smul, smul_eq_C_mul, ← h3]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [hf, map_add, map_sum, h3, ← smul_eq_C_mul, map_smul, smul_eq_C_mul, ← h3]
     simp only [AddMemClass.coe_add, MulMemClass.coe_mul, SubmonoidClass.coe_pow, SubringClass.coe_natCast,
       AddSubmonoidClass.coe_finset_sum, m]
     congr 1
@@ -523,7 +527,8 @@ theorem taylor_S (g : ↥(GK (ϖ.field a))) (f : S O K e) (r : ℕ) : ∃ M₀, 
     ∑ i ∈ Finset.range M, ϖ.muDiv a O g i * ϖ.iS O K ⟨descN K i h, descN_mem_S e i hh⟩, ?_⟩
   have h5 : galOCr O g (ϖ.iS O K (∑ n ∈ Finset.range N, m n)) = ∑ i ∈ Finset.range M, ϖ.muDiv a O g i *
       ϖ.iS O K (∑ n ∈ Finset.range N, (n.descFactorial i : S O K e) * m n) := by
-    simp only [map_sum, map_mul, map_natCast, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, map_natCast, Finset.mul_sum]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun n hn => ?_
     rw [galOCr_iS_monomial, ← ϖ.sum_muDiv_descFactorial a O g ((Finset.mem_range.1 hn).trans_le hM),

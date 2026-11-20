@@ -1045,7 +1045,8 @@ theorem isCl_ofAffine_self [IsDomain o] [IsFractionRing o Ω] {J : Type} (t : J 
     have key : (algebraMap o Ω (t i))⁻¹ =
         c.sum fun j a => algebraMap o Ω a * (algebraMap o Ω (t j) / algebraMap o Ω (t i)) := by
       rw [← one_div, ← map_one (algebraMap o Ω), ← hc]
-      simp only [Finsupp.sum, map_sum, Finset.sum_div, smul_eq_mul, map_mul, mul_div_assoc]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Finsupp.sum, map_sum, Finset.sum_div, smul_eq_mul, map_mul, mul_div_assoc]
     rw [key]
     exact sum_mem fun j _ => mul_mem (Subalgebra.algebraMap_mem _ _) (hS j)
   have divIff : ∀ (z : PrimeSpectrum o) (i : J),

@@ -123,7 +123,8 @@ include hψ hπ in
 theorem map_partialSum (x : Γ) (N : ℕ) :
     ψ (T.partialSum x N) =
       ∑ m ∈ Finset.range N, T.π ^ m * u ^ m * T.teich (g (T.coeff x m)) := by
-  simp only [partialSum, finSum, map_sum, map_mul, map_pow, hπ, T.map_teich ψ g hψ, mul_pow]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [partialSum, finSum, map_sum, map_mul, map_pow, hπ, T.map_teich ψ g hψ, mul_pow]
 
 include hπ in
 theorem map_sub_map_partialSum_mem (x : Γ) (N : ℕ) :

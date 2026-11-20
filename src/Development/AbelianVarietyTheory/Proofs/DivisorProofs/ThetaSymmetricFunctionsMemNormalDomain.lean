@@ -30,7 +30,8 @@ theorem exists_common_field : ∀ (R R₁ : Type) [CommRing R] [CommRing R₁] [
 
 theorem symTup_map' {R R' : Type} [CommRing R] [CommRing R'] (i : R →+* R') {N : ℕ} (c : Fin N → R) (j : Fin N) :
     i (symTup c j) = symTup (fun a => i (c a)) j := by
-  simp only [symTup, Finset.esymm_map_val, map_pow, map_sum, map_prod]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [symTup, Finset.esymm_map_val, map_pow, map_sum, map_prod]
 
 theorem symTup_perm' {R : Type} [CommRing R] {N : ℕ} (c : Fin N → R) (σ : Equiv.Perm (Fin N)) :
     symTup (fun b => c (σ b)) = symTup c := by

@@ -257,7 +257,8 @@ theorem exists_scalar_of_readExt
   obtain ⟨c, rfl⟩ := key x
   obtain ⟨d, rfl⟩ := key t
   have h1 : ∑ a, (eL (c a) - ζ * eL (d a)) • rd (v a) = 0 := by
-    simp only [map_sum, readExt_tmul, Finset.smul_sum, smul_smul] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, readExt_tmul, Finset.smul_sum, smul_smul] at h
     simp only [sub_smul, Finset.sum_sub_distrib, h, sub_self]
   have h2 : ∀ a, eL (c a) = ζ * eL (d a) := fun a =>
     sub_eq_zero.1 (Fintype.linearIndependent_iff.1 (hF _ v v.linearIndependent) _ h1 a)

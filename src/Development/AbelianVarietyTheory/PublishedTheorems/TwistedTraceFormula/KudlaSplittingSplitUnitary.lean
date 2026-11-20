@@ -115,7 +115,8 @@ theorem form_swap (hc : ∀ z, c (c z) = z) {Q : Matrix α α E} (hQ : IsHerm c 
   have hJ : ∀ j l, c (stdJ ν E j l) = -stdJ ν E l j := by
     rintro (j | j) (l | l) <;> simp [stdJ, one_apply, eq_comm]
   have h : hTens c Q (stdJ ν E) w' w = -c (hTens c Q (stdJ ν E) w w') := by
-    simp only [hTens, map_sum, map_mul, hc, hJ, hQ.1, ← Finset.sum_neg_distrib]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hTens, map_sum, map_mul, hc, hJ, hQ.1, ← Finset.sum_neg_distrib]
     simp only [← Finset.sum_product', Finset.univ_product_univ]
     exact Fintype.sum_equiv ⟨fun p => (p.2.2.1, p.2.2.2, p.1, p.2.1), fun p => (p.2.2.1, p.2.2.2, p.1, p.2.1),
       fun _ => rfl, fun _ => rfl⟩ _ _ fun p => by simp only [Equiv.coe_fn_mk]; ring
@@ -184,7 +185,8 @@ theorem continuous_form_left (Q : Matrix α α E) (w' : Matrix α (ν ⊕ ν) E)
     Continuous fun x : Matrix α ν E => form c Q (fromCols x 0) w' := by
   have h : ∀ e : E, Continuous fun z : E => Algebra.trace F E (z * e) := fun e =>
     IsModuleTopology.continuous_of_linearMap ((Algebra.trace F E).comp (LinearMap.mulRight F e))
-  simp only [form, hTens, map_sum, mul_assoc]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, hTens, map_sum, mul_assoc]
   refine continuous_const.mul (continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ =>
     continuous_finsetSum _ fun k _ => continuous_finsetSum _ fun l _ => (h _).comp ?_)
   rcases j with j | j

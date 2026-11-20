@@ -83,7 +83,8 @@ private theorem IsCoc.tr_bd [Fintype X] {a : G → X → X} {c : G → X → M} 
     (z : Ch A G (m + 1)) : bd A M m (tr A a c (m + 1) z) = tr A a c m (bd A G m z) := by
   refine LinearMap.congr_fun (ext1 (f := (bd A M m).comp (tr A a c (m + 1)))
     (f' := (tr A a c m).comp (bd A G m)) fun g => ?_) z
-  simp only [LinearMap.comp_apply, tr_single, bd_single, map_sum, map_add, map_smul, Finset.sum_add_distrib,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [LinearMap.comp_apply, tr_single, bd_single, map_sum, map_add, map_smul, Finset.sum_add_distrib,
     Finset.smul_sum, h.contract, h.tail]
   congr 1
   · exact Equiv.sum_comp (h.perm (g 0)) fun x => Finsupp.single (term a c x fun i => g i.succ) (1 : A)

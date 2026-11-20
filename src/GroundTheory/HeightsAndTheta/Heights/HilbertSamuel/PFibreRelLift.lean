@@ -152,10 +152,12 @@ theorem FibreRelLift.proof : FibreRelLift.Statement := by
     have := hd k
     omega
   have h1 := congrArg (dehomLoc _ hT) hrel
-  rw [map_sum, map_one] at h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_one] at h1
   simp only [map_mul, hz] at h1
   choose b hb using fun j => Ideal.Quotient.mk_surjective (dehomLoc _ hT (u j))
-  simp only [← hb, ← map_mul, ← map_sum] at h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← hb, ← map_mul, ← map_sum] at h1
   rw [← map_one (Ideal.Quotient.mk (Ideal.span {((ℓ : ℕ) : chartRingZ y c)})), Ideal.Quotient.eq,
     Ideal.mem_span_singleton'] at h1
   obtain ⟨q, hq⟩ := h1

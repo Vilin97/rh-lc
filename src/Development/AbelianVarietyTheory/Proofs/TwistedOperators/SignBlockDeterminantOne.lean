@@ -66,7 +66,8 @@ theorem frame_fock_orbit : ∀ (D : D7) (V W : HSp D) (S' : D.what₂.Tau → SP
       (GlobalTheory.Chain.RealIt.SubstDeg.totalDegree_subst_le _ _ _ _ _ _ _ _ _))
     (fun P => CoefCont.smul hs (coefCont_subst τ _ _ _ (continuous_toMK _) P)) φ
   refine ⟨n, φs, c, h1, fun k => ?_⟩
-  rw [hp, key, h2, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hp, key, h2, map_sum]
   simp only [map_smul]
 
 set_option maxHeartbeats 1000000 in

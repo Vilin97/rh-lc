@@ -98,13 +98,16 @@ include hx in
 theorem deltaS_apply (G : Module.Dual K V) (F : V) : deltaS φK x x' G (ν F) = φK (G F) := by
   have h1 : ν F = ∑ i, φK (x.repr F i) • x' i := by
     conv_lhs => rw [← x.sum_repr F]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun i _ => by rw [map_smulₛₗ, hx]
   have h2 : G F = ∑ i, x.repr F i * G (x i) := by
     conv_lhs => rw [← x.sum_repr F]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun i _ => by rw [map_smul, smul_eq_mul]
-  rw [h1, h2, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h1, h2, map_sum, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_smul, smul_eq_mul, map_mul]
   congr 1
@@ -362,7 +365,8 @@ theorem lpAt_dom (hφ : ∀ x : O, φK (algebraMap O Kf x) = algebraMap O' Kf' (
     have e2 : ∀ l : Fin n, ∑ i, algebraMap O' Kf' (φ (Mat jj i)) * φK (be p r lam0 (F i) (u (Pi.single l 1)).1) =
         algebraMap O' Kf' (φ ((p : O) ^ D * (Pi.single l (1 : O) : Fin n → O) jj)) := by
       intro l
-      rw [← hφ, ← hu (Pi.single l 1) jj, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hφ, ← hu (Pi.single l 1) jj, map_sum]
       exact Finset.sum_congr rfl fun i _ => by rw [map_mul, hφ]
     simp only [e1, Matrix.map_apply]
     calc ∑ i, algebraMap O' Kf' (φ (Mat jj i)) *

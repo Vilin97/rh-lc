@@ -54,12 +54,14 @@ theorem hAd_herm (hσ : ∀ e, σ (σ e) = e) (hJ : ∀ i j, σ (J j i) = J i j)
   have hc : ∀ i j, cA σ (incM F J i j) = incM F J j i := fun i j => by
     show cA σ (inclR (F := F) (AF F) (J i j)) = inclR (F := F) (AF F) (J j i)
     rw [← hJ j i]; rfl
-  simp only [hAd, dotProduct, Matrix.mulVec, map_sum, map_mul, cA_cA hσ, hc, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hAd, dotProduct, Matrix.mulVec, map_sum, map_mul, cA_cA hσ, hc, Finset.mul_sum]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 
 theorem hAd_incV (u u' : Fin n → E) : hAd σ J (incV F u) (incV F u') = inclR (F := F) (AF F) (form σ J u u') := by
-  simp only [hAd, form, incV, incM, dotProduct, Matrix.mulVec, Matrix.map_apply, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hAd, form, incV, incM, dotProduct, Matrix.mulVec, Matrix.map_apply, map_sum, map_mul]
   rfl
 
 variable {R : Type} [Zero R] {ev : AF F → R}

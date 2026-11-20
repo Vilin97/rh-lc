@@ -66,7 +66,8 @@ theorem genSub_stable (S : Set V) (Z : Mat p q) (y : V) (hy : y ∈ genSub act S
 theorem stable_of_units {N : Submodule ℂ V} (h : ∀ a b, ∀ x ∈ N, act (Eab a b) x ∈ N) (Z : Mat p q)
     (x : V) (hx : x ∈ N) : act Z x ∈ N := by
   rw [Matrix.matrix_eq_sum_single Z]
-  simp only [map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.sum_apply]
   refine N.sum_mem fun a _ => N.sum_mem fun b _ => ?_
   have : Matrix.single a b (Z a b) = Z a b • Eab a b := by
     rw [Eab, Matrix.smul_single, smul_eq_mul, mul_one]

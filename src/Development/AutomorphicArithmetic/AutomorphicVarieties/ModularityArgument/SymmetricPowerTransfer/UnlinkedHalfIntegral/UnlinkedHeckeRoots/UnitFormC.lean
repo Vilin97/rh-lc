@@ -105,7 +105,8 @@ theorem UpperTheory.V.Z.Sym.Unl.unitFormC :
     simp
   refine ⟨∑ a, c a • f a, hasChar_comb χ _ f hfam, ?_, vanOff_comb c f hvan, ?_, ?_⟩
   · intro n
-    rw [coef_comb, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [coef_comb, map_sum]
     refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg zero_le_one fun a _ => ?_
     rw [map_mul, norm_mul, hcn, one_mul]
     exact hint a n
@@ -127,7 +128,8 @@ theorem UpperTheory.V.Z.Sym.Unl.unitFormC :
     obtain ⟨f', hfam', hvan', hco⟩ := hcj σ
     refine ⟨∑ a : (ZMod N)ˣ, (σ (2 * u)⁻¹ * cj σ χ ((a⁻¹ : (ZMod N)ˣ) : ZMod N)) • f' a,
       hasChar_comb (cj σ χ) _ f' hfam', vanOff_comb _ f' hvan', fun n => ?_⟩
-    rw [coef_comb, coef_comb, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [coef_comb, coef_comb, map_sum]
     refine Finset.sum_congr rfl fun a _ => ?_
     rw [hco, map_mul σ (c a), hc]
     dsimp only

@@ -78,7 +78,8 @@ structure Hyp : Prop where
 variable {D}
 
 theorem h_symm (H : D.Hyp) (x y : n → A) : D.h y x = D.σA (D.h x y) := by
-  simp only [h, hform, map_sum, map_mul, H.σσ, H.herm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [h, hform, map_sum, map_mul, H.σσ, H.herm]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 
@@ -190,7 +191,8 @@ theorem orthogonal_proj_normal_zero (H : D.Hyp) : D.pW D.z = 0 := by
   rw [pW_apply, pU_z_eq H, sub_self]
 
 theorem pW_pX (H : D.Hyp) (u : n → A) : D.pW (D.pX u) = 0 := by
-  rw [pX_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [pX_apply, map_sum]
   simp [pW_e H]
 
 end Dat

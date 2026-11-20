@@ -219,7 +219,8 @@ private theorem loc {φ : TR.Sm F 2} {Ψ : GA F 2 → ℂ} (h0 : Ψ ≠ 0) (hr :
     rintro _ ⟨a, -, rfl⟩ _ ⟨b, -, rfl⟩ e
     rw [Function.surjInv_eq hs, Function.surjInv_eq hs] at e
     rw [e]
-  rw [(uopSum F w _ _ c Φ hΦ).2 _ hS, ← hM1, ← map_smul, ← he, (uopSum F w _ _ c φ hf).2 _ hS, map_add, map_sum, hM1]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [(uopSum F w _ _ c Φ hΦ).2 _ hS, ← hM1, ← map_smul, ← he, (uopSum F w _ _ c φ hf).2 _ hS, map_add, map_sum, hM1]
   simp only [hM, apply_ite M, map_zero]
 
 omit [IsTotallyReal F] in

@@ -19,7 +19,8 @@ theorem exists_sec_sum_nonzero :
   let s : LB.Sec L :=
     { f := fun m => ∑ j, (X.presheaf.map (homOfLE (le_top : L.U m ≤ ⊤)).op).hom (r j) * (σ j).f m
       compat := fun m n => by
-        simp only [map_sum, map_mul, Finset.mul_sum, hres]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, map_mul, Finset.mul_sum, hres]
         refine Finset.sum_congr rfl fun j _ => ?_
         rw [(σ j).compat m n]
         ring }
@@ -32,7 +33,8 @@ theorem exists_sec_sum_nonzero :
       ((X.presheaf.map (homOfLE (le_top : L.U m ≤ ⊤)).op).hom (r j)) =
         (X.presheaf.germ ⊤ z trivial).hom (r j) := fun j =>
     TopCat.Presheaf.germ_res_apply _ _ _ _ _
-  simp only [s, map_sum, map_mul, hgerm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [s, map_sum, map_mul, hgerm]
   rw [← Finset.add_sum_erase _ _ (Finset.mem_univ i)]
   have hu : IsUnit ((X.presheaf.germ ⊤ z trivial).hom (r i) * (X.presheaf.germ (L.U m) z hzm).hom ((σ i).f m)) :=
     ((Scheme.mem_basicOpen_top X _ z).1 hri).mul hm

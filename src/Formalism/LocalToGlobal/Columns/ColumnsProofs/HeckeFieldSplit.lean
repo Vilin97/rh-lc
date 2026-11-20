@@ -59,7 +59,8 @@ private theorem lifts_heckeD_of_nb_map {S : GSD X.K} {S' : GSD L} (b : GSDBC ι 
   intro φ
   apply Subtype.ext
   funext d'
-  simp only [heckeD_op_apply, GSDBC.lift_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [heckeD_op_apply, GSDBC.lift_apply, map_sum]
   rw [← hnb d', Finset.sum_map]
   rfl
 
@@ -70,7 +71,8 @@ private theorem lifts_heckeI_of_nbI_map {S : GSD X.K} {S' : GSD L} (b : GSDBC ι
   intro φ
   apply Subtype.ext
   funext d'
-  simp only [heckeI_op_apply, GSDBC.lift_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [heckeI_op_apply, GSDBC.lift_apply, map_sum]
   rw [← hnb d', Finset.sum_map]
   rfl
 

@@ -92,7 +92,8 @@ theorem phi_Wm_last (hE : IsGlRep E) (hU : IsInfUnitary ε E) (hV : IsKIrrHW ε 
   rw [Fintype.sum_prod_type]
   refine Finset.sum_eq_zero fun init _ => ?_
   simp only [sch_word_snoc, Module.End.mul_apply]
-  rw [← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum]
   rcases isEmpty_or_nonempty (Fin n × Fin n) with hX | ⟨⟨p0⟩⟩
   · simp
   · have h := phi_one_Wm hE hU hV hc hmono hh hbig (hF (Fin.snoc init p0))

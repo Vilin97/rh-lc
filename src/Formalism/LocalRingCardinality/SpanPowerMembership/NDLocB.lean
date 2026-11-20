@@ -18,7 +18,8 @@ instance KwF_fin : FiniteDimensional ℚ_[l] (KwF (E := E) j) :=
   IntermediateField.finiteDimensional_adjoin fun x _ => Algebra.IsIntegral.isIntegral x
 
 theorem jE_mem (x : E) : jE j x ∈ KwF (E := E) j := by
-  rw [← (Module.finBasis ℚ E).sum_repr x, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← (Module.finBasis ℚ E).sum_repr x, map_sum]
   refine IntermediateField.sum_mem _ fun i _ => ?_
   rw [Algebra.smul_def, map_mul, eq_ratCast (algebraMap ℚ E), map_ratCast]
   exact mul_mem (SubfieldClass.ratCast_mem _ _) (IntermediateField.subset_adjoin ℚ_[l] _ ⟨i, rfl⟩)

@@ -50,7 +50,8 @@ theorem at_vecMulVec_right {n d : ℕ} {v : Pl F} (a : Fin n → AE F E) {b : Fi
 
 theorem form_herm {σ : E →ₐ[F] E} (hσ : ∀ x, σ (σ x) = x) {n : ℕ} {J : Matrix (Fin n) (Fin n) E}
     (hJ : ∀ i j, σ (J j i) = J i j) (x w : Fin n → E) : form σ J x w = σ (form σ J w x) := by
-  simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hJ, hσ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hJ, hσ]
   simp only [Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun l _ => ?_
@@ -68,7 +69,8 @@ theorem hTens_pure_mul {R A : Type} [CommRing R] [CommRing A] [Algebra R A] (c :
     hTens c JA JB (Matrix.vecMulVec a b) (Z * N) =
       Matrix.vecMul (Matrix.vecMul a JA) (Z.map c) ⬝ᵥ (N.map c *ᵥ Matrix.vecMul b JB) := by
   unfold hTens
-  simp only [Matrix.vecMulVec_apply, Matrix.mul_apply, map_sum, map_mul, Matrix.vecMul, Matrix.mulVec, dotProduct,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.vecMulVec_apply, Matrix.mul_apply, map_sum, map_mul, Matrix.vecMul, Matrix.mulVec, dotProduct,
     Matrix.map_apply, Finset.mul_sum, Finset.sum_mul]
   conv_lhs => enter [2, i, 2, j, 2, k]; rw [Finset.sum_comm]
   conv_lhs => enter [2, i, 2, j]; rw [Finset.sum_comm]
@@ -93,7 +95,8 @@ theorem pair_iota_left (σ : E →ₐ[F] E) {n n₁ : ℕ} (J : Matrix (Fin n) (
     have h1 := congrArg (inclR (F := F) (AF F)) (h0 (Pi.single q 1))
     rw [map_zero] at h1
     rw [← h1]
-    simp only [form, incV, incM, Matrix.map_apply, hc, dotProduct, Matrix.mulVec, map_sum, map_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [form, incV, incM, Matrix.map_apply, hc, dotProduct, Matrix.mulVec, map_sum, map_mul,
       Pi.single_apply, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true, Finset.mul_sum]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun k _ => ?_
     ring
@@ -154,7 +157,8 @@ theorem isoA_orth_at : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Num
   have hgram : incM F W₁.J = (incM F H'.ι)ᵀ * incM F W.J * (incM F H'.ι).map (cA σ) := by
     rw [← hH'.gram]
     ext p q
-    simp only [incM, Matrix.map_apply, Matrix.mul_apply, Matrix.transpose_apply, map_sum, map_mul, hc]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [incM, Matrix.map_apply, Matrix.mul_apply, Matrix.transpose_apply, map_sum, map_mul, hc]
   set b : Fin d₁ → AE F E := Zᵀ *ᵥ incV F tX with hbdef
   have hb : b = 0 := by
     refine GlobalTheory.IsoOrthLoc.vanish_of_orth σ hσ W₁.J hJ₁ v b (GlobalTheory.IsoOrthLoc.at_mulVec (at_transpose hZ) _)
@@ -169,14 +173,16 @@ theorem isoA_orth_at : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Num
     congr 3
     have hα : Matrix.vecMul (incV F H.x) (incM F X.J) = fun k => cA σ (incV F tX k) := by
       funext k
-      simp only [Matrix.vecMul, dotProduct, incV, incM, Matrix.map_apply, hc, ← hxX k, map_sum, map_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Matrix.vecMul, dotProduct, incV, incM, Matrix.map_apply, hc, ← hxX k, map_sum, map_mul]
     have hβ : ((incM F H'.ι)ᵀ).map (cA σ) *ᵥ Matrix.vecMul (incM F H'.ι *ᵥ g) (incM F W.J) =
         Matrix.vecMul g (incM F W₁.J) := by
       rw [hgram, Matrix.transpose_map, Matrix.mulVec_transpose, ← Matrix.vecMul_transpose (incM F H'.ι) g,
         Matrix.vecMul_vecMul, Matrix.vecMul_vecMul, Matrix.mul_assoc]
     have hγ : Matrix.vecMul (fun k => cA σ (incV F tX k)) (Z.map (cA σ)) = fun q => cA σ (b q) := by
       funext q
-      simp only [Matrix.vecMul, dotProduct, Matrix.map_apply, hbdef, Matrix.mulVec, Matrix.transpose_apply, map_sum,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Matrix.vecMul, dotProduct, Matrix.map_apply, hbdef, Matrix.mulVec, Matrix.transpose_apply, map_sum,
         map_mul]
       exact Finset.sum_congr rfl fun k _ => mul_comm _ _
     rw [hα, hβ, hγ]

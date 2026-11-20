@@ -93,7 +93,8 @@ theorem exists_dual_basis (h' : IsGrpPullback G' t.G x φ) {r : ℕ} (b : Module
   refine ⟨u, GlobalTheory.LineNorm.isTanBasis_of_basis E H X t R x r _ (fun l => isTanAtG_lieG h' (u l)) fun v hv => ?_, hu'⟩
   choose L hL using fun m => exists_linear h' (b m)
   have hs (a : Fin r → R) (m : Fin r) : L m (∑ i, a i • tanOf (isTanAtG_lieG h' (u i))) = a m := by
-    simp [map_sum, hL, hu']
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, hL, hu']
   refine (existsUnique_congr fun a => isComb_iff (fun i => tanOf (isTanAtG_lieG h' (u i))) a (tanOf hv)).2
     ⟨fun m => L m (tanOf hv), ?_, fun a ha => funext fun m => by rw [ha, hs]⟩
   obtain ⟨y, hy⟩ := exists_lieG h' hv

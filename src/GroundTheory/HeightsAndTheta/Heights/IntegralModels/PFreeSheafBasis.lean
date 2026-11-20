@@ -71,7 +71,8 @@ lemma incl_proj_app (V : Y.Opens) (i j : Fin n) (r : Γ(Y, V)) :
 lemma sum_incl_proj_app (V : Y.Opens) (m : Γ(freeModule Y n, V)) :
     ∑ j, ((incl Y n j).app V).hom (((proj Y n j).app V).hom m) = m := by
   have := congrArg (fun φ => evalHom V m φ) (sum_proj_incl Y n)
-  simp only [map_sum, evalHom_apply] at this
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, evalHom_apply] at this
   exact this
 
 end FreeSheafBasis
@@ -103,7 +104,8 @@ theorem FreeSheafBasis.proof : FreeSheafBasis.Statement.{u} := by
   refine Function.bijective_iff_has_inverse.mpr ⟨fun m j => ((proj Y n j).app V).hom m, ?_, ?_⟩
   · intro r
     funext j
-    simp only [map_sum, incl_proj_app]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, incl_proj_app]
     change (∑ x, if x = j then r x else 0 : Γ(Y, V)) = r j
     simp
   · intro m

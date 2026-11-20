@@ -34,7 +34,8 @@ theorem exists_dual_family (A M : Type) [CommRing A] [AddCommGroup M] [Module A 
   refine ⟨n, fun i => t (Pi.single i 1), fun i => LinearMap.proj i ∘ₗ s, fun m => ?_⟩
   have h := LinearMap.congr_fun hs m
   rw [LinearMap.comp_apply, LinearMap.id_apply] at h
-  conv_rhs => rw [← h, pi_eq_sum_univ' (s m), map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_rhs => rw [← h, pi_eq_sum_univ' (s m), map_sum]
   simp only [map_smul, LinearMap.comp_apply, LinearMap.proj_apply]
 
 theorem lattices_alg {O Ω C : Type} [CommRing O] [Field Ω] [Field C] [Algebra O Ω] [Algebra O C] [Algebra Ω C]
@@ -95,7 +96,8 @@ theorem lattices_alg {O Ω C : Type} [CommRing O] [Field Ω] [Field C] [Algebra 
       obtain ⟨y, rfl⟩ := h
       refine AddSubgroup.subset_closure ⟨1, RC.one_mem, _, ⟨fun k => y.1 (b k), (hdd _).2 fun l hl => ?_, rfl⟩, ?_⟩
       · have := hW2 l hl y.1 y.2
-        rw [map_sum] at this
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum] at this
         simpa only [map_smul, smul_eq_mul, dotProduct] using this
       · rw [one_smul]
         exact funext fun k => hev _ _
@@ -111,7 +113,8 @@ theorem lattices_alg {O Ω C : Type} [CommRing O] [Field Ω] [Field C] [Algebra 
           ?_ ?_ ?_ ?_ (hall u)
         · rintro _ ⟨y, rfl⟩
           have := hR _ (hW2 a₀ ha₀ y.1 y.2)
-          rw [map_sum, map_sum] at this
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [map_sum, map_sum] at this
           simpa only [map_smul, smul_eq_mul, map_mul, hev] using this
         · simp only [hzero, mul_zero, Finset.sum_const_zero]; exact RC.zero_mem
         · intro x y _ _ hx hy
@@ -134,12 +137,14 @@ theorem lattices_alg {O Ω C : Type} [CommRing O] [Field Ω] [Field C] [Algebra 
     have hid : (∑ m, (j (f m)).smulRight (toLi (e m)) : Li →ₗ[Ω] Li) = LinearMap.id :=
       hbc.algHom_ext _ _ fun v => by
         rw [LinearMap.id_apply, LinearMap.sum_apply]
-        conv_rhs => rw [← hef v, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          conv_rhs => rw [← hef v, map_sum]
         refine Finset.sum_congr rfl fun m _ => ?_
         rw [LinearMap.smulRight_apply, hj, map_smul, algebraMap_smul]
     have hk : ∀ k k', (Pi.single k 1 : Fin r → Ω) k' = ∑ m, j (f m) (b k) * co (toLi (e m)) k' := fun k k' => by
       have := congrArg co (LinearMap.congr_fun hid (b k))
-      rw [LinearMap.id_apply, hco, LinearMap.sum_apply, map_sum] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [LinearMap.id_apply, hco, LinearMap.sum_apply, map_sum] at this
       rw [← this, Finset.sum_apply]
       simp only [LinearMap.smulRight_apply, map_smul, Pi.smul_apply, smul_eq_mul]
     have hjm : ∀ m, j (f m) ∈ om := fun m => by rw [hom]; exact ⟨_, rfl⟩
@@ -150,7 +155,8 @@ theorem lattices_alg {O Ω C : Type} [CommRing O] [Field Ω] [Field C] [Algebra 
       rw [Finset.sum_comm]
       have : ∀ k, ∑ m, a k * algebraMap Ω C (j (f m) (b k)) * bcMap Ω C _ (co (toLi (e m))) k' =
           a k * algebraMap Ω C ((Pi.single k 1 : Fin r → Ω) k') := fun k => by
-        rw [hk, map_sum, Finset.mul_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [hk, map_sum, Finset.mul_sum]
         refine Finset.sum_congr rfl fun m _ => ?_
         rw [map_mul, _root_.mul_assoc]
         rfl

@@ -216,7 +216,8 @@ theorem UpperTheory.ConvolutionTheory.H.constTerm :
   let P : LaurentRing n := ∑ l ∈ Λ, AddMonoidAlgebra.single l (c l)
   have hev : ∀ z, evalAt z P = ∫ g, T g * ctFun σ z g ∂μ := by
     intro z
-    rw [ct_int μ hT Λ hΛ σ z, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [ct_int μ hT Λ hΛ σ z, map_sum]
     refine Finset.sum_congr rfl fun l _ => ?_
     rw [evalAt_single]
     simp only [c]

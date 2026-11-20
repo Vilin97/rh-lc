@@ -24,7 +24,8 @@ theorem mem_of_exp (ι : Qbar l ≃+* ℂ) {n : Type} [Fintype n] [DecidableEq n
     (hS : ∀ v ∈ S, toEndC ι M v ∈ S) : ∀ v ∈ S, toEndC ι (exp M) v ∈ S := by
   obtain ⟨k, hk⟩ := hM
   intro v hv
-  rw [exp_eq_sum hk, map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [exp_eq_sum hk, map_sum, LinearMap.sum_apply]
   refine S.sum_mem fun i hi => ?_
   clear hi
   rw [map_rat_smul, LinearMap.smul_apply, map_pow]
@@ -37,7 +38,8 @@ theorem exp_apply_of_eq_zero (ι : Qbar l ≃+* ℂ) {n : Type} [Fintype n] [Dec
     {M : Matrix n n (Qbar l)} (hM : IsNilpotent M) {v : n → ℂ} (hv : toEndC ι M v = 0) :
     toEndC ι (exp M) v = v := by
   obtain ⟨k, hk⟩ := hM
-  rw [exp_eq_sum (k := k + 1) (pow_eq_zero_of_le (Nat.le_succ k) hk), Finset.sum_range_succ', map_add,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [exp_eq_sum (k := k + 1) (pow_eq_zero_of_le (Nat.le_succ k) hk), Finset.sum_range_succ', map_add,
     map_sum, LinearMap.add_apply, LinearMap.sum_apply, Finset.sum_eq_zero]
   · simp
   · intro i _

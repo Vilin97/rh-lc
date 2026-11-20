@@ -68,7 +68,8 @@ private theorem sec_norm_le {d : ℕ} (sec : Eu d →ₗ[ℂ] (G1 K (2 + 2) → 
   set v := U (HH z) with hv
   have hsum : sec v z = ∑ i, b.repr v i * sec (b i) z := by
     conv_lhs => rw [← b.sum_repr v]
-    simp [map_sum, Finset.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, Finset.sum_apply]
   have hc : ∀ i, ‖b.repr v i‖ ≤ B := fun i =>
     (PiLp.norm_apply_le (b.repr v) i).trans ((b.repr.norm_map v).le.trans (hU _))
   have hexp : ‖Complex.exp (2 * (HH z : ℂ))‖ = Real.exp (2 * HH z) := by

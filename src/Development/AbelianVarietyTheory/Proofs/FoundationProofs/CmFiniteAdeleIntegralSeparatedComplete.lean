@@ -37,7 +37,8 @@ def comb : (Fin (Module.finrank ℤ (𝓞 E)) → 𝔸) →+ E ⊗[ℚ] 𝔸 whe
 theorem coord_comb (r : Fin (Module.finrank ℤ (𝓞 E)) → 𝔸) (i : Fin (Module.finrank ℤ (𝓞 E))) :
     coord i (comb r) = r i := by
   change coord i (∑ j, algebraMap (𝓞 E) E (Module.finBasis ℤ (𝓞 E) j) ⊗ₜ[ℚ] r j) = r i
-  rw [map_sum, Finset.sum_eq_single i]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_eq_single i]
   · rw [← ratBasis_apply]
     simp [coord]
   · intro j _ hj

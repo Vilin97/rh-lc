@@ -96,7 +96,8 @@ theorem ker_le_span : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H 
   let b := GlobalTheory.Diag.dualBasis k (Module.finBasis ℤ φ.X)
   refine ⟨fun j => torL hF (b j), (ker_le_range hF hv hq).trans ?_⟩
   rintro _ ⟨c, rfl⟩
-  rw [← b.sum_repr c, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← b.sum_repr c, map_sum]
   exact Submodule.sum_mem _ fun j _ => by
     rw [map_smul]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨j, rfl⟩)

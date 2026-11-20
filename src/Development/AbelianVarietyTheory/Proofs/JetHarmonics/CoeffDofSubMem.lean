@@ -129,7 +129,8 @@ theorem dof_baseChange (hJ : JetAlgSt) (hRep : RepSt) (hSer : SerSt) [IsLocalRin
       fnVal r.left (π ⁻¹ᵁ U) (∑ i, resTop _ (scal G'.hom (c i)) * (π.app U).hom (s i)) =
         ∑ i, algebraMap R A (c i) * fnVal r.left (π ⁻¹ᵁ U) ((π.app U).hom (s i)) := by
     intro A _ _ r hr
-    rw [fnVal_eq_fnValHom _ _ hr, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [fnVal_eq_fnValHom _ _ hr, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_mul, ← fnVal_eq_fnValHom _ _ hr, ← fnVal_eq_fnValHom _ _ hr,
       fnVal_const r.left G'.hom (algebraMap R A) (Over.w r) _ hr]
@@ -149,7 +150,8 @@ theorem dof_baseChange (hJ : JetAlgSt) (hRep : RepSt) (hSer : SerSt) [IsLocalRin
         rw [h0 m]
         exact top_le_preimage_comp (toUnit _ : sp (R₀ := R) R ⟶ _).left _ _ hU'
     refine ⟨h₁, (val _ (y m) h₁).trans ?_⟩
-    rw [hΨ, map_sum, ← hτ, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hΨ, map_sum, ← hτ, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_mul, map_mul, ← hΨ (MvPowerSeries.map _ _), hτ (ev _ _), ← (hser i n a y hy m).2]
     congr 1

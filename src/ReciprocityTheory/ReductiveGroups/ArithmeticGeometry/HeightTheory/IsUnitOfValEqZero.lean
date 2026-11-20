@@ -120,7 +120,8 @@ theorem val_eval_eq_zero {Ω U σ : Type} [Field Ω] [Field U] [Algebra Ω U]
     first
       | (refine ⟨∑ β ∈ P.support, MvPolynomial.monomial β
             (⟨P.coeff β, hc β⟩ : (vRing w).comap (algebraMap Ω U)), ?_⟩
-         rw [map_sum]
+         set_option synthInstance.maxHeartbeats 100000 in
+           rw [map_sum]
          simp only [MvPolynomial.map_monomial]
          conv_rhs => rw [P.as_sum]
          rfl)

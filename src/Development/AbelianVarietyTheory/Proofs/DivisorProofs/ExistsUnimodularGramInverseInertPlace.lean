@@ -51,7 +51,8 @@ theorem at_mul {v : Pl F} {a b : AF F} (ha : At (evFin F v) a) : At (evFin F v) 
 theorem hA_gen (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (a b : AF F) (y y' : Fin n → E) :
     hA σ J (a • fun i => inclR (F := F) (AF F) (y i)) (b • fun i => inclR (F := F) (AF F) (y' i)) =
       (a * b) • inclR (F := F) (AF F) (form σ J y y') := by
-  simp only [hA, form, dotProduct, Matrix.mulVec, Pi.smul_apply, map_sum, map_mul, Algebra.smul_def,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hA, form, dotProduct, Matrix.mulVec, Pi.smul_apply, map_sum, map_mul, Algebra.smul_def,
     AlgHom.commutes, GlobalTheory.InertSelfDual.cA_inclR, Finset.mul_sum]
   refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun l _ => ?_
   ring
@@ -122,7 +123,8 @@ theorem mul_one_right (x : L) : ι x * ι 1 = ι x := by rw [← hmul, mul_one]
 theorem tJ_mul (hinj : Function.Injective ι) {m p q : Type} [Fintype p] (M : Matrix m p E) (N : Matrix p q E) :
     tJ ι (M * N) = tJ ι M * tJ ι N := by
   symm; apply tJ_eq himg hmul hinj; intro i j
-  rw [Matrix.mul_apply, Matrix.mul_apply, map_sum, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.mul_apply, Matrix.mul_apply, map_sum, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [hmul, tJ_spec himg hmul, tJ_spec himg hmul, map_mul]
   calc ι 1 * inclR (F := F) (AF F) (M i k) * (ι 1 * inclR (F := F) (AF F) (N k j))
@@ -229,7 +231,8 @@ theorem exists_gram_inv : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [
     rw [hint']
     have : ι (gram σL ι P X.J i j) = hA σ X.J (fun k => ι (Pm k i)) (fun k => ι (Pm k j)) := by
       rw [hGdef]
-      simp only [hA, Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, map_sum, hmul,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hA, Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, map_sum, hmul,
         tJ_spec himg hmul, hσ, Finset.sum_mul]
       rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_

@@ -234,7 +234,8 @@ theorem isAdmissible_flagPair_of_unitriangular_right_automorphism (Λ Λ' : Subm
       ∑ c, (ξ.map (fun x : 𝓞 E => (x : E)) * K) c b • frame F c =
       ∑ d, K d b • (frame (Formalism.L2.SG.Saturated.mapL γ hγ F') d - frameAct (frame F) ξ d) := by
     rw [Formalism.L2.SG.Saturated.frame_mapL, LinearEquiv.mul_apply, hKe b]
-    simp only [Formalism.L2.SG.Saturated.frame_mapL, map_sum, map_smul, frameAct, smul_sub, Finset.sum_sub_distrib,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Formalism.L2.SG.Saturated.frame_mapL, map_sum, map_smul, frameAct, smul_sub, Finset.sum_sub_distrib,
       Matrix.mul_apply, Matrix.map_apply, Finset.sum_smul, Finset.smul_sum, smul_smul]
     congr 1
     rw [Finset.sum_comm]

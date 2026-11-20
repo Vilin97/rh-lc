@@ -105,7 +105,8 @@ theorem isContRep_repOf [TopologicalSpace G] [TopologicalSpace K] [ContinuousMul
     have h2 : ev f = ∑ p : P, f.1 p.1 • (Pi.single p 1 : P → ℂ) := by
       funext p
       simp [ev, Finset.sum_apply, Pi.single_apply]
-    conv_lhs => rw [h1, h2, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [h1, h2, map_sum, map_sum]
     refine Finset.sum_congr rfl fun p _ => ?_
     rw [map_smul, map_smul, smul_eq_mul, mul_comm]
   have : (fun g => ℓ (repOf S hS α g w)) = fun g => ∑ p : P, ℓ (Lf (Pi.single p 1)) * w.1 (p.1 * α g) := by

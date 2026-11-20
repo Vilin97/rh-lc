@@ -26,7 +26,8 @@ theorem incA_mul_ι (p : Place D k) (a : D.host.E) (x : k) : (incA D a : AE D) *
 theorem rat_mul_ι (p : Place D k) {l m : ℕ} {Y : Type} [Fintype Y] (M : Matrix (Fin l) (Fin m) D.host.E)
     (N : Matrix (Fin m) Y k) : (rat M : Matrix (Fin l) (Fin m) (AE D)) * (N.map p.ι) = (M.map p.pr * N).map p.ι := by
   ext i j
-  simp only [rat, Matrix.mul_apply, Matrix.map_apply, map_sum, incA_mul_ι]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [rat, Matrix.mul_apply, Matrix.map_apply, map_sum, incA_mul_ι]
 
 variable {Z n : Type} [Fintype Z] [DecidableEq Z] [Fintype n] [DecidableEq n]
 

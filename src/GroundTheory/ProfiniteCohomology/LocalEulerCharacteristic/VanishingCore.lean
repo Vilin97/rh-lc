@@ -57,7 +57,8 @@ theorem cohomologyConj_eq_cohomologyMap_of_sum {T A : Rep.{u} k G} [IsDiscreteRe
     ext a
     rw [Rep.sum_hom, Representation.IntertwiningMap.toLinearMap_sum, LinearMap.sum_apply]
     change ∑ j, A.ρ g (i j (p j a)) = A.ρ g a
-    rw [← map_sum, hipa]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, hipa]
   have hj : ∀ j, cohomologyMap (resTrivMor N hT hA (i j)) n ≫ cohomologyConj A N n g =
       cohomologyMap (resTrivMor N hT hA (A.ρ g ∘ₗ i j)) n := fun j => by
     rw [cohomologyMap_comp_cohomologyConj_of_apply N _ (resTrivMor N hT hA (A.ρ g ∘ₗ i j)) g
@@ -88,7 +89,8 @@ theorem sum_quotient_out_apply_eq_zero (A : Rep.{u} k G)
     ∑ c : G ⧸ (U : Subgroup G), A.ρ c.out a = 0 := by
   apply hinv
   intro g
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   have hc : ∀ c : G ⧸ (U : Subgroup G), A.ρ g (A.ρ c.out a) = A.ρ (g • c).out a := by
     intro c
     obtain ⟨m, hm⟩ := QuotientGroup.mk_out_eq_mul (U : Subgroup G) (g * c.out)

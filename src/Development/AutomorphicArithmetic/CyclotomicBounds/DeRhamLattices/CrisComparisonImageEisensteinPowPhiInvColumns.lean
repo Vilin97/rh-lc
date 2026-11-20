@@ -14,7 +14,8 @@ private theorem tensor_inclusion_smul_sum {l : ℕ} [Fact l.Prime] {O K : Type} 
     {R R' : Type} [CommRing R] [CommRing R'] [Algebra O R] [Algebra O R']
     (f : R →ₐ[O] R') (T : LocLat G ℚ_[l] K O) (s : R) {κ : Type} [Fintype κ] (r : κ → R) (x : κ → ↥T.L.T) :
     TWincl f T (∑ k, (s * r k) ⊗ₜ[O] x k) = f s • TWincl f T (∑ k, r k ⊗ₜ[O] x k) := by
-  rw [map_sum, map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, Finset.smul_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   simp [TWincl, TensorProduct.smul_tmul']
 
@@ -25,7 +26,8 @@ private theorem ennreal_volume_ratio_step_cancel {R W ι : Type} [CommRing R] [A
     ∑ j, act (y j) (v j) = ∑ k, act (z k) (w k) := by
   obtain ⟨u, rfl⟩ := hu
   have h2 := congrArg (act ((u⁻¹ : Rˣ) : R)) h
-  simp only [map_sum, hy, hz, ← hmul, ← mul_assoc, Units.inv_mul, one_mul] at h2
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, hy, hz, ← hmul, ← mul_assoc, Units.inv_mul, one_mul] at h2
   exact h2
 
 private theorem tame_lattice_inclusion (l : ℕ) [Fact l.Prime] (a e : ℕ) [NeZero a] [NeZero e] (O K : Type) [CommRing O]

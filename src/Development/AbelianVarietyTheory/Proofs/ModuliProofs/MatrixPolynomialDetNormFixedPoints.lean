@@ -217,7 +217,8 @@ theorem map_ev (g : Q →+ Q) {pt pt' : κ → Q} (h : ∀ i, N • pt i = 0) (h
   have : M *ᵥ t = ∑ j, fun i => M i j * t j := by
     funext i
     simp [mulVec, dotProduct, Finset.sum_apply]
-  rw [this, map_sum, ev_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [this, map_sum, ev_apply, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_nsmul, hM, ev_apply, Finset.smul_sum]
   exact Finset.sum_congr rfl fun i _ => (val_mul_smul (h' i) _ _).symm
@@ -341,7 +342,8 @@ theorem exists_padic_matrix : ∀ (l : ℕ) [Fact l.Prime] (m : ℕ) (Q : Type) 
     have : Finite (Polynomial.aeval s F).toAddMonoidHom.ker := hfin
     exact norm_det_eq l τ h1 hb (Polynomial.aeval s F).toAddMonoidHom _ (hρ _)
   · obtain ⟨t, ht, -⟩ := hb j x (by rw [pow_succ', mul_smul, hx, smul_zero])
-    rw [← ht, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← ht, map_sum]
     refine Finset.sum_eq_zero fun i _ => ?_
     rw [map_nsmul, hρ, ← hF, h0]
     simp

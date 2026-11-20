@@ -126,7 +126,8 @@ theorem thAt_move : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T0 : Type
     exact Finset.sum_eq_zero fun p hp => Finset.sum_eq_zero fun q hq =>
       hsp.mul_eq_zero (hSt hp) (hSa hq) fun e => Finset.disjoint_left.1 hd hq (e ▸ hp)
   have o2 : et * cA D ea = 0 := by
-    rw [← idem_eq ht, ← idem_eq ha, idem, idem, map_sum, Finset.sum_mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← idem_eq ht, ← idem_eq ha, idem, idem, map_sum, Finset.sum_mul_sum]
     exact Finset.sum_eq_zero fun p hp => Finset.sum_eq_zero fun q hq => hsp.mul_conj (hSt hp) (hSa hq)
   have o3 : et * (ea + cA D ea) = 0 := by rw [mul_add, o1, o2, add_zero]
   have o4 : cA D et * (ea + cA D ea) = 0 := by

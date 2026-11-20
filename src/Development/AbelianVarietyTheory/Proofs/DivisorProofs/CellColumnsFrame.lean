@@ -23,7 +23,8 @@ theorem isFrame_sum_smul_of_isUnit {X : Scheme.{0}} {F : X.Modules} {U : X.Opens
       (Fintype.linearCombination Γ(X, V) fun i => resM F h (e i)) ∘
         ((resG X h).mapMatrix M).mulVec := by
     funext a
-    simp only [Function.comp_apply, Fintype.linearCombination_apply, map_sum, GlobalTheory.Twist.resM_smul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Function.comp_apply, Fintype.linearCombination_apply, map_sum, GlobalTheory.Twist.resM_smul,
       Matrix.mulVec, dotProduct, Finset.sum_smul, Finset.smul_sum, smul_smul,
       RingHom.mapMatrix_apply, Matrix.map_apply]
     rw [Finset.sum_comm]

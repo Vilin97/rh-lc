@@ -130,7 +130,8 @@ theorem exists_retraction [Subsingleton (CommRing.Pic A)] [Module.Free ℤ X]
     refine exists_eq_of_invariant hα h _ ?_
     change ρ (ev (RingHom.id C) u⁻¹ (ρ c)) = cst X C (ev (RingHom.id C) u⁻¹ (ρ c))
     rw [← AddMonoidAlgebra.sum_coeff_single (ρ c), Finsupp.sum]
-    simp only [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum]
     refine Finset.sum_congr rfl fun x _ => ?_
     have h1 : u⁻¹ (Multiplicative.ofAdd x) = u (Multiplicative.ofAdd (-x)) := by
       rw [ofAdd_neg, map_inv]; rfl

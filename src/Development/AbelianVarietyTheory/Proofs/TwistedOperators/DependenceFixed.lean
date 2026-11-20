@@ -175,7 +175,8 @@ variable {v φ}
 
 theorem Sm.mul {m n p : Type} [Fintype n] {c c' : Γ} {M : Matrix m n R} {N : Matrix n p R} (h : Sm v φ c M)
     (h' : Sm v φ c' N) : Sm v φ (c * c') (M * N) := fun i j => by
-  rw [Matrix.mul_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.mul_apply, map_sum]
   refine v.map_sum_le fun k _ => ?_
   rw [map_mul, map_mul]
   exact mul_le_mul' (h i k) (h' k j)
@@ -205,7 +206,8 @@ theorem Sm.det {n : Type} [Fintype n] [DecidableEq n] {c : Γ} (hc : c ≤ 1) {M
   have h3 : ∀ i j, v (φ (M i j)) ≤ 1 := fun i j => by
     have := v.map_add_le ((h2 i j).trans hc) (h1 i j)
     rwa [sub_add_cancel] at this
-  rw [← map_one φ, ← Matrix.det_one (n := n), Matrix.det_apply', Matrix.det_apply', map_sum, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_one φ, ← Matrix.det_one (n := n), Matrix.det_apply', Matrix.det_apply', map_sum, map_sum,
     ← Finset.sum_sub_distrib]
   refine v.map_sum_le fun σ _ => ?_
   rw [map_mul, map_mul, ← mul_sub, map_prod, map_prod, map_mul]

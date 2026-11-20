@@ -143,7 +143,8 @@ theorem ringdeg : ∀ (B : BottChern) (k : Type) [CommRing k] (X Y : Scheme.{0})
   have hl (j : ℕ) : R'.c1 L ^ j ∈ R'.gr j := by simpa using SetLike.pow_mem_graded j (R'.constant_one_mem_nonvanishing L)
   have hy (i : ℕ) : y i ∈ R.gr i := Submodule.smul_mem _ _ (hmem (g + i) i (by omega) _ (hl _))
   have hL : G (R'.ch (.ofLB L)) = y 0 + y 1 + y 2 := by
-    rw [GlobalTheory.T.chern_character_line_bundle_exp, show g + 1 + 2 = g + 3 by omega, Finset.sum_range_add, map_add, map_sum, Finset.sum_eq_zero, zero_add]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [GlobalTheory.T.chern_character_line_bundle_exp, show g + 1 + 2 = g + 3 by omega, Finset.sum_range_add, map_add, map_sum, Finset.sum_eq_zero, zero_add]
     · simp only [Finset.sum_range_succ, Finset.sum_range_zero, zero_add, map_add, map_smul, y]
     · intro j hj
       rw [map_smul, hzero j (by simpa using hj) _ (hl _), smul_zero]

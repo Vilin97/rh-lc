@@ -90,7 +90,8 @@ theorem so_kill : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberFiel
       Submodule.sum_mem _ fun m _ => Submodule.smul_mem _ _ (hφ₁SB m)
     have hsum0 : ∑ m, a m • φ₁ m = 0 := by
       refine hι.bij.injOn hsumSB (Submodule.zero_mem _) ?_
-      rw [map_zero, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_zero, map_sum]
       funext Y
       rw [Finset.sum_apply, Pi.zero_apply]
       have hY := hkill Y
@@ -107,7 +108,8 @@ theorem so_kill : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberFiel
           refine Finset.sum_congr rfl fun m _ => ?_
           rw [← hact m, hinv (z m) (hzat m) (hzpi m) _ hpure]
       _ = Λ (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure f (Function.update φ B.v₁ (∑ m, a m • φ₁ m))) := by
-          rw [pure_update_sum B.v₁ f φ hfin a φ₁, map_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [pure_update_sum B.v₁ f φ hfin a φ₁, map_sum]
           simp only [map_smul]
       _ = 0 := by rw [hsum0, pure_update_zero B.v₁ f φ hfin, map_zero]
 

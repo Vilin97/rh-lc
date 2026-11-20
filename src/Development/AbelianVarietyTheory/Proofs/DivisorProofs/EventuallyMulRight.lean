@@ -114,7 +114,8 @@ theorem eventually_mul_hom (N : ℕ) (hN : N ≠ 0)
       rw [map_zero]; rfl
     exact ht.eventually (eventually_mul_right N hN _)
   filter_upwards [eventually_all.2 h1] with b hb
-  rw [← B.sum_repr b, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← B.sum_repr b, map_sum, Finset.mul_sum]
   refine sum_mem fun i _ => ?_
   have := hb i
   rw [mul_assoc, Algebra.TensorProduct.tmul_mul_tmul, mul_one, one_mul] at this

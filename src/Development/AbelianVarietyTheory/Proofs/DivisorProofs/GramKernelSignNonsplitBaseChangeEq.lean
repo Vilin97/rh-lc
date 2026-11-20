@@ -134,7 +134,8 @@ theorem gram_det_map (hφ : ∀ x, τ (φ x) = φ (σ x)) (H A : Matrix (Fin n) 
   have e2 : (Matrix.of fun i j => hform τ (H.map φ) (c i).1 (c j).1) =
       ((gramOn σ H V).map φ).submatrix (finCongr hk) (finCongr hk) := by
     ext i j
-    simp only [Matrix.of_apply, hc, v, Matrix.submatrix_apply, Matrix.map_apply, gramOn, hform, map_sum, map_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.of_apply, hc, v, Matrix.submatrix_apply, Matrix.map_apply, gramOn, hform, map_sum, map_mul,
       Function.comp_apply, hφ, finCongr_apply]
     rfl
   rw [e2, Matrix.det_submatrix_equiv_self,

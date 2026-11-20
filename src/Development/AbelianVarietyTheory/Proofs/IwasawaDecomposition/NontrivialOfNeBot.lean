@@ -37,7 +37,8 @@ theorem total_apply (b : ι → S) (j : P →ₗ[ℂ] S →ₗ[ℂ] F) (c : ι �
 theorem total_repr (b : Module.Basis ι ℂ S) (j : P →ₗ[ℂ] S →ₗ[ℂ] F) (p : P) (v : S) :
     total b j (fun a => b.repr v a • p) = j p v := by
   rw [total_apply]
-  conv_rhs => rw [← b.sum_repr v, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_rhs => rw [← b.sum_repr v, map_sum]
   simp
 
 theorem range_total (b : Module.Basis ι ℂ S) (j : P →ₗ[ℂ] S →ₗ[ℂ] F) :
@@ -60,7 +61,8 @@ theorem coeff_mem {ρ : Representation ℂ H S} (hsp : Submodule.span ℂ (Set.r
     | mem x hx =>
       obtain ⟨g, rfl⟩ := hx
       have e : ∑ a, j (c a) (ρ g (b a)) = R g (total b j c) := by
-        rw [total_apply, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [total_apply, map_sum]
         exact Finset.sum_congr rfl fun a _ => hj _ _ _
       rw [e]
       exact hU _ _ h

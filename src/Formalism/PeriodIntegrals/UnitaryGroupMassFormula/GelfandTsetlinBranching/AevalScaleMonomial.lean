@@ -61,7 +61,8 @@ theorem eval_matrixCoeffPoly (x : Fin n × Fin n → ℂ) : eval x (mcP f) = mcF
     have h2 : (genY n).map (eval x) = matOf x := by ext i j; simp [genY, matOf]
     rw [h1, map_id, h2]
   unfold mcP mcF
-  rw [map_sum, fockF_eq_sum _ f f.support (fun m _ h => mem_support_iff.mpr h)]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, fockF_eq_sum _ f f.support (fun m _ h => mem_support_iff.mpr h)]
   refine Finset.sum_congr rfl fun m _ => ?_
   rw [map_mul, eval_C, ← coeff_map, hmap, mul_assoc]
 

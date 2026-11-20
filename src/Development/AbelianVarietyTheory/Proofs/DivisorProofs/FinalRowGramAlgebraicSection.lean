@@ -27,7 +27,8 @@ theorem hatL_cong_of_hat {D : D7} (V : HSp D) (κ : GA D V) (Λ Λ' : Submodule 
   convert h1 using 1
   funext j
   rw [e]
-  simp only [Pi.sub_apply, map_sub, Matrix.mulVec, dotProduct, map_sum, map_mul, AlgEquiv.apply_symm_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Pi.sub_apply, map_sub, Matrix.mulVec, dotProduct, map_sum, map_mul, AlgEquiv.apply_symm_apply,
     Matrix.map_apply]
 
 end GlobalTheory.BaseLevelInj

@@ -20,7 +20,8 @@ theorem repr_map_id {F A A' E ι : Type*} [Field F] [CommRing A] [Algebra F A] [
   have hm : Algebra.TensorProduct.map f (AlgHom.id F E) z
       = ∑ i, f ((Algebra.TensorProduct.basis A b).repr z i) • (Algebra.TensorProduct.basis A' b) i := by
     conv_lhs => rw [hz]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     simp only [Algebra.TensorProduct.basis_apply, TensorProduct.smul_tmul', smul_eq_mul, mul_one,
       Algebra.TensorProduct.map_tmul, AlgHom.id_apply]

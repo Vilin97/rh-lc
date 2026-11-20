@@ -133,12 +133,16 @@ theorem map_fildR_eq [CharZero Qp] (ρ : Representation LL G V) (ρ' : Represent
     obtain ⟨m, c, k, hc, hk⟩ := GlobalTheory.exists_embedding_idempotent_tensor Qp K LL τ
     refine ⟨∑ j, c j • mulVdR (LL := LL) (V := V) (k j) x,
       (mem_fil PD ρ τ a _).2 ⟨⟨fun g => ?_, fun y => ?_⟩, ?_⟩, ?_⟩
-    · simp only [map_sum, map_smul, act_mul, h1]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp only [map_sum, map_smul, act_mul, h1]
     · have := congrArg (ev (LL := LL) (K := K) x) (hk y)
-      simp only [map_sum, ev_tmul, mul_mul] at this
-      simp only [map_sum, map_smul, this, Finset.smul_sum, mul_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, ev_tmul, mul_mul] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, this, Finset.smul_sum, mul_smul]
     · exact Submodule.sum_mem _ fun j _ => Submodule.smul_mem _ _ (mul_mem_filV PD a _ x hx2)
-    · simp only [map_sum, map_smul, map_mul, h2, ← mul_smul, ← Finset.sum_smul, hc, one_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp only [map_sum, map_smul, map_mul, h2, ← mul_smul, ← Finset.sum_smul, hc, one_smul]
 
 variable {V₀ : Type} [AddCommGroup V₀] [Module LL V₀] [Module Qp V₀] [IsScalarTower Qp LL V₀]
 

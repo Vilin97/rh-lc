@@ -25,7 +25,8 @@ theorem ι_mul (x : k) (b : AE D) : p.ι x * b = p.ι (x * p.π b) := by
 theorem map_ι_mul {a b c : Type} [Fintype b] (M : Matrix a b k) (N : Matrix b c (AE D)) :
     M.map p.ι * N = (M * N.map p.π).map p.ι := by
   ext i j
-  simp only [Matrix.mul_apply, Matrix.map_apply, map_sum, ι_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mul_apply, Matrix.map_apply, map_sum, ι_mul]
 
 omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 
@@ -94,7 +95,8 @@ theorem beta_eq (h : p.IsCoreFrame B s FA F₀) (hL : ∀ r, FL.β r () = s * p.
   · exact h.1 r a
   · cases u
     rw [h.2 r, fromCols_apply_inr, Matrix.mul_apply]
-    simp only [vecB, Matrix.mulVec, dotProduct, Place.pr, map_sum, map_mul, Matrix.map_apply, hL, RingHom.comp_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [vecB, Matrix.mulVec, dotProduct, Place.pr, map_sum, map_mul, Matrix.map_apply, hL, RingHom.comp_apply,
       Finset.mul_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     ring
@@ -172,7 +174,8 @@ theorem slice_line : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [Topolog
     have hcol : ∀ r, F₀.β r (Sum.inr ()) = 0 := by
       intro r
       rw [h.2 r]
-      simp only [vecB, Matrix.mulVec, dotProduct, Place.pr, map_sum, map_mul, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [vecB, Matrix.mulVec, dotProduct, Place.pr, map_sum, map_mul, Finset.mul_sum]
       refine Finset.sum_eq_zero fun j _ => ?_
       have := hz j
       simp only [Place.pr] at this

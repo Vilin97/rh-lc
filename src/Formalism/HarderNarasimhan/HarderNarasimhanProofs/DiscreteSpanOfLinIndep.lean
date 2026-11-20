@@ -55,7 +55,8 @@ theorem sum_embedding_eq_zero {t : Free.ChooseBasisIndex ℤ (𝓞 K) → ℝ}
     rcases InfinitePlace.embedding_mk_eq φ with hφ | hφ
     · simpa [hφ] using h (InfinitePlace.mk φ)
     · have h2 := congrArg (starRingEnd ℂ) (h (InfinitePlace.mk φ))
-      simpa [hφ, map_sum, map_mul, Complex.conj_ofReal] using h2
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa [hφ, map_sum, map_mul, Complex.conj_ofReal] using h2
   have hli := (canonicalEmbedding.latticeBasis K).linearIndependent
   rw [Fintype.linearIndependent_iff] at hli
   have hz := hli (fun k => (t k : ℂ)) (by

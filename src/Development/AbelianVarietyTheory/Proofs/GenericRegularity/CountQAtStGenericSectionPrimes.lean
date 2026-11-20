@@ -202,7 +202,8 @@ theorem sfr_eq_sum (i : Fin (WeightFamilies.dimY D j + 1)) :
     sfr X la w i = ∑ k, algebraMap (Kp X la N) ↥(Frac0 X la w) (algebraMap (Op X la N) (Kp X la N) (Tv X la N (i, k))) *
       CurveLoc.fr0 X la N w 1 (X.inc wL (w k)) (mem_one X la N w k) := by
   apply Subtype.ext
-  rw [coe_sfr, Formalism.MainNotions.Gaps.EtaleWeightGaps.sec, map_sum, AddSubmonoidClass.coe_finsetSum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [coe_sfr, Formalism.MainNotions.Gaps.EtaleWeightGaps.sec, map_sum, AddSubmonoidClass.coe_finsetSum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [map_smul, ← Algebra.smul_def]
   rfl
@@ -277,14 +278,16 @@ theorem frobenius_zero_not_mem_of_trdeg {Ω : Type} [Field Ω] [Algebra B.KO Ω]
     refine hρ _ (hK ?_)
     rw [RingHom.mem_ker, CurveLoc.phiZ_fraction_base, h2, map_zero, zero_mul]
   · have h := congrArg ρ (sfr_eq_sum X la N w 0)
-    rw [sfr_zero, map_one, map_sum] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [sfr_zero, map_one, map_sum] at h
     rw [h]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_mul, hval _ _ (mem_one X la N w k)]
     rfl
   · intro i
     have h := congrArg ρ (sfr_eq_sum X la N w i.succ)
-    rw [hρ _ (hJ (sfr_succ_mem_Jid X la w i)), map_sum] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hρ _ (hJ (sfr_succ_mem_Jid X la w i)), map_sum] at h
     rw [h]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_mul, hval _ _ (mem_one X la N w k)]

@@ -45,7 +45,8 @@ theorem mul_conj_add_eq_zero {D : D7} {Pg : Finset (HeightOneSpectrum (𝓞 D.ho
       · exact (delta_of_isIdemAt hΦ (hes P hP)).2.1
       · exact (delta_of_isIdemAt hΦ (hes Q hQ)).2.2 P (Ne.symm hQP)
     have h2 : Φ (cA D (∑ Q ∈ Pg, es Q)) P = 1 := by
-      rw [map_sum, ev_sum, Finset.sum_eq_single_of_mem P' hP' fun Q hQ hQP => ?_]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, ev_sum, Finset.sum_eq_single_of_mem P' hP' fun Q hQ hQP => ?_]
       · rw [hPc]; exact (delta_conj hΦ (delta_of_isIdemAt hΦ (hes P' hP'))).2.1
       · refine (delta_conj hΦ (delta_of_isIdemAt hΦ (hes Q hQ))).2.2 P fun h => hQP ?_
         have h4 := congrArg (cP (D := D)) (h.symm.trans hPc)

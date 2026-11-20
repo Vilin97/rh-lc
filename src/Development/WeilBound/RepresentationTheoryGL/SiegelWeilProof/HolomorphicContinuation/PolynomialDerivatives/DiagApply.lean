@@ -145,9 +145,11 @@ theorem bicomm : Bicomm := by
     have hsum : ∀ w : Fin d → V, ∀ k, t w k = ∑ l, tt k l (w l) := by
       intro w k
       conv_lhs => rw [← Finset.univ_sum_single w]
-      simp [tt, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [tt, map_sum]
     refine LinearMap.ext fun w => funext fun k => ?_
-    simp only [Module.End.mul_apply, diag_apply, hsum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Module.End.mul_apply, diag_apply, hsum, map_sum]
     refine Finset.sum_congr rfl fun l _ => ?_
     exact LinearMap.congr_fun (htt k l) (w l)
   obtain ⟨s', hs', hs'E⟩ := orbit (amp_posH h d) T' hT' (diag d x) hx' (fun k => e k)

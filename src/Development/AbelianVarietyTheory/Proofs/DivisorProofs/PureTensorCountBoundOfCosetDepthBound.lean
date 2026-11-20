@@ -39,7 +39,8 @@ private theorem reps_fg {V : Type} [AddCommGroup V] [Module ℚ V] [Module.Finit
       ∑ i, (c i / n) • (b i : V), M.sum_mem fun i _ => M.smul_mem _ (b i).2, ?_⟩
     have e : u = ∑ i, c i • (b i : V) := by
       have := congrArg M.subtype (b.sum_repr ⟨u, hu⟩)
-      rw [map_sum] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum] at this
       exact this.symm
     rw [e, Finset.smul_sum, ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun i _ => ?_

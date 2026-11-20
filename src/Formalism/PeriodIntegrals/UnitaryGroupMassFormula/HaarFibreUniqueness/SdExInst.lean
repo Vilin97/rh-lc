@@ -50,7 +50,8 @@ theorem BR_symm (σ : E →ₐ[F] E) (hσ : ∀ x, σ (σ x) = x) {n a : ℕ}
       hR (Fv F v) σ J x y = sigR (Fv F v) σ (hR (Fv F v) σ J y x) := by
     intro x y
     unfold hR Formalism.UG.hform
-    simp only [map_sum, map_mul, hss, hsJ]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, hss, hsJ]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
     ring

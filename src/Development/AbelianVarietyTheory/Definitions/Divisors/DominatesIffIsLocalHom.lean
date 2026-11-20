@@ -245,7 +245,8 @@ theorem IsEtTower.coord_indep {cK : k →+* K} {R : Subring K} {cL : k →+* L} 
     (a : Fin r → R) (ha : ∑ i, ι (a i) * τ i = 0) (j : Fin r) : a j = 0 := by
   obtain ⟨φ, h1, h2⟩ := h.exists_deriv (Pi.single j 1)
   have := congrArg (fun x => (φ x).snd) ha
-  simp only [map_sum, map_mul, h1, h2, map_zero, TrivSqZeroExt.snd_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, h1, h2, map_zero, TrivSqZeroExt.snd_sum,
     TrivSqZeroExt.inl_mul_inr, TrivSqZeroExt.snd_inr] at this
   simpa [Pi.single_apply] using this
 

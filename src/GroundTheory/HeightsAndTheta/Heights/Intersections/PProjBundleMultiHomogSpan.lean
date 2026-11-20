@@ -48,14 +48,16 @@ theorem ker_genMap_le (P : Ideal (MRing ι)) {N1 : ℕ} {S S' : Type} [Fintype S
     rintro ⟨k | u, i⟩
     · simp [genMap, σ]
     · change Fin N1 at i
-      simp only [genMap, RingHom.coe_comp, Function.comp_apply, eval₂Hom_X', map_sum, map_mul, σ,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [genMap, RingHom.coe_comp, Function.comp_apply, eval₂Hom_X', map_sum, map_mul, σ,
         AlgHom.toRingHom_eq_coe, RingHom.coe_coe, aeval_C, aeval_X, algebraMap_eq]
       simp only [Finset.mul_sum]
       rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun s' _ => ?_
       have hGi := congrFun (hG s') i
       simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul] at hGi
-      rw [← hGi, map_sum, Finset.sum_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hGi, map_sum, Finset.sum_mul]
       refine Finset.sum_congr rfl fun s _ => ?_
       rw [map_mul]
       ring
@@ -93,7 +95,8 @@ theorem exists_homog_span [DecidableEq K] (P : Ideal (MRing ι)) [P.IsPrime]
     have h0 : ∑ j, evalAt (genPt P) (c r j) * B a j = 0 := by
       have := congrFun (LinearMap.mem_ker.mp (hB a)) r
       simpa [Matrix.mulVec, dotProduct] using this
-    rw [← ker_toFn P, RingHom.mem_ker, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← ker_toFn P, RingHom.mem_ker, map_sum]
     simp only [map_mul, hL', ← evalAt_genPt]
     rw [show ∑ j, evalAt (genPt P) (c r j) * (algebraMap (MRing ι ⧸ P) (FnField P) (δ a) * B a j) =
         algebraMap (MRing ι ⧸ P) (FnField P) (δ a) * ∑ j, evalAt (genPt P) (c r j) * B a j by
@@ -115,10 +118,12 @@ theorem exists_homog_span [DecidableEq K] (P : Ideal (MRing ι)) [P.IsPrime]
   · intro s
     rw [LinearMap.mem_ker, Matrix.mulVecLin_apply]
     funext r
-    simp only [Matrix.mulVec, dotProduct, Matrix.of_apply, Pi.zero_apply, evalAt_genPt, ← map_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, dotProduct, Matrix.of_apply, Pi.zero_apply, evalAt_genPt, ← map_mul,
       ← map_sum]
     rw [← RingHom.mem_ker, ker_toFn]
-    rw [show ∑ j, c r j * weightedHomogeneousComponent w s.2 (L s.1 j) =
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [show ∑ j, c r j * weightedHomogeneousComponent w s.2 (L s.1 j) =
         weightedHomogeneousComponent w (s.2 + m) (∑ j, c r j * L s.1 j) by
       rw [map_sum]
       exact Finset.sum_congr rfl fun j _ => (weightedHomogeneousComponent_mul_of_left (hc r j) _ _).symm]
@@ -129,7 +134,8 @@ theorem exists_homog_span [DecidableEq K] (P : Ideal (MRing ι)) [P.IsPrime]
     have hBa : B a = (algebraMap (MRing ι ⧸ P) (FnField P) (δ a))⁻¹ •
         ∑ γ : D, fun j => toFn P (weightedHomogeneousComponent w γ (L a j)) := by
       funext j
-      simp only [Pi.smul_apply, Finset.sum_apply, smul_eq_mul, ← map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Pi.smul_apply, Finset.sum_apply, smul_eq_mul, ← map_sum]
       rw [Finset.sum_coe_sort D (fun γ => weightedHomogeneousComponent w γ (L a j)), hsum, hL',
         ← mul_assoc, inv_mul_cancel₀ hδ0, one_mul]
     rw [hBa]

@@ -39,7 +39,8 @@ theorem incM_mulVec {m n : ℕ} (A : Matrix (Fin m) (Fin n) E) (v : Fin n → E)
   ext i; simp [incM, incV, Matrix.mulVec, dotProduct, map_sum]
 
 theorem incV_dot {n : ℕ} (a b : Fin n → E) : incV F a ⬝ᵥ incV F b = inclR (F := F) (AF F) (a ⬝ᵥ b) := by
-  simp [incV, dotProduct, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [incV, dotProduct, map_sum]
 
 theorem incM_vecMulVec {m n : ℕ} (a : Fin m → E) (b : Fin n → E) :
     incM F (vecMulVec a b) = vecMulVec (incV F a) (incV F b) := by
@@ -86,7 +87,8 @@ theorem sv_mulVec (M : Matrix (Fin d) (Fin d) E) (v : Fin d → E) : sv σ (M *�
 
 theorem form_swap (hσ : ∀ a, σ (σ a) = a) (hskew : ∀ i j, σ (J j i) = -J i j) (a b : Fin d → E) :
     form σ J b a = -σ (form σ J a b) := by
-  simp only [form, dotProduct, mulVec, map_sum, map_mul, hσ, hskew, Finset.mul_sum, Finset.sum_neg_distrib,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, mulVec, map_sum, map_mul, hσ, hskew, Finset.mul_sum, Finset.sum_neg_distrib,
     neg_mul, mul_neg]
   rw [neg_neg, Finset.sum_comm]
   exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring

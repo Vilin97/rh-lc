@@ -204,7 +204,8 @@ theorem sigR_hR (h : IsCMExt F E σ) {M : ℕ} {J : Matrix (Fin M) (Fin M) E} (h
   have hJR : ∀ i j, sigR R σ (JR R J i j) = JR R J j i := by
     intro i j
     simp [JR, inclR, sigR, hJ.1 j i]
-  simp only [hR, Formalism.UG.hform, map_sum, map_mul, sigR_sigR R h, hJR]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hR, Formalism.UG.hform, map_sum, map_mul, sigR_sigR R h, hJR]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   ring

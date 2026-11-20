@@ -157,7 +157,8 @@ theorem map_idx_eq (hO : Function.Injective (algebraMap O C)) {i : K →+* C} {j
     rw [hD, hD, Algebra.smul_def, RingHom.map_det, ← Matrix.det_mul]
     congr 1
     ext a t
-    rw [Matrix.of_apply, ← hc, map_sum, Finset.sum_apply, Matrix.mul_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Matrix.of_apply, ← hc, map_sum, Finset.sum_apply, Matrix.mul_apply]
     refine Finset.sum_congr rfl fun b _ => ?_
     rw [← algebraMap_smul C (c a b), map_smul]
     rfl
@@ -250,9 +251,11 @@ theorem mem_span_solutions {K C O : Type} [Field K] [NumberField K] [Field C] [C
   have hs : ∀ t, algebraMap O C (s t) =
       ∑ u, i (a (Pi.single t 1) u : 𝓞 K) * algebraMap O C (y (Finsupp.single u 1)) := fun t => by
     have := LinearMap.congr_fun h₁ (Pi.single t 1)
-    rw [Fintype.linearCombination_apply_single, one_smul, LinearMap.comp_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Fintype.linearCombination_apply_single, one_smul, LinearMap.comp_apply,
       ← Finsupp.univ_sum_single (a (Pi.single t 1)), map_sum] at this
-    rw [this, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [this, map_sum]
     refine Finset.sum_congr rfl fun u _ => ?_
     rw [← Finsupp.smul_single_one, map_smul, Algebra.smul_def, map_mul, ← hj]
     rfl
@@ -262,13 +265,16 @@ theorem mem_span_solutions {K C O : Type} [Field K] [NumberField K] [Field C] [C
     choose z hz using hd
     replace hz : ∀ t, (z t : K) = ((d : 𝓞 K) : K) * x t := fun t => (hz t).trans (Algebra.smul_def _ _)
     have h₃ : a z = 0 := LinearMap.congr_fun h₂ ⟨z, hO (by
-      rw [Fintype.linearCombination_apply, map_sum, map_zero, ← mul_zero (i (d : 𝓞 K)), ← hx, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Fintype.linearCombination_apply, map_sum, map_zero, ← mul_zero (i (d : 𝓞 K)), ← hx, Finset.mul_sum]
       refine Finset.sum_congr rfl fun t _ => ?_
       rw [Algebra.smul_def, map_mul, show algebraMap O C (algebraMap (𝓞 K) O (z t)) = i (z t) from hj _, hz, map_mul]
       ring)⟩
-    rw [← Finset.univ_sum_single z, map_sum] at h₃
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Finset.univ_sum_single z, map_sum] at h₃
     have h₄ := congrArg (fun f : Fin k →₀ 𝓞 K => algebraMap (𝓞 K) K (f u)) h₃
-    simp only [Finsupp.finset_sum_apply, map_sum, Finsupp.zero_apply, map_zero] at h₄
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Finsupp.finset_sum_apply, map_sum, Finsupp.zero_apply, map_zero] at h₄
     refine mul_left_cancel₀ (a := ((d : 𝓞 K) : K))
       (RingOfIntegers.coe_ne_zero_iff.2 (nonZeroDivisors.coe_ne_zero d)) ?_
     rw [mul_zero, Finset.mul_sum, ← h₄]
@@ -288,14 +294,16 @@ theorem mem_span_solutions {K C O : Type} [Field K] [NumberField K] [Field C] [C
     simp only [hs, Finset.sum_mul]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun u _ => ?_
-    rw [Pi.smul_apply, Function.comp_apply, hsum, Algebra.smul_def, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Pi.smul_apply, Function.comp_apply, hsum, Algebra.smul_def, map_sum, Finset.mul_sum]
     exact Finset.sum_congr rfl fun t _ => by rw [map_mul]; ring
   rw [e]
   refine Submodule.sum_mem _ fun u _ => Submodule.smul_mem _ _ (Submodule.subset_span
     ⟨_, ⟨Λ.sum_mem fun t _ => Λ.smul_mem _ (hl t), fun α => funext fun b => ?_⟩, rfl⟩)
   have h₅ := rel (fun t => (A α).mulVec (l t) b) (by
     have h₆ := congrFun (hA α) b
-    simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, hc, Finset.mul_sum, map_sum, map_mul, Pi.zero_apply] at h₆ ⊢
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, hc, Finset.mul_sum, map_sum, map_mul, Pi.zero_apply] at h₆ ⊢
     rw [← h₆, Finset.sum_comm]
     exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring) u
   simp only [Matrix.mulVec, dotProduct, hsum, Finset.mul_sum, Pi.zero_apply] at h₅ ⊢

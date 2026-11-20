@@ -59,7 +59,8 @@ theorem exists_right_inv {E : Type} [Field E] [NumberField E] {κ ι : Type} [Fi
       show g (j (w - s (φ.rangeRestrict w))) = _
       rw [hφw, map_zero, sub_zero, hjw, hg']
     have hw2 : w = ∑ a, w a • Pi.single a 1 := pi_eq_sum_univ' w
-    rw [hw2, map_sum] at hw
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hw2, map_sum] at hw
     have := congrFun hw k
     simp only [map_smul, Finset.sum_apply, Pi.smul_apply] at this
     simp only [Matrix.mul_apply, Matrix.of_apply, Matrix.smul_apply, smul_eq_mul]

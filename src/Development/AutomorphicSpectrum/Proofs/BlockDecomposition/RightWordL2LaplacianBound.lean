@@ -73,7 +73,8 @@ variable {V : Type} [NormedAddCommGroup V] [NormedSpace ℂ V]
 theorem Rd_sum_cf (M : Mat n) (f : Mat n → V) (g : Mat n) :
     Rd M f g = ∑ p : Ix n, ((cf M p : ℝ) : ℂ) • Rd (bs p) f g := by
   conv_lhs => rw [← sum_cf M]
-  simp only [Rd, Finset.mul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Rd, Finset.mul_sum, map_sum]
   refine Finset.sum_congr rfl fun p _ => ?_
   rw [mul_smul_comm, map_smul]
   exact (Complex.coe_smul _ _).symm

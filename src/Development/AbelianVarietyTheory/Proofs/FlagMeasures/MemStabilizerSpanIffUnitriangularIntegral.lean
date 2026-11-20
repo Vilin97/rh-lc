@@ -56,7 +56,8 @@ theorem unistab_iff : ∀ {F : Type} [Field F] [ValuativeRel F] [TopologicalSpac
     have hinv : ∀ b, g⁻¹ (v b) = ∑ a, M.adjugate a b • v a := by
       intro b
       have key : g (∑ a, M.adjugate a b • v a) = v b := by
-        simp only [map_sum, map_smul, hg, Finset.smul_sum, smul_smul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, map_smul, hg, Finset.smul_sum, smul_smul]
         rw [Finset.sum_comm]
         have : ∀ c, ∑ a, (M.adjugate a b * M c a) • v c = (M * M.adjugate) c b • v c := by
           intro c

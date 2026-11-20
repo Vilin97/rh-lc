@@ -40,14 +40,17 @@ theorem coords_eq_zero {O : Type} [CommRing O] [StarRing O] [IsDedekindDomain O]
     refine LinearMap.ext fun a => LinearMap.ext fun b => ?_
     simp only [Submodule.coe_sum, Submodule.coe_smul, LinearMap.sum_apply, LinearMap.smul_apply,
       smul_eq_mul]
-    rw [← hL, ← e.sum_repr (Forms.balTensorMk O a b), map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hL, ← e.sum_repr (Forms.balTensorMk O a b), map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_zsmul, smul_eq_mul, _root_.mul_comm]
     rfl
   have hδ (i) : L i (∑ j, ε.repr (β j) k • e j) = ε.repr (ε i) k := by
     have h1 := congrArg (ε.coord k) (hε i)
-    rw [map_sum] at h1
-    rw [map_sum, ← ε.coord_apply, h1]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, ← ε.coord_apply, h1]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_zsmul, map_zsmul, smul_eq_mul, smul_eq_mul, _root_.mul_comm, ε.coord_apply]
   have h := hΦa (∑ j, ε.repr (β j) k • e j)

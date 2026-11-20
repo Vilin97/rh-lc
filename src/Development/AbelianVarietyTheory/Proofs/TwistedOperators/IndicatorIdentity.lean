@@ -194,7 +194,8 @@ theorem U_KK {t : ℕ} (ht : Fintype.card n = Fintype.card n' + (t + 1)) (q : Un
   have h1 : ∀ P₁ ∈ withKer P₀.lat, U q (KK hμ hθ P₀ Q₀ φ) Q₀ =
       scal k t • ∑ P ∈ withLat P₀.lat, if cross q P₁ P = 1 then θ (φ P₁) (phiOneSB P Q₀) else 0 := fun P₁ hP => by
     rw [mem_withKer] at hP
-    rw [U_apply, Finset.sum_congr rfl fun Q₁ hQ =>
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [U_apply, Finset.sum_congr rfl fun Q₁ hQ =>
       KK_up hμ hθ P₀ Q₀ ht q hφ hP (mem_withKer.1 (Finset.mem_filter.1 hQ).1), ← Finset.smul_sum,
       ← Finset.sum_filter, ← map_sum, ← map_sum, ← hP]
     congr 2
@@ -204,7 +205,8 @@ theorem U_KK {t : ℕ} (ht : Fintype.card n = Fintype.card n' + (t + 1)) (q : Un
   have h2 : ∀ P ∈ withLat P₀.lat, KK hμ hθ P₀ Q₀ (U q φ) Q₀ =
       ∑ P₁ ∈ withKer P₀.lat, if cross q P₁ P = 1 then θ (φ P₁) (phiOneSB P Q₀) else 0 := fun P hP => by
     rw [mem_withLat] at hP
-    rw [KK_same hμ hθ P₀ Q₀ (U_mem_EqForm q hφ) hP rfl, U_apply, map_sum, LinearMap.sum_apply, hP,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [KK_same hμ hθ P₀ Q₀ (U_mem_EqForm q hφ) hP rfl, U_apply, map_sum, LinearMap.sum_apply, hP,
       Finset.sum_filter]
   have h3 := Finset.sum_congr rfl h1
   rw [← Finset.smul_sum, Finset.sum_comm, ← Finset.sum_congr rfl h2, Finset.sum_const, Finset.sum_const,
@@ -222,7 +224,8 @@ theorem KK_dia (s : 𝓀[k]ˣ) {φ : Form k n' V'} (hφ : φ ∈ EqForm π') :
 
 theorem KK_ram {φ : Form k n' V'} (hφ : φ ∈ EqForm π') (h : φ ∈ Mram k n' V') : KK hμ hθ P₀ Q₀ φ ∈ Mram k n V := by
   have : Nm (KK hμ hθ P₀ Q₀ φ) = KK hμ hθ P₀ Q₀ (Nm φ) := by
-    simp only [Nm, LinearMap.sum_apply, map_sum, KK_dia hμ hθ P₀ Q₀ _ hφ]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Nm, LinearMap.sum_apply, map_sum, KK_dia hμ hθ P₀ Q₀ _ hφ]
   rw [show Nm φ = 0 from h, map_zero] at this
   exact this
 
@@ -230,7 +233,8 @@ theorem FFStar_KK {t : ℕ} (ht : Fintype.card n = Fintype.card n' + (t + 1)) (q
     {φ : Form k n' V'} (hφ : φ ∈ EqForm π') (h : φ ∈ Mram k n' V') :
     FFStar q χ (KK hμ hθ P₀ Q₀ φ) = scal k t • KK hμ hθ P₀ Q₀ (FFStar q χ φ) := by
   have h1 : GsStar χ (KK hμ hθ P₀ Q₀ φ) = KK hμ hθ P₀ Q₀ (GsStar χ φ) := by
-    simp only [GsStar, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, KK_dia hμ hθ P₀ Q₀ _ hφ]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [GsStar, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, KK_dia hμ hθ P₀ Q₀ _ hφ]
   have h2 : GsStar χ φ ∈ EqForm π' := by
     simp only [GsStar, LinearMap.sum_apply, LinearMap.smul_apply]
     exact sum_mem fun c _ => Submodule.smul_mem _ _ (dia_mem_EqForm _ hφ)

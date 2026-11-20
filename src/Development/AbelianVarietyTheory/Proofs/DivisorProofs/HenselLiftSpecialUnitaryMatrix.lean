@@ -34,7 +34,8 @@ theorem map_smul_ring (c : R →+* R) (w : R) (H : Matrix n n R) : (w • H).map
 theorem herm_self (c : R →+* R) (hc : ∀ x, c (c x) = x) (A : Matrix n n R) :
     ((((A.map c)ᵀ * A - 1).map c))ᵀ = (A.map c)ᵀ * A - 1 := by
   ext a b
-  simp [Matrix.mul_apply, Matrix.one_apply, map_sum, hc, mul_comm, apply_ite c, eq_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Matrix.mul_apply, Matrix.one_apply, map_sum, hc, mul_comm, apply_ite c, eq_comm]
 
 theorem step_herm (c : R →+* R) (hc : ∀ x, c (c x) = x) (w : R) (hw : w + c w = 1) (A : Matrix n n R) :
     ((A * (1 - w • ((A.map c)ᵀ * A - 1))).map c)ᵀ * (A * (1 - w • ((A.map c)ᵀ * A - 1))) - 1

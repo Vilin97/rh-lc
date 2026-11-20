@@ -120,7 +120,8 @@ theorem covAt_dual (b : Basis (Idx E j) ℝ (VecInf E j)) :
       exact if_congr eq_comm rfl rfl
     rw [h3]
     conv_rhs => rw [← (stdB E j).sum_repr (d i), ← (stdB E j).sum_repr (b k)]
-    simp only [Matrix.mul_apply, Matrix.transpose_apply, Basis.toMatrix_apply, LinearMap.BilinForm.toMatrix_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mul_apply, Matrix.transpose_apply, Basis.toMatrix_apply, LinearMap.BilinForm.toMatrix_apply,
       map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, Finset.sum_mul, Finset.mul_sum]
     first
       | exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
@@ -279,7 +280,8 @@ theorem exists_basis [IsTotallyComplex E] (Λ : Submodule (𝓞 E) (Fin j → E)
   have hq : ∀ i, q i = (β i : Fin j → E) := fun i => Basis.extendOfIsLattice_apply ℚ β i
   have hall : ∀ y, emb E j y ∈ Submodule.span ℝ (Set.range fun i => emb E j (q i)) := by
     intro y
-    rw [← q.sum_repr y, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← q.sum_repr y, map_sum]
     refine Submodule.sum_mem _ fun i _ => ?_
     rw [map_rat_smul, ← Rat.cast_smul_eq_qsmul ℝ]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)
@@ -296,7 +298,8 @@ theorem exists_basis [IsTotallyComplex E] (Λ : Submodule (𝓞 E) (Fin j → E)
     have := congrArg Subtype.val (β.sum_repr ⟨y, hy⟩)
     rw [Submodule.coe_sum] at this
     simp only [Submodule.coe_smul_of_tower] at this
-    rw [← this, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← this, map_sum]
     refine Submodule.sum_mem _ fun i _ => ?_
     rw [map_zsmul, ← hq]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)
@@ -332,9 +335,11 @@ theorem span_std [IsTotallyComplex E] :
   · rw [Submodule.span_le]
     rintro _ ⟨y, hy, rfl⟩
     obtain ⟨c, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun (𝓞 E)).1 hy
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Submodule.sum_mem _ fun a _ => ?_
-    rw [← (RingOfIntegers.basis E).sum_repr (c a), Finset.sum_smul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← (RingOfIntegers.basis E).sum_repr (c a), Finset.sum_smul, map_sum]
     refine Submodule.sum_mem _ fun i _ => ?_
     rw [smul_assoc, map_zsmul, ← h3, ← intB_apply]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨_, rfl⟩)

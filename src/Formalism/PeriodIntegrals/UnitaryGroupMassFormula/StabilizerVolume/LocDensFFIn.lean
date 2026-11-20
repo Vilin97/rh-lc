@@ -29,7 +29,8 @@ theorem ffH_isHS (hσ : ∀ x, σ (σ x) = x) {M : ℕ} (J : Matrix (Fin M) (Fin
     simp only [ffH, Pi.smul_apply, smul_eq_mul, Finset.mul_sum]
     exact Finset.sum_congr rfl (fun i _ => Finset.sum_congr rfl (fun j _ => by ring))
   herm x y := by
-    simp only [ffH, map_sum, map_mul, hσ, hJ]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [ffH, map_sum, map_mul, hσ, hJ]
     conv_rhs => rw [Finset.sum_comm]
     exact Finset.sum_congr rfl (fun i _ => Finset.sum_congr rfl (fun j _ => by ring))
   nondeg x hx := by

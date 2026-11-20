@@ -47,7 +47,8 @@ theorem integral_eq_zero_of_coeffs {ι : Type} [Fintype ι] {N : ℕ} {Γ : AddS
         simpa using (Pi.basisFun ℝ (Fin N)).sum_repr t
       have hχa : ∀ t : Fin N → ℝ, χ t = ∑ k, t k * (m k : ℝ) := fun t => by
         conv_lhs => rw [← hsum t]
-        simp only [map_sum, map_smul, hm, smul_eq_mul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, map_smul, hm, smul_eq_mul]
       have h2 := h m fun s => by
         rw [← hν'a, ← hχL, LinearMap.comp_apply, hχa]
         simp only [mul_comm]

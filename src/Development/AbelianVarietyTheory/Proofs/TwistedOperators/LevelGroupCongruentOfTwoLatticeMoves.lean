@@ -141,7 +141,8 @@ theorem mem_of_vanish (L : Submodule (𝓞 E) (Fin n → E)) (𝔪 : Ideal (𝓞
   choose ind hind1 hind0 using (exists_ind (F := F))
   set e₁ : FiniteAdeleRing (𝓞 F) F := ∑ v ∈ P, ind v with he₁
   have hev : ∀ w, evalV F w e₁ = if w ∈ P then 1 else 0 := fun w => by
-    rw [he₁, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [he₁, map_sum]
     split_ifs with hw
     · rw [Finset.sum_eq_single w (fun b _ hb => hind0 b w (Ne.symm hb)) (fun h => absurd hw h), hind1]
     · exact Finset.sum_eq_zero fun b hb => hind0 b w (fun h => hw (h ▸ hb))

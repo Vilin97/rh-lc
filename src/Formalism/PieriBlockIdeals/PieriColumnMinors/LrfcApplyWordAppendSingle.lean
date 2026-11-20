@@ -158,7 +158,8 @@ theorem lrfc_coeffT_Phi (L : List (Fin r × Fin r × (Fin r × Fin n)))
       rw [List.nodup_append] at hL'
       intro h
       exact hL'.2.2 v h v (by simp) rfl
-    rw [lrfc_Phi_append_single, lrfc_tau_iota, Polynomial.eval₂_eq_sum, Polynomial.sum_def,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [lrfc_Phi_append_single, lrfc_tau_iota, Polynomial.eval₂_eq_sum, Polynomial.sum_def,
       map_sum, lrfc_coeffT_sum]
     have key : ∀ (j : ℕ) (c : MvPolynomial (Fin r × Fin n) R),
         lrfc_coeffT d (lrfc_Phi w (lrfc_iota c * C (X (s, a, v).2.2) ^ j)) =

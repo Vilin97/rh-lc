@@ -5616,7 +5616,8 @@ theorem cofL_free {γ : B.Mat k r} (hγ : γ ∈ B.GV k r) (a : Fin r) :
   rw [Matrix.mul_apply] at h
   simp only [Matrix.smul_apply, Matrix.one_apply_ne (Fin.castSucc_ne_last a).symm, smul_zero] at h
   have h2 := congrArg (starRingEnd ℂ) h
-  rw [map_sum, map_zero] at h2
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_zero] at h2
   rw [← h2]
   apply Finset.sum_congr rfl; intro c _
   rw [map_mul]; congr 1

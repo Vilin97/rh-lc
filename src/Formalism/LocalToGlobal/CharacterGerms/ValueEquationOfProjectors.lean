@@ -132,7 +132,8 @@ theorem toAllS_expPt (Y : FBChart C V O dd) (p : ∀ o, PairData Y d (I o)) (o :
   have h0 : ∀ m : Fin dd, MvPowerSeries.constantCoeff (∑ c : I o g, (Y.raw (p o)).u g c m •
       (MvPowerSeries.X (⟨g, c⟩ : WV (I o)) : MvPowerSeries (WV (I o)) C)) = 0 := by
     intro m
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_eq_zero fun c _ => ?_
     rw [MvPowerSeries.smul_eq_C_mul, map_mul, MvPowerSeries.constantCoeff_X, mul_zero]
   rw [VP.subst_subst h0 (fun _ => VP.cc_X _)]

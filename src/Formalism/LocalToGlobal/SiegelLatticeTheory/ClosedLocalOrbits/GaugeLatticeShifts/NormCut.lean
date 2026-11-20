@@ -42,7 +42,8 @@ theorem opOf_hsEmb (A : Wq →L[ℂ] Wp) : opOf (Formalism.L2.SG.PackageTie.hsEm
   ext e
   rw [opOf_apply]
   conv_rhs => rw [← (stdOrthonormalBasis ℂ Wq).sum_repr' e]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [map_smul, h]
 
 theorem hsEmb_eq_hsV (A : Wq →L[ℂ] Wp) : Formalism.L2.SG.PackageTie.hsEmb A = hsV A := rfl

@@ -42,7 +42,8 @@ theorem chern_invForm {D : D7} (Y : DV.ShimX D.what₂.Tau) (hP : Propor Y) :
     rw [add_mul, map_add, mul_assoc, mul_assoc, ← smul_eq_C_mul, ← smul_eq_C_mul, LinearMap.map_smul,
       LinearMap.map_smul, hH, hP, smul_eq_mul, smul_eq_mul]
     ring
-  rw [bcFl_eq, invForm, Finset.sum_mul, map_sum, Finset.sum_congr rfl (fun τ _ => e τ), ← Finset.mul_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [bcFl_eq, invForm, Finset.sum_mul, map_sum, Finset.sum_congr rfl (fun τ _ => e τ), ← Finset.mul_sum,
     ← Finset.mul_sum, testI]
   ring
 

@@ -87,7 +87,8 @@ theorem half {S T : HSp D} {P : Pl D.host.E} {e f : AE D} (he : IsPrimeIdem P e 
     exact Finsupp.sum_mapDomain_index (h := fun g (z : ℂ) => z • πS g u) (fun _ => zero_smul _ _)
       (fun _ _ _ => add_smul _ _ _)
   rw [← hc W πS u (fixS u hu) fun k hk => ?_, e1, hb]
-  rw [e1, Finsupp.sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e1, Finsupp.sum, map_sum]
   refine Finset.sum_congr rfl fun h _ => ?_
   rw [map_smul, comm, fixS u hu k hk]
 

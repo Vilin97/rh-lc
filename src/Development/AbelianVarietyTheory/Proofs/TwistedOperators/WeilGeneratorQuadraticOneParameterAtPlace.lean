@@ -84,7 +84,8 @@ theorem nOp_at (h : GlobalTheory.FockCompare.Chart θ σ) (hψ : IsStdChar D ψ 
     exact Finset.sum_congr rfl fun b _ => smul_smul _ _ _
   let j : BB ψ S T →ₗ[ℂ] (WO S T → ℂ) := ⟨⟨fun G => G.1, fun _ _ => rfl⟩, fun _ _ => rfl⟩
   change j _ = _
-  rw [e1, map_sum, ← e.sum_comp]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e1, map_sum, ← e.sum_comp]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_smul, Function.comp_apply]
   beta_reduce

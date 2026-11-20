@@ -231,7 +231,8 @@ theorem quotPiece_isInternal : DirectSum.IsInternal (quotPiece M₁ M₂) := by
   · intro y
     obtain ⟨m, rfl⟩ := Submodule.Quotient.mk_surjective _ y
     refine AddMonoidHom.mem_mrange.mp ?_
-    rw [laurent_eq_sum M₁ m, ← Submodule.mkQ_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [laurent_eq_sum M₁ m, ← Submodule.mkQ_apply, map_sum]
     refine AddSubmonoid.sum_mem _ fun c _ => ⟨DirectSum.of (fun c => quotPiece M₁ M₂ c) c
       ⟨quotIota M₁ M₂ c ⟨_, FinGradedSub.mem_laurent.mp m.2 c⟩, LinearMap.mem_range_self _ _⟩, ?_⟩
     rw [DirectSum.coeAddMonoidHom_of]
@@ -357,7 +358,8 @@ theorem filtPiece_smul_mem (A : Submodule (Poly S N) (quotLaurent M₁ M₂)) {d
 theorem quotProj_smul_iota (r : Poly S N) {e : ℤ} (g : M₁.piece e) (c : ℤ) :
     quotProj M₁ M₂ c (r • quotIota M₁ M₂ e g) = ∑ i ∈ Finset.range (r.totalDegree + 1),
       if e + i = c then homogeneousComponent i r • quotIota M₁ M₂ e g else 0 := by
-  conv_lhs => rw [← sum_homogeneousComponent r, Finset.sum_smul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [← sum_homogeneousComponent r, Finset.sum_smul, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   split_ifs with h
   · subst h

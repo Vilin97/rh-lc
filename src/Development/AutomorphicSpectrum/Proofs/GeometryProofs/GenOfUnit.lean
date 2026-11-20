@@ -174,7 +174,8 @@ theorem det_pull {L : Lat ξ V} {r m : ℕ} {s : Fin m → V} {U : Submodule Ω 
     intro k
     obtain ⟨T, hT⟩ := exists_mat (Ω := Ω) (b := s) (s := b) fun k => by
       rw [hb, ← hsU]; exact Submodule.subset_span ⟨k, rfl⟩
-    rw [hT k, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hT k, map_sum]
     exact Submodule.sum_mem _ fun k' _ => by rw [hj]; exact Submodule.smul_mem _ _ (hjb k')
   obtain ⟨T₁, hT₁⟩ := exists_mat hjs
   have main : ∀ (q : Cpt ξ') (h : genPt ξ ⤳ f q.1), ∃ t, (detLat L s).IsGenAt ⟨f q.1, h⟩ t ∧
@@ -188,7 +189,8 @@ theorem det_pull {L : Lat ξ V} {r m : ℕ} {s : Fin m → V} {U : Submodule Ω 
     refine ⟨T.det, GlobalTheory.CompanionTheory.Relay.det_lattice_frame_gen X Ω ξ V L r s c T _ hs hcf' hT, ?_⟩
     have h2 := GlobalTheory.CompanionTheory.Relay.det_lattice_frame_gen X' Ω' ξ' V' (L.pull ξ' f j) r b₀ (fun k => j (c k)) (T₁ * i.mapMatrix T) q hb₀
       (frame_pull hj (hli _ _ hcf'.1) h hreg hcf') fun k => by
-        rw [hT k, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [hT k, map_sum]
         simp only [hj, hT₁, Finset.smul_sum, smul_smul, Matrix.mul_apply, Finset.sum_smul, RingHom.mapMatrix_apply,
           Matrix.map_apply]
         rw [Finset.sum_comm]

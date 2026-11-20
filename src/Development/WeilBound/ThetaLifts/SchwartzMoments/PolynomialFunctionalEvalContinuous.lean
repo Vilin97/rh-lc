@@ -566,12 +566,14 @@ def iot (p : κ → Af F) : κ → AF F := fun i => pairA F 0 (p i)
 theorem dot_iot (x : κ → AF F) (q : κ → Af F) :
     x ⬝ᵥ iot q = pairA F 0 ((fun i => sndA F (x i)) ⬝ᵥ q) := by
   have h1 : fstAd (x ⬝ᵥ iot q) = 0 := by
-    simp only [dotProduct, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [dotProduct, map_sum]
     refine Finset.sum_eq_zero fun i _ => ?_
     show (x i).1 * 0 = 0
     rw [mul_zero]
   have h2 : sndA F (x ⬝ᵥ iot q) = (fun i => sndA F (x i)) ⬝ᵥ q := by
-    simp only [dotProduct, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [dotProduct, map_sum]
     rfl
   exact Prod.ext h1 h2
 

@@ -40,7 +40,8 @@ theorem descent {R₁ E : Type} [CommRing R₁] [CommRing E] [IsLocalRing E] (a 
   have hy : ∀ c' : Fin k →₀ R₁, y c' = ∑ l ∈ c'.support, a (c' l) * y (Finsupp.single l 1) := by
     intro c'
     conv_lhs => rw [← Finsupp.sum_single c']
-    rw [Finsupp.sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finsupp.sum, map_sum]
     refine Finset.sum_congr rfl fun l _ => ?_
     rw [← _root_.mul_one (c' l), ← smul_eq_mul, ← Finsupp.smul_single, map_smul, Algebra.smul_def,
       RingHom.algebraMap_toAlgebra]
@@ -136,7 +137,8 @@ theorem gaussAt_descent : ∀ (R₀ R₁ E F F₁ FE : Type) [CommRing R₀] [Is
     · obtain ⟨w, hw⟩ := hu i
       exact ⟨w, by rw [RingHom.comp_apply, hw]⟩
     · have := congrArg θE hsum
-      simpa [map_sum, hcomp] using this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa [map_sum, hcomp] using this
   rw [← hW, Set.mem_preimage, hG (θE v) hEv]
   constructor
   · rintro ⟨t, ht, n, e, z, hz, hsum⟩
@@ -148,16 +150,19 @@ theorem gaussAt_descent : ∀ (R₀ R₁ E F F₁ FE : Type) [CommRing R₀] [Is
       by_contra h
       exact ht ((mem_maximalIdeal _).2 h)
     have e1 : ∑ i, cE (a (G 0 i)) * θE (b i) = θE (c₁ δ) * θE v := by
-      rw [← map_mul, hv, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← map_mul, hv, map_sum]
       simp [hcomp]
     have e2 : ∀ j, ∑ i, cE (a (G j.succ i)) * θE (b i) = θE (c₁ δ) * z j := by
       intro j
-      rw [← hwz j, RingHom.comp_apply, ← map_mul, hw' j, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hwz j, RingHom.comp_apply, ← map_mul, hw' j, map_sum]
       simp [hcomp]
     have hz0 := hL1 m b hb (fun i => t * a (G 0 i) - ∑ j, e j * a (G j.succ i)) (by
       calc ∑ i, cE (t * a (G 0 i) - ∑ j, e j * a (G j.succ i)) * θE (b i)
           = cE t * (∑ i, cE (a (G 0 i)) * θE (b i)) - ∑ j, cE (e j) * (∑ i, cE (a (G j.succ i)) * θE (b i)) := by
-            simp only [map_sub, map_mul, map_sum, sub_mul, Finset.sum_sub_distrib, Finset.mul_sum, Finset.sum_mul]
+            set_option synthInstance.maxHeartbeats 100000 in
+              simp only [map_sub, map_mul, map_sum, sub_mul, Finset.sum_sub_distrib, Finset.mul_sum, Finset.sum_mul]
             rw [Finset.sum_comm (s := Finset.univ) (t := Finset.univ)
               (f := fun i j => cE (e j) * cE (a (G j.succ i)) * θE (b i))]
             congr 1
@@ -184,7 +189,8 @@ theorem gaussAt_descent : ∀ (R₀ R₁ E F F₁ FE : Type) [CommRing R₀] [Is
           rw [hv, Finset.mul_sum]
           simp only [map_mul, _root_.mul_assoc]
       _ = ∑ i, ∑ j, c₁ (r j) * (c₁ (G j.succ i) * b i) := by
-          simp only [hr, map_sum, map_mul, Finset.sum_mul, _root_.mul_assoc]
+          set_option synthInstance.maxHeartbeats 100000 in
+            simp only [hr, map_sum, map_mul, Finset.sum_mul, _root_.mul_assoc]
       _ = ∑ j, c₁ (r j) * (c₁ δ * θ (w j)) := by
           rw [Finset.sum_comm]
           simp only [hw', Finset.mul_sum]
@@ -197,6 +203,7 @@ theorem gaussAt_descent : ∀ (R₀ R₁ E F F₁ FE : Type) [CommRing R₀] [Is
     · obtain ⟨w, hw, hwz⟩ := hz i
       exact ⟨w, hw, by rw [RingHom.comp_apply, hwz]⟩
     · have := congrArg θE hsum
-      simpa [map_sum, hcomp] using this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa [map_sum, hcomp] using this
 
 end GlobalTheory.Desc.GaussDown

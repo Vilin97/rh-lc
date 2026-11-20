@@ -145,7 +145,8 @@ theorem d_revCochain {A : Rep k G} (n : ℕ) (f : (Fin n → G) → A) :
   have hP' : Fin.partialProd x (Fin.last (n + 1)) =
       Fin.partialProd (Fin.init x) (Fin.last n) * x (Fin.last n) := by
     rw [← Fin.succ_last, Fin.partialProd_succ, Fin.partialProd_init]
-  simp only [inhomogeneousCochains.d_hom_apply, revCochain_apply, Fin.sum_univ_castSucc,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [inhomogeneousCochains.d_hom_apply, revCochain_apply, Fin.sum_univ_castSucc,
     Fin.val_last, Fin.val_castSucc, contractNth_last, contractNth_revInv,
     partialProd_last_contractNth, tail_revInv', init_revInv', map_add, map_sum, map_smul,
     smul_add, Finset.smul_sum]

@@ -75,7 +75,8 @@ def blockCore (s : ι → Bool) (U : Submodule ℂ M) (ip : M →ₗ⋆[ℂ] M �
     InnerProductSpace.Core ℂ (blockSub s U) where
   inner y z := ∑ c, ip (y.1 c) (z.1 c)
   conj_inner_symm y z := by
-    simp only [map_sum, starRingEnd_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, starRingEnd_apply]
     exact Finset.sum_congr rfl fun c _ => hsym _ (z.2 c).1 _ (y.2 c).1
   re_inner_nonneg y := by
     simp only [RCLike.re_to_complex, Complex.re_sum]

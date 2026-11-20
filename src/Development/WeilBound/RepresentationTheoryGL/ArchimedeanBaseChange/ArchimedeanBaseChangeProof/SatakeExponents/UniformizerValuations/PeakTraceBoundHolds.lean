@@ -307,7 +307,8 @@ theorem peak {A : Type} [CommRing A] [StarRing A] [Algebra ℂ A] [StarModule �
     set w := θ s χ g
     set T : ℝ := ∑ s', ∑ g' ∈ t s', ‖θ s χ (d g')‖ ^ 2 with hT
     have hTh : θ s χ h = (T : ℂ) := by
-      simp only [hh, hT, map_sum, map_mul, map_star, Complex.star_def, Complex.conj_mul']
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hh, hT, map_sum, map_mul, map_star, Complex.star_def, Complex.conj_mul']
       push_cast; rfl
     have hT0 : 0 ≤ T := by positivity
     have hTM : T + 2 ≤ M := by

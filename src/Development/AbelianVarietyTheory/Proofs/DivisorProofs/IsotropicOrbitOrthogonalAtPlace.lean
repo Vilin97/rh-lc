@@ -38,7 +38,8 @@ theorem cA_cA {σ : E →ₐ[F] E} (hσ : ∀ x, σ (σ x) = x) (a : AE F E) : c
 
 theorem form_skew {σ : E →ₐ[F] E} (hσ : ∀ x, σ (σ x) = x) {d : ℕ} {J : Matrix (Fin d) (Fin d) E}
     (hJ : ∀ i j, σ (J j i) = -J i j) (x w : Fin d → E) : form σ J x w = -σ (form σ J w x) := by
-  simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hJ, hσ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hJ, hσ]
   simp only [Finset.mul_sum, ← Finset.sum_neg_distrib]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun l _ => ?_
@@ -108,7 +109,8 @@ theorem locCo_form {W : Type} [AddCommGroup W] [Module (AF F) W]
     (GlobalTheory.LatVac.locCo co v x).1 ⬝ᵥ (GlobalTheory.LatVac.locCo co v u).2 -
       (GlobalTheory.LatVac.locCo co v u).1 ⬝ᵥ (GlobalTheory.LatVac.locCo co v x).2 = evFin F v (B x u) := by
   rw [co.form]
-  simp [GlobalTheory.LatVac.locCo, dotProduct, map_sum, map_mul, map_sub]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [GlobalTheory.LatVac.locCo, dotProduct, map_sum, map_mul, map_sub]
 
 theorem locCo_surj {W : Type} [AddCommGroup W] [Module (AF F) W]
     {B : W → W → AF F} {κ : Type} [Fintype κ] (co : Darboux B κ) (v : Pl F)
@@ -136,7 +138,8 @@ theorem decomp {n d d₁ : ℕ} (x y : Fin d → E) (ι : Matrix (Fin d) (Fin d�
     simp only [hE, apply_ite (inclR (F := F) (AF F)), map_one, map_zero, mul_ite, mul_one, mul_zero,
       Finset.sum_ite_eq, Finset.mem_univ, if_true]
   rw [h1]
-  simp only [map_add, map_mul, map_sum, mul_add, Finset.sum_add_distrib, Finset.sum_mul, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_add, map_mul, map_sum, mul_add, Finset.sum_add_distrib, Finset.sum_mul, Finset.mul_sum]
   congr 1
   · congr 1
     · refine Finset.sum_congr rfl fun j _ => ?_; ring
@@ -153,7 +156,8 @@ theorem hTens_left (σ : E →ₐ[F] E) {n d : ℕ} (JX : Matrix (Fin n) (Fin n)
   have hx' : ∀ l, ∑ j, inclR (F := F) (AF F) (x j) * inclR (F := F) (AF F) (JW j l) =
       inclR (F := F) (AF F) (σ (t l)) := by
     intro l; rw [← hx l, map_sum]; simp only [map_mul]
-  simp only [hTens, Matrix.vecMulVec_apply, Matrix.mulVec, dotProduct, map_sum, map_mul, hc, incV, incM,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hTens, Matrix.vecMulVec_apply, Matrix.mulVec, dotProduct, map_sum, map_mul, hc, incV, incM,
     Matrix.map_apply]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [Finset.sum_comm]

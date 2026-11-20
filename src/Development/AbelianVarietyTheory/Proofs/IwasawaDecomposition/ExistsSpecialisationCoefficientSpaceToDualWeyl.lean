@@ -96,7 +96,8 @@ theorem specAt_blockAct (τ₀ : ι) (y : ι × Fin n × Fin n → K) (M : Matri
     by_cases hτ : τ = τ₀
     · subst hτ
       simp [specAt, Formalism.GradedWeylDivisibility.blockAct, Formalism.GradedWeylDivisibility.rowAct]
-    · simp only [AlgHom.comp_apply, Formalism.GradedWeylDivisibility.blockAct, specAt, MvPolynomial.aeval_X, hτ, if_false, map_sum, map_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp only [AlgHom.comp_apply, Formalism.GradedWeylDivisibility.blockAct, specAt, MvPolynomial.aeval_X, hτ, if_false, map_sum, map_mul,
         MvPolynomial.aeval_C, Matrix.one_apply]
       rw [Finset.sum_eq_single a]
       · simp [hτ]

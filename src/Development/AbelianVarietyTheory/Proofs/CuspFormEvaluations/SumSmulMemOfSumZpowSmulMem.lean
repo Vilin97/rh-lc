@@ -20,10 +20,12 @@ theorem sum_smul_mem_of_sum_pow_smul_mem (W : Submodule K V) (S : Finset ι) (e 
     refine Set.Infinite.mono (s := {0}ᶜ) ?_ (Set.finite_singleton (0 : K)).infinite_compl
     intro u hu
     have := hφ _ (h u hu)
-    simp only [map_sum, map_smul, smul_eq_mul] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, smul_eq_mul] at this
     simpa [Polynomial.eval_finsetSum, mul_comm] using this
   have := congrArg (Polynomial.lsum (R := K) (fun n => f n • (LinearMap.id : K →ₗ[K] K))) hP
-  simpa [map_sum, Polynomial.lsum_apply, Polynomial.sum_monomial_index] using this
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa [map_sum, Polynomial.lsum_apply, Polynomial.sum_monomial_index] using this
 
 theorem sum_smul_mem_of_sum_zpow_smul_mem (W : Submodule K V) (S : Finset ι) (e : ι → ℤ) (v : ι → V)
     (h : ∀ u : K, u ≠ 0 → ∑ i ∈ S, u ^ e i • v i ∈ W) (f : ℤ → K) :
@@ -322,9 +324,11 @@ theorem colLie_mem_of_colAct_mem {K : Type*} [Field K] [Infinite K] [Fintype κ]
       (fun m => monomial m (AddMonoidAlgebra.coeff w m)) (fun u hu => by
         obtain ⟨g, hg⟩ := exists_colAct_monomial (p := p) (q := q) t k (Units.mk0 u hu)
         have := hW g w hw
-        rw [w.as_sum, map_sum] at this
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [w.as_sum, map_sum] at this
         simpa only [hg, Units.val_zpow_eq_zpow_val, Units.val_mk0] using this) Int.cast
-    rw [w.as_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [w.as_sum, map_sum]
     simpa only [colLie_monomial] using this
   · refine derivation_mem_of_aeval_mem W (colDer K p q t k l) w fun s => ?_
     obtain ⟨g, hg⟩ := exists_colAct_eq_aeval (p := p) (q := q) t hkl s

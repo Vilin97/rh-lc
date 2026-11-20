@@ -31,7 +31,8 @@ theorem fixedFrameOfWord_isotropicSpan_eq : (GlobalTheory.TypeAsm.F0 X u).X = Su
 theorem hT_span_left {v : (VS D).V} (hv : ∀ a, (VS D).hT (X.eX a) v = 0) {y : (VS D).V}
     (hy : y ∈ Submodule.span D.host.E (Set.range X.eX)) : (VS D).hT y v = 0 := by
   obtain ⟨c, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun _).1 hy
-  simp [map_sum, hv]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, hv]
 
 theorem hT_span_span {y y' : (VS D).V} (hy : y ∈ Submodule.span D.host.E (Set.range X.eX))
     (hy' : y' ∈ Submodule.span D.host.E (Set.range X.eX)) : (VS D).hT y y' = 0 := by
@@ -48,7 +49,8 @@ theorem span_eq_zero {d : (VS D).V} (hd : d ∈ Submodule.span D.host.E (Set.ran
   have hc : ∀ b, c b = 0 := by
     intro b
     have := h b
-    simpa [map_sum, hT_f_e] using this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [map_sum, hT_f_e] using this
   simp [hc]
 
 end GlobalTheory.RowsOrb.ModelIso
@@ -106,7 +108,8 @@ theorem GlobalTheory.RowsOrb.ub_equiv_model : ∀ (D : D7) (X : HidaSetting D) (
     refine ⟨?_, ?_⟩
     · rw [map_sub, hWe w b, zero_sub, neg_eq_zero]
       exact p_symm_zero (VS D) (hT_span_left X (fun a => X.ee a b) hc)
-    · rw [map_sub, corr_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [map_sub, corr_apply, map_sum]
       simp only [map_smul, hT_f_e, smul_eq_mul, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ,
         if_true, sub_self]
   have hmUb : ∀ w : W, (⟨(w : (VS D).V) - corr X W w, hmWb w⟩ : GlobalTheory.RowsOrb.Wb X) ∈ GlobalTheory.RowsOrb.Ub X u := by

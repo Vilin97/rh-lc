@@ -44,14 +44,16 @@ namespace Gr
 variable (G : Gr k V)
 
 theorem big {c : ℕ} (hc : G.N ≤ c) (a : V) : G.π c a = 0 := by
-  rw [← G.sum a, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← G.sum a, map_sum]
   refine Finset.sum_eq_zero fun c' hc' => G.orth _ _ _ ?_
   have := Finset.mem_range.1 hc'
   omega
 
 theorem ext' {U : Type} [AddCommGroup U] [Module k U] {X Y : V →ₗ[k] U}
     (h : ∀ c a, X (G.π c a) = Y (G.π c a)) (a : V) : X a = Y a := by
-  rw [← G.sum a, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← G.sum a, map_sum, map_sum]
   exact Finset.sum_congr rfl fun c _ => h c a
 
 theorem σσ (a : V) : G.σ (G.σ a) = a := by
@@ -74,7 +76,8 @@ theorem exists_contraction : ∃ e h : V →ₗ[k] V,
     simp [h, LinearMap.sum_apply]
   have hπ : ∀ c a, h (G.π (c + 1) a) = G.π c (h a) := by
     intro c a
-    rw [happ, happ, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [happ, happ, map_sum]
     by_cases hc : c < G.N
     · rw [Finset.sum_eq_single c, Finset.sum_eq_single c]
       · rw [G.idem, G.idem]
@@ -95,8 +98,10 @@ theorem exists_contraction : ∃ e h : V →ₗ[k] V,
         simp
   have hdhd : ∀ a, G.d (h (G.d a)) = G.d a := by
     intro a
-    rw [happ, map_sum]
-    conv_rhs => rw [← G.sum a, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [happ, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_rhs => rw [← G.sum a, map_sum]
     refine Finset.sum_congr rfl fun c _ => ?_
     rw [← G.dπ, G.dπ c (g _), hg]
     rw [G.dπ c a, G.idem]
@@ -350,7 +355,8 @@ theorem phi_Dt [Fintype ι] [Fintype κ] (μ : E →ₗ[k] E' →ₗ[k] E'') (A 
     funext x
     simp only [LinearMap.comp_apply, Dt, LinearMap.add_apply, TensorProduct.map_tmul, LinearMap.id_apply, map_add,
       phi_tmul, Pi.add_apply]
-    simp only [biD, boxC, grC, LinearMap.pi_apply, LinearMap.add_apply, LinearMap.sum_apply, LinearMap.smul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [biD, boxC, grC, LinearMap.pi_apply, LinearMap.add_apply, LinearMap.sum_apply, LinearMap.smul_apply,
       LinearMap.proj_apply, LinearMap.restrict_coe_apply, deltaL_apply, sgL_apply, map_sum, map_zsmul]
     congr 1
     rw [Finset.smul_sum]

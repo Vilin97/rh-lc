@@ -207,7 +207,8 @@ theorem spanE_psL (u : Fin e → S.V) {I : Fin e → FractionalIdeal (𝓞 E)⁰
 
 theorem hT_iota (u : Fin e → S.V) (v : S.V) (c : Fin e → E) :
     S.hT v (j_iota u c) = ∑ j, c j * S.hT v (u j) := by
-  simp [j_iota, Fintype.linearCombination_apply, map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [j_iota, Fintype.linearCombination_apply, map_sum, map_smul]
 
 theorem hT_smul_left (x : E) (v w : S.V) : S.hT (x • v) w = star x * S.hT v w := by
   simp [LinearMap.map_smulₛₗ₂]

@@ -63,7 +63,8 @@ theorem triVal_rel (c : CC F 2) (hc : δ F 2 c = 0) (X : (NE κ)ᵒᵖ) {w x y z
       Finset.card_insert_of_notMem (by simp [h2.ne, (h2.trans h3).ne]), Finset.card_pair h3.ne]
   have e := congrArg (mp F (homOf (a := ne _ (card_nonempty ⟨_, ht⟩)) (b := X) hs))
     (congrFun hc ⟨_, ht⟩)
-  rw [δ_apply, map_sum, Pi.zero_apply, map_zero] at e
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [δ_apply, map_sum, Pi.zero_apply, map_zero] at e
   have e' : ∑ i ∈ ({w, x, y, z} : Finset κ), GlobalTheory.cubeSign ({w, x, y, z} : Finset κ) i •
       triVal F c X (({w, x, y, z} : Finset κ).erase i) = 0 := by
     rw [← e, ← Finset.sum_coe_sort]

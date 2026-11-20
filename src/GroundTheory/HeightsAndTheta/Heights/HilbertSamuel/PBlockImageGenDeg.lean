@@ -70,7 +70,8 @@ theorem natDegree_lineRestr_le {K : Type*} [DecidableEq K] (p : MvPolynomial K �
     (lineRestr p k₀ m).natDegree ≤ p.totalDegree := by
   rw [lineRestr]
   conv_lhs => rw [p.as_sum]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Polynomial.natDegree_sum_le_of_forall_le _ _ fun s hs => ?_
   rw [MvPolynomial.aeval_monomial, Polynomial.algebraMap_eq]
   refine (Polynomial.natDegree_C_mul_le _ _).trans ?_

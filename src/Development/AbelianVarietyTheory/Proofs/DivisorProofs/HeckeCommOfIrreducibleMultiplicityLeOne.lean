@@ -24,7 +24,8 @@ theorem heckeIdem_mem (hm : ∀ x ∈ U, ∀ y ∈ U, χ (x * y) = χ x * χ y)
   refine Submodule.smul_mem _ _ ?_
   rw [mem_eig]
   intro g hg
-  rw [map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.smul_sum]
   refine Fintype.sum_equiv (Equiv.mulLeft (⟨g, hg⟩ : U)) _ _ ?_
   intro u
   have h1 : χ (u : H)⁻¹ = χ g * χ (g * u)⁻¹ := by

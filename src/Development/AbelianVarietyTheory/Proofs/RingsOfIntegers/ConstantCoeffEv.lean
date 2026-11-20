@@ -100,7 +100,8 @@ private theorem pderiv_subst_eq_sum_of_constantCoeff_eq_zero {σ τ : Type} [Fin
     rw [map_add, Finsupp.degree_single] at hz
     omega
   rw [coeff_pderiv, h1, ← coeff_pderiv, pderiv_subst_coe_mvPolynomial_eq_sum hS]
-  simp only [map_sum, MvPowerSeries.coeff_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, MvPowerSeries.coeff_mul]
   refine Finset.sum_congr rfl fun r _ => Finset.sum_congr rfl fun y hy => ?_
   congr 1
   apply coeff_subst_congr_lemma hA
@@ -288,7 +289,8 @@ private theorem ev_finset_sum_of_constantCoeff_eq_zero {a : Fin m → Pt k n d}
     (ha : ∀ j i, constantCoeff (a j i) = 0) {ι : Type} (s : Finset ι) (F : ι → PS k m d) :
     ev a (∑ j ∈ s, F j) = ∑ j ∈ s, ev a (F j) := by
   unfold ev
-  rw [← substAlgHom_apply (hasSubst_pts ha), map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← substAlgHom_apply (hasSubst_pts ha), map_sum]
   simp only [substAlgHom_apply]
 
 private theorem pderiv_map_algebraMap' {R : Type} [CommRing R] [Algebra R k] {σ : Type} (s : σ)

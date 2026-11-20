@@ -136,7 +136,8 @@ theorem bilin_ext_restrict {K : Type} [CommRing K] {σ : Type*} (T : Set (σ →
   intro G hG H hH
   rw [MvPolynomial.mem_restrictSupport_iff] at hG hH
   rw [G.as_sum, H.as_sum]
-  simp only [map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.sum_apply]
   refine Finset.sum_congr rfl fun μ hμ => Finset.sum_congr rfl fun ν hν => ?_
   rw [e μ, e ν]
   simp only [map_smul, LinearMap.smul_apply]

@@ -29,7 +29,8 @@ theorem apply_perpVector (ε : ι → Module.Dual R M) (e' : ι → M) (g : M) (
     rw [← h, Finset.mul_sum]
     refine Finset.sum_congr rfl fun a' _ => ?_
     rw [pairingMatrix_apply]; ring
-  simp only [perpVector, map_sub, map_sum, map_smul, smul_eq_mul, key]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [perpVector, map_sub, map_sum, map_smul, smul_eq_mul, key]
   simp [mul_comm]
 
 theorem perpVector_of_apply_eq_zero (ε : ι → Module.Dual R M) (e' : ι → M) {g : M}
@@ -42,7 +43,8 @@ theorem map_perpVector {S N : Type*} [CommRing S] [AddCommGroup N] [Module S N] 
     ψ (perpVector ε e' g) = perpVector η (fun a => ψ (e' a)) (ψ g) := by
   have hm : pairingMatrix η (fun a => ψ (e' a)) = ρ.mapMatrix (pairingMatrix ε e') := by
     ext a' a; simp [he]
-  simp only [perpVector, map_sub, map_sum, LinearMap.map_smulₛₗ, hm, ← RingHom.map_det,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [perpVector, map_sub, map_sum, LinearMap.map_smulₛₗ, hm, ← RingHom.map_det,
     ← RingHom.map_adjugate, hg, map_mul]
   simp
 

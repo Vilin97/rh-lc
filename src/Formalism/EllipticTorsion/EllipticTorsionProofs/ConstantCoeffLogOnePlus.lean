@@ -93,7 +93,8 @@ def truncLog (N : ℕ) (f : MvPowerSeries σ K) : MvPowerSeries σ K :=
 theorem agree_truncLog {f : MvPowerSeries σ K} (hf : MvPowerSeries.constantCoeff f = 0)
     (N : ℕ) : Agree N (logOnePlus f) (truncLog N f) := by
   intro d hd
-  rw [logOnePlus, PowerSeries.coeff_subst (PowerSeries.HasSubst.of_constantCoeff_zero hf),
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [logOnePlus, PowerSeries.coeff_subst (PowerSeries.HasSubst.of_constantCoeff_zero hf),
     truncLog, map_sum]
   rw [finsum_eq_sum_of_support_subset _ (s := Finset.range N) ?_]
   · refine Finset.sum_congr rfl fun n _ => ?_
@@ -116,7 +117,8 @@ theorem coeff_log_succ_mul (k : ℕ) :
 theorem eul_truncLog (f : MvPowerSeries σ K) (M : ℕ) :
     eulFun (truncLog (M + 1) f) = (∑ k ∈ Finset.range M, (-f) ^ k) * eulFun f := by
   have h0 : PowerSeries.coeff 0 (PowerSeries.log K) = 0 := by simp
-  rw [← eul_apply, truncLog, map_sum, Finset.sum_range_succ', h0, zero_smul, map_zero,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← eul_apply, truncLog, map_sum, Finset.sum_range_succ', h0, zero_smul, map_zero,
     add_zero, Finset.sum_mul]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [Derivation.map_smul, Derivation.leibniz_pow, Nat.add_sub_cancel, Algebra.smul_def,

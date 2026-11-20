@@ -31,7 +31,8 @@ theorem sigR_inclR (x : E) : sigR R σ (inclR (F := F) R x) = inclR (F := F) R (
 
 theorem hR_ratV (x y : Fin M → E) :
     hR R σ J (ratV (F := F) R x) (ratV (F := F) R y) = inclR (F := F) R (hE σ J x y) := by
-  simp [hR, hE, Formalism.UG.hform, ratV, JR, sigR_inclR, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [hR, hE, Formalism.UG.hform, ratV, JR, sigR_inclR, map_sum, map_mul]
 
 variable {R σ J P T}
 

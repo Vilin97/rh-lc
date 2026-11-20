@@ -57,7 +57,8 @@ theorem trv_unitary (hσ : ∀ e, σ (σ e) = e) (hJ : ∀ i j, σ (J j i) = -J 
   set c : Fin n → E := J *ᵥ fun i => σ (x i) with hc
   have hsc : (fun i => σ (c i)) = -(x ᵥ* J) := by
     ext j
-    simp only [hc, Matrix.mulVec, dotProduct, map_sum, Pi.neg_apply, Matrix.vecMul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hc, Matrix.mulVec, dotProduct, map_sum, Pi.neg_apply, Matrix.vecMul]
     rw [← Finset.sum_neg_distrib]
     exact Finset.sum_congr rfl fun k _ => by rw [map_mul, hσ, hJ]; ring
   have hT : (trv σ J x f)ᵀ = 1 - f • Matrix.vecMulVec c x := by
@@ -85,7 +86,8 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 
 theorem form_swap_skew {σ : E →ₐ[F] E} {n : ℕ} {J : Matrix (Fin n) (Fin n) E} (hσ : ∀ e, σ (σ e) = e)
     (hJ : ∀ i j, σ (J j i) = -J i j) (x y : Fin n → E) : form σ J y x = -σ (form σ J x y) := by
-  simp only [form, Matrix.mulVec, dotProduct, map_sum, map_mul, hσ, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, Matrix.mulVec, dotProduct, map_sum, map_mul, hσ, Finset.mul_sum]
   rw [Finset.sum_comm, ← Finset.sum_neg_distrib]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [← Finset.sum_neg_distrib]

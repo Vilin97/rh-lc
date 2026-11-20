@@ -89,7 +89,8 @@ lemma thetaSummable_shift (h : V →ₗ⋆[K] V →ₗ[K] K)
 lemma thetaSummable_expand (h : V →ₗ⋆[K] V →ₗ[K] K) {ι : Type*} [Fintype ι] (e : ι → V) (c : ι → ℤ) :
     Algebra.trace ℚ K (h (∑ i, c i • e i) (∑ i, c i • e i)) =
       ∑ i, ∑ j, (c i : ℚ) * (c j : ℚ) * Algebra.trace ℚ K (h (e i) (e j)) := by
-  simp only [map_sum, map_zsmul, LinearMap.sum_apply, LinearMap.smul_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_zsmul, LinearMap.sum_apply, LinearMap.smul_apply]
   simp only [zsmul_eq_mul, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_

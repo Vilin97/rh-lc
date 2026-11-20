@@ -14,7 +14,8 @@ private theorem iter_gen {A R ι : Type*} (f : A → A) (φ : R → R) (E : (ι 
 private theorem sl_sum {R A ι : Type*} [Semiring R] [AddCommMonoid A] [Module R A] (σ : R →+* R)
     (f : A →ₛₗ[σ] A) [Fintype ι] (c : ι → R) (x : ι → A) (hx : ∀ k, f (x k) = x k) :
     f (∑ k, c k • x k) = ∑ k, σ (c k) • x k := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_congr rfl fun k _ => by rw [LinearMap.map_smulₛₗ, hx]
 
 theorem UpperTheory.crisFrobenius_iterate_evalEtaleFamily :

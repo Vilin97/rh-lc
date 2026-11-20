@@ -41,7 +41,8 @@ private lemma coeff_map_zero {O K σ τ : Type} [CommRing O] [CommRing K] [Algeb
   obtain ⟨μ, hμ, hs⟩ := key
   obtain ⟨b, -, hb⟩ := hs f (fun m hm => hf m (not_le.1 hm))
   have h1 : ψ f ∈ RingHom.ker (constantCoeff : MvPowerSeries τ K →+* K) ^ N := by
-    rw [hb, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hb, map_sum]
     refine Ideal.sum_mem _ fun m hm => ?_
     have hπ : ψ (monomial m 1) = m.prod fun i k => ψ (MvPowerSeries.X i) ^ k := by
       rw [MvPowerSeries.monomial_one_eq, Finsupp.prod, Finsupp.prod, map_prod]
@@ -68,10 +69,12 @@ private lemma homog_ker {O K σ τ X : Type} [CommRing O] [CommRing K] [Algebra 
   have h1 := coeff_map_zero ψ hψ (n.degree + 1) (f - ∑ i ∈ T, wcomp O w i f) (fun m hm => by
     have hm' : Finsupp.weight w m ∈ T :=
       Finset.mem_insert_of_mem (Finset.mem_image_of_mem _ (hfin.mem_toFinset.2 (Nat.lt_succ_iff.1 hm)))
-    rw [map_sub, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_sum]
     simp only [coeff_wcomp]
     rw [Finset.sum_ite_eq, if_pos hm', sub_self]) n (Nat.lt_succ_self _)
-  rw [map_sub, hf, zero_sub, map_neg, neg_eq_zero, map_sum, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sub, hf, zero_sub, map_neg, neg_eq_zero, map_sum, map_sum,
     Finset.sum_eq_single_of_mem j (Finset.mem_insert_self _ _)] at h1
   · exact h1
   · intro i _ hi

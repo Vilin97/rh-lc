@@ -63,7 +63,8 @@ theorem occD_eeF (dual : Bool) (hP : IsPsiFor ε lam T Ψ) (hP' : IsPsiFor ε la
   have hE := (isDerivedOn_smE (rreg_isURepOn ε)).glRep
   have h1 : casimir (tensF dual (smE ε (rreg ε))) (ι x) = ((casVal lam' : ℝ) : ℂ) • ι x := by
     rw [← map_smul, ← casimir_genSub hE (datumV_casimir hP' v₀') x hx]
-    simp only [casimir, LinearMap.sum_apply, Module.End.mul_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [casimir, LinearMap.sum_apply, Module.End.mul_apply, map_sum]
     refine sum_congr rfl fun a _ => sum_congr rfl fun b _ => ?_
     rw [hι.2.2.1 a b _ (tset_genSub_E _ _ b a hx), hι.2.2.1 b a x hx]
   have h2 : casimir (tensF dual (smE ε (rreg ε))) (ι x) = ((casVal lam : ℝ) : ℂ) • ι x + (n : ℂ) • ι x +

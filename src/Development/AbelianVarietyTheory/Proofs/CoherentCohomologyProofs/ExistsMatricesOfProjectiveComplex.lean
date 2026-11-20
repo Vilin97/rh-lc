@@ -64,7 +64,8 @@ theorem projMatrix_mulVec {R : Type} [CommRing R] (R' : Type) [CommRing R'] [Alg
     have hy : f y = (LinearMap.toMatrix' f).mulVec y := by
       rw [LinearMap.toMatrix'_mulVec]
     rw [LinearMap.baseChange_tmul, hy]
-    simp only [TensorProduct.piScalarRight_apply, TensorProduct.piScalarRightHom_tmul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [TensorProduct.piScalarRight_apply, TensorProduct.piScalarRightHom_tmul,
       Matrix.mulVec, dotProduct, Matrix.map_apply, Finset.sum_smul, Algebra.smul_def, map_mul,
       map_sum, Finset.sum_mul, mul_assoc]
 
@@ -79,7 +80,8 @@ theorem projMatrix_sum {R : Type} [CommRing R] (R' : Type) [CommRing R'] [Algebr
     simp only [map_add, Pi.add_apply, TensorProduct.add_tmul, Finset.sum_add_distrib, hx, hy]
   | tmul r y =>
     have hy : p y = ∑ k, y k • p (Pi.single k 1) := by
-      simp only [← map_smul, ← map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [← map_smul, ← map_sum]
       congr 1
       ext j
       simp [Finset.sum_apply, Pi.single_apply]

@@ -79,13 +79,15 @@ theorem inner_e {S : HSpace E} (hσ : ∀ (φ : E →+* ℂ) a, φ (star a) = st
 theorem psi_sum_rat {S : HSpace E} (M : Model S) (L : Submodule (𝓞 E) S.V) {ι : Type} [Fintype ι]
     (e : Basis ι ℤ L) (c : ι → ℚ) :
     psi M (∑ i, (c i : E) • (e i : S.V)) = ∑ i, (c i : ℝ) • psi M (e i : S.V) := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_congr rfl fun i _ ↦ psi_rat M (c i) _
 
 theorem psi_sum_int {S : HSpace E} (M : Model S) (L : Submodule (𝓞 E) S.V) {ι : Type} [Fintype ι]
     (e : Basis ι ℤ L) (c : ι → ℤ) :
     psi M (∑ i, c i • (e i : S.V)) = ∑ i, c i • psi M (e i : S.V) := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_congr rfl fun i _ ↦ map_zsmul _ _ _
 
 theorem GQ_det (S : HSpace E) (hσ : ∀ (φ : E →+* ℂ) a, φ (star a) = star (φ a)) (hsig : S.SigOK)

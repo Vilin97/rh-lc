@@ -47,10 +47,12 @@ theorem fockSubst_mul (p : D.what₂.Tau → ℕ) (u u' : GLR D n) :
   refine MvPolynomial.algHom_ext fun v => ?_
   rw [AlgHom.comp_apply, fockSubst, fockSubst, fockSubst, aeval_X, aeval_X]
   split_ifs with h
-  · simp only [map_sum, map_mul, aeval_C, aeval_X, if_pos h, Pi.mul_apply, _root_.mul_inv_rev, Units.val_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [map_sum, map_mul, aeval_C, aeval_X, if_pos h, Pi.mul_apply, _root_.mul_inv_rev, Units.val_mul,
       Matrix.mul_apply, algebraMap_eq, Finset.mul_sum, Finset.sum_mul, mul_assoc]
     exact Finset.sum_comm
-  · simp only [map_sum, map_mul, aeval_C, aeval_X, if_neg h, Pi.mul_apply, Units.val_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [map_sum, map_mul, aeval_C, aeval_X, if_neg h, Pi.mul_apply, Units.val_mul,
       Matrix.mul_apply, algebraMap_eq, Finset.mul_sum, Finset.sum_mul]
     rw [Finset.sum_comm]
     exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
@@ -144,7 +146,8 @@ theorem coefFn_rhoVr {emb : D.what₂.Tau → (D.host.E →+* K)} (hemb : ∀ τ
       eval₂Hom σ (fun v => (((embGL (tauE D) γ)⁻¹ * x) v.1).val v.2.1 v.2.2) := by
     refine MvPolynomial.ringHom_ext (fun a => by simp [trAct, Formalism.GradedWeylDivisibility.blockAct]) fun v => ?_
     have : ∀ a b, σ (((embGL emb γ v.1)⁻¹).val a b) = ((embGL (tauE D) γ v.1)⁻¹).val a b := fun a b => he _ _
-    simp only [RingHom.comp_apply, RingHom.coe_coe, trAct, Formalism.GradedWeylDivisibility.blockAct, aeval_X, map_sum, map_mul, eval₂Hom_C,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [RingHom.comp_apply, RingHom.coe_coe, trAct, Formalism.GradedWeylDivisibility.blockAct, aeval_X, map_sum, map_mul, eval₂Hom_C,
       eval₂Hom_X', Pi.mul_apply, Pi.inv_apply, Units.val_mul, Matrix.mul_apply]
     exact Finset.sum_congr rfl fun b _ => congrArg (· * _) (this _ _)
   have e3 : σ (detTwK lam (invTrK (embGL emb γ))) =

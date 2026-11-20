@@ -114,7 +114,8 @@ theorem form_smul_right (c : E) (a y : Fin n → E) :
 
 theorem form_cj (h : IsHerm L Hm) (x y : Fin n → E) : L.cj (hf L Hm x y) = hf L Hm y x := by
   have h' : ∀ i j, L.cj (Hm i j) = Hm j i := fun i j => congrFun (congrFun h j) i
-  simp only [hf, map_sum, map_mul, L.cj_cj, h']
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hf, map_sum, map_mul, L.cj_cj, h']
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 
@@ -151,7 +152,8 @@ theorem relIndex_divBy (U : Submodule L.O (Fin n → E))
     refine ⟨⟨∑ b, (c b : E) • e b, U.sum_mem fun b _ => U.smul_mem (c b) (he b)⟩,
       funext fun a => Subtype.ext ?_⟩
     show formLeft L Hm (e a) (∑ b, (c b : E) • e b) = c a
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     show ∑ b, hf L Hm ((c b : E) • e b) (e a) = c a
     simp [form_smul_left, hee]
   have h1 : (divBy L Hm U e x).addSubgroupOf U.toAddSubgroup

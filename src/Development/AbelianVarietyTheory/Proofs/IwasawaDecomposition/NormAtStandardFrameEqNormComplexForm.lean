@@ -20,7 +20,8 @@ theorem j_eq_sum {σ : K →+* ℂ} {W : Type} [AddCommGroup W] [Module ℂ W] {
     (j : (Fin n → K) →ₛₗ[σ] W) (x : Fin n → K) :
     j x = ∑ i, σ (x i) • j (Pi.single i 1) := by
   conv_lhs => rw [← Finset.univ_sum_single x]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   have : (Pi.single i (x i) : Fin n → K) = x i • Pi.single i 1 := by
     rw [← Pi.single_smul, smul_eq_mul, mul_one]
@@ -53,12 +54,14 @@ theorem hAt_mk {σ : K →+* ℂ} (hσ : ∀ a, σ (star a) = starRingEnd ℂ (�
   · left
     intro x y
     rw [hin, hform_eq_sum, hAt, he]
-    simp only [map_sum, map_mul, hσ]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, hσ]
     rfl
   · right
     intro x y
     rw [hin, hform_eq_sum, hAt, he]
-    simp only [map_sum, map_mul, hσ, star_sum, star_mul', ComplexEmbedding.conjugate_coe_eq, Complex.star_def]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, hσ, star_sum, star_mul', ComplexEmbedding.conjugate_coe_eq, Complex.star_def]
 
 theorem posAt_mk {σ : K →+* ℂ} (hσ : ∀ a, σ (star a) = starRingEnd ℂ (σ a)) {W : Type} [NormedAddCommGroup W]
     [InnerProductSpace ℂ W] {n : ℕ} (j : (Fin n → K) →ₛₗ[σ] W) (H E : Matrix (Fin n) (Fin n) K)

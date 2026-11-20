@@ -101,7 +101,8 @@ theorem FinSupp.exists_sum {lam : (ℕ → Qbar l) →ₗ[Qbar l] Qbar l} (h : F
   refine ⟨S, fun f => ?_⟩
   have h0 := hS (f - ∑ s ∈ S, f s • (Pi.single s 1 : ℕ → Qbar l)) (fun t ht => by
     simp [Finset.sum_apply, Pi.single_apply, ht])
-  rw [map_sub, map_sum, sub_eq_zero] at h0
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sub, map_sum, sub_eq_zero] at h0
   rw [h0]
   exact Finset.sum_congr rfl fun s _ => by rw [map_smul, smul_eq_mul, mul_comm]
 

@@ -105,4 +105,5 @@ theorem UpperTheory.V.Z.Tf.GlobalTraceComparison.Pi.absStep_pf :
   simp only [LinearMap.sum_apply, LinearMap.smul_apply]
   rw [Finset.sum_image hinj, Finset.sum_congr rfl hout, Finset.sum_product]
   refine Finset.sum_congr rfl fun s _ => ?_
-  simp only [MonoidHom.comp_apply, map_sum, map_smul, Finset.smul_sum, smul_smul, map_mul, Module.End.mul_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [MonoidHom.comp_apply, map_sum, map_smul, Finset.smul_sum, smul_smul, map_mul, Module.End.mul_apply]

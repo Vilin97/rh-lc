@@ -45,7 +45,8 @@ theorem weyl_int_expansion : ∀ (N : ℕ) (Y : YoungDiagram) (hY : Y.colLen 0 �
   apply MvPolynomial.map_injective (Int.castRingHom ℚ) Int.cast_injective
   apply smul_right_injective _ hN0ne
   simp only
-  rw [← h, map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← h, map_sum, Finset.smul_sum]
   refine Finset.sum_congr rfl fun J _ => ?_
   rw [map_zsmul, hmap, ← Int.cast_smul_eq_zsmul ℚ, smul_smul, mul_comm]
 

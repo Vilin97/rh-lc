@@ -82,7 +82,8 @@ theorem core {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {Dw
     refine GlobalTheory.T.weightSection_eq_zero_of_vanishing_finite_extensions E H Dw l Xo c a n (hh t) (hhsec t) fun L _ _ _ y => ?_
     have := GlobalTheory.T.eq_zero_of_sum_mul_embeddings_eq_zero' c.F (PAt φ) L m e he hea (fun t => evR Xo c (hh t) y) (fun σ => by
       rw [← hdrel L σ y]
-      simp only [hev, map_sum, map_mul, AlgHom.commutes, hq, Finset.mul_sum, Finset.sum_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hev, map_sum, map_mul, AlgHom.commutes, hq, Finset.mul_sum, Finset.sum_mul]
       rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun s _ => Finset.sum_congr rfl fun t _ => ?_
       ring)
@@ -132,7 +133,8 @@ theorem detects : ∀ (D : D7) (Γ : Type) [Group Γ] [Fintype Γ] (Pl0 I0 T1 : 
     rw [Fintype.linearIndependent_iff]
     intro cf hcf s
     have h1 : ((cuspOf YS fw j (∑ t : r.support, (eKs YS).symm (cf t) • bV t) : Cu T0 κ j) : T0.R ((j : ℕ) + 1)) = 0 := by
-      rw [← hcf, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hcf, map_sum]
       simp only [cuspOf_smul, RingEquiv.apply_symm_apply]
       push_cast
       rfl

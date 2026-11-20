@@ -24,7 +24,8 @@ theorem uj_map_iff {A B : Type} [CommRing A] [CommRing B] {m : Type} [Fintype m]
   have key : Formalism.UG.cT σB ((g : Matrix m m A).map φ) * JA.map φ * (g : Matrix m m A).map φ =
       (Formalism.UG.cT σA (g : Matrix m m A) * JA * (g : Matrix m m A)).map φ := by
     ext i j
-    simp [Formalism.UG.cT, Matrix.mul_apply, map_sum, map_mul, hσ]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Formalism.UG.cT, Matrix.mul_apply, map_sum, map_mul, hσ]
   rw [key]
   constructor
   · intro h
@@ -141,7 +142,8 @@ theorem linear_adelic_action (x : X.B.I.Gf) (y : Fin X.B.I.n → X.B.I.E) :
   rw [ratV_eq]
   funext i
   simp only [lin, Matrix.mulVecLin_apply, adelic_action_matrix, coe_psi0_eq_map_cE]
-  simp [Matrix.mulVec, dotProduct, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Matrix.mulVec, dotProduct, map_sum, map_mul]
 
 theorem linear_adelic_action_fixed_iff (x : X.B.I.Gf) (y : Fin X.B.I.n → X.B.I.E) :
     lin (Formalism.MainNotions.S.Af X.B.I.F) X.B.I.cm.sig X.B.I.J (psi1 X.B.I x) (ratV (F := X.B.I.F) (Formalism.MainNotions.S.Af X.B.I.F) y) =

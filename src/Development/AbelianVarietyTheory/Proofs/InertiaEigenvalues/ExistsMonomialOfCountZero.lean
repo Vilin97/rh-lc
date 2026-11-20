@@ -40,7 +40,8 @@ theorem exists_monomial_of_count_zero (I S : Type 1) (A : Type) [DecidableEq A] 
       ∑ m ∈ P.support, P.coeff m • Ψ.symm (MvPolynomial.monomial m 1) := by
     rw [← hPs]
     conv_lhs => rw [P.as_sum]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun m _ => ?_
     rw [← map_zsmul, MvPolynomial.smul_monomial, smul_eq_mul, mul_one]
   have hcnt : ∀ (c : I →₀ ℤ) (t : Multiset (List A)), 0 ≤ c →
@@ -77,7 +78,8 @@ theorem exists_monomial_of_count_zero (I S : Type 1) (A : Type) [DecidableEq A] 
     have e2 : ∑ m ∈ P.support, P.coeff m * ((s m).count w : ℤ) =
         Finsupp.linearCombination ℤ (fun x => ((M x w).toNat : ℤ))
           (∑ m ∈ P.support, P.coeff m • Ψ.symm (MvPolynomial.monomial m 1)) := by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun m _ => ?_
       rw [map_zsmul, e1 m, smul_eq_mul]
     rw [e2, ← hdec, Finsupp.linearCombination_single, hy w]
@@ -103,7 +105,8 @@ theorem exists_monomial_of_count_zero (I S : Type 1) (A : Type) [DecidableEq A] 
       push_cast
       simp
     conv_lhs => rw [P.as_sum]
-    rw [map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum]
     simp only [MvPolynomial.map_monomial, MvPolynomial.aeval_monomial]
     rw [Finset.sum_congr rfl hterm, Finset.sum_comm]
     refine Finset.sum_eq_zero fun w _ => ?_

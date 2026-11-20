@@ -35,7 +35,8 @@ theorem gram_det_ne_zero {Λ ι : Type} [AddCommGroup Λ] [Fintype ι] [Decidabl
     refine b.ext fun j => ?_
     have hj := congrFun hc j
     simp only [Matrix.vecMul, dotProduct, Matrix.of_apply, Pi.zero_apply] at hj
-    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
       LinearMap.zero_apply]
     exact hj
   have hsum : ∑ i, c i • b i = 0 := inj (by rw [hform, map_zero])

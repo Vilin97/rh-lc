@@ -20,7 +20,8 @@ lemma ptInner_sum {ι : Type*} [Fintype ι] (W : Weight L) (n : ℕ) (α β : ι
     (s : ι → Fin A.n → X → ℂ) (x : X) :
     ptInner W n (∑ c, α c • s c) (∑ d, β d • s d) x =
       ∑ c, ∑ d, α c * conj (β d) * ptInner W n (s c) (s d) x := by
-  simp only [ptInner, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [ptInner, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum, map_mul,
     Finset.sum_mul, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun c _ ↦ Finset.sum_congr rfl fun d _ ↦ ?_

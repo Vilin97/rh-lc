@@ -104,7 +104,8 @@ theorem normF_mem (n : ℕ) (F : (Fin (n + 1) → G) → M.V) (hF : F ∈ hcoch 
     rw [this]
     refine continuous_finsetSum _ fun c _ => (continuous_rho M _).comp (hF.1.comp ?_)
     exact continuous_pi fun i => continuous_const.mul (continuous_apply i)
-  · rw [normF_eq, normF_eq, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [normF_eq, normF_eq, map_sum]
     have key : ∀ c : Quotient (QuotientGroup.rightRel U),
         M.rho c.out⁻¹ (F fun i => c.out * (g • x i)) =
         M.rho g (M.rho (cosetMul U g c).out⁻¹ (F fun i => (cosetMul U g c).out * x i)) := by
@@ -130,7 +131,8 @@ theorem normF_hd (n : ℕ) (F : (Fin (n + 1) → G) → M.V) :
   classical
   haveI : Fintype (Quotient (QuotientGroup.rightRel U)) := Fintype.ofFinite _
   funext x
-  simp only [normF_eq, hd, map_sum, map_zsmul, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [normF_eq, hd, map_sum, map_zsmul, Finset.smul_sum]
   exact Finset.sum_comm
 
 theorem normF_add (n : ℕ) (F F' : (Fin (n + 1) → G) → M.V) :

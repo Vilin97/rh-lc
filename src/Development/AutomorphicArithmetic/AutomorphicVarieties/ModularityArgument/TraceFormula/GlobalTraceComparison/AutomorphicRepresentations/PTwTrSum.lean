@@ -66,7 +66,8 @@ private lemma trace_sum {J : Type*} (s : Finset J) (c : J → ℂ) (L : J → V 
     simp only [LinearMap.restrict_coe_apply, LinearMap.sum_apply, LinearMap.smul_apply,
       Submodule.coe_sum, Submodule.coe_smul]
     rw [← Finset.sum_attach s]
-  rw [e, map_sum, ← Finset.sum_attach s]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, map_sum, ← Finset.sum_attach s]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_smul, smul_eq_mul, trace_range_eq (L j.1) W (hle j.1 j.2) (hj' j.1 j.2)]
 

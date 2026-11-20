@@ -20,7 +20,8 @@ theorem val_linearCombination (L : LatModel M F) {U W : X.Opens} (h : W ≤ U)
     (hW : genericPoint X ∈ W) {m : ℕ} (e : Fin m → Γ(F, U)) (a : Fin m → Γ(X, W)) :
     L.val W hW (Fintype.linearCombination Γ(X, W) (fun i => Twist.resM F h (e i)) a) =
       ∑ i, fnOf W hW (a i) • L.val U (h hW) (e i) := by
-  simp only [Fintype.linearCombination_apply, map_sum, L.smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Fintype.linearCombination_apply, map_sum, L.smul]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [← L.res U W h hW (e i)]
 

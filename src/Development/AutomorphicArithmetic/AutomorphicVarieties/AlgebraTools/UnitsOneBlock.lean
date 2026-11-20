@@ -41,7 +41,8 @@ theorem UpperTheory.V.AlgebraTools.units_one_block :
         = T.tr (U.x i * y * (∑ k, T.st (U.x k) * U.x k) * z * T.st (U.x j)) := by
           rw [hB, mul_one, mul_assoc (U.x i) y z]
       _ = ∑ k, T.tr ((U.x i * y * T.st (U.x k)) * (U.x k * z * T.st (U.x j))) := by
-          simp only [Finset.mul_sum, Finset.sum_mul, map_sum, mul_assoc]
+          set_option synthInstance.maxHeartbeats 100000 in
+            simp only [Finset.mul_sum, Finset.sum_mul, map_sum, mul_assoc]
       _ = _ := by
           refine Finset.sum_congr rfl fun k _ => ?_
           exact hpair _ _ (hE' i k y) (hE' k j z)
@@ -71,7 +72,8 @@ theorem UpperTheory.V.AlgebraTools.units_one_block :
     have hq : ∀ k l, U.x i * (T.st (U.x k) * U.x l) * T.st (U.x j) = (U.x i * T.st (U.x k)) * (U.x l * T.st (U.x j)) := by
       intro k l
       simp only [mul_assoc]
-    simp only [f, g, Matrix.of_apply, Finset.mul_sum, Finset.sum_mul, map_sum, mul_smul_comm, smul_mul_assoc, map_smul, hq, hxs]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [f, g, Matrix.of_apply, Finset.mul_sum, Finset.sum_mul, map_sum, mul_smul_comm, smul_mul_assoc, map_smul, hq, hxs]
     simp [ite_mul, mul_ite, hidem, hte, apply_ite]
   have hfst : ∀ y, f (T.st y) = (f y)ᵀ := by
     intro y

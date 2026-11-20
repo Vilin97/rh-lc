@@ -109,7 +109,8 @@ theorem lintegral_arch_eq : ∀ (F : Type) [Field F] [NumberField F] (κ : Type)
     have e : ∑ i, (c i * h i y) • L (f i) = L (∑ i, (c i * h i y) • f i) := by simp only [map_sum, map_smul]
     rw [e, hsq, hsq, hL ν hν]
   have e1 : Ω (∑ i, c i • (g i : (κ → AF F) → ℂ)) = ∑ i, c i • pureA F (L (f i)) (h i) := by
-    simp only [map_sum, map_smul, hg, hΩ]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, hg, hΩ]
   rw [e1]
   simp only [hg, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
   exact key

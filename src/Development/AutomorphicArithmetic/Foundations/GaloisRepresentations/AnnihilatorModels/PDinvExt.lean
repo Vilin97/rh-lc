@@ -29,7 +29,8 @@ private theorem mem_baseChange_iInf_ker_sub_id_of_baseChange_eq {F L X ι : Type
     simp [e]
   have hz' : z = (e z).sum (fun j x => b j ⊗ₜ[F] x) := by
     conv_lhs => rw [← e.symm_apply_apply z, ← Finsupp.sum_single (e z)]
-    simp only [Finsupp.sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Finsupp.sum, map_sum]
     exact Finset.sum_congr rfl fun j _ => hsingle j _
   rw [hz']
   exact Submodule.sum_mem _ fun j _ => Submodule.tmul_mem_baseChange_of_mem _ (hmem j)

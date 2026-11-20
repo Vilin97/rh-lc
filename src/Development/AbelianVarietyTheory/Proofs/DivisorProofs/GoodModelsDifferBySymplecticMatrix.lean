@@ -61,7 +61,8 @@ theorem goodModel_coords_rat_symplectic : ∀ (F E : Type) [Field F] [NumberFiel
         obtain ⟨w, hw⟩ := hrat0 x
         have h1 := hfk (Submodule.subset_span (show w ∈ G from ⟨x, hw⟩))
         rw [LinearMap.mem_ker, hfc] at h1
-        simp only [LinearEquiv.coe_coe, LinearEquiv.coe_toLinearMap, hw, ← map_mul, ← map_sum, h1, map_zero]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [LinearEquiv.coe_coe, LinearEquiv.coe_toLinearMap, hw, ← map_mul, ← map_sum, h1, map_zero]
       | zero => simp
       | add x y _ _ hx hy => simp [add_mul, Finset.sum_add_distrib, hx, hy]
       | smul a x _ hx => simp [mul_assoc, ← Finset.mul_sum, hx]

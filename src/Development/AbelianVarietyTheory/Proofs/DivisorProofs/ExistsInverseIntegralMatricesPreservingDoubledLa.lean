@@ -12,7 +12,8 @@ variable {A O : Type} [CommRing A] [CommRing O] (ι : O →ₙ+* A) {n : ℕ}
 theorem map_mul_of_nonUnital {m : Type} [Fintype m] (G H : Matrix m m O) :
     (G * H).map ι = G.map ι * H.map ι := by
   ext i j
-  simp [Matrix.mul_apply, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Matrix.mul_apply, map_sum, map_mul]
 
 theorem exists_matrix_of_keeps (P : Matrix (Fin n) (Fin n) A) (Λ : Set (Fin n → A))
     (hP : ι 1 • P = P)

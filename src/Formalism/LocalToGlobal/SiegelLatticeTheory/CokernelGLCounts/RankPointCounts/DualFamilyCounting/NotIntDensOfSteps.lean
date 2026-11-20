@@ -32,7 +32,8 @@ theorem h_sum_left {ι : Type} (s : Finset ι) (x : ι → V) (y : V) :
 
 theorem h_sum_right {ι : Type} (s : Finset ι) (x : ι → V) (y : V) :
     H.h y (∑ i ∈ s, x i) = ∑ i ∈ s, H.h y (x i) := by
-  rw [H.h_herm (∑ i ∈ s, x i) y, h_sum_left, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [H.h_herm (∑ i ∈ s, x i) y, h_sum_left, map_sum]
   exact Finset.sum_congr rfl fun i _ => (H.h_herm (x i) y).symm
 
 theorem gram_comb {ι : Type} [Fintype ι] (v : ι → V) (A : Matrix ι ι E) :

@@ -21,7 +21,8 @@ lemma qx_wt (hd : IsStripData B be Str ps) {mu nu : Fin n → ℤ} (hmu : Domina
     (K : TIdx mu) (k : κ) (I : TIdx nu) (h : ps mu nu (K, k) I ≠ 0) :
     qb_wtT mu K + be k = qb_wtT nu I := by
   have h1 := congrArg (evGL (torusPt n)) (qx_ps_equiv hd hmu hnu K k I)
-  simp only [map_sum, map_mul, map_intCast, qb_evGL_torus_TMat, hd.2.1, Fintype.sum_prod_type,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, map_intCast, qb_evGL_torus_TMat, hd.2.1, Fintype.sum_prod_type,
     ite_mul, zero_mul, mul_ite, mul_zero, sum_ite_eq, sum_ite_eq', mem_univ, if_true,
     AddMonoidAlgebra.single_mul_single, one_mul] at h1
   by_contra hne

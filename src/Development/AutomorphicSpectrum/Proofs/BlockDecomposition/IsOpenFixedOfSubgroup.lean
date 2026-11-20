@@ -36,13 +36,15 @@ theorem exists_fixed_lift {L W W' : Type} [Group L] [AddCommGroup W] [Module ℂ
   have hc : ((Fintype.card (L ⧸ S) : ℕ) : ℂ) ≠ 0 := by
     exact_mod_cast Fintype.card_ne_zero
   refine ⟨((Fintype.card (L ⧸ S) : ℕ) : ℂ)⁻¹ • ∑ x, φ x, ?_, fun l => ?_⟩
-  · rw [map_smul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_smul, map_sum]
     have : ∀ x, f (φ x) = f w := fun x => by
       show f (ρ x.out w) = f w
       rw [hf, hw]
     simp only [this, Finset.sum_const, Finset.card_univ]
     rw [← Nat.cast_smul_eq_nsmul ℂ, smul_smul, inv_mul_cancel₀ hc, one_smul]
-  · rw [map_smul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_smul, map_sum]
     simp only [key]
     congr 1
     exact Equiv.sum_comp (MulAction.toPerm l) φ

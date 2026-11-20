@@ -27,7 +27,8 @@ theorem isIntegral_of_left_eigenvector_of_lattice {E K : Type} [Field E] [Number
     have h1 : (fun i => algebraMap E K ((B *ᵥ y) i))
         = (B.map (algebraMap E K)) *ᵥ (fun i => algebraMap E K (y i)) := by
       ext i
-      simp [Matrix.mulVec, dotProduct, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [Matrix.mulVec, dotProduct, map_sum]
     show v ⬝ᵥ (fun i => algebraMap E K ((B *ᵥ y) i)) = _ * (v ⬝ᵥ (fun i => algebraMap E K (y i)))
     rw [h1, Matrix.dotProduct_mulVec, hw, smul_dotProduct, smul_eq_mul]
   have hcK : algebraMap E K c ≠ 0 := by simpa using hc

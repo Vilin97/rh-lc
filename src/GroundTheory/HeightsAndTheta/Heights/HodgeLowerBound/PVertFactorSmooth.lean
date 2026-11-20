@@ -60,7 +60,8 @@ theorem mConeMap_monomial (y : (Σ k, ι k) → Ω) (e : (Σ k, ι k) →₀ ℕ
 theorem mConeMap_eq_sum (y : (Σ k, ι k) → Ω) (u : MRing ι) :
     mConeMap y u = ∑ e ∈ u.support, monomial (mdeg e) (((AddMonoidAlgebra.coeff u e : ℤ) : Ω) * e.prod fun p n => y p ^ n) := by
   conv_lhs => rw [u.as_sum]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [mConeMap_monomial]
 
 open Classical in
@@ -87,7 +88,8 @@ theorem isMultiHomog_comp (u : MRing ι) (m : K →₀ ℕ) : IsMultiHomog (comp
 theorem aeval_comp (y : (Σ k, ι k) → Ω) (u : MRing ι) (m : K →₀ ℕ) :
     aeval y (comp u m) = AddMonoidAlgebra.coeff (mConeMap y u) m := by
   classical
-  rw [mConeMap_eq_sum, coeff_sum, comp, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [mConeMap_eq_sum, coeff_sum, comp, map_sum]
   simp only [coeff_monomial, aeval_monomial, algebraMap_int_eq, eq_intCast]
   rw [← Finset.sum_filter]
 
@@ -96,7 +98,8 @@ theorem mConeMap_of_homog (y : (Σ k, ι k) → Ω) {g : MRing ι} {d : K →₀
   classical
   rw [isMultiHomog_iff] at hg
   rw [mConeMap_eq_sum]
-  conv_rhs => rw [g.as_sum, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_rhs => rw [g.as_sum, map_sum, map_sum]
   refine Finset.sum_congr rfl fun e he => ?_
   rw [hg e he, aeval_monomial, algebraMap_int_eq, eq_intCast]
 

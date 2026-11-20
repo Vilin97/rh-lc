@@ -95,7 +95,8 @@ theorem mapA_thO_sum_pure : GlobalTheory.Published.HoweDualityReal → GlobalThe
     rw [dif_pos HL]
     exact HL.choose_spec (f i) (φ i) (hφ i).1 (hφ i).2
   unfold mapA thetaLift
-  rw [dif_pos Hq, Hq.choose_spec _ hmem, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [dif_pos Hq, Hq.choose_spec _ hmem, map_sum]
   exact Finset.sum_congr rfl fun i _ => hL i
 
 end GlobalTheory.TripleAssembly.PureImage

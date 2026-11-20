@@ -36,13 +36,15 @@ theorem relationsLift_of_flat {I : Ideal A} {C : Type*} [CommRing C] [Algebra A 
   obtain ⟨k, m, v, rfl⟩ := TensorProduct.exists_sum_tmul_eq x
   rw [← hker, mem_ker] at hx
   have h0 : ∑ i, algebraMap A C (f (v i)) • q (m i) = 0 := by
-    simpa [map_sum] using hx
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [map_sum] using hx
   obtain ⟨l, c, y, hy, hc⟩ := Module.Flat.isTrivialRelation_of_sum_smul_eq_zero h0
   choose a ha using fun i j => hC (c i j)
   choose z hz using fun j => hq (y j)
   have hd : ∀ i, m i - ∑ j, a i j • z j ∈ I • (⊤ : Submodule A M) := by
     intro i
-    rw [← hker, mem_ker, map_sub, show q (m i) = _ from hy i, map_sum, sub_eq_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hker, mem_ker, map_sub, show q (m i) = _ from hy i, map_sum, sub_eq_zero]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_smul, hz, ← ha, algebraMap_smul]
   have hsum : ∑ i, m i ⊗ₜ[A] v i = ∑ i, (m i - ∑ j, a i j • z j) ⊗ₜ[A] v i +
@@ -65,7 +67,8 @@ theorem relationsLift_of_flat {I : Ideal A} {C : Type*} [CommRing C] [Algebra A 
     rw [Submodule.mem_comap, ← hI]
     change algebraMap A C _ = 0
     rw [← hc j]
-    simp [map_sum, ha, mul_comm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, ha, mul_comm]
 
 theorem relationsLift_pow {π : A} (h : RelationsLift (Ideal.span {π}) M)
     (hreg : IsSMulRegular M π) (k : ℕ) : RelationsLift (Ideal.span {π} ^ k) M := by

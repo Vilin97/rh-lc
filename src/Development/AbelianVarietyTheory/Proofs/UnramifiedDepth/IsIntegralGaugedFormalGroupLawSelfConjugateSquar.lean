@@ -426,7 +426,8 @@ theorem rlaw_rawSelf (C : Type) [Field C] [CharZero C] (V : VF C) (O : Type) [Co
     classical
     intro g e he
     show coeff e (∑ col, hCol col Y.h) = 0
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_eq_zero fun col _ => ?_
     refine Van.subst (T := {s : Fin 2 × (Fin 2 × Fin dd) | s.1 = g}) {s : Fin 2 × Fin dd | s.1 = g}
       (fun _ => constantCoeff_X _) ?_ (h_axes Y g) e he

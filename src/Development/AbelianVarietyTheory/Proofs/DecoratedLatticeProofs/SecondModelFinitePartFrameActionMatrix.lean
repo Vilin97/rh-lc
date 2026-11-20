@@ -56,7 +56,8 @@ theorem map_cols {A R : Type} [CommRing A] [CommRing R] (f : A →+* R) {m n : �
     M.map f *ᵥ (fun k => f (N k j)) = ∑ i, f (P i j) • fun k => f (N k i) := by
   funext k
   have h3 := congrArg f (congrFun (congrFun h k) j)
-  simp only [Matrix.mul_apply, map_sum, map_mul] at h3
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mul_apply, map_sum, map_mul] at h3
   simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
   rw [h3]
   exact Finset.sum_congr rfl fun i _ => mul_comm _ _

@@ -182,7 +182,8 @@ theorem galB_sub_mem_of_Pol [IsAlgClosure ℚ Ω] (X : Tower Ω ε) (l w : ℕ) 
       (Finset.mem_biUnion.2 ⟨i, Finset.mem_univ _, hx⟩)))
   set χ := (cyclotomicCharacter Ω l s.toRingEquiv : ℤ_[l]) with hχdef
   have hgal : X.galB l s b u = X.kmap l (X.gal s) (b ![u 0, χ * u 1]) := rfl
-  rw [Pi.sub_apply, hgal, hbc, hbc, map_sum, ← Finset.sum_sub_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Pi.sub_apply, hgal, hbc, hbc, map_sum, ← Finset.sum_sub_distrib]
   refine Submodule.sum_mem _ fun i _ => ?_
   simp only [map_smul, Matrix.cons_val_zero, Matrix.cons_val_one]
   have hpow : χ ^ (w - (i : ℕ)) - 1 ∈ (idl l) ^ n := by

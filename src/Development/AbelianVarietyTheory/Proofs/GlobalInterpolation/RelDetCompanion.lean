@@ -41,7 +41,8 @@ theorem functional_frame {P : HeightOneSpectrum (𝓞 E)} {N : Submodule (𝓞 E
   choose r hr using (mem_stdLat _).1 hsz
   have h1 : s • f z = ∑ i, r i • f (Pi.single i 1) := by
     rw [← algebraMap_smul E s, ← map_smul]
-    simp only [← algebraMap_smul E (r _), ← map_smul, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [← algebraMap_smul E (r _), ← map_smul, ← map_sum]
     congr 1
     funext j
     simp [Finset.sum_apply, Pi.single_apply, hr, Algebra.smul_def]
@@ -49,7 +50,8 @@ theorem functional_frame {P : HeightOneSpectrum (𝓞 E)} {N : Submodule (𝓞 E
     rw [← hsm s _ ((hf z).2 hz), h1, functional_sum _ φ hadd hsm _ _ _ fun i => (hf _).2 (single_mem_stdAt P i)]
     simp [hc]
   have h3 : algebraMap (𝓞 E) E (∑ i, r i * c i) = algebraMap (𝓞 E) E s * ∑ i, algebraMap (𝓞 E) E (c i) * z i := by
-    rw [map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_mul, hr, Pi.smul_apply, Algebra.smul_def]
     ring

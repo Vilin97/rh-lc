@@ -225,7 +225,8 @@ theorem thetaLift_der_eq_zero (hP : GlobalTheory.FunPr.Hypotheses₂) {k : ℕ} 
     unfold liftPure
     rw [dif_pos HL, HL.choose_spec _ _ (hf i).2.1 (hf i).2.2, hlie γ hγ (f i) (hf i).1 (f₁ i) (hA i),
       TensorProduct.zero_tmul]
-  rw [e1, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e1, map_sum]
   exact Finset.sum_eq_zero fun i _ => e2 i
 
 end GlobalTheory.TripleAssembly.LieInv

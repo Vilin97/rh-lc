@@ -92,7 +92,8 @@ theorem tau_eS [CharZero K] : (T.tau s).asAlgebraHom (eS T s) = 1 := by
       ((LinearMap.trace K (T.W s)) ∘ₗ LinearMap.mulLeft K (T.tau s y⁻¹))).smulRight (T.tau s y) with hΞ
   have hΞapp : ∀ M, Ξ M = (T.tau s).asAlgebraHom (theta T s M) := by
     intro M
-    rw [hΞ, theta, map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hΞ, theta, map_sum, LinearMap.sum_apply]
     refine Finset.sum_congr rfl fun y _ => ?_
     rw [map_smul, Representation.asAlgebraHom_of, LinearMap.smulRight_apply, LinearMap.smul_apply,
       LinearMap.comp_apply, LinearMap.mulLeft_apply, smul_eq_mul]
@@ -102,7 +103,8 @@ theorem tau_eS [CharZero K] : (T.tau s).asAlgebraHom (eS T s) = 1 := by
     rw [hΞapp, ← mul_eS, map_mul, hμ]
     simp
   have htr := congrArg (LinearMap.trace K _) hΞμ
-  rw [hΞ, map_sum, map_smul, LinearMap.trace_id, Module.finrank_linearMap] at htr
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hΞ, map_sum, map_smul, LinearMap.trace_id, Module.finrank_linearMap] at htr
   simp only [LinearMap.trace_smulRight, LinearMap.smul_apply, LinearMap.comp_apply, LinearMap.mulLeft_apply,
     ← map_mul, inv_mul_cancel, map_one, LinearMap.trace_one, smul_eq_mul, Finset.sum_const, Finset.card_univ,
     nsmul_eq_mul] at htr

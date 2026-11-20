@@ -27,7 +27,8 @@ theorem coe_bas_eq_sum (m : Fin g ⊕ Fin g → ℤ) :
   have hm : m = ∑ s, m s • (Pi.single s 1 : Fin g ⊕ Fin g → ℤ) := by
     ext t; simp [Finset.sum_apply, Pi.single_apply]
   conv_lhs => rw [hm]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   push_cast
   refine Finset.sum_congr rfl fun s _ => ?_
   rw [map_zsmul]

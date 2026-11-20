@@ -55,7 +55,8 @@ theorem comp_mem_adm : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Num
   have key2 : ∀ (f : SInf F (Fin n₁ × Fin d₁)) r, pure f (ψ r) = pureA F f (g' r) := fun f r => rfl
   refine ⟨∑ r ∈ R, g r • (T r).comp ei, fun f => ?_⟩
   have hL : l (e (pureA F (⇑f) g)) = ∑ r ∈ R, g r * T r (ei f) := by
-    rw [key, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [key, map_sum, map_sum]
     refine Finset.sum_congr rfl fun r _ => ?_
     rw [map_smul, map_smul, hpure f (φ r) (hφSB r) (hφvac r), key2, hT, smul_eq_mul]
   rw [LinearMap.comp_apply, hL, ContinuousLinearMap.sum_apply]

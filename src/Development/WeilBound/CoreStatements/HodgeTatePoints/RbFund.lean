@@ -177,7 +177,8 @@ theorem fund_pow_inj (p : ℕ) [Fact p.Prime] {C : Type} [Field C]
 theorem addHom_eq_zero (p : ℕ) [Fact p.Prime] {F : Type} [Field F] [Algebra (ZMod p) F]
     {ι : Type} [Fintype ι] (b : Module.Basis ι (ZMod p) F) {A : Type} [AddCommGroup A]
     (ψ : F →+ A) (h : ∀ i, ψ (b i) = 0) (a : F) : ψ a = 0 := by
-  rw [← b.sum_repr a, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← b.sum_repr a, map_sum]
   refine Finset.sum_eq_zero fun i _ => ?_
   rw [← ZMod.natCast_zmod_val (b.repr a i), Nat.cast_smul_eq_nsmul, map_nsmul, h, nsmul_zero]
 

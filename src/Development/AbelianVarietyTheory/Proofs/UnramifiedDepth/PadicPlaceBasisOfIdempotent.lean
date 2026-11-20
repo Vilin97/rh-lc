@@ -80,7 +80,8 @@ private theorem core {C B OE κ I H : Type} [Field C] [CommRing B] [Algebra C B]
     have h3 := hli (fun q => c q.2 * t q.1) (by
       rw [← hc, Fintype.sum_prod_type_right]
       refine Finset.sum_congr rfl fun l _ => ?_
-      rw [← ht, map_sum, Matrix.sum_mulVec, Finset.smul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← ht, map_sum, Matrix.sum_mulVec, Finset.smul_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_smul, Matrix.smul_mulVec, mul_smul])
     by_contra hl
@@ -212,6 +213,7 @@ theorem eigDim_eq_of_basis : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [
     refine (Submodule.mem_span_range_iff_exists_fun _).2 ⟨fun q => algebraMap ℤ_[p] C (c q), ?_⟩
     rw [← hc]
     funext i
-    simp only [Finset.sum_apply, Pi.smul_apply, Function.comp_apply, smul_eq_mul, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Finset.sum_apply, Pi.smul_apply, Function.comp_apply, smul_eq_mul, map_sum, map_mul]
 
 end GlobalTheory.ChF

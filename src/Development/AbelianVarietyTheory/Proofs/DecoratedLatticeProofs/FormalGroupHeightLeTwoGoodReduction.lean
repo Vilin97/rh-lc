@@ -150,7 +150,8 @@ theorem homog_prod {σ : Type} (S : Finset σ) (d : K) (c : σ → K) (A : K⟦X
     rw [Polynomial.natDegree_finsetProd_X_sub_C_eq_card, hm]
   have := homog_field (ψ.comp C) _ m hd (ψ A) _ hy
   apply hψ
-  simp only [map_sum, map_mul, map_pow, map_prod, map_sub, pow_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, map_pow, map_prod, map_sub, pow_mul]
   simp only [RingHom.comp_apply, map_pow] at this
   rw [this, Polynomial.eval₂_mul, Polynomial.eval₂_finsetProd, Polynomial.eval₂_C, ← hm, ← Finset.prod_const,
     mul_left_comm, ← Finset.prod_mul_distrib]

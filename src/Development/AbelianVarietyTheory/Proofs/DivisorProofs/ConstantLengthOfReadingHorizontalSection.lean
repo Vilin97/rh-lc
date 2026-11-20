@@ -165,7 +165,8 @@ theorem flatCoord_eq {p q r g : ℕ} (ε : Fin q ⊕ Fin p ≃ Fin r) (τ : E �
       have h2 : conjEmb τ (herm G (φ a) (φ b₀)) = hermC τ G (Data.emb τ (φ b₀)) (Data.emb τ (φ a)) := by
         have h3 : ∀ a b, conj (τ (G a b)) = τ (G b a) := fun a b => by
           rw [← hG a b, cc, IsCMField.complexEmbedding_complexConj]
-        simp only [conjEmb, RingHom.comp_apply, herm, hermC, Data.emb, cc, map_sum, map_mul, h3,
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [conjEmb, RingHom.comp_apply, herm, hermC, Data.emb, cc, map_sum, map_mul, h3,
           IsCMField.complexEmbedding_complexConj, Complex.conj_conj]
         rw [Finset.sum_comm]
         exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring

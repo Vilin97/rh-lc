@@ -79,7 +79,8 @@ theorem mem_KGL_of_unitary {E : Type} [Field E] [NumberField E] [IsCMField E] (h
 
 theorem e_mulVec {K F : Type} [Field K] [Field F] (e : K ≃+* F) {n : ℕ} (Q : Matrix (Fin n) (Fin n) F)
     (u : Fin n → K) (i : Fin n) : e ((Q.map e.symm *ᵥ u) i) = (Q *ᵥ fun j => e (u j)) i := by
-  simp [Matrix.mulVec, dotProduct, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Matrix.mulVec, dotProduct, map_sum, map_mul]
 
 end GlobalTheory.InertUnitOrb.LatStable
 

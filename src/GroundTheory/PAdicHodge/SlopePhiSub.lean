@@ -199,7 +199,8 @@ theorem mul_phiMatrix_eq_of_le {Φ : M →ₛₗ[φ] M} {I N : Submodule R M} (h
       bN.repr (Submodule.inclusion hIN y) k := by
     intro y
     have := congrArg (fun z => bN.repr (Submodule.inclusion hIN z) k) (bI.sum_repr y)
-    simp only [map_sum, map_smul, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.smul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.smul_apply,
       smul_eq_mul] at this
     rw [← this]
     exact Finset.sum_congr rfl fun m _ => mul_comm _ _
@@ -224,7 +225,8 @@ theorem exists_det_mul_eq_of_le [IsDomain R] {Φ : M →ₛₗ[φ] M} {I N : Sub
       ext k
       have := congrFun hc k
       simp only [mulVec, dotProduct, X, Matrix.of_apply, Pi.zero_apply] at this
-      simp [map_sum, Finsupp.coe_finsetSum, Finset.sum_apply, ← this, mul_comm]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [map_sum, Finsupp.coe_finsetSum, Finset.sum_apply, ← this, mul_comm]
     have h2 : ∑ j, c j • bI j = 0 := Submodule.inclusion_injective hIN (by rw [key, map_zero])
     have := bI.linearIndependent
     rw [Fintype.linearIndependent_iff] at this

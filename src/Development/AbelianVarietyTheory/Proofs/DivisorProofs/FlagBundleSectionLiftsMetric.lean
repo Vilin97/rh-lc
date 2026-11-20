@@ -85,7 +85,8 @@ theorem compare_trans (hC : Published.ArCalc) (hX : IsArithVar p (d + 1)) (h₁ 
   rw [← isArFun_restrict_inl hC.arIso hX L _ hΦ hΨ, ← sub_add_sub_cancel _ (bcPair h f₂ (comb L n) d), ← e₁, ← e₂,
     ← map_add, map_mul, map_pow, rename_inl_lin]
   congr 1
-  simp only [map_sub, map_sum, map_pow, MvPolynomial.rename_X]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sub, map_sum, map_pow, MvPolynomial.rename_X]
   ring
 
 theorem compare (hC : Published.ArCalc) (hP : Published.Principalisation) (hX : IsArithVar p (d + 1)) (H : h.IsCInf)
@@ -375,12 +376,15 @@ theorem taut_eq_pull_sub : Hypotheses2 → ∀ (k : Type) [CommRing k] (B Y : Sc
       rename Sum.inr (∑ z : Σ a, Fin (r a), MvPolynomial.X z ^ 2)) * rename Sum.inl (vdm r)) =
       -((∏ a, ((r a).factorial : ℝ)) * ∑ a, (h a).flagBc (m a)) := by
     rw [Finset.mul_sum, ← Finset.sum_neg_distrib, ← Finset.sum_congr rfl fun a _ => e₁ a, ← hV]
-    simp only [← smul_eq_mul (α := ℝ), ← map_smul, ← map_sum Ψ]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [← smul_eq_mul (α := ℝ), ← map_smul, ← map_sum Ψ]
     congr 1
-    rw [Finset.sum_comm, map_sum (rename _) (fun j => c j • _), Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_comm, map_sum (rename _) (fun j => c j • _), Finset.mul_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [← Finset.smul_sum, ← Finset.sum_mul, map_smul, mul_smul_comm, map_pow]
-    simp only [map_sum, map_pow, rename_X, Fintype.sum_sigma, Finset.sum_sub_distrib]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_pow, rename_X, Fintype.sum_sigma, Finset.sum_sub_distrib]
   rw [sub_mul, map_sub, ← map_mul, isArFun_restrict_inl HP.p4.arIso hp _ _ hΦ hΨ] at e₂
   exact (sub_eq_iff_eq_add'.1 e₂).trans (sub_eq_add_neg _ _).symm
 

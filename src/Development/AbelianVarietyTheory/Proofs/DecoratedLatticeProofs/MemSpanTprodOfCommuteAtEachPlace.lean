@@ -73,13 +73,16 @@ theorem piTensorHomMap_eq_zero [∀ τ, FiniteDimensional ℂ (V τ)]
     intro t
     simp only [χ, LinearMap.coe_sum, Finset.sum_apply, LinearMap.comp_apply, LinearMap.coe_mk,
       AddHom.coe_mk, LinearMap.applyₗ_apply_apply]
-    rw [← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum]
     congr 1
     apply LinearMap.ext
     intro v
     simp [Basis.coord_apply]
-    simp_rw [← map_smul, ← map_sum, (b σ).sum_repr v]
-  rw [hψ, MultilinearMap.map_sum, map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp_rw [← map_smul, ← map_sum, (b σ).sum_repr v]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hψ, MultilinearMap.map_sum, map_sum, LinearMap.sum_apply]
   apply Finset.sum_eq_zero
   intro J _
   rw [dualDistrib_apply_piTensorHomMap, hz]

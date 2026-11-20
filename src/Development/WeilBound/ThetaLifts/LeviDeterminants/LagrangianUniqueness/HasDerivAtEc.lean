@@ -83,7 +83,8 @@ theorem delta_pi (n : ℕ) (T : SchwartzMap (Fin n → ℝ) ℂ →L[ℂ] ℂ)
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [sub_apply, ph_apply (ht i), sub_mul, one_mul, he']
     rfl
-  rw [e1, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e1, map_sum]
   exact Finset.sum_eq_zero fun i _ => by rw [map_sub, hT i R⁻¹ (G i) _ (ph_apply (ht i) _), sub_self]
 
 theorem test_pi (n : ℕ) : ∃ f₀ : SchwartzMap (Fin n → ℝ) ℂ, ∀ T : SchwartzMap (Fin n → ℝ) ℂ →L[ℂ] ℂ,

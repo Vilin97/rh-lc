@@ -44,7 +44,8 @@ theorem harish_chandra_multiplicity : PI.HCMult := by
       (S.orthogonalProjectionOnto (σ k u)) (by show _ = σ (toM g) _; rw [hg]; exact hP)
     simpa [T, toMK, hg] using this
   rintro _ ⟨v, rfl⟩
-  rw [← b.sum_repr v, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← b.sum_repr v, map_sum]
   refine Submodule.sum_mem _ fun i _ => ?_
   rw [map_smul]
   refine Submodule.smul_mem _ _ (Submodule.mem_iSup_of_mem i ?_)

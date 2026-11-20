@@ -36,7 +36,8 @@ theorem latContMap_apply {E J : Type} [NormedAddCommGroup E] [NormedSpace ℝ E]
 theorem latContMap_repr {La E J : Type} [AddCommGroup La] [NormedAddCommGroup E] [NormedSpace ℝ E]
     [Fintype J] (e : Module.Basis J ℤ La) (p : La →+ E) (n : J → ℤ) :
     latContMap (fun i => p (e i)) (fun i => (n i : ℝ)) = p (e.equivFun.symm n) := by
-  rw [latContMap_apply, Module.Basis.equivFun_symm_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [latContMap_apply, Module.Basis.equivFun_symm_apply, map_sum]
   refine Finset.sum_congr rfl (fun i _ => ?_)
   rw [map_zsmul, Int.cast_smul_eq_zsmul]
 

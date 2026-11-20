@@ -227,7 +227,8 @@ theorem one_sided_lemma4_of_interfaces (D : Formalism.BasicNotions.D7) (CLa CD C
       rw [← Finset.prod_mul_distrib]
       refine Finset.prod_congr rfl fun j hj => ?_
       rw [(hξ' i j (Finset.mem_range.1 hj)).1, map_mul, mul_comm]
-    rw [e1, map_mul, map_mul, hPhe, map_monomial, map_one, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e1, map_mul, map_mul, hPhe, map_monomial, map_one, map_sum]
     simp only [map_prod]
     rw [← hSg]
     ring

@@ -111,7 +111,8 @@ theorem formEq_sig (T : Tens D D' W) (A A' : Matrix (Fin r) (Fin r) ℤ) :
     rfl
   apply Additive.ofMul.injective
   rw [hR]
-  simp only [ofMul_prod, ofMul_zpow, sig, map_sum, map_zsmul, hlam]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [ofMul_prod, ofMul_zpow, sig, map_sum, map_zsmul, hlam]
   rw [Fintype.sum_prod_type]
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [Fintype.sum_prod_type, Fintype.sum_prod_type]

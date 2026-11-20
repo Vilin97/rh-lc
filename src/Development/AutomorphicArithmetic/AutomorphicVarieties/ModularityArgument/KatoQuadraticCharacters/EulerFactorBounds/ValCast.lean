@@ -92,9 +92,11 @@ theorem UpperTheory.V.Z.Kato.Nb.sXiTw :
   unfold Xi UpperTheory.Kd.K4.CgF
   intro u
   simp only [Tower.galB, LinearMap.coe_mk, AddHom.coe_mk]
-  rw [Finset.sum_filter, Finset.sum_filter, map_sum, map_sub, sub_eq_zero]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.sum_filter, Finset.sum_filter, map_sum, map_sub, sub_eq_zero]
   conv_rhs => rw [← Fintype.sum_equiv (Equiv.mulRight (dg d⁻¹)) _ _ (fun _ => rfl)]
-  rw [← sub_eq_zero, ← map_sub, ← Finset.sum_sub_distrib, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← sub_eq_zero, ← map_sub, ← Finset.sum_sub_distrib, map_sum]
   apply Finset.sum_eq_zero
   intro m _
   simp only [Equiv.coe_mulRight]

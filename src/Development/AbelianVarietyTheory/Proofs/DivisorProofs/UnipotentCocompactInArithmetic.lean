@@ -19,7 +19,8 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 
 theorem form_swap {n : ℕ} {J : Matrix (Fin n) (Fin n) E} (hσ : ∀ x, σ (σ x) = x)
     (hJ : ∀ i j, σ (J j i) = -J i j) (v w : Fin n → E) : form σ J v w = -σ (form σ J w v) := by
-  simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, Finset.mul_sum, ← Finset.sum_neg_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, Finset.mul_sum, ← Finset.sum_neg_distrib]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   rw [hJ]; ring
@@ -38,7 +39,8 @@ theorem gram_col {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (hσ : ∀ x, σ (σ x
     (i : Fin 1) :
     ((Formalism.UG.cT (σ : E →+* E) (Matrix.of fun k (_ : Fin 1) => x k) * (c • J.map σ)) *ᵥ v) i =
       c * σ (form σ J x v) := by
-  simp only [Formalism.UG.cT, form, dotProduct, Matrix.mulVec, Matrix.mul_apply, Matrix.transpose_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Formalism.UG.cT, form, dotProduct, Matrix.mulVec, Matrix.mul_apply, Matrix.transpose_apply,
     Matrix.map_apply, Matrix.of_apply, Matrix.smul_apply, smul_eq_mul, map_sum, map_mul, hσ, Finset.mul_sum,
     Finset.sum_mul]
   rw [Finset.sum_comm]
@@ -119,7 +121,8 @@ theorem cocompact_unip : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [N
   have hincV : ∀ (s : E) (u : Fin d₁ → E), (fun k => inclR (F := F) (AF F) ((s • H'.x + H'.ι *ᵥ u) k)) =
       inclR (F := F) (AF F) s • incV F H'.x + incM F H'.ι *ᵥ incV F u := fun s u => by
     funext k
-    simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add, map_mul, incV, incM, Matrix.mulVec, dotProduct,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add, map_mul, incV, incM, Matrix.mulVec, dotProduct,
       map_sum, Matrix.map_apply]
   set e := toGAd hσ J hc0 with he
   have hfwd : ∀ u ∈ unip σ G.W H', e u ∈ GlobalTheory.UAut.unipFlag σ (c • J.map σ) C (fun _ => 0) := by

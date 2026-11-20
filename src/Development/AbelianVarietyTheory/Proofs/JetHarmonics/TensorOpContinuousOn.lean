@@ -34,7 +34,8 @@ theorem tensorOp_one : tensorOp (1 : Matrix (Fin k) (Fin k) ℂ) (1 : V →L[ℂ
 theorem tensorOp_mul (C D : Matrix (Fin k) (Fin k) ℂ) (A B : V →L[ℂ] V) :
     tensorOp (C * D) (A.comp B) = (tensorOp C A).comp (tensorOp D B) := by
   ext y c
-  simp only [tensorOp_apply, ContinuousLinearMap.comp_apply, Matrix.mul_apply, Finset.sum_smul, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [tensorOp_apply, ContinuousLinearMap.comp_apply, Matrix.mul_apply, Finset.sum_smul, map_sum,
     map_smul, Finset.smul_sum, smul_smul]
   exact Finset.sum_comm
 

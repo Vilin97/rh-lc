@@ -21,7 +21,8 @@ theorem hodgeAt_stable : ∀ (E : Type) [Field E] [NumberField E] (Ω Vs : Type)
   obtain ⟨⟨-, -, hX⟩, hmap, -⟩ := h
   have key : ∀ (c : 𝓞 E) (i : Fin N), ρH c (t i) ∈ HL := by
     intro c i
-    rw [hX, ← (RingOfIntegers.basis E).sum_repr c, map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hX, ← (RingOfIntegers.basis E).sum_repr c, map_sum, LinearMap.sum_apply]
     refine Submodule.sum_mem _ fun k _ => ?_
     rw [map_zsmul, LinearMap.smul_apply]
     exact zsmul_mem (Submodule.subset_span (Set.mem_range.2 ⟨(i, k), rfl⟩)) _

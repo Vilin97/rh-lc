@@ -20,7 +20,8 @@ theorem GlobalTheory.ColsFB.cols_fb : OnStd fun {D} _ _ {sc} {G} W F => ∀ σ (
       GlobalTheory.MixModel.rat N *ᵥ ratV z = ratV (N *ᵥ z) := by
     intro m n N z
     funext k
-    simp [GlobalTheory.MixModel.rat, ratV, Matrix.mulVec, dotProduct, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [GlobalTheory.MixModel.rat, ratV, Matrix.mulVec, dotProduct, map_sum, map_mul]
   set t := a * incA D ((-D.host.xi0) ^ (i.1 + 1)) with ht
   have hL : FinPl.colMul (F.dJ (σ + 1) h).jX i a =
       fun k => t * incA D ((G.colDec (2 * (σ + 1) + 1) (by omega) (by omega)).a k ⟨i.1, by omega⟩) := by

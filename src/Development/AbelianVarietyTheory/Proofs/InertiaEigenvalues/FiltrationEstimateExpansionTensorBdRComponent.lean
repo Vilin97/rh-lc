@@ -340,7 +340,8 @@ theorem _root_.GlobalTheory.HWL.Cmp.filt_expansion_component : ∀ {G : Type} [G
     rw [mulVR_mulVR', mulVR_mulVR', hβ₀_def, mul_assoc, hτw, mul_comm]
   have eqC : _root_.Formalism.BasicNotions.mulVR T pk (∑ k ∈ Finset.range M, _root_.Formalism.BasicNotions.mulVR T (tS ^ k) (L ((k : ℤ) - (a : ℤ)))) =
       ∑ k ∈ Finset.range M, H ((k : ℤ) - a) := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [mulVR_mulVR', hH_def]
     dsimp only
@@ -406,7 +407,8 @@ theorem _root_.GlobalTheory.HWL.Cmp.filt_expansion_component : ∀ {G : Type} [G
       ∑ k ∈ Finset.range (M + w), _root_.Formalism.BasicNotions.mulVR T (β₀ * tS ^ k) (∑ j, PowerSeries.coeff k (e j) • D j) := by
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun k _ => ?_
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [LinearMap.map_smul]
   rw [Finset.sum_add_distrib, eqA] at m2
   rw [eqB, eqC]

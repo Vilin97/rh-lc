@@ -27,7 +27,8 @@ theorem tensor_group_mul_kDiag (dual : Bool) (hσ : IsURepOn (UJset ε) σ) {g k
     rw [Matrix.mul_assoc, ← hk.2, ← Matrix.mul_assoc, h1, Matrix.one_mul]
   have hσm : σ (g * k) = (σ g).comp (σ k) := hσ.1.2 g hg k hkU
   funext c
-  simp only [tensGrp, kDiag, hσm, ContinuousLinearMap.comp_apply, map_sum, map_smul, Finset.smul_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [tensGrp, kDiag, hσm, ContinuousLinearMap.comp_apply, map_sum, map_smul, Finset.smul_sum,
     smul_smul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun d _ => ?_

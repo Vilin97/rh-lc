@@ -18,7 +18,8 @@ theorem eval_smul_of_homog {R : Type*} [CommRing R] {φ : MvPolynomial J R} {d :
     (hφ : φ.IsHomogeneous d) (c : R) (z : J → R) : eval (c • z) φ = c ^ d * eval z φ := by
   conv_lhs => rw [φ.as_sum]
   conv_rhs => rw [φ.as_sum]
-  simp only [map_sum, Finset.mul_sum, eval_monomial]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Finset.mul_sum, eval_monomial]
   refine Finset.sum_congr rfl fun s hs => ?_
   have hd : ∑ i ∈ s.support, s i = d := by
     have := hφ (mem_support_iff.mp hs)

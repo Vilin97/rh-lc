@@ -52,7 +52,8 @@ theorem sum_mem_fil {p : ℕ} [Fact p.Prime] {D : GlobalTheory.UPel.HT.Datum p} 
   obtain ⟨w, hw, hsum⟩ := GlobalTheory.HTSummand.lie_mod_fil p D R b N C β s hs o u hω
   set c' := fun l => algebraMap (𝓞 D.F) D.O (c l)
   have h1 : ∀ l, act (c' l) u - ∑ i, act (c' l) (w i) ∈ Fil o.A := fun l => by
-    rw [← map_sum, ← map_sub]; exact hfil _ hsum
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, ← map_sub]; exact hfil _ hsum
   have h2 : ∀ i, ∑ l, lam l • act (c' l) (w i) ∈ Fil o.A := fun i => by
     have e : ∑ l, lam l • act (c' l) (w i) = ∑ l, lam l • (act (c' l) (w i) - β (b.t i (c l)) • w i) +
         (∑ l, lam l * β (b.t i (c l))) • w i := by
@@ -122,13 +123,15 @@ theorem lieZ_mem_fil_and_lift : ∀ (p : ℕ) [Fact p.Prime] (D : GlobalTheory.U
       obtain ⟨r, lam, c, y, ⟨y', rfl⟩, hlam, rfl⟩ := hx
       have hlam' : ∀ i, ∑ l, algebraMap k (DualNumber k) (lam l) *
           ((algebraMap k (DualNumber k)).comp β) (b.t i (c l)) = 0 := fun i => by
-        simp only [RingHom.comp_apply, ← map_mul, ← map_sum, hlam i, map_zero]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [RingHom.comp_apply, ← map_mul, ← map_sum, hlam i, map_zero]
       haveI : IsLocalRing (DualNumber k) := dualNumber_local k
       have key := sum_mem_fil ((algebraMap k (DualNumber k)).comp β) hs o' (fun l => algebraMap k _ (lam l)) c hlam'
         (crysToDR (epsDP k) m'.cart (hbc.bcMap y'))
       rw [liftFil, Submodule.mem_comap]
       convert key using 2
-      simp only [map_sum, map_smulₛₗ, hE, LinearMap.sub_apply, LinearMap.smul_apply,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smulₛₗ, hE, LinearMap.sub_apply, LinearMap.smul_apply,
         Module.End.one_apply, map_sub, RingHom.comp_apply, map_intCast, RingHom.id_apply, map_smul]
     | zero => rw [map_zero]; exact zero_mem _
     | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy

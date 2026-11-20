@@ -26,7 +26,8 @@ theorem exists_extend {K L M H ι : Type} [Field K] [Field L] [AddCommGroup M] [
     ∃ T' : Module.End L H, ∀ f, T' (j f) = j (T f) := by
   have hj : ∀ f, j f = ∑ i, σ (b.repr f i) • j (b i) := fun f => by
     conv_lhs => rw [← b.sum_repr f]
-    simp only [map_sum, map_smulₛₗ]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smulₛₗ]
   have hsp' : ⊤ ≤ Submodule.span L (Set.range fun i => j (b i)) := by
     rw [← hsp, Submodule.span_le]
     rintro _ ⟨f, rfl⟩
@@ -38,7 +39,8 @@ theorem exists_extend {K L M H ι : Type} [Field K] [Field L] [AddCommGroup M] [
     rwa [Module.Basis.mk_apply] at this
   rw [hj f]
   conv_rhs => rw [← b.sum_repr f]
-  simp only [map_sum, map_smulₛₗ, h1, RingHom.id_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smulₛₗ, h1, RingHom.id_apply]
 
 theorem isDC_image {H G : Type} [Group H] [Group G] [DecidableEq G] (φ : H →* G) (N J₀ : Subgroup H) (J : Subgroup G)
     (hs : ∀ x, ∃ g ∈ N, φ g = x) (hJ : ∀ g, g ∈ N → (φ g ∈ J ↔ g ∈ J₀)) (hJN : ∀ g ∈ J₀, g ∈ N)

@@ -69,7 +69,8 @@ theorem basis_change : ∀ (D : D7) {p : ℕ} [Fact p.Prime] (lam : TaylorLogMet
     intro a b
     obtain ⟨n, r, x, hr, hx, hB⟩ := hR.2.2 b
     have e : g a b = ∑ k, r k * ρ ((Mi *ᵥ x k) a) := by
-      simp only [hg, Matrix.mul_apply, hB, hρe, hAi, Matrix.map_apply, Matrix.mulVec, dotProduct, map_sum,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hg, Matrix.mul_apply, hB, hρe, hAi, Matrix.map_apply, Matrix.mulVec, dotProduct, map_sum,
         map_mul, Finset.mul_sum]
       rw [Finset.sum_comm]
       exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring

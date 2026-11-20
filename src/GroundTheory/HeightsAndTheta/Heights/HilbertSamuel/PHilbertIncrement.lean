@@ -117,13 +117,15 @@ theorem isMultigrading_quotPiece [Fintype K] {J : Ideal (MRing ι F)} (hJ : IsMu
           (Ideal.Quotient.mkₐ F J).toLinearMap y = v i := fun i hi => Submodule.mem_map.mp (hv i hi)
       choose! x hx hxv using hex
       have hy : (∑ i ∈ s, x i) ∈ J := by
-        rw [← Ideal.Quotient.eq_zero_iff_mem, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [← Ideal.Quotient.eq_zero_iff_mem, map_sum]
         rw [← hsum]
         refine Finset.sum_congr rfl fun i hi => ?_
         rw [← hxv i hi]
         rfl
       have hc := component_intWeight_mem hJ hy m
-      rw [map_sum] at hc
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum] at hc
       have hcs : (∑ i ∈ s, weightedHomogeneousComponent (intWeight (ι := ι)) m (x i)) = x m := by
         rw [Finset.sum_eq_single m]
         · rw [weightedHomogeneousComponent_of_mem (hx m hm), if_pos rfl]

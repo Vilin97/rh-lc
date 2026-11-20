@@ -66,7 +66,8 @@ theorem exists_point_phiIs_core : ∀ (D : D7) (G : Type) [Group G] [Fintype G] 
     (fun PP => Matrix.of fun a b => Formalism.L2.DIV.resS D.host.F PP ⟨_, hβ a b⟩)
     (fun PP => by
       ext a b
-      simp only [Matrix.mul_apply, Matrix.of_apply, ← RingHom.map_mul, ← map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Matrix.mul_apply, Matrix.of_apply, ← RingHom.map_mul, ← map_sum]
       have : (∑ j, ⟨_, hβ a j⟩ * ⟨_, hβ' j b⟩ : Formalism.L2.Herm.intAf D.host.F D.host.E) = if a = b then 1 else 0 := by
         refine Subtype.ext ?_
         rw [AddSubmonoidClass.coe_finsetSum]

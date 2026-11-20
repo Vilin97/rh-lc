@@ -47,7 +47,8 @@ private theorem coeff_lemma_3 {D : ℕ} (M : Finset (Fin D → ℕ)) (A : (Fin D
   have hp : p = 0 := by
     apply MvPolynomial.funext
     intro y
-    simp only [p, map_sum, MvPolynomial.eval_monomial, map_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [p, map_sum, MvPolynomial.eval_monomial, map_zero]
     rw [← h y]
     refine Finset.sum_congr rfl fun α _ => ?_
     rw [Finsupp.prod_fintype _ _ (fun i => pow_zero _)]

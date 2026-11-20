@@ -191,7 +191,8 @@ theorem Ch.germ_comb (h : Ch p s k t) {u : Fin m → R} {su : B.Sec} (hu : IsCom
   have heq : su.f i = eval₂Hom (algX p (B.U i)) (fun j => (s j).f i)
       (GroundTheory.Heights₂.Heights.linForm u) := by
     rw [hu i]
-    simp [GroundTheory.Heights₂.Heights.linForm, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [GroundTheory.Heights₂.Heights.linForm, map_sum]
   rw [heq, h.germ_eval hz hi (linForm_isHomogeneous_one_minimal_prime_dimensions u), pow_one]
 
 theorem mem_iff (hE : Emb p s) {u : Fin m → R} {su : B.Sec} (hu : IsComb p s u su) (z : Z) :

@@ -20,17 +20,21 @@ lemma lift_letG (w : O) (LL : LiftLetters (Fin N)) (g : Matrix (Fin (r + K)) (Fi
   have hC : ∀ x : KK O, liftSubst p f O w r LL g (C x) = C x := fun x => (liftSubst p f O w r LL g).commutes x
   simp only [yO, map_mul, map_C, map_X]
   by_cases hv : LL.vec i = true
-  · simp only [letG, hv, if_true, map_sum, map_mul, hC, liftSubst_X_vec p f O w LL r g hg i _ hv]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [letG, hv, if_true, map_sum, map_mul, hC, liftSubst_X_vec p f O w LL r g hg i _ hv]
     simp_rw [Finset.sum_mul, mul_assoc, ← map_mul]
     rw [Finset.sum_comm]
-    simp_rw [← Finset.mul_sum, ← map_sum, ← Matrix.mul_apply, hinv, Matrix.one_apply, apply_ite C, map_one, map_zero,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp_rw [← Finset.mul_sum, ← map_sum, ← Matrix.mul_apply, hinv, Matrix.one_apply, apply_ite C, map_one, map_zero,
       mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true]
   · have hv' : LL.vec i = false := by simpa using hv
-    simp only [letG, hv', Bool.false_eq_true, if_false, map_sum, map_mul, hC,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [letG, hv', Bool.false_eq_true, if_false, map_sum, map_mul, hC,
       liftSubst_X_cov p f O w LL r g i _ hv', sigMat_inv p f O g hg]
     simp_rw [Finset.sum_mul, mul_assoc, ← map_mul]
     rw [Finset.sum_comm]
-    simp_rw [← Finset.mul_sum, ← map_sum, mul_comm (sigMat p f O g (LL.pos i) _ _), ← Matrix.mul_apply, hinv,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp_rw [← Finset.mul_sum, ← map_sum, mul_comm (sigMat p f O g (LL.pos i) _ _), ← Matrix.mul_apply, hinv,
       Matrix.one_apply, apply_ite C, map_one, map_zero, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq,
       Finset.mem_univ, if_true]
 

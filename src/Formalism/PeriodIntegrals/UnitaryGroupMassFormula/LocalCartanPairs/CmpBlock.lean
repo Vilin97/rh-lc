@@ -10,7 +10,8 @@ variable {R : Type*} [CommRing R] (σ : R ≃+* R)
 theorem cmp_conjT_mul {l m n : Type*} [Fintype m] (M : Matrix l m R) (N : Matrix m n R) :
     ((M * N).map σ)ᵀ = (N.map σ)ᵀ * (M.map σ)ᵀ := by
   ext i j
-  simp only [transpose_apply, map_apply, Matrix.mul_apply, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [transpose_apply, map_apply, Matrix.mul_apply, map_sum, map_mul]
   exact Finset.sum_congr rfl fun k _ => mul_comm _ _
 
 theorem cmp_block_of_gram [IsDomain R] {μ κ : Type*} [Fintype μ] [Fintype κ] [DecidableEq μ]

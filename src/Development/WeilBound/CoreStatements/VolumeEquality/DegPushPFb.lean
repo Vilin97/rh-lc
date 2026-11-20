@@ -97,7 +97,8 @@ theorem ker_baseChange {k B K σ Φ Φ' : Type} [Field k] [CommRing B] [Algebra 
       apply hν
       rw [map_zero, ← hΘα, hQ, map_mul, hP, mul_zero]
     have hJ : α Q ∈ (RingHom.ker ψ).map (map a) := by
-      rw [Q.as_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Q.as_sum, map_sum]
       refine Ideal.sum_mem _ fun v _ => ?_
       rw [monomial_eq, map_mul, hαC]
       refine Ideal.mul_mem_right _ _ (Ideal.mem_map_of_mem _ ?_)

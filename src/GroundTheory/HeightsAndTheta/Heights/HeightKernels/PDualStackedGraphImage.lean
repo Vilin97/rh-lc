@@ -23,7 +23,8 @@ theorem coord_stacked {F F' : HermLattice K i} {b : Module.Basis T ℤ (dualLatt
     {b' : Module.Basis T ℤ (dualLattice F')} {a : T → ℤ}
     (hab : ∀ t, (b t : Fin i → K) = a t • (b' t : Fin i → K)) (p : Σ _ : Unit, T) :
     dualLatticeCoord b p = (a p.2 : ProjField K i) * dualLatticeCoord b' p := by
-  simp only [dualLatticeCoord, hab p.2, Pi.smul_apply, zsmul_eq_mul, map_mul, map_intCast, Finset.mul_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dualLatticeCoord, hab p.2, Pi.smul_apply, zsmul_eq_mul, map_mul, map_intCast, Finset.mul_sum,
     map_sum, mul_assoc]
 
 def twist (Ω : Type) [Field Ω] : MvPolynomial Unit Ω →+* MvPolynomial Unit (MvPolynomial Unit Ω) :=

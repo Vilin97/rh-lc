@@ -163,7 +163,8 @@ theorem GlobalTheory.HeckeGenConst.generator_constant : ∀ (D : D7), GlobalTheo
   have h2 := GlobalTheory.HeckeGeoRead.theta_trace_read D hHk hSL hVF G Pl0 T0 A T R F κ v₀ hLev hGrp hFam hMod hThP hTie i σ hσ hV
     P p k α Rc hS h hx a ha C z hz hx' t ht hb ph b hph hbON hpin γ' hγ' hfr' Wt' Y' e he Δ hΔ X (fun _ => perVec Wt' v) hz'
   have h1 := hpin (h * a) γ' hγ' hfr' hx' Wt' Y' X (fun _ => perVec Wt' v) hz'
-  rw [thetaAt_eq, show ((1 : GA D (Vc D i)), γ' * (h * a)) = (1, γ' * h) * (1, a) by simp [mul_assoc], map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [thetaAt_eq, show ((1 : GA D (Vc D i)), γ' * (h * a)) = (1, γ' * h) * (1, a) by simp [mul_assoc], map_mul,
     Module.End.mul_apply, hom, map_smul, map_sum, Pi.smul_apply, Finset.sum_apply, smul_eq_mul] at h1
   obtain ⟨τ⟩ : Nonempty D.what₂.Tau := ⟨D.eTau.symm (Classical.arbitrary _)⟩
   have h3 := cancel (fun h0 => by simp [h0] at hph) (pow_ne_zero k (Units.ne_zero _)) (fun _ => hv) h1 h2

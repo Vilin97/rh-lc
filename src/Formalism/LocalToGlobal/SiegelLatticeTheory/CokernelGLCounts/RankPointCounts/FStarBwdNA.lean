@@ -53,7 +53,8 @@ theorem riesz (F : S.V →ₗ[E] E) : ∃ w, ∀ v, S.hT w v = F v := by
   have key : S.hT (∑ j, star (F (b j)) • bs j) = F := by
     apply b.ext
     intro i
-    rw [map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, LinearMap.sum_apply]
     simp only [LinearMap.map_smulₛₗ, LinearMap.smul_apply, starRingEnd_apply, star_star, smul_eq_mul]
     rw [Finset.sum_eq_single i]
     · rw [hsw S (b i) (bs i), hbs i i]; simp

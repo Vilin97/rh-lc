@@ -36,7 +36,8 @@ theorem trace_secondForm_sum {ι : Type} [Fintype ι] (x y : ι → ℂ) (u : ι
       ∑ a, ∑ b, x a * star (y b) * (secondForm K z (u a) * secondFormAdj K z (u b)).trace := by
   have e (w : ι → ℂ) : secondForm K z (∑ a, w a • u a) = ∑ a, w a • secondForm K z (u a) := by
     change secondFormL K z _ = ∑ a, w a • secondFormL K z (u a)
-    rw [map_sum]; simp only [map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]; simp only [map_smul]
   simp only [secondFormAdj, adj, e, conjTranspose_sum, conjTranspose_smul, Matrix.mul_sum,
     Matrix.sum_mul, Matrix.mul_smul, Matrix.smul_mul, trace_sum, trace_smul, smul_eq_mul]
   simp only [Finset.mul_sum]

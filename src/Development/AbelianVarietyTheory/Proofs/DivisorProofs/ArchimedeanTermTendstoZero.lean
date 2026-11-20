@@ -207,7 +207,8 @@ theorem arch_eq (hC : ArCalc) (r e : ℕ) : ∃ t : ℝ, ∀ (k : Type) [CommRin
     obtain ⟨y', Λ, hy', hΛ, hv⟩ : F.IsArch H N M s z e (F.arch H N M s z e) :=
       Classical.epsilon_spec ((existsUnique_val_arch hC k X p d hX E r h H F N z e).2 he M s hs).exists
     obtain rfl := isTop_unique hy hy'
-    rw [← hv, ← hcm, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hv, ← hcm, map_sum]
     exact Finset.sum_congr rfl fun j _ => by rw [map_smul, hΛ.1, smul_eq_mul]
   rcases hY.vertical_or_horizontal (redι (clo y)) with ⟨ℓ, _, ⟨_⟩⟩ | ⟨hc, -⟩
   · refine .inl fun h H N M s hs => (key h H N M s hs).trans (Finset.sum_eq_zero fun j _ => mul_eq_zero_of_right _

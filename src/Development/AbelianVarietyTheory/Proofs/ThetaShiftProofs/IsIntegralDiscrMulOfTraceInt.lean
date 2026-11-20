@@ -34,7 +34,8 @@ theorem _root_.GlobalTheory.ArcQ.pairE_properties : ∀ (E : Type) [Field E] [Nu
       rw [Algebra.smul_def]
       simp only [eq_ratCast, Rat.cast_intCast]
       ring
-    rw [hexp y, Finset.mul_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hexp y, Finset.mul_sum, map_sum]
     simp_rw [e, map_smul, hdual, smul_eq_mul, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq',
       Finset.mem_univ, if_true]
   have hC : ∀ x (y : 𝓞 E), Algebra.trace ℚ E (_root_.GlobalTheory.ArcQ.pairE ξ x * algebraMap (𝓞 E) E y) =
@@ -46,10 +47,12 @@ theorem _root_.GlobalTheory.ArcQ.pairE_properties : ∀ (E : Type) [Field E] [Nu
       rw [Algebra.smul_def]
       simp only [eq_ratCast, Rat.cast_intCast]
       ring
-    rw [hP, Finset.sum_mul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hP, Finset.sum_mul, map_sum]
     simp_rw [e, map_smul, hL, smul_eq_mul]
     conv_rhs => rw [← b.sum_repr y]
-    simp only [Finset.sum_smul, map_sum, smul_assoc, map_zsmul, smul_eq_mul, Int.cast_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Finset.sum_smul, map_sum, smul_assoc, map_zsmul, smul_eq_mul, Int.cast_sum,
       Int.cast_mul]
     exact Finset.sum_congr rfl fun i _ => mul_comm _ _
   have huniq : ∀ y y' : E, (∀ k, Algebra.trace ℚ E (y * integralBasis E k) =
@@ -94,6 +97,7 @@ theorem _root_.GlobalTheory.ArcQ.pairE_properties : ∀ (E : Type) [Field E] [Nu
   · intro K _ τK x
     show ∑ i, τK (d i) * (ξ (b i • x) : K) = τK (_root_.GlobalTheory.ArcQ.pairE ξ x)
     rw [hP]
-    simp [map_sum, map_mul, map_intCast]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, map_mul, map_intCast]
 
 end GlobalTheory.ArcQ

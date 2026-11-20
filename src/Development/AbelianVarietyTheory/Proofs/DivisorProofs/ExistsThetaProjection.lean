@@ -24,13 +24,15 @@ theorem proj_exists (p : ℕ) [Fact p.Prime] (O : Type) [CommRing O] [Fact ¬IsU
   intro w
   have hw : w = ∑ j, e w j • e.symm (Pi.single j 1) := by
     apply e.injective
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [map_smul, LinearEquiv.apply_symm_apply]
     ext k
     simp [Finset.sum_apply, Pi.single_apply]
   funext i
   conv_rhs => rw [hw]
-  simp only [Matrix.mulVecLin_apply, Matrix.mulVec, dotProduct, M, Finset.sum_apply, Pi.smul_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mulVecLin_apply, Matrix.mulVec, dotProduct, M, Finset.sum_apply, Pi.smul_apply,
     map_sum, theta_map_smul_fontaine σ f hf, map_mul]
   show (M *ᵥ _) i = _
   simp only [Matrix.mulVec, dotProduct, M]

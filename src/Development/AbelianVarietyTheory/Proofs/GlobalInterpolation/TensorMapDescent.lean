@@ -17,7 +17,8 @@ section BaseChange
 variable {K K' : Type} [Field K] [Field K'] (φ : K →+* K')
 
 theorem fockB_map {σ : Type} (f g : MvPolynomial σ K) : fockB (map φ f) (map φ g) = φ (fockB f g) := by
-  rw [fockB_eq_sum _ _ f.support (support_map_subset _ _), fockB, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [fockB_eq_sum _ _ f.support (support_map_subset _ _), fockB, map_sum]
   refine Finset.sum_congr rfl fun m _ => ?_
   simp [coeff_map]
 
@@ -88,7 +89,8 @@ theorem gramB_det_ne_zero [CharZero K] (sg : ι → DomWeight n) : (Br.gramB (K 
     refine eq_zero_of_fockB sg _ fun i => ?_
     have := congrFun hv0 i
     simp only [Matrix.mulVec, dotProduct, Br.gramB, Matrix.of_apply, Pi.zero_apply] at this
-    rw [← fockBL_apply, Submodule.coe_sum, map_sum, ← this]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← fockBL_apply, Submodule.coe_sum, map_sum, ← this]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [Submodule.coe_smul, map_smul, bVV_coe, fockBL_apply, smul_eq_mul, mul_comm]
   exact hv (funext (Fintype.linearIndependent_iff.mp (bVV K sg).linearIndependent v h1))
@@ -100,7 +102,8 @@ theorem fockB_projVV_basis [CharZero K] (sg : ι → DomWeight n) (F : Pol K ι 
   have h1 : fockB (bVVfun K sg k) (Br.projVV sg F : Pol K ι n) =
       ∑ i, ∑ j, Br.gramB (K := K) sg k i * (Br.gramB (K := K) sg)⁻¹ i j * fockB (bVVfun K sg j) F := by
     rw [← fockBL_apply]
-    simp only [Br.projVV, LinearMap.sum_apply, LinearMap.smul_apply, LinearMap.smulRight_apply, Submodule.coe_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Br.projVV, LinearMap.sum_apply, LinearMap.smul_apply, LinearMap.smulRight_apply, Submodule.coe_sum,
       Submodule.coe_smul, map_sum, map_smul, bVV_coe, fockBL_apply, smul_eq_mul]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
     rw [show Br.gramB (K := K) sg k i = fockB (bVVfun K sg k) (bVVfun K sg i) from rfl]

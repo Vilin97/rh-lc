@@ -57,7 +57,8 @@ theorem polyDeriv_aeval_lin {F : (σ → ℂ) → ℂ} (hF : Differentiable ℂ 
   | mul_X P l hP =>
     rw [map_mul, aeval_X, lin, Finset.mul_sum, I2.jof_polyDeriv_sum,
       polyDeriv_mul_X (smooth hF)]
-    conv_rhs => rw [pi_eq_sum_univ' (d l), map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_rhs => rw [pi_eq_sum_univ' (d l), map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [mul_left_comm, C_mul', I2.polyDeriv_smul, polyDeriv_mul_X (smooth hF), funext hP]
     simp
@@ -276,7 +277,8 @@ theorem exists_invariant (idx : Fin g ≃ T × Fin r) (ρ : Fin q ⊕ Fin p → 
       aeval (fun l => lin (lift idx NB (d l))) (barP (P j)))
   refine ⟨R, fun u hu => absorb_invariant (differentiable_gauss c M) hR _ _
     (dotProduct_act (uc u)) (fun y => ?_) (gauss_act c M hu), fun F hF => ?_⟩
-  · simp only [map_sum, map_mul, eval_aeval_lin]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [map_sum, map_mul, eval_aeval_lin]
     refine invFam_eval hP hu _ _ _ _ (fun t i k => ?_) fun t i k => ?_
     · simp only [hd]
       convert lift_single_act idx NA t (ρ i) _ (hA t i) k (uc u) y

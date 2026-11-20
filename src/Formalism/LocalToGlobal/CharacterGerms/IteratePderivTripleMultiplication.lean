@@ -32,7 +32,8 @@ theorem Tk_int {f : PS C 3 dd} (hf : IntS V f) (k : Fin dd) : IntS V (Tk f k) :=
 theorem decomp {f : PS C 3 dd} (h1 : ev (rz 2) f = 1) : f = 1 + ∑ k, X ((0 : Fin 3), k) * Tk f k := by
   classical
   ext p
-  rw [map_add, MvPowerSeries.coeff_one, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_add, MvPowerSeries.coeff_one, map_sum]
   have hX : ∀ k, coeff p (X ((0 : Fin 3), k) * Tk f k) =
       if Finsupp.single ((0 : Fin 3), k) 1 ≤ p then
         coeff (p - Finsupp.single ((0 : Fin 3), k) 1) (Tk f k) else 0 := by
@@ -368,7 +369,8 @@ theorem phiQ (Y : FBChart C V O dd) (u : Fin dd → C) (hu : ∀ i, V.Ge 0 (u i)
       ∑ k, coeff (ix i V.l γ) (m3 Y.B.G V.l k * ev (![m3 Y.B.G V.l, p3 1, p3 2] : Fin 3 → Pt C 3 dd)
         (Tk Y.B.ph2 k)) := by
     intro i
-    rw [map_add, map_sum, MvPowerSeries.coeff_one, if_neg, zero_add]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_add, map_sum, MvPowerSeries.coeff_one, if_neg, zero_add]
     intro h
     have h2 := congrArg (fun p => p ((0 : Fin 3), i)) h
     simp [index_raise_first] at h2

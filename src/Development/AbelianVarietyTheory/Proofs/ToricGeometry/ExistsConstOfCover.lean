@@ -120,7 +120,8 @@ theorem lift_translPt {S : Scheme.{0}} (A : Over S) [GrpObj A] {T B : Over S} (p
 private lemma herm_swap_eq_zero_of_eq_zero {g : ℕ} {Hm : Matrix (Fin g) (Fin g) ℂ} (hH : Hm.IsHermitian)
     (l a : Fin g → ℂ) :
     a ⬝ᵥ Hm.mulVec (star l) = starRingEnd ℂ (l ⬝ᵥ Hm.mulVec (star a)) := by
-  simp only [dotProduct, mulVec, map_sum, map_mul, Pi.star_apply, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dotProduct, mulVec, map_sum, map_mul, Pi.star_apply, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   rw [← hH.apply j i]

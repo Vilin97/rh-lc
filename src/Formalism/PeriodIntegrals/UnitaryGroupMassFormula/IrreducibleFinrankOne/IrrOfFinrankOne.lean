@@ -34,7 +34,8 @@ theorem char_ofGL {k : Type} [Field k] {n : ℕ} (ρ : G →* GL (Fin n) k) (x :
 
 theorem trace_map {k k' : Type} [Field k] [Field k'] {n : ℕ} (f : k →+* k') (M : Matrix (Fin n) (Fin n) k) :
     Matrix.trace (M.map f) = f (Matrix.trace M) := by
-  simp [Matrix.trace, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Matrix.trace, map_sum]
 
 theorem star_trace_inv [Fintype G] {n : ℕ} (ρ : G →* GL (Fin n) ℂ) (g : G) :
     star (Matrix.trace ((ρ g : GL (Fin n) ℂ) : Matrix (Fin n) (Fin n) ℂ)) =
@@ -140,7 +141,8 @@ theorem absIrr_isIrr [Fintype G] {K : Type} [Field K] [CharZero K] (σ : K →+*
   have hne : (Nat.card G : AlgebraicClosure K) ≠ 0 := by exact_mod_cast Nat.card_pos.ne'
   rw [inv_mul_eq_one₀ hne] at horth
   have := congrArg τ horth
-  simp only [map_sum, map_mul, map_natCast, hch, hτ] at this
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, map_natCast, hch, hτ] at this
   rw [← this, Nat.card_eq_fintype_card]
 
 theorem isIrr_absIrr [Fintype G] {K : Type} [Field K] (σ : K →+* ℂ) (hB : PI.XgNamed.BrauerSplit) (z : K)

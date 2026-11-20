@@ -243,7 +243,8 @@ private theorem rsT_comp_app_eq_pbT_app {Z Y X : Scheme.{0}} (y : Z ⟶ Y) (m : 
 
 private theorem rsT_sum_mul_fintype {Y : Scheme.{0}} {O₀ O : Y.Opens} {J : Type} [Fintype J] (s t : J → Γ(Y, O₀))
     (h : O ≤ O₀) : rsT (∑ a, s a * t a) O = ∑ a, rsT (s a) O * rsT (t a) O := by
-  simp only [rsT_eq_resG_of_le' _ h, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [rsT_eq_resG_of_le' _ h, map_sum, map_mul]
 
 private theorem sheaf_map_eq_rsT {Y : Scheme.{0}} {O₀ O : Y.Opens} (e : O ⟶ O₀) (s : Γ(Y, O₀)) :
     ConcreteCategory.hom (Y.sheaf.obj.map e.op) s = rsT s O := by

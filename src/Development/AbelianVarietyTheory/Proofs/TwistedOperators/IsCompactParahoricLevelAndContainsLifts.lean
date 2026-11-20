@@ -55,9 +55,11 @@ theorem exists_compact_entries {F E : Type} [Field F] [NumberField F] [Field E] 
         β * Formalism.L2.DIV.intGL F E n y * β⁻¹ := by
       rw [← hy]
       rfl
-    rw [hx', hy', Units.val_mul, Units.val_mul, Matrix.mul_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hx', hy', Units.val_mul, Units.val_mul, Matrix.mul_apply, map_sum]
     refine Finset.sum_congr rfl fun l _ => ?_
-    rw [map_mul, Matrix.mul_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_mul, Matrix.mul_apply, map_sum]
     congr 1
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_mul, Formalism.L2.DIV.intGL, Formalism.UG.P.bc_coe]

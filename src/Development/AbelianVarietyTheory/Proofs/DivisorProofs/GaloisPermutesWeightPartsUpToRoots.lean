@@ -127,7 +127,8 @@ theorem exists_root_conj [ArithBase o Ω] [ArithBase o' Ω'] (hx : IsGenLab ρ �
   have hσV : ∀ t : S'.perp H, σ (V t) = V (e' t) := fun t =>
     ((hV₁ t).conj σ s hs g.toAddMonoidHom hg).unique ρ'
       (hV (g h) ((hH h).2 hh) (by rw [← map_nsmul, e, hl]) (e' t))
-  rw [hf, hf, map_div₀, map_mul, map_inverse_natCast, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hf, hf, map_div₀, map_mul, map_inverse_natCast, map_sum,
     show σ (φ (S.th x₀)) = φ (S.th x₀) from RingHom.congr_fun hφ _,
     ← Equiv.sum_comp e' fun t => algebraMap o' Ω' (S'.ζN ^ (-(wtChar S' _ (g b) t)).val) * V t]
   simp only [map_mul, hζ, hσV]

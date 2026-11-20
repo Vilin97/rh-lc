@@ -38,7 +38,8 @@ theorem hasChars_frame_of_hasAF : ∀ (E : Type) [Field E] [NumberField E] [IsCM
     unfold pairDet
     congr 1
     ext a b
-    simp only [Matrix.of_apply, RingHom.mapMatrix_apply, Matrix.map_apply, map_sum, map_mul, frame, lieVec, jX,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.of_apply, RingHom.mapMatrix_apply, Matrix.map_apply, map_sum, map_mul, frame, lieVec, jX,
       RingHom.comp_apply, X.comp, lf]
     exact Finset.sum_congr rfl fun j _ => mul_comm _ _
   have hm := hmin f.2

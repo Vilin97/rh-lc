@@ -471,7 +471,8 @@ private theorem hK_smul_right' (k : D.host.K) (x y : D.host.E) :
 theorem hK_sum_smul_right {ι : Type*} (s : Finset ι) (k : ι → D.host.K) (f : ι → D.host.E) (x : D.host.E) :
     G0.hK D x (∑ i ∈ s, k i • f i) = ∑ i ∈ s, G0.cK D (k i) * G0.hK D x (f i) := by
   rw [← Finset.sum_congr rfl fun i _ => hK_smul_right' D (k i) x (f i)]
-  simp only [G0.hK, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [G0.hK, map_sum, Finset.mul_sum]
 
 theorem hK_smul_right (k : D.host.K) (x y : D.host.E) : G0.hK D x (k • y) = G0.cK D k * G0.hK D x y :=
   hK_smul_right' D k x y

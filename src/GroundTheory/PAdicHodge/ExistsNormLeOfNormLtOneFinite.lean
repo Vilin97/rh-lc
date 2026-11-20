@@ -80,7 +80,8 @@ theorem exists_sub_p_mul_eq_of_iterate_eq {R : Type*} [CommRing R] [Algebra ℚ_
   refine ⟨∑ k ∈ Finset.range (e + 1), A (c * q⁻¹ ^ k) * f^[k] ν, ?_, ?_⟩
   · have h1 : f (∑ k ∈ Finset.range (e + 1), A (c * q⁻¹ ^ k) * f^[k] ν) =
         ∑ k ∈ Finset.range e, A (c * q⁻¹ ^ k) * f^[k + 1] ν + A (c * q⁻¹ ^ e) * ν := by
-      rw [map_sum, Finset.sum_range_succ]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Finset.sum_range_succ]
       congr 1
       · exact Finset.sum_congr rfl fun k _ => by
           rw [map_mul, hf, ← Function.iterate_succ_apply' f]
@@ -97,7 +98,8 @@ theorem exists_sub_p_mul_eq_of_iterate_eq {R : Type*} [CommRing R] [Algebra ℚ_
     rw [h1, h2, add_sub_add_left_eq_sub, ← sub_mul, ← map_sub, mul_comm q c, ← mul_sub,
       hc, inv_mul_cancel₀ hne, map_one, one_mul]
   · intro g hg hgf hgν
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_mul, hg]
     congr 1
@@ -469,7 +471,8 @@ theorem false_of_kummerC_eq [FiniteDimensional ℚ_[p] K] {ε : 𝒪♭} (hε : 
         apply pow_eq_pow_of_mod_eq hζ1
         rw [← ZMod.natCast_eq_natCast_iff', hS]
         have h := congrArg (PadicInt.toZModPow m) (HZ σ)
-        simp only [map_add, map_mul, map_pow, map_natCast, map_sum] at h
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_add, map_mul, map_pow, map_natCast, map_sum] at h
         push_cast
         simp only [hcm, hχm, hκm, hA, hB, ZMod.natCast_val, ZMod.cast_id', id]
         rw [h, Finset.sum_congr rfl fun i _ => mul_comm ((PadicInt.toZModPow m) (κ i σ)) _]

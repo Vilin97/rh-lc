@@ -58,7 +58,8 @@ theorem redGLMat_mulVec (P : HeightOneSpectrum (𝓞 E)) (κ : Sp E n ≃ₗ[E] 
       funext k
       simp [Finset.sum_apply, Pi.single_apply]
     conv_lhs => rw [e1]
-    rw [map_sum, Finset.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_apply]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_smul, Pi.smul_apply, smul_eq_mul, mul_comm]
   change redP P (κ x i) = ∑ j, redP P (κ (Pi.single j 1) i) * redP P (x j)

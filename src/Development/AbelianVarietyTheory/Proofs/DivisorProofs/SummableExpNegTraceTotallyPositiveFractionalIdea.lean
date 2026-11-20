@@ -59,7 +59,8 @@ theorem repr_eq_trace (F : Type) [Field F] [NumberField F] {ι : Type} [Fintype 
   symm
   calc _ = (Algebra.traceForm ℚ F) ((Algebra.traceForm ℚ F).dualBasis (traceForm_nondegenerate ℚ F) b i) (∑ j, b.repr y j • b j) := by rw [b.sum_repr]
     _ = ∑ j, b.repr y j * (Algebra.traceForm ℚ F) ((Algebra.traceForm ℚ F).dualBasis (traceForm_nondegenerate ℚ F) b i) (b j) := by
-      simp only [map_sum, map_smul, smul_eq_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, smul_eq_mul]
     _ = b.repr y i := by simp [LinearMap.BilinForm.apply_dualBasis_left]
 end GlobalTheory.LatExpSum
 

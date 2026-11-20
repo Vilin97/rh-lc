@@ -41,8 +41,10 @@ theorem dchi_eq_sum (χ : HChar E) (z : Cinf E) : dchi χ z = ∑ φ : E →+* �
     · simp
   conv_lhs => rw [hz]
   conv_rhs => rw [hz]
-  rw [map_sum]
-  simp only [map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun w _ => ?_
   rw [dchi_atEmb]

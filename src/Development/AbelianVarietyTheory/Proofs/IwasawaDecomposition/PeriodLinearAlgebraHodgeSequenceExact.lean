@@ -137,7 +137,8 @@ theorem emb_eq (hr : Function.Injective r) (hc : ∀ φ, r (conjEmb φ) = conjEm
     exact Finset.sum_congr rfl fun j _ => by rw [hQ]; ring
   have e2 : starRingEnd ℂ (form B (Q (a • x)) (Q y)) =
       ∑ φ, starRingEnd ℂ (part B (Q x) (Q y) (conjEmb φ)) * r φ (a : E) := by
-    rw [e1, map_sum, ← hinv.bijective.sum_comp]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e1, map_sum, ← hinv.bijective.sum_comp]
     refine Finset.sum_congr rfl fun φ _ => ?_
     rw [map_mul, hc]
     simp [conjEmb]
@@ -181,7 +182,8 @@ theorem goodPer_of_form (c : Coeff l) (σ : c.F →+* ℂ) (τ : E →+* ℂ) (D
     congr 1
     · simp only [part, Matrix.mul_apply, Matrix.transpose_apply, Matrix.of_apply, perMat, Finset.sum_mul, Finset.mul_sum]
       exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
-    · simp only [part, Matrix.mul_apply, Matrix.transpose_apply, Matrix.of_apply, perMat, Finset.sum_mul, Finset.mul_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp only [part, Matrix.mul_apply, Matrix.transpose_apply, Matrix.of_apply, perMat, Finset.sum_mul, Finset.mul_sum,
         map_sum, map_mul, Complex.conj_conj, ← Finset.sum_neg_distrib]
       rw [Finset.sum_comm]
       exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring

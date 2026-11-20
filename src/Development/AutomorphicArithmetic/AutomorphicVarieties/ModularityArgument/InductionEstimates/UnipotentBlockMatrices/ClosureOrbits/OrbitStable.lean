@@ -77,7 +77,8 @@ private theorem exists_level (F : Submodule ℂ (L2 μ)) [FiniteDimensional ℂ 
       have := congrArg Subtype.val (b.sum_repr ⟨x, hx⟩)
       rw [Submodule.coe_sum] at this
       exact this.symm
-    rw [e, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, hUx i u (Subgroup.mem_iInf.1 hu i)]
 

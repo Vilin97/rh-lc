@@ -35,7 +35,8 @@ theorem pp_toA_eq_of_tendsto (M M' : Top.RootModel Ψ N) (II : IntersectionSyste
       M'.arMono II t (m.mapDomain some)) (𝓝[>] (0:ℝ)) (𝓝 0)) (F : Top.RP Ψ N) :
     M.PP II (Top.toA F) = M'.PP II (Top.toA F) := by
   rw [F.as_sum]
-  simp only [Top.toA, map_sum, rename_monomial, pp_monomial]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Top.toA, map_sum, rename_monomial, pp_monomial]
   refine Finset.sum_congr rfl fun m _ => ?_
   congr 1
   obtain ⟨L, hL⟩ := hconv (m.mapDomain some)

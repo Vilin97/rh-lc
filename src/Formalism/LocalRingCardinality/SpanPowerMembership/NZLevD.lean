@@ -16,14 +16,16 @@ theorem isWH_rename (g : σ → τ) (w1 : σ → M) (w2 : τ → N) (L : M →+ 
     (f : MvPolynomial σ R) (μ : M) (hf : IsWeightedHomogeneous w1 f μ) :
     IsWeightedHomogeneous w2 (rename g f) (L μ) := by
   classical
-  rw [f.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [f.as_sum, map_sum]
   apply IsWeightedHomogeneous.sum
   intro d hd
   rw [rename_monomial]
   apply isWeightedHomogeneous_monomial
   rw [← hf (mem_support_iff.1 hd), Finsupp.weight_apply, Finsupp.weight_apply,
     Finsupp.sum_mapDomain_index (by simp) (by intros; rw [add_smul])]
-  simp only [Finsupp.sum, map_sum, map_nsmul, hL]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finsupp.sum, map_sum, map_nsmul, hL]
 
 theorem isWH_prod {ι : Type*} (s : Finset ι) (w : σ → M) (φ : ι → MvPolynomial σ R) (n : ι → M)
     (h : ∀ i ∈ s, IsWeightedHomogeneous w (φ i) (n i)) :
@@ -188,7 +190,8 @@ theorem mem_line (e : P.Xsp) (he : e ∈ Submodule.span Kf (Set.range (BI P)))
   have hcomp : weightedHomogeneousComponent (om P) (LamTot P) e = e := by
     rw [weightedHomogeneousComponent_of_mem ((mem_weightedHomogeneousSubmodule _ _ _ _).2 hwt), if_pos rfl]
   have hmem : e ∈ Submodule.span Kf {EV P} := by
-    rw [← hcomp, ← hf, Finsupp.sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hcomp, ← hf, Finsupp.sum, map_sum]
     refine Submodule.sum_mem _ fun I _ => ?_
     rw [map_smul]
     refine Submodule.smul_mem _ _ ?_

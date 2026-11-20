@@ -54,7 +54,8 @@ theorem scaleBlock_eq_sum (b : Fin (D + 1)) (u : Kˣ) (p : MvPolynomial (TVar D 
     (hM : ∀ s ∈ p.support, degB b s < M) :
     sigP b u p = ∑ k ∈ Finset.range M, C ((u : K) ^ k) * compB b k p := by
   conv_lhs => rw [p.as_sum]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [sigP, scaleEquiv_monomial, sum_filter_block_eq_degB]
   simp only [compB, Finset.mul_sum]
   rw [← Finset.sum_fiberwise_of_maps_to (fun s hs => Finset.mem_range.mpr (hM s hs))]
@@ -88,7 +89,8 @@ theorem one_block (b : Fin (D + 1)) (z : KTf K D N)
       (algebraMap (KTp K D N) (KTf K D N) (compB b k p) - z * algebraMap (KTp K D N) (KTf K D N) (compB b k q)) * (algebraMap (KTp K D N) (KTf K D N) (C (u : K))) ^ k = 0 := by
     intro u
     have h1 := congrArg (sigF (K := K) (D := D) (N := N) b u) hpq
-    rw [map_mul, sigF_alg, sigF_alg, hz u, scaleBlock_eq_sum b u p M hMp, scaleBlock_eq_sum b u q M hMq,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_mul, sigF_alg, sigF_alg, hz u, scaleBlock_eq_sum b u p M hMp, scaleBlock_eq_sum b u q M hMq,
       map_sum, map_sum, Finset.mul_sum] at h1
     have h2 := sub_eq_zero.mpr h1
     rw [← Finset.sum_sub_distrib] at h2
@@ -165,7 +167,8 @@ theorem support_free_of_block_subst_invariant (P : KTp K D N)
   have hc : (aeval (fun v : TVar D N => if v.1 = 0 then C ((0 : Fin (N + 1) → K) v.2) else X v) :
       KTp K D N →ₐ[K] KTp K D N) P = compB 0 0 P := by
     conv_lhs => rw [P.as_sum]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [aeval_block_zero_monomial]
     unfold compB
     rw [Finset.sum_filter]

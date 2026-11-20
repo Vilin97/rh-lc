@@ -40,7 +40,8 @@ theorem clm_apply_eq_sum {n : ℕ} (T : (Fin n → ℝ) →L[ℝ] ℝ) (v : Fin 
   have hv : v = ∑ k, v k • (Pi.single k 1 : Fin n → ℝ) := by
     ext m; simp [Pi.single_apply]
   conv_lhs => rw [hv]
-  simp [map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, map_smul]
 
 variable {m : ℕ}
 

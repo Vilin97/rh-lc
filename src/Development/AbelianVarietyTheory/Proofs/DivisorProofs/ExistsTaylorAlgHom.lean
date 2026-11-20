@@ -80,7 +80,8 @@ theorem ev_poly (hW : ∀ p ∈ W₀, (((0 : I → ℂ), p.2) : Tot I g) ∈ W) 
     (p : Tot I₀ g) (hp : p ∈ W₀) :
     Algebra.TensorProduct.lift (AlgHom.id ℂ D) ((Algebra.ofId ℂ D).comp (Hol.ev p hp)) (fun _ _ ↦ Commute.all _ _)
       (poly hW N t h) = GlobalTheory.PeriodFamily.taylor N t fun z ↦ h.fn (z, p.2) := by
-  simp only [poly, map_sum, Algebra.TensorProduct.lift_tmul, AlgHom.id_apply, AlgHom.comp_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [poly, map_sum, Algebra.TensorProduct.lift_tmul, AlgHom.id_apply, AlgHom.comp_apply,
     Algebra.ofId_apply, Hol.ev_apply, fn_coef hW _ _ h hp, GlobalTheory.PeriodFamily.taylor]
   refine Finset.sum_congr rfl fun k _ ↦ Finset.sum_congr rfl fun s _ ↦ ?_
   rw [mul_comm, ← Algebra.smul_def, smul_smul, mul_comm]
@@ -130,7 +131,8 @@ theorem exists_taylor_algHom : ∀ {I I₀ : Type} [Fintype I] [DecidableEq I] [
             map_add' := hadd
             commutes' := hconst }, fun h p hp ↦ ev_poly hW N t h p hp, fun a h ↦ ?_⟩
   show poly hW N t (dw a h) = LinearMap.lTensor D (dw a).toLinearMap (poly hW N t h)
-  simp only [poly, map_sum, LinearMap.lTensor_tmul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [poly, map_sum, LinearMap.lTensor_tmul]
   refine Finset.sum_congr rfl fun k _ ↦ Finset.sum_congr rfl fun s _ ↦ ?_
   rw [← dw_coef]
   rfl

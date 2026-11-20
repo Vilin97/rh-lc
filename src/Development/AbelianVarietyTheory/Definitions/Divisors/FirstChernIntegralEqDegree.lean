@@ -265,7 +265,8 @@ theorem crd_map {E' : X.Modules} (φ : E ≅ E') (s : Γ(E, V)) (y : CxPts p σ)
   · have h₁ := (mem_ptsIn_inf.1 hy).2
     rw [← c.crd_resM s inf_le_left hy, ← (c.map φ).crd_resM _ inf_le_left hy, ← app_resM,
       ← (c.isFrame.basis inf_le_right).sum_repr (resM E _ s)]
-    simp only [map_sum, Scheme.Modules.Hom.app_smul, crd_sum, crd_smul, IsFrame.basis_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, Scheme.Modules.Hom.app_smul, crd_sum, crd_smul, IsFrame.basis_apply,
       app_resM, crd_resM _ _ _ hy, c.crd_frame h₁]
     exact Finset.sum_congr rfl fun b _ => congrArg _ ((c.map φ).crd_frame h₁ b)
   · funext a

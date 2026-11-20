@@ -40,7 +40,8 @@ theorem ksDim_finrank [FiniteDimensional k H] (ρ : O →+* Module.End k H) (φ 
       (∀ x ∈ Fil, g x - ∑ i, c i • f i x ∈ Fil) ↔
         cls Fil g = ∑ i, c i • (b i : Fil →ₗ[k] H ⧸ Fil) := fun g c => by
     simp_rw [← hfb]
-    simp only [← map_smul, ← map_sum, cls_eq_iff, LinearMap.sum_apply, LinearMap.smul_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [← map_smul, ← map_sum, cls_eq_iff, LinearMap.sum_apply, LinearMap.smul_apply]
   refine ⟨f, hf, fun g hg => ?_⟩
   let m : M := ⟨cls Fil g, g, hg, rfl⟩
   have hsum : ∀ c : Fin (finrank k M) → k, (cls Fil g = ∑ i, c i • (b i : Fil →ₗ[k] H ⧸ Fil)) ↔

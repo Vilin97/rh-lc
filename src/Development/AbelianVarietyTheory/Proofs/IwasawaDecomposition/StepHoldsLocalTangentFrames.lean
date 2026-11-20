@@ -80,7 +80,8 @@ theorem isComb_corr {n : ℕ} {b₁ : Fin n → (Sp (DualNumber S) ⟶ t₁.G.le
   refine (LieMet.isComb_iff (fun j => tanOf (h₂ j)) cf (tanOf k₂)).2 ((pushE m₂ x₂ rfl).injective ?_)
   have e₁ : pushE m₂ x₂ rfl (tanOf k₂) = pushE m₁ x₁ hx (tanOf k₁) := tan_ext hw.symm
   have e₂ (j) : pushE m₂ x₂ rfl (tanOf (h₂ j)) = pushE m₁ x₁ hx (tanOf (h₁ j)) := tan_ext (hb j).symm
-  rw [e₁, e, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e₁, e, map_sum, map_sum]
   exact Finset.sum_congr rfl fun j _ => by rw [map_smul, map_smul, e₂]
 
 include hx in

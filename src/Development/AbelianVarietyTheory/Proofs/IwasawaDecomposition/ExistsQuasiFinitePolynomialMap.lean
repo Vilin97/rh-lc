@@ -210,7 +210,8 @@ theorem shear_leadingCoeff_isUnit (fne : f ≠ 0) :
       using degreeOf_t_ne_of_ne f _ _ h1 vin <| List.ne_of_not_mem_cons h2
   have coeff : (finSuccEquiv k n (T (h v + ∑ x ∈ f.support \ {v}, h x))).leadingCoeff =
       (finSuccEquiv k n (T (h v))).leadingCoeff := by
-    simp only [map_add, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_add, map_sum]
     rw [add_comm]
     apply Polynomial.leadingCoeff_add_of_degree_lt <| (lt_of_le_of_lt <| Polynomial.degree_sum_le _ _) ?_
     have h2 : h v ≠ 0 := by simpa [h] using mem_support_iff.mp vin

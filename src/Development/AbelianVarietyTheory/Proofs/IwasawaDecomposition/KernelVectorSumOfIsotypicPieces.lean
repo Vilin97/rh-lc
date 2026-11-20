@@ -83,7 +83,8 @@ theorem GlobalTheory.decomp_kernels_isotIn : ∀ (D : D7) (n : ℕ) (A : Type) [
           rw [zero_add] at this
           rw [this, hB0 u huC, ha.2]; simp⟩ }
     have hsum : ∑ c' ∈ t, O i (y c') = 0 := by
-      rw [← map_sum, ← hxy]; exact hOx i
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← map_sum, ← hxy]; exact hOx i
     have hrest : ∑ c' ∈ t.erase c, O i (y c') ∈ Z := by
       refine Submodule.sum_mem _ fun c' hc' => ?_
       have hne : c' ≠ c := (Finset.mem_erase.mp hc').1

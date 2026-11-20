@@ -19,7 +19,8 @@ theorem map_skew (ρ : A →+* C) (μ : C →+ A) (hμs : ∀ y, μ (star y) = s
     (hμm : ∀ a y, μ (ρ a * y) = a * μ y) (H : Matrix κ κ A) (Y : Matrix κ κ C) :
     (H.map ρ * Y + Yᴴ * H.map ρ).map μ = H * Y.map μ + (Y.map μ)ᴴ * H := by
   ext i l
-  simp only [Matrix.map_apply, Matrix.add_apply, Matrix.mul_apply, map_add, map_sum, hμm,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.map_apply, Matrix.add_apply, Matrix.mul_apply, map_add, map_sum, hμm,
     conjTranspose_apply]
   congr 1
   refine Finset.sum_congr rfl fun k _ => ?_
@@ -81,7 +82,8 @@ theorem card_unitary_reduction [Finite A] (π : A →+* A') (ρ : A →+* C) (μ
     have hXπ : X.map π = X0.map π := congrArg Subtype.val hfib
     have hD : ∀ i l, ∃ y, μ y = (X0⁻¹ * (X - X0)) i l := by
       intro i l
-      rw [← hμr, Matrix.mul_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hμr, Matrix.mul_apply, map_sum]
       apply Finset.sum_eq_zero
       intro k _
       have : π (X k l) = π (X0 k l) := congrFun (congrFun hXπ k) l

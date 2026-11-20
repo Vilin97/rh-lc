@@ -106,7 +106,8 @@ theorem absorbed_two_mul [Module.Free ℤ X] [Module.Finite ℤ X] (ha : Submodu
   refine (absorbed_sum Finset.univ _ fun i => absorbed_sum Finset.univ _ fun j =>
     absorbed_two_mul_apply ha (F (E i j) • b i) (b j)).congr fun β _ => ?_
   conv_lhs => rw [hE β]
-  simp only [map_sum, map_smul, LinearMap.smul_apply, smul_eq_mul, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, LinearMap.smul_apply, smul_eq_mul, Finset.mul_sum]
   exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 
 end Squares

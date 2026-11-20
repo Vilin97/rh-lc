@@ -19,7 +19,8 @@ theorem gs_appLE_self {X Y : Scheme.{0}} (q : Y ⟶ X) (U : X.Opens) (W : Y.Open
 
 theorem gs_fsum {X Y : Scheme.{0}} (f : Y ⟶ X) (y : Y) (U : X.Opens) (h : f y ∈ U) {n : ℕ} (a : Fin n → Γ(X, U)) :
     gs f y U (∑ i, a i) = ∑ i, gs f y U (a i) := by
-  simp only [gs_eq f y U h, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [gs_eq f y U h, map_sum]
 
 end GlobalTheory.HomFixUniv.CondGen
 

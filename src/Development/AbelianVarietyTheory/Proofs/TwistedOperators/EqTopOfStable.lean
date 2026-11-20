@@ -36,7 +36,8 @@ theorem card_ne (N : Subgroup H) [Fintype (H ⧸ N)] : (Fintype.card (H ⧸ N) :
 
 theorem apply_mean (τ : Representation ℂ H V) (N : Subgroup H) [Fintype (H ⧸ N)] {v : V}
     (hv : ∀ n ∈ N, τ n v = v) (k : H) : τ k (mean τ N v) = mean τ N v := by
-  rw [mean_apply, map_smul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [mean_apply, map_smul, map_sum]
   congr 1
   have := sum_out_comp N (fun x => τ x v) (fun x n hn => by simp [hv n hn]) (fun x => k * x)
     (MulAction.toPerm k) (fun _ => rfl)
@@ -179,7 +180,8 @@ theorem hecke_comm (K : Subgroup G) (θ : G → G) (hmul : ∀ x y, θ (x * y) =
   obtain ⟨a, ha, b, hb, hh⟩ := hdc h
   obtain ⟨c, hc, d, hd, hg⟩ := hdc g
   rw [hm N (ρ h v) (fun n hn => p2 n hn.1.2), hm N (ρ g v) (fun n hn => p1 n hn.1.1), mean_apply, mean_apply]
-  simp only [map_smul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_smul, map_sum]
   congr 1
   have := sum_out_comp N (fun k : K => e (ρ h (ρ k (ρ g v))))
     (fun k n hn => by simp [p1 n hn.1.1]) (fun k => ⟨b, hb⟩ * (ψ k)⁻¹ * ⟨c, hc⟩)

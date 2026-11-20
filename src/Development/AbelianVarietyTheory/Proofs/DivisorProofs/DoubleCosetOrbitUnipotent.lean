@@ -98,7 +98,8 @@ theorem span_stable {d j : ℕ} (W : Spc F E d) (W₂ : Spc F E (d + d))
     rw [← hg₀]; rfl
   have hv : ∀ y, mat g *ᵥ incV F y = incV F ((g₀ : Matrix (Fin d) (Fin d) E) *ᵥ y) := fun y => by
     rw [hm]; funext k
-    simp [incV, Matrix.mulVec, dotProduct, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [incV, Matrix.mulVec, dotProduct, map_sum, map_mul]
   have hP' : ∀ x, x ∈ diagSub (AE F E) finSumFinEquiv ↔ mat (γ * i (1, g) * γ⁻¹) *ᵥ x ∈ diagSub (AE F E) finSumFinEquiv :=
     fun x => hP x
   have key : ∀ a : Fin j → E, ∃ b, (g₀ : Matrix (Fin d) (Fin d) E) *ᵥ (Y *ᵥ a) = Y *ᵥ b := by

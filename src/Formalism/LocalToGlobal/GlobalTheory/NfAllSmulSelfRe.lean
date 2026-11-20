@@ -33,7 +33,8 @@ theorem map_actAll (s : K →+* L) (lam : ι → DomWeight n) (g : ι → Matrix
   · congr 1
     congr 1
     funext v
-    simp [map_sum, Matrix.map_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, Matrix.map_apply]
 
 end Map
 

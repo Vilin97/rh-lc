@@ -140,7 +140,8 @@ theorem proof : ComplexChowFormToChowForm.Statement := by
     have e' : X (Sum.inr j) * rename Sum.inl g = ∑ c' ∈ coordSupport b g,
         C (b c') * map (algebraMap ℚ ℂ) (X (Sum.inr j) * rename Sum.inl (coordPoly (b.coord c') g)) := by
       conv_lhs => rw [← sum_coordPoly b g]
-      rw [map_sum, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Finset.mul_sum]
       refine Finset.sum_congr rfl fun c' _ => ?_
       rw [map_mul, rename_C, map_mul, map_X, map_rename]
       ring

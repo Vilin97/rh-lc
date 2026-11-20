@@ -75,7 +75,8 @@ theorem exists_normCoeff_not_mem {A B : Type} [CommRing A] [IsDomain A] [IsInteg
   have hPQ : Polynomial.aeval b P ∈ Q := hQI (by simpa [I, RingHom.mem_ker] using hker)
   have hbd : b ^ P.natDegree ∈ Q := by
     have hsum := hmon.as_sum
-    rw [hsum, map_add, map_pow, aeval_X, map_sum] at hPQ
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hsum, map_add, map_pow, aeval_X, map_sum] at hPQ
     refine (Q.add_mem_iff_left ?_).1 hPQ
     refine Q.sum_mem fun j hj => ?_
     rw [map_mul, aeval_C, aeval_X_pow]

@@ -442,7 +442,8 @@ theorem card_datum_le [IsAlgClosed k] [CharZero k] (hf : Finite {x : Q // x ^ p 
         rw [map_sub, map_smul, hφ, smul_smul, ← add_sub_assoc, ← add_smul, add_comm π, h, one_smul]
       rw [e₁]
       refine add_mem (Submodule.smul_mem_smul hπ trivial) ?_
-      rw [pi_eq_sum_univ' (y - y'), map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [pi_eq_sum_univ' (y - y'), map_sum]
       refine sum_mem fun i _ => ?_
       rw [map_smul]
       exact Submodule.smul_mem_smul (Ideal.Quotient.eq.1 (Quotient.out_eq _).symm) trivial

@@ -47,7 +47,8 @@ theorem mem_Dpst_coord (x : V' ⊗[ℚ_[l]] Bst P) :
     choose K' hK using fun i => (mem_Dpst P ρ).1 (hx i)
     have hsum : x = ∑ i, (tensCoord E (Bst P)).symm (Pi.single i (tensCoord E (Bst P) x i)) := by
       apply (tensCoord E (Bst P)).injective
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simp only [LinearEquiv.apply_symm_apply]
       exact (Finset.univ_sum_single _).symm
     rw [hsum]

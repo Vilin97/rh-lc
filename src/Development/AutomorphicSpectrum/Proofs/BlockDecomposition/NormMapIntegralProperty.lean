@@ -265,7 +265,8 @@ theorem exists_integral_norm_of_unit_norm_surjective : D0a → IntegralBasisUnra
     refine ⟨fun i => ⟨x i, (hxy i).1⟩, fun i => ⟨y i, (hxy i).2⟩, fun m hm => ?_⟩
     have hjinj : Function.Injective j := Subtype.val_injective
     apply hjinj
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     have e1 : ∀ i, j ((⟨x i, (hxy i).1⟩ : intO E) * (τ ^ m) ⟨y i, (hxy i).2⟩) =
         x i * (σ ^ m) (y i) := fun i => by
       rw [map_mul, ← pow_compat j σ τ hτ m]; rfl

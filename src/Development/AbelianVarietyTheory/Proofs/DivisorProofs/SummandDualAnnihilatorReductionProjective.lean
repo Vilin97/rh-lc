@@ -67,7 +67,8 @@ theorem exists_dual_lift [Projective R C] (hπ : Function.Surjective π) (ρ : C
   obtain ⟨s, hs⟩ := projective_def.mp (inferInstance : Projective R C)
   refine ⟨Finsupp.linearCombination R (fun m => Function.surjInv hπ (y (ρ m))) ∘ₗ s, fun c => ?_⟩
   conv_rhs => rw [← hs c]
-  simp only [LinearMap.comp_apply, Finsupp.linearCombination_apply, Finsupp.sum, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [LinearMap.comp_apply, Finsupp.linearCombination_apply, Finsupp.sum, map_sum,
     smul_eq_mul, map_mul, Function.surjInv_eq, LinearMap.map_smulₛₗ, id, RingHom.id_apply]
 
 theorem exists_dual_descent {ρ : C →ₛₗ[π] C₀} (hπ : Function.Surjective π)

@@ -42,7 +42,8 @@ theorem _root_.GlobalTheory.ideal_map_colon_eq_of_flat : ∀ {A R : Type} [CommR
         (Fintype.linearCombination A fun p => c p.1 p.2)
     have hxf : x ∘ₗ f = 0 := by
       refine LinearMap.ext fun v => ?_
-      simp [f, x, Algebra.smul_def, Fintype.sum_prod_type, Fintype.linearCombination_apply,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [f, x, Algebra.smul_def, Fintype.sum_prod_type, Fintype.linearCombination_apply,
         LinearMap.pi_apply, map_sum, Finset.sum_mul]
       rw [← sub_eq_add_neg, sub_eq_zero]
       refine Finset.sum_congr rfl fun i _ => ?_
@@ -87,7 +88,8 @@ theorem _root_.GlobalTheory.ideal_map_colon_eq_of_flat : ∀ {A R : Type} [CommR
       rw [h1]
       exact neg_mem (Ideal.sum_mem _ fun p _ => Ideal.mul_mem_right _ _ (hw2 p))
     have hs' : s = x (1, 0) := by simp [x]
-    rw [hs', hxy, LinearMap.comp_apply, ← Finsupp.univ_sum_single (g (1, 0)), map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hs', hxy, LinearMap.comp_apply, ← Finsupp.univ_sum_single (g (1, 0)), map_sum]
     refine Ideal.sum_mem _ fun q _ => ?_
     rw [← Finsupp.smul_single_one, map_smul, Algebra.smul_def, RingHom.algebraMap_toAlgebra]
     exact Ideal.mul_mem_right _ _ (Ideal.mem_map_of_mem φ (key q))

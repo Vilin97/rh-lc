@@ -27,7 +27,8 @@ theorem barRev_barRev {n : ℕ} (g : Mn n) : barRev (barRev g) = g := by
 
 theorem barRev_mul {n : ℕ} (g h : Mn n) : barRev (g * h) = barRev g * barRev h := by
   ext i j
-  simp only [barRev, Matrix.submatrix_apply, Matrix.map_apply, Matrix.mul_apply, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [barRev, Matrix.submatrix_apply, Matrix.map_apply, Matrix.mul_apply, map_sum, map_mul]
   exact (Fintype.sum_equiv Fin.revPerm _ _ (fun x => by simp [Fin.revPerm_apply])).symm
 
 theorem barRev_one {n : ℕ} : barRev (1 : Mn n) = 1 := by

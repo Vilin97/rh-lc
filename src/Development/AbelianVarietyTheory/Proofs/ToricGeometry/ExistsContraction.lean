@@ -255,7 +255,8 @@ theorem isHermitian_iff (G : Matrix (Fin g) (Fin g) ℂ) :
   constructor
   · intro hG z w
     rw [sesq_apply, sesq_apply, hermForm, hermForm]
-    simp only [dotProduct, mulVec, map_sum, map_mul, Finset.mul_sum, Pi.star_apply, Complex.star_def,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [dotProduct, mulVec, map_sum, map_mul, Finset.mul_sum, Pi.star_apply, Complex.star_def,
       Complex.conj_conj]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
@@ -278,7 +279,8 @@ theorem exists_anti (N : (Fin g → ℂ) →ₗ⋆[ℂ] (Fin g → ℂ)) : ∃ Z
     simp [Pi.single_apply]
   rw [anti_apply]
   conv_lhs => rw [hz]
-  simp only [map_sum, LinearMap.map_smulₛₗ, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, mulVec, dotProduct,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.map_smulₛₗ, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, mulVec, dotProduct,
     Matrix.of_apply, Pi.star_apply, Complex.star_def]
   exact Finset.sum_congr rfl fun j _ => mul_comm _ _
 
@@ -460,7 +462,8 @@ theorem exists_extend [Module.Finite ℤ M] (P P' : M →+ (Fin g → ℂ)) (hi 
   have hsp : ⊤ ≤ Submodule.span ℝ (Set.range v) := by
     rw [← hs, Submodule.span_le]
     rintro _ ⟨a, rfl⟩
-    rw [SetLike.mem_coe, ← b.sum_repr a, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [SetLike.mem_coe, ← b.sum_repr a, map_sum]
     refine Submodule.sum_mem _ fun i _ => ?_
     rw [map_zsmul]
     exact zsmul_mem (Submodule.subset_span (Set.mem_range_self i) : v i ∈ Submodule.span ℝ (Set.range v)) _

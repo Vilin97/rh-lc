@@ -39,12 +39,14 @@ theorem sum_pullMat_subBG_reframe : ∀ (D : D7) (p : ℕ) [Fact p.Prime] (X : S
       simp only [subBG, reframe, pullMat, ↓reduceIte]
       rw [hinv _ _ _ he, hinv _ _ _ he']
       by_cases hodd : IsOddPos (pos.symm τ).2
-      · simp only [hodd, ↓reduceIte, map_mul, ← hconj, hιe, Matrix.map_apply, Matrix.mul_apply,
+      set_option synthInstance.maxHeartbeats 100000 in
+        · simp only [hodd, ↓reduceIte, map_mul, ← hconj, hιe, Matrix.map_apply, Matrix.mul_apply,
           Matrix.star_apply, hs, map_sum, hcc, Finset.mul_sum, Finset.sum_mul]
         first
           | exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
           | (rw [Finset.sum_comm]; exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring)
-      · simp only [hodd, ↓reduceIte, map_mul, ← hconj, hιe, Matrix.map_apply, Matrix.mul_apply,
+      set_option synthInstance.maxHeartbeats 100000 in
+        · simp only [hodd, ↓reduceIte, map_mul, ← hconj, hιe, Matrix.map_apply, Matrix.mul_apply,
           Matrix.star_apply, hs, map_sum, hcc, Finset.mul_sum, Finset.sum_mul]
         first
           | exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring

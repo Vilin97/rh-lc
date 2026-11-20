@@ -288,7 +288,8 @@ theorem universal_lift_frame [IsDomain O] (hdvr : IsDiscreteValuationRing O) (hf
     have hfj : ∀ j, algebraMap (LetA O n) W.EE (Eπ ^ h') * fj j =
         algebraMap (LetA O n) W.EE ((letE c : LetA O n) * G j) := by
       intro j
-      simp only [hfj_def, hG, Finset.mul_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hfj_def, hG, Finset.mul_sum, map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [IsScalarTower.algebraMap_apply O (LetA O n) W.EE, mul_left_comm, hgeq i, ← map_mul]
       congr 1
@@ -297,12 +298,14 @@ theorem universal_lift_frame [IsDomain O] (hdvr : IsDiscreteValuationRing O) (hf
         algebraMap (LetA O n) W.EE (π' * ((letE c : LetA O n) * H j)) := by
       intro j
       have hγfj : W.γE W.gam (fj j) = ∑ i, algebraMap O W.EE (P j i) * W.γE W.gam (X i) := by
-        simp only [hfj_def, map_sum, map_mul, AlgHom.commutes]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [hfj_def, map_sum, map_mul, AlgHom.commutes]
       rw [hγfj, hfj_def]
       dsimp only
       rw [← Finset.sum_sub_distrib, Finset.mul_sum, hH]
       dsimp only
-      rw [Finset.mul_sum, Finset.mul_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Finset.mul_sum, Finset.mul_sum, map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       have hx := hXγ i
       rw [hgam] at hx
@@ -506,12 +509,14 @@ theorem universal_lift_frame [IsDomain O] (hdvr : IsDiscreteValuationRing O) (hf
     have hstar : Polynomial.aeval (γLA W T₂ π' c) PΩ b₀ =
         xr + ∑ j, f' j ⊗ₜ mkL W T₂ π' c (repE j) (hrepE_mem j) := by
       conv_lhs => rw [hb₀dec]
-      rw [map_add, map_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_add, map_sum, map_sum]
       simp only [aeval_γLA_tmul, hgam, hmkE]
       rfl
     have hxrL : xr ∈ LamLA W T₂ π' Eπ h' c Lr := by
       show smulLA W T₂ π' c (Eπ ^ h') xr ∈ LinearMap.range (toLA W T₂ π' c Lr)
-      rw [hxr, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hxr, map_sum]
       refine Submodule.sum_mem _ fun i _ => ?_
       rw [ModelFPf.smulLA_tmul, EE_aeval Eπ h' uE uE' huu hγE' PΩ (X i) _ (hgeq i), aeval_twA_letE]
       exact ⟨⟨Polynomial.aeval (twA W uE' h') PΩ (g i), aeval_twA_mem uE' h' huE'Δ PΩ (hg i)⟩ ⊗ₜ
@@ -536,7 +541,8 @@ theorem universal_lift_frame [IsDomain O] (hdvr : IsDiscreteValuationRing O) (hf
           (γLA W T₂ π' c (Polynomial.aeval (γLA W T₂ π' c) PΩ b₀) - Polynomial.aeval (γLA W T₂ π' c) PΩ b₀) -
             ∑ j, (γLA W T₂ π' c (f' j ⊗ₜ mkL W T₂ π' c (repE j) (hrepE_mem j)) -
               f' j ⊗ₜ mkL W T₂ π' c (repE j) (hrepE_mem j)) := by
-        rw [map_sub, map_sum, Finset.sum_sub_distrib]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sub, map_sum, Finset.sum_sub_distrib]
         abel
       rw [e3]
       refine Submodule.sub_mem _ hPb (Submodule.sum_mem _ fun j _ => ?_)

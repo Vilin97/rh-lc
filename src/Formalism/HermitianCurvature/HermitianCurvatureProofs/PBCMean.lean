@@ -118,7 +118,8 @@ theorem phiRG_psd (Y : Finset H) (κ : H → H → ℂ) (hκ : TB.PSDOn Y κ) (U
       ∑ h ∈ Y, ∑ h' ∈ Y, κ h h' * ∏ v, conj (P v (h', y v) (h, x v)) := by
     intro x y
     unfold phi
-    simp only [map_sum, map_mul, map_prod]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, map_prod]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun h hh => Finset.sum_congr rfl fun h' hh' => ?_
     congr 1

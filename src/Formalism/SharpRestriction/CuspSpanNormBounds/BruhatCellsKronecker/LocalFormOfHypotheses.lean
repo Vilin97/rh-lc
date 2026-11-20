@@ -27,7 +27,8 @@ theorem frm_stdLat_isOrtho (K : Type) [Field K] [NumberField K] [StarRing K] (j 
 theorem frm_stdH_isSymm (K : Type) [Field K] [NumberField K] [StarRing K] (j : ℕ) : (Cnt.stdH K j).IsSymm := by
   constructor
   intro x y
-  simp only [Cnt.stdH, LinearMap.mk₂'ₛₗ_apply, map_sum, map_mul, starRingEnd_apply, star_star]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Cnt.stdH, LinearMap.mk₂'ₛₗ_apply, map_sum, map_mul, starRingEnd_apply, star_star]
   exact Finset.sum_congr rfl (fun i _ => mul_comm _ _)
 
 theorem formAt_of (D : D7) (u : D.what₂.Word) (hR : LocalBesselAndTopKernel.FamilyMidVolume D) (hL : UnitaryVolumeMass.stLem3L0 D u)

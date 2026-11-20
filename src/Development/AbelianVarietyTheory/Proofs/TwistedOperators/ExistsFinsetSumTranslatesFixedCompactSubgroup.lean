@@ -78,7 +78,8 @@ theorem exists_finset_sum_translate_fixed {G X : Type} [Group G] [TopologicalSpa
         rw [← (hf y hy).2, ← (hf y' hy').2]
         exact congrArg (fun g => ρ g x) h
     intro k hk
-    rw [hsum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hsum, map_sum]
     refine Finset.sum_nbij' (fun y => ρ k y) (fun y => ρ k⁻¹ y) ?_ ?_ ?_ ?_ (fun _ _ => rfl)
     · intro y hy
       obtain ⟨k', hk', rfl⟩ := (hFmem y).1 hy

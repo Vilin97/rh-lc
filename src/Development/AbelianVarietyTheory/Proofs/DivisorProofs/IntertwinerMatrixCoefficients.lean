@@ -39,12 +39,14 @@ theorem exists_intertwiner (G : Type) [Group G] (K : Set G) (V : Type) [AddCommG
   intro hA hf
   refine ⟨∑ j, D.subtype ∘ₗ (f j) ∘ₗ colMap D b hbD j, ?_, ?_⟩
   · intro k hk v
-    simp only [LinearMap.sum_apply, LinearMap.comp_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [LinearMap.sum_apply, LinearMap.comp_apply, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     simp only [Submodule.coe_subtype]
     apply hf j k hk
     rw [colMap_val, colMap_val]
-    simp only [leftMul_coord, Finset.sum_smul, map_sum, map_smul, hA k hk, Finset.smul_sum, smul_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [leftMul_coord, Finset.sum_smul, map_sum, map_smul, hA k hk, Finset.smul_sum, smul_smul]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun l _ => Finset.sum_congr rfl fun i _ => ?_
     rw [mul_comm]

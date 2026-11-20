@@ -60,14 +60,16 @@ theorem chain_linear : ChainLin := by
 theorem hasSubst_lin {ι R : Type} [Fintype ι] [CommRing R] (B : ι → ι → R) :
     MvPowerSeries.HasSubst (fun x : ι => ∑ y, MvPowerSeries.C (B x y) * MvPowerSeries.X y) :=
   MvPowerSeries.hasSubst_of_constantCoeff_zero fun x => by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_eq_zero fun y _ => by rw [map_mul, MvPowerSeries.constantCoeff_X, mul_zero]
 
 theorem subst_lin {σ τ R : Type} [Fintype σ] [CommRing R] {a : σ → MvPowerSeries τ R} (ha : MvPowerSeries.HasSubst a)
     (c : σ → R) :
     MvPowerSeries.subst a (∑ y, MvPowerSeries.C (c y) * MvPowerSeries.X y : MvPowerSeries σ R) =
       ∑ y, MvPowerSeries.C (c y) * a y := by
-  rw [← MvPowerSeries.coe_substAlgHom ha, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← MvPowerSeries.coe_substAlgHom ha, map_sum]
   refine Finset.sum_congr rfl fun y _ => ?_
   rw [MvPowerSeries.coe_substAlgHom ha, MvPowerSeries.subst_mul ha, MvPowerSeries.subst_C, MvPowerSeries.subst_X ha]
 
@@ -104,7 +106,8 @@ theorem trSub_mul (U V : X.ZA j → X.ZA j → Kc) (P : DA X Kc j) :
     unfold trSub
     rw [MvPolynomial.aeval_X, MvPolynomial.aeval_X]
     unfold linT
-    simp only [map_sum, map_mul, MvPolynomial.aeval_C, MvPolynomial.aeval_X, MvPolynomial.algebraMap_eq, Finset.mul_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, MvPolynomial.aeval_C, MvPolynomial.aeval_X, MvPolynomial.algebraMap_eq, Finset.mul_sum,
       Finset.sum_mul]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun z _ => Finset.sum_congr rfl fun x _ => ?_
@@ -122,7 +125,8 @@ theorem pairD_lin (τ : XspC (X.Pj (j + 1)) Kc →ₗ[Kc] XspC (X.Pj (j + 1)) Kc
     (h : ∀ n, AddMonoidAlgebra.coeff P' n = τ (AddMonoidAlgebra.coeff P n)) (f : MvPowerSeries (X.ZA j) Kc) :
     pairD X Kc j P' f = τ (pairD X Kc j P f) := by
   classical
-  rw [pairD_eq X Kc j P' f (P.support ∪ P'.support) Finset.subset_union_right,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [pairD_eq X Kc j P' f (P.support ∪ P'.support) Finset.subset_union_right,
     pairD_eq X Kc j P f (P.support ∪ P'.support) Finset.subset_union_left, map_sum]
   refine Finset.sum_congr rfl fun n _ => ?_
   rw [h n, LinearMap.map_smul]

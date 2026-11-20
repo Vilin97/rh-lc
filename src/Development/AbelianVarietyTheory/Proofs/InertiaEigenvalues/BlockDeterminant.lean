@@ -24,7 +24,8 @@ theorem conj_sum {ι κ A B : Type} [Fintype ι] [Fintype κ] [CommRing A] [Comm
   have e : ∀ M : κ → Matrix ι ι A, (∑ k, c k • M k).map φ = ∑ k, φ (c k) • (M k).map φ := by
     intro M
     ext a b
-    simp [Matrix.sum_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Matrix.sum_apply, map_sum]
   rw [e, e, Matrix.mul_sum, Matrix.sum_mul]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [Matrix.mul_smul, Matrix.smul_mul, h]

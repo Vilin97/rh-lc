@@ -57,7 +57,8 @@ theorem rosatiAdj_iff_lam {f g : P.A ⟶ P.A} : RosatiAdj P.A P.L f g ↔ ∀ (T
       cls (LB.LinComb P.L (fun i => q ≫ rosatiφ P.A f g i) rosatiε) (LB.isLB_linComb P.isLB _ _) =
         pull q (∑ i, rosatiε i • pull (rosatiφ P.A f g i) (cls P.L P.isLB)) := fun q => by
     rw [cls_linComb P.isLB]
-    simp only [map_sum, map_zsmul, pull_comp]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_zsmul, pull_comp]
   refine ⟨fun h T x y => ?_, fun h s => ⟨⊤, trivial, (cls_eq_zero_iff (LB.isLB_linComb P.isLB _ _)).1 ?_⟩⟩
   · obtain ⟨U, hU, ht⟩ := h (default : PrimeSpectrum K)
     obtain rfl : U = ⊤ := top_unique fun y _ => by

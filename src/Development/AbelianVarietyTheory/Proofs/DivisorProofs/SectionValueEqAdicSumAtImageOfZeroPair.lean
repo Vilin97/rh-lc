@@ -55,7 +55,8 @@ theorem sumI_conv {R : Type} [CommRing R] [IsNoetherianRing R] {I : Ideal R} (hI
     have h3 := sumI_finset S _ _ h2
     simp only [← h1] at h3
     have h4 := sumI_unique hI (sumI_map π h) h3
-    rw [← map_sum, ← Finset.sum_mul] at h4
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, ← Finset.sum_mul] at h4
     have h5 := sub_mem ((Submodule.Quotient.eq _).1 h4) (hm _ (hS S le_rfl) _ hr')
     convert h5 using 1
     ring

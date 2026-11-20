@@ -189,7 +189,8 @@ theorem eq_zero_of_mem_twKer {π : Representation ℂ (GL (Fin n) ℚ_[g]) V} (h
       exact Subtype.ext ((repK_red π k _).trans (k1 k hu))) (by
       haveI := Fintype.ofFinite (U (1 - φ P) (φ P))
       change π (dd hP m) (π (dd hP 1) t) ∈ _
-      rw [← Module.End.mul_apply, ← map_mul, ← dd_succ, ht, S_apply, Submodule.coe_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← Module.End.mul_apply, ← map_mul, ← dd_succ, ht, S_apply, Submodule.coe_sum, map_sum]
       refine Submodule.sum_mem _ fun u _ => ?_
       obtain ⟨k, k', h1, h2, h3⟩ := conj_down hP u.2 m
       rw [← h1, repK_red, ← Module.End.mul_apply, ← map_mul, h3, map_mul, Module.End.mul_apply]

@@ -85,7 +85,8 @@ theorem lagrange_eigen_decomposition {ι : Type*} [Fintype ι] [DecidableEq ι] 
   · have hs := Lagrange.sum_basis hinj (Finset.univ_nonempty (α := ι))
     calc ∑ i, aeval T (Lagrange.basis Finset.univ v i) x
         = aeval T (∑ i, Lagrange.basis Finset.univ v i) x := by
-          rw [map_sum, LinearMap.sum_apply]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [map_sum, LinearMap.sum_apply]
       _ = x := by rw [hs, map_one, Module.End.one_apply]
   · rw [aeval_apply_eigenvector_alt T (v j) u hu]
     by_cases h : i = j
@@ -157,7 +158,8 @@ theorem finrank_sum_embedding_eigenspaces [FiniteDimensional Qp K] [Algebra.IsSe
       right_inv := fun F => by
         funext σ; apply Subtype.ext
         show e σ (∑ τ, (F τ : M)) = F σ
-        rw [map_sum, Finset.sum_congr rfl fun τ _ => hsel' σ τ _ (Submodule.mem_inf.1 (F τ).2).2]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum, Finset.sum_congr rfl fun τ _ => hsel' σ τ _ (Submodule.mem_inf.1 (F τ).2).2]
         simp }
   rw [Φ.finrank_eq, Module.finrank_pi_fintype]
 

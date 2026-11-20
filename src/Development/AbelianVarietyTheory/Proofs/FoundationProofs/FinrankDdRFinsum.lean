@@ -74,7 +74,8 @@ theorem finrank_eq_sum [FiniteDimensional F K]
     | add y z hy hz => simp [map_add, hy, hz, add_smul]
   have hsum : ∑ τ, e τ = 1 := by
     apply (evalEmb_bijective hcard).1
-    rw [map_sum, map_one]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_one]
     simp only [he]
     exact Finset.univ_sum_single (fun _ => (1 : L))
   have hmul : ∀ τ c, (1 ⊗ₜ c) * e τ = τ c • e τ := by
@@ -99,7 +100,8 @@ theorem finrank_eq_sum [FiniteDimensional F K]
     · rw [injective_iff_map_eq_zero]
       intro x hx
       have h1 : (x : M) = ∑ τ, Ψ (e τ) x := by
-        rw [← LinearMap.sum_apply, ← map_sum, hsum, map_one]; rfl
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [← LinearMap.sum_apply, ← map_sum, hsum, map_one]; rfl
       apply Subtype.ext
       rw [h1]
       simp [← hf, hx]
@@ -107,7 +109,8 @@ theorem finrank_eq_sum [FiniteDimensional F K]
       refine ⟨⟨∑ σ, (y σ : M), W.sum_mem fun σ _ => (y σ).2.1⟩, ?_⟩
       funext τ
       apply Subtype.ext
-      rw [hf, map_sum, Finset.sum_eq_single τ]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hf, map_sum, Finset.sum_eq_single τ]
       · rw [hΨE τ _ (y τ).2.2, he]; simp
       · intro σ _ h
         rw [hΨE σ _ (y σ).2.2, he]; simp [Pi.single_eq_of_ne h]

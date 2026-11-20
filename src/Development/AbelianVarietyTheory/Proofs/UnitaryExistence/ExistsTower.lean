@@ -55,7 +55,8 @@ theorem exists_coeff_containing :
   have hsub : S ⊆ IntermediateField.adjoin ℚ S := IntermediateField.subset_adjoin _ _
   refine ⟨⟨IntermediateField.adjoin ℚ S, IntermediateField.finiteDimensional_adjoin hint, ?_, ?_, ?_⟩, ?_⟩
   · intro τ a
-    rw [← b.sum_repr a, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← b.sum_repr a, map_sum]
     refine sum_mem fun i _ => ?_
     rw [map_rat_smul]
     exact IntermediateField.smul_mem _ (hsub (Or.inl (Or.inr ⟨(τ, i), rfl⟩)))

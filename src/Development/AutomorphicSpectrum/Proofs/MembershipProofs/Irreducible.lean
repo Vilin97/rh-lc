@@ -47,7 +47,8 @@ theorem mem_of_sum {al : X → ℂ} {Γ : AddSubgroup X} {φ : M} (hd : SelfDual
         al γ • S.rho γ (∑ x ∈ s, a x • S.rho x φ) - S.c γ x₀ ^ 2 • (∑ x ∈ s, a x • S.rho x φ)
           = ∑ x ∈ s.erase x₀, (a x * (S.c γ x ^ 2 - S.c γ x₀ ^ 2)) • S.rho x φ := by
       intro γ hγ x₀ _
-      rw [Finset.sum_erase _ (by simp), map_sum, Finset.smul_sum, Finset.smul_sum,
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Finset.sum_erase _ (by simp), map_sum, Finset.smul_sum, Finset.smul_sum,
         ← Finset.sum_sub_distrib]
       refine Finset.sum_congr rfl fun x _ => ?_
       rw [map_smul, smul_comm (al γ), eigen S hs hl hγ, smul_smul, smul_smul, ← sub_smul]

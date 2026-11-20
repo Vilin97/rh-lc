@@ -89,7 +89,8 @@ theorem altLagr : ∀ (R : Type) [CommRing R] (I : Ideal R) (D : Type) [AddCommG
   have hBexp : ∀ x y, B x y = ∑ i, ∑ j, s x i * s y j * B (e i) (e j) := by
     intro x y
     conv_lhs => rw [hexp x, hexp y]
-    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, Finset.mul_sum]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
     ring
@@ -124,7 +125,8 @@ theorem altLagr : ∀ (R : Type) [CommRing R] (I : Ideal R) (D : Type) [AddCommG
   have hβexp : ∀ x y, β x y = ∑ i, s x i * β (e i) y := by
     intro x y
     conv_lhs => rw [hexp x]
-    simp [map_sum, LinearMap.sum_apply, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, LinearMap.sum_apply, smul_eq_mul]
   let T : D →ₗ[R] D := -∑ i, LinearMap.smulRight (β (e i)) (z i)
   have hT : ∀ y, T y = -∑ i, β (e i) y • z i := fun y => by
     simp [T]
@@ -144,7 +146,8 @@ theorem altLagr : ∀ (R : Type) [CommRing R] (I : Ideal R) (D : Type) [AddCommG
     intro x y
     have h0 : ∑ i, β (e i) y * (s x i - φ x (z i)) = 0 :=
       Finset.sum_eq_zero fun i _ => hII _ (hβI _ _) _ (hz' i x)
-    rw [hT, map_neg, map_sum, hβexp]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hT, map_neg, map_sum, hβexp]
     simp only [map_smul, smul_eq_mul]
     have h1 : ∑ i, s x i * β (e i) y - ∑ i, β (e i) y * φ x (z i) = 0 := by
       rw [← Finset.sum_sub_distrib, ← h0]

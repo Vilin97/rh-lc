@@ -193,7 +193,8 @@ theorem GlobalTheory.Cyc.integers_level_one_eq_sum_zeta_pow : ∀ (l : ℕ) [Fac
       omega
     omega
   have hQ : aeval ζ Q = α := by
-    rw [hsum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hsum, map_sum]
     refine Finset.sum_congr rfl fun b _ => ?_
     rw [map_mul, Polynomial.aeval_C, map_pow, map_sub, Polynomial.aeval_X, Polynomial.aeval_C,
       map_one]

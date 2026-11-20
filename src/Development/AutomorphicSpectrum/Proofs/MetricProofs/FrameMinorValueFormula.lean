@@ -39,7 +39,8 @@ theorem pluck_eq {F : FrameData ι Ψ N M.Ω M.blk} (hF : M.IsFrame F) {zb : (Σ
       have := hF.2.2.1 p k hp I₀ I' hI₀ hI'
       split_ifs at this ⊢ <;> simpa [uA, vA] using this
     have e' := congrArg val e
-    rw [map_sum] at e'
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at e'
     simp only [map_mul] at e'
     rw [e']
     split_ifs <;> simp

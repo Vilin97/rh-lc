@@ -36,7 +36,8 @@ theorem span_laurentMonomial_eq_homLoc :
     refine awayFrac_mem_homLoc (monomial_mem_polyGrading m 1) ?_
     rw [hdeg, Finset.sum_congr rfl fun i _ => hm i, Finset.sum_add_distrib, a.2.1, hsum]
   · rintro _ ⟨k, p, hp, rfl⟩
-    rw [p.as_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [p.as_sum, map_sum]
     refine Submodule.sum_mem _ fun m hm => ?_
     have hd := mem_polyGrading_iff.1 hp m (mem_support_iff.1 hm)
     have e : monomial m (AddMonoidAlgebra.coeff p m) = AddMonoidAlgebra.coeff p m • (monomial m 1 : MvPolynomial ι R) := by

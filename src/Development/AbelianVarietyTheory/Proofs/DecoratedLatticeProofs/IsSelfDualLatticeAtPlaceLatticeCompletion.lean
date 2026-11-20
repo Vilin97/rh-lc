@@ -35,7 +35,8 @@ theorem hermAt_mul_inc (y : Fin S.rank → AE D) (a : AE D) (s : Fin S.rank → 
   unfold hermAt pairing FrameLat.row
   rw [Finset.sum_comm, Finset.mul_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
-  rw [map_sum, Finset.sum_mul, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_mul, Finset.mul_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [RingHom.map_mul, RingHom.map_mul, cA_incA, show gA S i j = incA D (S.gram i j) from rfl]
   ring
@@ -43,7 +44,8 @@ theorem hermAt_mul_inc (y : Fin S.rank → AE D) (a : AE D) (s : Fin S.rank → 
 theorem hermAt_sum_right {m : ℕ} (y : Fin S.rank → AE D) (x : Fin m → Fin S.rank → AE D) :
     hermAt S y (fun i => ∑ l, x l i) = ∑ l, hermAt S y (x l) := by
   unfold hermAt
-  simp only [map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Finset.sum_mul]
   rw [Finset.sum_comm (s := Finset.univ (α := Fin m))]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [Finset.sum_comm]
@@ -81,7 +83,8 @@ theorem isSDAt_latV : ∀ (D : D7) (S : HSp D) (L : Lat S) (v : Pl D), IsSelfDua
   · refine ⟨hermAt_mem_idAt hy x, ?_⟩
     obtain ⟨m, s, s', hs, hs', hd⟩ := exists_expansion hL
     have e : x = fun i => ∑ l, (fun l i => pairing S (s' l) x * incA D (s l i)) l i := funext fun i => hd x i
-    rw [e, hermAt_sum_right, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, hermAt_sum_right, map_sum]
     refine sum_mem fun l _ => ?_
     rw [hermAt_mul_inc, RingHom.map_mul]
     exact mul_mem_intAE ((cA_int_iff _).2 (pairing_int hL (hs' l) hx)) (pairing_int hL (hs l) hyL)

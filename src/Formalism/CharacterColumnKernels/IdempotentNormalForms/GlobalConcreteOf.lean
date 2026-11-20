@@ -57,7 +57,8 @@ lemma det_relMap_eq (g : Type) [Fintype g] [DecidableEq g] (Θ : Matrix g g R') 
       map_add' := fun _ _ => rfl }
   show ev (∑ j, Θ i j • (curryE R' x' g v) j) =
     Matrix.mulVec (bigMat (fun r : R' => (r : X' → Matrix d d (FractionRing O)) x') Θ) v (i, a)
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   have hev : ∀ j, ev (Θ i j • (curryE R' x' g v) j) =
       ∑ b, (Θ i j : X' → Matrix d d (FractionRing O)) x' a b * v (j, b) := fun j =>
     evalSp_smul R' x' (Θ i j) ((curryE R' x' g v) j) a

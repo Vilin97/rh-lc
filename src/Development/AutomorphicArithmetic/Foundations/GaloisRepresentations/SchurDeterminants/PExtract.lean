@@ -34,7 +34,8 @@ theorem extract : Extract := by
         exact h2
       rw [hφv] at h1
       rw [← h1]
-      simp only [Q, map_sum, eval_monomial]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Q, map_sum, eval_monomial]
       refine Finset.sum_congr rfl fun m _ => ?_
       rw [Finsupp.prod_fintype _ _ (fun i => pow_zero _), mul_comm]
       rfl

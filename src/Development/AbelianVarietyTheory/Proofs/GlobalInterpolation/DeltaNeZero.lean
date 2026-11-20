@@ -27,7 +27,8 @@ theorem form_reidx (A : ℝ) (a b : ℕ) (x y : VCx X.Tau a b) :
 
 theorem isHerm_formV (A : ℝ) (n : Type) [Fintype n] (a b : ℕ) : IsHerm (formV A n a b) := by
   intro x y
-  simp [formV, map_sum, mul_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [formV, map_sum, mul_comm]
 
 theorem iop_eq {a b : ℕ} (Λ₁ Λ₂ : AddSubgroup (TaylorLogMetric.VC D a b)) (G : TaylorLogMetric.VC D a b → ℂ) :
     TaylorLogMetric.Iop D B.tor Λ₁ Λ₂ G = inter (formV (TaylorLogMetric.area (TaylorLogMetric.lamOf D cc δ)) D.what₂.Tau a b) (TaylorLogMetric.al D B.tor) Λ₁ Λ₂ G := rfl

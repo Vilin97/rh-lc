@@ -117,7 +117,8 @@ theorem aL_cocycle {p : ℕ} (β : Fin (p + 2) → Co A 1) :
       simpa using ih'
     have h2 : ∑ j : Fin (p + 1), (-1 : ℤ) ^ ((Fin.succ (Fin.succ j) : Fin (p + 3)) : ℕ) • M (β 0 - β 1) (aL A ((fun i => β i.succ) ∘ (Fin.succ j).succAbove)) =
         M (β 0 - β 1) B := by
-      rw [← neg_neg B, ← h1, map_neg, map_sum, ← Finset.sum_neg_distrib]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← neg_neg B, ← h1, map_neg, map_sum, ← Finset.sum_neg_distrib]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_zsmul, ← neg_smul]
       congr 1
@@ -141,7 +142,8 @@ theorem aL_E {p : ℕ} (β : Fin (p + 2) → Co A 1) :
     simpa using h0
   have h2 : ∑ j : Fin (p + 1), (-1 : ℤ) ^ ((Fin.succ j : Fin (p + 2)) : ℕ) • M (β ((Fin.succ j).succAbove 0)) (aL A (β ∘ (Fin.succ j).succAbove)) =
       - M (β 0) (aL A fun i => β i.succ) := by
-    rw [← map_neg, ← h1, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_neg, ← h1, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_zsmul, Fin.succ_succAbove_zero]
   rw [h2, aL_succ, hM]
@@ -166,7 +168,8 @@ theorem d_fP (z : Co A 2) (hz : CH.d _ 2 z = 0) {p : ℕ} (β : Fin (p + 1) → 
 theorem sum_fP (z : Co A 2) {p : ℕ} (β : Fin (p + 2) → Co A 1) (k q : ℕ) (h : 2 * k + (p + 1) = q) :
     ∑ j : Fin (p + 2), (-1 : ℤ) ^ (j : ℕ) • fP A z (β ∘ j.succAbove) k q h = - gP A z β k q h := by
   unfold fP gP
-  rw [← map_neg, ← aL_E, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_neg, ← aL_E, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_zsmul]
   rfl

@@ -31,7 +31,8 @@ private theorem gen {G Q : Type} [CommGroup G] [TopologicalSpace G] [IsTopologic
       refine Eq.trans ?_ (congrArg (Measure.map fun p : ℝ × G => c p.1 p.2 (β * α)) hp.map_eq)
       rw [Measure.map_map (measurable_const_mul _) (hc α).measurable, Measure.map_map (hc (β * α)).measurable hp.measurable]
       exact congrArg (fun f => Measure.map f ν) (funext fun p => hmul τ w β p.1 p.2 α)
-    rw [hm, Measure.map_sum (measurable_const_mul _).aemeasurable]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hm, Measure.map_sum (measurable_const_mul _).aemeasurable]
     ext s hs
     rw [Measure.sum_apply _ hs, Measure.sum_apply _ hs, tsum_congr fun α => congrArg (fun n : Measure G => n s) (e α)]
     exact (Equiv.mulLeft β).tsum_eq fun α : Q => (ν.map fun p => c p.1 p.2 α) s⟩

@@ -50,7 +50,8 @@ theorem map_corner {m : ℕ} (g : GL (Fin m) R) :
 
 theorem superDiag_map {n : ℕ} (g : GL (Fin n) R) :
     GlobalTheory.Whittaker.superDiag (GeneralLinearGroup.map f g) = f (GlobalTheory.Whittaker.superDiag g) := by
-  simp [GlobalTheory.Whittaker.superDiag, map_sum, GeneralLinearGroup.map]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [GlobalTheory.Whittaker.superDiag, map_sum, GeneralLinearGroup.map]
 
 theorem map_mem_unipB {n : ℕ} {g : GL (Fin n) R} (hg : g ∈ unipB R (Fin n)) :
     GeneralLinearGroup.map f g ∈ unipB S (Fin n) := by

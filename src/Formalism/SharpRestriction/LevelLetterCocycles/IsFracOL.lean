@@ -16,7 +16,8 @@ theorem OL_le {LL LL' : FinExt l} (hLL : LL.1 ≤ LL'.1) (x : ↥(OL LL)) :
   exact ⟨p, hp, by
     have := congrArg (IntermediateField.inclusion hLL) hx
     rw [map_zero] at this
-    rw [← this, Polynomial.eval₂_eq_sum_range, Polynomial.eval₂_eq_sum_range, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← this, Polynomial.eval₂_eq_sum_range, Polynomial.eval₂_eq_sum_range, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_mul, map_pow]
     rfl⟩

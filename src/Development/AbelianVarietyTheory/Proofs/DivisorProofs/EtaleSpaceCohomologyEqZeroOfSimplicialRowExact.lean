@@ -54,7 +54,8 @@ theorem dcl_sum_zsmul (P : PSh) (m : ℤ) {ι : Type} (S : Finset ι) (c : ι �
     rfl
   have e : dclHom (F := F) P m (∑ i ∈ S, c i • (⟨t i, ht i⟩ : closedSub (F := F) P m)) =
       ∑ i ∈ S, c i • dcl P m (t i) (ht i) := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_zsmul]
     rfl

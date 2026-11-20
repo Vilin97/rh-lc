@@ -86,13 +86,15 @@ theorem last_letter [CompleteSpace H] (hlin : DsLin) (had : DsAd) {Hm : Mat n} (
   have h3 : Lie Hm (y⁻¹ * Y * y) := h1 _ (by simp)
   have h4 : ds σ (y⁻¹ * Y * y) u = ∑ j, (a j : ℂ) • ds σ (Z j) u + ∑ i, (b i : ℂ) • ds σ (Q i) u := by
     rw [hΛ _ h3, hab]
-    simp only [Complex.coe_smul, map_add, map_sum, map_smul, hΛ _ (hZ _), hΛ _ (hQ _)]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Complex.coe_smul, map_add, map_sum, map_smul, hΛ _ (hZ _), hΛ _ (hQ _)]
   have h5 : dsW σ [Y] (σ y u) =
       ∑ j, (a j : ℂ) • σ y (ds σ (Z j) u) + ∑ i, (b i : ℂ) • σ y (ds σ (Q i) u) := by
     rw [h2 u hu]
     change σ y (ds σ (y⁻¹ * Y * y) u) = _
     rw [h4]
-    simp only [map_add, map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_add, map_sum, map_smul]
   have hA := dsW_sum hσ.rep (lieW_of hW) (fun j => (a j : ℂ)) (fun j => σ y (ds σ (Z j) u))
     (fun j => (isSm_ds hσ.rep (hZ j) hu).apply hσ.rep hy) Finset.univ
   have hB := dsW_sum hσ.rep (lieW_of hW) (fun j => (b j : ℂ)) (fun j => σ y (ds σ (Q j) u))

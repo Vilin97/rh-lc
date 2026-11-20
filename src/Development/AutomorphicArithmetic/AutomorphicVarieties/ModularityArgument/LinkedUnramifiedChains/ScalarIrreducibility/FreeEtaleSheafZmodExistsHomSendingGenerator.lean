@@ -90,7 +90,8 @@ private theorem der_mul {A : Type} [CommRing A] {n : ℕ} (ξ : A →+* K) (D : 
     (hD : ∀ f g, D (f * g) = ξ f * D g + ξ g * D f) (P Q : Matrix (Fin n) (Fin n) A) :
     (P * Q).map D = P.map ξ * Q.map D + P.map D * Q.map ξ := by
   ext i j
-  simp only [Matrix.map_apply, Matrix.add_apply, Matrix.mul_apply, map_sum, hD, Finset.sum_add_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.map_apply, Matrix.add_apply, Matrix.mul_apply, map_sum, hD, Finset.sum_add_distrib]
   congr 1
   exact Finset.sum_congr rfl fun a _ => mul_comm _ _
 

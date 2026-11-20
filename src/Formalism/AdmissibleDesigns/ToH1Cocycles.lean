@@ -90,7 +90,8 @@ theorem psiB_equiv
     psiB i Dd hw v b
   show eK (D.nbr i _ hw) (∑ c, (Dd.ρk 0 (uElt Dd.r Dd.χ ((Br.iota D.nbr i _ hw g : decs D.host.E (Aw i dc) n) : GE D.nd)))
       (H0.e0 a) c • (show VB i Dd from v) c) = _
-  rw [map_sum, ← Equiv.sum_comp (H0.e0 (D := D))]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, ← Equiv.sum_comp (H0.e0 (D := D))]
   refine Finset.sum_congr rfl fun b _ => ?_
   rw [H0.unipotent_block_zero_entry hD hN, Algebra.smul_def, map_mul, eK_apply, Br.toLLK_alg]
   rfl

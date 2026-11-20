@@ -29,7 +29,8 @@ theorem sig_sig (z : I.E ⊗[I.F] Af I.F) : sigR I.cm.sig (Af I.F) (sigR I.cm.si
 
 theorem sig_hAf (x y : Fin I.n → I.E ⊗[I.F] Af I.F) : sigR I.cm.sig (Af I.F) (hAf I x y) = hAf I y x := by
   unfold hAf hform
-  simp only [map_sum, map_mul, sig_sig]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, sig_sig]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   have h : star (I.J j i) = I.J i j := congrFun (congrFun I.J_herm i) j
@@ -100,7 +101,8 @@ theorem exists_frame_of_dual {N p : ℕ} {w : HeightOneSpectrum (𝓞 I.E)} (hn 
   have hs : Function.Surjective c := fun t => by
     choose s hs using ZMod.ringHom_surjective r
     refine ⟨∑ j, s (t j) • b j, ?_⟩
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     funext i
     have : ∀ j, c (b j) i = if i = j then 1 else 0 := fun j => hb i j
     simp [map_smulₛₗ, hs, this]

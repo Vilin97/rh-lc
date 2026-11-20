@@ -158,7 +158,8 @@ theorem isGoodRep_of_killed (hs : L.s = 0) (hQ : L.Q = ∅) (hl : LiftsExist V �
   choose κ hκ using fun g => hl (eG g)
   refine ⟨x, h0, fun k hk => fixed_of_killed hs hQ hx hk, fun g => ⟨κ g, (hκ g).1⟩, hκ, ?_⟩
   have := mem_killed.1 hx _ (Or.inl (Or.inr ⟨fun g => ⟨κ g, (hκ g).1⟩, hκ, rfl⟩))
-  simpa [sub_eq_zero, map_sum, LinearMap.sum_apply] using this
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa [sub_eq_zero, map_sum, LinearMap.sum_apply] using this
 
 end Level
 

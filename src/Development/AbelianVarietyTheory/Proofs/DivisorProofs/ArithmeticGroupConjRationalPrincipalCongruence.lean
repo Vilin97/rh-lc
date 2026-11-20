@@ -59,7 +59,8 @@ theorem herm_mulVec {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ}
     simp only [herm, dotProduct, Matrix.mulVec, Finset.mul_sum, mul_assoc]
   have hc : (fun b => cc ((δ *ᵥ y) b)) = δ.map cc *ᵥ (fun b => cc (y b)) := by
     funext b
-    simp only [cc, Matrix.mulVec, dotProduct, map_sum, map_mul, Matrix.map_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [cc, Matrix.mulVec, dotProduct, map_sum, map_mul, Matrix.map_apply]
   rw [hh, hh, hc, dotProduct_comm (δ *ᵥ x), Matrix.dotProduct_mulVec, ← Matrix.mulVec_transpose,
     dotProduct_comm _ x, Matrix.mulVec_mulVec, Matrix.mulVec_mulVec, h]
 

@@ -19,7 +19,8 @@ private theorem cob_map {Γ M N : Type} [Group Γ] [AddCommGroup M] [Module ℂ 
       rw [b1 γ z hz, hP]
     · beta_reduce
       rw [b2 z hz]
-      simp only [hd, map_sum, map_zsmul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hd, map_sum, map_zsmul]
 
 private theorem coset_map {G : Type} [Group G] {U U' : Subgroup G} {x : G} (hx : ∀ u ∈ U', x⁻¹ * u * x ∈ U) :
     ∃ f : G ⧸ U' → G ⧸ U, (∀ y : G, f y = ((y * x : G) : G ⧸ U)) ∧ ∀ (g : G) s, f (g • s) = g • f s := by

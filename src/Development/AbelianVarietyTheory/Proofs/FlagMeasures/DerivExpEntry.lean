@@ -20,7 +20,8 @@ theorem flow_vanish {W : Type} [AddCommGroup W] [Module ℂ W] (S : Submodule �
   have hexp : ∀ t (x : S), φ t x = ∑ j, b.repr x j * φ t (b j) := by
     intro t x
     have h := congrArg (φ t ∘ₗ S.subtype) (b.sum_repr x)
-    rw [map_sum] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at h
     simp only [map_smul, smul_eq_mul] at h
     exact h.symm
   have key : (fun t i => φ t (b i)) = fun _ => 0 := by
@@ -117,7 +118,8 @@ theorem matOf_act {n : ℕ} {V : Type} [NormedAddCommGroup V] [InnerProductSpace
     rw [map_add, map_sub, apply_ite ℓ, apply_ite ℓ, map_zero] at this
     exact this
   ext a b
-  simp only [LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, Matrix.sum_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, Matrix.sum_apply,
     Matrix.smul_apply, h, smul_eq_mul, mul_add, mul_sub, Finset.sum_add_distrib, Finset.sum_sub_distrib,
     Matrix.add_apply, Matrix.sub_apply, Matrix.of_apply, Matrix.mul_apply, mul_ite, mul_zero]
   congr 2

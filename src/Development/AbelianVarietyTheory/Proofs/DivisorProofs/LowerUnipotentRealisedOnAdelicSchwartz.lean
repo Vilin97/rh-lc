@@ -17,7 +17,8 @@ def quad {R κ : Type} [CommRing R] [Fintype κ] (h : R) (A : Matrix κ κ R) (x
 
 theorem map_quad {R S κ : Type} [CommRing R] [CommRing S] [Fintype κ] (q : R →+* S) (h : R) (A : Matrix κ κ R)
     (x : κ → R) : q (quad h A x) = quad (q h) (A.map q) (fun i => q (x i)) := by
-  simp [quad, dotProduct, Matrix.mulVec, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [quad, dotProduct, Matrix.mulVec, map_sum]
 
 theorem quad_neg {R κ : Type} [CommRing R] [Fintype κ] (h : R) (A : Matrix κ κ R) (x : κ → R) :
     quad h (-A) x = -quad h A x := by

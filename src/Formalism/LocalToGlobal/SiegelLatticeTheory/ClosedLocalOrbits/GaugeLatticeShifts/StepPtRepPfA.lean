@@ -53,11 +53,13 @@ theorem formB_apply (x y : Fin n → ℂ) : formB ε x y = hJ ε x y := rfl
 
 theorem hJ_sum_right {ι : Type*} (s : Finset ι) (x : Fin n → ℂ) (y : ι → Fin n → ℂ) :
     hJ ε x (∑ i ∈ s, y i) = ∑ i ∈ s, hJ ε x (y i) := by
-  simp only [← formB_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← formB_apply, map_sum]
 
 theorem hJ_sum_left {ι : Type*} (s : Finset ι) (x : ι → Fin n → ℂ) (y : Fin n → ℂ) :
     hJ ε (∑ i ∈ s, x i) y = ∑ i ∈ s, hJ ε (x i) y := by
-  simp only [← formB_apply, map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← formB_apply, map_sum, LinearMap.sum_apply]
 
 theorem hJ_mulVec (A : Matrix (Fin n) (Fin n) ℂ) (x y : Fin n → ℂ) :
     hJ ε (A *ᵥ x) (A *ᵥ y) = star x ⬝ᵥ ((Aᴴ * Formalism.REAL.Jm ε * A) *ᵥ y) := by
@@ -152,7 +154,8 @@ theorem wittFam {ι : Type*} [Fintype ι] (s t : ι → Fin n → ℂ) (hs : Lin
   have hfsum : ∀ x : U, f x = ∑ i, bs.repr x i • t i := by
     intro x
     have := congrArg f (bs.sum_repr x)
-    rw [map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at this
     simp only [map_smul, hf] at this
     exact this.symm
   have e1 : ∀ x : U, Finsupp.linearCombination ℂ t (bs.repr x) = f x := fun x => by

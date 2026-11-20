@@ -47,7 +47,8 @@ theorem ratPart_rat {ℓ : MvPolynomial ι ℂ →ₗ[ℂ] ℂ} {Ω : ℂ} (h : 
     (φ : ℂ → L) (w : ℂ) (P : MvPolynomial ι ℂ) : ∃ z : L, ℓ (ratPart σ φ w P) = Ω * σ z := by
   choose z hz using h
   refine ⟨∑ k ∈ P.support, φ (w * P.coeff k) * z k, ?_⟩
-  simp only [ratPart, map_sum, map_smul, hz, map_mul, Finset.mul_sum, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [ratPart, map_sum, map_smul, hz, map_mul, Finset.mul_sum, smul_eq_mul]
   exact Finset.sum_congr rfl fun k _ => by ring
 
 theorem ratPart_eq {ℓ : MvPolynomial ι ℂ →ₗ[ℂ] ℂ} {Ω : ℂ} (h : ∀ k, ∃ z : L, ℓ (MvPolynomial.monomial k 1) = Ω * σ z)
@@ -55,11 +56,13 @@ theorem ratPart_eq {ℓ : MvPolynomial ι ℂ →ₗ[ℂ] ℂ} {Ω : ℂ} (h : �
     ℓ (ratPart σ φ (w * Ω) P) = Ω * σ (φ (w * ℓ P)) := by
   choose z hz using h
   have e : ℓ P = ∑ k ∈ P.support, P.coeff k * (Ω * σ (z k)) := by
-    conv_lhs => rw [P.as_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [P.as_sum, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [← hz, ← smul_eq_mul, ← map_smul, MvPolynomial.smul_monomial, smul_eq_mul, mul_one]
   rw [e]
-  simp only [ratPart, map_sum, map_smul, hz, Finset.mul_sum, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [ratPart, map_sum, map_smul, hz, Finset.mul_sum, smul_eq_mul]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [show w * (P.coeff k * (Ω * σ (z k))) = (w * Ω * P.coeff k) * σ (z k) by ring, hφ, σ.map_mul]
   ring

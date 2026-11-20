@@ -16,7 +16,8 @@ theorem diag_sum_le {V ι : Type} [AddCommGroup V] (B : V →+ V →+ ℝ) (hB :
     simp only [map_sub, AddMonoidHom.sub_apply] at this
     linarith
   have e : B (∑ i ∈ s, x i) (∑ i ∈ s, x i) = ∑ i ∈ s, ∑ j ∈ s, B (x i) (x j) := by
-    rw [map_sum B x s, AddMonoidHom.finset_sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum B x s, AddMonoidHom.finset_sum_apply]
     exact Finset.sum_congr rfl fun i _ => map_sum _ _ _
   have e' : ∑ i ∈ s, ∑ j ∈ s, B (x j) (x i) = ∑ i ∈ s, ∑ j ∈ s, B (x i) (x j) := Finset.sum_comm
   have h2 : ∑ i ∈ s, ∑ j ∈ s, (B (x i) (x j) + B (x j) (x i)) ≤ ∑ i ∈ s, ∑ j ∈ s, (B (x i) (x i) + B (x j) (x j)) :=

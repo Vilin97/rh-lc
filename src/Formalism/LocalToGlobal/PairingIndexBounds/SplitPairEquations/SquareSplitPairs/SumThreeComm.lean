@@ -22,7 +22,8 @@ theorem formV_phi {N N' : ℕ} (A : ℝ) (M : Matrix (Fin N') (Fin N') D.host.E)
   simp only [Ker.formV, LinearMap.mk₂'ₛₗ_apply, phi_apply]
   congr 1
   refine Finset.sum_congr rfl fun τ _ => ?_
-  simp only [Finset.sum_mul, map_sum, map_mul, Finset.mul_sum, conjTranspose_apply, embT_star']
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finset.sum_mul, map_sum, map_mul, Finset.mul_sum, conjTranspose_apply, embT_star']
   rw [sum_three_comm]
   refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun i _ => ?_
   simp only [starRingEnd_apply, star_star]

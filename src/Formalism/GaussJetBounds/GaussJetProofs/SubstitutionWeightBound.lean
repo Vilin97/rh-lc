@@ -53,7 +53,8 @@ theorem wtGe_sum {pi : ℝ} (h0 : 0 < pi) {r : ι → ℝ} {wt : ℝ} {α : Type
     (F : α → MvPowerSeries ι K) (h : ∀ i ∈ s, WtGe pi r wt (F i)) :
     WtGe pi r wt (∑ i ∈ s, F i) := by
   intro n
-  rw [monoWtGe_iff, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [monoWtGe_iff, map_sum]
   exact IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg (Real.rpow_nonneg h0.le _)
     fun i hi => h i hi n
 

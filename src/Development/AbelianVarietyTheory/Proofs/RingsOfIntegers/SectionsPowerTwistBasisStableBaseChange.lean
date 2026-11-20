@@ -30,7 +30,8 @@ theorem exists_comb {M : LB Y} {m : ℕ} (a : Fin m → Γ(Y, ⊤)) (b : Fin m �
     have h := fun l => (b l).compat i j
     change ∀ l, rs Y _ _ = _ * rs Y _ _ at h
     change rs Y _ _ = _ * rs Y _ _
-    simp only [map_sum, map_mul, rs_rs, h, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, rs_rs, h, Finset.mul_sum]
     exact Finset.sum_congr rfl fun l _ => by ring⟩, fun _ => rfl⟩
 
 theorem comb_iff (hL : L.IsLB) {φ : K → (Y ⟶ X)} {ε : K → ℤ} {m : ℕ} (s : LB.Sec (LB.LinComb L φ ε))

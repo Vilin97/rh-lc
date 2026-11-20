@@ -590,7 +590,8 @@ theorem flip_majorant (τ : InfinitePlace E) (y y' : Fin 2 → E) :
         ((flipMap F).baseChange (CAt τ.embedding) ((1 : CAt τ.embedding) ⊗ₜ y)))
         (stdCoord E 2 τ.embedding ((1 : CAt τ.embedding) ⊗ₜ y')) =
       τ.embedding ((hypForm (F := F) (E := E)).toSesq y y') := by
-  rw [LinearMap.baseChange_tmul, hypForm_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [LinearMap.baseChange_tmul, hypForm_apply, map_sum]
   simp only [PiLp.inner_apply, RCLike.inner_apply, stdCoord_tmul]
   refine Finset.sum_congr rfl fun i _ => ?_
   have h1 : (ofComplex τ.embedding).symm 1 = 1 := rfl

@@ -42,7 +42,8 @@ theorem killB_multiHomog (T : Finset K) {s : MRing ι} {c : K → ℕ} (hs : IsM
   by_cases hT : ∃ k ∈ T, c k ≠ 0
   · left
     obtain ⟨k, hkT, hck⟩ := hT
-    rw [s.as_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [s.as_sum, map_sum]
     apply Finset.sum_eq_zero
     intro m hm
     have h := hs m hm k

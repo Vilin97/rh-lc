@@ -160,7 +160,8 @@ theorem exists_interp {K : Type} (A : Submodule ℂ (K → ℂ)) [FiniteDimensio
     funext κ'
     simp [Finset.sum_apply, Pi.single_apply, ev]
   have h3 := congrArg (fun x : A => x.1 k) h1
-  simp only [h2, map_sum, map_smul] at h3
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [h2, map_sum, map_smul] at h3
   rw [← h3]
   simp [mul_comm]
 

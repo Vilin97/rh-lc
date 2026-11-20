@@ -17,7 +17,8 @@ theorem dual_ext : ∀ (Ω Ω' : Type) [Field Ω] [Field Ω'] (i : Ω →+* Ω')
   have hj : ∀ e : V, j e = (b.repr e).sum fun k a => i a • j (b k) := by
     intro e
     conv_lhs => rw [← b.linearCombination_repr e]
-    rw [Finsupp.linearCombination_apply, Finsupp.sum, map_sum, Finsupp.sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finsupp.linearCombination_apply, Finsupp.sum, map_sum, Finsupp.sum]
     exact Finset.sum_congr rfl fun k _ => hext.1 _ _
   have hli : LinearIndependent Ω' fun k => j (b k) := by
     rw [linearIndependent_iff_finset_linearIndependent]
@@ -37,8 +38,10 @@ theorem dual_ext : ∀ (Ω Ω' : Type) [Field Ω] [Field Ω'] (i : Ω →+* Ω')
   · rw [← map_add]
     congr 1
   · show b'.constr Ω' (fun k => i (w (b k))) (j e) = i (w e)
-    rw [hj e, Finsupp.sum, map_sum]
-    conv_rhs => rw [← b.linearCombination_repr e, Finsupp.linearCombination_apply, Finsupp.sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hj e, Finsupp.sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_rhs => rw [← b.linearCombination_repr e, Finsupp.linearCombination_apply, Finsupp.sum,
       map_sum, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_smul, show j (b k) = b' k from (Module.Basis.mk_apply hli hsp k).symm, Module.Basis.constr_basis,

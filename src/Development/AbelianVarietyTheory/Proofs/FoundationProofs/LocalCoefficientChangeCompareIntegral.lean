@@ -118,7 +118,8 @@ theorem coordLL_mulVec {k : ℕ} (q : ↥B.LL.1 →ₗ[ℚ_[l]] ↥B₀.LL.1)
     intro i
     rw [Br.toLLK_alg]
     rfl
-  simp only [Matrix.mulVec, dotProduct, map_sum, h1, h2, ← hx, ← map_mul, hq, hp]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mulVec, dotProduct, map_sum, h1, h2, ← hx, ← map_mul, hq, hp]
 
 include hp in
 set_option synthInstance.maxHeartbeats 400000 in
@@ -209,7 +210,8 @@ theorem bkG_le_extCond (l : ℕ) [Fact l.Prime] (P : LocPrime l) (E Ω : Type) [
       rw [Finset.sum_apply]
       exact (hs (x j)).symm
     simp only [Pi.smul_apply, ← hx]
-    conv_lhs => rw [this, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [this, map_sum]
     rfl
   change (c : ↥Gw → KOG O k) ∈ Submodule.span O _
   rw [hsum]

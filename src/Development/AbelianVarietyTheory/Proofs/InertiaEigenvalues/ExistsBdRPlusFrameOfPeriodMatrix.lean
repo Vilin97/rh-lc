@@ -151,7 +151,8 @@ theorem frame_of_period_matrix : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (
     intro g j
     have : (fun m => P.actQdR (g : GQ l) (vec (d j) m)) = (Q'.map (P.actQdR (g : GQ l))) *ᵥ (fun p => eK (d j p)) := by
       funext m
-      simp only [vec, Matrix.mulVec, dotProduct, map_sum, map_mul, hEg, Matrix.map_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [vec, Matrix.mulVec, dotProduct, map_sum, map_mul, hEg, Matrix.map_apply]
     rw [this, Matrix.mulVec_mulVec, hAQ]
   have hEig : ∀ g : ↥(GK K), A g * U0.map (P.actQdR (g : GQ l)) = U0 * Matrix.diagonal fun j =>
       algebraMap ℚ_[l] P.R.BdR ((P.χQ (g : GQ l) ^ (-(k j)) : ℚ_[l]ˣ) : ℚ_[l]) := by
@@ -192,7 +193,8 @@ theorem frame_of_period_matrix : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (
       apply Subtype.ext
       simpa [U0S] using hE
     have h3 := congrArg θ hsum
-    rw [map_sum, map_mul, hcθ] at h3
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_mul, hcθ] at h3
     simp only [Matrix.mulVec, dotProduct, Pi.smul_apply, smul_eq_mul, Aθ, M, Matrix.map_apply, Matrix.of_apply]
     rw [mul_comm, ← h3]
     refine Finset.sum_congr rfl fun m _ => ?_
@@ -217,7 +219,8 @@ theorem frame_of_period_matrix : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (
       have hi := congrFun hsum i
       simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Pi.zero_apply] at hi
       have h0 : θ (∑ j, (⟨eK (c' j), hmemc j⟩ : ↥S) * U0S i j) = 0 := by
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         simp only [map_mul, hθc]
         simpa [M] using hi
       have h1 := (hθ0 _).1 h0

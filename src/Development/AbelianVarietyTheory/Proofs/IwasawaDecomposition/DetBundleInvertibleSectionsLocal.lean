@@ -28,7 +28,8 @@ theorem toMatrix_map_of_semilinear {R R' N N' : Type} [CommRing R] [CommRing R']
     (b.toMatrix b').map φ = c.toMatrix c' := by
   ext i j
   have h := congrArg T (b.sum_repr (b' j))
-  simp only [map_sum, map_smulₛₗ, hb, hb'] at h
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smulₛₗ, hb, hb'] at h
   rw [Matrix.map_apply, Module.Basis.toMatrix_apply, Module.Basis.toMatrix_apply, ← h, Module.Basis.repr_sum_self]
 
 section VecBasis

@@ -95,7 +95,8 @@ private lemma map_mem_span_range_map_of_mem_span {r : ℕ} {v : Fin r → Fin n 
   obtain ⟨c, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun K).1 hx
   refine (Submodule.mem_span_range_iff_exists_fun K').2 ⟨fun a => j (c a), ?_⟩
   ext i
-  simp [Finset.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Finset.sum_apply, map_sum]
 
 open NumberField Module in
 open scoped nonZeroDivisors in
@@ -212,7 +213,8 @@ private lemma span_range_inf_ker_eq_span_range_castSucc {R : Type} [CommRing R] 
   · rintro x ⟨hx, hk⟩
     obtain ⟨c, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun R).1 hx
     have hk' : f (∑ i, c i • v i) = 0 := hk
-    rw [Fin.sum_univ_castSucc, map_add, map_sum] at hk'
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Fin.sum_univ_castSucc, map_add, map_sum] at hk'
     simp only [LinearMap.map_smul_of_tower, h0, h1, smul_zero, Finset.sum_const_zero,
       zero_add] at hk'
     have hc : c (Fin.last r) = 0 := by
@@ -290,7 +292,8 @@ private lemma log_relIndex_map_lemma_4 (h : _root_.ReciprocityTheory.GeometryOfN
     have hf' : ∀ x : Fin n → K, f' (fun i => j (x i)) = j (f x) := by
       intro x
       conv_rhs => rw [eq_sum_apply_smul_single x]
-      simp [f', map_sum, mul_comm]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [f', map_sum, mul_comm]
     have h0' : ∀ i : Fin r, f' (fun k => j (v i.castSucc k)) = 0 := fun i => by
       rw [hf', h0, map_zero]
     have h1' : f' (fun k => j (v (Fin.last r) k)) = 1 := by rw [hf', h1, map_one]

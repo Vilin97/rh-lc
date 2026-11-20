@@ -231,7 +231,8 @@ theorem mem_baseChange_iInf_ker [Finite ι] (φ : ι → V →ₗ[K] V) {x : A �
   have key : ∀ v : V, v - ∑ i, s i (φ i v) ∈ ⨅ i, LinearMap.ker (φ i) := fun v => by
     have e1 : ∑ i, s i (φ i v) = r ((LinearMap.pi φ).rangeRestrict v) := by
       have : l (LinearMap.pi φ v) = (LinearMap.pi φ).rangeRestrict v := LinearMap.congr_fun hl ((LinearMap.pi φ).rangeRestrict v)
-      rw [← this, ← Finset.univ_sum_single (LinearMap.pi φ v), map_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← this, ← Finset.univ_sum_single (LinearMap.pi φ v), map_sum, map_sum]
       rfl
     have e2 : LinearMap.pi φ (r ((LinearMap.pi φ).rangeRestrict v)) = LinearMap.pi φ v :=
       congrArg Subtype.val (LinearMap.congr_fun hr ((LinearMap.pi φ).rangeRestrict v))
@@ -269,7 +270,8 @@ theorem coefAt_tmul_single (δ δ' : Δ) (v : V) :
 theorem coefAt_sum (Xi : Δ →₀ V) (δ : Δ) :
     coefAt δ (Xi.sum fun δ' f => f ⊗ₜ[R] AddMonoidAlgebra.single δ' (1 : R)) = Xi δ := by
   classical
-  rw [Finsupp.sum, map_sum, Finset.sum_congr rfl fun δ' _ => coefAt_tmul_single δ δ' (Xi δ'), Finset.sum_ite_eq']
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finsupp.sum, map_sum, Finset.sum_congr rfl fun δ' _ => coefAt_tmul_single δ δ' (Xi δ'), Finset.sum_ite_eq']
   split_ifs with h
   · rfl
   · exact (Finsupp.notMem_support_iff.1 h).symm
@@ -402,7 +404,8 @@ theorem coefAt_thU_mem (Q M) (d : Y.Dat i ((j : ℕ) + 1) b) (δ) : coefAt δ (Y
   by_cases h : InRange X i Q ∧ ∀ a, ρ.xi i j b Y Q M (Z.cls d) (Z.coef d) a ∈ Set.range rd
   · obtain ⟨hQ, h⟩ := h
     choose x hx using h
-    rw [Z.thU_eq Q M d hQ x hx, grpSum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Z.thU_eq Q M d hQ x hx, grpSum, map_sum]
     refine Submodule.sum_mem _ fun a _ => ?_
     rw [coefAt_tmul_single]
     split_ifs

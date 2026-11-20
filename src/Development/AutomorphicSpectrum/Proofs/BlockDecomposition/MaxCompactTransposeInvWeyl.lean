@@ -51,7 +51,8 @@ theorem norm_preserving_iff (φ : E ≃+* ℝ) (hφ : ∀ x, ‖φ x‖ = ‖x�
       (fun i => φ.toRingHom (y i)) ᵥ* (k.map φ) := by
     intro y
     ext j
-    simp [vecMul, dotProduct, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [vecMul, dotProduct, map_sum, map_mul]
   constructor
   · intro h
     have hM : (k.map φ) * (k.map φ)ᵀ = 1 := by
@@ -64,7 +65,8 @@ theorem norm_preserving_iff (φ : E ≃+* ℝ) (hφ : ∀ x, ‖φ x‖ = ‖x�
     apply φ.injective
     have h1 := congrFun (congrFun hM i) j
     simp only [Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply] at h1
-    simp only [Matrix.mul_apply, Matrix.transpose_apply, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mul_apply, Matrix.transpose_apply, map_sum, map_mul]
     rw [h1, Matrix.one_apply, Matrix.one_apply]
     split_ifs <;> simp
   · intro h y
@@ -72,7 +74,8 @@ theorem norm_preserving_iff (φ : E ≃+* ℝ) (hφ : ∀ x, ‖φ x‖ = ‖x�
       rw [mem_unitaryGroup_iff]
       have : (k.map φ) * star (k.map φ) = (k * kᵀ).map φ := by
         ext i j
-        simp [Matrix.mul_apply, Matrix.star_eq_conjTranspose, map_sum, map_mul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp [Matrix.mul_apply, Matrix.star_eq_conjTranspose, map_sum, map_mul]
       rw [this, h]
       ext i j
       simp [Matrix.one_apply]

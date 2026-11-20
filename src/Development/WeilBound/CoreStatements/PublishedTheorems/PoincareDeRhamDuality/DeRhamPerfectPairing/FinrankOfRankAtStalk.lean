@@ -47,7 +47,8 @@ theorem chern_eq_sum (hFree : AbelianDeRham.Free) (hHodge : AbelianDeRham.Hodge)
     haveI : FiniteDimensional K (FirstDeRham (A.hom ≫ 𝟙 (Sp K))) := hfin
     apply wedge_two_eq_zero
     intro f
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [pairingDual_ιMulti_two]
     exact hvan (f 0 ∘ₗ (primDR A).subtype) (f 1 ∘ₗ (primDR A).subtype)
 
@@ -70,7 +71,8 @@ theorem chern_eq_sum (hFree : AbelianDeRham.Free) (hHodge : AbelianDeRham.Hodge)
     rw [hanti a₁ b₂]
     abel
   have hZ : ∑ k, cup (O (dp0 K) (A.hom ≫ 𝟙 (Sp K))) (pN (a k) : primDR A).1 (pN (b k) : primDR A).1 = 0 := by
-    rw [← map_zero e, ← h0, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_zero e, ← h0, map_sum]
     exact Finset.sum_congr rfl fun k _ ↦ (he _ _).symm
   obtain ⟨ω, hωdef⟩ : ∃ ω : Fin n ⊕ Fin n → Form (A.hom ≫ 𝟙 (Sp K)),
       ω = Sum.elim (fun k ↦ form (pF (b k))) (fun k ↦ form (pF (a k))) := ⟨_, rfl⟩

@@ -74,7 +74,8 @@ theorem cell_overlap (hc : Cells ρ ξ ℓ) (hv : ∀ j, Ideal.span (Set.range (
   have h3 : ∑ q, ψ' (ρ (ℓ j q)) * ψ' (ξ j' q) ≠ 0 := by
     intro h0
     apply h2
-    rw [eval₂_lin', ← Ideal.algebraMap_residueField_eq_zero, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [eval₂_lin', ← Ideal.algebraMap_residueField_eq_zero, map_sum]
     simpa only [map_mul] using h0
   obtain ⟨ψ, u, hb, hu⟩ := hc.ovl K j j' ψ' h3
   let z : Sp K := IsLocalRing.closedPoint K

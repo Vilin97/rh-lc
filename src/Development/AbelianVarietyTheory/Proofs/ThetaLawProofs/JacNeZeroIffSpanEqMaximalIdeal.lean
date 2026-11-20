@@ -65,7 +65,8 @@ theorem det_ne_zero_iff_span_eq {K S : Type} [Field K] [CommRing S] [IsLocalRing
     have h1 : ∀ k, D k 1 = 0 := fun k => by simpa using hD k 1 1
     have key : ∀ b ∈ Ideal.span (Set.range f), ∑ k, D k b * c k = 0 := fun b hb => by
       obtain ⟨r, rfl⟩ := Ideal.mem_span_range_iff_exists_fun.1 hb
-      simp only [map_sum, hD, hf, zero_mul, add_zero, Finset.sum_mul, mul_assoc]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, hD, hf, zero_mul, add_zero, Finset.sum_mul, mul_assoc]
       rw [Finset.sum_comm]
       refine Finset.sum_eq_zero fun i _ => ?_
       rw [← Finset.mul_sum]

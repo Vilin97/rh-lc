@@ -102,7 +102,8 @@ theorem exists_comb_translates_mem_So : ∀ {F E : Type} [Field F] [NumberField 
   rw [Finsupp.sum_mapDomain_index (f := kf) (s := z₁)
     (h := fun k (c' : ℂ) => c' • om' (κ k, 1) (∑ k, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure (f k) (φ k)))
     (fun _ => zero_smul ℂ _) (fun _ _ _ => add_smul _ _ _)]
-  simp only [Finsupp.sum, map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finsupp.sum, map_sum, Finset.smul_sum]
   rw [Finset.sum_comm]
   refine Submodule.sum_mem _ fun i _ => ?_
   have hstd : ∀ᶠ v in Filter.cofinite, φ i v = Set.indicator {x | ∀ j, x j ∈ v.adicCompletionIntegers F} 1 :=
@@ -147,7 +148,8 @@ theorem exists_comb_translates_mem_So : ∀ {F E : Type} [Field F] [NumberField 
   · rw [Function.update_self]
     refine ⟨hΦ₁SB, ι, hι, fun Y hY => ?_⟩
     have hιΦ : ι Φ₁ = ∑ g ∈ z₁.support, z₁ g • omB ν α g 1 (ι φ₀) := by
-      rw [hΦ₁, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hΦ₁, map_sum]
       exact Finset.sum_congr rfl fun g _ => by rw [map_smul, (hφ₁ g).2.1]
     have hιφ₀ : ι φ₀ = fun Y => c * (matLat (Fin a') Λ : Set (Matrix (Fin a') (Fin (a + a')) (Fv F B.v₁))).indicator 1 (P.val * Y) :=
       funext hφ₀

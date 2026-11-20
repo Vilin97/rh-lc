@@ -77,11 +77,13 @@ theorem schr_pure [Invertible (2 : AF F)] [Invertible (2 : mixedEmbedding.mixedS
     funext i
     simp only [Pi.add_apply, map_add, evFin_infAd, add_zero]
   have hs : sndA F (x ⬝ᵥ (fun i => infAd (b i)) + ⅟(2 : AF F) * ((fun i => infAd (a i)) ⬝ᵥ fun i => infAd (b i))) = 0 := by
-    simp only [dotProduct, map_add, map_sum, map_mul, sndA_infAd, mul_zero, Finset.sum_const_zero, add_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [dotProduct, map_add, map_sum, map_mul, sndA_infAd, mul_zero, Finset.sum_const_zero, add_zero]
   have hi : evI F (x ⬝ᵥ (fun i => infAd (b i)) + ⅟(2 : AF F) * ((fun i => infAd (a i)) ⬝ᵥ fun i => infAd (b i))) =
       (fun i => evI F (x i)) ⬝ᵥ b + ⅟(2 : mixedEmbedding.mixedSpace F) * (a ⬝ᵥ b) := by
     rw [← evIHom_apply]
-    simp only [dotProduct, map_add, map_sum, map_mul, evIHom_invOf]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [dotProduct, map_add, map_sum, map_mul, evIHom_invOf]
     simp only [evIHom_apply, evI_infAd]
   have e3 := infAd_evI _ hs
   rw [hi] at e3
@@ -102,16 +104,19 @@ theorem exists_finprod_ne {κ : Type} [Fintype κ] (φ : ∀ v : Pl F, (κ → F
   let T := hS.toFinset
   let xf : κ → AF F := fun i => ∑ w ∈ T, GlobalTheory.LatVac.liftV w (p w i)
   have hxf1 : ∀ i, evI F (xf i) = 0 := fun i => by
-    rw [← evIHom_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← evIHom_apply, map_sum]
     exact Finset.sum_eq_zero fun w _ => (map_zero (InfiniteAdeleRing.ringEquiv_mixedSpace F))
   have hxf2 : ∀ w i, w ∈ T → evFin F w (xf i) = p w i := fun w i hw => by
-    simp only [xf, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [xf, map_sum]
     rw [Finset.sum_eq_single_of_mem w hw]
     · exact GlobalTheory.LatVac.evFin_liftV w _
     · intro x _ hx
       exact GlobalTheory.AdelicU.evalV_singleFin_ne (Ne.symm hx) _
   have hxf3 : ∀ w i, w ∉ T → evFin F w (xf i) = 0 := fun w i hw => by
-    simp only [xf, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [xf, map_sum]
     exact Finset.sum_eq_zero fun x hx => GlobalTheory.AdelicU.evalV_singleFin_ne (fun h => hw (by rw [h]; exact hx)) _
   refine ⟨fun i => infAd (y i) + xf i, funext fun i => ?_, ?_⟩
   · rw [← evIHom_apply, map_add, evIHom_apply, evIHom_apply, evI_infAd, hxf1, add_zero]

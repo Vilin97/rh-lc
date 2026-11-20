@@ -244,7 +244,8 @@ theorem scale : ∀ {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Reci
   have hg2 : ∀ y, (letters Dw).get (eq.symm y) = y := fun y => eq.apply_symm_apply y
   let cf : Fin (Dw.mult σ) → C := fun i => f (gm σ) * cg (eq.symm ⟨σ, i⟩)
   have hsum : Polynomial.aeval (ρ α) (Q.map (intO C).subtype) wv = ∑ i, cf i • U ⟨σ, i⟩ := by
-    rw [hw, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hw, map_sum]
     simp only [map_smul, hval]
     rw [← Equiv.sum_comp eq.symm]
     simp only [hg2]

@@ -143,7 +143,8 @@ theorem ggE_mem_eig {P : Type} [Group P] (ρ : Representation K P Z) (U : Subgro
   obtain ⟨hone, hmul, -⟩ := hMk
   rw [gg_mem_eig]
   intro u0
-  rw [ggE_apply, map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [ggE_apply, map_sum, Finset.smul_sum]
   refine Fintype.sum_equiv (Equiv.mulLeft u0) _ _ (fun u => ?_)
   simp only [Equiv.coe_mulLeft, Subgroup.coe_mul, mul_inv_rev]
   rw [map_smul, hmul _ (U.inv_mem u.2) _ (U.inv_mem u0.2), smul_smul, map_mul,
@@ -256,7 +257,8 @@ theorem lemmaGG_of (hSc : IdxScaleIn) : LemmaGG := by
       rw [Submodule.mem_bot]
       ext i
       have h1 : ggE ρ U ψ (ρ (rep i)⁻¹ (S f)) = (N : K) • (f i : Z) := by
-        simp only [S, LinearMap.sum_apply, LinearMap.comp_apply, LinearMap.proj_apply,
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [S, LinearMap.sum_apply, LinearMap.comp_apply, LinearMap.proj_apply,
           Submodule.subtype_apply, map_sum]
         rw [Finset.sum_congr rfl (fun j _ => hkey i j _ (f j).2)]
         simp
@@ -383,7 +385,8 @@ theorem data_trace : DataTrace := by
       rw [hφ']
       ext x
       simp [Finset.sum_apply]
-    rw [e2, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e2, map_sum]
     simp only [map_smul]
     rw [← Finset.sum_congr rfl (fun u _ => e1 u)]
     simp [Nat.cast_smul_eq_nsmul]
@@ -442,7 +445,8 @@ theorem data_trace : DataTrace := by
       rw [hω0, this]
       exact (Quotient.out_eq' ω).symm
     · intro h; exact absurd (Finset.mem_univ _) h
-  rw [hdec, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hdec, map_sum]
   refine Submodule.sum_mem _ (fun ω _ => ?_)
   rw [map_smul]
   exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨rep ω, rfl⟩)

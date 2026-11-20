@@ -81,7 +81,8 @@ theorem build (E : WEt I) [Nontrivial R.EE] {Zl S W : Type} [CommRing Zl] [CommR
   choose q x hq hbas hL using hB
   have hsum : ∀ T hT (t : Fin (q T hT) → S),
       E.jD T (∑ i, a (t i) • x T hT i) = ∑ i, c (ψ (t i)) • E.jD T (x T hT i) := fun T hT t => by
-    rw [map_sum]; exact Finset.sum_congr rfl fun i _ => hj _ _ _
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]; exact Finset.sum_congr rfl fun i _ => hj _ _ _
   have hD : ∀ T hT (y : E.DD T), E.jD T y ∈ L T ↔ ∃ t : Fin (q T hT) → S, y = ∑ i, a (t i) • x T hT i :=
     fun T hT y => by
       rw [hL T hT]
@@ -166,7 +167,8 @@ theorem build (E : WEt I) [Nontrivial R.EE] {Zl S W : Type} [CommRing Zl] [CommR
     · obtain ⟨k, m, t, u, hu, hk⟩ := hφi T hT _ ((hN T hT y).1 hy)
       choose u' hu' using fun i => hlift T hT _ (hu i)
       have e : R.Q ^ k • y = ∑ i, a (t i) • E.φD T (u' i) := E.jD_inj T (by
-        rw [hQk, hk, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [hQk, hk, map_sum]
         exact Finset.sum_congr rfl fun i _ => by rw [hj, E.jD_φ, hu'])
       refine ⟨k, ?_⟩
       change R.Q ^ k • y ∈ _
@@ -268,7 +270,8 @@ theorem range_trivial (BS : GlobalTheory.Published.BhattScholzeCrystallineLattic
     choose x hx using fun i => full ioH BS U H (LinearMap.toSpanSingleton ℤ_[l] T (b i))
       (fun g x => by rw [hρ]; rfl) (t i)
     refine ⟨∑ i, x i, ?_⟩
-    rw [map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [hx, h2, h1]
 
@@ -298,7 +301,8 @@ theorem kappa_basis (κ : W ⊗[Z] T ≃+ RW ⊗[O] T) (hκ : ∀ w t, κ (w ⊗
     (b : Module.Basis (Fin q) W (W ⊗[Z] T)) (y : RW ⊗[O] T) :
     ∃! w : Fin q → W, y = ∑ i, c (w i) • κ (b i) := by
   have key : ∀ w : Fin q → W, ∑ i, c (w i) • κ (b i) = κ (b.equivFun.symm w) := fun w => by
-    rw [b.equivFun_symm_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [b.equivFun_symm_apply, map_sum]
     exact Finset.sum_congr rfl fun i _ => (kappa_smul c κ hκ _ _).symm
   refine ⟨b.equivFun (κ.symm y), by simp only [key]; simp, fun w hw => ?_⟩
   rw [hw, key, AddEquiv.symm_apply_apply, LinearEquiv.apply_symm_apply]
@@ -323,7 +327,8 @@ theorem coord_tensor {d : ℕ} (o : Module.Basis (Fin d) Z O) (r : O ⊗[Z] W) :
   have key : ∀ w : Fin d → W,
       ∑ j, o j • (Algebra.TensorProduct.includeRight : W →ₐ[Z] O ⊗[Z] W).toRingHom (w j) =
         TensorProduct.comm Z W O (b.equivFun.symm w) := fun w => by
-    rw [b.equivFun_symm_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [b.equivFun_symm_apply, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     simp [b, TensorProduct.smul_tmul']
   refine ⟨b.equivFun ((TensorProduct.comm Z W O).symm r), by simp only [key]; simp, fun w hw => ?_⟩
@@ -372,7 +377,8 @@ theorem coord_EE (I : WIo R RA RW inclR φR gR πA) {S W : Type} [CommRing S] [C
     fun j => ⟨((w⁻¹ : Wˣ) : W) ^ m * ψ (t j), by simp only [map_mul, map_pow, h2, hψ]⟩, ?_⟩
   rw [pow_one, map_pow, ← hu] at h
   convert Ideal.mul_mem_left _ (((u⁻¹ : R.EEˣ) : R.EE) ^ m) h using 1
-  rw [mul_sub, mul_left_comm, ← mul_pow, Units.inv_mul, one_pow, mul_one, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [mul_sub, mul_left_comm, ← mul_pow, Units.inv_mul, one_pow, mul_one, map_sum, Finset.mul_sum]
   congr 1
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [Algebra.smul_def, Algebra.smul_def, map_mul, ← IsScalarTower.algebraMap_apply, mul_left_comm]

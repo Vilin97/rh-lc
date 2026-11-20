@@ -40,7 +40,8 @@ lemma supp_ind {S : Ix p q → Ix p q → Prop} (act : Mat p q →ₗ[ℂ] Modul
     (N : Submodule ℂ V) (y : V)
     (h : ∀ a b, S a b → act (Eab a b) y ∈ N) {Z : Mat p q} (hZ : Supp S Z) : act Z y ∈ N := by
   rw [Matrix.matrix_eq_sum_single Z]
-  simp only [map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.sum_apply]
   refine N.sum_mem fun a _ => N.sum_mem fun b _ => ?_
   by_cases hab : S a b
   · have : (Matrix.single a b (Z a b) : Mat p q) = Z a b • Eab a b := by
@@ -75,7 +76,8 @@ lemma eig_of_wt {act : Mat p q →ₗ[ℂ] Module.End ℂ V} (c : Ix p q → ℂ
     · intro b _ hb; simp [hb]
     · simp
   rw [this]
-  simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, hv, Finset.sum_smul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, hv, Finset.sum_smul,
     mul_smul]
 
 theorem exists_generated :

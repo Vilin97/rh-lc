@@ -38,7 +38,8 @@ theorem inj_of_li {K V M ι : Type} [Field K] [AddCommGroup V] [Module K V] [Add
   have key : ∀ z : V, e z = ∑ j, σ (b.repr z j) • e (b j) := by
     intro z
     conv_lhs => rw [← b.sum_repr z]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [LinearMap.map_smulₛₗ]
   have hsum : ∑ j, (σ (b.repr x j) - σ (b.repr y j)) • e (b j) = 0 := by
     simp only [sub_smul, Finset.sum_sub_distrib, ← key, hxy, sub_self]

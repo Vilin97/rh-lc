@@ -51,7 +51,8 @@ theorem abstract {E : Type} [NormedAddCommGroup E] [NormedSpace ℝ E] [FiniteDi
     have hK : K v.2 ∈ k := (bk.equivFun.symm v.2).2
     rw [hL, hπ' _ (g.add_mem (hp t ht _ hP) (hk hK))] at h3
     refine Eq.trans h3.symm ?_
-    simp [P, K, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [P, K, map_sum]
 
 variable {n : ℕ}
 

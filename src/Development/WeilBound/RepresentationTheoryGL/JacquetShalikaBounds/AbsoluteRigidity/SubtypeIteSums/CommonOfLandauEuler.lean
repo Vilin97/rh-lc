@@ -50,7 +50,8 @@ theorem sum_lterm (q : W → ℕ) (hq : ∀ w, 2 ≤ q w) (A : ∀ x, W → Fin 
       Pw q A u p.1 p.2 * conj (Pw q A v p.1 p.2) * ((q p.1 : ℂ) ^ (-(σ : ℂ))) ^ (p.2 + 1) / (p.2 + 1) := by
   simp only [lterm_pair q hq]
   unfold Pw
-  rw [map_sum, Finset.sum_mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_mul_sum]
   simp only [Finset.sum_mul, Finset.sum_div]
 
 def cc (q : W → ℕ) (A : ∀ x, W → Fin (d x) → ℂ) {ι : Type} [Fintype ι] (u : ι → X × ℝ) (p : W × ℕ) : ℝ :=

@@ -281,7 +281,8 @@ lemma step_down [Fintype ι] (d : ℕ) (u : U)
       rwa [show Multiset.card (s0 : Multiset ι) = d + 1 from s0.2] at this
     have h1 := hz (testProd a (s0 : Multiset ι))
     rw [map_add, LinearMap.add_apply, map_add, filt_vanish e π hder χ d v hv _ hx, zero_add] at h1
-    rw [map_sum, LinearMap.sum_apply, map_sum] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, LinearMap.sum_apply, map_sum] at h1
     simp only [map_smul, LinearMap.smul_apply, smul_eq_mul] at h1
     rw [Finset.sum_eq_single s0] at h1
     · have hne := (pair_ne_zero_iff e hcomm π hder χ a ha hδ ((s0 : Multiset ι).toList) s0

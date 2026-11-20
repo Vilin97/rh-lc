@@ -19,7 +19,8 @@ variable {K : Type} [Field K] {V : Type} [AddCommGroup V] [Module K V] {E : Type
 theorem mem_of_isFreeOn {ρ : 𝓞 E →+* Module.End K V} {L : Submodule A V} {N : ℕ} {t : Fin N → V}
     (h : HT.IsFreeOn ρ L t) (i : Fin N) : t i ∈ L := by
   have e : t i = ρ 1 (t i) := by simp
-  rw [h.2.2, e, ← (RingOfIntegers.basis E).sum_repr 1, map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h.2.2, e, ← (RingOfIntegers.basis E).sum_repr 1, map_sum, LinearMap.sum_apply]
   refine Submodule.sum_mem _ fun k _ => ?_
   rw [map_zsmul, LinearMap.smul_apply]
   exact zsmul_mem (Submodule.subset_span (Set.mem_range.2 ⟨(i, k), rfl⟩)) _
@@ -39,7 +40,8 @@ theorem exists_lift_basis {R Y : Type} [CommRing R] [AddCommGroup Y] [Module R Y
   have hΦ : ∀ c : Fin N × Module.Free.ChooseBasisIndex ℤ (𝓞 E) → R,
       Φ (∑ q, c q • rB (RingOfIntegers.basis E q.2) (x q.1)) =
         ∑ q, f (c q) • ρ (RingOfIntegers.basis E q.2) (t q.1) := fun c => by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun q _ => by rw [hsmul, hact, hx]
   refine ⟨x, hx, ?_, ?_⟩
   · rw [Fintype.linearIndependent_iff]

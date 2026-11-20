@@ -42,7 +42,8 @@ private theorem algTrace_eq_sum {ι : Type*} [Fintype ι] {B B' : Type*} {C : ι
     rwa [hE, Pi.single_eq_same] at this
   have h2 : ∀ x, ∑ i, t i (r i x) = x := fun x ↦ by
     apply E.injective
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     have e : ∀ i, E (t i (r i x)) = Pi.single i (r i x) := fun i ↦ E.apply_symm_apply _
     simp only [e]
     rw [Finset.univ_sum_single]
@@ -51,7 +52,8 @@ private theorem algTrace_eq_sum {ι : Type*} [Fintype ι] {B B' : Type*} {C : ι
     ext x
     simp only [LinearMap.sum_apply, LinearMap.comp_apply]
     exact (h2 _).symm
-  rw [algTrace_apply, h3, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [algTrace_apply, h3, map_sum]
   refine Finset.sum_congr rfl fun i _ ↦ ?_
   rw [projTrace_comm, algTrace_apply]
   congr 1
@@ -179,7 +181,8 @@ private theorem omegaTrace_eq_sum {s : Z ⟶ Sp k} {s' : Y ⟶ Sp k} {c : Y ⟶ 
     rw [piece_app_smul h (W m) (hg m) j U]
     exact omegaTrace_toOm_smul_formPull (hg m) j hU _ x
   simp only [e]
-  rw [secTrace_eq_sum W hd hc hU b', Finset.sum_smul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [secTrace_eq_sum W hd hc hU b', Finset.sum_smul, map_sum]
 
 private theorem cohOn_map_sum {X : Scheme.{0}} (R : Type) [CommRing R] [Algebra R Γ(X, ⊤)]
     {F G : X.Modules} {ι : Type} (t : Finset ι) (φ : ι → (F ⟶ G)) (U : X.Opens) (n : ℕ) :

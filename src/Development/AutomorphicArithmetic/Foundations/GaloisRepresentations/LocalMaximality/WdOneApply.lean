@@ -78,7 +78,8 @@ theorem UpperTheory.Gal.productCup_of_system.pInt_of :
   · funext J
     simp only [Lef.omCx, GlobalTheory.PD.cech, GlobalTheory.PD.deltaL, LinearMap.coe_mk, AddHom.coe_mk, GlobalTheory.DI.delta]
     rw [(hU Finset.univ J).1]
-    simp only [wd_one_apply, map_add, map_zsmul, map_sum, hz, smul_zero, Finset.sum_const_zero,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [wd_one_apply, map_add, map_zsmul, map_sum, hz, smul_zero, Finset.sum_const_zero,
       zero_add, Finset.card_univ, Fintype.card_fin, Finset.smul_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [smul_comm]

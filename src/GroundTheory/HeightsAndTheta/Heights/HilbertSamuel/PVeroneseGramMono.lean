@@ -93,7 +93,8 @@ theorem phi_eq {N : ℕ} (b : MvPolynomial (Ix (Veronese.Idx D)) ℚ)
     phi D b = ∑ l, (c l : MvPolynomial (Fin (D + 1)) ℚ) * ∏ i, X i ^ adtEnum D N l i := by
   apply IsFractionRing.injective (MvPolynomial (Fin (D + 1)) ℚ) (Veronese.Fld D)
   rw [← aeval_alt, h]
-  simp [map_sum, map_mul, map_prod, map_pow, Veronese.t]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, map_mul, map_prod, map_pow, Veronese.t]
 
 theorem eval_map_phi (w : Fin (D + 1) → ℂ) (f : MvPolynomial (Ix (Veronese.Idx D)) ℚ) :
     eval (Veronese.map D w) (MvPolynomial.map (algebraMap ℚ ℂ) f) = aeval w (phi D f) := by
@@ -108,7 +109,8 @@ theorem eval_b {N : ℕ} (w : Fin (D + 1) → ℂ) (b : MvPolynomial (Ix (Verone
     eval (Veronese.map D w) (MvPolynomial.map (algebraMap ℚ ℂ) b) =
       ∑ l, (c l : ℂ) * ∏ i, w i ^ adtEnum D N l i := by
   rw [eval_map_phi, phi_eq b c h]
-  simp [map_sum, map_mul, map_prod, map_pow]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, map_mul, map_prod, map_pow]
 
 theorem eval_conj_b {N : ℕ} (w : Fin (D + 1) → ℂ) (b : MvPolynomial (Ix (Veronese.Idx D)) ℚ)
     (c : Fin (Finset.Nat.antidiagonalTuple (D + 1) N).card → ℤ)
@@ -116,7 +118,8 @@ theorem eval_conj_b {N : ℕ} (w : Fin (D + 1) → ℂ) (b : MvPolynomial (Ix (V
     eval (conjPt (Veronese.map D w)) (MvPolynomial.map (algebraMap ℚ ℂ) b) =
       starRingEnd ℂ (∑ l, (c l : ℂ) * ∏ i, w i ^ adtEnum D N l i) := by
   rw [conjPt_map, eval_b _ b c h]
-  simp [map_sum, map_mul, map_prod, map_pow]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, map_mul, map_prod, map_pow]
 
 def ex (D N : ℕ) (l : Fin (Finset.Nat.antidiagonalTuple (D + 1) N).card) : Fin (D + 1) →₀ ℕ :=
   Finsupp.equivFunOnFinite.symm (adtEnum D N l)
@@ -150,7 +153,8 @@ theorem pairVal_map (k l : Fin r) (w : Fin (D + 1) → ℂ) :
   unfold pairVal
   rw [veroneseMetric_pow_eq, eval_b w (b k) _ (hA k), eval_b w (b l) _ (hA l)]
   simp only [monoInner, eval_ex]
-  rw [map_sum, Finset.sum_mul_sum, Finset.sum_div]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_mul_sum, Finset.sum_div]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [Finset.sum_div]
   refine Finset.sum_congr rfl fun j _ => ?_
@@ -163,7 +167,8 @@ theorem pairVal_conj_map (k l : Fin r) (w : Fin (D + 1) → ℂ) :
   unfold pairVal
   rw [veroneseMetric_conj_pow_eq, eval_conj_b w (b k) _ (hA k), eval_conj_b w (b l) _ (hA l), Complex.conj_conj]
   simp only [monoInner, eval_ex]
-  rw [map_sum, Finset.sum_mul_sum, Finset.sum_div]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_mul_sum, Finset.sum_div]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [Finset.sum_div]
   refine Finset.sum_congr rfl fun j _ => ?_

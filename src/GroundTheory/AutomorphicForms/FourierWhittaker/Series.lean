@@ -28,7 +28,8 @@ theorem pair_zero (ξ : ι → K) : pair ξ (0 : ι → 𝔸[K]) = 0 := by simp 
 
 theorem pair_algebraMap (ξ η : ι → K) :
     pair ξ (fun i => algebraMap K 𝔸[K] (η i)) = algebraMap K 𝔸[K] (∑ i, ξ i * η i) := by
-  simp [pair, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [pair, map_sum]
 
 theorem adelicChar_pair_of_mem (ξ : ι → K) {x : ι → 𝔸[K]} (hx : x ∈ vecLattice K ι) :
     GroundTheory.Global.adelicChar K (pair ξ x) = 1 := by
@@ -138,7 +139,8 @@ theorem mul_mem_finiteInvDifferent {a z : FiniteAdeleRing (𝓞 K) K}
 theorem pair_finiteAdeleInr (ξ : ι → K) (z : ι → FiniteAdeleRing (𝓞 K) K) :
     pair ξ (fun i => GroundTheory.Global.finiteAdeleInr (z i)) =
       GroundTheory.Global.finiteAdeleInr (∑ i, algebraMap K (FiniteAdeleRing (𝓞 K) K) (ξ i) * z i) := by
-  simp [pair, GroundTheory.Global.algebraMap_mul_finiteAdeleInr, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [pair, GroundTheory.Global.algebraMap_mul_finiteAdeleInr, map_sum]
 
 theorem adelicChar_pair_finiteAdeleInr {ξ : ι → K} (hξ : IsDual ξ)
     {z : ι → FiniteAdeleRing (𝓞 K) K} (hz : ∀ i, z i ∈ GroundTheory.Global.integralFiniteAdeles (𝓞 K) K) :

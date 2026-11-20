@@ -23,7 +23,8 @@ private theorem exists_trace {k U D : Type} [Field k] [Field U] [AddCommGroup D]
     have h2 := Matrix.eq_zero_of_forall_pow_sum_mul_pow_eq_zero (f := fun i : Fin n => t i)
       (v := fun i : Fin n => f ((φ ^ (i : ℕ)) x)) ht (fun j => by
         have h3 := congrArg f (hc j)
-        rw [map_zero, LinearMap.sum_apply, map_sum, Finset.sum_range] at h3
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_zero, LinearMap.sum_apply, map_sum, Finset.sum_range] at h3
         rw [← h3]
         refine Finset.sum_congr rfl fun i _ => ?_
         rw [hφ, mul_comm, ← smul_eq_mul, ← map_smul]
@@ -35,7 +36,8 @@ private theorem exists_trace {k U D : Type} [Field k] [Field U] [AddCommGroup D]
     rw [hφ, htn, End.mul_apply, hp, pow_zero, one_mul]
   have h5 := Finset.sum_range_succ (fun i => (φ ^ i * m (t 0 ^ j)) x) n
   rw [Finset.sum_range_succ', h4, add_left_inj] at h5
-  rw [LinearMap.sum_apply, map_sum, ← h5]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [LinearMap.sum_apply, map_sum, ← h5]
   conv_rhs => rw [h5, ← h5]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [pow_succ', mul_assoc, End.mul_apply φ]

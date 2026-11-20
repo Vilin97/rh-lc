@@ -160,7 +160,8 @@ theorem spans_dualFlag (H : Spans fl U v) (hv : IsFrame v) :
   have hc (V : X.Opens) (h : V ≤ U) (a : Fin l → Γ(X, V)) :
       (Limits.kernel.ι (dualMap (fl.ι l.rev))).app V (Fintype.linearCombination Γ(X, V) (fun i => resM _ h (s' i)) a) =
         ∑ j, a j • resM _ h (hv.coord (Fin.castLE l.is_le j).rev) := by
-    simp only [Fintype.linearCombination_apply, map_sum, Scheme.Modules.Hom.app_smul, app_resM]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Fintype.linearCombination_apply, map_sum, Scheme.Modules.Hom.app_smul, app_resM]
     exact Finset.sum_congr rfl fun j _ => congrArg (fun w => a j • resM _ h w) (hs' j)
   have hev (V : X.Opens) (h : V ≤ U) (a : Fin l → Γ(X, V)) (b : Fin N) :
       dualApp (∑ j, a j • resM _ h (hv.coord (Fin.castLE l.is_le j).rev)) le_rfl (resM F h (v b)) =
@@ -222,7 +223,8 @@ theorem part_sum [SecondCountableTopology (CxPts p σ)] {J : Type} [Fintype J]
   have hs : IsDens fun c y => ∑ j, τ j c y := MixDens.IsDens.sum Finset.univ h
   obtain ⟨T, hT, hTS⟩ := TopologicalSpace.isOpen_iUnion_countable (fun c : AlgChart p σ 1 => c.e.source)
     fun c => c.e.open_source
-  rw [part_eq_restrict fun c y => ∑ j, τ j c y, Finset.sum_congr rfl fun j _ => part_eq_restrict (τ j),
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [part_eq_restrict fun c y => ∑ j, τ j c y, Finset.sum_congr rfl fun j _ => part_eq_restrict (τ j),
     show ∀ s : Set (CxPts p σ), ∑ j, (part (τ j)).restrict s = (∑ j, part (τ j)).restrict s from
       fun s => (map_sum (Measure.restrictₗ s) _ _).symm, ← hTS, Measure.restrict_biUnion_congr hT]
   intro c _

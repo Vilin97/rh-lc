@@ -209,7 +209,8 @@ theorem exists_herm (h : O.Reads A T H) (hO : O.DualRef) (B : ℝ) (c : O.s.Comp
     · rintro (_ | x)
       exacts [h₂ (), h₁ x]
     have hU : ∑ x : D.what₂.Tau × Fin O.Y.N, (n (some (some x)) : ℝ) • T.gen B c W.mult (some x) = T.L B c U := by
-      simp only [Real0.gen, Option.elim, ← map_smul, ← map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Real0.gen, Option.elim, ← map_smul, ← map_sum]
       congr 1
       funext τ i
       simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
@@ -292,7 +293,8 @@ theorem onModel : GlobalTheory.Published.ArCalc → ∀ (D : D7) (O : Setup D) (
     have halg := CoverHt.isAlgPt W.V w hw
     refine ⟨halg, rfl, fun g => ?_, fun n => ?_⟩
     · exact GlobalTheory.T.equidistribution_average_over_orbit _ _ _ _ _ (h.man _) ε π hd w hw (h.pts.d y) (h.pts.conj _ y) (by rw [e]; exact h.pts_is.conj y) g
-    · rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [map_sum]
       simp only [map_smul, smul_eq_mul]
       exact (GlobalTheory.T.point_height_dual_and_linear_comb hA.arExists _ _ _ _ W.V.ar _ halg).2 _ _ _ (isPtHt_gens hA.arExists h hO hB y W hw e) n
 

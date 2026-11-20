@@ -370,7 +370,8 @@ theorem indicator_reads : ∀ {D : D7} (ψ : AddChar (AF D.host.F) ℂ) (θ : In
   rw [one_smul] at hvac
   have hsum := reads_sum Finset.univ _ _ hr fun q => term_reads hc hs hv.2.lat hG hr h (hz q)
   have hT : ∑ q, heisO ψ S T (cA D e • finTens 1 (-z q)) v = (n : ℂ) • Tm (cosInd e 𝔪 rfl rfl 0) := by
-    rw [← map_smul, ← hcard, show (Fintype.card (B ⧸ A.addSubgroupOf B) : ℂ) • cosInd e 𝔪 rfl rfl 0 =
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_smul, ← hcard, show (Fintype.card (B ⧸ A.addSubgroupOf B) : ℂ) • cosInd e 𝔪 rfl rfl 0 =
       ∑ q, fun t => ψ (symplO S T t (cA D e • finTens 1 (-z q))) * halfInd e
         (latO S T (stdL D S.rank : Set (Fin S.rank → D.host.E))
           (stdL D T.rank : Set (Fin T.rank → D.host.E)) fun _ => True) t from

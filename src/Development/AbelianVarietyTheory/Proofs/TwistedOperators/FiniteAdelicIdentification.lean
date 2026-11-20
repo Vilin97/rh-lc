@@ -101,7 +101,8 @@ theorem link_of_isLatIsom {V V' : HSp D} (h : V.rank = V'.rank)
       (fun a => swapAE D (f * ((j.map (unswap D)).mulVec y) a)) = j.mulVec (fun b => swapAE D (f * y b)) := by
     intro f y
     funext a
-    simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, Finset.mul_sum, map_sum, map_mul, swap_unswap]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, Finset.mul_sum, map_sum, map_mul, swap_unswap]
     exact Finset.sum_congr rfl fun b _ => by ring
   have gN : ∀ f, Good (D := D) (N * N') f → Good (N ^ c) f := fun f hf => hf.pow c
   have gN' : ∀ f, Good (D := D) (N * N') f → Good (N' ^ c') f := by

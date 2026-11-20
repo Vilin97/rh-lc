@@ -37,7 +37,8 @@ theorem ker_cocompact {F A V V' M M' : Type} [Field F] [CommRing A] [Algebra F A
       rw [h, hb'.lift_eq, LinearMap.comp_apply, ← map_sub]
       have hv : v - s (T v) ∈ LinearMap.ker T := by simp [hs]
       rw [show v - s (T v) = ((⟨_, hv⟩ : LinearMap.ker T) : V) from rfl, ← b.sum_repr ⟨_, hv⟩]
-      simp only [Submodule.coe_sum, Submodule.coe_smul, map_sum, map_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Submodule.coe_sum, Submodule.coe_smul, map_sum, map_smul]
       exact Submodule.sum_mem _ fun j _ => Submodule.smul_of_tower_mem _ _ (Submodule.subset_span ⟨j, rfl⟩)
     | smul a x hx =>
       rw [map_smul, map_smul, ← smul_sub]
@@ -48,13 +49,15 @@ theorem ker_cocompact {F A V V' M M' : Type} [Field F] [CommRing A] [Algebra F A
   refine ⟨(fun a : Fin _ → A => ∑ j, a j • w j) '' Set.univ.pi fun _ => K,
     (isCompact_univ_pi fun _ => hK).image (by fun_prop), ?_, fun x hx => ?_⟩
   · rintro _ ⟨a, -, rfl⟩
-    simp only [map_sum, map_smul, w, h, show ∀ j, T (b j) = 0 from fun j => (b j).2, map_zero, smul_zero, Finset.sum_const_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, w, h, show ∀ j, T (b j) = 0 from fun j => (b j).2, map_zero, smul_zero, Finset.sum_const_zero]
   · have := key x
     rw [hx, map_zero, sub_zero] at this
     obtain ⟨a, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun A).1 this
     choose r hr using fun j => hc (a j)
     refine ⟨∑ j, r j • (b j : V), by simp [show ∀ j, T (b j) = 0 from fun j => (b j).2], _, fun j _ => hr j, ?_⟩
-    simp only [map_sum, map_smul, sub_smul, algebraMap_smul, Finset.sum_sub_distrib, w]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, sub_smul, algebraMap_smul, Finset.sum_sub_distrib, w]
 
 section Lat
 

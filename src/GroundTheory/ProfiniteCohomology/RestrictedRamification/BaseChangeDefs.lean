@@ -142,10 +142,12 @@ theorem continuous_coe_fixingMulEquivOfRestrictScalarsEq_symm [Algebra.IsIntegra
   intro y hy
   have hy' : y = ∑ i, b.repr ⟨y, hy⟩ i • (b i : E) := by
     have := congrArg K.val (b.sum_repr ⟨y, hy⟩)
-    rw [map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at this
     simp only [map_smul] at this
     exact this.symm
-  rw [hy', map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hy', map_sum]
   simp only [map_smul, hb]
 
 end Abstract
@@ -171,7 +173,8 @@ theorem exists_le_of_algebraMap_mem (hL : ∀ x : L, algebraMap L Ω x ∈ maxUn
   have hx : algebraMap L Ω x = ∑ i, b.repr x i • algebraMap L Ω (b i) := by
     conv_lhs => rw [← b.sum_repr x]
     change IsScalarTower.toAlgHom F L Ω _ = _
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [map_smul]
     rfl
   rw [hx]

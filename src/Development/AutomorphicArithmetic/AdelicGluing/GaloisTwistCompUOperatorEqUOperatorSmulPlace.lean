@@ -145,7 +145,8 @@ theorem UpperTheory.galoisTwist_comp_uOperator_eq_uOperator_smul_place :
   have hmain : ∀ v ∈ fixL μ w (GLnLocal.iwahori (w.adicCompletion E) n),
       U (Hop μ w (GLnLocal.iwahori (w.adicCompletion E) n) (Cartan.diagPow (w.adicCompletion E) n ν) v) =
         Hop μ (σ • w) (GLnLocal.iwahori ((σ • w).adicCompletion E) n) (s (Cartan.diagPow (w.adicCompletion E) n ν)) (U v) := fun v hv => by
-    rw [hsum ι y i1 r1 v hv, hsum' ι (fun i => s (y i)) i2 r2 (U v) ((hfx v).2 hv), map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hsum ι y i1 r1 v hv, hsum' ι (fun i => s (y i)) i2 r2 (U v) ((hfx v).2 hv), map_sum]
     exact Finset.sum_congr rfl fun i _ => hrho _ _
   obtain ⟨a, ha, b, hb, hab⟩ := hs3 ν
   have hH : Hop μ (σ • w) (GLnLocal.iwahori ((σ • w).adicCompletion E) n) (s (Cartan.diagPow (w.adicCompletion E) n ν)) =

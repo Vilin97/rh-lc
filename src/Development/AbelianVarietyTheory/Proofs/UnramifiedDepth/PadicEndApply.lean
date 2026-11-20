@@ -201,15 +201,18 @@ theorem main :
       apply Subtype.ext
       rw [AddSubmonoidClass.coe_finsetSum]
       change B.tg π hπ (w ⊗ₜ i) = ∑ l, B.tg π hπ (gb l ⊗ₜ (gb.repr w l • i))
-      rw [← map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← map_sum]
       congr 1
       conv_lhs => rw [← gb.sum_repr w, TensorProduct.sum_tmul]
       exact Finset.sum_congr rfl fun l _ => TensorProduct.smul_tmul _ _ _
     change (complEnd f p s (hf s) a ⟨B.tg π hπ (w ⊗ₜ i), tg_torP B p π hπ w i hi⟩ : B.G R) = _
-    rw [h1, map_sum, AddSubmonoidClass.coe_finsetSum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h1, map_sum, AddSubmonoidClass.coe_finsetSum,
       Finset.sum_congr rfl fun l _ => key2 a s π hπ l _ (hr l), ← map_sum]
     congr 1
-    conv_rhs => rw [← gb.sum_repr w, map_sum, TensorProduct.sum_tmul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_rhs => rw [← gb.sum_repr w, map_sum, TensorProduct.sum_tmul]
     exact Finset.sum_congr rfl fun l _ => by rw [map_smul, TensorProduct.smul_tmul]
   · intro a k l
     change complMat p dL a k l = algebraMap R₀ (O : Type) (gb.repr (L a (gb l)) k)

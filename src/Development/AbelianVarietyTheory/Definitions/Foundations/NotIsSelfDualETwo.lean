@@ -56,7 +56,8 @@ theorem _root_.GlobalTheory.TestLat.Model.sumGram_form [StarRing K] [Fintype C] 
   simp only [dotProduct, Matrix.mulVec, _root_.GlobalTheory.TestLat.sumGram, Matrix.of_apply, Pi.star_apply]
   rw [← e.symm.sum_comp, Fintype.sum_prod_type]
   refine Finset.sum_congr rfl fun c _ => ?_
-  simp only [_root_.GlobalTheory.TestLat.valAt, LinearMap.comp_apply, LinearMap.funLeft_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [_root_.GlobalTheory.TestLat.valAt, LinearMap.comp_apply, LinearMap.funLeft_apply,
     LinearEquiv.coe_coe, Module.Basis.equivFun_symm_apply, map_sum, map_smulₛₗ,
     LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, Finset.mul_sum]
   conv_rhs => rw [Finset.sum_comm]

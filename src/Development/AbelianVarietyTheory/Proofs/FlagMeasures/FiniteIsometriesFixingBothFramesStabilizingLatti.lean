@@ -44,7 +44,8 @@ theorem finite_of_fix (hT : V →ₗ⋆[E] V →ₗ[E] E) (U : Submodule E V)
         rw [Submodule.coe_sum] at this
         simp only [Submodule.coe_smul] at this
         exact this.symm
-      rw [hx', map_sum, LinearMap.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hx', map_sum, LinearMap.sum_apply]
       refine Finset.sum_eq_zero fun i _ => ?_
       rw [LinearMap.map_smulₛₗ, LinearMap.smul_apply, hy' i, smul_zero]
     have h1 := LinearMap.finrank_range_add_finrank_ker φ

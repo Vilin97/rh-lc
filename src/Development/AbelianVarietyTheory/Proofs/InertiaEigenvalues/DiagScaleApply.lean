@@ -70,7 +70,8 @@ theorem app_isoProj {P : PhiMod O K l e a ι} {Q : PhiMod O K l e a κ} {Δ₁ :
     {Δ₂ : Descent Q} (F : Descent.Hom Δ₁ Δ₂) (c : ZMod e) (v : Vec K a ι) :
     F.app (isoProj Δ₁ c v) = isoProj Δ₂ c (F.app v) := by
   letI := Fintype.ofFinite (rootsOfUnity e K)
-  simp only [isoProj, LinearMap.smul_apply, LinearMap.sum_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [isoProj, LinearMap.smul_apply, LinearMap.sum_apply,
     LinearMap.comp_apply, LinearMap.map_smul_of_tower, map_sum]
   congr 1
   refine Finset.sum_congr rfl fun ζ _ => ?_

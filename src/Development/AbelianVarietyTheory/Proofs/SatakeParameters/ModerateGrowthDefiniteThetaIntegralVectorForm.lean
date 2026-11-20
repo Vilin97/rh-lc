@@ -33,7 +33,8 @@ theorem modGrowth_thetaIntegral : ∀ {D : D7} (ψ : AddChar (Formalism.MainNoti
   have hdec : ∀ h g, thetaKO om h g (L (u h)) = ∑ k, b.coord k (u h) * thetaKO om h g (L (b k)) := by
     intro h g
     conv_lhs => rw [← b.sum_repr (u h)]
-    simp only [thetaKO, map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Module.Basis.coord_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [thetaKO, map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Module.Basis.coord_apply]
   have hθinv : ∀ γ ∈ GQ V, ∀ c g (f : WO V W → ℂ), IsThetaFunO ψ V W f → thetaKO om (γ * c) g f = thetaKO om c g f := by
     intro γ hγ c g f hf
     have e : (γ * c, g) = ((γ, 1) : GA D V × GA D W) * (c, g) := by rw [Prod.mk_mul_mk, one_mul]

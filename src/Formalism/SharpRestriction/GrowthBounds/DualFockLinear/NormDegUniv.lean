@@ -63,7 +63,8 @@ theorem nd_move (r : ℕ) (mm : TV n' k →₀ ℕ) (v v' : TV n' k) :
 theorem nd_op (r T : ℕ) (v v' : TV n' k) {P : MvPolynomial (TV n' k) R} (hP : P ∈ NDsub R n' k r T) :
     X v * pderiv v' P ∈ NDsub R n' k r (T + 1) := by
   rw [mem_NDsub] at hP
-  rw [P.as_sum, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [P.as_sum, map_sum, Finset.mul_sum]
   refine Submodule.sum_mem _ fun mm hmm => ?_
   rw [pderiv_monomial, ← pow_one (X v), ← monomial_single_add, mem_NDsub]
   intro mm' hmm'

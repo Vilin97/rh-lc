@@ -32,7 +32,8 @@ theorem exists_mul_mul_eq_one_of_rank (A : Matrix m l K) :
     intro c
     rw [← Matrix.mulVec_mulVec, hRc]
     have : A *ᵥ (∑ i, c i • x i) = f (∑ i, c i • x i) := rfl
-    rw [this, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [this, map_sum]
     simp only [map_smul, hx]
   have hli : LinearIndependent K (fun i => (b i : m → K)) :=
     b.linearIndependent.map' (LinearMap.range f).subtype (Submodule.ker_subtype _)

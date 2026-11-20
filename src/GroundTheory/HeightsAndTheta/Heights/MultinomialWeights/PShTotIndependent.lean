@@ -24,7 +24,8 @@ theorem lineClass_pow_mem (u : Idx d → ℚ) : lineClass d u ^ (d.D + 1) ∈ to
 theorem eval_shTotForm_single (a b : Fin d.f → ℚ) (τ : Fin d.f) (i : Fin d.N) :
     eval (fun p => if p = (τ, i) then (1 : ℚ) else 0) (shTotForm d a b) =
       (if i.val < d.j then a τ else 0) + b τ := by
-  simp only [shTotForm, map_sum, map_add, map_mul, eval_C, eval_X]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [shTotForm, map_sum, map_add, map_mul, eval_C, eval_X]
   rw [Finset.sum_eq_single τ]
   · simp [Finset.mem_filter]
   · intro τ' _ hne
@@ -46,7 +47,8 @@ theorem shTot_relation_trivial (hSh : ShOfPower.Statement) (hTot : TotOfPower.St
     simp only [LinearMap.add_apply, LinearMap.sum_apply, LinearMap.smul_apply,
       LinearMap.zero_apply, smul_eq_mul, shOn_apply, totOn_apply, hSh d, hTot d] at h1
     rw [eval_mul, hEval, shTotForm]
-    simp only [map_sum, map_add, map_mul, eval_C, eval_X]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_add, map_mul, eval_C, eval_X]
     have h2 : -((d.D + 1 : ℕ) : ℚ) * (degAt d u * ∑ τ : Fin d.f,
         (a τ * ∑ i ∈ univ.filter (fun i : Fin d.N => i.val < d.j), u (τ, i) +
           b τ * ∑ i : Fin d.N, u (τ, i))) = 0 := by

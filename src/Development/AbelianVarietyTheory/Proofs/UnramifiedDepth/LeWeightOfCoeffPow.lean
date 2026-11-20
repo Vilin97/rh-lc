@@ -63,7 +63,8 @@ lemma mvExp_add [CharZero C] {a b : MvPowerSeries σ C} (ha : MvPowerSeries.cons
       ext p
       simp only [Finset.mem_filter, Finset.mem_product, Finset.mem_range, Finset.HasAntidiagonal.mem_antidiagonal]
       omega
-    rw [this, (Commute.all a b).add_pow', map_sum, Finset.sum_div]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [this, (Commute.all a b).add_pow', map_sum, Finset.sum_div]
     refine Finset.sum_congr rfl fun p hp => ?_
     rw [Finset.HasAntidiagonal.mem_antidiagonal] at hp
     rw [map_nsmul, nsmul_eq_mul, ← hp, Nat.cast_add_choose C]
@@ -93,7 +94,8 @@ lemma mvExp_sum [CharZero C] {ι : Type} (s : Finset ι) (a : ι → MvPowerSeri
   induction s using Finset.induction_on with
   | empty => simp [mvExp_zero']
   | insert i s hi ih =>
-    rw [Finset.sum_insert hi, Finset.prod_insert hi, mvExp_add (ha i) (by simp [map_sum, ha]), ih]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_insert hi, Finset.prod_insert hi, mvExp_add (ha i) (by simp [map_sum, ha]), ih]
 
 lemma asc_mod (l b k : ℕ) :
     (((l * b + 1).ascFactorial k : ℕ) : ZMod l) = (k.factorial : ZMod l) := by
@@ -197,7 +199,8 @@ lemma sumElim_inj {A B A' B' : κ →₀ ℕ} (h : Finsupp.sumElim A B = Finsupp
 lemma coeff_mainTerm_pow [Fintype κ] [DecidableEq κ] (l : ℕ) (c : C) (k : ℕ) (A B : κ →₀ ℕ) :
     MvPowerSeries.coeff (Finsupp.sumElim A B) (mainTerm l c ^ k) =
       if A = l • B ∧ ∑ j, B j = k then c ^ k * Nat.multinomial Finset.univ B else 0 := by
-  rw [mainTerm, smul_pow, Finset.sum_pow_eq_sum_piAntidiag, map_smul, map_sum, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [mainTerm, smul_pow, Finset.sum_pow_eq_sum_piAntidiag, map_smul, map_sum, smul_eq_mul]
   have key : ∀ f : κ → ℕ, MvPowerSeries.coeff (Finsupp.sumElim A B)
       ((Nat.multinomial Finset.univ f : MvPowerSeries (κ ⊕ κ) C) *
         ∏ j, ((MvPowerSeries.X (Sum.inl j) : MvPowerSeries (κ ⊕ κ) C) ^ l *
@@ -432,7 +435,8 @@ lemma jetAt0_rename_mul [Fintype κ] (p q : MvPolynomial κ ℤ) (G : MvPowerSer
         ((AddMonoidAlgebra.coeff p A : ℤ) : C) * (AddMonoidAlgebra.coeff q B : ℤ) *
           ((mfact A : C) * mfact B) * MvPowerSeries.coeff (Finsupp.sumElim A B) G := by
   conv_lhs => rw [p.as_sum, q.as_sum]
-  simp only [map_sum, Finset.sum_mul_sum, jetAt0_sum, MvPolynomial.map_monomial,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Finset.sum_mul_sum, jetAt0_sum, MvPolynomial.map_monomial,
     MvPolynomial.rename_monomial, MvPolynomial.monomial_mul, jetAt0_monomial,
     ← Finsupp.sumElim_eq_add, eq_intCast]
   refine Finset.sum_congr rfl fun A _ => Finset.sum_congr rfl fun B _ => ?_
@@ -659,7 +663,8 @@ theorem ubIntegral : UBIntegral := by
       if ∀ x ∈ p.support, rowOf x = b then MvPowerSeries.coeff p h1 else 0 := fun _ _ => rfl
   have hdec : h1 = ∑ b, hb b := by
     ext p
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [hbc]
     by_cases h0 : MvPowerSeries.coeff p h1 = 0
     · simp [h0]

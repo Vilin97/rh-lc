@@ -42,7 +42,8 @@ theorem relMap_ev {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing 
   let evA : EvalSp O d R' x' →+ FractionRing O :=
     { toFun := fun w => w a, map_zero' := rfl, map_add' := fun _ _ => rfl }
   show evA (∑ q, P i q • v q) = _
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   rfl
 
 theorem span_single {R : Type*} [Ring R] {m g : Type} [Fintype m] [Fintype g] [DecidableEq g]
@@ -53,7 +54,8 @@ theorem span_single {R : Type*} [Ring R] {m g : Type} [Fintype m] [Fintype g] [D
   have h : w = ∑ j, w j • (Pi.single j (1 : R) : g → R) := by
     ext k
     simp [Finset.sum_apply, Pi.single_apply]
-  rw [h, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h, map_sum]
   refine Submodule.sum_mem _ fun j _ => ?_
   rw [map_smul]
   exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨j, rfl⟩)
@@ -116,10 +118,12 @@ theorem moduleBc : StatModuleBc := by
       rw [relMap_ev]
       show _ = (0 : FractionRing O')
       have h3 := congrArg κ h2
-      rw [map_zero, map_sum] at h3
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_zero, map_sum] at h3
       rw [← h3]
       refine Finset.sum_congr rfl fun q _ => ?_
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun b _ => ?_
       rw [map_mul]
       rfl

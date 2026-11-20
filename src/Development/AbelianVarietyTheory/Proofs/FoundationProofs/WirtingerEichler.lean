@@ -69,7 +69,8 @@ theorem wirtinger_eichler : ∀ (w : ℕ) (f h : ℍ → ℂ) (p : ℂ[X]), MDif
   refine ⟨L, hL.congr_of_eventuallyEq ?_, ?_⟩
   · filter_upwards [isOpen_upperHalfPlaneSet.mem_nhds hs] with z hz
     rw [he f z hz, he h z hz]
-    simp [Polynomial.map_sum, eval_finset_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Polynomial.map_sum, eval_finset_sum]
   · rw [hd]
     have hb : (s - (starRingEnd ℂ) s) ^ w = ∑ j ∈ Finset.range (w + 1),
         s ^ j * (-(starRingEnd ℂ) s) ^ (w - j) * (w.choose j : ℂ) := by

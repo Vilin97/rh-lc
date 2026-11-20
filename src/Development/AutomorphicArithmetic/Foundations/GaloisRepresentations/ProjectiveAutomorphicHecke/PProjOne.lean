@@ -20,7 +20,8 @@ private theorem algHom_wop_eq_wop_comp {F A B J : Type*} [Field F] [Ring A] [Alg
     [Algebra F B] (φ : A →ₐ[F] B) (T : J → A) (t : List J →₀ F) :
     φ (wop T t) = wop (fun j => φ (T j)) t := by
   unfold wop
-  simp only [Finsupp.sum, map_sum, map_smul, map_list_prod, List.map_map]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finsupp.sum, map_sum, map_smul, map_list_prod, List.map_map]
   rfl
 
 private theorem exists_idempotent_aeval_nilpotent_sub_of_isIntegral {F D : Type*} [Field F] [CommRing D] [Algebra F D] (x : D)

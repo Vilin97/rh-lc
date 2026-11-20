@@ -50,7 +50,8 @@ theorem resOntoK_of_resSatL (LL : Letters (K + 1)) {q : ℕ} (J : Fin q → ℕ)
   have hbx : algebraMap ℤ_[p] ℚ_[p] (b : ℤ_[p]) • x ∈ IntPol p (Fin (K + 1) × Fin r) := by
     refine LinearMap.mem_range.2 ⟨∑ m ∈ x.support, monomial m (y m), ?_⟩
     change MvPolynomial.map (algebraMap ℤ_[p] ℚ_[p]) (∑ m ∈ x.support, monomial m (y m)) = _
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     conv_rhs => rw [← MvPolynomial.support_sum_monomial_coeff x]
     rw [Finset.smul_sum]
     refine Finset.sum_congr rfl fun m _ => ?_
@@ -353,7 +354,8 @@ theorem divModP_zero {p : ℕ} [Fact p.Prime] {K r : ℕ} [NeZero r] (LL : Lette
         if m (Fin.last K, ρ) = 0 then monomial m (AddMonoidAlgebra.coeff b0 m) else 0)
       = initPart (Fin.last K, ρ) 0 (MvPolynomial.map (algebraMap ℤ_[p] ℚ_[p]) b0)
     unfold initPart
-    rw [MvPolynomial.support_map_of_injective _ (f := algebraMap ℤ_[p] ℚ_[p]) (fun a b h => Subtype.ext h),
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [MvPolynomial.support_map_of_injective _ (f := algebraMap ℤ_[p] ℚ_[p]) (fun a b h => Subtype.ext h),
       map_sum]
     refine Finset.sum_congr rfl fun m _ => ?_
     split_ifs <;> simp [MvPolynomial.map_monomial, MvPolynomial.coeff_map]

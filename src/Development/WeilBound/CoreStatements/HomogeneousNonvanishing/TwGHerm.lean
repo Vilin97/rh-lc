@@ -20,7 +20,8 @@ theorem tw_g_herm : ∀ (Z R : Type) [CommRing Z] [CommRing R] [Algebra Z R] (σ
   have hform : ∀ x y, ψ x y = lam (∑ i, ∑ j, x i * A i j * σ (y j)) := by
     intro x y
     conv_lhs => rw [pi_eq_sum_univ' x, pi_eq_sum_univ' y]
-    simp only [map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.sum_apply]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
     have h1 := hadj (σ (y j)) (x i • Pi.single i 1) (Pi.single j 1)

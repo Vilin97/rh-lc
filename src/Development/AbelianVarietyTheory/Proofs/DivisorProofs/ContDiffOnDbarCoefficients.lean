@@ -21,7 +21,8 @@ theorem contDiffOn_repr_dbarAt {n : ℕ} {γ : V n → Alt n} {U : Set (V n)} (h
   have key : (fun v => (bas n).repr (dbarAt γ v) T) = fun v => ∑ a, ∑ S,
       GlobalTheory.dbar (fun x => (bas n).repr (γ x) S) v (coordVec a) * (bas n).repr (dzb a * bas n S) T := by
     funext v
-    simp only [dbarAt, coefwise, map_sum, Finset.mul_sum, mul_smul_comm, map_smul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [dbarAt, coefwise, map_sum, Finset.mul_sum, mul_smul_comm, map_smul,
       Finsupp.finsetSum_apply, Finsupp.smul_apply, smul_eq_mul]
   rw [key]
   exact ContDiffOn.sum fun a _ => ContDiffOn.sum fun S _ =>

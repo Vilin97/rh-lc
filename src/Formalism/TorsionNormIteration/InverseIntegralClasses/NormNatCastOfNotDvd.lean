@@ -154,7 +154,8 @@ lemma term_bound {p : ℕ} (hp : p.Prime) (hp1 : ‖(p : K)‖ < 1) (z : PowerSe
     rw [mul_comm]
     exact h
   rw [add_pow, Finset.sum_range_succ]
-  simp only [Nat.sub_self, pow_zero, mul_one, Nat.choose_self, Nat.cast_one, add_sub_cancel_right, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Nat.sub_self, pow_zero, mul_one, Nat.choose_self, Nat.cast_one, add_sub_cancel_right, map_sum,
     Finset.smul_sum]
   refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg (norm_nonneg _) fun m hm => ?_
   have hmd : m < d := Finset.mem_range.1 hm

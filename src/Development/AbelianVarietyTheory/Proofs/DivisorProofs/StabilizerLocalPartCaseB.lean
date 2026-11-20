@@ -29,10 +29,12 @@ theorem linear_iterated_integral {α β Y : Type} [MeasurableSpace α] [Measurab
     have : g k t = ∑ i, c i k t • f i := by
       funext y
       simp only [hg, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
-    rw [this, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [this, map_sum]
     simp only [map_smul, smul_eq_mul]
   simp only [e2]
-  rw [e1, key, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e1, key, map_sum]
   simp only [map_smul, smul_eq_mul]
 
 theorem linear_coneFin_eq : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E) (a b : ℕ)

@@ -100,7 +100,8 @@ theorem poleSolve' (hI : MeasInvStatement (E := E)) (r : ℕ) (X : Data E r) (G 
           deriv χ (rhF X x0 z) ^ 2 * Complex.normSq
             (∑ j, wd (nd X) j (fun w => ((rhF X x0 w : ℝ) : ℂ)) z * ξ j) := by
         simp only [wdb_ofReal_comp hcd hrd, wdb_ofReal hrd, mul_assoc, ← map_mul]
-        rw [← Finset.mul_sum, ← map_sum, norm_mul, Complex.norm_conj, mul_pow,
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [← Finset.mul_sum, ← map_sum, norm_mul, Complex.norm_conj, mul_pow,
           Complex.normSq_eq_norm_sq, Complex.norm_real, Real.norm_eq_abs, sq_abs]
       rw [e]
       by_cases hzS : z ∈ S

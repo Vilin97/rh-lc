@@ -51,9 +51,11 @@ theorem tateSt : TateSt := by
   refine ⟨fun i => ⟨hsum _, ?_⟩, fun i => hsum _, ?_, fun i j => ?_, ?_⟩
   · refine EigenSplit.mem_eigenSub.2 fun o => ?_
     have e1 := congrArg Φ (hL.1 i o)
-    simp only [map_sum, hΦ] at e1
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, hΦ] at e1
     have e2 : ∀ (c : ℂ_[p]) (t : P.T), P.actV o (c ⊗ₜ[ℤ_[p]] t) = c ⊗ₜ[ℤ_[p]] P.actT o t := fun c t => rfl
-    simp only [map_sum, e2, ← hflin]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, e2, ← hflin]
     rw [e1, Finset.smul_sum]
     refine Finset.sum_congr rfl fun m _ => ?_
     rw [TensorProduct.smul_tmul', map_mul]
@@ -63,9 +65,11 @@ theorem tateSt : TateSt := by
     exact PadicInt.isUnit_iff.1 hu
   · have hc : ∀ x : 𝓞_ℂ_[p], algebraMap 𝓞_ℂ_[p] ℂ_[p] x = (x : ℂ_[p]) := fun x => rfl
     have e := congrArg (fun x : c'.V W => algebraMap 𝓞_ℂ_[p] ℂ_[p] (β x)) (hL.2.1 i j)
-    simp only [map_sum, map_mul, map_intCast] at e
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, map_intCast] at e
     simp only [hc] at e
-    simp only [map_sum, LinearMap.sum_apply, Point.pairV_tmul, hpair]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.sum_apply, Point.pairV_tmul, hpair]
     simp only [Algebra.smul_def, map_mul, map_intCast]
     have e4 : ∀ m m', algebraMap ℤ_[p] ℂ_[p] u * ((Dw.EF (a m) (a m') : ℤ) : ℂ_[p]) * (((β (S i m) : 𝓞_ℂ_[p]) : ℂ_[p]) * ((β (T j m') : 𝓞_ℂ_[p]) : ℂ_[p])) =
         algebraMap ℤ_[p] ℂ_[p] u * (((β (S i m) : 𝓞_ℂ_[p]) : ℂ_[p]) * ((β (T j m') : 𝓞_ℂ_[p]) : ℂ_[p]) * ((Dw.EF (a m) (a m') : ℤ) : ℂ_[p])) :=

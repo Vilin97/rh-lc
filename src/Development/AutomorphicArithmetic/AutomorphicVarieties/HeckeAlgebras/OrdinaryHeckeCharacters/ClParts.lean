@@ -28,7 +28,8 @@ private theorem cl_proj {S : Type} [Group S] (ρ : Representation ℂ S M) (U : 
   haveI : Fintype (S ⧸ U) := Fintype.ofFinite _
   have hc : (Fintype.card (S ⧸ U) : ℂ) ≠ 0 := Nat.cast_ne_zero.2 Fintype.card_ne_zero
   refine ⟨(Fintype.card (S ⧸ U) : ℂ)⁻¹ • ∑ q : S ⧸ U, ρ q.out, fun y hy s => ?_, fun y hy => ?_, fun Y hY y hy => ?_⟩
-  · simp only [LinearMap.smul_apply, LinearMap.sum_apply, map_smul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [LinearMap.smul_apply, LinearMap.sum_apply, map_smul, map_sum]
     congr 1
     refine Fintype.sum_equiv (MulAction.toPerm s) _ _ fun q => ?_
     have h1 : (((s • q : S ⧸ U).out : S) : S ⧸ U) = ((s * q.out : S) : S ⧸ U) := by
@@ -89,12 +90,14 @@ private theorem cl_avg {G : Type} [Group G] (ρ : Representation ℂ G M) (K : S
   have hfi : ∀ s ∈ (⨅ i : f.support, U i).subgroupOf S, ∀ i ∈ f.support, ρ s (f i) = f i := fun s hs i hi =>
     hfix i _ (Subgroup.mem_iInf.1 (Subgroup.mem_subgroupOf.1 hs) ⟨i, hi⟩)
   have hχ1 : ∀ s ∈ (⨅ i : f.support, U i).subgroupOf S, χ s = 1 := fun s hs => hinj _ _ (by
-    rw [← hχ, one_smul, ← hsum, Finsupp.sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hχ, one_smul, ← hsum, Finsupp.sum, map_sum]
     exact Finset.sum_congr rfl (hfi s hs))
   have hPF : P F = F := hP2 F fun s => by
     rw [hρ', hχ, smul_smul, inv_mul_cancel₀ (hne _ _ (hχ s)), one_smul]
   have : F = ∑ i ∈ f.support, P (f i) := by
-    rw [← map_sum, ← hPF, ← hsum]; rfl
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, ← hPF, ← hsum]; rfl
   have key : ∀ i ∈ f.support, P (f i) ∈ ⨆ i, Y i ⊓ clE ρ K F := fun i hi => by
     refine Submodule.mem_iSup_of_mem i ⟨hP3 _ (fun s y hy => ?_) _ (hf i), fun k hk a ha => ?_⟩
     · exact (Y i).smul_mem _ (hst i s s.2.1 y hy)

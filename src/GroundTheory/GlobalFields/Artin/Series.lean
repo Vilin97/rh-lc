@@ -44,7 +44,8 @@ theorem cosetAverage_smul (I : Subgroup G) [Finite I] (c : ℂ) (f : G → ℂ) 
 theorem cosetAverage_conj_apply (I : Subgroup G) [Finite I] (f : G → ℂ) (g : G) :
     cosetAverage I (fun x => conj (f x)) g = conj (cosetAverage I f g) := by
   have := Fintype.ofFinite I
-  simp only [cosetAverage_eq_sum, map_mul, map_inv₀, map_natCast, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [cosetAverage_eq_sum, map_mul, map_inv₀, map_natCast, map_sum]
 
 theorem cosetAverage_one (I : Subgroup G) [Finite I] (g : G) : cosetAverage I 1 g = 1 := by
   have := Fintype.ofFinite I

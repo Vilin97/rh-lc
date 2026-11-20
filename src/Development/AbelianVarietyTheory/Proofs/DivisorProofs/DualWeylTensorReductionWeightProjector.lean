@@ -74,14 +74,16 @@ theorem blockRed_wComp_rowW (O : Type) [CommRing O] (N : ℕ) {ι : Type} [Decid
       weightedHomogeneousComponent (blockW N τ) v (blockRed O N ϖ τ f) := by
   classical
   conv_rhs => rw [f.as_sum]
-  rw [weightedHomogeneousComponent_apply, map_sum, map_sum, map_sum, Finset.sum_filter]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [weightedHomogeneousComponent_apply, map_sum, map_sum, map_sum, Finset.sum_filter]
   refine Finset.sum_congr rfl fun d _ => ?_
   simp only [blockRed_eq_rename_map, map_monomial, rename_monomial]
   rw [wComp_monomial_eq_ite, weight_blockW_mapDomain_self]
 
 theorem blockRed_isWeightedHomogeneous_zero (O : Type) [CommRing O] (N : ℕ) {ι : Type} [DecidableEq ι] (ϖ : O) {τ σ : ι} (h : σ ≠ τ)
     (f : MvPolynomial (Fin N × Fin N) O) : IsWeightedHomogeneous (blockW N τ) (blockRed O N ϖ σ f) 0 := by
-  rw [blockRed_eq_rename_map, f.as_sum, map_sum, map_sum, ← mem_weightedHomogeneousSubmodule]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [blockRed_eq_rename_map, f.as_sum, map_sum, map_sum, ← mem_weightedHomogeneousSubmodule]
   refine Submodule.sum_mem _ fun d _ => ?_
   rw [mem_weightedHomogeneousSubmodule, map_monomial, rename_monomial]
   exact isWeightedHomogeneous_monomial _ _ _ (weight_blockW_mapDomain_of_ne N h d)

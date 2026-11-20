@@ -17,7 +17,8 @@ theorem clm_sum {M : Type} [NormedAddCommGroup M] [NormedSpace ℝ M] (ℓ : (Fi
   have : s = ∑ i, s i • ev i := by
     funext j; simp [ev, Finset.sum_apply, Pi.single_apply]
   conv_lhs => rw [this]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp [map_smul]
 
 section Real

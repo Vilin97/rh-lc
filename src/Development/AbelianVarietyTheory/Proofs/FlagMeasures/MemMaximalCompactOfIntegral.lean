@@ -40,7 +40,8 @@ theorem stab_span_of_integral {L : LocE F E} {r k : ℕ} (S : Frames L r k) (h :
   · rw [hN, Submodule.span_le]
     rintro _ ⟨j, rfl⟩
     have key : g j = h (∑ i, si i j • g i) := by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simp_rw [map_smul, hg, Finset.smul_sum, smul_smul]
       rw [Finset.sum_comm]
       simp_rw [← Finset.sum_smul]

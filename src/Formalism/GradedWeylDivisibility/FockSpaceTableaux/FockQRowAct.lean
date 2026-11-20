@@ -153,7 +153,8 @@ private lemma coeff_zero_rowAct_eq {r n : ℕ} (h : Matrix (Fin r) (Fin r) ℚ) 
   | add p q hp hq => rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq]
   | mul_X p v hp =>
     have hx : constantCoeff (rowAct ℚ h (X v)) = 0 := by
-      rw [rowAct_X_eq_sum_C_mul_X, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [rowAct_X_eq_sum_C_mul_X, map_sum]
       simp
     change constantCoeff (rowAct ℚ h (p * X v)) = constantCoeff (p * X v)
     rw [map_mul, map_mul, hx, map_mul, MvPolynomial.constantCoeff_X, mul_zero, mul_zero]
@@ -168,7 +169,8 @@ private lemma pderiv_rowAct_eq_sum_C_mul_rowAct_pderiv {r n : ℕ} (h : Matrix (
   | add p q hp hq => simp only [map_add, hp, hq, mul_add, Finset.sum_add_distrib]
   | mul_X p v hp =>
     have e1 : pderiv w (rowAct ℚ h (X v)) = if v.2 = w.2 then C (h v.1 w.1) else 0 := by
-      rw [rowAct_X_eq_sum_C_mul_X, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [rowAct_X_eq_sum_C_mul_X, map_sum]
       simp only [pderiv_C_mul, pderiv_X, Pi.single_apply]
       by_cases hv : v.2 = w.2
       · rw [if_pos hv, Finset.sum_eq_single w.1]

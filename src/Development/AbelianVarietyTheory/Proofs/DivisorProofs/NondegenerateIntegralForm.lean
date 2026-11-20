@@ -18,7 +18,8 @@ theorem det_gram_ne_zero {L : Type} [AddCommGroup L] {κ : Type} [Fintype κ] [D
     apply b.ext
     intro j
     have := congrFun hc j
-    simpa [Matrix.vecMul, dotProduct, map_sum, map_smul, mul_comm] using this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [Matrix.vecMul, dotProduct, map_sum, map_smul, mul_comm] using this
   have h1 : ∑ i, c i • b i = 0 := hB (hx.trans (map_zero B).symm)
   funext i
   exact Fintype.linearIndependent_iff.mp b.linearIndependent c h1 i
@@ -40,7 +41,8 @@ theorem nondeg_afP : ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (z : AfP p ⊗[�
   have hM : M.mulVec c = 0 := by
     funext i
     have := hz (bA i)
-    rw [hzs, map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hzs, map_sum] at this
     simpa [Matrix.mulVec, dotProduct, M, hg, mul_comm] using this
   have hdet : IsUnit M.det := by
     rw [show M.det = Int.castRingHom (AfP p) (Matrix.of fun i j => D.EF (b i) (b j)).det from

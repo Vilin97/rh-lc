@@ -11,7 +11,8 @@ private theorem tri_zero {Γ k : Type} [Group Γ] [Field k] (r : Γ →* M4 k) (
   have hexp : ∀ Y : M4 k, F Y = ∑ a, ∑ b, Y a b * F (Matrix.single a b 1) := by
     intro Y
     conv_lhs => rw [Matrix.matrix_eq_sum_single Y]
-    simp only [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum]
     refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
     rw [show Matrix.single a b (Y a b) = Y a b • Matrix.single a b (1 : k) by
       rw [Matrix.smul_single, smul_eq_mul, mul_one], map_smul, smul_eq_mul]

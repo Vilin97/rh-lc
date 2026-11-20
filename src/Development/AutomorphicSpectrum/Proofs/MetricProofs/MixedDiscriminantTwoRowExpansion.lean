@@ -51,7 +51,8 @@ theorem pderiv_C_mul_xt {σ : Type*} [DecidableEq σ] (j : σ) (a : ℝ) (p : Mv
 
 theorem linear_form_linear_combination (a b : ℝ) (n m : Fin 3 → ℝ) :
     lin4 (fun i => a * n i + b * m i) = C a * lin4 n + C b * lin4 m := by
-  simp only [lin4, lin3, map_sum, map_mul, rename_X, rename_C, Finset.mul_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [lin4, lin3, map_sum, map_mul, rename_X, rename_C, Finset.mul_sum,
     ← Finset.sum_add_distrib, map_add]
   refine Finset.sum_congr rfl fun i _ => ?_
   ring
@@ -99,13 +100,15 @@ theorem mdisc_extract_two : ∀ (d : ℕ) (T : Fin 3 → Matrix (Fin d) (Fin d) 
       ∑ r, C (u r 0) * ∑ s, C (u (r.succAbove s) 1) *
         ∏ t, rowW (u (r.succAbove (s.succAbove t))) (v (r.succAbove (s.succAbove t))) := by
     rw [derivation_prod_succAbove_xt]
-    simp only [pderiv_rowW_zero_xt, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [pderiv_rowW_zero_xt, map_sum]
     refine Finset.sum_congr rfl fun r _ => ?_
     rw [pderiv_C_mul_xt, derivation_prod_succAbove_xt]
     simp only [pderiv_rowW_one_xt]
   show ((d + 2).factorial : ℂ) * mdisc (fun r => blk ((u r 0 : ℂ) * e₀) (blk ((u r 1 : ℂ) * e₁) (M r))) = _
   rw [h1, h4]
-  simp only [h2, h3, map_sum, map_mul, map_prod, evalW_C_xt, hLC, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [h2, h3, map_sum, map_mul, map_prod, evalW_C_xt, hLC, Finset.mul_sum]
   refine Finset.sum_congr rfl fun r _ => Finset.sum_congr rfl fun s _ => ?_
   ring
 

@@ -55,7 +55,8 @@ theorem trace_end_finite_order {K : Type} [Field K] {W : Type} [AddCommGroup W] 
   set B := σ.mapMatrix A with hB
   have hBm : B ^ m = 1 := by rw [hB, ← map_pow, hAm, map_one]
   have hσtr : σ (A.trace) = B.trace := by
-    simp [Matrix.trace, hB, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Matrix.trace, hB, map_sum]
   obtain ⟨h1, h2⟩ := trace_finite_order B m hm hBm
   rw [htr, hσtr]
   refine ⟨by simpa using h1, ?_⟩

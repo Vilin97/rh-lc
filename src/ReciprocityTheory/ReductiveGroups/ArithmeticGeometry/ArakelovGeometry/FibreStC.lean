@@ -183,7 +183,8 @@ theorem Gen.trace_w {w : Fin (D + 1) → ℂ} (hw : G.Good w) (Tr : Ω → Ω)
   rw [map_sub, map_mul, map_pow, sub_eq_zero] at hwk
   have hTrw : deh w 0 (G.TrP H) =
       ((G.P.map (deh w 0)).roots.map fun ρ => H.eval₂ (deh w 0) ρ).sum := by
-    rw [Gen.TrP, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Gen.TrP, map_sum]
     simp only [map_mul, G.deh_S, Polynomial.eval₂_eq_sum_range]
     generalize (G.P.map (deh w 0)).roots = s
     refine Multiset.induction_on s ?_ ?_

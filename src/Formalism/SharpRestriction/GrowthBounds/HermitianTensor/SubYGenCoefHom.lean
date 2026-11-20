@@ -91,7 +91,8 @@ theorem mAH_subY_mid {A S : Type} [CommRing A] [CommRing S] [Algebra A S] (r : �
     (f : MvPolynomial (Fin r × Fin r) A →ₐ[A] S) (a : Fin (r + 1 + 1)) (j : Fin r) :
     mapAlgHom f (subY A r (X (a, midI r j))) = ∑ i : Fin r, C (f (X (i, j))) * X (a, midI r i) := by
   rw [subY_X_mid]
-  simp only [map_sum, map_mul, mAH_C, mAH_X]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, mAH_C, mAH_X]
 
 theorem mAH_subY_none {A S : Type} [CommRing A] [CommRing S] [Algebra A S] (r : ℕ)
     (f : MvPolynomial (Fin r × Fin r) A →ₐ[A] S) (a t : Fin (r + 1 + 1)) (h : midOf t = none) :
@@ -194,7 +195,8 @@ theorem subY_coefHom (A : Type) [CommRing A] (r : ℕ) (ν : Fin (r + 1 + 1) →
     (hv : IsWeightedHomogeneous (colW (r + 1 + 1) (r + 1 + 1)) v ν) :
     CoefHom (fun j => ν (midI r j)) (subY A r v) := by
   classical
-  rw [v.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [v.as_sum, map_sum]
   apply CoefHom.sum
   intro m hm
   have hw : Finsupp.weight (colW (r + 1 + 1) (r + 1 + 1)) m = ν := hv (mem_support_iff.mp hm)

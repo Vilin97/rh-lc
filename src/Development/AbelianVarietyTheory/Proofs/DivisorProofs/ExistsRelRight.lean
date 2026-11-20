@@ -20,7 +20,8 @@ theorem repr_map_eq_sum {R M N ι κ : Type} [CommRing R] [AddCommGroup M] [Modu
     [Fintype ι] (b : Module.Basis ι R M) (b' : Module.Basis κ R N) (φ : M →ₗ[R] N) (u : M) (m : κ) :
     b'.repr (φ u) m = ∑ l, b.repr u l * b'.repr (φ (b l)) m := by
   conv_lhs => rw [← b.sum_repr u]
-  simp only [map_sum, map_smul, Finsupp.finsetSum_apply, Finsupp.smul_apply, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, Finsupp.finsetSum_apply, Finsupp.smul_apply, smul_eq_mul]
 
 theorem repr_proj {R M N ι κ : Type} [CommRing R] [AddCommGroup M] [Module R M] [AddCommGroup N] [Module R N]
     (b : Module.Basis ι R M) (b' : Module.Basis κ R N) (φ : M →ₗ[R] N) (σ : κ → ι) (hσ : Function.Injective σ)
@@ -59,7 +60,8 @@ theorem norm_le_of_rel {X : Scheme.{0}} {ι κ n : Type} [Fintype κ] [Fintype n
     have key : ∀ k, valF (spMap (intO C).subtype ≫ w) _ (a m k) =
         ∑ l, valF (spMap (intO C).subtype ≫ w) _ (B m l) *
           valF (spMap (intO C).subtype ≫ w) _ (c l k) := fun k => by
-      rw [← valHom_resG _ h hU, hB _ h₀ h h₁, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← valHom_resG _ h hU, hB _ h₀ h h₁, map_sum]
       refine Finset.sum_congr rfl fun l _ => ?_
       rw [map_mul, valHom_resG, valHom_resG]
     have eq : ∑ k, cf k * valF (spMap (intO C).subtype ≫ w) _ (a m k) =

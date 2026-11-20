@@ -77,7 +77,8 @@ theorem trSq_reindex [Fintype ι] {κ : Type} [Fintype κ] (e : κ ≃ ι)
     ptLocalDualMap φ D M inv h
         (reindexAdd (fun v => cohomology (Rep.res (φ v).toMonoidHom M) r) e (fun k => Ex k (x k))) y =
       ε • zmodToQZ N (∑ k, P k (x k) (resY k (Ey.symm y))) := by
-  rw [ptLocalDualMap_reindex, map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [ptLocalDualMap_reindex, map_sum, Finset.smul_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [← hQ, hres, AddEquiv.apply_symm_apply]
 

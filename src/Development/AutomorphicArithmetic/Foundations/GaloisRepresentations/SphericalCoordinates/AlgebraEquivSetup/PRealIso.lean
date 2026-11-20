@@ -157,12 +157,14 @@ theorem UpperTheory.Gal.W2.Seed.pRealIso :
             simp [Pi.single_apply, hτ]
           · simp
         · simp [F, Pi.single_apply, hi]
-      rw [hFx, map_sum] at h1
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hFx, map_sum] at h1
       rw [← h1]
       exact Finset.sum_congr rfl fun τ _ => by rw [dec φ (τ, i) (τ.1 (x : E))]; ring
     apply hφ0
     refine LinearMap.ext fun z => ?_
-    rw [LinearMap.zero_apply, ← Finset.univ_sum_single z, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [LinearMap.zero_apply, ← Finset.univ_sum_single z, map_sum]
     refine Finset.sum_eq_zero fun p _ => ?_
     obtain ⟨τ, i⟩ := p
     rw [dec, (huv i τ).1, (huv i τ).2]

@@ -71,7 +71,8 @@ theorem fixed_ne_bot : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E], U
       rw [hpx] at h1
       rw [← hu i]
       exact h1
-    rw [Finset.sum_congr rfl hterm, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_congr rfl hterm, ← map_sum]
     have hs : ∑ i ∈ c.support, c i = (⟨φ, hφπ⟩ : π) := hsum
     rw [hs]
     apply Subtype.ext

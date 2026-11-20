@@ -35,7 +35,8 @@ theorem exists_repr_eq_trace (r : Fin (Module.finrank F E)) :
   classical
   refine ⟨(Module.finBasis F E).traceDual r, fun x => ?_⟩
   conv_rhs => rw [← (Module.finBasis F E).sum_repr x]
-  rw [Finset.mul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.mul_sum, map_sum]
   simp only [mul_smul_comm, map_smul, Module.Basis.trace_traceDual_mul]
   simp
 

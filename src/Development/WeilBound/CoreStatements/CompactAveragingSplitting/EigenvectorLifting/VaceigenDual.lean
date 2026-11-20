@@ -105,7 +105,8 @@ theorem form_eq (J : Matrix (Fin d) (Fin d) E) (y x : Fin d → E) : form σ J y
 
 theorem trF_incV (J : Matrix (Fin d) (Fin d) E) (y x : Fin d → E) :
     trF σ J y (incV x) = algebraMap F (AF F) (Algebra.trace F E (form σ J y x)) := by
-  rw [← trace_incl, form_eq, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← trace_incl, form_eq, map_sum]
   simp only [map_mul]
   rfl
 
@@ -146,9 +147,11 @@ theorem exists_tr_rep (hσ : ∀ x, σ (σ x) = x) {J : Matrix (Fin d) (Fin d) E
     exact ⟨b, fun e => LinearMap.congr_fun hb e⟩
   choose b hb using h
   refine ⟨b ᵥ* J⁻¹, fun x => ?_⟩
-  rw [form_eq, Matrix.vecMul_vecMul, Matrix.nonsing_inv_mul _ hJ, Matrix.vecMul_one, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [form_eq, Matrix.vecMul_vecMul, Matrix.nonsing_inv_mul _ hJ, Matrix.vecMul_one, map_sum]
   simp only [hb, hσ]
-  rw [← map_sum, Finset.univ_sum_single]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum, Finset.univ_sum_single]
 
 theorem mem_latW {B : Base F E} (hB : B.IsGood σ) {W : Spc F E d} {r s : ℕ} (hW : W.IsSkew σ B r s) (v : Pl F)
     {w : Fin d → AE F E} (hw : At (evFin F v) w)
@@ -176,7 +179,8 @@ theorem mem_latW {B : Base F E} (hB : B.IsGood σ) {W : Spc F E d} {r s : ℕ} (
       simp only [trF_incV, ← hu]
       ext j
       conv_lhs => rw [hid x]
-      simp only [incV, Finset.sum_apply, Pi.smul_apply, map_sum, algebraMap_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [incV, Finset.sum_apply, Pi.smul_apply, map_sum, algebraMap_smul]
       exact Finset.sum_congr rfl fun i _ =>
         map_smul (Algebra.TensorProduct.includeRight : E →ₐ[F] AF F ⊗[F] E) _ _
     | zero => simp
@@ -225,7 +229,8 @@ theorem symp_vecMulVec (hσ : ∀ x, σ (σ x) = x) (JA : Matrix (Fin n) (Fin n)
   rw [symp, neg_one_mul, map_neg]
   change _ = -Algebra.trace _ _ _
   congr 2
-  simp only [hTens, incM, incV, Matrix.map_apply, Matrix.vecMulVec_apply, Matrix.vecMul, dotProduct, map_sum, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hTens, incM, incV, Matrix.map_apply, Matrix.vecMulVec_apply, Matrix.vecMul, dotProduct, map_sum, map_mul,
     cA_incl, hσ, Finset.sum_mul, Finset.mul_sum]
   symm
   rw [Finset.sum_comm]
@@ -247,7 +252,8 @@ theorem mem_latAtV {B : Base F E} (hB : B.IsGood σ) {X : Spc F E n} {W : Spc F 
   have huL : ∀ i, u i ∈ X.L := fun i => (hX.dual _).2 fun x hx => by
     obtain ⟨c, hc⟩ := hf i x hx
     have e : form σ X.J (u i) x = σ (f i x) := by
-      rw [form_eq, hu, LinearMap.pi_apply_eq_sum_univ (f i) x, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [form_eq, hu, LinearMap.pi_apply_eq_sum_univ (f i) x, map_sum]
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [smul_eq_mul, map_mul, mul_comm]
       have : (fun j => if k = j then (1 : E) else 0) = Pi.single k 1 := funext fun j => by
@@ -260,7 +266,8 @@ theorem mem_latAtV {B : Base F E} (hB : B.IsGood σ) {X : Spc F E n} {W : Spc F 
     have e : ∀ k, ∑ i, incV (F := F) (g i) p * incV (a i) k = (1 : Matrix (Fin n) (Fin n) (AE F E)) p k := fun k => by
       have := congrFun (hid (Pi.single k 1)) p
       simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul] at this
-      simp only [incV, ← map_mul, ← map_sum, mul_comm (g _ p), a, ← this, Pi.single_apply, Matrix.one_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [incV, ← map_mul, ← map_sum, mul_comm (g _ p), a, ← this, Pi.single_apply, Matrix.one_apply]
       split_ifs <;> simp
     simp only [Matrix.sum_apply, Matrix.vecMulVec_apply, Matrix.vecMul, dotProduct, Finset.mul_sum, ← mul_assoc]
     rw [Finset.sum_comm]

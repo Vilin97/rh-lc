@@ -23,7 +23,8 @@ private theorem extDeriv_comp_linear_eq_of_differentiableAt {V W : Type} [Normed
     intro u
     exact M.hasFDerivAt.comp p
       ((hf.hasFDerivAt.continuousAlternatingMap_apply_const (A ∘ u)).comp p A.hasFDerivAt)
-  rw [extDeriv_apply hd, extDeriv_apply hf, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [extDeriv_apply hd, extDeriv_apply hf, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [(key _).fderiv, fderiv_continuousAlternatingMap_apply_const hf]
   simp

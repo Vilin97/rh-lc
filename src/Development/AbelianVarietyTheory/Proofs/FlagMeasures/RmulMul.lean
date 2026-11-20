@@ -145,7 +145,8 @@ theorem pairing (L : LocE F E) {r k : ℕ} (S : Frames L r k)
   have h2 : ∀ (y : S.V) (c : Fin (r + 1) → E) (x : Fin (r + 1) → S.V),
       S.h y (∑ i, c i • x i) = ∑ i, L.cj (c i) * S.h y (x i) := by
     intro y c x
-    simp only [Frames.h, hf, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum, map_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Frames.h, hf, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum, map_mul,
       Finset.mul_sum]
     conv_rhs => rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun i _ => ?_

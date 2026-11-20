@@ -52,7 +52,8 @@ theorem exists_isFieldDec_one (R : Type) [CommRing R] [IsArtinianRing R] [IsRedu
       rw [hsing, ← map_mul, ← Pi.single_mul, hb]
   · intro m n hmn
     rw [hsing, AlgEquiv.apply_symm_apply, Pi.single_eq_of_ne hmn, Pi.single_zero, map_zero]
-  · rw [← map_sum, Finset.univ_sum_single]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [← map_sum, Finset.univ_sum_single]
     exact map_one φ.symm
 
 theorem isFieldDec_sigma {A : Type} [CommRing A] {P : Type} [Fintype P] {u : P → A}
@@ -97,7 +98,8 @@ theorem isFieldDec_section (hcs : ∀ y, c (s y) = y) (hmul : ∀ y z, s y * z =
     rw [hmul, hss, hy]
   · intro i j hij
     rw [hss, hg.orth i j hij, map_zero]
-  · rw [← map_sum, hg.sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [← map_sum, hg.sum]
 
 theorem nonDiscreteAt_section [TopologicalSpace A] [Field k] [TopologicalSpace k] [(𝓝[≠] (0 : k)).NeBot] [Algebra k R]
     [TopologicalSpace R] [ContinuousSMul k R] (hs : Continuous s) (hcs : ∀ y, c (s y) = y)
@@ -240,12 +242,14 @@ theorem exists_dec_adeles (S : Finset (HeightOneSpectrum (𝓞 F))) {e : AF F �
     Sum.elim (fun w => singleInf E w 1) (fun v => GlobalTheory.AdelicU.Supp.singleTens E v.1 1)
   have hsum : ∑ p, u p = e := by
     refine GlobalTheory.AdelicU.Supp.adTens_ext (fun w => ?_) fun v => ?_
-    · rw [h1, map_sum, Fintype.sum_sum_type, Finset.sum_eq_single w]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [h1, map_sum, Fintype.sum_sum_type, Finset.sum_eq_single w]
       · simp [u, compInf_singleInf_self]
       · intro b _ hb
         simp [u, compInf_singleInf_ne hb.symm]
       · exact fun h => absurd (Finset.mem_univ w) h
-    · rw [map_sum, Fintype.sum_sum_type]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [map_sum, Fintype.sum_sum_type]
       have hi : ∑ x : InfinitePlace F, compFin F E v (u (Sum.inl x)) = 0 :=
         Finset.sum_eq_zero fun x _ => compFin_singleInf v x _
       rw [hi, zero_add]

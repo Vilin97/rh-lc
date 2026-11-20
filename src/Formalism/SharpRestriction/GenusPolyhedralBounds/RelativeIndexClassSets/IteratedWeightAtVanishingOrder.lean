@@ -255,13 +255,15 @@ variable (X : PJ D B P j) (la : HeightOneSpectrum (𝓞 B.KO)) {N : ℕ} {wL w0 
 theorem psi_zPoly (al : Fin (WeightFamilies.dimY D j) → ℕ) (θ : B.Cusp j w0) :
     psi X la N (SizeBoundsAlt.zPoly X w al θ) = secPow X la w al * emb X la N (X.inc w0 θ) := by
   unfold SizeBoundsAlt.zPoly secPow sec psi
-  simp only [map_mul, map_prod, map_pow, map_sum, MvPolynomial.eval₂Hom_X', MvPolynomial.eval₂Hom_C, Algebra.smul_def]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_mul, map_prod, map_pow, map_sum, MvPolynomial.eval₂Hom_X', MvPolynomial.eval₂Hom_C, Algebra.smul_def]
 
 theorem coe_zSum (ka : WeightFamilies.Wt D j) (al : Fin (WeightFamilies.dimY D j) → ℕ) (θ : B.Cusp j w0)
     (zc : (Idx D j N →₀ ℕ) →₀ B.Cusp j ka) (h : ∀ β, X.inc ka (zc β) = (SizeBoundsAlt.zPoly X w al θ).coeff β) :
     ((∑ β ∈ zc.support, jF X la N (MvPolynomial.monomial β 1) • uV X la N ka (zc β) : ↥(Vw X la N ka)) : Rp X la N) =
       secPow X la w al * emb X la N (X.inc w0 θ) := by
-  rw [← psi_zPoly, SizeBoundsAlt.polynomial_eq_sum_monomials (inc := fun w => (X.inc w).toAddMonoidHom) zc h, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← psi_zPoly, SizeBoundsAlt.polynomial_eq_sum_monomials (inc := fun w => (X.inc w).toAddMonoidHom) zc h, map_sum,
     AddSubmonoidClass.coe_finsetSum]
   refine Finset.sum_congr rfl fun β _ => ?_
   rw [psi_monomial, Submodule.coe_smul, coe_uV]

@@ -14,7 +14,8 @@ theorem theta_xi_eq_zero [IsDomain O] {ε : PreTilt O p} (hε : IsPrimitiveSyste
     WittVector.fontaineTheta O p (xi ε) = 0 := by
   have h1 : IsPrimitiveRoot (zeta ε 1) p := by simpa using hε 1
   have h2 := h1.geom_sum_eq_zero (Fact.out : p.Prime).one_lt
-  rw [xi, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [xi, map_sum]
   simpa [map_pow, WittVector.fontaineTheta_teichmuller, zeta] using h2
 
 theorem ghost_mu_eq_zero [IsDomain O] {ε : PreTilt O p} (hε : IsPrimitiveSystem ε) (n : ℕ) :

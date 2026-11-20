@@ -79,7 +79,8 @@ theorem lt_norm_sum_smul_tiltSharp {ι : Type*} [Fintype ι] {w : ι → C♭} {
   set A : C := ((∑ i, d i).untilt : C) with hA
 
   have hAn : ‖A‖ = ‖∑ i, algebraMap 𝒪K♭ K♭ (a i) • w i‖ := by
-    rw [hA, ← tiltSharp_algebraMap, norm_tiltSharp, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hA, ← tiltSharp_algebraMap, norm_tiltSharp, map_sum]
     simp only [hdw]
   have hsw : ∀ i, ‖tiltSharp C p (w i)‖ ≤ 1 := fun i => by rw [norm_tiltSharp]; exact hw1 i
 

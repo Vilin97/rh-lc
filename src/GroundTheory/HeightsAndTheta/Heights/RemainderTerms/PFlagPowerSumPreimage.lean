@@ -26,7 +26,8 @@ theorem FlagPowerSumPreimage.proof : FlagPowerSumPreimage.Statement := by
   intro N T hT
   choose Sf hSf using fun l => Flag.exists_powerSumHom_eq (hT l)
   refine ⟨∑ i : Fin N, X i * Sf (i.val + 1), ?_, ?_⟩
-  · rw [sum_Icc_one_eq_sum_fin N (fun l => psum (Fin N) ℚ l * T l), map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [sum_Icc_one_eq_sum_fin N (fun l => psum (Fin N) ℚ l * T l), map_sum]
     refine Finset.sum_congr rfl (fun i _ => ?_)
     rw [map_mul, hSf]
     simp [powerSumHom]

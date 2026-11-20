@@ -99,7 +99,8 @@ theorem IsAdicSum.map {S : Type*} [CommRing S] {J : Ideal S} (f : R →+* S) (hf
     {a : ℕ → R} {s : R} (hs : IsAdicSum I a s) : IsAdicSum J (fun n => f (a n)) (f s) := fun k => by
   obtain ⟨N, hN⟩ := hs k
   refine ⟨N, fun M hM => ?_⟩
-  rw [← map_sum, ← map_sub]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum, ← map_sub]
   exact (Ideal.pow_right_mono hf k).trans (Ideal.le_comap_pow f k) (hN M hM)
 
 theorem IsAdicSum.mem {J : Ideal R} {k : ℕ} (hJ : I ^ k ≤ J) {a : ℕ → R} {s : R}
@@ -237,7 +238,8 @@ theorem xi_sub_pow_mem (ε : 𝒪♭) :
   haveI := IsPerfectoidField.isDomain_preTilt (K := K) p
   rw [mem_span_p_iff_coeff_zero_eq_zero, ← WittVector.constantCoeff_apply,
     AInf.frobeniusEquiv_symm_mu, AInf.xi]
-  simp only [map_sub, map_sum, map_pow, map_one, WittVector.constantCoeff_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sub, map_sum, map_pow, map_one, WittVector.constantCoeff_apply,
     teichmuller_coeff_zero]
   set e := (_root_.frobeniusEquiv 𝒪♭ p).symm ε
   have h1 := geom_sum_mul e p

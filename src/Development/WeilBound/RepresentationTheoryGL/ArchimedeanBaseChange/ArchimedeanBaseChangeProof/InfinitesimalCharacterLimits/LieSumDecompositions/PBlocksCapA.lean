@@ -55,7 +55,8 @@ theorem capR_expand {n : Fin 2 → ℕ} (τ : E →+* ℂ) (w : ℂ) (G : Sm E (
     rw [CapFactor.std_zero, CapFactor.std_zero]
   rw [e1, ← CapFactor.lev_eq_leviEmb n h] at key
   change (capR (n 0) (n 1) τ w G).1 _ = (cap τ w θ).1 p.1 at key
-  rw [key, hθ, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [key, hθ, map_sum]
   simp [Finset.sum_apply, mul_comm]
 
 theorem capS_expand {n : Fin 2 → ℕ} (τ : E →+* ℂ) (w : ℂ) (G : Sm E (n 0 + n 1)) {k : ℕ}
@@ -73,7 +74,8 @@ theorem capS_expand {n : Fin 2 → ℕ} (τ : E →+* ℂ) (w : ℂ) (G : Sm E (
     rw [CapFactor.std_one, CapFactor.std_one]
   rw [e1, ← CapFactor.lev_eq_leviEmb n h] at key
   change (capS (n 0) (n 1) τ w G).1 _ = (cap τ w θ).1 p.2 at key
-  rw [key, hθ, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [key, hθ, map_sum]
   simp [Finset.sum_apply]
 
 end PositivityTheory.Rg.BcB.SpectralAccumulation.Cz.BlockCapelli

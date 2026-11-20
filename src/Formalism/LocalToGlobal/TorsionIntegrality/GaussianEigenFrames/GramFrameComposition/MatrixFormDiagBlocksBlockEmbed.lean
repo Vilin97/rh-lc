@@ -238,7 +238,8 @@ theorem GramTransfer_of (hM : MulRing) (hI : IotaOK) : GramTransfer := by
       ∑ w, g.symm (Pi.single w 1) q * z w = g.symm z q := by
     intro z q
     conv_rhs => rw [eq_sum_single z]
-    rw [map_sum, Finset.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_apply]
     refine Finset.sum_congr rfl fun w _ => ?_
     rw [map_smul, Pi.smul_apply, smul_eq_mul, mul_comm]
   refine ⟨fun w x => ι (Y x w),
@@ -252,7 +253,8 @@ theorem GramTransfer_of (hM : MulRing) (hI : IotaOK) : GramTransfer := by
   · intro a' i b' j
     show ∑ w, ι (g.symm (Pi.single w 1) (a', i)) * ι (Y (b', j) w) = _
     simp_rw [← map_mul]
-    rw [← map_sum, hsum, hY, LinearEquiv.symm_apply_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, hsum, hY, LinearEquiv.symm_apply_apply]
     by_cases hab : a' = b' <;> simp [emb, hab]
   · intro x y
     show ∑ w, ι (Y x w) * ι (Y y w) = _
@@ -262,7 +264,8 @@ theorem GramTransfer_of (hM : MulRing) (hI : IotaOK) : GramTransfer := by
       refine Finset.sum_congr rfl fun w _ => ?_
       rw [hconj y w, map_mul ι (Y x w)]
       ring
-    rw [e1, ← map_sum, hgram x y]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e1, ← map_sum, hgram x y]
     by_cases hxy : x.1 = y.1 <;> simp [hxy]
 
 end Formalism.L2.Th1.GD

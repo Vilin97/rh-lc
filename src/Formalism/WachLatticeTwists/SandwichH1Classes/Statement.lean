@@ -85,7 +85,8 @@ variable {actO : G →* (OC ≃ₐ[ℤ_[ℓ]] OC)} {r : ℕ}
 lemma map_vecMul' (e : OC ≃ₐ[ℤ_[ℓ]] OC) (v : Fin r → OC) (A : Matrix (Fin r) (Fin r) OC) :
     (fun k => e ((v ᵥ* A) k)) = (fun k => e (v k)) ᵥ* A.map e := by
   funext k
-  simp only [Matrix.vecMul, dotProduct, map_sum, map_mul, Matrix.map_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.vecMul, dotProduct, map_sum, map_mul, Matrix.map_apply]
 
 def SL.rep (S : SL actO r) : Representation ℤ_[ℓ] G (Fin r → OC) where
   toFun g :=

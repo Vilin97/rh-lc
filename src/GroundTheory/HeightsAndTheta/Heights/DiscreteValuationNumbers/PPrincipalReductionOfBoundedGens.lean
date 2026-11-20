@@ -259,7 +259,8 @@ theorem exists_relation {N : Ideal A} {e : ℕ} (hN : N.spanFinrank ≤ e) (v : 
   · rw [← hc i]
     exact Ideal.Quotient.eq_zero_iff_mem.2 h
   · have hsum : (maximalIdeal A • (⊤ : Submodule A N)).mkQ (∑ i, c i • (⟨v i, hv i⟩ : N)) = 0 := by
-      rw [map_sum, ← hg]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, ← hg]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_smul, ← hc i, ← Ideal.Quotient.algebraMap_eq, algebraMap_smul]
       rfl

@@ -138,7 +138,8 @@ theorem unimod_coords {K W : Type} [Field K] [NumberField K] [StarRing K] [AddCo
     show e.equivFun (e.equivFun.symm y) i = y i
     rw [LinearEquiv.apply_symm_apply]
   have hB2 : ∀ i, HW.B (e i) x = ((Matrix.of fun i j => HW.B (e i) (e j)) *ᵥ fun j => star (y j)) i := fun i => by
-    rw [hxdef, e.equivFun_symm_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hxdef, e.equivFun_symm_apply, map_sum]
     simp only [LinearMap.map_smulₛₗ, starRingEnd_apply, smul_eq_mul, mulVec, dotProduct, Matrix.of_apply]
     exact Finset.sum_congr rfl fun j _ => mul_comm _ _
   have hyL : (∀ i, y i ∈ c i) ↔ x ∈ L := by rw [hL]; simp only [hrx]
@@ -155,7 +156,8 @@ theorem unimod_coords {K W : Type} [Field K] [NumberField K] [StarRing K] [AddCo
     rw [← HW.herm x' x]
     refine star_mem_one ?_
     conv => arg 2; rw [← e.sum_repr x']
-    rw [map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, LinearMap.sum_apply]
     refine Submodule.sum_mem _ fun i _ => ?_
     rw [map_smul, LinearMap.smul_apply, smul_eq_mul, mul_comm, ← mem_one_iff']
     exact (FractionalIdeal.mem_inv_iff (hc i)).1 (hx i) _ ((hL x').1 hx' i)
@@ -169,7 +171,8 @@ theorem det_gram_ne_zero {K W : Type} [Field K] [StarRing K] [AddCommGroup W] [M
   have hx : ∀ j, HW.B x (e j) = 0 := fun j => by
     have h1 := congrFun hw0 j
     simp only [vecMul, dotProduct, Matrix.of_apply, Pi.zero_apply] at h1
-    rw [hxdef, e.equivFun_symm_apply, map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hxdef, e.equivFun_symm_apply, map_sum, LinearMap.sum_apply]
     simpa only [map_smul, LinearMap.smul_apply, smul_eq_mul] using h1
   have hB : HW.B x = 0 := e.ext fun j => by rw [hx j, LinearMap.zero_apply]
   have hx0 : x = 0 := HW.nondeg x fun y => by rw [hB, LinearMap.zero_apply]
@@ -276,7 +279,8 @@ theorem unimod_fund : ∀ (K W : Type) [Field K] [NumberField K] [StarRing K] [A
     have h0 : Ψ v x = ∑ i, σ v (e.repr x i) • Ψ v (e i) := by
       conv_lhs => rw [← e.sum_repr x]
       change φ v _ = _
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       exact Finset.sum_congr rfl fun i _ => hsmul v _ _
     rw [Matrix.smul_mulVec, h0]
     congr 1

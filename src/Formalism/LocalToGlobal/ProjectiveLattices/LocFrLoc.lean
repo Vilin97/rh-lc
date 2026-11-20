@@ -63,7 +63,8 @@ theorem finrank_range_idem {V k : Type} [CommRing V] [IsLocalRing V] [Field k] [
   have htr : f (LinearMap.trace V _ e) = LinearMap.trace k _ e' := by
     rw [LinearMap.trace_eq_matrix_trace V (Pi.basisFun V (Fin n)),
       LinearMap.trace_eq_matrix_trace k (Pi.basisFun k (Fin n))]
-    simp only [Matrix.trace, Matrix.diag, LinearMap.toMatrix_apply, Pi.basisFun_apply, Pi.basisFun_repr, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.trace, Matrix.diag, LinearMap.toMatrix_apply, Pi.basisFun_apply, Pi.basisFun_repr, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     have := congrFun (h (Pi.single i 1)) i
     rw [hs i] at this

@@ -23,7 +23,8 @@ theorem eq_one_of_pow_eq_one {O : Type} [CommRing O] [IsDomain O] [IsLocalRing O
   rw [hz, sub_self] at e
   refine sub_eq_zero.1 ((mul_eq_zero.1 e).resolve_right fun h0 => ?_)
   have e' := congrArg (IsLocalRing.residue O) h0
-  simp only [map_sum, map_pow, h, one_pow, Finset.sum_const, Finset.card_range, nsmul_eq_mul, _root_.mul_one,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_pow, h, one_pow, Finset.sum_const, Finset.card_range, nsmul_eq_mul, _root_.mul_one,
     map_zero] at e'
   exact (hn.map (IsLocalRing.residue O)).ne_zero ((map_natCast _ n).trans e')
 

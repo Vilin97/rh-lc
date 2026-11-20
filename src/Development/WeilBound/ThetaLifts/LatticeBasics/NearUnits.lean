@@ -171,7 +171,8 @@ theorem bump : Bump := by
     let u₀ : Matrix (Fin n) (Fin d) (Fv F v) := of fun i j => -l (single i j 1)
     have el : ∀ Y, trace (Yᵀ * -u₀) = l Y := fun Y => by
       conv_rhs => rw [matrix_eq_sum_single Y]
-      simp only [← dot_ofM, dotProduct, ofM, Fintype.sum_prod_type, map_sum, u₀, Matrix.neg_apply, of_apply, neg_neg]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [← dot_ofM, dotProduct, ofM, Fintype.sum_prod_type, map_sum, u₀, Matrix.neg_apply, of_apply, neg_neg]
       exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by rw [← smul_eq_mul, ← map_smul]; simp
     refine Or.inr ⟨secM sec u₀ 0, psiV B.ψ v (l Y₀), psiV B.ψ v (l (g₀.1ᵀ * Y₀)), h.atM _ _, fun H => h2 ?_,
       mult _ (h.atM _ _) (h.sndM _ _) _ fun Y hY => ?_,

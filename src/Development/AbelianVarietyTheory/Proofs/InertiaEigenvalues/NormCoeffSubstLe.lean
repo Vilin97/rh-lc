@@ -50,7 +50,8 @@ theorem exists_bound (u : K⟦X⟧) (hu : ‖constantCoeff u‖ < 1) (k : ℕ) :
   have hρ0 : 0 < ρ := hρ0
   have hb := pow_bound u k hρ0 hr.le (fun j hj => (hρ j (Finset.mem_range.2 (by omega))).le)
   refine ⟨r, (ρ ^ k)⁻¹, hr, hr1, by positivity, fun p B hB hp => ?_⟩
-  rw [Polynomial.aeval_eq_sum_range, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Polynomial.aeval_eq_sum_range, map_sum]
   refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg (by positivity) fun n _ => ?_
   rw [coeff_smul, smul_eq_mul, norm_mul, le_inv_mul_iff₀ (pow_pos hρ0 k)]
   calc ρ ^ k * (‖p.coeff n‖ * ‖coeff k (u ^ n)‖) = ‖p.coeff n‖ * (‖coeff k (u ^ n)‖ * ρ ^ k) := by ring
@@ -112,7 +113,8 @@ theorem Ex.aeval {u f e : K⟦X⟧} (hu : ‖constantCoeff u‖ < 1) (hf : ∀ m
       simp
     | succ n ih => rw [pow_succ, pow_succ]; exact ih.mul hu (coeff_pow_le hf n) hf he
   intro k
-  simp only [Polynomial.aeval_eq_sum_range (p := p), map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Polynomial.aeval_eq_sum_range (p := p), map_sum, map_smul]
   exact tendsto_finsetSum _ fun n _ => (hpow n k).const_smul _
 
 theorem Ex.of_approx {u f e : K⟦X⟧} (hu : ‖constantCoeff u‖ < 1) (F E : ℕ → K⟦X⟧)
@@ -198,7 +200,8 @@ theorem Ex.rescale {v a e : K⟦X⟧} (c : K) (he : Ex v a e) :
   intro k
   have : ∀ p : Polynomial K, Polynomial.aeval (PowerSeries.rescale c v) p =
       PowerSeries.rescale c (Polynomial.aeval v p) := fun p => by
-    simp only [Polynomial.aeval_eq_sum_range (p := p), map_sum, ← map_pow]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Polynomial.aeval_eq_sum_range (p := p), map_sum, ← map_pow]
     refine Finset.sum_congr rfl fun n _ => ?_
     ext j
     simp only [coeff_rescale, coeff_smul, smul_eq_mul, mul_left_comm]
@@ -286,7 +289,8 @@ private lemma exists_norm_coeff_pow_le_mul_pow_sub (u : K⟦X⟧) {r : ℝ} (hr 
   have hr0 : 0 ≤ r := (norm_nonneg _).trans hr
   refine ⟨∑ i ∈ Finset.range (k + 1), ‖coeff k (w ^ i)‖, Finset.sum_nonneg (fun _ _ => norm_nonneg _), fun j => ?_⟩
   have hu : u = w + C (constantCoeff u) := by simp [hw]
-  rw [hu, add_pow, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hu, add_pow, map_sum]
   calc ‖∑ i ∈ Finset.range (j + 1), coeff k (w ^ i * C (constantCoeff u) ^ (j - i) * (j.choose i : K⟦X⟧))‖
       ≤ ∑ i ∈ Finset.range (j + 1), ‖coeff k (w ^ i * C (constantCoeff u) ^ (j - i) * (j.choose i : K⟦X⟧))‖ :=
         norm_sum_le _ _
@@ -325,7 +329,8 @@ private lemma exists_norm_coeff_aeval_le_mul_of_weighted_bound (u : K⟦X⟧) {r
       ‖coeff k (Polynomial.aeval u p)‖ ≤ C * ε := by
   obtain ⟨B, hB0, hB⟩ := exists_norm_coeff_pow_le_mul_pow_sub u hr hr1 k
   refine ⟨B / r ^ k, by positivity, fun p ε hε hp => ?_⟩
-  rw [Polynomial.aeval_eq_sum_range, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Polynomial.aeval_eq_sum_range, map_sum]
   apply IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg (by positivity)
   intro j _
   rw [PowerSeries.coeff_smul, smul_eq_mul, norm_mul]

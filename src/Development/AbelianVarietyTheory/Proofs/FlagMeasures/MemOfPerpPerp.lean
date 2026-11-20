@@ -250,7 +250,8 @@ theorem main : ∀ (D : D7) (u : D.what₂.Word), letI := D.host.cmStar; ∀ F0 
       refine Finsupp.ext fun k => ?_
       simpa using congrFun e k)
     rw [hT_expand]
-    simp only [map_sum, map_mul, D.sp.cm.cmUnram.2.1 τ]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, D.sp.cm.cmUnram.2.1 τ]
     exact h2
   · rw [(D.sp.X 0).rank_eq, D.sp.X_rank 0 (Nat.zero_le _)]
     simp [Ranks.N]

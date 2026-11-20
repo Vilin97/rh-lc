@@ -29,7 +29,8 @@ theorem _root_.GlobalTheory.Dec.GelfSepProof.gen {n : ℕ} (l : Fin n → ℂ) :
     ext a b k
     rcases k with _ | k
     · simp [B, Matrix.one_apply]
-    · simp [B, Y, Matrix.mul_apply, Matrix.one_apply, pow_succ', PowerSeries.coeff_succ_X_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp [B, Y, Matrix.mul_apply, Matrix.one_apply, pow_succ', PowerSeries.coeff_succ_X_mul,
         map_sum]
       split_ifs <;> simp
   let c : Matrix (Fin n) (Fin 1) (PowerSeries ℂ) := replicateCol (Fin 1) 1
@@ -71,7 +72,8 @@ theorem _root_.GlobalTheory.Dec.GelfSepProof.gen {n : ℕ} (l : Fin n → ℂ) :
     simp only [← Finset.mul_sum]
     congr 1
     ext k
-    simp [PowerSeries.coeff_mk, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [PowerSeries.coeff_mk, map_sum]
   rw [← hdet2, ← hfactor, Matrix.det_mul, hdet1, hdet3, mul_comm]
 
 theorem shift_inj (s t : Multiset ℂ) (h : s.map (· + 1) + t = t.map (· + 1) + s) : s = t := by

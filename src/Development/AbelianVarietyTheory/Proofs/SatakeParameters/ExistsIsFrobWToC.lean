@@ -23,7 +23,8 @@ theorem wHom_ext (p : ℕ) [Fact p.Prime] (f g : Formalism.L2.G.Pend.WW p →+* 
   set S := ∑ i ∈ Finset.Iic N, (WittVector.teichmuller p
         (((_root_.frobeniusEquiv (Formalism.L2.G.Pend.kb p) p).symm ^ i) (x.coeff i)) * (p : Formalism.L2.G.Pend.WW p) ^ i) with hS
   have hfS : f S = g S := by
-    rw [hS, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hS, map_sum, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_mul, map_mul, map_pow, map_pow, map_natCast, map_natCast, ht]
   have hx : x = S + (p : Formalism.L2.G.Pend.WW p) ^ (N + 1) * c := by rw [← hc]; ring

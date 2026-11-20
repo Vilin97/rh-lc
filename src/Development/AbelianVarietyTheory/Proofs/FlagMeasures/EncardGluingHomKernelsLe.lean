@@ -148,7 +148,8 @@ theorem encard_kernels_le : ∀ {F : Type} [Field F] [ValuativeRel F] [Topologic
         intro c
         rw [t2 _ _ 0 (tauRel_sum S d Λ hΛ Finset.univ c b y hty), sub_zero, hMM,
           Fintype.linearCombination_apply]
-        simp only [← map_smul, ← map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [← map_smul, ← map_sum]
         rw [Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero]
         simp [M₀]
       ext w

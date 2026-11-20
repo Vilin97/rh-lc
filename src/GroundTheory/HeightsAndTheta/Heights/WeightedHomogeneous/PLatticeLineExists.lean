@@ -136,7 +136,8 @@ theorem conj_point (s : K →+* ℂ) (w : Fin (r + 1) → ℂ) :
     (fun b ↦ starRingEnd ℂ (latticePoint φ s w () b)) =
       latticePoint φ (ComplexEmbedding.conjugate s) (fun j ↦ starRingEnd ℂ (w j)) () := by
   funext b
-  simp [latticePoint, ComplexEmbedding.conjugate_coe_eq, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [latticePoint, ComplexEmbedding.conjugate_coe_eq, map_sum, map_mul]
 
 theorem herm_conj (s : K →+* ℂ) (w : Fin (r + 1) → ℂ) :
     (star (fun j ↦ starRingEnd ℂ (w j)) ⬝ᵥ
@@ -145,7 +146,8 @@ theorem herm_conj (s : K →+* ℂ) (w : Fin (r + 1) → ℂ) :
   rw [F.conj s]
   have h : star (fun j ↦ starRingEnd ℂ (w j)) ⬝ᵥ ((F.metric s).map (starRingEnd ℂ) *ᵥ
       fun j ↦ starRingEnd ℂ (w j)) = starRingEnd ℂ (star w ⬝ᵥ (F.metric s *ᵥ w)) := by
-    simp [dotProduct, mulVec, map_sum, map_mul, Matrix.map_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [dotProduct, mulVec, map_sum, map_mul, Matrix.map_apply]
   rw [h, Complex.conj_re]
 
 def line : HermLine (fun _ : Unit ↦ N) where

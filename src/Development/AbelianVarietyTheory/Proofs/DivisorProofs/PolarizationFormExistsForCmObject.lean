@@ -40,7 +40,8 @@ theorem exists_isCorrForm_diag : GlobalTheory.Published.AbelianDeRham → ∀ (F
     have e₂ : ∀ z, m.pull1 (pullOver (dp0 R) (𝟙 _) (snd X.A X.A) z) = pullOver (dp0 R) (𝟙 _) (fst X.A X.A) z :=
       fun z ↦ (pullOver_pullOver _ _ s (snd X.A X.A) z).trans (by rw [lift_snd])
     have hs := isChern_pull m hc
-    rw [map_sum] at hs
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at hs
     simp only [IsMor.pullCohomologyTwo_cup, e₁, e₂] at hs
     have hs' := (isChern_existsUnique_and_iso R _ (dp0 R) _ _).2 _ _ (pull_isLB hP _) hP
       (LBIso.symm (X.symm c)) _ hs

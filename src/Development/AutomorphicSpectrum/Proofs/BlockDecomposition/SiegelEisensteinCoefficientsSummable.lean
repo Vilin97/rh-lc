@@ -165,7 +165,8 @@ theorem trace_rat (β a : HermE D r) :
   have h : (HMul.hMul (β.1.map (incA D)) (a.1.map (incA D)) : Mx D r r) = (β.1 * a.1).map (incA D) := by
     rw [Matrix.map_mul]
   rw [h]
-  simp only [Matrix.trace, Matrix.diag, Matrix.map_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.trace, Matrix.diag, Matrix.map_apply, map_sum]
 
 theorem chi_path {ψ : AddChar (AF D.host.F) ℂ} {θ : InfFam D} {σ : (D.what₂.Tau → ℂ) →+ AE D}
     (hσ : GlobalTheory.FockCompare.Chart θ σ) {α : D.host.F}

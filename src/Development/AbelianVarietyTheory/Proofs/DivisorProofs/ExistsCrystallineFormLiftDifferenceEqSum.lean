@@ -211,7 +211,8 @@ theorem ev_idLift_sub_eq_sum : ∀ (R : Type) [CommRing R] (X : Scheme.{0}) (s :
   have hc : (ev ω.1 ((diagExt R (CechDR.Sec s U)).secHom hx (diagExt R (CechDR.Sec s U)).i fun _ ↦ rfl) -
       ev ω.1 ((diagExt R (CechDR.Sec s U)).secHom hx (diagSec R (CechDR.Sec s U)) (fst_derSec _))).snd =
       connForm ω.1 (CechDR.affPt s ⟨U, hU⟩) hx := rfl
-  rw [hc, hΩ, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hc, hΩ, map_sum]
   refine Finset.sum_congr rfl fun k _ ↦ ?_
   rw [diffLam_smul, diffLam_D]
   exact (congrArg₂ (fun a b ↦ a * b) (valR_eq_valHom y₂ hy₂ h₂ (r k))

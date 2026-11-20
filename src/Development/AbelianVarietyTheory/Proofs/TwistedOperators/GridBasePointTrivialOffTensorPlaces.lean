@@ -59,7 +59,8 @@ theorem base_mt_mulVec_off : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Const
     rw [← mul_assoc, hsupp i j]
   have h0 : (Formalism.L2.Theta.mt _ (b 0) - 1) *ᵥ y = 0 := by
     funext i
-    rw [hE i, map_sum, ← Finset.sum_add_distrib, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hE i, map_sum, ← Finset.sum_add_distrib, Finset.sum_mul]
     exact Finset.sum_eq_zero fun PP hPP => hkill PP hPP _ (hz i)
   rw [Matrix.sub_mulVec, Matrix.one_mulVec, sub_eq_zero] at h0
   exact h0

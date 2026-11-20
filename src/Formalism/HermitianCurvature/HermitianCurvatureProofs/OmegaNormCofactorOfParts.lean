@@ -13,7 +13,8 @@ theorem cofactorPair_statement : C7.CofactorPair := by
     simp only [Matrix.mul_apply, Matrix.smul_apply, Matrix.one_apply, smul_eq_mul, mul_ite, mul_one,
       mul_zero] at h
     unfold C7.cofX'
-    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul]
     rw [← h]
     apply Finset.sum_congr rfl; intro b _; rw [mul_comm]; rfl
   · intro b
@@ -21,7 +22,8 @@ theorem cofactorPair_statement : C7.CofactorPair := by
     simp only [Matrix.mul_apply, Matrix.smul_apply, Matrix.one_apply, smul_eq_mul, mul_ite, mul_one,
       mul_zero] at h
     unfold C7.cofX
-    simp only [map_sum, LinearMap.map_smulₛₗ, smul_eq_mul, Complex.conj_conj]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.map_smulₛₗ, smul_eq_mul, Complex.conj_conj]
     have e : (if b = Fin.last r then (C7.zhat B f x').det else 0) =
         (if Fin.last r = b then (C7.zhat B f x').det else 0) := by
       by_cases hb : b = Fin.last r <;> simp [hb, eq_comm]
@@ -65,7 +67,8 @@ theorem adjLastCol_statement : C7.AdjLastCol := by
 theorem gram_cofactor_identity : C7.GramCofactor := by
   intro V _ _ B r f x' T' h
   unfold C7.cofX'
-  simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
     LinearMap.map_smulₛₗ, h]
   simp only [mul_ite, mul_zero, ite_and, Finset.sum_ite_eq', Finset.mem_univ, if_true, Finset.sum_ite_irrel,
     Finset.sum_const_zero]

@@ -138,7 +138,8 @@ theorem goal1 :
     ⟨_, rfl⟩
   have hP : ∀ v, P v = ∑ u : J, ((↑(Nat.card J) : ℂ)⁻¹ * ↑(χ u)⁻¹) • ρ ↑u v := by
     intro v
-    rw [hPdef, Formalism.IrreducibleCountingLemmas.GaloisIrreducibility.twistedIdem.eq_def, map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hPdef, Formalism.IrreducibleCountingLemmas.GaloisIrreducibility.twistedIdem.eq_def, map_sum, LinearMap.sum_apply]
     refine Finset.sum_congr rfl (fun u _ => ?_)
     rw [map_smul, LinearMap.smul_apply, Representation.asAlgebraHom_of]
   have hPW : ∀ v, P v ∈ Formalism.IrreducibleCountingLemmas.GaloisIrreducibility.eqvSpace ρ (fun u : J => u.val) (fun u => (χ u).val) := by
@@ -146,7 +147,8 @@ theorem goal1 :
     rw [Formalism.IrreducibleCountingLemmas.GaloisIrreducibility.eqvSpace.eq_def]
     show ∀ u : J, ρ ↑u (P v) = (χ u : ℂ) • P v
     intro u0
-    rw [hP, map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hP, map_sum, Finset.smul_sum]
     refine Fintype.sum_equiv (Equiv.mulLeft u0) _ _ (fun u => ?_)
     simp only [Equiv.coe_mulLeft, map_smul, Subgroup.coe_mul, map_mul, Module.End.mul_apply, smul_smul,
       mul_inv_rev, Units.val_mul]

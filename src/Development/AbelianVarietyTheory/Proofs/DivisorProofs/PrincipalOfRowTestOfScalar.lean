@@ -42,7 +42,8 @@ theorem model_of_pres {H Γ : Type} [Group H] [Group Γ] {ι : Γ →* H} {W : T
   · rw [injective_iff_map_eq_zero]
     intro x hx
     have h4 : P.extL x = 0 := by rw [← hj, hx, map_zero]
-    rw [← S.basis.sum_repr x, map_sum] at h4
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← S.basis.sum_repr x, map_sum] at h4
     simp only [map_smulₛₗ] at h4
     have h5 := Fintype.linearIndependent_iff.1 h1 _ h4
     refine S.basis.repr.injective (Finsupp.ext fun i => ?_)
@@ -55,7 +56,8 @@ theorem apply_gaOp {K : Type} [Field K] [NumberField K] [StarRing K] {S : CSD K}
     (ρ : Representation ℂ G E) (j : S.Forms →ₛₗ[σ] H) (Θ : H →ₗ[ℂ] E) (h : ∀ g x, Θ (j (r g x)) = ρ g (Θ (j x)))
     (Y : Finset (G → K)) (hY : ∀ y, ∑ g, σ ((idemOf Y).coeff g) • ρ g y = y) (x : S.Forms) :
     Θ (j (S.gaOp r (goodAt Y ⊥ 1) x)) = Θ (j x) := by
-  rw [goodAt, level_idempotent_bot, mul_one, CSD.gaOp, LinearMap.sum_apply, map_sum, map_sum, ← hY (Θ (j x))]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [goodAt, level_idempotent_bot, mul_one, CSD.gaOp, LinearMap.sum_apply, map_sum, map_sum, ← hY (Θ (j x))]
   refine Finset.sum_congr rfl fun g _ => ?_
   rw [LinearMap.smul_apply, map_smulₛₗ, map_smul, h]
 
@@ -91,7 +93,8 @@ theorem sum_gE_eq (hE : R.models_HE) (hg : R.models_gE) (y : R.HE.H) :
   apply hE.1
   have h1 : R.HE.e y ∈ R.EEat R.triv := hE.2.1 ▸ ⟨y, rfl⟩
   have h2 : postOn (R.MY 0) R.e0 (R.HE.e y) = R.HE.e y := sub_eq_zero.1 h1.2
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Eq.trans ?_ h2
   simp only [map_smul, hg]
   ext v h

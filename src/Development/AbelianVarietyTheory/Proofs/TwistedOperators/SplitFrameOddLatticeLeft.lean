@@ -297,9 +297,11 @@ theorem GlobalTheory.AscFin.DepthColumn.scaled_column_mem : OnStd fun {D} _ _ {s
   have ha1 : a j q = ∑ l, (F.dB (σ + 1) h).extX _ a j l * (F.dB (σ + 1) h).jX l q := by
     change _ = (a * (F.dB (σ + 1) h).pX * (F.dB (σ + 1) h).jX) j q
     rw [Matrix.mul_assoc, HypDec.pX_jX, Matrix.mul_one]
-  rw [Pi.smul_apply, smul_eq_mul, ha1, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Pi.smul_apply, smul_eq_mul, ha1, map_sum, Finset.mul_sum]
   change _ = p.pr (∑ l, e₀ * (F.dB (σ + 1) h).extX _ a j l * _)
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun l _ => ?_
   have e4 : p.pr ((F.dB (σ + 1) h).jX l q) = ξ * p.pr (incA D ((G.colDec (2 * (σ + 1) + 2) (by omega) h).a l q')) := by
     change p.pr (incA D ((F.dB (σ + 1) h).e l q)) = _

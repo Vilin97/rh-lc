@@ -32,7 +32,8 @@ variable {ι : Type} [Fintype ι] in
 theorem _root_.GlobalTheory.TorusAtAssembly.im_Hf_swap (x y : EuclideanSpace ℂ ι) :
     (_root_.ReciprocityTheory.ChartRestriction.G.I2.Hf y x).im = -(_root_.ReciprocityTheory.ChartRestriction.G.I2.Hf x y).im := by
   have h : _root_.ReciprocityTheory.ChartRestriction.G.I2.Hf y x = (starRingEnd ℂ) (_root_.ReciprocityTheory.ChartRestriction.G.I2.Hf x y) := by
-    simp [_root_.ReciprocityTheory.ChartRestriction.G.I2.Hf, map_sum, mul_comm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [_root_.ReciprocityTheory.ChartRestriction.G.I2.Hf, map_sum, mul_comm]
   rw [h, Complex.conj_im]
 
 end Form

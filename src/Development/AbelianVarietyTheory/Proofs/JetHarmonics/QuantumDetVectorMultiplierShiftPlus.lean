@@ -62,7 +62,8 @@ theorem qdet_vector_multiplier_shift_plus : ∀ (V W : Type) [AddCommGroup V] [M
       rw [this]
       split_ifs <;> simp
     rw [h1]
-    simp only [X, hM, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [X, hM, map_sum]
     rw [Finset.sum_comm]
     simp only [h2]
     simp [hq]
@@ -83,14 +84,16 @@ theorem qdet_vector_multiplier_shift_plus : ∀ (V W : Type) [AddCommGroup V] [M
         LinearMap.add_apply, hqι, map_smul] at this
       rw [this]
       simp only [LinearMap.smul_apply, map_smul, GlobalTheory.T.qminor_intertwining_apply V W (m + 1) m E E' ι hι]
-    simp only [map_sum, h3, Finset.sum_add_distrib, Finset.smul_sum, X, hM]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, h3, Finset.sum_add_distrib, Finset.smul_sum, X, hM]
     rw [Finset.sum_comm]
   refine ⟨v, ?_, fun s u => ?_⟩
   · rw [Finset.sum_comm]
     have : ∀ a, ∑ s, x a (ι (v s a)) = x a (ι ((Pi.single j w : Fin (m + 1) → W) a)) := by
       intro a
       rw [hv]
-      simp [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [map_sum]
     simp only [this]
     rw [Finset.sum_eq_single j]
     · simp

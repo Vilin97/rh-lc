@@ -47,7 +47,8 @@ theorem sesq_smul_right (r : R) (u w : Fin d → R) : sesq c j u (r • w) = c r
 
 theorem sesq_skew (hcc : ∀ z, c (c z) = z) (hj : ∀ i k, c (j k i) = -j i k) (u w : Fin d → R) :
     sesq c j u w = -c (sesq c j w u) := by
-  simp only [sesq, dotProduct, mulVec, map_sum, map_mul, hcc, hj]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [sesq, dotProduct, mulVec, map_sum, map_mul, hcc, hj]
   simp only [Finset.mul_sum, neg_mul, mul_neg, Finset.sum_neg_distrib, neg_neg]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun k _ => by ring
@@ -121,7 +122,8 @@ theorem cA_inclR (e : E) : cA σ (inclR (F := F) (AF F) e) = inclR (AF F) (σ e)
 
 theorem sesq_incV {d : ℕ} (J : Matrix (Fin d) (Fin d) E) (u w : Fin d → E) :
     sesq (cA σ).toRingHom (incM F J) (incV F u) (incV F w) = inclR (AF F) (form σ J u w) := by
-  simp [sesq, form, dotProduct, mulVec, incV, incM, map_sum, map_mul, cA_inclR]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [sesq, form, dotProduct, mulVec, incV, incM, map_sum, map_mul, cA_inclR]
 
 end Spec
 

@@ -23,7 +23,8 @@ theorem iB_eq_sum [FiniteDimensional F E] (P : PlaceMap F K) (y : K ⊗[F] E) :
       ((1 : AF F) ⊗ₜ[F] (Module.finBasis F E) k) := by
   set B := Algebra.TensorProduct.basis K (Module.finBasis F E)
   conv_lhs => rw [← B.sum_repr y]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   simp only [B, Algebra.TensorProduct.basis_apply, TensorProduct.smul_tmul', smul_eq_mul, mul_one, iB_tmul]
 

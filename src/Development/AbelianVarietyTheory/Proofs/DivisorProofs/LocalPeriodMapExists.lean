@@ -280,7 +280,8 @@ theorem exists_family {S : Scheme.{0}} (P : PPAS S) {m : ℕ} {B : Set (Fin m �
       (LinearMap.ker_eq_bot.2 (T b₀).symm.injective)) fun w => by
       rw [mem_setOf_eq, hker b₀ hb₁, hβ₂]
       refine exists_congr fun n => ?_
-      rw [← (T b₀).symm.injective.eq_iff, (T b₀).symm_apply_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← (T b₀).symm.injective.eq_iff, (T b₀).symm_apply_apply, map_sum]
       simp only [map_zsmul]
   obtain ⟨C₁, hC₁, hC₁o, hC₁b⟩ := eventually_nhds_iff.1 ((eventually_all.2 fun j => (hpa j).eventually_analyticAt).and
     (hp.and (hB₁.mem_nhds hb₁)))

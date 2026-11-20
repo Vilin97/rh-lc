@@ -265,7 +265,8 @@ theorem param_down (hH : GlobalTheory.Hk3.HoweUnram) {ψ : AddChar (AF D.host.F)
         map_add' := fun F G => by simp [Finset.sum_add_distrib]
         map_smul' := fun a F => by simp [Finset.smul_sum] }
     have hΦ : ∀ g F, Φ (piRep ι πT g F) = ρT g (Φ F) := fun g F => by
-      simp only [Φ, LinearMap.coe_mk, AddHom.coe_mk, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Φ, LinearMap.coe_mk, AddHom.coe_mk, map_sum]
       exact Finset.sum_congr rfl fun j _ => hbT g (F j) (x j)
     have m := map_heckeVec hcT.1 hφ' Φ hΦ f
     have lhs : Φ (heckeVec (piRep ι πT) (KU c T.rank) φ' f) =
@@ -431,7 +432,8 @@ theorem paramFun_definite {V : HSp D} (c : CoefA V) (hc : c.Is)
     rw [GlobalTheory.Hk3.opOf, Finsupp.sum_single_index (by exact zero_smul _ _), one_smul, Finset.sum_apply, LinearMap.sum_apply,
       Finset.sum_apply] at h3
     have h5 := congrArg ℓ h4
-    rw [map_sum, Pi.smul_apply, map_smul] at h5
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Pi.smul_apply, map_smul] at h5
     exact h3.trans h5.symm
   exact (GlobalTheory.LFun.isParamFunV_iff_isSysParamD_of_level hsph hℓ hlev heig B).2 hB
 
@@ -464,7 +466,8 @@ theorem seg_coe {K : Type} [Field K] [NumberField K] (w : HeightOneSpectrum (�
 theorem thetaKO_sum {S T : HSp D} (om : GA D S × GA D T →* Module.End ℂ (WO S T → ℂ)) (h : GA D S) (g : GA D T)
     {ι : Type} (s : Finset ι) (u : ι → WO S T → ℂ) :
     thetaKO om h g (∑ k ∈ s, u k) = ∑ k ∈ s, thetaKO om h g (u k) := by
-  simp [thetaKO, map_sum, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [thetaKO, map_sum, Finset.sum_apply]
 
 open GlobalTheory.DownLift.Params in
 set_option maxHeartbeats 4000000 in
@@ -526,7 +529,8 @@ theorem unrCorr_inert : GlobalTheory.Hk3.HoweUnram → ∀ (D : D7) (G : Type) [
         ∑ k, thetaKO (R.ωP i t) h g (L0 (b0 k)) * b0.coord k (R.extV i t y h) := fun h => by
       rw [hL0]
       conv_lhs => rw [← b0.sum_repr ((R.cV i).ext ((R.HV i t).e y) h)]
-      rw [map_sum, thetaKO_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, thetaKO_sum]
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [map_smul, thetaKO_smul, mul_comm]
       rfl

@@ -29,7 +29,8 @@ theorem cont_act {V : Type} [AddCommGroup V] [Module LL V] [FiniteDimensional LL
   have h : (fun p : G × V => ρ p.1 p.2) = fun p => ∑ i, b.repr p.2 i • ρ p.1 (b i) := by
     funext p
     conv_lhs => rw [← b.sum_repr p.2]
-    simp only [map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul]
   rw [h]
   refine continuous_finset_sum _ fun i _ => ?_
   exact ((cont_form ((Finsupp.lapply i).comp b.repr.toLinearMap)).comp continuous_snd).smul
@@ -43,7 +44,8 @@ theorem cont_bil {V V' : Type} [AddCommGroup V] [Module LL V] [FiniteDimensional
   have h : (fun q : V × V' => m q.1 q.2) = fun q => ∑ i, b.repr q.1 i * m (b i) q.2 := by
     funext q
     conv_lhs => rw [← b.sum_repr q.1]
-    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply,
       smul_eq_mul]
   rw [h]
   refine continuous_finset_sum _ fun i _ => ?_

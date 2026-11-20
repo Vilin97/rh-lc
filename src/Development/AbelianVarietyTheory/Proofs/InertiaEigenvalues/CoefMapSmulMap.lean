@@ -69,7 +69,8 @@ variable {T : Type} (r : T → ℕ) (n : ℕ)
 
 theorem lap_map (τ τ' : T) (a : Fin (r τ)) (a' : Fin (r τ')) (Q : MvPolynomial (Letter T r n) F) :
     lap r n ℂ 1 τ τ' a a' (map (algebraMap F ℂ) Q) = map (algebraMap F ℂ) (lap r n F 1 τ τ' a a' Q) := by
-  simp only [lap, LinearMap.sum_apply, map_sum, LinearMap.smul_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [lap, LinearMap.sum_apply, map_sum, LinearMap.smul_apply]
   refine Finset.sum_congr rfl fun b _ => Finset.sum_congr rfl fun b' _ => ?_
   rw [Matrix.one_apply, Matrix.one_apply]
   split_ifs <;> simp [pderiv_map]

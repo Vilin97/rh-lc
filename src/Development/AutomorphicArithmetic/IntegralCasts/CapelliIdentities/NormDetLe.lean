@@ -12,7 +12,8 @@ theorem UpperTheory.Reformulated.B.Qh58.norm_det_le :
           ‖(ι.symm : ℂ → UpperTheory.Reformulated.B.Qh58.Qbar l) M.det‖ ≤ R ^ n := by
   intro l _ ι n M R hR h
   have hR0 : (0 : ℝ) ≤ R := zero_le_one.trans hR
-  rw [Matrix.det_apply', map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.det_apply', map_sum]
   refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg (pow_nonneg hR0 n) ?_
   intro σ _
   rw [map_mul, map_prod, norm_mul, norm_prod, map_intCast]

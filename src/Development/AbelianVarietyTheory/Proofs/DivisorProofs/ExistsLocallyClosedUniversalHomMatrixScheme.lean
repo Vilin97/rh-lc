@@ -31,7 +31,8 @@ theorem comb_comp {A₀ X X₂ T T₂ : Scheme.{0}} {N : LB A₀} (a : Fin mA �
     (c : Fin mA → Fin mB → Γ(T, ⊤)) (r : X₂ ⟶ X) (h : T₂ ⟶ T) (p₂ : X₂ ⟶ T₂) (e : p₂ ≫ h = r ≫ p) (z : X₂)
     (q : N.ι) (hq : φ (r z) ∈ N.U q) (j : Fin mB) :
     comb a (r ≫ φ) p₂ (fun i j => h.appTop (c i j)) z q j = (r.stalkMap z).hom (comb a φ p c (r z) q j) := by
-  simp only [comb, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [comb, map_sum, map_mul]
   refine Finset.sum_congr rfl fun i _ => ?_
   have e₁ : gs p₂ z ⊤ (h.appTop (c i j)) = gs (r ≫ p) z ⊤ (c i j) := by
     rw [← e]; exact gs_pull p₂ h z ⊤ trivial (c i j)

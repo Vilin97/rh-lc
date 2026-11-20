@@ -57,7 +57,8 @@ theorem UpperTheory.exists_linear_preimage_of_successive_approximation :
         simpa [Finset.sum_apply, smul_eq_mul, Ideal.mul_top] using this
       have hσ : σ ((∑ n ∈ Finset.range N, b n) - L) ∈ (I ^ N • ⊤ : Submodule A M) := by
         set v := (∑ n ∈ Finset.range N, b n) - L
-        rw [pi_eq_sum_univ v, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [pi_eq_sum_univ v, map_sum]
         refine Submodule.sum_mem _ (fun i _ => ?_)
         rw [map_smul]
         exact Submodule.smul_mem_smul (hv i) Submodule.mem_top

@@ -59,7 +59,8 @@ variable {K₁ K₂ : Type} [DecidableEq K₁] [DecidableEq K₂] {ι₁ : K₁ 
 theorem bind₁_isMultiHomog_of (Λ : (K₁ → ℕ) →+ (K₂ → ℕ)) (g : (Σ k, ι₁ k) → MRing ι₂ O)
     (hg : ∀ v, IsWeightedHomogeneous (blockWeight ι₂) (g v) (Λ (blockWeight ι₁ v))) {q : MRing ι₁ O}
     {d : K₁ → ℕ} (hq : IsMultiHomog q d) : IsMultiHomog (bind₁ g q) (Λ d) := by
-  rw [← q.support_sum_monomial_coeff, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← q.support_sum_monomial_coeff, map_sum]
   refine IsWeightedHomogeneous.sum _ _ _ fun m hm => ?_
   have hmd : Finsupp.weight (blockWeight ι₁) m = d := hq (mem_support_iff.mp hm)
   rw [bind₁_monomial]
@@ -68,7 +69,8 @@ theorem bind₁_isMultiHomog_of (Λ : (K₁ → ℕ) →+ (K₂ → ℕ)) (g : (
       (fun v _ => (hg v).pow (m v)))
   rw [zero_add] at this
   have hΛ : Λ d = ∑ v ∈ m.support, m v • Λ (blockWeight ι₁ v) := by
-    rw [← hmd, Finsupp.weight_apply, Finsupp.sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hmd, Finsupp.weight_apply, Finsupp.sum, map_sum]
     simp only [map_nsmul]
   rw [hΛ]
   exact this
@@ -78,7 +80,8 @@ theorem bind₁_scale_of (o₀ : K₁) (u : MRing ι₂ O) (h : (Σ k, ι₁ k) 
     bind₁ (fun v => u ^ blockWeight ι₁ v o₀ * h v) q = u ^ d o₀ * bind₁ h q := by
   conv_lhs => rw [← q.support_sum_monomial_coeff]
   conv_rhs => rw [← q.support_sum_monomial_coeff]
-  rw [map_sum, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun m hm => ?_
   have hmd : Finsupp.weight (blockWeight ι₁) m = d := hq (mem_support_iff.mp hm)
   have hs : ∑ v ∈ m.support, blockWeight ι₁ v o₀ * m v = d o₀ := by
@@ -189,7 +192,8 @@ theorem saturate (j : K₁ ↪ K₂) (o₀ : K₁) (pt : (Σ k, ι₂ k) → Φ)
     conv_lhs => rw [← sum_weightedHomogeneousComponent (blockWeight (fun k => ι₂ (j k))) q]
     exact finsum_eq_sum _ hfin
   refine ⟨∑ d ∈ S, nn d, ?_⟩
-  rw [hS, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hS, map_sum, Finset.mul_sum]
   refine Ideal.sum_mem _ fun d hd => ?_
   rw [← Nat.sub_add_cancel (Finset.single_le_sum (f := nn) (fun _ _ => Nat.zero_le _) hd), pow_add,
     mul_assoc]

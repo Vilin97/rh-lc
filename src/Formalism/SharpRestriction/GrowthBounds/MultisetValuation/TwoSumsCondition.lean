@@ -244,7 +244,8 @@ theorem gcCondition_of_twoSums (hT : TwoSumsCondition p) : RestGc p := by
   have hexp : MvPowerSeries.subst (tOf vp μ (coordZ B K' 1)) (-(MvPowerSeries.map (algebraMap (K0 p) K')
       (Gt p (Eidx n' r0 r1) (wK p c) (wK p (sigW p c))))) =
       -(MvPowerSeries.C (vp ^ (p + 1) / p) * hhS p K' u) + MvPowerSeries.C (vp ^ (p + 1)) * (-(Y + W)) := by
-    rw [← MvPowerSeries.coe_substAlgHom htS, map_neg, Gt, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← MvPowerSeries.coe_substAlgHom htS, map_neg, Gt, map_sum, map_sum]
     have hterm : ∀ e : Eidx n' r0 r1, MvPowerSeries.substAlgHom htS (MvPowerSeries.map (algebraMap (K0 p) K')
         (ren ![Sum.inl e, Sum.inr e] (Gser p (wK p c) (wK p (sigW p c))))) =
         MvPowerSeries.C (vp ^ (p + 1)) * MvPowerSeries.subst (P e) Rr +
@@ -269,7 +270,8 @@ theorem gcCondition_of_twoSums (hT : TwoSumsCondition p) : RestGc p := by
     simp [hS0, hhS_const, zero_pow hp.out.ne_zero, hpK] at hc0
     exact hc0
   have hW0 : MvPowerSeries.constantCoeff W = 0 := by
-    rw [hW, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hW, map_sum]
     exact Finset.sum_eq_zero fun e _ => MvPowerSeries.constantCoeff_subst_eq_zero (hPs e) (hP0 e) hRr0
   have hWI : IntR (Rp p K' vp) W := IntR_sum _ _ fun e _ => IntR_subst (P e) (hP0 e) (hPI e) hRrI
   rw [hexp, expK_add]

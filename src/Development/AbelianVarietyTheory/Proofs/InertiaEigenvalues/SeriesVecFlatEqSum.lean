@@ -184,7 +184,8 @@ theorem series_vecFlat_eq_sum {F : Face D A} (hC : GlobalTheory.Hk3.Core R F) {B
   change (R.ωP i t) (h, g) (B.F.fock (∑ p, (((B.G.P.chi p)⁻¹ : ℂˣ) : ℂ) • (R.ωP i t) (1, k p) f) P) 0 = _
   rw [show B.F.fock (∑ p, (((B.G.P.chi p)⁻¹ : ℂˣ) : ℂ) • (R.ωP i t) (1, k p) f) P =
       ∑ p, (((B.G.P.chi p)⁻¹ : ℂˣ) : ℂ) • B.F.fock ((R.ωP i t) (1, k p) f) P from hsum]
-  simp only [map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
   refine Finset.sum_congr rfl fun p _ => ?_
   rw [← hmove p, ← hBo.series_eq_ser t f u (h) w, GlobalTheory.ExportSeries.series_apply, ← Module.End.mul_apply, ← map_mul,
     Prod.mk_mul_mk, mul_one]

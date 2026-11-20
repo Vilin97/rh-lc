@@ -26,7 +26,8 @@ theorem besPhInt_rank {Wp Wq : Type} [NormedAddCommGroup Wp] [InnerProductSpace 
       ⟪a, X b⟫_ℂ * star ⟪a', X' b'⟫_ℂ := by
   have hb : X' b' = ∑ i, ⟪stdOrthonormalBasis ℂ Wq i, b'⟫_ℂ • X' (stdOrthonormalBasis ℂ Wq i) := by
     conv_lhs => rw [← (stdOrthonormalBasis ℂ Wq).sum_repr' b']
-    simp [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum]
   have h2 : star ⟪a', X' b'⟫_ℂ = ⟪X' b', a'⟫_ℂ := inner_conj_symm _ _
   rw [h2, hb, sum_inner, Finset.mul_sum]
   simp only [B.hsInner, B.hsVec, PiLp.inner_apply]

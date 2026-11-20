@@ -99,7 +99,8 @@ lemma bijective_coeAddMonoidHom :
     simp
   · intro f
     refine ⟨∑ i ∈ (f : (Polynomial Ω)).support, DirectSum.of (fun i => grading o x i) i (comp i f), ?_⟩
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Subtype.ext ?_
     simp only [DirectSum.coeAddMonoidHom_of]
     rw [AddSubmonoidClass.coe_finset_sum]

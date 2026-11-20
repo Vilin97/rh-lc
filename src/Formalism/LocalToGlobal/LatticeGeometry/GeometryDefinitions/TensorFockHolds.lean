@@ -74,7 +74,8 @@ lemma prod_rename_eq (p : T → MvPolynomial σ ℂ) :
       = ∏ τ, ∑ v ∈ (p τ).support, monomial (Finsupp.mapDomain (Prod.mk τ) v) (AddMonoidAlgebra.coeff (p τ) v) := by
         refine Finset.prod_congr rfl fun τ _ => ?_
         conv_lhs => rw [as_sum (p τ)]
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         simp only [rename_monomial]
     _ = ∑ g ∈ Fintype.piFinset (fun τ => (p τ).support),
           ∏ τ, monomial (Finsupp.mapDomain (Prod.mk τ) (g τ)) (AddMonoidAlgebra.coeff (p τ) (g τ)) :=

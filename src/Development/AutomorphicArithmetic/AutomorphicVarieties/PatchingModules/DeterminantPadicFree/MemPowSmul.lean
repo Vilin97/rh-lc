@@ -46,7 +46,8 @@ private theorem finite_quotient_X_pow_one_smul_module_of_free {K M : Type} [Fiel
   refine ⟨fun i => PowerSeries.constantCoeff (b.repr m i), ?_⟩
   dsimp only
   conv_rhs => rw [← b.sum_repr m]
-  simp only [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum]
   exact Finset.sum_congr rfl fun i _ => (key _ _).symm
 
 private theorem eq_zero_of_forall_mem_X_pow_smul_module {K M : Type} [Field K] [AddCommGroup M] [Module (PowerSeries K) M]

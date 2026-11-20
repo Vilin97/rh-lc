@@ -62,7 +62,8 @@ theorem planeCoeff_oneT (A : Module.End Kf (MvPolynomial τ Kf)) (F : MvPolynomi
   rw [coeff_planeCoeff, coeff_oneT, MvPolynomial.coeff_sum]
   simp only [MvPolynomial.coeff_smul, coeff_planeCoeff, smul_eq_mul]
   conv_lhs => rw [expand_sub (F.coeff mo) (nuSet F) (support_sub_nuSet F mo)]
-  rw [map_sum, MvPolynomial.coeff_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, MvPolynomial.coeff_sum]
   refine Finset.sum_congr rfl fun nu' _ => ?_
   rw [map_smul, MvPolynomial.coeff_smul, smul_eq_mul, mul_comm]
 
@@ -301,7 +302,8 @@ theorem joint_dec (hee : ∀ i mu, IsIsoProj (E i) mu (ee i mu))
       rw [h]
   refine ⟨Finset.univ.image kx, fun S' hS' => ?_⟩
   rw [← hy]
-  simp_rw [map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp_rw [map_sum, map_smul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [← Finset.smul_sum]

@@ -23,7 +23,8 @@ theorem mem_conjIdeal (P : Ideal (𝓞 K)) (x : 𝓞 K) :
 
 theorem conjO_sum_norm {M : ℕ} (y : Fin M → 𝓞 K) :
     conjO K (∑ i, conjO K (y i) * y i) = ∑ i, conjO K (y i) * y i := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_mul, conjO_conjO, mul_comm]
 
@@ -89,13 +90,15 @@ theorem normRepCount_inert_one (hK : Formalism.HermitianLatticesTheory.IsCMUnram
     intro x
     constructor
     · rintro ⟨y, hy, h⟩
-      rw [← h, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← h, map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_mul, ← hy i, sigEquiv_mk]
     · intro h
       choose y hy using fun i => Ideal.Quotient.mk_surjective (x i)
       refine ⟨y, hy, ?_⟩
-      rw [← h, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← h, map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_mul, ← hy i, sigEquiv_mk]
   unfold normRepCount
@@ -191,7 +194,8 @@ theorem norm_cond_iff {P : Ideal (𝓞 K)} (hP : P.IsMaximal) (hc : Formalism.He
         Ideal.Quotient.mk (P * Formalism.HermitianLatticesTheory.conjIdeal (K := K) P) n ↔
       ∑ i, Ideal.Quotient.mk P (conjO K (y i)) * Ideal.Quotient.mk P (y i) =
         Ideal.Quotient.mk P n := by
-  rw [Ideal.Quotient.eq, mem_mul_conjIdeal hP hc, map_sub, conjO_sum_norm, hn, and_self,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Ideal.Quotient.eq, mem_mul_conjIdeal hP hc, map_sub, conjO_sum_norm, hn, and_self,
     ← Ideal.Quotient.eq, map_sum]
   simp only [map_mul]
 

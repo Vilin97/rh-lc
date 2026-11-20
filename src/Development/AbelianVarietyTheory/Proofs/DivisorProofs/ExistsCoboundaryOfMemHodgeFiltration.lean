@@ -99,7 +99,8 @@ theorem exists_isCob_of_mem_fil : GlobalTheory.Published.AbelianHodgeDeRham → 
     (GlobalTheory.PtExt.isCob_whole_of_isCob_cover R _ K _ (iSup_parCov hW (spOver φ ≫ x)) _
       ((GlobalTheory.PtExt.SumMulFacts.main R D' B _ _ _).1 fun i ↦ hfv _) _ hcob)
   simp only [Fintype.sum_sum_type, Sum.elim_inl, Sum.elim_inr, neg_mul, Finset.sum_neg_distrib] at h0
-  simp only [map_sum, map_mul, AlgHom.commutes]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, AlgHom.commutes]
   linear_combination -h0
 
 end GlobalTheory.PtExt.OrthPt

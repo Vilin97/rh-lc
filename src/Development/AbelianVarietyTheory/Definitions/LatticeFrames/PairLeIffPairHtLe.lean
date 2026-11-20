@@ -106,7 +106,8 @@ theorem norming_dot [IsGalois ℚ K] : Norming (lat K n) (lat K n) (dot K n) := 
   have hc : ∀ a, v.embedding (σ.symm a) = starRingEnd ℂ (v.embedding a) := fun a =>
     RingHom.congr_fun hσ a
   refine ⟨fun i => σ.symm (w i), ?_, ?_⟩
-  · rw [nrm_sq, dot_apply, ← NumberField.InfinitePlace.norm_embedding_eq, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [nrm_sq, dot_apply, ← NumberField.InfinitePlace.norm_embedding_eq, map_sum]
     simp only [map_mul, hc, Complex.mul_conj]
     rw [← Complex.ofReal_sum, Complex.norm_of_nonneg (Finset.sum_nonneg fun i _ => Complex.normSq_nonneg _)]
     simp only [Complex.normSq_eq_norm_sq]
@@ -121,7 +122,8 @@ theorem reads_dot [IsGalois ℚ K] {m : ℕ} (Ψ : (lat K n).V →ₗ[K] (lat K 
 
 theorem pairLe_dot : PairLe (lat K n) (lat K n) (dot K n) 0 := by
   refine ⟨fun _ => 0, fun v x y => ?_, by simp⟩
-  rw [Real.exp_zero, one_mul, nrm_sq, nrm_sq, dot_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Real.exp_zero, one_mul, nrm_sq, nrm_sq, dot_apply,
     ← NumberField.InfinitePlace.norm_embedding_eq, map_sum]
 
   have h1 : ‖∑ i, v.embedding (x i * y i)‖ ≤ ∑ i, ‖v.embedding (x i)‖ * ‖v.embedding (y i)‖ :=

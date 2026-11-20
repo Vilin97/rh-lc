@@ -162,7 +162,8 @@ theorem orth_linInd {n : Type} [Fintype n] (cj : E ≃ₐ[ℚ] E)
   rw [Fintype.linearIndependent_iff]
   intro g hg j
   have h := congrArg (trL (K := K) cj (v j)) hg
-  rw [map_sum, map_zero, Finset.sum_eq_single j] at h
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_zero, Finset.sum_eq_single j] at h
   · rw [map_smul, trL_apply, smul_eq_mul] at h
     exact (mul_eq_zero.mp h).resolve_right (tr_self_ne cj hpos _ (hv0 j))
   · intro i _ hij
@@ -188,14 +189,16 @@ theorem orthogonal_diagonal : OrthDiag := by
   have hcol : ∀ y i, Algebra.trace K E (y * cj (v i)) = b.repr y i * (q i : K) := by
     intro y i
     have h := congrArg (trL (K := K) cj (v i)) (b.sum_repr y)
-    rw [map_sum, Finset.sum_eq_single i] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_eq_single i] at h
     · rw [← trL_apply, ← h, map_smul, trL_apply, hb, hq, smul_eq_mul]
     · intro j _ hji
       rw [map_smul, trL_apply, hb, hvo j i hji, smul_zero]
     · intro h; exact absurd (Finset.mem_univ i) h
   intro x y
   have hx := congrArg (fun z => algebraMap K E (trL (K := K) cj y z)) (b.sum_repr x)
-  simp only [map_sum, map_smul, trL_apply, smul_eq_mul, map_mul] at hx
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, trL_apply, smul_eq_mul, map_mul] at hx
   rw [← hx]
   refine Finset.sum_congr rfl (fun i _ => ?_)
   rw [hb, tr_swap cj hc, hcol, map_mul, map_mul, map_ratCast, map_ratCast]

@@ -129,7 +129,8 @@ theorem first_component_sum_eq [NeZero n] (hn : Even n) (d : ℕ) :
   simp only [Finset.sum_add_distrib, Finset.sum_sub_distrib]
   rw [h2, h3, key]
   unfold liftCorrectionSum
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [map_add, map_smul, Finset.sum_add_distrib]
   abel
 
@@ -148,7 +149,8 @@ theorem second_component_sum_eq [NeZero n] (hn : Even n) (d : ℕ) (hcoc : W.γ 
     have := cocycle_relation_on_letter (W := W) (T := T) hcoc (c + 1)
     rwa [show c + 1 + 1 = c + 2 by ring] at this
   unfold gammaDefectOfLiftCorrection liftCorrectionSum
-  rw [map_sum, ← Finset.sum_sub_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, ← Finset.sum_sub_distrib]
   conv_lhs => rw [hz]
   rw [Finset.smul_sum, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun c _ => ?_

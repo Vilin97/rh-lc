@@ -30,7 +30,8 @@ theorem isFrame_snoc_of_exact {X : Scheme.{0}} {U : X.Opens}
       appLinear S.f V (Fintype.linearCombination Γ(X, V) (fun i => resM S.X₁ h (a i))
         (fun i => c i.castSucc)) + c (Fin.last m) • resM S.X₂ h b := by
     intro c
-    simp only [Fintype.linearCombination_apply, Fin.sum_univ_castSucc, Fin.snoc_castSucc,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Fintype.linearCombination_apply, Fin.sum_univ_castSucc, Fin.snoc_castSucc,
       Fin.snoc_last, map_sum, map_smul, appLinear_apply, app_resM]
   have hb1 : ∀ y : Γ(X, V), Fintype.linearCombination Γ(X, V)
       (fun i : Fin 1 => resM S.X₃ h ((fun _ : Fin 1 => S.g.app U b) i)) (fun _ => y) =
@@ -130,7 +131,8 @@ theorem exists_GL_colSecOn {N : ℕ} {T : Scheme.{0}} (g : T ⟶ Sp ℤ) (V : T.
 theorem resM_colSecOn {N : ℕ} {T : Scheme.{0}} (g : T ⟶ Sp ℤ) {V W : T.Opens} (h : W ≤ V)
     (M : Matrix (Fin N) (Fin N) Γ(T, V)) (j : Fin N) :
     resM _ h (colSecOn g V M j) = colSecOn g W (M.map (resG T h)) j := by
-  simp only [colSecOn, map_sum, resM_smul, Matrix.map_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [colSecOn, map_sum, resM_smul, Matrix.map_apply]
   refine Finset.sum_congr rfl fun i _ => congrArg _ ?_
   exact QCoh.res_pullbackSections _ _ _ _ _
 

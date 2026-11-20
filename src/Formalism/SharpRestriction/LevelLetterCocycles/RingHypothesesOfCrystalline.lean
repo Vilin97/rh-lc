@@ -168,13 +168,15 @@ theorem sum_delF_shift {M : Type} [AddCommMonoid M] (f : W.Gam → M) {δ' : W.G
 
 theorem avA_mem (a : LetA O n) : avA W a ∈ W.AΔ := by
   intro δ' hδ'
-  simp only [avA, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [avA, map_sum]
   simp_rw [← γA_mul]
   exact sum_delF_shift W (fun δ => W.γA δ a) hδ'
 
 theorem avD_inv (x : W.DD T) : ∀ δ' ∈ W.DelF, W.γD T δ' (avD W x) = avD W x := by
   intro δ' hδ'
-  simp only [avD, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [avD, map_sum]
   simp_rw [← W.γD_mul]
   exact sum_delF_shift W (fun δ => W.γD T δ x) hδ'
 
@@ -659,7 +661,8 @@ section Avg2
 variable {W} {T : LocLat G Qp LL O}
 
 theorem avD_sum {ι : Type} (s : Finset ι) (f : ι → W.DD T) : avD W (∑ k ∈ s, f k) = ∑ k ∈ s, avD W (f k) := by
-  simp only [avD, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [avD, map_sum]
   exact Finset.sum_comm
 
 theorem frobeniusPoly_eq_evalZero (hR9 : R9 W T) (X : ℕ) :

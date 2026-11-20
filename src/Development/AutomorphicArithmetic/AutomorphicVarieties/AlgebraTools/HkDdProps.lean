@@ -7,7 +7,8 @@ open MvPolynomial Equiv UpperTheory.V.AlgebraTools.Hk
 private theorem rename_alt {R : Type} [CommRing R] {n : ℕ} (u : Perm (Fin n)) (x : MvPolynomial (Fin n) R) :
     rename u (alt x) = Perm.sign u • alt x := by
   unfold alt
-  rw [map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.smul_sum]
   refine Fintype.sum_equiv (Equiv.mulLeft u) _ _ fun w => ?_
   simp only [Equiv.coe_mulLeft]
   rw [Units.smul_def, map_zsmul, rename_rename, ← Perm.coe_mul, Perm.sign_mul, mul_smul, smul_smul,

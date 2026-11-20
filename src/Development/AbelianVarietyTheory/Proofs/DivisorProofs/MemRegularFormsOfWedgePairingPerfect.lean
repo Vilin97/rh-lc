@@ -113,7 +113,8 @@ theorem wedge_coef_mem (B : Subalgebra k K) {p q : ℕ} (b : Module.Basis (Fin (
     rw [this, b.det.map_perm, Module.Basis.det_self, Units.smul_def, zsmul_eq_mul, mul_one]
   obtain ⟨ε, hε⟩ := hdiag
   have hsum : topCoefBasis b (a * (Y : DR k K)) = (b.exteriorPower q).repr Y s * ((ε : ℤ) : K) := by
-    rw [eq_sum_exteriorPower_basis b Y, Finset.mul_sum, map_sum, Finset.sum_eq_single s]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [eq_sum_exteriorPower_basis b Y, Finset.mul_sum, map_sum, Finset.sum_eq_single s]
     · rw [mul_smul_comm, map_smul, hε, smul_eq_mul]
     · intro t _ hts; rw [mul_smul_comm, map_smul, hterm t hts, smul_zero]
     · intro h; exact absurd (Finset.mem_univ s) h

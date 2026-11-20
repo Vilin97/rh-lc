@@ -39,7 +39,8 @@ theorem psiB_eq_of_hom (b : Fin B) (δ : ℕ) (f : MvPolynomial (Fin B × Fin n)
     (hf : ∀ s ∈ f.support, bw b s = δ) : psiB b f = Polynomial.C f * Polynomial.X ^ δ := by
   conv_lhs => rw [f.as_sum]
   conv_rhs => rw [f.as_sum]
-  rw [map_sum, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, Finset.sum_mul]
   exact Finset.sum_congr rfl fun s hs => by rw [psiB_monomial, hf s hs]
 
 theorem coeff_psiB_ne_zero (b : Fin B) (f : MvPolynomial (Fin B × Fin n) K)
@@ -48,7 +49,8 @@ theorem coeff_psiB_ne_zero (b : Fin B) (f : MvPolynomial (Fin B × Fin n) K)
   intro h0
   have h1 := congrArg (AddMonoidAlgebra.coeff · s) h0
   conv at h1 => lhs; rw [f.as_sum]
-  rw [map_sum, Polynomial.finsetSum_coeff, coeff_sum] at h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Polynomial.finsetSum_coeff, coeff_sum] at h1
   simp only [psiB_monomial, Polynomial.coeff_C_mul_X_pow, coeff_zero] at h1
   rw [Finset.sum_eq_single s] at h1
   · simp at h1; exact (mem_support_iff.1 hs) h1

@@ -79,7 +79,8 @@ theorem doubled_kfin : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Num
         ⨆ j : Fin m, Submodule.span ℂ {Ψ | ∃ a ∈ KInf σ W₂ B.emb, Ψ = om₂ (1, a) (pureA F (f j) (g j))} := by
       rw [Submodule.span_le]
       rintro _ ⟨a, ha, rfl⟩
-      rw [hsum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hsum, map_sum]
       exact Submodule.sum_mem _ fun j _ => Submodule.mem_iSup_of_mem j (Submodule.subset_span ⟨a, ha, rfl⟩)
     haveI : ∀ j : Fin m, FiniteDimensional ℂ
         (Submodule.span ℂ {Ψ | ∃ a ∈ KInf σ W₂ B.emb, Ψ = om₂ (1, a) (pureA F (f j) (g j))}) := fun j =>

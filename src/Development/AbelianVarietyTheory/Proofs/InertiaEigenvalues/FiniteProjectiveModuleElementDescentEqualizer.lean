@@ -38,7 +38,8 @@ theorem descent : ∀ (A B D : Type) [CommRing A] [CommRing B] [CommRing D] (f :
   set e : Fin n → P := fun i => s (fun j => if i = j then 1 else 0) with he
   have hdec : ∀ c : Fin n → A, u (s c) = ∑ i, f (c i) • u (e i) := by
     intro c
-    rw [LinearMap.pi_apply_eq_sum_univ s c, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [LinearMap.pi_apply_eq_sum_univ s c, map_sum]
     simp only [LinearMap.map_smulₛₗ, e]
   obtain ⟨WB, hWB, -⟩ := hu (Fin n → B)
     { toFun := fun x i => f (g x i)

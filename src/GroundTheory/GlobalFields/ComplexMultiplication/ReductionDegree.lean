@@ -135,7 +135,8 @@ theorem degree_reduceIsogeny_le : (reduceIsogeny K W W' φ).degree ≤ φ.degree
 
     have hrel : ∑ i, g (a i) * b i = 0 := by
       apply IsFractionRing.injective (gaussRing W) (W.baseChange K).toAffine.FunctionField
-      rw [map_sum, map_zero]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, map_zero]
       have h1 := congrArg (fun z => φ.comap (algebraMap _ _ s) * z) hc
       simp only [mul_zero, Finset.mul_sum, Algebra.smul_def, IntermediateField.algebraMap_apply]
         at h1
@@ -182,7 +183,8 @@ theorem degree_reduceIsogeny_le : (reduceIsogeny K W W' φ).degree ≤ φ.degree
         rw [ha' i, map_mul, mul_assoc]
       exact (mul_eq_zero.1 this).resolve_left (hinj _ hai₁)
     have hred' := congrArg (fun z => gaussResidue W (residue _ z)) hrel'
-    simp only [map_sum, map_mul, map_zero, hb] at hred'
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, map_zero, hb] at hred'
     have hcoef : ∀ i, gaussResidue W (residue _ (g (a' i))) =
         (reduceIsogeny K W W' φ).comap (gaussResidue W' (residue _ (a' i))) := fun i => by
       rw [← ResidueField.map_residue, ← RingHom.comp_apply, hres]; rfl

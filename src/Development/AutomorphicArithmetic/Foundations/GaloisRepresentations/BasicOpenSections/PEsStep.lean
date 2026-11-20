@@ -15,7 +15,8 @@ private theorem mem_submodule_of_basis_matrix {L M : Type*} [Field L] [AddCommGr
     have h := congrArg Subtype.val (b.sum_repr ⟨x, hx⟩)
     simp only [AddSubmonoidClass.coe_finset_sum, SetLike.val_smul] at h
     exact h.symm
-  rw [hx', map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hx', map_sum]
   refine Submodule.sum_mem _ (fun i _ => ?_)
   rw [map_smul, hb]
   exact Submodule.smul_mem _ _ (Submodule.sum_mem _ (fun k _ => Submodule.smul_mem _ _ (b k).2))
@@ -73,7 +74,8 @@ theorem UpperTheory.Gal.Mod.esStep :
     have hM : Polynomial.aeval (ρ₀ σ⁻¹ : Matrix (Fin dd) (Fin dd) (Qbar l))
         (crystallineComparison.heckePol (normV w) n ϑ) = 0 := by
       refine aeval_matrix_eq_zero_of_aeval_zero_on_submodule b (galV l H Ω (Qbar l) σ⁻¹) _ (hb σ⁻¹) _ (fun x hx => ?_)
-      rw [← (key σ hσA x hx).2 hσv, crystallineComparison.heckePol, h4, hnorm, map_sum, LinearMap.sum_apply,
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← (key σ hσA x hx).2 hσv, crystallineComparison.heckePol, h4, hnorm, map_sum, LinearMap.sum_apply,
         Finset.sum_range (fun j => (Polynomial.aeval (galV l H Ω (Qbar l) σ⁻¹))
           (Polynomial.C ((-1) ^ j * ((p ^ f : ℕ) : Qbar l) ^ j.choose 2 * ϑ j) * Polynomial.X ^ (n - j)) x)]
       refine Finset.sum_congr rfl (fun j _ => ?_)

@@ -87,7 +87,8 @@ theorem first_cohomology_vanishes_descent (f : Y ⟶ X) (M : LB X) (G : Type) [G
       exact h)
   have hχ : ∀ a, ∃ χ : Γ(X, V a), pb f le_rfl χ = ∑ y, pb (τ y) (inv y (V a)) (ψ a) := fun a => by
     obtain ⟨χ, h, -⟩ := hgal (V a) (∑ y, pb (τ y) (inv y (V a)) (ψ a)) (fun z e => by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Fintype.sum_equiv (Equiv.mulLeft z) _ _ fun y => ?_
       rw [pb_pb, pb_congr (hmul z y)]
       rfl)
@@ -103,7 +104,8 @@ theorem first_cohomology_vanishes_descent (f : Y ⟶ X) (M : LB X) (G : Type) [G
     have lb : f ⁻¹ᵁ (V a ⊓ V b) ≤ f ⁻¹ᵁ V b := pre_mono f inf_le_right
     have ha := congrArg (rs Y la) (hχ a)
     have hb := congrArg (rs Y lb) (hχ b)
-    simp only [map_sum, rs_pb] at ha hb
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, rs_pb] at ha hb
     simp only [map_sub, map_mul, map_natCast, pb_rs]
     rw [ha, hb, Finset.mul_sum, ← Finset.sum_sub_distrib, ← nsmul_eq_mul, ← Finset.card_univ,
       ← Finset.sum_const]

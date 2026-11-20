@@ -37,7 +37,8 @@ private theorem pf_approx {O X σ : Type} [CommRing O] [AddCommGroup X] [Finite 
   have hd' : Finsupp.degree d < n := by exact_mod_cast hd
   have hmem : Finsupp.weight wt d ∈ T.image (Finsupp.weight wt) :=
     Finset.mem_image_of_mem _ (hT d hd')
-  rw [map_sub, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sub, map_sum]
   simp only [coeff_wcomp]
   rw [Finset.sum_ite_eq, if_pos hmem, sub_self]
 
@@ -49,7 +50,8 @@ private theorem pf_vanish {O X σ S : Type} [CommRing O] [AddCommGroup X] [Finit
   obtain ⟨s, hs⟩ := pf_approx wt F n
   have h1 := GlobalTheory.algHom_mem_pow_of_le_order φ hφ hs
   have h2 : φ (∑ j ∈ s, wcomp O wt j F) = 0 := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_eq_zero fun j _ => h j
   rw [map_sub, h2, sub_zero] at h1
   rwa [sub_zero]
@@ -82,7 +84,8 @@ private theorem pf_step (hg : ∀ s, ι (g (MvPowerSeries.X s)) = t (Multiplicat
       apply Subtype.ext
       rw [hx, hFb]
       show _ = W.A.val _
-      rw [map_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, map_sum]
       refine Finset.sum_congr rfl fun m _ => ?_
       rw [map_mul, map_mul]
       show _ = W.π (b m) * ((m.prod fun s k => W.zA s ^ k : W.A) : R)
@@ -95,11 +98,13 @@ private theorem pf_step (hg : ∀ s, ι (g (MvPowerSeries.X s)) = t (Multiplicat
       rw [h1, pf_prod W.wt t (fun s => ξ (W.zA s)) m, hS m (hμS (Finset.mem_coe.mpr hm)),
         map_finsuppProd]
       simp only [map_pow]
-    rw [hx', map_sum ι, map_sum ξ, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hx', map_sum ι, map_sum ξ, Finset.mul_sum]
     refine Finset.sum_congr rfl fun m hm => ?_
     rw [map_mul ι, map_mul ξ, hc m, hgm m hm]
     ring
-  · rw [hFb, map_sum, ← Finset.sum_sub_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [hFb, map_sum, ← Finset.sum_sub_distrib]
     refine Ideal.sum_mem _ fun m hm => ?_
     rw [map_mul, ← sub_mul]
     exact Ideal.mul_mem_mul (hcI m) (hJ m (hμS (Finset.mem_coe.mpr hm)))

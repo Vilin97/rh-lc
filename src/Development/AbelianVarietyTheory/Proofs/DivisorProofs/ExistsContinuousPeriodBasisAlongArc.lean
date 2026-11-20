@@ -95,7 +95,8 @@ theorem exists_period_basis_halfPlane
     rw [(hh _ (hcb (hub w hw))).2.2 ex hadd hex hd z, h1]
     simp only [← hL, ContinuousLinearMap.inverse_equiv, ContinuousLinearEquiv.coe_coe]
     refine exists_congr fun n => ?_
-    rw [show ∑ j, n j • L.symm (lamE (sOf w) j) = L.symm (∑ j, n j • lamE (sOf w) j) by
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [show ∑ j, n j • L.symm (lamE (sOf w) j) = L.symm (∑ j, n j • lamE (sOf w) j) by
         rw [map_sum]; exact Finset.sum_congr rfl fun j _ => (map_zsmul L.symm _ _).symm,
       ContinuousLinearEquiv.eq_symm_apply]
   · obtain ⟨C', hC'⟩ := GlobalTheory.T.polynomial_growth_of_periodic_integral_spans g' m lamE C k hcont (fun s hs => (hlat s hs).1) hper hC (2 * Real.pi * |R|)

@@ -58,7 +58,8 @@ theorem fock_map (ι : ℚ_[p] →+* KK O) {σ : Type} (F G : MvPolynomial σ �
     fock (map ι F) (map ι G) = ι (Formalism.GM.M.fockK F G) := by
   classical
   unfold fock Formalism.GM.M.fockK
-  rw [support_map_of_injective _ ι.injective, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [support_map_of_injective _ ι.injective, map_sum]
   refine Finset.sum_congr rfl fun m _ => ?_
   rw [coeff_map, coeff_map, map_mul, map_mul]
   congr 1

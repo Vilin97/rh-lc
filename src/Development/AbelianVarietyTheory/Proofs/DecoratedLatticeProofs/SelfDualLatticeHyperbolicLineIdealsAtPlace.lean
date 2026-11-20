@@ -47,7 +47,8 @@ theorem mulVec_colMul {k m n : ℕ} (P : Mx D k m) (x : Mx D m n) (i : Fin n) (b
 theorem hermAt_colMul (S : HSp D) {n : ℕ} (x : Mx D S.rank n) (i : Fin n) (a : AE D) (y : Fin S.rank → AE D) :
     hermAt S (colMul x i a) y = cA D (((adj x ⬝ gA S) *ᵥ y) i) * a := by
   have hG : ∀ k l, cA D (gA S k l) = gA S l k := fun k l => congrFun (congrFun (adj_gA S) l) k
-  simp only [hermAt, colMul, Matrix.mulVec, dotProduct, Matrix.mul_apply, adj, Matrix.transpose_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hermAt, colMul, Matrix.mulVec, dotProduct, Matrix.mul_apply, adj, Matrix.transpose_apply,
     Matrix.map_apply, map_sum, map_mul, GlobalTheory.RamLine.cA_cA', hG, Finset.sum_mul]
   refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun l _ => ?_
   ring

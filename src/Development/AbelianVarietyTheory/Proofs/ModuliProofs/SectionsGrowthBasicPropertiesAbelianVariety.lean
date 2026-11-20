@@ -171,7 +171,8 @@ theorem sectionsDim_le_tensor_of_nonzero_section [IsIntegral X] (p : X ⟶ Sp K)
       have hc' : ∀ l, ∑ i, cst p (A.U j ⊓ B.U k) (c i) * cst p (A.U j ⊓ B.U k) (a i l) = 0 := fun l => by
         have := congrArg (cst p (A.U j ⊓ B.U k)) (congrFun hc l)
         simpa [Finset.sum_apply] using this
-      simp only [map_sum, map_mul, res_cst, Finset.sum_mul, _root_.mul_assoc, e, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_mul, res_cst, Finset.sum_mul, _root_.mul_assoc, e, Finset.mul_sum]
       rw [Finset.sum_comm]
       refine Finset.sum_eq_zero fun l _ => ?_
       simp only [← _root_.mul_assoc, ← Finset.sum_mul, hc', zero_mul]

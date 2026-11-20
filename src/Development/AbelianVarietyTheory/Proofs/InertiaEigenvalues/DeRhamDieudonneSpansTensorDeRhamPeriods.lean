@@ -101,7 +101,8 @@ theorem span_of_isField [FiniteDimensional Qp LL] [FiniteDimensional LL V] (hF :
     (TensorProduct.comm Qp V BdR y)
   refine ⟨_, b, fun k => (TensorProduct.comm Qp V BdR).symm (e k), fun k => (e k).2, ?_⟩
   apply (TensorProduct.comm Qp V BdR).injective
-  simp only [map_sum, comm_mp, LinearEquiv.apply_symm_apply, hb]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, comm_mp, LinearEquiv.apply_symm_apply, hb]
 
 end General
 

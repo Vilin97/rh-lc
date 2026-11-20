@@ -32,7 +32,8 @@ theorem mem_range_map_iff {τ : Type*} (V : Subring ℚ) (F : MvPolynomial τ �
     exact (F'.coeff ν).2
   · intro h
     refine ⟨∑ ν ∈ F.support, monomial ν ⟨F.coeff ν, h ν⟩, ?_⟩
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [map_monomial]
     exact F.support_sum_monomial_coeff
 

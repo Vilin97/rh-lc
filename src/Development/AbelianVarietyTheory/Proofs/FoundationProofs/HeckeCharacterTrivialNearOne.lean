@@ -85,7 +85,8 @@ theorem trace_conj (y : D.host.E) :
     Algebra.trace D.host.K D.host.E (D.host.conj y) =
       conjK D (Algebra.trace D.host.K D.host.E y) := by
   apply Subtype.ext
-  rw [coe_conjK, coe_trace, coe_trace, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [coe_conjK, coe_trace, coe_trace, map_sum]
   exact Finset.sum_congr rfl fun τ _ => (conj_comm D τ y).symm
 
 theorem trace_pos (y : D.host.E) (hy : y ≠ 0) :
@@ -99,7 +100,8 @@ theorem trace_pos (y : D.host.E) (hy : y ≠ 0) :
   rw [hb, add_zero] at hab
   refine ⟨a, ?_, Subtype.ext (by rw [hab]; simp)⟩
   have h1 := congrArg D.host.φ₀ hab
-  rw [coe_trace, map_sum, map_ratCast] at h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [coe_trace, map_sum, map_ratCast] at h1
   have h2 : ∀ τ : D.host.E ≃ₐ[D.host.K] D.host.E,
       D.host.φ₀ (τ (y * D.host.conj y)) = ((Complex.normSq (D.host.φ₀ (τ y)) : ℝ) : ℂ) := by
     intro τ

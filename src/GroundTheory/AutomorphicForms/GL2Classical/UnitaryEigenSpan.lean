@@ -30,7 +30,8 @@ theorem orbitSum_mem {K : Subgroup G} {v : E} (hv : (Set.range fun k : K => ρ k
 theorem orbitSum_fixed {K : Subgroup G} {v : E} (hv : (Set.range fun k : K => ρ k v).Finite)
     (k : K) : ρ k (orbitSum ρ K v hv) = orbitSum ρ K v hv := by
   unfold orbitSum
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_nbij' (fun w => ρ k w) (fun w => ρ (k⁻¹ : K) w) ?_ ?_ ?_ ?_ (fun _ _ => rfl)
   · intro w hw
     simp only [Set.Finite.mem_toFinset] at hw ⊢
@@ -86,7 +87,8 @@ theorem mem_of_stable_of_eigen
       ⟪ι z, ι (orbitSum ρ K v (horb v hv))⟫_ℂ = ((horb v hv).toFinset.card : ℂ) * ⟪ι z, ι v⟫_ℂ := by
     intro z hz hzK v hv
     unfold orbitSum
-    rw [map_sum, inner_sum, ← nsmul_eq_mul, ← Finset.sum_const]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, inner_sum, ← nsmul_eq_mul, ← Finset.sum_const]
     refine Finset.sum_congr rfl fun w hw => ?_
     rw [Set.Finite.mem_toFinset] at hw
     obtain ⟨k, rfl⟩ := hw
@@ -160,7 +162,8 @@ theorem mem_of_stable_of_eigen
     have hDorth : ∀ v ∈ Y, ⟪ι D, ι v⟫_ℂ = 0 := by
       intro v hvY
       have hvT := hYT hvY
-      simp only [D, map_sub, map_sum, map_smul, inner_sub_left, sum_inner, inner_smul_left, hzY v hvY,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [D, map_sub, map_sum, map_smul, inner_sub_left, sum_inner, inner_smul_left, hzY v hvY,
         mul_zero, sub_zero]
       refine Finset.sum_eq_zero fun g _ => ?_
       rw [← hunit g⁻¹ _ (hTg g z hzT) v hvT, ← Module.End.mul_apply, ← map_mul, inv_mul_cancel, map_one,

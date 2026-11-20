@@ -48,7 +48,8 @@ theorem sum_cup_eq_mk {R : Type} [CommRing R] {A B : Over (Sp R)} {N : ℕ}
     (∑ k, cup _ (pullOver (dp0 R) (𝟙 _) (fst A B) (CatCoh.H1.mk _ (α k)))
       (pullOver (dp0 R) (𝟙 _) (snd A B) (CatCoh.H1.mk _ (β k)))) =
       CatCoh.H2.mk _ (∑ k, cupZ _ (m₁.coef.pullbackOneCocycle (α k)) (m₂.coef.pullbackOneCocycle (β k))) := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun k _ ↦ ?_
   rw [← cup_mk]
   rfl
@@ -78,9 +79,11 @@ theorem sum_mem_F1prim {R : Type} [CommRing R] {A : Over (Sp R)} [GrpObj A] {N :
     refine (mem_hodgeFiltration_iff_pointwiseCoboundary R A _).2 ⟨k, fun D _ _ D' _ _ ψ z hz ↦ ?_⟩
     rw [fv_sum]
     exact hk D D' ψ z hz
-  rw [map_sum] at hF
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum] at hF
   simp only [map_smul, hα] at hF
-  rw [PrimitiveSubmodule, Submodule.mem_comap, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [PrimitiveSubmodule, Submodule.mem_comap, map_sum]
   exact hF
 
 theorem fil_orthogonal : GlobalTheory.Published.AbelianHodgeDeRham → ∀ (R : Type) [CommRing R] (A B : Over (Sp R)) [GrpObj A] [GrpObj B] (g : ℕ), IsAbelianScheme A → IsAbelianScheme B → SmoothOfRelativeDimension g A.hom → SmoothOfRelativeDimension g B.hom → ∀ P : LB (A ⊗ B).left, P.IsLB → ∀ φ : HdR A →ₗ[R] HdR B →ₗ[R] R, AbDual.IsCorrForm (dp0 R) (𝟙 _) A B P φ → ∀ x ∈ Fil A, ∀ y ∈ Fil B, φ x y = 0 := by
@@ -94,7 +97,8 @@ theorem fil_orthogonal : GlobalTheory.Published.AbelianHodgeDeRham → ∀ (R : 
     (fun i ↦ (fv_isCoc_and_ev_eq R A (α i)).1) hcup y hy
   have eb : ∀ i, (⟨_, hβ' i⟩ : primDR B) = b i := fun i ↦ Subtype.ext (hβ i)
   have h0 := (Submodule.mem_dualAnnihilator _).1 hx _ (sum_mem_F1prim a α hα _ k hk)
-  rw [hφ, ← h0, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hφ, ← h0, map_sum]
   exact Finset.sum_congr rfl fun k _ ↦ by rw [map_smul, smul_eq_mul, mul_comm, eb]
 
 end GlobalTheory.PtExt.HodgeOrth

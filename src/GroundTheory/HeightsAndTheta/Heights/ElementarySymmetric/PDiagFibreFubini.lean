@@ -84,7 +84,8 @@ def sndHom : (S2 → ℝ) →+* (S2 × S2 → ℝ) :=
   RingHom.pi fun p => Pi.evalRingHom (fun _ : S2 => ℝ) p.2
 
 theorem dotPoly_snd : dotPoly (Prod.snd : S2 × S2 → S2) = map sndHom (dotPoly (id : S2 → S2)) := by
-  simp only [dotPoly, map_sum, map_mul, map_X, map_C]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dotPoly, map_sum, map_mul, map_X, map_C]
   rfl
 
 theorem moment_top (k : ℕ) (hk : 1 ≤ k) :

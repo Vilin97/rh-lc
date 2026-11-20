@@ -144,7 +144,8 @@ theorem exists_flip_eq [FiniteDimensional E V] (h2 : (2 : E) ≠ 0) (hc : ∀ t,
     exact LinearMap.congr_fun this b)
   refine ⟨∑ i, c (ψ (v i) / B (v i) (v i)) • v i, fun z => ?_⟩
   have : B.flip (∑ i, c (ψ (v i) / B (v i) (v i)) • v i) = ψ := v.ext fun j => by
-    rw [LinearMap.flip_apply, map_sum, Finset.sum_eq_single j]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [LinearMap.flip_apply, map_sum, Finset.sum_eq_single j]
     · rw [LinearMap.map_smulₛₗ, hc, smul_eq_mul, div_mul_cancel₀ _ (hne j)]
     · intro i _ hij
       rw [LinearMap.map_smulₛₗ, hv j i hij.symm, smul_zero]

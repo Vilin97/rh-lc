@@ -112,14 +112,16 @@ theorem continuous_coord (k : Fin 2) : Continuous (coord I k) := by
 theorem thetaV_eq (v : InfinitePlace I.F) (t : Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.AF I.F ⊗[I.F] I.E) :
     thetaV I v t = ∑ k, evV I v (coord I k t) * I.φ v (basisE I k) := by
   conv_lhs => rw [← sum_coord I t]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rfl
 
 theorem tauF_eq (t : Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.AF I.F ⊗[I.F] I.E) :
     tauF I t = ∑ k, basisE I k ⊗ₜ[I.F] (coord I k t).2 := by
   conv_lhs => rw [← sum_coord I t]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   show (1 : I.E) ⊗ₜ[I.F] Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sndA I.F (coord I k t) *
       (basisE I k ⊗ₜ[I.F] (1 : Formalism.MainNotions.S.Af I.F)) = _

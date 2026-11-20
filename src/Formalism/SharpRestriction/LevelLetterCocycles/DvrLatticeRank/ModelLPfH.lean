@@ -50,7 +50,8 @@ theorem rep_γ {u₀ : LetA O n} (hu₀ : u₀ ∈ W.AΔ) (hΛ : u₀ * W.γA W.
   have e : smulLA W T π' c (Eπ ^ h') (γLA W T π' c x) =
       smulLA W T π' c u₀ (γLA W T π' c (smulLA W T π' c (Eπ ^ h') x)) := by
     rw [γLA_smulLA, MLE.smulLA_smulLA, hΛ]
-  rw [e, hx, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, hx, map_sum, map_sum]
   refine Finset.sum_congr rfl (fun j _ => ?_)
   show (algebraMap (LetA O n) W.EE u₀ * W.γE W.gamK (algebraMap (LetA O n) W.EE
       ((letE c : LetA O n) * a j))) ⊗ₜ mkL W T π' c (y j) (hy j) = _

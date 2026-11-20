@@ -25,7 +25,8 @@ variable {R κ : Type} [CommRing R] [Algebra ℂ R] [LinearOrder κ]
 private theorem wd_map' (r : κ → R) (π : N →ₗ[R] N') (c : Finset κ → N) (s : Finset κ) :
     wd (fun l => (Algebra.lsmul ℂ ℂ N' : R →ₐ[ℂ] Module.End ℂ N') (r l)) (fun s => π (c s)) s =
       π (wd (fun l => (Algebra.lsmul ℂ ℂ N : R →ₐ[ℂ] Module.End ℂ N) (r l)) c s) := by
-  simp only [wd_eq', map_sum, map_zsmul, Algebra.lsmul_coe, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [wd_eq', map_sum, map_zsmul, Algebra.lsmul_coe, map_smul]
 
 private theorem mem_C' (r : κ → R) (n : ℤ) (c : Finset κ → N) :
     c ∈ (kos (Algebra.lsmul ℂ ℂ N) ⊤ r).C n ↔ ∀ s : Finset κ, (s.card : ℤ) ≠ n → c s = 0 := by

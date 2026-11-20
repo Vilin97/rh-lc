@@ -475,7 +475,8 @@ theorem real_right (hX : IsBottomTri W i j X) (t : T) {γ r : GA D WW} (hγ : γ
     unfold Tri.ker' thetaKO
     have hm : ((g, x * r) : GA D A' × GA D WW) = (g, x) * (1, r) := by simp
     rw [hm, map_mul, Module.End.mul_apply, hmain]
-    conv_lhs => rw [(C • Q).as_sum, map_sum, map_sum, Finset.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [(C • Q).as_sum, map_sum, map_sum, Finset.sum_apply]
     refine Finset.sum_congr rfl fun k' _ => ?_
     rw [show MvPolynomial.monomial k' ((C • Q).coeff k') = (C • Q).coeff k' • MvPolynomial.monomial k' (1 : ℂ) by
       rw [MvPolynomial.smul_monomial, smul_eq_mul, mul_one], map_smul, map_smul, Pi.smul_apply, smul_eq_mul]

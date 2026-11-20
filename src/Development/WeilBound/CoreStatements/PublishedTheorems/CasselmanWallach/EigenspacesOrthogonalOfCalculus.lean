@@ -92,12 +92,14 @@ lemma key (hgl : IsGlRep E) (huni : IsInfUnitary ε E)
 
 lemma beta_sum_left {ι : Type*} (s : Finset ι) (f : ι → V) (w : V) :
     beta ε E A (∑ i ∈ s, f i) w = ∑ i ∈ s, beta ε E A (f i) w := by
-  simp only [beta, map_sum, sum_inner]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [beta, map_sum, sum_inner]
   exact Finset.sum_comm
 
 lemma beta_sum_right {ι : Type*} (s : Finset ι) (f : ι → V) (v : V) :
     beta ε E A v (∑ i ∈ s, f i) = ∑ i ∈ s, beta ε E A v (f i) := by
-  simp only [beta, map_sum, inner_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [beta, map_sum, inner_sum]
   exact Finset.sum_comm
 
 lemma Lsym (hgl : IsGlRep E) (huni : IsInfUnitary ε E)

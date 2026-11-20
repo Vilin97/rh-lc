@@ -63,13 +63,15 @@ theorem expStar_of_sum : ∀ (LT : LocTheory) (l : ℕ) [Fact l.Prime] (AI : Loc
   have hSH : ∀ h ∈ Hinf K, (LT l).actQdR h S = S := by
     intro h hh
     have h1 : (LT l).χQ h = 1 := (hker K h (Hinf_le_fix hh)).2.1 hh
-    rw [hS, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hS, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [act_term h _ (hh ⟨w j, Ks_le_Kinf K s (hw j)⟩), h1]
     simp
   have hSg : qB (LT l) (((LT l).χQ g ^ (-(e : ℤ)) : ℚ_[l]ˣ) : ℚ_[l]) * (LT l).actQdR g S - S =
       ∑ j ∈ Finset.range e, oB (LT l) (w j) * tD (LT l) ^ j := by
-    rw [hS, map_sum, Finset.mul_sum, ← Finset.sum_sub_distrib]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hS, map_sum, Finset.mul_sum, ← Finset.sum_sub_distrib]
     refine Finset.sum_congr rfl fun j hj => ?_
     rw [act_term g _ (hg.1 ⟨w j, hw j⟩), ← mul_assoc, ← map_mul, ← sub_mul, ← map_sub]
     have : (((LT l).χQ g ^ (-(e : ℤ)) : ℚ_[l]ˣ) : ℚ_[l]) * (c j * u ^ j) - c j = 1 := by

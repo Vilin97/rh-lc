@@ -117,7 +117,8 @@ theorem perp_zero {z : Fin (2 * r + k + 1) → ℂ} (hz : inWb k r z) (hT : 0 < 
     intro g hg o
     have hsum : (∑ o', g o' • f o') = 0 := by
       apply psiW_inj (inWb_sum _ _ (fun o' _ => JfS.Sym.inWb_smul _ (hfW o')))
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simpa only [map_smul] using hg
     have := congrArg (fun x => herm (Hpk k r) x (f o)) hsum
     simp only [JfS.Sym.herm_sum_left, JfS.Sym.herm_smul_left, JfS.Sym.herm_zero_left] at this

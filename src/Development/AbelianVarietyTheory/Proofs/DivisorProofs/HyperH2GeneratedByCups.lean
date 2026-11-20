@@ -74,13 +74,15 @@ theorem GlobalTheory.AbCoh.hyp2_eq_sum_cupHyp : ∀ (R : Type) [CommRing R] (C :
   have hcls : H2.mk F (fn2 F c) = ∑ k, cup F (x k) (y k) := by
     have h := congrArg e hxy
     rw [LinearEquiv.apply_symm_apply] at h
-    rw [h, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h, map_sum]
     simp only [he]
   obtain ⟨c', hc'⟩ : ∃ c' : cechDeRhamTotalCocyclesTwo F, c' = c - ∑ k, cupZZ F (p (x k)) (p (y k)) := ⟨_, rfl⟩
   have hfn : ∃ f, d1 F f = c'.1.1 := by
     have h : H2.mk F (fn2 F c') = 0 := by
       rw [hc']
-      simp only [map_sub, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sub, map_sum]
       rw [hcls, sub_eq_zero]
       refine Finset.sum_congr rfl fun k _ ↦ ?_
       rw [cechDeRhamFunctionPart_cup_eq_cup, ← cup_mk, ← toO_mk, ← toO_mk, hp, hp]
@@ -89,4 +91,5 @@ theorem GlobalTheory.AbCoh.hyp2_eq_sum_cupHyp : ∀ (R : Type) [CommRing R] (C :
   refine ⟨m + n, Fin.append a (fun k ↦ Hyp1.mk F (p (x k))),
     Fin.append (fun k ↦ clAll F hc (w k)) (fun k ↦ Hyp1.mk F (p (y k))), ?_⟩
   rw [← sum_append, ← hm, hc']
-  simp only [map_sub, map_sum, cupHyp_mk, sub_add_cancel]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sub, map_sum, cupHyp_mk, sub_add_cancel]

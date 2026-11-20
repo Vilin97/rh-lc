@@ -24,7 +24,8 @@ theorem RestCutIKillsIdeal.proof (h₁ : RestCutIdealSum.Statement)
   have hC := homogeneousComponent_of_mem (m := flagDim f j k) hT
   rw [if_pos rfl] at hC
   rw [← hC]
-  rw [hG, map_sum, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hG, map_sum, map_sum, map_sum]
   refine Finset.sum_eq_zero fun i _ => ?_
   rw [map_mul, h₂, KRest.homogeneousComponent_mul_left (rootPsum_isHomogeneous f j k _ i.2)]
   split_ifs with hle

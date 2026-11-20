@@ -70,7 +70,8 @@ private theorem bilinForm_sum_smul_eq_neg_omegaStd {V : Type} [AddCommGroup V] [
     exact Finset.sum_congr rfl (fun k _ => by ring)
   have hZ : ∑ j, m j * ∑ k, m' k * omegaStd (Pi.single j (1 : ℤ)) (Pi.single k 1) = omegaStd m m' := by
     simp only [h2, h1]
-  simp only [map_sum, LinearMap.sum_apply, map_zsmul, LinearMap.smul_apply, hb, zsmul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.sum_apply, map_zsmul, LinearMap.smul_apply, hb, zsmul_eq_mul]
   rw [← hZ]
   push_cast
   simp only [mul_neg, Finset.sum_neg_distrib, Finset.mul_sum]

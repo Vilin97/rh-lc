@@ -35,7 +35,8 @@ theorem exists_casimir (F K : Type) [Field F] [Field K] [Algebra F K] [FiniteDim
   calc ∑ j, β (c * b j) (d j) = ∑ j, ∑ k, Algebra.trace F K (d k * (c * b j)) • β (b k) (d j) := by
         refine Finset.sum_congr rfl fun j _ => ?_
         conv_lhs => rw [← h2 (c * b j)]
-        simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply]
     _ = ∑ k, ∑ j, Algebra.trace F K (c * d k * b j) • β (b k) (d j) := by
         rw [Finset.sum_comm]
         refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun j _ => ?_
@@ -43,7 +44,8 @@ theorem exists_casimir (F K : Type) [Field F] [Field K] [Algebra F K] [FiniteDim
     _ = _ := by
         refine Finset.sum_congr rfl fun k _ => ?_
         conv_rhs => rw [← h1 (c * d k)]
-        simp only [map_sum, map_smul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, map_smul]
 
 section General
 
@@ -74,7 +76,8 @@ theorem exists_vector [Algebra.IsSeparable Qp K] (χ : G →* Kˣ) (τ : K →�
         β (b j) (c * d j) := fun j => by
       rw [hβ, hβ, mulVdR, AlgebraTensorModule.map_tmul, LinearMap.id_apply, LinearMap.mulLeft_apply,
         ← Algebra.smul_def, smul_smul]
-    rw [map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.smul_sum]
     simp only [hl]
     rw [← hcas]
     refine Finset.sum_congr rfl fun j _ => ?_
@@ -85,7 +88,8 @@ theorem exists_vector [Algebra.IsSeparable Qp K] (χ : G →* Kˣ) (τ : K →�
     have hne : τ (χ g : K) ≠ 0 := (map_ne_zero τ).2 (χ g).ne_zero
     have : actVdR PD ρ g (∑ j, β (b j) (d j)) = (τ (χ g : K))⁻¹ •
         mulVdR (K := K) (BdR := BdR) (V := Fin 1 → LL) (LL := LL) (χ g : K) (∑ j, β (b j) (d j)) := by
-      rw [map_sum, map_sum, Finset.smul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, map_sum, Finset.smul_sum]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [hβ, actVdR, mulVdR, AlgebraTensorModule.map_tmul, AlgebraTensorModule.map_tmul, hρ,
         ← TensorProduct.smul_tmul', LinearMap.id_apply, LinearMap.mulLeft_apply]
@@ -116,14 +120,16 @@ theorem exists_vector [Algebra.IsSeparable Qp K] (χ : G →* Kˣ) (τ : K →�
     have hx := hmem z
     rw [hz] at hx
     have hκ : Λ (∑ j, β (b j) (d j)) = (∑ j, lam (τ (b j)) • d j) • Y := by
-      rw [map_sum, Finset.sum_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Finset.sum_smul]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [hβ, hΛ, smul_assoc]
       simp [e]
     have hκ0 : (∑ j, lam (τ (b j)) • d j) ≠ 0 := fun h => hlam (by
       have h' := congrArg (Algebra.trace Qp K) h
       have h'' := congrArg (fun u => lam (τ u)) hbd
-      simp only [map_sum, map_smul, map_zero, map_one, smul_eq_mul] at h' h''
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, map_zero, map_one, smul_eq_mul] at h' h''
       rw [← h'', ← h']
       exact Finset.sum_congr rfl fun j _ => mul_comm _ _)
     rw [hκ] at hx

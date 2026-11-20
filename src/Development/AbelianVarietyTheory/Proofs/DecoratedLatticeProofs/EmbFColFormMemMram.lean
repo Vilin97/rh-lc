@@ -72,7 +72,8 @@ theorem embF_colForm_mem_Mram (l : I.Laws) (φ : ColsK I u) :
     have e : NmOp (Pr := B.primes X) B.wts I.Ch u 0 P φ =
         ∑ e ∈ @Finset.univ _ (Fintype.ofFinite (𝓞 B.fields.E ⧸ P.1.asIdeal)ˣ), diaOp (Pr := B.primes X) B.wts I.Ch u 0 P e φ :=
       LinearMap.sum_apply _ _ _
-    rw [e, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, map_sum, map_sum]
     refine (LinearMap.sum_apply _ _ _).trans (Finset.sum_congr (Finset.ext fun e => ?_) fun e _ => ?_)
     · exact iff_of_true (@Finset.mem_univ _ (_) _) (@Finset.mem_univ _ (_) _)
     · exact (embF_colForm_diaOp I h u a hf P e φ).symm

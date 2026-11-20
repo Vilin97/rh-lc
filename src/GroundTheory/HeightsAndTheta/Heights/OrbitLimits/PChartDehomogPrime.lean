@@ -33,7 +33,8 @@ theorem ChartDehomogPrime.proof : ChartDehomogPrime.Statement := by
     rw [this, mul_comm, IsLocalization.Away.mul_invSelf, sub_self]
   have hle : W ⊔ Ideal.span {linForm t - 1} ≤ RingHom.ker ψ := by
     refine sup_le (fun g hg => ?_) hspan
-    rw [RingHom.mem_ker, ← sum_homogeneousComponent g, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [RingHom.mem_ker, ← sum_homogeneousComponent g, map_sum]
     refine Finset.sum_eq_zero fun k _ => ?_
     rw [hhom (homogeneousComponent_isHomogeneous k g)]
     have : φ (homogeneousComponent k g) = 0 := by

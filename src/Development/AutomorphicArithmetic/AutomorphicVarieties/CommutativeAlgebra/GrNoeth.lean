@@ -62,7 +62,8 @@ theorem UpperTheory.V.Alg.gr_noeth :
     have hsum : a = ∑ m ∈ μ, bA m * mA m := by
       apply Subtype.ext
       rw [← hfa]
-      simp [hfb, map_sum, map_mul, bA, mA]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [hfb, map_sum, map_mul, bA, mA]
     rw [hsum]
     refine Submodule.sum_mem _ fun m hm => Submodule.mul_mem_mul ?_ ?_
     · show (W.π (b m) : R) ∈ W.part 0

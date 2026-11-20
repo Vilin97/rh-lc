@@ -43,7 +43,8 @@ theorem extCoc_rat_cont_cocycle : ∀ (l : ℕ) [Fact l.Prime] (a b : Type) [Fin
   have hcι : Continuous ι := Continuous.subtype_mk continuous_subtype_val _
   refine ⟨?_, ?_, ?_⟩
   · intro g i
-    rw [hform, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hform, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_mul, hrat.rat, hrat.rat]
   · intro i

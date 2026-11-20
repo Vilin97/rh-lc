@@ -238,7 +238,8 @@ theorem edgeSum_eq_supSum {κ : Type} [CommRing κ] {r : ℕ} (g : GL (Fin r) κ
 theorem supSum_map {κ κ' : Type} [CommRing κ] [CommRing κ'] (φ : κ →+* κ') {r : ℕ} (x : Matrix (Fin r) (Fin r) κ) :
     Formalism.IndefR.Mi.supSum (x.map φ) = φ (Formalism.IndefR.Mi.supSum x) := by
   unfold Formalism.IndefR.Mi.supSum
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   split_ifs <;> simp
 

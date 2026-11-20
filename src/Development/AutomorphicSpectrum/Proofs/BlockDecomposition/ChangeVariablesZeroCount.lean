@@ -11,7 +11,8 @@ namespace GlobalTheory.CompanionTheory.FSCrofton
 theorem clm_apply_eq_sum {d : ℕ} (T : V d →L[ℂ] ℂ) (v : V d) :
     T v = ∑ a, v a * T (EuclideanSpace.single a 1) := by
   conv_lhs => rw [← (EuclideanSpace.basisFun (Fin d) ℂ).sum_repr v]
-  simp [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum]
 
 theorem abs_det_restrictScalars_toEuclideanCLM {d : ℕ} (M : Matrix (Fin d) (Fin d) ℂ) :
     |((Matrix.toEuclideanCLM (𝕜 := ℂ) M : V d →L[ℂ] V d).restrictScalars ℝ).det| =

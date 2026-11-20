@@ -95,7 +95,8 @@ theorem liftSummand_residueCharZero : ∀ (p : ℕ) [Fact p.Prime] (D : GlobalTh
       rw [Finset.sum_sub_distrib, Finset.sum_ite_eq'] at hs
       simpa [hfapp] using hs
     have key : d - f d = (d - ∑ i, w i) - f (d - ∑ i, w i) - ∑ i, (f (w i) - w i) := by
-      simp only [map_sub, map_sum, Finset.sum_sub_distrib]; abel
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sub, map_sum, Finset.sum_sub_distrib]; abel
     rw [key]
     exact F.sub_mem (F.sub_mem hw2 (hfF _ hw2)) (Submodule.sum_mem F fun i _ => hfw i)
   have hGmem : ∀ d ∈ LinearMap.range e, d - π d ∈ LinearMap.range e ⊓ LinearMap.ker π := fun d hd =>

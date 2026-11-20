@@ -53,7 +53,8 @@ private theorem map_eq_zero_of_cc {O A σ : Type} [CommRing O] [CommRing A] [Fin
       if h : n ≠ 0 then (if c n h = i then MvPowerSeries.coeff n p else 0) else 0 := fun _ _ => rfl
   have hs : p = ∑ i, q i := by
     ext n
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [hq]
     by_cases h : n ≠ 0
     · simp [dif_pos h]
@@ -61,7 +62,8 @@ private theorem map_eq_zero_of_cc {O A σ : Type} [CommRing O] [CommRing A] [Fin
       push Not at h
       subst h
       simpa using hp
-  rw [hs, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hs, map_sum]
   refine Finset.sum_eq_zero fun i _ => ?_
   have : MvPowerSeries.X i ∣ q i := by
     rw [MvPowerSeries.X_dvd_iff]

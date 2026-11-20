@@ -83,7 +83,8 @@ theorem iterOp_mul {A : Type} [CommRing A] : ∀ {n : ℕ} (ds : Fin n → Deriv
       have ih := iterOp_mul (fun i => ds i.succ) α.tail f g
       have hs : ∀ (β : Fin (n+1) →₀ ℕ) x, iterOp (fun i => ⇑(ds i)) β x =
           (⇑(ds 0))^[β 0] (iterOp (fun i => ⇑(ds i.succ)) β.tail x) := fun β x => iterOp_succ _ β x
-      rw [hs, ih, ← iterHom_apply, map_sum, sum_antidiagonal_succ α (fun a b => (∏ i, (α i).choose (a i)) •
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hs, ih, ← iterHom_apply, map_sum, sum_antidiagonal_succ α (fun a b => (∏ i, (α i).choose (a i)) •
         (iterOp (fun i => ⇑(ds i)) a f * iterOp (fun i => ⇑(ds i)) b g))]
       conv_rhs => rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun r _ => ?_
@@ -194,7 +195,8 @@ theorem taylor_isRingHom : ∀ (A B : Type) [CommRing A] [CommRing B] [Algebra �
     rw [MvPowerSeries.coeff_mul]
     simp only [MvPowerSeries.coeff_apply]
     unfold taylor
-    rw [iterOp_mul, map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [iterOp_mul, map_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl fun p hp => ?_
     rw [HasAntidiagonal.mem_antidiagonal] at hp
     rw [map_nsmul, map_mul, nsmul_eq_mul, Algebra.smul_def,

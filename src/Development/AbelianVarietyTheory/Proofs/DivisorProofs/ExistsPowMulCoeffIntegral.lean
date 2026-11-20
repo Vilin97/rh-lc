@@ -139,7 +139,8 @@ theorem scale_mem_symO {n : ℕ} (Λ : GenLat E n) (k : ℕ) (hk : ∀ b ∈ Λ.
     · refine Subring.subset_closure (Or.inl ⟨o, ?_⟩)
       simp [φ]
     · refine Subring.subset_closure (Or.inr ⟨σ, i, (k : 𝓞 E) • b, hk b hb, ?_⟩)
-      simp only [φ, letB, AlgHom.toRingHom_eq_coe, RingHom.coe_coe, map_sum, map_mul, aeval_C, aeval_X,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [φ, letB, AlgHom.toRingHom_eq_coe, RingHom.coe_coe, map_sum, map_mul, aeval_C, aeval_X,
         algebraMap_eq, Pi.smul_apply]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [← mul_assoc, ← C_mul]

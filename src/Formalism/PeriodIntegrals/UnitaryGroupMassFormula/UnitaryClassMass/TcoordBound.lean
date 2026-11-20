@@ -124,10 +124,12 @@ theorem coordBound {ι : Type} [Fintype ι] (B : Module.Basis ι F E) :
   obtain ⟨w, rfl⟩ := hx
   have hx' : algebraMap (𝓞 E) E w = ∑ i, ((bw.repr w i : ℤ) : E) * algebraMap (𝓞 E) E (bw i) := by
     conv_lhs => rw [← bw.sum_repr w]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_zsmul, zsmul_eq_mul]
-  rw [hx', map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hx', map_sum, Finset.mul_sum]
   refine IsIntegral.sum _ fun i _ => ?_
   rw [show B.coord k (((bw.repr w i : ℤ) : E) * algebraMap (𝓞 E) E (bw i)) =
       ((bw.repr w i : ℤ) : F) * B.coord k (algebraMap (𝓞 E) E (bw i)) by
@@ -199,7 +201,8 @@ theorem tensLocX_of (hI : LocInt) : TensLoc := by
   have hy : ((∑ k, algebraMap (𝓞 F) (𝓞 E) (a k * q k) * β k : 𝓞 E) : E) =
       ∑ k, algebraMap F E ((a k * q k : 𝓞 F) : F) * ((n : E) * B k) := by
     show algebraMap (𝓞 E) E (∑ k, algebraMap (𝓞 F) (𝓞 E) (a k * q k) * β k) = _
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_mul]
     exact congrArg₂ (· * ·) (hcoeF _) rfl

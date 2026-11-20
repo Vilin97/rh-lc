@@ -137,7 +137,8 @@ theorem exists_complexify {K : Type} [Field K] {E : Type} [AddCommGroup E] [Modu
     intro z i
     have e : j z = ∑ i, φ (b.repr z i) • b' i := by
       conv_lhs => rw [← b.sum_repr z]
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [LinearMap.map_smulₛₗ, hb']
     rw [e, b'.repr_sum_self]

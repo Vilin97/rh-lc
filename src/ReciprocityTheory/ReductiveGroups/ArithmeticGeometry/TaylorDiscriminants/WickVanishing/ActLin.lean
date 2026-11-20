@@ -160,7 +160,8 @@ theorem action_linear : ActLinSt := by
   have hdf : dLin (comp1 ℓ (comp1 (B.A.act a) ε)) = dLin (B.A.act a) := by
     rw [dLin_comp1 ℓ _ hAε, dLin_comp1 _ ε hε0, hℓ1, hdε, one_mul, mul_one]
   ext n
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [MvPowerSeries.coeff_C_mul, MvPowerSeries.coeff_X]
   by_cases hn : n.degree = 1
   · obtain ⟨p, rfl⟩ := single_of_degree n hn

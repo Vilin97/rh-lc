@@ -50,14 +50,16 @@ theorem blow_map_cA (σ : E →ₐ[F] E) {c : w.adicCompletion E →+* w.adicCom
 theorem map_pt_mul_incM {n : ℕ} (A : Matrix (Fin n) (Fin n) (w.adicCompletion E)) (J : Matrix (Fin n) (Fin n) E) :
     A.map (ptAt hw h) * incM F J = (A * J.map (algebraMap E _)).map (ptAt hw h) := by
   ext i j
-  simp only [Matrix.mul_apply, Matrix.map_apply, incM, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mul_apply, Matrix.map_apply, incM, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [mul_comm, inclR_mul_ptAt, mul_comm]
 
 theorem incM_mul_map_pt {n : ℕ} (A : Matrix (Fin n) (Fin n) (w.adicCompletion E)) (J : Matrix (Fin n) (Fin n) E) :
     incM F J * A.map (ptAt hw h) = (J.map (algebraMap E _) * A).map (ptAt hw h) := by
   ext i j
-  simp only [Matrix.mul_apply, Matrix.map_apply, incM, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mul_apply, Matrix.map_apply, incM, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [inclR_mul_ptAt]
 

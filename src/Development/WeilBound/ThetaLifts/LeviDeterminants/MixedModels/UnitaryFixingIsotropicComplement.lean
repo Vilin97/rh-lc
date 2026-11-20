@@ -51,7 +51,8 @@ theorem PositivityTheory.Mix.unitary_fixing_isotropic_complement : ∀ (F E : Ty
       Matrix.mulVec_mulVec, hU]
   have hsym : ∀ v w, c (bf c J v w) = ε * bf c J w v := by
     intro v w
-    simp only [PositivityTheory.Mix.bf, dotProduct, Matrix.mulVec, map_sum, map_mul, cc, herm, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [PositivityTheory.Mix.bf, dotProduct, Matrix.mulVec, map_sum, map_mul, cc, herm, Finset.mul_sum]
     conv_lhs => rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
     ring

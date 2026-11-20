@@ -65,7 +65,8 @@ theorem psi_fin_scaledInt_dot : ∀ (F : Type) [Field F] [NumberField F] (κ : T
   let P : Af F →+ AF F :=
     { toFun := pairA F 0, map_zero' := rfl, map_add' := GlobalTheory.AnnCompactStd.pairA_zero_add }
   have hP : ∀ y, pairA F 0 y = P y := fun _ => rfl
-  rw [hsum, hP, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hsum, hP, map_sum]
   have hone : ∀ i, ψ (P (t i * algebraMap F (Af F) (a * z i))) = 1 := fun i =>
     GlobalTheory.IntDense.addChar_eq_one_of_integral F ψ hψ.1 (a * z i) (hdual i) (t i) (hti i)
   induction (Finset.univ : Finset κ) using Finset.induction_on with

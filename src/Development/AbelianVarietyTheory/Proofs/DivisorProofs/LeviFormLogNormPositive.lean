@@ -48,7 +48,8 @@ theorem levi_half_log_normSq_pos : ∀ (n N : ℕ) (G : (Fin n → ℂ) → Fin 
     simp only [wJac, Matrix.mulVec, dotProduct, wd_of_differentiableAt hfa.differentiableAt, hfa.fderiv,
       ContinuousLinearMap.pi_apply]
     conv_rhs => rw [hw']
-    simp [map_sum, map_smul, bas, L, mul_comm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, map_smul, bas, L, mul_comm]
     rfl
   rw [e, GlobalTheory.FinChart.levi_half, ← GlobalTheory.FinChart.leviV_re_eq_levi hh w]
   rw [show (fun v => ((h v : ℝ) : ℂ)) = fun y => ((Real.log (sqNorm (fun i => g i y)) : ℝ) : ℂ) from rfl,

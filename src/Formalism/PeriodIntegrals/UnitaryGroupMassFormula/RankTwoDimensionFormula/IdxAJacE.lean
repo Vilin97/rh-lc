@@ -112,7 +112,8 @@ theorem ja_key (G : ℕ) (m : IntAf F E) :
       (G : IntAf F E) * algebraMap (jaT F E) (IntAf F E) c0 + (-1) ^ n := by
     simp only [Finset.sum_range_succ, hpn, map_one, Nat.sub_self, pow_zero, one_mul]
     congr 1
-    rw [hc0, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hc0, map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun i hi => ?_
     have hin : i < n := Finset.mem_range.1 hi
     have h4 : n - i = (n - 1 - i) + 1 := by omega

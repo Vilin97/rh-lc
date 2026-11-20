@@ -21,7 +21,8 @@ theorem span_range_eq_basis {n : ℕ} (b : Module.Basis (Fin n) K C) (j : C →�
     Submodule.span ℂ (Set.range j) = Submodule.span ℂ (Set.range fun k => j (b k)) := by
   refine le_antisymm (Submodule.span_le.2 ?_) (Submodule.span_mono ?_)
   · rintro _ ⟨f, rfl⟩
-    rw [← b.sum_repr f, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← b.sum_repr f, map_sum]
     refine Submodule.sum_mem _ fun k _ => ?_
     rw [map_smulₛₗ]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨k, rfl⟩)

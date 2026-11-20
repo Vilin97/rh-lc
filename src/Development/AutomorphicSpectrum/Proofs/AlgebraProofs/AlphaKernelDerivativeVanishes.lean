@@ -148,7 +148,8 @@ theorem linc (u : Fin d → R) (g : PS R 2 d) (j : Fin d) :
       coeff (Finsupp.single ((1 : Fin 2), j) 1) k := by
     intro k
     rw [← cc_pd, d_zero_pt, GlobalTheory.DerivEndo.cc_ev noConst_0x, cc_pd]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [coeff_C_mul, key, Matrix.mulVec, dotProduct, Matrix.transpose_apply]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [coeff_pderiv, bil, add_comm]
@@ -333,7 +334,8 @@ theorem dxV (u : Fin d → R) (V : Pt R 1 d) (k : PS R 3 d) (hV : ∀ i, constan
   rw [Finset.sum_comm]
   refine Finset.sum_eq_zero fun l _ => ?_
   have hl : ∑ i, (C (lin V 1 l i * u i) : PS R 2 d) = 0 := by
-    rw [← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum]
     have := congrFun hu l
     simp only [Matrix.mulVec, dotProduct, Pi.zero_apply] at this
     rw [this, map_zero]

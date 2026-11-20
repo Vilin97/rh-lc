@@ -47,7 +47,8 @@ theorem map_expS {ι : Type} {f : MvPowerSeries ι (FormalGroupSystem.K0 p)} (hf
   rw [hd]
   change Formalism.L2.G.Pend.k0ToC p (∑ k ∈ Finset.range (n.degree + 1),
     ((k.factorial : FormalGroupSystem.K0 p))⁻¹ * MvPowerSeries.coeff n (f ^ k)) = _
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_mul, map_inv₀, map_natCast, PowerSeries.coeff_exp, ← map_pow, coeff_map]
   simp
@@ -110,7 +111,8 @@ theorem read_thOne {n' r0 r1 : ℕ} {κ : Type} (B : OmBasis p n') (be : MvPower
   set Φ : MvPowerSeries (Eidx n' r0 r1 ⊕ Eidx n' r0 r1) (FormalGroupSystem.K0 p) :=
     ∑ e : Eidx n' r0 r1, sub2 p be (MvPowerSeries.X (Sum.inl e)) (MvPowerSeries.X (Sum.inr e)) with hΦ
   have hΦ0 : constantCoeff (-Φ) = 0 := by
-    rw [map_neg, hΦ, map_sum, Finset.sum_eq_zero fun e _ => hsub0 e, neg_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_neg, hΦ, map_sum, Finset.sum_eq_zero fun e _ => hsub0 e, neg_zero]
   have hΦm : constantCoeff (MvPowerSeries.map (Formalism.L2.G.Pend.k0ToC p) (-Φ)) = 0 := by
     rw [constantCoeff_map, hΦ0, map_zero]
 
@@ -123,7 +125,8 @@ theorem read_thOne {n' r0 r1 : ℕ} {κ : Type} (B : OmBasis p n') (be : MvPower
     unfold product_zeroth_first_parts.expS
     rw [ReciprocityTheory.ChartRestriction.G.TB.WickVanishing.subst_exp _ hη0 hΦm]
     congr 1
-    rw [← coe_substAlgHom hηs, map_neg, map_neg, hΦ, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← coe_substAlgHom hηs, map_neg, map_neg, hΦ, map_sum, map_sum]
     congr 1
     refine Finset.sum_congr rfl fun e _ => ?_
     rw [coe_substAlgHom hηs]

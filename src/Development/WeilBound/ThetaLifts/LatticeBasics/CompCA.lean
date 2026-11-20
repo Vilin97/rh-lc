@@ -164,7 +164,8 @@ theorem exists_beta {B : Base F E} (hB : B.IsGood σ) {X : Spc F E n} {r s : ℕ
       | add x y hx hy => simp only [map_add, hx, hy])) r1
     (fun i k => Subtype.ext (congrArg ι (by
       change σ (G₀ k i) = G₀ i k
-      simp only [hG₀, Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, map_sum, map_mul, hσ, hX.herm, Finset.sum_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hG₀, Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, map_sum, map_mul, hσ, hX.herm, Finset.sum_mul]
       rw [Finset.sum_comm]
       exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring)))
     (inj (by

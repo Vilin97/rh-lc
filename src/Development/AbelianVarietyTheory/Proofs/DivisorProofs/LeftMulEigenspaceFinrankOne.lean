@@ -28,7 +28,8 @@ theorem eig_leftMulMatrix_finrank : ∀ (C : Type) [Field C] (O : Type) [CommRin
   have f_w0 : ∀ x, f w0 x = algebraMap O C (τ x) := by
     intro x
     conv_rhs => rw [← b.sum_repr x]
-    simp [f, hw0, map_sum, Algebra.smul_def, hτ', hψ]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [f, hw0, map_sum, Algebra.smul_def, hτ', hψ]
   have f_mul : ∀ w, (∀ a i, f w (a * b i) = algebraMap O C (τ a) * w i) →
       ∀ a x, f w (a * x) = algebraMap O C (τ a) * f w x := by
     intro w h a x

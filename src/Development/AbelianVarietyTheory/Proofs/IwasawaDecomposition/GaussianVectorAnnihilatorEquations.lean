@@ -63,11 +63,13 @@ theorem inner_X_mul_of_deriv {κ : Type} [Fintype κ] (h : HasCoeff F v E) (l : 
     have e2 : ((MvPolynomial.C c + ∑ k, MvPolynomial.C (a k) * MvPolynomial.X (m k) :
         MvPolynomial σ ℂ) : MvPowerSeries σ ℂ) =
         MvPowerSeries.C c + ∑ k, MvPowerSeries.C (a k) * MvPowerSeries.X (m k) := by
-      rw [← MvPolynomial.coeToMvPowerSeries.ringHom_apply, map_add, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← MvPolynomial.coeToMvPowerSeries.ringHom_apply, map_add, map_sum]
       simp
     rw [e, mul_smul_comm]
     simp only [Derivation.map_smul, map_smul, inner_smul_left]
-    simp only [inner_X_mul_monomial h, inner_pderiv_monomial h, h α, hE, e2, add_mul, Finset.sum_mul, map_add,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [inner_X_mul_monomial h, inner_pderiv_monomial h, h α, hE, e2, add_mul, Finset.sum_mul, map_add,
       map_sum, mul_assoc, MvPowerSeries.coeff_C_mul, mul_add, Finset.mul_sum]
     congr 1
     · ring
@@ -80,7 +82,8 @@ variable {P Q : ℕ}
 theorem pderiv_inl_gaussPoly (A : Matrix (Fin P) (Fin Q) ℂ) (x : Ix P Q → ℂ) (i : Fin P) :
     MvPolynomial.pderiv (Sum.inl i) (gaussPoly A x) =
       MvPolynomial.C (x (Sum.inl i)) + ∑ j, MvPolynomial.C (A i j) * MvPolynomial.X (Sum.inr j) := by
-  simp only [gaussPoly, map_add, map_sum, mul_assoc, MvPolynomial.pderiv_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [gaussPoly, map_add, map_sum, mul_assoc, MvPolynomial.pderiv_mul,
     MvPolynomial.pderiv_X, Pi.single_apply]
   rw [add_comm, Finset.sum_comm]
   simp
@@ -88,7 +91,8 @@ theorem pderiv_inl_gaussPoly (A : Matrix (Fin P) (Fin Q) ℂ) (x : Ix P Q → �
 theorem pderiv_inr_gaussPoly (A : Matrix (Fin P) (Fin Q) ℂ) (x : Ix P Q → ℂ) (j : Fin Q) :
     MvPolynomial.pderiv (Sum.inr j) (gaussPoly A x) =
       MvPolynomial.C (x (Sum.inr j)) + ∑ i, MvPolynomial.C (A i j) * MvPolynomial.X (Sum.inl i) := by
-  simp only [gaussPoly, map_add, map_sum, mul_assoc, MvPolynomial.pderiv_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [gaussPoly, map_add, map_sum, mul_assoc, MvPolynomial.pderiv_mul,
     MvPolynomial.pderiv_X, Pi.single_apply]
   rw [add_comm]
   simp

@@ -16,7 +16,8 @@ namespace GlobalTheory.LvT.UKS
 variable {D : D7} {u : D.what₂.Word} {X : Ch D u}
 
 theorem emb_mem_Fi (X : Ch D u) (i : ℕ) (x : Vl X i) : X.fm.emb i x ∈ X.fm.Fi i := by
-  rw [← (X.fm.emb_basis i).2, ← (X.fm.lat i).b.sum_repr x, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← (X.fm.emb_basis i).2, ← (X.fm.lat i).b.sum_repr x, map_sum]
   refine Submodule.sum_mem _ fun a _ => ?_
   rw [LinearMap.map_smulₛₗ]
   exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨a, rfl⟩)

@@ -52,7 +52,8 @@ theorem exists_bform_ne_zero : ∀ (D : Formalism.BasicNotions.D7) (N : NData D.
     have hker : matAct Φ (fun k => I.mkQ (x₀ k)) = 0 := by
       funext k
       have := congrArg I.mkQ (congrFun hx₀ k)
-      simpa only [matAct, LinearMap.coe_mk, AddHom.coe_mk, map_sum, map_smul, Pi.zero_apply, map_zero] using this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa only [matAct, LinearMap.coe_mk, AddHom.coe_mk, map_sum, map_smul, Pi.zero_apply, map_zero] using this
     obtain ⟨x', hx', -⟩ := (hU (A ⧸ I)).1 _ hker
     have h0 := (hU (A ⧸ I)).2.1 _ hker (by
       rw [← hx']
@@ -62,7 +63,8 @@ theorem exists_bform_ne_zero : ∀ (D : Formalism.BasicNotions.D7) (N : NData D.
       · funext b
         have e : x'.1 h b = I.mkQ (x.1 h b) := by
           rw [hx, hx']
-          simp only [rect, map_sum, map_smul]
+          set_option synthInstance.maxHeartbeats 100000 in
+            simp only [rect, map_sum, map_smul]
         rw [e, Pi.zero_apply, Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero]
         exact Ideal.subset_span ⟨h, hh, b, rfl⟩)
     have := congrFun h0 j

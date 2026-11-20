@@ -65,7 +65,8 @@ variable (R : Type) [CommRing R] [Algebra F R]
 theorem ratTup_rE {M n : ℕ} (X : Fin n → Fin M → E) (G : Matrix (Fin n) (Fin n) E) :
     ratTup (F := F) R (rE X G) = rmul R (ratTup R X) (G.map (inclR R)) := by
   funext a i
-  simp [ratTup, rE, rmul, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [ratTup, rE, rmul, map_sum, map_mul]
 
 theorem cT_map_incl (σ : E →ₐ[F] E) {n : ℕ} (G : Matrix (Fin n) (Fin n) E) :
     cT (sigR R σ) (G.map (inclR R)) = (cT (σ : E →+* E) G).map (inclR R) := by
@@ -149,14 +150,16 @@ theorem unitary_conjugate_local (σ : E →ₐ[F] E) (hcm : IsCMExt F E σ) (hin
 theorem projInf_rmul {M n : ℕ} (X : Fin n → Fin M → AF F ⊗[F] E) (G : Matrix (Fin n) (Fin n) E) :
     projInf (rmul (AF F) X (G.map (inclR (AF F)))) = rmul (Ainf F) (projInf X) (G.map (inclR (Ainf F))) := by
   funext a i
-  simp [projInf, rmul, map_sum, map_mul, inclR]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [projInf, rmul, map_sum, map_mul, inclR]
 
 theorem projV_rmul (v : HeightOneSpectrum (𝓞 F)) {M n : ℕ} (X : Fin n → Fin M → AF F ⊗[F] E)
     (G : Matrix (Fin n) (Fin n) E) :
     projV v (projFin (rmul (AF F) X (G.map (inclR (AF F))))) =
       rmul (Fv F v) (projV v (projFin X)) (G.map (inclR (Fv F v))) := by
   funext a i
-  simp [projV, projFin, rmul, map_sum, map_mul, inclR]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [projV, projFin, rmul, map_sum, map_mul, inclR]
 
 end Top
 

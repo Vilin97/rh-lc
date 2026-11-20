@@ -15,7 +15,8 @@ theorem UpperTheory.rep_hom_alternating_sum_eq_zero :
         ((Equiv.Perm.sign π : ℤ) : ℂ) • Finsupp.single (K.re π t) (1 : ℂ) := by
     intro p t
     show repHomEvalLinearMap (B := PC Γ (K.Tup p)) (Finsupp.single t (1 : ℂ)) (K.alt p) = _
-    simp only [Cx.alt, map_smul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Cx.alt, map_smul, map_sum]
     congr 1
     refine Finset.sum_congr rfl ?_
     intro π _

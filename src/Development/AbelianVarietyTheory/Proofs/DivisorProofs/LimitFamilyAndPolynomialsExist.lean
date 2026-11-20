@@ -21,9 +21,12 @@ theorem exists_poly_diag {σ V : Type} [Fintype σ] [AddCommGroup V] [Module ℝ
     simp [totalDegree_X]
   · have e : l x = ∑ o, x o • l (Pi.single o 1) := by
       conv_lhs => rw [pi_eq_sum_univ' x]
-      simp only [map_sum, map_smul]
-    rw [e, f.map_sum (fun _ o => x o • l (Pi.single o 1))]
-    simp only [map_sum, smul_eval, map_prod, eval_X, f.map_smul_univ, smul_eq_mul, mul_comm]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, f.map_sum (fun _ o => x o • l (Pi.single o 1))]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, smul_eval, map_prod, eval_X, f.map_smul_univ, smul_eq_mul, mul_comm]
 
 variable {D : D7} {Y : ShimX D.what₂.Tau}
 

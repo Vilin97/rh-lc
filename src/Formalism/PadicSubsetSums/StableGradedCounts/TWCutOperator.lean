@@ -38,7 +38,8 @@ theorem truncation_operator_holds : CutOperator := by
   · intro hev
     rw [map_smul, LinearMap.smul_apply, hev]
   · intro T hT
-    rw [asAlgebraHom_apply_eq_sum, asAlgebraHom_apply_eq_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [asAlgebraHom_apply_eq_sum, asAlgebraHom_apply_eq_sum, map_sum]
     refine Finset.sum_congr rfl fun g _ => ?_
     rw [map_smul, hT]
 

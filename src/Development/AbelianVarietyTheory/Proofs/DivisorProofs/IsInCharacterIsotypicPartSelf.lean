@@ -38,7 +38,8 @@ theorem kills_self : ∀ (G : Type) [Group G] [Finite G] (Y : G → ℂ), IsChar
     intro f
     have hm : ∑ g : G, Representation.linHom σ ρ g f ∈ (Representation.linHom σ ρ).invariants := by
       intro h
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simp only [← Module.End.mul_apply, ← map_mul]
       exact Fintype.sum_equiv (Equiv.mulLeft h) _ _ (fun _ => rfl)
     rw [hbot] at hm

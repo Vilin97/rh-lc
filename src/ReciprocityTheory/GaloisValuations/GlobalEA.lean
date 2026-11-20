@@ -40,7 +40,8 @@ theorem continuous_resGal [Algebra.IsAlgebraic F Ω] : Continuous (resGal F L Ω
   rw [hx', ← b.sum_repr ⟨x, hx⟩]
   simp only [IntermediateField.coe_sum, IntermediateField.coe_smul]
   change resGal F L Ω σ _ = _
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   change σ (((b.repr ⟨x, hx⟩) i) • (b i : Ω)) = _
   rw [← algebraMap_smul L ((b.repr ⟨x, hx⟩) i) (b i : Ω), map_smul, hb]

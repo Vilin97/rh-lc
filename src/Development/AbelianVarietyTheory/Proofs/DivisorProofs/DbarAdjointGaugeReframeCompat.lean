@@ -169,7 +169,8 @@ theorem dbarAdj_gauge {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] [Fin
     simp only [pointDifference, hd10g]
     rw [d10_comp_continuousLinearMap s (reframe τ γ) P _ hRc hsR,
       d10_comp_of_differentiableAt (fun Q => (Real.log (h Q) : ℂ)) (reframe τ γ) P _ hRc hlog, hRv, d10_finset_sum', d10_sum_smul_vert]
-    simp only [pointDifference, map_sum, map_add, map_smul, Finset.sum_smul, smul_add,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [pointDifference, map_sum, map_add, map_smul, Finset.sum_smul, smul_add,
       Finset.sum_add_distrib, smul_smul, gauge, smul_eq_mul]
   have contrΦ : ∀ (c : Fin g) (w : Ext (n + n + g)), contr (dzb n c) (frameAt n τ γ P.1 w) =
       ∑ d, star ((den γ (τ P.1))⁻¹ c d) • frameAt n τ γ P.1 (contr (dzb n d) w) :=
@@ -194,7 +195,8 @@ theorem dbarAdj_gauge {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] [Fin
       -∑ e, ∑ d, (2 * imPart (fun b => moeb γ (τ b)) P.1 e d) •
         contr (dzb n d) (pointDifference h s (reframe τ γ P) (vert E e)) := rfl
   rw [hdbar]
-  simp only [dbarAdj, key, contr_sum, contr_smul, contrΦ, hY, map_neg, map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dbarAdj, key, contr_sum, contr_smul, contrΦ, hY, map_neg, map_sum, map_smul]
   congr 1
   simp only [Finset.smul_sum, smul_smul, Finset.mul_sum, Finset.sum_smul]
   rw [sum_sum_sum_sum_comm]

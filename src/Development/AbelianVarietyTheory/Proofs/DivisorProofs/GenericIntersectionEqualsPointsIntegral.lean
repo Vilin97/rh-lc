@@ -113,7 +113,8 @@ theorem psiAll_liftBaseChange_injective (G : HTGroup p) :
   rw [← LinearMap.ker_eq_bot, LinearMap.ker_eq_bot']
   intro x hx
   rw [← bR.sum_repr x] at hx ⊢
-  simp only [map_sum, map_smul, hbR] at hx
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, hbR] at hx
   have h0 := Fintype.linearIndependent_iff.mp (psiAll_towerBasis_linearIndependent G) _ hx
   simp [h0]
 

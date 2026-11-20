@@ -144,7 +144,8 @@ theorem isRoot_charpoly_of_isRoot_minpoly {F C E : Type} [Field F] [Ring C] [Alg
 
   have h0 : ∑ k ∈ q.support, b k • ρ (Polynomial.aeval x (q k)) = 0 := by
     have h := Matrix.aeval_self_charpoly (ρ x)
-    rw [hq, Finsupp.sum, map_sum] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hq, Finsupp.sum, map_sum] at h
     rw [← h]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_smul, heval]

@@ -44,7 +44,8 @@ theorem lin_subst {σ τ : Type*} [Fintype σ] [Finite τ] {a : σ → MvPowerSe
     (ha : ∀ j, constantCoeff (a j) = 0) (g : MvPowerSeries σ R) (i : τ) :
     coeff (Finsupp.single i 1) (g.subst a) =
       ∑ j, coeff (Finsupp.single j 1) g * coeff (Finsupp.single i 1) (a j) := by
-  rw [← cc_pderiv, Formalism.G.LogCR.pderiv_subst ha, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← cc_pderiv, Formalism.G.LogCR.pderiv_subst ha, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_mul, cc_pderiv, Formalism.G.LogP.constantCoeff_subst_of_zero _ ha, cc_pderiv]
 

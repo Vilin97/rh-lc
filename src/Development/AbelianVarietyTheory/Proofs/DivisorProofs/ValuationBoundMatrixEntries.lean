@@ -38,7 +38,8 @@ theorem GlobalTheory.TriFrame.exists_gl_upperTri_of_matNorm : ∀ (R K : Type) [
     set N := (Q : Matrix (Fin (r+1)) (Fin (r+1)) R).map (algebraMap R K) * M with hN
     have hN0 : ∀ l, N l 0 = (ρ 0)⁻¹ * algebraMap R K ((Pi.single 0 1 : Fin (r+1) → R) l) := fun l => by
       rw [← hQ]
-      simp only [N, Matrix.mul_apply, Matrix.map_apply, Matrix.mulVec, dotProduct, map_sum, map_mul, ha, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [N, Matrix.mul_apply, Matrix.map_apply, Matrix.mulVec, dotProduct, map_sum, map_mul, ha, Finset.mul_sum]
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [mul_left_comm, ← mul_assoc (ρ 0)⁻¹, inv_mul_cancel₀ hρ0, one_mul]
     have hM' : ∀ t i, ‖θ t (ρ i.succ)‖ * matNorm ((N.submatrix Fin.succ Fin.succ).map (θ t)) i = 1 := fun t i => by

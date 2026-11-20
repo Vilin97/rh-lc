@@ -161,7 +161,8 @@ theorem exists_co_eq {R : Type} [CommRing R] {φ : c.F →+* R} {x : Sp R ⟶ Z.
     exact Finset.sum_comm
   refine ⟨EigFrame.ofVec (fun τ i => ∑ k, T τ k i • (f τ).vec τ k) (fun τ i a => ?_) fun τ w hw => ?_,
     fun τ => EigFrame.co_eq fun i => (GlobalTheory.LieMet.isComb_iff ((f τ).vec τ) _ _).2 rfl⟩
-  · simp only [map_sum, map_smul, EigFrame.act_vec, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [map_sum, map_smul, EigFrame.act_vec, Finset.smul_sum]
     exact Finset.sum_congr rfl fun k _ => smul_comm _ _ _
   · obtain ⟨b, hb, hu⟩ := (f τ).existsUnique_sum τ w hw
     refine ⟨(T τ)⁻¹ *ᵥ b, by

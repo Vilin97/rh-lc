@@ -13,13 +13,15 @@ theorem mk_sum_smul (p : Submodule O (Fin (r + 1) → O)) (c : Fin (r + 1) → O
     (Submodule.Quotient.mk (∑ a, c a • v a) : (Fin (r + 1) → O) ⧸ p) =
       ∑ a, c a • Submodule.Quotient.mk (v a) := by
   change p.mkQ (∑ a, c a • v a) = ∑ a, c a • p.mkQ (v a)
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [LinearMap.map_smul]
 
 theorem bRaw_sum (Z : Matrix (Fin (r + 1)) (Fin (r + 1)) O) (y' : Fin (r + 1) → O)
     (c : Fin (r + 1) → O) (v : Fin (r + 1) → Fin (r + 1) → O) :
     bRaw O cj Z (∑ a, c a • v a) y' = ∑ a, (c a : E) * bRaw O cj Z (v a) y' := by
-  rw [← bLin_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← bLin_apply, map_sum]
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [LinearMap.map_smul, bLin_apply, Subring.smul_def, smul_eq_mul]
 
@@ -50,7 +52,8 @@ theorem uLift_spec (γ : MbMod Z₁ ≃ₗ[O] MbMod Z₂) (he : γ (eCl Z₁) = 
 
 theorem gam_sum (γ : MbMod Z₁ ≃ₗ[O] MbMod Z₂) (he : γ (eCl Z₁) = eCl Z₂) (c : Fin (r + 1) → O) :
     γ (Submodule.Quotient.mk (∑ a, c a • uLift O γ a)) = (Submodule.Quotient.mk c : MbMod Z₂) := by
-  rw [mk_sum_smul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [mk_sum_smul, map_sum]
   simp only [map_smul, uLift_spec O γ he]
   rw [← mk_sum_smul, sum_smul_single]
 
@@ -81,7 +84,8 @@ theorem adjVal_mem (hO : ∀ x ∈ O, cj x ∈ O) (hu₁ : IsUnit (Z₁.map O.su
   have hmem := bRaw_mem_of_mk O cj hO Z₁ hu₁ hmk y'
   rw [bRaw_sum] at hmem
   have hval : adjVal O cj γ y' b = cj (∑ a, (Z₂ a b : E) * bRaw O cj Z₁ (uLift O γ a) y') := by
-    simp [adjVal, adjW, map_sum, map_mul, Matrix.map_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [adjVal, adjW, map_sum, map_mul, Matrix.map_apply]
   rw [hval]
   exact hO _ hmem
 
@@ -210,11 +214,13 @@ theorem adjV_comp (γ : MbMod Z₁ ≃ₗ[O] MbMod Z₂) (hb : γ (bCls Z₁) = 
     have hj : ∀ j, ∑ a, cj ((Z₁.map O.subtype) a b) * ((y' j : E) * cj ((Z₁.map O.subtype)⁻¹ j a)) =
         (y' j : E) * cj (((Z₁.map O.subtype)⁻¹ * (Z₁.map O.subtype)) j b) := by
       intro j
-      rw [Matrix.mul_apply, map_sum, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Matrix.mul_apply, map_sum, Finset.mul_sum]
       refine Finset.sum_congr rfl fun a _ => ?_
       rw [map_mul]
       ring
-    simp only [bRaw, hcol, map_sum, map_mul, hcj]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [bRaw, hcol, map_sum, map_mul, hcj]
     simp only [Finset.mul_sum]
     rw [Finset.sum_comm]
     simp only [hj, hinv, Matrix.one_apply]

@@ -84,7 +84,8 @@ theorem core {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [A
     exact h2
   have hqsym : ∀ x y, hq sig G.Hm x y = sig (hq sig G.Hm y x) := by
     intro x y
-    simp only [hq, map_sum, map_mul, hsig]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hq, map_sum, map_mul, hsig]
     conv_lhs => rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
     rw [← hH j i]

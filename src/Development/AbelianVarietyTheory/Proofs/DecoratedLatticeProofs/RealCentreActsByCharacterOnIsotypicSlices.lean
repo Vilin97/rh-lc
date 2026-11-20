@@ -26,11 +26,13 @@ theorem mulVec_eq_smul (σ : R →+* R) (J : Matrix (Fin n) (Fin n) R) (hJ : ∀
     ∃ c : R, b *ᵥ v = c • v := by
   obtain ⟨u, hu⟩ := hq.exists_left_inv
   have hw : ∀ i, σ ((v ᵥ* J) i) = (J *ᵥ v) i := fun i => by
-    simp only [vecMul, mulVec, dotProduct, map_sum, map_mul, hv, hJ]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [vecMul, mulVec, dotProduct, map_sum, map_mul, hv, hJ]
     exact Finset.sum_congr rfl fun k _ => mul_comm _ _
   have hσq : σ ((v ᵥ* J) ⬝ᵥ v) = (v ᵥ* J) ⬝ᵥ v := by
     conv_rhs => rw [← dotProduct_mulVec, dotProduct_comm]
-    simp only [dotProduct, map_sum, map_mul, hv, hw]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [dotProduct, map_sum, map_mul, hv, hw]
   have hσu : σ u = u := by
     have h := congrArg σ hu
     rw [map_mul, hσq, map_one] at h
@@ -141,7 +143,8 @@ theorem norm_unit {V : HSp D} {x : DefSp V} (hx : x.Is) (v : Fin V.rank → ℚ)
     IsUnit (((fun i => incA D (v i)) ᵥ* JR (AF D.host.F) V.gram) ⬝ᵥ fun i => incA D (v i)) := by
   have := (norm_ne_zero hx v hv).isUnit.map (incA D)
   convert this using 1
-  simp only [dotProduct, vecMul, map_sum, map_mul, JR, map_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dotProduct, vecMul, map_sum, map_mul, JR, map_apply]
 
 theorem sigR_inclR {F E : Type} [Field F] [Field E] [Algebra F E] (R : Type) [CommRing R] [Algebra F R] (σ : E →ₐ[F] E)
     (e : E) : sigR R σ (inclR R e) = inclR R (σ e) := by

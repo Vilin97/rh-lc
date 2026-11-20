@@ -80,7 +80,8 @@ theorem principal_of_pull : ∀ (g n : ℕ), 3 ≤ n → Odd n → ∀ (P R₁ R
   have hLW' : cls L' hL' = quad (cls c₁.P c₁.isLB) W8 pr' := cls_linComb c₁.isLB _ _ _
   have hiso : LBIso L' (L.pull ψ) := by
     refine (cls_eq_iff hL' (pull_isLB hL _)).1 ?_
-    rw [cls_pull hL, hLW, hLW', quad, quad, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [cls_pull hL, hLW, hLW', quad, quad, map_sum]
     exact Finset.sum_congr rfl fun uv _ => by rw [map_zsmul, hpair ψ _ _ _ _ (hpr uv.1) (hpr uv.2)]
   have hadd := pair_mul c hl.globalFns hA
   have hadd' := pair_mul c₁ hl.globalFns hA₁

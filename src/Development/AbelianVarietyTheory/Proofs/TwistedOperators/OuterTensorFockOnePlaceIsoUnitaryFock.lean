@@ -20,7 +20,8 @@ theorem linSub_rename {ι σ : Type} [Fintype ι] [DecidableEq ι] [Fintype σ] 
   congr 1
   congr 1
   funext i
-  simp [Function.comp_apply, map_sum, Matrix.transpose_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Function.comp_apply, map_sum, Matrix.transpose_apply]
 
 theorem fockOne_apply (a b : ℕ) (α β : ℤ) (h : U a) (g : U b) (f : MvPolynomial (Fin b × Fin a) ℂ) :
     fockOne a b α β (h, g) f =

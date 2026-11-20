@@ -288,7 +288,8 @@ theorem _root_.GlobalTheory.MomOne.kapFrame : ∀ (q : ℕ) [Fact q.Prime] (lam 
         beta_smul_right_eq_conj_mul]
     have h2 : ι (starRingEnd ℂ (D i)) = ∑ j, ((Nb j : ℂ_[q]) - _root_.GlobalTheory.MomOne.zc (A j)) *
         ι (_root_.Formalism.L2.Ker.JMB.beta S.d S.Hm (x i) (b j)) + (_root_.GlobalTheory.MomOne.zc (A' i) - N i) := by
-      rw [h1, hA i, map_sub, map_sum, map_natCast]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [h1, hA i, map_sub, map_sum, map_natCast]
       simp only [map_mul, map_natCast, sub_mul, Finset.sum_sub_distrib]
       ring
     rw [h2]

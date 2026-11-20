@@ -22,7 +22,8 @@ theorem exists_represent_mod_of_basis {R ι : Type*} [CommRing R] [Fintype ι]
   have key : ∀ (w : ι → ℤ) (k : ι),
       ((T (b k * ∑ l, w l • b l) : ℤ) : ZMod N) = M.mulVec (fun l => (w l : ZMod N)) k := by
     intro w k
-    simp only [Finset.mul_sum, map_sum, mul_smul_comm, map_zsmul, smul_eq_mul, Matrix.mulVec,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Finset.mul_sum, map_sum, mul_smul_comm, map_zsmul, smul_eq_mul, Matrix.mulVec,
       dotProduct, M]
     push_cast
     exact Finset.sum_congr rfl fun l _ => mul_comm _ _
@@ -47,7 +48,8 @@ theorem exists_represent_mod_of_basis {R ι : Type*} [CommRing R] [Fintype ι]
     funext l
     have h2 : w l = N * b.repr y l := by
       have := congrArg (fun z => b.repr z l) hy
-      simp only [map_sum, map_zsmul, map_nsmul, Module.Basis.repr_self] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_zsmul, map_nsmul, Module.Basis.repr_self] at this
       simpa [Finsupp.single_apply] using this
     simp [h2]
   have hsurj : Function.Surjective M.mulVecLin := Finite.surjective_of_injective hinj

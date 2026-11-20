@@ -35,7 +35,8 @@ theorem dvO_lin (T : LocLat G Qp LL O) (e : ℕ) {d : ℕ} (b : Fin d → W.DD T
     (c : Fin I → Fin d → O) :
     dvO W T e b (fun k => ∑ i, t i * c i k) = ∑ i, algebraMap O LL (t i) • dvO W T e b (c i) := by
   unfold dvO dv
-  simp only [map_sum, map_mul, Finset.sum_smul, mul_smul, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, Finset.sum_smul, mul_smul, Finset.smul_sum]
   exact Finset.sum_comm
 
 theorem isDist_XP (i j : ℕ) : IsDist ((X : PowerSeries O) ^ i * Br.P.p 1 ^ j) := by
@@ -181,7 +182,8 @@ theorem coef_fil (hinj : Function.Injective (algebraMap O LL)) {T : LocLat G Qp 
       have h3 := congrArg (coeff j) (hGs k)
       rw [coeff_C_mul] at h3
       rw [← h3]
-      simp only [V, map_sum, coeff_C_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [V, map_sum, coeff_C_mul]
       exact Finset.sum_congr rfl fun i _ => mul_comm _ _
     have hmem : dvO W T 2 b (fun k => ((PD.p : ℕ) : O) ^ κ * coeff j (Gs k)) ∈ FilS W T a 0 bs := by
       rw [hco, dvO_lin]

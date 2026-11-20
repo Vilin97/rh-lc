@@ -197,7 +197,8 @@ def nElt (y : Fin n → L) (z : L) (hz : z + σ z = rowOf σ y ⬝ᵥ y) : (line
 omit [Valued L (WithZero (Multiplicative ℤ))] in
 include hσ in
 theorem map_rowOf_dot (y : Fin n → L) : σ (rowOf σ y ⬝ᵥ y) = rowOf σ y ⬝ᵥ y := by
-  simp only [dotProduct, rowOf, map_sum, map_mul, map_neg, hσ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dotProduct, rowOf, map_sum, map_mul, map_neg, hσ]
   rw [← Equiv.sum_comp Fin.revPerm]
   simp [mul_comm]
 

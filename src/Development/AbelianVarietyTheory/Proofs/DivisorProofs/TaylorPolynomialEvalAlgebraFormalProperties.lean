@@ -49,7 +49,8 @@ theorem _root_.GlobalTheory.PeriodFamily.taylor_congr_germ (f g : (I → ℂ) �
 theorem map_taylor_algHom (D' : Type) [CommRing D'] [Algebra ℂ D'] (ψ : D →ₐ[ℂ] D') (f : (I → ℂ) → ℂ) :
     ψ (taylor N t f) = taylor N (fun i ↦ ψ (t i)) f := by
   unfold taylor
-  simp only [map_sum, map_smul, map_prod]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, map_prod]
 
 set_option autoImplicit false in
 open Filter Topology in
@@ -86,6 +87,7 @@ theorem _root_.GlobalTheory.PeriodFamily.taylor_formal_properties : ∀ {I : Typ
       iteratedFDeriv_const_smul_apply' hf.contDiffAt, ContinuousMultilinearMap.smul_apply,
       smul_eq_mul, smul_smul, mul_left_comm]
   · unfold _root_.GlobalTheory.PeriodFamily.taylor
-    simp [map_sum, map_prod]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, map_prod]
 
 end GlobalTheory.PeriodFamily

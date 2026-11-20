@@ -16,7 +16,8 @@ theorem UpperTheory.V.Weyl.preSub :
     intro i j
     refine ⟨∑ l, (∑ k, MvPolynomial.C (B i k) * p k l) * MvPolynomial.C (A l j), fun g => ?_⟩
     rw [hρ]
-    simp only [Matrix.mul_apply, map_sum, map_mul, MvPolynomial.eval_C, hp]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mul_apply, map_sum, map_mul, MvPolynomial.eval_C, hp]
   let Ξ' : Pre n := ⟨d', ρ', hpoly⟩
   refine ⟨Ξ', A, B, hd, hBA, hA, fun X => ?_⟩
   have h0 : (fun t : ℂ => (1 : Matrix (Fin n) (Fin n) ℂ) + t • X) 0 = 1 := by simp

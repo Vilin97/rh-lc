@@ -18,7 +18,8 @@ theorem mem_GfC_of_hasLoc : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts
   intro D T L sc G t B j hj x g hx
   obtain ⟨e, ⟨⟨es, hes, rfl⟩, -⟩, hg, -⟩ := hx
   have h0 : infPart D ((∑ PP ∈ locPl G t, es PP) + cA D (∑ PP ∈ locPl G t, es PP)) = 0 := by
-    rw [map_sum (cA D), ← Finset.sum_add_distrib, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum (cA D), ← Finset.sum_add_distrib, map_sum]
     refine Finset.sum_eq_zero fun PP hPP => ?_
     obtain ⟨-, -, v, ε, ⟨α, rfl, -⟩, h⟩ := (hes PP hPP).1
     rw [h]; exact TensorProduct.zero_tmul _ _

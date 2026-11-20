@@ -336,7 +336,8 @@ private theorem jac_eig {T : Type} [AddCommGroup T] [Module ℂ T] (V : Sig.Lev 
   have h3 : ∑ u ∈ s, τ u (τ (Sig.dg d) v) = Dict.expo ψ d • v := (hs T τ v).symm.trans (h2.symm.trans (h1.trans h))
   have h4 : (Submodule.Quotient.mk (∑ u ∈ s, τ u (τ (Sig.dg d) v)) : Jacquet τ (unipB k (Fin n))) =
       (s.card : ℂ) • (Submodule.Quotient.mk (τ (Sig.dg d) v) : Jacquet τ (unipB k (Fin n))) := by
-    rw [← Submodule.mkQ_apply, map_sum, Nat.cast_smul_eq_nsmul, ← Finset.sum_const]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Submodule.mkQ_apply, map_sum, Nat.cast_smul_eq_nsmul, ← Finset.sum_const]
     refine Finset.sum_congr rfl fun u hu => ?_
     rw [Submodule.mkQ_apply, Submodule.Quotient.eq]
     exact sub_mem_twKer (π := τ) (hsN u hu).1 _

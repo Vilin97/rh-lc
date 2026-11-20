@@ -27,7 +27,8 @@ theorem tracePow : TracePow := by
   have hQ1 : Polynomial.aeval φ Q = 1 := by
     rw [hQ, map_pow, map_mul, Polynomial.aeval_X, hinv, one_pow]
   have htr : LinearMap.trace ℂ J (Polynomial.aeval φ Q) = 0 := by
-    rw [Polynomial.aeval_eq_sum_range, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Polynomial.aeval_eq_sum_range, map_sum]
     refine Finset.sum_eq_zero (fun i _ => ?_)
     rw [map_smul, smul_eq_mul]
     by_cases hi : k₀ ≤ i

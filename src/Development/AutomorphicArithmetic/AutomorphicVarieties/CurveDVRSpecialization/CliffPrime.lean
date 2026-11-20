@@ -86,7 +86,8 @@ private theorem eig_indep (σ : G →* Module.End κ V) (U : Subgroup G) :
       have := ih (fun i => ((i u : κ) - a u) • v i)
         (fun i hi => Submodule.smul_mem _ _ (hv i (Finset.mem_insert_of_mem hi))) (by
           have h1 := congrArg (σ u) h0
-          rw [map_add, map_sum, map_zero, hv a (Finset.mem_insert_self _ _) u,
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [map_add, map_sum, map_zero, hv a (Finset.mem_insert_self _ _) u,
             Finset.sum_congr rfl fun i hi => hv i (Finset.mem_insert_of_mem hi) u] at h1
           simp only [sub_smul, Finset.sum_sub_distrib, ← Finset.smul_sum]
           rw [eq_neg_of_add_eq_zero_right h1, eq_neg_of_add_eq_zero_right h0, smul_neg, sub_self]) j hj

@@ -79,7 +79,8 @@ theorem cross_eq_zero {R ι : Type} [CommRing R] (hR : ∀ n : ℕ, 0 < n → Is
     (s : Finset ι) (h : ∀ i ∈ s, p i * p i = p i) (hc : (∑ i ∈ s, p i) * c (∑ i ∈ s, p i) = 0) :
     ∀ i ∈ s, ∀ j ∈ s, p i * c (p j) = 0 := by
   intro i hi j hj
-  rw [map_sum, Finset.sum_mul_sum, ← Finset.sum_product'] at hc
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_mul_sum, ← Finset.sum_product'] at hc
   refine eq_zero_of_sum_idem hR (fun q : ι × ι => p q.1 * c (p q.2)) _ (fun q hq => ?_) hc
     (i := (i, j)) (Finset.mem_product.2 ⟨hi, hj⟩)
   rw [mul_mul_mul_comm, ← map_mul, h _ (Finset.mem_product.1 hq).1, h _ (Finset.mem_product.1 hq).2]
@@ -125,7 +126,8 @@ theorem idemSum_mul_self {e : AE D} {P : Finset (Formalism.L2.DIV.Pl D.host.E)} 
 
 theorem map_sum_eq_zero {R R' ι : Type} [CommRing R] [CommRing R'] (f : R →+* R') (p : ι → R) (s : Finset ι)
     (h : ∀ i ∈ s, f (p i) = 0) : f (∑ i ∈ s, p i) = 0 := by
-  rw [map_sum]; exact Finset.sum_eq_zero h
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]; exact Finset.sum_eq_zero h
 
 theorem infPart_idemSum {e : AE D} {P : Finset (Formalism.L2.DIV.Pl D.host.E)} (h : IsIdemSum e P) : infPart D e = 0 := by
   obtain ⟨⟨es, hes, rfl⟩, -⟩ := h

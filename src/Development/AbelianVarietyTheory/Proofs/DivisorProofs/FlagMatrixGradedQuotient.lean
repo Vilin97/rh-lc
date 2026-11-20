@@ -24,8 +24,10 @@ theorem linearIndependent_repr {R N K : Type} [CommRing R] [AddCommGroup N] [Mod
   have key (k : κ) : ∑ j, φ (b.repr (b' k) j) * φ (b'.repr (b j) k') = if k = k' then 1 else 0 := by
     have h1 : ∑ j, b.repr (b' k) j * b'.repr (b j) k' = b'.repr (b' k) k' := by
       conv_rhs => rw [← b.sum_repr (b' k)]
-      simp only [map_sum, map_smul, Finsupp.finset_sum_apply, Finsupp.smul_apply, smul_eq_mul]
-    simp only [← map_mul, ← map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, Finsupp.finset_sum_apply, Finsupp.smul_apply, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [← map_mul, ← map_sum]
     rw [h1, b'.repr_self, Finsupp.single_apply]
     split_ifs <;> simp
   have h2 (j : ι) : ∑ k, g k * φ (b.repr (b' k) j) = 0 := by

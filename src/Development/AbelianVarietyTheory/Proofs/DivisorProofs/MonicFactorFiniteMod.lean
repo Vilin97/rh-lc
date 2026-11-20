@@ -94,10 +94,12 @@ theorem monicFactorFiniteMod_of (H : MonicFactorFinite) : MonicFactorFiniteMod :
         apply Subtype.ext
         change r u = _
         rw [hra u]
-        rw [show ((∑ i ∈ Finset.range (d + 1), u ^ i • a' i : S) : Module.End ℂ M) = ∑ i ∈ Finset.range (d + 1), u ^ i • (a' i : Module.End ℂ M) from
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [show ((∑ i ∈ Finset.range (d + 1), u ^ i • a' i : S) : Module.End ℂ M) = ∑ i ∈ Finset.range (d + 1), u ^ i • (a' i : Module.End ℂ M) from
           map_sum S.val.toLinearMap (fun i => u ^ i • a' i) _ |>.trans (Finset.sum_congr rfl fun i _ => map_smul S.val.toLinearMap _ _)]
         exact Finset.sum_congr rfl fun i hi => by rw [ha' i (Finset.mem_range.1 hi)]
-      rw [e, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [e, map_sum]
       exact Finset.sum_congr rfl fun i _ => map_smul _ _ _
   have hcS : ∀ u, ρ (cS u) = ρ (pS u) * ρ (qS u) := fun u => by
     rw [← map_mul]

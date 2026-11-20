@@ -279,7 +279,8 @@ theorem mem_omA_iff_tw {k F : Type} [Field k] [Field F] [Algebra k F] {d : ℕ} 
 theorem formPair_eq_cup {k K : Type} [Field k] [Field K] [Algebra k K] {ι : Type} [LinearOrder ι] [Fintype ι]
     (t : GlobalTheory.CechDR.DR k K →ₗ[k] k) (a b : Finset ι → GlobalTheory.CechDR.DR k K) :
     formPair k t a b = t (cup (sg k K) a b Finset.univ) := by
-  simp [formPair, cup, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [formPair, cup, map_sum]
 
 end Extra
 

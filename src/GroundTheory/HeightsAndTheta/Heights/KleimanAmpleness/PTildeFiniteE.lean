@@ -49,7 +49,8 @@ theorem chartVal_d {n : ℕ} (y : Cech.Cochain (locSys S N M.coneSubE) n) (J : C
       ∑ j : J.1.1, Cech.sgn J.1.1 j • chartVal M c y (Cech.face J j) := by
   refine (congrArg (coeffE S x E c)
     (locConeE_d M y ⟨⟨J.1.1, J.1.2.1, Finset.subset_univ _⟩, J.2⟩ J.1.2.2)).trans ?_
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_zsmul]
   rfl
@@ -122,7 +123,8 @@ theorem d_liftCochain_any {n : ℕ} (t : Cech.Cochain (fun I : Chart x => ↥((M
           exact locConeE_liftTilde M c _ _ _
       _ = singleE S x E c (∑ j : K.1.1, Cech.sgn K.1.1 j •
             (t (Cech.face (⟨⟨K.1.1, K.1.2.1, hK⟩, K.2⟩ : Cech.Idx (support x) (n + 1)) j) : E)) := by
-          rw [map_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [map_sum]
           refine Finset.sum_congr rfl fun j _ => ?_
           rw [map_zsmul]
       _ = 0 := by

@@ -37,7 +37,8 @@ theorem exists_comb {p : ℕ} {η : Fin r → Γ(F, V)} (hη : SectionsSatisfyAt
   have h1 (i : Fin r) : (p : Γ(X, V ⊓ V')) • resM F (inf_le_left : V ⊓ V' ≤ V) (f i) =
       ∑ l, resG X (inf_le_left : V ⊓ V' ≤ V) (M i l) • resM F (inf_le_left : V ⊓ V' ≤ V) (η l) := by
     have := congrArg (resM F (inf_le_left : V ⊓ V' ≤ V)) (hM i)
-    rw [map_sum, resM_smul, map_natCast] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, resM_smul, map_natCast] at this
     rw [← this]
     simp only [resM_smul]
   refine ⟨fun l => ∑ i, (hf.basis inf_le_left).repr (resM F inf_le_right σ) i * resG X inf_le_left (M i l), ?_⟩
@@ -56,7 +57,8 @@ theorem val_comb {p : ℕ} {η : Fin r → Γ(F, V)} {σ : Γ(F, V')} {N : Fin r
   have l₁ : (V ⊓ V') ⊓ T ≤ V ⊓ T := inf_le_inf_right _ inf_le_left
   have l₂ : (V ⊓ V') ⊓ T ≤ V' ⊓ T := inf_le_inf_right _ inf_le_right
   have h1 := congrArg (fun m => valH hw ((hs.basis inf_le_right).repr (resM F (inf_le_left : (V ⊓ V') ⊓ T ≤ _) m) i)) hN
-  simp only [map_sum, resM_smul, resM_resM, map_natCast, map_smul, Finsupp.smul_apply, Finsupp.coe_finset_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, resM_smul, resM_resM, map_natCast, map_smul, Finsupp.smul_apply, Finsupp.coe_finset_sum,
     Finset.sum_apply, smul_eq_mul, map_mul, valH_res] at h1
   rw [← valH_res l₂ hw, crd, ← hs.repr_resM, resM_resM]
   refine h1.trans (Finset.sum_congr rfl fun l _ => ?_)
@@ -95,7 +97,8 @@ theorem span_of_ne {p : ℕ} {η : Fin r → Γ(F, V)} (hη : SectionsSatisfyAtP
   · have hu : IsUnit (resG X hle (p : Γ(X, V ⊓ V'))) := X.toRingedSpace.isUnit_res_basicOpen _
     obtain ⟨N, hN⟩ := exists_comb hη (η' j)
     have h1 := congrArg (resM F hle) hN
-    simp only [map_sum, resM_smul, resM_resM] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, resM_smul, resM_resM] at h1
     rw [← Submodule.smul_mem_iff_of_isUnit _ hu, h1]
     exact Submodule.sum_mem _ fun l _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨l, rfl⟩)
 
@@ -184,7 +187,8 @@ theorem span_of_ext (hp0 : p ≠ 0) {X : Scheme.{0}} [IsReduced X] {h : X ⟶ Z.
       ht j l k w a ha (fun q hq => hle j l (hw hq)) (fun q hq => l₀ (hw hq)),
       mul_inv_cancel_left₀ (cast_ne_zero hp0 h ha)]
   have h2 := congrArg (resM F l₀) (hN j)
-  simp only [map_sum, resM_smul, resM_resM, map_natCast, h1, mul_smul] at h2
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, resM_smul, resM_resM, map_natCast, h1, mul_smul] at h2
   rw [← Finset.smul_sum] at h2
   obtain ⟨f, hf, -⟩ := hη
   have h3 : resM F (l₀.trans inf_le_right) (η' j) =

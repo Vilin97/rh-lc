@@ -40,7 +40,8 @@ private theorem dz_dec {l : ℕ} [Fact l.Prime] {E : Type} [Field E] [Algebra �
       (fun g x => by simp [he, dz_ch]) c h
   · have h1 : c = ∑ i, fun g => e.symm (Pi.single i (e (c g) i)) := by
       funext g
-      rw [Finset.sum_apply, ← map_sum, Finset.univ_sum_single, e.symm_apply_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Finset.sum_apply, ← map_sum, Finset.univ_sum_single, e.symm_apply_apply]
     rw [h1]
     refine Submodule.sum_mem _ fun i _ => ?_
     refine (z1fMap _ (chRep (χ i)) ρ).2

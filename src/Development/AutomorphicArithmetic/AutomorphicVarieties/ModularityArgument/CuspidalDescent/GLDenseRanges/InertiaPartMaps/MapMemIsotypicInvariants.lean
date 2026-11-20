@@ -28,7 +28,8 @@ private theorem map_mem_isotypic_invariants {m : ℕ} (K₁ : Subgroup G) (τ₀
     {F : Fin m → W} (hF : F ∈ inv1 K₁ τ₀ ρ) : (fun i => e (F i)) ∈ inv1 K₁ τ₀ ρ' := by
   refine ⟨fun k i => ?_, fun k _ i => ?_⟩
   · have h := congrArg e (hF.1 k i)
-    simp only [map_sum, map_smul, MonoidHom.comp_apply, MonoidHom.coe_fst, h₁ k.1 k.2] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, MonoidHom.comp_apply, MonoidHom.coe_fst, h₁ k.1 k.2] at h
     simpa only [MonoidHom.comp_apply, MonoidHom.coe_fst] using h
   · simp
 

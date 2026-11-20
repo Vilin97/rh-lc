@@ -53,7 +53,8 @@ theorem norm_entry_le (c : E → E) (hc : ∀ (φ : E →+* ℂ) x, φ (c x) = s
     (γ : Matrix (Fin N) (Fin N) E) (h : γ * (γ.map c).transpose = 1) (φ : E →+* ℂ) (i j : Fin N) :
     ‖φ (γ i j)‖ ≤ 1 := by
   have h1 := congrArg φ (congrFun (congrFun h i) i)
-  simp only [Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, map_sum, map_mul, hc,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, map_sum, map_mul, hc,
     Matrix.one_apply_eq, map_one, Complex.mul_conj'] at h1
   have h2 : ∑ k, ‖φ (γ i k)‖ ^ 2 = 1 := by exact_mod_cast h1
   have h3 : ‖φ (γ i j)‖ ^ 2 ≤ 1 := by

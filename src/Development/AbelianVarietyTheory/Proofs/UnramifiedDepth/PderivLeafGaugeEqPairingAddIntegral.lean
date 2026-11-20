@@ -154,7 +154,8 @@ theorem pderiv_hM : ∀ (C : Type) [Field C] (V : VF C) (d : ℕ) [NeZero d] (I 
   choose γ hγint hγeq using hK
   refine ⟨∑ k, v' b k • γ k, ?_, ?_⟩
   · intro μ
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine VF.Ge.sum (fun k _ => ?_)
     simp only [map_smul, smul_eq_mul]
     exact VF.Ge.mul_int (hvint b k) (hγint k μ)

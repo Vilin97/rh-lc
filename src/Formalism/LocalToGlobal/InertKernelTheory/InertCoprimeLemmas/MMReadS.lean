@@ -37,13 +37,15 @@ theorem change_of_parameters_const_scale : ReadChangeS := by
           PowerSeries.subst (MvPowerSeries.X i : MvPowerSeries (Fin r) ℂ_[p]) (flog (C • wModel lam Λ) wq)) := by
       apply MvPowerSeries.hasSubst_of_constantCoeff_zero
       intro k
-      simp [map_sum, hXfl]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [map_sum, hXfl]
     have hΦ' : MvPowerSeries.HasSubst (fun τ : D.what₂.Tau =>
         ∑ i, algebraMap ℂ_[p] (MvPowerSeries (Fin r) ℂ_[p]) (((C.u⁻¹ : ℂ_[p]ˣ) : ℂ_[p]) * v i (τ, 0, 0)) *
           PowerSeries.subst (MvPowerSeries.X i : MvPowerSeries (Fin r) ℂ_[p]) (flog (C • wModel lam Λ) wq)) := by
       apply MvPowerSeries.hasSubst_of_constantCoeff_zero
       intro k
-      simp [map_sum, hXfl]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [map_sum, hXfl]
     have hL : MvPowerSeries.HasSubst (fun τ : D.what₂.Tau =>
         (MvPowerSeries.X (τ, 0, 0) : MvPowerSeries (D.what₂.Tau × Fin 1 × Fin 1) ℂ_[p])) :=
       MvPowerSeries.hasSubst_of_constantCoeff_zero (fun τ => MvPowerSeries.constantCoeff_X _)
@@ -54,7 +56,8 @@ theorem change_of_parameters_const_scale : ReadChangeS := by
     rw [MvPowerSeries.subst_comp_subst_apply hΦ' hSs]
     congr 1
     funext τ
-    rw [← MvPowerSeries.coe_substAlgHom hSs, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← MvPowerSeries.coe_substAlgHom hSs, map_sum]
     simp only [map_mul, AlgHom.commutes, MvPowerSeries.coe_substAlgHom, subst_single_var S hSs]
     refine (Fintype.sum_equiv e _ _ fun j => ?_).symm
     rw [hSi, e.symm_apply_apply, ← PowerSeries.subst_comp_subst_apply hh (PowerSeries.HasSubst.X j)]

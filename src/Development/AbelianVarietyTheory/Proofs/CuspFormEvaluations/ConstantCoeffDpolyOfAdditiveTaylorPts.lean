@@ -30,7 +30,8 @@ private theorem fderiv_comp_apply_eq_sum_pi_single {φ : W → σ → ℂ} {f : 
   simp_rw [hi]
   rw [fderiv_comp z hf hφ, ContinuousLinearMap.comp_apply]
   conv_lhs => rw [← Finset.univ_sum_single (fderiv ℂ φ z v)]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [show (Pi.single i (fderiv ℂ φ z v i) : σ → ℂ) = fderiv ℂ φ z v i • Pi.single i 1 by
     ext k; by_cases h : k = i <;> simp [h], map_smul, smul_eq_mul, mul_comm]

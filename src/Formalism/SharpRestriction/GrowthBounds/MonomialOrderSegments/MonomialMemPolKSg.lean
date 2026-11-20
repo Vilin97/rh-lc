@@ -146,10 +146,12 @@ theorem Th_ph (p : ℕ) (Ψ : ι → MvPolynomial (Fin (D.nB j + D.r) × Fin D.r
     D.ph p (D.Th j cc PP (monomial ζ 1)) = D.ph p (monomial ζ 1) := by
   have hsum : (∑ b, cc (D.pullE j ζ) b • rename (Prod.map (D.eA j) id) (Ψ b)) =
       D.ph p (monomial (eIn (D.outSeg j) ζ) 1) := by
-    rw [← D.mapDomain_pullE j ζ, ← MvPolynomial.rename_monomial, substitution_rename_first_embedding,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← D.mapDomain_pullE j ζ, ← MvPolynomial.rename_monomial, substitution_rename_first_embedding,
       hcc _ (D.pullE_deg j ζ hζ), map_sum]
     simp only [map_smul]
-  rw [Th_monomial, map_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Th_monomial, map_mul, map_sum]
   simp only [map_smul, hPP]
   rw [hsum, ← map_mul, MvPolynomial.monomial_mul, one_mul, eOut_add_eIn]
 

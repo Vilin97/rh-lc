@@ -26,7 +26,8 @@ theorem trace_hOf_mul (hH : HbFacts) (u u' : Fin n × Fin n → ℝ) :
 
 theorem map_hOf {V : Type} [NormedAddCommGroup V] [InnerProductSpace ℂ V] (α : Mat n →ₗ[ℝ] (V →L[ℂ] V))
     (u : Fin n × Fin n → ℝ) : α (hOf u) = ∑ p, ((u p : ℝ) : ℂ) • α (hb p) := by
-  simp only [hOf, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hOf, map_sum]
   refine Finset.sum_congr rfl fun p _ => ?_
   have e : ((u p : ℝ) : ℂ) • (hb p : Mat n) = (u p) • hb p := by
     ext a b

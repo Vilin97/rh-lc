@@ -244,7 +244,8 @@ theorem exists_family {Y : Var F} (M : TrueGeo.Model Y) (Δ : Y.Dv) (t : Y.X →
     · have e₁ := congrArg (fnMap M.j hη) hc
       have e₂ : fnOf V' h₀ (algX M.p V' b) = fnOf ⊤ trivial (algX M.p ⊤ b) :=
         RingHom.congr_fun (fnOf_comp_algX M.p V' h₀) b
-      simp only [e₂, map_mul, map_sum, hu₁, hs', fnMap_fnOf M.j hη h₀ h] at e₁
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [e₂, map_mul, map_sum, hu₁, hs', fnMap_fnOf M.j hη h₀ h] at e₁
       exact e₁
   choose b hb c hc using key
   let w : Option (Fin n ⊕ Fin m) → Y.H0 (d • -Δ + N • A) := fun i => i.elim 0 (Sum.elim
@@ -294,7 +295,8 @@ theorem main : ∀ (F : Type) [Field F] [NumberField F] (Y : Var F) (M : GlobalT
   obtain ⟨i, hi⟩ := exists_unitAt (x := x) (fun k => regAt_fnOf hx (gen_mem hx) (π.app V' (c k))) hg (by
     apply (fnMap N.j hη).injective
     apply mul_right_cancel₀ ha
-    rw [map_one, one_mul, map_sum, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_one, one_mul, map_sum, Finset.sum_mul]
     refine Eq.trans (Finset.sum_congr rfl fun k _ => ?_) hc.symm
     rw [map_mul, e, mul_assoc, hg'])
   obtain ⟨W, hW, hW'⟩ := exists_common_open fun k => (hg k).mul hi.inv.regAt

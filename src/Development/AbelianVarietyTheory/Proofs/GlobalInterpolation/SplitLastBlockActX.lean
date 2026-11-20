@@ -135,7 +135,8 @@ theorem isUnit_det_gramB (sg : ι → DomWeight n) [DecidableEq (VVIdx sg)] : Is
       refine (bVV K sg).ext fun j => ?_
       have hj := congrFun h j
       simp only [Matrix.vecMul, dotProduct, gramB, Matrix.of_apply, Pi.zero_apply] at hj
-      simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, pairBK_apply, pairB_apply, bVV_coe,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, pairBK_apply, pairB_apply, bVV_coe,
         smul_eq_mul, LinearMap.zero_apply]
       simp only [mul_left_comm (v _), ← Finset.mul_sum, hj, mul_zero]
     rw [this]
@@ -150,7 +151,8 @@ theorem fockB_projVV (sg : ι → DomWeight n) (F : Pol K ι n) {y : Pol K ι n}
     intro k
     have hinv := Matrix.mul_nonsing_inv _ (isUnit_det_gramB (K := K) sg)
     rw [← fockBL_apply]
-    simp only [projVV, LinearMap.sum_apply, LinearMap.smul_apply, LinearMap.smulRight_apply, Submodule.coe_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [projVV, LinearMap.sum_apply, LinearMap.smul_apply, LinearMap.smulRight_apply, Submodule.coe_sum,
       Submodule.coe_smul, map_sum, map_smul, bVV_coe, smul_eq_mul, fockBL_apply]
     rw [Finset.sum_comm]
     have h1 : ∀ j, ∑ i, (gramB (K := K) sg)⁻¹ i j * (fockB (bVVfun K sg j) F * fockB (bVVfun K sg i) (bVVfun K sg k)) =
@@ -228,14 +230,16 @@ theorem splitLast_blockAct_X (A' : ι → Matrix (Fin N) (Fin N) K)
   obtain ⟨h1, h2, h3⟩ := h τ
   have hX : ∀ {m : ℕ} (U : ι → Matrix (Fin m) (Fin m) K) (τ : ι) (a s : Fin m),
       Formalism.GradedWeylDivisibility.blockAct K U (X (τ, a, s)) = ∑ b, C (U τ a b) * X (τ, b, s) := fun U τ a s => aeval_X _ _
-  rw [hX, map_sum, sum_split hN]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hX, map_sum, sum_split hN]
   simp only [map_mul, splitLast_C]
   rcases cases_idx hN s with rfl | ⟨s, rfl⟩
   · simp only [splitLast_X_lastCol, mul_zero, Finset.sum_const_zero, add_zero, map_zero]
   · rcases cases_idx hN a with rfl | ⟨a, rfl⟩
     · simp only [splitLast_X_up, splitLast_X_lastRow, (h2 _).2, h3, map_zero, zero_mul, Finset.sum_const_zero, zero_add,
         map_X, aeval_X]
-    · simp only [splitLast_X_up, splitLast_X_lastRow, (h2 _).1, h1, map_zero, zero_mul, add_zero, map_C, algHom_C,
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp only [splitLast_X_up, splitLast_X_lastRow, (h2 _).1, h1, map_zero, zero_mul, add_zero, map_C, algHom_C,
         algebraMap_eq, AlgHom.toRingHom_eq_coe, RingHom.coe_coe, hX, map_sum, map_mul]
 
 theorem coefLast_blockAct [Fintype ι] (b : ι → Fin n → ℕ) (A' : ι → Matrix (Fin N) (Fin N) K)

@@ -123,7 +123,8 @@ theorem leib_fam (P : DPairing K L M) {a b : ℕ} {x : ∀ p q, K.X p q} {y : �
     (hx : x ∈ K.T a) (hy : y ∈ L.T b) :
     M.D (fam P a b x y) = fam P (a + 1) b (K.D x) y + (-1 : ℤ) ^ a • fam P a (b + 1) x (L.D y) := by
   rw [eq_sum_sgl K hx, eq_sum_sgl L hy]
-  simp only [map_sum, LinearMap.sum_apply, Finset.smul_sum, ← Finset.sum_add_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.sum_apply, Finset.smul_sum, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun c hc => Finset.sum_congr rfl fun c' hc' => ?_
   have e' := Finset.HasAntidiagonal.mem_antidiagonal.1 hc
   have e := Finset.HasAntidiagonal.mem_antidiagonal.1 hc'

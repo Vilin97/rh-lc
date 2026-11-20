@@ -430,7 +430,8 @@ theorem hermC_col {r : ℕ} (τ : E →+* ℂ) (G : Matrix (Fin r) (Fin r) E)
   have hcc : ∀ a b, conj (τ (G a b)) = τ (G b a) := fun a b => by
     rw [← hG a b]
     exact (IsCMField.complexEmbedding_complexConj E τ _).symm
-  simp only [FD.hermC, FD.col, vecMul, dotProduct, Matrix.mul_apply, map_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [FD.hermC, FD.col, vecMul, dotProduct, Matrix.mul_apply, map_apply,
     map_sum, map_mul, Complex.conj_conj, Finset.mul_sum, hcc]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring

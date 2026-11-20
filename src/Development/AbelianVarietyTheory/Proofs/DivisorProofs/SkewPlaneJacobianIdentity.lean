@@ -349,7 +349,8 @@ theorem GlobalTheory.ThK.CuspTransfer.isSm_of_isInd : ∀ (F E : Type) [Field F]
   have hx : H.x ≠ 0 := fun h0 => by simp [form, h0] at hxy
   have hxx' : (fun i => σ (H.x i)) ⬝ᵥ (c₀ • W.J.map σ) *ᵥ H.x = 0 := by
     have := congrArg (fun z => c₀ * σ z) hxx
-    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, map_zero, mul_zero, Finset.mul_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, map_zero, mul_zero, Finset.mul_sum] at this
     simp only [dotProduct, Matrix.mulVec, Matrix.smul_apply, Matrix.map_apply, smul_eq_mul, Finset.mul_sum]
     rw [← this]
     exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring

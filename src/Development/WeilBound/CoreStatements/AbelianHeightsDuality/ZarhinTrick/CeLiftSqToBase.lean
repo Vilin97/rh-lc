@@ -177,7 +177,8 @@ theorem ceLam_zb_pt (hA : IsAbelianScheme A) (hB : IsAbelianScheme B) {P : LB (A
   have hφ1 : ∀ i, phiL mu s (1, i) = ((pA (B := B) s i)⁻¹).left := fun _ => rfl
   have hφ2 : ∀ i, phiL mu s (2, i) = (pM mu s i).left := fun _ => rfl
   have hφ3 : ∀ i, phiL mu s (3, i) = ((pM mu s i)⁻¹).left := fun _ => rfl
-  rw [hΛ, hcls, map_add, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hΛ, hcls, map_add, map_sum, map_sum]
   simp only [map_zsmul, one_smul]
   simp only [hΛ']
   rw [Fintype.sum_prod_type, Fintype.sum_prod_type, Fin.sum_univ_four]
@@ -298,7 +299,8 @@ private theorem ceZc_alg_lemma {GA GB Q : Type*} [AddCommGroup GA] [AddCommGroup
   have ho : ∀ j k, j ≠ k → α 0 j * α 0 k + α 1 j * α 1 k + α 2 j * α 2 k + α 3 j * α 3 k = 0 := by
     intro j k hne
     simpa [Matrix.one_apply, hne] using hjk j k
-  simp only [map_sub, map_sum, map_zsmul, map_nsmul, AddMonoidHom.sub_apply, AddMonoidHom.finset_sum_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sub, map_sum, map_zsmul, map_nsmul, AddMonoidHom.sub_apply, AddMonoidHom.finset_sum_apply,
     AddMonoidHom.smul_apply, hml, hs, Fin.sum_univ_four, map_add, AddMonoidHom.add_apply]
   linear_combination (norm := module)
       ((-2 : ℤ) * (m : ℤ)) • ((hd 0) • E (mu (z' 0)) (z 0)) +
@@ -453,19 +455,22 @@ theorem two_cls_eMap {Ω : Type} [Field Ω] [IsAlgClosed Ω] (hA : IsAbelianSche
   have e3 : ∀ i, ((𝟙 ((Over.pullback s).obj (G4 (A ⊗ B))))⁻¹).left ≫ phiL mu s (3, i) = phiL mu s (2, i) := fun i => by
     rw [hφ2, hφ3, ← Over.comp_left, GrpObj.comp_inv, GrpObj.inv_comp, Category.id_comp, inv_inv]
   have symL : pull ((𝟙 ((Over.pullback s).obj (G4 (A ⊗ B))))⁻¹).left (∑ k : Fin 4 × Fin 4, (1 : ℤ) • pull (phiL mu s k) (cls L hL)) = (∑ k : Fin 4 × Fin 4, (1 : ℤ) • pull (phiL mu s k) (cls L hL)) := by
-    simp only [map_sum, map_zsmul, ← pull_comp]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_zsmul, ← pull_comp]
     rw [Fintype.sum_prod_type, Fintype.sum_prod_type]
     simp only [Fin.sum_univ_four, e0, e1, e2, e3]
     abel
   have symP : pull ((𝟙 ((Over.pullback s).obj (G4 (A ⊗ B))))⁻¹).left (∑ ij : Fin 4 × Fin 4, α ij.1 ij.2 • pull (phiP s ij) (cls P hD.isLB)) = (∑ ij : Fin 4 × Fin 4, α ij.1 ij.2 • pull (phiP s ij) (cls P hD.isLB)) := by
-    simp only [map_sum, map_zsmul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_zsmul]
     refine Finset.sum_congr rfl fun ij _ => ?_
     congr 1
     have h1 := pull_phiP s hD.isLB (𝟙 ((Over.pullback s).obj (G4 (A ⊗ B)))) ij
     rw [Over.id_left, pull_id] at h1
     rw [pull_phiP, h1, toBase_inv, GrpObj.inv_comp, GrpObj.inv_comp, evc_inv_inv hD hD']
   have oneP : pull (1 : (Over.pullback s).obj (G4 (A ⊗ B)) ⟶ (Over.pullback s).obj (G4 (A ⊗ B))).left (∑ ij : Fin 4 × Fin 4, α ij.1 ij.2 • pull (phiP s ij) (cls P hD.isLB)) = 0 := by
-    simp only [map_sum, map_zsmul, pull_phiP, toBase_one, MonObj.one_comp, evc_one_l hD, smul_zero,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_zsmul, pull_phiP, toBase_one, MonObj.one_comp, evc_one_l hD, smul_zero,
       Finset.sum_const_zero]
   have hvM : (𝟙 ((Over.pullback s).obj (G4 (A ⊗ B))))⁻¹ ≫ (Over.pullback s).map (eMap mu α m) = (Over.pullback s).map (eMap mu α m) ≫ (𝟙 ((Over.pullback s).obj (G4 (A ⊗ B))))⁻¹ := by
     have L1 : toBase _ s ((𝟙 ((Over.pullback s).obj (G4 (A ⊗ B))))⁻¹ ≫ (Over.pullback s).map (eMap mu α m)) = (toBase _ s (𝟙 ((Over.pullback s).obj (G4 (A ⊗ B)))) ≫ eMap mu α m)⁻¹ := by
@@ -481,7 +486,8 @@ theorem two_cls_eMap {Ω : Type} [Field Ω] [IsAlgClosed Ω] (hA : IsAbelianSche
     rw [hc1, lam_pull_eq_lam_comp_of_hom _ hMmul hMone, ceLam_zb_pt hA hB hD hD' l mu α s L hL e, toBase_map, toBase_map,
       ceZcPair_eMap hD hD' l mu α m hm h₂ hα (fun x y => ceEvc_sym hA hD.isLB l s L hL e x y), hLsum,
       lam_eq_lamHom]
-    simp only [map_sum, map_zsmul, one_smul, ← lam_eq_lamHom]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_zsmul, one_smul, ← lam_eq_lamHom]
     rw [Fintype.sum_prod_type]
     simp only [Fin.sum_univ_four, line_bundle_pairing_zeroth hD l mu s L hL e, line_bundle_pairing_first hD hD' l mu s L hL e,
       line_bundle_pairing_second hD l mu s L hL e, line_bundle_pairing_third hD hD' l mu s L hL e, two_nsmul]

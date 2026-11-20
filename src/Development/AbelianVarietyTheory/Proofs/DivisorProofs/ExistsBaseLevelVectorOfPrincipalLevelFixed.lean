@@ -156,7 +156,8 @@ theorem exists_base_vec : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T :
       obtain ⟨h, rfl⟩ := hx
       simp only [hprod _ h v hvWs]
       conv_rhs => rw [← hgoodv]
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simp only [map_smul, hprod h _ v hvWs]
       refine Fintype.sum_equiv (MulAut.conj h⁻¹).toEquiv _ _ fun g => ?_
       simp only [MulEquiv.toEquiv_eq_coe, MulEquiv.coe_toEquiv, MulAut.conj_apply]

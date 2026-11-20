@@ -161,7 +161,8 @@ private theorem ker_span (O X R R' : Type) [CommRing O] [IsLocalRing O] [IsNoeth
     obtain ⟨g, hg⟩ := (Ideal.mem_span_range_iff_exists_fun).mp hF
     choose o ho using fun i => IsCO.res_surj (O := O) (W.π (g i))
     refine ⟨o, ?_⟩
-    rw [← hg, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hg, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_mul]
     have hm : (W.π (g i) - algebraMap O R (o i)) * W.π (f i) = 0 := by
@@ -262,10 +263,12 @@ private theorem split_data (O X R R' κ : Type) [CommRing O] [IsLocalRing O] [Is
         exact Submodule.smul_mem _ _ (hεp l)
       · exact Submodule.zero_mem _
     have hqz : q (i v + ∑ l, Z l) = v := by
-      rw [map_add, hqi, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_add, hqi, map_sum]
       simp [hZ2]
     refine ⟨i v + ∑ l, Z l, ?_, by rw [hqz]; exact hv, ?_⟩
-    · simp only [v, map_add, hφi, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp only [v, map_add, hφi, map_sum]
       rw [Finset.mul_sum, ← Finset.sum_add_distrib]
       refine Finset.sum_congr rfl fun l _ => ?_
       rw [hZ1, hc (cd l) _ (Submodule.smul_mem _ _ (hεp l)), MonoidHom.inv_apply,
@@ -274,7 +277,8 @@ private theorem split_data (O X R R' κ : Type) [CommRing O] [IsLocalRing O] [Is
       · rw [add_zero, h, ← mul_assoc, Units.mul_inv, one_mul]
       · rw [map_zero, zero_add, hTs, mul_assoc]
     · rw [hqz]
-      simp only [v, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [v, map_sum]
       refine Finset.sum_eq_zero fun l _ => ?_
       split_ifs
       · exact RingHom.mem_ker.mp (hmk l)
@@ -375,7 +379,8 @@ theorem UpperTheory.V.Alg.loc_graded :
     intro g h
     ext a b
     simp only [E, Matrix.of_apply, Matrix.mul_apply]
-    rw [map_mul, Matrix.mul_apply, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_mul, Matrix.mul_apply, map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun c' _ => ?_
     rw [map_mul, ← hT0 a b c']
     ring

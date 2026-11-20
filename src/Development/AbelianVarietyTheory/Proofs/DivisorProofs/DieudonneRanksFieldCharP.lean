@@ -30,7 +30,8 @@ theorem finrank_eq_of_semilinear_surjective {W k M V : Type} [CommRing W] [Nontr
     simpa [hq, hw, Finsupp.single_apply] using e
   have h2 : ⊤ ≤ Submodule.span k (Set.range fun i => r (b i)) := fun v _ => by
     obtain ⟨m, rfl⟩ := hr v
-    rw [← b.sum_repr m, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← b.sum_repr m, map_sum]
     exact Submodule.sum_mem _ fun i _ => by
       rw [map_smulₛₗ]
       exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)

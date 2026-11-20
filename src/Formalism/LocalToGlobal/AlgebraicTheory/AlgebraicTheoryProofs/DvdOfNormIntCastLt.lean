@@ -355,7 +355,8 @@ theorem xiEt_of (hE : EtLoc) : XiEt := by
         (frameM (ι : ℂ →+* ℂ_[p]) v A) =
       thetaLin (ι : ℂ →+* ℂ_[p]) h θ r' t' (frameM (ι : ℂ →+* ℂ_[p]) v A) := by
     unfold serLin thetaLin
-    rw [hfun, hT, map_sum, ← Formalism.L2.Th1.G.linSubHom_apply, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hfun, hT, map_sum, ← Formalism.L2.Th1.G.linSubHom_apply, map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun x _ => ?_
     rw [map_mul, MvPowerSeries.map_C, map_mul, Formalism.L2.Th1.G.linSubHom_apply, Formalism.L2.Th1.G.linSubHom_apply,
       Formalism.L2.Th1.G.linSub_C, ← mul_assoc, ← map_mul]
@@ -368,7 +369,8 @@ theorem xiEt_of (hE : EtLoc) : XiEt := by
         ∑ b ∈ Sb, Ψ b * Complex.exp (-(2 * (Real.pi : ℂ)) * Complex.I * (altE (matH h) b a : ℂ)) := by
       unfold xiHat; push_cast
       rw [← mul_assoc, mul_inv_cancel₀ (pow_ne_zero _ hp0), one_mul]
-    rw [e, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, map_sum]
     refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg zero_le_one fun b hb => ?_
     obtain ⟨m, hm⟩ := XiTorsion.altE_int hsd (hSb.1 b hb) (hpa a ha)
     rw [XiTorsion.altE_smul_right] at hm

@@ -117,7 +117,8 @@ theorem ind_concat {Dw : Datum H} {l : Level H} (c : Coeff l) {k : Type} [Field 
       fun h => GlobalTheory.LieMet.tan_ext h⟩
   have hS : ∀ τ (a : Fin (Dw.mult τ) → k), ReciprocityTheory.ChartRestriction.G.PullbackSections.IsEigV ρ (embK c τ) (∑ i, a i • U ⟨τ, i⟩) :=
     fun τ a s => by
-      rw [map_sum, Finset.smul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Finset.smul_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_smul, (hEv τ (U ⟨τ, i⟩)).2 (hE τ i) s, smul_comm]
   have h1 := GlobalTheory.LieMet.tan_ext (((hc cf w).1 h).symm.trans ((hc cf' w).1 h'))

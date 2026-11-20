@@ -160,7 +160,8 @@ theorem sum_mulPw_iff (hL : L.IsLB) (k : L.ι) (h : V ≤ L.U k) {J : Type} (T :
     exact ⟨fun j => ch hL l k h (t j), by simp only [map_sum, ch_mulPw hL k h _ e]⟩
   · rintro ⟨r, hr⟩
     refine ⟨fun j => (ch hL l k h).symm (r j), (ch hL l' k h).injective ?_⟩
-    simp only [hr, map_sum, ch_mulPw hL k h _ e, LinearEquiv.apply_symm_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hr, map_sum, ch_mulPw hL k h _ e, LinearEquiv.apply_symm_apply]
 
 variable {R : Type} [CommRing R] (f : X ⟶ Spec (CommRingCat.of R)) {κ : Type} (D : κ → X.Opens)
 
@@ -189,7 +190,8 @@ theorem exists_sec_sum_of_ofSec_eq_sum (hV : V = ⊤) {J : Type} (T : Finset J) 
   refine ⟨ta, fun k => ?_⟩
   have hk : L.U k ≤ V ⊓ L.U k := le_inf (hV ▸ le_top) le_rfl
   have := congrArg (fun z => rs X hk (co z k)) ht
-  simp only [co_sum, co_mulPw _ e, ← hta, co_ofSec, map_sum, map_mul, rs_rs, rs_self] at this
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [co_sum, co_mulPw _ e, ← hta, co_ofSec, map_sum, map_mul, rs_rs, rs_self] at this
   exact this
 
 theorem gs_rs (y : X) (h : W ≤ V) (hy : y ∈ W) (a : Γ(X, V)) :
@@ -253,7 +255,8 @@ theorem gs_sum_mem {J : Type} (T : Finset J) (s : J → LB.Sec (pw L n)) (e : l'
     (t : J → SecOn (pw L l) V) (y : X) (hy : y ∈ V) {k : L.ι} (hk : y ∈ L.U k) :
     gs (𝟙 X) y (V ⊓ L.U k) (co (∑ j ∈ T, mulPw (s j) l l' V (t j)) k) ∈ zI s y k := by
   have hO : y ∈ V ⊓ L.U k := ⟨hy, hk⟩
-  rw [co_sum, gs_germ y hO, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [co_sum, gs_germ y hO, map_sum]
   refine Ideal.sum_mem _ fun j _ => ?_
   rw [co_mulPw _ e, map_mul, ← gs_germ y hO, gs_rs y _ hO]
   exact Ideal.mul_mem_right _ _ (Ideal.subset_span ⟨j, rfl⟩)
@@ -357,7 +360,8 @@ theorem cut_global {K : Type} [Field K] (p : X ⟶ Sp K) [IsSeparated p] (hp : L
         (H1 i l (l + n) (GlobalTheory.LB.ofSec y _ : SecOn (pw L l) _) rfl hi
           ((mem_mulCube_iff p D (fun j : Fin g => (j : ℕ) < i) s ∅
             (mulPw (s i) l (l + n) _ (GlobalTheory.LB.ofSec y _))).2 ⟨fun j => GlobalTheory.LB.ofSec (ta j) _, co_ext fun k => ?_⟩)))
-    simp only [co_sum, co_mulPw _ rfl, co_ofSec, ← map_mul, ← map_sum, e k]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [co_sum, co_mulPw _ rfl, co_ofSec, ← map_mul, ← map_sum, e k]
   · choose σ hσ using fun b : I => exists_interp p hp hL (haff {b} (by simp)) (hin {b} b (by simp)) s hZ c hc a l
     obtain ⟨y₀, hy₀⟩ := (H2 l hl).2 σ fun b b' => by
       have h1 := iInf_le_iInf_of_subset D (show ({b} : Finset I) ⊆ {b, b'} by simp)

@@ -51,7 +51,8 @@ theorem eigenProjections_of_comaximal :
     split_ifs with hji
     · exact map_one _
     · unfold Finsupp.sum
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       have := hf i j (Ne.symm hji)
       unfold Finsupp.sum at this
       refine Eq.trans ?_ this
@@ -63,7 +64,8 @@ theorem eigenProjections_of_comaximal :
     · rw [TensorProduct.zero_tmul, map_zero]; rfl
     rw [if_neg (Ne.symm hil)]
     unfold Finsupp.sum
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     apply Finset.sum_eq_zero
     intro c _
     rw [map_mul, map_sub, hχ, hχ, hχ]

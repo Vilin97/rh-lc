@@ -308,7 +308,8 @@ private theorem sliceAtLastCoord_appTop_sum_mul_lagrangeSection (k : Type u) [Fi
     (G : ι → ↑((affineSpaceIndexedBy k (ULift.{u, 0} (Fin M))).presheaf.obj (Opposite.op ⊤))) (i : ι) :
     (ConcreteCategory.hom (Scheme.Hom.appTop (sliceAtLastCoord k M (e i))))
         (∑ j : ι, pullbackAlongProjection k M (G j) * lagrangeBasisSection k M e j) = G i := by
-  rw [map_sum, Finset.sum_eq_single_of_mem i (Finset.mem_univ i)]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_eq_single_of_mem i (Finset.mem_univ i)]
   · simp only [map_mul, sliceAtLastCoord_appTop_pullbackAlongProjection,
       sliceAtLastCoord_appTop_lagrangeSection k M e he i i]
     simp

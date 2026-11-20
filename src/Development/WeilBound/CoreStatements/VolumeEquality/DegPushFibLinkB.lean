@@ -143,7 +143,8 @@ private theorem exists_integral_change_of_basis_of_span_eq (fn : Ω₀ →+* Ω)
         exact Finset.sum_congr rfl fun l _ => by ring, hg2 φ hφ, mul_zero]
     · intro a ha
       refine ⟨fun l => hfn _, fun φ hφ => ?_⟩
-      rw [← map_zero fn, ← hφ a ha, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← map_zero fn, ← hφ a ha, map_sum]
       simp [map_mul]
   choose g hg1 hgeq using hG0
   obtain ⟨G, hGdef⟩ : ∃ G : Matrix (Fin r) (Fin r) Ω, G = Matrix.of fun l k => g k l := ⟨_, rfl⟩

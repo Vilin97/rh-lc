@@ -91,7 +91,8 @@ private theorem lattice {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuatio
     have e5 : residue O (r h s s) = residue O (r h s s) - residue O 0 := by simp
     rw [← e4, e5, ← e3]
     conv_rhs => rw [← e2]
-    simp only [map_sum, map_mul, hm, ← Finset.sum_sub_distrib, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, hm, ← Finset.sum_sub_distrib, Finset.mul_sum]
     refine Finset.sum_congr rfl fun g _ => ?_
     ring
   have c1 : c 1 = 0 := by

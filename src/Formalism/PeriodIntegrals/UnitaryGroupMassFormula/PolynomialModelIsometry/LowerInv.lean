@@ -123,7 +123,8 @@ lemma lowerInv_not_cdom {N : ℕ} {Λ : Fin N → ℝ} {a b : Fin N} (hab : a < 
     rw [hL]
     simp [root, Pi.single_apply, mul_sub, Finset.sum_sub_distrib]
   have h1 := congrArg L heq
-  simp only [map_sum, map_smul, hroot] at h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, hroot] at h1
   have lhs : L (Λ - (Λ + (m : ℝ) • root a b)) = (m : ℝ) * (((b : ℕ) : ℝ) - ((a : ℕ) : ℝ)) := by
     rw [sub_add_cancel_left, map_neg, map_smul, hroot, smul_eq_mul]; ring
   rw [lhs] at h1

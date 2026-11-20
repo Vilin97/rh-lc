@@ -103,7 +103,8 @@ theorem dvd_aeval_sub {p r : Polynomial R} {n : ℕ} (h : (X : R⟦X⟧) ^ n ∣
 
 theorem aeval_trunc (φ : R⟦X⟧) (n : ℕ) (w : A) :
     Polynomial.aeval w (trunc n φ) = ∑ j ∈ Finset.range n, algebraMap R A (coeff j φ) * w ^ j := by
-  rw [trunc_apply, map_sum, Finset.range_eq_Ico]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [trunc_apply, map_sum, Finset.range_eq_Ico]
   exact Finset.sum_congr rfl fun j _ => Polynomial.aeval_monomial w
 
 theorem trunc_comm {π : R} {q : ℕ} (hq : q ≠ 0) {φ : R⟦X⟧}
@@ -244,7 +245,8 @@ theorem core (hπ : Irreducible π) {v : ℕ → OC l} (h0 : v 0 = 0) (h1 : v 1 
     refine sub_eq_zero.1 (perfection_haus (p := l) (R := ModP (OC l) l) hn (red K (gal K g ω) - red K y) fun n => ?_)
     have e1 := Ideal.mem_span_singleton.1 (isTiltOf_eval K hπ hx hx0 φ hg (isTiltOf_σF hx (g : GQ l)) n)
     have e2 := map_dvd (red K) (hy n)
-    simp only [map_pow, map_sub, map_sum, map_mul] at e2
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_pow, map_sub, map_sum, map_mul] at e2
     have e3 := dvd_sub e1 e2
     rwa [sub_sub_sub_cancel_right, ← red_gal] at e3
   · rw [frobE_apply, ← gal_frobq, hω]

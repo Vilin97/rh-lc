@@ -39,7 +39,8 @@ theorem desc_app_eq_zero {k : Type} [CommRing k] {Q' : T.Modules} {φ : T ⟶ PS
   have key : ∀ {Q₁ : T.Modules} (s₁ : Fin (N + 1) → (L ⟶ Q₁)), Rel φ s₁ →
       (biproduct.desc s₁).app W u = (s₁ i).app W v := by
     intro Q₁ s₁ h₁
-    rw [desc_app, hv, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [desc_app, hv, map_sum]
     refine Finset.sum_congr rfl fun m _ => ?_
     rw [h₁ i m W hi, Scheme.Modules.Hom.app_smul]
   have hv0 : v = 0 := hj (by rw [hs i j W hi, ← key s hs, h0, smul_zero, map_zero])

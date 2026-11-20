@@ -166,7 +166,8 @@ private theorem df_ex (ha : IsLocalArtin h a) : ∃ δ : (Emb l w → ℤ) →+ 
 private theorem hom_sum {M : Type} [CommGroup M] (δ : (Emb l w → ℤ) →+ Additive M) (wt : Emb l w → ℤ) [DecidableEq (Emb l w)] :
     (δ wt).toMul = ∏ τ : Emb l w, (δ (Pi.single τ 1)).toMul ^ wt τ := by
   conv_lhs => rw [pi_eq_sum_univ' wt]
-  simp only [map_sum, map_zsmul, toMul_sum, toMul_zsmul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_zsmul, toMul_sum, toMul_zsmul]
 
 include hG hB in
 private theorem df_coef (hC : ChCoef) [DecidableEq (Emb l w)] {d d' : Weil h →* (Qbar l)ˣ} (s : GQ l) (τ τ' : Emb l w)

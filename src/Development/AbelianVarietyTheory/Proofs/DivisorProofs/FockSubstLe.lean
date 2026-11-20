@@ -47,7 +47,8 @@ theorem rowAct_pad {a b : ℕ} (h : a ≤ b) (A : Matrix (Fin a) (Fin b) ℂ) (f
       (rename (incl h)).comp (rowAct ℂ (A * Aᴴ)) := by
     apply MvPolynomial.algHom_ext
     rintro ⟨p, q⟩
-    simp only [AlgHom.comp_apply, rename_X, rowAct, aeval_X, map_sum, map_mul, rename_C, Prod.map]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [AlgHom.comp_apply, rename_X, rowAct, aeval_X, map_sum, map_mul, rename_C, Prod.map]
     rw [sum_castLE h]
     · refine Finset.sum_congr rfl fun β _ => ?_
       simp [Matrix.mul_apply, padRows]

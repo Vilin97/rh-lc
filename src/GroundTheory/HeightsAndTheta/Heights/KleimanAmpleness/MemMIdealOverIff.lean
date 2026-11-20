@@ -128,7 +128,8 @@ theorem CurveLift.full : CurveLift.Statement := by
     have h1 : (1 : Kleiman.chartRing k x (Kleiman.singleChart hi)) = ∑ j, ⟨g j * w j, hgA j j⟩ :=
       Subtype.ext (by simp [hsum])
     have h2 := congrArg ψ h1
-    rw [map_one, map_sum] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_one, map_sum] at h2
     simp [hcon] at h2
   let t : Fin m → K' := fun b => ψ ⟨g b * w j0, hgA b j0⟩
   refine ⟨mIdealOver k (graphVec (fun a => ψ (Kleiman.ratio hi a)) t),

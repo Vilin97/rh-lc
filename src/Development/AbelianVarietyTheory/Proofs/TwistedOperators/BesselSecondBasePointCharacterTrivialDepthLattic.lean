@@ -103,7 +103,8 @@ theorem coef_mem_bnd {m n : ℕ} (r : Fin m → D.host.E) (z : Fin n → D.host.
     obtain ⟨α, hα, x, hx, rfl⟩ := hw
     have e : ratV r ⬝ᵥ (Matrix.of fun i j => (pairA D.host.F 0 α) ⊗ₜ[D.host.F] x i j : Mx D m n) *ᵥ ratV z =
         (pairA D.host.F 0 α) ⊗ₜ[D.host.F] (r ⬝ᵥ x *ᵥ z) := by
-      simp only [GlobalTheory.IdeleAA.tmul_eq, dotProduct, mulVec, ratV, Matrix.of_apply, map_sum, map_mul, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [GlobalTheory.IdeleAA.tmul_eq, dotProduct, mulVec, ratV, Matrix.of_apply, map_sum, map_mul, Finset.mul_sum]
       refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
     rw [e]
     exact tmul_mem_bnd hα (hM hx)

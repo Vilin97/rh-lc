@@ -183,9 +183,11 @@ theorem psi_red_at : ∀ (D : D7) (u : D.what₂.Word) (d : GlobalTheory.SeeSaw.
   set w : Formalism.L2.Herm.intAf D.host.F D.host.E := ∑ i : Fin D.R.r, ∑ j : Fin D.R.r,
     if GlobalTheory.chainEdge D.R.k i j then y.val (Fin.castLE hr i) (Fin.castLE hr j) else 0 with hw
   have hres : resS D.host.F PP w = Ideal.Quotient.mk PP.asIdeal z := by
-    rw [hz, hw, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hz, hw, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     split_ifs
     · rfl
@@ -193,9 +195,11 @@ theorem psi_red_at : ∀ (D : D7) (u : D.what₂.Word) (d : GlobalTheory.SeeSaw.
   have hker := (hred.ker (w - Formalism.L2.DIV.oToS D.host.F D.host.E z)).1 (by
     rw [map_sub, hres, Formalism.L2.DIV.resS_oToS, sub_self])
   have hpw : (π'.comp (Formalism.L2.Herm.intAf D.host.F D.host.E).subtype) w = (G.S.ϖ : G.k) * GlobalTheory.RootEx.simpleSum q := by
-    rw [← hsum, hw, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hsum, hw, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     split_ifs
     · have := congrFun (congrFun hmat (Fin.castLE hr i)) (Fin.castLE hr j)

@@ -212,14 +212,16 @@ theorem adapted_basis : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlg
       exact Fintype.linearIndependent_iff.1 lb.linearIndependent _ this
     have hc : cob1 (up E c.μ) (map (algebraMap O E) s) = 0 := by
       rw [← hs, ← cobL_apply c.μ h0]
-      simp [comb, map_sum, map_smul, Fintype.sum_sum_type, cobL_apply, hcob, hr]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [comb, map_sum, map_smul, Fintype.sum_sum_type, cobL_apply, hcob, hr]
     have hs0 := GlobalTheory.T.pDivGroupChart_integral_additive_series_eq_zero p C v O hv G d c E hE s hc
     have hc0 : comb b e = 0 := by rw [hs, hs0, map_zero]
     have hl : ∀ i, b (Sum.inl i) = 0 := fun i => by
       have h1 := congrArg (coeff (Finsupp.single i 1)) hc0
       have hco : ∀ i', coeff (Finsupp.single i 1) (e (Sum.inl i')) = (Pi.single i' (1 : E) : Fin d → E) i :=
         fun i' => congrFun (hlin' i') i
-      simp [comb, map_sum, Fintype.sum_sum_type, hr, hco, Pi.single_apply] at h1
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [comb, map_sum, Fintype.sum_sum_type, hr, hco, Pi.single_apply] at h1
       exact hE.inj (by rw [map_zero]; simpa [Algebra.smul_def] using h1)
     funext x
     cases x with

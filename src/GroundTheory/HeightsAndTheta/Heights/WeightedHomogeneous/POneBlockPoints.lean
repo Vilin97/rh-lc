@@ -63,7 +63,8 @@ theorem sum_latticePoint {φ : Fin (N + 1) → Fin (r + 1) → K} (σ : K →+* 
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun j _ ↦ ?_
   have h' := congrArg σ (h j)
-  simp only [map_sum, map_mul, map_intCast] at h'
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, map_intCast] at h'
   rw [← mul_assoc, ← h', Finset.sum_mul]
   exact Finset.sum_congr rfl fun b _ ↦ by ring
 
@@ -174,9 +175,11 @@ theorem latticeMap_intComb (φ : Fin (N + 1) → Fin (r + 1) → K) (c : Fin (N 
   let Lf : (Fin (r + 1) → K) →+ MvPolynomial (Fin (r + 1)) K := AddMonoidHom.mk' latticeForm latticeForm_add
   have h : latticeForm (∑ b, c b • φ b) = ∑ b, c b • latticeForm (φ b) := by
     change Lf _ = _
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun b _ ↦ map_zsmul Lf (c b) (φ b)
-  rw [h, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h, map_sum]
   refine Finset.sum_congr rfl fun b _ ↦ ?_
   rw [map_mul, map_intCast, zsmul_eq_mul]
   simp [latticeMap]
@@ -277,7 +280,8 @@ theorem exists_left_inverse {F : HermLattice K (r + 1)} {φ : Fin (N + 1) → Fi
     have hf : ∀ x, f x = ∑ p, g p * x p := by
       intro x
       conv_lhs => rw [← Finset.univ_sum_single x]
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun p _ ↦ ?_
       rw [show (Pi.single p (x p) : (K →+* ℂ) × Fin (r + 1) → ℂ) =
           x p • Pi.single p (1 : ℂ) by

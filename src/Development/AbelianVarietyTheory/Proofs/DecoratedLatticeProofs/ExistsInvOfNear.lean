@@ -232,7 +232,8 @@ theorem mle_frame {g : GL (Fin a) (AfE F E)} {p : DecoF E a ST SG Q} (h : IsPtOf
   convert AdT.FrameMove.val_sub_lt_of_liftFr h w r s using 2
   rw [Matrix.sub_apply, Matrix.mul_apply]
   unfold GlobalTheory.Mem.Col2.pullV
-  rw [Matrix.mulVec, dotProduct, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.mulVec, dotProduct, map_sum]
   congr 1
   refine Finset.sum_congr rfl fun t _ => ?_
   rw [map_mul, adAt_inclE]

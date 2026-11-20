@@ -18,7 +18,8 @@ lemma fu_comp_sum {ι M N Q : Type*} [AddCommMonoid M] [AddCommMonoid N] [AddCom
     [Module ℂ M] [Module ℂ N] [Module ℂ Q] (s : Finset ι) (g : N →ₗ[ℂ] Q) (f : ι → M →ₗ[ℂ] N) :
     g ∘ₗ (∑ i ∈ s, f i) = ∑ i ∈ s, g ∘ₗ f i := by
   ext x
-  simp [LinearMap.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [LinearMap.sum_apply, map_sum]
 
 section HS
 
@@ -40,7 +41,8 @@ theorem frame_gram_holds : FrameGram := by
     exact h
   refine ⟨?_, ?_⟩
   · rw [frQ.eq_1]
-    simp only [fu_sum_comp, fu_comp_sum, LinearMap.smul_comp, LinearMap.comp_smul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [fu_sum_comp, fu_comp_sum, LinearMap.smul_comp, LinearMap.comp_smul,
       LinearMap.comp_assoc, map_sum, map_smul, smul_eq_mul, kc, Finset.mul_sum, Complex.re_sum,
       Complex.re_ofReal_mul]
     rw [Finset.sum_comm]
@@ -48,7 +50,8 @@ theorem frame_gram_holds : FrameGram := by
     rw [hs2.eq_1]
     ring
   · rw [frQ.eq_1]
-    simp only [map_sum, map_smul, smul_eq_mul, Complex.re_sum, Complex.re_ofReal_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, smul_eq_mul, Complex.re_sum, Complex.re_ofReal_mul]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [LinearMap.trace_comp_comm']
 

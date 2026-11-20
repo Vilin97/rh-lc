@@ -43,7 +43,8 @@ theorem dual_coordinates_kronecker (hT : 0 < T) (hT' : 0 < T') (hdet : Zm.det �
   simp only [y0, hco_sum_left, hco_smul_left, fco_xco T T' Zm hT hT' hdet, Matrix.conjTranspose_apply]
   have hu : IsUnit Zm.det := isUnit_iff_ne_zero.mpr hdet
   have h := congrArg (fun M => conj (M b.castSucc c)) (Matrix.nonsing_inv_mul Zm hu)
-  simp only [Matrix.mul_apply, map_sum, map_mul, Matrix.one_apply, Complex.star_def] at h
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mul_apply, map_sum, map_mul, Matrix.one_apply, Complex.star_def] at h
   simp only [Complex.star_def]
   rw [h]
   by_cases hc : c = b.castSucc
@@ -79,7 +80,8 @@ theorem cofco_xco (hT : 0 < T) (hT' : 0 < T') (hdet : Zm.det ≠ 0) (b : Fin (r 
     hco T' (cofco T T' Zm) (xco T T' Zm b) = if b = Fin.last r then conj Zm.det else 0 := by
   simp only [cofco, hco_sum_left, hco_smul_left, fco_xco T T' Zm hT hT' hdet]
   have h := congrArg (fun M => conj (M (Fin.last r) b)) (Matrix.adjugate_mul Zm)
-  simp only [Matrix.mul_apply, map_sum, map_mul, Matrix.smul_apply, Matrix.one_apply, smul_eq_mul] at h
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mul_apply, map_sum, map_mul, Matrix.smul_apply, Matrix.one_apply, smul_eq_mul] at h
   rw [h]
   by_cases hb : b = Fin.last r
   · subst hb; simp
@@ -396,7 +398,8 @@ theorem secM_spec (S : B.RealPlaceData k r Wp Wq) (ν' : Fin (2 * r + k + 1) →
       rw [herm_x_cvec] at h
       simp only [hv1, hv2, mul_zero, Finset.sum_const_zero, zero_add, add_zero, xco] at h
       have h' := congrArg conj h
-      simp only [map_add, map_sum, map_mul, Complex.conj_conj, map_zero] at h'
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_add, map_sum, map_mul, Complex.conj_conj, map_zero] at h'
       rw [← h']
     have htn : tn = 0 := by
       have hsum : ∑ b, kap Zm b * ((∑ a, Zm a.castSucc b * conj (t a)) + be T T' Zm b * conj tn) = 0 := by

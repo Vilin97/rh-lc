@@ -148,7 +148,8 @@ theorem div_mem {f : ↥(decAt D v) → Fin D.R.r → D.ntw.O0 i}
     rw [Pi.add_apply, MonoidHom.comp_apply, Subgroup.coe_subtype, trep_apply D i s k ψ g (hψ g g.2)]
     beta_reduce
     rw [cocycle_of_crys _ _ hf g h j]
-    simp only [← Submodule.mkQ_apply, map_add, map_sum, map_mul, add_div, Finset.sum_div, mul_div_assoc,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [← Submodule.mkQ_apply, map_add, map_sum, map_mul, add_div, Finset.sum_div, mul_div_assoc,
       ← LinearMap.map_smul, Algebra.smul_def]
   · refine mk_mem_bk D i s k ψ v hv (bk0 D) _ (((D.ntwbr i v hv).toLL d)⁻¹ •
       (fun g j => (D.ntwbr i v hv).toLL (f ((D.ntwbr i v hv).e.symm g) j)))

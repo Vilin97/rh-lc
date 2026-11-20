@@ -121,7 +121,8 @@ theorem good_torConj (D : D7) (h : admG1 D) (cc : Ideal (𝓞 D.host.K)) (δ : �
   · rw [← (hK _).2, ← h.2 y, cj_mem ρ (sum_mem fun τ _ => hM τ y)]
     have : (⟨∑ τ, embT D τ y, sum_mem fun τ _ => hM τ y⟩ : M) = ∑ τ, ⟨embT D τ y, hM τ y⟩ := by
       apply Subtype.ext; simp
-    rw [this, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [this, map_sum]
     rfl
 
 theorem Good.embV_add {D : D7} {T : Tor D} (h : Good D T) {N N' : ℕ}
@@ -151,7 +152,8 @@ theorem Good.coordB_embV {D : D7} {T : Tor D} (h : Good D T) {N N' r : ℕ}
   unfold hYY at h2
   rw [h2] at h1
   have h3 : coordB D T b j (embV D T (b i)) = ∑ τ, e τ (∑ a, ∑ c, b i a c * D.host.conj (b j a c)) := by
-    simp only [coordB, embV, he, map_sum, map_mul, emb_conj]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [coordB, embV, he, map_sum, map_mul, emb_conj]
   rw [h3, h1]
   split_ifs <;> simp
 
@@ -173,7 +175,8 @@ theorem Good.coordB_sum {D : D7} {T : Tor D} (h : Good D T) {N N' r : ℕ}
     {b : Fin r → Matrix (Fin N') (Fin N) D.host.E} (hb : TaylorLogMetric.Orthonormal D b) (c : Fin r → ℂ) (j : Fin r) :
     coordB D T b j (∑ i, c i • embV D T (b i)) = c j := by
   change coordL D T b j _ = _
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   have : ∀ i, coordL D T b j (c i • embV D T (b i)) = if i = j then c i else 0 := fun i => by
     change coordB D T b j _ = _
     rw [coordB_smul, h.coordB_embV hb]; simp

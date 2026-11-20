@@ -61,11 +61,13 @@ theorem isFrame_cokernel_π {G E : X.Modules} (i : G ⟶ E) [Mono i] {U : X.Open
     exact (hex V _).2 ⟨_, rfl⟩
   refine isFrame_of_injective_of_local (fun V h => ?_) (fun V h s x hx => ?_)
   · refine (injective_iff_map_eq_zero _).2 fun a ha => ?_
-    simp only [Fintype.linearCombination_apply, ← app_resM, ← Scheme.Modules.Hom.app_smul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Fintype.linearCombination_apply, ← app_resM, ← Scheme.Modules.Hom.app_smul,
       ← map_sum] at ha
     obtain ⟨g, hg⟩ := ((hex V _).1 ha)
     obtain ⟨b, rfl⟩ := (hf V h).2 g
-    simp only [Fintype.linearCombination_apply, map_sum, Scheme.Modules.Hom.app_smul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Fintype.linearCombination_apply, map_sum, Scheme.Modules.Hom.app_smul,
       app_resM, hi] at hg
     have h0 : Fintype.linearCombination Γ(X, V) (fun j => resM E h (e j))
         (Fin.append (-b) a) = 0 := by
@@ -79,7 +81,8 @@ theorem isFrame_cokernel_π {G E : X.Modules} (i : G ⟶ E) [Mono i] {U : X.Open
   · obtain ⟨W, hWV, hxW, t, ht⟩ := exists_app_eq_of_epi (cokernel.π i) s hx
     obtain ⟨a, rfl⟩ := (he W (hWV.trans h)).2 t
     refine ⟨W, hWV, hxW, fun k => a (Fin.natAdd l k), ?_⟩
-    rw [← ht, Fintype.linearCombination_apply, Fintype.linearCombination_apply, Fin.sum_univ_add,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← ht, Fintype.linearCombination_apply, Fintype.linearCombination_apply, Fin.sum_univ_add,
       map_add, map_sum, map_sum]
     simp only [Scheme.Modules.Hom.app_smul, hzero, smul_zero, Finset.sum_const_zero, zero_add,
       app_resM]

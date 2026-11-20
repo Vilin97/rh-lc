@@ -80,7 +80,8 @@ theorem diagonal_split : ∀ (C : Type) [Field C] [CharZero C] (V : VF C) (d : �
       have := (hq _).2 (hadj W W' a b hE ha hb)
       rwa [map_sub, sub_eq_zero] at this)
     hWW π hπ (fun o g o' g' hn => (hq _).2 (horth o g o' g' hn))
-  rw [← hq, map_sub, map_sum, sub_eq_zero]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hq, map_sub, map_sum, sub_eq_zero]
   exact key
 
 end GlobalTheory.RowVal.MapSumDiagonal

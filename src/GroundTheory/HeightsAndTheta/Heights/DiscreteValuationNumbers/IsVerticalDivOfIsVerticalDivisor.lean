@@ -23,7 +23,8 @@ theorem pointConeMap_of_isMultiHomog (y : (Σ k, ι k) → Ω) {s : MRingOver R 
     NumbersDVR.pointConeMap R y s = C (aeval y s) * ∏ k, X k ^ a k := by
   conv_lhs => rw [s.as_sum]
   conv_rhs => rw [s.as_sum]
-  rw [map_sum, map_sum, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun m hm => ?_
   simp only [NumbersDVR.pointConeMap, aeval_monomial]
   rw [Finsupp.prod_fintype _ _ (fun _ => pow_zero _), Finsupp.prod_fintype _ _ (fun _ => pow_zero _)]

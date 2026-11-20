@@ -97,7 +97,8 @@ theorem flat_quotSMulTop_coker_of_matrix_witnesses :
     simp only [p, q, LinearMap.sum_apply, LinearMap.comp_apply,
       LinearMap.proj_apply, LinearMap.pi_apply, Submodule.mkQ_apply, Submodule.liftQ_apply,
       LinearMap.toSpanSingleton_apply]
-    conv_rhs => rw [← Finset.univ_sum_single v, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_rhs => rw [← Finset.univ_sum_single v, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [← map_smul]
     refine congrArg pr ?_

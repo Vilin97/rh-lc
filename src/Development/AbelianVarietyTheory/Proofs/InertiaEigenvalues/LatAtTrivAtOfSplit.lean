@@ -70,7 +70,8 @@ theorem latAt_trivAt_of_split : ∀ (D : D7) (V W : HSp D) (B : Base V W), B.Goo
   have hQsum := isIdemSum_idem D Q hQs
   have hinf : infPart D (idem Q) = 0 := by
     obtain ⟨⟨es, hes, hsum⟩, -⟩ := hQsum
-    rw [hsum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hsum, map_sum]
     exact Finset.sum_eq_zero fun PP hPP => GlobalTheory.ExportSeries.SpecGood.infPart_eq_zero_of_isIdemAt D PP _ (hes PP hPP)
   refine ⟨GlobalTheory.WeilProduct.mem_GfC_of_supp (a := idem Q + cA D (idem Q)) ?_ hsQ, ?_⟩
   · rw [map_add, GlobalTheory.PlaceIdem.infPart_cA, hinf, map_zero, add_zero]

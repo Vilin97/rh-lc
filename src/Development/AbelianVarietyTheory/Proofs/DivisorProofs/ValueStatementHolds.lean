@@ -77,7 +77,8 @@ theorem pairV_proj_right {j₀ : E →+* ℂ_[p]} {x : P.V}
       have := congrArg (algebraMap 𝓞_ℂ_[p] ℂ_[p]) (H a)
       rwa [algebraMap_embO, algebraMap_embO] at this)
   conv_lhs => rw [← EigenSplit.sum_proj (isSplitting_embO P.integers) P.actV y]
-  rw [map_sum, LinearMap.sum_apply, ← Finset.add_sum_erase _ _ (Finset.mem_univ j₀), add_eq_left]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, LinearMap.sum_apply, ← Finset.add_sum_erase _ _ (Finset.mem_univ j₀), add_eq_left]
   refine Finset.sum_eq_zero fun j hj => ?_
   obtain ⟨a, ha⟩ := not_forall.1 fun H => Finset.ne_of_mem_erase hj (hinj j j₀ H)
   refine pairV_eq_zero' P (EigenSplit.proj_mem _ P.actV j y) hx (a := a) fun H => ha (P.integers.hom_inj ?_)
@@ -137,7 +138,8 @@ theorem coord_of_mem_span (hd : ∀ i j, P.pairV (s i) (t j) = if i = j then u e
   refine Finset.sum_congr rfl fun j _ => ?_
   congr 1
   have : P.pairV (∑ i, d i • t i) (s j) = -(d j * u) := by
-    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul]
     simp only [fun i => P.pairV_swap (t i) (s j), hd, mul_neg, Finset.sum_neg_distrib, mul_ite, mul_zero,
       Finset.sum_ite_eq, Finset.mem_univ, if_true]
   rw [this, neg_neg, mul_div_assoc, div_self hu, _root_.mul_one]
@@ -148,7 +150,8 @@ theorem sum_pair_mul_eq_zero (hd : ∀ i j, P.pairV (s i) (t j) = if i = j then 
     ∑ i, P.pairV w₁ (t i) * P.pairV w₂ (s i) = 0 := by
   have e := coord_of_mem_span P hd hu hw
   rw [e] at h0
-  simp only [map_sum, map_smul, smul_eq_mul] at h0
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, smul_eq_mul] at h0
   have : ∑ i, P.pairV w₁ (t i) * P.pairV w₂ (s i) = -u * ∑ j, -P.pairV w₂ (s j) / u * P.pairV w₁ (t j) := by
     rw [Finset.mul_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
@@ -167,7 +170,8 @@ theorem beta_sat {χ : 𝓞 E →+* 𝓞_ℂ_[p]} (ht : ∀ i, t i ∈ P.latTSub
   have hx : ∑ k, a k • w k ∈ P.eigV χ := Submodule.sum_mem _ fun k _ => Submodule.smul_mem _ _ (hwm k).2
   have e := coord_of_mem_span P hd hu0 (hsp hx)
   have hb : ∀ j, P.pairV (∑ k, a k • w k) (s j) = ∑ k, a k * P.pairV (w k) (s j) := fun j => by
-    simp [map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, map_smul]
   have hL : ∑ k, a k • w k ∈ P.latT := by
     rw [e]
     refine Submodule.sum_mem _ fun j _ => smul_mem_latT P ?_ (ht j).1
@@ -206,12 +210,14 @@ theorem alpha_sat {j₀ j₁ : E →+* ℂ_[p]}
     exact pairV_mem_range P hy (ht i).1
   refine ⟨fun k i => (mem_range_iff_norm_le p _).1 (hint _ (hLa k) i), fun a ha k => ?_⟩
   have hb : ∀ i, P.pairV (∑ k, a k • w k) (t i) = ∑ k, a k * P.pairV (w k) (t i) := fun i => by
-    simp [map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, map_smul]
   have hy : (∑ i, (P.pairV (∑ k, a k • w k) (t i) / u) • s i) ∈ P.latT :=
     Submodule.sum_mem _ fun i _ => smul_mem_latT P (by rw [norm_div, hu, div_one, hb]; exact ha i) (hs i)
   have hyt : ∀ i, P.pairV (∑ i, (P.pairV (∑ k, a k • w k) (t i) / u) • s i) (t i) =
       P.pairV (∑ k, a k • w k) (t i) := fun i => by
-    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, hd, smul_eq_mul, mul_ite, mul_zero,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, hd, smul_eq_mul, mul_ite, mul_zero,
       Finset.sum_ite_eq', Finset.mem_univ, if_true]
     field_simp
   have hzE : EigenSplit.proj (isSplitting_embO P.integers) P.actV j₀
@@ -229,7 +235,8 @@ theorem alpha_sat {j₀ j₁ : E →+* ℂ_[p]}
   have key : ∀ z : P.V, (∀ i, P.pairV z (t i) = 0) → ∀ w' ∈ P.eigV (embO P.integers j₁), P.pairV z w' = 0 :=
     fun z hz w' hw' => by
       obtain ⟨d, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun ℂ_[p]).1 (hsp hw')
-      simp only [map_sum, map_smul, hz, smul_zero, Finset.sum_const_zero]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, hz, smul_zero, Finset.sum_const_zero]
   have hzt : ∀ i, P.pairV (EigenSplit.proj (isSplitting_embO P.integers) P.actV j₀
       (∑ i, (P.pairV (∑ k, a k • w k) (t i) / u) • s i) - ∑ k, a k • w k) (t i) = 0 := fun i => by
     rw [map_sub, LinearMap.sub_apply, ← pairV_proj_right P (htE i), hyt, sub_self]

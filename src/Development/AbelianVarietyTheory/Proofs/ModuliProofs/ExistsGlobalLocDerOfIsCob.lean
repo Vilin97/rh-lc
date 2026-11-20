@@ -123,7 +123,8 @@ theorem GlobalTheory.KS.exists_global_locDer_of_isCob : ∀ (K : Type) [Field K]
       ring
     · intro O O' h hO f
       have h' := pre_mono m h
-      rw [(hc.der i).res O O' h hO, rsT_eq h', rsT_eq h', map_sub, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [(hc.der i).res O O' h hO, rsT_eq h', rsT_eq h', map_sub, map_sum]
       congr 1
       refine Finset.sum_congr rfl fun a _ => ?_
       have h2 := (H a).2.2.1 _ _ ((m.app O).hom f) h'

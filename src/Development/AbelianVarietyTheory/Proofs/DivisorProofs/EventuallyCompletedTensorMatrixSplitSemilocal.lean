@@ -99,7 +99,8 @@ theorem split_eventually : ∀ (p : ℕ) [Fact p.Prime] (G : HTGroup p) (γ : G.
         intro g hg
         have := GlobalTheory.T.powers_linearIndependent_over_localTensorCenter p G γ hdeg v g (by
           have h2 := congrArg Φ hg
-          rw [map_sum, map_zero] at h2
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [map_sum, map_zero] at h2
           rw [← h2]
           refine Finset.sum_congr rfl fun i _ => ?_
           rw [Algebra.smul_def, map_mul, map_pow, hsc, hX, Algebra.TensorProduct.tmul_pow, one_pow])

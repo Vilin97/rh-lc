@@ -50,7 +50,8 @@ theorem thP_vec_eq_translate : ∀ (D : D7) (S T : HSp D) (C : Ctx S T) (om : GA
       funext x
       rw [hF x, finsum_eq_sum_of_fintype, Finset.sum_apply]
       rfl
-    rw [hΦ, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hΦ, map_sum]
     refine Finset.sum_congr rfl fun c _ => ?_
     rw [map_smul, hTm.trans _ hSB _ (hhalf _)]
   set f' := om (k₀⁻¹, 1) f'' with hf'
@@ -62,7 +63,8 @@ theorem thP_vec_eq_translate : ∀ (D : D7) (S T : HSp D) (C : Ctx S T) (om : GA
   have hom1 : om (k₀, 1) f' = f'' := hinv k₀ f''
   have hTh' : C.IsTh f' := hom.om_pres _ _ hTh
   have hu : om (k₀, 1) (C.uVec Lv hn f') = f := by
-    rw [hfsum, Ctx.uVec, finsum_eq_sum_of_fintype, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hfsum, Ctx.uVec, finsum_eq_sum_of_fintype, map_sum]
     refine Finset.sum_congr rfl fun c _ => ?_
     rw [map_smul]
     congr 1

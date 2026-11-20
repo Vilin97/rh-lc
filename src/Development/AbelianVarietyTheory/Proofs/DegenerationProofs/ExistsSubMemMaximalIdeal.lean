@@ -266,7 +266,8 @@ theorem exists_pow_eq_of_isGalois {R : Type*} (K L M : Type*) [CommRing R] [IsDo
     rcases h5 with h5 | h5
     · exfalso
       have h6 := congrArg (residue T) h5
-      simp only [map_sum, map_mul, map_pow, hres, map_zero] at h6
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_mul, map_pow, hres, map_zero] at h6
       rw [geom_sum₂_self] at h6
       have h7 : IsUnit ((n : ResidueField T) * residue T y ^ (n - 1)) := by
         refine IsUnit.mul ?_ ((hyu.map _).pow _)

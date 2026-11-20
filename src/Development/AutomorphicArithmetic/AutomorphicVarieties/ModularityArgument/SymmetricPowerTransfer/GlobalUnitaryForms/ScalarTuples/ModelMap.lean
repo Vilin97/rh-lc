@@ -307,7 +307,8 @@ private lemma form_map {c : K} {m : EL Δ τ} (P : Sp Δ τ ≃ₗ[Lsq K Δ] (Fi
       simp only [map_smul, Pi.smul_apply, smul_eq_mul, star_mul']
       ring
     · intro y
-      rw [herm_spm, hP, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [herm_spm, hP, map_sum]
       simp only [map_mul, lmap_star, mapP_spm, Function.comp_apply]
 
 private lemma semi_map {d : EL Δ τ} {δ : Matrix (Fin 3) (Fin 3) (Lsq K Δ)} (P : Sp Δ τ ≃ₗ[Lsq K Δ] (Fin 3 → Lsq K Δ))

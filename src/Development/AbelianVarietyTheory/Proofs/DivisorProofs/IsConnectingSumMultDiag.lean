@@ -83,7 +83,8 @@ theorem isConnecting_sum_multDiag (p : ℕ) [Fact p.Prime] (R : Type) [CommRing 
       Algebra.TensorProduct.lift (mulBy R (G.A 1) i : G.A 1 →ₐ[R] G.A 1) (AlgHom.id R _)
         (fun _ _ ↦ Commute.all _ _) (z.1 1)) := by
   let B : G.funs := ⟨fun n => ∑ i ∈ Finset.range p, multDiag R (G.A n) i (z.1 n), fun n => by
-    simp only [map_sum, map_multDiag, (z.2 n).2]⟩
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_multDiag, (z.2 n).2]⟩
   let K : G.funs := ⟨fun n => algebraMap R _ (valZero R _ (z.1 n)), fun n => by
     dsimp only
     rw [AlgHomClass.commutes, ← (z.2 n).2, valZero_pullTwo]⟩
@@ -99,7 +100,8 @@ theorem isConnecting_sum_multDiag (p : ℕ) [Fact p.Prime] (R : Type) [CommRing 
       map_smul, cobOne_apply 1, comul_one, Algebra.TensorProduct.one_def, sub_self, zero_sub,
       smul_neg]
     abel
-  · simp only [map_sum, counit_multDiag, Finset.sum_const, Finset.card_range, nsmul_eq_mul, hp,
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [map_sum, counit_multDiag, Finset.sum_const, Finset.card_range, nsmul_eq_mul, hp,
       zero_mul]
 
 end PDivGroup

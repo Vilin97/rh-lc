@@ -155,7 +155,8 @@ theorem mem_sup_isotropic_of_dual_pairing (hΛ : Submodule.IsFullLattice D.host.
       show l - l' ∈ orth (hS D) (Submodule.span D.host.E (Set.range F0.e))
       rw [he]
       refine a_orth_of_frame _ _ fun b => ?_
-      rw [map_sub, hl', map_sum, sub_eq_zero]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, hl', map_sum, sub_eq_zero]
       have : ∀ a, (hS D).hT (D.sp.hypE b) (o a • (ε • D.sp.hypF a)) =
           if b = a then algebraMap (𝓞 D.host.E) D.host.E (o a) * algebraMap (𝓞 D.host.E) D.host.E ε else 0 := by
         intro a
@@ -167,7 +168,8 @@ theorem mem_sup_isotropic_of_dual_pairing (hΛ : Submodule.IsFullLattice D.host.
     have e : l = (l - l') + l' := by abel
     rw [e, map_add, LinearMap.add_apply]
     refine Submodule.add_mem _ (hy _ hm) ?_
-    rw [hl', map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hl', map_sum, LinearMap.sum_apply]
     refine Submodule.sum_mem _ fun a _ => ?_
     rw [← algebraMap_smul D.host.E (o a), map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, starRingEnd_apply]
     exact mul_mem_one_submodule (star_mem_one_submodule (Submodule.mem_one.2 ⟨o a, rfl⟩)) (hgy a)

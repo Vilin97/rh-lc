@@ -23,7 +23,8 @@ noncomputable def iterD {ι : Type} : (m : ℕ) → (Fin m → ι) → (MvPolyno
 
 theorem pderiv_lin {ι : Type} [Fintype ι] (x : ι → ℝ) (j : ι) :
     MvPolynomial.pderiv j (lin x) = MvPolynomial.C (x j) := by
-  rw [lin, map_sum, Finset.sum_eq_single j]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [lin, map_sum, Finset.sum_eq_single j]
   · simp
   · intro b _ hb
     simp [MvPolynomial.pderiv_X, Pi.single_apply, hb, hb.symm]
@@ -58,7 +59,8 @@ theorem topSelf_comb_pull {k : Type} [CommRing k] {X : Scheme.{0}} {p : X ⟶ Sp
   have hL : ∀ j, ((N j).B.pull i).IsLB := fun j => LB.isLB_pull (N j).isLB i
   have e := HD.interNum_of_cls_eq_sum (L := fun j => (N j).B.pull i) hL (Q := fun _ => (comb N n).B.pull i)
     (fun _ => LB.isLB_pull (comb N n).isLB i) (fun _ => n) fun _ => by
-      rw [CechPic.cls_pull (comb N n).isLB, GenFibreSecs.cls_comb, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [CechPic.cls_pull (comb N n).isLB, GenFibreSecs.cls_comb, map_sum]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [map_zsmul, CechPic.cls_pull (N j).isLB]
   rw [topSelf_def, e]

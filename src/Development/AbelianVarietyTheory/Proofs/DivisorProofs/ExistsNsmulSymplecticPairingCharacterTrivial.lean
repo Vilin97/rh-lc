@@ -157,9 +157,11 @@ theorem char_sympl_nsmul_int : ∀ {D : D7} (ψ : AddChar (AF D.host.F) ℂ), Co
     (fun p : Fin T.rank × Fin S.rank => (symplR S T A0).comp (Matrix.singleLinearMap (AF D.host.F) p.1 p.2))
   refine ⟨N, hN, fun v hv hint => ?_⟩
   show symplR S T A0 (N • v) ∈ kerSub ψ
-  rw [map_nsmul, Matrix.matrix_eq_sum_single v, map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_nsmul, Matrix.matrix_eq_sum_single v, map_sum, Finset.smul_sum]
   refine sum_mem fun i _ => ?_
-  rw [map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.smul_sum]
   exact sum_mem fun j _ => h (i, j) (v i j) (hv i j) (hint i j)
 
 end GlobalTheory.FinCharInt

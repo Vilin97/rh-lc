@@ -45,7 +45,8 @@ theorem valR_coef_eq_zero [Smooth G.hom] (v : Module.Basis (Fin n) R (TanM (𝟙
       inl (valR g W x) := a₂
   have key : ∀ f, ∑ i, s i * valR g W (dd i W f) = 0 := fun f => by
     have := congrArg (valR g W) (hc f)
-    simpa [GlobalTheory.Points.valR_eq g W hg, map_sum, map_mul, s] using this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [GlobalTheory.Points.valR_eq g W hg, map_sum, map_mul, s] using this
   have hP : GlobalTheory.SqZero.lieExp u e (fun i => he i i) *
       (ReciprocityTheory.ChartRestriction.G.Chart.spMap (GlobalTheory.SqZero.inlS R S) ≫ z) =
       ReciprocityTheory.ChartRestriction.G.Chart.spMap (GlobalTheory.SqZero.inlS R S) ≫ z := by

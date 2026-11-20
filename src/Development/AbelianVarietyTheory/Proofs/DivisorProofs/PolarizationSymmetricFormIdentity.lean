@@ -19,7 +19,8 @@ theorem linear_coeff_compare {V J : Type} [AddCommGroup V] [Module ℝ V] (e : �
     intro t
     simp only [P, Polynomial.eval_finsetSum, Polynomial.eval_mul, Polynomial.eval_C,
       Polynomial.eval_pow, Polynomial.eval_X]
-    rw [add_pow, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [add_pow, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     have : (MvPolynomial.C t * x) ^ k * ℓ ^ (e + 1 - k) * (((e + 1).choose k : ℕ) : MvPolynomial J ℝ)
         = (t ^ k * ((e + 1).choose k : ℝ)) • (x ^ k * ℓ ^ (e + 1 - k)) := by

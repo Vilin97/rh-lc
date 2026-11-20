@@ -34,7 +34,8 @@ theorem atPl_one (w : T) : atPl w (1 : Module.End ℂ (V w)) = 1 := by
 
 theorem qop_atPl {ι : Type} [Fintype ι] [DecidableEq ι] (w : T) (F : ι → ι → Module.End ℂ (V w)) (α β : ℂ) (i j : ι) :
     qop (fun a b => atPl w (F a b)) α β i j = atPl w (qop F α β i j) := by
-  simp only [qop, ← atPlLin_apply, map_sub, map_sum, map_smul, apply_ite (atPlLin w), map_zero]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [qop, ← atPlLin_apply, map_sub, map_sum, map_smul, apply_ite (atPlLin w), map_zero]
   simp only [atPlLin_apply, atPl_mul, atPl_one]
 
 theorem mem_of_atPl (C : ∀ w, Submodule ℂ (V w)) (w : T) (L : Module.End ℂ (V w)) (hL : ∀ x, L x ∈ C w)

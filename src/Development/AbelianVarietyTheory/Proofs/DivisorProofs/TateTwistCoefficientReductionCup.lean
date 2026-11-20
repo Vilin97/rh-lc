@@ -74,7 +74,8 @@ theorem semiMap_cup : ∀ (S R : Type) [CommRing S] [CommRing R] {I J T : Cx S} 
     (GlobalTheory.T.exists_image_cocycle_semilinearSheafComplexMap S R ρ₁).2 E n α α' hα', (GlobalTheory.T.exists_image_cocycle_semilinearSheafComplexMap S R ρ₂).2 E m β β' hβ']
   refine ((GlobalTheory.T.cup_eq_class_of_isAW R ν hk).2 α' β' γ' ?_).symm
   intro N w h U x
-  rw [hγ' N w h U x, hγ N w h U x, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hγ' N w h U x, hγ N w h U x, map_sum]
   refine Finset.sum_congr rfl fun p _ => ?_
   rw [Units.smul_def, map_zsmul, hσ, ← hα', ← hβ', Units.smul_def]
 

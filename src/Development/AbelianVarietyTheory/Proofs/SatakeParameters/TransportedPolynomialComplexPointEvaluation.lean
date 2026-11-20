@@ -91,7 +91,8 @@ theorem evD_trDY_polDY : ∀ {p : ℕ} [Fact p.Prime] (X : Sys p) (D : D7) (pos 
         valZ X D pos (j + 1) h' (phiC X D pos (j + 1) h' (wT X D pos j) (AddMonoidAlgebra.coeff (polDY D s Q (N' := D.R.N (j + 1))) α)) f' *
           ∏ k ∈ α.support, d k.1 k.2.2 k.2.1 ^ α k) := by
     unfold trDY
-    rw [map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum]
     refine Finset.sum_congr rfl fun α _ => ?_
     unfold evD
     rw [MvPolynomial.coe_eval₂Hom, MvPolynomial.eval₂_monomial,

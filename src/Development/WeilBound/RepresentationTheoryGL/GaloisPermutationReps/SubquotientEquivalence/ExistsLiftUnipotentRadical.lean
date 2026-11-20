@@ -136,7 +136,8 @@ theorem lift_mem_twisted_kernel {W V : Type} [AddCommGroup W] [Module ℂ W] [Ad
   have hy : y = 0 := by
     apply hCF
     intro u hu
-    simp only [y, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [y, map_sum]
     rw [show (∑ v : unipRad 𝓀[k] e, τ u (τ v x)) =
         ∑ v : unipRad 𝓀[k] e, τ ((⟨u, hu⟩ * v : unipRad 𝓀[k] e) : GL (Fin N) 𝓀[k]) x from
       Finset.sum_congr rfl fun v _ => by rw [Subgroup.coe_mul, map_mul, Module.End.mul_apply]]
@@ -153,7 +154,8 @@ theorem lift_mem_twisted_kernel {W V : Type} [AddCommGroup W] [Module ℂ W] [Ad
       (Fintype.card (unipRad 𝓀[k] e) : ℂ) • j x := by
     rw [Finset.sum_sub_distrib]
     have : ∑ u : unipRad 𝓀[k] e, ρ ((lf u : KO k (Fin N)) : GL (Fin N) k) (j x) = j y := by
-      simp only [y, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [y, map_sum]
       refine Finset.sum_congr rfl fun u _ => ?_
       rw [← hj, (hlf u).1]
     rw [this, hy, map_zero, sub_zero, Finset.sum_const, Finset.card_univ, Nat.cast_smul_eq_nsmul]

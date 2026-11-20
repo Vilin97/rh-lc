@@ -32,7 +32,8 @@ theorem pow_sub_one_pow_congr_geom_sum_pow {R : Type} [CommRing R] {l : ℕ} (hl
     have h7 := dvd_sub h6 h5
     rw [← pow_mul, ← pow_mul, mul_comm k (k + 1), sub_sub_sub_cancel_right] at h7
     simpa using h7
-  simpa [map_sum] using map_dvd (Polynomial.aeval (R := ℤ) x) key
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa [map_sum] using map_dvd (Polynomial.aeval (R := ℤ) x) key
 
 theorem exists_div_prime_pow_dvd {R A : Type} [CommRing R] [CommRing A] [Algebra R A] {l : ℕ} (hl : l.Prime)
     (hu : ∀ n : ℕ, IsUnit ((n.factorial : ℕ) : A)) (S : Subalgebra R A) (η z : R)

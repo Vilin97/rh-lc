@@ -40,7 +40,8 @@ theorem line_functional_eq_period_mul : ∀ (l : ℕ) [Fact l.Prime] (M S : Type
     obtain ⟨t, ht⟩ := hσB i ![0, 1]
     obtain ⟨Sf, rfl⟩ := TensorProduct.exists_finset t
     refine ⟨Sf, ?_⟩
-    rw [← ht, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← ht, map_sum]
     simp [LinearMap.baseChange_tmul]
   choose Sf hSf using hex
   set T : Finset (PadicAlgCl l) := F ∪ Finset.univ.biUnion (fun i => (Sf i).image Prod.fst) with hT
@@ -62,7 +63,8 @@ theorem line_functional_eq_period_mul : ∀ (l : ℕ) [Fact l.Prime] (M S : Type
     have h1 : L (LinearMap.baseChange (PadicAlgCl l) (g s) (σ i ![0, 1])) = τ • y i := by
       rw [hy]
       simp only
-      rw [hSf i, map_sum, map_sum, map_sum, Finset.smul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hSf i, map_sum, map_sum, map_sum, Finset.smul_sum]
       refine Finset.sum_congr rfl fun q hq => ?_
       rw [LinearMap.baseChange_tmul]
       have e1 : ∀ x : M, q.1 ⊗ₜ[ℤ_[l]] x = q.1 • ((1 : PadicAlgCl l) ⊗ₜ[ℤ_[l]] x) := fun x => by

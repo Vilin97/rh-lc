@@ -31,7 +31,8 @@ theorem kfin_lie (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : 
   rintro _ ⟨k, rfl⟩
   rw [SetLike.mem_coe]
   change cptRep E a k (lie E a X φ) ∈ _
-  rw [cptRep_lie, ← b.sum_repr (toL _), map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [cptRep_lie, ← b.sum_repr (toL _), map_sum, LinearMap.sum_apply]
   refine Submodule.sum_mem _ fun i _ => ?_
   rw [map_smul, LinearMap.smul_apply]
   exact Submodule.smul_of_tower_mem _ _ (Submodule.mem_iSup_of_mem i

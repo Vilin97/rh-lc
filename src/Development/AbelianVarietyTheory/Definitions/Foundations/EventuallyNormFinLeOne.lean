@@ -255,7 +255,8 @@ theorem opNorm_map_conj_le {n : Type} [Fintype n] [DecidableEq n] (y : Matrix n 
   let xs : EuclideanSpace ℂ n := WithLp.toLp 2 fun i => starRingEnd ℂ (x i)
   have hcomp : ∀ i, (Matrix.toEuclideanCLM (n := n) (𝕜 := ℂ) (y.map (starRingEnd ℂ)) x) i =
       starRingEnd ℂ ((Matrix.toEuclideanCLM (n := n) (𝕜 := ℂ) y xs) i) := fun i => by
-    simp [xs, Matrix.mulVec, dotProduct, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [xs, Matrix.mulVec, dotProduct, map_sum]
   have h1 : ‖Matrix.toEuclideanCLM (n := n) (𝕜 := ℂ) (y.map (starRingEnd ℂ)) x‖₊ =
       ‖Matrix.toEuclideanCLM (n := n) (𝕜 := ℂ) y xs‖₊ := by
     rw [EuclideanSpace.nnnorm_eq, EuclideanSpace.nnnorm_eq]

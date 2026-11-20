@@ -14,12 +14,14 @@ theorem UpperTheory.V.Fr.pr_sqz :
       A * X.map μ = (A.map (res O C) * X).map μ := by
     intro A X
     ext i j
-    simp only [Matrix.mul_apply, Matrix.map_apply, map_sum, hμ.mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mul_apply, Matrix.map_apply, map_sum, hμ.mul]
   have hR : ∀ (A : Matrix (Fin n) (Fin n) C) (X : Matrix (Fin n) (Fin n) (ResidueField O)),
       X.map μ * A = (X * A.map (res O C)).map μ := by
     intro A X
     ext i j
-    simp only [Matrix.mul_apply, Matrix.map_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mul_apply, Matrix.map_apply, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [mul_comm (X i k), hμ.mul, mul_comm]
   have hsqM : ∀ X Y : Matrix (Fin n) (Fin n) (ResidueField O), X.map μ * Y.map μ = 0 := by

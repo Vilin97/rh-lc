@@ -71,10 +71,12 @@ theorem schr_pureA_fin [Invertible (2 : AF F)] (ψ : AddChar (AF F) ℂ) (w : (�
       p2 (⅟(2 : AF F)) * ((fun i => p2 (w.1 i)) ⬝ᵥ fun i => p2 (w.2 i))) := by
     rw [map_eq_mul ψ]
     have : p1 (x ⬝ᵥ w.2 + ⅟(2 : AF F) * (w.1 ⬝ᵥ w.2)) = 0 := by
-      simp only [dotProduct, map_add, map_mul, map_sum, h2, mul_zero, Finset.sum_const_zero, add_zero]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [dotProduct, map_add, map_mul, map_sum, h2, mul_zero, Finset.sum_const_zero, add_zero]
     rw [this, show mk (F := F) 0 0 = 0 from rfl, AddChar.map_zero_eq_one, one_mul]
     congr 1
-    simp only [dotProduct, map_add, map_mul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [dotProduct, map_add, map_mul, map_sum]
     rfl
   simp only [schr, pureA, finS]
   rw [e1, e2, e3]
@@ -148,7 +150,8 @@ theorem rho_shiftA_pureA_finite : GlobalTheory.ThK.KP → ∀ (F E : Type) [Fiel
     have hw : G.M.co.e (((pairA F 0 1 : AF F) • l.1) • M) =
         ∑ i, (pairA F 0 1 * GlobalTheory.IdeleDecay.coord F E l.1 i) • u i := by
       conv_lhs => rw [hl']
-      simp only [Finset.smul_sum, Finset.sum_smul, map_sum, smul_smul, u, ← map_smul, smul_assoc]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Finset.smul_sum, Finset.sum_smul, map_sum, smul_smul, u, ← map_smul, smul_assoc]
     have hp1 : p1 (pairA F 0 1) = 0 := rfl
     have hp2 : p2 (pairA F 0 1) = 1 := rfl
     have hct : ∀ i, c * t i = p2 (GlobalTheory.IdeleDecay.coord F E l.1 i) := fun i => by
@@ -165,24 +168,29 @@ theorem rho_shiftA_pureA_finite : GlobalTheory.ThK.KP → ∀ (F E : Type) [Fiel
       have hcA : ∀ e : E, cA σ (inclR (F := F) (AF F) e) = inclR (F := F) (AF F) (σ e) := fun _ => rfl
       rw [map_zero] at h0
       rw [← h0]
-      simp only [form, Matrix.mulVec, dotProduct, incM, incV, Matrix.map_apply, hcA, map_sum, map_mul, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [form, Matrix.mulVec, dotProduct, incM, incV, Matrix.map_apply, hcA, map_sum, map_mul, Finset.mul_sum]
     rw [hsplit, ← GlobalTheory.MixW.UnipHeis.rho_rho G.M.co B.ψ _ _ hiso]
     congr 1
     rw [Darboux.rho, schr_pureA_fin, hj]
     · have e1 : (fun k => p2 ((G.M.co.e (((pairA F 0 1 : AF F) • l.1) • M)).1 k)) = s t := by
         funext k
-        simp only [hw, Prod.fst_sum, Finset.sum_apply, Prod.smul_fst, Pi.smul_apply, smul_eq_mul, map_sum, map_mul, hp2,
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [hw, Prod.fst_sum, Finset.sum_apply, Prod.smul_fst, Pi.smul_apply, smul_eq_mul, map_sum, map_mul, hp2,
           one_mul, s, hct]
       have e2 : (fun k => p2 ((G.M.co.e (((pairA F 0 1 : AF F) • l.1) • M)).2 k)) = d t := by
         funext k
-        simp only [hw, Prod.snd_sum, Finset.sum_apply, Prod.smul_snd, Pi.smul_apply, smul_eq_mul, map_sum, map_mul, hp2,
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [hw, Prod.snd_sum, Finset.sum_apply, Prod.smul_snd, Pi.smul_apply, smul_eq_mul, map_sum, map_mul, hp2,
           one_mul, d, hct]
       rw [e1, e2]
     · intro k
-      simp only [hw, Prod.fst_sum, Finset.sum_apply, Prod.smul_fst, Pi.smul_apply, smul_eq_mul, map_sum, map_mul, hp1,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hw, Prod.fst_sum, Finset.sum_apply, Prod.smul_fst, Pi.smul_apply, smul_eq_mul, map_sum, map_mul, hp1,
         zero_mul, Finset.sum_const_zero]
     · intro k
-      simp only [hw, Prod.snd_sum, Finset.sum_apply, Prod.smul_snd, Pi.smul_apply, smul_eq_mul, map_sum, map_mul, hp1,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hw, Prod.snd_sum, Finset.sum_apply, Prod.smul_snd, Pi.smul_apply, smul_eq_mul, map_sum, map_mul, hp1,
         zero_mul, Finset.sum_const_zero]
 
 end GlobalTheory.FinFinite

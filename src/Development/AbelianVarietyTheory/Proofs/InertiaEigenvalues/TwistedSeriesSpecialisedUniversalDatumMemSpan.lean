@@ -69,9 +69,11 @@ theorem twist_series_mem_span {D : D7} {S T : HSp D} (B : Base S T) (hB : B.Good
       rw [Finset.prod_mul_distrib]
       ring
     change B.F.vecL B.G _ (B.locFn t.Q loc) = ∑ τ : (∀ PP, ι PP), (∏ PP, a PP (τ PP)) • B.F.vecL B.G _ (B.locFn t.Q (φ τ))
-    rw [e1, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e1, map_sum]
     simp only [map_smul]
-  rw [hvec, series_sum B hB ω _ _ _ (fun τ => theta_vecAt hB hQ (φ τ)), map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hvec, series_sum B hB ω _ _ _ (fun τ => theta_vecAt hB hQ (φ τ)), map_sum]
   refine Submodule.sum_mem _ fun τ _ => ?_
   obtain ⟨hQτ, hsupp, hmove⟩ := GlobalTheory.T.thetaSeries_integralSourceTranslation_right_mul D S T B hB hS ω hω t.Q hQ (fun PP => g PP (τ PP))
   have e2 : series B.F ω (B.vecAt t.Q (φ τ)) h P = series B.F ω (B.vecFlat t) (h * hQτ) P :=

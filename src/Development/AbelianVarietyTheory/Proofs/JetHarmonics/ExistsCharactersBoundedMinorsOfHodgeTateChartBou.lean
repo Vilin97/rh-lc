@@ -92,7 +92,8 @@ theorem dl_mul {u u' : PS k 1 d} (h : constantCoeff u = 1) (h' : constantCoeff u
 
 theorem dl_pull {φ : Pt k 1 d} (hφ : ∀ i, constantCoeff (φ i) = 0) (u : PS k 1 d) (j : Fin d) :
     dl (ev ![φ] u) j = ∑ i, dl u i * dLin φ i j := by
-  rw [dl_eq, pderiv_ev (CZ.cons hφ CZ.nil), map_sum, Fintype.sum_prod_type, Fin.sum_univ_one]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [dl_eq, pderiv_ev (CZ.cons hφ CZ.nil), map_sum, Fintype.sum_prod_type, Fin.sum_univ_one]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_mul, WickVanishing.gt_const_ev_eq _ (CZ.cons hφ CZ.nil), ← dl_eq, ← dl_eq]
   rfl
@@ -176,7 +177,8 @@ theorem smul_mem_span_pairing {O N : Type} [CommRing O] {d r : ℕ} {c : O} (w :
       rw [← hlam]
       show ∑ s, e a s * lam i s = _
       exact Finset.sum_congr rfl fun s _ => mul_comm _ _
-    simp only [map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, this]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, this]
     simp
   rw [e1] at h
   exact h
@@ -260,7 +262,8 @@ theorem hasDlog_pull (f : V →+* O) (hf : ∀ r, algebraMap O F (f r) = algebra
     exact isCh_pull (WickVanishing.Nab.lawK F B) (PointMapComposition.actKO F B) a (isCh_map f hf B hu)
   · rw [hm]
     have hc : ∀ i, constantCoeff (B.actK F a i) = 0 := (PointMapComposition.actKO F B).const a
-    simp only [dl_pull hc, Finset.mul_sum, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [dl_pull hc, Finset.mul_sum, map_sum, map_mul]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun i _ => ?_
     have h := congrFun (he l) i

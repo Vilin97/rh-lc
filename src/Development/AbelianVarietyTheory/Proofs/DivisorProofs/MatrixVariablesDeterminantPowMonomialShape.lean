@@ -65,7 +65,8 @@ theorem detPow_shape : ∀ (C : Type) [Field C] [CharZero C] (i c : ℕ),
     have h1 : (∑ a : Fin i, Finsupp.single (⟨a, a⟩ : Σ _ : Fin i, Fin i) c) =
         Finsupp.mapDomain f (∑ a : Fin i, Finsupp.single a c) := by
       change _ = Finsupp.mapDomain.addMonoidHom f _
-      simp [map_sum, f]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [map_sum, f]
     have h2 : MvPolynomial.killCompl hf (detPow C i c) =
         MvPolynomial.monomial (∑ a : Fin i, Finsupp.single a c) 1 := by
       unfold detPow

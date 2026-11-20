@@ -100,7 +100,8 @@ theorem proof : PullConeDegree.Statement := by
       ← algebraMap_int_eq, aeval_map_algebraMap]
   have hψg : mConeMapQ y g =
       ∑ j, mConeMapQ y (b j) * monomial (Finsupp.equivFunOnFinite.symm e) (aeval y (L j)) := by
-    rw [← huv, map_add, RingHom.mem_ker.mp hu, zero_add, ← hb, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← huv, map_add, RingHom.mem_ker.mp hu, zero_add, ← hb, map_sum]
     simp only [map_mul, hmapL]
 
   refine ⟨fun j => weightedHomogeneousComponent (NumbersDVR.blockWeight ι) (d - e) (b j),

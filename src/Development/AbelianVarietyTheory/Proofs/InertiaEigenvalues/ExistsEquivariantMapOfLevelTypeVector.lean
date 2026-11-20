@@ -25,7 +25,8 @@ theorem exists_map_of_typeVec (F : Type) [Field F] [ValuativeRel F] [Topological
     simp [Φ, LinearMap.sum_apply]
   have heq : ∀ μ (g₀ : GL n (ZMod p)) (h : GL n F), IsLift g₀ h → ∀ w, π h (Φ μ w) = Φ μ (ρ.ρ g₀ w) := by
     intro μ g₀ h H w
-    rw [hΦ, hΦ, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hΦ, hΦ, map_sum]
     refine Fintype.sum_equiv (Equiv.mulLeft g₀) _ _ fun g => ?_
     rw [map_smul, ← Module.End.mul_apply, ← map_mul, IsLift.apply_eq hp h1 (H.mul hp (hℓ g)) (hℓ _)]
     simp [mul_inv_rev, map_mul, Module.End.mul_apply]

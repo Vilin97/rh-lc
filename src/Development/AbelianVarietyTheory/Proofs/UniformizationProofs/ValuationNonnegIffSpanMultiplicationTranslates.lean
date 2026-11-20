@@ -62,7 +62,8 @@ theorem eq_sum_translates {F E G : Type} [Field F] [AddCommGroup E] [Module F E]
     have : (U y).symm.toLinearMap ∘ₗ ∑ x, a x • (U x).toLinearMap =
         ∑ x, a x • ((U y).symm.toLinearMap ∘ₗ (U x).toLinearMap) := by
       ext w; simp
-    rw [this, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [this, map_sum]
     simp only [map_smul, orth, smul_eq_mul, mul_ite, mul_zero]
     simp
   have hli : LinearIndependent F fun x => (U x).toLinearMap := by

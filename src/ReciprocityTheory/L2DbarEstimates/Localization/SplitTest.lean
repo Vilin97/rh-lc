@@ -269,7 +269,8 @@ theorem splitTest (n : ℕ) (M : Type*) [TopologicalSpace M] [T2Space M]
       _ = ∫ x, conj ((∑ j, db n z j g x * conj (f x j)) * (Real.exp (-ph₂ x) : ℂ)) ∂vol n z := by
           congr 1
           funext x
-          rw [map_mul, Complex.conj_ofReal, map_sum, PiLp.inner_apply]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [map_mul, Complex.conj_ofReal, map_sum, PiLp.inner_apply]
           congr 1
           refine Finset.sum_congr rfl fun j _ => ?_
           rw [map_mul, Complex.conj_conj]

@@ -72,7 +72,8 @@ theorem exists_comb {R : Type} [CommRing R] {Y : Scheme.{0}} (q : Y ⟶ Sp R) {H
     exact congrArg (fun z => z.hom ((Scheme.ΓSpecIso (CommRingCat.of R)).inv.hom c))
       (q.appLE_map (U := ⊤) (fun _ _ => trivial) (homOfLE h).op)
   refine ⟨⟨fun l => ∑ j, constFn q (H.U l) (a j) * (s j).f l, fun i k => ?_⟩, fun _ => rfl⟩
-  rw [map_sum, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_mul, map_mul, hres, hres, (s j).compat i k]
   ring
@@ -82,7 +83,8 @@ theorem valR_comb {R K : Type} [CommRing R] [Field K] {X Y : Scheme.{0}} (q : Y 
     (hσ : ∀ l, σ.f l = ∑ j, constFn q ((H.pull r).U l) (a j) * (GlobalTheory.secPull (s j) r).f l) (x : Sp K ⟶ Y)
     (l : (H.pull r).ι) (hx : ⊤ ≤ x ⁻¹ᵁ (H.pull r).U l) :
     valR x _ (σ.f l) = ∑ j, (Spec.preimage (x ≫ q)).hom (a j) * valF (x ≫ r) _ ((s j).f (l PUnit.unit)) := by
-  rw [hσ, Points.valR_eq x _ hx, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hσ, Points.valR_eq x _ hx, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_mul, ← Points.valR_eq, ← Points.valR_eq, Points.valR_constFn q x _ hx]
   exact congrArg _ (Points.valR_appLE x r _ hx _)

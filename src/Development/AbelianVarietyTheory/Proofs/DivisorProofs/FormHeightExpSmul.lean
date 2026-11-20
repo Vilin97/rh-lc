@@ -14,7 +14,8 @@ theorem linSubst_smul {R : Type} [CommRing R] {B N n m : ℕ} (s : R) (M : Matri
     linSubst (s • M) g = C (s ^ m) * linSubst M g := by
   conv_lhs => rw [g.as_sum]
   conv_rhs => rw [g.as_sum]
-  simp only [linSubst, map_sum, aeval_monomial, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [linSubst, map_sum, aeval_monomial, Finset.mul_sum]
   refine Finset.sum_congr rfl fun a ha => ?_
   have : a.degree = m := by rw [Finsupp.degree_eq_weight_one]; exact hg (mem_support_iff.1 ha)
   simp only [Matrix.smul_apply, smul_eq_mul, map_mul, mul_assoc, ← Finset.mul_sum, Finsupp.prod, mul_pow,

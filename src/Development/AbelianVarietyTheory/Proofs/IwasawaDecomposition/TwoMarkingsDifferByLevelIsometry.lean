@@ -84,7 +84,8 @@ theorem per_unique : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H :
       ((GlobalTheory.ExpChain.isDerivAt0_ex_iff E H Dw l Xo _ g _ Fu i P hP i P' h.toLinearMap hP' h5 _ _).1 (h3 z)) (k3 z)
     refine ⟨gam, g1, g2, fun v => funext fun z => ?_⟩
     refine Fintype.linearIndependent_iffₛ.1 (linearIndependent_dirs hP' hy' hj' k1 k2 k3) _ _ ?_ z
-    rw [← hQ', g4, hQ, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hQ', g4, hQ, map_sum]
     simp only [map_smul, hW]
 
 end GlobalTheory.ShFam.Hor.TwoMarkings

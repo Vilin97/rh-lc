@@ -184,9 +184,11 @@ theorem jet_map_eq_zero : ∀ (V : Type) [NormedAddCommGroup V] [InnerProductSpa
       · exact hstab a b hab _ (hstab b a hab.symm _ hf)
       · exact Submodule.zero_mem _
     have hCasT : T (CasK ε (arrE E (j + 1)) f) = CasK ε E (T f) := by
-      rw [compactCasimir_apply, compactCasimir_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [compactCasimir_apply, compactCasimir_apply, map_sum]
       refine Finset.sum_congr rfl fun a _ => ?_
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun b _ => ?_
       split_ifs with hab
       · rw [hE a b hab _ (hstab b a hab.symm _ hf), hE b a hab.symm _ hf]

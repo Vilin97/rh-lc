@@ -28,7 +28,8 @@ theorem evalAt_monomial_nat (z : Fin m → ℂˣ) (k : Fin m → ℕ) :
 
 theorem evalAt_hL (z : Fin m → ℂˣ) (p : ℕ) : evalAt z (hL m p) = hN p (fun i => (z i : ℂ)) := by
   unfold hL hN
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   exact evalAt_monomial_nat z k
 

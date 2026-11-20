@@ -24,10 +24,12 @@ theorem dvd_xi_of_theta_tensor_vanish : ∀ (p : ℕ) [Fact p.Prime] (C : Type) 
         intro σ
         obtain ⟨f, hf, -⟩ := theta_tensor_exists p C v O hv ε hε Λ σ
         have h0 := hr σ f hf
-        rw [hrsum, map_sum] at h0
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [hrsum, map_sum] at h0
         simp_rw [show ∀ a l, f (a ⊗ₜ l) = _ from hf] at h0
         have h1 := congrArg (algebraMap O C) h0
-        simpa [map_sum, map_mul] using h1)
+        set_option synthInstance.maxHeartbeats 100000 in
+          simpa [map_sum, map_mul] using h1)
     intro j
     have := congrFun hc j
     exact hv.hom_inj (by simpa using this)

@@ -107,7 +107,8 @@ theorem sum_chiVal [IsAlgClosure ℚ Ω] (ε : Ω →+* ℂ) (j : Ω →+* Qbar 
     simp only [up, chiProj, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
     exact Fintype.sum_equiv (Equiv.inv _) _ _ fun δ => by simp only [Equiv.inv_apply, inv_inv]
   simp only [chiVal, Finset.mul_sum (s := (Finset.univ : Finset (ZMod N)ˣ))]
-  rw [Finset.sum_comm, hup, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.sum_comm, hup, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun δ _ => ?_
   simp only [mul_left_comm (ψ _) (χ _)⁻¹]
   rw [← Finset.mul_sum, sum_unitVal ε j lam N k c d _ _ m β ψ

@@ -165,7 +165,8 @@ theorem exists_basis_kaehler (σ : K →+* S) (hσR : ∀ a : R, σ (algebraMap 
     rw [Fintype.linearIndependent_iff]
     intro g hg j
     have := congrArg (dualForm (DD j)) hg
-    simp only [map_sum, map_smul, hΦ, smul_eq_mul, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq',
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, hΦ, smul_eq_mul, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq',
       Finset.mem_univ, if_true, map_zero] at this
     exact this
 
@@ -174,7 +175,8 @@ theorem exists_basis_kaehler (σ : K →+* S) (hσR : ∀ a : R, σ (algebraMap 
   let W := Submodule.span S (Set.range fun i => D k S (algebraMap A S (Y i)))
   have hC (a : R) : D k S (algebraMap R S a) ∈ W := by
     have e : algebraMap R S a = algebraMap K S (algebraMap R K a) := (hσR a).symm
-    rw [e, ← KaehlerDifferential.map_D k k K S, ← bK.sum_repr (D k K (algebraMap R K a)), map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, ← KaehlerDifferential.map_D k k K S, ← bK.sum_repr (D k K (algebraMap R K a)), map_sum]
     refine Submodule.sum_mem _ fun i _ => ?_
     rw [map_smul, ← algebraMap_smul S, hbK, KaehlerDifferential.map_D]
     refine Submodule.smul_mem _ _ (Submodule.subset_span ⟨Fin.natAdd r i, ?_⟩)

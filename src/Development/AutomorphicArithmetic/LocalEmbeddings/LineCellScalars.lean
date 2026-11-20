@@ -103,7 +103,8 @@ theorem chain_split_simultaneous_eigen : ∀ {V ι : Type} [AddCommGroup V] [Mod
   · refine ⟨fun t => aeval T (Lagrange.basis Finset.univ lam t) v, ?_, ?_⟩
     · have hsum : ∑ t, Lagrange.basis Finset.univ lam t = 1 :=
         Lagrange.sum_basis (fun a _ b _ h => hlam h) ⟨⟨0, hM⟩, Finset.mem_univ _⟩
-      rw [← LinearMap.sum_apply, ← map_sum, hsum, map_one, Module.End.one_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← LinearMap.sum_apply, ← map_sum, hsum, map_one, Module.End.one_apply]
     · intro t y
       set lam' : ℕ → ℂ := fun s => if h : s < M then lam ⟨s, h⟩ else 0 with hlam'
       set B : Module.End ℂ V := R y - algebraMap ℂ (Module.End ℂ V) (nu t y) with hBdef

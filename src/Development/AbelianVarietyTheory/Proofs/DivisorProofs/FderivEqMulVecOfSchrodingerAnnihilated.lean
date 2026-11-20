@@ -16,7 +16,8 @@ theorem dRho_apply_basis {l : Type} [Fintype l] [DecidableEq l] (w : l ⊕ l →
     simp [pPart, PiLp.single_apply, Pi.single_apply]
   have h2 : inner ℝ (qPart w) x = ∑ b, w (.inr b) * x b := by
     simp [qPart, PiLp.inner_apply, mul_comm]
-  rw [h1, map_sum, h2]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h1, map_sum, h2]
   simp [Complex.real_smul, ofReal_sum]
 
 theorem fderiv_eq_of_annihilated : ∀ (l : Type) [Fintype l] [DecidableEq l] (s : Matrix (l ⊕ l) (l ⊕ l) ℝ)

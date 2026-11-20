@@ -189,7 +189,8 @@ theorem mid (M : Meta l) (K : W → Matrix β β ℂ) (hK : ∀ w, (K w)ᴴ = K 
   have e2 : z = ∑ w, c w / 2 * (Z w).trace := by
     have a : 2 * z = ζ Z := exp_mul_inj fun t => by rw [← h1, hζ Z hZ]
     have b : ζ Z = ∑ w, c w * (Z w).trace := by
-      conv_lhs => rw [← Finset.univ_sum_single Z, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        conv_lhs => rw [← Finset.univ_sum_single Z, map_sum]
       exact Finset.sum_congr rfl fun w _ => hc w _ (hZw w)
     rw [b] at a
     simp only [div_mul_eq_mul_div, ← Finset.sum_div, ← a]

@@ -101,7 +101,8 @@ theorem av_eigen' (φ : AddChar k Circle) (hφ : Continuous φ) (col : (Fin n �
   let χ : (Fin n → k) → Circle := fun t => (φ (ξ ⬝ᵥ t))⁻¹ * ψ (η ⬝ᵥ t)
   have hexp : E (((p.2.card : ℂ)⁻¹) • ∑ t ∈ p.2, (starRingEnd ℂ ((φ (ξ ⬝ᵥ t) : Circle) : ℂ)) • col t v) w
       = ((p.2.card : ℂ)⁻¹ * ∑ t ∈ p.2, ((χ t : Circle) : ℂ)) * E v w := by
-    simp only [map_smul, map_sum, LinearMap.smul_apply, LinearMap.sum_apply, smul_eq_mul, hE]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_smul, map_sum, LinearMap.smul_apply, LinearMap.sum_apply, smul_eq_mul, hE]
     rw [Finset.mul_sum, Finset.mul_sum, Finset.sum_mul]
     refine Finset.sum_congr rfl (fun t _ => ?_)
     simp only [χ, Circle.coe_mul, Circle.coe_inv_eq_conj]
@@ -221,6 +222,7 @@ theorem av_conj' (φ : AddChar k Circle) (hφ : Continuous φ) (col : (Fin n →
   rw [av_eq' φ col hca (gmap g A) _ (gl g v) q hq]
   simp only [q]
   rw [Finset.card_image_of_injective _ hinj, Finset.sum_image (fun x _ y _ h => hinj h)]
-  simp only [map_smul, map_sum, hconj, dot_g, ginv_mulVec]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_smul, map_sum, hconj, dot_g, ginv_mulVec]
 
 end PositivityTheory.RgUd.Form.U.Lift2.AvA

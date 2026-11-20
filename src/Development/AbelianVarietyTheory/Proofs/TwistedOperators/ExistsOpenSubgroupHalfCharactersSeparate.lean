@@ -14,7 +14,8 @@ open GlobalTheory.IdemModTwo
 theorem sum_incA_inv_mul {D : D7} (W : HSp D) (p i : Fin W.rank) :
     ∑ k, incA D (W.gram⁻¹ p k) * incA D (W.gram k i) = if p = i then 1 else 0 := by
   have h1 : (∑ k, incA D (W.gram⁻¹ p k) * incA D (W.gram k i)) = incA D ((W.gram⁻¹ * W.gram) p i) := by
-    rw [Matrix.mul_apply, map_sum (incA D)]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Matrix.mul_apply, map_sum (incA D)]
     exact Finset.sum_congr rfl fun k _ => ((incA D).map_mul _ _).symm
   rw [h1, Matrix.nonsing_inv_mul _ (GlobalTheory.LatVac.gram_det_isUnit W), Matrix.one_apply]
   split_ifs

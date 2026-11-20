@@ -1810,7 +1810,8 @@ theorem avg_norm_sq [μ.IsMulLeftInvariant] [μ.IsInvInvariant] [μ.IsOpenPosMea
     have h0 : ρ κ u = ∑ j, ⟪e j, ρ κ u⟫_ℂ • e j := (e.sum_repr' (ρ κ u)).symm
     have h2 : T (ρ κ u) = ∑ j, ⟪e j, ρ κ u⟫_ℂ • T (e j) := by
       conv_lhs => rw [h0]
-      simp [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [map_sum]
     have h3 : ((‖T (ρ κ u)‖ ^ 2 : ℝ) : ℂ) = ⟪T (ρ κ u), T (ρ κ u)⟫_ℂ := by
       rw [inner_self_eq_norm_sq_to_K]; norm_cast
     rw [h3, h2, sum_inner]

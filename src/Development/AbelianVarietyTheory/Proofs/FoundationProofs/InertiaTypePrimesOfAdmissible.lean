@@ -43,7 +43,8 @@ theorem pow_sub_one_mem (I : Ideal R) (l m : ℕ) (hl : (l : R) ∈ I) (Y : Matr
   have h2 : (Ideal.Quotient.mk I).mapMatrix (∑ i ∈ Finset.range l, Y ^ i) = 0 := by
     have h0 : ((l : ℕ) : R ⧸ I) = 0 := by
       rw [← map_natCast (Ideal.Quotient.mk I), Ideal.Quotient.eq_zero_iff_mem]; exact hl
-    simp only [map_sum, map_pow, h1, one_pow, Finset.sum_const, Finset.card_range]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_pow, h1, one_pow, Finset.sum_const, Finset.card_range]
     rw [← Nat.cast_smul_eq_nsmul (R ⧸ I), h0, zero_smul]
   have h3 : ∀ a b, (∑ i ∈ Finset.range l, Y ^ i) a b ∈ I := fun a b => by
     have := congrFun (congrFun h2 a) b

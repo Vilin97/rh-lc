@@ -30,7 +30,8 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {N : ℕ}
 theorem conjE_h (V : HermSpace E N) (x y : Fin N → E) : conjE E (V.h y x) = V.h x y := by
   have hJ : ∀ i j, conjE E (V.J i j) = V.J j i := fun i j =>
     (congrFun (congrFun V.herm i) j).symm
-  simp only [HermSpace.h, ReciprocityTheory.ChartRestriction.G.SA.hf, map_sum, map_mul, hJ, conjE_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [HermSpace.h, ReciprocityTheory.ChartRestriction.G.SA.hf, map_sum, map_mul, hJ, conjE_apply,
     IsCMField.complexConj_apply_apply]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_

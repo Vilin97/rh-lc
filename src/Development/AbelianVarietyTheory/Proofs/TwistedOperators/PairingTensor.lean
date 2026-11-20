@@ -90,7 +90,8 @@ theorem exists_finiteDimensional_kill (ha : IsGK a) (hA : AdmGK R.HK)
   have hR : ∀ w, ∀ x ∈ F, inner ℂ (R.ι x) (R.ι (φ w)) = l (B w x) := fun w x hx => by
     conv_rhs => rw [← he x hx]
     rw [hφ]
-    simp only [map_sum, map_smul, inner_sum, inner_smul_right, LinearMap.map_smulₛₗ,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, inner_sum, inner_smul_right, LinearMap.map_smulₛₗ,
       inner_conj_symm, smul_eq_mul, mul_comm]
   have hreal : ∀ X ∈ upq p q, IsKC X → ∀ w, φ (a X w) = R.HK.act X (φ w) := by
     intro X hX hK w
@@ -145,11 +146,13 @@ theorem exists_map (ha : IsGK a) (hA : AdmGK R.HK)
     have h1 := hkill (y - ∑ j, inner ℂ (R.ι (e j)) (R.ι y) • e j) (fun x hx => by
       rw [map_sub, inner_sub_left, sub_eq_zero]
       conv_lhs => rw [← he x hx]
-      simp only [map_sum, map_smul, inner_sum, sum_inner, inner_smul_right, inner_smul_left,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, inner_sum, sum_inner, inner_smul_right, inner_smul_left,
         inner_conj_symm, mul_comm])
     rw [map_sub, sub_eq_zero] at h1
     rw [h1]
-    simp only [map_sum, ctr_tmul, LinearMap.map_smulₛₗ, inner_conj_symm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, ctr_tmul, LinearMap.map_smulₛₗ, inner_conj_symm]
   choose g hg using ex
   let f : W →ₗ[ℂ] R.HK.V ⊗[ℂ] U :=
     { toFun := g

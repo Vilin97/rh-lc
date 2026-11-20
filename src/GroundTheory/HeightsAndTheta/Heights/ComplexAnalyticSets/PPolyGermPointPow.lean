@@ -115,7 +115,8 @@ theorem mem_pow_ker_of_isBigO {k : ℕ} {q : MvPolynomial σ ℂ}
       intro t
       rw [← hev]
       conv_rhs => rw [← sum_homogeneousComponent q']
-      simp only [P, Polynomial.eval_finsetSum, Polynomial.eval_monomial, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [P, Polynomial.eval_finsetSum, Polynomial.eval_monomial, map_sum]
       refine Finset.sum_congr rfl fun e _ => ?_
       rw [eval_smul_of_isHomogeneous (homogeneousComponent_isHomogeneous e q'), mul_comm]
     have hT : Tendsto (fun t : ℂ => t • v + w) (𝓝 0) (𝓝 w) := by

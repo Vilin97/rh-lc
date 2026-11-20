@@ -33,7 +33,8 @@ theorem norm_piInf_le {w : InfinitePlace F} (τ : EmbOver E w) (l : AE F E) :
   have h1 : ∀ (a : AF F) (x : E), piInf τ (a ⊗ₜ[F] x) =
       InfinitePlace.Completion.extensionEmbedding w (a.1 w) * τ.1 x := fun a x => rfl
   conv_lhs => rw [hl]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun i _ => ?_)
   rw [h1, norm_mul, (InfinitePlace.Completion.isometry_extensionEmbedding w).norm_map_of_map_zero (map_zero _)]
 
@@ -111,7 +112,8 @@ theorem arch_slice_decay {B : Base F E} {b a' : ℕ} {G : Geo σ (b + 2) a'} {G�
     exact one_mul _
   choose f₁ hf₁ hb₁ using fun j => hCb j ⟨k, hk⟩ x hx2
   have hS0 : G.M.co.e (shiftA H H' l) = ∑ i, GlobalTheory.XTermMaj.crd F E (l : AE F E) i • S i := by
-    simp only [S, ← map_smul, ← map_sum, ← smul_assoc, ← Finset.sum_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [S, ← map_smul, ← map_sum, ← smul_assoc, ← Finset.sum_smul]
     congr 2
     rw [shiftA]
     congr 1
@@ -130,7 +132,8 @@ theorem arch_slice_decay {B : Base F E} {b a' : ℕ} {G : Geo σ (b + 2) a'} {G�
     simp only at h1
     rw [h1, Darboux.rho, hS]
     change coeL (∑ j, f₁ j) y = (sliceL c ∘ₗ e) (schrL B.ψ _ _) y
-    rw [map_sum, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum, map_sum]
     exact congrFun (Finset.sum_congr rfl fun j _ => hf₁ j) y
   · rw [Finset.sum_mul]
     refine (Finset.le_sum_of_subadditive _ (map_zero _).le (map_add_le_add _) _ _).trans

@@ -108,7 +108,8 @@ theorem subMuP_of (h2 : ExplicitMapOntoTwoLetters) (h5 : TwoLetterLatticeGaussIn
   rw [← tie3 h2 h5 hCO R (r + 1) (by omega) P Q] at hF
   obtain ⟨f, hf, rfl⟩ := hF
   rw [dPsi_apply, f.as_sum]
-  simp only [map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun v hv => ?_
   rw [subY_dPsi_monomial, (hf v hv).2]
 

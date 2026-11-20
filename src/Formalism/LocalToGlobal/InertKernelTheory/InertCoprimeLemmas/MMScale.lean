@@ -48,7 +48,8 @@ theorem thetaU_smul {K : Type} [Field K] (ι : ℂ →+* K) {lg : PowerSeries K}
   rw [MvPowerSeries.subst_comp_subst_apply hb ha]
   congr 1
   funext i
-  rw [← MvPowerSeries.coe_substAlgHom ha, map_sum, Finset.sum_eq_single i]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← MvPowerSeries.coe_substAlgHom ha, map_sum, Finset.sum_eq_single i]
   · rw [map_mul, MvPowerSeries.coe_substAlgHom ha, MvPowerSeries.subst_C, MvPowerSeries.subst_X ha, Matrix.map_apply,
       Matrix.diagonal_apply_eq, Finset.mul_sum]
     refine Finset.sum_congr rfl fun j _ => ?_

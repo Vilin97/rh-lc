@@ -526,8 +526,10 @@ theorem omega_top (LL : Letters (K + 1)) (hv : LL.vec (Fin.last K) = true) (ρ :
         have : ((b : ℕ) : ℤ) < ((a : ℕ) : ℤ) := by exact_mod_cast hab
         omega), map_zero, map_zero, mul_zero, if_neg (ne_of_gt hab), if_neg (not_lt_of_gt hab)]
       simp
-  rw [omega_formula LL ρ c o x hP hF, map_sub, map_smul, map_sum]
-  simp only [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [omega_formula LL ρ c o x hP hF, map_sub, map_smul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum]
   rw [Finset.sum_congr rfl (fun a ha => Finset.sum_congr rfl (fun b hb => hterm a ha b hb))]
   simp only [← Finset.sum_smul]
   rw [← sub_smul]
@@ -644,7 +646,8 @@ theorem omega_comm (LL : Letters (K + 1)) (hv : LL.vec (Fin.last K) = true) (ρ 
     rw [h2, map_add, ← h1]
     split_ifs <;> simp
   unfold Omega
-  rw [LinearMap.sum_apply, LinearMap.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [LinearMap.sum_apply, LinearMap.sum_apply, map_sum]
   simp only [LinearMap.comp_apply, hterm]
   rw [Finset.sum_add_distrib, Finset.sum_sub_distrib, Finset.sum_ite_eq, Finset.sum_ite_eq, if_pos hs, if_pos ht]
   abel

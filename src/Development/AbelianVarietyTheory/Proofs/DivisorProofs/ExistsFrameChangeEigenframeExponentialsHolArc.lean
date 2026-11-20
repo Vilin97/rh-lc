@@ -35,7 +35,8 @@ theorem exists_frame_change : ∀ (E : Type) [Field E] [NumberField E] [IsCMFiel
   refine ⟨h, fun u hu => ⟨(hh u hu).1, ?_, fun ex hadd hex hd z => ?_⟩⟩
   · refine ((hh u hu).1.contDiffAt_map_inverse (n := 1)).continuousAt.comp (continuousAt_clm_apply.2 fun z => ?_)
     have : ∀ u, h u z = ∑ j, z j • h u (Pi.single j 1) := fun u => by
-      simp only [← map_smul, ← map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [← map_smul, ← map_sum]
       exact congrArg _ (pi_eq_sum_univ' z)
     simp only [this]
     refine tendsto_finset_sum _ fun j _ => ContinuousAt.const_smul ?_ (z j)

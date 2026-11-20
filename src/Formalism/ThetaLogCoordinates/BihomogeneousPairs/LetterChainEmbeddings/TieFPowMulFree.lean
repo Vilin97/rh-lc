@@ -70,7 +70,8 @@ private lemma add_single_mem_support_of_mem_support_pderiv (i : σ) (p : MvPolyn
   classical
   have hp : pderiv i p = ∑ s ∈ p.support, pderiv i (monomial s (AddMonoidAlgebra.coeff p s)) := by
     conv_lhs => rw [p.as_sum]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
   rw [MvPolynomial.mem_support_iff, hp, MvPolynomial.coeff_sum] at ht
   obtain ⟨s, hs, hne⟩ := Finset.exists_ne_zero_of_sum_ne_zero ht
   rw [pderiv_monomial, MvPolynomial.coeff_monomial] at hne

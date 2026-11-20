@@ -35,7 +35,8 @@ private theorem schur_form {H Γ : Type} [NormedAddCommGroup H] [InnerProductSpa
   have hT : ∀ x y, inner ℂ x (T y) = B x y := by
     intro x y
     conv_rhs => rw [← b.sum_repr' x]
-    simp only [T, LinearMap.sum_apply, LinearMap.smulRight_apply, inner_sum, inner_smul_right, map_sum, LinearMap.map_smulₛₗ,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [T, LinearMap.sum_apply, LinearMap.smulRight_apply, inner_sum, inner_smul_right, map_sum, LinearMap.map_smulₛₗ,
       LinearMap.smul_apply, smul_eq_mul, inner_conj_symm]
     exact Finset.sum_congr rfl fun i _ => mul_comm _ _
   have hs : ∀ g, Function.Surjective (ρ g) := fun g => by
@@ -222,7 +223,8 @@ variable {K : Type} [Field K] [NumberField K] [StarRing K] (S : CSD K) (σ : K �
 private theorem pairAt_sesq {W : Type} [AddCommGroup W] [Module ℂ W] (j : S.V →ₛₗ[σ] W) (B : W →ₗ⋆[ℂ] W →ₗ[ℂ] ℂ)
     (h : ∀ i k, B (j (S.bV i)) (j (S.bV k)) = σ (S.pair (S.bV i) (S.bV k))) (x y : S.V) : pairAt S σ x y = B (j x) (j y) := by
   conv_rhs => rw [← S.bV.sum_repr x, ← S.bV.sum_repr y]
-  simp only [pairAt, map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, h,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [pairAt, map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, h,
     CSD.gramV, Matrix.of_apply, RingHom.id_apply, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
@@ -230,7 +232,8 @@ private theorem pairAt_sesq {W : Type} [AddCommGroup W] [Module ℂ W] (j : S.V 
 
 private theorem csumAt_sum {I : Type} [Fintype I] (a : I → K) (f : I → S.Cl → S.V) :
     csumAt S σ (∑ i, a i • f i) (∑ i, a i • f i) = ∑ i, ∑ k, starRingEnd ℂ (σ (a i)) * csumAt S σ (f i) (f k) * σ (a k) := by
-  simp only [csumAt, pairAt, Finset.sum_apply, Pi.smul_apply, map_sum, map_smul, Finsupp.coe_finsetSum, Finsupp.coe_smul, smul_eq_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [csumAt, pairAt, Finset.sum_apply, Pi.smul_apply, map_sum, map_smul, Finsupp.coe_finsetSum, Finsupp.coe_smul, smul_eq_mul,
     map_mul, Finset.mul_sum, Finset.sum_mul]
   conv_rhs =>
     rw [Finset.sum_comm]
@@ -314,7 +317,8 @@ private theorem pairK_mapVV_rat {K : Type} [Field K] [StarRing K] (σ : K →+* 
     obtain ⟨P, hP⟩ := bVVfun_int K lam j
     exact pairK_mapVV_int σ lam G _ y P ((bVV_coe _ lam j).trans hP)
   rw [← (bVV K lam).sum_repr x]
-  simp only [map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, hb, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, hb, map_mul]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [starRingEnd_apply (R := K), hx j σ]
 

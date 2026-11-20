@@ -125,7 +125,8 @@ theorem exists_tri {S K R : Type} [CommRing S] [Field K] [CommRing R] (ι : S �
       have e1 := hiK _ _ _ (tanLinG _ hfK _ (M.map ι) _ w (fun c => GlobalTheory.LatDRFree.comb_map t ι (hM c)) h1)
         (tanLinG _ hfK v T' cf w hT3 h2)
       have e2 : ∀ k, ι ((M * A.map ev) k i) = T'.mulVec cf k := fun k => by
-        rw [← e1, Matrix.mul_apply, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [← e1, Matrix.mul_apply, map_sum]
         simp only [map_mul]
         rfl
       obtain ⟨e3, e4⟩ := tri_mulVec hT' h4

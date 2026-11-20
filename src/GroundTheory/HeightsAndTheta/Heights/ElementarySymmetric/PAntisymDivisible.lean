@@ -153,7 +153,8 @@ lemma homogeneousComponent_mul_of_isHomogeneous {Δ : MvPolynomial σ ℝ} {D : 
     (hΔ : Δ.IsHomogeneous D) (l : MvPolynomial σ ℝ) (n : ℕ) :
     homogeneousComponent (D + n) (Δ * l) = Δ * homogeneousComponent n l := by
   conv_lhs => rw [← sum_homogeneousComponent l]
-  rw [Finset.mul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.mul_sum, map_sum]
   have key : ∀ m, homogeneousComponent (D + n) (Δ * homogeneousComponent m l) =
       if n = m then Δ * homogeneousComponent n l else 0 := by
     intro m
@@ -340,7 +341,8 @@ theorem AntisymDivisible.proof : AntisymDivisible.Statement := by
       c (τ, a) = c (τ, b) := by
     intro τ a b hab hbl
     have h := congrArg (AddMonoidAlgebra.coeff · (Finsupp.single (τ, a) 1)) (inv τ a b hab hbl)
-    rw [← hc, map_sum] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hc, map_sum] at h
     simp only [map_smul, rename_X] at h
     rw [coeff_lin, coeff_lin] at h
     simp only [Equiv.swap_apply_eq_iff, Equiv.swap_apply_left, Finset.sum_ite_eq',
@@ -349,7 +351,8 @@ theorem AntisymDivisible.proof : AntisymDivisible.Statement := by
   refine ⟨l₁, ⟨?_, ?_⟩, hP1⟩
   · exact homogeneousComponent_isHomogeneous 1 l
   · intro g hg
-    rw [← hc, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hc, map_sum]
     simp only [map_smul, rename_X]
     have hcg : ∀ w, c (g w) = c w := by
       rintro ⟨τ, a⟩

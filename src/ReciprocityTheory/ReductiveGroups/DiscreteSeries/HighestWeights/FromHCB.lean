@@ -60,7 +60,8 @@ lemma fh_not_cdom {Λ : Fin k → ℝ} {a b : Fin k} (hab : a < b) :
   have hL : Λ - (Λ + Pi.single a 1 - Pi.single b 1) = Pi.single b 1 - Pi.single a 1 := by abel
   have h1 := congrArg f hsum
   rw [hL, map_sub, hs, hs] at h1
-  simp only [map_sum, map_smul, Formalism.REAL.root, map_sub, hs, smul_eq_mul] at h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, Formalism.REAL.root, map_sub, hs, smul_eq_mul] at h1
   have hneg : ∑ x : Fin k, ∑ y : Fin k, (c x y : ℝ) * (((x : ℕ) : ℝ) - ((y : ℕ) : ℝ)) ≤ 0 := by
     refine Finset.sum_nonpos fun x _ => Finset.sum_nonpos fun y _ => ?_
     by_cases h0 : c x y = 0

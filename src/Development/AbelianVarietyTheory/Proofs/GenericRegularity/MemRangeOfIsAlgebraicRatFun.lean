@@ -249,7 +249,8 @@ theorem compNe_and_exists_fnAlgClosed : ∀ (E : Type) [Field E] [NumberField E]
       exact ((Algebra.IsIntegral.isIntegral (R := ℚ) (b j)).map c.F.val).isAlgebraic)
   refine ⟨c', fun z hz => ?_, fun c'' hle Z a ha => ?_⟩
   · have e := congrArg c.F.val (b.sum_repr ⟨z, hz⟩)
-    rw [map_sum] at e
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at e
     have e' : z = _ := e.symm
     rw [e']
     refine sum_mem fun j _ => ?_

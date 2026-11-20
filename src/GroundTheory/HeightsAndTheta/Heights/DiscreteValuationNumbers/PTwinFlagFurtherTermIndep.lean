@@ -45,7 +45,8 @@ theorem term_head {N r : ℕ} (l : Fin r) (α : Fin N →₀ ℕ) (β : Fin r �
     simp only [hgt, if_false, Finset.prod_const_one, one_mul, hnn, hn]
   unfold term
   rw [h1, h3, hn l]
-  simp only [map_mul, map_prod, map_pow, map_sum, rename_X, Sum.map_inl, Sum.map_inr]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_mul, map_prod, map_pow, map_sum, rename_X, Sum.map_inl, Sum.map_inr]
   ring
 
 theorem rename_monomial_head {N r : ℕ} (α : Fin N →₀ ℕ) (c : ℤ) :
@@ -77,7 +78,8 @@ theorem rename_divDiff_natAdd_monomial {N r : ℕ} (l : Fin r) (α : Fin N →�
       obtain ⟨μ, hμ, he⟩ := hmem
       exact Finset.mem_image.mpr ⟨μ, hμ, by rw [he, add_tsub_cancel_of_le hle]⟩
     · exact absurd rfl hν
-  rw [rename_monomial, ← hA, rename_divDiff_eq_sum (Fin.natAdd N l) _ hsub,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [rename_monomial, ← hA, rename_divDiff_eq_sum (Fin.natAdd N l) _ hsub,
     Finset.sum_image fun a _ b _ h => hinj h, rename_divDiff_eq_sum l Q subset_rfl, map_sum,
     Finset.mul_sum, rename_monomial_head]
   refine Finset.sum_congr rfl fun μ _ => ?_

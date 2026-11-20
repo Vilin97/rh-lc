@@ -32,7 +32,8 @@ theorem UpperTheory.cohomology_sum_bound :
   let F : Rep.{0} ℂ Γ ⥤ ModuleCat.{0} ℂ :=
     groupCohomology.cochainsFunctor ℂ Γ ⋙ HomologicalComplex.homologyFunctor (ModuleCat.{0} ℂ) (ComplexShape.up ℕ) q
   have hF : ∑ i, F.map (π i) ≫ F.map (ι i) = 𝟙 (F.obj A) := by
-    rw [← F.map_id, ← h, F.map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← F.map_id, ← h, F.map_sum]
     simp only [Functor.map_comp]
   change Module.rank ℂ (F.obj A) ≤ ∑ i, Module.rank ℂ (F.obj (B i))
   let φ : F.obj A →ₗ[ℂ] (∀ i, F.obj (B i)) := LinearMap.pi fun i => (F.map (π i)).hom

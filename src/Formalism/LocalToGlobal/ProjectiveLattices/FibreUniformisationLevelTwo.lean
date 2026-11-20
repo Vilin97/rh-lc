@@ -473,7 +473,8 @@ theorem fibTri_of {g : ℕ} (e : Fin g ≃ Σ τ : E →+* ℂ, Fin (Dw.mult τ)
     rw [h2] at hw0
     have h3 := derivAt_unique hTE hP' (hv' τ i) hw0
     refine ⟨cf, hcu, hct, ?_⟩
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [map_smul]
     exact h3
   obtain ⟨γ, hγ, b, hb, hx⟩ := hFb hMB hR k x.1 x'.1 x.2 x'.2 gam h hiso hlM hlA hrel htri'

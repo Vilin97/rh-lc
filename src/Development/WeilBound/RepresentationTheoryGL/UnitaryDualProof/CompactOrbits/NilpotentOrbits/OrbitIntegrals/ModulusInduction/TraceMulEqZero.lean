@@ -190,7 +190,8 @@ theorem continuous_piZ [CharZero k] (Z : Subalgebra k (Matrix (Fin n) (Fin n) k)
     have hs : ∀ i j, Matrix.single i j (x i j) = x i j • Matrix.single i j (1 : k) := by
       intro i j
       rw [Matrix.smul_single, smul_eq_mul, mul_one]
-    simp only [hs, map_sum, map_smul] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hs, map_sum, map_smul] at h
     exact h
   have hfun : piZ Z (n := n) = fun x => ∑ i, ∑ j, x i j • piZ Z (Matrix.single i j (1 : k)) := funext hrep
   rw [hfun]

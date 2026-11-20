@@ -94,7 +94,8 @@ theorem bcE_bijective (hm : m.IsBC) : Function.Bijective (bcE hm) := by
       simp only [G, bcE, liftSemi_tmul, co_smul_bc, ← TensorProduct.smul_tmul, ← TensorProduct.sum_tmul]
       rw [J.b.sum_repr]
   refine ⟨Function.LeftInverse.injective hG, fun d ↦ ⟨∑ ν, J.b ν ⊗ₜ co hm ν d, ?_⟩⟩
-  simp only [map_sum, bcE, liftSemi_tmul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, bcE, liftSemi_tmul]
   exact (eq_sum_co hm d).symm
 
 section Tensor
@@ -163,7 +164,8 @@ def jetEquiv (hm : m.IsBC) (hN : ∀ i j, N i * N j = 0) :
 
 theorem jetEquiv_tmul (hm : m.IsBC) (hN : ∀ i j, N i * N j = 0) (x : HdR X.A) :
     jetEquiv hm hN (1 ⊗ₜ x) = hm.bcMap x + ∑ i, J.t i • hm.bcMap (N i x) := by
-  simp only [jetEquiv, jetAut, LinearEquiv.trans_apply, LinearEquiv.ofLinear_apply, LinearEquiv.ofBijective_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [jetEquiv, jetAut, LinearEquiv.trans_apply, LinearEquiv.ofLinear_apply, LinearEquiv.ofBijective_apply,
     LinearMap.add_apply, Module.End.one_apply, nilK, LinearMap.sum_apply, LinearMap.smul_apply,
     LinearMap.baseChange_tmul, map_add, map_sum, map_smul, bcE, liftSemi_tmul, one_smul]
 
@@ -197,7 +199,8 @@ theorem exists_red_mem (hm : m.IsBC) {d : Crys J.κ (spMap J.π) X.A}
   | mem d hd =>
     obtain ⟨x, hx, hj⟩ := hd
     refine ⟨x, hx, fun c ↦ ?_⟩
-    rw [hj c, map_add, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hj c, map_add, map_sum]
     simp [jet_filtration_proj_section_eq_zero, JetRing.π_algebraMap]
   | zero => exact ⟨0, zero_mem _, fun c ↦ by simp⟩
   | add d₁ d₂ _ _ h₁ h₂ =>
@@ -245,7 +248,8 @@ theorem jetFil_summand_reduces : GlobalTheory.Published.GrothendieckDeformation 
     exact ⟨_, h⟩
   · refine ⟨jetEquiv hm hN' (1 ⊗ₜ y), Submodule.subset_span ⟨y, hy, (isJetElt_iff hm hN' y _).2 rfl⟩,
       (corr_iff hm _ _).2 fun c ↦ ?_⟩
-    rw [jetEquiv_tmul_apply, map_add, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [jetEquiv_tmul_apply, map_add, map_sum]
     simp [jet_filtration_proj_section_eq_zero, JetRing.π_algebraMap]
   · rintro ⟨d, hd, hc⟩
     obtain ⟨y', hy', e⟩ := exists_red_mem hm hd

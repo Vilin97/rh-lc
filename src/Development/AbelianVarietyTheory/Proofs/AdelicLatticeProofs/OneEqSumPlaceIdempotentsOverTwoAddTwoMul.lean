@@ -41,7 +41,8 @@ theorem one_eq_sum_singleV_add_two_mul : ∀ (F : Type) [Field F] [NumberField F
     · subst hw
       rw [evalV_singleV_same]; exact one_mem _
     · rw [evalV_singleV_ne F v w hw]; exact zero_mem _
-  · rw [map_mul, map_sub, map_one, map_sum, AlgHom.commutes]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_mul, map_sub, map_one, map_sum, AlgHom.commutes]
     by_cases hw : w ∈ hfin.toFinset
     · rw [Finset.sum_eq_single_of_mem w hw fun b _ hb => evalV_singleV_ne F b w hb.symm,
         evalV_singleV_same, sub_self, mul_zero]

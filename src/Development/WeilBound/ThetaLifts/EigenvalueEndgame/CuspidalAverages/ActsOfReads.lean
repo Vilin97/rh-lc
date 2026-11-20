@@ -327,7 +327,8 @@ theorem transv {g : UA σ W.J} (hg : g ∈ UAt σ W (evFin F v)) {x : Fin d → 
 omit h hd in
 theorem form_swap (hσ : ∀ x, σ (σ x) = x) {x z : Fin d → E} (e : form σ W.J z x = 0) : form σ W.J x z = 0 := by
   have a := congrArg σ e
-  simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, hJ, map_zero, Finset.mul_sum] at a ⊢
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, hJ, map_zero, Finset.mul_sum] at a ⊢
   rw [Finset.sum_comm] at a
   rw [← neg_eq_zero, ← a, ← Finset.sum_neg_distrib]
   refine Finset.sum_congr rfl fun _ _ => ?_

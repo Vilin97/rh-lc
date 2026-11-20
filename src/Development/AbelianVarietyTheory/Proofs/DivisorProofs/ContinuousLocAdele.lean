@@ -58,7 +58,8 @@ theorem mul_eq_locAdele {S₁ : Finset (InfinitePlace F)} {S₂ : Finset (Height
   · apply GlobalTheory.AdelicU.af_ext
     intro u
     change evalV F u (sndA F ε) * evalV F u (sndA F a) = _
-    simp only [locAdele, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [locAdele, map_sum]
     by_cases h : u ∈ S₂
     · rw [h3 u h, one_mul, Finset.sum_eq_single ⟨u, h⟩]
       · exact (GlobalTheory.AdelicU.evalV_singleFin_self u _).symm

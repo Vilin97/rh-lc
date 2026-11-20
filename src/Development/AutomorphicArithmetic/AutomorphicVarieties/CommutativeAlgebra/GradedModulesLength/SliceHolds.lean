@@ -41,7 +41,8 @@ private theorem degree_derivation_vanishes_on_homogeneous_ideal {O A K : Type} [
     ∀ a ∈ I, E a = 0 := by
   classical
   intro a ha
-  rw [← DirectSum.sum_support_decompose 𝒜 a, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← DirectSum.sum_support_decompose 𝒜 a, map_sum]
   refine Finset.sum_eq_zero fun i _ => ?_
   rw [hE i _ (SetLike.coe_mem _), hξ _ (hI i ha), mul_zero]
 

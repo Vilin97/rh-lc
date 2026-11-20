@@ -814,7 +814,8 @@ variable {K0 K : Type} [Field K0] [NumberField K0] [Field K] [NumberField K] [Al
 
 theorem iota_eq_sum (ι : Z0 →ₗ[K0] (Fin n → K)) {d : ℕ} (b : Basis (Fin d) K0 Z0) (z : Z0) :
     ι z = ∑ i, algebraMap K0 K (b.repr z i) • ι (b i) := by
-  conv_lhs => rw [← b.sum_repr z, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [← b.sum_repr z, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_smul, algebraMap_smul]
 

@@ -90,7 +90,8 @@ theorem emb_hform (H : Matrix (Fin n) (Fin n) E) (φ : E →+* ℂ) (x : Fin n �
       star (fun i => φ (x i)) ⬝ᵥ (H.map φ).mulVec (fun i => φ (x i)) := by
   have hs : ∀ z : E, φ ((sg E : E →ₐ[Fr E] E) z) = star (φ z) := fun z =>
     IsCMField.complexEmbedding_complexConj E φ z
-  simp only [hform, map_sum, map_mul, dotProduct, Matrix.mulVec, Finset.mul_sum, Pi.star_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hform, map_sum, map_mul, dotProduct, Matrix.mulVec, Finset.mul_sum, Pi.star_apply,
     Matrix.map_apply, mul_assoc]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   erw [hs]

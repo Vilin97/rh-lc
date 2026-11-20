@@ -9,7 +9,8 @@ theorem UpperTheory.Gal.crystallineComparison.ptsProd_of :
   intro B B' _ _ ρ ι J _ _ I _ a v
   have hf : ∀ c : ι → B, Polynomial.map (MvPolynomial.map ρ) (form c) = form (fun k => ρ (c k)) := by
     intro c
-    simp [form, Polynomial.map_sub, Polynomial.map_sum, Polynomial.map_mul, Polynomial.map_C]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [form, Polynomial.map_sub, Polynomial.map_sum, Polynomial.map_mul, Polynomial.map_C]
   have key : ∀ (m : J → Multiset (ι → B')) (s : Finset J),
       (Multiset.map form (∑ j ∈ s, a j • m j)).prod = ∏ j ∈ s, (Multiset.map form (m j)).prod ^ a j := by
     intro m s

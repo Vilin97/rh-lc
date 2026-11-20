@@ -31,7 +31,8 @@ theorem fderiv_eq_sum_wirt' (h : (Φ → ℂ) → ℂ) (y u : Φ → ℂ) :
     rw [Finset.sum_add_distrib, Finset.sum_ite_eq, Finset.sum_ite_eq]
     simp [Complex.re_add_im]
   conv_lhs => rw [hu]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun τ _ => ?_
   rw [map_add, map_smul, map_smul]
   simp only [wirt, Bool.false_eq_true, if_false, if_true, real_smul]

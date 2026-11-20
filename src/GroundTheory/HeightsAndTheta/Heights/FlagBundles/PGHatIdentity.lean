@@ -71,7 +71,8 @@ theorem integral_eval_pderiv_snd (P : MvPolynomial (Fin 2) ℝ) (s a b : ℝ) :
 
 theorem gKernel_eval_diag (k : ℕ) (c : ℝ) : eval ![c, c] (gKernel ℝ k) = 0 := by
   unfold gKernel
-  simp only [map_sum, map_sub, map_mul, map_pow, eval_X, Matrix.cons_val_zero,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_sub, map_mul, map_pow, eval_X, Matrix.cons_val_zero,
     Matrix.cons_val_one]
   refine Finset.sum_eq_zero fun j hj => ?_
   have hj' : j < k := Finset.mem_range.1 hj

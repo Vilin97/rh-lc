@@ -33,7 +33,8 @@ theorem sgn_sq {m : ℕ} (τ : Equiv.Perm (Fin m)) :
 theorem pm_alt_first {m k : ℕ} (τ : Equiv.Perm (Fin m)) (hτ : τ ∈ firstG m k) (ξ : TV n M (Fin m)) :
     pm τ (alt (firstG m k) ξ) = ((Equiv.Perm.sign τ : ℤ) : ℂ) • alt (firstG m k) ξ := by
   rw [mem_firstG] at hτ
-  simp only [alt, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [alt, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, Finset.smul_sum]
   refine Finset.sum_equiv (Equiv.mulLeft τ) ?_ ?_
   · intro σ
     simp only [mem_firstG, Equiv.coe_mulLeft, Equiv.Perm.coe_mul, Function.comp_apply]
@@ -172,7 +173,8 @@ theorem outer {m k : ℕ} (hk : k < m) (X : Submodule ℂ (TV n M (Fin m))) (hP 
   have hπ2 : π * π = 1 := Equiv.swap_mul_self k' i
   have hcomm : ∀ η : TV n M (Fin m), alt (firstG m k) (pm π η) = pm π (alt (firstG m k) η) := by
     intro η
-    simp only [alt, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [alt, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul]
     refine Finset.sum_congr rfl fun σ hσ => ?_
     rw [mem_firstG] at hσ
     congr 1
@@ -190,7 +192,8 @@ theorem outer {m k : ℕ} (hk : k < m) (X : Submodule ℂ (TV n M (Fin m))) (hP 
     refine Finset.sum_congr rfl fun j hj => ?_
     have hne : j ≠ k' := by
       intro h; rw [h] at hj; simp [k'] at hj
-    rw [map_sum, ← Finset.sum_neg_distrib]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, ← Finset.sum_neg_distrib]
     refine Finset.sum_congr rfl fun σ _ => ?_
     rw [Equiv.Perm.sign_mul, Equiv.Perm.sign_swap hne, pm_mul, map_smul, Module.End.mul_apply]
     simp
@@ -198,7 +201,8 @@ theorem outer {m k : ℕ} (hk : k < m) (X : Submodule ℂ (TV n M (Fin m))) (hP 
   have hA := h0 (pm π ξ) (hP π ξ hξ)
   rw [hdec, hcomm, sub_eq_zero] at hA
   have h2 := congrArg (pm π) hA
-  rw [← Module.End.mul_apply, ← pm_mul, hπ2, pm_one, Module.End.one_apply, map_sum] at h2
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Module.End.mul_apply, ← pm_mul, hπ2, pm_one, Module.End.one_apply, map_sum] at h2
   conv_rhs => rw [h2]
   refine Finset.sum_congr rfl fun j hj => ?_
   simp only [Finset.mem_filter, Finset.mem_univ, true_and] at hj
@@ -243,7 +247,8 @@ theorem om_alt {m : ℕ} (E : Fin n → Fin n → Module.End ℂ M) (hT : ∀ (�
       pm σ * Om E p = (Om E (σ p) * pm σ : Module.End ℂ (TV n M (Fin m)))) (k : ℕ) (ξ : TV n M (Fin m)) :
     alt (firstG m k) (∑ j ∈ Finset.univ.filter (fun j : Fin m => (j : ℕ) < k), Om E j ξ) =
       ∑ j ∈ Finset.univ.filter (fun j : Fin m => (j : ℕ) < k), Om E j (alt (firstG m k) ξ) := by
-  simp only [alt, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [alt, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul]
   conv_lhs => rw [Finset.sum_comm]
   conv_rhs => rw [Finset.sum_comm]
   apply Finset.sum_congr rfl

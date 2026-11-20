@@ -97,7 +97,8 @@ theorem ev₀_vv (l : Fin (N + 1)) : ev₀ ι g₀ hy (vv ι g₀ hg₀ hy l) = 
   rw [map_sub, ev₀_algebraMap, sub_self]
 
 theorem ev₀_sum (c : Fin (N + 1) → ℂ) : ev₀ ι g₀ hy (∑ l, c l • vv ι g₀ hg₀ hy l) = 0 := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_eq_zero fun l _ => by rw [ev₀_smul, ev₀_vv, mul_zero]
 
 theorem mkQ_eq_mkQ (a b : Sec p (fOpen ι g₀)) :
@@ -117,7 +118,8 @@ theorem Lm_apply (hp : ι ≫ PSpace.str ℂ N = p) (c : Fin (N + 1) → ℂ) :
     fRatio_linear X p N ι hp g₀ hg₀ c (lin_mem c)
   rw [hfr]
   congr 1
-  simp only [vv, smul_sub, Finset.sum_sub_distrib, map_sum, ev₀_smul, map_mul, Algebra.smul_def,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [vv, smul_sub, Finset.sum_sub_distrib, map_sum, ev₀_smul, map_mul, Algebra.smul_def,
     ev₀_algebraMap, mul_sub]
 
 end Cot

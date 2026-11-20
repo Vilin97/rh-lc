@@ -181,7 +181,8 @@ theorem nsmul_coprime_bijective_curves [CharZero C] (G : LogFGL v d) {p : ℕ} (
         hK0 b]
     · obtain ⟨s, rfl⟩ := exists_eq_single_of_degree_eq_one α hd
       rw [hK]
-      simp only [map_sub, map_sum, MvPowerSeries.coeff_smul, ptNs_lin, MvPowerSeries.coeff_X,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sub, map_sum, MvPowerSeries.coeff_smul, ptNs_lin, MvPowerSeries.coeff_X,
         Finsupp.single_left_inj one_ne_zero, hMab, smul_eq_mul, mul_ite, mul_one, mul_zero]
       simp [Finset.sum_ite_eq, Finset.sum_ite_eq', eq_comm]
   have hf : PTGood v gb := isCurve_iff_good.mp hgb

@@ -61,7 +61,8 @@ theorem lowerUni_mem_range {F Ω : Type} [Field F] [Field Ω] [Algebra F Ω] {n 
     ext a b
     show ∑ l, algebraMap F Ω (M a l) * algebraMap F Ω (π (C l b)) =
       algebraMap F Ω (π (∑ l, algebraMap F Ω (M a l) * C l b))
-    rw [map_sum π, map_sum (algebraMap F Ω)]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum π, map_sum (algebraMap F Ω)]
     refine Finset.sum_congr rfl fun l _ => ?_
     rw [← Algebra.smul_def (M a l) (C l b), map_smul, smul_eq_mul, map_mul]
   have hC' : C'.IsUpperTriangular := fun a b hab => by

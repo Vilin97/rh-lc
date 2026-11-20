@@ -40,7 +40,8 @@ theorem extMap_liftOld_of_isWeightedHomogeneous {f : MvPolynomial (Coord n) ℤ}
   rw [h]
   conv_lhs => rw [f.as_sum]
   conv_rhs => rw [f.as_sum]
-  rw [map_sum, map_sum, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun d hd ↦ ?_
   rw [eval₂Hom_monomial_blockVal, hf (mem_support_iff.mp hd)]
 
@@ -55,7 +56,8 @@ theorem liftOld_mem_extIdeal {f : MvPolynomial (Coord n) ℤ} (hf : f ∈ P.idea
   rw [extIdeal, RingHom.mem_ker]
   conv_lhs => rw [← sum_weightedHomogeneousComponent (coordDeg n) f,
     finsum_eq_sum _ (weightedHomogeneousComponent_finsupp f)]
-  rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum]
   refine Finset.sum_eq_zero fun m _ ↦ ?_
   rw [D.extMap_liftOld_of_isWeightedHomogeneous (weightedHomogeneousComponent_isWeightedHomogeneous m f),
     (P.mkF_eq_zero_iff _).mpr (P.homogeneous f hf m), map_zero, zero_mul]

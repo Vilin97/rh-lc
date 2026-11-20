@@ -166,7 +166,8 @@ theorem flip_fix : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam D)
     intro x hx hw hxx
     rw [flipElt_eq]
     change heisL V W ψ _ (∑ y ∈ Y, heisO ψ V W y f₀) = _
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine sum_reindex Y _ _ (fun y y' => y + (cA D eT * incA D ((m : D.host.E)⁻¹)) • x - y' ∈
         latO V W (ΛV : Set (Fin V.rank → D.host.E)) (ΛW : Set (Fin W.rank → D.host.E)) (fun _ => True))
       (fun y hy => ?_) (fun y₁ h₁ y₂ h₂ z _ r₁ r₂ => ?_)

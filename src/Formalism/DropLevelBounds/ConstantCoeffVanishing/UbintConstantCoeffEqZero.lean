@@ -34,7 +34,8 @@ theorem ubint_mvExp_sum [CharZero C] {ι : Type} (s : Finset ι) (f : ι → MvP
   | @insert a s ha ih =>
     have hs : ∀ i ∈ s, constantCoeff (f i) = 0 := fun i hi => hf i (Finset.mem_insert_of_mem hi)
     have h0 : constantCoeff (∑ i ∈ s, f i) = 0 := by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       exact Finset.sum_eq_zero hs
     rw [Finset.sum_insert ha, Finset.prod_insert ha,
       expSeriesAdd C σ (f a) _ (hf a (Finset.mem_insert_self a s)) h0, ih hs]

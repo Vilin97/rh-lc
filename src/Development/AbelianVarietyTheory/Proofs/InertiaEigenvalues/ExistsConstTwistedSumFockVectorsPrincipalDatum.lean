@@ -297,7 +297,8 @@ theorem vec_sum {B : Base S T} (hB : B.Good) (hS : S.SigOK) {ψ : Twist D Circle
     funext x
     rw [datum_sum B hQ g hk inj surj x, Finset.sum_apply]
     rfl
-  conv_rhs => rw [Base.vecFlat, Base.vecAt, Frame.vec, e, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_rhs => rw [Base.vecFlat, Base.vecAt, Frame.vec, e, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [om_princ_move hB hS hψ hQ hω (hg i) (parLev_St (lev_le_parLev (hk i))), smul_smul, map_smul, mul_one, Units.val_mul]
 

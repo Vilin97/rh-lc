@@ -27,7 +27,8 @@ private theorem UpperTheory.ConvolutionTheory.Dp.infZc_coeff {M : Type*} [AddCom
     apply Polynomial.funext
     intro u
     have := congrArg f (h u)
-    simp only [map_sum, map_smul, map_zero, smul_eq_mul] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, map_zero, smul_eq_mul] at this
     simp only [Polynomial.eval_finsetSum, Polynomial.eval_monomial, Polynomial.eval_zero]
     rw [← this]
     exact Finset.sum_congr rfl fun j _ => mul_comm _ _
@@ -51,7 +52,8 @@ theorem UpperTheory.ConvolutionTheory.Dp.infZc :
   have key : ∀ (u : ℂ) (φ : GlobalTheory.CuspRep.Sm E n), GlobalTheory.CuspRep.cap τ u φ =
       u ^ n • φ + ∑ i : Fin n, u ^ (n - (i + 1)) • Cm.uC E n (UpperTheory.ConvolutionTheory.zc τ i) φ := fun u φ => by
     rw [← Cm.uC_capC, hc]
-    simp only [map_add, map_smul, map_one, map_sum, LinearMap.add_apply, LinearMap.smul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_add, map_smul, map_one, map_sum, LinearMap.add_apply, LinearMap.smul_apply,
       LinearMap.sum_apply, Module.End.one_apply]
   change (m.card = n ∧ ∀ u : ℂ, ∀ φ ∈ π.V, GlobalTheory.CuspRep.cap τ u φ = (m.map fun x => u + x).prod • φ) ↔ _
   refine and_congr_right fun hm => ⟨fun h i φ hφ => ?_, fun h u φ hφ => ?_⟩

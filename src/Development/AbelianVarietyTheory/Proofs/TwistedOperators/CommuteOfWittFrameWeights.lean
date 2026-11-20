@@ -164,14 +164,16 @@ theorem GlobalTheory.Cusp.WeightCommute.commute_of_weights : ∀ (D : D7) (V : H
       ∑ i ∈ S, V.hT (xv i) v • yv i, Submodule.sum_mem _ (fun i hi => Submodule.smul_mem _ _ (my i hi)),
       v - (∑ i ∈ S, V.hT (yv i) v • xv i) - ∑ i ∈ S, V.hT (xv i) v • yv i, genX _ ?_, genY _ ?_, by abel⟩
     · intro j hj
-      rw [map_sub, map_sub, map_sum, map_sum,
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, map_sub, map_sum, map_sum,
         Finset.sum_eq_zero (fun i hi => by rw [map_smul, pxx i hi j hj, smul_zero]),
         Finset.sum_eq_single j (fun i hi hij => by rw [map_smul, pxy i hi j hj, if_neg hij, smul_zero])
           (fun h => absurd hj h),
         map_smul, pxy j hj j hj, if_pos rfl, smul_eq_mul, mul_one]
       simp
     · intro j hj
-      rw [map_sub, map_sub, map_sum, map_sum,
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, map_sub, map_sum, map_sum,
         Finset.sum_eq_single j (fun i hi hij => by rw [map_smul, pyx i hi j hj, if_neg hij, smul_zero])
           (fun h => absurd hj h),
         Finset.sum_eq_zero (fun i hi => by rw [map_smul, pyy i hi j hj, smul_zero]),

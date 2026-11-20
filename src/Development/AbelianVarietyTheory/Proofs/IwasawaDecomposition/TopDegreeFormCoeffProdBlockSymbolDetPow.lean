@@ -175,7 +175,8 @@ theorem tc_prod_rename (f : ι → MvPolynomial (γ × γ) ℂ) :
         = ∏ τ, ∑ d ∈ (f τ).support, monomial (d.mapDomain (emb τ)) (AddMonoidAlgebra.coeff (f τ) d) := by
           refine Finset.prod_congr rfl fun τ _ => ?_
           conv_lhs => rw [(f τ).as_sum]
-          rw [map_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [map_sum]
           simp only [rename_monomial]
       _ = _ := by
           rw [Finset.prod_univ_sum]
@@ -210,7 +211,8 @@ theorem blockSym_eq {ι : Type} [Fintype ι] {p q n : ℕ} (h : Fintype.card (ι
     GlobalTheory.DomainDens.blockSym h τ = (symMat p q).map
       (rename (Prod.map (Fintype.equivFinOfCardEq h) (Fintype.equivFinOfCardEq h) ∘ emb τ)) := by
   ext i j
-  simp [GlobalTheory.DomainDens.blockSym, symMat, map_sum, rename_X, emb]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [GlobalTheory.DomainDens.blockSym, symMat, map_sum, rename_X, emb]
 
 end GlobalTheory.BlockTop
 

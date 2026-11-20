@@ -111,7 +111,8 @@ theorem killFin3 (hU : Unimod) (hT : ThetaBasic) (hP : PureAct) (hL : LocCpt) (h
         _ = starRingEnd ℂ (w i) * β sQ y := by
             rw [LinearMap.map_smulₛₗ, LinearMap.smul_apply, iso (k i) (hw i).1, smul_eq_mul]
     have e3 : β sQ z = (∑ i, w i * starRingEnd ℂ (w i)) * β sQ y := by
-      simp only [z, map_sum, map_smul, hk, smul_eq_mul, Finset.sum_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [z, map_sum, map_smul, hk, smul_eq_mul, Finset.sum_mul]
       exact Finset.sum_congr rfl fun i _ => by ring
     rw [h0] at e3
     have w0 : w 0 ≠ 0 := fun e => s0 (by

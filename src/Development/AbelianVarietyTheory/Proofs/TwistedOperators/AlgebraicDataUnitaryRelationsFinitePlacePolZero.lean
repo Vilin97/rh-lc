@@ -104,7 +104,8 @@ theorem polZero_relV : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Num
       · rw [Function.update_of_ne (hvT w hw)]; exact (hφ i).2.2 w (hT₀ w hw)
     · simp only [Fin.append_right]
       exact ⟨neg_mem (hφ i).1, (hφ i).2.1, fun w hw => (hφ i).2.2 w (hT₀ w hw)⟩
-  · rw [map_sum, Fin.sum_univ_add]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum, Fin.sum_univ_add]
     simp only [Fin.append_left, Fin.append_right, RelV.pure_neg, Finset.sum_neg_distrib, ← sub_eq_add_neg]
     congr 1
     refine Finset.sum_congr rfl fun i _ => ?_

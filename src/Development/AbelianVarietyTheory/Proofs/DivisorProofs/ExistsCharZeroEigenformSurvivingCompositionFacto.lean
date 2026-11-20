@@ -87,7 +87,8 @@ theorem hecke_compat (hH : F.IsHecke lam jK Gm) (hHm : F.IsHecke mu jKm (NablaT 
     simp only [Submodule.coe_add, Pi.add_apply, map_add]
     rw [hp x z hxz g, hq x z hxz g]
   | mul_X p i hp =>
-    rw [mul_comm, mul_smul, mul_smul, hHm.2, hH.2, map_smul, hψs, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [mul_comm, mul_smul, mul_smul, hHm.2, hH.2, map_smul, hψs, map_sum, map_sum]
     congr 1
     exact Finset.sum_congr rfl fun s _ => hp x z hxz (g * s)
 
@@ -203,7 +204,8 @@ theorem jmap_equiv (hHm : F.IsHecke mu jKm (NablaT F.O N mu)) (b : NablaT F.O N 
   funext g
   show b ((((MvPolynomial.X i : F.T) • x : Forms F.O (A := alg F.O N mu) F.Γ jKm (NablaT F.O N mu)) : F.G → NablaT F.O N mu) g) =
     F.emb (F.cst i) • ∑ s ∈ F.tr i, b ((x : F.G → NablaT F.O N mu) (g * s))
-  rw [hHm.2 i x g, map_smulₛₗ, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hHm.2 i x g, map_smulₛₗ, map_sum]
 
 theorem eig_of_ann (hOk : F.Ok) (hJm : F.IsJ mu jKm) (hHm : F.IsHecke mu jKm (NablaT F.O N mu))
     (b : NablaT F.O N mu →ₛₗ[F.emb] NablaT (PadicAlgCl l) N mu) (hbi : Function.Injective b)

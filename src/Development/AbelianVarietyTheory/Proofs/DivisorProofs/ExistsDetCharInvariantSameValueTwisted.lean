@@ -29,7 +29,8 @@ theorem colSub_totalDegree_le {ι : Type} [Fintype ι] {d a : ℕ} (g : ι → M
   classical
   unfold colSub
   conv_lhs => rw [P.as_sum]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine totalDegree_finsetSum_le fun s hs => ?_
   rw [aeval_monomial]
   refine (totalDegree_mul _ _).trans ?_

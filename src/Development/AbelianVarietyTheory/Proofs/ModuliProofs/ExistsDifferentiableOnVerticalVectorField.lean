@@ -77,7 +77,8 @@ private theorem clm_apply_eq_sum_single_mul {g : ℕ} (L : (Fin g → ℂ) →L[
     ext j
     simp [Finset.sum_apply, Pi.single_apply]
   conv_lhs => rw [hv]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [map_smul, smul_eq_mul, mul_comm]
 

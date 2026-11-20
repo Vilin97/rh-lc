@@ -371,7 +371,8 @@ theorem mirabolicLevel_maps_baseLattice {k : GL (Fin n) (E ⊗[F] Formalism.L2.H
     rw [AddSubmonoidClass.coe_finsetSum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [← hu j]; rfl
-  · rw [map_sum, Finset.sum_eq_single (lastIdx n)]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum, Finset.sum_eq_single (lastIdx n)]
     · rw [map_mul, huP P hP, mul_zero]
     · intro j _ hj
       rw [map_mul, ← hr P, hm P hP j, if_neg hj, zero_mul]

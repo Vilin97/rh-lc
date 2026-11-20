@@ -56,7 +56,8 @@ theorem first_coordinate_admissible {B : Base F E} {n d n₁ d₁ : ℕ} {X : Sp
   have h2 : ∀ k, (LinearMap.proj 0 : Fn F n₁ d₁ →ₗ[ℂ] ℂ) (e (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure f (φ k))) = a k * δ (ei f) := fun k => by
     rw [hloc f (φ k) (hφSB k) (hφvac k), mul_comm]
     rfl
-  simp only [LinearMap.comp_apply, h1, map_sum, map_smul, h2, FunLike.coe_sum, Finset.sum_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [LinearMap.comp_apply, h1, map_sum, map_smul, h2, FunLike.coe_sum, Finset.sum_apply,
     FunLike.coe_smul, Pi.smul_apply, ContinuousLinearMap.coe_comp, Function.comp_apply, smul_eq_mul, mul_assoc]
 
 variable {n d d₁ d₂ : ℕ} {X : Spc F E n} {W : Spc F E d} {W₁ : Spc F E d₁} {V₁ : Spc F E d₂}

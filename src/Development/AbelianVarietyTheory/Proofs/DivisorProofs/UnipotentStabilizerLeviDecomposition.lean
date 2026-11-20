@@ -111,7 +111,8 @@ theorem incV_vecMul {m n : ℕ} (v : Fin m → E) (M : Matrix (Fin m) (Fin n) E)
   funext j; exact (RingHom.map_vecMul (inclR (F := F) (AF F)) M v j).symm
 
 theorem incV_dot {n : ℕ} (u w : Fin n → E) : incV F u ⬝ᵥ incV F w = inclR (F := F) (AF F) (u ⬝ᵥ w) := by
-  simp only [incV, dotProduct, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [incV, dotProduct, map_sum, map_mul]
 
 theorem incM_mul {m n k : Type} [Fintype n] (M : Matrix m n E) (N : Matrix n k E) :
     incM F M * incM F N = incM F (M * N) := (Matrix.map_mul (f := inclR (F := F) (AF F))).symm

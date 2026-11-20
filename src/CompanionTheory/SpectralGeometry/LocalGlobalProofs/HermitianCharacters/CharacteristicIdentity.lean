@@ -83,7 +83,8 @@ theorem eq_zero_of_eval (P : B[X]) (h : ∀ u : ℂ, P.eval (algebraMap ℂ B u)
     apply Polynomial.funext
     intro u
     have := congrArg ℓ (h u)
-    rw [eval_eq_sum, Polynomial.sum, map_sum, map_zero] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [eval_eq_sum, Polynomial.sum, map_sum, map_zero] at this
     rw [eval_zero, ← this, Polynomial.eval_finsetSum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [← map_pow, ← Algebra.commutes, ← Algebra.smul_def, map_smul, eval_monomial, smul_eq_mul,

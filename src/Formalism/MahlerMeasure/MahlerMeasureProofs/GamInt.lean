@@ -867,7 +867,8 @@ theorem aeval_expand (LL : Letters (N + 1)) (ρ : Fin r) (f : MvPolynomial (Fin 
     aeval (freezeSub p LL ρ) f = ∑ μ ∈ f.support,
       C (AddMonoidAlgebra.coeff f μ) * ∏ v : Fin (N + 1) × Fin r, freezeSub p LL ρ v ^ μ v := by
   conv_lhs => rw [f.as_sum]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   apply sum_congr rfl
   intro μ _
   rw [aeval_monomial, Finsupp.prod_fintype _ _ (fun _ => pow_zero _), MvPolynomial.algebraMap_eq]
@@ -1441,7 +1442,8 @@ theorem fock_F_pow_expand (hy : ∀ c ∈ univ.erase ρ, w c ≠ e ρ ∧ e c �
   apply sum_congr rfl; intro a' _
   rw [fock_smul_left, fock_smul_right, FT_pow_X_pow_mul w e (e ρ) _ hy, FT_pow_X_pow_mul w e (e ρ) _ hy]
   conv_lhs => rw [((FT w e (univ.erase ρ) ^ (j - a)) G).as_sum, ((FT w e (univ.erase ρ) ^ (j - a')) G').as_sum]
-  rw [mul_sum, mul_sum, map_sum, map_sum, fock_sum_left, mul_sum, mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [mul_sum, mul_sum, map_sum, map_sum, fock_sum_left, mul_sum, mul_sum]
   apply sum_congr rfl; intro β _
   rw [fock_sum_right, mul_sum, mul_sum]
   apply sum_congr rfl; intro γ _

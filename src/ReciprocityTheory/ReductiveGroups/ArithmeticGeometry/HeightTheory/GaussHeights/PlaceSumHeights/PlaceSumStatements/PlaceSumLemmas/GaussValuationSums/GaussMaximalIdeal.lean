@@ -121,7 +121,8 @@ theorem gauss_clear (p : KTp K D N) :
     exact RingHom.mem_rangeS.mp (hb _ (Finset.mem_image_of_mem _ hv))
   choose! g hg using hint_r
   refine ⟨∑ v ∈ p.support, MvPolynomial.monomial v (g v), b, nonZeroDivisors.coe_ne_zero b, ?_⟩
-  rw [ReciprocityTheory.ChartRestriction.G.T0.OTtoKT, map_sum, MvPolynomial.map_C]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [ReciprocityTheory.ChartRestriction.G.T0.OTtoKT, map_sum, MvPolynomial.map_C]
   conv_rhs => rw [p.as_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun v hv => ?_
   rw [MvPolynomial.map_monomial, MvPolynomial.C_mul_monomial, hg v hv, Algebra.smul_def]

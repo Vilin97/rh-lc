@@ -222,7 +222,8 @@ theorem exists_sys (d : Dat S n) {C : ℝ} (hC : 0 ≤ C) :
         ∑ k ∈ Finset.range (n + 1), u ^ (n - k) •
           cmp d hC (MvPolynomial.aeval X (MvPolynomial.esymm (Fin n) ℂ k) • φ) := fun u => by
       have e1 : (((∑ k ∈ Finset.range (n + 1), u ^ (n - k) • z τ k) • φ : bsp S n hC) : Sm E n) = cap τ u φ := by
-        rw [← uC_capC, ((zSpec E) n τ).2 u, map_sum, Finset.sum_smul, Submodule.coe_sum, LinearMap.sum_apply]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [← uC_capC, ((zSpec E) n τ).2 u, map_sum, Finset.sum_smul, Submodule.coe_sum, LinearMap.sum_apply]
         refine Finset.sum_congr rfl fun k _ => ?_
         rw [smul_assoc, Submodule.coe_smul, hz, map_smul, LinearMap.smul_apply]
       have e2 := ofFn_rel n (fun i => algebraMap ℂ A u + X i) (fun i : Fin n =>
@@ -232,7 +233,8 @@ theorem exists_sys (d : Dat S n) {C : ℝ} (hC : 0 ≤ C) :
             LinearMap.add_apply, Module.algebraMap_end_apply, add_assoc]) φ
       have e3 := compCap E S n d φ τ u φ.2.1.toUmg
       rw [← e1, ← e2, ← hc, ← hc, prod_add_esymm] at e3
-      simpa only [Finset.sum_smul, smul_assoc, map_sum, map_smul] using e3
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa only [Finset.sum_smul, smul_assoc, map_sum, map_smul] using e3
     have e : MvPolynomial.aeval (fun q : (E →+* ℂ) × Fin n => algebraMap ℂ A (d.lamR q) + I (d.idx q.2)) (blockE (τ, i)) =
         MvPolynomial.aeval X (MvPolynomial.esymm (Fin n) ℂ (i + 1)) := by
       rw [blockE, MvPolynomial.aeval_rename]; rfl
@@ -245,7 +247,8 @@ theorem exists_sys (d : Dat S n) {C : ℝ} (hC : 0 ≤ C) :
     simp only [mul_sub, Finset.sum_sub_distrib, this, sub_self]
   · have hk' : k.1 ∉ S := hk
     funext x
-    rw [dif_pos hk', hc, hH', compHecke E S n d φ k.1 (k.2 + 1) x φ.2.1.toUmg φ.2.2 hk' k.2.2, Dat.hEP, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [dif_pos hk', hc, hH', compHecke E S n d φ k.1 (k.2 + 1) x φ.2.1.toUmg φ.2.2 hk' k.2.2, Dat.hEP, map_sum,
       Finset.sum_smul, map_sum, Finset.sum_apply]
     refine Finset.sum_congr rfl fun a _ => ?_
     have e : ∀ (v : Fin d.len → ℝ) (c : ℂ), lift I t (AddMonoidAlgebra.single v (MvPolynomial.C c)) =

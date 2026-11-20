@@ -61,7 +61,8 @@ theorem fIwasawa_tri_succ_of_max_pivot (hσ : ∀ x, σ (σ x) = x) (hσv : ∀ 
       ring
   have hS : σ S = S := by
     rw [hSeq]
-    simp only [fIwasawaH, map_sum, map_mul, hσ]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [fIwasawaH, map_sum, map_mul, hσ]
     exact Fintype.sum_equiv Fin.revPerm _ _ (fun j => by
       simp only [Fin.revPerm_apply, Fin.rev_rev]
       ring)

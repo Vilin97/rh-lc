@@ -32,7 +32,8 @@ theorem _root_.GlobalTheory.WachTie.exists_invariant_basis : ∀ {G : Type} [Gro
     simp [avg, LinearMap.sum_apply]
   have hinv : ∀ g ∈ W.DelF, ∀ x, W.γD T g (avg x) = avg x := by
     intro g hg x
-    rw [havg, map_smul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [havg, map_smul, map_sum]
     congr 1
     simp_rw [← W.γD_mul T]
     conv_rhs => rw [← himage g hg]

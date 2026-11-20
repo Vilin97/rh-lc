@@ -35,7 +35,8 @@ lemma orb_homog (z : (Σ k, ι k) → ℂ) (a : K → ℕ) (s : MvPolynomial (Σ
       ∏ k, (X k : MvPolynomial K ℂ) ^ a k := by
   conv_lhs => rw [s.as_sum]
   conv_rhs => rw [s.as_sum]
-  simp only [map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl (fun d hd => ?_)
   have hw : Finsupp.weight (blockWeight ι) d = a := hs (mem_support_iff.mp hd)
   simp only [orb, coe_eval₂Hom, eval₂_monomial, map_monomial, eval_monomial, mul_pow,

@@ -27,7 +27,8 @@ theorem alg_sum {Γ₀ R : Type} [CommRing Γ₀] [CommRing R] {g n : ℕ} (κ :
     (C : Matrix (Fin n) (Fin n) R) (X Z : Fin g → Γ₀) :
     ∑ a, ∑ b, κ (C a b) * (∑ c', κ (P c' b) * X c') * ∑ c, κ (P c a) * Z c =
       ∑ c, ∑ c', κ ((P * C * Pᵀ) c c') * X c' * Z c := by
-  simp only [Matrix.mul_apply, Matrix.transpose_apply, map_sum, map_mul, Finset.sum_mul, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mul_apply, Matrix.transpose_apply, map_sum, map_mul, Finset.sum_mul, Finset.mul_sum]
   calc ∑ a, ∑ b, ∑ c, ∑ c', κ (C a b) * (κ (P c' b) * X c') * (κ (P c a) * Z c)
       = ∑ b, ∑ a, ∑ c, ∑ c', κ (C a b) * (κ (P c' b) * X c') * (κ (P c a) * Z c) := Finset.sum_comm
     _ = ∑ b, ∑ c, ∑ c', ∑ a, κ (C a b) * (κ (P c' b) * X c') * (κ (P c a) * Z c) :=

@@ -49,7 +49,8 @@ theorem flag_eq_zero {Ω : Type*} [Field Ω] {E : Type*} [AddCommGroup E] [Modul
     refine e.ext fun i => ?_
     have key := Fintype.linearIndependent_iff.1 ht (fun i => θ (e i)) (by
       rw [← h0]
-      simp only [hθe, Algebra.smul_def, map_sum, Finset.sum_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hθe, Algebra.smul_def, map_sum, Finset.sum_mul]
       rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun j _ => ?_
       simp only [flagCoord]

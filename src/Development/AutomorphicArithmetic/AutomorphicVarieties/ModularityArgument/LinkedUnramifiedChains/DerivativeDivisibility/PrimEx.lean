@@ -227,7 +227,8 @@ private theorem finite_setOf_nat_not_primitive_element {Λ R : Type} [CommRing �
   set t : R := ∑ i : Fin r, (s : R) ^ (i : ℕ) * b i with ht
   have hsum : ∀ χ : A →ₐ[L] Ω, χ (ι t) = ∑ i, χ (ι (b i)) * (s : Ω) ^ (i : ℕ) := by
     intro χ
-    simp only [ht, map_sum, map_mul, map_pow, map_natCast]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [ht, map_sum, map_mul, map_pow, map_natCast]
     exact Finset.sum_congr rfl fun i _ => mul_comm _ _
   have hsep : ∀ φ ψ : A →ₐ[L] Ω, φ (ι t) = ψ (ι t) → φ = ψ := by
     intro φ ψ hφψ
@@ -237,7 +238,8 @@ private theorem finite_setOf_nat_not_primitive_element {Λ R : Type} [CommRing �
     have hB : ∀ y : R, φ (ι y) = ψ (ι y) := by
       intro y
       obtain ⟨c, rfl⟩ := hgen y
-      simp only [map_sum, map_mul, hχl]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_mul, hχl]
       exact Finset.sum_congr rfl fun i _ => by rw [congr_fun htup i]
     apply AlgHom.coe_ringHom_injective
     apply IsLocalization.ringHom_ext (Algebra.algebraMapSubmonoid R (nonZeroDivisors Λ))
@@ -282,7 +284,8 @@ theorem UpperTheory.V.J.primEx :
     obtain ⟨a, rfl⟩ := Ideal.Quotient.mk_surjective y
     obtain ⟨c, hc⟩ := hgen a
     refine ⟨c, ?_⟩
-    rw [Ideal.Quotient.eq.mpr hc, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Ideal.Quotient.eq.mpr hc, map_sum]
     simp only [map_mul, hmk]
   haveI : Module.Finite Λ (B ⧸ J) := by
     refine ⟨⟨Finset.univ.image (fun i => Ideal.Quotient.mk J (b i)), ?_⟩⟩
@@ -317,7 +320,8 @@ theorem UpperTheory.V.J.primEx :
     refine ⟨c, hc, P, ?_⟩
     rw [← Ideal.Quotient.eq_zero_iff_mem, map_sub, map_mul, ← hmk, hP, Polynomial.aeval_def,
       Polynomial.hom_eval₂]
-    simp only [map_sum, map_mul, map_pow, map_natCast]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, map_pow, map_natCast]
     rw [sub_eq_zero]
     rfl
   · intro x' hx' hcomp hxt
@@ -333,7 +337,8 @@ theorem UpperTheory.V.J.primEx :
     have hsum : ∀ χ : B →ₐ[O] K,
         χ (∑ i : Fin r, (s : B) ^ (i : ℕ) * b i) = ∑ i, χ (b i) * (s : K) ^ (i : ℕ) := by
       intro χ
-      simp only [map_sum, map_mul, map_pow, map_natCast]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_mul, map_pow, map_natCast]
       exact Finset.sum_congr rfl fun i _ => mul_comm _ _
     have htup : (fun i => x' (b i)) = (fun i => x (b i)) := by
       by_contra hne
@@ -345,7 +350,8 @@ theorem UpperTheory.V.J.primEx :
       intro χ hχ
       have := RingHom.mem_ker.mp (hχ hc)
       rw [map_sub, sub_eq_zero] at this
-      rw [this, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [this, map_sum]
       simp only [map_mul]
     rw [e1 x' hx', e1 x hx]
     refine Finset.sum_congr rfl fun i _ => ?_

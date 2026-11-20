@@ -105,7 +105,8 @@ theorem hf_smul_left (t : E) (x y : Fin M → E) : hf σ J (t • x) y = σ t * 
 
 theorem hf_conj (hσ : ∀ x, σ (σ x) = x) (hJ : ∀ i j, σ (J j i) = J i j) (x y : Fin M → E) :
     σ (hf σ J x y) = hf σ J y x := by
-  simp only [hf, map_sum, map_mul, hσ, hJ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hf, map_sum, map_mul, hσ, hJ]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 
@@ -223,7 +224,8 @@ theorem sum_row (t : E) (x y : Fin M → E) : ∑ j, (t * rowJ σ J x j) * y j =
 
 theorem conj_row (hσ : ∀ x, σ (σ x) = x) (hJ : ∀ i j, σ (J j i) = J i j) (v : Fin M → E) (i : Fin M) :
     σ (rowJ σ J v i) = ∑ j, J i j * v j := by
-  simp only [rowJ, map_sum, map_mul, hσ, hJ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [rowJ, map_sum, map_mul, hσ, hJ]
   exact Finset.sum_congr rfl fun j _ => mul_comm _ _
 
 theorem exists_frame (hcm : IsCMExt F E σ) (hJ : IsHermND σ J) {u₀ u₁ : Fin M → E} (hd : PlaneND σ J u₀ u₁) :

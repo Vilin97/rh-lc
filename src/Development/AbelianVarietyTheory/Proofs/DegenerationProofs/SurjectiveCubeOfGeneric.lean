@@ -119,7 +119,8 @@ theorem formEq_of_sum {K K' : Type} [Fintype K] [Fintype K'] {V W : Scheme.{0}} 
     (h : ∑ k, ε k • FreeAbelianGroup.of (φ k) = ∑ k, ε' k • FreeAbelianGroup.of (φ' k)) : FormEq φ ε φ' ε' :=
   fun U _ g => by
     have := congrArg (FreeAbelianGroup.lift (fun q => Additive.ofMul (g q))) h
-    simp only [map_sum, map_zsmul, FreeAbelianGroup.lift_apply_of] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_zsmul, FreeAbelianGroup.lift_apply_of] at this
     apply Additive.ofMul.injective
     simpa only [ofMul_prod, ofMul_zpow] using this
 

@@ -99,7 +99,8 @@ theorem orthogonalProjection_comp_sumEquivL [Fintype (EquivSummands hinv σ)]
       if h : (π.restrict (V j) (hinv j)).IsEquivalent σ then
         c ⟨j, h⟩ • summandEquivL hinv ⟨j, h⟩ k else 0 := by
   classical
-  simp only [sumEquivL, sum_apply, smul_apply, comp_apply, map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [sumEquivL, sum_apply, smul_apply, comp_apply, map_sum, map_smul]
   split_ifs with h
   · rw [Finset.sum_eq_single ⟨j, h⟩]
     · simp [Submodule.subtypeL_apply, Submodule.orthogonalProjectionOnto_mem_subspace_eq_self]

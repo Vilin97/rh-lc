@@ -144,7 +144,8 @@ theorem exists_complete_dvr (A : Type) [CommRing A] [IsDomain A] [IsNoetherianRi
   haveI : FiniteDimensional (ResidueField V) k' :=
     IntermediateField.finiteDimensional_adjoin (fun x _ => Algebra.IsIntegral.isIntegral x)
   have hmem : ∀ x : k, σ x ∈ k' := fun x => by
-    rw [← bs.sum_repr x, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← bs.sum_repr x, map_sum]
     refine sum_mem fun i _ => ?_
     rw [map_smul, Algebra.smul_def, IsScalarTower.algebraMap_apply (ResidueField A) (ResidueField V) Ω]
     exact mul_mem (k'.algebraMap_mem _) (IntermediateField.subset_adjoin _ _ ⟨i, rfl⟩)

@@ -111,7 +111,8 @@ theorem exists_image_principal_of_effCartier : ∀ (X Y : Scheme.{0}) [IsIntegra
   calc ψ.app W s = QCoh.appLinear ψ W (∑ i, (he'.basis hW).repr s i • he'.basis hW i) := by
         rw [hs]; rfl
     _ = _ := by
-      rw [map_sum, Finset.sum_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Finset.sum_smul]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_smul, IsFrame.basis_apply, QCoh.appLinear_apply, app_resM, hc, resM_smul, mul_smul]
 

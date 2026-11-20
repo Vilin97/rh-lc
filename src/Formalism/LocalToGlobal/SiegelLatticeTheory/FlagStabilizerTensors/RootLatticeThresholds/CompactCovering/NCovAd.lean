@@ -53,7 +53,8 @@ theorem NCovAd_inf_approx : ∃ R : ℝ, ∀ x : Ainf F, ∃ β : 𝓞 F,
   let γ : 𝓞 F := ∑ i, c i • NumberField.RingOfIntegers.basis F i
   have hγ : NumberField.mixedEmbedding F (algebraMap (𝓞 F) F γ) = w := by
     rw [← hc]
-    simp only [γ, map_sum, map_zsmul, hb, NumberField.mixedEmbedding.latticeBasis_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [γ, map_sum, map_zsmul, hb, NumberField.mixedEmbedding.latticeBasis_apply,
       NumberField.integralBasis_apply]
   refine ⟨-γ, fun v => ?_⟩
   have hneg : ((-γ : 𝓞 F) : F) = -(algebraMap (𝓞 F) F γ) := by

@@ -58,7 +58,8 @@ theorem cechFG_of_transfer {Z Z' : Scheme.{0}} {J : Type} (W : J → Z.Opens) (W
     choose h hh1 using fun i => h1 i (h' i)
     refine ⟨r, h, fun i i' => (h2 i i').1 ?_⟩
     have e1 := hh i i'
-    rw [map_add, map_sub, map_sum, hl, hr, hh1, hh1]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_add, map_sub, map_sum, hl, hr, hh1, hh1]
     simp only [map_mul, hact, hg]
     exact e1
 

@@ -114,7 +114,8 @@ private theorem fockB_proj_of_isUnit_gramB {κ : Type} [Fintype κ] {m : ℕ} (l
   simp only [LinearMap.sum_apply, LinearMap.smul_apply, LinearMap.smulRight_apply,
     Submodule.coe_sum, Submodule.coe_smul, Formalism.L2.DIV.bVV_coe, Formalism.L2.DIV.fockBL_apply]
   rw [← Formalism.L2.DIV.fockBL_apply]
-  simp only [map_sum, map_smul, smul_eq_mul, Formalism.L2.DIV.fockBL_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, smul_eq_mul, Formalism.L2.DIV.fockBL_apply]
   have e1 : ∀ i, Formalism.L2.DIV.fockB (Formalism.L2.DIV.bVVfun ℂ lam j) (Formalism.L2.DIV.bVVfun ℂ lam i) =
       Formalism.L2.Col.Br.gramB (K := ℂ) lam j i := fun i => rfl
   simp_rw [e1]
@@ -147,7 +148,8 @@ private theorem proj_unique_of_isUnit_gramB {κ : Type} [Fintype κ] {m : ℕ} (
     have := hd0 j
     rw [← (Formalism.L2.DIV.bVV ℂ lam).sum_repr (Formalism.L2.Col.Br.projVV lam x - ⟨v, hv⟩)] at this
     simp only [Submodule.coe_sum, Submodule.coe_smul, Formalism.L2.DIV.bVV_coe] at this
-    rw [← Formalism.L2.DIV.fockBL_apply, map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Formalism.L2.DIV.fockBL_apply, map_sum] at this
     simp only [map_smul, smul_eq_mul, Formalism.L2.DIV.fockBL_apply] at this
     simp only [Matrix.mulVec, dotProduct, Pi.zero_apply]
     rw [← this]
@@ -238,12 +240,14 @@ private theorem isUnit_gramB {κ : Type} [Fintype κ] {m : ℕ} (lam : κ → Do
   have hS : ∀ y : Formalism.L2.DIV.Pol ℂ κ m, Formalism.L2.DIV.fockL (∑ i, v i • Formalism.L2.DIV.bVVfun ℂ lam i) y =
       ∑ i, star (v i) * Formalism.L2.DIV.fockL (Formalism.L2.DIV.bVVfun ℂ lam i) y := by
     intro y
-    rw [map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, LinearMap.sum_apply]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, starRingEnd_apply]
   have hz : ∀ i, Formalism.L2.DIV.fockL (Formalism.L2.DIV.bVVfun ℂ lam i) (∑ j, v j • Formalism.L2.DIV.bVVfun ℂ lam j) = 0 := by
     intro i
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [map_smul, smul_eq_mul, Formalism.L2.DIV.fockL_apply]
     have := congrFun hv i
     simp only [Matrix.mulVec, dotProduct, Pi.zero_apply] at this

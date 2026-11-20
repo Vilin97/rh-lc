@@ -46,7 +46,8 @@ theorem dot_ne_zero_of_hasSig_pos {n : ℕ} (M : Matrix (Fin n) (Fin n) ℂ) (h 
 theorem map_form_self {F E : Type} [Field F] [Field E] [Algebra F E] (σ : E →ₐ[F] E) (τ : E →+* ℂ)
     (hτ : ∀ x, τ (σ x) = star (τ x)) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (z : Fin n → E) :
     τ (form σ J z z) = (fun i => τ (z i)) ⬝ᵥ J.map τ *ᵥ star (fun i => τ (z i)) := by
-  simp [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hτ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hτ]
 
 theorem exists_adapted_plane_of_isotropic : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E) (a b : ℕ) (G₁ : Geo σ a b) X om₁ om₁', IsTriple B G₁ X om₁ om₁' →
     (∃ z : Fin (a + b) → E, z ≠ 0 ∧ form σ G₁.W.J z z = 0) →

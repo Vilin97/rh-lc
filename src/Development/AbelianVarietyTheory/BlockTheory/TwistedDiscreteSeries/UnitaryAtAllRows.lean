@@ -35,7 +35,8 @@ theorem csumAt_smul (a b : K) (f f' : S.Cl → S.V) :
 
 theorem pairAt_eq (h : ∀ a, σ (star a) = starRingEnd ℂ (σ a)) (x y : S.V) : pairAt S σ x y = σ (S.pair x y) := by
   conv_rhs => rw [← S.bV.sum_repr x, ← S.bV.sum_repr y]
-  simp only [pairAt, map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [pairAt, map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, map_mul,
     CSD.gramV, Matrix.of_apply, RingHom.id_apply, starRingEnd_apply, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_

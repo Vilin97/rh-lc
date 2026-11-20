@@ -60,7 +60,8 @@ theorem exists_isLocalizedModule_pi {R K C T : Type} [CommRing R] [CommRing K] [
     apply hext'
     intro ψ
     show ψ (r ^ M • u s) = _
-    rw [map_sum, Finset.sum_apply, map_sum, Finset.sum_eq_single s]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_apply, map_sum, Finset.sum_eq_single s]
     · rw [map_smul, map_smul, Pi.smul_apply, map_smul, hϕ]
       show _ = r ^ (M - k s) • g s _
       rw [hg1, ← map_pow, ← Algebra.smul_def, smul_smul, ← pow_add, Nat.sub_add_cancel (hM s)]

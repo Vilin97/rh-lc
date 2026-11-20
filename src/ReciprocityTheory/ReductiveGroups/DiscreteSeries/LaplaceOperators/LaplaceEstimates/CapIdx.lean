@@ -150,7 +150,8 @@ theorem evalP : EvalPStatement := by
     simp only [h1]
     calc ∑ d, (c₀ * Q (Fin.last (2 * r + k)) d) • l ⟨Capelli.nnPlus E y om (v : D) d, hnnS d⟩
         = l (∑ d, (c₀ * Q (Fin.last (2 * r + k)) d) • (⟨Capelli.nnPlus E y om (v : D) d, hnnS d⟩ : S)) := by
-          rw [map_sum]; simp only [map_smul]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [map_sum]; simp only [map_smul]
       _ = _ := by rw [hsumS, map_smul]; rfl
 
   have hfac : ∀ j, (om - 1 - (r : ℂ) + ((u j : ℝ) : ℂ) - ((k : ℂ) - 1) / 2) ≠ 0 := by

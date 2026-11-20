@@ -202,7 +202,8 @@ theorem bijective_ptShaPairing (hM : ∀ m : M, n • m = 0) :
       refine AddMonoidHom.ext fun y => ?_
       rw [ptLocalDualMap_apply, ← hg, AddMonoidHom.comp_apply]
       simp_rw [hξ, AddMonoidHom.comp_apply, AddMonoidHom.single_apply]
-      rw [← map_sum, Finset.univ_sum_single]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← map_sum, Finset.univ_sum_single]
       rfl
     rw [← P.ptCompactDualMap_ptLocalToCompact M _ (show 0 + 1 + 2 = 3 from rfl)] at hf
     have hx' : (ptLocalToCompact φ M 0).hom ξ = ptShaLift φ M x := hψ.1 hf

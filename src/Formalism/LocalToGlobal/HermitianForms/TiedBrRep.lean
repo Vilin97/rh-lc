@@ -27,7 +27,8 @@ theorem blkRow_rename (K : ι → Matrix (Fin n) (Fin n) ℂ) (τ : ι) (f : MvP
   have h : (blkRow K).comp (rename (Prod.mk τ)) = (rename (Prod.mk τ)).comp (Formalism.GradedWeylDivisibility.rowAct ℂ (K τ)) := by
     apply MvPolynomial.algHom_ext
     intro v
-    simp [blkRow, Formalism.GradedWeylDivisibility.rowAct, rename_X, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [blkRow, Formalism.GradedWeylDivisibility.rowAct, rename_X, map_sum]
   exact congrArg (fun F : MvPolynomial (Fin n × Fin n) ℂ →ₐ[ℂ] _ => F f) h
 
 theorem blkRow_mem (K : ι → Matrix (Fin n) (Fin n) ℂ) (lam : ι → DomWeight n) {P : MvPolynomial (ι × Fin n × Fin n) ℂ}

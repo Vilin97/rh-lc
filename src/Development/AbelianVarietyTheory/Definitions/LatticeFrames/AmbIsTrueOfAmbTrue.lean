@@ -155,7 +155,8 @@ theorem ambTrue_ex : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC
     set b := (MtHL I hX a).b
     have hsum : jA a z = ∑ i, B.embLL (b.repr z i) • jA a (b i) := by
       conv_lhs => rw [← b.sum_repr z]
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_smulₛₗ]
     rw [hsum] at hz
@@ -186,7 +187,8 @@ theorem ambTrue_ex : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC
       have hmem : (∑ v ∈ (Z.W.Mtilde μ).gen, c' v • xv v) ∈ (MtHL I hX μ).L :=
         Submodule.sum_mem _ fun v hv => Submodule.smul_mem _ _ (hxvL v hv)
       have heq : jA μ (∑ v ∈ (Z.W.Mtilde μ).gen, c' v • xv v) = jA μ x := by
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         refine Eq.trans (Finset.sum_congr rfl fun v hv => ?_) hc.symm
         have hs : ((c' v : B.LL)) • xv v = c' v • xv v := by
           letI := (MtHL I hX μ).modOV

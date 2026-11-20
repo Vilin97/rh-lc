@@ -98,7 +98,8 @@ theorem heis_mem_span {f x : WO S T → ℂ} {b : WO S T} (hb : b.map (infPart D
     (hx : x ∈ Submodule.span ℂ (Set.range fun a : {a : WO S T // a.map (infPart D) = 0} => heisO ψ S T a f)) :
     heisO ψ S T b x ∈ Submodule.span ℂ (Set.range fun a : {a : WO S T // a.map (infPart D) = 0} => heisO ψ S T a f) := by
   obtain ⟨c, rfl⟩ := Finsupp.mem_span_range_iff_exists_finsupp.1 hx
-  rw [← GlobalTheory.SplitScalar.heisL_apply, Finsupp.sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← GlobalTheory.SplitScalar.heisL_apply, Finsupp.sum, map_sum]
   refine Submodule.sum_mem _ fun a _ => ?_
   rw [map_smul, GlobalTheory.SplitScalar.heisL_apply, GlobalTheory.LatVac.heisO_heisO]
   exact Submodule.smul_mem _ _ (Submodule.smul_mem _ _ (Submodule.subset_span ⟨⟨b + a, fin_add hb a.2⟩, rfl⟩))

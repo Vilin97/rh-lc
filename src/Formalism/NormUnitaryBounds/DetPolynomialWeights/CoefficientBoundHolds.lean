@@ -118,7 +118,8 @@ theorem coefficient_bound_holds : CB := by
       ((G.map (algebraMap R (FractionRing R))) * A) i b = algebraMap R (FractionRing R) r := by
     intro i b
     have : ((G.map (algebraMap R (FractionRing R))) * A) i b = Φ (ψ (G i)) (J b) := by
-      simp [Matrix.mul_apply, A, ψ, Fintype.linearCombination_apply, map_sum, map_smul,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [Matrix.mul_apply, A, ψ, Fintype.linearCombination_apply, map_sum, map_smul,
         Algebra.smul_def]
     rw [this]
     exact hΦ _ (hG i) (J b)

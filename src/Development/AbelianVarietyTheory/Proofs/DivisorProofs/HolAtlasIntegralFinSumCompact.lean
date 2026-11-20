@@ -24,9 +24,11 @@ theorem loc_finset_sum {κ : Type} (s : Finset κ) (α : κ → A.Fld) (i : A.ι
 theorem isForm_finset_sum {κ : Type} (s : Finset κ) (α : κ → A.Fld) (h : ∀ j ∈ s, A.IsForm (α j)) :
     A.IsForm (∑ j ∈ s, α j) := by
   refine ⟨fun i S => ?_, fun x x' e => ?_⟩
-  · simp only [loc_finset_sum, map_sum, Finsupp.finsetSum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [loc_finset_sum, map_sum, Finsupp.finsetSum_apply]
     exact ContDiffOn.sum fun j hj => (h j hj).smooth i S
-  · rw [Finset.sum_apply, Finset.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [Finset.sum_apply, Finset.sum_apply, map_sum]
     exact Finset.sum_congr rfl fun j hj => (h j hj).compat x x' e
 
 theorem integral_finset_sum [CompactSpace M] [T2Space M] [SecondCountableTopology M] [MeasurableSpace M] [BorelSpace M]

@@ -11,7 +11,8 @@ theorem sum_smul_frame_mem_ofStalks_iff : ∀ {X : Scheme.{0}} {F : X.Modules} {
   have hg : ∀ (y : X) (hy : y ∈ V), F.presheaf.germ V y hy (∑ j, a j • resM F h (c j)) =
       ∑ j, X.presheaf.germ V y hy (a j) • hc.stalkBasis y (h hy) j := by
     intro y hy
-    simp only [map_sum, QCoh.germ_smul, Twist.germ_resM, IsFrame.stalkBasis_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, QCoh.germ_smul, Twist.germ_resM, IsFrame.stalkBasis_apply]
   have hset : ∀ (y : X) (hy : y ∈ U),
       {v | ∃ j : Fin N, (j : ℕ) < l ∧ v = F.presheaf.germ U y hy (c j)} =
         hc.stalkBasis y hy '' {j : Fin N | (j : ℕ) < l} := by

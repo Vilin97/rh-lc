@@ -82,7 +82,8 @@ theorem integrable_red : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalS
     have : (w : Matrix R Q k → k) = fun t => ∑ r, ∑ q, t r q * w (Matrix.single r q 1) := by
       funext t
       conv_lhs => rw [Matrix.matrix_eq_sum_single t]
-      simp only [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum]
       refine Finset.sum_congr rfl fun r _ => Finset.sum_congr rfl fun q _ => ?_
       rw [← smul_eq_mul, ← map_smul, Matrix.smul_single, smul_eq_mul, mul_one]
     rw [this]
@@ -351,8 +352,10 @@ theorem integrate_entry : ∀ (k : Type) [Field k] [ValuativeRel k] [Topological
     · simp only [Set.indicator_of_notMem (show x ∉ {z : Matrix R Q k | z e.1 e.2 ∈ (U : Set k)} from hx),
         Finset.sum_const_zero, Pi.zero_apply]
   have hL := hK (∑ a ∈ S, Φ' a) hΞ
-  rw [← hcov, map_sum]
-  rw [map_sum] at hL
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hcov, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum] at hL
   rw [← hL]
   exact Finset.sum_congr rfl fun a _ => (hΦ'L a).symm
 

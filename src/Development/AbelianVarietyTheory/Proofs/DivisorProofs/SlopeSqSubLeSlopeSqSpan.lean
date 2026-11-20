@@ -56,7 +56,8 @@ theorem relIndex_span {R S M W : Type} [CommRing R] [CommRing S] [Algebra R S] [
     obtain ⟨a, ha⟩ := h1
     have h2 : ∑ k, a k • l (e k) = 0 := by
       have := congrArg θ ha
-      rw [LinearMap.map_smul_of_tower, hz, smul_zero, map_sum] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [LinearMap.map_smul_of_tower, hz, smul_zero, map_sum] at this
       simpa [hθ] using this
     have h3 := Fintype.linearIndependent_iff.1 he a h2
     have h4 : m • z = 0 := by rw [← ha]; simp [h3]
@@ -188,7 +189,8 @@ theorem gram_le {K K' V V' ι κ : Type} [Field K] [NumberField K] [StarRing K] 
   have h1 : ∀ x : Fin j → K, Formalism.HermitianLatticesTheory.cnorm (cols b' X' w (fun k => φ (e k)) *ᵥ fun k => σ (x k)) ≤
       t * N σ (∑ k, x k • e k) := fun x => by
     have h := ht w.embedding (∑ k, x k • e k)
-    rw [← (hG' w).2, map_sum] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← (hG' w).2, map_sum] at h
     simp only [map_smulₛₗ] at h
     rw [normAt_sum] at h
     exact h
@@ -280,7 +282,8 @@ theorem slope_sq_sub_le_slope_sq_span : ∀ (K K' V V' : Type) [Field K] [Number
       refine le_antisymm (Submodule.span_le.2 ?_) (Submodule.span_mono ?_)
       · rintro _ ⟨x, hx, rfl⟩
         obtain ⟨a, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun K).1 (hsp ▸ Submodule.subset_span hx)
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         exact Submodule.sum_mem _ fun k _ => by
           rw [map_smulₛₗ]; exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨k, rfl⟩)
       · rintro _ ⟨k, rfl⟩; exact ⟨e k, heL k, rfl⟩

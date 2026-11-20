@@ -79,7 +79,8 @@ private lemma core (hDet : Det) (hK2 : KoszulBoundaryOfComponentMemIdeal) (hKS :
   refine iSup₂_le ?_
   rintro _ ⟨l, rfl⟩ _ ⟨x, hx, rfl⟩
   show act (r (ι l)) x ∈ _
-  rw [hrel l, map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hrel l, map_sum, LinearMap.sum_apply]
   refine Submodule.sum_mem _ fun b _ => ?_
   rw [mul_comm, map_mul, Module.End.mul_apply]
   exact (le_iSup₂_of_le (f := fun (t : S) (_ : t ∈ Set.range fun j => r (ι (e0 j))) => M.map (act t))

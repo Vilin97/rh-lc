@@ -54,7 +54,8 @@ theorem isFrame_change {ℓ : μ → Γ(L, U)} (hℓ : VB.IsFrame ℓ) (hV : V �
       (Fintype.linearCombination Γ(X, V') fun b => resM L (h.trans hV) (ℓ b)) ∘
         (C.map (resG X h)).mulVec := by
     funext y
-    simp only [Fintype.linearCombination_apply, map_sum, resM_smul, resM_resM, Function.comp, Matrix.mulVec,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Fintype.linearCombination_apply, map_sum, resM_smul, resM_resM, Function.comp, Matrix.mulVec,
       dotProduct, Finset.sum_smul, Finset.smul_sum, smul_smul, Matrix.map_apply]
     rw [Finset.sum_comm]
     simp only [mul_comm]
@@ -127,7 +128,8 @@ theorem locAdapted_of_matrix : ∀ {X W : Scheme.{0}} (jB : W ⟶ X) {ι : Type}
       simp only [p]
       rw [app_resM, hℓ.repr_resM hV hV']
       exact app_resG_eq jB hV' _
-    rw [Function.comp_apply, this, hA, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Function.comp_apply, this, hA, map_sum]
     simp only [Matrix.mulVec, dotProduct, x, Finset.mul_sum, mul_ite, mul_zero, Matrix.map_apply]
     rw [Finset.sum_comm]
     simp only [Finset.sum_ite_eq', Finset.mem_univ, if_true, map_mul, hw]

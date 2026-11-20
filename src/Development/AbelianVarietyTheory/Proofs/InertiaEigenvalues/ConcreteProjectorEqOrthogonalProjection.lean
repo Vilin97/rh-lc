@@ -30,7 +30,8 @@ variable {W : Type} [NormedAddCommGroup W] [InnerProductSpace ℂ W] (σ : K →
 
 theorem semi_expand (y : Fin n → K) : J y = ∑ i, σ (y i) • J (Pi.single i 1) := by
   conv_lhs => rw [← Finset.univ_sum_single y]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   have : (Pi.single i (y i) : Fin n → K) = y i • Pi.single i 1 := by
     ext k; by_cases hk : k = i
@@ -57,7 +58,8 @@ theorem semi_mulVec_mem (E : Matrix (Fin n) (Fin d) K) (c : Fin d → K) :
     ext a; by_cases ha : a = k
     · subst ha; simp
     · simp [Pi.single_apply, ha]
-  rw [e, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, map_sum]
   refine Submodule.sum_mem _ fun k _ => ?_
   rw [LinearMap.map_smulₛₗ]
   exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨k, rfl⟩)

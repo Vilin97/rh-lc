@@ -75,12 +75,14 @@ theorem trace_le_one : ∀ (K L : Type) [Field K] [NumberField K] [Field L] [Num
       apply Subtype.val_injective
       rw [IntermediateField.coe_sum]
       exact h1
-    rw [← hσ₀, h2, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hσ₀, h2, map_sum]
     exact Finset.sum_congr rfl fun ρ _ => (hτ ρ z).symm
   rw [← valV_le_one_of_ext i he' hv]
   have hsum : i (∑ k, io (Algebra.trace K L ((b : L) * y k)) * x k) =
       ∑ ρ : L →ₐ[K] Ω, ∑ k, τ ρ (b : L) * (τ ρ (y k) * i (x k)) := by
-    simp only [map_sum, map_mul (f := i), htr, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul (f := i), htr, Finset.sum_mul]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun ρ _ => Finset.sum_congr rfl fun k _ => ?_
     rw [map_mul, mul_assoc]

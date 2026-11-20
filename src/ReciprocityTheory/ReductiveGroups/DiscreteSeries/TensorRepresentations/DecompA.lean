@@ -78,7 +78,8 @@ theorem dc_lagrange_decomp (hT : ∀ f ∈ S, T f ∈ S)
       have h2 : ∑ b ∈ B, aeval T (Lagrange.basis (dc_cplxPts B) id (b : ℂ)) f =
           ∑ z ∈ dc_cplxPts B, aeval T (Lagrange.basis (dc_cplxPts B) id z) f := by
         rw [dc_cplxPts, Finset.sum_image fun x _ y _ h => Complex.ofReal_injective h]
-      rw [h2, ← LinearMap.sum_apply, ← map_sum, h1, map_one, Module.End.one_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [h2, ← LinearMap.sum_apply, ← map_sum, h1, map_one, Module.End.one_apply]
 
 theorem dc_lagrange_eig (hP : ∀ f ∈ S, aeval T (Lagrange.nodal (dc_cplxPts B) id) f = 0) :
     ∀ z : ℂ, ∀ f ∈ S, f ≠ 0 → T f = z • f → ∃ b ∈ B, z = ((b : ℝ) : ℂ) := by

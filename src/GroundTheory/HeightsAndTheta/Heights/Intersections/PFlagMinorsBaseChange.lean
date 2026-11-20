@@ -68,7 +68,8 @@ theorem FlagMinorsBaseChange.proof : FlagMinorsBaseChange.Statement := by
     symm
     simp_rw [Finset.sum_mul, mul_assoc, ← map_mul]
     rw [Finset.sum_comm]
-    simp_rw [← Finset.mul_sum, ← map_sum, e, Matrix.one_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp_rw [← Finset.mul_sum, ← map_sum, e, Matrix.one_apply]
     simp
 
 end GroundTheory.Heights₂.Heights.IndefiniteRowSideFullHecke.Inter

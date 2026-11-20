@@ -60,7 +60,8 @@ def tEquiv : (k ⊗[F] Fld P) ≃ₗ[k ⊗[F] E] (ι → k ⊗[F] E) where
       rw [← TensorProduct.tmul_sum, b.sum_repr]
   right_inv v := by
     funext j
-    simp only [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum]
     rw [Finset.sum_eq_single j]
     · rw [crd_smul, crd_tmul]
       simp [← Algebra.TensorProduct.one_def]
@@ -153,7 +154,8 @@ theorem eq_zero_of_trBase [NumberField E] (z : k ⊗[F] Fld P) (hz : ∀ y, trBa
     rw [trBase, LinearMap.lTensor_tmul, LinearMap.restrictScalars_apply, this]
     split_ifs <;> simp [Algebra.TensorProduct.one_def]
   have h := hz ((1 : k) ⊗ₜ[F] d i)
-  rw [← (bb P k b).sum_repr z, Finset.sum_mul, map_sum] at h
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← (bb P k b).sum_repr z, Finset.sum_mul, map_sum] at h
   simp only [smul_mul_assoc, trBase_smul, bb_apply, Algebra.TensorProduct.tmul_mul_tmul, one_mul, key, mul_ite,
     mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true] at h
   exact h
@@ -215,7 +217,8 @@ theorem torUnit_injective : Function.Injective (torUnit (P := P) (k := k)) := fu
 
 theorem commute_mulMat {φ : (k ⊗[F] Fld P) ≃ₗ[k ⊗[F] E] (Fin n → k ⊗[F] E)} {G : Matrix (Fin n) (Fin n) (k ⊗[F] E)}
     (hG : Commute G (mulMat φ ((1 : k) ⊗ₜ[F] alpha P))) (z : k ⊗[F] Fld P) : Commute G (mulMat φ z) := by
-  rw [← (bb P k (pb P).basis).sum_repr z, ← mulAlg_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← (bb P k (pb P).basis).sum_repr z, ← mulAlg_apply, map_sum]
   refine Commute.sum_right _ _ _ fun i _ => ?_
   rw [map_smul, bb_apply, PowerBasis.coe_basis, pb_gen, ← one_pow (i : ℕ), ← Algebra.TensorProduct.tmul_pow, map_pow,
     mulAlg_apply]

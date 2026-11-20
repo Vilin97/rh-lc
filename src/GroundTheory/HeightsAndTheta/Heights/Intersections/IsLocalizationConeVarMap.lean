@@ -54,7 +54,8 @@ theorem coneVarMap_coe (hPW : P ≤ W) (v : ∀ k, ι k) (G : MvPolynomial K (lo
       ∑ e ∈ G.support, ((AddMonoidAlgebra.coeff G e : locRing P W) : FractionRing (MRing ι ⧸ P)) * fracHom P (varMono v e) := by
   rw [coneVarMap, aeval_def, eval₂_eq']
   change (coneLocRing P W hPW).val _ = _
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun e _ => ?_
   rw [map_mul, map_prod, varMono, map_prod]
   simp only [map_pow]
@@ -102,7 +103,8 @@ theorem coneVarMap_mul_clear (hPW : P ≤ W) (v : ∀ k, ι k) (G : MvPolynomial
         ((AddMonoidAlgebra.coeff G e : locRing P W) : FractionRing (MRing ι ⧸ P)) * fracHom P V = fracHom P (N e)) :
     ((coneVarMap P W hPW v G : coneLocRing P W hPW) : FractionRing (MRing ι ⧸ P)) * fracHom P V =
       fracHom P (∑ e ∈ G.support, N e * varMono v e) := by
-  rw [coneVarMap_coe, Finset.sum_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [coneVarMap_coe, Finset.sum_mul, map_sum]
   refine Finset.sum_congr rfl fun e _ => ?_
   rw [map_mul, ← (hN e).2]
   ring

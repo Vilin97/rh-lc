@@ -40,7 +40,8 @@ theorem Uh_add (X : PT E) (q : ℕ) {a b : Vsp X.dim} (ha : a ∈ X.L) (hb : b �
     simp only [Hf, PiLp.add_apply, map_add, mul_add, add_mul, Finset.sum_add_distrib]
     ring
   have h4 : Hf b a = (starRingEnd ℂ) (Hf a b) := by
-    simp only [Hf, map_sum, map_mul, Complex.conj_conj]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Hf, map_sum, map_mul, Complex.conj_conj]
     exact Finset.sum_congr rfl fun i _ => mul_comm _ _
   have h5 : Hf b a - Hf a b = -(2 * (k : ℂ) * Complex.I) := by
     rw [h4]

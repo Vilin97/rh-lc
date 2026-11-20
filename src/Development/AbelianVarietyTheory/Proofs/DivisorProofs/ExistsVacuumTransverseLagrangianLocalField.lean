@@ -51,7 +51,8 @@ theorem exists_fixed {A B X : Type} [AddCommGroup A] [AddCommGroup B] [AddCommGr
     rw [hconj, hfix h hh, (hK h).mp hh w, one_smul]
   refine ⟨∑ q : A ⧸ K, π (Quotient.out q) (S w φ), Submodule.sum_mem _ fun q _ => hPπ _ _ (hPS _ _ hφ),
     fun h0 => hw (hS w _ ?_), avg_fixed K π hπ _ hx⟩
-  rw [map_sum, ← h0]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, ← h0]
   exact Finset.sum_congr rfl fun q _ => (hconj _ _ _).symm
 
 section Lin
@@ -103,9 +104,11 @@ theorem exists_denom_lin {ι Y Y' : Type} [Fintype ι] [Fintype Y] [Fintype Y'] 
   classical
   obtain ⟨N, hN, h⟩ := exists_denom (fun t : ι × Y × Y' => l t.1 (Matrix.single t.2.1 t.2.2 1))
   refine ⟨N, hN, fun i u hu => ?_⟩
-  rw [Matrix.matrix_eq_sum_single u, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.matrix_eq_sum_single u, map_sum, Finset.mul_sum]
   refine Subring.sum_mem _ fun r _ => ?_
-  rw [map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.mul_sum]
   refine Subring.sum_mem _ fun q _ => ?_
   rw [show Matrix.single r q (u r q) = u r q • Matrix.single r q (1 : k) by simp, hl, mul_left_comm]
   exact mul_mem (hu r q) (h (i, r, q))

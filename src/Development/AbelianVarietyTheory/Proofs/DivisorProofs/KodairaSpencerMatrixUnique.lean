@@ -47,7 +47,8 @@ theorem IsPolForm.unique (P : AbelianDeRham.Free) {A : Over (Sp R)} [GrpObj A] {
   have ex : ∀ c : primDR A, x' c.1 = x c := fun c => congrArg x (o.symm_apply_apply c)
   have ey : ∀ c : primDR A, y' c.1 = y c := fun c => congrArg y (o.symm_apply_apply c)
   have := congrArg (exteriorPower.alternatingMapLinearEquiv (wedgeDual x' y')) hw
-  simpa [map_sum, wedgeDual, ex, ey] using this
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa [map_sum, wedgeDual, ex, ey] using this
 
 theorem isDPMorphism_red : IsDPMorphism (epsDP R) (dp0 R) (TrivSqZeroExt.fstHom R R R).toRingHom := by
   refine (isDPMorphism_iff _ _ _).2 ⟨Ideal.map_le_iff_le_comap.2 fun a ha => ?_, fun n hn a ha => ?_⟩
@@ -271,7 +272,8 @@ theorem IsKS.unique (P : AbelianDeRham) {Φ : Finset (E →+* ℂ)} {y : FrPt Xo
     refine LinearMap.ext fun h => ?_
     obtain ⟨a, ha⟩ := exists_sub_mem_Fil hρ hL hvs (kb := kb) (fun k => hl₂ k.1 k.2) h
     have := iso f hf _ ha
-    rw [map_sub, map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_sum] at this
     simpa [h0] using this
   have ed : ∀ k, th (hb k) - kb k ∈ Fil B := fun k => by
     have := (hl k.1 k.2).baseChange (hφ := hφ) hF hL (hth _) (htv _)

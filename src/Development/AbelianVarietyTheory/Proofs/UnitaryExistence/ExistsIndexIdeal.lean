@@ -250,7 +250,8 @@ theorem bdd_of_unimod [IsCMField E] (Λ : GenLat E n) (h : Λ.Unimod) : Bdd Λ.L
     rw [hk u huL] at h0
     obtain ⟨φ⟩ : Nonempty (E →+* ℂ) := inferInstance
     have h1 := congrArg φ h0
-    simp only [map_sum, map_mul, IsCMField.complexEmbedding_complexConj, map_zero,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, IsCMField.complexEmbedding_complexConj, map_zero,
       ← Complex.normSq_eq_conj_mul_self] at h1
     have h2 : ∑ j, Complex.normSq (φ (u j)) = 0 := by exact_mod_cast h1
     have h3 : ∀ j, u j = 0 := fun j => by

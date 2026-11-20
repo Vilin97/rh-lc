@@ -112,7 +112,8 @@ theorem gram_split (hτι : ∀ r, τ (ι r) = ι r) {n : ℕ} (d : Fin (n + 1) 
 theorem gram_mem (hττ : ∀ x, τ (τ x) = x) (hτι : ∀ r, τ (ι r) = ι r) {n : ℕ} (d : Fin n → Rˣ)
     (u : Up n → K) : gram ι τ d u ∈ Hm τ n := by
   intro a b
-  simp only [gram, map_sum, map_mul, hττ, hτι]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [gram, map_sum, map_mul, hττ, hτι]
   exact Finset.sum_congr rfl fun k _ => by ring
 
 theorem blk_mem (hττ : ∀ x, τ (τ x) = x) {n : ℕ} {A : K} (hA : τ A = A) (c : Fin n → K)

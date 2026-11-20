@@ -863,10 +863,12 @@ theorem IsPolForm.pull {L : LB A.left} {ψ : LinearMap.BilinForm R (Crys κ t A)
   · unfold IsPolForm
     refine ⟨n, fun k ↦ m.pull (a k), fun k ↦ m.pull (b k), ?_, rfl⟩
     have hc := isChern_pull m.isMor hL
-    simp only [map_sum, IsMor.pullCohomologyTwo_cup] at hc
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, IsMor.pullCohomologyTwo_cup] at hc
     exact hc
   · intro x x' y y' hx hy
-    rw [wedgeForm_apply, wedgeForm_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [wedgeForm_apply, wedgeForm_apply, map_sum]
     refine Finset.sum_congr rfl fun k _ ↦ ?_
     rw [hx (a k), hy (b k), hx (b k), hy (a k), map_sub, map_mul, map_mul]
 

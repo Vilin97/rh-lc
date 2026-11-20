@@ -93,7 +93,8 @@ theorem UpperTheory.finiteDimensional_span_adjoin_apply_of_commuting_algebraic :
               (Submodule.mem_map_of_mem hw)
           · have hsplit : (a ^ j) w = (a ^ (j - Q.natDegree)) ((a ^ Q.natDegree) w) := by
               rw [← Module.End.mul_apply, ← pow_add, Nat.sub_add_cancel (not_lt.mp hj)]
-            rw [hsplit, hred w hw, map_neg, map_sum]
+            set_option synthInstance.maxHeartbeats 100000 in
+              rw [hsplit, hred w hw, map_neg, map_sum]
             refine U'.neg_mem (U'.sum_mem (fun i hi => ?_))
             rw [map_smul, ← Module.End.mul_apply, ← pow_add]
             refine U'.smul_mem _ (ihj _ ?_ w hw)

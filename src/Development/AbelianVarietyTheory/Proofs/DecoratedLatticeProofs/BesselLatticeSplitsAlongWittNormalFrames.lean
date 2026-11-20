@@ -204,7 +204,8 @@ theorem intIn_splitL (q : SplitPt D k) {ρ : ℕ} (B : BesLev D ρ) {n : Type} [
     rfl
   have c2 : ∀ r, FV.β r (Sum.inr ⟨ρ, by omega⟩) = (B.d.i₀.map P * F₀.β) r (Sum.inr ()) := by
     intro r
-    rw [h3 _ rfl, Matrix.mul_apply, ← hPa, Matrix.mulVec, dotProduct, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h3 _ rfl, Matrix.mul_apply, ← hPa, Matrix.mulVec, dotProduct, map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun u _ => ?_
     rw [hC.2, map_mul, Matrix.map_apply]
     simp only [hPa]

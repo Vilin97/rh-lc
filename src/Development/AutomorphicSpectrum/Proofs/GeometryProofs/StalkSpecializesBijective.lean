@@ -381,7 +381,8 @@ theorem genericFlag_pull (fn : Ω₀ →+* Ω) (fn' : Ω₀' →+* Ω') (ψ : Ω
   · exact hj.2 _ _ (hb σ)
   · simp [hd1]
   · simp [hup σ l k hlk]
-  · rw [show (fun k => ∑ l, ((u σ).map i) l k • (j.comp j₀) (c σ l)) =
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [show (fun k => ∑ l, ((u σ).map i) l k • (j.comp j₀) (c σ l)) =
         fun k => j (∑ l, u σ l k • j₀ (c σ l)) by
       funext k
       rw [map_sum]

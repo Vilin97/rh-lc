@@ -23,7 +23,8 @@ theorem eval_fibPow (H : Matrix (Fin 2) (Fin 2) ℂ) (k : ℕ) :
     refine Finset.sum_congr rfl fun f _ => ?_
     simp only [smul_eq_mul, Finset.prod_mul_distrib]
     ring
-  simp only [fibPow, map_sum, map_mul, MvPolynomial.eval_C, map_prod, MvPolynomial.eval_X]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [fibPow, map_sum, map_mul, MvPolynomial.eval_C, map_prod, MvPolynomial.eval_X]
   simp_rw [e]
   rw [MeasureTheory.integral_finsetSum _ fun f _ => ((Intg.integrable_prod_qCoef_mul_fsDens k f).mul_const _)]
   simp only [integral_mul_const]

@@ -165,7 +165,8 @@ theorem dualPack : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [AddC
       map_add' := by intro x y; ext v i; simp [add_mul] }
   have hΦ : ∀ x ∈ S, ∀ v, ‖Φ x v‖ ^ 2 = (τ v (h x x)).re := by
     intro x hx v
-    rw [EuclideanSpace.norm_sq_eq, hf x (Submodule.subset_span hx), map_sum, Complex.re_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [EuclideanSpace.norm_sq_eq, hf x (Submodule.subset_span hx), map_sum, Complex.re_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     change ‖τ v (f i x) * (Real.sqrt (τ v (h (e i) (e i))).re : ℂ)‖ ^ 2 = _
     rw [norm_mul, mul_pow, Complex.norm_real, Real.norm_eq_abs, sq_abs, Real.sq_sqrt (hnn _ _),

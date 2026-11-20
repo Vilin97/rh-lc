@@ -47,18 +47,22 @@ theorem fockT_stable_gen {E cp cm : Fin n → Fin n → Module.End ℂ W} (hC : 
   refine ⟨hE0, fun a c => ?_, ?_, ?_⟩
   · simp only [diagE, LinearMap.add_apply, map_add, hE0, zero_add, sgE]
     split_ifs with h1 h2
-    · simp only [LinearMap.sum_apply, map_sum, Module.End.mul_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp only [LinearMap.sum_apply, map_sum, Module.End.mul_apply]
       refine Finset.sum_eq_zero fun y hy => hcpcm _ _ _ _ ⟨h1.1, ?_⟩
       simpa [minusIdx] using hy
-    · simp only [LinearMap.neg_apply, LinearMap.sum_apply, map_neg, map_sum, Module.End.mul_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp only [LinearMap.neg_apply, LinearMap.sum_apply, map_neg, map_sum, Module.End.mul_apply]
       refine neg_eq_zero.mpr (Finset.sum_eq_zero fun i hi => hcpcm _ _ _ _ ⟨?_, h2.2⟩)
       simpa [plusIdx] using hi
     · simp
-  · simp only [dOp, LinearMap.sum_apply, map_sum, Module.End.mul_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [dOp, LinearMap.sum_apply, map_sum, Module.End.mul_apply]
     refine Finset.sum_eq_zero fun i hi => Finset.sum_eq_zero fun a ha => ?_
     rw [hEc, fockT_cm_cp hC hjb ⟨by simpa [plusIdx] using hi, by simpa [minusIdx] using ha⟩, hx0]
     simp
-  · simp only [dOp', LinearMap.neg_apply, LinearMap.sum_apply, map_neg, map_sum, Module.End.mul_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [dOp', LinearMap.neg_apply, LinearMap.sum_apply, map_neg, map_sum, Module.End.mul_apply]
     refine neg_eq_zero.mpr (Finset.sum_eq_zero fun i _ => Finset.sum_eq_zero fun a _ => ?_)
     rw [hEc, fockT_cm_cm hC, hx0]
     simp

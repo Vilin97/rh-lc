@@ -38,7 +38,8 @@ theorem mfact_mul_coeff_mvExp_linear [Fintype σ] (y : σ → C) (m : σ →₀ 
   classical
   have hL : (∑ s, y s • (MvPowerSeries.X s : MvPowerSeries σ C)) =
       ((∑ s, y s • (MvPolynomial.X s : MvPolynomial σ C) : MvPolynomial σ C) : MvPowerSeries σ C) := by
-    rw [← MvPolynomial.coeToMvPowerSeries.ringHom_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← MvPolynomial.coeToMvPowerSeries.ringHom_apply, map_sum]
     refine Finset.sum_congr rfl fun s _ => ?_
     rw [MvPolynomial.coeToMvPowerSeries.ringHom_apply, MvPolynomial.smul_eq_C_mul, MvPolynomial.coe_mul,
       MvPolynomial.coe_C, MvPolynomial.coe_X, MvPowerSeries.smul_eq_C_mul]

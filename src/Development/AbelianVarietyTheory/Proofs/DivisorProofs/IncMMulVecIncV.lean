@@ -57,7 +57,8 @@ theorem hA_zero_r (v : Fin n → AE F E) : hA σ J v 0 = 0 := by
 
 theorem hA_herm (hσ : ∀ a, σ (σ a) = a) (hJ : ∀ i j, σ (J j i) = J i j) (v w : Fin n → AE F E) :
     hA σ J w v = cA σ (hA σ J v w) := by
-  simp only [hA, dotProduct, Matrix.mulVec, incM, Matrix.map_apply, map_sum, map_mul, cA_cA σ hσ, cA_inclR',
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hA, dotProduct, Matrix.mulVec, incM, Matrix.map_apply, map_sum, map_mul, cA_cA σ hσ, cA_inclR',
     Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
@@ -157,7 +158,8 @@ theorem cA_incV' (σ : E →ₐ[F] E) {n : ℕ} (x : Fin n → E) :
 theorem hA_incV' (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (a b : Fin n → E) :
     hA σ J (incV F a) (incV F b) = inclR (F := F) (AF F) (form σ J a b) := by
   rw [hA, cA_incV', incM_mulVec_incV']
-  simp [form, incV, dotProduct, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [form, incV, dotProduct, map_sum, map_mul]
 
 theorem hA_ι_incV (σ : E →ₐ[F] E) {d d₁ : ℕ} (J : Matrix (Fin d) (Fin d) E) (ι : Matrix (Fin d) (Fin d₁) E)
     (w : Fin d → E) (h : ∀ u, form σ J (ι *ᵥ u) w = 0) (z : Fin d₁ → AE F E) :

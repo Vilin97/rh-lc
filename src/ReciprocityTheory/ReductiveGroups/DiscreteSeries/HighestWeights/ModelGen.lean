@@ -63,9 +63,11 @@ theorem pre_kUnit : Formalism.REAL.KUnit ε (preUnits dτ) := by
 theorem pre_dτ_stable_of_kStable (W : Submodule ℂ V) (hW : Formalism.REAL.KStable ε (preUnits dτ) W) :
     ∀ Y, inK ε Y → ∀ v ∈ W, dτ Y v ∈ W := by
   intro Y hY v hv
-  rw [Matrix.matrix_eq_sum_single Y, map_sum, _root_.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.matrix_eq_sum_single Y, map_sum, _root_.sum_apply]
   refine W.sum_mem fun a _ => ?_
-  rw [map_sum, _root_.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, _root_.sum_apply]
   refine W.sum_mem fun b _ => ?_
   by_cases hab : ε a = ε b
   · have e : Matrix.single a b (Y a b) = Y a b • Matrix.single a b 1 := by

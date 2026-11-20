@@ -91,7 +91,8 @@ theorem csum_toF_at {v0 : InfinitePlace K} (hv0 : IsConjAt v0) {s : ℕ} (h : B.
   rw [hm]
   push_cast
   congr 1
-  simp only [dotProduct, Matrix.mulVec, Pi.star_apply, map_sum, map_mul, Matrix.map_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dotProduct, Matrix.mulVec, Pi.star_apply, map_sum, map_mul, Matrix.map_apply]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [hv0]
   rfl

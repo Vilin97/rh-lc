@@ -93,7 +93,8 @@ private theorem trace_form {W : Type} [AddCommGroup W] [Module ℂ W] [FiniteDim
   have h2 : a = ∑ i, (b.coord i).smulRight (a (b i)) := by
     refine b.ext fun j => ?_
     simp [Finsupp.single_apply]
-  rw [h2, map_sum, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h2, map_sum, map_sum, Finset.sum_mul]
   exact Finset.sum_congr rfl fun i _ => h1 _ _
 
 private theorem free_etale_sheaf_zmod_exists_hom_sending_generator {A : Subalgebra ℂ (Module.End ℂ F)} [Nontrivial F] (hA : Faith A) {Θ : Module.End ℂ F}

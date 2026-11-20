@@ -131,7 +131,8 @@ theorem UpperTheory.V.Z.Sym.So.extF :
         intro r
         rw [show ι γ * ↑s * u * (u⁻¹ * ↑r * u) = ι γ * ↑(s * r) * u by
           simp only [Subgroup.coe_mul]; group, Φ_spec _ _ _ hu]
-      rw [Finset.sum_congr rfl (fun r _ => e5 r), ← map_sum (W γ),
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Finset.sum_congr rfl (fun r _ => e5 r), ← map_sum (W γ),
         ← (dcBasic S V (U.subgroupOf S) a hfinS ψ hψU').2.2.2.2 R hR1 hR2 s, heig, Pi.smul_apply,
         map_smul]
     · rw [hval 1 U.one_mem, Φ_neg _ hg, smul_zero]

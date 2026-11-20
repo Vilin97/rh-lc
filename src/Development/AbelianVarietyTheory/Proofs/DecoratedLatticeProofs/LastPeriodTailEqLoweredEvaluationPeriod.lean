@@ -63,7 +63,8 @@ theorem tailTop_eq_of_pin : ∀ {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} (
         exact (congrFun (hC.rdq B.R.m le_rfl β ψ _) _).trans (hev c _)
       rw [e2, ellTop_apply, hst c, heL c]
       field_simp
-    rw [Finset.sum_congr rfl fun c _ => hterm c, ← Finset.mul_sum, ← LinearMap.sum_apply, ← map_sum, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_congr rfl fun c _ => hterm c, ← Finset.mul_sum, ← LinearMap.sum_apply, ← map_sum, ← map_sum]
     have e3 : ∑ c, Pi.single c (eW Lz c) = eW Lz := Finset.univ_sum_single _
     rw [e3, LinearEquiv.symm_apply_apply, ← hper, hLz]
     rfl

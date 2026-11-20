@@ -70,7 +70,8 @@ theorem lvlAvgF_eig (f : S.Forms) (q : P) :
     act (q : G₀) (lvlAvgF act P ψ f) = ((ψ q : Kˣ) : K) • lvlAvgF act P ψ f := by
   classical
   unfold lvlAvgF
-  rw [map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.smul_sum]
   refine Fintype.sum_equiv (Equiv.mulLeft q) _ _ fun p => ?_
   rw [map_smul, ← Module.End.mul_apply, ← map_mul, Equiv.coe_mulLeft, smul_smul, Subgroup.coe_mul]
   congr 1
@@ -122,7 +123,8 @@ theorem cutAvgL_ext (f : S.Forms) :
   funext h
   rw [cutAvgL_apply, ← Bridge.ClassPres.extL_apply pres (lvlAvgF act P ψ f)]
   unfold lvlAvgF
-  rw [map_sum, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_apply]
   refine Finset.sum_congr rfl fun p _ => ?_
   rw [map_smulₛₗ, Bridge.ClassPres.extL_apply,
     tie.act_eq (p : G₀) _ (tie.red_surj (p : G₀)).choose_spec f, Pi.smul_apply, Bridge.g0Act, mul_smul]
@@ -161,7 +163,8 @@ theorem ext_lvlForm_mem_span (x : Fin (S.lvlDim act P ψ) → K) :
     simp [Finset.sum_apply, Pi.single_apply]
   have e : pres.ext (lvlForm S act P ψ x).1 =
       ∑ a, σ (x a) • pres.ext (lvlForm S act P ψ (Pi.single a 1)).1 := by
-    rw [← lvlFormL_apply, ← Bridge.ClassPres.extL_apply, hx, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← lvlFormL_apply, ← Bridge.ClassPres.extL_apply, hx, map_sum, map_sum]
     refine Finset.sum_congr rfl fun a _ => ?_
     rw [map_smul, map_smulₛₗ, Bridge.ClassPres.extL_apply, lvlFormL_apply]
     simp [Pi.single_apply]
@@ -198,7 +201,8 @@ variable {G Γ W K : Type} [Group G] [Group Γ] [NormedAddCommGroup W] [InnerPro
 
 theorem ext_lvlForm_single (a : Fin (S.lvlDim act P ψ)) :
     pres.ext (lvlForm S act P ψ (Pi.single a 1)).1 = ∑ i, σ (S.lvlE act P ψ i a) • pres.ext (S.basis i).1 := by
-  rw [← Bridge.ClassPres.extL_apply, lvlForm_eq_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Bridge.ClassPres.extL_apply, lvlForm_eq_sum, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_smulₛₗ, Bridge.ClassPres.extL_apply]
   simp [Matrix.mulVec_single_one]

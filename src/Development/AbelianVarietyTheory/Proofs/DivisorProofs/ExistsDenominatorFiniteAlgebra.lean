@@ -52,7 +52,8 @@ theorem GlobalTheory.exists_element_eval_eq_const_mul_of_finite_points : ∀ (R 
     (fun ψ => f ψ / ψ (e ψ))
   choose m hm using fun ψ => hc ψ (Finset.mem_univ _)
   refine ⟨c, ∑ ψ, m ψ • e ψ, nonZeroDivisors.ne_zero c.2, fun ψ0 => ?_⟩
-  rw [map_sum, Finset.sum_eq_single ψ0]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_eq_single ψ0]
   · rw [map_smul, Algebra.smul_def, hm ψ0, Algebra.smul_def]
     rw [_root_.mul_assoc, div_mul_cancel₀ _ (he1 ψ0)]
   · intro ψ _ hne

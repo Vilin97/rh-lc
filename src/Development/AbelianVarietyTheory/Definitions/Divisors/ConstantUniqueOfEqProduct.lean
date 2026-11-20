@@ -134,7 +134,8 @@ theorem hatC_phiHat {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host D.hos
     congr 1
     push_cast
     field_simp
-  rw [phiHat, hatC, finsum_eq_sum_of_fintype, finsum_eq_sum_of_fintype, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [phiHat, hatC, finsum_eq_sum_of_fintype, finsum_eq_sum_of_fintype, map_sum]
   refine Finset.sum_congr rfl fun x _ => ?_
   rw [map_mul, map_zpow₀, hz]
 

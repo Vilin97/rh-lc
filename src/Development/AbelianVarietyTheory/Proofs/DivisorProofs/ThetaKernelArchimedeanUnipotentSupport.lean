@@ -86,11 +86,13 @@ theorem mul_eq_zero_of_supp (S : Finset (Pl F)) {m n k : ℕ} (A : Matrix (Fin m
     have h0 : fstA F (infOne (F := F)) = 1 := rfl
     have hl : ∀ w : Pl F, fstA F (GlobalTheory.LatVac.liftV w 1) = 0 := fun w => rfl
     have : fstA F (1 - e) = 0 := by
-      rw [he, map_sub, map_one, map_add, map_sum, h0, Finset.sum_eq_zero fun w _ => hl w, add_zero, sub_self]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [he, map_sub, map_one, map_add, map_sum, h0, Finset.sum_eq_zero fun w _ => hl w, add_zero, sub_self]
     rw [this, map_zero]
   have h2 : ∀ w ∈ S, evFin F w (1 - e) = 0 := by
     intro w hw
-    rw [he, map_sub, map_one, map_add, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [he, map_sub, map_one, map_add, map_sum]
     have h0 : evFin F w (infOne (F := F)) = 0 := by
       change evalV F w (sndA F infOne) = 0
       have : sndA F (infOne (F := F)) = 0 := rfl

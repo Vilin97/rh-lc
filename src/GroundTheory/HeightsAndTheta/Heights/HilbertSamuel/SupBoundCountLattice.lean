@@ -440,7 +440,8 @@ theorem exists_isSecBasisM (y : (Σ k, ι k) → Ω) (k₀ : K) (n : ℕ) :
   have hle : N ≤ Submodule.span ℤ T := by
     refine Submodule.span_le.2 ?_
     rintro _ ⟨g, hg, rfl⟩
-    rw [g.as_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [g.as_sum, map_sum]
     refine Submodule.sum_mem _ fun m hm => ?_
     rw [← mul_one (AddMonoidAlgebra.coeff g m), ← smul_eq_mul, ← smul_monomial, map_zsmul]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨m, fun k => hg m hm k, rfl⟩)

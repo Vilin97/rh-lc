@@ -42,7 +42,8 @@ theorem adAt_eq_zero_of_prV (P : HeightOneSpectrum (𝓞 E)) (z : AfE F E) (h : 
   obtain ⟨c, rfl⟩ := TensorProduct.eq_repr_basis_left b z
   have h1 : (c.mapRange (evalV F (P.under (𝓞 F))) (map_zero _)).sum (fun i n => b i ⊗ₜ[F] n) = 0 := by
     rw [Finsupp.sum_mapRange_index (fun i => TensorProduct.tmul_zero _ _)]
-    rw [Finsupp.sum, map_sum] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finsupp.sum, map_sum] at h
     rw [Finsupp.sum]
     exact h
   have h2 := TensorProduct.sum_tmul_basis_left_eq_zero b _ h1
@@ -50,7 +51,8 @@ theorem adAt_eq_zero_of_prV (P : HeightOneSpectrum (𝓞 E)) (z : AfE F E) (h : 
     have h4 := DFunLike.congr_fun h2 i
     have h5 : evalV F (P.under (𝓞 F)) (c i) = 0 := by simpa using h4
     exact h5
-  rw [Finsupp.sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finsupp.sum, map_sum]
   refine Finset.sum_eq_zero fun i _ => ?_
   have e : b i ⊗ₜ[F] c i = (b i ⊗ₜ[F] (1 : FiniteAdeleRing (𝓞 F) F)) * ((1 : E) ⊗ₜ[F] c i) := by
     simp [Algebra.TensorProduct.tmul_mul_tmul]
@@ -148,8 +150,10 @@ theorem isPtOf_rat {hc : Formalism.BasicNotions.CMData F E} {ST SG Q : Finset (H
       show (γ.1 * p.1.2 P * (((1 : GLQ E n Q) P)⁻¹).1) _ = _
       simp
       rfl
-    rw [e, ← ufGL_mulVec', Units.val_mul, Matrix.mul_apply, map_sum]
-    simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, ratAd_val, Matrix.map_apply, adAt_inclE, h.fr]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, ← ufGL_mulVec', Units.val_mul, Matrix.mul_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, ratAd_val, Matrix.map_apply, adAt_inclE, h.fr]
 
 end GenR
 
@@ -390,7 +394,8 @@ theorem isPtOf_tilFr {hc : Formalism.BasicNotions.CMData F E} {N n : ℕ} (hN : 
       ∑ j, adAt F P ((k⁻¹ : GL (Fin N) (AfE F E)).1 i j) * adAt F P (pullV (extGL hN y) x j) := by
     intro P x i
     rw [hpull]
-    simp only [Matrix.mulVec, dotProduct, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, dotProduct, map_sum, map_mul]
   refine ⟨mul_mem (extGL_mem_ustd hN hy.uni) hku, fun x => ?_, fun P x hx i hi => ?_, fun w x hx i => ?_, fun P => isEmptyElim P⟩
   · have e : ((extGL hN y * k)⁻¹ : GL (Fin N) (AfE F E)).1 *ᵥ x =
         (k⁻¹ : GL (Fin N) (AfE F E)).1 *ᵥ (((extGL hN y)⁻¹ : GL (Fin N) (AfE F E)).1 *ᵥ x) := by

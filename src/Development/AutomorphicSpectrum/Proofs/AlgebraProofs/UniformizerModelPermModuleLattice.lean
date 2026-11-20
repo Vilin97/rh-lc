@@ -16,7 +16,8 @@ theorem toMultiset_allOne (q : ℕ) : (allOne q).toMultiset = Finset.univ.val :=
   simp [allOne, Finsupp.count_toMultiset, Finsupp.finset_sum_apply, Finsupp.single_apply]
 
 theorem degree_allOne (q : ℕ) : (allOne q).degree = q := by
-  simp [allOne, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [allOne, map_sum]
 
 theorem isHomogeneous_allOne (q n : ℕ) (h : q = n) :
     (monomial (allOne q) (1 : ℤ) : MvPolynomial (Fin q) ℤ).IsHomogeneous n :=

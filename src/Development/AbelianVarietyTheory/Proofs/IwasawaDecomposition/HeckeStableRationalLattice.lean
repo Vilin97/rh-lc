@@ -36,7 +36,8 @@ theorem exists_integral_functional {O K V : Type} [CommRing O] [IsDomain O] [IsP
     obtain ⟨a, ha⟩ := (Submodule.mem_span_range_iff_exists_fun K).mp h
     have h0 : ∑ i, a i • ((e i : N') : V ⧸ (K ∙ v)) = 0 := by
       have h1 := congrArg q ha
-      rw [map_sum, hqv] at h1
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, hqv] at h1
       simpa only [map_smul, hq'] using h1
     have := Fintype.linearIndependent_iff.mp hli a h0
     apply hv
@@ -51,7 +52,8 @@ theorem exists_integral_functional {O K V : Type} [CommRing O] [IsDomain O] [IsP
       have h3 := congrArg Subtype.val (e.sum_repr n')
       rw [Submodule.coe_sum] at h3
       exact h3.symm
-    rw [map_sub, map_sum, sub_eq_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_sum, sub_eq_zero]
     refine h2.trans (Finset.sum_congr rfl fun i _ => ?_)
     rw [q.map_smul_of_tower, hq']
   obtain ⟨c, hc⟩ := Submodule.mem_span_singleton.mp ((Submodule.Quotient.mk_eq_zero _).mp h1)
@@ -60,7 +62,8 @@ theorem exists_integral_functional {O K V : Type} [CommRing O] [IsDomain O] [IsP
     exact N.sub_mem hn (N.sum_mem fun i _ => N.smul_mem _ (hm i)))
   refine ⟨o, ?_⟩
   have h3 := congrArg f hc
-  rw [map_sub, map_sum, map_smul] at h3
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sub, map_sum, map_smul] at h3
   simp only [f.map_smul_of_tower, hfm, smul_zero, Finset.sum_const_zero, sub_zero, smul_eq_mul] at h3
   rw [ho, LinearMap.smul_apply, ← h3, smul_eq_mul]
   field_simp
@@ -86,7 +89,8 @@ theorem exists_integral_reading {LL : Type} [Field LL] [NumberField LL] (L0 : In
     intro a
     rw [← B.sum_repr a]
     push_cast
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine N.sum_mem fun i _ => ?_
     rw [map_zsmul]
     exact zsmul_mem (Submodule.subset_span (Set.mem_range_self (f := fun i => ι (B i : LL)) i)) _
@@ -115,7 +119,8 @@ theorem mem_span_solutions {R O : Type} [CommRing R] [CommRing O] [Algebra R O] 
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul a c =>
-      simp only [LinearMap.lTensor_tmul, TensorProduct.piScalarRight_apply, TensorProduct.piScalarRightHom_tmul, hg,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [LinearMap.lTensor_tmul, TensorProduct.piScalarRight_apply, TensorProduct.piScalarRightHom_tmul, hg,
         Algebra.smul_def, map_sum, map_mul, Finset.sum_mul]
       exact Finset.sum_congr rfl fun t _ => by ring
     | add x y hx hy => simp only [map_add, Pi.add_apply, hx, hy, add_mul, Finset.sum_add_distrib]
@@ -193,7 +198,8 @@ theorem exists_integral_descent {LL : Type} [Field LL] [NumberField LL] (L0 : In
     rw [map_smul, Finsupp.smul_apply, smul_eq_mul, hlx, mul_smul]
   · intro f fr hf x
     conv_lhs => rw [← B.sum_repr x]
-    rw [map_sum, map_sum, hΦ x, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum, hΦ x, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_smul, hB, ← hf ⟨bs k, hb k⟩, key, map_smul, LinearMap.baseChange_tmul]
   · intro w
@@ -259,7 +265,8 @@ theorem exists_integral_descent {LL : Type} [Field LL] [NumberField LL] (L0 : In
   have hsol := mem_span_solutions (fun t (q : κ × Fin n) => A (t, q)) o (by
     rintro ⟨a, k⟩
     apply hinj
-    simp only [map_sum, map_mul, hs, hA', map_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, hs, hA', map_zero]
     have := congrArg (rd ((d : 𝓞 L0) : L0) * ·) (hrel a k)
     simp only [Finset.mul_sum, mul_zero] at this
     rw [← this]
@@ -268,14 +275,16 @@ theorem exists_integral_descent {LL : Type} [Field LL] [NumberField LL] (L0 : In
   rintro _ ⟨c, hc, rfl⟩
   refine ⟨c, fun a => B.repr.injective (Finsupp.ext fun k => ?_), fun t => hs _⟩
   have h1 := congrArg (fun z : 𝓞 L0 => (z : L0)) (hc (a, k))
-  simp only [RingOfIntegers.coe_eq_algebraMap, map_sum, map_mul, map_zero] at h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [RingOfIntegers.coe_eq_algebraMap, map_sum, map_mul, map_zero] at h1
   simp only [← RingOfIntegers.coe_eq_algebraMap, hA'] at h1
   have h2 : ∑ t, (c t : L0) * α (t, a, k) = 0 := by
     apply mul_left_cancel₀ hd0
     rw [mul_zero, ← h1, Finset.mul_sum]
     exact Finset.sum_congr rfl fun t _ => by ring
   have h3 := congrArg (fun z : L0 => (z : LL)) h2
-  simp only [map_sum, map_smul, Finsupp.finset_sum_apply, Finsupp.smul_apply, smul_eq_mul, hα, map_zero, Finsupp.zero_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, Finsupp.finset_sum_apply, Finsupp.smul_apply, smul_eq_mul, hα, map_zero, Finsupp.zero_apply]
   simpa using h3
 
 theorem normV_isUnit (D : D7) (T : TwR D.LL0 D.nd) (i : T.Tw) (w : PlE D.host) (hw : w ∉ T.S0 i) :
@@ -457,7 +466,8 @@ theorem GlobalTheory.HeightCounting.FormsStep.hkStab_all : ∀ (D : D7) (cf : Ch
   haveI : Fintype ↥(Formalism.IndefR.NX.U D.nd) := Fintype.ofFinite _
   have hsol := hrel (fun t a => eqL D S In.θ j a (w t)) (fun t a => eqL_rational D S In j h1 h2 W0 hW0 hW0c a (w t)) o (by
     intro a
-    rw [← hx0 a, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hx0 a, map_sum]
     refine Finset.sum_congr rfl fun t _ => ?_
     rw [hET, LinearMap.map_smul_of_tower])
   clear hx0 hx
@@ -465,7 +475,8 @@ theorem GlobalTheory.HeightCounting.FormsStep.hkStab_all : ∀ (D : D7) (cf : Ch
   | mem o ho =>
     obtain ⟨c, hc0, hco⟩ := ho
     have h3 : ∑ t, o t • Φ (w t) = Φ (∑ t, ((c t : ↥D.LL0) : D.what₂.LL) • (w t : S.WL j)) := by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun t _ => ?_
       rw [hc, ← hco, algebraMap_smul]
     rw [h3]
@@ -474,7 +485,8 @@ theorem GlobalTheory.HeightCounting.FormsStep.hkStab_all : ∀ (D : D7) (cf : Ch
         (RingOfIntegers.isIntegral_coe (c t)).map (algebraMap ↥D.LL0 D.what₂.LL).toIntAlgHom⟩
       have h4 := Submodule.smul_mem _ a (Submodule.subset_span (R := 𝓞 D.what₂.LL) (s := ((S.A j).MK : Set (S.WL j))) (hwM t))
       rwa [← algebraMap_smul D.what₂.LL a] at h4
-    · rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [map_sum]
       simpa only [map_smul] using hc0 a
   | zero => simp
   | add o o' _ _ ho ho' =>

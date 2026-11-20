@@ -44,7 +44,8 @@ theorem exists_left_inv {B : Type} [CommRing B] {n : ℕ} (φ : ZMod n →+* B) 
       rw [smul_assoc]
     have h2 : ∀ k, φ (e (b k • a • x) y) = ∑ l, ((b.repr (a * b k) l : ℤ) : B) * φ (e (b l • x) y) := by
       intro k
-      rw [h1, map_sum, AddMonoidHom.finset_sum_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [h1, map_sum, AddMonoidHom.finset_sum_apply, map_sum]
       refine Finset.sum_congr rfl fun l _ => ?_
       rw [map_zsmul, AddMonoidHom.zsmul_apply, map_zsmul, zsmul_eq_mul]
     simp only [Λ, h2, Finset.mul_sum]
@@ -63,7 +64,8 @@ theorem exists_left_inv {B : Type} [CommRing B] {n : ℕ} (φ : ZMod n →+* B) 
       funext j
       simp [Pi.single_apply]
     have := congrArg (Λh y) hx
-    rw [map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at this
     simpa [Λh, Λsmul] using this
   let f : Fin N × Module.Free.ChooseBasisIndex ℤ (𝓞 E) → (Fin N → 𝓞 E) →+ ZMod n := fun q =>
     AddMonoidHom.mk' (fun y => ((b.repr (c (y q.1)) q.2 : ℤ) : ZMod n)) (by
@@ -169,20 +171,24 @@ theorem gram_unit : ∀ (A K : Type) [CommRing A] [Field K] [Algebra A K] [CharZ
   have hu' : ∑ k, uB k * cc k = 1 := by
     have : ∑ k, u k * g k = 1 := by
       apply hAK
-      rw [map_sum, map_one, ← hu]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, map_one, ← hu]
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [map_mul, hg]
-    simp only [uB, cc, ← map_mul, ← map_sum, this, map_one]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [uB, cc, ← map_mul, ← map_sum, this, map_one]
   have hcc : ∀ (a : 𝓞 E) l, ∑ k, cc k * (((b.repr (a * b k) l : ℤ)) : A ⧸ I) = s a * cc l := by
     intro a l
     have : ∑ k, g k * (((b.repr (a * b k) l : ℤ)) : A) = ψ a * g l := by
       apply hAK
-      rw [map_sum, map_mul, hψ, hg, mul_left_comm, ← map_mul, GlobalTheory.CompanionTheory.Ar.HT.ProjEig.mul_dualInt_eq,
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, map_mul, hψ, hg, mul_left_comm, ← map_mul, GlobalTheory.CompanionTheory.Ar.HT.ProjEig.mul_dualInt_eq,
         map_sum, Finset.mul_sum]
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [map_mul T, hg, map_mul σ, map_intCast σ, map_intCast T]
       ring
-    simp only [cc, s, RingHom.comp_apply, ← map_intCast mkB, ← map_mul, ← map_sum, this]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [cc, s, RingHom.comp_apply, ← map_intCast mkB, ← map_mul, ← map_sum, this]
   have hc' : ∀ a, RingOfIntegers.mapRingEquiv c (RingOfIntegers.mapRingEquiv c a) = a := by
     intro a
     apply RingOfIntegers.ext
@@ -191,7 +197,8 @@ theorem gram_unit : ∀ (A K : Type) [CommRing A] [Field K] [Algebra A K] [CharZ
   have hΓ : mkB.mapMatrix Gm = Matrix.of fun i j =>
       ∑ k, cc k * φ (D.e (Pi.single i (b k)) (Pi.single j 1)) := by
     ext i j
-    simp only [RingHom.mapMatrix_apply, Matrix.map_apply, Matrix.of_apply, Gm, map_sum, map_mul, hφ, cc]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [RingHom.mapMatrix_apply, Matrix.map_apply, Matrix.of_apply, Gm, map_sum, map_mul, hφ, cc]
   have hβΓ : β * mkB.mapMatrix Gm = 1 := by
     rw [hΓ]
     ext j₀ j
@@ -210,7 +217,8 @@ theorem gram_unit : ∀ (A K : Type) [CommRing A] [Field K] [Algebra A K] [CharZ
     exact hβΓ)
   refine ⟨Gm, H, Z, Z', ?_, hZ, hZ'⟩
   intro i j
-  simp only [Gm, Matrix.of_apply, map_sum, map_mul, map_natCast, hg]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Gm, Matrix.of_apply, map_sum, map_mul, map_natCast, hg]
   unfold GlobalTheory.CompanionTheory.Ar.HT.HTChart.gram
   rfl
 

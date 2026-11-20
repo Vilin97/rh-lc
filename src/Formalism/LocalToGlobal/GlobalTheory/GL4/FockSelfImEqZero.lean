@@ -170,7 +170,8 @@ theorem fock_adjoint_exists {κ ι : Type} (V : Submodule ℂ (MvPolynomial κ �
       simp only [Submodule.coe_sum, Submodule.coe_smul] at h2 ⊢
       exact h2.symm
     conv_rhs => rw [hv]
-    rw [map_sum, fockF_finset_sum_right]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, fockF_finset_sum_right]
     simp only [map_smul, fockF_smul_right_eq_star_mul, LinearMap.sum_apply, LinearMap.smulRight_apply,
       fockF_finset_sum_left, fockF_smul_left', fockLin_apply]
     refine Finset.sum_congr rfl fun l _ => ?_

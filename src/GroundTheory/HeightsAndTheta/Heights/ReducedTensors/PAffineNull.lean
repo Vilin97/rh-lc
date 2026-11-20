@@ -42,7 +42,8 @@ theorem AffineNull.proof (h : BaseChangeReduced.Statement) : AffineNull.Statemen
       RingOfIntegers.coe_ne_zero_iff.mpr (nonZeroDivisors.ne_zero b.2)
     have hsum : ∑ i, a i • z i = 0 := by
       have : ∑ i, a i • z i = ofComplex σ (σ ((b : 𝓞 K) : K) * ∑ i, c i • w i) := by
-        rw [Finset.mul_sum, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [Finset.mul_sum, map_sum]
         refine Finset.sum_congr rfl fun i _ ↦ ?_
         rw [ComplexAt.smul_def, Algebra.smul_def, RingHom.algebraMap_toAlgebra, ← mul_assoc,
           ← map_mul, show ((a i : 𝓞 K) : K) = (b : 𝓞 K) * c i from (ha i).trans (Algebra.smul_def _ _)]
@@ -84,7 +85,8 @@ theorem AffineNull.proof (h : BaseChangeReduced.Statement) : AffineNull.Statemen
       rw [e0, e1, ← smul_tmul, Algebra.smul_def, mul_one]
       exact e2
     have := hf φ hφ
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Eq.trans (Finset.sum_congr rfl fun i _ ↦ ?_) this
     rw [show w i ⊗ₜ[K] r i = w i • ((1 : ℂ) ⊗ₜ[K] r i) by rw [smul_tmul', smul_eq_mul, mul_one],
       map_smul, smul_eq_mul]

@@ -46,7 +46,8 @@ def act (c : Coef l) (n : ℕ) (B : Matrix (Fin 2) (Fin 2) c.O) :
 theorem act_redV (c : Coef l) (n : ℕ) (B : Matrix (Fin 2) (Fin 2) c.O) (x : Fin 2 → c.O) :
     act c n B (redV c n x) = redV c n (B *ᵥ x) := by
   funext i
-  simp only [act, AddMonoidHom.coe_mk, ZeroHom.coe_mk, redV, mulR_red, Matrix.mulVec, dotProduct,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [act, AddMonoidHom.coe_mk, ZeroHom.coe_mk, redV, mulR_red, Matrix.mulVec, dotProduct,
     map_sum]
 
 variable {Ω : Type} [Field Ω] [Algebra ℚ Ω]

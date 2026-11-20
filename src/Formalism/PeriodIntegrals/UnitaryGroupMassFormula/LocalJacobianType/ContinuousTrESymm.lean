@@ -172,7 +172,8 @@ theorem trC_injective : Function.Injective (trC (E := E) v) := by
     funext i
     have h1 := congrFun hy i
     rw [trC_apply, ← (bas (E := E) v).sum_equivFun y, Finset.mul_sum] at h1
-    simp only [mul_smul_comm, map_sum, map_smul, smul_eq_mul] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [mul_smul_comm, map_sum, map_smul, smul_eq_mul] at h1
     rw [Pi.zero_apply] at h1
     rw [Pi.zero_apply, ← h1, Matrix.mulVec, dotProduct]
     refine Finset.sum_congr rfl fun j _ => ?_

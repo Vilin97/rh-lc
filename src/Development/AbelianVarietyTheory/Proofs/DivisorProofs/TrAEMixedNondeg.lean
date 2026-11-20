@@ -69,7 +69,8 @@ theorem trAE_trace_dual {F E A ι : Type} [Field F] [Field E] [Algebra F E] [Fin
     (β : A ⊗[F] E) (j : ι) :
     Algebra.trace A (A ⊗[F] E) (β * (1 ⊗ₜ[F] b.traceDual j)) = (Algebra.TensorProduct.basis A b).repr β j := by
   conv_lhs => rw [← (Algebra.TensorProduct.basis A b).sum_repr β]
-  rw [Finset.sum_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.sum_mul, map_sum]
   have key : ∀ i, Algebra.trace A (A ⊗[F] E) ((Algebra.TensorProduct.basis A b) i * (1 ⊗ₜ[F] b.traceDual j)) =
       if i = j then 1 else 0 := by
     intro i

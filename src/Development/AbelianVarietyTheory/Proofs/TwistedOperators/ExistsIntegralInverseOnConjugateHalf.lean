@@ -39,7 +39,8 @@ theorem exists_int_inv_half : ∀ (D : D7) (P : Finset (Formalism.L2.DIV.Pl D.ho
   have hsE : (s : D.host.E) ≠ 0 := by
     intro h; apply hs0; exact RingOfIntegers.ext (by simpa using h)
   refine ⟨cA D (∑ PP ∈ P, es PP) * incA D ((s : D.host.E)⁻¹), ?_, ?_⟩
-  · rw [map_sum, Finset.sum_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum, Finset.sum_mul, map_sum]
     refine sum_mem fun PP hPP => ?_
     have hc0 : Formalism.L2.Col.cO D.host.E s ≠ 0 := by
       intro h0; apply hs0

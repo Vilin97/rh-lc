@@ -89,7 +89,8 @@ theorem Datum.finrank_algO (D : Datum p) : Module.finrank ℚ D.algO = D.m ^ 2 *
       obtain ⟨q, x, rfl⟩ := D.exists_of_mem_algO hg
       refine Submodule.smul_mem _ q ?_
       have hx : D.actQ x = f x := rfl
-      rw [hx, ← b.sum_repr x, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hx, ← b.sum_repr x, map_sum]
       refine Submodule.sum_mem _ fun i _ => ?_
       rw [map_zsmul, ← Int.cast_smul_eq_zsmul ℚ]
       exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)

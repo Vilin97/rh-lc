@@ -22,7 +22,8 @@ theorem map_eq_zero_of_repr {F A E R ι : Type} [Field F] [CommRing A] [CommRing
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [Algebra.TensorProduct.basis_apply, Algebra.TensorProduct.tmul_mul_tmul, TensorProduct.smul_tmul', smul_eq_mul,
       one_mul]
-  rw [hs, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hs, map_sum]
   refine Finset.sum_eq_zero fun i _ => ?_
   rw [map_mul, hc i, zero_mul]
 

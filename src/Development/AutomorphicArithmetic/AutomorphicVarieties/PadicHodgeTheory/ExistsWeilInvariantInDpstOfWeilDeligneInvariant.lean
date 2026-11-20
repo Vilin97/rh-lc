@@ -28,7 +28,8 @@ private theorem UpperTheory.fixed_vector_descends_weil_group {Γ I K D W : Type}
   let E : Module.End K D := ∑ q : I ⧸ (a.comp j).ker, a (j q.out)
   let E' : Module.End ℂ W := ∑ q : I ⧸ (a.comp j).ker, b (j q.out)
   have hE : ∀ x s, a (j s) (E x) = E x := fun x s => by
-    simp only [E, LinearMap.sum_apply, map_sum, ha]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [E, LinearMap.sum_apply, map_sum, ha]
     refine Fintype.sum_equiv (Equiv.mulLeft (s : I ⧸ (a.comp j).ker)) _ _ fun q => ?_
     rw [Equiv.coe_mulLeft, map_mul, Module.End.mul_apply]
     rfl
@@ -37,7 +38,8 @@ private theorem UpperTheory.fixed_vector_descends_weil_group {Γ I K D W : Type}
   have hE2 : E' y = n • y := by
     simp only [E', LinearMap.sum_apply, hi, Finset.sum_const, Finset.card_univ, n]
   have hEE : ∀ x, E' (mk x) = mk (E x) := fun x => by
-    simp only [E, E', LinearMap.sum_apply, hc, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [E, E', LinearMap.sum_apply, hc, map_sum]
   have hcan : ∀ z : D, n • z = 0 → z = 0 := fun z hz => by
     rw [← Nat.cast_smul_eq_nsmul K] at hz
     exact (smul_eq_zero.mp hz).resolve_left hn0

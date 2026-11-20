@@ -84,7 +84,8 @@ theorem map_plk {ι : Type} {k : ℕ} {S' : Type} [CommRing S'] (φ : S →+* S'
 theorem map_cellVec {ι : Type} {S' : Type} [CommRing S'] (φ : S →+* S') (c : Let m → ι → S) (w : Pm m)
     (x : CellVar m → S) (z : Let m) : φ ∘ cellVec c w x z = cellVec (fun z => φ ∘ c z) w (φ ∘ x) z := by
   funext r
-  simp only [cellVec, Function.comp_apply, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [cellVec, Function.comp_apply, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum, map_mul]
   refine Finset.sum_congr rfl fun i _ => ?_
   congr 1
   unfold cell
@@ -93,7 +94,8 @@ theorem map_cellVec {ι : Type} {S' : Type} [CommRing S'] (φ : S →+* S') (c :
 theorem LeftInv.map {ι : Type} {S' : Type} [CommRing S'] (φ : S →+* S') {D c : ι → Fin M → S} (h : LeftInv D c) :
     LeftInv (fun z => φ ∘ D z) (fun z => φ ∘ c z) := fun z z' => by
   have := congrArg φ (h z z')
-  simp only [map_sum, map_mul] at this
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul] at this
   refine this.trans ?_
   split_ifs <;> simp
 

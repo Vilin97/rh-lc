@@ -328,7 +328,8 @@ theorem toAllS_expPtS (o : Orb) (g col : Fin 2) (i : Fin dd) :
   have h0 : ∀ x : Fin 2 × Fin dd, MvPowerSeries.constantCoeff (∑ c : I0 o, (Y.rawSelf (p o)).u g c x •
       (MvPowerSeries.X (⟨g, c⟩ : WV (IS I0 o)) : MvPowerSeries (WV (IS I0 o)) C)) = 0 := by
     intro m
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_eq_zero fun c _ => ?_
     rw [MvPowerSeries.smul_eq_C_mul, map_mul, MvPowerSeries.constantCoeff_X, mul_zero]
   show MvPowerSeries.subst _ (MvPowerSeries.subst _ (MvPowerSeries.subst

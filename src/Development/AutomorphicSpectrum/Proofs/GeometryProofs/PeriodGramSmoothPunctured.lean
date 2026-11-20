@@ -193,7 +193,8 @@ theorem exists_basis {n a : ℕ} {Λ : Type} [AddCommGroup Λ] (L : Flat.LogPeri
     have h1 : L.E (c i) (b j) = b.coord i (b j) := by rw [hc]
     have h2 : c i = ∑ k, b.repr (c i) k • b k := (b.sum_repr (c i)).symm
     rw [h2] at h1
-    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul] at h1
     simp only [Matrix.mul_apply, C, M, Matrix.of_apply]
     rw [h1]
     simp [Matrix.one_apply, Finsupp.single_apply, eq_comm]

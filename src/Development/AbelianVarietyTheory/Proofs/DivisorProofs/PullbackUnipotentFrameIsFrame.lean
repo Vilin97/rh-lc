@@ -41,7 +41,8 @@ theorem isFrame_cols {X : Scheme.{0}} {F : X.Modules} {V : X.Opens} {m : ℕ} {e
   have key : ⇑(Fintype.linearCombination Γ(X, W) fun j => resM F h (∑ l, M l j • e l)) =
       ⇑(Fintype.linearCombination Γ(X, W) fun i => resM F h (e i)) ∘ (M.map (resG X h)).mulVec := by
     funext a
-    simp only [Function.comp_apply, Fintype.linearCombination_apply, map_sum, resM_smul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Function.comp_apply, Fintype.linearCombination_apply, map_sum, resM_smul,
       Finset.smul_sum, Matrix.mulVec, dotProduct, Finset.sum_smul, Matrix.map_apply, smul_smul]
     rw [Finset.sum_comm]
     simp only [mul_comm]

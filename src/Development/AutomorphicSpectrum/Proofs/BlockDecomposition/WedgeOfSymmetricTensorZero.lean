@@ -54,7 +54,8 @@ theorem wedgeT_eq_zero_of_basis {ι : Type} [Fintype ι] [DecidableEq ι] (b : M
     rw [Fintype.sum_prod_type]
     simp [hB, Module.Basis.tensorProduct_apply]
   rw [hexp]
-  simp only [map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul]
   refine sum_sum_eq_zero_of_antisymm
     (fun i j ↦ B.repr t (i, j) • wedgeT (R := R) V (b i ⊗ₜ[R] b j)) ?_ ?_ Finset.univ
   · intro i

@@ -72,7 +72,8 @@ theorem core : Core := by
         congr 1
         exact prod_ren α (Fin.succEmb ρ) (Fin.succAboveEmb j) σ (List.finRange ρ) 1
       simp_rw [h2]
-      rw [← map_sum, ← LinearMap.sum_apply, ← detE_eq_sum, ih, map_mul, AlgHom.map_det]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← map_sum, ← LinearMap.sum_apply, ← detE_eq_sum, ih, map_mul, AlgHom.map_det]
       congr 1
       · rw [map_prod, map_prod]
         refine Finset.prod_congr rfl fun i _ => ?_

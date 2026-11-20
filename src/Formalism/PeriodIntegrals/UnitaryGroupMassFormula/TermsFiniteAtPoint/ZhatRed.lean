@@ -128,7 +128,8 @@ theorem zhatReduce_of (hC : CellReduce) (hF : FrameOp) (hR : CarrierRow) (hI : Z
       congr 1
       exact n0.apply_symm_apply _
     rw [h1, hn0act a, hmact b]
-    simp only [map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
       Matrix.mul_apply, Matrix.map_apply, Finset.sum_mul, ← key]
     refine Finset.sum_congr rfl fun d _ => ?_
     simp only [RingHom.id_apply, Finset.mul_sum]

@@ -152,7 +152,8 @@ theorem hadamard (V : Type) [NormedAddCommGroup V] [NormedSpace ℝ V] [FiniteDi
     rw [← h1]
     have h2 : ∀ t : ℝ, fderiv ℝ f (t • x) x = ∑ i, (L i x : ℂ) * fderiv ℝ f (t • x) (b i) := by
       intro t
-      rw [show fderiv ℝ f (t • x) x = fderiv ℝ f (t • x) (∑ i, b.repr x i • b i) by rw [b.sum_repr], map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [show fderiv ℝ f (t • x) x = fderiv ℝ f (t • x) (∑ i, b.repr x i • b i) by rw [b.sum_repr], map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_smul, Complex.real_smul, hL]
     simp_rw [h2]

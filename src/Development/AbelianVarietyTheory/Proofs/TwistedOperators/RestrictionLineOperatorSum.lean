@@ -136,7 +136,8 @@ theorem main : GlobalTheory.FunPr.Hypotheses₂ → ∀ {F E : Type} [Field F] [
   have e1 : ∀ t : ℝ, thetaSum F (G.M.co.rho B.ψ u (om (1, γ (Multiplicative.ofAdd t)) (∑ i, tens (evI F) (⇑(f i)) (r i))))
       = ∑ i, thetaSum F (G.M.co.rho B.ψ u (om (1, γ (Multiplicative.ofAdd t)) (tens (evI F) (⇑(f i)) (r i)))) := by
     intro t
-    rw [map_sum, rho_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, rho_sum]
     unfold thetaSum
     simp only [Finset.sum_apply]
     exact (hasSum_sum fun i _ => ((hone i).1 t).hasSum).tsum_eq

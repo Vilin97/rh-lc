@@ -123,10 +123,12 @@ theorem exists_sign_traceGram {w : InfinitePlace K} (hw : w.IsReal)
       (fun a => ψ.symm (v a))) (vecOfCoords b w.Completion (fun a => ψ.symm (v a)))) =
       ∑ a, ∑ c, v a * v c * embedding_of_isReal hw (traceGram H b a c) := by
     intro v
-    rw [hermTrace_eq_sum_traceGram (H := H) (b := b) w.Completion,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hermTrace_eq_sum_traceGram (H := H) (b := b) w.Completion,
       vecCoords_vecOfCoords b w.Completion (fun a => ψ.symm (v a)), map_sum]
     refine Finset.sum_congr rfl fun a _ => ?_
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun c _ => ?_
     rw [map_mul, map_mul, RingEquiv.apply_symm_apply, RingEquiv.apply_symm_apply]
     congr 1
@@ -205,9 +207,11 @@ theorem realEmb_mul_hermTrace_pos {θ : K}
     simp [vecOfCoords]
   have := hθ w hw _ hv
   convert this using 1
-  rw [hermTrace_eq_sum_traceGram (H := H) (b := b) K, Finset.mul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hermTrace_eq_sum_traceGram (H := H) (b := b) K, Finset.mul_sum, map_sum]
   refine Finset.sum_congr rfl fun a _ => ?_
-  rw [Finset.mul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.mul_sum, map_sum]
   refine Finset.sum_congr rfl fun c _ => ?_
   rw [Algebra.algebraMap_self, RingHom.id_apply]
   simp only [map_mul]

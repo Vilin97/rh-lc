@@ -127,7 +127,8 @@ private theorem alt_comp (x : Wt n) (w : Equiv.Perm (Fin n)) : alt (x ∘ w) = s
 
 private theorem act_alt (x : Wt n) (v : Equiv.Perm (Fin n)) : act v (alt x) = sg v • alt x := by
   unfold alt
-  rw [map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.smul_sum]
   refine Fintype.sum_equiv (Equiv.mulRight v) _ _ fun u => ?_
   have e : (x ∘ u) ∘ v = x ∘ (Equiv.mulRight v u) := rfl
   rw [map_smul, act_ex, e, smul_smul]

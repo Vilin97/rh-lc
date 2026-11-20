@@ -164,8 +164,10 @@ theorem le_finrank_eigenSub {R V F O X : Type} [CommRing R] [CommRing V] [IsDoma
           ext k j
           refine hinj ?_
           have h₁ := hφ' k (o p.1) (b j)
-          rw [← b.sum_repr (σ (o p.1) • b j), map_sum] at h₁
-          simp only [Matrix.mul_apply, map_sum, map_mul, hΦ, Matrix.smul_apply, smul_eq_mul, Matrix.map_apply,
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [← b.sum_repr (σ (o p.1) • b j), map_sum] at h₁
+          set_option synthInstance.maxHeartbeats 100000 in
+            simp only [Matrix.mul_apply, map_sum, map_mul, hΦ, Matrix.smul_apply, smul_eq_mul, Matrix.map_apply,
             Matrix.of_apply, map_intCast, mul_assoc, ← Finset.mul_sum]
           rw [mul_left_comm]
           congr 1

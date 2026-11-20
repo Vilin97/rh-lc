@@ -42,7 +42,8 @@ theorem twist {N W : Type} [AddCommGroup N] [Fintype N] [AddCommGroup W] (e : W 
     exact (mul_eq_right₀ ha').1 this.symm
   refine ⟨a, ?_⟩
   conv_lhs => rw [hT]
-  rw [map_sum, ← Equiv.sum_comp (Equiv.addRight a) (fun x => conj (e (Q x))), Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, ← Equiv.sum_comp (Equiv.addRight a) (fun x => conj (e (Q x))), Finset.mul_sum]
   refine Finset.sum_congr rfl fun x _ => ?_
   rw [← hc, ← he, Equiv.coe_addRight, hQ, ← mul_one (e (Q a + _)), ← h1 x, ← he]
   congr 1

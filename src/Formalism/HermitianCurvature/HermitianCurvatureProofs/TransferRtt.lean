@@ -882,7 +882,8 @@ theorem IsPoly.dual {f : ℂ → B} (hf : IsPoly f) (φ : Module.Dual ℂ B) : I
   refine ⟨∑ n ∈ p.support, monomial n (φ (p.coeff n)), fun y => ?_⟩
   show φ (f y) = _
   rw [hp, ev_apply]
-  simp only [Polynomial.eval₂_eq_sum, Polynomial.sum_def, RingHom.id_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Polynomial.eval₂_eq_sum, Polynomial.sum_def, RingHom.id_apply,
     map_sum, eval_finsetSum, eval_monomial]
   refine Finset.sum_congr rfl fun n _ => ?_
   rw [← map_pow, ← Algebra.commutes, ← Algebra.smul_def, map_smul, smul_eq_mul, mul_comm]
@@ -908,7 +909,8 @@ variable (P : Par)
 
 theorem kap_sum (f : Ty P → ℂ) : kap P f = ∑ π, f π • kap P (Pi.single π 1) := by
   conv_lhs => rw [pi_eq_sum_univ' f]
-  simp only [map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul]
 
 theorem isPoly_kap {F : Ty P → ℂ → ℂ} (hF : ∀ π, IsPolyS (F π)) : IsPoly fun Y => kap P fun π => F π Y := by
   have : (fun Y => kap P fun π => F π Y) = fun Y => ∑ π, F π Y • kap P (Pi.single π 1) := by
@@ -1256,7 +1258,8 @@ variable (P : Par)
 
 theorem kap_sum' (s : Finset ℕ) (f : ℕ → Ty P → ℂ) :
     kap P (fun π => ∑ l ∈ s, f l π) = ∑ l ∈ s, kap P (f l) := by
-  rw [← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum]
   congr 1
   funext π
   simp [Finset.sum_apply]

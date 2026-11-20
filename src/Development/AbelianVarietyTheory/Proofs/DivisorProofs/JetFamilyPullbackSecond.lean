@@ -165,7 +165,8 @@ theorem detGen_baseChange : GlobalTheory.Published.AbelianDeRham → ∀ {F : Ty
       rw [liftSemi_tmul, LinearMap.map_smulₛₗ, map_smul, map_smul, smul_eq_mul, smul_eq_mul, map_mul, key,
         isJetElt_jet J' hBC' N₁ y (m.pull c₀), isJetElt_jet J hBC0 N x₀ c₀]
       have e : ∀ i, N₁ i y (m.pull c₀) = σ (N i x₀ c₀) := fun i ↦ hN i x₀ y hy c₀
-      simp only [e, hy c₀, map_add, map_sum, map_mul, hτa, hτt]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [e, hy c₀, map_add, map_sum, map_mul, hτa, hτt]
 
   let Λ : HdR X₁.A → Z'.Lie := fun y ↦ LZ.toLie Z'.rm (crysToDR J'.κ hi'.grp (jet J' hBC' N₁ y))
   have hΛadd : ∀ a b, Λ (a + b) = Λ a + Λ b := fun a b ↦ by

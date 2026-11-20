@@ -75,7 +75,8 @@ theorem coefDet_orth_pow {h : ℕ} (lam : Fin h → F) (hO : Orth p lam) : Orth 
   intro c j hc
   have h1 := hO c j hc
   have e : (∑ i, (c i : F) * lam i) ^ p = ∑ i, (c i : F) * lam i ^ p := by
-    rw [← frobenius_def (R := F) p, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← frobenius_def (R := F) p, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_mul, map_intCast, frobenius_def]
   show ‖lam j ^ p‖ ≤ ‖∑ i, (c i : F) * lam i ^ p‖

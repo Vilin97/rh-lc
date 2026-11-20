@@ -16,7 +16,8 @@ private lemma wS_mul (p : ℕ) [hp : Fact p.Prime] (n : ℕ) : (p : MvPolynomial
   set q : MvPolynomial (Fin n) ℤ := (∑ j, (MvPolynomial.X j) ^ p) - (∑ j, MvPolynomial.X j) ^ p with hq
   have hd : MvPolynomial.C (p : ℤ) ∣ q := by
     rw [MvPolynomial.C_dvd_iff_zmod, hq]
-    simp only [map_sub, map_sum, map_pow, MvPolynomial.map_X]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sub, map_sum, map_pow, MvPolynomial.map_X]
     rw [sum_pow_char, sub_self]
   rw [MvPolynomial.C_dvd_iff_dvd_coeff] at hd
   conv_rhs => rw [q.as_sum]
@@ -64,7 +65,8 @@ theorem teichmuller_quot :
     rw [map_add, map_mul, map_natCast]
   · obtain ⟨w, hw⟩ := ((teichSum p (Fin n) Finset.univ).2 (PreTilt O p) a (wS p n) (wS_mul p n)).1
     have h := congrArg pr hw
-    rw [map_sum, map_add, map_add, map_mul, map_mul, hp2, zero_mul, add_zero, map_natCast] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_add, map_add, map_mul, map_mul, hp2, zero_mul, add_zero, map_natCast] at h
     rw [h, MvPolynomial.aeval_def]
     rfl
   · have hK := ((a0 p C v O hv).2.2.1 ϖ hϖ).2.2

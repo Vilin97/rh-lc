@@ -68,7 +68,8 @@ theorem GlobalTheory.HalfGeo.chartSt_holds : ChartSt := by
       (Matrix.of fun r l => algebraMap (V.G.presheaf.stalk z) V.G.functionField
         (∑ j, α z hz (h r j) * a z hz l j)) * (T (V.π z)).map V.φ := by
     ext r i
-    simp only [Matrix.of_apply, Matrix.mul_apply, Matrix.map_apply, hA z hz i, Finset.sum_apply, Pi.smul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.of_apply, Matrix.mul_apply, Matrix.map_apply, hA z hz i, Finset.sum_apply, Pi.smul_apply,
       smul_eq_mul, map_sum, map_mul, hι₀, Finset.mul_sum, Finset.sum_mul]
     rw [Finset.sum_comm]
     exact Finset.sum_congr rfl fun l _ => Finset.sum_congr rfl fun j _ => by ring

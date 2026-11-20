@@ -226,7 +226,8 @@ theorem UpperTheory.V.Z.Desc.V0.eEx :
   have hcomm : ∀ i f, E (H.op A i f) = H.op A i (E f) := by
     intro i f
     show opE ρ a (H.op A i f) = H.op A i (opE ρ a f)
-    rw [opE_eq, opE_eq, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [opE_eq, opE_eq, map_sum]
     refine Finset.sum_congr rfl fun g hg => ?_
     rw [map_zsmul]
     congr 1

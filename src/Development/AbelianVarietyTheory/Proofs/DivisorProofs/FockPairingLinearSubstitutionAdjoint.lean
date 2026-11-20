@@ -25,7 +25,8 @@ theorem pderiv_rsub [DecidableEq σ] [DecidableEq σ'] (M : Matrix σ' σ ℂ) (
   | add p q hp hq => simp only [map_add, hp, hq, mul_add, Finset.sum_add_distrib]
   | mul_X p k hp =>
     have hX : pderiv s (rsub M (X k)) = C (M s k) := by
-      rw [rsub_X, map_sum, Finset.sum_eq_single s]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [rsub_X, map_sum, Finset.sum_eq_single s]
       · simp [pderiv_X]
       · intro b _ hb
         rw [Derivation.leibniz, pderiv_C, pderiv_X_of_ne hb]
@@ -55,9 +56,11 @@ theorem fockL_rsub_adj (M : Matrix σ' σ ℂ) (F : MvPolynomial σ ℂ) (F' : M
       rw [map_mul, rsub_X, Finset.mul_sum]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [smul_eq_C_mul]; ring
-    rw [e1, map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e1, map_sum, LinearMap.sum_apply]
     simp_rw [LinearMap.map_smulₛₗ, LinearMap.smul_apply, fockL_X_pderiv, hp]
-    rw [mul_comm p, fockL_X_pderiv, pderiv_rsub, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [mul_comm p, fockL_X_pderiv, pderiv_rsub, map_sum]
     refine Finset.sum_congr rfl fun b _ => ?_
     rw [← smul_eq_C_mul, map_smul, Matrix.conjTranspose_apply, starRingEnd_apply]
 

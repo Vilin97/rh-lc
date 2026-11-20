@@ -28,7 +28,8 @@ theorem det_ne_zero_of_indep : ∀ (F A : Type) [Field F] [NumberField F] [AddCo
     intro i
     have := congrFun hMa i
     simp only [Matrix.mulVec, dotProduct, hM, Matrix.of_apply, Pi.zero_apply] at this
-    rw [hx, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hx, map_sum]
     simp only [map_smul, smul_eq_mul]
     rw [← this]
     exact Finset.sum_congr rfl fun k _ => mul_comm _ _

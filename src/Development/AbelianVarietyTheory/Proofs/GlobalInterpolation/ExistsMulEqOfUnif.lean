@@ -220,7 +220,8 @@ theorem exists_basis_ker {d : Deco E n ST SG} (hd : d.Ok) (P : ST) (hs : d.at P.
     LinearMap.codRestrict (stdLat E n) ((Algebra.linearMap (𝓞 E) E).compLeft (Fin n)) hvec
   have hg : ∀ r, g r = d.f P fun a => algebraMap (𝓞 E) E (r a) := fun _ => rfl
   have hgs : ∀ r, g r = ∑ j, Ideal.Quotient.mk P.1.asIdeal (r j) * g (Pi.single j 1) := fun r => by
-    conv_lhs => rw [← Finset.univ_sum_single r, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [← Finset.univ_sum_single r, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [← quot_smul_def, ← map_smul, ← Pi.single_smul, smul_eq_mul, mul_one]
   have hred : ∀ x ∈ d.at P.1, ∃ s ∉ P.1.asIdeal, ∃ r : Fin n → 𝓞 E, s • x = (fun a => algebraMap (𝓞 E) E (r a)) ∧
@@ -272,7 +273,8 @@ theorem exists_basis_ker {d : Deco E n ST SG} (hd : d.Ok) (P : ST) (hs : d.at P.
       rw [← Ideal.Quotient.eq_zero_iff_mem]
       refine (mul_eq_zero.1 ?_).resolve_right hi
       rw [hx2, mul_zero, hgs, ← Finset.add_sum_erase _ _ (Finset.mem_univ i)] at e'
-      rw [← e', map_add, map_sum, add_mul, Finset.sum_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← e', map_add, map_sum, add_mul, Finset.sum_mul]
       congr 1
       exact Finset.sum_congr rfl fun j _ => by rw [map_mul, mul_assoc, ← hc']
     obtain ⟨s', hs', b, hb⟩ := exists_mul_eq_of_unif hT hT2 h1
@@ -292,7 +294,8 @@ theorem exists_basis_ker {d : Deco E n ST SG} (hd : d.Ok) (P : ST) (hs : d.at P.
     have h3 : (s' * s) • x = ∑ j, (Function.update (s' • r) i b) j • fun a => algebraMap (𝓞 E) E (B₀ a j) := by
       funext a
       have h4 := congrArg (fun y => algebraMap (𝓞 E) E (y a)) h2
-      simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum, map_mul] at h4
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum, map_mul] at h4
       rw [mul_smul, e]
       simp only [Finset.sum_apply, Pi.smul_apply, Algebra.smul_def]
       exact h4

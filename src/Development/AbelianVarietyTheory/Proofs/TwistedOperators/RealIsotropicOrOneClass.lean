@@ -12,7 +12,8 @@ private theorem sigma_hf_eq_hf_swap {R : Type} [CommRing R] {n : ℕ} (σ : R �
     (G : Matrix (Fin n) (Fin n) R) (hσ : ∀ a, σ (σ a) = a) (hG : ∀ a b, σ (G a b) = G b a)
     (x y : Fin n → R) : σ (GlobalTheory.UTrans.hf σ G x y) = GlobalTheory.UTrans.hf σ G y x := by
   unfold GlobalTheory.UTrans.hf
-  simp only [map_sum, map_mul, hσ, hG]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, hσ, hG]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
   ring

@@ -228,7 +228,8 @@ theorem local_sum_gen : GlobalTheory.FunPr.Hypotheses₂ → ∀ {D : D7} (θ : 
     simp [Ttot, LinearMap.sum_apply]
   have hTK : ∀ (g : {g // g ∈ Formalism.QuantumDeterminants.UH (gramAt D V τ) ∧ M.fr τ * g * (M.fr τ)⁻¹ ∈ Formalism.REAL.Kset (M.ε τ)})
       (y : Fin m → P), Ttot (fun j => kOp g (y j)) = rTr V (atTau θ V τ g.1) (Ttot y) := fun g y => by
-    rw [hTtot, hTtot, show rTr V (atTau θ V τ g.1) (∑ j, T j (y j)) = ∑ j, rTr V (atTau θ V τ g.1) (T j (y j))
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hTtot, hTtot, show rTr V (atTau θ V τ g.1) (∑ j, T j (y j)) = ∑ j, rTr V (atTau θ V τ g.1) (T j (y j))
       from map_sum (rTrL V (atTau θ V τ g.1)) (fun j => T j (y j)) Finset.univ]
     exact Finset.sum_congr rfl fun j _ => (hT j).mapK g.1 g.2.1 g.2.2 (y j) _ rfl
   have hTL : ∀ (X : {X // X ∈ lieAt V τ}) (y : Fin m → P), Ttot (fun j => dOp X (y j)) = Rder θ V τ X.1 (Ttot y) :=
@@ -264,7 +265,8 @@ theorem local_sum_gen : GlobalTheory.FunPr.Hypotheses₂ → ∀ {D : D7} (θ : 
     have := hSa l (Sum.inr ⟨X, hX⟩) v
     simp only [a, Sum.elim_inr] at this
     rw [this, hTL]
-  · rw [hsum, ← hTtot p, hpq, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [hsum, ← hTtot p, hpq, map_sum]
     rfl
 
 end GlobalTheory.CuspGKId

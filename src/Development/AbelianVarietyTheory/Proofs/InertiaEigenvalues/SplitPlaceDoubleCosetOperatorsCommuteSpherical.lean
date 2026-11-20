@@ -31,7 +31,8 @@ theorem gelfand {G W : Type} [Group G] [AddCommGroup W] [Module ℂ W] (ρ : Rep
   have key : ∀ A B : Finset G, ∑ γ ∈ A, ρ γ (∑ δ ∈ B, ρ δ x)
       = ∑ p ∈ A ×ˢ B, f ((p.1 * p.2 : G) : G ⧸ J) := fun A B => by
     rw [Finset.sum_product]
-    simp only [hf, map_sum, map_mul, Module.End.mul_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hf, map_sum, map_mul, Module.End.mul_apply]
   rw [key, key]
   let T : Finset (G ⧸ J) := (R ×ˢ S).image (fun p => ((p.1 * p.2 : G) : G ⧸ J)) ∪
     (S ×ˢ R).image (fun p => ((p.1 * p.2 : G) : G ⧸ J))

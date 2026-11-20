@@ -19,7 +19,8 @@ theorem coeff_pow_char_sum {σ k : Type} [DecidableEq σ] [Field k] (p : ℕ) [F
   set g := f - P
   have hg : ∀ m ≤ α, coeff m g = 0 := by
     intro m hm
-    simp only [g, P, map_sub, map_sum, coeff_monomial]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [g, P, map_sub, map_sum, coeff_monomial]
     rw [Finset.sum_eq_single m]
     · simp
     · intro b _ hb; simp [Ne.symm hb]
@@ -36,7 +37,8 @@ theorem coeff_pow_char_sum {σ k : Type} [DecidableEq σ] [Field k] (p : ℕ) [F
     rw [hn, pow_succ]; exact hmul _
   rw [show f ^ p = (P + g) ^ p from congrArg (· ^ p) hf, add_pow_char, map_add, hgp, add_zero]
   simp only [P]
-  rw [sum_pow_char, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [sum_pow_char, map_sum]
   simp only [monomial_pow, coeff_monomial]
 
 theorem coeff_smul_pow_char {σ k : Type} [DecidableEq σ] [Field k] (p : ℕ) [Fact p.Prime] [CharP k p]

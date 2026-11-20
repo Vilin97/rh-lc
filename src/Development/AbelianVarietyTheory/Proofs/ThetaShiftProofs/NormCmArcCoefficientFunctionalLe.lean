@@ -114,7 +114,8 @@ theorem cfOf_le {K₁ : Type} [Field K₁] [Algebra c.F K₁] (d : ArcDatum Xo c
   set P := arcNum (evR Xo c F d.yF) with hP
   let G : MvPolynomial (ArcLt Dw) ℂ := ∑ m ∈ P.support, MvPolynomial.monomial m (em ((P.coeff m).coeff d.jj))
   have hG : ∀ x, MvPolynomial.eval x G = ajAt d em F x := fun x => by
-    simp only [G, map_sum, MvPolynomial.eval_monomial, ajAt, Finsupp.prod, hP]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [G, map_sum, MvPolynomial.eval_monomial, ajAt, Finsupp.prod, hP]
   have hc : G.coeff d.μ = em (cfOf d.yF d.μ d.jj F) := by
     simp only [G, MvPolynomial.coeff_sum, MvPolynomial.coeff_monomial, Finset.sum_ite_eq', cfOf, ← hP]
     split_ifs with hm
@@ -315,7 +316,8 @@ theorem norm_cfOf_le : Known → ∀ (E : Type) [Field E] [NumberField E] [IsCMF
           unfold Datum.mult
           split_ifs <;> omega
         exact_mod_cast this
-      rw [← herm_single Hm, ← hLz, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← herm_single Hm, ← hLz, map_sum]
       have := herm_sum_le hH'.2.1 (fun j => L (x ⟨τ, (i, j)⟩ • z₁ τ j))
         (b := (La * Real.sqrt (max 1 c₁)) ^ 2 / Real.pi) fun j => by
           rw [le_div_iff₀' Real.pi_pos, map_smul, herm_smul, mul_left_comm]

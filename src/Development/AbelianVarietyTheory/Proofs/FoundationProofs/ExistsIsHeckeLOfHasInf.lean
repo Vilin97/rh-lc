@@ -237,7 +237,8 @@ theorem thEval_eq (ha : IsGlobalArtin art) (h : Corr art (r.comp (X.art i Q)) ξ
     rw [hTq, map_inv, map_inv, hfin, finPart_mul, Units.val_mul, Units.val_inv_eq_inv_val]
     simp only [mul_inv]
     ring
-  rw [e, ← Finset.sum_fiberwise Finset.univ (fun q => π q⁻¹), map_sum, Finset.mul_sum, BlochKatoReduction.Gen.thEval, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, ← Finset.sum_fiberwise Finset.univ (fun q => π q⁻¹), map_sum, Finset.mul_sum, BlochKatoReduction.Gen.thEval, map_sum]
   refine Finset.sum_congr rfl fun δ _ => ?_
   rw [map_mul, hJ, hδ, ← hr, mul_assoc, ← map_mul]
   congr 2

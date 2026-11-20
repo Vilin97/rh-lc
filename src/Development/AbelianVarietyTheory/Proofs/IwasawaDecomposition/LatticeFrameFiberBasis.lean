@@ -75,7 +75,8 @@ theorem exists_frame_of_rows : (∀ (E : Type) [Field E] [NumberField E] [IsCMFi
         simpa only [e2] using this
       · refine (GlobalTheory.LieMet.isComb_iff (fun j => Φ.symm fun l => φx (((A⁻¹ : GL (Fin n) Γ(Z.X, U))) l j)) _ w').2 ?_
         apply Φ.injective
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         simp only [map_smul, LinearEquiv.apply_symm_apply]
         funext l
         simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
@@ -84,7 +85,8 @@ theorem exists_frame_of_rows : (∀ (E : Type) [Field E] [NumberField E] [IsCMFi
         have hinv : ∀ l', ∑ j, φx (((A⁻¹ : GL (Fin n) Γ(Z.X, U))) l j) * φx (A j l') = if l = l' then 1 else 0 := by
           intro l'
           have := congrArg φx (congrFun (congrFun hI l) l')
-          rw [Matrix.mul_apply, map_sum] at this
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [Matrix.mul_apply, map_sum] at this
           simp only [map_mul] at this
           rw [this, Matrix.one_apply]
           split_ifs <;> simp

@@ -71,7 +71,8 @@ theorem span_E_of_real (S : HSpace E) (hσ : ∀ (φ : E →+* ℂ) a, φ (star 
     simp only [Submodule.coe_sum, Submodule.coe_smul] at hx'
     calc S.hT x z = S.hT (∑ j, (p.repr ⟨x, hx⟩ j) • (p j : S.V)) z := by rw [hx']
       _ = 0 := by
-        rw [map_sum, LinearMap.sum_apply]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum, LinearMap.sum_apply]
         refine Finset.sum_eq_zero fun j _ ↦ ?_
         rw [hT_smul_left, hzj, mul_zero]
   have hw : psi M z ∈ UU M L e := psi_mem_U_all S M L e hL z

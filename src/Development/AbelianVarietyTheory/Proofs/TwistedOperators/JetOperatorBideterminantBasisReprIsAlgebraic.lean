@@ -77,7 +77,8 @@ theorem jetLin_monomial (J : (DVar ι a b →₀ ℕ) → ℂ) (m : (ι × Fin b
 theorem jetLin_mem (J : (DVar ι a b →₀ ℕ) → ℂ) (hJ : ∀ m, IsAlgebraic ℚ (J m))
     {p : MvPolynomial ((ι × Fin b × Fin b) ⊕ DVar ι a b) ℂ} (hp : p ∈ algPol _) :
     jetLin J p ∈ algPol (ι × Fin b × Fin b) := by
-  rw [p.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [p.as_sum, map_sum]
   refine sum_mem fun m _ => ?_
   rw [jetLin_monomial]
   exact monomial_mem _ ((coeff_isAlgebraic hp m).mul (hJ _))
@@ -106,7 +107,8 @@ theorem descent {σ κ : Type} [Fintype κ] (v : κ → MvPolynomial σ ℂ) (hv
     have h1 : (∑ k, x k • v k).coeff m = algebraMap A ℂ (pr ((∑ k, x k • v k).coeff m)) := by
       rw [← hq, coeff_map, hp]
     rw [h1]
-    simp only [coeff_sum, coeff_smul, smul_eq_mul, hc, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [coeff_sum, coeff_smul, smul_eq_mul, hc, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     have : x k * algebraMap A ℂ (c k) = c k • x k := by rw [Algebra.smul_def, mul_comm]
     rw [this, map_smul, smul_eq_mul, map_mul, mul_comm]

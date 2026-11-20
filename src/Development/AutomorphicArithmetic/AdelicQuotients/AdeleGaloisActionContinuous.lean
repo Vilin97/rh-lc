@@ -14,7 +14,8 @@ private theorem galOf_cont {A B : Type*} [CommRing A] [Algebra F A] [CommRing B]
   have h : ∀ y, galOf e σ y = ∑ i, e (σ (b i) ⊗ₜ 1) * e (1 ⊗ₜ c i y) := by
     intro y
     change e (Algebra.TensorProduct.map (σ : E →ₐ[F] E) (AlgHom.id F A) (e.symm y)) = _
-    rw [hs, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hs, map_sum, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [Algebra.TensorProduct.map_tmul, ← map_mul, Algebra.TensorProduct.tmul_mul_tmul, mul_one,
       one_mul]

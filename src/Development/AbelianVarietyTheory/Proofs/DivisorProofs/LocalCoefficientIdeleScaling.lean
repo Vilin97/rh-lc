@@ -41,7 +41,8 @@ theorem locCo_pair {W : Type} [AddCommGroup W] [Module (AF F) W] {B : W → W �
     (co : GlobalTheory.WeilM.Darboux B κ) (v : Pl F) (w w' : W) :
     (locCo co v w).1 ⬝ᵥ (locCo co v w').2 - (locCo co v w').1 ⬝ᵥ (locCo co v w).2 = evFin F v (B w w') := by
   rw [co.form]
-  simp [locCo, dotProduct, map_sum, map_mul, map_sub]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [locCo, dotProduct, map_sum, map_mul, map_sub]
 
 theorem cA_inclR (σ : E →ₐ[F] E) (e : E) : cA σ (inclR (F := F) (AF F) e) = inclR (F := F) (AF F) (σ e) := by
   simp [cA, inclR]
@@ -58,7 +59,8 @@ theorem hTens_eq {σ : E →ₐ[F] E} (hσ : ∀ x, σ (σ x) = x) {n n₁ d d�
     GlobalTheory.WeilM.hTens (cA σ) (incM F JA) (incM F JB) (GlobalTheory.VanishLoc.uAt H H' v t) (shiftB σ H H' l) =
       GlobalTheory.VanishLoc.liftT v t * l.1 * inclR (F := F) (AF F) (form σ JA H.x H.y) *
         inclR (F := F) (AF F) (form σ JB H'.y H'.x) := by
-  simp only [GlobalTheory.WeilM.hTens, GlobalTheory.VanishLoc.uAt, shiftB, Matrix.vecMulVec_apply, Matrix.smul_apply, Pi.smul_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [GlobalTheory.WeilM.hTens, GlobalTheory.VanishLoc.uAt, shiftB, Matrix.vecMulVec_apply, Matrix.smul_apply, Pi.smul_apply,
     incV, incM, Matrix.map_apply, smul_eq_mul, map_mul, cA_inclR, cA_cA hσ, form, dotProduct, Matrix.mulVec,
     map_sum, Finset.mul_sum, Finset.sum_mul]
   refine Finset.sum_comm.trans (Finset.sum_congr rfl fun j _ => ?_)
@@ -69,7 +71,8 @@ theorem hTens_eq {σ : E →ₐ[F] E} (hσ : ∀ x, σ (σ x) = x) {n n₁ d d�
 
 theorem form_swap_skew {σ : E →ₐ[F] E} (hσ : ∀ x, σ (σ x) = x) {n : ℕ} (J : Matrix (Fin n) (Fin n) E)
     (hJ : ∀ i j, σ (J j i) = -J i j) (a b : Fin n → E) : form σ J a b = -σ (form σ J b a) := by
-  simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, Finset.mul_sum]
   rw [Finset.sum_comm, ← Finset.sum_neg_distrib]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [← Finset.sum_neg_distrib]

@@ -17,7 +17,8 @@ private theorem coreSep_coord {A M N κ : Type} [CommRing A] [AddCommGroup M] [M
       map_add' := fun f f' => hadd _ f.2 _ f'.2
       map_smul' := fun r f => hsmul _ f.2 r }
   have h1 : s g = ∑ j ∈ (b.repr g).support, φ (b.repr g j) • sp (b j) := by
-    conv_lhs => rw [← b.linearCombination_repr g, Finsupp.linearCombination_apply, Finsupp.sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [← b.linearCombination_repr g, Finsupp.linearCombination_apply, Finsupp.sum, map_sum]
     exact Finset.sum_congr rfl fun j _ => s.map_smulₛₗ _ _
   by_cases hi : i ∈ (b.repr g).support
   · exact linearIndependent_iff'.1 hind _ (fun j => φ (b.repr g j)) (h1.symm.trans hg) i hi

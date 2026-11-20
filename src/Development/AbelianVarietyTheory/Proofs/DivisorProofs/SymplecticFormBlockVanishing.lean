@@ -55,7 +55,8 @@ theorem GlobalTheory.ThK.symp_shiftA_vanish : ∀ (F E : Type) [Field F] [Number
       fun m => inclR (F := F) (AF F) (form σ G.V.J (H.ι *ᵥ Pi.single m 1) H.x) := by
     ext m
     have hc : ∀ e : E, cA σ (inclR (F := F) (AF F) e) = inclR (F := F) (AF F) (σ e) := fun _ => rfl
-    simp only [Matrix.vecMul, dotProduct, incM, incV, Matrix.map_apply, hc, ← map_mul, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.vecMul, dotProduct, incM, incV, Matrix.map_apply, hc, ← map_mul, ← map_sum]
     congr 1
     simp only [form, Matrix.mulVec, dotProduct, Pi.single_apply, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true]
     exact Finset.sum_congr rfl fun _ _ => mul_comm _ _

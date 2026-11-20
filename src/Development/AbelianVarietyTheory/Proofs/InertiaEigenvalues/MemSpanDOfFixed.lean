@@ -66,14 +66,16 @@ private theorem mulR_mem_spanD (K : FinExt l) (ρ : Representation LL ↥(GK K) 
     mulR ℚ_[l] P.R.BdR LL V a x ∈ spanD P K ρ := by
   obtain ⟨m, b, d, hd, rfl⟩ := hx
   refine ⟨m, fun i => a * b i, d, hd, ?_⟩
-  simp only [map_sum, mulR_mulR]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, mulR_mulR]
 
 private theorem act_mem_spanD (K : FinExt l) (ρ : Representation LL ↥(GK K) V) (g : ↥(GK K))
     (x : V ⊗[ℚ_[l]] P.R.BdR) (hx : x ∈ spanD P K ρ) :
     actVdR (P.PD K) ρ g x ∈ spanD P K ρ := by
   obtain ⟨m, b, d, hd, rfl⟩ := hx
   refine ⟨m, fun i => (P.PD K).actdR g (b i), d, hd, ?_⟩
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [act_mulR, (mem_DdR (P.PD K) ρ _).1 (hd i)]
 

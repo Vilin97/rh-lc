@@ -19,7 +19,8 @@ variable {g : ℕ}
 theorem coords_sum {d : ℕ} (π : Matrix (Fin g) (Fin g) ℂ →ₗ[ℂ] (Fin d → ℂ)) (S : Matrix (Fin g) (Fin g) ℂ) (k : Fin d) :
     π S k = ∑ i, ∑ j, S i j * π (Matrix.single i j 1) k := by
   conv_lhs => rw [matrix_eq_sum_single S]
-  simp only [map_sum, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Finset.sum_apply]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   rw [show Matrix.single i j (S i j) = S i j • Matrix.single i j (1 : ℂ) by rw [smul_single, smul_eq_mul, mul_one],
     map_smul, Pi.smul_apply, smul_eq_mul]

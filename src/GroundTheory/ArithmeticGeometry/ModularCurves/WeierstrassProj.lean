@@ -127,7 +127,8 @@ theorem scale_homog {m : ℕ} {a : MvPolynomial σ R} (ha : a.IsHomogeneous m) :
       algebraMap Q _ (π a) := by
   conv_lhs => rw [a.as_sum]
   conv_rhs => rw [a.as_sum]
-  rw [map_sum, map_sum, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl (fun e he => ?_)
   have hdeg : e.degree = m := by
     have := ha (MvPolynomial.mem_support_iff.mp he)

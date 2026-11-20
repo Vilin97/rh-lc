@@ -34,7 +34,8 @@ theorem chain_dvd (φ : A →+* A) (hφ : Function.Bijective φ) (ι : R →+* A
     obtain ⟨z, hz⟩ := ih M
     obtain ⟨z', rfl⟩ := hφ.2 z
     refine ⟨z', hφ.1 ?_⟩
-    simp only [map_sub, map_sum, map_mul, map_pow, hι, hω, hy]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sub, map_sum, map_mul, map_pow, hι, hω, hy]
     exact hz
 
 end General
@@ -73,7 +74,8 @@ theorem eval_eq {A R : Type*} [CommRing A] [CommRing R] (θ : A →+* OC l) (ι 
   obtain ⟨z, hz⟩ := hd M
   have h1 : θ y - ∑ j ∈ range M, a (c j) * θ w ^ j = θ w ^ M * θ z := by
     have := congrArg θ hz
-    simpa only [map_sub, map_sum, map_mul, map_pow, hθι] using this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa only [map_sub, map_sum, map_mul, map_pow, hθι] using this
   have h2 : ‖(θ y : ℂ_[l]) - ((∑ j ∈ range M, a (c j) * θ w ^ j : OC l) : ℂ_[l])‖ ≤ ‖(θ w : ℂ_[l])‖ ^ M := by
     have e : (θ y : ℂ_[l]) - ((∑ j ∈ range M, a (c j) * θ w ^ j : OC l) : ℂ_[l]) =
         (((θ w ^ M * θ z : OC l)) : ℂ_[l]) := by rw [← h1]; push_cast; rfl

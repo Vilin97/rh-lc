@@ -32,11 +32,13 @@ theorem approxB_jForm_smul_left (p : ℕ) {r : ℕ} (x y : Fin r → ℂ) (a : �
 
 theorem approxB_jForm_sum_left (p : ℕ) {r : ℕ} {α : Type*} (s : Finset α) (y : Fin r → ℂ)
     (f : α → Fin r → ℂ) : jForm p (∑ j ∈ s, f j) y = ∑ j ∈ s, jForm p (f j) y := by
-  simp only [jForm, Finset.sum_apply, map_sum, Finset.sum_mul, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [jForm, Finset.sum_apply, map_sum, Finset.sum_mul, Finset.mul_sum]
   exact Finset.sum_comm
 
 theorem approxB_jForm_conj (p : ℕ) {r : ℕ} (x y : Fin r → ℂ) : conj (jForm p x y) = jForm p y x := by
-  rw [jForm, jForm, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [jForm, jForm, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   by_cases h : (k : ℕ) < p <;> simp [sgn, h, mul_comm]
 

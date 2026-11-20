@@ -262,7 +262,8 @@ theorem two_roots_of_parabolic_functional : ∀ (V : Type) [AddCommGroup V] [Mod
       Finset.prod_congr rfl (fun s _ => by ring)
     rw [hprod, ← e1]
     unfold Formalism.REAL.qminor
-    simp only [LinearMap.sum_apply, map_sum, Module.End.mul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [LinearMap.sum_apply, map_sum, Module.End.mul_apply,
       Module.End.intCast_apply, map_zsmul]
     simp only [term_eq E hE p q ℓ α β h1 h2 h3 h4 τ _ hτ0 hτl u v]
     simp only [G, Polynomial.eval_finset_sum, Finset.mul_sum]

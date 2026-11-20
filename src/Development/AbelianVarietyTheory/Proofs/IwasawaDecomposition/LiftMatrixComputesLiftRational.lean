@@ -19,7 +19,8 @@ theorem semi_expand {d : ℕ} (w : (Fin d → K) →ₛₗ[σ] H) (y : Fin d →
   have hz : y = ∑ k, y k • (Pi.single k 1 : Fin d → K) := by
     ext i; simp [Pi.single_apply]
   conv_lhs => rw [hz]
-  simp only [map_sum, map_smulₛₗ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smulₛₗ]
 
 omit [NumberField K] in
 theorem semi_injective {d : ℕ} (w : (Fin d → K) →ₛₗ[σ] H) (hli : LinearIndependent ℂ fun k => w (Pi.single k 1)) :
@@ -114,7 +115,8 @@ theorem oLatTie_of_closure {O : Type} [CommRing O] {φ : O →+* ℂ} (hφ : ∀
         rw [← map_neg, ← Finset.sum_neg_distrib]
         simp
     · rintro ⟨c, rfl⟩
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine AddSubgroup.sum_mem _ fun v hv => AddSubgroup.subset_closure ⟨c v, e v, ⟨v, hgen v hv, rfl⟩, map_smul _ _ _⟩
   refine ⟨fun v hv => ?_, fun x => ⟨fun hx => ?_, ?_⟩⟩
   · have h1 : e v ∈ AddSubgroup.closure {y | ∃ a : 𝓞 K, ∃ x ∈ e '' M.carrier, y = σ (a : K) • x} :=
@@ -279,7 +281,8 @@ theorem mem_image_iff (b : Bool) (i : Fin D.R.m) (y : (R.HW i (sg0 D A)).H) :
     have hW : f ∈ R.WL F b i := (R.FW i).Mj_sub_Wgood _ _ _ hf
     have hs : ∑ k, (Module.finBasis D.what₂.LL (R.WL F b i)).repr ⟨f, hW⟩ k • R.bL F b i k = f := by
       have h := congrArg (R.WL F b i).subtype ((Module.finBasis D.what₂.LL (R.WL F b i)).sum_repr ⟨f, hW⟩)
-      rw [map_sum] at h
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum] at h
       exact h
     refine ⟨fun k => (Module.finBasis D.what₂.LL (R.WL F b i)).repr ⟨f, hW⟩ k, ((R.FW i).mem_Mcoord _ _ _ _ _).2 ?_, ?_⟩
     · rw [hs]; exact hf

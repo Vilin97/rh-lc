@@ -240,7 +240,8 @@ theorem isTaylorExpansion_orderOne [DecidableEq I] {W : Opens (Tot I g)} {W₀ :
     refine (Hol.fn_comap _ _ _ _ hp).trans ((Hol.fn_der _ _ (hW p hp)).trans ?_)
     have : ((v, 0) : Tot I g) = ∑ i, v i • ((Pi.single i 1, 0) : Tot I g) := by
       ext j <;> simp [Prod.fst_sum, Prod.snd_sum, Finset.sum_apply, Pi.single_apply]
-    rw [this, map_sum]; simp only [map_smul, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [this, map_sum]; simp only [map_smul, smul_eq_mul]
   change evT _ p hp (_ + _) = _
   rw [map_add, Algebra.TensorProduct.lift_tmul, Algebra.TensorProduct.lift_tmul, AlgHom.comp_apply,
     AlgHom.comp_apply, e1, e2]

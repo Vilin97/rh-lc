@@ -91,7 +91,8 @@ theorem op_col (W : RealPack ex) (u w : D.what₂.Word) (hwu : w = u) (hc : W.P.
   have hr : Fintype.linearCombination ℂ (fun i => D.eMu w (D.jN w (W.P.I.eNu w (Pi.single i (1 : D.what₂.LL))))) x =
       D.eMu w (colC W w x) := by
     refine (Fintype.linearCombination_apply ℂ _ x).trans ?_
-    simp [colC, map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [colC, map_sum, map_smul]
   refine op_eq (pwOf W.S W.Q.hin w) _ T ?_
   show Formalism.L2.SG.ColDict.colDictL W.S.X (W.S.tr w) W.S.Y.hK T = _
   refine hT.trans ?_

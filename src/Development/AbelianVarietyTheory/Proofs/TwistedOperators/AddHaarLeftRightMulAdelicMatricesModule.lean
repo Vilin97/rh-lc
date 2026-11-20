@@ -66,14 +66,16 @@ theorem chi_Af (F : Type) [Field F] [NumberField F] {κ : Type} [Fintype κ] [De
       rw [evalV_jS]
       by_cases hv : v ∈ S
       · rw [dif_pos hv]
-        simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Finset.sum_apply, Pi.mul_apply]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Finset.sum_apply, Pi.mul_apply]
         refine Finset.sum_congr rfl fun k _ => ?_
         change evalV F v (M i k) * evalV F v (jS F S (x.1 k, x.2 k)) = _
         rw [evalV_jS, dif_pos hv]
         rfl
       · rw [dif_neg hv]
         change _ = ι ((MO *ᵥ x.2) i) ⟨v, hv⟩
-        simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Finset.sum_apply, Pi.mul_apply]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Finset.sum_apply, Pi.mul_apply]
         refine Finset.sum_congr rfl fun k _ => ?_
         change evalV F v (M i k) * evalV F v (jS F S (x.1 k, x.2 k)) = _
         rw [evalV_jS, dif_neg hv]
@@ -112,10 +114,12 @@ theorem chi_AF (F : Type) [Field F] [NumberField F] [IsTotallyReal F] {κ : Type
       rw [mulVecCE_apply, prodCE_apply, mulVecCE_apply, mulVecCE_apply]
       refine Prod.ext ?_ ?_
       · change fstA F _ = _
-        simp only [Matrix.mulVec, dotProduct, map_sum, map_mul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [Matrix.mulVec, dotProduct, map_sum, map_mul]
         exact Finset.sum_congr rfl fun k _ => rfl
       · change sndA F _ = _
-        simp only [Matrix.mulVec, dotProduct, map_sum, map_mul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [Matrix.mulVec, dotProduct, map_sum, map_mul]
         exact Finset.sum_congr rfl fun k _ => rfl)
   rw [key, GlobalTheory.T.addEquivAddHaarChar_prodCongr, NNReal.coe_mul, chi_Af F _ hu₂, hd₂,
     GlobalTheory.T.addEquivAddHaarChar_mulVec_artinian_reduced (Ainf F)

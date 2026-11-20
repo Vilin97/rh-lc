@@ -179,7 +179,8 @@ theorem rank_maximal_self_core (hV1 : FirstVanishingCore) (hFE : FunEqCoreSt) (h
   have hlink : ∀ q : I0, V.MM (∑ r, Y.aLin (U r) (fun i => p.gm (p.ty0 q) r (1 - g) * p.e q i)) := by
     intro q
     have hq := congrArg (PowerSeries.coeff V.l) (hfil q)
-    rw [tyS_coeff_l hl, map_add, map_sub, map_sum] at hq
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [tyS_coeff_l hl, map_add, map_sub, map_sum] at hq
     have hz : ∑ c : I0, PowerSeries.coeff V.l (if (Y.rawSelf p).ty g c = (Y.rawSelf p).ty (1 - g) q then
         (Y.rawSelf p).sg1 ((Y.rawSelf p).u g c) ((Y.rawSelf p).u (1 - g) q) • tyS V.l (fun s => x s (Sum.inl c))
         else 0) = 0 := by
@@ -192,7 +193,8 @@ theorem rank_maximal_self_core (hV1 : FirstVanishingCore) (hFE : FunEqCoreSt) (h
         ∑ r, alongCv (γc r) (un1 (Y.sgP fun i => p.gm (p.ty0 q) r (1 - g) * p.e q i)) := by
       rw [Y.rawSelf_sg p, Fin.sum_univ_two, Fin.sum_univ_two, ← hcol, ← hcol, Y.rawCol_sg, Y.rawCol_sg]
       exact MvPowerSeries.subst_add (MvPowerSeries.hasSubst_of_constantCoeff_zero hγ0) _ _
-    rw [hsg, map_sum] at hq
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hsg, map_sum] at hq
     have hc := hc0 q
     have hc' : V.MM ((V.l : C) * x 1 (Sum.inr q)) := hc
     rw [hq] at hc'

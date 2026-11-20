@@ -57,13 +57,15 @@ theorem E_d₂ (z : Pr N) : E N z.d₂ = (-1 : ℤ) ^ z.1 • z.d₂ := by
   obtain ⟨p, r, a, b⟩ := z
   rcases r with _ | r
   · simp [d₂_zero]
-  · simp [d₂_succ, map_sum, E_single, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp [d₂_succ, map_sum, E_single, Finset.smul_sum]
 
 theorem E_d₁ (z : Pr N) : E N z.d₁ = -((-1 : ℤ) ^ z.1 • z.d₁) := by
   obtain ⟨p, r, a, b⟩ := z
   rcases p with _ | p
   · simp [d₁_zero]
-  · simp [d₁_succ, map_sum, E_single, Finset.smul_sum, pow_succ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp [d₁_succ, map_sum, E_single, Finset.smul_sum, pow_succ]
 
 theorem d_eq (c : Pr N →₀ ℤ) : Pr.d N c = D₁ N c + E N (D₂ N c) := by
   induction c using Finsupp.induction_linear with
@@ -100,9 +102,11 @@ theorem D₁_D₁ (c : Pr N →₀ ℤ) : D₁ N (D₁ N c) = 0 := by
     rcases p with _ | p
     · simp [d₁_zero]
     rcases p with _ | p
-    · simp [d₁_succ, map_sum, D₁_single, d₁_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp [d₁_succ, map_sum, D₁_single, d₁_zero]
     have h := alt_sum_zero (n := p) (fun θ => single (⟨p, r, θ ≫ a, b⟩ : Pr N) (1 : ℤ))
-    rw [d₁_succ, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [d₁_succ, map_sum]
     simp only [D₁_single, d₁_succ, Finset.smul_sum]
     rw [← h]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
@@ -119,9 +123,11 @@ theorem D₂_D₂ (c : Pr N →₀ ℤ) : D₂ N (D₂ N c) = 0 := by
     rcases r with _ | r
     · simp [d₂_zero]
     rcases r with _ | r
-    · simp [d₂_succ, map_sum, D₂_single, d₂_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp [d₂_succ, map_sum, D₂_single, d₂_zero]
     have h := alt_sum_zero (n := r) (fun θ => single (⟨p, r, a, θ ≫ b⟩ : Pr N) (1 : ℤ))
-    rw [d₂_succ, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [d₂_succ, map_sum]
     simp only [D₂_single, d₂_succ, Finset.smul_sum]
     rw [← h]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
@@ -137,9 +143,12 @@ theorem D₁_D₂ (c : Pr N →₀ ℤ) : D₁ N (D₂ N c) = D₂ N (D₁ N c) 
     obtain ⟨p, r, a, b⟩ := z
     rcases p with _ | p <;> rcases r with _ | r
     · simp [d₁_zero, d₂_zero]
-    · simp [d₁_zero, d₂_succ, map_sum, D₁_single]
-    · simp [d₂_zero, d₁_succ, map_sum, D₂_single]
-    · simp only [d₁_succ, d₂_succ, map_sum, D₁_single, D₂_single, Finset.smul_sum, smul_single, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp [d₁_zero, d₂_succ, map_sum, D₁_single]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp [d₂_zero, d₁_succ, map_sum, D₂_single]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp only [d₁_succ, d₂_succ, map_sum, D₁_single, D₂_single, Finset.smul_sum, smul_single, smul_eq_mul]
       rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
       rw [mul_comm]
@@ -164,14 +173,16 @@ theorem push_d₁ {N M : ℕ} (θ : SimplexCategory.mk N ⟶ SimplexCategory.mk 
   obtain ⟨p, r, a, b⟩ := z
   rcases p with _ | p
   · simp [d₁_zero]
-  · simp [d₁_succ, map_sum, push_single, Category.assoc]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp [d₁_succ, map_sum, push_single, Category.assoc]
 
 theorem push_d₂ {N M : ℕ} (θ : SimplexCategory.mk N ⟶ SimplexCategory.mk M) (z : Pr N) :
     Pr.push θ z.d₂ = Pr.d₂ (⟨z.1, z.2.1, z.2.2.1 ≫ θ, z.2.2.2 ≫ θ⟩ : Pr M) := by
   obtain ⟨p, r, a, b⟩ := z
   rcases r with _ | r
   · simp [d₂_zero]
-  · simp [d₂_succ, map_sum, push_single, Category.assoc]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp [d₂_succ, map_sum, push_single, Category.assoc]
 
 theorem d_push {N M : ℕ} (θ : SimplexCategory.mk N ⟶ SimplexCategory.mk M) (c : Pr N →₀ ℤ) :
     Pr.d M (Pr.push θ c) = Pr.push θ (Pr.d N c) := by
@@ -191,11 +202,13 @@ theorem push_push {N M K : ℕ} (θ : SimplexCategory.mk N ⟶ SimplexCategory.m
 
 theorem bd_bd {N : ℕ} (c : Pr N →₀ ℤ) : Pr.bd (Pr.bd c) = 0 := by
   have h := alt_sum_zero (n := N) (fun θ => Pr.push θ c)
-  simp only [Pr.bd, map_sum, map_zsmul, push_push, Finset.smul_sum, smul_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Pr.bd, map_sum, map_zsmul, push_push, Finset.smul_sum, smul_smul]
   exact h
 
 theorem d_bd {N : ℕ} (c : Pr N →₀ ℤ) : Pr.d (N + 1) (Pr.bd c) = Pr.bd (Pr.d N c) := by
-  simp only [Pr.bd, map_sum, map_zsmul, d_push]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Pr.bd, map_sum, map_zsmul, d_push]
 
 theorem deg_iff {N : ℕ} (k : ℕ) (c : Pr N →₀ ℤ) :
     Pr.Deg k c ↔ c ∈ supported ℤ ℤ {z : Pr N | z.1 + z.2.1 = k} := by

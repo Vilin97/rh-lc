@@ -34,7 +34,8 @@ theorem gram_posDef_and_l2_le_sup_bound : ∀ (k : Type) [CommRing k] (X : Schem
         (vals P a b f σ y i * (starRingEnd ℂ) (vals P a b f σ y j))).re := by
       funext y
       have h1 := Complex.mul_conj' (∑ i, c i * vals P a b f σ y i)
-      rw [map_sum, Finset.sum_mul_sum] at h1
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Finset.sum_mul_sum] at h1
       simp only [cmb]
       rw [← Complex.ofReal_re (‖_‖ ^ 2), Complex.ofReal_pow, ← h1]
       congr 1

@@ -45,13 +45,15 @@ theorem DefectPoint.proof (h1 : PointLine.Statement) (h2 : PointChowForm.Stateme
     apply hu
     rw [hmem]
     intro t
-    simp only [linForm, map_sum, map_mul, eval_C, eval_X, Pi.smul_apply, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [linForm, map_sum, map_mul, eval_C, eval_X, Pi.smul_apply, smul_eq_mul]
     calc ∑ j, u j * (t * y j) = t * ∑ j, u j * y j := by
           rw [Finset.mul_sum]; exact Finset.sum_congr rfl fun j _ => by ring
       _ = 0 := by rw [h0, mul_zero]
   have hev : eval (fun ij => u ij.2) g = c * ∑ j, u j * y j := by
     rw [hgeq]
-    simp only [map_mul, map_sum, eval_C, eval_X]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_mul, map_sum, eval_C, eval_X]
     congr 1
     exact Finset.sum_congr rfl fun j _ => mul_comm _ _
   have hcone : coneIntegral h W 0 (fsLog h u) = fsLog h u y := by

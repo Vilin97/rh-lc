@@ -159,7 +159,8 @@ theorem sections_generic_indicators : ∀ (E : Type) [Field E] [NumberField E] [
     · rw [(hC.e_val Z).2 Y hY, zero_mul]
   · rw [finsum_eq_sum_of_fintype]
     refine heq (Submodule.sum_mem _ fun Z _ => hz Z) one_mem_secZ_zero fun Y => ?_
-    rw [evC_one_of_test hT, ← evL_apply, map_sum, Finset.sum_eq_single Y]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [evC_one_of_test hT, ← evL_apply, map_sum, Finset.sum_eq_single Y]
     · rw [evL_apply]
       exact (hC.e_val Y).1
     · intro Z _ hZ

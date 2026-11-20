@@ -35,19 +35,23 @@ theorem yForm_eq_sum (t : T) (b : Fin q) (φ : κ → R) :
 theorem colDerM_xForm (t t' : T) (X : Matrix κ κ R) (a : Fin p) (ε : κ → R) :
     colDerM (q := q) t X (xForm t' a ε) = if t' = t then xForm t a (ε ᵥ* X) else 0 := by
   have hv : ε ᵥ* X = ∑ k, ε k • X k := by ext l; simp [vecMul, dotProduct]
-  rw [xForm_eq_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [xForm_eq_sum, map_sum]
   simp only [Derivation.map_smul, colDerM_X_xVar]
   split_ifs with h
-  · rw [hv, map_sum]; simp [map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [hv, map_sum]; simp [map_smul]
   · simp
 
 theorem colDerM_yForm (t t' : T) (X : Matrix κ κ R) (b : Fin q) (φ : κ → R) :
     colDerM (p := p) t X (yForm t' b φ) = if t' = t then -yForm t b (X *ᵥ φ) else 0 := by
   have hv : X *ᵥ φ = ∑ k, φ k • fun r => X r k := by ext l; simp [mulVec, dotProduct, mul_comm]
-  rw [yForm_eq_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [yForm_eq_sum, map_sum]
   simp only [Derivation.map_smul, colDerM_X_yVar]
   split_ifs with h
-  · rw [hv, map_sum]; simp [map_smul, Finset.sum_neg_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [hv, map_sum]; simp [map_smul, Finset.sum_neg_distrib]
   · simp
 
 variable [DecidableEq κ] in
@@ -211,10 +215,12 @@ theorem sum_smul_mem_of_sum_pow_smul_mem_on (W : Submodule K V) {U : Set K} (hU 
     refine Set.Infinite.mono ?_ hU
     intro u hu
     have := hφ _ (h u hu)
-    simp only [map_sum, map_smul, smul_eq_mul] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, smul_eq_mul] at this
     simpa [Polynomial.eval_finsetSum, mul_comm] using this
   have := congrArg (Polynomial.lsum (R := K) (fun n => f n • (LinearMap.id : K →ₗ[K] K))) hP
-  simpa [map_sum, Polynomial.lsum_apply, Polynomial.sum_monomial_index] using this
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa [map_sum, Polynomial.lsum_apply, Polynomial.sum_monomial_index] using this
 
 theorem sum_smul_mem_of_sum_zpow_smul_mem_on (W : Submodule K V) {U : Set K} (hU : U.Infinite)
     (hU0 : ∀ u ∈ U, u ≠ 0) (S : Finset ι) (e : ι → ℤ) (v : ι → V)
@@ -362,10 +368,12 @@ theorem colLie_diag_mem_of_unitary (W : Submodule ℂ (Poly ℂ T p q κ))
         rw [Set.mem_setOf_eq, h0, zero_mul] at hu; exact zero_ne_one hu
       have := hW (Pi.mulSingle t (diagInvAt k (Units.mk0 u hu0)))
         (mulSingle_mem_unitaryGroup t _ (diagInvAt_mem_unitaryGroup k _ hu)) w hw
-      rw [w.as_sum, map_sum] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [w.as_sum, map_sum] at this
       simpa only [colActHom_diagInvAt_monomial, Units.val_zpow_eq_zpow_val, Units.val_mk0] using this)
     Int.cast
-  rw [w.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [w.as_sum, map_sum]
   simpa only [colLie_monomial] using this
 
 theorem colDerM_mem_of_conj (W : Submodule ℂ (Poly ℂ T p q κ))

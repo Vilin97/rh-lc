@@ -74,7 +74,8 @@ private theorem UpperTheory.flag_section_combination {X : Scheme.{0}} {M : X.Mod
   have hι (a : Fin r) : (ch.isFrame.basis hW).repr ((fl.ι i.succ).app W
       (Fintype.linearCombination Γ(X, W) (fun j => resM (fl.F i.succ) hW (s j)) c)) a =
       ∑ j, if j.castLE hi = a then c j else 0 := by
-    rw [Fintype.linearCombination_apply, ← appLinear_apply, map_sum, map_sum, Finsupp.coe_finset_sum, Finset.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Fintype.linearCombination_apply, ← appLinear_apply, map_sum, map_sum, Finsupp.coe_finset_sum, Finset.sum_apply]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_smul, appLinear_apply, app_resM, hs, ← ch.isFrame.basis_apply, map_smul, Module.Basis.repr_self,
       Finsupp.smul_apply, Finsupp.single_apply]
@@ -91,7 +92,8 @@ private theorem UpperTheory.flag_section_combination {X : Scheme.{0}} {M : X.Mod
         exact if_neg fun h => hj (Fin.ext ((show (j : ℕ) = i from congrArg Fin.val h).trans hlv.symm))
       · simp
     refine Eq.trans ?_ (congrArg (· • resM (fl.gr i) hW ((fl.π i).app ch.U t)) ((hι i).trans hl).symm)
-    rw [Fintype.linearCombination_apply, ← appLinear_apply, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Fintype.linearCombination_apply, ← appLinear_apply, map_sum,
       Finset.sum_eq_single l, map_smul, appLinear_apply, app_resM, h₁ _ hl₀]
     · intro j _ hj
       rw [map_smul, appLinear_apply, app_resM, h₂ j (fun h => hj (h.trans hl₀.symm)), map_zero, smul_zero]

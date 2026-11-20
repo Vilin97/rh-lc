@@ -124,7 +124,8 @@ theorem toLoc_mulVec {E k : Type} [Field E] [Field k] (ι : E →+* k) {A : Type
     (toLoc ι e e x *ᵥ fun i => ι (y (e i))) = fun i => ι (x y (e i)) := by
   funext i
   rw [toLoc_eq, ← LinearMap.toMatrix'_mulVec]
-  simp only [mulVec, dotProduct, map_sum, map_mul, map_apply, submatrix_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [mulVec, dotProduct, map_sum, map_mul, map_apply, submatrix_apply]
   exact Equiv.sum_comp e fun l => ι (LinearMap.toMatrix' x (e i) l) * ι (y l)
 
 theorem bounds_of_isGL : ∀ (X : Fields) (Pr : Primes X) (R : Ranks) (P : HeightOneSpectrum (𝓞 X.E)) (k : Type) [Field k]

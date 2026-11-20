@@ -26,10 +26,12 @@ theorem contDiffOn_coef : ∀ (n : ℕ) (s : Set (V n)) (F : V n → Alt n), IsO
       ContDiffOn ℝ ∞ (fun v => (bas n).repr (dbarAt F v) S) s := by
   intro n s F hs hF U
   constructor
-  · simp only [delAt, coefwise, Finset.mul_sum, mul_smul_comm, map_sum, map_smul, Finsupp.coe_finset_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [delAt, coefwise, Finset.mul_sum, mul_smul_comm, map_sum, map_smul, Finsupp.coe_finset_sum,
       Finset.sum_apply, Finsupp.smul_apply, smul_eq_mul]
     exact ContDiffOn.sum fun a _ => ContDiffOn.sum fun S _ => (contDiffOn_del_dir hs (hF S) _).mul contDiffOn_const
-  · simp only [dbarAt, coefwise, Finset.mul_sum, mul_smul_comm, map_sum, map_smul, Finsupp.coe_finset_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [dbarAt, coefwise, Finset.mul_sum, mul_smul_comm, map_sum, map_smul, Finsupp.coe_finset_sum,
       Finset.sum_apply, Finsupp.smul_apply, smul_eq_mul]
     exact ContDiffOn.sum fun a _ => ContDiffOn.sum fun S _ => (contDiffOn_dbar_dir hs (hF S) _).mul contDiffOn_const
 

@@ -258,7 +258,8 @@ theorem value_tangent : ∀ (R : Type) [CommRing R] [IsDomain R] (I : Ideal R) (
       GlobalTheory.ZH.FormCount.valR_scal (algebraMap C (DualNumber C)) yG _ e₃ ⊤ mtop]
     rfl
   have E := congrArg (stalkClosedPointIso (CommRingCat.of (DualNumber C))).hom.hom (a₁.symm.trans a₂)
-  rw [map_mul, map_sum, Units.val_pow_eq_pow_val, map_pow, hpw, ht] at E
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_mul, map_sum, Units.val_pow_eq_pow_val, map_pow, hpw, ht] at E
   simp only [map_mul, hc, hσv] at E
   rw [← E, ← _root_.mul_assoc, h1, _root_.one_mul]
 

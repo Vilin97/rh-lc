@@ -56,7 +56,8 @@ theorem alt_eq_zero_of_lt (n : ℕ) (ψ : MvPolynomial (Fin n) ℝ →ₗ[ℝ] �
       ψ (MvPolynomial.rename σ P) = ((Equiv.Perm.sign σ : ℤ) : ℝ) * ψ P)
     (P : MvPolynomial (Fin n) ℝ) (d : ℕ) (hP : P.IsHomogeneous d) (hd : d < ∑ i : Fin n, (i : ℕ)) :
     ψ P = 0 := by
-  rw [P.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [P.as_sum, map_sum]
   refine Finset.sum_eq_zero fun α hα => ?_
   by_cases h : ∃ i j, i ≠ j ∧ α i = α j
   · obtain ⟨i, j, hij, he⟩ := h

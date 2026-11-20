@@ -291,7 +291,8 @@ private theorem gen_isStable {V : Submodule ℂ (TR.Sm F 2)} (hV : TR.IsStable V
       fin_cases a <;> fin_cases b <;> simp [Fin.sum_univ_two, Finset.sum_apply, Pi.single_apply]
     change TR.lie F 2 X x ∈ _
     rw [e]
-    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply]
     refine Submodule.sum_mem _ fun i _ => Submodule.sum_mem _ fun j _ => Submodule.sum_mem _ fun w _ => Submodule.smul_of_tower_mem _ _ ?_
     have key : TR.Eop w i j x ∈ gen V (wOp (TR.Eop v)) (xOp (TR.Eop v)) m := by
       by_cases h : w = v

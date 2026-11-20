@@ -167,7 +167,8 @@ theorem exists_tensor {P : Subgroup H} (ρ : Representation F P W) {K : Set H} (
       rw [hu])⟩
   refine ⟨∑ i ∈ S, b i ⊗ₜ c i, fun x => ?_⟩
   obtain ⟨p, w, hw, rfl⟩ := hPK x
-  rw [hf, h2 (f w) S (Finset.subset_biUnion_of_mem s (hfin.mem_toFinset.2 ⟨w, hw, rfl⟩)), map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hf, h2 (f w) S (Finset.subset_biUnion_of_mem s (hfin.mem_toFinset.2 ⟨w, hw, rfl⟩)), map_sum, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [LinearMap.lTensor_tmul, LinearMap.lTensor_tmul]
   exact congrArg _ ((c i).1.2 p w)

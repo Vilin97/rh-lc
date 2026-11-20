@@ -36,7 +36,8 @@ theorem unitary_conj_entry_and_inv_entry : ∀ (k r : ℕ) (i j : Fin (2 * r + k
       rw [MvPolynomial.totalDegree_C, MvPolynomial.totalDegree_X]
     · show (Hpk k r * gᴴ * Hpk k r) i j = _
       rw [sandwich_entry_sum]
-      simp only [map_sum, map_mul, MvPolynomial.eval_C, MvPolynomial.eval_X, Sum.elim_inr,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_mul, MvPolynomial.eval_C, MvPolynomial.eval_X, Sum.elim_inr,
         Matrix.conjTranspose_apply]
 
 end GlobalTheory

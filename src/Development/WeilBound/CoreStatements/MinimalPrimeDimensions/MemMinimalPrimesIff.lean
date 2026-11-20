@@ -18,7 +18,8 @@ theorem cone_of_homog {d : ℕ} {g : MvPolynomial (Fin m) R} (hg : g.IsHomogeneo
     cone c t g = Polynomial.X ^ d * Polynomial.C (eval₂Hom c t g) := by
   conv_lhs => rw [g.as_sum]
   conv_rhs => rw [g.as_sum]
-  simp only [cone, map_sum, eval₂Hom_monomial, Finset.mul_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [cone, map_sum, eval₂Hom_monomial, Finset.mul_sum, map_mul]
   refine Finset.sum_congr rfl fun a ha => ?_
   have : a.degree = d := by rw [Finsupp.degree_eq_weight_one]; exact hg (mem_support_iff.1 ha)
   simp only [Finsupp.prod, mul_pow, Finset.prod_mul_distrib, Finset.prod_pow_eq_pow_sum, map_prod, map_pow]
@@ -26,7 +27,8 @@ theorem cone_of_homog {d : ℕ} {g : MvPolynomial (Fin m) R} (hg : g.IsHomogeneo
 
 theorem coeff_cone (g : MvPolynomial (Fin m) R) (d : ℕ) :
     (cone c t g).coeff d = eval₂Hom c t (homogeneousComponent d g) := by
-  conv_lhs => rw [← g.sum_homogeneousComponent, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [← g.sum_homogeneousComponent, map_sum]
   simp only [cone_of_homog c t (homogeneousComponent_isHomogeneous _ g), Polynomial.finsetSum_coeff,
     Polynomial.X_pow_mul_C, Polynomial.coeff_C_mul, Polynomial.coeff_X_pow, mul_ite, mul_one, mul_zero,
     Finset.sum_ite_eq, Finset.mem_range]
@@ -89,7 +91,8 @@ theorem exists_homog (hk : t k = 1) (g : MvPolynomial (Fin m) R) {N : ℕ} (hN :
     have hd' := Finset.mem_range.1 hd
     rwa [one_mul, show d + (N - d) = N by omega] at h
   · conv_rhs => rw [← g.sum_homogeneousComponent]
-    simp only [map_sum, map_mul, map_pow, eval₂Hom_X', hk, one_pow, mul_one]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, map_pow, eval₂Hom_X', hk, one_pow, mul_one]
 
 theorem exists_homog' (hs : Function.Surjective (eval₂Hom c t)) (hk : t k = 1) (a : A) :
     ∃ (N : ℕ) (G : MvPolynomial (Fin m) R), G.IsHomogeneous N ∧ eval₂Hom c t G = a := by

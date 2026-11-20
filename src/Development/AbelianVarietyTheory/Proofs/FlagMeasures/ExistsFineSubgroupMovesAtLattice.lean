@@ -73,7 +73,8 @@ theorem h_smul_r (c : E) (y a : S.V) : S.h y (c • a) = L.cj c * S.h y a := by
 theorem h_zero_r (y : S.V) : S.h y 0 = 0 := by simp [Frames.h, hf]
 theorem h_cj (x y : S.V) : L.cj (S.h x y) = S.h y x := by
   have hH : ∀ i j, L.cj (S.Hm j i) = S.Hm i j := fun i j => congrFun (congrFun S.herm.1 i) j
-  simp only [Frames.h, hf, map_sum, map_mul, L.cj_cj, hH]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Frames.h, hf, map_sum, map_mul, L.cj_cj, hH]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 

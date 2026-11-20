@@ -26,7 +26,8 @@ theorem key₁ {B B' : Type} [CommRing B] [CommRing B'] {n : ℕ} (ρ : B →+* 
     linear_combination gm' k * h2 k + ρ (aφ k) * h3 k
   have hs := Finset.sum_congr rfl (fun k (_ : k ∈ Finset.univ) => e k)
   simp only [Finset.sum_add_distrib] at hs
-  rw [map_add, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_add, map_sum]
   simp only [map_mul]
   linear_combination hs - h1
 
@@ -43,7 +44,8 @@ theorem key₂ {B B' : Type} [CommRing B] [CommRing B'] {n : ℕ} (ρ : B →+* 
     linear_combination (-gm₂ k) * h3 k + ρ (aθ k) * h4 k - a₁ k * h5 k
   have hs := Finset.sum_congr rfl (fun k (_ : k ∈ Finset.univ) => e k)
   simp only [Finset.sum_sub_distrib, Finset.sum_add_distrib] at hs
-  rw [map_add, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_add, map_sum]
   simp only [map_mul]
   linear_combination hs + h2 - h1
 
@@ -107,7 +109,8 @@ theorem exists_bounds
   have hpull : ∀ k, pullP hp (H1.mk _ (β k)) = H1.mk (FP sW) ((pushC hp).pullbackOneCocycle (β k)) :=
     fun k => CoefMap.pullCohomologyOne_class _ _
   simp only [hpull, cup_mk] at h
-  rw [← map_sum] at h
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum] at h
   obtain ⟨f, hf⟩ := H2.mk_eq_zero.mp h
   refine ⟨f, fun S S' S'' φ ψ χ e => ?_⟩
   have hχ : χ = φ ≫ ψ := by
@@ -150,7 +153,8 @@ theorem hZ_rel (H : Bounds hp α β f) {T' : Pt sY} (τ : T ⟶ T') {X'' : Schem
   have e2 : ∀ z, pullP hw (H1.mk (FP sW) z) = H1.mk (FP s') ((pushC hw).pullbackOneCocycle z) :=
     fun z => CoefMap.pullCohomologyOne_class _ _
   simp only [e1, e2]
-  simp only [← LinearMap.map_smul, ← map_sum, ← map_sub, ← map_add]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← LinearMap.map_smul, ← map_sum, ← map_sub, ← map_add]
   rw [H1.mk_eq_zero]
   let u : ∀ S : Pt s'', pushPt hw (pushPt hj S) ⟶ pushPt hw' S := fun S =>
     { ρ := { RingHom.id S.B with commutes' := fun r => congrArg (algebraMap T'.B S.B) (τ.ρ.commutes r) }
@@ -173,7 +177,8 @@ theorem hZ_rel (H : Bounds hp α β f) {T' : Pt sY} (τ : T ⟶ T') {X'' : Schem
     rw [Algebra.smul_def]
     rfl
   rw [hR]
-  rw [map_add, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_add, map_sum]
   simp only [map_mul]
   have B1 : mp (FP s'') φ (v1 f (u S)) - v1 f (u S ≫ pushHom hw' φ) + v1 f (pushHom hw' φ)
       = ∑ k, mp (FP s'') φ (v1 (α k).1 (u S)) * v1 (β k).1 (pushHom hp (pushHom hw' φ)) :=
@@ -314,7 +319,8 @@ theorem orth_of_surj (hF : AbelianDeRham.Free) (hB : AbelianDeRham.BaseChange) {
     rw [← Category.assoc, Over.w]
     simp [spMap]
   have h0 := pull2_chern_class_eq_zero hP hCh
-  rw [map_sum] at h0
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum] at h0
   simp only [CoefMap.pullCohomologyTwo_cup] at h0
   have eA : ∀ k, (toPC _).pull1 (pullOver (dp0 R) (𝟙 (Sp R)) (fst A B) (a k).1) = pullP hq (toP _ (a k).1) :=
     fun k => (pullP_toP (IsMor.of_dividedPowersZeroIdeal (dp0 R) hq) _).symm
@@ -397,7 +403,8 @@ theorem orth_of_surj (hF : AbelianDeRham.Free) (hB : AbelianDeRham.BaseChange) {
       rw [hα k, pullP_pullP hq (hw T) (hφ' T) (fun r => rfl) (hwf T),
         pullP_pullP (hφ' T) hj (hφ' T') (fun r => τ.ρ.commutes r) hjf, hXc]
     have h1 := congrArg (X T') hrel
-    simp only [map_add, map_sub, map_sum, map_smul, smul_eq_mul, hii, map_zero] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_add, map_sub, map_sum, map_smul, smul_eq_mul, hii, map_zero] at h1
     simp only [hi] at h1
     exact h1
   have hcob : ∃ g : C0 (FP (B.hom ≫ 𝟙 (Sp R))), d0 _ g = ↑(∑ k, x (a k) • β k) := by
@@ -412,12 +419,14 @@ theorem orth_of_surj (hF : AbelianDeRham.Free) (hB : AbelianDeRham.BaseChange) {
     linear_combination -key T T' τ
   have hmk : H1.mk _ (∑ k, x (a k) • β k) = 0 := H1.mk_eq_zero.mpr hcob
   have hc : toP (B.hom ≫ 𝟙 (Sp R)) (∑ k, x (a k) • (b k).1) = 0 := by
-    simpa only [map_sum, map_smul, hβ] using hmk
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa only [map_sum, map_smul, hβ] using hmk
   have hF1 := (toP_eq_zero_iff _).mp hc
   have hcF : (∑ k, x (a k) • b k) ∈ PrimitiveSubmodule B := by
     show (primDR B).subtype (∑ k, x (a k) • b k) ∈ F1 _
     simpa using hF1
   have hy0 := (Submodule.mem_dualAnnihilator _).mp hy _ hcF
-  simpa [map_sum, map_smul] using hy0
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa [map_sum, map_smul] using hy0
 
 end CrystallinePoints.Pd

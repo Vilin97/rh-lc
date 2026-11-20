@@ -130,7 +130,8 @@ theorem frob_in_coordinates : ∀ (l : ℕ) [Fact l.Prime] (a e : ℕ) [NeZero a
     refine mul_left_cancel₀ (pow_ne_zero k' hJE0) ?_
     change _ * lam n τ i = _
     rw [← h2]
-    simp only [F, AddMonoidHom.coe_mk, ZeroHom.coe_mk, Matrix.mulVec, dotProduct, hlamtr, hφg,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [F, AddMonoidHom.coe_mk, ZeroHom.coe_mk, Matrix.mulVec, dotProduct, hlamtr, hφg,
       PhiMod.phi_apply, frobV_apply, map_mul, map_pow, map_sum, Matrix.map_apply]
     ring
 

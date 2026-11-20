@@ -138,7 +138,8 @@ lemma aeval_weighted_scale {σ : Type} {B : Type} [CommSemiring B] [Algebra K B]
     MvPolynomial.aeval (fun p => t ^ (w p) * z p) φ = t ^ n * MvPolynomial.aeval z φ := by
   conv_lhs => rw [φ.as_sum]
   conv_rhs => rw [φ.as_sum]
-  rw [map_sum, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun m hm => ?_
   rw [MvPolynomial.aeval_monomial, MvPolynomial.aeval_monomial]
   have hw : Finsupp.weight w m = n := hφ (MvPolynomial.mem_support_iff.mp hm)
@@ -245,7 +246,8 @@ theorem red_of_valGE (_hr : 0 < r) (vec : ι → Bool) (S : Finset ι) (A : Fin 
     have hev : ∀ (M : Matrix (Fin r) (Fin r) L[X]),
         ev (∑ b, MvPolynomial.C (M a b) * MvPolynomial.X (i, b)) = ∑ b, M a b * y (i, b) := by
       intro M
-      simp only [ev, map_sum, map_mul, AlgHom.restrictScalars_apply, MvPolynomial.aeval_C,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [ev, map_sum, map_mul, AlgHom.restrictScalars_apply, MvPolynomial.aeval_C,
         MvPolynomial.aeval_X, Algebra.algebraMap_self, RingHom.id_apply]
     by_cases hS : i ∈ S
     · by_cases hvi : vec i = true
@@ -429,7 +431,8 @@ lemma rho_adj (A : Fin r → ι) (l i j : Fin r) : rho K A l ((Tm K A).adjugate 
 
 lemma rho_cc (A : Fin r → ι) (hA : Function.Injective A) (lst l : Fin r) :
     rho K A l (((Tm K A).adjugate.mulVec (Wv K A)) lst) = (Tm K A).adjugate lst l := by
-  simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, rho_adj]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, rho_adj]
   have : ∀ j, rho K A l (Wv K A j) = if j = l then 1 else 0 := by
     intro j; simp [rho, Wv, hA.eq_iff]
   simp only [this, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true]
@@ -648,7 +651,8 @@ theorem dvd_of_red_one (hr : 0 < r) (A : Fin r → ι) (hA : Function.Injective 
           if_true, mul_assoc]
         rw [Finset.mul_sum]
       have hφY : ∑ x, φ x * Y (A l, x) = am (Dt * Wv K A l) / am c := by
-        rw [← hTψ l, map_sum, Finset.sum_div]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [← hTψ l, map_sum, Finset.sum_div]
         refine Finset.sum_congr rfl fun b _ => ?_
         simp only [φ, Y, T, Tm, Matrix.of_apply, map_mul]
         ring

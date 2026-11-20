@@ -331,7 +331,8 @@ theorem sub_mem_of_lift (hc : ∀ k, U.mkQ (c k) = b'' k) (x : V) :
     x - ∑ k, b''.repr (U.mkQ x) k • c k ∈ U := by
   apply (Submodule.Quotient.eq U).mp
   change U.mkQ x = U.mkQ (∑ k, b''.repr (U.mkQ x) k • c k)
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [LinearMap.map_smul, hc]
   exact (b''.sum_repr (U.mkQ x)).symm
 
@@ -354,7 +355,8 @@ theorem proj_eq_tv (hc : ∀ k, U.mkQ (c k) = b'' k) (v : InfinitePlace K) (x : 
   have hsplit : Formalism.HermitianLatticesTheory.fcoord b X v x = Formalism.HermitianLatticesTheory.fcoord b X v (x - ∑ k, r k • c k) +
       ∑ k, v.embedding (r k) • Formalism.HermitianLatticesTheory.fcoord b X v (c k) := by
     rw [← fcoord_finset_sum_smul, ← Formalism.HermitianLatticesTheory.fcoord_add, sub_add_cancel]
-  rw [← hL, hsplit, map_add, h0, zero_add, map_sum, tv, Fintype.linearCombination_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hL, hsplit, map_add, h0, zero_add, map_sum, tv, Fintype.linearCombination_apply]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [map_smul, hL]
 

@@ -166,7 +166,8 @@ theorem fubiniStudy_hessian_posDef : ∀ (k : Type) [CommRing k] (N : ℕ) (σ :
     have hgw : ∀ a, fderiv ℂ (g a) x0 w = 0 := fun a => by
       have := hξ a
       simp only [ReciprocityTheory.L2DbarEstimates.wd_of_differentiableAt (hgD a)] at this
-      rw [hwsum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hwsum, map_sum]
       simpa [mul_comm] using this
     have hdF : fderiv ℂ F x0 w = 0 := by
       ext a

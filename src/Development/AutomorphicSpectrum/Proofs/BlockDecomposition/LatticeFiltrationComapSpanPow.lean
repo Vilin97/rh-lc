@@ -137,7 +137,8 @@ theorem dividedPowerFiltration_eq : ∀ {W B : Type} [CommRing W] [CommRing B] [
     obtain ⟨c, e⟩ := exists_rep_high h hl (ι_mem f ξ l M x) hx (min r m) (by omega) (by omega)
     have hx' : x = ∑ i ∈ Finset.Ico (min r m) (m + 1), Lat.ofW f ξ l M (c i) * Lat.dpA f ξ l M i := by
       apply Lat.ι_injective f ξ l M
-      rw [e, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [e, map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_mul, Lat.ι_ofW, Lat.ι_dpA]
     rw [hx']

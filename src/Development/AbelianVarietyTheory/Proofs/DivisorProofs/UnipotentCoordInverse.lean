@@ -26,14 +26,16 @@ theorem fA_mat {n : ℕ} {J : Matrix (Fin n) (Fin n) E} (u : UA σ J) (v w : Fin
   have hu : (mat u)ᵀ * incM F J * (mat u).map (cA σ) = incM F J := u.2
   have h1 : (fun i => cA σ ((mat u *ᵥ w) i)) = (mat u).map (cA σ) *ᵥ fun i => cA σ (w i) := by
     funext i
-    simp [Matrix.mulVec, dotProduct, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Matrix.mulVec, dotProduct, map_sum, map_mul]
   unfold fA
   rw [h1, Matrix.mulVec_mulVec, ← Matrix.vecMul_transpose, ← Matrix.dotProduct_mulVec, Matrix.mulVec_mulVec,
     ← Matrix.mul_assoc, hu]
 
 theorem fA_skew (hσ : ∀ x, σ (σ x) = x) {n : ℕ} {J : Matrix (Fin n) (Fin n) E} (hJ : ∀ i j, σ (J j i) = -J i j)
     (v w : Fin n → AE F E) : fA σ J v w = -cA σ (fA σ J w v) := by
-  simp only [fA, dotProduct, Matrix.mulVec, incM, Matrix.map_apply, map_sum, map_mul, cA_cA hσ, cA_inclR, hJ, map_neg,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [fA, dotProduct, Matrix.mulVec, incM, Matrix.map_apply, map_sum, map_mul, cA_cA hσ, cA_inclR, hJ, map_neg,
     Finset.mul_sum, ← Finset.sum_neg_distrib]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_

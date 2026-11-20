@@ -343,7 +343,8 @@ theorem shapiro {G : Type} [CommGroup G] (χ : (Ω ≃ₐ[ℚ] Ω) →* G) (z : 
       (s (∑ k ∈ Finset.range N, ((g ^ k) ξ - z (g ^ k) (χ g ^ k))) - (∑ k ∈ Finset.range N, ((g ^ k) ξ - z (g ^ k) (χ g ^ k))) +
         ∑ k ∈ Finset.range N, (g ^ k) (w k)) := by
   nth_rewrite 1 [← sum_shift N j hj (fun k => (g ^ k) ξ - z (g ^ k) (χ g ^ k))]
-  rw [map_sum, ← Finset.sum_sub_distrib, ← Finset.sum_add_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, ← Finset.sum_sub_distrib, ← Finset.sum_add_distrib]
   refine cg_sum _ _ _ fun k hk => ?_
   replace hk := Finset.mem_range.1 hk
   have a1 := hz s _ hs (stab_pow hg ((k + N - j) % N)) (χ g ^ k)

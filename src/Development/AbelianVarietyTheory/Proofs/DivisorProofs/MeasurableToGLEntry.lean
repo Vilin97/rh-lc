@@ -124,7 +124,8 @@ theorem measurable_dual {X Z : Type} [MeasurableSpace X] [NormedAddCommGroup Z] 
   have : η = fun x => ∑ i, η x (b i) • LinearMap.toContinuousLinearMap (b.coord i) := by
     funext x
     ext z
-    conv_lhs => rw [← b.sum_repr z, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [← b.sum_repr z, map_sum]
     simp only [map_smul]
     simp [mul_comm]
   rw [this]

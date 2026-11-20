@@ -18,7 +18,8 @@ variable {Ω : Type*} [Field Ω] {E : Type*} [AddCommGroup E] [Module Ω E] {N :
 theorem repr_sum_smul {τ : Type*} [Fintype τ] (w : Module.Basis (Fin N) Ω E) (a : τ → Ω) (bb : τ → E)
     (j : Fin N) :
     w.repr (∑ q, a q • bb q) j = ∑ q, a q * w.repr (bb q) j := by
-  simp only [map_sum, map_smul, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.smul_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.smul_apply,
     smul_eq_mul]
 
 theorem coeff_eq_zero_of_tri (w : Module.Basis (Fin N) Ω E) (bb : Fin N → E)

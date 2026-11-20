@@ -180,7 +180,8 @@ theorem map_latTQuot (ht : IsTie P D (padicIncl p Λ) φ) {J : Type} [DecidableE
     refine ⟨(mem_eigV_iff ht σ _).1 (hσ ▸ EigenSplit.proj_mem hτ P.actV i t), ?_⟩
     have e : φ (EigenSplit.proj hτ P.actV i t) =
         φ t - ∑ k ∈ Finset.univ.erase i, φ (EigenSplit.proj hτ P.actV k t) := by
-      rw [eq_sub_iff_add_eq, ← map_sum, ← map_add,
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [eq_sub_iff_add_eq, ← map_sum, ← map_add,
         Finset.add_sum_erase _ (fun k => EigenSplit.proj hτ P.actV k t) (Finset.mem_univ i),
         EigenSplit.sum_proj]
     rw [e]

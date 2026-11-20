@@ -33,7 +33,8 @@ theorem surjective_arch : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [
     filter_upwards [hM.std, T.eventually_cofinite_notMem] with v hv hT
     rw [hv, hstd i v hT]
   have hid : pure h M₁.vac = ∑ i, pure (ei (f i)) fun v => ev v (φ i v) := by
-    rw [← heΨ, hsum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← heΨ, hsum, map_sum]
     exact Finset.sum_congr rfl fun i _ => he (f i) (φ i) (hSB i) (hvac i)
   obtain ⟨y, hy⟩ := exists_point_ne_zero M₁.vac (fun v => (hM₁.vac v).2.1) hM₁.std
   set c : ℂ := ∏ᶠ v, M₁.vac v (fun j => y j v) with hc
@@ -50,7 +51,8 @@ theorem surjective_arch : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [
     rw [Finset.sum_apply] at this
     simp only [GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure, hI] at this
     exact this
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   have hs : (∑ i, ei ((cs i / c) • f i)) x = ∑ i, (cs i / c) * ei (f i) x := by
     rw [SchwartzMap.sum_apply]
     refine Finset.sum_congr rfl fun i _ => ?_

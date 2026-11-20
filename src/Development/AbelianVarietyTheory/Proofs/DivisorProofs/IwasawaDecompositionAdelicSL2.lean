@@ -20,7 +20,8 @@ theorem tensor_ideal_eq_of_span_of_linearIndependent
   have hmk : ∀ (J : Ideal (R ⊗[A] B)), Ideal.Quotient.mk J s
       = ∑ k, c k • Ideal.Quotient.mk J ((1 : R) ⊗ₜ[A] v k) := by
     intro J
-    rw [hs, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hs, map_sum]
     refine Finset.sum_congr rfl (fun k _ => ?_)
     rw [← Ideal.Quotient.mkₐ_eq_mk R, map_smul]
   have h1 : t - s ∈ J₁ := by

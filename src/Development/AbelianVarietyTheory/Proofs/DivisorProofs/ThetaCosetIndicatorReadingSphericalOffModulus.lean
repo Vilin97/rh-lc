@@ -113,7 +113,8 @@ theorem exists_sum_eq {D : D7} (𝔫 : Ideal (𝓞 D.host.F)) {α : Af D.host.F}
     · rw [zero_mul, smul_zero]; exact zero_mem _
   · refine FiniteAdeleRing.ext (R := 𝓞 D.host.F) D.host.F fun v => ?_
     show evalV D.host.F v α = evalV D.host.F v _
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [Algebra.smul_def, map_mul, AlgHom.commutes, GlobalTheory.SelfDualAt.evalV_indP]
     by_cases h : 𝔫 ≤ v.asIdeal
     · rw [h0 v h]

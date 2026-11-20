@@ -99,9 +99,11 @@ theorem mh_change (Or : CptOrigin Y S₀ Dc Hd) {bb : ∀ τ, Fin Dc.N → W τ}
       refine (Submodule.Quotient.eq (Hd.F τ)).1 ?_
       have := ht τ k
       simp_rw [← map_smul] at this
-      rw [← map_sum] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← map_sum] at this
       exact this.symm
-    rw [Or.F_eq τ, Submodule.mem_comap, map_sub, map_sum] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Or.F_eq τ, Submodule.mem_comap, map_sub, map_sum] at h1
     rw [← sub_eq_zero]
     refine (Submodule.disjoint_def.1 (MuIndep.blocks_disjoint Or τ)) _ ?_
       (sub_mem (hs τ k).1 (sum_mem fun a _ => Submodule.smul_mem _ _ (hs' τ a).1))

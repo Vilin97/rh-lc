@@ -14,7 +14,8 @@ private theorem pull_D (S : Type) [CommRing S] [Algebra A S] (y : S ⊗[A] E') :
 private theorem map_gen {ι : Type} [Fintype ι] (x : ι → E') :
     Algebra.TensorProduct.map (AlgHom.id (MvPolynomial ι A) (MvPolynomial ι A)) f (Det.gen (A := A) x) =
       Det.gen (A := A) (fun a => f (x a)) := by
-  simp [Det.gen, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Det.gen, map_sum]
 
 private theorem pull_chiS (S : Type) [CommRing S] [Algebra A S] (y : S ⊗[A] E') :
     (D.pull f).chiS S y = D.chiS S (Algebra.TensorProduct.map (AlgHom.id S S) f y) := by

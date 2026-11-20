@@ -67,7 +67,8 @@ variable {l : ℕ} [Fact l.Prime]
 theorem phi_xi (e : Per.Fl l) : ∃ c : Per.Ainf l, Per.φA l (xi e) = l * c + mu e ^ (l - 1) := by
   obtain ⟨c, hc⟩ := geom_sum_one_add (Fact.out : l.Prime) (mu e)
   refine ⟨c, ?_⟩
-  rw [← hc, xi, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hc, xi, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_pow, mu, sub_add_cancel]
   congr 1

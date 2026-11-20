@@ -111,7 +111,8 @@ private theorem solveGen (l : ℕ) [Fact l.Prime] (R N : Type) [CommRing R] [Add
       ∑ t ∈ Finset.range (l ^ (max A k - k)), σ (γ ^ (t * l ^ k)) (a (l ^ k) - a 0) := by
     rw [← L2 _ hk, hK1, mul_comm (l ^ k)]
   have hfixQ : σ (γ ^ (l ^ (max A k))) (a (l ^ (max A k)) - a 0) = a (l ^ (max A k)) - a 0 := by
-    rw [hdQ, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hdQ, map_sum]
     refine Finset.sum_congr rfl (fun t _ => ?_)
     rw [← Module.End.mul_apply, ← map_mul, mul_comm (γ ^ (l ^ (max A k))), map_mul,
       Module.End.mul_apply, hA (max A k) (le_max_left A k)]

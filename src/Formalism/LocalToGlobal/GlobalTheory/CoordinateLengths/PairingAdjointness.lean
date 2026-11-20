@@ -33,7 +33,8 @@ theorem intSubm_eq (w : D.what₂.places.Pl) {N : ℕ} (lam : D.what₂.Tau → 
         rw [Submodule.coe_sum] at h2
         simp only [Submodule.coe_smul] at h2
         conv_lhs => rw [← h2]
-        rw [map_sum, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum, map_sum]
         simp only [map_zsmul]
       simp only [hfe]
       rw [Finset.prod_univ_sum, Fintype.piFinset_univ]
@@ -66,7 +67,8 @@ theorem bwA_span_basis (O : Subring ℂ) {N : ℕ} (ν : Fin N → ℕ) {κ : Ty
     have h2 := congrArg Subtype.val (b.sum_repr ⟨p, hp⟩)
     rw [Submodule.coe_sum] at h2
     simp only [Submodule.coe_smul] at h2
-    rw [← h2, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← h2, map_sum]
     refine Submodule.sum_mem _ fun i _ => ?_
     rw [map_zsmul]
     apply zsmul_mem

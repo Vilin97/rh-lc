@@ -82,7 +82,8 @@ theorem DerivSpanTrdeg.proof : DerivSpanTrdeg.Statement := by
     have h := LinearEquiv.apply_symm_apply (KaehlerDifferential.linearMapEquivDerivation k F₀) D'
     exact (congrArg (fun D'' : Derivation k F₀ L =>
       D'' ⟨z j, IntermediateField.subset_adjoin k _ ⟨j, rfl⟩⟩) h).symm
-  rw [h1, ← ω.sum_repr (KaehlerDifferential.D k F₀ _), map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h1, ← ω.sum_repr (KaehlerDifferential.D k F₀ _), map_sum]
   refine Finset.sum_congr rfl fun m _ => ?_
   rw [map_smul, Algebra.smul_def, mul_comm]
   rfl

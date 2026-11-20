@@ -100,7 +100,8 @@ private lemma herm_sum_smul_right' {m : ℕ} (G : Matrix (Fin r) (Fin r) E) (x :
     (c : Fin m → E) (v : Fin m → Fin r → E) :
     herm G x (∑ k, c k • v k) = ∑ k, cc (c k) * herm G x (v k) := by
   unfold herm cc
-  simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum, map_mul, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum, map_mul, Finset.mul_sum]
   calc _ = ∑ a, ∑ k, ∑ b, x a * G a b * ((IsCMField.complexConj E) (c k) *
         (IsCMField.complexConj E) (v k b)) :=
         Finset.sum_congr rfl fun a _ => Finset.sum_comm

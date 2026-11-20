@@ -45,7 +45,8 @@ theorem cHom_res {W W' : (TFK (R := R) F ⊗ A.A).left.Opens} (h : W' ≤ W) (a 
 
 theorem exists_cmb {n : ℕ} (b : Fin n → SecA A F k) (a : Fin n → F) : ∃ t, Cmb b a t := by
   refine ⟨⟨fun j => ∑ i, cHom _ (a i) * (b i).f j, fun j j' => ?_⟩, fun j => rfl⟩
-  rw [map_sum, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_mul, map_mul, cHom_res, cHom_res, (b i).compat j j']
   ring
@@ -53,7 +54,8 @@ theorem exists_cmb {n : ℕ} (b : Fin n → SecA A F k) (a : Fin n → F) : ∃ 
 theorem sum_comp {Γ : Type} [CommRing Γ] (c : F →+* Γ) {n n' : ℕ} (a : Fin n → F) (B : Fin n → Fin n' → F)
     (b : Fin n → Γ) (τ : Fin n' → Γ) (h : ∀ i, b i = ∑ i', c (B i i') * τ i') :
     ∑ i, c (a i) * b i = ∑ i', c (∑ i, a i * B i i') * τ i' := by
-  simp only [h, map_sum, map_mul, Finset.mul_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [h, map_sum, map_mul, Finset.mul_sum, Finset.sum_mul]
   rw [Finset.sum_comm]
   simp only [_root_.mul_assoc]
 
@@ -84,7 +86,8 @@ theorem valAt_cmb {n : ℕ} {τ : Fin n → SecA A F k} {a l : Fin n → F} {t :
     rw [e, gs_eq _ _ _ hz] at h1
     exact h1.symm
   refine (hg t).trans ((congrArg g (h _)).trans ((map_sum g _ _).trans ?_))
-  rw [hc, dotProduct, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hc, dotProduct, map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun i _ => (map_mul g _ _).trans ?_
   have e := (hg (τ i)).symm.trans (hl i z J hJ)
   rw [hc] at e

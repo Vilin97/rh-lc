@@ -151,7 +151,8 @@ theorem eig_indep {E : Type} [Field E] [NumberField E] {g r : ℕ} {Λ : Type} [
     refine Finset.sum_congr rfl fun x _ => ?_
     have hx : ρ x = ρ (∑ k, e.repr x k • e k) := by rw [e.sum_repr]
     rw [hx]
-    simp only [map_sum, map_zsmul, LinearMap.sum_apply, LinearMap.smul_apply, Finset.smul_sum, mul_smul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_zsmul, LinearMap.sum_apply, LinearMap.smul_apply, Finset.smul_sum, mul_smul,
       Int.cast_smul_eq_zsmul]
   have hk : ∃ k, γ k ≠ 0 := by
     by_contra hn
@@ -171,7 +172,8 @@ theorem eig_indep {E : Type} [Field E] [NumberField E] {g r : ℕ} {Λ : Type} [
     refine h1 l (hinj ?_)
     rw [hu _ (by rw [Submodule.coe_sum]; exact I.sum_mem fun p _ => zsmul_mem (hmem p) _), map_zero]
     have : u ((∑ p, l p • e p.1 • y p.2 : W) : Λ) = 0 := by
-      rw [← hl, Submodule.coe_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hl, Submodule.coe_sum, map_sum]
       exact Finset.sum_congr rfl fun p _ => map_zsmul u _ _
     rw [this]
     have : cst (0 : Fin g → ℤ) = 0 := by funext k; simp [cst]
@@ -212,7 +214,8 @@ theorem oFamily_image {E : Type} [Field E] [NumberField E] {g r : ℕ} {Λ : Typ
       exact AddSubgroup.subset_closure ⟨x, hx, rfl⟩
   have hsum : ∀ c : Fin r → 𝓞 E, per (∑ i, c i • y i) = ∑ i, ρ (c i) (per (y i)) := by
     intro c
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun i _ => hact _ _
   refine ⟨fun a => AddSubgroup.subset_closure ⟨y a, hy a, rfl⟩, fun c hc => ?_, ?_⟩
   · funext i

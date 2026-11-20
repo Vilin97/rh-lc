@@ -32,15 +32,18 @@ theorem qa_lcoef_mapC_mul (L : MvPolynomial ρ K →ₗ[K] K) (G : MvPolynomial 
     (h : MvPolynomial σ (MvPolynomial ρ K)) : lcoef L (map C G * h) = G * lcoef L h := by
   classical
   ext w
-  rw [coeff_lcoef_eq, coeff_mul, coeff_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [coeff_lcoef_eq, coeff_mul, coeff_mul, map_sum]
   refine Finset.sum_congr rfl fun x _ => ?_
   rw [coeff_map, coeff_lcoef_eq, MvPolynomial.C_mul', map_smul, smul_eq_mul]
 
 theorem qa_eval_lcoef (L : MvPolynomial ρ K →ₗ[K] K) (x : σ → K) (h : MvPolynomial σ (MvPolynomial ρ K)) :
     eval x (lcoef L h) = L (eval (fun i => C (x i)) h) := by
   classical
-  rw [show lcoef L h = ∑ u ∈ h.support, monomial u (L (AddMonoidAlgebra.coeff h u)) from rfl, map_sum]
-  conv_rhs => rw [h.as_sum, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [show lcoef L h = ∑ u ∈ h.support, monomial u (L (AddMonoidAlgebra.coeff h u)) from rfl, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_rhs => rw [h.as_sum, map_sum, map_sum]
   refine Finset.sum_congr rfl fun u _ => ?_
   rw [eval_monomial, eval_monomial]
   rw [show (u.prod fun n e => (C (x n) : MvPolynomial ρ K) ^ e) = C (u.prod fun n e => x n ^ e) by
@@ -63,7 +66,8 @@ theorem qa_lcoef_rowAct {k n : ℕ} (L : MvPolynomial ρ K →ₗ[K] K) (g : Mat
     simpa using RingHom.congr_fun e P
   conv_lhs => rw [h.as_sum]
   conv_rhs => rw [h.as_sum]
-  simp only [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum]
   refine Finset.sum_congr rfl fun u _ => ?_
   have hm : (monomial u (AddMonoidAlgebra.coeff h u) : MvPolynomial (Fin k × Fin n) (MvPolynomial ρ K)) =
       map C (monomial u 1) * C (AddMonoidAlgebra.coeff h u) := by
@@ -125,7 +129,8 @@ end S2
 theorem lamCoeffP : LamCoeffP := by
   classical
   intro K _ r L v t u
-  rw [qa_lamOf_apply, map_mul, block_substitution_blockEmb, block_substitution_blockEmb, coeff_lcoef_eq, coeff_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [qa_lamOf_apply, map_mul, block_substitution_blockEmb, block_substitution_blockEmb, coeff_lcoef_eq, coeff_mul, map_sum]
   simp only [coeff_map]
   rfl
 

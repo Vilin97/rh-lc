@@ -23,7 +23,8 @@ theorem eq_zero_of_trace_mul {F E R : Type} [Field F] [Field E] [Algebra F E] [F
   have key : ∀ j, bA.repr m j = 0 := by
     intro j
     have hj := h ((1 : R) ⊗ₜ[F] d j)
-    rw [← bA.sum_repr m, Finset.sum_mul, map_sum] at hj
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← bA.sum_repr m, Finset.sum_mul, map_sum] at hj
     rw [← hj, Finset.sum_eq_single j]
     · rw [Algebra.TensorProduct.basis_apply, smul_mul_assoc, map_smul, Algebra.TensorProduct.tmul_mul_tmul, one_mul,
         trace_one_tmul, smul_eq_mul]

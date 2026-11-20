@@ -54,7 +54,8 @@ theorem mem_range_rTensor_iff {X : Type*} [AddCommGroup X] [Module k X] (f : X �
   · intro h
     choose w hw using h
     refine ⟨∑ i, w i ⊗ₜ[k] b i, ?_⟩
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp_rw [LinearMap.rTensor_tmul, hw]
     exact sum_coordTensor_tmul b z
 
@@ -105,7 +106,8 @@ theorem twistResMap_mem_shaSubmodule_iff (n : ℕ)
     rw [← cohomologyMap_resTensorFormMor_coord_twistResMap Q T M hM b n i z]
     exact cohomologyMap_mem_shaSubmodule ψ _ h
   · intro h
-    rw [← sum_coordTensor_tmul b z, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← sum_coordTensor_tmul b z, map_sum]
     refine Submodule.sum_mem _ fun i _ => ?_
     rw [twistResMap_tmul]
     exact cohomologyMap_mem_shaSubmodule ψ _ (h i)

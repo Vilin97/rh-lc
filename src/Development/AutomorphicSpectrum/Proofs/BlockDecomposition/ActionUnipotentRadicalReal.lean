@@ -230,7 +230,8 @@ theorem sum_letters {M : Type} [AddCommGroup M] (H : Lr n → Lr n → Lr n → 
 open Classical in
 theorem Phi_bd (S : Lr n → Prop) (E1 E2 : Fin n → Fin n → Module.End ℂ V) {x : Finset (Lr n) → V} (hx : SuppL S x) :
     Phi (bdL S E1 E2 x) = bdq E1 E2 (Phi x) := by
-  rw [bdL_apply, bdq_apply, map_add, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [bdL_apply, bdq_apply, map_add, map_sum, map_sum]
   refine congrArg₂ (· + ·) ?_ ?_
   · rw [← Equiv.sum_comp fl (fun l => liftq n (Tl E1 E2 l) (annq l (Phi x)))]
     refine Finset.sum_congr rfl fun l _ => ?_
@@ -239,9 +240,11 @@ theorem Phi_bd (S : Lr n → Prop) (E1 E2 : Fin n → Fin n → Module.End ℂ V
     · rw [if_neg h, map_zero, ← Phi_ann, ann_zero hx h, map_zero, map_zero]
   · rw [← sum_letters (fun l m k => creq k (annq m (annq l (Phi x))))]
     refine Finset.sum_congr rfl fun l _ => ?_
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun m _ => ?_
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     have hk : Phi (creL k (annL m (annL l x))) = creq (fl k) (annq (fl m) (annq (fl l) (Phi x))) := by
       rw [Phi_cre, Phi_ann, Phi_ann]
@@ -286,7 +289,8 @@ theorem adC_eq (s t c : Bool) (p q : Fin n) (i k : Pos n) :
 
 theorem Phi_ad (lev : Fin n → ℕ) (s : Bool) (p q : Fin n) {x : Finset (Lr n) → V} (hx : SuppL (inUU lev) x) :
     Phi (adLL lev s p q x) = adLq (!s) p q (Phi x) := by
-  rw [adLL_apply, adLq_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [adLL_apply, adLq_apply, map_sum]
   have h1 : ∀ l k : Lr n, Phi (if inUU lev l then adCL s p q l k • creL k (annL l x) else 0) =
       adCL s p q l k • creq (fl k) (annq (fl l) (Phi x)) := by
     intro l k
@@ -297,7 +301,8 @@ theorem Phi_ad (lev : Fin n → ℕ) (s : Bool) (p q : Fin n) {x : Finset (Lr n)
   have h2 : ∀ l : Lr n, Phi (∑ k : Lr n, if inUU lev l then adCL s p q l k • creL k (annL l x) else 0) =
       ∑ k : Lr n, adCL s p q l k • creq (fl k) (annq (fl l) (Phi x)) := by
     intro l
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun k _ => h1 l k
   refine (Finset.sum_congr rfl fun l _ => h2 l).trans ?_
   rw [← Equiv.sum_comp fl, Fintype.sum_prod_type]

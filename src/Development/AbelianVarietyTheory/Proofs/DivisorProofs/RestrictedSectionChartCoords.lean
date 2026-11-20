@@ -123,7 +123,8 @@ theorem exists_local (hM : M.IsLB) (hL : L.IsLB) {d : ℕ} (t : Fin d → L.Sec)
   obtain ⟨c, hc⟩ := Ideal.mem_span_range_iff_exists_fun.1 h₂
   refine ⟨V.1, hV, fun a => (Twist.zchartEquiv hL n j hVj).symm ((LB.chartEquiv hM i hVi).symm (c a)), ?_⟩
   refine (Twist.zchartEquiv hL l j hVj).injective ((LB.chartEquiv hM i hVi).injective ?_)
-  simp only [map_sum, Twist.zchartEquiv_mulSecOfEq_app, map_smul, LinearEquiv.apply_symm_apply, Twist.zfun_zofSec,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Twist.zchartEquiv_mulSecOfEq_app, map_smul, LinearEquiv.apply_symm_apply, Twist.zfun_zofSec,
     smul_eq_mul]
   rw [LB.chartEquiv_apply, Twist.zchartEquiv_apply]
   refine Eq.trans ?_ (hc.symm.trans (Finset.sum_congr rfl fun a _ => mul_comm _ _))
@@ -141,7 +142,8 @@ theorem ger_comb_sum {ι : Type} [Fintype ι] (a : ι → K) (u : ι → Fin G.N
     ger y hj ((G.comb (∑ i, a i • u i)).f j) = ∑ i, H0.const G.str y (a i) * ger y hj ((G.comb (u i)).f j) := by
   have key (v : Fin G.N → K) : H0.ofSec G.str ⊤ (G.comb v) =
       Fintype.linearCombination K (fun c => H0.ofSec G.str ⊤ (G.b c)) v := G.ofSec_comb ⊤ v
-  rw [← H0.germ_ofSec (p := G.str) j y (TopologicalSpace.Opens.mem_top y) hj, key, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← H0.germ_ofSec (p := G.str) j y (TopologicalSpace.Opens.mem_top y) hj, key, map_sum, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_smul, H0.germ_smul, ← key, H0.germ_ofSec]
 
@@ -192,8 +194,10 @@ theorem kerRes : Quoted → KerRes := by
   have e' (i) : H0.restr (le_top : G.U ≤ ⊤) (mulSec hB G.isLB (G.comb (∑ j, g i j • s j)) (Nat.cast_succ l).symm (μ i)) =
       G.mulW l (∑ j, g i j • s j) (H0.restr le_top (μ i)) := by
     rw [G.mulW_apply, mulSec, mulSec, ProdChart.restr_mul, H0.restr_ofSec]
-  rw [e, map_sum]
-  simp only [e', map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [e', map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply]
   exact Finset.sum_comm
 
 end GlobalTheory.HSKerRes

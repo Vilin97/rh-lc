@@ -34,11 +34,13 @@ theorem symp_projL (σ : E →ₐ[F] E) {n d : ℕ} (JX : Matrix (Fin n) (Fin n)
   set w : Fin n → E := JX *ᵥ fun i => σ (y i) with hw
   have hU : ∀ i, (∑ k, incM F JX i k * cA σ (incV F y k)) = incV F w i := by
     intro i
-    simp only [hw, incV, incM, Matrix.mulVec, dotProduct, Matrix.map_apply, GlobalTheory.SuppOut.cA_inclR, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hw, incV, incM, Matrix.mulVec, dotProduct, Matrix.map_apply, GlobalTheory.SuppOut.cA_inclR, map_sum, map_mul]
   have h1 : ∑ j, inclR (F := F) (AF F) (x j) * inclR (F := F) (AF F) (w j) = 1 := by
     have h := congrArg (inclR (F := F) (AF F)) hxy
     rw [map_one] at h
-    rw [← h, form, dotProduct, map_sum]; simp only [map_mul, hw]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← h, form, dotProduct, map_sum]; simp only [map_mul, hw]
   have hV : Matrix.vecMul (incV F w) (incM F (Matrix.vecMulVec x w)) = incV F w := by
     ext k
     simp only [Matrix.vecMul, dotProduct, incV, incM, Matrix.map_apply, Matrix.vecMulVec_apply, map_mul]
@@ -69,7 +71,8 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [Algebra F E]
 
 theorem form_swap_herm {σ : E →ₐ[F] E} (hσ : ∀ x, σ (σ x) = x) {n : ℕ} (J : Matrix (Fin n) (Fin n) E)
     (hJ : ∀ i j, σ (J j i) = J i j) (a b : Fin n → E) : form σ J a b = σ (form σ J b a) := by
-  simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, hJ, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, hJ, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   ring
@@ -107,7 +110,8 @@ theorem coefR [NumberField E] (σ : E →ₐ[F] E) {n d : ℕ} (X : Spc F E n) (
         inclR (F := F) (AF F) (σ (form σ J x y)) =
           ∑ i, inclR (F := F) (AF F) (σ (x i)) * incV F (fun k => σ ((J *ᵥ fun k => σ (y k)) k)) i := by
       intro m J x y
-      simp only [form, dotProduct, map_sum, map_mul, incV]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [form, dotProduct, map_sum, map_mul, incV]
     have he : (∑ i, ∑ j, cA σ ((a • incM F (Matrix.vecMulVec x y)) i j) *
         incV F (fun k => σ ((X.J *ᵥ fun k => σ (u k)) k)) i * incV F (fun k => σ ((W.J *ᵥ fun k => σ (w k)) k)) j) =
         a ⊗ₜ[F] (σ (form σ X.J x u) * σ (form σ W.J y w)) := by
@@ -151,7 +155,8 @@ theorem read_shift (σ : E →ₐ[F] E) (hcc : ∀ z : AE F E, cA σ (cA σ z) =
       inclR (F := F) (AF F) (σ (form σ J x y)) =
         ∑ i, inclR (F := F) (AF F) (σ (x i)) * incV F (fun k => σ ((J *ᵥ fun k => σ (y k)) k)) i := by
     intro m J x y
-    simp only [form, dotProduct, map_sum, map_mul, incV]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [form, dotProduct, map_sum, map_mul, incV]
   rw [hform, hform, mul_assoc, Finset.sum_mul_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [Finset.mul_sum]

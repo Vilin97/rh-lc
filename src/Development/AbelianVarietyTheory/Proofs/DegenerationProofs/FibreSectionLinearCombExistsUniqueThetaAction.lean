@@ -24,7 +24,8 @@ namespace GlobalTheory.SecComb
 
 theorem equiv_sum {K M J : Type} [CommRing K] [AddCommGroup M] [Module K M] [Fintype J] (ρ : M ≃ₗ[K] M)
     (c : J → K) (v w : J → M) (h : ∀ i, ρ (v i) = w i) : ρ (∑ i, c i • v i) = ∑ i, c i • w i := by
-  simp only [map_sum, map_smul, h]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, h]
 
 variable {R : Type} [CommRing R] [IsDomain R] (A : PolAV (Spec (CommRingCat.of (FractionRing R))))
   {F : Type} [Field F] [Algebra (FractionRing R) F] {k : ℕ}

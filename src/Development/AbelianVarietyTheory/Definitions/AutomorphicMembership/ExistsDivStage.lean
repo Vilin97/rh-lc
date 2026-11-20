@@ -21,7 +21,8 @@ theorem ext_one_tmul [Fintype ι] (σ : K →+* ℂ) (e : V →ₛₗ[σ] M) (b 
   letI := σ.toAlgebra
   conv_lhs => rw [← b.sum_repr x]
   conv_rhs => rw [← b.sum_repr x]
-  rw [TensorProduct.tmul_sum, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [TensorProduct.tmul_sum, map_sum, map_sum]
   refine Finset.sum_congr rfl (fun i _ => ?_)
   rw [LinearMap.map_smulₛₗ, TensorProduct.tmul_smul, ← algebraMap_smul ℂ, map_smul]
   congr 1
@@ -76,12 +77,14 @@ theorem ker_rational [Fintype ι] {J : Type} [Fintype J] (σ : K →+* ℂ) (e :
     exact congrArg Subtype.val h2
   have hsum : g ∘ₗ P = ∑ j, (g ∘ₗ LinearMap.single K (fun _ => V) j) ∘ₗ n j := by
     ext x
-    simp only [LinearMap.comp_apply, LinearMap.sum_apply, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [LinearMap.comp_apply, LinearMap.sum_apply, ← map_sum]
     congr 1
     ext j
     simp [hP, Finset.sum_apply, Pi.single_apply]
   have hz : (g ∘ₗ P).baseChange ℂ t = 0 := by
-    rw [hsum, ← LinearMap.baseChangeHom_apply, map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hsum, ← LinearMap.baseChangeHom_apply, map_sum, LinearMap.sum_apply]
     refine Finset.sum_eq_zero (fun j _ => ?_)
     rw [LinearMap.baseChangeHom_apply, LinearMap.baseChange_comp, LinearMap.comp_apply, ht, map_zero]
   have ht' : t = (LinearMap.id - g ∘ₗ P).baseChange ℂ t := by
@@ -102,7 +105,8 @@ theorem ker_rational [Fintype ι] {J : Type} [Fintype J] (σ : K →+* ℂ) (e :
 
 theorem span_image_le [Fintype ι] (σ : K →+* ℂ) (e : V →ₛₗ[σ] M) (b : Module.Basis ι K V) (x : V) :
     e x ∈ Submodule.span ℂ (Set.range (fun a => e (b a))) := by
-  rw [← b.sum_repr x, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← b.sum_repr x, map_sum]
   refine Submodule.sum_mem _ (fun i _ => ?_)
   rw [LinearMap.map_smulₛₗ]
   exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)
@@ -131,7 +135,8 @@ theorem exists_frame {n : ℕ} (v : InfinitePlace K) (b : Module.Basis (Fin n) K
   refine ⟨(LinearMap.toMatrix' T.toLinearMap)⁻¹, Matrix.isUnit_nonsing_inv_det _ hT, fun x => ?_⟩
   rw [Matrix.nonsing_inv_nonsing_inv _ hT, LinearMap.toMatrix'_mulVec]
   have h1 : e x = L (Formalism.HermitianLatticesTheory.vecAt b v x) := by
-    conv_lhs => rw [← b.sum_repr x, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [← b.sum_repr x, map_sum]
     simp only [L, Fintype.linearCombination_apply, LinearMap.map_smulₛₗ, Formalism.HermitianLatticesTheory.vecAt]
   have h2 : ‖L (Formalism.HermitianLatticesTheory.vecAt b v x)‖ = ‖c.repr (LinearEquiv.ofInjective L hL (Formalism.HermitianLatticesTheory.vecAt b v x))‖ := by
     rw [LinearIsometryEquiv.norm_map]; rfl

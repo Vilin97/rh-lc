@@ -47,7 +47,8 @@ theorem meanSq_expand (I PPs : Finset ℕ) (c : ℕ → ℝ) (hc : ∀ n, 0 ≤ 
       ∑ n ∈ I, ∑ n' ∈ I, ((c n * c n' : ℝ) : ℂ) * (κ n * (starRingEnd ℂ) (κ n')) *
         ((∑ q ∈ PPs, (jacobiSym ((n * n' : ℕ) : ℤ) q : ℝ) : ℝ) : ℂ) := by
     push_cast
-    simp_rw [← Complex.mul_conj', map_sum, Finset.sum_mul_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp_rw [← Complex.mul_conj', map_sum, Finset.sum_mul_sum, Finset.mul_sum]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun n _ => ?_
     rw [Finset.sum_comm]

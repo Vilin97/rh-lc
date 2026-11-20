@@ -60,7 +60,8 @@ theorem cycHerbrand_eq_of_surjective_of_finite_ker (ρB : Representation ℤ G B
   have hgK : ∀ x ∈ p.ker, cycNorm ρB x ∈ p.ker := by
     intro x hx
     rw [AddMonoidHom.mem_ker] at hx ⊢
-    rw [cycNorm_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [cycNorm_apply, map_sum]
     simp [hpG, hx]
   have hfgK : ∀ x, restrictEnd (cycSubOne ρB σ) p.ker hfK
       (restrictEnd (cycNorm ρB) p.ker hgK x) = 0 := fun x =>
@@ -73,7 +74,8 @@ theorem cycHerbrand_eq_of_surjective_of_finite_ker (ρB : Representation ℤ G B
   have hex : Function.Exact p.ker.subtype p := by
     intro b
     simp
-  rw [cycHerbrand, cycHerbrand,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [cycHerbrand, cycHerbrand,
     herbrandQuotient_eq_mul_of_shortExact p.ker.subtype_injective hp hex
       (fun _ => rfl) (fun _ => rfl)
       (fun b => by rw [cycSubOne_apply, cycSubOne_apply, map_sub, hpG])

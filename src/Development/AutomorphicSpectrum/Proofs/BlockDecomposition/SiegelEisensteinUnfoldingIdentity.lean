@@ -18,7 +18,8 @@ theorem map_eq_sum (f : R →ₐ[F] R') {d : ℕ} (b : Module.Basis (Fin d) F E)
     Algebra.TensorProduct.map f (AlgHom.id F E) x =
       ∑ k, f ((Algebra.TensorProduct.basis R b).repr x k) ⊗ₜ[F] b k := by
   conv_lhs => rw [← (Algebra.TensorProduct.basis R b).sum_repr x]
-  simp [map_sum, Algebra.TensorProduct.basis_apply, TensorProduct.smul_tmul']
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, Algebra.TensorProduct.basis_apply, TensorProduct.smul_tmul']
 
 theorem repr_map (f : R →ₐ[F] R') {d : ℕ} (b : Module.Basis (Fin d) F E) (x : R ⊗[F] E) (k : Fin d) :
     (Algebra.TensorProduct.basis R' b).repr (Algebra.TensorProduct.map f (AlgHom.id F E) x) k =
@@ -36,7 +37,8 @@ theorem trace_map (f : R →ₐ[F] R') {d : ℕ} (b : Module.Basis (Fin d) F E) 
   have h1 : ∀ e : E, Algebra.trace R' (R' ⊗[F] E) ((1 : R') ⊗ₜ[F] e) = algebraMap F R' (Algebra.trace F E e) := by
     intro e
     rw [Algebra.trace_apply, Algebra.trace_apply, ← Algebra.baseChange_lmul, LinearMap.trace_baseChange]
-  rw [map_eq_sum f b x, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_eq_sum f b x, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   have h2 : ∀ (a : R') (e : E), a ⊗ₜ[F] e = a • ((1 : R') ⊗ₜ[F] e) := by
     intro a e
@@ -165,7 +167,8 @@ theorem continuous_chiT (σ : E →ₐ[F] E) {n : ℕ} (ψ : AddChar (AF F) ℂ)
       fun y : HermR (AF F) σ n => ∑ a, ∑ c, Algebra.trace (AF F) (AF F ⊗[F] E)
         (T.map (inclR (AF F)) a c * (y : Matrix (Fin n) (Fin n) (AF F ⊗[F] E)) c a) := by
     funext y
-    simp only [Matrix.trace, Matrix.diag_apply, Matrix.mul_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.trace, Matrix.diag_apply, Matrix.mul_apply, map_sum]
   have ht : Continuous fun y : HermR (AF F) σ n => Algebra.trace (AF F) (AF F ⊗[F] E)
       (Matrix.trace (T.map (inclR (AF F)) * (y : Matrix (Fin n) (Fin n) (AF F ⊗[F] E)))) := by
     rw [hs]

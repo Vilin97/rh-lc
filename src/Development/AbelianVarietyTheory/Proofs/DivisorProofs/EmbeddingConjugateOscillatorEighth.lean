@@ -33,7 +33,8 @@ theorem inner_of_int {K : Type} [Field K] [StarRing K] {I : Type} [Fintype I] {n
   generalize bVV K lam = b at hp hu
   conv_lhs => rw [← b.sum_repr u, ← b.sum_repr v]
   conv_rhs => rw [← b.sum_repr u, ← b.sum_repr v]
-  simp only [map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, map_mul,
     RingHom.id_apply, sum_inner, inner_sum, inner_smul_left, inner_smul_right, hp, Finset.mul_sum]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun a' _ => ?_
   rw [starRingEnd_apply (b.repr u a'), hu a' σ]
@@ -172,7 +173,8 @@ theorem toG_gaStar (he : Function.Injective e) (hl : IsLt (mv e lt)) (h : IsTyp 
   | mul_X P ℓ hP =>
     simp only [map_mul, hP]
     congr 1
-    rw [toG_X, gaStar, MvPolynomial.aeval_X, MvPolynomial.aeval_X, letB, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [toG_X, gaStar, MvPolynomial.aeval_X, MvPolynomial.aeval_X, letB, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     have hc : lt ⟨ℓ.1, ℓ.2.1, j⟩ = ((lt ℓ).1, (lt ℓ).2.1, j) :=
       Prod.ext (he (congrArg Prod.fst (hl.col h ℓ j))) (congrArg Prod.snd (hl.col h ℓ j) :)

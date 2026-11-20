@@ -52,7 +52,8 @@ theorem hom_eq (F G : AddMonoidAlgebra B M →+* C)
 
 theorem ev_eq_zero (κ : B →+* C) (c : Multiplicative M →* Cˣ) (a : AddMonoidAlgebra B M)
     (h : ∀ m, κ (a.coeff m) = 0) : ev κ c a = 0 := by
-  rw [← AddMonoidAlgebra.sum_coeff_single a, Finsupp.sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← AddMonoidAlgebra.sum_coeff_single a, Finsupp.sum, map_sum]
   exact Finset.sum_eq_zero fun m _ => by rw [ev_single, h, zero_mul]
 
 theorem coeff_mem (I : Ideal B) (G : AddMonoidAlgebra B M →+* AddMonoidAlgebra (B ⧸ I) M)

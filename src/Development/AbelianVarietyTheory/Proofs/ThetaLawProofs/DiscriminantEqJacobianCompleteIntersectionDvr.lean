@@ -149,7 +149,8 @@ theorem main : Out.Laws → ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscrete
         exact notMem_nonzeroLocus (T := O) x _ _ (hz (r y)) _ (hs (r y) i))))
   have hmul : ∀ y i k, F y i * ρ 1 y k = ∑ k', m i 0 1 k' k • ρ 0 y k' := fun y i k => by
     have h := congrArg (valH (θ y) _ (hc y)) (hm i 0 i.pos k (ch (r y)))
-    rw [map_mul, map_sum] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_mul, map_sum] at h
     refine (congrArg₂ (· * ·) (valT_eq _ _ (hc y) _) (valT_eq _ _ (hc y) _)).trans
       (h.trans (Finset.sum_congr rfl fun k' _ => (map_mul _ _ _).trans ?_))
     rw [Algebra.smul_def]

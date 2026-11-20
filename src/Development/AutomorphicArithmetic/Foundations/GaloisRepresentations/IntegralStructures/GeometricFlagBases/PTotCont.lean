@@ -25,7 +25,8 @@ theorem UpperTheory.Gal.Int.Geo.totCont_of :
         (galHQ l Ω p n 0 σ (v n)) := by
     intro σ
     conv_lhs => rw [← DirectSum.sum_support_of v]
-    rw [map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum]
     refine Finset.sum_congr rfl fun n _ => ?_
     rw [LinearMap.comp_apply]
     congr 1

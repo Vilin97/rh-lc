@@ -37,7 +37,8 @@ theorem dual_family (R K : Type) {V : Type} [CommRing R] [IsDedekindDomain R] [F
   induction hx using Submodule.span_induction with
   | mem x hx =>
     have h1 : p (s ⟨x, hx⟩) = ⟨x, hx⟩ := LinearMap.congr_fun hps _
-    rw [pi_eq_sum_univ' (s ⟨x, hx⟩), map_sum] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [pi_eq_sum_univ' (s ⟨x, hx⟩), map_sum] at h1
     have h2 := congrArg Subtype.val h1
     simp only [map_smul, AddSubmonoidClass.coe_finsetSum, SetLike.val_smul] at h2
     conv_lhs => rw [← h2]

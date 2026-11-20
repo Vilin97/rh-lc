@@ -82,7 +82,8 @@ theorem li_of_kill {ι : Type} (m : ι → σ →₀ ℕ) (w : ι → MvPolynomi
       exact hq' (Finset.mem_filter.mpr ⟨hq, hh⟩)
     rw [this, zero_smul]
   have hΘ := congrArg (fun P => (scaleS S P).coeff δ) hsum'
-  simp only [map_sum, map_smul, map_mul, scaleS_monomial, Polynomial.finsetSum_coeff, Polynomial.coeff_smul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, map_mul, scaleS_monomial, Polynomial.finsetSum_coeff, Polynomial.coeff_smul,
     map_zero, Polynomial.coeff_zero] at hΘ
   have hterm : ∀ q ∈ s', (Polynomial.C (monomial (m q) (1 : R)) * Polynomial.X ^ offDeg S (m q) *
       scaleS S (w q)).coeff δ = if offDeg S (m q) = δ then monomial (m q) (1 : R) * kill S (w q) else 0 := by

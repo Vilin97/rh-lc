@@ -368,7 +368,8 @@ private theorem ofLp_apply_toLp_eq_sum_mul_basis {n : ℕ} (T : V n →L[ℂ] V 
   have h := (EuclideanSpace.basisFun (Fin n) ℂ).sum_repr (WithLp.toLp 2 η)
   simp only [EuclideanSpace.basisFun_repr, EuclideanSpace.basisFun_apply] at h
   conv_lhs => rw [← h]
-  simp [map_sum, bas, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, bas, smul_eq_mul]
 
 theorem dbar_flat_loc {n : ℕ} {Y : Type u} [TopologicalSpace Y] [T2Space Y] [SecondCountableTopology Y] [MeasurableSpace Y] [BorelSpace Y] {ι : Type*} {La : Type*} [AddCommGroup La] (A : WeightedAtlas n Y ι La) {L : La} {N : ℕ} {w : Fin N → ι → Y → ℂ} {w0 : ι → Y → ℂ} {s : Fin n → ι → Y → ℂ} {De : MvPolynomial (Fin n) ℂ} (hD : A.D0 L w w0 s) (hF : A.Flat w0 s De) (u : Y → ℂ) (i : ι) (x : A.Mset w0 s De)
     (hx : (x : Y) ∈ (A.chart i).source)
@@ -413,7 +414,8 @@ theorem dbar_flat_loc {n : ℕ} {Y : Type u} [TopologicalSpace Y] [T2Space Y] [S
       (fun k => jz A w0 s i x (WithLp.toLp 2 ξ) k) b
     rw [hJ'] at h1
     exact h1
-  rw [hb, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hb, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_mul]
   ring

@@ -351,7 +351,8 @@ theorem pair_iso : HodgeComparisonCompatibility → ThetaUnifAV → ∀ (E : Typ
     · intro k
       congr 1
       funext a
-      rw [p6, hm₁ a, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [p6, hm₁ a, map_sum]
       refine Finset.sum_congr rfl fun q _ => ?_
       rw [p5.1, p9]
     · intro k
@@ -359,7 +360,8 @@ theorem pair_iso : HodgeComparisonCompatibility → ThetaUnifAV → ∀ (E : Typ
       have e1 : (fun a => Fl₂.b (Equiv.sumCongr π₀ π₀ s) (Fin.cast (hrl s).symm a)) =
           fun a => ∑ q, i₂ (m₂ q a) • Fl₂.j (θ₃ (θ₁ (cc q))) := by
         funext a
-        rw [q6, hm₂ a, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [q6, hm₂ a, map_sum]
         refine Finset.sum_congr rfl fun q _ => ?_
         rw [q5.1, hθ₃, q9]
         rfl

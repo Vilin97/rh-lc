@@ -22,7 +22,8 @@ theorem ev_monomial (n : ℕ) (a : F) : ev c (monomial n a) = c n * a := by
 theorem ev_expand (q p : F[X]) (n : ℕ) (hp : p.natDegree < n) :
     ev c (q * p) = ∑ j ∈ Finset.range n, p.coeff j * ev c (q * X ^ j) := by
   conv_lhs => rw [p.as_sum_range' n hp]
-  rw [Finset.mul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.mul_sum, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [← C_mul_X_pow_eq_monomial, show q * (C (p.coeff j) * X ^ j) = p.coeff j • (q * X ^ j) by
     rw [smul_eq_C_mul]; ring, map_smul, smul_eq_mul]
@@ -59,7 +60,8 @@ theorem exists_kill (n : ℕ) (h : hankel c n = 0) :
   · intro j hj
     have := congrFun hv ⟨j, Nat.lt_succ_of_le hj⟩
     simp only [Matrix.mulVec, dotProduct, Matrix.of_apply, Pi.zero_apply] at this
-    rw [Finset.sum_mul, map_sum, ← this]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_mul, map_sum, ← this]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [monomial_mul_X_pow, ev_monomial, add_comm]
 
@@ -160,9 +162,11 @@ theorem isRat_of_ann (φ : PowerSeries F) (q : F[X]) (hq : q ≠ 0)
       have hR : (R : PowerSeries F) = ∑ k ∈ Finset.range (q.natDegree + 1),
           PowerSeries.C (q.coeff k) * PowerSeries.X ^ (q.natDegree - k) := by
         show Polynomial.coeToPowerSeries.ringHom R = _
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         simp [Polynomial.coeToPowerSeries.ringHom_apply]
-      rw [hR, Finset.sum_mul, map_sum, ← h m, ev_X_pow_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hR, Finset.sum_mul, map_sum, ← h m, ev_X_pow_mul]
       refine Finset.sum_congr rfl fun k hk => ?_
       have hk' := Finset.mem_range.1 hk
       rw [mul_assoc, PowerSeries.coeff_C_mul, PowerSeries.coeff_X_pow_mul', if_pos (by omega)]

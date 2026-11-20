@@ -94,7 +94,8 @@ theorem trace_swap {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ} 
     unfold herm
     unfold cc at *
     rw [Finset.sum_comm]
-    simp only [map_sum, map_mul, hG, IsCMField.complexConj_apply_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, hG, IsCMField.complexConj_apply_apply]
     refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
     ring
   have h2 := Algebra.trace_eq_of_algEquiv ((IsCMField.complexConj E).restrictScalars ℚ) (ξ * herm G x y)

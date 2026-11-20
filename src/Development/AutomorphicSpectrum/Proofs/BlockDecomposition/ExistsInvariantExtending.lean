@@ -147,7 +147,8 @@ theorem exists_multi {H V : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ 
       rw [LinearMap.comp_apply, hP3 j _ (fun e => hji (hwt e).symm) _ (hHs i _ x.2), map_zero]
     · exact fun h => absurd hi h
   · intro a b w
-    simp only [LinearMap.sum_apply, LinearMap.comp_apply, map_sum, hP1, hT2]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [LinearMap.sum_apply, LinearMap.comp_apply, map_sum, hP1, hT2]
 
 theorem exp_mem_unitary (X : Matrix (Fin n) (Fin n) ℂ) (hX : Xᴴ = -X) (s : ℝ) :
     NormedSpace.exp ((s : ℂ) • X) ∈ Matrix.unitaryGroup (Fin n) ℂ := by
@@ -218,7 +219,8 @@ theorem dual_rel (E : KMod n) (G : Fin n → Fin n → Module.End ℂ (E.V →L[
       exact (he (γ t) ξ).symm
     rw [h4] at h1
     have h5 := h1.unique h3
-    simp only [map_sum, map_smul] at h5
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul] at h5
     simp only [smul_sub, Finset.sum_sub_distrib]
     rw [h5, sub_self]) a b
   exact sub_eq_zero.1 key

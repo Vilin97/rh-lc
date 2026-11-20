@@ -40,7 +40,8 @@ theorem pair_counit [IsCocomm k D] (β : Du k D →ₐ[k] R) :
     · ext d; simp
     · ext d; simp
   unfold pair
-  rw [← map_one β, ← h, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_one β, ← h, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_smul, Algebra.smul_def]
 
@@ -74,7 +75,8 @@ theorem pair_mul [IsCocomm k D] (a a' : D →ₗ[k] R) (β : Du k D →ₐ[k] R)
       apply ofConv_injective
       refine h.symm.trans ?_
       ext d; simp [cc]
-    rw [h', map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h', map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul]
     congr 1
@@ -216,7 +218,8 @@ theorem P_one {W : Over (Sp k)} (t : W ⟶ TE k D) : P (1 : W ⟶ GD k D) t = 1 
 
 theorem pullback_comp₂ {W W' : Over (Sp k)} (f : W' ⟶ W) (x : W ⟶ GD k D) (t : W ⟶ TE k D) :
     f.left.appTop (P x t) = P (f ≫ x) (f ≫ t) := by
-  simp only [P, pair, map_sum, map_mul, Over.comp_left]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [P, pair, map_sum, map_mul, Over.comp_left]
   refine Finset.sum_congr rfl fun i _ => ?_
   exact congrArg₂ (· * ·) (fnR_comp f.left x.left _).symm (fnR_comp f.left t.left _).symm
 

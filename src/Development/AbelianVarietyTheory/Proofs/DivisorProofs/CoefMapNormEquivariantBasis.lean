@@ -37,7 +37,8 @@ def up (v : VV K lam) : VV K' lam := ⟨MvPolynomial.map φ (v : Pol K I n), Glo
 theorem up_sum (a : VVIdx lam → K) (v : VVIdx lam → VV K lam) :
     up φ lam (∑ j, a j • v j) = ∑ j, φ (a j) • up φ lam (v j) := by
   apply Subtype.ext
-  simp only [up, Submodule.coe_sum, Submodule.coe_smul, map_sum, smul_eq_C_mul, map_mul, map_C]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [up, Submodule.coe_sum, Submodule.coe_smul, map_sum, smul_eq_C_mul, map_mul, map_C]
 
 theorem exists_coord (v : VV K' lam) : ∃ a : VVIdx lam → K', v = ∑ j, a j • up φ lam (bVV K lam j) := by
   have hv : v ∈ Submodule.span K' (Set.range (bVV K' lam)) := by rw [(bVV K' lam).span_eq]; exact Submodule.mem_top
@@ -72,7 +73,8 @@ theorem equivariant (hE : ∀ v, c' (up φ lam v) = c₀ v) (T : W →ₗ[ℂ] W
     (S' : VV K' lam →ₗ[K'] VV K' lam) (hS : ∀ v, up φ lam (S v) = S' (up φ lam v)) (hT : ∀ v, c₀ (S v) = T (c₀ v))
     (v : VV K' lam) : c' (S' v) = T (c' v) := by
   obtain ⟨a, rfl⟩ := exists_coord φ lam v
-  simp only [map_sum, map_smul, map_smulₛₗ, ← hS, hE, hT, RingHom.id_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, map_smulₛₗ, ← hS, hE, hT, RingHom.id_apply]
 
 theorem span_top (hE : ∀ v, c' (up φ lam v) = c₀ v)
     (hs : Submodule.span ℂ (Set.range fun j => c₀ (bVV K lam j)) = ⊤) : Submodule.span ℂ (Set.range c') = ⊤ := by
@@ -98,7 +100,8 @@ theorem linearIndependent (hE : ∀ v, c' (up φ lam v) = c₀ v)
   have e : (fun j => c' (b j)) = ⇑(Fintype.linearCombination ℂ fun k => c₀ (bVV K lam k)) ∘ fun j => algebraMap K' ℂ ∘ a j := by
     funext j
     rw [ha j]
-    simp only [map_sum, map_smulₛₗ, hE, Function.comp_apply, Fintype.linearCombination_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smulₛₗ, hE, Function.comp_apply, Fintype.linearCombination_apply]
     rfl
   rw [e]
   exact h3

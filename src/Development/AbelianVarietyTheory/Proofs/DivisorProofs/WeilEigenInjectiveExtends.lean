@@ -31,7 +31,8 @@ theorem eq_zero_of_pure_eq_zero {F : Type} [Field F] [NumberField F] {κ : Type}
   let yf : κ → Af F := fun i => ∑ v ∈ S, GlobalTheory.AdelicU.singleFin v (pt v i)
   have hyf : ∀ w i, evalV F w (yf i) = if w ∈ S then pt w i else 0 := by
     intro w i
-    simp only [yf, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [yf, map_sum]
     split_ifs with hw
     · rw [Finset.sum_eq_single w]
       · exact GlobalTheory.AdelicU.evalV_singleFin_self w _

@@ -141,7 +141,8 @@ theorem separates_of_shuffle_count : ∀ (I S : Type 1) (A : Type) [DecidableEq 
     by_contra hki
     set y : I →₀ ℤ := ∑ j, Finsupp.single (p j) (k j) with hy
     have hRy : ∀ w, Rh w y = 0 := fun w => by
-      rw [hy, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hy, map_sum]
       simp only [hRs]
       exact hk w
     set P := Ψ y with hPdef
@@ -158,7 +159,8 @@ theorem separates_of_shuffle_count : ∀ (I S : Type 1) (A : Type) [DecidableEq 
     have hyP : y = ∑ m ∈ P.support, P.coeff m • Ψ.symm (MvPolynomial.monomial m 1) := by
       have h : y = Ψ.symm P := by rw [hPdef, AddEquiv.symm_apply_apply]
       conv_lhs => rw [h, P.as_sum]
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun m _ => ?_
       rw [← map_zsmul, MvPolynomial.smul_monomial, smul_eq_mul, mul_one]
     have hyi : y (p i) = k i := by
@@ -207,7 +209,8 @@ theorem separates_of_shuffle_count : ∀ (I S : Type 1) (A : Type) [DecidableEq 
     apply KQ (fun j => ψ (c j))
     intro w
     have h := congrArg ψ (hc w)
-    rw [map_sum, map_zero] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero] at h
     rw [← h]
     refine Finset.sum_congr rfl fun j _ => ?_
     show ψ (c j) * _ = ψ (c j * _)

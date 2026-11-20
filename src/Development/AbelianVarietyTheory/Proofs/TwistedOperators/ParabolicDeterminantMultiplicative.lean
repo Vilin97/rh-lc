@@ -129,7 +129,8 @@ theorem detMat_mul (u : SV (wittIndex V)) (g g' : HA R hc.sig V.gram)
         Matrix.mulVecLin ((HA.mat R hc.sig V.gram g : GL (Fin V.rank) (R ⊗[F] E)) : Matrix (Fin V.rank) (Fin V.rank) (R ⊗[F] E)) z :=
       fun _ => rfl
     have e2 : ∀ z x : Fin V.rank → R ⊗[F] E, hLin hc.sig V.gram R z x = hLinL hc R x z := fun _ _ => rfl
-    simp only [e1, e2, map_sum, map_smul, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [e1, e2, map_sum, map_smul, smul_eq_mul]
     exact Finset.sum_congr rfl fun k _ => mul_comm _ _
   simp only [detMat, Matrix.of_apply, Matrix.mul_apply]
   rw [GlobalTheory.IndefiniteRowSideFullHecke.AdelicUnitaryGroups.act_mul, key _ (GlobalTheory.Cusp.mem_parab_iff_maps.1 hg' _ hb)]

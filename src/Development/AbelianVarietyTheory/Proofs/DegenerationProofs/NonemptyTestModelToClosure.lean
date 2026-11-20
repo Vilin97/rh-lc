@@ -60,7 +60,8 @@ noncomputable def comb {k : Type} [CommRing k] {X : Scheme.{0}} (p : X ⟶ Sp k)
         (X.presheaf.map (homOfLE h).op).hom (constFn p U c) = constFn p V c := fun U V h c =>
       congrArg (fun φ => φ.hom ((Scheme.ΓSpecIso (CommRingCat.of k)).inv.hom c))
         (Scheme.Hom.appLE_map p (U := ⊤) (V := U) (fun _ _ => trivial) (homOfLE h).op)
-    simp only [map_sum, map_mul, e, Finset.mul_sum, (s _).compat l l']
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, e, Finset.mul_sum, (s _).compat l l']
     exact Finset.sum_congr rfl fun j _ => mul_left_comm _ _ _
 
 theorem crd_comb {k R : Type} [CommRing k] [CommRing R] {X : Scheme.{0}} {p : X ⟶ Sp k} {H : LB X}
@@ -70,7 +71,8 @@ theorem crd_comb {k R : Type} [CommRing k] [CommRing R] {X : Scheme.{0}} {p : X 
   obtain ⟨l, c, hl, hv⟩ := hv
   refine ⟨l, c, hl, fun i => ?_⟩
   change ∑ j, ψ (m i j) * v j = c * valR x _ (∑ j, constFn p (H.U l) (m i j) * (s j).f l)
-  rw [CrdCalc.valR_eq x _ hl, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [CrdCalc.valR_eq x _ hl, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_mul, ← CrdCalc.valR_eq, ← CrdCalc.valR_eq,
     GlobalTheory.Points.valR_constFn_of_over p ψ x hx _ hl, hv, mul_left_comm]
@@ -313,7 +315,8 @@ theorem span_val (hE : S.IsEE M U₀ EE) (l : Q.Λ) {p : ℕ} [Fact p.Prime] (y 
     have e : (∑ i, a i • Q.B l i) j = ((∑ i, aO i * BO i : M.O z) : Ω) := by
       simp [aO, BO, Finset.sum_apply, Subalgebra.smul_def]
     beta_reduce
-    rw [e, ← RatModel.valHom_apply _ z hr, map_sum, Finset.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, ← RatModel.valHom_apply _ z hr, map_sum, Finset.sum_apply]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_mul, RatModel.valHom_apply, RatModel.valHom_apply]
     exact congrArg (· * _) (RatModel.val_gPt rfl (a i)).symm

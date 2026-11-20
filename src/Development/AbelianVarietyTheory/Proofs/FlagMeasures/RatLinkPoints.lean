@@ -133,7 +133,8 @@ theorem root_entry (u : D.what₂.Word) (n : (VS D).V ≃ₗ[D.host.E] (VS D).V)
   have e : nxt X.eX (X.zu u) a = frame (lf D (X.Fu u)) a.succ := by
     show _ = (X.Fu u).fvec a.succ
     rw [fvec_succ, X.Fu_e, X.flagZVector]
-  rw [e, hA, map_sum, Fin.sum_univ_castSucc]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, hA, map_sum, Fin.sum_univ_castSucc]
   have h1 : ∀ b : Fin D.R.rS, frame (lf D (X.Fu u)) b.castSucc = X.eX b := by
     intro b
     show (X.Fu u).fvec b.castSucc = _

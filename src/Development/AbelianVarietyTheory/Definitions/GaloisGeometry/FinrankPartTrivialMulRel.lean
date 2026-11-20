@@ -31,7 +31,8 @@ theorem sum_mem_fix {n : ℕ} {z : Fin n → G} (hz : IsHeckeFam K z) {v : V} (h
   let F : G ⧸ K → V := fun y => π y.out v
   have hF : ∀ x : G, π x v = F (x : G ⧸ K) := fun x =>
     apply_eq_of_coset π hv (QuotientGroup.out_eq' (x : G ⧸ K)).symm
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   calc ∑ i, π k (π (z i) v) = ∑ i, F ((k * z i : G) : G ⧸ K) := by
         refine Finset.sum_congr rfl fun i _ => ?_
         rw [← Module.End.mul_apply, ← map_mul, hF]

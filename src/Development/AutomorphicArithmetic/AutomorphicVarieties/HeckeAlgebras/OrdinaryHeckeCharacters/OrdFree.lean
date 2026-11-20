@@ -16,7 +16,8 @@ private theorem ordFree_smul {A N ι : Type} [CommRing A] [AddCommGroup N] [Modu
   have key : a = ∑ i, a i • (Pi.single i (1 : A) : ι → A) := by
     ext j
     simp [Finset.sum_apply, Pi.single_apply]
-  rw [key, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [key, map_sum]
   refine Submodule.sum_mem _ fun i _ => ?_
   rw [map_smul]
   exact Submodule.smul_mem_smul (ha i) Submodule.mem_top
@@ -61,7 +62,8 @@ private theorem linearMap_pi_eq_sum_single {A N ι : Type} [CommRing A] [AddComm
     ext j
     simp [Finset.sum_apply, Pi.single_apply]
   conv_lhs => rw [hb]
-  simp only [map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul]
 
 private theorem exists_eventually_periodic_mod_V {A M : Type} [CommRing A] [IsCNL A] [AddCommGroup M] [Module A M]
     (V : ℕ → Submodule A M) (T : Module.End A M)
@@ -158,13 +160,15 @@ theorem UpperTheory.V.Hi.ordAbs {A M : Type} [CommRing A] [IsCNL A] [AddCommGrou
       rw [Pi.smul_apply, smul_eq_mul]
       exact Ideal.mul_mem_right _ _ (hb i)
     · have e1 : e (s' (ev' f)) = ∑ i, ev' f i • e (s' (Pi.single i (1 : A) : ι' → A)) := by
-        rw [linearMap_pi_eq_sum_single s' (ev' f), map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [linearMap_pi_eq_sum_single s' (ev' f), map_sum]
         simp only [map_smul]
       have e2 : f - e (s₁ (∑ i, ev' f i • ev₁ (e (s' (Pi.single i (1 : A) : ι' → A))))) =
           (f - e (s' (ev' f))) + ∑ i, ev' f i • (e (s' (Pi.single i (1 : A) : ι' → A))
             - e (s₁ (ev₁ (e (s' (Pi.single i (1 : A) : ι' → A)))))) := by
         rw [e1]
-        simp only [map_sum, map_smul, smul_sub, Finset.sum_sub_distrib]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, map_smul, smul_sub, Finset.sum_sub_distrib]
         abel
       rw [e2]
       exact add_mem (h' f hf) (Submodule.sum_mem _ fun i _ => hm1 j _ (hb i) _ (h₁ _ (heO _)))

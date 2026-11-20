@@ -146,7 +146,8 @@ theorem extF_apply {r : ℕ} (φ : (Fin r → O) →ₗ[O] O) (y : Fin r → Pow
 
 theorem extF_cst {r : ℕ} (φ : (Fin r → O) →ₗ[O] O) (v : Fin r → O) :
     extF φ (cst v) = PowerSeries.C (φ v) := by
-  rw [extF_apply, LinearMap.pi_apply_eq_sum_univ φ v, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [extF_apply, LinearMap.pi_apply_eq_sum_univ φ v, map_sum]
   refine Finset.sum_congr rfl (fun i _ => ?_)
   simp [cst, smul_eq_mul, mul_comm]
 

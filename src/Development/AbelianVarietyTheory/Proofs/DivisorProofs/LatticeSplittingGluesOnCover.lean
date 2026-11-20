@@ -88,7 +88,8 @@ theorem splits_glue : ∀ (X : Scheme.{0}) [IsIntegral X] (K' : IntermediateFiel
   obtain ⟨c, hc⟩ := hpow
   have hc' : ∑ k, algebraMap Γ(X, U.1) (Kbar X) (c k) * ι (α k) ^ (2 * N) = 1 := by
     have := congrArg (algebraMap Γ(X, U.1) (Kbar X)) hc
-    simp only [map_sum, map_mul, map_one, Function.comp_apply, map_pow] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, map_one, Function.comp_apply, map_pow] at this
     exact this
   let e := (Fintype.equivFin (Σ k, Fin (n k))).symm
   refine ⟨_, fun j => w (e j).1 (e j).2,

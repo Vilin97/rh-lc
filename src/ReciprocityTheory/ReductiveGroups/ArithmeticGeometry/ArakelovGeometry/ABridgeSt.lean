@@ -237,7 +237,8 @@ theorem bGram_change {J : Type} {μ : Measure (J → ℂ)} {r : ℕ} (s s' : Fin
       fun z => ∑ k, ∑ l, ((A i k : ℂ) * (A j l : ℂ)) * (starRingEnd ℂ (s k z) * s l z * (w z : ℂ)) := by
     filter_upwards [hs i, hs j] with z hi hj
     rw [hi, hj]
-    simp only [map_sum, map_mul, map_intCast, Finset.sum_mul, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, map_intCast, Finset.sum_mul, Finset.mul_sum]
     rw [Finset.sum_comm]
     exact Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun l _ => by ring
   rw [integral_congr_ae hae,
@@ -278,13 +279,15 @@ theorem ae_secFun_change {x : Ix κ → Ω} {m : ConeMetric ℂ (Ix κ)} {μ : M
   have hd0 : aeval x d = 0 := by
     have e1 : aeval x f' = aeval x (b' k) := by rw [hf', hcast]
     have e2 : ∀ l, aeval x (f l) = aeval x (b l) := fun l => by rw [hf l, hcast]
-    simp only [d, map_sub, map_sum, map_mul, aeval_C, algebraMap_int_eq, eq_intCast, map_intCast, e1, e2]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [d, map_sub, map_sum, map_mul, aeval_C, algebraMap_int_eq, eq_intCast, map_intCast, e1, e2]
     rw [← hA k, sub_eq_zero]
     exact Finset.sum_congr rfl fun l _ => zsmul_eq_mul _ _
   filter_upwards [hpts] with z hz
   have h := secFun_eq_zero_of_pts hdh hd0 hz
   rw [secFun_map_int] at h
-  simp only [d, map_sub, map_sum, map_mul, map_C, eval_sub, eval_sum, eval_mul, eval_C, eq_intCast,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [d, map_sub, map_sum, map_mul, map_C, eval_sub, eval_sum, eval_mul, eval_C, eq_intCast,
     map_intCast] at h
   rw [hf', secFun_map_int]
   simp only [Matrix.of_apply, hf, secFun_map_int]

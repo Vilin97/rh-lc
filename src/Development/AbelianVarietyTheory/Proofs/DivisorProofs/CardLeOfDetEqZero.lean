@@ -75,7 +75,8 @@ theorem eq_zero_of_torusChar {K V ι : Type} [Field K] [CharZero K] [AddCommGrou
   have hl := (linearIndependent_monoidHom (ι → Kˣ) K).comp _ (torusChar_injective K)
   refine linearIndependent_iff'.1 hl s (fun e => φ (v e)) (funext fun t => ?_) e he
   have := congrArg φ (h t)
-  simpa [map_sum, mul_comm] using this
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa [map_sum, mul_comm] using this
 
 end Generic
 
@@ -237,7 +238,8 @@ variable {σ : c.F →+* ℂ} (U : Unf Xo c σ r) (x : ℝ)
 
 theorem homN_sum_le {ι : Type} (s : Finset ι) (G : WTZ D.host.E) (n : ι → ℕ) (w : ι → Rul Xo c)
     (z : Σ k, Frame (U.X k).Ψ r) : homN U x G (∑ i ∈ s, n i • w i) z ≤ ∑ i ∈ s, n i * homN U x G (w i) z := by
-  simp only [homN, ptN, Data.pnorm, map_sum, map_nsmul, Finset.sum_apply, Pi.smul_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [homN, ptN, Data.pnorm, map_sum, map_nsmul, Finset.sum_apply, Pi.smul_apply]
   have h := (norm_sum_le s fun i => n i • rdU U (w i) z.1 z.2).trans
     (Finset.sum_le_sum fun i _ => norm_nsmul_le (n := n i) (a := rdU U (w i) z.1 z.2))
   refine (mul_le_mul_of_nonneg_left (mul_le_mul_of_nonneg_right h (by positivity)) (lieFacZ_pos x G).le).trans (le_of_eq ?_)

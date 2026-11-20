@@ -86,7 +86,8 @@ private theorem trace_mixEq (x : Cinf K) : mixedTrace K (Cm.mixEq K x) = 2 * ∑
 
 private theorem pairing (x y : Lie K n) :
     mixedPairingPi K (linC K n x) (swapCLE K n (linC K n y)) = 2 * ∑ w, ((Matrix.of x * Matrix.of y).trace w).re := by
-  rw [← trace_mixEq, trace_mul_eq_sum, map_sum, map_sum, mixedPairingPi]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← trace_mixEq, trace_mul_eq_sum, map_sum, map_sum, mixedPairingPi]
   refine Finset.sum_congr rfl fun p _ => ?_
   rw [mixedTraceForm_apply, map_mul (Cm.mixEq K)]
   rfl

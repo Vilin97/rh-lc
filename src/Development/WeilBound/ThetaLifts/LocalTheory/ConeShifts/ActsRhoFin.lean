@@ -107,7 +107,8 @@ theorem acts_rho_inf {W : Type} [AddCommGroup W] [Module (AF F) W] {B : W → W 
         _ = _ := by rw [h3, mul_one]
     have hd : ∀ a b : κ → AF F, evI F (a ⬝ᵥ b) = (fun i => evI F (a i)) ⬝ᵥ fun i => evI F (b i) := fun a b => by
       show evIH F _ = _
-      simp only [dotProduct, map_sum, map_mul]; rfl
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [dotProduct, map_sum, map_mul]; rfl
     rw [evI_add, evI_mul, h2, map_add, ← Algebra.smul_def, map_smul, hd, hd]
     simp only [PositivityTheory.Mix.beta, smul_eq_mul]
     push_cast

@@ -153,7 +153,8 @@ theorem coords_integral_iff : ∀ (K : Type) [Field K] [NumberField K] (v : Pl) 
       have e : algebraMap K (Kv K w) (∑ j, r j • β j) =
           (∑ i, x i • algebraMap K (Kv K w) (β i)) -
             ∑ i, (x i - algebraMap ℚ (Qv v) (r i)) • algebraMap K (Kv K w) (β i) := by
-        rw [← Finset.sum_sub_distrib, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [← Finset.sum_sub_distrib, map_sum]
         refine Finset.sum_congr rfl fun i _ => ?_
         rw [← sub_smul, sub_sub_cancel, Algebra.smul_def (r i), map_mul, Algebra.smul_def,
           ← IsScalarTower.algebraMap_apply ℚ (Qv v) (Kv K w),

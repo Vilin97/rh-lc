@@ -66,13 +66,15 @@ theorem integralOp_eq_sum {G W : Type} [Group G] [MeasurableSpace G] [AddCommGro
     intro h
     rw [← smul_eq_mul, ← map_smul]
     change l (b h • σ h w) = _
-    rw [hsum h, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hsum h, map_sum]
     refine Finset.sum_congr rfl fun r _ => ?_
     rw [map_smul, smul_eq_mul]
     by_cases hh : h ∈ F ⁻¹' {r}
     · rw [Set.indicator_of_mem hh, Set.indicator_of_mem hh, one_mul]
     · rw [Set.indicator_of_notMem hh, Set.indicator_of_notMem hh, zero_mul]
-  rw [map_sub, (hA w l).2, map_sum, integral_congr_ae (.of_forall hpt),
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sub, (hA w l).2, map_sum, integral_congr_ae (.of_forall hpt),
     integral_finsetSum _ fun r hr => (integrableOn_const (hs r hr).2).integrable_indicator (hs r hr).1,
     ← Finset.sum_sub_distrib]
   refine Finset.sum_eq_zero fun r hr => ?_
@@ -211,12 +213,14 @@ theorem opTensor : ∀ (D : D7) (V : HSp D) (S : D.what₂.Tau → SPar) (M : DS
       ∑ r ∈ s, (B r).indicator (fun _ => (1 : ℂ)) (projFin D.sp.cm.sig V.gram g) •
         a r (fun w' => projArch D.sp.cm.sig V.gram w' g) := by
     intro g
-    rw [apply_homFinDS hT, tensor, ← finFn_toFin, mul_smul, ← ContinuousMultilinearMap.smul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [apply_homFinDS hT, tensor, ← finFn_toFin, mul_smul, ← ContinuousMultilinearMap.smul_apply,
       ← LinearMap.map_smul, hsum, map_sum, ContinuousMultilinearMap.sum_apply, Finset.smul_sum]
     refine Finset.sum_congr rfl fun r _ => ?_
     rw [map_smul, ContinuousMultilinearMap.smul_apply, smul_comm]
     rfl
-  rw [(hR (T w y)).2, integral_congr_ae (.of_forall hpt), integral_finset_sum _ fun r hr => (hL r hr).1,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [(hR (T w y)).2, integral_congr_ae (.of_forall hpt), integral_finset_sum _ fun r hr => (hL r hr).1,
     hAw, map_sum, ContinuousMultilinearMap.sum_apply]
   refine Finset.sum_congr rfl fun r hr => ?_
   rw [(hL r hr).2, (hpi r).2, map_smul, ContinuousMultilinearMap.smul_apply, hνB r hr, Complex.coe_smul]

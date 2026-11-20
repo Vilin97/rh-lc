@@ -26,7 +26,8 @@ def ofObjects (D : Heights.AddBlockData P) : AddBlockData P where
     obtain ⟨u, hu, hsum⟩ := D.generating c hc
     refine ⟨fun j ↦ funFieldEquiv P (u j), fun j ↦ (funFieldEquiv_mem_chartRing_iff P c _).2 (hu j),
       ?_⟩
-    simp only [← funFieldEquiv_div_chartPow, ← map_mul, ← map_sum, hsum, map_one]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [← funFieldEquiv_div_chartPow, ← map_mul, ← map_sum, hsum, map_one]
 
 def toObjects (D : AddBlockData P) : Heights.AddBlockData P where
   deg := D.deg
@@ -42,7 +43,8 @@ def toObjects (D : AddBlockData P) : Heights.AddBlockData P where
     · rw [← funFieldEquiv_mem_chartRing_iff, RingEquiv.apply_symm_apply]
       exact hu j
     · apply (funFieldEquiv P).injective
-      simp only [map_sum, map_mul, funFieldEquiv_div_chartPow, RingEquiv.apply_symm_apply, map_one]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_mul, funFieldEquiv_div_chartPow, RingEquiv.apply_symm_apply, map_one]
       exact hsum
 
 theorem ofObjects_toObjects (D : AddBlockData P) : ofObjects (toObjects D) = D := by

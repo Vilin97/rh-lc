@@ -24,7 +24,8 @@ theorem UpperTheory.V.AlgebraTools.qRegAt_uLim :
         ∑ α : GlobalTheory.MonoDeg σ a, GlobalTheory.monoVal y ↑α • p α := by
       ext N
       simp [Finset.sum_apply]
-    rw [e, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, map_sum]
     simp [hp]
   rw [sup_bot_eq, hsum, ULim.mem_smul_top_iff R F hF _ M (Y ^ (a + 1)) hYfg.pow hK] at hc
   intro α

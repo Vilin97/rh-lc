@@ -42,7 +42,8 @@ private theorem fin_prod {ι X : Type} [Fintype ι] {Y : ι → Type} (p : ∀ i
     have e2 : T s = T fun i => ∑ j, c i j • ((b i j : Submodule.span ℂ (S i)) : Y i → ℂ) :=
       congrArg T (funext hsum)
     show (fun x => ∏ i, s i (p i x)) ∈ (Submodule.span ℂ R : Set (X → ℂ))
-    rw [e, e2, MultilinearMap.map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, e2, MultilinearMap.map_sum]
     refine Submodule.sum_mem _ fun r _ => ?_
     rw [MultilinearMap.map_smul_univ]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨r, rfl⟩)

@@ -22,7 +22,8 @@ theorem map_gramR {n j : ℕ} (G : Matrix (Fin n) (Fin n) K) (e : Fin j → Fin 
   rw [gramR, RingHom.map_det]
   congr 1
   ext a b
-  simp only [RingHom.mapMatrix_apply, Matrix.map_apply, Matrix.of_apply, Matrix.mul_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [RingHom.mapMatrix_apply, Matrix.map_apply, Matrix.of_apply, Matrix.mul_apply,
     Matrix.conjTranspose_apply, StepBAux.fmat, dotProduct, Matrix.mulVec, Pi.star_apply, map_sum,
     map_mul, Rb.tw_apply, Complex.star_def, Complex.conj_conj, Finset.mul_sum, Finset.sum_mul]
   rw [Finset.sum_comm]

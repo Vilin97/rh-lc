@@ -15,7 +15,8 @@ namespace GlobalTheory.FrameSign
 private theorem hermC_emb_eq_map_herm' {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ} (τ : E →+* ℂ)
     (Gm : Matrix (Fin r) (Fin r) E) (v w : Fin r → E) :
     hermC τ Gm (Data.emb τ v) (Data.emb τ w) = τ (herm Gm v w) := by
-  simp only [hermC, herm, Data.emb, cc, map_sum, map_mul, IsCMField.complexEmbedding_complexConj]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hermC, herm, Data.emb, cc, map_sum, map_mul, IsCMField.complexEmbedding_complexConj]
 
 private theorem re_emb' {E : Type} [Field E] [NumberField E] [IsCMField E] (τ : E →+* ℂ) (ξ : E)
     (hξ : cc ξ = -ξ) : (τ ξ).re = 0 := by

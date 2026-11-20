@@ -41,7 +41,8 @@ theorem continuous_symm_inf : ∀ (F E : Type) [Field F] [NumberField F] [Field 
         rr w (c w).im • Φ.symm (Pi.single w Complex.I, 0)) := by
     funext c
     apply Φ.injective
-    rw [Φ.apply_symm_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Φ.apply_symm_apply, map_sum]
     simp only [map_add, key]
     ext v
     · rw [Prod.fst_sum, Finset.sum_apply]

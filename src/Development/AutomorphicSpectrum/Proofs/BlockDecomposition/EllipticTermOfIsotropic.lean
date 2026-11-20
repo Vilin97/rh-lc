@@ -185,7 +185,8 @@ theorem iso_bot (d : GL (Fin n) E) (hd : IsRegEll d) (W : Submodule E (Fin n →
       exact (RingHom.map_mulVec τ _ _ i).symm
     rw [h1]
     have h2 := congrArg τ h0
-    rw [map_sum, map_zero] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero] at h2
     rw [← h2]
     simp only [dotProduct, Pi.star_apply, Function.comp_apply, map_mul]
     refine Finset.sum_congr rfl fun i _ => ?_

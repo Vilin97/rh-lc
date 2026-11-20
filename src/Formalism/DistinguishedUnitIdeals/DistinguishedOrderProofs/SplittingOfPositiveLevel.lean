@@ -361,12 +361,14 @@ theorem le_dv (a : PowerSeries O) (S : Submodule (PowerSeries O) V) : S ≤ dv a
 theorem dφ_sum {ι : Type} (s : Finset ι) (f : ι → ZMod n → V) :
     L.dφ (∑ c ∈ s, f c) = ∑ c ∈ s, L.dφ (f c) := by
   funext i
-  simp only [Lat.dφ, Finset.sum_apply, map_sum, Finset.sum_sub_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Lat.dφ, Finset.sum_apply, map_sum, Finset.sum_sub_distrib]
 
 theorem dγ_sum {ι : Type} (s : Finset ι) (f : ι → ZMod n → V) :
     L.dγ (∑ c ∈ s, f c) = ∑ c ∈ s, L.dγ (f c) := by
   funext i
-  simp only [Lat.dγ, Finset.sum_apply, map_sum, Finset.sum_sub_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Lat.dγ, Finset.sum_apply, map_sum, Finset.sum_sub_distrib]
 
 theorem phiIt_fixed {e : V} (he : ∀ i, L.φ i e = e) (i : ZMod n) (k : ℕ) : L.phiIt i k e = e := by
   induction k with

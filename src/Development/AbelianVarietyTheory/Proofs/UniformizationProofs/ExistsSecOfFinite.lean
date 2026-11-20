@@ -178,7 +178,8 @@ theorem exists_sec_of_finite (hL : L.IsLB) {W : Z.Opens} (hW : IsAffineOpen W) {
   refine ⟨∑ y, a y • t y, fun y hy => ⟨i y, ?_⟩⟩
   have hy' : y ∈ W ⊓ L.U (i y) := ⟨hFW hy, hi y⟩
   refine (isUnit_gs_iff (𝟙 Z) y _ hy' _).1 (show IsUnit (germAt (i y) y hy' _) from ?_)
-  rw [map_sum, ← Finset.add_sum_erase _ _ (Finset.mem_univ (⟨y, hy⟩ : F))]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, ← Finset.add_sum_erase _ _ (Finset.mem_univ (⟨y, hy⟩ : F))]
   have u : IsUnit (germAt (i y) y hy' (a ⟨y, hy⟩ • t ⟨y, hy⟩)) := by
     rw [germAt_smul]
     exact ((isUnit_gs_iff (𝟙 Z) y W (hFW hy) _).2 (h₁ ⟨y, hy⟩)).mul (h₃ ⟨y, hy⟩)

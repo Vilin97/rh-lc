@@ -54,7 +54,8 @@ theorem eOp_eq (a : MonoidAlgebra LL G) : A.eOp (fun g => a.coeff g) = (twRep A)
     ext g
     simp [MonoidAlgebra.coeff_sum, Finsupp.finset_sum_apply, Finsupp.single_apply]
   conv_rhs => rw [ha]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   unfold Arith.FormsL.eOp
   refine Finset.sum_congr rfl fun g _ => ?_
   rw [Representation.asAlgebraHom_single, mul_smul]
@@ -769,7 +770,8 @@ variable {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A : FamIn D.w
 theorem tC_cpt {K : Type} [Field K] [NumberField K] [StarRing K] {Bs : DefBase K} {A : DefAmb Bs} (X : CxData A)
     {fc : DefSub A → DefFace Bs} (cr : Crd A fc) (b : Bool) (j : Bs.J) (t : Bs.Tup) (y : Fin ((lv (fc X.zs) b).dZ j t) → K) :
     X.tC cr b j t (cpt Bs.v0.embedding y) = X.θ' j t (X.jL j t (cr.toL X.zs b j t y)) := by
-  conv_rhs => rw [← Finset.univ_sum_single y, map_sum, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_rhs => rw [← Finset.univ_sum_single y, map_sum, map_sum, map_sum]
   show ∑ k, Bs.v0.embedding (y k) • X.θ' j t (X.jL j t (cr.toL X.zs b j t (Pi.single k 1))) = _
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [← map_smul, ← map_smulₛₗ, ← map_smul, ← Pi.single_smul', smul_eq_mul, mul_one]
@@ -778,7 +780,8 @@ theorem liftWeight_complexPoint_eq_twist {K : Type} [Field K] [NumberField K] [S
     (b : Bool) (j : Bs.J) (z : Fin (X.dW b j) → K) :
     X.w0C b j (cpt Bs.v0.embedding z) = ∑ k, Bs.v0.embedding (z k) • X.eW b j (X.bW b j Bs.v0 k) := by
   show X.eW b j (∑ k, Bs.v0.embedding (z k) • X.bW b j Bs.v0 k) = _
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_congr rfl fun k _ => map_smul _ _ _
 
 theorem out_sum {s : Bool} {E ι : Type} [NormedAddCommGroup E] [InnerProductSpace ℂ E] [Fintype ι] (f : ι → Tw s E) :
@@ -792,7 +795,8 @@ theorem j_coordMap (j : Fin D.R.m) (z : Fin (finrank D.what₂.LL (R.WL F false 
   refine Eq.trans ?_ (congrArg (Tw.out (s := twAt D.what₂.embLL A.v0)) (liftWeight_complexPoint_eq_twist (R.toCx F) false j z)).symm
   refine Eq.trans ?_ (out_sum _).symm
   unfold coordMap
-  rw [Fintype.linearCombination_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Fintype.linearCombination_apply, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   show _ = cj (twAt D.what₂.embLL A.v0) (A.v0.embedding (z k)) • (((Real.sqrt (RealDat.nP F false) : ℝ) : ℂ) •
     ((((Real.sqrt (RealDat.nP F false))⁻¹ : ℝ) : ℂ) • (R.FW j).j (sg0 D A) (R.bL F false j k)))

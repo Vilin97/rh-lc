@@ -35,7 +35,8 @@ theorem avg_mem (ρ : Representation ℂ Γ V) (σ : Representation ℂ Γ W) (f
     avg ρ σ f ∈ Intw ρ σ := by
   intro h
   ext v
-  simp only [LinearMap.comp_apply, avg_apply, map_smul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [LinearMap.comp_apply, avg_apply, map_smul, map_sum]
   congr 1
   refine Fintype.sum_equiv (Equiv.mulLeft h⁻¹) _ _ fun g => ?_
   have e1 : ρ (h⁻¹ * g)⁻¹ v = ρ g⁻¹ (ρ h v) := by
@@ -81,7 +82,8 @@ theorem comp_avg {ρ : Representation ℂ Γ V} {σ : Representation ℂ Γ W} (
     {φ : V →ₗ[ℂ] W} (hφ : φ ∈ Intw ρ σ) (f : U →ₗ[ℂ] V) :
     φ ∘ₗ avg τ ρ f = avg τ σ (φ ∘ₗ f) := by
   ext v
-  simp only [LinearMap.comp_apply, avg_apply, map_smul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [LinearMap.comp_apply, avg_apply, map_smul, map_sum]
   congr 1
   refine Finset.sum_congr rfl fun g _ => ?_
   rw [mem_intw_apply hφ]

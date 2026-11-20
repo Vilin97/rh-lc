@@ -32,7 +32,8 @@ theorem gamma_sub_one_pi_invariants : GammaSubOnePiInvariants := by
   have hcoord : ∀ d v k, b.repr (ρ d v) k = d • b.repr v k := by
     intro d v k
     conv_lhs => rw [← b.sum_repr v]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [hρ, hb]
     rw [b.repr_sum_self]
   have hk : ∀ k (d : Δ), d • (π * b.repr x' k) = π * b.repr x' k := by
@@ -43,7 +44,8 @@ theorem gamma_sub_one_pi_invariants : GammaSubOnePiInvariants := by
   choose a' ha'inv ha' using fun k => hring (b.repr x' k) (hk k)
   refine ⟨∑ k, a' k • b k, ?_, ?_⟩
   · intro d
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [hρ, hb, ha'inv]
   · rw [hx', smul_sum]
     conv_lhs => rw [← b.sum_repr x', smul_sum]

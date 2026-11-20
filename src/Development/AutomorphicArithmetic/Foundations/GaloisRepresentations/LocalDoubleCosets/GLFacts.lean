@@ -63,7 +63,8 @@ private theorem whitChar_sg (σ : E ≃+* E) (ψ : AddChar E Circle) (hψ : ∀ 
     (u u' : unipB E (Fin n)) (h : (u' : GL (Fin n) E) = sg σ u) : whitChar ψ n u' = whitChar ψ n u := by
   have hs : ∑ p : Fin n × Fin n with (p.2 : ℕ) = p.1 + 1, (u' : GL (Fin n) E).val p.1 p.2 =
       σ (∑ p : Fin n × Fin n with (p.2 : ℕ) = p.1 + 1, (u : GL (Fin n) E).val p.1 p.2) := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun p _ => by rw [h]; rfl
   change Circle.toUnits (ψ _) = Circle.toUnits (ψ _)
   rw [hs, hψ]

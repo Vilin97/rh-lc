@@ -71,7 +71,8 @@ theorem kummer_twist_relation_and_fixed_field :
       rw [Algebra.adjoin_singleton_eq_range_aeval] at hy
       obtain ⟨p, rfl⟩ := (AlgHom.mem_range _).1 hy
       rw [Polynomial.aeval_eq_sum_range]
-      simp_rw [map_sum, map_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp_rw [map_sum, map_smul]
       rw [Finset.sum_comm]
       refine Subalgebra.sum_mem _ fun i _ => ?_
       rw [← Finset.smul_sum]

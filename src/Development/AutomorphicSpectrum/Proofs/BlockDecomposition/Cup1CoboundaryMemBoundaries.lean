@@ -117,7 +117,8 @@ theorem coboundary_cup1 (n : ℕ) {x : Cn F 1} (hx : dn F 1 x = 0) (z : Cn F n) 
       fin_cases i <;> rfl) x
     rw [e0, e1, e2] at h0
     simpa [sub_eq_add_neg] using h0
-  rw [dn_eq (n + 1), dn_eq n, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [dn_eq (n + 1), dn_eq n, map_sum]
   simp only [map_smul, map_mul, cup1_apply, pr_pr]
   have e1 : pr F ((dl (1 : Fin (n + 3))).comp (dl 0)) z = pr F ((dl (0 : Fin (n + 3))).comp (dl 0)) z :=
     pr_congr (fun i ↦ by fin_order) z
@@ -252,7 +253,8 @@ theorem pulln_one (m : CoefMap (RingHom.id R) F G) (n : ℕ) : pulln m n (1 : Cn
 
 theorem pulln_dn (m : CoefMap (RingHom.id R) F G) (n : ℕ) (f : Cn F n) :
     pulln m (n + 1) (dn F n f) = dn G n (pulln m n f) := by
-  rw [dn_eq, dn_eq, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [dn_eq, dn_eq, map_sum]
   refine Finset.sum_congr rfl fun i _ ↦ ?_
   rw [map_smul, pulln_pr]
 

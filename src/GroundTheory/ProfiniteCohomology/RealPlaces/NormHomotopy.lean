@@ -76,7 +76,8 @@ theorem sum_ρ_μ_tmul_ρ_inv (e : X) (b : Y) :
       change TensorProduct.map (X.ρ a) (Y.ρ a) (e ⊗ₜ[k] Y.ρ a⁻¹ b) = _
       rw [TensorProduct.map_tmul, Representation.self_inv_apply]
     exact (Rep.hom_comm_apply μ a _).symm.trans (congrArg _ h2)
-  rw [Finset.sum_congr rfl fun a _ => h1 a, ← map_sum, ← TensorProduct.sum_tmul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.sum_congr rfl fun a _ => h1 a, ← map_sum, ← TensorProduct.sum_tmul]
   congr 2
   simp [Representation.norm]
 
@@ -102,7 +103,8 @@ theorem normHomotopyFun_d_add {m : ℕ} (e : X) (y : (Fin (m + 1) → F) → Y) 
         ∑ j : Fin (m + 1), (-1 : k) ^ ((j : ℕ) + 2) •
           normHomotopyFun μ rfl e y (Fin.contractNth j (· * ·) g) := by
     simp only [normHomotopyFun, consTuple_rfl]
-    simp only [hdy, TensorProduct.tmul_add, TensorProduct.tmul_sub, TensorProduct.tmul_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hdy, TensorProduct.tmul_add, TensorProduct.tmul_sub, TensorProduct.tmul_sum,
       TensorProduct.tmul_smul, map_add, map_sub, map_sum, map_smul, Finset.sum_add_distrib,
       Finset.sum_sub_distrib]
     rw [sum_ρ_μ_tmul_ρ_inv μ e (y g), Finset.sum_comm (β := Z.V)]

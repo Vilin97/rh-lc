@@ -54,7 +54,8 @@ private theorem UpperTheory.Reformulated.B.FreeModuleQuotient.aux {R S M : Type}
         exact Ideal.Quotient.eq_zero_iff_mem.1 this
       have hxe : x = ∑ i, s (t i) • e.symm (Pi.single i 1) := by
         apply e.injective
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         simp only [he, e.apply_symm_apply]
         rw [← Finset.univ_sum_single (e x)]
         refine Finset.sum_congr rfl fun i _ => ?_

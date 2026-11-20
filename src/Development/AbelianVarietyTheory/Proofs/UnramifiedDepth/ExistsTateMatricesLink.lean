@@ -68,7 +68,8 @@ lemma ev_expand {O : LAlg R₀} {g : ℕ} (gb : Module.Basis (Fin g) R₀ B.gg)
     simp only [BX.ev, TensorProduct.map_tmul, LinearMap.mul'_apply, LinearMap.id_apply,
       TensorProduct.comm_tmul, Module.Basis.baseChange_repr_tmul]
     conv_lhs => rw [← gb.sum_repr x]
-    rw [map_sum, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_mul]
     refine Finset.sum_congr rfl fun a _ => ?_
     rw [map_smul, Algebra.smul_def, Algebra.smul_def]
     ring
@@ -143,9 +144,11 @@ lemma tangent_eq {O R : LAlg R₀} (gb : Module.Basis (Fin g) R₀ B.gg) (f : OE
     f.f (Dp.σ.comp s) (B.tg Dp.π Dp.sqZero (v ⊗ₜ Dp.ηk)) =
       B.tg Dp.π Dp.sqZero (LinearMap.lTensor B.gg Dp.ηmap
         (gb.constr R₀ (fun l => ∑ k, gb k ⊗ₜ[R₀] s.1 (M k l)) v)) := by
-  rw [← gb.sum_repr v, TensorProduct.sum_tmul, map_sum, map_sum, map_sum, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← gb.sum_repr v, TensorProduct.sum_tmul, map_sum, map_sum, map_sum, map_sum, map_sum]
   refine Finset.sum_congr rfl fun l _ => ?_
-  rw [TensorProduct.smul_tmul, map_smul, Module.Basis.constr_basis, map_smul, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [TensorProduct.smul_tmul, map_smul, Module.Basis.constr_basis, map_smul, map_sum,
     Finset.smul_sum,
     hM l _ (fun k => gb.repr v l • Dp.ηmap (s.1 (M k l))) (fun k => by
       simp only [DualPair.ηmap, DualPair.ηk, LHom.comp, LinearMap.coe_mk, AddHom.coe_mk,
@@ -186,10 +189,12 @@ lemma height_eq (Tw : ATower R₀ p) [Algebra ℤ_[p] (Tw.O : Type)] (Dp : ∀ n
     rw [← map_nsmul, hy, map_zero]
   have H3 := B.isHeight_unique (pairingProperties B) (Dp n) _ hchar _ hya _ _ H1 H2
   have H4 := LinearMap.congr_fun H3 (gb l)
-  simp only [LinearMap.comp_apply, Module.Basis.constr_basis, map_sum, hext_tmul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [LinearMap.comp_apply, Module.Basis.constr_basis, map_sum, hext_tmul,
     AlgHom.toLinearMap_apply, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
     map_mul] at H4
-  simp only [map_sub, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sub, map_sum, map_mul]
   rw [sub_eq_zero]
   simp only [mul_comm] at H4 ⊢
   exact H4.symm

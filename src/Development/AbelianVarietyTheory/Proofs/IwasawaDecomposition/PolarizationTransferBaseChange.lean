@@ -62,7 +62,8 @@ theorem ev_twoDet (M : MChart Z) (M' : MChart Z') (ha : IsAffineOpen (p ⁻¹ᵁ
   have h1 := (pullBasis h M (tau ha) (le_preimage_map p inf_le_left (tau_le _ le_rfl))).sum_toMatrix_smul_self
     (pullBasis h' M' (tau ha) (le_preimage_map p' inf_le_right (tau_le _ le_rfl))) j
   have h2 := congrArg (tanPull (G := G) _ e) h1
-  rw [map_sum, tanPull_pullBasis h' M' _ e _ h₁] at h2
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, tanPull_pullBasis h' M' _ e _ h₁] at h2
   simp only [map_smulₛₗ, tanPull_pullBasis h M _ e _ h₀] at h2
   rw [Module.Basis.toMatrix_apply, ← h2, Module.Basis.repr_sum_self]
   rfl

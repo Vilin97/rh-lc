@@ -55,7 +55,8 @@ theorem mem_of_piMap_mem_span {A R L : Type} [CommRing A] [IsDomain A] [IsIntegr
           rwa [hφ0, Submodule.mem_bot] at this
         rw [LinearMap.pi_apply_eq_sum_univ] at h0
         have h0' := congrArg (algebraMap K L) h0
-        rw [map_sum, map_zero] at h0'
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum, map_zero] at h0'
         rw [← h0']
         refine Finset.sum_congr rfl fun i _ => ?_
         have e' : (fun k => if i = k then (1 : K) else 0) = Pi.single i 1 := by

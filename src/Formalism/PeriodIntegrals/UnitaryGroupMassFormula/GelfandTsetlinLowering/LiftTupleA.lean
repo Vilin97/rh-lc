@@ -50,7 +50,8 @@ theorem rowGen_gmin {r c m : ℕ} (a b : Fin r) (ρ : Fin m → Fin r) (κ : Fin
   rw [Finset.sum_comm, Finset.powerset_univ]
   refine Finset.sum_congr rfl fun S _ => ?_
   split_ifs with hS
-  · rw [h2, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [h2, map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun σ _ => ?_
     have hBS : ∏ i ∈ S, B σ i =
         Polynomial.X ^ S.card * Polynomial.C (∏ i ∈ S, (X (a, κ (σ i)) : MvPolynomial (Fin r × Fin c) ℤ)) := by
@@ -231,7 +232,8 @@ theorem rowDiv_comb {r c n K : ℕ} (e : Fin n → Fin r) (sz : Fin K → ℕ)
       rowDiv_prod e sz G hG C0 a b hC t J]
     congr 1
     unfold tmat
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun F _ => ?_
     split_ifs
     · rw [Finsupp.linearCombination_single, one_smul]

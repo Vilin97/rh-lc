@@ -144,7 +144,8 @@ theorem local_self_dual_holds : LocSelfDual := by
         obtain ⟨v, rfl⟩ := hw
         have e : ∀ i, (L.H p).h (L.bc p v) (L.bc p (μ i)) = (D.s.atP p).ιE ((VS D).hT (μ i) v) := fun i => hform _ _
         simp only [e, ← L.bc_smul p]
-        rw [← map_sum, ← hV v]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [← map_sum, ← hV v]
       | zero => simp [local_form_zero_left]
       | add w w' _ _ h1 h2 =>
         simp only [(L.H p).h_add_left, add_smul, Finset.sum_add_distrib]

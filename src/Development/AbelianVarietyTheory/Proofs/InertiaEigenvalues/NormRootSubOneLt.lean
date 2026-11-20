@@ -133,7 +133,8 @@ theorem rel_trace (hn : ∀ (g : GQ l) (x : Om l), ‖g x‖ = ‖x‖) (K : Fin
     a ha ha1
   have hfix : ∀ y ∈ L ⊔ E, ∀ n ∈ L.fixingSubgroup, n (∑ t ∈ T, t y) = ∑ t ∈ T, t y := by
     intro y hy n hnL
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine sum_shift L.fixingSubgroup E.fixingSubgroup T hT hT' (fun g => g y) ?_ n hnL
     intro g v hv hv'
     have : v ∈ (L ⊔ E).fixingSubgroup := by rw [hsup]; exact ⟨hv, hv'⟩
@@ -144,7 +145,8 @@ theorem rel_trace (hn : ∀ (g : GQ l) (x : Om l), ‖g x‖ = ‖x‖) (K : Fin
   rw [Finset.sum_image hinj, Finset.sum_product] at he
   rw [← he]
   refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg (norm_nonneg _) fun s _ => ?_
-  rw [← hn s (∑ t ∈ T, t e), map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hn s (∑ t ∈ T, t e), map_sum]
   rfl
 
 theorem norm_root_sub_one (k : ℕ) (ζ : Om l) (hζ : IsPrimitiveRoot ζ (l ^ (k + 1))) :
@@ -307,13 +309,16 @@ theorem exists_tilt {P : LocPrime l} (AI : LocAinf l P) (N : Subgroup (GQ l)) (S
     rw [map_pow, hB _ g hg]
   · choose y hy hy' using fun s => AI.actT_coeff s x 0 _ (hx 0)
     have h1 := congrArg (PreTilt.coeff 0) h0
-    rw [map_sum, map_zero, Finset.sum_congr rfl fun s _ => hy' s] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero, Finset.sum_congr rfl fun s _ => hy' s] at h1
     have h2 : Ideal.Quotient.mk (Ideal.span {((l : ℕ) : OC l)}) (∑ s ∈ S, y s) = 0 := by
-      rw [map_sum]; exact h1
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]; exact h1
     rw [mk_eq_zero_iff] at h2
     have h3 : ((∑ s ∈ S, y s : OC l) : PadicComplex l) =
         ∑ s ∈ S, AI.actC s ((B k : PadicComplex l) ^ l ^ k) := by
-      rw [show ((∑ s ∈ S, y s : OC l) : PadicComplex l) = ∑ s ∈ S, (y s : PadicComplex l) from
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [show ((∑ s ∈ S, y s : OC l) : PadicComplex l) = ∑ s ∈ S, (y s : PadicComplex l) from
         map_sum (PadicComplexInt l).subtype _ _]
       refine Finset.sum_congr rfl fun s _ => ?_
       rw [hy s, zero_add]
@@ -396,14 +401,17 @@ theorem main : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l P) 
     simp only [F]
     rw [map_mul AI.actT, RingAut.mul_apply, hxN v hv]
   have ht : ∀ h ∈ Hinf K, AI.actWCb h (∑ s ∈ S, F s) = ∑ s ∈ S, F s := fun h hh => by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [hF]
     exact sum_shift (Hinf K) L.fixingSubgroup S hS hS' F (fun g v _ hv => hFv g v hv) h hh
   have hu : IsUnit (∑ s ∈ S, F s) := by
     apply WittVector.isUnit_of_coeff_zero_ne_zero
-    rw [← WittVector.constantCoeff_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← WittVector.constantCoeff_apply, map_sum]
     simp only [F, WittVector.constantCoeff_apply, WittVector.teichmuller_coeff_zero]
-    rw [← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum]
     exact fun h => hx (IsFractionRing.injective (OCb l) (Cb l) (h.trans (map_zero _).symm))
   obtain ⟨w, hw⟩ := hu.exists_right_inv
   have hwf : ∀ h ∈ Hinf K, AI.actWCb h w = w := fun h hh => by

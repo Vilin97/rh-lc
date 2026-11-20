@@ -28,7 +28,8 @@ theorem pair_monomial (A : σ →₀ ℕ) (c : C) (Q : MvPolynomial σ C) :
 theorem pair_eq (P Q : MvPolynomial σ C) :
     pair P Q = ∑ A ∈ P.support, AddMonoidAlgebra.coeff P A * wt C A * AddMonoidAlgebra.coeff Q A := by
   conv_lhs => rw [P.as_sum]
-  rw [map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, LinearMap.sum_apply]
   exact Finset.sum_congr rfl fun A _ => pair_monomial A (AddMonoidAlgebra.coeff P A) Q
 
 theorem wt_add_single (A : σ →₀ ℕ) (j : σ) :
@@ -63,7 +64,8 @@ theorem coeff_pderiv' (j : σ) (A : σ →₀ ℕ) (Q : MvPolynomial σ C) :
 theorem pair_X_mul (j : σ) (P Q : MvPolynomial σ C) :
     pair (P * X j) Q = pair P (pderiv j Q) := by
   conv_lhs => rw [P.as_sum]
-  rw [pair_eq P, Finset.sum_mul, map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [pair_eq P, Finset.sum_mul, map_sum, LinearMap.sum_apply]
   refine Finset.sum_congr rfl fun A _ => ?_
   rw [show (X j : MvPolynomial σ C) = monomial (Finsupp.single j 1) 1 from rfl, monomial_mul, mul_one,
     pair_monomial, coeff_pderiv', wt_add_single]
@@ -87,7 +89,8 @@ theorem pair_det (n : ℕ) (P Q : MvPolynomial (Fin n × Fin n) C) :
     refine Finset.sum_congr rfl fun s _ => ?_
     rw [Units.smul_def, Fin.prod_univ_def]
     rfl
-  rw [hdet, cayOp, Finset.mul_sum, map_sum, LinearMap.sum_apply, LinearMap.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hdet, cayOp, Finset.mul_sum, map_sum, LinearMap.sum_apply, LinearMap.sum_apply, map_sum]
   refine Finset.sum_congr rfl fun s _ => ?_
   rw [mul_smul_comm, map_zsmul, LinearMap.smul_apply, LinearMap.smul_apply, map_zsmul]
   exact congrArg (fun t => (Equiv.Perm.sign s : ℤ) • t) (pair_list (fun i => (s i, i)) (List.finRange n) P Q)

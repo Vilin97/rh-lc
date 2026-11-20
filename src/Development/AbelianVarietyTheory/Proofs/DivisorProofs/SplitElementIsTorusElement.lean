@@ -123,7 +123,8 @@ theorem isIdTorusElt_of_isSplitElt {n : ℕ} {J : Matrix (Fin n) (Fin n) E} {r :
         have h2 : ∀ k, ψ (d k)⁻¹.1 = 1 := fun k => rfl
         change ψ (m.1 i j) = (1 : Matrix (Fin n) (Fin n) _) i j
         rw [he]
-        simp only [Matrix.add_apply, Matrix.mul_apply (N := cT _ _ * _), mul_diagonal, map_add, map_sum, map_mul, map_sub,
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [Matrix.add_apply, Matrix.mul_apply (N := cT _ _ * _), mul_diagonal, map_add, map_sum, map_mul, map_sub,
           h1, h2, map_one, sub_self, mul_zero, zero_mul, Finset.sum_const_zero, add_zero, Matrix.one_apply, apply_ite ψ,
           map_zero])
       rw [e1, e2]

@@ -59,7 +59,8 @@ theorem inner_mkE_fc (Xf : InfinitePlace K → Matrix (Fin n) (Fin n) ℂ) (hXf 
     rw [Matrix.dotProduct_mulVec, ← Matrix.star_mulVec]
     unfold fc
     rw [Matrix.mulVec_mulVec, hinv, Matrix.one_mulVec]
-    simp [dotProduct, map_sum, star_sum, map_mul, mul_comm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [dotProduct, map_sum, star_sum, map_mul, mul_comm]
   have hsum : ∑ i, (star (fc Xf v x i) * ((2 : ℂ) • ((Xf v)ᴴ *ᵥ fun i => star (v.embedding (ξ i)))) i).re =
       2 * (star (fc Xf v x) ⬝ᵥ ((Xf v)ᴴ *ᵥ fun i => star (v.embedding (ξ i)))).re := by
     simp only [dotProduct, Complex.re_sum, Finset.mul_sum]
@@ -244,9 +245,11 @@ theorem zdual_eq_yv (Xf : InfinitePlace K → Matrix (Fin n) (Fin n) ℂ) (hXf :
     rfl
   have htr : ∀ x, Algebra.trace ℚ K (∑ i, ξ i * x i) = ψ x := by
     intro x
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp_rw [hξ]
-    rw [← map_sum, Finset.univ_sum_single]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, Finset.univ_sum_single]
   refine ⟨ξ, ?_, fun x hx => ?_⟩
   · have horth : ∀ x, inner ℝ (Rz x) (y - yv Xf ξ) = 0 := by
       intro x
@@ -295,7 +298,8 @@ theorem norm_sq_yv (cj : K → K) (hσ : ∀ (v : InfinitePlace K) z, v.embeddin
   congr 2
   rw [Matrix.star_mulVec, Matrix.conjTranspose_conjTranspose, ← Matrix.dotProduct_mulVec,
     Matrix.mulVec_mulVec, hfr v]
-  simp only [dotProduct, Matrix.mulVec, Matrix.map_apply, map_sum, map_mul, hσ, Pi.star_apply, star_star,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dotProduct, Matrix.mulVec, Matrix.map_apply, map_sum, map_mul, hσ, Pi.star_apply, star_star,
     Finset.mul_sum]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun k _ => ?_
   ring

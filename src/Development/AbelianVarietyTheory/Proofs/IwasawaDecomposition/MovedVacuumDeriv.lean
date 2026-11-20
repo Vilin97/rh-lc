@@ -182,7 +182,8 @@ theorem moved_vacuum_deriv : ∀ (V : Type) [NormedAddCommGroup V] [InnerProduct
         quad ρ c p q (proj h x) + (-∑ i, c i * l (p i) (q i)) • proj h x := by
       simp only [hG, smul_sub]
       rw [integral_sub i1 i2, e1, Osc.proj_proj hJ, ← proj_apply h, neg_smul, sub_eq_add_neg, Finset.sum_smul]
-      simp only [quad, map_sum, map_smul, hl, smul_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [quad, map_sum, map_smul, hl, smul_smul]
     rw [← e3]
     have i4 : Integrable fun u =>
         ContinuousLinearMap.toSpanSingleton ℝ (gau u • fderiv ℝ (fun u => ρ u (proj h x)) u (X u)) :=

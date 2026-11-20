@@ -118,7 +118,8 @@ private theorem abs_faith {n : ℕ} {A H : Type} [CommRing A] [Ring H] [Algebra 
   have hli' := Fintype.linearIndependent_iff.1 (hli.comp f hf) (fun a => p.coeff a.1 * q ^ m a) (by
     have h0 : T c * (th p * e) = 0 := by rw [hp, mul_zero]
     rw [← h0]
-    conv_rhs => rw [p.as_sum, ← Finset.sum_coe_sort, map_sum, Finset.sum_mul, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_rhs => rw [p.as_sum, ← Finset.sum_coe_sort, map_sum, Finset.sum_mul, Finset.mul_sum]
     refine Finset.sum_congr rfl fun a _ => ?_
     have : MvPolynomial.monomial a.1 (p.coeff a.1) = p.coeff a.1 • MvPolynomial.monomial a.1 (1 : A) := by
       rw [MvPolynomial.smul_monomial, smul_eq_mul, mul_one]

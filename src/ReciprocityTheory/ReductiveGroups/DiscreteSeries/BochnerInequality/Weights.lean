@@ -35,7 +35,8 @@ private theorem w_coord_bAct (E : Fin n → Fin n → Module.End ℂ M) (k : ℕ
     coord k κ (bAct E k a b F) = E a b (F κ) + ∑ i, ((if (κ i).1 = a then
       F (Function.update κ i (b, (κ i).2)) else 0) -
       (if (κ i).2 = b then F (Function.update κ i ((κ i).1, a)) else 0)) := by
-  simp only [bAct, LinearMap.add_apply, LinearMap.sum_apply, map_add, map_sum, w_coord_mAct,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [bAct, LinearMap.add_apply, LinearMap.sum_apply, map_add, map_sum, w_coord_mAct,
     w_coord_positionAd]
 
 private theorem w_sum_update (φ : Fin n × Fin n → ℤ) {k : ℕ} (κ : Fin k → Fin n × Fin n) (i : Fin k)

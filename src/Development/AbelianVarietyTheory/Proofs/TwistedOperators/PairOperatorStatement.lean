@@ -115,7 +115,8 @@ theorem vanishing [Fintype n] [DecidableEq n] (q : Unif k) : Vanishing k n M q w
       · exact h g (stab g s hg P.ker) v
     have hsum : ∑ c : 𝓀[k]ˣ, formOf π P v (c • P) = 0 := (mem_Mram _).mp hv P
     have h0 := congrArg θ hsum
-    rw [map_sum, map_zero] at h0
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero] at h0
     simp only [hθc, Finset.sum_const, Finset.card_univ] at h0
     have hcard : (Fintype.card 𝓀[k]ˣ : ℂ) ≠ 0 := Nat.cast_ne_zero.mpr Fintype.card_ne_zero
     rw [← Nat.cast_smul_eq_nsmul ℂ] at h0

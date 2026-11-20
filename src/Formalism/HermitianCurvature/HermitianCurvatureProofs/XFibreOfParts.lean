@@ -99,7 +99,8 @@ variable {Wp Wq : Type} [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp] [Norm
 theorem xf_capV_sum (π' : Mx k r → (Wq →L[ℂ] Wq)) (B0 : Fin k → Fin (2 * r + k + 1) → ℂ) (w : ℂ) (ν : Fin k → ℂ) :
     capV π' B0 w ν = ∑ i : Fin k, ∑ j : Fin k, ((-1 : ℂ) ^ ((i : ℕ) + (j : ℕ)) * star (ν i) * ν j) •
       LinearMap.toContinuousLinearMap (qminor (EB π' B0) (skip1 i) (skip1 j) w : Module.End ℂ Wq) := by
-  simp only [capV, Q.chatA, map_sum, map_smul, Pi.star_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [capV, Q.chatA, map_sum, map_smul, Pi.star_apply]
 
 theorem xf_capV_cd (π' : Mx k r → (Wq →L[ℂ] Wq)) (B0 : Fin k → Fin (2 * r + k + 1) → ℂ) (w : ℂ) :
     ContDiff ℝ ∞ (fun ν : Fin k → ℂ => capV π' B0 w ν) := by

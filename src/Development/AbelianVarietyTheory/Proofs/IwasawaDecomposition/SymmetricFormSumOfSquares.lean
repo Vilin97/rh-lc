@@ -17,7 +17,8 @@ theorem exists_coord_family_of_finite (X : Type) [AddCommGroup X] [Module.Finite
   have hmem : x - ∑ i, (b.coord i (T.mkQ x)) • e i ∈ T := by
     apply (Submodule.Quotient.mk_eq_zero T).1
     change T.mkQ _ = 0
-    rw [map_sub, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_sum]
     simp only [map_smul, he]
     rw [sub_eq_zero]
     simpa using (b.sum_repr (T.mkQ x)).symm
@@ -31,7 +32,8 @@ theorem exists_coord_family_of_finite (X : Type) [AddCommGroup X] [Module.Finite
     have hn0 : (n : ℤ) ≠ 0 := nonZeroDivisors.coe_ne_zero n
     exact (smul_eq_zero.1 h1).resolve_left hn0
   have h2 := hzero _ hmem
-  rw [map_sub, map_sum, sub_eq_zero] at h2
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sub, map_sum, sub_eq_zero] at h2
   rw [h2]
   simp [map_smul]
 
@@ -56,7 +58,8 @@ theorem two_mul_functional_eq_sum_diag (X : Type) [AddCommGroup X] [Module.Finit
       refine Finset.sum_congr rfl fun j _ => ?_
       ring
     conv_lhs => rw [hβ]
-    simp [map_sum, map_smul, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, map_smul, smul_eq_mul]
   let ι := (Fin n × Fin n) × Fin 3
   let Y : ι → X := fun p => ![e p.1.1 + e p.1.2, e p.1.1, e p.1.2] p.2
   let A : ι → ℤ := fun p => ![ℓ (B p.1.1 p.1.2), -ℓ (B p.1.1 p.1.2), -ℓ (B p.1.1 p.1.2)] p.2

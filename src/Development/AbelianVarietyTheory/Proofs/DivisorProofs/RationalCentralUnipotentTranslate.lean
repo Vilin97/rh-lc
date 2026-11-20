@@ -20,7 +20,8 @@ theorem cA_inclR (σ : E →ₐ[F] E) (e : E) : cA σ (inclR (F := F) (AF F) e) 
 
 theorem form_swap {σ : E →ₐ[F] E} (hσ : ∀ x, σ (σ x) = x) {n : ℕ} {J : Matrix (Fin n) (Fin n) E}
     (hJ : ∀ i j, σ (J j i) = -J i j) (x y : Fin n → E) : form σ J y x = -σ (form σ J x y) := by
-  simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, Finset.mul_sum, ← Finset.sum_neg_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, Finset.mul_sum, ← Finset.sum_neg_distrib]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   rw [hJ]; ring
@@ -47,7 +48,8 @@ theorem gam_mul {σ : E →ₐ[F] E} {n : ℕ} {J : Matrix (Fin n) (Fin n) E} {x
 theorem vecMul_vc {σ : E →ₐ[F] E} (hσ : ∀ x, σ (σ x) = x) {n : ℕ} {J : Matrix (Fin n) (Fin n) E}
     (hJ : ∀ i j, σ (J j i) = -J i j) (x : Fin n → E) : x ᵥ* J = -fun j => σ (vc σ J x j) := by
   funext j
-  simp only [vc, Matrix.vecMul, Matrix.mulVec, dotProduct, map_sum, map_mul, hσ, Pi.neg_apply, ← Finset.sum_neg_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [vc, Matrix.vecMul, Matrix.mulVec, dotProduct, map_sum, map_mul, hσ, Pi.neg_apply, ← Finset.sum_neg_distrib]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [hJ]; ring
 
@@ -111,7 +113,8 @@ theorem fA_incV_right (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n)
   rw [fA, this, incM_mulVec_incV]; rfl
 
 theorem incV_dot {n : ℕ} (a b : Fin n → E) : incV F a ⬝ᵥ incV F b = inclR (F := F) (AF F) (a ⬝ᵥ b) := by
-  simp [incV, dotProduct, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [incV, dotProduct, map_sum, map_mul]
 
 theorem fA_incV (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (a b : Fin n → E) :
     fA σ J (incV F a) (incV F b) = inclR (F := F) (AF F) (form σ J a b) := by

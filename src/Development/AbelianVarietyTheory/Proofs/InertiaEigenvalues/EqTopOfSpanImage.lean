@@ -34,7 +34,8 @@ theorem eq_top_of_span_image {E R D M : Type} [CommRing E] [CommRing R] [AddComm
   have hsp : ⊤ ≤ Submodule.span R (Set.range fun i => j (b i)) := by
     rw [← hspan, Submodule.span_le]
     rintro _ ⟨x, rfl⟩
-    rw [← b.sum_repr x, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← b.sum_repr x, map_sum]
     refine Submodule.sum_mem _ fun i _ => ?_
     rw [hj]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)
@@ -47,7 +48,8 @@ theorem eq_top_of_span_image {E R D M : Type} [CommRing E] [CommRing R] [AddComm
   have hF : ∀ x, F (j x) = q (f x) := by
     intro x
     rw [← b.sum_repr x]
-    simp only [map_sum, hj, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, hj, map_smul]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [← hc, Module.Basis.constr_basis, Algebra.smul_def, Algebra.smul_def, map_mul]
     rfl
@@ -138,7 +140,8 @@ theorem map_maximal_ne_top {O E R : Type} [CommRing O] [IsNoetherianRing O] [Com
       funext k
       simp [letE, Finset.sum_apply, Pi.single_apply]
     have := m.sum_mem (t := Finset.univ) fun i _ => h i
-    rw [← map_sum, h1, map_one] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, h1, map_one] at this
     exact hm.ne_top ((Ideal.eq_top_iff_one _).2 this)
   let ψ : PowerSeries O →+* E := a.comp (Pi.constRingHom (ZMod n) (PowerSeries O))
   have hψ : ∀ f : LetA O n, a (letE i) * a f = a (letE i) * ψ (f i) := by

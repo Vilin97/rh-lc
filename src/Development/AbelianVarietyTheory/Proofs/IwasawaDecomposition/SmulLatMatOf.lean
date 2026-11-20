@@ -97,7 +97,8 @@ theorem mem_lat {n : ℕ} (N : Submodule (𝓞 X.E) (Sp X.E n)) (y : Fin n → D
 theorem stdH_vec (hok : s.Ok) {n : ℕ} (x y : Sp X.E n) :
     (letI := D.host.cmStar; stdH D.host.E n (vec s x) (vec s y)) = s.iE (hStd X.E n x y) := by
   show ∑ i, (letI := D.host.cmStar; star (s.iE (x i))) * s.iE (y i) = s.iE (∑ i, star (x i) * y i)
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_mul, hok.2, star_conj]
 
@@ -148,7 +149,8 @@ theorem apply_eq_sum {n : ℕ} (γ : Sp X.E n ≃ₗ[X.E] Sp X.E n) (x : Sp X.E 
   have h : x = ∑ j, x j • (Pi.single j 1 : Sp X.E n) := by
     funext k
     simp [Finset.sum_apply, Pi.single_apply]
-  conv_lhs => rw [h, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [h, map_sum]
   rw [Finset.sum_apply]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_smul, Pi.smul_apply, smul_eq_mul, mul_comm]
@@ -157,7 +159,8 @@ theorem matOf_mulVec {n : ℕ} (γ : Sp X.E n ≃ₗ[X.E] Sp X.E n) (x : Sp X.E 
     (matOf s γ).mulVec (vec s x) = vec s (γ x) := by
   funext i
   show ∑ j, s.iE (γ (Pi.single j 1) i) * s.iE (x j) = s.iE (γ x i)
-  rw [apply_eq_sum γ x i, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [apply_eq_sum γ x i, map_sum]
   simp only [map_mul]
 
 theorem smulLat_matOf {n : ℕ} (γ : Sp X.E n ≃ₗ[X.E] Sp X.E n) (N : Submodule (𝓞 X.E) (Sp X.E n)) :

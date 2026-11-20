@@ -264,7 +264,8 @@ private theorem eta_ne (hH : H.IsAdapted σ B X X₁ i₀ i₁) (k : UA σ X.J) 
     have h1 : mat k *ᵥ (mat k⁻¹ *ᵥ incV F H.x) = incV F H.x := by
       rw [Matrix.mulVec_mulVec, ← GlobalTheory.StabHaar.mat_mul, mul_inv_cancel, GlobalTheory.StabHaar.mat_one, Matrix.one_mulVec]
     have h2 := congrArg (piInf (B.emb w)) (congrFun h1 i)
-    rw [Matrix.mulVec, dotProduct, map_sum, Finset.sum_eq_zero fun j _ => by
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Matrix.mulVec, dotProduct, map_sum, Finset.sum_eq_zero fun j _ => by
       rw [map_mul, show piInf (B.emb w) ((mat k⁻¹ *ᵥ incV F H.x) j) = 0 from h j, mul_zero]] at h2
     rw [incV, piInf_inc] at h2
     exact (map_eq_zero _).1 h2.symm
@@ -278,11 +279,13 @@ private theorem exists_u (hB : B.IsGood σ) (hX : X.IsHerm σ B r s) (v : Fin n 
   choose U hU using fun w => exists_solve (hX.cartan w) fun i => v (i, w)
   choose u _ hu using fun i => GlobalTheory.ThK.exists_at_evI_piInf_eq F E σ hB.cm B.emb fun w => U w i
   refine ⟨u, fun k w => ?_⟩
-  rw [dotProduct, map_sum, pr]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [dotProduct, map_sum, pr]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_mul, mul_comm, ← congrFun (hU w) i]
   congr 1
-  simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, incM, Matrix.map_apply, piInf_inc,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, incM, Matrix.map_apply, piInf_inc,
     GlobalTheory.RealPlaceConj.piInf_cA_eq_star F E σ hB.cm, hu, Pi.star_apply]
 
 private def phi (B : Base F E) (M : Model σ X W) (om : Rep σ X W) (H : Plane E n n₁) (H' : Plane E d d₁)

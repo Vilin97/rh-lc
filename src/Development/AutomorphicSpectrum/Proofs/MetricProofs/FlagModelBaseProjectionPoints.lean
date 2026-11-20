@@ -342,7 +342,8 @@ theorem frame_gen {F : FrameData ι Ψ N M.Ω M.blk} (hF : M.IsFrame F) {S : Typ
     rw [(GlobalTheory.T.block_diagonal_minor_vanishing S N j p.2 M.j_le).2.2.1 _ bb I hbb hbt, minorIJ_map]
   simp only [h2] at h1
   have h3 : f (y ⟨k, m⟩) = ∑ I, algebraMap M.Ω S (M.coef ⟨k, m⟩ I) * f (minorIJ (M.g p.1) I (stepCols N j p.2)) := by
-    rw [M.y_step p k hp m, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [M.y_step p k hp m, map_sum]
     exact Finset.sum_congr rfl fun I _ => by rw [map_mul]; rfl
   have ha : algebraMap M.Ω S (detFac j p.2 (F.T p.1)) = f (algebraMap M.Ω Φ (detFac j p.2 (F.T p.1))) := rfl
   rw [h3, Finset.mul_sum]
@@ -380,7 +381,8 @@ theorem flag_nonzero {F : FrameData ι Ψ N M.Ω M.blk} (hF : M.IsFrame F) {z : 
         have := hF.2.2.1 p k hp I I' hI hI'
         split_ifs at this ⊢ <;> simpa [uA, vA] using this
       have e' := congrArg val e
-      rw [map_sum] at e'
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum] at e'
       simp only [map_mul] at e'
       rw [e']
       split_ifs <;> simp
@@ -459,7 +461,8 @@ theorem flag_back {F : FrameData ι Ψ N M.Ω M.blk} (hF : M.IsFrame F) {z : (Σ
           algebraMap S L (∑ I, C (algebraMap M.Ω Φ (F.u ⟨k, m⟩ I)) * minorIJ (G' p.1) I (stepCols N j p.2)) := fun m => by
         show algebraMap S L (iS _) = _
         congr 1
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         refine Finset.sum_congr rfl fun I _ => ?_
         rw [map_mul, ← minorIJ_map, hiG]
         congr 1
@@ -483,7 +486,8 @@ theorem flag_back {F : FrameData ι Ψ N M.Ω M.blk} (hF : M.IsFrame F) {z : (Σ
         · show _ = φL _ * algebraMap S L D * φL _
           ring
         · rfl
-      · rw [map_sum, hz m, inv_mul_cancel_left₀ ha]
+      set_option synthInstance.maxHeartbeats 100000 in
+        · rw [map_sum, hz m, inv_mul_cancel_left₀ ha]
         refine Finset.sum_congr rfl fun I _ => ?_
         rw [map_mul, ← minorIJ_map, hρ]
         congr 1
@@ -557,7 +561,8 @@ theorem flag_fwd {F : FrameData ι Ψ N M.Ω M.blk} (hF : M.IsFrame F) {z : (Σ 
         (fun I m => am (F.u' I ⟨k, m⟩)) M.j_le (hHB p.1) (hbV p.1) (hbdet p.1) (hbinv p.1)
         (fun I m => hOV _ (hO (hG.2.1 _ I).2)) (fun m I => hOV _ (hO (hG.2.1 _ I).1)) (fun I I' hI hI' => by
           have := congrArg am (hF.2.2.1 p k hp I I' hI hI')
-          rw [map_sum] at this
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [map_sum] at this
           simp only [map_mul] at this
           rw [this]
           split_ifs <;> simp)
@@ -622,11 +627,13 @@ theorem flag_fwd {F : FrameData ι Ψ N M.Ω M.blk} (hF : M.IsFrame F) {z : (Σ 
     let rR : R := Subring.inclusion hOR ⟨r, _, hr⟩
     have e1 : ∑ I, uR I * minorIJ (HR p.1) I (stepCols N j p.2) = rR * wR := Subtype.ext (by
       show R.subtype _ = r * wc p
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simp only [map_mul, ← minorIJ_map, hHR]
       exact hw)
     have e2 := congrArg ψ e1
-    rw [map_sum] at e2
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at e2
     simp only [map_mul, ← minorIJ_map] at e2
     have e3 : ∀ I, ψ (uR I) = valAt M.x (F.u ⟨k, m⟩ I) (basePart M.blk z) := fun I =>
       (hψ _).trans (regVal_eq hz _ (val_lift M hz (hG.2.1 _ I).1))

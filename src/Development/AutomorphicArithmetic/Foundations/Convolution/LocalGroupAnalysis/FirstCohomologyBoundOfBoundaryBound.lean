@@ -51,7 +51,8 @@ private theorem isGal_equiv {R' : Type} [CommRing R'] [Algebra k R'] (e : R ≃�
   · obtain ⟨z, rfl⟩ := e.surjective z
     obtain ⟨c, rfl⟩ := h.fix z (e.injective (by simpa using hz))
     exact ⟨c, (e.commutes c).symm⟩
-  · simp only [hp, ← map_mul, ← map_sum, hxy j hj]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [hp, ← map_mul, ← map_sum, hxy j hj]
     split_ifs <;> simp
 
 private theorem abstract_hilbert90 (σ : R ≃ₐ[k] R) (q : ℕ) (hσ : IsGal σ q) (O : Subring k) [IsLocalRing O] (S : Subring R)
@@ -97,7 +98,8 @@ private theorem abstract_hilbert90 (σ : R ≃ₐ[k] R) (q : ℕ) (hσ : IsGal �
       m, fun i => ⟨x i, (hm i).1⟩, fun i => ⟨y i, (hm i).2⟩, fun j hj' => hj ?_⟩
     · obtain ⟨c, hc⟩ := hσ.fix r (congrArg S.subtype hr)
       exact ⟨⟨c, (hOS c).1 (hc ▸ r.2)⟩, Subtype.ext hc⟩
-    · simp only [map_sum, map_mul, hjp]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp only [map_sum, map_mul, hjp]
       refine (hxy j hj').trans ?_
       split_ifs <;> simp
   obtain ⟨a, rfl⟩ := (intGL_iff S a).1 ha
@@ -331,7 +333,8 @@ theorem UpperTheory.ConvolutionTheory.G.firstCohomologyBound_of_boundaryBound :
     exact congrArg (mapGL n) (RingHom.ext fun _ => rfl)
   have key := abstract_hilbert90 (sigLoc σ v) _ hσ 𝒪[v.adicCompletion F] (intOver E v) (alg_mem hσ.inj) (sigLoc_mem σ v)
     ⟨s, fun i => algebraMap E _ (x i), fun i => algebraMap E _ (y i), fun i => ⟨hx i, hy i⟩, fun j hj => by
-      simp only [sigLoc_pow, ← map_mul, ← map_sum, hxy j hj]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [sigLoc_pow, ← map_mul, ← map_sum, hxy j hj]
       split_ifs <;> simp⟩ _ _
     (intGL_map _ _ δ hδ hδ') (intGL_map _ _ γ hγ hγ') ⟨_, _, hu, hw, by
       rw [cp_map, derivative_map, ← Polynomial.map_mul, ← Polynomial.map_mul, ← Polynomial.map_add, huw,

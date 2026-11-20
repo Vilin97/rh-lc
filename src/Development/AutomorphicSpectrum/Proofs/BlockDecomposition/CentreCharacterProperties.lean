@@ -34,7 +34,8 @@ theorem chz_facts : ∀ {D : D7} {ρ : ℕ} (ψ : AddChar (AF D.host.F) ℂ), Is
     have hZ' : Z.map (incA D) = z.1 := hZ
     have e : Matrix.trace (HMul.hMul (b₀.1.map (incA D)) z.1 : Mx D ρ ρ) = incA D (Matrix.trace (b₀.1 * Z)) := by
       rw [← hZ', ← Matrix.map_mul]
-      simp only [Matrix.trace, Matrix.diag, Matrix.map_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Matrix.trace, Matrix.diag, Matrix.map_apply, map_sum]
     unfold chz
     rw [e, GlobalTheory.CompanionTheory.ThetaInv.halfTr_incA]
     exact hψ.2.2.1 _

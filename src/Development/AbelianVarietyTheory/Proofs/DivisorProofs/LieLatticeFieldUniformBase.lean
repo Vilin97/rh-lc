@@ -453,7 +453,8 @@ theorem torusExt_of_fibAt (p22 : GlobalTheory.Published.SemiAbelianHomExtension)
   have hsp : ∀ c, c ∈ Submodule.span K (Set.range fun i => β.symm (ε i)) ↔ β c ∈ Submodule.span K (Set.range ε) := fun c => by
     simp only [Submodule.mem_span_range_iff_exists_fun]
     refine exists_congr fun a => ?_
-    rw [← β.injective.eq_iff, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← β.injective.eq_iff, map_sum]
     simp only [map_smul, LinearEquiv.apply_symm_apply]
   have hk : LinearMap.ker (q ∘ₗ β.toLinearMap) = Submodule.span K (Set.range fun i => β.symm (ε i)) := by
     ext c
@@ -467,7 +468,8 @@ theorem torusExt_of_fibAt (p22 : GlobalTheory.Published.SemiAbelianHomExtension)
       obtain ⟨a, ha⟩ := (Submodule.mem_span_range_iff_exists_fun K).1 hc''
       choose a' ha' using GlobalTheory.T.integral_tangent_coefficients_integral ts _ _ _ _ K xO _ hx r ε hε a w (hw.trans ha.symm)
       refine (Submodule.mem_span_range_iff_exists_fun (𝓞 K)).2 ⟨a', β.injective ?_⟩
-      rw [← ha, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← ha, map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [← algebraMap_smul K, ha', map_smul, LinearEquiv.apply_symm_apply]
     · rintro _ ⟨i, rfl⟩

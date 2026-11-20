@@ -140,7 +140,8 @@ theorem exists_coords {r : ℕ} {b : Fin r → Matrix (Fin N') (Fin N) D.host.E}
     obtain ⟨s, hs, c, hc⟩ := hb.2.2 A hA
     refine ⟨s, hs, fun i => c₀ * c i, ?_⟩
     have h1 := congrArg (GlobalTheory.CommutatorCharacter.vecHom cc δ) hc
-    rw [map_sum, Nat.cast_smul_eq_nsmul, map_nsmul] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Nat.cast_smul_eq_nsmul, map_nsmul] at h1
     simp only [GlobalTheory.CommutatorCharacter.vecHom_apply, vecOf_smul] at h1
     have h2 : (δ * D.host.φ₀ ((c₀ : D.host.K) : D.host.E)) • embV D (tor0 D cc δ) A =
         D.host.φ₀ ((c₀ : D.host.K) : D.host.E) • vecOf D cc δ A := by rw [vecOf, smul_smul, mul_comm]
@@ -178,7 +179,8 @@ theorem liftY_eq (p n : ℕ) (ε : 𝓞 D.host.K) {r : ℕ} (b : Fin r → Matri
   have h := vecOf_smul D cc δ ((ε : D.host.K) / (p : D.host.K) ^ n) (∑ i, (((y i : ℕ) : D.host.E)) • b i)
   push_cast at h
   refine h.trans ?_
-  rw [liftZ_apply, ← GlobalTheory.CommutatorCharacter.vecHom_apply, map_sum, map_div₀, map_pow, map_natCast]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [liftZ_apply, ← GlobalTheory.CommutatorCharacter.vecHom_apply, map_sum, map_div₀, map_pow, map_natCast]
   congr 1
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [Nat.cast_smul_eq_nsmul, map_nsmul, natCast_zsmul]
@@ -449,7 +451,8 @@ theorem momentsAt_of_momComb (B : Base D cc δ) {χ : IdE D → ℂ} (hcc : IsCu
     have e3 : ∑ i, ((n₀ * s * a i : ℕ) : D.host.E) • b i = ∑ i, (a i : D.host.E) • ((n₀ * s : ℕ) : D.host.E) • b i :=
       Finset.sum_congr rfl fun i _ => by rw [smul_smul, Nat.cast_mul _ (a i), mul_comm]
     have hw : vecOf D cc δ (∑ i, (a i : D.host.E) • ((n₀ * s : ℕ) : D.host.E) • b i) ∈ La D (tor0 D cc δ) L L' := by
-      rw [← GlobalTheory.CommutatorCharacter.vecHom_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← GlobalTheory.CommutatorCharacter.vecHom_apply, map_sum]
       exact sum_mem fun i _ => by rw [Nat.cast_smul_eq_nsmul, map_nsmul]; exact nsmul_mem (hb'.2 i) _
     rw [e3] at e1
     change _ = lamC lam (kap D _ (vecOf D cc δ _) _) * _ at e1

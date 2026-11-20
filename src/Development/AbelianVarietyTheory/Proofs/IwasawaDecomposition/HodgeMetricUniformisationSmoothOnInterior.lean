@@ -105,7 +105,8 @@ theorem exists_lift_comb (q : FrPt Xo c (CAt σ)) {y : CxPts (genStr Z) σ} (hq 
     rw [hco]
     have e1 := (cxFrame Z q).vec_eq f τ b
     refine (LinearEquiv.apply_symm_apply L _).trans ?_
-    rw [map_sum, e1]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, e1]
     refine Finset.sum_congr rfl fun i _ => ?_
     exact (LinearEquiv.map_smul L _ _).symm
 

@@ -144,14 +144,16 @@ theorem hasTrace_finiteRank_tensor : ∀ (ι : Type) [Fintype ι] [DecidableEq �
       have hperp : ∀ k, ⟪evalAt T u (z k), evalAt T u (w - ∑ j, β w (z j) • z j)⟫_ℂ = 0 := by
         intro k
         have h1 := hon.inner_right_fintype (fun j => β w (z j)) k
-        rw [map_sub, map_sum, inner_sub_right]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sub, map_sum, inner_sub_right]
         simp only [map_smul]
         rw [h1, beta_eq hβ hu, sub_self]
       have h0 : A (w - ∑ j, β w (z j) • z j) = 0 := by
         refine hA0 _ fun x hx => ?_
         rw [beta_eq hβ hu, hdec x hx, sum_inner]
         exact Finset.sum_eq_zero fun k _ => by rw [inner_smul_left, hperp k, mul_zero]
-      rw [map_sub, map_sum, sub_eq_zero] at h0
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, map_sum, sub_eq_zero] at h0
       simpa only [map_smul] using h0
     let P : Fin n → H →L[ℂ] H := fun j =>
       (Submodule.span ℂ {x | ∃ y', x = T (z j) y'}).topologicalClosure.starProjection
@@ -160,7 +162,8 @@ theorem hasTrace_finiteRank_tensor : ∀ (ι : Type) [Fintype ι] [DecidableEq �
       rintro _ ⟨w, y, rfl⟩
       rw [ContinuousLinearMap.sum_apply]
       simp only [ContinuousLinearMap.comp_apply, P, starProjection_tensor hβ (hzz _), map_smul, hX]
-      rw [hAw w, map_sum, ContinuousMultilinearMap.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hAw w, map_sum, ContinuousMultilinearMap.sum_apply]
       simp only [map_smul, ContinuousMultilinearMap.smul_apply]
     have hj : ∀ j, GlobalTheory.OpTrace.HasTrace (X ∘L P j) (β (A (z j)) (z j) * ∏ i, b i) := fun j =>
       GlobalTheory.T.hilbertTensor_traceClass_hasTrace_prod ι Hs H (T (z j)) (T (A (z j))) (β (A (z j)) (z j)) (β (A (z j)) (A (z j)))

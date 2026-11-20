@@ -148,7 +148,8 @@ private theorem coeff_eq_zero_of_monomial_sum_eq_zero {n : ℕ} (M : Finset (Fin
     intro y
     have hy := h (WithLp.toLp 2 y)
     simp only at hy
-    simp only [P, map_zero, map_sum, MvPolynomial.eval_monomial]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [P, map_zero, map_sum, MvPolynomial.eval_monomial]
     rw [← hy]
     refine Finset.sum_congr rfl fun α _ => ?_
     rw [Finsupp.prod_fintype _ _ (fun i => pow_zero _)]

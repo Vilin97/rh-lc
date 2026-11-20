@@ -200,7 +200,8 @@ theorem core (p n' : ℕ) (h : Res (p : W) F) (hq : Nat.card F = p ^ n') (N g i 
     intro w
     funext r
     rw [LinearMap.pi_apply_eq_sum_univ Tl w]
-    simp only [red_apply, f, Mf, Matrix.mulVecLin_apply, Matrix.mulVec, dotProduct, Matrix.of_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [red_apply, f, Mf, Matrix.mulVecLin_apply, Matrix.mulVec, dotProduct, Matrix.of_apply,
       Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum, map_mul]
     exact Finset.sum_congr rfl fun c _ => mul_comm _ _
   have redSurj : ∀ (m : ℕ) (u : Fin m → F), ∃ w : Fin m → W, red F m w = u := by

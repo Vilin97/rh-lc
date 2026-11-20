@@ -43,7 +43,8 @@ theorem UpperTheory.Gal.crystallineComparison.detSpan_of :
     have hfin : (Pi.single i 1 : Fin a → S) =
         ∑ j, π ((1 : ↥LL.1) ⊗ₜ[ℚ_[l]] b j) • (fun m => π (co (x j) m)) := by
       funext m
-      rw [← hone i m, hsum, hsumco, map_sum, Finset.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hone i m, hsum, hsumco, map_sum, Finset.sum_apply]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [honB, (hco ℚ_[l] ↥LL.1 (Bst P) a).2.2.1 (b j) (x j)]
       simp only [Pi.smul_apply, smul_eq_mul, map_mul]

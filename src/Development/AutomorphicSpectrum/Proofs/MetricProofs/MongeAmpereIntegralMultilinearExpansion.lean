@@ -32,7 +32,8 @@ theorem mdisc_sum_smul {D : ℕ} {σ : Type*} [Fintype σ] (H : σ → Matrix (F
       ∑ w : Fin D → σ, (∏ i, c i (w i)) * mdisc (fun i => H (w i)) := by
   classical
   obtain ⟨M, hM⟩ := ReciprocityTheory.AnForm.A.exists_multilinearMap_eq_mdisc (D := D)
-  rw [← hM, M.map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hM, M.map_sum]
   refine Finset.sum_congr rfl fun w _ => ?_
   rw [M.map_smul_univ, smul_eq_mul]
 

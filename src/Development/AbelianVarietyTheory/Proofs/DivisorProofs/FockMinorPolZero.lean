@@ -143,7 +143,8 @@ theorem apply_minorPol {a d : ℕ} {n : D.what₂.Tau → ℕ} (U : Tup D a d n)
       p ^ (k.sum fun _ e => e) * Formalism.MainNotions.GL3Theta.applyAt0 D (MvPolynomial.monomial k 1) G) :
     l (minorPol D U) = p ^ (a * ∑ τ, n τ) * Formalism.MainNotions.GL3Theta.applyAt0 D (minorPol D U) G := by
   conv_lhs => rw [(minorPol D U).as_sum]
-  rw [map_sum l, Formalism.MainNotions.GL3Theta.applyAt0, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum l, Formalism.MainNotions.GL3Theta.applyAt0, Finset.mul_sum]
   refine Finset.sum_congr rfl fun α hα => ?_
   have hk := GlobalTheory.RotJets.card_of_mem_support U hα
   rw [Finsupp.card_toMultiset] at hk

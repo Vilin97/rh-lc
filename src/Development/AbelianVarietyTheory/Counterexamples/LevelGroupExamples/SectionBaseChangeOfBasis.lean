@@ -98,7 +98,8 @@ theorem exists_lift {S : Type} [CommRing S] [Algebra K S] [Algebra K' S]
   · show Φ ((1 : K') ⊗ₜ[K] v) = φ v
     simp [Φ]
   · have e := congrArg Φ (sum_coord B (R := R) v)
-    rw [map_sum] at e
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at e
     refine e.trans (Finset.sum_congr rfl fun j _ => ?_)
     simp only [Φ, Algebra.TensorProduct.lift_tmul]
     rfl

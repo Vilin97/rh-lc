@@ -17,7 +17,8 @@ theorem shift_mem (τ : H → M →+ M) (hmul : ∀ g h x, τ (g * h) x = τ g (
     (J : AddSubgroup M) (hJ : ∀ g, ∀ x ∈ J, τ g x ∈ J) (N : Subgroup H) [Fintype (H ⧸ N)] (x : M)
     (hx : ∀ ν ∈ N, τ ν x - x ∈ J) (h : H) :
     τ h (∑ q : H ⧸ N, τ q.out x) - ∑ q : H ⧸ N, τ q.out x ∈ J := by
-  rw [map_sum, ← Equiv.sum_comp (MulAction.toPerm h) (fun q : H ⧸ N => τ q.out x),
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, ← Equiv.sum_comp (MulAction.toPerm h) (fun q : H ⧸ N => τ q.out x),
     ← Finset.sum_sub_distrib]
   refine J.sum_mem fun q _ => ?_
   obtain ⟨ν, hν⟩ := QuotientGroup.mk_out_eq_mul N (h * q.out)
@@ -48,7 +49,8 @@ theorem exists_fixed (σ : H → R → R) (τ : H → M →+ M) (hmul : ∀ g h 
     · obtain ⟨N₁, hN₁, h₁⟩ := hx k
       obtain ⟨N₂, hN₂, hle, hle'⟩ := hdir N hN N₁ hN₁
       refine ⟨N₂, hN₂, fun ν hν => ?_⟩
-      rw [map_sum, ← Finset.sum_sub_distrib]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, ← Finset.sum_sub_distrib]
       refine (J k).sum_mem fun q _ => ?_
       have hν' := (hnorm N₂ hN₂).conj_mem' ν hν q.out
       have e : ν * q.out = q.out * (q.out⁻¹ * ν * q.out) := by group
@@ -163,9 +165,11 @@ theorem surjective_of_matrix {W : Type} [CommRing W] [DecidableEq ι] (j : W →
   rw [← LinearMap.range_eq_top, eq_top_iff, ← hm, Submodule.span_le]
   rintro _ ⟨k, rfl⟩
   refine ⟨∑ a, j (U⁻¹ a k) • m a, ?_⟩
-  simp only [map_sum, map_smul, hu, Finset.smul_sum, smul_smul, ← map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, hu, Finset.smul_sum, smul_smul, ← map_mul]
   rw [Finset.sum_comm]
-  simp only [← Finset.sum_smul, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← Finset.sum_smul, ← map_sum]
   have : ∀ i, ∑ a, U⁻¹ a k * U i a = (1 : Matrix ι ι W) i k := fun i => by
     rw [← Matrix.mul_nonsing_inv U hU, Matrix.mul_apply]
     exact Finset.sum_congr rfl fun a _ => mul_comm _ _
@@ -328,7 +332,8 @@ theorem generic (b : Module.Basis ι O T) (c : Module.Basis κ Z T) (ρ : H →*
       rw [hz]
       exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨k, rfl⟩)
     · rw [hut]
-      simp only [Matrix.sum_apply, map_sum, Finset.sum_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Matrix.sum_apply, map_sum, Finset.sum_smul]
       rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun q _ => ?_
       conv_lhs => rw [← c.sum_repr (ρ q.out (c k)), TensorProduct.tmul_sum, Finset.smul_sum]
@@ -432,7 +437,8 @@ theorem base (hF : FaithH AI) {H : Type} [Group H] (f : H →* GQ l) (hf : ∀ h
     refine fun h0 => hy (Eq.trans (congrArg Matrix.det ?_) h0)
     symm
     ext i k
-    simp only [RingHom.mapMatrix_apply, Matrix.map_apply, Matrix.sum_apply, Matrix.smul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [RingHom.mapMatrix_apply, Matrix.map_apply, Matrix.sum_apply, Matrix.smul_apply,
       smul_eq_mul, map_sum, map_mul, act_teich, hs]
     refine Finset.sum_congr rfl fun q _ => ?_
     rw [WittVector.constantCoeff_apply, WittVector.teichmuller_coeff_zero]

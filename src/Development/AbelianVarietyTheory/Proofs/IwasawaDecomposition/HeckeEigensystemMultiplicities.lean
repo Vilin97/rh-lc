@@ -76,7 +76,8 @@ theorem mem_iSup_iff {V Wf : Type} [AddCommGroup V] [Module ℂ V] [AddCommGroup
 
     have hz : ∑ P' ∈ f.support, (cc P' - lam p) • f P' = 0 := by
       apply hreal
-      rw [map_zero, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_zero, map_sum]
       have e1 : ∀ P' ∈ f.support, real ((cc P' - lam p) • f P') = op p (real (f P')) - lam p • real (f P') := by
         intro P' _
         rw [map_smul, hcc P' _ (hf P'), sub_smul]

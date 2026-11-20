@@ -29,7 +29,8 @@ theorem exists_unique_map_single_one_eq_one (φ : (∀ i, A i) →+* R) :
     rw [IsIdempotentElem, ← map_mul, ← Pi.single_mul, one_mul]
   have hsum : ∑ i, φ (Pi.single i 1) = 1 := by
     have h1 : ∑ i, Pi.single i (1 : A i) = (1 : ∀ i, A i) := Finset.univ_sum_single 1
-    rw [← map_sum, h1, map_one]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, h1, map_one]
   obtain ⟨i, -, hi⟩ : ∃ i ∈ Finset.univ, φ (Pi.single i 1) ≠ 0 := by
     by_contra h
     push Not at h

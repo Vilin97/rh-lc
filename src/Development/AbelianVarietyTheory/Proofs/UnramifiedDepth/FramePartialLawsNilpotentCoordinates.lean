@@ -25,7 +25,8 @@ theorem spMap_spMap {R R' R'' : Type} [CommRing R] [CommRing R'] [CommRing R''] 
 
 theorem cc_psIn {n n' : ℕ} (r : Fin n → Fin n') (f : PS V n d) (hf : MvPowerSeries.constantCoeff f = 0) :
     MvPolynomial.constantCoeff (psIn d m r f) = 0 := by
-  rw [psIn, MvPolynomial.constantCoeff_rename, psTrunc, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [psIn, MvPolynomial.constantCoeff_rename, psTrunc, map_sum]
   refine Finset.sum_eq_zero fun e _ => ?_
   rw [MvPolynomial.constantCoeff_monomial]
   split_ifs with h

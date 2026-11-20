@@ -333,7 +333,8 @@ theorem GlobalTheory.Dict.exists_theta_sublattice_jet_ne_zero : ∀ (E : Type) [
       refine ⟨fun k => ⟨u k, hu k⟩, fun a' => ?_⟩
       rw [hI]
       simp only [hu']
-      conv_lhs => rw [← Finset.univ_sum_single a', map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        conv_lhs => rw [← Finset.univ_sum_single a', map_sum]
       rw [← Finset.mul_sum]
       push_cast
       field_simp

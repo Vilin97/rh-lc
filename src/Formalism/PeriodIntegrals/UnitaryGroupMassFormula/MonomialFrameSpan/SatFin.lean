@@ -46,7 +46,8 @@ theorem stepSat_of (hP : ProjZ) : StepSat := by
   have hSexp : S P = ∑ m ∈ P.support, AddMonoidAlgebra.coeff P m •
       MvPolynomial.map (Int.castRingHom ℂ_[l]) (T (MvPolynomial.monomial m 1)) := by
     conv_lhs => rw [MvPolynomial.as_sum P]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun m _ => ?_
     rw [← hS1, ← map_smul, MvPolynomial.smul_monomial, smul_eq_mul, mul_one]
   let c : ColChoice N0 nu →₀ ℂ_[l] := ∑ m ∈ P.support,
@@ -72,7 +73,8 @@ theorem stepSat_of (hP : ProjZ) : StepSat := by
       rw [Finsupp.sum_mapRange_index (by intro; exact zero_smul _ _)]
       refine Finsupp.sum_congr fun J _ => ?_
       rw [map_zsmul, Int.cast_smul_eq_zsmul]
-    simp only [c, map_sum, map_smul, hΦ]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [c, map_sum, map_smul, hΦ]
     rw [← hSexp, hSP]
 
 end GenFrameSpan

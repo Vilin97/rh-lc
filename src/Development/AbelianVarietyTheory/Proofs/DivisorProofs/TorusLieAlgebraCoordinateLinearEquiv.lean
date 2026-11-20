@@ -85,7 +85,8 @@ theorem lieCoord_eq (x : LieG (torus R r)) (i : Fin r) : lieCoord x i = dChar x 
 theorem dChar_apply (x : LieG (torus R r)) (χ : Fin r → ℤ) :
     dChar x χ = ∑ i, (χ i : R) * lieCoord x i := by
   conv_lhs => rw [← Finset.univ_sum_single χ]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   have : (Pi.single i (χ i) : Fin r → ℤ) = χ i • Pi.single i 1 := by
     ext j; by_cases h : j = i <;> simp [Pi.single_apply, h]

@@ -73,7 +73,8 @@ theorem exists_family {d : ℕ} (H : Matrix (Fin d) (Fin d) K) (hH : IsUnit H.de
   have hFcoord : ∀ i (y : Fin d → K), F i y = ∑ j, y j * F i (Pi.single j 1) := by
     intro i y
     conv_lhs => rw [← Finset.univ_sum_single y]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [show (Pi.single j (y j) : Fin d → K) = y j • Pi.single j 1 by
       ext k; by_cases hk : k = j <;> simp [hk], map_smul, smul_eq_mul]
@@ -112,9 +113,11 @@ theorem exists_family {d : ℕ} (H : Matrix (Fin d) (Fin d) K) (hH : IsUnit H.de
     refine ⟨Formalism.DivisionValues.cO K (f i ⟨y, hy⟩), ?_⟩
     rw [star_int, hw, hF i ⟨y, hy⟩]
   · refine (sub_eq_zero.1 (hnd _ fun u => ?_)).symm
-    rw [map_sub, sub_eq_zero, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, sub_eq_zero, map_sum]
     conv_rhs => rw [hexp u]
-    rw [map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, LinearMap.sum_apply]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, map_smulₛₗ, LinearMap.smul_apply, hw, smul_eq_mul, smul_eq_mul,
       starRingEnd_apply, mul_comm]
@@ -142,7 +145,8 @@ theorem dual_baseChange : ∀ (K K' : Type) [Field K] [NumberField K] [StarRing 
     rfl
   have ι_sum : ∀ {m : ℕ} (v : Fin m → Fin d → K), ι (∑ i, v i) = ∑ i, ι (v i) := by
     intro m v
-    simp only [hι, Finset.sum_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hι, Finset.sum_apply, map_sum]
     rw [← Matrix.mulVec_sum]
     congr 1
     ext k

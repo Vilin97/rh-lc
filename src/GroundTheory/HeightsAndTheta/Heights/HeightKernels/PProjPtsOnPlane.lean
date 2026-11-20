@@ -19,7 +19,8 @@ theorem mulMat_sum (α : 𝓞 K) (m : Module.Free.ChooseBasisIndex ℤ (𝓞 K))
     ∑ n, (mulMat α m n : K) * integralBasis K n = (α : K) * integralBasis K m := by
   have h := congrArg (algebraMap (𝓞 K) K) ((RingOfIntegers.basis K).sum_repr
     (α * RingOfIntegers.basis K m))
-  simp only [map_sum, map_mul, zsmul_eq_mul, map_intCast] at h
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, zsmul_eq_mul, map_intCast] at h
   simpa only [integralBasis_apply, mulMat, RingOfIntegers.coe_eq_algebraMap] using h
 
 open scoped Classical in
@@ -64,7 +65,8 @@ theorem lin_eq (α : 𝓞 K) (Z : ProjIdx K i → ℂ) (q : ProjIdx K i) :
     _ = _ := by
         refine Finset.sum_congr rfl fun σ _ => ?_
         have h := congrArg σ (mulMat_sum α q.1)
-        simp only [map_sum, map_mul, map_intCast] at h
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, map_mul, map_intCast] at h
         rw [h]
         ring
 
@@ -87,19 +89,22 @@ theorem quad_mem (α : 𝓞 K) (p q : ProjIdx K i) : quad α p q ∈ projSpaceId
       (C (integralBasis K n) * X u.2) = C (α : K) * (C (integralBasis K u.1) * X u.2) := by
     intro u
     have h := congrArg (C : K → MvPolynomial (Fin i) K) (mulMat_sum α u.1)
-    simp only [map_sum, map_mul, map_intCast] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, map_intCast] at h
     rw [← mul_assoc, ← h, Finset.sum_mul]
     exact Finset.sum_congr rfl fun n _ => by ring
   have hS : ∀ u : ProjIdx K i, ∑ n, (mulMat α u.1 n : ProjField K i) * projSpaceCoord K i ⟨(), (n, u.2)⟩ =
       algebraMap (MvPolynomial (Fin i) K) (ProjField K i) (C (α : K)) * projSpaceCoord K i ⟨(), u⟩ := by
     intro u
     have h := congrArg (algebraMap (MvPolynomial (Fin i) K) (ProjField K i)) (hlin u)
-    simpa only [projSpaceCoord, map_sum, map_mul, map_intCast] using h
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa only [projSpaceCoord, map_sum, map_mul, map_intCast] using h
   have hsum : ∀ u : ProjIdx K i, mConeMap (projSpaceCoord K i) (lform α u) =
       MvPolynomial.C (algebraMap (MvPolynomial (Fin i) K) (ProjField K i) (C (α : K)) *
         projSpaceCoord K i ⟨(), u⟩) * MvPolynomial.X () := by
     intro u
-    rw [← hS u, lform, map_sum, map_sum, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hS u, lform, map_sum, map_sum, Finset.sum_mul]
     refine Finset.sum_congr rfl fun n _ => ?_
     simp only [mConeMap, aeval_X, map_mul, map_intCast, eq_intCast]
     ring

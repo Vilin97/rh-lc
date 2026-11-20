@@ -710,7 +710,8 @@ theorem witt_trans {T' : D.host.E} (F' F'' : LFlag (VS D) D.R.rS T') (hzt' : F'.
     have hx' : ∑ i, bv.repr x i • w i = 0 := by
       rw [← hx]
       conv_rhs => rw [← bv.sum_repr x]
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simp only [map_smul, hfb]
     have hc := Fintype.linearIndependent_iff.1 hlw _ hx'
     rw [Submodule.mem_bot]
@@ -728,11 +729,13 @@ theorem witt_trans {T' : D.host.E} (F' F'' : LFlag (VS D) D.R.rS T') (hzt' : F'.
       intro x
       calc f x = f (∑ i, bv.repr x i • bv i) := by rw [bv.sum_repr]
         _ = ∑ i, bv.repr x i • w i := by
-            rw [map_sum]
+            set_option synthInstance.maxHeartbeats 100000 in
+              rw [map_sum]
             simp only [map_smul, hfb]
     intro x y
     rw [hfx, hfx, hcx, hcx]
-    simp only [map_sum, LinearMap.map_smulₛₗ₂, map_smul, LinearMap.sum_apply, hgram]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.map_smulₛₗ₂, map_smul, LinearMap.sum_apply, hgram]
   obtain ⟨g, hgi, hgf⟩ := _root_.witt_extension_theorem D.host.E (VS D).V (VS D).hT
     (fun x y => (VS D).herm.eq x y) (fun x hx => (VS D).nondeg.1 x hx) _ f hinj hiso
   have hgv : ∀ i, g (v i) = w i := by

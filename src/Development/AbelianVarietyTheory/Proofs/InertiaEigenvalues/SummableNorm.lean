@@ -70,7 +70,8 @@ theorem ev_mul (hc : Bdd c) (hν : Small ν) {a b : K⟦X⟧} (ha : SC a) (hb : 
   rw [ev, ev, ev, tsum_mul_tsum_eq_tsum_sum_antidiagonal_of_summable_norm (summable_norm hc hν ha)
     (summable_norm hc hν hb)]
   refine tsum_congr fun k => ?_
-  rw [coeff_mul, map_sum, sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [coeff_mul, map_sum, sum_mul]
   refine sum_congr rfl fun p hp => ?_
   rw [← mem_antidiagonal.1 hp, map_mul, pow_add]
   ring
@@ -108,7 +109,8 @@ theorem ev_map {O : Type} [CommRing O] (j : O →+* K) (hν : Small ν) (hc : Bd
         ∑ k ∈ range m, C (coeff k a) * X ^ k := by
       ext n
       simp [coeff_X_pow, Polynomial.coeff_monomial, Polynomial.finsetSum_coeff]
-    rw [e, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, map_sum]
     simp only [map_mul, map_pow, hX, hC, coeff_map]
   simp only [key]
   conv => rhs; rw [← sub_zero (f a)]
@@ -150,7 +152,8 @@ theorem hasSum_subst [IsUltrametricDist K] (hc : Bdd c) (hν : Small ν) {y a : 
         apply hk
         simp only [coe_range, Set.mem_Iio, not_lt] at hk'
         simp [hz k n hk']
-    rw [e, map_sum, sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, map_sum, sum_mul]
     refine hasSum_sum_of_ne_finset_zero fun k hk => ?_
     simp only [mem_range, not_lt] at hk
     simp [F, hz k n hk]

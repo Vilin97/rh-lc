@@ -54,7 +54,8 @@ theorem triMove_main : ∀ {D : D7} (Z : LocDat D) (p : PlF D) {T T' : D.host.E}
   · obtain ⟨A, hA, hc⟩ := hf'
     refine ⟨A2 p * A, isUpperUnitriangularFinMatrix_mul_of_both _ _ (hA2 p).1 hA, fun b => ?_⟩
     show g (f' b) = _
-    rw [hc b, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hc b, map_sum]
     have h2 : ∀ a, g (A a b • scaled Z p (frame F') a) =
         ∑ d, (A a b * A2 p d a) • scaled Z p (frame F0') d := by
       intro a

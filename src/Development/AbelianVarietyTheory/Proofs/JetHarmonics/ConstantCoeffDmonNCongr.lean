@@ -34,7 +34,8 @@ theorem coeff_DofN_congr (F : Fin d → PS k 2 d) (b : Fin n) (v : Fin d → k) 
     coeff mo (DofN F b v f) = coeff mo (DofN F b v g) := by
   classical
   unfold DofN
-  rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [coeff_mul, coeff_mul]
   refine Finset.sum_congr rfl fun p hp => ?_
@@ -121,7 +122,8 @@ theorem constantCoeff_DpolyN_eq (F : Fin d → PS k 2 d) {Ix : Type} [Fintype Ix
     (P : MvPolynomial Ix k) (f : PS k n d) (S : Finset (Ix →₀ ℕ)) (hS : P.support ⊆ S) :
     constantCoeff (DpolyN F cp u P f) = ∑ m ∈ S, P.coeff m * constantCoeff (DmonN F cp u m f) := by
   unfold DpolyN
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [map_mul, constantCoeff_C]
   refine Finset.sum_subset hS fun m _ hm => ?_
   rw [MvPolynomial.notMem_support_iff.1 hm, zero_mul]
@@ -148,7 +150,8 @@ theorem nabJet : NabJetSt := by
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun m _ => ?_
     have hl := NabJet.isLinearMap_DmonN (B.FK k) cp u m
-    rw [Finset.sum_mul, ← IsLinearMap.mk'_apply hl, map_sum, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_mul, ← IsLinearMap.mk'_apply hl, map_sum, map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [smul_mul_assoc, map_smul, IsLinearMap.mk'_apply, smul_eq_C_mul, map_mul, constantCoeff_C]
     ring

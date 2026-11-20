@@ -31,7 +31,8 @@ theorem exists_jet {k : Type} [CommRing k] {n d : ℕ} (N : ℕ) (f : PS k n d) 
         MvPowerSeries.coeff e (∑ j : S, MvPowerSeries.coeff j.1 f • (MvPowerSeries.monomial j.1 1 : PS k n d)) := by
   classical
   refine ⟨(Finsupp.finite_of_degree_le N).toFinset, fun e he => ?_⟩
-  rw [map_sum, Finset.sum_eq_single ⟨e, by simpa using he⟩]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_eq_single ⟨e, by simpa using he⟩]
   · simp
   · intro j _ hj
     rw [map_smul, MvPowerSeries.coeff_monomial_ne (fun h => hj (Subtype.ext h.symm)), smul_zero]
@@ -57,7 +58,8 @@ theorem col_sum_eq_zero {T : Type} {r : T → ℕ} {n : ℕ} {k : Type} [Field k
   simp only [harmK, Submodule.mem_iInf, LinearMap.mem_ker] at hQ
   have h := hQ τ hτ i i'
   apply MvPolynomial.rename_injective _ (letterEquiv T r n).injective
-  rw [map_zero, ← h, map_sum, lap, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_zero, ← h, map_sum, lap, LinearMap.sum_apply]
   refine Finset.sum_congr rfl fun b _ => ?_
   rw [LinearMap.sum_apply, Finset.sum_eq_single b]
   · rw [Matrix.one_apply_eq, one_smul, ← MvPolynomial.pderiv_rename (letterEquiv T r n).injective,

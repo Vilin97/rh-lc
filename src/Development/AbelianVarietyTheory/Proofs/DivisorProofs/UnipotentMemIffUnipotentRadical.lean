@@ -19,7 +19,8 @@ open GlobalTheory.LeviPlane Formalism.UG
 theorem row_mulVec {R : Type} [CommRing R] {s : R →+* R} (hs : ∀ x, s (s x) = x) {n : ℕ} (J : Matrix (Fin n) (Fin n) R)
     (a : R) (x v : Fin n → R) (k : Fin 1) :
     ((cT s (Matrix.of fun i (_ : Fin 1) => x i) * (a • J.map s)) *ᵥ v) k = a * s (fm s J x v) := by
-  simp only [fm, cT, Matrix.mulVec, dotProduct, Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, Matrix.of_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [fm, cT, Matrix.mulVec, dotProduct, Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, Matrix.of_apply,
     Matrix.smul_apply, smul_eq_mul, map_sum, map_mul, hs, Finset.sum_mul, Finset.mul_sum]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
@@ -81,7 +82,8 @@ theorem gen_iff {σ : E →ₐ[F] E} {B : Base F E} {d r s : ℕ} {W : Spc F E d
         cT (cA σ).toRingHom (Matrix.of fun i (_ : Fin 1) => incV F H'.x i) *
           (inclR (F := F) (AF F) c • (incM F W.J).map (cA σ).toRingHom) := by
       ext k j
-      simp only [adMat, cT, Matrix.map_apply, Matrix.mul_apply, Matrix.transpose_apply, Matrix.of_apply, Matrix.smul_apply,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [adMat, cT, Matrix.map_apply, Matrix.mul_apply, Matrix.transpose_apply, Matrix.of_apply, Matrix.smul_apply,
         smul_eq_mul, map_sum, map_mul, incV, incM, cAr_inclR, RingHom.coe_coe]
     have hu : (mat u)ᵀ * incM F W.J * (mat u).map (cA σ).toRingHom = incM F W.J := u.2
     rw [e]

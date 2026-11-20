@@ -98,12 +98,14 @@ theorem exists_idem_finset {Φ : AE D →+* FiniteAdeleRing (𝓞 D.host.E) D.ho
     | empty => rw [Finset.sum_empty, Finset.sum_empty, ev_zero]
     | cons a s ha ih => rw [Finset.sum_cons, Finset.sum_cons, ev_add, ih]
   refine ⟨∑ P ∈ T, δ P, ?_, fun Q hQ => ?_, fun Q hQ => ?_, fun Q hQ => ?_⟩
-  · rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum]
     exact Finset.sum_eq_zero fun P _ => (hδ P).1
   · rw [ev, Finset.sum_eq_single_of_mem Q hQ fun P _ h => (hδ P).2.2 Q h.symm, (hδ Q).2.1]
   · rw [ev]
     exact Finset.sum_eq_zero fun P hP => (hδ P).2.2 Q fun h => hQ (h ▸ hP)
-  · rw [map_sum, ev]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum, ev]
     exact Finset.sum_eq_zero fun P hP => (delta_conj hΦ (hδ P)).2.2 Q fun h => hT P hP (h ▸ hQ)
 
 variable {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host D.host.E}

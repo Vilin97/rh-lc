@@ -21,7 +21,8 @@ theorem map_sum_smul_pow {R R' : Type} [CommRing R] [CommRing R'] (f : R →+* R
     (N : Matrix (Fin d) (Fin d) R) (a : ℕ → R) :
     (∑ i ∈ Finset.range d, a i • N ^ i).map f = ∑ i ∈ Finset.range d, f (a i) • (N.map f) ^ i := by
   change f.mapMatrix _ = ∑ i ∈ Finset.range d, f (a i) • (f.mapMatrix N) ^ i
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [← map_pow]
   ext a b

@@ -87,7 +87,8 @@ theorem dep_fibre : DepSt → ∀ (R : Type) [CommRing R] [IsLocalRing R] (X : S
   show _ ∈ Ideal.map (cst s (V a ⊓ V c')) (IsLocalRing.maximalIdeal R)
   rw [← IsLocalRing.ker_residue]
   apply mem_of_app_eq_zero hsurj hpb' ((hVa a).inf (hVa c'))
-  rw [map_sub, map_sum, map_sub, app_rs_eq_rs_app φ inf_le_left (inf_le_left : V' a ⊓ V' c' ≤ V' a),
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sub, map_sum, map_sub, app_rs_eq_rs_app φ inf_le_left (inf_le_left : V' a ⊓ V' c' ≤ V' a),
     app_rs_eq_rs_app φ inf_le_right (inf_le_right : V' a ⊓ V' c' ≤ V' c'), hβ, hβ]
   simp only [map_mul, app_cst hw, he]
   exact sub_eq_zero.mpr (hcψ a c')

@@ -22,7 +22,8 @@ theorem del_loc_repr_contDiffOn : ∀ {M : Type} [TopologicalSpace M] {n : ℕ} 
       rw [GlobalTheory.CxForm.HolAtlas.loc, dif_pos hv]
       simp only [GlobalTheory.CxForm.HolAtlas.del, GlobalTheory.CxForm.HolAtlas.Pt.crd, GlobalTheory.CxForm.HolAtlas.Pt.ch, GlobalTheory.CxForm.HolAtlas.Pt.pt, (A.e i).right_inv hv]
     rw [h1, GlobalTheory.CxForm.delAt]
-    simp only [GlobalTheory.CxForm.coefwise, Finset.mul_sum, mul_smul_comm, map_sum, map_smul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [GlobalTheory.CxForm.coefwise, Finset.mul_sum, mul_smul_comm, map_sum, map_smul,
       Finsupp.finset_sum_apply, Finsupp.smul_apply, smul_eq_mul]
   refine ContDiffOn.congr ?_ key
   have ho := (A.e i).open_target

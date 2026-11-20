@@ -52,7 +52,8 @@ theorem relIndex_span_le_norm_minor :
     have hb : M *ᵥ (fun a => (c a : E)) = M *ᵥ b := by
       funext k
       have h := congrArg (algebraMap (𝓞 E) E) (congrFun hc k)
-      rw [Matrix.mulVecLin_apply, Matrix.mulVec, dotProduct, map_sum] at h
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Matrix.mulVecLin_apply, Matrix.mulVec, dotProduct, map_sum] at h
       apply mul_left_cancel₀ hn0
       have h2 : (algebraMap (𝓞 E) E) (φ ⟨∑ i, b i • w i, hvΛ, hv⟩ k) =
           (n : E) * (∑ i, b i • w i) (e k) := rfl

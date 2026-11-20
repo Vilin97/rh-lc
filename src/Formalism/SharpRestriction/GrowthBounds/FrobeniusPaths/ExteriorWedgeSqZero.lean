@@ -211,7 +211,8 @@ lemma LamL_Wop (m : Matrix (Fin k) (Fin k) A) (x : Fin k → A) :
   intro I c
   simp only [Module.End.mul_apply]
   have e : Wop x (Pi.single I c) = ∑ a, x a • exteriorWedge A a (Pi.single I c) := by simp [Wop]
-  rw [e, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, map_sum]
   simp only [map_smul, LamL_w_single]
   rw [LamL_single, map_smul, Wop_vecMul]
   simp only [LinearMap.sum_apply, LinearMap.smul_apply, Finset.smul_sum]
@@ -300,7 +301,8 @@ theorem Lam_contr (m m' : Matrix (Fin k) (Fin k) A) (h : m * m' = 1) (y : Fin k 
   rw [vecMul_Lam, vecMul_Lam, ← Iop_apply, ← Iop_apply]
   have hK : K = ∑ I, Pi.single I (K I) := (Finset.univ_sum_single K).symm
   rw [hK]
-  simp only [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum]
   exact Finset.sum_congr rfl fun I _ => LamL_Iop_single m m' h y I (K I)
 
 theorem Lam_empty (m : Matrix (Fin k) (Fin k) A) (J : Finset (Fin k)) (hJ : J ≠ ∅) : abelian₂ m ∅ J = 0 := by
@@ -346,7 +348,8 @@ theorem Lam_map {A' : Type*} [CommRing A'] (φ : A →+* A') (m : Matrix (Fin k)
       split_ifs <;> simp
     | insert b s hb ih =>
       intro J
-      simp only [img_insert_max m b s hb, img_insert_max (m.map φ) b s hb, wedgeR, map_sum, map_mul,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [img_insert_max m b s hb, img_insert_max (m.map φ) b s hb, wedgeR, map_sum, map_mul,
         map_pow, map_neg, map_one, ih, Matrix.map_apply]
   ext I J
   simp [Matrix.map_apply, abelian₂, key]

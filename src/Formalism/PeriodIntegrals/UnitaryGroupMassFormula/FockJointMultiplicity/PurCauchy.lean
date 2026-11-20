@@ -35,7 +35,8 @@ theorem exists_support_of_killS {S : Set σ} {P : MvPolynomial σ ℂ} (h : aeva
   push_neg at hne
   apply h
   conv_lhs => rw [P.as_sum]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_eq_zero fun e he => ?_
   obtain ⟨v, hvS, hv⟩ := hne e he
   rw [aeval_monomial, Finsupp.prod]
@@ -47,7 +48,8 @@ theorem aeval_killS_free {S : Set σ} {Q : MvPolynomial σ ℂ} (h : ∀ e ∈ Q
     aeval (killS S) Q = Q := by
   conv_rhs => rw [Q.as_sum]
   conv_lhs => rw [Q.as_sum]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun e he => ?_
   rw [aeval_monomial, monomial_eq, Finsupp.prod, Finsupp.prod, algebraMap_eq]
   congr 1
@@ -58,7 +60,8 @@ theorem aeval_killS_free {S : Set σ} {Q : MvPolynomial σ ℂ} (h : ∀ e ∈ Q
 private theorem pderiv_eq_zero_of_forall_support_apply_eq_zero {v : σ} {Q : MvPolynomial σ ℂ} (h : ∀ e ∈ Q.support, e v = 0) :
     pderiv v Q = 0 := by
   conv_lhs => rw [Q.as_sum]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_eq_zero fun e he => ?_
   simp [pderiv_monomial, h e he]
 

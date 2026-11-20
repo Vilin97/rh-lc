@@ -129,7 +129,8 @@ theorem gen_all {K V Ω : Type} [Field K] [NumberField K] [AddCommGroup V] [Modu
   have hs := nonzero_of_comb hv hb gw fun w => by
     obtain ⟨a, ha⟩ := (Submodule.mem_span_range_iff_exists_fun (𝓞 K)).1 (hg.ge w.2)
     refine ⟨a, ?_⟩
-    rw [← ha, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← ha, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [← algebraMap_smul K (a k), map_smul, Algebra.smul_def, ← IsScalarTower.algebraMap_apply]
   exact ⟨e, he, hv, hs, hasDiv hH he (fun k => hv (gw k)) hs⟩

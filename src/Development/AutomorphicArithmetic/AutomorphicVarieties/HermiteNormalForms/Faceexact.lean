@@ -33,7 +33,8 @@ private theorem UpperTheory.V.KT.fe_comm {I : Type} (S : ∀ n, Set (Fin n → I
   | single t c =>
     rw [KH.faceD_single, Finsupp.mapDomain_single]
     simp only [ConeExtensionAcyclic.bd, Finsupp.linearCombination_single, Finset.smul_sum]
-    rw [← Finsupp.lmapDomain_apply ℤ ℤ, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Finsupp.lmapDomain_apply ℤ ℤ, map_sum]
     refine Finset.sum_congr rfl (fun i _ => ?_)
     rw [map_zsmul, Finsupp.lmapDomain_apply, Finsupp.mapDomain_single]
     simp only [Finsupp.smul_single, smul_eq_mul, mul_one]

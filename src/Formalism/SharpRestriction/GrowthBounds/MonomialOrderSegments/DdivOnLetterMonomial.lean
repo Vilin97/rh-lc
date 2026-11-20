@@ -263,7 +263,8 @@ theorem appMon_eq (i : L) (P : ℕ) (cls : I → Fin r → ℕ) (cf : I → K) (
     appMon i P cls cf ρ' δ κ α = putL i α (∑ s, if cls s = (fun a => letE α i a % P) then
       monomial (ρ' s + P • (δ s + (divE P (letE α i) - κ s))) (cf s * bin (κ s) (divE P (letE α i)))
       else 0) := by
-  rw [map_sum, appMon]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, appMon]
   refine Finset.sum_congr rfl fun s _ => ?_
   by_cases h : cls s = (fun a => α (i, a) % P)
   · rw [if_pos h, if_pos (show cls s = fun a => letE α i a % P from h), putL_monomial]

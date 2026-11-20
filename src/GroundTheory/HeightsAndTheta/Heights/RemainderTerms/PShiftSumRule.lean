@@ -23,7 +23,8 @@ theorem pderiv_blockPowerSum (N k : ℕ) (i : Fin N) :
     pderiv ((0 : Fin 1), i) (blockPowerSum 1 N k 0) =
       (k : RootRing 1 N) * X ((0 : Fin 1), i) ^ (k - 1) := by
   classical
-  rw [blockPowerSum, map_sum, Finset.sum_eq_single i]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [blockPowerSum, map_sum, Finset.sum_eq_single i]
   · simp
   · intro j _ hj
     rw [pderiv_pow, pderiv_X_of_ne (show ((0 : Fin 1), j) ≠ ((0 : Fin 1), i) by simp [hj]), mul_zero]
@@ -78,13 +79,15 @@ theorem ShiftSumRule.proof (hS : ShiftTotalValues.Statement)
               Q k 0) := by
     rw [hQ]
     simp only [Fin.sum_univ_one]
-    simp_rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp_rw [map_sum]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl (fun k _ => ?_)
     rw [← sum_first_pow, Finset.mul_sum, Finset.mul_sum, Finset.sum_mul, ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl (fun i _ => ?_)
     rw [pderiv_mul, pderiv_blockPowerSum]; ring
-  rw [hexp, map_sum] at h0
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hexp, map_sum] at h0
   have hval : ∀ k ∈ Icc 1 (r + a),
       flagIntegralLinear 1 (r + a)
         (blockPowerSum 1 (r + a) k 0 *

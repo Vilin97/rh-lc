@@ -25,7 +25,8 @@ def linSub {σ : Type} [Fintype σ] [DecidableEq σ] :
         = (aeval (R := ℂ) fun p : ι × σ => ∑ j, C (M p.1 j p.2) * (X (p.1, j) : MvPolynomial (ι × σ) ℂ)).comp
           (aeval (R := ℂ) fun p : ι × σ => ∑ j, C (N p.1 j p.2) * (X (p.1, j) : MvPolynomial (ι × σ) ℂ)) := by
       ext1 p
-      simp only [aeval_X, AlgHom.comp_apply, map_sum, map_mul, aeval_C, algebraMap_eq, Pi.mul_apply, Matrix.mul_apply,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [aeval_X, AlgHom.comp_apply, map_sum, map_mul, aeval_C, algebraMap_eq, Pi.mul_apply, Matrix.mul_apply,
         Finset.sum_mul, Finset.mul_sum]
       rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring

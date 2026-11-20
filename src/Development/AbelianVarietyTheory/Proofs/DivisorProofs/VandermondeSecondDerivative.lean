@@ -45,7 +45,8 @@ theorem apolar_smul_left' (c : ℝ) (P D : MvPolynomial ν ℝ) : apolar (c • 
 
 theorem apolar_sum_left' {α : Type} (s : Finset α) (F : α → MvPolynomial ν ℝ) (D : MvPolynomial ν ℝ) :
     apolar (∑ a ∈ s, F a) D = ∑ a ∈ s, apolar (F a) D := by
-  rw [apolar_comm', map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [apolar_comm', map_sum]
   exact Finset.sum_congr rfl fun a _ => apolar_comm' _ _
 
 theorem apolar_rename_equiv (e : ν ≃ ν) (P D : MvPolynomial ν ℝ) :
@@ -97,7 +98,8 @@ theorem rename_vdm (σ : Equiv.Perm (Fin r)) :
   simp
 
 theorem rename_psq (σ : Equiv.Perm (Fin r)) : rename (Equiv.optionCongr σ) (psq r) = psq r := by
-  simp only [psq, map_sum, map_pow, rename_X, Equiv.optionCongr_apply, Option.map_some]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [psq, map_sum, map_pow, rename_X, Equiv.optionCongr_apply, Option.map_some]
   exact Equiv.sum_comp σ (fun i => (X (some i) : MvPolynomial (Option (Fin r)) ℝ) ^ 2)
 
 theorem bb_perm (σ : Equiv.Perm (Fin r)) (a c : Fin r) : bb r (σ a) (σ c) = bb r a c := by
@@ -142,7 +144,8 @@ section Sums
 variable (r : ℕ)
 
 theorem pderiv_psq (a : Fin r) : pderiv (some a) (psq r) = 2 * X (some a) := by
-  rw [psq, map_sum, Finset.sum_eq_single a]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [psq, map_sum, Finset.sum_eq_single a]
   · simp [Derivation.leibniz_pow]
   · intro i _ hi
     have : (some a : Option (Fin r)) ≠ some i := fun h => hi (Option.some_injective _ h).symm
@@ -150,7 +153,8 @@ theorem pderiv_psq (a : Fin r) : pderiv (some a) (psq r) = 2 * X (some a) := by
   · simp
 
 theorem pderiv_pone (a : Fin r) : pderiv (some a) (pone r) = 1 := by
-  rw [pone, map_sum, Finset.sum_eq_single a]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [pone, map_sum, Finset.sum_eq_single a]
   · simp
   · intro i _ hi
     have : (some a : Option (Fin r)) ≠ some i := fun h => hi (Option.some_injective _ h).symm
@@ -206,7 +210,8 @@ theorem apolar_zero_left' (Q : MvPolynomial (Option (Fin r)) ℝ) : apolar 0 Q =
 theorem row_sum (hW1 : ∑ a : Fin r, pderiv (some a) (vdm r) = 0) (c : Fin r) :
     ∑ a : Fin r, bb r a c = 2 * apolar (vdm r) (vdm r) := by
   simp_rw [bb_eq]
-  rw [← apolar_sum_left', ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← apolar_sum_left', ← map_sum]
   have h1 : ∑ a : Fin r, pderiv (some a) (psq r * vdm r) = (2 : ℝ) • (pone r * vdm r) + psq r * 0 := by
     rw [← hW1, Finset.mul_sum, pone, Finset.sum_mul, Finset.smul_sum, ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun a _ => ?_
@@ -214,7 +219,8 @@ theorem row_sum (hW1 : ∑ a : Fin r, pderiv (some a) (vdm r) = 0) (c : Fin r) :
     simp only [show (C 2 : MvPolynomial (Option (Fin r)) ℝ) = 2 from rfl]
     ring
   have h0 : apolar (pone r * pderiv (some c) (vdm r)) (vdm r) = 0 := by
-    rw [apolar_comm', pone, Finset.sum_mul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [apolar_comm', pone, Finset.sum_mul, map_sum]
     simp_rw [GlobalTheory.FlagFormDeg.apolar_X_mul]
     rw [← apolar_sum_left', hW1, apolar_zero_left']
   rw [h1, mul_zero, add_zero, Derivation.map_smul, Derivation.leibniz, pderiv_pone, smul_eq_mul, smul_eq_mul, mul_one,

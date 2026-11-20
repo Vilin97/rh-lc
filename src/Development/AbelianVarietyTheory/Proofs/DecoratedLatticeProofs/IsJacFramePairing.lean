@@ -26,7 +26,8 @@ theorem pair_col (p : Place D k) {N ρ : ℕ} {κ : Type} [Fintype κ] (G : Matr
     rw [star_mul', Matrix.conjTranspose_apply, star_star, hv, mul_comm]
   rw [h]
   change _ = Witness.prH p _
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_congr rfl fun r _ => (map_mul (Witness.prH p) _ _).symm
 
 theorem pair_scaled (p : Place D k) {N ρ : ℕ} {κ Z : Type} [Fintype κ] (G : Matrix (Fin N) (Fin N) D.host.E)

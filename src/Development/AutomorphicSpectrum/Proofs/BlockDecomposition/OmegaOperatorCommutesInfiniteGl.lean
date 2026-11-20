@@ -29,12 +29,14 @@ theorem sum_sq_map_eq {B : LinearMap.BilinForm ℝ L} {b : Module.Basis ι ℝ L
   set u := UniversalEnvelopingAlgebra.ι ℝ (L := L)
   have h1 : ∀ j, u (φ (b j)) = ∑ i, (ε i * B (b i) (φ (b j))) • u (b i) := fun j => by
     conv_lhs => rw [eq_sum_of_orthogonal hε horth (φ (b j))]
-    simp only [map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul]
   have h2 : ∀ i, u (b i) = ∑ j, (ε j * B (φ (b j)) (b i)) • u (φ (b j)) := fun i => by
     have e := congrArg φ (eq_sum_of_orthogonal hε horth (ψ (b i)))
     rw [hψ] at e
     conv_lhs => rw [e]
-    simp only [map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [← hφ (b j) (ψ (b i)), hψ]
   calc ∑ j, ε j • (u (φ (b j)) * u (φ (b j)))
@@ -88,7 +90,8 @@ theorem AdU_casimir {d : ℕ} (b : Module.Basis (Fin d) ℝ (isExpLieAlgebra E a
     (hε : ∀ i, ε i * ε i = 1)
     (horth : ∀ i j, archTraceForm E a (b i) (b j) = if i = j then ε i else 0) (g : archGroup E a) :
     (isExpLieAlgebra E a).AdU g (casimir b ε) = casimir b ε := by
-  simp only [casimir, map_sum, map_smul, map_mul, IsExpLieAlgebra.AdU_ι]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [casimir, map_sum, map_smul, map_mul, IsExpLieAlgebra.AdU_ι]
   exact sum_sq_map_eq hε horth archTraceForm_symm _ ((isExpLieAlgebra E a).AdLie g⁻¹)
     (archTraceForm_AdLie g) (AdLie_AdLie_inv g)
 

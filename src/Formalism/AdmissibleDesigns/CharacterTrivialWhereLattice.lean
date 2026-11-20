@@ -489,7 +489,8 @@ theorem locS_g (hE : Ev r π Dd) (hN : RepresentationBoundsCohomology.NormAt D.n
     refine (congrArg (· * _) ?_).trans (zero_mul _)
     rw [← h0, Matrix.map_mul]
     congr 1
-    · rw [AddSubmonoidClass.coe_finsetSum, Finset.sum_apply, hF, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [AddSubmonoidClass.coe_finsetSum, Finset.sum_apply, hF, map_sum]
       refine Finset.sum_congr rfl (fun k _ => ?_)
       rw [hE.smul_eval, SubmonoidClass.coe_pow, Pi.pow_apply, hE.r_eval, Polynomial.coeff_map, hsm, hF, ← map_pow]
       rfl
@@ -511,7 +512,8 @@ theorem locS_g (hE : Ev r π Dd) (hN : RepresentationBoundsCohomology.NormAt D.n
     have hu : IsUnit (∑ k ∈ Finset.range (Pp.natDegree + 1), ((Pp.coeff k : D.nd.T i) : D.nd.X i → D.nd.O i) π *
         ((D.nd.chi i 1 (D.nd.gam0 i v.1) : (D.nd.O i)ˣ) : D.nd.O i) ^ k) := by
       have h := hPu.map (evT D.nd i π)
-      rw [Polynomial.eval_eq_sum_range, map_sum] at h
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Polynomial.eval_eq_sum_range, map_sum] at h
       simpa [evT, chi1] using h
     obtain ⟨u, hu'⟩ := hu
     calc m = ((u⁻¹ : (D.nd.O i)ˣ) : D.nd.O i) • ((u : D.nd.O i) • m) := by

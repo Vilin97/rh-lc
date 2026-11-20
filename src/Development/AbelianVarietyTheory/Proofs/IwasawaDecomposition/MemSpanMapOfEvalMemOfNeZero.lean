@@ -40,7 +40,8 @@ theorem mem_span_map_of_eval_mem (k : Type) [Field k] [Infinite k] (σ τ : Type
       ∑ γ ∈ Γ, (eval y (monomial γ (1 : k) : MvPolynomial τ k)) • Q γ := by
     intro y
     conv_lhs => rw [hdec]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl (fun γ _ => ?_)
     rw [smul_eq_C_mul, map_mul, map_C, map_map, hevid, map_id, smul_eq_C_mul]
   have hQM : ∀ γ ∈ Γ, Q γ ∈ M := by
@@ -50,7 +51,8 @@ theorem mem_span_map_of_eval_mem (k : Type) [Field k] [Infinite k] (σ τ : Type
     let R : MvPolynomial τ k := ∑ γ ∈ Γ, monomial γ (L (Q γ))
     have hR : ∀ y : τ → k, eval y R = L (map (eval y) P) := by
       intro y
-      rw [hevP, map_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hevP, map_sum, map_sum]
       refine Finset.sum_congr rfl (fun γ _ => ?_)
       rw [map_smul, smul_eq_mul, eval_monomial, eval_monomial, mul_comm, one_mul]
     have hRD : R * D = 0 := by

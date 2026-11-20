@@ -106,7 +106,8 @@ theorem eval_lhs (a b : ℝ) (hab : a ≠ b) (m : ℕ) :
     rw [neg_pow]; ring
   simp_rw [hI]
   rw [intervalIntegral.integral_finset_sum (fun j _ => by apply Continuous.intervalIntegrable; fun_prop)]
-  simp only [map_sum, map_mul, eval_C, map_pow, eval_X, hE]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, eval_C, map_pow, eval_X, hE]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [intervalIntegral.integral_const_mul]
   simp only [Matrix.cons_val_zero]
@@ -128,7 +129,8 @@ theorem eval_rhs (a b : ℝ) (m : ℕ) :
     ring
   simp_rw [hI]
   rw [intervalIntegral.integral_finset_sum (fun j _ => by apply Continuous.intervalIntegrable; fun_prop)]
-  simp only [pm, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [pm, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [intervalIntegral.integral_const_mul, beta_eq]
   simp

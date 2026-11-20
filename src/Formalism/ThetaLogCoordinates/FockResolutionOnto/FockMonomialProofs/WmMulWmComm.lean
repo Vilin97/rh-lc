@@ -119,7 +119,8 @@ noncomputable def mkGlW (E : Fin n → Fin n → MvPolynomial σ ℚ_[p] →ₗ[
     · simp
   shift := fun a b μ x => by
     conv_lhs => rw [← sum_compW w x _ (compW_dec w x)]
-    rw [map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum]
     have e' : ∀ ν, compW p w μ (E a b (compW p w ν x)) =
         if ν = μ - dl a b then E a b (compW p w ν x) else 0 := by
       intro ν
@@ -177,7 +178,8 @@ theorem eul_X_mul (b : Fin r) (G : MvPolynomial (Fin (K + 1) × Fin r) ℚ_[p]) 
 theorem pderiv_eul (j : Fin r) (G : MvPolynomial (Fin (K + 1) × Fin r) ℚ_[p]) :
     pderiv (Fin.last K, j) (ProjS.eulL (fun c : Fin r => (Fin.last K, c)) G) =
       pderiv (Fin.last K, j) G + ProjS.eulL (fun c : Fin r => (Fin.last K, c)) (pderiv (Fin.last K, j) G) := by
-  rw [ProjS.eulL_apply, ProjS.eulL_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [ProjS.eulL_apply, ProjS.eulL_apply, map_sum]
   simp only [pderiv_X_mul, Finset.sum_add_distrib]
   rw [Finset.sum_ite_eq, if_pos (Finset.mem_univ j)]
   congr 1
@@ -187,7 +189,8 @@ theorem eul_Uop (LL : Letters (K + 1)) (c : ℤ) (Cs : Finset (Fin r)) (i : Fin 
     (F : MvPolynomial (Fin (K + 1) × Fin r) ℚ_[p]) :
     ProjS.eulL (fun c : Fin r => (Fin.last K, c)) (Uop p LL c Cs i F) =
       Uop p LL c Cs i F + Uop p LL c Cs i (ProjS.eulL (fun c : Fin r => (Fin.last K, c)) F) := by
-  rw [Uop_apply, Uop_apply, map_sub, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Uop_apply, Uop_apply, map_sub, map_sum]
   simp only [eul_X_mul, eul_glAct, map_sub, map_smul, Finset.sum_add_distrib]
   abel
 
@@ -211,7 +214,8 @@ theorem d_U (LL : Letters (K + 1)) (hv : LL.vec (Fin.last K) = true) (c : ℤ) (
     (hj : j ∈ Cs) (F : MvPolynomial (Fin (K + 1) × Fin r) ℚ_[p]) :
     dW p K j (Uop p LL c Cs i F) - Uop p LL c Cs i (dW p K j F) =
       (if j = i then Aop p K r c F else 0) - glAct p LL (K + 1) i j F := by
-  rw [dW_apply, dW_apply, Uop_apply, Uop_apply, map_sub, map_sum, Aop_apply, glAct_succ LL hv]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [dW_apply, dW_apply, Uop_apply, Uop_apply, map_sub, map_sum, Aop_apply, glAct_succ LL hv]
   simp only [pderiv_X_mul, pderiv_glJ, map_sub, Derivation.map_smul, pderiv_eul, Finset.sum_add_distrib]
   rw [Finset.sum_ite_eq, if_pos hj]
   simp only [mul_sub, mul_add]
@@ -248,7 +252,8 @@ theorem S_S (LL : Letters (K + 1)) (Cs : Finset (Fin r)) (i k : Fin r) (hi : i �
     Sop p LL Cs i * Sop p LL Cs k - Sop p LL Cs k * Sop p LL Cs i =
       (Wm p K k : Module.End ℚ_[p] _) * Sop p LL Cs i - (Wm p K i : Module.End ℚ_[p] _) * Sop p LL Cs k := by
   refine LinearMap.ext fun F => ?_
-  simp only [LinearMap.sub_apply, Module.End.mul_apply, Sop_apply, Wm, LinearMap.mulLeft_apply, map_sum, glJ_X_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [LinearMap.sub_apply, Module.End.mul_apply, Sop_apply, Wm, LinearMap.mulLeft_apply, map_sum, glJ_X_mul]
   rw [Finset.sum_comm (s := Cs) (t := Cs)
     (f := fun b' b => X (Fin.last K, b) * (X (Fin.last K, b') * glAct p LL K i b (glAct p LL K k b' F))),
     ← Finset.sum_sub_distrib]
@@ -291,7 +296,8 @@ theorem aop_weightMul_comm (c : ℤ) (i : Fin r) :
 theorem A_S (LL : Letters (K + 1)) (c : ℤ) (Cs : Finset (Fin r)) (i : Fin r) :
     (Aop p K r c : Module.End ℚ_[p] _) * Sop p LL Cs i = Sop p LL Cs i * Aop p K r c - Sop p LL Cs i := by
   refine LinearMap.ext fun F => ?_
-  simp only [LinearMap.sub_apply, Module.End.mul_apply, Aop_apply, Sop_apply, map_sum, eul_X_mul, eul_glAct, map_sub,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [LinearMap.sub_apply, Module.End.mul_apply, Aop_apply, Sop_apply, map_sum, eul_X_mul, eul_glAct, map_sub,
     map_smul, Finset.sum_add_distrib, Finset.sum_sub_distrib, Finset.smul_sum]
   abel
 

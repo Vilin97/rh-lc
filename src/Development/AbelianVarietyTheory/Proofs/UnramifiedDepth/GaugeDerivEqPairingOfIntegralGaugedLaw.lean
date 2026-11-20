@@ -89,7 +89,8 @@ theorem subst_subst [Finite σ] [Finite τ] {a : σ → MvPowerSeries τ C} (ha 
 
 theorem subst_sum' [Finite σ] {a : σ → MvPowerSeries τ C} (ha : ∀ s, constantCoeff (a s) = 0) {ι : Type}
     (s : Finset ι) (f : ι → MvPowerSeries σ C) : subst a (∑ i ∈ s, f i) = ∑ i ∈ s, subst a (f i) := by
-  rw [← coe_substAlgHom (hasSubst_of_constantCoeff_zero ha), map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← coe_substAlgHom (hasSubst_of_constantCoeff_zero ha), map_sum]
 
 theorem subst_zero' [Finite σ] {a : σ → MvPowerSeries τ C} (ha : ∀ s, constantCoeff (a s) = 0) :
     subst a (0 : MvPowerSeries σ C) = 0 := by
@@ -383,7 +384,8 @@ theorem sg_eq (v : κ → C) : Y.sg v = -∑ i, v i • subst (pr (X : κ → Mv
       rintro ⟨x, hx⟩
       exact absurd (congrArg Prod.fst hx) (show ¬ (0 : Fin 2) = 1 by decide)
   ext μ
-  rw [map_neg, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_neg, map_sum]
   show -∑ i, v i * coeff (μ.mapDomain (fun x : κ => ((0 : Fin 2), x)) + Finsupp.single ((1 : Fin 2), i) 1) Y.h = _
   congr 1
   refine Finset.sum_congr rfl fun i _ => ?_
@@ -398,7 +400,8 @@ theorem tder_sg {a : κ → MvPowerSeries τ C} (ha : ∀ i, constantCoeff (a i)
   have hs := hasSubst_of_constantCoeff_zero ha
   have hX : ∀ p, constantCoeff ((pr (X : κ → MvPowerSeries κ C) fun _ => 0) p) = 0 :=
     pr_prop (P := fun f => constantCoeff f = 0) (fun _ => constantCoeff_X _) fun _ => map_zero _
-  rw [sg_eq, ← coe_substAlgHom hs, map_neg, neg_neg, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [sg_eq, ← coe_substAlgHom hs, map_neg, neg_neg, map_sum]
   unfold tder
   rw [Fintype.sum_prod_type, Fin.sum_univ_two, Finset.sum_eq_zero (fun i _ => by simp [pr]), zero_add]
   refine Finset.sum_congr rfl fun i _ => ?_
@@ -663,7 +666,8 @@ theorem sum_lie (y : I₁) :
     ∑ c, subst (fun _ : Unit => t c) (tyS V.l fun s => S.cur c s (Sum.inl y)) = (X y : MvPowerSeries I₁ C) := by
   classical
   ext μ
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [coeff_subst_tyS V.l_prime.two_le (ht.1 _)]
   rw [Finset.sum_comm, coeff_X]
   convert ht.2 y μ
@@ -673,7 +677,8 @@ theorem sum_fil (q : J₁) :
     ∑ c, subst (fun _ : Unit => t c) (tyS V.l fun s => S.cur c s (Sum.inr q)) = -S.ze t q := by
   classical
   ext μ
-  rw [map_sum, map_neg]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_neg]
   simp only [coeff_subst_tyS V.l_prime.two_le (ht.1 _)]
   rw [Finset.sum_comm]
   show _ = -(-(∑ s ∈ Finset.Icc 1 μ.degree, ∑ c, S.be c s q * coeff μ (t c ^ (V.l ^ s))))
@@ -805,7 +810,8 @@ theorem pderiv_expPt_self (R : RLaw Y V) (g : Fin 2) (k : I g) :
   · funext x
     exact (lg_ex R (cc_lin g) x).symm
   · funext x
-    rw [map_sum, Finset.sum_eq_single k, Derivation.map_smul, pderiv_X_self, smul_eq_C_mul, mul_one]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_eq_single k, Derivation.map_smul, pderiv_X_self, smul_eq_C_mul, mul_one]
     · intro c _ hc
       rw [Derivation.map_smul, pderiv_X_of_ne, smul_zero]
       intro h
@@ -817,7 +823,8 @@ theorem pderiv_expPt_ne {g g' : Fin 2} (hg : g ≠ g') (k : I g') :
   funext i
   rw [RawChart.expPt, pderiv_subst_eq (cc_lin g)]
   refine tder_zero _ (fun x => ?_) _
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_eq_zero fun c _ => ?_
   rw [Derivation.map_smul, pderiv_X_of_ne, smul_zero]
   intro h
@@ -923,7 +930,8 @@ theorem cEqSt_of_rLaw (C : Type) [Field C] (V : VF C) (d : ℕ) [NeZero d] (I : 
   split_ifs with h
   · have hz : coeff μ (∑ y : I g, (if Y.ty g y = Y.ty (1 - g) k then Y.sg1 (Y.u g y) (Y.u (1 - g) k) else 0) •
         (X (⟨g, y⟩ : WV I) : MvPowerSeries (WV I) C)) = 0 := by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_eq_zero fun y _ => ?_
       rw [coeff_smul, coeff_X]
       split_ifs with h1 h2

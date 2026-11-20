@@ -203,7 +203,8 @@ theorem mul_square (j : R →+* k1) (g0 g0inv : Matrix (Fin r) (Fin r) k1) (h : 
         have hm' := congrFun hm c
         simp only [Matrix.vecMul, dotProduct, mul_Dg, Matrix.diagonal_mul] at hm'
         rw [e1, e2]
-        simp only [map_sum, map_mul, coe_eval₂Hom, eval₂_C, eval₂_X, mul_dl, hx]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, map_mul, coe_eval₂Hom, eval₂_C, eval₂_X, mul_dl, hx]
         have ht' : ∀ b, (AddMonoidAlgebra.mapRingHom ℤ
             (mul_sp ((C : k1 →+* MvPolynomial (ι × Fin r) k1).comp j) _ _ hK))
             (twistMat R r (lastIdx r) 1 b c) = _ := ht
@@ -235,7 +236,8 @@ theorem mul_square (j : R →+* k1) (g0 g0inv : Matrix (Fin r) (Fin r) k1) (h : 
         have hm' := congrFun hm c
         simp only [Matrix.mulVec, dotProduct, mul_Dg, Matrix.mul_diagonal] at hm'
         rw [e1, e2]
-        simp only [map_sum, map_mul, coe_eval₂Hom, eval₂_C, eval₂_X, mul_dl, hx]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, map_mul, coe_eval₂Hom, eval₂_C, eval₂_X, mul_dl, hx]
         have ht' : ∀ b, (AddMonoidAlgebra.mapRingHom ℤ
             (mul_sp ((C : k1 →+* MvPolynomial (ι × Fin r) k1).comp j) _ _ hK))
             (twistMat R r (lastIdx r) (-1) c b) = _ := ht

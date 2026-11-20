@@ -262,7 +262,8 @@ theorem ProjectionBounds.proof (hR : ResChiBounds.Statement) : ProjectionBounds.
       exact (div_le_iff₀ (pow_pos hρ _)).mp this
     have hexp : eval z (map (Int.castRingHom ℂ) (∑ l, rename e (Q l) * E l)) =
         ∑ l, eval (z ∘ e) (map (Int.castRingHom ℂ) (Q l)) * eval z (map (Int.castRingHom ℂ) (E l)) := by
-      simp only [map_sum, map_mul, map_rename, eval_rename]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_mul, map_rename, eval_rename]
     have hs0 : 0 ≤ ∑ l, c l := Finset.sum_nonneg fun l _ => hc0 l
     rw [ptNorm, hmz, div_le_iff₀ (pow_pos hρ n), hexp]
     calc _ ≤ ∑ l, ‖eval (z ∘ e) (map (Int.castRingHom ℂ) (Q l)) *

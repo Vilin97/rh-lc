@@ -90,7 +90,8 @@ theorem constantCoeff_polyAdd {S : Type} [CommRing S] {d n : ℕ} {ι : Type} [F
         coeff (∑ p, m p • Finsupp.single (p.2, e p.1) 1) G) := by
   classical
   unfold TB.polyAdd
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun m _ => ?_
   rw [map_mul, MvPowerSeries.constantCoeff_C]
   congr 1
@@ -211,7 +212,8 @@ theorem secondOrder_zero {E : Type} [Field E] [NumberField E] [IsCMField E] {H :
       ∑ b : Fin n, MvPolynomial.pderiv (ℓ, b) (MvPolynomial.pderiv (ℓ', b) Q) = 0 := by
     intro ℓ ℓ' h
     simp only [hQ, MvPolynomial.pderiv_map]
-    rw [← map_sum, colSum_conj c hPsi a n P hP ℓ ℓ' h, map_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, colSum_conj c hPsi a n P hP ℓ ℓ' h, map_zero]
   have hcol' : ∀ ℓ ℓ' : Lt1 Dw, ℓ.1 = ComplexEmbedding.conjugate ℓ'.1 →
       ∑ b : Fin n, MvPolynomial.pderiv (ℓ, b) (MvPolynomial.pderiv (ℓ', b) Q) = 0 := by
     intro ℓ ℓ' h

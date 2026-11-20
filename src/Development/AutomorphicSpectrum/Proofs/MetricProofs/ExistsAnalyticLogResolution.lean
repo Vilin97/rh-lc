@@ -72,7 +72,8 @@ theorem exists_span_of_fibre (A : Type) [CommRing A] [Algebra ℚ A] [Algebra A 
     intro q
     rw [← hl]
     have h := congrArg l (B.sum_repr ((1 : ℂ) ⊗ₜ[A] KaehlerDifferential.D ℚ A (u q)))
-    rw [map_sum] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at h
     rw [← h]
     exact Finset.sum_congr rfl fun i _ => by rw [map_smul, smul_eq_mul]
   have he : (fun q => (Φ (u q)).snd) =

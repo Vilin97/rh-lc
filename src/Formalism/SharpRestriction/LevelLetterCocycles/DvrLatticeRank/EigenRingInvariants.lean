@@ -291,7 +291,8 @@ theorem toZMod_injOn {s : ℕ} (hs : 0 < s) (hsl : s < l) {δ ε : ℤ_[l]} (hδ
   rw [hδ, hε, sub_self] at e
   have hS : IsUnit (∑ i ∈ Finset.range s, δ ^ i * ε ^ (s - 1 - i)) := by
     apply isUnit_of_toZMod_ne_zero
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     have : ∀ i ∈ Finset.range s, PadicInt.toZMod (δ ^ i * ε ^ (s - 1 - i)) =
         PadicInt.toZMod δ ^ (s - 1) := by
       intro i hi
@@ -630,12 +631,14 @@ theorem geom_eq_prod {ζ0 : O} (hζ0 : IsPrimitiveRoot ζ0 l) :
   rw [Polynomial.cyclotomic_prime] at h1
   have h2 := congrArg (Polynomial.aeval (1 + X : PowerSeries O)) h1
   have hC : ∀ μ : O, algebraMap O (PowerSeries O) μ = C μ := fun μ => rfl
-  simp only [map_sum, map_pow, map_prod, map_sub, Polynomial.aeval_X, Polynomial.aeval_C, hC] at h2
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_pow, map_prod, map_sub, Polynomial.aeval_X, Polynomial.aeval_C, hC] at h2
   have hPR : PRt l O = primitiveRoots l O := by
     ext z
     rw [mem_primitiveRoots hl.out.pos, mem_PRt]
   rw [hPR]
-  simp only [map_sum, map_pow, map_add, map_one, map_X]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_pow, map_add, map_one, map_X]
   rw [h2]
   refine Finset.prod_congr rfl fun μ _ => ?_
   rw [map_sub C, map_one]

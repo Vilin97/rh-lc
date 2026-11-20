@@ -68,7 +68,8 @@ theorem hform_herm (hσ : ∀ e, σ (σ e) = e) (hJ : IsHermND σ J) (a b : Fin 
     change sigR k σ (1 ⊗ₜ J i j) = 1 ⊗ₜ J j i
     simp [sigR, hJ.1]
   unfold Formalism.UG.hform
-  simp only [map_sum, map_mul, sigR_sigR hσ, hG]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, sigR_sigR hσ, hG]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 

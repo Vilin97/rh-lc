@@ -115,7 +115,8 @@ theorem exists_im_tau : ∃ A N : Matrix (Fin g) (Fin g) ℝ, ∀ w : ℂ, (Θ.�
       have := (Θ.per 0 k).1
       rwa [Ha.Pw_eq, zero_smul, add_zero] at this
     rw [h1, ← hu, hs]
-    simp only [map_sum, map_zsmul, Matrix.mulVec_sum, Matrix.mulVec_smul, hp]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_zsmul, Matrix.mulVec_sum, Matrix.mulVec_smul, hp]
     simp [Pi.single_apply]
   refine ⟨Matrix.of fun j k => ((Θ.h *ᵥ Ha.P₀ (Θ.bas (Pi.single (.inr k) 1))) j).im,
     Matrix.of fun j k => ((Θ.h *ᵥ Ha.N (Θ.bas (Pi.single (.inr k) 1))) j).re, fun w => ?_⟩

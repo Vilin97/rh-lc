@@ -175,7 +175,8 @@ theorem fk_descent {σ κ : Type} [Fintype κ] (v : κ → MvPolynomial σ K) (h
       simp only [coeff_smul, smul_eq_mul]
     have h2 : ((π (AddMonoidAlgebra.coeff (∑ i, c i • v i) m) : K0) : K) = AddMonoidAlgebra.coeff (∑ i, c i • v i) m :=
       congrArg (fun a : K0 => (a : K)) (hπ' ⟨_, fk_coeff_mem K0 hx m⟩)
-    rw [← h1, ← h2, h1, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← h1, ← h2, h1, map_sum]
     push_cast
     refine Finset.sum_congr rfl fun i _ => ?_
     have := hmul ⟨_, fk_coeff_mem K0 (hv0 i) m⟩ (c i)

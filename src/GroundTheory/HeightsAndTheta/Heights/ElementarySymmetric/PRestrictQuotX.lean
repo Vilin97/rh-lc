@@ -49,7 +49,8 @@ theorem restrC_d (e : ∀ J : Cell V, G (liftCell hVU J) →ₗ[R] G' J)
       ρ (liftCell hVU (face J j).1) (liftCell hVU J.1) (face_subset J j) (s (liftIdx hVU (face J j))) :=
     d_apply i s (liftIdx hVU J)
   refine (congrArg (e J.1) hd).trans ?_
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_zsmul]
   congr 1

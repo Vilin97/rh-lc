@@ -64,7 +64,8 @@ theorem algebraicIndependent_pair_linear {R A : Type*} [CommRing R] [CommRing A]
     if μ 0 + μ 1 = D then Polynomial.C (p.coeff μ) * Polynomial.X ^ (μ 1) else 0
   have hg : Polynomial.aeval η g = ((Q.coeff D : B') : A) := by
     rw [hcoeff]
-    simp only [g, map_sum, AddSubmonoidClass.coe_finsetSum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [g, map_sum, AddSubmonoidClass.coe_finsetSum]
     refine Finset.sum_congr rfl fun μ _ => ?_
     split_ifs <;> simp [η']
   have hg0 : g ≠ 0 := by

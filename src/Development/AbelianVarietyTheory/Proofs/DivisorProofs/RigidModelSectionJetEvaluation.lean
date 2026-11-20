@@ -392,10 +392,12 @@ theorem jetFun_eq (hy : IsTangent y) {L : LB G.left} {i₀ : L.ι} (hi : ⊤ ≤
       ∑ a, c a • valR (A := EpsAlg K k) (epsPt y k).left (L.U i₀) ((b a).f i₀) := by
     rw [valR_eq _ _ h]
     simp only [secComb]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun a _ => ?_
     rw [map_mul, ← valR_eq, ← valR_eq, valR_constFn G.hom (algebraMap K _) _ (Over.w (epsPt y k)) _ h, Algebra.smul_def]
-  rw [jetFun_apply, jetVal, e, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [jetFun_apply, jetVal, e, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [map_smul, smul_eq_mul, jetVal]
   ring

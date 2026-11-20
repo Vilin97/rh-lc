@@ -51,7 +51,8 @@ theorem gs_intCast {Z Y : Scheme.{0}} (f : Z ⟶ Y) (z : Z) (O : Y.Opens) (hz : 
 
 theorem gs_sum {Z Y : Scheme.{0}} (f : Z ⟶ Y) (z : Z) (O : Y.Opens) (hz : f z ∈ O) {I : Type} (s : Finset I)
     (a : I → Γ(Y, O)) : gs f z O (∑ i ∈ s, a i) = ∑ i ∈ s, gs f z O (a i) := by
-  simp only [gs_eq f z O hz, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [gs_eq f z O hz, map_sum]
 
 def cstD {k : Type} [Field k] {Z : Scheme.{0}} (p : Z ⟶ Sp (DualNumber k)) (z : Z) :
     DualNumber k →+* Z.presheaf.stalk z :=

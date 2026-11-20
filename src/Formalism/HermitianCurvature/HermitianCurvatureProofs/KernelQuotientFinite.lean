@@ -311,7 +311,8 @@ theorem gram_kernel_identity : Formalism.FourierDecayAlt.A5.GramIdentity := by
         (Nat.card (autSet R (C a) (e a) (lam a)) : ℂ)) * phase ψ (rep R q) *
         conj (phase ψ (rep R q')) := by
     intro a
-    rw [BB_eq_sum R ψ hL w μ₁ μ₂ h1 h2 (C a) (e a) (lam a) hf,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [BB_eq_sum R ψ hL w μ₁ μ₂ h1 h2 (C a) (e a) (lam a) hf,
       BB_eq_sum R ψ hL w' μ₁' μ₂' h1' h2' (C a) (e a) (lam a) hf', map_sum,
       Finset.sum_mul_sum, Finset.sum_div]
     refine Finset.sum_congr rfl fun q _ => ?_
@@ -399,7 +400,8 @@ theorem sum_of_classes {T Q : Type} [Fintype T] [Fintype Q] [DecidableEq Q] (f :
       ∑ i, ∑ j, (μ κ : ℂ) * ((if f i = κ then c i else 0) *
         conj (if f j = κ then c j else 0)) := by
     intro κ
-    rw [Complex.ofReal_mul, ← Complex.mul_conj, map_sum, Finset.sum_mul_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Complex.ofReal_mul, ← Complex.mul_conj, map_sum, Finset.sum_mul_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [Finset.mul_sum]
   rw [Complex.ofReal_sum, Finset.sum_congr rfl fun κ _ => h κ,

@@ -558,10 +558,12 @@ theorem tj_Q (D : D7) (hind : LinearIndependent D.host.E D.sp.hypE) (y : (hS D).
     apply Prod.ext
     · funext b
       have hz : (hS D).hT (D.sp.hypE b) D.sp.zm = 0 := p_symm_zero _ (D.sp.hyp_orthz b).1
-      simp only [map_add, map_sum, map_smul, smul_eq_mul, D.sp.hyp_ef, hz, mul_zero, add_zero, mul_ite, mul_one,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_add, map_sum, map_smul, smul_eq_mul, D.sp.hyp_ef, hz, mul_zero, add_zero, mul_ite, mul_one,
         Finset.sum_ite_eq, Finset.mem_univ, if_true]
     · have hz : ∀ a, (hS D).hT D.sp.zm (D.sp.hypF a) = 0 := fun a => (D.sp.hyp_orthz a).2
-      simp only [map_add, map_sum, map_smul, smul_eq_mul, hz, mul_zero, Finset.sum_const_zero, zero_add, D.sp.zm_norm]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_add, map_sum, map_smul, smul_eq_mul, hz, mul_zero, Finset.sum_const_zero, zero_add, D.sp.zm_norm]
       field_simp
   have hker : Module.finrank D.host.E (LinearMap.ker L) = D.R.k + D.R.rS := by
     have h := LinearMap.finrank_range_add_finrank_ker L
@@ -4537,7 +4539,8 @@ theorem ng_frame_back (Fr : FrameD H r) {g : V ≃ₗ[E] V} (hg : g ∈ Fr.NSet)
   obtain ⟨row, -, -, h⟩ := N_row Fr (NSet_inv Fr hg) a
   refine ⟨row, ?_⟩
   have h1 : g ((g⁻¹ : V ≃ₗ[E] V) (Fr.f a)) = Fr.f a := LinearEquiv.apply_symm_apply g _
-  rw [← h1, h, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← h1, h, map_sum]
   exact Finset.sum_congr rfl (fun b _ => by rw [map_smul])
 
 theorem ng_orth_back (Fr : FrameD H r) {g : V ≃ₗ[E] V} (hg : g ∈ Fr.NSet) {k : V}
@@ -6382,7 +6385,8 @@ theorem NGOrbit0_of_mat (hR : P.RelG (theta M)) (hMat : NGMat P) : NGOrbit0 P :=
     · have hz : (fun b => M.L.cj (γ b)) = 0 := by
         refine ngs_inj (H.Zhat P.A.f P.B.f).transpose (by rw [Matrix.det_transpose]; exact hdetZ) _ (funext fun a => ?_)
         have h0 := congrArg M.L.cj (hγ a)
-        rw [map_sum, map_zero] at h0
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum, map_zero] at h0
         simp only [Matrix.mulVec, dotProduct, HermSp.Zhat, Matrix.of_apply, Matrix.transpose_apply, Pi.zero_apply]
         rw [← h0]
         exact Finset.sum_congr rfl (fun b _ => by rw [map_mul, ← H.h_herm, mul_comm])
@@ -6397,7 +6401,8 @@ theorem NGOrbit0_of_mat (hR : P.RelG (theta M)) (hMat : NGMat P) : NGOrbit0 P :=
     have e : ∀ b, (n⁻¹ * s) (P.A.f b) = ∑ c, M.L.cj (A b c) • P.A.f c := by
       intro b
       show n.symm (s (P.A.f b)) = _
-      rw [hsA, hgn, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hsA, hgn, map_sum]
       exact Finset.sum_congr rfl (fun c _ => by rw [map_smul, LinearEquiv.symm_apply_apply])
     have h0 := ng_span_frame P.A hm (fun a b => by
       rw [ng_row_coef P.A (e b) a]; exact Formalism.MainNotions.LocalModelPeriodLattices.cj_mem_O M.L _ (hAi _ _))
@@ -6413,7 +6418,8 @@ theorem NGOrbit0_of_mat (hR : P.RelG (theta M)) (hMat : NGMat P) : NGOrbit0 P :=
     have e : ∀ b, (n'⁻¹ * s) (P.B.f b) = ∑ d, A' d b • P.B.f d := by
       intro b
       show n'.symm (s (P.B.f b)) = _
-      rw [hsB, hgn', map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hsB, hgn', map_sum]
       exact Finset.sum_congr rfl (fun c _ => by rw [map_smul, LinearEquiv.symm_apply_apply])
     have h0 := ng_span_frame P.B hm (fun a b => by
       rw [ng_row_coef P.B (e b) a]; exact hAi' _ _)

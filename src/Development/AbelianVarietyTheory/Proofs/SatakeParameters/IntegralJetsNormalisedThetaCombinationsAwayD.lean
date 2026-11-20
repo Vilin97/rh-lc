@@ -194,7 +194,8 @@ theorem GlobalTheory.Proof.integralJets_normalisedThetaCombinations_away_d.jetsA
         (∑ k, algebraMap ℂ_[p] (MvPowerSeries (D.what₂.Tau × Fin N' × Fin N) ℂ_[p]) (r k) * G k) =
       ∑ k, MvPowerSeries.C (r k) * TaylorLogMetric.atLin c (fun j => MvPowerSeries.X j) (G k) := by
     intro c G
-    rw [GlobalTheory.Proof.integralJets_normalisedThetaCombinations_away_d.atLin_X, ← Formalism.L2.Th1.G.linSubHom_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [GlobalTheory.Proof.integralJets_normalisedThetaCombinations_away_d.atLin_X, ← Formalism.L2.Th1.G.linSubHom_apply, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_mul, AlgHom.commutes, Formalism.L2.Th1.G.linSubHom_apply]
     rfl

@@ -32,11 +32,13 @@ private theorem finPart_ne {F : Type} [Field F] [NumberField F] {n d : ℕ}
   refine finprod_induction (· ≠ (0 : ℂ)) one_ne_zero (fun _ _ => mul_ne_zero) fun v => ?_
   by_cases hv : v ∈ hS.toFinset
   · have : (fun k => evalV F v (y k)) = ξ v := funext fun k => by
-      rw [map_sum, Finset.sum_eq_single_of_mem v hv fun v' _ h => evalV_singleFin_ne h.symm _, evalV_singleFin_self]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Finset.sum_eq_single_of_mem v hv fun v' _ h => evalV_singleFin_ne h.symm _, evalV_singleFin_self]
     rw [this]
     exact hξ v
   · have : (fun k => evalV F v (y k)) = 0 := funext fun k => by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       exact Finset.sum_eq_zero fun v' h => evalV_singleFin_ne (fun e : v = v' => hv (e ▸ h)) _
     rw [this, of_not_not (mt hS.mem_toFinset.2 hv), Set.indicator_of_mem (by exact fun _ => zero_mem _)]
     exact one_ne_zero

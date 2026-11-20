@@ -189,14 +189,16 @@ theorem exists_ratio_of_weight_sums : ∀ (k : Type) [Field k] [IsAlgClosed k] (
     refine (eq_or_ne _ 0).imp (fun h => hinj U' hU' ?_) (hu o).2
     rw [(hu o).1, h, map_zero]
   have hb : ev g₀ U' (hg U' hU') (∑ j, u (some (Sum.inr j))) = ∑ χ ∈ S, p' χ := by
-    rw [map_sum, ← hε]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, ← hε]
     exact Finset.sum_congr rfl fun j _ => (hu _).1
   refine ⟨U', hle, S.card, fun j => u (some (Sum.inl j)), fun j => u (some (Sum.inr j)), fun j => ε j - χ₀, hU',
     fun j => ⟨hwt _ _ _ (hu _).1 fun t => (hw t _ (ε j).2).2, hwt _ _ _ (hu _).1 fun t => (hw t _ (ε j).2).1,
       hun _, hun _⟩, ?_, hinj U' hU' ?_⟩
   · rw [hinj U' hU' (hb.trans (hu none).1.symm)]
     exact (hu none).2 hp'
-  · rw [map_mul, hb, ev_res g₀ hle _ (hg U hU), ← ev_congr hone U (hgt 1 U hU), hφ, map_sum, ← hε]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_mul, hb, ev_res g₀ hle _ (hg U hU), ← ev_congr hone U (hgt 1 U hU), hφ, map_sum, ← hε]
     exact Finset.sum_congr rfl fun j _ => (hu (some (Sum.inl j))).1.symm
 
 end GlobalTheory.SS.WtRat

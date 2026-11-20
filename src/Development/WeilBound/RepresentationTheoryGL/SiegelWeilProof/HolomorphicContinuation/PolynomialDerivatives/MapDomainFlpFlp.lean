@@ -82,7 +82,8 @@ theorem fockMono_eq (c : ℝ) (s : Ix m n →₀ ℕ) :
 
 theorem fock_eq (c : ℝ) (p : PX m n) : fock c p = ((phi c p : CrAlg m n c) : Module.End ℂ (PX m n)) 1 := by
   conv_rhs => rw [p.as_sum]
-  rw [map_sum, AddSubmonoidClass.coe_finsetSum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, AddSubmonoidClass.coe_finsetSum, LinearMap.sum_apply]
   refine Finset.sum_congr rfl fun s _ => ?_
   have : monomial s (p.coeff s) = p.coeff s • (monomial s 1 : PX m n) := by
     rw [smul_monomial, smul_eq_mul, mul_one]
@@ -172,7 +173,8 @@ theorem DegLT.X_mul {d : ℕ} {P : PX m n} (j : Ix m n) (hP : DegLT d P) : DegLT
 theorem DegLT.pderiv {d : ℕ} {P : PX m n} (k : Ix m n) (hP : DegLT d P) : DegLT d (pderiv k P) := by
   classical
   intro t ht
-  rw [P.as_sum, map_sum] at ht
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [P.as_sum, map_sum] at ht
   obtain ⟨s, hs, hts⟩ := Finset.mem_biUnion.mp (MvPolynomial.support_sum ht)
   rw [pderiv_monomial] at hts
   have ht' := MvPolynomial.support_monomial_subset hts

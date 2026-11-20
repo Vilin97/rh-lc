@@ -65,7 +65,8 @@ theorem exists_log : ∀ (l : ℕ) [Fact l.Prime] (j : Per.Acris l →+* Per.BdR
     intro m
     rw [← sum_eq u (fun k => (γ k : Per.AinfP l)) _ hu hγ m]
     change (Per.Acris0 l).val _ = _
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_mul, map_mul, map_pow, map_natCast, map_neg, map_one]
     rfl

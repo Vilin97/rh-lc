@@ -40,7 +40,8 @@ theorem famOf_sumBasis (coE : V ≃ₗ[K] (Cl → W)) (BK : Basis J0 K W) (φ : 
   rw [Fintype.sum_prod_type]
   simp only [Matrix.blockDiagonal_apply, ite_smul, zero_smul]
   simp only [Finset.sum_ite_eq', Finset.sum_ite_eq, Finset.mem_univ, if_true]
-  rw [hφ, hs, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hφ, hs, map_sum]
   simp only [Pi.single_smul, map_smul, sumBasis_apply]
 
 end Gen

@@ -33,7 +33,8 @@ theorem exists_proj (𝔐 : HodgeCpt Y S y) (s : CMType H ⊕ CMType H) (q : Cpt
     simp [T, LinearMap.sum_apply]
   refine ⟨T, fun v hv => ?_, fun e he => ?_, fun e he => ?_⟩
   · have h1 : ∑ m, 𝔐.emb s (cc m) • 𝔐.ρ (a m) v = 𝔐.emb s (∑ m, cc m * a m) • v := by
-      simp only [(mem_iff v).1 hv, smul_smul, map_sum, map_mul, Finset.sum_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [(mem_iff v).1 hv, smul_smul, map_sum, map_mul, Finset.sum_smul]
     rw [hT, h1, hσd, smul_smul, inv_mul_cancel₀ hd0, one_smul]
   · rw [hV]
     refine ⟨?_, ?_⟩

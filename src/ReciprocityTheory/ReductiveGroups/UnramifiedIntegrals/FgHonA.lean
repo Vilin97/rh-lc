@@ -53,7 +53,8 @@ private theorem mvPowerSeries_norm_coeff_pow_sub_pow_le {ι : Type} {A B : MvPow
   classical
   have hs : ∀ e, ‖MvPowerSeries.coeff e (∑ i ∈ Finset.range m, A ^ i * B ^ (m - 1 - i))‖ ≤ 1 := by
     intro e
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg zero_le_one fun i _ => ?_
     simpa using mvPowerSeries_norm_coeff_mul_le_mul zero_le_one zero_le_one (mvPowerSeries_norm_coeff_pow_le_one hA i) (mvPowerSeries_norm_coeff_pow_le_one hB (m - 1 - i)) e
   rw [← geom_sum₂_mul]
@@ -71,7 +72,8 @@ private theorem mvPowerSeries_norm_coeff_pow_prime_sub_le_mul_norm {ι : Type} (
   rw [add_pow, Finset.sum_range_succ']
   simp only [pow_zero, one_mul, Nat.sub_zero, Nat.choose_zero_right, Nat.cast_one, mul_one,
     add_sub_cancel_right]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg (mul_nonneg hc (norm_nonneg _))
     fun i hi => ?_
   have hi' : i < l := Finset.mem_range.mp hi

@@ -17,7 +17,8 @@ theorem hypU_proved (hB : G.BlockOK) : Formalism.InvariantFactorPaths.KP.LL.HypU
     intro LL LL' a c hda hdo y hy
     unfold M.Pol at hy ⊢
     rw [MvPolynomial.restrictSupport, AddMonoidAlgebra.supported, Submodule.mem_comap, Finsupp.mem_supported] at hy
-    rw [y.as_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [y.as_sum, map_sum]
     refine Submodule.sum_mem _ fun m hm => ?_
     rw [MvPolynomial.pderiv_monomial]
     by_cases h0 : m (a, c) = 0
@@ -83,7 +84,8 @@ theorem hypTie_proved (hB : G.BlockOK) : Formalism.InvariantFactorPaths.KP.LL.Hy
     intro LL LL' a c hda hdo y hy
     unfold M.Pol at hy ⊢
     rw [MvPolynomial.restrictSupport, AddMonoidAlgebra.supported, Submodule.mem_comap, Finsupp.mem_supported] at hy
-    rw [y.as_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [y.as_sum, map_sum]
     refine Submodule.sum_mem _ fun m hm => ?_
     rw [MvPolynomial.pderiv_monomial]
     by_cases h0 : m (a, c) = 0

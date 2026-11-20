@@ -64,7 +64,8 @@ theorem exists_frame_image (j : S ⟶ T) [IsOpenImmersion j] (f : T ⟶ Y) (p : 
       ∑ m, c k m • pullbackSections (j ≫ f) _ (V := ⊤) le_top (pullbackSections q E (U := ⊤) le_top (e m)) := by
     refine (ConcreteCategory.bijective_of_isIso
       (((Scheme.Modules.pullbackComp (j ≫ f) q).hom.app E).app ⊤)).1 ((h k).trans ?_)
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun m _ => ?_
     rw [Scheme.Modules.Hom.app_smul, pullbackComp_hom_app]
   have h3 : ((Scheme.Modules.pullback f).map i).app (j ''ᵁ ⊤) (t k) =
@@ -72,13 +73,15 @@ theorem exists_frame_image (j : S ⟶ T) [IsOpenImmersion j] (f : T ⟶ Y) (p : 
     have hn := congr(($((compIso j f).hom.naturality i)).app ⊤ (s k))
     refine hn.symm.trans ?_
     refine (congrArg (((compIso j f).hom.app _).app ⊤) h2).trans ?_
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun m _ => ?_
     rw [Scheme.Modules.Hom.app_smul, compIso_app_pullbackSections j f _ _ le_top]
     rfl
   refine (app_resM _ hV _).trans ?_
   refine (congrArg (fun x => resM _ hV (((Scheme.Modules.pullbackComp f q).hom.app E).app _ x)) h3).trans ?_
-  rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum]
   refine Finset.sum_congr rfl fun m _ => ?_
   rw [Scheme.Modules.Hom.app_smul, pullbackComp_hom_app f q E _ _ le_top, Twist.resM_smul]
   exact congrArg _ (res_pullbackSections _ _ _ _ _)

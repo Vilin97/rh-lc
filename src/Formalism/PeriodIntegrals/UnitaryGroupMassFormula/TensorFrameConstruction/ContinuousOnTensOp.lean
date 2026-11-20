@@ -98,7 +98,8 @@ theorem sum_inner_op {V' : Type} [NormedAddCommGroup V'] [InnerProductSpace ℂ 
     {m : Type} [Fintype m] (b : OrthonormalBasis m ℂ V') (u x : V') :
     ∑ j, ⟪u, A (b j)⟫_ℂ * ⟪b j, x⟫_ℂ = ⟪u, A x⟫_ℂ := by
   conv_rhs => rw [← b.sum_repr' x]
-  rw [map_sum, inner_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, inner_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_smul, inner_smul_right, mul_comm]
 

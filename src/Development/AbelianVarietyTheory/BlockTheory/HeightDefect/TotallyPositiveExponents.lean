@@ -84,7 +84,8 @@ def val (χ : Herm H n) (y y' : V H n) : H.E :=
   ∑ i, ∑ k, y i * (χ : Matrix (Fin n) (Fin n) H.E) i k * H.conj (y' k)
 
 theorem conj_val (χ : Herm H n) (y y' : V H n) : H.conj (val χ y y') = val χ y' y := by
-  simp only [val, map_sum, map_mul, conj_conj]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [val, map_sum, map_mul, conj_conj]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun k _ => ?_
   rw [← χ.2 k i]; ring

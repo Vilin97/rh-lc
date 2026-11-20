@@ -84,7 +84,8 @@ theorem isoProj_locFin : ∀ (G : Type) [Group G] [TopologicalSpace G] (K : Set 
         ((toEndD ρ D K h1 hmul hst P y : D) : V) = F y := by
       intro F hF
       conv_lhs => rw [hyD]
-      rw [← ht, map_sum, Submodule.coe_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← ht, map_sum, Submodule.coe_sum, map_sum]
       refine Finset.sum_congr rfl (fun j _ => ?_)
       rw [map_smul, Submodule.coe_smul, hF, map_smul]
     refine ⟨?_, ?_⟩
@@ -104,7 +105,8 @@ theorem isoProj_locFin : ∀ (G : Type) [Group G] [TopologicalSpace G] (K : Set 
       have hu' : (repD ρ D K h1 hmul hst).asModuleEquiv u = ∑ j, t j • (⟨b₀ j, hbD₀ j⟩ : D) := by
         ext; simp [ht]
       apply (repD ρ D K h1 hmul hst).asModuleEquiv.injective
-      rw [Representation.asModuleEquiv_map_smul, hu', map_sum, map_zero]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Representation.asModuleEquiv_map_smul, hu', map_sum, map_zero]
       refine Finset.sum_eq_zero (fun j _ => ?_)
       rw [map_smul]
       have := congrArg (repD ρ D K h1 hmul hst).asModuleEquiv (ha j)
@@ -120,7 +122,8 @@ theorem isoProj_locFin : ∀ (G : Type) [Group G] [TopologicalSpace G] (K : Set 
     obtain ⟨T, hT, hTr⟩ := GlobalTheory.T.intertwiner_matrix_coefficients G K V ρ D m₀ b₀ A₀ hbD₀ (fun j => toEndD ρ D K h1 hmul hst (f j)) hA₀ hfe
     refine ⟨T, hT, ?_⟩
     convert hTr using 1
-    rw [toEndD_apply, hf, map_sum, Submodule.coe_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [toEndD_apply, hf, map_sum, Submodule.coe_sum]
     rfl
 
 end GlobalTheory.LocFinIso

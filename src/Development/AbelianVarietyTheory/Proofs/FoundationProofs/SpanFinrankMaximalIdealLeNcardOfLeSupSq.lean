@@ -201,7 +201,8 @@ theorem finrank_cotangentSpace_le_finrank_cotangent {B : Type*} [CommRing B] [Is
     intro z hz
     choose c hc using fun i ↦ Ideal.Quotient.mk_surjective (b.repr (x.toCotangent ⟨z, hz⟩) i)
     have h₁ : x.toCotangent ⟨z, hz⟩ = x.toCotangent (∑ i, c i • y i) := by
-      rw [← b.sum_repr (x.toCotangent ⟨z, hz⟩), map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← b.sum_repr (x.toCotangent ⟨z, hz⟩), map_sum]
       refine Finset.sum_congr rfl fun i _ ↦ ?_
       rw [map_smul, hy, ← hc]
       rfl

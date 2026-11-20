@@ -18,7 +18,8 @@ theorem eq_zero_of_mem_span_eX (X : HidaSetting D) (w : (VS D).V)
   have hc : ∀ b, c b = 0 := by
     intro b
     have h := hf b
-    simp only [map_sum, map_smul, smul_eq_mul] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, smul_eq_mul] at h
     have hfe : ∀ a, (VS D).hT (X.fY b) (X.eX a) = if a = b then 1 else 0 := by
       intro a
       rw [a_herm, X.ef a b]

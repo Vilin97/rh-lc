@@ -219,7 +219,8 @@ theorem pair_sumFrame {p : SplitPt D k} {S A L : HSp D} (o : OrthDec S A L) (ζ 
     rw [mul_comm, ← conjTranspose_apply, gram_conjTranspose]
   have h1 : ∑ i, ∑ j, (β₀.b *ᵥ x) i * p.pr (cA D (incA D (S.gram i j))) * (t * p.pr (incA D (star (vecB o ζ j)))) =
       t * ((f ∘ r) ⬝ᵥ β₀.b *ᵥ x) := by
-    simp only [dotProduct, Function.comp_apply, hr, map_sum, map_mul, Finset.mul_sum, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [dotProduct, Function.comp_apply, hr, map_sum, map_mul, Finset.mul_sum, Finset.sum_mul]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
     change _ * f (star (S.gram i j)) * (t * f (star (vecB o ζ j))) = _
     ring

@@ -10,7 +10,8 @@ variable {a : ℕ} {b c : ℤ} {d : ℕ} {ha : 0 < a} {hd : 0 < d} {lam : ℂ} {
 variable {m : Type*} [Fintype m] [DecidableEq m]
 
 lemma stdH_symm (L : PeriodPair) (x y : m → ℂ) : stdH L m y x = conj (stdH L m x y) := by
-  rw [stdH_apply, stdH_apply, map_mul, map_inv₀, Complex.conj_ofReal, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [stdH_apply, stdH_apply, map_mul, map_inv₀, Complex.conj_ofReal, map_sum]
   congr 1
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_mul, Complex.conj_conj, mul_comm]

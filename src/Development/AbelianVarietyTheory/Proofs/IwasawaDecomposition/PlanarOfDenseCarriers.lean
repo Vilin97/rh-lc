@@ -82,7 +82,8 @@ theorem exists_complete {R κ : Type} [CommRing R] [Field κ] (ρ : R →+* κ) 
       Finset.sum_const_zero] at h1
     rw [Finset.sum_comm] at h1
     have h2 : ∀ l, ∑ j, ρ (D l' j) * (g l * (v ∘ Sum.inl) l j) = g l * ρ (if l = l' then 1 else 0) := fun l => by
-      rw [← hD l l', map_sum, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hD l l', map_sum, Finset.mul_sum]
       refine Finset.sum_congr rfl fun j _ => ?_
       simp only [v, vR, Function.comp_apply, Sum.elim_inl, map_mul]
       ring
@@ -156,7 +157,8 @@ theorem span_of_rows {K : Type} [Field K] {V V' : Type} [AddCommGroup V] [Module
     (M M' : Matrix (Fin k) (Fin k) K) (h1 : ∀ a, T (ξ a) = ∑ l, M a l • n l) (h2 : ∀ l, n l = ∑ a, M' l a • T (ξ a)) :
     (∀ a, ξ a = ∑ l, M a l • T' (n l)) ∧ ∀ l, T (T' (n l)) = n l := by
   refine ⟨fun a => ?_, fun l => ?_⟩
-  · rw [← hT (ξ a), h1, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [← hT (ξ a), h1, map_sum]
     exact Finset.sum_congr rfl fun l _ => map_smul _ _ _
   · have : n l = T (∑ a, M' l a • ξ a) := by simp only [map_sum, map_smul, ← h2]
     rw [this, hT]
@@ -249,7 +251,8 @@ theorem planar_of_generic : ∀ (O : Type) [CommRing O] (Z Z' : Scheme.{0}) (C :
       have := l'.2
       simp only [Fin.val_castLE] at *
       omega
-    rw [Matrix.one_apply_ne hne, map_zero, Matrix.mul_apply, map_sum] at e1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Matrix.one_apply_ne hne, map_zero, Matrix.mul_apply, map_sum] at e1
     refine Eq.trans (Finset.sum_congr rfl fun i' _ => ?_) e1
     rw [map_mul, Matrix.map_apply, hB1]
     exact congrArg _ (ev_res w hBU hw hwU _).symm

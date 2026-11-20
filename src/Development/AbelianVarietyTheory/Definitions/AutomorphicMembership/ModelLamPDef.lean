@@ -289,7 +289,8 @@ theorem tcols_fits (C : Cols B) : Fits (tcols C) (fun _ => 1) where
   mtTw _ _ := ⟨lineEquiv⟩
   herm u x y := by
     erw [tcols_ipC, tcols_ipC]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun c _ => by simp [mul_comm]
   pos u x := by
     erw [tcols_ipC]

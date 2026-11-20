@@ -33,7 +33,8 @@ theorem conj_hTens (hc : ∀ z, c (c z) = z) {JA : Matrix α α A} {JB : Matrix 
     (hA : ∀ i j, c (JA j i) = JA i j) (hB : ∀ i j, c (JB j i) = -JB i j) (x y : Matrix α β A) :
     c (GlobalTheory.WeilM.hTens c JA JB y x) = -GlobalTheory.WeilM.hTens c JA JB x y := by
   unfold GlobalTheory.WeilM.hTens
-  simp only [map_sum, map_mul, hc, hA, hB, ← Finset.sum_neg_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, hc, hA, hB, ← Finset.sum_neg_distrib]
   rw [sum_four_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun k _ =>
     Finset.sum_congr rfl fun l _ => ?_

@@ -270,9 +270,11 @@ theorem pair_eq (h2 : (2 : F) ≠ 0) (hb0 : b 0 = 1) (hσ : σ (b 1) = - b 1)
   have A : pairHerm R σ n S T = ∑ i, ∑ j, (rc R b (S.1 i j) 0 * rc R b (T.1 i j) 0 +
       (-algebraMap F R D * rc R b (S.1 i j) 1 * rc R b (T.1 i j) 1)) := by
     unfold pairHerm
-    rw [map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
-    rw [map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [trace_eq hb0 hD, ← mul_assoc, hh, one_mul, rc_mul hb0 hD, (herm_rc hb0 hσ hT j i).1,
       (herm_rc hb0 hσ hT j i).2]

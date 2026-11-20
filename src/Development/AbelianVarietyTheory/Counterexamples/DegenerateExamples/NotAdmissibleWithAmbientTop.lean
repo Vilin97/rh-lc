@@ -74,7 +74,8 @@ theorem exists_acts (D : D7) {V : Type} [AddCommGroup V] [Module ℂ V]
       atPlace_central D k v _ (D.ntypes.eSer_central k f)⟩ :
         Subalgebra.center ℂ (MonoidAlgebra ℂ (G0g D.nd)))) = 1 := by
     apply Subtype.ext
-    simp only [AddSubmonoidClass.coe_finsetSum, atPlace_eq, ← map_sum, hsum, map_one,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [AddSubmonoidClass.coe_finsetSum, atPlace_eq, ← map_sum, hsum, map_one,
       OneMemClass.coe_one]
   by_contra hne
   push Not at hne
@@ -82,7 +83,8 @@ theorem exists_acts (D : D7) {V : Type} [AddCommGroup V] [Module ℂ V]
   calc F = cen 1 F := by rw [map_one]; rfl
     _ = ∑ f ∈ S, cen ⟨atPlace D k v (D.ntypes.eSer k f),
           atPlace_central D k v _ (D.ntypes.eSer_central k f)⟩ F := by
-        rw [← h1, map_sum, LinearMap.sum_apply]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [← h1, map_sum, LinearMap.sum_apply]
     _ = 0 := Finset.sum_eq_zero fun f _ => hne f
 
 theorem exists_onMt (D : D7) (μ j) (k : Fin 2) (v : D.nd.PlG k) (F : D.what₂.Mt μ j) (hF : F ≠ 0) :

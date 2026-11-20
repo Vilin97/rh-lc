@@ -21,7 +21,8 @@ def frameLin {K : Type} [Field K] (Bm : ∀ τ : E →+* ℂ, Matrix (Fin (Dw.mu
 theorem eval_frameLin {K : Type} [Field K] (Bm : ∀ τ : E →+* ℂ, Matrix (Fin (Dw.mult τ)) (Fin (Dw.mult τ)) K)
     (lam : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) → K) (Y : ArcLt Dw → K) (x : ArcLt Dw) :
     eval Y (frameLin Bm lam x) = frameSub Bm lam Y x := by
-  simp only [frameLin, frameSub, map_sum, map_mul, eval_X, eval_C, Finset.sum_mul, mul_assoc]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [frameLin, frameSub, map_sum, map_mul, eval_X, eval_C, Finset.sum_mul, mul_assoc]
 
 theorem frameLin_homog {K : Type} [Field K] (Bm : ∀ τ : E →+* ℂ, Matrix (Fin (Dw.mult τ)) (Fin (Dw.mult τ)) K)
     (lam : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) → K) (x : ArcLt Dw) : (frameLin Bm lam x).IsHomogeneous 1 := by
@@ -46,14 +47,16 @@ theorem bind_subA_frameLin {K : Type} [Field K]
     intro k
     have h := congrFun (congrFun (hAB τ) k) j
     rwa [Matrix.mul_apply, Matrix.one_apply] at h
-  simp only [frameLin, map_sum, map_mul, bind₁_X_right, bind₁_C_right, subA_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [frameLin, map_sum, map_mul, bind₁_X_right, bind₁_C_right, subA_sum, Finset.sum_mul]
   calc _ = ∑ k : Fin (Dw.mult τ), C ((∑ l, A τ k l * Bm τ l j) * (lam τ j)⁻¹) *
           (X ⟨τ, i, k⟩ : MvPolynomial (ArcLt Dw) K) := by
         show ∑ l : Fin (Dw.mult τ), ∑ k : Fin (Dw.mult τ), C (A τ k l) *
           (X ⟨τ, i, k⟩ : MvPolynomial (ArcLt Dw) K) * (C (Bm τ l j) * C (lam τ j)⁻¹) = _
         rw [Finset.sum_comm]
         refine Finset.sum_congr rfl fun k _ => ?_
-        simp only [Finset.sum_mul, map_sum, map_mul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [Finset.sum_mul, map_sum, map_mul]
         refine Finset.sum_congr rfl fun l _ => ?_
         ring
     _ = C (lam τ j)⁻¹ * X ⟨τ, i, j⟩ := by
@@ -196,7 +199,8 @@ private theorem eval_frame_lemma_7 {K : Type} [NormedField K]
     (x : ArcLt Dw → K) :
     eval x (C c * bind₁ (frameLin Bm lam) Q) = c * eval (frameSub Bm lam x) Q := by
   have hfs : ∀ y, eval x (frameLin Bm lam y) = frameSub Bm lam x y := fun y => by
-    simp only [frameLin, frameSub, map_sum, map_mul, eval_X, eval_C, Finset.sum_mul, mul_assoc]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [frameLin, frameSub, map_sum, map_mul, eval_X, eval_C, Finset.sum_mul, mul_assoc]
   rw [map_mul, eval_C]
   congr 1
   induction Q using MvPolynomial.induction_on <;> simp_all
@@ -216,14 +220,16 @@ private theorem coeff_subst_lemma_8 {K : Type} [NormedField K]
         intro k
         have h := congrFun (congrFun (hAB τ) k) j
         rwa [Matrix.mul_apply, Matrix.one_apply] at h
-      simp only [frameLin, map_sum, map_mul, bind₁_X_right, bind₁_C_right, subA_sum, Finset.sum_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [frameLin, map_sum, map_mul, bind₁_X_right, bind₁_C_right, subA_sum, Finset.sum_mul]
       calc _ = ∑ k : Fin (Dw.mult τ), C ((∑ l, A τ k l * Bm τ l j) * (lam τ j)⁻¹) *
               (X ⟨τ, i, k⟩ : MvPolynomial (ArcLt Dw) K) := by
             show ∑ l : Fin (Dw.mult τ), ∑ k : Fin (Dw.mult τ), C (A τ k l) *
               (X ⟨τ, i, k⟩ : MvPolynomial (ArcLt Dw) K) * (C (Bm τ l j) * C (lam τ j)⁻¹) = _
             rw [Finset.sum_comm]
             refine Finset.sum_congr rfl fun k _ => ?_
-            simp only [Finset.sum_mul, map_sum, map_mul]
+            set_option synthInstance.maxHeartbeats 100000 in
+              simp only [Finset.sum_mul, map_sum, map_mul]
             refine Finset.sum_congr rfl fun l _ => ?_
             ring
         _ = C (lam τ j)⁻¹ * X ⟨τ, i, j⟩ := by

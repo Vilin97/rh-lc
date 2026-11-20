@@ -82,7 +82,8 @@ theorem mul_eq_one {μ : Fin d → MvPowerSeries (Fin d ⊕ Fin d) O} {ι κ : T
   have h2 : In (⊤ : Ideal O) (f l - comb (∑ m, P l m • R m) f) := by
     have e1 : f l - comb (∑ m, P l m • R m) f =
         (f l - comb (P l) g) + ∑ m, P l m • (g m - comb (R m) f) := by
-      simp only [comb_eq, map_sum, map_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [comb_eq, map_sum, map_smul]
       simp only [Fintype.linearCombination_apply, smul_sub, Finset.sum_sub_distrib]
       abel
     rw [e1, in_top_iff]

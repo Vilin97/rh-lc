@@ -35,7 +35,8 @@ theorem trace_eq_sum_eigenspaces : ∀ (C : Type) [Field C] (O : Type) [CommRing
       exact hact σ x.1 x.2
     rw [this, map_smul, LinearMap.trace_id, smul_eq_mul, mul_comm]
   have hleft : algebraMap O C (ρ a).trace = LinearMap.trace C (Fin h → C) f := by
-    rw [hf, Matrix.trace_toLin'_eq, Matrix.trace, Matrix.trace, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hf, Matrix.trace_toLin'_eq, Matrix.trace, Matrix.trace, map_sum]
     rfl
   rw [hleft, htr]
   simp only [hrestrict]

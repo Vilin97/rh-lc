@@ -185,7 +185,8 @@ theorem AddBlockBridge.proof (hCLS : ChartLatSection.Statement) : AddBlockBridge
     obtain ⟨u, hu, hsum⟩ := hgen c (ne_zero_of_isLive P y hP hc)
     choose v hv hve using fun j ↦ exists_chartRing P y hP c (hu j)
     refine ⟨v, hv, (funHom P y hP).injective ?_⟩
-    rw [map_sum, map_one, ← map_one (constMap (Ω := Ω) ι), ← hsum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_one, ← map_one (constMap (Ω := Ω) ι), ← hsum, map_sum]
     refine Finset.sum_congr rfl fun j _ ↦ ?_
     rw [map_mul, map_mul, hve j, hquot c hc j]
   let D : AddBlockData P :=

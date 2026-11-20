@@ -49,7 +49,8 @@ theorem cv_add (f : PowerSeries R) (g g' : ℤ → M) (m : ℤ) (hg : ∀ k < m,
 theorem cv_map {M' : Type} [AddCommGroup M'] [Module R M'] (L : M →ₗ[R] M') (f : PowerSeries R) (g : ℤ → M)
     (m : ℤ) (hg : ∀ k < m, g k = 0) (k : ℤ) : L (cv f g k) = cv f (fun k => L (g k)) k := by
   obtain ⟨N, hN⟩ := exists_nat_gt (k - m)
-  rw [cv_eq_sum f g m hg k N hN,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [cv_eq_sum f g m hg k N hN,
     cv_eq_sum f (fun j => L (g j)) m (fun j hj => by rw [hg j hj, map_zero]) k N hN,
     map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_

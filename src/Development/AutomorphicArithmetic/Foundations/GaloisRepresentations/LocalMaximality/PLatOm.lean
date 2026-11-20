@@ -65,7 +65,8 @@ private theorem dual_of_lattice {A F W : Type} [CommRing A] [IsDomain A] [Field 
       ext j
       simp [Finset.sum_apply, Pi.single_apply]
     conv_lhs => rw [← h1, h2]
-    simp [map_sum, hφ, algebraMap_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, hφ, algebraMap_smul]
   refine ⟨n, fun k => (f (Pi.single k 1) : P), φ, fun k => (f (Pi.single k 1)).2, ?_, ?_⟩
   · rintro k p hp
     exact ⟨g ⟨p, hp⟩ k, (hφ k ⟨p, hp⟩).symm⟩
@@ -141,7 +142,8 @@ private theorem lat_of_isBundle {F : Type} [Field F] [Algebra ℂ F] {d : ℕ} {
   · obtain ⟨w, rfl⟩ := hM m hm
     simpa [hre] using hval k w ((hML w).2 hm)
   · obtain ⟨w, rfl⟩ := hM m hm
-    simp only [LinearMap.comp_apply, hre, ← map_smul, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [LinearMap.comp_apply, hre, ← map_smul, ← map_sum]
     exact congrArg e (hid w)
   · have hw : w ∈ Submodule.span F (s : Set W) := hsF ▸ Submodule.mem_top
     have hsL : ∀ z ∈ s, e z ∈ M := fun z hz => (hML z).1 (hLsub z (hPL z (by rw [hPs]; exact Submodule.subset_span hz)))

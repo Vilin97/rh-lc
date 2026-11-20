@@ -440,7 +440,8 @@ theorem diag_no_step {M : ℕ} (π : IrrRep (GL (Fin (M + 1)) k)) (hπ : IsCuspi
         ring
       rw [← rho_mul, U_mul, show Y + Yc c = Yc (c + r) + Z by simp [Z], ← U_mul, rho_mul,
         (mem_fixed_iff _ _ _).1 hw _ hZ]
-    simp only [s, map_sum, step]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [s, map_sum, step]
     exact Fintype.sum_equiv (Equiv.addRight r) _ _ (fun c => rfl)
   have hsK : s ∈ fixed π.ρ (KOne k (Fin (M + 1))) :=
     Submodule.sum_mem _ fun c _ => fixed_of_KO π.ρ hw (U_mem_KO (PB p) hP _ fun a b _ => hYc c a b)
@@ -493,7 +494,8 @@ theorem diag_no_step {M : ℕ} (π : IrrRep (GL (Fin (M + 1)) k)) (hπ : IsCuspi
   have hsum : l (π.ρ (GroundTheory.Automorphic.Iwasawa.diagGL k (M + 1) τ) s) =
       (Fintype.card (Fin (M + 1) → Fin (M + 1) → 𝓀[k]) : ℂ) *
         l (π.ρ (GroundTheory.Automorphic.Iwasawa.diagGL k (M + 1) τ) w) := by
-    simp only [s, map_sum, heach, Finset.sum_const, Finset.card_univ, nsmul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [s, map_sum, heach, Finset.sum_const, Finset.card_univ, nsmul_eq_mul]
   rw [hs0, map_zero, map_zero] at hsum
   have hc : (Fintype.card (Fin (M + 1) → Fin (M + 1) → 𝓀[k]) : ℂ) ≠ 0 :=
     Nat.cast_ne_zero.2 Fintype.card_ne_zero

@@ -24,13 +24,15 @@ theorem smul_latTQuot_le_latT : ∀ {p : ℕ} [Fact p.Prime] {C : Type} [Field C
   have e : d • idem (isSplitting_embO P.integers) φ =
       ∑ k, algebraMap O C (r k) ⊗ₜ[ℤ] a k := (isSplitting_embO P.integers).1 (by
     ext ψ
-    rw [map_smul, splitMap_idem, map_sum, Finset.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_smul, splitMap_idem, map_sum, Finset.sum_apply]
     simp only [splitMap_tmul, RingHom.comp_apply, algebraMap_embO, Pi.smul_apply, Pi.single_apply,
       smul_eq_mul]
     rw [hsum ψ]
     split_ifs <;> simp)
   change d • proj (isSplitting_embO P.integers) P.actV φ y ∈ P.latT
-  rw [proj, ← LinearMap.smul_apply, ← map_smul, e, map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [proj, ← LinearMap.smul_apply, ← map_smul, e, map_sum, LinearMap.sum_apply]
   refine P.latT.sum_mem fun k _ => ?_
   rw [tensorAction_tmul, algebraMap_smul]
   exact P.latT.smul_mem _ (hact _ _ hy)

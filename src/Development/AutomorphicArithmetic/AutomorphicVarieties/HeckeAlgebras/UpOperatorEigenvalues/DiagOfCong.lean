@@ -31,7 +31,8 @@ private theorem cong_roots {K : Type} [NormedField K] [IsUltrametricDist K] {N :
     rw [a.2, b.2, sub_self, mul_eq_zero] at h1
     refine Subtype.ext (sub_eq_zero.1 (h1.resolve_left fun h2 => ?_))
     have h3 := congrArg (residue O) h2
-    simp only [map_sum, map_mul, map_pow, hab, map_zero] at h3
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, map_pow, hab, map_zero] at h3
     rw [geom_sum₂_self, mul_eq_zero] at h3
     rcases h3 with h3 | h3
     · rw [← map_natCast (residue O), hm] at h3

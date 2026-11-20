@@ -19,7 +19,8 @@ def toA {κ : Type} (w : (κ → F) × (κ → F)) : (κ → AF F) × (κ → AF
 
 theorem toA_dot {κ : Type} [Fintype κ] (a b : κ → F) :
     (fun k => algebraMap F (AF F) (a k)) ⬝ᵥ (fun k => algebraMap F (AF F) (b k)) = algebraMap F (AF F) (a ⬝ᵥ b) := by
-  simp [dotProduct, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [dotProduct, map_sum, map_mul]
 
 theorem iso_span {κ : Type} [Fintype κ] (Λ : Submodule F ((κ → F) × (κ → F)))
     (hΛ : ∀ a ∈ Λ, ∀ b ∈ Λ, a.1 ⬝ᵥ b.2 = b.1 ⬝ᵥ a.2) :
@@ -60,7 +61,8 @@ theorem lagrForm_schr_invariant : ∀ (F : Type) [Field F] [NumberField F] (ψ :
   have hCM : C ∈ M := Submodule.sum_mem _ (fun j _ => Submodule.smul_mem _ _ (hUM j))
   have hC1 : C.1 = (toA v).1 := by
     funext k
-    simp [hCdef, toA, hc, Prod.fst_sum, Finset.sum_apply, map_sum, hc', Algebra.smul_def]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [hCdef, toA, hc, Prod.fst_sum, Finset.sum_apply, map_sum, hc', Algebra.smul_def]
   have key : ∀ x : Fin r → AF F, schr ψ (∑ j, x j • toA (u j)) (schr ψ (t • toA v) φ) 0
       = schr ψ (∑ j, (x + t • c') j • toA (u j)) φ 0 := by
     intro x

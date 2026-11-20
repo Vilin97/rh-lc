@@ -87,7 +87,8 @@ theorem comm_at_good_place : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ :
       rw [← mul_assoc, ← hc.eq]; group
     rw [← m, e1, m (u i * uv⁻¹), m (GlobalTheory.AdelicU.emb D.sp.cm.sig W₁.gram v x) uv, hfixv]
   simp only [Finsupp.sum]
-  rw [LinearMap.sum_apply, LinearMap.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [LinearMap.sum_apply, LinearMap.sum_apply, map_sum]
   refine Finset.sum_congr rfl fun k hk => ?_
   rw [LinearMap.smul_apply, LinearMap.smul_apply, map_smul, key k hk]
 

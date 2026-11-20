@@ -29,7 +29,8 @@ theorem dualV_pairing_exists : ∀ (r g rk : ℕ) (Mq : Matrix (Fin r) (Fin r) �
   have hfsum : ∀ s : Fin g → ℚ, f s = ∑ i, a i * s i := by
     intro s
     conv_lhs => rw [pi_eq_sum_univ s]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, smul_eq_mul, mul_comm]
     congr 1

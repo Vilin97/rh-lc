@@ -47,7 +47,8 @@ theorem isPullWedge_smul_ιMulti (i : Ω₀ →+* Ω) (j : V₀ →+ V) (hj : Is
   have h3 : (fun k => j (b k)) = fun k => ∑ l, (i.mapMatrix (Matrix.of T)) k l • j (u l) := by
     funext k
     rw [hb]
-    simp only [map_sum, hj.1]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, hj.1]
     rfl
   rw [h3, GlobalTheory.CompanionTheory.Ar.Lat.wedge_matrix_mul_family Ω V n _ _, ← RingHom.map_det, smul_smul, ← map_mul, ← h2]
 

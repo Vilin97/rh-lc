@@ -111,7 +111,8 @@ theorem lw_fv (h : a + b = n) (w : Pl E) (U : Subgroup (GLw a w × GLw b w)) {W 
     lw (fv h w U ρ f X v g) = ∑ y ∈ X, hint ((GlobalTheory.LFun.KGL w a).prod (GlobalTheory.LFun.KGL w b))
       fun m => phi3 h w f g y m * lw (ρ m (v y)) := by
   unfold fv
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun y hy => ?_
   have hfin := GlobalTheory.CompanionTheory.DiagAvg.finite_cosets U hUo _ (GlobalTheory.CompanionTheory.GL3BlockMatrixLocal.constant_term_compact_support h w f hfc g y)
   rw [map_smul, smul_eq_mul, GlobalTheory.CompanionTheory.HintLevel.hint_eq_level _ _ U _ hUK ?_ hne,

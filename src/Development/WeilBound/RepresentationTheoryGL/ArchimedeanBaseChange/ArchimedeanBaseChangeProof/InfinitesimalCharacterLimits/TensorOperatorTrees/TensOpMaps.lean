@@ -38,14 +38,16 @@ theorem tensOp_inj {U₁ : Submodule ℂ (Sm E r)} {U₂ : Submodule ℂ (Sm E s
     intro a
     refine hn₂ _ (Submodule.sum_mem _ fun i _ => U₂.smul_mem _ (u₂ i)) (Subtype.ext (funext fun b => ?_))
     have := congrFun h0 (a, b)
-    simp only [map_sum, map_smul, Submodule.coe_sum, Submodule.coe_smul, Finset.sum_apply, Pi.smul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, Submodule.coe_sum, Submodule.coe_smul, Finset.sum_apply, Pi.smul_apply,
       smul_eq_mul, Pi.zero_apply, ZeroMemClass.coe_zero] at this ⊢
     exact this
   have s2 : ∀ b, ∑ i, (ψ₂ i).1 b • ψ₁ i = 0 := by
     intro b
     refine hn₁ _ (Submodule.sum_mem _ fun i _ => U₁.smul_mem _ (u₁ i)) (Subtype.ext (funext fun a => ?_))
     have := congrArg (fun w : Sm E s => w.1 b) (s1 a)
-    simp only [map_sum, map_smul, Submodule.coe_sum, Submodule.coe_smul, Finset.sum_apply, Pi.smul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, Submodule.coe_sum, Submodule.coe_smul, Finset.sum_apply, Pi.smul_apply,
       smul_eq_mul, Pi.zero_apply, ZeroMemClass.coe_zero] at this ⊢
     rw [← this]
     exact Finset.sum_congr rfl fun i _ => mul_comm _ _

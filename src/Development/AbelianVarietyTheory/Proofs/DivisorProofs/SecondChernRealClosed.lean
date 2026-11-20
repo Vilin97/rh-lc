@@ -35,7 +35,8 @@ theorem repr_bas_mul (S T U : Finset (Fin (n + n))) : ∃ m : ℤ, (bas n).repr 
 theorem repr_mul (α β : Alt n) (U : Finset (Fin (n + n))) : (bas n).repr (α * β) U =
     ∑ S, ∑ T, (bas n).repr α S * (bas n).repr β T * (bas n).repr (bas n S * bas n T) U := by
   conv_lhs => rw [← (bas n).sum_repr α, ← (bas n).sum_repr β]
-  simp only [Finset.sum_mul, Finset.mul_sum, smul_mul_smul_comm, map_sum, map_smul, Finsupp.finset_sum_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finset.sum_mul, Finset.mul_sum, smul_mul_smul_comm, map_sum, map_smul, Finsupp.finset_sum_apply,
     Finsupp.smul_apply, smul_eq_mul]
   exact Finset.sum_comm
 
@@ -85,9 +86,11 @@ theorem IsConj.smul {α β : Alt n} (c : ℂ) (h : IsConj α β) : IsConj (c •
   simp [h S]
 
 theorem IsConj.mul {α β α' β' : Alt n} (h : IsConj α β) (h' : IsConj α' β') : IsConj (α * α') (β * β') := fun U => by
-  rw [repr_mul, repr_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [repr_mul, repr_mul, map_sum]
   refine Finset.sum_congr rfl fun S _ => ?_
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun T _ => ?_
   obtain ⟨m, e, -⟩ := repr_bas_mul S T U
   rw [e, h S, h' T, map_mul, map_mul, map_intCast]

@@ -36,7 +36,8 @@ theorem OrbitCenterChart.proof : OrbitCenterChart.Statement := by
 
   have hVzero : ∀ f ∈ V, aeval (dehomCoords (genPt V) c) f = 0 := by
     intro f hf
-    rw [← sum_weightedHomogeneousComponent (w := coordDeg n) f,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← sum_weightedHomogeneousComponent (w := coordDeg n) f,
       finsum_eq_sum _ (weightedHomogeneousComponent_finsupp f), map_sum]
     refine Finset.sum_eq_zero fun b _ ↦ ?_
     exact (aeval_dehomCoords_of_homog (genPt V) c

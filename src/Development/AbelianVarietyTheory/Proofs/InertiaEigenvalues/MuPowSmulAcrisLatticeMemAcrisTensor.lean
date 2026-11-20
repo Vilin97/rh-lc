@@ -59,7 +59,8 @@ theorem mu_pow_smul_mem : ∀ (l : ℕ) [Fact l.Prime] (a e : ℕ) [NeZero a] [N
     · simp [Pi.single_apply, h]
   have hz : (fun i => toOB l O (z i)) = ∑ i, toOB l O (z i) • (Pi.single i (1 : OB l O)) := by
     funext k; simp [Finset.sum_apply, Pi.single_apply]
-  rw [hz, map_sum, map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hz, map_sum, map_sum, Finset.smul_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_smul, smul_comm, hsingle, tw_incl_smul, tw_incl_comp]
   rfl

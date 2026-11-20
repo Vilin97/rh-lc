@@ -156,7 +156,8 @@ theorem GlobalTheory.CtLocFac.fac : GlobalTheory.ThK.KP → ∀ (F E : Type) [Fi
     choose ψ₁ hψ₁ _ using hloc
     refine ⟨ψ₁, fun i => hψ₁ i, ?_⟩
     have hmv : om (1, mm) (om (1, g) Φ) = ∑ i, tens (evFin F v) (ψ₁ i) (r i) := by
-      rw [hdec, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hdec, map_sum]
       exact Finset.sum_congr rfl fun i _ => (hψ₁ i).2 (r i) (hRest i _ (hSB i v))
     have hmem : ∀ i, tens (evFin F v) (ψ₁ i) (r i) ∈ schA F (Fin a × Fin (a + a')) := fun i => (hRest i _ (hψ₁ i).1).2
     have hsumT : ∀ s : Finset (Fin m), Tct (∑ i ∈ s, tens (evFin F v) (ψ₁ i) (r i)) =

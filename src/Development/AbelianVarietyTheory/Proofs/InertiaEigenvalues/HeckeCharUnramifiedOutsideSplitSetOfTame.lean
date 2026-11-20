@@ -35,7 +35,8 @@ theorem unramOutside_of_corr_of_tame : ∀ (D : D7) (N : NData D.R D.host D.what
     have k1 : idemAt P * idem Q = idemAt P :=
       GlobalTheory.PlaceModelSum.mul_sum_orth (fun a ha => (hQ.isIdemAt ha).1) (fun a ha b hb hab => hQ.mul_eq_zero ha hb hab) hP
     have k2 : idemAt P * cA D (idem Q) = 0 := by
-      rw [idem, map_sum, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [idem, map_sum, Finset.mul_sum]
       exact Finset.sum_eq_zero fun j hj => hQ.mul_conj hP hj
     rw [hf, mul_add, k1, k2, add_zero]
   have hdelta : ∀ P e', GlobalTheory.IdemSupport.IsDelta Φ P e' → e P = e' := fun P e' h' =>

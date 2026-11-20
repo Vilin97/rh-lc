@@ -73,7 +73,8 @@ theorem exists_inv : ∀ {D : D7} (Z : Finset (Pl D.host.E)) (e : AE D), IsIdemS
     fun PP hPP => exists_local_inv (hes PP hPP) α ha (hZ PP hPP)
   choose! γ hγ1 hγ2 using key
   refine ⟨toEAf D (∑ PP ∈ Z, γ PP), GlobalTheory.IdemIntegral.toEAf_mem_of_finPart ?_, ?_⟩
-  · rw [map_sum (finPart D)]; exact sum_mem fun PP hPP => hγ1 PP hPP
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum (finPart D)]; exact sum_mem fun PP hPP => hγ1 PP hPP
   · have hαw : α * ∑ PP ∈ Z, γ PP = e := by
       rw [Finset.mul_sum, hsum]; exact Finset.sum_congr rfl fun PP hPP => hγ2 PP hPP
     have hee : e * e = e := GlobalTheory.PlaceDatum.idemSum_mul_self he

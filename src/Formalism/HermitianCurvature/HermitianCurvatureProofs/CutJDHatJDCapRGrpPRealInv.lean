@@ -51,7 +51,8 @@ theorem ri_ginv (v : Fin (2 * r + k + 1) → ℂ) (p : Fin (2 * r + k + 1)) :
   · exact (MvPolynomial.totalDegree_finset_sum _ _).trans (Finset.sup_le fun c _ =>
       (MvPolynomial.totalDegree_finset_sum _ _).trans (Finset.sup_le fun b _ =>
         (MvPolynomial.totalDegree_finset_sum _ _).trans (Finset.sup_le fun a _ => hdeg _ _)))
-  · simp only [ginvH, Matrix.mulVec, dotProduct, Matrix.mul_apply, Matrix.conjTranspose_apply, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [ginvH, Matrix.mulVec, dotProduct, Matrix.mul_apply, Matrix.conjTranspose_apply, map_sum,
       MvPolynomial.eval_mul, MvPolynomial.eval_C, MvPolynomial.eval_X, Sum.elim_inr, Finset.sum_mul]
     refine Finset.sum_congr rfl fun c _ => Finset.sum_congr rfl fun b _ => Finset.sum_congr rfl fun a _ => ?_
     ring

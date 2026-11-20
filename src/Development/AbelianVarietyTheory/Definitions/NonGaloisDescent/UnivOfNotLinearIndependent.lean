@@ -123,12 +123,14 @@ theorem dU_mul (β : DetBases k r n) (U : Planes k r n) (g : Matrix (Fin r) (Fin
     have hgy : (g * y).row i = ∑ j, g i j • y.row j := by
       ext c
       simp [Matrix.mul_apply, Matrix.row, Finset.sum_apply]
-    rw [hgy, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hgy, map_sum]
     simp only [map_smul]
   have hM : e.toMatrix (fun i => U.1.mkQ ((g * y).row i)) =
       e.toMatrix (fun i => U.1.mkQ (y.row i)) * g.transpose := by
     ext a i
-    simp only [Module.Basis.toMatrix_apply, hrow, map_sum, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Module.Basis.toMatrix_apply, hrow, map_sum, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply,
       Finsupp.smul_apply, smul_eq_mul, Matrix.mul_apply, Matrix.transpose_apply]
     exact Finset.sum_congr rfl fun j _ => mul_comm _ _
   unfold dU

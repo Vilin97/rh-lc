@@ -19,7 +19,8 @@ private theorem lin_part {E : Type} [Field E] {n : ℕ} (f : MvPowerSeries (Fin 
   obtain ⟨g, hg⟩ := mem_span_X f hf
   have hc : ∀ j, coeff (Finsupp.single j 1) f = constantCoeff (g j) := by
     intro j
-    rw [hg, map_sum, Finset.sum_eq_single j]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hg, map_sum, Finset.sum_eq_single j]
     · rw [MvPowerSeries.X, coeff_monomial_mul, if_pos le_rfl, one_mul, tsub_self,
         coeff_zero_eq_constantCoeff_apply]
     · intro i _ hij

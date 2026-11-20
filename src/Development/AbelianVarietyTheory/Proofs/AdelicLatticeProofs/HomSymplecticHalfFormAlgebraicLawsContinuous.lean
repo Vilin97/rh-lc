@@ -39,7 +39,8 @@ theorem hO_mul_right (t : Formalism.L2.Theta.AE D) (x y : WO S T) :
 theorem hO_rat (M N : Matrix (Fin T.rank) (Fin S.rank) D.host.E) :
     hO S T (M.map (incA D)) (N.map (incA D)) = incA D (GlobalTheory.LatVac.hRat S T M N) := by
   unfold hO GlobalTheory.LatVac.hRat
-  simp only [Matrix.map_apply, GlobalTheory.DualPairCheck.cA_incA, map_sum, RingHom.map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.map_apply, GlobalTheory.DualPairCheck.cA_incA, map_sum, RingHom.map_mul]
 
 theorem symplOH_rat (M N : Matrix (Fin T.rank) (Fin S.rank) D.host.E) :
     symplOH S T (M.map (incA D)) (N.map (incA D)) = algebraMap D.host.F (AF D.host.F)

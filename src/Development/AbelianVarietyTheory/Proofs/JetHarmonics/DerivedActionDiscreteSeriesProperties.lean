@@ -171,7 +171,8 @@ theorem dsig_kfin [CompleteSpace H] (hK : PI.KFinSmooth) (hmu : IsHCParam mu) (h
     show dsig (k := k) (r := r) σ Y s ∈ T
     induction hs using Submodule.span_induction with
     | mem y hy =>
-      rw [(hL ⟨y, hy⟩ Y hY).1, ← b.sum_repr Y, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [(hL ⟨y, hy⟩ Y hY).1, ← b.sum_repr Y, map_sum]
       refine T.sum_mem fun j _ => ?_
       rw [map_smul]
       exact T.smul_of_tower_mem _ (Submodule.subset_span ⟨(⟨y, hy⟩, j), rfl⟩)

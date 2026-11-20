@@ -108,7 +108,8 @@ theorem adjoin_genU : Algebra.adjoin ℝ {x : UEnv E a | ∃ v i j, x = genU v i
       funext k l w
       simp [Finset.sum_apply, Matrix.single_apply, Pi.single_apply, ite_and, ite_apply]
     rw [e]
-    simp only [map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul]
     exact sum_mem fun i _ => sum_mem fun j _ => sum_mem fun v _ =>
       Subalgebra.smul_mem _ (Algebra.subset_adjoin (by exact ⟨v, i, j, rfl⟩)) _
   | hmul x y hx hy => exact mul_mem (hx trivial) (hy trivial)

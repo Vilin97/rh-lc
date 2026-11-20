@@ -112,7 +112,8 @@ theorem nilPart_skew (B : LinearMap.BilinForm O H) {M : I → Module.End O H}
     (hskew : ∀ i x y, B (M i x) y + B x (M i y) = 0) (hiso : ∀ i j x y, B (M i x) (M j y) = 0) (l : ℕ) (t : I → R)
     (x y : R ⊗[O] H) :
     B.baseChange R (nilPart l M R t x) y + B.baseChange R x (nilPart l M R t y) = 0 := by
-  simp only [nilPart_eq, LinearMap.smul_apply, LinearMap.sum_apply, map_smul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [nilPart_eq, LinearMap.smul_apply, LinearMap.sum_apply, map_smul, map_sum]
   rw [← smul_add, ← Finset.sum_add_distrib]
   simp only [← smul_add]
   rw [Finset.sum_eq_zero fun i _ => by rw [(baseChange_skew_iso R B (hskew i) (hiso i i) x y).1, smul_zero], smul_zero]
@@ -121,7 +122,8 @@ theorem nilPart_iso (B : LinearMap.BilinForm O H) {M : I → Module.End O H}
     (hskew : ∀ i x y, B (M i x) y + B x (M i y) = 0) (hiso : ∀ i j x y, B (M i x) (M j y) = 0) (l : ℕ) (t : I → R)
     (x y : R ⊗[O] H) :
     B.baseChange R (nilPart l M R t x) (nilPart l M R t y) = 0 := by
-  simp only [nilPart_eq, LinearMap.smul_apply, LinearMap.sum_apply, map_smul, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [nilPart_eq, LinearMap.smul_apply, LinearMap.sum_apply, map_smul, map_sum,
     (baseChange_skew_iso R B (hskew _) (hiso _ _) _ _).2, smul_zero, Finset.sum_const_zero]
 
 end R

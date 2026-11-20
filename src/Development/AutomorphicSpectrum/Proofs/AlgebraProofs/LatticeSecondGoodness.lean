@@ -28,7 +28,8 @@ private theorem loc_free_base_change {o Ω C : Type} [CommRing o] [Field Ω] [Fi
     fun l => algebraMap Ω C (f l), fun l => algebraMap Ω C (c l), fun l => hRC _ (hf l),
     fun l => hRC _ (hc l), ?_, fun l => ?_⟩
   · have h := congrArg (algebraMap Ω C) hsum
-    simpa only [map_sum, map_mul, map_one] using h
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa only [map_sum, map_mul, map_one] using h
   obtain ⟨b, hli, hsp, hiff⟩ := hb l
   have hbc := isBaseChange_bcMap Ω C ι
   let B : Module.Basis (Fin r) Ω (ι → Ω) := Module.Basis.mk hli hsp.ge
@@ -69,7 +70,8 @@ private theorem loc_free_base_change {o Ω C : Type} [CommRing o] [Field Ω] [Fi
         refine ⟨fun q => a * algebraMap Ω C (av q), fun q => ?_, ?_⟩
         · obtain ⟨n, hn⟩ := hav q
           exact ⟨n, by rw [mul_left_comm, ← map_pow, ← map_mul]; exact mul_mem ha (hRC _ hn)⟩
-        · simp only [map_sum, map_smul, Finset.smul_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          · simp only [map_sum, map_smul, Finset.smul_sum]
           refine Finset.sum_congr rfl fun q _ => ?_
           rw [← algebraMap_smul C (av q), smul_smul]
       | zero => exact ⟨0, fun q => ⟨0, by simp⟩, by simp⟩

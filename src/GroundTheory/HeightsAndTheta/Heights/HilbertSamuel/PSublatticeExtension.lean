@@ -37,11 +37,13 @@ theorem SublatticeExtension.proof : SublatticeExtension.Statement := by
     intro x
     obtain ⟨c, hc⟩ : ∃ c : _ → ℤ, x = ∑ i, c i • g i := by
       refine ⟨b.repr ⟨φ' x, (mem φ' _).2 ⟨x, rfl⟩⟩, hφ' ?_⟩
-      rw [map_sum]; simp only [map_zsmul, hg]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]; simp only [map_zsmul, hg]
       have hs := congrArg Subtype.val (b.sum_repr ⟨φ' x, (mem φ' _).2 ⟨x, rfl⟩⟩)
       rw [Submodule.coe_sum] at hs; simp only [Submodule.coe_smul] at hs
       exact hs.symm
-    rw [hc]; simp only [map_sum, map_zsmul, hg, hΨb]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hc]; simp only [map_sum, map_zsmul, hg, hΨb]
 
   have hlat : ∀ y ∈ imageLattice φ', ‖Ψ y‖ ≤ ‖y‖ := by
     intro y hy; obtain ⟨x, rfl⟩ := (mem φ' y).1 hy; rw [hext]; exact hnorm x
@@ -85,7 +87,8 @@ theorem SublatticeExtension.proof : SublatticeExtension.Statement := by
     have h1 : ∑ i, c i • b i = 0 := by
       apply Subtype.ext
       have := congrArg φ' h0
-      simpa [map_sum, map_zsmul, hg] using this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa [map_sum, map_zsmul, hg] using this
     exact Fintype.linearIndependent_iff.1 b.linearIndependent c h1
   have hvR := SublatticeExtension.linearIndependent_real_of_discrete (imageLattice φ) _
     (fun i => (mem φ _).2 ⟨ψ (g i), rfl⟩) hvZ

@@ -73,7 +73,8 @@ theorem mem_range_of_int_pairing (E : Type) [Field E] [NumberField E] (n : ℕ)
       intro j
       have hj := congrFun hc j
       simp only [Matrix.vecMulLinear_apply, Matrix.vecMul, dotProduct, Pi.zero_apply] at hj
-      rw [map_sum, LinearMap.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, LinearMap.sum_apply]
       simp only [map_smul, LinearMap.smul_apply, smul_eq_mul, hBQ]
       exact_mod_cast hj
     have := (Fintype.linearIndependent_iff.mp htli) (fun k => (c k : ℝ)) hz
@@ -86,7 +87,8 @@ theorem mem_range_of_int_pairing (E : Type) [Field E] [NumberField E] (n : ℕ)
   intro j
   have hj := congrFun hc j
   simp only [Matrix.vecMulLinear_apply, Matrix.vecMul, dotProduct] at hj
-  rw [map_sub, LinearMap.sub_apply, hBm, map_sum, map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sub, LinearMap.sub_apply, hBm, map_sum, map_sum, LinearMap.sum_apply]
   simp only [map_smul, ← Rat.cast_smul_eq_qsmul ℝ, hxk, map_smul, LinearMap.smul_apply, smul_eq_mul, hBQ]
   rw [sub_eq_zero]
   exact_mod_cast hj.symm

@@ -27,7 +27,8 @@ theorem symp_actB {R E : Type} [CommRing R] [CommRing E] [Algebra R E] (c : E �
   have hg : ((g : GL β E) : Matrix β β E)ᵀ * JB * ((g : GL β E) : Matrix β β E).map c = JB := g.2
   have key : actB c g x * JB * ((actB c g y).map c)ᵀ = x * JB * (y.map c)ᵀ := by
     unfold actB
-    rw [show (y * ((g : GL β E) : Matrix β β E)ᵀ).map c = y.map c * (((g : GL β E) : Matrix β β E).map c)ᵀ by
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [show (y * ((g : GL β E) : Matrix β β E)ᵀ).map c = y.map c * (((g : GL β E) : Matrix β β E).map c)ᵀ by
       ext i j; simp [Matrix.mul_apply, map_sum, map_mul]]
     rw [Matrix.transpose_mul, Matrix.transpose_transpose]
     calc x * ((g : GL β E) : Matrix β β E)ᵀ * JB * (((g : GL β E) : Matrix β β E).map c * (y.map c)ᵀ)

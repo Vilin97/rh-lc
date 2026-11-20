@@ -26,7 +26,8 @@ theorem proj_liftT_app {X : Scheme.{0}} [IsIntegral X] {ι : Type} [Fintype ι] 
     have e : (filtSub o T (o b + 1)).incl.app V ((liftT o T b).app V (f b i)) = (T b).app V (f b i) := rfl
     rw [e]
     conv_lhs => rw [← (hc.basis le_rfl).sum_repr ((T b).app V (f b i))]
-    simp only [map_sum, Scheme.Modules.Hom.app_smul, ht, IsFrame.basis_apply, resM_self]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, Scheme.Modules.Hom.app_smul, ht, IsFrame.basis_apply, resM_self]
     symm
     refine Finset.sum_of_injOn Subtype.val Subtype.val_injective.injOn
       (fun _ _ => Finset.mem_coe.2 (Finset.mem_univ _)) (fun j _ hj => ?_) (fun _ _ => rfl)
@@ -35,7 +36,8 @@ theorem proj_liftT_app {X : Scheme.{0}} [IsIntegral X] {ι : Type} [Fintype ι] 
       exact hj ⟨⟨j, by omega⟩, by simp, rfl⟩), zero_smul]
   rw [h1]
   conv_rhs => rw [← ((hf' b).basis le_rfl).sum_repr ((u b).app V (f b i))]
-  simp only [map_sum, Scheme.Modules.Hom.app_smul, IsFrame.basis_apply, resM_self]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Scheme.Modules.Hom.app_smul, IsFrame.basis_apply, resM_self]
   symm
   refine Finset.sum_of_injOn (fun j => ⟨⟨b, j⟩, Nat.lt_succ_self _⟩) ?_
     (fun _ _ => Finset.mem_coe.2 (Finset.mem_univ _)) (fun z _ hz => ?_) (fun j _ => ?_)

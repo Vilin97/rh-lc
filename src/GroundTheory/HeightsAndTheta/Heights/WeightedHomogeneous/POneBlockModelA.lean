@@ -88,7 +88,8 @@ theorem isHomogeneous_latticeForm (u : Fin m → K) : (latticeForm u).IsHomogene
 
 theorem latticeMap_linear (φ : Fin (N + 1) → Fin m → K) (c : Fin (N + 1) → ℤ) :
     latticeMap φ (∑ b, C (c b) * X ⟨(), b⟩) = latticeForm (∑ b, c b • φ b) := by
-  rw [latticeForm_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [latticeForm_sum, map_sum]
   refine Finset.sum_congr rfl fun b _ ↦ ?_
   rw [latticeForm_zsmul, map_mul]
   simp [latticeMap]
@@ -146,7 +147,8 @@ theorem latticeMap_homogeneousComponent (φ : Fin (N + 1) → Fin m → K)
     latticeMap φ (homogeneousComponent d f) = homogeneousComponent d (latticeMap φ f) := by
   classical
   conv_rhs => rw [← sum_homogeneousComponent f]
-  rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum]
   simp_rw [homogeneousComponent_of_mem (isHomogeneous_latticeMap φ (homogeneousComponent_isHomogeneous _ f))]
   rw [Finset.sum_ite_eq]
   split_ifs with h
@@ -184,7 +186,8 @@ def dehom (K : Type) [Field K] (r : ℕ) : MvPolynomial (Fin (r + 1)) K →+* La
 theorem dehom_latticeForm (u : Fin (r + 1) → K) :
     dehom K r (latticeForm u) = algebraMap (MvPolynomial (Fin r) K) (LatticeField K r)
       (C (u 0) + ∑ j : Fin r, C (u j.succ) * X j) := by
-  simp only [dehom, latticeForm, map_sum, map_mul, map_add, coe_eval₂Hom, eval₂_C, eval₂_X, algebraMap_C,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dehom, latticeForm, map_sum, map_mul, map_add, coe_eval₂Hom, eval₂_C, eval₂_X, algebraMap_C,
     Fin.sum_univ_succ, genericVal, Fin.cases_zero, Fin.cases_succ, mul_one]
 
 theorem latticeCoord_eq (φ : Fin (N + 1) → Fin (r + 1) → K) (v : Coord fun _ : Unit ↦ N) :
@@ -237,7 +240,8 @@ theorem mCoordIdeal_latticeCoord (φ : Fin (N + 1) → Fin (r + 1) → K) :
         | mul_X p v hp =>
           rw [map_mul, map_mul, hp, map_mul, map_mul]
           congr 1
-          simp only [χ, latticeMap, coe_eval₂Hom, eval₂_X, latticeForm, map_mul, map_add, map_sum, eval_C, eval_X,
+          set_option synthInstance.maxHeartbeats 100000 in
+            simp only [χ, latticeMap, coe_eval₂Hom, eval₂_X, latticeForm, map_mul, map_add, map_sum, eval_C, eval_X,
             Fin.sum_univ_succ]
           rw [mul_add, Finset.mul_sum]
           congr 1
@@ -266,7 +270,8 @@ theorem mCoordIdeal_latticeCoord (φ : Fin (N + 1) → Fin (r + 1) → K) :
         rw [map_mul, map_mul, hp, map_mul]
         congr 1
         obtain ⟨⟨⟩, b⟩ := v
-        simp only [Geo.mConeMap, aeval_X, latticeCoord_eq, dehom, latticeMap, ψ, coe_eval₂Hom, eval₂_X,
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [Geo.mConeMap, aeval_X, latticeCoord_eq, dehom, latticeMap, ψ, coe_eval₂Hom, eval₂_X,
           latticeForm, map_sum, map_mul, eval₂_C, RingHom.comp_apply, Finset.sum_mul, mul_assoc]
     rw [h1, hf, map_zero]
 

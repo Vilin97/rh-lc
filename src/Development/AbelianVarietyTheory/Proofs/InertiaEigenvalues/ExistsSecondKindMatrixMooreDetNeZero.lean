@@ -286,7 +286,8 @@ theorem dep_false {AI : LocAinf l P} (T : LocTied l P AI) (h : ℕ) (hh : 2 ≤ 
             Finset.sum_congr rfl fun j _ => by rw [← hac j]; rfl
         _ = ∑ j, ∑ m, (c j m • lam j) * ev P i (b m) := by
             refine Finset.sum_congr rfl fun j _ => ?_
-            rw [map_sum, Finset.mul_sum]
+            set_option synthInstance.maxHeartbeats 100000 in
+              rw [map_sum, Finset.mul_sum]
             refine Finset.sum_congr rfl fun m _ => ?_
             rw [map_smul, mul_smul_comm, smul_mul_assoc]; rfl
         _ = ∑ m, lam' m * ev P i (b m) := by

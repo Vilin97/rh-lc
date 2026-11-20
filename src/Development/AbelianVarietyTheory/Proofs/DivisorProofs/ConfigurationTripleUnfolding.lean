@@ -64,7 +64,8 @@ theorem twist_heis_inv : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [N
             Finset.sum_congr rfl fun i _ => Finset.sum_comm
         _ = ∑ m, ∑ i, ∑ l, z m j * inclR (F := F) (AF F) (H.ι i m * (G.V.J i l * σ (H.x l))) := Finset.sum_comm
         _ = ∑ m, z m j * inclR (F := F) (AF F) (∑ i, ∑ l, H.ι i m * (G.V.J i l * σ (H.x l))) := by
-            simp [map_sum, Finset.mul_sum]
+            set_option synthInstance.maxHeartbeats 100000 in
+              simp [map_sum, Finset.mul_sum]
         _ = 0 := Finset.sum_eq_zero fun m _ => by rw [hcol m, map_zero, mul_zero]
     have hTn : hTens (cA σ) (incM F G.V.J) (incM F G.W.J) (incM F H.ι * z) (Matrix.vecMulVec (incV F H.x) q) = 0 := by
       unfold hTens

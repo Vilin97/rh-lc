@@ -295,7 +295,8 @@ theorem cns_tens_sum {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H
     (η : Fin n → H) {β : Type*} (B : Finset β) (F : β → Fin n → D) :
     ∑ c, inner ℂ (η c) (tensGrp dual σ g (fun d => (((∑ b ∈ B, F b) d : D) : H)) c) =
       ∑ b ∈ B, ∑ c, inner ℂ (η c) (tensGrp dual σ g (fun d => ((F b d : D) : H)) c) := by
-  simp only [tensGrp, Finset.sum_apply, Submodule.coe_sum, map_sum, Finset.smul_sum, inner_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [tensGrp, Finset.sum_apply, Submodule.coe_sum, map_sum, Finset.smul_sum, inner_sum]
   conv_lhs => enter [2, c]; rw [Finset.sum_comm]
   exact Finset.sum_comm
 

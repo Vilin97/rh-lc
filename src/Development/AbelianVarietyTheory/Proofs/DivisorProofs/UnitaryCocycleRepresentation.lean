@@ -21,7 +21,8 @@ theorem matrices_unitary_hom_of_linearIndependent :
     intro k hk k' hk'
     apply key
     intro j
-    rw [← hA _ (hmul k hk k' hk') j, map_mul, Module.End.mul_apply, hA k' hk' j, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hA _ (hmul k hk k' hk') j, map_mul, Module.End.mul_apply, hA k' hk' j, map_sum]
     simp only [map_smul, hA k hk, Finset.smul_sum, smul_smul, Matrix.mul_apply, Finset.sum_smul]
     rw [Finset.sum_comm]
     exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun l _ => by rw [mul_comm]

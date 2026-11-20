@@ -18,7 +18,8 @@ theorem exists_eval_eq_pow_lin {ι : Type} [Fintype ι] (d : ℕ) (Φ : MvPolyno
   refine ⟨∑ a ∈ (Finset.univ : Finset ι).piAntidiag d,
     monomial (Finsupp.equivFunOnFinite.symm a) ((Nat.multinomial Finset.univ a : ℝ) *
       Φ (monomial (Finsupp.equivFunOnFinite.symm a) 1)), fun x => ?_⟩
-  rw [GlobalTheory.ArInt.lin, Finset.sum_pow_eq_sum_piAntidiag, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [GlobalTheory.ArInt.lin, Finset.sum_pow_eq_sum_piAntidiag, map_sum, map_sum]
   refine Finset.sum_congr rfl fun a _ => ?_
   have e : (Nat.multinomial Finset.univ a : MvPolynomial ι ℝ) * ∏ i, (C (x i) * MvPolynomial.X i) ^ a i =
       ((Nat.multinomial Finset.univ a : ℝ) * ∏ i, x i ^ a i) • monomial (Finsupp.equivFunOnFinite.symm a) (1 : ℝ) := by

@@ -90,11 +90,13 @@ theorem dot_adeleJoin_zero {κ : Type} [Fintype κ] (v : κ → AdeleRing (𝓞 
   have e1 : ∀ s : AdeleRing (𝓞 F) F, s.1 = p1 s := fun _ => rfl
   have e2 : ∀ s : AdeleRing (𝓞 F) F, s.2 = p2 s := fun _ => rfl
   refine Prod.ext ?_ ?_
-  · rw [e1, dotProduct, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [e1, dotProduct, map_sum]
     refine Finset.sum_eq_zero fun i _ => ?_
     rw [map_mul, adeleJoin_zero]
     exact mul_zero _
-  · rw [e2, dotProduct, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [e2, dotProduct, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_mul, adeleJoin_zero]
     rfl

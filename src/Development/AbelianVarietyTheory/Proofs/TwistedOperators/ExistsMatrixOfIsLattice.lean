@@ -95,7 +95,8 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
 
 theorem dot_sec {n : Type} [Fintype n] (π : n → D.host.E) (y : n → k) :
     (fun i => incA D (π i)) ⬝ᵥ (fun i => p.sec (y i)) = p.sec ((fun i => p.pr (incA D (π i))) ⬝ᵥ y) := by
-  simp only [dotProduct, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dotProduct, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [mul_comm, GlobalTheory.FinPl.FrameLat.sec_mul_right, mul_comm]
 

@@ -53,7 +53,8 @@ theorem locAt_of_placeAt : Big fun ch => ∀ s, PlaceAt ch s → ConLin ch → L
       have e1 : ∀ {ι : Type} (G' : ι → ℂ) (ν : ι →₀ ℂ), Finsupp.linearCombination ℂ G' ν = ν.sum fun k x => x * G' k :=
         fun G' ν => by rw [Finsupp.linearCombination_apply]; rfl
       have e2 : ∑ i ∈ μ.support, μ i * G i = Finsupp.linearCombination ℂ G μ := by rw [e1]; rfl
-      rw [e2, hμ, map_sub, map_sum, Finsupp.linearCombination_mapDomain, e1]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [e2, hμ, map_sub, map_sum, Finsupp.linearCombination_mapDomain, e1]
       congr 1
       refine Finset.sum_congr rfl fun a _ => ?_
       rw [map_smul, e1, smul_eq_mul]

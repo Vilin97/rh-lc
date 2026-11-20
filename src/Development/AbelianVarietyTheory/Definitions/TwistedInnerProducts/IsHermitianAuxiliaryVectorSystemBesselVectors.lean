@@ -522,7 +522,8 @@ theorem IsHermitianAuxiliaryVectorSystem.trace_sum (H : IsHermitianAuxiliaryVect
     Algebra.trace (AF D.host.F) (AE D) (∑ i ∈ range m, hA V (locGL V τ β g) (a (i + 1)) (a (c - 1 - i))) =
       atPlace v (∑ i ∈ range m, τ (κ i) * t i / t (i + 1) * ent g i -
         ∑ i ∈ range m, τ (κ (c - 1 - m + i)) * t (c - 1 - m + i) / t (c - 1 - m + i + 1) * ent g (c - 1 - m + i)) := by
-  rw [← Finset.sum_range_reflect (fun i => τ (κ (c - 1 - m + i)) * t (c - 1 - m + i) / t (c - 1 - m + i + 1) *
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Finset.sum_range_reflect (fun i => τ (κ (c - 1 - m + i)) * t (c - 1 - m + i) / t (c - 1 - m + i + 1) *
     ent g (c - 1 - m + i)), ← Finset.sum_sub_distrib, map_sum, map_sum]
   refine Finset.sum_congr rfl fun i hi => ?_
   have hi' : i + 1 < c := by have := Finset.mem_range.1 hi; omega

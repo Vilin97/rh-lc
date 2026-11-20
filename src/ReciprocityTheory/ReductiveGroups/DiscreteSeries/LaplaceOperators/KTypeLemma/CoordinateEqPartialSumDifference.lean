@@ -17,7 +17,8 @@ theorem root_cone_functional_natural (ℓ : (Fin n → ℝ) →ₗ[ℝ] ℝ) (h�
   obtain ⟨m, rfl⟩ := hβ
   choose! N hN using hℓ
   refine ⟨∑ a, ∑ b, if a < b then m a b * N a b else 0, ?_⟩
-  simp only [map_sum, Nat.cast_sum, Nat.cast_ite, Nat.cast_mul, Nat.cast_zero]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Nat.cast_sum, Nat.cast_ite, Nat.cast_mul, Nat.cast_zero]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
   split_ifs with h
   · rw [map_smul, hN a b h, smul_eq_mul]

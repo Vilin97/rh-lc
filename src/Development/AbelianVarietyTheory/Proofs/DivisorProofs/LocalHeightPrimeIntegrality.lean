@@ -73,7 +73,8 @@ theorem dlogDvd_of_gens [IsLocallyNoetherian X] {x : Sp ↥(intO ℂ_[p]) ⟶ X}
         Ideal.Quotient.mk (Ideal.span {(p : ↥(intO ℂ_[p])) ^ n}) ((k m : ↥(intO ℂ_[p])) * (s m * (p : ↥(intO ℂ_[p])) ^ 2)) :=
       fun m => by rw [(dual_pow _ (hf m) _).2, hs m w hw, map_mul (Ideal.Quotient.mk _) (k m : ↥(intO ℂ_[p])), map_natCast]
     simp only [h2] at h1
-    rw [← map_sum, eq_comm, Ideal.Quotient.eq, Ideal.mem_span_singleton] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, eq_comm, Ideal.Quotient.eq, Ideal.mem_span_singleton] at h1
     have h3 := ((pow_dvd_pow _ hn).trans h1).add
       (Finset.dvd_sum fun m (_ : m ∈ Finset.univ) => ((dvd_mul_left _ (s m)).mul_left (k m : ↥(intO ℂ_[p]))))
     rwa [sub_add_cancel] at h3

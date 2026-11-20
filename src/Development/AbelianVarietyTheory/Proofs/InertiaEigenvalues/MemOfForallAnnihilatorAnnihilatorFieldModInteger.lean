@@ -143,7 +143,8 @@ theorem mem_of_forall_annihilator_annihilator :
   have hexp : ∀ (a : Fin r → O) (s : N), β (∑ i, a i • v i) s =
       Submodule.Quotient.mk (∑ i, algebraMap O LL (a i) * y s i) := by
     intro a s
-    rw [← Submodule.mkQ_apply, map_sum, map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Submodule.mkQ_apply, map_sum, map_sum, LinearMap.sum_apply]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, LinearMap.smul_apply, ← hy, Submodule.mkQ_apply, ← Submodule.Quotient.mk_smul,
       Algebra.smul_def]
@@ -219,7 +220,8 @@ theorem mem_of_forall_annihilator_annihilator :
     choose k hk using h5
     refine ⟨Finset.univ.sup k, fun d => ?_⟩
     obtain ⟨a, rfl⟩ := hspan d
-    rw [map_sum, LinearMap.sum_apply, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, LinearMap.sum_apply, Finset.smul_sum]
     refine Finset.sum_eq_zero fun i _ => ?_
     rw [map_smul, LinearMap.smul_apply, smul_comm, hk i _ (Finset.le_sup (Finset.mem_univ i)),
       smul_zero]
@@ -233,7 +235,8 @@ theorem mem_of_forall_annihilator_annihilator :
   choose cs hcs using hcoef
   have hkey : ∀ d, β d c = β d (∑ s : F, cs s • s.1.1) := by
     intro d
-    rw [hφG d, ← Finset.univ_sum_single (τ d), map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hφG d, ← Finset.univ_sum_single (τ d), map_sum, map_sum]
     refine Finset.sum_congr rfl fun s _ => ?_
     rw [hτ, hcs s _ (hn _ d), map_smul]
   have hdiff : c - ∑ s : F, cs s • s.1.1 ∈ S :=

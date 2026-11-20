@@ -84,7 +84,8 @@ theorem lemmaRA_of (hS : LemmaS.{u}) (hG : GenLogWeight.{u, 0}) (hB : LogBridges
     simp [linSub]
   have hbS0 : MvPowerSeries.constantCoeff (bSum M be) = 0 := by
     unfold bSum
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_eq_zero fun ab _ => ?_
     exact MvPowerSeries.constantCoeff_subst_eq_zero
       (MvPowerSeries.hasSubst_of_constantCoeff_zero fun s => hlin0 _) (fun s => hlin0 _) hbe0
@@ -133,7 +134,8 @@ theorem lemmaRA_of (hS : LemmaS.{u}) (hG : GenLogWeight.{u, 0}) (hB : LogBridges
   have hlinw : ∀ x, WtGe ‖(l : K)‖ (fun _ : ι => rho l) (rho l) (linSub M x) := by
     intro x n
     rw [monoWtGe_iff]
-    simp only [linSub, map_sum, MvPowerSeries.coeff_C_mul, MvPowerSeries.coeff_X]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [linSub, map_sum, MvPowerSeries.coeff_C_mul, MvPowerSeries.coeff_X]
     refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg (Real.rpow_nonneg h0.le _)
       fun i _ => ?_
     split_ifs with h

@@ -33,7 +33,8 @@ theorem adelstab_trace_int (b : 𝓞 E) :
 theorem adelstabT_mem {s : 𝒜} (hs : s ∈ 𝒮) : adelstabT F E s ∈ intAd F := by
   obtain ⟨r, hr, rfl⟩ := levelaf_decomp (fun j => Module.finBasis ℤ (𝓞 E) j)
     (Module.Basis.span_eq _) hs
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine sum_mem fun j _ => ?_
   rw [adelstabT_tmul]
   obtain ⟨t, ht⟩ := adelstab_trace_int (F := F) (Module.finBasis ℤ (𝓞 E) j)

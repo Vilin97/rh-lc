@@ -89,7 +89,8 @@ theorem PPSet_mul {F G : ZMod a → K⟦X⟧⟦X⟧} (hF : F ∈ PPSet t K e) (h
     · rw [← hx]; exact Nat.factorial_mul_factorial_dvd_factorial_add _ _
     · exact (Nat.factorial_mul_factorial_dvd_factorial_add _ _).trans
         (Nat.factorial_dvd_factorial (by rw [← hy]; exact Nat.add_div_le_add_div _ _ _))
-  simp only [Pi.mul_apply, coeff_mul, map_sum, Finset.mul_sum, map_mul, map_natCast]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Pi.mul_apply, coeff_mul, map_sum, Finset.mul_sum, map_mul, map_natCast]
   refine Finset.sum_congr rfl fun x hx => Finset.sum_congr rfl fun y hy => ?_
   rw [hc x hx y hy, ← hF τ x.1 y.1, ← hG τ x.2 y.2]
   push_cast

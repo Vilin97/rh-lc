@@ -34,7 +34,8 @@ theorem finrank_eig_eq {LL G W : Type} [Field LL] [Group G] [AddCommGroup W] [Mo
     intro v
     conv_lhs => rw [show v = ∑ k, v k • Pi.single k (1 : LL) by
       ext j; simp [Finset.sum_apply, Pi.single_apply]]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_smulₛₗ]
   have hsp' : ⊤ ≤ Submodule.span ℂ (Set.range fun k => f (Pi.single k 1)) := by
@@ -78,7 +79,8 @@ theorem top_le_span_single {LL W : Type} [Field LL] [AddCommGroup W] [Module ℂ
   rintro _ ⟨v, rfl⟩
   have hv : v = ∑ k, v k • Pi.single k (1 : LL) := by
     ext j; simp [Finset.sum_apply, Pi.single_apply]
-  rw [hv, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hv, map_sum]
   exact Submodule.sum_mem _ fun k _ => by
     rw [map_smulₛₗ]; exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨k, rfl⟩)
 

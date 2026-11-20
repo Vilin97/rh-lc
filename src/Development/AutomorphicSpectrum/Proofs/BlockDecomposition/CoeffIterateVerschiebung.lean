@@ -61,7 +61,8 @@ theorem sum_teichmuller {ι : Type} [Fintype ι] (e : ι → R) (he : CompleteOr
   have hs : IsIdempotentElem (∑ i, WittVector.teichmuller p (e i)) := ho.isIdempotentElem_sum
   have h1 : (1 : WittVector p R) - ∑ i, WittVector.teichmuller p (e i) = 0 := by
     refine idem_eq_zero _ hs.one_sub.eq ?_
-    rw [← WittVector.constantCoeff_apply, map_sub, map_one, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← WittVector.constantCoeff_apply, map_sub, map_one, map_sum]
     simp only [WittVector.constantCoeff_apply, WittVector.teichmuller_coeff_zero]
     rw [he.complete, sub_self]
   exact (sub_eq_zero.1 h1).symm
@@ -81,7 +82,8 @@ theorem acr_ext {ι : Type} [Fintype ι] (e : ι → A.A) (he : CompleteOrthogon
     (h : ∀ i, A.toAcr n (WittVector.teichmuller l (e i)) * x = A.toAcr n (WittVector.teichmuller l (e i)) * y) :
     x = y := by
   have hs : ∑ i, A.toAcr n (WittVector.teichmuller l (e i)) = 1 := by
-    rw [← map_sum, sum_teich A e he, map_one]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, sum_teich A e he, map_one]
   calc x = (∑ i, A.toAcr n (WittVector.teichmuller l (e i))) * x := by rw [hs, one_mul]
     _ = (∑ i, A.toAcr n (WittVector.teichmuller l (e i))) * y := by
       simp only [Finset.sum_mul]

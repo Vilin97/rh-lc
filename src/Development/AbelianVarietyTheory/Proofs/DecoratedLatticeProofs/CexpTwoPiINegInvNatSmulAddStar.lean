@@ -51,7 +51,8 @@ theorem theta_form (v : InfinitePlace I.F) (M : Matrix (Fin I.n) (Fin I.n) (AF I
     thetaV I v (∑ i, ∑ j, inclR (AF I.F) (star (p i) * I.J i j) * (M *ᵥ fun k => inclR (AF I.F) (q k)) j) =
       hJ (I.ε v) (rv I v p) (((I.P v)⁻¹ * M.map (thetaV I v) * I.P v) *ᵥ rv I v q) := by
   rw [rv, rv, hJ_frame]
-  simp only [map_sum, map_mul, thetaV_inclR, phi_star, Matrix.mulVec, dotProduct, Matrix.map_apply, Pi.star_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, thetaV_inclR, phi_star, Matrix.mulVec, dotProduct, Matrix.map_apply, Pi.star_apply,
     Finset.mul_sum, mul_assoc]
 
 theorem sig_inclE (x : I.E) : Formalism.UG.sigR I.cm.sig (Formalism.MainNotions.S.Af I.F) (Formalism.UG.inclE (F := I.F) (Formalism.MainNotions.S.Af I.F) x) =
@@ -63,7 +64,8 @@ theorem sig_inclE (x : I.E) : Formalism.UG.sigR I.cm.sig (Formalism.MainNotions.
 theorem tau_form (M : Matrix (Fin I.n) (Fin I.n) (AF I.F ⊗[I.F] I.E)) (p q : Fin I.n → I.E) :
     tauF I (∑ i, ∑ j, inclR (AF I.F) (star (p i) * I.J i j) * (M *ᵥ fun k => inclR (AF I.F) (q k)) j) =
       hA I (incl I p) (M.map (tauF I) *ᵥ incl I q) := by
-  simp only [map_sum, map_mul, tauF_inclR, Matrix.mulVec, dotProduct, Matrix.map_apply, hA, Formalism.UG.hform, incl, sig_inclE]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, tauF_inclR, Matrix.mulVec, dotProduct, Matrix.map_apply, hA, Formalism.UG.hform, incl, sig_inclE]
 
 theorem trace_tmul' (a : AF I.F) (x : I.E) :
     Algebra.trace (AF I.F) (AF I.F ⊗[I.F] I.E) (a ⊗ₜ[I.F] x) = a * algebraMap I.F (AF I.F) (Algebra.trace I.F I.E x) := by
@@ -164,7 +166,8 @@ theorem pX_mulVec {D : D7} {V₀ : HSp D} {ρ : ℕ} (d : HypDec (D.sp.Y 0) V₀
     (d.pX *ᵥ (mt (D.sp.Y 0) n *ᵥ ratV q)) a = hN n (fun k => d.e' k a) q := by
   rw [hN, Finset.sum_comm, Matrix.mulVec, dotProduct]
   refine Finset.sum_congr rfl fun j _ => ?_
-  rw [← Finset.sum_mul, ← map_sum (incA D)]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Finset.sum_mul, ← map_sum (incA D)]
   rfl
 
 theorem blockX_eq {D : D7} {V₀ : HSp D} {ρ : ℕ} (d : HypDec (D.sp.Y 0) V₀ ρ) (n : GA D (D.sp.Y 0)) (a b : Fin ρ) :

@@ -37,7 +37,8 @@ theorem summable_exp_neg_size : Summable fun μ => Real.exp (-A.size μ) :=
 
 theorem norm_le_mul_size {E : Type*} [SeminormedAddCommGroup E] (f : A.X →+ E) {C : ℝ}
     (hC : ∀ i, ‖f (Module.Free.chooseBasis ℤ A.X i)‖ ≤ C) (μ : A.X) : ‖f μ‖ ≤ C * A.size μ := by
-  conv_lhs => rw [← (Module.Free.chooseBasis ℤ A.X).sum_repr μ, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [← (Module.Free.chooseBasis ℤ A.X).sum_repr μ, map_sum]
   rw [size, Finset.mul_sum]
   refine norm_sum_le_of_le _ fun i _ => ?_
   rw [map_zsmul]

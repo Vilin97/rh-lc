@@ -35,7 +35,8 @@ theorem latMul_le_of_parts (S : HSp D) (𝔞 : Set D.host.E) (L : Lat S) (M : Ad
   have hdec : α = ∑ w ∈ s, GlobalTheory.FinPlLoc.ePl D (· = w) * α := by
     refine RestrictedProduct.ext _ _ fun u => ?_
     change evalV D.host.F u α = evalV D.host.F u (∑ w ∈ s, GlobalTheory.FinPlLoc.ePl D (· = w) * α)
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [map_mul, GlobalTheory.FinPlLoc.evalV_ePl]
     by_cases hu : u ∈ s
     · simp only [ite_mul, one_mul, zero_mul]

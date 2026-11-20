@@ -17,7 +17,8 @@ theorem iterate_leibniz_ps (D : Derivation K K⟦X⟧ K⟦X⟧) (a b : K⟦X⟧)
   induction n with
   | zero => simp
   | succ n ih =>
-    rw [Finset.sum_antidiagonal_choose_succ_mul (fun i j => (⇑D)^[i] a * (⇑D)^[j] b) n,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_antidiagonal_choose_succ_mul (fun i j => (⇑D)^[i] a * (⇑D)^[j] b) n,
       Function.iterate_succ_apply', ih, map_sum, ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun ij hij => ?_
     rw [Finset.HasAntidiagonal.mem_antidiagonal] at hij
@@ -147,7 +148,8 @@ def Small (N : ℕ) (y : K⟦X⟧⟦X⟧) : Prop := ∀ i n, i + n < N → coeff
 theorem small_mul {a b : ℕ} {y z : K⟦X⟧⟦X⟧} (hy : Small a y) (hz : Small b z) :
     Small (a + b) (y * z) := by
   intro i n h
-  rw [coeff_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [coeff_mul, map_sum]
   refine Finset.sum_eq_zero fun p hp => ?_
   rw [coeff_mul]
   refine Finset.sum_eq_zero fun q hq => ?_

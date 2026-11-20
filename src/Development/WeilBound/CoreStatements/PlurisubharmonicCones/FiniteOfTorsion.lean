@@ -358,7 +358,8 @@ theorem nzOf_of_le {σ : Ψ → (𝓞 E →+* ℂ)} (hσ : IsCMFam σ) {I : Subm
     rw [RingHom.map_det, RingHom.mapMatrix_apply]
     apply gram_matrix
     intro b
-    simp only [eigComp_eq, hAw b, map_sum, R.act, proj_act, Matrix.map_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [eigComp_eq, hAw b, map_sum, R.act, proj_act, Matrix.map_apply]
   have hN : ((Algebra.norm ℤ A.det).natAbs : ℝ) ≠ 0 := by
     exact_mod_cast Int.natAbs_ne_zero.2 (Algebra.norm_ne_zero_iff.2 hdet)
   unfold RiemLat.nzOf

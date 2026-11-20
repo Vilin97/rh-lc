@@ -85,7 +85,8 @@ theorem exists_im_HC_eq (hfg : Λ'.FG)
     exact eq_sum_tens_contr hexp _
   rw [HC_sum_left, Complex.im_sum]
   conv_lhs => rw [hsplit]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   push_cast
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [HC_tens_left]

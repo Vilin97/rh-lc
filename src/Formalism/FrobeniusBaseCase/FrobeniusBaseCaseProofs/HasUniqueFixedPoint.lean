@@ -35,7 +35,8 @@ theorem OrdGE.sub {n : ℕ} {f g : MvPowerSeries Z k} (hf : OrdGE n f) (hg : Ord
 theorem OrdGE.sum {ι : Type*} {n : ℕ} (s : Finset ι) {f : ι → MvPowerSeries Z k}
     (hf : ∀ i ∈ s, OrdGE n (f i)) : OrdGE n (∑ i ∈ s, f i) := by
   intro A hA
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_eq_zero fun i hi => hf i hi A hA
 
 theorem OrdGE.mul {a b : ℕ} {f g : MvPowerSeries Z k} (hf : OrdGE a f) (hg : OrdGE b g) :
@@ -115,7 +116,8 @@ theorem coeff_Psi (t : C → MvPowerSeries Z k) (b : C) (A : Z →₀ ℕ) :
 theorem coeff_PsiPartial (N : ℕ) (t : C → MvPowerSeries Z k) (b : C) (A : Z →₀ ℕ) :
     coeff A (D.PsiPartial N t b) = coeff A (D.zvec b) -
       ∑ c, ∑ j ∈ Finset.Icc 1 N, D.al c j b * coeff A (t c ^ (D.l ^ j)) := by
-  simp only [PsiPartial, map_sub, map_sum, coeff_C_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [PsiPartial, map_sub, map_sum, coeff_C_mul]
 
 theorem noConst_zvec : NoConst D.zvec := by
   intro b

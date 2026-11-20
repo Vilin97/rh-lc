@@ -139,7 +139,8 @@ theorem ortho (σ τ : E →+* ℂ) :
 open scoped Classical in
 theorem casimir : ∑ i, ed E i * integralBasis E i = 1 := by
   refine eq_of_emb fun σ => ?_
-  rw [map_sum, map_one]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_one]
   simp_rw [map_mul]
   rw [ortho σ σ, if_pos rfl]
 

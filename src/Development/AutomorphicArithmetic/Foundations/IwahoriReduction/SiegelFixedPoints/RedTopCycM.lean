@@ -167,7 +167,8 @@ private theorem bMid_coc [IsAlgClosure ℚ Ω] [CharZero Ω] (ε : Ω →+* ℂ)
   have hmul : ∀ a b, redTop l n m N (a * b) = redTop l n m N a * redTop l n m N b := fun a b => map_mul _ _ _
   have hinv : ∀ a, redTop l n m N a⁻¹ = (redTop l n m N a)⁻¹ := fun a => map_inv (Units.map _) a
   unfold E1 bMid
-  rw [Finset.sum_apply, map_sum, map_sum (X.galB l s), Pi.add_apply, map_add, Finset.sum_apply, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.sum_apply, map_sum, map_sum (X.galB l s), Pi.add_apply, map_add, Finset.sum_apply, map_sum,
     Finset.sum_apply, map_sum,
     Finset.sum_congr rfl (fun y _ => bTop_coc ε X l N c d gm hp x w m n c₀ hw hm bB hB s t y)]
   simp only [Pi.add_apply, map_add, Finset.sum_add_distrib]

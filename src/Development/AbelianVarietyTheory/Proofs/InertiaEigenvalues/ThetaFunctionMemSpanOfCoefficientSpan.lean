@@ -102,7 +102,8 @@ theorem exists_decomp (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D) (a : AE D) 
       · intro h
         exact absurd hx₁ h
   have key := congrArg (K.liftQ ℓ hle) (hs _ hmem)
-  rw [hA, map_sum] at key
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hA, map_sum] at key
   simp only [map_smul, smul_eq_mul] at key
   have hb : ∀ y, K.liftQ ℓ hle (Fq y) = ℓ (heisO ψ S T y f) := fun y => rfl
   simp only [hb] at key
@@ -138,7 +139,8 @@ theorem mem_span_of_coef_mem_span : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ
   have hzero := GlobalTheory.T.splitPlace_invariantForms_separate_thetaFunctions D ψ S T hψ a ha (f - ∑ x₁ ∈ X, φ x₁)
     (theta_sub hf (theta_of_mem_span h0 h𝒯 hsum)) (by
       intro ℓ hℓ x hx
-      rw [heisO_lin_sub, GlobalTheory.SplitScalar.heisO_sum, map_sub, map_sum, hL ℓ hℓ x hx, sub_eq_zero]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [heisO_lin_sub, GlobalTheory.SplitScalar.heisO_sum, map_sub, map_sum, hL ℓ hℓ x hx, sub_eq_zero]
       refine Finset.sum_congr rfl fun x₁ hx₁ => ?_
       rw [hφe x₁ hx₁ ℓ hℓ x hx, coef, if_pos hx])
   rw [sub_eq_zero] at hzero

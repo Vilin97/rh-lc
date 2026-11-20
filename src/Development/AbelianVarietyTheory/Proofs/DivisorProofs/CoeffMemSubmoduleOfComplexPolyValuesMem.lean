@@ -17,7 +17,8 @@ theorem coeff_mem_of_poly_values_mem : ∀ (V : Type) [AddCommGroup V] [Module �
     have h1 : S.mkQ (∑ k ∈ Finset.range N, u ^ k • c k) = 0 :=
       (Submodule.Quotient.mk_eq_zero S).mpr (h u)
     have h0 := congrArg f h1
-    simp only [map_sum, map_smul, Submodule.mkQ_apply, smul_eq_mul, map_zero] at h0
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, Submodule.mkQ_apply, smul_eq_mul, map_zero] at h0
     simp only [hpdef, Polynomial.eval_finset_sum, Polynomial.eval_mul, Polynomial.eval_C,
       Polynomial.eval_pow, Polynomial.eval_X, Polynomial.eval_zero]
     rw [← h0]

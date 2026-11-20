@@ -59,7 +59,8 @@ theorem weighted_frame_operator_to_lin {I α : Type} [Fintype I] [Fintype α] [D
     [∀ i, Fintype (ι i)] [∀ i, DecidableEq (ι i)] (B : ∀ i, Matrix α (ι i) ℂ) (ga : I → ℝ) :
     frQ ga (fun i => Matrix.toEuclideanLin (B i)) = Matrix.toEuclideanLin (QmG B ga) := by
   unfold frQ QmG
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_smul, to_euclidean_lin_mul, to_euclidean_lin_adjoint_eq]
 
@@ -103,7 +104,8 @@ theorem quadratic_matrix_fin_reindex {I α : Type} [Fintype I] [Fintype α] {ι 
     HilbertSchmidtNormSquare.Qm (toFin B) ga
       = Matrix.reindex (Fintype.equivFin α) (Fintype.equivFin α) (QmG B ga) := by
   unfold HilbertSchmidtNormSquare.Qm QmG toFin
-  rw [← Matrix.coe_reindexLinearEquiv ℂ ℂ, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Matrix.coe_reindexLinearEquiv ℂ ℂ, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   simp only [Matrix.coe_reindexLinearEquiv, Matrix.reindex_apply, Matrix.conjTranspose_submatrix,
     Matrix.submatrix_mul_equiv, Matrix.submatrix_smul, Pi.smul_apply]

@@ -21,7 +21,8 @@ theorem fderiv_chart_rmul (φ : Sm E a) (g : GA E a) (y : GL (Fin a) (Cinf E)) (
 theorem lieD_eq_sum (V : Lie E a) (F : GA E a → ℂ) (h : GA E a) :
     lieD V F h = ∑ i, (lieCoord E a i V) * lieD (lieBasis E a i) F h := by
   conv_lhs => rw [← sum_lieCoord V]
-  rw [lieD, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [lieD, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_smul, Complex.real_smul]
   rfl

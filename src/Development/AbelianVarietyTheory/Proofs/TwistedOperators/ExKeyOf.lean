@@ -83,7 +83,8 @@ theorem exKey_of (h1 : GridEx) (h2 : IsEx) (h3 : NFAll) (cG : CarryG) (cW : Carr
   subst hS2
   refine hAll'.numbersIn.mono ?_
   rintro _ ⟨y, rfl⟩
-  rw [← b.sum_repr y, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← b.sum_repr y, map_sum]
   refine X.toD7.what₂.embLL.fieldRange.sum_mem fun i _ => ?_
   rw [Rat.smul_def, map_mul, map_ratCast]
   exact X.toD7.what₂.embLL.fieldRange.mul_mem (SubfieldClass.ratCast_mem _ _) (hz _ (Finset.mem_image_of_mem _ (Finset.mem_univ i)))

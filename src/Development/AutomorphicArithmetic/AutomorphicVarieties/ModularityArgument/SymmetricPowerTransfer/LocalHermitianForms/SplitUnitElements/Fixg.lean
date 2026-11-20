@@ -102,7 +102,8 @@ theorem UpperTheory.V.Z.Sym.Loc.One.fixg :
       have hx' : ∀ i, IsInt O (Q x i) := hx
       have hxe : x = ∑ i, R i (Q x i) := by
         show x = ∑ i, P.symm (G *ᵥ Pi.single i (Q x i))
-        rw [← map_sum, ← Matrix.mulVec_sum, Finset.univ_sum_single, hPQ, P.symm_apply_apply]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [← map_sum, ← Matrix.mulVec_sum, Finset.univ_sum_single, hPQ, P.symm_apply_apply]
       rw [hxe]
       refine Submodule.sum_mem _ fun i _ => ?_
       obtain ⟨a, b, hab⟩ := hdec _ (hx' i)

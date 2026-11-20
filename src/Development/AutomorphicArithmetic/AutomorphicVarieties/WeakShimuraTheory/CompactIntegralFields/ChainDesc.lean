@@ -86,7 +86,8 @@ private theorem desc_ex (f : R →+* R') (hf : Function.Injective f) (P : PD ι 
         intro x y
         ext i j
         apply hf
-        rw [Matrix.of_apply, hr, map_mul, Matrix.mul_apply, Matrix.mul_apply, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [Matrix.of_apply, hr, map_mul, Matrix.mul_apply, Matrix.mul_apply, map_sum]
         simp only [map_mul, Matrix.of_apply, hr] }
   refine ⟨⟨q, fun v => Matrix.of (n v)⟩, ?_⟩
   apply PD.ext

@@ -78,7 +78,8 @@ theorem exists_rep (φ : (Fin a → Fin n → LL) →ₗ[LL] LL) :
     simp [Finset.sum_apply, Pi.single_apply, ite_apply, Finset.sum_ite_eq, Finset.sum_ite_eq']
   conv_lhs => rw [hu]
   rw [pr_apply]
-  simp [map_sum, dotProduct]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, dotProduct]
 
 theorem eq_zero_of_pr (u' : Fin a → Fin n → LL) (h : ∀ u, pr LL a n u u' = 0) : u' = 0 := by
   funext b k

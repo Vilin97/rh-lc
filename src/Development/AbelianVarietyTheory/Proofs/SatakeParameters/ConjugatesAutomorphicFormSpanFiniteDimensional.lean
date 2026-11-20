@@ -187,7 +187,8 @@ theorem conj_span_finite : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E
       (hcont _ (polys_le_adjoin N hq)) ?_
     rintro k ⟨γ, hγ, hk⟩
     simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
-    rw [hrat _ hsf k γ hγ hk, hdec k, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hrat _ hsf k γ hγ hk, hdec k, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_mul, hp' i γ hγ k hk, mul_comm]
 

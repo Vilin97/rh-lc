@@ -131,7 +131,8 @@ theorem prod_zpow_single {I H : Type} [Fintype I] [DecidableEq I] [CommGroup H] 
     simp [Finset.sum_apply, Pi.single_apply]
   have : F a = ∑ u, a u • F (Pi.single u 1) := by
     conv_lhs => rw [e]
-    simp only [map_sum, map_zsmul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_zsmul]
   apply Additive.ofMul.injective
   rw [ofMul_prod]
   simp only [ofMul_zpow]

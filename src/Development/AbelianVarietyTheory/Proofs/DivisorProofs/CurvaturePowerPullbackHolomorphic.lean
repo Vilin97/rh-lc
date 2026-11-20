@@ -75,7 +75,8 @@ theorem curv_pow_chern_comp_holo : ∀ (n n' : ℕ) (r : Type) [Fintype r] [Deci
   refine ⟨key, fun k => ⟨?_, ?_⟩⟩
   · have := fun i => key k 0 i i G hG hu
     simp only [pow_zero, mul_one] at this
-    simp only [powAt, Matrix.trace, Matrix.diag_apply, AddSubmonoidClass.coe_finsetSum, map_sum, this]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [powAt, Matrix.trace, Matrix.diag_apply, AddSubmonoidClass.coe_finsetSum, map_sum, this]
   · have e : chernPoly (fun x => G (φ x)) w k = subst (fderiv ℂ φ w) (chernPoly G (φ w) k) := by
       rw [chernPoly, chernPoly, curvPoly_comp hφ hG hu, ← map_neg]
       exact (congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p k)

@@ -82,7 +82,8 @@ theorem isConj_combWeight (hB : B.IsLB) (s : α → B.Sec) {σ σ' : k →+* ℂ
   simp only [RCLike.norm_conj] at this
   refine Eq.trans (Finset.sum_congr rfl fun a _ => ?_) this
   congr 2
-  simp only [e, hv, Matrix.mul_apply, Matrix.map_apply, Matrix.vecMul, dotProduct, map_sum, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [e, hv, Matrix.mul_apply, Matrix.map_apply, Matrix.vecMul, dotProduct, map_sum, map_mul,
     Finset.sum_mul]
   exact Finset.sum_comm.trans (Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring)
 
@@ -362,7 +363,8 @@ theorem exists_induced : ∀ (F : Type) [Field F] [NumberField F] [StarRing F] (
   have comb (τ : F →+* ℂ) (y : Pts Y τ) {i : (B.pull M.j).ι} (hi : under y ∈ (B.pull M.j).U i) (b : W.ι) :
       ∑ a, A τ a b * valR (y.1 ≫ M.j) (B.U (i PUnit.unit)) ((s a).f (i PUnit.unit)) =
         ∑ j, frameAt W τ j b * evalSec y.1 y.2 (hr.isEqn i _ hi) ι hι (W.b j) := by
-    simp only [A, Matrix.mul_apply, Matrix.of_apply, ← hc, map_sum, map_smulₛₗ, smul_eq_mul, Finset.sum_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [A, Matrix.mul_apply, Matrix.of_apply, ← hc, map_sum, map_smulₛₗ, smul_eq_mul, Finset.sum_mul,
       Finset.mul_sum, ← val y.1 hi]
     exact Finset.sum_comm.trans (Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by
       rw [mul_comm (τ _), mul_assoc]; rfl)

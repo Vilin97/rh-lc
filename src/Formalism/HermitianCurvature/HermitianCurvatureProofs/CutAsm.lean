@@ -102,7 +102,8 @@ theorem actA_mul (P : M.Par) (a b : MA.A P (MA.DQ P)) (x : M.Ty P → MA.SmQ P.r
       | (simp; rfl)
   rw [Finset.sum_congr rfl fun π' _ => e π', Finset.sum_comm]
   refine Finset.sum_congr rfl fun σ _ => ?_
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
 
 theorem actA_smul (P : M.Par) (c : ℂ) (a : MA.A P (MA.DQ P)) (x : M.Ty P → MA.SmQ P.r P.TT) :
     MA.actA P (c • a) x = c • MA.actA P a x := by

@@ -28,12 +28,14 @@ theorem trace_mul_sesq_eq_form (D : Datum H) (a : 𝓞 E) (x y : D.La) :
     rw [show (a : E) * ((D.EF (RingOfIntegers.basis E k • x) y : E) * HT.dualInt E k) =
         (D.EF (RingOfIntegers.basis E k • x) y : ℤ) • (HT.dualInt E k * (a : E)) by rw [zsmul_eq_mul]; ring,
       map_zsmul, zsmul_eq_mul, HT.LatBasic.repr_eq_trace]
-  simp only [sesq, Finset.mul_sum, map_sum, e]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [sesq, Finset.mul_sum, map_sum, e]
   have ha : a • x = ∑ k, ((RingOfIntegers.basis E).repr a k : ℤ) • (RingOfIntegers.basis E k • x) := by
     conv_lhs => rw [← (RingOfIntegers.basis E).sum_repr a]
     rw [Finset.sum_smul]
     exact Finset.sum_congr rfl fun k _ => smul_assoc _ _ _
-  rw [ha, map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [ha, map_sum, LinearMap.sum_apply]
   push_cast
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [map_zsmul, LinearMap.smul_apply, smul_eq_mul]

@@ -43,7 +43,8 @@ theorem flin_reindex {σ : Type} (l linv : PowerSeries K) {ν ν' : Type} [Finty
 theorem constantCoeff_phSum {n : Type} [Fintype n] (c : n → K) {ph : PowerSeries K}
     (hph : PowerSeries.constantCoeff ph = 0) : MvPowerSeries.constantCoeff (phSum c ph) = 0 := by
   unfold phSum
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_eq_zero fun i _ => ?_
   rw [MvPowerSeries.smul_eq_C_mul, map_mul,
     Pts.constantCoeff_subst (MvPowerSeries.constantCoeff_X i) hph, mul_zero]

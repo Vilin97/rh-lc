@@ -28,7 +28,8 @@ theorem postOn_sum_mem_range {D : D7} {V : HSp D} {S : D.what₂.Tau → SPar} (
     postOn M (∑ g, c g • L g) T ∈ LinearMap.range e := by
   obtain ⟨y, rfl⟩ := hT
   refine ⟨∑ g, c g • a g y, ?_⟩
-  rw [postOn_sum_smul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [postOn_sum_smul, map_sum]
   exact Finset.sum_congr rfl fun g _ => by rw [map_smul, ha]
 
 theorem is_inj {X : Type} [AddCommGroup X] [Module ℂ X] {M : HMod X} {V : Submodule ℂ X} {ip : X → X → ℂ}

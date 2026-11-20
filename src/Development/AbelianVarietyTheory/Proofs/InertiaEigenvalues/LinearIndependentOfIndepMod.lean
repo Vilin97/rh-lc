@@ -87,10 +87,12 @@ theorem linearIndependent_of_indepMod {N : Type} [AddCommGroup N] [Module O N] (
   choose x hx using fun a => hs (y a)
   rw [← hx, hk]
   refine h x ?_ a
-  simp only [← map_smul, ← map_sum] at hy
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← map_smul, ← map_sum] at hy
   obtain ⟨b, hb⟩ := (Submodule.Quotient.mk_eq_zero _).mp hy
   have e1 : ∑ a, x a • (Submodule.Quotient.mk (z a) : H1 π ⊤) = Submodule.mkQ _ (∑ a, x a • z a) := by
-    rw [map_sum]; rfl
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]; rfl
   rw [e1]
   refine (Submodule.Quotient.mk_eq_zero _).mpr ⟨q.symm b, Submodule.mem_top, ?_⟩
   funext g

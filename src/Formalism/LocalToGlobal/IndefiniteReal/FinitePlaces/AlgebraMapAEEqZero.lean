@@ -61,7 +61,8 @@ theorem eps_orth {P : Finset (Formalism.L2.DIV.Pl D.host.E)} {e : AE D} {es : Fo
     (hes : ∀ PP ∈ P, Formalism.L2.NTheta.IsIdemAt (es PP) PP) (he : e = ∑ PP ∈ P, es PP) {v : HeightOneSpectrum (𝓞 D.host.F)}
     (hv : ∀ PP ∈ P, belowPl PP ≠ v) :
     (e + cA D e) * algebraMap (AF D.host.F) (AE D) (sA v 1) = 0 := by
-  rw [he, map_sum, ← Finset.sum_add_distrib, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [he, map_sum, ← Finset.sum_add_distrib, Finset.sum_mul]
   refine Finset.sum_eq_zero fun PP hPP => ?_
   have h1 : es PP * phiE (belowPl PP) 1 = es PP := idemAt_eps (hes PP hPP)
   have h2 : es PP + cA D (es PP) = phiE (D := D) (belowPl PP) 1 := below_of_idemAt (hes PP hPP)
@@ -75,7 +76,8 @@ theorem eps_absorb {P : Finset (Formalism.L2.DIV.Pl D.host.E)} {e : AE D} {es : 
     algebraMap (AF D.host.F) (AE D) (sA (belowPl PP) 1) * (e + cA D e) =
       algebraMap (AF D.host.F) (AE D) (sA (belowPl PP) 1) := by
   have hsum : e + cA D e = ∑ Q ∈ P, phiE (D := D) (belowPl Q) 1 := by
-    rw [he, map_sum, ← Finset.sum_add_distrib]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [he, map_sum, ← Finset.sum_add_distrib]
     exact Finset.sum_congr rfl fun Q hQ => below_of_idemAt (hes Q hQ)
   change phiE (D := D) (belowPl PP) 1 * (e + cA D e) = phiE (D := D) (belowPl PP) 1
   rw [hsum, Finset.mul_sum, Finset.sum_eq_single_of_mem PP hPP]

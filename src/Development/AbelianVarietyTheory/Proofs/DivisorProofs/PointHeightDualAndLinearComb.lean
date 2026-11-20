@@ -138,7 +138,8 @@ theorem isPtHt_dual_comb : GlobalTheory.Published.ArExists → ∀ (k : Type) [C
   · rw [hpt] at h ⊢
     rw [HermLB.icls_dual, map_neg, h, neg_mul]
   · simp only [hpt] at h ⊢
-    rw [ArInt.icls_comb, map_sum, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [ArInt.icls_comb, map_sum, Finset.sum_mul]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_zsmul, h, zsmul_eq_mul, mul_assoc]
 

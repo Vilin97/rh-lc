@@ -92,13 +92,15 @@ theorem mat_eq_sum {P Q : ℕ} (Z : Mat P Q) : Z = ∑ i, ∑ j, Z i j • Eab i
 theorem actR_full (P Q R : ℕ) (h : P ≤ R) (k : ℕ) (Z : Mat P Q) (G : Mdl P Q) :
     fockAct1 P Q R 0 Z (embR P Q R h k G) = embR P Q R h k (actR P Q R k Z G) := by
   conv_lhs => rw [mat_eq_sum Z]
-  simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, L_actR, actR_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, L_actR, actR_apply]
 
 theorem actS_full (P Q S : ℕ) (h : Q ≤ S) (k' : ℕ) (Z : Mat P Q) (G : Mdl P Q) (f : Pol P Q 0 S) :
     GlobalTheory.DefLift.BilFischer.pair (fockAct1 P Q 0 S Z f) (embS P Q S h k' G) =
       GlobalTheory.DefLift.BilFischer.pair f (embS P Q S h k' (actS P Q S k' Z G)) := by
   conv_lhs => rw [mat_eq_sum Z]
-  simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, L_actS, actS_apply, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, L_actS, actS_apply, smul_eq_mul]
 
 theorem formEx : GlobalTheory.RealLift.FormEx := by
   intro P Q R S x k k' hP hQ _ _ hk hk'

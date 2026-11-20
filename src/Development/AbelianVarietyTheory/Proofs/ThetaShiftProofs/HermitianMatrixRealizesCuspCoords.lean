@@ -36,7 +36,8 @@ theorem exists_trace_repr (f : Matrix (Fin ρ) (Fin ρ) E →ₗ[ℚ] ℚ) :
   choose c hc using fun a b : Fin ρ => h (f ∘ₗ Matrix.singleLinearMap ℚ a b)
   refine ⟨Matrix.of c, fun β => ?_⟩
   conv_lhs => rw [Matrix.matrix_eq_sum_single β]
-  simp only [map_sum, Matrix.of_apply, ← hc]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Matrix.of_apply, ← hc]
   rfl
 
 theorem exists_herm_phase (E : Type) [Field E] [NumberField E] [IsCMField E] (r ρ : ℕ)
@@ -73,7 +74,8 @@ theorem exists_herm_phase (E : Type) [Field E] [NumberField E] [IsCMField E] (r 
           ∑ a, ∑ b, -(cc (c b a) * zBas X cu k a b) := by
         rw [Finset.sum_comm]
         unfold cc
-        simp only [map_sum, map_mul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, map_mul]
         refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
         rw [show IsCMField.complexConj E (zBas X cu k b a) = cc (zBas X cu k b a) from rfl, hs,
           mul_neg]

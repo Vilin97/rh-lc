@@ -55,7 +55,8 @@ theorem stepD (X : Submodule E S.V) (hXiso : ∀ x ∈ X, ∀ y ∈ X, S.hT x y 
     have key : S.hT (B₁ v) = -(star c) • (S.hT (B₀ v) + S.hT v ∘ₗ B₀) := by
       apply b.ext
       intro k'
-      rw [hB₁app, map_sum, LinearMap.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hB₁app, map_sum, LinearMap.sum_apply]
       simp only [LinearMap.map_smulₛₗ, LinearMap.smul_apply, starRingEnd_apply, smul_eq_mul,
         LinearMap.add_apply, LinearMap.comp_apply]
       rw [Finset.sum_eq_single k']

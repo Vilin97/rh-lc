@@ -102,7 +102,8 @@ theorem exists_coords {X : Scheme.{0}} (t : SAB H X) {Ω : Type} [Field Ω] {ξ 
     have e : u = ∑ i, u i • (Pi.single i 1 : Fin g → V) := by
       ext k; simp [Finset.sum_apply, Pi.single_apply]
     conv_lhs => rw [e]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [hjs, hj1]
     ext k; simp [Finset.sum_apply, Pi.single_apply, Algebra.smul_def]
   have hpt : ∀ u, MC.pt (algebraMap V L ∘ u) = epsBase (algebraMap V L) rfl ≫ MV.pt u := fun u => by

@@ -34,7 +34,8 @@ theorem psTrunc_map {S S' : Type} [CommRing S] [CommRing S'] (ψ : S →+* S') {
     (m : ℕ) (f : MvPowerSeries κ S) :
     psTrunc m (MvPowerSeries.map ψ f) = MvPolynomial.map ψ (psTrunc m f) := by
   unfold psTrunc
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun e _ => ?_
   rw [MvPolynomial.map_monomial, MvPowerSeries.coeff_map]
 

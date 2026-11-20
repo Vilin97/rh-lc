@@ -35,11 +35,13 @@ theorem graphD [CompleteSpace H₁] [CompleteSpace H₂] (h₁ : IsURepOn (UJset
     show ofP (E₁ a b (κ₁ w), E₂ a b (κ₂ w)) = ofP (κ₁ (F a b w), κ₂ (F a b w))
     rw [e₁, e₂]
   have c₁ : ∀ w, casimir E₁ (κ₁ w) = κ₁ (casimir F w) := fun w => by
-    simp only [casimir, LinearMap.sum_apply, Module.End.mul_apply, map_sum, e₁]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [casimir, LinearMap.sum_apply, Module.End.mul_apply, map_sum, e₁]
   have cF : ∀ w, casimir F w = (c : ℂ) • w := fun w => hi (by rw [← c₁, hc, map_smul])
   have cκ : ∀ w, casimir (sE E₁ E₂) (κ w) = (c : ℂ) • κ w := fun w => by
     rw [← map_smul, ← cF]
-    simp only [casimir, LinearMap.sum_apply, Module.End.mul_apply, map_sum, hκ]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [casimir, LinearMap.sum_apply, Module.End.mul_apply, map_sum, hκ]
   let Γ : Submodule ℂ (WithLp 2 (H₁ × H₂)) :=
     { carrier := {x | U (ofLp x).1 = (ofLp x).2}
       add_mem' := fun {a b} ha hb => by

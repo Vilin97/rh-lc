@@ -124,7 +124,8 @@ theorem isUnitarisable_piTensor {Γ : α → Type} [∀ a, Group (Γ a)] {ρ : �
     have hmem : v ∈ Submodule.span ℂ (Set.range E) := by
       rw [← hx]
       refine Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _ ?_
-      rw [← hy, show y i = fun a => ∑ j, c i a j • b a j from funext (hc i), MultilinearMap.map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hy, show y i = fun a => ∑ j, c i a j • b a j from funext (hc i), MultilinearMap.map_sum]
       refine Submodule.sum_mem _ fun I _ => ?_
       rw [MultilinearMap.map_smul_univ]
       exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨I, rfl⟩)

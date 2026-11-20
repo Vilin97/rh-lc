@@ -34,7 +34,8 @@ theorem Bd_zero_left (a : Fin N → F) (w : Fin N → AF F) : Bd (AF F) a 0 w = 
 
 theorem Bd_rat (a : Fin N → F) (ξ η : Fin N → F) :
     Bd (AF F) a (rat ξ) (rat η) = algebraMap F (AF F) (Bd F a ξ η) := by
-  simp [Bd, rat, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Bd, rat, map_sum, map_mul]
 
 theorem continuous_Bd_right (a : Fin N → F) (w : Fin N → AF F) :
     Continuous fun u : Fin N → AF F => Bd (AF F) a u w := by

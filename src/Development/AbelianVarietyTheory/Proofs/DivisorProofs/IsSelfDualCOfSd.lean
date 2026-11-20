@@ -240,7 +240,8 @@ theorem inId_of_mem (hc : D.host.ccK = ⊤) (hS : S.gram = 1) {e : AE D} {𝔪 :
       mul_div_cancel₀ _ hn0] at h2
     obtain ⟨m, hm, hme⟩ := (FractionalIdeal.mem_coeIdeal _).1 h2
     have hme' : (m : D.host.E) = (β : D.host.E) * M i j := hme
-    rw [he, Finset.sum_mul, show toEAf D (∑ P ∈ SS, es P * finTens α M i j) = ∑ P ∈ SS, toEAf D (es P * finTens α M i j) from
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [he, Finset.sum_mul, show toEAf D (∑ P ∈ SS, es P * finTens α M i j) = ∑ P ∈ SS, toEAf D (es P * finTens α M i j) from
       map_sum (toEAf D).toAddMonoidHom _ SS]
     refine sum_mem fun P hP => ?_
     have hβ0 : β ≠ 0 := fun hh => hβP P hP (hh ▸ zero_mem _)

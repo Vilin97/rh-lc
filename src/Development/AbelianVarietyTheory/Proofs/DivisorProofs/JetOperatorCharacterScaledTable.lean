@@ -35,7 +35,8 @@ theorem subD_scale (w : ι → K) (P : Pol K ι a) :
     (MvPolynomial.algHom_ext fun v => ?_) P
   simp only [AlgHom.comp_apply, subD, aeval_X]
   split_ifs with h
-  · simp only [map_sum, map_mul, scaleVar, aeval_X, Sum.elim_inl, Sum.elim_inr, map_one]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [map_sum, map_mul, scaleVar, aeval_X, Sum.elim_inl, Sum.elim_inr, map_one]
     refine Finset.sum_congr rfl fun β _ => ?_
     ring
   · simp
@@ -75,7 +76,8 @@ theorem scaleVar_hom [DecidableEq ι] (w : ι → K) (d : ι → ℕ) {Q : Pol K
     scaleVar (fun v => w v.1) Q = (∏ τ, w τ ^ d τ) • Q := by
   conv_lhs => rw [Q.as_sum]
   conv_rhs => rw [Q.as_sum]
-  rw [map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.smul_sum]
   refine Finset.sum_congr rfl fun m hm => ?_
   rw [scaleVar_monomial, Finsupp.prod_fintype _ _ (by simp), Fintype.prod_prod_type]
   congr 1

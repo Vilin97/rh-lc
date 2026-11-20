@@ -79,7 +79,8 @@ theorem nonempty_tensor_equiv : ∀ (A B : Type) [CommRing A] [CommRing B] [Alge
   have hμD : ∀ (a : L) (y : Fin h → B),
       μ (D hN hL a y) = piMap (algebraMap A B) (Fin h) a + algebraMap A B f • y := by
     intro a y
-    simp only [D, map_add, map_sum, hμ, one_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [D, map_add, map_sum, hμ, one_smul]
     congr 1
     ext k
     simp [fx, Finset.sum_apply, Pi.single_apply, mul_comm, Algebra.smul_def]

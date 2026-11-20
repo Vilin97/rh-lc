@@ -188,7 +188,8 @@ theorem range_bc (χ : F → Ω) :
   · rintro _ ⟨g, rfl⟩
     have h := eq_sum g (1 : Ω)
     rw [map_one, one_smul] at h
-    rw [h, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h, map_sum]
     refine Submodule.sum_mem _ fun x _ => ?_
     rw [map_smul, linMap_bc]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨_, ⟨_, rfl⟩, rfl⟩)
@@ -245,7 +246,8 @@ theorem af_bc [One F] (hR : ∀ a ∈ R, algebraMap Ω C a ∈ RC) (χ : F → �
     have hid : τ (linMap n (fun a => algebraMap Ω C (χ a)) w) = w := by
       have h := eq_sum w (1 : Ω)
       rw [map_one, one_smul] at h
-      rw [h, map_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [h, map_sum, map_sum]
       refine Finset.sum_congr rfl fun x _ => ?_
       rw [map_smul, map_smul, linMap_bc, hτ, a1]
     rw [← hid]

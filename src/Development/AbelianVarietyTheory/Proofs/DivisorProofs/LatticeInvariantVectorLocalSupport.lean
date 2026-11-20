@@ -45,7 +45,8 @@ theorem latAtV_selfDual_locCo : ∀ (F E : Type) [Field F] [NumberField F] [Fiel
   have h := hw (-γ) (neg_mem hγ)
   rw [GlobalTheory.LatVac.psiAt_apply] at h
   convert h using 2
-  simp only [GlobalTheory.LatVac.locCo, AddMonoidHom.coe_mk, ZeroHom.coe_mk, hp, dotProduct, map_sub, map_sum, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [GlobalTheory.LatVac.locCo, AddMonoidHom.coe_mk, ZeroHom.coe_mk, hp, dotProduct, map_sub, map_sum, map_mul,
     GlobalTheory.LatVac.evFin_liftV, map_neg, Pi.neg_apply, Prod.fst_neg, Prod.snd_neg]
   simp only [neg_mul, mul_neg, Finset.sum_neg_distrib]
   ring_nf

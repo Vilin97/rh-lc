@@ -46,9 +46,11 @@ theorem mem_span_tr {l : ℕ} {R : Type} [CommRing R] (E : FCrys l R) {P P' : Ob
   refine (Submodule.span_le.2 ?_) hx
   rintro _ ⟨z, rfl⟩
   obtain ⟨N, c, s, hz⟩ := hgen z
-  rw [hz, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hz, map_sum]
   refine Submodule.sum_mem _ fun j _ => ?_
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Submodule.sum_mem _ fun q _ => ?_
   rw [map_smulₛₗ, ← (oE (c j q)).u_tr]
   exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨(c j q, j), rfl⟩)
@@ -82,7 +84,8 @@ theorem conv_comb {l : ℕ} [Fact l.Prime] {a e : ℕ} [NeZero a] [NeZero e] {O 
   subst hw
   choose n₀ hn₀ using hconv
   refine ⟨Finset.univ.sup n₀, fun n hn => ?_⟩
-  simp_rw [hG, map_sum, map_smul, Finset.mul_sum, mul_smul_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp_rw [hG, map_sum, map_smul, Finset.mul_sum, mul_smul_comm]
   rw [Finset.sum_comm, ← Finset.sum_sub_distrib]
   apply Finset.dvd_sum
   intro q _
@@ -99,7 +102,8 @@ theorem comb_S {O K : Type} [CommRing O] [NormedField K] [IsUltrametricDist K] [
   intro k
   funext τ
   apply Subtype.ext
-  rw [hG, Finset.sum_apply, AddSubmonoidClass.coe_finsetSum, map_sum, Finset.mul_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hG, Finset.sum_apply, AddSubmonoidClass.coe_finsetSum, map_sum, Finset.mul_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun q _ => ?_
   rw [Pi.smul_apply, SetLike.val_smul, hF, PowerSeries.coeff_smul, mul_smul_comm, mul_smul_comm]
 

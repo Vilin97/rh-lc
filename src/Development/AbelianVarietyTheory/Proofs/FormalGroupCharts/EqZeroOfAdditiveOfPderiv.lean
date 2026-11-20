@@ -176,7 +176,8 @@ theorem eq_zero_of_additive_of_pderiv (k : Type) [CommRing k] [Algebra ℚ k] (d
     rw [e0, hlin'] at h2
     have hs : ∀ f : Fin d → PS k (q + 2) d, ev V (∑ l, f l) = ∑ l, ev V (f l) := fun f => by
       unfold ev
-      rw [← coe_substAlgHom (gt_hasSubst V hV), map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← coe_substAlgHom (gt_hasSubst V hV), map_sum]
     simp only [hs, gt_ev_mul V hV, eS] at h2
     exact h2
   have hD0 : (fun l => pderiv k ((0 : Fin (q + 1)), l) g) = 0 := by

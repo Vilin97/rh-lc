@@ -41,7 +41,8 @@ theorem exists_wedge_eq_integral_smul {R : Type*} [CommRing R] [Algebra R K] [Mo
     simp [algebraMap_smul]
   have hrepr : ∀ j i, bW.repr (w' j) i = algebraMap R K (c j i) := by
     intro j i
-    rw [hw'eq j, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hw'eq j, map_sum]
     simp only [map_smul, Basis.repr_self, Finsupp.finsetSum_apply, Finsupp.smul_apply, smul_eq_mul,
       Finsupp.single_apply, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq',
       Finset.mem_univ, if_true]

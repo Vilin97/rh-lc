@@ -78,7 +78,8 @@ theorem norm_chiInf (χ : HChar E) (h : ∀ z, star z = z → dchi χ z = 0) (y 
       Complex.smul_re, smul_eq_mul] at h3
     exact (mul_eq_zero.1 h3).resolve_left (by positivity)
   have h3 : ∀ z : Cinf E, (dchi χ z).re = 0 := fun z => by
-    rw [← Finset.univ_sum_single z, map_sum, Complex.re_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Finset.univ_sum_single z, map_sum, Complex.re_sum]
     refine Finset.sum_eq_zero fun w _ => ?_
     have e : (Pi.single w (z w) : Cinf E) =
         (z w).re • (Pi.single w 1 : Cinf E) + (z w).im • (Pi.single w Complex.I : Cinf E) := by

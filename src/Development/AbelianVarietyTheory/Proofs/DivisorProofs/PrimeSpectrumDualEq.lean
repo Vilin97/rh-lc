@@ -104,7 +104,8 @@ theorem exists_nsmul_mem {E : Type} [AddCommGroup E] [Module ℚ E] [FiniteDimen
       have := congrArg Subtype.val e
       rw [Submodule.coe_sum] at this
       exact this.trans (Finset.sum_congr rfl fun k _ => Submodule.coe_smul _ _)
-    rw [e', map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e', map_sum]
     refine Submodule.sum_mem _ fun k _ => ?_
     rw [map_smul, ← algebraMap_smul ℝ]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨k, rfl⟩)

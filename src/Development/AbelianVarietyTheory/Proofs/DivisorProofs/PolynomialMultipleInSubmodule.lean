@@ -29,7 +29,8 @@ theorem schwartz_submodule_multilinear_mem (V : Type) [NormedAddCommGroup V] [No
       funext i; refine Fin.cases ?_ ?_ i <;> simp
     have hlin : M.curryLeft x = ∑ i, b.repr x i • M.curryLeft (b i) := by
       conv_lhs => rw [← b.sum_repr x]
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simp only [map_smul]
     have hx : M (fun _ => x) = ∑ i, ((b.coord i x : ℝ) : ℂ) * (M.curryLeft (b i)) (fun _ => x) := by
       rw [hcons, ← ContinuousMultilinearMap.curryLeft_apply, hlin, ContinuousMultilinearMap.sum_apply]

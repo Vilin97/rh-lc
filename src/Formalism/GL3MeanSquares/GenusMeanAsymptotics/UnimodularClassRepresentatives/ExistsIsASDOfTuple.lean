@@ -41,7 +41,8 @@ theorem expand_orth [FiniteDimensional K V] {y : Fin (finrank K V) → V}
     rw [Fintype.linearIndependent_iff]
     intro g hg j
     have hj := congrArg (h (y j)) hg
-    simp only [map_sum, map_smul, smul_eq_mul, map_zero] at hj
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, smul_eq_mul, map_zero] at hj
     rw [Finset.sum_eq_single j (fun i _ hij => by rw [horth j i (Ne.symm hij), mul_zero])
       (by simp)] at hj
     exact (mul_eq_zero.mp hj).resolve_right (hne j)
@@ -59,7 +60,8 @@ theorem expand_orth [FiniteDimensional K V] {y : Fin (finrank K V) → V}
     intro j
     rw [eq_mul_inv_iff_mul_eq₀ (hne j)]
     have hj := congrArg (h (y j)) hv
-    simp only [map_sum, map_smul, smul_eq_mul] at hj
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, smul_eq_mul] at hj
     rw [Finset.sum_eq_single j (fun i _ hij => by rw [horth j i (Ne.symm hij), mul_zero])
       (by simp)] at hj
     exact hj

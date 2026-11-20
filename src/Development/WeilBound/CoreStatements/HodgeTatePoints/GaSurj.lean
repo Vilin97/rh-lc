@@ -50,9 +50,11 @@ private theorem toZMod_cycZ_eq_one_of_cycMod_eq_one (σ : E →+* K) (hσ : ∀ 
     rw [h1, h2]
   refine ⟨b, ∑ i, y i, Submodule.sum_mem _ fun i _ => hy i, ?_⟩
   conv_lhs => rw [hz]
-  rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum]
   simp only [he, map_add, hrho, ← hb, algebraMap_smul]
-  rw [Finset.sum_add_distrib, map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.sum_add_distrib, map_sum, Finset.smul_sum]
   unfold HTChart.q
   congr 1
   refine Finset.sum_congr rfl fun i _ => ?_

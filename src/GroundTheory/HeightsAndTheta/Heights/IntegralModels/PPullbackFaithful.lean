@@ -52,7 +52,8 @@ lemma basisExpand_apply (W : X.Opens) (r : Fin n → Γ(X, W)) :
 lemma basisExpand_map {W W' : X.Opens} (i : W' ≤ W) (r : Fin n → Γ(X, W)) :
     (B.presheaf.map (homOfLE i).op).hom (basisExpand B s W r) =
       basisExpand B s W' (fun k => (X.presheaf.map (homOfLE i).op).hom (r k)) := by
-  rw [basisExpand_apply, basisExpand_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [basisExpand_apply, basisExpand_apply, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [Scheme.Modules.map_smul]
   congr 1

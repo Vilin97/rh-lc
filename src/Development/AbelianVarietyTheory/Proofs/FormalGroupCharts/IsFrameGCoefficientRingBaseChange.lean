@@ -56,7 +56,8 @@ theorem psIn_map {d n n' : ℕ} (m : ℕ) (r : Fin n → Fin n') (f : MvPowerSer
   rw [MvPolynomial.map_rename]
   congr 1
   unfold psTrunc
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun e _ => ?_
   rw [MvPolynomial.map_monomial, MvPowerSeries.coeff_map]
 

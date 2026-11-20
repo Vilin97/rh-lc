@@ -216,7 +216,8 @@ theorem expS_add_right {z : R} (hz : z ∈ I) (y y' : A) :
 theorem expS_add_left {z z' : R} (hz : z ∈ I) (hz' : z' ∈ I) (y : A) :
     expS κ (z + z') y = expS κ z y * expS κ z' y := by
   ext n
-  simp only [expS, PowerSeries.coeff_mk, PowerSeries.coeff_mul, κ.dpow_add hz hz', map_sum, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [expS, PowerSeries.coeff_mk, PowerSeries.coeff_mul, κ.dpow_add hz hz', map_sum, map_mul,
     Finset.mul_sum]
   refine Finset.sum_congr rfl fun p hp ↦ ?_
   rw [Finset.HasAntidiagonal.mem_antidiagonal] at hp

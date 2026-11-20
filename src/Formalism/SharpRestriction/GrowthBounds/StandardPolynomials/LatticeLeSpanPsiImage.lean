@@ -72,7 +72,8 @@ theorem xiSpan (N r t b : ℕ) :
       exact (map_ne_zero_iff _ hinj).2 (MvPolynomial.mem_support_iff.1 hm)
     rw [hmap] at h1
     exact ((MvPolynomial.mem_restrictSupport_iff (KK O)).1 h1) (Finset.mem_coe.2 hm')
-  rw [hmap, MvPolynomial.as_sum g, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hmap, MvPolynomial.as_sum g, map_sum]
   refine Submodule.sum_mem _ (fun m hm => ?_)
   obtain ⟨hv, hb⟩ := hsup m hm
   have hmon : m.prod (fun v e => (X v : MvPolynomial (BVar N r t) (KK O)) ^ e) =

@@ -458,7 +458,8 @@ theorem polarPoly_one {σ R : Type*} [CommRing R] [Fintype σ] [DecidableEq σ]
   have hc : ∀ v : σ, (X v * C (X v) : MvPolynomial σ (MvPolynomial σ R)) = C (X v) * X v :=
     fun v => mul_comm _ _
   simp only [outerDot, hc, coeff_neg, coeff_sum, coeff_C_mul, coeff_X]
-  rw [map_neg, map_sum, ← Finset.sum_neg_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_neg, map_sum, ← Finset.sum_neg_distrib]
   refine Finset.sum_congr rfl (fun v _ => ?_)
   split_ifs <;> simp
 

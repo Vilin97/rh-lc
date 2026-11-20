@@ -1208,7 +1208,8 @@ theorem exists_orthogonal_lattice (W : HSpace E) (h : OrthoFam W W.rank) :
     rw [linearIndependent_iff']
     intro s c hc j hj
     have h1 := congrArg (W.hT (e j)) hc
-    rw [map_sum, map_zero] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero] at h1
     simp only [map_smul, he, smul_eq_mul, mul_ite, mul_one, mul_zero] at h1
     rw [Finset.sum_ite_eq s j] at h1
     simpa [hj] using h1
@@ -1475,7 +1476,8 @@ theorem mass_ortho (K : Type) [Field K] [NumberField K] [StarRing K] (hK : Forma
   have he : ∀ x y, stdForm K n (e x) (e y) = h x y := by
     intro x y
     conv_rhs => rw [← B.sum_repr x, ← B.sum_repr y]
-    simp only [map_sum, LinearMap.sum_apply, map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, hB, hon,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.sum_apply, map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, hB, hon,
       RingHom.id_apply, mul_ite, mul_one, mul_zero]
     show ∑ i, star (e x i) * e y i = _
     refine Finset.sum_congr rfl fun i _ => ?_

@@ -90,7 +90,8 @@ theorem small_mul {r s : ℝ} {f g : Hn F → ℂ} (hf : Small ι r f) (hg : Sma
   obtain ⟨c, hc, hc'⟩ := hasQ_mul F f g a b ha hb
   refine ⟨c, hc, fun ξ => ?_⟩
   obtain ⟨t, ht⟩ := hc' ξ
-  rw [ht, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [ht, map_sum]
   refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg (mul_nonneg hr hs) fun η _ => ?_
   rw [map_mul, norm_mul]
   exact mul_le_mul (ha' η) (hb' (ξ - η)) (norm_nonneg _) hr

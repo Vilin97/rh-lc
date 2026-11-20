@@ -48,7 +48,8 @@ theorem galois_clause (Cv : LabelConv K) (hC : CuspParam K Cv) (d : ℕ) (α : �
       rw [hdeg', hdeg, Fintype.card_fin]
     · intro y hy γ hγ z hz m hm'
       obtain ⟨r, hr, rfl⟩ := (conj_roots hm hi hw (fun x => x ^ a) hf y).1 hy
-      rw [htr γ, hval r hr γ hγ z hz m hm', map_mul, map_pow, map_neg, map_one, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [htr γ, hval r hr γ hγ z hz m hm', map_mul, map_pow, map_neg, map_one, map_sum]
       congr 1
       refine Finset.sum_congr rfl fun i _ => ?_
       have hu : (Cv.ι r ^ (m * Fintype.card K ^ i)) ^ (∏ e ∈ Finset.Icc 1 d, (q K ^ e - 1)) = 1 := by

@@ -44,7 +44,8 @@ theorem lift_growth (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D) (χS
     rw [hFi γ hγ, hinv]
     have e : thetaKO om k (x * g) (L (F k)) = ∑ j, b.repr (F k) j * thetaKO om k (x * g) (L (b j)) := by
       conv_lhs => rw [← b.sum_repr (F k)]
-      simp only [thetaKO, map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [thetaKO, map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
     rw [e, Finset.sum_mul]
     refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun j _ => ?_)
     rw [norm_mul, mul_assoc]

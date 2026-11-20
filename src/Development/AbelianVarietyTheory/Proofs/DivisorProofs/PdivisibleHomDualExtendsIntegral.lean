@@ -73,14 +73,16 @@ theorem exists_rigExtMap_verschiebung_eq_sum {S : Type} [CommRing S] (hR : (p : 
       ← (s.frobTwist hR hS).rig_naturality s (verschiebung hR G) _ (s.app_verschiebung hR hS) z, ← ht,
       SemiHom.rig_rigOfOmega]
     refine congrArg _ ?_
-    rw [map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smulₛₗ, map_smul,
       ← (frobProj hS G').omega_naturality (frobProj hS A) κ (frobTwistMap hS κ) (fun _ _ => rfl), hu,
       s.omega_omega _ ((frobProj hS G').comp s) fun _ _ => rfl]
     exact congrArg _ ((frobProj hR G).omega_omega _ _
       (fun n a => (SemiHom.frobTwist_app_frobProj hR hS s n a).symm) _)
-  rw [← hv, h1, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hv, h1, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_smul, SemiHom.rig_rigOfOmega]
 

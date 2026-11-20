@@ -63,7 +63,8 @@ theorem exists_coords (hc : IsClo p Ω) {ι : Type} [Fintype ι] (E : ι → Ω)
       simp only [Submodule.coe_smul, hsm, Submodule.coe_zero]
       exact hv
     have := congrArg (fun s => b.repr s i) h0
-    simp only [map_sum, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.smul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.smul_apply,
       smul_eq_mul, map_zero, Finsupp.coe_zero, Pi.zero_apply] at this
     exact this
 
@@ -99,7 +100,8 @@ theorem sum_psi_eq_zero (hc : IsClo p Ω) {T : Tower p Ω} {n : ℕ} {ψ : O0 p 
       _ = 0 := by rw [h1, mul_zero]
   calc ∑ k, E k * ψ (algebraMap (Lau p) (O0 p) (G k))
       = ∑ i, f i * ψ (algebraMap (Lau p) (O0 p) (∑ k, HahnSeries.C (M k i) * G k)) := by
-        simp only [map_sum, map_mul, psi_C h, hE, Finset.sum_mul, Finset.mul_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, map_mul, psi_C h, hE, Finset.sum_mul, Finset.mul_sum]
         rw [Finset.sum_comm]
         exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun k _ => by ring
     _ = 0 := by simp only [hB, map_zero, mul_zero, Finset.sum_const_zero]

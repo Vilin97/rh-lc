@@ -64,16 +64,19 @@ private theorem iso_alg {R : Type} [CommRing R] [Algebra ℂ R] [IsNoetherianRin
       simp [Matrix.vecMul, dotProduct, Finset.sum_apply]
     set x' := x - ∑ j, c j • g j with hx'Eq
     have hx' : φ (D ℂ R x') = 0 := by
-      simp only [hx'Eq, map_sub, map_sum, Derivation.map_smul, map_smul, hM, hc, sub_self]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hx'Eq, map_sub, map_sum, Derivation.map_smul, map_smul, hM, hc, sub_self]
     obtain ⟨k, b, ω', hb, hω⟩ := hk _ hx'
     have hx'm : x' ∈ m ^ 2 := by
       have h1 : dd.liftKaehlerDifferential (D ℂ R x') = 0 := by
-        rw [hω, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [hω, map_sum]
         exact Finset.sum_eq_zero fun i _ => by
           rw [map_smul]
           exact hkill _ ((hmem _).mpr (hb i)) _
       have hex' : e x' = 0 := by
-        simp [hx'Eq, map_sub, map_sum, map_smul, hg, (hmem x).mp hx]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp [hx'Eq, map_sub, map_sum, map_smul, hg, (hmem x).mp hx]
       rw [hL, hd, hex', map_zero, sub_zero, Ideal.Quotient.eq_zero_iff_mem] at h1
       exact h1
     have hsum : ∑ j, c j • g j ∈ Ig :=

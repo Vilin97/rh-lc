@@ -85,7 +85,8 @@ theorem pderiv_X_inj {f : Fin r → σ} (hf : Function.Injective f) (c d : Fin r
 theorem pderiv_e_S (he : Function.Injective e) (hwe : ∀ c d, w c ≠ e d)
     (c : Fin r) : pderiv (e c) (∑ d, X (w d) * X (e d) : MvPolynomial σ k) = X (w c) := by
   have h0 : ∀ d, pderiv (e c) (X (w d) : MvPolynomial σ k) = 0 := fun d => mvPolynomial_pderiv_X_of_ne (hwe d c)
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [Derivation.leibniz, h0, pderiv_X_inj he, smul_eq_mul, mul_ite, mul_one, mul_zero,
     add_zero, Finset.sum_ite_eq', Finset.mem_univ, ↓reduceIte]
 
@@ -93,7 +94,8 @@ theorem pderiv_w_S (hw : Function.Injective w) (hwe : ∀ c d, w c ≠ e d)
     (c : Fin r) : pderiv (w c) (∑ d, X (w d) * X (e d) : MvPolynomial σ k) = X (e c) := by
   have h0 : ∀ d, pderiv (w c) (X (e d) : MvPolynomial σ k) = 0 :=
     fun d => mvPolynomial_pderiv_X_of_ne (fun h => hwe c d h.symm)
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [Derivation.leibniz, h0, pderiv_X_inj hw, smul_eq_mul, mul_ite, mul_one, mul_zero,
     zero_add, Finset.sum_ite_eq', Finset.mem_univ, ↓reduceIte]
 

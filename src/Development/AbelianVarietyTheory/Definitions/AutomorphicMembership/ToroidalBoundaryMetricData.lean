@@ -229,7 +229,8 @@ def EigFrame.ofFrPt : EigFrame Z (algebraMap c.F S) x :=
         ((lieEquiv Z y hx).injective (by rw [lieEquiv_act, hw, map_smul]) :
           actR Xo.univ.t.act a w = algebraMap c.F S (embK c τ a) • w))
       refine (isComb_iff (fun i => tanOf (t := Xo.univ.t) (y.tan τ i)) a w).trans ?_
-      rw [← (lieEquiv Z y hx).injective.eq_iff, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← (lieEquiv Z y hx).injective.eq_iff, map_sum]
       simp only [map_smul]
 
 theorem EigFrame.ofFrPt_v (τ : E →+* ℂ) (i : Fin (Dw.mult τ)) : ∃ w : Sp (DualNumber S) ⟶ Z.oF.t.G.left,

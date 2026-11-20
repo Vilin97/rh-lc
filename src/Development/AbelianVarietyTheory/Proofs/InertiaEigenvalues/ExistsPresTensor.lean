@@ -119,7 +119,8 @@ theorem eps_orth {i j : ZMod n} (h : i ≠ j) : eps E ρ i * eps E ρ j = 0 := b
   rw [eps, eps, ← map_mul, ← map_mul, letE_mul_ne h, map_zero, map_zero]
 
 theorem eps_sum [NeZero n] : ∑ i, eps E ρ i = 1 := by
-  simp only [eps, ← map_sum, sum_letE, map_one]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [eps, ← map_sum, sum_letE, map_one]
 
 theorem eps_ext [NeZero n] {x y : Rk} (h : ∀ i, eps E ρ i * x = eps E ρ i * y) : x = y := by
   rw [← one_mul x, ← one_mul y, ← eps_sum E ρ, Finset.sum_mul, Finset.sum_mul]
@@ -229,7 +230,8 @@ theorem IsRed.push [IsDomain O] [IsPrincipalIdealRing O] {lam : O} {κ : k⸨X�
   set z' := ∑ δ ∈ W.DelF, W.γD T'' δ z with hz'
   have hzΔ : z' ∈ DΔ W T'' := sum_mem_DΔ T'' z
   have h3 : W.map f z' = W.DelF.card • (x : W.DD T) := by
-    rw [hz', map_sum, ← Finset.sum_const]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hz', map_sum, ← Finset.sum_const]
     exact Finset.sum_congr rfl fun δ hδ => (W.map_γ f δ z).trans (by rw [hz]; exact x.2 δ hδ)
   refine ⟨⟨u • W.map f' z', fun δ hδ => by rw [map_smul, ← W.map_γ, hzΔ δ hδ]⟩, ?_⟩
   have h4 : J E ρ T' q' (W.map f' z') = g.baseChange Rk (J E ρ T q (W.map f z')) := by
@@ -401,10 +403,12 @@ theorem exists_pres [IsDomain O] [IsPrincipalIdealRing O] [NeZero n] (hO : Funct
         have h4 : (1 : Rk) ⊗ₜ[k] A.ρ g t = Act a A g ((1 : Rk) ⊗ₜ[k] t) := by rw [Act_tmul, map_one]
         rw [h4]
         rcases hg with hg | hg
-        · rw [hy, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          · rw [hy, map_sum]
           exact Finset.sum_congr rfl fun i _ => by rw [hact T A q hq, (x i).2 _ hg]
         · refine Eq.trans ?_ h2
-          rw [hy, map_sum, map_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [hy, map_sum, map_sum]
           exact Finset.sum_congr rfl fun i _ => by rw [hact T A q hq, hact T A q hq, hg, hg₀] }
   obtain ⟨F, F1, F2, F3, F4, F5⟩ := GlobalTheory.T.exists_exact_functor_phiGamma_of_frames R _ φ a g₀ _ _ _ hfr
   have hj : ∀ (T : LocLat G Qp LL O) (A : Ob k G) (q : ↥T.L.T →ₗ[O] (Fin A.m → k)) (i : ZMod n'),

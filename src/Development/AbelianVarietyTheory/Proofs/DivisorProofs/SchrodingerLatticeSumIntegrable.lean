@@ -27,7 +27,8 @@ theorem linD_linC {F R : Type} [Field F] [CommRing R] (e : F →+* R) {κ : Type
   rw [Finset.sum_comm]
   have h : ∀ j, ∑ k, e (p i k) * (y j * e (a j k)) = y j * e (if i = j then 1 else 0) := by
     intro j
-    rw [← hp i j, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hp i j, map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_mul]; ring
   simp only [h, apply_ite e, map_one, map_zero, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq, Finset.mem_univ, if_true]
@@ -51,7 +52,8 @@ theorem exists_leftInv {F : Type} [Field F] {κ : Type} [Fintype κ] {r : ℕ} (
     rw [← h1]; exact LinearMap.congr_fun hP _
   have h3 : P (a j) i = ∑ k, P (fun k' => if k = k' then (1 : F) else 0) i * a j k := by
     conv_lhs => rw [pi_eq_sum_univ (a j)]
-    rw [map_sum, Finset.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_apply]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_smul, Pi.smul_apply, smul_eq_mul, mul_comm]
   rw [← h3, h2]
@@ -135,13 +137,15 @@ theorem pureA_comp_mem {κ : Type} [Fintype κ] {r : ℕ} (a p : Fin r → κ �
         (fun i => InfiniteAdeleRing.ringEquiv_mixedSpace F (x i).1) := by
     funext k
     show archPart F (linC (fun j k => algebraMap F (AF F) (a j k)) x k) = _
-    simp only [linC, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [linC, map_sum, map_mul]
     rfl
   have hB : (fun i => (linC (fun j k => algebraMap F (AF F) (a j k)) x i).2) =
       linC (fun j k => ((finPart F).comp (algebraMap F (AF F))) (a j k)) (fun i => (x i).2) := by
     funext k
     show finPart F (linC (fun j k => algebraMap F (AF F) (a j k)) x k) = _
-    simp only [linC, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [linC, map_sum, map_mul]
     rfl
   simp only [pureA, Function.comp_apply, hf']
   rw [hA, hB]

@@ -22,7 +22,8 @@ theorem ThroughTwoPointsTrdeg.proof (hT : TrdegAdjoinLe.Statement) : ThroughTwoP
   have heq : ∀ i, ∑ m, u (i, m) * z m = s i * ∑ m, c' m * z m := by
     intro i
     have h := hy i
-    simp only [genSubst, map_sub, map_mul, map_sum, hC] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [genSubst, map_sub, map_mul, map_sum, hC] at h
     have h' : ∑ m, u (i, m) * y m = s i * ∑ m, c' m * y m := by
       rw [← sub_eq_zero, Finset.mul_sum, ← Finset.sum_sub_distrib, ← h]
       refine Finset.sum_congr rfl fun m _ => ?_

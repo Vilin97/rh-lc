@@ -66,7 +66,8 @@ lemma lin_mul_rel (hn : 0 < n) (p : MvPolynomial (Fin r) R) (i : Fin r) :
 
 lemma lin_rel (hn : 0 < n) {f : MvPolynomial (Fin r) R} (hf : f ∈ rel n x) : lin n x f = 0 := by
   obtain ⟨c, rfl⟩ := Ideal.mem_span_range_iff_exists_fun.mp hf
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_eq_zero fun i _ => lin_mul_rel n x hn _ i
 
 lemma algebraMap_eq_mk (z : R) :

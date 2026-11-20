@@ -306,7 +306,8 @@ theorem burGapPos_of_bmu : CompanionTheory.Bmu.BesselMapUniqGap → UpperTheory.
         (fun i => UpperTheory.Lit.Bur.sobolevCont_of_conj_gram_form σ q1 q2 qg (hl1 i)) (fun v hv => ?_)
       have hv' := (hsm v).1 hv
       have e0 := hBx ⟨v, hv'⟩
-      rw [← b.sum_dual_apply_smul_coord (β.flip ⟨v, hv'⟩), map_sum] at e0
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← b.sum_dual_apply_smul_coord (β.flip ⟨v, hv'⟩), map_sum] at e0
       refine e0.trans (Finset.sum_congr rfl fun i _ => ?_)
       rw [map_smul, LinearMap.flip_apply, ← hl2 i ⟨v, hv'⟩]
   refine rank_le_one_of_dep _ fun β₁ h₁ β₂ h₂ => ?_

@@ -68,7 +68,8 @@ theorem sh_tr {T T' : C} (φ : T ⟶ T') (t : Φ.A.obj T') (c : ℕ →₀ Φ.A.
       rw [sh_single_zero, tr_single, map_zero, Finset.Nat.antidiagonal_zero, Finset.sum_singleton]
       exact sh_single_zero _
     | succ n =>
-      rw [sh_single_succ, tr_single, tr_single, map_sum, Finset.Nat.sum_antidiagonal_succ, sh_single_zero, zero_add]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [sh_single_succ, tr_single, tr_single, map_sum, Finset.Nat.sum_antidiagonal_succ, sh_single_zero, zero_add]
       exact Finset.sum_congr rfl fun p _ => sh_single_succ _ _
 
 theorem ev_tr (Q : Poly Φ) {T T' : C} (φ : T ⟶ T') (ψ : Q.P T ⟶ Q.P T') (t : Φ.A.obj T')
@@ -82,7 +83,8 @@ theorem ev_tr (Q : Poly Φ) {T T' : C} (φ : T ⟶ T') (ψ : Q.P T ⟶ Q.P T') (
     have hy : (Φ.A.map ψ).hom ((Φ.A.map (Q.j T)).hom y) = (Φ.A.map (Q.j T')).hom ((Φ.A.map φ).hom y) := by
       rw [← Cut.mapA_comp, ← Cut.mapA_comp, hj]
     have hjt : (Φ.A.map (Q.j T')).hom t ∈ Φ.J.S (Q.P T') := Φ.J.map_mem _ ht
-    rw [ev_single, map_mul, hy, Φ.dp_map ψ n (Q.X_mem T), hX, Φ.dp_add n (Q.X_mem T') hjt, tr_single, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [ev_single, map_mul, hy, Φ.dp_map ψ n (Q.X_mem T), hX, Φ.dp_add n (Q.X_mem T') hjt, tr_single, map_sum,
       Finset.mul_sum]
     refine Finset.sum_congr rfl fun p _ => ?_
     rw [ev_single, map_mul, Φ.dp_map (Q.j T') p.2 ht]

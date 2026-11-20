@@ -96,7 +96,8 @@ theorem fderiv_eq_sum (he : e ≫ π = 𝟙 S) (hc : IsHolTo Set.univ c) (h0 : c
       ∑ a ∈ s, valAt' x T (α a) • fderiv ℂ (fun u => valAt' (c u) (W' a) (G a)) 0 := by
   ext v
   have H' := congrArg (QCoh.appLinear (der hc h0 hπ v).lift T) H
-  rw [map_sum] at H'
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum] at H'
   simp only [map_smul] at H'
   have key {W : X.Opens} (hW : T ≤ e ⁻¹ᵁ W) (F : Γ(X, W)) :
       QCoh.appLinear (der hc h0 hπ v).lift T (Conormal.d he hW F) = (der hc h0 hπ v).app hW F :=
@@ -105,7 +106,8 @@ theorem fderiv_eq_sum (he : e ≫ π = 𝟙 S) (hc : IsHolTo Set.univ c) (h0 : c
   let δ : Γ((Scheme.Modules.pushforward x).obj (SheafOfModules.unit (Sp ℂ).ringCatSheaf), T) →+ ℂ :=
     AddMonoidHom.mk' (fun t => valAt' (𝟙 (Sp ℂ)) (x ⁻¹ᵁ T) t) (GlobalTheory.valAt'_add _ _)
   have H2 := congrArg δ H'
-  rw [map_sum] at H2
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum] at H2
   rw [ContinuousLinearMap.sum_apply]
   refine (val_cst hx _).symm.trans (Eq.trans (b := δ ((der hc h0 hπ v).app hW F)) rfl ?_)
   refine H2.trans (Finset.sum_congr rfl fun a _ => ?_)

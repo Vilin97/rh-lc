@@ -81,7 +81,8 @@ theorem antisym_lhs_eq {A : Type*} [CommRing A] (m d : ℕ) (h : ℕ → A) :
     exact Finset.sum_congr rfl fun ν _ => by ring
   rw [Finset.sum_congr rfl fun σ _ => hσ σ, Finset.sum_comm]
   refine Finset.sum_congr rfl fun ν _ => ?_
-  rw [← Finset.sum_mul, Matrix.det_apply', map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Finset.sum_mul, Matrix.det_apply', map_sum]
   congr 1
   refine Finset.sum_congr rfl fun σ _ => ?_
   rw [map_mul, map_intCast, map_prod]

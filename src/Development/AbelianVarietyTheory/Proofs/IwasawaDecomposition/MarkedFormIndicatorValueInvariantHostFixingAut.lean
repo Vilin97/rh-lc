@@ -51,7 +51,8 @@ theorem isMarked_transport_of (β : LinearMap.BilinForm ℤ X) (h : IsMarked bar
   · rw [Finset.mem_map_equiv, hS, ← isIndec_transport he hbal hψ hlab]
     show IsIndec bar ψ lab (e β) (e (e.symm x)) ↔ _
     rw [e.apply_symm_apply]
-  · rw [Finset.sum_map, ← map_zsmul, hsum, map_sum]; rfl
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [Finset.sum_map, ← map_zsmul, hsum, map_sum]; rfl
 
 theorem isMarked_transport (β : LinearMap.BilinForm ℤ X) :
     IsMarked bar ψ lab i X (e β) ↔ IsMarked bar ψ lab i X β := by

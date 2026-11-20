@@ -171,7 +171,8 @@ theorem pr_ne_zero (hBP : ProjFrameBasePtFree.Statement) (hfr : IsProjFrame x e)
     rintro _ ⟨k, rfl⟩
     have hk : z (e k) = 0 := congrFun h0 k
     have he : (⟨(), (e k).2⟩ : Ix κ) = e k := rfl
-    simp only [SetLike.mem_coe, RingHom.mem_ker, hψ, RingHom.comp_apply, linForm, map_sum, map_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [SetLike.mem_coe, RingHom.mem_ker, hψ, RingHom.comp_apply, linForm, map_sum, map_mul,
       map_C, map_X, eval_C, eval_X, projMat]
     simp only [eq_intCast, Int.cast_ite, Int.cast_one, Int.cast_zero, ite_mul, one_mul, zero_mul]
     rw [Finset.sum_eq_single (e k).2 (fun i _ hi => if_neg (Ne.symm hi))

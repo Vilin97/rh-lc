@@ -78,7 +78,8 @@ theorem splitSet_union {P H : Finset (Pl D.host.E)} (hP : SplitSet P) (hH : ∀ 
       rw [idemAt_eq he]
       exact he
   refine ⟨idem (P ∪ H), ⟨idemAt, hid, rfl⟩, ?_⟩
-  rw [idem, map_sum, Finset.sum_mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [idem, map_sum, Finset.sum_mul_sum]
   refine Finset.sum_eq_zero fun i hi => Finset.sum_eq_zero fun j hj => ?_
   by_cases hh : i ∈ H ∨ j ∈ H
   · rcases GlobalTheory.PlaceModelSum.eq_or_mul_eq_zero (hid i hi).1 (GlobalTheory.PlaceModelSum.isSplitIdem_cA (hid j hj).1) with e | e

@@ -107,17 +107,20 @@ theorem chart_p_smul_lift_eq_bt :
     (D.wd.ψ.1.toLinearMap.restrict hf)
     (TensorProduct.map LinearMap.id (ξmul (Tw.π 1) (Tw.ξ 1) (Tw.ξ_mem 1)) (w i))
   have hpt : p • ∑ i, n i • B.map D.wd.ψ (p • th i) = B.tg D.wd.πW hsq v := by
-    simp only [v, map_sum, map_nsmul (B.tg D.wd.πW hsq), Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [v, map_sum, map_nsmul (B.tg D.wd.πW hsq), Finset.smul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [B.tg_nat (Tw.π 1) D.wd.πW (Tw.sqZero 1) hsq, ← hpth, smul_comm p, ← map_nsmul,
       smul_smul, pow_two]
   refine ⟨∑ i, n i • B.map D.wd.ψ (p • th i), ?_, ?_⟩
-  · simp only [ptOf, map_sum, map_nsmul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [ptOf, map_sum, map_nsmul]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [← B.map_comp, hc1, B.map_comp, hth, ← B.map_comp, hc2, D.L.τ_compat i 0, map_nsmul]
   · refine ⟨hpt ▸ map_tg_ker B _ _ hsq _ D.wd.ρW_eq v, fun k => ?_⟩
     refine ⟨∑ i, n i • D.wd.ψ.1 (btTanCrd D.ch.gb _ k (w i)), ?_, ?_⟩
-    · simp only [map_sum, map_nsmul, Matrix.mulVec, dotProduct, map_mul, Function.comp_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp only [map_sum, map_nsmul, Matrix.mulVec, dotProduct, map_mul, Function.comp_apply]
       refine Finset.sum_congr rfl fun i _ => ?_
       have h1 := congrArg (btTanCrd D.ch.gb _ k) (hw i)
       rw [btTanCrd_nat, btTanCrd_nat] at h1
@@ -139,7 +142,8 @@ theorem chart_p_smul_lift_eq_bt :
     · have h := btTan_chi_tg D.ch (hF D.ch _) D.wd.ρW D.sm.nil D.wd.πW hsq D.wd.ρ1 D.wd.ρW_eq v k
       simp only [hpt]
       rw [h]
-      simp only [v, map_sum, map_nsmul, AddSubmonoidClass.coe_finsetSum,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [v, map_sum, map_nsmul, AddSubmonoidClass.coe_finsetSum,
         AddSubmonoidClass.coe_nsmul, Finset.mul_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [btTanCrd_nat, ← LinearMap.lTensor_def, btTanCrd_nat, ← D.wd.ξ_img, mul_smul_comm,

@@ -75,7 +75,8 @@ theorem Bf_eq_sum_right (σ : E →ₐ[F] E) (J : Matrix (Fin m) (Fin m) E) (bs 
     Bf σ J X Z = ∑ k, crdB bs Z k * Bf σ J X (Ek bs k) := by
   conv_lhs => rw [← sum_crdB bs Z]
   change BfR σ J X _ = _
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [map_smul, smul_eq_mul]
   rfl
 
@@ -83,7 +84,8 @@ theorem Bf_eq_sum_left (σ : E →ₐ[F] E) (J : Matrix (Fin m) (Fin m) E) (bs :
     Bf σ J X Z = ∑ k, crdB bs X k * Bf σ J (Ek bs k) Z := by
   conv_lhs => rw [← sum_crdB bs X]
   change BfL σ J Z _ = _
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [map_smul, smul_eq_mul]
   rfl
 

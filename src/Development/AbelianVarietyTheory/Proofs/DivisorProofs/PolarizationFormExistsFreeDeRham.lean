@@ -30,7 +30,8 @@ theorem exists_of_isLB (P : GlobalTheory.Published.AbelianDeRham.Free) {R : Type
   let b' : Fin n → primDR A := fun k ↦ ⟨b k, hm _⟩
   have hz' : IsChern (dp0 R) (A.hom ≫ 𝟙 _) L (∑ k, CatCoh.cup _ (a' k).1 (b' k).1) := by
     have : z = ∑ k, CatCoh.cup _ (a k) (b k) := by
-      rw [← e.apply_symm_apply z, ← hab, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← e.apply_symm_apply z, ← hab, map_sum]
       exact Finset.sum_congr rfl fun k _ ↦ he _ _
     exact this ▸ hz
   exact ⟨_, n, a', b', hz', rfl⟩

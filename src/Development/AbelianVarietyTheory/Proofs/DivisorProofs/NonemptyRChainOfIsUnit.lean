@@ -173,7 +173,8 @@ theorem ringExSt_of_existsSt : GlobalTheory.RingChain.ExistsSt → GlobalTheory.
       exact dvd_mul_right _ _)
     (by rw [hπ, map_sub, map_one, hz])
     (fun n hn => by
-      rw [hγ n hn, xiN, GlobalTheory.Sandwich.xi, map_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hγ n hn, xiN, GlobalTheory.Sandwich.xi, map_sum, map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_pow, map_pow, WittVector.fontaineTheta_teichmuller, ← hz, zeta, Function.iterate_succ_apply'])
     Lie Om eL eO

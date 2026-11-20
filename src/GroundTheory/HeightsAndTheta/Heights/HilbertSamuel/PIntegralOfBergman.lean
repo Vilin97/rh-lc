@@ -197,7 +197,8 @@ lemma iSup_ratio_eq {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℂ E]
     intro s
     have hs : ℓ s = ∑ a, ⟪b a, s⟫_ℂ * ℓ (b a) := by
       conv_lhs => rw [← b.sum_repr' s]
-      simp [map_sum, map_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [map_sum, map_smul]
     have h1 : ‖ℓ s‖ ≤ ∑ a, ‖⟪b a, s⟫_ℂ‖ * ‖ℓ (b a)‖ := by
       rw [hs]
       exact (norm_sum_le _ _).trans (le_of_eq (by simp))
@@ -221,7 +222,8 @@ lemma iSup_ratio_eq {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℂ E]
     simp only [hc, RCLike.norm_conj]
     exact hSdef.symm
   have hl : ℓ s0 = (S : ℂ) := by
-    rw [hs0, map_sum, hSdef, Complex.ofReal_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hs0, map_sum, hSdef, Complex.ofReal_sum]
     refine Finset.sum_congr rfl fun a _ => ?_
     rw [map_smul, smul_eq_mul, Complex.conj_mul', Complex.ofReal_pow]
   apply le_antisymm (ciSup_le hbound)

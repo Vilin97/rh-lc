@@ -88,7 +88,8 @@ theorem eq_zero_of_anti (L : Pol ι N →ₗ[ℝ] ℝ)
     {k : ℕ} (hL : ∀ (τ : ι) (a b : Fin N), (b : ℕ) = a + 1 → ∀ P : Pol ι N, P.IsHomogeneous k →
       L (rename (swapAt τ a b) P) = -L P)
     (hk : k < dimFl ι N) {P : Pol ι N} (hP : P.IsHomogeneous k) : L P = 0 := by
-  rw [P.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [P.as_sum, map_sum]
   refine Finset.sum_eq_zero fun m hm => ?_
   have hdeg := hP (mem_support_iff.1 hm)
   have hsum : ∑ x, m x = k := by
@@ -187,7 +188,8 @@ theorem eq_formDeg_of_swap (hh : Pol ι N →ₗ[ℝ] ℝ) (hHh : GlobalTheory.F
         -(hh (pSum τ 2 * Q) - formDeg (bcForm τ * toForm Q)))
     (Q : Pol ι N) : hh (pSum τ 2 * Q) = formDeg (bcForm τ * toForm Q) := by
   suffices h : defect hh τ Q = 0 from sub_eq_zero.1 h
-  rw [← sum_homogeneousComponent Q, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← sum_homogeneousComponent Q, map_sum]
   refine Finset.sum_eq_zero fun k _ => ?_
   have hk := homogeneousComponent_isHomogeneous k Q
   by_cases e : k + 1 = dimFl ι N

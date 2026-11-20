@@ -163,7 +163,8 @@ private theorem coord_mul {ι : Type*} [Fintype ι] (b : Module.Basis ι ℝ (Ar
   let L : ArchMatrix K n →ₗ[ℝ] ℝ := (b.coord i).comp (LinearMap.mulLeft ℝ a)
   have h : L x = ∑ j, b.repr x j • L (b j) := by
     conv_lhs => rw [← b.sum_repr x]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [map_smul]
   exact h
 

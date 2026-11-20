@@ -52,7 +52,8 @@ noncomputable def transferSum (y : (res S.subtype A).ρ.invariants) : A :=
 lemma transferSum_mem_invariants (y : (res S.subtype A).ρ.invariants) :
     transferSum S y ∈ A.ρ.invariants := fun h => by
   classical
-  simp only [transferSum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [transferSum, map_sum]
   rw [show (∑ q : G ⧸ S, A.ρ h (cosetSMul S y q)) = ∑ q : G ⧸ S, cosetSMul S y (h • q) from
     Finset.sum_congr rfl fun q _ => (cosetSMul_smul S y h q).symm]
   exact Fintype.sum_equiv (MulAction.toPerm h) _ _ fun _ => rfl
@@ -132,7 +133,8 @@ lemma counit_indCoindIso_inv_coindConst [DecidableRel (QuotientGroup.rightRel S)
   classical
   change ((Rep.indResAdjunction k S.subtype).counit.app A).hom
       (coindToInd (res S.subtype A) (coindConst S (res S.subtype A) y)) = _
-  rw [coindToInd_apply, map_sum, transferSum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [coindToInd_apply, map_sum, transferSum]
   refine (Finset.sum_congr (by convert rfl) fun x _ => ?_ : _ = ∑ x : Quotient (QuotientGroup.rightRel S),
     cosetSMul S y (QuotientGroup.quotientRightRelEquivQuotientLeftRel S x)).trans (Equiv.sum_comp _ _)
   induction x using Quotient.inductionOn with

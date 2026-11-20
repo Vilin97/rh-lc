@@ -55,7 +55,8 @@ theorem dex_global {R : Type} [CommRing R] [Algebra k R] [FiniteDimensional k R]
     · rw [Pi.single_eq_of_ne h, mul_zero]
   have hE2 : ∑ m, e m = 1 := by
     apply (IsArtinianRing.equivPi R).injective
-    rw [map_sum, map_one]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_one]
     funext m'
     rw [Finset.sum_apply, Finset.sum_eq_single m']
     · rw [he, Pi.single_eq_same, Pi.one_apply]
@@ -182,9 +183,11 @@ theorem dex_global {R : Type} [CommRing R] [Algebra k R] [FiniteDimensional k R]
     have hvs : v = ∑ m, e m • v := by rw [← Finset.sum_smul, hE2, one_smul]
     have hAv : A v = ∑ m', ((A.restrict (hAm m') ⟨e m' • v, hself m' v⟩ : Vm m') : V) := by
       conv_lhs => rw [hvs]
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       rfl
-    rw [hAv, map_sum, Finsupp.finsetSum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hAv, map_sum, Finsupp.finsetSum_apply]
     refine Finset.sum_eq_zero fun m' _ => ?_
     by_cases hmm : m' = m
     · subst hmm

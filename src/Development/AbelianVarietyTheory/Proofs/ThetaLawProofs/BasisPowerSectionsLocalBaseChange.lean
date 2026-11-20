@@ -119,7 +119,8 @@ theorem gs_cst (p : Y ⟶ Sp C) (W : Y.Opens) (r : Z ⟶ Y) (z : Z) (hz : r z �
 theorem gs_comb (p : Y ⟶ Sp C) (W : Y.Opens) (r : Z ⟶ Y) (z : Z) (hz : r z ∈ W) (c : Fin N → C)
     (a : Fin N → Γ(Y, W)) :
     gs r z W (∑ k, AbLaw.cst p W (c k) * a k) = ∑ k, cst (r ≫ p) z (c k) * gs r z W (a k) := by
-  simp only [← gs_cst p W r z hz, gs_eq r z W hz, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← gs_cst p W r z hz, gs_eq r z W hz, map_sum, map_mul]
 
 theorem gs_congr {W : Y.Opens} (r : Z ⟶ Y) (z : Z) {a b : Γ(Y, W)} (h : a = b) : gs r z W a = gs r z W b := by rw [h]
 
@@ -245,7 +246,8 @@ open GlobalTheory.KeyKa
 theorem sum_comb {R T : Type} [CommRing R] [CommRing T] (g : R →+* T) {N N' : ℕ} (c : Fin N → R)
     (A : Matrix (Fin N) (Fin N') R) (v : Fin N' → T) :
     ∑ k, g (c k) * ∑ k', g (A k k') * v k' = ∑ k', g (Matrix.vecMul c A k') * v k' := by
-  simp only [Matrix.vecMul, dotProduct, map_sum, map_mul, Finset.mul_sum, Finset.sum_mul, _root_.mul_assoc]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.vecMul, dotProduct, map_sum, map_mul, Finset.mul_sum, Finset.sum_mul, _root_.mul_assoc]
   exact Finset.sum_comm
 
 theorem coords_comp {R : Type} [CommRing R] (x : KeyIn R) {l N N' : ℕ} {b : Fin N → RR x l} {b₀ : Fin N' → RR x l}

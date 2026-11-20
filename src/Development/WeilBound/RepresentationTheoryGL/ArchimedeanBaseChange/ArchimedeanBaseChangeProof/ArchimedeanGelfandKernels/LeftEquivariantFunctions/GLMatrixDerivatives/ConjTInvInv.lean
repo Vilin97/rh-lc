@@ -42,14 +42,16 @@ theorem eps_sum_trace (hH : HbFacts) {V : Type} [NormedAddCommGroup V] [InnerPro
     rw [← trace_real (hher p)]
     ext a b
     simp [Complex.real_smul]
-  rw [← e, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← e, map_sum]
   refine Finset.sum_congr rfl fun p _ => ?_
   rw [map_smul, real_smul_clm, trace_real (hher p)]
 
 theorem eps_sum_sq (hH : HbFacts) {V : Type} [NormedAddCommGroup V] [InnerProductSpace ℂ V]
     (ε : Mat n →ₗ[ℝ] (V →L[ℂ] V)) : ∑ p, ε ((hb p : Mat n) * hb p + hb p * hb p) = ((2 * n : ℕ) : ℂ) • ε 1 := by
   obtain ⟨-, -, -, -, -, hsq, -, -⟩ := hH n
-  rw [← map_sum, Finset.sum_add_distrib, hsq]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum, Finset.sum_add_distrib, hsq]
   have e : (n : ℂ) • (1 : Mat n) + (n : ℂ) • 1 = ((2 * n : ℕ) : ℝ) • (1 : Mat n) := by
     ext a b
     simp [Complex.real_smul]

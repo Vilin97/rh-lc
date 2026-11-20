@@ -151,9 +151,11 @@ theorem liftT_oppTens (W : G.Weil) (M : Vol G) (t : T) (τi : PolRow G × PolDow
   let l : TotT G (oppPath t D.R.m) →+ Fn G (.grid D.R.m 0) :=
     AddMonoidHom.mk' (fun τ => liftT W M (oppPath t D.R.m) τ F) fun τ τ' => liftT_add W M _ τ τ' F
   show l (oppTens W t τi τf) = _
-  rw [oppTens, Finsupp.sum, map_sum, Finset.sum_product]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [oppTens, Finsupp.sum, map_sum, Finset.sum_product]
   refine Finset.sum_congr rfl fun P _ => ?_
-  rw [Finsupp.sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finsupp.sum, map_sum]
   exact Finset.sum_congr rfl fun d _ => liftT_single W M _ _ _ F
 
 theorem all_append {S : Arrow T → Type} {P : ∀ a, S a → Prop} {X Y : Node} {p : Path T X Y} {d : p.Fam S} (hd : Path.Fam.All P d) :

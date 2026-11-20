@@ -103,11 +103,14 @@ theorem exists_glue_of_int {F E : Type} [Field F] [NumberField F] [Field E] [Num
   refine ⟨∑ i, Module.finBasis F E i ⊗ₜ[F] c i, fun g ι hι P => ?_⟩
   have e1 : ι (sigR g (FiniteAdeleRing (𝓞 F) F) (∑ i, Module.finBasis F E i ⊗ₜ[F] c i)) =
       ∑ i, algebraMap E _ (g (Module.finBasis F E i)) * adMap F E (c i) := by
-    rw [map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum]
     exact Finset.sum_congr rfl fun i _ => hι _ _
-  rw [e1, ← localComponent_apply₂, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e1, ← localComponent_apply₂, map_sum]
   conv_rhs => rw [← (Module.finBasis F E).sum_repr (algebraMap (𝓞 E) E (f (P.under (𝓞 F))))]
-  rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_mul, localComponent_algebraMap, localComponent_apply₂, adMap_apply, hc', locMap_algebraMap, Algebra.smul_def, map_mul,
     AlgHom.commutes, map_mul, mul_comm]

@@ -83,7 +83,8 @@ theorem mem_range (hu : ∀ c : U, ι (u c) = O c) (hφ : ∀ c : U, φ (u c) = 
     intro n
     obtain ⟨c, hc⟩ := fund (∑ i ∈ Finset.range N, u ((σ^[i] ζ) ^ n) * φ^[i] b)
       (∑ i ∈ Finset.range N, (((σ^[i] ζ) ^ n : U) : Ω) * y i) (by
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         have e : ∀ i, φ (u ((σ^[i] ζ) ^ n) * φ^[i] b) = u ((σ^[i + 1] ζ) ^ n) * φ^[i + 1] b := by
           intro i
           rw [map_mul, hφ, map_pow σ, Function.iterate_succ_apply', Function.iterate_succ_apply']
@@ -92,7 +93,8 @@ theorem mem_range (hu : ∀ c : U, ι (u c) = O c) (hφ : ∀ c : U, φ (u c) = 
         have h2 := Finset.sum_range_succ' (fun i => u ((σ^[i] ζ) ^ n) * φ^[i] b) N
         rw [h1, hζ, hb] at h2
         exact (add_right_cancel h2).symm) (by
-        rw [map_sum, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum, map_sum]
         refine Finset.sum_congr rfl fun i _ => ?_
         rw [map_mul, map_mul, hu, hy])
     exact ⟨_, hc⟩

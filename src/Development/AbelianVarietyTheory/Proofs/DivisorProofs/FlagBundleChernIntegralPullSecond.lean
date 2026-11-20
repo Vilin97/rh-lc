@@ -37,7 +37,8 @@ theorem sum_hs_eq_zero (m' : ℕ) : ∑ i ∈ Finset.range (m' + 2), C ((-1 : �
   apply esymm_sub_injective
   rw [map_zero]
   refine (mul_left_injective₀ X_sub_X_ne_zero) ?_
-  simp only [zero_mul, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [zero_mul, map_sum, Finset.sum_mul]
   have key : ∀ c : MvPolynomial (Fin 2) ℝ, ∑ i ∈ Finset.range (m' + 2), (-c) ^ i * (X 0 + X 1) ^ (m' + 1 - i) *
       (((m' + 1).choose i : ℕ) : MvPolynomial (Fin 2) ℝ) = (-c + (X 0 + X 1)) ^ (m' + 1) := fun c => (add_pow _ _ _).symm
   have h0 := key (X 0)
@@ -348,7 +349,8 @@ theorem fibre_integral_vanish : ∀ (k : Type) [CommRing k] (B Y : Scheme.{0}) [
       have fZ : ∀ i ∈ Finset.range (m' + 2), (hY.atlas σ).IsForm (xi (hY.atlas σ) x6 (X 0 ^ (m' + i + 1)) * P (xi (hB.atlas σ) f4 (X 1 + X 2) ^ (m' + 1 - i) * χ)) :=
         fun i _ => isForm_mul (hY.atlas σ) (isForm_xi (hY.atlas σ) x6 f6 _)
           (isForm_pullHom hB hY σ π w (isForm_mul (hB.atlas σ) (isForm_pow (hB.atlas σ) fε _) hχ))
-      rw [hexp, map_sum, Finset.sum_mul, Finset.sum_congr rfl hterm,
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hexp, map_sum, Finset.sum_mul, Finset.sum_congr rfl hterm,
         integral_sum' (hY.atlas σ) _ (fun i => ((((-1 : ℝ) ^ i * ((m' + 1).choose i : ℝ)) : ℝ) : ℂ) •
           (xi (hY.atlas σ) x6 (X 0 ^ (m' + i + 1)) * P (xi (hB.atlas σ) f4 (X 1 + X 2) ^ (m' + 1 - i) * χ)))
           (fun i hi => isForm_smul (hY.atlas σ) _ (fZ i hi))]
@@ -360,7 +362,8 @@ theorem fibre_integral_vanish : ∀ (k : Type) [CommRing k] (B Y : Scheme.{0}) [
           (xi (hB.atlas σ) f4 (aeval ![X 1 + X 2, X 3] (hs (m' + i))) * (xi (hB.atlas σ) f4 (X 1 + X 2) ^ (m' + 1 - i) * χ)) =
           xi (hB.atlas σ) f4 (aeval ![X 1 + X 2, X 3] (∑ i ∈ Finset.range (m' + 2), C ((-1 : ℝ) ^ i * ((m' + 1).choose i : ℝ)) * hs (m' + i) *
             X 0 ^ (m' + 1 - i))) * χ := by
-        rw [map_sum, map_sum, Finset.sum_mul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum, map_sum, Finset.sum_mul]
         refine Finset.sum_congr rfl fun i _ => ?_
         rw [map_mul, map_mul, map_mul, map_mul, map_pow, map_pow, aeval_C, aeval_X, Matrix.cons_val_zero, algebraMap_eq, xi_C,
           Algebra.smul_def]
@@ -371,7 +374,8 @@ theorem fibre_integral_vanish : ∀ (k : Type) [CommRing k] (B Y : Scheme.{0}) [
       rw [hsumB, sum_hs_eq_zero, map_zero, map_zero, zero_mul, integral_zero'] at h0
       rw [Finset.sum_congr rfl (fun i hi => integral_smul' (hB.atlas σ) _ (fB i hi))] at h0
       simp only [mul_neg, Finset.sum_neg_distrib, ← h0, neg_zero]
-  rw [evalF_eq_xi, upperParabolic, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [evalF_eq_xi, upperParabolic, map_sum, Finset.mul_sum]
   rw [integral_sum' (hY.atlas σ) s (fun x => pullF hB hY σ π w phi * xi (hY.atlas σ) x5 ((X 0 * (X 3 + X 4 - X 0)) ^ m x * aeval ![X 2, X 3, X 4] (W x)))
     (fun x _ => isForm_mul (hY.atlas σ) (isForm_pullHom hB hY σ π w hφ) (isForm_xi (hY.atlas σ) x5 fx5 _))]
   refine Finset.sum_eq_zero fun x _ => ?_

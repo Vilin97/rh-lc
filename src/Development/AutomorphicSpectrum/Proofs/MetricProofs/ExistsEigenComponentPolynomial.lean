@@ -102,7 +102,8 @@ def combo (c : 𝓞 E →₀ ℂ) : ℂ ⊗[ℤ] 𝓞 E := ∑ a ∈ c.support, 
 
 theorem evalHom_combo (c : 𝓞 E →₀ ℂ) (s : E →+* ℂ) :
     evalHom E (combo c) s = ∑ a ∈ c.support, c a * s (algebraMap (𝓞 E) E a) := by
-  simp only [combo, map_sum, Finset.sum_apply, evalHom_tmul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [combo, map_sum, Finset.sum_apply, evalHom_tmul]
 
 open Classical in
 
@@ -133,7 +134,8 @@ theorem actHom_tmul (ρ : 𝓞 E →+* Module.End ℂ V) (z : ℂ) (a : 𝓞 E) 
 
 theorem actHom_combo (ρ : 𝓞 E →+* Module.End ℂ V) (c : 𝓞 E →₀ ℂ) (x : V) :
     actHom ρ (combo c) x = ∑ a ∈ c.support, c a • ρ a x := by
-  simp [combo, map_sum, actHom_tmul, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [combo, map_sum, actHom_tmul, LinearMap.sum_apply]
 
 theorem mem_eigSp_iff {ρ : 𝓞 E →+* Module.End ℂ V} {s : 𝓞 E →+* ℂ} {x : V} :
     x ∈ eigSp ρ s ↔ ∀ a, ρ a x = s a • x := by
@@ -149,7 +151,8 @@ theorem eigComp_eq_combination : ∀ (E : Type) [Field E] [NumberField E] (s₀ 
   refine ⟨cs (extEmb s₀), fun V _ _ ρ => ?_⟩
   have hsum : ∑ s, combo (cs s) = 1 := by
     apply evalHom_injective
-    rw [map_sum, map_one]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_one]
     simp only [hcs]
     funext s'
     simp [Finset.sum_apply, Pi.single_apply]
@@ -166,7 +169,8 @@ theorem eigComp_eq_combination : ∀ (E : Type) [Field E] [NumberField E] (s₀ 
   have hsum' : ∀ x, ∑ s, actHom ρ (combo (cs s)) x = x := by
     intro x
     have h := congrArg (actHom ρ) hsum
-    rw [map_sum, map_one] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_one] at h
     have h2 := LinearMap.congr_fun h x
     simpa [LinearMap.sum_apply] using h2
   have heig : ∀ (s : E →+* ℂ) x, actHom ρ (combo (cs s)) x ∈ eigSp ρ (s.comp (algebraMap (𝓞 E) E)) := by

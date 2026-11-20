@@ -418,7 +418,8 @@ theorem bijective_toPiLocalization_of_henselian (R S : Type*) [CommRing R]
     fun q ↦ (IsIdempotentElem.iff_eq_one_of_isUnit (IsLocalization.map_units _
       (⟨e q, (H q _ q.isMaximal).2 rfl⟩ : q.asIdeal.primeCompl))).1 ((he.idem q).map _)
   refine ⟨∑ q, e q * a q, funext fun q ↦ ?_⟩
-  rw [MaximalSpectrum.toPiLocalization_apply_apply, map_sum, Finset.sum_eq_single q]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [MaximalSpectrum.toPiLocalization_apply_apply, map_sum, Finset.sum_eq_single q]
   · rw [map_mul, h1, one_mul, ha]
   · intro p _ hpq
     have := congr(algebraMap S (Localization.AtPrime q.asIdeal) $(he.ortho hpq))

@@ -60,7 +60,8 @@ theorem th_prod (c : PV (Rw ε true) (Fin n) (Fin n)) (μ : VV (Rw ε false) n �
 theorem decomp (Q : PX m n) :
     Q = ∑ μ ∈ (Th ε Q).support, emb ε true ((Th ε Q).coeff μ) * emb ε false (monomial μ 1) := by
   apply (Th ε).injective
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp_rw [th_prod]
   exact (Th ε Q).as_sum
 
@@ -83,7 +84,8 @@ theorem coeff_sum_monomial {σ R : Type*} [CommSemiring R] [DecidableEq σ] (S :
 theorem indep {J : Type} [Fintype J] (b : J → PV (Rw ε true) (Fin n) (Fin n)) (hb : LinearIndependent ℂ b)
     (t : J → PV (Rw ε false) (Fin n) (Fin n)) (h : ∑ j, emb ε true (b j) * emb ε false (t j) = 0) : ∀ j, t j = 0 := by
   have h2 := congrArg (Th ε) h
-  rw [map_sum, map_zero] at h2
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_zero] at h2
   simp_rw [map_mul, th_embT, th_embF] at h2
   intro j
   ext μ

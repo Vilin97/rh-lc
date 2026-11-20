@@ -14,7 +14,8 @@ theorem valC_finiteDimensional {E K ι : Type} [Field E] [Field K] [CharZero K] 
       Submodule.span ℂ (Set.range fun i => evV emb (1 : Matrix (Fin n) (Fin n) E) lam σ (bVV K lam i)) := by
     rw [← h, Submodule.span_le]
     rintro _ ⟨F, rfl⟩
-    rw [← (bVV K lam).sum_repr F, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← (bVV K lam).sum_repr F, map_sum]
     refine Submodule.sum_mem _ fun i _ => ?_
     rw [LinearMap.map_smulₛₗ]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)

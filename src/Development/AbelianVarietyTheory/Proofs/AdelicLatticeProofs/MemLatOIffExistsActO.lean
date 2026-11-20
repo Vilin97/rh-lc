@@ -181,18 +181,21 @@ theorem actO_rankOne (S T : HSp D) (g : GA D S) (h : GA D T) (a : D.host.E) (s :
       ∑ l, cF D (toEAf D (mt S g l k)) * eToEAf D (S.gram l j) := by
     intro k
     have := congrArg (toEAf D) (congrFun (congrFun (gram_mul_inv S g) k) j)
-    simpa only [Matrix.mul_apply, map_sum, map_mul, Matrix.map_apply, Matrix.transpose_apply, toEAf_cA,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa only [Matrix.mul_apply, map_sum, map_mul, Matrix.map_apply, Matrix.transpose_apply, toEAf_cA,
       toEAf_incA] using this
   have key2 : ∑ l, (∑ k, cF D (s k) * eToEAf D (S.gram k l)) * toEAf D (mt S g⁻¹ l j) =
       ∑ k, cF D (((mt S g).map (toEAf D) *ᵥ s) k) * eToEAf D (S.gram k j) := by
-    simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Matrix.map_apply, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Matrix.map_apply, Finset.sum_mul]
     rw [Finset.sum_comm, Finset.sum_comm (f := fun k l => cF D (toEAf D (mt S g k l)) * cF D (s l) * _)]
     refine Finset.sum_congr rfl fun k _ => ?_
     simp only [mul_assoc, mul_left_comm _ (cF D (s k))]
     rw [← Finset.mul_sum, ← Finset.mul_sum, key]
   simp only [actO, rankOne, Matrix.mul_apply, Matrix.of_apply]
   rw [← key2]
-  simp only [← finEmb_mul, ← map_sum, mul_comm (finEmb D _)]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← finEmb_mul, ← map_sum, mul_comm (finEmb D _)]
   congr 1
   simp only [Matrix.mulVec, dotProduct, Matrix.map_apply]
   rw [Finset.mul_sum (f := fun l => (∑ k, cF D (s k) * eToEAf D (S.gram k l)) * toEAf D (mt S g⁻¹ l j))]

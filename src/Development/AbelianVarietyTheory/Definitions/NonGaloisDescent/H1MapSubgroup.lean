@@ -18,7 +18,8 @@ variable {Γ O Λ : Type} [Group Γ] [CommRing O] [CommRing Λ] [Algebra O Λ] {
 theorem repOn_map (f : B →ₗ[Λ] B') (g : Γ) (m : Fin r → B) :
     f.compLeft (Fin r) (repOn ρ κ B g m) = repOn ρ κ B' g (f.compLeft (Fin r) m) := by
   funext a
-  simp [repOn, matAct, map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [repOn, matAct, map_sum, Finset.smul_sum]
 
 variable [TopologicalSpace Γ] [TopologicalSpace B] [DiscreteTopology B] [TopologicalSpace B'] [DiscreteTopology B']
 

@@ -312,7 +312,8 @@ theorem framepf_γ_vec (Gs : PowerSeries O) (hGs0 : PowerSeries.constantCoeff Gs
   have hι : ∀ h : PowerSeries O, letγ (W.γ₀ W.gam) (framepf_ι π' i h) = framepf_ι π' i (PowerSeries.subst Gs h) :=
     fun h => framepf_ι_letγ π' i (hπ0 i) (W.γ₀ W.gam) hγ0 Gs hGs0 hGs h
   unfold framepf_vec
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   have hterm : ∀ m, W.γD T W.gam (framepf_ι π' i (H m k) • Bs.b m) =
       ∑ p, framepf_ι π' i (Γ p m * PowerSeries.subst Gs (H m k)) • Bs.b p := by
     intro m

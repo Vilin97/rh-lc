@@ -23,7 +23,8 @@ theorem sum_gE (R : RealDat D A Ks) (hE : R.models_HE) (hg : R.models_gE) (y : R
   have hmem : R.HE.e y ∈ R.EEat R.triv := hE.2.1 ▸ LinearMap.mem_range_self _ _
   have hfix := ((mem_goodPart _ _ _ _ _ _).1 hmem).2
   apply hE.1
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp_rw [map_smul, hg]
   ext v
   rw [← hfix v]
@@ -56,7 +57,8 @@ theorem exists_good (hP : GlobalTheory.Published.CuspRapidDecay) (R : RealDat D 
     exact LinearMap.mem_range_self _ x
   refine ⟨_, hmem, ?_⟩
   conv_rhs => rw [← sum_gE R hC.models.HE hC.models.gE (R.Th t (R.jX t x))]
-  simp only [CSD.gaOp, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, LinearMap.map_smulₛₗ, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [CSD.gaOp, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, LinearMap.map_smulₛₗ, map_smul]
   refine Finset.sum_congr rfl fun g _ => ?_
   rw [hth t g x]
 

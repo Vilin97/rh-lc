@@ -45,7 +45,8 @@ theorem symm_of_casimir {R S L W ι : Type*} [CommRing R] [CommRing S] [Algebra 
     simp only [Φv, map_sub, LinearMap.sub_apply, sub_smul, Finset.sum_sub_distrib]
   have τΦ : ∀ f v, τ (Φ f v) = n • β f v := fun f v ↦ by
     have : β f ((∑ i, τ (t i) • e i) • v) = n • β f v := by rw [tr, Nat.cast_smul_eq_nsmul, map_nsmul]
-    rw [← this, Φv, Finset.sum_smul, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← this, Φv, Finset.sum_smul, map_sum, map_sum]
     exact Finset.sum_congr rfl fun i _ ↦ by
       rw [smul_assoc, τ.map_smul, (β f).map_smul, smul_eq_mul, smul_eq_mul, mul_comm]
   have k : ∀ u, (m * n) • (Φ f u • κ f' - Φ f' u • κ f) = 0 := fun u ↦ by
@@ -83,7 +84,8 @@ theorem exists_form (F : Type) [Field F] [NumberField F] (l : ℕ) [Fact l.Prime
   have dual : ∀ i (x : 𝓞 F), Algebra.trace ℚ F ((integralBasis F).traceDual i * x) =
       ((RingOfIntegers.basis F).repr x i : ℚ) := fun i x ↦ by
     conv_lhs => rw [← (RingOfIntegers.basis F).sum_repr x]
-    simp only [map_sum, map_zsmul, Finset.mul_sum, mul_smul_comm, ← integralBasis_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_zsmul, Finset.mul_sum, mul_smul_comm, ← integralBasis_apply,
       RingOfIntegers.coe_eq_algebraMap, Module.Basis.trace_traceDual_mul]
     simp
   obtain ⟨δ, hδ, hgen⟩ := GlobalTheory.FracGen.exists_gen F 𝔡 l
@@ -101,7 +103,8 @@ theorem exists_form (F : Type) [Field F] [NumberField F] (l : ℕ) [Fact l.Prime
     simp [mul_comm, mul_left_comm]
   · have z : (δ : F) * y = 0 := by
       refine (traceForm_nondegenerate ℚ F).1 _ fun x ↦ ?_
-      rw [← (integralBasis F).sum_repr x, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← (integralBasis F).sum_repr x, map_sum]
       refine Finset.sum_eq_zero fun i _ ↦ ?_
       have e : ((τ (y * RingOfIntegers.basis F i) : ℤ) : ℚ) = 0 := by exact_mod_cast hy _
       rw [hτ] at e
@@ -116,9 +119,11 @@ theorem exists_casimir (F : Type) [Field F] [NumberField F] (l : ℕ) [Fact l.Pr
   obtain ⟨n, τ, t, hn, ht, nd⟩ := exists_form F l
   set b := RingOfIntegers.basis F
   have cas : ∀ a j, a * t j = ∑ i, b.repr (a * b i) j • t i := fun a j ↦ sub_eq_zero.1 <| nd _ fun x ↦ by
-    rw [sub_mul, map_sub, Finset.sum_mul, map_sum, mul_comm a, mul_assoc, ht, sub_eq_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [sub_mul, map_sub, Finset.sum_mul, map_sum, mul_comm a, mul_assoc, ht, sub_eq_zero]
     conv_lhs => rw [← b.sum_repr x]
-    simp only [Finset.mul_sum, map_sum, mul_smul_comm, smul_mul_assoc, map_smul, ht, Finsupp.coe_finset_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Finset.mul_sum, map_sum, mul_smul_comm, smul_mul_assoc, map_smul, ht, Finsupp.coe_finset_sum,
       Finset.sum_apply, Finsupp.smul_apply, smul_eq_mul]
     exact Finset.sum_congr rfl fun i _ ↦ by ring
   refine ⟨n, fun i ↦ 1 ⊗ₜ b i, fun i ↦ 1 ⊗ₜ t i, (AlgebraTensorModule.rid ℤ R R).toLinearMap ∘ₗ τ.baseChange R, hn,
@@ -132,7 +137,8 @@ theorem exists_casimir (F : Type) [Field F] [NumberField F] (l : ℕ) [Fact l.Pr
       have e₂ : ∀ j, (r ⊗ₜ[ℤ] a * (1 : R) ⊗ₜ[ℤ] t j) = r • ∑ i, b.repr (a * b i) j • (1 : R) ⊗ₜ[ℤ] t i := fun j ↦ by
         simp only [← tmul_smul, ← tmul_sum, ← cas]
         simp [smul_tmul']
-      simp only [Finset.mul_sum, mul_smul_comm, e₁, e₂, map_smul, map_sum, map_zsmul, Finset.smul_sum,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Finset.mul_sum, mul_smul_comm, e₁, e₂, map_smul, map_sum, map_zsmul, Finset.smul_sum,
         Finset.sum_smul, smul_assoc]
       rw [Finset.sum_comm]
       exact Finset.sum_congr rfl fun i _ ↦ Finset.sum_congr rfl fun j _ ↦ by rw [smul_comm (f _), smul_comm (f _)]

@@ -51,8 +51,10 @@ theorem exists_map_evalV_eq (z : ∀ v : HeightOneSpectrum (𝓞 F), Fv F v ⊗[
       have e' : (x : E) = ∑ j, c.repr x j • (c j : E) := by
         conv_lhs => rw [← c.sum_repr x]
         simp
-      simp only [e', map_sum, map_zsmul, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.coe_smul, Pi.smul_apply]
-    simp only [Algebra.TensorProduct.basis_repr_tmul, Finsupp.smul_apply, Finsupp.mapRange_apply, smul_eq_mul, e,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [e', map_sum, map_zsmul, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.coe_smul, Pi.smul_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Algebra.TensorProduct.basis_repr_tmul, Finsupp.smul_apply, Finsupp.mapRange_apply, smul_eq_mul, e,
       map_sum, map_zsmul]
     exact mul_mem ha (sum_mem fun j _ => zsmul_mem (hv j) _)
   let A : Fin (Module.finrank F E) → Af F := fun k =>

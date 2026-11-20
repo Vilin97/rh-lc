@@ -279,7 +279,8 @@ theorem mem_localization_span_iff {R K V κ κ' : Type} [CommRing R] [Field K] [
     refine Submodule.sum_mem _ fun i _ => ?_
     obtain ⟨s, hs, hsa⟩ := H' (Submodule.subset_span ⟨i, rfl⟩)
     have e : B (∑ j, a j • D j) (E i) = a i := by
-      simp [map_sum, h]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [map_sum, h]
     rw [LinearMap.restrictScalars_apply, e] at hsa
     obtain ⟨r, hr⟩ := Submodule.mem_one.mp hsa
     refine ⟨s, hs, ?_⟩

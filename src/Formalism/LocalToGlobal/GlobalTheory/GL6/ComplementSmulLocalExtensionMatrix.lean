@@ -127,17 +127,20 @@ theorem complement_local_idempotent_idem : (1 - localIdempotent (E := E) v) * (1
 
 theorem local_extension_matrix_mul (M N : Matrix (Fin n) (Fin n) (E ⊗[F] v.adicCompletion F)) : localExtensionMatrix v M * localExtensionMatrix v N = localExtensionMatrix v (M * N) := by
   ext i j
-  simp only [localExtensionMatrix, Matrix.mul_apply, Matrix.map_apply, map_sum, local_extension_tensor_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [localExtensionMatrix, Matrix.mul_apply, Matrix.map_apply, map_sum, local_extension_tensor_mul]
 
 theorem local_extension_matrix_mul_gram (M : Matrix (Fin n) (Fin n) (E ⊗[F] v.adicCompletion F)) (J : Matrix (Fin n) (Fin n) E) :
     localExtensionMatrix v M * J.map (inclE (F := F) (FiniteAdeleRing (𝓞 F) F)) = localExtensionMatrix v (M * J.map (inclE (F := F) (v.adicCompletion F))) := by
   ext i j
-  simp only [localExtensionMatrix, Matrix.mul_apply, Matrix.map_apply, map_sum, local_extension_mul_incl]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [localExtensionMatrix, Matrix.mul_apply, Matrix.map_apply, map_sum, local_extension_mul_incl]
 
 theorem gram_mul_local_extension_matrix (M : Matrix (Fin n) (Fin n) (E ⊗[F] v.adicCompletion F)) (J : Matrix (Fin n) (Fin n) E) :
     J.map (inclE (F := F) (FiniteAdeleRing (𝓞 F) F)) * localExtensionMatrix v M = localExtensionMatrix v (J.map (inclE (F := F) (v.adicCompletion F)) * M) := by
   ext i j
-  simp only [localExtensionMatrix, Matrix.mul_apply, Matrix.map_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [localExtensionMatrix, Matrix.mul_apply, Matrix.map_apply, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [mul_comm, ← local_extension_mul_incl, mul_comm]
 

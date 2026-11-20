@@ -21,7 +21,8 @@ theorem ConeVanishingHomog.proof : ConeVanishingHomog.Statement := by
   have hroot : ∀ a : ℂ, a ≠ 0 → p.IsRoot a := by
     intro a ha
     have h0 := hf (a • c) (hC c hc a ha)
-    rw [← sum_homogeneousComponent f, map_sum] at h0
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← sum_homogeneousComponent f, map_sum] at h0
     rw [Polynomial.IsRoot, hp, Polynomial.eval_finsetSum, ← h0]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [GoodChartZeroSet.eval_smul_of_isHomogeneous (homogeneousComponent_isHomogeneous i f)]

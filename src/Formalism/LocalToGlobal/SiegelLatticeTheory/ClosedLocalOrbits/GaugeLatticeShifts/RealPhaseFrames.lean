@@ -162,12 +162,14 @@ variable {D : D7} (X : Formalism.L2.SG.HidaSetting.HidaSetting D)
 
 theorem sgLoF_map (L : Formalism.L2.SG.PairVal.MatR D) (ψ : D.host.E →+* ℂ) :
     sgLoF (L.map ψ) = ψ (Formalism.L2.SG.PairVal.sgLo L) := by
-  rw [sgLoF_eq, FormRegularity.sgLo_eq, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [sgLoF_eq, FormRegularity.sgLo_eq, map_sum]
   rfl
 
 theorem sgUpF_map (U : Formalism.L2.SG.PairVal.MatR D) (ψ : D.host.E →+* ℂ) :
     sgUpF (U.map ψ) = ψ (Formalism.L2.SG.PairVal.sgUp U) := by
-  rw [sgUpF_eq, FormRegularity.sgUp_eq, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [sgUpF_eq, FormRegularity.sgUp_eq, map_sum]
   rfl
 
 theorem place_id (u u' : D.what₂.Word) {γ γw g g' : X.B.I.Ginf} (hg : g ∈ X.SinfU u) (hg' : g' ∈ X.SinfU u')

@@ -247,7 +247,8 @@ theorem mem_range_toLi_iff [Smooth 𝔐.t.G.hom] (P : ChartPack G O c') (hpt : D
       intro v
       have h1 : f (h v) = v := LinearMap.congr_fun hh v
       conv_lhs => rw [← h1, pi_eq_sum_univ' (h v)]
-      simp only [map_sum, map_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul]
     let g : Fin n → (P.L →ₗ[CR O y c'] Ω) := fun i =>
       (Algebra.linearMap (CR O y c') Ω) ∘ₗ (LinearMap.proj i) ∘ₗ h
     let Fi : Fin n → (𝔐.Li →ₗ[Ω] Ω) := fun i => P.toLi_bc.lift (g i)
@@ -280,7 +281,8 @@ theorem mem_range_toLi_iff [Smooth 𝔐.t.G.hom] (P : ChartPack G O c') (hpt : D
       refine P.toLi_bc.inductionOn w (fun w => w = ∑ i, Fi i w • P.toLi (f (Pi.single i 1))) (by simp) ?_ ?_ ?_
       · intro m
         conv_lhs => rw [hv m]
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         refine Finset.sum_congr rfl fun i _ => ?_
         rw [hFi, map_smul]
         exact (algebraMap_smul Ω (h m i) _).symm
@@ -292,7 +294,8 @@ theorem mem_range_toLi_iff [Smooth 𝔐.t.G.hom] (P : ChartPack G O c') (hpt : D
         simp only [map_add, add_smul, Finset.sum_add_distrib]
     refine ⟨∑ i, (⟨Fi i e, hmem i⟩ : CR O y c') • f (Pi.single i 1), ?_⟩
     conv_rhs => rw [hsum e]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul]
     exact algebraMap_smul Ω (⟨Fi i e, hmem i⟩ : CR O y c') _
@@ -333,7 +336,8 @@ theorem ev_mem_dotDual (P : ChartPack G O c')
   intro l hl
   obtain ⟨v, hv⟩ := (mem_coordLat_dR_iff P hsec s b hb l).1 hl
   have h1 : l ⬝ᵥ (fun k => P.j u (b k)) = P.j u (∑ k, l k • b k) := by
-    simp [dotProduct, map_sum, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [dotProduct, map_sum, smul_eq_mul]
   rw [h1, ← hv, P.j_apply]
   exact (u v).2
 
@@ -367,7 +371,8 @@ theorem exists_form [CharZero Ω] (P : ChartPack G O c')
   have hproj : ∀ x : P.L, ∃ x', P.toLi x' = HT.eigProj 𝔐.ρ τ (P.toLi x) := by
     intro x
     refine ⟨∑ k, (⟨_, hcoef k⟩ : CR O y c') • P.ρ (RingOfIntegers.basis E k) x, ?_⟩
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [HT.eigProj, LinearMap.sum_apply]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_smul, toLi_rho]
@@ -392,7 +397,8 @@ theorem exists_form [CharZero Ω] (P : ChartPack G O c')
     have h3 := (mem_dotDual_iff _ _ _).1 hm a h2
     have h4 : Ψ (P.toLi x) = a ⬝ᵥ m := by
       change ψ (HT.eigProj 𝔐.ρ τ (P.toLi x)) = _
-      rw [← ha, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← ha, map_sum]
       simp [dotProduct, hψb]
     rw [h4]
     exact h3

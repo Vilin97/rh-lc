@@ -50,7 +50,8 @@ theorem subst_mem {n₀ n₁ : ℕ} (h : n₀ ≤ n₁) (x : Matrix (Fin n₁) (
     · intro m hm
       have h1 := hF.1 hm
       change _ = extZero n₀ n₁ ν
-      rw [← h1, Finsupp.weight_apply, Finsupp.weight_apply, Finsupp.sum, Finsupp.sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← h1, Finsupp.weight_apply, Finsupp.weight_apply, Finsupp.sum, Finsupp.sum, map_sum]
       simp only [map_nsmul]
   · intro l j hlj c
     by_cases hj : j.val < n₀
@@ -62,7 +63,8 @@ theorem subst_mem {n₀ n₁ : ℕ} (h : n₀ ≤ n₁) (x : Matrix (Fin n₁) (
         by_cases hv : v.2 = ⟨j.val, hj⟩
         · have h2 : Fin.castLE h v.2 = j := by rw [hv]; rfl
           have h3 : Fin.castLE h (⟨l.val, hl⟩ : Fin n₀) = l := rfl
-          simp only [AlgHom.comp_apply, subst, colAdd, aeval_X, map_sum, map_mul, map_add, algHom_C,
+          set_option synthInstance.maxHeartbeats 100000 in
+            simp only [AlgHom.comp_apply, subst, colAdd, aeval_X, map_sum, map_mul, map_add, algHom_C,
             if_pos hv, h2, h3, if_true, algebraMap_eq, mul_add, Finset.sum_add_distrib, Finset.mul_sum]
           refine congrArg₂ (· + ·) (Finset.sum_congr rfl fun b _ => rfl) (Finset.sum_congr rfl fun b _ => ?_)
           ring
@@ -70,7 +72,8 @@ theorem subst_mem {n₀ n₁ : ℕ} (h : n₀ ≤ n₁) (x : Matrix (Fin n₁) (
             intro e
             have e' : v.2.val = j.val := congrArg (fun z : Fin n₁ => z.val) e
             exact hv (Fin.ext e')
-          simp only [AlgHom.comp_apply, subst, colAdd, aeval_X, map_sum, map_mul, algHom_C,
+          set_option synthInstance.maxHeartbeats 100000 in
+            simp only [AlgHom.comp_apply, subst, colAdd, aeval_X, map_sum, map_mul, algHom_C,
             if_neg hv, if_neg h2, algebraMap_eq]
       have := DFunLike.congr_fun e F
       rw [AlgHom.comp_apply, AlgHom.comp_apply, hF.2 _ _ (by exact hlj) c] at this
@@ -83,7 +86,8 @@ theorem subst_mem {n₀ n₁ : ℕ} (h : n₀ ≤ n₁) (x : Matrix (Fin n₁) (
           apply hj
           rw [← e]
           exact v.2.2
-        simp only [AlgHom.comp_apply, subst, colAdd, aeval_X, map_sum, map_mul, algHom_C,
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [AlgHom.comp_apply, subst, colAdd, aeval_X, map_sum, map_mul, algHom_C,
           if_neg h2, algebraMap_eq]
       exact DFunLike.congr_fun e F
 

@@ -61,7 +61,8 @@ theorem sum_cst_rs (s : X ⟶ Sp R) {r : ℕ} (t : Fin r → R) {U W : X.Opens} 
     (f : Fin r → Γ(X, U)) :
     ∑ i, GlobalTheory.SmallExtLift.cst s W (t i) * rs X h (f i) =
       rs X h (∑ i, GlobalTheory.SmallExtLift.cst s U (t i) * f i) := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_congr rfl fun i _ => by rw [map_mul, rs_cst]
 
 theorem exists_cochain : ∀ (R : Type) [CommRing R] (X : Scheme.{0}) (s : X ⟶ Sp R) (𝔪 I : Ideal R) (r : ℕ) (t : Fin r → R),

@@ -163,7 +163,8 @@ theorem leftInvariant_frame (𝔸 : Type) [NormedRing 𝔸] [NormedAlgebra ℝ �
       rfl
     rw [key]
     conv_lhs => rw [← (EuclideanSpace.basisFun (Fin d) ℝ).sum_repr (A x X)]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_smul, Complex.real_smul, EuclideanSpace.basisFun_repr, EuclideanSpace.basisFun_apply]
     rfl

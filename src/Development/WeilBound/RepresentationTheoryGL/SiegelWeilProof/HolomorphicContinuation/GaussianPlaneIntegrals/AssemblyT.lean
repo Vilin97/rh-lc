@@ -99,7 +99,8 @@ theorem Tf_mem (hS : Stable) (hA : Avg) (q : PV ι A B) : Tf hA q ∈ pairAlg ι
     refine Algebra.subset_adjoin ⟨(a, b), ?_⟩
     apply MvPolynomial.funext
     intro z
-    simp only [res, map_sum, map_mul, aeval_X, eval_resφ, Sum.elim_inl, Sum.elim_inr]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [res, map_sum, map_mul, aeval_X, eval_resφ, Sum.elim_inl, Sum.elim_inr]
     rw [sum_invE (fun j => (invE A B j).elim 0 fun i => z (Sum.inl (i, a))) (fun i => z (Sum.inr (i, b)))]
     refine Finset.sum_congr rfl fun i _ => ?_
     have : invE A B (emb (A := A) (B := B) i) = some i := by simp [invE, emb]

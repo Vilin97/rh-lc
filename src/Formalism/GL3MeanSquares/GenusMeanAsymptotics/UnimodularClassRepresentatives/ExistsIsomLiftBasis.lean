@@ -95,10 +95,12 @@ theorem form_inP (hF : IsFixF K F) {h : V →ₗ⋆[K] V →ₗ[K] K} (b : Basis
       rw [coe_cmb, coe_cmb]
       have h1 : ∀ w : V, h (∑ i, c i • b i) w = ∑ i, star (jK (c i)) * h (b i) w := by
         intro w
-        rw [map_sum, LinearMap.sum_apply]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum, LinearMap.sum_apply]
         exact Finset.sum_congr rfl fun i _ => hl _ _ _
       rw [h1]
-      simp only [map_sum, map_mul, hst, hr, ← hH, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_mul, hst, hr, ← hH, Finset.mul_sum]
     rw [hcu, hcv, hl, hr, hfix] at e
     refine ⟨t * t', fun h1 => (‹𝔭.IsPrime›.mem_or_mem h1).elim ht ht', ∑ i, ∑ j, star (c i) * (c' j * H i j), ?_, ?_⟩
     · rw [pow_zero, Ideal.one_eq_top]
@@ -178,15 +180,18 @@ theorem form_cmb {h : V →ₗ⋆[K] V →ₗ[K] K} (b : Basis κ K V) {H : Matr
       ∑ i, ∑ j, star (jK (c i)) * (jK (c' j) * h (b i) (b j)) := by
     have h1 : ∀ w : V, h (∑ i, c i • b i) w = ∑ i, star (jK (c i)) * h (b i) w := by
       intro w
-      rw [map_sum, LinearMap.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, LinearMap.sum_apply]
       exact Finset.sum_congr rfl fun i _ => hl _ _ _
     rw [h1]
     refine Finset.sum_congr rfl fun i _ => ?_
-    rw [map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [hr]
   have rhs : jK (star c ⬝ᵥ (H *ᵥ c')) = ∑ i, ∑ j, star (jK (c i)) * (jK (H i j) * jK (c' j)) := by
-    simp only [dotProduct, Matrix.mulVec, Pi.star_apply, map_sum, map_mul, hst, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [dotProduct, Matrix.mulVec, Pi.star_apply, map_sum, map_mul, hst, Finset.mul_sum]
   rw [coe_cmb, coe_cmb, expand, rhs]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   rw [← hH]
@@ -245,7 +250,8 @@ theorem aut_cmb {𝔭 : Ideal (𝓞 F)} (b : Basis κ K V) {g : V ≃ₗ[K] V} {
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun l _ => ?_
     rw [mul_comm]
-  rw [coe_cmb, coe_cmb, map_sum, e]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [coe_cmb, coe_cmb, map_sum, e]
   simp only [hs]
   rw [← Finset.sum_sub_distrib]
   refine Submodule.sum_mem _ fun i _ => ?_

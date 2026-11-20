@@ -139,7 +139,8 @@ theorem latH_of {B : Base F E} (hcm : IsCMExt F E σ) {X : Spc F E n} {W : Spc F
     obtain ⟨c, hc⟩ := Finset.dvd_prod_of_mem N (Finset.mem_univ i)
     rw [← map_nsmul, hc, mul_comm, mul_smul]
     exact hten _ (hu i).1 _ (nsmul_mem (hN' i) c)
-  · rw [trace_int_iff, key M', hRat_sum, Finset.mul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [trace_int_iff, key M', hRat_sum, Finset.mul_sum, map_sum]
     refine IsIntegral.sum _ fun i _ => ?_
     rw [hRat_ten X.J W.J _ ξ₀ e2, map_neg]
     have := (hW.dual _).1 ((hΛ M).1 hM _ (hu i).1) _ ((hΛ M').1 hM' _ (hu i).2) 1

@@ -101,7 +101,8 @@ theorem _root_.GlobalTheory.ExtPrime.isPrime_map_and_generic_form_notMem (K L : 
   let G₀ : MvPolynomial (Fin N) (MvPolynomial (Fin N) K) := ∑ i : Fin N, C (X i) * X i
   have hG₀ : algebraMap _ (MvPolynomial (Fin N) L) G₀ =
       ∑ i : Fin N, C (algebraMap (MvPolynomial (Fin N) K) L (X i)) * X i := by
-    simp [G₀, RingHom.algebraMap_toAlgebra, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [G₀, RingHom.algebraMap_toAlgebra, map_sum]
   rw [← hG₀] at hG
   have hG₀Q : G₀ ∈ P.map ι := by
     have h := IsLocalization.comap_map_of_isPrime_disjoint _ (MvPolynomial (Fin N) L) hQprime hdisj
@@ -109,7 +110,8 @@ theorem _root_.GlobalTheory.ExtPrime.isPrime_map_and_generic_form_notMem (K L : 
     exact hG
   rw [hQ, RingHom.mem_ker] at hG₀Q
   have hπG : π G₀ = ∑ i : Fin N, X i * C (Ideal.Quotient.mk P (X i)) := by
-    simp only [π, G₀, RingHom.coe_comp, Function.comp_apply, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [π, G₀, RingHom.coe_comp, Function.comp_apply, map_sum, map_mul]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [show e.toRingHom (C (X i)) = X i from commAlgEquiv_C_X (R := K) (S₁ := Fin N) i,
       show e.toRingHom (X i) = C (X i) from commAlgEquiv_X (R := K) (S₂ := Fin N) i, map_X, map_C]

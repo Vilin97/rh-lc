@@ -22,7 +22,8 @@ theorem hl_smul (c : E) (x z : S.V) : S.hT (c • x) z = star c * S.hT x z := by
   simp [starRingEnd_apply]
 theorem hl_sum {ι : Type} (s : Finset ι) (x : ι → S.V) (z : S.V) :
     S.hT (∑ i ∈ s, x i) z = ∑ i ∈ s, S.hT (x i) z := by
-  rw [map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, LinearMap.sum_apply]
 theorem hr_sub (x y z : S.V) : S.hT z (x - y) = S.hT z x - S.hT z y := by
   simp
 theorem hr_add (x y z : S.V) : S.hT z (x + y) = S.hT z x + S.hT z y := by

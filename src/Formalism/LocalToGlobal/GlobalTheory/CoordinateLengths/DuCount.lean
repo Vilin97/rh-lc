@@ -43,7 +43,8 @@ theorem finrank_weylZ {r : ℕ} (ν : Fin r → ℕ) (hν : Antitone ν) :
         simp only [Submodule.coe_smul] at h
         exact h.symm
       show Formalism.GradedWeylDivisibility.applyWord ℚ w (Formalism.GradedWeylDivisibility.hw ℚ (le_rfl : r ≤ r) ν) ∈ Submodule.span ℚ (Set.range v)
-      rw [← Formalism.GradedWeylDivisibility.lclosedeq_hw_map φ, Formalism.GradedWeylDivisibility.lclosedeq_applyWord_map, hx_eq, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← Formalism.GradedWeylDivisibility.lclosedeq_hw_map φ, Formalism.GradedWeylDivisibility.lclosedeq_applyWord_map, hx_eq, map_sum]
       refine Submodule.sum_mem _ fun i _ => ?_
       rw [map_zsmul]
       exact zsmul_mem (Submodule.subset_span (Set.mem_range_self (f := v) i) : v i ∈ Submodule.span ℚ (Set.range v)) _

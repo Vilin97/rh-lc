@@ -29,7 +29,8 @@ variable {A B : Type} [CommRing A] [CommRing B] {n : ℕ} (e : A ≃+* B) (S : S
 theorem equiv_mulVec (m : Matrix (Fin n) (Fin n) A) (z : Fin n → A) :
     (fun i => e ((m *ᵥ z) i)) = m.map e *ᵥ fun i => e (z i) := by
   funext i
-  simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Matrix.map_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Matrix.map_apply]
 
 theorem mulVec_mem_of_frame (hP : ∀ z, z ∈ P ↔ ∀ i, ((β⁻¹).val *ᵥ fun i => e (z i)) i ∈ S)
     (hQ : Q = AddSubgroup.closure {w | ∃ a ∈ 𝔞, ∃ z ∈ P, w = a • z}) (m : Matrix (Fin n) (Fin n) A)

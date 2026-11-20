@@ -49,7 +49,8 @@ theorem coeffForm_map_mul (φ : F' →ₗ[F] F) (g : MvPolynomial σ F) (f : MvP
     coeffForm φ (map (algebraMap F F') g * f) = g * coeffForm φ f := by
   classical
   ext ν
-  simp only [coeff_coeffForm, coeff_mul, map_sum, coeff_map, form_algebraMap_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [coeff_coeffForm, coeff_mul, map_sum, coeff_map, form_algebraMap_mul]
 
 theorem coeffForm_map (φ : F' →ₗ[F] F) (hφ : φ 1 = 1) (g : MvPolynomial σ F) :
     coeffForm φ (map (algebraMap F F') g) = g := by
@@ -188,7 +189,8 @@ theorem sum_smul_mk_monomial (E : Type*) [Field E] (J : Ideal (MRing ι E)) {B :
     (lift : B → (Σ k, ι k) →₀ ℕ) (c : B → E) :
     ∑ x, c x • Ideal.Quotient.mk J (monomial (lift x) (1 : E)) =
       Ideal.Quotient.mk J (∑ x, monomial (lift x) (c x)) := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_congr rfl fun x _ => smul_mk_monomial E J _ _
 
 variable {F : Type*} [Field F] {F' : Type*} [Field F'] [Algebra F F']
@@ -223,7 +225,8 @@ theorem finrank_gradedPiece_map (I : Ideal (MRing ι F)) (m : K → ℕ) :
     rw [← Module.forall_dual_apply_eq_zero_iff F (g x)]
     intro φ
     have hmem := coeffForm_mem φ hg'
-    rw [map_sum] at hmem
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at hmem
     simp only [coeffForm_monomial] at hmem
     rw [← Ideal.Quotient.eq_zero_iff_mem, ← sum_smul_mk_monomial] at hmem
     simp only [hlift_v] at hmem
@@ -248,7 +251,8 @@ theorem finrank_gradedPiece_map (I : Ideal (MRing ι F)) (m : K → ℕ) :
         simpa only [hlift_v] using hc
       rw [sum_smul_mk_monomial, Ideal.Quotient.eq] at hc'
       have h' := Ideal.mem_map_of_mem (map (algebraMap F F')) hc'
-      rw [map_sub, map_sum] at h'
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, map_sum] at h'
       simp only [map_monomial, map_one] at h'
       rw [← Ideal.Quotient.eq, ← sum_smul_mk_monomial] at h'
       rw [SetLike.mem_coe]

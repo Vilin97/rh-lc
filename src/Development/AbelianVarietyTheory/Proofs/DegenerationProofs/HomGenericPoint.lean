@@ -198,7 +198,8 @@ theorem crd_change (hU : (U₀ : Set M.Z).Nonempty) (l l' : Q.Λ) {K : Type} [Fi
   have hval : ∀ c : M.O z, φ (RatModel.valLoc (Y ≫ Q.P.hom) z hc c) = M.val t c := fun c => by
     rw [← RatModel.val_spMap_comp, ← Category.assoc, hφ, hXt]
   rw [hb j]
-  simp only [hu j, map_mul, Matrix.mulVec, dotProduct, map_sum, Matrix.map_apply, hval, ha, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hu j, map_mul, Matrix.mulVec, dotProduct, map_sum, Matrix.map_apply, hval, ha, Finset.mul_sum]
   exact Finset.sum_congr rfl fun k _ => by ring
 
 theorem tors_change (hB : BaseFacts S M U₀ EE) (l l' : Q.Λ) {K : Type} [Field K] (t : Sp K ⟶ M.Z)
@@ -216,7 +217,8 @@ theorem tors_change (hB : BaseFacts S M U₀ EE) (l l' : Q.Λ) {K : Type} [Field
     have e1 : Q.B l' i ⬝ᵥ S.ev h = (Q.B l').mulVec (S.ev h) i := rfl
     rw [e1, hg, ← Matrix.mulVec_mulVec]
     simp [a, Matrix.mulVec, dotProduct, Finset.sum_div, mul_div_assoc]
-  rw [e, ← RatModel.valHom_apply t z' hr, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, ← RatModel.valHom_apply t z' hr, map_sum]
   simp only [map_mul, RatModel.valHom_apply]
   rfl
 

@@ -84,10 +84,12 @@ theorem eq_of_indW {β β' : (VS D).V ≃ₗ[D.host.E] (VS D).V} (hβ : β ∈ s
   ext y
   have hdec : y = (y - prV X y) + prV X y := by abel
   have h1 : β (y - prV X y) = y - prV X y := by
-    rw [sub_prV_eq, map_add, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [sub_prV_eq, map_add, map_sum, map_sum]
     simp only [map_smul, he, hf]
   have h1' : β' (y - prV X y) = y - prV X y := by
-    rw [sub_prV_eq, map_add, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [sub_prV_eq, map_add, map_sum, map_sum]
     simp only [map_smul, he', hf']
   have hw : prV X y ∈ perpS (VS D) (X.Fu u).X := fun x hx => by
     rw [hXs] at hx

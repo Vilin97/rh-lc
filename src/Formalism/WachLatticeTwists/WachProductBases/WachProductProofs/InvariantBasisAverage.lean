@@ -24,7 +24,8 @@ theorem invariant_basis_average : InvariantBasisAverage := by
   have hinv : ∀ d k, ρ d (b' k) = b' k := by
     intro d k
     simp only [b']
-    rw [hsl, hrinv, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hsl, hrinv, map_sum]
     congr 1
     simp only [← hmul]
     exact Fintype.sum_equiv (Equiv.mulLeft d) _ _ (fun _ => rfl)

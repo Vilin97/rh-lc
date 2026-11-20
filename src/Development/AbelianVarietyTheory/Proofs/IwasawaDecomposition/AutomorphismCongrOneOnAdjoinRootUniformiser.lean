@@ -137,7 +137,8 @@ theorem cong_on_adjoin : ∀ (W : Type) [CommRing W] [IsDomain W] [IsDiscreteVal
     refine pow_left_injective hl0 ?_
     show _ ^ l = t ^ l
     rw [← map_pow, ← map_pow, hx', g.commutes, htl]
-  rw [map_sum, ← Finset.sum_sub_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, ← Finset.sum_sub_distrib]
   refine Valuation.map_sum_lt _ one_ne_zero fun i hi => ?_
   rcases Nat.eq_zero_or_pos i with rfl | hi0
   · simp

@@ -35,7 +35,8 @@ private lemma btPoly_map_tEval {R₀ : Type} [CommRing R₀] {ι : Type} [Fintyp
     (N : ℕ) (f : MvPowerSeries ι R₀) {S S' : Type} [CommRing S] [Algebra R₀ S] [CommRing S']
     [Algebra R₀ S'] (φ : S →ₐ[R₀] S') (a : ι → S) :
     φ (tEval N f a) = tEval N f (fun i => φ (a i)) := by
-  simp [tEval, map_sum, map_prod]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [tEval, map_sum, map_prod]
 
 private lemma btPoly_unif {ι S : Type} [Fintype ι] [CommRing S] (a : ι → S)
     (h : ∀ i, IsNilpotent (a i)) : ∃ M, ∀ M' ≥ M, ∀ i, a i ^ M' = 0 := by

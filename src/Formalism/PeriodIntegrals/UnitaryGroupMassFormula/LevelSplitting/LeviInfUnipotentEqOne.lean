@@ -48,7 +48,8 @@ theorem cj_apply (U : Matrix (Fin r) (Fin r) (R ⊗[F] E)) (a b : Fin r) :
 
 theorem cj_mul (U V : Matrix (Fin r) (Fin r) (R ⊗[F] E)) : cj R σ U * cj R σ V = cj R σ (V * U) := by
   ext a b
-  simp only [cj, Matrix.mul_apply, Matrix.of_apply, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [cj, Matrix.mul_apply, Matrix.of_apply, map_sum, map_mul]
   exact Finset.sum_congr rfl fun k _ => mul_comm _ _
 
 theorem cj_one : cj R σ (1 : Matrix (Fin r) (Fin r) (R ⊗[F] E)) = 1 := by
@@ -113,7 +114,8 @@ theorem levU_mem (g : HA R σ J) : levU hσσ hJ hP g ∈ HR R σ J := by
   refine levL_uni H _ _ (fun b c => ?_) (fun b c => ?_) x y
   · calc ∑ a, sigR R σ (uT R σ J P g a b) * cj R σ (uI R σ J P g) a c
         = sigR R σ ((uI R σ J P g * uT R σ J P g) c b) := by
-          rw [Matrix.mul_apply, map_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [Matrix.mul_apply, map_sum]
           refine Finset.sum_congr rfl fun a _ => ?_
           rw [cj_apply, map_mul, mul_comm]
       _ = if b = c then 1 else 0 := by

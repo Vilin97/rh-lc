@@ -15,7 +15,8 @@ variable {A B : Type} [Ring A] [Algebra ℂ A] [Ring B] [Algebra ℂ B]
 theorem qdet_map (f : A →ₐ[ℂ] B) {n : ℕ} (E : Fin n → Fin n → A) (u : ℂ) :
     f (qdet E u) = qdet (fun a b => f (E a b)) u := by
   unfold qdet qminor
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun σ _ => ?_
   rw [map_mul, map_intCast, map_list_prod, List.map_ofFn]
   congr 1

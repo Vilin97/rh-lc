@@ -215,7 +215,8 @@ theorem exists_shape (hL : Out.Laws) {W : Matrix (Fin 8) (Fin 8) ℤ} (hW : IsE8
         rw [hz, LinearEquiv.apply_symm_apply]
       rw [← this]
       conv_lhs => rw [hx]
-      simp only [map_sum, map_zsmul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_zsmul]
     have h2 : ∑ v, a j u v • bas (Pi.single i 1) v = ∑ p, z p • bas (Pi.single p 1) u := by
       simpa [Finset.sum_apply] using congrFun h1 u
     have h3 : ∑ v, a j u v • bas (Pi.single i 1) v - ∑ i', ((((z i' : ℤ) : ZMod k).val : ℕ) : ℤ) • bas (Pi.single i' 1) u =

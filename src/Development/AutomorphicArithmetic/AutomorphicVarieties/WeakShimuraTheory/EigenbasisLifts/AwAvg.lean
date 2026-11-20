@@ -34,7 +34,8 @@ private theorem exists_coboundary_on_h_of_vanish_on_finiteIndex {K : Type*} [Fie
       _ = ∑ q : H ⧸ N.subgroupOf H, (z g + R g (z ((q.out : H) : Γ))) :=
           Finset.sum_congr rfl (fun q _ => hzout ⟨g, hg⟩ q)
       _ = _ := by
-          rw [Finset.sum_add_distrib, map_sum, Finset.sum_const, Finset.card_univ,
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [Finset.sum_add_distrib, map_sum, Finset.sum_const, Finset.card_univ,
             Nat.cast_smul_eq_nsmul]
   have hR : R g (∑ q : H ⧸ N.subgroupOf H, z ((q.out : H) : Γ)) =
       ∑ q : H ⧸ N.subgroupOf H, z ((q.out : H) : Γ) -

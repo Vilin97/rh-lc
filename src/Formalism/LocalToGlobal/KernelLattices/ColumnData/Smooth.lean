@@ -104,7 +104,8 @@ theorem Seam.stdH_vec (hok : s.Ok) {n : ℕ} (x y : Sp X.E n) :
     (letI := D.host.cmStar; stdH D.host.E n (s.vec x) (s.vec y)) = s.iE (hStd X.E n x y) := by
   rw [Formalism.L2.Ker.Cd.IntegralLatticeDensity.SD.stdH_eq]
   show _ = s.iE (∑ i, star (x i) * y i)
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_mul, hok.2]
   rfl

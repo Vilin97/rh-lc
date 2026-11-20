@@ -604,7 +604,8 @@ theorem ntw_qminor (hD : IsOpen D) (φ : E →L[ℂ] E') {t : ℕ} (a b : Fin t 
     Ntw k r i D φ (fun f => qminorOp (EH k r) (posL k r i ∘ a) (posL k r i ∘ b) u f)
       (fun f => qminorOp (EH k r) (posL k r i ∘ a) (posL k r i ∘ b) u f) := by
   intro f hf x hx
-  simp only [qminorOp, Finset.sum_apply, Pi.smul_apply, map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [qminorOp, Finset.sum_apply, Pi.smul_apply, map_sum, map_smul]
   refine Finset.sum_congr rfl fun σ _ => ?_
   congr 1
   have h := ntw_foldr hD φ (List.ofFn fun l : Fin t => ((u - ((l : ℕ) : ℂ), a (σ l), b l) :
@@ -618,17 +619,20 @@ theorem ntw_tL (hD : IsOpen D) (φ : E →L[ℂ] E') (z z' : Fin (2 * r + k + 1)
   fin_cases p <;> fin_cases q
   · exact ntw_qminor hD φ id id _ f hf x hx
   · show -(chatL _ _ _ _ _ _ x) = φ (-(chatL _ _ _ _ _ f x))
-    simp only [chatL, map_neg, map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [chatL, map_neg, map_sum, map_smul]
     congr 1
     refine Finset.sum_congr rfl fun i₁ _ => Finset.sum_congr rfl fun j₁ _ => ?_
     exact congrArg _ (ntw_qminor hD φ (skip1 i₁) (skip1 j₁) _ f hf x hx)
   · show -(chatL _ _ _ _ _ _ x) = φ (-(chatL _ _ _ _ _ f x))
-    simp only [chatL, map_neg, map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [chatL, map_neg, map_sum, map_smul]
     congr 1
     refine Finset.sum_congr rfl fun i₁ _ => Finset.sum_congr rfl fun j₁ _ => ?_
     exact congrArg _ (ntw_qminor hD φ (skip1 i₁) (skip1 j₁) _ f hf x hx)
   · show -(chat2L _ _ _ _ _ _ _ _ x) = φ (-(chat2L _ _ _ _ _ _ _ f x))
-    simp only [chat2L, map_neg, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [chat2L, map_neg, map_sum]
     congr 1
     refine Finset.sum_congr rfl fun i₁ _ => Finset.sum_congr rfl fun i₂ _ => Finset.sum_congr rfl fun j₁ _ =>
       Finset.sum_congr rfl fun j₂ _ => ?_

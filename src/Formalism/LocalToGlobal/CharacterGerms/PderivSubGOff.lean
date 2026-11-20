@@ -42,7 +42,8 @@ theorem pderiv_subG_off {p : MvPolynomial (Fin N × WVO fun o (_ : Fin 2) => IIs
   refine Finset.sum_eq_zero fun y _ => ?_
   have hX : pderiv ℓ (subG r tau gm plc (X y)) = 0 := by
     unfold subG
-    rw [MvPolynomial.aeval_X, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [MvPolynomial.aeval_X, map_sum]
     refine Finset.sum_eq_zero fun col _ => ?_
     rw [Derivation.leibniz, MvPolynomial.pderiv_C, smul_zero, add_zero, MvPolynomial.pderiv_X]
     have hne : (⟨tau y.2.1 y.2.2.2.1, y.2.2.2.2, plc (y.1, col)⟩ : Letter T r n) ≠ ℓ := by
@@ -70,7 +71,8 @@ private theorem pderiv_lam_subG_X_eq_ite (inj : Function.Injective fun x : Orb �
     pderiv (lam r tau plc (α0, col0)) (subG r tau gm plc (X y)) =
       if (eW r tau N y).1 = α0 then MvPolynomial.C (gm y.2.1 y.2.2.2.1 col0 y.2.2.1) else 0 := by
   unfold subG
-  rw [MvPolynomial.aeval_X, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [MvPolynomial.aeval_X, map_sum]
   have key : ∀ col : Fin 2, pderiv (lam r tau plc (α0, col0))
       (MvPolynomial.C (gm y.2.1 y.2.2.2.1 col y.2.2.1) *
         MvPolynomial.X (⟨tau y.2.1 y.2.2.2.1, y.2.2.2.2, plc (y.1, col)⟩ : Letter T r n)) =

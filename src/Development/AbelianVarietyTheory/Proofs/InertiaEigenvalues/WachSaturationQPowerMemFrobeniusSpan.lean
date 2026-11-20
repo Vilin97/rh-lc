@@ -91,7 +91,8 @@ theorem basisDD_apply {T : LocLat G Qp LL O} {S : Submodule (LetA O n) (W.DD T)}
 
 theorem phi_mem_span {T : LocLat G Qp LL O} {r : ℕ} (β : Module.Basis (Fin r) W.EE (W.DD T))
     (x : W.DD T) : W.φD T x ∈ Submodule.span W.EE (Set.range fun i => W.φD T (β i)) := by
-  rw [← β.sum_repr x, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← β.sum_repr x, map_sum]
   refine Submodule.sum_mem _ fun i _ => ?_
   rw [W.φD_smul]
   exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)
@@ -236,7 +237,8 @@ theorem Qpow_mem_φspan_satM {T₁ T₂ : LocLat G Qp LL O} (l : ℕ) (hpl : PD.
     · rw [φspan, Submodule.span_le]
       rintro _ ⟨x, hx, rfl⟩
       obtain ⟨a, ha, -⟩ := hu x hx
-      rw [ha, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [ha, map_sum]
       refine Submodule.sum_mem _ fun j _ => ?_
       rw [φD_smulA]
       exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨j, hcb j⟩)

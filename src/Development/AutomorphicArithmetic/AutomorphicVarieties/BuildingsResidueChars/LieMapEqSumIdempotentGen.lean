@@ -9,13 +9,15 @@ theorem UpperTheory.lieMap_eq_sum_idempotent_gen :
   intro R _ _ ι _ n A _ _ _ _ D l X
   have key : ∀ i j, ∑ τ, D.ch τ (X i j) • gen D l τ i j = l (Matrix.single i j (X i j)) := by
     intro i j
-    simp only [gen, ← map_smul, ← map_sum, ← D.mul_e, ← Finset.mul_sum, D.sum, mul_one,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [gen, ← map_smul, ← map_sum, ← D.mul_e, ← Finset.mul_sum, D.sum, mul_one,
       unitMap_tmul, one_smul]
   conv_rhs =>
     rw [Finset.sum_comm]
     arg 2
     ext i
     rw [Finset.sum_comm]
-  simp only [key, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [key, ← map_sum]
   congr 1
   exact Matrix.matrix_eq_sum_single X

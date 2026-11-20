@@ -32,7 +32,8 @@ theorem sc_col_mul {K : Type} [Field K] [NumberField K] {r : ℕ} {ι : Type} [F
     (σ : K →+* ℂ) (N : Matrix (Fin r) (Fin r) K) (c : ι → Fin r → K) :
     embCols σ (fun j => N *ᵥ c j) = N.map σ * embCols σ c := by
   ext a j
-  simp [embCols, Matrix.mul_apply, Matrix.mulVec, dotProduct, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [embCols, Matrix.mul_apply, Matrix.mulVec, dotProduct, map_sum, map_mul]
 
 theorem sc_col_inj {K : Type} [Field K] [NumberField K] {r : ℕ} {ι : Type} [Fintype ι]
     [DecidableEq ι] (σ : K →+* ℂ) {v : ι → Fin r → K} (hv : LinearIndependent K v) :

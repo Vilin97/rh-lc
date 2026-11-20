@@ -51,7 +51,8 @@ private theorem UpperTheory.V.Pa.phDec_expand {F A : Type} [Field F] [AddCommGro
       map_add' := fun _ _ => rfl
       map_smul' := fun _ _ => rfl }
   change ev d = ∑ k, ev (v k) * v.coord k d
-  conv_lhs => rw [← v.sum_repr d, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [← v.sum_repr d, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [map_smul, smul_eq_mul, mul_comm, Module.Basis.coord_apply]
 

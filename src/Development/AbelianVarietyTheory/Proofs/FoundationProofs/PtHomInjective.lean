@@ -63,9 +63,11 @@ theorem La0_eq_map (D : D7) (cc : Ideal (𝓞 D.host.K)) (δ : ℂ) (a d : ℕ) 
     refine ⟨((c : D.host.K) : D.host.E) • A, fun i j => ?_, ptHom_smul D cc δ a d c A⟩
     exact Submodule.subset_span ⟨c, hc, A i j, (GlobalTheory.OddGenus.mem_iff_entries D a d A).1 hA i j, rfl⟩
   · rintro _ ⟨z, hz, rfl⟩
-    rw [Matrix.matrix_eq_sum_single z, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Matrix.matrix_eq_sum_single z, map_sum]
     refine sum_mem fun i _ => ?_
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine sum_mem fun j _ => ?_
     simpa using single_mem D cc δ a d i j (hz i j) 1
 

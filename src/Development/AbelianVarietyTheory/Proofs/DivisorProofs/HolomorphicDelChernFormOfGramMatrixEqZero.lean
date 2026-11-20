@@ -88,7 +88,8 @@ theorem delAt_sum_smul {ι : Type} [Fintype ι] {v : V n} {u : ι → V n → �
       ∑ i, del (u i) v (coordVec c) • α i := by
     refine (bas n).ext_elem fun S => ?_
     rw [FormMul.repr_coefwise]
-    simp only [map_sum, map_smul, Finsupp.finset_sum_apply, Finsupp.smul_apply, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, Finsupp.finset_sum_apply, Finsupp.smul_apply, smul_eq_mul]
     rw [del_sum fun i _ => (hu i).mul_const _, ContinuousLinearMap.sum_apply]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [del_mul (hu i) (differentiableAt_const _), del_const]
@@ -148,7 +149,8 @@ theorem mem_closedAt_of_symm {v : V n} {u : Fin n × Fin n → V n → ℂ} (hu 
     (hs : ∀ a b c, del (u (a, b)) v (coordVec c) = del (u (c, b)) v (coordVec a)) :
     (fun x => ∑ p, u p x • sym p) ∈ closedAt v := by
   refine mem_closedAt.2 ⟨fun S => ?_, ?_⟩
-  · simp only [AddSubmonoidClass.coe_finset_sum, Subalgebra.coe_smul, map_sum, map_smul, Finsupp.finset_sum_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [AddSubmonoidClass.coe_finset_sum, Subalgebra.coe_smul, map_sum, map_smul, Finsupp.finset_sum_apply,
       Finsupp.smul_apply, smul_eq_mul]
     exact DifferentiableAt.fun_sum fun p _ => (hu p).mul_const _
   · simp only [AddSubmonoidClass.coe_finset_sum, Subalgebra.coe_smul]

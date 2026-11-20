@@ -50,7 +50,8 @@ theorem exists_eigen_of_sum {M : Type} [AddCommGroup M] [Module ℂ M]
   let e : V → V := fun w => ∑ q : G ⧸ H, F w q.out
   have heig : ∀ i ∈ s, ∀ g, π g (e (u i)) = ((θ g : ℂˣ) : ℂ) • e (u i) := by
     intro i hi g
-    simp only [e, map_sum, hFg, ← Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [e, map_sum, hFg, ← Finset.smul_sum]
     congr 1
     refine Fintype.sum_equiv (MulAction.toPerm g) _ _ fun q => ?_
     apply hFH i hi
@@ -58,7 +59,8 @@ theorem exists_eigen_of_sum {M : Type} [AddCommGroup M] [Module ℂ M]
     conv_rhs => rw [← QuotientGroup.out_eq' q]
     rfl
   have htot : ∑ i ∈ s, T i (e (u i)) = (Fintype.card (G ⧸ H) : ℂ) • f := by
-    simp only [e, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [e, map_sum]
     rw [Finset.sum_comm]
     have : ∀ q : G ⧸ H, ∑ i ∈ s, T i (F (u i) q.out) = f := by
       intro q
@@ -144,7 +146,8 @@ theorem main : ∀ (L : Type) [Field L] [NumberField L] [IsCMField L] (n : ℕ) 
       intro i _
       rw [hπ, ← hu i]
       exact i.2.2 κ hκ (u i)
-    rw [Finset.sum_congr rfl this, ← map_sum, ← hrt κ hκ hg]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_congr rfl this, ← map_sum, ← hrt κ hκ hg]
     rw [← hsum]
     rfl
   let H : Subgroup K := θ.ker ⊓ ⨅ i ∈ φ.support, stabSub π (u i)

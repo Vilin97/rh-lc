@@ -65,7 +65,8 @@ theorem shufF_comm (G : ∀ a b n : ℕ, bo a b ⟶ bo n n)
     (tot Y).d (n + 1) n ≫ shufF Y G n = shufF Y G (n + 1) ≫ (diagCx Y).d (n + 1) n := by
   refine total.hom_ext (K := dbl Y) (c₁₂ := ComplexShape.down ℕ) (fun a b h => ?_)
   simp only [ComplexShape.π_def] at h
-  rw [← ιz_eq Y _ _ _ h, ← Category.assoc, ιz_d, Preadditive.sum_comp, ← Category.assoc, ιz_shufF Y G _ _ _ h,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← ιz_eq Y _ _ _ h, ← Category.assoc, ιz_d, Preadditive.sum_comp, ← Category.assoc, ιz_shufF Y G _ _ _ h,
     ← evd', ← Functor.map_comp, hG a b n h, Functor.map_sum]
   refine Finset.sum_congr rfl fun x hx => ?_
   rw [Category.assoc, ιz_shufF Y G _ _ _ (Finset.HasAntidiagonal.mem_antidiagonal.1 hx), Functor.map_comp]
@@ -88,11 +89,13 @@ theorem awF_comm (n : ℕ) : awF Y (n + 1) ≫ (tot Y).d (n + 1) n = (diagCx Y).
   simp_rw [← Category.assoc, ← Functor.map_comp]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun y hy => ?_
-  rw [awop' n y.1 y.2 (Finset.HasAntidiagonal.mem_antidiagonal.1 hy), Functor.map_sum, Preadditive.sum_comp]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [awop' n y.1 y.2 (Finset.HasAntidiagonal.mem_antidiagonal.1 hy), Functor.map_sum, Preadditive.sum_comp]
 
 theorem awF_shufF (G : ∀ a b n : ℕ, bo a b ⟶ bo n n) (n : ℕ) :
     awF Y n ≫ shufF Y G n = (ev Y).map (∑ x ∈ antidiagonal n, awO n x.1 x.2 ≫ G x.1 x.2 n) := by
-  rw [awF_eq, Preadditive.sum_comp, Functor.map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [awF_eq, Preadditive.sum_comp, Functor.map_sum]
   refine Finset.sum_congr rfl fun x hx => ?_
   rw [Category.assoc, ιz_shufF Y G _ _ _ (Finset.HasAntidiagonal.mem_antidiagonal.1 hx), Functor.map_comp]
 
@@ -220,7 +223,8 @@ def htpyT (G : ∀ a b n : ℕ, bo a b ⟶ bo n n)
     simp_rw [← Category.assoc, ← Functor.map_comp]
     rw [Finset.sum_congr rfl fun y hy => by
       rw [hK a b y.1 y.2 (Finset.HasAntidiagonal.mem_antidiagonal.1 hy)]]
-    simp_rw [Functor.map_add, Preadditive.add_comp, Finset.sum_add_distrib, sum_idO Y a b _ rfl,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp_rw [Functor.map_add, Preadditive.add_comp, Finset.sum_add_distrib, sum_idO Y a b _ rfl,
       Functor.map_sum, Preadditive.sum_comp]
 
     simp only [Preadditive.comp_add, Category.comp_id]

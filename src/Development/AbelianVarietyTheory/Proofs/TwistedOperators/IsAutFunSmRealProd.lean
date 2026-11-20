@@ -137,7 +137,8 @@ theorem equiv_one {H G : Type} [AddCommGroup H] [Module ℂ H] [Module.Free ℂ 
   have e2 : ∀ i, e (B i (ρ h v)) = ∑ j, LinearMap.trace ℂ H (ρ (k j) ∘ₗ (B i ∘ₗ ρ h)) * e (B j v) := by
     intro i
     have := congrArg (fun L : H →ₗ[ℂ] H => e (L v)) (hB i h hh)
-    simp only [LinearMap.comp_apply, LinearMap.sum_apply, LinearMap.smul_apply, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [LinearMap.comp_apply, LinearMap.sum_apply, LinearMap.smul_apply, map_sum,
       map_smul, smul_eq_mul] at this
     exact this
   simp only [e1, e2, Finset.mul_sum, Finset.sum_mul]

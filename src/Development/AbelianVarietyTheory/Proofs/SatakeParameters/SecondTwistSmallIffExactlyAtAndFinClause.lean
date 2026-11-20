@@ -109,7 +109,8 @@ theorem linearIndepOn_of_invariant {K F W G ι : Type} [Field K] [Field F] [Alge
     have key : ∀ i ∈ s, ∀ g, a g (c i) = c i := by
       intro i hi g
       have h1 : ∑ i ∈ s, a g (c i) • v i = v x := by
-        rw [← hv g x, ← hc, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [← hv g x, ← hc, map_sum]
         exact Finset.sum_congr rfl fun j _ => by rw [hσ, hv]
       have h2 := linearIndepOn_finset_iff.1 (ih h.1) (fun j => a g (c j) - c j) (by
         simp only [sub_smul, Finset.sum_sub_distrib, h1, hc, sub_self]) i hi

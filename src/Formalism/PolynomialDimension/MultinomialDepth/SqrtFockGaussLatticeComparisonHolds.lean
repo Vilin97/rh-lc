@@ -83,7 +83,8 @@ theorem glAct_hXY {K : Type} [Field K] {k : ℕ} (g : GL (Fin k) K) : glAct g (h
     rw [e, Units.inv_mul, Matrix.one_apply]
     split_ifs <;> simp
   unfold hXY
-  simp only [map_sum, map_mul, glAct_X_inl, glAct_X_inr]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, glAct_X_inl, glAct_X_inr]
   calc ∑ i : Fin k, (∑ j : Fin k, C ((g : Matrix (Fin k) (Fin k) K) i j) * X (Sum.inl j)) *
         (∑ l : Fin k, C (((g⁻¹ : GL (Fin k) K) : Matrix (Fin k) (Fin k) K) l i) * X (Sum.inr l))
       = ∑ i : Fin k, ∑ j : Fin k, ∑ l : Fin k, (C ((g : Matrix (Fin k) (Fin k) K) i j) * X (Sum.inl j)) *
@@ -95,7 +96,8 @@ theorem glAct_hXY {K : Type} [Field K] {k : ℕ} (g : GL (Fin k) K) : glAct g (h
     _ = ∑ j : Fin k, ∑ l : Fin k, C (∑ i : Fin k, (g : Matrix (Fin k) (Fin k) K) i j * ((g⁻¹ : GL (Fin k) K) : Matrix (Fin k) (Fin k) K) l i) *
           (X (Sum.inl j) * X (Sum.inr l)) := by
         refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun l _ => ?_
-        rw [map_sum, Finset.sum_mul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum, Finset.sum_mul]
         exact Finset.sum_congr rfl fun i _ => by rw [map_mul]; ring
     _ = ∑ i : Fin k, X (Sum.inl i) * X (Sum.inr i) := by
         simp only [hm, ite_mul, one_mul, zero_mul, Finset.sum_ite_eq', Finset.sum_ite_eq,
@@ -106,7 +108,8 @@ theorem glAct_inv_glAct {K : Type} [Field K] {k : ℕ} (g : GL (Fin k) K) (f : P
   have key : (glAct g⁻¹).comp (glAct g) = AlgHom.id K (PolXY K k) := by
     apply MvPolynomial.algHom_ext
     rintro (i | i)
-    · simp only [AlgHom.comp_apply, AlgHom.id_apply, glAct_X_inl, map_sum, map_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp only [AlgHom.comp_apply, AlgHom.id_apply, glAct_X_inl, map_sum, map_mul,
         MvPolynomial.algHom_C, MvPolynomial.algebraMap_eq]
       have hm : ∀ l : Fin k, C (∑ j : Fin k, (g : Matrix (Fin k) (Fin k) K) i j *
           ((g⁻¹ : GL (Fin k) K) : Matrix (Fin k) (Fin k) K) j l) = (if i = l then 1 else 0 : PolXY K k) := by
@@ -117,11 +120,13 @@ theorem glAct_inv_glAct {K : Type} [Field K] {k : ℕ} (g : GL (Fin k) K) (f : P
             ∑ l : Fin k, C (((g⁻¹ : GL (Fin k) K) : Matrix (Fin k) (Fin k) K) j l) * X (Sum.inl l)
           = ∑ l : Fin k, C (∑ j : Fin k, (g : Matrix (Fin k) (Fin k) K) i j *
               ((g⁻¹ : GL (Fin k) K) : Matrix (Fin k) (Fin k) K) j l) * X (Sum.inl l) := by
-            simp only [map_sum, Finset.sum_mul, map_mul, mul_assoc, Finset.mul_sum]
+            set_option synthInstance.maxHeartbeats 100000 in
+              simp only [map_sum, Finset.sum_mul, map_mul, mul_assoc, Finset.mul_sum]
             rw [Finset.sum_comm]
         _ = X (Sum.inl i) := by
           simp only [hm, ite_mul, one_mul, zero_mul, Finset.sum_ite_eq, Finset.mem_univ, if_true]
-    · simp only [AlgHom.comp_apply, AlgHom.id_apply, glAct_X_inr, map_sum, map_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp only [AlgHom.comp_apply, AlgHom.id_apply, glAct_X_inr, map_sum, map_mul,
         MvPolynomial.algHom_C, MvPolynomial.algebraMap_eq, inv_inv]
       have hm : ∀ l : Fin k, C (∑ j : Fin k, ((g⁻¹ : GL (Fin k) K) : Matrix (Fin k) (Fin k) K) j i *
           (g : Matrix (Fin k) (Fin k) K) l j) = (if i = l then 1 else 0 : PolXY K k) := by
@@ -139,7 +144,8 @@ theorem glAct_inv_glAct {K : Type} [Field K] {k : ℕ} (g : GL (Fin k) K) (f : P
             ∑ l : Fin k, C ((g : Matrix (Fin k) (Fin k) K) l j) * X (Sum.inr l)
           = ∑ l : Fin k, C (∑ j : Fin k, ((g⁻¹ : GL (Fin k) K) : Matrix (Fin k) (Fin k) K) j i *
               (g : Matrix (Fin k) (Fin k) K) l j) * X (Sum.inr l) := by
-            simp only [map_sum, Finset.sum_mul, map_mul, mul_assoc, Finset.mul_sum]
+            set_option synthInstance.maxHeartbeats 100000 in
+              simp only [map_sum, Finset.sum_mul, map_mul, mul_assoc, Finset.mul_sum]
             rw [Finset.sum_comm]
         _ = X (Sum.inr i) := by
           simp only [hm, ite_mul, one_mul, zero_mul, Finset.sum_ite_eq, Finset.mem_univ, if_true]
@@ -201,7 +207,8 @@ theorem glAct_mem_PolAB {K : Type} [Field K] {k A B : ℕ} (g : GL (Fin k) K) (f
         (isWeightedHomogeneous_X (R := K) (wXY k) (Sum.inr j))
       convert h using 1
       simp [wXY]
-  rw [hgl, f.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hgl, f.as_sum, map_sum]
   apply IsWeightedHomogeneous.sum
   intro m hm
   rw [aeval_monomial, MvPolynomial.algebraMap_eq]

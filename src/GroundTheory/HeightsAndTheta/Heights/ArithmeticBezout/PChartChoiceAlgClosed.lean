@@ -68,7 +68,8 @@ theorem specFirst_zero_of_isMultiHomog {δ : ℕ} (hδ : 1 ≤ δ) {f : MvPolyno
   classical
   unfold specFirst
   conv_lhs => rw [f.as_sum]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_eq_zero fun s hs => ?_
   rw [bind₁_monomial]
   obtain ⟨i, hi, h0⟩ : ∃ i ∈ s.support, i.1 = 0 := by

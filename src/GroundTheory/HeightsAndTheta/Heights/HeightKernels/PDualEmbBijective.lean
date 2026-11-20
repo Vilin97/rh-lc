@@ -70,7 +70,8 @@ theorem injective (F : HermLattice K i) {T : Type} [Fintype T] [DecidableEq T]
     simpa [Matrix.mulVecLin_apply, Matrix.mulVec, dotProduct, dualEmbMatrix, pairing] using h
   have hL : ∀ φ : dualLattice F, pairing w φ = 0 := by
     intro φ
-    rw [← b.sum_repr φ, Submodule.coe_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← b.sum_repr φ, Submodule.coe_sum, map_sum]
     refine Finset.sum_eq_zero fun t _ => ?_
     rw [Submodule.coe_smul, map_zsmul, hb, smul_zero]
   have hK : ∀ y, pairing w y = 0 := by

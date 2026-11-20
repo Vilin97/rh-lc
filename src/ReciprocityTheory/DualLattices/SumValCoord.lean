@@ -80,7 +80,8 @@ theorem u5 : MonomialDeterminantStatement := by
     intro j x
     rw [show Ideal.Quotient.mk I (w j x) = Ideal.Quotient.mk I (∑ i, Λ j i * ((x i).val : R)) from
       Ideal.Quotient.eq.mpr ((hmem _).mpr (by rw [map_sub, hw]; exact hc j x))]
-    simp only [map_sum, map_mul, map_natCast]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, map_natCast]
     simp only [lam, xc, Matrix.map_apply, ZMod.castHom_apply, ZMod.natCast_val]
   have hWN : Ideal.Quotient.mk I (Matrix.of fun (x α : ι → ZMod p) => ∏ j, w j x ^ (α j).val).det =
       (Matrix.of fun (x α : ι → ZMod p) => monF (Λ.map (Ideal.Quotient.mk I)) α x).det := by

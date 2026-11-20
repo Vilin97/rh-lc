@@ -87,7 +87,8 @@ theorem d_cOf {K : Coef C} {k : ℕ} (u : L P k ⟶ K) : d (elF P (zm K)) k (cOf
   funext s
   rw [d_apply']
   change _ = (u.app _).hom (((dL P k).app _).hom (FreeAbelianGroup.of (⟨s, 𝟙 _⟩ : Gen P (k + 1) _)))
-  rw [dL_of, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [dL_of, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_zsmul, u_of]
   simp [gFace]
@@ -96,7 +97,8 @@ theorem tOf_d {K : Coef C} {k : ℕ} (f : Cn (elF P (zm K)) k) : tOf (d (elF P (
   ext B : 2
   refine fa_ext fun g => (tOf_of _ g).trans ?_
   change _ = ((tOf f).app B).hom (((dL P k).app B).hom (FreeAbelianGroup.of g))
-  rw [d_apply', dL_of, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [d_apply', dL_of, map_sum, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_zsmul, map_zsmul, tOf_of]
   simp [gFace]

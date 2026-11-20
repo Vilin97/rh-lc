@@ -218,7 +218,8 @@ theorem famSmooth : ∀ (n : ℕ) (ε : Fin n → Bool) (H : Type) [NormedAddCom
     have e2 := map_der_eq hb 1 (adInv hB Y) u []
     simp only [ContinuousLinearMap.one_apply] at e2
     show σ _ (σ (NormedSpace.exp (t i • Xs i)) (σ (B i t) ((der σ (adInv hB Y) u).1 []))) = _
-    rw [e2, ← sigma_mul hσ hA (exp_mem_UJ (hX i) (t i)),
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e2, ← sigma_mul hσ hA (exp_mem_UJ (hX i) (t i)),
       ← sigma_mul hσ (mul_mem_UJ hA (exp_mem_UJ (hX i) (t i))) hB, ← eP, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     exact (σ (P t)).map_smul_of_tower _ _

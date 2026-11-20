@@ -40,7 +40,8 @@ theorem hTens_pure {F E : Type} [Field F] [NumberField F] [Field E] [NumberField
   have hs : ∀ k, (t • incV F β) k = algebraMap (AF F) (AE F E) t * inclR (AF F) (β k) := fun k => by
     rw [Pi.smul_apply, Algebra.smul_def]; rfl
   rw [form_mul_form]
-  simp only [hTens, Matrix.vecMulVec_apply, hs, incM, Matrix.map_apply, map_mul, AlgHom.commutes, hc, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hTens, Matrix.vecMulVec_apply, hs, incM, Matrix.map_apply, map_mul, AlgHom.commutes, hc, map_sum,
     Finset.mul_sum]
   simp only [incV, hc]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun k _ =>

@@ -102,7 +102,8 @@ theorem hasDerivAt_box : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {
     convert hd using 1
     have e : GlobalTheory.ChainFr.ptF W.ψ W.θ A' B' f ((∑ σ, Δ σ) Q) = ∑ σ, GlobalTheory.ChainFr.ptF W.ψ W.θ A' B' f (Δ σ Q) := by
       unfold GlobalTheory.ChainFr.ptF
-      rw [LinearMap.sum_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [LinearMap.sum_apply, map_sum]
     rw [e, Finset.sum_apply]
     exact Finset.sum_congr rfl fun σ _ => by rw [hΔ σ f hf Q]
 

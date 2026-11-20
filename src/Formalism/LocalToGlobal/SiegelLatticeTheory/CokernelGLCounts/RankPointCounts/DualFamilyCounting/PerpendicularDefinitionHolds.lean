@@ -70,7 +70,8 @@ theorem eq_zero_of_orth (hG : GZ T T' (ZhatL (lf D F0) F') ≠ 0)
   apply Matrix.eq_zero_of_mulVec_eq_zero hdet
   funext a
   have ha := h a
-  simp only [map_sum, map_smul, smul_eq_mul, hT_fam] at ha
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, smul_eq_mul, hT_fam] at ha
   simp only [Matrix.mulVec, dotProduct, Pi.zero_apply]
   rw [← ha]
   exact Finset.sum_congr rfl (fun i _ => mul_comm _ _)

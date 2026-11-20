@@ -92,7 +92,8 @@ theorem glued_loc_cong : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u u' : D
   have h := hPP P rfl b
   obtain ⟨v, hv⟩ : ∃ v, v = g' (frame (lf D (X.Fu u')) b) - ∑ a, ((ξ a b : 𝓞 D.host.E) : D.host.E) • g (frame (lf D (X.Fu u)) a) := ⟨_, rfl⟩
   have hφv : (VS D).frame.equivFun (g' (frame (lf D (X.Fu u')) b)) - ∑ a, ((ξ a b : 𝓞 D.host.E) : D.host.E) • (VS D).frame.equivFun (g (frame (lf D (X.Fu u)) a)) = (VS D).frame.equivFun v := by
-    rw [hv, map_sub, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hv, map_sub, map_sum]
     simp only [map_smul]
   rw [hφv] at h
   obtain ⟨s, hs, hsv⟩ := h
@@ -110,7 +111,8 @@ theorem glued_loc_cong : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u u' : D
     simp only [frame, Formalism.MainNotions.S.FlagG.fvec, mapFlag]
     exact (congrFun (Fin.comp_snoc (⇑(g⁻¹ * g')) _ _) b).symm
   have htarget : frame (mapLF (g⁻¹ * g') (lf D (X.Fu u'))) b - frameAct (frame (lf D (X.Fu u))) ξ b = g⁻¹ v := by
-    rw [hfr, hv, map_sub, map_sum, LinearEquiv.mul_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hfr, hv, map_sub, map_sum, LinearEquiv.mul_apply]
     unfold frameAct
     refine congrArg₂ (· - ·) rfl (Finset.sum_congr rfl fun a _ => ?_)
     exact (((g⁻¹ : GV D).map_smul _ _).trans (congrArg _ (g.symm_apply_apply _))).symm

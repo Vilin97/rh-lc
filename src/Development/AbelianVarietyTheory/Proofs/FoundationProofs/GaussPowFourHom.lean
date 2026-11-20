@@ -239,7 +239,8 @@ theorem proj_triple (H : (∀ x y f, W x (W y f) = c x y • W (x + y) f) ∧
       (∑ y : B ⧸ A₀.addSubgroupOf B, W (rep y) f)) =
       ((A₀.relIndex A : ℂ) * ∑ z : C ⧸ A₀.addSubgroupOf C, ∑ y : B ⧸ A₀.addSubgroupOf B,
         if rep z + rep y ∈ A then c (rep z) (rep y) else 0) • f := by
-  simp only [map_sum, H.1 (rep _ : V) (rep _ : V) f, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, H.1 (rep _ : V) (rep _ : V) f, map_smul]
   rw [Finset.sum_comm, Finset.mul_sum, Finset.sum_smul]
   refine Finset.sum_congr rfl fun z _ => ?_
   rw [Finset.sum_comm, Finset.mul_sum, Finset.sum_smul]

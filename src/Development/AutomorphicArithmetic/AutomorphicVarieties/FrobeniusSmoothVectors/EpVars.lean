@@ -102,7 +102,8 @@ theorem UpperTheory.V.Fr.ep_vars :
   · obtain ⟨u, hu, hu0⟩ := ev_decomp h
     have h0 : p h = 0 := hh
     have h1 : algebraMap O R (MvPowerSeries.constantCoeff h) + ∑ i, z i * p (u i) = 0 := by
-      rw [hu, map_add, map_sum, hC] at h0
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hu, map_add, map_sum, hC] at h0
       simp only [map_mul, hpX] at h0
       exact h0
     have h3 : MvPowerSeries.constantCoeff h ∈ maximalIdeal O := by

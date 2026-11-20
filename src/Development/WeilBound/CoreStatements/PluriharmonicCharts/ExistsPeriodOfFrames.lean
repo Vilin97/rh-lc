@@ -132,7 +132,8 @@ theorem form_const {D : Datum H} {ty : Fin g → (E →+* ℂ)} {P P' : D.La →
         (Pr ty (ComplexEmbedding.conjugate σ) *ᵥ P x) (Pr ty (ComplexEmbedding.conjugate σ) *ᵥ P y))) =
         ((2 * (D.EF (a • x) y : ℝ) : ℝ) : ℂ) * Complex.I := by
     intro P hP G hE a
-    rw [← hE, ← Complex.sub_conj, (lin_iff P).1 hP.1, herm_dg (herm_block hP hE), map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hE, ← Complex.sub_conj, (lin_iff P).1 hP.1, herm_dg (herm_block hP hE), map_sum]
     simp only [mul_sub, Finset.sum_sub_distrib]
     congr 1
     refine Fintype.sum_equiv (ComplexEmbedding.involutive_conjugate E).toPerm _ _ fun σ => ?_

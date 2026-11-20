@@ -78,7 +78,8 @@ theorem hR_sum_right (σ : E →ₐ[F] E) {M n : ℕ} (J : Matrix (Fin M) (Fin M
 theorem hR_sum_left (σ : E →ₐ[F] E) {M n : ℕ} (J : Matrix (Fin M) (Fin M) E) (x : Fin n → Fin M → R ⊗[F] E)
     (y : Fin M → R ⊗[F] E) (w : Fin n → R ⊗[F] E) :
     hR R σ J (fun k => ∑ c, x c k * w c) y = ∑ c, sigR R σ (w c) * hR R σ J (x c) y := by
-  simp only [hR, hform, map_sum, map_mul, Finset.mul_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hR, hform, map_sum, map_mul, Finset.mul_sum, Finset.sum_mul]
   refine (Finset.sum_congr rfl fun i _ => Finset.sum_comm).trans ?_
   refine Finset.sum_comm.trans ?_
   exact Finset.sum_congr rfl fun e _ => Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
@@ -104,7 +105,8 @@ theorem cjM_mem (σ : E →ₐ[F] E) (hσ : ∀ x, sigR R σ (sigR R σ x) = x) 
     (g y : Matrix (Fin n) (Fin n) (R ⊗[F] E)) (hy : y ∈ HermR R σ n) : cjM R σ g y ∈ HermR R σ n := by
   intro a c
   have hy' : ∀ a c, sigR R σ (y c a) = y a c := hy
-  simp only [cjM, Matrix.mul_apply, Matrix.map_apply, Matrix.transpose_apply, map_sum, map_mul, hσ, hy']
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [cjM, Matrix.mul_apply, Matrix.map_apply, Matrix.transpose_apply, map_sum, map_mul, hσ, hy']
   simp only [Finset.sum_mul]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring

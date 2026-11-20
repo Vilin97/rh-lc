@@ -102,10 +102,12 @@ theorem coeffSpan_finDim {K W : Type} [Group K] [AddCommGroup W] [Module ℂ W] 
       funext k
       conv_lhs => rw [← b.sum_repr w]
       rw [Finset.sum_apply, Fintype.sum_prod_type, Finset.sum_comm]
-      simp only [map_sum, map_smul, smul_eq_mul, Pi.smul_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, smul_eq_mul, Pi.smul_apply]
       refine Finset.sum_congr rfl fun j _ => ?_
       conv_lhs => rw [← b.sum_repr (ρ k (b j))]
-      simp only [map_sum, map_smul, smul_eq_mul, Finset.mul_sum, g]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, smul_eq_mul, Finset.mul_sum, g]
       exact Finset.sum_congr rfl fun i _ => by ring
     rw [SetLike.mem_coe, this]
     exact Submodule.sum_mem _ fun ij _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨ij, rfl⟩)

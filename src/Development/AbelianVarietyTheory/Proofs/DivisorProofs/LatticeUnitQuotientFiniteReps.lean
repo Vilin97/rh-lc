@@ -64,7 +64,8 @@ theorem eq_atPl (v : Pl F) (x : AF F) (hx : evI F x = 0) (hxw : ∀ w : Pl F, w 
 theorem incV_sum {d r : ℕ} (c : Fin r → ℤ) (g : Fin r → Fin d → E) :
     incV F (∑ j, c j • g j) = ∑ j, c j • incV F (g j) := by
   funext i
-  simp only [incV, Finset.sum_apply, Pi.smul_apply, map_sum, map_zsmul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [incV, Finset.sum_apply, Pi.smul_apply, map_sum, map_zsmul]
 
 theorem exists_int_gens {d : ℕ} (L : Submodule (𝓞 E) (Fin d → E)) (hL : L.IsLattice E) :
     ∃ (r : ℕ) (g : Fin r → Fin d → E), (∀ j, g j ∈ L) ∧ ∀ x ∈ L, ∃ c : Fin r → ℤ, ∑ j, c j • g j = x := by

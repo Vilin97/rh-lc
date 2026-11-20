@@ -19,7 +19,8 @@ theorem coeff_pow_pow (x : Per.Fl l) (k : ℕ) :
 
 theorem xi_coeff_zero (e : Per.Fl l) :
     (xi e).coeff 0 = ∑ i ∈ Finset.range l, ((frobeniusEquiv (Per.Fl l) l).symm e) ^ i := by
-  rw [← WittVector.constantCoeff_apply, xi, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← WittVector.constantCoeff_apply, xi, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_pow, WittVector.constantCoeff_apply, WittVector.teichmuller_coeff_zero]
 

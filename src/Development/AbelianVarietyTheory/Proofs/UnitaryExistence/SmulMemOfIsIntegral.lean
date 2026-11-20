@@ -39,7 +39,8 @@ theorem herm_add_smul_right (G : Matrix (Fin r) (Fin r) E) (x ξ y : Fin r → E
 theorem cc_herm {G : Matrix (Fin r) (Fin r) E} (hG : ∀ a b, FD.cc (G a b) = G b a)
     (x y : Fin r → E) : FD.cc (FD.herm G x y) = FD.herm G y x := by
   have hG' : ∀ a b, IsCMField.complexConj E (G a b) = G b a := hG
-  simp only [FD.herm, FD.cc, map_sum, map_mul, hG', IsCMField.complexConj_apply_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [FD.herm, FD.cc, map_sum, map_mul, hG', IsCMField.complexConj_apply_apply]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
   ring

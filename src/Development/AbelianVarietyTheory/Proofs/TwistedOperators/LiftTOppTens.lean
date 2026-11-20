@@ -89,7 +89,8 @@ theorem liftT_oppTens (τi : PolRow G × PolDown G →₀ ℂ) (τ : SchRow G ×
   have e : liftT W M (oppPath t D.R.m) (oppTens W t τi τ) F =
       AddMonoidHom.mk' (fun x => liftT W M (oppPath t D.R.m) x F) (fun x y => liftT_add W M _ x y F) (oppTens W t τi τ) := rfl
   rw [e]
-  simp only [oppTens, Finsupp.sum, map_sum, AddMonoidHom.mk'_apply, liftT_single, Finset.smul_sum, smul_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [oppTens, Finsupp.sum, map_sum, AddMonoidHom.mk'_apply, liftT_single, Finset.smul_sum, smul_smul]
 
 end Lin
 

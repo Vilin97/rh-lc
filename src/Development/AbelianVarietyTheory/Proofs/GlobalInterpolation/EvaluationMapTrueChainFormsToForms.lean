@@ -39,7 +39,8 @@ theorem GlobalTheory.PerQ.ptT_forms_built : ∀ {B : Base} {X : PreX B.toPre} (I
       rw [LinearMap.map_smulₛₗ, LinearMap.map_smulₛₗ, e, LinearMap.map_smul, LinearMap.map_smul]
   have ptMem : ∀ y, M.ptEmb y ∈ M.ptC := by
     intro y
-    rw [← M.ptEmb_basis.2, ← M.ptLat.b.sum_repr y, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← M.ptEmb_basis.2, ← M.ptLat.b.sum_repr y, map_sum]
     refine Submodule.sum_mem _ fun a _ => ?_
     rw [LinearMap.map_smulₛₗ]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨a, rfl⟩)

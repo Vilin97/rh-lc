@@ -65,7 +65,8 @@ open scoped ComplexConjugate BigOperators ComplexOrder in
 variable {g : ℕ} in
 private lemma conj_beta_eq_beta_swap (d : ℕ) {H : Matrix (Fin g) (Fin g) ℂ} (hH : H.IsHermitian)
     (x z : Fin g → ℂ) : conj (_root_.Formalism.L2.Ker.JMB.beta d H x z) = _root_.Formalism.L2.Ker.JMB.beta d H z x := by
-  simp only [_root_.Formalism.L2.Ker.JMB.beta, _root_.Formalism.L2.Ker.JMB.hf, map_mul, map_sum, Complex.conj_ofReal, Complex.conj_conj]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [_root_.Formalism.L2.Ker.JMB.beta, _root_.Formalism.L2.Ker.JMB.hf, map_mul, map_sum, Complex.conj_ofReal, Complex.conj_conj]
   congr 1
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
@@ -95,7 +96,8 @@ private lemma beta_sum_right' (d : ℕ) {H : Matrix (Fin g) (Fin g) ℂ} (hH : H
   rw [← conj_beta_eq_beta_swap d hH]
   have := map_sum (_root_.GlobalTheory.MomOne.OrthFrame.betaL d H x) f s
   simp only [_root_.GlobalTheory.MomOne.OrthFrame.betaL, LinearMap.coe_mk, AddHom.coe_mk] at this
-  rw [this, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [this, map_sum]
   exact Finset.sum_congr rfl fun i _ => conj_beta_eq_beta_swap d hH _ _
 
 open scoped ComplexConjugate BigOperators ComplexOrder in
@@ -277,7 +279,8 @@ private lemma exists_orthogonal_vector_norm_coprime {q : ℕ} (hq : q.Prime) (S 
   have hPorth : ∀ y j, _root_.Formalism.L2.Ker.JMB.beta S.d S.Hm (P y) (x j) = 0 := by
     intro y j
     have e : _root_.Formalism.L2.Ker.JMB.beta S.d S.Hm (P y) (x j) = _root_.GlobalTheory.MomOne.OrthFrame.betaL S.d S.Hm (x j) (P y) := rfl
-    rw [e, hP, map_sub, map_smul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, hP, map_sub, map_smul, map_sum]
     simp only [map_smul, smul_eq_mul, _root_.GlobalTheory.MomOne.OrthFrame.betaL, LinearMap.coe_mk,
       AddHom.coe_mk, horth, mul_ite, mul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true]
     rw [mul_assoc, mul_comm (_root_.Formalism.L2.Ker.JMB.beta S.d S.Hm y (x j)), ← mul_assoc, ← Nat.cast_mul,

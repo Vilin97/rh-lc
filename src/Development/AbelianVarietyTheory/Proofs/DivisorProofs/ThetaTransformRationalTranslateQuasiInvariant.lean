@@ -47,7 +47,8 @@ theorem thetaSum_schr_rat (F : Type) [Field F] [NumberField F] [Invertible (2 : 
         ⅟(2 : AdeleRing (𝓞 F) F) * ((fun i => algebraMap F (AdeleRing (𝓞 F) F) (y i)) ⬝ᵥ
           (fun i => algebraMap F (AdeleRing (𝓞 F) F) (z i))) =
         algebraMap F (AdeleRing (𝓞 F) F) (ξ ⬝ᵥ z + 1 / 2 * (y ⬝ᵥ z)) := by
-      simp only [dotProduct, map_add, map_mul, map_sum, h2]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [dotProduct, map_add, map_mul, map_sum, h2]
     rw [e]
     exact hψ _
   unfold GlobalTheory.WeilM.thetaSum GlobalTheory.WeilM.schr

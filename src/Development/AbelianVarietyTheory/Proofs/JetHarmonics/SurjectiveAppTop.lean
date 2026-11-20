@@ -294,7 +294,8 @@ theorem germ_pullback : Laws → Laws4 → TwistBCSpanStatement → JetSer.JetAl
   · have eV : TWO.algVF (V := V) (F := F) = algebraMap V F := (IsScalarTower.algebraMap_eq V _ F).symm
     have czK := FramePull.cz1 (FramePull.constantCoeff_actK (k := F) y.B a)
     obtain ⟨Θ, hΘ, hΘ'⟩ := exists_evHom czK
-    rw [hΘ, map_sum, Finset.sum_mul, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hΘ, map_sum, Finset.sum_mul, Finset.mul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     have e : (fun j i => MvPowerSeries.map (algebraMap V F) ((![y.B.A.act a] : Fin 1 → Pt V 1 y.d) j i)) =
         ![y.B.actK F a] := by

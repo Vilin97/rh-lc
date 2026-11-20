@@ -12,7 +12,8 @@ namespace GlobalTheory.KFixIrr.LowStable
 theorem deg_X_pderiv {σ : Type} (a b : σ) (P : MvPolynomial σ ℂ) :
     (X a * pderiv b P).totalDegree ≤ P.totalDegree := by
   classical
-  conv_lhs => rw [P.as_sum, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [P.as_sum, map_sum, Finset.mul_sum]
   refine (totalDegree_finsetSum _ _).trans (Finset.sup_le fun s hs => ?_)
   rw [pderiv_monomial]
   by_cases h : s b = 0

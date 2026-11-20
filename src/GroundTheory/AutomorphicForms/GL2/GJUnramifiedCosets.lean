@@ -557,7 +557,8 @@ theorem evalAt_satakeTransform_integralHecke (z : Fin n → ℂˣ) (k : ℕ) :
     evalAt z (satakeTransform μ (integralHecke μ k)) =
       (μ.real (integralGL F n : Set (GL (Fin n) F)) : ℂ) * sqrtQ F ^ (((n : ℤ) - 1) * k) *
         ∑ l ∈ Finset.Nat.antidiagonalTuple n k, ∏ i, (z i : ℂ) ^ l i := by
-  rw [satakeTransform_apply, evalAt_normalize, satake_integralHecke, map_smul, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [satakeTransform_apply, evalAt_normalize, satake_integralHecke, map_smul, map_sum,
     smul_eq_mul, mul_assoc]
   congr 1
   rw [Finset.mul_sum]

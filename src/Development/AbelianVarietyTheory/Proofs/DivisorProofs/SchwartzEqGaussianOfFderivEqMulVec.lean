@@ -22,7 +22,8 @@ theorem schwartz_eq_gaussian_of_fderiv_eq_mulVec :
     intro t
     rw [show fderiv ℝ f (t • x) x = fderiv ℝ f (t • x) (∑ a, x a • EuclideanSpace.single a (1 : ℝ)) from
       congrArg _ hx]
-    simp only [map_sum, map_smul, H, Complex.real_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, H, Complex.real_smul]
     have hvt : (fun i => ((t • x) i : ℂ)) = (t : ℂ) • v := by
       funext i; simp [hv]
     rw [hvt, Matrix.mulVec_smul, hc, dotProduct]

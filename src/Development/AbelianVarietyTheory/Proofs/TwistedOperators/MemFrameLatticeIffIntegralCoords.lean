@@ -61,7 +61,8 @@ theorem mem_frameLattice_iff_integral_coords (V : HSp D) (hV : V.gram = 1) (y : 
       rw [← hc]
       exact Finset.sum_congr rfl fun i _ => (algebraMap_smul D.host.E (c i) (V.frame i))
     have := congrArg (fun z => V.frame.repr z i) h1
-    simp only [map_sum, map_smul, Module.Basis.repr_self, Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.smul_apply, Finsupp.single_apply, smul_eq_mul, mul_ite,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, Module.Basis.repr_self, Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.smul_apply, Finsupp.single_apply, smul_eq_mul, mul_ite,
       mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true] at this
     exact this
   · intro h

@@ -80,7 +80,8 @@ theorem constMul_change_generator : ∀ (E : Type) [Field E] [NumberField E] [Is
     intro m k
     have h1 : (n : ℂ) * P (x m) k = ∑ b, ty k (T m b) * P (e b) k * n := by
       have := congrArg (fun z => z k) (congrArg P (hS m))
-      simp only [_root_.map_nsmul, _root_.map_sum, Finset.sum_apply, Pi.smul_apply, nsmul_eq_mul] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [_root_.map_nsmul, _root_.map_sum, Finset.sum_apply, Pi.smul_apply, nsmul_eq_mul] at this
       rw [this]
       refine Finset.sum_congr rfl fun b _ => ?_
       rw [hPer.1 (S m b) (e b) k, hST m b, _root_.map_mul, _root_.map_natCast]

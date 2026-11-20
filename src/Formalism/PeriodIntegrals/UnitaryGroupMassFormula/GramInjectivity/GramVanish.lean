@@ -23,7 +23,8 @@ theorem gram_vanish {σ ι K : Type*} [Fintype ι] [Field K] [CharZero K]
     have hrel : ∑ j, algebraMap ℚ K (l (ph (g j))) • g j = 0 := by
       ext s
       have hs := congrArg (fun p => l (AddMonoidAlgebra.coeff p s)) h
-      simp only [coeff_sum, coeff_smul, smul_eq_mul, coeff_zero, map_sum, map_zero] at hs
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [coeff_sum, coeff_smul, smul_eq_mul, coeff_zero, map_sum, map_zero] at hs
       have e : ∀ j, AddMonoidAlgebra.coeff (g j) s = ((AddMonoidAlgebra.coeff (f j) s : ℤ) : K) := fun j => by
         rw [hg, coeff_map, eq_intCast]
       rw [coeff_sum, coeff_zero]
@@ -37,7 +38,8 @@ theorem gram_vanish {σ ι K : Type*} [Fintype ι] [Field K] [CharZero K]
     have hsum : ∑ j, l (ph (g j)) ^ 2 = 0 := by
       have h1 : l (ph (∑ j, algebraMap ℚ K (l (ph (g j))) • g j)) = 0 := by
         rw [hrel, map_zero, map_zero]
-      rw [map_sum, map_sum] at h1
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, map_sum] at h1
       rw [← h1]
       refine Finset.sum_congr rfl (fun j _ => ?_)
       rw [map_smul, smul_eq_mul, ← Algebra.smul_def, map_smul, smul_eq_mul, sq]

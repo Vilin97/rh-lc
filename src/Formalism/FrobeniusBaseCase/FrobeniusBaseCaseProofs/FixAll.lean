@@ -89,9 +89,11 @@ theorem start_eq_z : D.StartEqZ := by
 theorem coeff_logSum (t : C → MvPowerSeries Z k) (b : C) (A : Z →₀ ℕ) (N : ℕ) :
     coeff A (∑ c, ∑ j ∈ Finset.Icc 1 N, MvPowerSeries.C (D.al c j b) * t c ^ (D.l ^ j)) =
       ∑ c, ∑ j ∈ Finset.Icc 1 N, D.al c j b * coeff A (t c ^ (D.l ^ j)) := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun c _ => ?_
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_congr rfl fun j _ => coeff_C_mul _ _ _
 
 theorem LogIffFix_statement : D.LogIffFix := by

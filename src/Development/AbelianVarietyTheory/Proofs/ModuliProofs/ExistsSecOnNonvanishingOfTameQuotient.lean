@@ -31,7 +31,8 @@ theorem exists_trace_ne_zero {Γ B A K : Type} [Group Γ] [Fintype Γ] [CommRing
     simp only [H, mul_zero, Finset.sum_const_zero]
   have h2 : ∑ j, ev (f (d j)) * ev (∑ g : Γ, g • (f (c j) * x)) =
       ∑ g : Γ, ev (f (∑ j, d j * g • c j)) * ev (g • x) := by
-    simp only [map_sum, Finset.mul_sum, Finset.sum_mul, smul_mul', map_mul, hf, _root_.mul_assoc]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, Finset.mul_sum, Finset.sum_mul, smul_mul', map_mul, hf, _root_.mul_assoc]
     rw [Finset.sum_comm]
   have h3 : ∀ g : Γ, ev (f (∑ j, d j * g • c j)) * ev (g • x) =
       if g ∈ (RingHom.ker (ev.comp f)).inertia Γ then ev (f s) * ev x else 0 := by
@@ -197,7 +198,8 @@ theorem exists_descent {Γ : Type} [Group Γ] [Fintype Γ] {Y' : Scheme.{0}} (τ
       (φ.app _).hom (resG Y' lk (t k)) = ∑ g : Γ,
         ((τ g⁻¹).hom.appLE _ _ (preimage_le_of_invariant τ φ hφ (O ⊓ L.U i ⊓ L.U j) _)).hom
           (resG Y ((φ.preimage_mono lk).trans (l k)) (coord s (fun _ => k))) := by
-    rw [Scheme.Hom.app_eq_appLE, appLE_resG, ← resG_app, ht k, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Scheme.Hom.app_eq_appLE, appLE_resG, ← resG_app, ht k, map_sum]
     refine Finset.sum_congr rfl fun g _ => ?_
     rw [resG_appLE, appLE_resG, appLE_resG]
   rw [map_mul, key i li, key j lj, Finset.mul_sum]

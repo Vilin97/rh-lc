@@ -12,7 +12,8 @@ private theorem addHom_eq_zero_of_integralBasis_mul {F : Type} [Field F] [Number
     {y : F} (hy : y ≠ 0) (h0 : ∀ i, g (integralBasis F i * y) = 0) (w : F) : g w = 0 := by
   have hw : w = (∑ i, (integralBasis F).repr (w * y⁻¹) i • integralBasis F i) * y := by
     rw [(integralBasis F).sum_repr, mul_assoc, inv_mul_cancel₀ hy, mul_one]
-  rw [hw, Finset.sum_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hw, Finset.sum_mul, map_sum]
   refine Finset.sum_eq_zero (fun i _ => ?_)
   rw [smul_mul_assoc, map_rat_smul, h0 i, smul_zero]
 

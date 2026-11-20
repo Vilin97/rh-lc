@@ -35,7 +35,8 @@ theorem sE_eq (Λ : Submodule (𝓞 D.host.E) (VS D).V) (ρ : lpS D F0 Λ →ₗ
   have hsm : ∀ (r : 𝓞 D.host.E) (v : (VS D).V),
       r • v = (algebraMap (𝓞 D.host.E) D.host.E r) • v := fun r v => (algebraMap_smul D.host.E r v).symm
   have hq : (Submodule.Quotient.mk (∑ i, o i • a i - d • b) : WbQ D F0) = 0 := by
-    rw [← Submodule.mkQ_apply, map_sub, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Submodule.mkQ_apply, map_sub, map_sum]
     simp only [LinearMap.map_smul_of_tower, Submodule.mkQ_apply, hac, ho, sub_self]
   have hmem := (Submodule.Quotient.mk_eq_zero _).mp hq
   rw [Submodule.mem_comap] at hmem
@@ -44,14 +45,16 @@ theorem sE_eq (Λ : Submodule (𝓞 D.host.E) (VS D).V) (ρ : lpS D F0 Λ →ₗ
     simp [hya, hyb]
   have hρz := hρid _ hzX
   have e := congrArg (fun u : lpS D F0 Λ => (u : (VS D).V)) hρz
-  simp only [map_sub, map_sum, map_smul, Submodule.coe_sub, Submodule.coe_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sub, map_sum, map_smul, Submodule.coe_sub, Submodule.coe_sum,
     Submodule.coe_smul] at e
   have h1 : ∑ i, o i • (y i : (VS D).V) - ∑ i, o i • (ρ (y i) : (VS D).V) =
       d • (yb : (VS D).V) - d • (ρ yb : (VS D).V) := by
     rw [sub_eq_sub_iff_sub_eq_sub]
     exact e.symm
   have h2 := congrArg (fun q => ((sE q : perpS (VS D) F0.X) : (VS D).V)) ho
-  simp only [map_sum, LinearMap.map_smul_of_tower, Submodule.coe_sum, Submodule.coe_smul_of_tower,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.map_smul_of_tower, Submodule.coe_sum, Submodule.coe_smul_of_tower,
     hsEc] at h2
   have hd : (algebraMap (𝓞 D.host.E) D.host.E d) ≠ 0 := by
     intro h0

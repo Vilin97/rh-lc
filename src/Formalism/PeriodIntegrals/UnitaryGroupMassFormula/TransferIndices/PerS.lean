@@ -127,7 +127,8 @@ theorem perS (T : GoodSet K G) (P0 P : Pair K G) (hM1 : M1 T P0) (s : T.S) :
       intro j
       have := congrFun hc j
       simp only [Matrix.mulVec, dotProduct, Matrix.of_apply, A, Pi.zero_apply] at this
-      rw [hw, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hw, map_sum]
       simp only [map_smul, smul_eq_mul]
       rw [← this]
       exact Finset.sum_congr rfl fun k _ => mul_comm _ _
@@ -179,7 +180,8 @@ theorem perS (T : GoodSet K G) (P0 P : Pair K G) (hM1 : M1 T P0) (s : T.S) :
     have hb'u : ∀ i k, τ.asAlgebraHom (b' i) (F (g k) : T.W s) =
         (cH⁻¹ * (1 : Matrix (Fin n) (Fin n) K) i k) • v0 := by
       intro i k
-      simp only [b', map_smul, map_sum, LinearMap.smul_apply, LinearMap.sum_apply, hbu, smul_smul,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [b', map_smul, map_sum, LinearMap.smul_apply, LinearMap.sum_apply, hbu, smul_smul,
         ← Finset.sum_smul]
       congr 1
       have hadj : ∑ j, ΓK.adjugate i j * ΓK j k = δ * (1 : Matrix (Fin n) (Fin n) K) i k := by
@@ -217,7 +219,8 @@ theorem perS (T : GoodSet K G) (P0 P : Pair K G) (hM1 : M1 T P0) (s : T.S) :
       | smul c y _ hy => rw [map_smul, hy]
     have hZu : ∀ u ∈ LinearMap.range p, Z' u = u := fun u hu => hZsp u (hrange u hu)
     have hZ : τ.asAlgebraHom (∑ i, a i * b' i * eps P) = p := by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simp only [map_mul]
       rw [← Finset.sum_mul, ← hZ']
       apply LinearMap.ext; intro w

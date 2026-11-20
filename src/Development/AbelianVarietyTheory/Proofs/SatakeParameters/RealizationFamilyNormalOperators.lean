@@ -96,7 +96,8 @@ theorem dcOp_mem {Γ W : Type} [Group Γ] [NormedAddCommGroup W] [InnerProductSp
   have h1 : ∀ (k : J) (h : G), F (h * k) = (χ k : ℂ) • F h := fun k h => by simpa using hF 1 h k
   have h2 : ∀ h, F (ι γ * h) = ρ γ (F h) := fun h => by simpa using hF γ h 1
   rw [(GlobalTheory.HkB.dcOp_eq_and_level J L χ x x A A F hsp hχ hA hA hx hx ⟨1, 1, by simp⟩ h1).2 k]
-  simp only [Bridge.dcOp, map_sum, mul_assoc, h2]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Bridge.dcOp, map_sum, mul_assoc, h2]
 
 theorem exists_lift {X : Type} [AddCommGroup X] [Module ℂ X] (M : HMod X) (U : Submodule ℂ X) (ip : X → X → ℂ)
     (hM : M.Is U ip) (S : Module.End ℂ X) (hS : ∀ F ∈ U, S F ∈ U) :

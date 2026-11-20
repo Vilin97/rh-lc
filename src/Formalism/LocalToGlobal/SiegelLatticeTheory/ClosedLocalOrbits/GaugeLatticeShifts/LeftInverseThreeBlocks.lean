@@ -318,7 +318,8 @@ theorem castSucc_ne (b : Fin r) : Fin.castSucc b ≠ Fin.last r := (Fin.castSucc
 theorem hJ_swap (ε : Fin n → Bool) (x y : Fin n → ℂ) : hJ ε x y = star (hJ ε y x) := by
   show hJ ε x y = (starRingEnd ℂ) (hJ ε y x)
   unfold hJ Formalism.REAL.Jm
-  simp only [Matrix.mulVec_diagonal, dotProduct, Pi.star_apply, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mulVec_diagonal, dotProduct, Pi.star_apply, map_sum, map_mul]
   refine Finset.sum_congr rfl (fun i _ => ?_)
   split_ifs <;> simp <;> ring
 

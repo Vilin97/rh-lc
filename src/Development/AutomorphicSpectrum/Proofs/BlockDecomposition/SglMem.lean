@@ -282,7 +282,8 @@ def hm {A : Sy.{w} R ι} {B : Sy.{w'} R ι} (m : A.Hom B) : DCx.Hom (cc A).dcx (
   ch p q x := by
     change ((cc B).cos q).d p _ = _
     change _ = (LinearMap.pi fun i => ((m.φ (ent i)).f q).comp (LinearMap.proj i)) (((cc A).cos q).d p x)
-    rw [Cos.d_apply, Cos.d_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Cos.d_apply, Cos.d_apply, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_zsmul]
     congr 1
@@ -325,7 +326,8 @@ theorem cls_sum {C : Cx.{w} R} {a : ℕ} {κ : Type} [Fintype κ] (c : κ → �
   unfold Cx.cls
   rw [e]
   change Submodule.mkQ _ _ = _
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_congr rfl fun k _ => map_zsmul _ _ _
 
 def cl (A : Sy.{w} R ι) (a p : ℕ) (x : (colK A p).X a) (hx : ∀ i, (A.K (ent i)).d a (x i) = 0) : (A.coh a).cech.X p :=
@@ -365,7 +367,8 @@ theorem sc_d {A : Sy.{w} R ι} {B : Sy.{w'} R ι} {a : ℕ} (σ : ∀ S : Finset
   funext t
   rw [Cos.d_apply, Cos.d_apply]
   change σ (ent t) (ent_ne t) ((∑ k : Fin (p + 2), (-1 : ℤ) ^ (k : ℕ) • (B.coh a).cech.δ p k g) t) = _
-  rw [Finset.sum_apply, Finset.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.sum_apply, Finset.sum_apply, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [Pi.smul_apply, Pi.smul_apply, map_zsmul]
   congr 1

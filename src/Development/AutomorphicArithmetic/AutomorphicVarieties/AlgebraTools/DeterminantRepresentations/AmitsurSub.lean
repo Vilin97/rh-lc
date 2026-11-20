@@ -21,5 +21,6 @@ theorem UpperTheory.V.AlgebraTools.Det.amitsurSub :
       D.D (MvPolynomial (Fin m) A) (GDet.gen fun j => MonoidAlgebra.single (g j) 1) := by
     change D.D _ (ofT A G _ (Det.gen _)) = _
     congr 1
-    simp only [Det.gen, GDet.gen, map_sum, ofT_tmul, MvPolynomial.algebraMap_eq]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Det.gen, GDet.gen, map_sum, ofT_tmul, MvPolynomial.algebraMap_eq]
   rwa [e] at h

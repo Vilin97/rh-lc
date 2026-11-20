@@ -130,13 +130,15 @@ open GlobalTheory.IndefiniteRowSideFullHecke.ColumnDataLaws
 
 theorem map_mul_zero {A B m n : Type} [CommRing A] [CommRing B] [Fintype m] (π : A →+* B) (P : Matrix m m A)
     (w : Matrix m n A) (h : ∀ a b, π (w a b) = 0) (a : m) (b : n) : π ((P * w) a b) = 0 := by
-  rw [Matrix.mul_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.mul_apply, map_sum]
   exact Finset.sum_eq_zero fun i _ => by rw [map_mul, h, mul_zero]
 
 theorem map_mul_congr {A B K m n : Type} [CommRing A] [CommRing B] [CommRing K] [Fintype m] (π : A →+* B)
     (j : K →+* A) (P : Matrix m m K) (w : Matrix m n A) (X : Matrix m n K) (h : ∀ a b, π (w a b) = π (j (X a b)))
     (a : m) (b : n) : π ((P.map j * w) a b) = π (j ((P * X) a b)) := by
-  rw [Matrix.mul_apply, Matrix.mul_apply, map_sum, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.mul_apply, Matrix.mul_apply, map_sum, map_sum, map_sum]
   exact Finset.sum_congr rfl fun i _ => by rw [map_mul, map_mul, map_mul, h]; rfl
 
 variable {D : D7}

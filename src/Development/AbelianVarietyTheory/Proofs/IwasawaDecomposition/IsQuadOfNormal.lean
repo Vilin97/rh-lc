@@ -67,7 +67,8 @@ theorem sum_lin (X : Matrix ι ι ℂ) (A : (ι → ℂ) →ₗ[ℂ] ℂ) (v : �
   have hx : X *ᵥ v = ∑ k, (∑ j, X k j * v j) • (Pi.single k (1 : ℂ) : ι → ℂ) := by
     ext i
     simp [Matrix.mulVec, dotProduct, Finset.sum_apply, Pi.single_apply]
-  rw [hx, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hx, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [map_smul, smul_eq_mul, Finset.sum_mul]
   refine Finset.sum_congr rfl fun j _ => ?_
@@ -90,7 +91,8 @@ theorem sum_anti {H X : Matrix ι ι ℂ} (hH : Hᴴ = H) (hd : H.det ≠ 0) (hX
         simp only [Matrix.mulVec_smul]
   have hA : A w = ∑ j, (starRingEnd ℂ) ((H *ᵥ w) j) * A (H⁻¹ *ᵥ Pi.single j 1) := by
     conv_lhs => rw [hexp]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [LinearMap.map_smulₛₗ, smul_eq_mul]
 

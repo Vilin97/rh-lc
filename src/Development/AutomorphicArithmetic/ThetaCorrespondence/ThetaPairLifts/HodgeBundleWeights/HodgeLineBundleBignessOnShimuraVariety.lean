@@ -45,7 +45,8 @@ theorem hodgeLineBundle_isBig : _root_.GlobalTheory.CovTop.PublishedHodgeBundleT
     refine IsNef.of_cls_eq_sum Finset.univ
       (fun τ : Psi H => (_root_.GlobalTheory.NefUnit.isNef_hodgeBundle_unitWeight (_root_.GlobalTheory.CovTop.PublishedHodgeBundleTheorems.toClassicalTheorems hP) hN E H Dw l Xo c TF Z hF τ).2) (fun _ => 1) hA
       (isLB_L₀ TF.X Z w) ?_
-    rw [hφ, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hφ, map_sum]
     exact Finset.sum_congr rfl fun τ _ => (one_smul _ _).symm
   letI := algebraΓOfHom (s₀ TF.Y Z)
   have hf : ∀ r : c.F, algebraMap c.F Γ(X₀ TF.Y Z, ⊤) r =

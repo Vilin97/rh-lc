@@ -21,7 +21,8 @@ open Formalism.L2.Th1.CM (MaximalUnramifiedExtension)
 theorem map_lgF' {K K' : Type} [Field K] [Field K'] (φ : K →+* K') (p : ℕ) :
     PowerSeries.map φ (lgF K p) = lgF K' p := by
   ext n
-  simp only [lgF, PowerSeries.coeff_map, PowerSeries.coeff_mk, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [lgF, PowerSeries.coeff_map, PowerSeries.coeff_mk, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   split_ifs <;> simp
 

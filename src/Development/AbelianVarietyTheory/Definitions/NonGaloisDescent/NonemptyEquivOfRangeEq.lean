@@ -380,7 +380,8 @@ theorem isCompl_fixed_twKer {π : Representation ℂ G V} (hπ : IsSmooth π) {H
     letI := Fintype.ofFinite (H ⧸ U)
     have hc : (Fintype.card (H ⧸ U) : ℂ) ≠ 0 := Nat.cast_ne_zero.2 Fintype.card_ne_zero
     have h1 : cosetSum π U v ∈ fixed π H := mem_fixed.2 fun h hh => by
-      simp only [cosetSum, LinearMap.sum_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [cosetSum, LinearMap.sum_apply, map_sum]
       refine Fintype.sum_equiv (MulAction.toPerm (⟨h, hh⟩ : H)) _ _ fun q => ?_
       conv_rhs => rw [MulAction.toPerm_apply, ← q.out_eq, MulAction.Quotient.smul_mk]
       rw [out_apply π hU, smul_eq_mul, Subgroup.coe_mul, map_mul, Module.End.mul_apply]
@@ -414,11 +415,13 @@ theorem idem_eq_cosetSum (U : Subgroup H) [Fintype (H ⧸ U)] {v : V} (hv : ∀ 
     idem hπ hH v = (Fintype.card (H ⧸ U) : ℂ)⁻¹ • ∑ q : H ⧸ U, π (q.out : H) v := by
   have hc : (Fintype.card (H ⧸ U) : ℂ) ≠ 0 := Nat.cast_ne_zero.2 Fintype.card_ne_zero
   have h1 : ∑ q : H ⧸ U, π (q.out : H) v ∈ fixed π H := mem_fixed.2 fun h hh => by
-    simp only [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum]
     refine Fintype.sum_equiv (MulAction.toPerm (⟨h, hh⟩ : H)) _ _ fun q => ?_
     conv_rhs => rw [MulAction.toPerm_apply, ← q.out_eq, MulAction.Quotient.smul_mk]
     rw [out_apply π hv, smul_eq_mul, Subgroup.coe_mul, map_mul, Module.End.mul_apply]
-  rw [← idem_of_mem hπ hH h1, map_sum, Finset.sum_congr rfl fun q _ => idem_apply_mem hπ hH (q.out : H).2 v,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← idem_of_mem hπ hH h1, map_sum, Finset.sum_congr rfl fun q _ => idem_apply_mem hπ hH (q.out : H).2 v,
     Finset.sum_const, Finset.card_univ, ← Nat.cast_smul_eq_nsmul ℂ, smul_smul, inv_mul_cancel₀ hc, one_smul]
 
 end Idem

@@ -153,7 +153,8 @@ private theorem cont_multi {ι X : Type} [Finite ι] [TopologicalSpace X] {M : �
     funext x
     have h1 : (fun i => y i x) = fun i => ∑ j, (b i).coord j (y i x) • b i j :=
       funext fun i => ((b i).sum_repr (y i x)).symm
-    rw [h1, m.map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h1, m.map_sum]
     exact Finset.sum_congr rfl fun r _ => m.map_smul_univ _ _
   rw [e]
   exact continuous_finset_sum _ fun r _ => (continuous_finset_prod _ fun i _ => hy i _).smul continuous_const

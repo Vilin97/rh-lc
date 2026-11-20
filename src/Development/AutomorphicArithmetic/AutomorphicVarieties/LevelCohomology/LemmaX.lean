@@ -294,7 +294,8 @@ theorem UpperTheory.V.X.lemmaX :
   have hSA : (∑ u, ξ u * g u) ∈ A := A.sum_mem (fun u _ => A.mul_mem (hξA u) (hgA u))
   have hred_sum : red ⟨∑ u, ξ u * g u, hSA⟩ = ∑ u, ξk u * red ⟨g u, hgA u⟩ := by
     have e0 : (⟨∑ u, ξ u * g u, hSA⟩ : A) = ∑ u, (⟨ξ u, hξA u⟩ * ⟨g u, hgA u⟩ : A) := Subtype.ext (by simp)
-    rw [e0, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e0, map_sum]
     simp only [map_mul]
     rfl
   apply le_antisymm ((hA _).1 hSA)

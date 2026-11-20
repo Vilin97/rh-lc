@@ -18,7 +18,8 @@ theorem proj_glue_mem (S : Finset (Pl F)) (c : F) (a : ∀ s : S, Kp s.1) {u : P
     proj u (glue S c a) = a ⟨u, hu⟩ := by
   have h : proj u (∑ s : S, inc s.1 (a s - algebraMap F (Kp s.1) c)) =
       a ⟨u, hu⟩ - algebraMap F (Kp u) c := by
-    rw [map_sum, Finset.sum_eq_single (⟨u, hu⟩ : S)]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_eq_single (⟨u, hu⟩ : S)]
     · exact proj_inc_same u _
     · intro b _ hb
       exact proj_inc_ne (fun e => hb (Subtype.ext e.symm)) _
@@ -29,7 +30,8 @@ theorem proj_glue_mem (S : Finset (Pl F)) (c : F) (a : ∀ s : S, Kp s.1) {u : P
 theorem proj_glue_notMem (S : Finset (Pl F)) (c : F) (a : ∀ s : S, Kp s.1) {u : Pl F}
     (hu : u ∉ S) : proj u (glue S c a) = algebraMap F (Kp u) c := by
   have h : proj u (∑ s : S, inc s.1 (a s - algebraMap F (Kp s.1) c)) = 0 := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_eq_zero fun b _ => proj_inc_ne (fun e => hu ?_) _
     rw [e]
     exact b.2

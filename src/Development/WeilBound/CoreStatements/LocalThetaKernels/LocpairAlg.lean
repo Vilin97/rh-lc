@@ -279,7 +279,8 @@ theorem in_locW (w : (κ → AF F) × (κ → AF F)) :
     rw [atPlace_mul_right, one_mul]
 
 theorem ev_dot (a b : κ → AF F) : evFin F v (a ⬝ᵥ b) = evA κ v a ⬝ᵥ evA κ v b := by
-  simp only [dotProduct, map_sum, map_mul]; rfl
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dotProduct, map_sum, map_mul]; rfl
 
 variable {JA : Matrix α α (AE F E)} {JB : Matrix β β (AE F E)} {JAv : Matrix α α (Ev E v)} {JBv : Matrix β β (Ev E v)}
 
@@ -294,7 +295,8 @@ theorem ev_symp (hA : JA.map (compFin F E v) = JAv) (hB : JB.map (compFin F E v)
   subst hA hB
   rw [symp, symp, ← trace_map']
   change _ = Algebra.trace _ _ (compFin F E v _)
-  simp only [hTens, map_mul, map_sum, map_neg, map_one, comp_cA, Matrix.map_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hTens, map_mul, map_sum, map_neg, map_one, comp_cA, Matrix.map_apply]
 
 omit [DecidableEq α] [DecidableEq β] in
 theorem exists_locD (hA : JA.map (compFin F E v) = JAv) (hB : JB.map (compFin F E v) = JBv)

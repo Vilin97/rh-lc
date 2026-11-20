@@ -56,7 +56,8 @@ theorem finrank_eq_sum_emb (hcard : Fintype.card (K →ₐ[Qp] LL) = finrank Qp 
     | add y z hy hz => simp only [map_add, LinearMap.add_apply, Pi.add_apply, hy, hz, add_smul]
   choose e he using fun τ : K →ₐ[Qp] LL => hsurj (Pi.single τ 1)
   have he1 : ∑ τ, e τ = 1 := hinj (by
-    rw [map_sum, map_one]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_one]
     simp only [he]
     exact Finset.univ_sum_single (fun _ => (1 : LL)))
   have he2 : ∀ τ c, (1 ⊗ₜ c) * e τ = τ c • e τ := fun τ c => hinj (by
@@ -76,10 +77,12 @@ theorem finrank_eq_sum_emb (hcard : Fintype.card (K →ₐ[Qp] LL) = finrank Qp 
       invFun := fun y => ⟨∑ τ, (y τ : M), U.sum_mem fun τ _ => ((hE τ _).1 (y τ).2).1⟩
       left_inv := fun x => Subtype.ext (by
         change ∑ τ, Ψ (e τ) x = x
-        rw [← LinearMap.sum_apply, ← map_sum, he1, map_one, Module.End.one_apply])
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [← LinearMap.sum_apply, ← map_sum, he1, map_one, Module.End.one_apply])
       right_inv := fun y => funext fun τ => Subtype.ext (by
         change Ψ (e τ) (∑ σ, (y σ : M)) = y τ
-        rw [map_sum, Finset.sum_eq_single τ]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum, Finset.sum_eq_single τ]
         · rw [hΨE τ _ _ (y τ).2, he]; simp
         · intro σ _ h
           rw [hΨE σ _ _ (y σ).2, he]; simp [h]

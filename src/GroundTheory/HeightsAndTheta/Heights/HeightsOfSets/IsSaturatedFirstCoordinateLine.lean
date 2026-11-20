@@ -189,7 +189,8 @@ theorem eval₂_homog_pt {R : Type*} [CommRing R] (f : ℤ →+* R) (z : (Σ _ :
     (g : MRing (PBlk 1)) (d : Unit → ℕ) (hg : IsMultiHomog g d) :
     eval₂ f z g = f (∑ m ∈ g.support, g.coeff m) * z ⟨(), 0⟩ ^ d () := by
   have := subsingleton_pt
-  rw [eval₂_eq', map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [eval₂_eq', map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun m hm ↦ ?_
   rw [Fintype.prod_subsingleton _ ⟨(), 0⟩]
   have := hg m hm ()

@@ -56,7 +56,8 @@ theorem loc_act {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E]
       A.bc p (∑ a, l a • w a) = ∑ a, (A.loc p).ιE (l a) • A.bc p (w a) := by
     intro l w
     funext i
-    simp [Places.bc, Finset.sum_apply, map_sum, smul_eq_mul, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Places.bc, Finset.sum_apply, map_sum, smul_eq_mul, map_mul]
   rw [hvl b, map_smul, hE, hM b, hbc, Finset.smul_sum]
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [← hv a, smul_smul, smul_smul]

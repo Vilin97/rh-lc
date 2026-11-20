@@ -306,13 +306,15 @@ theorem surjective_ptTLocalDualMap_two (hM : ∀ m : M, n • m = 0) :
         ∑ w, AddMonoidHom.inr _ _
           (Pi.single w (Submodule.Quotient.mk (p := normClasses (Rep.res (ψ w).toMonoidHom (dualRep D M)))
             (ptRes ψ (dualRep D M) w 0 y))) := by
-    rw [ptTGlobalToLocalHat_apply, ptTGlobalToLocal_apply, ptTHatMk_apply, ← map_sum, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [ptTGlobalToLocalHat_apply, ptTGlobalToLocal_apply, ptTHatMk_apply, ← map_sum, ← map_sum]
     refine Prod.ext ?_ ?_
     · simp only [Prod.fst_add, AddMonoidHom.inl_apply, AddMonoidHom.inr_apply, add_zero]
       exact (Finset.univ_sum_single _).symm
     · simp only [Prod.snd_add, AddMonoidHom.inl_apply, AddMonoidHom.inr_apply, zero_add]
       exact (Finset.univ_sum_single _).symm
-  rw [ptTLocalDualMap_apply, ← hg, AddMonoidHom.comp_apply, hdec, map_add, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [ptTLocalDualMap_apply, ← hg, AddMonoidHom.comp_apply, hdec, map_add, map_sum, map_sum]
   congr 1
   · refine Finset.sum_congr rfl fun v _ => ?_
     rw [hξ₁]
@@ -396,7 +398,8 @@ theorem bijective_ptTShaPairing (hM : ∀ m : M, n • m = 0) :
       have hdec : (ptTGlobalToLocal φ ψ (dualRep D M) 2).hom y =
           (∑ v, AddMonoidHom.inl _ _ (Pi.single v (ptRes φ (dualRep D M) v 2 y))) +
             ∑ w, AddMonoidHom.inr _ _ (Pi.single w (ptRes ψ (dualRep D M) w 2 y)) := by
-        rw [ptTGlobalToLocal_apply, ← map_sum, ← map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [ptTGlobalToLocal_apply, ← map_sum, ← map_sum]
         refine Prod.ext ?_ ?_
         · simp only [Prod.fst_add, AddMonoidHom.inl_apply, AddMonoidHom.inr_apply, add_zero]
           exact (Finset.univ_sum_single _).symm
@@ -404,7 +407,8 @@ theorem bijective_ptTShaPairing (hM : ∀ m : M, n • m = 0) :
           exact (Finset.univ_sum_single _).symm
       rw [ptTLocalDualMap_apply, ← hg, AddMonoidHom.comp_apply]
       change _ = g ((ptTGlobalToLocal φ ψ (dualRep D M) 2).hom y)
-      rw [hdec, map_add, map_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hdec, map_add, map_sum, map_sum]
       congr 1
       · refine Finset.sum_congr rfl fun v _ => ?_
         rw [hξ₁]

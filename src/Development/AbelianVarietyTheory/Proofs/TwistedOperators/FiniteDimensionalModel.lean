@@ -56,7 +56,8 @@ theorem isCuspFun_of_definite {V : HSp D} (hs : V.SigOK) (hd : V.IsDefinite) (φ
   have h2 := aniso hs hd τ (fun i => τ (C i ⟨0, hr⟩)) (by
     rw [Matrix.zero_apply, map_zero] at h1
     rw [← h1, Matrix.mul_assoc]
-    simp only [Matrix.mul_apply, map_sum, map_mul, dotProduct, Matrix.mulVec, Matrix.map_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mul_apply, map_sum, map_mul, dotProduct, Matrix.mulVec, Matrix.map_apply]
     refine Finset.sum_congr rfl fun i _ => ?_
     congr 1
     exact (hτ _).symm)
@@ -140,7 +141,8 @@ theorem eventually_conj {R R' : Type} [CommRing R] [TopologicalSpace R] [IsTopol
   refine Filter.eventually_all.2 fun i => Filter.eventually_all.2 fun j => ?_
   have e : ∀ m : Matrix (Fin n) (Fin n) R, ((β⁻¹).1 * m.map φ * β.1) i j - (1 : Matrix (Fin n) (Fin n) R') i j =
       φ ((((β⁻¹).1.map φ.symm * m * β.1.map φ.symm) i j) - (1 : Matrix (Fin n) (Fin n) R) i j) := fun m => by
-    simp only [map_sub, Matrix.mul_apply, map_sum, map_mul, Matrix.map_apply, RingEquiv.apply_symm_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sub, Matrix.mul_apply, map_sum, map_mul, Matrix.map_apply, RingEquiv.apply_symm_apply,
       Matrix.one_apply, apply_ite φ, map_one, map_zero]
   have hc : Continuous fun m : Matrix (Fin n) (Fin n) R =>
       (((β⁻¹).1.map φ.symm * m * β.1.map φ.symm) i j) - (1 : Matrix (Fin n) (Fin n) R) i j :=

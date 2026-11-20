@@ -331,7 +331,8 @@ theorem exists_gelf (R : RealPoints θ V) (τ : D.what₂.Tau) : ∃ c : ℕ →
     refine Subalgebra.sum_mem _ fun l _ => Subalgebra.smul_mem _ (Subalgebra.list_prod_mem _ fun x hx => ?_) _
     obtain ⟨X, -, rfl⟩ := List.mem_map.1 hx
     exact Algebra.span_le_adjoin ℂ _ (h2 X)
-  · rw [gelf, gelfA, map_sum, LinearMap.sum_apply, Submodule.coe_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [gelf, gelfA, map_sum, LinearMap.sum_apply, Submodule.coe_sum]
     refine Finset.sum_congr rfl fun idx _ => ?_
     rw [map_list_prod, List.map_ofFn]
     refine foldr_ofFn_eq _ _ _ _ (fun i x => ?_) φ

@@ -102,7 +102,8 @@ theorem mem_int_iff (y : Af F ⊗[F] E) :
       exact hy)
     obtain ⟨m, g, hg⟩ := Module.Finite.exists_fin (R := ℤ) (M := 𝓞 E)
     obtain ⟨r, hr, e⟩ := Formalism.UG.P.levelaf_decomp g hg h1
-    rw [← c.symm_apply_apply y, e, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← c.symm_apply_apply y, e, map_sum]
     exact sum_mem fun i _ => AddSubgroup.subset_closure ⟨r i, hr i, g i, rfl⟩
 
 theorem continuous_finAdEquiv_symm : Continuous (finAdEquiv F E).symm :=

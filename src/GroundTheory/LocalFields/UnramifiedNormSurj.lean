@@ -38,7 +38,8 @@ theorem residue_eq_sum_repr (y : 𝒪[L]) :
     residue 𝒪[L] y = ∑ i, residue 𝒪[K] ((Module.Free.chooseBasis 𝒪[K] 𝒪[L]).repr y i) •
       residue 𝒪[L] (Module.Free.chooseBasis 𝒪[K] 𝒪[L] i) := by
   conv_lhs => rw [← (Module.Free.chooseBasis 𝒪[K] 𝒪[L]).sum_repr y]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun i _ ↦ ?_
   rw [Algebra.smul_def, map_mul, Algebra.smul_def]
   rfl

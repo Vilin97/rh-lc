@@ -109,7 +109,8 @@ theorem coord_decomp {n m k : ℕ} (a : Fin n → FractionalIdeal (𝓞 K)⁰ K)
     have hv := congrFun ((sumBasis b c hli hmk).sum_repr (v : Fin n → K)) r
     simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, sumBasis_apply] at hv
     simp only [mulVec, dotProduct, embMat, of_apply]
-    rw [← hv, map_sum, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hv, map_sum, Finset.sum_mul]
     refine Finset.sum_congr rfl fun s _ => ?_
     rw [map_mul]
     ring

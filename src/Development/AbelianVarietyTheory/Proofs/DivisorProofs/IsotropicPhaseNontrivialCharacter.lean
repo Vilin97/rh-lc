@@ -174,7 +174,8 @@ theorem hA_single {n : ℕ} (σ : E →ₐ[F] E) (J : Matrix (Fin n) (Fin n) E) 
     · subst hk; simp
     · simp [Pi.single_apply, hk]
   simp only [hA, h1, Matrix.mulVec_single]
-  simp [dotProduct, incV, incM, Matrix.vecMul, map_sum, Finset.sum_mul, mul_assoc, mul_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [dotProduct, incV, incM, Matrix.vecMul, map_sum, Finset.sum_mul, mul_assoc, mul_comm]
   exact Finset.sum_congr rfl fun _ _ => by ring
 
 end GlobalTheory.IsoPhaseNonzero

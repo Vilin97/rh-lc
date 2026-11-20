@@ -37,7 +37,8 @@ lemma massTelescope_symm (n : ℕ) : (massTelescope_form K n).IsSymm := by
   have key : ∀ x y : Fin n → K,
       starRingEnd K (massTelescope_form K n x y) = massTelescope_form K n y x := by
     intro x y
-    simp only [massTelescope_form_apply, map_sum, starRingEnd_apply, star_mul, star_star]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [massTelescope_form_apply, map_sum, starRingEnd_apply, star_mul, star_star]
   first
   | exact key
   | exact ⟨key⟩
@@ -99,7 +100,8 @@ lemma massTelescope_trace_nonneg (hCM : IsCMUnram K) (a : K) :
 
 lemma massTelescope_def (hCM : IsCMUnram K) (n : ℕ) (x : Fin n → K) (hx : x ≠ 0) :
     0 < Algebra.trace ℚ K (massTelescope_form K n x x) := by
-  rw [massTelescope_form_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [massTelescope_form_apply, map_sum]
   obtain ⟨i, hi⟩ : ∃ i, x i ≠ 0 := by
     by_contra hc
     push_neg at hc

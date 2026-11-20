@@ -27,7 +27,8 @@ theorem Close.comap_linear : ∀ {I I' : Type} [Fintype I] [Fintype I'] {g g' : 
     · simp only [RingHom.comp_apply]
       rw [h3 (ψ f)]
       congr 1
-      simp_rw [hψ, map_sum, Algebra.smul_def, map_mul, Finset.sum_mul, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp_rw [hψ, map_sum, Algebra.smul_def, map_mul, Finset.sum_mul, Finset.mul_sum]
       rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun b _ ↦ Finset.sum_congr rfl fun a _ ↦ ?_
       ring

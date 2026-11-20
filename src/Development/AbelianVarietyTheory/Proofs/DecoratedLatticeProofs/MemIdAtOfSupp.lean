@@ -318,7 +318,8 @@ theorem exists_topFrame {PP : Formalism.L2.DIV.Pl D.host.E} (h : IsIdemAt q.e PP
   have h4 : ∀ j, (1 - toEAf D q.e) * toEAf D (q.sec (y j)) = 0 := fun j => by
     rw [sub_mul, one_mul, ← map_mul, ← GlobalTheory.FrameGlob.sec_eq_mul, sub_self]
   rw [h2, ← map_inv]
-  simp only [mulVec, dotProduct, Finset.mul_sum, mul_left_comm (1 - toEAf D q.e), h4, mul_zero, Finset.sum_const_zero, zero_mem,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [mulVec, dotProduct, Finset.mul_sum, mul_left_comm (1 - toEAf D q.e), h4, mul_zero, Finset.sum_const_zero, zero_mem,
     true_and, map_sum, map_mul, h1, q.pr_sec]
   rfl
 
@@ -423,9 +424,11 @@ theorem sym_chr (ψ₀ : AddChar (O ⧸ I) ℂ) (hψ : ∀ z, (S.ψ (((S.ϖ⁻¹
   classical
   choose l hl using Ideal.Quotient.mk_surjective (I := I)
   have h3 : edgeSum (symEdge S.ρ κ) g' = Ideal.Quotient.mk I (∑ a, ∑ b, if Edge a b then l (g.val (e a) (e b)) else 0) := by
-    rw [edgeSum, ← (e.trans π.symm).sum_comp, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [edgeSum, ← (e.trans π.symm).sum_comp, map_sum]
     refine Finset.sum_congr rfl fun a _ => ?_
-    rw [← (e.trans π.symm).sum_comp, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← (e.trans π.symm).sum_comp, map_sum]
     refine Finset.sum_congr rfl fun b _ => ?_
     simp only [Equiv.trans_apply, (sym_order S.odd e he hπ a b).2, hg, Equiv.apply_symm_apply]
     split_ifs
@@ -439,10 +442,12 @@ theorem sym_chr (ψ₀ : AddChar (O ⧸ I) ℂ) (hψ : ∀ z, (S.ψ (((S.ϖ⁻¹
   refine congrArg (fun c : Circle => (c : ℂ)) ?_
   rw [← mul_inv_eq_one, ← AddChar.map_neg_eq_inv, ← AddChar.map_add_eq_mul, ← sub_eq_add_neg, ← mul_sub]
   refine (S.cond 1).2 (by simp) _ ?_
-  rw [map_mul, Units.val_inv_eq_inv_val, map_inv₀, map_one, inv_mul_le_one₀ (by simp [zero_lt_iff]), ← S.unif, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_mul, Units.val_inv_eq_inv_val, map_inv₀, map_one, inv_mul_le_one₀ (by simp [zero_lt_iff]), ← S.unif, map_sum,
     ← Finset.sum_sub_distrib]
   refine Valuation.map_sum_lt _ one_ne_zero fun a _ => ?_
-  rw [map_sum, ← Finset.sum_sub_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, ← Finset.sum_sub_distrib]
   refine Valuation.map_sum_lt _ one_ne_zero fun b _ => ?_
   split_ifs
   · exact hx a b _ (hl _)

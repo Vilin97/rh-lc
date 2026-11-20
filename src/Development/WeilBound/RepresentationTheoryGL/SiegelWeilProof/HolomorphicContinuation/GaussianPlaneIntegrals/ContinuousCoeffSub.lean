@@ -25,8 +25,10 @@ theorem eval_sub (g h : Matrix ι ι ℂ) (z : (ι × A) ⊕ (ι × B) → ℂ) 
     rw [map_mul, map_mul, map_mul, hp]
     congr 1
     rcases s with x | y
-    · simp [sub, actP, map_sum]
-    · simp [sub, actP, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp [sub, actP, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp [sub, actP, map_sum]
 
 theorem actP_actP (g h g' h' : Matrix ι ι ℂ) (z : (ι × A) ⊕ (ι × B) → ℂ) :
     actP g h (actP g' h' z) = actP (g * g') (h * h') z := by
@@ -159,9 +161,11 @@ theorem avg : Avg := by
     have e : ∀ k, eval z (F k) = ∑ m ∈ S, AddMonoidAlgebra.coeff (F k) m * (m.prod fun n e => z n ^ e) := by
       intro k
       conv_lhs => rw [hF k]
-      simp only [map_sum, eval_monomial]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, eval_monomial]
     rw [integral_congr_ae (Filter.Eventually.of_forall e), integral_finsetSum _ (fun m _ => (hint m).mul_const _)]
-    simp only [P, map_sum, eval_monomial, integral_mul_const]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [P, map_sum, eval_monomial, integral_mul_const]
   refine ⟨P, ?_, ?_, heval⟩
   · intro u hu
     obtain ⟨ku, hku⟩ := exists_toMK N u hu

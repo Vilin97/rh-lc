@@ -41,7 +41,8 @@ theorem BdAt.mul {Q : Pl D.host.E} {N N' : ℕ} {a b c : ℕ} {A : Matrix (Fin a
     refine Finset.sum_congr rfl fun k _ => ?_
     push_cast
     ring
-  rw [this, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [this, map_sum]
   refine Valuation.map_sum_le _ fun k _ => ?_
   rw [map_mul, Valuation.map_mul]
   exact mul_le_one' (hA i k) (hB k j)

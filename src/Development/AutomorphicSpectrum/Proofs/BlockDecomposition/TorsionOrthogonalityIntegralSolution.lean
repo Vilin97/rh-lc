@@ -95,7 +95,8 @@ theorem sO_mem_tor (σ : E →ₐ[F] E) (hinv : ∀ x, σ (σ x) = x)
       obtain ⟨p, hp⟩ := hcol i
       refine ⟨sO σ p, ?_⟩
       have e1 : algebraMap (𝓞 E) E (sO σ p) = σ (algebraMap (𝓞 E) E p) := hsO p
-      rw [e1, hp, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [e1, hp, map_sum]
       simp only [Matrix.mulVec, dotProduct]
       refine Finset.sum_congr rfl fun j _ => ?_
       have e2 : algebraMap (𝓞 E) E (sO σ (o j)) = σ (a' j) := by
@@ -106,7 +107,8 @@ theorem sO_mem_tor (σ : E →ₐ[F] E) (hinv : ∀ x, σ (σ x) = x)
     obtain ⟨q, hq⟩ := h2
     refine ⟨sO σ q, ?_⟩
     have e1 : algebraMap (𝓞 E) E (sO σ q) = σ (algebraMap (𝓞 E) E q) := hsO q
-    rw [e1, hq, map_mul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e1, hq, map_mul, map_sum]
     simp only [dotProduct, Finset.mul_sum, Pi.smul_apply]
     refine Finset.sum_congr rfl fun j _ => ?_
     have e3 : ((sO σ (o j) : 𝓞 E) : E) = σ (a' j) := by

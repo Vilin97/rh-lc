@@ -132,7 +132,8 @@ theorem map_orbInd_normal (y : Y) {K J : Subgroup H} (hK1 : IsOpen (K : Set H))
     have h2 := hv y
     rw [e, Set.indicator_of_mem (show y ∈ r y '' K from ⟨1, K.one_mem, h1 y⟩)] at h2
     exact zero_ne_one h2
-  · rw [e, map_sum, Finset.sum_congr rfl (g := fun _ => l (orbInd r hc ho y hJ1 hJ2)), Finset.sum_const,
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [e, map_sum, Finset.sum_congr rfl (g := fun _ => l (orbInd r hc ho y hJ1 hJ2)), Finset.sum_const,
       Nat.cast_smul_eq_nsmul]
     intro z hz
     have hz' : z ∈ r y '' K := Set.mem_of_indicator_ne_zero (hv z ▸ ht z hz)
@@ -197,7 +198,8 @@ theorem exists_generator [IsTopologicalGroup H] [SigmaCompactSpace H] [LocallyCo
   obtain ⟨K, b1, b2, b3⟩ := hb _ (Filter.inter_mem hker
     (GlobalTheory.schwartzBruhat_eventually_invariant_of_continuous_action H Y r h1 hm hcc Φ))
   obtain ⟨t, -, e⟩ := exists_sum_orbInd hc ho h1 hm b1 b2 Φ fun y x hx => (b3 hx).2 y
-  rw [e, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, map_sum]
   refine Submodule.sum_mem _ fun y _ => ?_
   rw [map_smul]
   refine Submodule.smul_mem _ _ ?_

@@ -71,7 +71,8 @@ theorem cont_of_frame : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocA
         algebraMap (Om l) P.R.BdR (algebraMap ℚ_[l] (Om l) ((P.χQ (g : GQ l) ^ k k' : ℚ_[l]ˣ) : ℚ_[l])) *
         P.actQdR (g : GQ l) ((W : Matrix n n P.R.BdR) k' j)
       rw [← IsScalarTower.algebraMap_apply]
-    rw [hsum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hsum, map_sum]
     refine Finset.sum_congr rfl fun k' _ => ?_
     rw [map_mul, map_mul]
     obtain ⟨h1, h2⟩ := hθom (algebraMap ℚ_[l] (Om l) ((P.χQ (g : GQ l) ^ k k' : ℚ_[l]ˣ) : ℚ_[l]))

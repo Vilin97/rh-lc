@@ -105,7 +105,8 @@ def freeGraded (d : Fin r → ℤ) : GradedPMod S N (ULift.{v} (Fin r → Poly S
       intro x _
       have hx : x = ∑ j, coordIncl.{u, v} j (x.down j) := by
         apply (ULift.moduleEquiv (R := S)).injective
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         exact (Finset.univ_sum_single x.down).symm
       rw [hx]
       refine Submodule.sum_mem _ fun j _ => ?_

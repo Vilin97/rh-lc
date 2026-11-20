@@ -87,7 +87,8 @@ theorem exists_basis_modN {M : Type*} [AddCommGroup M] [Module O M] [Module.Fini
       (fun i => b.repr (f a) i)
     choose y hy using fun i => hT i (Finset.mem_univ i)
     have h1 : f ((T : O) • a) = f (∑ i, y i • m i) := by
-      rw [map_smul, map_sum, ← b.sum_repr (f a), Finset.smul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_smul, map_sum, ← b.sum_repr (f a), Finset.smul_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_smul, ← hb i, ← smul_assoc, ← hy i, algebraMap_smul]
     obtain ⟨u, hu⟩ := (IsLocalizedModule.eq_iff_exists (primeToSub n) f).mp h1
@@ -107,7 +108,8 @@ theorem exists_basis_modN {M : Type*} [AddCommGroup M] [Module O M] [Module.Fini
     rintro c ⟨w, hw⟩ i
     have h1 : ∑ j, (algebraMap O Loc (c j) - algebraMap O Loc n * b.repr (f w) j) • b j = 0 := by
       simp only [sub_smul, Finset.sum_sub_distrib, mul_smul, ← Finset.smul_sum, b.sum_repr]
-      simp only [algebraMap_smul, hb, ← map_smul, ← map_sum, hw, sub_self]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [algebraMap_smul, hb, ← map_smul, ← map_sum, hw, sub_self]
     have h2 := (Fintype.linearIndependent_iff.mp b.linearIndependent) _ h1 i
     obtain ⟨⟨yy, t⟩, ht⟩ := IsLocalization.surj (primeToSub n) (b.repr (f w) i)
     have h3 : c i * t = n * yy := by

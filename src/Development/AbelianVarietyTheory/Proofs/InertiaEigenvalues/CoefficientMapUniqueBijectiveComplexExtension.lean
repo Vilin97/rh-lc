@@ -32,7 +32,8 @@ theorem exists_ext (c' : VV K lam →ₛₗ[σ] W) (hs : Submodule.span ℂ (Set
   have hsw : ⊤ ≤ Submodule.span ℂ (Set.range fun j => c' (bVV K lam j)) := by
     rw [← hs, Submodule.span_le]
     rintro _ ⟨v, rfl⟩
-    rw [← (bVV K lam).sum_repr v, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← (bVV K lam).sum_repr v, map_sum]
     refine Submodule.sum_mem _ fun j _ => ?_
     rw [map_smulₛₗ]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨j, rfl⟩)
@@ -42,7 +43,8 @@ theorem exists_ext (c' : VV K lam →ₛₗ[σ] W) (hs : Submodule.span ℂ (Set
     rw [← hb, Module.Basis.equiv_apply]
     exact Module.Basis.mk_apply hli hsw j
   refine ⟨(b.equiv w (Equiv.refl _)).toLinearMap, fun v => ?_, (b.equiv w (Equiv.refl _)).bijective, fun d hd => ?_⟩
-  · rw [← (bVV K lam).sum_repr v, up_sum, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [← (bVV K lam).sum_repr v, up_sum, map_sum, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_smul, map_smulₛₗ, LinearEquiv.coe_coe, hc]
   · refine b.ext fun j => ?_

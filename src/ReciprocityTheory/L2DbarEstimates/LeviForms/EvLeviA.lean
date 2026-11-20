@@ -52,14 +52,16 @@ theorem evl_levi_mul {M : Type*} [TopologicalSpace M] (n : ℕ) (z : M → V n) 
       ∑ j, ∑ k, conj (d n z k (fun y => (f y : ℂ)) x) * d n z j (fun y => (g y : ℂ)) x *
         ξ j * conj (ξ k) := by
     unfold dDot
-    rw [map_sum, Finset.sum_mul_sum, Finset.sum_comm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_mul_sum, Finset.sum_comm]
     refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun k _ => ?_
     simp only [map_mul]; ring
   have c2 : dDot n z (fun y => (f y : ℂ)) x ξ * conj (dDot n z (fun y => (g y : ℂ)) x ξ) =
       ∑ j, ∑ k, d n z j (fun y => (f y : ℂ)) x * conj (d n z k (fun y => (g y : ℂ)) x) *
         ξ j * conj (ξ k) := by
     unfold dDot
-    rw [map_sum, Finset.sum_mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_mul_sum]
     refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun k _ => ?_
     simp only [map_mul]; ring
   rw [c1, c2]
@@ -192,7 +194,8 @@ theorem evl_levi_expNeg {M : Type*} [TopologicalSpace M] (n : ℕ) (z : M → V 
       ∑ j, ∑ k, d n z j (fun y => (ph y : ℂ)) x * conj (d n z k (fun y => (ph y : ℂ)) x) *
         ξ j * conj (ξ k) := by
     unfold dDot
-    rw [map_sum, Finset.sum_mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_mul_sum]
     refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun k _ => ?_
     simp only [map_mul]; ring
   rw [c]

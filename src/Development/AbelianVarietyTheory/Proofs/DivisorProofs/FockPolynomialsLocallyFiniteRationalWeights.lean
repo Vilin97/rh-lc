@@ -11,7 +11,8 @@ theorem X_mul_pderiv_mem {σ : Type} (d : ℕ) (i j : σ) (P : MvPolynomial σ �
     X i * pderiv j P ∈ restrictTotalDegree σ ℂ d := by
   classical
   rw [mem_restrictTotalDegree] at hP
-  rw [P.as_sum, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [P.as_sum, map_sum, Finset.mul_sum]
   refine Submodule.sum_mem _ fun α hα => ?_
   have hd : (α.sum fun _ e => e) ≤ d := (le_totalDegree hα).trans hP
   rw [pderiv_monomial]

@@ -35,7 +35,8 @@ theorem est_at {m : ℕ} {γ : Fin m → LinearMap.BilinForm ℤ X} {N : ℕ} {�
   by_cases he : (N : ℝ) * ψ.evalZ u = ℓ u
   · obtain ⟨k, c, hk, hc⟩ := hstr u hu hp he
     have e3 : h (k • u) = ∑ i, (c i : ℤ) * h (γ i) := by
-      rw [hc, map_sum]; simp only [map_nsmul, nsmul_eq_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hc, map_sum]; simp only [map_nsmul, nsmul_eq_mul]
     have h2 : 0 ≤ ∑ i, (c i : ℤ) * h (γ i) := Finset.sum_nonneg fun i _ => mul_nonneg (Nat.cast_nonneg _) (hγ i)
     rw [← e3, map_nsmul, nsmul_eq_mul] at h2
     have h3 : 0 ≤ h u := by
@@ -134,7 +135,8 @@ theorem isCell_comp : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H 
       have e4 : (h β : ℝ) = 0 := by nlinarith
       exact_mod_cast e4
     have e3 : h (k • β) = ∑ i, (c i : ℤ) * h (γ i) := by
-      rw [hc, map_sum]; simp only [map_nsmul, nsmul_eq_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hc, map_sum]; simp only [map_nsmul, nsmul_eq_mul]
     have hsum : ∑ i, (c i : ℤ) * h (γ i) = 0 := by
       rw [← e3, map_nsmul, hh0, smul_zero]
     have hz : ∀ j, (c j : ℤ) * h (γ j) = 0 := fun j =>

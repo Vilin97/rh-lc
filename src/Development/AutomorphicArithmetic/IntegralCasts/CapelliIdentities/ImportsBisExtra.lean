@@ -9,7 +9,8 @@ theorem UpperTheory.Reformulated.B.DYlb5.main :
       f M = ∑ i, ∑ j, M i j * f (Matrix.single i j 1) := by
     intro M
     conv_lhs => rw [Matrix.matrix_eq_sum_single M]
-    simp only [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
     have : Matrix.single i j (M i j) = (M i j) • Matrix.single i j (1 : k) := by
       simp [Matrix.smul_single]

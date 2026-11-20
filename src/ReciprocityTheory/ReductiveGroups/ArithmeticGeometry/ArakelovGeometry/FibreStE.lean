@@ -160,9 +160,11 @@ theorem exists_gen (x : ι → Ω) (e : Fin (D + 1) → ι) (h : IsProjFrame x e
       show _ = H.eval₂ (deh y 0) (deh x (e 0) Θ)
       rw [eval₂_eq_sum_range, hθ, hsdef]
       simp [Algebra.smul_def]
-    rw [← hs, fnTrace_coe, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hs, fnTrace_coe, map_sum]
     simp only [LinearMap.map_smul, smul_eq_mul, trace_pow_eq_psumC hc]
-    rw [Gen.TrP, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Gen.TrP, map_sum]
     push_cast
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_mul, ← coe_dehK y (G.S j), hS j]

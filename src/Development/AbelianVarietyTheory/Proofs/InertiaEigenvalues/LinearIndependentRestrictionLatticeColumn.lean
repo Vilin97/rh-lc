@@ -45,7 +45,8 @@ theorem eq_zero_of_sum_kd_mul_U0_mem_fil : ∀ (l : ℕ) [Fact l.Prime] (P : Loc
           subst this; simp
       rw [h1]
       simp_rw [← map_mul]
-      rw [← map_sum, ← hexp i k, hc (i, k), sub_self]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← map_sum, ← hexp i k, hc (i, k), sub_self]
     have h0 := Matrix.eq_zero_of_vecMul_eq_zero hdet hv
     intro m
     have := congrFun h0 (m + 1)
@@ -70,7 +71,8 @@ theorem eq_zero_of_sum_kd_mul_U0_mem_fil : ∀ (l : ℕ) [Fact l.Prime] (P : Loc
         mul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true, Finset.mul_sum, mul_assoc]
     rw [Finset.sum_congr rfl fun a _ => step a, Finset.sum_comm]
     refine Finset.sum_congr rfl fun j _ => ?_
-    simp only [hd_def, Matrix.vecMul, dotProduct, map_sum, map_mul, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hd_def, Matrix.vecMul, dotProduct, map_sum, map_mul, Finset.sum_mul]
   have hzero : (fun j => d (j, x.1)) = 0 := hx _ hfix (hid ▸ hsum)
   have hd0 : d = 0 := by
     funext ⟨i, m⟩

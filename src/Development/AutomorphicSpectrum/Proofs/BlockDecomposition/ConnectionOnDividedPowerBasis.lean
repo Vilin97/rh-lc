@@ -12,7 +12,8 @@ lemma map_mem_of_repr (e : Module.Basis ℕ B M) (P : Submodule B M) (L : M →�
     (h : ∀ k, L (e.repr z k • e k) ∈ P) : L z ∈ P := by
   have hz := e.linearCombination_repr z
   rw [Finsupp.linearCombination_apply, Finsupp.sum] at hz
-  rw [← hz, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hz, map_sum]
   exact P.sum_mem fun k _ => h k
 
 def grade (e : Module.Basis ℕ B M) (I : ℕ → Ideal B) (r : ℕ) : Submodule B M where

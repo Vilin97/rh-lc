@@ -123,7 +123,8 @@ theorem char_eq_psi_symp : ∀ (F E : Type) [Field F] [NumberField F] [Field E] 
         (W.J.map t)ᵀ * (1 : GL (Fin d) (Fv F v)).1)) i j * Z i j := by
       rw [hS_def, GlobalTheory.WeilM.symp, evFin_trace, trace_split h t]
       change piW t _ + piW (t.comp σ) _ = _
-      simp only [GlobalTheory.WeilM.hTens, map_mul, map_neg, map_one, map_sum, hx', hJX, hJW, hu]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [GlobalTheory.WeilM.hTens, map_mul, map_neg, map_one, map_sum, hx', hJX, hJW, hu]
       have key : ∀ (f : Fin n → Fin d → Fin n → Fin d → Fv F v),
           ∑ a, ∑ b, ∑ i, ∑ j, f a b i j = ∑ i, ∑ j, ∑ b, ∑ a, f a b i j := by
         intro f

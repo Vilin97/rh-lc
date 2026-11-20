@@ -242,7 +242,8 @@ theorem exists_adapted {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) (hn : 
     have hx' : ∑ a, k a • e a ∈ dual h Λ := h2.ge hx
     have := (dualBasic_mem_dual h Λ _).1 hx' (star b • f a)
       (h3 (Submodule.subset_span (Or.inl (Or.inr ⟨a, b, hb, rfl⟩))))
-    simp only [map_sum, sm, star_star, hfe, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, sm, star_star, hfe, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ,
       if_true] at this
     rw [mul_comm]
     exact (FractionalIdeal.mem_one_iff _).2 (Submodule.mem_one.1 this)

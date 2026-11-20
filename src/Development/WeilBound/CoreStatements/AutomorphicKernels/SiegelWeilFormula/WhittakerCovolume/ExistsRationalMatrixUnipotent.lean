@@ -101,7 +101,8 @@ theorem rel_aniso (d : SD σ) (η : E) (hη : η ≠ 0) (y : Fin d.m → E)
     apply τ.injective
     simpa [z] using congrFun h i
   have key : τ (HeckeCharacterZeroLocus.SiegelWeilU.hE σ (Jd d η) y y) = τ η * (z ⬝ᵥ (d.A.J.map τ) *ᵥ star z) := by
-    simp only [HeckeCharacterZeroLocus.SiegelWeilU.hE, HeckeCharacterZeroLocus.SiegelWeilU.hform, Jd, Matrix.mulVec, dotProduct, map_sum, map_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [HeckeCharacterZeroLocus.SiegelWeilU.hE, HeckeCharacterZeroLocus.SiegelWeilU.hform, Jd, Matrix.mulVec, dotProduct, map_sum, map_mul,
       Matrix.transpose_apply, Matrix.smul_apply, smul_eq_mul, Matrix.map_apply, Finset.mul_sum, Pi.star_apply]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_

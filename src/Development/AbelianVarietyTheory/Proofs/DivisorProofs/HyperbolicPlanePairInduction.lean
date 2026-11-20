@@ -202,7 +202,8 @@ theorem exists_mixed : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [Numbe
       (fun k => (hperp _ k).2)
     have hyx : form σ X.J H.y H.x = 1 := by
       have hsym : form σ X.J H.y H.x = σ (form σ X.J H.x H.y) := by
-        simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, hV.herm, Finset.mul_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, hV.herm, Finset.mul_sum]
         rw [Finset.sum_comm]
         exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun k _ => by ring
       rw [hsym, hxy, map_one]
@@ -211,7 +212,8 @@ theorem exists_mixed : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [Numbe
     have key : ∀ (p : Fin (d₂ + 2) → E) (q : Fin d → AE F E),
         ∑ i, Matrix.vecMulVec (incV F p) q i l * inclR (F := F) (AF F) ((X.J *ᵥ fun i => σ (H.x i)) i) =
           inclR (F := F) (AF F) (form σ X.J p H.x) * q l := fun p q => by
-      rw [form, dotProduct, map_sum, Finset.sum_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [form, dotProduct, map_sum, Finset.sum_mul]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_mul, Matrix.vecMulVec_apply, incV]
       ring
@@ -242,7 +244,8 @@ theorem size_le {F E κ : Type} [Field F] [NumberField F] [Field E] [NumberField
     have h1 : w = b (a w) := (LinearMap.congr_fun hb w).symm
     have h2 : a w = ∑ k, a w k • (Pi.single k 1 : κ → F) := by
       funext l; simp [Finset.sum_apply, Pi.single_apply]
-    conv_lhs => rw [h1, h2, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [h1, h2, map_sum]
     simp only [map_smul, Finset.sum_apply, Pi.smul_apply]
     simp only [Algebra.smul_def]
   rw [hw, Finset.sum_mul]

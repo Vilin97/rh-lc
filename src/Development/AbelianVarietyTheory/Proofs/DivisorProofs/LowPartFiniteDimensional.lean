@@ -76,7 +76,8 @@ theorem finiteDimensional_span_dH (N : Submodule ℂ (SInf F κ)) [FiniteDimensi
       dH v.1 v.2 ⇑(bN j : SInf F κ) ∈ T := by
     intro v j
     have e : dH v.1 v.2 ⇑(bN j : SInf F κ) = dHdir (bN j : SInf F κ) v := rfl
-    rw [e, ← bV.sum_repr v, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, ← bV.sum_repr v, map_sum]
     refine Submodule.sum_mem _ fun k _ => ?_
     rw [map_smul]
     exact Submodule.smul_of_tower_mem _ _ (Submodule.subset_span ⟨(k, j), rfl⟩)
@@ -84,11 +85,13 @@ theorem finiteDimensional_span_dH (N : Submodule ℂ (SInf F κ)) [FiniteDimensi
     intro a b f hf
     have hf' : f = ∑ j, bN.repr ⟨f, hf⟩ j • (bN j : SInf F κ) := by
       have := congrArg N.subtype (bN.sum_repr ⟨f, hf⟩)
-      rw [map_sum] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum] at this
       simp only [map_smul, Submodule.subtype_apply] at this
       exact this.symm
     have e : dH a b ⇑f = dHfun a b f := rfl
-    rw [e, hf', map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, hf', map_sum]
     refine Submodule.sum_mem _ fun j _ => ?_
     rw [map_smul]
     exact Submodule.smul_mem _ _ (base (a, b) j)

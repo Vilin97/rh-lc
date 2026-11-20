@@ -23,7 +23,8 @@ theorem hasDerivAt_prodForm (L : ι → Module.End ℂ V) (e : ι → ℂ → V 
       (GlobalTheory.TensIrr.prodForm (V := fun _ : ι => V) (fun w => e w t) (sumPl (V := fun _ : ι => V) L T)) t := by
   induction T using PiTensorProduct.induction_on with
   | smul_tprod r f =>
-    simp only [map_smul, smul_eq_mul, GlobalTheory.TensIrr.prodForm_tprod, sumPl, LinearMap.sum_apply, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_smul, smul_eq_mul, GlobalTheory.TensIrr.prodForm_tprod, sumPl, LinearMap.sum_apply, map_sum,
       GlobalTheory.TensIrr.atPl_tprod]
     have := (HasDerivAt.fun_finsetProd (u := Finset.univ) (fun w _ => h w t (f w))).const_mul r
     refine this.congr_deriv ?_
@@ -68,7 +69,8 @@ def shift (P Q : ℕ) : Ix R S → ℂ := Sum.elim (fun _ => ((P : ℂ) - Q) / 2
 theorem evZ_Eab {Z : Matrix (Ix P Q) (Ix R S) ℂ} (hZ : OnPos Z) (a b : Ix R S) (hab : sameBlock a b) (f : Pol P Q R S) :
     evZ Z (fockAct2 P Q R S (Eab a b) f) =
       ∑ i, Z i a * evZ Z (pderiv (i, b) f) + (if a = b then shift P Q a else 0) * evZ Z f := by
-  rw [fockAct2_Eab, LinearMap.sum_apply, map_sum, Fintype.sum_sum_type, Fintype.sum_sum_type]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [fockAct2_Eab, LinearMap.sum_apply, map_sum, Fintype.sum_sum_type, Fintype.sum_sum_type]
   rcases a with c | c <;> rcases b with d | d
   · simp only [GlobalTheory.CompactHarm.omE_pp (Sum.inl _, Sum.inl _) (Sum.inl _, Sum.inl _) rfl rfl,
       GlobalTheory.CompactHarm.omE_nn (Sum.inr _, Sum.inl _) (Sum.inr _, Sum.inl _) rfl rfl, evZ_apply, map_add, map_sub, map_neg,
@@ -108,7 +110,8 @@ theorem evZ_fock {Z : Matrix (Ix P Q) (Ix R S) ℂ} (hZ : OnPos Z) {Y : Mat R S}
     · have hab : a ≠ b := by rintro rfl; exact hs (GlobalTheory.KFixIrr.LowMinor.sameBlock_self a)
       simp [hY a b hs, hab]
   conv_lhs => rw [hYs]
-  simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, term, Finset.sum_add_distrib,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, term, Finset.sum_add_distrib,
     Finset.sum_ite_eq, Finset.mem_univ, if_true, Matrix.mul_apply, Finset.sum_mul, Fintype.sum_prod_type]
   congr 1
   rw [Finset.sum_comm, Finset.sum_comm (s := (Finset.univ : Finset (Ix P Q)))]

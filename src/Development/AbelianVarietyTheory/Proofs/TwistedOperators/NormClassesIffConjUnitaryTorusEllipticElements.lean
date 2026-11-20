@@ -105,7 +105,8 @@ theorem hform_mulVec_of_unitary {A : Type} [CommRing A] (s : A →+* A) (G M : M
     Formalism.UG.hform s G (M *ᵥ a) (M *ᵥ b) = Formalism.UG.hform s G a b := by
   have e : (fun i => s ((M *ᵥ a) i)) = Matrix.vecMul (fun i => s (a i)) (Formalism.UG.cT s M) := by
     ext i
-    simp [Formalism.UG.cT, Matrix.vecMul, Matrix.mulVec, dotProduct, map_sum, mul_comm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Formalism.UG.cT, Matrix.vecMul, Matrix.mulVec, dotProduct, map_sum, mul_comm]
   rw [hform_eq_vecMul, hform_eq_vecMul, e, Matrix.dotProduct_mulVec, Matrix.vecMul_vecMul, Matrix.vecMul_vecMul, ← Matrix.mul_assoc, h]
 
 theorem matrix_ext_mulVec {A : Type} [CommRing A] {M N : Matrix (Fin n) (Fin n) A} (h : ∀ v, M *ᵥ v = N *ᵥ v) :

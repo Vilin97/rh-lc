@@ -259,7 +259,8 @@ theorem zero_of_ball (n : ℕ) (T : SchwartzMap (Fin n → ℝ) ℂ →L[ℂ] �
       refine Finset.sum_congr rfl fun i _ => ?_
       show _ = cexp (2 * π * I * x i) * g i x - g i x
       ring
-    rw [e, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, map_sum]
     refine Finset.sum_eq_zero fun i _ => ?_
     rw [map_sub, hχ i (g i) _ (fun x => rfl), sub_self]
 

@@ -264,7 +264,8 @@ theorem indep_conj {M A I : Type} [AddCommGroup M] [Module ℂ M] [AddCommGroup 
     LinearIndependent ℂ fun k => C (Φ (b k)) := by
   refine linearIndependent_iff'.2 fun s g hg k hk => ?_
   have h1 : C (Φ (∑ i ∈ s, τ.symm (g i) • b i)) = 0 := by
-    rw [map_sum, map_sum, ← hg]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum, ← hg]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, LinearMap.map_smulₛₗ]
     exact congrArg (· • _) (τ.apply_symm_apply _)
@@ -302,7 +303,8 @@ theorem expansion_eq (H : AtPlace Y Z c w j) {u : ∀ τ, lowT (X.R.MW j (sg0 D 
   have k1 := GlobalTheory.T.liftForm_at_evaluationVector_eq_realisationLift D X X0 Y S YS Z c w j H x hx
   have k0 : (fun τ => (u τ : ↥((X.R.MW j (sg0 D X.A3.A)).sm τ))) = X.geo.v₀ j (sg0 D X.A3.A) := funext hu
   have k3 : evW YS X.geo.v₀ j (∑ k, a k • (f k).val) = ∑ k, D.what₂.embLL (a k) • evW YS X.geo.v₀ j (f k).val := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun k _ => evW_smul YS X.geo.v₀ j _ _
   have k4 : evW YS X.geo.v₀ j (∑ k, a k • (f k).val) = _ :=
     (congrArg (fun y => (X.R.HW j (sg0 D X.A3.A)).e y (X.geo.v₀ j (sg0 D X.A3.A))) hf).trans (k1.trans (k0 ▸ hth))
@@ -412,7 +414,8 @@ theorem indep_of_read {K W A I : Type} [Field K] [AddCommGroup W] [Module K W] [
     (r : W →ₛₗ[ε] A) {b : I → W} (h : LinearIndependent ℂ fun k => r (b k)) : LinearIndependent K b := by
   refine linearIndependent_iff'.2 fun s g hg k hk => ?_
   have h1 : ∑ i ∈ s, ε (g i) • r (b i) = 0 := by
-    rw [← map_zero r, ← hg, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_zero r, ← hg, map_sum]
     exact Finset.sum_congr rfl fun i _ => (r.map_smulₛₗ _ _).symm
   simpa using linearIndependent_iff'.1 h s _ h1 k hk
 
@@ -474,7 +477,8 @@ theorem place_of_at (hCo : GlobalTheory.Published.DiscreteSeriesCover) (hCW : Gl
     have h1 := hth x hx n a f hf
     rw [hε.twVia_eq] at h1
     refine (rdF_thPe _ hε H.ok hrat _).trans ((congrArg _ (he x)).trans (h1.trans (congrArg (z₁ • ·) ?_)))
-    rw [map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [rdF_tmul, smul_comm]
     refine congrArg (ε (c.embW w (a k)) • ·) ?_

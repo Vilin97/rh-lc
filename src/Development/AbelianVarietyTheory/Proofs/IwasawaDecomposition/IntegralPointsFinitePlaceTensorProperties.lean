@@ -70,7 +70,8 @@ theorem _root_.GlobalTheory.GaugeEx.IntBasis.sum_mem' {ι : Type} (s : Finset ι
     ∑ i ∈ s, f i ∈ _root_.GlobalTheory.GaugeEx.intV b v := by
   rw [mem_intV_iff_basis_repr_mem_integers]
   intro k
-  rw [map_sum, Finsupp.finset_sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finsupp.finset_sum_apply]
   exact sum_mem fun i hi => (mem_intV_iff_basis_repr_mem_integers b v (f i)).1 (hf i hi) k
 
 theorem compact_open : IsCompact (intV b v) ∧ IsOpen (intV b v) := by
@@ -183,7 +184,8 @@ theorem _root_.GlobalTheory.GaugeEx.IntBasis.main : ∀ (F E : Type) [Field F] [
         (mul_mem ((mem_intV_iff_basis_repr_mem_integers b v y).1 hy k)
           ((mem_intV_iff_basis_repr_mem_integers b v z).1 hz l)) (hv2 (k, l))
     · intro y hy
-      rw [eq_sum_basis_repr_tmul_basis b v y, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [eq_sum_basis_repr_tmul_basis b v y, map_sum]
       refine _root_.GlobalTheory.GaugeEx.IntBasis.sum_mem' b v _ _ fun k _ => ?_
       simp only [_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR, AlgHom.toRingHom_eq_coe, RingHom.coe_coe,
         Algebra.TensorProduct.map_tmul, AlgHom.id_apply]

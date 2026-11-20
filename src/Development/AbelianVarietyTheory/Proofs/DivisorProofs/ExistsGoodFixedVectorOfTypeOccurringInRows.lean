@@ -275,10 +275,12 @@ theorem exists_vec_of_occRows : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {P
       rw [hL, hR]
       exact Finset.sum_congr rfl fun g _ => by rw [hact g]
     have h1 := hv (∑ g, MonoidAlgebra.single (κ g) (RealDat.eC (A := A) D.what₂.embLL g) - 1) (by
-      rw [map_sub, map_sum, map_one, LinearMap.sub_apply, Module.End.one_apply, LinearMap.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, map_sum, map_one, LinearMap.sub_apply, Module.End.one_apply, LinearMap.sum_apply]
       simp only [asAlgebraHom_single, LinearMap.smul_apply]
       rw [hU2, sub_self])
-    rw [map_sub, map_sum, map_one, LinearMap.sub_apply, Module.End.one_apply, LinearMap.sum_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_sum, map_one, LinearMap.sub_apply, Module.End.one_apply, LinearMap.sum_apply,
       sub_eq_zero] at h1
     simp only [asAlgebraHom_single, LinearMap.smul_apply] at h1
     have h2 := congrArg Subtype.val h1

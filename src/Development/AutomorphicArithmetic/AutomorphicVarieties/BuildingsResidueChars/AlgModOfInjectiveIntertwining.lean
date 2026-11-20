@@ -5,7 +5,8 @@ attribute [local instance 100] LieRing.ofAssociativeRing
 
 private theorem UpperTheory.quantum_determinant_map {A B : Type} [Ring A] [Algebra ℂ A] [Ring B] [Algebra ℂ B] (f : A →ₐ[ℂ] B) {n : ℕ}
     (X : Fin n → Fin n → A) (u : ℂ) : f (Formalism.REAL.qdet X u) = Formalism.REAL.qdet (fun i j => f (X i j)) u := by
-  simp only [Formalism.REAL.qdet, Formalism.REAL.qminor, Formalism.REAL.Tm, map_sum, map_mul, map_intCast, map_list_prod, List.map_ofFn,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Formalism.REAL.qdet, Formalism.REAL.qminor, Formalism.REAL.Tm, map_sum, map_mul, map_intCast, map_list_prod, List.map_ofFn,
     Function.comp_def, map_add, apply_ite f, AlgHom.commutes, map_zero]
 
 theorem UpperTheory.algMod_of_injective_intertwining :

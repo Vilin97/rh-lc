@@ -17,7 +17,8 @@ theorem det_smul_eq_sum_det_update (b : Basis ι R F) (v : ι → F) (x : F) :
   have h := Matrix.mulVec_cramer (b.toMatrix v) (b.equivFun x)
   rw [map_smul, Basis.det_apply, ← h]
   ext j
-  simp only [map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, Basis.equivFun_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, Basis.equivFun_apply,
     smul_eq_mul, Matrix.mulVec, dotProduct, Matrix.cramer_apply, Basis.det_apply,
     Basis.toMatrix_update, Basis.toMatrix_apply, mul_comm]
 

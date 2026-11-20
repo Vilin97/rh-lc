@@ -33,7 +33,8 @@ theorem dec {TA TB : E} (A : FlagG S r TA) (B : FlagG S r TB) (hdet : (Zhat A B)
   set yB := ∑ b, κ (Sum.inr b) • B.fvec b with hyB
   have hA : ∀ c, S.hT (A.fvec c) yA = if c = Fin.last r then -TA * κ (Sum.inl (Fin.last r)) else 0 := by
     intro c
-    rw [hyA, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hyA, map_sum]
     simp only [map_smul, smul_eq_mul, hT_fvec_self]
     rw [Finset.sum_eq_single (Fin.last r)]
     · split_ifs with h1 h2 h2 <;> simp_all [mul_comm]

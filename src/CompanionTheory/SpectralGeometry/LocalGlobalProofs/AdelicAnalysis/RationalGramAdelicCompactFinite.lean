@@ -72,7 +72,8 @@ theorem fixed_mem (σ : E →ₐ[F] E) (h : IsCMExt F E σ) (e : E) (he : σ e =
 theorem hE_self_fixed (σ : E →ₐ[F] E) (h : IsCMExt F E σ) {M : ℕ}
     (J : Matrix (Fin M) (Fin M) E) (hJ : IsHermND σ J) (x : Fin M → E) :
     σ (hE σ J x x) = hE σ J x x := by
-  simp only [hE, hform, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hE, hform, map_sum, map_mul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   have h1 : σ ((σ : E →+* E) (x j)) = x j := sigma_sigma σ h (x j)
@@ -102,7 +103,8 @@ theorem gram_rational_finite : ∀ (F E : Type) [Field F] [NumberField F] [Field
     ext a b
     have hs : ∀ e : E, sigR (AF F) σ (inclR (AF F) e) = inclR (AF F) (σ e) := fun e => by
       simp [sigR, inclR]
-    simp only [gramR, hR, hform, ratTup, JR, Matrix.map_apply, gramE, hE, map_sum, map_mul, hs]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [gramR, hR, hform, ratTup, JR, Matrix.map_apply, gramE, hE, map_sum, map_mul, hs]
     rfl
   · intro Ω hΩ
     obtain ⟨⟨hlc, hsc, ht2⟩, -⟩ := GlobalTheory.CompanionTheory.AdeleTop.adele_top F

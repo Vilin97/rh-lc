@@ -152,7 +152,8 @@ theorem mem_skew_iff {𝔪 : Ideal (𝓞 D.host.E)} (h𝔪 : 𝔪 ≠ ⊥) {y : 
       rw [e']; exact y1 b' hb'
     have e : sgA D (y : AE D) * ((y⁻¹ : (AE D)ˣ) : AE D) * inc D x =
         ∑ i, sgA D (w i) * (((y⁻¹ : (AE D)ˣ) : AE D) * inc D (x * D.host.conj (b i : D.host.E))) := by
-      rw [hy, map_sum, Finset.sum_mul, Finset.sum_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hy, map_sum, Finset.sum_mul, Finset.sum_mul]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_mul, GlobalTheory.NormSum.PtsMem.sgA_inc, map_mul]; ring
     rw [e]

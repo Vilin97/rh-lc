@@ -200,7 +200,8 @@ theorem keeps_latHat {S : HSp D} {Λ : Submodule (𝓞 D.host.E) (Fin S.rank →
       ((Formalism.L2.Theta.mt S g).map (finPart D)).mulVec y ∈ latHat D.host.F D.host.E (Λ : Set (Fin S.rank → D.host.E)) := by
   rw [GlobalTheory.LevSplit.latHat_iff, GlobalTheory.LevSplit.latHat_iff, GlobalTheory.IndefiniteRowSideFullHecke.SplitSumStabLattice.mulVec_mem_hatL_iff hβ hg]
   refine iff_of_eq (congrArg (· ∈ Formalism.L2.Herm.hatL (F := D.host.F) Λ) (funext fun i => ?_))
-  simp only [Matrix.mulVec, dotProduct, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mulVec, dotProduct, map_sum, map_mul]
   rfl
 
 theorem prod_detIdl {e : Formalism.L2.Theta.AE D} {P : Finset (Pl D.host.E)} (he : IsIdemSum e P)

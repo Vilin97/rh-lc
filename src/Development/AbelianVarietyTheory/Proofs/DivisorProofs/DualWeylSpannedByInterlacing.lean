@@ -26,7 +26,8 @@ theorem rowAct_initMinor_mem {r m s : ℕ} (g : Matrix (Fin r) (Fin r) K) (I : F
     congr 1
     ext p q : 2
     simp [rowAct, Finset.sum_apply]
-  rw [h1, MultilinearMap.map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h1, MultilinearMap.map_sum]
   refine Submodule.sum_mem _ fun J _ => ?_
   rw [MultilinearMap.map_smul_univ, ← map_prod, smul_eq_mul, ← smul_eq_C_mul]
   exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨J, rfl⟩)

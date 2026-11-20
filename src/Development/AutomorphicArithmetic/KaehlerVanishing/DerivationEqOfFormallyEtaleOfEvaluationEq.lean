@@ -112,7 +112,8 @@ theorem UpperTheory.derivation_eq_of_formallyEtale_of_evaluation_eq :
       simp [Pi.single_apply]
     simp only [hr, hσ]
     conv_lhs => rw [hsum]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun l _ => ?_
     rw [map_smul, smul_eq_mul, mul_comm]
   have Fδ := F1 δ τ uδ hτ

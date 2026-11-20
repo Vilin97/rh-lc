@@ -51,7 +51,8 @@ theorem hTens_vmv (σ : E →ₐ[F] E) {α β : Type} [Fintype α] [Fintype β] 
     hTens (cA σ) (incM F JA) (incM F JB) (incM F (Matrix.vecMulVec p q)) (incM F (Matrix.vecMulVec r s)) =
       inclR (F := F) (AF F) ((p ⬝ᵥ JA *ᵥ fun k => σ (r k)) * (q ⬝ᵥ JB *ᵥ fun l => σ (s l))) := by
   rw [← sum_vmv σ]
-  simp only [hTens, incM, Matrix.map_apply, GlobalTheory.MixXEvUniq.cA_inclR, ← map_mul, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hTens, incM, Matrix.map_apply, GlobalTheory.MixXEvUniq.cA_inclR, ← map_mul, ← map_sum]
 
 theorem symp_vmv (σ : E →ₐ[F] E) {α β : Type} [Fintype α] [Fintype β] (JA : Matrix α α E) (JB : Matrix β β E)
     (p r : α → E) (q s : β → E) :

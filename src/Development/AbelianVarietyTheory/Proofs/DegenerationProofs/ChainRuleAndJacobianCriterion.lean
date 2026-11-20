@@ -112,7 +112,8 @@ private theorem det_derivation_eq_mul_det_repr {R B I : Type} [CommRing R] [Comm
       rw [Derivation.liftKaehlerDifferential_comp_D]; rfl
     rw [h1]
     conv_lhs => rw [← b.sum_repr (D R B (t' j))]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_smul, hb, ← h1, Algebra.smul_def, mul_comm]
     rfl

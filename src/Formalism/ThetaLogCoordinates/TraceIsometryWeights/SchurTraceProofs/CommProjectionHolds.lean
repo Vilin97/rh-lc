@@ -24,7 +24,8 @@ theorem coeff_glAct_diag (LL : Letters N) (j : ℕ) (c : Fin r) (x : MvPolynomia
     AddMonoidAlgebra.coeff (glAct p LL j c c x) m = ((wt LL j c m : ℤ) : ℚ_[p]) * AddMonoidAlgebra.coeff x m := by
   classical
   conv_lhs => rw [x.as_sum]
-  rw [map_sum, coeff_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, coeff_sum]
   simp only [glAct_diag_monomial, coeff_smul, coeff_monomial, smul_eq_mul]
   rw [Finset.sum_eq_single m]
   · rw [if_pos rfl]

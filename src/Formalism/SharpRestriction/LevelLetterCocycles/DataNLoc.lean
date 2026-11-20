@@ -1002,9 +1002,11 @@ theorem isUnit_inclW_ξ : IsUnit (inclW l AI.ξ) := by
   rw [inclW, WittVector.map_coeff]
   have h0 : AI.ξ.coeff 0 = ∑ i ∈ Finset.range l, AI.ε1 ^ i := by
     have := congrArg (fun x => WittVector.constantCoeff x) (show AI.ξ = AI.ξ from rfl)
-    simp only [ξ, map_sum, map_pow] at this ⊢
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [ξ, map_sum, map_pow] at this ⊢
     change WittVector.constantCoeff (∑ i ∈ Finset.range l, (WittVector.teichmuller l AI.ε1) ^ i) = _
-    simp [map_sum, map_pow, WittVector.teichmuller_coeff_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, map_pow, WittVector.teichmuller_coeff_zero]
   rw [h0]
   intro hz
   have hz' : ∑ i ∈ Finset.range l, AI.ε1 ^ i = 0 :=

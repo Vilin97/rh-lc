@@ -43,7 +43,8 @@ theorem applyD_map {σ τ K L : Type} [Field K] [Field L] (φ : K →+* L) (P : 
     (f : MvPowerSeries σ K) :
     applyD P (MvPowerSeries.map φ f) = MvPolynomial.map φ (applyD P f) := by
   unfold applyD
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun n _ => ?_
   rw [MvPolynomial.smul_eq_C_mul, MvPolynomial.smul_eq_C_mul, map_mul (MvPolynomial.map φ), MvPolynomial.map_C,
     MvPolynomial.map_map, RingHom.ext_int (φ.comp (Int.castRingHom K)) (Int.castRingHom L)]
@@ -111,7 +112,8 @@ theorem cofactor_lower_bound_of_place_bound_witt : ∀ (p : ℕ) [Fact p.Prime] 
   have hAo : ((d + 1 : ℕ) : ℕ∞) ≤ A.order := by
     apply MvPowerSeries.nat_le_order
     intro k hk
-    rw [hA, map_sub, hspan k (Nat.le_of_lt_succ hk), map_sum, sub_eq_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hA, map_sub, hspan k (Nat.le_of_lt_succ hk), map_sum, sub_eq_zero]
     refine Finset.sum_congr rfl fun n _ => ?_
     rw [MvPowerSeries.coeff_smul, MvPowerSeries.coeff_map]
   have hz : applyD P (X.ThZA Y.Kc j (MvPowerSeries.map φ E * A)) = 0 := by
@@ -129,7 +131,8 @@ theorem cofactor_lower_bound_of_place_bound_witt : ∀ (p : ℕ) [Fact p.Prime] 
     rfl
   have hval : AddMonoidAlgebra.coeff (applyD P (X.ThZA Y.Kc j (MvPowerSeries.map φ E * U))) m =
       (p : Y.Kc) ^ ⌈g⌉ * ∑ n ∈ S, c n * φ (algebraMap (WW p) (K0 p) (a n)) := by
-    rw [hU', hTh, map_add, ← hTh, hz, zero_add, map_sum, MvPolynomial.coeff_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hU', hTh, map_add, ← hTh, hz, zero_add, map_sum, MvPolynomial.coeff_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun n _ => ?_
     rw [map_smul, ← hTh, hφ, ThZA_map, applyD_map, MvPolynomial.coeff_smul, MvPolynomial.coeff_map, ha n, map_mul,
       map_zpow₀, map_natCast, smul_eq_mul]

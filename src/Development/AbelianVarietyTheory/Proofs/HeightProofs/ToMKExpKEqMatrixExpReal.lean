@@ -102,7 +102,8 @@ theorem exists_ext_of_mem {ε : Fin n → Bool} {d : ℕ} {φ : KG ε → ℂ} (
 
 theorem mxDer_sum_smul {ι : Type*} (s : Finset ι) (c : ι → ℝ) (b : ι → Mx n) (F : Mx n → ℂ) (M : Mx n) :
     mxDer (∑ j ∈ s, c j • b j) F M = ∑ j ∈ s, c j • mxDer (b j) F M := by
-  simp only [mxDer, Matrix.mul_sum, Matrix.mul_smul, map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [mxDer, Matrix.mul_sum, Matrix.mul_smul, map_sum, map_smul]
 
 theorem mxDer_sum (X : Mx n) {ι : Type*} (s : Finset ι) (c : ι → ℝ) (G : ι → Mx n → ℂ)
     (hG : ∀ i ∈ s, ContDiff ℝ ⊤ (G i)) :
@@ -228,7 +229,8 @@ theorem eq_sum_re_im (X : Mx n) :
 theorem abs_linear_le (ψ : Mx n →ₗ[ℝ] ℝ) {X : Mx n} (h : hs X ≤ 1) :
     |ψ X| ≤ ∑ a : Fin n, ∑ b : Fin n, (|ψ (Matrix.single a b (1 : ℂ))| + |ψ (Matrix.single a b Complex.I)|) := by
   conv_lhs => rw [eq_sum_re_im X]
-  simp only [map_sum, map_add, map_smul, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_add, map_smul, smul_eq_mul]
   refine (Finset.abs_sum_le_sum_abs _ _).trans (Finset.sum_le_sum fun a _ => ?_)
   refine (Finset.abs_sum_le_sum_abs _ _).trans (Finset.sum_le_sum fun b _ => ?_)
   have h1 := norm_entry_le_of_hs h a b

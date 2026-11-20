@@ -32,7 +32,8 @@ theorem spanForms_le_of_isComb (A : Subring K) {M : Set K} {H H' : Set Ω[K⁄�
   have e : ExteriorAlgebra.ιMulti K a v = ∑ r : ∀ i, ι i,
       (∏ i, co i (r i)) • ExteriorAlgebra.ιMulti K a (fun i => w i (r i)) := by
     conv_lhs => rw [show v = fun i => ∑ k, co i k • w i k from funext hv']
-    rw [← AlternatingMap.coe_multilinearMap, MultilinearMap.map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← AlternatingMap.coe_multilinearMap, MultilinearMap.map_sum]
     refine Finset.sum_congr rfl fun r _ => ?_
     rw [MultilinearMap.map_smul_univ]
   rw [e, Finset.smul_sum]

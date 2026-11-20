@@ -29,7 +29,8 @@ theorem rename_fockGL_eq_C_mul_colAct : ∀ (D : D7) (H : Geo.Tor.Host D.host.E)
     induction i using Fin.addCases with
     | left i =>
       have hi : ((Fin.castAdd Dw.q i : Fin (Dw.p + Dw.q)) : ℕ) < w.p ρ := by simp [hp]
-      simp only [AlgHom.comp_apply, GlobalTheory.ExportSeries.fockSubst, MvPolynomial.aeval_X, if_pos hi, map_sum, map_mul,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [AlgHom.comp_apply, GlobalTheory.ExportSeries.fockSubst, MvPolynomial.aeval_X, if_pos hi, map_sum, map_mul,
         MvPolynomial.rename_C, MvPolynomial.rename_X, ]
       simp only [fockVarEquiv, Equiv.prodCongr_apply, Prod.map, finCongr_refl, Equiv.refl_trans, Equiv.refl_apply,
         finSumFinEquiv_symm_apply_castAdd]
@@ -37,7 +38,8 @@ theorem rename_fockGL_eq_C_mul_colAct : ∀ (D : D7) (H : Geo.Tor.Host D.host.E)
       simp [GlobalTheory.Harm.xForm_apply]
     | right j =>
       have hj : ¬ ((Fin.natAdd Dw.p j : Fin (Dw.p + Dw.q)) : ℕ) < w.p ρ := by simp [hp]
-      simp only [AlgHom.comp_apply, GlobalTheory.ExportSeries.fockSubst, MvPolynomial.aeval_X, if_neg hj, map_sum, map_mul,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [AlgHom.comp_apply, GlobalTheory.ExportSeries.fockSubst, MvPolynomial.aeval_X, if_neg hj, map_sum, map_mul,
         MvPolynomial.rename_C, MvPolynomial.rename_X, ]
       simp only [fockVarEquiv, Equiv.prodCongr_apply, Prod.map, finCongr_refl, Equiv.refl_trans, Equiv.refl_apply,
         finSumFinEquiv_symm_apply_natAdd]

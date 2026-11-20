@@ -92,7 +92,8 @@ private theorem ev_sub_lin_mem {m n : ℕ} {a : Fin m → Pt R n d} (ha : ∀ j,
   have h := ev_mem_pow ha (K := germIdeal (Fin n × Fin d) R) (fun j i => ha j i) (sub_lin_mem hf)
   unfold ev at h ⊢
   rw [← substAlgHom_apply (gt_hasSubst a ha)] at h ⊢
-  simpa only [map_sub, map_sum, map_smul, substAlgHom_X] using h
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa only [map_sub, map_sum, map_smul, substAlgHom_X] using h
 
 private theorem coeff_law (F : FGLaw R d) (i : Fin d) (l : Fin 2) (j : Fin d) :
     coeff (Finsupp.single (l, j) 1) (F.F i) = if j = i then 1 else 0 := by

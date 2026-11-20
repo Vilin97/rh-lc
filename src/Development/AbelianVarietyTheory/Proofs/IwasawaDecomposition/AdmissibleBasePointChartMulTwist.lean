@@ -58,7 +58,8 @@ theorem admissibleBasePoint_chart_mul_twist : ∀ {B : Base} {X : PreX B.toPre} 
       · exact TilX.adAt_eq_zero_of_prV P.1 _ (by simpa [Matrix.one_apply_ne h] using e)
     have key : adAt B.host.F P.1 (((k0 (g β) * t β)⁻¹ : GA B (B.R.N i)).1 r j) =
         adAt B.host.F P.1 (((k0 (g β))⁻¹ : GA B (B.R.N i)).1 r j) := by
-      rw [_root_.mul_inv_rev, Units.val_mul, Matrix.mul_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [_root_.mul_inv_rev, Units.val_mul, Matrix.mul_apply, map_sum]
       simp only [map_mul, hent, ite_mul, one_mul, zero_mul, Finset.sum_ite_eq, Finset.mem_univ, if_true]
     rw [key]
     exact hR.k_T (g β) P r j hr

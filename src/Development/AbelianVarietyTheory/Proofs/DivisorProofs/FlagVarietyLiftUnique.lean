@@ -69,7 +69,8 @@ theorem low_le_low (b : Module.Basis (Fin N) A M) {g h : GL (Fin N) A}
 theorem inv_mulVec_map (ψ : A →+* B) (g : GL (Fin N) A) (a : Fin N → A) (i : Fin N) :
     (((GeneralLinearGroup.map ψ g)⁻¹).1 *ᵥ fun k => ψ (a k)) i = ψ (((g⁻¹).1 *ᵥ a) i) := by
   rw [← map_inv]
-  simp only [mulVec, dotProduct, GeneralLinearGroup.map_apply, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [mulVec, dotProduct, GeneralLinearGroup.map_apply, map_sum, map_mul]
 
 end Lin
 
@@ -173,10 +174,12 @@ theorem comp_congr_app {Y B : Scheme.{0}} {b : T ⟶ Y} {π : Y ⟶ B} {g : T �
         ∑ i, b.app V (c i) • pullbackSections b _ (le_refl (b ⁻¹ᵁ V)) (e' i) := fun e' => by
     letI := QCoh.appLEModule b ((Scheme.Modules.pullback b).obj ((Scheme.Modules.pullback π).obj E))
       (le_refl (b ⁻¹ᵁ V))
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [QCoh.pullbackSections_smul, Scheme.Hom.appLE_eq_app]
-  rw [e₁, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e₁, map_sum]
   exact Finset.sum_congr rfl fun i _ => Scheme.Modules.Hom.app_smul _ _ _
 
 theorem pullIncl_app {g : T ⟶ Sp ℤ} {g' : T ⟶ Fl ι N} (w : g' ≫ flStr ι N = g) (a : ι) (l : Fin (N + 1))
@@ -187,7 +190,8 @@ theorem pullIncl_app {g : T ⟶ Sp ℤ} {g' : T ⟶ Fl ι N} (w : g' ≫ flStr �
   refine (comp_congr_app w _ (incl ι N a l) (VB.freeFrame (Sp ℤ) (Fin N)) V s c ?_).trans
     (Finset.sum_congr rfl fun i _ => congrArg _ (QCoh.res_pullbackSections g _ _ _ _).symm)
   refine (congrArg ((freeIso ι N).inv.app V) hs).trans ?_
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [Scheme.Modules.Hom.app_smul, freeIso_inv_app]
   exact congrArg _ (QCoh.res_pullbackSections _ _ _ _ _)
@@ -196,7 +200,8 @@ theorem germ_sum {X : Scheme.{0}} {E : X.Modules} {e : Fin N → Γ(E, ⊤)} (he
     (hx : x ∈ V) (c : Fin N → Γ(X, V)) :
     E.presheaf.germ V x hx (∑ i, c i • resM E le_top (e i)) =
       ∑ i, X.presheaf.germ V x hx (c i) • he.stalkBasis x trivial i := by
-  simp only [map_sum, QCoh.germ_smul, Twist.germ_resM]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, QCoh.germ_smul, Twist.germ_resM]
   exact Finset.sum_congr rfl fun i _ => congrArg _ (he.stalkBasis_apply x trivial i).symm
 
 theorem germ_pullIncl_mem {g : T ⟶ Sp ℤ} {g' : T ⟶ Fl ι N} (w : g' ≫ flStr ι N = g) (a : ι) (l : Fin (N + 1))

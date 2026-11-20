@@ -23,7 +23,8 @@ theorem psi_trivial_on_scaledInt : ∀ (F : Type) [Field F] [NumberField F] (ψ 
     set q : F := ∑ i, ξ i * b i with hq
     have e1 : (∑ i, algebraMap F (FiniteAdeleRing (𝓞 F) F) (ξ i) * algebraMap F (FiniteAdeleRing (𝓞 F) F) (b i)) =
         algebraMap F (FiniteAdeleRing (𝓞 F) F) q := by
-      rw [hq, map_sum]; simp only [map_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hq, map_sum]; simp only [map_mul]
     rw [e1]
     set y : AF F := (((algebraMap F (InfiniteAdeleRing F) q), (0 : FiniteAdeleRing (𝓞 F) F)) : AF F) with hy
     have e2 : (show AF F from ((0 : InfiniteAdeleRing F), algebraMap F (FiniteAdeleRing (𝓞 F) F) q)) + y =

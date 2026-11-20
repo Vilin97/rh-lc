@@ -335,7 +335,8 @@ theorem _root_.GlobalTheory.HolTheta.exists_theta_holomorphic : ∀ (La : Type) 
       F b *ᵥ (fun i => (bs.repr x (Sum.inl i) : ℂ)) := by
     intro b x
     conv_lhs => rw [← bs.sum_repr x]
-    rw [map_sum, Fintype.sum_sum_type, add_comm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Fintype.sum_sum_type, add_comm]
     ext i
     simp [Matrix.mulVec, dotProduct, A, F, Finset.sum_apply, mul_comm]
   have hlat_pt : ∀ b ∈ B, ∀ x, (A b)⁻¹ *ᵥ P b x = (fun i => (bs.repr x (Sum.inr i) : ℂ)) +

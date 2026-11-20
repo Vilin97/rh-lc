@@ -17,7 +17,8 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 
 theorem form_eq (hσ : ∀ x, σ (σ x) = x) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (z : Fin n → E) :
     form σ J z z = σ (hE σ (J.map σ) z z) := by
-  simp only [form, hE, Formalism.UG.hform, dotProduct, Matrix.mulVec, Matrix.map_apply, map_sum, map_mul, AlgHom.coe_toRingHom,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, hE, Formalism.UG.hform, dotProduct, Matrix.mulVec, Matrix.map_apply, map_sum, map_mul, AlgHom.coe_toRingHom,
     RingHom.coe_coe, hσ, Finset.mul_sum]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   ring

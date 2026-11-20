@@ -118,7 +118,8 @@ theorem genSt_of_ringSt : RingSt → GenSt := by
     rw [hsq]
     exact GlobalTheory.HTPres.isTanBasis_map t (he z) _
   · apply hinj (U z)
-    simp only [map_sum, map_mul, hη', hM'', hM z i k]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, hη', hM'', hM z i k]
     split_ifs <;> simp
   · change CutsHT t p (hA.fromSpec ≫ f.f ≫ ρ) _ _
     rw [hsq]

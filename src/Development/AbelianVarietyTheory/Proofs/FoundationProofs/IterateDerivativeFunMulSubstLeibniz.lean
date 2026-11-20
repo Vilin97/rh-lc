@@ -11,7 +11,8 @@ theorem iterate_derivation_mul_antidiagonal {R S : Type} [CommRing R] [CommRing 
   induction n with
   | zero => simp
   | succ n ih =>
-    rw [Finset.sum_antidiagonal_choose_succ_nsmul (fun i j => (⇑D)^[i] a * (⇑D)^[j] b) n,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_antidiagonal_choose_succ_nsmul (fun i j => (⇑D)^[i] a * (⇑D)^[j] b) n,
       Function.iterate_succ_apply', ih, map_sum, ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun ij hij => ?_
     rw [Finset.HasAntidiagonal.mem_antidiagonal] at hij
@@ -40,7 +41,8 @@ theorem iterate_derivativeFun_mul_subst :
       rw [Function.iterate_succ_apply, Function.iterate_succ_apply, ih]
       rfl
   simp only [hit]
-  rw [iterate_derivation_mul_antidiagonal,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [iterate_derivation_mul_antidiagonal,
     Finset.Nat.sum_antidiagonal_eq_sum_range_succ
       (fun i j => l.choose i • ((⇑(PowerSeries.derivative k))^[i] φ *
         (⇑(PowerSeries.derivative k))^[j] ψ)) l,

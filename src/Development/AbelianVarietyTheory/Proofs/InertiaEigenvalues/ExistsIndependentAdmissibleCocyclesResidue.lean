@@ -113,11 +113,13 @@ theorem linearIndependent_of_indepMod (hs : Function.Surjective (algebraMap O k)
   choose x hx using fun a => hs (c a)
   rw [← hx, hk]
   refine hz x ?_ a
-  simp only [← map_smul, ← map_sum] at hc
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← map_smul, ← map_sum] at hc
   obtain ⟨b, hb⟩ := (Submodule.Quotient.mk_eq_zero _).1 hc
   have h1 : ∑ a, x a • (Submodule.Quotient.mk (z a) : H1 π ⊤) = Submodule.Quotient.mk (∑ a, x a • z a) := by
     change ∑ a, x a • Submodule.mkQ _ (z a) = Submodule.mkQ _ _
-    simp only [map_smul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_smul, map_sum]
   rw [h1, Submodule.Quotient.mk_eq_zero]
   refine ⟨φ.symm b, Submodule.mem_top, ?_⟩
   funext g

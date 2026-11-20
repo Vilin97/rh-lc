@@ -122,7 +122,8 @@ def eigenSubalgebra (z : Fin n → ℂˣ) (f : GL (Fin n) F → ℂ)
 
 omit [MeasurableSpace (GL (Fin n) F)] [BorelSpace (GL (Fin n) F)] in
 theorem polyEmb_esymm (k : ℕ) : polyEmb n (MvPolynomial.esymm (Fin n) ℂ k) = esymmL n k := by
-  rw [MvPolynomial.esymm, map_sum, esymmL]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [MvPolynomial.esymm, map_sum, esymmL]
   refine Finset.sum_congr rfl fun t _ => ?_
   rw [map_prod]
   simp only [polyEmb_X, monomial]

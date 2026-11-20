@@ -55,7 +55,8 @@ theorem exists_dual_coeff {E : Type} [Field E] [NumberField E] {N : ℕ}
       funext m
       simp [e, Finset.sum_apply, Pi.single_apply]
     have h2 := congrFun (s.map_smul a (e i)) j
-    rw [h1, map_sum] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h1, map_sum] at h2
     simpa [Finset.sum_apply] using h2
 
 theorem exists_projection_eq : ∀ (E : Type) [Field E] [NumberField E] [IsGalois ℚ E] (F : Type) [Field F] [CharZero F] (R : Subring F)
@@ -74,7 +75,8 @@ theorem exists_projection_eq : ∀ (E : Type) [Field E] [NumberField E] [IsGaloi
         ∑ i', ((ρ a i' i : ℤ) : F) * y i * τ (g (l j i' : E)) := by
       intro i
       have h := congrArg (fun x : 𝓞 E => τ (g (algebraMap (𝓞 E) E x))) (hl2 a j i)
-      simp only [map_sum, map_mul, map_intCast] at h
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_mul, map_intCast] at h
       rw [mul_left_comm]
       erw [← h]
       rw [Finset.mul_sum]

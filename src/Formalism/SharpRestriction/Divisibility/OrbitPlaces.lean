@@ -1480,7 +1480,8 @@ theorem kgeTw_of (E : KerEnt D Dx T) (hU : E.UnUnit) (hR : KmapRat E) {u : D.wha
     have heq' : KM.applyAt0 (D.R.N i) (D.R.N (i + 1)) (D.what₂.places.resChar w) (E.Th u μ w i c c')
         (KM.Gxz (D.R.N i) (D.R.N (i + 1)) (nuD D u i) I) = cf.sum fun J a =>
           a • MvPolynomial.map (Int.castRingHom ℂ_[D.what₂.places.resChar w]) (KM.nablaX (D.R.N i) (nuD D u i) J) := heq
-    rw [heq', Finsupp.sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [heq', Finsupp.sum, map_sum]
     refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg (Real.rpow_nonneg hP0.le _) fun J _ => ?_
     rw [map_smul, smul_eq_mul, norm_mul]
     calc ‖cf J‖ * _ ≤ ((D.what₂.places.resChar w : ℕ) : ℝ) ^ (-B) * 1 :=
@@ -1549,7 +1550,8 @@ theorem kgeTw_of (E : KerEnt D Dx T) (hU : E.UnUnit) (hR : KmapRat E) {u : D.wha
     funext c'
     show ∑ c, (D.chTw u μ).wt i c • (D.chTw u μ).Kmap i c c' ((T.fm u μ).emb i x c) =
       D.what₂.embLL b • E.ev u μ (i + 1) c' (∑ c, (r c * a⁻¹) • v' c c')
-    rw [map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl fun c _ => ?_
     rw [← hvev c, ← hv' c c', hwt c, LinearMap.map_smulₛₗ, smul_smul, ← map_mul]
     congr 2
@@ -1564,7 +1566,8 @@ theorem kgeTw_of (E : KerEnt D Dx T) (hU : E.UnUnit) (hR : KmapRat E) {u : D.wha
   have hV' : ∀ c' I, ‖E.prT u μ w i c' (V' c') I‖ ≤ 1 := by
     intro c' I
     show ‖E.prT u μ w i c' (∑ c, (r c * a⁻¹) • v' c c') I‖ ≤ 1
-    rw [map_sum, Finset.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_apply]
     refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg zero_le_one fun c _ => ?_
     rw [LinearMap.map_smulₛₗ, Pi.smul_apply, smul_eq_mul, map_mul, norm_mul, norm_mul, mul_assoc]
     calc ‖E.iL w (r c)‖ * (‖E.iL w a⁻¹‖ * ‖E.prT u μ w i c' (v' c c') I‖) ≤ 1 * 1 :=

@@ -41,7 +41,8 @@ theorem mvPowerSeries_three_eq_zero_of_subst_lines :
     rw [h1]
     simp only [hprod, PowerSeries.coeff_C_mul_X_pow, smul_eq_mul]
     rw [finsum_eq_sum_of_support_subset _ (s := S) ?_]
-    · simp only [P, map_sum, MvPolynomial.eval_monomial]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp only [P, map_sum, MvPolynomial.eval_monomial]
       refine Finset.sum_congr rfl (fun e he => ?_)
       rw [if_pos ((hS e).1 he).symm, Finsupp.prod_fintype _ _ (fun s => pow_zero _)]
     · intro e he

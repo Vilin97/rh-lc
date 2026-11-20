@@ -60,7 +60,8 @@ lemma blk_IntSpan_of {D : D7} {u : D.what₂.Word}
 variable {D : D7} {T : TwForms D} {u : D.what₂.Word} {μ : D.what₂.Tup}
 
 lemma emb_memT (i : ℕ) (x : ((T.fm u μ).lat i).V) : (T.fm u μ).emb i x ∈ (T.fm u μ).Fi i := by
-  rw [← ((T.fm u μ).emb_basis i).2, ← ((T.fm u μ).lat i).b.sum_repr x, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← ((T.fm u μ).emb_basis i).2, ← ((T.fm u μ).lat i).b.sum_repr x, map_sum]
   exact Submodule.sum_mem _ (fun a _ => by
     rw [LinearMap.map_smulₛₗ]; exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨a, rfl⟩))
 

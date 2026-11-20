@@ -243,7 +243,8 @@ theorem rotation_centre_condition : GTRRCentre := by
   have hd := hasDerivAt_genW hU hF he hxU hxG (fun _ => 1)
   refine hd.congr_deriv ?_
   symm
-  rw [Finset.sum_congr rfl (fun a _ => eh_pp hU hF he hxU hxG a), ← Finset.smul_sum, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.sum_congr rfl (fun a _ => eh_pp hU hF he hxU hxG a), ← Finset.smul_sum, ← map_sum]
   have hs : ∑ a : Fin (Q.mdim k r (Fin.last r)), ((0 : Fin r → ℂ),
       x.2 * genW k r (fun j' : Fin (k + 1) => if j'.val = a.val then (-1 : ℝ) else 0)) =
       -((0 : Fin r → ℂ), x.2 * genW k r (fun _ => 1)) := by

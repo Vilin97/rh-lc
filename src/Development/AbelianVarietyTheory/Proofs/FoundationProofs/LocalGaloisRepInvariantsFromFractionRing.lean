@@ -57,7 +57,8 @@ theorem localGaloisRep_invariants_from_fractionRing [IsDomain O] {m : ℕ} (r : 
     funext a
     apply φ.injective
     rw [hx₀, ← congrFun h1 a]
-    simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Matrix.map_apply, hφ, hx₀]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Matrix.map_apply, hφ, hx₀]
   rw [Submodule.mem_bot]
   funext a
   rw [← hx₀, h0]

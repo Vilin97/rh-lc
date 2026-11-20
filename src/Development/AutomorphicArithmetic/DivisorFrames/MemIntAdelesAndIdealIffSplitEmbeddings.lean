@@ -144,7 +144,8 @@ theorem UpperTheory.mem_intAdeles_and_ideal_iff_splitEmbeddings :
   intro D ε Pw hε ι _ pl τ hP _ c z hz
   obtain ⟨⟨es, hes, rfl⟩, -⟩ := hε
   have h0 : ∀ Q, Q ∉ Pw → cpt (D := D) Q z = 0 := fun Q hQ => by
-    rw [← hz, RingHom.map_mul, map_sum, map_sum, Finset.sum_eq_zero, zero_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hz, RingHom.map_mul, map_sum, map_sum, Finset.sum_eq_zero, zero_mul]
     intro P hP
     exact (cpt_of_isIdemAt (hes P hP)).2 Q fun e => hQ (e ▸ hP)
   constructor

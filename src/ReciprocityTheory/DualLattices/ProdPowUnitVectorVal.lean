@@ -74,7 +74,8 @@ theorem linX_xp (hv : v.Integers R) (hp1 : v (algebraMap R C (p : R)) < 1) (D : 
     have h2 := congrFun (MuR_mulVec_bR hv hp1 D j) y
     simp only [Matrix.mulVec, dotProduct, hvec] at h2
     have h3 := congrArg (algebraMap R C) h2
-    rw [map_sum, map_pow, uR_spec] at h3
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_pow, uR_spec] at h3
     simp only [map_mul] at h3
     rw [xL, mul_pow, ← h3, Finset.mul_sum]
     refine Finset.sum_congr rfl fun α _ => ?_
@@ -94,7 +95,8 @@ def psi (a : O) (y : Nb p g) : Nb p g := ((H.ρ a).map PadicInt.toZMod) *ᵥ y
 theorem red_mulVec (M : Matrix (Ix g) (Ix g) ℤ_[p]) (t : TT p g) :
     red p g (M *ᵥ t) = (M.map PadicInt.toZMod) *ᵥ red p g t := by
   funext i
-  simp [red, Matrix.mulVec, dotProduct, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [red, Matrix.mulVec, dotProduct, map_sum, map_mul]
 
 theorem red_surj (y : Nb p g) : ∃ t : TT p g, red p g t = y := by
   exact ⟨fun i => ((y i).val : ℤ_[p]), funext fun i => by simp [red]⟩

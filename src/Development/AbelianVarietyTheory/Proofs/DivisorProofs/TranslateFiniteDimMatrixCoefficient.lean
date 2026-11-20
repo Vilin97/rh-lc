@@ -86,11 +86,13 @@ theorem exists_matrix_rep_of_finiteDimensional_translates :
     have e1 : Fn t = ev (R t ⟨Fn, hFV⟩) := by rw [hev, hR, one_mul]
     rw [e1, Finset.sum_comm]
     conv_lhs => rw [← b.sum_repr ⟨Fn, hFV⟩]
-    rw [map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_smul, map_smul]
     conv_lhs => rw [← b.sum_repr (R t (b j))]
-    rw [map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, hρ, hev, smul_eq_mul, smul_eq_mul]
     ring

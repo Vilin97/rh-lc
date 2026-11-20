@@ -35,7 +35,8 @@ theorem exists_coords {n : ℕ} (S : Submodule ℝ (Matrix (Fin n) (Fin n) ℂ))
       map_add' := fun Z Z' => by simpa using congrFun (hL 1 Z Z.2 Z' Z'.2) x
       map_smul' := fun a Z => by simpa [h0] using congrFun (hL a Z Z.2 0 S.zero_mem) x }
   have h1 : L Y x = l ⟨Y, hY⟩ := rfl
-  rw [h1, ← b.sum_repr ⟨Y, hY⟩, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h1, ← b.sum_repr ⟨Y, hY⟩, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   have h2 : c j Y = b.repr ⟨Y, hY⟩ j := LinearMap.congr_fun (hc j) ⟨Y, hY⟩
   rw [map_smul, LinearMap.coe_toContinuousLinearMap', h2, Complex.real_smul]

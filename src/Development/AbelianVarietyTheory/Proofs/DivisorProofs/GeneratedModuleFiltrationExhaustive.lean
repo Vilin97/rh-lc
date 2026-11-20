@@ -43,7 +43,8 @@ lemma act_base (act : Mat R S →ₗ[ℂ] Module.End ℂ V) (N : Submodule ℂ V
     conv_lhs => rw [Matrix.matrix_eq_sum_single Z]
     simp [Eab, Matrix.smul_single]
   rw [hZ]
-  simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply]
   refine Submodule.sum_mem _ fun a _ => Submodule.sum_mem _ fun b _ => Submodule.smul_mem _ _ ?_
   by_cases h : sameBlock a b
   · exact le_wordSpan act N (hN _ (GlobalTheory.TensorHW.isKC_Eab h) _ hn)

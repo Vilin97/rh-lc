@@ -92,6 +92,7 @@ theorem exists_eigen_local : ∀ (L : Type) [Field L] [NumberField L] [IsCMField
   have hj : ∀ j : F.support, (j.1.1 : σ.V →ₗ[ℂ] (GAf L n → a.W))
       (σ.ρ (Matrix.GeneralLinearGroup.map c.toRingHom (s.loc n x)) (y j.1)) =
       NG.rt L n x ((j.1.1 : σ.V →ₗ[ℂ] (GAf L n → a.W)) (y j.1)) := fun j => j.1.2.2 x hx (y j.1)
-  rw [Finset.sum_congr rfl fun j _ => hj j, ← map_sum, hsum, hfx]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.sum_congr rfl fun j _ => hj j, ← map_sum, hsum, hfx]
 
 end GlobalTheory.EigLocal

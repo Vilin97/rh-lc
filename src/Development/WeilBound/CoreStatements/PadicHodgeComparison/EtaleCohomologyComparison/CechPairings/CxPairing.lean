@@ -29,7 +29,8 @@ theorem Cos.d_apply (K : Cos.{w} R) (n : ℕ) (x : K.X n) : K.d n x = ∑ i : Fi
 
 theorem Cos.dd (K : Cos.{w} R) (n : ℕ) (x : K.X n) : K.d (n + 1) (K.d n x) = 0 := by
   rw [Cos.d_apply, Cos.d_apply]
-  simp only [map_sum, map_zsmul, Finset.smul_sum, smul_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_zsmul, Finset.smul_sum, smul_smul]
   rw [← Fintype.sum_prod_type']
   refine Finset.sum_involution (fun p _ => (p.1.succAbove p.2, p.2.predAbove p.1)) ?_ ?_ ?_ ?_
   · rintro ⟨j, i⟩ _
@@ -235,7 +236,8 @@ abbrev CosCx.dcx (S : CosCx.{w} R) : DCx.{w} R where
   hh p q := (S.cos q).dd p
   vv p q := (S.K p).dd q
   hv p q x := by
-    rw [Cos.d_apply, Cos.d_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Cos.d_apply, Cos.d_apply, map_sum]
     exact Finset.sum_congr rfl fun i _ => by rw [map_zsmul]; exact congrArg _ ((S.δ p i).comm q x).symm
 
 structure CxPairing (K : Cx.{w} R) (L : Cx.{w'} R) (M : Cx.{w''} R) where

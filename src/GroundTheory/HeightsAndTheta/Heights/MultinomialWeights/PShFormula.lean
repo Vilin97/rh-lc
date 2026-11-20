@@ -13,7 +13,8 @@ theorem pderiv_blockPowerSum_apply (d : IndexData) (k : ℕ) (σ τ : Fin d.f) (
     pderiv (τ, i) (RestTerms.blockPowerSum d.f d.N k σ : XPoly d) =
       if σ = τ then (k : XPoly d) * X (τ, i) ^ (k - 1) else 0 := by
   classical
-  rw [RestTerms.blockPowerSum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [RestTerms.blockPowerSum, map_sum]
   split_ifs with h
   · subst h
     rw [Finset.sum_eq_single i]
@@ -55,14 +56,17 @@ theorem ShFormula.proof : ShFormula.Statement := by
             ∑ i ∈ univ.filter (fun i : Fin d.N => i.val < d.j), pderiv (τ, i) (Q k σ) +
           (k : XPoly d) * lowerPowerSum d (k - 1) τ * Q k τ) := by
     rw [hQ]
-    simp_rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp_rw [map_sum]
     rw [Finset.sum_comm]
     exact Finset.sum_congr rfl (fun k _ => hinner k)
   unfold shiftFl
-  rw [hexp, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hexp, map_sum]
   refine Finset.sum_congr rfl (fun k hk => ?_)
   rw [Finset.mem_Icc] at hk
-  rw [map_add, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_add, map_sum,
     Finset.sum_eq_zero (fun σ _ => intFl_blockPowerSum_mul d k σ _ hk.1 hk.2), zero_add, mul_assoc,
     intFl_natCast_mul]
 

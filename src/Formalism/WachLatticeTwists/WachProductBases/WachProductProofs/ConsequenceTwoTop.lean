@@ -95,7 +95,8 @@ theorem consequence_two_triangular : TriangularConsequence := by
     rw [← hr, smul_sum]
     refine sum_congr rfl fun k _ => ?_
     rw [smul_comm, hwv]
-  rw [hxsum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hxsum, map_sum]
   refine Submodule.sum_mem _ fun k _ => ?_
   obtain ⟨r', h'⟩ := main k y Sx (hS k) (r k)
   rw [h']

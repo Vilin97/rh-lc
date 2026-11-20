@@ -30,7 +30,8 @@ theorem UpperTheory.V.Lit.Bor.tformAdj :
     have hL : tform H G x ((Matrix.toLin' Q).lTensor W y)
         = ∑ a, ∑ b, (G * Q) a b * H (cmp a x) (cmp b y) := by
       rw [tform_apply]
-      simp only [cmp_lTensor_toLin, map_sum, map_smul, smul_eq_mul, Matrix.mul_apply,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [cmp_lTensor_toLin, map_sum, map_smul, smul_eq_mul, Matrix.mul_apply,
         Finset.mul_sum, Finset.sum_mul]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [Finset.sum_comm]
@@ -38,7 +39,8 @@ theorem UpperTheory.V.Lit.Bor.tformAdj :
     have hR : tform H G ((Matrix.toLin' P).lTensor W x) y
         = ∑ a, ∑ b, (Pᴴ * G) a b * H (cmp a x) (cmp b y) := by
       rw [tform_apply]
-      simp only [cmp_lTensor_toLin, map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [cmp_lTensor_toLin, map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply,
         LinearMap.smul_apply, smul_eq_mul, Matrix.mul_apply, Matrix.conjTranspose_apply,
         starRingEnd_apply, Finset.mul_sum, Finset.sum_mul]
       conv_lhs => rw [Finset.sum_comm]

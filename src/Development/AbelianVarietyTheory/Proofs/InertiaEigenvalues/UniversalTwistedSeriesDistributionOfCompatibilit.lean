@@ -40,7 +40,8 @@ theorem specU_grpSum (Y : NExp D.R D.host D.what₂ D.LL0 N X) (i : X.Tw) {j : �
     Formalism.MainNotions.IntegralHeckeForms.specU Y i j b Q M k χ (grpSum Y ch Q M x) =
       ∑ c, ((χ (Multiplicative.ofAdd (spread Y i Q M ch c)) : (X.Ok i k)ˣ) : X.Ok i k) ⊗ₜ[X.O i] x c := by
   unfold grpSum
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun c _ => ?_
   simp [Formalism.MainNotions.IntegralHeckeForms.specU, AddMonoidAlgebra.lift_single]
 
@@ -233,7 +234,8 @@ theorem thURel_of_tie {ρ : Setup X} (hρ : ρ.Good) {Y : NExp D.R D.host D.what
   obtain ⟨x2, hx2, hT2⟩ := (T i J b).thU_of_rat (hR i hi J b) M hIR' (Finset.disjoint_of_subset_left hQ'Q hlev)
   change Formalism.MainNotions.IntegralHeckeForms.specU Y i ((J : ℕ) + 1) b Q M k χ (Y.thU i ((J : ℕ) + 1) b Q M a) = GlobalTheory.TwSys.PqF Y i ((J : ℕ) + 1) b k P _
     (Formalism.MainNotions.IntegralHeckeForms.specU Y i ((J : ℕ) + 1) b ((Q.erase P).erase Pb) M k χ' (Y.thU i ((J : ℕ) + 1) b ((Q.erase P).erase Pb) M a))
-  rw [hT1, hT2, specU_grpSum, specU_grpSum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hT1, hT2, specU_grpSum, specU_grpSum, map_sum]
   apply (T i J b).injective_rdK k
   funext g
 
@@ -299,7 +301,8 @@ theorem thURel_of_tie {ρ : Setup X} (hρ : ρ.Good) {Y : NExp D.R D.host D.what
 
   have eL : (rdK (rd i J b) hρ k (∑ c, ((χ (Multiplicative.ofAdd (spread Y i Q M (ρ.ch i) c)) : (X.Ok i k)ˣ) : X.Ok i k) ⊗ₜ[X.O i]
       x1 c)) g = ∑ c, E c * Ξ c g := by
-    simp only [map_sum, rdK_tmul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, hx1]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, rdK_tmul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, hx1]
     rfl
   have eR : (rdK (rd i J b) hρ k (∑ c, GlobalTheory.TwSys.PqF Y i ((J : ℕ) + 1) b k P
       ((Formalism.MainNotions.BlochKatoReduction.Gen.psiAt true χ' (Y.delU i ((Q.erase P).erase Pb) M σ) : (X.Ok i k)ˣ) : X.Ok i k)
@@ -308,7 +311,8 @@ theorem thURel_of_tie {ρ : Setup X} (hρ : ρ.Good) {Y : NExp D.R D.host D.what
       ∑ c, (E' c * Ξ' c g + ∑ n ∈ Finset.Icc 1 D.R.r, ((-1) ^ n * q ^ (n * (n - 1) / 2) * yv ^ n) *
         (E' c * (((((ρ.B i J b).mu x : Circle) : ℂ) ^ n)⁻¹ * (q ^ (n * ((Links.Vc D J).rank / 2)))⁻¹ *
           ∑ γ ∈ R n, Ξ' c (g * γ)))) := by
-    simp only [map_sum, PqF_tmul, map_add, map_smulₛₗ, rdK_tmul, Finset.sum_apply, Pi.add_apply, Pi.smul_apply, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, PqF_tmul, map_add, map_smulₛₗ, rdK_tmul, Finset.sum_apply, Pi.add_apply, Pi.smul_apply, smul_eq_mul]
     refine Finset.sum_congr rfl fun c _ => ?_
     rw [hx2]
     congr 1

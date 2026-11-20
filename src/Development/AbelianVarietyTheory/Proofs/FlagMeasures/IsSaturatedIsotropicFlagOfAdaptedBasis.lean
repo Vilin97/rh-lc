@@ -29,7 +29,8 @@ theorem isSatFlag_of_isAdapted (I I₀ : AutInst) (e : I₀.E ≃+* I.E) (xf : I
     simp only [p, mulVecLin_apply, mulVec_mulVec]
     rw [hsw, (h1 k i).2.2 hk]; simp
   have pS : ∀ i (u : ∀ i, Fin (j i) → I.E), p i (∑ k, T k *ᵥ u k) = u i := fun i u => by
-    rw [map_sum, Finset.sum_eq_single i (fun k _ hk => pT' i k _ hk) (by simp), pT]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_eq_single i (fun k _ hk => pT' i k _ hk) (by simp), pT]
   have hsp : ∀ k z, z ∈ Submodule.span I.E (S k : Set (Fin I.n → I.E)) →
       z = ∑ i, T i *ᵥ p i z ∧ ∀ i : Fin a, ¬ i.castSucc < k → p i z = 0 := fun k z hz => by
     induction hz using Submodule.span_induction with
@@ -116,7 +117,8 @@ theorem isSatFlag_of_isAdapted (I I₀ : AutInst) (e : I₀.E ≃+* I.E) (xf : I
       have a2 : ∀ x, p i (T₀ *ᵥ x) = 0 := fun x => by
         simp only [p, mulVecLin_apply, mulVec_mulVec]
         rw [(h2 i).2.2]; simp
-      rw [hz, map_add, map_add, pS, a2, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hz, map_add, map_add, pS, a2, map_sum]
       simp [a1]
     obtain ⟨b1, b2⟩ := hsp k y hy'
     exact (hS k y).2 ⟨fun i => p i y, fun i => by simpa only [hp] using hu i, b2, b1⟩

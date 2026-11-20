@@ -29,7 +29,8 @@ private lemma constFn_mul_moduli {K : Type} [Field K] {Y : Scheme.{0}} (q : Y �
 private lemma constFn_sum {K : Type} [Field K] {Y : Scheme.{0}} (q : Y ⟶ Sp K) (O : Y.Opens) {n : ℕ}
     (f : Fin n → K) : constFn q O (∑ k, f k) = ∑ k, constFn q O (f k) := by
   unfold constFn
-  simp only [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum]
 
 private lemma sum_sub_sum_mul_eq_sub_sub_sum {R : Type*} [CommRing R] {n : ℕ} (A B u v : Fin n → R) (M N : Fin n → Fin n → R) :
     ∑ a, (∑ b, A b * M b a - ∑ b, B b * N a b) * v a =

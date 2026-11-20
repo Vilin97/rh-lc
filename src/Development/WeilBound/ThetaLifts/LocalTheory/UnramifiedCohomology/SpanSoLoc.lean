@@ -152,7 +152,8 @@ theorem loc_form {V : Type} [AddCommGroup V] [Module (AF F) V] {Bf : V → V →
     (v : Pl F) (x u : V) :
     (locCo co v x).1 ⬝ᵥ (locCo co v u).2 - (locCo co v u).1 ⬝ᵥ (locCo co v x).2 = evFin F v (Bf x u) := by
   rw [co.form]
-  simp [GlobalTheory.LatVac.locCo, dotProduct, map_sum, map_mul, map_sub]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [GlobalTheory.LatVac.locCo, dotProduct, map_sum, map_mul, map_sub]
 
 theorem rv_add (B : Base F E) (M : Model σ X W) (v : Pl F) {x : Fin d → E} (hx : form σ W.J x x = 0) (p q : Fin n → AE F E)
     (φ : Fl F v n d) : rv B M v (Matrix.vecMulVec (p + q) (incV F x)) φ =
@@ -162,7 +163,8 @@ theorem rv_add (B : Base F E) (M : Model σ X W) (v : Pl F) {x : Fin d → E} (h
       have := congrArg (inclR (F := F) (AF F)) hx
       rw [map_zero] at this
       rw [← this]
-      simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, Finset.mul_sum, mul_assoc]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, Finset.mul_sum, mul_assoc]
       rfl
     calc _ = ∑ i, ∑ k, p i * incM F X.J i k * cA σ (q k) * ∑ j, ∑ l, incV F x j * incM F W.J j l * cA σ (incV F x l) := by
           simp only [hTens, Matrix.vecMulVec_apply, map_mul, Finset.mul_sum]

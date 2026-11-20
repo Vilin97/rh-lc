@@ -86,7 +86,8 @@ theorem mem_N_of_div {r : ℕ} (b : Fin r → W.DD T) (hbN : ∀ j, b j ∈ W.N 
     rw [Submodule.span_le]
     rintro _ ⟨x, hx, rfl⟩
     obtain ⟨u, rfl⟩ := hspan x hx
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Submodule.sum_mem _ fun i _ => ?_
     rw [φ_smul]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)
@@ -108,7 +109,8 @@ theorem mem_N_of_div {r : ℕ} (b : Fin r → W.DD T) (hbN : ∀ j, b j ∈ W.N 
       W.γA W.gam W.X ^ a * (c i + letπ * W.X ^ a * ω i) := by
     have h1 : W.X ^ a • W.γD T W.gam (W.X ^ a • m) =
         ∑ i, (W.X ^ a * ∑ k, Γc k i * W.γA W.gam (c k)) • b i := by
-      rw [hc, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hc, map_sum]
       simp_rw [γ_smul, hΓeq]
       rw [sum_smul_sum W T b _ (fun i k => Γc k i), Finset.smul_sum]
       simp_rw [smul_smul]
@@ -130,7 +132,8 @@ theorem mem_N_of_div {r : ℕ} (b : Fin r → W.DD T) (hbN : ∀ j, b j ∈ W.N 
       W.Q ^ K * W.Q ^ a * W.Q ^ M * c i + W.Q ^ K * W.X ^ a * W.Q ^ a * υ i := by
     have h1 : W.Q ^ M • W.Q ^ K • W.φD T (W.X ^ a • m) =
         ∑ i, (W.Q ^ M * ∑ k, Φc k i * W.φA (c k)) • b i := by
-      rw [hc, map_sum, Finset.smul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hc, map_sum, Finset.smul_sum]
       simp_rw [φ_smul, hcomm (W.Q ^ K), hΦc]
       rw [sum_smul_sum W T b _ (fun i k => Φc k i), Finset.smul_sum]
       simp_rw [smul_smul]

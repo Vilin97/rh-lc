@@ -46,7 +46,8 @@ theorem mulVec_sec (q : SplitPt D k) {n : ℕ} (M : Matrix (Fin n) (Fin n) (AE D
     (M *ᵥ fun i => q.sec (b i)) = fun i => q.sec ((M.map q.pr *ᵥ b) i) := by
   funext i
   simp only [Matrix.mulVec, dotProduct, Matrix.map_apply]
-  rw [map_sum q.sec]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum q.sec]
   exact Finset.sum_congr rfl fun j _ => mul_sec q _ _
 
 theorem mem_KO_of_keeps {Y : Type} [Fintype Y] [DecidableEq Y] (x : GL Y k)

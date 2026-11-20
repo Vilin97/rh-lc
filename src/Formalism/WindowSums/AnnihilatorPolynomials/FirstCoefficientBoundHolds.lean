@@ -110,7 +110,8 @@ lemma core {ℓ : ℕ} [Fact ℓ.Prime] (hℓ : Irreducible (ℓ : O)) (ε u : P
     rw [map_mul, map_mul, map_mul, map_pow, map_pow, map_pow, hPdef, residue_map_p1_eq, PowerSeries.map_X]
     ring
   have hLft : PowerSeries.coeff (r + ℓ * j0) (φ E) ≠ 0 := by
-    rw [hE, map_sum, map_sum, Finset.sum_eq_single j0]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hE, map_sum, map_sum, Finset.sum_eq_single j0]
     · rw [hterm, PowerSeries.coeff_mul_X_pow', if_pos le_rfl, Nat.sub_self,
         PowerSeries.coeff_zero_eq_constantCoeff_apply, hm0, Nat.sub_self, pow_zero, one_mul]
       exact ((hw0.map φ).mul ((hu.map φ).pow j0)).map PowerSeries.constantCoeff |>.ne_zero

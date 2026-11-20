@@ -27,11 +27,14 @@ theorem crd_sigR (y : Fv F v ⊗[F] E) (k : Fin d) :
       smul_eq_mul]
     have he : σ e = ∑ l, b.repr e l • σ (b l) := by
       have h := congrArg σ (b.sum_repr e)
-      rw [map_sum] at h
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum] at h
       simp only [map_smul] at h
       exact h.symm
-    rw [he, map_sum]
-    simp only [map_smul, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.smul_apply, smul_eq_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [he, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_smul, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.smul_apply, smul_eq_mul,
       map_sum, map_mul, Finset.mul_sum]
     refine Finset.sum_congr rfl fun l _ => ?_
     ring

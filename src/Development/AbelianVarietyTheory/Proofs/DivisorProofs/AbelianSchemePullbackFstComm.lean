@@ -179,10 +179,12 @@ theorem mem_of_corr [Module.Finite R (primDR A)] [Module.Projective R (primDR A)
       rw [liftSemi_tmul, map_smul, map_smul]
       congr 1
       have hc : c = ∑ i, q c i • p (Pi.single i 1) := by
-        conv_lhs => rw [← show p (q c) = c from LinearMap.congr_fun hpq c, pi_eq_sum_univ' (q c), map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          conv_lhs => rw [← show p (q c) = c from LinearMap.congr_fun hpq c, pi_eq_sum_univ' (q c), map_sum]
         simp only [map_smul]
       rw [LinearMap.sum_apply]
-      conv_lhs => rw [hc, map_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        conv_lhs => rw [hc, map_sum, map_sum]
       refine Finset.sum_congr rfl fun i _ ↦ ?_
       rw [LinearMap.map_smulₛₗ, map_smul, LinearMap.smul_apply, hl i c, smul_eq_mul, smul_eq_mul, mul_comm]
       rfl

@@ -36,9 +36,11 @@ theorem ev_sub {L A : Type*} [Field L] [CommRing A] (t : A) (ι : L →+* A)
       f - ∑ k ∈ Finset.range M, PowerSeries.C (PowerSeries.coeff k f) * PowerSeries.X ^ k := by
     rw [PowerSeries.X_pow_dvd_iff]
     intro m hm
-    simp [map_sum, PowerSeries.coeff_C_mul, PowerSeries.coeff_X_pow, hm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, PowerSeries.coeff_C_mul, PowerSeries.coeff_X_pow, hm]
   have := map_dvd ev h
-  simpa [map_sum, hC, hX] using this
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa [map_sum, hC, hX] using this
 
 theorem ev_dvd_iff {L A : Type*} [Field L] [CommRing A] [IsDomain A] (t : A) (ht0 : t ≠ 0)
     (htu : ¬ IsUnit t) (ι : L →+* A)
@@ -97,7 +99,8 @@ theorem main (l : ℕ) [Fact l.Prime] {B L : Type*} [CommRing B] [Field L]
   · have := (key M _).2 (ev_sub π ι₀ ev hC hX f M)
     rw [hF]
     convert this using 1
-    simp [map_sum, hj', ht]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, hj', ht]
   · rw [hF, ← ev_dvd_iff π hirr.ne_zero hirr.not_isUnit ι₀ ev hC hX, ← key]
     simp
   · have := (h0.isUnit).map e.symm

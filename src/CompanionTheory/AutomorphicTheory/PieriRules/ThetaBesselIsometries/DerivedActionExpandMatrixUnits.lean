@@ -80,7 +80,8 @@ theorem dC_expand_units : PI.KFinSmooth → ∀ (k r : ℕ) (ε : Fin (2 * r + k
       _ = f v (∑ a, ∑ b, (P * Y * P⁻¹) a b • (P⁻¹ * Matrix.single a b (1 : ℂ) * P)) :=
           congrArg (f v) (conj_expand_units P Y hP)
       _ = ∑ a, ∑ b, (P * Y * P⁻¹) a b • f v (P⁻¹ * Matrix.single a b (1 : ℂ) * P) := by
-          simp only [map_sum, map_smul]
+          set_option synthInstance.maxHeartbeats 100000 in
+            simp only [map_sum, map_smul]
       _ = ∑ a, ∑ b, (P * Y * P⁻¹) a b • ((E a b v : R.smSub) : R.H) := by
           simp only [hPE]
           rfl

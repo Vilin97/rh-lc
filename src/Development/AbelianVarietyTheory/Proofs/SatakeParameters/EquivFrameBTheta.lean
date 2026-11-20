@@ -41,7 +41,8 @@ theorem mapT_yMat (v : X.Pl) (s : Fin (X.G.P.n' v)) :
   simp only [Matrix.map_apply, Matrix.mul_apply, yMat, mapT, MvPolynomial.map_C]
   rw [show (tau0 X Kc j W : XspC (X.Pj (j + 1)) Kc →+* XspC (X.Pj (j + 1)) Kc) (MvPolynomial.X (idxS X j ⟨v, (s, (b, t))⟩)) =
     frF X Kc j W (idxS X j ⟨v, (s, (b, t))⟩) from MvPolynomial.aeval_X _ _]
-  simp only [frF, idxS, map_sum, map_mul, cD, RingHom.comp_apply, Fin.cast_cast, Fin.cast_eq_self]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [frF, idxS, map_sum, map_mul, cD, RingHom.comp_apply, Fin.cast_cast, Fin.cast_eq_self]
   rfl
 
 end GlobalTheory.FrameB

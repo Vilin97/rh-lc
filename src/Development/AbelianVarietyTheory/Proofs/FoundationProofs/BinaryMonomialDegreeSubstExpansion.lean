@@ -103,7 +103,8 @@ theorem GlobalTheory.KZ.H3.mon_expand : ∀ (R : Type) [CommRing R] (w : ℕ), (
   refine ⟨?_, fun p hp => hom_expand R w p hp, mon_hom R w, ?_, ?_⟩
   · intro m k
     have hz := hom_expand ℤ w _ (polySlash_monomial_isHomogeneous w m k)
-    rw [← map₃, hz, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map₃, hz, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_mul, MvPolynomial.map_C, map_mon]
     rfl

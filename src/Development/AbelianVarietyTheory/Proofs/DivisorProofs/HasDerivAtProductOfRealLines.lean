@@ -57,7 +57,8 @@ theorem hasDerivAt_prod_ofFn : ∀ (F E : Type) [Field F] [NumberField F] [Field
     hasDerivAt_pi.2 fun _ => hasDerivAt_id 0
   have := HasFDerivAt.comp_hasDerivAt_of_eq (x := (0 : ℝ)) hd hc rfl
   refine this.congr_deriv ?_
-  rw [show (fun _ : Fin k => (1 : ℝ)) = ∑ i, Pi.single i 1 from (Finset.univ_sum_single _).symm, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [show (fun _ : Fin k => (1 : ℝ)) = ∑ i, Pi.single i 1 from (Finset.univ_sum_single _).symm, map_sum]
   exact Finset.sum_congr rfl fun i _ => hpart i
 
 end GlobalTheory.ThK.DiagDeriv

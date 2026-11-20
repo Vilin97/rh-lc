@@ -39,14 +39,16 @@ theorem exists_basis_push_eq_sum : GlobalTheory.Published.AbelianDeRham → ∀ 
   have hB : ∀ i, (GlobalTheory.Published.AbelianDeRham.bcMor h).Corr (b i) (B i) := by
     intro i x
     rw [← cb.sum_repr x]
-    simp only [map_sum, map_smulₛₗ, ← hc', B, Module.Basis.dualBasis_apply_self, hcb, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smulₛₗ, ← hc', B, Module.Basis.dualBasis_apply_self, hcb, smul_eq_mul]
     refine Finset.sum_congr rfl fun k _ ↦ ?_
     split_ifs <;> simp
   have hb : ∀ i, b i = eH.symm (Pi.single i 1) := fun i ↦ by simp [b]
   have hsum : ∀ v : Fin n → R, (GlobalTheory.Published.AbelianDeRham.bcMor h).Corr (∑ k, v k • b k)
       (∑ k, ((v k : R) : ℂ) • B k) := by
     intro v x
-    simp only [LinearMap.sum_apply, LinearMap.smul_apply, hB _, map_sum, smul_eq_mul, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [LinearMap.sum_apply, LinearMap.smul_apply, hB _, map_sum, smul_eq_mul, map_mul]
     refine Finset.sum_congr rfl fun k _ ↦ ?_
     rw [hB k x]
     rfl

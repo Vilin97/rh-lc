@@ -26,7 +26,8 @@ theorem kc_comm_symm (σ : H.E ≃ₐ[ℚ] H.E)
 theorem kc_sum_comm (σ : H.E ≃ₐ[ℚ] H.E)
     (hc : ∀ (τ : H.E ≃ₐ[H.K] H.E) (x : H.E), σ (τ x) = τ (σ x)) (w : H.E) :
     σ (∑ τ : H.E ≃ₐ[H.K] H.E, τ w) = ∑ τ : H.E ≃ₐ[H.K] H.E, τ (σ w) := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_congr rfl fun τ _ => hc τ w
 
 theorem kc_one_ne : (1 : FractionalIdeal (𝓞 H.E)⁰ H.E) ≠ 0 := one_ne_zero

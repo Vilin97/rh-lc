@@ -57,11 +57,14 @@ theorem relation_map_comm_transvection (c : ι) (i k : Fin (d.D + 1)) (hik : i �
             X (r', l) * C (ratio (Ω := Ω c) (d.w l c) (d.w (d.jc c) c)) := by
           intro r'
           simp only [hφ, Data.relationEliminateColumn, MvPolynomial.aeval_X, h2, eq_self_iff_true, if_true]
-        rw [e1 r, e1 k, map_neg, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [e1 r, e1 k, map_neg, map_sum]
         by_cases h1 : r = i
-        · simp only [h1, eq_self_iff_true, if_true, map_mul, hX, hC, map_neg, map_sum, add_mul,
+        set_option synthInstance.maxHeartbeats 100000 in
+          · simp only [h1, eq_self_iff_true, if_true, map_mul, hX, hC, map_neg, map_sum, add_mul,
             Finset.sum_add_distrib, mul_neg, Finset.mul_sum, mul_assoc, neg_add]
-        · simp only [h1, if_false, add_zero, map_mul, hX, hC, map_neg, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          · simp only [h1, if_false, add_zero, map_mul, hX, hC, map_neg, map_sum]
       · have e1 : ∀ r', φ r' = X (r', b) := by
           intro r'
           simp only [hφ, Data.relationEliminateColumn, MvPolynomial.aeval_X, h2, if_false]

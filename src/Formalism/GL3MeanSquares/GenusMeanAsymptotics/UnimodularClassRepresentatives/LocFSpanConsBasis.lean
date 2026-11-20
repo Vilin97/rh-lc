@@ -210,7 +210,8 @@ theorem akCount_split (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF :
     set w : ↥(locF 𝔭 (spanO bb)) := ∑ p, c p • Formalism.HermitianLattices.Ext.L3.PinG.bM bb 𝔭 p with hwdef
     have hred : Formalism.HermitianLattices.Ext.L3.PinG.red bb h𝔭 k w = x := by
       funext q
-      simp [hwdef, map_sum, map_smul, Formalism.HermitianLattices.Ext.L3.PinG.red_bM, Pi.single_apply, hc,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [hwdef, map_sum, map_smul, Formalism.HermitianLattices.Ext.L3.PinG.red_bM, Pi.single_apply, hc,
         Algebra.smul_def, Ideal.Quotient.algebraMap_eq]
       rcases q with ⟨⟩ | i <;> simp
     have hwL : (w : V) ∈ L := by

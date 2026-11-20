@@ -50,7 +50,8 @@ theorem exists_aeval_chartSubst_eq_C_pow_mul (a : J → MRing ι R) (j₀ : J) (
   have hs : Polynomial.C (a j₀ ^ h.natDegree) * h = ∑ k ∈ Finset.range (h.natDegree + 1),
       Polynomial.C (a j₀ ^ h.natDegree) * (Polynomial.C (h.coeff k) * Polynomial.X ^ k) := by
     rw [← Finset.mul_sum, ← h.as_sum_range_C_mul_X_pow]
-  rw [hs, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hs, map_sum]
   refine Finset.sum_congr rfl fun k hk => ?_
   have hk' : k ≤ h.natDegree := Nat.lt_succ_iff.mp (Finset.mem_range.mp hk)
   have e : a j₀ ^ h.natDegree = a j₀ ^ (h.natDegree - k) * a j₀ ^ k := by

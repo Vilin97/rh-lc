@@ -65,7 +65,8 @@ theorem prod_locFn_half : ∀ (D : D7) (S T : HSp D) (βS : GL (Fin S.rank) (EAf
         exact (hhalf k l).symm
       have hsum : frMapO S T βS βT t i j = ∑ PP ∈ s, frMapO S T βS βT (es PP • t) i j := by
         conv_lhs => rw [ht, frMapO_smul]
-        rw [Matrix.smul_apply, smul_eq_mul, map_sum (toEAf D), Finset.sum_mul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [Matrix.smul_apply, smul_eq_mul, map_sum (toEAf D), Finset.sum_mul]
         refine Finset.sum_congr rfl fun PP _ => ?_
         rw [frMapO_smul, Matrix.smul_apply, smul_eq_mul]
       rw [hsum]

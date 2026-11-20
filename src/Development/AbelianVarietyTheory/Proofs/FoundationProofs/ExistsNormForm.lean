@@ -75,7 +75,8 @@ theorem form_bound {k σ : Type} [Field k] [Infinite k] [Fintype σ] (n : ℕ)
     rw [Finset.sum_congr rfl hterm]
     have hev : MvPolynomial.eval lam G =
         ∑ m ∈ F.support, (F.coeff m).coeff c * ∏ i ∈ m.support, lam i ^ m i := by
-      rw [hG, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hG, map_sum]
       refine Finset.sum_congr rfl fun m _ => ?_
       rw [MvPolynomial.eval_monomial, Finsupp.prod]
     rw [← hev]
@@ -108,7 +109,8 @@ theorem exists_norm_form {R A : Type} [CommRing R] [CommRing A] [Algebra R A] (n
     rw [Algebra.norm_eq_matrix_det b, RingHom.map_det]
     congr 1
     ext a c
-    simp [map_sum, Matrix.sum_apply, mul_comm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, Matrix.sum_apply, mul_comm]
 
 theorem norm_degree (k A : Type) [Field k] [Infinite k] [CommRing A] [IsDomain A]
     [Algebra k[X] A] (n : ℕ) (b : Module.Basis (Fin n) k[X] A) :

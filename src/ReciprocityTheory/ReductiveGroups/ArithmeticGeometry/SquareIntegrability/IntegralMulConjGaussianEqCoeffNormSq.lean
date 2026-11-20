@@ -124,7 +124,8 @@ theorem integral_mul_conj_gaussian_eq_coeffNormSq {g : ℕ} (p : MvPolynomial (F
         (AddMonoidAlgebra.coeff p α * (starRingEnd ℂ) (AddMonoidAlgebra.coeff p β)) *
           (monomialOfMultiindex α z * (starRingEnd ℂ) (monomialOfMultiindex β z) * (Real.exp (-‖z‖ ^ 2) : ℂ)) := by
     intro z
-    rw [hF, eval_eq_sum_coeff_mul_monomial, map_sum, Finset.sum_mul, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hF, eval_eq_sum_coeff_mul_monomial, map_sum, Finset.sum_mul, Finset.sum_mul]
     refine Finset.sum_congr rfl (fun α _ => ?_)
     rw [Finset.mul_sum, Finset.sum_mul]
     refine Finset.sum_congr rfl (fun β _ => ?_)

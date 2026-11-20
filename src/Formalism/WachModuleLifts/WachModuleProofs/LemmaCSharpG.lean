@@ -343,7 +343,8 @@ lemma key (g n r : ℕ) :
 lemma gen (g r : ℕ) (P : Polynomial ℚ_[p]) (hP : ∀ n, ‖P.coeff n‖ ≤ 1) :
     ‖coeff (p ^ (g + 1) * r) (Polynomial.aeval (hh p g) P) - P.coeff r * (p:ℚ_[p])⁻¹ ^ r‖ ≤
       (p:ℝ) ^ ((r:ℝ) - ((p - 1 : ℕ) : ℝ)) := by
-  rw [Polynomial.aeval_eq_sum_range, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Polynomial.aeval_eq_sum_range, map_sum]
   have hm : P.coeff r * (p:ℚ_[p])⁻¹ ^ r = ∑ i ∈ range (P.natDegree + 1),
       P.coeff i * (if i = r then (p:ℚ_[p])⁻¹ ^ r else 0) := by
     simp only [mul_ite, mul_zero, Finset.sum_ite_eq', Finset.mem_range]

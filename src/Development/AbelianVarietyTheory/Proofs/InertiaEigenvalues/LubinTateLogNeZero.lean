@@ -256,7 +256,8 @@ theorem mem_sq_of_ev {L : PowerSeries ↥K.1} (h0 : PowerSeries.coeff 0 L = 0) (
       GlobalTheory.DiscEval.psum (inK K) L (toB K (ofA K x)) n - 0 = toB K ((l : CK K) ^ r * z) := ev r
   obtain ⟨z, hz⟩ := hN (N + 1 + 1) (by omega)
   have e := congrArg (rhoB K) hz
-  rw [sub_zero, GlobalTheory.DiscEval.psum, Finset.sum_range_succ', Finset.sum_range_succ', h0, zero_add, h1, map_zero,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [sub_zero, GlobalTheory.DiscEval.psum, Finset.sum_range_succ', Finset.sum_range_succ', h0, zero_add, h1, map_zero,
     zero_mul, add_zero, map_one, one_mul, pow_one, map_add, map_sum, Finset.sum_eq_zero, zero_add, rhoB_toB,
     rhoB_toB, rhoC_ofA, map_mul, map_pow, map_natCast] at e
   · exact ⟨_, quot_injective K e⟩

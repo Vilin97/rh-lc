@@ -38,21 +38,24 @@ theorem dual_frame_ext {Ω Ω' : Type} [Field Ω] [Field Ω'] (i : Ω →+* Ω')
     induction hu using Submodule.span_induction with
     | mem y hy =>
       obtain ⟨m, rfl⟩ := hy
-      simp [he, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [he, map_sum]
     | zero => simp
     | add y z _ _ hy hz => simp only [LinearMap.add_apply, hy, hz, add_zero]
     | smul a y _ hy => simp only [LinearMap.smul_apply, hy, smul_zero]
   have hjx : ∀ x, j x = ∑ k, i (b k x) • j (e k) := by
     intro x
     conv_lhs => rw [hx x]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun k _ => hj _ _
   have hext : ∀ v v' : Module.Dual Ω' W', (∀ k, v (j (e k)) = v' (j (e k))) → v = v' := by
     intro v v' h
     refine LinearMap.ext_on hs ?_
     rintro _ ⟨x, rfl⟩
     rw [hjx x]
-    simp only [map_sum, map_smul, h]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, h]
   have hpair : ∀ k l, jW (b k) (j (e l)) = if k = l then 1 else 0 := by
     intro k l
     rw [hjW, he]

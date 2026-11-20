@@ -165,7 +165,8 @@ theorem classSum_smul_right (c : ℂ) (f f' : GAf L n → a.W) :
 
 theorem classSum_conj (hβ : IsInvForm a β) (f f' : GAf L n → a.W) :
     classSum a β J T f' f = starRingEnd ℂ (classSum a β J T f f') := by
-  simp only [classSum, map_sum, map_mul, map_inv₀, map_natCast]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [classSum, map_sum, map_mul, map_inv₀, map_natCast]
   refine Finset.sum_congr rfl fun t _ => ?_
   rw [hβ.1 (f' t) (f t)]
 

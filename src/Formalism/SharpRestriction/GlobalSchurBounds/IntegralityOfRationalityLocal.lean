@@ -51,7 +51,8 @@ theorem ramified_lines_of_level_zero (hF : FiSt0 D u) (hX : CrossDia0 D u) (hU :
       (∀ a, dia D u 0 v' a (f φ) = f (dia D u 0 v' a φ)) → Nm D u 0 v' (f φ) = 0 := by
     intro v' _ f hf
     have h : Nm D u 0 v' (f φ) = f (Nm D u 0 v' φ) := by
-      simp only [Nm, LinearMap.sum_apply, map_sum, hf]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Nm, LinearMap.sum_apply, map_sum, hf]
     rw [h, hN v', map_zero]
   have memR : ∀ ψ, ψ ∈ (D.fm u).Fi 0 → (∀ v', Nm D u 0 v' ψ = 0) → ψ ∈ MramI D u 0 := by
     intro ψ h1 h2

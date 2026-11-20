@@ -144,5 +144,6 @@ theorem PositivityTheory.Xgp.t_per_int : ∀ (e : ℕ) (X : Type) [TopologicalSp
     exact Measure.measure_pos_of_mem_nhds _ (inter_mem (hcf.eventually_ne hv) ((A.chart k).open_target.mem_nhds hyt))
   refine ⟨_, div_pos hpos hP1, (PositivityTheory.Xgp.t_poly_delta Ψ N _ _ fun c => ?_).1⟩
   rw [← hprop c, (hexp c).2]
-  simp only [formPoly, map_sum, map_mul, eval_C, map_prod, eval_X]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [formPoly, map_sum, map_mul, eval_C, map_prod, eval_X]
   exact Finset.sum_congr rfl fun w _ => mul_comm _ _

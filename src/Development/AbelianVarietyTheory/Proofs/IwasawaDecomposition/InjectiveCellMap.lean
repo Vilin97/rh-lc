@@ -14,7 +14,8 @@ theorem toMatrix_cellFrame {k : Type} [Field k] {ι : Type} {V : ι → Type} [�
     [∀ i, Module k (V i)] (b : Frames k V) (u : AffPts k (CellIdx k V)) (i : ι) :
     (b i).toMatrix (cellFrame b u i) = uniMat u i := by
   ext a c
-  rw [Basis.toMatrix_apply, cellFrame_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Basis.toMatrix_apply, cellFrame_apply, map_sum]
   simp [Finsupp.single_apply]
 
 theorem cellMap_injective (k : Type) [Field k] (ι : Type) [Fintype ι] (V : ι → Type) [∀ i, AddCommGroup (V i)]

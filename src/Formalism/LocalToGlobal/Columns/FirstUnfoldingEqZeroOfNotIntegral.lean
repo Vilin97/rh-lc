@@ -516,7 +516,8 @@ theorem firstUnfolding_reduction_eq (hq : ((q : ℕ) : 𝓞 E) ∈ P.asIdeal) (h
     have := (ocbS_scE_free f.1.1.2 f.1.2.2 f.2).2.1
     omega
   unfold Loc.E1
-  rw [map_mul, map_pow, map_sum, Finset.sum_congr rfl (fun t _ => hterm t),
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_mul, map_pow, map_sum, Finset.sum_congr rfl (fun t _ => hterm t),
     ocbS_sum_pi_fiber (fun _ => LocE.valsQ E q A B) r W]
   rw [hsumω, Fintype.piFinset_univ, one_pow, one_mul, ← Finset.sum_mul, Finset.prod_pow_eq_pow_sum, hexp, map_inv₀, map_pow,
     map_natCast, inv_pow, ← pow_mul, pow_add]

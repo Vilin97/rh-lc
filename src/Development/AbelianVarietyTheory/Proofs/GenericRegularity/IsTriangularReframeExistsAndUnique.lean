@@ -56,7 +56,8 @@ theorem comb_exists [Algebra c.F S] {x : Sp S ⟶ Xo.X} {m : ℕ}
     fun i => tv_injective ((isEigAt_iff τ (ovT (t := Xo.univ.t) (hv i))).1 (he i) a)
   have : actL (x0 := x) Xo.univ.t.act a (∑ i, cf i • toM (hv i)) =
       algebraMap c.F S (embK c τ a) • ∑ i, cf i • toM (hv i) := by
-    rw [map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.smul_sum]
     exact Finset.sum_congr rfl fun i _ => by rw [map_smul, hU, smul_comm]
   exact congrArg tv this
 

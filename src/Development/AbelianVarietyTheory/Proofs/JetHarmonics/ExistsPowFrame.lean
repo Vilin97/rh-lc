@@ -72,7 +72,8 @@ theorem cst_spMap {A C : Type} [CommRing A] [CommRing C] {Z : Scheme.{0}} (q : Z
 
 theorem cst_sum {A : Type} [CommRing A] {Z : Scheme.{0}} (q : Z ⟶ Sp A) (z : Z) {n : ℕ} (a : Fin n → A) :
     cst q z (∑ i, a i) = ∑ i, cst q z (a i) := by
-  simp only [cst, gs_eq q z ⊤ trivial, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [cst, gs_eq q z ⊤ trivial, map_sum]
 
 theorem coeff_of_jet {V F κ : Type} [CommRing V] [CommRing F] [Fintype κ] [DecidableEq κ] (φ : V →+* F) (m : ℕ)
     (f : MvPowerSeries κ V) (g : MvPowerSeries κ F) (c : F)
@@ -155,7 +156,8 @@ theorem jets : Laws → Laws2 → Laws4 → TwistBaseChangeStatement → AJetSt 
         (congrArg (fun w => sval (σ i) w y J) (e₂.trans ((congrArg (_ ≫ ·) hψ).trans (Category.assoc _ _ _).symm))).trans
           (k₂.trans (congrArg (· * _) ((cst_spMap _ _ y _).trans (H1.gs_spec _ y _))))
       rw [k₁, k₃, map_smul, jetCoef_smul, ← _root_.mul_assoc, ← H1.cst_mul, map_mul, _root_.mul_assoc (algebraMap F (Jet F κ n) lam)]
-    rw [Finset.sum_congr rfl fun i _ => h₂ i, ← Finset.sum_mul, ← cst_sum, ← Finset.mul_sum, ← map_sum, ← map_sum, hc,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_congr rfl fun i _ => h₂ i, ← Finset.sum_mul, ← cst_sum, ← Finset.mul_sum, ← map_sum, ← map_sum, hc,
       ψ.apply_symm_apply] at h₁
     exact (Units.mul_left_inj _).1 h₁
 

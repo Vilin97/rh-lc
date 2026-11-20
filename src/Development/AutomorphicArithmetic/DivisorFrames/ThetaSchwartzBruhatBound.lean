@@ -157,7 +157,8 @@ theorem UpperTheory.theta_schwartz_bruhat_bound :
   rw [hred w hw]
   have e : theta om (∑ j, pureA F (w j) (t j)) x h = ∑ j, theta om (pureA F (w j) (t j)) x h := by
     simp only [theta]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact thetaSum_finset_sum _ _ fun j _ => hpres _ _ (hmem _ (htT j).1 (w j))
   rw [e, Finset.mul_sum, Finset.sum_mul]
   refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun j _ => (hCb j (w j) x h).trans ?_)

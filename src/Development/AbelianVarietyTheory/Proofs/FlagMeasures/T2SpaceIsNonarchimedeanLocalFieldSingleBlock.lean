@@ -81,7 +81,8 @@ theorem trace_base_change {F E K L : Type} [Field F] [Field E] [Algebra F E] [Fi
   have key : ∀ y : E, g y = ∑ i, f (b.repr y i) • g (b i) := by
     intro y
     conv_lhs => rw [← b.sum_repr y]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [Algebra.smul_def, Algebra.smul_def, map_mul, hc]
   have hsp : ⊤ ≤ Submodule.span K (Set.range fun i => g (b i)) := by
@@ -97,7 +98,8 @@ theorem trace_base_change {F E K L : Type} [Field F] [Field E] [Algebra F E] [Fi
     rw [key y]
     simp_rw [← hcb]
     exact congrFun (c.repr_sum_self _) i
-  rw [Algebra.trace_eq_matrix_trace c, Algebra.trace_eq_matrix_trace b, Matrix.trace, Matrix.trace,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Algebra.trace_eq_matrix_trace c, Algebra.trace_eq_matrix_trace b, Matrix.trace, Matrix.trace,
     map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   simp only [Matrix.diag, Algebra.leftMulMatrix_eq_repr_mul]
@@ -286,7 +288,8 @@ theorem sum_local_trace {l : ℕ} [Fact l.Prime] {F : Type} [Field F] [NumberFie
     ∑ s, Algebra.trace ℚ_[l] (K s) (ι s t) = ((Algebra.trace ℚ F t : ℚ) : ℚ_[l]) := by
   classical
   apply (algebraMap ℚ_[l] (PadicAlgCl l)).injective
-  rw [map_sum, map_ratCast]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_ratCast]
   have e : ((Algebra.trace ℚ F t : ℚ) : PadicAlgCl l) =
       algebraMap ℚ (PadicAlgCl l) (Algebra.trace ℚ F t) := by simp
   rw [e, trace_eq_sum_embeddings]

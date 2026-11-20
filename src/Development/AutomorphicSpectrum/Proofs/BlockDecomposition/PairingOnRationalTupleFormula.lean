@@ -44,7 +44,8 @@ theorem pair_single : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Numb
     rw [Finset.sum_eq_single i₀]
     · simp only [if_true, JR, ratTuple, Matrix.map_apply]
       rw [← hv]
-      simp only [map_mul, map_sum, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_mul, map_sum, Finset.mul_sum]
       refine Finset.sum_congr rfl fun j _ => ?_
       ring
     · intro i _ hi
@@ -74,7 +75,8 @@ theorem pair_single : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Numb
         rw [hz c' a hc, mul_zero]
       · simp
     simp only [h2]
-    rw [Finset.mul_sum, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.mul_sum, map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun a _ => ?_
     simp only [map_mul]
     ring

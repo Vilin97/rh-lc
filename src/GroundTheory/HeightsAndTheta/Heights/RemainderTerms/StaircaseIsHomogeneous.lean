@@ -56,9 +56,11 @@ theorem eval_top (f j k : ℕ) (L : IndefiniteRowSideFullHecke.RestTerms.Roots f
       (∑ m ∈ Finset.Icc 1 (j + k), ∑ b : Fin f, Coinv.bps ℝ f (j + k) m b * Q m b) := by
     rw [← e1, hcomp]
   have hzero : L (G - C c * s) = 0 := by
-    rw [e2, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e2, map_sum, map_sum]
     refine Finset.sum_eq_zero fun m hm => ?_
-    rw [map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum]
     refine Finset.sum_eq_zero fun b _ => ?_
     have hm1 : 1 ≤ m := (Finset.mem_Icc.mp hm).1
     have hp : (Coinv.bps ℝ f (j + k) m b).IsHomogeneous m :=

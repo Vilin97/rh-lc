@@ -281,7 +281,8 @@ theorem max_le_erase {σ : Type} [Fintype σ] (π : MvPowerSeries σ O →ₐ[O]
       ring
     conv_lhs => rw [hf]
     rw [← Finset.add_sum_erase _ _ (Finset.mem_univ i)]
-    simp only [map_add, map_sum, map_mul, hCa, hs]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_add, map_sum, map_mul, hCa, hs]
     ring
   have hsI : s ∈ Ideal.span ((fun k => π (X k)) '' {k | k ≠ i}) := by
     refine Ideal.sum_mem _ (fun k hk => Ideal.mul_mem_left _ _ (Ideal.subset_span ⟨k, ?_, rfl⟩))
@@ -332,7 +333,8 @@ theorem aeval_weight {A : Type} [CommRing A] [Algebra O A] (z : σ → A) (t : A
     rw [Finset.sum_insert ha, Finset.prod_insert ha, zpow_add, ih]
   conv_lhs => rw [p.as_sum]
   conv_rhs => rw [p.as_sum]
-  rw [map_sum, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun d hd => ?_
   have hw : Finsupp.weight w d = j := by
     by_contra hne
@@ -395,7 +397,8 @@ theorem zpow_indep {A : Type} [CommRing A] (t : (PowerSeries A)ˣ) (ht : (t : Po
       simp
     rw [e, Polynomial.coeff_coe, Polynomial.coeff_X_add_one_pow]
   have h3 := congrArg (PowerSeries.coeff (j0 + N).toNat) h2
-  rw [map_sum, map_zero] at h3
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_zero] at h3
   rw [Finset.sum_eq_single j0] at h3
   · rw [PowerSeries.coeff_mul_C, hc, Nat.choose_self, Nat.cast_one, one_mul] at h3
     exact hj0.2 h3
@@ -472,9 +475,11 @@ theorem wcomp_eq_of_nilp {A : Type} [CommRing A] [Algebra O A] (J : Ideal A) {n 
     simp only [Pk]
     rw [MvPolynomial.coeff_weightedHomogeneousComponent, if_neg hd]
   have hψG : ψ G = ∑ k ∈ K, c k := by
-    rw [hψe G, ← hP, ← hsum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hψe G, ← hP, ← hsum, map_sum]
   have hφG : φ G = ∑ k ∈ K, ((t ^ k : (PowerSeries A)ˣ) : PowerSeries A) * PowerSeries.C (c k) := by
-    rw [hφe G, ← hP, ← hsum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hφe G, ← hP, ← hsum, map_sum]
     exact Finset.sum_congr rfl fun k _ => hφk k
   have hz : ∑ k ∈ K, ((t ^ k : (PowerSeries A)ˣ) : PowerSeries A) *
       PowerSeries.C (c k - if k = j then ψ G else 0) = 0 := by

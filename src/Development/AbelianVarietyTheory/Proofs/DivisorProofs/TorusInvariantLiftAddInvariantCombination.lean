@@ -110,7 +110,8 @@ theorem isField_add_comb {Z : Scheme.{0}} {n : ℕ} {U : Z.Opens} (d₀ : Fld Z)
       fun g u => Finset.sum_congr rfl fun a _ => by ring
     rw [e, e]
     ring
-  · simp only [h₀.2.2 W W' hWW hW, fun a => (h a).2.2 W W' hWW le_top, map_add, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [h₀.2.2 W W' hWW hW, fun a => (h a).2.2 W W' hWW le_top, map_add, map_sum, map_mul]
     congr 1
     refine Finset.sum_congr rfl fun a _ => ?_
     rw [← GlobalTheory.KS.rsT_of_le hWW (rsT (y a) W), GlobalTheory.KS.rsT_rsT hW hWW]

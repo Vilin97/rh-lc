@@ -261,7 +261,8 @@ theorem hTens_mul (JA : Matrix α α E) (JB : Matrix β β E) (a : Matrix α α'
   rw [hTens_eq, hTens_eq]
   have hm : (a * y * bᵀ).map c = a.map c * y.map c * (b.map c)ᵀ := by
     ext i j
-    simp [Matrix.mul_apply, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Matrix.mul_apply, map_sum, map_mul]
   rw [hm]
   simp only [Matrix.transpose_mul, Matrix.transpose_transpose, Matrix.mul_assoc]
   rw [Matrix.trace_mul_comm b]

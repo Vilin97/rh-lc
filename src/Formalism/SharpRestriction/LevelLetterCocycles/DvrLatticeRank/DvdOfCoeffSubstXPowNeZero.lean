@@ -159,7 +159,8 @@ theorem coeff_sum_X_pow_mul_subst {s : ℕ} (hs : s ≠ 0) (a : Fin s → PowerS
     (j : Fin s) (m : ℕ) :
     coeff (s * m + j) (∑ i : Fin s, X ^ (i : ℕ) * PowerSeries.subst (X ^ s : PowerSeries O) (a i)) =
       coeff m (a j) := by
-  rw [map_sum, Finset.sum_eq_single j]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_eq_single j]
   · try beta_reduce
     rw [coeff_X_pow_mul', if_pos (Nat.le_add_left _ _), Nat.add_sub_cancel, coeff_subst_X_pow_eq_ite_dvd hs,
       if_pos (dvd_mul_right s m), Nat.mul_div_cancel_left m (Nat.pos_of_ne_zero hs)]

@@ -46,10 +46,12 @@ theorem idxH_holds : IdxH := by
     have h1 : σ 1 = 1 := map_one σ
     have h2 : (1 : E) = ∑ l, b.repr 1 l • b l := (b.sum_repr 1).symm
     have h3 : σ 1 = ∑ l, b.repr 1 l • σ (b l) := by
-      rw [show σ 1 = σ (∑ l, b.repr 1 l • b l) from by rw [b.sum_repr], map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [show σ 1 = σ (∑ l, b.repr 1 l • b l) from by rw [b.sum_repr], map_sum]
       exact Finset.sum_congr rfl fun l _ => σ.toLinearMap.map_smul _ _
     have := congrArg (fun y => b.repr y k) h3
-    simp only [h1, map_sum, map_smul, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.smul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [h1, map_sum, map_smul, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.smul_apply,
       smul_eq_mul] at this
     rw [this]
     exact Finset.sum_congr rfl fun l _ => mul_comm _ _

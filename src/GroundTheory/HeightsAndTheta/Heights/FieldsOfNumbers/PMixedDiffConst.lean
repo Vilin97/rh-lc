@@ -62,7 +62,8 @@ theorem sum_eq (b : K → ℤ) (p : MvPolynomial K ℚ) :
       polyStep b p = ∑ v ∈ p.support, polyStep b (monomial v (AddMonoidAlgebra.coeff p v)) := by
   have hs : shiftPoly b p = ∑ v ∈ p.support, shiftPoly b (monomial v (AddMonoidAlgebra.coeff p v)) := by
     conv_lhs => rw [p.as_sum]
-    simp only [shiftPoly, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [shiftPoly, map_sum]
   refine ⟨hs, ?_⟩
   simp only [polyStep, Finset.sum_sub_distrib]
   rw [← hs, ← p.as_sum]

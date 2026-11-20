@@ -53,7 +53,8 @@ theorem orbit_nhds (Z : Subalgebra k (Matrix (Fin n) (Fin n) k)) (hZ : CR Z) (h0
     have hrep : ∀ v : Fin n → k, ψ v = ∑ i, v i • ψ (fun j => if i = j then 1 else 0) := by
       intro v
       conv_lhs => rw [pi_eq_sum_univ v]
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simp only [map_smul]
     have hfun : (ψ : (Fin n → k) → Matrix (Fin n) (Fin n) k) =
         fun v => ∑ i, v i • ψ (fun j => if i = j then 1 else 0) := funext hrep

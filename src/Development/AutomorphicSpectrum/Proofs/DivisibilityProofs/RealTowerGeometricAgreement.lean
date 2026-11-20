@@ -33,7 +33,8 @@ theorem geoMono_word (hI : PB.Inputs) (M : RootModel Ψ N) {J : Ideal (MRing M.�
         ((M.δ : ℝ) * (M.kA : ℝ) ^ (∑ j, Finsupp.single (w j) (1 : ℕ)) none) := by
   classical
   have hdeg : (∑ j, Finsupp.single (w j) (1 : ℕ)).degree = dimFl Ψ N := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp [Finsupp.degree_single]
   have hms : Finsupp.toMultiset (∑ j, Finsupp.single (w j) (1 : ℕ)) = Multiset.map w Finset.univ.val := by
     rw [Finsupp.toMultiset_sum]
@@ -74,7 +75,8 @@ theorem geoFun_pow (M : RootModel Ψ N) (a : Option (Ψ × Fin N) → ℝ) :
     refine Finset.sum_congr rfl fun w _ => ?_
     rw [Finset.prod_mul_distrib, monomial_sum_one, smul_eq_C_mul, map_prod]
     rfl
-  rw [h1, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h1, map_sum]
   refine Finset.sum_congr rfl fun w _ => ?_
   rw [map_smul, smul_eq_mul]
   congr 1
@@ -87,7 +89,8 @@ omit [DecidableEq Ψ] in
 
 theorem linA_eq (lam : Wt Ψ N) (s : ℝ) :
     linA lam s = ∑ o : Option (Ψ × Fin N), C (o.elim s fun r => -lam r.1 r.2) * X o := by
-  simp only [linA, toA, linRoot, map_neg, map_sum, map_mul, rename_C, rename_X, Fintype.sum_option,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [linA, toA, linRoot, map_neg, map_sum, map_mul, rename_C, rename_X, Fintype.sum_option,
     Option.elim, neg_mul, Finset.sum_neg_distrib]
   rw [add_comm]
 

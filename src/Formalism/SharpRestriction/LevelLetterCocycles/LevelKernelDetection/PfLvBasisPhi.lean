@@ -86,7 +86,8 @@ private theorem eigen_finset_eq_zero_of_injective_embeddings {ι : Type} [Decida
       · intro i hi c'
         rw [map_smul, hx i (Finset.mem_insert_of_mem hi) c', smul_comm]
       · have h1 := congrArg (Formalism.WeaklyAdmissibleFiltrations.mulVB (K₀ := K₀) (B := B) (V := V) (LL := LL) c) hs
-        rw [map_add, map_sum, map_zero, hx j (Finset.mem_insert_self j s) c,
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_add, map_sum, map_zero, hx j (Finset.mem_insert_self j s) c,
           Finset.sum_congr rfl (fun i hi => hx i (Finset.mem_insert_of_mem hi) c)] at h1
         simp_rw [sub_smul]
         rw [Finset.sum_sub_distrib, ← Finset.smul_sum, h2, smul_neg, sub_neg_eq_add, add_comm]

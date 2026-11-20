@@ -46,7 +46,8 @@ theorem crd_lin {k K : Type} [CommRing k] [CommRing K] {p : X ⟶ Sp k} {H : LB 
     (hx : x ≫ p = spMap ψ) {v : J → K} (hv : Crd H s x v) : Crd H t x (a.map ψ *ᵥ v) := by
   obtain ⟨l, c, hl, hv⟩ := hv
   refine ⟨l, c, hl, fun i => ?_⟩
-  rw [ht i l, CrdCalc.valR_eq x _ hl, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [ht i l, CrdCalc.valR_eq x _ hl, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_mul, ← CrdCalc.valR_eq, ← CrdCalc.valR_eq,
     GlobalTheory.Points.valR_constFn_of_over p ψ x hx _ hl, hv, mul_left_comm]
@@ -59,7 +60,8 @@ theorem isAffineOpen_lin {k : Type} [CommRing k] {p : X ⟶ Sp k} {H : LB X} {J 
   · have h : ∑ j, constFn p (nonzeroLocus φ) (a j) * secRatio φ (s j) = 1 := by
       refine (eq_secRatio φ φ fun l => ?_).trans (secRatio_self φ)
       conv_lhs => rw [hφ l]
-      rw [map_sum, map_sum, Finset.sum_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, map_sum, Finset.sum_mul]
       refine Finset.sum_congr rfl fun j _ => ?_
       have e : ∀ (U V : X.Opens) (e : U ≤ V), resG X e (constFn p V (a j)) = constFn p U (a j) := by
         intro U V e
@@ -253,7 +255,8 @@ theorem proj_mem (hB : BaseFacts S M U₀ EE) (z : M.Z) (c : S.TT M z →+ ZMod 
       exact (Algebra.smul_def _ _).symm
   rw [ThetaSys.proj, finsum_eq_sum_of_fintype, e]
   refine hs _ _ ?_
-  rw [← RingHom.mapMatrix_apply, map_sum, Matrix.sum_mulVec]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← RingHom.mapMatrix_apply, map_sum, Matrix.sum_mulVec]
   refine Submodule.sum_mem _ fun t _ => ?_
   rw [RingHom.mapMatrix_apply, e]
   exact hs _ _ (hB.stab z _ ((hB.free z).2.le ((hB.free z).1.1 t.2)) v hv)
@@ -289,9 +292,11 @@ theorem exists_adapted [hA : ArithBase o Ω] (hB : BaseFacts S M U₀ EE) (Q : C
       · exact (he c).symm
       · simp)))
     (hinc (hu.mul_left_cancel (by
-      rw [map_sum, Matrix.mul_sum, map_one]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Matrix.mul_sum, map_one]
       simp only [he]
-      rw [← Matrix.sum_mul, hP, ← map_sum, hsum, map_one, Matrix.one_mul, Matrix.mul_one])))
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← Matrix.sum_mul, hP, ← map_sum, hsum, map_one, Matrix.one_mul, Matrix.mul_one])))
   set A₀ : Matrix S.J S.J (M.O z) := Matrix.of fun i j => e (κ i) j (col i) with hA₀
   let V : M.Z.Opens := ⟨⋂ i, ⋂ j, {x | inc A₀ i j ∈ M.O x} ∩ {x | inc A₀⁻¹ i j ∈ M.O x},
     isOpen_iInter_of_finite fun i => isOpen_iInter_of_finite fun j =>

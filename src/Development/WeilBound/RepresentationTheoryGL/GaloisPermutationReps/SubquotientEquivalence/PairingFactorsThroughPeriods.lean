@@ -89,7 +89,8 @@ theorem basis_side {V : Type} [AddCommGroup V] [Module ℂ V] [FiniteDimensional
       intro j
       have e1 : M x = ∑ j, (c j * z ^ q ^ (j : ℕ)) • b j := by
         conv_lhs => rw [hsum]
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         refine Finset.sum_congr rfl (fun j _ => ?_)
         rw [map_smul, hb j, hMf j, smul_smul]
       have e2 : z • x = ∑ j, (z * c j) • b j := by

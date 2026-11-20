@@ -56,13 +56,15 @@ theorem GlobalTheory.realPoint_ratIsom_isMatOn : ∀ (D : D7) (X : HidaSetting D
     intro c w
     have hc : X.crd (∑ i, c i • w i) = ∑ i, X.ιE.symm (c i) • X.crd (w i) := by
       funext l
-      simp [HidaSetting.crd, Formalism.L2.SG.HidaSetting.crdOf, map_sum, Finset.sum_apply, smul_eq_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [HidaSetting.crd, Formalism.L2.SG.HidaSetting.crdOf, map_sum, Finset.sum_apply, smul_eq_mul]
     rw [hc]
     unfold rv
     have hv : (fun l => X.B.I.φ v ((∑ i, X.ιE.symm (c i) • X.crd (w i)) l)) =
         ∑ i, embS D (X.pl v) (c i) • fun l => X.B.I.φ v (X.crd (w i) l) := by
       funext l
-      simp [Finset.sum_apply, map_sum, X.φ_eq]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [Finset.sum_apply, map_sum, X.φ_eq]
     rw [hv, Matrix.mulVec_sum]
     simp_rw [Matrix.mulVec_smul]
   intro b

@@ -184,7 +184,8 @@ theorem euler_of_span (B : Type) [CommRing B] [IsLocalRing B] [IsNoetherianRing 
     apply Subtype.ext; simp [hre]
   show z - ∑ a, (∑ i, (y i : B) * b i a) * D a z ∈ _
   refine ((maximalIdeal B).toCotangent_eq_zero ⟨_, hmem⟩).1 ?_
-  rw [← hw, map_sub, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hw, map_sub, map_sum]
   simp only [map_smul, hy]
   have hcoord : ∀ i, c i • β i = β.coord i ((maximalIdeal B).toCotangent ⟨z, hz⟩) • β i := by
     intro i; rw [hb i z hz, ← algebraMap_smul (ResidueField B) (∑ a, b i a * D a z) (β i)]; rfl

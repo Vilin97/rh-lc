@@ -50,7 +50,8 @@ theorem schr_acts {ψ : AddChar (AF F) ℂ} (hψ : IsStd ψ) (a b : κ → AF F)
   have hz : At (evI F) (x ⬝ᵥ b) := fun s hs => by
     rw [← dotProduct_smul, hb s hs, dotProduct_zero]
   have e1 : evI F (x ⬝ᵥ b) = (fun i => evI F (x i)) ⬝ᵥ fun i => evI F (b i) := by
-    simp only [evR_eq, dotProduct, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [evR_eq, dotProduct, map_sum, map_mul]
   have e2 : (fun i => evI F ((x + a) i)) = (fun i => evI F (x i)) - -fun i => evI F (a i) := by
     funext i
     simp [evR_eq]

@@ -82,7 +82,8 @@ theorem expSeriesAdd : ExpAdd := by
     _ = ∑ k ∈ range N, ∑ j ∈ range (k + 1),
           coeff m (a ^ j * b ^ (k - j)) / ((j.factorial : K) * ((k - j).factorial : K)) := by
         refine Finset.sum_congr rfl (fun k _ => ?_)
-        rw [add_pow, map_sum, Finset.sum_div]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [add_pow, map_sum, Finset.sum_div]
         refine Finset.sum_congr rfl (fun j hj => ?_)
         rw [mem_range] at hj
         rw [← map_natCast (MvPowerSeries.C (σ := σ) (R := K)), coeff_mul_C, mul_div_assoc,

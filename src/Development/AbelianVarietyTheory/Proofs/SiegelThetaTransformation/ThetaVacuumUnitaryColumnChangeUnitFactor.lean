@@ -72,7 +72,8 @@ theorem trace_mul_unitary {h : Matrix (Fin n) (Fin n) E} (hu : ccT h * h = 1)
     (h * y * β * ccT (h * y)).trace = (y * β * ccT y).trace := by
   have hc : ccT (h * y) = ccT y * ccT h := by
     ext i j
-    simp only [ccT, cc, Matrix.transpose_apply, Matrix.map_apply, Matrix.mul_apply, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [ccT, cc, Matrix.transpose_apply, Matrix.map_apply, Matrix.mul_apply, map_sum, map_mul]
     exact Finset.sum_congr rfl fun _ _ => mul_comm _ _
   rw [hc, ← Matrix.mul_assoc, Matrix.trace_mul_comm (h * y * β * ccT y) (ccT h)]
   simp only [← Matrix.mul_assoc, hu, Matrix.one_mul]
@@ -99,7 +100,8 @@ theorem dblz_hAct (h : Matrix (Fin n) (Fin n) E) (x₁ x₂ : Frame X.Ψ r) (z�
     · rw [rowType_of_lt X τ ha]
       simp only [NumberField.ComplexEmbedding.conjugate_coe_eq]
     · rw [rowType_of_le X τ (not_lt.mp ha)]
-      simp only [map_sum, map_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_mul]
   ext k b
   simp only [dblz, Matrix.of_apply, hv, Matrix.mulVec_sum, Matrix.mulVec_smul, Finset.smul_sum,
     Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Matrix.mul_apply, Matrix.transpose_apply,
@@ -118,7 +120,8 @@ theorem dblz'_hAct (h : Matrix (Fin n) (Fin n) E) (x₁ x₂ : Frame X.Ψ r) (z�
     simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Dict.hAct, Equiv.apply_symm_apply]
     split_ifs with ha
     · rw [rowType_of_lt X τ ha]
-      simp only [NumberField.ComplexEmbedding.conjugate_coe_eq, map_sum, map_mul, Complex.conj_conj]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [NumberField.ComplexEmbedding.conjugate_coe_eq, map_sum, map_mul, Complex.conj_conj]
     · rw [rowType_of_le X τ (not_lt.mp ha)]
   ext k b
   simp only [dblz', Matrix.of_apply, hv, Matrix.mulVec_sum, Matrix.mulVec_smul, Matrix.sum_vecMul,

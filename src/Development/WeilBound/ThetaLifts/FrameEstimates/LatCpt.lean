@@ -55,7 +55,8 @@ theorem sz_mul_mul_le {n d : ℕ} (A : Ten F E n n) (B : Ten F E d d) (z : Ten F
   have key : ∀ w i j, ‖piInf (τ w) ((A * z * Bᵀ : Ten F E n d) i j)‖ ≤
       (sz τ A * sz τ B) * ∑ k, ∑ l, ‖piInf (τ w) (z k l)‖ := by
     intro w i j
-    simp only [Matrix.mul_apply, Matrix.transpose_apply, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mul_apply, Matrix.transpose_apply, map_sum, map_mul]
     rw [Finset.sum_comm, Finset.mul_sum]
     refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun l _ => ?_)
     rw [Finset.sum_mul, Finset.mul_sum]

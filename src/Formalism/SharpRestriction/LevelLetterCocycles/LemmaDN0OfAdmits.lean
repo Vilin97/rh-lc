@@ -264,7 +264,8 @@ theorem lead_indep [IsDomain O] [IsFractionRing O LL] (Pt : ZMod n → LL → (K
         ∑ a, (W.Q ^ k * W.φA (c a)) • (W.Q ^ M • W.φD T ((letE (i - 1) : LetA O n) • bb a)) := by
       have hφ : (letE i : LetA O n) • W.φD T x =
           ∑ a, W.φA (c a) • W.φD T ((letE (i - 1) : LetA O n) • bb a) := by
-        rw [← φA_letE W i, ← φD_smulA, hc, Finset.smul_sum, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [← φA_letE W i, ← φD_smulA, hc, Finset.smul_sum, map_sum]
         refine Finset.sum_congr rfl fun a _ => ?_
         rw [smul_smul, mul_comm, ← smul_smul, φD_smulA]
       rw [smul_comm _ (W.Q ^ M), smul_comm _ (W.Q ^ k), hφ, Finset.smul_sum, Finset.smul_sum]
@@ -280,7 +281,8 @@ theorem lead_indep [IsDomain O] [IsFractionRing O LL] (Pt : ZMod n → LL → (K
         apply Subtype.ext
         rw [Submodule.coe_sum]
         exact hsum
-      rw [hsub, map_sum, Finset.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hsub, map_sum, Finset.sum_apply]
       refine Finset.sum_congr rfl fun a _ => ?_
       rw [W.levN_smul]
       have := Formalism.MainNotions.RamifiedCoefficientChains.S9.Conv.conv_lead (W.lev i ζ (W.Q ^ k * W.φA (c a))) (W.levN T i ζ ⟨_, hpa a⟩) M
@@ -348,7 +350,8 @@ theorem sum_γA_mem (c : LetA O n) : (∑ δ ∈ W.DelF, W.γA δ c) ∈ W.AΔ :
   unfold LocWach.AΔ
   show ∀ δ ∈ W.DelF, W.γA δ (∑ δ' ∈ W.DelF, W.γA δ' c) = ∑ δ' ∈ W.DelF, W.γA δ' c
   intro δ hδ
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [← γA_mul]
   exact Finset.sum_nbij' (fun x => δ * x) (fun x => δ⁻¹ * x)
     (fun a ha => delF_mul W hδ ha) (fun a ha => delF_mul W (delF_inv W hδ) ha)
@@ -380,7 +383,8 @@ theorem phispan_le (T : LocLat G Qp LL O) (i : ZMod n) {r : ℕ} (bb : Fin r →
   rintro y ⟨z, hz, rfl⟩
   obtain ⟨x, hx, rfl⟩ := Submodule.mem_map.mp hz
   obtain ⟨c, hc, -⟩ := huniq x hx
-  rw [SetLike.mem_coe, LinearMap.smul_apply, LinearMap.id_apply, hc, Finset.smul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [SetLike.mem_coe, LinearMap.smul_apply, LinearMap.id_apply, hc, Finset.smul_sum, map_sum]
   refine Submodule.sum_mem _ (fun a _ => ?_)
   rw [smul_smul, mul_comm, ← smul_smul, φD_smulA W T]
   exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨a, rfl⟩)
@@ -418,7 +422,8 @@ theorem coeff_vanish [IsDomain O] [IsFractionRing O LL] (Pt : ZMod n → LL → 
     rw [smul_comm]
   have e1 : W.levN T i ζ ⟨_, hyN⟩ k =
       ∑ a, Formalism.MainNotions.RamifiedCoefficientChains.S9.Conv.conv (W.lev i ζ (g a)) (W.levN T i ζ ⟨_, hpa a⟩) k := by
-    rw [hsub, map_sum, Finset.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hsub, map_sum, Finset.sum_apply]
     refine Finset.sum_congr rfl fun a _ => ?_
     rw [W.levN_smul]; rfl
   rw [← e1]
@@ -496,7 +501,8 @@ theorem reconstruct (T : LocLat G Qp LL O) (i : ZMod n) (hπ : W.π₀ ∈ W.AΔ
   have hγ : ∀ δ ∈ W.DelF, W.γD T δ x =
       Formalism.MainNotions.LiftingTheory.qp W ^ b • ∑ a, W.γA δ (c a) • W.φD T ((letE (i - 1) : LetA O n) • bb a) := by
     intro δ hδ
-    rw [hxy, γD_smulA W T, map_pow, hqpΔ δ hδ, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hxy, γD_smulA W T, map_pow, hqpΔ δ hδ, map_sum]
     congr 1
     refine Finset.sum_congr rfl (fun a _ => ?_)
     rw [γD_smulA W T, ← W.φγ_comm, γD_smulA W T, γA_letE W, (hb a).2 δ hδ]
@@ -634,7 +640,8 @@ theorem lemmaDN0_of_admits [IsLocalRing O] [IsAdicComplete (IsLocalRing.maximalI
     funext j
     show W.γ₀ δ (1 - (PD.p : PowerSeries O) + ∑ δ' ∈ W.DelF, W.γ₀ δ' (1 + PowerSeries.X)) =
       1 - (PD.p : PowerSeries O) + ∑ δ' ∈ W.DelF, W.γ₀ δ' (1 + PowerSeries.X)
-    rw [map_add, map_sub, map_one, map_natCast, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_add, map_sub, map_one, map_natCast, map_sum]
     congr 1
     simp only [← AlgHom.mul_apply, ← map_mul]
     exact Finset.sum_nbij' (fun x => δ * x) (fun x => δ⁻¹ * x)

@@ -247,7 +247,8 @@ theorem sum_pull (hF : IsFil Φ Fil) (hc : E.GrConst Fil) (P : Pack Fil E σ r �
   choose b' hb' using fun I : Idx j d => GlobalTheory.CompanionTheory.CocProd.rep_form hF E σ hc j q r hr (Fin.succ ∘ I.1) (x I) (hx I)
   have e1 : a = ∑ I, a' I := rep_unique ha (rep_sum Finset.univ _ a' fun I _ => ha' I)
   have e2 : b = ∑ I, b' I := rep_unique hb (rep_sum Finset.univ _ b' fun I _ => hb' I)
-  rw [e1, e2, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e1, e2, map_sum]
   exact Finset.sum_congr rfl fun I _ => P.pull j q hr I.1 (x I) (hx I) _ _ (ha' I) (hb' I)
 
 theorem sum_delta (hF : IsFil Φ Fil) (hc : E.GrConst Fil) (P : Pack Fil E σ r π ε θ) {k q : ℕ} (hr : r = k + 1 + q)
@@ -266,7 +267,8 @@ theorem sum_delta (hF : IsFil Φ Fil) (hc : E.GrConst Fil) (P : Pack Fil E σ r 
     GlobalTheory.CompanionTheory.CocProd.rep_form hF E σ hc (k + 1) q r hr'' (Fin.cons 0 (Fin.succ ∘ I.1)) (x I) (hx I)
   have e1 : a = ∑ I, a' I := rep_unique ha (rep_sum Finset.univ _ a' fun I _ => ha' I)
   have e2 : w = ∑ I, w' I := rep_unique hw (rep_sum Finset.univ _ w' fun I _ => hw' I)
-  rw [e1, e2, map_sum, ← Finset.sum_neg_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e1, e2, map_sum, ← Finset.sum_neg_distrib]
   exact Finset.sum_congr rfl fun I _ => P.delta k q hr I.1 (x I) (hx I) _ _ (ha' I) (hw' I)
 
 end Sums

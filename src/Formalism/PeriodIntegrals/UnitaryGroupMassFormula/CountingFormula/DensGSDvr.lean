@@ -36,7 +36,8 @@ theorem resF_sum_mul {ι : Type} [Fintype ι] (c x : ι → F) (hc : ∀ i, c i 
     resF F (∑ i, c i * x i) = ∑ i, resF F (c i) * resF F (x i) := by
   have hs : ((∑ i, (⟨c i, hc i⟩ : 𝒪[F]) * ⟨x i, hx i⟩ : 𝒪[F]) : F) = ∑ i, c i * x i := by
     simp
-  rw [← hs, resF_coe, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hs, resF_coe, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_mul, ← resF_coe F ⟨c i, hc i⟩, ← resF_coe F ⟨x i, hx i⟩]
 

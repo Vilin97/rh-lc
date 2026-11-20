@@ -26,7 +26,8 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 
 theorem form_herm {σ : E →ₐ[F] E} (hσ : ∀ x, σ (σ x) = x) {n : ℕ} {J : Matrix (Fin n) (Fin n) E}
     (hJ : ∀ i j, σ (J j i) = J i j) (x w : Fin n → E) : form σ J x w = σ (form σ J w x) := by
-  simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hJ, hσ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hJ, hσ]
   simp only [Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun l _ => ?_
@@ -100,7 +101,8 @@ theorem eq_zero_of_plane {n n₁ : ℕ} (x y : Fin n → E) (ι : Matrix (Fin n)
       inclR (F := F) (AF F) (s j) * (incV F x ⬝ᵥ δ) +
         ∑ q, inclR (F := F) (AF F) (U q j) * ((incM F ι)ᵀ *ᵥ δ) q +
         inclR (F := F) (AF F) (t j) * (incV F y ⬝ᵥ δ) := by
-    simp only [map_add, map_mul, map_sum, add_mul, Finset.sum_add_distrib, dotProduct, Matrix.mulVec,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_add, map_mul, map_sum, add_mul, Finset.sum_add_distrib, dotProduct, Matrix.mulVec,
       Finset.mul_sum, Finset.sum_mul, incV, incM, Matrix.transpose_apply, Matrix.map_apply]
     congr 1
     · congr 1
@@ -133,12 +135,14 @@ theorem orth_row {σ : E →ₐ[F] E} (hσ : ∀ x, σ (σ x) = x) {n n₁ : ℕ
 theorem incM_mulVec_incV {n k : ℕ} (A : Matrix (Fin n) (Fin k) E) (u : Fin k → E) :
     incM F A *ᵥ incV F u = incV F (A *ᵥ u) := by
   funext i
-  simp [incM, incV, Matrix.mulVec, dotProduct, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [incM, incV, Matrix.mulVec, dotProduct, map_sum, map_mul]
 
 theorem incV_vecMul_incM {n k : ℕ} (A : Matrix (Fin n) (Fin k) E) (u : Fin n → E) :
     incV F u ᵥ* incM F A = incV F (u ᵥ* A) := by
   funext i
-  simp [incM, incV, Matrix.vecMul, dotProduct, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [incM, incV, Matrix.vecMul, dotProduct, map_sum, map_mul]
 
 theorem incV_zero {n : ℕ} : incV F (0 : Fin n → E) = 0 := by
   funext i
@@ -147,7 +151,8 @@ theorem incV_zero {n : ℕ} : incV F (0 : Fin n → E) = 0 := by
 theorem cA_mulVec (σ : E →ₐ[F] E) {n k : ℕ} (A : Matrix (Fin n) (Fin k) E) (w : Fin k → AE F E) :
     (fun i => cA σ ((incM F A *ᵥ w) i)) = incM F (A.map σ) *ᵥ fun i => cA σ (w i) := by
   funext i
-  simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, incM, Matrix.map_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, incM, Matrix.map_apply]
   rfl
 
 theorem sum_dot (σ : E →ₐ[F] E) {n : ℕ} (a : Fin n → AE F E) (A : Matrix (Fin n) (Fin n) (AE F E))

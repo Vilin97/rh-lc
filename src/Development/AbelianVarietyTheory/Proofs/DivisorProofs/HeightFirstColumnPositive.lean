@@ -83,7 +83,8 @@ theorem normInf_stab : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [Num
       ∑ i, Algebra.norm w.Completion ((U.1 *ᵥ z) i) = ∑ i, Algebra.norm w.Completion (z i) := by
     intro z
     apply (algebraMap w.Completion (w.Completion ⊗[F] E)).injective
-    simp only [map_sum, GlobalTheory.Doubling.algebraMap_norm_eq hCM]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, GlobalTheory.Doubling.algebraMap_norm_eq hCM]
     have h2 : ∀ y : Fin n → w.Completion ⊗[F] E, ∑ i, y i * sigR _ σ (y i) =
         (fun i => sigR _ σ (y i)) ⬝ᵥ y := fun y => by
       simp only [dotProduct]; exact Finset.sum_congr rfl fun i _ => mul_comm _ _
@@ -109,7 +110,8 @@ theorem normInf_adVec_pos : ∀ {F E : Type} [Field F] [NumberField F] [Field E]
   refine pow_pos (norm_pos_iff.2 fun hs => hx ?_) _
   have h1 : ∑ i, infEmb τ ((B'.1 *ᵥ xw) i) * starRingEnd ℂ (infEmb τ ((B'.1 *ᵥ xw) i)) = 0 := by
     have := congrArg (fun s => infEmb τ (algebraMap _ (w.Completion ⊗[F] E) s)) hs
-    simp only [map_sum, GlobalTheory.Doubling.algebraMap_norm_eq hCM, map_mul, map_zero] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, GlobalTheory.Doubling.algebraMap_norm_eq hCM, map_mul, map_zero] at this
     simpa only [infEmb_sigR hCM] using this
   have h4 : ∑ i, Complex.normSq (infEmb τ ((B'.1 *ᵥ xw) i)) = 0 := by
     have h3 : ((∑ i, Complex.normSq (infEmb τ ((B'.1 *ᵥ xw) i)) : ℝ) : ℂ) = 0 := by
@@ -249,7 +251,8 @@ theorem normFin_first_column_finite_pos : ∀ {F E : Type} [Field F] [NumberFiel
     rw [hLin_smul_left] at h2
     have h3 : hLin σ J (Fv F v) (fun i => inclR (F := F) (Fv F v) (x i)) (fun i => (1 : Fv F v) ⊗ₜ[F] z i) =
         inclR (F := F) (Fv F v) c := by
-      simp [hLin, hR, Formalism.UG.hform, JR, sigR, inclR, hcdef, hE, map_sum, Algebra.TensorProduct.tmul_mul_tmul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [hLin, hR, Formalism.UG.hform, JR, sigR, inclR, hcdef, hE, map_sum, Algebra.TensorProduct.tmul_mul_tmul]
     rw [h3] at h2
     have h5 : absEv F E v (l⁻¹ * loc v cu) ≤ 1 := norm_le_one_of_mem_intLoc hCM h2
     rw [map_mul, map_inv] at h5

@@ -50,8 +50,10 @@ theorem ConeVarSurj.proof : ConeVarSurj.Statement.{u} := by
     ∑ d ∈ D h, monomial (Finsupp.equivFunOnFinite.symm d) (c h d)
   have hQ : ∀ h, coneVarMap P W hPW v (Q h) =
       algebraMap (MRing ι F ⧸ P) (coneLocal P W hPW) (Ideal.Quotient.mk P h) := fun h => by
-    conv_rhs => rw [← hsum h, map_sum, map_sum]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_rhs => rw [← hsum h, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun d _ => ?_
     rw [coneVarMap, aeval_monomial, Finsupp.prod_fintype _ _ (fun _ => pow_zero _)]
     apply Subtype.ext

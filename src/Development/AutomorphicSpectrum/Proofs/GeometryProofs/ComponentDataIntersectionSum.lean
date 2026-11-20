@@ -292,7 +292,8 @@ theorem main : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host 
       exact ⟨Matrix.of fun a' a => v a a', fun a => (hv a).symm⟩
     choose T hTs using hex
     have hbw : ∀ τ a, b τ (tailIdx hj a) = ∑ a', T τ a' a • w τ a' := fun τ a => hinj τ (by
-      rw [hTs, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hTs, map_sum]
       exact Finset.sum_congr rfl fun a' _ => by rw [map_smul, hw])
     have hq : ∀ τ, quotWedge (F τ) hj (b τ) =
         (T τ).det • exteriorPower.ιMulti Ω (Dc.N - Dc.j) fun a => (F τ).mkQ (w τ a) := fun τ => by
@@ -300,7 +301,8 @@ theorem main : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host 
       unfold quotWedge
       congr 1
       funext a
-      rw [hbw, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hbw, map_sum]
       exact Finset.sum_congr rfl fun a' _ => by rw [map_smul]
     have htp : (PiTensorProduct.tprod Ω fun τ => quotWedge (F τ) hj (b τ)) = (∏ τ, (T τ).det) • Pw := by
       simp_rw [hq]

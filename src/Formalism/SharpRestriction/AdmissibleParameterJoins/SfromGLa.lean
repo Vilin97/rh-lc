@@ -176,7 +176,8 @@ theorem mass_ortho_eq {n : ℕ} {L : Submodule (𝓞 K) V} {L' : Submodule (𝓞
     have hx := b.sum_repr x
     have hy := b.sum_repr y
     rw [← hx, ← hy]
-    simp only [map_sum, map_smul, map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, b,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, b,
       Module.Basis.mk_apply, hφe, he, he']
   rw [← mass_tr hφ]
   congr 1

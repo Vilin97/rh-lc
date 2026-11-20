@@ -14,7 +14,8 @@ namespace GlobalTheory.FlagPoly
 theorem ev_invForm_scale {ι : Type} [Fintype ι] [DecidableEq ι] {N : ℕ} (j : ℕ) (al be : ι → ℝ) (k : ℝ)
     (lam : ι → Fin N → ℝ) :
     ev lam (invForm j (fun τ => k * al τ) (fun τ => k * be τ)) = k * ev lam (invForm j al be) := by
-  simp only [ev, invForm, map_sum, map_add, map_mul, eval_C, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [ev, invForm, map_sum, map_add, map_mul, eval_C, Finset.mul_sum]
   refine Finset.sum_congr rfl fun τ _ => ?_
   ring
 

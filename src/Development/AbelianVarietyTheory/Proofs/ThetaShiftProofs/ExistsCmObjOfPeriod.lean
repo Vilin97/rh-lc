@@ -47,7 +47,8 @@ theorem exists_lat_move (hP : IsPeriod D ty P) (hP' : IsPeriod D' ty P') (gam : 
        obtain ⟨x, hx⟩ := hs (gam.symm a)
        refine ⟨x, ?_⟩
        have := congrArg gam hx
-       rw [map_nsmul, gam.apply_symm_apply, map_sum] at this
+       set_option synthInstance.maxHeartbeats 100000 in
+         rw [map_nsmul, gam.apply_symm_apply, map_sum] at this
        exact this }, rfl⟩
 
 theorem isExp_move {R : Type} [CommRing R] {T : GlobalTheory.CM.PAT H (Sp R)} {σ : R →+* ℂ} (hP : IsPeriod D ty P)

@@ -96,7 +96,8 @@ theorem fou_mq_fouInv (B : Matrix l l ℝ) (f : Sch l) :
   congr 1
   have h : ∀ j (u : Sch l), fouInv l (dRho (Pi.single (Sum.inl j) 1) u) = -dRho (Pi.single (Sum.inr j) 1) (fouInv l u) :=
     fourierInv_dRho_inl
-  simp only [← dRho_single_inl, map_smul, map_sum, h, map_neg, neg_neg]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← dRho_single_inl, map_smul, map_sum, h, map_neg, neg_neg]
   ext x
   have hπ : (π : ℂ) ≠ 0 := by simp [Real.pi_ne_zero]
   simp only [mq_apply, SchwartzMap.smul_apply, SchwartzMap.sum_apply, dRho_single_inr, smul_eq_mul,

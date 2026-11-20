@@ -691,7 +691,8 @@ theorem basisVal_add_le (x y : M) :
 theorem basisVal_sum_le {α : Type*} {s : Finset α} {x : α → M} {γ : Γ₀}
     (h : ∀ a ∈ s, basisVal v b (x a) ≤ γ) : basisVal v b (∑ a ∈ s, x a) ≤ γ :=
   (basisVal_le_iff v b).mpr fun i => by
-    rw [map_sum, Finsupp.finsetSum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finsupp.finsetSum_apply]
     exact v.map_sum_le fun a ha => (le_basisVal v b _ i).trans (h a ha)
 
 theorem basisVal_eq_zero_iff (hv : v.supp = ⊥) {x : M} : basisVal v b x = 0 ↔ x = 0 := by
@@ -700,7 +701,8 @@ theorem basisVal_eq_zero_iff (hv : v.supp = ⊥) {x : M} : basisVal v b x = 0 �
 
 theorem basisVal_map_le (c : Basis κ R N) (φ : M →ₗ[R] N) (h : ∀ i, basisVal v c (φ (b i)) ≤ 1)
     (x : M) : basisVal v c (φ x) ≤ basisVal v b x := by
-  conv_lhs => rw [← b.linearCombination_repr x, Finsupp.linearCombination_apply, Finsupp.sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [← b.linearCombination_repr x, Finsupp.linearCombination_apply, Finsupp.sum,
     map_sum]
   refine basisVal_sum_le v c fun i _ => ?_
   rw [map_smul, basisVal_smul]
@@ -708,7 +710,8 @@ theorem basisVal_map_le (c : Basis κ R N) (φ : M →ₗ[R] N) (h : ∀ i, basi
 
 theorem valuation_linearMap_le_basisVal (φ : M →ₗ[R] R) (h : ∀ i, v (φ (b i)) ≤ 1) (x : M) :
     v (φ x) ≤ basisVal v b x := by
-  conv_lhs => rw [← b.linearCombination_repr x, Finsupp.linearCombination_apply, Finsupp.sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [← b.linearCombination_repr x, Finsupp.linearCombination_apply, Finsupp.sum,
     map_sum]
   refine v.map_sum_le fun i _ => ?_
   rw [map_smul, smul_eq_mul, map_mul]

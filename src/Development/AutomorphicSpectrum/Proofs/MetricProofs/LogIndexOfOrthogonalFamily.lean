@@ -47,7 +47,8 @@ theorem psi_apply (ρ : 𝓞 E →+* Module.End L V) {r : ℕ} (v : Fin r → V)
 
 theorem psi_smul (ρ : 𝓞 E →+* Module.End L V) {r : ℕ} (v : Fin r → V) (o : 𝓞 E) (x : Fin r → E) :
     psi ρ v (o • x) = ρ o (psi ρ v x) := by
-  simp only [psi_apply, map_sum, map_smul, rho_eigProj, Pi.smul_apply, smul_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [psi_apply, map_sum, map_smul, rho_eigProj, Pi.smul_apply, smul_smul]
   refine Finset.sum_congr rfl fun t _ => Finset.sum_congr rfl fun a _ => ?_
   congr 1
   rw [Algebra.smul_def, map_mul, mul_comm]
@@ -309,7 +310,8 @@ theorem theta_injective (hcard : Fintype.card (E →+* L) = Module.finrank ℚ E
       intro k
       refine hGI _ (hst _ _ (hv.1 a)) _ ?_
       rw [psi_smul, psi_single hcard]
-    simp only [HT.eigProj, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, h1]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [HT.eigProj, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, h1]
     funext u b
     simp only [Finset.sum_apply, Pi.smul_apply, emb_apply, smul_eq_mul]
     by_cases hb : b = a
@@ -330,7 +332,8 @@ theorem theta_injective (hcard : Fintype.card (E →+* L) = Module.finrank ℚ E
       · simp [Pi.single_eq_of_ne htu]
   have hleft : Function.LeftInverse G (theta ρ v) := by
     intro z
-    simp only [theta_apply, map_sum, map_smul, hGP]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [theta_apply, map_sum, map_smul, hGP]
     funext u b
     simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
     rw [Finset.sum_eq_single u, Finset.sum_eq_single b]
@@ -416,12 +419,15 @@ theorem map_eigenLat [NumberField L] (hcard : Fintype.card (E →+* L) = Module.
     have h3 : thetaO ρ v z ∈ HT.eigSp ρ t := h2
     have h4 := HT.LatBasic.eigProj_of_mem h3
     have h5 : HT.eigProj ρ t (thetaO ρ v z) = phi ρ v t (z t) := by
-      rw [phi_apply, thetaO_apply, theta_apply, map_sum, Finset.sum_eq_single t]
-      · simp only [map_sum, map_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [phi_apply, thetaO_apply, theta_apply, map_sum, Finset.sum_eq_single t]
+      set_option synthInstance.maxHeartbeats 100000 in
+        · simp only [map_sum, map_smul]
         refine Finset.sum_congr rfl fun a _ => ?_
         rw [eigProj_eigProj, if_pos rfl]
       · intro u _ hu
-        simp only [map_sum, map_smul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, map_smul]
         refine Finset.sum_eq_zero fun a _ => ?_
         rw [eigProj_eigProj, if_neg hu, smul_zero]
       · simp

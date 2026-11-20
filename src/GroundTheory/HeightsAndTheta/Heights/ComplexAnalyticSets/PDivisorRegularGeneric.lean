@@ -17,7 +17,8 @@ theorem DivisorRegularGeneric.proof (hG : FrameGraphGeneric.Statement) : Divisor
   set T := hfinM.toFinset with hT
   have hmemT : ∀ W, W ∈ T ↔ W ∈ L.minimalPrimes := fun W => hfinM.mem_toFinset
   have hevL : ∀ x : Fin n → ℂ, eval x (linForm u) = linEval u x := fun x => by
-    simp [linForm, linEval, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [linForm, linEval, map_sum]
 
   have hdimW : ∀ W ∈ L.minimalPrimes, ringKrullDim (MvPolynomial (Fin n) ℂ ⧸ W) = (d : ℕ) := by
     intro W hW

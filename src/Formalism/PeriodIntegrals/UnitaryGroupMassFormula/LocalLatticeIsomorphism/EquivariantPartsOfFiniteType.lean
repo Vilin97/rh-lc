@@ -44,7 +44,8 @@ theorem sum_conj (cj : E ≃ₐ[ℚ] E)
     (h : ∀ k : K, ∃ k' : K, cj (algebraMap K E k) = algebraMap K E k') {ι : Type} [Fintype ι]
     (v w : ι → K) :
     ∑ i, algebraMap K E (v i) * cj (algebraMap K E (w i)) = algebraMap K E (hf (conjK cj h) v w) := by
-  simp only [hf, map_sum, map_mul, conjK_spec]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hf, map_sum, map_mul, conjK_spec]
 
 theorem trace_natCast_mul (cj : E ≃ₐ[ℚ] E) (s t : ℕ) (x y : E) :
     Algebra.trace K E (((s : E) * x) * cj ((t : E) * y)) =

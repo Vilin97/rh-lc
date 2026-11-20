@@ -84,7 +84,8 @@ theorem GlobalTheory.HeightCounting.FormsStep.hkStab_of_ringSpec_of_subset : ∀
   haveI : Fintype ↥(Formalism.IndefR.NX.U D.nd) := Fintype.ofFinite _
   have hsol := hrel (fun t a => eqL D S In.θ j a (w t)) (fun t a => eqL_rational D S In j h1 h2 W0 hW0 hW0c a (w t)) o (by
     intro a
-    rw [← hx0 a, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hx0 a, map_sum]
     refine Finset.sum_congr rfl fun t _ => ?_
     rw [hET, LinearMap.map_smul_of_tower])
   clear hx0 hx
@@ -92,7 +93,8 @@ theorem GlobalTheory.HeightCounting.FormsStep.hkStab_of_ringSpec_of_subset : ∀
   | mem o ho =>
     obtain ⟨c, hc0, hco⟩ := ho
     have h3 : ∑ t, o t • Φ (w t) = Φ (∑ t, ((c t : ↥D.LL0) : D.what₂.LL) • (w t : S.WL j)) := by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun t _ => ?_
       rw [hc, ← hco, algebraMap_smul]
     rw [h3]
@@ -101,7 +103,8 @@ theorem GlobalTheory.HeightCounting.FormsStep.hkStab_of_ringSpec_of_subset : ∀
         (RingOfIntegers.isIntegral_coe (c t)).map (algebraMap ↥D.LL0 D.what₂.LL).toIntAlgHom⟩
       have h4 := Submodule.smul_mem _ a (Submodule.subset_span (R := 𝓞 D.what₂.LL) (s := ((S.A j).MK : Set (S.WL j))) (hwM t))
       rwa [← algebraMap_smul D.what₂.LL a] at h4
-    · rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [map_sum]
       simpa only [map_smul] using hc0 a
   | zero => simp
   | add o o' _ _ ho ho' =>

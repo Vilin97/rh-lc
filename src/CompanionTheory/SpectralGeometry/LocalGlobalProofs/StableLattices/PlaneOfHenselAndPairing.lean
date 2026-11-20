@@ -51,7 +51,8 @@ theorem lat_commens {Λ M : AddSubgroup V} (hΛ : IsLat L Λ) (hM : IsLat L M) {
   have hx' := (hb' x).1 hx
   have hexp : b.coord i x = ∑ j, b'.repr x j * b.coord i (b' j) := by
     conv_lhs => rw [← b'.sum_repr x]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [map_smul, smul_eq_mul]
   have hbound : ‖b.repr x i‖ ≤ C := by
     have h1 : ‖b.repr x i‖ ≤ ∑ j, ‖b.repr (b' j) i‖ := by

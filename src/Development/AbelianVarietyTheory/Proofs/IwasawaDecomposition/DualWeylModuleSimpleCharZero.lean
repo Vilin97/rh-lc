@@ -57,7 +57,8 @@ theorem map_rowAct_eq {R S : Type} [CommRing R] [CommRing S] (φ : R →+* S) {N
   | mul_X p v hp =>
     simp only [map_mul, hp, map_X]
     congr 1
-    simp [rowAct, map_sum, Matrix.map_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [rowAct, map_sum, Matrix.map_apply]
 
 theorem map_mem_span_map {S A : Type} [CommRing S] [CommRing A] (ψ : S →+* A) {σ : Type}
     (X : Set (MvPolynomial σ S)) (P : MvPolynomial σ S) (hP : P ∈ Submodule.span S X) :

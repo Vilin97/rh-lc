@@ -127,7 +127,8 @@ theorem continuous_tensAt : Continuous (tensAt E v : Ev E v → AE F E) := by
   let b := Algebra.TensorProduct.basis (Fv F v) (Module.finBasis F E)
   have e : (tensAt E v : Ev E v → AE F E) = fun y => ∑ i, atPlace v (b.coord i y) • tensAt E v (b i) := by
     funext y
-    conv_lhs => rw [← b.sum_repr y, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [← b.sum_repr y, map_sum]
     exact Finset.sum_congr rfl fun i _ => smul_tensAt v _ _
   rw [e]
   exact continuous_finset_sum _ fun i _ => ((GlobalTheory.VacAny.continuous_atPlace v).comp

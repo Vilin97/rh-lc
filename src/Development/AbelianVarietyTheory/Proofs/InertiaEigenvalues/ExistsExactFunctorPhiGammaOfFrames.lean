@@ -42,7 +42,8 @@ theorem frame_span_top {ε : Rk} (hε : IsIdempotentElem ε) (h0 : ε ≠ 0) {m 
   let b := Module.finBasis k⸨X⸩ W
   have key : ∀ x : W, β x ∈ Submodule.span Rk (Set.range fun j => β (b j)) := by
     intro x
-    rw [← b.sum_repr x, Submodule.coe_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← b.sum_repr x, Submodule.coe_sum, map_sum]
     refine Submodule.sum_mem _ fun j _ => ?_
     rw [Submodule.coe_smul, h.2.1]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨j, rfl⟩)
@@ -232,10 +233,12 @@ theorem exists_dfun_of_frames {k G : Type} [Field k] [Group G] {Rk : Type} [Comm
         rw [← (H.frame A hA j).2.2.1, smul_smul, H.ε_orth i j hj.symm, zero_smul]
       · intro h; exact (h (Finset.mem_univ _)).elim
     obtain ⟨t, ht, hfix⟩ := H.fix A hA (∑ j, β A j (x j)) (by
-        rw [map_sum, ← Equiv.sum_comp (Equiv.subRight (1 : ZMod n))]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum, ← Equiv.sum_comp (Equiv.subRight (1 : ZMod n))]
         refine Finset.sum_congr rfl fun j _ => ?_
         rw [Equiv.subRight_apply, ← (hD A hA).1, hφ]) (by
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         refine Finset.sum_congr rfl fun j _ => ?_
         rw [← (hD A hA).2, hγ]) (fun i => ⟨x i, he i⟩)
     let f : (Fin 1 → k) →ₗ[k] (Fin A.m → k) := (LinearMap.proj 0 : (Fin 1 → k) →ₗ[k] k).smulRight t

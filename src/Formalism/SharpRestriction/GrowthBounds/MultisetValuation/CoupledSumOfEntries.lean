@@ -30,7 +30,8 @@ theorem kernel_eq_theta {a a' : X.G.Kf} {v : X.Pl} {j : ℕ} (hTh : ThEq Y a a' 
 theorem ker_sum (j : ℕ) (La : X.Lt j) (La' : X.Lt (j + 1)) {ι : Type} (s : Finset ι) (G : ι → (X.Pj j).Xsp) :
     Y.ker j La La' (∑ x ∈ s, G x) = ∑ x ∈ s, Y.ker j La La' (G x) := by
   unfold Pend.ker Pend.kerF
-  rw [map_sum, LinearMap.sum_apply, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, LinearMap.sum_apply, Finset.smul_sum]
 
 theorem cC_ne (hp : (p : X.G.Kf) ≠ 0) {a : X.G.Kf} (ha : a ≠ 0) (v : X.Pl) (j k : ℕ) : cC X a v j k ≠ 0 :=
   mul_ne_zero (zpow_ne_zero _ hp) (mul_ne_zero (zpow_ne_zero _ ha) (zpow_ne_zero _ hp))

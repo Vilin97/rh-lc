@@ -94,7 +94,8 @@ theorem polZero_om_fin : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [N
   · rw [Finset.mem_insert, not_or] at hw
     simp only [φ₂, Function.update_of_ne hw.1]
     exact (hf i).2.2 w hw.2
-  · rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum]
     exact Finset.sum_congr rfl fun i _ => hpure i
   · have hz' := GlobalTheory.PolMatchLin.transport Bs G Xc om om' R Rf hM.fin hXT hTS f φ
       (fun j : Fin 0 => j.elim0 : Fin 0 → SInf F (Fin a' × Fin (a + a')))
@@ -104,7 +105,8 @@ theorem polZero_om_fin : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [N
     let Lw : ∀ u : (insert v T : Finset (Pl F)), Rf.Pi u →ₗ[ℂ] Rf.Pi u :=
       Function.update (fun _ => LinearMap.id) ⟨v, hv⟩ L
     have key := congrArg (LinearMap.lTensor R.Pi (PiTensorProduct.map Lw)) hz'
-    rw [map_zero, map_sum] at key
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_zero, map_sum] at key
     rw [← key]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [LinearMap.lTensor_tmul, PiTensorProduct.map_tprod]

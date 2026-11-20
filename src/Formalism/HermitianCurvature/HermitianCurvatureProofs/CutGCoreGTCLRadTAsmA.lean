@@ -38,7 +38,8 @@ variable {E : Type} [NormedAddCommGroup E] [NormedSpace ℝ E]
 theorem ml_expand {j : ℕ} (m : ContinuousMultilinearMap ℝ (fun _ : Fin j => ℂ) E) (v : ℂ) :
     m (fun _ => v) = ∑ s : Fin j → Fin 2, (∏ i, crd (s i) v) • m (fun i => e2 (s i)) := by
   have h : (fun _ : Fin j => v) = fun _ => ∑ t : Fin 2, crd t v • e2 t := funext fun _ => (sum_crd v).symm
-  rw [h, m.map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h, m.map_sum]
   refine Finset.sum_congr rfl fun s _ => ?_
   exact m.map_smul_univ (fun i => crd (s i) v) (fun i => e2 (s i))
 

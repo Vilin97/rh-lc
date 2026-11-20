@@ -70,7 +70,8 @@ theorem exists_poly_derivAt0_subst {C : Type} [Field C] {σ Λ : Type} [Fintype 
       simp [u, MvPowerSeries.smul_eq_C_mul]
     · ext d
       simp
-  rw [← key, derivAt0, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← key, derivAt0, map_sum]
   refine Finset.sum_congr rfl fun α _ => ?_
   rw [map_mul, MvPolynomial.eval_C, coeff_map]
 

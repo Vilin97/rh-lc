@@ -156,7 +156,8 @@ theorem perVal_eq_horizGen : ∀ (E : Type) [Field E] [NumberField E] [IsCMField
   set N : Matrix (Idx Dw τ) (Fin r) ℂ := Matrix.of fun k a => ∑ b, starRingEnd ℂ (B b k) * T (X.Gm a b) with hN_def
   have hTm : (hm.map T)ᵀ = -t • (N * B) := by
     ext k' k
-    simp only [Matrix.transpose_apply, Matrix.map_apply, hm_eq X Di φ x hm hEF hx, herm, cc, map_mul, map_neg,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.transpose_apply, Matrix.map_apply, hm_eq X Di φ x hm hEF hx, herm, cc, map_mul, map_neg,
       map_sum, IsCMField.complexEmbedding_complexConj, Matrix.smul_apply, Matrix.mul_apply, smul_eq_mul, hN_def,
       hB_def, Matrix.of_apply, Finset.sum_mul, Finset.mul_sum]
     rw [← ht_def]

@@ -158,7 +158,8 @@ theorem Sh_dn_expand {n : ℕ} (w : Cn (box F) (n + 1)) :
     Sh F (n + 1) (dn (box F) (n + 1) w) =
       ∑ i ∈ Finset.range (n + 1 + 1), ∑ j ∈ Finset.range (n + 1 + 2), ((-1 : R) ^ (i + j)) • aT F w i j := by
   rw [dn_eq (n + 1)]
-  simp only [Finset.sum_range, Sh, LinearMap.sum_apply, LinearMap.smul_apply, AlgHom.toLinearMap_apply, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finset.sum_range, Sh, LinearMap.sum_apply, LinearMap.smul_apply, AlgHom.toLinearMap_apply, map_sum,
     map_smul, bv_pr, Finset.smul_sum, smul_smul]
   rw [Finset.sum_comm]
   apply Finset.sum_congr rfl
@@ -173,7 +174,8 @@ theorem prB_Sh_expand {n : ℕ} (w : Cn (box F) (n + 1)) :
   simp only [Finset.sum_range]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun j _ ↦ ?_
-  simp only [Sh, LinearMap.sum_apply, LinearMap.smul_apply, AlgHom.toLinearMap_apply, map_sum, map_smul, prB_bv]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Sh, LinearMap.sum_apply, LinearMap.smul_apply, AlgHom.toLinearMap_apply, map_sum, map_smul, prB_bv]
   rw [Finset.smul_sum]
   refine Finset.sum_congr rfl fun k _ ↦ ?_
   rw [bT, dif_pos ⟨k.2, j.2⟩, smul_smul, pow_add, mul_comm]

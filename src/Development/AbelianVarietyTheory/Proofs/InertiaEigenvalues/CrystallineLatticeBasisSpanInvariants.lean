@@ -62,7 +62,8 @@ theorem linIndep_lat (T : Submodule ℤ_[l] V) (b : Module.Basis (Fin d) ℤ_[l]
 theorem sum_lat (T : Submodule ℤ_[l] V) (b : Module.Basis (Fin d) ℤ_[l] T) (w : T) :
     (w : V) = ∑ i, (algebraMap ℤ_[l] ℚ_[l] (b.repr w i)) • (b i : V) := by
   have h := congrArg T.subtype (b.sum_repr w)
-  rw [map_sum] at h
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum] at h
   simp only [map_smul, Submodule.subtype_apply] at h
   simp only [algebraMap_smul]
   exact h.symm
@@ -116,7 +117,8 @@ theorem lattice_basis_span_invariants : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt
     have key := congrArg (fun z => T.eB (crd (bVL L.T L.span b) r z)) hinv
     beta_reduce
     rw [← key, actVB, crd_map]
-    simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum]
     refine Finset.sum_congr rfl fun s _ => ?_
     rw [toMatrix_lat, Algebra.smul_def, map_mul, PadicInt.algebraMap_apply, T.zB]
     congr 1
@@ -127,7 +129,8 @@ theorem lattice_basis_span_invariants : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt
     exact (P.PD_actB K g _).symm
   · funext r
     have key := congrArg (fun z => T.eB (crd (bVL L.T L.span b) r z)) hy
-    simp only [map_sum, crd_mulLeft, crd_basis, map_mul] at key
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, crd_mulLeft, crd_basis, map_mul] at key
     beta_reduce
     rw [Finset.sum_apply]
     simp only [Pi.smul_apply, smul_eq_mul]

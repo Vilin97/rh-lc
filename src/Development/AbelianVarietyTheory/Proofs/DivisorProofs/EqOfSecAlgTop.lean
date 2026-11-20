@@ -98,7 +98,8 @@ theorem _root_.GlobalTheory.HilbAff.basic_iff_kappa {r N : ℕ} (e : Module.Basi
         _root_.GlobalTheory.HilbAff.kappa A B g I U (∑ k, c k ⊗ₜ[A] e (σ k)) := by
   unfold _root_.GlobalTheory.HilbAff.Basic
   refine forall_congr' fun U => ?_
-  simp only [map_sum, _root_.GlobalTheory.HilbAff.kappa_tmul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, _root_.GlobalTheory.HilbAff.kappa_tmul]
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite in
 open scoped TensorProduct in

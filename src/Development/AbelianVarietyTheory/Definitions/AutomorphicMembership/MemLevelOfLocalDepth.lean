@@ -163,7 +163,8 @@ theorem grpAt_of_grpTrue (h : I.Ok) (hN : Top.GrpTrue X.N I.C) : GrpAt X I := (g
 theorem goodSet_of_idem (eR : Gc X.B px ≃* G0g X.toD7.nd) (Xg : Finset (Gc X.B px → X.B.LL)) (hX : ∀ χ ∈ Xg, IsAbsIrrChar χ)
     (he : ∀ g, X.B.embLL ((idemOf Xg).coeff g) = X.toD7.ntypes.e0.coeff (eR g)) : GoodSet X (px := px) eR Xg := by
   refine (goodSet_iff X eR Xg).2 ⟨fun χ => ?_, he⟩
-  simp only [← he, ← map_mul, ← map_sum, X.B.embLL.injective.eq_iff]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← he, ← map_mul, ← map_sum, X.B.embLL.injective.eq_iff]
   exact mem_iff_trace Xg hX χ
 
 theorem GoodSet.nonempty {eR : Gc X.B px ≃* G0g X.toD7.nd} {Xg : Finset (Gc X.B px → X.B.LL)}

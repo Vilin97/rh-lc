@@ -90,7 +90,8 @@ theorem exists_goodSet_Ks (eR : Gc X.B px ≃* G0g X.toD7.nd) :
       fun χ _ χ' _ h => funext fun g => σ.injective (congrFun h g)
     rw [← hcoeff g]
     conv_rhs => rw [hexp]
-    rw [himg, coeff_idemOf, coeff_idemOf, Finset.sum_image hinj, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [himg, coeff_idemOf, coeff_idemOf, Finset.sum_image hinj, map_sum]
     refine Finset.sum_congr rfl fun χ _ => ?_
     simp [σ, map_div₀, map_mul, map_natCast]
   · rw [coeff_idemOf]

@@ -19,7 +19,8 @@ theorem jMt_injective (D : D7) (μ : D.what₂.Tup) (j : ℕ) : Function.Injecti
   have hx' : x = ∑ i ∈ (b.repr x).support, b.repr x i • b i := by
     conv_lhs => rw [← b.linearCombination_repr x]
     rw [Finsupp.linearCombination_apply]; rfl
-  rw [hx', map_sum] at hx
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hx', map_sum] at hx
   simp only [map_smulₛₗ] at hx
   have h0 := linearIndependent_iff'.1 hli _ _ hx
   apply b.repr.injective
@@ -49,10 +50,12 @@ theorem latStable_of_latInt : ∀ (D : D7) (M : MtFam D) (B : NLocBase D M) (j :
     have e2 := (M (D.what₂.muTw w) j h1 h2).real_inj e1
     have e3 : B.hL j w v k y = ∑ g ∈ (D.what₂.MtLat (D.what₂.muTw w) j).gen, c g • f g := by
       apply hinj
-      rw [e2, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [e2, map_sum]
       refine Finset.sum_congr rfl fun g hg => ?_
       rw [map_smulₛₗ, hf g hg]
-    rw [B.hK_def, e3, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [B.hK_def, e3, map_sum]
     refine Submodule.sum_mem _ fun g hg => ?_
     rw [map_smulₛₗ]
     obtain ⟨o, ho⟩ := (B.ec_w j w (c g)).1 (hc0 g)

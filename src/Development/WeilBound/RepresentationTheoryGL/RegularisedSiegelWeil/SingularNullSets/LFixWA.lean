@@ -130,7 +130,8 @@ theorem kap_supp (Q : Matrix (Fin r) (Fin r) D.host.E) (hQ : Q.det ≠ 0) (hψ :
     have e1 : adj x = C * rat Q⁻¹ := by
       rw [hCdef, Matrix.mul_assoc, ← rat_mul, Matrix.mul_nonsing_inv _ (isUnit_iff_ne_zero.2 hQ), rat_one, Matrix.mul_one]
     have h2 : cv D v (adj x j i) ∈ intLoc D.host.F D.host.E v := by
-      rw [e1, Matrix.mul_apply, map_sum (cv D v)]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [e1, Matrix.mul_apply, map_sum (cv D v)]
       exact sum_mem fun k _ => by rw [RingHom.map_mul]; exact mul_mem (hno j k) (hQi k i v hv)
     have h3 : x i j = cA D (adj x j i) := by
       conv_lhs => rw [← adj_adj x]

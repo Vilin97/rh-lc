@@ -75,7 +75,8 @@ theorem exists_coeff_ge {E : Type} [Field E] [NumberField E] [IsCMField E] {H : 
       exact (Algebra.IsAlgebraic.isAlgebraic (R := ℚ) (b i)).algHom K.val)
   refine ⟨c₀, fun x hx => ?_⟩
   have e := congrArg K.val (b.sum_repr ⟨x, hx⟩)
-  rw [map_sum] at e
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum] at e
   change _ = x at e
   rw [← e]
   refine sum_mem fun i _ => ?_

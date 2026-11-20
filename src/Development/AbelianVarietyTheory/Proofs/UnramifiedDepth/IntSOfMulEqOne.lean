@@ -54,7 +54,8 @@ theorem mvExp_sum [CharZero C] {σ α : Type} (s : Finset α) {F : α → MvPowe
   induction s using Finset.induction_on with
   | empty => simp [mvExp_zero']
   | insert a s ha ih =>
-    rw [Finset.sum_insert ha, Finset.prod_insert ha, mvExp_add (hF a) (by simp [map_sum, hF]), ih]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_insert ha, Finset.prod_insert ha, mvExp_add (hF a) (by simp [map_sum, hF]), ih]
 
 theorem cc_subst {σ τ : Type} [Finite σ] {a : σ → MvPowerSeries τ C} (ha : ∀ s, constantCoeff (a s) = 0)
     (F : MvPowerSeries σ C) : constantCoeff (subst a F) = constantCoeff F := by

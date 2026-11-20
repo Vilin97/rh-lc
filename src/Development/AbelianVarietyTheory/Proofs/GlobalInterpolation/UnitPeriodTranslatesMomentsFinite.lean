@@ -68,7 +68,8 @@ theorem embV_sum (D : D7) (cc : Ideal (𝓞 D.host.K)) (δ : ℂ) {N N' r : ℕ}
     (b : Fin r → Matrix (Fin N') (Fin N) D.host.E) :
     embV D (tor0 D cc δ) (∑ i, ((a i : ℕ) : D.host.E) • b i) = ∑ i, ((a i : ℕ) : ℂ) • embV D (tor0 D cc δ) (b i) := by
   funext τ i j
-  simp [embV, tor0, Finset.sum_apply, Matrix.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [embV, tor0, Finset.sum_apply, Matrix.sum_apply, map_sum]
 
 theorem kap_transport (D : D7) (T : Tor D) {N N' g : ℕ} (Hm : Matrix (Fin g) (Fin g) ℂ) (e : VC D N N' ≃L[ℂ] (Fin g → ℂ))
     (hhf : ∀ x y, JMB.hf Hm (e x) (e y) = Hf D T x y) (x y : VC D N N') : kap D T x y = JMB.kap Hm (e x) (e y) := by
@@ -163,7 +164,8 @@ theorem moments_fin : (∀ (D : D7) (cc : Ideal (𝓞 D.host.K)) (δ : ℂ) (B :
   have hf := GlobalTheory.T.eq_on_padicInt_of_eq_on_naturals_moment p lam Ω g S r n k bS (JMB.liftY p n eps bS yt) ys gf (fun a => by
     rw [hg a, ← hK a, kap_transport D B.tor S.Hm e hhf, embV_sum]
     have hs : e (δ • ∑ i, ((a i : ℕ) : ℂ) • embV D (tor0 D cc δ) (b i)) = ∑ i, ((a i : ℕ) : ℂ) • bS i := by
-      simp only [bS, Finset.smul_sum, map_sum, map_smul, smul_comm δ]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [bS, Finset.smul_sum, map_sum, map_smul, smul_comm δ]
     rw [hs]
     congr 1
     exact Finset.prod_congr rfl fun j _ => (GlobalTheory.T.pairing_scaledDirections_eq_period_pairing D cc δ δ₀ B N N' g S e p lam Ω r b (y' j) _ hQ hne hcop hbeta).symm)

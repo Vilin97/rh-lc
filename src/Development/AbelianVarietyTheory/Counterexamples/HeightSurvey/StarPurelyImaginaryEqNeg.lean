@@ -80,7 +80,8 @@ theorem herm_small (σ : A →+* A) (hσ : ∀ a, σ (σ a) = a) (P : Fin m → 
     (hP : ∀ i k, σ (P i k) = P k i) (hQ : ∀ i k, σ (Q i k) = Q k i) (x y : Matrix (Fin m) (Fin n) A) :
     σ (∑ i, ∑ j, ∑ k, ∑ l, σ (x i j) * P k i * Q j l * y k l) =
       ∑ i, ∑ j, ∑ k, ∑ l, σ (y i j) * P k i * Q j l * x k l := by
-  simp only [map_sum, map_mul, hσ, hP, hQ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, hσ, hP, hQ]
   have a : ∀ f : Fin m → Fin n → Fin m → Fin n → A, ∑ i, ∑ j, ∑ k, ∑ l, f i j k l =
       ∑ p : Fin m × Fin n, ∑ q : Fin m × Fin n, f p.1 p.2 q.1 q.2 := by
     intro f; simp only [Fintype.sum_prod_type]

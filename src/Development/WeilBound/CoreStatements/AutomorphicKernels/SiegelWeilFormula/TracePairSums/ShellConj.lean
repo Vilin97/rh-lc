@@ -70,7 +70,8 @@ theorem gramR_rowMix (hcm : IsCMExt F E σ) (J : Matrix (Fin M) (Fin M) E) (a : 
     (Y : Fin n → Fin M → R ⊗[F] E) :
     gramR R σ J (rowMix (a.map (sigR R σ)) Y) = a * gramR R σ J Y * (a.map (sigR R σ))ᵀ := by
   ext c p
-  simp only [gramR, hR, hform, rowMix, Matrix.mul_apply, Matrix.map_apply, Matrix.transpose_apply, map_sum, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [gramR, hR, hform, rowMix, Matrix.mul_apply, Matrix.map_apply, Matrix.transpose_apply, map_sum, map_mul,
     sigR_sigR R σ hcm, Finset.sum_mul, Finset.mul_sum]
   rw [sum_sum_sum_sum_comm]
   refine Finset.sum_congr rfl fun l _ => Finset.sum_congr rfl fun k _ =>

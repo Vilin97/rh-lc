@@ -398,7 +398,8 @@ theorem tie_gram_det_ne {E : Type} [Field E] [NumberField E] [StarRing E] (S : F
     intro i
     have hi := congrFun hv i
     simp only [Matrix.mulVec, dotProduct, HSpace.gram, Pi.zero_apply] at hi
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [map_smul, smul_eq_mul]
     rw [← hi]
     exact Finset.sum_congr rfl (fun j _ => mul_comm _ _)
@@ -450,7 +451,8 @@ def tie_Hp (M : Loc.Model (D.s.atP p).Fp (D.s.atP p).Ep) (hcj : M.L.cj = (D.s.at
     have hcc : ∀ z, (D.s.atP p).cj ((D.s.atP p).cj z) = z := fun z => by
       have := M.L.cj_cj z; rwa [hcj] at this
     rw [hcj]
-    simp only [tie_hp, map_sum, map_mul, hcc, tie_Gp_cj]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [tie_hp, map_sum, map_mul, hcc, tie_Gp_cj]
     rw [Finset.sum_comm]
     exact Finset.sum_congr rfl (fun j _ => Finset.sum_congr rfl (fun i _ => by ring))
   nondeg := fun x hx => by
@@ -480,7 +482,8 @@ theorem tie_bc_form (x y : (hS D).V) :
   have key : (hS D).hT y x = ∑ j, ∑ i, star ((hS D).frame.repr y j) *
       ((hS D).gram j i * (hS D).frame.repr x i) := by
     conv_lhs => rw [← (hS D).frame.sum_repr y, ← (hS D).frame.sum_repr x]
-    simp only [map_sum, map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, map_smul, smul_eq_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, map_smul, smul_eq_mul,
       starRingEnd_apply, HSpace.gram, Finset.mul_sum, RingHom.id_apply]
     rw [Finset.sum_comm]
     apply Finset.sum_congr rfl
@@ -489,7 +492,8 @@ theorem tie_bc_form (x y : (hS D).V) :
     intro i _
     ring
   rw [hbc, hbc, show brS (hS D) x y = (hS D).hT y x from rfl, key]
-  simp only [tie_hp, tie_Gp, Matrix.map_apply, tie_cj_iota, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [tie_hp, tie_Gp, Matrix.map_apply, tie_cj_iota, map_sum, map_mul]
 
 theorem tie_Ep_nontrivial : Nontrivial (D.s.atP p).Ep := by
   have hr := (D.s.atP p).rank

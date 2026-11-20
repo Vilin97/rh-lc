@@ -343,7 +343,8 @@ theorem QCoh.germ_support_bijective (hf : (support F).Finite)
   choose s h₁ h₂ using key
   refine ⟨∑ x, s x, funext fun y => ?_⟩
   beta_reduce
-  rw [map_sum, Finset.sum_eq_single y (fun x _ hx => h₂ x y hx.symm) (by simp), h₁]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_eq_single y (fun x _ hx => h₂ x y hx.symm) (by simp), h₁]
 
 variable (R : Type v) [CommRing R] [Algebra R Γ(X, ⊤)]
 

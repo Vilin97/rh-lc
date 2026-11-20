@@ -21,7 +21,8 @@ section Reindex
 variable {k : Type} [CommRing k] {X : Scheme.{0}} {p : X ⟶ Sp k} {ι κ : Type} [Fintype ι] [Fintype κ]
 
 theorem rename_lin (e : κ ≃ ι) (m : ι → ℝ) : rename e (lin fun j => m (e j)) = lin m := by
-  simp only [lin, map_sum, map_mul, rename_C, rename_X]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [lin, map_sum, map_mul, rename_C, rename_X]
   exact e.sum_comp fun i => C (m i) * MvPolynomial.X i
 
 theorem isometric_comb_equiv (e : κ ≃ ι) {L : ι → HermLB p} {M : κ → HermLB p} (h : ∀ j, (M j).Isometric (L (e j)))

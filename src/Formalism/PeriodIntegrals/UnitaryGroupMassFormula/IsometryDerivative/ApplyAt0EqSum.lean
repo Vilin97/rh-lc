@@ -103,7 +103,8 @@ theorem Q_eq (φ : LaC N nu) (Q : MvPolynomial (FrV T N) ℂ)
   have h1 : evFr Q y = MvPolynomial.eval x Q := rfl
   have h2 : ∀ J, MvPolynomial.eval x (mY tp nu J) = minY N nu J (frC tp y) := fun J =>
     eval_mY tp nu J y
-  rw [← h1, hQ, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← h1, hQ, map_sum]
   simp only [map_mul, MvPolynomial.eval_C, h2]
   unfold canC prC hvC
   rw [finsum_eq_sum_of_fintype]

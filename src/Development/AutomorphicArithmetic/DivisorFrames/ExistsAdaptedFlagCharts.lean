@@ -44,7 +44,8 @@ private theorem UpperTheory.quotient_line_frame {X : Scheme.{0}} {A L : X.Module
   refine ⟨W, hle, hxW, ?_⟩
   obtain ⟨a, ha⟩ := (hs W (hle.trans h)).2 (t 0)
   have h₁ : resM L hW (c 0) = a j₀ • resM L (hle.trans h) (q.app U (s j₀)) := by
-    rw [← ht, ← ha, Fintype.linearCombination_apply, ← appLinear_apply, map_sum, Finset.sum_eq_single j₀, map_smul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← ht, ← ha, Fintype.linearCombination_apply, ← appLinear_apply, map_sum, Finset.sum_eq_single j₀, map_smul,
       appLinear_apply, app_resM]
     · intro j _ hj
       rw [map_smul, appLinear_apply, app_resM, h₀ j hj, map_zero, smul_zero]

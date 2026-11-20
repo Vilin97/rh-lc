@@ -34,7 +34,8 @@ theorem norm_le_of_distinct {ι : Type*} (s : Finset ι) (e : ι → ℕ) (u : �
   have hcoeff : ∀ N, coeff N (∑ j ∈ s, C (c j) * (X ^ e j * u j)) =
       ∑ j ∈ s, c j * (if e j ≤ N then coeff (N - e j) (u j) else 0) := by
     intro N
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [PowerSeries.coeff_C_mul, PowerSeries.coeff_X_pow_mul']
   have key : ∀ N, ∀ j ∈ s, e j = N → ‖c j‖ ≤ B := by

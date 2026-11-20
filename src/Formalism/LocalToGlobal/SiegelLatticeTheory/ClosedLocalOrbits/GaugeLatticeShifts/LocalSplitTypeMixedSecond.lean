@@ -270,7 +270,8 @@ theorem brS_frameAct {T T' : D.host.E} (F : LFlag (VS D) D.R.rS T) (F' : LFlag (
     (ξ : Matrix (Fin (D.R.rS + 1)) (Fin (D.R.rS + 1)) (𝓞 D.host.E)) (a b : Fin (D.R.rS + 1)) :
     brS (VS D) (frameAct (frame F') ξ b) (frame F a) =
       (ZhatL F F' * ξ.map (algebraMap (𝓞 D.host.E) D.host.E)) a b := by
-  simp only [frameAct, brS, map_sum, map_smul, smul_eq_mul, Matrix.mul_apply, Matrix.map_apply, ZhatL,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [frameAct, brS, map_sum, map_smul, smul_eq_mul, Matrix.mul_apply, Matrix.map_apply, ZhatL,
     Formalism.MainNotions.S.Zhat, frame]
   refine Finset.sum_congr rfl fun c _ => ?_
   rw [mul_comm]

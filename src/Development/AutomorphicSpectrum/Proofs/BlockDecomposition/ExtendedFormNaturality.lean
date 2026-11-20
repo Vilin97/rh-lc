@@ -48,7 +48,8 @@ theorem extForm_sum (hp : Par F) {n : ℕ} (w : Fin n → Glob1 F) (l : Fin n �
     change ∑ i, GlobalTheory.CompanionTheory.OneFormCoh.extForm F hp (l i) T (v.1 T) • (w i).1 T = v.1 T
     simp only [GlobalTheory.CompanionTheory.OneFormCoh.extForm_ev, algebraMap_smul]
     have h := congrArg (MainStatements.Hodge.evForm F T) (hw v)
-    rw [map_sum] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at h
     simp only [map_smul] at h
     exact h
   · intro s m hm
@@ -127,7 +128,8 @@ theorem main (hF : Framed F) :
       simp [Pi.single_apply]
     calc ∑ i, (LinearMap.proj i ∘ₗ g) v • f (Pi.single i 1)
         = f (∑ i, g v i • (Pi.single i 1 : Fin n → R)) := by
-          rw [map_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [map_sum]
           simp only [map_smul, LinearMap.comp_apply, LinearMap.proj_apply]
       _ = v := by
           rw [hsum]
@@ -136,7 +138,8 @@ theorem main (hF : Framed F) :
   · intro a ha
     refine ⟨∑ i, GlobalTheory.CompanionTheory.OneFormCoh.pushZ F hp (l i) a ha ⊗ₜ w i, ?_⟩
     funext T T' φ
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [Finset.sum_apply, GlobalTheory.CompanionTheory.OneFormCoh.muMap_tmul]
     exact GlobalTheory.CompanionTheory.OneFormCoh.extForm_sum F hp w l hw T' (a T T' φ)
   · intro t β hβ
@@ -148,7 +151,8 @@ theorem main (hF : Framed F) :
       funext T T' φ
       rw [GlobalTheory.CatCoh.amitsur_d0_apply, ← GlobalTheory.CompanionTheory.OneFormCoh.extForm_muMap F hp, hβ, map_sub,
         GlobalTheory.CompanionTheory.OneFormCoh.extended_form_naturality]
-    rw [← GlobalTheory.CompanionTheory.OneFormCoh.sum_contr F w l hw t, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← GlobalTheory.CompanionTheory.OneFormCoh.sum_contr F w l hw t, map_sum]
     refine Finset.sum_eq_zero fun i _ => ?_
     rw [LinearMap.rTensor_tmul, hzero, TensorProduct.zero_tmul]
 

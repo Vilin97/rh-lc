@@ -40,6 +40,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 
 theorem form_map {σ : E →ₐ[F] E} (hcm : IsCMExt F E σ) (τ : E →+* ℂ) {d : ℕ} (J : Matrix (Fin d) (Fin d) E) (a b : Fin d → E) :
     (fun i => τ (a i)) ⬝ᵥ J.map τ *ᵥ star (fun i => τ (b i)) = τ (form σ J a b) := by
-  simp [form, dotProduct, Matrix.mulVec, map_sum, map_mul, ← hcm.2.2.2]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [form, dotProduct, Matrix.mulVec, map_sum, map_mul, ← hcm.2.2.2]
 
 end GlobalTheory.IwaAdelicIso

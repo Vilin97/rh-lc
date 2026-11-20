@@ -32,7 +32,8 @@ theorem HiOrd.mul_left {K : ℕ} {g : PS k n d} (h : HiOrd K g) (a : PS k n d) :
 theorem HiOrd.sum {K : ℕ} {α : Type} (s : Finset α) (g : α → PS k n d) (h : ∀ i ∈ s, HiOrd K (g i)) :
     HiOrd K (∑ i ∈ s, g i) := by
   intro μ hμ
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_eq_zero fun i hi => h i hi μ hμ
 
 theorem HiOrd.deriv {K : ℕ} {g : PS k n d} (h : HiOrd (K + 1) g) (i : Fin n × Fin d) :
@@ -74,7 +75,8 @@ theorem const_dpolyN_eq_zero (F : Fin d → PS k 2 d) {ι : Type} [Fintype ι] (
     (P : MvPolynomial ι k) {g : PS k n d} (h : HiOrd (P.totalDegree + 1) g) :
     constantCoeff (DpolyN F cp u P g) = 0 := by
   unfold DpolyN
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_eq_zero fun m hm => ?_
   have hd : Finsupp.degree m ≤ P.totalDegree := by
     have h1 := MvPolynomial.le_totalDegree hm
@@ -156,7 +158,8 @@ theorem hiOrd_sub_trunc (f : PS k n d) (D : ℕ) :
 theorem coe_eq_sum (p : MvPolynomial (Fin n × Fin d) k) :
     (p : PS k n d) = ∑ μ ∈ p.support, AddMonoidAlgebra.coeff p μ • monomial μ (1 : k) := by
   ext ν
-  rw [MvPolynomial.coeff_coe, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [MvPolynomial.coeff_coe, map_sum]
   simp only [map_smul, MvPowerSeries.coeff_monomial, smul_eq_mul, mul_ite, mul_one, mul_zero]
   rw [Finset.sum_ite_eq]
   split_ifs with h
@@ -174,7 +177,8 @@ theorem nabL_trunc (F : Fin d → PS k 2 d) {ι : Type} [Fintype ι] (cp : ι �
     exact const_dpolyN_eq_zero F cp u P ((hiOrd_sub_trunc f P.totalDegree).mul_left G)
   have hsplit : nabL F cp u P G f = nabL F cp u P G (f - T) + nabL F cp u P G T := by
     rw [← map_add, sub_add_cancel]
-  rw [hsplit, h0, zero_add, hTdef, coe_eq_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hsplit, h0, zero_add, hTdef, coe_eq_sum, map_sum]
   simp only [map_smul, smul_eq_mul]
 
 theorem dpolyN_sub (F : Fin d → PS k 2 d) {ι : Type} [Fintype ι] (cp : ι → Fin n) (u : ι → Fin d → k)
@@ -197,7 +201,8 @@ theorem const_dpolyN_lin (F : Fin d → PS k 2 d) {ι : Type} [Fintype ι] (cp :
       ∑ i ∈ s, c i * constantCoeff (∑ m ∈ S, MvPowerSeries.C ((Q i).coeff m) * DmonN F cp u m g) :=
     Finset.sum_congr rfl fun i hi => by rw [hQ i hi]
   rw [hR]
-  simp only [map_sum, map_mul, MvPowerSeries.constantCoeff_C, MvPolynomial.coeff_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, MvPowerSeries.constantCoeff_C, MvPolynomial.coeff_sum,
     MvPolynomial.coeff_smul, smul_eq_mul, Finset.sum_mul, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun m _ => by ring

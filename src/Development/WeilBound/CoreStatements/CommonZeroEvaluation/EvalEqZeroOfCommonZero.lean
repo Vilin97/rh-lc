@@ -202,7 +202,8 @@ theorem eval_eq_zero_of_common_zero {W : Ideal (MvPolynomial (Fin n) ℂ)}
     · have h1 : aeval x q = 0 := hW q hq
       rw [aeval_algebraMap_apply, h1, map_zero]
     · have := congrArg a (hw i)
-      simpa [map_sum] using this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa [map_sum] using this
   have h := (hg.2 g).2 dvd_rfl _ hmem
   rw [aeval_algebraMap_apply] at h
   exact hinj (h.trans (map_zero a).symm)

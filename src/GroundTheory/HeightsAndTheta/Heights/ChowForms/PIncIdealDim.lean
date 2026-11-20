@@ -45,7 +45,8 @@ theorem IncIdealDim.proof (h₁ : IncidenceGeneric.Statement) (h₂ : GenericLin
       rw [← map_mul, mul_inv_cancel₀ hξj, map_one]
     have h2 : ψ (∑ m, X (i, m) * C (η m)) =
         -((∑ m, X (i, j.succAbove m) * C (ξ (j.succAbove m))) * C (ξ j)⁻¹) := by
-      simp only [ψ, AlgHom.restrictScalars_apply, map_sum, map_mul, rename_X, rename_C, τ]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [ψ, AlgHom.restrictScalars_apply, map_sum, map_mul, rename_X, rename_C, τ]
       rw [Finset.sum_mul, ← Finset.sum_neg_distrib]
       refine Finset.sum_congr rfl fun m _ => ?_
       rw [C_neg, C_mul]

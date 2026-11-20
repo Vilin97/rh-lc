@@ -29,9 +29,11 @@ theorem RestCutCaseDecomp.proof (h₁ : RestCutRestHom.Statement) (h₂ : RestCu
     exact ((homogeneousComponent_isHomogeneous _ _).map _).rename_isHomogeneous
   · rw [← hF]
     conv_lhs => rw [hdec]
-    rw [map_sum, Finset.sum_comm, ← hN]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_comm, ← hN]
     refine Finset.sum_congr rfl fun τ _ => ?_
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun m _ => ?_
     rw [map_mul, h₃]
 

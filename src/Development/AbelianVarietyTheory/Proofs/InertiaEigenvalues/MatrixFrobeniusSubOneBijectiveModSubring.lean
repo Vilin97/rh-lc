@@ -78,7 +78,8 @@ theorem semi_iterate {EE : Type} [CommRing EE] (j : EE →+* R) (φ : R →+* R)
     obtain ⟨q, hq⟩ := ih
     refine ⟨fun i l => ∑ k, Pm i k * ψ (q k l), fun v i => ?_⟩
     rw [Function.iterate_succ_apply', semi_apply]
-    simp only [hq, map_sum, map_mul, hψ, Function.iterate_succ_apply', Finset.mul_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hq, map_sum, map_mul, hψ, Function.iterate_succ_apply', Finset.mul_sum,
       Finset.sum_mul]
     rw [Finset.sum_comm]
     simp only [mul_assoc]
@@ -163,7 +164,8 @@ theorem matrix_frob_sub_one_bijective :
       convert h4 using 1
       simp only [Pi.sub_apply]
       rw [hq y0 i]
-      simp only [h', mul_add, Finset.sum_add_distrib, map_sum, map_mul, Finset.mul_sum,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [h', mul_add, Finset.sum_add_distrib, map_sum, map_mul, Finset.mul_sum,
         mul_left_comm (p : R)]
       ring)
     (fun x hx => by

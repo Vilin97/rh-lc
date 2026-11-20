@@ -91,7 +91,8 @@ theorem GlobalTheory.CompanionTheory.Hypotheses₂.HCA.exists_basis_lieOf_orthog
     intro X hX
     have h := hexp _ (hmemW X hX)
     have h2 := congrArg (vecOf (n := n)).symm h
-    rw [map_sum] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at h2
     simpa using h2
   refine ⟨d, fun i => vecOf.symm (e i), hbL, ?_, ?_, ?_⟩
   · exact hon.linearIndependent.map' (vecOf (n := n)).symm.toLinearMap
@@ -109,7 +110,8 @@ theorem GlobalTheory.CompanionTheory.Hypotheses₂.HCA.exists_basis_lieOf_orthog
     refine ⟨_, hO, fun i => ?_⟩
     have h := hexp _ (hfW i)
     have h2 := congrArg (vecOf (n := n)).symm h
-    rw [map_sum] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at h2
     simpa [f] using h2
 
 end

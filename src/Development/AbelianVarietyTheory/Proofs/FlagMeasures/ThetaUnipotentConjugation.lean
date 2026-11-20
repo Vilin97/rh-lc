@@ -71,7 +71,8 @@ theorem chr_rat (d : FJDat L A B ι) {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsC
     (hγ : γ ∈ GQ B) : d.chr ψ γ = 1 := by
   choose s hs using exists_rat_hA hγ
   unfold FJDat.chr
-  simp only [hs, ← map_mul, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hs, ← map_mul, ← map_sum]
   rw [BesselChar.trace_incA]
   exact hψ.2.2.1 _
 

@@ -140,7 +140,8 @@ theorem exists_coset_minimiser :
     have hyφ : φ y = ∑ j, b.repr y j • φ (b j) := by
       calc φ y = φ (∑ j, b.repr y j • b j) := by rw [b.sum_repr]
         _ = ∑ j, b.repr y j • φ (b j) := by rw [map_sum]; simp only [map_zsmul]
-    rw [smul_add, ← hy, hyφ, hχ0, map_sum, Finset.smul_sum, ← Finset.sum_add_distrib]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [smul_add, ← hy, hyφ, hχ0, map_sum, Finset.smul_sum, ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_zsmul, smul_smul, add_smul]
   have hsc : ∀ z : X, Q (N • z) = N ^ 2 * Q z := by

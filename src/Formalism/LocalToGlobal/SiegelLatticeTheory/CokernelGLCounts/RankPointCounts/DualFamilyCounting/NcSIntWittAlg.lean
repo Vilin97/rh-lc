@@ -69,7 +69,8 @@ theorem hform_conj (hs : ∀ z, s (s z) = z) (hJ : IsHerm s J) (x y : Fin n → 
   have hJ' : ∀ i j, s (J i j) = J j i := fun i j => by
     have := congrFun (congrFun hJ j) i
     simpa [cT] using this
-  simp only [hform, map_sum, map_mul, hs, hJ']
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hform, map_sum, map_mul, hs, hJ']
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   ring

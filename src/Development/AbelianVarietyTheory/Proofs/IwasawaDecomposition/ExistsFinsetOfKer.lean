@@ -56,7 +56,8 @@ theorem exists_finset_emb (E : Type) [Field E] [NumberField E] :
     fun F hF φ x => ?_⟩
   · obtain ⟨p, -, rfl⟩ := Finset.mem_image.1 hz
     exact (Algebra.IsAlgebraic.isAlgebraic (R := ℚ) (b p.2)).algHom p.1.toRatAlgHom
-  · rw [← b.sum_repr x, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [← b.sum_repr x, map_sum]
     refine sum_mem fun i _ => ?_
     rw [map_rat_smul, Rat.smul_def]
     exact mul_mem (SubfieldClass.ratCast_mem F _) (hF _ (Finset.mem_image.2 ⟨(φ, i), Finset.mem_univ _, rfl⟩))

@@ -153,7 +153,8 @@ theorem scalar_frame_w_zero_exists (Λ : Submodule (𝓞 D.host.E) (VS D).V) (f 
   · have e : betaP p β w - ∑ j, w j • baseChange₂ D p (x2 j) =
         ∑ j, w j • baseChange₂ D p (β ((VS D).frame j - u j) - x2 j) := by
       nth_rewrite 1 [hw']
-      rw [hHh, map_sum, ← Finset.sum_sub_distrib]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hHh, map_sum, ← Finset.sum_sub_distrib]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [map_smul, betaP_bc, ← smul_sub, ← map_sub]
     rw [e]

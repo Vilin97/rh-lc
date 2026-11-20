@@ -29,7 +29,8 @@ theorem exists_nonneg_avgOver (π : W →ₗ[ℂ] E) {K : Subgroup G} {f : G →
   have hidx : (0 : ℝ) < (S.index : ℝ) := Nat.cast_pos.2 (Nat.pos_of_ne_zero hf)
   refine ⟨(S.index : ℝ)⁻¹ * ∑ q, rr q, ?_, ?_, ?_⟩
   · exact mul_nonneg (inv_nonneg.2 hidx.le) (Finset.sum_nonneg fun q _ => (hrr q).1)
-  · rw [avgOver_eq_sum, map_smul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [avgOver_eq_sum, map_smul, map_sum]
     simp_rw [fun q : K ⧸ S => (hrr q).2]
     rw [← Finset.sum_smul, smul_smul]
     congr 1

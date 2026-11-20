@@ -50,7 +50,8 @@ theorem injective_app_of_frame {X : Scheme.{0}} {F G : X.Modules} (φ : F ⟶ G)
   change Function.Injective (appLinear φ W)
   refine (injective_iff_map_eq_zero _).2 fun t ht => ?_
   obtain ⟨a, rfl⟩ := (he W hW).2 t
-  simp only [Fintype.linearCombination_apply, map_sum, map_smul, appLinear_apply, app_resM,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Fintype.linearCombination_apply, map_sum, map_smul, appLinear_apply, app_resM,
     h] at ht
   have ha : a = 0 := funext (Fintype.linearIndependent_iff.1 hli a ht)
   rw [ha, map_zero]
@@ -77,7 +78,8 @@ theorem injective_and_exists_frame_mul_upper : ∀ {T : Scheme.{0}} (x : T ⟶ S
     _, Univ.isFrame_sum_smul_of_isUnit he _ (isUnit_submatrix_castLE_of_upper l.is_le b hb hu),
     fun j => ?_⟩
   rw [colSecOn_mul, ← appLinear_apply]
-  simp only [map_sum, map_smul, appLinear_apply, hφ, Matrix.submatrix_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, appLinear_apply, hφ, Matrix.submatrix_apply]
   refine Finset.sum_of_injOn (Fin.castLE l.is_le) (Fin.castLE_injective _).injOn
     (fun _ _ => Finset.mem_univ _) (fun k _ hk => ?_) (fun _ _ => rfl)
   rw [hb, zero_smul]

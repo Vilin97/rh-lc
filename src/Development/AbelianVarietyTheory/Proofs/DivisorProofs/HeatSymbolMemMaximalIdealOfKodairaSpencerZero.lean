@@ -78,9 +78,11 @@ theorem symbol_mem_maximalIdeal : ∀ (E : Type) [Field E] [NumberField E] [IsCM
   intro a b
   have e := congrArg (fun M => (Scheme.ΓSpecIso (CommRingCat.of (ChartRing k m d))).hom.hom (M a b)) heq
   simp only [Matrix.map_apply, Iso.inv_hom_id_apply] at e
-  rw [← e, Matrix.mul_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← e, Matrix.mul_apply, map_sum]
   refine Ideal.sum_mem _ fun c _ => ?_
-  rw [map_mul, Matrix.mul_apply, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_mul, Matrix.mul_apply, map_sum, Finset.sum_mul]
   refine Ideal.sum_mem _ fun e' _ => ?_
   rw [map_mul]
   exact Ideal.mul_mem_right _ _ (Ideal.mul_mem_left _ _ (hm e' c))

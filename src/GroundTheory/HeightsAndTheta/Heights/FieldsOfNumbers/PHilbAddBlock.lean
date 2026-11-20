@@ -181,7 +181,8 @@ theorem finrank_gradedPiece (I : Ideal (MRing ι F)) (M : Option K → ℕ) :
       rw [← Ideal.Quotient.eq_zero_iff_mem, ← hs]
       exact hg
     have hmem := Ideal.mem_map_of_mem (splitEquiv F ι N) hg'
-    rw [hJ, map_splitEquiv, map_sum] at hmem
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hJ, map_splitEquiv, map_sum] at hmem
     simp only [splitEquiv_monomial_comb] at hmem
     have hc := (mem_map_C_iff.mp hmem) p.2.1
     rw [coeff_sum, Fintype.sum_prod_type] at hc
@@ -228,7 +229,8 @@ theorem finrank_gradedPiece (I : Ideal (MRing ι F)) (M : Option K → ℕ) :
       have h' : rename (addBlockIncl ι N) (∑ x, monomial (lift x) (c x) - monomial d 1) *
           rename (newVar ι N) (monomial a 1) ∈ J :=
         Ideal.mul_mem_right _ _ (Ideal.mem_map_of_mem _ hc')
-      rw [map_sub, map_sum, sub_mul, Finset.sum_mul] at h'
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, map_sum, sub_mul, Finset.sum_mul] at h'
       simp only [← monomial_comb] at h'
       rw [← Ideal.Quotient.eq] at h'
       have hs := sum_smul_mk_monomial F J (fun x : B => comb (lift x) a) c

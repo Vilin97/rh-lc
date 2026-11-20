@@ -196,7 +196,8 @@ theorem isRegularLocalRing_locAt_chart (P : Ideal (MvPolynomial (Σ k, ι k) ℂ
     have hK : ∀ k, g (Sum.inr k) = 0 := by
       intro k
       have h := congrArg (lam k) hg
-      simp only [map_add, map_sum, map_smul, map_zero, smul_eq_mul, v, Sum.elim_inl, Sum.elim_inr,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_add, map_sum, map_smul, map_zero, smul_eq_mul, v, Sum.elim_inl, Sum.elim_inr,
         hlamG, hlamX, mul_zero, Finset.sum_const_zero, zero_add, mul_ite, mul_one,
         Finset.sum_ite_eq', Finset.mem_univ, if_true] at h
       exact h

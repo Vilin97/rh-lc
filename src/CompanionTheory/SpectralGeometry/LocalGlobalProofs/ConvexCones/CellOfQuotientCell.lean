@@ -177,7 +177,8 @@ theorem cell_of_quot_cell : ∀ (O : Type) [CommRing O] [IsDedekindDomain O] [Ch
     have hv := (hKt _ (hσ.mem (s i)) (hσ.nonneg (s i))).2.1 hKj
     have e3 : k • σ (s i) = ∑ l, c' l • pull (orad (O := O) β).mkQ (δ l) := by
       have e := congrArg (pullLin (orad (O := O) β).mkQ) hkc
-      simp only [map_nsmul, map_sum, pullLin_apply] at e
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_nsmul, map_sum, pullLin_apply] at e
       rw [desc _ (hσ.mem (s i)) hv] at e
       exact e
     rw [e3]

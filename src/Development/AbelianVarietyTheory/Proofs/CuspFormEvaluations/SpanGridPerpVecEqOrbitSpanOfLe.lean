@@ -35,7 +35,8 @@ theorem map_perpVec_apply (f : R →+* S) (h : (Fin n → R) →ₗ[R] ((Fin n �
     ext a' a; exact hM a' a
   have hadj (a a') : f ((hMat h e e').adjugate a a') = (hMat h' ε ε').adjugate a a' := by
     rw [← hm, ← RingHom.map_adjugate]; rfl
-  simp only [perpVec, Pi.sub_apply, Pi.smul_apply, Finset.sum_apply, smul_eq_mul, map_sub, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [perpVec, Pi.sub_apply, Pi.smul_apply, Finset.sum_apply, smul_eq_mul, map_sub, map_mul,
     map_sum, RingHom.map_det, hm, hadj, hg, hge, he']
 
 theorem map_perpVec_dotPairing (f : R →+* S) (ε ε' : Fin p → Fin n → R) (γ : Fin n → R) :
@@ -104,7 +105,8 @@ variable [Fintype κ]
 
 theorem swapVars_rowForm_isHomogeneous (t : T) (r : Fin p ⊕ Fin q) (u : κ → MvPolynomial σ K)
     {d : ℕ} (hu : ∀ k, (u k).IsHomogeneous d) : (swapVars (rowForm t r u)).IsHomogeneous d := by
-  rw [rowForm_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [rowForm_apply, map_sum]
   refine IsHomogeneous.sum _ _ _ fun k _ => ?_
   simp only [swapVars, map_mul, eval₂Hom_C, eval₂Hom_X']
   simpa using ((hu k).map C).mul (isHomogeneous_C σ (X (t, r, k) : Poly K T p q κ))
@@ -154,7 +156,8 @@ theorem map_coordProd (f : R →+* S) (c : T → Fin p → ℕ) (c' : T → Fin 
     MvPolynomial.map f (coordProd c c' w w' x) =
       coordProd c c' (fun t i k => f (w t i k)) (fun t i k => f (w' t i k)) fun j => f (x j) := by
   simp only [coordProd, map_minorProd, map_perpVec_dotPairing]
-  simp only [Function.comp_def, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Function.comp_def, map_sum, map_mul]
 
 variable {K : Type} [Field K]
 
@@ -258,9 +261,11 @@ theorem exists_sum_mul_embedding_eq {E K J κ ι : Type*} [Field E] [CharZero E]
       have h2 : u (Pi.single k a) = ∑ j, σ j a • Pi.single (j, k) 1 := by
         ext ⟨j', k'⟩
         by_cases hk : k' = k <;> simp [u, Finset.sum_apply, Pi.single_apply, hk]
-      rw [h2, map_sum] at h1
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [h2, map_sum] at h1
       simpa [mul_comm] using h1
-    rw [← Finset.univ_sum_single (fun s : J × κ => y s.1 s.2), map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Finset.univ_sum_single (fun s : J × κ => y s.1 s.2), map_sum]
     refine Finset.sum_eq_zero fun s _ => ?_
     rw [← mul_one (y s.1 s.2), ← smul_eq_mul, Pi.single_smul', map_smul, h0, smul_zero]
   obtain ⟨x, hx⟩ := (Submodule.mem_span_range_iff_exists_fun K).1 hy

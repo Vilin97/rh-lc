@@ -180,7 +180,8 @@ theorem coef_mem (O : Type) [CommRing O] (N : ℕ) (ν : Fin N → ℕ) (m : Fin
     simp only [LinearMap.sum_apply, LinearMap.smul_apply, MvPolynomial.coeff_sum, MvPolynomial.coeff_smul, smul_eq_mul]
     simpa [Φ] using h
   have hzero := lduHom_pure_of_parts O N _ s (fun m' => Asub.mkQ (Cm m')) (fun k => by
-    simp only [← map_smul, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [← map_smul, ← map_sum]
     rw [hcoef k, Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero]
     exact Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _ (Submodule.mem_map_of_mem (hp i))) m (Finset.mem_insert_self _ _)
   rw [Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero] at hzero

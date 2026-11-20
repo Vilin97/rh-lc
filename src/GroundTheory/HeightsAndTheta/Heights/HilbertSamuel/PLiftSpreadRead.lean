@@ -133,7 +133,8 @@ variable (y) in
 theorem aeval_div_mem (c : ∀ k, ι k) {g : MRingOver ℚ ι} {d : K → ℕ} (hg : IsMultiHomog g d) :
     aeval y g / ∏ k, y ⟨k, c k⟩ ^ d k ∈ chartRingQ y c := by
   classical
-  rw [g.as_sum, map_sum, Finset.sum_div]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [g.as_sum, map_sum, Finset.sum_div]
   refine Subalgebra.sum_mem _ fun m hm => ?_
   rw [aeval_monomial, mul_div_assoc]
   refine Subalgebra.mul_mem _ (Subalgebra.algebraMap_mem _ _) ?_
@@ -465,7 +466,8 @@ theorem exists_sections_of_generatedV {n : K → ℤ} (hg : KH.GeneratedV ℚ (K
         linear_combination (evL y _ (u (chartCell c) j) * evL y _ (z (chartCell c) j (chartCell c))) * h1
       rw [Fintype.sum_sigma, Finset.sum_eq_single c]
       · refine (Finset.sum_congr rfl fun j _ => e j).trans ?_
-        rw [← map_sum, hsum, map_one]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [← map_sum, hsum, map_one]
       · intro c' _ hc'
         simp [hc']
       · intro h

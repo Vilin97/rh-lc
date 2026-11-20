@@ -55,7 +55,8 @@ private theorem sum_neg_index_smul_diag_apply_comm {V : Type*} [AddCommGroup V] 
     · subst ha; simp [hb]
     · subst hb; simp [ha]
     · simp [ha, hb]
-  simp only [LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, h1, smul_add,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, h1, smul_add,
     Finset.sum_add_distrib, smul_sub, Finset.sum_sub_distrib, smul_ite, smul_zero,
     Finset.sum_ite_eq', Finset.sum_ite_eq, Finset.mem_univ, if_true]
   rw [sub_smul, neg_smul, neg_smul]
@@ -308,7 +309,8 @@ private theorem coeff_apply_of_diagonal_on_monomials {σ : Type*} (g : MvPolynom
     have h : monomial n (AddMonoidAlgebra.coeff P n) = AddMonoidAlgebra.coeff P n • monomial n (1 : ℂ) := by
       rw [smul_monomial, smul_eq_mul, mul_one]
     rw [h, map_smul, hg, smul_smul]
-  conv_lhs => rw [P.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [P.as_sum, map_sum]
   simp only [hmon, coeff_sum, coeff_smul, smul_eq_mul]
   simp only [MvPolynomial.coeff_monomial, mul_ite, mul_one, mul_zero]
   rw [Finset.sum_ite_eq']

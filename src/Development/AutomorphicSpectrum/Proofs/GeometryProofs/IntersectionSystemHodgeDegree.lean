@@ -159,9 +159,11 @@ theorem class_change (Or : CptOrigin Y S₀ Dc Hd) {w : (Σ k, J k) → ℂ} (d 
     (Hd.F τ).mkQ (d'.b τ (tailIdx Dc.j_le_N q)) =
       ∑ p, T p q • (Hd.F τ).mkQ (d.b τ (tailIdx Dc.j_le_N p)) := by
   simp_rw [← map_smul]
-  rw [← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum]
   refine (Submodule.Quotient.eq (Hd.F τ)).2 ?_
-  rw [Or.F_eq τ, Submodule.mem_comap, map_sub, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Or.F_eq τ, Submodule.mem_comap, map_sub, map_sum]
   have e : Or.i τ (d'.b τ (tailIdx Dc.j_le_N q)) - ∑ p, Or.i τ (T p q • d.b τ (tailIdx Dc.j_le_N p)) =
       (Or.i τ (d'.b τ (tailIdx Dc.j_le_N q)) - s' τ q) -
         ∑ p, T p q • (Or.i τ (d.b τ (tailIdx Dc.j_le_N p)) - s τ p) := by

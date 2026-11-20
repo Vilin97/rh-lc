@@ -175,7 +175,8 @@ theorem adapted_index_vector_compatibility : ∀ (F E : Type) [Field F] [NumberF
       rw [co.form, hu, dotProduct_zero, zero_sub, h2, AddChar.map_neg_eq_inv, inv_eq_one, ← h5]
       change _ = B.ψ (liftV v _)
       congr 1
-      simp only [dotProduct, map_sum, PositivityTheory.ThK.Vac.liftV_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [dotProduct, map_sum, PositivityTheory.ThK.Vac.liftV_mul]
       rfl
   have h6 := congrFun (E0 _ (neg_mem huL)) x
   have l1 : (locCo co v (-u)).1 = -a := funext fun k => by simp [locCo, hu, evFin_liftV]

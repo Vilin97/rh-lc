@@ -83,10 +83,12 @@ theorem exists_den_lattice (b : Module.Basis ι F E) (L : Submodule (𝓞 E) (Fi
   have : (D : F) * b.repr (l j) k = ∑ t, c t • ((D : F) * b.repr ((s t : Fin n → E) j) k) := by
     rw [hl']
     simp only [Finset.sum_apply, Pi.smul_apply]
-    rw [← b.coord_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← b.coord_apply, map_sum]
     simp only [map_zsmul, b.coord_apply, Finset.mul_sum, mul_smul_comm, Finsupp.smul_apply]
   unfold IntF
-  rw [this, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [this, map_sum]
   exact ohat_sum _ fun t _ => by rw [map_zsmul]; exact ohat_zsmul (h (t, j, k)) _
 
 end PI.WAU

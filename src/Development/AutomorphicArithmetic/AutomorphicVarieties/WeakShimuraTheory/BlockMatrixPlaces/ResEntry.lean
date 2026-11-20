@@ -11,7 +11,8 @@ private theorem res_entry {R : Type} [CommRing R] [IsLocalRing R] {X X' : M4 R} 
   have kr : ∀ (A B : M4 R), (∀ a b, a ≠ b → residue R (B a b) = 0) →
       ∀ a b, residue R ((A * B) a b) = residue R (A a b) * residue R (B b b) := by
     intro A B hB a b
-    rw [Matrix.mul_apply, map_sum, Finset.sum_eq_single b]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Matrix.mul_apply, map_sum, Finset.sum_eq_single b]
     · rw [map_mul]
     · intro c _ hc
       rw [map_mul, hB c b hc, mul_zero]
@@ -20,7 +21,8 @@ private theorem res_entry {R : Type} [CommRing R] [IsLocalRing R] {X X' : M4 R} 
   have kl : ∀ (A B : M4 R), (∀ a b, a ≠ b → residue R (A a b) = 0) →
       ∀ a b, residue R ((A * B) a b) = residue R (A a a) * residue R (B a b) := by
     intro A B hA a b
-    rw [Matrix.mul_apply, map_sum, Finset.sum_eq_single a]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Matrix.mul_apply, map_sum, Finset.sum_eq_single a]
     · rw [map_mul]
     · intro c _ hc
       rw [map_mul, hA a c (Ne.symm hc), zero_mul]

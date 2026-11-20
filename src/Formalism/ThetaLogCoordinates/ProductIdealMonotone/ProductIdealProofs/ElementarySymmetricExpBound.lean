@@ -50,7 +50,8 @@ theorem invariant_factors_submodule : InvariantFactorsSubmodule := by
     obtain ⟨coef, -, hcoef⟩ := Submodule.mem_span_finset.mp hz
     have hfa : f (fun c => coef c) = P.mkQ (π ^ E • x) := by
       show ∑ c : C, coef c • P.mkQ (c : X) = _
-      rw [← hpz, map_add, Submodule.mkQ_apply, (Submodule.Quotient.mk_eq_zero P).mpr hp, zero_add,
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hpz, map_add, Submodule.mkQ_apply, (Submodule.Quotient.mk_eq_zero P).mpr hp, zero_add,
         ← hcoef, map_sum, ← Finset.sum_coe_sort C]
       refine Finset.sum_congr rfl fun c _ => ?_
       rw [map_smul]
@@ -62,7 +63,8 @@ theorem invariant_factors_submodule : InvariantFactorsSubmodule := by
     simp only [Submodule.coe_sum, Submodule.coe_smul] at hsum
     set r := b.repr ⟨_, ha⟩ with hr
     have hq : P.mkQ (π ^ E • x) = P.mkQ (∑ i, r i • π ^ E • mm i) := by
-      rw [← hfa, ← hsum, map_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hfa, ← hsum, map_sum, map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_smul, map_smul, hmf i]
     have hmem : π ^ E • x - ∑ i, r i • π ^ E • mm i ∈ P := by

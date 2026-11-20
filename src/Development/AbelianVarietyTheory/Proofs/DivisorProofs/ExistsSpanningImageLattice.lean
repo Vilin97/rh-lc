@@ -14,7 +14,8 @@ theorem image_integral_points_eq_span_of_surjective :
   have key : ∀ x : Fin h → C, π x = ∑ i, x i • π (Pi.single i 1) := by
     intro x
     conv_lhs => rw [pi_eq_sum_univ' x]
-    simp only [map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul]
   refine ⟨fun i => π (Pi.single i 1), ?_, ?_⟩
   · rw [eq_top_iff]
     rintro v -

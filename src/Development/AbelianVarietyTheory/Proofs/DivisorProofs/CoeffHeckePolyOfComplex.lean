@@ -242,7 +242,8 @@ theorem LocRep.gaL_comm (hβ : IsBaseFrame V β Λ N) {P : Pl D.host.E} (hP : Of
     {A : Finset (GA D V)} (h : LocRep (levG V β L) P x A) {G : Type} [Group G] [Fintype G] (eG : G ≃* G0 L.Pg L.r)
     (c : G → ℂ) {F : GA D V → ℂ} (hF : RInv (levG V β L) F) :
     gaL V β L eG c (heckeLin V A F) = heckeLin V A (gaL V β L eG c F) := by
-  simp only [gaL, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [gaL, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul]
   refine Finset.sum_congr rfl fun g _ => congrArg _ ?_
   show actG0 V β L (eG g) (heckeLin V A F) = heckeLin V A (actG0 V β L (eG g) F)
   unfold actG0

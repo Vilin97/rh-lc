@@ -32,7 +32,8 @@ private theorem lin_lie {A : Type} [Ring A] [Algebra ℂ A] {n : ℕ} (F : Fin n
       hF, map_sub]
     congr 1 <;> split_ifs <;> simp_all [lin_E]
   rw [eq_sum_E X, eq_sum_E Y]
-  simp only [sum_lie, lie_sum, smul_lie, lie_smul, map_sum, map_smul, hE]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [sum_lie, lie_sum, smul_lie, lie_smul, map_sum, map_smul, hE]
 
 private noncomputable def lie {A : Type} [Ring A] [Algebra ℂ A] {n : ℕ} (F : Fin n → Fin n → A)
     (hF : Formalism.REAL.GlRel F) : gl n →ₗ⁅ℂ⁆ A :=

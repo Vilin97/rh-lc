@@ -53,7 +53,8 @@ theorem toW_sum_smul (c : ι → ZMod a → invE l e (A O K)) (w : ι → ME P)
   have : (⟨_, hv⟩ : ME P) = ∑ j, (⟨(fun τ => (c j τ : K⟦X⟧)) • (w j).1,
       P.smul_tot_mem_Mext (fun τ => (c j τ).2) (w j).2⟩ : ME P) := Subtype.ext (by
     rw [Submodule.coe_sum])
-  rw [this, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [this, map_sum]
   exact Finset.sum_congr rfl fun j _ => toW_smul t ϖ P (c j) (w j) _ fun τ => rfl
 
 theorem act_toW_sum (I : Ident t ϖ P T) {s : GQ l} {g : G} {γ : TameGal K l e a} (hc : Covers K t ϖ s γ)
@@ -70,7 +71,8 @@ theorem act_toW_sum (I : Ident t ϖ P T) {s : GQ l} {g : G} {γ : TameGal K l e 
     rw [← matAct_eq_sum]; exact hv
   have hv1 : toW t ϖ P ⟨v, hvm⟩ = toW t ϖ P ⟨_, e1⟩ := congrArg _ (Subtype.ext (eq_sum_bas v))
   have hv2 : toW t ϖ P ⟨_, hv⟩ = toW t ϖ P ⟨_, e2⟩ := congrArg _ (Subtype.ext (matAct_eq_sum γ _ v))
-  rw [hv1, hv2, toW_sum_smul, toW_sum_smul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hv1, hv2, toW_sum_smul, toW_sum_smul, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [Ident.act_smul, hw, UnitModel.galOW_iW_of_covers t ϖ hc (f j) (f' j) fun τ => rfl]
 
@@ -151,7 +153,8 @@ theorem stable_of_desc (I : Ident t ϖ P T) (s : G →* GQ l) {Δ : Descent P} (
       rw [Finset.sum_eq_single j (fun x _ hx => by simp [Pi.single_apply, hx]) (by simp)]
       simp
   rintro _ ⟨c, rfl⟩
-  rw [pi_eq_sum_univ' c, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [pi_eq_sum_univ' c, map_sum, map_sum]
   refine Submodule.sum_mem _ fun j _ => ?_
   rw [key, Ident.act_smul, galOW_inclO, hcol, hΔ g γ hc _ ⟨Δ.act γ (P.phi (bas j)),
     mem_ME_of_mem_L (Δ.act_mem_ext γ le_rfl rot_A (P.phi_mem_L (P.bas_mem_M j)))⟩ rfl]

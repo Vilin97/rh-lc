@@ -164,7 +164,8 @@ theorem eq_zero_of_vanish_fibre : ∀ {F : Type} [Field F] [NumberField F] {κ :
       exact Submodule.sum_mem _ fun b _ => Submodule.smul_mem _ _ (lc ψ hstd b Φ hΦ)
     have hT : T (fun x => (∑ b ∈ s, c b * ψ (x ⬝ᵥ b)) * Φ x) =
         fun x => (∑ b ∈ s, c b * ψ (x ⬝ᵥ b)) * T Φ x := by
-      rw [hsum, hsum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hsum, hsum, map_sum]
       refine Finset.sum_congr rfl fun b hb => ?_
       rw [map_smul, hchar b hb Φ hΦ]
     have := hiso μ inferInstance _ hmem

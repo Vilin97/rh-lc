@@ -60,6 +60,7 @@ theorem UpperTheory.V.AlgebraTools.Det.injTest :
         MvPolynomial.C = algebraMap A B := by
       ext a : 1
       simp
-    rw [h1, map_one, hz, map_add, map_one, map_mul, injTest_comp, e, GDet.gen, map_sum] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h1, map_one, hz, map_add, map_one, map_mul, injTest_comp, e, GDet.gen, map_sum] at h2
     simp only [injTest_smul, injTest_comp, e] at h2
     simpa only [RingHom.coe_coe, MvPolynomial.aeval_X] using h2

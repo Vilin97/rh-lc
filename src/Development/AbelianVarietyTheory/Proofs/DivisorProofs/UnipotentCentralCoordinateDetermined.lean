@@ -53,7 +53,8 @@ theorem fA_sum_left {ι : Type} (s : Finset ι) (f : ι → Fin n → AE F E) (w
   exact Finset.sum_comm
 
 theorem fA_incV (a b : Fin n → E) : fA σ J (incV F a) (incV F b) = inclR (AF F) (form σ J a b) := by
-  simp [fA, form, incV, incM, dotProduct, Matrix.mulVec, cA_inclR, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [fA, form, incV, incM, dotProduct, Matrix.mulVec, cA_inclR, map_sum, map_mul]
 
 theorem fA_mat (g : UA σ J) (v w : Fin n → AE F E) : fA σ J (mat g *ᵥ v) (mat g *ᵥ w) = fA σ J v w := by
   have hg : (mat g)ᵀ * incM F J * (mat g).map (cA σ) = incM F J := g.2
@@ -65,7 +66,8 @@ theorem fA_mat (g : UA σ J) (v w : Fin n → AE F E) : fA σ J (mat g *ᵥ v) (
 
 theorem fA_skew (hσ : ∀ e, σ (σ e) = e) (hJ : ∀ i j, σ (J i j) = -J j i) (v w : Fin n → AE F E) :
     cA σ (fA σ J v w) = -fA σ J w v := by
-  simp only [fA, dotProduct, Matrix.mulVec, map_sum, map_mul, cA_cA hσ, incM, Matrix.map_apply, cA_inclR, hJ, map_neg]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [fA, dotProduct, Matrix.mulVec, map_sum, map_mul, cA_cA hσ, incM, Matrix.map_apply, cA_inclR, hJ, map_neg]
   rw [← Finset.sum_neg_distrib]
   simp only [Finset.mul_sum]
   rw [Finset.sum_comm]
@@ -278,7 +280,8 @@ theorem coC_sub_conj_eq : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [
         funext i
         rw [vecMul_incM, hzc i, incV_add, incV_add, incV_smul, incV_smul, fA_add_right, fA_add_right,
           fA_smul_right, fA_smul_right, hwX, hwY, hwι]
-        simp only [Pv, map_sum, map_mul, cA_inclR]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [Pv, map_sum, map_mul, cA_inclR]
         ring
       calc w = w ᵥ* (incM F W.J * incM F W.J⁻¹) := by rw [hinv, Matrix.vecMul_one]
         _ = Wv α := by rw [← Matrix.vecMul_vecMul, hv]

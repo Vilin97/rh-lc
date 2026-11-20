@@ -58,7 +58,8 @@ theorem HD.const_of_zero {f : ℝ → A} (h : HD f (fun _ => 0)) (l : A →ₗ[�
       funext s; simp [h2, map_sum]
     have e2 : ∑ i, p' i s * l (C i) = 0 := by
       have := congrArg l (h3 s)
-      simpa [map_sum] using this.symm
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa [map_sum] using this.symm
     rw [e1]
     rwa [e2] at h4
   exact is_const_of_deriv_eq_zero (fun s => (hd s).differentiableAt) (fun s => (hd s).deriv) s t
@@ -114,7 +115,8 @@ theorem hd_lie {F F' : ℝ → Lie E a} (h : ∀ s, HasDerivAt F (F' s) s) :
   have hsum : ∀ X : Lie E a, lie E a X = ∑ m, ((b.repr X m : ℝ) : ℂ) • lie E a (b m) := by
     intro X
     conv_lhs => rw [← b.sum_repr X]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun m _ => ?_
     rw [map_smul]
     exact (algebraMap_smul ℂ _ _).symm

@@ -92,7 +92,8 @@ theorem cf_mem_HHa {φ : K' →+ K} (hφ : ∀ a x, φ (j a * x) = a * φ x) {T 
     intro t ht i i'
     rw [← cf_comm j hφ _ (lap r n K' 1 t (cc t) i i'), hh t ht i i', cf_zero]
     intro Q
-    simp [lap, Matrix.one_apply, ite_smul, Finset.sum_ite_eq, LinearMap.sum_apply, pderiv_map, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [lap, Matrix.one_apply, ite_smul, Finset.sum_ite_eq, LinearMap.sum_apply, pderiv_map, map_sum]
   · intro s i i' hlt t
     have := cf_comm j hφ (rowShift r n K s i i' t).toLinearMap (rowShift r n K' s i i' (j t)).toLinearMap ?_ P
     · rw [AlgHom.toLinearMap_apply, AlgHom.toLinearMap_apply, hi s i i' hlt] at this
@@ -185,10 +186,12 @@ theorem exists_coords : ∃ (N : ℕ) (e : Fin N → 𝓞 K') (φ : Fin N → K'
   · have h0 : ∀ y : 𝓞 K', ∑ i, ((f (Pi.single i 1) : 𝓞 K') : K') * j (φ i y) = y := by
       intro y
       have h1 : y = ∑ i, g y i • f (Pi.single i 1) := by
-        conv_lhs => rw [← show f (g y) = y from LinearMap.congr_fun hfg y, pi_eq_sum_univ' (g y), map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          conv_lhs => rw [← show f (g y) = y from LinearMap.congr_fun hfg y, pi_eq_sum_univ' (g y), map_sum]
         simp only [map_smul]
       conv_rhs => rw [h1]
-      simp only [hφ, map_sum, Algebra.smul_def, map_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hφ, map_sum, Algebra.smul_def, map_mul]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [mul_comm]; rfl
     obtain ⟨⟨y, s⟩, hy⟩ := IsLocalizedModule.surj (nonZeroDivisors (𝓞 K))
@@ -224,7 +227,8 @@ theorem gaStar_map (ga : Matrix (Fin n) (Fin n) E) (P : MvPolynomial (LtN Dw n) 
   | mul_X p v hp =>
     simp only [map_mul, hp, map_X]
     congr 1
-    simp only [Formalism.L2.Pj.gaStar, aeval_X, letB, map_sum, map_mul, map_C, map_X]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Formalism.L2.Pj.gaStar, aeval_X, letB, map_sum, map_mul, map_C, map_X]
     rfl
 
 theorem pG_map (a : (E →+* ℂ) × ℕ → ℕ) :
@@ -343,7 +347,8 @@ theorem exists_ioLFRec_over : ∀ (E : Type) [Field E] [NumberField E] [IsCMFiel
     refine ⟨∑ i, (e i : c'.F) • up (v i), ?_, ?_⟩
     · refine Submodule.sum_mem _ fun i _ => ?_
       exact Submodule.smul_mem _ (e i) ((m1 (up (v i))).2 (map_mem_nabStd _ lam ((n1 _).1 (hv i))))
-    · rw [eq_sum_cf (incF c c' hle) _ φ hsum P, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [eq_sum_cf (incF c c' hle) _ φ hsum P, map_sum]
       simp only [map_smul, hup, hv']
 
 end GlobalTheory.IoExtend

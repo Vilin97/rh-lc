@@ -15,7 +15,8 @@ theorem exists_symm_bilin_ext {L V : Type} [AddCommGroup L] [Module.Free ℤ L] 
   have htop : ⊤ ≤ Submodule.span ℝ (Set.range fun i => P (e i)) := by
     rw [← hP, Submodule.span_le]
     rintro _ ⟨a, rfl⟩
-    rw [← e.sum_repr a, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← e.sum_repr a, map_sum]
     refine Submodule.sum_mem _ fun i _ => ?_
     rw [map_zsmul]
     exact zsmul_mem (Submodule.subset_span (Set.mem_range_self (f := fun i => P (e i)) i)) _
@@ -26,7 +27,8 @@ theorem exists_symm_bilin_ext {L V : Type} [AddCommGroup L] [Module.Free ℤ L] 
   let f : V →ₗ[ℝ] (V →ₗ[ℂ] ℂ) := β.constr ℝ fun i => b (e i)
   have hf : ∀ a, f (P a) = b a := fun a => by
     rw [← e.sum_repr a]
-    simp only [map_sum, map_zsmul, ← hβ, f, Module.Basis.constr_basis]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_zsmul, ← hβ, f, Module.Basis.constr_basis]
   have hs : ∀ u v, f u v = f v u := by
     let F : V →ₗ[ℝ] V →ₗ[ℝ] ℂ := LinearMap.mk₂ ℝ (fun u v => f u v) (fun _ _ _ => by simp) (fun _ _ _ => by simp)
       (fun _ _ _ => by simp) (fun _ _ _ => by simp)
@@ -43,7 +45,8 @@ theorem hermForm_sub_swap {g : ℕ} {Hm : Matrix (Fin g) (Fin g) ℂ} (hH : Hm.I
     hermForm Hm z w - hermForm Hm w z = 2 * Complex.I * (hermForm Hm z w).im := by
   have h : ∀ i k, starRingEnd ℂ (Hm i k) = Hm k i := fun i k => hH.apply k i
   have hc : starRingEnd ℂ (hermForm Hm z w) = hermForm Hm w z := by
-    simp only [hermForm, dotProduct, Matrix.mulVec, map_sum, map_mul, Finset.mul_sum, h, Pi.star_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hermForm, dotProduct, Matrix.mulVec, map_sum, map_mul, Finset.mul_sum, h, Pi.star_apply,
       RCLike.star_def, Complex.conj_conj]
     rw [Finset.sum_comm]
     exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun k _ => by ring

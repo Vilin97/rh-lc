@@ -100,7 +100,8 @@ theorem sumFirst_of (hGA : GoodAdd) (hBS : BiaddSub) : SumFirst := by
 theorem cc_sum_lg (hd : Data l ex ph) {m : ℕ} {a : Fin m → MvPowerSeries σ ℂ_[p]}
     (ha : ∀ j, MvPowerSeries.constantCoeff (a j) = 0) :
     MvPowerSeries.constantCoeff (∑ j, lg l (a j)) = 0 := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_eq_zero fun j _ => cc_lg hd (ha j)
 
 theorem pt_sum_succ (hd : Data l ex ph) {m : ℕ} (a : Fin (m + 1) → MvPowerSeries σ ℂ_[p])

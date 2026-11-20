@@ -109,7 +109,8 @@ theorem ramAt_act (β : Frame p S n) (P : Pair k n) (c : GA D S →₀ ℂ)
   · let _ := Fintype.ofFinite 𝓀[k]ˣ
     refine (mem_Mram _).2 fun Q => ?_
     have h0 := (mem_Mram φ).1 hram Q
-    rw [← map_sum, h0, map_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, h0, map_zero]
 
 end Frames
 

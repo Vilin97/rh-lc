@@ -31,7 +31,8 @@ theorem arch (V : Type) [NormedAddCommGroup V] [NormedSpace ℝ V] [FiniteDimens
     ext x
     rw [hsum x, SchwartzMap.sum_apply]
   have : T (f - f 0 • f₀) = 0 := by
-    rw [e, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, map_sum]
     exact Finset.sum_eq_zero fun i _ => GlobalTheory.CharFormDeriv.charForm_kills_linear_mul V T hT (L i) (h i) (g i) (hg i)
   rw [map_sub, map_smul, sub_eq_zero] at this
   rw [this, smul_eq_mul, mul_comm]
@@ -50,22 +51,26 @@ theorem pairA_zero_add (a b : Af F) : pairA F 0 (a + b) = pairA F 0 a + pairA F 
 theorem dot_pairA_fin {κ : Type} [Fintype κ] (x : κ → AF F) (y : κ → Af F) :
     (x ⬝ᵥ fun i => pairA F 0 (y i)) = pairA F 0 ((fun i => (x i).2) ⬝ᵥ y) := by
   have h1 : (RingHom.fst (Ainf F) (Af F)) (x ⬝ᵥ fun i => pairA F 0 (y i)) = 0 := by
-    simp only [dotProduct, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [dotProduct, map_sum, map_mul]
     exact Finset.sum_eq_zero fun i _ => by
       show (RingHom.fst (Ainf F) (Af F)) (x i) * 0 = 0
       exact mul_zero _
   have h2 : (RingHom.snd (Ainf F) (Af F)) (x ⬝ᵥ fun i => pairA F 0 (y i)) = (fun i => (x i).2) ⬝ᵥ y := by
-    simp only [dotProduct, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [dotProduct, map_sum, map_mul]
     rfl
   exact Prod.ext h1 h2
 
 theorem dot_pairA_inf {κ : Type} [Fintype κ] (x : κ → AF F) (y : κ → Ainf F) :
     (x ⬝ᵥ fun i => pairA F (y i) 0) = pairA F (∑ i, (x i).1 * y i) 0 := by
   have h1 : (RingHom.fst (Ainf F) (Af F)) (x ⬝ᵥ fun i => pairA F (y i) 0) = ∑ i, (x i).1 * y i := by
-    simp only [dotProduct, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [dotProduct, map_sum, map_mul]
     rfl
   have h2 : (RingHom.snd (Ainf F) (Af F)) (x ⬝ᵥ fun i => pairA F (y i) 0) = 0 := by
-    simp only [dotProduct, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [dotProduct, map_sum, map_mul]
     exact Finset.sum_eq_zero fun i _ => by
       show (RingHom.snd (Ainf F) (Af F)) (x i) * 0 = 0
       exact mul_zero _
@@ -101,7 +106,8 @@ theorem psi_dot_inf {F : Type} [Field F] [NumberField F] {ψ : AddChar (AF F) �
   rw [dot_pairA_inf, hψ.2.2 _ hat]
   show Complex.exp (_ * ((Algebra.trace ℝ (mixedEmbedding.mixedSpace F)
     (InfiniteAdeleRing.ringEquiv_mixedSpace F (∑ i, (x i).1 * (InfiniteAdeleRing.ringEquiv_mixedSpace F).symm (Y i))) : ℝ) : ℂ)) = _
-  rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum]
   simp only [map_mul, RingEquiv.apply_symm_apply]
   congr 1
   push_cast

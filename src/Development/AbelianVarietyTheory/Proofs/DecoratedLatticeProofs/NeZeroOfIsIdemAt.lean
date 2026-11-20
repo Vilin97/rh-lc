@@ -56,7 +56,8 @@ theorem places : ∀ (D : D7) (c : GlobalTheory.ChainOnto.Com D), c.Is → ∀ (
   · rw [key, key] at hPP
     obtain ⟨E', ⟨es, hes, hsum⟩, h0⟩ := hc.split
     have h0' := h0
-    rw [hsum, map_sum, Finset.sum_mul_sum, ← Finset.sum_product'] at h0'
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hsum, map_sum, Finset.sum_mul_sum, ← Finset.sum_product'] at h0'
     have hz : ∀ x ∈ c.Pg ×ˢ c.Pg, es x.1 * cA D (es x.2) = 0 :=
       GlobalTheory.PlaceVec.idem_eq_zero_of_sum (A := AE D) GlobalTheory.PlaceVec.natCast_mul_eq_zero
       (fun x : Formalism.L2.DIV.Pl D.host.E × Formalism.L2.DIV.Pl D.host.E => es x.1 * cA D (es x.2)) (c.Pg ×ˢ c.Pg) (fun i hi => by

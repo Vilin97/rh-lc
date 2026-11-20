@@ -41,8 +41,10 @@ theorem reprMul {I : Type} [Fintype I] {n : ℕ} (J : JetRing ℂ I n) (F G : Mv
     rw [Finset.mul_sum]
     refine Finset.sum_congr rfl fun ν' _ => ?_
     rw [smul_mul_smul_comm]
-  rw [hxy, map_sum, Finsupp.finset_sum_apply]
-  simp_rw [map_sum, Finsupp.finset_sum_apply, map_smul, Finsupp.smul_apply, smul_eq_mul, hb, hx, hy]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hxy, map_sum, Finsupp.finset_sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp_rw [map_sum, Finsupp.finset_sum_apply, map_smul, Finsupp.smul_apply, smul_eq_mul, hb, hx, hy]
   have hfac : ∀ ν ν' : Idx I n, ν.1 + ν'.1 = μ.1 →
       (∏ i, (ν.1 i).factorial) * (∏ i, (ν'.1 i).factorial) * (∏ i, (ν.1 i + ν'.1 i).choose (ν.1 i)) =
         ∏ i, (μ.1 i).factorial := by

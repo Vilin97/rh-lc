@@ -289,7 +289,8 @@ lemma exists_theta (hϖ : Irreducible ϖ) (lam : Fin r → D) (hI : LinearIndepe
     rw [hU, ← ho]
     exact W.smul_mem _ hw
   have h2 : f (algebraMap O LL (ϖ ^ N) • w) = algebraMap O LL (g o l) := by
-    rw [ho, map_sum, LinearMap.pi_apply_eq_sum_univ g o, Finset.sum_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [ho, map_sum, LinearMap.pi_apply_eq_sum_univ g o, Finset.sum_apply, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_smul, hf, smul_eq_mul, Pi.smul_apply, smul_eq_mul, map_mul]
     rfl
@@ -394,9 +395,11 @@ theorem core_mp (hϖ : Irreducible ϖ) (hI : LinearIndependent LL lam)
         exact Submodule.zero_mem _
       · exact h5
     have h5 := ev_kill f W hf2 h4
-    rw [FA, cf_Fy_nat, map_sum] at h5
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [FA, cf_Fy_nat, map_sum] at h5
     simp only [ev_smul_tmul, hf1] at h5
-    rw [ex_apply, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [ex_apply, map_sum, map_sum]
     simp only [map_mul, hρ, PowerSeries.coeff_mul_C]
     exact h5
   obtain ⟨N1, z1, hz1⟩ := compl_vec hC m y h1

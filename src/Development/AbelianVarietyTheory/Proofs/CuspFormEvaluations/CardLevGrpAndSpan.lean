@@ -109,7 +109,8 @@ theorem card_levGrp_and_span : ∀ (E : Type) [Field E] [NumberField E] [IsCMFie
     choose c hc using fun i => Ideal.Quotient.mk_surjective (e1 z i)
     refine ⟨∑ i, c i • x₀ i, Submodule.sum_mem _ fun i _ =>
       Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩), e1.injective ?_⟩
-    simp only [map_sum, map_smul, Submodule.mkQ_apply, hx, LinearEquiv.apply_symm_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, Submodule.mkQ_apply, hx, LinearEquiv.apply_symm_apply]
     ext j
     rw [Finset.sum_apply, Finset.sum_eq_single j (fun i _ hi => by simp [hi.symm]) (by simp), ← hc]
     simp [Algebra.smul_def]

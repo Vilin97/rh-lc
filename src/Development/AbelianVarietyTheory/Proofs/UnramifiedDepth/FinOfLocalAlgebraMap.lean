@@ -145,7 +145,8 @@ lemma finOf_split (B : BX R₀) (p : ℕ) [Module.Free (O : Type) A] [Module.Fin
     have h0 : ∀ i, φ (ε i) = 0 := fun i =>
       (finOf_idem ((hε.idem i).map φ)).resolve_right fun h => hcon ⟨i, h⟩
     have h1 := congrArg φ hε.complete
-    rw [map_sum, map_one, Finset.sum_eq_zero fun i _ => h0 i] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_one, Finset.sum_eq_zero fun i _ => h0 i] at h1
     exact zero_ne_one h1
   have hmk : ∀ i, Ideal.Quotient.mk (Ideal.span {1 - ε i}) (ε i) = 1 := fun i => by
     rw [← map_one (Ideal.Quotient.mk (Ideal.span {1 - ε i})), eq_comm, Ideal.Quotient.eq]

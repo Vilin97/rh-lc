@@ -51,7 +51,8 @@ theorem sameOrbit_comp_inl {z z' : (Σ k, joinIdx ι ι₂ k) → ℂ} (h : Same
 theorem cone_homog {Ω : Type} [Field Ω] (y : (Σ k, ι k) → Ω) {f : MRing ι} {a : K → ℕ} (hf : IsMultiHomog f a) :
     mConeMap y f = C (aeval y f) * ∏ k, X k ^ a k := by
   unfold mConeMap
-  rw [aeval_def, aeval_def, eval₂_eq', eval₂_eq', map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [aeval_def, aeval_def, eval₂_eq', eval₂_eq', map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun d hd => ?_
   have hc : (∏ i : (Σ k, ι k), (X i.1 : MvPolynomial K Ω) ^ d i) = ∏ k, X k ^ a k := by
     rw [Fintype.prod_sigma]

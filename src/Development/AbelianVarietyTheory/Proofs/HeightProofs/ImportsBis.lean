@@ -11,7 +11,8 @@ theorem main : ∀ {F E : Type} [inst : Field F] [inst_1 : NumberField F] [inst_
     obtain ⟨a, ha, w, hw, rfl⟩ := hy
     obtain ⟨n, rfl⟩ := hx w hw
     refine ⟨fun j => n j • a, fun j => zsmul_mem ha _, fun i => ?_⟩
-    simp only [map_sum, map_zsmul, Finsupp.coe_finset_sum, Finsupp.coe_smul, Finset.sum_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_zsmul, Finsupp.coe_finset_sum, Finsupp.coe_smul, Finset.sum_apply,
       Pi.smul_apply, TensorProduct.tmul_sum, TensorProduct.smul_tmul]
   | zero => exact ⟨0, fun j => zero_mem _, fun i => by simp⟩
   | add y z _ _ hy hz =>

@@ -150,7 +150,8 @@ theorem IsLocUnit.eq_one {M : Type} [CommGroup M] {χ : (AE D)ˣ →* M} {Q P : 
     (hx : IsLocUnit PP u x) : χ x = 1 := by
   refine hχ x hx.inf hx.int hx.int' ?_
   have h0 : idemAt PP * (idem Q + cA D (idem Q)) = 0 := by
-    rw [mul_add, idem, map_sum, Finset.mul_sum, Finset.mul_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [mul_add, idem, map_sum, Finset.mul_sum, Finset.mul_sum,
       Finset.sum_eq_zero fun j hj => hP.mul_eq_zero hPP (hQ hj) fun e => hn (e ▸ hj),
       Finset.sum_eq_zero fun j hj => hP.mul_conj hPP (hQ hj), add_zero]
   linear_combination (idem Q + cA D (idem Q)) * hx.off + ((x : AE D) - 1) * h0

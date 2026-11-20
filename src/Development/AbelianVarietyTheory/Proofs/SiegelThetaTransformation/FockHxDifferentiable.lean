@@ -50,7 +50,8 @@ theorem fock_hx_conj (hs : IsSympl X bas) (hd : x ∈ X.dom) (z w : Fin g → �
   simp only [hx]
   generalize hMat X bas idx x *ᵥ z = u
   generalize hMat X bas idx x *ᵥ w = v
-  simp only [dotProduct, mulVec, map_sum, map_mul, Finset.mul_sum, Pi.star_apply, hr, RCLike.star_def,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dotProduct, mulVec, map_sum, map_mul, Finset.mul_sum, Pi.star_apply, hr, RCLike.star_def,
     conj_conj]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring

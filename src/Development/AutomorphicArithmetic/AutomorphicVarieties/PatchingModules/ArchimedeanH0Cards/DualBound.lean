@@ -314,7 +314,8 @@ theorem UpperTheory.V.Pa.B2.dualBound :
       conv_lhs => rw [hm]
       have hsum : (fun t => c t.1 t.2.1 t.2.2 : Fin n × Fin n × Fin s → x.K)
           = ∑ t, Pi.single t (c t.1 t.2.1 t.2.2) := (Finset.univ_sum_single _).symm
-      rw [map_add, hkill f Y', add_zero, hsum, map_sum, map_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_add, hkill f Y', add_zero, hsum, map_sum, map_sum, map_sum]
     rw [key f, key f', hff]
   calc _ ≤ Nat.card (Fin n × Fin n × Fin s → x.K → {y : ZMod l // Nat.card x.K • y = 0}) :=
         Nat.card_le_card_of_injective Φ hinj

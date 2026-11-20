@@ -31,7 +31,8 @@ theorem exp_sum_range {σ : Type} (f : ℕ → MvPowerSeries σ C) (hf : ∀ k, 
   | zero => simp [rtj_mvExp_zero]
   | succ n ih =>
     have h0 : MvPowerSeries.constantCoeff (∑ k ∈ Finset.range n, f k) = 0 := by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       exact Finset.sum_eq_zero fun k _ => hf k
     rw [Finset.sum_range_succ, VP.exp_add h0 (hf n), ih, List.range_succ, List.map_append, List.prod_append]
     simp
@@ -121,7 +122,8 @@ theorem col_left (Y : FBChart C V O dd) {τ : Type} (n : ℕ) (a : ℕ → Fin d
   have c1 : ∀ k, MvPowerSeries.constantCoeff (VP.hAt Y (a k) c) = 0 := fun k => VP.cc_hAt Y (ha k).1 hc.1
   have c2 : MvPowerSeries.constantCoeff (VP.hAt Y s c) = 0 := VP.cc_hAt Y hs.1 hc.1
   have cS : MvPowerSeries.constantCoeff (∑ k ∈ Finset.range n, VP.hAt Y (a k) c) = 0 := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_eq_zero fun k _ => c1 k
   have c2' : MvPowerSeries.constantCoeff (-VP.hAt Y s c) = 0 := by rw [map_neg, c2, neg_zero]
   have hU' : mvExp (∑ k ∈ Finset.range n, VP.hAt Y (a k) c) = mvExp (VP.hAt Y s c) * U := by
@@ -148,7 +150,8 @@ theorem col_right (Y : FBChart C V O dd) {τ : Type} (n : ℕ) (a : ℕ → Fin 
   have c1 : ∀ k, MvPowerSeries.constantCoeff (VP.hAt Y c (a k)) = 0 := fun k => VP.cc_hAt Y hc.1 (ha k).1
   have c2 : MvPowerSeries.constantCoeff (VP.hAt Y c s) = 0 := VP.cc_hAt Y hc.1 hs.1
   have cS : MvPowerSeries.constantCoeff (∑ k ∈ Finset.range n, VP.hAt Y c (a k)) = 0 := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_eq_zero fun k _ => c1 k
   have c2' : MvPowerSeries.constantCoeff (-VP.hAt Y c s) = 0 := by rw [map_neg, c2, neg_zero]
   have hU' : mvExp (∑ k ∈ Finset.range n, VP.hAt Y c (a k)) = mvExp (VP.hAt Y c s) * U := by

@@ -62,7 +62,8 @@ theorem vec_mem (hs : ∀ x, s (s x) = x) {ζ : R} (hζ : ζ * s ζ = 1) (hζ1 :
     vecMulVec v (fun k => s (v k) * d k) ∈ uAlg s (diagonal d) := by
   set N := ∑ k, s (v k) * d k * v k with hNdef
   have hsN : s N = N := by
-    rw [hNdef, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hNdef, map_sum]
     exact Finset.sum_congr rfl fun k _ => by rw [map_mul, map_mul, hs, hd]; ring
   set Ni : R := ((hN.unit⁻¹ : Rˣ) : R) with hNidef
   have hNi : Ni * N = 1 := hN.val_inv_mul

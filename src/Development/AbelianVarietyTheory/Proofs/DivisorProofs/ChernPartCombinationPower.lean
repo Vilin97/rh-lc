@@ -42,7 +42,8 @@ def rowForm (a : Fin n) : (Fin n → ℂ) →ₗ[ℂ] Ev n := Fintype.linearComb
 
 theorem coe_rowForm (a : Fin n) (u : Fin n → ℂ) :
     (rowForm a u : Alt n) = dz a * ExteriorAlgebra.ι ℂ (∑ b, u b • Pi.single (Sum.inr b : Fin n ⊕ Fin n) (1 : ℂ)) := by
-  simp only [rowForm, Fintype.linearCombination_apply, AddSubmonoidClass.coe_finset_sum, Subalgebra.coe_smul, sym,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [rowForm, Fintype.linearCombination_apply, AddSubmonoidClass.coe_finset_sum, Subalgebra.coe_smul, sym,
     map_sum, map_smul, Finset.mul_sum, mul_smul_comm, dzb]
 
 theorem rowForm_mul_same (a a' : Fin n) (u : Fin n → ℂ) : rowForm a u * rowForm a' u = 0 := by
@@ -156,7 +157,8 @@ theorem chernPart_comb_eq_part : ∀ {k : Type} [CommRing k] {X : Scheme.{0}} {p
     have e : aeval (fun i => c1F hX σ (L i) ⟨(c, y), hy⟩) ((lin (fun i => (n i : ℝ)) ^ D).map (algebraMap ℝ ℂ)) =
         matForm D (hessL (comb L n) c y) ^ D := by
       rw [hessL_comb L n hy]
-      simp only [lin, map_pow, map_sum, map_mul, map_C, map_X, aeval_C, aeval_X, map_smul, c1F_eq_matForm_hessL hX _ hy]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [lin, map_pow, map_sum, map_mul, map_C, map_X, aeval_C, aeval_X, map_smul, c1F_eq_matForm_hessL hX _ hy]
       simp [Algebra.smul_def]
     change _ = (dens ((aeval (fun i => c1F hX σ (L i) ⟨(c, y), hy⟩)
       ((lin (fun i => (n i : ℝ)) ^ D).map (algebraMap ℝ ℂ)) : Ev D) : Alt D)).re

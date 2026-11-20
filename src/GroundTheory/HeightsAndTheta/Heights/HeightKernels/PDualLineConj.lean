@@ -22,7 +22,8 @@ theorem conj_mulVec (b : Module.Basis T ℤ (dualLattice F)) (w : (K →+* ℂ) 
     (fun t => starRingEnd ℂ ((dualEmbMatrix b *ᵥ w) t)) =
       dualEmbMatrix b *ᵥ fun p => starRingEnd ℂ (w (conjugate p.1, p.2)) := by
   funext t
-  simp only [mulVec, dotProduct, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [mulVec, dotProduct, map_sum, map_mul]
   refine Fintype.sum_equiv ((conjPerm K).prodCongr (Equiv.refl _)) _ _ fun p => ?_
   simp [conjPerm, dualEmbMatrix]
 
@@ -41,7 +42,8 @@ theorem re_conj_form {n : Type} [Fintype n] (H : Matrix n n ℂ) (v : n → ℂ)
       (star v ⬝ᵥ (H.map (starRingEnd ℂ) *ᵥ v)).re := by
   rw [← Complex.conj_re (star v ⬝ᵥ _)]
   congr 1
-  simp [dotProduct, mulVec, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [dotProduct, mulVec, map_sum, map_mul]
 
 theorem normSq_conj (b : Module.Basis T ℤ (dualLattice F))
     (hb : Function.Bijective (Matrix.mulVecLin (dualEmbMatrix b))) (z : T → ℂ) :

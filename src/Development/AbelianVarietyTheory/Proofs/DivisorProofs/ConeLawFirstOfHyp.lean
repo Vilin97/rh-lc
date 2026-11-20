@@ -164,7 +164,8 @@ theorem coneLawA : GlobalTheory.FunPr.Hypotheses₂ → ConeLawA := by
       integral_mul_right_eq_self (fun l : idelesAt E (evFin F v) => L (ev v (locOp v (G.M.co.rho B.ψ
         (partFin v (shiftA H H' l.1))) (locOp v (om (k.1, 1)) φ))) y * (X.ν l.1 : ℂ) * ((absE F E l.1 : ℝ) : ℂ) ^ z) τ
     simp_rw [hsub]
-    rw [hfin, Pi.smul_apply, smul_eq_mul, ← hLe _ (hconeSB φ hφ), heq, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hfin, Pi.smul_apply, smul_eq_mul, ← hLe _ (hconeSB φ hφ), heq, map_sum]
     simp only [map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
     rw [hc₀, GlobalTheory.T.local_factor_character_identity F E σ B b a' G X om om' hT t]
 

@@ -33,7 +33,8 @@ private theorem span_abs {Q Z O D B V κ : Type} [CommRing Q] [CommRing Z] [Comm
     refine ⟨fun k => b.repr t k ⊗ₜ[Z] y1, ?_⟩
     have h1 : (t : V) = ∑ k, b.repr t k • ((b k : T) : V) := by
       have h2 := congrArg T.subtype (b.sum_repr t).symm
-      rw [map_sum] at h2
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum] at h2
       simpa only [map_smul, Submodule.subtype_apply] using h2
     rw [hf, hy0, hy, ← TensorProduct.smul_tmul, ← ht, h1, TensorProduct.sum_tmul]
     refine Finset.sum_congr rfl fun k _ => ?_

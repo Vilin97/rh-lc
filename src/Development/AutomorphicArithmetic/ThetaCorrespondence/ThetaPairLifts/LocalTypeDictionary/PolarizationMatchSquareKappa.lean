@@ -50,9 +50,11 @@ theorem polarization_match_square_kappa : _root_.GlobalTheory.FunPr.ThetaLocalIn
   have hOnK : GlobalTheory.ThK.PolynomialMatching.PolMatchOn Bs Γ Xc R Rf S (om (1, k) ΦD) (om' (1, k) Φ₀D) := by
     obtain ⟨m, m', f, φ, f', φ', hφ, hφ', hΦ, hΦ', hsum⟩ := hOnS
     refine ⟨m, m', f, φ, f', φ', hφ, hφ', ?_, ?_, hsum⟩
-    · rw [hΦ, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [hΦ, map_sum]
       exact Finset.sum_congr rfl fun i _ => hU.1 (f i) (φ i) (hφ i).2.1 (hφ i).2.2
-    · rw [hΦ', map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [hΦ', map_sum]
       exact Finset.sum_congr rfl fun j _ => hU.2 (f' j) (φ' j) (hφ' j).2.1 (hφ' j).2.2
   have split : ∀ (x y : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.UA D.sp.cm.sig Γ.W.J) Φ, om (1, x * y) Φ = om (1, x) (om (1, y) Φ) := by
     intro x y Φ

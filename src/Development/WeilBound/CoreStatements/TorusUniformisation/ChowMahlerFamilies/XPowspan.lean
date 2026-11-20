@@ -142,7 +142,8 @@ theorem PositivityTheory.Xgn.t_powspan : ∀ {o Ω C : Type} [CommRing o] [Field
       (fun l => algebraMap Ω C (f l)) (fun l => algebraMap Ω C (c l)) (fun l => hR _ (hf l))
       (fun l => hR _ (hc l)) ?_ fun l => ?_
     · have := congrArg (algebraMap Ω C) hs
-      simpa [map_sum] using this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa [map_sum] using this
     · obtain ⟨b, hb, ⟨m, hm⟩, hx⟩ := unpack R X (f l) (hl l)
       have hb' : algebraMap Ω C b ≠ 0 := by simpa using hb
       obtain ⟨n, hn⟩ := span_loc RC _ (hR _ (hf l)) (algebraMap Ω C b) (by

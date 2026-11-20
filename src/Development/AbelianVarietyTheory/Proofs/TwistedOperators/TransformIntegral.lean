@@ -56,7 +56,8 @@ theorem keeps_of (la : HeightOneSpectrum (𝓞 Ks)) (hL : WL →ₗ[LL] WL) (hW 
     (hr : ∀ g : G, hL ∘ₗ Φ.ρ g = Φ.ρ g ∘ₗ hL) : Keeps Φ la hL hW := by
   have he : ∀ eC : G → LL, hL ∘ₗ Φ.eOp eC = Φ.eOp eC ∘ₗ hL := fun eC => by
     ext x
-    simp only [FormsL.eOp, LinearMap.comp_apply, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [FormsL.eOp, LinearMap.comp_apply, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul]
     exact Finset.sum_congr rfl fun g _ => congrArg _ (LinearMap.congr_fun (hr g) x)
   have ht : ∀ (J : Subgroup G) (lam : J →* LLˣ), ∀ x ∈ Φ.typeP J lam, hL x ∈ Φ.typeP J lam := fun J lam x hx p => by
     have h1 : Φ.ρ p (hL x) = hL (Φ.ρ p x) := (LinearMap.congr_fun (hr p) x).symm

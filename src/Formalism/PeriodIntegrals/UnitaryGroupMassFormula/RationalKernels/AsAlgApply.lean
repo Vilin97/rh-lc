@@ -59,7 +59,8 @@ theorem eG_mem (T : GoodSet K G) (P : Pair K G) (h : ∀ s, (T.tau s).asAlgebraH
   choose a ha using fun i => T.irr s (A i)
   choose b hb using fun i => T.irr s (B i)
   have hτ : (T.tau s).asAlgebraHom (∑ i, a i * eps P * b i) = (T.tau s).asAlgebraHom 1 := by
-    rw [map_one, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_one, map_sum]
     simp only [map_mul, ha, hb]
     exact hAB
   have e1 := mul_eS T s (∑ i, a i * eps P * b i)

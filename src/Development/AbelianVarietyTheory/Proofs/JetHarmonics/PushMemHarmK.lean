@@ -23,7 +23,8 @@ theorem pderiv_push_X (γ : Matrix (Fin n) (Fin n) E) (τ : E →+* ℂ) (a : Fi
     pderiv (⟨τ, a, b⟩ : LtN Dw n) (push c γ (X ℓ)) =
       ∑ j, embF c τ (γ b j) • push c γ (pderiv (⟨τ, a, j⟩ : LtN Dw n) (X ℓ)) := by
   obtain ⟨σ, i, j⟩ := ℓ
-  rw [push_X, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [push_X, map_sum]
   simp only [pderiv_C_mul, pderiv_X]
   by_cases hσ : σ = τ
   · subst hσ
@@ -88,11 +89,14 @@ theorem lap_push (γ : Matrix (Fin n) (Fin n) E) (hγ : IsUnitary γ) (τ : E �
       if j' = j then 1 else 0 := by
     intro j' j
     have h := congrArg (embF c τ) (congrFun (congrFun hγ j') j)
-    simp only [Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, map_sum, map_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, map_sum, map_mul,
       Matrix.one_apply, apply_ite (embF c τ), map_one, map_zero] at h
     simpa only [hc] using h
-  rw [lap_one_apply, lap_one_apply, map_sum]
-  simp only [pderiv_push, map_sum, Derivation.map_smul, Finset.smul_sum, smul_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [lap_one_apply, lap_one_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [pderiv_push, map_sum, Derivation.map_smul, Finset.smul_sum, smul_smul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun j' _ => ?_
   rw [Finset.sum_comm]

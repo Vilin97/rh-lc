@@ -127,7 +127,8 @@ theorem admissible_of_pi_decomposition {e : ℕ} (hB : Bound σ L e) {W : Type} 
     funext j
     apply Subtype.ext
     show tm (F := F) (B := B) (pr j) (∑ i, tm (F := F) (B := B) (inc i) (y i).1) = (y j).1
-    rw [map_sum, Finset.sum_eq_single j]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_eq_single j]
     · rw [tm_comp, ho]
       simp
     · intro i _ h

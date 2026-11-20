@@ -254,7 +254,8 @@ theorem weyl_coeff (j : ℕ) (ν : Ψ → Fin N → ℝ) (n k : ℕ) (hD : Forma
     Polynomial.C ((D.choose m : ℝ) * degFlL Ψ N (μ ^ m * L ^ (D - m))) * Polynomial.X ^ (D - m) with hPLdef
   have hPL : ∀ ε : ℝ, PL.eval ε = degFlL Ψ N ((μ + C ε * L) ^ D) := by
     intro ε
-    rw [add_pow, map_sum, hPLdef, Polynomial.eval_finsetSum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [add_pow, map_sum, hPLdef, Polynomial.eval_finsetSum]
     refine Finset.sum_congr rfl (fun m _ => ?_)
     have e : μ ^ m * (C ε * L) ^ (D - m) * ((D.choose m : ℕ) : Pol Ψ N) =
         C (ε ^ (D - m) * (D.choose m : ℝ)) * (μ ^ m * L ^ (D - m)) := by
@@ -485,8 +486,10 @@ theorem flag_integral_nonzero : FlagIntegralNonzero := by
     rw [map_natCast]] at hpol
   have hP := congrArg (PhiL j n) hpol
   have hA := congrArg (apolL fib) hpol
-  rw [PhiL_C_mul, map_sum] at hP
-  rw [apolL_C_mul, map_sum] at hA
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [PhiL_C_mul, map_sum] at hP
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [apolL_C_mul, map_sum] at hA
   simp only [PhiL_C_mul, apolL_C_mul, ← hkdef, hagree] at hP hA
   have hmain : PhiL j n fib = c * apolL fib fib := by
     have e1 : ∑ S ∈ (idxS Ψ N j).powerset, (-1 : ℝ) ^ ((idxS Ψ N j).card - S.card) *

@@ -230,7 +230,8 @@ theorem isTransv_iff_gram (F F' : FlagD H r) : IsTransv F F' ↔ (Gram F F').det
       ∑ p, c p • Sum.elim F.e F'.e p ∈ wSp F F' ↔ Matrix.vecMul c (Gram F F') = 0 := fun c => by
     rw [wSp, hV, mem_perp_span, Set.forall_mem_range, funext_iff]
     refine forall_congr' fun q => ?_
-    rw [map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, LinearMap.sum_apply]
     simp only [map_smul, LinearMap.smul_apply, smul_eq_mul, Matrix.vecMul, dotProduct, Gram, Matrix.of_apply,
       Pi.zero_apply]
   have hcard : Fintype.card (Fin (r + 1) ⊕ Fin (r + 1)) = 2 * r + 2 := by simp; omega

@@ -27,7 +27,8 @@ theorem UpperTheory.V.Pa.k3F :
       x.ρX x.Fr (h.p₀ g) * Y.map f * x.ρX x.Fr (h.p₀ g⁻¹) - Y.map f := by
     intro g
     have e := congrArg f.mapMatrix (key g)
-    simpa [map_sub, map_mul, map_sum, hsm, kapF, NP.ρX, Matrix.map_map, RingHom.mapMatrix_apply] using e
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [map_sub, map_mul, map_sum, hsm, kapF, NP.ρX, Matrix.map_map, RingHom.mapMatrix_apply] using e
   set u := (f x.t ^ (s' + s₀))⁻¹ with hu
   refine ⟨fun j => u * f (c j), u • Y.map f, ?_, ?_, ?_⟩
   · intro i j

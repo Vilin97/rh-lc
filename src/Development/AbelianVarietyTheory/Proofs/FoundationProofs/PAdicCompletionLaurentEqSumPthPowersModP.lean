@@ -35,7 +35,8 @@ theorem exists_eq_sum_qO_pow_mul_pow_add_mul (p : ℕ) [Fact p.Prime] (x : O0 p)
   obtain ⟨f, z, rfl⟩ := exists_lau_add_p_mul p x
   obtain ⟨g, h, hf⟩ := GlobalTheory.T.laurentSeriesPadic_exists_pthPower_combination p f
   refine ⟨fun j => algebraMap (Lau p) (O0 p) (g j), algebraMap (Lau p) (O0 p) h + z, ?_⟩
-  rw [hf, map_add, map_sum, map_mul, map_natCast]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hf, map_add, map_sum, map_mul, map_natCast]
   simp only [map_mul, map_pow, qO_pow_eq]
   ring
 

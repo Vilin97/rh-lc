@@ -138,7 +138,8 @@ theorem pairB_sep [FiniteDimensional LL U] {m : V →ₗ[LL] U →ₗ[LL] W} (hm
       refine u.ext fun j => ?_
       simp [Finsupp.single_apply]
     simp only [s, LinearMap.comp_apply]
-    rw [← map_sum, h1]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, h1]
     exact LinearMap.congr_fun hr v
   have key : ∀ x : V ⊗[Qp] B, ∑ i, tensorB (s i) (pairB Qp B m x (u i ⊗ₜ 1)) = x := by
     intro x

@@ -179,7 +179,8 @@ theorem phi_incl (e : E) : phi R (inclR F e) = inclR R e := by
 
 theorem offE_map (b : Module.Basis (Fin d) F E) (x : Idx n d → F) (p) :
     phi R (offE F b x p) = offE R b (fun i => algebraMap F R (x i)) p := by
-  simp [offE, map_sum, phi_tmul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [offE, map_sum, phi_tmul]
 
 theorem psi_map (σ : E →ₐ[F] E) (b : Module.Basis (Fin d) F E) (x : Idx n d → F) :
     (psi F σ b x).map (phi R) = psi R σ b (fun i => algebraMap F R (x i)) := by

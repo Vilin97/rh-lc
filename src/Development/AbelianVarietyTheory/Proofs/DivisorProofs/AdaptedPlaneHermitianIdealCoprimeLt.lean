@@ -52,7 +52,8 @@ theorem exists_smul_mem {n : ℕ} {L : Submodule (𝓞 E) (Fin n → E)} (hL : L
 theorem form_swap {σ : E →ₐ[F] E} (hσ : ∀ x, σ (σ x) = x) {n : ℕ} {J : Matrix (Fin n) (Fin n) E}
     (herm : ∀ i j, σ (J j i) = J i j) (a b : Fin n → E) : form σ J b a = σ (form σ J a b) := by
   have herm' : ∀ i j, σ (J i j) = J j i := fun i j => herm j i
-  simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, herm', Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, herm', Finset.mul_sum]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 
@@ -73,7 +74,8 @@ theorem form_smul_right (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin 
 theorem pair_eq {v : HeightOneSpectrum (𝓞 F)} (τ : E →ₐ[F] Fv F v) (σ : E →ₐ[F] E) {n : ℕ}
     (J : Matrix (Fin n) (Fin n) E) (z z' : Fin n → E) :
     (fun r => (τ.comp σ) (z r)) ⬝ᵥ (Jᵀ).map τ *ᵥ (fun r => τ (z' r)) = τ (form σ J z' z) := by
-  simp only [form, dotProduct, Matrix.mulVec, Matrix.map_apply, Matrix.transpose_apply, map_sum, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, Matrix.mulVec, Matrix.map_apply, Matrix.transpose_apply, map_sum, map_mul,
     AlgHom.comp_apply, Finset.mul_sum]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring

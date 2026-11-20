@@ -282,7 +282,8 @@ private theorem deriv_σ (v : D.U) (X : Matrix (Fin n) (Fin n) ℂ) (γ : ℝ �
   set d : D.U := ∑ a, ∑ b, X a b • kF (D.E1 w) (D.E2 w) a b u with hd'
   have hdi : D.i d = lieOp π Z (D.i u) := by
     rw [hZd, lieOp_skew π _ X hX, hd']
-    simp only [map_sum, map_smul, i_K, LinearMap.sum_apply, LinearMap.smul_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, i_K, LinearMap.sum_apply, LinearMap.smul_apply]
   have hdS : d ∈ (orb D v).comap D.i := by
     show D.i d ∈ orb D v
     rw [hdi]

@@ -58,7 +58,8 @@ theorem heis_at_local_identity : ∀ {F : Type} [Field F] [NumberField F] (v : I
     simp [map_ofNat]
   have hdot : ∀ a b : κ → AF F, evFin F v (a ⬝ᵥ b) = (fun i => evFin F v (a i)) ⬝ᵥ (fun i => evFin F v (b i)) := by
     intro a b
-    simp [dotProduct, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [dotProduct, map_sum, map_mul]
   have hsum : (fun i => evFin F v ((x + (co.e γ).1) i)) = ξ + (GlobalTheory.LatVac.locCo co v γ).1 := by
     funext i
     rw [← hevx]

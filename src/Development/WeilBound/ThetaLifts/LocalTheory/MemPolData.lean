@@ -194,7 +194,8 @@ theorem tens_step {T : Finset (Pl F)} {P P₁ : Type} [AddCommGroup P] [Module �
     (k : ℂ) : ∑ i, ((k * c * ∏ v ∈ T, w v) • li (x i)) ⊗ₜ[ℂ] (PiTensorProduct.tprod ℂ fun v : T => lf v (y i v)) =
       ∑ j, (k • c • li (x' j)) ⊗ₜ[ℂ] (PiTensorProduct.tprod ℂ fun v : T => w v • lf v (y' j v)) := by
   have := congrArg (fun z => (k * c * ∏ v ∈ T, w v) • TensorProduct.map li (PiTensorProduct.map fun v : T => lf v) z) h
-  simp only [map_sum, TensorProduct.map_tmul, PiTensorProduct.map_tprod, Finset.smul_sum] at this
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, TensorProduct.map_tmul, PiTensorProduct.map_tprod, Finset.smul_sum] at this
   simp only [← TensorProduct.smul_tmul', this, MultilinearMap.map_smul_univ, TensorProduct.tmul_smul, smul_smul,
     Finset.prod_coe_sort T w]
   exact Finset.sum_congr rfl fun j _ => by congr 1; ring

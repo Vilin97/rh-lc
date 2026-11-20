@@ -36,7 +36,8 @@ private theorem nv_tv {R S : Type} [CommRing R] [CommRing S] [Algebra R S] {e : 
       show algebraMap R S (v k) * e * (algebraMap R S (v k') * e) = 0
       rw [_root_.mul_mul_mul_comm, he, mul_zero]) (φ j)
   rw [h, hφ, map_zero, zero_add, Fintype.sum_prod_type, Fin.sum_univ_one]
-  simp only [tv, lin, Matrix.mulVec, dotProduct, Matrix.of_apply, map_sum, map_mul, Finset.sum_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [tv, lin, Matrix.mulVec, dotProduct, Matrix.of_apply, map_sum, map_mul, Finset.sum_mul,
     Matrix.cons_val_fin_one, _root_.mul_assoc]
 
 private theorem mat_ext {R : Type} [CommRing R] (I : Ideal R) [IsAdicComplete I R] {m n : ℕ}

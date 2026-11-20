@@ -100,11 +100,13 @@ theorem phiZ_polX {Pw : MvPolynomial (Fin N) B.KO} {k : ℕ} (hPw : Pw.IsHomogen
 
 theorem rzMap_secOf (g g' : Fin N → B.Cusp j wL) (h : ∀ k, gF (X.inc wL (g k)) = gF (X.inc wL (g' k))) :
     rzMap X la N Ω gF (secOf X la N g) = rzMap X la N Ω gF (secOf X la N g') := by
-  simp only [secOf, map_sum, map_smul, rzMap_emb, h]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [secOf, map_sum, map_smul, rzMap_emb, h]
 
 theorem rzMap_secOf_zero (g : Fin N → B.Cusp j wL) (h : ∀ k, gF (X.inc wL (g k)) = 0) :
     rzMap X la N Ω gF (secOf X la N g) = 0 := by
-  simp only [secOf, map_sum, map_smul, rzMap_emb, h, TensorProduct.tmul_zero, smul_zero, Finset.sum_const_zero]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [secOf, map_sum, map_smul, rzMap_emb, h, TensorProduct.tmul_zero, smul_zero, Finset.sum_const_zero]
 
 end One
 

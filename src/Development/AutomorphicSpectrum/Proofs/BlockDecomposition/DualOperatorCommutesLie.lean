@@ -88,6 +88,7 @@ theorem dualT_G : ∀ {n : ℕ} (E : KMod n) (T : E.V →L[ℂ] E.V), (∀ k, T 
   · intro X hX
     simp only [smul_sub, Finset.sum_sub_distrib]
     rw [sub_eq_zero, ← dualT_sum E T hT G hG X hX ξ]
-    simp only [map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul]
 
 end GlobalTheory.CompanionTheory.RealCountG.DualComm

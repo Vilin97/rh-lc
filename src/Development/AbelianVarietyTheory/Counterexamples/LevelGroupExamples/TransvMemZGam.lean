@@ -28,7 +28,8 @@ theorem pair_real (X : Data E r) (χ β : Matrix (Fin ρ) (Fin ρ) E) (hχ : IsH
   have ht : cc (Matrix.trace (χ.transpose * β)) = -Matrix.trace (χ.transpose * β) := by
     have h1 : ∀ a b, IsCMField.complexConj E (χ a b) = χ b a := hχ
     have h2 : ∀ a b, IsCMField.complexConj E (β a b) = -β b a := hβ
-    simp only [cc, Matrix.trace, Matrix.diag, Matrix.mul_apply, Matrix.transpose_apply, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [cc, Matrix.trace, Matrix.diag, Matrix.mul_apply, Matrix.transpose_apply, map_sum,
       map_mul, h1, h2, mul_neg, Finset.sum_neg_distrib]
     rw [Finset.sum_comm]
   unfold cc at hk ht ⊢

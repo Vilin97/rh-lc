@@ -50,7 +50,8 @@ theorem chi_nondeg {ψ : AddChar (Ad E) ℂ} (hψ : StdPsi ψ) (z : Cinf E) (hz 
 
 theorem sInf_lastE (k : ℕ) (y : UnipotentBlockColumnIndex a k k → Cinf E) :
     sInf E (lastE k y) = lastE k (fun t => sInf E (y t)) := by
-  simp only [lastE, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [lastE, map_sum]
   refine Finset.sum_congr rfl fun t _ => ?_
   split_ifs <;> simp
 

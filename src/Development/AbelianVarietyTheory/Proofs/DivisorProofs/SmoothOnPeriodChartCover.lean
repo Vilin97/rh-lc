@@ -293,7 +293,8 @@ theorem cInfAt_of_periodChart : ∀ (k : Type) [CommRing k] (S : Scheme.{0}) (p 
       funext a
       have := congrArg (· a) hG
       rw [hx2s] at this
-      simp only [map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Pi.zero_apply] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Pi.zero_apply] at this
       simp only [Matrix.mulVec, dotProduct, Matrix.of_apply, hcot, Pi.zero_apply]
       rw [← this]
       exact Finset.sum_congr rfl fun b _ => mul_comm _ _

@@ -65,7 +65,8 @@ theorem frameSt_of (hAct : ActSt) (hUnit : UnitSt) : FrameSt := by
     · exact frame_cc_ev _ (frame_cc_pt 0) (hact i)
   have hcL : constantCoeff (B.hL C h w0) = 0 := frame_cc_ev _ hpair hc
   have hS : constantCoeff (∑ b : Fin n, ev (n := n) ![pt C d b] (B.hL C h w0)) = 0 := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_eq_zero fun b _ => frame_cc_ev _ (frame_cc_pt b) hcL
   obtain ⟨-, -, -, hadd, hone, -⟩ := hUnit C v (Fin n × Fin d)
   refine ⟨hone _ hS, fun k => ?_, fun σ _ y hy => ?_⟩
@@ -80,7 +81,8 @@ theorem frameSt_of (hAct : ActSt) (hUnit : UnitSt) : FrameSt := by
     have key : subst (fun q : Fin n × Fin d => expPt (fglOf hB) (y q.1) q.2)
         (∑ b : Fin n, ev (n := n) ![pt C d b] (B.hL C h w0)) =
         ∑ j, pairSer (fglOf hB) h (y j) (mv (dAct C B w0) (y j)) := by
-      rw [← coe_substAlgHom ht, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← coe_substAlgHom ht, map_sum]
       refine Finset.sum_congr rfl fun b _ => ?_
       have hs : HasSubst (fun p : Fin 1 × Fin d => expPt (fglOf hB) (y b) p.2) :=
         hasSubst_of_constantCoeff_zero fun q => cc_expPt _ (hy b) q.2

@@ -56,7 +56,8 @@ theorem mem_of_derivation {N κ : Type} [AddCommGroup N] [Module R N] [Fintype �
     rw [add_comm (_ • D _)]
     congr 5 <;> abel
   have hδ (x : X) : δ x ∈ p := by
-    rw [← b.sum_repr x, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← b.sum_repr x, map_sum]
     exact p.sum_mem fun k _ => by
       rw [map_zsmul]
       exact zsmul_mem (p.smul_mem _ (hv k)) _
@@ -88,7 +89,8 @@ theorem exact_of_span {M N P κ : Type} [AddCommGroup M] [AddCommGroup N] [AddCo
     exact ⟨x, by simp [this]⟩
   · intro z
     refine ⟨∑ k, (c.unitsSMul w).repr z k • t k, ?_⟩
-    simp only [map_sum, map_smul, ht']
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, ht']
     exact (c.unitsSMul w).sum_repr z
 
 end Algebra

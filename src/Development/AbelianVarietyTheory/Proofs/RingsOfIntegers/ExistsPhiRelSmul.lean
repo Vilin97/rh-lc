@@ -61,7 +61,8 @@ theorem pow_eq_one_of_pr {S : Scheme.{0}} {G' G : Over S} [GrpObj G'] [GrpObj G]
 
 theorem equiv_comb {B M : Type} [CommRing B] [AddCommGroup M] [Module B M] (f : M ≃ₗ[B] M) {I : Type} [Fintype I]
     (a : I → B) (v : I → M) : f (∑ l, a l • v l) = ∑ l, a l • f (v l) := by
-  simp only [map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul]
 
 theorem act_comb (hG : GlobalFnsSt) {S : Scheme.{0}} (P : PolAV S) (k : ℤ) (T : Over S) (θ : ThetaGrp P.A P.L k T)
     {I : Type} [Fintype I] (a : I → Γ(T.left, ⊤)) (c : Γ(T.left, ⊤)) (t u : I → LB.Sec (LPow P.A P.L k T))
@@ -117,7 +118,8 @@ theorem qkToAk_box : Laws → ∀ (R : Type) [CommRing R] [IsDomain R] (I : Idea
   have q₀ := ((hB' F k hk w' hw').1 t₀).unique e₀ E₀
   have q₁ := ((hB' F k hk w' hw').1 t₁).unique e₁ E₁
   have q : s₁ = c • Φ s₀ := by
-    rw [q₁, q₀, map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [q₁, q₀, map_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl fun l _ => ?_
     rw [hSS, map_smul, map_smul, smul_smul, smul_smul, smul_smul]
     congr 1

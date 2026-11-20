@@ -113,7 +113,8 @@ theorem gramProj_le (k r : ℕ) {j : ℕ} (hj : j ≤ r) (z : Fin (2 * r + k + 1
     have := hs' a
     rw [eucl_eq, WithLp.toLp_sum] at this
     refine le_trans (le_of_eq ?_) ((P.norm_starProjection_apply_le _).trans this)
-    simp only [map_sum, WithLp.toLp_smul, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, WithLp.toLp_smul, map_smul]
   have h := norm_det_inner_le_pow _ _ s s hs hs h1 h1
   have h0 := one_le_Sg k r z x
   refine le_trans ?_ (pow_le_pow_right₀ h0 hj)

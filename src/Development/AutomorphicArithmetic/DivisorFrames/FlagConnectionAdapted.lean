@@ -15,9 +15,11 @@ private theorem trS_map_iso {X : Scheme.{0}} {M M' : X.Modules} {r : ℕ} (φ : 
   have key : ∀ t : Γ(M, c.U ⊓ c'.U), (((c.isFrame.map_iso φ.hom).basis h₁).repr (φ.hom.app _ t)) =
       (c.isFrame.basis h₁).repr t := fun t => by
     conv_lhs => rw [← (c.isFrame.basis h₁).sum_repr t]
-    simp only [map_sum, Scheme.Modules.Hom.app_smul, IsFrame.basis_apply, Twist.app_resM]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, Scheme.Modules.Hom.app_smul, IsFrame.basis_apply, Twist.app_resM]
     simp only [← (c.isFrame.map_iso φ.hom).basis_apply h₁]
-    rw [← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum]
     ext k
     exact congrFun (((c.isFrame.map_iso φ.hom).basis h₁).repr_sum_self _) k
   have := key (Twist.resM M h₂ (c'.e b))

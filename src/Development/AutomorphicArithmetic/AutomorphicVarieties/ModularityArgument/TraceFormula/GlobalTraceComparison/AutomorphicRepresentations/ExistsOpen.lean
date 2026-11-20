@@ -38,7 +38,8 @@ private theorem lv_inter [Nontrivial W] [Nontrivial V] (σ : Representation ℂ 
   by_cases hfin : (Function.support fun q : G ⧸ K => f q.out).Finite
   · rw [finsum_eq_sum_of_support_subset (s := hfin.toFinset) _ (by rw [supp_eq]; simp),
       finsum_eq_sum_of_support_subset (s := hfin.toFinset) _ (by rw [supp_eq]; simp)]
-    simp [LinearMap.sum_apply, map_sum, hT]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [LinearMap.sum_apply, map_sum, hT]
   · rw [finsum_of_infinite_support (by rwa [supp_eq]), finsum_of_infinite_support (by rwa [supp_eq])]
     simp
 
@@ -93,7 +94,8 @@ private theorem cs_fixed (σ : Representation ℂ G W) (N H : Subgroup G) [Finty
       rfl
     rw [e, out_act σ N H hx]
     simp only [Subgroup.coe_mul, map_mul, Module.End.mul_apply]
-  simp only [cs, LinearMap.sum_apply, map_sum, key]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [cs, LinearMap.sum_apply, map_sum, key]
   exact Equiv.sum_comp (MulAction.toPerm (⟨n, hn⟩ : N)) fun q : N ⧸ H.subgroupOf N => σ (q.out : N).1 x
 
 private theorem avg_mem (σ : Representation ℂ G W) (ρ : Representation ℂ G V) (N H : Subgroup G)
@@ -102,7 +104,8 @@ private theorem avg_mem (σ : Representation ℂ G W) (ρ : Representation ℂ G
     refine Submodule.mem_comap.1 ((iSup_le fun f => ?_ : isoM σ ρ H ≤ (isoM σ ρ N).comap (cs ρ N H)) hy)
     rintro _ ⟨x, hx, rfl⟩
     refine Submodule.mem_iSup_of_mem f ⟨cs σ N H x, cs_fixed σ N H hx, ?_⟩
-    simp only [cs, LinearMap.sum_apply, map_sum, f.2]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [cs, LinearMap.sum_apply, map_sum, f.2]
   have h2 : cs ρ N H y = (Fintype.card (N ⧸ H.subgroupOf N) : ℂ) • y := by
     simp only [cs, LinearMap.sum_apply]
     rw [Finset.sum_congr rfl fun q _ => LocEx.mem_fix.1 hf _ (q.out : N).2]

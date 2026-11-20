@@ -12,7 +12,8 @@ private theorem mem_map_C_of_forall_coeff_mem_of_fg {A : Type} [CommRing A] (J :
   choose c _ hc using hc
   have hf : f = ∑ a ∈ s, PowerSeries.C a * PowerSeries.mk (fun n => c n a) := by
     ext n
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [PowerSeries.coeff_C_mul, PowerSeries.coeff_mk]
     rw [← hc n]
     refine Finset.sum_congr rfl fun a _ => ?_

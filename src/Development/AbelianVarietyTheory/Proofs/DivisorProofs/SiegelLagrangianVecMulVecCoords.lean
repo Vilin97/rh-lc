@@ -48,7 +48,8 @@ theorem De_vecMulVec_basisMap : ∀ (F E : Type) [Field F] [NumberField F] [Fiel
         refine Finset.sum_eq_zero fun i _ => ?_
         rw [Pi.single_eq_of_ne (Ne.symm hb)]; simp
       · simp
-  rw [key, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [key, map_sum]
   simp only [map_smul, hD, extA, LinearMap.coe_comp, Function.comp_apply]
 
 end GlobalTheory.SiegelConv

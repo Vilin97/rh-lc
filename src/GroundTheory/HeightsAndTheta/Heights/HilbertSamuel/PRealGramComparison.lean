@@ -130,7 +130,8 @@ theorem abs_sub_le (hR : ResolutionSupBound.Statement) (d : HSMDatum D Ω κ) :
       exact (hg'.map _).C_mul _
     have hevf : ∀ w, eval w f = ∑ i, c i * secFun (b i) w := by
       intro w
-      simp [hf, secFun, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [hf, secFun, map_sum]
     have hpt : ∀ w : Ix κ → ℂ, w ≠ 0 → ptNorm d.m (RingHom.id ℂ) n f w ^ 2 = g w := by
       intro w hw
       rw [ptNorm, MvPolynomial.map_id, hevf]

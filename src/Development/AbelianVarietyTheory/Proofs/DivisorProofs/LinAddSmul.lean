@@ -33,7 +33,8 @@ theorem num_cons_eq {e : ℕ} {M : Man e} (K : Calc M) {ι : Type} [Fintype ι] 
       ∑ m ∈ Finset.range (e + 1 + 1),
         (((e + 1).choose m : ℝ) * Φ (lin α ^ m * lin β ^ (e + 1 - m))) * t ^ m := by
     intro t
-    rw [lin_add_smul, add_pow, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [lin_add_smul, add_pow, map_sum]
     refine Finset.sum_congr rfl fun m _ => ?_
     have : (C t * lin α) ^ m * lin β ^ (e + 1 - m) * ((e + 1).choose m : MvPolynomial (Option ι) ℝ)
         = (((e + 1).choose m : ℝ) * t ^ m) • (lin α ^ m * lin β ^ (e + 1 - m)) := by

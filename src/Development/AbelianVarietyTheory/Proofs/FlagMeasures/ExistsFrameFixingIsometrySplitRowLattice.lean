@@ -259,12 +259,15 @@ theorem exists_dual_frame (hE : Formalism.HermitianLatticesTheory.IsCMUnram E) {
     exact pair_idSpan h h0 (hX ▸ ⟨hxL, hx⟩) a (hB a β hβ)
   refine ⟨fun b => g b - ∑ a, ((t : E) * S.hT (g a) (g b)) • e a, ⟨h.1, fun a b => ?_, fun a b => ?_⟩,
     fun a => ?_, fun b β hβ => ?_⟩
-  · simp only [map_sub, map_sum, LinearMap.sub_apply, LinearMap.sum_apply, hsmul, map_smul, h.1, hge, heg,
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [map_sub, map_sum, LinearMap.sub_apply, LinearMap.sum_apply, hsmul, map_smul, h.1, hge, heg,
       smul_eq_mul, mul_zero, Finset.sum_const_zero, sub_zero, mul_ite, mul_one, Finset.sum_ite_eq,
       Finset.sum_ite_eq', Finset.mem_univ, if_true, star_mul, hsym]
     linear_combination (-(S.hT (g a) (g b))) * ht
-  · simp only [map_sub, map_sum, map_smul, h.1, heg, smul_eq_mul, mul_zero, Finset.sum_const_zero, sub_zero]
-  · simp only [map_sub, map_sum, LinearMap.sub_apply, LinearMap.sum_apply, hsmul, hez, hgz, mul_zero,
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [map_sub, map_sum, map_smul, h.1, heg, smul_eq_mul, mul_zero, Finset.sum_const_zero, sub_zero]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [map_sub, map_sum, LinearMap.sub_apply, LinearMap.sum_apply, hsmul, hez, hgz, mul_zero,
       Finset.sum_const_zero, sub_zero]
   · rw [smul_sub, Finset.smul_sum]
     refine Λ.sub_mem (hgL b β hβ) (Λ.sum_mem fun a _ => ?_)
@@ -290,20 +293,24 @@ theorem prj_apply (e f : Fin r → S.V) (v : S.V) :
   simp [prj, LinearMap.sum_apply]
 
 theorem e_prj {e f : Fin r → S.V} (h : IsHyp e f) (a : Fin r) (v : S.V) : S.hT (e a) (prj e f v) = 0 := by
-  simp [prj_apply, map_sum, h.1, h.2.2]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [prj_apply, map_sum, h.1, h.2.2]
 
 theorem f_prj {e f : Fin r → S.V} (h : IsHyp e f) (a : Fin r) (v : S.V) : S.hT (f a) (prj e f v) = 0 := by
-  simp [prj_apply, map_sum, h.2.1, h.fe]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [prj_apply, map_sum, h.2.1, h.fe]
 
 theorem prj_prj {e f : Fin r → S.V} (h : IsHyp e f) (u v : S.V) :
     S.hT (prj e f u) (prj e f v) = S.hT u v - ∑ a, S.hT (f a) v * star (S.hT (e a) u) -
       ∑ a, S.hT (e a) v * star (S.hT (f a) u) := by
   have h1 : S.hT (prj e f u) (prj e f v) = S.hT u (prj e f v) := by
     rw [prj_apply e f u]
-    simp only [map_sub, map_sum, LinearMap.sub_apply, LinearMap.sum_apply, hsmul, e_prj h, f_prj h, mul_zero,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sub, map_sum, LinearMap.sub_apply, LinearMap.sum_apply, hsmul, e_prj h, f_prj h, mul_zero,
       Finset.sum_const_zero, sub_zero]
   rw [h1, prj_apply]
-  simp only [map_sub, map_sum, map_smul, smul_eq_mul, hsym]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sub, map_sum, map_smul, smul_eq_mul, hsym]
 
 def chg (e f f' : Fin r → S.V) : S.V →ₗ[E] S.V :=
   ∑ a, (S.hT (f' a)).smulRight (e a) + prj e f ∘ₗ prj e f' + ∑ a, (S.hT (e a)).smulRight (f a)
@@ -316,10 +323,12 @@ theorem chg_isom {e f f' : Fin r → S.V} (h : IsHyp e f) (h' : IsHyp e f') (u v
     S.hT (chg e f f' u) (chg e f f' v) = S.hT u v := by
   have h1 : ∀ a v, S.hT (e a) (chg e f f' v) = S.hT (e a) v := by
     intro a v
-    simp [chg_apply, map_sum, h.1, h.2.2, e_prj h]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [chg_apply, map_sum, h.1, h.2.2, e_prj h]
   have h2 : ∀ a v, S.hT (f a) (chg e f f' v) = S.hT (f' a) v := by
     intro a v
-    simp [chg_apply, map_sum, h.2.1, h.fe, f_prj h]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [chg_apply, map_sum, h.2.1, h.fe, f_prj h]
   have h3 : ∀ v, prj e f (chg e f f' v) = prj e f (prj e f' v) := by
     intro v
     rw [prj_apply e f (chg e f f' v)]

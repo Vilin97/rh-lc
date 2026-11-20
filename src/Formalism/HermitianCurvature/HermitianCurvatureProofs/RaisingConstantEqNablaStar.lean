@@ -44,7 +44,8 @@ theorem kap_smul (c : ℂ) (f : Ty P → ℂ) : (kap P fun π => c * f π) = c �
 
 theorem kap_sum {ι : Type} (s : Finset ι) (f : ι → Ty P → ℂ) :
     (kap P fun π => ∑ i ∈ s, f i π) = ∑ i ∈ s, kap P (f i) := by
-  rw [← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum]
   congr 1
   funext π
   rw [Finset.sum_apply]
@@ -337,7 +338,8 @@ theorem coordinate_polynomial_monic (π : Ty P) : (coordinatePolynomial P π).Mo
 
 theorem star_wC (π : Ty P) (Y : ℂ) : star (wC P π Y) = wC P π (star Y) := by
   have h1 : (wNum P π).map (starRingEnd ℂ) = wNum P π := by
-    simp [wNum, qP, Polynomial.map_sum, Polynomial.map_prod, conj_two]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [wNum, qP, Polynomial.map_sum, Polynomial.map_prod, conj_two]
   have h2 : (coordinatePolynomial P π).map (starRingEnd ℂ) = coordinatePolynomial P π := by simp [coordinatePolynomial, Polynomial.map_prod]
   have h3 : (wNum P π /ₘ coordinatePolynomial P π).map (starRingEnd ℂ) = wNum P π /ₘ coordinatePolynomial P π := by
     rw [Polynomial.map_divByMonic _ (coordinate_polynomial_monic P π), h1, h2]
@@ -521,7 +523,8 @@ theorem lead_kap (n : ℕ) (p : Ty P → ℂ[X]) (c : Ty P → ℂ) (hp : ∀ π
     simp only [Pi.add_apply, Pi.smul_apply, Finset.sum_apply, smul_eq_mul]
     exact e π
   show kap P (fun π => (p π).eval Y) = _
-  rw [e2, map_add, map_smul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e2, map_add, map_smul, map_sum]
   simp only [map_smul]
 
 theorem lead_prod (s : Finset ℕ) :

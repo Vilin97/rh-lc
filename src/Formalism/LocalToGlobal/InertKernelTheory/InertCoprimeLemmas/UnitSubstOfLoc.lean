@@ -221,7 +221,8 @@ theorem gram_change (σ : ℂ_[p] →+* ℂ_[p]) (hσ : IsConjP D lam σ) {N N' 
   simp only [Matrix.of_apply, Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, hσQ]
   simp only [← tauE_apply]
   rw [hb' m, hb' n, hYY_comb D b (fun i => Q i m) (fun i => Q i n) (fun i => hQK i m) (fun i => hQK i n)]
-  simp only [map_sum, map_mul, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, Finset.sum_mul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun i _ => ?_
   ring
@@ -257,7 +258,8 @@ theorem lamb_change {N N' r : ℕ} (b b' : Fin r → Matrix (Fin N') (Fin N) D.h
     lamC lam (embT D k.1 (b' m k.2.1 k.2.2)) =
       ∑ n, lamC lam (D.host.φ₀ (Q n m)) * lamC lam (embT D k.1 (b n k.2.1 k.2.2)) := by
   rw [IntegralOrthonormalChange.lamC_embT, hb' m, Matrix.sum_apply]
-  simp only [Matrix.smul_apply, smul_eq_mul, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.smul_apply, smul_eq_mul, map_sum, map_mul]
   refine Finset.sum_congr rfl fun n _ => ?_
   rw [← IntegralOrthonormalChange.embT_K D k.1 _ (hQK n m), IntegralOrthonormalChange.lamC_embT, IntegralOrthonormalChange.lamC_embT]
 
@@ -382,16 +384,19 @@ theorem atLogV_change {N N' r : ℕ} (Λ : AddSubgroup ℂ) (C : WeierstrassCurv
         PowerSeries.subst (MvPowerSeries.X i : MvPowerSeries (Fin r) ℂ_[p]) (flog (C • wModel lam Λ) wq)) := by
     apply MvPowerSeries.hasSubst_of_constantCoeff_zero
     intro k
-    simp [map_sum, hX]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, hX]
   have hSs : MvPowerSeries.HasSubst S := MvPowerSeries.hasSubst_of_constantCoeff_zero hS0
   unfold atLogV
   simp only []
   rw [MvPowerSeries.subst_comp_subst_apply hY hSs]
   congr 1
   funext k
-  rw [← MvPowerSeries.coe_substAlgHom hSs, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← MvPowerSeries.coe_substAlgHom hSs, map_sum]
   simp only [map_mul, AlgHom.commutes, MvPowerSeries.coe_substAlgHom, subst_subst_X S hSs, hSl, hvP]
-  simp only [Finset.mul_sum, Finset.sum_mul, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finset.mul_sum, Finset.sum_mul, map_sum, map_mul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   ring
@@ -513,7 +518,8 @@ theorem unitSubst_of_loc (hU : UnitSubstLoc) : UnitSubst := by
       rwa [norm_mul, hs1, one_mul] at h3
   have hE : ∀ j j', ∑ i, tauE D lam (A i j) * tauE D lam (D.host.conj (A i j')) = if j = j' then 1 else 0 := by
     intro j j'
-    simp only [← map_mul, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [← map_mul, ← map_sum]
     rw [hAu j j']
     split_ifs <;> simp
   have hMu : ∀ j j', ∑ i, M i j * (M i j').swap = if j = j' then 1 else 0 := by

@@ -38,7 +38,8 @@ theorem herm_gramAt (V : HSp D) (τ : D.what₂.Tau) (z : Fin V.rank → D.host.
       tauE D τ (Formalism.UG.hform (D.sp.cm.sig : D.host.E →+* D.host.E) V.gram z z) := by
   have hσ : ∀ x : D.host.E, tauE D τ ((D.sp.cm.sig : D.host.E →+* D.host.E) x) = star (tauE D τ x) :=
     fun x => GlobalTheory.FockCompare.tauE_star τ x
-  simp only [Formalism.QuantumDeterminants.herm, Formalism.UG.hform, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, gramAt,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Formalism.QuantumDeterminants.herm, Formalism.UG.hform, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, gramAt,
     Matrix.map_apply, Finset.mul_sum, Pi.star_apply, mul_assoc]
 
 end GlobalTheory.BesselFrameReal

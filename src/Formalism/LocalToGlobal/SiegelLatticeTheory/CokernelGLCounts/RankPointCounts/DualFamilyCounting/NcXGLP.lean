@@ -51,7 +51,8 @@ theorem pi_surj {V : Type*} [AddCommGroup V] [Module K V] {a : ℕ} (ψ : Fin a 
     have hdec : LinearMap.pi ψ v = ∑ i, ψ i v • (Pi.single i 1 : Fin a → K) := by
       ext j
       simp [Finset.sum_apply, Pi.single_apply]
-    rw [hdec, map_sum] at hv
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hdec, map_sum] at hv
     simpa [smul_eq_mul, mul_comm] using hv
   have hc := Fintype.linearIndependent_iff.1 hψ _ hsum
   apply LinearMap.pi_ext'

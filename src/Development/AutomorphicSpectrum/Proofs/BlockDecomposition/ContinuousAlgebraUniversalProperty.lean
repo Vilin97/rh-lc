@@ -133,11 +133,13 @@ theorem map_unique {A t : PAlg l} (ψ ψ' : A.cont ℤ_[l] ⟶ t)
   obtain ⟨M, hM⟩ := exists_period A f k
   let g : (A.cont ℤ_[l]).A := ∑ c, ind A M c * Hom.f (A.toCont ℤ_[l]) (Hom.f (A.evCont (rep c)) f)
   have hg : Hom.f ψ g = Hom.f ψ' g := by
-    simp only [g, map_sum, map_mul, h2, hconst]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [g, map_sum, map_mul, h2, hconst]
   have hfg : f - g ∈ Ideal.span {(A.cont ℤ_[l]).pi ^ k} := by
     refine (mem_span_pi_pow A k _).2 fun z => ?_
     have : Hom.f (A.evCont z) g = Hom.f (A.evCont (rep (PadicInt.toZModPow M z))) f := by
-      simp only [g, map_sum, map_mul, ev_toCont, ev_ind]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [g, map_sum, map_mul, ev_toCont, ev_ind]
       rw [Finset.sum_eq_single (PadicInt.toZModPow M z)]
       · simp
       · intro c _ hc
@@ -184,7 +186,8 @@ theorem formula (ε : Eps l) {ρ : ℕ → ((base l).cont ℤ_[l]).A}
     t.sharp (Hom.f ψ (Hom.f (contMap A.fromBase ℤ_[l]) (ρ m))) =
       ∑ c : ZMod (l ^ m), t.sharp (Hom.f ψ (ind A m c)) * t.sharp (t.s (ε.e m)) ^ c.val := by
   have h := congrArg (mapU (contMap A.fromBase ℤ_[l] ≫ ψ)) (hF m)
-  rw [mapU_sharp, map_sum] at h
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [mapU_sharp, map_sum] at h
   refine h.trans (Finset.sum_congr rfl fun c _ => ?_)
   rw [map_mul, map_pow, mapU_sharp, mapU_sharp]
   have h1 : Hom.f (contMap A.fromBase ℤ_[l] ≫ ψ) (ind (base l) m c) = Hom.f ψ (ind A m c) :=

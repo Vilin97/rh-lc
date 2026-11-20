@@ -12,7 +12,8 @@ namespace GlobalTheory.CompanionTheory.Hypotheses₂.Shintani.Gens
 
 theorem map_sum_ratSmul {F κ : Type} [Field F] [Fintype κ] (σ : F →+* ℝ) (q : κ → ℚ) (v : κ → F) :
     σ (∑ i, q i • v i) = ∑ i, σ (v i) * (q i : ℝ) := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [Rat.smul_def, map_mul, map_ratCast, mul_comm]
 

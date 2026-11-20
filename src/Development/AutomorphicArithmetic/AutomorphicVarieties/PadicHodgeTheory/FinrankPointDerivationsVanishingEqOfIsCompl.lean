@@ -130,20 +130,23 @@ theorem UpperTheory.finrank_pointDerivations_vanishing_eq_of_isCompl :
         (fun i => D i r / algebraMap O E (c i))
       choose! b hb using hk
       have hz := hker δ δ.2 ((k : O) • r - ∑ i, b i • a i) (fun j => by
-        rw [map_sub, map_sum, map_smul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sub, map_sum, map_smul]
         simp only [map_smul, ha, smul_ite, smul_zero, Finset.sum_ite_eq, Finset.mem_univ, if_true]
         rw [Algebra.smul_def, Algebra.smul_def, hb j (Finset.mem_univ _), Algebra.smul_def]
         have := hne _ (hc j)
         field_simp
         ring)
-      rw [map_sub, map_sum, map_smul] at hz
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, map_sum, map_smul] at hz
       simp only [map_smul, ← hev, hδ, Pi.zero_apply, smul_zero, Finset.sum_const_zero, sub_zero] at hz
       rw [Algebra.smul_def] at hz
       exact (mul_eq_zero.1 hz).resolve_left (hne k (nonZeroDivisors.coe_ne_zero k))
     · intro v
       refine ⟨∑ j, (v j / algebraMap O E (c j)) • ⟨D j, hDT j⟩, ?_⟩
       ext i
-      rw [map_sum, Finset.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Finset.sum_apply]
       simp only [hev, Submodule.coe_smul, LinearMap.smul_apply, ha, smul_ite, smul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true]
       rw [smul_eq_mul, div_mul_cancel₀ _ (hne _ (hc i))]
   rw [(LinearEquiv.ofBijective ev hbij).finrank_eq]

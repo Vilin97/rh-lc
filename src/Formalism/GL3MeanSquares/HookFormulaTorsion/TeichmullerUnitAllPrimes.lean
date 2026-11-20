@@ -57,7 +57,8 @@ theorem equal_powers_formula : EqualPowers := by
   · exact sub_eq_zero.1 h1
   · exfalso
     have := congrArg MvPowerSeries.constantCoeff h1
-    simp [map_sum, hf, hg] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, hf, hg] at this
     omega
 
 theorem character_power_formula : ChiPower := by
@@ -121,13 +122,15 @@ theorem isotropic_vector_zero : IsotropicZero := by
         have : ∀ i, cob φ (f a i • t a) (∑ e ∈ s, f e i • t e) =
             ∑ e ∈ s, c (t a) ((star (f a i) * f e i) • t e) := by
           intro i
-          rw [hadj, ← hc, Finset.smul_sum, map_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [hadj, ← hc, Finset.smul_sum, map_sum]
           simp only [smul_smul]
         simp only [this]
         rw [Finset.sum_comm]
         apply Finset.sum_eq_zero
         intro e _
-        rw [← map_sum, ← Finset.sum_smul, hiso, zero_smul, map_zero]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [← map_sum, ← Finset.sum_smul, hiso, zero_smul, map_zero]
       rw [e2, e3, add_zero]
   simpa using key Finset.univ
 
@@ -264,7 +267,8 @@ private theorem witt_frobenius_sq_eq_neg (p : ℕ) [Fact p.Prime] (k : Type) [Fi
       rw [ha, hb, cfrob, cfrob, ← pow_mul, ← sq, ← hN1, pow_succ, cε, map_neg]; ring
     have cbN : c b ^ N = -1 := by rw [← map_pow, hbN, map_neg, map_one]
     have h2 := congrArg c h1
-    rw [map_sum, map_zero] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero] at h2
     have h3 : ∀ i ∈ range N, c (a ^ i * b ^ (N - 1 - i)) = c b ^ (N - 1) := by
       intro i hi
       have := Finset.mem_range.1 hi

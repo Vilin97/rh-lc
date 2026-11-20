@@ -52,7 +52,8 @@ theorem lccomp_colAddGen_homog {B : Type*} [CommRing B] {r n : ℕ} (l j : Fin n
     (hf : IsWeightedHomogeneous (pairW l j) f ω) :
     IsWeightedHomogeneous (lccompW l j) (colAddGen B l j f) ω := by
   classical
-  rw [f.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [f.as_sum, map_sum]
   refine IsWeightedHomogeneous.sum _ _ _ fun d hd => ?_
   have h := lccomp_colAddGen_monomial_homog (B := B) l j d (AddMonoidAlgebra.coeff f d)
   rwa [hf (mem_support_iff.mp hd)] at h
@@ -101,7 +102,8 @@ theorem lccomp_component_colAddGen {B : Type*} [CommRing B] {r n : ℕ} (l j : F
   have hf := lccomp_sum_components (pairW l j) f (f.support.image (Finsupp.weight (pairW l j)))
     (fun d hd => Finset.mem_image_of_mem _ hd)
   conv_lhs => rw [hf]
-  rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum]
   by_cases hω : ω ∈ f.support.image (Finsupp.weight (pairW l j))
   · rw [Finset.sum_eq_single ω]
     · exact weightedHomogeneousComponent_self_of_isWH_ring

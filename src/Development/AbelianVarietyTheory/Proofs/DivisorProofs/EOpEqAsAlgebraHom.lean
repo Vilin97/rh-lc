@@ -81,7 +81,8 @@ theorem avg_mem (P : Subgroup G) (lam : P →* LLˣ) (x : WL) : avg A P lam x �
   rw [mem_eigenspace_iff₂]
   intro q
   unfold avg
-  rw [map_sum, Finset.smul_sum, ← Equiv.sum_comp (Equiv.mulLeft q) (fun p => ((lam q : LLˣ) : LL) • _)]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.smul_sum, ← Equiv.sum_comp (Equiv.mulLeft q) (fun p => ((lam q : LLˣ) : LL) • _)]
   refine Finset.sum_congr rfl fun p _ => ?_
   simp only [Equiv.coe_mulLeft, map_smul, Subgroup.coe_mul, map_mul, Module.End.mul_apply, smul_smul]
   congr 1
@@ -103,7 +104,8 @@ theorem mem_span_good_iff (σ : LL →+* ℂ) {M : Type} [AddCommGroup M] [Modul
     simp
   have hE : ∀ x, e (A.j σ (A.eOp c x)) = ∑ g, σ (c g) • a g (e (A.j σ x)) := by
     intro x
-    rw [eOp_eq_sum, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [eOp_eq_sum, map_sum, map_sum]
     exact Finset.sum_congr rfl fun g _ => by rw [map_smulₛₗ, map_smul, htw]
   constructor
   · intro hh
@@ -137,7 +139,8 @@ theorem mem_span_good_iff (σ : LL →+* ℂ) {M : Type} [AddCommGroup M] [Modul
         · rw [← LinearMap.comp_apply (A.ρ p) (A.eOp c), ← h2, LinearMap.comp_apply, avg_mem A P lam x p, map_smul]
         · have : e (A.j σ (avg A P lam x)) = Pi (e (A.j σ x)) := by
             unfold avg
-            simp only [Pi, map_sum, LinearMap.sum_apply, LinearMap.smul_apply]
+            set_option synthInstance.maxHeartbeats 100000 in
+              simp only [Pi, map_sum, LinearMap.sum_apply, LinearMap.smul_apply]
             exact Finset.sum_congr rfl fun g _ => by rw [map_smulₛₗ, map_smul, htw]
           rw [hE, this]
           simp only [E, LinearMap.sum_apply, LinearMap.smul_apply]
@@ -181,7 +184,8 @@ theorem ws_eq_span (R : RealDat D A Ks) (F : Face D A) (b : Bool) (i : Fin D.R.m
     have h1 := congrArg (fun z : R.WL F b i => (z : Fin (R.nW i) → D.what₂.LL))
       ((Module.finBasis D.what₂.LL (R.WL F b i)).sum_repr ⟨x, hx⟩)
     simp only [Submodule.coe_sum, Submodule.coe_smul] at h1
-    rw [← h1, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← h1, map_sum]
     refine Submodule.sum_mem _ fun k _ => ?_
     rw [map_smulₛₗ]
     refine Submodule.smul_mem _ _ ?_

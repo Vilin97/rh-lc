@@ -296,7 +296,8 @@ theorem map_transvMat (v : Fin 2 → E4) (b : E4) (τ : flagData.Ψ) :
       flagData.flowMat v τ (((3 : ℝ) : ℂ) * τ.1 b) := by
   have hc : flagData.c τ = 1 := by rw [Data.c, norm_ξ0]; norm_num
   ext a k
-  simp only [transvMat, Data.flowMat, Matrix.map_apply, Matrix.of_apply, hc, flagData_m,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [transvMat, Data.flowMat, Matrix.map_apply, Matrix.of_apply, hc, flagData_m,
     flagData_κ0, map_add, map_mul, map_sum, map_neg, emb_cc, emb_ii_eq, map_natCast,
     apply_ite τ.1, map_one, map_zero]
   push_cast

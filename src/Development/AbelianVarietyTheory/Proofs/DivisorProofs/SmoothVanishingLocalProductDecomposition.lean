@@ -93,7 +93,8 @@ theorem fibre_hadamard : ∀ {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ 
           ∑ k, (e.repr (Q.1 - b) k) • ((e k, 0) : Pt E g) := by
         conv_lhs => rw [← e.sum_repr (Q.1 - b)]
         ext <;> simp [Prod.fst_sum, Prod.snd_sum]
-      rw [hv, map_sum, Finset.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hv, map_sum, Finset.sum_apply]
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [map_smul, Pi.smul_apply, Complex.real_smul]
     simp_rw [hexp]

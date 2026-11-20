@@ -42,7 +42,8 @@ theorem secMaps_congr {Y : Scheme.{0}} {L N : LB Y} (hL : L.IsLB) (hN : N.IsLB) 
 theorem topEquiv_sum {X : Scheme.{0}} {R : Type} [CommRing R] (f : X ⟶ Sp R) (M : LB X) {n : ℕ}
     (c : Fin n → R) (x : Fin n → SecOnR f M ⊤) :
     SecOnR.topEquiv f M (∑ j, c j • x j) = ∑ j, cst f ⊤ (c j) • SecOnR.topEquiv f M (x j) := by
-  simp only [map_sum, SecOnR.smul_def, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, SecOnR.smul_def, map_smul]
 
 theorem sum_f {X : Scheme.{0}} {H : LB X} {m : ℕ} (s : Fin m → H.Sec) (k : H.ι) :
     (∑ j, s j).f k = ∑ j, (s j).f k :=

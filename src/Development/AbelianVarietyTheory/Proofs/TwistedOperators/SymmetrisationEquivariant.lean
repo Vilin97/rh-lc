@@ -158,7 +158,8 @@ theorem monomial_mem (h : SymbolCongr act) {Y : Mat p q} (hY : IsKC Y) (v : V)
       cls act (act Y v) (symU p q (MvPolynomial.monomial α 1)) -
       cls act v (ugι p q Y * symU p q (MvPolynomial.monomial α 1)) ∈
         indFlt act (Finsupp.toMultiset α).toList.length := by
-  rw [mul_symU_monomial_eq_avg_perm, map_smul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [mul_symU_monomial_eq_avg_perm, map_smul, map_sum]
   apply sub_inv_factorial_smul_sum_mem
   intro σ
   have hσ := list_mem act h hY v (List.ofFn fun i => (Finsupp.toMultiset α).toList.get (σ i))
@@ -175,7 +176,8 @@ theorem homog_mem (h : SymbolCongr act) {Y : Mat p q} (hY : IsKC Y) (v : V) (k :
       (cls act v ∘ₗ symU p q ∘ₗ kOnS Y + cls act (act Y v) ∘ₗ symU p q -
         cls act v ∘ₗ LinearMap.mulLeft ℂ (ugι p q Y) ∘ₗ symU p q) Q := fun Q => by
     simp
-  rw [hlin, MvPolynomial.as_sum P, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hlin, MvPolynomial.as_sum P, map_sum]
   refine Submodule.sum_mem _ fun d hd => ?_
   rw [show MvPolynomial.monomial d (P.coeff d) = P.coeff d • MvPolynomial.monomial d 1 by
     rw [MvPolynomial.smul_monomial, smul_eq_mul, mul_one], map_smul]

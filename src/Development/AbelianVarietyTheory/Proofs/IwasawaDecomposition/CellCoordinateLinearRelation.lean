@@ -66,7 +66,8 @@ theorem sum_gell (hk : k ≤ m) {D c : Fin m → Fin (N + 1) → R} (h : LeftInv
       (pmat hk w l i * MvPolynomial.C (c i r)) = pmat hk w l i *
         MvPolynomial.C (∑ r, D (v.1 (Fin.castLE hk l')) r * c i r) := by
     intro i
-    simp only [map_sum, map_mul, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, Finset.mul_sum]
     refine Finset.sum_congr rfl fun r _ => ?_
     ring
   simp only [h2, h _ _]

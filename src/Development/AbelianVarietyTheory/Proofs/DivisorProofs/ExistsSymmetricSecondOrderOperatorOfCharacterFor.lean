@@ -36,7 +36,8 @@ theorem quad_eq {R S : Type} [CommRing R] [CommRing S] (φ : R →+* S) {κ : Ty
     refine Finset.sum_congr rfl fun b _ => ?_
     rw [hmul, hF, Finset.mul_sum]
     exact Finset.sum_congr rfl fun a _ => by ring
-  simp only [h, map_sum, map_mul, Finset.sum_mul, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [h, map_sum, map_mul, Finset.sum_mul, Finset.mul_sum]
   calc _ = ∑ a, ∑ s, ∑ b, ∑ t, φ (w s t) * φ (c s a) * φ (c t b) * d a (d b f) :=
         Finset.sum_congr rfl fun a _ => Finset.sum_comm
     _ = ∑ s, ∑ a, ∑ b, ∑ t, φ (w s t) * φ (c s a) * φ (c t b) * d a (d b f) := Finset.sum_comm
@@ -52,7 +53,8 @@ theorem form_eq {R X : Type} [CommRing R] [AddCommGroup X] {κ : Type} [Fintype 
   have h1 : ∀ (g : X →+ R), g α = ∑ s, g (b s) * ((b.repr α s : ℤ) : R) := by
     intro g
     conv_lhs => rw [← b.sum_repr α]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun s _ => ?_
     rw [map_zsmul, zsmul_eq_mul, mul_comm]
   have h2 := h1 (AddMonoidHom.mk' (fun mu => w mu α) fun mu mu' => hw mu mu' α)
@@ -90,9 +92,11 @@ theorem exists_quad : ∀ (R : Type) [CommRing R] [IsDomain R] [IsLocalRing R] [
     rw [hsymm (b t) (b s)]
     ring
   · intro α W hW f hf
-    rw [key, base_constant_function_eq_torTensorConstantsRingHom, ← form_eq b w hw α, map_sum, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [key, base_constant_function_eq_torTensorConstantsRingHom, ← form_eq b w hw α, map_sum, Finset.sum_mul]
     refine Finset.sum_congr rfl fun s _ => ?_
-    rw [map_sum, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_mul]
     refine Finset.sum_congr rfl fun t _ => ?_
     rw [(hc t).2.2.1 α W hW f hf, base_constant_function_eq_torTensorConstantsRingHom, hmul, (hc s).2.2.1 α W hW f hf, base_constant_function_eq_torTensorConstantsRingHom, hℓ, hℓ, map_mul,
       map_mul]

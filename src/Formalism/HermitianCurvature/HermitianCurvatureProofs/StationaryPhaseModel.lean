@@ -2579,7 +2579,8 @@ theorem F_fderiv_single {d : ℕ} {g : (Fin d → ℂ) → ℂ} {x : Fin d → �
 theorem F_clm_sum {d : ℕ} (L : (Fin d → ℂ) →L[ℂ] ℂ) (v : Fin d → ℂ) :
     L v = ∑ k, v k * L (Pi.single k 1) := by
   conv_lhs => rw [pi_eq_sum_univ' v]
-  simp [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum]
 
 theorem F_contDiff_mul_cut {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] {U : Set E} (hU : IsOpen U)
     {χ f : E → ℝ} {n : WithTop ℕ∞} (hχ : ContDiff ℝ n χ) (hs : tsupport χ ⊆ U) (hf : ContDiffOn ℝ n f U) :

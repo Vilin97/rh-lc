@@ -102,7 +102,8 @@ theorem exists_differentiableOn_transfer {V Λ : Type} [NormedAddCommGroup V] [N
     ext j; simp [Pi.single_apply]
   have hkM : ∀ b ∈ B, ∀ z, k b (M Q b z) = M Q' b z := by
     intro b hb z
-    simp [M, map_sum, hk b hb]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [M, map_sum, hk b hb]
   refine ⟨B ∩ M Q ⁻¹' {x | IsUnit x}, (hM Q hQ).continuousOn.isOpen_inter_preimage hB Units.isOpen,
     ⟨hb₀, by simp [h0]⟩, Set.inter_subset_left, ?_⟩
   have hd : DifferentiableOn ℂ (fun b => M Q' b * Ring.inverse (M Q b)) (B ∩ M Q ⁻¹' {x | IsUnit x}) := by

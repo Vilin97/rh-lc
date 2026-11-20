@@ -55,7 +55,8 @@ theorem bijective_arch : ∀ {F : Type} [Field F] [NumberField F] {κ : Type} [F
     have hvac : ∀ i, ∀ᶠ v in Filter.cofinite, φ i v = stdInd F κ v := fun i =>
       T.eventually_cofinite_notMem.mono fun v hT => hφstd i v hT
     have hid : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure h Φ₁ = ∑ i, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure (ei (f i)) fun v => ev v (φ i v) := by
-      rw [← heΨ, hsum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← heΨ, hsum, map_sum]
       exact Finset.sum_congr rfl fun i _ => he (f i) (φ i) (hφSB i) (hvac i)
     obtain ⟨y, hy⟩ := GlobalTheory.ArchSurj.exists_point_ne_zero Φ₁ hne hΦ₁std
     set c : ℂ := ∏ᶠ v, Φ₁ v (fun j => y j v) with hc
@@ -72,7 +73,8 @@ theorem bijective_arch : ∀ {F : Type} [Field F] [NumberField F] {κ : Type} [F
       rw [Finset.sum_apply] at this
       simp only [GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure, hI] at this
       exact this
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     have hs : (∑ i, ei ((cs i / c) • f i)) x = ∑ i, (cs i / c) * ei (f i) x := by
       rw [SchwartzMap.sum_apply]
       refine Finset.sum_congr rfl fun i _ => ?_

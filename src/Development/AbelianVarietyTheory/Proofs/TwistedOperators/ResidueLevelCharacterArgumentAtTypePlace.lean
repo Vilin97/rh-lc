@@ -65,7 +65,8 @@ theorem lin_mulVec {n : ℕ} (φ : (Fin n → A) →ₗ[A] A) (B : Matrix (Fin n
   have e : v = ∑ l, v l • (Pi.single l 1 : Fin n → A) := by
     funext i; simp [Finset.sum_apply, Pi.single_apply]
   conv_lhs => rw [e]
-  rw [Matrix.mulVec_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.mulVec_sum, map_sum]
   refine Finset.sum_congr rfl fun l _ => ?_
   rw [Matrix.mulVec_smul, map_smul, smul_eq_mul, mul_comm]
 

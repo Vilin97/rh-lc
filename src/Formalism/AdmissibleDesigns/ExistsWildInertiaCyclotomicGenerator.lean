@@ -205,7 +205,8 @@ theorem int_R' (hD : RingDef O T r₀ π χ₁ ε g₀ eB e₁ s Dd) :
   intro a ha x' i j
   obtain ⟨S, c, -, rfl⟩ := (h8 a).1 ha
   refine ⟨∑ g ∈ S, c g x' * r₀ g (Dd.p x') i j, ?_⟩
-  simp only [Finset.sum_apply, Matrix.sum_apply, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finset.sum_apply, Matrix.sum_apply, map_sum, map_mul]
   refine Finset.sum_congr rfl fun g _ => ?_
   have := h7 g x'
   simp only [RingHom.toMonoidHom_eq_coe, MonoidHom.coe_comp, MonoidHom.coe_coe, Function.comp_apply] at *

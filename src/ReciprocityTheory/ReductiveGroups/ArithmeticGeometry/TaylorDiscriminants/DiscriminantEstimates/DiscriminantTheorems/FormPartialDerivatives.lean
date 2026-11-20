@@ -89,27 +89,33 @@ theorem det_polynomial_harmonic : ReciprocityTheory.ChartRestriction.G.TB.DetPol
     intro a' b'
     rw [hSx]
     refine ⟨fun j => ?_, fun d => if d = b' ∧ a' = a then 1 else 0, fun k => ?_⟩
-    · simp [ReciprocityTheory.ChartRestriction.G.TB.xForm, map_sum, MvPolynomial.pderiv_mul, MvPolynomial.pderiv_X,
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp [ReciprocityTheory.ChartRestriction.G.TB.xForm, map_sum, MvPolynomial.pderiv_mul, MvPolynomial.pderiv_X,
         Pi.single_apply]
     · by_cases hab : a' = a
-      · simp [ReciprocityTheory.ChartRestriction.G.TB.xForm, map_sum, MvPolynomial.pderiv_mul, MvPolynomial.pderiv_X,
+      set_option synthInstance.maxHeartbeats 100000 in
+        · simp [ReciprocityTheory.ChartRestriction.G.TB.xForm, map_sum, MvPolynomial.pderiv_mul, MvPolynomial.pderiv_X,
           Pi.single_apply, hab]
-      · simp [ReciprocityTheory.ChartRestriction.G.TB.xForm, map_sum, MvPolynomial.pderiv_mul, MvPolynomial.pderiv_X,
+      set_option synthInstance.maxHeartbeats 100000 in
+        · simp [ReciprocityTheory.ChartRestriction.G.TB.xForm, map_sum, MvPolynomial.pderiv_mul, MvPolynomial.pderiv_X,
           Pi.single_apply, hab]
   have hygen : ∀ b' d', ReciprocityTheory.ChartRestriction.G.TB.yForm (p := p) f b' d' ∈ Sy := by
     intro b' d'
     rw [hSy, hAy]
     refine ⟨fun i => ?_, fun d => if d = d' ∧ b' = b then 1 else 0, fun d => ?_, fun k => ?_⟩
-    · simp [ReciprocityTheory.ChartRestriction.G.TB.yForm, map_sum, MvPolynomial.pderiv_mul, MvPolynomial.pderiv_X,
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp [ReciprocityTheory.ChartRestriction.G.TB.yForm, map_sum, MvPolynomial.pderiv_mul, MvPolynomial.pderiv_X,
         Pi.single_apply]
     · dsimp only
       split_ifs
       · exact Ay.one_mem
       · exact Ay.zero_mem
     · by_cases hab : b' = b
-      · simp [ReciprocityTheory.ChartRestriction.G.TB.yForm, map_sum, MvPolynomial.pderiv_mul, MvPolynomial.pderiv_X,
+      set_option synthInstance.maxHeartbeats 100000 in
+        · simp [ReciprocityTheory.ChartRestriction.G.TB.yForm, map_sum, MvPolynomial.pderiv_mul, MvPolynomial.pderiv_X,
           Pi.single_apply, hab]
-      · simp [ReciprocityTheory.ChartRestriction.G.TB.yForm, map_sum, MvPolynomial.pderiv_mul, MvPolynomial.pderiv_X,
+      set_option synthInstance.maxHeartbeats 100000 in
+        · simp [ReciprocityTheory.ChartRestriction.G.TB.yForm, map_sum, MvPolynomial.pderiv_mul, MvPolynomial.pderiv_X,
           Pi.single_apply, hab]
 
   have hP : (∏ i, ReciprocityTheory.ChartRestriction.G.TB.leadMinor (Matrix.of (ReciprocityTheory.ChartRestriction.G.TB.xForm (q := q) e)) i ^ c i)
@@ -137,7 +143,8 @@ theorem det_polynomial_harmonic : ReciprocityTheory.ChartRestriction.G.TB.DetPol
     intro k
     have hHx : ∀ d, MvPolynomial.pderiv (Sum.inl (a, k)) (H d) = 0 := fun d => (hAy _).mp (hHA d) (a, k)
     rw [MvPolynomial.pderiv_mul, hP0 (b, k), zero_mul, zero_add, hH k, MvPolynomial.pderiv_mul, hG k]
-    simp only [map_sum, MvPolynomial.pderiv_mul, hHx, MvPolynomial.pderiv_C, zero_mul, mul_zero,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, MvPolynomial.pderiv_mul, hHx, MvPolynomial.pderiv_C, zero_mul, mul_zero,
       add_zero, Finset.sum_const_zero]
     rw [Finset.sum_mul_sum]
     refine Finset.sum_congr rfl fun b' _ => Finset.sum_congr rfl fun d _ => ?_
@@ -149,7 +156,8 @@ theorem det_polynomial_harmonic : ReciprocityTheory.ChartRestriction.G.TB.DetPol
   refine Finset.sum_eq_zero fun b' _ => ?_
   rw [Finset.sum_comm]
   refine Finset.sum_eq_zero fun d _ => ?_
-  rw [← Finset.mul_sum, ← map_sum MvPolynomial.C, horth b' d, map_zero, mul_zero]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Finset.mul_sum, ← map_sum MvPolynomial.C, horth b' d, map_zero, mul_zero]
 
 theorem perpendicular_vector_exists : ReciprocityTheory.ChartRestriction.G.TB.PerpVecSt := by
   unfold ReciprocityTheory.ChartRestriction.G.TB.PerpVecSt

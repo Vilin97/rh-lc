@@ -103,7 +103,8 @@ theorem finChar_eq_finprod (ψ : AddChar (AF F) ℂ) (hψ : Continuous ψ) (z : 
   set s : Af F := ∑ v ∈ hT.toFinset, singleFin v (evalV F v z) with hs
   have hev : ∀ u, evalV F u s = if u ∈ hT.toFinset then evalV F u z else 0 := by
     intro u
-    rw [hs, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hs, map_sum]
     split_ifs with hu
     · rw [Finset.sum_eq_single_of_mem u hu fun v _ hv => evalV_singleFin_ne hv.symm _, evalV_singleFin_self]
     · exact Finset.sum_eq_zero fun v hv => evalV_singleFin_ne (fun e : u = v => hu (e ▸ hv)) _

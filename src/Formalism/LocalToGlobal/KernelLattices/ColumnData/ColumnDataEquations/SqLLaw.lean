@@ -27,7 +27,8 @@ theorem formV_phi {N N' : ℕ} (A : ℝ) (M : Matrix (Fin N') (Fin N') D.host.E)
   rw [formV_apply', formV_apply']
   congr 1
   refine Finset.sum_congr rfl fun τ _ => ?_
-  simp only [phi_apply, Matrix.conjTranspose_apply, Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.embT_star', Complex.star_def, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [phi_apply, Matrix.conjTranspose_apply, Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.embT_star', Complex.star_def, map_sum,
     map_mul, Complex.conj_conj, Finset.sum_mul, Finset.mul_sum]
   refine (sum_three_comm _).trans ?_
   refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun i _ => ?_

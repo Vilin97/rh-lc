@@ -300,7 +300,8 @@ theorem exists_monic (hσ : ∀ x, σ (σ x) = x) {B : Base F E} {G : Geo σ a a
     have h2 : (⟨∑ i, pure (f i) (φ i), Submodule.sum_mem _ fun i _ => hD i⟩ :
         ↥(PolData B G.M' ⊓ G.M'.So B.ψ B.τ₁)) = ∑ i, ⟨pure (f i) (φ i), hD i⟩ := by
       ext1; simp
-    rw [← h1, h2, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← h1, h2, map_sum]
     exact Finset.sum_congr rfl fun i _ => hLin _
   have hsum : (fun x => G.M'.I om' (∑ i, pure (f i) (φ i)) ((toGAd hσ G.W.J hc).symm x)) = ∑ i, θi i := by
     funext x; rw [hI]; simp [θi, Finset.sum_apply]

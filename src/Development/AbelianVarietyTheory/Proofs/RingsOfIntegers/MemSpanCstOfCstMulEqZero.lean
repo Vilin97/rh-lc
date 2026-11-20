@@ -110,7 +110,8 @@ theorem expandsAtMod_of_succ
         sv U k σ (fGl I G e) y jL := by
       rw [← hf]
       exact stalkMap_gs _ _ y _ (Set.mem_iInter.2 fun _ => hL') _
-    rw [map_sub, map_mul, Units.val_pow_eq_pow_val, map_pow, hW, hS, map_sum, ← Category.assoc, hf] at H'
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_mul, Units.val_pow_eq_pow_val, map_pow, hW, hS, map_sum, ← Category.assoc, hf] at H'
     simp only [map_mul, hF, hT] at H'
     rw [Units.val_pow_eq_pow_val]
     exact H'

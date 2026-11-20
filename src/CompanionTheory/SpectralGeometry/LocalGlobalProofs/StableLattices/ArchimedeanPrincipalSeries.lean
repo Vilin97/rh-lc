@@ -203,7 +203,8 @@ theorem rFin_coef {K : Type} [Group K] [TopologicalSpace K] {H : Type} [NormedAd
   show d * ⟪σ (x * k⁻¹) s, s⟫_ℂ = _
   rw [map_mul, ContinuousLinearMap.mul_apply]
   conv_lhs => rw [e1]
-  simp only [map_sum, map_smul, sum_inner, inner_smul_left, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, sum_inner, inner_smul_left, Finset.mul_sum]
   exact Finset.sum_congr rfl fun i _ => by ring
 
 theorem exists_projAvg (K : Type) [Group K] [TopologicalSpace K] [IsTopologicalGroup K] [CompactSpace K] [T2Space K]

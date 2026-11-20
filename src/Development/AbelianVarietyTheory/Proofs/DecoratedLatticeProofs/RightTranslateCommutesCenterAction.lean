@@ -58,7 +58,8 @@ theorem gelfT_rTr_real (hθ : IsInfFam θ) {h : GA D V} (hh : IsRealPt θ h) (τ
   have key := GlobalTheory.Dec.GelfAd.trace_pow_comm
     (fun a b => MulOpposite.op (derEnd (V := V) hθ τ (Matrix.single a b 1))) (MulOpposite.op T) _ _ hQP
     (fun a b => by
-      simp only [← MulOpposite.op_smul, ← Finset.op_sum, ← MulOpposite.op_mul, ← map_smul, ← map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [← MulOpposite.op_smul, ← Finset.op_sum, ← MulOpposite.op_mul, ← map_smul, ← map_sum]
       have e : ∑ c, ∑ d, ((infMat D.sp.cm.sig V.gram (θ τ) h)ᵀ a c * (infMat D.sp.cm.sig V.gram (θ τ) h⁻¹)ᵀ d b) •
           (Matrix.single c d 1 : Matrix (Fin V.rank) (Fin V.rank) ℂ) =
           infMat D.sp.cm.sig V.gram (θ τ) h * Matrix.single a b 1 * infMat D.sp.cm.sig V.gram (θ τ) h⁻¹ := by

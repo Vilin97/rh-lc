@@ -23,7 +23,8 @@ theorem alg_eq_of_support {σ R A : Type*} [CommSemiring R] [CommSemiring A] [Al
     (h : ∀ m ∈ G.support, ∀ p ∈ m.support, α (X p) = β (X p)) : α G = β G := by
   conv_lhs => rw [G.as_sum]
   conv_rhs => rw [G.as_sum]
-  rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum]
   refine Finset.sum_congr rfl fun m hm => ?_
   rw [monomial_eq, Finsupp.prod, map_mul, map_mul, map_prod, map_prod]
   congr 1
@@ -344,7 +345,8 @@ theorem SegreFlagCutPreimage.proof : SegreFlagCutPreimage.Statement := by
   have hLval : ∀ (s : Fin N → Φ) i, aeval (pairProjCoord y w φ φ' s) (L i) =
       aeval (pairProjCoord y w φ φ' s) (C (ϖ ^ n) * chartMonoZ O M M' c bH) * genVal w s (φ i) := by
     intro s i
-    rw [hval s i, hLdef, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hval s i, hLdef, map_sum]
     refine Finset.sum_congr rfl fun l _ => ?_
     rw [map_mul, aeval_X, mul_comm]
     rfl
@@ -380,7 +382,8 @@ theorem SegreFlagCutPreimage.proof : SegreFlagCutPreimage.Statement := by
         intro i
         rw [map_mul, hLval]
         ring
-      rw [map_sum, Finset.sum_congr rfl fun i _ => hterm i, ← Finset.mul_sum, ← hval']
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Finset.sum_congr rfl fun i _ => hterm i, ← Finset.mul_sum, ← hval']
       simp only [map_mul, aeval_X]
       change _ = genVal w (flagCoord w e t (k + 1)) (φ' l₀) * (_ * _) * (_ * _)
       ring

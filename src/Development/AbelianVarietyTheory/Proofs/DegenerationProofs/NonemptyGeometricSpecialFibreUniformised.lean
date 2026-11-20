@@ -117,7 +117,8 @@ theorem isLin_pullSec {R R' : Type} [CommRing R] [CommRing R'] (φ : R →+* R')
 def sumSec {X : Scheme.{0}} {M : LB X} {A : Type} (S : Finset A) (φ : A → M.Sec) : M.Sec where
   f l := ∑ α ∈ S, (φ α).f l
   compat i j := by
-    rw [map_sum, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum, Finset.mul_sum]
     exact Finset.sum_congr rfl fun α _ => (φ α).compat i j
 
 theorem isPart_sumSec {k : Type} [Field k] (Φ : FibPre k) {A : Type} (e : A → Φ.E.X) (he : Function.Injective e)

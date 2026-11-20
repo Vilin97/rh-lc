@@ -338,7 +338,8 @@ theorem hatTot_conn (hN : ∀ j, P.conn (bas j) ∈ P.Mext (RpiE O K l e)) {v : 
   have h3 : ∑ j, v τ j * P.conn (bas j) τ i =
       ((∑ j, ⟨_, h1 j⟩ * ⟨_, h2 j⟩ : RpiE O K l e) : K⟦X⟧) := by simp
   change hat O l e (P.conn v τ i) = NHatE O K l e (hat O l e _) + ∑ j, hat O l e _ * hat O l e _
-  rw [conn_apply_eq, hat_add l e (N_mem_RpiE l e (h1 i))
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [conn_apply_eq, hat_add l e (N_mem_RpiE l e (h1 i))
     (sum_mem fun j _ => mul_mem (h1 j) (h2 j)), hat_N l e (h1 i), h3, hat_coe, map_sum]
   simp only [map_mul, hat_of_mem l e (h1 _), hat_of_mem l e (h2 _)]
 

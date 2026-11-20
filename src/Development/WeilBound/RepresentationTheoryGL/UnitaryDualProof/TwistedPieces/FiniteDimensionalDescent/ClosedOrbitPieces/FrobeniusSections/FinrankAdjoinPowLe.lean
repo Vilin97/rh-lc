@@ -165,7 +165,8 @@ theorem sectionEx {k R : Type*} [Field k] [CommRing R] [Algebra k R] [FiniteDime
     intro x
     have : x = ∑ I, σ I (π x I) := by
       apply π.injective
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simp only [σ, AlgEquiv.apply_symm_apply]
       exact (Finset.univ_sum_single (π x)).symm
     rw [this]; exact A.sum_mem fun I _ => hσA I _

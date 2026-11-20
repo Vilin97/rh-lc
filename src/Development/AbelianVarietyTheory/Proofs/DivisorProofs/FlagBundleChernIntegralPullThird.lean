@@ -162,7 +162,8 @@ theorem integral_fsDens_qMat {n : ℕ} (H : Matrix (Fin 2) (Fin 2) (Ev n)) (m : 
       rw [qMat, ← Fin.prod_const, Fintype.prod_sum]
       exact Finset.sum_congr rfl fun f _ => Finset.prod_smul _ _ _
     change _ * densL n _ = _
-    rw [e₁, AddSubmonoidClass.coe_finsetSum, Finset.sum_mul, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e₁, AddSubmonoidClass.coe_finsetSum, Finset.sum_mul, map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun f _ => ?_
     rw [Subalgebra.coe_smul, smul_mul_assoc, map_smul, smul_eq_mul]
     ring
@@ -172,7 +173,8 @@ theorem integral_fsDens_qMat {n : ℕ} (H : Matrix (Fin 2) (Fin 2) (Ev n)) (m : 
   refine ⟨integrable_finset_sum _ fun f _ => hi f, ?_⟩
   rw [integral_finset_sum _ fun f _ => hi f]
   change _ = densL n _
-  rw [fibPow, map_sum, AddSubmonoidClass.coe_finsetSum, Finset.sum_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [fibPow, map_sum, AddSubmonoidClass.coe_finsetSum, Finset.sum_mul, map_sum]
   refine Finset.sum_congr rfl fun f _ => ?_
   rw [integral_mul_const, map_mul (aeval _), aeval_C, map_prod, ← Algebra.smul_def, Subalgebra.coe_smul, smul_mul_assoc, map_smul,
     smul_eq_mul]

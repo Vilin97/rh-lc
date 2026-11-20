@@ -38,7 +38,8 @@ theorem valIs_comb {J : Type} [Fintype J] {s : J → SecA A F k} {b c : J → F}
   let ψ : F →+* (TFK (R := R) F).left.presheaf.stalk z := cstH (R := R) z
   have e₁ : ∀ a : F, @id ((TFK (R := R) F).left.presheaf.stalk z) (cst (R := R) F z a) = ψ a := fun a => cst_eq z a
   refine (congrArg φ e₀).trans ((map_sum φ _ _).trans ?_)
-  rw [e₁, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e₁, map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun i _ => (ThetaAct.sv_smul _ _ _ z hI).trans ?_
   rw [ThetaPtMove.ptSecT_fst, map_mul, _root_.mul_assoc, ← e₁, ← e₁]
   exact congrArg (@id ((TFK (R := R) F).left.presheaf.stalk z) (cst (R := R) F z (b i)) * ·) (hs i z I hI)

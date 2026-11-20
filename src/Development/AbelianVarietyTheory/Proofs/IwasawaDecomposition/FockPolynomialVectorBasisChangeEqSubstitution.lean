@@ -160,10 +160,12 @@ theorem pureTensorO_subst : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : 
         (pureTensorO ψ θ S T (fun _ => 1) (fun _ => 1) BS BT f (substF h (fun τ => ((g τ)⁻¹)ᵀ) p)) :=
       pure_mem (P := IsThetaFunO ψ S T) (fun _ _ => theta_add) (fun a _ => theta_smul a)
         (fun _ _ h => aPlus_theta hψ hθ _ _ _ h) hf _
-    rw [mul_comm, pureTensorO_X_mul hψ hθ _ _ hf, hp, map_mul, substF_X, unitMap_mul, aPlus_dir_sum hψ hθ _ _ _ hm,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [mul_comm, pureTensorO_X_mul hψ hθ _ _ hf, hp, map_mul, substF_X, unitMap_mul, aPlus_dir_sum hψ hθ _ _ _ hm,
       Finset.sum_mul, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
-    rw [aPlus_dir_sum hψ hθ _ _ _ hm, Finset.sum_mul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [aPlus_dir_sum hψ hθ _ _ _ hm, Finset.sum_mul, map_sum]
     refine Finset.sum_congr rfl fun l _ => ?_
     rw [aPlus_dir_smul hψ hθ _ _ _ hm, mul_assoc, MvPolynomial.C_mul', map_smul, pureTensorO_X_mul hψ hθ _ _ hf]
     rfl

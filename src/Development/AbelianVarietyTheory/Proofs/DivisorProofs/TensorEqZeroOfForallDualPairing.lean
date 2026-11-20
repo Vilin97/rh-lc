@@ -66,7 +66,8 @@ theorem tensor_mem_of_dualAnnihilator : ∀ (R : Type) [CommRing R] (M N : Type 
     simp only [sub_sub_cancel]
     apply tensor_eq_zero_of_forall_dual_pairing
     intro x y
-    simp only [map_sum, TensorProduct.lift.tmul, LinearMap.compl₁₂_apply, LinearMap.mul_apply']
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, TensorProduct.lift.tmul, LinearMap.compl₁₂_apply, LinearMap.mul_apply']
     exact hab _ (ann x) _ (ann' y)
 
 end GlobalTheory

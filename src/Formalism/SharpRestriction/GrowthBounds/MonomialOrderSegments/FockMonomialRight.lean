@@ -168,7 +168,8 @@ theorem fock_eq_sum_right (F G : MvPolynomial σ K) :
 theorem dg_eq_sum_f (f : (σ →₀ ℕ) → K) (F : MvPolynomial σ K) :
     dg f F = ∑ α ∈ F.support, monomial α (f α * F.coeff α) := by
   conv_lhs => rw [← support_sum_monomial_coeff F]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_congr rfl fun α _ => dg_monomial f α _
 
 theorem support_dg_subset (f : (σ →₀ ℕ) → K) (F : MvPolynomial σ K) :

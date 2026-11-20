@@ -251,7 +251,8 @@ theorem conjPt_mem_mcPts {P : Ideal (MRing ι)} {z : (Σ k, ι k) → ℂ} (hz :
 theorem blockMapC_conjPt (k₀ : K) {J : Type} [Fintype J] (M : Matrix J (ι k₀) ℤ) (z : (Σ k, ι k) → ℂ) :
     blockMapC k₀ M (conjPt z) = conjPt (blockMapC k₀ M z) := by
   funext j
-  simp [blockMapC, conjPt, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [blockMapC, conjPt, map_sum]
 
 end Points
 
@@ -281,7 +282,8 @@ theorem det_resGram_eq {κ : Type} [Fintype κ] (d : HSMDatum D Ω κ) {n s : �
         refine hf'.sub (IsHomogeneous.sum _ _ _ fun l _ => ?_)
         simpa using (isHomogeneous_C (Ix κ) (A k l)).mul (hf l)
       have hq0 : aeval d.x q = 0 := by
-        simp only [q, map_sub, map_sum, map_mul, eq_intCast]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [q, map_sub, map_sum, map_mul, eq_intCast]
         rw [← aeval_map_int, ← hbf', ← hA k]
         simp [zsmul_eq_mul, hbf, aeval_map_int, map_intCast]
       have h0 := secFun_eq_zero_of_pts hq hq0 hz

@@ -69,7 +69,8 @@ theorem exists_frPt_of_basis (M : MChart Y) {y : Sp S ⟶ Xo.XF c}
   let u : ∀ σ : E →+* ℂ, Matrix (Fin M.n) (Fin (Dw.mult σ)) S := fun σ j i => (vec M x hM).symm (f σ i) j
   have hu : ∀ σ i, vec M x hM (fun j => u σ j i) = f σ i := fun σ i => (vec M x hM).apply_symm_apply _
   have hs : ∀ σ (a : Fin (Dw.mult σ) → S), vec M x hM ((u σ).mulVec a) = ∑ i, a i • f σ i := fun σ a => by
-    simp only [← hu, ← map_smul, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [← hu, ← map_smul, ← map_sum]
     congr 1
     funext j
     simp [Matrix.mulVec, dotProduct, Finset.sum_apply, _root_.mul_comm]
@@ -240,7 +241,8 @@ theorem Carries.map {S S' : Type} [CommRing S] [CommRing S'] {z : Sp S ⟶ Y₀ 
     rw [← frX_frMap hPP, Category.assoc, hP]; exact hx'
   refine ⟨inst', P', hP', ?_, fun σ i => ?_⟩
   · rw [Category.assoc, hz]; exact TF.X.ptY_frMap hPP
-  · rw [← tanPull_frVec hPP hP hP' hx' σ i, hvec, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [← tanPull_frVec hPP hP hP' hx' σ i, hvec, map_sum]
     exact Finset.sum_congr rfl fun j _ => by
       rw [map_smulₛₗ, tanPull_valV TF hv _ hx' hU hU']
       rfl
@@ -275,7 +277,8 @@ theorem Carries.eq_of_cell (hC : IsCell TF Z U e v W k L N) {S : Type} [CommRing
     · show ev zw W hW (L σ i j) = 0
       rw [hLz σ i j h, map_zero]
     · rw [(GlobalTheory.LieMet.isComb_iff (fun j => valV TF hv _ hU (e ⟨σ, j⟩)) _ _).1 (hcomb S zw hW hU hk hxx σ i)]
-      simp only [hvec, Finset.smul_sum, smul_smul, Matrix.mul_apply, map_sum, map_mul, Finset.sum_smul,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hvec, Finset.smul_sum, smul_smul, Matrix.mul_apply, map_sum, map_mul, Finset.sum_smul,
         Matrix.map_apply]
       exact Finset.sum_comm
   rw [← cancel_mono (inc₀ TF.X Z), hpt, heq]

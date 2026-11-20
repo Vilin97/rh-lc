@@ -45,7 +45,8 @@ theorem isMultiHomog_aeval (τ : K ≃ K') (g : (Σ k, ι k) → MRingOver F ι'
     (hs : IsMultiHomog s a) : IsMultiHomog (aeval g s) (a ∘ τ.symm) := by
   classical
   conv_lhs => rw [s.as_sum]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine isMultiHomog_sum _ _ fun m hm => ?_
   have hm' := hs m hm
   have hdeg : (0 + ∑ p ∈ m.support, m p • (Pi.single (τ p.1) 1 : K' → ℕ)) = a ∘ τ.symm := by
@@ -140,13 +141,15 @@ theorem exists_linear_preimage (k' : K') (i : ι (e k')) :
     have := congrFun (congrFun hBA' i) j
     simpa [Matrix.mul_apply, Matrix.one_apply] using this
   refine ⟨fun q => B i q, ?_⟩
-  simp only [map_sum, map_mul, algHom_C, MvPolynomial.algebraMap_eq]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, algHom_C, MvPolynomial.algebraMap_eq]
   simp_rw [blockLinSubst_X, Finset.mul_sum, ← mul_assoc, ← C_mul]
   calc (∑ q : ι' k', ∑ j : ι (e k'), C (B i q * A k' q j) * (X ⟨e k', j⟩ : MRingOver F ι))
       = ∑ j : ι (e k'), ∑ q : ι' k', C (B i q * A k' q j) * (X ⟨e k', j⟩ : MRingOver F ι) :=
         Finset.sum_comm
     _ = ∑ j : ι (e k'), C (∑ q, B i q * A k' q j) * (X ⟨e k', j⟩ : MRingOver F ι) := by
-        simp_rw [map_sum, Finset.sum_mul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp_rw [map_sum, Finset.sum_mul]
     _ = X ⟨e k', i⟩ := by
         simp_rw [hij]
         simp
@@ -246,7 +249,8 @@ theorem isRelevant_comap_iff (W : Ideal (MRingOver F ι)) :
     push Not at hall
     obtain ⟨c, hc⟩ := exists_linear_preimage hA k' i
     apply hi
-    rw [← hc, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hc, map_sum]
     exact Ideal.sum_mem _ fun q _ => by
       rw [map_mul]
       exact Ideal.mul_mem_left _ _ (hall q)

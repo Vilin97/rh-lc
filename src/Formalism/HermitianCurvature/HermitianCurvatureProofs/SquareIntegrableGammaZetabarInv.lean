@@ -521,7 +521,8 @@ theorem actA_eq (a : A P (DQ P)) (f π) : actA P a f π = ∑ π', Phi P (a π �
 
 theorem act_mul (a b : A P (DQ P)) (f) : actA P (a * b) f = actA P a (actA P b f) := by
   funext π
-  simp only [actA_eq, Matrix.mul_apply, map_sum, map_mul, LinearMap.sum_apply, Module.End.mul_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [actA_eq, Matrix.mul_apply, map_sum, map_mul, LinearMap.sum_apply, Module.End.mul_apply]
   rw [Finset.sum_comm]
 theorem act_add (a b : A P (DQ P)) (f π) : actA P (a + b) f π = actA P a f π + actA P b f π := by
   simp only [actA_eq, Matrix.add_apply, map_add, LinearMap.add_apply, Finset.sum_add_distrib]
@@ -1301,7 +1302,8 @@ theorem isJ_euler (v : M.Var P.r) {F : (ℝ → ℝ) → SmQ P.r P.TT} (hF : IsJ
   refine ⟨n + n, Fin.append (fun t => qs t + 1) qs, Fin.append (fun t => kapG P v * c t) (fun t => eulerQ v (c t)),
     fun φ hφ => ?_⟩
   beta_reduce
-  rw [h φ hφ, map_sum, Fin.sum_univ_add]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h φ hφ, map_sum, Fin.sum_univ_add]
   simp only [Fin.append_left, Fin.append_right]
   rw [← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun t _ => ?_
@@ -1914,7 +1916,8 @@ theorem actA_eq (a : A P (DQ P)) (f π) : actA P a f π = ∑ π', Phi P (a π �
 
 theorem act_mul (a b : A P (DQ P)) (f) : actA P (a * b) f = actA P a (actA P b f) := by
   funext π
-  simp only [actA_eq, Matrix.mul_apply, map_sum, map_mul, LinearMap.sum_apply, Module.End.mul_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [actA_eq, Matrix.mul_apply, map_sum, map_mul, LinearMap.sum_apply, Module.End.mul_apply]
   rw [Finset.sum_comm]
 theorem act_diag (d : M.Ty P → (DQ P).Pr) (f π) : actA P (Matrix.diagonal d) f π = (d π).1 (f π) := by
   rw [actA_eq, Finset.sum_eq_single π (fun b _ hb => by rw [Matrix.diagonal_apply_ne _ hb.symm, map_zero]; rfl)
@@ -2417,7 +2420,8 @@ theorem mulmat_mul (hτ : 0 ≤ (PP).TT) {δ : ℝ} {a b : A PP (DQ PP)} (ha : M
   choose βa hga hpa using ha
   choose βb hgb hpb using hb
   refine ⟨∑ π', βa π π' * βb π' π'', Good.sum hτ _ _ fun π' _ => (hga π π').mul hτ (hgb π' π''), fun g => ?_⟩
-  rw [Matrix.mul_apply, map_sum, LinearMap.sum_apply, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.mul_apply, map_sum, LinearMap.sum_apply, Finset.sum_mul]
   refine Finset.sum_congr rfl fun π' _ => ?_
   rw [map_mul, Module.End.mul_apply, hpb, hpa, mul_assoc]
 
@@ -2488,7 +2492,8 @@ theorem F_facts (hτ : 0 ≤ (PP).TT) {δ : ℝ} {ψ : S (PP).TT}
     refine L2.sum _ _ fun π' _ => ?_
     have : z * (ψ * (β π π' * U π')) = (ψ * β π π') * (z * U π') := by ring
     rw [this]; exact (hψ'.mul_bdd (hβg π π').1).l2 (hU π').2.1
-  · simp only [Finset.mul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [Finset.mul_sum, map_sum]
     refine L2.sum _ _ fun π' _ => ?_
     have : gg * (zi * th (ψ * (β π π' * U π'))) = (th ψ * β π π') * (gg * (zi * U π')) +
         (ψ * th (β π π')) * (gg * (zi * U π')) + (ψ * β π π') * (gg * (zi * th (U π'))) := by
@@ -2497,7 +2502,8 @@ theorem F_facts (hτ : 0 ≤ (PP).TT) {δ : ℝ} {ψ : S (PP).TT}
     have hz := L2.square_integrable_gamma_zeta_inv hτ (hU π').2.1
     exact (((hψ1.mul_bdd (hβg π π').1).l2 hz).add ((hψ'.mul_bdd (hβg π π').2.1).l2 hz)).add
       ((hψ'.mul_bdd (hβg π π').1).l2 (hU π').2.2.1)
-  · simp only [Finset.mul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [Finset.mul_sum, map_sum]
     refine L2.sum _ _ fun π' _ => ?_
     have : gg * (zbi * thb (ψ * (β π π' * U π'))) = (thb ψ * β π π') * (gg * (zbi * U π')) +
         (ψ * thb (β π π')) * (gg * (zbi * U π')) + (ψ * β π π') * (gg * (zbi * thb (U π'))) := by

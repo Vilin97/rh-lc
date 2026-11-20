@@ -16,7 +16,8 @@ theorem aeval_mul_of_isHomogeneous {σ' Ω : Type*} [Field Ω] [CharZero Ω] {p 
   classical
   conv_lhs => rw [p.as_sum]
   conv_rhs => rw [p.as_sum]
-  rw [map_sum, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun m hm => ?_
   rw [aeval_monomial, aeval_monomial]
   have hdeg : ∑ i ∈ m.support, m i = d := by

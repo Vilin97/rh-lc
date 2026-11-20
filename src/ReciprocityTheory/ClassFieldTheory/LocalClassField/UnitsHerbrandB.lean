@@ -109,7 +109,8 @@ theorem hilbert90_matrix_subalgebra_norm_one (g₀ : G) (hg : ∀ g, g ∈ Subgr
     have hd : g₀ • y - y = x - e (∑ g : G, g • x) := by
       rw [hydef, smul_sum, ← sum_sub_distrib]
       simp only [telescope]
-      rw [sum_sub_distrib, sum_pow_eq hg (fun g => g • e (g⁻¹ • x)), h.e_sum, ← map_sum,
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [sum_sub_distrib, sum_pow_eq hg (fun g => g • e (g⁻¹ • x)), h.e_sum, ← map_sum,
         sum_pow_eq hg (fun g => g⁻¹ • x)]
       congr 2
       exact Fintype.sum_equiv (Equiv.inv G) _ _ fun _ => rfl

@@ -294,7 +294,8 @@ theorem bt_span_units {ι : Type*} (u w : ι → (D.s.atP p).Ep) (v : ι → Vp 
 
 theorem bt_bc_sum {ι : Type*} (s : Finset ι) (c : ι → D.host.E) (v : ι → (VS D).V) :
     baseChange₂ D p (∑ i ∈ s, c i • v i) = ∑ i ∈ s, (D.s.atP p).ιE (c i) • baseChange₂ D p (v i) := by
-  rw [map_sum]; simp only [baseChange_smul₂]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]; simp only [baseChange_smul₂]
 
 theorem bt_frameAct_comp {n : ℕ} (v : Fin n → (VS D).V) (A B : Matrix (Fin n) (Fin n) (𝓞 D.host.E)) :
     frameAct (frameAct v A) B = frameAct v (A * B) := by
@@ -550,7 +551,8 @@ theorem bt_coord {T : D.host.E} (F : FlagG (VS D) D.R.rS T) (b : Fin D.R.rS) :
     intro x
     show ∑ i, (D.s.atP p).ιE (lam ((VS D).frame i)) * (D.s.atP p).ιE ((VS D).frame.repr x i) = _
     conv_rhs => rw [← (VS D).frame.sum_repr x]
-    rw [map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, smul_eq_mul, map_mul, mul_comm]
   rw [key, hl a]
@@ -1002,11 +1004,13 @@ theorem bt_bc_linIndep {ι : Type*} [Fintype ι] (v : ι → (VS D).V) (hv : Lin
     intro x
     show ∑ k, (D.s.atP p).ιE (lam ((VS D).frame k)) * (D.s.atP p).ιE ((VS D).frame.repr x k) = _
     conv_rhs => rw [← (VS D).frame.sum_repr x]
-    rw [map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_smul, smul_eq_mul, map_mul, mul_comm]
   have h2 := congrArg Φ hc
-  rw [map_sum, map_zero] at h2
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_zero] at h2
   simp only [map_smul, key, hl, smul_eq_mul] at h2
   simpa [apply_ite, Finset.sum_ite_eq'] using h2
 
@@ -1226,7 +1230,8 @@ theorem bt_det_unitri_sub {n l : ℕ} (hl : l ≤ n) {R : Type*} [CommRing R] (U
 theorem bt_brS_frameAct {n : ℕ} (v : Fin n → (VS D).V) (m : Matrix (Fin n) (Fin n) (𝓞 D.host.E)) (b : Fin n)
     (x : (VS D).V) :
     brS (VS D) (frameAct v m b) x = ∑ c, brS (VS D) (v c) x * ((m c b : 𝓞 D.host.E) : D.host.E) := by
-  simp only [brS, frameAct, map_sum, map_smul, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [brS, frameAct, map_sum, map_smul, smul_eq_mul]
   refine Finset.sum_congr rfl fun c _ => ?_
   ring
 

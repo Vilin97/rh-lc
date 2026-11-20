@@ -80,7 +80,8 @@ theorem sum_character_translate :
   have h1 : LinearMap.trace ℂ τ (τ.ρ u * ∑ v : GL (Fin d) K,
       if v ∈ Formalism.IrreducibleCountingLemmas.TYPES.unip K (Formalism.IrreducibleCountingLemmas.TYPES.twoBlock d j) then τ.ρ v else 0) = 0 := by
     rw [h0, mul_zero, map_zero]
-  rw [Finset.mul_sum, map_sum] at h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.mul_sum, map_sum] at h1
   refine Eq.trans (Finset.sum_congr rfl fun v _ => ?_) h1
   split_ifs
   · rw [FDRep.character, map_mul]

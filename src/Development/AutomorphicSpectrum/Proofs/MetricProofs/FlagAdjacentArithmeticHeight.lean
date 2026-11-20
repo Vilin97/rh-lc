@@ -111,7 +111,8 @@ theorem pluck_of_flag (M : FlagModel y Ψ N j) {F : FrameData ι Ψ N M.Ω M.blk
         have := hF.2.2.1 p k hp I I' hI hI'
         split_ifs at this ⊢ <;> simpa [uA, vA] using this
       have e' := congrArg val e
-      rw [map_sum] at e'
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum] at e'
       simp only [map_mul] at e'
       refine e'.trans ?_
       split_ifs <;> simp

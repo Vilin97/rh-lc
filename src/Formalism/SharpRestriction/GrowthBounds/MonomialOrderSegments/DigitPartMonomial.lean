@@ -19,7 +19,8 @@ theorem lsup_monomial {σ τ : Type} (φ : (σ →₀ ℕ) → MvPolynomial τ K
 theorem lsup_apply {σ τ : Type} (φ : (σ →₀ ℕ) → MvPolynomial τ K) (F : MvPolynomial σ K) :
     lsup φ F = ∑ α ∈ F.support, F.coeff α • φ α := by
   conv_lhs => rw [F.as_sum]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_congr rfl fun α _ => lsup_monomial φ α _
 
 theorem dg_eq_lsup {σ : Type} (f : (σ →₀ ℕ) → K) : dg f = lsup fun α => monomial α (f α) := rfl
@@ -109,7 +110,8 @@ theorem digitPart_smul (p : ℕ) (ρ : D.Tau → Fin D.r → ℕ) (a : K) (F : M
 theorem digitPart_sum {ι : Type} (p : ℕ) (ρ : D.Tau → Fin D.r → ℕ) (s : Finset ι)
     (f : ι → MvPolynomial (D.OL × Fin D.r) K) :
     D.digitPart p ρ (∑ i ∈ s, f i) = ∑ i ∈ s, D.digitPart p ρ (f i) := by
-  simp only [digitPart_eq, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [digitPart_eq, map_sum]
 
 theorem gaAct_eq (G : MvPolynomial (D.OL × Fin D.r) K) : D.gaAct G = dg D.ga G := by
   rw [dg_apply, gaAct]

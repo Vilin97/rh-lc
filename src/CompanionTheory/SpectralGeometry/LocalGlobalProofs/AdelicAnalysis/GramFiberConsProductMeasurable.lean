@@ -35,7 +35,8 @@ theorem gram_symm (σ : E →ₐ[F] E) (hinv : ∀ y, sigR R σ (sigR R σ y) = 
     {J : Matrix (Fin M) (Fin M) E} (hJ : ∀ i j, σ (J j i) = J i j)
     (X : Fin n → Fin M → R ⊗[F] E) (p q : Fin n) :
     sigR R σ (gramR R σ J X q p) = gramR R σ J X p q := by
-  simp only [gramR, hR, hform, JR, map_sum, map_mul, hinv, Matrix.map_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [gramR, hR, hform, JR, map_sum, map_mul, hinv, Matrix.map_apply]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   have h : sigR R σ (inclR R (J j i)) = inclR R (J i j) := by

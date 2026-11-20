@@ -357,11 +357,13 @@ theorem transport : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberFi
     refine ⟨T₀, hT₀, m, m', fun i => T (f i), φ, fun j => T' (f' j), φ',
       fun i => ⟨memT _ (hf i).1, (hf i).2.1, (hf i).2.2⟩, fun j => ⟨memT' _ (hf' j).1, (hf' j).2.1, (hf' j).2.2⟩,
       ?_, ?_, hsum⟩
-    · rw [hΦ, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [hΦ, map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       exact hT1 (f i) _ (rest_pure (f i) (φ i) (hf i).2.1
         ((hcof.and hT.geo.hM.std).mono fun v hv => ((hf i).2.2 v hv.1).trans hv.2))
-    · rw [hΦ', map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [hΦ', map_sum]
       refine Finset.sum_congr rfl fun j _ => ?_
       exact hT1' (f' j) _ (rest_pure (f' j) (φ' j) (hf' j).2.1
         ((hcof.and hT.geo.hM'.std).mono fun v hv => ((hf' j).2.2 v hv.1).trans hv.2))

@@ -79,7 +79,8 @@ theorem map_sum_smul_pow {R S : Type} [CommRing R] [CommRing S] (h : R →+* S) 
     (a : ℕ → R) (x : R) (M : Matrix (Fin d) (Fin d) R) :
     (∑ n ∈ Finset.range d, (a n * x ^ n) • M ^ n).map h =
       ∑ n ∈ Finset.range d, (h (a n) * h x ^ n) • (M.map h) ^ n := by
-  rw [← RingHom.mapMatrix_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← RingHom.mapMatrix_apply, map_sum]
   refine Finset.sum_congr rfl fun n _ => ?_
   have e : h.mapMatrix ((a n * x ^ n) • M ^ n) = h (a n * x ^ n) • h.mapMatrix (M ^ n) := by
     ext i j; simp

@@ -114,7 +114,8 @@ theorem GlobalTheory.HTRho.finrank_homO_eq_sum_quot : ∀ {k O C Idx W V : Type*
     intro v
     have h0 : actC τ (1 - ∑ i, e i) v = 0 :=
       actC_eq_zero τ χ hJ _ (fun l => by simp [map_sub, map_sum, he]) v
-    rw [map_sub, map_one, map_sum, LinearMap.sub_apply, Module.End.one_apply, LinearMap.sum_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_one, map_sum, LinearMap.sub_apply, Module.End.one_apply, LinearMap.sum_apply,
       sub_eq_zero] at h0
     exact h0
   let Φ : V →ₗ[k] ((i : Idx) → V ⧸ mSub τ (χ i) ⊤) := LinearMap.pi fun i => (mSub τ (χ i) ⊤).mkQ

@@ -140,7 +140,8 @@ theorem ctLeftV [MeasurableSpace (NA F)] [BorelSpace (NA F)] (μ : Measure (NA F
       ((((GeneralLinearGroup.map (Pi.evalRingHom (fun _ => ℝ) v) h)⁻¹).val * Matrix.single i j (1 : ℝ) *
         (GeneralLinearGroup.map (Pi.evalRingHom (fun _ => ℝ) v) h).val) a b : ℝ) * L (E v a b) := fun i j x => by
     rw [conj_dec]
-    simp only [map_sum, map_smul, Complex.real_smul, E]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, Complex.real_smul, E]
   have hv := fun v : InfinitePlace F => hA (GeneralLinearGroup.map (Pi.evalRingHom (fun _ => ℝ) v) h) (fun a b => L (E v a b))
     ((k v : ℂ) * cterm μ D φ.1 g)
     (by

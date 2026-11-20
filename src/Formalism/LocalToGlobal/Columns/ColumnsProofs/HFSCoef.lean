@@ -99,7 +99,8 @@ theorem hfsJ_li (F : CoefFrame ι) : LinearIndependent L fun i => hfsJ ι lam (b
     simp only [MvPolynomial.coeff_sum, MvPolynomial.coeff_smul, MvPolynomial.coeff_map, smul_eq_mul,
       MvPolynomial.coeff_zero] at h1 ⊢
     have h2 := congrArg (fun y => F.c y k) h1
-    simp only [map_sum, map_zero, Finset.sum_apply, Pi.zero_apply] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_zero, Finset.sum_apply, Pi.zero_apply] at h2
     rw [← h2]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [mul_comm (g j), F.smul, Pi.smul_apply, smul_eq_mul]
@@ -129,7 +130,8 @@ theorem hfs_map_trAct (g : σ → GL (Fin n) K) (F : Pol K σ n) :
     MvPolynomial.map ι (trAct g F) = trAct (fun τ => Formalism.UG.bc ι (g τ)) (MvPolynomial.map ι F) := by
   unfold trAct Formalism.GradedWeylDivisibility.blockAct
   refine map_aeval_eq_aeval_map' ι _ _ (fun v => ?_) F
-  simp [map_sum, Formalism.UG.bc, Matrix.transpose_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, Formalism.UG.bc, Matrix.transpose_apply]
 
 theorem hfs_detPow_bc (g : GL (Fin n) K) (c : ℤ) : detPow L n (Formalism.UG.bc ι g) c = ι (detPow K n g c) := by
   unfold detPow

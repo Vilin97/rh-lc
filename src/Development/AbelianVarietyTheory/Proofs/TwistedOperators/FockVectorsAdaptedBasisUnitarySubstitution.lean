@@ -434,7 +434,8 @@ theorem ptAt_basis : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam 
       rw [e2, h0, h0]
     | add Q R hQ hR => rw [map_add, map_add, map_add, hQ, hR]
     | mul_X Q v hQ =>
-      rw [mul_comm, GlobalTheory.FockIndep.pure_X_mul hadd hsm hA' hc' Aadd' Asm' hf, hQ,
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [mul_comm, GlobalTheory.FockIndep.pure_X_mul hadd hsm hA' hc' Aadd' Asm' hf, hQ,
         hN v _ (GlobalTheory.FockIndep.pure_mem hadd hsm hA hf _), map_mul, lsub_X, Finset.sum_mul, map_sum]
       refine Finset.sum_congr rfl fun w _ => ?_
       rw [mul_assoc, ← MvPolynomial.smul_eq_C_mul, map_smul, GlobalTheory.FockIndep.pure_X_mul hadd hsm hA hc Aadd Asm hf]

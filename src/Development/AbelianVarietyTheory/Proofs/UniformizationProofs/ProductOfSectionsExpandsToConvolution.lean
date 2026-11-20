@@ -314,7 +314,8 @@ theorem coef_eq_sum {κ : Type} [Fintype κ] {k : ℕ} (g : GtPtF D.toPre F) {w 
     congrArg (fun q => q.left) (lift_fst (𝟙 (TF (R := R) F)) g.b)
   have e₁ := (congrArg (fun q => sval q (lift (𝟙 (TF (R := R) F)) g.b).left z J) h).trans (sval_sum' hJ _ _ _)
   refine Eq.trans ?_ (congrArg (fun q => q * _ * _) e₁).symm
-  rw [CoefBasic.cst_eq, map_sum, Finset.sum_mul, Finset.sum_mul, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [CoefBasic.cst_eq, map_sum, Finset.sum_mul, Finset.sum_mul, Finset.sum_mul]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [sval_smul' hJ, sval_termPull (f i) g.b hJ, e, map_mul, ← CoefBasic.cst_eq, ← CoefBasic.cst_eq, _root_.mul_assoc,
     hx i z J hJ, ← _root_.mul_assoc, ← _root_.mul_assoc]
@@ -396,7 +397,8 @@ theorem main : LL → AllUF fun {R} _ _ {I} {D} {A} {G} _ _ U F _ _ => ∀ (w₀
   have hs : ∀ β, famProj D.toPre F k'' β (∑ p : Fin n × Fin n', (c p.1 * c' p.2) • famPull D.toPre (FractionRing R) F hG k'' (Φ p)) =
       ∑ p : Fin n × Fin n', (c p.1 * c' p.2 * (algebraMap (FractionRing R) F (algebraMap R (FractionRing R) (r p)))⁻¹) •
         termPull D.toPre (FractionRing R) F k'' β (genericTerm D k'' β ((y p).2 β)) := fun β => by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun p _ => ?_
     rw [d₂, map_smulₛₗ, map_smulₛₗ, smul_smul, inv_mul_cancel_right₀ (hr' p)]; rfl
   have hE := expandsG_of_fintype U.toUnifPre F k'' v'' _ _ y hy (hv.trans (Finset.sum_congr (M := GroupSec U.toUnifPre F k'') rfl fun p _ => by

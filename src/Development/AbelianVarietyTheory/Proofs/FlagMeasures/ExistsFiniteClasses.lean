@@ -357,7 +357,8 @@ theorem rel_iff (Λs : Submodule L.O (Fin n → E)) (x : Fin m → Fin n → E)
     have h2 : ∀ v ∈ Submodule.span E (Set.range x), (g' * k * g⁻¹) v = v := by
       intro v hv
       obtain ⟨c, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun E).1 hv
-      simp only [map_sum, map_smul, h1]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, h1]
     refine ⟨g' * k * g⁻¹, ⟨(isomG L Hm).mul_mem ((isomG L Hm).mul_mem hg' hi)
       ((isomG L Hm).inv_mem hg), fun v => ⟨fun hv => ?_, fun hv => ?_⟩,
       fun v hv => ?_⟩, ?_⟩

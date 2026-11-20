@@ -45,7 +45,8 @@ theorem adelicChar_pair_torusPt_single [DecidableEq ι] (ξ : ι → K) (p : ι 
     (∑ i, algebraMap K (InfiniteAdeleRing K) (ξ i) * ofCoord fun j => (Pi.single p s : ι × BIdx K → ℝ) (i, j))
   refine this.trans ?_
   congr 2
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp_rw [infiniteTrace_algebraMap_mul_ofCoord]
   rw [← Fintype.sum_prod_type (f := fun q : ι × BIdx K =>
     (Pi.single p s : ι × BIdx K → ℝ) q * (Algebra.trace ℚ K (ξ q.1 * integralBasis K q.2) : ℝ))]

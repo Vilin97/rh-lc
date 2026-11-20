@@ -9,7 +9,8 @@ private theorem form_map' {A A' ι : Type} [CommRing A] [CommRing A'] [Fintype �
   unfold form
   rw [Polynomial.map_sub, Polynomial.map_X, Polynomial.map_C]
   congr 2
-  simp [map_sum, MvPolynomial.map_C, MvPolynomial.map_X]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, MvPolynomial.map_C, MvPolynomial.map_X]
 
 private theorem form_eval' {A ι : Type} [CommRing A] [Fintype ι] (x y : ι → A) :
     Polynomial.evalRingHom (∑ k, MvPolynomial.C (x k) * MvPolynomial.X k) (form y) =

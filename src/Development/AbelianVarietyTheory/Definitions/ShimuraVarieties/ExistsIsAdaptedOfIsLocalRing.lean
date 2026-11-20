@@ -87,7 +87,8 @@ theorem basisMulGL_repr (b : Basis ι R M) (g : GL ι R) (x : M) (i : ι) :
     rw [h, ← toMatrix_basisMulGL (basisMulGL b g) g⁻¹, h]
   rw [← h']
   conv_lhs => rw [← b.sum_repr x]
-  simp only [map_sum, map_smul, Finsupp.finsetSum_apply, Finsupp.smul_apply, smul_eq_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, Finsupp.finsetSum_apply, Finsupp.smul_apply, smul_eq_mul,
     Basis.toMatrix_apply, mul_comm]
 
 @[reducible] def basisMulAction : MulAction (GL ι R)ᵐᵒᵖ (Basis ι R M) where
@@ -415,7 +416,8 @@ theorem exists_isAdapted_of_free (F : FullFlag R M n) (h : ∀ i, Module.Free R 
     obtain ⟨i, hi, hmax⟩ := Finset.exists_max_image (Finset.univ.filter fun i => a i ≠ 0) id
       (by obtain ⟨i, hi⟩ := hne; exact ⟨i, by simpa using hi⟩)
     have h0 : e i (π i (∑ j, a j • v j)) = a i := by
-      rw [map_sum, map_sum, Finset.sum_eq_single i _ (by simp)]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, map_sum, Finset.sum_eq_single i _ (by simp)]
       · simp [v, h₁]
       · intro j _ hj
         by_cases haj : a j = 0

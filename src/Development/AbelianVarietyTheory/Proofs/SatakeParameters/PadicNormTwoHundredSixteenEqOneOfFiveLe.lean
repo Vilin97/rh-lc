@@ -272,13 +272,15 @@ theorem dict_core (hp2 : p ≠ 2) (D : D7) {N N' r : ℕ} (lam : Qbar →+* ℂ_
           PowerSeries.subst (MvPowerSeries.X i : MvPowerSeries (Fin r) ℂ_[p]) (flog (C • wModel lam Λ) wq)) := by
       apply MvPowerSeries.hasSubst_of_constantCoeff_zero
       intro k
-      simp [map_sum, hXfl]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [map_sum, hXfl]
     have hT : MvPowerSeries.HasSubst (fun k : D.what₂.Tau × Fin N' × Fin N =>
         ∑ i, MvPowerSeries.C ((((C.u⁻¹ : ℂ_[p]ˣ) : ℂ_[p]) * κ) * lamC lam (embT D k.1 (b i k.2.1 k.2.2))) *
           (MvPowerSeries.X i : MvPowerSeries (Fin r) ℂ_[p])) := by
       apply MvPowerSeries.hasSubst_of_constantCoeff_zero
       intro k
-      simp [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [map_sum]
     have hP : MvPowerSeries.HasSubst (fun i : Fin r => PowerSeries.subst (MvPowerSeries.X i : MvPowerSeries (Fin r) ℂ_[p]) L) :=
       MvPowerSeries.hasSubst_of_constantCoeff_zero (fun i => constantCoeff_inVar_eq_zero i L hL0)
     unfold atLog Formalism.L2.KerInert.Rep.thOrth Formalism.MainNotions.FormalGroupSystem.inParamK
@@ -287,7 +289,8 @@ theorem dict_core (hp2 : p ≠ 2) (D : D7) {N N' r : ℕ} (lam : Qbar →+* ℂ_
     erw [MvPowerSeries.subst_comp_subst_apply hT hP]
     congr 1
     funext k
-    rw [← MvPowerSeries.coe_substAlgHom hSs, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← MvPowerSeries.coe_substAlgHom hSs, map_sum]
     erw [← MvPowerSeries.coe_substAlgHom hP, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [hCalg]
@@ -539,7 +542,8 @@ theorem s2_in_unramified_closure (hTor : Formalism.L2.Th1.CM.CM4) (dK : ℕ) (L 
   have key : lam ^ 2 * ι (Formalism.L2.Th1.F.s2 L)
       = -(((2 * dK : ℕ) : ℂ_[l])⁻¹ * ∑ P ∈ S, lam ^ 2 * ι (L.weierstrassP P)) := by
     have h := congrArg ι hsum'
-    rw [map_mul, map_neg, map_mul, map_sum, map_ofNat, map_natCast] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_mul, map_neg, map_mul, map_sum, map_ofNat, map_natCast] at h
     rw [← Finset.mul_sum, ← h]
     push_cast
     push_cast at hN0

@@ -158,7 +158,8 @@ private theorem cy_fin [Algebra ℤ_[l] (w.adicCompletionIntegers E)] :
     have hx : φ (fun i => ((b.repr x i : ℤ) : ℤ_[l])) =
         algebraMap (𝓞 E) (w.adicCompletionIntegers E) x := by
       conv_rhs => rw [← b.sum_repr x]
-      simp [φ, Fintype.linearCombination_apply, map_sum, Int.cast_smul_eq_zsmul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [φ, Fintype.linearCombination_apply, map_sum, Int.cast_smul_eq_zsmul]
     simp only [LinearMap.coe_comp, Function.comp_apply, Submodule.mkQ_apply, hx]
     rw [Submodule.Quotient.eq, Submodule.ideal_span_singleton_smul,
       Submodule.mem_smul_pointwise_iff_exists]

@@ -83,7 +83,8 @@ theorem eq_monomial_of_dehomog_const (A : MvPolynomial (V D N) K) (m : ℕ) (hA 
       ∑ s ∈ A.support, if s.erase (Sum.inr 0) = u then AddMonoidAlgebra.coeff A s else 0 := by
     intro u
     conv_lhs => rw [A.as_sum]
-    rw [map_sum, coeff_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, coeff_sum]
     refine Finset.sum_congr rfl fun s _ => ?_
     rw [hmono, coeff_monomial]
   have hwt : ∀ s : V D N →₀ ℕ,

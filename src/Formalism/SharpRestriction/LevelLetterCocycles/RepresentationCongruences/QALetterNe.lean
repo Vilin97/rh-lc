@@ -83,7 +83,8 @@ theorem w_mem (hR : Formalism.MainNotions.N.FrobeniusPowerSeries.GS.RD W) :
     funext i
     show W.γ₀ δ W.π₀₁ = W.π₀₁
     unfold Formalism.BasicNotions.LocWach.π₀₁
-    rw [map_add, map_sub, map_one, map_natCast, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_add, map_sub, map_one, map_natCast, map_sum]
     congr 1
     have hsum : ∀ x ∈ W.DelF, W.γ₀ δ (W.γ₀ x (1 + PowerSeries.X)) = W.γ₀ (δ * x) (1 + PowerSeries.X) := by
       intro x _
@@ -162,7 +163,8 @@ theorem coord_mod (hR : Formalism.MainNotions.N.FrobeniusPowerSeries.GS.RD W) {T
   refine ⟨c₀, ∑ m, a' m • b m, ⟨⟨?_, ?_⟩, ?_⟩, ?_⟩
   · exact Submodule.sum_mem _ fun m _ => (W.N T).smul_mem _ (hb.1 m).1.1
   · intro δ hδ
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun m _ => ?_
     rw [Formalism.MainNotions.N.FrobeniusPowerSeries.GS.γD_smulA, (hb.1 m).1.2 δ hδ]
     congr 1

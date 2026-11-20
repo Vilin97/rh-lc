@@ -125,7 +125,8 @@ theorem finite_algebra_split_local :
     all_goals simp
   · apply ext
     intro φ
-    rw [map_sum, map_one]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_one]
     simp only [hval]
     rw [Fintype.sum_equiv eqv _
       (fun M : Pts => if (maximalIdeal O).comap φ = M.1 then (1 : O) else 0) (fun _ => rfl)]

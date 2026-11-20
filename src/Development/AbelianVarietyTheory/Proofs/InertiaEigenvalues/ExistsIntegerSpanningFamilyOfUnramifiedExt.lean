@@ -72,7 +72,8 @@ theorem exists_int_basis_of_unr (K K' : UQ) (d : ℕ) (φ : K.E →+* K'.E) (hU 
   have hres : ∀ c : Fin d → K.O, ∀ j, c j = 1 → ∑ i, ψ (c i) * u i ∉ maximalIdeal K'.O := by
     intro c j hj hmem
     have h0 : residue K'.O (∑ i, ψ (c i) * u i) = 0 := (IsLocalRing.residue_eq_zero_iff _).2 hmem
-    rw [map_sum] at h0
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at h0
     simp only [map_mul, ← ResidueField.map_residue, hu] at h0
     have h1 : ∑ i, residue K.O (c i) • b i = 0 := by
       simpa only [Algebra.smul_def, RingHom.algebraMap_toAlgebra] using h0
@@ -94,7 +95,8 @@ theorem exists_int_basis_of_unr (K K' : UQ) (d : ℕ) (φ : K.E →+* K'.E) (hU 
     have h1 := hres a j haj
     rw [memK', not_lt] at h1
     have h2 : algebraMap K'.O K'.E (∑ i, ψ (a i) * u i) = ∑ i, φ (e i / e j) * U i := by
-      simp only [map_sum, map_mul, hψ, ha, hUdef]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_mul, hψ, ha, hUdef]
     have h3 : ∑ i, φ (e i) * U i = φ (e j) * ∑ i, φ (e i / e j) * U i := by
       rw [Finset.mul_sum]
       refine Finset.sum_congr rfl fun i _ => ?_

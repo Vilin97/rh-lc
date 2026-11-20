@@ -51,7 +51,8 @@ theorem coeff_expMv (f : MvPowerSeries σ ℂ_[p]) (α : σ →₀ ℕ) :
 
 theorem coeff_expT (f : MvPowerSeries σ ℂ_[p]) (N : ℕ) (α : σ →₀ ℕ) :
     coeff α (expT f N) = ∑ n ∈ Finset.range N, coeff α (f ^ n) / (n.factorial : ℂ_[p]) := by
-  simp only [expT, map_sum, map_smul, smul_eq_mul, div_eq_inv_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [expT, map_sum, map_smul, smul_eq_mul, div_eq_inv_mul]
 
 end IntegralPowerSeriesBall
 
@@ -122,9 +123,11 @@ theorem expT_mul_expT (x y : MvPowerSeries σ ℂ_[p]) (N : ℕ) :
 theorem coeff_expT_add {x y : MvPowerSeries σ ℂ_[p]} (hx : constantCoeff x = 0)
     (hy : constantCoeff y = 0) {α : σ →₀ ℕ} {N : ℕ} (hN : Finsupp.degree α < N) :
     coeff α (expT (x + y) N) = coeff α (expT x N * expT y N) := by
-  rw [expT_add, expT_mul_expT, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [expT_add, expT_mul_expT, map_sum, map_sum]
   refine Finset.sum_congr rfl fun m hm => ?_
-  rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum]
   apply Finset.sum_subset
   · intro j hj; simp only [Finset.mem_range] at *; omega
   · intro j _ hj

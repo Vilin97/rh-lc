@@ -18,9 +18,11 @@ theorem mem_levelVL_of_first_components : ∀ (F E : Type) [Field F] [NumberFiel
       ∑ i, ∑ j, (sp (z i)).2 * (sp (inclE (F := F) (v.adicCompletion F) (J i j))).1 * (sp (y j)).1 := by
     intro z y
     unfold hR hform
-    rw [map_sum, Prod.fst_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Prod.fst_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
-    rw [map_sum, Prod.fst_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Prod.fst_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_mul, map_mul, hsig]
     rfl
@@ -28,9 +30,11 @@ theorem mem_levelVL_of_first_components : ∀ (F E : Type) [Field F] [NumberFiel
       ∑ i, ∑ j, (sp (z i)).1 * (sp (inclE (F := F) (v.adicCompletion F) (J i j))).2 * (sp (y j)).2 := by
     intro z y
     unfold hR hform
-    rw [map_sum, Prod.snd_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Prod.snd_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
-    rw [map_sum, Prod.snd_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Prod.snd_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_mul, map_mul, hsig]
     rfl
@@ -130,12 +134,14 @@ theorem mem_levelVL_of_first_components : ∀ (F E : Type) [Field F] [NumberFiel
   have hc1 : ∀ (x : Fin n → E ⊗[F] Kv) b, (sp (((κ : Matrix (Fin n) (Fin n) (E ⊗[F] Kv)) *ᵥ x) b)).1 =
       (K1 *ᵥ fun j => (sp (x j)).1) b := by
     intro x b
-    simp only [mulVec, dotProduct, map_sum, Prod.fst_sum, map_mul, Prod.fst_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [mulVec, dotProduct, map_sum, Prod.fst_sum, map_mul, Prod.fst_mul]
     rfl
   have hc2 : ∀ (x : Fin n → E ⊗[F] Kv) b, (sp (((κ : Matrix (Fin n) (Fin n) (E ⊗[F] Kv)) *ᵥ x) b)).2 =
       (K2 *ᵥ fun j => (sp (x j)).2) b := by
     intro x b
-    simp only [mulVec, dotProduct, map_sum, Prod.snd_sum, map_mul, Prod.snd_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [mulVec, dotProduct, map_sum, Prod.snd_sum, map_mul, Prod.snd_mul]
     rfl
   show κ ∈ UJ _ _ ⊓ stabGL _
   rw [Subgroup.mem_inf]

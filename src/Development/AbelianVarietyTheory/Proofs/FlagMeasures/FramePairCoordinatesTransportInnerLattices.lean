@@ -76,12 +76,14 @@ lemma prL_apply (v : V) : prL Fr v = Fr.prF v := by
 
 lemma h_prF_e (v : V) (b : Fin r) : H.h (Fr.prF v) (Fr.e b) = 0 := by
   rw [← hl_apply]
-  simp only [LocNG.FrameD.prF, map_sub, map_sum, map_smul, hl_apply, h_ee, h_es_e]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [LocNG.FrameD.prF, map_sub, map_sum, map_smul, hl_apply, h_ee, h_es_e]
   simp
 
 lemma h_prF_es (v : V) (b : Fin r) : H.h (Fr.prF v) (Fr.es b) = 0 := by
   rw [← hl_apply]
-  simp only [LocNG.FrameD.prF, map_sub, map_sum, map_smul, hl_apply, Fr.h_ss, h_e_es]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [LocNG.FrameD.prF, map_sub, map_sum, map_smul, hl_apply, Fr.h_ss, h_e_es]
   simp
 
 lemma prF_perp (v : V) : Fr.prF v ∈ H.perp (H.X Fr.f) := (mem_perpX Fr _).2 (h_prF_e Fr v)

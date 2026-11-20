@@ -64,7 +64,8 @@ theorem span_one_tmul_D {k A : Type} [Field k] [CommRing A] [IsLocalRing A] [Alg
     have hD : D k A a = ∑ i, (β i • D k A (τ i) + τ i • D k A (β i)) := by
       have : D k A a = D k A (a - algebraMap k A c) := by
         rw [map_sub, Derivation.map_algebraMap, sub_zero]
-      rw [this, ← hβ, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [this, ← hβ, map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [Derivation.leibniz, add_comm]
     rw [hD, TensorProduct.tmul_sum]

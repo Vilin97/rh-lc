@@ -20,7 +20,8 @@ theorem isIntegral_trace_of_isIntegral
   have hM : IsIntegral U (f ω) := h.map f
   have htr : algebraMap L A (Algebra.trace L Ω ω) = (f ω).trace := by
     rw [Algebra.trace_eq_matrix_trace b]
-    simp only [Matrix.trace, Matrix.diag, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.trace, Matrix.diag, map_sum]
     rfl
   rw [← isIntegral_algebraMap_iff (A := L) (B := A) , htr,
     Matrix.trace_eq_sum_roots_charpoly]
@@ -146,7 +147,8 @@ theorem exists_conductor_of_fractionFields
     ext i j
     simp [Gt, hBB, Algebra.traceMatrix_apply, Algebra.traceForm_apply]
   refine ⟨∑ j, v j ⊗ₜ e j, hψi ?_⟩
-  rw [map_mul, hψ, hψ, map_sum, Algebra.TensorProduct.algebraMap_apply, hφ, map_one, ← hdet]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_mul, hψ, hψ, map_sum, Algebra.TensorProduct.algebraMap_apply, hφ, map_one, ← hdet]
   have h1 : ((Algebra.traceMatrix L B).det ⊗ₜ[F] (1 : K)) * ψ c =
       (Algebra.traceMatrix L B).det • ψ c := by
     rw [Algebra.smul_def]; rfl

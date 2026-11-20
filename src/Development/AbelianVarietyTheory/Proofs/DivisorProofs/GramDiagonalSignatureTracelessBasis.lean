@@ -138,7 +138,8 @@ theorem riemLie_eq_smul_formLie_of_signs (E : Type) [Field E] [NumberField E] [I
       simp only [Y, Matrix.mul_assoc]
       rw [Matrix.mul_nonsing_inv_cancel_left _ _ (hx τ).isUnit]
     rw [Matrix.of_apply, h1, htr]
-    simp [Matrix.trace, map_sum, Matrix.mul_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Matrix.trace, map_sum, Matrix.mul_apply]
   have hcF : Continuous fun Z : (realLie Ψ G).comap (fromFrame x) => fromFrame x Z.1 :=
     (fromFrame x).continuous_of_finiteDimensional.comp continuous_subtype_val
   have hcf : Continuous f := f.toLinearMap.continuous_of_finiteDimensional

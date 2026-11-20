@@ -97,7 +97,8 @@ theorem UpperTheory.Kd.K4.pur :
   have hk : ∀ i, ∃ k : X.Khat l, ((l : ℤ_[l]) ^ n) • k = ((l : ℤ_[l]) ^ V.det.valuation) • cf i := by
     intro i
     have h1 : V.det • cf i ∈ LinearMap.ker (AdicCompletion.eval (idl l) (X.Kl l) n) := by
-      rw [LinearMap.mem_ker, e1 i, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [LinearMap.mem_ker, e1 i, map_sum]
       refine Finset.sum_eq_zero fun t _ => ?_
       have h2 := h0 ![((t : ℕ) : ℤ_[l]), 1]
       simp only [Pi.zero_apply, sub_zero] at h2

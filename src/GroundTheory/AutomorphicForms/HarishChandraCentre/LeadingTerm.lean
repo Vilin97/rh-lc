@@ -157,7 +157,8 @@ theorem sum_diagMain_capelliWord (k : ℕ) :
 
 theorem hcProjLin_capelli_sub_mem (k : ℕ) :
     hcProjLin (capelli (n := n) (k + 1)) - psum (Fin n) ℂ (k + 1) ∈ polyLE n k := by
-  rw [capelli_eq_sum_word, map_sum, ← sum_diagMain_capelliWord, ← Finset.sum_sub_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [capelli_eq_sum_word, map_sum, ← sum_diagMain_capelliWord, ← Finset.sum_sub_distrib]
   refine Submodule.sum_mem _ fun i _ => ?_
   have := hcProjLin_word_sub_mem (List.ofFn fun t : Fin (k + 1) => (i t, i (finRotate (k + 1) t)))
   rwa [List.length_ofFn, Nat.add_sub_cancel] at this
@@ -193,7 +194,8 @@ theorem translate_sub_mem_polyLE (c : Fin n → ℂ) :
     exact Submodule.zero_mem _
   | succ d ih =>
     intro p hp
-    rw [p.as_sum, map_sum, ← Finset.sum_sub_distrib]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [p.as_sum, map_sum, ← Finset.sum_sub_distrib]
     refine Submodule.sum_mem _ fun s hs => ?_
     have hsd : (s.sum fun _ e => e) ≤ d + 1 := by
       have := mem_polyLE.1 hp

@@ -115,7 +115,8 @@ theorem pr_apply (H : HermSpace K V) {J : Type} [Fintype J] (e f : J → V) (v :
 
 theorem pr_adj (H : HermSpace K V) {J : Type} [Fintype J] (e f : J → V) (x v : V) :
     H.B (pr H f e x) v = H.B x (pr H e f v) := by
-  simp only [pr_apply, map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply, map_smulₛₗ, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [pr_apply, map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply, map_smulₛₗ, smul_eq_mul]
   refine Finset.sum_congr rfl fun b _ => ?_
   rw [← H.herm v (e b), mul_comm]; rfl
 

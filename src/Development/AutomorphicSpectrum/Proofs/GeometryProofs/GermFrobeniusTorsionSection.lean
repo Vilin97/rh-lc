@@ -33,7 +33,8 @@ theorem constantCoeff_psIn {S : Type} [CommRing S] {d n n' : ℕ} (m : ℕ) (r :
     (f : MvPowerSeries (Fin n × Fin d) S) (hf : MvPowerSeries.constantCoeff f = 0) :
     MvPolynomial.constantCoeff (psIn d m r f) = 0 := by
   unfold psIn
-  rw [MvPolynomial.constantCoeff_rename, psTrunc, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [MvPolynomial.constantCoeff_rename, psTrunc, map_sum]
   refine Finset.sum_eq_zero fun e _ => ?_
   rw [MvPolynomial.constantCoeff_monomial]
   split_ifs with h

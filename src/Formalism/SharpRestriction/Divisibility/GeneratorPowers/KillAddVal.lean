@@ -63,8 +63,10 @@ theorem quad_form (q : MvPowerSeries (Fin 1 × Fin N) S) (hq0 : constantCoeff q 
     q = ∑ i, ∑ j, C (qβ q i j) * X ((0 : Fin 1), i) * X ((0 : Fin 1), j) := by
   classical
   ext e
-  rw [map_sum]
-  simp only [map_sum, mul_assoc, coeff_C_mul, coeff_XX]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, mul_assoc, coeff_C_mul, coeff_XX]
   by_cases hdeg : e.degree = 2
   · obtain ⟨s, t, hst⟩ := degree_eq_two e hdeg
     obtain ⟨o1, p⟩ := s
@@ -142,7 +144,8 @@ theorem prod_expS {τ : Type} {ι : Type} (s : Finset ι) (x : ι → MvPowerSer
     rw [PowerSeries.subst_zero_eq_C_constantCoeff, PowerSeries.constantCoeff_exp, map_one]
     simp
   | insert a s ha ih =>
-    rw [Finset.prod_insert ha, Finset.sum_insert ha, ih,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.prod_insert ha, Finset.sum_insert ha, ih,
       ← Formalism.MainNotions.ModuliIntegralCharts.H1.PartialDerivativeExponent.expS_add _ _ (hx a) (by rw [map_sum]; exact Finset.sum_eq_zero fun i _ => hx i)]
 
 end KAVal
@@ -165,7 +168,8 @@ theorem killAddVal_of (hPsi : ∀ (E : Type) [Field E] [NumberField E] [IsCMFiel
   have hren_q : ∀ b, ren b q = ∑ i, ∑ j, MvPowerSeries.C (β i j) * MvPowerSeries.X (b, i) * MvPowerSeries.X (b, j) := by
     intro b
     conv_lhs => rw [hq_form]
-    simp only [ren, map_sum, map_mul, MvPowerSeries.rename_C, MvPowerSeries.rename_X]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [ren, map_sum, map_mul, MvPowerSeries.rename_C, MvPowerSeries.rename_X]
     rfl
   have hquad : (TB.quadCol (n := n) β : MvPowerSeries (Fin n × Fin (dL Dw)) S) = ∑ b, ren b q := by
     unfold TB.quadCol

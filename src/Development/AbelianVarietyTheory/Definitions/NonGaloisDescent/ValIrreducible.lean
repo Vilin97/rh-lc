@@ -32,7 +32,8 @@ theorem _root_.GlobalTheory.UnitLemma.Basic.trace_sigma (u : B.A) :
     simp [b', Module.Basis.coe_ofEquivFun, φ, Pi.single_apply, apply_ite B.σ]
   have hrepr (w : B.A) (i) : b'.repr w i = K.c (b.repr (B.σ w) i) := by
     simp [b', φ]
-  rw [Algebra.trace_eq_matrix_trace b' (B.σ u), Algebra.trace_eq_matrix_trace b u,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Algebra.trace_eq_matrix_trace b' (B.σ u), Algebra.trace_eq_matrix_trace b u,
     Matrix.trace, Matrix.trace, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   simp only [Matrix.diag, Algebra.leftMulMatrix_apply, LinearMap.toMatrix_apply,

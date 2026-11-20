@@ -1209,11 +1209,13 @@ theorem bE_apply (D : D7) (k : D.div.RR.ι) : bE D k = D.jEE (D.div.RR.b k) := b
 
 theorem bes_sum_left (D : D7) (u : D.what₂.Word) (F : D.what₂.EE) {ι : Type} (t : Finset ι) (c : ι → ℂ)
     (g : ι → D.what₂.Mu u) : D.besS u (∑ i ∈ t, c i • g i) F = ∑ i ∈ t, c i * D.besS u (g i) F := by
-  simp only [besS_eq, map_sum, map_smul, inner_sum, inner_smul_right]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [besS_eq, map_sum, map_smul, inner_sum, inner_smul_right]
 
 theorem bes_sum_right (D : D7) (u : D.what₂.Word) (φ : D.what₂.Mu u) {ι : Type} (t : Finset ι) (c : ι → ℂ)
     (g : ι → D.what₂.EE) : D.besS u φ (∑ i ∈ t, c i • g i) = ∑ i ∈ t, c i * D.besS u φ (g i) := by
-  simp only [besS_eq, map_sum, map_smulₛₗ, sum_inner, inner_smul_left, Complex.conj_conj]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [besS_eq, map_sum, map_smulₛₗ, sum_inner, inner_smul_left, Complex.conj_conj]
 
 def Vr0 (D : D7) (U : ∀ u, D.what₂.Mu u ≃ₗᵢ[ℂ] D.what₂.Mu u) (u : D.what₂.Word) :
     Matrix (Fin (D.duS u)) (D.div.Nu u).ι ℂ :=
@@ -1239,7 +1241,8 @@ theorem pm_vr (D : D7) (f : OrthonormalBasis (RowIx D) ℂ D.s.HH) (U : ∀ u, D
     (PMat D f u * Vr0 D U u) a j = inner ℂ (f a) (D.s.Pu u (iotaC D u (U u (oM D u j)))) := by
   rw [Matrix.mul_apply]
   conv_rhs => rw [← (eC D u).sum_repr' (iotaC D u (U u (oM D u j)))]
-  simp only [map_sum, map_smul, inner_sum, inner_smul_right, PMat, Vr0]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, inner_sum, inner_smul_right, PMat, Vr0]
   exact Finset.sum_congr rfl (fun i _ => mul_comm _ _)
 
 theorem block_eq (D : D7) (hRat : D.BuRational) (V : D.what₂.EE ≃ₗᵢ[ℂ] D.what₂.EE)
@@ -1260,7 +1263,8 @@ theorem block_eq (D : D7) (hRat : D.BuRational) (V : D.what₂.EE ≃ₗᵢ[ℂ]
   have e1 : oM D u j = ∑ j', (bN D u).repr (oM D u j) j' • bN D u j' := ((bN D u).sum_repr _).symm
   have e2 : oE D k = ∑ k', (bE D).repr (oE D k) k' • bE D k' := ((bE D).sum_repr _).symm
   conv_lhs => rw [e1, e2]
-  simp only [map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul]
   rw [bes_sum_left]
   simp only [bes_sum_right, hbase]
   rw [Matrix.mul_apply]

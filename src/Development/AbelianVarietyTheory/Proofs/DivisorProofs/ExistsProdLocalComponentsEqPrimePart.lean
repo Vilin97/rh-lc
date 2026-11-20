@@ -79,7 +79,8 @@ theorem finQ_sum_idem {q : ℕ} (hq : q.Prime) (S : Finset (HeightOneSpectrum (�
   have hev : ∀ w : HeightOneSpectrum (𝓞 D.host.F), (∑ v ∈ S, ε v).2 w = if w ∈ S then 1 else 0 := by
     intro w
     have e1 : (∑ v ∈ S, ε v).2 w = ∑ v ∈ S, evalV D.host.F w (sndA D.host.F (ε v)) := by
-      rw [← map_sum, ← map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← map_sum, ← map_sum]
       rfl
     have e2 : ∀ v, evalV D.host.F w (sndA D.host.F (ε v)) = if w = v then 1 else 0 := by
       intro v

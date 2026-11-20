@@ -80,7 +80,8 @@ theorem sum_coord_of_iso (hj : j ≤ N) {P : Matrix (Fin N) (Fin N) ℂ} (τ : �
     rw [hYdef, Matrix.mulVec_mulVec, Matrix.mul_nonsing_inv _ hdet, Matrix.one_mulVec]
   have hτ0 : A.emb τ (hermForm Em A.H x y) = star (fun b => A.emb τ (x b)) ⬝ᵥ
       (A.H.map (A.emb τ) *ᵥ fun b => A.emb τ (y b)) := by
-    simp [hermForm, dotProduct, Matrix.mulVec, Finset.mul_sum, mul_assoc, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [hermForm, dotProduct, Matrix.mulVec, Finset.mul_sum, mul_assoc, map_sum, map_mul]
   have hτ : A.emb τ (hermForm Em A.H x y) = star X ⬝ᵥ (signMat N j *ᵥ Y) := by
     rw [hτ0, hx, hy, ← hP, ← Matrix.mulVec_mulVec, ← Matrix.mulVec_mulVec,
       Matrix.dotProduct_mulVec (star X) Pᴴ, Matrix.star_mulVec]

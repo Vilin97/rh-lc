@@ -264,7 +264,8 @@ private theorem hermForm_combinations_eq_gram_mul {l : ℕ} (P Q : Matrix (Fin l
     (hl : l ≤ r + 1) (a c : Fin l) :
     H.B (∑ b, P a b • F.e (Fin.castLE hl b)) (∑ d, Q c d • F'.e (Fin.castLE hl d)) =
       (P * (_root_.Formalism.HermitianLatticeCounting.S6.Zhat F F').submatrix (Fin.castLE hl) (Fin.castLE hl) * (Q.map star).transpose) a c := by
-  simp only [Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, Matrix.submatrix_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, Matrix.submatrix_apply,
     _root_.Formalism.HermitianLatticeCounting.S6.Zhat, Matrix.of_apply, map_sum, LinearMap.sum_apply, map_smul, map_smulₛₗ, LinearMap.smul_apply,
     smul_eq_mul, Finset.sum_mul, Finset.mul_sum]
   refine Finset.sum_congr rfl fun b _ => Finset.sum_congr rfl fun d _ => ?_

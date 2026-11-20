@@ -215,7 +215,8 @@ theorem exists_nA_sig (σ : E →ₐ[F] E) : ∃ C, 0 ≤ C ∧ ∀ a : Fv F v �
   refine ⟨∑ i, nA v (sigR (Fv F v) σ (bA E v i)), Finset.sum_nonneg fun i _ => nA_nonneg _, fun a => ?_⟩
   have : sigR (Fv F v) σ a = ∑ i, crd v a i • sigR (Fv F v) σ (bA E v i) := by
     conv_lhs => rw [← sum_crd v a]
-    rw [map_sum]; simp only [sigR_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]; simp only [sigR_smul]
   rw [this]; unfold nA; rw [crd_sum]; simp only [crd_smul]
   exact norm_comb_le v a _
 
@@ -224,7 +225,8 @@ theorem exists_trace_le : ∃ C, 0 ≤ C ∧ ∀ a : Fv F v ⊗[F] E,
   refine ⟨∑ i, ‖Algebra.trace (Fv F v) (Fv F v ⊗[F] E) (bA E v i)‖, Finset.sum_nonneg fun i _ => norm_nonneg _,
     fun a => ?_⟩
   conv_lhs => rw [← sum_crd v a]
-  rw [map_sum]; simp only [map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]; simp only [map_smul]
   exact norm_comb_le v a _
 
 theorem trace_one_tmul (e : E) : Algebra.trace (Fv F v) (Fv F v ⊗[F] E) (1 ⊗ₜ e) =
@@ -278,7 +280,8 @@ theorem exists_trace_ge : ∃ c, 0 < c ∧ ∀ a : Fv F v ⊗[F] E, ∃ a', nA v
   have htr : ∀ i, Algebra.trace (Fv F v) (Fv F v ⊗[F] E) (bA E v i * a) = (G.mulVec (crd v a)) i := by
     intro i
     conv_lhs => rw [← sum_crd v a]
-    rw [Finset.mul_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.mul_sum, map_sum]
     simp only [mul_smul_comm, map_smul, Matrix.mulVec, dotProduct, hG, Matrix.of_apply, smul_eq_mul]
     exact Finset.sum_congr rfl fun k _ => mul_comm _ _
   have hinv : crd v a = G⁻¹.mulVec (G.mulVec (crd v a)) := by

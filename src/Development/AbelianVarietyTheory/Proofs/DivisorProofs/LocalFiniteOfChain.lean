@@ -80,7 +80,8 @@ private theorem comp_ck {Zn : NModel O} {d r : ℕ} (F : FPair (Zn.toITh p d) r)
     rw [F.hx i, (P.toFPair p).hx i, map_sub, map_sub, (hP i).1]
     congr 1
     exact (pull_cDQ C f _).trans (congrArg B.cDQ (hP i).2)
-  simp only [Gk, map_mul, map_sum, map_pow, (hP i).1, hx']
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Gk, map_mul, map_sum, map_pow, (hP i).1, hx']
 
 private theorem comp_chDiv {Zn : NModel O} {d r : ℕ} (F : FPair (Zn.toITh p d) r) (C : Zn.Comp)
     {B : GlobalTheory.Vert.Model O} (f : GlobalTheory.Vert.Model.Hom B (Zn.comp C)) (hf : f.relDim = 0) (hB : GlobalTheory.IsNormalScheme B.X)
@@ -98,7 +99,8 @@ private theorem comp_chDiv {Zn : NModel O} {d r : ℕ} (F : FPair (Zn.toITh p d)
   have h := (GlobalTheory.T.ck_root_multiplication_scaling O p B hB Pr (B.const (p : O)) 1 (Iso.refl _) hroot (Category.id_comp _).symm k).2 P.fl
     (picSymPull f.f (picSymPull (Zn.compι C) Q))
   rw [h, capDeg_eq_inv p C f hf, pull_divP p C f]
-  simp only [map_mul, map_sum, map_pow, hP]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_mul, map_sum, map_pow, hP]
   rw [mul_left_comm]
   rfl
 

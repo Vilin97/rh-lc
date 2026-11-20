@@ -33,7 +33,8 @@ theorem map_weighted_finsum {F S₁ S₂ T Q : Type} [Field F] [CommRing S₁] [
     ψ₁ (algebraMap F S₁ k * ∑ᶠ q, algebraMap F S₁ (w q) * A₁ q) =
       ψ₂ (algebraMap F S₂ k * ∑ᶠ q, algebraMap F S₂ (w q) * A₂ q) := by
   haveI := Fintype.ofFinite Q
-  simp only [finsum_eq_sum_of_fintype, map_mul, map_sum, AlgHom.commutes, h]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [finsum_eq_sum_of_fintype, map_mul, map_sum, AlgHom.commutes, h]
 
 end GlobalTheory.ShortValue
 

@@ -25,7 +25,8 @@ def vf (c : τ → MvPowerSeries τ k) (G : MvPowerSeries τ k) : MvPowerSeries 
 
 theorem vf_sum {ι : Type} (s : Finset ι) (c : τ → MvPowerSeries τ k) (f : ι → MvPowerSeries τ k) :
     vf c (∑ i ∈ s, f i) = ∑ i ∈ s, vf c (f i) := by
-  simp only [vf, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [vf, map_sum, Finset.mul_sum]
   exact Finset.sum_comm
 
 theorem vf_C (c : τ → MvPowerSeries τ k) (a : k) : vf c (C a) = 0 := by
@@ -67,7 +68,8 @@ theorem vf_vf (c c' : τ → MvPowerSeries τ k) (G : MvPowerSeries τ k) :
     vf c (vf c' G) = vf (fun t => vf c (c' t)) G + ∑ s, ∑ t, c s * c' t * pderiv k s (pderiv k t G) := by
   have hL : vf c (vf c' G) = ∑ s, ∑ t, (c s * c' t * pderiv k s (pderiv k t G) +
       c s * pderiv k s (c' t) * pderiv k t G) := by
-    simp only [vf, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [vf, map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun s _ => Finset.sum_congr rfl fun t _ => ?_
     rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul]
     ring
@@ -173,7 +175,8 @@ theorem T_eq (b i j : Fin d) :
       ∑ c, Jac G j c * C (constantCoeff (pderiv k ((0 : Fin 1), b) (Jac G c i))) := by
   have h := congrArg (fun g => ev (n := 1) ![pt k d 0, 0] (pderiv k ((1 : Fin 2), b) g)) (jac_F G j i)
   beta_reduce at h
-  simp only [d_F, map_sum, ev_sum cz1, Derivation.leibniz, smul_eq_mul, ev_add cz1, ev_mul cz1, ezF, d_y, ez_y,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [d_F, map_sum, ev_sum cz1, Derivation.leibniz, smul_eq_mul, ev_add cz1, ev_mul cz1, ezF, d_y, ez_y,
     ez_Ar, ez_dF, C_cc_jac, ite_mul, one_mul, zero_mul, Finset.sum_add_distrib, Finset.sum_ite_eq',
     Finset.mem_univ, if_true] at h
   have hs : ∑ c, Jac G c b * pderiv k ((0 : Fin 1), c) (Jac G j i) =

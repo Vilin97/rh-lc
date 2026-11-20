@@ -53,7 +53,8 @@ theorem form_smul (c : ℂ) (H : Matrix n n ℂ) (v w : n → ℂ) :
 
 theorem conj_form {H : Matrix n n ℂ} (hH : H.IsHermitian) (v w : n → ℂ) :
     conj (form H v w) = form H w v := by
-  simp only [form_eq_sum, map_sum, map_mul, conj_conj]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form_eq_sum, map_sum, map_mul, conj_conj]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
   rw [← hH.apply a b]; simp; ring

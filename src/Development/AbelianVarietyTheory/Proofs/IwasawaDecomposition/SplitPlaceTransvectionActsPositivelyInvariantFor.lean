@@ -152,7 +152,8 @@ theorem hO_along (ξ : Fin T.rank → D.host.E) (t : WO S T) (s : Fin S.rank →
     hO S T t (along S T ξ fun b => cA D (s b)) = (rowOf S T ξ t ᵥ* (S.gram⁻¹).map (incA D)) ⬝ᵥ s := by
   have e : ∀ x, incA D ((D.sp.cm.sig : D.host.E →+* D.host.E) x) = cA D (incA D x) :=
     fun x => (GlobalTheory.DualPairCheck.cA_incA x).symm
-  simp only [hO, along, rowOf, vecMulVec_apply, vecMul, dotProduct, Matrix.map_apply, RingHom.map_mul, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hO, along, rowOf, vecMulVec_apply, vecMul, dotProduct, Matrix.map_apply, RingHom.map_mul, map_sum,
     GlobalTheory.DualPairCheck.cA_cA, e, Finset.sum_mul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun b _ => Finset.sum_congr rfl fun a _ => ?_
@@ -174,7 +175,8 @@ theorem det_eq_one {ξ : Fin T.rank → D.host.E} (h : IsoVec T ξ) {z : GA D T}
     simp only [Matrix.map_apply, vecMulVec_apply, RingHom.map_mul, Matrix.smul_apply, Pi.smul_apply, smul_eq_mul,
       mul_assoc]
   have h2 := congrArg (incA D) h.2
-  rw [Matrix.dotProduct_mulVec, dotProduct, map_sum, RingHom.map_zero] at h2
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.dotProduct_mulVec, dotProduct, map_sum, RingHom.map_zero] at h2
   simp only [RingHom.map_mul] at h2
   rw [Formalism.L2.Theta.mt, ha, e, vecMulVec_eq Unit, det_one_add_replicateCol_mul_replicateRow, dotProduct_smul,
     dotProduct, h2, smul_zero, add_zero]
@@ -233,7 +235,8 @@ theorem eq_zero_of_small (hψ : IsStdChar D ψ (-1)) {ξ : Fin T.rank → D.host
           (smul_dual _ _ _ ((rowOf_smul ξ e t).symm.trans (congrArg _ ((isHalf_iff _ _).1 ht))))
           fun s hs => (congrArg ψ (symplO_along ξ t s)).trans (hb ⟨s, hs⟩)
         rwa [Set.mem_preimage, undo_dual (incA D) (GlobalTheory.IndefiniteRowSideFullHecke.BesselData.embedding_xi_zero_ne_zero D) (gram_det_ne S)] at h1
-      rw [heisO_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [heisO_sum, map_sum]
       exact Finset.sum_eq_zero fun i _ => by rw [key _ _ hg, H m hm t ht hrow, mul_zero]
     · obtain ⟨s, hs⟩ := not_forall.1 hb
       have h1 := key s _ hth
@@ -243,7 +246,8 @@ theorem eq_zero_of_small (hψ : IsStdChar D ψ (-1)) {ξ : Fin T.rank → D.host
       rw [h2] at h1
       exact (mul_left_eq_self₀.1 h1.symm).resolve_left hs
   have h1 := congrArg ℓ h0
-  rw [map_sum, map_zero, Finset.sum_congr rfl fun i _ => hℓ _ g hg, Finset.sum_const, nsmul_eq_mul] at h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_zero, Finset.sum_congr rfl fun i _ => hℓ _ g hg, Finset.sum_const, nsmul_eq_mul] at h1
   exact (mul_eq_zero.1 h1).resolve_left (Nat.cast_ne_zero.2 Fintype.card_ne_zero)
 
 open GlobalTheory.SplitScalar in

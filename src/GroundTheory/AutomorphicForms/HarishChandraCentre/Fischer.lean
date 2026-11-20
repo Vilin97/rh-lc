@@ -62,7 +62,8 @@ def rowWt (m : Fin n × Fin n →₀ ℕ) (i : Fin n) : ℕ := ∑ k, m (i, k)
 
 theorem rowOp_self_monomial (i : Fin n) (s : Fin n × Fin n →₀ ℕ) (c : ℂ) :
     rowOp i i (monomial s c) = monomial s (c * (rowWt s i : ℂ)) := by
-  rw [rowOp_apply, rowWt, Nat.cast_sum, Finset.mul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [rowOp_apply, rowWt, Nat.cast_sum, Finset.mul_sum, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [pderiv_monomial, X, monomial_mul, one_mul]
   by_cases hk : s (i, k) = 0
@@ -202,7 +203,8 @@ theorem wtProj_comm {T : Module.End ℂ (Poly n)} (hT : ∀ a, T * rowOp a a = r
       have h1 := congrArg (fun S : Module.End ℂ (Poly n) => S (wtProj ν f)) (hT a)
       simp only [Module.End.mul_apply] at h1
       rw [← h1, rowOp_self_of_wtProj ν _ a (by rw [wtProj_wtProj, if_pos rfl]), map_smul]
-  conv_lhs => rw [← sum_wtProj f, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [← sum_wtProj f, map_sum, map_sum]
   rw [Finset.sum_eq_single μ]
   · exact hν μ
   · intro ν _ hne

@@ -77,7 +77,8 @@ theorem diagonal_hypothesis : HypDiag := by
   intro σ m ι hι α P hP
   conv_lhs => rw [P.as_sum]
   conv_rhs => rw [P.as_sum]
-  rw [map_sum, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun e he => ?_
   have hm : MvPolynomial.monomial e (P.coeff e) = MvPolynomial.C (P.coeff e) * MvPolynomial.monomial e 1 := by
     rw [MvPolynomial.C_mul_monomial, mul_one]

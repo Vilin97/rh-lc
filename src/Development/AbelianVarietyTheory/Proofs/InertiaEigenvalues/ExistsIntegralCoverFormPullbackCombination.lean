@@ -25,7 +25,8 @@ theorem exists_pull_comb_integral : ∀ (D : D7) (T : CoreJ D), LawsJ T → ∀ 
       ((adel (T.V j σ) C.dict₂ (muPin (T.V j σ) C.dict₂ (T.mu j σ) C.cc₂)).comp (rdU C.U₂))
   have hR : ∀ f, C.rd a f = R f := fun _ => rfl
   have hsum : C.rd a (∑ k, y k • g k) = ∑ k, C.σ₂ (y k) • T.phiJ j σ a (β k) := by
-    rw [hR, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hR, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_smulₛₗ, ← hR, hP.2 (β k) (hβ k) (g k) (hg k) (hgp k)]
   set s := ∑ k, y k • g k with hs

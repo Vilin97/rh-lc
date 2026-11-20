@@ -187,7 +187,8 @@ theorem offConj : ∀ (D : D7) (Pg Q : Finset (Formalism.L2.DIV.Pl D.host.E)) (e
   obtain ⟨⟨es, hes, rfl⟩, h0⟩ := he
   have hz : ∀ i ∈ Pg ∪ Q, ∀ j ∈ Pg ∪ Q, es i * cA D (es j) = 0 := by
     have hsum : ∑ x ∈ (Pg ∪ Q) ×ˢ (Pg ∪ Q), es x.1 * cA D (es x.2) = 0 := by
-      rw [Finset.sum_product, ← h0, map_sum, Finset.sum_mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Finset.sum_product, ← h0, map_sum, Finset.sum_mul_sum]
     have hall := GlobalTheory.PlaceVec.idem_eq_zero_of_sum (A := AE D) GlobalTheory.PlaceVec.natCast_mul_eq_zero
       (fun x : Formalism.L2.DIV.Pl D.host.E × Formalism.L2.DIV.Pl D.host.E => es x.1 * cA D (es x.2)) ((Pg ∪ Q) ×ˢ (Pg ∪ Q))
       (fun x hx => by
@@ -201,7 +202,8 @@ theorem offConj : ∀ (D : D7) (Pg Q : Finset (Formalism.L2.DIV.Pl D.host.E)) (e
     · exact absurd (GlobalTheory.PlaceVec.isIdemAt_inj (hes i hi) (by rw [e]; exact hes j hj)) hij
     · rw [← map_mul, e, map_zero]
   show finPart D _ ∈ clos D (GlobalTheory.LiftLevel.liftI Pg Q)
-  rw [map_sum, ← prod_one_sub _ _ horth, map_prod]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, ← prod_one_sub _ _ horth, map_prod]
   exact prod_mem_clos (Pg ∪ Q) _ (fun PP => conjI PP.asIdeal) fun PP hP =>
     finPart_one_sub_cA_mem (hes PP hP) (by rw [GlobalTheory.LiftIdeal.conjI_eq_map D]; exact GlobalTheory.LiftIdeal.map_ne he' hP hP)
 

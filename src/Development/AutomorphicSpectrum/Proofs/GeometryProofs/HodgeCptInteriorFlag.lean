@@ -162,7 +162,8 @@ theorem gram_posDef {V : Type} [AddCommGroup V] [Module ℂ V] (h : V →ₗ⋆[
   · ext p q
     simp [Matrix.conjTranspose_apply, hh (v p) (v q)]
   · have e : star x ⬝ᵥ ((Matrix.of fun p q => h (v p) (v q)) *ᵥ x) = h (∑ p, x p • v p) (∑ q, x q • v q) := by
-      simp [dotProduct, Matrix.mulVec, map_sum, LinearMap.sum_apply, Finset.mul_sum, mul_comm, mul_left_comm]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [dotProduct, Matrix.mulVec, map_sum, LinearMap.sum_apply, Finset.mul_sum, mul_comm, mul_left_comm]
       rw [Finset.sum_comm]
       exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
     rw [e]
@@ -236,7 +237,8 @@ theorem compare (h0 : val 0 = 0) (hadd : ∀ e ∈ Lm, ∀ e' ∈ Lm, val (e + e
     exact val_sum h0 hadd hsm hbL (fun l => P l k) Finset.univ
   have hG : gramOf h val b' = Cᴴ * gramOf h val b * C := by
     ext p q
-    simp only [gramOf, Matrix.of_apply, hval, Matrix.mul_apply, Matrix.conjTranspose_apply, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [gramOf, Matrix.of_apply, hval, Matrix.mul_apply, Matrix.conjTranspose_apply, map_sum,
       LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, Finset.sum_mul, Complex.star_def,
       RingHom.id_apply, smul_eq_mul, map_smulₛₗ]
     refine Finset.sum_congr rfl fun m _ => ?_
@@ -368,7 +370,8 @@ theorem exists_dual (𝔐 : HodgeCpt Y S y) (hind : iSupIndep 𝔐.Vgen) (q : Cp
         rw [hfr] at hx
         obtain ⟨c', rfl⟩ := (Submodule.mem_span_range_iff_exists_fun _).1 hx
         have e1 : ∀ k, (c' k • b k) = ((c' k : regAt 𝔐.ξ q) : Ω) • b k := fun _ => rfl
-        simp only [e1, map_sum, map_smul, LinearMap.comp_apply, Submodule.subtype_apply, hpr _ (hbV _), hgb,
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [e1, map_sum, map_smul, LinearMap.comp_apply, Submodule.subtype_apply, hpr _ (hbV _), hgb,
           LinearMap.proj_apply]
         refine sum_mem fun k _ => ?_
         rw [smul_eq_mul]
@@ -556,7 +559,8 @@ theorem exists_norm : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H 
     choose g hg using hg
     refine Fintype.linearIndependent_iff.2 fun w hw j => ?_
     have := congrArg (g j) hw
-    simpa [map_sum, hg, Finset.sum_ite_eq] using this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [map_sum, hg, Finset.sum_ite_eq] using this
 
   have hGram : ∀ (b : Fin (labelRk D s) → 𝔐.Li) (Γ : Matrix (Fin (labelRk D s)) (Fin (labelRk D s)) ℂ),
       (∀ k, b k ∈ 𝔐.M.lat q) → (𝔐.M.GramAt 𝔐.t.PP.L z b Γ ↔ Γ = gramOf h val b) := by

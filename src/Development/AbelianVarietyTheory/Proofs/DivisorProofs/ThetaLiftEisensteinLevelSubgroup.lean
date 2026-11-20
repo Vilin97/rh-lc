@@ -64,7 +64,8 @@ theorem Induced.sum {ι : Type} (s : Finset ι) (c : ι → ℂ) (A : ι → (GA
   choose Ψ e using fun i => h i Φ
   refine ⟨∑ i ∈ s, c i • Ψ i, fun g x => ?_⟩
   funext k
-  simp only [e, map_sum, map_smul, Submodule.coe_sum, Submodule.coe_smul, Finset.sum_apply, Pi.smul_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [e, map_sum, map_smul, Submodule.coe_sum, Submodule.coe_smul, Finset.sum_apply, Pi.smul_apply]
 
 section
 

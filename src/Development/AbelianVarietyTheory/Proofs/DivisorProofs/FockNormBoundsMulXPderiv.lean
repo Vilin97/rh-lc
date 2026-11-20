@@ -9,7 +9,8 @@ namespace GlobalTheory.FockNormBound
 theorem norm_sum_sq_of_orth {κ H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
     (s : Finset κ) (v : κ → H) (h : ∀ a b, a ≠ b → inner ℂ (v a) (v b) = 0) :
     ‖∑ a ∈ s, v a‖ ^ 2 = ∑ a ∈ s, ‖v a‖ ^ 2 := by
-  rw [← inner_self_eq_norm_sq (𝕜 := ℂ), sum_inner, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← inner_self_eq_norm_sq (𝕜 := ℂ), sum_inner, map_sum]
   refine Finset.sum_congr rfl fun a ha => ?_
   rw [inner_sum, Finset.sum_eq_single a, inner_self_eq_norm_sq]
   · intro b _ hb; exact h a b (Ne.symm hb)
@@ -47,7 +48,8 @@ theorem norm_comb (h : IsFockIP ι) (s : Finset (σ →₀ ℕ)) (c : (σ →₀
     ‖ι (∑ a ∈ s, monomial (g a) (c a))‖ ^ 2 = ∑ a ∈ s, ‖c a‖ ^ 2 * mfact (g a) := by
   have e : ∀ a, ι (monomial (g a) (c a)) = c a • ι (monomial (g a) 1) := by
     intro a; rw [← map_smul, smul_monomial]; simp
-  rw [map_sum, norm_sum_sq_of_orth]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, norm_sum_sq_of_orth]
   · refine Finset.sum_congr rfl fun a _ => ?_
     rw [e, norm_smul, mul_pow, norm_mono h]
   · intro a b hab
@@ -77,7 +79,8 @@ theorem fock_norm_bounds (σ : Type) [DecidableEq σ] (H : Type) [NormedAddCommG
     rw [X, monomial_mul, add_comm, one_mul]
   have h2 : pderiv i P = ∑ a ∈ P.support, monomial (a - Finsupp.single i 1) (AddMonoidAlgebra.coeff P a * a i) := by
     conv_lhs => rw [P.as_sum]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun a _ => ?_
     rw [pderiv_monomial]
   have hsub : ∀ a : σ →₀ ℕ, a i ≠ 0 → a - Finsupp.single i 1 + Finsupp.single i 1 = a := by

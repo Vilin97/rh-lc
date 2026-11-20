@@ -41,7 +41,8 @@ theorem comb_iff (a : Fin d → S) (w : Sp (DualNumber S) ⟶ t.G.left) :
     IsCombAtG t x g.tg a w ↔ (tv (gd g a)).left = w := by
   have e : g.tg = fun i => (tv (gd g (Pi.single ((Equiv.refl (Fin d)) i) 1))).left := funext (tg_eq g)
   have e₂ : ∑ i, a i • gd g (Pi.single i 1) = gd g a := by
-    simp only [← map_smul, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [← map_smul, ← map_sum]
     congr 1
     funext k; simp [Pi.single_apply]
   rw [e, ← e₂]

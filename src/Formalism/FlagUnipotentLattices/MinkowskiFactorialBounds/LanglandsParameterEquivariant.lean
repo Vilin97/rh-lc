@@ -15,7 +15,8 @@ theorem LL_tmul {V U : Type} [AddCommGroup V] [Module ℂ V] [AddCommGroup U] [M
 
 theorem coord_sum {V : Type} [AddCommGroup V] [Module ℂ V] {n : ℕ} (ξ : Fin n → V) (a : Fin n) :
     LLmap LinearMap.id a (∑ c, ξ c ⊗ₜ[ℂ] (Pi.single c (1 : ℂ) : Fin n → ℂ)) = ξ a := by
-  simp only [map_sum, LL_tmul, LinearMap.id_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LL_tmul, LinearMap.id_apply]
   rw [Finset.sum_eq_single a]
   · simp
   · intro b _ hb; simp [Pi.single_apply, Ne.symm hb]

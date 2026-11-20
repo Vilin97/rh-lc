@@ -124,7 +124,8 @@ theorem UpperTheory.exists_qdet_eq_pow_add_sum_coeff_mem_span :
     let ψ := Polynomial.eval₂RingHom' (RingHom.id A) (algebraMap ℂ A u)
       (fun a => Algebra.commute_algebraMap_right u a)
     show _ = ψ P
-    simp only [P, Q, map_sum, map_mul, map_list_prod, List.map_ofFn]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [P, Q, map_sum, map_mul, map_list_prod, List.map_ofFn]
     simp only [Formalism.REAL.qdet, Formalism.REAL.qminor]
     refine Finset.sum_congr rfl (fun σ _ => ?_)
     congr 1

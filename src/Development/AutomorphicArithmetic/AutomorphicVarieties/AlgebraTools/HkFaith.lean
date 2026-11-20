@@ -26,13 +26,15 @@ theorem UpperTheory.V.AlgebraTools.hkFaith :
     have h1 : b.th (∑ u, c u * Y u x) * b.one = 0 := by
       calc b.th (∑ u, c u * Y u x) * b.one
           = ∑ u, b.th (c u) * (b.th (Y u x) * b.one) := by
-            rw [map_sum, Finset.sum_mul]; simp [map_mul, mul_assoc]
+            set_option synthInstance.maxHeartbeats 100000 in
+              rw [map_sum, Finset.sum_mul]; simp [map_mul, mul_assoc]
         _ = ∑ u, b.th (c u) * (b.T u * b.th x * b.one) := by simp [hY1]
         _ = (∑ u, b.th (c u) * b.T u) * b.th x * b.one := by
             rw [Finset.sum_mul, Finset.sum_mul]; simp [mul_assoc]
         _ = 0 := hc x
     have h2 := congrArg (algebraMap (MvPolynomial (Fin n) R) K) (hfaith _ h1)
-    rw [map_sum, map_zero] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero] at h2
     simp_rw [map_mul, hY2, Finset.mul_sum] at h2
     rw [Finset.sum_comm] at h2
     rw [← h2]

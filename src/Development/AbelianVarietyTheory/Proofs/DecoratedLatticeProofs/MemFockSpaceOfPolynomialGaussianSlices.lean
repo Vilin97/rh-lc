@@ -51,7 +51,8 @@ theorem exists_eval_recon {Y : Type} (W : Submodule ℂ (Y → ℂ)) [FiniteDime
       ext t
       simp [R, Finset.sum_apply, Pi.single_apply]
     have h3 := congrArg Subtype.val h1
-    rw [h2, map_sum] at h3
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h2, map_sum] at h3
     simp only [map_smul, Submodule.coe_sum, Submodule.coe_smul] at h3
     refine h3.trans ?_
     rw [← Finset.sum_coe_sort S]

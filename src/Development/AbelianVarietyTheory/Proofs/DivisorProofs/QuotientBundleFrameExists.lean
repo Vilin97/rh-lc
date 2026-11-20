@@ -88,7 +88,8 @@ theorem GlobalTheory.VB.exists_isFrame_cokernel_of_frame :
     have hmem : (∑ j, b j • resM F h (c j)) ∈ P.sec V := by
       rw [hsum, ← VB.Sub.cokernel_π_app_eq_zero_iff]
       rw [Fintype.linearCombination_apply] at ha
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simpa only [Scheme.Modules.Hom.app_smul, app_resM] using ha
     have hb := (hP V h b).1 hmem
     funext k
@@ -98,7 +99,8 @@ theorem GlobalTheory.VB.exists_isFrame_cokernel_of_frame :
     obtain ⟨W, h', hxW, s, hs⟩ := VB.exists_app_eq_of_epi π t hx
     obtain ⟨β, hβ⟩ := (hc W (h'.trans h)).2 s
     refine ⟨W, h', hxW, fun k => β ⟨l + k, by omega⟩, ?_⟩
-    rw [← hs, ← hβ, Fintype.linearCombination_apply, Fintype.linearCombination_apply, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hs, ← hβ, Fintype.linearCombination_apply, Fintype.linearCombination_apply, map_sum,
       sum_eq_sum_last hl]
     · refine Finset.sum_congr rfl fun k _ => ?_
       rw [Scheme.Modules.Hom.app_smul, app_resM]

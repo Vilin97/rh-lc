@@ -77,10 +77,12 @@ theorem exists_acris (P : LocPrime l) (AI : LocAinf l P) (T : LocTied l P AI) :
           (algebraMap (Per.Ainf l) (Per.Acris0 l) (mu AI.ε)) ^ (k + 1) := by
       apply Subtype.val_injective
       rw [← Subalgebra.val_apply, ← Subalgebra.val_apply]
-      simp only [map_mul, map_sum, map_pow, map_neg, map_one, map_natCast, AlgHom.commutes]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_mul, map_sum, map_pow, map_neg, map_one, map_natCast, AlgHom.commutes]
       exact hs
     have h2 := congrArg (algebraMap (Per.Acris0 l) (Per.Acris l)) hs'
-    simp only [map_mul, map_sum, map_pow, map_neg, map_one, map_natCast, alg_alg] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_mul, map_sum, map_pow, map_neg, map_one, map_natCast, alg_alg] at h2
     exact h2
   · obtain ⟨j, hj, -, hb⟩ := GlobalTheory.CrisIncl.exists_restrict l _ T.incl
     obtain ⟨N, hN⟩ := hb m
@@ -215,7 +217,8 @@ theorem exists_tensor_acris : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI 
     obtain ⟨u, z, h1, h2⟩ := hN n hn
     refine ⟨j u, j z, ?_, ?_⟩
     · have := congrArg j h1
-      simp only [map_mul, map_sum, map_pow, map_neg, map_one, map_natCast] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_mul, map_sum, map_pow, map_neg, map_one, map_natCast] at this
       rwa [hj]
     · have := congrArg j h2
       rwa [map_sub, map_mul, map_pow, map_natCast] at this

@@ -22,7 +22,8 @@ private theorem nz_comp {O A τ : Type} [CommRing O] [IsDomain O] [CommRing A] [
     ∃ f ∈ 𝒜 (wt i), MvPowerSeries.coeff (Finsupp.single i 1) (φ f) ≠ 0 := by
   classical
   obtain ⟨f, hf, -⟩ := h.onto i
-  rw [← DirectSum.sum_support_decompose 𝒜 f, map_sum, map_sum] at hf
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← DirectSum.sum_support_decompose 𝒜 f, map_sum, map_sum] at hf
   obtain ⟨j, -, hj⟩ := Finset.exists_ne_zero_of_sum_ne_zero hf
   have hm := (DirectSum.decompose 𝒜 f j).2
   have hw : wt i = j := by

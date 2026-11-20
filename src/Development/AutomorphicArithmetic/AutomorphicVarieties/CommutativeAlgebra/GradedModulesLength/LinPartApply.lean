@@ -104,7 +104,8 @@ private theorem linPart_proj {τ : Type} {𝒜 : ℤ → Submodule O A} [GradedA
     linPart φ i (DirectSum.decompose 𝒜 f j) = linPart φ i f := by
   classical
   conv_rhs => rw [← DirectSum.sum_support_decompose 𝒜 f]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   by_cases hj : j ∈ (DirectSum.decompose 𝒜 f).support
   · rw [Finset.sum_eq_single j]
     · intro k _ hk

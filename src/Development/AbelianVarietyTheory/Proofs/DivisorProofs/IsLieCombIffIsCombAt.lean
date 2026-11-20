@@ -138,7 +138,8 @@ theorem IsKS.of_frChg {Φ : Finset (E →+* ℂ)} {g : ∀ τ : E →+* ℂ, Mat
   · rw [(key _ _ _ _ fun a' => (key _ _ _ _ (hub' τ.1)).1 (hw a')).1 (isLieComb_lieComb _ _)]
     congr 1
     exact smul_sum_smul_sum _ (fun a' b' => M' ⟨τ, a', b'⟩) _ _
-  · simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, hd, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, hd, smul_eq_mul]
     by_cases hσ : σ = conjEmb τ.1
     · subst hσ
       have := congrFun (congrFun (e (conjEmb τ.1)) k) a

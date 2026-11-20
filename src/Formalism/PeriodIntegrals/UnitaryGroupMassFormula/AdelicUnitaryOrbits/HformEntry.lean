@@ -39,7 +39,8 @@ theorem hform_conj (hs : ∀ z, s (s z) = z) (hJ : IsHerm s J) (x y : Fin n → 
     unfold cT at h1
     simpa [Matrix.transpose_apply, Matrix.map_apply] using h1
   unfold hform
-  simp only [map_sum, map_mul, hs, hJ']
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, hs, hJ']
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   ring

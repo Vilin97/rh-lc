@@ -49,7 +49,8 @@ theorem ker_map_le_span {K L : Type*} [Field K] [Field L] (φ : K →+* L) {m n 
   have hmap : ∀ x : n → K, (A.map φ) *ᵥ (φ ∘ x) = φ ∘ (A *ᵥ x) := by
     intro x
     funext k
-    simp [Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum]
   have hT : Submodule.span L (Set.range w) ≤ LinearMap.ker (A.map φ).mulVecLin := by
     rw [Submodule.span_le]
     rintro _ ⟨i, rfl⟩
@@ -334,7 +335,8 @@ variable {D : D7} (X : HidaSetting D) (Y : Formalism.L2.SG.Full.Full X) (u u' : 
 theorem classFrameOO2_hE_expand (a x : Fin X.B.I.n → X.B.I.E) :
     Formalism.L2.SG.Pf.Level.hE X a x = ∑ j, Formalism.L2.SG.Pf.Level.hE X a (Pi.single j 1) * x j := by
   conv_lhs => rw [← Formalism.L2.SG.Pf.Level.sum_single X x]
-  rw [← Formalism.L2.SG.Pf.Level.hEl_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Formalism.L2.SG.Pf.Level.hEl_apply, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_smul, Formalism.L2.SG.Pf.Level.hEl_apply, smul_eq_mul, mul_comm]
 

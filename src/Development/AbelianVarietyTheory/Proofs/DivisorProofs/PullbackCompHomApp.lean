@@ -96,13 +96,15 @@ theorem val_eq_sum {v : Sp (DualNumber R) ⟶ t.G.left} (hv : IsTanAtG t (j ≫ 
   have k₃ : resG (Sp R) (le_top : j ⁻¹ᵁ T ≤ ⊤) (ψ.app ⊤ (pullbackSections j _ e μ) : Γ(Sp R, ⊤)) =
       ∑ b, j.appLE T _ le_rfl (c b) * f b := by
     refine (app_resM ψ le_top _).symm.trans ?_
-    rw [k₂, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [k₂, map_sum]
     refine Finset.sum_congr rfl fun b _ => ?_
     rw [Scheme.Modules.Hom.app_smul]
     exact congrArg (fun z => j.appLE T _ le_rfl (c b) * (show Γ(Sp R, j ⁻¹ᵁ T) from (tanForm t hv).app _ z))
       (pullbackComp_hom_app j g _ hTV le_rfl h₁ (m b))
   refine (k₁ _).trans ((congrArg (fun z => (Scheme.ΓSpecIso (.of k)).hom ((spMap κ).appLE _ ⊤ h₀ z)) k₃).trans ?_)
-  rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum]
   refine Finset.sum_congr rfl fun b _ => ?_
   rw [map_mul, map_mul, appLE_appLE rfl _ _ hw, tanEv, Glue.tanForm_bc t κ h₁ h₀ hv hv' hV]
 
@@ -115,7 +117,8 @@ theorem tanEv_of_isCombAtG {k : Type} [CommRing k] {y : Sp k ⟶ X₀} {V : X₀
   obtain ⟨Φ, hΦ⟩ := TanPair.exists_tanM_equiv _ _ _ t k _ V hV n m hm
   have e := (LieMet.isComb_iff (fun i => LieMet.tanOf (hu i)) c (LieMet.tanOf hv)).1 h
   refine (hΦ (LieMet.tanOf hv) b).symm.trans ?_
-  rw [e, map_sum, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, map_sum, Finset.sum_apply]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_smul, Pi.smul_apply, hΦ]
   rfl
@@ -221,7 +224,8 @@ theorem formSt : GlobalTheory.ChainPts.SysB.FormSt := by
       rfl
     rw [valF, dif_pos (hwT.trans (w.preimage_mono hT))]
     refine (congrArg (Scheme.ΓSpecIso (.of k)).hom (appLE_resG w hT hwT _)).symm.trans ?_
-    rw [e₁, hc, map_sum, map_sum, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e₁, hc, map_sum, map_sum, map_sum, map_sum]
     refine Finset.sum_congr rfl fun b _ => ?_
     have e₂ : γ.hom.app T (pullbackSections (h ≫ Z.π) _ hTV (m b)) =
         pullbackSections h (om Z) inf_le_right (pullbackSections Z.π _ (inf_le_right : T₀ ≤ _) (m b)) :=

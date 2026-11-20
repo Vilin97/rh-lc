@@ -53,7 +53,8 @@ theorem le_span_of_casimir (β : V →+* 𝓞_ℂ_[p]) (σ : 𝓞 E →+* V) {J 
     induction hy using Submodule.span_induction with
     | mem x hx =>
       obtain ⟨i, rfl⟩ := hx
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simp only [phi_tmul]
       exact Submodule.subset_span ⟨i, rfl⟩
     | zero => simp
@@ -67,8 +68,10 @@ theorem le_span_of_casimir (β : V →+* 𝓞_ℂ_[p]) (σ : 𝓞 E →+* V) {J 
       apply hL.2.2
       intro o
       have h1 := congrArg (TensorProduct.map σ.toIntAlgHom.toLinearMap g) (hc o)
-      simp only [map_sum, TensorProduct.map_tmul] at h1
-      simp only [map_sum, LinearMap.baseChange_tmul, Finset.smul_sum, TensorProduct.smul_tmul']
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, TensorProduct.map_tmul] at h1
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, LinearMap.baseChange_tmul, Finset.smul_sum, TensorProduct.smul_tmul']
       simp only [g, LinearMap.restrictScalars_apply, LinearMap.toSpanSingleton_apply, mul_smul, map_mul,
         AlgHom.toLinearMap_apply] at h1
       exact h1
@@ -110,7 +113,8 @@ theorem le_span_of_casimir (β : V →+* 𝓞_ℂ_[p]) (σ : 𝓞 E →+* V) {J 
     simp only [Q, LinearMap.sum_apply, LinearMap.smul_apply, hw', smul_smul]
     rw [← Finset.sum_smul]
     congr 1
-    simp [χ, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [χ, map_sum, map_mul]
   have : w = (χ (∑ j, c j * θ j))⁻¹ • Q w := by
     rw [hQ, smul_smul, inv_mul_cancel₀ hne, one_smul]
   rw [this]

@@ -80,7 +80,8 @@ theorem exists_eq_mul_matInt [MeasurableSpace k] [BorelSpace k] (ν : Measure k)
     rw [← all h ψ hψ, hC _ (comp_right_mem_fullRk h hψ) hs, ← matInt_comp_right ν h ψ]; ring
   refine ⟨C, fun φ hφ => ?_⟩
   obtain ⟨s, ψ, rfl, hψ⟩ := exists_sum_pieces k n d hnd hO φ hφ
-  rw [map_sum, matInt_sum ν s ψ fun h hh => (hψ h hh).1.1, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, matInt_sum ν s ψ fun h hh => (hψ h hh).1.1, Finset.mul_sum]
   exact Finset.sum_congr rfl fun h hh => piece h _ (hψ h hh).1 (hψ h hh).2
 
 theorem left_scale : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (n d : ℕ), n < d →

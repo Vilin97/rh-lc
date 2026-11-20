@@ -35,7 +35,8 @@ theorem mConeMap_of_homog (y : (Σ κ, ι κ) → Ω) {g : MRing ι} {d : K → 
     mConeMap y g = monomial (expo d) (aeval y g) := by
   conv_lhs => rw [g.as_sum]
   conv_rhs => rw [g.as_sum]
-  rw [map_sum, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, map_sum]
   refine Finset.sum_congr rfl fun μ hμ => ?_
   rw [mConeMap_monomial]
   have hμd : μ.mapDomain Sigma.fst = expo d := by

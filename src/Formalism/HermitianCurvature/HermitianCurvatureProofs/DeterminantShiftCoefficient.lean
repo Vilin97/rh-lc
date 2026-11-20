@@ -46,7 +46,8 @@ theorem detShift_aeval_coeff (Q : MvPolynomial (Fin 2) ℂ) (t j : ℕ) (hj : j 
     intro d
     rw [detShift_aeval_monomial, Polynomial.coeff_C_mul_X_pow]
   conv_lhs => rw [Q.as_sum]
-  rw [map_sum, Polynomial.finsetSum_coeff, Finset.sum_eq_single D]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Polynomial.finsetSum_coeff, Finset.sum_eq_single D]
   · rw [hterm, hD0, hD1, if_pos rfl, mul_comm]
   · intro d hd hne
     rw [hterm]
@@ -91,7 +92,8 @@ theorem detShift_const {t : ℕ} (σ : Equiv.Perm (Fin t)) (i : Fin t) :
 theorem detShift_subst {t : ℕ} (M : Matrix (Fin t) (Fin t) ℂ) :
     aeval detShiftSub (∑ σ : Equiv.Perm (Fin t), ((Equiv.Perm.sign σ : ℤ) : MvPolynomial (Fin 2) ℂ) *
       ∏ i : Fin t, ((if σ i = i then X 0 else 0) + X 1 * C (M (σ i) i))) = M.charpoly := by
-  rw [Matrix.charpoly, Matrix.det_apply', map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.charpoly, Matrix.det_apply', map_sum]
   refine Finset.sum_congr rfl fun σ _ => ?_
   rw [map_mul, map_intCast, map_prod]
   congr 1

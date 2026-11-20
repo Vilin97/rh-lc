@@ -50,7 +50,8 @@ theorem iV_injective (B : NLocBase D M) (j : ℕ) (w : D.what₂.places.Pl) : Fu
   have hb := (B.iV_basis j w b).1
   refine (injective_iff_map_eq_zero (B.iV j w)).2 fun y hy => ?_
   have hsum := b.sum_repr y
-  rw [← hsum, map_sum] at hy
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hsum, map_sum] at hy
   simp only [LinearMap.map_smulₛₗ] at hy
   have hz := Fintype.linearIndependent_iff.1 hb _ hy
   rw [← hsum]

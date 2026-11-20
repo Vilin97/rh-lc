@@ -34,7 +34,8 @@ theorem exists_relation_gradient {R A k ι : Type} [CommRing R] [CommRing A] [Fi
   have hfv : ∀ γ : ι → k, f γ = ∑ j, γ j * v j := by
     intro γ
     conv_lhs => rw [pi_eq_sum_univ' γ]
-    simp [v, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [v, map_sum]
   let ψ : MvPolynomial ι R →+* DualNumber k :=
     eval₂Hom ((TrivSqZeroExt.inlHom k k).comp (red.comp (ev.comp C)))
       (fun j => (TrivSqZeroExt.inl (red (ev (X j))) + TrivSqZeroExt.inr (v j) : DualNumber k))

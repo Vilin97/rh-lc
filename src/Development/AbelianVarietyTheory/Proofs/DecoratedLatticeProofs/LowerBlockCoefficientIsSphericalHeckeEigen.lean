@@ -126,7 +126,8 @@ theorem coeff_isEigen : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSp
     have e0 : ∀ J, ℓ (π (E m) (π J x)) = φ (E m * J) := fun J => by simp only [hφ, map_mul, Module.End.mul_apply]
     have h1 : lamA * φ (E m) = ∑ j ∈ R', (((ξ (blockDet j))⁻¹ : ℂˣ) : ℂ) * φ (E m * (j * mtor ϖ (indic s))) := by
       have := congrArg (fun v => ℓ (π (E m) v)) heig
-      simp only [map_sum, map_smul, smul_eq_mul] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, smul_eq_mul] at this
       simp only [← e0]
       exact this
     have hterm : ∀ g ∈ R, ∑ ν ∈ N g, (((ξ (blockDet (lowU ν * E (κc g))))⁻¹ : ℂˣ) : ℂ) *

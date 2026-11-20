@@ -119,7 +119,8 @@ theorem isSquareDetComparison_eq_mul_det_pow_of_basis_change : Out.Laws → ∀ 
       refine (gs_sum' _ y _ (hJ _) _ _).trans (Finset.sum_congr rfl fun k' _ => ?_)
       rw [gs_mul _ y _ (hJ _), gs_cst _ _ y _ (hJ _), Over.w r]
     simp only [h3] at h1
-    simp only [map_sub, sub_mul, Finset.sum_sub_distrib, h1, map_mul, map_sum, Matrix.of_apply, map_prod,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sub, sub_mul, Finset.sum_sub_distrib, h1, map_mul, map_sum, Matrix.of_apply, map_prod,
       _root_.mul_assoc, ← Finset.mul_sum]
     rw [sub_eq_zero]
     congr 1

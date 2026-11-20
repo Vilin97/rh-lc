@@ -93,7 +93,8 @@ theorem val_comb {n : ℕ} {x : Fin n → Z1 ρ} {x₀ : Z1 ρ} {α : Fin n → 
     (e : (Submodule.Quotient.mk x₀ : H1 ρ) = ∑ a, α a • (Submodule.Quotient.mk (x a) : H1 ρ)) {h : Γ} (hh : ρ h = 1) :
     x₀.1 h = ∑ a, α a • (x a).1 h := by
   have e' : (Submodule.Quotient.mk x₀ : H1 ρ) = Submodule.Quotient.mk (∑ a, α a • x a) := by
-    rw [e, ← Submodule.mkQ_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, ← Submodule.mkQ_apply, map_sum]
     simp
   rw [val_eq e' hh]
   simp
@@ -214,7 +215,8 @@ theorem exists_lift (S : Submodule K (H1 ρ)) {n : ℕ} (b : Module.Basis (Fin n
     exact b.linearIndependent.map' S.subtype S.ker_subtype
   · simp only [hx]
     have := congrArg S.subtype (b.sum_repr t)
-    rw [map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at this
     simp only [map_smul, Submodule.subtype_apply] at this
     exact this.symm
 
@@ -312,14 +314,16 @@ theorem abs_two (hcc : ∀ g, cj (cj g) = g) (A : (Fin r → K) ≃ₗ[K] (Fin r
       (Submodule.Quotient.mk (twZ cj hcj A.toLinearMap hA (x b)) : H1 ρ') := by
     have e1 : (Submodule.Quotient.mk y₀ : H1 ρ') = C.symm (t' : H1 ρ) := by
       rw [LinearEquiv.eq_symm_apply]; exact hηt
-    rw [e1, hxs t', map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e1, hxs t', map_sum]
     refine Finset.sum_congr rfl fun b _ => ?_
     rw [map_smul]
     rfl
   have := hc (x₀ a) y₀ _ _ (hxs (t a)) e
   rw [h0 a y₀ hη] at this
   rw [← bT.sum_repr (t a), ← bT.sum_repr t']
-  simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, Finset.mul_sum]
   rw [this, Finset.sum_comm]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => by ring
 
@@ -474,7 +478,8 @@ variable {i} {K K' : Type} [Field K] [Algebra (X.O0 i) K] [TopologicalSpace K] [
 omit [TopologicalSpace K] [DiscreteTopology K] [TopologicalSpace K'] [DiscreteTopology K'] in
 theorem red_map (f : K →ₐ[X.O0 i] K') (ρ : GE N →* GL (Fin D.R.r) (X.O0 i)) (g : GE N) (v : Fin D.R.r → K) (a : Fin D.R.r) :
     f (red i K ρ g v a) = red i K' ρ g (fun b => f (v b)) a := by
-  simp [repOn, matAct, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [repOn, matAct, map_sum]
 
 def mapC (f : K →ₐ[X.O0 i] K') {ρ : GE N →* GL (Fin D.R.r) (X.O0 i)} (x : Z1 (red i K ρ)) : Z1 (red i K' ρ) :=
   ⟨fun g a => f (x.1 g a),
@@ -484,7 +489,8 @@ def mapC (f : K →ₐ[X.O0 i] K') {ρ : GE N →* GL (Fin D.R.r) (X.O0 i)} (x :
 
 theorem fm_mapC (f : K →ₐ[X.O0 i] K') {ρ ρ' : GE N →* GL (Fin D.R.r) (X.O0 i)} (x : Z1 (red i K ρ)) (y : Z1 (red i K ρ'))
     (h : GE N) : fm (cConj X) (mapC f x) (mapC f y) h = f (fm (cConj X) x y h) := by
-  simp [fm, mapC, dotProduct, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [fm, mapC, dotProduct, map_sum]
 
 theorem mapC_mapC (e : K ≃ₐ[X.O0 i] K') {ρ : GE N →* GL (Fin D.R.r) (X.O0 i)} (x : Z1 (red i K' ρ)) :
     mapC (e : K →ₐ[X.O0 i] K') (mapC (e.symm : K' →ₐ[X.O0 i] K) x) = x :=
@@ -496,7 +502,8 @@ theorem not_indep_mapC (f : K →ₐ[X.O0 i] K') {ρ : GE N →* GL (Fin D.R.r) 
   obtain ⟨c, hc, a₀, ha₀⟩ := h
   refine ⟨fun a => f (c a), ?_, a₀, (map_ne_zero f).2 ha₀⟩
   have e : (Submodule.mkQ _ (∑ a, c a • x a) : H1 (red i K ρ)) = 0 := by
-    rw [map_sum]; exact hc
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]; exact hc
   have e1 : ∑ a, c a • x a ∈ (B1 (red i K ρ)).comap (Z1 (red i K ρ)).subtype := (Submodule.Quotient.mk_eq_zero _).1 e
   obtain ⟨m, hm⟩ := (mem_coboundaries1 _ _).1 e1
   have e2 : ∑ a, f (c a) • mapC f (x a) ∈ (B1 (red i K' ρ)).comap (Z1 (red i K' ρ)).subtype := by
@@ -504,9 +511,11 @@ theorem not_indep_mapC (f : K →ₐ[X.O0 i] K') {ρ : GE N →* GL (Fin D.R.r) 
     have := congrArg f (congrFun (hm g) b)
     rw [Pi.sub_apply, map_sub, red_map] at this
     rw [Pi.sub_apply, ← this]
-    simp [mapC, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [mapC, map_sum]
   have e3 : (Submodule.mkQ _ (∑ a, f (c a) • mapC f (x a)) : H1 (red i K' ρ)) = 0 := (Submodule.Quotient.mk_eq_zero _).2 e2
-  rw [map_sum] at e3
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum] at e3
   exact e3
 
 theorem body_transfer (e : K ≃ₐ[X.O0 i] K') {ρ ρ' : GE N →* GL (Fin D.R.r) (X.O0 i)} {R n : ℕ} {φ : Fin R → GE N}
@@ -520,7 +529,8 @@ theorem body_transfer (e : K ≃ₐ[X.O0 i] K') {ρ ρ' : GE N →* GL (Fin D.R.
       have h1 := h0 a (mapC (e : K →ₐ[X.O0 i] K') y)
         (GlobalTheory.ResSel.CoefMap.cl_mem_selOn_of_algHom D N X bkP i ρ' K K' (e : K →ₐ[X.O0 i] K') ∅ y _ (fun _ _ => rfl) hy)
       apply e.injective
-      rw [map_zero, ← h1, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_zero, ← h1, map_sum]
       refine Finset.sum_congr rfl fun b _ => ?_
       rw [map_mul]
       congr 1

@@ -62,7 +62,8 @@ theorem exists_affine_isMap : ∀ (E : Type) [Field E] [NumberField E] [IsCMFiel
   have hAB' : ∀ τ, B' τ * A' τ = 1 := fun τ => Matrix.ext fun i k => germ_injective_of_isIntegral X.X z hy (by
     show gm _ = gm _
     have := congrFun (congrFun (hAB τ) i) k
-    simp only [Matrix.mul_apply, map_sum, map_mul, hA', hB', Matrix.one_apply] at this ⊢
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mul_apply, map_sum, map_mul, hA', hB', Matrix.one_apply] at this ⊢
     rw [this]
     split_ifs <;> simp)
   have hx₂ : spMap ρ ≫ (show Sp Γ(gen Z, U₀) ⟶ gen Z from hU₀.fromSpec) ≫ genι Z =

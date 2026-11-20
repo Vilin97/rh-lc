@@ -368,7 +368,8 @@ theorem derivative_of_rep : ∀ {n : ℕ} (H : Type) [NormedAddCommGroup H] [Inn
     obtain rfl : γ = eU X hX := funext fun t => Subtype.ext (hγ t)
     have hs : gL hρ X = ∑ a, ∑ b, X a b • gL hρ (Matrix.single a b 1) := by
       conv_lhs => rw [Matrix.matrix_eq_sum_single X]
-      simp only [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum]
       refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
       rw [← map_smul, Matrix.smul_single, smul_eq_mul, mul_one]
     have e : (∑ a, ∑ b, X a b • R (gL hρ (Matrix.single a b 1)) w) = dA ρ X hX w := by

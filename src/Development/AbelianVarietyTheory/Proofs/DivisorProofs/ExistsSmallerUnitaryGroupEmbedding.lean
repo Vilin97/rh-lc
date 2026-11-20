@@ -81,7 +81,8 @@ theorem extendMatrixByIdentityAlongIndices_mul {e : Fin r → Fin n} (he : Funct
 theorem conjTranspose_extendMatrixByIdentityAlongIndices (σ : L →+* L) (e : Fin r → Fin n) (M : Matrix (Fin r) (Fin r) L) :
     cT σ (ext1 e M) = ext1 e (cT σ M) := by
   ext a b
-  simp only [cT, ext1, Matrix.transpose_apply, Matrix.map_apply, Matrix.add_apply, Matrix.mul_apply, map_add,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [cT, ext1, Matrix.transpose_apply, Matrix.map_apply, Matrix.add_apply, Matrix.mul_apply, map_add,
     map_sum, map_mul, incl, Matrix.of_apply, Matrix.sub_apply, map_sub, Matrix.one_apply, apply_ite σ, map_one,
     map_zero, Finset.sum_mul]
   congr 1

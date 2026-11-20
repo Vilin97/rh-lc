@@ -31,7 +31,8 @@ theorem UpperTheory.V.Lit.Bor.harmEx :
     rw [← h2]
     exact hE _ hm
   · have h1 := congrArg (incl π Ξ) (DFunLike.congr_fun hd X)
-    rw [dCo_apply, AlternatingMap.zero_apply, map_zero, map_sum] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [dCo_apply, AlternatingMap.zero_apply, map_zero, map_sum] at h1
     rw [dCo_apply, AlternatingMap.zero_apply, ← h1]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [inclCo_apply, ← hIL]
@@ -41,7 +42,8 @@ theorem UpperTheory.V.Lit.Bor.harmEx :
     | succ q =>
       refine AlternatingMap.ext fun X => ?_
       have h1 := congrArg (incl π Ξ) (DFunLike.congr_fun (show del _ e ω = 0 from hδ) X)
-      rw [del_apply, AlternatingMap.zero_apply, map_zero, map_sum] at h1
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [del_apply, AlternatingMap.zero_apply, map_zero, map_sum] at h1
       rw [del_apply, AlternatingMap.zero_apply, ← h1]
       exact Finset.sum_congr rfl fun j _ => (hIA _ _).symm
   · rw [inclCo_apply, hcmp]

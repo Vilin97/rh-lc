@@ -84,14 +84,16 @@ def trA (a : LetA O n₀) : LetA O n₀ := fun t => tr₀ W (a t)
 
 def trD (T : LocLat G Qp LL O) : W.DD T →+ ↥(DΔ W T) :=
   AddMonoidHom.codRestrict (∑ δ ∈ W.DelF, W.γD T δ).toAddMonoidHom (DΔ W T) (fun z δ hδ => by
-    simp only [LinearMap.toAddMonoidHom_coe, LinearMap.sum_apply, map_sum, ← W.γD_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [LinearMap.toAddMonoidHom_coe, LinearMap.sum_apply, map_sum, ← W.γD_mul]
     exact sum_shift W (fun g => W.γD T g z) hδ)
 
 theorem trD_coe (T : LocLat G Qp LL O) (z : W.DD T) : (trD W T z : W.DD T) = ∑ δ ∈ W.DelF, W.γD T δ z := by
   exact LinearMap.sum_apply _ _ _
 
 theorem tr₀_inv (b : O⟦X⟧) {δ : W.Gam} (hδ : δ ∈ W.DelF) : W.γ₀ δ (tr₀ W b) = tr₀ W b := by
-  simp only [tr₀, map_sum, ← AlgHom.mul_apply, ← map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [tr₀, map_sum, ← AlgHom.mul_apply, ← map_mul]
   exact sum_shift W (fun g => W.γ₀ g b) hδ
 
 theorem γD_smulA (T : LocLat G Qp LL O) (g : W.Gam) (a : LetA O n₀) (x : W.DD T) :
@@ -159,7 +161,8 @@ theorem tr_of (hι : GlobalTheory.IndefiniteRowSideFullHecke.OnePlusPowerCharact
   have h1 := (hι.2.2.1 _).2 ⟨c, h⟩
   have h2 : PowerSeries.map (algebraMap O k) (tr₀ W b) =
       (W.DelF.card : k⟦X⟧) * PowerSeries.map (algebraMap O k) b := by
-    rw [tr₀, map_sum, ← nsmul_eq_mul, ← Finset.sum_const]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [tr₀, map_sum, ← nsmul_eq_mul, ← Finset.sum_const]
     refine Finset.sum_congr rfl fun δ hδ => ?_
     rw [he ⟨δ, hδ⟩, h1 _ (e ⟨δ, hδ⟩).2]
   rw [h2, map_mul, map_mul, map_mul, h, map_natCast, map_natCast]
@@ -278,7 +281,8 @@ theorem condC (hι : GlobalTheory.IndefiniteRowSideFullHecke.OnePlusPowerCharact
   have := j_tr p hq i _ ⟨s, hs.2⟩ c hc
   obtain ⟨c', rfl⟩ := X_dvd_of hι c _ hc (by
     have h0 : PowerSeries.constantCoeff (tr₀ W ((letπ * a : LetA O n₀) (τ i))) = 0 := by
-      rw [tr₀, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [tr₀, map_sum]
       refine Finset.sum_eq_zero fun δ _ => ?_
       rw [Pi.mul_apply, map_mul, map_mul, letπ, (W.γ₀_X δ).1, zero_mul]
     rw [← PowerSeries.coeff_zero_eq_constantCoeff_apply, PowerSeries.coeff_map,

@@ -27,7 +27,8 @@ omit [DecidableEq T] in
 theorem mConeMap_lin {Ω : Type} [Field Ω] (y : (Σ _ : Unit, T) → Ω) (a : T → ℤ) :
     mConeMap y (∑ t, C (a t) * X ⟨(), t⟩ : MRing (dualBlocks T)) =
       MvPolynomial.C (∑ t, (a t : Ω) * y ⟨(), t⟩) * MvPolynomial.X () := by
-  rw [map_sum, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun t _ => ?_
   simp only [mConeMap, aeval_X, map_mul, map_intCast, eq_intCast]
   ring
@@ -60,7 +61,8 @@ theorem DualStdBasePtFree.proof : DualStdBasePtFree.Statement := by
       have hc' : ∀ l, ∑ t, (dualStdCoordMat b () j t : MvPolynomial (Fin i) K) * (C ((b t : Fin i → K) l) * X l) =
           C ((Pi.single j (1 : K) : Fin i → K) l) * X l := by
         intro l
-        rw [← hc l, map_sum, Finset.sum_mul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [← hc l, map_sum, Finset.sum_mul]
         refine Finset.sum_congr rfl fun t _ => ?_
         simp only [map_mul, map_intCast]
         ring
@@ -68,7 +70,8 @@ theorem DualStdBasePtFree.proof : DualStdBasePtFree.Statement := by
       rw [Finset.sum_eq_single j (fun l _ hl => by simp [hl]) (by simp)]
       simp
     have h := congrArg am hpoly
-    simpa only [am, y, dualLatticeCoord, map_sum, map_mul, map_intCast] using h
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa only [am, y, dualLatticeCoord, map_sum, map_mul, map_intCast] using h
 
   have hS : ∀ j, ∑ s, (mulMat b (α j) (c ()) s : ProjField K i) * y ⟨(), s⟩ =
       am (C (α j : K)) * y ⟨(), c ()⟩ := by
@@ -79,18 +82,22 @@ theorem DualStdBasePtFree.proof : DualStdBasePtFree.Statement := by
       rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun l _ => ?_
       have h := congrArg (C : K → MvPolynomial (Fin i) K) (mulMat_sum b (α j) (c ()) l)
-      simp only [map_sum, map_mul, map_intCast] at h
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_mul, map_intCast] at h
       rw [← mul_assoc, ← h, Finset.sum_mul]
       refine Finset.sum_congr rfl fun t _ => ?_
       ring
     have h := congrArg am hlin
-    simpa only [am, y, dualLatticeCoord, map_sum, map_mul, map_intCast] using h
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa only [am, y, dualLatticeCoord, map_sum, map_mul, map_intCast] using h
 
   have hy : y ⟨(), c ()⟩ = ∑ j, am (C (α j : K)) * am (X j) := by
-    simp only [y, am, dualLatticeCoord, map_sum, map_mul, hα]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [y, am, dualLatticeCoord, map_sum, map_mul, hα]
   have key : X ⟨(), c ()⟩ ^ 2 - ∑ j, linForm (ι₂ := PBlk i) (dualStdCoordMat b) ⟨(), j⟩ * L j ∈ dualIdeal b := by
     show _ ∈ RingHom.ker (mConeMap (dualLatticeCoord b))
-    rw [RingHom.mem_ker, map_sub, sub_eq_zero, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [RingHom.mem_ker, map_sub, sub_eq_zero, map_sum]
     have hl : ∀ j, mConeMap (dualLatticeCoord b) (linForm (ι₂ := PBlk i) (dualStdCoordMat b) ⟨(), j⟩) =
         MvPolynomial.C (am (X j)) * MvPolynomial.X () := by
       intro j
@@ -109,7 +116,8 @@ theorem DualStdBasePtFree.proof : DualStdBasePtFree.Statement := by
     calc ∑ j, MvPolynomial.C (am (X j)) * MvPolynomial.X () *
           (MvPolynomial.C (am (C (α j : K))) * MvPolynomial.C (y ⟨(), c ()⟩) * MvPolynomial.X ())
         = MvPolynomial.C ((∑ j, am (C (α j : K)) * am (X j)) * y ⟨(), c ()⟩) * MvPolynomial.X () ^ 2 := by
-          rw [Finset.sum_mul, map_sum, Finset.sum_mul]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [Finset.sum_mul, map_sum, Finset.sum_mul]
           refine Finset.sum_congr rfl fun j _ => ?_
           simp only [map_mul]
           ring

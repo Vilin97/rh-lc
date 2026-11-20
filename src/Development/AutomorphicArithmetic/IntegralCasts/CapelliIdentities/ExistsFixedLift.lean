@@ -119,7 +119,8 @@ theorem UpperTheory.Reformulated.B.Gwa5.exists_fixed_lift :
         simp only [hmul, inv_mul_cancel, map_one, Module.End.one_apply]
       · intro w _
         simp only [hmul, mul_inv_cancel, map_one, Module.End.one_apply]
-    rw [map_smul, map_sum, hs, MonoidHom.one_apply, Units.val_one, one_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_smul, map_sum, hs, MonoidHom.one_apply, Units.val_one, one_smul]
   · have h2 : (O.card : ℂ)⁻¹ • ∑ w ∈ O, w - u = (O.card : ℂ)⁻¹ • ∑ w ∈ O, (w - u) := by
       rw [Finset.sum_sub_distrib, Finset.sum_const, smul_sub, ← Nat.cast_smul_eq_nsmul ℂ,
         smul_smul, inv_mul_cancel₀ hne, one_smul]

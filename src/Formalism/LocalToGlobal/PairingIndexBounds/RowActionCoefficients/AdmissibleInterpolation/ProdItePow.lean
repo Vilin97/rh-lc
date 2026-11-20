@@ -39,7 +39,8 @@ theorem map_rowAct {R S : Type*} [CommRing R] [CommRing S] (f : R →+* S) {r n 
     congr 1
     unfold rowAct
     rw [aeval_X, aeval_X]
-    simp [map_sum, map_mul, map_C, map_X]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, map_mul, map_C, map_X]
 
 theorem sum_C_mul {σ K : Type*} [CommRing K] (κ : K) (R0 : MvPolynomial σ K) (d : (σ →₀ ℕ) → K) :
     ∑ n ∈ (C κ * R0).support, d n * AddMonoidAlgebra.coeff (C κ * R0) n = κ * ∑ n ∈ R0.support, d n * AddMonoidAlgebra.coeff R0 n := by
@@ -262,7 +263,8 @@ theorem mulC_diag (δ : Fin n → K) (w : Fin n → ℕ → K) : mulC (Matrix.di
 theorem map_mulC {S : Type*} [CommRing S] (f : K →+* S) (B : Matrix (Fin n') (Fin n) K) (x : Fin n → ℕ → K) :
     (fun a i => f (mulC B x a i)) = mulC (B.map f) fun a i => f (x a i) := by
   funext a i
-  simp [mulC, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [mulC, map_sum, map_mul]
 
 end Mat
 
@@ -427,7 +429,8 @@ theorem eval_colFac (j : ℕ) (Ist : X.ColCh j) (v : X.Pl) (s : Fin (X.G.P.n' v)
   rw [RingHom.map_det, RingHom.map_det]
   congr 1
   refine Matrix.ext fun i i' => ?_
-  simp only [RingHom.mapMatrix_apply, Matrix.map_apply, Matrix.of_apply, map_sum, map_mul, map_C, map_X, eval_C, eval_X,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [RingHom.mapMatrix_apply, Matrix.map_apply, Matrix.of_apply, map_sum, map_mul, map_C, map_X, eval_C, eval_X,
     coe_eval₂Hom, eval₂_X, mulC, dM, xB, Matrix.transpose_apply]
   exact Finset.sum_congr rfl fun a _ => mul_comm _ _
 

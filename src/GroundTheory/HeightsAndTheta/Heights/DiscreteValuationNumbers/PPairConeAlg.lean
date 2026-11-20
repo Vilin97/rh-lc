@@ -20,9 +20,11 @@ theorem eval_generic {Ω : Type*} [Field Ω] {E : Type*} [AddCommGroup E] [Modul
   refine Finset.sum_congr rfl fun i _ => ?_
   have h : ψ (e i) = ∑ q, u.repr (e i) q * ψ (u q) := by
     conv_lhs => rw [← u.sum_repr (e i)]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [map_smul, smul_eq_mul]
-  rw [h, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h, map_sum, Finset.mul_sum]
   simp only [map_mul, mul_assoc]
 
 theorem expand {Ω : Type*} [Field Ω] {E : Type*} [AddCommGroup E] [Module Ω E] {Φ : Type*} [Field Φ]
@@ -31,7 +33,8 @@ theorem expand {Ω : Type*} [Field Ω] {E : Type*} [AddCommGroup E] [Module Ω E
     ∑ q, C (algebraMap Ω Φ (ψ (u q) / Z)) *
         (C (algebraMap Ω Φ Y * ∑ i, t i * algebraMap Ω Φ (u.repr (e i) q)) * (X o : MvPolynomial σ Φ)) =
       C (algebraMap Ω Φ (Y / Z) * ∑ i, t i * algebraMap Ω Φ (ψ (e i))) * X o := by
-  rw [eval_generic e u t ψ, Finset.mul_sum, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [eval_generic e u t ψ, Finset.mul_sum, map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun q _ => ?_
   rw [← mul_assoc, ← map_mul]
   congr 2

@@ -30,7 +30,8 @@ theorem sMoves_of_wComp : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [To
       fun i => p.sec (((Formalism.L2.Theta.mt S g).map p.pr *ᵥ u) i) := by
     intro u
     funext i
-    simp only [Matrix.mulVec, dotProduct, map_sum, Matrix.map_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, dotProduct, map_sum, Matrix.map_apply]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [sec_mul, p.sec_pr, mul_comm p.e, mul_assoc, e_mul_sec]
   have hc1 : ∀ a : k, c * p.sec a = p.sec (p.pr c * a) := by

@@ -499,7 +499,8 @@ theorem norm_coeff_le : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (
     Nat.finite_of_card_ne_zero (by rw [card_laJ_eq_pd_pow_of_isLev hd]; exact pow_ne_zero _ hpd.ne')
   haveI : Fintype (Fin n → LaJ Xo c d) := Fintype.ofFinite _
   simp only [DeltaDat.w, map_mul, norm_mul, hz1, _root_.one_mul]
-  rw [hph6 q, finsum_eq_sum_of_fintype, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hph6 q, finsum_eq_sum_of_fintype, map_sum]
   refine (norm_sum_le _ _).trans ((Finset.sum_le_card_nsmul _ _ 1 fun x _ => ?_).trans ?_)
   · rw [map_mul, norm_mul, hζ, _root_.mul_one]
     exact norm_eF_ph_le_one_of_phiPin hd hpin hn σ x

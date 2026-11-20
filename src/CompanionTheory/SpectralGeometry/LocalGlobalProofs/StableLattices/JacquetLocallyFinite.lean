@@ -51,7 +51,8 @@ theorem step_down {M : GMod n} {A : Matrix (Fin n) (Fin n) ℂ} (F : Filt M A) (
   set g : ℂ[X] := q.comp (X + C 1) * q.comp (X + C 2) with hg
   obtain ⟨m, Y, v, hY, hu⟩ := hnil u
   have key : aeval T (g * p) u = ∑ k, aeval T g (actM M.E (Y k) (v k)) := by
-    rw [map_mul, Module.End.mul_apply, hu, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_mul, Module.End.mul_apply, hu, map_sum]
   rw [key]
   refine Submodule.sum_mem _ fun k _ => ?_
   obtain ⟨Y₁, Y₂, hk, h₁, h₂⟩ := hY k

@@ -30,7 +30,8 @@ theorem isAbsIrrChar_map : ∀ {K K' G : Type} [Field K] [Field K'] [CharZero K]
     have hsum : ∑ g, ρ.character g * ρ.character g⁻¹ = (Nat.card G : A) := by
       field_simp at ho
       simpa using ho
-    simp only [hch, ← map_mul, ← map_sum, hsum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hch, ← map_mul, ← map_sum, hsum]
     exact map_natCast ψ _
   · rw [hch, hρ, hψ]
 

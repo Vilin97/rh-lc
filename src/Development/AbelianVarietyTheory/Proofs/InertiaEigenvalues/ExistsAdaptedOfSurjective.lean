@@ -84,7 +84,8 @@ theorem exists_adapted_of_surjective (hF : IsField F) [FiniteDimensional LL V'] 
     obtain ⟨x, hx, rfl⟩ := exists_ext_mem_FilV PD g hs hy
     obtain ⟨m', k', b, e, he, rfl⟩ := h n x hx
     change q _
-    rw [map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum]
     refine Finset.sum_induction _ q qa q0 fun i _ => ?_
     rw [ext_mulR, ← sm_one_tmul, sm_comm, sm_one_tmul, ← ext_sm]
     refine qm (k' i) (b i) (he i).2.2 _ ((hA (k' i)).le ⟨_, ⟨?_, ?_⟩, rfl⟩)

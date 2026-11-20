@@ -159,7 +159,8 @@ theorem lambda_of_matrixCongruences (hC : CoordHom C₁ C₂ F) (hD : MemD W F c
   have hcmp : W.cmp T₂ ⟨W.map F (C₁.t (c - (ell : ZMod n)) (e₁ k)), hx⟩ =
       ∑ l, algebraMap O LL (LinearMap.toMatrix' P l k) •
         W.cmp T₂ ⟨C₂.t (c - (ell : ZMod n)) (e₂ l), he₂ l⟩ := by
-    rw [hsplit, map_add, map_sum, comparison_pi0_smul_eq_zero hR, add_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hsplit, map_add, map_sum, comparison_pi0_smul_eq_zero hR, add_zero]
     simp only [W.cmp_smul]
   have hL : ∀ l, ((lamOf C₂ c ell e₂ l : Dc W T₂ c) : T₂.V ⊗[Qp] B) =
       ((φVB PD (LL := LL) (V := T₂.V) : Module.End LL (T₂.V ⊗[Qp] B)) ^ ell)
@@ -176,7 +177,8 @@ theorem lambda_of_matrixCongruences (hC : CoordHom C₁ C₂ F) (hD : MemD W F c
     _ = ∑ l, algebraMap O LL (LinearMap.toMatrix' P l k) •
           ((φVB PD (LL := LL) (V := T₂.V) : Module.End LL (T₂.V ⊗[Qp] B)) ^ ell)
             (W.cmp T₂ ⟨_, he₂ l⟩) := by
-        rw [hcmp, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [hcmp, map_sum]
         simp only [map_smul]
     _ = _ := by
         rw [Submodule.coe_sum]

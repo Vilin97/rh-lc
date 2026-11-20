@@ -227,7 +227,8 @@ theorem sum_trace_eq : ∀ {F : Type} [Field F] [NumberField F] (l : ℕ) [Fact 
         (fun x hx => norm_le_one _ p rfl ((hv' ⟨p, hp⟩ x).1 hx).le)
       exact ⟨⟨⟨p, hp⟩, τ⟩, AlgHom.ext hτ⟩
   apply (algebraMap ℚ_[l] Ω).injective
-  rw [map_sum, map_ratCast]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_ratCast]
   have h1 := trace_eq_sum_embeddings (K := ℚ) Ω (x := a)
   rw [eq_ratCast] at h1
   rw [h1, ← he.sum_comp, Fintype.sum_sigma]

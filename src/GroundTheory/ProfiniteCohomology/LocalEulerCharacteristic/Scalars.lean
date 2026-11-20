@@ -35,7 +35,8 @@ include he in
 theorem addEquiv_inhomogeneousCochains_d (i : ℕ) (f : (Fin i → G) → A) (g : Fin (i + 1) → G) :
     e ((inhomogeneousCochains.d A i).hom f g) =
       (inhomogeneousCochains.d A' i).hom (fun h => e (f h)) g := by
-  rw [inhomogeneousCochains.d_hom_apply, inhomogeneousCochains.d_hom_apply, map_add, map_sum, he]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [inhomogeneousCochains.d_hom_apply, inhomogeneousCochains.d_hom_apply, map_add, map_sum, he]
   congr 1
   refine Finset.sum_congr rfl fun m _ => ?_
   have hk : ∀ (c : ℕ) (a : A), ((-1 : k) ^ c) • a = ((-1 : ℤ) ^ c) • a := fun c a => by

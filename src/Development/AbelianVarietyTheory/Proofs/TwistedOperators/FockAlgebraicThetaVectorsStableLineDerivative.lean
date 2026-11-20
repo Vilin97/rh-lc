@@ -67,7 +67,8 @@ theorem dLine_eq_sum_dRho {D : D7} {S T : HSp D} {ψ : AddChar (AF D.host.F) ℂ
   rw [Finset.sum_congr rfl fun τ _ => hτ τ, Finset.sum_add_distrib]
   have hp : piW θ T S (L 1) = ∑ τ, (Pi.single τ (compAt θ τ (L 1)) : RW T S) := by
     exact (Finset.univ_sum_single (piW θ T S (L 1))).symm
-  rw [hp, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hp, map_sum, map_sum]
   simp only [Complex.ofReal_sum, Finset.mul_sum, Finset.sum_mul]
 
 theorem deriv_line_mem_algF : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam D), IsStdChar D ψ (-1) → IsInfFam θ →

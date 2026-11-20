@@ -230,7 +230,8 @@ theorem splitFibre : StatSplitFibre := by
   have hexp : ∀ σ t, φ σ t = ∑ k, x (b.repr t k) * φ σ (b k) := by
     intro σ t
     conv_lhs => rw [← b.sum_repr t]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [Algebra.smul_def, map_mul]
     congr 1

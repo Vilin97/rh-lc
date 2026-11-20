@@ -201,7 +201,8 @@ theorem tens_cocompact : ∃ K : Set (AF F ⊗[F] E), IsCompact K ∧ ∀ z, ∃
   choose x hx using fun i => h (e z i)
   refine ⟨∑ i, x i • b i, fun i => e z i - algebraMap F _ (x i), fun i _ => hx i, ?_⟩
   have : (fun i => e z i - algebraMap F (AF F) (x i)) = e z - fun i => algebraMap F (AF F) (x i) := rfl
-  rw [this, map_sub, LinearEquiv.symm_apply_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [this, map_sub, LinearEquiv.symm_apply_apply, map_sum]
   congr 1
   rw [Module.Basis.equivFun_symm_apply]
   refine Finset.sum_congr rfl fun i _ => ?_

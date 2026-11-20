@@ -53,7 +53,8 @@ private theorem inclE_hform (I : AutInst) (w v : Fin I.n → I.E) :
     Formalism.UG.inclE (F := I.F) (Af I.F) (Formalism.UG.hform (starRingEnd I.E) I.J w v) =
       hhat I (iv I w) (iv I v) := by
   unfold hhat iv
-  simp only [Formalism.UG.hform, map_sum, map_mul, Matrix.map_apply, sigR_inclE']
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Formalism.UG.hform, map_sum, map_mul, Matrix.map_apply, sigR_inclE']
 
 private theorem sigR_mem_intAf (I : AutInst) (c : I.E ⊗[I.F] Af I.F) (hc : c ∈ IntAf I.F I.E) :
     Formalism.UG.sigR I.cm.sig (Af I.F) c ∈ IntAf I.F I.E := by

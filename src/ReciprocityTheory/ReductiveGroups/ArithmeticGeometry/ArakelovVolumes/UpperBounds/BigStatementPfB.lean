@@ -169,7 +169,8 @@ private theorem hermC_mulVec_map_of_gram_invariant (τ : E →+* ℂ) (G g : Mat
     ext a b
     simp only [Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, Finset.sum_mul]
     rw [← hg a b]
-    simp only [map_sum, map_mul, ringHom_cc_eq_starRingEnd]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, ringHom_cc_eq_starRingEnd]
     exact Finset.sum_comm
   have hE : ∀ u w : Fin r → ℂ, hermC τ G u w = u ⬝ᵥ (Matrix.mulVec (G.map τ) (starRingEnd ℂ ∘ w)) := by
     intro u w

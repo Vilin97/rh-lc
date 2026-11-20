@@ -169,7 +169,8 @@ theorem uop_ram (hok : ∀ x, (p x).Ok (T.atT.res v)) (φ : LT.Fn D u 0) (hφ : 
   show (D.mem u).A.Nm v' _ = 0
   unfold ColumnsAtT.Nm at h2 ⊢
   rw [LinearMap.sum_apply] at h2 ⊢
-  rw [Finset.sum_congr rfl (fun a _ => uop_rho T v p hp hy hok φ h1 v' a), ← map_sum, h2, map_zero]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.sum_congr rfl (fun a _ => uop_rho T v p hp hy hok φ h1 v' a), ← map_sum, h2, map_zero]
 
 set_option maxHeartbeats 2000000 in
 theorem uop_inj (φ : LT.Fn D u 0) (hφ : φ ∈ (D.mem u).A.Mram) (h0 : LT.Uop D u 0 v φ = 0) : φ = 0 := by

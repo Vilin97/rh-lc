@@ -26,12 +26,14 @@ theorem single_decomp (x : Fin n → K) : x = ∑ k, x k • (Pi.single k 1 : Fi
 theorem semi_decomp {U : Type} [AddCommGroup U] [Module ℂ U] (f : (Fin n → K) →ₛₗ[σ] U) (x : Fin n → K) :
     f x = ∑ k, σ (x k) • f (Pi.single k 1) := by
   conv_lhs => rw [single_decomp x]
-  simp only [map_sum, LinearMap.map_smulₛₗ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.map_smulₛₗ]
 
 theorem constrOf_apply (j : (Fin n → K) →ₛₗ[σ] V) (hli : LinearIndependent ℂ fun i => j (Pi.single i 1))
     (hsp : Submodule.span ℂ (Set.range fun i => j (Pi.single i 1)) = ⊤) (a : (Fin n → K) →ₛₗ[σ] W) (x : Fin n → K) :
     constrOf σ j hli hsp a (j x) = a x := by
-  rw [semi_decomp σ j x, semi_decomp σ a x, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [semi_decomp σ j x, semi_decomp σ a x, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [LinearMap.map_smul]
   unfold constrOf

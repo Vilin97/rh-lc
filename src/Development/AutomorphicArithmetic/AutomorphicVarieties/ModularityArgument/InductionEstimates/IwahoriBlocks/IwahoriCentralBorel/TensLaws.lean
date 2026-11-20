@@ -19,7 +19,8 @@ private theorem coef_mem {A B ι : Type} (X : Submodule ℂ (A → ℂ)) (s : Fi
     have h2 : (fun a => ∑ i ∈ s, φ i a * ψ i b) = ∑ i ∈ s, ψ i b • φ i := by
       funext a
       simp [Finset.sum_apply, mul_comm]
-    rw [h2, map_sum] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h2, map_sum] at h1
     simpa [Finset.sum_apply, mul_comm] using h1
   exact hf (linearIndependent_iff'.1 hψ s _ h0 i hi)
 
@@ -46,7 +47,8 @@ private theorem prodMap_inj {A B : Type} (X₁ : Submodule ℂ (A → ℂ)) (X�
     rw [Submodule.mem_bot]
     funext a
     have := congrFun ht (a, b)
-    simpa [Finsupp.sum, map_sum, prodMap_tmul, Finset.sum_apply] using this)
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [Finsupp.sum, map_sum, prodMap_tmul, Finset.sum_apply] using this)
   refine Finset.sum_eq_zero fun i hi => ?_
   have : c i = 0 := Subtype.ext ((Submodule.mem_bot ℂ).1 (hc i hi))
   simp [this]

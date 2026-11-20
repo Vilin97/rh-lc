@@ -165,7 +165,8 @@ theorem exists_isWittFrame (h : IsCMExt F E σ) (hJ : IsHermND σ J) :
     simp only [B, toLinearMapₛₗ₂'_apply, smul_eq_mul, RingHom.id_apply, RingHom.coe_coe]
     exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
   have hs : ∀ u v, B u v = (σ : E →+* E) (B v u) := fun u v => by
-    simp only [hB, map_sum, map_mul, RingHom.coe_coe, sigma_sigma h, hJ.1]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hB, map_sum, map_mul, RingHom.coe_coe, sigma_sigma h, hJ.1]
     rw [Finset.sum_comm]
     exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
   let P : ℕ → Prop := fun r => ∃ x y : Fin r → Fin n → E, (∀ i j, B (x i) (x j) = 0) ∧ (∀ i j, B (y i) (y j) = 0) ∧
@@ -277,7 +278,8 @@ theorem exists_isTorusElt (h : IsCMExt F E σ) (hJ : IsHermND σ J) {X Y : Matri
     have h2 : ∀ k, ψ (d k)⁻¹.1 = 1 := fun k => rfl
     change ψ (m.1 i j) = (1 : Matrix (Fin n) (Fin n) _) i j
     rw [he]
-    simp only [Matrix.add_apply, Matrix.mul_apply (N := cT _ _ * _), mul_diagonal, map_add, map_sum, map_mul, map_sub, h1,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.add_apply, Matrix.mul_apply (N := cT _ _ * _), mul_diagonal, map_add, map_sum, map_mul, map_sub, h1,
       h2, map_one, sub_self, mul_zero, zero_mul, Finset.sum_const_zero, add_zero, Matrix.one_apply, apply_ite ψ, map_zero]
   · let φ := (infEmb τ).comp (compInf F E w)
     have h0 : ∀ x : E, φ (inclR (F := F) (AF F) x) = τ.1 x := fun x => by

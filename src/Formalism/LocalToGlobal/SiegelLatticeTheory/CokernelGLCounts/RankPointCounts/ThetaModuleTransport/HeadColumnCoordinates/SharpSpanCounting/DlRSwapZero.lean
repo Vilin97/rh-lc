@@ -72,7 +72,8 @@ theorem h_omP_swap (f f' : Fin (r + 1) → V) (hD : IsUnit (H.Dl f f' (r + 1))) 
     unfold omP HermSp.om'
     rw [Finset.smul_sum, hDl', Matrix.inv_def]
     simp only [smul_smul, Matrix.smul_apply, smul_eq_mul]
-  rw [e1, H.h_herm, h_sum_left, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e1, H.h_herm, h_sum_left, map_sum]
   refine Finset.sum_congr rfl (fun a _ => ?_)
   rw [map_mul, ← H.h_herm, inv_swap H f f' hD, M.L.cj_cj]
 

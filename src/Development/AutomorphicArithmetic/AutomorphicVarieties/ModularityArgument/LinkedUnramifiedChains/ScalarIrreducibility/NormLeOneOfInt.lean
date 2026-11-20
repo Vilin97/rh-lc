@@ -27,7 +27,8 @@ private theorem aeval_X_ne {O : Type} [CommRing O] {d : ℕ} (i : Fin d) {p : Po
       simp
     · have : Finsupp.single i n ≠ Finsupp.single i k := fun e => hk (Finsupp.single_injective i e).symm
       simp [hk, this]
-  rw [Polynomial.aeval_eq_sum_range, map_sum] at h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Polynomial.aeval_eq_sum_range, map_sum] at h1
   simp only [h2] at h1
   rw [Finset.sum_ite_eq', map_zero] at h1
   split_ifs at h1 with hn

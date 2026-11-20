@@ -56,7 +56,8 @@ theorem approxEStep : ApproxEStep := by
   refine ⟨∑ k, (1 : E) ⊗ₜ[F] t k * PI.UnitaryApproxDefs.inclE (F := F) (v.adicCompletion F) (b k), ?_, ?_⟩
   · exact Subring.sum_mem _ fun k _ =>
       Subring.mul_mem _ (one_tmul_mem_Sv v (htO k)) (inclE_mem_Sv v (hbint k))
-  · rw [hc v, map_sum, Finset.mul_sum, ← Finset.sum_sub_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [hc v, map_sum, Finset.mul_sum, ← Finset.sum_sub_distrib]
     refine Finset.sum_congr rfl fun k _ => ?_
     simp only [PI.UnitaryApproxDefs.inclE, dv, Algebra.TensorProduct.includeLeftRingHom_apply,
       Algebra.TensorProduct.tmul_mul_tmul, one_mul, mul_one]

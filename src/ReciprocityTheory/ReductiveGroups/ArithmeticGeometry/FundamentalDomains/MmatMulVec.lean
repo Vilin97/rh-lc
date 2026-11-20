@@ -47,7 +47,8 @@ theorem Mmat_map (u : Fin 2 → Fin r → E) (β : Matrix (Fin 2) (Fin 2) E) (τ
     (X.Mmat u β).map τ.1 = X.zmat u (X.embH β) τ := by
   ext a j
   by_cases h : a = j <;>
-    simp [h, Matrix.map_apply, Data.Mmat, Data.zmat, Data.embH, Data.emb, map_add, map_mul, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [h, Matrix.map_apply, Data.Mmat, Data.zmat, Data.embH, Data.emb, map_add, map_mul, map_sum,
       X.tau_kappa0 τ, cc, NumberField.IsCMField.complexEmbedding_complexConj] <;> ring
 
 theorem embH_add (β β' : Matrix (Fin 2) (Fin 2) E) : X.embH (β + β') = X.embH β + X.embH β' := by
@@ -110,10 +111,12 @@ noncomputable def gam (u : Fin 2 → Fin r → E) (hu : ∀ i k, herm X.Gm (u i)
 theorem emb_mulVec (τ : E →+* ℂ) (M : Matrix (Fin r) (Fin r) E) (v : Fin r → E) :
     emb τ (M *ᵥ v) = (M.map τ) *ᵥ emb τ v := by
   funext a
-  simp [Data.emb, Matrix.mulVec, dotProduct, map_sum, map_mul, Matrix.map_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Data.emb, Matrix.mulVec, dotProduct, map_sum, map_mul, Matrix.map_apply]
 
 private lemma cc_herm_Gm_eq_herm_swap (x y : Fin r → E) : cc (herm X.Gm x y) = herm X.Gm y x := by
-  simp only [herm, cc, map_sum, map_mul, NumberField.IsCMField.complexConj_apply_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [herm, cc, map_sum, map_mul, NumberField.IsCMField.complexConj_apply_apply]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
   first

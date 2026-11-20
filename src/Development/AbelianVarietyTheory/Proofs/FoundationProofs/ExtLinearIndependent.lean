@@ -32,7 +32,8 @@ theorem ext_unique (h : IsCoefExt ι lam c₀ c') (h' : IsCoefExt ι lam c₀ c'
 
 theorem apply_eq_sum [Fintype (VVIdx lam)] (c' : VV K' lam →ₛₗ[σ'] W) (v : VV K' lam) :
     c' v = ∑ j, σ' ((bVV K' lam).repr v j) • c' (bVV K' lam j) := by
-  conv_lhs => rw [← (bVV K' lam).sum_repr v, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [← (bVV K' lam).sum_repr v, map_sum]
   exact Finset.sum_congr rfl fun j _ => map_smulₛₗ _ _ _
 
 theorem ext_linearIndependent (h : IsCoefExt ι lam c₀ c') (hli : LinearIndependent ℂ fun j => c₀ (bVV K lam j)) :

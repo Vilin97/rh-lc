@@ -18,10 +18,12 @@ theorem evalAt_intVec {n : ℕ} (la : Fin n → ℕ) (y : Matrix (Fin n) (Fin n)
   rw [← coe_basis]
   have h : basis la ℂ j = ∑ i, onMat la i j • (toSpace la).symm (onBasis la i) := by
     apply (toSpace la).injective
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [map_smul, LinearEquiv.apply_symm_apply, onMat, Matrix.of_apply]
     exact ((onBasis la).sum_repr _).symm
-  rw [h, Submodule.coe_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h, Submodule.coe_sum, map_sum]
   simp [Submodule.coe_smul, map_smul]
 
 variable {T : Type} [Fintype T] [DecidableEq T] {N : T → ℕ}

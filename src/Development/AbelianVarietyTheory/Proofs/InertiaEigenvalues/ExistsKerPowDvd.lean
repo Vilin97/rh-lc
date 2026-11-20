@@ -370,13 +370,15 @@ theorem Ev.subst {L : PowerSeries ↥K.1} (hL : OnDisc l (oK K) L) {u : PowerSer
   refine IsEval.subst (o := inI K) (isUnit_l K) (fun c => (inK_oK K c).symm) hL hu hM ?_ (fun n => ?_) hw
   · have := h M _ (Ideal.pow_mem_pow hx M)
     rwa [Nat.div_self hM, pow_one, map_pow] at this
-  · simpa only [map_sub, map_sum, map_mul, map_pow, ofA_inO] using h n _ (hy n)
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simpa only [map_sub, map_sum, map_mul, map_pow, ofA_inO] using h n _ (hy n)
 
 theorem Ev.tendsto (ψ : BK K →+* ℂ_[l]) (hψ : ∀ z, ‖ψ (toB K z)‖ ≤ 1) {L : PowerSeries ↥K.1} {x : AK K} {y : BK K}
     (h : Ev L x y) : Filter.Tendsto
       (fun n => ∑ k ∈ Finset.range n, ψ (inK K (PowerSeries.coeff k L)) * ψ (toB K (ofA K x)) ^ k)
       Filter.atTop (nhds (ψ y)) := by
-  simpa only [psum, map_sum, map_mul, map_pow] using Tends.tendsto ψ hψ GlobalTheory.RingBasics.norm_p_lt h
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa only [psum, map_sum, map_mul, map_pow] using Tends.tendsto ψ hψ GlobalTheory.RingBasics.norm_p_lt h
 
 section Log
 

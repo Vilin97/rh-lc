@@ -182,7 +182,8 @@ theorem mat_mul_inv {N : ℕ} (g : Sp E N ≃ₗ[E] Sp E N) {p p' : ℕ} (hp : p
     funext i
     simp [Finset.sum_apply, eN, Fin.val_inj]
   have h3 := congrFun h1 ⟨p, hp⟩
-  rw [h2, map_sum, Finset.sum_apply] at h3
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h2, map_sum, Finset.sum_apply] at h3
   refine Eq.trans ?_ (h3.trans rfl)
   refine Finset.sum_congr rfl fun l _ => ?_
   simp only [mat, atN, dif_pos hp, dif_pos l.2, map_smul, Pi.smul_apply, smul_eq_mul, ← hv]

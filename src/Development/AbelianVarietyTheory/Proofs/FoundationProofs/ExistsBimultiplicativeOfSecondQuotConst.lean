@@ -366,7 +366,8 @@ theorem posDef_gram_of_posDef_realExt {ι : Type*} [Fintype ι] (b : Basis ι �
     have e : realExtBilin Q.polarBilin ((b.baseChange ℝ).equivFun.symm w)
         ((b.baseChange ℝ).equivFun.symm w) =
         star w ⬝ᵥ (Matrix.of fun i j => QuadraticMap.polar Q (b i) (b j)).mulVec w := by
-      simp only [Basis.equivFun_symm_apply, Basis.baseChange_apply, map_sum, map_smul,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Basis.equivFun_symm_apply, Basis.baseChange_apply, map_sum, map_smul,
         LinearMap.sum_apply, LinearMap.smul_apply, realExtBilin_tmul, dotProduct, Matrix.mulVec,
         Finset.mul_sum, Finset.smul_sum]
       refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_

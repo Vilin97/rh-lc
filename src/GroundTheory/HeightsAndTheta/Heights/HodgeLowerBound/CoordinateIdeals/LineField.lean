@@ -25,7 +25,8 @@ theorem transcendental_div {i j : Fin 2} (hij : i ≠ j) : Transcendental ℚ (x
   set Q : MvPolynomial (Fin 2) ℚ :=
     ∑ k ∈ Finset.range (n + 1), C (p.coeff k) * X i ^ k * X j ^ (n - k) with hQdef
   have hQ : algebraMap _ L Q = xL j ^ n * Polynomial.aeval (xL i / xL j) p := by
-    rw [Polynomial.aeval_eq_sum_range, Finset.mul_sum, hQdef, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Polynomial.aeval_eq_sum_range, Finset.mul_sum, hQdef, map_sum]
     refine Finset.sum_congr rfl fun k hk => ?_
     have hk' : k ≤ n := Nat.lt_succ_iff.mp (Finset.mem_range.mp hk)
     have hpow : xL j ^ n = xL j ^ (n - k) * xL j ^ k := by
@@ -41,7 +42,8 @@ theorem transcendental_div {i j : Fin 2} (hij : i ≠ j) : Transcendental ℚ (x
     rw [hQ, hp, mul_zero, map_zero]
   have hev : MvPolynomial.aeval (fun m : Fin 2 => if m = i then (Polynomial.X : Polynomial ℚ) else 1) Q = p := by
     conv_rhs => rw [p.as_sum_range_C_mul_X_pow]
-    rw [hQdef, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hQdef, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     simp [hij.symm, Polynomial.algebraMap_eq]
   rw [← hev, hQ0, map_zero]

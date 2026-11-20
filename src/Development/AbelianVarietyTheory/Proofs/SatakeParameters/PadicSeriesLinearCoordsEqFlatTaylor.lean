@@ -80,7 +80,8 @@ theorem bridge : ∀ (D : D7) (X : Fields) (s : Seam D X) (N N' : ℕ) (p : ℕ)
   rw [subst_rename_lin]
   · congr 1
   · intro t
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_eq_zero fun j _ => ?_
     rw [map_mul, constantCoeff_X, mul_zero]
 

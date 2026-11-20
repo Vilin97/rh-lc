@@ -55,7 +55,8 @@ private theorem hermE_conj_eq_swap_of_involutive_of_conj_symm (hinv : ∀ z : E,
     (a b : Fin n → E) :
     c (_root_.GlobalTheory.UnRep.hermE c G a b) = _root_.GlobalTheory.UnRep.hermE c G b a := by
   unfold _root_.GlobalTheory.UnRep.hermE
-  simp only [map_sum, map_mul, hinv, hG]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, hinv, hG]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   ring

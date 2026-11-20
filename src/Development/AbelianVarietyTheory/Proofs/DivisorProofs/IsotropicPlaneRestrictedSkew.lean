@@ -107,7 +107,8 @@ theorem unitary_of_map' (σ : E →ₐ[F] E) {n : ℕ} (A J : Matrix (Fin n) (Fi
 theorem entry_eq (σ : E →ₐ[F] E) (hσ : ∀ x, σ (σ x) = x) {n n₁ : ℕ} (J : Matrix (Fin n) (Fin n) E) (ι : Matrix (Fin n) (Fin n₁) E)
     (hskew : ∀ i j, σ (J j i) = -J i j) (z : Fin n → E) (k : Fin n₁) :
     (((ι.map σ)ᵀ * Jᵀ) *ᵥ z) k = -σ (form σ J (fun i => ι i k) z) := by
-  simp only [form, Matrix.mulVec, dotProduct, Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, Matrix.mulVec, dotProduct, Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply,
     map_sum, map_mul, hσ]
   simp only [hskew, neg_mul, mul_neg, Finset.sum_neg_distrib, neg_neg, Finset.sum_mul, Finset.mul_sum]
   conv_rhs => rw [Finset.sum_comm]
@@ -179,8 +180,10 @@ theorem exists_rat_isLevi_one_skew : ∀ (F E : Type) [Field F] [NumberField F] 
     simp only [Matrix.map_mul] at this
     rw [← this]
     ext i j
-    simp only [Matrix.map_apply, Matrix.mul_apply, map_sum, map_mul]
-    simp only [← map_mul, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.map_apply, Matrix.mul_apply, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [← map_mul, ← map_sum]
     rfl
 
 end Field

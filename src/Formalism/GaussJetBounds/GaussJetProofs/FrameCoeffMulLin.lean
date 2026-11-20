@@ -133,7 +133,8 @@ private theorem frame_pure_formula {K : Type u} [Field K] {d N0 N1 : ℕ} [NeZer
         ∑ ab : Fin N0 × Fin N1, M (lt i, ab.1, ab.2) i ^ A * M (lt j, ab.1, ab.2) j ^ B := by
   classical
   unfold bSum
-  rw [map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun ab _ => ?_
   set φ : MvPolynomial ι K →+* MvPowerSeries ι K := MvPolynomial.coeToMvPowerSeries.ringHom
     with hφ
@@ -141,7 +142,8 @@ private theorem frame_pure_formula {K : Type u} [Field K] {d N0 N1 : ℕ} [NeZer
     fun t => ∑ y, MvPolynomial.C (M (t, ab.1, ab.2) y) * MvPolynomial.X y with hPdef
   have hL : ∀ t, linSub M (t, ab.1, ab.2) = φ (P t) := by
     intro t
-    simp only [linSub, hPdef, hφ, map_sum, map_mul, MvPolynomial.coeToMvPowerSeries.ringHom_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [linSub, hPdef, hφ, map_sum, map_mul, MvPolynomial.coeToMvPowerSeries.ringHom_apply,
       MvPolynomial.coe_C, MvPolynomial.coe_X]
   have hsub : MvPowerSeries.HasSubst (fun t => linSub (K := K) M (t, ab.1, ab.2)) := by
     apply MvPowerSeries.hasSubst_of_constantCoeff_zero

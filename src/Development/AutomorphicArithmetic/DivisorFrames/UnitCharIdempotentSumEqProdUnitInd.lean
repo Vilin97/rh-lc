@@ -29,7 +29,8 @@ open Classical in
 private theorem cpt_sum {D : D7} {P : Finset (Pl D.host.E)} {e : AE D} (he : IsIdemSum e P) (Q : Pl D.host.E) :
     cpt (D := D) Q (toEAf D e) = if Q ∈ P then 1 else 0 := by
   obtain ⟨⟨es, hes, hsum⟩, -⟩ := he
-  rw [hsum, map_sum (toEAf D), map_sum (cpt (D := D) Q)]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hsum, map_sum (toEAf D), map_sum (cpt (D := D) Q)]
   split_ifs with hQ
   · rw [Finset.sum_eq_single Q (fun P hP hPQ => (cpt_of_isIdemAt (hes P hP)).2 Q (Ne.symm hPQ))
       (fun h => absurd hQ h)]

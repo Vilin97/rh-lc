@@ -27,7 +27,8 @@ open Classical in
 theorem evalV_indQ (Q : Finset (Pl D)) (w : Pl D) :
     evalV D.host.F w (indQ D Q) = if w ∈ Q then 1 else 0 := by
   classical
-  rw [indQ, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [indQ, map_sum]
   have h : ∀ v ∈ Q, evalV D.host.F w (singleV D.host.F v 1) = if w = v then 1 else 0 := by
     intro v _
     by_cases hwv : w = v

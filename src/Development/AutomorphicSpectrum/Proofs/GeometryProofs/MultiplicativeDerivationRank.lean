@@ -169,7 +169,8 @@ theorem map_powerSum_eq_zero (D : Derivation k R R) (ε : R →ₐ[k] k) {z : R}
     induction n with
     | zero => simpa using hk 1 (by simp)
     | succ n ih => rw [pow_succ, hu, ih, huz]; simp
-  rw [powerSum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [powerSum_apply, map_sum]
   refine Finset.sum_eq_zero fun i _ => ?_
   rw [hu, hpow, hk _ (a i).2]
   simp

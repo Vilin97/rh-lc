@@ -119,7 +119,8 @@ theorem conj_eq (hH : Hm.IsHermitian) (hd : Hm.det ≠ 0) (hP : P.det ≠ 0) (ha
     simp only [map_smul, map_add, map_sub, h1, sub_zero, smul_zero, add_zero]
   have h3 : ∀ W, L W = 0 := fun W => by
     rw [Matrix.matrix_eq_sum_single W]
-    simp only [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum]
     refine Finset.sum_eq_zero fun i _ => Finset.sum_eq_zero fun j _ => ?_
     have : Matrix.single i j (W i j) = vecMulVec (Pi.single i (W i j)) (star (Pi.single j (1 : ℂ))) := by
       ext k l

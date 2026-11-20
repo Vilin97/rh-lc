@@ -32,7 +32,8 @@ theorem ιE_smul (L : LocAt F E sig p) (a : F) (y : E) : L.ιE (a • y) = L.ιF
 theorem ιE_eq_sum (L : LocAt F E sig p) {ι : Type*} [Fintype ι] (b : Module.Basis ι F E) (y : E) :
     L.ιE y = ∑ i, L.ιF (b.repr y i) • L.ιE (b i) := by
   conv_lhs => rw [← b.sum_repr y]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_congr rfl fun i _ => ιE_smul L _ _
 
 theorem span_basis (L : LocAt F E sig p) {ι : Type*} [Fintype ι] (b : Module.Basis ι F E) :
@@ -71,7 +72,8 @@ theorem trace_ιE (L : LocAt F E sig p) (h : Module.finrank F E = 2) (x : E) :
     Algebra.trace L.Fp L.Ep (L.ιE x) = L.ιF (Algebra.trace F E x) := by
   classical
   let b := Module.finBasisOfFinrankEq F E h
-  rw [Algebra.trace_eq_matrix_trace (basisE L b h), Algebra.trace_eq_matrix_trace b,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Algebra.trace_eq_matrix_trace (basisE L b h), Algebra.trace_eq_matrix_trace b,
     leftMulMatrix_ιE, Matrix.trace, Matrix.trace, map_sum]
   rfl
 

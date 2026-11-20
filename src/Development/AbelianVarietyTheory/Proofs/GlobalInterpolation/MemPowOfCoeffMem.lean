@@ -85,7 +85,8 @@ theorem mem_pow_of_coeff_mem (a n : ℕ) :
       exact absurd (Finset.min'_le _ j (Finsupp.mem_support_iff.2 hne)) (not_le.2 hj)
     have hdecomp : f = C (constantCoeff f) + ∑ i, fi i := by
       ext d
-      rw [map_add, map_sum, coeff_C]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_add, map_sum, coeff_C]
       simp only [hfi]
       by_cases hd : d = 0
       · subst hd

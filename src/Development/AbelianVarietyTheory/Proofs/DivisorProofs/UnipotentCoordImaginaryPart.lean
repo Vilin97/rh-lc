@@ -21,7 +21,8 @@ theorem GlobalTheory.ThK.UnipDom.coC_sub_conj_plane : ∀ (F E : Type) [Field F]
     rw [hCM.2.2.2, hCM.2.2.2, star_star]
   have hsk : ∀ v v' : Fin n → E, form σ Y.J v' v = -σ (form σ Y.J v v') := by
     intro v v'
-    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, map_neg, hinv]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, map_neg, hinv]
     simp only [Finset.mul_sum, hskew, mul_neg, neg_mul, Finset.sum_neg_distrib, neg_neg]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
@@ -118,7 +119,8 @@ theorem GlobalTheory.ThK.UnipDom.coC_sub_conj_plane : ∀ (F E : Type) [Field F]
   have hι : fA σ Y.J w (incM F H.ι *ᵥ (incM F (Y₁.Jᵀ)⁻¹ *ᵥ s)) = s ⬝ᵥ fun k => cA σ ((incM F (Y₁.Jᵀ)⁻¹ *ᵥ s) k) := by
     simp only [fA]
     rw [hcv, Matrix.mulVec_mulVec, Matrix.dotProduct_mulVec, ← Matrix.mulVec_transpose]
-    rw [show incM F Y.J * (incM F H.ι).map (cA σ) = incM F (Y.J * H.ι.map σ) by
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [show incM F Y.J * (incM F H.ι).map (cA σ) = incM F (Y.J * H.ι.map σ) by
       ext i j; simp [incM, Matrix.mul_apply, cA_inclR, map_sum, map_mul]]
     rw [hQ]
   have hfin := congrArg (fA σ Y.J w) hrec

@@ -24,7 +24,8 @@ theorem idemSum_of_noConj (S : Finset (Formalism.L2.DIV.Pl D.host.E))
     simp only [es, dif_pos h]
     exact (idem_exists_at PP h).choose_spec.1
   refine ⟨∑ PP ∈ S, es PP, ⟨es, hes, rfl⟩, ?_⟩
-  rw [map_sum, Finset.sum_mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_mul_sum]
   apply Finset.sum_eq_zero
   intro PP hPP
   apply Finset.sum_eq_zero

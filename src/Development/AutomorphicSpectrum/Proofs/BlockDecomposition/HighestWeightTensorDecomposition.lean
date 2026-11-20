@@ -117,7 +117,8 @@ theorem kmap_extend : ∀ {n : ℕ} (H V : Type) [NormedAddCommGroup H] [InnerPr
     intro x
     exact LinearMap.congr_fun hb x
   · intro a b w
-    rw [hTapp, hTapp, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hTapp, hTapp, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [hcomm, hTK i a b rfl]
 

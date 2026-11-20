@@ -84,9 +84,11 @@ theorem sy_vec (M : Model σ X W) (c : AE F E) (a : Fin n → AE F E) (b : Fin d
     (w : Matrix (Fin n₁) (Fin d₁) (AE F E)) : sy σ X W (c • Matrix.vecMulVec a b) (ι * w * ι'ᵀ) = 0 := by
   rw [mid_sum]
   refine (form_eq M.co _ _).trans ?_
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_eq_zero fun k _ => ?_
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_eq_zero fun l _ => ?_
   refine (form_eq M.co _ _).symm.trans ?_
   change Algebra.trace _ _ _ = _

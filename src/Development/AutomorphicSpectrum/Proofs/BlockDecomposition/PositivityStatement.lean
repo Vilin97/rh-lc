@@ -338,7 +338,8 @@ theorem sum_eq (ψ₀ : AddChar k ℂ) (β : Matrix (Fin n) (Fin n) k) (r m : �
           rw [Finset.sum_comm]
           refine Finset.sum_congr rfl fun g _ => ?_
           unfold hC
-          rw [map_sum, Finset.sum_mul]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [map_sum, Finset.sum_mul]
           refine Finset.sum_congr rfl fun Y _ => ?_
           simp only [map_mul, map_pow, Complex.conj_conj, map_natCast, hq]
           ring

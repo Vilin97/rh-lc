@@ -89,7 +89,8 @@ theorem lenCoker_le_of_hasLen (hT : ValTie V vm) (hv : vm.Integers R) (h0 : 0 < 
   have e2 : (Matrix.of fun c k => ∑ i, dlogC (toC (C := C) (u k)) i * algebraMap R C (W c i)) =
       Matrix.of fun c k => algebraMap R C (α c k) := by
     ext c k
-    simp only [Matrix.of_apply, hα, res, Matrix.mulVecLin_apply, Matrix.mulVec, dotProduct, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.of_apply, hα, res, Matrix.mulVecLin_apply, Matrix.mulVec, dotProduct, map_sum, map_mul]
     exact Finset.sum_congr rfl fun i _ => mul_comm _ _
   rw [e2, e]
   refine WithTop.coe_le_coe.mpr ?_

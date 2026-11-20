@@ -91,7 +91,8 @@ theorem exists_embed (ρ : Representation ℂ G X) (τ : Representation ℂ G V)
     fun z hz h => hinj z fun i => ?_
   · rw [hNmem] at hz ⊢
     intro i
-    simp only [hT, hz i, map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hT, hz i, map_sum, map_smul]
   · refine (Submodule.ne_bot_iff N).2 ⟨y, (hNmem y).2 fun i => (hc i).symm, hy⟩
   · rw [(hNmem z).1 hz i]
     simp [h]

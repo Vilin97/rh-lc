@@ -82,7 +82,8 @@ theorem step_surj (p : ℕ) (π : A) (hπ : IsUnit (ι π)) (φA : A →+* A)
     calc ι a * v ^ m = ι (a * Q ^ m) * φE (v ^ m) := by rw [map_mul, mul_assoc, ← hvm]
       _ = _ := by
         rw [hc]
-        simp only [comb, map_sum, map_mul, hφ, Finset.sum_mul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [comb, map_sum, map_mul, hφ, Finset.sum_mul]
         exact Finset.sum_congr rfl fun j _ => by ring
   rw [← h2]
   exact hx
@@ -155,7 +156,8 @@ theorem step_inj (p : ℕ) (π : A) (hπ : IsUnit (ι π)) (φA : A →+* A)
       comb ι φE e c - (p : E) * comb ι φE e y' := by
     have : c = fun j => ι (a' j) * v ^ M + (p : E) * y' j := funext hca
     rw [this, comb_add_mul ι φE e _ _ _ (by simp), add_sub_cancel_right]
-    simp only [comb, map_sum, map_mul, hφ, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [comb, map_sum, map_mul, hφ, Finset.sum_mul]
     exact Finset.sum_congr rfl fun j _ => by ring
   have hdv : ι (∑ j, e j * φA (a' j)) ∈ Ideal.span {(p : E) ^ 1} := by
     rw [pow_one, Ideal.mem_span_singleton]

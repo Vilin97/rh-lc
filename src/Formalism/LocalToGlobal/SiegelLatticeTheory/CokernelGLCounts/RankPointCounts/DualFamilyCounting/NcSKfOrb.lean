@@ -99,9 +99,11 @@ theorem ev_crd_oev {d : ℕ} (b : Module.Basis (Fin d) F E) :
     rw [hcrd]
     have ho : (o : E) = ∑ t, (B.repr o t) • ((B t : 𝓞 E) : E) := by
       have := congrArg (algebraMap (𝓞 E) E) (B.sum_repr o)
-      rw [map_sum] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum] at this
       simpa [map_zsmul] using this.symm
-    rw [ho, map_sum, Finsupp.finset_sum_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [ho, map_sum, Finsupp.finset_sum_apply, map_sum]
     refine Subring.sum_mem _ fun t _ => ?_
     rw [map_zsmul, Finsupp.smul_apply, map_zsmul]
     exact Subring.zsmul_mem _ (hv t l) _

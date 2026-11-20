@@ -156,7 +156,8 @@ theorem exists_extension : ∀ (L : Type) [Field L] [NumberField L] [IsCMField L
     rw [hrat γ γQ γ₀ h1 h2, Matrix.toLin_toMatrix]
   · change Continuous fun g : UA L n => μ (Matrix.toLin b b (polyMat P g) v)
     have hc := continuous_polyMat P
-    simp only [Matrix.toLin_apply, map_sum, map_smul, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.toLin_apply, map_sum, map_smul, smul_eq_mul]
     refine continuous_finset_sum _ fun j _ => Continuous.mul ?_ continuous_const
     exact (continuous_apply j).comp (hc.matrix_mulVec continuous_const)
 

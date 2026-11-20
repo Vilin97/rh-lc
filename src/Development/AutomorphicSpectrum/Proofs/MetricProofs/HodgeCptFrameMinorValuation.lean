@@ -186,7 +186,8 @@ theorem frame_of_cols {X : Scheme.{0}} {Ω : Type} [Field Ω] {ξ : Spec (CommRi
     ext j k
     rw [Matrix.mul_apply, Matrix.smul_apply, smul_eq_mul]
     show ∑ l, φ j (e l) * f k l = x c ^ m * (φ j (b k) / x c ^ m)
-    rw [mul_div_cancel₀ _ hX, ← hf k, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [mul_div_cancel₀ _ hX, ← hf k, map_sum]
     exact Finset.sum_congr rfl fun l _ => by rw [map_smul, smul_eq_mul, mul_comm]
   choose G hGr hGC using fun a => exists_left_inv hg hc hb a
   let Gm : Matrix (Fin r) (Fin n) Ω := Matrix.of G
@@ -790,7 +791,8 @@ theorem isFrameAt_of_goodAt : ∀ (E : Type) [Field E] [NumberField E] [IsCMFiel
         colFrame (cc 𝔐 bW bO (.inl τ)) (wBlock (F.T τ)) := by
       funext b
       unfold colFrame
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       exact Finset.sum_congr rfl fun a _ => map_smul _ _ _
     refine frame_unmap (inW_injective 𝔐) ?_
     rw [e]
@@ -803,7 +805,8 @@ theorem isFrameAt_of_goodAt : ∀ (E : Type) [Field E] [NumberField E] [IsCMFiel
         colFrame (cc 𝔐 bW bO (.inr τ)) (omBlock (F.T τ)) := by
       funext b
       unfold colFrame
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       exact Finset.sum_congr rfl fun a _ => map_smul _ _ _
     refine frame_unmap (inO_injective 𝔐 τ) ?_
     rw [e]

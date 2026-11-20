@@ -25,7 +25,8 @@ theorem evalGens_mem (Θ : Matrix g g R) (n : g → NN) (hrel : ∀ i, ∑ j, Θ
   funext i
   rw [relMap_apply', Pi.zero_apply]
   simp_rw [← LinearMap.map_smul]
-  rw [← map_sum, hrel i, map_zero]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum, hrel i, map_zero]
 
 theorem evalGens_inj (n : g → NN) (hspan : Submodule.span R (Set.range n) = ⊤) :
     Function.Injective (fun (φ : NN →ₗ[R] M) (j : g) => φ (n j)) := by

@@ -51,7 +51,8 @@ theorem coeff_blockSum_eq_zero {ι : PowerSeries O →ₐ[O] PowerSeries O} {m :
     (hX : ι X = w * X ^ m) (hm : 0 < m) (h : ℕ → O) (n : ℕ) (hh : ∀ n' ≤ n, h n' = 0) :
     coeff n (powerSeriesBlockSum ι m (powerSeriesBlockSplit m h)) = 0 := by
   unfold powerSeriesBlockSum
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_eq_zero fun i _ => ?_
   rw [coeff_X_pow_mul']
   split_ifs with hi

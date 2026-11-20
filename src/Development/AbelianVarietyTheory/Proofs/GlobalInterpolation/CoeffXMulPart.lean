@@ -34,7 +34,8 @@ lemma coeff_X_mul_part (f : MvPowerSeries (Fin a) O) (i : Fin a) (m : Fin a →�
 lemma eq_sum (f : MvPowerSeries (Fin a) O) (h0 : coeff 0 f = 0) :
     f = ∑ i, X i * part f i := by
   ext m
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [coeff_X_mul_part]
   by_cases hm : m = 0
   · subst hm; simp [h0]

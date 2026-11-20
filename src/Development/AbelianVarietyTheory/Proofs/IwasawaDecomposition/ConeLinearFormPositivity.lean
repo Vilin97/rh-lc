@@ -26,7 +26,8 @@ theorem linForm_eq_sum {ι : Type} [Fintype ι] [DecidableEq ι] (b : Module.Bas
     refine LinearMap.ext_basis b b fun k l => ?_
     simp [elemForm, Finsupp.single_apply, Finset.sum_apply, LinearMap.sum_apply]
   conv_lhs => rw [hbe]
-  simp only [map_sum, map_zsmul, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_zsmul, smul_eq_mul]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => mul_comm _ _
 
 end GlobalTheory.TorRef.ChartHFun

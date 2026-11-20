@@ -77,7 +77,8 @@ theorem localToAdelic : LocalToAdelic := by
       ∃ A : Matrix (Fin r) (Fin r) (Adf (maximalRealSubfield E) E), ∀ v, A.map (compAt E v) = M v := by
     intro M hM
     refine ⟨1 + ∑ w ∈ hfin.toFinset, (M w - 1).map (singleV E w), fun v => Matrix.ext fun i j => ?_⟩
-    simp only [Matrix.map_apply, Matrix.add_apply, Matrix.sum_apply, map_add, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.map_apply, Matrix.add_apply, Matrix.sum_apply, map_add, map_sum]
     rw [Finset.sum_eq_single v (fun w _ hw => (hv w).2.1 v hw.symm _) (fun h => by
       rw [hM v (by simpa using h)]; simp), (hv v).1, Matrix.one_apply, apply_ite (compAt E v), map_one, map_zero,
       Matrix.sub_apply, Matrix.one_apply]

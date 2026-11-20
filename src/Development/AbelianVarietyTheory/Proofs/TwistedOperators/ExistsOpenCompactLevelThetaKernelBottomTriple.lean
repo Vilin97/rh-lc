@@ -52,7 +52,8 @@ theorem exists_open_fix (hX : IsBottomTri W i j X) (t : T) :
       ext y; simp [Subgroup.mem_iInf]
     rw [e2]
     exact isOpen_iInter_of_finite hU
-  · rw [e, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [e, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_smul, hfix k κ (Subgroup.mem_iInf.1 hκ k) hf]
 

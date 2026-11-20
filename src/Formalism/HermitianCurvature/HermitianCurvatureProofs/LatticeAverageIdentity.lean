@@ -676,7 +676,8 @@ theorem cnta_row {D : Matrix (Fin n) (Fin n) K} (hD : IsD R k D) (Z : Matrix (Fi
   have h1 : (Submodule.Quotient.mk ((D *ᵥ abelian₂ R k Z v) j) : KR R) =
       ∑ b : Fin n, cntaCoef R k hD j b.val • lamN R Z b.val v := by
     simp only [Matrix.mulVec, dotProduct]
-    rw [← Submodule.mkQ_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Submodule.mkQ_apply, map_sum]
     refine Finset.sum_congr rfl fun b _ => ?_
     rw [Submodule.mkQ_apply, cnta_coef_fin, cnta_Lam_coord]
     by_cases hb : k < b.val

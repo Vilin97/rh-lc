@@ -45,7 +45,8 @@ theorem lineRestr_prod {ι : Type*} (v : n → K) (s : Finset ι) (T : ι → Mv
 
 theorem lineRestr_sum {ι : Type*} (v : n → K) (s : Finset ι) (T : ι → MvPowerSeries n K) :
     lineRestr v (∑ i ∈ s, T i) = ∑ i ∈ s, lineRestr v (T i) := by
-  simp only [← lineHom_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← lineHom_apply, map_sum]
 
 theorem lineRestr_C (v : n → K) (c : K) : lineRestr v (MvPowerSeries.C c) = PowerSeries.C c :=
   MvPowerSeries.subst_C c
@@ -70,7 +71,8 @@ theorem lineRestr_linSubst {K : Type*} [CommRing K] {m n : Type*} [Finite m] [Fi
   funext i
   change lineRestr v (∑ j, MvPowerSeries.C (M i j) * (MvPowerSeries.X j : MvPowerSeries n K)) = _
   rw [lineRestr_sum]
-  simp only [lineRestr_mul, lineRestr_C, lineRestr_X, Matrix.mulVec, dotProduct, map_sum, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [lineRestr_mul, lineRestr_C, lineRestr_X, Matrix.mulVec, dotProduct, map_sum, map_mul,
     Finset.sum_mul, mul_assoc]
 
 theorem lineRestr_at1_eq_rescale {K n : Type} [Field K] [Finite n] (v : n → K) (i : n) (f : PowerSeries K) :

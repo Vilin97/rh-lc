@@ -227,7 +227,8 @@ lemma integral_of_bounded [IsModuleTopology ℚ_[l] LL] [IsTopologicalRing LL]
     let z : Fin d → ℤ_[l] := fun i => ⟨(l : ℚ_[l]) ^ n * e y i, hcoord i⟩
     have hy' : y = ∑ i, z i • v i := by
       apply e.injective
-      simp only [hsmul, v, map_sum, map_smul, LinearEquiv.apply_symm_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hsmul, v, map_sum, map_smul, LinearEquiv.apply_symm_apply]
       ext j
       simp [z, Finset.sum_apply, Pi.single_apply, smul_smul]
       rw [mul_comm ((l : ℚ_[l]) ^ n) (e y j), mul_inv_cancel_right₀ (pow_ne_zero _ hl0)]

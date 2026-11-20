@@ -25,7 +25,8 @@ theorem GlobalTheory.PMon.cocycle_rat_coords : ∀ (l : ℕ) [Fact l.Prime] (n :
         (Matrix.blockDiagonal (fun m : Fin r => (σ g : Matrix n n ↥(MaximalUnramifiedExtension l)).map (fr l m))).mulVec
           (fun x : n × Fin r => fr l x.2 (c h x.1)) := by
     funext ⟨i, m⟩
-    simp only [hc, Pi.add_apply, map_add, Matrix.mulVec, dotProduct, Fintype.sum_prod_type,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hc, Pi.add_apply, map_add, Matrix.mulVec, dotProduct, Fintype.sum_prod_type,
       Matrix.blockDiagonal_apply, Matrix.map_apply, map_sum, map_mul]
     congr 1
     refine Finset.sum_congr rfl fun j _ => ?_

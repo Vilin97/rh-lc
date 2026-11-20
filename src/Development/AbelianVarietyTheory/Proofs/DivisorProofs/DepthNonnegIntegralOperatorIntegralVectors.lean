@@ -53,7 +53,8 @@ theorem mvIsInt_mul {σ : Type} {g h : MvPowerSeries σ C} (hg : MvIsInt v g) (h
 theorem mvIsInt_sum {σ ι : Type} (s : Finset ι) {g : ι → MvPowerSeries σ C}
     (hg : ∀ i, MvIsInt v (g i)) : MvIsInt v (∑ i ∈ s, g i) := by
   intro α
-  rw [← mem_intSub, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← mem_intSub, map_sum]
   exact Subring.sum_mem _ fun i _ => hg i α
 
 theorem hurInt_of_mvIsInt {σ : Type} {g : MvPowerSeries σ C} (hg : MvIsInt v g) : HurInt v g :=
@@ -76,7 +77,8 @@ theorem hurInt_one {σ : Type} : HurInt v (1 : MvPowerSeries σ C) := by
 theorem hurInt_sum {σ ι : Type} (s : Finset ι) {g : ι → MvPowerSeries σ C}
     (hg : ∀ i ∈ s, HurInt v (g i)) : HurInt v (∑ i ∈ s, g i) := by
   intro α
-  rw [map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.mul_sum]
   exact Subring.sum_mem _ fun i hi => hg i hi α
 
 theorem hurInt_C_mul {σ : Type} {c : C} (hc : c ∈ intSub v) {g : MvPowerSeries σ C}

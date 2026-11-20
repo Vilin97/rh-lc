@@ -66,7 +66,8 @@ theorem pderiv_linAt [Fintype σ] [Fintype κ] (c : σ → κ → ℂ_[p]) (G : 
   refine Finset.sum_congr rfl fun k _ => ?_
   have : pderiv ℂ_[p] x (∑ y : κ, algebraMap ℂ_[p] (MvPowerSeries κ ℂ_[p]) (c k y) * X y) =
       algebraMap ℂ_[p] (MvPowerSeries κ ℂ_[p]) (c k x) := by
-    simp only [← Algebra.smul_def, map_sum, Derivation.map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [← Algebra.smul_def, map_sum, Derivation.map_smul]
     rw [Finset.sum_eq_single x]
     · rw [pderiv_X_self, Algebra.algebraMap_eq_smul_one]
     · intro y _ hy

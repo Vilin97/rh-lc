@@ -120,7 +120,8 @@ theorem mulVec_gen (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E)
         fun i => putAt v (((HA.mat (Fv F v) σ J k : Matrix (Fin n) (Fin n) (Fv F v ⊗[F] E)) *ᵥ
           fun s => evFin F v a ⊗ₜ[F] x s) i) := by
   funext i
-  simp only [Matrix.mulVec, dotProduct, mat_emb, add_mul, Finset.sum_add_distrib, smul_incV, putAt_mul, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mulVec, dotProduct, mat_emb, add_mul, Finset.sum_add_distrib, smul_incV, putAt_mul, map_sum,
     Pi.add_apply]
   congr 1
   simp only [Matrix.one_apply, mul_ite, mul_one, mul_zero, ite_mul, zero_mul, Finset.sum_ite_eq, Finset.mem_univ, if_true]

@@ -27,7 +27,8 @@ theorem valR_secLin : ∀ {X Y Y' : Scheme.{0}} (L : LB X) {K₁ K₂ : Type} [F
   have e := congrArg (valR y (LB.wchart L φ₁ j₁ ⊓ LB.wchart L (fun k => h ≫ φ₂ k) j₂)) (H j₁ j₂ hc)
   rw [← GlobalTheory.ZH.CrdCalc.valR_res y inf_le_left hW (s₁.f j₁)]
   refine e.trans ?_
-  rw [GlobalTheory.ZH.CrdCalc.valR_eq y _ hW, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [GlobalTheory.ZH.CrdCalc.valR_eq y _ hW, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_mul, ← GlobalTheory.ZH.CrdCalc.valR_eq y _ hW, ← GlobalTheory.ZH.CrdCalc.valR_eq y _ hW]
   congr 1

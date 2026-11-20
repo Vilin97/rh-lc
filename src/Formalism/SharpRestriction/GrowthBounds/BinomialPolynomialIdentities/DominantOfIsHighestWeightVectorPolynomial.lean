@@ -115,7 +115,8 @@ theorem multidegreeProj_glOperatorsEmbedded_comm (d : Fin N → ℕ) (a b : Fin 
   classical
   induction G using MvPolynomial.induction_on' with
   | monomial mm c =>
-    rw [polProj_monomial, glOperatorsEmbedded_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [polProj_monomial, glOperatorsEmbedded_apply, map_sum]
     by_cases h : ∀ i, multideg mm i = d i
     · rw [if_pos h, glOperatorsEmbedded_apply]
       refine Finset.sum_congr rfl fun l _ => ?_
@@ -275,7 +276,8 @@ theorem polynomialTypeSums_by_evaluation (D : Formalism.BasicNotions.D7) : TypeS
       have h2 : prm a ((Tev dcd y).toLinearMap x) =
           ∑ c ∈ T, prm a ((Tev dcd y).toLinearMap (prE c x)) := by
         conv_lhs => rw [hTx]
-        rw [map_sum, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum, map_sum]
       rw [h2]
       by_cases haT : a ∈ T
       · rw [Finset.sum_eq_single_of_mem a haT fun c _ hc => sysm.zero_on a c hc _ (hiso y c _ (sysE.mem c x))]

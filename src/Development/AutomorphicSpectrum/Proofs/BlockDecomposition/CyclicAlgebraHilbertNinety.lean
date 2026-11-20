@@ -38,7 +38,8 @@ theorem res_fixed (O O' κ : Type) [CommRing O] [CommRing O'] [Algebra O O'] [Co
     | zero => exact ⟨0, by simp⟩
     | tmul k x =>
       have hfx : τ (∑ j ∈ Finset.range ℓ, (τ ^ j) x) = ∑ j ∈ Finset.range ℓ, (τ ^ j) x := by
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         have e := (Finset.sum_range_succ' (fun j => (τ ^ j) x) ℓ).symm.trans
           (Finset.sum_range_succ (fun j => (τ ^ j) x) ℓ)
         rw [hτ, pow_zero] at e

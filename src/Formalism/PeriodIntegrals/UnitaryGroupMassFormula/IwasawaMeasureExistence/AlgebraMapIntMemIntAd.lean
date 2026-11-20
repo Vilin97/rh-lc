@@ -312,7 +312,8 @@ theorem mem_of_sum (𝔡 : FractionalIdeal (𝓞 I.E)⁰ I.E) (d : I.E) (hd : d 
 
   choose a ha z hz hsz using fun i => IntAf_approx (F := I.F) (E := I.E) M hM (s i) (hs i)
   have hx2 : iE I (ρ * (x - ∑ i, c i * a i)) = (M : AEf I) * ∑ i, iE I (ρ * c i) * z i := by
-    rw [map_mul, map_sub, hx, map_sum, ← Finset.sum_sub_distrib, Finset.mul_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_mul, map_sub, hx, map_sum, ← Finset.sum_sub_distrib, Finset.mul_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [hsz i]
     simp only [map_mul]

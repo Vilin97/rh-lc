@@ -132,7 +132,8 @@ theorem complementNormIdentity : OmegaNorm := by
 
   have h1 : h om z = Z.det := by
     rw [hom']
-    simp only [map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply, smul_eq_mul]
     have : (Z * Z.adjugate) (Fin.last r) (Fin.last r) = Z.det := by
       rw [Matrix.mul_adjugate]; simp
     rw [← this, Matrix.mul_apply]
@@ -148,7 +149,8 @@ theorem complementNormIdentity : OmegaNorm := by
   have h3 : h om om = -(T' * (Z.adjugate (Fin.last r) (Fin.last r) *
       star (Z.adjugate (Fin.last r) (Fin.last r)))) := by
     rw [hom']
-    simp only [map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply, smul_eq_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply, smul_eq_mul,
       LinearMap.map_smulₛₗ, starRingEnd_apply, hG']
     rw [Finset.sum_eq_single (Fin.last r)]
     · rw [Finset.sum_eq_single (Fin.last r)]

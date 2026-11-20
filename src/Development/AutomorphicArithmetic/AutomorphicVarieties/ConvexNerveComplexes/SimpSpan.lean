@@ -14,7 +14,8 @@ theorem UpperTheory.V.ConeExtensionAcyclic.simp_span :
   obtain ⟨c, hc⟩ : ∃ c : E, c = N⁻¹ • ∑ j, (t j).1 := ⟨_, rfl⟩
   have hlin : ∀ f : E →L[ℝ] ℝ, f c = N⁻¹ * ∑ j, f (t j).1 := by
     intro f
-    rw [hc, map_smul, map_sum, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hc, map_smul, map_sum, smul_eq_mul]
   have hpoly : ∀ j, (t j).1 ∈ poly q := fun j => (t j).2.1
   have hconst : ∀ a : ℝ, (∑ _j : Fin (n + 1), a) = N * a := by
     intro a

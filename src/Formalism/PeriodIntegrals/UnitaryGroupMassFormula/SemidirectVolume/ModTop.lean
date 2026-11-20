@@ -48,7 +48,8 @@ theorem continuous_linMap {X : Type} [TopologicalSpace X]
       fun x => ∑ j, v x j • f (fun k => if j = k then (1 : R ⊗[F] E) else 0) := by
     funext x
     conv_lhs => rw [pi_eq_sum_univ (v x)]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [map_smul]
   rw [key]
   refine continuous_finsetSum _ fun j _ => ?_

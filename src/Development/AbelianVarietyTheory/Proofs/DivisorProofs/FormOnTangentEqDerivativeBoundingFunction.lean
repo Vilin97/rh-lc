@@ -32,7 +32,8 @@ theorem main : ∀ {A : Over (Sp ℂ)} {I : Type} [Fintype I] {g : ℕ} {Λ : Ty
       · simp [Prod.fst_sum]
       · simp only [Prod.snd_sum, Prod.smul_snd]
         exact pi_eq_sum_univ' w
-    rw [this, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [this, map_sum]
     refine Finset.sum_congr rfl fun a _ ↦ ?_
     rw [map_smul, smul_eq_mul, mul_comm]
     exact congrArg (· * w a) (Hol.fn_der _ h hp).symm

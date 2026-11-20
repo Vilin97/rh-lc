@@ -19,7 +19,8 @@ variable {F E : Type} [Field F] [Field E] [Algebra F E] {σ : E →ₐ[F] E} {n 
 theorem _root_.GlobalTheory.FrameGram.hE_swap (hσ : ∀ x, σ (σ x) = x)
     (hJ : ∀ i j, σ (J j i) = J i j) (x y : Fin n → E) :
     σ (_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.hE σ J y x) = _root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.hE σ J x y := by
-  simp only [_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.hE, _root_.Formalism.UG.P.hform_eq_dot, dotProduct, Matrix.mulVec, Function.comp, Finset.mul_sum, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [_root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.hE, _root_.Formalism.UG.P.hform_eq_dot, dotProduct, Matrix.mulVec, Function.comp, Finset.mul_sum, map_sum,
     map_mul, AlgHom.coe_toRingHom, RingHom.coe_coe, hσ, hJ]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
@@ -39,7 +40,8 @@ theorem linearIndependent_ratTup_of_det_ne_zero (R : Type) [CommRing R] [Algebra
     exact (IsUnit.mk0 _ hX).map _
   have h0 : ((gramE σ J X).map (inclR (F := F) R)).mulVec c = 0 := by
     funext a
-    simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, gramE, hE, Formalism.UG.hform, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, gramE, hE, Formalism.UG.hform, map_sum,
       map_mul, Finset.sum_mul, Pi.zero_apply]
     rw [Finset.sum_comm]
     refine Finset.sum_eq_zero fun i _ => ?_

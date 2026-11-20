@@ -14,7 +14,8 @@ namespace GlobalTheory.ArchSch
 theorem form_swap_of_skew {F E : Type} [Field F] [Field E] [Algebra F E] {σ : E →ₐ[F] E} {d : ℕ}
     (J : Matrix (Fin d) (Fin d) E) (hσ : ∀ x, σ (σ x) = x) (hJ : ∀ i j, σ (J j i) = -J i j) (x y : Fin d → E) :
     form σ J y x = -σ (form σ J x y) := by
-  simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, hJ, Finset.mul_sum, ← Finset.sum_neg_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, hJ, Finset.mul_sum, ← Finset.sum_neg_distrib]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   ring
@@ -38,7 +39,8 @@ theorem symp_dual_iso : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [Nu
   have h1 : ∑ j, ∑ l, inclR (F := F) (AF F) (H'.y j) * inclR (F := F) (AF F) (W.J j l) *
       inclR (F := F) (AF F) (σ (H'.x l)) = -1 := by
     have := congrArg (inclR (F := F) (AF F)) hyx
-    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, Finset.mul_sum, map_neg, map_one] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, Finset.mul_sum, map_neg, map_one] at this
     simpa only [mul_assoc] using this
   unfold symp hTens
   congr 1

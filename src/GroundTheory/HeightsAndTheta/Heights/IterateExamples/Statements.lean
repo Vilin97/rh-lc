@@ -81,7 +81,8 @@ def TrivialFlagRoots.exampleZMod4 : TrivialFlagRoots (ZMod 4) 2 where
   x := ![2, 2]
   esymm_eval_eq_zero := by
     intro j hj
-    rw [MvPolynomial.esymm, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [MvPolynomial.esymm, map_sum]
     simp only [map_prod, MvPolynomial.eval_X]
     match j, hj with
     | 1, _ => decide

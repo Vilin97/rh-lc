@@ -38,7 +38,8 @@ theorem finPartPi_mulVec (M : Matrix ι ι 𝔸[K]) (x : ι → 𝔸[K]) :
     finPartPi (M *ᵥ x) = M.map Adele2.finRingHom *ᵥ finPartPi x := by
   funext i
   show Adele2.finRingHom (∑ j, M i j * x j) = _
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_congr rfl fun j _ ↦ map_mul _ _ _
 
 omit [DecidableEq ι] in
@@ -47,7 +48,8 @@ theorem infPartPi_mulVec (M : Matrix ι ι 𝔸[K]) (x : ι → 𝔸[K]) :
     infPartPi (M *ᵥ x) = M.map Adele2.infRingHom *ᵥ infPartPi x := by
   funext i
   show Adele2.infRingHom (∑ j, M i j * x j) = _
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_congr rfl fun j _ ↦ map_mul _ _ _
 
 omit [DecidableEq ι] in

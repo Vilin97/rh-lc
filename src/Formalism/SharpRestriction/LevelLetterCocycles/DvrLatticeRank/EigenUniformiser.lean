@@ -49,7 +49,8 @@ variable (hs : IsUnit (Fintype.card Δ : O))
 
 theorem coeff_eigen_uniformiser (n : ℕ) : coeff n (pi1 D hs) =
     ((hs.unit⁻¹ : Oˣ) : O) * ∑ δ, (((D.ω δ)⁻¹ : Oˣ) : O) * coeff n (D.ρ δ X) := by
-  simp [pi1, map_sum, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [pi1, map_sum, smul_eq_mul]
 
 theorem coeff_zero_eigen_uniformiser : coeff 0 (pi1 D hs) = 0 := by
   rw [coeff_eigen_uniformiser]
@@ -72,7 +73,8 @@ theorem isUnit_coeff_one_eigen_uniformiser : IsUnit (coeff 1 (pi1 D hs)) := by
 
 theorem rho_eigen_uniformiser (δ : Δ) : D.ρ δ (pi1 D hs) = (D.ω δ : O) • pi1 D hs := by
   unfold pi1
-  rw [map_smul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_smul, map_sum]
   simp_rw [map_smul, rho_rho_X]
   have key : ∑ ε, (((D.ω ε)⁻¹ : Oˣ) : O) • D.ρ (δ * ε) X =
       (D.ω δ : O) • ∑ η, (((D.ω η)⁻¹ : Oˣ) : O) • D.ρ η X := by
@@ -237,7 +239,8 @@ theorem invariants (D : Data O Δ) (hs : IsUnit (Fintype.card Δ : O)) :
         PowerSeries.subst (pi1 D hs) (∑ j : Fin (Fintype.card Δ),
           X ^ (j : ℕ) * PowerSeries.subst (X ^ Fintype.card Δ : PowerSeries O) (a j)) := by
       intro a
-      rw [← coe_substAlgHom hp, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← coe_substAlgHom hp, map_sum]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [map_mul, map_pow, coe_substAlgHom, subst_X hp, uniformiser_pow_card_subst]
     obtain ⟨g, rfl⟩ := subst_surjective hp0 hp1 f

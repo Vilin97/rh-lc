@@ -535,7 +535,8 @@ theorem lift_char [IsDomain A] {O : Type} [CommRing O] [IsDomain O] [CharZero O]
   have hx : IsPrimitiveRoot (x ζ) q := by
     have h1 : x ζ ≠ 1 := fun h => by
       have := congrArg x (hζ.geom_sum_eq_zero hq.one_lt)
-      simp [map_sum, h, hq.ne_zero] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [map_sum, h, hq.ne_zero] at this
     have h2 : x ζ ^ q = 1 := by rw [← map_pow, hζ.pow_eq_one, map_one]
     rw [← orderOf_eq_prime h2 h1]
     exact IsPrimitiveRoot.orderOf _
@@ -672,7 +673,8 @@ theorem ex_dlog [IsDomain A] [IsIntegrallyClosed A] {p n : ℕ}
     rw [h5]
     simpa [dualMap, Pi.single_apply] using h2.symm
   intro a v hv w hw
-  rw [hd a v hv w hw, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hd a v hv w hw, map_sum, map_sum]
   exact Finset.sum_congr rfl fun i _ => by rw [map_mul, map_mul, key]
 
 theorem hodgeTate_map : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (X : Scheme.{0}) [IsLocallyNoetherian X] (t : SAB H X) (A : Type) [CommRing A] [IsDomain A] [IsIntegrallyClosed A] [CharZero A] (x₀ : Sp A ⟶ X) (g : ℕ) (e : Fin g → (Sp (DualNumber A) ⟶ t.G.left)), IsTanBasis t x₀ e → ∀ p : ℕ, p.Prime → (∃ ζ : A, IsPrimitiveRoot ζ p) → SplitTors t x₀ p → ∃ (n : ℕ) (h : Fin n → Fin g → A), ∀ (C : Type) [NontriviallyNormedField C] [IsUltrametricDist C] [IsAlgClosed C] [CharZero C] (x : A →+* ↥(intO C)), (∀ c : TorsChar t (spMap x ≫ x₀) (p ^ 1), ∃ j, DlogIs t p 1 c (fun i => spMap (dualMap x) ≫ e i) (fun i => x (h j i))) ∧ ∀ j, ∃ c : TorsChar t (spMap x ≫ x₀) (p ^ 1), DlogIs t p 1 c (fun i => spMap (dualMap x) ≫ e i) (fun i => x (h j i)) := by

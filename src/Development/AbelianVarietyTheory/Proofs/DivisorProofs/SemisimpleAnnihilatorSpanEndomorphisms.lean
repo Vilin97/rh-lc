@@ -34,6 +34,7 @@ theorem semisimple_mem_sum_endo_images (R : Type) [Ring R] (M : Type) [AddCommGr
       LinearMap.toSpanSingleton_apply, one_smul]
   rw [← h1]
   conv_lhs => rw [← Finset.univ_sum_single w]
-  simp [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum]
 
 end GlobalTheory

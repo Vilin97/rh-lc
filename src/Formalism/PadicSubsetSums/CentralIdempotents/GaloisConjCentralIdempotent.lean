@@ -247,7 +247,8 @@ theorem trace_bcRepr (σ : ℂ ≃+* ℂ) {V : Type} [AddCommGroup V] [Module �
       (LinearMap.toMatrix (Module.finBasis ℂ V) (Module.finBasis ℂ V) (ρ γ))) := rfl
   rw [h1, LinearMap.trace_eq_matrix_trace ℂ (Pi.basisFun ℂ _), LinearMap.toMatrix_eq_toMatrix',
     LinearMap.toMatrix'_toLin', LinearMap.trace_eq_matrix_trace ℂ (Module.finBasis ℂ V) (ρ γ)]
-  simp [Matrix.trace, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Matrix.trace, map_sum]
 
 theorem finrank_bc (σ : ℂ ≃+* ℂ) (τ : FDRep ℂ Γ) :
     Module.finrank ℂ (bc σ τ) = Module.finrank ℂ τ := by

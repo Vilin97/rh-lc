@@ -79,7 +79,8 @@ theorem isCompact_latW (W : Spc F E d) (hW : W.L.FG) (v : Pl F) : IsCompact (lat
       obtain ⟨c, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun ℤ).1 hy'
       refine ⟨fun j => c j • ⟨_, ha'⟩, funext fun i => ?_⟩
       change (∑ j, fun i => atPlace v (c j • evFin F v a) • inclR (F := F) (AF F) (s j i)) i = _
-      rw [Finset.sum_apply, Finset.sum_apply, map_sum, Finset.smul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Finset.sum_apply, Finset.sum_apply, map_sum, Finset.smul_sum]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [map_zsmul, ← kc_eq_atPlace ha, Pi.smul_apply, map_zsmul, smul_assoc, smul_comm]
     · rintro _ ⟨a, rfl⟩

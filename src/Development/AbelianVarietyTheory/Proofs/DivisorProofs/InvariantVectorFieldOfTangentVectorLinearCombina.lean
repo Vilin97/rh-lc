@@ -42,7 +42,8 @@ theorem isField_comb (g : ℕ) (e : Fin g → Fld G.left) (he : ∀ c, IsField �
     simp only [h1, mul_add, Finset.sum_add_distrib, Finset.mul_sum]
     congr 1 <;> exact Finset.sum_congr rfl fun c _ => by ring
   · have h1 := fun c => (he c).2.2 W W' h hW f
-    simp only [h1, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [h1, map_sum, map_mul]
     refine Finset.sum_congr rfl fun c _ => ?_
     rw [← GlobalTheory.ArcPts.SecValue.res_constFn G.hom h (a c)]
 
@@ -103,7 +104,8 @@ theorem isInv_comb : ∀ (R : Type) [CommRing R] (G : Over (Sp R)) [GrpObj G] [I
   have a₃ : ∀ h, valR z.left O h = inl (valR x O h) := a₂
   simp only [a₃]
   show _ = valR x O (∑ c, constFn G.hom O (a c) * e c O f)
-  conv_rhs => rw [GlobalTheory.ZH.CrdCalc.valR_eq x O hO, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_rhs => rw [GlobalTheory.ZH.CrdCalc.valR_eq x O hO, map_sum]
   simp only [map_mul, ← GlobalTheory.ZH.CrdCalc.valR_eq x O hO]
   rw [TrivSqZeroExt.snd_add, TrivSqZeroExt.snd_inl, zero_add, TrivSqZeroExt.snd_sum]
   refine Finset.sum_congr rfl fun c _ => ?_

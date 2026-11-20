@@ -66,7 +66,8 @@ theorem sum_pair_le {K : Type} [Field K] [CharZero K] [StarRing K] (σ : K →+*
     rfl
   have e3 : σ (∑ c, ((w c : ℕ) : K)⁻¹ * pairBK sg (B (x c)) (y c)) = wForm w ((GlobalTheory.TestLat.Compare.gramB K sg).map σ)
       (fun c => star fun i => σ ((bVV K sg).repr (B (x c)) i)) (fun c i => σ ((bVV K sg).repr (y c) i)) := by
-    rw [map_sum, wForm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, wForm]
     refine Finset.sum_congr rfl fun c _ => ?_
     rw [map_mul, map_inv₀, map_natCast, star_star, map_pairBK]
   have h := wForm_le w hG (fun c => star fun i => σ ((bVV K sg).repr (B (x c)) i)) (fun c i => σ ((bVV K sg).repr (y c) i))

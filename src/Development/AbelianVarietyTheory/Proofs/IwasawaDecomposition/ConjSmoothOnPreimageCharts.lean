@@ -61,7 +61,8 @@ theorem leviV_comp_conjV (n : ℕ) (g : V n → ℝ) (y : V n) (ξ : Fin n → �
   have h2 : ∀ j k w, wd n j (wdb n k (G ∘ conjV n)) w =
       starRingEnd ℂ (wd n j (wdb n k G) (conjV n w)) := fun j k w => by
     rw [h1, wd_comp_conjV, hG, ReciprocityTheory.L2DbarEstimates.ChartWirtingerDerivatives.wdb_conj']
-  simp only [leviV, h2, map_sum, map_mul, Complex.conj_conj, Pi.star_apply, Complex.star_def]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [leviV, h2, map_sum, map_mul, Complex.conj_conj, Pi.star_apply, Complex.star_def]
 
 theorem smoothOn_comp_ddcForm_of_isConjMap : ∀ (k : Type) [Field k] (Y : Scheme.{0}) (p : Y ⟶ Sp k) (d : ℕ)
     [SmoothOfRelativeDimension d p] (σ σ' : k →+* ℂ) (j : CxPts p σ' → CxPts p σ), IsConjMap j →

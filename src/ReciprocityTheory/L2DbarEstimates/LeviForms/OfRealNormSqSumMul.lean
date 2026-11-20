@@ -30,7 +30,8 @@ variable {n : ℕ}
 theorem ofReal_normSq_sum_mul (a ξ : Fin n → ℂ) :
     ((Complex.normSq (∑ j, a j * ξ j) : ℝ) : ℂ) =
       ∑ j, ∑ kk, a j * conj (a kk) * ξ j * conj (ξ kk) := by
-  rw [← mul_conj, map_sum, Finset.sum_mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← mul_conj, map_sum, Finset.sum_mul_sum]
   refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun kk _ => ?_
   rw [map_mul]; ring
 

@@ -87,7 +87,8 @@ instance (c : Coef l) (n : ℕ) : Finite (Qn c n) := by
   obtain ⟨a, ha⟩ := (Submodule.mem_span_range_iff_exists_fun ℤ_[l]).1 hx
   refine ⟨fun i => PadicInt.toZModPow n (a i), ?_⟩
   show ∑ i, _ = _
-  rw [← ha, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← ha, map_sum]
   exact Finset.sum_congr rfl fun i _ => (red_smul c n (a i) (s i)).symm
 
 abbrev Mn (c : Coef l) (n : ℕ) : Type := Fin 2 → Qn c n
@@ -120,7 +121,8 @@ theorem matQ_mul (c : Coef l) (n : ℕ) (W : R2 Ω l) (hint : ∀ s i j, mat W s
     simp only [mat, map_mul, Matrix.GeneralLinearGroup.coe_mul, Matrix.mul_apply]
     push_cast
     rfl
-  rw [matQ_apply, e, map_sum, Matrix.mul_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [matQ_apply, e, map_sum, Matrix.mul_apply]
   simp only [map_mul, matQ_apply]
 
 def rhoG (c : Coef l) (n : ℕ) (W : R2 Ω l) (hint : ∀ s i j, mat W s i j ∈ c.O) :

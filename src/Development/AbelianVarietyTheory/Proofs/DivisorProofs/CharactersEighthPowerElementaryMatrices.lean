@@ -159,7 +159,8 @@ theorem characters_eighthPower_elementaryMatrices : ∀ (R : Type) [CommRing R] 
         rw [AddMonoidHom.comp_apply] at this
         rw [this]
         split_ifs <;> rfl
-      simp only [map_sum, e, Finset.sum_ite_eq', Finset.mem_univ, if_true]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, e, Finset.sum_ite_eq', Finset.mem_univ, if_true]
     · have := DFunLike.congr_fun hcd x
       simpa [AddMonoidHom.finset_sum_apply] using this
   · intro a b f f₁ m hf hf₁ hff₁ hm w x

@@ -198,7 +198,8 @@ theorem transfer {K R V W : Type} [Field K] [AddCommGroup R] [Module K R] [AddCo
   have hex : ∀ y ∈ M, ∃ a : _ → K, y = ∑ l, a l • (b l : R) := fun y hy =>
     ⟨b.repr ⟨y, hy⟩, by
       have := congrArg M.subtype (b.sum_repr ⟨y, hy⟩).symm
-      rw [map_sum] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum] at this
       exact this⟩
   choose a ha using fun i => hex (h i) (Submodule.subset_span ⟨Sum.inl i, rfl⟩)
   choose a' ha' using fun j => hex (h' j) (Submodule.subset_span ⟨Sum.inr j, rfl⟩)
@@ -206,7 +207,8 @@ theorem transfer {K R V W : Type} [Field K] [AddCommGroup R] [Module K R] [AddCo
       (t : L → Fin (Module.finrank K M) → K),
       ∑ i, d i • p (∑ l, t i l • (b l : R)) = ∑ l, (∑ i, d i * s (t i l)) • p (b l) := by
     intro L Z _ _ _ s p d t
-    simp only [map_sum, map_smulₛₗ, Finset.smul_sum, Finset.sum_smul, mul_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smulₛₗ, Finset.smul_sum, Finset.sum_smul, mul_smul]
     exact Finset.sum_comm
   have e1 : ∑ i, c i • ρ₀ (h i) = _ := (Finset.sum_congr rfl fun i _ => by rw [ha i]).trans (ex ρ₀ c a)
   have e2 : ∑ i, c' i • ρ₀ (h' i) = _ := (Finset.sum_congr rfl fun i _ => by rw [ha' i]).trans (ex ρ₀ c' a')
@@ -218,7 +220,8 @@ theorem transfer {K R V W : Type} [Field K] [AddCommGroup R] [Module K R] [AddCo
   rw [e3, e4]
   refine Finset.sum_congr rfl fun l _ => ?_
   have := congrArg α (congrFun e5 l)
-  simp only [map_sum, map_mul, hα] at this
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, hα] at this
   rw [this]
 
 theorem ratio_eigen {I J : Type} [Fintype I] [Fintype J] [DecidableEq I] (D : I → J → ℂ) (D' : J → I → ℂ)
@@ -581,9 +584,11 @@ theorem mem_cuspA_of_rdU_mem_holSub0 : ∀ (D : D7) (T : CoreJ D), LawsJ T → �
     refine (Submodule.span_le.2 ?_) hspan
     rintro _ ⟨y, hy, rfl⟩
     have e := congrArg S.subtype (b.sum_repr ⟨y, hy⟩).symm
-    rw [map_sum] at e
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at e
     replace e : y = ∑ i, b.repr ⟨y, hy⟩ i • (b i : T.R j) := e
-    rw [e, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, map_sum]
     refine Submodule.sum_mem _ fun i _ => ?_
     rw [map_smulₛₗ]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)

@@ -106,7 +106,8 @@ theorem rename_esymm (τ : GlobalTheory.AllWt.Psi H) (k : ℕ) :
 theorem flagMap_relPoly (τ : GlobalTheory.AllWt.Psi H) (k : ℕ) :
     flagMap Dw (chernRoots Dw.mult (GlobalTheory.PointChern.relPoly τ k)) =
       rename (fun i : Fin (Dw.p + Dw.q) => (τ, i)) (esymm (Fin (Dw.p + Dw.q)) ℝ k) := by
-  rw [rename_esymm, esymm_add, GlobalTheory.PointChern.relPoly, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [rename_esymm, esymm_add, GlobalTheory.PointChern.relPoly, map_sum, map_sum]
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [map_mul, map_mul, map_mul, map_mul, flagMap_chernRoots_X, flagMap_chernRoots_X, roots_mem, roots_conj,
     Multiset.esymm_neg]

@@ -36,9 +36,11 @@ theorem stalkBasis_repr_germ {U V : X.Opens} {e : Fin r → Γ(F, U)} (he : IsFr
     (he.stalkBasis x (h hx)).repr (F.presheaf.germ V x hx t) i =
       X.presheaf.germ V x hx ((he.basis h).repr t i) := by
   conv_lhs => rw [← (he.basis h).sum_repr t]
-  simp only [map_sum, QCoh.germ_smul, IsFrame.basis_apply, germ_resM]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, QCoh.germ_smul, IsFrame.basis_apply, germ_resM]
   simp only [← he.stalkBasis_apply x (h hx)]
-  rw [← map_sum, Module.Basis.repr_sum_self]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum, Module.Basis.repr_sum_self]
 
 theorem exists_isFrame_sub {U : X.Opens} (P : Sub F) (c : Fin r → Γ(F, U)) (hc : IsFrame c) (l : ℕ) (hl : l ≤ r)
     (hP : ∀ (V : X.Opens) (h : V ≤ U) (a : Fin r → Γ(X, V)),
@@ -62,7 +64,8 @@ theorem exists_isFrame_sub {U : X.Opens} (P : Sub F) (c : Fin r → Γ(F, U)) (h
         resM P.toMod h (P.mkSec _ (hmem j)) := by
       apply P.incl_app_injective V
       conv_lhs => rw [← (hc.basis h).sum_repr (P.incl.app V t)]
-      simp only [map_sum, Scheme.Modules.Hom.app_smul, app_resM, Sub.incl_app_mkSec,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, Scheme.Modules.Hom.app_smul, app_resM, Sub.incl_app_mkSec,
         IsFrame.basis_apply]
       symm
       refine Finset.sum_of_injOn (Fin.castLE hl) (Fin.castLE_injective hl).injOn

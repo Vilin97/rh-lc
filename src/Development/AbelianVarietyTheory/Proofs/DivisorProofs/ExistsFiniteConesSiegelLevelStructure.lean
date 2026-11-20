@@ -100,7 +100,8 @@ theorem exists_nat_comb_of_infinite : ∀ (φ : InvFun ℤ) (r m : ℕ) (γ : Fi
     obtain ⟨k, cf, hk0, he⟩ := hk n hn
     have hE : k • (n • B' + B₀) = ∑ j, cf j • bb (Sum.inl j) := Subtype.ext (by simpa [hbb, B', B₀] using he)
     have := congrArg (fun x => bb.repr x o) hE
-    simp only [map_nsmul, map_add, map_sum, Module.Basis.repr_self, Finsupp.smul_apply, Finsupp.add_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_nsmul, map_add, map_sum, Module.Basis.repr_self, Finsupp.smul_apply, Finsupp.add_apply,
       Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.single_apply, nsmul_eq_mul] at this
     rw [Finset.sum_eq_zero fun j _ => by rw [if_neg (ho j).symm]; simp] at this
     have hk' : (k : ℤ) ≠ 0 := by exact_mod_cast hk0.ne'
@@ -111,7 +112,8 @@ theorem exists_nat_comb_of_infinite : ∀ (φ : InvFun ℤ) (r m : ℕ) (γ : Fi
     obtain ⟨k, cf, hk0, he⟩ := hk n hn
     have hE : k • (n • B' + B₀) = ∑ j, cf j • bb (Sum.inl j) := Subtype.ext (by simpa [hbb, B', B₀] using he)
     have := congrArg (fun x => bb.repr x (Sum.inl j)) hE
-    simp only [map_nsmul, map_add, map_sum, Module.Basis.repr_self, Finsupp.smul_apply, Finsupp.add_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_nsmul, map_add, map_sum, Module.Basis.repr_self, Finsupp.smul_apply, Finsupp.add_apply,
       Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.single_apply, nsmul_eq_mul, Sum.inl.injEq] at this
     simp only [mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true] at this
     have hk' : (0 : ℤ) < k := by exact_mod_cast hk0

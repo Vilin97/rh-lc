@@ -92,7 +92,8 @@ lemma exists_lim_tensor (Tw : ATowerL R₀ p) (wb : ∀ n, B.gg ⊗[R₀] (Tw.R 
     rw [← hwb n, B.coordK_lTensor]
     rfl)
   refine ⟨∑ k, (Module.Free.chooseBasis R₀ B.gg k) ⊗ₜ[R₀] a k, fun n => ?_⟩
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [LinearMap.lTensor_tmul]
   conv_rhs => rw [← B.sum_coordK _ (wb n)]
   refine Finset.sum_congr rfl fun k _ => ?_

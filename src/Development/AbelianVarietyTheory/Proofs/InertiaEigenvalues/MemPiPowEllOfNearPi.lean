@@ -75,7 +75,8 @@ theorem near_one_split [NeZero n] {ι : A →+* R} {p : ℕ} (j : LetA O n →�
       funext k
       simp [letE, Finset.sum_apply, Pi.single_apply]
     have h9 : algebraMap O R o = ∑ k : ZMod n, j (o • letE k) := by
-      rw [← map_sum, ← Finset.smul_sum, h8, map_smul, map_one, Algebra.algebraMap_eq_smul_one]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← map_sum, ← Finset.smul_sum, h8, map_smul, map_one, Algebra.algebraMap_eq_smul_one]
     rw [h9]
     exact Near.sum _ fun k _ => h7 k
   choose o' ho' using h3

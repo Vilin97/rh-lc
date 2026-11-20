@@ -125,11 +125,14 @@ theorem killCompl_beAll (D : D7) (p : ℕ) [Fact p.Prime] {N0 N1 : ℕ} (R : Fin
       sg r • ∑ a : Fin N0, ∑ b : Fin N1, subst (fun s : ZMod (nP D p) =>
         (X (s, a, b) : MvPowerSeries (ZMod (nP D p) × Fin N0 × Fin N1) ℂ_[p])) (be r) := by
   unfold beAll
-  rw [map_sum, Finset.sum_eq_single r ?_ (fun h => absurd hr h)]
-  · rw [map_smul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_eq_single r ?_ (fun h => absurd hr h)]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_smul, map_sum]
     congr 1
     refine Finset.sum_congr rfl fun a _ => ?_
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun b _ => ?_
     have hX : ∀ s : ZMod (nP D p), killCompl (orbEmb D p r (Fin N0 × Fin N1))
         (X (orbMap D p r s, a, b) : MvPowerSeries (Pl D × Fin N0 × Fin N1) ℂ_[p]) = X (s, a, b) :=
@@ -139,9 +142,11 @@ theorem killCompl_beAll (D : D7) (p : ℕ) [Fact p.Prime] {N0 N1 : ℕ} (R : Fin
       coeff_subst (hasSubst_of_constantCoeff_zero fun s => constantCoeff_X _)]
     simp only [hX]
   · intro r' hr' hne
-    rw [map_smul, map_sum, Finset.sum_eq_zero, smul_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_smul, map_sum, Finset.sum_eq_zero, smul_zero]
     intro a _
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_eq_zero fun b _ => ?_
     ext x
     rw [coeff_killCompl_subst _ (hasSubst_orbX D p r' a b), map_zero]

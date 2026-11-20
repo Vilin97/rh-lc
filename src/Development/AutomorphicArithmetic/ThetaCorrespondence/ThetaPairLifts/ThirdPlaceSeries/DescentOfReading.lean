@@ -104,7 +104,8 @@ theorem descent_of_reading_alt : _root_.GlobalTheory.BigOn.Exp.CanonicalFits fun
       erw [hAsmul]
       rw [smul_comm]
   apply hRinj
-  rw [hinc, hz, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hinc, hz, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [← algebraMap_smul (FractionRing ((Fm.ex x hx i).nch.Oe w)) (a k) (rd (y k)), hRdef, readExt_smul, ← hRdef,
     hrd _ (hy k), mul_smul]

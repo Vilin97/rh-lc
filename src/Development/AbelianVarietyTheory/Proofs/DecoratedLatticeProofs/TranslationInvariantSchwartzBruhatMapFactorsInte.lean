@@ -157,7 +157,8 @@ theorem map_eq_zero_of_fiber
     funext x
     rw [Submodule.coe_sum, Finset.sum_apply]
     exact hsum x
-  rw [hdec, map_sum, Finset.sum_congr rfl fun q _ => hq q, ← map_sum, ← map_sum, hg, map_zero, map_zero]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hdec, map_sum, Finset.sum_congr rfl fun q _ => hq q, ← map_sum, ← map_sum, hg, map_zero, map_zero]
 
 theorem exists_factor
     (hbasis : ∀ V ∈ 𝓝 (0 : A), ∃ U : AddSubgroup A, IsOpen (U : Set A) ∧ IsCompact (U : Set A) ∧ (U : Set A) ⊆ V)

@@ -14,7 +14,8 @@ theorem transport_smallPowerSum (f j k m : ℕ) (τ : Fin f) :
     restTransport f j k (j + k) (restFirstEquiv j k) (RestTerms.smallPowerSum f j k .first m τ) =
       (-1) ^ m * ∑ a : Fin j, (X (τ, Sum.inl a) : RootPoly f j k) ^ m := by
   rw [Finset.mul_sum]
-  simp only [RestTerms.smallPowerSum, map_sum, map_pow]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [RestTerms.smallPowerSum, map_sum, map_pow]
   refine Finset.sum_congr rfl fun a _ => ?_
   have hidx : (restFirstEquiv j k) (⟨a.val, by omega⟩ : Fin (j + k)) = Sum.inl a := by
     have : (⟨a.val, by omega⟩ : Fin (j + k)) = Fin.castAdd k a := rfl

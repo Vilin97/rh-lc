@@ -36,7 +36,8 @@ theorem aR_keep {h : FinX Y} {h' : FinX (reY Z Y)} (u u' : D.what₂.Word) (t : 
   letI := h.fibFT t
   letI := h'.fibFT (eRT Z Y u u' t)
   unfold aR
-  rw [ContinuousLinearMap.sum_apply, ContinuousLinearMap.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [ContinuousLinearMap.sum_apply, ContinuousLinearMap.sum_apply, map_sum]
   exact Fintype.sum_equiv (eFib Z Y u u' t) _ _ fun s => aT_keep Z Y u u' s.1 x
 
 set_option maxHeartbeats 4000000 in

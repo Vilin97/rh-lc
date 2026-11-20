@@ -291,12 +291,14 @@ theorem GlobalTheory.JSW.jacquetShalikaRigidity_holds : GlobalTheory.Published.J
     have e1' : ∀ j, B' j = (sat (π0' j) w).map (· * (absPow E (t' j)).val w) := fun j =>
       (hB' j).unique (by rw [he0' j]; exact ((hasSat_sat (hT0' j) hw).twist_absPow (t' j)).1)
     have hL : (M.map (f w r)).sum = ((∑ i, B i).map fun α : ℂˣ => (α : ℂ) ^ (r + 1)).sum := by
-      rw [hpw, map_sum, hM, Multiset.map_map, ← Finset.sum_eq_multiset_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hpw, map_sum, hM, Multiset.map_map, ← Finset.sum_eq_multiset_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [← hpw, e1 i, sum_map_pow_twist]
       rfl
     have hR : (M'.map (f w r)).sum = ((∑ j, B' j).map fun α : ℂˣ => (α : ℂ) ^ (r + 1)).sum := by
-      rw [hpw, map_sum, hM', Multiset.map_map, ← Finset.sum_eq_multiset_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hpw, map_sum, hM', Multiset.map_map, ← Finset.sum_eq_multiset_sum]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [← hpw, e1' j, sum_map_pow_twist]
       rfl

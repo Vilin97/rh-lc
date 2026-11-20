@@ -230,7 +230,8 @@ theorem lift_mainDatum {L : Submodule 𝒪[k] (n' → k)} [L.IsLattice k] (he : 
     exact_mod_cast (Finset.card_pos.2 ⟨P', mem_withLat.2 hP'⟩).ne'
   have h5 := smul_right_injective A h4 h3
   rw [mainDatum_eq, dia_FFStar, hP, hP']
-  simpa only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply] using h5
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply] using h5
 
 end Decomposition
 
@@ -506,7 +507,8 @@ theorem lift_datumHat {π : Representation ℂ (GL n' k) M} {θ : M →ₗ[ℂ] 
         θ (dia (resUnit ε) (FFStar q (resChar ψ hψ q) φ) P') (phiOne P' Q) := by
   have h0 := lift_latInd P hφ he (hP.symm ▸ hθ)
   rw [← map_smul, datumHat_mul q LY L'' x' η hψ]
-  simp only [map_smul, map_add, map_sum, h0 LY, fun Q : Pair k n => h0 Q.ker, smul_zero, zero_add,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_smul, map_add, map_sum, h0 LY, fun Q : Pair k n => h0 Q.ker, smul_zero, zero_add,
     fun Q => lift_mainDatum q (resChar ψ hψ q) (resUnit ε) he hθ Q hP hP']
 
 end Last

@@ -144,7 +144,8 @@ variable (lt : ι → σ) (N : σ → ι → R)
 theorem spCoeff_lin (s : σ) (n : ι →₀ ℕ) :
     MvPowerSeries.coeff n (∑ k, MvPowerSeries.C (N s k) * MvPowerSeries.X k) =
       ∑ k, N s k * if n = Finsupp.single k 1 then 1 else 0 := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [MvPowerSeries.coeff_C_mul, MvPowerSeries.coeff_X]
 
@@ -317,7 +318,8 @@ end Pure
 theorem pure_weight_formula : PureFormula.{u, v} := by
   intro K _ l d N0 N1 _ _ ι _ _ lt M hM be i j α β hij
   unfold bSum pureMon
-  rw [map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun ab _ => ?_
   exact spCore (N := fun s k => M (s, ab.1, ab.2) k) (fun s k h => hM _ _ h) be i j _ _ hij
 
@@ -364,7 +366,8 @@ theorem spMinor (top : Fin (p + 1) → R) (A : Matrix (Fin (p + 1)) (Fin (p + 1)
     rw [hrow]
     show Matrix.detRowAlternating (fun i => ∑ o,
       (MvPolynomial.C (cf i o) : MvPolynomial (Fin m × Fin (p + 1)) R) • spV top o) = _
-    rw [← AlternatingMap.coe_multilinearMap, MultilinearMap.map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← AlternatingMap.coe_multilinearMap, MultilinearMap.map_sum]
     refine Finset.sum_congr rfl fun r _ => ?_
     rw [MultilinearMap.map_smul_univ]
     rfl

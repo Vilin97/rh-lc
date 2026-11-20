@@ -49,7 +49,8 @@ theorem htW : StatHTW := by
   have R2 : ∀ k t, ∑ q, Vm q t * Bm k q = ((w ^ (-(u k)) : ℤ_[ℓ]ˣ) : ℤ_[ℓ]) • Bm k t := by
     intro k t
     have := congrArg Tt.pr (hrel k t)
-    rw [map_sum, pr_zsmul] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, pr_zsmul] at this
     rw [← this]
     refine Finset.sum_congr rfl fun q _ => ?_
     rw [mul_comm (Tt.g0 (B k q)), ← Algebra.smul_def, map_smul, Tt.pr_comp_g_zero, smul_eq_mul]
@@ -70,7 +71,8 @@ theorem htW : StatHTW := by
         rw [Vi_apply, map_sub, AlgHom.commutes, Algebra.smul_def, map_mul,
           ← IsScalarTower.algebraMap_apply, Algebra.smul_def, map_mul]
         ring
-      rw [Finset.sum_congr rfl fun q _ => e1 q, ← Finset.smul_sum, Finset.sum_sub_distrib, hrel k t,
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Finset.sum_congr rfl fun q _ => e1 q, ← Finset.smul_sum, Finset.sum_sub_distrib, hrel k t,
         ← map_sum, R2 k t]
       have e2 : al (((w ^ (-(u k)) : ℤ_[ℓ]ˣ) : ℤ_[ℓ]) • Bm k t)
           = ((w ^ (-(u k)) : ℤ_[ℓ]ˣ) : ℤ_[ℓ]) • al (Bm k t) := by
@@ -85,7 +87,8 @@ theorem htW : StatHTW := by
   have h1 : Bm' * Bm = ((ℓ : Tt.Om) ^ N) • (1 : Matrix (Fin r) (Fin r) Tt.Om) := by
     ext k t
     have := congrArg Tt.pr (congrFun (congrFun hB'B k) t)
-    rw [Matrix.mul_apply, map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Matrix.mul_apply, map_sum] at this
     rw [Matrix.mul_apply]
     have e3 : ∀ q, Tt.pr (B' k q * B q t) = Bm' k q * Bm q t := by
       intro q
@@ -116,7 +119,8 @@ theorem htW : StatHTW := by
     funext t
     simp [Algebra.smul_def]
   have hz : ((ℓ : ℤ_[ℓ]) ^ N) • P v = 0 := by
-    rw [← map_smul, hdec, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_smul, hdec, map_sum]
     refine Finset.sum_eq_zero fun k _ => ?_
     apply ht_kill _ w U i (u k) (hu k)
     rw [gmI_smul, heig k, smul_comm]

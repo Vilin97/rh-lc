@@ -66,7 +66,8 @@ theorem exists_aeval (hP : B.P.Separable) (x : B.A) : ∃ f : K.E[X], x = aeval 
   obtain ⟨e, he⟩ := exists_basis_pow_of_separable K B hP
   refine ⟨∑ i, C (e.repr x i) * X ^ (i : ℕ), ?_⟩
   conv_lhs => rw [← e.sum_repr x]
-  simp [map_sum, he, Algebra.smul_def]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, he, Algebra.smul_def]
 
 theorem traceForm_nondegenerate (hP : B.P.Separable) : (Algebra.traceForm K.E B.A).Nondegenerate := by
   refine ⟨fun w hw => ?_, fun w hw => ?_⟩

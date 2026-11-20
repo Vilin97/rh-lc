@@ -35,7 +35,8 @@ private theorem cocl_app {E : Type} [Field E] [NumberField E] [IsTotallyComplex 
     show del (smAdj Ξ r) e (app T ω) = 0
     refine AlternatingMap.ext fun X => ?_
     have h2 := congrArg (fun η => T.rTensor (Fin Ξ.d → ℂ) (η X)) h'
-    simp only [del_apply, map_sum, AlternatingMap.zero_apply, map_zero] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [del_apply, map_sum, AlternatingMap.zero_apply, map_zero] at h2
     simp only [del_apply, app_apply, adj_rT Ξ r T hT, AlternatingMap.zero_apply, h2]
 
 theorem UpperTheory.V.Cj.H.charOf :

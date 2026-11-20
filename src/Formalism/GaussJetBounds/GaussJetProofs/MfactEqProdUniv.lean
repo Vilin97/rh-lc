@@ -75,7 +75,8 @@ lemma exp_jet (r : ℝ) (hr : 1 ≤ r) (ι : Type) [Fintype ι] (S : K) (u : ι 
   unfold mvExp
   rw [PowerSeries.coeff_subst hs, mul_finsum]
   refine norm_finsum_le_of (pow_nonneg hr0 _) fun k => ?_
-  rw [smul_pow, quad_pow, PowerSeries.coeff_exp, Finset.smul_sum, map_sum, Finset.smul_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [smul_pow, quad_pow, PowerSeries.coeff_exp, Finset.smul_sum, map_sum, Finset.smul_sum,
     Finset.mul_sum]
   refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg (pow_nonneg hr0 _) fun n hn => ?_
   rw [Finset.mem_piAntidiag] at hn

@@ -185,7 +185,8 @@ theorem mem_endL_iff {κ : Type} [Fintype κ] [DecidableEq κ] (a : Basis κ K V
     rw [LinearMap.toMatrix_apply]
     exact (mem_smul_span_iff a h𝔭 k _).1 (hD _ (basis_mem_locF a 𝔭 j)) i
   · intro hD x hx
-    rw [← a.sum_repr x, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← a.sum_repr x, map_sum]
     refine Submodule.sum_mem _ fun j _ => ?_
     rw [map_smul]
     have h1 : D (a j) ∈ extP K 𝔭 ^ k • locF 𝔭 (Submodule.span (𝓞 K) (Set.range a)) :=
@@ -202,9 +203,11 @@ theorem mem_sesqL_iff (hF : IsFixF K F) {κ : Type} [Fintype κ] (a : Basis κ K
   · intro hs i j
     exact hs _ (basis_mem_locF a 𝔭 i) _ (basis_mem_locF a 𝔭 j)
   · intro hs x hx y hy
-    rw [← a.sum_repr x, ← a.sum_repr y, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← a.sum_repr x, ← a.sum_repr y, map_sum]
     refine Submodule.sum_mem _ fun j _ => ?_
-    rw [map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, LinearMap.sum_apply]
     refine Submodule.sum_mem _ fun i _ => ?_
     rw [map_smul, LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, smul_eq_mul]
     have h1 := mul_mem_pK h𝔭 (repr_mem_pK_zero a h𝔭 hy j)

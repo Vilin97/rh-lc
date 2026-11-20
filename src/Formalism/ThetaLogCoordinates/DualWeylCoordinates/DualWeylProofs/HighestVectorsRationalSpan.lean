@@ -15,7 +15,8 @@ lemma qd_ev_point (M : GLMod n) (nu : Fin n → ℤ) (x : M.ι → ℚ) {R' : Ty
       Matrix.mulVec ((prMu M nu).map (Int.castRingHom R'))
         (Matrix.mulVec (M.A.map (evGL g)) (fun l => algebraMap ℚ R' (x l))) i := by
   rw [qb_ev_apply]
-  simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, map_intCast, qd_evGLR_mapCoord, qd_ev_algebraMap,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, map_intCast, qd_evGLR_mapCoord, qd_ev_algebraMap,
     Matrix.map_apply, Int.coe_castRingHom]
 
 lemma qd_ev_inv (M : GLMod n) (la nu : Fin n → ℤ) (x : M.ι → ℚ) (hx : IsHighest M ℚ la x)
@@ -52,7 +53,8 @@ lemma qd_ev_expand {M : GLMod n} (CF : ColFam M) (a : qb_Idx CF → ℚ) (nu : F
     qb_ev M ℚ nu (∑ y, a y • qb_vecF CF ℚ y) i =
       ∑ j : {j : CF.J // CF.mu j = nu}, ((CF.ph j.1 i (canT (CF.mu j.1)) : ℤ) : ℚ) • qd_f CF a j.1 := by
   classical
-  rw [← qb_evL_apply, map_sum, Finset.sum_apply, Fintype.sum_sigma,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← qb_evL_apply, map_sum, Finset.sum_apply, Fintype.sum_sigma,
     ← Finset.sum_subtype (univ.filter fun j => CF.mu j = nu) (by simp)
       (fun j => ((CF.ph j i (canT (CF.mu j)) : ℤ) : ℚ) • qd_f CF a j), Finset.sum_filter]
   refine Finset.sum_congr rfl fun j _ => ?_
@@ -90,7 +92,8 @@ theorem highest_vectors_rational_span_of : LemmaA → HighestVectorsRationalSpan
       split_ifs <;> rfl
     have h : Matrix.mulVecLin ((prMu M la).map (Int.castRingHom ℚ)) (∑ y, a y • qb_vecF CF ℚ y) =
         ∑ y, a y • qb_vecF CF ℚ y := hx.1
-    rw [map_sum] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at h
     simp only [map_smul, Matrix.mulVecLin_apply, hpr, smul_ite, smul_zero] at h
     have h0 := Fintype.linearIndependent_iff.1 hli
       (fun y => (if qb_wtT (CF.mu y.1) y.2.1 = la then a y else 0) - a y) (by
@@ -114,7 +117,8 @@ theorem highest_vectors_rational_span_of : LemmaA → HighestVectorsRationalSpan
         (fun j => evGLR (R := ℚ) (g * u) (qd_f CF a j.1) - evGLR (R := ℚ) g (qd_f CF a j.1)) (fun i => ?_) j
       · exact sub_eq_zero.1 this
       · have e := qd_ev_inv M la nu _ hx g u hu1 hu2 i
-        rw [qd_ev_expand CF a nu hmax i, map_sum, map_sum] at e
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [qd_ev_expand CF a nu hmax i, map_sum, map_sum] at e
         simp only [smul_sub, Finset.sum_sub_distrib]
         rw [sub_eq_zero]
         convert e using 2 <;>

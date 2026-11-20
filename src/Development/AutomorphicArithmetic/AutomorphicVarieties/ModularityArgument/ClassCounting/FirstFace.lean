@@ -66,7 +66,8 @@ private theorem merge (q e t : ℕ) (ht : t < e + 1) (j : Fin (e + 1) → ZMod q
 theorem sZc : SZc := by
   intro q _ e
   have hz : zc q e = ∑ j : Fin (e + 1) → ZMod q, Finsupp.single (gz q e j) 1 := rfl
-  rw [Cyc, hz, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Cyc, hz, map_sum]
   simp only [bd, Finsupp.linearCombination_single, one_smul]
   rw [Finset.sum_add_distrib, first_face, zero_add, Finset.sum_comm]
   simp only [← Finset.smul_sum]

@@ -81,7 +81,8 @@ lemma dual_dbarDot_comp_real {M : Type*} [TopologicalSpace M] (n : ℕ) (z : M �
   have : dbarDot n z (fun y => (k (f y) : ℂ)) x ξ =
       ((deriv k (f x) : ℝ) : ℂ) * (starRingEnd ℂ) (dDot n z (fun y => (f y : ℂ)) x ξ) := by
     unfold dbarDot dDot
-    rw [map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [db_comp_real n z k hk f hf i x, db_ofReal, map_mul]
     ring

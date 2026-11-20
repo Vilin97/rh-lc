@@ -9,7 +9,8 @@ private theorem isGSp_map' {R R' : Type} [CommRing R] [CommRing R'] (f : R →+*
   unfold IsGSp at *
   ext i j
   have := congrArg f (congrFun (congrFun h i) j)
-  simpa [Matrix.mul_apply, adj_apply, Matrix.one_apply, map_sum, apply_ite f] using this
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa [Matrix.mul_apply, adj_apply, Matrix.one_apply, map_sum, apply_ite f] using this
 
 open Classical in
 theorem UpperTheory.V.Ws.sxPreOfCore :

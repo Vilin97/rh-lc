@@ -99,11 +99,13 @@ theorem Mf_prodQ (R : Fin n → MvPolynomial ι k) : Mf mu (prodQ R) = ∏ b, mu
   have hR : ∀ b, colE b (R b) = ∑ α ∈ (R b).support, colE b (monomial α (AddMonoidAlgebra.coeff (R b) α)) := by
     intro b
     conv_lhs => rw [as_sum (R b)]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
   have hmu : ∀ b, mu b (R b) = ∑ α ∈ (R b).support, AddMonoidAlgebra.coeff (R b) α * mu b (monomial α 1) := by
     intro b
     conv_lhs => rw [as_sum (R b)]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun α _ => by
       rw [show monomial α (AddMonoidAlgebra.coeff (R b) α) = AddMonoidAlgebra.coeff (R b) α • monomial α (1 : k) by
         rw [smul_monomial, smul_eq_mul, mul_one], map_smul, smul_eq_mul]
@@ -163,7 +165,8 @@ theorem colAlg (κ : ι → ι → k) (lam : Fin n → (ι →₀ ℕ) → k)
   have hE : ∀ b α, (monomial α (1 : k)).totalDegree ≤ N →
       lam b α = mu b (E1 κ 1 N (monomial α 1)) := by
     intro b α hα
-    rw [hlm, E1, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hlm, E1, map_sum]
     refine Finset.sum_subset (Finset.range_subset_range.2 (Nat.succ_le_succ hα)) (fun i hi hi' => ?_) |>.trans ?_
     · rw [so_iter_eq_zero κ i _ (by simp only [Finset.mem_range] at hi'; omega), smul_zero, map_zero]
     · refine Finset.sum_congr rfl fun i _ => ?_
@@ -196,7 +199,8 @@ theorem colAlg (κ : ι → ι → k) (lam : Fin n → (ι →₀ ℕ) → k)
       (algebraMap ℚ k ((i.factorial : ℚ)⁻¹) * 1 ^ i) * Mf mu ((secondOrder k cc)^[i] P) := by
     intro i
     conv_rhs => rw [as_sum P]
-    rw [iter_linear, map_sum, Mf_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [iter_linear, map_sum, Mf_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun mo _ => ?_
     rw [show monomial mo (P.coeff mo) = P.coeff mo • monomial mo (1 : k) by
       rw [smul_monomial, smul_eq_mul, mul_one], map_smul, Mf_smul, ← iter_linear]

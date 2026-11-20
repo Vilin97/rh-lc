@@ -63,10 +63,12 @@ theorem exists_coeffs (Λ : Submodule (𝓞 E) (Fin n → E))
     rw [hb'' i]
     ring
   have h2 := congrArg φ h1
-  rw [map_smul, map_sum] at h2
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_smul, map_sum] at h2
   simp only [map_smul, smul_eq_mul] at h2
   have h3 := congrArg (fun t : 𝓞 E => (t : E)) h2
-  simp only [map_mul, map_sum] at h3
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_mul, map_sum] at h3
   have hBD : algebraMap (𝓞 E) E (B : 𝓞 E) * algebraMap (𝓞 E) E D ≠ 0 := mul_ne_zero hBE hDE
   apply mul_left_cancel₀ hBD
   refine Eq.trans ?_ h3.symm
@@ -149,7 +151,8 @@ theorem functional_integral (p : HeightOneSpectrum (𝓞 F)) (Λ : Submodule (�
     obtain ⟨y, hy, rfl⟩ := hx
     obtain ⟨o, ho⟩ := hc y hy
     have : ∑ k, (A.loc p).ιE (c k) * A.bc p y k = (A.loc p).ιE (o : E) := by
-      rw [ho, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [ho, map_sum]
       simp [Places.bc]
     rw [this]
     exact int_mem A p o
@@ -175,7 +178,8 @@ theorem mem_of_forall_lat (Λ : Submodule (𝓞 E) (Fin n → E)) (h : Submodule
     refine ((PlacesInt.integers_local A).1 _).1 fun p => ?_
     have := functional_integral A p Λ (c i)
       (fun y hy => ⟨φ i ⟨y, hy⟩, (hc i ⟨y, hy⟩).symm⟩) _ (hx p)
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simpa [Places.bc] using this
   choose o ho using hint
   obtain ⟨D, hD, hDx⟩ := exists_smul_mem Λ h.span_eq_top x

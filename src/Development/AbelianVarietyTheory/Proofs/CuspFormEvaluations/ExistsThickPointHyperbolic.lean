@@ -36,7 +36,8 @@ theorem _root_.GlobalTheory.ThickPoint.exists_euclidean_real {M : ℕ} [FiniteDi
   refine ⟨(EuclideanSpace.equiv (Fin _) ℝ).symm.toLinearEquiv.toLinearMap ∘ₗ L, fun x y => ?_⟩
   have hB : B x y = ∑ i, v.repr x i * v.repr y i * B (v i) (v i) := by
     conv_lhs => rw [← v.sum_repr x, ← v.sum_repr y]
-    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [Finset.sum_eq_single i (fun j _ hj => by rw [hv hj]; ring) (by simp)]
     ring
@@ -83,7 +84,8 @@ theorem _root_.GlobalTheory.ThickPoint.transference_pair {M : ℕ} (b : Basis (F
     have hψu : ψ u = ∑ j, m j • c j := by simp [hu, map_sum, map_zsmul, hc]
     have hu0 : u ≠ 0 := fun h => hx0 (by rw [← hψu, h, map_zero])
     have hint : ∀ j, ∃ k : ℤ, B u (b j) = k := fun j => ⟨m j, by
-      simp [hu, map_sum, map_zsmul, LinearMap.sum_apply, hd,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [hu, map_sum, map_zsmul, LinearMap.sum_apply, hd,
         LinearMap.BilinForm.apply_dualBasis_left]⟩
     have h := hmin u hu0 hint
     rw [hψu] at h
@@ -93,14 +95,16 @@ theorem _root_.GlobalTheory.ThickPoint.transference_pair {M : ℕ} (b : Basis (F
   have hφv : ∀ i, φ (∑ j, m i j • b j) = y i := by
     intro i
     refine InnerProductSpace.ext_inner_right_basis c fun j => ?_
-    rw [hm i j, hc j, map_sum, sum_inner]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hm i j, hc j, map_sum, sum_inner]
     simp [map_zsmul, ← Int.cast_smul_eq_zsmul ℝ, inner_smul_left, hpair]
   refine ⟨fun i => ∑ j, m i j • b j, fun i => ?_, ?_, fun i => ?_⟩
   · exact Submodule.sum_mem _ fun j _ => Submodule.smul_mem _ _ (subset_span ⟨j, rfl⟩)
   · rw [Fintype.linearIndependent_iff]
     intro g hg i
     have h1 : ∑ j, (g j : ℝ) • y j = 0 := by
-      rw [← map_zero φ, ← hg, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← map_zero φ, ← hg, map_sum]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [← hφv j, ← map_ratCast_smul φ ℚ ℝ (g j)]
       simp
@@ -135,7 +139,8 @@ private lemma herm_swap_eq_cc_herm {G : Matrix (Fin r) (Fin r) E}
   have hcc : ∀ z : E, IsCMField.complexConj E (IsCMField.complexConj E z) = z := fun z => by
     simpa [hc] using _root_.GlobalTheory.TraceDualMin.cc_cc z
   simp only [hc] at hG
-  simp only [_root_.ReciprocityTheory.ChartRestriction.G.FD.herm, hc, map_sum, map_mul, hcc, hG]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [_root_.ReciprocityTheory.ChartRestriction.G.FD.herm, hc, map_sum, map_mul, hcc, hG]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
   ring

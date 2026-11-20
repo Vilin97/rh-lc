@@ -74,7 +74,8 @@ theorem integral_mem {K K' : Type} [MeasurableSpace K'] (μ : Measure K') (S : S
     have h2 : R ⟨s, hs⟩ = ∑ t : T, s t • b t := by
       conv_lhs => rw [← b.sum_repr (R ⟨s, hs⟩)]
       simp [R, b]
-    rw [h2, map_sum] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h2, map_sum] at h1
     have h3 := congrArg (fun u : S => (u : K → ℂ)) h1
     simpa [Submodule.coe_sum, map_smul] using h3
   have : (fun k => ∫ k', F k' k ∂μ) = ∑ t : T, (∫ k', F k' t ∂μ) • ((L (b t) : S) : K → ℂ) := by

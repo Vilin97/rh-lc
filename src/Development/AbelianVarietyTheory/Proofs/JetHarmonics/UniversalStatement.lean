@@ -181,7 +181,8 @@ theorem univ_of_dirs {d : ℕ} {κ : Type} [Fintype κ] (β : Fin d ≃ κ)
     obtain ⟨c, hc⟩ := exists_lin _ (hψ0 1 i)
     have hcj : ∀ j, c (β j) = if j = i then 1 else 0 := fun j => by
       have e := congrArg TrivSqZeroExt.snd (AlgHom.congr_fun (h1 j) (zR 1 i))
-      rw [AlgHom.comp_apply, hc, dualLift_zR, TrivSqZeroExt.snd_inr, ← β.sum_comp, map_sum, TrivSqZeroExt.snd_sum,
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [AlgHom.comp_apply, hc, dualLift_zR, TrivSqZeroExt.snd_inr, ← β.sum_comp, map_sum, TrivSqZeroExt.snd_sum,
         Finset.sum_eq_single j] at e
       · rw [map_smul, ht, if_pos rfl, TrivSqZeroExt.snd_smul, DualNumber.snd_eps, smul_eq_mul, _root_.mul_one,
           Pi.single_apply] at e

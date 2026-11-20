@@ -150,7 +150,8 @@ theorem MMS.sub {f g : MvPowerSeries σ C} (hf : MMS V f) (hg : MMS V g) : MMS V
 theorem mms_sum {ι : Type} (s : Finset ι) {f : ι → MvPowerSeries σ C} (hf : ∀ i ∈ s, MMS V (f i)) :
     MMS V (∑ i ∈ s, f i) := by
   intro μ
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact mm_sum s _ (fun i hi => hf i hi μ)
 
 theorem MMS.mul_left {f g : MvPowerSeries σ C} (hf : IntS V f) (hg : MMS V g) : MMS V (f * g) := by
@@ -361,7 +362,8 @@ theorem mms_pow_frobTw [Finite σ] {f : MvPowerSeries σ C} (hf : IntS V f) : MM
   set P : MvPowerSeries σ C := ∑ ν ∈ S, MvPowerSeries.monomial ν (MvPowerSeries.coeff ν f) with hP
   have hcoeffP : ∀ ν, MvPowerSeries.coeff ν P = if ν ∈ S then MvPowerSeries.coeff ν f else 0 := by
     intro ν
-    rw [hP, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hP, map_sum]
     simp only [MvPowerSeries.coeff_monomial]
     rw [Finset.sum_ite_eq]
   have hlow : ∀ ν, ν ≤ μ → MvPowerSeries.coeff ν (f - P) = 0 := by
@@ -389,7 +391,8 @@ theorem mms_pow_frobTw [Finite σ] {f : MvPowerSeries σ C} (hf : IntS V f) : MM
   have h4 : frobTw V.l P = ∑ ν ∈ S, (MvPowerSeries.monomial ν (MvPowerSeries.coeff ν f)) ^ V.l := by
     ext μ'
     rw [coeff_frobTw]
-    simp only [hP, map_sum, monomial_pow_lemma_9, MvPowerSeries.coeff_monomial]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hP, map_sum, monomial_pow_lemma_9, MvPowerSeries.coeff_monomial]
     split_ifs with hd
     · rw [Finset.sum_ite_eq]
       have e : ∀ ν : σ →₀ ℕ, (μ' = V.l • ν) ↔ (ν = μ'.mapRange (fun n => n / V.l) (Nat.zero_div V.l)) := by

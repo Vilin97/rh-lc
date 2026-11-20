@@ -28,7 +28,8 @@ theorem eq_of_ip_ev (hG : IsUnit E.gram.det) {f f' : E.Y → ℂ} (hf : f ∈ Su
   have key : ∀ (w : S.ιV → ℂ) (j : S.ιV),
       E.ip (E.lin w) (E.ev (S.bV j)) = ((fun i => starRingEnd ℂ (w i)) ᵥ* E.gram) j := by
     intro w j
-    simp only [lin, Fintype.linearCombination_apply, map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [lin, Fintype.linearCombination_apply, map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply,
       smul_eq_mul, Matrix.vecMul, dotProduct, gram, Matrix.of_apply]
   have h1 : (fun i => starRingEnd ℂ (z i)) ᵥ* E.gram = (fun i => starRingEnd ℂ (z' i)) ᵥ* E.gram := by
     funext j
@@ -126,7 +127,8 @@ theorem jOf_mem (b : ι → S'.EqFun) (z : ι → ℂ) (c : S.Cl) : P.jOf E b z 
 
 theorem ip_jOf (hG : IsUnit E.gram.det) (b : ι → S'.EqFun) (z : ι → ℂ) (c : S.Cl) (x : S.V) :
     E.ip (P.jOf E b z c) (E.ev x) = ∑ a, z a * σ (P.B x ((b a : S'.D → S'.V) (P.eD (S.outSec.rep c)))) := by
-  simp only [jOf, map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, Complex.conj_conj, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [jOf, map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, Complex.conj_conj, smul_eq_mul]
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [E.ip_sharp_ev hG, semi_apply]
 
@@ -135,7 +137,8 @@ theorem jOf_mem_Fi (h : S.Ok) (hG : IsUnit E.gram.det) (b : ι → S'.EqFun) (z 
   intro c
   refine ⟨P.jOf_mem E b z c, fun γ hγ => ?_⟩
   unfold jOf
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [map_smul]
   congr 1
@@ -155,9 +158,11 @@ theorem jOf_partner (h : S.Ok) (hG : IsUnit E.gram.det) (b : Basis ι K S'.EqFun
   refine E.eq_of_ip_ev hG (P.jOf_mem E b _ c) (Submodule.subset_span ⟨_, rfl⟩) fun x => ?_
   rw [P.ip_jOf E hG, E.emb_apply, E.ip_ev, ← hψ]
   conv_rhs => rw [← b.sum_repr ψ]
-  simp only [← map_mul, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← map_mul, ← map_sum]
   congr 1
-  rw [Submodule.coe_sum, Finset.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Submodule.coe_sum, Finset.sum_apply, map_sum]
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [Submodule.coe_smul, Pi.smul_apply, map_smul, smul_eq_mul]
 

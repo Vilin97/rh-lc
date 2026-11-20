@@ -16,7 +16,8 @@ theorem repr_algebraMap_of_basis_image (F β : Type) [Field F] [Algebra ℚ F] [
     exact RingHom.congr_fun h q
   have hx : algebraMap F A x = ∑ j, algebraMap ℚ R (ω.repr x j) • b j := by
     conv_lhs => rw [← ω.sum_repr x]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [Algebra.smul_def, map_mul, hq, hb, Algebra.smul_def]
   rw [hx, b.repr_sum_self]

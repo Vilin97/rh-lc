@@ -43,7 +43,8 @@ theorem exists_reverse_intertwiner {G V W : Type} [Group G] [Finite G] [AddCommG
     rw [hinv, e, hgx, hinv, hσ]
   have hψ : ∀ x, Φ (ψ (Φ x)) = (Fintype.card G : ℂ) • Φ x := by
     intro x
-    simp only [ψ, LinearMap.sum_apply, LinearMap.comp_apply, map_sum, hterm, Finset.sum_const,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [ψ, LinearMap.sum_apply, LinearMap.comp_apply, map_sum, hterm, Finset.sum_const,
       Finset.card_univ, Nat.cast_smul_eq_nsmul]
   refine ⟨ψ, ?_, ?_⟩
   · intro h0
@@ -56,7 +57,8 @@ theorem exists_reverse_intertwiner {G V W : Type} [Group G] [Finite G] [AddCommG
     simpa [hc] using h1.symm
   · intro q
     ext w
-    simp only [ψ, LinearMap.comp_apply, LinearMap.sum_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [ψ, LinearMap.comp_apply, LinearMap.sum_apply, map_sum]
     refine Fintype.sum_equiv (Equiv.mulLeft q⁻¹) _ _ fun p => ?_
     simp only [Equiv.coe_mulLeft, mul_inv_rev, inv_inv, map_mul, Module.End.mul_apply]
     rw [← Module.End.mul_apply (ρ q), ← map_mul, mul_inv_cancel, map_one, Module.End.one_apply]

@@ -63,7 +63,8 @@ theorem DefiniteAniso.anisotropic_of_definite : ∀ {F E : Type} [Field F] [Numb
   have h2 := DefiniteAniso.eq_zero_of_hasSig hs (fun i => (B.emb w).1 (x i)) (by
     rw [map_zero] at h1
     rw [← h1]
-    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, h.2.2.2, Matrix.map_apply, Pi.star_apply])
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, h.2.2.2, Matrix.map_apply, Pi.star_apply])
   funext i
   simpa using congrFun h2 i
 

@@ -223,7 +223,8 @@ theorem om_Th_phi : ∀ (D : D7) (S T : HSp D) (C : Ctx S T), ∀ om : GA D S ×
     GlobalTheory.T.rows_congr_of_trivial_at_level D S T C Lv hn M hw hM0 hM h Λ g L h1 h2 h3 h4 g1 g2 g3 g4 _ _ (by
       rw [eu i, sub_add_cancel_left]
       exact neg_mem (nsmul_mem_hatA (fun y hy => nsmul_mem_tens hM hy) (hu' i)))
-  rw [RecSum.phi_eq_sum C.idx C.sympl C.even hn hM hSV hX v₀ hV0 f f1 f2 f3,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [RecSum.phi_eq_sum C.idx C.sympl C.even hn hM hSV hX v₀ hV0 f f1 f2 f3,
     RecSum.phi_eq_sum C.idx C.sympl C.even hn hM hΛ hL v₀ hV f' f1'
       (fun i j e => f2 i j fun k => RecSum.cong_trans (RecSum.cong_symm (hcong i k))
         (RecSum.cong_trans (e k) (hcong j k)))

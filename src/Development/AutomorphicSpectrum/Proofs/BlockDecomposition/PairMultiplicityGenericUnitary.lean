@@ -29,7 +29,8 @@ theorem adLq_apply (s : Bool) (p q : Fin n) (x : Cq n V) :
 
 theorem lift_adLq (T : V →ₗ[ℂ] W) (s : Bool) (p q : Fin n) (x : Cq n V) :
     liftq n T (adLq s p q x) = adLq s p q (liftq n T x) := by
-  simp only [adLq_apply, map_sum, map_smul, lift_cre', lift_ann']
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [adLq_apply, map_sum, map_smul, lift_cre', lift_ann']
 
 section MorLemmas
 
@@ -51,7 +52,8 @@ theorem MorQ.lift_Tl (h : MorQ T E1 E2 F1 F2) (i : Lt n) (y : Cq n V) :
 theorem MorQ.bd (h : MorQ T E1 E2 F1 F2) (x : Cq n V) :
     liftq n T (bdq E1 E2 x) = bdq F1 F2 (liftq n T x) := by
   rw [bd_apply, bd_apply]
-  simp only [map_add, map_smul, map_sum, lift_cre', lift_ann', h.lift_Tl]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_add, map_smul, map_sum, lift_cre', lift_ann', h.lift_Tl]
 
 theorem MorQ.lF (h : MorQ T E1 E2 F1 F2) (s : Bool) (p q : Fin n) (x : Cq n V) :
     liftq n T (lFq E1 E2 s p q x) = lFq F1 F2 s p q (liftq n T x) := by
@@ -162,7 +164,8 @@ theorem lift_bd_comm {E1 E2 : Fin n → Fin n → Module.End ℂ V} {S : Lt n �
       exact (LinearMap.congr_fun (hT i hi).eq _).symm
     · rw [← lift_ann', ann_zero hx hi]
       simp
-  simp only [map_add, map_smul, map_sum, lift_cre', lift_ann' T, hk]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_add, map_smul, map_sum, lift_cre', lift_ann' T, hk]
 
 theorem single_degree_zero (v : V) : DegQ 0 (Pi.single ∅ v : Cq n V) := by
   intro A hA
@@ -331,7 +334,8 @@ theorem shift_zero {lev : Fin n → ℕ} {a b : FreeAlgebra ℂ (Bool × Fin n �
         split_ifs
         · exact bd_single E1 E2 l _
         · simp
-      simp only [t, map_sum, h1]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [t, map_sum, h1]
       exact (map_sum (AddMonoidHom.single (fun _ : Finset (Lt n) => V) ∅) _ _).symm
     rw [e, ← hw, eq_single hx, lift_single, evC_single, ← Pi.single_sub]
     simp

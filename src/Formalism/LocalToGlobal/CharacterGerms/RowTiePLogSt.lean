@@ -329,7 +329,8 @@ theorem closed (i l a : Fin d) :
     intro k
     have D1 := congrArg (fun g => ev (n := 1) ![pt C d 0, 0] (pderiv C ((0 : Fin 2), l) g)) (I1 G i k)
     have D2 := congrArg (fun g => ev (n := 1) ![pt C d 0, 0] (pderiv C ((1 : Fin 2), k) g)) (I2 G i l)
-    simp only [map_sum, Derivation.leibniz, smul_eq_mul, pderiv_eval_single G.F G.const,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, Derivation.leibniz, smul_eq_mul, pderiv_eval_single G.F G.const,
       pderiv_eval_single (pt C d 1) (coordinate_point_constantCoeff 1), pderiv_eval_single (pt C d 0) (coordinate_point_constantCoeff 0),
       sum_d_pt_other (1 : Fin 2) 0 (by decide), sum_d_pt_other (0 : Fin 2) 1 (by decide),
       pderiv_comm' ((0 : Fin 2), l) ((1 : Fin 2), k)] at D1 D2

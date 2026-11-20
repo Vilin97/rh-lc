@@ -66,7 +66,8 @@ theorem sigma_sigma (hcm : IsCMExt F E σ) (a : E) : σ (σ a) = a := by
 
 theorem form_swap {n : ℕ} (hcm : IsCMExt F E σ) {J : Matrix (Fin n) (Fin n) E} (hJ : ∀ i j, σ (J j i) = J i j)
     (x y : Fin n → E) : form σ J y x = σ (form σ J x y) := by
-  simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   rw [sigma_sigma hcm, hJ j i]

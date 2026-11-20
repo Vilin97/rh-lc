@@ -42,7 +42,8 @@ theorem mem_sq_of_gradAt_eq_zero (q : Fin n → ℂ) (p : MvPolynomial (Fin n) �
   obtain ⟨c, hc⟩ := exists_expansion q p
   rw [hp, map_zero, zero_add] at hc
   have hgrad : gradAt q p = ∑ i, eval q (c i) • (Pi.single i 1 : Fin n → ℂ) := by
-    rw [hc, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hc, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [gradAt_mul_of_eval_eq_zero q _ _ (by simp), gradAt_X_sub_C]
   have hcj : ∀ j, eval q (c j) = 0 := by
@@ -93,7 +94,8 @@ theorem gradSpace_sliceIdeal (W : Ideal (MvPolynomial (Fin n) ℂ)) (L : Matrix 
     rw [map_add]
     refine Submodule.add_mem_sup ⟨w, hw, rfl⟩ ?_
     obtain ⟨c, rfl⟩ := Ideal.mem_span_range_iff_exists_fun.1 hy
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Submodule.sum_mem _ fun i _ => ?_
     rw [gradAt_mul_of_eval_eq_zero q _ _ (by rw [map_sub, eval_linPoly, eval_C, sub_self]),
       gradAt_linPoly_sub]

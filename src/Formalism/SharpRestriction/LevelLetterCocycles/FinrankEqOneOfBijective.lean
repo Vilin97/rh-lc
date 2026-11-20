@@ -105,7 +105,8 @@ def trΔ (W : LocWach PD LL O v n) (T : LocLat G Qp LL O) (x : W.DD T) : W.DD T 
 theorem trΔ_inv (T : LocLat G Qp LL O) (x : W.DD T) (δ' : W.Gam) (h' : δ' ∈ W.DelF) :
     W.γD T δ' (trΔ W T x) = trΔ W T x := by
   unfold trΔ
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_bij' (fun δ _ => δ' * δ) (fun δ _ => δ'⁻¹ * δ) ?_ ?_ ?_ ?_ ?_
   · intro δ hδ; exact DelF_mul h' hδ
   · intro δ hδ; exact DelF_mul (DelF_inv h') hδ
@@ -126,7 +127,8 @@ theorem trΔ_letter (T : LocLat G Qp LL O) (i : ZMod n) (x : W.DD T)
 theorem trΔ_map (F : LatHom T₁.L T₂.L) (x : W.DD T₁) :
     W.map F (trΔ W T₁ x) = trΔ W T₂ (W.map F x) := by
   unfold trΔ
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_congr rfl fun δ _ => W.map_γ F δ x
 
 theorem trΔ_fixed (T : LocLat G Qp LL O) (x : W.DD T) (hx : ∀ δ ∈ W.DelF, W.γD T δ x = x) :

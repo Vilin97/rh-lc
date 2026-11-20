@@ -50,9 +50,11 @@ theorem sum_mem_ratForms {D : D7} {T : CoreJ D} {j : ℕ} {σ : T.Q.c.F →+* �
     ∑ k, β k • C.rd a (fs k) ∈ C.ratForms a n := by
   choose b hb using fun k => RingHom.mem_range.1 (hβ k)
   refine ⟨∑ k, b k • fs k, ⟨sum_mem fun k _ => (sec _ _ _ _).smul_mem _ (hf k).1, ?_⟩, ?_⟩
-  · rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum]
     exact sum_mem fun k _ => by rw [map_smulₛₗ]; exact Submodule.smul_mem _ _ (hf k).2
-  · simp only [Cover.rd, map_sum, map_smulₛₗ, hb, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [Cover.rd, map_sum, map_smulₛₗ, hb, Finset.smul_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [RingHom.id_apply, smul_comm]
 

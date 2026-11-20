@@ -253,7 +253,8 @@ theorem qI_apply (y : V) : qI N y = ∑ b ∈ Finset.univ.filter (fun b : Fin r 
   simp only [GlobalTheory.DegCnt.LiftS.qI, LinearMap.sum_apply, LinearMap.smulRight_apply, LinearMap.flip_apply]
 
 theorem adj (x y : V) : H.B (pI N x) y = H.B x (qI N y) := by
-  simp only [GlobalTheory.DegCnt.LiftS.pI_apply, GlobalTheory.DegCnt.LiftS.qI_apply, map_sum, LinearMap.sum_apply, map_smul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [GlobalTheory.DegCnt.LiftS.pI_apply, GlobalTheory.DegCnt.LiftS.qI_apply, map_sum, LinearMap.sum_apply, map_smul,
     LinearMap.smul_apply, LinearMap.map_smulₛₗ, starRingEnd_apply, H.herm, smul_eq_mul]
   exact Finset.sum_congr rfl (fun b _ => mul_comm _ _)
 
@@ -374,17 +375,20 @@ theorem p_II (h0 : II N.F N.F' ⊓ N.F.Xa N.j = ⊥) {y : V} (hy : y ∈ II N.F 
   exact (sub_eq_zero.1 hm).symm
 
 theorem qq (y : V) : qI N (qI N y) = qI N y := by
-  rw [qI_apply N y, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [qI_apply N y, map_sum]
   refine Finset.sum_congr rfl (fun b hb => ?_)
   rw [map_smul, q_i N b (Finset.mem_filter.1 hb).2]
 
 theorem pq (y : V) : pI N (qI N y) = 0 := by
-  rw [qI_apply N y, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [qI_apply N y, map_sum]
   refine Finset.sum_eq_zero (fun b hb => ?_)
   rw [map_smul, p_i N b (Finset.mem_filter.1 hb).2, smul_zero]
 
 theorem projectionOntoDualIsotropicSpan_orthogonal_anisotropic (y : V) : H.B (qI N y) N.F.z = 0 := by
-  rw [qI_apply, map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [qI_apply, map_sum, LinearMap.sum_apply]
   refine Finset.sum_eq_zero (fun b hb => ?_)
   rw [map_smul, LinearMap.smul_apply, symm0 H (N.normalForm_dual_orthogonal_last b (Finset.mem_filter.1 hb).2), smul_zero]
 

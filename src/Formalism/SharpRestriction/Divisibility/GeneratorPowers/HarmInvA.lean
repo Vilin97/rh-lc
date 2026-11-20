@@ -54,7 +54,8 @@ theorem prod_exp {τ : Type} [Algebra ℚ R] : ∀ (n : ℕ) (q : Fin n → MvPo
     ∏ b, PowerSeries.subst (q b) (PowerSeries.exp R) = PowerSeries.subst (∑ b, q b) (PowerSeries.exp R)
   | 0, q, _ => by rw [Fin.prod_univ_zero, Fin.sum_univ_zero, ReciprocityTheory.ChartRestriction.G.TB.WickVanishing.exp_zero]
   | n + 1, q, hq => by
-    rw [Fin.prod_univ_succ, Fin.sum_univ_succ, prod_exp n (fun b => q b.succ) (fun b => hq _),
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Fin.prod_univ_succ, Fin.sum_univ_succ, prod_exp n (fun b => q b.succ) (fun b => hq _),
       ReciprocityTheory.ChartRestriction.G.TB.WickVanishing.exp_add (ha := hq 0)
         (hb := by rw [map_sum]; exact Finset.sum_eq_zero fun b _ => hq _)]
 

@@ -95,7 +95,8 @@ theorem det_gram_ne_zero [StarRing K] {h : V →ₗ⋆[K] V →ₗ[K] K} {X : Su
     intro j
     have hj := congrFun hc j
     simp only [Matrix.vecMul, dotProduct, U0.gram, Matrix.of_apply, Pi.zero_apply] at hj
-    simp only [map_sum, map_smulₛₗ, starRingEnd_apply, star_star, LinearMap.sum_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smulₛₗ, starRingEnd_apply, star_star, LinearMap.sum_apply,
       LinearMap.smul_apply, smul_eq_mul]
     exact hj
   have hall : ∀ z ∈ X, h (∑ i, star (c i) • x i) z = 0 := by

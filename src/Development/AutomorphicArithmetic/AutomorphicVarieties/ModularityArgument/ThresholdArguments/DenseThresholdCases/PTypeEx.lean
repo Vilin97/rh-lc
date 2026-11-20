@@ -81,7 +81,8 @@ private theorem te_root {O : Type} [CommRing O] [IsDomain O] [IsLocalRing O] [Fi
   rw [hu, sub_self] at h1
   rcases mul_eq_zero.1 h1 with h2 | h2
   · have h3 := congrArg (residue O) h2
-    simp only [map_sum, map_pow, hr, one_pow, Finset.sum_const, Finset.card_range, map_zero, nsmul_eq_mul, mul_one] at h3
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_pow, hr, one_pow, Finset.sum_const, Finset.card_range, map_zero, nsmul_eq_mul, mul_one] at h3
     rw [Nat.cast_sub Nat.card_pos, Nat.card_eq_fintype_card, FiniteField.cast_card_eq_zero] at h3
     simp at h3
   · exact mul_inv_eq_one.1 (Units.ext (sub_eq_zero.1 h2))

@@ -78,7 +78,8 @@ theorem exists_smul_eq_mulVec (g : ℕ) (S : Matrix (Fin g) (Fin g) ℤ) (hS : S
   have hψc : ∀ w, ψ w = c ⬝ᵥ w := by
     intro w
     conv_lhs => rw [pi_eq_sum_univ' w]
-    simp [map_sum, c, dotProduct, mul_comm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, c, dotProduct, mul_comm]
   have hu_eq : uq = Sq *ᵥ c := by
     funext i
     have h1 : φ (Pi.single i 1) = uq i := by

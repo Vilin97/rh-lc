@@ -54,7 +54,8 @@ theorem repr_mem_of_coeff_mem (A : Subfield ℂ) (lam : ι → DomWeight n) (v :
     rw [Fintype.linearIndependent_iff]
     intro g hg j
     have e := congrArg (map s) hg
-    simp only [map_sum, map_zero, smul_eq_C_mul, map_mul, map_C, hb'] at e
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_zero, smul_eq_C_mul, map_mul, map_C, hb'] at e
     have e' : ∑ k, (s (g k)) • ((bVV ℂ lam k : VV ℂ lam) : Pol ℂ ι n) = 0 := by
       simpa only [smul_eq_C_mul] using e
     have := Fintype.linearIndependent_iff.1 hliC (fun k => s (g k)) e' j
@@ -79,7 +80,8 @@ theorem repr_mem_of_coeff_mem (A : Subfield ℂ) (lam : ι → DomWeight n) (v :
   obtain ⟨c, hc⟩ := (Submodule.mem_span_range_iff_exists_fun A).1 hspan
   have hvc : v = ∑ j, (s (c j)) • bVV ℂ lam j := by
     apply Subtype.ext
-    rw [← hv', ← hc, map_sum, Submodule.coe_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hv', ← hc, map_sum, Submodule.coe_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [Submodule.coe_smul, ← hb', smul_eq_C_mul, smul_eq_C_mul, map_mul, map_C]
   rw [hvc, (bVV ℂ lam).repr_sum_self]

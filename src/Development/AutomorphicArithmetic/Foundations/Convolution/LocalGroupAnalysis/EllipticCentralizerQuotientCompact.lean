@@ -38,7 +38,8 @@ private theorem krylov_det_ne_zero {F : Type*} [Field F] {n : ℕ} {M : Matrix (
   rw [vecMul_krylov] at hc0
   set p : F[X] := ∑ k : Fin n, C (c k) * X ^ (k : ℕ) with hp
   have hpa : aeval M p = ∑ k : Fin n, c k • M ^ (k : ℕ) := by
-    simp [hp, map_sum, Algebra.smul_def]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [hp, map_sum, Algebra.smul_def]
   have hdeg : p.degree < n := degree_sum_fin_lt c
   have hp0 : p ≠ 0 := by
     intro h

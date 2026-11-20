@@ -34,7 +34,8 @@ theorem comb_mul_right (r : B) (b : ι → B) (e : ι → MvPowerSeries σ Q) :
 
 theorem coeff_comb (b : ι → B) (e : ι → MvPowerSeries σ Q) (α : σ →₀ ℕ) :
     coeff α (comb b e) = ∑ i, algebraMap B Q (b i) * coeff α (e i) := by
-  simp only [comb, map_sum, coeff_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [comb, map_sum, coeff_smul]
 
 end GlobalTheory.BasisLift
 

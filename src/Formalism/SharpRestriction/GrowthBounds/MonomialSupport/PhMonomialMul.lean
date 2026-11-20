@@ -125,7 +125,8 @@ theorem compPh : CompPh := by
     simp only [multideg_add', multideg_phExp]
   unfold filtQ
   conv_lhs => rw [F.as_sum]
-  rw [map_sum, Finset.mul_sum, compD_sum, map_sum, Finset.mul_sum, Finset.sum_filter]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.mul_sum, compD_sum, map_sum, Finset.mul_sum, Finset.sum_filter]
   refine Finset.sum_congr rfl (fun mo _ => ?_)
   rw [ph_monomial_mul, compD_monomial']
   simp only [key]
@@ -254,7 +255,8 @@ theorem fdigPh : FdigPh := by
   have hs := fdigSum p O r J Dt rho _ F.support
     (fun mo => monomial β c * Dt.ph (monomial mo (AddMonoidAlgebra.coeff F mo)))
   conv_lhs => rw [F.as_sum]
-  rw [map_sum, Finset.mul_sum, hs]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.mul_sum, hs]
   simp only [ph_monomial_mul, fdig_monomial]
   by_cases hd : Dt.digOK rho β
   · rw [if_pos hd]

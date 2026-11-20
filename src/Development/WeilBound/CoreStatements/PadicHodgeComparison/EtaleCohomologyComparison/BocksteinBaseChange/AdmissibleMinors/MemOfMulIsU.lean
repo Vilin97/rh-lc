@@ -140,7 +140,8 @@ theorem conn (P : Pre G R) (hR : R.Facts) (hE : EtSide G) (M : Model l K) (hM : 
   have hv : v ∈ Submodule.span ℚ_[l] (Set.range g) := by rw [hg]; trivial
   obtain ⟨a, ha⟩ := (Submodule.mem_span_range_iff_exists_fun ℚ_[l]).mp hv
   have e1 : R.tB ^ d * P.c M (n + j) v φ = ∑ s, R.q (a s) * (R.tB ^ d * P.c M (n + j) (g s) φ) := by
-    rw [← ha, map_sum, AddMonoidHom.finsetSum_apply, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← ha, map_sum, AddMonoidHom.finsetSum_apply, Finset.mul_sum]
     refine Finset.sum_congr rfl fun s _ => ?_
     rw [P.lin]
     ring

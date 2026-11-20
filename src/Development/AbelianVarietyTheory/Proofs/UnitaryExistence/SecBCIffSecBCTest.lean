@@ -66,7 +66,8 @@ theorem isBC_of_isBCTest (hWD : ValueWD Xo c) (hBC : HasBC Xo c) (hT : AllTest X
     have : IsReduced q.R := (Ideal.isRadical_iff_quotient_reduced _).1 q.rad
     obtain ⟨p, φ, y₀, hy₀⟩ := hT q.R (y'.res hle hq)
     have h₂ := map_trans _ _ hy₀ ((frMap_res_iff hle hq hS ψ y' y).2 hy')
-    rw [hev, h q hq y' p φ y₀ hy₀, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hev, h q hq y' p φ y₀ hy₀, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_mul, ψ.commutes, evR_of_map hWD (hfs i) h₂]
     rfl

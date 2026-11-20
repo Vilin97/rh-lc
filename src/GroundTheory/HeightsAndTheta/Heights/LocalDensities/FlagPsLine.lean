@@ -84,7 +84,8 @@ theorem gram_eq : rowPoly i hi L * (signatureForm N p).map C * colPoly i hi L =
   · rw [sigTop, Matrix.diagonal_map (map_zero C), Matrix.mul_apply]
     simp only [Matrix.mul_diagonal]
     rfl
-  · simp only [tailForm, Matrix.of_apply, map_sum, Finset.mul_sum, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [tailForm, Matrix.of_apply, map_sum, Finset.mul_sum, smul_eq_mul]
     refine Finset.sum_congr rfl fun c _ => ?_
     split_ifs with hc
     · have h1 : ∀ a : Fin i, c ≠ Fin.castLE hi a := fun a h => by

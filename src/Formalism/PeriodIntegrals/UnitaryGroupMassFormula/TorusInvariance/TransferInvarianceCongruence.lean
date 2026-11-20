@@ -398,7 +398,8 @@ theorem transfer_invariance_right : StepRight := by
         rw [hconj]
         change lamL (fderiv ℝ F (g * s')) (g * s')
           (∑ c, ∑ d, (blk i s'⁻¹ c a * blk i s' b d) • Matrix.single (posL k r i c) (posL k r i d) (1 : ℂ)) = _
-        simp only [map_sum, map_smul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, map_smul]
         rfl
     _ = _ := by
         refine Finset.sum_congr rfl fun c _ => Finset.sum_congr rfl fun d _ => ?_

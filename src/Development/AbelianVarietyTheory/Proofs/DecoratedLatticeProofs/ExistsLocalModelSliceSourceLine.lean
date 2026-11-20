@@ -34,13 +34,15 @@ theorem prH_apply (a : D.host.E) : prH p a = p.pr a := rfl
 theorem map_ι_mul_rat {l m o : Type} [Fintype m] (M : Matrix l m k) (N : Matrix m o D.host.E) :
     M.map p.ι * N.map (incA D) = (M * N.map (prH p)).map p.ι := by
   ext i j
-  simp only [Matrix.mul_apply, Matrix.map_apply, map_sum, ι_mul_right]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mul_apply, Matrix.map_apply, map_sum, ι_mul_right]
   rfl
 
 theorem rat_mul_map_ι {l m o : Type} [Fintype m] (N : Matrix l m D.host.E) (M : Matrix m o k) :
     N.map (incA D) * M.map p.ι = (N.map (prH p) * M).map p.ι := by
   ext i j
-  simp only [Matrix.mul_apply, Matrix.map_apply, map_sum, ι_mul_left]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mul_apply, Matrix.map_apply, map_sum, ι_mul_left]
   rfl
 
 section Frames

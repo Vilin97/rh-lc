@@ -83,11 +83,13 @@ theorem isPlacesIdem_sumIdem (S₁ : Finset (InfinitePlace F)) (S₂ : Finset (H
   have hI : ∀ w, (placeMapInf w).proj (sumIdem S₁ S₂) =
       ∑ u : S₁, (placeMapInf w).proj ((placeMapInf u.1).inj 1) := by
     intro w
-    simp only [sumIdem, map_add, map_sum, inf_proj_fin, Finset.sum_const_zero, add_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [sumIdem, map_add, map_sum, inf_proj_fin, Finset.sum_const_zero, add_zero]
   have hF : ∀ v, (placeMapFin v).proj (sumIdem S₁ S₂) =
       ∑ u : S₂, (placeMapFin v).proj ((placeMapFin u.1).inj 1) := by
     intro v
-    simp only [sumIdem, map_add, map_sum, fin_proj_inf, Finset.sum_const_zero, zero_add]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [sumIdem, map_add, map_sum, fin_proj_inf, Finset.sum_const_zero, zero_add]
   refine ⟨fun w hw => ?_, fun w hw => ?_, fun v hv => ?_, fun v hv => ?_⟩
   · refine (hI w).trans ?_
     rw [Finset.sum_eq_single (⟨w, hw⟩ : S₁)]

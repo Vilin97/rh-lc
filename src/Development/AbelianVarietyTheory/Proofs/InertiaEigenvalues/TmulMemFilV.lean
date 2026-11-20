@@ -104,8 +104,10 @@ theorem proj_mem (τ : K →ₐ[Qp] LL) {n : ℕ} (α β : Fin n → K)
       LinearMap.smul_apply, LinearMap.id_apply, sub_eq_zero]
     intro c
     have := congrArg (projMap τ x) (h c)
-    simp only [map_sum, projMap, TensorProduct.lift.tmul, LinearMap.mk₂_apply] at this
-    simp only [map_sum, map_smul, mul_mul, Finset.smul_sum, smul_smul, ← map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, projMap, TensorProduct.lift.tmul, LinearMap.mk₂_apply] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, mul_mul, Finset.smul_sum, smul_smul, ← map_mul]
     exact this.symm
   rw [← he] at this
   exact this.2
@@ -129,7 +131,8 @@ theorem coord_proj (τ : K →ₐ[Qp] LL) {n d : ℕ} (α β : Fin n → K) (f :
     (b : Fin d → V) (y : Fin d → BdR) (s : BdR) :
     coordMap f (∑ j, τ (α j) • mulVdR (K := K) (LL := LL) (β j) (∑ k, b k ⊗ₜ[Qp] (y k * s))) =
       (∑ j, ∑ k, (algebraMap K BdR (β j) * algebraMap Qp BdR (f (τ (α j) • b k))) * y k) * s := by
-  simp only [map_sum, mulVdR_tmul, Finset.smul_sum, TensorProduct.smul_tmul', coordMap,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, mulVdR_tmul, Finset.smul_sum, TensorProduct.smul_tmul', coordMap,
     LinearMap.comp_apply, TensorProduct.map_tmul, LinearEquiv.coe_coe, TensorProduct.lid_tmul,
     LinearMap.id_apply, Finset.sum_mul]
   refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun k _ => ?_

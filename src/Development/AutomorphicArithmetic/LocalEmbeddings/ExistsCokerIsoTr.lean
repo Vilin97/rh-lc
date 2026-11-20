@@ -317,7 +317,8 @@ theorem R.gr {a : Z' ⟶ Z} {x : Pt E m r Z} {y : Pt E m r Z'} (H : R a x y) {h 
   · rw [← funext fun k => hψ _ (c.e (.inr k)) ⊤ h ⊤ le_rfl h']
     exact (G.1.pullback a).map_iso ψ.hom
   · have e : a.appLE ⊤ ⊤ le_rfl = a.appTop := (a.app_eq_appLE (U := ⊤)).symm
-    rw [← hψ _ _ ⊤ h ⊤ le_rfl, G.2, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hψ _ _ ⊤ h ⊤ le_rfl, G.2, map_sum, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [QCoh.pullbackSections_smul, Scheme.Modules.Hom.app_smul, hψ _ _ _ _ _ _ h', e]
 

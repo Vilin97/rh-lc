@@ -449,7 +449,8 @@ abbrev Isom (x : Alg P) : Type := {i : Alg P ≃ₗ[B] (n → B) // ∀ y z, hfo
 def stdIsom (x : Alg P) : Isom P (gram P x) x :=
   ⟨(powBasis P).equivFun, fun y z => by
     conv_rhs => rw [← (powBasis P).sum_equivFun y, ← (powBasis P).sum_equivFun z]
-    simp only [hform, gram, herm, Matrix.of_apply, map_sum, conj_smul, Finset.mul_sum, Finset.sum_mul, mul_smul_comm,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hform, gram, herm, Matrix.of_apply, map_sum, conj_smul, Finset.mul_sum, Finset.sum_mul, mul_smul_comm,
       smul_mul_assoc, map_smul, smul_eq_mul]
     exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring⟩
 

@@ -39,12 +39,14 @@ theorem map_gcell {S' : Type} [CommRing S'] (φ : S →+* S') (x : GVar m a k b 
 theorem map_gvec {S' : Type} [CommRing S'] {φ : S →+* S'} {Q Q' : Type} [AddCommGroup Q] [Module S Q] [AddCommGroup Q']
     [Module S' Q'] (F : Q →ₛₗ[φ] Q') (c : Fin m → Q) (w : GPm m a b) (x : GVar m a k b → S) (l : Fin m) :
     F (gvec c w x l) = gvec (fun i => F (c i)) w (φ ∘ x) l := by
-  simp only [gvec, map_sum, map_smulₛₗ, map_gcell]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [gvec, map_sum, map_smulₛₗ, map_gcell]
 
 theorem comp_gvec {S' : Type} [CommRing S'] (φ : S →+* S') {ι : Type} (c : Fin m → ι → S) (w : GPm m a b)
     (x : GVar m a k b → S) (l : Fin m) : φ ∘ gvec c w x l = gvec (fun i => φ ∘ c i) w (φ ∘ x) l := by
   funext r
-  simp only [gvec, Function.comp_apply, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum, map_mul, map_gcell]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [gvec, Function.comp_apply, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum, map_mul, map_gcell]
 
 variable (a b) in
 

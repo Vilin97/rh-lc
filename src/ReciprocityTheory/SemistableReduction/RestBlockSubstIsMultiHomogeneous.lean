@@ -135,7 +135,8 @@ private theorem aeval_whom_lemma {σ τ : Type*} {M : Type*} [AddCommMonoid M] (
     (g : MvPolynomial σ ℂ) (m : M) (hg : ∀ s ∈ g.support, ∑ i ∈ s.support, s i • d i = m) :
     IsWeightedHomogeneous w (aeval v g) m := by
   classical
-  rw [g.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [g.as_sum, map_sum]
   refine IsWeightedHomogeneous.sum _ _ _ fun s hs => ?_
   rw [aeval_monomial, MvPolynomial.algebraMap_eq, ← hg s hs,
     ← zero_add (∑ i ∈ s.support, s i • d i), Finsupp.prod]

@@ -23,7 +23,8 @@ theorem hermVec_map {R R' : Type} [CommRing R] [Algebra F R] [CommRing R'] [Alge
     congr 1
     have h := GlobalTheory.CompanionTheory.SiegelND.Coef.Lim.trace_map (AlgHom.id F R) b ((S : Matrix (Fin n) (Fin n) (R ⊗[F] E)) i i)
     rw [Algebra.TensorProduct.map_id, AlgHom.id_apply] at h
-    rw [h, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_mul, AlgHom.commutes]
     rfl

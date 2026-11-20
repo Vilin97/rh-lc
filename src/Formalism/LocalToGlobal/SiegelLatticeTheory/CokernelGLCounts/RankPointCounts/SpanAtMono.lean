@@ -29,7 +29,8 @@ theorem cplxKer : CplxKer := by
       simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, Algebra.smul_def,
         RingHom.algebraMap_toAlgebra]
     have h2 := congrArg (fun z => b.repr z j) h1
-    simp only [map_sum, map_smul, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.smul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.smul_apply,
       smul_eq_mul, map_zero, Finsupp.coe_zero, Pi.zero_apply] at h2
     simpa [Matrix.mulVec, dotProduct, s] using h2
   have hcsum : c = ∑ j ∈ J, b j • (fun i => φ (s j i)) := by
@@ -122,10 +123,12 @@ theorem cplx_comb {ι : Type} [Fintype ι] (g : ι → (VS D).V) (U : Submodule 
       rw [← hc p hp]; refine Finset.sum_congr rfl fun i _ => ?_
       rw [Algebra.smul_def, RingHom.algebraMap_toAlgebra, mul_comm]
     have h2 := congrArg (fun z => b.repr z j) h1
-    simp only [map_sum, map_smul, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.smul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.smul_apply,
       smul_eq_mul, map_zero, Finsupp.coe_zero, Pi.zero_apply] at h2
     show (VS D).hT p (w j) = 0
-    simp only [w, map_sum, map_smul, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [w, map_sum, map_smul, smul_eq_mul]
     rw [← h2]; refine Finset.sum_congr rfl fun i _ => ?_; simp only [s]; ring
   have hc' : ∀ i, c i = ∑ j ∈ J, embS D (X.pl v) (s j i) * b j := by
     intro i

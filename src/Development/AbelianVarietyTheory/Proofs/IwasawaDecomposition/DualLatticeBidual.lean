@@ -62,7 +62,8 @@ theorem dual_lattice_bidual (σ : E →+* E) (hσ : ∀ x, σ (σ x) = x) (J : M
   have hsym' : ∀ x y, σ (hform σ J x y) = hform σ J y x := by
     intro x y
     have e : ∀ i j, σ (J i j) = J j i := fun i j => congrFun (congrFun hH j) i
-    simp only [hform, map_sum, map_mul, hσ, e]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hform, map_sum, map_mul, hσ, e]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
   have hsym : h.IsSymm := ⟨fun x y => hsym' x y⟩

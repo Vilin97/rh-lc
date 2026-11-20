@@ -159,7 +159,8 @@ theorem algebraicIndependent_forgotten (hv : ∀ p, (v p).1 = κ p.1) (hP : IsMu
   have hH : H ∈ P' := by
     rw [← hker, RingHom.mem_ker]
     have e1 : φ H = (N : L) * aeval (fun k : Forgotten κ ↦ φ (X ⟨k.1, i k⟩)) p := by
-      rw [hHdef, map_sum, aeval_def, eval₂_eq', Finset.mul_sum, ← Finset.sum_coe_sort p.support]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hHdef, map_sum, aeval_def, eval₂_eq', Finset.mul_sum, ← Finset.sum_coe_sort p.support]
       refine Finset.sum_congr rfl fun a _ ↦ ?_
       rw [map_mul, show φ (rename v (g a)) = ψ (g a) from rfl, hg a, forgetMonomial, map_prod]
       simp only [map_pow, mul_assoc]
@@ -180,7 +181,8 @@ theorem algebraicIndependent_forgotten (hv : ∀ p, (v p).1 = κ p.1) (hP : IsMu
     (isHomogeneous_forgetWeight κ hP) hH (⇑a)
   have e2 : weightedHomogeneousComponent (forgetWeight κ) (⇑a) H =
       rename v (g ⟨a, ha⟩) * forgetMonomial κ i a := by
-    rw [hHdef, map_sum, Finset.sum_eq_single ⟨a, ha⟩]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hHdef, map_sum, Finset.sum_eq_single ⟨a, ha⟩]
     · exact (hhom ⟨a, ha⟩).weightedHomogeneousComponent_same
     · intro b _ hb
       exact (hhom b).weightedHomogeneousComponent_ne _

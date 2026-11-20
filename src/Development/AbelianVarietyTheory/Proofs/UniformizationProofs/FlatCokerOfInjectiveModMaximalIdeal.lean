@@ -31,7 +31,8 @@ private theorem flat_quotient_of_mem_ideal_smul_imp_mem_map_smul {V A N : Type*}
   choose n hn using fun i => Submodule.Quotient.mk_surjective K (x i)
   have hzK : ∑ i, f i • n i ∈ K := by
     have h1 : (K.mkQ.restrictScalars V) (∑ i, f i • n i) = 0 := by
-      rw [map_sum, ← hsum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, ← hsum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_smul, LinearMap.restrictScalars_apply, Submodule.mkQ_apply, hn]
     exact (Submodule.Quotient.mk_eq_zero K).1 h1

@@ -102,11 +102,13 @@ theorem act_le_std (D : D7) (S T : HSp D) (g : GA D T) : ∃ N : ℕ, 0 < N ∧
     rw [h1, Matrix.mul_one, Matrix.mul_apply]
   rw [mul_smul]
   refine hKm _ (Matrix.ext fun i j => ?_) fun i j => ?_
-  · rw [Matrix.map_apply, Matrix.smul_apply, nsmul_eq_mul, RingHom.map_mul, hact, map_sum, Finset.sum_eq_zero,
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [Matrix.map_apply, Matrix.smul_apply, nsmul_eq_mul, RingHom.map_mul, hact, map_sum, Finset.sum_eq_zero,
       mul_zero, Matrix.zero_apply]
     intro k _
     rw [RingHom.map_mul, GlobalTheory.LatVac.infPart_of_mem hu k j, mul_zero]
-  · rw [Matrix.smul_apply, nsmul_eq_mul, RingHom.map_mul, map_natCast, hact, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [Matrix.smul_apply, nsmul_eq_mul, RingHom.map_mul, map_natCast, hact, map_sum, Finset.mul_sum]
     refine sum_mem fun k _ => ?_
     have h3 := mul_mem (h' i k) (hden u hu k j)
     rw [Matrix.map_apply, mul_mul_mul_comm, ← Nat.cast_mul, ← RingHom.map_mul] at h3

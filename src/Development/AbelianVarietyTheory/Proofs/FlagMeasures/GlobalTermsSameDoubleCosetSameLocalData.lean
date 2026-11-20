@@ -131,7 +131,8 @@ theorem NU_of_tri (H : HermSp M V) {f g : Fin (r + 1) → V} (h : Tri E f g) {u 
         span_eq_of_tri h]
     rw [hsp]
     obtain ⟨A, hA, hc⟩ := h
-    rw [hc a.castSucc, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hc a.castSucc, map_sum]
     have e : ∑ c, u (A c a.castSucc • f c) - ∑ c, A c a.castSucc • f c =
         ∑ c, A c a.castSucc • (u (f c) - f c) := by
       rw [← Finset.sum_sub_distrib]

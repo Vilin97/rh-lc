@@ -62,7 +62,8 @@ theorem pair_sum (V : Submodule ℂ (Fin n → ℂ)) (x : V) (y : Fin n → ℂ)
   have hx : (x : Fin n → ℂ) =
       ∑ i, (Module.finBasis ℂ V).repr x i • ((Module.finBasis ℂ V i : V) : Fin n → ℂ) := by
     have hs := congrArg V.subtype ((Module.finBasis ℂ V).sum_repr x)
-    rw [map_sum] at hs
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at hs
     simp only [map_smul, Submodule.subtype_apply] at hs
     exact hs.symm
   rw [hx, star_sum, sum_dotProduct]

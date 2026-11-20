@@ -103,7 +103,8 @@ theorem loc_entry (D : D7) (Λ : Submodule (𝓞 D.host.E) (VS D).V) {T T' : D.h
   have hYeq : Y = (frame G₂ b - frame G b) - (frame G₁ b - frame G b) + (frame G₁ b - frame G b) -
       n (frame G₁ b - frame G b) - n (∑ c, M' c • (G₁.fl.e c - G.fl.e c)) := by
     rw [hY, hfr b, hd'sum]
-    simp only [map_add, map_sub, map_sum, map_smul, smul_sub, Finset.sum_sub_distrib]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_add, map_sub, map_sum, map_smul, smul_sub, Finset.sum_sub_distrib]
     abel
   have hYLg : Y ∈ LP P (Ideal.span {((gS D : ℕ) : 𝓞 D.host.E)} • Λ) := by
     rw [hYeq]

@@ -89,11 +89,13 @@ theorem isLMat_of_single (I : Ident t ϖ P T) (s : GQ l) (g : G) (γ : ι → ι
   have h1 : inclL t ϖ P c = ∑ j, inclO l O (c j) • phiW t ϖ P (Pi.single j 1) := by
     funext i
     simp [inclL_apply, phiW_apply, Matrix.mulVec, dotProduct, Pi.single_apply, apply_ite (frobOW l O), mul_comm]
-  rw [h1, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h1, map_sum]
   simp only [I.act_smul, I.act_phiW, h, galOW_inclO]
   simp only [phiW_apply, frobOW_inclO, inclL_apply]
   funext i
-  simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Matrix.mulVec, dotProduct, Matrix.of_apply, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Matrix.mulVec, dotProduct, Matrix.of_apply, map_sum,
     map_mul, Finset.mul_sum]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
@@ -132,7 +134,8 @@ theorem value_eq {l : ℕ} {R₀ O R S ι Q : Type} [CommRing R₀] [CommRing O]
   have h2 := congrArg (E.tr ev) (hy j)
   rw [← E.tr_comp, h₁, E.tr_comp, E.tr_comp] at h2
   rw [h2]
-  simp only [map_sum, LinearMap.map_smulₛₗ, ← FHom.u_tr, hws, hwo',
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.map_smulₛₗ, ← FHom.u_tr, hws, hwo',
     Finset.sum_apply, Pi.smul_apply, hwb]
   rw [Finset.sum_eq_single i (fun k _ hk => by simp [Ne.symm hk]) (by simp)]
   refine Finset.sum_congr rfl fun q _ => ?_

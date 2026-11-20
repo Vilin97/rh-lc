@@ -25,7 +25,8 @@ theorem sgE_cpT (a b : Fin n) :
 theorem tcoef_eq_sum (φ : Module.Dual ℂ (Fock n)) (y : TensorProduct ℂ N (Fock n)) :
     tcoef φ y = ∑ s : Finset (Fin (n * n)), φ (fockBasis n s) • tcoef ((fockBasis n).coord s) y := by
   conv_lhs => rw [tcoef_expand y]
-  simp only [map_sum, tcoef_tmul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, tcoef_tmul]
 
 theorem tco_actDiag (E : Fin n → Fin n → Module.End ℂ N) (X : Matrix (Fin n) (Fin n) ℂ)
     (y : TensorProduct ℂ N (Fock n)) (s : Finset (Fin (n * n))) :
@@ -34,7 +35,8 @@ theorem tco_actDiag (E : Fin n → Fin n → Module.End ℂ N) (X : Matrix (Fin 
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul m f =>
-    simp only [actM, diagE, sgE_cpT, eT, sgX, LinearMap.sum_apply, LinearMap.smul_apply, LinearMap.add_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [actM, diagE, sgE_cpT, eT, sgX, LinearMap.sum_apply, LinearMap.smul_apply, LinearMap.add_apply,
       TensorProduct.map_tmul, LinearMap.lTensor_tmul, LinearMap.id_apply, map_sum, map_smul, map_add,
       tcoef_tmul, LinearMap.coe_comp, Function.comp_apply, smul_add, Finset.sum_add_distrib, smul_smul]
     rw [Finset.smul_sum, Finset.sum_smul]
@@ -61,7 +63,8 @@ theorem tco_wK (hD : IsDerivedOn ε σ D E) {k : Matrix (Fin n) (Fin n) ℂ} (hk
     tcoef ((fockBasis n).coord s) (wK hD hk y) =
       ∑ s', (fockBasis n).coord s (ff ε k (fockBasis n s')) • sigD hD hk (tcoef ((fockBasis n).coord s') y) := by
   conv_lhs => rw [tcoef_expand y]
-  simp only [map_sum, wK, TensorProduct.map_tmul, tcoef_tmul, AlgHom.toLinearMap_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, wK, TensorProduct.map_tmul, tcoef_tmul, AlgHom.toLinearMap_apply]
 
 theorem tco_wK_hasDeriv (hσ : IsURepOn (UJset ε) σ) (hD : IsDerivedOn ε σ D E) {X : Matrix (Fin n) (Fin n) ℂ}
     (hX : inK ε X) (y : TensorProduct ℂ D (Fock n)) (s : Finset (Fin (n * n))) :

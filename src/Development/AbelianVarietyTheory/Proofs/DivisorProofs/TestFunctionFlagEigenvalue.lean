@@ -18,7 +18,8 @@ theorem GlobalTheory.CovTest.hh_testF : GlobalTheory.CovTop.Hypotheses2 → Glob
     GlobalTheory.FlagZ.IsHh D.what₂.Tau Y.N hh → hh (testF Y) = (1 / (Y.j : ℝ) - 1 / ((Y.N : ℝ) - Y.j) - 1) * testI Y := by
   intro hP hD hA hR D Y hh h
   have e1 : hh (testF Y) = ∑ τ, formDeg (bcForm τ * toForm (curveCl D.what₂.Tau Y.N Y.j)) := by
-    simp only [testF, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [testF, map_sum]
     exact Finset.sum_congr rfl fun τ _ => GlobalTheory.T.hh_power_sum_eq_boundary_form hP hD hA hR _ _ hh h τ _
   have e2 : ∀ τ, formDeg (bcForm τ * toForm (curveCl D.what₂.Tau Y.N Y.j)) =
       formDeg (blkForm Y.j τ * toForm (curveCl D.what₂.Tau Y.N Y.j)) -

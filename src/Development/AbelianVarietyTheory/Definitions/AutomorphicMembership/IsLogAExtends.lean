@@ -227,7 +227,8 @@ theorem isLogA_extends {f : Per.Ainf l →+* Per.Ainf l} {F : Per.Acris l →+* 
   refine ⟨⟨Per.extP f s, hf.mem _ s.2⟩, ?_, F z, ?_⟩
   · have hm : f (mu e) = mu e' := by rw [mu, mu, map_sub, map_one, h]
     have := congrArg (Per.extP f) hs
-    simpa only [map_mul, map_natCast, map_sum, map_pow, map_neg, map_one, GlobalTheory.RingBasics.awayMap_algebraMap₂, hm] using this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa only [map_mul, map_natCast, map_sum, map_pow, map_neg, map_one, GlobalTheory.RingBasics.awayMap_algebraMap₂, hm] using this
   · have := congrArg F hz
     rw [map_sub, map_mul, map_pow, map_natCast, hf.env] at this
     exact this

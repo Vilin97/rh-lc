@@ -69,7 +69,8 @@ omit [DecidableEq a] in
 theorem superSum_map {R : Type} [CommRing R] (f : R →+* F) (pos : a → ℕ) (M : Matrix a a R) :
     superSum pos (M.map f) = f (∑ r, ∑ s, if pos s = pos r + 1 then M r s else 0) := by
   unfold superSum
-  simp only [map_sum, Matrix.map_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Matrix.map_apply]
   refine Finset.sum_congr rfl fun r _ => Finset.sum_congr rfl fun s _ => ?_
   split_ifs <;> simp
 

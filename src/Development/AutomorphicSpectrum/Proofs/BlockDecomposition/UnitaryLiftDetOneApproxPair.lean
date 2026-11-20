@@ -56,7 +56,8 @@ theorem sigR_incl (σ : E →ₐ[F] E) (e : E) : sigR K σ (inclR K e) = inclR K
 
 theorem hform_incV (σ : E →ₐ[F] E) {M : ℕ} (J : Matrix (Fin M) (Fin M) E) (a t : Fin M → E) :
     Formalism.UG.hform (sigR K σ) (JR K J) (incV K a) (incV K t) = inclR K (hf σ J a t) := by
-  simp only [Formalism.UG.hform, incV, JR, Sa2.hf, Matrix.map_apply, sigR_incl, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Formalism.UG.hform, incV, JR, Sa2.hf, Matrix.map_apply, sigR_incl, map_sum, map_mul]
 
 end Lift
 
@@ -84,7 +85,8 @@ theorem lift_plane : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [Numbe
     have hsum : ∑ j, (((HA.mat K σ J x).1 : Matrix (Fin M) (Fin M) (K ⊗[F] E)) - 1) i j * inclR K (v j) =
         ((((HA.mat K σ J x).1 : Matrix (Fin M) (Fin M) (K ⊗[F] E)) - 1).mulVec (incV K v)) i := rfl
     simp only [Matrix.mulVec, dotProduct, Pi.zero_apply]
-    rw [Finset.sum_congr rfl (fun j _ => hterm j), ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_congr rfl (fun j _ => hterm j), ← map_sum]
     have h0 : ((((HA.mat K σ J x).1 : Matrix (Fin M) (Fin M) (K ⊗[F] E)) - 1).mulVec (incV K v)) = 0 := by
       rw [Matrix.sub_mulVec, hXv, Matrix.one_mulVec, sub_self]
     rw [hsum, h0, Pi.zero_apply, map_zero]

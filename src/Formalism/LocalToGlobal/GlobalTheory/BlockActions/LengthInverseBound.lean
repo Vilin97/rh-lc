@@ -112,7 +112,8 @@ theorem root_eq_one (P : Ideal (𝓞 E)) (T k : ℕ) (b : 𝓞 E) (hT : T.Prime)
   have hqP : (q : 𝓞 E) ∈ P := by
     rw [← Ideal.Quotient.eq_zero_iff_mem]
     have h0 := congrArg (Ideal.Quotient.mk P) (hη.geom_sum_eq_zero hq.one_lt)
-    simpa [map_sum, map_pow, hbP] using h0
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [map_sum, map_pow, hbP] using h0
   have hTq : T = q := by
     by_contra hne'
     have hcop : Nat.Coprime T q := (Nat.coprime_primes hT hq).2 hne'

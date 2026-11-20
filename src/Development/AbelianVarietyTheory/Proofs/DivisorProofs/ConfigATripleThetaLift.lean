@@ -82,7 +82,8 @@ variable {F E : Type} [Field F] [Field E] [Algebra F E]
 
 theorem form_swap {σ : E →ₐ[F] E} (hσ : ∀ x, σ (σ x) = x) {n : ℕ} {J : Matrix (Fin n) (Fin n) E}
     (hJ : ∀ i j, σ (J j i) = -J i j) (p q : Fin n → E) : form σ J p q = -σ (form σ J q p) := by
-  simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, hJ, Finset.mul_sum, ← Finset.sum_neg_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, hJ, Finset.mul_sum, ← Finset.sum_neg_distrib]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 
@@ -125,11 +126,13 @@ variable {F E K : Type} [Field F] [Field E] [Algebra F E] [Field K] [Algebra F K
 theorem row_form (σ : E →ₐ[F] E) (t : E →ₐ[F] K) {n m : ℕ} (J : Matrix (Fin n) (Fin n) E) (x : Fin n → E)
     (ι : Matrix (Fin n) (Fin m) E) (j : Fin m) :
     ∑ r, t (x r) * (J.map t * ι.map (t.comp σ)) r j = t (form σ J x (ι *ᵥ Pi.single j 1)) := by
-  simp [form, Matrix.mul_apply, dotProduct, Matrix.mulVec, map_sum, map_mul, Pi.single_apply, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [form, Matrix.mul_apply, dotProduct, Matrix.mulVec, map_sum, map_mul, Pi.single_apply, Finset.mul_sum]
 
 theorem col_form (σ : E →ₐ[F] E) (t : E →ₐ[F] K) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (x z : Fin n → E) :
     ∑ r, (J.map t *ᵥ fun s => t (σ (x s))) r * t (z r) = t (form σ J z x) := by
-  simp [form, dotProduct, Matrix.mulVec, map_sum, map_mul, Finset.mul_sum, Finset.sum_mul, mul_comm, mul_left_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [form, dotProduct, Matrix.mulVec, map_sum, map_mul, Finset.mul_sum, Finset.sum_mul, mul_comm, mul_left_comm]
 
 end Field
 

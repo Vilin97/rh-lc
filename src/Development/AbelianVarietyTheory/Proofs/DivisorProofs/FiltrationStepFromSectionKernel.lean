@@ -87,7 +87,8 @@ lemma filt_map {m m' : ℕ} (T : V →ₗ[ℂ] V)
   refine Submodule.iSup_induction (fun j : Fin (m + 1) => LinearMap.range (phiN act N j))
     (motive := fun v => T v ∈ filt act N m') hv' ?_ (by simp) (fun x y hx hy => by rw [map_add]; exact add_mem hx hy)
   rintro j _ ⟨Ψ, rfl⟩
-  rw [phiN_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [phiN_apply, map_sum]
   exact Submodule.sum_mem _ fun g _ => hT j (Nat.lt_succ_iff.mp j.isLt) g (Ψ g)
 
 lemma filt_X {m : ℕ} (x : NC R S) : ∀ v ∈ filt act N m, act (eNC x) v ∈ filt act N (m + 1) :=
@@ -107,7 +108,8 @@ lemma filt_word {m : ℕ} : ∀ {j : ℕ} (h : Fin j → NC R S), ∀ v ∈ filt
 lemma act_pc_mem {m : ℕ} {P : Mat R S} (hP : IsPC P) (v : V) (hv : v ∈ filt act N m) :
     act P v ∈ filt act N (m + 1) := by
   rw [Matrix.matrix_eq_sum_single P]
-  simp only [map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.sum_apply]
   refine Submodule.sum_mem _ fun a _ => Submodule.sum_mem _ fun b _ => ?_
   by_cases hab : sameBlock a b
   · simp [hP a b hab]
@@ -166,7 +168,8 @@ lemma phiN_succ (k : ℕ) (Ψ : (Fin (k + 1) → NC R S) → N) :
     phiN act N (k + 1) Ψ = ∑ x, act (eNC x) (phiN act N k (fun g' => Ψ (Fin.cons x g'))) := by
   rw [phiN_apply, sum_cons]
   refine Finset.sum_congr rfl fun x _ => ?_
-  rw [phiN_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [phiN_apply, map_sum]
   refine Finset.sum_congr rfl fun g' _ => ?_
   rw [word_cons, Module.End.mul_apply]
 
@@ -190,7 +193,8 @@ lemma position_zero (hlie : IsLieAct act) (hN : KStable act N) (k : ℕ) (Ψ : (
   have hmain : ∑ x, ∑ g' : Fin k → NC R S, word act g' (act (eNC x) (Ψ (Fin.cons x g') : V)) = 0 := by
     rw [Finset.sum_comm]
     refine Finset.sum_eq_zero fun g' _ => ?_
-    rw [← map_sum, hsum g', map_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, hsum g', map_zero]
   rw [hmain, zero_add]
   refine Submodule.sum_mem _ fun x _ => Submodule.sum_mem _ fun g' _ => ?_
   simpa using comm_word act N hlie hN x g' _ (mem_filt_zero act N (Ψ (Fin.cons x g')))

@@ -30,7 +30,8 @@ theorem orbit : KP → ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Num
     rw [hfe i, pureA_smul]
   have horb : ∀ t : ℝ, om' (1, γ (Multiplicative.ofAdd t)) Φ = ∑ i, pureA F (u t i) (φ i) := by
     intro t
-    rw [hΦe, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hΦe, map_sum]
     exact Finset.sum_congr rfl fun i _ => hu t i (φ i) (hφ i)
   refine ⟨n, φ, u, u₁, hφ, horb, ?_, hu₁⟩
   funext x

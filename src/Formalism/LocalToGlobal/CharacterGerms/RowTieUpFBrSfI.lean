@@ -85,7 +85,8 @@ theorem eig_atS {Y : FBChart C V OE dd} (p : SelfData Y d I0) (hinj : Function.I
     refine ⟨fun k => lift (b (e k)) (hbint (e k)), ?_, ?_⟩
     · funext j
       apply hinj
-      simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum, map_mul, hlift, hu]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum, map_mul, hlift, hu]
       rw [← hsum (fun c => b c * p.e c j) (fun c hc => by rw [hbsupp c hc, zero_mul]), ← hvb', hvC]
     · intro c' hc'
       funext k
@@ -94,7 +95,8 @@ theorem eig_atS {Y : FBChart C V OE dd} (p : SelfData Y d I0) (hinj : Function.I
       have h2 : ∀ j, vC j = ∑ m, algebraMap R C (c' m) * p.e (e m) j := by
         intro j
         rw [hvC, ← hc']
-        simp [Finset.sum_apply, map_sum, hu]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp [Finset.sum_apply, map_sum, hu]
       simp_rw [h2, Finset.sum_mul]
       rw [Finset.sum_comm]
       simp_rw [_root_.mul_assoc, ← Finset.mul_sum, hw2]

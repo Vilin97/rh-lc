@@ -30,13 +30,15 @@ theorem lp_eq_sum (f : LP n) :
 theorem evL_eq_sum (z : Fin n → ℂˣ) (f : LP n) :
     evL z f = ∑ m ∈ f.coeff.support, f.coeff m * GlobalTheory.CompanionTheory.CoefId.mon m (fun a => (z a : ℂ)) := by
   conv_lhs => rw [lp_eq_sum f]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun m _ => ?_
   rw [evL_single]; rfl
 
 theorem evL_cPoly (z : Fin n → ℂˣ) (s : Finset (Fin n → ℤ)) (c : (Fin n → ℤ) → ℂ) :
     evL z (cPoly s c) = ∑ μ ∈ s, (∏ a, ((z a : ℂ) ^ μ a)) * c μ := by
-  rw [cPoly, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [cPoly, map_sum]
   exact Finset.sum_congr rfl fun μ _ => by rw [evL_single, mul_comm]
 
 theorem eq_zero_of_evL (f : LP n)
@@ -81,7 +83,8 @@ variable {n : ℕ}
 
 theorem evL_altL (z : Fin n → ℂˣ) (m : Fin n → ℤ) :
     evL z (altL m) = (Matrix.of fun i j : Fin n => (z i : ℂ) ^ m j).det := by
-  rw [← Matrix.det_transpose, Matrix.det_apply', altL, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Matrix.det_transpose, Matrix.det_apply', altL, map_sum]
   refine Finset.sum_congr rfl fun σ _ => ?_
   rw [map_smul, evL_single, one_mul, smul_eq_mul]
   simp [Matrix.transpose_apply, Matrix.of_apply]

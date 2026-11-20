@@ -218,7 +218,8 @@ theorem stepVec_eq_sum : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : Inf
   have h2 := fun p => om_theta hW hTm hth hΘ (GlobalTheory.T.mem_homLattice_iff_frameStabilizer_act_mem D S T ΛS ΛT βS βT dS dT fS fT (κ p) 1 (sg p) sh)
     (GlobalTheory.StepVecLaw.om_vac hW kS kT cS cT dS dT fS fT hf he' (fun PP hP => (hres PP hP).1) (fun PP hP => (hres PP hP).2) uS uT
       (hκ p).1 (one_mem _) (sg p) sh)
-  rw [hΘ'.2 Tm hTm, Finset.sum_congr rfl fun p _ => by rw [h2 p, smul_smul, ← map_smul], ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hΘ'.2 Tm hTm, Finset.sum_congr rfl fun p _ => by rw [h2 p, smul_smul, ← map_smul], ← map_sum]
   congr 1
   funext x
   rw [Finset.sum_apply]

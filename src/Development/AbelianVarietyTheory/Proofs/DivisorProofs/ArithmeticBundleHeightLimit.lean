@@ -263,7 +263,8 @@ private theorem exists_co_eq (f : EigFrame Z φ x) (T : ∀ τ : E →+* ℂ, Ma
     rw [Finset.sum_comm]
     simp only [mul_comm]
   refine ⟨EigFrame.ofVec (fun τ i => ∑ b, T τ b i • f.vec τ b) (fun τ i a => ?_) (fun τ w hw => ?_), fun τ => ?_⟩
-  · simp only [map_sum, map_smul, f.act_vec, Finset.smul_sum, smul_smul, mul_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [map_sum, map_smul, f.act_vec, Finset.smul_sum, smul_smul, mul_comm]
   · obtain ⟨a, ha, hu⟩ := f.existsUnique_sum τ w hw
     refine ⟨(T τ)⁻¹.mulVec a, ?_, fun a' ha' => ?_⟩
     · dsimp only

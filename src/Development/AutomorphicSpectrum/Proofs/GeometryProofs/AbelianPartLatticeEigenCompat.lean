@@ -80,7 +80,8 @@ theorem frame_compare (hξ : IsCptGen ξ) {F : Type} [Field F] (w : Sp F ⟶ X) 
   let Ds : Matrix (Fin m) (Fin m) (X.presheaf.stalk (centre w)) := Matrix.of fun i j => B j i
   have e : ∀ k, ∑ j, g ((Ts * Ds) j k) • s j = s k := fun k => by
     conv_rhs => rw [hB k]
-    simp only [Matrix.mul_apply, map_sum, map_mul, Finset.sum_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mul_apply, map_sum, map_mul, Finset.sum_smul]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun l _ => ?_
     rw [hA l, Finset.smul_sum]

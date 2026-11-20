@@ -35,7 +35,8 @@ theorem pointConeMap_of_homog (z : (Σ k, ι k) → Φ) {f : MRing ι O} {b : K 
     pointConeMap O z f = C (aeval z f) * ∏ k, X k ^ b k := by
   conv_lhs => rw [f.as_sum]
   conv_rhs => rw [f.as_sum]
-  rw [map_sum, map_sum, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun m hm => ?_
   have hw : ∀ k, ∑ i : ι k, m ⟨k, i⟩ = b k := by
     intro k
@@ -121,7 +122,8 @@ omit [Algebra O Φ] in
 theorem genVal_sum_smul (e : Module.Basis (Fin N) Ω E) (t : Fin N → Φ) {L : ℕ} (r : Fin L → Ω)
     (ψ : Fin L → Module.Dual Ω E) :
     genVal e t (∑ l, r l • ψ l) = ∑ l, algebraMap Ω Φ (r l) * genVal e t (ψ l) := by
-  simp only [genVal, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, map_sum, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [genVal, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, map_sum, map_mul,
     Finset.mul_sum]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun l _ => by ring
@@ -284,7 +286,8 @@ theorem val_pair {z : (Σ o, bundleIdx (bundleIdx ι M) M' o) → Φ} {L : ℕ}
     (hx : aeval z x = w) (H : MRing (bundleIdx (bundleIdx ι M) M') O)
     (hval : aeval z H * w = ∑ l, aeval z (G l) * v l) :
     aeval z (∑ l, xs l * G l) = aeval z (x * H) := by
-  rw [map_sum, map_mul, hx, mul_comm, hval]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_mul, hx, mul_comm, hval]
   exact Finset.sum_congr rfl fun l _ => by rw [map_mul, hxs, mul_comm]
 
 theorem pairs_at (hexp : TwistedDualGensExpress.Statement) {ϖ : O} (y : (Σ k, ι k) → Ω)

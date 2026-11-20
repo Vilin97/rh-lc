@@ -75,7 +75,8 @@ private theorem latData_pid (Dw : Datum H) {V : Type} [CommRing V] [IsDomain V] 
     have h0 : Dw.EF (y m') (a k) = ∑ m, cc m' m * Dw.EF (a m) (a k) := by
       calc Dw.EF (y m') (a k) = Dw.EF (∑ m, a.repr (y m') m • a m) (a k) := by rw [a.sum_repr]
         _ = ∑ m, cc m' m * Dw.EF (a m) (a k) := by
-          simp only [map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply, smul_eq_mul, cc]
+          set_option synthInstance.maxHeartbeats 100000 in
+            simp only [map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply, smul_eq_mul, cc]
     rw [← h0, hy, Module.Basis.coord_apply, Module.Basis.repr_self, Finsupp.single_apply]
     simp [eq_comm]
   let tb := Algebra.TensorProduct.basis V a
@@ -104,14 +105,16 @@ private theorem latData_pid (Dw : Datum H) {V : Type} [CommRing V] [IsDomain V] 
     rw [EigenSplit.baseChangeAction_apply, actZ_apply] at hm
     have e1 : ∑ m, T i m ⊗ₜ[ℤ] (o • a m)
         = ((LinearMap.lsmul (𝓞 E) Dw.La o).restrictScalars ℤ).baseChange V (∑ m, T i m ⊗ₜ[ℤ] a m) := by
-      simp [map_sum, LinearMap.baseChange_tmul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [map_sum, LinearMap.baseChange_tmul]
     rw [e1, hT, hm, ← hT, Finset.smul_sum]
     simp [TensorProduct.smul_tmul', smul_eq_mul]
   · intro i j
     have e2 : ∑ m, ∑ m', S i m * T j m' * ((Dw.EF (a m) (a m') : ℤ) : V) = f i (b j) := by
       rw [Finset.sum_comm]
       simp_rw [mul_comm (S i _) (T j _), _root_.mul_assoc, ← Finset.mul_sum, hS]
-      rw [← hT j, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hT j, map_sum]
       refine Finset.sum_congr rfl fun m' _ => ?_
       have e3 : T j m' ⊗ₜ[ℤ] a m' = T j m' • ((1 : V) ⊗ₜ[ℤ] a m') := by
         rw [TensorProduct.smul_tmul', smul_eq_mul, _root_.mul_one]
@@ -137,9 +140,11 @@ private theorem latData_map (Dw : Datum H) {V V' J : Type} [CommRing V] [IsDomai
   obtain ⟨h1, h2, h3⟩ := h
   refine ⟨fun i o => ?_, fun i j => ?_, fun x hx => ?_⟩
   · have := congrArg (EigenSplit.extendTensor ℤ V V' Dw.La) (h1 i o)
-    simpa only [map_sum, EigenSplit.extendTensor_tmul, hφa, map_mul, RingHom.comp_apply] using this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa only [map_sum, EigenSplit.extendTensor_tmul, hφa, map_mul, RingHom.comp_apply] using this
   · have := congrArg φ (h2 i j)
-    simpa only [map_sum, map_mul, map_intCast, apply_ite φ, map_one, map_zero] using this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa only [map_sum, map_mul, map_intCast, apply_ite φ, map_one, map_zero] using this
   · have hxK : x ∈ EigenSplit.eigenSub (EigenSplit.baseChangeAction V' (actZ Dw)) ((algebraMap V V').comp σ) :=
       EigenSplit.mem_eigenSub.2 fun o => by
         rw [EigenSplit.baseChangeAction_apply, actZ_apply]; exact hx o

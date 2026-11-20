@@ -32,7 +32,8 @@ theorem coeff_zero_rowSubst (h : Matrix (Fin ν) (Fin ν) ℂ) (Q : MvPolynomial
 theorem pderiv_rowSubst_X (h : Matrix (Fin ν) (Fin ν) ℂ) (k : Fin ν) (a : ι) (s : Fin ν × ι) :
     pderiv (k, a) (rowSubst h (X s : MvPolynomial (Fin ν × ι) ℂ)) =
       if s.2 = a then C (h k s.1) else 0 := by
-  rw [rowSubst_X, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [rowSubst_X, map_sum]
   by_cases hs : s.2 = a
   · simp [pderiv_C_mul, pderiv_X, Pi.single_apply, hs]
   · simp [pderiv_C_mul, pderiv_X, Pi.single_apply, hs]

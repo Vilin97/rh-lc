@@ -219,7 +219,8 @@ theorem stdH_apply (z w : n → ℂ) : stdH L n z w = ∑ i, form1 L (z i) (w i)
   ring
 
 theorem stdH_herm : IsHerm (stdH L n) := fun x y => by
-  simp only [stdH_apply, map_sum, ← periodLatticeSesquilinearForm_isHerm L _ _]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [stdH_apply, map_sum, ← periodLatticeSesquilinearForm_isHerm L _ _]
 
 theorem altE_stdH (z w : n → ℂ) : altE (stdH L n) z w = ∑ i, altE (form1 L) (z i) (w i) := by
   simp only [altE, stdH_apply, Complex.im_sum]

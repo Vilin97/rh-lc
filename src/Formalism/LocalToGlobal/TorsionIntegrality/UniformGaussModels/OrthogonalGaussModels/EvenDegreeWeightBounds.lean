@@ -162,7 +162,8 @@ theorem cc_phSum {l : ℕ} [Fact l.Prime] (h5 : 5 ≤ l) (g2 g3 s2 ε : CM.Maxim
     MvPowerSeries.constantCoeff
       (Formalism.L2.Th1.E.phSum (phL l g2 g3 s2 ε) : MvPowerSeries n ℂ_[l]) = 0 := by
   unfold Formalism.L2.Th1.E.phSum
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_eq_zero fun x _ => ?_
   refine Pair.constantCoeff_inVar_eq_zero x ?_
   unfold phL

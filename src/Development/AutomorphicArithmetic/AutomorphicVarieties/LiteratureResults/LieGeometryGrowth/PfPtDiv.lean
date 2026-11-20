@@ -63,7 +63,8 @@ theorem UpperTheory.V.Lit.Geo.Pf.ptDiv :
     have e5 : (lie E a (toL X.1) (∑ i, ∑ j, G i j • θ i j)).1 g =
         tform (ptForm χ g) G x (smA Ξ (toL X.1) y) + tform (ptForm χ g) G (smA Ξ (toL X.1) x) y +
           2 * c * tform (ptForm χ g) G x y := by
-      simp only [map_sum, map_smul, sum_val, Submodule.coe_smul, Pi.smul_apply, smul_eq_mul, h1, tform_apply,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, sum_val, Submodule.coe_smul, Pi.smul_apply, smul_eq_mul, h1, tform_apply,
         smA_apply, cmp_rT, Finset.mul_sum, ← Finset.sum_add_distrib, ptForm_apply]
       refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
       rw [hχ.2, hχ.2, ← hc]

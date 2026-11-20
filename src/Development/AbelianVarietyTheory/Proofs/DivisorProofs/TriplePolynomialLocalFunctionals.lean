@@ -214,6 +214,7 @@ theorem GlobalTheory.ThetaGlobalHalf.thetaIntegral_eq_sum_local : ∀ (F E : Typ
       rw [hgen j, tensL_apply, hrt j, Function.update_eq_self]
     have hT' : (fun y => G.M'.I om' Φ ((toGAd hσ G.W.J hc).symm y)) = T (Λ Φ) := by
       rw [hΛI Φ hSo]; rfl
-    rw [hT', hΦsum, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hT', hΦsum, map_sum, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     simp only [map_smul, LinearMap.smul_apply, LinearMap.comp_apply]

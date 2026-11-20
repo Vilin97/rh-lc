@@ -77,7 +77,8 @@ theorem exists_finite : ∃ ι : Af F ⊗[F] E →+* FiniteAdeleRing (𝓞 E) E,
     obtain ⟨r, hr, e⟩ := Formalism.UG.P.levelaf_decomp g hg hz
     have : y = ∑ j, r j ⊗ₜ[F] (g j : E) := by
       apply c.injective
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       exact e
     rw [this]
     exact sum_mem fun j _ => AddSubgroup.subset_closure ⟨r j, hr j, g j, rfl⟩

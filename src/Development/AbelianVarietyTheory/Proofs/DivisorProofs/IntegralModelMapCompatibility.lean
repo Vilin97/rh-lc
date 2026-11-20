@@ -31,7 +31,8 @@ theorem rows_indep {A K : Type} [CommRing A] [Field K] (φ : A →+* K) {n g : �
     rw [pairDet, RingHom.map_det]
     congr 1
     ext k k'
-    simp [M, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [M, map_sum, map_mul]
   have hdet : M.det = 0 := by
     refine Matrix.exists_vecMul_eq_zero_iff.1 ⟨a, ha0, ?_⟩
     ext k'
@@ -104,7 +105,8 @@ theorem rows_data (Y : Model Xo' c' (c'.V W).subtype) (r : Xo'.XF c' ⟶ Xo.XF c
       rw [this, zero_smul]
     have h1 : ∑ i, a i • C i = 0 := by
       have : Pν (Pm.symm (∑ i, a i • C i)) = 0 := by
-        rw [← h0]; simp only [map_sum, map_smul]; rfl
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [← h0]; simp only [map_sum, map_smul]; rfl
       exact Pm.symm.injective (Pν.injective (this.trans ((congrArg Pν (map_zero Pm.symm)).trans (map_zero Pν)).symm))
     let cv : Fin g → K := fun b => ∑ i, a i * φ (U i b)
     have h2 : ∑ i, a i • C i = ∑ b, cv b • Eb b := by

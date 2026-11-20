@@ -191,7 +191,8 @@ theorem exists_invariant_isEqn : ∀ (F : Type) [Field F] [CharZero F] (X W : Sc
   set h : X.functionField := ∑ γ : Γ, sig ρ γ (af * e₀) with hh
 
   have hinvh (δ : Γ) : sig ρ δ h = h := by
-    rw [hh, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hh, map_sum]
     simp only [sig_sig]
     exact Equiv.sum_comp (Equiv.mulRight δ) (fun γ => sig ρ γ (af * e₀))
 

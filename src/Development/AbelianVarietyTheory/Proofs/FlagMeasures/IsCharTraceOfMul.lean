@@ -59,7 +59,8 @@ theorem isChar_fibre_mean : ∀ (P M : Type) [Group P] [Fintype P] [Group M] [Fi
   rw [map_smul, smul_eq_mul]
   congr 1
   simp only [S]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun x _ => ?_
   split_ifs
   · rw [← hV]; rfl

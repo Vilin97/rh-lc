@@ -64,8 +64,10 @@ theorem residue_onto (c : Fin r) :
       rw [hfα] at hz
       refine ⟨∑ i, o i * α' i, ?_, ?_⟩
       · rw [← Ideal.Quotient.eq_zero_iff_mem]
-        simpa [map_sum, map_mul, hα', mk] using hz
-      · rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simpa [map_sum, map_mul, hα', mk] using hz
+      set_option synthInstance.maxHeartbeats 100000 in
+        · rw [map_sum]
         push_cast
         refine Finset.sum_congr rfl fun i _ => ?_
         rw [hT_osmul_right, ho]; ring)
@@ -103,7 +105,8 @@ theorem exact_dual (c : Fin r) :
     exact zero_ne_one this
   have key : ∀ i, S.hT (∑ j, cj (G.adjugate c j) • y j) (e i) = ((G.adjugate * G) c i : E) := by
     intro i
-    rw [map_sum, LinearMap.sum_apply, Matrix.mul_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, LinearMap.sum_apply, Matrix.mul_apply]
     push_cast
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [hT_cj_left, ho]

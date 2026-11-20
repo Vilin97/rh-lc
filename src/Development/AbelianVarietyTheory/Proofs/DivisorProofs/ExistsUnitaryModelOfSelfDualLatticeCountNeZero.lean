@@ -79,7 +79,8 @@ theorem exists_orthonormal_of_selfDual (K : GlobalTheory.UnitLemma.UQ) (V : Type
     rw [Fintype.linearIndependent_iff]
     intro c hc i
     have := congrArg (φ (g i)) hc
-    simp only [map_sum, map_smul, map_zero] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, map_zero] at this
     simpa [φ, hg] using this
   refine ⟨Module.Basis.mk hli (hli.span_eq_top_of_card_eq_finrank' (by simp)).ge, fun i j => ?_⟩
   rw [Module.Basis.mk_apply, Module.Basis.mk_apply]

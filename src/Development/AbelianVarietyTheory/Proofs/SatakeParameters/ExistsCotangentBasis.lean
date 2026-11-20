@@ -51,7 +51,8 @@ theorem exists_basis_mod_sq {A : Type} [CommRing A] [Algebra ℂ A] (e : A →+*
   have hmemg : ∀ c : Fin d → ℂ, ∑ j, c j • (g j : A) ∈ RingHom.ker (algebraMap A ℂ) := fun c =>
     Ideal.sum_mem _ fun j _ => by rw [Algebra.smul_def]; exact Ideal.mul_mem_left _ _ (g j).2
   have hφg : ∀ c : Fin d → ℂ, φ (∑ j, c j • (g j : A)) = ∑ j, c j • b j := fun c => by
-    rw [map_sum]; simp only [map_smul, hg]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]; simp only [map_smul, hg]
   refine ⟨fun j => g j, fun j => (g j).2, ?_, ?_⟩
   · intro a ha
     refine ⟨fun j => b.repr (φ a) j, ?_⟩

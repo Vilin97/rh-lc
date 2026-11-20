@@ -39,7 +39,8 @@ theorem mem_smul_top_of_forall_mem {R : Type} [CommRing R] (I : Ideal R) {P : Ty
     have hc : c = f (s c) := (LinearMap.congr_fun hs c).symm
     simp only [LinearMap.sum_apply, LinearMap.smul_apply, LinearMap.comp_apply,
       LinearMap.proj_apply, smul_eq_mul]
-    conv_lhs => rw [hc, pi_eq_sum_univ (s c), map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [hc, pi_eq_sum_univ (s c), map_sum, map_sum]
     refine Finset.sum_congr rfl fun i _ ↦ ?_
     rw [map_smul, map_smul, smul_eq_mul, mul_comm]
     congr 3

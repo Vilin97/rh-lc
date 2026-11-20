@@ -69,7 +69,8 @@ theorem genSpan_eq_span_frame (o : ι → ℕ) (T : ∀ a, E a ⟶ L) {V : X.Ope
     have hUV : genericPoint X ∈ U ⊓ V := ⟨hU, hV⟩
     rw [SetLike.mem_coe, ← germ_resM (inf_le_left : U ⊓ V ≤ U) hUV, ← app_resM,
       ← ((hf a).basis (inf_le_right : U ⊓ V ≤ V)).sum_repr (resM _ inf_le_left s)]
-    simp only [map_sum, Scheme.Modules.Hom.app_smul, IsFrame.basis_apply, app_resM, QCoh.germ_smul, germ_resM]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, Scheme.Modules.Hom.app_smul, IsFrame.basis_apply, app_resM, QCoh.germ_smul, germ_resM]
     exact Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨⟨a, i⟩, ha, rfl⟩)
   · rintro _ ⟨z, hz, rfl⟩
     exact ⟨z.1, hz, V, hV, _, rfl⟩
@@ -91,7 +92,8 @@ theorem GlobalTheory.GrFilt.genSpan_eq_of_adaptedAt :
     (fun y z => X.presheaf.germ V _ hV ((hc.basis le_rfl).repr ((T y.1).app V (f y.1 y.2)) z))
     (fun y => ?_) (fun y z h => ?_) (fun a i j => ?_) hsp k
   · conv_lhs => rw [← (hc.basis le_rfl).sum_repr ((T y.1).app V (f y.1 y.2))]
-    simp only [map_sum, QCoh.germ_smul, IsFrame.basis_apply, germ_resM]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, QCoh.germ_smul, IsFrame.basis_apply, germ_resM]
   · exact (congrArg _ ((hA y.1 y.2).1 z h)).trans (map_zero _)
   · exact (congrArg _ ((hA a i).2 j)).trans
       (TriFrame.FlagOf.stalkBasis_repr_germ (hf' a) le_rfl _ hV _ j).symm

@@ -197,9 +197,11 @@ theorem swp_hermA (c : E ≃ₐ[F] E) (σ : E →ₐ[F] E) (hσ : ∀ x, σ x = 
       Formalism.UG.hform (Formalism.UG.sigR σ (Formalism.L2.Herm.Af F)) (J.map (Formalism.UG.inclE (F := F) (Formalism.L2.Herm.Af F)))
         (fun i => Formalism.UG.inclE (F := F) (Formalism.L2.Herm.Af F) (x i)) (fun i => swp F E (y i)) := by
   unfold Formalism.UG.hform GlobalTheory.AdLat.hermA
-  rw [Finset.sum_comm, map_sum (swp F E)]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.sum_comm, map_sum (swp F E)]
   refine Finset.sum_congr rfl fun a _ => ?_
-  rw [map_sum (swp F E)]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum (swp F E)]
   refine Finset.sum_congr rfl fun b _ => ?_
   have e1 : swp F E (GlobalTheory.AdLat.sg (FiniteAdeleRing (𝓞 F) F) c (GlobalTheory.AdLat.fv F x a)) =
       Formalism.UG.sigR σ (Formalism.L2.Herm.Af F) (Formalism.UG.inclE (F := F) (Formalism.L2.Herm.Af F) (x a)) := by

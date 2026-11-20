@@ -112,7 +112,8 @@ theorem GlobalTheory.cmTorsionConj : GlobalTheory.Published.PeriodComparison →
     | empty => simpa using (uu.ker 0).2 (zero_mem _)
     | insert k s hk ih => rw [Finset.sum_insert hk, Finset.prod_insert hk, uu.ex_add, ih]
   have hsum' : (fun j ↦ g (φ (T.U.e j) x')) = ∑ k, (fun j ↦ g (φ (T.U.e j) (algebraMap K E (a' k) * b k))) := by
-    rw [hx']; funext j; simp [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hx']; funext j; simp [map_sum]
   have hsum : (fun j ↦ φ (T.U.e j) (∑ k, algebraMap K E (a k) * b k)) =
       ∑ k, (fun j ↦ φ (T.U.e j) (algebraMap K E (a k) * b k)) := by
     funext j; simp [map_sum]

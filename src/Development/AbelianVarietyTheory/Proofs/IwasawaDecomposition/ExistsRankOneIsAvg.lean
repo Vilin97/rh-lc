@@ -47,7 +47,8 @@ theorem exists_rank_one_isAvg : ∀ (n : ℕ) (ε : Fin n → Bool) (H : Type) [
     | mem M hM =>
       obtain ⟨g, hg, rfl⟩ := hM
       have := (A2 _ _ hQavg (A2 _ _ (A1 g hg) hQavg).2).2
-      simp only [hQ, map_sum, map_smul, inner_sum, inner_smul_right, Finset.sum_smul] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hQ, map_sum, map_smul, inner_sum, inner_smul_right, Finset.sum_smul] at this
       simpa only [mul_comm] using this
     | zero => simpa using A5
     | add M N _ _ hM hN =>

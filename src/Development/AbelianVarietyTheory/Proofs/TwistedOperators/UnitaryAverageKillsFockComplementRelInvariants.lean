@@ -17,7 +17,8 @@ theorem colSub_comp {d a : ℕ} (u v : ι → Matrix (Fin a) (Fin a) ℂ) (P : P
   have h : (colSub (d := d) u).comp (colSub v) = colSub (fun τ => u τ * v τ) := by
     apply MvPolynomial.algHom_ext
     intro y
-    simp only [AlgHom.comp_apply, colSub, aeval_X, map_sum, map_mul, algHom_C, algebraMap_eq, Matrix.mul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [AlgHom.comp_apply, colSub, aeval_X, map_sum, map_mul, algHom_C, algebraMap_eq, Matrix.mul_apply,
       Finset.sum_mul, Finset.mul_sum, C_mul]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => ?_
@@ -185,14 +186,16 @@ theorem integral_eq_lin (ν : Measure K) [IsProbabilityMeasure ν] (n : ι → �
   have hexp : ∀ Q : Pol ι d a, Q.support ⊆ S → ℓ Q = ∑ m ∈ S, AddMonoidAlgebra.coeff Q m * ℓ (monomial m 1) := by
     intro Q hQ
     conv_lhs => rw [Q.as_sum]
-    rw [Finset.sum_subset hQ (fun m _ hm => by rw [notMem_support_iff.1 hm, monomial_zero]), map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_subset hQ (fun m _ hm => by rw [notMem_support_iff.1 hm, monomial_zero]), map_sum]
     exact Finset.sum_congr rfl fun m _ => hmono m _
   have hL : ∀ g, cc n ρ g * ℓ (colSub (Mg ρ g) P) =
       ∑ m ∈ S, (cc n ρ g * AddMonoidAlgebra.coeff (colSub (Mg ρ g) P) m) * ℓ (monomial m 1) := by
     intro g
     rw [hexp _ (hS _), Finset.mul_sum]
     exact Finset.sum_congr rfl fun m _ => by ring
-  rw [integral_congr_ae (Filter.Eventually.of_forall hL),
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [integral_congr_ae (Filter.Eventually.of_forall hL),
     integral_finset_sum _ (fun m _ => (integrable_term ν n ρ hρ P m).mul_const _), map_sum]
   refine Finset.sum_congr rfl fun m _ => ?_
   rw [integral_mul_const]

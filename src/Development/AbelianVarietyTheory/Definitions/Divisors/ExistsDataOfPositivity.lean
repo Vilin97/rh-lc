@@ -124,7 +124,8 @@ theorem exists_bound {V V' : Type} [AddCommGroup V] [Module F V] [AddCommGroup V
       (fun _ _ => sq_nonneg _) (Finset.mem_univ i))
   have e (l) : b'.repr (μ w f) l = ∑ k, ∑ i, w k * b.repr f i * b'.repr (μ (Pi.single k 1) (b i)) l := by
     conv_lhs => rw [pi_eq_sum_univ' w, ← b.sum_repr f]
-    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, Finsupp.coe_finsetSum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, Finsupp.coe_finsetSum,
       Finset.sum_apply, Finsupp.smul_apply, smul_eq_mul, Finset.mul_sum]
     rw [Finset.sum_comm]
     exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
@@ -132,9 +133,11 @@ theorem exists_bound {V V' : Type} [AddCommGroup V] [Module F V] [AddCommGroup V
   refine (Real.sqrt_le_iff.2 ⟨by positivity, Finset.sum_sq_le_sq_sum_of_nonneg fun _ _ => norm_nonneg _⟩).trans ?_
   simp only [Finset.sum_mul]
   refine Finset.sum_le_sum fun l _ => ?_
-  rw [e, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, map_sum]
   refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun k _ => ?_)
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun i _ => ?_)
   rw [map_mul, map_mul, norm_mul, norm_mul]
   have := mul_le_mul_of_nonneg_right (mul_le_mul (hw k) (hf i) (norm_nonneg _) ((norm_nonneg _).trans (hw k)))

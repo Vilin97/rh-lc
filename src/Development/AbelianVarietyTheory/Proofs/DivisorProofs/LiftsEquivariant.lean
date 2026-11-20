@@ -129,7 +129,8 @@ theorem proj_rows (hC : R.Char F) (y : R.HE.H) : ∑ g, D.what₂.embLL ((idemOf
     exact LinearMap.mem_range_self _ y
   have h2 : postOn (R.MY 0) R.e0 (R.HE.e y) - R.HE.e y = 0 := h1.2
   refine Eq.trans ?_ ((postOn_gaL (R.MY 0) (R.βY 0) (R.dat0 R.triv) R.eG _ _).symm.trans (sub_eq_zero.1 h2))
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_congr rfl fun g _ => by rw [map_smul, hC.models.gE]; rfl
 
 theorem proj_lifts {s : ℕ} (hC : R.Char F) (hOk : A.fam.Ok s) (i : Fin D.R.m) (t : T) (y : (R.HV i t).H) :
@@ -140,7 +141,8 @@ theorem proj_lifts {s : ℕ} (hC : R.Char F) (hOk : A.fam.Ok s) (i : Fin D.R.m) 
   have hs : ∀ a, sg0 D A a = D.what₂.embLL a := fun a => by rw [sg0, sgAt_mk _ R.hv0]
   have h2 : R.thG i t y = ∑ g, D.what₂.embLL ((idemOf A.X).coeff g) • R.gW i (sg0 D A) g z := by
     refine (hC.models.HW i _).1 ?_
-    rw [hC.thP.thG, ← hz, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hC.thP.thG, ← hz, map_sum]
     refine (postOn_gaL (R.MW i (sg0 D A)) (R.βW i) (R.datWp i R.triv) R.eG _ _).trans ?_
     exact Finset.sum_congr rfl fun g _ => by rw [map_smul, hC.models.gW, RealDat.eC, hs]; rfl
   rw [h2]

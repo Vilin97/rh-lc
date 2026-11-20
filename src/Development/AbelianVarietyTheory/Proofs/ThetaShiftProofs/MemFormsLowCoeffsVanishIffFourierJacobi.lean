@@ -23,7 +23,8 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r ρ : ℕ}
 
 theorem herm_swap (X : Data E r) (v w : Fin r → E) : herm X.Gm w v = cc (herm X.Gm v w) := by
   have h1 : ∀ a b, IsCMField.complexConj E (X.Gm a b) = X.Gm b a := X.Gm_herm
-  simp only [herm, cc, map_sum, map_mul, h1, IsCMField.complexConj_apply_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [herm, cc, map_sum, map_mul, h1, IsCMField.complexConj_apply_apply]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
 
@@ -119,7 +120,8 @@ theorem coefFn_eq_zero_of_fj (X : Data E r) (cu : CuspFD X ρ) (hbas : ∃ bs, I
 
 theorem hq_real {χ : Matrix (Fin ρ) (Fin ρ) E} (hχ : IsHermE χ) (η : Fin ρ → E) : cc (hq χ η) = hq χ η := by
   have h1 : ∀ a b, IsCMField.complexConj E (χ a b) = χ b a := hχ
-  simp only [hq, cc, map_sum, map_mul, h1, IsCMField.complexConj_apply_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hq, cc, map_sum, map_mul, h1, IsCMField.complexConj_apply_apply]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
 

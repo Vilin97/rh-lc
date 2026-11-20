@@ -104,7 +104,8 @@ theorem coef_proj (hLL : LL) (hU : UTorsSt) [ArithBase o Ω] [CharZero u.V] (l :
   set φ : o →+* PadicAlgCl p := y₀.comp (algebraMap o S.R) with hφ
   change ∑ j, φ _ * _ = _
   change ∀ a : S.perp l.yy.ker, ∑ j, φ _ * _ = φ _ * _ at key
-  simp only [proj_eq, Matrix.smul_apply, Matrix.sum_apply, smul_eq_mul, map_mul, map_sum, Finset.mul_sum, Finset.sum_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [proj_eq, Matrix.smul_apply, Matrix.sum_apply, smul_eq_mul, map_mul, map_sum, Finset.mul_sum, Finset.sum_mul,
     _root_.mul_assoc]
   rw [Finset.sum_comm]
   simp only [← Finset.mul_sum, key]

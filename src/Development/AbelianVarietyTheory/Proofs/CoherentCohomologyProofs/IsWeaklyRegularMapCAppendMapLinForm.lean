@@ -203,7 +203,8 @@ theorem linFormHom_X_of_notMem (u : J → R) {S : Set ι} {j₀ : J} {x : ι × 
 theorem linFormHom_linForm [DecidableEq J] (u v : J → R) {S : Set ι} (j₀ : J) {i : ι}
     (hi : i ∈ S) : linFormHom u S j₀ (linForm v i) =
       linForm (fun j => if j = j₀ then v j₀ * u j₀ else v j₀ * u j + v j) i := by
-  rw [linForm_eq v i j₀, map_add, map_mul, linFormHom_X_of_mem u j₀ hi, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [linForm_eq v i j₀, map_add, map_mul, linFormHom_X_of_mem u j₀ hi, map_sum,
     linForm_eq u i j₀, linForm_eq _ i j₀, if_pos rfl, algHom_C, algebraMap_eq, mul_add,
     Finset.mul_sum, add_assoc, ← Finset.sum_add_distrib, C_mul, mul_assoc]
   congr 1
@@ -290,7 +291,8 @@ theorem linFormElim_X_of_notMem {S : Set ι} {x : ι × J} (hx : x ∉ elimIndic
 theorem linFormElim_X_of_mem {S : Set ι} {i : ι} (hi : i ∈ S) [DecidableEq J] :
     linFormElim u hu S (X (i, j₀)) = -∑ j : {j : J // j ≠ j₀},
       C ((↑hu.unit⁻¹ : R) * u j) * X ⟨(i, j.1), fun h => j.2 h.2⟩ := by
-  rw [linFormElim_apply, linFormEquiv_symm_X_of_mem u hu hi, linForm_eq _ i j₀, map_add, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [linFormElim_apply, linFormEquiv_symm_X_of_mem u hu hi, linForm_eq _ i j₀, map_add, map_mul,
     killVars_X_of_mem (by exact ⟨hi, rfl⟩), mul_zero, zero_add, map_sum,
     Finset.sum_subtype (p := fun j => j ≠ j₀) _ (by simp), ← Finset.sum_neg_distrib]
   refine Finset.sum_congr rfl fun j _ => ?_

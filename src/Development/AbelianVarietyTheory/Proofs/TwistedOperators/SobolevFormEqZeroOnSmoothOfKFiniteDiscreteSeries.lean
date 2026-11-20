@@ -140,7 +140,8 @@ theorem analyticAt_coef (hHC : GlobalTheory.Published.HarishChandraModules) (h :
     have e1 := Dw_translate h.1 hg hsm (hS i)
     have e2 : (NormedSpace.exp (t • X))⁻¹ = NormedSpace.exp (-(t • X)) := (Matrix.exp_neg _).symm
     simp only [Dw] at e1
-    rw [e1, e2, he i t, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e1, e2, he i t, map_sum, map_sum]
     simp only [map_smul, smul_eq_mul]
   have ha : ∀ i j, AnalyticAt ℝ (fun t : ℝ => Λ i (σ (NormedSpace.exp (t • X)) (w i j))) 0 := by
     intro i j

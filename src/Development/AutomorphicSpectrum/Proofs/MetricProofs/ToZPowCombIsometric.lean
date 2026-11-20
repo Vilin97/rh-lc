@@ -40,7 +40,8 @@ theorem toZ_pow_comb : ∀ (k : Type) [CommRing k] (X : Scheme.{0}) (p : X ⟶ S
   intro k _ X p t H
   refine ⟨fun L m => HermLB.icls_eq_iff.1 ?_, fun ι _ L n => HermLB.icls_eq_iff.1 ?_⟩
   · rw [← toZClass_icls H, HermLB.icls_pow, HermLB.icls_pow, map_nsmul, toZClass_icls H]
-  · rw [← toZClass_icls H, ArInt.icls_comb, ArInt.icls_comb, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [← toZClass_icls H, ArInt.icls_comb, ArInt.icls_comb, map_sum]
     simp only [map_zsmul, toZClass_icls H]
 
 end GlobalTheory.CompanionTheory.Ar.BaseZ

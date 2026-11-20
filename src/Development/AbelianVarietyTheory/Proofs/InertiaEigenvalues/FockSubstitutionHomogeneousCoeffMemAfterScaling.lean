@@ -41,7 +41,8 @@ theorem C_pow_mul_aeval_mem {σ : Type} (O : Subring ℂ) (z : ℂ) (g : σ → 
     (hg : ∀ v, C z * g v ∈ coeffSub O σ) (d : ℕ) (P : MvPolynomial σ ℂ) (hP : P.IsHomogeneous d)
     (hc : P ∈ coeffSub O σ) : C (z ^ d) * aeval g P ∈ coeffSub O σ := by
   rw [P.as_sum]
-  rw [map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.mul_sum]
   refine Subring.sum_mem _ fun mo hmo => ?_
   have hdeg : ∑ v ∈ mo.support, mo v = d := by
     have := hP (mem_support_iff.mp hmo)

@@ -96,7 +96,8 @@ theorem flat_of_exp_eq {g : ℕ} {E : Type} [NormedAddCommGroup E] [NormedSpace 
         Finset.sum_apply, Pi.smul_apply, Pi.single_apply, zsmul_eq_mul, Pi.mul_apply, Pi.intCast_apply,
         mul_ite, mul_one, mul_zero, Finset.sum_ite_eq, Finset.sum_ite_eq', Finset.mem_univ, if_true, hn]
     have := congrArg F hsum
-    simp only [map_sum, map_zsmul] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_zsmul] at this
     simp only [F, AddMonoidHom.mk'_apply] at this
     rw [this]
     refine Finset.sum_congr rfl fun j _ => ?_

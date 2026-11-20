@@ -39,7 +39,8 @@ theorem linGen_of (hA : AddGen) (hM : MulGen) : LinGen := by
   have csum : ∀ s : Finset ι, MvPowerSeries.constantCoeff
       (∑ j ∈ s, MvPowerSeries.C (c j) * PowerSeries.subst (a j) l) = 0 := by
     intro s
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_eq_zero fun j _ => ?_
     rw [map_mul, cc _ (ha j).2, mul_zero]
   suffices H : ∀ s : Finset ι, PtOver S (PowerSeries.subst

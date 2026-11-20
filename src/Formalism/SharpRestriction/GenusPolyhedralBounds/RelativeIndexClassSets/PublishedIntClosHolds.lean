@@ -222,7 +222,8 @@ private theorem pt_lemma_6 (O K A : Type) [CommRing O] [IsDomain O] [IsDiscreteV
     rw [← sub_eq_zero]
     apply inj_lemma K A
     intro M
-    rw [← Ideal.Quotient.eq_zero_iff_mem, map_sub, map_sum, map_one, Finset.sum_eq_single M]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Ideal.Quotient.eq_zero_iff_mem, map_sub, map_sum, map_one, Finset.sum_eq_single M]
     · rw [hE1, sub_self]
     · intro J _ hJ
       exact hE0 J M (Ne.symm hJ)

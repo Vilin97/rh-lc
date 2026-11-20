@@ -64,7 +64,8 @@ theorem trace_int_eq_of_period {La : Type} [AddCommGroup La] [Module.Free ℤ La
     rw [h1]
     have h2 : Q (A (b j)) = ∑ k, (b.repr (A (b j)) k : ℝ) • bR k := by
       conv_lhs => rw [← b.sum_repr (A (b j))]
-      simp only [map_sum, map_zsmul, hbR]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_zsmul, hbR]
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [← Int.cast_smul_eq_zsmul ℝ]
     rw [h2, bR.repr_sum_self]
@@ -123,7 +124,8 @@ theorem _root_.GlobalTheory.UPel.HT.LieType.finrank_eigSp_add_conj_eq (p : ℕ) 
     have h2 := GlobalTheory.T.trace_ringOfIntegers_action_lattice_eq D.F D.O D'.La (D.m * D.n) hrank c
     have h3 := GlobalTheory.T.trace_ringOfIntegers_action_sum_embeddings_eigenspace D.F D.g φ c
     have hconj : (starRingEnd ℂ) (φ c).trace = ∑ σ : D.F →+* ℂ, (d (cj σ) : ℂ) * σ (c : D.F) := by
-      rw [h3, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [h3, map_sum]
       simp only [map_mul, Complex.conj_natCast]
       exact (Fintype.sum_equiv cj _ _ (fun σ => by
         show (d σ : ℂ) * (starRingEnd ℂ) (σ (c : D.F)) = (d (cj (cj σ)) : ℂ) * (cj σ) (c : D.F)

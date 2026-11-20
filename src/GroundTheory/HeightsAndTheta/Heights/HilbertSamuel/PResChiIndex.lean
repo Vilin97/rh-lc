@@ -112,7 +112,8 @@ theorem resGram_change (d : HSMDatum D Ω κ) {n r : ℕ} {b : Fin r → MvPolyn
     intro z hz k l
     have e1 : ∀ p q : MvPolynomial (Ix κ) ℚ, pairVal d.m n p q z =
         secFun p z * starRingEnd ℂ (secFun q z) / ((d.m.ρ z ^ (2 * n) : ℝ) : ℂ) := fun p q => rfl
-    simp only [e1, hc k z hz, hc l z hz, map_sum, map_mul, map_ratCast, Finset.sum_mul, Finset.mul_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [e1, hc k z hz, hc l z hz, map_sum, map_mul, map_ratCast, Finset.sum_mul, Finset.mul_sum,
       Finset.sum_div]
     conv_lhs => rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
@@ -237,7 +238,8 @@ theorem resChi_sub_of_bases (d d' : HSMDatum D Ω κ) (B : Matrix (Ix κ) (Ix κ
       rw [map_sub, aeval_matSubst, ← hx, hTΩ k]
       simp
     have h0 := secFun_eq_zero hh hx0 hz
-    simp only [secFun, map_sub, map_sum, map_mul, map_C, eval_C, eq_ratCast]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [secFun, map_sub, map_sum, map_mul, map_C, eval_C, eq_ratCast]
       at h0 ⊢
     exact sub_eq_zero.1 h0
   have hchange : resGram d' n b' =

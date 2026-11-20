@@ -56,7 +56,8 @@ theorem inj_of_li {L K I W : Type} [Field L] [CharZero L] [Field K] [Fintype I] 
     (hli : LinearIndependent ℂ fun i => cL (bVV L lam i)) : Function.Injective cK := by
   have hL : ∀ u : VV L lam, cL u = 0 → u = 0 := fun u hu => by
     have e := (bVV L lam).sum_repr u
-    rw [← e, map_sum] at hu
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← e, map_sum] at hu
     simp only [LinearMap.map_smulₛₗ] at hu
     have := Fintype.linearIndependent_iff.1 hli _ hu
     exact (bVV L lam).repr.injective (Finsupp.ext fun i => by

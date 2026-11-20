@@ -116,7 +116,8 @@ theorem lvlIdem_comap [Fintype G] {π : Γ →* G} {ι : G →* Γ} (h : IsSplit
     Formalism.L2.DIV.lvlIdem (P.comap π) lamb =
       MonoidAlgebra.mapDomainAlgHom ℂ ℂ ι (Formalism.L2.DIV.lvlIdem P lam) * eR π := by
   have hcard := card_comap h P
-  simp only [Formalism.L2.DIV.lvlIdem, eR, map_sum, MonoidAlgebra.mapDomainAlgHom_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Formalism.L2.DIV.lvlIdem, eR, map_sum, MonoidAlgebra.mapDomainAlgHom_apply,
     MonoidAlgebra.mapDomain_single, Finset.sum_mul_sum, MonoidAlgebra.single_mul_single]
   rw [← Fintype.sum_prod_type' (f := fun (i : P) (j : π.ker) =>
     MonoidAlgebra.single (ι (i : G) * (j : Γ))

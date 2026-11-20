@@ -152,7 +152,8 @@ theorem totalD_total (X : ∀ s, A.obj s) (t : Finset κ) :
     Cube.totalD B (P.total X) t = P.total (Cube.totalD A X) t := by
   rw [Cube.totalD_apply]
   by_cases ht : Set.InjOn τ (t : Set κ)
-  · rw [total_of_inj _ _ ht, Cube.totalD_apply, Finset.sum_image ht, map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [total_of_inj _ _ ht, Cube.totalD_apply, Finset.sum_image ht, map_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl fun i hi => ?_
     have hs : Set.InjOn τ (t.erase i : Finset κ) := ht.mono (by simp [Finset.erase_subset])
     rw [total_of_inj _ _ hs, map_zsmul, ← P.app_res (Finset.erase_subset i t), map_zsmul,

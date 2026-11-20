@@ -64,7 +64,8 @@ theorem isGeneric_of_wh (ψ : AddChar (ZMod g) ℂ) (hψ : ψ ≠ 1) {n : ℕ} (
     intro h0
     apply h
     have := congrArg (LinearMap.trace ℂ V) h0
-    rw [map_zero, op, map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_zero, op, map_sum] at this
     rw [← this]
     unfold wh tr
     refine Finset.sum_congr (by congr) fun x _ => ?_

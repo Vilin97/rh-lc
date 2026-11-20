@@ -114,7 +114,8 @@ theorem proportional_of_crd : GlobalFnsSt → ∀ (R : Type) [CommRing R] [IsDom
       change (m i).1 l = _
       simp only [m, Submodule.coe_sum, Finset.sum_apply]
       rfl
-    rw [e, valR_eq r _ hl, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, valR_eq r _ hl, map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [← valR_eq r _ hl, valR_mul r _ hl, valR_const p r hr _ hl, hc j, mul_left_comm]
   obtain ⟨c₀, hc₀⟩ := SectionRatio.exists_ratio A.isLB (φ := fun _ : Fin 1 => (snd T A.A).left)

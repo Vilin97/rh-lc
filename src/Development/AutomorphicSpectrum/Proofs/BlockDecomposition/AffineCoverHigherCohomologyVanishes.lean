@@ -60,7 +60,8 @@ theorem Compat.on {V : X.Opens} {s : ∀ α, κ α → Γ(X, V ⊓ U α)} (hs : 
     rs h₁ (s α k) = ∑ k' : κ β, rs h₂ (g α β k k') * rs h₃ (s β k') := by
   have hT : T ≤ V ⊓ U α ⊓ U β := le_inf h₁ (h₂.trans inf_le_right)
   have := congrArg (rs hT) (hs α β k)
-  simp only [map_sum, map_mul, rs_rs] at this
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, rs_rs] at this
   exact this
 
 def secGroup (V : X.Opens) : AddSubgroup (∀ α, κ α → Γ(X, V ⊓ U α)) where
@@ -150,7 +151,8 @@ theorem isSheaf_secPresheaf : (secPresheaf U κ g).IsSheaf := by
       rw [iSup_inf_eq, iSup_inf_eq]
     refine eq_of_cover (fun j => C j ⊓ U α ⊓ U β) (fun j => inf_le_inf_right _ (hC α j)) hle
       fun j => ?_
-    simp only [map_sum, map_mul, rs_rs]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, rs_rs]
     have h1 := (sf' j).2.on α β k (T := C j ⊓ U α ⊓ U β) inf_le_left
       (inf_le_inf_right _ inf_le_right) (inf_le_inf_right _ inf_le_left)
     rw [← hb α k j, rs_rs] at h1
@@ -205,7 +207,8 @@ def ofCoord (hg : IsCoc U κ g) {V : X.Opens} {β : ι} (h : V ≤ U β) (t : κ
     secGroup U κ g V :=
   ⟨fun α k => ∑ k', rs (le_inf inf_le_right (inf_le_left.trans h)) (g α β k k') * rs inf_le_left (t k'),
     fun α γ k => by
-    simp only [map_sum, map_mul, rs_rs, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, rs_rs, Finset.mul_sum]
     have hT1 : V ⊓ U α ⊓ U γ ≤ U α ⊓ U γ := inf_le_inf_right _ inf_le_right
     have hT2 : V ⊓ U α ⊓ U γ ≤ U γ ⊓ U β := le_inf inf_le_right (inf_le_left.trans (inf_le_left.trans h))
     have hT3 : V ⊓ U α ⊓ U γ ≤ U α ⊓ U β :=
@@ -222,7 +225,8 @@ theorem ofCoord_val (hg : IsCoc U κ g) {V : X.Opens} {β : ι} (h : V ≤ U β)
 theorem coord_ofCoord' (hg : IsCoc U κ g) {V : X.Opens} {α β : ι} (hα : V ≤ U α) (hβ : V ≤ U β)
     (t : κ β → Γ(X, V)) (k : κ α) :
     coord hα (ofCoord hg hβ t) k = ∑ k', rs (le_inf hα hβ) (g α β k k') * t k' := by
-  simp only [coord_apply, ofCoord_val, map_sum, map_mul, rs_rs, rs_self]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [coord_apply, ofCoord_val, map_sum, map_mul, rs_rs, rs_self]
 
 theorem coord_ofCoord (hg : IsCoc U κ g) {V : X.Opens} {β : ι} (h : V ≤ U β) (t : κ β → Γ(X, V)) :
     coord h (ofCoord hg h t) = t := funext fun k => by
@@ -346,7 +350,8 @@ theorem isCoc : IsCoc U V.κ V.g := by
       · exact h₂.trans inf_le_right
     have e (m : V.κ γ) : ∑ k', rs h₁ (V.g α β k k') * rs h₂ (V.g β γ k' m) = rs h₃ (V.g α γ k m) := by
       have := congrArg (rs hT) (mul_g_tuple V (0 : Fin 3) 1 2 i k m)
-      simp only [map_sum, map_mul, rs_rs] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_mul, rs_rs] at this
       exact this
     simp only [← e, Finset.mul_sum, Finset.sum_mul]
     rw [Finset.sum_comm]
@@ -380,7 +385,8 @@ def secOf (n : ℕ) (x : K.X n) (i : Fin (n + 1) → ι) :
 theorem coord_secOf (n : ℕ) (x : K.X n) (i : Fin (n + 1) → ι) (a : Fin (n + 1)) (k : V.κ (i a)) :
     coord (inter_le' i a) (secOf V n x i) k = rs (inter_le_capO i) (V.e n a x i k) := by
   rw [secOf, coord_ofCoord', V.e_chg n a 0 x i k]
-  simp only [map_sum, map_mul, rs_rs]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, rs_rs]
 
 def cochainEquiv (n : ℕ) : K.X n ≃+ Cochain (modulesAb (toMod U V.κ V.g)).obj U n where
   toFun x i := secOf V n x i
@@ -419,7 +425,8 @@ theorem cochainEquiv_δ (n : ℕ) (j : Fin (n + 2)) (x : K.X n) (i : Fin (n + 2)
 theorem cochainEquiv_d (n : ℕ) (x : K.X n) :
     cochainEquiv V (n + 1) (K.d n x) = d (modulesAb (toMod U V.κ V.g)).obj U n (cochainEquiv V n x) := by
   funext i
-  rw [d_apply, Cos.d_apply, map_sum, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [d_apply, Cos.d_apply, map_sum, Finset.sum_apply]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_zsmul, Pi.smul_apply, cochainEquiv_δ]
 
@@ -548,7 +555,8 @@ def restrictVB (hUW : ∀ α, U α ≤ W) (V : VB str U K) :
     rw [V.e_δ, rs_toY W _ _ (capO_comp U i b.succAbove) (image_capO W hUW i).le]
   e_chg n a b x i k := by
     change toY W _ (V.e n a x i k) = ∑ k', rs _ (toY W _ (V.g (i a) (i b) k k')) * toY W _ (V.e n b x i k')
-    rw [V.e_chg n a b x i k, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [V.e_chg n a b x i k, map_sum]
     refine Finset.sum_congr rfl fun k' _ => ?_
     rw [map_mul, rs_toY W _ _ (le_inf (capO_le U i a) (capO_le U i b)) (image_capO W hUW i).le]
 

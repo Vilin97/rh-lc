@@ -51,7 +51,8 @@ theorem shuffle_cup1_product_formula {R : Type} [CommRing R] {C : Type} [Categor
       prB F (dl 0) (bv F (sI j) (Fin.predAboveOrderHom j) w) := fun j ↦ by
     rw [bv_pr, prB_bv]
     exact bv_congr (fun t ↦ by fin_order') (fun t ↦ by fin_order') w
-  simp only [Sh, LinearMap.sum_apply, LinearMap.smul_apply, AlgHom.toLinearMap_apply, cup1_apply, map_mul, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Sh, LinearMap.sum_apply, LinearMap.smul_apply, AlgHom.toLinearMap_apply, cup1_apply, map_mul, map_sum,
     map_smul]
   rw [Fin.sum_univ_succ]
   simp only [a1, a2, b1, b2, Fin.val_zero, pow_zero, one_smul, Fin.val_succ, Finset.mul_sum, mul_smul_comm]

@@ -62,7 +62,8 @@ theorem finrank_coneTangent_of_jacobian (h : HermNorm n) (J : Ideal (MvPolynomia
       have hder : ∀ j, eval x s * eval x (pderiv j q) = ∑ k, eval x (c k) * a k j := by
         intro j
         have := congrArg (fun P => eval x (pderiv j P)) hc
-        simp only [map_sum, pderiv_mul, map_add, map_mul, hq0, hf0, mul_zero, zero_add] at this
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, pderiv_mul, map_add, map_mul, hq0, hf0, mul_zero, zero_add] at this
         simpa [a, mul_comm] using this.symm
       have hk : ∀ k, ∑ j, a k j * h.pointOf v j = 0 := fun k => by
         simpa [Matrix.mulVec, dotProduct] using congrFun hv k

@@ -111,7 +111,8 @@ theorem _root_.GlobalTheory.CoordArch.coord_bound : ∀ (p : ℕ) [Fact p.Prime]
     intro c
     funext u a b
     have h := congrArg (fun x => G.psi u x a b) (B.sum_repr c)
-    simp only [map_sum, Matrix.sum_apply, map_rat_smul] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, Matrix.sum_apply, map_rat_smul] at h
     simp only [L, Φ, Fintype.linearCombination_apply, Finset.sum_apply, Matrix.sum_apply]
     rw [← h]
     refine Finset.sum_congr rfl fun i _ => ?_

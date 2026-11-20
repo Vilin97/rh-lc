@@ -72,7 +72,8 @@ theorem GlobalTheory.Desc.spanBy_iInter_of_flat : ∀ (R R₁ K L : Type) [CommR
     intro x hx
     obtain ⟨n, u, r, rfl⟩ := exists_fin_sum x
     apply hinj n u r
-    simpa [Φ, map_sum, tensorMap_tmul] using hx
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [Φ, map_sum, tensorMap_tmul] using hx
   ext v
   constructor
   · rintro ⟨n, r, t, ht, rfl⟩
@@ -83,7 +84,8 @@ theorem GlobalTheory.Desc.spanBy_iInter_of_flat : ∀ (R R₁ K L : Type) [CommR
       obtain ⟨n, r, t, ht, rfl⟩ := Set.mem_iInter.1 hv j
       choose u hu hut using ht
       refine ⟨(N j).subtype.rTensor R₁ (∑ i, (⟨u i, hu i⟩ : N j) ⊗ₜ[R] r i), LinearMap.mem_range_self _ _, ?_⟩
-      simp [Φ, map_sum, tensorMap_tmul, hut]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [Φ, map_sum, tensorMap_tmul, hut]
     choose T hT hTv using key
     obtain ⟨j₀⟩ := ‹Nonempty J›
     have heq : ∀ j, T j = T j₀ := fun j => by
@@ -94,4 +96,5 @@ theorem GlobalTheory.Desc.spanBy_iInter_of_flat : ∀ (R R₁ K L : Type) [CommR
     refine ⟨n, s, fun i => θ (w i), fun i => ⟨w i, ?_, rfl⟩, ?_⟩
     · exact Set.mem_iInter.2 fun j => (Submodule.mem_iInf N).1 (w i).2 j
     · rw [← hTv j₀, ← hy]
-      simp [Φ, map_sum, tensorMap_tmul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [Φ, map_sum, tensorMap_tmul]

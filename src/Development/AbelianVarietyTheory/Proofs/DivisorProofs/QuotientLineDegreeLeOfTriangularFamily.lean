@@ -139,13 +139,15 @@ theorem quot_line_le : ∀ (k F : Type) [Field k] [IsAlgClosed k] [CharZero k] [
           algebraMap E E' (∑ j : Fin r, G (ρ' p') 0 j.succ * m j) * w 1)
           (fun i => w 1 * algebraMap E E' ((Q (ρ' p') *ᵥ m) i)) := by
         ext i; refine Fin.cases ?_ (fun i => ?_) i
-        · simp only [Matrix.mulVec, dotProduct, Fin.sum_univ_succ, hw'def, Fin.cons_zero, Fin.cons_succ,
+        set_option synthInstance.maxHeartbeats 100000 in
+          · simp only [Matrix.mulVec, dotProduct, Fin.sum_univ_succ, hw'def, Fin.cons_zero, Fin.cons_succ,
             pullAd, Matrix.map_apply, map_sum, map_mul, Finset.sum_mul, Fin.cases_zero]
           congr 1
           apply Finset.sum_congr rfl
           intro j _
           ring
-        · simp [pullAd, hw'def, hQG, hG0, Matrix.mulVec, dotProduct, Fin.sum_univ_succ, map_sum,
+        set_option synthInstance.maxHeartbeats 100000 in
+          · simp [pullAd, hw'def, hQG, hG0, Matrix.mulVec, dotProduct, Fin.sum_univ_succ, map_sum,
             Finset.mul_sum, mul_assoc, mul_comm, mul_left_comm]
       rw [v1, v2, nrm_two, nrm_cons]
       congr 1

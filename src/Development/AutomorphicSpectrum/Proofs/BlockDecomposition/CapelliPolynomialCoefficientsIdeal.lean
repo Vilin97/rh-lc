@@ -135,7 +135,8 @@ theorem monic_relations_to_blocks : ∀ (V : Type) [AddCommGroup V] [Module ℂ 
     have : (⟨R t, hRmem t⟩ : Algebra.adjoin ℂ s)
         = ∑ k ∈ Finset.range (n₁ + 1), t ^ k • (⟨a k, hamem k⟩ : Algebra.adjoin ℂ s) := by
       apply Subtype.ext; simp [hRform t]
-    rw [this, map_sum, sumPoly_eval]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [this, map_sum, sumPoly_eval]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_smul, Algebra.smul_def, map_pow, mul_comm]
   have hQev : ∀ t : ℂ, Q.eval (algebraMap ℂ _ t) = π ⟨S t, hSmem t⟩ := by
@@ -143,7 +144,8 @@ theorem monic_relations_to_blocks : ∀ (V : Type) [AddCommGroup V] [Module ℂ 
     have : (⟨S t, hSmem t⟩ : Algebra.adjoin ℂ s)
         = ∑ k ∈ Finset.range (n₂ + 1), t ^ k • (⟨b k, hbmem k⟩ : Algebra.adjoin ℂ s) := by
       apply Subtype.ext; simp [hSform t]
-    rw [this, map_sum, sumPoly_eval]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [this, map_sum, sumPoly_eval]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_smul, Algebra.smul_def, map_pow, mul_comm]
   have hβ : ∀ u : ℂ, IsIntegral ℂ (P.eval (algebraMap ℂ _ (u + c₁)) *

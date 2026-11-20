@@ -34,7 +34,8 @@ theorem vec_sum_zsmul (y : I.Ginf) {N : ℕ} (z : Fin N → ℤ) (e : Fin N → 
 theorem gm_mulVec {N : ℕ} (ρ : (InfinitePlace I.F → Fin I.n → ℂ) ≃ₗ[ℝ] (Fin N → ℝ)) (y : I.Ginf)
     (e : Fin N → Fin I.n → I.E) (z : Fin N → ℤ) :
     gm I ρ y e *ᵥ (fun j => (z j : ℝ)) = ρ (vec I y (∑ j, z j • e j)) := by
-  rw [vec_sum_zsmul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [vec_sum_zsmul, map_sum]
   funext i
   simp only [map_zsmul]
   simp only [gm, mulVec, dotProduct, of_apply, Finset.sum_apply, Pi.smul_apply, zsmul_eq_mul]
@@ -45,7 +46,8 @@ theorem gm_change {N : ℕ} (ρ : (InfinitePlace I.F → Fin I.n → ℂ) ≃ₗ
     gm I ρ y (fun j => ∑ i, M i j • e i) = gm I ρ y e * M.map (Int.cast : ℤ → ℝ) := by
   ext i j
   simp only [gm, Matrix.of_apply, Matrix.mul_apply, Matrix.map_apply]
-  rw [vec_sum_zsmul I y (fun k => M k j) e, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [vec_sum_zsmul I y (fun k => M k j) e, map_sum]
   simp only [map_zsmul]
   simp only [Finset.sum_apply, Pi.smul_apply, zsmul_eq_mul]
   exact Finset.sum_congr rfl fun k _ => mul_comm _ _

@@ -19,7 +19,8 @@ theorem UpperTheory.WildB.embSum :
   have key : ∑ χ : E →+* C, ((∑ j, φ (a j : E) * χ (b j : E)) / χ (d : E) - if χ = φ then 1 else 0) • (χ : E → C) = 0 := by
     funext x
     have h2 := congrArg φ (h x)
-    rw [map_sum] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at h2
     simp only [Rat.smul_def, map_mul, map_ratCast] at h2
     simp only [htr, map_mul, map_div₀] at h2
     simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, sub_mul, Finset.sum_sub_distrib,

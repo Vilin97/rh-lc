@@ -22,7 +22,8 @@ theorem isAmpleLB_rootEx : ∀ (D : D7) (A : Amb D) (N j : ℕ) (S : Sig A N j) 
   exact GlobalTheory.T.weighted_projective_embedding_sep _ _ f hf _ _ (fun x => LB.isLB_pull (isLB_toLB _) _) M t ht hsep w (fun x => hw x) _
     (LB.isLB_pull (isLB_toLB _) _) (by
       show GlobalTheory.CechPic.pull _ (toPic _) = ∑ x, w x • GlobalTheory.CechPic.pull _ (toPic _)
-      simp only [map_add, map_sum, map_zsmul, map_neg, htop, smul_zero, Finset.sum_const_zero, add_zero]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_add, map_sum, map_zsmul, map_neg, htop, smul_zero, Finset.sum_const_zero, add_zero]
       refine Finset.sum_congr rfl fun x _ => ?_
       rw [natCast_zsmul])
 

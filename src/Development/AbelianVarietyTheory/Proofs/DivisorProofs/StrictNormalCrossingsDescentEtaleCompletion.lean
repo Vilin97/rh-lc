@@ -36,7 +36,8 @@ theorem exists_rsp {A : Type} [CommRing A] [IsRegularLocalRing A] {m : ℕ} (p :
     intro g hg i
     choose a ha using fun j => residue_surjective (g j)
     have h1 : (maximalIdeal A).toCotangent (∑ j, a j • τ j) = 0 := by
-      rw [map_sum, ← hg]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, ← hg]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [map_smul, ← ha j]
       rfl
@@ -126,7 +127,8 @@ theorem exists_rsp_of_flat {A R : Type} [CommRing A] [IsRegularLocalRing A] [Com
     isUnit_of_dvd_unit (Finset.dvd_prod_of_mem u (Finset.mem_univ i)) hU
   obtain ⟨n, r, T, hr, hT⟩ := exists_rsp p (fun i => (mem_maximalIdeal _).2 (hp i).not_isUnit) fun a ha i => by
     have h1 := Ideal.mem_map_of_mem φ ha
-    rw [Ideal.map_pow, hm, map_sum] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Ideal.map_pow, hm, map_sum] at h1
     have h2 := hind (fun j => φ (a j) * u j) (by
       convert h1 using 2 with j
       rw [map_mul, hu]; ring) i
@@ -157,7 +159,8 @@ theorem exists_rsp_of_isEtaleCompletion : ∀ (A : Type) [CommRing A] [IsLocalRi
   · rw [GlobalTheory.FormalIsogeny.mem_maximalIdeal_iff_constantCoeff]
     simp
   · have h := coeff_single_eq_zero ha (Sum.inl i)
-    rw [map_sum, Finset.sum_eq_single i] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_eq_single i] at h
     · rw [GlobalTheory.FormalIsogeny.mem_maximalIdeal_iff_constantCoeff, maximalIdeal_eq_bot, Ideal.mem_bot]
       rw [bdParam, MvPowerSeries.X_def, MvPowerSeries.coeff_mul_monomial] at h
       simpa using h

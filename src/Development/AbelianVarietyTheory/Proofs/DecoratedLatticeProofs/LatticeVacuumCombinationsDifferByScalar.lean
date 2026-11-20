@@ -42,7 +42,8 @@ theorem iso_mem {V ι J : Type} [AddCommGroup V] [Module ℂ V] (A : ι → V �
       have h1 : A i (z a + ∑ j ∈ s, z j) - l a i • (z a + ∑ j ∈ s, z j) ∈ U :=
         U.sub_mem (hU i _ hsum) (U.smul_mem _ hsum)
       have h2 : A i (z a + ∑ j ∈ s, z j) - l a i • (z a + ∑ j ∈ s, z j) = ∑ j ∈ s, (l j i - l a i) • z j := by
-        rw [map_add, map_sum, hz a (Finset.mem_insert_self a s), smul_add, Finset.smul_sum,
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_add, map_sum, hz a (Finset.mem_insert_self a s), smul_add, Finset.smul_sum,
           Finset.sum_congr rfl (fun j hj => hz j (Finset.mem_insert_of_mem hj) i), add_sub_add_comm, sub_self, zero_add,
           ← Finset.sum_sub_distrib]
         exact Finset.sum_congr rfl fun j _ => (sub_smul _ _ _).symm
@@ -223,7 +224,8 @@ theorem class_mem (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D) (Λ : AddSubgro
     rwa [sub_sub_cancel] at this
   have hz : ∀ C, ∀ m : Λ, hL ψ S T m (z C) = l C m • z C := by
     intro C m
-    simp only [z, map_sum, map_smul, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [z, map_sum, map_smul, Finset.smul_sum]
     refine Finset.sum_congr rfl fun j hj => ?_
     have hjC : mk (y j) = C := (Finset.mem_filter.1 hj).2
     have e : hL ψ S T m (heisO ψ S T (y j) f) = (ψ (symplO S T m (y j)) * q m) • heisO ψ S T (y j) f :=

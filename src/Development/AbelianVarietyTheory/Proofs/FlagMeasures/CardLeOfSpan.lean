@@ -117,7 +117,8 @@ theorem card_quot_le {R W : Type} [CommRing R] [IsDedekindDomain R] [AddCommGrou
     refine (Submodule.mem_span_range_iff_exists_fun R).2 ⟨a, ?_⟩
     have e : ∑ b, a b • q b = Submodule.Quotient.mk (∑ b, a b • (⟨c • w b, hcB b⟩ : B)) := by
       simp only [q]
-      rw [← Submodule.mkQ_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← Submodule.mkQ_apply, map_sum]
       simp only [map_smul, Submodule.mkQ_apply]
     rw [e, eq_comm, Submodule.Quotient.eq, Submodule.mem_comap]
     have : B.subtype (⟨x, hx⟩ - ∑ b, a b • (⟨c • w b, hcB b⟩ : B)) = u := by

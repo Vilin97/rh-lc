@@ -84,7 +84,8 @@ theorem HypPair.symm {K : Type} [NormedField K] {σ : K →+* K} {E n : Type} [D
   obtain ⟨a, b, c, d, e⟩ := h
   refine ⟨b, a, d, c, fun x y => ?_⟩
   have := congrArg σ (e y x)
-  rw [map_sum] at this
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum] at this
   simp only [map_mul, (a _ _).2] at this
   rw [show (∑ i, σ (f' x i) * f y i) = ∑ i, f y i * σ (f' x i) from Finset.sum_congr rfl fun i _ => mul_comm _ _, this]
   by_cases hxy : x = y
@@ -125,7 +126,8 @@ theorem HostLog.constantCoeff_factor (l : ℕ) [Fact l.Prime] (g2 g3 s2 ε : Max
     fun {a} ha f => HostLog.constantCoeff_subst (σ := Unit) (a := fun _ => a) (fun _ => ha) f
   rw [Formalism.DworkPowerSeriesWeights.mvExp, key]
   · simp
-  · rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum]
     refine Finset.sum_eq_zero fun i _ => ?_
     rw [at1, key (by simp), ← PowerSeries.coeff_zero_eq_constantCoeff_apply, PowerSeries.coeff_map,
       PowerSeries.coeff_zero_eq_constantCoeff_apply, Formalism.L2.Th1.D.FAux.cc_phFF hl, map_zero]

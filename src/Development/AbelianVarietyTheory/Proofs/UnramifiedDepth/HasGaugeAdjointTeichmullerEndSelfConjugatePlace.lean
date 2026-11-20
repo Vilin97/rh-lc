@@ -104,7 +104,8 @@ variable {d d' dd : ℕ} {I I' : Fin 2 → Type}
 theorem teichSelf_cc_lin {κ τ : Type} [Fintype κ] (X : RawChart C d I κ) (hlg : ∀ i, constantCoeff (X.lg i) = 0)
     (M : Matrix κ κ C) (a : κ → MvPowerSeries τ C) (ha : ∀ i, constantCoeff (a i) = 0) (x : κ) :
     constantCoeff (∑ y, M x y • subst a (X.lg y)) = 0 := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_eq_zero fun y _ => ?_
   rw [← coeff_zero_eq_constantCoeff_apply, coeff_smul, coeff_zero_eq_constantCoeff_apply,
     constantCoeff_subst_zero ha (hlg y), mul_zero]
@@ -125,7 +126,8 @@ theorem teichSelf_subst_endP {κ τ υ : Type} [Fintype κ] [Finite τ] (X : Raw
   rw [subst_comp_subst_apply (hasSubst_of_constantCoeff_zero (teichSelf_cc_lin X hlg M a ha)) hB]
   congr 1
   funext z
-  rw [← coe_substAlgHom hB, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← coe_substAlgHom hB, map_sum]
   refine Finset.sum_congr rfl fun y _ => ?_
   rw [map_smul, coe_substAlgHom hB, subst_comp_subst_apply (hasSubst_of_constantCoeff_zero ha) hB]
 
@@ -189,7 +191,8 @@ theorem teichSelf_hAt_col [CharZero C] {τ : Type} (X : RawChart C d I (Fin dd))
     hAt X' a b = ∑ col : Fin 2, hAt X (fun y => a (col, y)) (fun y => b (col, y)) := by
   have hA := hasSubst_of_constantCoeff_zero (teichSelf_cc_pair a b ha hb)
   unfold hAt
-  rw [e3, ← coe_substAlgHom hA, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e3, ← coe_substAlgHom hA, map_sum]
   refine Finset.sum_congr rfl fun col _ => ?_
   rw [coe_substAlgHom hA]
   unfold hCol

@@ -51,7 +51,8 @@ theorem sep_idem {F K C R : Type} [Field F] [Field K] [Algebra F K] [CommRing C]
   have key : ∀ κ, B κ * E = j κ • E := by
     intro κ
     have := congrArg φ (h1 κ)
-    simp only [map_sum, hφ, map_mul] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, hφ, map_mul] at this
     rw [hE, Finset.mul_sum, Finset.smul_sum]
     simp only [mul_smul_comm, smul_smul]
     exact this
@@ -59,7 +60,8 @@ theorem sep_idem {F K C R : Type} [Field F] [Field K] [Algebra F K] [CommRing C]
         conv_lhs => rw [hE, Finset.sum_mul]
         simp only [smul_mul_assoc, hE]
     _ = j (∑ i, α i * β i) • E := by
-        simp only [key, smul_smul, map_sum, map_mul, Finset.sum_smul, mul_comm]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [key, smul_smul, map_sum, map_mul, Finset.sum_smul, mul_comm]
     _ = E := by rw [h2, map_one, one_smul]
 
 def mulMat {F LL V : Type} (C : Type) [Field F] [Field LL] [Algebra F LL] [AddCommGroup V]
@@ -241,7 +243,8 @@ theorem frame_of_dec (P : LocPrime l) (AI : LocAinf l P) (Θ : ThetaL P AI) (K L
       intro j
       rw [Matrix.mul_smul, hBe, p2, hι, smul_smul, map_mul, mul_comm, toC_apply K (α j)]
     simp only [this]
-    rw [← Finset.sum_smul, ← map_sum, h2, map_one, one_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Finset.sum_smul, ← map_sum, h2, map_one, one_smul]
   apply p3
   have : Pr.mulVec (fun a => algebraMap ℚ_[l] (PadicComplex l) (z a)) = Pr.mulVec x := by
     have h3 : ∀ v, Pr.mulVec v = Pr.mulVec (Q.mulVec ((R * Dm⁻¹).mulVec v)) := fun v => by

@@ -41,7 +41,8 @@ theorem UpperTheory.V.KT.spanpsd :
     refine Finset.sum_eq_zero fun w _ => ?_
     have hsum : ∑ j, u w j * toR y w j = 0 := by
       have : w.embedding (∑ j, toL y j * c j) = 0 := by rw [hyk, map_zero]
-      rw [map_sum] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum] at this
       rw [← this]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [map_mul, mul_comm]

@@ -138,7 +138,8 @@ private theorem sum_pev_sq_le_hs_pmat {ε : Fin n → Bool} (z : PCoord ε → �
       = ∑ i : Fin n, ∑ j : Fin n, A i j * star (A i j) := by
     rw [← hAA, hAA2, hD]
   have hre := congrArg (fun w : ℂ => RCLike.re w) hmain
-  simp only [map_sum, RCLike.star_def, RCLike.mul_conj] at hre
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, RCLike.star_def, RCLike.mul_conj] at hre
   simp only [← RCLike.ofReal_pow, RCLike.ofReal_re] at hre
   simp only [hpev]
   unfold S7.hs

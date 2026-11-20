@@ -111,7 +111,8 @@ theorem exists_small_coprime_norm :
     rw [Int.fract, ← sub_mul]; push_cast; ring
   have hfr : ∀ τ : F →+* ℝ, |τ (zz - (t : F))| ≤ C₂ := by
     intro τ
-    rw [hdec, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hdec, map_sum]
     refine (Finset.abs_sum_le_sum_abs _ _).trans ?_
     refine Finset.sum_le_sum fun i _ => ?_
     rw [map_mul, map_ratCast, abs_mul]

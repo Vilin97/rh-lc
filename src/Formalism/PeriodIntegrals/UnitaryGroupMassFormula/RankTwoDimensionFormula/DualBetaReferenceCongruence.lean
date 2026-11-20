@@ -135,7 +135,8 @@ theorem leviM_mul {x y : X.B.I.Gf} (hx : x ∈ X.B.I.Kset) (hy : y ∈ X.B.I.Kse
     apply Subtype.ext
     simp only [Subring.coe_add, AddSubmonoidClass.coe_finsetSum, Subring.coe_mul]
     ring
-  rw [e3, map_add, hD, zero_add, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e3, map_add, hD, zero_add, map_sum]
   simp only [map_mul]
 
 end LeviMul

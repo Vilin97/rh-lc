@@ -92,7 +92,8 @@ theorem component_mem_ker (c : (Σ k, ι k) → Φ) {f : MRing ι} (hf : f ∈ R
       RingHom.ker (T.multiConeMap c) := by
   rw [RingHom.mem_ker] at hf ⊢
   have hsum := congrArg (weightedHomogeneousComponent (fun k : K => (Pi.single k 1 : K → ℕ)) m) hf
-  rw [← sum_weightedHomogeneousComponent (fun q : Σ k, ι k => (Pi.single q.1 1 : K → ℕ)) f,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← sum_weightedHomogeneousComponent (fun q : Σ k, ι k => (Pi.single q.1 1 : K → ℕ)) f,
     finsum_eq_sum _ (weightedHomogeneousComponent_finsupp f), map_sum, map_sum, map_zero] at hsum
   rw [← (isWeightedHomogeneous_multiConeMap c
     (weightedHomogeneousComponent_isWeightedHomogeneous m f)).weightedHomogeneousComponent_same, ← hsum]

@@ -34,7 +34,8 @@ theorem frobSemilinear_iterate_eq_zero : ∀ (p : ℕ) [Fact p.Prime] (S : Type)
   have hdecomp : ∀ w : ι → S, L^[N] w = ∑ j, (w j) ^ (p ^ N) • L^[N] (Pi.single j 1) := by
     intro w
     conv_lhs => rw [← Finset.univ_sum_single w]
-    rw [← hF, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hF, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [hF, ← hsmulN]
     congr 1

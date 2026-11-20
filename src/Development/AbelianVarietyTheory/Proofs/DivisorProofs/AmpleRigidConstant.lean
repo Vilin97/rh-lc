@@ -38,7 +38,8 @@ theorem exists_relation_of_cls (K : Type) [Field K] (X : Scheme.{0}) (f : X ⟶ 
     GlobalTheory.AbLaw.HighTwist.sec_eq_zero _ fun i => (ev M _ i).trans (h i)
   have h2 : ∑ k, a' k • σ k = 0 := by
     apply e.injective
-    rw [map_sum, map_zero, ← h1]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero, ← h1]
     exact Finset.sum_congr rfl fun k _ => e.map_smul _ _
   exact ⟨a, ha, fun i => (ev B σ i).symm.trans (by rw [h2]; rfl)⟩
 

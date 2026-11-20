@@ -67,7 +67,8 @@ theorem UpperTheory.V.Ws.Bl.uMFacts :
       calc Y = uEq R ((uEq R).symm Y) := ((uEq R).apply_symm_apply Y).symm
         _ = _ := by
           conv_lhs => rw [hv]
-          rw [map_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [map_sum]
           simp only [map_smul]
     rw [hY]
     refine Submodule.sum_mem _ (fun k _ => Submodule.smul_mem_smul ?_ Submodule.mem_top)

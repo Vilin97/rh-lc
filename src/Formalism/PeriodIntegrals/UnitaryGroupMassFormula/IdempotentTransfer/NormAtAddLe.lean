@@ -65,7 +65,8 @@ lemma eS_in_ideal (T : GoodSet K G) (s : T.S) (P0 : Pair K G)
   choose b hb using fun i => T.irr s (B i)
   refine ⟨n, a, b, ?_⟩
   have key : (∑ i, a i * eps P0 * b i) * eS T s = eS T s := by
-    rw [mul_eS, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [mul_eS, map_sum]
     simp only [map_mul, ha, hb]
     rw [h, phiS_one]
   conv_rhs => rw [← key]
@@ -95,13 +96,15 @@ lemma exists_g (T : GoodSet K G) (P0 P : Pair K G) (hM : M1 T P0) {V : Type} [Ad
       rw [nS, h0, LinearMap.range_zero, finrank_bot] at this
       exact zero_ne_one this
     obtain ⟨n, a, b, hab⟩ := eS_in_ideal T s P0 hY
-    rw [← hab, map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hab, map_sum, LinearMap.sum_apply]
     refine Finset.sum_eq_zero fun i _ => ?_
     rw [map_mul, Module.End.mul_apply, vanish ρ P0 x hcon, map_zero]
   obtain ⟨z, rfl⟩ := hx
   have he : ρ.asAlgebraHom (eG T) (ρ.asAlgebraHom (eps P * eG T) z) = ρ.asAlgebraHom (eps P * eG T) z := by
     rw [← Module.End.mul_apply, ← map_mul, ← mul_assoc, ← eG_comm, mul_assoc, eG_idem]
-  rw [← he, eG, map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← he, eG, map_sum, LinearMap.sum_apply]
   exact Finset.sum_eq_zero fun s _ => hes s
 
 open Classical in
@@ -109,7 +112,8 @@ lemma phi_apply {V : Type} [AddCommGroup V] [Module K V] (ρ : Representation K 
     (y : V) :
     ρ.asAlgebraHom (epsSum P0 * MonoidAlgebra.of K G g) y =
       ∑ h : P0.H, (((P0.chi h)⁻¹ : Kˣ) : K) • ρ (h : G) (ρ g y) := by
-  rw [map_mul, Representation.asAlgebraHom_of, Module.End.mul_apply, epsSum, map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_mul, Representation.asAlgebraHom_of, Module.End.mul_apply, epsSum, map_sum, LinearMap.sum_apply]
   simp only [map_smul, Representation.asAlgebraHom_of, LinearMap.smul_apply]
 
 open Classical in

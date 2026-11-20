@@ -62,8 +62,10 @@ theorem trOn_eqvM (ι : H →* G) (hι : Function.Injective ι) (ρ : Representa
       ∑ q, LinearMap.trace ℂ V (e q ∘ₗ T.restrict hmaps ∘ₗ s q) := by
     have hsum : T.restrict hmaps ∘ₗ (∑ q, s q ∘ₗ e q) = ∑ q, (T.restrict hmaps ∘ₗ s q) ∘ₗ e q := by
       ext φ : 1
-      simp [LinearMap.sum_apply, map_sum]
-    conv_lhs => rw [← LinearMap.comp_id (T.restrict hmaps), ← hid, hsum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [LinearMap.sum_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [← LinearMap.comp_id (T.restrict hmaps), ← hid, hsum, map_sum]
     refine Finset.sum_congr rfl fun q _ => ?_
     rw [LinearMap.trace_comp_comm']
   rw [htr, finsum_eq_sum_of_fintype, Finset.mul_sum]
@@ -79,7 +81,8 @@ theorem trOn_eqvM (ι : H →* G) (hι : Function.Injective ι) (ρ : Representa
     have := GlobalTheory.T.heckeOperator_equivariantDoubleCosetSection_basePoint G H V ι hι ρ K K' F hR hsupp (x q) (hst _) hfin v
     rw [finsum_eq_sum_of_support_subset _ (hsub _ fun h h0 => by simp [h0])] at this
     simpa [e, s, LinearMap.restrict_apply, LinearMap.sum_apply] using this
-  rw [hA, LinearMap.map_smul, LinearMap.map_smul, map_sum, smul_eq_mul, smul_eq_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hA, LinearMap.map_smul, LinearMap.map_smul, map_sum, smul_eq_mul, smul_eq_mul,
     finsum_eq_sum_of_support_subset _ (hsub (fun h => F ((x q)⁻¹ * ι h * x q) * LinearMap.trace ℂ V (ρ h))
       fun h h0 => by simp [h0])]
   simp only [map_smul, smul_eq_mul, x]

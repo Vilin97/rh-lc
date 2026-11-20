@@ -148,7 +148,8 @@ theorem NgX_mapL (g : ℕ) (Λ : Submodule (𝓞 E) S.V) (F : LFlag S r T) (F' :
 
 theorem frameAct_map {n : ℕ} (f : Fin n → S.V) (ξ : Matrix (Fin n) (Fin n) (𝓞 E)) (b : Fin n) :
     frameAct (fun a => β (f a)) ξ b = β (frameAct f ξ b) := by
-  simp only [frameAct, map_sum, LinearEquiv.map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [frameAct, map_sum, LinearEquiv.map_smul]
 
 theorem frame_mapL' (F : LFlag S r T) : frame (mapL β hβ F) = fun a => β (frame F a) := by
   funext a; exact frame_mapL β hβ F a

@@ -22,7 +22,8 @@ noncomputable def linL (H : HermSp M V) (y : V) : V →ₗ[E] E where
 lemma h_sum_left (H : HermSp M V) {n : ℕ} (c : Fin n → E) (b : Fin n → V) (y : V) :
     H.h (∑ i, c i • b i) y = ∑ i, c i * H.h (b i) y := by
   show linL H y (∑ i, c i • b i) = _
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_smul, smul_eq_mul]
   rfl
@@ -32,7 +33,8 @@ lemma hf_eq (H : HermSp M V) {n : ℕ} (b : Fin n → V) (c d : Fin n → E) :
 
   have hr : ∀ (x : V) (d : Fin n → E), H.h x (∑ j, d j • b j) = ∑ j, M.L.cj (d j) * H.h x (b j) := by
     intro x d
-    rw [H.h_herm, h_sum_left, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [H.h_herm, h_sum_left, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_mul, ← H.h_herm]
   rw [h_sum_left]
@@ -65,7 +67,8 @@ lemma hermND (H : HermSp M V) {n : ℕ} (b : Module.Basis (Fin n) E V) :
     have hright : ∀ x y : V, H.h x y = ∑ j, M.L.cj (b.repr y j) * H.h x (b j) := by
       intro x y
       conv_lhs => rw [← b.sum_repr y]
-      rw [H.h_herm, h_sum_left, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [H.h_herm, h_sum_left, map_sum]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [map_mul, ← H.h_herm]
 

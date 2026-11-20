@@ -193,7 +193,8 @@ theorem sum_lift_mul_real (hX : IsDictWt P X) {k : GA D X.B} (hk : k ∈ GinfC X
         Finset.sum_congr rfl (fun T' _ => (integral_const_mul _ _).symm)]
     rw [← integral_finsetSum _ (fun T' _ => (hi T').const_mul (U T T'))]
     congr 1; funext q
-    simp only [GlobalTheory.AutomorphicL2Unitary.descend, thetaKO, map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [GlobalTheory.AutomorphicL2Unitary.descend, thetaKO, map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul,
       Pi.one_apply, mul_one]
   simp_rw [e]
   exact sum_norm_sq_unitary U hU _

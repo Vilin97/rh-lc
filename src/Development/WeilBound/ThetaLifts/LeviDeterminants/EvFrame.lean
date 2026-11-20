@@ -141,13 +141,15 @@ theorem w_inc {α β α' β' : Type} [Fintype α] [Fintype β] (Q : Matrix α' �
 theorem DR_inc {α β : Type} [Fintype α] (J : Matrix α α E) (x : Matrix α (β ⊕ Fin 2) E) :
     DR (cA σ) (incM F J) (incM F x) = fun k => inclR (F := F) (AF F) (DR σ J x k) := by
   funext k
-  simp only [DR, map_neg, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [DR, map_neg, map_sum, map_mul]
   rfl
 
 theorem DL_inc {α β : Type} [Fintype β] (J : Matrix β β E) (x : Matrix (α ⊕ Fin 2) β E) :
     DL (cA σ) (incM F J) (incM F x) = fun k => inclR (F := F) (AF F) (DL σ J x k) := by
   funext k
-  simp only [DL, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [DL, map_sum, map_mul]
   rfl
 
 end PositivityTheory.ThKF0

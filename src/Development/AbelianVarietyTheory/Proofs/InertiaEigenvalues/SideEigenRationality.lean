@@ -75,7 +75,8 @@ theorem charpoly_pt : ∀ (D : D7) (i : D.nd.Loc) (x : D.nd.X i) (ρ : G D.host.
   have hcomp : (D.naut.iotaQC i).toRingHom.comp (iotaOQ D.nd D.naut i) = iotaOC D i := rfl
   rw [hcomp]
   unfold heckePol sysPol
-  rw [Polynomial.map_add, Polynomial.map_pow, Polynomial.map_X, Polynomial.map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Polynomial.map_add, Polynomial.map_pow, Polynomial.map_X, Polynomial.map_sum]
   congr 1
   refine Finset.sum_congr rfl fun k hk => ?_
   obtain ⟨hk1, hk2⟩ := Finset.mem_Icc.1 hk

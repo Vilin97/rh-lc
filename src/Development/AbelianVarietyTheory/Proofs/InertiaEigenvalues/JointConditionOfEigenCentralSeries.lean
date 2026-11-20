@@ -169,7 +169,8 @@ theorem main : ∀ (D : D7) (Q : PairedCharacterCondition.Pend D), GlobalTheory.
       (D.what₂.restRowsFiniteGroupCard : ℂ) • D.ntypes.e0 := by
     rw [e0_eq, eGood, Finset.smul_sum, AddSubmonoidClass.coe_finsetSum]
     show MonoidAlgebra.mapRingHom _ (iotaO D.nd D.naut i) _ = _
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun p _ => ?_
     split_ifs with hg
     · exact hp p

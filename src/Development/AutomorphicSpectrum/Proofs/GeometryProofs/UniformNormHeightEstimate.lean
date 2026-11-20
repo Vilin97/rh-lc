@@ -60,7 +60,8 @@ theorem count_le {K R Om Ω : Type} [Field K] [NumberField K] [AddCommGroup R] [
       have hs : ∀ i, s i ∈ V := fun i => Submodule.sum_mem _ fun a _ => V.smul_mem _ (v a).2
       have hphi : ∀ i, φ (ev (s i)) = ∑ a, (∑ b, (g (a, b, i) : Ω) * ψ (bK b)) * φ (ev (v a)) := by
         intro i
-        simp only [s, c, map_sum, map_smul, Algebra.smul_def, map_mul, Finset.sum_mul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [s, c, map_sum, map_smul, Algebra.smul_def, map_mul, Finset.sum_mul]
         refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
         simp [ψ, map_ratCast]
       have hterm : ∀ a b i, (g (a, b, i) : Ω) * (w * φ (ev (bK b • (v a : R))) * f i) =
@@ -210,7 +211,8 @@ theorem geomDeg_combLine_top (hI : PB.Inputs) (M : Top.RootModel Ψ N) (n : Opti
   have hδ : (M.δ : ℝ) ≠ 0 := Nat.cast_ne_zero.2 M.δ_pos.ne'
   have e1 : Top.toA ((∑ r, MvPolynomial.C (n (some r) : ℝ) * MvPolynomial.X r) ^ Top.dimFl Ψ N) =
       (∑ o, MvPolynomial.C (n o : ℝ) * MvPolynomial.X o : Top.RPA Ψ N) ^ Top.dimFl Ψ N := by
-    simp only [Top.toA, map_pow, map_sum, map_mul, MvPolynomial.rename_C, MvPolynomial.rename_X, Fintype.sum_option, hn,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Top.toA, map_pow, map_sum, map_mul, MvPolynomial.rename_C, MvPolynomial.rename_X, Fintype.sum_option, hn,
       Int.cast_zero, map_zero, zero_mul, zero_add]
   rw [e1, Top.RealGeo.geoFun_pow, Finset.mul_sum]
   have h := ptsIntegral_combLine (e := Top.dimFl Ψ N) hI.resExists M.arith (M.line 1) (Top.RealGeo.line_smooth M)

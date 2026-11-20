@@ -85,7 +85,8 @@ theorem homogEval_mul {A : Type*} [CommRing A] (f : A →+* S) (P : A[X]) (s z :
 theorem map_homogEval {A : Type*} [CommRing A] (f : A →+* S) (P : A[X]) (y s : S) (g : S →+* T)
     (f' : A →+* T) (hf : ∀ a, g (f a) = f' a) :
     g (homogEval f P y s) = homogEval f' P (g y) (g s) := by
-  simp only [homogEval, map_sum, map_mul, map_pow, hf]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [homogEval, map_sum, map_mul, map_pow, hf]
 
 theorem Localization.Away.exists_algebraMap_eq_pow_mul (t : R) (x : Localization.Away t) :
     ∃ (m : ℕ) (y : R), algebraMap R (Localization.Away t) y =

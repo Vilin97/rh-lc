@@ -127,7 +127,8 @@ theorem exists_untilt_sum_eq {N : IntermediateField K♭ C♭} [FiniteDimensiona
   have hx : WittVector.teichmuller p (∑ i ∈ s, a i) =
       ∑ i ∈ s, WittVector.teichmuller p (a i) + v * p := by rw [hv]; ring
   have := congrArg (RingHom.comp θ (WittVector.map (integerTilt K C p N).subtype)) hx
-  simp only [RingHom.comp_apply, map_add, map_sum, map_mul, map_natCast,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [RingHom.comp_apply, map_add, map_sum, map_mul, map_natCast,
     WittVector.map_teichmuller, WittVector.fontaineTheta_teichmuller, map_sum] at this
   rw [mul_comm] at this
   convert this using 2 <;> rfl

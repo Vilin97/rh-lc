@@ -33,7 +33,8 @@ theorem map_unit {A B : Type} [CommRing A] [CommRing B] {m : ℕ} (ρ : A →+* 
 theorem mapNU_mul {A B : Type} [CommRing A] [CommRing B] {m : ℕ} (S : A →ₙ+* B) (X Y : Matrix (Fin m) (Fin m) A) :
     (X * Y).map S = X.map S * Y.map S := by
   ext i j
-  simp [Matrix.mul_apply, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Matrix.mul_apply, map_sum, map_mul]
 
 def liftMat (v : Pl F) (m : ℕ) : Matrix (Fin m) (Fin m) (Fv F v ⊗[F] E) →* Matrix (Fin m) (Fin m) (AE F E) where
   toFun h := 1 + (h - 1).map (Supp.singleTens E v)

@@ -47,7 +47,8 @@ theorem eval_rowOps_eq {K σ : Type*} [Field K] [DecidableEq σ] {p n : ℕ} (z 
         split_ifs
         · simp [hy]
         · simp
-      rw [map_add, eval_X, map_sum, Finset.sum_congr rfl fun k _ => he k, Finset.sum_insert hq, hy_def]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_add, eval_X, map_sum, Finset.sum_congr rfl fun k _ => he k, Finset.sum_insert hq, hy_def]
       ring
     rw [hfun, ← hb, hinv q.1 q.2 hab (c q), ih fun q' h => hT q' (Finset.mem_insert_of_mem h)]
 
@@ -237,7 +238,8 @@ theorem column_degree_le {K σ : Type*} [Field K] [CharZero K] [DecidableEq σ] 
       exact (eval_rowOps_eq z hz P hinv S.card c (sc t x) T hT).symm
     have hRx : eval x R = (Q x).coeff j := by
       rw [hQcoeff, ← Finset.sum_filter]
-      simp only [R, map_sum, eval_monomial, Finsupp.prod]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [R, map_sum, eval_monomial, Finsupp.prod]
     rw [hRx, hQ, hQcoeff]
     refine Finset.sum_eq_zero fun m hm => ?_
     split_ifs with hmj

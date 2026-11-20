@@ -181,7 +181,8 @@ theorem UpperTheory.V.Z.J.dualZero :
           if p = q then (((F.Ψ ↑h ^ w 3 p)⁻¹ : (ResidueField O)ˣ) : ResidueField O) else 0 := by
         intro p q
         have e := congrArg (fun A => IsLocalRing.residue O (A p q)) hinv
-        simp only [Matrix.mul_apply, map_sum, map_mul, hD, ite_mul, zero_mul, Finset.sum_ite_eq,
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [Matrix.mul_apply, map_sum, map_mul, hD, ite_mul, zero_mul, Finset.sum_ite_eq,
           Finset.mem_univ, if_true, Matrix.one_apply, apply_ite (IsLocalRing.residue O), map_one,
           map_zero] at e
         have hu : ((F.Ψ ↑h ^ w 3 p : (ResidueField O)ˣ) : ResidueField O) ≠ 0 := Units.ne_zero _

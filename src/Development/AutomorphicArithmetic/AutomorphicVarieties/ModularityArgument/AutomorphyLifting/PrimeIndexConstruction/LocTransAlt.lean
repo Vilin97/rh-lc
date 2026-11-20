@@ -43,7 +43,8 @@ private theorem hasU_of_map {F : Type} [Field F] [NumberField F] (w : Pl F) {V W
   have e := (h V ρ x hx).2
   rw [hU] at e
   have e2 := congrArg p e
-  rw [map_smul, map_sum] at e2
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_smul, map_sum] at e2
   rw [e2]
   simp only [hp]
 

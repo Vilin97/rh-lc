@@ -254,13 +254,15 @@ theorem omL_emb (u v : (κ → F) × (κ → F)) : omL R κ (emb R u) (emb R v) 
 omit [Fintype κ] in
 theorem emb_sum {ι : Type} [Fintype ι] (c : ι → F) (b : ι → (κ → F) × (κ → F)) :
     emb R (∑ i, c i • b i) = ∑ i, algebraMap F R (c i) • emb R (b i) := by
-  simp [map_sum, algebraMap_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, algebraMap_smul]
 
 theorem exists_omL_eq (φ : ((κ → F) × (κ → F)) →ₗ[F] F) : ∃ w, ∀ v, omL F κ v w = φ v := by
   refine ⟨(fun i => -φ (0, Pi.single i 1), fun i => φ (Pi.single i 1, 0)), fun v => ?_⟩
   have e : v = ∑ i, v.1 i • ((Pi.single i 1, 0) : (κ → F) × (κ → F)) + ∑ i, v.2 i • ((0, Pi.single i 1) : (κ → F) × (κ → F)) := by
     ext j <;> simp [Prod.fst_sum, Prod.snd_sum, Finset.sum_apply, Pi.single_apply]
-  conv_rhs => rw [e, map_add, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_rhs => rw [e, map_add, map_sum, map_sum]
   simp only [map_smul, smul_eq_mul, omL_apply, dotProduct, neg_mul, Finset.sum_neg_distrib, sub_neg_eq_add]
   congr 1
   exact Finset.sum_congr rfl fun _ _ => mul_comm _ _
@@ -319,9 +321,11 @@ theorem exists_avg {F : Type} [Field F] {A : Type} [CommRing A] [Algebra F A] {�
     rw [show ⇑β = fun t => ∑ i, t i • emb A (b i : (κ → F) × (κ → F)) from funext hβ]
     fun_prop
   have hβom : ∀ t w, omL A κ (β t) (emb A w) = ∑ i, t i * algebraMap F A (omL F κ (b i) w) := fun t w => by
-    simp only [hβ, map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, omL_emb, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hβ, map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, omL_emb, smul_eq_mul]
   have hiso : ∀ t t', omL A κ (β t) (β t') = 0 := fun t t' => by
-    rw [hβ t', map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hβ t', map_sum]
     refine Finset.sum_eq_zero fun j _ => ?_
     rw [map_smul, hβom, Finset.sum_eq_zero, smul_zero]
     intro i _
@@ -332,7 +336,8 @@ theorem exists_avg {F : Type} [Field F] {A : Type} [CommRing A] [Algebra F A] {�
     rw [hβ, ← emb_sum]
     refine congrArg (emb A) ?_
     have h := congrArg L.subtype (b.sum_repr w)
-    rw [map_sum] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at h
     simp only [map_smul, Submodule.subtype_apply] at h
     exact h.symm
   let Γ : AddSubgroup (Fin n → A) := AddSubgroup.pi Set.univ fun _ => (algebraMap F A).range.toAddSubgroup
@@ -370,7 +375,8 @@ theorem exists_avg {F : Type} [Field F] {A : Type} [CommRing A] [Algebra F A] {�
     · rintro _ ⟨c, rfl⟩
       refine ⟨hc.comp (by fun_prop), fun γ hγ t => ?_⟩
       obtain ⟨c', rfl⟩ := (hΓ γ).mp hγ
-      simp only [Pi.add_apply, add_mul, Finset.sum_add_distrib, ← map_mul, ← map_sum, AddChar.map_add_eq_mul, htriv,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Pi.add_apply, add_mul, Finset.sum_add_distrib, ← map_mul, ← map_sum, AddChar.map_add_eq_mul, htriv,
         mul_one]
     · rintro _ ⟨c, rfl⟩ _ ⟨c', rfl⟩
       refine ⟨c + c', funext fun t => ?_⟩
@@ -417,8 +423,10 @@ theorem exists_avg {F : Type} [Field F] {A : Type} [CommRing A] [Algebra F A] {�
       have h1 : ∀ j, sA (emb A (b j : (κ → F) × (κ → F))) = β fun i => S i j := fun j => by
         refine (hsA _).trans ((hβL (sL (b j))).trans ?_)
         simp [S, LinearMap.toMatrix_apply]
-      rw [hβ t, map_sum]
-      simp only [map_smul sA, h1, ← map_smul β, ← map_sum β]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hβ t, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_smul sA, h1, ← map_smul β, ← map_sum β]
       refine congrArg β (funext fun i => ?_)
       simp [Matrix.mulVec, dotProduct, Finset.sum_apply, mul_comm]
     have h2 := hMσ (Matrix.mulVecLin S).toAddMonoidHom (continuous_const.matrix_mulVec continuous_id)

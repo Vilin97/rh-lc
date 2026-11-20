@@ -32,7 +32,8 @@ theorem gram_map {R S : Type} [CommRing R] [CommRing S] (f : R →+* S) {n g : �
     (M : Matrix (Fin n) (Fin g) R) (i k : Fin g) :
     ((M.map f).transpose * J.map (Int.castRingHom S) * M.map f) i k =
       f ((M.transpose * J.map (Int.castRingHom R) * M) i k) := by
-  simp [Matrix.mul_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Matrix.mul_apply, map_sum]
 
 theorem gram_eq_dot {K : Type} [CommRing K] {n g : ℕ} (J : Matrix (Fin n) (Fin n) K)
     (H : Matrix (Fin n) (Fin g) K) (B : Matrix (Fin g) (Fin g) K) (i k : Fin g) :

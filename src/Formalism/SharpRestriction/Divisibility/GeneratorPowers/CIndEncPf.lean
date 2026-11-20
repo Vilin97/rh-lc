@@ -42,7 +42,8 @@ theorem harmLink_holds : HarmLinkSt := by
       show (((⟨τ, i⟩ : Σ τ : E →+* ℂ, Fin (Dw.mult τ))), b) = ltEquiv Dw n ⟨τ, i, b⟩ from rfl,
       ← MvPolynomial.pderiv_rename (ltEquiv Dw n).injective]
   simp_rw [key]
-  rw [← map_sum, colSum_zero c a n P hP τ hτ i i', map_zero]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum, colSum_zero c a n P hP τ hτ i i', map_zero]
 
 theorem colLink_holds : ColLinkSt := by
   intro E _ _ _ H Dw n m b

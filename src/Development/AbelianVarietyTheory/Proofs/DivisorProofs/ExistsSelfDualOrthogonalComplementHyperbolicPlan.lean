@@ -27,7 +27,8 @@ namespace GlobalTheory.PlaneCompl
 
 theorem gram_sum {D : D7} (S : HSp D) (a b : Fin S.rank → D.host.E) :
     ∑ i, ∑ j, star (a i) * S.gram i j * b j = S.hT (S.frame.equivFun.symm a) (S.frame.equivFun.symm b) := by
-  simp only [Module.Basis.equivFun_symm_apply, map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Module.Basis.equivFun_symm_apply, map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ,
     LinearMap.smul_apply, smul_eq_mul, Formalism.BasicNotions.HSpace.gram, starRingEnd_apply]
   simp only [Finset.mul_sum, RingHom.id_apply]
   conv_lhs => rw [Finset.sum_comm]

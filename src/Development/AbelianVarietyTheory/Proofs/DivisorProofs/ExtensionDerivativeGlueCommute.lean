@@ -160,7 +160,8 @@ theorem exists_zsmul_mem_lat {n : ℕ} (L : Submodule (𝓞 E) (Fin n → E)) [S
 theorem incM_sum {m k ι : Type} (s : Finset ι) (f : ι → Matrix m k E) :
     incM F (∑ i ∈ s, f i) = ∑ i ∈ s, incM F (f i) := by
   ext a b
-  simp [incM, Matrix.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [incM, Matrix.sum_apply, map_sum]
 
 theorem eventually_smul_mem_latAtV {n d : ℕ} (X : Spc F E n) (W : Spc F E d) [Submodule.IsLattice E X.L]
     [Submodule.IsLattice E W.L] (u : Matrix (Fin n) (Fin d) E) :
@@ -230,7 +231,8 @@ theorem vacS_eventually_std : ∀ {F E : Type} [Field F] [NumberField F] [Field 
     · intro hy
       refine ⟨∑ k₀, adAt v (y k₀) • incM F (M k₀),
         sum_mem fun k₀ _ => h2 k₀ _ (at_adAt v _) (by rw [evFin_adAt]; exact hy k₀), fun k => ?_⟩
-      simp only [map_sum, map_smul, Prod.fst_sum, Prod.smul_fst, Finset.sum_apply, Pi.smul_apply, smul_eq_mul,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, Prod.fst_sum, Prod.smul_fst, Finset.sum_apply, Pi.smul_apply, smul_eq_mul,
         planeT_incM_fst, hM, map_mul, evFin_adAt, GlobalTheory.VacIndic.evFin_algebraMap]
       rw [Finset.sum_eq_single k]
       · simp

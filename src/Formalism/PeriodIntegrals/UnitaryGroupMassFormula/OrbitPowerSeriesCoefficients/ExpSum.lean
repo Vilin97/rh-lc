@@ -25,7 +25,8 @@ theorem fin_two_vector_eq_matrixVecCons (e : Fin 2 →₀ ℕ) (k j : ℕ) :
 theorem coeff_X_add_X_pow (n : ℕ) (e : Fin 2 →₀ ℕ) :
     coeff e ((X 0 + X 1 : MvPowerSeries (Fin 2) K) ^ n) =
       if e 0 + e 1 = n then (n.choose (e 0) : K) else 0 := by
-  rw [add_pow, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [add_pow, map_sum]
   have hterm : ∀ m ∈ Finset.range (n + 1), coeff e ((X 0 : MvPowerSeries (Fin 2) K) ^ m * X 1 ^ (n - m) *
       (n.choose m : MvPowerSeries (Fin 2) K)) = if e 0 = m ∧ e 1 = n - m then (n.choose m : K) else 0 := by
     intro m _
@@ -164,7 +165,8 @@ theorem eS_sum {ι : Type*} (s : Finset ι) (f : ι → MvPowerSeries τ K)
     rw [Finset.sum_insert ha, Finset.prod_insert ha,
       eS_add _ _ (hf a (Finset.mem_insert_self a s)) ?_,
       ih (fun i hi => hf i (Finset.mem_insert_of_mem hi))]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_eq_zero fun i hi => hf i (Finset.mem_insert_of_mem hi)
 
 theorem subst_eS {b : τ → MvPowerSeries υ K} (hb : HasSubst b) (f : MvPowerSeries τ K)

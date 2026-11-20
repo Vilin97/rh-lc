@@ -38,7 +38,8 @@ theorem linearIndependent_image {a : V →ₛₗ[algebraMap K F] W} (ha : IsExte
     obtain ⟨Λ, hΛ⟩ := ha.coord ℓ
     have h0 : ∑ j ∈ s, ℓ (g j) • Module.Basis.ofVectorSpace K V j = 0 := by
       have := congrArg Λ hg
-      rw [map_sum, map_zero, Finset.sum_congr rfl fun j _ => hΛ (g j) _] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, map_zero, Finset.sum_congr rfl fun j _ => hΛ (g j) _] at this
       exact this
     exact linearIndependent_iff'.1 (Module.Basis.ofVectorSpace K V).linearIndependent s _ h0 i hi
   let e := Module.Basis.ofVectorSpace K F
@@ -50,7 +51,8 @@ theorem span_image {a : V →ₛₗ[algebraMap K F] W} (ha : IsExtension a) :
     ⊤ ≤ Submodule.span F (Set.range fun i => a (Module.Basis.ofVectorSpace K V i)) := by
   rw [← ha.span, Submodule.span_le]
   rintro _ ⟨v, rfl⟩
-  rw [← (Module.Basis.ofVectorSpace K V).linearCombination_repr v, Finsupp.linearCombination_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← (Module.Basis.ofVectorSpace K V).linearCombination_repr v, Finsupp.linearCombination_apply,
     Finsupp.sum, map_sum]
   refine Submodule.sum_mem _ fun i _ => ?_
   rw [map_smulₛₗ]
@@ -95,7 +97,8 @@ theorem exists_scale [CharZero K] [IsAlgClosure K F] {a : V →ₛₗ[algebraMap
     choose k hk using this
     refine ⟨∑ j ∈ (B.repr w).support, k j • Module.Basis.ofVectorSpace K V j, ?_⟩
     conv_rhs => rw [← B.linearCombination_repr w, Finsupp.linearCombination_apply, Finsupp.sum]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_smulₛₗ, hk, extBasis_apply]
   by_cases h0 : ∀ i, T i = 0

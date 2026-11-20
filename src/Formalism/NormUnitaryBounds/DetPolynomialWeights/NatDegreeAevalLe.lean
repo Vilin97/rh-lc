@@ -22,7 +22,8 @@ lemma aeval_scale {S : Type*} [CommRing S] [Algebra R S] {N n : ℕ} {ν : Fin N
     aeval (fun p => lam p.1 * y p) F = (∏ j, lam j ^ ν j) * aeval y F := by
   conv_lhs => rw [F.as_sum]
   conv_rhs => rw [F.as_sum]
-  simp only [map_sum, Finset.mul_sum, aeval_monomial]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Finset.mul_sum, aeval_monomial]
   refine Finset.sum_congr rfl fun d hd => ?_
   have hw : Finsupp.weight (blockWt N n) d = ν := hF (mem_support_iff.mp hd)
   have hprod : (d.prod fun p k => lam p.1 ^ k) = ∏ j, lam j ^ ν j := by
@@ -91,7 +92,8 @@ lemma natDegree_aeval_le {B : Type*} [CommRing B] [Algebra R B] {N n : ℕ} {ν 
     (F : MvPolynomial (Fin (N + 1) × Fin n) R) (hF : IsWeightedHomogeneous (blockWt (N + 1) n) F ν)
     (y : Fin (N + 1) × Fin n → Polynomial B)
     (hy : ∀ p, (y p).natDegree ≤ if p.1 = 0 then 1 else 0) : (aeval y F).natDegree ≤ ν 0 := by
-  rw [F.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [F.as_sum, map_sum]
   refine Polynomial.natDegree_sum_le_of_forall_le _ _ fun d hd => ?_
   have hw : Finsupp.weight (blockWt (N + 1) n) d = ν := hF (mem_support_iff.mp hd)
   rw [aeval_monomial, Polynomial.algebraMap_apply]

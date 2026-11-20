@@ -277,7 +277,8 @@ theorem factor_det_eq {V : HSp D} {ι : Dw.La →ₗ[𝓞 D.host.E] (Fin V.rank 
       rw [← latGHat_one_eq hι]
       exact h _ (hv₁ j))
   have hdet := hδ a fun j => by
-    rw [← hv₂, ← hk, (Submodule.Quotient.eq _).2 (ha₁ j), ← Submodule.mkQ_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hv₂, ← hk, (Submodule.Quotient.eq _).2 (ha₁ j), ← Submodule.mkQ_apply, map_sum]
     simp only [map_smul, Submodule.mkQ_apply, hv₂]
   rw [hdet, Ideal.Quotient.factor_mk]
   exact (resS_eq_of_sub_mem P hP U _ (by rw [hU]; exact ha₂)).symm

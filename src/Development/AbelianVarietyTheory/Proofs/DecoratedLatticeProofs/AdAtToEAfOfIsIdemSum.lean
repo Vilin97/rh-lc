@@ -18,9 +18,11 @@ theorem read_rel {A B K E : Type} [CommRing A] [CommRing B] [CommRing K] [CommRi
     (h : γ₀.map (fun r => e * i r) = X * γ.map (fun r => e * i r) * Z + k • v) (r : m) (s : n) :
     φ ((X.map t * γ.map j * Z.map t - γ₀.map j) r s) = -((k : K) * φ (t (v r s))) := by
   have h1 := congrArg (fun W : Matrix m n A => φ (t (W r s))) h
-  simp only [Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, Matrix.mul_apply, map_add, map_sum, map_mul, he,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, Matrix.mul_apply, map_add, map_sum, map_mul, he,
     one_mul, hij, nsmul_eq_mul, map_natCast] at h1
-  simp only [Matrix.map_apply, Matrix.sub_apply, Matrix.mul_apply, map_sub, map_sum, map_mul, h1]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.map_apply, Matrix.sub_apply, Matrix.mul_apply, map_sub, map_sum, map_mul, h1]
   ring
 
 end GlobalTheory.AdForm.CongAtIdem

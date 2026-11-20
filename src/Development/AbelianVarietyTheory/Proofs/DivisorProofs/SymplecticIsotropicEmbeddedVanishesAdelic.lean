@@ -24,7 +24,8 @@ theorem symplectic_isotropic_embedded_vanishes : ∀ (F E : Type) [Field F] [Num
     exact Finset.sum_congr rfl fun j _ => by rw [Finset.mul_sum]; exact Finset.sum_congr rfl fun l _ => by ring
   have hm' : ∀ m, ∑ j, ∑ l, inclR (F := F) (AF F) (H'.ι j m) * inclR (F := F) (AF F) (JW j l) * inclR (F := F) (AF F) (σ (H'.x l)) = 0 := fun m => by
     have := congrArg (inclR (F := F) (AF F)) (hm m)
-    simpa only [map_sum, map_mul, map_zero] using this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa only [map_sum, map_mul, map_zero] using this
   have hc : ∀ e : E, cA σ (inclR (F := F) (AF F) e) = inclR (F := F) (AF F) (σ e) := fun e => by simp [cA, inclR]
   have h1 : (incM F (1 : Matrix (Fin n) (Fin n) E)) = 1 := by simp [incM]
   unfold symp

@@ -61,7 +61,8 @@ theorem phiDeriv_injective (b : OrthonormalBasis (Fin n) ℂ (EuclideanSpace ℂ
     simp only [phiDeriv, ContinuousLinearMap.prod_apply, ContinuousLinearMap.pi_apply, polyDeriv_apply,
       Prod.snd_zero, Pi.zero_apply] at this
     rw [← this]
-    simp only [frameDeriv, map_sum, map_mul, eval_C, hvl, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [frameDeriv, map_sum, map_mul, eval_C, hvl, Finset.mul_sum]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun l _ => by ring
   let M : Matrix {j // j ∉ I} {j // j ∉ I} ℂ := Matrix.of fun k j => eval (fun i => x i) (frameDeriv b j (f k))

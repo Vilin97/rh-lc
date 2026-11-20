@@ -72,7 +72,8 @@ theorem compC_mem : ∀ (D : D7), D.host.ccK = ⊤ → ∀ (S T : HSp D) (e : AE
   have e1 : ((LinearMap.toMatrix' ((c : D.host.E)⁻¹ • x')).map fun r => cA D (∑ PP ∈ SS, es PP) * incA D r) =
       ∑ PP ∈ SS, ((LinearMap.toMatrix' ((c : D.host.E)⁻¹ • x')).map fun r => cA D (es PP) * incA D r) := by
     ext i j
-    simp only [Matrix.map_apply, Matrix.sum_apply, map_sum, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.map_apply, Matrix.sum_apply, map_sum, Finset.sum_mul]
   rw [e1]
   refine sum_mem fun PP hPP => ?_
   have hnot : Formalism.L2.Col.conjPrime₂ PP ∉ SS := by
@@ -183,7 +184,8 @@ theorem off_den_int : ∀ (D : D7) (e : AE D) (SS : Finset (Formalism.L2.DIV.Pl 
   have hdc : ∀ P ∈ SS, IsDelta Φ (cP P) (cA D (es P)) := fun P hP => delta_conj hΦ (hd P hP)
   have hE : ∀ Q, Φ (∑ P ∈ SS, es P) Q = ∑ P ∈ SS, Φ (es P) Q := fun Q => map_sum (evQ Φ Q) _ _
   have hC : ∀ Q, Φ (cA D (∑ P ∈ SS, es P)) Q = ∑ P ∈ SS, Φ (cA D (es P)) Q := fun Q => by
-    rw [map_sum]; exact map_sum (evQ Φ Q) _ _
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]; exact map_sum (evQ Φ Q) _ _
   have hO : ∀ Q, Φ (1 - ∑ P ∈ SS, es P - cA D (∑ P ∈ SS, es P)) Q =
       1 - Φ (∑ P ∈ SS, es P) Q - Φ (cA D (∑ P ∈ SS, es P)) Q := fun Q => by
     change evQ Φ Q _ = _

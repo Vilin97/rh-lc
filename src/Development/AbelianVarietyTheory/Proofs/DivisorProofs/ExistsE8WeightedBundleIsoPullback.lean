@@ -191,7 +191,8 @@ theorem fibre_iso_keeps_lam : ∀ W : Matrix (Fin 8) (Fin 8) ℤ, IsE8 W → ∀
         GlobalTheory.CechPic.pull (z ≫ lamPts (pr k.1.1) (pr k.1.2) k.2 ≫ pullback.fst Q.B.hom (spMap ρ))
           (GlobalTheory.CechPic.cls Q.M.L Q.M.isLB) := by
     intro X z
-    rw [(GlobalTheory.CechPic.cls_eq_iff D.P.isLB hLC).2 ⟨w, hw⟩, GlobalTheory.CechPic.cls_linComb Q.M.isLB, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [(GlobalTheory.CechPic.cls_eq_iff D.P.isLB hLC).2 ⟨w, hw⟩, GlobalTheory.CechPic.cls_linComb Q.M.isLB, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_zsmul, ← GlobalTheory.CechPic.pull_comp]
   have e0 : GlobalTheory.CechPic.pull (pullback.fst D.P.A.hom (spMap ev)) (GlobalTheory.CechPic.cls D.P.L D.P.isLB) =

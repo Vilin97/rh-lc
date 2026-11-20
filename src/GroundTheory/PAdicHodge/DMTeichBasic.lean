@@ -537,7 +537,8 @@ theorem red_matOp (A : Matrix ι ι Γ) {τ : Γ →+* Γ}
     (hτ : ∀ y, T.red (τ y) = T.red y ^ p ^ e) (x : ι → Γ) :
     redV T (matOp A τ x) = resOp T A e (redV T x) := by
   funext i
-  simp only [redV, matOp_apply, resOp_apply, Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [redV, matOp_apply, resOp_apply, Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum,
     map_mul, hτ]
 
 theorem red_iterate_matOp (A : Matrix ι ι Γ) {τ : Γ →+* Γ}
@@ -649,7 +650,8 @@ theorem map_ofCoord (e : ℕ) (g : H →+ H)
     {n : ℕ} (b : Fin n → H) (A : Matrix (Fin n) (Fin n) Γ)
     (hA : ∀ j, g (b j) = ∑ i, algebraMap Γ T.B (A i j) • b i) (x : Fin n → Γ) :
     g (ofCoord T b x) = ofCoord T b (matOp A ((F.φ : Γ →+* Γ) ^ e) x) := by
-  simp only [ofCoord, map_sum, hg, frob_iterate_algebraMap, hA, Finset.smul_sum, smul_smul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [ofCoord, map_sum, hg, frob_iterate_algebraMap, hA, Finset.smul_sum, smul_smul,
     matOp_apply, Matrix.mulVec, dotProduct, map_sum, map_mul, Finset.sum_smul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl (fun i _ => Finset.sum_congr rfl (fun j _ => ?_))

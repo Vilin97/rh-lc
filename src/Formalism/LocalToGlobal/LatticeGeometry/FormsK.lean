@@ -211,7 +211,8 @@ theorem act_scal_of {H : Type} [Group H] [MulSemiringAction H (P.Forms j)]
     rw [hF']; exact P.scal_incS F'
   have key : P.scalL j (h • x) = P.scalL j x := by
     conv_lhs => rw [hx]
-    rw [smul_add, Finset.smul_sum, map_add, map_sum, h1]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [smul_add, Finset.smul_sum, map_add, map_sum, h1]
     simp only [h2, Finset.sum_const_zero, add_zero]
     show P.scal _ = P.scal _
     rw [scal_alg]

@@ -227,7 +227,8 @@ theorem exists_abs_le {β : LinearMap.BilinForm ℤ X} (hs : ∀ y z, β y z = �
   refine ⟨∑ i, (C i + C' i), fun y => ?_⟩
   have e : δ y y = ∑ i, b.coord i y * δ (b i) y := by
     refine (congrArg (fun z => δ z y) (b.sum_repr y).symm).trans ?_
-    simp only [map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply, smul_eq_mul, Module.Basis.coord_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply, smul_eq_mul, Module.Basis.coord_apply]
   rw [e, Nat.cast_sum, Finset.sum_mul]
   refine (Finset.abs_sum_le_sum_abs _ _).trans (Finset.sum_le_sum fun i _ => ?_)
   have h₁ := hC i y

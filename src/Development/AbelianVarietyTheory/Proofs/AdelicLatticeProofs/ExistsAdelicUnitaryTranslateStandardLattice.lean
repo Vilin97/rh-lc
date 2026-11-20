@@ -255,7 +255,8 @@ theorem span_eq_top (Λ : GenLat E n) (hU : Λ.Unimod) : Submodule.span E (Λ.La
   obtain ⟨σ⟩ : Nonempty (E →+* ℂ) := inferInstance
   have h2 : ∑ j, Complex.normSq (σ (v j)) = 0 := by
     have := congrArg σ h1
-    simp only [map_sum, map_mul, IsCMField.complexEmbedding_complexConj, map_zero,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, IsCMField.complexEmbedding_complexConj, map_zero,
       ← Complex.normSq_eq_conj_mul_self] at this
     exact_mod_cast this
   have h3 : ∀ j, v j = 0 := fun j => by

@@ -127,7 +127,8 @@ lemma herm_coord (X : Data E r) {x : Frame X.Ψ r} (hx : x ∈ X.dom) (ho : X.Is
   have hdet : (mat x τ).det ≠ 0 := ((Data.mem_dom_iff X x).mp hx τ).1
   have hf := hermC_col_mat_of_isOrtho X ho τ
   have h1 : τ.1 (herm X.Gm u v) = hermC τ.1 X.Gm (Data.emb τ.1 u) (Data.emb τ.1 v) := by
-    simp only [herm, hermC, Data.emb, map_sum, map_mul, cc, IsCMField.complexEmbedding_complexConj]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [herm, hermC, Data.emb, map_sum, map_mul, cc, IsCMField.complexEmbedding_complexConj]
   calc τ.1 (herm X.Gm u v) = hermC τ.1 X.Gm (Data.emb τ.1 u) (Data.emb τ.1 v) := h1
     _ = hermC τ.1 X.Gm (∑ k, ((mat x τ)⁻¹ *ᵥ Data.emb τ.1 u) k • col (mat x τ) k)
           (∑ l, ((mat x τ)⁻¹ *ᵥ Data.emb τ.1 v) l • col (mat x τ) l) := by

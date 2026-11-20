@@ -43,7 +43,8 @@ theorem eval_map_eq {n : ℕ} (x : (Fin n × Fin n) ⊕ (Fin n × Fin n) → ℂ
     (p : MvPolynomial ((Fin n × Fin n) ⊕ (Fin n × Fin n)) (Poly n)) :
     eval x (map f p) = ∑ s ∈ p.support, f (AddMonoidAlgebra.coeff p s) * eval x (monomial s 1) := by
   conv_lhs => rw [p.as_sum]
-  simp only [map_sum, map_monomial, eval_monomial, one_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_monomial, eval_monomial, one_mul]
 
 end GlobalTheory.PsCo.Pc3.RK
 
@@ -139,7 +140,8 @@ theorem rangeK : RangeK := by
           rw [integral_finsetSum _ fun s _ => (hint2 s).const_mul _]
           exact Finset.sum_congr rfl fun s _ => integral_const_mul _ _
       _ = ev (toMK k₀) (∑ s ∈ p.support, C (c s) * monomial s 1) := by
-          simp only [map_sum, map_mul, ev, eval_C]
+          set_option synthInstance.maxHeartbeats 100000 in
+            simp only [map_sum, map_mul, ev, eval_C]
           exact Finset.sum_congr rfl fun s _ => mul_comm _ _
 
 end GlobalTheory.PsCo.Pc3

@@ -46,7 +46,8 @@ theorem psiS_chiImg (j₀ : Fin (N + 1)) (x : Fin N → Ω) (v : TVar D N)
       exact (Fin.insertNth_apply_same (α := fun _ => MvPolynomial (SVar D N) Ω) j₀ _ _).trans
         (if_neg hi)
     rw [h1, h2]
-    simp [psiS, map_neg, map_sum, map_mul, MvPolynomial.rename_X, MvPolynomial.rename_C]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [psiS, map_neg, map_sum, map_mul, MvPolynomial.rename_X, MvPolynomial.rename_C]
   · obtain ⟨k, hk⟩ := Fin.exists_succAbove_eq hj
     rw [← hk]
     have h1 : chiImg j₀ x (i, j₀.succAbove k) = X (i, k) :=
@@ -66,7 +67,8 @@ theorem psiS_chiImg_base (j₀ : Fin (N + 1)) (x : Fin N → Ω) :
   have h1 : chiImg j₀ x ((0 : Fin (D + 1)), j₀) = -∑ k, X ((0 : Fin (D + 1)), k) * C (x k) :=
     Fin.insertNth_apply_same (α := fun _ => MvPolynomial (Fin (D + 1) × Fin N) Ω) j₀ _ _
   rw [h1]
-  simp [psiS, map_neg, map_sum, map_mul, MvPolynomial.rename_X, MvPolynomial.rename_C]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [psiS, map_neg, map_sum, map_mul, MvPolynomial.rename_X, MvPolynomial.rename_C]
 
 theorem sImg_base (j₀ : Fin (N + 1)) (x : Fin N → Ω) :
     sImg (Ω := Ω) j₀ x ((0 : Fin (D + 1)), j₀) =
@@ -150,7 +152,8 @@ theorem w0rat_eq_base (hd : d.AxH 𝒜) (c : ι) :
     exact (key _ _ _ hb ((one_smul _ _).trans hex.choose_spec)).symm
   unfold Data.rationalBaseRow
   rw [Fin.sum_univ_succAbove _ (d.jc c), hr1, map_one, mul_one]
-  simp only [sH_X, sImg_succAbove, sImg_base, map_add, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [sH_X, sImg_succAbove, sImg_base, map_add, map_sum, map_mul]
   congr 1
 
 theorem ker_eval_le_of_place (hd : d.AxH 𝒜) (c : ι) {p : Ideal (KTp K d.D d.N)}

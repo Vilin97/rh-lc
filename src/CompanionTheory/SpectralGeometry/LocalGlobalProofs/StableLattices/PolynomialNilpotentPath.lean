@@ -91,7 +91,8 @@ theorem exists_monic_trace (n : Fin c → ℕ) (h : ∑ i, n i = N) (Xf : Fin N 
     have : (⟨qdet (Xi i) t, hRmem i t⟩ : Algebra.adjoin ℂ s)
         = ∑ k ∈ Finset.range (n i + 1), t ^ k • (⟨a i k, hamem i k⟩ : Algebra.adjoin ℂ s) :=
       Subtype.ext (by simp [hform])
-    rw [this, map_sum, sumPoly_eval]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [this, map_sum, sumPoly_eval]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_smul, Algebra.smul_def, map_pow, mul_comm]
   let φ : Algebra.adjoin ℂ s →* Module.End ℂ V :=
@@ -178,7 +179,8 @@ theorem exists_monic_trace (n : Fin c → ℕ) (h : ∑ i, n i = N) (Xf : Fin N 
       Xf (stdBlocks n h ⟨i, p⟩) (stdBlocks n h ⟨i, p⟩) := by
     simp [Tb, Xi]
   have hint : IsIntegral ℂ (π Tb) := by
-    simp only [Tb, map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Tb, map_sum, map_smul]
     exact IsIntegral.sum _ fun i _ => (hI i).smul _
   obtain ⟨q, hqm, hq0⟩ := hint
   refine ⟨q, hqm, fun x => ?_⟩
@@ -310,7 +312,8 @@ theorem actM_grading (X : GMod n) {A : Matrix (Fin n) (Fin n) ℂ} (B : GradBasi
     show aM X.E A = _
     rw [← actL_apply]
     conv_lhs => rw [A_eq B, hd]
-    rw [Finset.mul_sum, Finset.sum_mul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.mul_sum, Finset.sum_mul, map_sum]
     refine Finset.sum_congr rfl fun p _ => ?_
     rw [Matrix.mul_smul, Matrix.smul_mul, map_smul]
     rfl

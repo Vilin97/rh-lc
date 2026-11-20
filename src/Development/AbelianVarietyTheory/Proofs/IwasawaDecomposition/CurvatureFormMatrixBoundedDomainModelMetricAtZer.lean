@@ -96,7 +96,8 @@ theorem curvPoly_model_zero : ∀ (ι : Type) [Fintype ι] (p q n : ℕ) (h : Fi
     simp [block_reshape_apply, EuclideanSpace.single_apply]
   refine Matrix.ext fun i j => ?_
   simp only [GlobalTheory.GoodMetric.curvPoly, of_apply, e2, Matrix.neg_apply, blockSym_apply]
-  simp only [map_neg, neg_mul, Finset.sum_neg_distrib, neg_inj, map_sum, Finset.sum_mul, mul_ite, ite_mul, one_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_neg, neg_mul, Finset.sum_neg_distrib, neg_inj, map_sum, Finset.sum_mul, mul_ite, ite_mul, one_mul,
     zero_mul, mul_zero, apply_ite (C : ℂ → MvPolynomial (Fin n × Fin n) ℂ), map_one, map_zero]
   rw [Finset.sum_congr rfl fun _ _ => Finset.sum_comm, Finset.sum_comm]
   refine Finset.sum_congr rfl fun b _ => ?_

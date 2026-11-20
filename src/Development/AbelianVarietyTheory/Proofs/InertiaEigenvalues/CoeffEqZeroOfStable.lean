@@ -38,7 +38,8 @@ theorem coeff_eq_zero_of_stable {F Ω ι : Type*} [Field F] [Field Ω] [Algebra 
     have heN : ∀ i, e i ∈ N := fun i => N.sub_mem (hN g _ (hdN i)) (hdN i)
     have h2 : ∑ i, g (d i) * x i = 0 := by
       have := congrArg g hdsum
-      rw [map_sum, map_zero] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, map_zero] at this
       simpa only [map_mul, hgx] using this
     have hesum : ∑ i, e i * x i = 0 := by
       simp only [he, sub_mul, Finset.sum_sub_distrib, h2, hdsum, sub_zero]

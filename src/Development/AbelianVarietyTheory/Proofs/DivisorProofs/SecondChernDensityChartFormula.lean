@@ -125,7 +125,8 @@ theorem curv_sum_left (h : MContDiffAt 2 H z) (hu : IsUnit (H z).det) (x : Fin n
   let L : V n →ₗ[ℂ] Matrix (Fin r) (Fin r) ℂ :=
     ⟨⟨fun ξ => curv H z ξ η, fun _ _ => hs.add_left _ _ _⟩, fun _ _ => hs.smul_left _ _ _⟩
   change L _ = ∑ a, x a • L (u a)
-  simp only [map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul]
 
 theorem curv_sum_right (h : MContDiffAt 2 H z) (hu : IsUnit (H z).det) (x : Fin n → ℂ) (u : Fin n → V n) (ξ : V n) :
     curv H z ξ (∑ a, x a • u a) = ∑ a, star (x a) • curv H z ξ (u a) := by
@@ -133,7 +134,8 @@ theorem curv_sum_right (h : MContDiffAt 2 H z) (hu : IsUnit (H z).det) (x : Fin 
   let L : V n →ₛₗ[starRingEnd ℂ] Matrix (Fin r) (Fin r) ℂ :=
     ⟨⟨fun η => curv H z ξ η, fun _ _ => hs.add_right _ _ _⟩, fun _ _ => hs.smul_right _ _ _⟩
   change L _ = ∑ a, (starRingEnd ℂ) (x a) • L (u a)
-  simp only [map_sum, map_smulₛₗ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smulₛₗ]
 
 theorem trace_sum_mul_sum (x y : Fin n → ℂ) (M N : Fin n → Matrix (Fin r) (Fin r) ℂ) :
     ((∑ a, x a • M a) * ∑ c, y c • N c).trace = ∑ a, ∑ c, x a * y c * (M a * N c).trace := by

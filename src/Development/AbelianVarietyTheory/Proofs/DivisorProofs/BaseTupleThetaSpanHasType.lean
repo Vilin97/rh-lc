@@ -48,7 +48,8 @@ theorem actL_levelTrace (U : Subgroup G) (ψ : U →* D.what₂.LLˣ) (u : U)
       rw [h1, map_zero]
       exact (GlobalTheory.ProjComm.levelGroupAction_eq_zero_of_no_lift hn F).symm
   unfold levelTrace gaL
-  simp only [LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, Finset.smul_sum]
   refine Fintype.sum_bijective (fun g => (u : G) * g) (Group.mulLeft_bijective (u : G)) _ _ fun g => ?_
   simp only [smul_smul]
   refine congrArg₂ (· • ·) ?_ (hmul g)

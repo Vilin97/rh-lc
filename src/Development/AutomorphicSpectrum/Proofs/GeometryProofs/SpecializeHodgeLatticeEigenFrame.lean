@@ -28,7 +28,8 @@ theorem ev_eigProj : ∀ (E : Type) [Field E] [NumberField E] (Ω Vs C : Type) [
     rw [AddSubmonoidClass.coe_finset_sum]
     simp only [HT.eigProj, LinearMap.sum_apply, LinearMap.smul_apply]
     rfl
-  rw [hsum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hsum, map_sum]
   simp only [HT.eigProj, LinearMap.sum_apply, LinearMap.smul_apply]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [LinearMap.map_smulₛₗ, hψ, hev.1 _ h]

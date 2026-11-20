@@ -79,7 +79,8 @@ theorem continuous_of_linear (f : (Fin a → Fin b → K) →ₗ[K] (Fin a → F
       ext k l
       simp [Finset.sum_apply, Pi.single_apply, ite_apply]
     conv_lhs => rw [hX]
-    simp only [map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul]
   rw [show (f : _ → _) = fun X => ∑ i, ∑ j, X i j • f (Pi.single i (Pi.single j 1)) from funext h]
   fun_prop
 

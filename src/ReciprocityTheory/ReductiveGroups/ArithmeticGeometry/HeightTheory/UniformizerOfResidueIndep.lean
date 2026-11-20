@@ -115,7 +115,8 @@ theorem PlaceTrivialOrPositive (hd : d.AxH 𝒜) (h : d.S1) (c : ι) (p : Ideal 
       apply Subtype.ext
       push_cast
       exact d.genericHomAt_relation hd c j0 hw0 hq i hi
-    rw [hV, map_neg, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hV, map_neg, map_sum]
     congr 1
   obtain ⟨e0, he0⟩ := exists_rename_notMem p hp
   have hcK : ∀ a : K, algebraMap K (OmS (Ω c) d.D d.N) a ∈ vRing w := by
@@ -210,7 +211,8 @@ theorem PlaceTrivialOrPositive (hd : d.AxH 𝒜) (h : d.S1) (c : ι) (p : Ideal 
   have hres0 : IsLocalRing.residue (vRing w) ⟨_, hz0mem⟩ =
       ∑ j, algebraMap (IsLocalRing.ResidueField (vRing (d.Wres c w))) _ (ρ j) *
         tb ⟨(0, j), Or.inl rfl⟩ := by
-    rw [hz0V, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hz0V, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_mul, mul_comm]
     rfl
@@ -247,7 +249,8 @@ theorem PlaceTrivialOrPositive (hd : d.AxH 𝒜) (h : d.S1) (c : ι) (p : Ideal 
       rintro ⟨i, j⟩
       by_cases h : i = 0 ∨ j ≠ j0
       · simp only [G, dif_pos h, aeval_X]
-      · simp only [G, dif_neg h, map_neg, map_sum, map_mul, aeval_X, aeval_C]
+      set_option synthInstance.maxHeartbeats 100000 in
+        · simp only [G, dif_neg h, map_neg, map_sum, map_mul, aeval_X, aeval_C]
         rw [not_or, not_not] at h
         obtain ⟨hi, hj⟩ := h
         subst j

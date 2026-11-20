@@ -63,7 +63,8 @@ theorem exists_isotropic : ∀ (F E : Type) [Field F] [NumberField F] [Field E] 
     intro y
     have h1 : (fun i => σ ((P *ᵥ y) i)) = (P.map (σ : E →+* E)) *ᵥ (fun i => σ (y i)) := by
       funext i
-      simp [Matrix.mulVec, dotProduct, map_sum, map_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [Matrix.mulVec, dotProduct, map_sum, map_mul]
     rw [form, h1, ← hPg]
     simp only [Matrix.dotProduct_mulVec, Matrix.vecMul_vecMul, Matrix.mulVec_mulVec]
     rw [← Matrix.vecMul_transpose, Matrix.vecMul_vecMul, Matrix.mul_assoc]

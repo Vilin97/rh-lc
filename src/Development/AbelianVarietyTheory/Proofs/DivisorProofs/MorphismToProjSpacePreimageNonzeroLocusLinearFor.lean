@@ -41,7 +41,8 @@ theorem secPull_comb_f {R : Type} [CommRing R] {X Y : Scheme.{0}} {L : LB X} {n 
     rw [Scheme.Hom.app_eq_appLE]
     exact GlobalTheory.LinChange.appLE_cst p φ le_rfl r
   dsimp only [GlobalTheory.Cartier.secPull]
-  rw [comb_f, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [comb_f, map_sum, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_mul, map_mul, hc, GlobalTheory.LinChange.resG_cst]
 
@@ -58,7 +59,8 @@ theorem GlobalTheory.SpanVA.toProj_preimage_nonzeroLocus_lin : ∀ (R : Type) [C
   have hc := fun j => GlobalTheory.ProjSpace.secMaps_toProjIso f t ht j (k, q)
   change resG X _ ((s i).f k) = _ * resG X _ ((GlobalTheory.Cartier.secPull (GlobalTheory.SpanVA.lin a i) (GlobalTheory.ProjSpace.toProj f t ht)).f q)
   rw [GlobalTheory.SpanVA.lin]
-  rw [hst i, GlobalTheory.SpanVA.comb_f, GlobalTheory.SpanVA.secPull_comb_f, map_sum, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hst i, GlobalTheory.SpanVA.comb_f, GlobalTheory.SpanVA.secPull_comb_f, map_sum, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_mul, map_mul, GlobalTheory.LinChange.resG_cst, GlobalTheory.LinChange.resG_cst, hc j, GlobalTheory.ProjSpace.toProj_str]
   ring

@@ -48,7 +48,8 @@ theorem BasisIsoFree.proof (h : FreeSheafBasis.Statement.{u}) : BasisIsoFree.Sta
       (fun r : Fin n → Γ(Y, V) => ∑ i, r i • (M.presheaf.map (homOfLE (le_top : V ≤ ⊤)).op).hom (s i)) := by
     intro V
     funext r
-    simp only [Function.comp_apply, map_sum, Scheme.Modules.Hom.app_smul, app_map_apply, ψ,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Function.comp_apply, map_sum, Scheme.Modules.Hom.app_smul, app_map_apply, ψ,
       basisHom_app_stdSection]
   have hV : ∀ V : Y.Opens, IsIso (ψ.app V) := fun V =>
     (ConcreteCategory.isIso_iff_bijective _).mpr

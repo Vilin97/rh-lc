@@ -31,11 +31,13 @@ theorem chr_mem_of_idemSum {K : Type} [Field K] {σ : K →+* ℂ} {D : D7} {c :
   obtain ⟨⟨es, hes, rfl⟩, -⟩ := he
   have heT : ∀ P, ι (finPart D (∑ PP ∈ S, es PP)) P = if P ∈ S then 1 else 0 := by
     intro P
-    rw [map_sum, map_sum, GlobalTheory.FlipCharFormula.fa_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum, GlobalTheory.FlipCharFormula.fa_sum,
       Finset.sum_congr rfl (fun PP hPP => GlobalTheory.FlipCharFormula.comp_of_isIdemAt ι h1 h2 (hes PP hPP) P)]
     exact Finset.sum_ite_eq S P (fun _ => (1 : HeightOneSpectrum.adicCompletion D.host.E P))
   have hinfT : infPart D (∑ PP ∈ S, es PP) = 0 := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_eq_zero (fun PP hPP => GlobalTheory.FlipCharFormula.infPart_of_isIdemAt (hes PP hPP))
   have hinf : infPart D (x : AE D) = 1 := by
     rw [hx, map_add, map_mul, map_sub, hinfT, map_one, zero_mul, zero_add, sub_zero]

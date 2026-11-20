@@ -122,7 +122,8 @@ theorem conjHomotopyFun_cupCochain (g : Γ) {r s m : ℕ} (h : r + 1 + (s + 1) =
   · rw [sum_tmul]
     refine sum_congr rfl fun i hi => ?_
     rw [cupCochain_seqTuple_prismSeq_of_le g h F E Y (by simp at hi; omega), smul_tmul']
-  · rw [map_sum, tmul_sum, smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum, tmul_sum, smul_sum]
     refine sum_congr rfl fun j _ => ?_
     rw [cupCochain_seqTuple_prismSeq_add g h F E Y j, map_smul, tmul_smul, smul_smul, pow_add]
 
@@ -134,7 +135,8 @@ theorem conjHomotopyFun_cupCochain_zero_left (g : Γ) {s m : ℕ} (h : 0 + (s + 
   funext γ
   rw [← seqTuple_tupleSeq γ]
   set Y := tupleSeq γ
-  rw [conjHomotopyFun_seqTuple, cupCochain_seqTuple, conjHomotopyFun_seqTuple, map_sum, tmul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [conjHomotopyFun_seqTuple, cupCochain_seqTuple, conjHomotopyFun_seqTuple, map_sum, tmul_sum]
   refine sum_congr rfl fun j _ => ?_
   have e := cupCochain_seqTuple_prismSeq_add g h F E Y j
   rw [zero_add] at e

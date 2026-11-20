@@ -439,7 +439,8 @@ theorem st_exp (hF : IsFil F L) (hst : IsAdj F st) {Y : A} (hY : Y ∈ F 0) :
     induction n with
     | zero => simp [hst.one]
     | succ n ih => rw [pow_succ, hst.mul, ih, pow_succ']
-  rw [hF.exp_eq hY, hF.exp_eq (hst.mem Y hY), map_add, map_add, map_sum, hst.one]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hF.exp_eq hY, hF.exp_eq (hst.mem Y hY), map_add, map_add, map_sum, hst.one]
   simp only [map_smul, hpow]
 
 theorem exp_mem_grpN (hF : IsFil F L) (hst : IsAdj F st) {Y : A} (hY : Y ∈ lieN F st) :

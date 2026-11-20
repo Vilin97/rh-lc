@@ -118,7 +118,8 @@ theorem unitri_map (η : Matrix (Fin (D.R.rS + 1)) (Fin (D.R.rS + 1)) (𝓞 D.ho
 theorem GZ_frameAct (u h : Fin (D.R.rS + 1) → (VS D).V) (η : Matrix (Fin (D.R.rS + 1)) (Fin (D.R.rS + 1)) (𝓞 D.host.E)) :
     GZ u (frameAct h η) = GZ u h * η.map (fun x => (x : D.host.E)) := by
   ext a b
-  simp only [GZ, Matrix.of_apply, Matrix.mul_apply, Matrix.map_apply, frameAct, brS, map_sum, map_smul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [GZ, Matrix.of_apply, Matrix.mul_apply, Matrix.map_apply, frameAct, brS, map_sum, map_smul,
     smul_eq_mul]
   exact Finset.sum_congr rfl fun c _ => mul_comm _ _
 

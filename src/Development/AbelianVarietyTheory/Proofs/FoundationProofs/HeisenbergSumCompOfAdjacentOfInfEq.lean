@@ -171,12 +171,14 @@ theorem _root_.GlobalTheory.FinWeil.sumOp_comp_of_adj_of_inf_eq : ∀ {R X M : T
     have h1 : ∀ i, W (f i) (W c v) = W c (W (f i) v) := fun i => by
       rw [hW.comm,
         hW.iso hC (hfC i) hc, one_smul]
-    rw [Finset.sum_congr rfl (fun i _ => h1 i), ← map_sum, ← hACsum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_congr rfl (fun i _ => h1 i), ← map_sum, ← hACsum]
     exact hSfix c hc
   have hstep : ∀ i, W (f i) (∑ q : R ⧸ P, W (Quotient.out q • x) v) =
       ∑ q : R ⧸ P, χ (w * Quotient.out q * σ (Quotient.out q)) •
         W (f i) (W (Quotient.out q • c₀) v) := fun i => by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl (fun q _ => ?_)
     rw [hterm, map_smul]
   have hstep' : ∀ q : R ⧸ P, ∑ i, χ (w * Quotient.out q * σ (Quotient.out q)) •

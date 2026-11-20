@@ -570,7 +570,8 @@ theorem gp_dRep_expand {M : DSModel V S} {τ : D.what₂.Tau} {u : M.H τ}
   have h1 : dRep (M.rep τ) Y u = gpA M τ u hu ⟨Y, hY⟩ := rfl
   rw [h1]
   conv_lhs => rw [← (Module.finBasis ℝ (gpTan V τ)).sum_repr ⟨Y, hY⟩]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_smul, Complex.coe_smul]
   all_goals rfl

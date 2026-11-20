@@ -263,7 +263,8 @@ theorem norm_le_of_bdT (xs : ℂ_[q]⟦X⟧) (k : ℕ) (c : ℕ → ℂ_[q]) (B 
   | _ n ih =>
     intro j hj hn
     have h1 := hB (2 * n) (by omega)
-    rw [← Finset.add_sum_erase _ _ (Finset.mem_range.mpr (Nat.lt_succ_of_le hj)), map_add, map_sum, mul_assoc,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Finset.add_sum_erase _ _ (Finset.mem_range.mpr (Nat.lt_succ_of_le hj)), map_add, map_sum, mul_assoc,
       coeff_C_mul, coeff_X_pow_mul', if_pos (by omega), hn, Nat.sub_self, coeff_zero_eq_constantCoeff] at h1
     have h2 : ‖∑ l ∈ (Finset.range (k + 1)).erase j, coeff (2 * n) (C (c l) * X ^ (2 * (k - l)) * xs ^ l)‖ ≤ B := by
       refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg hB0 ?_
@@ -281,7 +282,8 @@ theorem norm_le_of_bdT (xs : ℂ_[q]⟦X⟧) (k : ℕ) (c : ℕ → ℂ_[q]) (B 
 theorem bd_sum (xs : ℂ_[q]⟦X⟧) (k : ℕ) (c : ℕ → ℂ_[q]) (B : ℝ) (hB : 0 ≤ B) (hx : Bd 1 xs) (hc : ∀ i, ‖c i‖ ≤ B) :
     Bd B (∑ i ∈ Finset.range (k + 1), C (c i) * X ^ (2 * (k - i)) * xs ^ i) := by
   intro m
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg hB ?_
   intro l _
   rw [mul_assoc, coeff_C_mul, coeff_X_pow_mul']
@@ -388,7 +390,8 @@ theorem exists_unit_coeff : ∀ (q : ℕ) [Fact q.Prime] (M : Mdl q) (ℓ : ℂ_
       rw [e1, ← (hAD _ (hβP i hi)).2, map_mul, norm_mul]
       have e2 : ‖M.ι (M.x (β * P i))‖ ≤ 1 := hint _ (by rw [mul_left_comm]; exact hL _ (hKP i)) (hβP i hi)
       have e3 : ‖M.ι (D.eval (M.x (P i)))‖ ≤ ‖M.ι (D.coeff m)‖ := by
-        rw [Polynomial.eval_eq_sum_range, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [Polynomial.eval_eq_sum_range, map_sum]
         refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg (norm_nonneg _) fun l _ => ?_
         rw [map_mul, map_pow, norm_mul, norm_pow]
         simpa using mul_le_mul (hDc l) (pow_le_one₀ (norm_nonneg _) (hint _ (hKP i) (hP i hi)) (n := l))

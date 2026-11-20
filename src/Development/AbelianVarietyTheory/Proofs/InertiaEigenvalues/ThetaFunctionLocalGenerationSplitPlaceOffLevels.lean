@@ -348,7 +348,8 @@ theorem sum_up (hψ : IsStdChar D ψ (-1)) (he : IsSplitIdem D e) {k : ℕ} (hk 
   · rw [heisO_sum]
     refine Finset.sum_congr rfl fun u hu => ?_
     rw [heisO_comm, psi_down_up hψ he hk ha ha' (hR u hu).1 (hR u hu).2, one_smul, hfix a ha (Or.inl ha')]
-  · rw [map_sum, Finset.sum_congr rfl fun u hu => hℓ u (hR u hu).2 g hg, Finset.sum_const, nsmul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum, Finset.sum_congr rfl fun u hu => hℓ u (hR u hu).2 g hg, Finset.sum_const, nsmul_eq_mul]
 
 theorem exists_vac (hψ : IsStdChar D ψ (-1)) (he : IsSplitIdem D e) {h : WO S T → ℂ} (hh : IsThetaFunO ψ S T h) :
     ∃ φ ∈ locSpan ψ S T e h, HalfVac ψ S T e φ ∧ ∀ ℓ, InvForm ψ S T e ℓ → ℓ φ = ℓ h := by
@@ -376,7 +377,8 @@ theorem exists_vac (hψ : IsStdChar D ψ (-1)) (he : IsSplitIdem D e) {h : WO S 
         t2 a (nsmul_mem ha k) ha']
   · obtain ⟨v₀, ⟨hv₀, hv₀'⟩, hu₀⟩ := hRu 0 (zero_mem _) (isHalf_zero _)
     rw [zero_sub, neg_mem_iff] at hv₀'
-    rw [map_smul, map_sum, Finset.sum_eq_single_of_mem v₀ hv₀, t3 v₀ hv₀' (hR _ hv₀).2, t4 ℓ hℓ, smul_eq_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_smul, map_sum, Finset.sum_eq_single_of_mem v₀ hv₀, t3 v₀ hv₀' (hR _ hv₀).2, t4 ℓ hℓ, smul_eq_mul,
       inv_mul_cancel_left₀ hc]
     intro u hu hne
     obtain ⟨y, hy, hy', hψy⟩ := exists_dual_up hψ he hk
@@ -631,7 +633,8 @@ theorem relation_vac (hψ : IsStdChar D ψ (-1)) (he : IsSplitIdem D e) {f₀ φ
   have key : ∀ ℓ, InvForm ψ S T e ℓ → ∀ {g}, HalfVac ψ S T e g →
       ℓ (heisO ψ S T x (∑ i ∈ s, a i • heisO ψ S T (u i) (heisO ψ S T (w i) g))) =
         ℓ (∑ i ∈ s, (a i * c i) • heisO ψ S T (w i) g) := fun ℓ hℓ g hg => by
-    rw [heisO_sum, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [heisO_sum, map_sum, map_sum]
     refine Finset.sum_congr rfl fun i hi => ?_
     rw [heisO_smul, map_smul, map_smul, hc i hi ℓ hℓ _ (v hg i hi), smul_eq_mul, smul_eq_mul, mul_assoc]
   rw [key ℓ hℓ hφ, hrel, map_zero]
@@ -649,7 +652,8 @@ theorem rel_of_finsupp {X V ι : Type} [AddCommGroup V] [Module ℂ V] (p : X �
   classical
   have hc : ∀ K : X → V, ((∑ i ∈ s, Finsupp.single (w i) (a i)).sum fun u z => z • K u) = ∑ i ∈ s, a i • K (w i) :=
     fun K => by
-      rw [← Finsupp.linearCombination_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← Finsupp.linearCombination_apply, map_sum]
       simp only [Finsupp.linearCombination_single]
   rw [← hc]
   refine H _ (fun u hu => ?_) (by rw [hc, h])

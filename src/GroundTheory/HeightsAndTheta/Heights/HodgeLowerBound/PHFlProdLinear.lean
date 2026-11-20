@@ -129,7 +129,8 @@ theorem I_fsHerm_sum (hI : IsIntersectionFamily I) (hP : IsArithVar P (n + 1)) {
     (ℓ : Fin (n + 1) → α → ℤ) (x : α → K → ℤ) :
     I P (n + 1) (fun i => fsHerm ι (∑ p, ℓ i p • x p)) =
       ∑ r : Fin (n + 1) → α, (∏ i, (ℓ i (r i) : ℝ)) * I P (n + 1) (fun i => fsHerm ι (x (r i))) := by
-  rw [← fsMultilin_apply hI hP, MultilinearMap.map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← fsMultilin_apply hI hP, MultilinearMap.map_sum]
   refine Finset.sum_congr rfl fun r _ => ?_
   rw [MultilinearMap.map_smul_univ (fsMultilin hI hP) (fun i => ℓ i (r i)) (fun i => x (r i)),
     fsMultilin_apply, zsmul_eq_mul, Int.cast_prod]
@@ -183,7 +184,8 @@ theorem hFlMono_sum_single (II : IntersectionSystem) (hII : IsIntersectionSystem
     hFlMono Ψ N II (∑ i, Finsupp.single (r i) 1) =
       II (FlBlock Ψ N) (FlIdx Ψ N) (PFl Ψ N) (dimFl Ψ N + 1) (fun i => xLine Ψ N (r i)) := by
   have hdeg : (∑ i, Finsupp.single (r i) (1 : ℕ)).degree = dimFl Ψ N + 1 := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp [Finsupp.degree_single]
   have hm : Finsupp.toMultiset (∑ i, Finsupp.single (r i) (1 : ℕ)) = Multiset.map r Finset.univ.val := by
     rw [Finsupp.toMultiset_sum]

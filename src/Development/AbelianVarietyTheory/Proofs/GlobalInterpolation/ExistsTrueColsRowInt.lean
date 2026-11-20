@@ -72,7 +72,8 @@ def rowsRestOfSpanning (W : RowsRest B (I.cols l)) (s : ∀ a, Finset (W.Amb a))
 theorem rowVal_of_mem_carrier (W : RowsRest B (I.cols l)) (a) (L : Rows.OLat B.O (B.embLL.comp B.OtoLL) (W.Amb a))
    (h : ∀ v ∈ L.gen, RowVal I l B.u₀ a ((W.eMtTw B.u₀ a).symm v)) : ∀ F ∈ L.carrier, RowVal I l B.u₀ a ((W.eMtTw B.u₀ a).symm F) := by
   rintro F ⟨c, rfl⟩
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_induction _ (RowVal I l B.u₀ a) (rowVal_add I l _ _) (rowVal_zero I l _ _) fun v hv => ?_
   rw [map_smul]
   exact rowVal_smul I l _ _ _ _ (h v hv)

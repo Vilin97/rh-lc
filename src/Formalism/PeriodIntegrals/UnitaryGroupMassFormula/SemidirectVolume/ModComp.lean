@@ -23,8 +23,10 @@ theorem h_e_L (H : D.Hyp) {w' : Fin r → n → A} (s' : Fin r → Fin r → A)
 theorem pW_L (H : D.Hyp) {w' : Fin r → n → A} (s' : Fin r → Fin r → A)
     (hw' : ∀ a, IsW D (w' a)) (v : n → A) :
     D.pW (D.L w' s' v) = D.pW v + ∑ d, D.h (D.e d) v • w' d := by
-  rw [L_apply, map_sub, map_add, map_sum, map_sum]
-  simp only [map_smul, map_add, map_sum, pW_e H, pW_of_isW (hw' _), smul_zero,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [L_apply, map_sub, map_add, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_smul, map_add, map_sum, pW_e H, pW_of_isW (hw' _), smul_zero,
     Finset.sum_const_zero, add_zero, sub_zero]
 
 theorem L_comp (H : D.Hyp) {w w' : Fin r → n → A} (s s' : Fin r → Fin r → A)

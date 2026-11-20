@@ -76,10 +76,12 @@ theorem isIdemSum_props : ∀ {D : D7} (e : AE D) (P : Finset (Formalism.L2.DIV.
   intro D e P d h
   obtain ⟨⟨es, hes, he⟩, -⟩ := id h
   have hint : toEAf D e ∈ Formalism.L2.Herm.intAf D.host.F D.host.E := by
-    rw [he, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [he, map_sum]
     exact sum_mem fun w hw => (idemOf_toEAf (hes w hw)).mem
   refine ⟨?_, hint, ?_⟩
-  · rw [he, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [he, map_sum]
     exact Finset.sum_eq_zero fun w hw =>
       GlobalTheory.ExportSeries.SpecGood.infPart_eq_zero_of_isIdemAt D w (es w) (hes w hw)
   · refine one_sub_mem_idS_prod P d hint fun w hw => ?_

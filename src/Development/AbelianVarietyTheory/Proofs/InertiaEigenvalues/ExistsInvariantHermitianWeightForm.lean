@@ -64,7 +64,8 @@ theorem exists_form_of_bounded {ι : Type} [Fintype ι] [DecidableEq ι]
   · show ∫ k, φ k x y ∂μ = starRingEnd ℂ (∫ k, φ k y x ∂μ)
     rw [← integral_conj]
     congr 1; funext k
-    simp [φ, dotProduct, map_sum, mul_comm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [φ, dotProduct, map_sum, mul_comm]
   · show 0 < (∫ k, φ k x x ∂μ).re
     have e := integral_re (hφi x x)
     simp only [RCLike.re_to_complex] at e
@@ -117,7 +118,8 @@ theorem norm_emb_le_one {L : Type} [Field L] [NumberField L] [IsCMField L] {n : 
   have h2 := congrFun (congrFun h1 i) i
   simp only [Matrix.mul_apply, conjT, Matrix.transpose_apply, Matrix.map_apply, Matrix.one_apply_eq] at h2
   have h3 := congrArg τ h2
-  simp only [map_sum, map_mul, map_one] at h3
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, map_one] at h3
   have h4 : ∑ k, (‖τ ((g : Matrix (Fin n) (Fin n) L) i k)‖ ^ 2 : ℝ) = 1 := by
     have : ∑ k, ((‖τ ((g : Matrix (Fin n) (Fin n) L) i k)‖ ^ 2 : ℝ) : ℂ) = 1 := by
       rw [← h3]

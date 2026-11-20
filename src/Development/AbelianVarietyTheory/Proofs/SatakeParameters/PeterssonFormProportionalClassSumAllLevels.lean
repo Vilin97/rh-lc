@@ -37,7 +37,8 @@ theorem gaL_comm {G : Type} [Group G] [Fintype G] (V : HSp D) (β : GL (Fin V.ra
     (h : ∀ g0 : G0 L.Pg L.r, actG0 V β L g0 (H Φ) = H (actG0 V β L g0 Φ)) :
     gaL V β L eG c (H Φ) = H (gaL V β L eG c Φ) := by
   unfold gaL
-  rw [LinearMap.sum_apply, LinearMap.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [LinearMap.sum_apply, LinearMap.sum_apply, map_sum]
   refine Finset.sum_congr rfl fun g _ => ?_
   rw [LinearMap.smul_apply, LinearMap.smul_apply, map_smul]
   exact congrArg (c g • ·) (h (eG g))

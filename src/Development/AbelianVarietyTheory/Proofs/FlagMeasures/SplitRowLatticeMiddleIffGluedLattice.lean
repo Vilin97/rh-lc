@@ -191,7 +191,8 @@ theorem forall_sumS (h : V →ₗ⋆[K] V →ₗ[K] K) (e : Fin r → V) (v : V)
     exact H _ (Submodule.subset_span ⟨a, x, hx, rfl⟩)
   · intro H y hy
     obtain ⟨c, hc, rfl⟩ := (mem_sumS _ _ _).1 hy
-    rw [map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, LinearMap.sum_apply]
     exact Submodule.sum_mem _ fun a _ => by rw [e1]; exact H a _ (hc a)
 
 theorem IsHypFrame.mem_dual_glue (H : IsHypFrame h e f) (hL : ∀ w ∈ L, Mid h e f w) (h0 : ∀ a, B a ≠ 0)

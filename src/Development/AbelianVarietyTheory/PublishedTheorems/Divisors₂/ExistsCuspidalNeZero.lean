@@ -18,7 +18,8 @@ theorem aniso_one (h : IsCMExt F E σ) (z : Fin n → E) (hz : hE σ (1 : Matrix
   have e : ∑ i, σ (z i) * z i = 0 := by
     simpa [hE, Formalism.UG.hform, Matrix.one_apply] using hz
   have e2 := congrArg (fun x => (τ x).re) e
-  simp only [map_sum, map_mul, h.2.2.2, map_zero, Complex.zero_re, Complex.re_sum, Complex.star_def,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, h.2.2.2, map_zero, Complex.zero_re, Complex.re_sum, Complex.star_def,
     ← Complex.normSq_eq_conj_mul_self, Complex.ofReal_re] at e2
   funext i
   have := (Finset.sum_eq_zero_iff_of_nonneg fun i _ => Complex.normSq_nonneg (τ (z i))).1 e2 i (Finset.mem_univ i)

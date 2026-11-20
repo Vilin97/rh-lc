@@ -53,7 +53,8 @@ def coefMat (n : ℕ) (a : Matrix d d (PowerSeries (X' → FractionRing O))) :
 lemma coefMat_mul (n : ℕ) (a b : Matrix d d (PowerSeries (X' → FractionRing O))) :
     coefMat n (a * b) = ∑ p ∈ antidiagonal n, coefMat p.1 a * coefMat p.2 b := by
   ext x' i j
-  simp only [coefMat, Matrix.mul_apply, map_sum, PowerSeries.coeff_mul, Finset.sum_apply, Matrix.sum_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [coefMat, Matrix.mul_apply, map_sum, PowerSeries.coeff_mul, Finset.sum_apply, Matrix.sum_apply,
     Pi.mul_apply]
   exact Finset.sum_comm
 
@@ -149,7 +150,8 @@ lemma coeff_psi (m : ℕ) (P : MvPolynomial (Fin m) K) :
     rw [Finset.prod_pow_eq_pow_sum]
     rfl
   conv_lhs => rw [P.as_sum]
-  rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum]
   simp only [hpsi, PowerSeries.coeff_C_mul_X_pow]
   have h1 : ∑ e ∈ P.support, (if m = wt e then AddMonoidAlgebra.coeff P e else 0) =
       ∑ e ∈ P.support ∪ Finset.Iic (bnd m), (if m = wt e then AddMonoidAlgebra.coeff P e else 0) :=
@@ -194,7 +196,8 @@ lemma coeff_det_eq (R' : Subalgebra O (X' → Matrix d d (FractionRing O)))
       (PowerSeries.X : PowerSeries (FractionRing O)) • ∑ j : Fin (n + Fintype.card d),
         (PowerSeries.X : PowerSeries (FractionRing O)) ^ j.1 • (coefMat j.1 a x').map PowerSeries.C := by
     ext i k
-    simp only [RingHom.mapMatrix_apply, Matrix.map_apply, Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [RingHom.mapMatrix_apply, Matrix.map_apply, Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul,
       map_sum, map_mul, psi, MvPolynomial.eval₂Hom_X', MvPolynomial.eval₂Hom_C, Finset.mul_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [pow_succ]
@@ -205,7 +208,8 @@ lemma coeff_det_eq (R' : Subalgebra O (X' → Matrix d d (FractionRing O)))
   apply coeff_det_congr
   intro i j k hk
   have hd0 : 0 < Fintype.card d := Fintype.card_pos_iff.2 ⟨i⟩
-  simp only [Matrix.sum_apply, Matrix.smul_apply, Matrix.map_apply, smul_eq_mul, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.sum_apply, Matrix.smul_apply, Matrix.map_apply, smul_eq_mul, map_sum,
     RingHom.mapMatrix_apply, PowerSeries.coeff_map]
   rw [Finset.sum_eq_single ⟨k, by omega⟩]
   · rw [mul_comm, PowerSeries.coeff_C_mul_X_pow, if_pos rfl]
@@ -231,7 +235,8 @@ lemma detGood (T' : Subalgebra O (X' → O)) (R' : Subalgebra O (X' → Matrix d
     split_ifs
     · exact hF e
     · exact Subalgebra.zero_mem _
-  · rw [coeff_det_eq R' a ha n x', coeff_psi, Finset.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [coeff_det_eq R' a ha n x', coeff_psi, Finset.sum_apply, map_sum]
     refine Finset.sum_congr rfl fun e _ => ?_
     by_cases h : wt e = n + Fintype.card d
     · rw [if_pos h, if_pos h]

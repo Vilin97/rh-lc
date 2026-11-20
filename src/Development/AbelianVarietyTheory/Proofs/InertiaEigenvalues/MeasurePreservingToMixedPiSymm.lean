@@ -182,7 +182,8 @@ theorem adelicChar_sInf_sum (x u : Fin n → Cinf E) :
   have h1 : ∀ v : Fin n → Cinf E, infPartPi (fun i => sInf E (v i)) = fun i => toMixed E (v i) := fun v => rfl
   simp only [h0, h1, mixedPairingPi, mixedTraceForm_toMixed, Pi.zero_apply, mul_zero, Finset.sum_const_zero,
     AddChar.map_zero_eq_one, Circle.coe_one, mul_one] at h
-  rw [← h, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← h, map_sum]
   simp only [map_mul]
 
 def toMixedSch (f : 𝓢(Fin n → Cinf E, ℂ)) : 𝓢(Fin n → mixedEmbedding.mixedSpace E, ℂ) :=

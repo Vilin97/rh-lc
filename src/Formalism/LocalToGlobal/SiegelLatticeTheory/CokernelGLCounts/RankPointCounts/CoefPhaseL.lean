@@ -89,14 +89,16 @@ theorem sUp_conj (A : Matrix (Fin n) (Fin n) K) (d d' : Fin n → K) (c : K)
 theorem sLow_map {S : Type} [CommRing S] (f : K →+* S) (A : Matrix (Fin n) (Fin n) K) :
     Formalism.DoubleCosetMeasures.sLow (A.map f) = f (Formalism.DoubleCosetMeasures.sLow A) := by
   unfold Formalism.DoubleCosetMeasures.sLow
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   split_ifs <;> simp
 
 theorem sUp_map {S : Type} [CommRing S] (f : K →+* S) (A : Matrix (Fin n) (Fin n) K) :
     Formalism.DoubleCosetMeasures.sUp (A.map f) = f (Formalism.DoubleCosetMeasures.sUp A) := by
   unfold Formalism.DoubleCosetMeasures.sUp
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   split_ifs <;> simp
 

@@ -36,7 +36,8 @@ theorem eS_mul_self_inv [Fintype ι] {e : ι → B.A} (he : CompleteOrthogonalId
 theorem σ_eS_inv [Fintype ι] {e : ι → B.A} {S : Finset ι} (hP : IsPre B e S) (I : Finset ι) :
     B.σ (eS B e I) = eS B e I := by
   unfold eS
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   obtain ⟨f, -, -, -, h1, h2⟩ := hP.2 i
   by_cases hi : i ∈ S

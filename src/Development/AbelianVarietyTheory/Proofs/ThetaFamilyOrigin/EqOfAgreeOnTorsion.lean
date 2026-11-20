@@ -189,7 +189,8 @@ theorem lam_rosati {f g : P.A ⟶ P.A} (h : RosatiAdj P.A P.L f g) {T : Over (Sp
   have h₁ := congrArg (pull ((lift x y).left ≫ inv ((P.A ⊗ P.A).hom ⁻¹ᵁ ⊤).ι))
     ((cls_linComb P.isLB _ _ _).symm.trans ((cls_eq_zero_iff (LB.isLB_linComb P.isLB _ _)).2 ht))
   have e : ∀ u v : P.A ⊗ P.A ⟶ P.A, padd P.A u v = u * v := fun _ _ => rfl
-  simp only [map_sum, map_zsmul, map_zero, ← pull_comp, Category.assoc, IsIso.inv_hom_id_assoc] at h₁
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_zsmul, map_zero, ← pull_comp, Category.assoc, IsIso.inv_hom_id_assoc] at h₁
   simp only [Fin.sum_univ_succ, rosatiφ, rosatiε, Matrix.cons_val_zero, Matrix.cons_val_succ, ← Over.comp_left, e,
     MonObj.comp_mul, lift_fst, lift_snd, lift_fst_assoc, lift_snd_assoc, Fin.sum_univ_zero] at h₁
   rw [← sub_eq_zero, ← h₁, lam, lam]
@@ -213,7 +214,8 @@ theorem sum_pull_act (hm : MulPullSt) (hc : CubeSt) {r c : ℕ} (a : O) (b : Fin
     rw [map_nsmul, show 4 = 2 * 2 from rfl, mul_nsmul, two_nsmul_pull_act P ρ hm]
     rfl
   simp only [h₂]
-  rw [← Finset.smul_sum, ← smul_add, ← map_sum, ← map_add, h, ← nsmul_one, map_nsmul, h₁]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Finset.smul_sum, ← smul_add, ← map_sum, ← map_add, h, ← nsmul_one, map_nsmul, h₁]
   module
 
 end Classes
@@ -317,7 +319,8 @@ theorem endDeterminedOnTorsion : Out.Laws →
         fun l => φ.hom.left ≫ (ρ'.act (b l)).left) ?_ fun x h => ?_
     · have h₁ := sum_pull_act P ρ laws.mulPull laws.cube _ b hb
       have h₂ := congrArg (pull φ.hom.left) (sum_pull_act P' ρ' laws.mulPull laws.cube _ b hb)
-      rw [map_add, map_sum, map_nsmul _ (4 * c), hl] at h₂
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_add, map_sum, map_nsmul _ (4 * c), hl] at h₂
       simp only [Fintype.sum_sum_type, Sum.elim_inl, Sum.elim_inr, Over.comp_left, pull_comp,
         map_nsmul (pull φ.hom.left) 4 (cls P'.L P'.isLB), hl]
       rw [add_add_add_comm, h₁, h₂]

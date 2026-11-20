@@ -74,7 +74,8 @@ theorem exists_mul_eq_one (B : Matrix (Fin n) (Fin N1) F) (hB : LinearIndependen
         simp [Matrix.mul_apply]
     _ = g (B i) b := by
         conv_rhs => rw [← h2]
-        simp [map_sum, Finset.sum_apply, map_smul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp [map_sum, Finset.sum_apply, map_smul]
     _ = (1 : Matrix (Fin n) (Fin n) F) i b := by
         rw [h1, Matrix.one_apply, Pi.single_apply]
         exact if_congr eq_comm rfl rfl
@@ -175,7 +176,8 @@ theorem fibreIdeal_flag (P : Ideal (MRing ι)) [hP : P.IsPrime] (B : Matrix (Fin
         congr 1
         rw [flagMap, eval₂Hom_X']
         refine (flagMinor_mul (genMat (FnField P) n) (B.map C) j S).trans ?_
-        simp only [map_sum, map_mul, aeval_C, aeval_X, algebraMap_eq]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, map_mul, aeval_C, aeval_X, algebraMap_eq]
         refine Finset.sum_congr rfl fun S' _ => ?_
         exact (mul_comm _ _).trans
           (congrArg (· * flagMinor (genMat (FnField P) n) j S') (RingHom.map_det C _).symm)

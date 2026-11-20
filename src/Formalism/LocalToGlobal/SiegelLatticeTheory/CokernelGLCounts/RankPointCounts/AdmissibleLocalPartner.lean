@@ -40,7 +40,8 @@ theorem Cm_mul (ξ η : Matrix (Fin (D.R.rS + 1)) (Fin (D.R.rS + 1)) (𝓞 D.hos
   rw [Matrix.mul_apply, Cm_apply, Matrix.mul_apply]
   simp only [Cm_apply]
   push_cast
-  rw [map_sum, Finset.mul_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.mul_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun d _ => ?_
   have := uFi_mul Zd p d
   rw [map_mul]
@@ -58,7 +59,8 @@ theorem comb_Cm {T' : D.host.E} (F' : LFlag (VS D) D.R.rS T')
     (ξ : Matrix (Fin (D.R.rS + 1)) (Fin (D.R.rS + 1)) (𝓞 D.host.E)) (b : Fin (D.R.rS + 1)) :
     comb (Cm Zd p ξ) (locF' Zd p F') b = uF Zd p b • baseChange₂ D p (frameAct (frame F') ξ b) := by
   simp only [comb, Cm_apply, locF'_eq, frameAct]
-  rw [map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.smul_sum]
   refine Finset.sum_congr rfl fun c _ => ?_
   rw [Formalism.L2.SG.Pf.LocalDenominators.baseChange_smul₂, smul_smul, smul_smul]
   congr 1

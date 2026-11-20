@@ -105,7 +105,8 @@ lemma pairing_ptOf (D : Dat p g B Tw Dt Oe σ cp) (s t : TT p g) :
   choose k hk hpair using fun i j => D.L.E_spec i j 0
   simp only [zero_add, pow_one] at hpair
   refine ⟨∑ i, (∑ j, k i j * (red p g t j).val) * (red p g s i).val, ?_, ?_⟩
-  · simp only [pair, dotProduct, mulVec, map_sum, map_mul, Nat.cast_sum, Nat.cast_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [pair, dotProduct, mulVec, map_sum, map_mul, Nat.cast_sum, Nat.cast_mul,
       ZMod.natCast_zmod_val, red]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [mul_comm]

@@ -28,7 +28,8 @@ private theorem trunc_eq {K : Type} [Field K] [NumberField K] {n : ℕ} (d : ℕ
     (h : ∀ k, (G k).support ⊆ s) :
     trunc d G = ∑ β ∈ s, monomial β (∑ k ∈ Finset.range (d + 1), homog d ((G k).coeff β)) := by
   unfold trunc
-  simp only [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun k _ => Finset.sum_subset (h k) fun β _ hβ => ?_
   rw [notMem_support_iff.mp hβ]
@@ -57,7 +58,8 @@ private theorem homog_norm {ι : Type} {H : Type} [NormedAddCommGroup H] [Normed
     (ψ : MvPolynomial (Option ι) ℂ →+* (H →L[ℂ] H)) (hψ : ∀ c : ℂ, ψ (C c) = c • 1) {D : ℝ} (hD : 1 ≤ D)
     (hX : ∀ i, ‖ψ (X i)‖ ≤ D) (d : ℕ) (p : MvPolynomial ι ℂ) (hp : p.totalDegree ≤ d) :
     ‖ψ (homog d p)‖ ≤ l1 p * D ^ d := by
-  rw [homog_eq, map_sum, l1, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [homog_eq, map_sum, l1, Finset.sum_mul]
   refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun α hα => ?_)
   rw [← mul_one (p.coeff α), ← C_mul_monomial, map_mul, hψ, smul_mul_assoc, one_mul, norm_smul, mul_one]
   refine mul_le_mul_of_nonneg_left ((mon_norm ψ hD hX _).trans (le_of_eq ?_)) (norm_nonneg _)
@@ -111,7 +113,8 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.truncSB :
   have h1 : ∀ β, ‖ev (C (∑ k ∈ Finset.range (d + 1), homog d ((G k).coeff β)))‖
       ≤ 2 ^ (d + 1) * E ^ (d + 1) * D ^ (d + 1) := by
     intro β
-    rw [map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum]
     refine (norm_sum_le _ _).trans ?_
     have h2 : ∀ k ∈ Finset.range (d + 1), ‖ev (C (homog d ((G k).coeff β)))‖ ≤ E ^ (d + 1) * D ^ (d + 1) := by
       intro k hk
@@ -129,7 +132,8 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.truncSB :
     rw [Finset.card_range, nsmul_eq_mul, mul_assoc]
     refine mul_le_mul_of_nonneg_right ?_ (by positivity)
     exact_mod_cast (Nat.lt_two_pow_self (n := d + 1)).le
-  rw [hT, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hT, map_sum]
   refine (norm_sum_le _ _).trans ?_
   have h6 : ∀ β ∈ Φ.support, ‖ev (monomial β (∑ k ∈ Finset.range (d + 1), homog d ((G k).coeff β)))‖
       ≤ 2 ^ (d + 1) * E ^ (d + 1) * D ^ (d + 1) * |Mβ β| := by

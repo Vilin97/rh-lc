@@ -16,12 +16,15 @@ theorem trace_actH_eq_trace_actT : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Fiel
   obtain ⟨-, -, htr⟩ := GlobalTheory.T.matrix_sandwich_trace_eq (Ainf p O) h (mu ε) D.F D.G
     ((D.ρT a).map (ofPadic p O)) (D.ρM a) hmu D.G_mul_F (D.F_act a)
   have hT : (actT D a).trace = fontaineTheta O p (((D.ρT a).map (ofPadic p O)).trace) := by
-    simp only [actT, Matrix.trace, Matrix.diag, Matrix.map_apply, map_sum, padicToO,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [actT, Matrix.trace, Matrix.diag, Matrix.map_apply, map_sum, padicToO,
       RingHom.comp_apply]
   have hH : (actH D a).trace = fontaineTheta O p ((D.ρM a).trace) := by
-    simp only [actH, Matrix.trace, Matrix.diag, Matrix.map_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [actH, Matrix.trace, Matrix.diag, Matrix.map_apply, map_sum]
   refine ⟨by rw [hH, hT, htr], ?_⟩
   rw [hT]
-  simp only [padicToO, Matrix.trace, Matrix.diag, Matrix.map_apply, map_sum, RingHom.comp_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [padicToO, Matrix.trace, Matrix.diag, Matrix.map_apply, map_sum, RingHom.comp_apply]
 
 end GlobalTheory

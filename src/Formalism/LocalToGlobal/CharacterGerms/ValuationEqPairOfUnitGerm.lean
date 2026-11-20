@@ -171,7 +171,8 @@ theorem eqA (m i : Fin dd) :
       MvPowerSeries.pderiv_X_self, one_mul]
   rw [s0, s1, zero_add] at h
   have h2 := congrArg (MvPowerSeries.subst (exZero Y)) h
-  rw [← MvPowerSeries.coe_substAlgHom hz, map_sum] at h2
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← MvPowerSeries.coe_substAlgHom hz, map_sum] at h2
   simp only [map_mul, MvPowerSeries.coe_substAlgHom] at h2
   rw [MvPowerSeries.subst_comp_subst_apply hsX1 hz] at h2
   simp only [MvPowerSeries.subst_comp_subst_apply hsF hz, F_exZero, MvPowerSeries.subst_X hz] at h2
@@ -192,7 +193,8 @@ theorem eqK (n k : Fin dd) :
     rw [MvPowerSeries.subst_self]
     rfl
   have h := congrArg (MvPowerSeries.subst (e Y)) (congrArg (MvPowerSeries.pderiv C k) (exlg Y n))
-  rw [pderiv_subst hl k, ← MvPowerSeries.coe_substAlgHom hsE, map_sum] at h
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [pderiv_subst hl k, ← MvPowerSeries.coe_substAlgHom hsE, map_sum] at h
   simp only [map_mul, MvPowerSeries.coe_substAlgHom, key] at h
   refine h.trans ?_
   by_cases hnk : n = k

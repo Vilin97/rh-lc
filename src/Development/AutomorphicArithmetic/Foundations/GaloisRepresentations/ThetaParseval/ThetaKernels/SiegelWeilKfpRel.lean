@@ -101,7 +101,8 @@ theorem B_rel'_k (hT : _root_.PositivityTheory.SiegelWeilFormula.TAll_k) (hU : _
     _ = ∫ X, _root_.PositivityTheory.SiegelWeilFormula.KFP.TL_k d (∑ i ∈ Finset.range (q.natDegree + 1), q.coeff i • d.om (k ^ i) Φ) X * star (d.T Ψ X) ∂ν := by
         congr 1
         funext X
-        rw [map_sum, Finset.sum_apply, Finset.sum_mul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum, Finset.sum_apply, Finset.sum_mul]
         refine Finset.sum_congr rfl fun i _ => ?_
         rw [map_smul, Pi.smul_apply, smul_eq_mul, mul_assoc]
         rfl

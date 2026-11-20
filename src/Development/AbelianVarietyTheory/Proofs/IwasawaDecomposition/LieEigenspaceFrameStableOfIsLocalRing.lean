@@ -29,7 +29,8 @@ theorem basis_fixed_bc {L k : Type} [CommRing L] [CommRing k] (ψ : L →+* k) {
     simp [Finset.sum_apply, Pi.single_apply]
   have hinv : ∀ i, (fun i' => ∑ j, e i j * M j i') = Pi.single i 1 := fun i => by
     refine (hb _ (he i)).unique ?_ ?_
-    · conv_lhs => rw [← he i, ← hs (e i), map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · conv_lhs => rw [← he i, ← hs (e i), map_sum]
       simp only [map_smul, hM, Finset.smul_sum, Finset.sum_smul, smul_smul]
       exact Finset.sum_comm
     · simp [Pi.single_apply]
@@ -40,7 +41,8 @@ theorem basis_fixed_bc {L k : Type} [CommRing L] [CommRing k] (ψ : L →+* k) {
     simp [Finset.sum_apply]
   refine ⟨fun i => ∑ j, c' j * ψ (M j i), ?_, fun a ha => ?_⟩
   · show c' = _
-    conv_lhs => rw [← hc, ← hs c', map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [← hc, ← hs c', map_sum]
     simp only [map_smul, h1, Finset.smul_sum, Finset.sum_smul, smul_smul]
     exact Finset.sum_comm
   · funext i

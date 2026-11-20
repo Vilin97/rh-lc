@@ -226,7 +226,8 @@ theorem isDPDer_of_map {J : Ideal T} {δ : DividedPowers J} {κ : DividedPowers 
       | succ n => simp [dpow_eval_zero _ n.succ_ne_zero]
     | add a b ha hb iha ihb =>
       intro n
-      simp only [κ.dpow_add (h.1 ha) (h.1 hb), map_sum, D.leibniz, iha, ihb, smul_smul, Finset.sum_add_distrib,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [κ.dpow_add (h.1 ha) (h.1 hb), map_sum, D.leibniz, iha, ihb, smul_smul, Finset.sum_add_distrib,
         ← Finset.sum_smul, sum_dpow_mul_dpPred κ (h.1 ha) (h.1 hb), sum_dpow_mul_dpPred' κ (h.1 ha) (h.1 hb),
         map_add, smul_add]
       exact add_comm _ _

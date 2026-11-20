@@ -154,7 +154,8 @@ theorem tyPart_row {D : Datum H} {g : ℕ} {ty : Fin g → (E →+* ℂ)} {P : D
   simp only [tyPart, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
   split_ifs with hk
   · have e1 := congrFun (congrArg P h) k
-    rw [hP.1, map_sum, Finset.sum_apply] at e1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hP.1, map_sum, Finset.sum_apply] at e1
     simp only [hP.1, hk] at e1
     rw [eq_comm, ← mul_right_inj' hσ, e1, Finset.mul_sum]
     refine Finset.sum_congr rfl fun m _ => ?_

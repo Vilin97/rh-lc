@@ -125,7 +125,8 @@ private theorem finite_setOf_bilin_self_le_of_posDef {X : Type} [AddCommGroup X]
     intro y z
     rw [Matrix.toBilin'_apply]
     conv_lhs => rw [← b.sum_repr y, ← b.sum_repr z]
-    simp only [map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply, smul_eq_mul, Int.cast_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply, smul_eq_mul, Int.cast_sum,
       Int.cast_mul, Finset.mul_sum, M, φ, Matrix.of_apply]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
@@ -165,7 +166,8 @@ private theorem finite_setOf_bilin_self_le_of_posDef {X : Type} [AddCommGroup X]
   have hexp : ∀ v, Bq v v = ∑ k, (w.repr v k) ^ 2 * Bq (w k) (w k) := by
     intro v
     conv_lhs => rw [← w.sum_repr v]
-    simp only [map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply, smul_eq_mul]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [Finset.sum_eq_single k]
     · ring

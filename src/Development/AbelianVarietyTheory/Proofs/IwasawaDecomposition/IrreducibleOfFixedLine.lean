@@ -51,7 +51,8 @@ theorem irreducible_of_fixed_line {G V : Type} [Group G] [TopologicalSpace G] [I
     exact hW _ _ hwW
   have hufix : ∀ k ∈ K, ρ k u = u := by
     intro k hk
-    rw [hu, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hu, map_sum]
     refine Finset.sum_bij (fun y _ => ρ k y) ?_ ?_ ?_ fun _ _ => rfl
     · intro y hy
       obtain ⟨l, rfl⟩ := hfin.mem_toFinset.1 hy

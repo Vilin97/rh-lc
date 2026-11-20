@@ -61,7 +61,8 @@ theorem IsNilDP.map_dpExp_eq {δ : DividedPowers J} {δ' : DividedPowers J'} (h 
     {f : B →+* B'} (hf : IsDPMorphism δ δ' f) {a : B} (ha : a ∈ J) :
     f (dpExp δ a) = dpExp δ' (f a) := by
   obtain ⟨N, hN⟩ := h.exists_dpow_eq_zero
-  rw [dpExp_eq_sum_range_of_vanish δ a N fun n hn ↦ hN n hn a,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [dpExp_eq_sum_range_of_vanish δ a N fun n hn ↦ hN n hn a,
     dpExp_eq_sum_range_of_vanish δ' (f a) N fun n hn ↦ by
       rw [← hf.map_dpow ha, hN n hn a, map_zero], map_sum]
   exact Finset.sum_congr rfl fun n _ ↦ hf.map_dpow ha
@@ -83,7 +84,8 @@ theorem _root_.GlobalTheory.Cris.dpExp_add_and_natural (B B' : Type) [CommRing B
   have hvan' : ∀ n, N ≤ n → δ'.dpow n (f a) = 0 := by
     intro n hn
     rw [← hf.map_dpow ha, hvan n hn, map_zero]
-  rw [_root_.GlobalTheory.Cris.dpExp_eq_sum_range_of_vanish δ a N hvan, _root_.GlobalTheory.Cris.dpExp_eq_sum_range_of_vanish δ' (f a) N hvan',
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [_root_.GlobalTheory.Cris.dpExp_eq_sum_range_of_vanish δ a N hvan, _root_.GlobalTheory.Cris.dpExp_eq_sum_range_of_vanish δ' (f a) N hvan',
     map_sum]
   exact Finset.sum_congr rfl fun n _ => hf.map_dpow ha
 

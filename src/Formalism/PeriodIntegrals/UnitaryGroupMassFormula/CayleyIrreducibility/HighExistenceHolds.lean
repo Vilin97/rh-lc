@@ -76,7 +76,8 @@ theorem aeval_support (w : σ → ℕ) (c : ℕ) (f : σ → Polynomial (MvPolyn
     (hf : ∀ v, TGood w c (w v) (f v)) (P : MvPolynomial σ ℂ) (j : ℕ) (m' : σ →₀ ℕ)
     (h : AddMonoidAlgebra.coeff ((aeval f P).coeff j) m' ≠ 0) :
     ∃ m, AddMonoidAlgebra.coeff P m ≠ 0 ∧ Finsupp.weight w m' + j * c = Finsupp.weight w m := by
-  rw [P.as_sum, map_sum, Polynomial.finsetSum_coeff, coeff_sum] at h
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [P.as_sum, map_sum, Polynomial.finsetSum_coeff, coeff_sum] at h
   obtain ⟨m, hm, hm0⟩ := Finset.exists_ne_zero_of_sum_ne_zero h
   exact ⟨m, mem_support_iff.mp hm, tgood_aeval_monomial w c f hf m _ j m' hm0⟩
 

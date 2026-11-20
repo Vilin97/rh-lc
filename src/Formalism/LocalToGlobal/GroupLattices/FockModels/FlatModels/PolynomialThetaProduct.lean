@@ -33,7 +33,8 @@ theorem scaleHd {R : Type} [CommRing R] {k d : ℕ} (q : MvPolynomial (Fin k) R)
   simp only [Hd, MvPolynomial.mem_restrictSupport_iff] at hP
   conv_lhs => rw [MvPolynomial.as_sum P]
   conv_rhs => rw [MvPolynomial.as_sum P]
-  rw [map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun μ hμ => ?_
   have hd : ∑ c, μ c = d := hP hμ
   rw [MvPolynomial.aeval_monomial, Finsupp.prod_fintype _ _ (fun _ => pow_zero _)]
@@ -48,7 +49,8 @@ theorem lin_smul {R : Type} [CommRing R] {k d : ℕ} (a : R) (M : Matrix (Fin k)
   simp only [lin]
   conv_lhs => rw [MvPolynomial.as_sum P]
   conv_rhs => rw [MvPolynomial.as_sum P]
-  rw [map_sum, map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, Finset.smul_sum]
   refine Finset.sum_congr rfl fun μ hμ => ?_
   have hd : ∑ c, μ c = d := hP hμ
   have e : ∀ c, (∑ b, C ((a • M) c b) * X b : MvPolynomial (Fin k) R) = C a * ∑ b, C (M c b) * X b := by
@@ -245,7 +247,8 @@ theorem scalePol {R : Type} [CommRing R] {k : ℕ} {d : S → ℕ} (Q : S → Mv
   rw [mem_Pol] at hF
   conv_lhs => rw [MvPolynomial.as_sum F]
   conv_rhs => rw [MvPolynomial.as_sum F]
-  rw [map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun μ hμ => ?_
   have hd : ∀ s, ∑ c, μ (s, c) = d s := fun s => hF μ hμ s
   rw [MvPolynomial.aeval_monomial, Finsupp.prod_fintype _ _ (fun _ => pow_zero _),
@@ -278,7 +281,8 @@ theorem Lin_smul {R : Type} [CommRing R] {k : ℕ} {d : S → ℕ} (a : S → R)
   simp only [Lin]
   conv_lhs => rw [MvPolynomial.as_sum F]
   conv_rhs => rw [MvPolynomial.as_sum F]
-  rw [map_sum, map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, Finset.smul_sum]
   refine Finset.sum_congr rfl fun μ hμ => ?_
   have hd : ∀ s, ∑ c, μ (s, c) = d s := fun s => hF μ hμ s
   have e : ∀ v : S × Fin k, (∑ b, C ((a v.1 • M v.1) v.2 b) * X (v.1, b) : MvPolynomial (S × Fin k) R) =

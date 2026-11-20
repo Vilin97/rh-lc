@@ -37,10 +37,12 @@ theorem exists_generic_jacobian_data_of_prime (Λ : Type) [CommRing Λ] [IsDomai
     have hx : ∑ j, a' j * f j ∈ Q := Q.sum_mem fun j _ => Q.mul_mem_left _ (hfQ j)
     have hpd : ∀ t, MvPolynomial.pderiv t (∑ j, a' j * f j) ∈ Q := by
       intro t
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simp only [Derivation.leibniz, smul_eq_mul, Finset.sum_add_distrib]
       refine Q.add_mem ?_ (Q.sum_mem fun j _ => Q.mul_mem_right _ (hfQ j))
-      rw [← hφker, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hφker, map_sum]
       simp only [map_mul, hφa, mul_assoc, ← Finset.mul_sum, ha t, mul_zero]
     obtain ⟨u, hu, hux⟩ := GlobalTheory.T.exists_not_mem_mul_mem_sq_of_pderiv_mem Λ σ Q hQ _ hx hpd
     have haQ := hmin a' u hu hux

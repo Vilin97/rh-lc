@@ -69,7 +69,8 @@ theorem evalMatrix_bind₁_mulLeft (A : Matrix (Fin n) (Fin n) ℂ) (q : MvPolyn
     congr 1
     rcases v with ⟨i, j⟩ | ⟨i, j⟩
     · simp [subst, Matrix.mul_apply, Matrix.of_apply, MvPolynomial.eval_X, MvPolynomial.eval_C]
-    · simp [subst, Matrix.mul_apply, Matrix.of_apply, MvPolynomial.eval_X, MvPolynomial.eval_C, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp [subst, Matrix.mul_apply, Matrix.of_apply, MvPolynomial.eval_X, MvPolynomial.eval_C, map_sum]
 
 theorem totalDegree_subst (A : Matrix (Fin n) (Fin n) ℂ) (v : Var n) : (subst A v).totalDegree ≤ 1 := by
 
@@ -83,7 +84,8 @@ theorem totalDegree_bind_le (A : Matrix (Fin n) (Fin n) ℂ) (q : MvPolynomial (
     (MvPolynomial.bind₁ (subst A) q).totalDegree ≤ q.totalDegree := by
 
   conv_lhs => rw [q.as_sum]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine (MvPolynomial.totalDegree_finset_sum _ _).trans (Finset.sup_le fun m hm => ?_)
   rw [MvPolynomial.bind₁_monomial]
   refine (MvPolynomial.totalDegree_mul _ _).trans ?_
@@ -117,7 +119,8 @@ theorem evalMatrix_eq_sum_monomial (q : MvPolynomial (Var n) ℂ) (k : Fin n →
 
   simp only [evP]
   conv_lhs => rw [q.as_sum]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun m _ => ?_
   rw [show MvPolynomial.monomial m (q.coeff m) =
       MvPolynomial.C (q.coeff m) * MvPolynomial.monomial m (1 : ℂ) by

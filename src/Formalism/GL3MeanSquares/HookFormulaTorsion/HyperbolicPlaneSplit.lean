@@ -106,7 +106,8 @@ theorem unitary_invariance : UnitaryInvariance := by
     apply hinj
     have := congrFun (congrFun hδ j) j
     simp only [Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.one_apply_eq] at this
-    rw [map_sum, map_one]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_one]
     simpa [hnm] using this
   rw [diag' h1 h2 h3 δ hG u Finset.univ]
   simp [hN]
@@ -120,7 +121,8 @@ theorem hyperbolic_plane_split : HyperbolicSplit := by
     have hz : ∀ e, ∑ i, nm (g e i) = 0 := by
       intro e
       apply hinj
-      rw [map_sum, map_zero]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, map_zero]
       simpa [hnm] using hg e e
     rw [diag' h1 h2 h3 (fun i e => g e i) (fun a j _ => hg a j) w Finset.univ]
     simp [hz]

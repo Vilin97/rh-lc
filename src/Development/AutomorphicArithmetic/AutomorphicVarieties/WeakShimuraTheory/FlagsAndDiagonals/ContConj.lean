@@ -24,7 +24,8 @@ theorem UpperTheory.V.Ws.Lab.contConj :
       fun g => ∑ k : Fin 4, ∑ m : Fin 4,
         (Ideal.Quotient.mk (I ^ N) (p i m) * Ideal.Quotient.mk (I ^ N) (r g m k)) * Ideal.Quotient.mk (I ^ N) (q k j) := by
     funext g
-    simp [Matrix.mul_apply, Finset.sum_mul, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Matrix.mul_apply, Finset.sum_mul, map_sum, map_mul]
   rw [e]
   refine lc_sum _ _ (fun k => ?_)
   refine lc_sum _ _ (fun m => ?_)

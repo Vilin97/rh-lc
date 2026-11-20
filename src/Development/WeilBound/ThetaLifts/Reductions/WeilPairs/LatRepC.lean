@@ -34,7 +34,8 @@ theorem ft_mem {α : Af F} (hα : α ∈ Formalism.MainNotions.StandardLattice.i
 
 theorem hOF_rat (M N : Matrix (Fin nT) (Fin nS) E) :
     hOF σ JS JT (ratWF (F := F) M) (ratWF (F := F) N) = incAF F E (hRatF σ JS JT M N) := by
-  simp only [hOF, hRatF, ratWF, Matrix.map_apply, GlobalTheory.HeisLineF.cAF_incAF, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hOF, hRatF, ratWF, Matrix.map_apply, GlobalTheory.HeisLineF.cAF_incAF, map_sum, map_mul]
 
 theorem sympl_ft (hσ : ∀ x, σ (σ x) = x) (α β : Af F) (M N : Matrix (Fin nT) (Fin nS) E) :
     symplOF σ JS JT ξ₀ (algebraMap (AF F) (AEF F E) (pairA F 0 α) • ratWF (F := F) M)

@@ -35,7 +35,8 @@ theorem norm_dH_mul {ψ : AddChar (AF F) ℂ} (hψ : IsStd ψ) (i : κ) (e : mix
         _ = 0 := by rw [this, mul_zero]
     have hE : evI F (z ⬝ᵥ (realAd F t • a)) = t • (evI F (z i) * e) := by
       rw [evI_eq]
-      simp only [dotProduct, smul_eq_mul, Pi.smul_apply, map_sum, map_mul, ← evI_eq, evI_realAd, ha, evI_archInc]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [dotProduct, smul_eq_mul, Pi.smul_apply, map_sum, map_mul, ← evI_eq, evI_realAd, ha, evI_archInc]
       rw [Finset.sum_eq_single i (fun j _ hj => by simp [hj]) (by simp), Pi.single_eq_same, Algebra.smul_def]
       ring
     rw [hψ.2.2 _ hA, hE, map_smul, ← hT, smul_eq_mul]
@@ -65,7 +66,8 @@ theorem exists_family : ∃ (n : ℕ) (e : Fin n → mixedEmbedding.mixedSpace F
       have := hf x j
       rw [hx, Pi.zero_apply, mul_smul_comm, map_smul, smul_eq_mul] at this
       exact (mul_eq_zero.1 this.symm).resolve_left (inv_pos.2 (hp j)).ne'
-    rw [← b.sum_repr y, Finset.mul_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← b.sum_repr y, Finset.mul_sum, map_sum]
     refine Finset.sum_eq_zero fun j _ => ?_
     rw [mul_smul_comm, map_smul, h1, smul_zero]
   obtain ⟨K, -, hK⟩ := f.exists_antilipschitzWith hker

@@ -150,7 +150,8 @@ theorem GlobalTheory.PairStep.kltAt_add_general_member : GlobalTheory.Published.
   have ht' : ((fnPull π t : Y.functionFieldˣ) : Y.functionField) =
       ∑ i, Cartier.constFn (π ≫ p) (u i) * functionFieldMap π (s i) := by
     change functionFieldMap π (t : X.functionField) = _
-    rw [ht, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [ht, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_mul, ← EtaleKlt.functionFieldMap_comp_constFn p π, RingHom.comp_apply]
   have hH' : (CartierDiv.principal (fnPull π t) + pullCart π A).IsEqn y' (fnPull π (t * ya)) := by

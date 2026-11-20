@@ -69,5 +69,6 @@ theorem UpperTheory.trOn_sub_sum_eq_trace_comp_compression :
   rw [h1]
   simp only [h2]
   have h3 : L (P ∘L F ∘L P - ∑ x ∈ S, a x • prj (E x)) = trace ((P ∘L F ∘L P - ∑ x ∈ S, a x • prj (E x)) ∘L T0) := rfl
-  rw [← h3, map_sub, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← h3, map_sub, map_sum]
   simp only [map_smul, smul_eq_mul]

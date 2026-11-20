@@ -61,7 +61,8 @@ theorem toForm_bijective_of_frame {V : X.Opens} {e : Fin r → Γ(F, V)} (he : I
   classical
   refine ⟨fun l l' H => he.dual_ext hV fun i => congr($H _), fun φ => ?_⟩
   refine ⟨∑ i, φ (he.basis hV i) • resM (dual F) hV (he.coord i), (he.basis hV).ext fun j => ?_⟩
-  rw [map_sum, LinearMap.sum_apply, Finset.sum_eq_single j]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, LinearMap.sum_apply, Finset.sum_eq_single j]
   · rw [map_smul]
     change φ _ * dualApp (he.coord j) hV _ = _
     rw [he.dualApp_coord, Module.Basis.repr_self, Finsupp.single_eq_same, mul_one]

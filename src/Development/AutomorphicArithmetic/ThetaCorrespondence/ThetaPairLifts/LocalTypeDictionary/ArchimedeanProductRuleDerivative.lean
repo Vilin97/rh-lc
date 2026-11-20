@@ -54,7 +54,8 @@ theorem archimedean_hasDerivAt_prod : _root_.GlobalTheory.FunPr.ThetaLocalInputs
     refine tendsto_nhds_unique h1 (h2.congr fun t => ?_)
     exact hev _ _ _
   have hsum : (∑ i, c i) = ev (∑ i, Q i f) := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun i _ => (hci i).trans (hevq _).symm
   rw [hasDerivAt_iff_tendsto_slope_zero, hsum]
   have hp0 : (List.ofFn fun i => T i 0).prod = 1 := by

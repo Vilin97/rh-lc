@@ -391,7 +391,8 @@ theorem gauge_kappa_pointwise_holds : GTKPt := by
     have haev : ∀ v : Wq, Polynomial.aeval C p v = ∑ ρ, f ρ • QQ ρ v := by
       intro v
       conv_lhs => rw [← b.sum_repr' v]
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       have hb : ∀ i, Polynomial.aeval C p (⟪b i, v⟫_ℂ • b i) = (f (typeOf (lam i)) * ⟪b i, v⟫_ℂ) • b i := by
         intro i
         have hev : Module.End.HasEigenvector C ((lam i : ℝ) : ℂ) (b i) := hC.hasEigenvector_eigenvectorBasis hn.symm i

@@ -75,7 +75,8 @@ private theorem per_act (C : LatEmb F) (R : RiemLat E g Λ) (a : 𝓞 E) (y : Ψ
 private theorem sesq_emb (C : LatEmb F) (τ : Ψ) (x y : Λ) :
     embOf (F.σ τ) (C.h.toSesq (C.e y) (C.e x)) = star (C.vec y τ) ⬝ᵥ (C.gr τ *ᵥ C.vec x τ) := by
   rw [sesq_eq_sum C.h.toSesq (Pi.basisFun E (Fin (j + j')))]
-  simp only [map_sum, map_mul, embedding_conj, Pi.basisFun_repr, dotProduct, mulVec, Finset.mul_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, embedding_conj, Pi.basisFun_repr, dotProduct, mulVec, Finset.mul_sum,
     LatEmb.gr, LatEmb.vec, Matrix.map_apply, Pi.star_apply, mul_assoc]
   rfl
 

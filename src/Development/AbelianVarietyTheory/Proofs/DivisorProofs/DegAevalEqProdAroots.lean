@@ -27,7 +27,8 @@ theorem deg_aeval_eq_prod_aroots : ∀ (K : Type) [Field K] (A : AbVar K) (f : E
     obtain ⟨Φ, hΦ, hΦev⟩ := GlobalTheory.T.homDegree_integerCombination_isHomogeneous K A A rfl n (fun i => Polynomial.aeval f (u i))
     refine ⟨Φ, hΦ, fun m => ?_⟩
     rw [hΦev m]
-    simp only [map_sum, map_zsmul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_zsmul]
   · exact hm.map _
   · rw [Polynomial.natDegree_map_eq_of_injective (RingHom.injective_int _)]
     exact hd

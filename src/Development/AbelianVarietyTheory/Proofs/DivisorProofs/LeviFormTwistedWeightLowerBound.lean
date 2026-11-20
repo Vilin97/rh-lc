@@ -37,7 +37,8 @@ theorem main : ∀ (n : ℕ) (M : Type) [TopologicalSpace M] [T2Space M] [Second
     have hnorm : ‖dbarDot n z (fun y => (ψ y : ℂ)) x ξ‖ = ‖dDot n z (fun y => (ψ y : ℂ)) x ξ‖ := by
       have : dbarDot n z (fun y => (ψ y : ℂ)) x ξ = (starRingEnd ℂ) (dDot n z (fun y => (ψ y : ℂ)) x ξ) := by
         unfold dbarDot dDot
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         refine Finset.sum_congr rfl fun j _ => ?_
         rw [db_ofReal n z ψ j x, map_mul]
       rw [this, Complex.norm_conj]

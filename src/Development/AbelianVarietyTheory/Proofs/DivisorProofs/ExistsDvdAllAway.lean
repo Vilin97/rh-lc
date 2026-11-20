@@ -107,7 +107,8 @@ theorem coeff_mem {E : Type} [Field E] [NumberField E] {n : ℕ} {P : Ideal (�
   have he : (∑ k, b k • (Pi.single k 1 : Formalism.L2.Col.inType P y)) = 0 := by
     have := congrArg e hq
     rw [map_zero] at this
-    rw [← this, ← Submodule.mkQ_apply, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← this, ← Submodule.mkQ_apply, map_sum, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_smul, map_smul, Submodule.mkQ_apply, hx]
   have hi := congrFun he i

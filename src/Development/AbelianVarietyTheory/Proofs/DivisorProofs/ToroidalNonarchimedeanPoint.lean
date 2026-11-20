@@ -74,7 +74,8 @@ theorem grCond_tanMat_of_inGr : ∀ {E : Type} [Field E] [NumberField E] [IsCMFi
   have hP : ∀ s b, P b s = Φ (U s) b := fun s b => (hPm s ((hu s.1).1 s.2).1 hV b).trans (hΦ (U s) b).symm
   have hcomb : ∀ d : (Σ τ, Fin (r τ)) → C, Φ (∑ s, d s • U s) = P.mulVec d := fun d => by
     funext b
-    simp only [map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Matrix.mulVec, dotProduct, hP]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Matrix.mulVec, dotProduct, hP]
     exact Finset.sum_congr rfl fun s _ => mul_comm _ _
   have hlat : ∀ v : TanM x Z.t.G, (tv v).left ∈ latDR Z.t x ↔ ∀ b, ‖Φ v b‖ ≤ 1 := fun v =>
     (GlobalTheory.TanSec.Norm.mem_latDR_iff_tanEv Z.t hsep hx hO hV ch.isFrame (LieMet.isTan_tv v)).trans
@@ -84,7 +85,8 @@ theorem grCond_tanMat_of_inGr : ∀ {E : Type} [Field E] [NumberField E] [IsCMFi
     fun τ n d V hV' => by
       refine ⟨LieMet.isTan_tv _, fun o => ?_⟩
       have e3 : actR Z.t.act o (∑ i, d i • V i) = φ (embK c τ o) • ∑ i, d i • V i := by
-        simp only [map_sum, map_smul, hV', Finset.smul_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, map_smul, hV', Finset.smul_sum]
         exact Finset.sum_congr rfl fun j _ => smul_comm _ _ _
       exact congrArg (fun z => (tv z).left) e3
   intro k a ha

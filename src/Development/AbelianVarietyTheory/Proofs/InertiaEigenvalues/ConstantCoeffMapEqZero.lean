@@ -258,7 +258,8 @@ theorem pow_log_mul_coeff_mem (k : ℕ) :
   simp only [map_mul, map_sub, map_one, map_pow] at hu'
   have hr := congrArg (algebraMap A K π ^ Nat.log q (j + 1) * ·) (coeff_log_rec K hπ hf (j + 1))
   simp only [Finset.mul_sum] at hr
-  rw [Finset.sum_congr rfl hc, ← Finset.mul_sum, ← map_sum] at hr
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.sum_congr rfl hc, ← Finset.mul_sum, ← map_sum] at hr
   refine ⟨u * ∑ m ∈ Finset.range (j + 1), c m, mul_left_cancel₀ h0 ?_⟩
   rw [map_mul]
   linear_combination algebraMap A K u * hr - (algebraMap A K π *

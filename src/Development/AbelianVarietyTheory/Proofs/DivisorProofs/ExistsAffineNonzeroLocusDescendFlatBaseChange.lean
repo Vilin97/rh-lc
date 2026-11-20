@@ -96,7 +96,8 @@ theorem exists_sec_mem (g : R →+* R') (hg : g.Flat) [CompactSpace X] [QuasiSep
       ∀ a z, π z ∈ W a → gs (𝟙 X') z _ (σ.f fun _ => j a) =
         ∑ i, gs (𝟙 X') z ⊤ (cst f' ⊤ (c i)) * gs π z _ (v i a).1 := fun {n c v} h a z hz => by
     have h' := congrArg (gs (𝟙 X') z (π ⁻¹ᵁ W a)) (hxe a).symm
-    simp only [h a, map_sum, AddEquiv.refl_apply, LinearMap.lTensor_tmul, Submodule.subtype_apply, he] at h'
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [h a, map_sum, AddEquiv.refl_apply, LinearMap.lTensor_tmul, Submodule.subtype_apply, he] at h'
     rw [gs_comb f' π _ z hz] at h'
     exact (gs_res (𝟙 X') z _ hz _).symm.trans h'
   obtain ⟨n, c, v, hv, hd⟩ := exists_comb_ker (fun a => AddEquiv.refl _) e' d x

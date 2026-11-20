@@ -191,7 +191,8 @@ theorem bddAll_of_theta_sum_on_cover : ∀ (E : Type) [Field E] [NumberField E] 
     have e4 : j ((i₂.comp i₁) (evI y f)) = (ψ₁.comp φ₁) (evR Xo c f y.1) := by
       show j (i₂ (i₁ (evR Xo c f y.1))) = algebraMap T₁.Fr k (φ₁.toRingHom (evR Xo c f y.1))
       rw [hφ₁, hj]
-    rw [e4, ← e1, hev, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e4, ← e1, hev, map_sum]
     exact Finset.sum_congr rfl fun t _ => by rw [map_mul, e2, hu]
   rw [← inV_map_iff (i₂.comp i₁) he₀ hv₀, map_mul, e3, Finset.mul_sum]
   refine sum_mem (S := (algebraMap T₂.V T₂.Fr).range) fun t _ => ?_

@@ -52,7 +52,8 @@ theorem scalar_mem (hσ : σ'.comp ι = σ) (hE : IsCoefExt ι lam c₀ c')
   have key : ∀ v' : VV K' lam, ∃ a : VVIdx lam → K', c' v' = ∑ j, σ' (a j) • c₀ (bVV K lam j) := by
     refine ext_induction hE (p := fun w => ∃ a : VVIdx lam → K', w = ∑ j, σ' (a j) • c₀ (bVV K lam j)) (fun v => ?_) ?_ ?_
     · refine ⟨fun j => ι ((bVV K lam).repr v j), ?_⟩
-      conv_lhs => rw [← (bVV K lam).sum_repr v, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        conv_lhs => rw [← (bVV K lam).sum_repr v, map_sum]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [map_smulₛₗ, ← RingHom.congr_fun hσ]; rfl
     · rintro _ _ ⟨a, rfl⟩ ⟨b, rfl⟩

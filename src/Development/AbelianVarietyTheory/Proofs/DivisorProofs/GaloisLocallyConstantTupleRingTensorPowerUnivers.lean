@@ -273,7 +273,8 @@ private theorem map_tens_lev {K Ω : Type} [Field K] [Field Ω] [Algebra K Ω] {
     (φ : LCRing K Ω k) :
     f (Tens.lev g₀ gs θ φ) = Tens.lev (f.comp g₀) (fun i => f.comp (gs i)) θ φ := by
   unfold Tens.lev
-  simp only [map_sum, map_mul, map_prod, map_tens_idem, RingHom.comp_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, map_prod, map_tens_idem, RingHom.comp_apply]
 
 private theorem tens_lev_legHom_eq_of_dependsOn {K Ω : Type} [Field K] [Field Ω] [Algebra K Ω] [IsSepClosure K Ω] (k : ℕ)
     (θ : Ω) (φ : LCRing K Ω k) (hφ : Tens.DependsOn K Ω k θ φ) :

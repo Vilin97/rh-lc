@@ -48,7 +48,8 @@ theorem coreMat : ∀ {D : D7} {k : Type} [Field k] [ValuativeRel k] [Topologica
         Matrix.mul_assoc, Matrix.mul_assoc, β.b'b, Matrix.mul_one]
     · ext i j
       have := congrFun hv i
-      simp only [Matrix.mul_apply, replicateCol_apply, Matrix.map_apply, ← map_mul, ← map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Matrix.mul_apply, replicateCol_apply, Matrix.map_apply, ← map_mul, ← map_sum]
       rw [← this]
       rfl
   calc (mt B.V₀ (B.o.emb (κ, 1))).map p.pr

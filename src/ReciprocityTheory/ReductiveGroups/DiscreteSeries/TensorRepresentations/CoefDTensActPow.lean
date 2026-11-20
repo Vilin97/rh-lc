@@ -60,7 +60,8 @@ theorem coefD_diag_pow (A : Module.End ℂ M) (k : ℕ) (u : Fin n → M) (c : F
 theorem coefD_comm (A : Module.End ℂ M) (B : Matrix (Fin n) (Fin n) ℂ) :
     Commute (coefPm (M := M) B) (diagOp A) := by
   refine LinearMap.ext fun u => funext fun c => ?_
-  simp only [Module.End.mul_apply, coefPm_apply, diagOp_coord, map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Module.End.mul_apply, coefPm_apply, diagOp_coord, map_sum, map_smul]
 
 theorem coefD_sum_ite (c : Fin n) (f : Fin n → Fin n → M) :
     ∑ x, ∑ y, (if c = x then f x y else 0) = ∑ y, f c y := by
@@ -137,7 +138,8 @@ theorem coefD_taylor (dual : Bool) (hσ : IsURepOn (UJset ε) σ) (hD : IsDerive
   have hΛ : ∀ u : Fin n → H, Λ u = ∑ c, lc c (u c) := by
     intro u
     conv_lhs => rw [← Finset.univ_sum_single u]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     rfl
   set B := coefBm dual X
   set Y := actM E X
@@ -178,12 +180,14 @@ theorem coefD_taylor (dual : Bool) (hσ : IsURepOn (UJset ε) σ) (hD : IsDerive
         lc c (σ (NormedSpace.exp ((s : ℂ) • X)) ((w d : D) : H)) := by
     rw [hΛ]
     refine Finset.sum_congr rfl fun c _ => ?_
-    rw [coefD_tensGrp_eq, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [coefD_tensGrp_eq, map_sum]
     simp only [map_smul, smul_eq_mul]
   rw [hR]
   refine htot.congr_fun fun m => ?_
   rw [hΛ]
-  simp only [coefD_tensAct_pow, Submodule.coe_sum, Submodule.coe_smul, map_sum, map_smul, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [coefD_tensAct_pow, Submodule.coe_sum, Submodule.coe_smul, map_sum, map_smul, smul_eq_mul]
   rw [← coefD_comb]
 
 end Rep

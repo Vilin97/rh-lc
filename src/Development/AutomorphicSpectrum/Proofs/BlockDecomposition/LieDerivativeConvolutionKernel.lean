@@ -63,7 +63,8 @@ theorem lie_eq_conv : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex
   have hY : (lie E a (GlobalTheory.CompanionTheory.ArchSmooth.mMap E a Y) φ).1 g =
       ∑ j, c j * (lie E a (GlobalTheory.CompanionTheory.ArchSmooth.mMap E a (b j)) φ).1 g := by
     conv_lhs => rw [← b.sum_repr Y]
-    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply,
       Submodule.coe_sum, Submodule.coe_smul_of_tower, Finset.sum_apply, Pi.smul_apply,
       Complex.real_smul, hc]
   rw [hY]

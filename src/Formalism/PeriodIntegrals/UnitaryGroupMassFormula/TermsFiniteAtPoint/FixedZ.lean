@@ -146,15 +146,19 @@ theorem fixedZhat_of (hH : HeisOp) (hSk : SkewSolve) (hS : ShortFin) (hRD : Rows
     exact frame_mem D Λ y.1 hX hlift.1 b
   have hyve : ∀ y ∈ Y, ∀ c, (VS D).hT (F0.e c) (yv y.1) = 0 := by
     intro y hy c
-    simp only [yv, map_sum, map_smul, smul_eq_mul, hβy y hy]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [yv, map_sum, map_smul, smul_eq_mul, hβy y hy]
     rw [← hv c]
     exact Finset.sum_congr rfl fun b _ => mul_comm _ _
   have hpie : ∀ c x, (VS D).hT (F0.e c) (piL F0.e f x) = (VS D).hT (F0.e c) x := fun c x => by
-    simp [piL_apply, map_sub, map_sum, F0.e_iso]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [piL_apply, map_sub, map_sum, F0.e_iso]
   have hpif : ∀ c x, (VS D).hT (f c) (piL F0.e f x) = 0 := fun c x => by
-    simp [piL_apply, map_sub, map_sum, hfe]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [piL_apply, map_sub, map_sum, hfe]
   have hpiz : ∀ x, (VS D).hT F0.z (piL F0.e f x) = (VS D).hT F0.z x := fun x => by
-    simp [piL_apply, map_sub, map_sum, hze]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [piL_apply, map_sub, map_sum, hze]
   have hι2 : ∀ y : Carrier (PD D Λ (lf D F0) u'), ι2 y.1 ∈ Λ := by
     intro y
     let lam : (VS D).V := ∑ b, ((nv : D.host.E) * v b) • frame y.1 b
@@ -175,17 +179,20 @@ theorem fixedZhat_of (hH : HeisOp) (hSk : SkewSolve) (hS : ShortFin) (hRD : Rows
     exact Λ.sub_mem (hnat nd _ hlam) (Λ.sum_mem fun c _ => hmemE _ _ (hfint _ hlam c) (he c))
   have hhz : ∀ y ∈ Y, hz y.1 = ((nd * nv : ℕ) : D.host.E) * ∑ b, v b * Z (Fin.last D.R.rS) b := by
     intro y hy
-    simp only [hz, ι2, map_smul, smul_eq_mul, hpiz, yv, map_sum, hzy y hy]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hz, ι2, map_smul, smul_eq_mul, hpiz, yv, map_sum, hzy y hy]
 
   have hyvn : ∀ y : LFlag (VS D) D.R.rS ((Tu D u' : ℕ) : D.host.E),
       (VS D).hT (yv y) (yv y) = (VS D).hT (yv y0.1) (yv y0.1) := by
     intro y
-    simp only [yv, map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, map_smul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [yv, map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, map_smul,
       smul_eq_mul, gram_frame]
   have hpin : ∀ y ∈ Y, (VS D).hT (piL F0.e f (yv y.1)) (piL F0.e f (yv y.1)) = (VS D).hT (yv y.1) (yv y.1) := by
     intro y hy
     have h1 : ∀ c, (VS D).hT (yv y.1) (F0.e c) = 0 := fun c => by rw [← herm_star, hyve y hy c]; simp
-    simp [piL_apply, map_sub, map_sum, LinearMap.sub_apply, LinearMap.sum_apply, LinearMap.map_smulₛₗ,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [piL_apply, map_sub, map_sum, LinearMap.sub_apply, LinearMap.sum_apply, LinearMap.map_smulₛₗ,
       hyve y hy, h1, F0.e_iso]
   set hzc : D.host.E := ((nd * nv : ℕ) : D.host.E) * ∑ b, v b * Z (Fin.last D.R.rS) b with hzc_def
   set K : D.host.E := ((Tu D u : ℕ) : D.host.E) ^ 2 * ((((nd * nv : ℕ) : D.host.E)) ^ 2 *
@@ -217,7 +224,8 @@ theorem fixedZhat_of (hH : HeisOp) (hSk : SkewSolve) (hS : ShortFin) (hRD : Rows
     have ht : ∀ c, t c = 0 := by
       intro c
       have := LinearMap.mem_ker.1 ((Submodule.mem_iInf _).1 hxf c)
-      simpa [map_sum, hfe] using this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa [map_sum, hfe] using this
     simp [ht]
   have hxP : ∀ y ∈ Y, xf y.1 ∈ P := by
     intro y hy

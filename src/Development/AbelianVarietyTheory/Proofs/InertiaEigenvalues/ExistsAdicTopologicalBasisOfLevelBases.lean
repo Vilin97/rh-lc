@@ -143,7 +143,8 @@ theorem GlobalTheory.BSP.exists_topBasis_of_levels (A : Type) [CommRing A] (L : 
       obtain ⟨c, hc⟩ := exA n x
       have e1 : i (lsum s m c) = ∑ k ∈ F ∪ c.support, (i.comp s) (c k) * i (m k) := by
         unfold lsum
-        rw [Finsupp.sum_of_support_subset c (Finset.subset_union_right (s₁ := F)) _ (fun _ _ => by simp), map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [Finsupp.sum_of_support_subset c (Finset.subset_union_right (s₁ := F)) _ (fun _ _ => by simp), map_sum]
         simp [RingHom.comp_apply, map_mul]
       have e2 : ∑ k ∈ F, (i.comp s) (C x k) * i (m k) =
           ∑ k ∈ F ∪ c.support, (i.comp s) (if k ∈ F then C x k else 0) * i (m k) := by

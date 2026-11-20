@@ -153,7 +153,8 @@ theorem exists_levi (hcm : IsCMExt F E σ) {d d₁ : ℕ} {W : Spc F E d} {W₁ 
       have e2 : P *ᵥ (fun i => σ (z i)) = 0 := by rw [hP, ← mulVec_mulVec, e1, mulVec_zero]
       funext j
       have := congrArg σ (congrFun e2 j)
-      simpa [mulVec, dotProduct, map_sum, map_mul, hσ] using this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa [mulVec, dotProduct, map_sum, map_mul, hσ] using this
     refine ⟨P.map σ, ?_, ?_, by rw [mm, h2], hz _ fun u => (horth u).1, hz _ fun u => (horth u).2⟩
     · have : P * H'.ι.map σ = 1 := by rw [hP, Matrix.mul_assoc, hgram, Matrix.nonsing_inv_mul _ hdet]
       rw [← mm H'.ι, ← mul, this]

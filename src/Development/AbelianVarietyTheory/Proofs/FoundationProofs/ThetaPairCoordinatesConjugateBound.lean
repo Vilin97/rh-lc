@@ -54,7 +54,8 @@ theorem comb_bound {ι : Type} [Fintype ι] (ρ : Qbar →ₐ[ℚ] ℂ) (r : ι 
     push_cast
     rfl
   refine ⟨e ▸ SetLike.coe_mem _, ?_⟩
-  rw [e, cj_coe, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, cj_coe, map_sum]
   have h1 : ∀ i, ‖ρ ⟨t i, (ht i).1⟩‖ ≤ Real.sqrt M := fun i => by
     rw [← cj_coe]
     exact Real.le_sqrt_of_sq_le (ht i).2

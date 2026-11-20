@@ -36,7 +36,8 @@ theorem exists_presentation_baseChange : ∀ (A : Type) [CommRing A] (c : A) (Li
   let E : Matrix (Fin m) (Fin m) A := Matrix.of fun i j => s (y j) i
   have hy : ∀ l, ∑ i, s l i • y i = l := fun l => by
     have h1 : π (s l) = l := LinearMap.congr_fun hs l
-    conv_rhs => rw [← h1, ← Finset.univ_sum_single (s l), map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_rhs => rw [← h1, ← Finset.univ_sum_single (s l), map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [← map_smul, ← Pi.single_smul, smul_eq_mul, mul_one]
   refine ⟨m, m, y, 1 - E + c • E, ?_⟩
@@ -49,7 +50,8 @@ theorem exists_presentation_baseChange : ∀ (A : Type) [CommRing A] (c : A) (Li
   have hφ : ∀ x, φ x = ∑ i, x i • eL (1 ⊗ₜ y i) := fun x => Fintype.linearCombination_apply _ _ _
   have h1 : ∀ l, φ (σ (eL (1 ⊗ₜ l))) = eL (1 ⊗ₜ l) := fun l => by
     rw [hφ]
-    conv_rhs => rw [← hy l, TensorProduct.tmul_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_rhs => rw [← hy l, TensorProduct.tmul_sum, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [hσ, ← map_smul, TensorProduct.tmul_smul, algebraMap_smul]
   have h : ∀ l, φ (σ l) = l := fun l => by
@@ -62,7 +64,8 @@ theorem exists_presentation_baseChange : ∀ (A : Type) [CommRing A] (c : A) (Li
         map_smul, map_smul, map_smul, h1]
   have hE : ∀ x, σ (φ x) = (E.map (algebraMap A A')).mulVec x := fun x => by
     funext i
-    rw [hφ, map_sum, Finset.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hφ, map_sum, Finset.sum_apply]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_smul, Pi.smul_apply, hσ, smul_eq_mul, mul_comm]
     rfl

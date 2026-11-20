@@ -290,7 +290,8 @@ theorem typeSp_decomp : ∀ (L : Type) [Field L] [NumberField L] [IsCMField L] (
   have hy1 : ∀ i : P, ∀ w ∈ NG.isoTyp a.ρ (S i), B y w = 0 := by
     intro i w hw
     have e : B y w = B (x - p i) w - ∑ j ∈ Finset.univ.erase i, B (p j) w := by
-      simp only [hy, map_sub, map_sum, LinearMap.sub_apply, LinearMap.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hy, map_sub, map_sum, LinearMap.sub_apply, LinearMap.sum_apply]
       rw [← Finset.add_sum_erase _ _ (Finset.mem_univ i)]
       ring
     rw [e, hpo i w hw, Finset.sum_eq_zero fun j hj => horth j i (Finset.ne_of_mem_erase hj) _ (hpmem j) w hw,

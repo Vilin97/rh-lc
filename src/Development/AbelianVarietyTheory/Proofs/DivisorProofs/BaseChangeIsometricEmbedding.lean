@@ -27,7 +27,8 @@ theorem form_sum_right (σ : K →+* ℂ) (x : V) {ι : Type*} (s : Finset ι) (
 
 theorem form_sum_left (σ : K →+* ℂ) (y : V) {ι : Type*} (s : Finset ι) (f : ι → V) :
     h.form σ (∑ i ∈ s, f i) y = ∑ i ∈ s, h.form σ (f i) y := by
-  rw [← h.conj_symm, form_sum_right, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← h.conj_symm, form_sum_right, map_sum]
   exact Finset.sum_congr rfl fun i _ => h.conj_symm σ y (f i)
 
 theorem form_smul_left (σ : K →+* ℂ) (a : K) (x y : V) :
@@ -83,7 +84,8 @@ theorem GlobalTheory.baseChange_isometry_injective : ∀ (K K' : Type) [Field K]
     intro σ y z
     conv_lhs => rw [vec_eq_sum y, vec_eq_sum z]
     conv_rhs => rw [vec_eq_sum y, vec_eq_sum z]
-    simp only [map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul]
     rw [form_expand, form_expand]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
     congr 1

@@ -149,11 +149,13 @@ theorem exists_orth_decomp {G D : Type} [Group G] [TopologicalSpace G] [IsTopolo
     · obtain ⟨k, rfl⟩ := (hTmem v).1 hv; exact hW _ _ hw'
     · rw [mem_fixed_iff_irr]
       intro h
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       exact Finset.sum_nbij' (fun v => ρ (h : G) v) (fun v => ρ ((h⁻¹ : K) : G) v) (hTst h) (hTst h⁻¹)
         (fun v _ => hinv h v) (fun v _ => hinv' h v) (fun v _ => rfl)
   have h0 := hw _ hsumF
-  rw [map_sum] at h0
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum] at h0
   have hterm : ∀ v ∈ T, B (u - w) v = B (u - w) w' := by
     intro v hv
     obtain ⟨k, rfl⟩ := (hTmem v).1 hv

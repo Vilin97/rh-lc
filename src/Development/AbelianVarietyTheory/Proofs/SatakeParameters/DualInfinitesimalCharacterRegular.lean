@@ -538,12 +538,15 @@ theorem commute_dmat (Ξ : AlgRep E a) (Z : Matrix (Fin Ξ.d) (Fin Ξ.d) ℂ)
       unfold atEmb
       rw [if_pos (by rw [InfinitePlace.mk_embedding])]
       congr 1 <;> simp
-    rw [e, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, map_sum]
     exact Commute.sum_right _ _ _ fun w _ => h1 _ _ _ _
   have e : X = ∑ i, ∑ j, toL (Matrix.single i j (X i j)) := Matrix.matrix_eq_sum_single (Matrix.of X)
-  rw [e, map_sum, Matrix.transpose_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, map_sum, Matrix.transpose_sum]
   refine Commute.sum_right _ _ _ fun i _ => ?_
-  rw [map_sum, Matrix.transpose_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Matrix.transpose_sum]
   refine Commute.sum_right _ _ _ fun j _ => ?_
   simpa [dualL_apply, dualS] using (h2 i j (X i j)).neg_right
 

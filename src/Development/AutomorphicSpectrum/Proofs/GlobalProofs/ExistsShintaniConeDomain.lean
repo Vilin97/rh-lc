@@ -48,7 +48,8 @@ theorem exists_coneDomain : ∀ (F : Type) [Field F] [NumberField F] [IsTotallyR
   have hDpos : ∀ x ∈ D, TotPos F x := by
     intro x hx σ
     have hk : Nonempty κ := b.index_nonempty
-    rw [← b.sum_repr x, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← b.sum_repr x, map_sum]
     refine Finset.sum_pos (fun i _ => ?_) Finset.univ_nonempty
     rw [Rat.smul_def, map_mul, map_ratCast]
     exact mul_pos (by exact_mod_cast hx i) (hbpos i σ)

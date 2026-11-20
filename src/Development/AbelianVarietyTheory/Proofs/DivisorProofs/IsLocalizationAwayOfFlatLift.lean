@@ -102,7 +102,8 @@ theorem isLocalization_away_of_flat_lift (R B B' B₀ B₀' : Type) [CommRing R]
     obtain ⟨k, c, g, rfl⟩ := Submodule.mem_span_set'.mp hxI
     choose i hi hgi using fun j => (g j).2
     have hrel : ∑ j, i j • φ (c j) = 0 := by
-      rw [← hx, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hx, map_sum]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [smul_eq_mul, map_mul, Algebra.smul_def, ← hgi j, hφ,
         IsScalarTower.algebraMap_apply R B B', mul_comm]
@@ -119,7 +120,8 @@ theorem isLocalization_away_of_flat_lift (R B B' B₀ B₀' : Type) [CommRing R]
       ring
     have he : ∀ q, φ (c q * a ^ M - ∑ j, A q j • (d j * a ^ (M - m j))) = 0 := by
       intro q
-      rw [map_sub, map_mul, map_pow, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, map_mul, map_pow, map_sum]
       simp_rw [hφs, ← hM]
       rw [show φ (c q) = ∑ j, A q j • y j from hy q, Finset.sum_mul]
       simp [smul_mul_assoc]
@@ -147,7 +149,8 @@ theorem isLocalization_away_of_flat_lift (R B B' B₀ B₀' : Type) [CommRing R]
         _ = _ := Finset.sum_congr rfl fun j _ => by ring
     rw [Finset.mul_sum, Finset.sum_congr rfl fun q _ => step q, Finset.sum_comm]
     refine Finset.sum_eq_zero fun j _ => ?_
-    rw [← Finset.sum_mul, ← map_sum, hA j, map_zero, zero_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Finset.sum_mul, ← map_sum, hA j, map_zero, zero_mul]
   have kerAll : ∀ x : B, φ x = 0 → ∃ N : ℕ, a ^ N * x = 0 := by
     intro x hx
     obtain ⟨n, hn⟩ := kerI x hx

@@ -11,7 +11,8 @@ variable {p q r s : ℕ}
 
 theorem der_sum_apply {ι : Type*} (t : Finset ι) (D : ι → Derivation ℂ (Pol p q r s) (Pol p q r s))
     (f : Pol p q r s) : (∑ c ∈ t, D c) f = ∑ c ∈ t, D c f := by
-  rw [← Derivation.coeFnAddMonoidHom_apply, map_sum, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Derivation.coeFnAddMonoidHom_apply, map_sum, Finset.sum_apply]
   rfl
 
 def der1 (a b : Ix p q) : Derivation ℂ (Pol p q r s) (Pol p q r s) :=

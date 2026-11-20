@@ -127,7 +127,8 @@ theorem dual_facts {σ : E →ₐ[F] E} (hσ : ∀ e, σ (σ e) = e) {N N₁ : �
   intro aE bE
   have hconj : ∀ v : Fin N → E, ⇑σ ∘ (J *ᵥ (⇑σ ∘ v)) = -(v ᵥ* J) := by
     intro v; funext i
-    simp only [Function.comp_apply, mulVec, dotProduct, vecMul, map_sum, map_mul, hσ, Pi.neg_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Function.comp_apply, mulVec, dotProduct, vecMul, map_sum, map_mul, hσ, Pi.neg_apply]
     rw [← Finset.sum_neg_distrib]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [show J i j = -σ (J j i) by rw [hsk, neg_neg], map_neg, hσ]

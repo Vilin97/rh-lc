@@ -144,7 +144,8 @@ theorem exists_lift_basis (v : Place k K) :
   have hmem : (∑ α, algebraMap k K (d α) * (s' α : K)) =
       ((∑ α, algebraMap k v.ring (d α) * s' α : v.ring) : K) := by
     simp
-  rw [hmem, v.valuation_lt_one_iff, ← ValuationSubring.valuation_lt_one_iff,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hmem, v.valuation_lt_one_iff, ← ValuationSubring.valuation_lt_one_iff,
     ← IsLocalRing.residue_eq_zero_iff, map_sum] at hd
   have h : ∑ α, d α • b α = 0 := by
     rw [← hd]

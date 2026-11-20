@@ -17,7 +17,8 @@ theorem map_mk_smul_sum {O A : Type} [CommRing O] [Ring A] [Algebra O A] {V W : 
   have e' : (⟨x, hx⟩ : U) = c • ∑ s ∈ S, (⟨v s, hv s⟩ : U) := by
     apply Subtype.ext
     simpa using e
-  rw [e', LinearMap.map_smul_of_tower, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e', LinearMap.map_smul_of_tower, map_sum]
 
 section
 variable {O A G I : Type} [CommRing O] [Ring A] [Algebra O A] [Group G] (Γ : Subgroup G) {K : Subgroup G} (jK : K →* A)

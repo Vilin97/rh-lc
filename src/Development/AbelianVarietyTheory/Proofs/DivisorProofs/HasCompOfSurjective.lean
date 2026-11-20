@@ -130,7 +130,8 @@ theorem exists_split {ρ : Representation ℂ Γ V} (hρ : ρ.IsIrreducible) {σ
       | smul c a ha => simp [ha]
     have h1 : ev (TensorProduct.map (l.smulRight y) LinearMap.id (∑ i ∈ s, i.1 ⊗ₜ[ℂ] i.2)) =
         Representation.asAlgebraHom (ρ.comp e) r (ev (∑ i ∈ s, i.1 ⊗ₜ[ℂ] i.2)) := by
-      simp only [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum]
       refine Finset.sum_congr rfl fun i hi => ?_
       rw [TensorProduct.map_tmul, hev, hev, ← key, hr _ (Finset.mem_image_of_mem _ hi)]
       rfl

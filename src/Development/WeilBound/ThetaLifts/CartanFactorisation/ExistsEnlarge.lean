@@ -92,7 +92,8 @@ theorem anAll_of (hW : WeilConv) (hC : KCoinv) (hI : ILeft) : AnAll := by
       fun i => ⟨(h1 i).1, (h1 i).2.1, fun v hv => (h1 i).2.2 v fun k => hv (Finset.mem_insert_of_mem k)⟩,
       fun j => ⟨(h2 j).1, sb j, off j⟩, e1, rfl, ?_⟩
     have := congrArg (TensorProduct.map LinearMap.id L) e
-    simp only [map_sum, TensorProduct.map_tmul, LinearMap.id_apply] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, TensorProduct.map_tmul, LinearMap.id_apply] at this
     simp only [pe]
     refine Eq.trans (Finset.sum_congr rfl fun i _ => ?_) (this.trans (Finset.sum_congr rfl fun j _ => ?_))
     · rw [hL (fun v => Rf.p v (φ i v)) fun v hv => by rw [(h1 i).2.2 v hv]]
@@ -102,7 +103,8 @@ theorem anAll_of (hW : WeilConv) (hC : KCoinv) (hI : ILeft) : AnAll := by
   congr 1
   have st : ∀ j, Std (φ' j) := fun j => (good_std g').congr (ev_of_off (h2 j).2.2)
   have m1 : Φ' ∈ schA F _ := e2 ▸ sum_mem fun j _ => GlobalTheory.TensUniq.pure_mem_schA _ _ (h2 j).2.1 (st j)
-  rw [← hJ _ (so_le g' _ so), ← hJ _ m1, e2, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hJ _ (so_le g' _ so), ← hJ _ m1, e2, map_sum, map_sum]
   refine congrFun (Finset.sum_congr rfl fun j _ => ?_) h
   have k := kill_aug hI hp J hJ B.v₁ (f' j) (φ' j) (h2 j).2.1 (st j) (y j - φ' j B.v₁)
     ((c2 _ (sub_mem (hy j).1 ((h2 j).2.1 _))).1 (by rw [map_sub, hy', sub_self]))

@@ -123,7 +123,8 @@ theorem valAt_eq_sum {n : ℕ} (B : Module.Basis (Fin n) S.Ks (NX.FmK S ((j : �
     (z : FrC YS iC b ((j : ℕ) + 1)) :
     valAt YS fw j z x = ∑ s, iC (coef b j B x s) * valC z (cuspOf YS fw j (B s) : T0.R ((j : ℕ) + 1)) := by
   conv_lhs => rw [eq_sum_coef b j B x]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun s _ => ?_
   rw [valAt_smul]
   congr 1
@@ -211,11 +212,13 @@ theorem mem_span_locBall
         rw [← div_eq_mul_inv, div_le_one hϖ0]
         exact hsum' z)
     have hco := congrArg (fun t => (B.baseChange F').repr t s0) heq
-    simp only [map_sum, Finsupp.coe_finset_sum, Finset.sum_apply, Module.Basis.baseChange_repr_tmul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, Finsupp.coe_finset_sum, Finset.sum_apply, Module.Basis.baseChange_repr_tmul,
       Module.Basis.repr_self, Finsupp.single_apply, ite_smul, one_smul, zero_smul, Finset.sum_ite_eq',
       Finset.mem_univ, if_true] at hco
     have h1 : ‖φ' (a' s0 * (algebraMap S.Ks F' ϖ)⁻¹)‖ ≤ 1 := by
-      rw [hco, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hco, map_sum]
       refine norm_sum_le_of_le _ _ zero_le_one fun t _ => ?_
       rw [Algebra.smul_def, map_mul, hφ', norm_mul]
       calc _ ≤ 1 * 1 := mul_le_mul (hBc (g t) (hg t) s0) (hβ t) (norm_nonneg _) zero_le_one

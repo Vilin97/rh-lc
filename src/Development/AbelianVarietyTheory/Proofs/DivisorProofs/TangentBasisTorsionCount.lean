@@ -28,7 +28,8 @@ theorem pairDet_eq_sum {C J : Type} [CommRing C] {g m k : ℕ} (h : J → Fin g 
   unfold pairDet
   rw [hM]
   change Matrix.detRowAlternating.toMultilinearMap _ = _
-  rw [MultilinearMap.map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [MultilinearMap.map_sum]
   refine Finset.sum_congr rfl fun s _ => ?_
   rw [MultilinearMap.map_smul_univ, smul_eq_mul]
   congr 1

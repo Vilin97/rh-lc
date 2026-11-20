@@ -64,7 +64,8 @@ def cc (v : Fin (2 * r + k + 1) → ℂ) : Fin (2 * r + k + 1) → ℂ :=
 theorem map_conj_mulVec {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) (u : Fin n → ℂ) :
     A.map (starRingEnd ℂ) *ᵥ (fun i => conj (u i)) = fun i => conj ((A *ᵥ u) i) := by
   funext i
-  simp [Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum, map_mul]
 
 theorem col_apply {n : ℕ} (M : Matrix (Fin n) (Fin n) ℂ) (i j : Fin n) : (M *ᵥ bvec j) i = M i j := by
   simp [bvec, Matrix.mulVec, dotProduct, Pi.single_apply]

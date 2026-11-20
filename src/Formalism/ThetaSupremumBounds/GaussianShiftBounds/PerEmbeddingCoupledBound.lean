@@ -442,7 +442,8 @@ theorem sharp_entries : SharpEntries := by
 
 theorem coupled_product : CoupledProduct := by
   intro AA Rep Y Cl2 _ Cl _ _ _ A B C _ _ _ _ _ _ γ0 γ1 ε1 T1 ε2 T2 G g'
-  simp only [liftOp, coupledOp, map_sum, map_smul, Finset.smul_sum, smul_smul, Fintype.sum_sigma,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [liftOp, coupledOp, map_sum, map_smul, Finset.smul_sum, smul_smul, Fintype.sum_sigma,
     mul_assoc]
   conv_lhs => rw [Finset.sum_comm]
   conv_lhs => enter [2, x]; rw [Finset.sum_comm]
@@ -601,7 +602,8 @@ theorem chainFun_sum {m : ℕ} {C : Fin (m + 1) → Type} [∀ i, AddCommMonoid 
   | succ j ih =>
     show Kj j (chainFun (fun j => ⇑(Kj j)) j.castSucc (∑ a ∈ s, x a)) =
       ∑ a ∈ s, Kj j (chainFun (fun j => ⇑(Kj j)) j.castSucc (x a))
-    rw [ih, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [ih, map_sum]
 
 theorem single_sum {I X : Type} [DecidableEq I] {H : I → Type} [∀ i, AddCommMonoid (H i)] (i : I)
     (s : Finset X) (x : X → H i) :

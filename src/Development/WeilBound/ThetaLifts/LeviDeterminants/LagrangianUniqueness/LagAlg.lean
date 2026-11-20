@@ -62,7 +62,8 @@ theorem inv_of_mem {R : Type} [CommRing R] [Algebra F R] [Invertible (2 : R)] (�
   | insert i s hi ih =>
     intro φ hφ
     have h0 : omL R κ (x i • emb R (u i)) (∑ j ∈ s, x j • emb R (u j)) = 0 := by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_eq_zero fun j _ => ?_
       rw [map_smul, map_smul, LinearMap.smul_apply, omL_emb, omL_apply, hL (u i) (hCD _) (u j) (hCD _)]
       simp

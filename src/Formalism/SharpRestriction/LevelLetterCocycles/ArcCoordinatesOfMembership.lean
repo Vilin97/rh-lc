@@ -83,7 +83,8 @@ theorem dcrisL_sum_zero (T : LocLat G Qp LL O) :
         rw [hf, LinearMap.sub_apply, mulVB_of_mem T _ (hd j hj), LinearMap.smul_apply,
           LinearMap.id_apply, sub_smul]
       have h1 := congrArg f hsum
-      rw [map_sum, map_zero, Finset.sum_congr rfl hfj, Finset.sum_insert ha, sub_self, zero_smul,
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, map_zero, Finset.sum_congr rfl hfj, Finset.sum_insert ha, sub_self, zero_smul,
         zero_add] at h1
       have := ih (fun j => (W.emb j c - W.emb a c) • d j)
         (fun j hj => (DcrisL PD T.ρ (W.emb j)).smul_mem _ (hd j (Finset.mem_insert_of_mem hj))) h1 i hi
@@ -200,7 +201,8 @@ theorem cmp_sum_letter (T : LocLat G Qp LL O) (i : ZMod n) {d : ℕ} (b : Fin d 
       ∑ m, algebraMap O LL (PowerSeries.constantCoeff (β m i)) • W.cmp T ⟨b m, hbN m⟩ := by
   have e : (⟨∑ m, β m • b m, h⟩ : ↥(W.N T)) =
       ∑ m, (⟨β m • b m, (W.N T).smul_mem _ (hbN m)⟩ : ↥(W.N T)) := Subtype.ext (by simp)
-  rw [e, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, map_sum]
   exact Finset.sum_congr rfl fun m _ => cmp_smul_letter W T i (β m) (b m) (hbN m) (hbl m)
 
 theorem cmpD_of_mem (T : LocLat G Qp LL O) {x : W.DD T} (hx : x ∈ W.N T) :
@@ -228,7 +230,8 @@ theorem dcrisL_le_span [NeZero n] (T : LocLat G Qp LL O) (h3 : Formalism.MainNot
     Submodule.span_le.2 (by rintro _ ⟨x, rfl⟩; exact W.cmp_letter T j x)
   have hcmp : ∀ x : ↥(W.N T), W.cmp T x = ∑ j : ZMod n, W.cmp T ((letE j : LetA O n) • x) := by
     intro x
-    rw [← map_sum, ← Finset.sum_smul, sum_letE, one_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, ← Finset.sum_smul, sum_letE, one_smul]
   have hrange : Set.range (W.cmp T) ⊆ ((⨆ j, S j : Submodule LL (T.V ⊗[Qp] B)) : Set _) := by
     rintro _ ⟨x, rfl⟩
     rw [hcmp]
@@ -293,7 +296,8 @@ theorem cmp_indepO (T : LocLat G Qp LL O) (h3 : Formalism.MainNotions.DeltaInvar
   have hcX : W.cmp T ⟨X, hXN⟩ = 0 := by
     have e : (⟨X, hXN⟩ : ↥(W.N T)) = ∑ k, cc k • (⟨b k, hbN k⟩ : ↥(W.N T)) :=
       Subtype.ext (by simp [hXdef])
-    rw [e, map_sum, ← h0]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, map_sum, ← h0]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [W.cmp_smul, cmpD_of_mem W T (hbN k)]
   obtain ⟨y, hyN, hyX⟩ := h3.1 ⟨X, hXN⟩ hcX
@@ -314,7 +318,8 @@ theorem cmp_indepO (T : LocLat G Qp LL O) (h3 : Formalism.MainNotions.DeltaInvar
   have hev0 : ∀ j, ∑ k, cc k * ev c' (α' k j) = 0 := by
     intro j
     have := congrArg (ev c') (congrFun hcoef j)
-    simpa [map_sum, map_mul, ev_alg, ev_π] using this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [map_sum, map_mul, ev_alg, ev_π] using this
   choose α hα using fun j => (hb.2 ((letE c' : LetA O n) • b' j)
     ⟨smul_mem_NΔ W T (SatPW.letE_mem_AΔ W c') (hb'Δ j),
       ⟨b' j, (hb'Δ j).1, by rw [LinearMap.smul_apply, LinearMap.id_apply]⟩⟩).exists
@@ -347,7 +352,8 @@ theorem cmp_indepO (T : LocLat G Qp LL O) (h3 : Formalism.MainNotions.DeltaInvar
   have hevδ : ∀ k m, ∑ j, ev c' (α' k j) * ev c' (α j m) = if m = k then 1 else 0 := by
     intro k m
     have := congrArg (ev c') (hδ k m)
-    rw [map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at this
     simp only [map_mul] at this
     rw [this]
     split_ifs
@@ -527,11 +533,13 @@ theorem phi_trunc (T : LocLat G Qp LL O) (e R : ℕ) {d : ℕ} (b : Fin d → W.
     ((W.φD T) ^ e) (∑ r ∈ Finset.range R, W.π₀ ^ r • Formalism.MainNotions.LiftingTheory.vecB W T b (y r)) =
       ∑ m, (∑ r ∈ Finset.range R, ((W.φA ^ e) W.π₀) ^ r * algebraMap O (LetA O n) (y r m)) •
         ((W.φD T) ^ e) (b m) := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   have h1 : ∀ r ∈ Finset.range R, ((W.φD T) ^ e) (W.π₀ ^ r • Formalism.MainNotions.LiftingTheory.vecB W T b (y r)) =
       ∑ m, (((W.φA ^ e) W.π₀) ^ r * algebraMap O (LetA O n) (y r m)) • ((W.φD T) ^ e) (b m) := by
     intro r _
-    rw [Formalism.MainNotions.UnusedSlot80.Relay2.φpow_smul, map_pow, Formalism.MainNotions.LiftingTheory.vecB, map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Formalism.MainNotions.UnusedSlot80.Relay2.φpow_smul, map_pow, Formalism.MainNotions.LiftingTheory.vecB, map_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl fun m _ => ?_
     rw [map_smul, ← algebraMap_smul (LetA O n) (y r m), smul_smul]
   rw [Finset.sum_congr rfl h1, Finset.sum_comm]
@@ -722,7 +730,8 @@ theorem Pp_repr (T : LocLat G Qp LL O) (c' : ZMod n) (e : ℕ) {d : ℕ} (b : Fi
   · intro a ha x hx
     obtain ⟨α, hα, hxα⟩ := (hb.2 x hx).exists
     refine ⟨fun m => a * (W.φA ^ e) (α m), fun m => W.AΔ.mul_mem ha (φA_pow_mem_AΔ W (hα m).1 e), ?_⟩
-    rw [hxα, map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hxα, map_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl fun m _ => ?_
     rw [Formalism.MainNotions.UnusedSlot80.Relay2.φpow_smul, smul_smul]
 
@@ -753,7 +762,8 @@ theorem frame_inv_poly (hinj : Function.Injective (algebraMap O LL)) {d : ℕ}
       if t = 0 ∧ m = m' then 1 else 0 := by
     intro t
     have h := congrArg (fun Q : Matrix (Fin d) (Fin d) (PowerSeries LL) => PowerSeries.coeff t (Q m m')) hinv
-    simp only [Matrix.mul_apply, map_sum, PowerSeries.coeff_mul, hHps, Matrix.of_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mul_apply, map_sum, PowerSeries.coeff_mul, hHps, Matrix.of_apply,
       PowerSeries.coeff_mk] at h
     rw [h, Matrix.one_apply]
     by_cases hm : m = m'
@@ -780,12 +790,14 @@ theorem frame_inv_poly (hinj : Function.Injective (algebraMap O LL)) {d : ℕ}
   have hQ : ∀ t < M, Q.coeff t = 0 := by
     intro t ht
     apply hinj
-    rw [map_zero, hQdef, Polynomial.coeff_sub, Polynomial.finset_sum_coeff, Polynomial.coeff_C, map_sub,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_zero, hQdef, Polynomial.coeff_sub, Polynomial.finset_sum_coeff, Polynomial.coeff_C, map_sub,
       map_sum]
     have hk : ∀ k, algebraMap O LL ((HP k * GP k).coeff t) = (PD.p : LL) ^ (2 * κ) *
         ∑ x ∈ Finset.HasAntidiagonal.antidiagonal t, sol k x.1 m * PowerSeries.coeff x.2 (Hps⁻¹ k m') := by
       intro k
-      rw [Polynomial.coeff_mul, map_sum, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Polynomial.coeff_mul, map_sum, Finset.mul_sum]
       refine Finset.sum_congr rfl fun x hx => ?_
       have hx' := Finset.HasAntidiagonal.mem_antidiagonal.1 hx
       rw [hHPc, hGPc, if_pos (by omega), if_pos (by omega), map_mul, hyy k x.1 (by omega),
@@ -799,7 +811,8 @@ theorem frame_inv_poly (hinj : Function.Injective (algebraMap O LL)) {d : ℕ}
   obtain ⟨ρ, hρ⟩ := (Polynomial.X_pow_dvd_iff).2 hQ
   refine ⟨ρ, ?_⟩
   have h := congrArg (Polynomial.aeval Y) hρ
-  simp only [hQdef, map_sub, map_sum, map_mul, Polynomial.aeval_C, Polynomial.aeval_X_pow, HP, GP,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hQdef, map_sub, map_sum, map_mul, Polynomial.aeval_C, Polynomial.aeval_X_pow, HP, GP,
     Polynomial.aeval_X] at h
   rw [← h]
   ring

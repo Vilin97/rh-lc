@@ -78,7 +78,8 @@ theorem bcomp_eq_zero [DecidableEq (K → ℕ)] (g : MRing J) {d : K → ℕ} (h
 theorem exists_aeval_bcomp_ne {Ω : Type} [Field Ω] (t : (Σ k, J k) → Ω) (g : MRing J) (h : aeval t g ≠ 0) :
     ∃ d : K → ℕ, aeval t (bcomp g d) ≠ 0 := by
   classical
-  rw [← sum_bcomp g, map_sum] at h
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← sum_bcomp g, map_sum] at h
   obtain ⟨d, -, hd⟩ := Finset.exists_ne_zero_of_sum_ne_zero h
   exact ⟨d, hd⟩
 
@@ -91,7 +92,8 @@ theorem aeval_bcomp_eq_zero (w : (Σ k, J k) → ℂ) (g : MRing J)
     rw [map_zero, GroundTheory.Heights₂.Heights.HilbertSamuel.FibreNormDehomRoots.eval_mConeMap]
     exact h c fun k => hc k (Set.mem_univ k)
   have h1 : mConeMap w g = ∑ d' ∈ g.support.image bdeg, C (aeval w (bcomp g d')) * ∏ k, X k ^ d' k := by
-    conv_lhs => rw [← sum_bcomp g, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [← sum_bcomp g, map_sum]
     exact Finset.sum_congr rfl fun d' _ =>
       GroundTheory.Heights₂.Heights.HilbertSamuel.ProjLine.mConeMap_eq_of_isMultiHomog w (bcomp_homog g d')
   have hm : ∀ d' : K → ℕ, (∏ k, (X k : MvPolynomial K ℂ) ^ d' k) = monomial (Finsupp.equivFunOnFinite.symm d') 1 := by

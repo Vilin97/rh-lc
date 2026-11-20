@@ -176,7 +176,8 @@ theorem liftDeg_core {k r : ℕ} (T : D.LevTower k r Wp Wq) (F : B.Mat k r → (
   have hdl : ∀ (x : X) (l : Fin (i0 + 1)), ℓ x (cf x l) = ∑ i : Fin (i0 + 1), (Vi l i * (cLift s τ b)⁻¹) •
       ℓ x (Kr T.base (D.uwG k r z z' F j hj ((b, ((i : ℕ) : ℝ) + δ) :: w') (Fin.cons 1 a')) (sx x * x₁)) := by
     intro x l
-    rw [coeff_recover (i0 + 1) (cf x) l, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [coeff_recover (i0 + 1) (cf x) l, map_sum]
     apply Finset.sum_congr rfl
     intro i _
     rw [← hcfY x ((i : ℕ) : ℝ), hnode x, map_smul, map_smul, smul_smul]
@@ -200,7 +201,8 @@ theorem liftDeg_core {k r : ℕ} (T : D.LevTower k r Wp Wq) (F : B.Mat k r → (
     have e2 : ∀ x, ℓ x (Kr T.base (D.uwG k r z z' F j hj ((b, y + δ) :: w') (Fin.cons 1 a')) (sx x * x₁)) =
         ∑ l : Fin (i0 + 1), (((y : ℂ) ^ (l : ℕ)) * cLift s τ b) • ℓ x (cf x l) := by
       intro x
-      rw [key x (y + δ), hcfY x y, map_smul, map_sum, Finset.smul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [key x (y + δ), hcfY x y, map_smul, map_sum, Finset.smul_sum]
       apply Finset.sum_congr rfl
       intro l _
       rw [map_smul, smul_smul, mul_comm]

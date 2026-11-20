@@ -386,7 +386,8 @@ theorem eq_map_toMatrix_of_eq_sum (hli : LinearIndependent K fun i => j (b' i))
   ext i k
   refine Fintype.linearIndependent_iffₛ.1 hli (fun i => g i k)
     (fun i => algebraMap R K (b'.toMatrix b i k)) ?_ i
-  rw [← hg, ← b'.sum_toMatrix_smul_self b k, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hg, ← b'.sum_toMatrix_smul_self b k, map_sum]
   simp
 
 variable [LinearOrder ι]

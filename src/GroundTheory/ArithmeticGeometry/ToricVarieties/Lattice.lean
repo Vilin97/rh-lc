@@ -266,7 +266,8 @@ theorem latticePoints_fg {τ : PointedCone ℝ (Dual ℝ (ℝ ⊗[ℤ] N))}
     replace hcm : ∑ t ∈ T, c t • toRealDual N t = toRealDual N m := hcm
     set m' := m - ∑ t ∈ T, (⌊c t⌋₊) • t with hm'
     have him' : toRealDual N m' = ∑ t ∈ T, (c t - ⌊c t⌋₊) • toRealDual N t := by
-      rw [hm', map_sub, map_sum, ← hcm, ← Finset.sum_sub_distrib]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hm', map_sub, map_sum, ← hcm, ← Finset.sum_sub_distrib]
       refine Finset.sum_congr rfl fun t _ => ?_
       rw [map_nsmul, ← Nat.cast_smul_eq_nsmul ℝ]
       exact (sub_smul _ _ _).symm
@@ -279,7 +280,8 @@ theorem latticePoints_fg {τ : PointedCone ℝ (Dual ℝ (ℝ ⊗[ℤ] N))}
           rw [← toRealDual_apply_toRealSpan, him']
           change Dual.eval ℝ (ℝ ⊗[ℤ] N) (toRealSpan N (e j))
             (∑ t ∈ T, (c t - ⌊c t⌋₊) • toRealDual N t) = _
-          rw [map_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [map_sum]
           simp
         have hbound : |(m' (e j) : ℝ)| ≤ (B j : ℝ) := by
           rw [hval]

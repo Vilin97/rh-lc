@@ -106,7 +106,8 @@ theorem pairing_tup (V : HSp D) (ψ : AddChar (AF D.host.F) ℂ) (x y : Mx D V.r
   unfold GlobalTheory.IndefiniteRowSideFullHecke.GramMatrixBlocks.pairing GlobalTheory.IndefiniteRowSideFullHecke.GramMatrixBlocks.trA
   rw [GlobalTheory.SiegelWeilLitCompare.gramQ_eq]
   congr 1
-  simp only [BR, Matrix.trace, Matrix.diag, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [BR, Matrix.trace, Matrix.diag, map_sum]
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [← hR_tup]
   rfl
@@ -162,7 +163,8 @@ theorem trF_adj (a b : Mx D r r) : trF (adj a) (adj b) = trF a b := by
   have h : Matrix.trace (adj a * adj b) = cA D (Matrix.trace (b * a)) := by
     have e : adj a * adj b = adj (b * a) := (adj_mul b a).symm
     rw [e]
-    simp only [Matrix.trace, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.trace, map_sum]
     rfl
   unfold trF
   rw [h, GlobalTheory.DualPairCheck.trace_cA, Matrix.trace_mul_comm]

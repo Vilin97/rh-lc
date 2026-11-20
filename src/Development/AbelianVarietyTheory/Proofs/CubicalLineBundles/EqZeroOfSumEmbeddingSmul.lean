@@ -82,7 +82,8 @@ theorem exists_eigen_components {E : Type} [Field E] [NumberField E] {L V : Type
     have hb : ∀ i, ∑ τ : E →+* ℂ, τ (b i : E) * f τ = 0 := fun i => by
       simpa [mul_comm] using congrFun hf i
     rw [← b.sum_repr s]
-    simp only [map_sum, RingOfIntegers.coe_eq_algebraMap, map_zsmul, Finset.sum_mul, smul_mul_assoc] at hb ⊢
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, RingOfIntegers.coe_eq_algebraMap, map_zsmul, Finset.sum_mul, smul_mul_assoc] at hb ⊢
     rw [Finset.sum_comm]
     simp only [← Finset.smul_sum, hb, smul_zero, Finset.sum_const_zero]
   have hsp := hli.span_eq_top_of_card_eq_finrank' (by
@@ -105,7 +106,8 @@ theorem exists_eigen_components {E : Type} [Field E] [NumberField E] {L V : Type
   simp only [AddMonoidHom.mk'_apply]
   conv_lhs => rw [← b.sum_repr s]
   conv_rhs => rw [← b.sum_repr s]
-  simp only [Finset.sum_smul, smul_assoc, map_sum, map_zsmul, RingOfIntegers.coe_eq_algebraMap] at hb ⊢
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finset.sum_smul, smul_assoc, map_sum, map_zsmul, RingOfIntegers.coe_eq_algebraMap] at hb ⊢
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [← Finset.smul_sum, ← hb]

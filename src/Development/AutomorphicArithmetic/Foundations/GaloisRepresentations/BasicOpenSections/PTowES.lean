@@ -101,7 +101,8 @@ private theorem core {n : ℕ} (P : B →ₗ[Q] A) (G : A →ₗ[Q] A) (G' : Mod
   have hsum := map_sum (LinearMap.baseChangeHom Q L B B)
     (fun j : Fin (n + 1) => (c j : Q) • (T j * G' ^ (n - (j : ℕ)))) Finset.univ
   simp only [LinearMap.baseChangeHom_apply] at hsum
-  rw [hsum, LinearMap.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hsum, LinearMap.sum_apply, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [mul_smul, key j, LinearMap.baseChange_smul, LinearMap.smul_apply, Int.cast_smul_eq_zsmul Q, map_zsmul,
     Int.cast_smul_eq_zsmul L]

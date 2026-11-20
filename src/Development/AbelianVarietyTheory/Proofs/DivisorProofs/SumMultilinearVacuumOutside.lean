@@ -40,7 +40,8 @@ theorem sum_prod_functionals {ι Y : Type} [DecidableEq ι] {X : ι → Type} (T
           rw [Function.update_of_ne hva]
         rw [this, hc]; ring
       have hL := congrArg (L a) hg
-      rw [map_sum, map_zero] at hL
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, map_zero] at hL
       simp only [map_smul, smul_eq_mul] at hL
       rw [← hL]
       refine Finset.sum_congr rfl fun j _ => ?_
@@ -61,7 +62,8 @@ theorem tensor_eq_zero {ι Y V P₀ : Type} {X : ι → Type} {P : ι → Type}
   apply (TensorProduct.equivFinsuppOfBasisRight B).injective
   rw [map_zero]
   ext k
-  rw [map_sum, Finsupp.finset_sum_apply, Finsupp.zero_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finsupp.finset_sum_apply, Finsupp.zero_apply]
   simp only [TensorProduct.equivFinsuppOfBasisRight_apply_tmul_apply, B, Basis.piTensorProduct_repr_tprod_apply]
   let L : ∀ v, (X v → ℂ) →ₗ[ℂ] ℂ := fun v =>
     if hv : v ∈ T then ((b ⟨v, hv⟩).coord (k ⟨v, hv⟩)).comp (q v) else 0
@@ -72,11 +74,13 @@ theorem tensor_eq_zero {ι Y V P₀ : Type} {X : ι → Type} {P : ι → Type}
     simp [L, v.2, Module.Basis.coord_apply]
   have hzero : ∑ j, (∏ v ∈ T, L v (φ j v)) • f j = 0 := by
     refine hev _ fun y => ?_
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [map_smul, smul_eq_mul]
     rw [← h L y]
     exact Finset.sum_congr rfl fun j _ => mul_comm _ _
-  simp_rw [hc, ← map_smul, ← map_sum, hzero, map_zero]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp_rw [hc, ← map_smul, ← map_sum, hzero, map_zero]
 
 theorem sum_zero_of_pure {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
     {σ : E →ₐ[F] E} {n d : ℕ} {Y : Spc F E n} {W : Spc F E d} (M : Model σ Y W) (ψ : AddChar (AF F) ℂ)

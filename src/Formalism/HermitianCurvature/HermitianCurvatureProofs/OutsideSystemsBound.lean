@@ -98,8 +98,10 @@ theorem quadM (F : Finset α) (k : α → α → ℂ) (a : α → ℂ) :
 
 theorem conj_quad (F : Finset α) (k : α → α → ℂ) (hh : ∀ x ∈ F, ∀ y ∈ F, k y x = conj (k x y)) (a : α → ℂ) :
     conj (∑ x ∈ F, ∑ y ∈ F, conj (a x) * k x y * a y) = ∑ x ∈ F, ∑ y ∈ F, conj (a x) * k x y * a y := by
-  rw [map_sum, Finset.sum_comm]
-  simp only [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum]
   rw [Finset.sum_comm]
   conv_rhs => rw [Finset.sum_comm]
   apply Finset.sum_congr rfl; intro x hx

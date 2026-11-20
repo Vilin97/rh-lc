@@ -112,16 +112,19 @@ theorem log_endo (G : FGLaw C d) (lg : Pt C 1 d) (hlin : LinN lg)
       ring)
     (by
       intro k
-      rw [map_sub, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, map_sum]
       simp only [coeff_C_mul, linN_coeff hlin, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq, Finset.sum_ite_eq',
         Finset.mem_univ, if_true]
-      rw [← cc_pderiv, show comp1 lg φ i = ev ![φ] (lg i) from rfl, pderiv_eval_single φ hφ0, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← cc_pderiv, show comp1 lg φ i = ev ![φ] (lg i) from rfl, pderiv_eval_single φ hφ0, map_sum]
       simp only [map_mul, constantCoeff_ev hφ1, cc_pderiv, linN_coeff hlin, ite_mul, one_mul, zero_mul,
         Finset.sum_ite_eq, Finset.sum_ite_eq', Finset.mem_univ, if_true]
       unfold linM
       ring)
     (by
-      rw [map_sub, map_sum, show comp1 lg φ i = ev ![φ] (lg i) from rfl, constantCoeff_ev hφ1, linN_const hlin]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, map_sum, show comp1 lg φ i = ev ![φ] (lg i) from rfl, constantCoeff_ev hφ1, linN_const hlin]
       simp [linN_const hlin])
   exact sub_eq_zero.mp hQ
 

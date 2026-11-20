@@ -68,7 +68,8 @@ theorem hermBil_incV (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) 
     hermBil (cA σ) (incM F J) (incV F v) (incV F w) = algebraMap F (AF F) (hermBil σ J v w) := by
   have hc : ∀ e : E, cA σ (inclR (F := F) (AF F) e) = inclR (F := F) (AF F) (σ e) := fun e => rfl
   rw [hermBil_apply, hermBil_apply, ← trace_inclR]
-  simp only [incV, incM, Matrix.map_apply, hc, map_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [incV, incM, Matrix.map_apply, hc, map_mul, map_sum]
 
 theorem cA_cA (σ : E →ₐ[F] E) (hσ : ∀ a, σ (σ a) = a) (x : AE F E) : cA σ (cA σ x) = x := by
   induction x using TensorProduct.induction_on with
@@ -113,7 +114,8 @@ theorem GlobalTheory.HermCoords.exists_herm_pair_coords : ∀ {F E : Type} [Fiel
     intro a b
     rw [← GlobalTheory.HermCoords.hermBil_apply]
     conv_rhs => rw [← B₂.sum_equivFun b, ← B₁.sum_equivFun a]
-    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, hk, smul_eq_mul, mul_ite, mul_one,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, hk, smul_eq_mul, mul_ite, mul_one,
       mul_zero, Finset.sum_ite_eq, Finset.mem_univ, if_true, dotProduct]
     exact Finset.sum_congr rfl fun i _ => mul_comm _ _
   have hcc := GlobalTheory.HermCoords.cA_cA σ hσ
@@ -127,7 +129,8 @@ theorem GlobalTheory.HermCoords.exists_herm_pair_coords : ∀ {F E : Type} [Fiel
     rw [← Algebra.trace_eq_of_algEquiv eA (∑ i, ∑ k, a i * incM F J i k * cA σ (b k))]
     congr 1
     show _ = cA σ _
-    simp only [map_sum, map_mul, hcc, hJ']
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, hcc, hJ']
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun k _ => ?_
     ring

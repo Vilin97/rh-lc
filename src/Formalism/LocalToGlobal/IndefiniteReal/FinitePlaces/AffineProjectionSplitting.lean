@@ -180,7 +180,8 @@ theorem evalYZero_zero (ψ : AddChar (AF D.host.F) ℂ) {e e₁ : AE D} (he₁ :
     rw [Finset.sum_sub_distrib, hA t, sub_zero, Finset.sum_const, Finset.card_univ, nsmul_eq_mul, smul_eq_mul,
       inv_mul_cancel_left₀ hM]
   conv_lhs => rw [hfun]
-  rw [map_smul, map_sum, map_smul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_smul, map_sum, map_smul, map_sum]
   refine (smul_eq_zero.2 (Or.inr (Finset.sum_eq_zero fun g _ => ?_)))
   rw [map_sub, map_sub, hmo Ψ ⟨hs, k, hk, hi, hl⟩ _ (chalf_sub_of S T h1 (hgY g)),
     hℓ _ (hgY g) _ (hth Ψ ⟨hs, k, hk, hi, hl⟩), sub_self]

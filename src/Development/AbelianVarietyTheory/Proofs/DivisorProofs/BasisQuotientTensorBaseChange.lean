@@ -90,10 +90,12 @@ theorem quotient_basis_baseChange (A B C R : Type) [CommRing A] [CommRing B] [Al
   · rw [Fintype.linearIndependent_iff]
     intro c hc
     have hmem : (∑ k, c k • ((1 : R) ⊗ₜ[A] v k)) ∈ J' := by
-      rw [← Ideal.Quotient.eq_zero_iff_mem, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← Ideal.Quotient.eq_zero_iff_mem, map_sum]
       simpa [mkR] using hc
     have h0 := kill _ hmem
-    rw [map_sum] at h0
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at h0
     simp only [map_smul, ℓ_tmul, one_smul, Φ_v] at h0
     intro i
     have := congrFun h0 i
@@ -107,14 +109,17 @@ theorem quotient_basis_baseChange (A B C R : Type) [CommRing A] [CommRing B] [Al
       have hx := bas.sum_repr (Ideal.Quotient.mk J x)
       set c := bas.repr (Ideal.Quotient.mk J x)
       have hmem : x - ∑ k, c k • ((1 : C) ⊗ₜ[A] v k) ∈ J := by
-        rw [← Ideal.Quotient.eq_zero_iff_mem, map_sub, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [← Ideal.Quotient.eq_zero_iff_mem, map_sub, map_sum]
         simp only [mkC, ← bas_apply]
         rw [hx, sub_self]
       have hmem' : f x - ∑ k, ψ (c k) • ((1 : R) ⊗ₜ[A] v k) ∈ J' := by
         have := Ideal.mem_map_of_mem f hmem
-        rw [map_sub, map_sum] at this
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sub, map_sum] at this
         simpa only [f_smul, f_one] using this
-      rw [← sub_add_cancel (f x) (∑ k, ψ (c k) • ((1 : R) ⊗ₜ[A] v k)), map_add,
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← sub_add_cancel (f x) (∑ k, ψ (c k) • ((1 : R) ⊗ₜ[A] v k)), map_add,
         Ideal.Quotient.eq_zero_iff_mem.mpr hmem', zero_add, map_sum]
       refine Submodule.sum_mem _ (fun k _ => ?_)
       rw [mkR]

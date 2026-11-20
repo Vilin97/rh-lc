@@ -103,7 +103,8 @@ theorem mk_logTermJ_add_sub {x δ : AInf K p} (hx : x ∈ pdIdeal K p) (hδ : δ
       Ideal.Quotient.mk (kerAway K p ^ 2) (algebraMap (AInf K p) 𝔸 ((-x) ^ n * δ)) := by
   have hS : Ideal.Quotient.mk (kerAway K p ^ 2)
       (∑ k ∈ Finset.range n, dpow k x * dpow (n + 1 - k) δ) = 0 := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_eq_zero fun k hk => by
       rw [map_mul, mk_dpow_eq_zero hδ (by have := Finset.mem_range.1 hk; omega), mul_zero]
   rw [← map_sub, coe_logTermJ, coe_logTermJ, dpow_add, Finset.sum_range_succ, Finset.sum_range_succ,
@@ -123,7 +124,8 @@ theorem mk_sum_logTermJ_mul_sub {x k : AInf K p} (hx : x ∈ pdIdeal K p) (hk : 
         Ideal.Quotient.mk (kerAway K p ^ 2) (logTermJ hx n : 𝔸)) =
       Ideal.Quotient.mk (kerAway K p ^ 2) (algebraMap (AInf K p) 𝔸 (k - k * (-x) ^ N)) := by
   have hδ : (1 + x) * k ∈ RingHom.ker θ := Ideal.mul_mem_left _ _ hk
-  rw [Finset.sum_congr rfl fun n _ => mk_logTermJ_add_sub hx hδ hz n, ← map_sum, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.sum_congr rfl fun n _ => mk_logTermJ_add_sub hx hδ hz n, ← map_sum, ← map_sum]
   congr 2
   have h := mul_neg_geom_sum (-x) N
   rw [← Finset.sum_mul]

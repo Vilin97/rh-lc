@@ -99,11 +99,13 @@ theorem coefAt_jointTop (hι : Function.Injective ι) (t : Outer ι →₀ ℕ) 
     GlobalTheory.CompactHarm.JointTop z y κ α β (coefAt ι t P) := by
   have hm : ∀ i j, coefAt ι t (mixedOp ℂ (ι ∘ z) (ι ∘ y) i j P) =
       mixedOp ℂ z y i j (coefAt ι t P) := fun i j => by
-    simp only [mixedOp_apply, map_sub, map_sum, Function.comp_apply, coefAt_X_mul hι,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [mixedOp_apply, map_sub, map_sum, Function.comp_apply, coefAt_X_mul hι,
       coefAt_pderiv hι]
   have hr : ∀ {K : ℕ} (w : Fin K × Fin N → σ₀) (a b : Fin K),
       coefAt ι t (rowOp ℂ (ι ∘ w) a b P) = rowOp ℂ w a b (coefAt ι t P) := fun w a b => by
-    simp only [rowOp_apply, map_sum, Function.comp_apply, coefAt_X_mul hι, coefAt_pderiv hι]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [rowOp_apply, map_sum, Function.comp_apply, coefAt_X_mul hι, coefAt_pderiv hι]
   obtain ⟨h1, h2, h3, h4, h5, h6, h7⟩ := h
   refine ⟨fun i j hij => ?_, fun i => ?_, fun c c' hc => ?_, fun c => ?_, fun d d' hd => ?_,
     fun d => ?_, fun c d => ?_⟩
@@ -114,7 +116,8 @@ theorem coefAt_jointTop (hι : Function.Injective ι) (t : Outer ι →₀ ℕ) 
   · rw [← hr, h5 d d' hd, map_zero]
   · rw [← hr, h6 d, map_smul]
   · have := congrArg (coefAt ι t) (h7 c d)
-    simpa only [map_sum, Function.comp_apply, coefAt_pderiv hι, map_zero] using this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa only [map_sum, Function.comp_apply, coefAt_pderiv hι, map_zero] using this
 
 variable (ι)
 
@@ -144,7 +147,8 @@ theorem unslice_slice (hι : Function.Injective ι) (Q : MvPolynomial σ ℂ) :
 theorem slice_decomp (hι : Function.Injective ι) (P : MvPolynomial σ ℂ) :
     P = ∑ t ∈ (slice ι P).support,
       rename ι (coefAt ι t P) * t.prod (fun r e => (X r.1 : MvPolynomial σ ℂ) ^ e) := by
-  conv_lhs => rw [← unslice_slice hι P, (slice ι P).as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [← unslice_slice hι P, (slice ι P).as_sum, map_sum]
   refine Finset.sum_congr rfl fun t _ => ?_
   simp [unslice, eval₂_monomial, coefAt]
 

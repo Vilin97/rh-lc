@@ -178,7 +178,8 @@ theorem main : ∀ (R : Type) [CommRing R] [IsDomain R] [IsLocalRing R] (D : Deg
   have hl : ∀ χ, lam χ = ∑ l, lam (bX l) * ((bX.repr χ l : ℤ) : R) := by
     intro χ
     conv_lhs => rw [← bX.sum_repr χ]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun l _ => ?_
     rw [map_zsmul, zsmul_eq_mul, mul_comm]
   obtain ⟨bd, vd⟩ := tor (fun l => lam (bX l))

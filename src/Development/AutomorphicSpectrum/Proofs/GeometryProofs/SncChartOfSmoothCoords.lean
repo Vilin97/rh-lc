@@ -216,7 +216,8 @@ theorem sncChart_of_coords (Ω : Type) [Field Ω] [CharZero Ω] (Z : Scheme.{0})
   refine ⟨m, fun l => valR ζ W (u l), fun l => valR ζ W (c l), fun l => hv _, fun l => hv _, ?_,
     fun l hf S hS => ?_⟩
   · simp only [valR_eq _ _ h]
-    simp only [← map_mul, ← map_sum, hsum, map_one]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [← map_mul, ← map_sum, hsum, map_one]
   · obtain ⟨j, v, huv⟩ := hl l
     obtain ⟨z, k, hk, hz, hT⟩ := hV j
     exact snc_on_basicOpen ζ g e T hsm hW h A hA σ hσ (u l) hf (V j).2 v huv z k hk hz hT S hS

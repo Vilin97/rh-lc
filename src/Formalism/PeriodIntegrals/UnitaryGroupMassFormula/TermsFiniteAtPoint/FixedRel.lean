@@ -85,9 +85,11 @@ theorem related_gen (hH : HeisOp) (hSk : SkewSolve) {T T' : E} (Λ : Submodule (
     · subst h; simp
     · simp [h, Ne.symm h]
   have hpi_e : ∀ a x, S.hT (e a) (piL e f x) = S.hT (e a) x := fun a x => by
-    simp [piL_apply, map_sub, map_sum, hee]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [piL_apply, map_sub, map_sum, hee]
   have hpi_f : ∀ a x, S.hT (f a) (piL e f x) = 0 := fun a x => by
-    simp [piL_apply, map_sub, map_sum, hfe]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [piL_apply, map_sub, map_sum, hfe]
   have hmemE : ∀ (x : E) (w : S.V), IntE x → w ∈ Λ → x • w ∈ Λ := by
     rintro x w ⟨o, rfl⟩ hw
     show (algebraMap (𝓞 E) E o) • w ∈ Λ
@@ -109,7 +111,8 @@ theorem related_gen (hH : HeisOp) (hSk : SkewSolve) {T T' : E} (Λ : Submodule (
   have hρe : ∀ c b, S.hT (e c) (ρ b) = 0 := fun c b => by simp only [ρ, hpi_e, hδe]
   have hρsum : ∑ b, v b • ρ b = 0 := by
     have : ∑ b, v b • ρ b = piL e f (∑ b, v b • frame y2 b) - piL e f (∑ b, v b • frame y1 b) := by
-      simp only [ρ, δ, map_sum, map_smul, map_sub, smul_sub, Finset.sum_sub_distrib]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [ρ, δ, map_sum, map_smul, map_sub, smul_sub, Finset.sum_sub_distrib]
     rw [this, ← hι, sub_self]
   obtain ⟨qo, hqo⟩ : ∃ qo : Fin (r + 1) → Fin r → 𝓞 E, ∀ b c, (qo b c : E) = (nQ : E) * Q b c :=
     ⟨fun b c => (hQint b c).choose, fun b c => (hQint b c).choose_spec⟩
@@ -201,7 +204,8 @@ theorem related_gen (hH : HeisOp) (hSk : SkewSolve) {T T' : E} (Λ : Submodule (
     intro a0 b
     have h := hgram a0 b
     rw [hk a0, hk b, ← hiso1 (frame y1 a0) (frame y1 b)] at h
-    simp only [map_add, LinearMap.add_apply, map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_add, LinearMap.add_apply, map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ,
       LinearMap.smul_apply, smul_eq_mul, hee, mul_zero, Finset.sum_const_zero, add_zero, hrow, hcol,
       starRingEnd_apply] at h
     rw [Finset.sum_add_distrib]

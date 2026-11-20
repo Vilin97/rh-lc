@@ -39,10 +39,12 @@ theorem linMap_archBound : ∀ (F E : Type) [Field F] [NumberField F] [Field E] 
   have hfv : f v k l = ∑ i, (algebraMap (AF F) (AE F E) (v.1 i) * f (e1 i) k l +
       algebraMap (AF F) (AE F E) (v.2 i) * f (e2 i) k l) := by
     conv_lhs => rw [hvdec]
-    simp only [map_sum, map_add, LinearMap.map_smul, Matrix.sum_apply, Matrix.add_apply, Matrix.smul_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_add, LinearMap.map_smul, Matrix.sum_apply, Matrix.add_apply, Matrix.smul_apply]
     simp only [Algebra.smul_def]
   have h1 : ‖piInf τ (f v k l)‖ ≤ B * S w τ k l := by
-    rw [hfv, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hfv, map_sum]
     refine (norm_sum_le _ _).trans ?_
     rw [Finset.mul_sum]
     refine Finset.sum_le_sum fun i _ => ?_

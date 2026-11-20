@@ -43,10 +43,12 @@ theorem int_exists (ρ : Γ → Module.End ℂ M) (y : M)
   have hpt : ∀ k, g k * lam (ρ k y) = ∑ i, g k * e i (ρ k y) * lam (b i) := by
     intro k
     conv_lhs => rw [hrepr k]
-    simp [map_sum, Finset.mul_sum, mul_assoc]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, Finset.mul_sum, mul_assoc]
   simp_rw [hpt]
   rw [MeasureTheory.integral_finsetSum _ (fun i _ => (hint i).mul_const _)]
-  simp only [map_sum, map_smul, smul_eq_mul, integral_mul_const]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, smul_eq_mul, integral_mul_const]
 
 omit [MeasurableSpace Γ] [BorelSpace Γ] [CompactSpace Γ] in
 theorem mono_left (hK : IsKD bar κ) {m : ℕ} (lab : Fin m → ι) (c : ι → ℤ) (I K : Fin m → Fin n) (γ k : Γ) :

@@ -86,7 +86,8 @@ private theorem leib {ι E E' E'' : Type} [LinearOrder ι] [AddCommGroup E] [Mod
     have hA : ∑ i ∈ t.filter (· < j), GlobalTheory.cubeSign t i •
         μ (a ((t.erase i).filter (· ≤ j))) (b ((t.erase i).filter (j ≤ ·))) =
         μ (∑ i ∈ t.filter (· < j), GlobalTheory.cubeSign v i • a (v.erase i)) (b u) := by
-      rw [map_sum, LinearMap.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, LinearMap.sum_apply]
       refine Finset.sum_congr rfl fun i hi => ?_
       have hi' : i < j := (Finset.mem_filter.1 hi).2
       have c1 : (t.erase i).filter (· ≤ j) = v.erase i := by ext y; grind
@@ -107,7 +108,8 @@ private theorem leib {ι E E' E'' : Type} [LinearOrder ι] [AddCommGroup E] [Mod
       rw [c0, c00, one_smul] at hd
       have hb2 := eq_neg_of_add_eq_zero_right hd
       calc _ = GlobalTheory.cubeSign t j • μ (a v) (∑ i ∈ t.filter (j < ·), GlobalTheory.cubeSign u i • b (u.erase i)) := by
-            rw [map_sum, Finset.smul_sum]
+            set_option synthInstance.maxHeartbeats 100000 in
+              rw [map_sum, Finset.smul_sum]
             refine Finset.sum_congr rfl fun i hi => ?_
             have hi' : j < i := (Finset.mem_filter.1 hi).2
             have d1 : (t.erase i).filter (· ≤ j) = v := by ext y; grind
@@ -154,7 +156,8 @@ private theorem wd_cup {ν ρ E E' E'' : Type} [LinearOrder ν] [AddCommGroup E]
     [AddCommGroup E''] [Module ℂ E''] (μ : E →ₗ[ℂ] E' →ₗ[ℂ] E'') (w : ν → Module.End ℂ E) (w' : ν → Module.End ℂ E'')
     (hw : ∀ l m y, μ (w l m) y = w' l (μ m y)) (I : Finset ρ) (g : ρ → Finset ν → E) (y : ρ → E') (t : Finset ν) :
     wd w' (fun t' => ∑ i ∈ I, μ (g i t') (y i)) t = ∑ i ∈ I, μ (wd w (g i) t) (y i) := by
-  simp only [wd_app, map_sum, LinearMap.sum_apply, Finset.smul_sum, map_zsmul, LinearMap.smul_apply, hw]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [wd_app, map_sum, LinearMap.sum_apply, Finset.smul_sum, map_zsmul, LinearMap.smul_apply, hw]
   exact Finset.sum_comm
 
 private theorem tri (hW : WdUni) {d : ℕ} {S E : Type} [CommRing S] [Algebra ℂ S] [AddCommGroup E] [Module ℂ E]

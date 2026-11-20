@@ -30,7 +30,8 @@ theorem moves_iff_smul_eq : ∀ {D : D7} {k : Type} [Field k] [ValuativeRel k] [
     intro u
     funext i
     rw [← hg]
-    simp only [Matrix.mulVec, dotProduct, map_sum, Matrix.map_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, dotProduct, map_sum, Matrix.map_apply]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [sec_mul, p.sec_pr, mul_comm p.e, mul_assoc, e_mul_sec]
   have key : ∀ x : n → k, mt S κ *ᵥ (fun i => p.sec ((β.b *ᵥ x) i)) =

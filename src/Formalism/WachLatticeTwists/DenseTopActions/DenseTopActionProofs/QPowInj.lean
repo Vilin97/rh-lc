@@ -20,7 +20,8 @@ theorem Phi_smul (a : ι → A) (x : ι → D) :
 theorem Phi_sum {κ : Type} (s : Finset κ) (f : κ → ι → D) :
     Phi W (∑ k ∈ s, f k) = ∑ k ∈ s, Phi W (f k) := by
   funext i
-  simp [Phi, Finset.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Phi, Finset.sum_apply, map_sum]
 
 theorem Phi_lc (φs : As →+* As) (hφs : ∀ a i, jS (φs a) i = S.φ (jS a (pr i)))
     (b : Fin r → ι → D) (c : Fin r → As) :

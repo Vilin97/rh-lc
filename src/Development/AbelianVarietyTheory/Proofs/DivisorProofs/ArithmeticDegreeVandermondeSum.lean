@@ -106,7 +106,8 @@ theorem mixEv_empty (R : ℝ) (c : O.s.Comp) (P : Pol D.what₂.Tau O.N) :
   simp only [AlgHom.comp_apply] at e2
   rw [map_mul, e2, map_mul, map_mul, rename_rename]
   congr 1
-  simp only [ArIn.mixEv, aeval_X, update_ind_one ∅ hT, map_sum, map_pow, rename_X, map_mul, algHom_C]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [ArIn.mixEv, aeval_X, update_ind_one ∅ hT, map_sum, map_pow, rename_X, map_mul, algHom_C]
   norm_num
   rfl
 
@@ -117,7 +118,8 @@ theorem rename_root_sq (R : ℝ) (c : O.s.Comp) (P : Pol D.what₂.Tau O.N) :
     simp only [pSum]
     rw [Fintype.sum_prod_type]
   rw [hp]
-  simp only [map_mul, map_sum, map_pow, rename_X, rename_rename, Function.comp_def]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_mul, map_sum, map_pow, rename_X, rename_rename, Function.comp_def]
   rfl
 
 theorem comp_eqDR (hM : RamModelDR) (hC : ArCalc) (hD : ArDegree) (hO : O.Core) (R : ℝ) (hR : 2 ≤ R)

@@ -33,7 +33,8 @@ theorem rebase_rel {V : Type*} [AddCommGroup V] (W : AddSubgroup V) {r g : ℕ} 
     (hu : ∀ j, g • u j ∈ W) (M c d : Matrix (Fin r) (Fin r) (ZMod g)) (hcd : c * d = 1)
     (h : ∀ i, F (u i) - ∑ j, (M j i).val • u j ∈ W) (i : Fin r) :
     F (∑ j, (c j i).val • u j) - ∑ m, ((d * M * c) m i).val • ∑ l, (c l m).val • u l ∈ W := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [map_nsmul]
   have e1 : ∑ j, (c j i).val • F (u j) = ∑ j, (c j i).val • (F (u j) - ∑ l, (M l j).val • u l) +
       ∑ j, (c j i).val • ∑ l, (M l j).val • u l := by
@@ -72,7 +73,8 @@ variable {D : D7}
 theorem incl_sum_nsmul (X : HidaSetting D) {r : ℕ} (a : Fin r → ℕ) (x : Fin r → Fin X.B.I.n → X.B.I.E) :
     incl X.B.I (∑ j, a j • x j) = ∑ j, a j • incl X.B.I (x j) := by
   funext t
-  simp [incl, map_sum, map_nsmul, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [incl, map_sum, map_nsmul, Finset.sum_apply]
 
 theorem incl_nsmul (X : HidaSetting D) (a : ℕ) (x : Fin X.B.I.n → X.B.I.E) :
     incl X.B.I (a • x) = a • incl X.B.I x := by

@@ -55,7 +55,8 @@ theorem fA_mulVec_left (σ : E →ₐ[F] E) {m n : ℕ} (J : Matrix (Fin n) (Fin
 
 theorem form_swap {σ : E →ₐ[F] E} {n : ℕ} {J : Matrix (Fin n) (Fin n) E} (hσ : ∀ e, σ (σ e) = e)
     (hsk : ∀ i j, σ (J j i) = -J i j) (v w : Fin n → E) : form σ J v w = -σ (form σ J w v) := by
-  simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, hsk, Finset.mul_sum, mul_neg,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, hsk, Finset.mul_sum, mul_neg,
     Finset.sum_neg_distrib, neg_neg]
   simp only [neg_mul, mul_neg, Finset.sum_neg_distrib, neg_neg]
   rw [Finset.sum_comm]

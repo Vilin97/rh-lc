@@ -148,7 +148,8 @@ lemma complex_linear {H x : Mt n} {q : ℕ} (h : OrthFr H q x) (L : Mt n →ₗ[
     rw [hB B hB']
     change M' _ = _
     nth_rewrite 1 [matrix_eq_sum_single B]
-    simp only [Matrix.mul_sum, Matrix.sum_mul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mul_sum, Matrix.sum_mul, map_sum]
     refine Finset.sum_congr rfl fun a _ => ?_
     have e : ∀ c, M' (x * Matrix.single a c (B a c) * x⁻¹) = B a c * if a = c then d a else 0 := by
       intro c

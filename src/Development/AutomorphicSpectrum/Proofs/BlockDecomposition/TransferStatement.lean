@@ -76,7 +76,8 @@ lemma lop_sum_left {ι : Type*} (s : Finset ι) (c : ι → ℂ) (Y : ι → Mat
     lop (∑ i ∈ s, c i • Y i) F = ∑ i ∈ s, c i • lop (Y i) F := by
   funext z
   by_cases hz : z ∈ OmegaSet n
-  · simp only [lop, if_pos hz, Finset.sum_apply, Pi.smul_apply, Finset.sum_mul, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [lop, if_pos hz, Finset.sum_apply, Pi.smul_apply, Finset.sum_mul, map_sum,
       Matrix.smul_mul, map_smul, smul_neg, Finset.sum_neg_distrib]
   · simp [lop, if_neg hz]
 

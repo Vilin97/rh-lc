@@ -56,7 +56,8 @@ theorem iInf_thGen_le_nuLocC : ∀ (E : Type) [Field E] [NumberField E] [IsCMFie
   obtain ⟨s, cf, Qs, hQs, hsum⟩ := exists_combination_integers c.F T io _ _ n _ _ _ Pp hPp
   have hmap : (∑ i, algebraMap T.Fr F (algebraMap T.V T.Fr (cf i)) •
       MvPolynomial.map ((algebraMap T.Fr F).comp io) (Qs i)) = MvPolynomial.map (algebraMap T.Fr F) Pp := by
-    rw [hsum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hsum, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [MvPolynomial.smul_eq_C_mul, MvPolynomial.smul_eq_C_mul, map_mul, MvPolynomial.map_C, MvPolynomial.map_map]
   have hdeg : (MvPolynomial.map (algebraMap T.Fr F) Pp).totalDegree ≤ Dg :=

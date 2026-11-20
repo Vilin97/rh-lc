@@ -102,6 +102,7 @@ theorem exists_averaging_operator : ExistsAvg := by
   show ⟪σ (x * k⁻¹) v, b⟫_ℂ = _
   rw [map_mul, ContinuousLinearMap.mul_apply]
   conv_lhs => rw [e1]
-  simp only [map_sum, map_smul, sum_inner, inner_smul_left]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, sum_inner, inner_smul_left]
 
 end CompanionTheory.D.gk.admitted

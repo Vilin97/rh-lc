@@ -183,7 +183,8 @@ theorem continuous_map_dual (w : abelian₂ n) : ∀ φ : Module.Dual ℂ (abeli
       calc φ (x * y) = φ ((∑ s, (fb n).repr x s • fb n s) * (∑ t, (fb n).repr y t • fb n t)) := by
             rw [(fb n).sum_repr, (fb n).sum_repr]
         _ = _ := by
-            simp only [Finset.sum_mul_sum, map_sum, smul_mul_smul_comm, map_smul, smul_eq_mul,
+            set_option synthInstance.maxHeartbeats 100000 in
+              simp only [Finset.sum_mul_sum, map_sum, smul_mul_smul_comm, map_smul, smul_eq_mul,
               Module.Basis.coord_apply]
     have e : ∀ g : Matrix (Md n) (Md n) ℂ, φ (ExteriorAlgebra.map (Matrix.toLin' g) (a * b)) =
         ∑ s, ∑ t, ((fb n).coord s (ExteriorAlgebra.map (Matrix.toLin' g) a) *
@@ -224,7 +225,8 @@ theorem Mt_mul (x y : Mat n) : Mt (x * y) = Mt x * Mt y := by
     conv_lhs => rw [herm_exp hH]
     simp [Matrix.mul_sum, Matrix.sum_mul]
   show cf n (x * y * hbM q * (x * y)ᴴ) p = _
-  rw [e, map_sum, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, map_sum, Finset.sum_apply]
   refine Finset.sum_congr rfl fun r _ => ?_
   rw [map_smul, Pi.smul_apply]
   show _ = cf n (x * hbM r * xᴴ) p * cf n H r

@@ -59,7 +59,8 @@ theorem tensor_eq_zero_of_fixed {K : Type} [Field K] [Fintype K] [DecidableEq K]
     intro g v
     have hm : ∀ u : U, f g (f u v) = f (g * u) v := fun u => by
       simp only [f, Subgroup.coe_mul, map_mul, Module.End.mul_apply]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp_rw [hm]
     exact Equiv.sum_comp (Equiv.mulLeft g) (fun u => f u v)
   have hA : (∑ u : U, f u) = 0 := by

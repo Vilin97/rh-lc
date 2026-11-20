@@ -19,7 +19,8 @@ theorem lattice_comap_finite_projective_span : ∀ (B : Type) [CommRing B] [IsDo
   have hu : ∀ x : P, x = ∑ i, s x i • u i := fun x => by
     have h1 : f (s x) = x := LinearMap.congr_fun hfs x
     conv_lhs => rw [← h1, pi_eq_sum_univ' (s x)]
-    simp only [map_sum, map_smul, u]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, u]
   refine ⟨insert ϖ (Set.range (fun q : Fin m × Fin h => (u q.1).1 q.2) ∪
     Set.range (fun q : Fin h × Fin m => s ⟨_, he q.1⟩ q.2)),
     ((Set.finite_range _).union (Set.finite_range _)).insert _, ?_⟩
@@ -42,8 +43,10 @@ theorem lattice_comap_finite_projective_span : ∀ (B : Type) [CommRing B] [IsDo
       simp [G, hpi, Finset.sum_apply, Pi.single_apply, mul_comm]
     have h2 : g a * s (G x) i = g (∑ k, x.1 k * c k i) := by
       have := congrFun (congrArg s h1) i
-      simp only [map_smul, map_sum, Finset.sum_apply, Pi.smul_apply, smul_eq_mul] at this
-      rw [ha, this, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_smul, map_sum, Finset.sum_apply, Pi.smul_apply, smul_eq_mul] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [ha, this, map_sum]
       simp only [map_mul, hc]
     obtain ⟨z, hz⟩ := (GlobalTheory.T.divisibility_lattice_descends_integral_ext A' B g hg hi).1 a _ ha0 ⟨_, h2.symm⟩
     rw [hz, map_mul, ha] at h2

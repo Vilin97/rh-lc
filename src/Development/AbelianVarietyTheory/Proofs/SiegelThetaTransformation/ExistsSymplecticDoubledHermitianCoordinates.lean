@@ -28,9 +28,11 @@ theorem sum_trace {ι : Type} [Fintype ι] (B : Module.Basis ι ℚ E) (b d : E)
   have hd : cc d = ∑ j, B.repr d j • cc (B j) := by
     conv_lhs => rw [← B.sum_repr d]
     unfold cc
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun j _ => map_rat_smul _ _ _
-  rw [hd, Finset.mul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hd, Finset.mul_sum, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [mul_smul_comm, map_smul, smul_eq_mul, mul_comm]
 
@@ -115,7 +117,8 @@ theorem crdMap_pair (u v) : (crdMap X bas u).1 ⬝ᵥ (crdMap X bas v).2 =
   have e₂ : ∀ p : QI E r, (crdMap X bas v).2 p =
       (Module.finBasis ℚ E).repr (dv X bas v (Sum.inl p.1)) p.2 := fun p => rfl
   simp only [dotProduct, e₁, e₂]
-  rw [Fintype.sum_prod_type, map_sum (Algebra.trace ℚ E)]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Fintype.sum_prod_type, map_sum (Algebra.trace ℚ E)]
   refine Finset.sum_congr rfl fun a _ => ?_
   dsimp only
   rw [sum_trace (Module.finBasis ℚ E) (dv X bas u (Sum.inr a)) (dv X bas v (Sum.inl a))]

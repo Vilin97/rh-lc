@@ -170,7 +170,8 @@ theorem adjoint_eH (hM : R.IsModels) (hX : ∀ χ ∈ A.X, IsAbsIrrChar χ) (i :
   have hc : ∀ g, starRingEnd ℂ (RealDat.eC (A := A) (sg0 D A) g) = RealDat.eC (A := A) (sg0 D A) g⁻¹ := by
     intro g
     unfold RealDat.eC
-    rw [coeff_idemOf, coeff_idemOf, map_sum, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [coeff_idemOf, coeff_idemOf, map_sum, map_sum, map_sum]
     refine Finset.sum_congr rfl fun χ hχ => ?_
     have h1 := (hX χ hχ).map_inv (sg0 D A) 1
     have h2 := (hX χ hχ).map_inv (sg0 D A) g⁻¹
@@ -188,7 +189,8 @@ theorem adjoint_eH (hM : R.IsModels) (hX : ∀ χ ∈ A.X, IsAbsIrrChar χ) (i :
 theorem e_eH (hM : R.IsModels) (i : Fin D.R.m) (x : (R.HW i (sg0 D A)).H) :
     (R.HW i _).e (GlobalTheory.Hk3.eH R i x) = postOn _ (R.eWf i (sg0 D A)) ((R.HW i _).e x) := by
   unfold GlobalTheory.Hk3.eH RealDat.eWf gaL
-  simp only [LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, hM.gW i]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, hM.gW i]
   ext v g
   simp [postOn]
   rfl

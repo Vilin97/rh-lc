@@ -73,9 +73,11 @@ theorem dUnit_ev_of_two (n : ℕ) (f : MvPowerSeries (Fin d) O)
     have : ((∑ v ∈ P.support, MvPolynomial.monomial v (AddMonoidAlgebra.coeff P v) :
         MvPolynomial (Fin d) O) : MvPowerSeries (Fin d) O) =
         ∑ v ∈ P.support, monomial v (AddMonoidAlgebra.coeff P v) := by
-      rw [← MvPolynomial.coeToMvPowerSeries.ringHom_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← MvPolynomial.coeToMvPowerSeries.ringHom_apply, map_sum]
       simp only [MvPolynomial.coeToMvPowerSeries.ringHom_apply, MvPolynomial.coe_monomial]
-    rw [this, map_sum, dUnit, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [this, map_sum, dUnit, map_sum]
     refine Finset.sum_eq_zero fun v hv => ?_
     have hv' : AddMonoidAlgebra.coeff P v ≠ 0 := MvPolynomial.mem_support_iff.1 hv
     have h2 : 2 ≤ v.degree := by
@@ -101,7 +103,8 @@ theorem dlog_eq_sum_lin [Fact p.Prime] (χ : G.dual.Tate) (u : MvPowerSeries (Fi
   set g : MvPowerSeries (Fin d) O := ∑ i, lin u i • X i with hg
   have hsplit : u = 1 + g + (u - 1 - g) := by ring
   have hev : c.ev n g = ∑ i, lin u i • c.x n i := by
-    rw [hg, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hg, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, (c.isEval n).1 i]
   have e1 : dUnit O (c.ev n u) = dUnit O (c.ev n 1) + dUnit O (c.ev n g) +
@@ -109,11 +112,13 @@ theorem dlog_eq_sum_lin [Fact p.Prime] (χ : G.dual.Tate) (u : MvPowerSeries (Fi
     conv_lhs => rw [hsplit]
     simp only [PDiv.dUnit, map_add]
   rw [e1, c.dUnit_ev_of_two n (u - 1 - g) ?_, add_zero, map_one, hev]
-  · simp only [PDiv.dUnit, AugCot.d_one, zero_add, map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [PDiv.dUnit, AugCot.d_one, zero_add, map_sum, map_smul]
     rfl
   intro α hα
   have hcg : ∀ i, coeff (Finsupp.single i 1) g = lin u i := fun i => by
-    rw [hg, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hg, map_sum]
     simp only [map_smul, coeff_X, smul_eq_mul, mul_ite, mul_one, mul_zero]
     rw [Finset.sum_eq_single i]
     · simp
@@ -125,7 +130,8 @@ theorem dlog_eq_sum_lin [Fact p.Prime] (χ : G.dual.Tate) (u : MvPowerSeries (Fi
   rcases Nat.le_one_iff_eq_zero_or_eq_one.1 hα with h0 | h1'
   · rw [(Finsupp.degree_eq_zero_iff α).1 h0]
     have hg0 : coeff 0 g = 0 := by
-      rw [hg, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hg, map_sum]
       refine Finset.sum_eq_zero fun i _ => ?_
       rw [map_smul, coeff_X, if_neg, smul_zero]
       intro h

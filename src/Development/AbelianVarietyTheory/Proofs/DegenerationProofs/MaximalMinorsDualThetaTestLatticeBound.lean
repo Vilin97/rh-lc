@@ -81,7 +81,8 @@ theorem exists_eStd_eq (g n : ℕ) (φ : (Fin g ⊕ Fin g → ZMod n) →+ ZMod 
   have hb : φ b = ∑ s, b s * φ (Pi.single s 1) := by
     change ψ b = ∑ s, b s * ψ (Pi.single s 1)
     conv_lhs => rw [pi_eq_sum_univ' b]
-    simp only [map_sum, map_smul, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, smul_eq_mul]
   rw [hb, Fintype.sum_sum_type, ← Finset.sum_add_distrib, eStd]
   refine Finset.sum_congr rfl fun i _ => ?_
   simp only [Sum.elim_inl, Sum.elim_inr]

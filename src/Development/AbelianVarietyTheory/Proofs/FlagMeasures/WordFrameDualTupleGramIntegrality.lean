@@ -32,7 +32,8 @@ theorem pairM_apply {α β : Type} [Fintype α] [Fintype β]
     GlobalTheory.SgAlg.pairM (D.sp.cm.sig : D.host.E →+* D.host.E) (Jc X) Q P a b =
       (VS D).hT (vecOf X fun i => P i a) (vecOf X fun i => Q i b) := by
   rw [vecOf_sum, vecOf_sum]
-  simp only [GlobalTheory.SgAlg.pairM, GlobalTheory.SgAlg.cT, Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, Jc,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [GlobalTheory.SgAlg.pairM, GlobalTheory.SgAlg.cT, Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, Jc,
     map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, Finset.sum_mul,
     Finset.mul_sum, sig_apply]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_

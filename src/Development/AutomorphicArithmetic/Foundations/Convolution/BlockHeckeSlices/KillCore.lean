@@ -88,10 +88,12 @@ private theorem app_abs {M : Type} [AddCommGroup M] [Module ℂ M] (S : Set (Upp
     intro p V hV
     have e : z p = ∑ α ∈ p.support, p.coeff α • z (monomial α 1) := by
       conv_lhs => rw [p.as_sum]
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun α _ => ?_
       rw [← map_smul, smul_monomial, smul_eq_mul, mul_one]
-    rw [e, tp_eq, Finset.sum_mul, ContinuousLinearMap.sum_apply, map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, tp_eq, Finset.sum_mul, ContinuousLinearMap.sum_apply, map_sum, LinearMap.sum_apply]
     refine Finset.sum_congr rfl fun α _ => ?_
     rw [smul_mul_assoc, ContinuousLinearMap.smul_apply, map_smul, h2 α V hV, LinearMap.smul_apply]
   have h5 : ∀ p : UpperTheory.ConvolutionTheory.Pl K × Fin n, p.1 ∉ S → ∀ (e : ℕ) v, L (ev (X p ^ e) v) = (h p ^ e) (L v) := by
@@ -108,7 +110,8 @@ private theorem app_abs {M : Type} [AddCommGroup M] [Module ℂ M] (S : Set (Upp
       intro hl v
       rw [List.map_cons, List.map_cons, List.prod_cons, List.prod_cons, map_mul, ContinuousLinearMap.mul_apply,
         h5 p (hl p List.mem_cons_self), ih fun q hq => hl q (List.mem_cons_of_mem _ hq), Module.End.mul_apply]
-  rw [yk, ContinuousLinearMap.sum_apply, map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [yk, ContinuousLinearMap.sum_apply, map_sum, LinearMap.sum_apply]
   refine Finset.sum_congr rfl fun β hβ => ?_
   rw [mul_assoc, h3 _ _ (fix_mul hB hW (ev_comm ev _ _) (hB _).symm), Module.End.mul_apply, ContinuousLinearMap.mul_apply,
     ← h6 β _ fun p hp => hg β hβ p (Finset.mem_toList.1 hp), Finset.prod_map_toList, monomial_eq, C_1, one_mul]
@@ -159,7 +162,8 @@ private theorem core_abs {M : Type} [AddCommGroup M] [Module ℂ M] (S : Set (Up
           (((ContinuousLinearMap.apply ℂ H (Q u)).continuous.tendsto _).comp
             (tendsto_const_nhds.sub hsum.hasSum.tendsto_sum_nat)).norm
         simpa only [sub_self, ContinuousLinearMap.zero_apply, norm_zero] using t1
-      · rw [ContinuousLinearMap.sub_apply, map_sub, ContinuousLinearMap.sum_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        · rw [ContinuousLinearMap.sub_apply, map_sub, ContinuousLinearMap.sum_apply, map_sum]
         congr 1
         exact Finset.sum_congr rfl fun k _ => app_abs S ev L z h hz h4 B hB _ hW' _ (hoff k) _
     show A (Y (Q u)) = 0

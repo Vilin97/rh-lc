@@ -86,7 +86,8 @@ theorem projection_square_integrable {ε : Fin n → Bool} {lam : Fin n → ℝ}
   refine ⟨P, fun s => dc_isGKEndo_aeval (isGKEndo_eeF hσ hD _ false) _, ?_, ?_, ?_, ?_, ?_⟩
   · intro s f hf
     obtain ⟨fb, hfb, hfe⟩ := hdec f hf
-    rw [hfe, map_sum, map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hfe, map_sum, map_sum, Finset.smul_sum]
     exact Finset.sum_congr rfl fun b _ => hterm s _ (hfb b).1 _ (hfb b).2
   · intro s f _ hf
     rw [hPe s f _ hf, Lagrange.eval_basis_self hinj (Finset.mem_univ _), one_smul]
@@ -100,7 +101,8 @@ theorem projection_square_integrable {ε : Fin n → Bool} {lam : Fin n → ℝ}
     obtain ⟨fb, hfb, hfe⟩ := hdec f hf
     conv_lhs => rw [hfe]
     rw [hfe]
-    simp only [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum]
     rw [Finset.sum_comm]
     exact (Finset.sum_congr rfl fun b _ => hsum1 _ (hfb b).1 _ (hfb b).2).symm
   · intro s j

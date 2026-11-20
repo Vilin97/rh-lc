@@ -59,10 +59,12 @@ theorem exists_idem (F : Type) [Field F] [NumberField F] (M : ℕ) (hM : 0 < M) 
     refine h.subset fun v hv => ?_
     exact Ideal.dvd_span_singleton.2 hv
   have e1 : ∀ w ∈ hfin.toFinset, evalV F w (∑ v ∈ hfin.toFinset, singleV F v 1) = 1 := fun w hw => by
-    rw [map_sum, Finset.sum_eq_single_of_mem w hw fun b _ hb => evalV_single_ne F b w hb.symm,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_eq_single_of_mem w hw fun b _ hb => evalV_single_ne F b w hb.symm,
         evalV_single_same]
   have e0 : ∀ w ∉ hfin.toFinset, evalV F w (∑ v ∈ hfin.toFinset, singleV F v 1) = 0 := fun w hw => by
-    rw [map_sum, Finset.sum_eq_zero fun b hb => evalV_single_ne F b w fun h => hw (h ▸ hb)]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_eq_zero fun b hb => evalV_single_ne F b w fun h => hw (h ▸ hb)]
   refine ⟨hfin.toFinset, fun v hv => by simpa using hv,
     algebraMap F (Af F) (M : F)⁻¹ * (1 - ∑ v ∈ hfin.toFinset, singleV F v 1), fun w => ?_, ?_, ?_⟩
   · rw [map_mul, map_sub, map_one, AlgHom.commutes]

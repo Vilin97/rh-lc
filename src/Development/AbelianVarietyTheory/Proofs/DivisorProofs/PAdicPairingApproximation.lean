@@ -41,7 +41,8 @@ theorem pair_comb_congr : ∀ (E : Type) [Field E] [NumberField E] (p : ℕ) [Fa
       ((∑ b, (∑ a, Tc i a * (P.al₀ (ta a)).1 (x b)) * U b : 𝓞_ℂ_[p]) : ℂ_[p]) := by
     have e1 : ∀ m, (Tc i m : ℂ_[p]) ⊗ₜ[ℤ_[p]] ta m = (Tc i m : ℂ_[p]) • ((1 : ℂ_[p]) ⊗ₜ[ℤ_[p]] ta m) := by
       intro m; rw [TensorProduct.smul_tmul', smul_eq_mul, _root_.mul_one]
-    simp only [e1, map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, P.pairV_bLie, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [e1, map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, P.pairV_bLie, smul_eq_mul]
     push_cast
     simp only [Finset.sum_mul, Finset.mul_sum]
     have ha : ∀ z : 𝓞_ℂ_[p], algebraMap 𝓞_ℂ_[p] ℂ_[p] z = (z : ℂ_[p]) := fun _ => rfl

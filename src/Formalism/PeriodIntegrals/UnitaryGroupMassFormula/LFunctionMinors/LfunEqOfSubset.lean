@@ -65,7 +65,8 @@ theorem lH : LH := by
   have hm : ∀ (a : Lt × ℕ × Fin N0 →₀ ℕ) (c : ℂ_[l]),
       ph (MvPolynomial.monomial a c) = c * ph (MvPolynomial.monomial a 1) := fun a c => by
     rw [← smul_eq_mul, ← map_smul, MvPolynomial.smul_monomial, smul_eq_mul, mul_one]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl (fun μ _ => ?_)
   conv_rhs => rw [hm]
   unfold wt
@@ -95,7 +96,8 @@ theorem evalH : EvalH := by
   unfold EvalH Hpol
   intro Lt _ _ l _ N0 N1 ph G z
   conv_rhs => rw [G.as_sum]
-  simp only [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum]
   refine Finset.sum_congr rfl (fun μ _ => ?_)
   rw [chi_monomial, MvPolynomial.eval_monomial, MvPolynomial.C_mul', map_smul, smul_eq_mul]
   ring

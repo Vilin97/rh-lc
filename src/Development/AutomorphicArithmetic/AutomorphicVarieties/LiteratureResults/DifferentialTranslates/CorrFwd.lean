@@ -17,7 +17,8 @@ private theorem cont_multi {V F ι : Type} [Fintype ι] [NormedAddCommGroup V] [
     funext v
     have e : v = fun i => ∑ j, b.coord j (v i) • b j := funext fun i => (b.sum_repr (v i)).symm
     conv_lhs => rw [e]
-    rw [f.map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [f.map_sum]
     exact Finset.sum_congr rfl fun r _ => f.map_smul_univ _ _
   rw [h]
   exact continuous_finset_sum _ fun r _ => (continuous_finset_prod _ fun i _ =>

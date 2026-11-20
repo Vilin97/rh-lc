@@ -61,7 +61,8 @@ theorem loc_finE_u_colCoord {T : Type} {L : LevCh D T} {sc : Consts} {G : GridDa
       intro PP hPP
       refine cpt_sg_eq_zero ((cpt_of_isIdemAt (hes PP hPP)).2 _ fun e => hoff PP hPP q hq ?_)
       rw [← e]; exact (natCast_mem_cP w q).2 hqw
-    simp only [map_add, toEAf_cA, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_add, toEAf_cA, map_sum]
     rw [Finset.sum_eq_zero hA, Finset.sum_eq_zero hB, add_zero]
   apply Units.ext
   refine Matrix.ext fun i j => ?_

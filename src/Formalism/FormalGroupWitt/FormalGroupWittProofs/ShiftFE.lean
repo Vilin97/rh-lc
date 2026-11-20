@@ -49,7 +49,8 @@ lemma coeff_shiftLog_zero (j : ZMod m) (n : ZMod m →₀ ℕ)
 lemma map_shiftLog (σ : K →+* K) (k : ZMod m) :
     map σ (shiftLog K l m k) = shiftLog K l m k := by
   ext n
-  rw [coeff_map, coeff_shiftLog, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [coeff_map, coeff_shiftLog, map_sum]
   refine Finset.sum_congr rfl fun e _ => ?_
   split_ifs <;> simp [map_inv₀]
 

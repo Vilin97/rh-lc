@@ -41,7 +41,8 @@ theorem h_z_omP (f f' : Fin (r + 1) → V) (hD : IsUnit (H.Dl f f' (r + 1))) :
       M.L.cj (H.Zhat f f').det := by
     have h1 := congrFun (congrFun (Matrix.mul_adjugate (H.Zhat f f')) (Fin.last r)) (Fin.last r)
     rw [Matrix.mul_apply, Matrix.smul_apply, Matrix.one_apply_eq, smul_eq_mul, mul_one] at h1
-    rw [← h1, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← h1, map_sum]
     exact Finset.sum_congr rfl fun b _ => by rw [map_mul, mul_comm]
   unfold omP
   rw [h_smul_right, Formalism.MainNotions.S.Loc.HermSp.om', h_sum_right]

@@ -274,7 +274,8 @@ theorem absThm_gen (hV : VacOut) (hP : ProjOp) (hT : TSGen) (hB : Basis) (hFar :
     have h := I_eq_of_sL hS hLC hL hD (Q := P) (Q' := ∑ j, cc j • QQ j)
       (fun y => by simp [map_sum, map_smul, hPc y]) g
     rw [h]
-    simp [map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, map_smul]
   have hsumHV := hv_sum_lemma_6 Finset.univ (s₀ := s₀)
     (f := fun j z => cc j * GlobalTheory.Eis.cosetSum Pp Γ (hz Ht sec s₀ z (QQ j)) g)
     (z := fun j => cc j * I (QQ j) g) (fun j _ => (holValueAt_const (cc j) s₀).mul (key' j))

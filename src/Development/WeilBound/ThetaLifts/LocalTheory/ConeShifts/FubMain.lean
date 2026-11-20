@@ -233,7 +233,8 @@ theorem ideleFub : IdeleFub := by
       κa * (idealVal ν 𝔞 : ℂ) * charL ν (S₀ : Set (Pl F)) (z : ℂ) :=
     euler hz 𝔞 fin hS hT hν hram _ hu2 _ t2
   have hsum : (io (rest ∅) : AE F E) = ∑ v ∈ T, io (idem F v) + io (rest T) := by
-    rw [sum_rest T, io, map_add, map_sum]; rfl
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [sum_rest T, io, map_add, map_sum]; rfl
   obtain ⟨p1, p2⟩ := sy.prod (fun v => io (idem F v)) hv (fun _ _ h => io_orth (idem_orth h)) _ (hi T) γ hγ (β T) (hβ T) T
     (fun v h => io_orth (idem_rest h))
     (fun T' h => co_I (sy.good_sum _ hv (fun _ _ h => io_orth (idem_orth h)) _ (hi T) T' fun v h' => io_orth (idem_rest (h h')))

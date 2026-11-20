@@ -73,7 +73,8 @@ theorem hco_sum_right {ι : Type*} (s : Finset ι) (c : Co r) (f : ι → Co r) 
   rw [Finset.sum_insert ha, Finset.sum_insert ha, hco_add_right, ih]
 
 theorem hco_symm (c d : Co r) : hco T' d c = conj (hco T' c d) := by
-  simp only [hco, map_add, map_sub, map_mul, map_sum, Complex.conj_conj, Complex.conj_ofReal]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hco, map_add, map_sub, map_mul, map_sum, Complex.conj_conj, Complex.conj_ofReal]
   have e1 : ∑ a, d.1 a * conj (c.2.1 a) = ∑ a, conj (c.2.1 a) * d.1 a :=
     Finset.sum_congr rfl fun _ _ => mul_comm _ _
   have e2 : ∑ a, d.2.1 a * conj (c.1 a) = ∑ a, conj (c.1 a) * d.2.1 a :=
@@ -116,7 +117,8 @@ theorem herm_cvec (hz' : inWb k r z') (hν : inWb k r ν') (hνz : herm (Hpk k r
   have hsym : ∀ v w : Fin (2 * r + k + 1) → ℂ,
       herm (Hpk k r) v w = conj (herm (Hpk k r) w v) := by
     intro v w
-    simp only [herm, dotProduct, Matrix.mulVec, Pi.star_apply, map_sum, map_mul, Finset.mul_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [herm, dotProduct, Matrix.mulVec, Pi.star_apply, map_sum, map_mul, Finset.mul_sum,
       Finset.sum_mul, Complex.star_def, Complex.conj_conj]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_

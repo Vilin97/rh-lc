@@ -36,7 +36,8 @@ theorem formPoly_sub_bound : ∀ (σ : Type) [Fintype σ] (n : ℕ) (a b : (Fin 
       _ = (Fintype.card σ : ℝ) ^ n * M := by
           simp
   · intro c
-    simp only [formPoly, map_sum, map_mul, eval_C, map_prod, eval_X]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [formPoly, map_sum, map_mul, eval_C, map_prod, eval_X]
     rw [← Finset.sum_sub_distrib]
     refine (Finset.abs_sum_le_sum_abs _ _).trans ?_
     calc ∑ w : Fin n → σ, |a w * ∏ j, c (w j) - b w * ∏ j, c (w j)|

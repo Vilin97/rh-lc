@@ -156,7 +156,8 @@ theorem tt_rat (M : Matrix (Fin n) (Fin n) E) :
     Algebra.trace (AF F) (AE F E) (incM F M).trace = algebraMap F (AF F) (Algebra.trace F E M.trace) := by
   rw [← trace_inclR]
   congr 1
-  simp [incM, Matrix.trace, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [incM, Matrix.trace, map_sum]
 
 theorem psi_rat {ψ : AddChar (AF F) ℂ} (hψ : IsStd ψ) (T ν : nF σ Y b) :
     ψ (Algebra.trace (AF F) (AE F E) (T.1.1 * ν.1.1).trace) = 1 := by

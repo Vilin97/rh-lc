@@ -54,7 +54,8 @@ theorem sum_ne_zero_at (hL : ToricSumFormula) {i : X.Tw} {ι : ℂ →+* Kbar X 
     t1.unique ((isToricSum_iff _ _ _ _ _ _).2 ⟨hfin, T, hT, (finsum_eq_sum_of_fintype _).symm⟩)
   intro hz
   have h1 := congrArg (algebraMap (FractionRing (X.O i)) (Kbar X i)) hz
-  rw [map_sum, map_zero, Finset.sum_congr rfl fun δ _ => hδ δ, ← Finset.mul_sum, ← map_sum] at h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_zero, Finset.sum_congr rfl fun δ _ => hδ δ, ← Finset.mul_sum, ← map_sum] at h1
   refine mul_ne_zero hu ((map_ne_zero ι).2 ?_) h1
   rw [e, ← Finset.sum_fiberwise Finset.univ (fun q => π q⁻¹)] at h0
   convert h0 using 2 with δ

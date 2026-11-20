@@ -45,7 +45,8 @@ theorem sInf_pos {C M : Type} [NontriviallyNormedField C] [AddCommGroup M] [Modu
     obtain ⟨c, hc, e⟩ := h3 _ hL
     have e2 : a * cf i = ∑ j, c j * l (V j) i := by
       have := congrArg (fun z => l z i) e
-      simpa [map_smul, hl', map_sum, Finset.sum_apply] using this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa [map_smul, hl', map_sum, Finset.sum_apply] using this
     have e3 : ‖a‖ * ‖cf i‖ ≤ B := by
       rw [← norm_mul, e2]
       refine (norm_sum_le _ _).trans ((Finset.sum_le_sum fun j _ => ?_).trans (le_add_of_nonneg_right zero_le_one))

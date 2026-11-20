@@ -48,7 +48,8 @@ theorem special_fibre_generators : ∀ (p : ℕ) [Fact p.Prime] (Λ : Type) [Com
     (ρ (b ij.2)).map WittVector.constantCoeff *ᵥ x ij.1) with hU
   have key : ∀ (l : Λ) i, Φ l *ᵥ x i ∈ U := by
     intro l i
-    rw [← b.sum_repr l, map_sum, Matrix.sum_mulVec]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← b.sum_repr l, map_sum, Matrix.sum_mulVec]
     refine U.sum_mem fun j _ => ?_
     rw [hscal', Matrix.smul_mulVec]
     exact U.smul_mem _ (Submodule.subset_span ⟨(i, j), rfl⟩)

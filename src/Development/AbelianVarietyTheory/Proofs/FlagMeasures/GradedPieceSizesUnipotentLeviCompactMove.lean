@@ -236,7 +236,8 @@ theorem norm_det_gram (x : I.GA) (w : InfinitePlace I.E) {r : ℕ} (e : Fin r �
       simp [hw2, ComplexEmbedding.conjugate_coe_eq]
     have hgr : Formalism.HN.gramPl (bas I) (frm I x) w e = G.map (starRingEnd ℂ) := by
       ext a b
-      simp [Formalism.HN.gramPl, Formalism.HermitianLatticesTheory.majAt, hf, hG, dotProduct, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [Formalism.HN.gramPl, Formalism.HermitianLatticesTheory.majAt, hf, hG, dotProduct, map_sum]
     have hc := RingHom.map_det (starRingEnd ℂ) G
     rw [RingHom.mapMatrix_apply] at hc
     rw [hgr, ← hc]

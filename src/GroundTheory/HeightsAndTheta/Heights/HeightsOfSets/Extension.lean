@@ -98,7 +98,8 @@ theorem norm_sub_proj_map_le {ι : Type*} [Fintype ι] (Y : Submodule ℂ V) [Y.
   set U' := Submodule.span ℂ (Set.range fun i ↦ Y.starProjection (c i))
   obtain ⟨a, ha⟩ := (Submodule.mem_span_range_iff_exists_fun ℂ).mp (U.starProjection_apply_mem x)
   have hmem : Y.starProjection (U.starProjection x) ∈ U' := by
-    rw [← ha, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← ha, map_sum]
     refine Submodule.sum_mem _ fun i _ ↦ ?_
     rw [map_smul]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)

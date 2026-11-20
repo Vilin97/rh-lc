@@ -126,9 +126,11 @@ theorem crd_app (φ : F ⟶ G) {e : Fin r → Γ(F, V)} (he : IsFrame e) (he' : 
   unfold crd
   rw [← app_resM]
   conv_lhs => rw [← (he.basis inf_le_left).sum_repr (resM F inf_le_right t)]
-  simp only [map_sum, Scheme.Modules.Hom.app_smul, IsFrame.basis_apply, app_resM]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Scheme.Modules.Hom.app_smul, IsFrame.basis_apply, app_resM]
   simp only [← he'.basis_apply (inf_le_left : V ⊓ T ≤ V)]
-  rw [← map_sum, Module.Basis.repr_sum_self]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum, Module.Basis.repr_sum_self]
 
 def valR {R : Type} [CommRing R] (w : Sp R ⟶ X) (U : X.Opens) (h : ⊤ ≤ w ⁻¹ᵁ U) : Γ(X, U) →+* R :=
   (Scheme.ΓSpecIso (CommRingCat.of R)).hom.hom.comp (w.appLE U ⊤ h).hom
@@ -153,12 +155,14 @@ theorem valF_crd_app (φ : F ⟶ G) {e : Fin r → Γ(F, V)} {e' : Fin r → Γ(
   have h₀ : V ⊓ (V' ⊓ T) ≤ V' ⊓ T := inf_le_right
   have h₁ : V ⊓ (V' ⊓ T) ≤ V' ⊓ V := le_inf (h₀.trans inf_le_left) inf_le_left
   have h₂ : V ⊓ (V' ⊓ T) ≤ V ⊓ T := inf_le_inf_left _ inf_le_right
-  simp only [← valHom_resG x h₀ hU, ← valHom_resG x h₁ hU, ← valHom_resG x h₂ hU, ← map_mul, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← valHom_resG x h₀ hU, ← valHom_resG x h₁ hU, ← valHom_resG x h₂ hU, ← map_mul, ← map_sum]
   congr 1
   simp only [crd, ← IsFrame.repr_resM, resM_resM]
   rw [← app_resM]
   conv_lhs => rw [← (he.basis inf_le_left).sum_repr (resM F (h₀.trans inf_le_right) t)]
-  simp only [map_sum, Scheme.Modules.Hom.app_smul, IsFrame.basis_apply, app_resM, map_smul, Finsupp.finsetSum_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Scheme.Modules.Hom.app_smul, IsFrame.basis_apply, app_resM, map_smul, Finsupp.finsetSum_apply,
     Finsupp.smul_apply, smul_eq_mul]
   exact Finset.sum_congr rfl fun l _ => mul_comm _ _
 
@@ -195,7 +199,8 @@ theorem mem_kerAt_iff {R : Type} [CommRing R] (w : Sp R ⟶ X) {Q : X.Modules} [
   have key : ∀ u l, g (β.repr (((Scheme.Modules.pullback w).map a).app ⊤ u) l) =
       ∑ m, valR w _ hU (crd he (a.app V' (e' m)) l) * g (β'.repr u m) := fun u l => by
     conv_lhs => rw [← β'.sum_repr u]
-    simp only [map_sum, Scheme.Modules.Hom.app_smul, map_smul, Finsupp.finsetSum_apply, Finsupp.smul_apply, smul_eq_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, Scheme.Modules.Hom.app_smul, map_smul, Finsupp.finsetSum_apply, Finsupp.smul_apply, smul_eq_mul,
       map_mul, hβ', pullback_map_app_pullbackSections]
     refine Finset.sum_congr rfl fun m _ => ?_
     rw [mul_comm, ← pullbackSections_res w G hU inf_le_right]
@@ -271,14 +276,16 @@ theorem norm_iff_mem_kerAt {X : Scheme.{0}} {A L Q : X.Modules} [A.IsQuasicohere
       refine Finset.sum_congr rfl fun l _ => congrArg _ ?_
       rw [← hc, hb]
       change (intO C).subtype _ = _
-      simp only [map_sum, map_mul, hval]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_mul, hval]
       rfl
     rw [this]
     exact (b n).2
   · intro H
     refine ⟨_, ⟨fun m => ⟨_, H m⟩, fun _ => rfl⟩, fun l => ?_⟩
     change (intO C).subtype _ = _
-    simp only [map_sum, map_mul, hval]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, hval]
     rfl
 
 theorem isEqLatPres_of_ptJ : ∀ {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} {Dw : Datum H} {Xo : ∀ l : Level H, Moduli Dw l} {p : ℕ} [Fact p.Prime] {W : ValuationSubring ℂ} {Y : LocalSystem Xo p W} {i₀ : Idx H p} (Z : GlobalTheory.LocM.Mdl Y i₀) {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [CharZero O] [CharP (ResidueField O) p] {B : GlobalTheory.Vert.Model O} (h : B.X ⟶ Z.X) {r : ℕ} (x : Fin r → Letter Dw) (lw : EPres B (𝓞 E)) (wl : lw.E ⟶ lw.E') (π : Γ(B.X, ⊤)) (P₁ P₃ : Pres B) (j : lw.E'.V ⟶ P₁.mod) (hj : wl.hom ≫ j = 0) (s : ∀ a : Fin Z.m, Fin r → Γ(lw.E'.V, h ⁻¹ᵁ (Z.U a).1)) (hs : IsEqLat Z h x false lw.E' s), lw.r = r → IsRootOfP p π (p - 1) → lw.ψ ≫ wl = smulA _ π → Mono wl.hom → (ShortComplex.mk wl.hom j hj).Exact → Nonempty (cokernel j ≅ P₃.mod) → PtJ Z h x hs.2.2.1.frame π j → IsEqLatPres Z h x false lw := by

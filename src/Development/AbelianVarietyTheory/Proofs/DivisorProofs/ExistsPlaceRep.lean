@@ -53,7 +53,8 @@ theorem matDer_bracket (τ : T) (X Y : Matrix (Fin n) (Fin n) ℂ) :
   refine MvPolynomial.derivation_ext fun p => ?_
   rw [Derivation.commutator_apply, matDer_X, matDer_X, matDer_X]
   split_ifs with h
-  · simp only [map_sum, Derivation.leibniz, MvPolynomial.derivation_C, smul_zero, zero_add, matDer_X, if_true,
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [map_sum, Derivation.leibniz, MvPolynomial.derivation_C, smul_zero, zero_add, matDer_X, if_true,
       smul_eq_mul, Finset.sum_mul, Matrix.sub_apply, Matrix.mul_apply, map_sub, map_sum, MvPolynomial.C_mul,
       Finset.mul_sum, mul_sub, Finset.sum_sub_distrib, mul_zero, zero_add]
     refine congrArg₂ (· - ·) ?_ ?_ <;> rw [Finset.sum_comm] <;>
@@ -66,7 +67,8 @@ theorem matDer_comm {τ τ' : T} (h : τ ≠ τ') (X Y : Matrix (Fin n) (Fin n) 
   refine MvPolynomial.derivation_ext fun p => ?_
   rw [Derivation.commutator_apply, matDer_X, matDer_X, Derivation.zero_apply]
   by_cases h1 : p.1 = τ <;> by_cases h2 : p.1 = τ' <;>
-    simp [h1, h2, h, Ne.symm h, map_sum, Derivation.leibniz, MvPolynomial.derivation_C, matDer_X]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [h1, h2, h, Ne.symm h, map_sum, Derivation.leibniz, MvPolynomial.derivation_C, matDer_X]
 
 theorem matDer_commute {τ τ' : T} (h : τ ≠ τ') (X Y : Matrix (Fin n) (Fin n) ℂ) :
     Commute (matDer τ X : Module.End ℂ (MvPolynomial (T × Fin n × Fin n) ℂ)) (matDer τ' Y) := by

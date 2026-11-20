@@ -57,7 +57,8 @@ theorem supp_aeval_pow (g : σ → τ) (e : σ → ℕ) (x : MvPolynomial σ R) 
   by_contra hne
   push_neg at hne
   apply MvPolynomial.mem_support_iff.mp hm'
-  rw [x.as_sum, map_sum, MvPolynomial.coeff_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [x.as_sum, map_sum, MvPolynomial.coeff_sum]
   refine Finset.sum_eq_zero fun m hm => ?_
   rw [aeval_pow_monomial, MvPolynomial.coeff_monomial, if_neg (fun h => hne m hm h.symm)]
 
@@ -345,7 +346,8 @@ theorem vs_img_le (he : Even n') {F : Frames n' r} {L₁ N₁ : ℕ} (hV : F.Val
     vsDeg (imgMon (fun v : ℤ × Fin (r + K) => (posOf n' v.1, v.2)) (fun v => p ^ F.dist j v.1) m) ≤
       ∑ x ∈ nonW F j, p ^ F.dist j x * ordDeg m x := by
   classical
-  rw [vsDeg_eq, imgMon, Finsupp.sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [vsDeg_eq, imgMon, Finsupp.sum, map_sum]
   simp only [Finsupp.linearCombination_single, smul_eq_mul]
   calc ∑ v ∈ m.support, p ^ F.dist j v.1 * m v * wtVS (posOf n' v.1, v.2)
       ≤ ∑ v ∈ nonW F j ×ˢ (Finset.univ : Finset (Fin (r + K))), p ^ F.dist j v.1 * m v * wtVS (posOf n' v.1, v.2) := by

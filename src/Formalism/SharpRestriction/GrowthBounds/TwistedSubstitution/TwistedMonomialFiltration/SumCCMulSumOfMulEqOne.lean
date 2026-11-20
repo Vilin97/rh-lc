@@ -128,7 +128,8 @@ theorem flt_tay_monomial (R : Type*) [CommRing R] {σ : Type*} (m : σ →₀ �
 theorem flt_tay_coeff (R : Type*) [CommRing R] {σ : Type*} (F : MvPolynomial σ R) (be : σ →₀ ℕ) :
     AddMonoidAlgebra.coeff (flt_tay R σ F) be = divDer be F := by
   conv_lhs => rw [F.as_sum]
-  rw [map_sum, coeff_sum, divDer]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, coeff_sum, divDer]
   refine Finset.sum_congr rfl fun m _ => ?_
   rw [show monomial m (AddMonoidAlgebra.coeff F m) = C (AddMonoidAlgebra.coeff F m) * monomial m 1 by rw [C_mul_monomial, mul_one], map_mul]
   have hC : flt_tay R σ (C (AddMonoidAlgebra.coeff F m)) = C (C (AddMonoidAlgebra.coeff F m)) := by simp [flt_tay]
@@ -160,7 +161,8 @@ theorem sum_C_C_mul_sum_of_mul_eq_one {B : Type*} [CommRing B] {σ' σ'' : Type*
     ∑ b, C (C (P b d)) * ∑ c, C (C (Q c b)) * Y c = Y d := by
   simp_rw [Finset.mul_sum, ← mul_assoc, ← map_mul]
   rw [Finset.sum_comm]
-  simp_rw [← Finset.sum_mul, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp_rw [← Finset.sum_mul, ← map_sum]
   have hcd : ∀ c, ∑ b, P b d * Q c b = (1 : Matrix (Fin n) (Fin n) B) c d := fun c => by
     rw [← h, Matrix.mul_apply]
     exact Finset.sum_congr rfl fun b _ => mul_comm _ _
@@ -223,7 +225,8 @@ theorem flt_Th_mem {R : Type*} [CommRing R] {ι : Type*} {n : ℕ} (LL : Letters
         rw [h0, sub_zero]
         exact (laurentCoeffFiltration R n (ι × Fin n) e).one_mem
       exact flt_monomial_mem h1
-  rw [P.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [P.as_sum, map_sum]
   refine AddSubgroup.sum_mem _ fun m _ => ?_
   rw [show monomial m (AddMonoidAlgebra.coeff P m) = C (AddMonoidAlgebra.coeff P m) * monomial m 1 by rw [C_mul_monomial, mul_one], map_mul]
   have hc : AddMonoidAlgebra.coeff P m ∈ (flt_L (GLCoord R n) e).F t := by

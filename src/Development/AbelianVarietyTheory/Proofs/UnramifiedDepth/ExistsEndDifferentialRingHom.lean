@@ -119,7 +119,8 @@ private lemma endDiff_exists {g : ℕ} {B : BX R₀} {O : LAlg R₀} (gb : Modul
     exact Subtype.ext hη.symm
   have hB : ∑ k, gb k ⊗ₜ[R₀] m k = LinearMap.lTensor B.gg (φ.1.toLinearMap.restrict hf)
       (∑ k, gb k ⊗ₜ[R₀] Dp.ηmap (c l k)) := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [LinearMap.lTensor_tmul]
     congr 1
@@ -172,9 +173,11 @@ theorem exists_endDifferential_ringHom :
       · simp
   have hmul : ∀ a b, d (a * b) = d a * d b := fun a b =>
     endDiff_unique (hd _) Dp _ fun l => by
-      rw [((hf _ _).2 a b).2, endDiff_spec (hd b), map_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [((hf _ _).2 a b).2, endDiff_spec (hd b), map_sum, map_sum]
       simp only [endDiff_spec (hd a)]
-      rw [← map_sum, Finset.sum_comm]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← map_sum, Finset.sum_comm]
       simp [Matrix.mul_apply, TensorProduct.tmul_sum]
   have hzero : d 0 = 0 := by
     have := hadd 0 0

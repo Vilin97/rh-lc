@@ -28,15 +28,18 @@ theorem GlobalTheory.PMon.exI_of_ser_core (hser : ∀ (l : ℕ) [Fact l.Prime] (
       have h1 : (∑ a, (⟨_, hq0 (c a)⟩ : S) * ⟨_, hm a j⟩) = 0 := by
         apply Subtype.ext
         have := congrArg (fun x => P.ιB ((P.φB ^ j) x)) hc
-        simp only [map_sum, map_smul, map_zero] at this
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, map_smul, map_zero] at this
         simp only [AddSubmonoidClass.coe_finset_sum, Subring.coe_mul, e, ZeroMemClass.coe_zero]
         simpa only [Algebra.smul_def] using this
       have h2 := congrArg θ h1
-      rw [map_sum, map_zero] at h2
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, map_zero] at h2
       simpa only [map_mul, hq, hev] using h2
     exact fun i => congrFun this i
   · have h2 : θ (∑ i : Fin h, (⟨μ i, (hS _).2 (hμ i)⟩ : S) * ⟨_, hm a i⟩) = 0 := by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simpa only [map_mul, hev] using hz a
     have := (hker _).1 h2
     simpa only [AddSubmonoidClass.coe_finset_sum, Subring.coe_mul] using this

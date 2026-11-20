@@ -128,7 +128,8 @@ theorem lemD (σ : E →ₐ[F] E) (B : Base F E) {n d r s r' s' : ℕ} (X : Spc 
   have hsum : incM F (∑ k, Matrix.vecMulVec (p k) (contr σ X.J X₀ (f k))) =
       ∑ k, incM F (Matrix.vecMulVec (p k) (contr σ X.J X₀ (f k))) := by
     ext i j
-    simp [incM, Matrix.sum_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [incM, Matrix.sum_apply, map_sum]
   rw [hsum, Finset.smul_sum]
   refine AddSubgroup.sum_mem _ fun k _ => AddSubgroup.subset_closure ?_
   have hc0 : (tp k * tw k : 𝓞 F) ∉ v.asIdeal := fun h => (v.isPrime.mem_or_mem h).elim (htp k) (htw k)

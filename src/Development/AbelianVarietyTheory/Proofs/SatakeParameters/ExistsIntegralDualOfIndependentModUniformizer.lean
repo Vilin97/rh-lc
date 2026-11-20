@@ -91,7 +91,8 @@ theorem exists_dual_of_indepMod : ∀ (L : Type) [Field L] [Valued L (WithZero (
       have h1 : res (∑ i, d i * Z i r) = 0 := by
         have := congrFun hw r
         simp only [Matrix.mulVecLin_apply, Matrix.mulVec, dotProduct, Matrix.transpose_apply, Pi.zero_apply] at this
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         simpa [Zb, hd, mul_comm] using this
       have h2 := (residue_eq_zero_iff_dvdPow hϖ _).1 h1
       simpa [Z] using h2

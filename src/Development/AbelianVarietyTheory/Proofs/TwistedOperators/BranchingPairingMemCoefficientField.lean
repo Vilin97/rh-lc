@@ -30,7 +30,8 @@ theorem exists_map_eq {K : Type} [Field K] (φ : K →+* ℂ) {σ : Type} (P : M
   choose c hc using h
   refine ⟨∑ m ∈ P.support, monomial m (c m), ?_⟩
   conv_rhs => rw [P.as_sum]
-  simp [map_sum, map_monomial, hc]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, map_monomial, hc]
 
 theorem descend {K : Type} [Field K] [CharZero K] (φ : K →+* ℂ) (sg : ι → DomWeight n) (x : VV ℂ sg)
     (h : ∀ m, AddMonoidAlgebra.coeff x.1 m ∈ Set.range φ) : ∃ y : VV K sg, map φ y.1 = x.1 := by

@@ -32,7 +32,8 @@ theorem xLast_eq_rat {T T₀ : HSp D} {σ : ℕ} (d : HypDec T T₀ σ) (z : Fin
     xLast d z = rat (lastMat d z) := by
   ext row i
   refine Fin.lastCases ?_ (fun i => ?_) i
-  · simp [xLast, lastMat, rat, HypDec.j0, ratV, Matrix.mulVec, dotProduct, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp [xLast, lastMat, rat, HypDec.j0, ratV, Matrix.mulVec, dotProduct, map_sum]
   · simp [xLast, lastMat, rat, HypDec.jX]
 
 theorem e_mul_ι (x : k) : p.e * p.ι x = p.ι x := by
@@ -51,12 +52,14 @@ theorem incA_mul_ι (x : k) (b : D.host.E) : incA D b * p.ι x = p.ι (p.pr b * 
 theorem map_ι_mul_rat {a b c : Type} [Fintype b] (M : Matrix a b k) (N : Matrix b c D.host.E) :
     M.map p.ι * N.map (incA D) = (M * N.map p.pr).map p.ι := by
   ext i j
-  simp [Matrix.mul_apply, ι_mul_incA, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Matrix.mul_apply, ι_mul_incA, map_sum]
 
 theorem rat_mul_map_ι {a b c : Type} [Fintype b] (N : Matrix a b D.host.E) (M : Matrix b c k) :
     N.map (incA D) * M.map p.ι = (N.map p.pr * M).map p.ι := by
   ext i j
-  simp [Matrix.mul_apply, incA_mul_ι, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Matrix.mul_apply, incA_mul_ι, map_sum]
 
 theorem infPart_e : infPart D p.e = 0 := by
   obtain ⟨h1, h2, v, ε, ⟨α, hα, -⟩, h3⟩ := p.split
@@ -118,7 +121,8 @@ theorem extY_colMx {S S₀ T : HSp D} {ρ : ℕ} (d : HypDec S S₀ ρ) {Y : Typ
 theorem wittExtZero_inclusionX_adelicSingleRowMatrix {S S₀ T T₀ : HSp D} {ρ σ : ℕ} (d : HypDec S S₀ ρ) (d' : HypDec T T₀ σ) (l : Fin σ)
     (v : Fin S₀.rank → k) (row : Fin T.rank) (col : Fin S.rank) :
     d.ext0 T (d'.incX S₀ (rowMx p l v)) row col = p.ι (∑ m, p.pr (d'.e row l) * v m * p.pr (d.q0 m col)) := by
-  rw [HypDec.matrixExtendByZero_apply, HypDec.incX_apply, Matrix.mul_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [HypDec.matrixExtendByZero_apply, HypDec.incX_apply, Matrix.mul_apply, map_sum]
   refine Finset.sum_congr rfl fun m _ => ?_
   rw [Matrix.mul_apply, Finset.sum_eq_single l (fun m' _ hm => by rw [show rowMx p l v m' m = 0 from if_neg hm, mul_zero]) (fun h => absurd (Finset.mem_univ _) h), ← ι_mul_incA, ← incA_mul_ι]
   rw [show rowMx p l v l m = _ from if_pos rfl]
@@ -243,7 +247,8 @@ theorem gram_colMx (m m' : Fin ρ) : (adj (colMx p FT r i b) ⬝ (gA T ⬝ rat X
   rw [gA, ← rat_mul, Matrix.mul_apply]
   split_ifs with hm
   · subst hm
-    rw [pairVal, Finset.mul_sum, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [pairVal, Finset.mul_sum, map_sum, map_sum]
     refine Finset.sum_congr rfl fun c _ => ?_
     have h1 : (Xᴴ * T.gram) m' c = star ((T.gram * X) c m') := by
       rw [← conjTranspose_apply, conjTranspose_mul, gram_conjTranspose]

@@ -50,7 +50,8 @@ theorem posDef_map {K : Type} [Field K] [StarRing K] {n : ℕ} (σ : K →+* ℂ
   set f : (Fin n → K) → (Fin n → ℂ) := fun y i => σ (y i) with hf
   have hqv : ∀ y, star (f y) ⬝ᵥ (G.map σ *ᵥ f y) = σ (star y ⬝ᵥ (G *ᵥ y)) := by
     intro y
-    simp [hf, dotProduct, mulVec, map_sum, map_mul, hs]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [hf, dotProduct, mulVec, map_sum, map_mul, hs]
   have hnn : ∀ y : Fin n → K, 0 ≤ star (f y) ⬝ᵥ (G.map σ *ᵥ f y) := by
     intro y
     rw [Complex.le_def]

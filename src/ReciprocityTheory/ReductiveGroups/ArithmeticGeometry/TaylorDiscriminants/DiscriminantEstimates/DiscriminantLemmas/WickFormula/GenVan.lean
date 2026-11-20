@@ -34,7 +34,8 @@ private lemma monomial_mem_lowDeg_of_weighted_sum_lt {f : ι → σ} {t : ℕ} {
 theorem pderiv_mem_lowDeg {f : ι → σ} {t : ℕ} (k : σ) {R : MvPolynomial σ K}
     (h : R ∈ lowDeg f t) : pderiv k R ∈ lowDeg f t := by
   have hR := mem_lowDeg.mp h
-  rw [R.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [R.as_sum, map_sum]
   refine Submodule.sum_mem _ fun m hm => ?_
   rw [pderiv_monomial]
   apply monomial_mem_lowDeg_of_weighted_sum_lt
@@ -44,7 +45,8 @@ theorem pderiv_mem_lowDeg_of_succ {f : ι → σ} {t : ℕ} (i : ι) {R : MvPoly
     (h : R ∈ lowDeg f (t + 1)) : pderiv (f i) R ∈ lowDeg f t := by
   classical
   have hR := mem_lowDeg.mp h
-  rw [R.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [R.as_sum, map_sum]
   refine Submodule.sum_mem _ fun m hm => ?_
   rw [pderiv_monomial]
   by_cases h0 : m (f i) = 0

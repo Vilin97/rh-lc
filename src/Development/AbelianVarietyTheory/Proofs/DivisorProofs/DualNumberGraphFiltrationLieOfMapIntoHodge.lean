@@ -278,14 +278,16 @@ theorem eigen_decomp_graphFil : ∀ (p : ℕ) [Fact p.Prime] (D : GlobalTheory.U
     rw [mem_graphFil_iff_coords hs]
     have hg0 : ∀ j, algChar b β j (1 - ∑ i, e i) = 0 := by
       intro j
-      rw [map_sub, map_one, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, map_one, map_sum]
       simp [he]
     obtain ⟨k1, k2⟩ := key _ hg0
     have decu : u' - δ⁻¹ • (Ω u - ρ • u) = u := by rw [hu'def]; exact inv_sub_smul_sub_sub_inv_sub_smul_sub_eq _ _ _ _ hδ
     have decv : v' - δ⁻¹ • (Ω v - ρ • v) = v := by rw [hv'def]; exact inv_sub_smul_sub_sub_inv_sub_smul_sub_eq _ _ _ _ hδ
     have hsum : ∀ z, algAct o₀ (1 - ∑ i, e i) z = z - ∑ i, algAct o₀ (e i) z := by
       intro z
-      rw [map_sub, map_one, map_sum, LinearMap.sub_apply, LinearMap.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, map_one, map_sum, LinearMap.sub_apply, LinearMap.sum_apply]
       rfl
     rw [sub_eq_neg_smul_add_of_sub_smul_eq u u' _ _ _ decu, sub_eq_neg_smul_add_of_sub_smul_eq v v' _ _ _ decv, ← hsum, ← hsum]
     refine ⟨add_mem (Submodule.smul_mem _ _ hx) k1, ?_⟩

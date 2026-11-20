@@ -132,7 +132,8 @@ theorem matrixSubst_transvection_monomial (N : ℕ) (hN : (m.sum fun _ e => e) <
 theorem map_dividedPowerMonomial (k : ℕ) :
     MvPolynomial.map φ (divPowMono R LL S a b k m) = divPowMono B LL S a b k m := by
   unfold Formalism.MainNotions.G.divPowMono
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun f _ => ?_
   have h : ∀ l, φ (if LL.vec l then ((m (l, b)).choose (f l) : R) else (-1 : R) ^ (f l) * ((m (l, a)).choose (f l) : R)) =
       (if LL.vec l then ((m (l, b)).choose (f l) : B) else (-1 : B) ^ (f l) * ((m (l, a)).choose (f l) : B)) :=
@@ -167,10 +168,12 @@ theorem transvectionExpansion : TransvectionExpansion := by
     rw [dividedPower_monomial, MvPolynomial.smul_eq_C_mul, map_mul, MvPolynomial.map_C, map_dividedPowerMonomial]
     ring
   conv_lhs => rw [F.as_sum]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine (Finset.sum_congr rfl key).trans ?_
   conv_rhs => rw [F.as_sum]
-  simp only [map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Finset.mul_sum]
   exact Finset.sum_comm
 
 end Formalism.MainNotions.G.GLWeightTheory

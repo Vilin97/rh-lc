@@ -41,7 +41,8 @@ theorem eq_zero_of_forall_conj {k F Ω ι : Type} [Field k] [Field F] [Field Ω]
   have : ∑ g : F ≃ₐ[k] F, τ (g c) * ∑ j, τ (g (b j)) * x j = x m := by
     simp only [Finset.mul_sum, ← mul_assoc, ← map_mul τ]
     rw [Finset.sum_comm]
-    simp only [← Finset.sum_mul, ← map_sum τ, hc']
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [← Finset.sum_mul, ← map_sum τ, hc']
     rw [Finset.sum_eq_single m] <;> simp +contextual [eq_comm]
   rw [← this]
   simp [h]
@@ -81,7 +82,8 @@ theorem le_one_of_forall_conj {F ι : Type} [Field F] [Fintype ι] (v : Valuatio
     choose c' hc' using fun j => Ideal.Quotient.mk_surjective (c j)
     rw [← hc', Ideal.Quotient.eq_zero_iff_mem]
     refine hb c' (Ideal.Quotient.eq_zero_iff_mem.1 ?_) j
-    rw [← hc, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hc, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [← hc', Algebra.smul_def, Algebra.smul_def, map_mul]
     rfl
@@ -91,7 +93,8 @@ theorem le_one_of_forall_conj {F ι : Type} [Field F] [Fintype ι] (v : Valuatio
   obtain ⟨g, rfl⟩ := Ideal.Quotient.stabilizerHom_surjective (L ≃ₐ[K] L) la.asIdeal μ.asIdeal g
   have h4 : ∀ j, τ (Ideal.Quotient.stabilizerHom μ.asIdeal la.asIdeal (L ≃ₐ[K] L) g
       (Ideal.Quotient.mk μ.asIdeal (b j))) = ρ (ψ (g.1 • b j)) := fun j => rfl
-  simp only [h4, ← map_mul, ← map_sum, hρ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [h4, ← map_mul, ← map_sum, hρ]
   have h5 : ((∑ j, ψ (g.1 • b j) * z j : v.valuationSubring) : F) = (∑ j, σ (g.1 (b j)) * x j) / x j₀ := by
     rw [Finset.sum_div]
     push_cast
@@ -189,7 +192,8 @@ theorem exists_residue_basis [la'.asIdeal.LiesOver la.asIdeal] : ∃ (d : ℕ) (
   choose b hb using fun j => Ideal.Quotient.mk_surjective (B j)
   have e : ∀ x : Fin _ → 𝓞 K, Ideal.Quotient.mk la'.asIdeal (∑ j, x j • b j) =
       ∑ j, Ideal.Quotient.mk la.asIdeal (x j) • B j := fun x => by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [← hb, Algebra.smul_def, Algebra.smul_def, map_mul]
     rfl
@@ -216,7 +220,8 @@ theorem exists_approx (hv : ∀ x : K, vLa la' (algebraMap K K' x) = vLa la x) {
     have h1 := (la'.valuation_lt_one_iff_mem (K := K') _).2 hx
     have h2 : a - ∑ j, algebraMap K K' (x j) * b j =
         algebraMap (𝓞 K') K' (a₀ - ∑ j, x j • b j) - (algebraMap (𝓞 K') K' a₀ - a) := by
-      rw [map_sub, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, map_sum]
       simp only [Algebra.smul_def, map_mul]
       have : ∀ j, algebraMap (𝓞 K') K' (algebraMap (𝓞 K) (𝓞 K') (x j)) = algebraMap K K' (x j) := fun j => rfl
       simp only [this]
@@ -305,7 +310,8 @@ theorem inV_of_forall_emb [la'.asIdeal.LiesOver la.asIdeal] {d : ℕ} {b : Fin d
     have h3 := (GoodPtsModel.inV_iff_vV T' ((map_ne_zero i).2 h0)).1 ((GoodPtsModel.inV_iff_val T' _).2 key)
     rw [hv'] at h3
     exact (GoodPtsModel.inV_iff_vV T h0).2 ((mul_nonneg_iff_of_pos_left (by exact_mod_cast he')).1 h3)
-  · rw [hQl.over, Ideal.under_def, Ideal.mem_comap, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [hQl.over, Ideal.under_def, Ideal.mem_comap, map_sum]
     simpa only [Algebra.smul_def, map_mul, ← IsScalarTower.algebraMap_apply] using hc
   · let σ : K' →+* T'.Fr := (σ₁.comp (g : L →+* L)).comp (algebraMap K' L)
     obtain ⟨e'', ho''⟩ := exists_overLa_of_mem (la := la') (io := σ) hT' fun a => by
@@ -365,7 +371,8 @@ theorem supSet_descent : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] 
     rw [Finset.sum_comm, ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [hx i]
-    simp only [map_add, map_sum, map_mul, h', add_mul, Finset.sum_mul, mul_assoc]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_add, map_sum, map_mul, h', add_mul, Finset.sum_mul, mul_assoc]
     congr 1
     exact Finset.sum_congr rfl fun j _ => by ring
   refine ⟨d + m, Fin.append (fun j => (b j : c'.F)) ρ, Fin.append F fun i => κ i • fs i, fun i => ?_, fun i => ?_, ?_⟩

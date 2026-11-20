@@ -132,7 +132,8 @@ theorem theta_eq {τ : Matrix (Fin g) (Fin g) ℂ} {a b : Fin g → ℂ} {al : M
       (by rintro (r | c) <;> exact congrArg J (Category.id_comp _)) pt.left ((Category.comp_id _).trans hp)]
     exact hC y pt hy _ m₂ m₁
   have h := congrArg ev (hQ y₀ J hJ)
-  simp only [map_prod, map_mul, map_sum, v₁, v₂, v₃, Finset.prod_mul_distrib] at h
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_prod, map_mul, map_sum, v₁, v₂, v₃, Finset.prod_mul_distrib] at h
   have n₁ : (∏ r, u.fr (J (alMap x al r (ξ r)).left) (∑ c, al r c • y c + tors τ al m k n r)) ≠ 0 :=
     Finset.prod_ne_zero_iff.2 fun r _ => u.fr_ne _ _ (m₂ r)
   have n₂ : (∏ c, u.fr (J (Out.powPr x.P.A c).left) (y c) ^ (-(m : ℤ))) *

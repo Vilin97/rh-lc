@@ -43,13 +43,15 @@ theorem exists_ext_pairing [FiniteDimensional LL V] (m : V →ₗ[LL] V' →ₗ[
       simp [v', Algebra.TensorProduct.basis_apply, smul_tmul']
     have h3 : m (v i) y = w.repr y i := by
       conv_lhs => rw [← w.sum_repr y]
-      simp only [map_sum, map_smul, hvw, smul_eq_mul, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, hvw, smul_eq_mul, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq,
         Finset.mem_univ, if_true]
     rw [h2, map_smul, h3]
     simp only [e, LinearEquiv.coe_coe, Basis.equiv_apply, Equiv.refl_apply, LinearMap.smul_apply,
       Basis.dualBasis_apply, w', Algebra.TensorProduct.basis_repr_tmul]
     simp [mul_assoc]
-  rw [← v.sum_repr x, tmul_sum, map_sum, map_sum, LinearMap.sum_apply, LinearMap.sum_apply, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← v.sum_repr x, tmul_sum, map_sum, map_sum, LinearMap.sum_apply, LinearMap.sum_apply, map_sum,
     Finset.mul_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   have h4 : a ⊗ₜ[LL] (v.repr x i • v i) = algebraMap LL L (v.repr x i) • (a ⊗ₜ[LL] v i) := by

@@ -115,7 +115,8 @@ theorem caseC (j0 : Fin r) (c : K) (b : Bool) (v : MvPolynomial (Fin (r + 1 + 1)
             simp [e, MvPolynomial.algebraMap_apply, MvPolynomial.algebraMap_eq]
             ring
           · simp [hmid i hi, hi]
-        rw [e1, hz, map_sum, Finset.sum_congr rfl (fun i _ => hterm i), Finset.sum_add_distrib]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [e1, hz, map_sum, Finset.sum_congr rfl (fun i _ => hterm i), Finset.sum_add_distrib]
         simp
   exact (RingHom.congr_fun key v).trans hmult
 

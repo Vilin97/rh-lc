@@ -282,7 +282,8 @@ theorem exists_levPerm {Λ Λ' : Lt E n} (hΛ : Λ ∈ Vset E n l.M) (hΛ' : Λ'
     intro A B hAB c d kc kd hc hd
     ext i j
     have e1 : ((c * d) i j : E) = ((kc * kd : ℕ) : E) * (A * B) i j := by
-      simp only [Matrix.mul_apply, map_sum, map_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Matrix.mul_apply, map_sum, map_mul]
       rw [Finset.mul_sum]
       refine Finset.sum_congr rfl fun l _ => ?_
       rw [show (algebraMap (𝓞 E) E (c i l)) = (c i l : E) from rfl,
@@ -498,7 +499,8 @@ theorem roots_move : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H :
     intro i
     have hxb : (k1 : 𝓞 E) • A' i - ∑ j, g1 i j • A j ∈ l.Mb • (⊤ : Submodule (𝓞 E) Dw.La) := by
       have h0 : (l.Mb • (⊤ : Submodule (𝓞 E) Dw.La)).mkQ ((k1 : 𝓞 E) • A' i - ∑ j, g1 i j • A j) = 0 := by
-        simp only [map_sub, map_smul, map_sum, Submodule.mkQ_apply, hAq, hA'q]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sub, map_smul, map_sum, Submodule.mkQ_apply, hAq, hA'q]
         rw [hq i, sub_self]
       exact (Submodule.Quotient.mk_eq_zero _).mp h0
     have hxf : (k1 : 𝓞 E) • A' i - ∑ j, g1 i j • A j ∈
@@ -524,7 +526,8 @@ theorem roots_move : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H :
     intro i
     have hCE : (l.M : E) • mk (C i) = (k1 : E) • mk (A' i) - ∑ j, (g1 i j : E) • mk (A j) := by
       have := congrArg mk (hC i)
-      simp only [map_sub, map_sum, LinearMap.map_smul, cs, hMc, hk1c] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sub, map_sum, LinearMap.map_smul, cs, hMc, hk1c] at this
       exact this
     have hmkC : mk (C i) = (l.M : E)⁻¹ • ((k1 : E) • mk (A' i) - ∑ j, (g1 i j : E) • mk (A j)) := by
       rw [← hCE, smul_smul, inv_mul_cancel₀ hM0, one_smul]

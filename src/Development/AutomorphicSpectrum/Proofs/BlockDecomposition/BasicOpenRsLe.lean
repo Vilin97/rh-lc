@@ -279,7 +279,8 @@ theorem cmp_coef : ∀ {K : Type} [Field K] [CharZero K] {X : Scheme.{0}} (q : X
       sgn I i.2 • (εW (rs hWU (z i.1)) * ∏ k, εW (p (i.2 k) (rs hWU (tU (i.1.1 k))))) = εW (y' I) := by
     intro I
     rw [Fintype.sum_prod_type]
-    simp only [y', map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [y', map_sum, map_mul]
     refine Finset.sum_congr rfl fun L _ => ?_
     have e3 : ∀ J : Fin m → Fin d, sgn I J • (εW (rs hWU (z L)) * ∏ k, εW (p (J k) (rs hWU (tU (L.1 k))))) =
         εW (rs hWU (z L)) * sgn I J • ∏ k, εW (p (J k) (rs hWU (tU (L.1 k)))) := fun J => by

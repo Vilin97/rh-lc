@@ -80,10 +80,12 @@ private lemma lam_act (Φ : Fr l A j) {c : Coef l} (β : Bas c) (a : c.O) (x : F
     rw [mul_comm, ← Algebra.smul_def]
     rfl
   unfold Fr.lam
-  simp only [map_sum, map_mul, Finset.mul_sum, Φ.jh_alg]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, Finset.mul_sum, Φ.jh_alg]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun k _ => ?_
-  rw [← mul_assoc, ← map_mul, ← h k, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← mul_assoc, ← map_mul, ← h k, map_sum, Finset.sum_mul]
   simp only [map_mul, mul_assoc]
 
 private lemma tw_succ (Φ : Fr l A j) {d : ℕ} (M : Matrix (Fin d) (Fin d) ℤ_[l]) (D : Fin d → PowerSeries Φ.R)
@@ -91,8 +93,10 @@ private lemma tw_succ (Φ : Fr l A j) {d : ℕ} (M : Matrix (Fin d) (Fin d) ℤ_
     (Φ.tw (m + 1) (D i)).coeff n = ∑ k, algebraMap ℤ_[l] Φ.R (M i k) * (Φ.tw m (D k)).coeff n := by
   haveI := Φ.fl.complete
   have h1 := congrArg (PowerSeries.coeff n) (h i)
-  simp only [Fr.tw, Fr.act, PowerSeries.coeff_map, pow_one, map_sum, PowerSeries.coeff_C_mul] at h1 ⊢
-  rw [pow_succ, RingHom.mul_def, RingHom.comp_apply, h1, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Fr.tw, Fr.act, PowerSeries.coeff_map, pow_one, map_sum, PowerSeries.coeff_C_mul] at h1 ⊢
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [pow_succ, RingHom.mul_def, RingHom.comp_apply, h1, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [map_mul]
   congr 1
@@ -225,7 +229,8 @@ theorem UpperTheory.Kd.C7.pClause1 :
       ∑ i, algebraMap (PadicAlgCl l) ℂ_[l] (β.val i) * ε (ev Φ.R l m (dl (Φ.ser (Q i)))) := by
     intro Q hQ
     unfold htv
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun i _ => by rw [map_mul, key _ (hQ i)]
   have hex : (d₀ : Qbar l) * htv j (ζ m) (fun i => (P i).map (R0 A).subtype) β.val
       ((b * un d₀ hd m : (ZMod (l ^ m))ˣ) : ZMod (l ^ m)).val =
@@ -260,7 +265,8 @@ theorem UpperTheory.Kd.C7.pClause1 :
     exact mul_le_one₀ (pow_le_one₀ (norm_nonneg _) (coef_le β a)) (norm_nonneg _) ht
   have e5 : ∑ i, ι (β.val i) * ∑ k ∈ Finset.range (l ^ (3 * m)), Φ.jh ((Φ.tw m (D i)).coeff k) * (ι (j w) - 1) ^ k =
       v * (ι a ^ m * ι (tval Gs (l ^ (3 * m)) (j w))) := by
-    simp only [tval, Finset.mul_sum, map_sum, map_mul, map_pow, map_sub, map_one]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [tval, Finset.mul_sum, map_sum, map_mul, map_pow, map_sub, map_one]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun k _ => ?_
     have h1 := lam_tw Φ β a D hFr m k

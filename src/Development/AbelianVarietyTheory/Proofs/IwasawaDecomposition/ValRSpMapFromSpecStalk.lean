@@ -115,7 +115,8 @@ theorem Par.map_mul_of (hg : Par k O g) (hh : Par k' O h) (v : K → K') (ψ : O
   have e : (g * h) τ i j = ((∑ l, (⟨_, (hg τ).1 i l⟩ * ⟨_, (hh τ).1 l j⟩ : O) : O) : K) := by
     simp [Matrix.mul_apply]
   show v ((g * h) τ i j) = ∑ l, v (g τ i l) * v (h τ l j)
-  rw [e, hv, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, hv, map_sum]
   exact Finset.sum_congr rfl fun l _ => by rw [_root_.map_mul, ← hv, ← hv]
 
 theorem Par.map_of (hg : Par k O g) (v : K → K') (ψ : O →+* K') (hv : ∀ x : O, v x = ψ x) :

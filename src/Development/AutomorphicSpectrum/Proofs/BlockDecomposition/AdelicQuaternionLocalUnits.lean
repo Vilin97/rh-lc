@@ -14,7 +14,8 @@ open Classical in
 
 theorem proj_sum_inc (T : Finset (Pl F)) (c : (u : Pl F) → Kp u) (u : Pl F) :
     proj u (∑ t ∈ T, inc t (c t)) = if u ∈ T then c u else 0 := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   by_cases h : u ∈ T
   · rw [if_pos h, Finset.sum_eq_single_of_mem u h]
     · exact proj_inc_same u _

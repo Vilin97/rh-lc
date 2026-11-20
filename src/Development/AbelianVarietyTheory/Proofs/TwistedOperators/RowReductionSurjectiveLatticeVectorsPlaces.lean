@@ -205,7 +205,8 @@ theorem exists_row {S T : HSp D} (Pg Q : Finset (Formalism.L2.DIV.Pl D.host.E)) 
     have hr : (⟨R i0 j, hRint i0 j⟩ : Formalism.L2.Herm.intAf D.host.F D.host.E) = r0 i0 j := rfl
     rw [hr]
     simp only [r0, if_pos rfl]
-    rw [map_mul, hres PP hPP, one_mul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_mul, hres PP hPP, one_mul, map_sum]
     simp_rw [map_mul, Formalism.L2.DIV.resS_oToS]
     rw [Finset.sum_eq_single ⟨PP, hPP⟩]
     · rw [hdel PP hPP PP hPP, if_pos rfl, one_mul, hc]

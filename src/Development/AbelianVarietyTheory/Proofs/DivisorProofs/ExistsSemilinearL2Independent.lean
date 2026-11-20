@@ -98,7 +98,8 @@ theorem exists_semilinear_L2_independent (hS : Out.SecBaseChangeSt) (U : ∀ σ 
     refine hc w ?_
     have h1 : (cf : ℂ) • L (∑ i, w i • R (e i)) = 0 := by
       have hw' : ∑ i, w i • ((cf : ℂ) • L (R (e i))) = 0 := hw
-      rw [map_sum, Finset.smul_sum, ← hw']
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Finset.smul_sum, ← hw']
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [L.map_smul]
       exact smul_comm _ _ _

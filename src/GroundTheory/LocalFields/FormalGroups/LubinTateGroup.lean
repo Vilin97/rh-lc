@@ -93,7 +93,8 @@ variable {A : Type*} [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
 
 theorem subst_linearForm {σ τ : Type*} [Fintype τ] {v : τ → MvPowerSeries σ A} (hv : HasSubst v)
     (a : τ → A) : subst v (sum₂ a) = ∑ j, C (a j) * v j := by
-  rw [sum₂, ← coe_substAlgHom hv, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [sum₂, ← coe_substAlgHom hv, map_sum]
   simp only [map_mul, coe_substAlgHom, subst_C, subst_X hv]
 
 theorem linearForm_unit (a : A) :

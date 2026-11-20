@@ -38,7 +38,8 @@ theorem eq_zero_of_commute_of_separable {n : ℕ} (γ X : Matrix (Fin n) (Fin n)
     rw [hb]; exact (hv i).apply_eq_smul
   have hrepr : ∀ w j, b.repr (T w) j = (j : ℂ) * b.repr w j := fun w j => by
     conv_lhs => rw [← b.sum_repr w]
-    simp [map_sum, hTb, Finsupp.single_apply, Finset.sum_ite_eq', mul_comm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, hTb, Finsupp.single_apply, Finset.sum_ite_eq', mul_comm]
   have hdiag : ∀ i j, j ≠ i → b.repr (R (b i)) j = 0 := fun i j hji => by
     have h1 := hrepr (R (b i)) j
     rw [hTR, hTb, map_smul, map_smul] at h1

@@ -179,7 +179,8 @@ theorem EhS_eq (l : Fin S.t) :
     ext
     simp only [finPos, chE, uTop, Fin.val_castSucc, Fin.val_mk]
     omega
-  simp only [EhS, pairU, tcPairP, map_sum, map_mul, rename_X, chainEmb, h1, h2]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [EhS, pairU, tcPairP, map_sum, map_mul, rename_X, chainEmb, h1, h2]
 
 def uTot (r : ℕ) (S : SegData s) (ju : Fin S.t → ℕ) (jp : ℕ) (G : MvPolynomial (Fin (2 * s + 1) × Fin r) (KK O))
     (zU sU : Fin S.t → ℕ) (xf : ℕ) (γ : Fin r → ℕ) : MvPolynomial (BVar (2 * s + 1) r S.t) (KK O) :=

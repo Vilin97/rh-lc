@@ -563,7 +563,8 @@ theorem heckePolyOf_gaussBin (q n : ℕ) (ν : L) :
 
 theorem map_heckePolyOf {L' : Type} [Field L'] (φ : L →+* L') (n q : ℕ) (a : ℕ → L) :
     (heckePolyOf n q a).map φ = heckePolyOf n q fun i => φ (a i) := by
-  simp [heckePolyOf, Polynomial.map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [heckePolyOf, Polynomial.map_sum]
 
 theorem map_blockPoly {L' : Type} [Field L'] (φ : L →+* L') (ν : L) (q t : ℕ) :
     (blockPoly ν q t).map φ = blockPoly (φ ν) q t := by

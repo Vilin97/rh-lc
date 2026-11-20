@@ -53,7 +53,8 @@ theorem sep_laurent {X : Scheme.{0}} {x : Sp (PowerSeries ℂ) ⟶ X} {G : Over 
   have hb' : ∀ k, HahnSeries.ofPowerSeries ℤ ℂ (b k) = HahnSeries.ofPowerSeries ℤ ℂ (d : PowerSeries ℂ) * a k := fun k => by
     rw [← LaurentSeries.coe_algebraMap, hb k, Algebra.smul_def, LaurentSeries.coe_algebraMap]
   have h0 := GlobalTheory.T.derivatives_separate_lieBasis_coeffs_cartesian h v hv hA hV b fun f => hinj (by
-    rw [map_sum, map_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero]
     have e := congrArg (fun t => HahnSeries.ofPowerSeries ℤ ℂ (d : PowerSeries ℂ) * t) (ha f)
     simp only [mul_zero, Finset.mul_sum] at e
     rw [← e]
@@ -134,7 +135,8 @@ theorem lie_coords_hasSum : ∀ (E : Type) [Field E] [NumberField E] [IsCMField 
       have e3 : Wv (Fin.cast hg.symm i') = ∑ k, Gw i' k • z k := funext fun j => by
         rw [hGw i' j, Finset.sum_apply]
         simp
-      rw [e3, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [e3, map_sum]
       simp [smul_eq_mul]
     have hT' := hT ⟨(w, yF, xF, Gw), h1, h2, fun t => ⟨(hxF t).1, (hxF t).2.1⟩, hz, hω⟩ hw i
     have hS : ∀ k, SumsAt (A i k) w (Gw i k) := fun k => GlobalTheory.Conv.sumsAt_iff.2 (hT' k)
@@ -171,7 +173,8 @@ theorem lie_coords_hasSum : ∀ (E : Type) [Field E] [NumberField E] [IsCMField 
     (Bw := fun f ω => (valR (spMap (dualMap (ψ ω)) ≫ M.v₀ (Fin.cast hn.symm i)) Vo f).snd)
     (Gw := fun k ω => ω.1.2.2.2 i k)
     (fun f => ?_) (sep_laurent hcart v hvb hVo hVη) (fun f k => ?_) (fun f => ?_) (fun f => ?_)
-  · rw [comb_snd hcart v tanv (A i) (v' i) (hA i) Vo hVη f, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [comb_snd hcart v tanv (A i) (v' i) (hA i) Vo hVη f, map_sum]
     exact Finset.sum_congr rfl fun k _ => map_mul _ _ _
   · obtain ⟨T', hT'⟩ := Ha.diff (z k) (e k) (v k) Vo f (hez k).2.1 (hez k).2.2
       (fun n ρ κ vn h1 h2 h3 h4 h5 => (hez k).1 n ρ κ vn h1 h2 h3 h4 (thick_base _ n (v k) ρ vn h1 h5) h5) (hvV k)

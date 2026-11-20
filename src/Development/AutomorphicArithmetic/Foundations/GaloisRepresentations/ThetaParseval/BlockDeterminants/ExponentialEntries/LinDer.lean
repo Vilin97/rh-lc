@@ -39,7 +39,8 @@ theorem isExp_add_smul {V : Type} [AddCommGroup V] [Module ℂ V] {L U : Module.
     simp [mul_comm]
   rw [hval]
   convert key using 2 with n
-  rw [hcomm.add_pow', LinearMap.sum_apply, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hcomm.add_pow', LinearMap.sum_apply, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl ?_
   rintro ⟨i, j⟩ hij
   obtain rfl : i + j = n := by simpa using hij
@@ -107,7 +108,8 @@ theorem der_pow_mul (D : Derivation ℂ (MvPolynomial σ ℂ) (MvPolynomial σ �
   induction n with
   | zero => simp
   | succ n ih =>
-    rw [Finset.sum_antidiagonal_choose_succ_nsmul (fun i j => (L ^ i) P * (L ^ j) Q) n, pow_succ',
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_antidiagonal_choose_succ_nsmul (fun i j => (L ^ i) P * (L ^ j) Q) n, pow_succ',
       Module.End.mul_apply, ih, map_sum, ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl ?_
     rintro ⟨i, j⟩ hij
@@ -126,7 +128,8 @@ theorem eval_series_mul (D : Derivation ℂ (MvPolynomial σ ℂ) (MvPolynomial 
   have key := hasSum_cauchy hP hQ
   rw [map_mul, map_mul]
   convert key using 2 with n
-  rw [der_pow_mul, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [der_pow_mul, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl ?_
   rintro ⟨i, j⟩ hij
   obtain rfl : i + j = n := by simpa using hij
@@ -157,7 +160,8 @@ theorem linDer_pow_X (T : Matrix σ σ ℂ) (n : ℕ) (i : σ) :
   induction n with
   | zero => simp [Matrix.one_apply, ite_smul]
   | succ n ih =>
-    rw [pow_succ', Module.End.mul_apply, ih, map_sum, pow_succ']
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [pow_succ', Module.End.mul_apply, ih, map_sum, pow_succ']
     simp only [map_smul, Derivation.coeFn_coe, linDer_X, Finset.smul_sum, smul_smul, Matrix.mul_apply, Finset.sum_smul]
     rw [Finset.sum_comm]
     exact Finset.sum_congr rfl fun m _ => Finset.sum_congr rfl fun l _ => by rw [mul_comm]
@@ -246,7 +250,8 @@ theorem linDer_eval_series (T G : Matrix σ σ ℂ)
           MvPolynomial σ ℂ →ₗ[ℂ] MvPolynomial σ ℂ) ^ n) (X i))) =
         fun b : ℕ => ∑ l, (b.factorial : ℂ)⁻¹ * (T ^ b) l i * z l := by
       funext n
-      rw [linDer_pow_X, map_sum, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [linDer_pow_X, map_sum, Finset.mul_sum]
       exact Finset.sum_congr rfl fun l _ => by simp [smul_eval, mul_assoc]
     rw [heq]
     exact hs

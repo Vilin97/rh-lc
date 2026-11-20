@@ -67,7 +67,8 @@ theorem exists_desc_of_isKsForm : ∀ (D : D7) (S : RatDat D.ntw) (j : ℕ), (S.
         rw [hbL, ← hbK]; rfl
       have e2 : T (bL q) = ∑ s, (algebraMap S.Ks D.what₂.LL (bK.repr (T' (bK q)) s)) • bL s := by
         rw [e1]; conv_lhs => rw [← bK.sum_repr (T' (bK q))]
-        rw [map_sum]; refine Finset.sum_congr rfl fun s _ => ?_
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]; refine Finset.sum_congr rfl fun s _ => ?_
         rw [map_smul, hbK, hbL, algebraMap_smul]
       rw [e2, Module.Basis.repr_sum_self]
     apply bF.equivFun.injective
@@ -88,7 +89,8 @@ theorem exists_desc_of_isKsForm : ∀ (D : D7) (S : RatDat D.ntw) (j : ℕ), (S.
     funext r
     rw [hΦ, hKB, hΦ]
     simp only []
-    rw [hL, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hL, map_sum, map_sum]
     refine Finset.sum_congr rfl fun q _ => ?_
     rw [← S.kKs_spec, hfc, map_mul]; rfl
 

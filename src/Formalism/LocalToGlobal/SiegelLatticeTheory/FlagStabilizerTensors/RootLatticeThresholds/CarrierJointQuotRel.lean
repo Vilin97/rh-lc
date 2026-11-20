@@ -262,14 +262,16 @@ theorem hJ_sum_r' {ι : Type*} [Fintype ι] (x : Fin n → ℂ) (a : ι → ℂ)
   simp only [hJ, Matrix.mulVec_sum, Matrix.mulVec_smul, dotProduct_sum, dotProduct_smul, smul_eq_mul]
 
 theorem hJ_cj' (x y : Fin n → ℂ) : hJ ε x y = conj (hJ ε y x) := by
-  simp only [hJ, Formalism.REAL.Jm, Matrix.mulVec_diagonal, dotProduct, Pi.star_apply, RCLike.star_def, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hJ, Formalism.REAL.Jm, Matrix.mulVec_diagonal, dotProduct, Pi.star_apply, RCLike.star_def, map_sum,
     map_mul, Complex.conj_conj]
   refine Finset.sum_congr rfl fun a _ => ?_
   split_ifs <;> simp <;> ring
 
 theorem hJ_sum_l' {ι : Type*} [Fintype ι] (x : Fin n → ℂ) (a : ι → ℂ) (y : ι → Fin n → ℂ) (w : Fin n → ℂ) :
     hJ ε (x + ∑ c, a c • y c) w = hJ ε x w + ∑ c, conj (a c) * hJ ε (y c) w := by
-  rw [hJ_cj' ε (x + ∑ c, a c • y c) w, hJ_add_r', hJ_sum_r', map_add, map_sum, ← hJ_cj' ε x w]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hJ_cj' ε (x + ∑ c, a c • y c) w, hJ_add_r', hJ_sum_r', map_add, map_sum, ← hJ_cj' ε x w]
   congr 1
   refine Finset.sum_congr rfl fun c _ => ?_
   rw [map_mul, ← hJ_cj' ε (y c) w]

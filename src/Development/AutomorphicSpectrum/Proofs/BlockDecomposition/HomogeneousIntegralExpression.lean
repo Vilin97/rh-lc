@@ -48,7 +48,8 @@ theorem exists_monic_relation {K σ : Type} [Field K] {m : ℕ} (I : Ideal (MvPo
     simpa using this
   choose C hC using hlift
   refine ⟨q.natDegree, C, hdeg, ?_⟩
-  rw [← Ideal.Quotient.eq_zero_iff_mem, ← hroot', Polynomial.eval₂_eq_sum_range,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Ideal.Quotient.eq_zero_iff_mem, ← hroot', Polynomial.eval₂_eq_sum_range,
     Finset.sum_range_succ, map_add, map_sum, add_comm]
   congr 1
   · refine Finset.sum_congr rfl fun l _ => ?_
@@ -75,7 +76,8 @@ theorem homogeneousComponent_aeval_mul {K σ : Type} [Field K] {m e : ℕ} (he :
         hr (Nat.eq_of_mul_eq_mul_left he (Nat.add_right_cancel h'))
       rw [if_neg hne.symm, if_neg hr]
   conv_lhs => rw [← sum_homogeneousComponent C]
-  rw [map_sum, Finset.sum_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_mul, map_sum]
   simp_rw [key]
   rw [Finset.sum_ite_eq']
   split_ifs with hmem
@@ -97,7 +99,8 @@ theorem exists_hom_relation {K σ : Type} [Field K] {m : ℕ} (I : Ideal (MvPoly
   refine ⟨s, fun l => homogeneousComponent ((s - l) * w) (C l), hs,
     fun l => homogeneousComponent_isHomogeneous _ _, ?_⟩
   have hcomp := hI _ hmem (e * w * s)
-  rw [map_add, map_sum] at hcomp
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_add, map_sum] at hcomp
   convert hcomp using 2
   · have h := ha.pow s
     rw [homogeneousComponent_of_mem ((mem_homogeneousSubmodule _ _).2 h)]

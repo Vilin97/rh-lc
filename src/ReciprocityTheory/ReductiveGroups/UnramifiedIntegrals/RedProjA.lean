@@ -64,7 +64,8 @@ theorem homS_eq_zero (hU : PowerSeries.constantCoeff U = 1) (m : ℕ) (P : K[X])
     (h : homS U m P = 0) : P = 0 := by
   have h1 : PowerSeries.coeff (2 * (m - P.natDegree)) (homS U m P) = P.leadingCoeff := by
     unfold homS
-    rw [map_sum, Finset.sum_eq_single P.natDegree]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_eq_single P.natDegree]
     · rw [PowerSeries.coeff_mul_X_pow', if_pos le_rfl, Nat.sub_self, PowerSeries.coeff_zero_eq_constantCoeff_apply,
         map_mul, map_pow, hU]
       simp

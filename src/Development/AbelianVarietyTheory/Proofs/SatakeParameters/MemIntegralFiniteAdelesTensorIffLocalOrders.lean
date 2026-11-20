@@ -50,7 +50,8 @@ theorem exists_coeff {k : ℕ} (x : Fin k → 𝓞 E)
     refine ⟨fun j => n j • a, fun j => zsmul_mem ha _, ?_⟩
     show a ⊗ₜ[F] (algebraMap (𝓞 E) E (∑ j, n j • x j)) =
       ∑ j, (n j • a) ⊗ₜ[F] (algebraMap (𝓞 E) E (x j))
-    simp only [map_sum, map_zsmul, TensorProduct.tmul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_zsmul, TensorProduct.tmul_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [TensorProduct.smul_tmul]
   | zero => exact ⟨0, fun _ => zero_mem _, by simp⟩
@@ -86,7 +87,8 @@ theorem mem_intA_iff :
     have e : z = ∑ j, A j ⊗ₜ[F] (x j : E) := by
       apply evF_ext
       intro v
-      rw [ea v, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [ea v, map_sum]
       exact Finset.sum_congr rfl fun j _ => rfl
     rw [e]
     exact sum_mem fun j _ => AddSubgroup.subset_closure ⟨A j, fun v => ha v j, x j, rfl⟩

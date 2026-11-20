@@ -88,7 +88,8 @@ theorem isCombAt_of_one : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [To
   choose Φ hΦ using hA
   let Ξ' : SB (Matrix Y Y' k) := ∑ u : c.support, c u • Φ u
   have hΞ' : ∀ Tm, p.IsModel ψ FS FT Tm → Tm Ξ' = comb ψ S T c (Tm O) := fun Tm h => by
-    simp only [Ξ', map_sum, map_smul, fun u => hΦ u Tm h]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Ξ', map_sum, map_smul, fun u => hΦ u Tm h]
     rw [GlobalTheory.HeisComb.comb_eq_sum, Finsupp.sum]
     exact Finset.sum_coe_sort c.support (fun u => c u • heisO ψ S T u (Tm O))
   have hinj : Ξ = Ξ' := by

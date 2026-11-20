@@ -162,7 +162,8 @@ theorem alg_comp (ρ : Representation ℂ H' X) (Φ : H ≃* H') (B : Finset H) 
     Representation.asAlgebraHom (ρ.comp Φ.toMonoidHom : Representation ℂ H X)
         (∑ γ ∈ B, MonoidAlgebra.single γ 1 - MonoidAlgebra.single 1 z) v =
       ρ.asAlgebraHom (∑ γ ∈ B.map Φ.toEquiv.toEmbedding, MonoidAlgebra.single γ 1 - MonoidAlgebra.single 1 z) v := by
-  simp [map_sub, map_sum, Representation.asAlgebraHom_single, Finset.sum_map, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sub, map_sum, Representation.asAlgebraHom_single, Finset.sum_map, LinearMap.sum_apply]
 
 end Alg
 

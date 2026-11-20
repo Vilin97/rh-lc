@@ -94,7 +94,8 @@ section Norm
 variable {k H : Type u} [CommRing k] [Group H] [Fintype H]
 
 lemma ρ_apply_norm (B : Rep.{u} k H) (b : B) (s : H) : B.ρ s (B.ρ.norm b) = B.ρ.norm b := by
-  rw [Representation.norm, LinearMap.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Representation.norm, LinearMap.sum_apply, map_sum]
   refine Fintype.sum_equiv (Equiv.mulLeft s) _ _ fun t => ?_
   simp [← Module.End.mul_apply, ← map_mul]
 

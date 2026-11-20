@@ -207,7 +207,8 @@ theorem sumPlaceInv_eq_sum_of_placeInv (T : Finset (Place K.1)) (y : ⨁ w : Pla
     (hT : ∀ w ∉ T, placeInv w (y w) = 0) : sumPlaceInv K y = ∑ w ∈ T, placeInv w (y w) := by
   classical
   conv_lhs => rw [← DirectSum.sum_support_of y]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp_rw [sumPlaceInv_of]
   calc ∑ w ∈ DFinsupp.support y, placeInv w (y w)
       = ∑ w ∈ DFinsupp.support y ∪ T, placeInv w (y w) :=

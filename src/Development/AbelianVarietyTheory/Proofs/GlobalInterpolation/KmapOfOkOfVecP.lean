@@ -122,7 +122,8 @@ theorem map_kerOf (A : Amb X) {a b : ℕ} (Sa SB : Finset (HeightOneSpectrum (�
     funext m
     rw [jetC_sum _ _ _ hs, Finset.sum_apply]
     rfl
-  rw [hj, GlobalTheory.GO.jetMap_sum, LinearMap.sum_apply, LinearMap.sum_apply, Submodule.coe_sum, map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hj, GlobalTheory.GO.jetMap_sum, LinearMap.sum_apply, LinearMap.sum_apply, Submodule.coe_sum, map_sum, Finset.smul_sum]
   refine Finset.sum_congr rfl fun q _ => ?_
   rw [LinearMap.smul_apply, LinearMap.smul_apply, LinearMap.smul_apply, Submodule.coe_smul, Submodule.coe_smul, jetOp_coe lam lam' n hV,
     smul_smul, MvPolynomial.smul_eq_C_mul, map_mul, MvPolynomial.map_C, ← MvPolynomial.smul_eq_C_mul,

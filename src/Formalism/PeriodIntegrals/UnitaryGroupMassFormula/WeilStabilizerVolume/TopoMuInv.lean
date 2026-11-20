@@ -26,7 +26,8 @@ theorem BR_smul (h : HA R σ J) {n : ℕ} (X Y : Fin n → Fin M → R ⊗[F] E)
     Set.mem_setOf_eq] at hg ⊢
   congr 1
   conv_rhs => rw [← hg]
-  simp only [Matrix.mulVec, dotProduct, Matrix.mul_apply, Formalism.UG.cT, map_sum, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mulVec, dotProduct, Matrix.mul_apply, Formalism.UG.cT, map_sum, map_mul,
     Finset.sum_mul, Finset.mul_sum]
   refine (Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => Finset.sum_comm).trans ?_
   refine (Finset.sum_congr rfl fun _ _ => Finset.sum_comm).trans ?_

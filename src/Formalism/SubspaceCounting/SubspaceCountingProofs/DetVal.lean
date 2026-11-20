@@ -96,7 +96,8 @@ lemma entry_one_mem {R : Type} [CommRing R] {r : ℕ} (vec : ι → Bool) (S : F
     MvPolynomial.eval₂Hom φ v (substS (K := K) vec S (1 : GL (Fin r) K) (MvPolynomial.X (i, a))) =
       φ (if a.val + 1 = r then Polynomial.X else 1) * v (i, a) := by
   rw [substS_X]
-  simp only [hi, hvi, if_true, msMat_one, map_sum, map_mul, MvPolynomial.eval₂Hom_C,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hi, hvi, if_true, msMat_one, map_sum, map_mul, MvPolynomial.eval₂Hom_C,
     MvPolynomial.eval₂Hom_X', Matrix.diagonal_apply]
   rw [Finset.sum_eq_single a]
   · simp

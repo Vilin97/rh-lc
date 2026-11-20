@@ -248,7 +248,8 @@ theorem dRep_sum_all (hG : IsUnit G) {k : ℕ} {B : Fin k → Matrix (Fin n) (Fi
     rw [← hA]
     congr 1
     simp [Pi.single_apply]
-  simp only [hA, e, ← map_smul, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hA, e, ← map_smul, ← map_sum]
   congr 1
   funext j
   simp [Pi.single_apply]
@@ -287,7 +288,8 @@ theorem continuous_word (hG : IsUnit G) (hρ : IsURepOn (Formalism.QuantumDeterm
       rw [← e1] at e2
       rw [Submodule.coe_sum]
       exact e2
-    simp only [e, map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [e, map_sum, map_smul]
     refine continuous_finset_sum _ fun i _ => Continuous.smul ?_ (hc (f ∘ₗ dOp hG hρ (b i).2))
     exact Complex.continuous_ofReal.comp ((b.coord i).continuous_of_finiteDimensional.comp (h1.subtype_mk h2))
 
@@ -347,7 +349,8 @@ theorem exists_factor (hG : IsUnit G) (hρ : IsURepOn (Formalism.QuantumDetermin
   refine ⟨_, S', fun i => g ∘L ContinuousLinearMap.single ℂ (fun _ => H) i, hS', fun w hw => ?_⟩
   have h1 := hg ⟨Φ ⟨w, hw⟩, ⟨_, rfl⟩⟩
   rw [LinearMap.mkContinuous_apply, hf] at h1
-  simp only [ContinuousLinearMap.comp_apply, ← map_sum, ContinuousLinearMap.single_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [ContinuousLinearMap.comp_apply, ← map_sum, ContinuousLinearMap.single_apply]
   refine h1.symm.trans (congrArg g ?_)
   funext j
   simp [hΦ, Pi.single_apply]

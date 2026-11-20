@@ -65,7 +65,8 @@ theorem gauss_mul_conj (ψ : AddChar k ℂ) (hψ : ψ ≠ 1) (h2 : (2 : k) ≠ 0
       ← AddChar.map_add_eq_mul, quadForm_add h2 hB]
     congr 1
     ring
-  rw [map_sum, Finset.sum_mul_sum, Finset.sum_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_mul_sum, Finset.sum_comm]
   simp_rw [step]
   rw [Finset.sum_comm]
   simp_rw [← Finset.mul_sum, inner]

@@ -42,7 +42,8 @@ theorem tendsto_one_sub_sum (F : Type) [Field F] [NumberField F] :
     apply FiniteAdeleRing.ext
     intro w
     have hw : ((1 : Af F) - ∑ v ∈ Q, singleV F v 1) w = evalV F w ((1 : Af F) - ∑ v ∈ Q, singleV F v 1) := rfl
-    rw [hw, map_sub, map_one, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hw, map_sub, map_one, map_sum]
     show _ = (if w ∈ Q then (0 : w.adicCompletion F) else 1)
     by_cases h : w ∈ Q
     · rw [Finset.sum_eq_single_of_mem w h (fun b _ hb => GlobalTheory.LatVac.evalV_singleV_ne F b w (Ne.symm hb)),
@@ -95,15 +96,18 @@ theorem one_sub_sum_idem (P : Finset (Place D)) (hP : P.toRight = Finset.univ) :
     1 - ∑ p ∈ P, idem D p = algebraMap (AF D.host.F) (AE D)
       (pairA D.host.F 0 (1 - ∑ v ∈ P.toLeft, singleV D.host.F v 1)) := by
   rw [Finset.sum_sum_eq_sum_toLeft_add_sum_toRight, hP]
-  rw [show (1 : AE D) - (∑ v ∈ P.toLeft, idem D (.inl v) + ∑ τ : D.what₂.Tau, idem D (.inr τ)) =
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [show (1 : AE D) - (∑ v ∈ P.toLeft, idem D (.inl v) + ∑ τ : D.what₂.Tau, idem D (.inr τ)) =
       algebraMap (AF D.host.F) (AE D) (1 - (∑ v ∈ P.toLeft, pairA D.host.F 0 (singleV D.host.F v 1) +
         ∑ τ : D.what₂.Tau, pairA D.host.F (GlobalTheory.AutFunCompare.sgW (plTau D τ) 1) 0)) by
     rw [map_sub, map_add, map_one, map_sum, map_sum]
     rfl]
   congr 1
   apply af_ext_of_fstA_sndA
-  · simp [fstA_pairA_twisted_operators, map_sum, sum_sgW_plTau_eq_one D]
-  · simp [sndA_pairA_twisted_operators, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp [fstA_pairA_twisted_operators, map_sum, sum_sgW_plTau_eq_one D]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp [sndA_pairA_twisted_operators, map_sum]
 
 theorem exists_eq_sum_wAt_add_two_smul : ∀ (D : D7) (S T : HSp D) (ΛS : Submodule (𝓞 D.host.E) (Fin S.rank → D.host.E)) (ΛT : Submodule (𝓞 D.host.E) (Fin T.rank → D.host.E)), IsSelfDualC S ΛS → IsSelfDualC T ΛT → ∀ w : WO S T, ∃ P₀ : Finset (Place D), ∀ P : Finset (Place D), P₀ ⊆ P → ∃ u ∈ (latO S T ΛS ΛT fun _ => True), w = ∑ p ∈ P, wAt p w + 2 • u := by
   intro D S T ΛS ΛT hS hT w

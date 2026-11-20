@@ -131,7 +131,8 @@ theorem canEx_at (p : PtAt ex Csz) (w : D.what₂.places.Pl) (j : Fin D.R.m) :
   have hv : ∀ g, v g = g.1 := fun _ => rfl
   have hsum : ∀ a : Fin n → p.Sx.Ks, (p.nexp.fi j).e (∑ k, a k • f k).1 = ∑ k, (p.nexp.fi j).eK (a k) • b k := by
     intro a
-    rw [← hv, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hv, map_sum, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_smul, hv, hEs, hf]
   have hdec : ∀ g : NX.FmK p.Sx ((j : ℕ) + 1), ∃ a : Fin n → p.Sx.Ks, g = ∑ k, a k • f k := by

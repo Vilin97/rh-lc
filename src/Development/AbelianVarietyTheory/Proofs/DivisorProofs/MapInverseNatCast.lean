@@ -196,7 +196,8 @@ theorem partV_eq (H : AddSubgroup S'.Gam) [Fintype (S'.perp H)] (i : S'.J) (a h 
     partV S' H i a h = algebraMap o' Ω' (Ring.inverse (Nat.card (S'.perp H) : o')) *
       ∑ t : S'.perp H, algebraMap o' Ω' (S'.ζN ^ (-(wtChar S' _ a t)).val) *
         ∑ j, algebraMap o' Ω' (S'.ρ t j i) * S'.ev h j := by
-  simp only [partV, ThetaSys.proj, finsum_eq_sum_of_fintype, Matrix.smul_apply, Matrix.sum_apply, smul_eq_mul, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [partV, ThetaSys.proj, finsum_eq_sum_of_fintype, Matrix.smul_apply, Matrix.sum_apply, smul_eq_mul, map_mul,
     map_sum, Finset.mul_sum, Finset.sum_mul]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun t _ => Finset.sum_congr rfl fun j _ => by ring
@@ -318,7 +319,8 @@ theorem exists_parts [ArithBase o Ω] [ArithBase o' Ω'] (hS : USame ρ ρ' lab 
           (hV κ (g h) ((hH h).2 hh) (by rw [← map_nsmul, e', hl]) (e t))
       · simp [hV₀ κ he]
     beta_reduce
-    rw [map_div₀, map_mul, map_inverse_natCast, map_sum, show σ (φ (S.th x₀)) = φ (S.th x₀) from RingHom.congr_fun hφ _,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_div₀, map_mul, map_inverse_natCast, map_sum, show σ (φ (S.th x₀)) = φ (S.th x₀) from RingHom.congr_fun hφ _,
       ← Equiv.sum_comp e fun t => algebraMap o' Ω' (S'.ζN ^ (-(wtChar S' _ (g b) t)).val) * V κ t]
     simp only [map_mul, hζ, hσV]
 

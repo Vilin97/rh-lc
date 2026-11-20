@@ -33,7 +33,8 @@ theorem latticeCoord_ne_zero (hφ : IsDualBasis L φ) (b : Fin (N + 1)) : lattic
 
 theorem dehom_latticeForm_sum (c : Fin (N + 1) → ℤ) :
     dehom K r (latticeForm (∑ b, c b • φ b)) = ∑ b, (c b : LatticeField K r) * latticeCoord φ ⟨(), b⟩ := by
-  rw [latticeForm_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [latticeForm_sum, map_sum]
   refine Finset.sum_congr rfl fun b _ ↦ ?_
   rw [latticeForm_zsmul, map_mul, latticeCoord_eq]
   simp [dehom]

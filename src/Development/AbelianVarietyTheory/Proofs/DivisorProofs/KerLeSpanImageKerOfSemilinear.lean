@@ -37,7 +37,8 @@ theorem ker_le_span_image_ker_of_semilinear :
       have := congrArg (fun z : C => (z : X)) (b.sum_repr ⟨c, hc⟩)
       simp only [Submodule.coe_sum, Submodule.coe_smul] at this
       exact this.symm
-    rw [hcs, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hcs, map_sum]
     refine Submodule.sum_mem _ fun k _ => ?_
     rw [map_smulₛₗ]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨k, rfl⟩)
@@ -49,7 +50,8 @@ theorem ker_le_span_image_ker_of_semilinear :
   have hTu : T u = 0 := hNT hu
   have h0 : ∑ k, a k • jW (θ (b k : X)) = 0 := by
     have : T (u + ∑ k, a k • j (b k : X)) = 0 := hh
-    rw [map_add, hTu, zero_add, map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_add, hTu, zero_add, map_sum] at this
     simpa [hT] using this
   have ha := Fintype.linearIndependent_iff.1 hli2 a h0
   simpa [ha] using hu

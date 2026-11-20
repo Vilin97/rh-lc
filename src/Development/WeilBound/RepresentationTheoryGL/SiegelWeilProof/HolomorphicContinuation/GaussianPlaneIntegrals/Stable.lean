@@ -69,7 +69,8 @@ theorem stable : Stable := by
   have hgen : ∀ v : Unit × Fin n × Fin n, aeval ψF (∑ k, (X (v.1, false, k, v.2.1) * X (v.1, true, k, v.2.2) :
       MvPolynomial (Unit × Bool × Fin n × Fin n) ℂ)) ∈ pairAlg ι A B := by
     rintro ⟨t, a', b'⟩
-    simp only [map_sum, map_mul, aeval_X, ψF, Bool.false_eq_true, if_false, if_true]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, aeval_X, ψF, Bool.false_eq_true, if_false, if_true]
     by_cases hb : ∃ b, eB b = a'
     · by_cases ha : ∃ a, eA a = b'
       · simp only [dif_pos hb, dif_pos ha]

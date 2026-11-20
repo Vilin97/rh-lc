@@ -41,7 +41,8 @@ theorem exists_gen (S : Subring A) (Λ : Submodule S (Fin n → A)) {k : Type} [
   let μ : Fin n → Λ := fun i => ε • g (Pi.single i 1)
   have h1 : ∀ a : Fin n → S, c (∑ i, a i • μ i) = fun i => r (a i) := by
     intro a
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     ext j
     simp [μ, map_smulₛₗ, hg, hrε, Finset.sum_apply, Pi.single_apply]
   have h2 : ∀ i, ε • μ i = μ i := fun i => by simp only [μ, smul_smul, hε]
@@ -202,7 +203,8 @@ theorem hform_adj (s : A →+* A) {J : Matrix (Fin n) (Fin n) A} (hJ : IsUnit J.
     Matrix.dotProduct_mulVec]
   congr 1
   ext i
-  simp [cT, Matrix.vecMul, Matrix.mulVec, dotProduct, map_sum, mul_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [cT, Matrix.vecMul, Matrix.mulVec, dotProduct, map_sum, mul_comm]
 
 noncomputable def glue (s : A →+* A) (J : Matrix (Fin n) (Fin n) A) (e : A)
     (X X' : Matrix (Fin n) (Fin n) A) : Matrix (Fin n) (Fin n) A :=
@@ -276,7 +278,8 @@ theorem exists_unitary_lift : ∀ (A : Type) [CommRing A] (s : A →+* A) (S : S
       simp [Matrix.mulVec, dotProduct]
     · rw [hcz, hca]
       ext i
-      simp [Matrix.mulVec, dotProduct, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [Matrix.mulVec, dotProduct, map_sum]
   have hFmem : ∀ P, ∀ y ∈ Λ, F P *ᵥ y ∈ Λ := fun P y hy => by
     obtain ⟨z, hz, -⟩ := hFΛ P ⟨y, hy⟩
     exact hz ▸ z.2

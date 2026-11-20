@@ -15,7 +15,8 @@ open CompanionTheory.D.DSIC (KRel NC)
 theorem deg_pderiv {σ : Type} (i : σ) (f : MvPolynomial σ ℂ) (k : ℕ) (h : f.totalDegree ≤ k + 1) :
     (pderiv i f).totalDegree ≤ k := by
   classical
-  rw [f.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [f.as_sum, map_sum]
   refine totalDegree_finsetSum_le fun s hs => ?_
   rw [pderiv_monomial]
   by_cases h0 : s i = 0
@@ -95,7 +96,8 @@ theorem generalized_verma_module_polynomial : Verma2 := by
       all_goals simp
     · simp
   · intro a b f
-    simp [yy, LinearMap.sum_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [yy, LinearMap.sum_apply, map_sum]
 
   · intro c d f h
     have hd : ∀ (i : NC ε) (a b : Fin n), (X i * dd ε a b f).totalDegree ≤ f.totalDegree := fun i a b => by

@@ -308,7 +308,8 @@ theorem vb_cech (hp : p ≠ 0) (hn : IsNilpotent (p : R)) (U : Cov q) (r : ℕ) 
       intro T h
       exact ⟨(h a).1, _, rfl, le_preimage_inf (pt T) (sq_inU (hle i a T h)) (sq_inU (hle i a' T h))⟩
     have h1 := congrArg ((resU _ hle2).pull r) (hg' (i a) (i a') k')
-    rw [GlobalTheory.CompanionTheory.GrCech.res_res, map_sum] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [GlobalTheory.CompanionTheory.GrCech.res_res, map_sum] at h1
     refine h1.trans (Finset.sum_congr rfl fun k _ => ?_)
     refine (res_fAct 𝔭 (isF _) (hq2 _ _) r (isF _) (hT i) (le_inf (capO_le U' i a) (capO_le U' i a')) hle2 _ _).trans ?_
     change fAct _ _ _ r _ _ = fAct _ _ _ r _ _

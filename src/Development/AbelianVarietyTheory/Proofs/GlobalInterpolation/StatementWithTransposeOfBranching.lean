@@ -312,7 +312,8 @@ theorem coeff_prod_rename {A ι : Type} [CommRing A] [Fintype ι] {n : ℕ} (b :
       ∑ m ∈ (P τ).support, monomial (m.mapDomain fun p : Unit × Fin n => (τ, p.2)) (AddMonoidAlgebra.coeff (P τ) m) := by
     intro τ
     conv_lhs => rw [(P τ).as_sum]
-    simp only [map_sum, rename_monomial]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, rename_monomial]
   have h2 : ∀ τ, AddMonoidAlgebra.coeff (P τ) (expOf fun _ : Unit => b τ) =
       ∑ m ∈ (P τ).support, if m = expOf (fun _ : Unit => b τ) then AddMonoidAlgebra.coeff (P τ) m else 0 := by
     intro τ

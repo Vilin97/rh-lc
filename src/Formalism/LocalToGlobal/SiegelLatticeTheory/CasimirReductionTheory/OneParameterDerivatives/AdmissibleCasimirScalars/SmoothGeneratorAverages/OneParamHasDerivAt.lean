@@ -222,7 +222,8 @@ theorem bound_on_sup (Λ : Finset ℝ) (v : H) (hv : v ∈ ⨆ μ ∈ Λ, Ev σ 
   have hder : HasDerivAt (fun t : ℝ => σ (NormedSpace.exp ((t : ℂ) • gen ε p)) v)
       (∑ μ ∈ Λ, ((μ : ℂ) * Complex.I) • (c μ : H)) 0 := by
     rw [← hc]
-    simp only [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum]
     exact HasDerivAt.fun_sum fun μ _ => (c μ).2
   have hpy : ‖v‖ ^ 2 = ∑ μ ∈ Λ, ‖(c μ : H)‖ ^ 2 := by
     rw [← hc]
@@ -322,7 +323,8 @@ theorem isoK_le (S : Submodule ℂ H) (hfd : FiniteDimensional ℂ S) (hst : IsK
     rw [hbA i, map_smul] at h4
     exact h4
   rintro _ ⟨v, rfl⟩
-  rw [← (hB.eigenvectorBasis rfl).sum_repr v, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← (hB.eigenvectorBasis rfl).sum_repr v, map_sum]
   refine Submodule.sum_mem _ fun i _ => ?_
   rw [map_smul]
   exact Submodule.smul_mem _ _ (hmemΛ i (hΘEv i))

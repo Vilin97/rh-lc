@@ -135,7 +135,8 @@ theorem isClassSum_of_sumI {O : Type} [CommRing O] {bar : O → O} {q s : ℕ} {
     exact hn (Finset.mem_filter.2 ⟨Finset.mem_union_right _ ((Set.Finite.mem_toFinset _).2 ⟨hP, hlt⟩), hP⟩)
   · have h1 := hS₀ T Finset.subset_union_left
     have h2 : ∑ mu ∈ T, f mu = io (∑ mu ∈ T.filter P, Φ.term y mu c) := by
-      rw [map_sum, Finset.sum_filter]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Finset.sum_filter]
       refine Finset.sum_congr rfl fun mu _ => ?_
       split_ifs with hP
       · exact hf1 mu hP
@@ -225,6 +226,7 @@ theorem exact_of_isGeo : ∀ (g n : ℕ) (F : SFam g n (zetaAway n)) (W : Matrix
     hsum f (fun mu h => if_pos ((hwκ mu).1 h)) (fun mu h => if_neg fun h' => h ((hwκ mu).2 h'))
   refine ⟨d * ∑ τ : TT, zt ^ (-(w κ τ)).val * hτ τ, isClassSum_of_sumI Φ y _ κ c (RingHom.id _) _ f
     (fun mu h => if_pos h) (fun mu h => if_neg h) ?_⟩
-  simpa only [map_mul, map_sum, map_pow] using hf
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa only [map_mul, map_sum, map_pow] using hf
 
 end GlobalTheory.Poinc.Sep.ExactSums

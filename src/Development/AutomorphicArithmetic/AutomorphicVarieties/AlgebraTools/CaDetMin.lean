@@ -29,7 +29,8 @@ theorem UpperTheory.V.AlgebraTools.exists_least_prime_detIdeal :
     have hi : z.mulVec m i ∈ Q :=
       hle (Ideal.mem_sup_left (Ideal.subset_span ⟨i, rfl⟩))
     have h2 := (hf _).2 hi
-    simpa [Matrix.mulVec, dotProduct, map_sum, map_mul] using h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [Matrix.mulVec, dotProduct, map_sum, map_mul] using h2
   have h2 : (z.map f).det = 0 := by
     have hi : z.det ∈ Q := hle (Ideal.mem_sup_right (Ideal.subset_span rfl))
     have h3 := (hf _).2 hi

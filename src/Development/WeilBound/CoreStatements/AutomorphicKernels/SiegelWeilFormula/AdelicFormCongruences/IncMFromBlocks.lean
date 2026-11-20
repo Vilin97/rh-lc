@@ -222,7 +222,8 @@ def cNA (b : GL (Fin n ⊕ Fin n) E) (P Q P' Q' : Matrix (Fin n) (Fin n) (AE F E
 
 theorem trace_incM {p : Type} [Fintype p] (M : Matrix p p E) :
     (incM F M).trace = inclR (F := F) (AF F) M.trace := by
-  simp [Matrix.trace, incM, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Matrix.trace, incM, map_sum]
 
 theorem psi_rat_trace {ψ : AddChar (AF F) ℂ} (hψ : ∀ x : F, ψ (algebraMap F (AF F) x) = 1) (M : Matrix (Fin n) (Fin n) E) :
     ψ (-(Algebra.trace (AF F) (AE F E) (incM F M).trace)) = 1 := by

@@ -101,7 +101,8 @@ theorem sigma_component : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E]
         κ (h (RingOfIntegers.basis E (e k) • x) (RingOfIntegers.basis E (e k') • y)) *
         starRingEnd ℂ (σ (HT.dualInt E (e k'))) =
       ((ε : ℤ) : ℂ) * ∑ τ : E →ₐ[ℚ] ℂ, S τ * starRingEnd ℂ (S τ) * c τ := by
-    simp only [hform, hSdef, hcdef, map_sum, map_mul, Finset.sum_mul, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hform, hSdef, hcdef, map_sum, map_mul, Finset.sum_mul, Finset.mul_sum]
     rw [Finset.sum_congr rfl fun k _ => Finset.sum_comm]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun τ _ => ?_

@@ -92,7 +92,8 @@ theorem map_dHom (ρA : Representation k G A) (ρB : Representation k G B) (g : 
 
 theorem map_nHom (ρA : Representation k G A) (ρB : Representation k G B) (i : A →+ B)
     (hiG : ∀ c a, i (ρA c a) = ρB c (i a)) (a : A) : i (nHom ρA a) = nHom ρB (i a) := by
-  rw [nHom_apply, nHom_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [nHom_apply, nHom_apply, map_sum]
   exact Finset.sum_congr rfl fun c _ => hiG c a
 
 theorem ses_of_rep (ρA : Representation k G A) (ρB : Representation k G B) (ρC : Representation k G C)

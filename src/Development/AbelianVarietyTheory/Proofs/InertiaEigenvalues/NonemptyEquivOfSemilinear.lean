@@ -370,7 +370,8 @@ def piLattice {μ : ℕ} (T : LocLat G Qp LL O) (F : Fin μ → LocLat G Qp LL O
   · rw [eq_top_iff]
     intro x _
     obtain ⟨y, rfl⟩ := e.symm.surjective x
-    rw [← Finset.univ_sum_single y, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Finset.univ_sum_single y, map_sum]
     refine Submodule.sum_mem _ fun j _ => ?_
     have hy : y j ∈ Submodule.span LL ((F j).L.T : Set (F j).V) := by rw [(F j).L.span]; trivial
     have h1 := Submodule.mem_map_of_mem

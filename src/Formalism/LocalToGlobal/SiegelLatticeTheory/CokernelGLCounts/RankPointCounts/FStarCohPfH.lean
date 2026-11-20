@@ -143,7 +143,8 @@ theorem globGramNe_holds : GlobGramNe u u' F0 what₂ := by
     intro k
     have hk := congr_fun hv k
     simp only [Matrix.mulVec, dotProduct, gramG, Matrix.of_apply, brS, Pi.zero_apply] at hk
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [map_smul, smul_eq_mul]
     exact (Finset.sum_congr rfl (fun j _ => mul_comm _ _)).trans hk
   obtain ⟨h1, h2⟩ := PI.UnitaryGroupMassFormula.BetaLUniq.GN.coeffs_zero F0 F'₂.fl (v ∘ Sum.inl) (v ∘ Sum.inr)

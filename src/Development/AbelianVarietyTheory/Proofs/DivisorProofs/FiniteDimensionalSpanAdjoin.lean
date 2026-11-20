@@ -22,7 +22,8 @@ theorem coeff_mem_span_fin {M : Type} [AddCommGroup M] [Module ℂ M] {n : ℕ} 
   set Q : ℂ[X] := ∑ j ∈ Finset.range (n + 1), monomial j (φ (a j)) with hQdef
   have hev : ∀ u, Q.eval u = φ (p u) := by
     intro u
-    rw [hp, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hp, map_sum]
     simp only [Q, Polynomial.eval_finsetSum, eval_monomial]
     exact Finset.sum_congr rfl fun j _ => by rw [map_smul, smul_eq_mul, mul_comm]
   have hdeg : Q.natDegree ≤ n := by

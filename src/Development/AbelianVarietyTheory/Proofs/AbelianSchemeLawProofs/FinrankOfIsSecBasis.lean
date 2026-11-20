@@ -17,7 +17,8 @@ variable {X X' Y Z : Scheme.{0}} {R R' : Type} [CommRing R] [CommRing R']
 
 theorem gs_finsum (r : Z ⟶ X) (z : Z) (U : X.Opens) (h : r z ∈ U) {n : ℕ} (a : Fin n → Γ(X, U)) :
     gs r z U (∑ i, a i) = ∑ i, gs r z U (a i) := by
-  simp only [gs_eq r z U h, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [gs_eq r z U h, map_sum]
 
 theorem gs_cst (p : X ⟶ Spec (CommRingCat.of R)) (W : X.Opens) (r : Z ⟶ X) (z : Z) (hz : r z ∈ W) (a : R) :
     gs r z W (GlobalTheory.AbLaw.cst p W a) = Tor.cst (r ≫ p) z a :=
@@ -156,7 +157,8 @@ theorem perf_bas {f : X ⟶ Spec (CommRingCat.of R)} {M : LB X} (Q : Perf f M) (
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun k _ => ?_
     simp only [← _root_.mul_assoc, ← map_mul]
-    rw [← Finset.sum_mul, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Finset.sum_mul, ← map_sum]
     congr 2
     simp [Matrix.mulVec, dotProduct, mul_comm, Pi.single_apply]
   refine ⟨b, fun s => ?_⟩

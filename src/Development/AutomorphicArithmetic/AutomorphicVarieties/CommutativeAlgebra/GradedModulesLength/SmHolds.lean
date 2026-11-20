@@ -45,7 +45,8 @@ private theorem sm_lift {O P : Type} [CommRing O] [IsDomain O] [IsDiscreteValuat
   have h1 : φ u ∈ Submodule.span O (Set.range n) := hn ▸ LinearMap.mem_range_self φ u
   obtain ⟨a, ha⟩ := (Submodule.mem_span_range_iff_exists_fun O).1 h1
   have h2 : u - ∑ i, a i • w i ∈ LinearMap.ker φ := by
-    simp [LinearMap.mem_ker, map_sum, hw, ha]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [LinearMap.mem_ker, map_sum, hw, ha]
   have h3 := congrArg Subtype.val (b.sum_repr ⟨_, h2⟩)
   simp only [Fin.sum_univ_one, Submodule.coe_smul] at h3
   rw [← sub_add_cancel u (∑ i, a i • w i), ← h3]

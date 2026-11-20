@@ -32,7 +32,8 @@ theorem uphi_torsion_smul {ζ : (𝓞 E)ˣ} (hζ : ζ ∈ torsion E) (x : mixedS
 theorem logEmbedding_prod_fundSystem (f : Fin (rank E) → ℤ) :
     logEmbedding E (Additive.ofMul (∏ i, (fundSystem E i) ^ (f i))) =
       ∑ i, (f i : ℝ) • ((basisUnitLattice E i : unitLattice E) : logSpace E) := by
-  rw [ofMul_prod, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [ofMul_prod, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [ofMul_zpow, map_zsmul, logEmbedding_fundSystem, Int.cast_smul_eq_zsmul]
 
@@ -44,7 +45,8 @@ theorem ucoord_prod_fundSystem_smul (f : Fin (rank E) → ℤ) (x : mixedSpace E
   have : ∀ j, ((basisUnitLattice E j : unitLattice E) : logSpace E) =
       (basisUnitLattice E).ofZLatticeBasis ℝ (unitLattice E) j := fun j =>
     (Module.Basis.ofZLatticeBasis_apply ℝ (unitLattice E) (basisUnitLattice E) j).symm
-  simp_rw [this, map_sum, map_smul, Module.Basis.repr_self]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp_rw [this, map_sum, map_smul, Module.Basis.repr_self]
   simp [Finsupp.single_apply, add_comm]
 
 theorem hasSum_snd_of_fintype {α β : Type*} [Fintype α] {g : β → ℝ} (hg0 : ∀ b, 0 ≤ g b) {t : ℝ}

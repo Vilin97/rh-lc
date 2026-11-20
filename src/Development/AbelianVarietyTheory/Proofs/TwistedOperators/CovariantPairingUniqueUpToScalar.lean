@@ -48,7 +48,8 @@ theorem exists_tensor {V A B H₁ H₂ : Type} [AddCommGroup V] [Module ℂ V] [
     have := congrArg (fun v : E.map i₁ => (v : H₁))
       (e.sum_repr' ⟨i₁ (φ y P), Submodule.mem_map_of_mem (hmem y)⟩)
     simp only [Submodule.coe_sum, Submodule.coe_smul, Submodule.coe_inner] at this
-    rw [← this, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← this, map_sum, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [contrR_tmul, map_smul, hm, ← hψ, ha]
   choose g hg using ex

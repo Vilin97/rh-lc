@@ -40,7 +40,8 @@ variable {c J}
 
 theorem form_swap (hc : ∀ r, c (c r) = r) (hJ : ∀ i j, c (J j i) = J i j) (u w : Fin n → R) :
     c (u ⬝ᵥ J *ᵥ cv c w) = w ⬝ᵥ J *ᵥ cv c u := by
-  simp only [dotProduct, mulVec, cv, map_sum, map_mul, hc, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dotProduct, mulVec, cv, map_sum, map_mul, hc, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   rw [hJ]; ring
@@ -48,11 +49,13 @@ theorem form_swap (hc : ∀ r, c (c r) = r) (hJ : ∀ i j, c (J j i) = J i j) (u
 theorem vecMul_J (hc : ∀ r, c (c r) = r) (hJ : ∀ i j, c (J j i) = J i j) (u : Fin n → R) :
     u ᵥ* J = cv c (J *ᵥ cv c u) := by
   ext j
-  simp only [vecMul, mulVec, dotProduct, cv, map_sum, map_mul, hc, hJ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [vecMul, mulVec, dotProduct, cv, map_sum, map_mul, hc, hJ]
   exact Finset.sum_congr rfl fun i _ => mul_comm _ _
 
 theorem cv_dot (a b : Fin n → R) : cv c a ⬝ᵥ cv c b = c (a ⬝ᵥ b) := by
-  simp [dotProduct, cv, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [dotProduct, cv, map_sum]
 
 variable {x y : Fin n → R}
 
@@ -146,7 +149,8 @@ theorem cv_incV (w : Fin n → E) : cv (cA σ).toRingHom (incV F w) = incV F (fu
 theorem dot_incV (J : Matrix (Fin n) (Fin n) E) (u w : Fin n → E) :
     incV F u ⬝ᵥ incM F J *ᵥ cv (cA σ).toRingHom (incV F w) = inclR (AF F) (form σ J u w) := by
   rw [cv_incV]
-  simp [dotProduct, mulVec, incV, incM, form, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [dotProduct, mulVec, incV, incM, form, map_sum, map_mul]
 
 end Adelic
 

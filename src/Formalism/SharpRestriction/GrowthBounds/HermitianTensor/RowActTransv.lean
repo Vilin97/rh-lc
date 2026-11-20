@@ -21,7 +21,8 @@ theorem caseN (t0 : Fin (r + 1 + 1)) (h0 : midOf t0 = none) (c : K) (b : Bool)
   · rintro ⟨a, t⟩
     rcases midOf_cases t with ⟨j, rfl⟩ | ⟨ht, -⟩
     · have hne : ∀ i : Fin r, midI r i ≠ t0 := fun i => midOf_none_ne h0 i
-      simp [th_X_mid, psiB_X, scCol_X, hne, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [th_X_mid, psiB_X, scCol_X, hne, map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [psiB_C]
     · simp [th_X_none _ _ _ _ _ ht, psiB_X, scCol_X]
@@ -65,7 +66,8 @@ theorem caseM (ψ : MvPolynomial (Fin (r + 1 + 1) × Fin (r + 1 + 1)) K →ₐ[K
     simp
   · rintro ⟨a, t⟩
     rcases midOf_cases t with ⟨j, rfl⟩ | ⟨ht, -⟩
-    · simp only [RingHom.comp_apply, AlgHom.toRingHom_eq_coe, RingHom.coe_coe, th_X_mid, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp only [RingHom.comp_apply, AlgHom.toRingHom_eq_coe, RingHom.coe_coe, th_X_mid, map_sum, map_mul]
       simp only [thR, AlgHom.comp_apply, mAH_subY_mid]
       rw [← hgen b a j]
       refine Finset.sum_congr rfl fun i _ => ?_
@@ -93,7 +95,8 @@ theorem lam_caseM (L : MvPolynomial (Bool × (Fin r × Fin r)) K →ₗ[K] K) (N
     exact coeff_sum_monomial_linear L h u
   rw [lam_eq, lcoef_comm, map_mul, caseM ψ (rowAct K l) hgen hnone, caseM ψ (rowAct K l) hgen hnone]
   ext u
-  rw [coeff_smul, hc, hc, coeff_mul, coeff_mul, map_sum, map_sum, smul_eq_mul, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [coeff_smul, hc, hc, coeff_mul, coeff_mul, map_sum, map_sum, smul_eq_mul, Finset.mul_sum]
   refine Finset.sum_congr rfl fun p _ => ?_
   rw [thR_coeff, thR_coeff, th_coeff, th_coeff]
   exact hInv l hl _ (hv p.1) _ (ht p.2)
@@ -114,7 +117,8 @@ theorem lam_scaleM (L : MvPolynomial (Bool × (Fin r × Fin r)) K →ₗ[K] K) (
     exact key
   · intro b a j'
     refine Finset.sum_congr rfl fun i _ => ?_
-    simp only [scCol_X, midI_inj, rowAct, aeval_X, Matrix.diagonal_apply, blockEmb, map_mul, map_C, map_X,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [scCol_X, midI_inj, rowAct, aeval_X, Matrix.diagonal_apply, blockEmb, map_mul, map_C, map_X,
       ite_mul, zero_mul, Finset.sum_ite_eq, Finset.mem_univ, if_true, map_sum, rename_C, rename_X]
     rw [Finset.sum_eq_single i (fun x _ hx => by simp [Ne.symm hx]) (by simp)]
     simp only [if_true, MvPolynomial.algebraMap_eq]

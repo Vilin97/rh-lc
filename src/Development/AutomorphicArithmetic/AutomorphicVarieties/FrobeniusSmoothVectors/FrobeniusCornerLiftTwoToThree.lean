@@ -63,7 +63,8 @@ private theorem one_le_td {B A : Type} [CommRing B] [CommRing A] [Algebra B A] (
         (∑ i ∈ Finset.range (Q.natDegree + k + 1), Q.coeff i • a ^ i) ∈ η := by
       rw [GradedAlgebra.proj_apply]
       exact (Ideal.IsHomogeneous.mem_iff 𝒜 hh).1 hQ _
-    rw [map_sum, Finset.sum_eq_single k] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_eq_single k] at h2
     · rw [GradedAlgebra.proj_apply, DirectSum.decompose_of_mem_same 𝒜 (hmem k), Algebra.smul_def] at h2
       rcases hη.mem_or_mem h2 with h | h
       · exact h

@@ -177,7 +177,8 @@ theorem isIntB_conj_map_of_isIntB_conj : ∀ (p : ℕ) [Fact p.Prime] (G : HTGro
     refine isIntB_sum v b _ _ fun k hk => ?_
     rw [conj_tmul_smul_pow]
     exact isIntB_mul v b hb (hcoef a k hk) (isIntB_pow v b hb h1 hX k)
-  rw [eq_sum_basis v ℓ ρ, map_sum, Finset.mul_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [eq_sum_basis v ℓ ρ, map_sum, Finset.mul_sum, Finset.sum_mul]
   refine isIntB_sum v b _ _ fun a _ => ?_
   rw [hmap, mul_smul_comm, smul_mul_assoc]
   exact isIntB_smul v b (hρ a) (hterm a)

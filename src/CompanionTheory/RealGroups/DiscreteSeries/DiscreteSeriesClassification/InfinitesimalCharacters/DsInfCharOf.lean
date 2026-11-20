@@ -53,7 +53,8 @@ theorem dsInfChar_of (hC : CapToGelf) (hG : GlRelUnit) (hM : MapQdet) (hW : Coef
       ⟪w, σ g ((Formalism.REAL.etr (fun a b => GlobalTheory.SmoothVecMod.unitAct hσ a b) (m + 1) sv :
         GlobalTheory.SmoothVecMod.smoothVec ε σ) : H)⟫_ℂ := by
     simp only [GlobalTheory.Dec.gelf]
-    rw [← hY, LinearMap.sum_apply, Submodule.coe_sum, map_sum, inner_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hY, LinearMap.sum_apply, Submodule.coe_sum, map_sum, inner_sum]
     exact Finset.sum_congr rfl fun a _ => hW n ε H σ hσ sv w _ g hg
   rw [hgelf]
   rcases n with _ | k

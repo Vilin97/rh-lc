@@ -41,7 +41,8 @@ theorem fix_of_basis (g : (Fin (n + c) → k) ≃ₗ[k] (Fin (n + c) → k))
       simp [eN_apply, hx]
     · intro hx
       exact absurd (Finset.mem_univ x) hx
-  rw [hsum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hsum, map_sum]
   refine Finset.sum_congr rfl fun l _ => ?_
   rw [map_smul]
   by_cases hl : l.1 < n

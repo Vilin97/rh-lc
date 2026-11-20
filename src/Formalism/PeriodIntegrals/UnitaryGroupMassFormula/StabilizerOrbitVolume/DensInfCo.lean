@@ -100,7 +100,8 @@ theorem hR_herm (σ : E →ₐ[F] E) (hσ : ∀ x, σ (σ x) = x) {M : ℕ} (J :
   have hJ' : ∀ i j, sigR R σ (JR R J i j) = JR R J j i := by
     intro i j
     simp [JR, inclR, sigR, hJ]
-  simp only [hR, Formalism.UG.hform, map_sum, map_mul, hinv, hJ']
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hR, Formalism.UG.hform, map_sum, map_mul, hinv, hJ']
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   ring

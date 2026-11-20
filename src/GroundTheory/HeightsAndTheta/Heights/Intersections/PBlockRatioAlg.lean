@@ -84,8 +84,10 @@ theorem aeval_homogN {F : Type} [Field F] (c : ∀ k, ι k) (N : ℕ) (f : MRing
   have hsum : aeval (fun p ↦ w p / w ⟨p.1, c p.1⟩) f =
       ∑ m ∈ f.support, aeval (fun p ↦ w p / w ⟨p.1, c p.1⟩) (monomial m (AddMonoidAlgebra.coeff f m)) := by
     conv_lhs => rw [f.as_sum]
-    rw [map_sum]
-  rw [hsum, Finset.mul_sum, homogN, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hsum, Finset.mul_sum, homogN, map_sum]
   refine Finset.sum_congr rfl fun m hm ↦ ?_
   have hle : ∀ p, m p ≤ N := fun p ↦
     ((monomial_le_degreeOf p hm).trans (degreeOf_le_totalDegree f p)).trans hN
@@ -255,6 +257,7 @@ theorem BlockRatioAlg.proof : BlockRatioAlg.Statement := by
       rw [hv', div_pow, show y' c ^ m = y' c ^ (j : ℕ) * y' c ^ (m - j : ℕ) by
         rw [← pow_add, Nat.add_sub_cancel' hj]]
       field_simp
-    rw [map_sum, Finset.sum_congr rfl fun j _ ↦ e j, ← Finset.mul_sum, hpr', mul_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_congr rfl fun j _ ↦ e j, ← Finset.mul_sum, hpr', mul_zero]
 
 end GroundTheory.Heights₂.Heights.Inter

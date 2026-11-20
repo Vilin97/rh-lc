@@ -32,7 +32,8 @@ theorem exists_basis_OK (K : IntermediateField ℚ_[p] (PadicAlgCl p)) (hK : Fin
   · let z : _ → ℤ_[p] := fun i => ⟨β.repr x i, hx i⟩
     have hx' : x = algebraMap (OK p K) K (∑ i, z i • β₀ i) := by
       conv_lhs => rw [← β.sum_repr x]
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [Algebra.smul_def, Algebra.smul_def, map_mul, ← IsScalarTower.algebraMap_apply ℤ_[p] (OK p K) K,
         IsScalarTower.algebraMap_apply ℤ_[p] ℚ_[p] K, ← Module.Basis.localizationLocalization_apply ℚ_[p]

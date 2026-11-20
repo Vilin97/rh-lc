@@ -45,7 +45,8 @@ private theorem val_sum {K : Type} [Field K] {Z : Scheme.{0}} [AlgebraicGeometry
     TrueGeo.valAt z (∑ k, c k * algebraMap _ Z.functionField (b k)) =
       ∑ k, TrueGeo.valAt z (c k) * (Scheme.stalkClosedPointTo z).hom (b k) := by
   choose c' hc' using hc
-  simp only [← hc', ← map_mul, ← map_sum, Res.valAt_algebraMap]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← hc', ← map_mul, ← map_sum, Res.valAt_algebraMap]
 
 open GlobalTheory.LineNorm.Chart in
 theorem UpperTheory.test_point_lifts_to_cover :
@@ -96,6 +97,7 @@ theorem UpperTheory.test_point_lifts_to_cover :
     exact Res.valAt_const hy c
   refine (congrArg (fun r => io (TrueGeo.valAt z r)) e1).trans ?_
   rw [val_sum z _ (fun k => V.regAt_φ (Y.regAt_algebraMap _ _))]
-  simp only [e2, covMat, Matrix.of_apply, map_sum, map_mul, ← hβα]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [e2, covMat, Matrix.of_apply, map_sum, map_mul, ← hβα]
   subst hψ
   rfl

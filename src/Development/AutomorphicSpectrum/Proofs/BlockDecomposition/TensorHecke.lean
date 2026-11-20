@@ -34,7 +34,8 @@ theorem map_sum_sum_apply {A B : Type} (s : Finset A) (t : Finset B) (a : A → 
   have hB : ∀ (P' : Module.End ℂ V) (Q' : Module.End ℂ W),
       TensorProduct.map P' Q' v = TensorProduct.mapBilinear (RingHom.id ℂ) V W V W P' Q' v := fun P' Q' => by
     rw [TensorProduct.mapBilinear_apply]
-  simp only [hB, map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, Finset.sum_product,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hB, map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, Finset.sum_product,
     Finset.smul_sum, smul_smul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_

@@ -96,7 +96,8 @@ private theorem aW_gen {O R : Type} [CommRing O] [CommRing R] [Algebra O R] (W :
   rintro _ ⟨f, hf, rfl⟩
   obtain ⟨b, hb, rfl⟩ := hdec f hf
   show W.π _ ∈ _
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine sum_mem fun m hm => ?_
   rw [map_mul]
   refine mul_mem (h0 _ ⟨b m, hb m, rfl⟩) (hmon m ?_)

@@ -218,7 +218,8 @@ theorem chain_core (hNN : ValNN) (hPM : PhMon) (hFP : FdigPh) (hFS : FdigSum) (h
   have e1 : Dt.ph Pi' = ∑ M ∈ Pi'.support.image (fun μ => μ.filter (fun v => v.1 ∈ w)),
       Dt.ph (monomial M 1) * Dt.ph (wCoeff w M Pi') := by
     conv_lhs => rw [sum_wCoeff w Pi']
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun M _ => map_mul _ _ _
   rw [e1, Finset.mul_sum, hFS]
   refine le_valS_sum _ _ _ _ _ fun M hM => ?_

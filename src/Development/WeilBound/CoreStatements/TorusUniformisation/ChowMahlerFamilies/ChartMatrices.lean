@@ -70,7 +70,8 @@ theorem pt_matrices {v : Valuation C NNReal} (hv : v.Integers O) (P : HTPoint C 
     rw [hT] at hx
     obtain ⟨a, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun O).1 hx
     refine ⟨a m, ?_⟩
-    simp only [map_sum, LinearMap.map_smul_of_tower, Basis.coord_apply, Basis.repr_self, Finsupp.single_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.map_smul_of_tower, Basis.coord_apply, Basis.repr_self, Finsupp.single_apply]
     rw [Finset.sum_eq_single m (fun b _ hb => by simp [hb]) (by simp)]
     simp [Algebra.smul_def]
   choose Ei hEi using fun m => (Submodule.mem_span_range_iff_exists_fun O).1 (hT ▸ hwT m)
@@ -115,9 +116,11 @@ theorem pt_matrices {v : Valuation C NNReal} (hv : v.Integers O) (P : HTPoint C 
   · ext m m'
     apply hinj
     have h := congrArg (fun f : Module.Dual C V => f (B m')) (hw m)
-    simp only [← hEi m, map_sum, LinearMap.sum_apply, LinearMap.map_smul_of_tower, LinearMap.smul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [← hEi m, map_sum, LinearMap.sum_apply, LinearMap.map_smul_of_tower, LinearMap.smul_apply,
       Basis.coord_apply, Basis.repr_self, ← hEg] at h
-    rw [Matrix.mul_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Matrix.mul_apply, map_sum]
     simp only [Matrix.of_apply, map_mul, ← Algebra.smul_def]
     rw [h, Matrix.one_apply, Finsupp.single_apply]
     by_cases hm : m = m'
@@ -128,16 +131,19 @@ theorem pt_matrices {v : Valuation C NNReal} (hv : v.Integers O) (P : HTPoint C 
     let x : V := ∑ m, algebraMap O C (Hm k m) • w m
     have hx : P.e x = (bC.coord k) ∘ₗ P.ht := by
       refine B.ext fun m => ?_
-      simp only [x, map_sum, map_smul, hw, LinearMap.sum_apply, LinearMap.smul_apply, Basis.coord_apply,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [x, map_sum, map_smul, hw, LinearMap.sum_apply, LinearMap.smul_apply, Basis.coord_apply,
         Basis.repr_self, LinearMap.comp_apply, Finsupp.single_apply]
       rw [Finset.sum_eq_single m (fun b _ hb => by simp [Ne.symm hb]) (by simp)]
       simp [hHm]
     have h0 : P.ht x = 0 := (P.lagr x).2 fun y hy => by rw [hx, LinearMap.comp_apply, hy, map_zero]
     have h1 := congrArg (fun z => bC.repr z k') h0
-    simp only [x, ← hEi, map_sum, map_smul, LinearMap.map_smul_of_tower, Finsupp.coe_finset_sum, Finset.sum_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [x, ← hEi, map_sum, map_smul, LinearMap.map_smul_of_tower, Finsupp.coe_finset_sum, Finset.sum_apply,
       map_zero, Finsupp.coe_zero, Pi.zero_apply] at h1
     rw [Matrix.zero_apply, map_zero, ← h1]
-    simp only [Matrix.mul_apply, Matrix.transpose_apply, Matrix.of_apply, map_sum, map_mul, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mul_apply, Matrix.transpose_apply, Matrix.of_apply, map_sum, map_mul, Finset.sum_mul]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun m _ => ?_
     simp only [Finsupp.smul_apply, Finsupp.coe_finset_sum, Finset.sum_apply, smul_eq_mul, Finset.mul_sum]
@@ -193,7 +199,8 @@ theorem chart_matrices {A K : Type} [CommRing A] [IsDomain A] [Field K] [Algebra
     refine ⟨Fintype.linearCombination C fun k => jf (e.symm (bo k)), fun u => ?_⟩
     rw [Fintype.linearCombination_apply, ← hjf, ← e.symm_apply_apply (1 ⊗ₜ u), he]
     conv_rhs => rw [← bo.sum_repr ⟨ι₀ u, hmem u⟩]
-    simp only [map_sum, map_smul, hio, algebraMap_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, hio, algebraMap_smul]
   · obtain ⟨z, hz⟩ := hr.e_eq (dl m) (dl m')
     rw [hv.hom_inj ((h4 m m').trans hz), add_sub_cancel_left]
     exact hpR z

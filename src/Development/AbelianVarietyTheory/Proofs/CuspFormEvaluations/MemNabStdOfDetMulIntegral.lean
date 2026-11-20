@@ -36,7 +36,8 @@ theorem mem_valuationSubring_of_indep {K σ ι : Type} [Field K] [Fintype ι] (A
         = (∑ i, c i • map (Int.castRingHom K) (q i)).coeff m / c j := by
       rw [coeff_sum, Finset.sum_div]
       change A.subtype _ = _
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [map_mul, map_intCast, coeff_smul, coeff_map]
       simp only [a, ValuationSubring.coe_subtype, smul_eq_mul, eq_intCast]

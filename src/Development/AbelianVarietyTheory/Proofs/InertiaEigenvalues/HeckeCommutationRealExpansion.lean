@@ -88,7 +88,8 @@ theorem goodProjW_eq_sum (j : ℕ) (eC : G0g D.nd → ↥D.LL0)
 theorem inForms_goodProjector (j : ℕ) (hst : RhoStab S j) (hχ : ChiInLL0 S j) (eC : G0g D.nd → ↥D.LL0)
     (s : Finset (G0g D.nd)) (hs : ∀ g, g ∉ s → eC g = 0) (z : ↥D.LL0 ⊗[S.Ks] FmK S j) :
     inWL S j (goodProjectorBaseChangeForms S j hst hχ eC z) = goodProjW S j eC (inWL S j z) := by
-  rw [goodProjector_eq_sum S j hst hχ eC s hs, goodProjW_eq_sum S j eC s hs, LinearMap.sum_apply, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [goodProjector_eq_sum S j hst hχ eC s hs, goodProjW_eq_sum S j eC s hs, LinearMap.sum_apply, map_sum,
     LinearMap.sum_apply]
   refine Finset.sum_congr rfl fun g _ => ?_
   rw [LinearMap.smul_apply, inWL_smul, LinearMap.smul_apply]

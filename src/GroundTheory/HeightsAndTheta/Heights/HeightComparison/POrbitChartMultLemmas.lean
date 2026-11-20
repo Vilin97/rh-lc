@@ -51,7 +51,8 @@ theorem chartCone_of_isWeightedHomogeneous (D : Type*) [CommRing D] [Algebra (ch
   classical
   conv_lhs => rw [F.as_sum]
   conv_rhs => rw [F.as_sum]
-  rw [map_sum, map_sum, map_sum, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, map_sum, map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun m hm ↦ ?_
   have hm' : ∀ k, ∑ i, m ⟨k, i⟩ = d k := fun k ↦ by
     rw [← weight_coordDeg_apply, hF (mem_support_iff.mp hm)]
@@ -158,8 +159,10 @@ theorem mem_of_chartEval_mem_chartPoint (hc : ∀ k, x k (c k) ≠ 0)
         (isWeightedHomogeneous_chartMonomial c (E - e)).mul
           (weightedHomogeneousComponent_isWeightedHomogeneous e v)
   have hG0 : chartEval x c G = 0 := by
-    simp only [G, map_sub, map_sum, map_mul, chartEval_chartMonomial x c hc, one_mul]
-    rw [← map_sum, ← hvsum, hvF, sub_self]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [G, map_sub, map_sum, map_mul, chartEval_chartMonomial x c hc, one_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, ← hvsum, hvF, sub_self]
   have hGW := mem_orbitIdeal_of_chartEval_eq_zero x c hc hG hG0
   have hmem : chartMonomial c (E - d) * F ∈ V := by
     have e : chartMonomial c (E - d) * F = G +

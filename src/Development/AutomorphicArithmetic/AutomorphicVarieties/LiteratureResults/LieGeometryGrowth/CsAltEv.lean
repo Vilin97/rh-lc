@@ -34,7 +34,8 @@ theorem UpperTheory.V.Lit.Geo.Cs.altEv :
     calc f y = M (L (f y)) := (LinearMap.congr_fun hM (f y)).symm
       _ = M (∑ σ, Pi.single σ (L (f y) σ)) := by rw [Finset.univ_sum_single]
       _ = ∑ σ, A σ (f y (fun i => bs (σ i))) := by
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         rfl
   intro i hi
   have hcdi : ∀ σ : Fin q → Fin (Module.finrank ℝ V),

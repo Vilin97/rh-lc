@@ -219,7 +219,8 @@ theorem isAdmOn_of_iwasawa {n : ℕ} {G : Set (Matrix (Fin n) (Fin n) ℂ)} {H :
     calc v = ((∑ i, b.repr ⟨v, hv⟩ i • b i : S) : H) := by rw [b.sum_repr]
       _ = _ := (map_sum S.subtype _ _).trans (Finset.sum_congr rfl fun i _ => rfl)
   show Θ₀ v ∈ _
-  rw [hv2, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hv2, map_sum]
   refine Submodule.sum_mem _ fun i _ => ?_
   rw [map_smul]
   refine Submodule.smul_mem _ _ (Submodule.mem_iSup_of_mem i ?_)

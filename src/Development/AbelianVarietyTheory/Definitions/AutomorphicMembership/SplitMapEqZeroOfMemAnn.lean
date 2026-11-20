@@ -64,7 +64,8 @@ instance isQuasicoherent_spanSub {ι : Type} [Finite ι] (u : ι → Γ(F, ⊤))
 
 theorem sectionsHom_app_sum {ι : Type} [Fintype ι] (u : ι → Γ(F, ⊤)) (a : ι → Γ(X, V)) :
     (sectionsHom u).app V (∑ i, a i • resM _ le_top (freeBasis X i)) = ∑ i, a i • resM F le_top (u i) := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_congr rfl fun i _ => by
     rw [Scheme.Modules.Hom.app_smul, app_resM, QCoh.sectionsHom_app_freeBasis]
 

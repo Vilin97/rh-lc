@@ -104,7 +104,8 @@ theorem torus_mem_twKer {τ : Representation ℂ (GL (Fin n) 𝓀[k]) W} (hτ : 
 
   have hsum : ∑ u : unipRad 𝓀[k] e, τ u w = 0 := by
     refine hτ 2 _ e hne _ fun x hx => ?_
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Fintype.sum_equiv (Equiv.mulLeft (⟨x, hx⟩ : unipRad 𝓀[k] e)) _ _ fun u => ?_
     rw [Equiv.coe_mulLeft]
     show _ = τ (x * (u : GL (Fin n) 𝓀[k])) w
@@ -137,7 +138,8 @@ theorem torus_mem_twKer {τ : Representation ℂ (GL (Fin n) 𝓀[k]) W} (hτ : 
   have hcard : (Fintype.card (unipRad 𝓀[k] e) : ℂ) • π t (j w) ∈ twKer π (KOne k (Fin n)) 1 := by
     have h2 := Submodule.sum_mem (twKer π (KOne k (Fin n)) 1) fun u (_ : u ∈ Finset.univ) => hterm u
     have h3 : ∑ u : unipRad 𝓀[k] e, π t (j (τ u w)) = 0 := by
-      rw [← map_sum (π t), ← map_sum j, hsum, map_zero, map_zero]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← map_sum (π t), ← map_sum j, hsum, map_zero, map_zero]
     rw [Finset.sum_sub_distrib, h3, sub_zero, Finset.sum_const, Finset.card_univ,
       ← Nat.cast_smul_eq_nsmul ℂ] at h2
     exact h2

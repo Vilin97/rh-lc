@@ -27,7 +27,8 @@ theorem crd_app {X : Scheme.{0}} {F : X.Modules} {r : ℕ} {V V' : X.Opens} {s :
   have e : resM F (inf_le_left : V ⊓ V' ≤ V) (u.app V σ) =
       ∑ j, (resG X inf_le_right (c j) * crd hs σ j) • hs.basis (inf_le_right : V ⊓ V' ≤ V') j := by
     rw [← app_resM, ← (hs.basis (inf_le_right : V ⊓ V' ≤ V')).sum_repr (resM F inf_le_left σ)]
-    simp only [map_sum, Scheme.Modules.Hom.app_smul, GlobalTheory.VB.IsFrame.basis_apply, app_resM, hu, resM_smul, smul_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, Scheme.Modules.Hom.app_smul, GlobalTheory.VB.IsFrame.basis_apply, app_resM, hu, resM_smul, smul_smul]
     exact Finset.sum_congr rfl fun j _ => congrArg (· • resM F inf_le_right (s j)) (mul_comm _ _)
   rw [crd, e, Module.Basis.repr_sum_self]
 

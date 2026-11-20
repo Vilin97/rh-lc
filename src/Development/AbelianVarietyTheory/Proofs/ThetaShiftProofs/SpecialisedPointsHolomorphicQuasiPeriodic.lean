@@ -35,7 +35,8 @@ theorem ev_comb_factor : ∀ (O : Type) [CommRing O] [StarRing O] (A : AnArc O),
       apply Subtype.ext
       rw [AddSubmonoidClass.coe_finset_sum]
       exact h2 z
-    rw [e, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, map_sum]
     exact Finset.sum_congr rfl fun i _ => by rw [map_mul, hv i]
   rw [key, key, Finset.mul_sum]
   refine Finset.sum_congr rfl fun i _ => ?_

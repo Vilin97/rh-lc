@@ -75,7 +75,8 @@ def fuG (ι : Qq →+* Kf) (σ : Qq ≃+* Qq) (s : ℕ) (g : GL (Fin k) Qq) : GL
 theorem fu_twist (ι : Qq →+* Kf) (σ : Qq ≃+* Qq) (s : ℕ) (g : GL (Fin k) Qq) (x : Fin k → Qq) :
     twistVec ι σ s (nt_phi W g x) = nt_phi O (fuG ι σ s g) (twistVec ι σ s x) := by
   funext i
-  simp [twistVec, nt_phi, fuG, fuF, Matrix.mulVec, dotProduct, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [twistVec, nt_phi, fuG, fuF, Matrix.mulVec, dotProduct, map_sum]
 
 theorem fu_extO (ι : Qq →+* Kf) (σ : Qq ≃+* Qq) (s : ℕ) (g : GL (Fin k) Qq) (L : Submodule W (Fin k → Qq)) :
     extO O ι σ s (L.map (nt_phi W g)) = (extO O ι σ s L).map (nt_phi O (fuG ι σ s g)) := by
@@ -128,10 +129,12 @@ theorem fu_block_inv {k n : ℕ} (A B : Fin n' → Matrix (Fin k) (Fin k) Kf) (h
   have hc : (blockAct Kf A).comp (blockAct Kf B) = AlgHom.id Kf (MvPolynomial (Fin n' × Fin k × Fin n) Kf) := by
     apply MvPolynomial.algHom_ext
     rintro ⟨s, a, j⟩
-    simp only [AlgHom.comp_apply, AlgHom.id_apply, blockAct, MvPolynomial.aeval_X, map_sum, map_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [AlgHom.comp_apply, AlgHom.id_apply, blockAct, MvPolynomial.aeval_X, map_sum, map_mul,
       MvPolynomial.aeval_C, MvPolynomial.algebraMap_eq, Finset.mul_sum]
     rw [Finset.sum_comm]
-    simp_rw [← mul_assoc, ← MvPolynomial.C_mul, ← Finset.sum_mul, ← map_sum, ← Matrix.mul_apply, h s,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp_rw [← mul_assoc, ← MvPolynomial.C_mul, ← Finset.sum_mul, ← map_sum, ← Matrix.mul_apply, h s,
       Matrix.one_apply]
     simp
   exact congrArg (fun φ => φ P) hc

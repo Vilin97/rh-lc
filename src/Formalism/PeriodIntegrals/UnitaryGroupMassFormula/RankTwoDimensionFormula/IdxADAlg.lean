@@ -72,7 +72,8 @@ theorem da_herm (hσ : ∀ a, σ (σ a) = a) (hJ : Formalism.UG.IsHerm σ J) (x 
   have hJ' : ∀ i j, σ (J i j) = J j i := fun i j => by
     have h := congrFun (congrFun hJ j) i
     simpa [Formalism.UG.cT] using h
-  simp only [Formalism.UG.hform, map_sum, map_mul, hσ, hJ']
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Formalism.UG.hform, map_sum, map_mul, hσ, hJ']
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
 

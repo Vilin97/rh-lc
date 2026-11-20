@@ -58,7 +58,8 @@ theorem RootDivSuppEmpty.proof : RootDivSuppEmpty.Statement := by
   have hy0 : rootCoord ζ ⟨τ, plAnchor j m⟩ = 1 := anchor_minor _ _ _
   have hG : G ∈ rootPointIdeal ζ := by
     rw [rootPointIdeal, mCoordIdeal, RingHom.mem_ker]
-    simp only [hGdef, mConeMap, map_sum, map_mul, map_pow, MvPolynomial.aeval_C, MvPolynomial.aeval_X,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hGdef, mConeMap, map_sum, map_mul, map_pow, MvPolynomial.aeval_C, MvPolynomial.aeval_X,
       hy0, MvPolynomial.C_1, one_mul]
     have hterm : ∀ k ∈ Finset.range (n + 1),
         algebraMap ℤ (MvPolynomial (Fin f) ℂ) (p.coeff k) * (C (rootCoord ζ ⟨τ, I⟩) * X τ) ^ k *
@@ -69,7 +70,8 @@ theorem RootDivSuppEmpty.proof : RootDivSuppEmpty.Statement := by
       rw [eq_intCast, ← map_intCast (C : ℂ →+* MvPolynomial (Fin f) ℂ), mul_pow, C_mul, C_pow,
         ← Nat.add_sub_cancel' hkn, pow_add, Nat.add_sub_cancel_left]
       ring
-    rw [Finset.sum_congr rfl hterm, ← Finset.sum_mul, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_congr rfl hterm, ← Finset.sum_mul, ← map_sum]
     have hsum : ∑ k ∈ Finset.range (n + 1), (p.coeff k : ℂ) * rootCoord ζ ⟨τ, I⟩ ^ k = 0 := by
       rw [← hp, Polynomial.eval₂_eq_sum_range]
       simp [n]
@@ -78,7 +80,8 @@ theorem RootDivSuppEmpty.proof : RootDivSuppEmpty.Statement := by
   have h0 : Ideal.Quotient.mk Q (X ⟨τ, plAnchor j m⟩) = 0 := Ideal.Quotient.eq_zero_iff_mem.2 hτ
   have hpow : Ideal.Quotient.mk Q (X ⟨τ, I⟩) ^ n = 0 := by
     have h1 := Ideal.Quotient.eq_zero_iff_mem.2 hGQ
-    simp only [hGdef, map_sum, map_mul, map_pow, h0] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hGdef, map_sum, map_mul, map_pow, h0] at h1
     rw [Finset.sum_range_succ, Finset.sum_eq_zero, zero_add, Nat.sub_self, pow_zero, mul_one,
       hpm.coeff_natDegree, map_one, map_one, one_mul] at h1
     · exact h1

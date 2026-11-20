@@ -180,7 +180,8 @@ theorem betaRat_holds : BetaRat Zd u u' F0 what₂ := by
       rw [← hZ]
       rfl
     have homh : FsLA.om (VS D) F₂.fvec h = β (starOmL f g) := by
-      simp only [FsLA.om, starOmL, map_sum, map_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [FsLA.om, starOmL, map_sum, map_smul]
       have e : FsLA.gram (VS D) h F₂.fvec = Z₁ᴴ := hZ3
       rw [e]
       refine Finset.sum_congr rfl fun a _ => ?_

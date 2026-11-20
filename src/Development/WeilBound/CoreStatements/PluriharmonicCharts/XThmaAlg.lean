@@ -84,7 +84,8 @@ open Classical in
 theorem eval_mixPoly {σ : Type} [Fintype σ] (n : ℕ) (a : (Fin n → σ) → ℝ) (k : ℕ) (e : σ → ℝ) (a₀ : σ)
     (c : σ → ℝ) :
     MvPolynomial.eval c (mixPoly n a k e a₀) = polar n a (mix k e fun x => if x = a₀ then 0 else c x) := by
-  simp only [mixPoly, polar, mix, map_sum, map_mul, map_prod, MvPolynomial.eval_C]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [mixPoly, polar, mix, map_sum, map_mul, map_prod, MvPolynomial.eval_C]
   refine Finset.sum_congr rfl fun w _ => ?_
   congr 1
   refine Finset.prod_congr rfl fun r _ => ?_

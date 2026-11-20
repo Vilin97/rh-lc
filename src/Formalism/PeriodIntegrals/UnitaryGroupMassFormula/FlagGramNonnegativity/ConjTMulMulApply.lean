@@ -12,7 +12,8 @@ theorem tau_form {E : Type} [Field E] [StarRing E] {V : Type} [AddCommGroup V] [
     τ (hT v w) = star (fun n => τ (b.repr v n)) ⬝ᵥ
       (((PI.FlagGramNonneg.gram hT b).map τ) *ᵥ (fun n => τ (b.repr w n))) := by
   conv_lhs => rw [← b.sum_repr v, ← b.sum_repr w]
-  simp only [map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ₂, LinearMap.map_smul, smul_eq_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ₂, LinearMap.map_smul, smul_eq_mul,
     map_mul, starRingEnd_apply, hτ, dotProduct, mulVec, Matrix.map_apply, PI.FlagGramNonneg.gram,
     Pi.star_apply, Finset.mul_sum]
   rw [Finset.sum_comm]

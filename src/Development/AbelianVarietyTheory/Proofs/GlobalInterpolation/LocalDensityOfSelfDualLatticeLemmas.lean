@@ -275,7 +275,8 @@ theorem localDensity_of_selfDualLatticeLemmas (H : SelfDualLatticeActions.SelfDu
       intro y hy
       have := valued_eq_one_iff v
         (∑ i : Fin M, (y (i, 0) ^ 2 + t * y (i, 0) * y (i, 1) + n * y (i, 1) ^ 2))
-      simp only [map_sum, map_add, map_mul, map_pow] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_add, map_mul, map_pow] at this
       rw [← this, he2]
       simp only [hy]
       push_cast

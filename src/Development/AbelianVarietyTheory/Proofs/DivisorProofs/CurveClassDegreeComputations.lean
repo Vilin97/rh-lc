@@ -13,13 +13,15 @@ variable {ι : Type} [Fintype ι] [DecidableEq ι] {N : ℕ}
 theorem shF_sum (j : ℕ) (σ : ι) (F : ι → Pol ι N) :
     shF j σ (∑ τ, F τ) = ∑ τ, shF j σ (F τ) := by
   unfold shF
-  simp only [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum]
   rw [Finset.sum_comm, PPowSum.degFl_sum]
 
 theorem totF_sum (σ : ι) (F : ι → Pol ι N) :
     totF σ (∑ τ, F τ) = ∑ τ, totF σ (F τ) := by
   unfold totF
-  simp only [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum]
   rw [Finset.sum_comm, PPowSum.degFl_sum]
 
 theorem pLow_add_pHigh (j : ℕ) (τ : ι) (k : ℕ) :

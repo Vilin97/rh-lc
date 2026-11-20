@@ -134,7 +134,8 @@ theorem valS_add_le (F G : MvPolynomial (L × Fin r) K) :
 
 theorem valS_sum_le {ι : Type} (s : Finset ι) (f : ι → MvPolynomial (L × Fin r) K) (n : WithTop ℤ)
     (h : ∀ i ∈ s, n ≤ valS sg S (f i)) : n ≤ valS sg S (∑ i ∈ s, f i) := by
-  rw [le_valS_iff_pge, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [le_valS_iff_pge, map_sum]
   exact pge_sum s _ fun i hi => (le_valS_iff_pge sg S n _).mp (h i hi)
 
 theorem valS_mul_le (F G : MvPolynomial (L × Fin r) K) :
@@ -249,7 +250,8 @@ theorem substS_monomial' (α : L × Fin r →₀ ℕ) (c : K) :
 theorem substS_eq_sum (F : MvPolynomial (L × Fin r) K) :
     substS ι sg S A B F =
       ∑ α ∈ F.support, C (ι (F.coeff α)) * substS ι sg S A B (monomial α 1) := by
-  conv_lhs => rw [F.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [F.as_sum, map_sum]
   exact Finset.sum_congr rfl fun α _ => substS_monomial' ι sg S A B α _
 
 theorem coeff_substS (F : MvPolynomial (L × Fin r) K) (β : L × Fin r →₀ ℕ) :
@@ -261,7 +263,8 @@ theorem coeff_substS (F : MvPolynomial (L × Fin r) K) (β : L × Fin r →₀ �
 theorem substS_mem (T : Subring (MvPolynomial (L × Fin r) R)) (hC : ∀ c : K, C (ι c) ∈ T)
     (F : MvPolynomial (L × Fin r) K)
     (h : ∀ α ∈ F.support, ∀ x ∈ α.support, subX sg S A B x ∈ T) : substS ι sg S A B F ∈ T := by
-  rw [F.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [F.as_sum, map_sum]
   refine Subring.sum_mem _ fun α hα => ?_
   rw [substS_monomial]
   refine Subring.mul_mem _ (hC _) ?_
@@ -481,7 +484,8 @@ theorem valS_coefOut_le (hout : ∀ i ∈ S, ¬ out i) (μ : L × Fin r →₀ �
         ∑ α ∈ F.support, if eOut out α = μ then
           lauι K r (F.coeff α) * (subV sg S (monomial (eIn out α) 1)).coeff β else 0 := by
       unfold coefOut
-      rw [map_sum, coeff_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, coeff_sum]
       refine Finset.sum_congr rfl fun α _ => ?_
       split_ifs
       · rw [substS_monomial', coeff_C_mul]
@@ -516,7 +520,8 @@ theorem valS_outside_linear (Φ : MvPolynomial (L × Fin r) K →ₗ[K] MvPolyno
     valS sg S F ≤ valS sg S (Φ F) := by
   have hΦ : Φ F = ∑ μ ∈ F.support.image (eOut out), Φ (monomial μ 1) * coefOut out μ F := by
     rw [sum_mul_coefOut out (fun μ => Φ (monomial μ 1)) F]
-    conv_lhs => rw [F.as_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [F.as_sum, map_sum]
     refine Finset.sum_congr rfl fun α _ => ?_
     have : monomial α (F.coeff α) = F.coeff α • (monomial α (1 : K)) := by
       rw [smul_monomial, smul_eq_mul, mul_one]
@@ -801,7 +806,8 @@ theorem hcomp_smul (d : L → ℕ) (a : K) (F : MvPolynomial (L × Fin r) K) :
 
 theorem hcomp_sum {κ : Type} (d : L → ℕ) (s : Finset κ) (f : κ → MvPolynomial (L × Fin r) K) :
     hcomp d (∑ k ∈ s, f k) = ∑ k ∈ s, hcomp d (f k) := by
-  simp only [hcomp_eq_dg, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hcomp_eq_dg, map_sum]
 
 theorem hcomp_mem_PolK (d : L → ℕ) (F : MvPolynomial (L × Fin r) K) : hcomp d F ∈ PolK K r d := by
   rw [mem_PolK_iff]
@@ -850,7 +856,8 @@ theorem coeff_subV_hcomp (d : L → ℕ) (F : MvPolynomial (L × Fin r) K) (β :
       ∑ α ∈ F.support, if (∀ i, ldeg α i = d i) then
         ι (F.coeff α) * (substS ι sg S A B (monomial α 1)).coeff β else 0 := by
     unfold hcomp
-    rw [map_sum, coeff_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, coeff_sum]
     refine Finset.sum_congr rfl fun α _ => ?_
     split_ifs
     · rw [substS_monomial', coeff_C_mul]
@@ -1074,7 +1081,8 @@ theorem vala_ddiv_letter (hV2 : V2 K) {θ : ℝ} (i : L) (β : Fin r →₀ ℕ)
 omit [CharZero K] [Fintype L] [NeZero r] in
 theorem dg_eq_sum {σ : Type} (f : (σ →₀ ℕ) → K) (F : MvPolynomial σ K) :
     dg f F = ∑ α ∈ F.support, monomial α (f α * F.coeff α) := by
-  conv_lhs => rw [F.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [F.as_sum, map_sum]
   exact Finset.sum_congr rfl fun α _ => dg_monomial f α _
 
 omit [CharZero K] [Fintype L] [NeZero r] in
@@ -1195,7 +1203,8 @@ theorem vala_dg_outside (out : L → Prop) [DecidablePred out] (hout : ∀ i ∈
     (h : ∀ μ, eOut out μ = μ → ∀ G : MvPolynomial (L × Fin r) K, vala sg S θ G →
       vala sg S (θ - n) (dg (fun β => g (μ + β)) G))
     {F : MvPolynomial (L × Fin r) K} (hF : vala sg S θ F) : vala sg S (θ - n) (dg g F) := by
-  conv => rw [sum_coefOut out F, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv => rw [sum_coefOut out F, map_sum]
   refine vala_sum _ _ fun μ hμ => ?_
   obtain ⟨α, -, rfl⟩ := Finset.mem_image.mp hμ
   rw [dg_monomial_mul]

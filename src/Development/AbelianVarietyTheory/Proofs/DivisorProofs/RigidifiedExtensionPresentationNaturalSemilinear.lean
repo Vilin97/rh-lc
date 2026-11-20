@@ -20,7 +20,8 @@ theorem GlobalTheory.Katz.rig_pull_natural_semi : ∀ (p : ℕ) (k k' : Type) [C
   · rw [SemiHom.cocycles_val, hev n]
   · rw [SemiHom.omega_val]
     change (s.app n).cot (∑ i, w i • dUnit k (c.x n i)) = _
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [map_smulₛₗ, SemiBialgHom.cot_d]
     have hd : ∀ i, dUnit k' (s.app n (c.x n i)) = ∑ l, lin (φ i) l • dUnit k' (c'.x n l) := fun i => by
       rw [← hφ n i]

@@ -25,14 +25,16 @@ theorem relation_conj {K C X : Type} [Field K] [AddCommGroup C] [Module K C] (σ
   let c : Fin n → Fin (Module.finrank K S) → K := fun k l => b.repr ⟨f k, Submodule.subset_span ⟨k, rfl⟩⟩ l
   have hf : ∀ k, f k = ∑ l, c k l • (b l : C) := fun k => by
     have h1 := congrArg S.subtype (b.sum_repr ⟨f k, Submodule.subset_span ⟨k, rfl⟩⟩)
-    rw [map_sum] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at h1
     exact h1.symm
   have key : ∀ (a' : Fin n → ℂ) (x : X), ∑ k, a' k * Φ (f k) x = ∑ l, (∑ k, a' k * σ (c k l)) * Φ (b l) x := by
     intro a' x
     simp only [Finset.sum_mul]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun k _ => ?_
-    rw [hf k, map_sum, Finset.sum_apply, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hf k, map_sum, Finset.sum_apply, Finset.mul_sum]
     refine Finset.sum_congr rfl fun l _ => ?_
     rw [map_smulₛₗ, Pi.smul_apply, smul_eq_mul, mul_assoc]
   have h0 : ∀ l, ∑ k, a k * σ (c k l) = 0 := by
@@ -43,7 +45,8 @@ theorem relation_conj {K C X : Type} [Field K] [AddCommGroup C] [Module K C] (σ
   rw [key]
   refine (Finset.sum_eq_zero fun l _ => ?_).symm
   have h1 := congrArg τ (h0 l)
-  simp only [map_sum, map_mul, hτ, map_zero] at h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, hτ, map_zero] at h1
   rw [h1, zero_mul]
 
 theorem exists_semilinear {D : D7} (T : CoreJ D) {j : ℕ} {σ : T.Q.c.F →+* ℂ} {W : HSp D} (hV : T.V j σ = W)

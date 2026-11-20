@@ -118,7 +118,8 @@ theorem exists_mul_sub_mem_of_mem_twist_fibre {F : Type u} [Field F] [Algebra S 
             ∑ m ∈ (homogeneousComponent e f₂).support,
               algebraMap S Ω (d _ (hg₂ m)) * (aeval x (monomial m (1 : S)) / aeval x s) := by
           conv_lhs => rw [(homogeneousComponent e f₂).as_sum]
-          rw [map_sum, Finset.sum_div, Finset.mul_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [map_sum, Finset.sum_div, Finset.mul_sum]
           refine Finset.sum_congr rfl fun m _ => ?_
           rw [aeval_monomial, aeval_monomial, map_one, one_mul,
             IsScalarTower.algebraMap_apply S F Ω (d _ (hg₂ m)), ← hd, map_mul,

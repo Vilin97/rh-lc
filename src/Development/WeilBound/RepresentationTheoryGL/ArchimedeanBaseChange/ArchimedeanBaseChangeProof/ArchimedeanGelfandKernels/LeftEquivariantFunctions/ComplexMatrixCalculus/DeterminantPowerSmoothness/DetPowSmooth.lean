@@ -50,7 +50,8 @@ theorem rowAct_smooth (f : MvPolynomial (Fin n × Fin n) ℂ) :
         ∑ b : Fin n, x b v.1 * (ℓ ∘ₗ LinearMap.mulRight ℂ (X (b, v.2) : MvPolynomial (Fin n × Fin n) ℂ))
           (Formalism.GradedWeylDivisibility.rowAct ℂ (n := n) xᵀ p) := by
       intro x
-      rw [map_mul, Formalism.GradedWeylDivisibility.rowAct, aeval_X, ← Formalism.GradedWeylDivisibility.rowAct, Finset.mul_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_mul, Formalism.GradedWeylDivisibility.rowAct, aeval_X, ← Formalism.GradedWeylDivisibility.rowAct, Finset.mul_sum, map_sum]
       refine Finset.sum_congr rfl fun b _ => ?_
       rw [LinearMap.comp_apply, LinearMap.mulRight_apply, Matrix.transpose_apply, mul_left_comm, ← smul_eq_C_mul,
         map_smul, smul_eq_mul]

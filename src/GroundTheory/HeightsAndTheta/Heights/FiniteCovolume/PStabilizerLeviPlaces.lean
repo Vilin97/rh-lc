@@ -36,7 +36,8 @@ theorem vecAt_sum_smul (v : Basis ι E W) {κ : Type*} [Fintype κ] (c : κ → 
     (w : InfinitePlace E) :
     vecAt v (∑ k, c k • u k) w = colMat v u w *ᵥ fun k => w.embedding (c k) := by
   funext i
-  simp [vecAt, colMat, mulVec, dotProduct, map_sum, mul_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [vecAt, colMat, mulVec, dotProduct, map_sum, mul_comm]
 
 theorem vecAt_coe {W' : Submodule E W} {n : ℕ} (v : Basis ι E W) (v' : Basis (Fin n) E W') (x : W')
     (w : InfinitePlace E) :

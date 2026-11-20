@@ -162,7 +162,8 @@ theorem computes_transfer : ∀ (D : Formalism.BasicNotions.D7) (N : NData D.R D
   have hx' : (Φ.map aug).mulVec (fun c => f (x c)) = 0 := by
     funext c
     have h1 := congrArg f (congrFun hx c)
-    simpa [Matrix.mulVec, dotProduct, map_sum, hf] using h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [Matrix.mulVec, dotProduct, map_sum, hf] using h1
   let z₁ : Z1 (repOn (Tgl i s) (delInv i M d) k) :=
     cocycles1MapOfEquivariant _ _ (fl.compLeft (Fin D.R.r)) continuous_of_discreteTopology (repOn_map (Tgl i s) (delInv i M d) fl) z
   refine ⟨⟨fun c => f (x c), hx'⟩, semilinearCoefficientMapCocycles _ _ (idVec aug hs D.R.r) continuous_of_discreteTopology

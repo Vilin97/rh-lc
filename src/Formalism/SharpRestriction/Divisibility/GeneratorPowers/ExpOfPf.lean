@@ -72,7 +72,8 @@ theorem cc_linPt {n : ℕ} (uvec : Lt1 Dw → Fin d → S) (b : Fin n) (i : Fin 
 theorem subst_linPt {n m : ℕ} (uvec : Lt1 Dw → Fin d → S) (b : Fin n)
     (a : Fin n × Fin (dL Dw) → MvPowerSeries (Fin m × Fin (dL Dw)) S) (ha : HasSubst a) (i : Fin d) :
     subst a (linPt uvec b i) = ∑ ℓ : Lt1 Dw, MvPowerSeries.C (uvec ℓ i) * a (b, ltIdx Dw ℓ) := by
-  rw [linPt, ← coe_substAlgHom ha, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [linPt, ← coe_substAlgHom ha, map_sum]
   refine Finset.sum_congr rfl fun ℓ _ => ?_
   rw [map_mul, coe_substAlgHom, subst_X ha]
   congr 1
@@ -88,7 +89,8 @@ theorem hasSubst_linPt {n : ℕ} (uvec : Lt1 Dw → Fin d → S) (b : Fin n) :
 theorem coeff_linPt (uvec : Lt1 Dw → Fin d → S) (ℓ : Lt1 Dw) (i : Fin d) :
     coeff (Finsupp.single ((0 : Fin 1), ltIdx Dw ℓ) 1) (linPt uvec (0 : Fin 1) i) = uvec ℓ i := by
   classical
-  rw [linPt, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [linPt, map_sum]
   simp only [coeff_C_mul, coeff_X]
   rw [Finset.sum_eq_single ℓ]
   · simp

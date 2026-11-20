@@ -93,7 +93,8 @@ theorem sum_eq_zero_of_lin {R : Type} [CommRing R] [IsLocalRing R] (G : Over (Sp
     simp only [hsub, sub_mul, Finset.sum_sub_distrib, ← key]
     exact sub_eq_zero.2 (e1.symm.trans e2)
   have e4 := congrArg (ψ.stalkMap y).hom e3
-  rw [map_sum, map_zero] at e4
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_zero] at e4
   refine Eq.trans (Finset.sum_congr rfl fun i _ => ?_) e4
   rw [map_mul, ← gs_comp, ← sval_comp]
 

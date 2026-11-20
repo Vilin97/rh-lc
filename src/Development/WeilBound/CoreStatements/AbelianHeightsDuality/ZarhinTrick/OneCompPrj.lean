@@ -39,7 +39,8 @@ theorem zc_rigid {P : LB (A ⊗ B).left} (hD : IsDual A B P) (l : A ⟶ B) [IsMo
       (1 : Y ⟶ G4 (A ⊗ B)) ≫ prj _ i ≫ f = 1 := by
     intro Y i f _; rw [← Category.assoc, one_comp_prj, MonObj.one_comp]
   constructor <;>
-  · simp only [zc, zcPair, map_add, map_sum, map_nsmul, map_zsmul, pull_evc, lift_fst_assoc, lift_snd_assoc,
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [zc, zcPair, map_add, map_sum, map_nsmul, map_zsmul, pull_evc, lift_fst_assoc, lift_snd_assoc,
       Category.id_comp, o1, o2, e1, e2, smul_zero, add_zero, zero_add, Finset.sum_const_zero]
 
 end PositivityTheory.PrwZar

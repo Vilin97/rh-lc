@@ -83,7 +83,8 @@ theorem isCompact_latAt {d : ℕ} (W : Spc F E d) (hL : W.L.IsLattice E) (v : Pl
         obtain ⟨n, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun ℤ).1 hy'
         refine ⟨fun k => n k • a, fun k _ => zsmul_mem (show a ∈ intAt F v from ⟨ha, ha'⟩) _, ?_⟩
         funext i
-        simp only [g, Finset.sum_apply, Pi.smul_apply, map_sum, map_zsmul, Finset.smul_sum, smul_comm a, smul_assoc]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [g, Finset.sum_apply, Pi.smul_apply, map_sum, map_zsmul, Finset.smul_sum, smul_comm a, smul_assoc]
       | zero => exact ⟨0, fun k _ => zero_mem _, by simp [g]⟩
       | add y z _ _ hy hz =>
         obtain ⟨c, hc, rfl⟩ := hy

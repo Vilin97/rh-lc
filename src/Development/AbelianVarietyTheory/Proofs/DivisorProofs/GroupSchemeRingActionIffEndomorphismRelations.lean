@@ -143,8 +143,10 @@ theorem ringAct_iff_relations : ∀ (O : Type) [Ring O] (r : ℕ) (e : Fin r →
       fun k => ?_⟩
     · rw [prodPow_comp f hf _ hm]
       apply hwd hNj
-      rw [hcoef, map_sum]
-      simp only [map_sum, map_zsmul, hcoef]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hcoef, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_zsmul, hcoef]
       rw [← hmul, hcoef, hcoef]
     · rw [← prodPow_add]
       apply hwd hNj

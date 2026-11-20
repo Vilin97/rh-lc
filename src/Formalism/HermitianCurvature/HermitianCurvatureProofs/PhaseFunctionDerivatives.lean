@@ -128,7 +128,8 @@ theorem a_fderiv_single {n : ℕ} (D' : ℂ) (x : Fin n → ℂ) (hx : ∀ k, x 
 theorem a_fderiv_apply {n : ℕ} (D' : ℂ) (x : Fin n → ℂ) (hx : ∀ k, x k ≠ 0) (v : Fin n → ℂ) :
     fderiv ℂ (g0 D') x v = ∑ k, v k * dg0 D' x k := by
   conv_lhs => rw [pi_eq_sum_univ v]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   have : (fun j => if k = j then (1 : ℂ) else 0) = Pi.single k 1 := by
     funext j; simp [Pi.single_apply, eq_comm]

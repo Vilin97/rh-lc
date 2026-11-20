@@ -199,7 +199,8 @@ theorem qA_mem_AΔ (hcase : Formalism.MainNotions.LiftingTheory.CaseA W) (hP9 : 
   have h1 : ∀ δ' ∈ W.DelF, W.γ₀ δ' W.π₀₁ = W.π₀₁ := by
     intro δ' hδ'
     simp only [LocWach.π₀₁]
-    rw [map_add, map_sub, map_one, map_natCast, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_add, map_sub, map_one, map_natCast, map_sum]
     congr 1
     refine Finset.sum_equiv (Equiv.mulLeft δ') (fun δ => ⟨fun h => mul_mem_delF W hδ' h, fun h => ?_⟩)
       (fun δ _ => ?_)
@@ -260,7 +261,8 @@ theorem lemGB_DelF_inv {δ : W.Gam} (h : δ ∈ W.DelF) : δ⁻¹ ∈ W.DelF := 
 
 theorem lemGB_sum_inv (T : LocLat G Qp LL O) (x : W.DD T) (δ' : W.Gam) (h' : δ' ∈ W.DelF) :
     W.γD T δ' (∑ δ ∈ W.DelF, W.γD T δ x) = ∑ δ ∈ W.DelF, W.γD T δ x := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   have hm : ∀ δ, W.γD T δ' (W.γD T δ x) = W.γD T (δ' * δ) x := by
     intro δ
     exact (W.γD_mul T δ' δ x).symm
@@ -287,7 +289,8 @@ theorem inImg_of_Nimg (hΔ : IsUnit ((W.DelF.card : ℕ) : O)) {T₁ T₂ : LocL
         | (rw [W.map_γ]; exact hzΔ δ hδ)
         | exact W.map_γ
     have hmapS : W.map F (∑ δ ∈ W.DelF, W.γD T₁ δ y) = ((W.DelF.card : ℕ) : O) • W.map F y := by
-      rw [map_sum, Finset.sum_congr rfl hfix, Finset.sum_const]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Finset.sum_congr rfl hfix, Finset.sum_const]
       exact (Nat.cast_smul_eq_nsmul O _ _).symm
     have hc : W.map F ((↑u⁻¹ : O) • ∑ δ ∈ W.DelF, W.γD T₁ δ y) =
         (↑u⁻¹ : O) • W.map F (∑ δ ∈ W.DelF, W.γD T₁ δ y) := by

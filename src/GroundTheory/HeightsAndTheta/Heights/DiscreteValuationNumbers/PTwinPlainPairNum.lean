@@ -60,7 +60,8 @@ theorem classList_sum_single {σ : Type*} (cls : σ → K → ℤ) {r : ℕ} (a 
     induction s using Multiset.induction_on with
     | empty => simp
     | cons b s ih => simp [ih]
-  rw [← Multiset.coe_eq_coe, classList, Multiset.coe_toList, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Multiset.coe_eq_coe, classList, Multiset.coe_toList, map_sum]
   simp only [Finsupp.toMultiset_single, one_smul]
   rw [Finset.sum_eq_multiset_sum, hs, Multiset.map_map, ← Fin.univ_val_map]
   rfl
@@ -96,7 +97,8 @@ theorem rename_divDiff_eq_sum {r : ℕ} (l : Fin r) (G : MvPolynomial (Fin r) �
     rename finSumFinEquiv.symm (IndefiniteRowSideFullHecke.NumbersDVR.Bundles.divDiff l G) =
       ∑ μ ∈ S, C (G.coeff μ) * term l μ := by
   unfold IndefiniteRowSideFullHecke.NumbersDVR.Bundles.divDiff
-  simp only [map_sum, map_mul, map_prod, map_pow, rename_X, rename_C,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, map_prod, map_pow, rename_X, rename_C,
     finSumFinEquiv_symm_apply_castAdd, finSumFinEquiv_symm_apply_natAdd]
   refine (Finset.sum_subset hS ?_).trans (Finset.sum_congr rfl fun μ _ => ?_)
   · intro μ _ hμ
@@ -158,7 +160,8 @@ theorem term_tail {N r : ℕ} (i : Fin N) (μ : Fin N →₀ ℕ) (ν : Fin (N +
     simp only [hgt, if_true, hcc, hc, hn, pow_one]
   unfold term
   rw [h1, h3, hc i]
-  simp only [map_mul, map_prod, map_pow, map_sum, rename_X, Sum.map_inl, Sum.map_inr]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_mul, map_prod, map_pow, map_sum, rename_X, Sum.map_inl, Sum.map_inr]
   ring
 
 theorem prod_X_natAdd (N r : ℕ) :
@@ -189,7 +192,8 @@ theorem rename_divDiff_castAdd {N r : ℕ} (i : Fin N) (G : MvPolynomial (Fin N)
       obtain ⟨μ, hμ, he⟩ := hmem
       exact Finset.mem_image.mpr ⟨μ, hμ, by rw [he, tsub_add_cancel_of_le hle]⟩
     · exact absurd rfl hν
-  rw [prod_X_natAdd, rename_divDiff_eq_sum (Fin.castAdd r i) _ hsub,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [prod_X_natAdd, rename_divDiff_eq_sum (Fin.castAdd r i) _ hsub,
     Finset.sum_image fun a _ b _ h => hinj h, rename_divDiff_eq_sum i G subset_rfl, map_sum,
     Finset.sum_mul]
   refine Finset.sum_congr rfl fun μ _ => ?_

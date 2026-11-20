@@ -27,7 +27,8 @@ private theorem exists_notMem {σ : T ≃ₐ[S] T} {q : ℕ} (h : IsGal σ q) (a
   have hz : ∀ t, a * σ (z t) = z t := by
     intro t
     have h1 : a * σ (z t) = ∑ j ∈ Finset.range q, c (j + 1) * (σ ^ (j + 1)) t := by
-      simp only [z, map_sum, Finset.mul_sum, map_mul, ← hc, pow_succ_app, mul_assoc]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [z, map_sum, Finset.mul_sum, map_mul, ← hc, pow_succ_app, mul_assoc]
     have h2 := Finset.sum_range_succ (fun j => c j * (σ ^ j) t) q
     rw [Finset.sum_range_succ'] at h2
     have h3 : c q = 1 := ha
@@ -130,7 +131,8 @@ theorem h90 : H90 := by
     convert h3 using 1
     ring
   refine ⟨hu.unit, ?_⟩
-  rw [hu.unit_spec, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hu.unit_spec, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun m _ => ?_
   rw [map_mul, σ.commutes, mul_left_comm, hz]
 

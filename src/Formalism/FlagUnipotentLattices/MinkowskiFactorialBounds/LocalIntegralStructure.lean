@@ -31,7 +31,8 @@ theorem orthogonal_complement_formula : PerpCompl := by
           exact (map_eq_zero σ).mp h2
         have h3 : a = ∑ i, (bs.repr ⟨a, ha⟩ i) • (bs i : U) := by
           have h4 := congrArg (S.subtype) (bs.sum_repr ⟨a, ha⟩)
-          rw [map_sum] at h4
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [map_sum] at h4
           simpa only [map_smul, Submodule.subtype_apply] using h4.symm
         rw [h3]; simp [hi]
       · intro h; ext i
@@ -223,7 +224,8 @@ theorem gram_matrix_nondegenerate : GramNondeg := by
     have h1 : (Matrix.of fun i j => B (v i) (v j)).mulVec (fun i => σ (c i)) = 0 := by
       funext j
       have hj := hc j
-      rw [map_sum] at hj
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum] at hj
       simp only [LinearMap.map_smulₛₗ, smul_eq_mul] at hj
       simp only [Matrix.mulVec, dotProduct, Matrix.of_apply, Pi.zero_apply]
       rw [← hj]
@@ -238,7 +240,8 @@ theorem gram_matrix_nondegenerate : GramNondeg := by
     have h1 : Matrix.vecMul c (Matrix.of fun i j => B (v i) (v j)) = 0 := by
       funext j
       have hj := hc j
-      rw [map_sum, LinearMap.sum_apply] at hj
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, LinearMap.sum_apply] at hj
       simp only [LinearMap.map_smul, LinearMap.smul_apply, smul_eq_mul] at hj
       simp only [Matrix.vecMul, dotProduct, Matrix.of_apply, Pi.zero_apply]
       exact hj

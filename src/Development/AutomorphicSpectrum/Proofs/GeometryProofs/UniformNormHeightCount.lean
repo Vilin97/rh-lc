@@ -196,9 +196,11 @@ theorem card_le_rank (G : Top.Given) {r : ℕ} {U : ∀ σ : c.F →+* ℂ, Unf 
       rw [Finset.sum_mul]
       exact Finset.sum_congr rfl fun j _ => smul_mul_assoc _ _ _
     have h3 := congrArg (evCAlg h hL.genT Z) h1
-    rw [map_zero, map_sum] at h3
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_zero, map_sum] at h3
     show trHom Rd v _ = 0
-    rw [h2, map_sum, ← h3]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h2, map_sum, ← h3]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_zsmul, map_zsmul]
     exact congrArg (a j • ·) (hgev j i).symm

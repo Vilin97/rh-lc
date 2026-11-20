@@ -75,7 +75,8 @@ private theorem gauss_sqrt_inertia_negates {Ω : Type} [Field Ω] [CharZero Ω] 
   refine ⟨gaussSum χ ψ, by rw [gaussSum_sq hχ hq hψ, hm, ZMod.card]; simp, s, hs, ?_⟩
   have h3 := gaussSum_mulShift χ ψ (-1)
   rw [Units.val_neg, Units.val_one, hm, neg_one_mul, neg_eq_iff_eq_neg] at h3
-  rw [← h3, gaussSum, gaussSum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← h3, gaussSum, gaussSum, map_sum]
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [map_mul]
   congr 1

@@ -124,7 +124,8 @@ theorem regular_tensor (c : B) (q : Ideal A) (hq : q = (IsLocalRing.maximalIdeal
     simpa using ⟨i.1.1, i.2⟩)⟩ : P)
   have hy : P.subtype.baseChange B y = ∑ i ∈ S, i.1 ⊗ₜ[A] i.2 := by
     rw [← Finset.sum_attach S]
-    simp [y, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [y, map_sum]
   have hinj := Module.Flat.lTensor_preserves_injective_linearMap (M := B) P.subtype P.injective_subtype
   have : c • y = 0 := hinj (by
     have : P.subtype.baseChange B (c • y) = 0 := by rw [map_smul, hy]; exact hz

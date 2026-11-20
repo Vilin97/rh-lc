@@ -66,7 +66,8 @@ theorem coord (F : Type) [Field F] [NumberField F] (ψ : AddChar (AF F) ℂ) (h�
   have hUc : IsCompact (U : Set (κ → Af F)) :=
     hU₀c.inter_right ((AddSubgroup.isClosed_of_isOpen U₁ hU₁o).preimage hπc)
   obtain ⟨T, G, hG, hΦeq⟩ := hdec U hUo hUc fun x hx => hU₀W hx.1
-  rw [hΦeq, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hΦeq, map_sum]
   refine Finset.sum_eq_zero fun q _ => ?_
   have hq1 := GlobalTheory.CharForm.cosetInd_mem_SB U hUo hUc q
   by_cases hq : projS s q.out ∈ U₁

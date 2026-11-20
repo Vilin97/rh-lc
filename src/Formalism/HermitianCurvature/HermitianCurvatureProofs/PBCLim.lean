@@ -68,7 +68,8 @@ theorem phiG_conj_tendsto (Y : Finset H) (κ : H → H → ℂ) (hκ : TB.PSDOn 
   · filter_upwards [eventually_good σ] with x hx
     symm
     rw [phiG, if_pos ⟨hx.2, hx.1⟩, phi]
-    simp only [map_sum, map_mul, map_prod]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, map_prod]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl (fun h hh => Finset.sum_congr rfl (fun h' hh' => ?_))
     rw [hherm h hh h' hh']

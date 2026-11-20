@@ -55,7 +55,8 @@ theorem pderiv_expG_U (hE : ExDerSt Y) (g : Fin 2) (k : I g)
   rw [Formalism.G.LogCR.pderiv_subst hlin0,
     ← MvPowerSeries.subst_comp_subst_apply (MvPowerSeries.hasSubst_of_constantCoeff_zero hx0) hL]
   simp only [pderiv_lin]
-  rw [e1, ← MvPowerSeries.coe_substAlgHom hL, map_sum, MvPowerSeries.coe_substAlgHom]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e1, ← MvPowerSeries.coe_substAlgHom hL, map_sum, MvPowerSeries.coe_substAlgHom]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [MvPowerSeries.subst_mul hL, MvPowerSeries.subst_C, mul_comm]
 
@@ -98,7 +99,8 @@ theorem derAt_rawU (hu : ∀ g c i, V.Ge 0 (u g c i)) : DerAt V (rawU Y d u) := 
       ∑ j, MvPowerSeries.subst (fun q : Fin 2 × Fin dd => (rawU Y d u).expPt q.1 q.2)
           (MvPowerSeries.pderiv C ((1 - g : Fin 2), j) Y.h) *
         MvPowerSeries.subst ((rawU Y d u).expPt (1 - g)) (un1 (Y.dF ((rawU Y d u).u (1 - g) k) j)) := by
-    rw [← MvPowerSeries.coe_substAlgHom hES, map_sum, MvPowerSeries.coe_substAlgHom]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← MvPowerSeries.coe_substAlgHom hES, map_sum, MvPowerSeries.coe_substAlgHom]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [MvPowerSeries.subst_mul hES, subst_exp_eval_two _ hE0, mul_comm]
   have hJ : IntS V J := by

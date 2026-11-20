@@ -17,7 +17,8 @@ theorem coef_zero {ι : Type} [Fintype ι] [DecidableEq ι] {v : ι → V} (hN :
   have hG : H.gram v *ᵥ c = 0 := by
     funext i
     have h := h0 i
-    rw [← hL_apply, map_sum] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hL_apply, map_sum] at h
     simp only [map_smul, hL_apply, smul_eq_mul] at h
     simp only [Matrix.mulVec, dotProduct, HermSp.gram, Matrix.of_apply, Pi.zero_apply]
     rw [← h]

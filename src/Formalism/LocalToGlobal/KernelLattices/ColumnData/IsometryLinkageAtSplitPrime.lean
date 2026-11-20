@@ -165,7 +165,8 @@ theorem isoP (p : ℕ) (hp : p.Prime) (hpd : ¬ p ∣ D.host.d) : ∃ γ : IsoK 
   refine ⟨⟨g, fun x y => ?_⟩, fun x hx => ⟨s, hcop, fun w => h1 x hx w⟩, fun v hv => ⟨s, hcop, fun a => ?_⟩⟩
   · have h3 : (∑ a, Algebra.trace D.host.K D.host.E (x a * D.host.conj (y a))) = ∑ w, g x w * G0.cK D (g y w) :=
       (hg x y).symm
-    rw [h3, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h3, map_sum]
     refine Finset.sum_congr rfl fun w _ => ?_
     rw [map_mul]
     rfl

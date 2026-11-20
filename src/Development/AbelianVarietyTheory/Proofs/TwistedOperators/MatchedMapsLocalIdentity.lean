@@ -155,17 +155,20 @@ theorem polMatchOn_step : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) 
     · subst hw; simp only [φN', Function.update_self]; exact (hloc' _ ((hφ' j).2.1 w)).1
     · simp only [φN', Function.update_of_ne hw]; exact (hφ' j).2.1 w
   · simp only [φN', Function.update_of_ne (hvT w hw)]; exact (hφ' j).2.2 w hw
-  · rw [hΦ, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [hΦ, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     exact pure_update v (om (1, h)) (f i) (φ i) (hφ i).2.1 (evc G.M (φ i) (hφ i).2.2 hT.geo.hM)
       (hloc _ ((hφ i).2.1 v)).2
-  · rw [hΦ', map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [hΦ', map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     exact pure_update v (om' (1, h)) (f' j) (φ' j) (hφ' j).2.1 (evc G.M' (φ' j) (hφ' j).2.2 hT.geo.hM')
       (hloc' _ ((hφ' j).2.1 v)).2
   · have key := congrArg (LinearMap.lTensor R.Pi (PiTensorProduct.map
       (Function.update (fun u : T => (LinearMap.id : Rf.Pi u.1 →ₗ[ℂ] Rf.Pi u.1)) ⟨v, hv⟩ A))) hsum
-    simp only [map_sum, LinearMap.lTensor_tmul, PiTensorProduct.map_tprod] at key
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.lTensor_tmul, PiTensorProduct.map_tprod] at key
     have e1 : ∀ i, (fun u : T => Function.update (fun u : T => (LinearMap.id : Rf.Pi u.1 →ₗ[ℂ] Rf.Pi u.1)) ⟨v, hv⟩ A u
         (Rf.p u (φ i u))) = fun u : T => Rf.p u (φN i u) := by
       intro i; funext u

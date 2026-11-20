@@ -15,7 +15,8 @@ variable {E : Type} [Field E] [NumberField E] {κ : Type} [Fintype κ]
 theorem hom_basis {R' : Type} [Ring R'] (f : 𝓞 E →+* R') (b : Module.Basis κ ℤ (𝓞 E)) (x : 𝓞 E) :
     f x = ∑ k, ((b.repr x k : ℤ) : R') * f (b k) := by
   conv_lhs => rw [← b.sum_repr x]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [map_zsmul, zsmul_eq_mul]
 
@@ -50,7 +51,8 @@ theorem decomp_of_inv (ρ : 𝓞 E →+* Module.End R M) (χ : ι → (𝓞 E �
   have eig : ∀ σ (a : 𝓞 E) (m : M), ρ a (Q σ m) = χ σ a • Q σ m := by
     intro σ a m
     have h1 : ρ a (Q σ m) = ∑ i, Cm i σ • ρ (a * b i) m := by
-      simp only [hQ, map_sum, map_smul, map_mul, Module.End.mul_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hQ, map_sum, map_smul, map_mul, Module.End.mul_apply]
     rw [h1]
     simp_rw [F3 _ m, map_mul, Finset.smul_sum, smul_smul]
     rw [Finset.sum_comm]
@@ -68,7 +70,8 @@ theorem decomp_of_inv (ρ : 𝓞 E →+* Module.End R M) (χ : ι → (𝓞 E �
     exact this.symm
   have hlin : ∀ σ (f : ι → M), Q σ (∑ σ', f σ') = ∑ σ', Q σ (f σ') := by
     intro σ f
-    simp only [hQ, map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hQ, map_sum, Finset.smul_sum]
     exact Finset.sum_comm
   refine ⟨fun m => ⟨fun σ => Q σ m, fun σ a => eig σ a m, hsum1 m⟩, ?_⟩
   intro mσ hmσ hsum σ
@@ -95,7 +98,8 @@ theorem global_basis_gen (ρ : 𝓞 E →+* Module.End R M) (χ : ι → 𝓞 E 
   have heig : ∀ σ (c : Fin (mult σ) → R) (a : 𝓞 E),
       ρ a (∑ i, c i • U ⟨σ, i⟩) = χ σ a • ∑ i, c i • U ⟨σ, i⟩ := by
     intro σ c a
-    simp only [map_sum, map_smul, hU, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, hU, Finset.smul_sum]
     exact Finset.sum_congr rfl fun i _ => smul_comm _ _ _
   obtain ⟨mσ, hmσ, hsum⟩ := hdec.1 W
   choose c hc hcu using fun σ => hb σ (mσ σ) (hmσ σ)

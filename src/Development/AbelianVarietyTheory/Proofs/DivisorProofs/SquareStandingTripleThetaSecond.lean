@@ -426,7 +426,8 @@ theorem isDatum_linB : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : GlobalTheor
           by_contra! hall
           refine hl (GlobalTheory.SmallPlaces.mem_of_sum_smul (P := locPl G t) (a := fun w => cA D (atPl w 1)) ?_
             fun w hw => (congrArg (· ∈ homLatB G i j) (ptB_smul e _ u)).mp (hall w hw))
-          rw [← map_sum, ← hεs]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [← map_sum, ← hεs]
           exact hu
         obtain ⟨w, hw, hn⟩ := this
         rw [if_neg fun h' => hl h'.1, mul_zero]

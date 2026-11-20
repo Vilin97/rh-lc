@@ -22,7 +22,8 @@ variable {D : D7} {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [Is
 
 theorem conj_herm (S : HSp D) (x y : Fin S.rank → AE D) : cA D (hermAt S x y) = hermAt S y x := by
   have hg : ∀ i j, cA D (gA S i j) = gA S j i := fun i j => congrFun (congrFun (adj_gA S) j) i
-  simp only [hermAt, map_sum, RingHom.map_mul, cA_cA, hg]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hermAt, map_sum, RingHom.map_mul, cA_cA, hg]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 
@@ -130,7 +131,8 @@ theorem expand (hL : IsSelfDualC S L) {F : Frame k S.rank Y} (h : IntIn q S F L)
   congr 1
   generalize (F.γ *ᵥ fun r => q.pr (x r)) = y
   funext r
-  simp only [Matrix.mulVec, dotProduct, map_sum, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, colAt, sec_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mulVec, dotProduct, map_sum, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, colAt, sec_mul]
   exact Finset.sum_congr rfl fun c _ => mul_comm _ _
 
 theorem mulVec_colMul {l m n : ℕ} (M : Mx D l m) (N : Mx D m n) (i : Fin n) (a : AE D) :
@@ -215,7 +217,8 @@ theorem colAt_core {N n : ℕ} {F : Frame k N Y} {F₀ : Frame k n Y₀} {c : Y}
     (h : ∀ r, F.β r c = (M.map (ofSplit q).pr * F₀.β) r a) : colAt q F c = (rat M : Mx D N n) *ᵥ colAt q F₀ a := by
   funext r
   change q.sec (F.β r c) = ∑ l, incA D (M r l) * q.sec (F₀.β l a)
-  rw [h, Matrix.mul_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h, Matrix.mul_apply, map_sum]
   refine Finset.sum_congr rfl fun l _ => ?_
   rw [mul_comm (incA D _), sec_mul_right, mul_comm]; rfl
 

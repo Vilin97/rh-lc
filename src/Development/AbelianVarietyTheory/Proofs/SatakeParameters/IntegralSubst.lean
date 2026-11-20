@@ -39,7 +39,8 @@ theorem expMv_sum {ι : Type*} (s : Finset ι) {f : ι → MvPowerSeries κ ℂ_
   induction s using Finset.induction_on with
   | empty => simpa using expMv_zero
   | insert i s hi ih =>
-    rw [Finset.sum_insert hi, Finset.prod_insert hi, expMv_add (hf i) (by simp [map_sum, hf]), ih]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_insert hi, Finset.prod_insert hi, expMv_add (hf i) (by simp [map_sum, hf]), ih]
 
 theorem cc_ph (g : G1 l) (hE : PowerSeries.constantCoeff (ePhi1 g.lam g.abelian₂ g.C g.wq) = 1) :
     PowerSeries.constantCoeff g.ph = 0 := by

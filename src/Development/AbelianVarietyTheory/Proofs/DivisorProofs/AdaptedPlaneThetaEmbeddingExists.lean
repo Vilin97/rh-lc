@@ -65,7 +65,8 @@ theorem hTens_rat (σ : E →ₐ[F] E) {n d : ℕ} (JX : Matrix (Fin n) (Fin n) 
     (ξ q : Fin n → E) (y x : Fin d → E) :
     hTens (cA σ) (incM F JX) (incM F JW) (vecMulVec (incV F ξ) (incV F y)) (vecMulVec (incV F q) (incV F x)) =
       inclR (F := F) (AF F) (form σ JX ξ q * form σ JW y x) := by
-  simp only [hTens, vecMulVec_apply, incV, incM, Matrix.map_apply, ← map_mul, cA_inclR, form, dotProduct, mulVec,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hTens, vecMulVec_apply, incV, incM, Matrix.map_apply, ← map_mul, cA_inclR, form, dotProduct, mulVec,
     Finset.sum_mul, Finset.mul_sum, map_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun j _ => ?_
@@ -92,9 +93,11 @@ theorem symp_freq (σ : E →ₐ[F] E) {n d : ℕ} (JX : Matrix (Fin n) (Fin n) 
   unfold symp
   rw [hv]
   change Algebra.trace (AF F) (AE F E) (-1 * hTensR σ (incM F JX) (incM F JW) _ (∑ j, _)) = _
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [map_smul]
-  simp only [hTensR, LinearMap.coe_mk, AddHom.coe_mk, hTens_rat, hyx, mul_neg_one, map_neg, smul_neg,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hTensR, LinearMap.coe_mk, AddHom.coe_mk, hTens_rat, hyx, mul_neg_one, map_neg, smul_neg,
     Finset.sum_neg_distrib, neg_mul, one_mul, neg_neg, map_sum, map_smul, smul_eq_mul]
 
 end GlobalTheory.RealFreq
@@ -119,11 +122,13 @@ theorem psi_freq (ψ : AddChar (AF F) ℂ) (hψ : IsStd ψ) {N : ℕ} (c : Fin N
   congr 3
   have h1 : evI F (∑ j, realAd F (t j) * c j) = ∑ j, t j • evI F (c j) := by
     change evIHom (∑ j, realAd F (t j) * c j) = _
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     change evI F _ = _
     rw [evI_mul, evI_realAd, Algebra.smul_def]
-  rw [h1, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h1, map_sum]
   simp only [map_smul, smul_eq_mul]
 
 end GlobalTheory.RealFreq
@@ -188,7 +193,8 @@ theorem det_ne_zero_of_sig {n : ℕ} (M : Matrix (Fin n) (Fin n) ℂ) (r s : ℕ
 theorem form_swap (σ : E →ₐ[F] E) (hσ : ∀ z, σ (σ z) = z) {d : ℕ} (J : Matrix (Fin d) (Fin d) E)
     (hskew : ∀ i j, σ (J j i) = -J i j) (x y : Fin d → E) : form σ J y x = -σ (form σ J x y) := by
   unfold form
-  simp only [dotProduct, mulVec, map_sum, map_mul, hσ, hskew, Finset.mul_sum, neg_mul, mul_neg,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dotProduct, mulVec, map_sum, map_mul, hσ, hskew, Finset.mul_sum, neg_mul, mul_neg,
     Finset.sum_neg_distrib, neg_neg]
   exact Finset.sum_comm.trans (Finset.sum_congr rfl fun l _ => Finset.sum_congr rfl fun i _ => by ring)
 

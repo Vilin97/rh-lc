@@ -94,7 +94,8 @@ theorem restWord : RestWord := by
     rw [← Finset.prod_mul_distrib, ← Finset.prod_attach F]
     refine Finset.prod_congr rfl fun x _ => ?_
     simp [A3ev.extF, x.2]
-  rw [hexp, map_sum] at he
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hexp, map_sum] at he
   obtain ⟨p, -, hpe⟩ := Finset.mem_biUnion.1 (MvPolynomial.support_sum he)
   obtain ⟨I', hI'⟩ : ∃ I', I' = A3ev.extF F p := ⟨_, rfl⟩
   rw [← hI'] at hpe
@@ -154,7 +155,8 @@ theorem exists_dominant_top_weight_nonzero (k : Type) [Field k] (n N : ℕ) (isV
   have hanti : Antitone μ₀ := hμ₀ ▸ x₀.2.1.2.1 N le_rfl
   have hd₀ : DomLe (x₁.1.1 N) μ₀ := hμ₀ ▸ hx₀.2
   refine ⟨μ₀, hanti, hd₀, fun h1 => ?_⟩
-  rw [Finsupp.sum, map_sum] at h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finsupp.sum, map_sum] at h1
   simp_rw [map_smul] at h1
   have h2 : ∑ x ∈ c.support.filter (fun x => x.1.1 N = μ₀), c x • fam k x = 0 := by
     have h3 := Finset.sum_filter_of_ne (s := c.support)

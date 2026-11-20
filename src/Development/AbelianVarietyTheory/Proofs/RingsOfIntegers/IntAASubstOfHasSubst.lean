@@ -59,7 +59,8 @@ theorem intAA_pow {f : MvPowerSeries σ k} (hf : IntAA (R := R) k f) (m : ℕ) :
 
 theorem intAA_sum {ι : Type*} (t : Finset ι) {f : ι → MvPowerSeries σ k}
     (hf : ∀ i ∈ t, IntAA (R := R) k (f i)) : IntAA (R := R) k (∑ i ∈ t, f i) := fun n => by
-  rw [map_sum]; exact Subring.sum_mem _ fun i hi => hf i hi n
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]; exact Subring.sum_mem _ fun i hi => hf i hi n
 
 theorem intAA_prod {ι : Type*} (t : Finset ι) {f : ι → MvPowerSeries σ k}
     (hf : ∀ i ∈ t, IntAA (R := R) k (f i)) : IntAA (R := R) k (∏ i ∈ t, f i) :=

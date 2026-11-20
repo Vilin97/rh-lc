@@ -31,7 +31,8 @@ theorem form_smul_left (σ : E →ₐ[F] E) {m : ℕ} (J : Matrix (Fin m) (Fin m
 theorem form_swap (σ : E →ₐ[F] E) (hσ : ∀ x, σ (σ x) = x) {m : ℕ} (J : Matrix (Fin m) (Fin m) E)
     (hJ : ∀ i j, σ (J j i) = -J i j) (v w : Fin m → E) :
     form σ J v w = -σ (form σ J w v) := by
-  simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, hJ, Finset.mul_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, hJ, Finset.mul_sum,
     ← Finset.sum_neg_distrib]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring

@@ -56,11 +56,13 @@ theorem component_mem [DecidableEq K] (y : (Σ k, ι k) → Ω) (f : MRing ι)
   set S := f.support.filter fun e ↦ Finsupp.weight (NumbersDVR.blockWeight ι) e = m
   have himg : φ (weightedHomogeneousComponent (NumbersDVR.blockWeight ι) m f) =
       monomial m' (∑ e ∈ S, ((AddMonoidAlgebra.coeff f e : ℤ) : Ω) * e.prod fun p n ↦ y p ^ n) := by
-    rw [weightedHomogeneousComponent_apply, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [weightedHomogeneousComponent_apply, map_sum, map_sum]
     refine Finset.sum_congr rfl fun e he ↦ ?_
     rw [mConeMap_monomial, (hdeg e).2 (Finset.mem_filter.1 he).2]
   have hcoeff : AddMonoidAlgebra.coeff (φ f) m' = ∑ e ∈ S, ((AddMonoidAlgebra.coeff f e : ℤ) : Ω) * e.prod fun p n ↦ y p ^ n := by
-    conv_lhs => rw [f.as_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [f.as_sum, map_sum]
     rw [coeff_sum, Finset.sum_filter]
     refine Finset.sum_congr rfl fun e _ ↦ ?_
     rw [mConeMap_monomial, coeff_monomial]

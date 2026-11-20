@@ -68,7 +68,8 @@ theorem pureTensorO_mul_mul (hψ : IsStdChar D ψ (-1)) (hθ : IsInfFam θ)
     clear hP
     generalize (subst _ H P : Pol D.what₂.Tau W.rank V.rank) = Q
     rw [subst, MvPolynomial.aeval_X]
-    simp only [Finset.sum_mul, smul_mul_assoc, map_sum, map_smul, hX]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Finset.sum_mul, smul_mul_assoc, map_sum, map_smul, hX]
     simp only [aPlusAll, aPlus]
     rw [unitMap_mul_mul, crea_sum hψ hθ _ (hm _ _ _), Finset.smul_sum]
     refine Finset.sum_congr rfl fun a _ => ?_

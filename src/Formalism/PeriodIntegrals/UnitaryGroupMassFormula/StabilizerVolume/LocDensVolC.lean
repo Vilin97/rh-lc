@@ -24,8 +24,10 @@ theorem crd_sigR (σ : E →ₐ[F] E) (z : Fv F v ⊗[F] E) (l : Fin d) :
     intro k
     simp [sigR]
   conv_lhs => rw [← B.sum_repr z]
-  rw [map_sum]
-  simp only [sigR_smul, hB, hs, crd, map_sum, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [sigR_smul, hB, hs, crd, map_sum, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply,
     Finsupp.smul_apply, smul_eq_mul, Algebra.TensorProduct.basis_repr_tmul,
     Finsupp.mapRange_apply, one_smul]
   rfl

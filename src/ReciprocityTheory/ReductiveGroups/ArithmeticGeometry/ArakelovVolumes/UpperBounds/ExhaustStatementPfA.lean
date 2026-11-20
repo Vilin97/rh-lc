@@ -79,7 +79,8 @@ open ReciprocityTheory.L2DbarEstimates ReciprocityTheory.ChartRestriction.G.AR.U
 theorem quad_im {m : ℕ} {A : Matrix (Fin m) (Fin m) ℂ} (hA : A.IsHermitian) (x : Fin m → ℂ) :
     (star x ⬝ᵥ (A *ᵥ x)).im = 0 := by
   rw [← Complex.conj_eq_iff_im]
-  simp only [dotProduct, mulVec, map_sum, map_mul, Pi.star_apply, Complex.star_def,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dotProduct, mulVec, map_sum, map_mul, Pi.star_apply, Complex.star_def,
     Complex.conj_conj, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_

@@ -573,7 +573,8 @@ theorem rate_top (p : KB.Pl P Wp Wq) {nn : ℝ → ℝ} (hnn : ∀ y, 0 < nn y) 
       L i (∑ j ∈ Finset.insertNone (G.rootSet (m + 2) ((-1) ^ (m + 2 + 1) * D)),
         (conj (co (m + 2) x j) * (omTop p nn w (FormNormSumIdentities.PPt (m + 2) h x D j) : ℂ)) •
           p.V (Fi i) (FormNormSumIdentities.PPt (m + 2) h x D j)) := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_smul, smul_smul]
   rw [e]

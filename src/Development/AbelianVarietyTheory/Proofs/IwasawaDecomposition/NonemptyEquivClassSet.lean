@@ -392,7 +392,8 @@ theorem cong_swap_symm {F E : Type} [Field F] [NumberField F] [Field E] [NumberF
   refine ⟨_, GlobalTheory.PrincInLevel.swap_symm_mem_hat Λ y hy, funext fun i => ?_⟩
   apply (Algebra.TensorProduct.comm F _ E).injective
   have := congrFun e i
-  simpa only [Pi.sub_apply, Pi.smul_apply, map_sub, map_nsmul, Matrix.mulVec, dotProduct, map_sum, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa only [Pi.sub_apply, Pi.smul_apply, map_sub, map_nsmul, Matrix.mulVec, dotProduct, map_sum, map_mul,
     AlgEquiv.apply_symm_apply, Matrix.map_apply] using this
 
 variable {D}

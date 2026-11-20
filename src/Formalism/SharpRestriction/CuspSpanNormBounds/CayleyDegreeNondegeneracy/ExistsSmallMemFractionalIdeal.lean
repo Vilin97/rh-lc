@@ -101,7 +101,8 @@ theorem eq_sum_coords_orthonormal_pair (hspan : Submodule.span K (Set.range e) =
   obtain ⟨c, hc⟩ := (Submodule.mem_span_range_iff_exists_fun K).1 hv
   have hcoef : ∀ j, h (e j) v = c j := by
     intro j
-    rw [← hc, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hc, map_sum]
     simp [map_smul, ho]
   rw [hcoef 0, hcoef 1]
   conv_lhs => rw [← hc]

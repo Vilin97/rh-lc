@@ -38,7 +38,8 @@ theorem step {D : D7} {Z : LocDat D} {T T' : D.host.E} {F0 : LFlag (VS D) D.R.rS
     (hN : ∀ b, N (g b) = ∑ a, B a b • g a) (b : Fin (D.R.rS + 1)) :
     (c.c p).e (scaled Z p (fun b => ∑ a, B a b • v a) b) = m (gl b) := by
   have h1 : c.e (∑ a, B a b • v a) = N (g b) := by
-    rw [hN b, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hN b, map_sum]
     exact Finset.sum_congr rfl fun a _ => by rw [map_smul, hg a]
   have h2 : (c.c p).e (scaled Z p (fun b => ∑ a, B a b • v a) b) =
       frFac Z.δ p b • (c.c p).e (baseChange₂ D p (∑ a, B a b • v a)) := (c.c p).e.map_smul _ _

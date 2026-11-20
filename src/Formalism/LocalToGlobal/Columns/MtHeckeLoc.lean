@@ -310,7 +310,8 @@ theorem mhl_prV_pullV_eta (hc : Formalism.BasicNotions.CMData F E) {n : ℕ} [Ne
   classical
   rw [mhl_pullV_mul]
   simp only [Matrix.mulVec, dotProduct]
-  rw [map_sum, Finset.sum_eq_single i]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_eq_single i]
   · rw [map_mul, mhl_prV_eta_inv, if_pos rfl, map_mul]
   · intro j _ hj
     rw [map_mul, mhl_prV_eta_inv, if_neg (Ne.symm hj), map_zero, map_zero, zero_mul]

@@ -99,7 +99,8 @@ theorem HformGram : Formalism.UG.HformGram := by
     ext j
     simp [Pi.single_apply]
   conv_lhs => rw [hx, hy]
-  simp only [map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul,
     RingHom.id_apply, Finset.mul_sum, hform, gram]
   rw [Finset.sum_comm]
   apply Finset.sum_congr rfl
@@ -519,7 +520,8 @@ theorem DwActMul : Formalism.UG.DwActMul := by
   refine ⟨?_, ?_⟩
   · apply MvPolynomial.algHom_ext
     intro i
-    simp only [dwAct, Formalism.GradedWeylDivisibility.rowAct, AlgHom.comp_apply, MvPolynomial.aeval_X, map_sum, map_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [dwAct, Formalism.GradedWeylDivisibility.rowAct, AlgHom.comp_apply, MvPolynomial.aeval_X, map_sum, map_mul,
       MvPolynomial.aeval_C, MvPolynomial.algebraMap_eq, mul_inv_rev, Units.val_mul, Matrix.mul_apply,
       Finset.sum_mul, Finset.mul_sum, mul_assoc]
     rw [Finset.sum_comm]

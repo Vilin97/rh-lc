@@ -127,7 +127,8 @@ theorem UpperTheory.ConvolutionTheory.R2.G.majL :
     exact h1.symm
   have hexp : hat (W.Om k (W.L h φ)).1 v =
       ∑ i, c i (cD (nu F h)⁻¹ k) * (H (W.L h (b i))).1 v := by
-    rw [hcomm, he, ← hH, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hcomm, he, ← hH, map_sum, map_sum]
     simp only [map_smul, Submodule.coe_sum, Submodule.coe_smul, Finset.sum_apply, Pi.smul_apply,
       smul_eq_mul]
   rw [hexp]

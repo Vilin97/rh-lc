@@ -75,7 +75,8 @@ theorem integral_span_of_values (φ : K →+* K') {σ C M M' : Type} [AddCommGro
       exact Finset.sum_congr rfl fun k _ => by rw [hu]
     have h1 : f' = ∑ i, b i • L (∑ k, F i (a k) • u k) := by
       rw [hf]
-      simp only [map_sum, hL, Finset.smul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, hL, Finset.smul_sum]
       rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun k _ => ?_
       conv_lhs => rw [hb (a k), Finset.sum_smul]
@@ -87,7 +88,8 @@ theorem integral_span_of_values (φ : K →+* K') {σ C M M' : Type} [AddCommGro
     have h2 : ev c (∑ k, F i (a k) • u k) = q := by
       ext μ
       rw [e, hf, map_one, one_mul]
-      simp only [map_sum, map_smul, hev, MvPolynomial.coeff_sum, MvPolynomial.coeff_smul, MvPolynomial.coeff_map,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, hev, MvPolynomial.coeff_sum, MvPolynomial.coeff_smul, MvPolynomial.coeff_map,
         smul_eq_mul]
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [mul_comm (a k), hF, mul_comm]

@@ -18,7 +18,8 @@ theorem hcVal_map {R S : Type} [CommRing R] [CommRing S] (φ : R →+* S) {N : �
   have hP : (hcMat S (fun i => φ (μ i))) ^ k = ((hcMat R μ) ^ k).map φ := by
     rw [hM]
     exact (map_pow (RingHom.mapMatrix φ) (hcMat R μ) k).symm
-  simp only [hcVal, hP, Matrix.map_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hcVal, hP, Matrix.map_apply, map_sum]
 
 theorem gel_dualWeyl_int (N : ℕ) (ν : Fin N → ℕ) (hν : Antitone ν) (j : ℕ) (f : MvPolynomial (Fin N × Fin N) ℤ)
     (hf : f ∈ dualWeyl ℤ N N ν) : gel ℤ N N j f = hcVal ℤ (fun i => (ν i : ℤ)) j • f := by

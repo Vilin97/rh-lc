@@ -91,9 +91,11 @@ theorem isDer (n : ℕ) :
     have hsum : ((∑ a, ∑ b, X a b • act (Matrix.single a b (1 : ℂ)) w : (⊤ : Submodule ℂ _)) :
         EuclideanSpace ℂ (Fin n)) = stdRep X w := by
       rw [Submodule.coe_sum]
-      conv_rhs => rw [hX, stdRep, map_sum, _root_.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        conv_rhs => rw [hX, stdRep, map_sum, _root_.sum_apply]
       refine Finset.sum_congr rfl fun a _ => ?_
-      rw [Submodule.coe_sum, map_sum, _root_.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Submodule.coe_sum, map_sum, _root_.sum_apply]
       refine Finset.sum_congr rfl fun b _ => ?_
       rw [Submodule.coe_smul, act_coe, map_smul, _root_.smul_apply, stdRep]
     have hfun : (fun t : ℝ => stdRep (NormedSpace.exp ((t : ℂ) • X)) (w : EuclideanSpace ℂ (Fin n))) =

@@ -65,7 +65,8 @@ private theorem swapE_inclE_eq (a : I.E) :
 
 theorem hR_swV (x y : Fin I.n → I.E ⊗[I.F] Af I.F) :
     hR (Af I.F) I.cm.sig I.J (swV I x) (swV I y) = swapE I (hA I x y) := by
-  simp only [hR, hA, Formalism.UG.hform, JR, Matrix.map_apply, map_sum, map_mul, swV_apply, sigR_swap,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hR, hA, Formalism.UG.hform, JR, Matrix.map_apply, map_sum, map_mul, swV_apply, sigR_swap,
     swapE_inclE_eq]
 
 theorem ratV_swV (w : Fin I.n → I.E) : ratV (F := I.F) (Af I.F) w = swV I (incl I w) := by

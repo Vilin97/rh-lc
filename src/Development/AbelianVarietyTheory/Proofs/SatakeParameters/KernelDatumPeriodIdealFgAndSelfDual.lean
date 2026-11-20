@@ -111,7 +111,8 @@ theorem isSdLat_of_transport (i : E ≃+* E') (hst : ∀ x, i (star x) = star (i
   ·
     have hform : ∀ x y : Sp E n, stdH E' n (cw i x) (cw i y) = i (hStd E n x y) := by
       intro x y
-      simp only [stdH, cw, hStd, LinearMap.mk₂'ₛₗ_apply, map_sum, map_mul, hst]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [stdH, cw, hStd, LinearMap.mk₂'ₛₗ_apply, map_sum, map_mul, hst]
     have hrange : ∀ w : E, i w ∈ (algebraMap (𝓞 E') E').range ↔ w ∈ (1 : Submodule (𝓞 E) E) := by
       intro w
       rw [Submodule.mem_one]

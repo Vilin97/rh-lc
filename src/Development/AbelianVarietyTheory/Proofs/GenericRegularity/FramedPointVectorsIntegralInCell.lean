@@ -151,7 +151,8 @@ theorem tie_vectors_integral : ∀ (E : Type) [Field E] [NumberField E] [IsCMFie
         ∑ i, algebraMap T.V T.Fr (r i) • fun j => algebraMap T.V T.Fr (u₀ τ j i) := by
     rintro τ r cc rfl
     ext j
-    simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum, map_mul]
   refine ⟨fun τ i => cvV (tvec (x := xc) fun j => u₀ τ j i), fun τ i => isTan_cvV (isTan_tvec hxc _),
     fun τ i a s hs => ?_, fun τ w hw he => ?_, fun τ i => ?_⟩
   · have hs' : s = χ τ a := inj (hs.trans (hχ τ a).symm)

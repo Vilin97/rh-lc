@@ -48,7 +48,8 @@ theorem self_sq {A : Type} [CommRing A] (q : ℕ) [NeZero q] (hq : IsUnit (q : A
     rw [← Ideal.Quotient.eq_zero_iff_mem]
     have hxy : Ideal.Quotient.mk (Ideal.span {d}) x = Ideal.Quotient.mk (Ideal.span {d}) y := by
       rw [Ideal.Quotient.eq]; exact Ideal.subset_span rfl
-    simp only [u, c, map_sub, map_sum, map_mul, map_pow, map_natCast, hxy]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [u, c, map_sub, map_sum, map_mul, map_pow, map_natCast, hxy]
     rw [geom_sum₂_self, sub_self]
   obtain ⟨w0, hw0⟩ := Ideal.mem_span_singleton'.1 hmem
   obtain ⟨cu, hcu⟩ := hc

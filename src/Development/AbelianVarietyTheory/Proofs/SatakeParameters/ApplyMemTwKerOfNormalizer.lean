@@ -617,7 +617,8 @@ theorem step {T : Finset (Fin s)} (hT : ∀ a b : Fin s, a ≤ b → b ∈ T →
   set W := GlobalTheory.OppRad.S (repF π) (GlobalTheory.OppRad.U (pr e T 𝓀[k]) (qr e T 𝓀[k])) X with hW
   have hW2 : π (dia e hc C) (W : V) ∈ twKer π (KOne k (Fin n)) 1 := by
     haveI := Fintype.ofFinite (GlobalTheory.OppRad.U (pr e T 𝓀[k]) (qr e T 𝓀[k]))
-    rw [hW, GlobalTheory.OppRad.S_apply, Submodule.coe_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hW, GlobalTheory.OppRad.S_apply, Submodule.coe_sum, map_sum]
     refine Submodule.sum_mem _ fun u _ => ?_
     obtain ⟨a, hau, ha, hai⟩ := exists_lift (Z := fun i j => blk e i ∈ T ∧ blk e j ∉ T)
       (fun i l j h1 h2 => h1.2 h2.1) u.1 ((mem_U_iff e T u.1).1 u.2)

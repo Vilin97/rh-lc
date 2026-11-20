@@ -31,7 +31,8 @@ theorem cT_mul_swap {σ : E →ₐ[F] E} (hs : ∀ z : E, σ (σ z) = z) {n : �
     cT (σ : E →+* E) y * J * x = (cT (σ : E →+* E) x * J * y).map σ := by
   ext i j
   rw [Subsingleton.elim i 0, Subsingleton.elim j 0]
-  simp only [cT, Matrix.mul_apply, Matrix.map_apply, Matrix.transpose_apply, AlgHom.coe_toRingHom, map_sum, map_mul, hs,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [cT, Matrix.mul_apply, Matrix.map_apply, Matrix.transpose_apply, AlgHom.coe_toRingHom, map_sum, map_mul, hs,
     Finset.sum_mul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun l _ => ?_

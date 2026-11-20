@@ -176,7 +176,8 @@ theorem arFun_pow_eq_oddHarm_mul : ArCalc → ∀ (k : Type) [CommRing k] (B Y :
 
   have eL : Φ5 ((X 3 + X 4 - 2 * X 0) ^ (2 * (l + 1)) * rename (![3, 4, 2] : Fin 3 → Fin 5) M) =
       oddHarm (l + 1) * (2 * ΨB ((X 1 - X 0) ^ (2 * l) * M)) := by
-    rw [pow_expand, add_mul, map_add, er, arFun_base hC hq hp hΦ5, zero_add, Finset.sum_mul, map_sum, oddHarm,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [pow_expand, add_mul, map_add, er, arFun_base hC hq hp hΦ5, zero_add, Finset.sum_mul, map_sum, oddHarm,
       Finset.sum_mul]
     refine Finset.sum_congr rfl fun i hi => ?_
     have hi' := Finset.mem_range.1 hi

@@ -59,7 +59,8 @@ theorem hasConstTerm_thetaSum_schr_lin : ∀ (F E : Type) [Field F] [NumberField
     obtain ⟨y, hy⟩ := hrat w
     rw [hχ, hy]
     have : cst ξ.1 ⬝ᵥ (fun k => algebraMap F (AF F) (y k)) = algebraMap F (AF F) (ξ.1 ⬝ᵥ y) := by
-      simp [dotProduct, cst, map_sum, map_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [dotProduct, cst, map_sum, map_mul]
     rw [this]
     exact hψ.2.1 _
   · intro h

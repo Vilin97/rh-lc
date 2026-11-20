@@ -151,7 +151,8 @@ theorem intStep_succ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Rec
   refine initSpan_step _ _ (u σ) hk g1 e g2 _ (fun i => ?_) ?_
   · rw [basAt, basPull_apply, h1]
     exact tanPull_basPull (L.le β) _ w hw e₀ _ e₂ _
-  · rw [basAt, basPull_apply, h2, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [basAt, basPull_apply, h2, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_smulₛₗ, tanPull_basPull (L.le β) _ w hw e₀ _ e₂ _]
 

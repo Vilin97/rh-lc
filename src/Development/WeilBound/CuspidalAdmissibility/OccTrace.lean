@@ -53,7 +53,8 @@ theorem exists_vec (m : Measure G) [m.IsHaarMeasure] (ρ : Representation ℂ G 
         exact absurd hgS h
   have hfun : (fun g => φ g * l (ρ g v)) = fun g => ∑ s ∈ S, (E s).indicator φ g * l s := funext hpt
   rw [hfun, integral_finsetSum]
-  · simp only [map_sum, map_smul, smul_eq_mul, integral_mul_const]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [map_sum, map_smul, smul_eq_mul, integral_mul_const]
   · intro s _
     exact (hφi.indicator (hE s)).mul_const (l s)
 

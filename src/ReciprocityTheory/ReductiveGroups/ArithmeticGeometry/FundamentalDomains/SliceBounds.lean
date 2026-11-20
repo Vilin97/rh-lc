@@ -55,7 +55,8 @@ theorem slice_bound {x : Frame X.Ψ r} (hx : x ∈ X.dom) {ξ : Fin r → E} (h�
     intro τ
     constructor
     · have hh : hermC τ.1 X.Gm (Data.emb τ.1 ξ) (Data.emb τ.1 ξ) = τ.1 (herm X.Gm ξ ξ) := by
-        simp only [hermC, herm, Data.emb, map_sum, map_mul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [hermC, herm, Data.emb, map_sum, map_mul]
         refine Finset.sum_congr rfl (fun a _ => Finset.sum_congr rfl (fun b _ => ?_))
         congr 1
         exact (IsCMField.complexEmbedding_complexConj E τ.1 (ξ b)).symm

@@ -71,7 +71,8 @@ theorem isInternal : DirectSum.IsInternal (piece M) := by
   · intro r
     refine ⟨∑ n ∈ (r : A[X]).support,
       DirectSum.of (fun e => piece M e) n ⟨mono M n ⟨_, r.2 n⟩, _, rfl⟩, ?_⟩
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     apply Subtype.ext
     simp only [DirectSum.coeAddMonoidHom_of, AddSubmonoidClass.coe_finsetSum, mono_val]
     exact (as_sum_support _).symm

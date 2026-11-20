@@ -41,7 +41,8 @@ theorem _root_.GlobalTheory.VacCocycle.conj_hTens (hc : ∀ z, c (c z) = z) {JA 
     (x y : Matrix α β A) :
     c (_root_.GlobalTheory.WeilM.hTens c JA JB y x) = -_root_.GlobalTheory.WeilM.hTens c JA JB x y := by
   unfold _root_.GlobalTheory.WeilM.hTens
-  simp only [map_sum, map_mul, hc, hA, hB]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, hc, hA, hB]
   simp only [← Finset.sum_neg_distrib]
   conv_lhs => enter [2, i]; rw [Finset.sum_comm]
   conv_lhs => rw [Finset.sum_comm]

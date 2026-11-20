@@ -31,7 +31,8 @@ theorem end_finsupp_sum_apply {α β : Type} (A : Module.End ℂ (β → ℂ)) (
     funext x
     simp only [Finsupp.sum, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
   rw [e]
-  simp only [Finsupp.sum, map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finsupp.sum, map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
 
 theorem isHecke_div {F E : Type} [Field F] [NumberField F] [Field E] [Algebra F E]
     {χ χ' : (AF F ⊗[F] E)ˣ →* Circle} (h : GlobalTheory.LFun.IsHecke F E χ) (h' : GlobalTheory.LFun.IsHecke F E χ') :

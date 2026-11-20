@@ -23,7 +23,8 @@ theorem lin_single_int {ι : Type} [Fintype ι] [DecidableEq ι] (j : ι) :
 
 theorem lin_option_elim_int {ι : Type} [Fintype ι] (n : ι → ℤ) :
     lin (fun o : Option ι => (((o.elim 0 n : ℤ)) : ℝ)) = rename some (lin fun i => (n i : ℝ)) := by
-  simp [lin, map_sum, Fintype.sum_option]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [lin, map_sum, Fintype.sum_option]
 
 theorem aeval_single_rename {ι : Type} [Fintype ι] [DecidableEq ι] (a : ι → ℤ) (n : ι → ℤ) :
     (aeval fun j : Option ι => lin fun i => (((j.elim a fun i' => Pi.single i' 1 : ι → ℤ) i : ℤ) : ℝ))

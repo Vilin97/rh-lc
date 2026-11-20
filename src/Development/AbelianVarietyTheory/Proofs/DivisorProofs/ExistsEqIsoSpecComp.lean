@@ -131,7 +131,8 @@ theorem isHomogeneous_spec {F K : Type} [Field F] [Field K] [Algebra F K] {D N Î
     (spec s f).IsHomogeneous Î´ := by
   classical
   unfold spec
-  rw [f.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [f.as_sum, map_sum]
   apply IsHomogeneous.sum
   intro m hm
   have hprod : (m.prod fun v e =>

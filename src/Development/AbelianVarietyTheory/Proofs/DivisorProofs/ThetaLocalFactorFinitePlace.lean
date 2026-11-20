@@ -33,7 +33,8 @@ theorem fstA_idemAt (w : Pl F) : fstA F (idemAt w) = 0 := rfl
 
 theorem fstA_idemSet (S : Finset (Pl F)) : fstA F (idemSet S) = 0 := by
   unfold idemSet
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_eq_zero fun w _ => fstA_idemAt w
 
 theorem evFin_idemAt_ne {w w' : Pl F} (h : w' ≠ w) : evFin F w' (idemAt w) = 0 := by
@@ -46,12 +47,14 @@ theorem idemAt_mul_ne {w w' : Pl F} (h : w' ≠ w) : idemAt w * idemAt w' = 0 :=
 theorem evFin_idemSet_mem {S : Finset (Pl F)} {w : Pl F} (hw : w ∈ S) : evFin F w (idemSet S) = 1 := by
   classical
   unfold idemSet
-  rw [map_sum, Finset.sum_eq_single w (fun w' _ hne => evFin_idemAt_ne (Ne.symm hne)) (fun h => absurd hw h),
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_eq_single w (fun w' _ hne => evFin_idemAt_ne (Ne.symm hne)) (fun h => absurd hw h),
     evFin_idemAt]
 
 theorem evFin_idemSet_not_mem {S : Finset (Pl F)} {w : Pl F} (hw : w ∉ S) : evFin F w (idemSet S) = 0 := by
   unfold idemSet
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_eq_zero fun w' hw' => evFin_idemAt_ne (by rintro rfl; exact hw hw')
 
 theorem idemSet_mul_self (S : Finset (Pl F)) : idemSet S * idemSet S = idemSet S := by

@@ -89,7 +89,8 @@ theorem UpperTheory.tangent_basis_lie_coordinates :
   have c2 := GlobalTheory.ShFam.Pad.Guard.comb_smul he' hw (σ o)
   rw [← hσ o] at c2
   have c3 := (he.2 _ _ _ (GlobalTheory.ShFam.Pad.Guard.comb_tan he' c2)).unique c1 c2
-  rw [map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.smul_sum]
   simp only [map_smul, hV, Finset.smul_sum, smul_smul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun j _ => ?_

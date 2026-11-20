@@ -182,7 +182,8 @@ theorem coef_mul {g k : HA R σ J} {A B : Matrix (Fin (r + 1)) (Fin (r + 1)) (R 
     (hg : Coef P g A) (hk : Coef P k B) : Coef P (g * k) (A * B) := by
   have hg' : ∀ a, lin R σ J g (ratV (F := F) R (F0 P a)) = ∑ c, A c a • ratV (F := F) R (F0 P c) := hg
   intro b
-  rw [lin_mul, hk b, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [lin_mul, hk b, map_sum]
   simp only [map_smul, hg', Finset.smul_sum, smul_smul, Matrix.mul_apply, Finset.sum_smul]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun c _ => Finset.sum_congr rfl fun a _ => by rw [mul_comm]

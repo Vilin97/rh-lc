@@ -182,7 +182,8 @@ theorem mem_RL_rows (L : Lat D N) (hL : SD D L) (z : Matrix (Fin N') (Fin N) D.h
     refine ⟨t, ht, fun j => D.host.conj (A i j), (hs _).2 fun x hx => ?_, ?_⟩
     · have h2 := (mem_stdL.1 (mem_homL.1 hA x hx) i).conj
       have e : hE D (fun j => D.host.conj (A i j)) x = D.host.conj (A.mulVec x i) := by
-        simp only [hE, Matrix.mulVec, dotProduct, map_sum, map_mul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [hE, Matrix.mulVec, dotProduct, map_sum, map_mul]
       rw [e]; exact h2
     · simp only [conj_conj]; rfl
   · intro h

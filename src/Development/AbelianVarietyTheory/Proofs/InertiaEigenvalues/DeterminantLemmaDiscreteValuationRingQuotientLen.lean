@@ -220,7 +220,8 @@ theorem exists_relations {A : Type} [Ring A] [Algebra O A] {d : ℕ} (ψ : A →
   choose θ hθ hθr using fun (p : Fin g) (a : Fin d) => hrN (p, a) a
   have hM : (Matrix.of fun (pa qb : Fin g × Fin d) => ψ ((∑ a, θ pa.1 a) qb.1) pa.2 qb.2) = Matrix.of r := by
     ext ⟨p, a⟩ ⟨q, b⟩
-    simp [Finset.sum_apply, map_sum, Matrix.sum_apply, hθr]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Finset.sum_apply, map_sum, Matrix.sum_apply, hθr]
   refine ⟨fun p => ∑ a, θ p a, fun p => Rel.sum_mem fun a _ => hθ p a, ?_⟩
   rw [hM]
   let π : (Fin g × Fin d → FractionRing O) →ₗ[O] (Fin g → KOG O d) :=
@@ -247,7 +248,8 @@ theorem exists_relations {A : Type} [Ring A] [Algebra O A] {d : ℕ} (ψ : A →
           (LinearMap.proj q : (Fin g → KOG O d) →ₗ[O] KOG O d)) (π y) =
         (stdG O (FractionRing O) d).mkQ
           (∑ q, ((ψ (t q)).map (algebraMap O (FractionRing O))).mulVec fun b => y (q, b)) := by
-      rw [LinearMap.sum_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [LinearMap.sum_apply, map_sum]
       rfl
     rw [h1, Submodule.mkQ_apply, mk_eq_zero_iff]
     intro a

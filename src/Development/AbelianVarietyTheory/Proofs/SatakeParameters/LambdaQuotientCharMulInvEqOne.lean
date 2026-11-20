@@ -183,7 +183,8 @@ theorem block_mul (P : HeightOneSpectrum (𝓞 E)) (q : ℕ) (hq0 : q ≠ 0) (hq
     rw [hXE, hY, add_comm, hsum]
     split_ifs <;> rfl
   have hred : redHom P Y = 0 := by
-    rw [hYdef, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hYdef, map_sum]
     refine Finset.sum_eq_zero fun u hu => ?_
     rw [map_mul]
     simp only [redHom_apply]

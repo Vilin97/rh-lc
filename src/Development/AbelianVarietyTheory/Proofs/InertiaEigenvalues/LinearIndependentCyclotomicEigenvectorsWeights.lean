@@ -56,7 +56,8 @@ theorem linIndep_of_eigen_weights : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l
       funext i
       have hi := congrFun hbrel i
       simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Pi.zero_apply] at hi ⊢
-      rw [← map_zero (Formalism.Per.σC (g : GQ l)), ← hi, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← map_zero (Formalism.Per.σC (g : GQ l)), ← hi, map_sum]
       simp only [map_mul]
     have h2 : ∑ j, (Formalism.Per.σC (g : GQ l) (b j) * e g (w j)) • v j = 0 := by
       have := congrArg (fun u => (A g).mulVec u) h1

@@ -113,9 +113,11 @@ theorem exists_coord : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Num
   let p : Matrix (Fin d) (Fin n ⊕ Fin n) (AE F E) → (Fin n ⊕ Fin n) × Fin 2 → AF F := fun z k => Tr (βA k.2 * b z k.1)
   let q : Matrix (Fin d) (Fin n ⊕ Fin n) (AE F E) → (Fin n ⊕ Fin n) × Fin 2 → AF F := fun z k => -βA.repr (D z k.1) k.2
   have hpq : ∀ z z', p z ⬝ᵥ q z' = -Tr (b z ⬝ᵥ D z') := fun z z' => by
-    simp only [dotProduct, Fintype.sum_prod_type, map_sum, ← Finset.sum_neg_distrib]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [dotProduct, Fintype.sum_prod_type, map_sum, ← Finset.sum_neg_distrib]
     refine Finset.sum_congr rfl fun k _ => ?_
-    conv_rhs => rw [← βA.sum_repr (D z' k), Finset.mul_sum, map_sum, ← Finset.sum_neg_distrib]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_rhs => rw [← βA.sum_repr (D z' k), Finset.mul_sum, map_sum, ← Finset.sum_neg_distrib]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [mul_smul_comm, map_smul, smul_eq_mul, mul_comm (b z k)]
     simp only [p, q]
@@ -196,7 +198,8 @@ theorem exists_coord : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Num
       rw [Finset.sum_eq_single j (fun j' _ hj => by simp [Ne.symm hj]) (by simp)] at h2
       simpa using h2
     refine (traceForm_nondegenerate F E).1 (z j) fun t => ?_
-    rw [← β.sum_repr t, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← β.sum_repr t, map_sum]
     refine Finset.sum_eq_zero fun i _ => ?_
     rw [map_smul, Algebra.traceForm_apply, mul_comm, h1, smul_zero]
   · have := hval z 0 0

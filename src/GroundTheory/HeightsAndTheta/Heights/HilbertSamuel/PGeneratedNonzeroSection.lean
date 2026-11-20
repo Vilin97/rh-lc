@@ -370,7 +370,8 @@ theorem mem_ratChart_of_mem {c : ∀ k, ι k} {w : Ω} (hw : w ∈ chartRingZ y 
 theorem aeval_homog_mem (c : ∀ k, ι k) {p : MRingOver ℚ ι} {d : K → ℕ} (hp : IsMultiHomog p d) :
     aeval y p * ∏ k, y ⟨k, c k⟩ ^ (-(d k : ℤ)) ∈ ratChart y c := by
   classical
-  rw [p.as_sum, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [p.as_sum, map_sum, Finset.sum_mul]
   refine Submodule.sum_mem _ fun μ hμ => ?_
   have hdeg := hp μ hμ
   rw [aeval_monomial, Finsupp.prod_fintype _ _ (fun i => pow_zero _)]
@@ -483,7 +484,8 @@ theorem exists_section {Ω : Type} [Field Ω] [CharZero Ω] (y : (Σ k, ι k) �
   choose c₀ hc₀ using hall
   obtain ⟨r, z, u, hz, -, hsum⟩ := hG (chartCell c₀)
   have h1 := congrArg (evHom y _ (nonzeroOn_chart y hc₀)) hsum
-  rw [map_sum, map_one] at h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_one] at h1
   obtain ⟨j, hj⟩ : ∃ j, evHom y _ (nonzeroOn_chart y hc₀) (z j (chartCell c₀)) ≠ 0 := by
     by_contra hcon
     push Not at hcon

@@ -48,7 +48,8 @@ theorem hform_smul_left (c : K) (x y : Fin M → K) :
 
 theorem hform_conj (hs : ∀ e, s (s e) = e) (hA : ∀ i j, s (A j i) = A i j) (x y : Fin M → K) :
     s (hform s A x y) = hform s A y x := by
-  simp only [hform, map_sum, map_mul, hs]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hform, map_sum, map_mul, hs]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by rw [hA]; ring
 

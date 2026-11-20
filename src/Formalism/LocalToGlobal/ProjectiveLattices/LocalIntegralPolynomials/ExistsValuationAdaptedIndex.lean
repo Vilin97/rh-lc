@@ -37,7 +37,8 @@ theorem sImg_succAbove (jc : Fin (N + 1)) (x : Fin N → Ω) (i : Fin (D + 1)) (
 theorem sum_y_sImg (jc : Fin (N + 1)) (x : Fin N → Ω) {i : Fin (D + 1)} (hi : i ≠ 0) :
     ∑ j, algebraMap Ω (OmS Ω D N) (yv jc x j) * sImg jc x (i, j) = 0 := by
   rw [Fin.sum_univ_succAbove _ jc, yv_self, sImg_self, if_neg hi]
-  simp only [yv_succAbove, sImg_succAbove, map_one, one_mul, map_neg, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [yv_succAbove, sImg_succAbove, map_one, one_mul, map_neg, map_sum, map_mul]
   rw [neg_add_eq_zero]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [IsScalarTower.algebraMap_apply Ω (MvPolynomial (SVar D N) Ω) (OmS Ω D N),
@@ -84,7 +85,8 @@ theorem aeval_qj (hy0 : yv jc x j0 ≠ 0) (p : TVar D N) :
           sImg jc x (i, j0.succAbove k)) / algebraMap Ω (OmS Ω D N) (yv jc x j0) := by
         rw [eq_div_iff hy]
         linear_combination hs
-      simp only [map_neg, map_sum, map_mul, aeval_X, aeval_C, tj, Sum.elim_inr, map_div₀]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_neg, map_sum, map_mul, aeval_X, aeval_C, tj, Sum.elim_inr, map_div₀]
       rw [key, neg_div, Finset.sum_div]
       congr 1
       refine Finset.sum_congr rfl fun k _ => ?_
@@ -140,7 +142,8 @@ theorem X_mem_intPoly {σ : Type} {W : Subring Ω} (s : σ) : (X s : MvPolynomia
 theorem aeval_mem_intPoly {σ τ : Type} {W : Subring Ω} {q : σ → MvPolynomial τ Ω}
     (hq : ∀ s, q s ∈ intPoly τ W) {P : MvPolynomial σ Ω} (hP : P ∈ intPoly σ W) :
     aeval q P ∈ intPoly τ W := by
-  rw [P.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [P.as_sum, map_sum]
   refine Subring.sum_mem _ fun v _ => ?_
   rw [aeval_monomial]
   refine Subring.mul_mem _ ?_ ?_

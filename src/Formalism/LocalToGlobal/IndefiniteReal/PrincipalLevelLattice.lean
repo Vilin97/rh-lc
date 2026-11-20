@@ -178,7 +178,8 @@ theorem jEE_basis (h2 : X.H2 cr b) (I : RowsId X b c E) (hn : 0 < X.nP b) (σ : 
   refine ⟨?_, ?_⟩
   · rw [Fintype.linearIndependent_iff]
     intro g hg i
-    simp_rw [hsm, ← map_sum] at hg
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp_rw [hsm, ← map_sum] at hg
     have h0 : ∑ j, c (g j) • (Pi.single j 1 : Fin ((lv (fc X.zs) b).dQ Bs.μ0) → ℂ) = 0 :=
       (rowsMap_bijective X cr b h2 I hn).1 (hg.trans (map_zero _).symm)
     have h1 := congrFun h0 i
@@ -187,7 +188,8 @@ theorem jEE_basis (h2 : X.H2 cr b) (I : RowsId X b c E) (hn : 0 < X.nP b) (σ : 
     intro w _
     obtain ⟨y, rfl⟩ := (rowsMap_bijective X cr b h2 I hn).2 w
     refine (Submodule.mem_span_range_iff_exists_fun ℂ).2 ⟨fun i => c (y i), ?_⟩
-    simp_rw [hsm, I.c_c, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp_rw [hsm, I.c_c, ← map_sum]
     congr 1
     ext j
     simp [Finset.sum_apply, Pi.single_apply]

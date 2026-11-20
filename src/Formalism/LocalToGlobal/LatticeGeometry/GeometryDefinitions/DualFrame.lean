@@ -65,7 +65,8 @@ theorem dual_frame (h : V →ₗ⋆[K] V →ₗ[K] K) (hs : h.IsSymm) (hnd : h.N
   let w : Fin n → V := fun i => ∑ j, star (algebraMap R K (fi i ⟨b j, hbL j⟩)) • bs j
   have hw_b : ∀ i k, h (w i) (b k) = algebraMap R K (fi i ⟨b k, hbL k⟩) := by
     intro i k
-    simp only [w, map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, hbs',
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [w, map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, hbs',
       smul_eq_mul, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq, Finset.mem_univ, if_true]
     rw [starRingEnd_apply, star_star]
   have hw_L : ∀ i (z : L), h (w i) z = algebraMap R K (fi i z) := by
@@ -83,12 +84,14 @@ theorem dual_frame (h : V →ₗ⋆[K] V →ₗ[K] K) (hs : h.IsSymm) (hnd : h.N
       IsFractionRing.to_map_ne_zero_of_mem_nonZeroDivisors d.2
     have L1 : algebraMap R K d * h (w i) z =
         ∑ j, algebraMap R K (a j) * algebraMap R K (fi i ⟨b j, hbL j⟩) := by
-      rw [← smul_eq_mul, ← LinearMap.map_smul, algebraMap_smul, hdzV, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← smul_eq_mul, ← LinearMap.map_smul, algebraMap_smul, hdzV, map_sum]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [← algebraMap_smul K (a j) (b j), LinearMap.map_smul, hw_b, smul_eq_mul]
     have L2 : algebraMap R K d * algebraMap R K (fi i z) =
         ∑ j, algebraMap R K (a j) * algebraMap R K (fi i ⟨b j, hbL j⟩) := by
-      rw [← map_mul, ← smul_eq_mul, ← LinearMap.map_smul, hdz, map_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← map_mul, ← smul_eq_mul, ← LinearMap.map_smul, hdz, map_sum, map_sum]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [LinearMap.map_smul, smul_eq_mul, map_mul]
     exact mul_left_cancel₀ hd0 (L1.trans L2.symm)
@@ -146,7 +149,8 @@ theorem IsFrame.map {n k : ℕ} {H : Matrix (Fin n) (Fin n) K} {g w : Fin k → 
   calc z a = ∑ d, z d * (if a = d then 1 else 0) := by simp
     _ = ∑ d, z d * φ (∑ i, g i a * ∑ c, star (w i c) * H c d) := by simp only [e1]
     _ = _ := by
-      simp only [map_sum, map_mul, Finset.mul_sum, Finset.sum_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_mul, Finset.mul_sum, Finset.sum_mul]
       rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [Finset.sum_comm]

@@ -41,7 +41,8 @@ theorem map_linExt {R S : Type} [CommRing R] [Algebra ℚ R] [CommRing S] [Algeb
   ext i j
   show φ (∑ kl : ι × ι, algebraMap ℚ R (c (i, j) kl) * x kl.1 kl.2) =
     ∑ kl : ι × ι, algebraMap ℚ S (c (i, j) kl) * φ (x kl.1 kl.2)
-  simp only [map_sum, map_mul, AlgHom.commutes]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, AlgHom.commutes]
 
 theorem map_poly {R S : Type} [CommRing R] [Algebra ℚ R] [CommRing S] [Algebra ℚ S] (φ : R →ₐ[ℚ] S)
     (b : ι → ι → MvPolynomial (ι × ι) ℚ) (x : Matrix ι ι R) :

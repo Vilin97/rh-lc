@@ -202,10 +202,12 @@ private lemma hermC_map_mulVec_eq_of_preserves_form (τ : E →+* ℂ) (G M : Ma
   have hK' : ∀ a b, τ (G a b) = ∑ i, ∑ j, τ (M i a) * τ (G i j) * starRingEnd ℂ (τ (M j b)) := by
     intro a b
     rw [← hK a b]
-    simp [map_sum, IsCMField.complexEmbedding_complexConj]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, IsCMField.complexEmbedding_complexConj]
   unfold _root_.ReciprocityTheory.ChartRestriction.G.FD.hermC
   conv_rhs => rw [Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => by rw [hK' a b]]
-  simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum, map_mul, Finset.sum_mul, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum, map_mul, Finset.sum_mul, Finset.mul_sum]
   conv_lhs => enter [2, i, 2, j]; rw [Finset.sum_comm]
   conv_lhs => enter [2, i]; rw [Finset.sum_comm]
   conv_lhs => enter [2, i, 2, a]; rw [Finset.sum_comm]

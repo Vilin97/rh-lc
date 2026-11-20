@@ -30,7 +30,8 @@ theorem exists_of_std (ψ : AddChar K ℂ) (hψ : GlobalTheory.JR.IsStdChar ψ) 
   have hB : ∀ x y, β x y = ∑ i, e.repr x i * e'.repr y i := by
     intro x y
     conv_lhs => rw [← e.sum_repr x]
-    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [LinearMap.BilinForm.dualBasis_repr_apply, hs.eq]
   obtain ⟨t, ht0, ht1⟩ := NormedField.exists_norm_lt_one K
@@ -226,7 +227,8 @@ theorem hR_symm [FiniteDimensional F E] (hσ : ∀ x, σ (σ x) = x) (hJ : IsHer
     Algebra.trace R (R ⊗[F] E) (hR R σ J x y) = Algebra.trace R (R ⊗[F] E) (hR R σ J y x) := by
   rw [← trace_sigR R σ]
   congr 1
-  simp only [hR, hform, map_sum, map_mul, sigR_sigR R σ hσ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hR, hform, map_sum, map_mul, sigR_sigR R σ hσ]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   have : sigR R σ (JR R J j i) = JR R J i j := by

@@ -66,7 +66,8 @@ private theorem pres (D : Dat F E) (h : GL (Fin 2) (A E))
     have h2 := congrArg (fun M : Matrix (Fin 2) (Fin 2) (Cinf E) => M.map (coord τ)) h1
     ext i j
     have h3 := congrFun (congrFun h2 i) j
-    simp only [Matrix.map_apply, Matrix.mul_apply, Matrix.star_eq_conjTranspose, Matrix.conjTranspose_apply, map_sum, map_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.map_apply, Matrix.mul_apply, Matrix.star_eq_conjTranspose, Matrix.conjTranspose_apply, map_sum, map_mul,
       UpperTheory.V.FieldIso.coord_star] at h3
     rw [Matrix.mul_apply]
     simp only [hK, Matrix.conjTranspose_apply, Matrix.map_apply]

@@ -54,7 +54,8 @@ theorem exists_comm_YYl (D : D7) (N N' r : ℕ) (b : Fin r → Matrix (Fin N') (
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [← Finset.sum_smul]
     congr 1
-    rw [RingOfIntegers.coe_eq_algebraMap, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [RingOfIntegers.coe_eq_algebraMap, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_mul, ← RingOfIntegers.coe_eq_algebraMap, ← RingOfIntegers.coe_eq_algebraMap, ha, ht]
     simp only [Sum.elim_inl]

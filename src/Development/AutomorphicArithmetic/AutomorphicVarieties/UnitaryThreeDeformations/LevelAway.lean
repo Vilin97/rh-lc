@@ -34,7 +34,8 @@ private theorem la_avg {A H C : Type} [CommRing A] [IsLocalRing A] [Group H] [Gr
     show (residue A).mapMatrix ((a s * (b s)⁻¹ : GL (Fin 3) A) : Matrix (Fin 3) (Fin 3) A) = 1
     rw [Units.val_mul, map_mul, h1, ← map_mul, Units.mul_inv, map_one]
   have hM : IsUnit M := by
-    rw [Matrix.isUnit_iff_isUnit_det, ← residue_ne_zero_iff_isUnit, RingHom.map_det, ← isUnit_iff_ne_zero,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Matrix.isUnit_iff_isUnit_det, ← residue_ne_zero_iff_isUnit, RingHom.map_det, ← isUnit_iff_ne_zero,
       ← Matrix.isUnit_iff_isUnit_det, map_sum]
     simp only [hred, Finset.sum_const, Finset.card_univ, nsmul_eq_mul, mul_one]
     have := (hQ.map (residue A)).map (algebraMap _ (Matrix (Fin 3) (Fin 3) (ResidueField A)))

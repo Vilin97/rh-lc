@@ -89,7 +89,8 @@ theorem GlobalTheory.Poinc.EighthPow.main : ∀ (R : Type) [CommRing R] [IsDomai
       conv_lhs => rw [hy]
       show m (∑ w, c w (Mq (e y) w)) = ∑ w, c w (t' w)
       have hL : m (∑ w, c w (Mq (e y) w)) = c b (Mq (e y) a) := by
-        rw [map_sum]; simp [hmc]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]; simp [hmc]
       have hR : ∑ w, c w (t' w) = c b (Mq (e y) a) := by
         rw [Finset.sum_eq_single b (fun w _ hw => by simp only [t', if_neg hw, map_zero]) (by simp)]
         simp only [t', if_pos rfl]

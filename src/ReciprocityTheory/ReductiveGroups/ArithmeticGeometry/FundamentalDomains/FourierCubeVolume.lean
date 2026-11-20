@@ -23,7 +23,8 @@ lemma Bv_zero : Bv ω 0 = 0 := by
 
 lemma Bv_herm (hωh : ∀ j, IsHermFam (ω j)) (t : Fin N → ℝ) : IsHermFam (Bv ω t) := by
   intro τ i k
-  simp only [Bv, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum, map_mul, Complex.conj_ofReal]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Bv, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum, map_mul, Complex.conj_ofReal]
   refine Finset.sum_congr rfl (fun j _ => ?_)
   rw [hωh j τ i k]
 
@@ -44,7 +45,8 @@ lemma pair_Bv (χ : ι → Fin 2 → Fin 2 → ℂ) (t : Fin N → ℝ) :
       Finset.sum_congr rfl (fun k _ => by ring)))
   let P : (ι → Fin 2 → Fin 2 → ℂ) →+ ℝ := AddMonoidHom.mk' (pr χ) hadd
   have h1 : pr χ (Bv ω t) = P (Bv ω t) := rfl
-  rw [h1, Bv, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h1, Bv, map_sum]
   exact Finset.sum_congr rfl (fun j _ => hsm _ _)
 
 def ech (χ : ι → Fin 2 → Fin 2 → ℂ) (t : Fin N → ℝ) : ℂ :=

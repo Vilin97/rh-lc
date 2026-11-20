@@ -17,7 +17,8 @@ theorem lin_prod_expand {J : Type} [Fintype J] [DecidableEq J] (d : ℕ) (Φ : M
     (c : J → ℝ) :
     Φ ((∑ j, C (c j) * X j) ^ d) =
       ∑ w : Fin d → J, (∏ k, c (w k)) * Φ (monomial (∑ k, Finsupp.single (w k) 1) 1) := by
-  rw [← Fin.prod_const, Fintype.prod_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Fin.prod_const, Fintype.prod_sum, map_sum]
   refine Finset.sum_congr rfl fun w _ => ?_
   have hm : ∏ k, C (c (w k)) * X (w k) = C (∏ k, c (w k)) * monomial (∑ k, Finsupp.single (w k) 1) (1 : ℝ) := by
     rw [Finset.prod_mul_distrib, map_prod, monomial_sum_one]
@@ -46,7 +47,8 @@ theorem root_model_arithmetic_intersection : ∀ II : IntersectionSystem, IsFull
   let cc : Option (Ψ × Fin N) → ℝ := fun j => Option.elim j s (fun r => -lam r.1 r.2)
   have hlin : linA lam s = ∑ j, C (cc j) * X j := by
     rw [Fintype.sum_option]
-    simp [cc, linA, toA, linRoot, map_sum, map_neg, rename_X, Finset.sum_neg_distrib, add_comm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [cc, linA, toA, linRoot, map_sum, map_neg, rename_X, Finset.sum_neg_distrib, add_comm]
   rw [hlin, lin_prod_expand, Finset.mul_sum]
   refine Finset.sum_congr rfl fun w _ => ?_
   obtain ⟨hdeg, σ, _, hII2⟩ := RootFieldNumerics.intersection_monomial_lines II hII.1 M.K M.ι M.P (dimFl Ψ N + 1) _ (M.line t) w M.arith hsm

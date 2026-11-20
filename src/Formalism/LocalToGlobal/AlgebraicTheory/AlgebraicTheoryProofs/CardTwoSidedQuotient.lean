@@ -261,7 +261,8 @@ theorem alV_flat (d : ℕ) (sc : ℝ) (z : DVar T a b → ℂ) :
 
 theorem herm_hSc (sc : ℝ) : IsHerm (matH (hSc T a b sc)) := by
   intro x y
-  rw [matH_hSc, matH_hSc, map_mul, map_sum, Complex.conj_ofReal]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [matH_hSc, matH_hSc, map_mul, map_sum, Complex.conj_ofReal]
   congr 1
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_mul, Complex.conj_conj, mul_comm]

@@ -256,7 +256,8 @@ theorem posAt_ipAt (h : F.Ok) (hpos : ∀ v : InfinitePlace K, (F.gramV.map v.em
 theorem pairAt_of_rat (v : InfinitePlace K) (x y : F.V) (hx : ∀ i, F.bV.repr x i ∈ cmMax K) :
     v.embedding (F.pair x y) = F.pairAt v x y := by
   conv_lhs => rw [← F.bV.sum_repr x, ← F.bV.sum_repr y]
-  simp only [map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, map_mul, pairAt,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, map_mul, pairAt,
     Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
@@ -269,7 +270,8 @@ theorem pairAt_of_rat (v : InfinitePlace K) (x y : F.V) (hx : ∀ i, F.bV.repr x
 theorem gram_ipAt (h : F.Ok) (hr : (F.toCSD h).HasRatBasis) (v : InfinitePlace K) :
     gramOf (F.hB h) (fun (φ ψ : F.Forms) => F.ipAt h v φ ψ) = (F.hGram h).map v.embedding := by
   ext a a'
-  simp only [gramOf, Matrix.of_apply, ipAt, Matrix.map_apply, CSD.H, CSD.csum, map_sum, map_mul, map_inv₀, map_natCast]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [gramOf, Matrix.of_apply, ipAt, Matrix.map_apply, CSD.H, CSD.csum, map_sum, map_mul, map_inv₀, map_natCast]
   refine Finset.sum_congr rfl fun c _ => ?_
   congr 1
   have e : ∀ a, F.valAt (F.hB h a) c = ((F.toCSD h).basis a : F.Cl → F.V) c := by

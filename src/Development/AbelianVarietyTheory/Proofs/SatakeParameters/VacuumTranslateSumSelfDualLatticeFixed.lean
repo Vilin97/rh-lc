@@ -90,7 +90,8 @@ theorem vacuum_sum_selfDual_fixed : ∀ (L : Type) [Field L] [CharZero L] [Value
       _ = ρ (v' * A) (ρ ((u + v - v') * A) s) := (hcomb v' _ hv' hw s).symm
       _ = ρ (v' * A) s := by rw [hl]
   choose! f hfZ hf hfd using key
-  rw [map_sum, Finset.sum_congr rfl hf]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_congr rfl hf]
   have hinj : ∀ x ∈ Z, ∀ y ∈ Z, f x = f y → x = y := by
     intro z1 h1 z2 h2 he
     apply hZdist z1 h1 z2 h2

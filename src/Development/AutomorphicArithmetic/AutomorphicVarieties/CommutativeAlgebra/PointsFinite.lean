@@ -129,7 +129,8 @@ private theorem pf_approx {O X σ : Type} [CommRing O] [AddCommGroup X] [Finite 
     ∃ s : Finset X, (n : ℕ∞) ≤ (F - ∑ j ∈ s, wcomp O wt j F).order := by
   classical
   refine ⟨(truncTotal n F).support.image (Finsupp.weight wt), nat_le_order fun d hd => ?_⟩
-  rw [map_sub, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sub, map_sum]
   simp only [coeff_wcomp]
   rw [Finset.sum_ite_eq]
   split_ifs with h
@@ -213,17 +214,20 @@ private theorem pf_step (hg : ∀ s, ι (g (MvPowerSeries.X s)) = t (Multiplicat
   choose c hc hc' using fun m => hI (b m) (hb m) (β m) rfl
   have hx' : x = ∑ m ∈ μ, β m * m.prod fun s k => W.zA s ^ k := by
     apply Subtype.ext
-    rw [hx, map_sum, AddSubmonoidClass.coe_finset_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hx, map_sum, AddSubmonoidClass.coe_finset_sum]
     refine Finset.sum_congr rfl fun m _ => ?_
     rw [Subalgebra.coe_mul, pf_zprod, map_mul]
   refine ⟨∑ m ∈ μ, c m * g (monomial m 1), ?_, ?_⟩
-  · rw [hx', map_sum, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [hx', map_sum, map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun m hm => ?_
     rw [map_mul, map_mul, hc, pf_monomial, map_finsuppProd, map_finsuppProd]
     simp only [map_pow, hg]
     rw [pf_prod W.wt t (fun s => ξ (W.zA s)), hS m (hμ hm)]
     ring
-  · rw [map_sum, ← Finset.sum_sub_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum, ← Finset.sum_sub_distrib]
     refine Ideal.sum_mem _ fun m hm => ?_
     rw [map_mul, ← sub_mul]
     exact Ideal.mul_mem_mul (hc' m) (hJ m (hμ hm))

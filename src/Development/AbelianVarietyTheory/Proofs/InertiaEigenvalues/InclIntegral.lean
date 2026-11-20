@@ -121,7 +121,8 @@ theorem extMat_comm {LL LL' : FinExt l} (h : LL.1 ≤ LL'.1) {T₁ T₂ : LocLat
     rw [← c1, ← c2, hc]
   refine Matrix.ext fun i j => ?_
   have := congrArg (fun M => incl h (M i j)) key
-  simp only [Matrix.mul_apply, map_sum, map_mul] at this
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mul_apply, map_sum, map_mul] at this
   simpa only [e1, e2, Matrix.mul_apply, extMat, Matrix.map_apply] using this
 
 def extHom {LL LL' : FinExt l} (h : LL.1 ≤ LL'.1) {T₁ T₂ : LocLat G ℚ_[l] ↥LL.1 ↥(OL LL)} {k₁ k₂ : ℕ}

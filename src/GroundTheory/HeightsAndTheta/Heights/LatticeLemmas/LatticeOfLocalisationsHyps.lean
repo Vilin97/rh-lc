@@ -788,7 +788,8 @@ def HermitianSpace.standard (r : ℕ) : HermitianSpace K r where
   form _ := coreOfInjective (WithLp.linearEquiv 2 ℂ (Fin r → ℂ)).symm.toLinearMap
     (WithLp.linearEquiv 2 ℂ (Fin r → ℂ)).symm.injective
   form_conj σ x y := by
-    simp only [coreOfInjective_inner, LinearEquiv.coe_coe, PiLp.inner_apply, RCLike.inner_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [coreOfInjective_inner, LinearEquiv.coe_coe, PiLp.inner_apply, RCLike.inner_apply,
       map_sum, map_mul, Complex.conj_conj]
     refine Finset.sum_congr rfl fun i _ ↦ ?_
     change star (y i) * starRingEnd ℂ (star (x i)) = starRingEnd ℂ (y i) * x i

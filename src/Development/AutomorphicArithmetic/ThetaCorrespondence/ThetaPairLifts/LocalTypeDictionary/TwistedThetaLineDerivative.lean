@@ -66,7 +66,8 @@ theorem lift_splits_locally : _root_.GlobalTheory.FunPr.ThetaLocalInputs → ∀
   have e1 : ∀ t : ℝ, GlobalTheory.WeilM.thetaSum F (G.M.co.rho B.ψ u (om (1, γ (Multiplicative.ofAdd t))
       (∑ i, tens (evI F) (⇑(f i)) (r i)))) = ∑ i, v i t := by
     intro t
-    rw [map_sum, rho_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, rho_sum]
     refine HasSum.tsum_eq ?_
     convert hasSum_sum (s := Finset.univ) (fun i _ => hv i t) using 1
     funext ξ

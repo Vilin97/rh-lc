@@ -41,7 +41,8 @@ theorem span_inv (hsep : ∀ F : W, (∀ t, ev t F = 0) → F = 0)
     rfl
   let ξj : Fin (Module.finrank LL C) → V := fun j => c.sum fun x a => π j a • x
   have hdec : (c.sum fun x a => a • φ x) = ∑ j, (κ j : Kf) • φ (ξj j) := by
-    simp only [ξj, Finsupp.sum, map_sum, hsm, Finset.smul_sum, smul_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [ξj, Finsupp.sum, map_sum, hsm, Finset.smul_sum, smul_smul]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun x hx => ?_
     have h1 : c x • φ x = ∑ j, ((κ j : Kf) * e (π j (c x))) • φ x := by
@@ -58,7 +59,8 @@ theorem span_inv (hsep : ∀ F : W, (∀ t, ev t F = 0) → F = 0)
   have hzero : ∑ j, (κ j : Kf) • φ (y (ξj j) - ξj j) = 0 := by
     simp only [map_sub, hy, smul_sub, Finset.sum_sub_distrib]
     have h2 : ∑ x, (κ x : Kf) • Tm (φ (ξj x)) = Tm (∑ x, (κ x : Kf) • φ (ξj x)) := by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       exact Finset.sum_congr rfl fun x _ => (map_smul Tm _ _).symm
     rw [h2, ← hdec, hinv Tm hTm, sub_self]
   have hli : LinearIndependent LL fun j => (κ j : Kf) :=
@@ -67,7 +69,8 @@ theorem span_inv (hsep : ∀ F : W, (∀ t, ev t F = 0) → F = 0)
     refine hsep _ fun t => ?_
     choose q hq using fun j' => hval (y (ξj j') - ξj j') t
     have h3 := congrArg (ev t) hzero
-    rw [map_sum, map_zero] at h3
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero] at h3
     simp only [map_smul, smul_eq_mul, ← hq] at h3
     have h4 : ∑ j', q j' • (κ j' : Kf) = 0 := by
       rw [← h3]

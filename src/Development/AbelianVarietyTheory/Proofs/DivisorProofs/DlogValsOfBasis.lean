@@ -44,7 +44,8 @@ theorem dlogVals_of_basis {E : Type} [Field E] [NumberField E] [IsCMField E] {H 
   have h4 : ∀ i, (a' i : ℂ_[p]) = ∑ l, cf l * a l i := fun i => by
     simpa [Finset.sum_apply] using congrFun h3 i
   change (intO ℂ_[p]).subtype _ = _
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [map_mul, Subring.coe_subtype, h4, Matrix.of_apply, Finset.mul_sum, Finset.sum_mul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
@@ -109,7 +110,8 @@ theorem dlogVals_valMat : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E]
       Matrix.of fun r l => ∑ i, ((β (h r i) : intO ℂ_[resP v]) : ℂ_[resP v]) * ψ (a l i) := by
     ext r l
     simp only [Matrix.map_apply, valMat, Matrix.of_apply]
-    rw [hMα, hval, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hMα, hval, map_sum]
     simp only [map_mul, hβα]
   have key := dlogVals_of_basis t _ χ _ hB _ (hd β hβ) _ _ hb
   rw [← hm] at key

@@ -43,7 +43,8 @@ theorem Ex.descend {k Ω Ix : Type} [Field k] [Field Ω] [Fintype Ix] (f : k →
   have e := congrArg ρ (congrFun hw p)
   rw [Function.comp_apply, hρ'] at e
   rw [← e]
-  simp only [Matrix.mulVec, dotProduct, map_sum, Matrix.map_apply, Function.comp_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mulVec, dotProduct, map_sum, Matrix.map_apply, Function.comp_apply]
   refine Finset.sum_congr rfl fun q _ => ?_
   exact ((ρ.map_smul (D p q) (w q)).trans (smul_eq_mul _ _)).symm
 
@@ -198,7 +199,8 @@ def comb {R : Type} [CommRing R] {X : Scheme.{0}} (p : X ⟶ Sp R) {L : LB X} {S
     [Fintype S] (a : S → R) (s : S → L.Sec) : L.Sec where
   f j := ∑ i, AbLaw.cst p (L.U j) (a i) * (s i).f j
   compat j k := by
-    rw [map_sum, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_mul, map_mul, rs_cst, rs_cst, (s i).compat j k]
     ring
@@ -259,7 +261,8 @@ theorem coords_sum (x : KeyIn R) {l N : ℕ} {S : Type} [Fintype S] (b : Fin N �
   intro i
   refine (Finset.sum_congr rfl fun a _ => hc a i).trans (Finset.sum_comm.trans ?_)
   refine Finset.sum_congr rfl fun k _ => ?_
-  rw [Finset.sum_apply, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.sum_apply, map_sum, Finset.sum_mul]
 
 theorem resolves_field (hL : Out.Laws) (K : Type) [Field K] [IsAlgClosed K] (x : KeyIn K) (n l d : ℕ)
     (s : Fin x.P.g → RR x n) (b : ∀ j, Fin ((l - j * n) ^ x.P.g) → RR x (l - j * n)) (z : Fin d → Pt x)

@@ -74,7 +74,8 @@ theorem projV_lmul (v : HeightOneSpectrum (𝓞 F)) (A : Matrix (Fin n) (Fin n) 
     HeckeCharacterZeroLocus.SiegelWeilU.projV v (fun j i => ∑ c, Algebra.TensorProduct.map (HeckeCharacterZeroLocus.SiegelWeilU.sndA F) (AlgHom.id F E) (A c j) * X c i) =
       fun j i => ∑ c, PositivityTheory.SiegelWeilFormula.Gen.matV v A c j * HeckeCharacterZeroLocus.SiegelWeilU.projV v X c i := by
   funext j i
-  simp only [HeckeCharacterZeroLocus.SiegelWeilU.projV, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [HeckeCharacterZeroLocus.SiegelWeilU.projV, map_sum, map_mul]
   refine Finset.sum_congr rfl fun c _ => ?_
   congr 1
   exact (compV_apply v (A c j)).symm
@@ -85,7 +86,8 @@ theorem finPart_mul (x : Matrix (Fin M) (Fin n) (HeckeCharacterZeroLocus.SiegelW
       fun i j => ∑ c, Algebra.TensorProduct.map (HeckeCharacterZeroLocus.SiegelWeilU.sndA F) (AlgHom.id F E) (A c j) *
         Algebra.TensorProduct.map (HeckeCharacterZeroLocus.SiegelWeilU.sndA F) (AlgHom.id F E) (x i c) := by
   funext i j
-  rw [Matrix.mul_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.mul_apply, map_sum]
   refine Finset.sum_congr rfl fun c _ => ?_
   rw [map_mul, mul_comm]
 

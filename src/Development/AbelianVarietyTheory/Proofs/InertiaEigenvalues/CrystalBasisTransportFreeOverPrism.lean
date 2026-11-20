@@ -72,7 +72,8 @@ theorem indep_of_coord {Z O S W B R M N ι : Type} [CommRing Z] [CommRing O] [Co
     · rw [Algebra.smul_def, mul_comm]
     · rw [map_zero, mul_zero]
   change lam _ () i = _
-  simp only [map_sum, Finset.sum_apply, h3]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Finset.sum_apply, h3]
   rw [Finset.sum_comm]
   simp only [Finset.sum_ite_eq, Finset.mem_univ, if_true]
 
@@ -99,7 +100,8 @@ theorem exists_toW_eq {m : Vec K a ι} (hm : m ∈ P.M) (i : ι) :
   obtain ⟨s, hs⟩ := exists_eq_sum_toAc t K (Module.Free.chooseBasis ℤ_[l] O)
     (fun τ => ⟨m τ i, mem_tot.1 hm τ i⟩)
   refine ⟨∑ k, Module.Free.chooseBasis ℤ_[l] O k • ((1 : O) ⊗ₜ[ℤ_[l]] s k), ?_⟩
-  rw [h1, hs, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h1, hs, map_sum, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [map_smul, map_smul, OfCrystal.iR_toAc]
   rfl

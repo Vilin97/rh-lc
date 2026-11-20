@@ -243,11 +243,13 @@ theorem lemma_three_invariants : ProductBasisInvariants := by
   refine ⟨r • ∑ d, ρ₁ d n₁, ?_, ?_, ?_⟩
   · exact N₁.smul_of_tower_mem r (N₁.sum_mem fun d _ => hN₁ d _ hn₁)
   · intro d
-    rw [map_smul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_smul, map_sum]
     congr 1
     simp only [← Module.End.mul_apply, ← map_mul]
     exact Fintype.sum_equiv (Equiv.mulLeft d) _ _ (fun _ => rfl)
-  · rw [LinearMap.map_smul_of_tower, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [LinearMap.map_smul_of_tower, map_sum]
     simp only [hf, hfn, ha, hinv]
     rw [Finset.sum_const, Finset.card_univ, ← Nat.cast_smul_eq_nsmul O, smul_smul, hr, one_smul]
 

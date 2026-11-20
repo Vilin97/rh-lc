@@ -59,7 +59,8 @@ theorem exists_norm_eq_zpow_of_iota_eq {y : PadicAlgCl p} (hy : y ≠ 0) {a b : 
   have hrel : ∑ i ∈ Finset.range (d + 1),
       algebraMap (AInf ℂ_[p] p) (ACris ℂ_[p] p) (x i) * a ^ i * b ^ (d - i) = 0 := by
     apply iota_injective (K := ℂ_[p]) (p := p)
-    rw [map_zero, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_zero, map_sum]
     have e : ∀ i ∈ Finset.range (d + 1), iota ℂ_[p] p
         (algebraMap (AInf ℂ_[p] p) (ACris ℂ_[p] p) (x i) * a ^ i * b ^ (d - i)) =
         algebraMap ℚ_[p] 𝔹 ((p : ℚ_[p]) ^ k) * iota ℂ_[p] p b ^ d *

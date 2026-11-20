@@ -118,7 +118,8 @@ theorem transv_frames (σ : E →ₐ[F] E) {α β κ : Type}
       -2 * (∑ w, ∑ a, ∑ b, lineSign a b * c w a b * star (c' w a b)).im := fun c c' => by
     rw [← GlobalTheory.SympFrames.symp_frames σ τ JA JB a₀ b₀ A C hCM hFr (U c) (U c') c c' (hU c).1 (hU c').1 (hU c).2 (hU c').2,
       d.form, trPair_apply, trPair_apply, ← map_sub, ← evR_apply]
-    simp only [dotProduct, map_sub, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [dotProduct, map_sub, map_sum, map_mul]
     rfl
   have hs : Function.Surjective (p.prod q) := by
     rintro ⟨v, v'⟩

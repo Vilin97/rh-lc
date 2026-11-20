@@ -145,7 +145,8 @@ theorem exists_half_char {d : ℕ} (Λ : Submodule ℤ (Fin d → ℂ)) (Hm : Ma
     have h1 : ∀ m : Fin g → ℤ, (fun i => (m i : ℂ)) = ∑ i, m i • (Pi.single i 1 : Fin g → ℂ) := by
       intro m; ext k; simp [Finset.sum_apply, Pi.single_apply]
     rw [← Φ.apply_symm_apply l, hmn, h1 m, h1 n]
-    simp only [Matrix.mulVec_sum, Matrix.mulVec_smul, map_add, map_sum, map_zsmul, e, f]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec_sum, Matrix.mulVec_smul, map_add, map_sum, map_zsmul, e, f]
     simp
   have : l ∈ S := hl ▸ S.add_mem (S.sum_mem fun i _ => S.zsmul_mem (he i) _)
     (S.sum_mem fun i _ => S.zsmul_mem (hf i) _)

@@ -22,7 +22,8 @@ private theorem clm_apply_eq_sum_wd_wdb_basis (D : V n →L[ℝ] ℂ) (w : V n) 
     D w = ∑ b, (w b * ((D (bas n b) - I * D (I • bas n b)) / 2) +
       conj (w b) * ((D (bas n b) + I * D (I • bas n b)) / 2)) := by
   conv_lhs => rw [eq_sum_coord_smul_basis w]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun b _ => ?_
   conv_lhs => rw [← Complex.re_add_im (w b), add_smul, mul_smul, Complex.coe_smul, Complex.coe_smul,
     map_add, map_smul, map_smul]

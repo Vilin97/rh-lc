@@ -219,7 +219,8 @@ theorem exists_hadamard [FiniteDimensional ℝ Y] (P : Submodule ℝ Y) (f : �
       ext
       · simp [B₁, Prod.fst_sum, h4]
       · simp [B₁, Prod.snd_sum, h4]
-    rw [← map_neg, h3, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_neg, h3, map_sum]
     exact Finset.sum_congr rfl fun j _ => by rw [map_smul, hK, Complex.real_smul]
   have hcK : ∀ j, Continuous fun s : ℝ => K j ((B₀ + s • B₁) x) := fun j => by
     refine (K j).continuous.comp ?_
@@ -295,7 +296,8 @@ theorem eq_of_eqOn : ∀ {Y : Type} [NormedAddCommGroup Y] [NormedSpace ℝ Y] [
     ext x
     rw [hu, SchwartzMap.sum_apply]
     exact Finset.sum_congr rfl fun j _ => (hv j x).symm
-  rw [← sub_eq_zero, ← map_sub, e, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← sub_eq_zero, ← map_sub, e, map_sum]
   refine Finset.sum_eq_zero fun j _ => apply_linear_mul ℓ (L j) (fun t a b hab => ?_) (u j) (v j) (hv j)
   refine h ((-t / (2 * Real.pi)) • (L j : Y →ₗ[ℝ] ℝ)) (fun p hp => by simp [hL j p hp]) a b (funext fun x => ?_)
   rw [hab, ech]

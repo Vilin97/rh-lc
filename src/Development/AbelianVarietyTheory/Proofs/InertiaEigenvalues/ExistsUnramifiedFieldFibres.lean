@@ -90,7 +90,8 @@ theorem exists_complete_of_idem {R ι A : Type} [CommRing R] [Fintype ι] [Decid
           simp [hφ, this]
       · exact Finset.prod_eq_zero (Finset.mem_univ i) (by simp [hφ, h])
     have hs : φ s = 1 := by
-      rw [map_sum, Finset.sum_congr rfl fun a _ => hf a, Finset.sum_ite_eq]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Finset.sum_congr rfl fun a _ => hf a, Finset.sum_ite_eq]
       simp
     rw [map_add, hf]
     split_ifs <;> simp [hs]

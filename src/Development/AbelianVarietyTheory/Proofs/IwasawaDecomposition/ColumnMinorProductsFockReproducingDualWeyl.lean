@@ -165,7 +165,8 @@ theorem reproducing_left : ∀ (N : ℕ) (Y : YoungDiagram) (hY : Y.colLen 0 ≤
     (hw ℚ le_rfl (fun r : Fin N => Y.rowLen r)) f
   rw [Matrix.transpose_transpose, h1, hev, rowAct_hw_expand N Y hY x, hsum] at h2
   simp only [MvPolynomial.C_mul', hsmul] at h2
-  simp only [map_sum, MvPolynomial.smul_eval]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, MvPolynomial.smul_eval]
   rw [mul_comm (fockQ _ _) (eval x f), ← h2]
   exact Finset.sum_congr rfl fun J _ => mul_comm _ _
 

@@ -145,7 +145,8 @@ theorem functor_comparison_of_single_weight (hIOe : ExistsIO) (hPRe : ExistsPR) 
       rw [hJf, ← Finset.prod_univ_sum (fun s : TT => Finset.range (min (A s) (B s) + 1))
         (fun s j => rename (fun v : Bool × (Fin (m + 1) × Fin (m + 1)) => ((s, v.1), v.2)) (i1 s j (pr1 s j (Y s))))]
       refine Finset.prod_congr rfl fun s _ => ?_
-      rw [← map_sum, ← hmin s, hsum1 s (Y s) (hYm s)]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← map_sum, ← hmin s, hsum1 s (Y s) (hYm s)]
     · simp
     · intro x y _ _ hx hy
       simp only [map_add, Finset.sum_add_distrib, hx, hy]

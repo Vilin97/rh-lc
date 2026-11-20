@@ -26,7 +26,8 @@ theorem hc_shift (L : Module.End ℂ (MvPolynomial σ ℂ)) (k : ℕ)
     homogeneousComponent j (L P) = if k ≤ j then L (homogeneousComponent (j - k) P) else 0 := by
   have hP := sum_homogeneousComponent P
   conv_lhs => rw [← hP]
-  rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum]
   have hterm : ∀ d, homogeneousComponent j (L (homogeneousComponent d P)) =
       if j = d + k then L (homogeneousComponent d P) else 0 := by
     intro d
@@ -82,7 +83,8 @@ theorem low_sum {ι : Type*} (t : Finset ι) (L : ι → Module.End ℂ (MvPolyn
     ∀ (e : ℕ) (P : MvPolynomial σ ℂ),
       homogeneousComponent e ((∑ i ∈ t, L i) P) = (∑ i ∈ t, L i) (homogeneousComponent (e + 2) P) := by
   intro e P
-  simp only [LinearMap.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [LinearMap.sum_apply, map_sum]
   exact Finset.sum_congr rfl fun i _ => hL i e P
 
 theorem exists_homog_of (P : MvPolynomial σ ℂ) (h0 : P ≠ 0) (D : ℚ)
@@ -149,13 +151,15 @@ theorem posC_sb {n m : ℕ} {a b : Ix n m} (h : posC a b) : sameBlock a b := by
 theorem homogeneous_component_raise_first {a b : Ix p q} (hab : sameBlock a b) (e : ℕ) (Q : Pol p q r s) :
     homogeneousComponent e (PI.FJM.rai1 (r := r) (s := s) a b Q) =
       PI.FJM.rai1 (r := r) (s := s) a b (homogeneousComponent e Q) := by
-  simp only [PI.FJM.rai1, LinearMap.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [PI.FJM.rai1, LinearMap.sum_apply, map_sum]
   exact Finset.sum_congr rfl fun c _ => hc_raiLow _ _ (sameBlock_linePos_first hab c) e Q
 
 theorem homogeneous_component_raise_second {c d : Ix r s} (hcd : sameBlock c d) (e : ℕ) (Q : Pol p q r s) :
     homogeneousComponent e (PI.FJM.rai2 (p := p) (q := q) c d Q) =
       PI.FJM.rai2 (p := p) (q := q) c d (homogeneousComponent e Q) := by
-  simp only [PI.FJM.rai2, LinearMap.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [PI.FJM.rai2, LinearMap.sum_apply, map_sum]
   exact Finset.sum_congr rfl fun a _ => hc_raiLow _ _ (sameBlock_linePos_second hcd a) e Q
 
 theorem hc_mem_hwSub1 (μ : Ix p q → ℚ) (P : Pol p q r s) (hP : P ∈ hwSub (fockAct1 p q r s) μ) (e : ℕ) :

@@ -116,7 +116,8 @@ theorem SplitSet.mul_conj {P : Finset (Pl D.host.E)} (h : SplitSet P) {i j : Pl 
 
 theorem SplitSet.mono {P P' : Finset (Pl D.host.E)} (h : SplitSet P) (hP : P' ⊆ P) : SplitSet P' := by
   refine ⟨idem P', ⟨idemAt, fun PP hPP => h.isIdemAt (hP hPP), rfl⟩, ?_⟩
-  rw [idem, map_sum, Finset.sum_mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [idem, map_sum, Finset.sum_mul_sum]
   exact Finset.sum_eq_zero fun i hi => Finset.sum_eq_zero fun j hj => h.mul_conj (hP hi) (hP hj)
 
 section Twist
@@ -323,7 +324,8 @@ theorem PlacesOK.isOrthSum {Pg Q : Finset (Pl D.host.E)} (h : PlacesOK Pg Q) :
       · rw [mul_comm]; exact hP.mul_conj (h2 hj) (h1 hi)
       · exact hP.mul_conj (h2 hi) (h1 hj)
       · exact hP.mul_eq_zero (h2 hi) (h2 hj) fun e => hij (e ▸ rfl)
-    · rw [Finset.sum_disjSum, halfIdem, idem, map_sum]; rfl
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [Finset.sum_disjSum, halfIdem, idem, map_sum]; rfl
   · have a1 := (hP.mono h1).isIdemSum.2
     have a2 := (hP.mono h2).isIdemSum.2
     have a3 : idem Pg * idem Q = 0 := by

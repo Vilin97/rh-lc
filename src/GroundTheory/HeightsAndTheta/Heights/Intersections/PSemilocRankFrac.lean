@@ -24,7 +24,8 @@ theorem aeval_scale (y : (Σ k, ι k) → Ω) (c : K → Ω) {u : MRing ι} {a :
     aeval (fun p => y p * c p.1) u = aeval y u * ∏ k, c k ^ a k := by
   conv_lhs => rw [u.as_sum]
   conv_rhs => rw [u.as_sum]
-  rw [map_sum, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun m hm => ?_
   rw [aeval_monomial, aeval_monomial, mul_assoc]
   congr 1

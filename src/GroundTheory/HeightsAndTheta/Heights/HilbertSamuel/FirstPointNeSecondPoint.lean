@@ -65,7 +65,8 @@ theorem dehom_monomial (i j : ℕ) (c : ℤ) :
   simp
 
 theorem dehom_homog (p : Polynomial ℤ) {d : ℕ} (hp : p.natDegree ≤ d) : dehom (homog p d) = p := by
-  rw [homog, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [homog, map_sum]
   simp_rw [dehom_monomial]
   conv_rhs => rw [p.as_sum_range' (d + 1) (by omega)]
   refine Finset.sum_congr rfl fun i _ ↦ ?_
@@ -126,7 +127,8 @@ theorem homog_dehom {f : MvPolynomial J2 ℤ} {d : ℕ} (hf : f.IsHomogeneous d)
     rw [homog_C_mul_X_pow _ (by omega), show d - m p1 = m p0 by omega, ← finsupp_twoPoint_eq m]
   conv_lhs => rw [f.as_sum]
   change H (dehom (∑ m ∈ f.support, monomial m (f.coeff m))) = _
-  rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum]
   conv_rhs => rw [f.as_sum]
   exact Finset.sum_congr rfl key
 

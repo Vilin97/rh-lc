@@ -141,7 +141,8 @@ theorem UpperTheory.Kd.K4.lim :
   have hd : ∀ i k, AdicCompletion.eval (idl l) (X.Kl l) (n + k)
       (((l : ℤ_[l]) ^ c) • a (k + 1) i - ((l : ℤ_[l]) ^ c) • a k i) = 0 := by
     intro i k
-    rw [hrec, hrec, ← Finset.sum_sub_distrib, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hrec, hrec, ← Finset.sum_sub_distrib, map_sum]
     refine Finset.sum_eq_zero fun j _ => ?_
     rw [← smul_sub, map_smul, hC k _, smul_zero]
   choose L hL using fun i => lim_exists (fun k => ((l : ℤ_[l]) ^ c) • a k i) n (hd i)
@@ -150,7 +151,8 @@ theorem UpperTheory.Kd.K4.lim :
     intro k u
     show AdicCompletion.eval (idl l) (X.Kl l) (n + k)
       ((∑ i : Fin (w + 1), (u 0 ^ (i : ℕ) * u 1 ^ (w - (i : ℕ))) • L i) - ((l : ℤ_[l]) ^ c) • t k u) = 0
-    rw [ht k u, Finset.smul_sum, ← Finset.sum_sub_distrib, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [ht k u, Finset.smul_sum, ← Finset.sum_sub_distrib, map_sum]
     refine Finset.sum_eq_zero fun i _ => ?_
     rw [smul_comm ((l : ℤ_[l]) ^ c), ← smul_sub, map_smul, hL i k, smul_zero]
   have hA : ∀ i, L i ∈ X.ASet l := by

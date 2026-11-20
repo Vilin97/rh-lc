@@ -137,7 +137,8 @@ theorem _root_.GlobalTheory.FlagMahler.comb_bound (y : X.Ψ → Matrix (Fin r) (
       ∑ i, ‖(q i : ℂ)‖ * (1 + _root_.ReciprocityTheory.ChartRestriction.G.FD.QuadraticLatticeForms.Qy X y (f i) / X.c τ) := by
   have he : _root_.ReciprocityTheory.ChartRestriction.G.FD.Data.emb τ.1 (∑ i, q i • f i) = ∑ i, (q i : ℂ) • _root_.ReciprocityTheory.ChartRestriction.G.FD.Data.emb τ.1 (f i) := by
     ext a
-    simp [_root_.ReciprocityTheory.ChartRestriction.G.FD.Data.emb, Finset.sum_apply, map_sum, Rat.smul_def]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [_root_.ReciprocityTheory.ChartRestriction.G.FD.Data.emb, Finset.sum_apply, map_sum, Rat.smul_def]
   rw [he, Matrix.mulVec_sum]
   simp only [Matrix.mulVec_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
   refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun i _ => ?_)

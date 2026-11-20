@@ -92,7 +92,8 @@ def IsLin [Fintype Z] (f : MvPowerSeries Z R) : Prop :=
 theorem isLin_sum [Fintype Z] {α : Type} (s : Finset α) (f : α → MvPowerSeries Z R) (h : ∀ a ∈ s, IsLin (f a)) :
     IsLin (∑ a ∈ s, f a) := by
   unfold IsLin at *
-  simp_rw [map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp_rw [map_sum, Finset.sum_mul]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl h
 

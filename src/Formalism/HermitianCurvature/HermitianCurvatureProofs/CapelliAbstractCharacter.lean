@@ -98,7 +98,8 @@ theorem polyVanish {X : Type} [AddCommGroup X] [Module ℂ X] (d : ℕ) (c : ℕ
   have hroot : ∀ u : ℂ, u ∉ F → p.eval u = 0 := by
     intro u hu
     have h1 := congrArg φ (h u hu)
-    simp only [map_sum, map_smul, smul_eq_mul, map_zero] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, smul_eq_mul, map_zero] at h1
     rw [hp, Polynomial.eval_finset_sum]
     simp only [Polynomial.eval_mul, Polynomial.eval_C, Polynomial.eval_pow, Polynomial.eval_X]
     calc _ = ∑ j ∈ Finset.range d, u ^ j * φ (c j) := Finset.sum_congr rfl (fun j _ => mul_comm _ _)
@@ -275,7 +276,8 @@ theorem comat (hE : GlRel E) (u : ℂ) (X : Fin (N + 1) → V) (i : Fin (N + 1))
   have h2 : ∑ l, (if i = l then qdet E u (X l) else 0) = qdet E u (X i) := by simp
   rw [← h2, ← Finset.sum_congr rfl (fun l _ => h l), Finset.sum_comm, Th_apply]
   refine Finset.sum_congr rfl (fun j _ => ?_)
-  rw [← Finset.smul_sum, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Finset.smul_sum, ← map_sum]
   congr 2
   simp only [Tm_apply, Finset.sum_add_distrib, Finset.sum_ite_eq, Finset.mem_univ, if_true, Pi.add_apply,
     Pi.smul_apply, EE_apply]
@@ -444,7 +446,8 @@ theorem covUp_succ (η : Fin (N + 1) → Module.End ℂ V) (hE : GlRel E) (hη :
   · have hs : ∑ i, Lagrange.basis Finset.univ (fun j => -m j) i = 1 :=
       Lagrange.sum_basis (fun a _ b _ h => hm (neg_injective h)) Finset.univ_nonempty
     have hsum : ∑ i, Y i = Z := by
-      rw [hYdef, ← LinearMap.sum_apply, ← map_sum, hs, map_one]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hYdef, ← LinearMap.sum_apply, ← map_sum, hs, map_one]
       rfl
     have h1 := congrFun hsum x
     rw [Finset.sum_apply] at h1

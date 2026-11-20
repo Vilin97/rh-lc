@@ -48,7 +48,8 @@ theorem rho_rat_rho_rat (M : Model σ X W) {ψ : AddChar (AF F) ℂ} (hψ : IsSt
     have e : ⅟(2 : AF F) * ((fun i => algebraMap F (AF F) (y₁ i)) ⬝ᵥ (fun i => algebraMap F (AF F) (z₂ i)) -
         (fun i => algebraMap F (AF F) (y₂ i)) ⬝ᵥ (fun i => algebraMap F (AF F) (z₁ i))) =
         algebraMap F (AF F) (1 / 2 * (y₁ ⬝ᵥ z₂ - y₂ ⬝ᵥ z₁)) := by
-      simp only [dotProduct, map_mul, map_sub, map_sum, h2]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [dotProduct, map_mul, map_sub, map_sum, h2]
     rw [e]; exact hψ.2.1 _
   simp only [hph, one_smul]
 

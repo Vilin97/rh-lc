@@ -42,7 +42,8 @@ theorem eval_matRep {n n' : ℕ} (g : GL (Fin n) ℂ) (h : GL (Fin n') ℂ) (x :
     obtain ⟨a, s⟩ := v
     simp only [map_mul, hp, eval_X]
     congr 1
-    simp only [sub, aeval_X, map_sum, map_mul, eval_C, eval_X, Fintype.sum_prod_type, Matrix.mul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [sub, aeval_X, map_sum, map_mul, eval_C, eval_X, Fintype.sum_prod_type, Matrix.mul_apply,
       Matrix.transpose_apply, Matrix.kroneckerMap_apply, Finset.sum_mul]
     rw [Finset.sum_comm]
     exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring

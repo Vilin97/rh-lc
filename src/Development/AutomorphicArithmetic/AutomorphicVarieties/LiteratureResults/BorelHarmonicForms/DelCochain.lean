@@ -17,7 +17,8 @@ theorem UpperTheory.V.Lit.Bor.delCochain :
   have hβ : ∀ Y Z, β Y Z = L (toL Y.1) (ω (Matrix.vecCons Z fun i => adHerm k (X i))) := fun _ _ => rfl
   have key := UpperTheory.V.Lit.Bor.frameAd E a n e he M β k
   simp only [hβ] at key
-  rw [del_apply, del_apply, map_sum, ← key]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [del_apply, del_apply, map_sum, ← key]
   refine Finset.sum_congr rfl fun j _ => ?_
   have hc : (Matrix.vecCons (adHerm k (e j)) fun i => adHerm k (X i)) =
       fun i => adHerm k (Matrix.vecCons (e j) X i) := by

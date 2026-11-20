@@ -74,7 +74,8 @@ lemma actC_apply (r : R) (n : ℕ) (σ : Cochain P U n) (i : Fin (n + 1) → ι)
 lemma d_actC (r : R) (n : ℕ) (σ : Cochain P U n) :
     d P U n (actC A U r n σ) = actC A U r (n + 1) (d P U n σ) := by
   funext i
-  simp only [actC_apply, d_apply, map_sum, map_zsmul, A.res_act]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [actC_apply, d_apply, map_sum, map_zsmul, A.res_act]
 
 lemma le_cons {n : ℕ} (j : ι) (I : Fin (n + 1) → ι) :
     inter U (Fin.cons j I : Fin (n + 2) → ι) ≤ inter U I := by
@@ -145,7 +146,8 @@ theorem exists_d_eq_pow_smul [Fintype ι] {n : ℕ} (σ : Cochain P (D ∘ h) (n
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [Fin.val_succ, pow_succ, mul_neg_one, neg_smul, neg_neg,
         res_congr P _ σ (cons_comp_succAbove_succ j J k) _ (le_cons_comp _ j J k)]
-    rw [map_sub, d_apply, map_sum, A.res_act, sub_eq_zero, Finset.sum_congr rfl (fun k _ => e1 k),
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, d_apply, map_sum, A.res_act, sub_eq_zero, Finset.sum_congr rfl (fun k _ => e1 k),
       e0, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_zsmul]
@@ -177,7 +179,8 @@ theorem cechAcyclic_of_localizingAction [Finite ι] (g : R) (hcov : ⨆ i, D (h 
   let T : Cochain P (D ∘ h) n := ∑ j, actC A (D ∘ h) (c j * h j ^ (N0 - N j)) n (τ j)
   have hT : d P _ n T = actC A (D ∘ h) (g ^ L) (n + 1) σ := by
     funext J
-    simp only [T, map_sum, d_actC, hτ]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [T, map_sum, d_actC, hτ]
     refine (Finset.sum_apply J _ _).trans ?_
     change ∑ j, A.act _ _ (A.act _ _ (σ J)) = A.act (g ^ L) _ (σ J)
     rw [hc, A.act_sum]

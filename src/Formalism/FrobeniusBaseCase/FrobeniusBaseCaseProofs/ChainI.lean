@@ -209,7 +209,8 @@ theorem m_closed (s : ℕ) (hs : s < D.K) :
       simp only [hfr, Finset.sum_mul, Finset.mul_sum]
       rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun d _ => ?_
-      rw [map_sum, Finset.sum_mul, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Finset.sum_mul, Finset.mul_sum]
       refine Finset.sum_congr rfl fun c _ => ?_
       rw [← pow_succ', mul_pow]
       simp only [map_mul, map_neg, map_pow]

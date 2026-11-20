@@ -419,7 +419,8 @@ theorem subD_hvEven (j : ℕ) (v : X.Pl) (s : Fin (X.G.P.n' v)) (hs : ¬ IsOddPo
     unfold ySub
     rw [if_neg hs]
   show subD X Kc j (∑ a, MvPolynomial.C (x a i.val) * yL X j v s a (Fin.castLE (hh k) t)) = _
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [map_mul, hy]
   rw [Matrix.of_apply, ← show Fin.castLE (NN_le X j) (Fin.castLE (hh k) t) = Fin.castLE ((hh k).trans (NN_le X j)) t from rfl,
     ← pair_dy]

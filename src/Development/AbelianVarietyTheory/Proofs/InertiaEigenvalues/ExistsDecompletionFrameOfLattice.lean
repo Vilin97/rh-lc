@@ -180,7 +180,8 @@ theorem assemble (act : GQ l →* (PadicComplex l ≃+* PadicComplex l)) (χ : G
   have hA : ∀ a y, Ψ (α a • y) = (A a).mulVec (Ψ y) := fun a y => by rw [hΨ, hα]
   have core : ∀ y, Ψ y = D.mulVec (co y) := by
     intro y
-    conv_lhs => rw [← b.sum_repr y, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [← b.sum_repr y, map_sum]
     have h1 : D.mulVec (co y) = ∑ j, co y j • Ψ (y₀ j) := by
       funext i
       simp [D, Matrix.mulVec, dotProduct, mul_comm]

@@ -90,17 +90,20 @@ theorem UpperTheory.V.Alg.ker_coef :
     obtain ⟨g, hg, hgx⟩ := Submodule.mem_map.1 hxP'
     simp only [AlgHom.toLinearMap_apply] at hfε hgx
     have hk : g - ∑ v, a v • f v ∈ RingHom.ker W.π := by
-      rw [RingHom.mem_ker, map_sub, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [RingHom.mem_ker, map_sub, map_sum]
       simp only [map_smul, hfε]
       rw [hgx, ← ha, sub_self]
     have hh := W.homog _ hk (wf u)
     have hfw : ∀ v, wcomp O W.wt (wf u) (f v) = if wf v = wf u then f v else 0 :=
       fun v => wcomp_of_mem_ite W.wt (hf v)
-    rw [map_sub, map_sum, wcomp_of_mem_ite W.wt hg, if_neg hj] at hh
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_sum, wcomp_of_mem_ite W.wt hg, if_neg hj] at hh
     simp only [map_smul, hfw] at hh
     have hrel0 : ∑ v, (if wf v = wf u then a v else 0) • ε v = 0 := by
       have h2 := RingHom.mem_ker.1 hh
-      rw [map_sub, map_zero, map_sum, zero_sub, neg_eq_zero] at h2
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, map_zero, map_sum, zero_sub, neg_eq_zero] at h2
       rw [← h2]
       apply Finset.sum_congr rfl
       intro v _

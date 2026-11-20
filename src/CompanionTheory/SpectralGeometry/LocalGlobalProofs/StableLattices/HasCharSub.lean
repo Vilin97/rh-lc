@@ -93,7 +93,8 @@ theorem qdet_lin {V V' : Type} [AddCommGroup V] [Module ℂ V] [AddCommGroup V']
     unfold Tm
     by_cases hab : a = b <;> simp [hab, h]
   unfold qdet qminor
-  simp only [LinearMap.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [LinearMap.sum_apply, map_sum]
   refine Finset.sum_congr rfl fun σ _ => ?_
   simp only [Module.End.mul_apply, Module.End.intCast_apply, map_zsmul]
   rw [ofFn_lin f _ _ (fun k y => hT _ _ _ y)]

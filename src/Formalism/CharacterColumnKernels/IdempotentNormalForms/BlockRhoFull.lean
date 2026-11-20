@@ -73,10 +73,12 @@ theorem cobColumn : StatCobColumn := by
       (E - algebraMap T' A (∑ g ∈ s, t g * ((χ g : T'ˣ) : T'))) * E := by
     rw [hy₁def]
     simp only [Submodule.coe_sum, Submodule.coe_smul, smul_eq_mul, yg, Submodule.coe_mk]
-    rw [Finset.sum_congr rfl (fun g _ => hterm g), ← Finset.sum_mul, Finset.sum_sub_distrib, ← hE,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_congr rfl (fun g _ => hterm g), ← Finset.sum_mul, Finset.sum_sub_distrib, ← hE,
       ← map_sum]
   have hFy : Fl y₁ = -(δO • v) := by
-    rw [hy₁def, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hy₁def, map_sum]
     have hgen : ∀ g ∈ s, Fl (algebraMap T' A (t g * ((χ g : T'ˣ) : T')) • yg g) =
         (t g • r g) • v - (t g * ((χ g : T'ˣ) : T')) • v := by
       intro g _

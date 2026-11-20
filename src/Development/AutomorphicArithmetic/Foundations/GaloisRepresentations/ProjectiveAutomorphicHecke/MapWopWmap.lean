@@ -41,7 +41,8 @@ theorem wop_wmul (T : J → A) (s t : List J →₀ F) : wop T (wmul s t) = wop 
 theorem map_wop {B : Type*} [Semiring B] [Algebra F B] (g : A →ₐ[F] B) (T : J → A) (t : List J →₀ F) :
     g (wop T t) = wop (fun j => g (T j)) t := by
   unfold wop
-  simp only [Finsupp.sum, map_sum, map_smul, map_list_prod, List.map_map]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finsupp.sum, map_sum, map_smul, map_list_prod, List.map_map]
   rfl
 
 def wmap {K : Type*} [CommSemiring K] (f : F →+* K) (t : List J →₀ F) : List J →₀ K := t.mapRange f f.map_zero
@@ -51,7 +52,8 @@ theorem map_wop_wmap {K B : Type*} [CommSemiring K] [Semiring B] [Algebra K B] (
     g (wop T t) = wop (fun j => g (T j)) (wmap f t) := by
   unfold wop wmap
   rw [Finsupp.sum_mapRange_index (h := fun w (c : K) => c • (List.map (fun j => g (T j)) w).prod) (fun _ => zero_smul _ _)]
-  simp only [Finsupp.sum, map_sum, Algebra.smul_def, map_mul, hg, map_list_prod, List.map_map]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finsupp.sum, map_sum, Algebra.smul_def, map_mul, hg, map_list_prod, List.map_map]
   rfl
 
 end Words

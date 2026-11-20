@@ -68,7 +68,8 @@ theorem avg_eig : ∀ (G V : Type) [Group G] [TopologicalSpace G] [IsTopological
     · exact QuotientGroup.out_eq' q
   have hsum : ∀ h : Hs, π h (∑ q, f (rep q)) = θ h • ∑ q, f (rep q) := by
     intro h
-    rw [map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.smul_sum]
     simp_rw [hact]
     have : ∀ q, f (h * rep q) = f (rep (h • q)) := fun q => by
       apply hf

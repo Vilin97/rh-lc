@@ -17,7 +17,8 @@ variable {Ψ : Type} [Fintype Ψ] [DecidableEq Ψ] {N : ℕ}
 theorem linA_eq (c : Option (Ψ × Fin N) → ℝ) :
     linA (fun τ i => c (some (τ, i))) (-c none) = -∑ x, C (c x) * X x := by
   rw [Fintype.sum_option]
-  simp only [linA, toA, linRoot, map_neg, map_sum, map_mul, rename_C, rename_X, neg_add_rev, C_neg]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [linA, toA, linRoot, map_neg, map_sum, map_mul, rename_C, rename_X, neg_add_rev, C_neg]
   simp only [Prod.mk.eta]
   ring
 
@@ -36,7 +37,8 @@ theorem coeff_scaleNone (u : ℝ) (Q : MvPolynomial (Option (Ψ × Fin N)) ℝ) 
 
 theorem eval_scaleNone (u : ℝ) (Q : MvPolynomial (Option (Ψ × Fin N)) ℝ) (c : Option (Ψ × Fin N) → ℝ) :
     eval c (scaleNone u Q) = eval (fun o : Option (Ψ × Fin N) => o.elim (u * c none) fun p => c (some p)) Q := by
-  rw [scaleNone, map_sum, eval_eq']
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [scaleNone, map_sum, eval_eq']
   refine Finset.sum_congr rfl fun m _ => ?_
   rw [eval_monomial, Finsupp.prod_fintype _ _ (fun i => pow_zero _)]
   simp only [Fintype.prod_option, Option.elim, mul_pow]

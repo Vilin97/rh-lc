@@ -146,7 +146,8 @@ private theorem twistedAction_mul_lemma_2 (hact : _root_.GlobalTheory.Cyc.IsActC
     ← Matrix.mulVec_smul]
   congr 2
   funext a
-  simp [Matrix.mulVec, dotProduct, map_sum, map_mul, hfix, hc, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Matrix.mulVec, dotProduct, map_sum, map_mul, hfix, hc, Finset.mul_sum]
 
 open scoped Matrix in
 variable {l : ℕ} [Fact l.Prime] in
@@ -225,7 +226,8 @@ private theorem eq_zero_of_twistedInvariant_offJumps_lemma_5 (hact : _root_.Glob
       _root_.GlobalTheory.Cyc.twAct act χ i U σ (∑ k, c k • B k) =
         ∑ k, (_root_.GlobalTheory.Cyc.chiC χ (i - u k) σ * act σ (c k)) • B k := by
     intro σ hσ c
-    rw [show _root_.GlobalTheory.Cyc.twAct act χ i U σ (∑ k, c k • B k) =
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [show _root_.GlobalTheory.Cyc.twAct act χ i U σ (∑ k, c k • B k) =
         (AddMonoidHom.mk' (_root_.GlobalTheory.Cyc.twAct act χ i U σ)
           (twistedAction_add_lemma_12 act χ i U σ)) (∑ k, c k • B k) from rfl, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_

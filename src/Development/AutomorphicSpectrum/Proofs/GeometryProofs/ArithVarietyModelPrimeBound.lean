@@ -70,13 +70,15 @@ theorem coordLat_locFree (X : Scheme.{0}) (Ω : Type) [Field Ω] (ξ : Spec (Com
       · intro he
         obtain ⟨a, ha⟩ := (Submodule.mem_span_range_iff_exists_fun (regAt ξ q'.1)).1 he
         refine ⟨fun i => (a i : Ω), fun i => (a i).2, hinj ?_⟩
-        rw [← ha, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [← ha, map_sum]
         refine Finset.sum_congr rfl fun i _ => ?_
         rw [map_smul, hf']
         rfl
       · rintro ⟨a, ha, rfl⟩
         refine (Submodule.mem_span_range_iff_exists_fun (regAt ξ q'.1)).2 ⟨fun i => ⟨a i, ha i⟩, ?_⟩
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         refine Finset.sum_congr rfl fun i _ => ?_
         rw [map_smul, hf']
         rfl

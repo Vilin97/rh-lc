@@ -138,7 +138,8 @@ theorem kTriv_of_unimodular : ∀ (S : Scheme.{0}) (G : Over S) [GrpObj G] [IsCo
     · simp only [MonObj.one_comp, Finset.prod_const_one]
     · have hx : m = ∑ i, P.incl m i • P.proj (Pi.single i 1) := by
         have e : P.proj (P.incl m) = m := congr($(P.proj_incl) m)
-        simp only [← map_smul, ← map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [← map_smul, ← map_sum]
         rw [← pi_eq_sum_univ', e]
       have hp : ∀ i, t.tmul m ≫ p i = a.act (P.incl m i) := fun i => by simp [p]
       simp only [Category.assoc, reassoc_of% hp, ← t.tmul_smul']

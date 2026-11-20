@@ -8,7 +8,8 @@ private theorem dual_symm {R : Type} [CommRing R] {n : ℕ} {ι : Type} [Fintype
     {a b : ι → MvPolynomial (Fin n) R} (h : IsDual a b) : IsDual b a := by
   intro w
   have h2 := congrArg (rename ⇑w) (h w⁻¹)
-  simp only [map_sum, map_mul, rename_rename] at h2
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, rename_rename] at h2
   have hc : (⇑w ∘ ⇑w⁻¹ : Fin n → Fin n) = id := by
     funext k
     simp

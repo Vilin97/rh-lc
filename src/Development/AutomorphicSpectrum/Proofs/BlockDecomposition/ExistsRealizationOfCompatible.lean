@@ -31,7 +31,8 @@ theorem exists_rho {Λ A B K : Type} [CommRing Λ] [CommRing A] [CommRing B] [Fi
       rw [Finset.sum_comm, hg]
       refine Finset.sum_congr rfl fun t _ => ?_
       conv_rhs => rw [← bs.sum_repr (bs₀ t)]
-      rw [map_sum, Finset.smul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Finset.smul_sum]
       refine Finset.sum_congr rfl fun s _ => ?_
       rw [LinearMap.map_smulₛₗ, smul_smul, Module.Basis.coord_apply, mul_comm]
     rw [key, ← hu, smul_smul, ← mul_pow, Units.mul_inv, one_pow, one_smul]

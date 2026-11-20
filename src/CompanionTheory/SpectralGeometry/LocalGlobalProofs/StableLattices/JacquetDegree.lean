@@ -34,9 +34,11 @@ theorem extract (W' : Submodule ℂ (Module.Dual ℂ V)) (φ : Module.Dual ℂ V
         ∑ j ∈ range (m - 1), (Y + a) ^ j • (φ ∘ₗ Cc j) := by
       refine LinearMap.ext fun v => ?_
       rw [hC (Y + a)]
-      simp [Algebra.algebraMap_eq_smul_one, LinearMap.sum_apply, map_sum, ← ht]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [Algebra.algebraMap_eq_smul_one, LinearMap.sum_apply, map_sum, ← ht]
     rw [e]
-    simp [hR, eval_finset_sum, map_sum, map_add, map_sub, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [hR, eval_finset_sum, map_sum, map_add, map_sub, map_smul]
   have hR0 : R = 0 := Polynomial.funext fun Y => by
     rw [hRe, hW' _ (h Y)]; simp
   have hc : R.coeff (m - 1) = 0 := by rw [hR0]; simp
@@ -343,15 +345,18 @@ theorem mem_Wm (F : Filt X A) (B : GradBasis A) (c : ℝ) {φ : Module.Dual ℂ 
     refine ⟨hTφ, fun Y => ?_⟩
     have e : actM X.E Y = ∑ p, ∑ q, (B.Ui * Y * B.U) p q • Eb X B p q := by
       conv_lhs => rw [mat_sum B Y]
-      rw [← actL_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← actL_apply, map_sum]
       refine Finset.sum_congr rfl fun p _ => ?_
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun q _ => ?_
       rw [map_smul]
       rfl
     have e2 : φ ∘ₗ actM X.E Y = ∑ p, ∑ q, (B.Ui * Y * B.U) p q • (φ ∘ₗ Eb X B p q) := by
       refine LinearMap.ext fun v => ?_
-      simp [e, LinearMap.sum_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [e, LinearMap.sum_apply, map_sum]
     rw [e2]
     refine sum_mem fun p _ => sum_mem fun q _ => Submodule.smul_mem _ _ ?_
     by_cases h : bl B p < bl B q
@@ -571,7 +576,8 @@ theorem A_eq (B : GradBasis A) : A = ∑ p, (dz (bl B p) : ℂ) • Ym B p p := 
 
 theorem act_A (X : GMod n) (B : GradBasis A) : actM X.E A = trB X B 2 - trB X B 0 := by
   conv_lhs => rw [A_eq B]
-  rw [← actL_apply, map_sum, sum_blocks B]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← actL_apply, map_sum, sum_blocks B]
   simp only [map_smul, block_standard]
   have e : ∀ p, actL X.E (Ym B p p) = Eb X B p p := fun _ => rfl
   simp only [e, ← Finset.smul_sum]

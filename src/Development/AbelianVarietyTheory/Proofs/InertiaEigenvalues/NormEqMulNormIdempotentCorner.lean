@@ -30,7 +30,8 @@ theorem norm_scale_idem_add_compl {K A : Type} [Field K] [CommRing A] [Algebra K
   rw [hM, Matrix.det_one_add_replicateCol_mul_replicateRow]
   have hs : ∑ j, ψ (b j) * ((c - 1) * b.repr e j) = (c - 1) * ψ e := by
     conv_rhs => rw [← b.sum_repr e]
-    rw [map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_smul, smul_eq_mul]; ring
   rw [dotProduct, hs, he]; ring

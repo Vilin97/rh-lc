@@ -57,7 +57,8 @@ theorem OrbitCompNonvanish.proof : OrbitCompNonvanish.Statement := by
   have hQ : ∀ c : K → ℂ, eval c Q = eval (fun p => c p.1 * z p) (map (Int.castRingHom ℂ) E) := by
     intro c
     conv_rhs => rw [← hsum]
-    simp only [Q, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Q, map_sum]
     refine Finset.sum_congr rfl fun b _ => ?_
     rw [eval_smul_homog (comp b) b (OrbitCompNonvanish.isMultiHomog_component E b) c z, eval_monomial,
       Finsupp.prod_fintype _ _ (by simp)]

@@ -30,7 +30,8 @@ theorem isProj_finsetSum {G κ : Type} [Group G] [Fintype G] (s : Finset κ) (a 
   · rw [conv_finsetSum_finsetSum]
     refine Finset.sum_congr rfl fun i hi => ?_
     rw [Finset.sum_eq_single_of_mem i hi fun j hj hne => ho i hi j hj hne.symm, (h i hi).1]
-  · simp only [Finset.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [Finset.sum_apply, map_sum]
     exact Finset.sum_congr rfl fun i hi => (h i hi).2 x
 
 theorem eGood_isProj_central : ∀ (g : ℕ) [Fact g.Prime] (N : ℕ), ∀ (m : ℕ) (ι : Type) [Fintype ι] (τ : ι → (ZMod g)[X] → GG g N → ℂ) (ch : ι → Fin m → (ZMod g)ˣ), (∀ v, IsSeries (τ v)) → IsProj (eGood τ ch) ∧ ∀ a, conv (eGood τ ch) a = conv a (eGood τ ch) := by

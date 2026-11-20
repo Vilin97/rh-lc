@@ -128,7 +128,8 @@ theorem sum_act_eq_zero {b : Fin r → ℕ} (e : (Σ a, Fin (d a)) ≃ Fin r) (h
       ext i j
       rw [Units.val_one, Matrix.one_apply]
       exact (key c' i j).resolve_right fun h => hc h.1
-  rw [act_eq e he hσ u x hx, hx1, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [act_eq e he hσ u x hx, hx1, map_sum]
   refine Fintype.sum_equiv (Equiv.mulLeft (⟨x c, hxc⟩ : H)) _ _ fun w => ?_
   rw [← Module.End.mul_apply, ← map_mul, ← map_mul, ← Pi.mulSingle_mul]
   rfl
@@ -163,7 +164,8 @@ theorem exists_prod [Finite F] {b : Fin r → ℕ} (e : (Σ a, Fin (d a)) ≃ Fi
     obtain ⟨-, H, -, hH, -⟩ := GlobalTheory.T.exists_standardUnipotentRadical_bijOn_nilradical F (d c) a h1.le
     letI : Fintype H := Fintype.ofFinite H
     have hs := congrArg (LinearMap.trace ℂ (Fin n → ℂ)) (sum_act_eq_zero e he hσ c a h0 h1 H hH)
-    rw [map_sum, map_zero] at hs
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero] at hs
     have hv : ∀ u : GL (Fin (d c)) F, LinearMap.trace ℂ (Fin n → ℂ) (σ (diagHom b e he (Pi.mulSingle c u))) =
         ψ c u * ∏ c' ∈ Finset.univ.erase c, ψ c' 1 := by
       intro u

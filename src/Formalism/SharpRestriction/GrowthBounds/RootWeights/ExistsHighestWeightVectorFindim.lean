@@ -153,7 +153,8 @@ private theorem weight_components_mem_of_sum_mem {n : ℕ} {K V : Type*} [Field 
       rw [hg]; exact Submodule.smul_mem _ _ (hw mu')
     have hgsum : (g.sum fun _ v => v) =
         (E a a - ((nu a : ℤ) : K) • (1 : Module.End K V)) (f.sum fun _ v => v) := by
-      rw [Finsupp.onFinset_sum _ (fun _ => rfl), Finsupp.sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Finsupp.onFinset_sum _ (fun _ => rfl), Finsupp.sum, map_sum]
       refine Finset.sum_congr rfl fun mu' _ => ?_
       have := (mem_weightSpace_iff_diagonal_rep E mu' (f mu')).1 (hw mu') a
       rw [LinearMap.sub_apply, LinearMap.smul_apply, Module.End.one_apply, this, sub_smul]

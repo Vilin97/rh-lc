@@ -76,7 +76,8 @@ private theorem av_eig (L : Lvl χ) {x : V} (hx : Fx σ L.N x) (k : C) :
   have e : ∑ q : C ⧸ L.N, σ k (tw σ χ x q.out) = ((χ k : ℂˣ) : ℂ) • ∑ q : C ⧸ L.N, tw σ χ x q.out := by
     rw [hs, Finset.smul_sum]
     exact Finset.sum_congr rfl fun q _ => tw_left x k _
-  rw [av_apply, map_smul, map_sum, e, smul_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [av_apply, map_smul, map_sum, e, smul_comm]
 
 private theorem av_translate (L : Lvl χ) {x : V} (hx : Fx σ L.N x) (k : C) :
     av σ χ L (σ k x) = ((χ k : ℂˣ) : ℂ) • av σ χ L x := by
@@ -98,7 +99,8 @@ private theorem av_refine {L' L : Lvl χ} (hle : L'.N ≤ L.N) {x : V} (hx : Fx 
   have h2 : av σ χ L' (av σ χ L x) = av σ χ L' x := by
     have h : ∀ k, av σ χ L' (tw σ χ x k) = av σ χ L' x := fun k => by
       rw [tw, map_smul, av_translate L' (hx.mono hle), smul_smul, inv_mul_cancel₀ (Units.ne_zero _), one_smul]
-    rw [av_apply L x, map_smul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [av_apply L x, map_smul, map_sum]
     simp only [h, Finset.sum_const, Finset.card_univ, ← Nat.card_eq_fintype_card, ← Nat.cast_smul_eq_nsmul ℂ]
     rw [smul_smul, inv_mul_cancel₀ (card_ne L), one_smul]
   rw [← h2, h1]
@@ -108,7 +110,8 @@ private theorem av_indep {L L' : Lvl χ} {x : V} (hx : Fx σ L.N x) (hx' : Fx σ
 
 private theorem av_comm (L : Lvl χ) (T : V →ₗ[ℂ] V) (hT : ∀ k x, T (σ k x) = σ k (T x)) (x : V) :
     av σ χ L (T x) = T (av σ χ L x) := by
-  simp only [av_apply, map_smul, map_sum, tw, hT]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [av_apply, map_smul, map_sum, tw, hT]
 
 private def Z (σ : Representation ℂ C V) (χ : C →* ℂˣ) (x : V) : Prop := ∃ L : Lvl χ, Fx σ L.N x ∧ av σ χ L x = 0
 
@@ -207,7 +210,8 @@ theorem UpperTheory.Gal.CertificateRingHomMap.pLocAdj_of :
   have hr : ∀ v, (r.sum fun g a => a • ρ g (f v)) = av σ χ L (ρ h (f v)) := fun v => by
     have e : (r.sum fun g a => a • ρ g (f v)) = Finsupp.linearCombination ℂ (fun g => ρ g (f v)) r :=
       (Finsupp.linearCombination_apply _ _).symm
-    rw [e, av_apply, map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, av_apply, map_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl fun q _ => ?_
     rw [Finsupp.linearCombination_single, map_mul, Module.End.mul_apply, tw, mul_smul]
     rfl

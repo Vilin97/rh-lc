@@ -65,7 +65,8 @@ theorem exists_ops_tuple : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T 
         rw [GlobalTheory.Hk3.OpsRows.mult_lev hU1 v k ((lev P hP).1 k hk).1 g, ((lev P hP).1 k hk).2, one_mul]
       rw [postOn_apply]
       conv_rhs => rw [← hU2 v]
-      simp only [RealDat.e0, gaL, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [RealDat.e0, gaL, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul]
       refine Finset.sum_congr rfl fun g _ => ?_
       congr 1
       exact (lev P hP).2.2.2.1 c _ _ hfix)

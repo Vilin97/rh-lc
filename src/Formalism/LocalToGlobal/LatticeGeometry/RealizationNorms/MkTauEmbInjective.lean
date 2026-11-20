@@ -246,7 +246,8 @@ theorem span_E_top (χ : Matrix (Fin n) (Fin n) D.host.E) (hP : Formalism.MainNo
   have hf : ∀ u, f u = ∑ i, ξ i * u i := by
     intro u
     conv_lhs => rw [← Finset.univ_sum_single u]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [show Pi.single i (u i) = u i • (Pi.single i (1 : D.host.E) : Fin n → D.host.E) by
       rw [← Pi.single_smul']; simp, map_smul, smul_eq_mul, mul_comm]

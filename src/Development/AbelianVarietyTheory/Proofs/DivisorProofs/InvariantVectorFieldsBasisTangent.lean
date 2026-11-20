@@ -141,7 +141,8 @@ theorem cechCochain_sum_sub_sum_constFn_eq_ringHom {n N : ℕ} (c : Fin n → A)
 theorem comb_eq {n : ℕ} (φ b : Fin n → C1 U) (P : Matrix (Fin n) (Fin n) A) (c : Fin n → A) :
     ∑ a, kapH q U (c a) * φ a - ∑ k, kapH q U ((c ᵥ* P) k) * b k =
       ∑ a, kapH q U (c a) * (φ a - ∑ k, kapH q U (P a k) * b k) := by
-  simp only [Matrix.vecMul, dotProduct, map_sum, map_mul, Finset.sum_mul, mul_sub, Finset.sum_sub_distrib,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.vecMul, dotProduct, map_sum, map_mul, Finset.sum_mul, mul_sub, Finset.sum_sub_distrib,
     Finset.mul_sum, mul_assoc]
   rw [Finset.sum_comm]
   congr 1
@@ -182,7 +183,8 @@ theorem main : ∀ (A : Type) [CommRing A] [IsLocalRing A] [IsNoetherianRing A] 
       intro k
       rw [← IsLocalRing.residue_eq_zero_iff]
       have := congrFun hyP k
-      simpa [Matrix.vecMul, dotProduct, map_sum, RingHom.mapMatrix_apply, Matrix.map_apply] using this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa [Matrix.vecMul, dotProduct, map_sum, RingHom.mapMatrix_apply, Matrix.map_apply] using this
     simpa [IsLocalRing.residue_eq_zero_iff] using hmem y hk a
   obtain ⟨e, he, heu⟩ := hb c hc
   refine ⟨e ᵥ* (Matrix.of P)⁻¹, ?_, ?_⟩

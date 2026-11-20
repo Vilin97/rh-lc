@@ -95,7 +95,8 @@ theorem sum_zsmul (P : Pair p) (a b : ℤ) {J : Type} [Fintype J] (f : J → X.f
   obtain ⟨ℓ, hℓ⟩ := GlobalTheory.T.exists_additive_sectionValueUnitFrame k X p P a b σ y
   let F : P.H a b := ∑ j, n j • (⟨f j, hf j⟩ : P.H a b)
   have hF : (F : X.functionField) = ∑ j, n j • f j := by simp [F]
-  rw [← hF, ← norm_val, ← hℓ, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hF, ← norm_val, ← hℓ, map_sum]
   refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun j _ => ?_)
   rw [map_zsmul, zsmul_eq_mul, norm_mul, Complex.norm_intCast, hℓ, norm_val]
 
@@ -142,7 +143,8 @@ theorem count_rank_lower : ∀ (k : Type) [CommRing k] (X : Scheme.{0}) [IsInteg
     have hT : ∀ i, (T i).IsHomogeneous q := fun i =>
       IsHomogeneous.sum _ _ _ fun α _ => isHomogeneous_monomial _ α.2
     have hTe : ∀ i, aeval x (T i) = ∑ α : Deg D q, n (i, α) • xm x α.1 := fun i => by
-      simp only [T, map_sum, aeval_monomial, Finsupp.prod_pow, algebraMap_int_eq, eq_intCast, zsmul_eq_mul, xm]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [T, map_sum, aeval_monomial, Finsupp.prod_pow, algebraMap_int_eq, eq_intCast, zsmul_eq_mul, xm]
     have h0 := GlobalTheory.T.homogeneousFormCombination_eq_zero_independent X.functionField D x hx0 halg hfin (Fin δ) g hgi q T hT (by
       rw [← hn, Fintype.sum_prod_type]
       refine Finset.sum_congr rfl fun i _ => ?_

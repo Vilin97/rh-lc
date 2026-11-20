@@ -65,10 +65,12 @@ theorem weil_last_local : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (σ : �
   have hcomm : ∀ G, IsThetaFunO ψ S.J.W₀ S.B'.A G →
       S.omb (1, a₀) (GlobalTheory.SeeSaw.comb ψ S.J.W₀ S.B'.A c₂ G) = GlobalTheory.SeeSaw.comb ψ S.J.W₀ S.B'.A c₂ (S.omb (1, a₀) G) := by
     intro G hG
-    simp only [GlobalTheory.SeeSaw.comb, map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [GlobalTheory.SeeSaw.comb, map_sum, map_smul]
     refine Finset.sum_congr rfl fun y hy => ?_
     rw [S.weilb.om_heis 1 a₀ y G hG, actO_one_of_away Q hloc y (hAway y hy)]
-  rw [biComb_eq_sum, biComb_eq_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [biComb_eq_sum, biComb_eq_sum, map_sum]
   refine Finset.sum_congr rfl fun x _ => ?_
   rw [map_smul]
   obtain ⟨T₂, hT₂, hΛ⟩ := hbi.2 Ξ₁ (u + x)

@@ -113,7 +113,8 @@ lemma not_dvd_substS_det {L : Type} [Field L] [Algebra K L] {r : ℕ} (hr : 1 �
     refine Matrix.ext fun l a => ?_
     rw [Matrix.of_apply, Matrix.submatrix_apply, id, Matrix.transpose_apply, substS_X]
     by_cases hl : A l ∈ S
-    · simp only [hl, hv l, if_true, map_sum, map_mul, φ, MvPolynomial.eval₂Hom_C,
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp only [hl, hv l, if_true, map_sum, map_mul, φ, MvPolynomial.eval₂Hom_C,
         MvPolynomial.eval₂Hom_X', hvA]
       have := congrFun (congrFun (msMat_eval_zero_mul_eq_mul_diagonal g) a) (τ l)
       rw [Matrix.mul_apply, Matrix.mul_diagonal] at this

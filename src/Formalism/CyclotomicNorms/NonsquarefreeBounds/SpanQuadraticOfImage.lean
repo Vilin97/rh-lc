@@ -173,7 +173,8 @@ theorem comm (hspan : ∀ i, Submodule.span k (Set.range (ρ i)) = ⊤)
     · rw [off_diag hspan hne φ hij, off_diag hspan hne φ hij, map_zero]
   conv_lhs => rw [← sum_single m]
   conv_rhs => rw [← sum_single m]
-  simp only [Finset.smul_sum, map_sum, pi_smul_single, key]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finset.smul_sum, map_sum, pi_smul_single, key]
 
 end PrismSpan
 

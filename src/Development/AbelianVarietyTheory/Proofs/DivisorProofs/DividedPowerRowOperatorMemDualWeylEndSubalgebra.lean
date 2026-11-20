@@ -87,7 +87,8 @@ theorem PSh_rowGen_C (a b : Fin N) (r : O) : PSh a b 0 (rowGen O a b (C r)) := b
 theorem PSh_rowGen (a b : Fin N) (hab : a ≠ b) (u : Fin N → ℤ) (f : MvPolynomial (Fin N × Fin N) O)
     (hf : IsWeightedHomogeneous (wZ N) f u) : PSh a b u (rowGen O a b f) := by
   classical
-  rw [f.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [f.as_sum, map_sum]
   have key : ∀ d ∈ f.support, PSh a b u (rowGen O a b (monomial d (AddMonoidAlgebra.coeff f d))) := by
     intro d hd
     have hw : Finsupp.weight (wZ N) d = u := hf (mem_support_iff.mp hd)
@@ -165,7 +166,8 @@ theorem proj_rowAct (a b : Fin N) (hab : a ≠ b) (k : ℕ) (w : Fin N → ℕ) 
       rowDiv O a b k f := by
   classical
   rw [rowAct_transvection, Polynomial.eval_eq_sum_range]
-  simp only [one_pow, mul_one, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [one_pow, mul_one, map_sum]
   have : ∀ j, (rowGen O a b f).coeff j = rowDiv O a b j f := fun j => rfl
   simp only [this, proj_rowDiv a b hab _ k w f hf, Finset.sum_ite_eq', Finset.mem_range]
   split_ifs with hk
@@ -230,7 +232,8 @@ theorem rowDiv_mem_dwAlg : ∀ (O : Type) [CommRing O] (N : ℕ) (ν : Fin N →
     have hlin : ∀ (s : Finset (Fin N → ℕ)) (F : (Fin N → ℕ) → MvPolynomial (Fin N × Fin N) O),
         rowDiv O a b k (∑ w ∈ s, F w) = ∑ w ∈ s, rowDiv O a b k (F w) := by
       intro s F
-      simp only [rowDiv, map_sum, Polynomial.finset_sum_coeff]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [rowDiv, map_sum, Polynomial.finset_sum_coeff]
     rw [hlin]
     refine Finset.sum_congr rfl fun w _ => ?_
     simp only [Module.End.mul_apply]

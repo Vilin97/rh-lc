@@ -400,7 +400,8 @@ open Formalism.MainNotions.ModuliIntegralCharts.H1.CIndFrExp1
 
 theorem eval_pair_bilinear {τ : Type} (M : Fin d → Fin d → S) (u v : Fin d → MvPolynomial τ S) :
     ev2 (bil M) u v = ∑ i, ∑ l, C (M i l) * (u i * v l) := by
-  simp [ev2, bil, map_sum, map_mul, aeval_C, aeval_X, algebraMap_eq]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [ev2, bil, map_sum, map_mul, aeval_C, aeval_X, algebraMap_eq]
 
 theorem lead_bil {P : MvPolynomial (Fin 2 × Fin d) S} {m : ℕ} (hm : 2 ≤ m)
     (fF : Fin d → MvPolynomial (Fin 3 × Fin d) S)

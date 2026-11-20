@@ -437,7 +437,8 @@ theorem level_inclusion_type : LevelInclType := by
     refine ⟨∑ γ, ((chi γ⁻¹ : Oˣ) : O) • ρ0 γ a, ⟨?_, ?_⟩, ?_⟩
     · exact Submodule.sum_mem _ fun γ _ => Submodule.smul_mem _ _ (hA γ a haA)
     · refine (mem_typeSpace _ _ _).2 fun δ => ?_
-      rw [map_sum, Finset.smul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Finset.smul_sum]
       refine Fintype.sum_equiv (Equiv.mulLeft δ) _ _ fun γ => ?_
       rw [LinearMap.map_smul_of_tower, Equiv.coe_mulLeft, map_mul ρ0, Module.End.mul_apply,
         algebraMap_smul, smul_smul, ← Units.val_mul]
@@ -446,7 +447,8 @@ theorem level_inclusion_type : LevelInclType := by
           map_one, one_mul]
       rw [hχ]
     · change io (∑ γ, ((chi γ⁻¹ : Oˣ) : O) • ρ0 γ a) = ((Fintype.card Γ : ℕ) : O) • io a
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       have : ∀ γ, io (((chi γ⁻¹ : Oˣ) : O) • ρ0 γ a) = io a := by
         intro γ
         rw [LinearMap.map_smul_of_tower, hio, hx γ, algebraMap_smul, smul_smul, ← Units.val_mul,

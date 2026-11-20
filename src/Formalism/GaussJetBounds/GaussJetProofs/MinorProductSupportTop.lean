@@ -87,7 +87,8 @@ lemma shape_minor {R : Type u} [CommRing R] {J : Type} [Fintype J] [DecidableEq 
       ∏ i, (C (A (π i) (τ i)) * X (τ i, I i) : MvPolynomial (J × Fin N1) R) =
       C (Matrix.of fun (r i : Fin p) => A r (τ i)).det * ∏ i, X (τ i, I i) := by
     intro τ
-    rw [Matrix.det_apply, map_sum, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Matrix.det_apply, map_sum, Finset.sum_mul]
     refine Finset.sum_congr rfl fun π _ => ?_
     simp only [Units.smul_def, map_zsmul, smul_mul_assoc, Finset.prod_mul_distrib, map_prod,
       Matrix.of_apply]

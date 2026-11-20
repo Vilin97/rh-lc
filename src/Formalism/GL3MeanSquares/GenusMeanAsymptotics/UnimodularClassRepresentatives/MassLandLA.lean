@@ -32,7 +32,8 @@ theorem gram_det_unit {K V : Type*} [Field K] [StarRing K] [AddCommGroup V] [Mod
   have key : ∀ y j, h y (∑ i, G⁻¹ i j • g i) = star (g.repr y j) := by
     intro y j
     conv_lhs => rw [← g.sum_repr y]
-    simp only [map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply,
       smul_eq_mul, map_smul, starRingEnd_apply]
     have h2 : ∀ k, ∑ i, star (g.repr y k) * (G⁻¹ i j * h (g k) (g i))
         = star (g.repr y k) * (1 : Matrix (Fin n) (Fin n) K) k j := by

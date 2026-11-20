@@ -57,7 +57,8 @@ theorem exists_contragredient {G X κ : Type} [Group G] [TopologicalSpace G] [Ad
     simp_rw [h2]
     have h3 : ∑ q, B.repr (T g (B p)) q * B.repr (T g⁻¹ (B q)) r =
         B.repr (T g⁻¹ (∑ q, B.repr (T g (B p)) q • B q)) r := by
-      rw [map_sum, map_sum, Finsupp.coe_finsetSum, Finset.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, map_sum, Finsupp.coe_finsetSum, Finset.sum_apply]
       refine Finset.sum_congr rfl fun q _ => ?_
       rw [map_smul, map_smul, Finsupp.smul_apply, smul_eq_mul]
     rw [h3, B.sum_repr, ← Module.End.mul_apply, ← map_mul, inv_mul_cancel, map_one, Module.End.one_apply,
@@ -69,7 +70,8 @@ theorem exists_contragredient {G X κ : Type} [Group G] [TopologicalSpace G] [Ad
           starRingEnd ℂ (∑ p, x p * starRingEnd ℂ (B.repr (T g (B p)) q))
         = ∑ p, ∑ r, starRingEnd ℂ (x p) * y r *
             ∑ q, B.repr (T g (B p)) q * starRingEnd ℂ (B.repr (T g (B r)) q) := by
-          simp only [map_sum, map_mul, Complex.conj_conj, Finset.sum_mul, Finset.mul_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            simp only [map_sum, map_mul, Complex.conj_conj, Finset.sum_mul, Finset.mul_sum]
           rw [Finset.sum_comm]
           refine Finset.sum_congr rfl fun r _ => ?_
           rw [Finset.sum_comm]

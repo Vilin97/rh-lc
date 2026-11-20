@@ -151,7 +151,8 @@ theorem eigenFinite_of (hc : ∀ φ : TR.Sm F a, TR.IsCuspForm φ → φ.1 ∈ c
   · rw [map_aeval_apply_of_intertwine incl (B := uAction (laplacianU F a (b.map (Fb.lieEq F a)))) (fun _ => rfl), hψ,
       ← map_aeval_apply_of_intertwine (toArch F a) (A := ∑ l, TR.lie F a (b l) * TR.lie F a (b l)), h3, map_zero, map_zero]
     intro m
-    simp only [laplacianU, map_sum, map_mul, LinearMap.sum_apply, Module.End.mul_apply, Module.Basis.map_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [laplacianU, map_sum, map_mul, LinearMap.sum_apply, Module.End.mul_apply, Module.Basis.map_apply,
       uAction_lieEq]
   · have hz : UnitaryAdmissible.centralZ F a = Fb.lieEq F a (e • TR.oneL F a) := by
       refine Subtype.ext ?_

@@ -89,7 +89,8 @@ theorem character_on_torsion_points_eq_series : ∀ (p : ℕ) [Fact p.Prime] (C 
       fun i => (hmem _).2 ⟨g i, fun n => rfl⟩, fun i => (hmem _).2 ⟨h i, fun n => rfl⟩, ?_⟩
     intro x y
     obtain ⟨Φ, h0, h1, h2⟩ := (hsum x.1 y.1 (x + y).1).2 rfl
-    rw [← hu, ← h2, hgh Φ x.1 y.1 h0 h1 (hNJ x) (hNJ y), map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hu, ← h2, hgh Φ x.1 y.1 h0 h1 (hNJ x) (hNJ y), map_sum]
     simp only [map_mul]
   · intro f hf
     obtain ⟨u, hu⟩ := (hmem _).1 hf

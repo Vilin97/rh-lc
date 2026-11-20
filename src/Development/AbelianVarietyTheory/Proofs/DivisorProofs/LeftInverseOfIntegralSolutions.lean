@@ -31,7 +31,8 @@ theorem dvr_matrix_exists_leftInverse_of_saturated
       rw [← residue_eq_zero_iff]
       have := congrFun hcb i
       rw [hcb'] at this
-      simpa [Matrix.mulVec, dotProduct, hAb, map_sum] using this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa [Matrix.mulVec, dotProduct, hAb, map_sum] using this
     have hmax : maximalIdeal V = Ideal.span {π} := hπ.maximalIdeal_eq
     have hdiv : ∀ i, π ∣ (A.mulVec c) i := fun i => by
       have := hmem i; rw [hmax, Ideal.mem_span_singleton] at this; exact this
@@ -41,7 +42,8 @@ theorem dvr_matrix_exists_leftInverse_of_saturated
       funext i
       have h1 : (A.map (algebraMap V Fr)).mulVec cf i
           = algebraMap V Fr ((A.mulVec c) i) / algebraMap V Fr π := by
-        simp only [cf, Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum, map_mul,
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [cf, Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum, map_mul,
           Finset.sum_div, mul_div_assoc]
       rw [h1, hb i, map_mul, mul_div_assoc, mul_div_cancel₀ _ hπF]
     have hint := hA cf b hcf

@@ -155,7 +155,8 @@ theorem exists_bound_relAmple : ∀ (W : Matrix (Fin 8) (Fin 8) ℤ), IsE8 W →
   rw [cls_linComb c.isLB, cls_linComb c.isLB] at hsub
   have hpf : pull f.left (cls P'.L hL) = ∑ uv : Fin 8 × Fin 8,
       (m.transpose * W * m) uv.1 uv.2 • pull (lift (pr uv.1) (pr uv.2)).left (cls c.P c.isLB) := by
-    rw [hPL, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hPL, map_sum]
     refine Eq.trans (Finset.sum_congr rfl fun uv _ => ?_) hsub.symm
     rw [map_zsmul, ← pull_comp, ← Over.comp_left, comp_lift, hact i uv.1, hact i uv.2]
     rfl

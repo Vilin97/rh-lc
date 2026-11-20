@@ -53,7 +53,8 @@ lemma EF_eq_efr (X : Data E r) (x y : Fin r → E) :
   refine Finset.sum_congr rfl fun τ _ => ?_
   rw [map_mul]
   congr 3
-  simp only [herm, hermC, map_sum, map_mul, ReciprocityTheory.ChartRestriction.G.FD.emb_cc, Data.embV, Data.emb]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [herm, hermC, map_sum, map_mul, ReciprocityTheory.ChartRestriction.G.FD.emb_cc, Data.embV, Data.emb]
 
 lemma hC_sub_right (τ : E →+* ℂ) (G : Matrix (Fin r) (Fin r) E) (u v v' : Fin r → ℂ) :
     hermC τ G u (v - v') = hermC τ G u v - hermC τ G u v' := by

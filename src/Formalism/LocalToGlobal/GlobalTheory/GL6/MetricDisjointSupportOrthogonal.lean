@@ -56,7 +56,8 @@ theorem majAt_swap_eq_conj {V ι : Type} [AddCommGroup V] [Module D.what₂.LL V
     (X : InfinitePlace D.what₂.LL → Matrix ι ι ℂ) (v : InfinitePlace D.what₂.LL) (x y : V) :
     majAt b X v y x = starRingEnd ℂ (majAt b X v x y) := by
   unfold majAt
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   simp only [map_mul, Complex.star_def, Complex.conj_conj]
   ring

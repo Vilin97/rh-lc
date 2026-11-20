@@ -232,7 +232,8 @@ theorem hform_add_left {A : Type} [CommRing A] (τ : A →+* A) (J : Matrix (Fin
 theorem hform_loc (J : Matrix (Fin k) (Fin k) E) (x y : Fin k → E) :
     hform (sigR σ (v.adicCompletion F)) (J.map (inclE (F := F) (v.adicCompletion F))) (loc v x) (loc v y) =
       inclE (F := F) (v.adicCompletion F) (hform (σ : E →+* E) J x y) := by
-  simp only [hform, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hform, map_sum, map_mul]
   rfl
 
 end Split

@@ -28,7 +28,8 @@ private theorem alternatingMap_sub_base_eq_alternating_sum_removeNth {E : Type} 
   rw [Arith.EF_apply]
   set s : 𝓞 E := ∑ i, A.hd n i * x i * A.bar (x i) with hs
   have hbs : A.bar s = s := by
-    rw [hs, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hs, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_mul, map_mul, hd_bar, A.bar_bar]
     ring

@@ -16,7 +16,8 @@ private theorem scalarDecomp {E : Type} [Field E] [NumberField E] [IsTotallyComp
     rw [if_pos (by rw [InfinitePlace.mk_embedding])]
     congr 1 <;> simp
   rw [← Finset.sum_fiberwise Finset.univ InfinitePlace.mk]
-  conv_lhs => rw [e, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [e, map_sum]
   refine Finset.sum_congr rfl fun w _ => ?_
   have hne : w.embedding ≠ ComplexEmbedding.conjugate w.embedding := fun h =>
     InfinitePlace.not_isReal_iff_isComplex.2 (IsTotallyComplex.isComplex w)
@@ -53,7 +54,8 @@ theorem UpperTheory.V.AlgRepEndIrreducible.lieDecomp :
   let L' : Matrix (Fin a) (Fin a) (Cinf E) →ₗ[ℝ] N := L
   change L' X = _
   conv_lhs => rw [Matrix.matrix_eq_sum_single X]
-  simp only [map_sum, hol_apply, Matrix.map_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, hol_apply, Matrix.map_apply]
   rw [Finset.sum_comm]
   conv_rhs => rw [Finset.sum_comm]
   rw [Finset.sum_comm]

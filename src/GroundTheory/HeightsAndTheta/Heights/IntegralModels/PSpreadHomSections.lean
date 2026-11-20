@@ -59,7 +59,8 @@ lemma exists_pull_eq_nsmul_hom (h₁ : RatDenominators.Statement) (h₂ : Pullba
   refine ⟨∑ i, r i • (G.presheaf.map (homOfLE hV).op).hom ((∏ j ∈ Finset.univ.erase i, N j) • τ i), ?_⟩
   have hV' : toInvOpen f ℚ a hq ⁻¹ᵁ V ≤ toInvOpen f ℚ a hq ⁻¹ᵁ ((invOpen f a).ι ⁻¹ᵁ U) :=
     (Opens.map (toInvOpen f ℚ a hq).base).monotone hV
-  rw [pullSectionOn_sum, pullSectionOn_sum, map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [pullSectionOn_sum, pullSectionOn_sum, map_sum, Finset.smul_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [Scheme.Modules.Hom.app_smul, smul_comm]
   congr 1

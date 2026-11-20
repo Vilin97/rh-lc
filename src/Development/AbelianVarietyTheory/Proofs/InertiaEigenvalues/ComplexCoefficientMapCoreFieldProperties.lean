@@ -58,7 +58,8 @@ theorem injective_of_basis {W : Type} [AddCommGroup W] [Module K W] {ι : Type} 
   have hs : ∑ j, B.repr x j • c (B j) = 0 := by
     rw [← hx]
     conv_rhs => rw [← B.sum_repr x]
-    simp only [map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul]
   have h0 := Fintype.linearIndependent_iff.1 h _ hs
   rw [← B.sum_repr x]
   simp [h0]
@@ -139,7 +140,8 @@ theorem GlobalTheory.AdTh.CoefC.coefMap_complex_core : ∀ (D : D7) (G : Type) [
     refine top_le_iff.1 (hs ▸ Submodule.span_le.2 ?_)
     rintro _ ⟨w, rfl⟩
     obtain ⟨a, rfl⟩ := CoefExt.exists_coord (inC T.Q.c) (lamV D i) w
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Submodule.sum_mem _ fun j _ => by
       rw [map_smul]
       exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨_, rfl⟩)

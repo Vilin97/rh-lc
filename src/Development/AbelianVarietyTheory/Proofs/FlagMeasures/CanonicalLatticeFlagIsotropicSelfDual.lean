@@ -154,7 +154,8 @@ theorem rkK_le_rkR (S : Submodule (𝓞 I.E) (Fin I.n → I.E))
     have h4 := congrArg (I.φ v) (hS _ (hbS i) _ (hbS j))
     rw [map_zero] at h4
     rw [← h4]
-    simp only [Formalism.UG.hform, map_sum, map_mul, starRingEnd_apply, I.cm.cmUnram.2.1, dotProduct,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Formalism.UG.hform, map_sum, map_mul, starRingEnd_apply, I.cm.cmUnram.2.1, dotProduct,
       Matrix.mulVec, Finset.mul_sum, mul_assoc, Pi.star_apply, Function.comp_apply, Matrix.map_apply]
   exact le_min (card_le_of_isotropic _ _ h2 h3 true) (card_le_of_isotropic _ _ h2 h3 false)
 

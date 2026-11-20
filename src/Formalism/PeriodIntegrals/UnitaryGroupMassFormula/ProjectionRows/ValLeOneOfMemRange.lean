@@ -102,7 +102,8 @@ lemma card_le_of_orth (A : HLat K) (e : Module.End K A.V) (h : A.V →ₗ⋆[K] 
     have hfa : ∀ v : Fin d → K, f v = ∑ i, a i * v i := by
       intro v
       conv_lhs => rw [pi_eq_sum_univ v]
-      simp only [map_sum, map_smul, smul_eq_mul, a]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, smul_eq_mul, a]
       refine Finset.sum_congr rfl (fun i _ => ?_)
       rw [mul_comm]
     let z : A.V := ∑ i, star (a i) • y i
@@ -115,7 +116,8 @@ lemma card_le_of_orth (A : HLat K) (e : Module.End K A.V) (h : A.V →ₗ⋆[K] 
       have h2 : f (Θ x) = 0 := hle ⟨x, rfl⟩
       rw [hfa] at h2
       rw [h1]
-      simp only [z, map_sum, LinearMap.sum_apply, map_smulₛₗ, starRingEnd_apply, star_star,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [z, map_sum, LinearMap.sum_apply, map_smulₛₗ, starRingEnd_apply, star_star,
         LinearMap.smul_apply, smul_eq_mul]
       simpa [Θ] using h2
     have hz0 : z = 0 := hH.2.1 z hz

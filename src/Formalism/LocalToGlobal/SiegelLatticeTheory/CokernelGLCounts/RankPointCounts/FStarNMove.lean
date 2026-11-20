@@ -70,7 +70,8 @@ theorem gram_flag {T : E} (P Q : FlagG S r T) (a c : Fin (r + 1)) :
 
 theorem hermitian_double_sum_expand {ι : Type*} [Fintype ι] (x : ι → S.V) (g g' : ι → E) :
     S.hT (∑ i, g i • x i) (∑ j, g' j • x j) = ∑ i, ∑ j, star (g i) * (g' j * S.hT (x i) (x j)) := by
-  simp only [map_sum, LinearMap.sum_apply, hT_smulL, map_smul, smul_eq_mul, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.sum_apply, hT_smulL, map_smul, smul_eq_mul, Finset.mul_sum]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 
@@ -173,7 +174,8 @@ theorem exists_move {T T' : E} (F : FlagG S r T) (P Q : FlagG S r T')
     simp [ℓ, LinearMap.sum_apply]
   have hℓcomb : ∀ (x : Fin (r + 1) → S.V) (y : S.V),
       ℓ (fun b => S.hT (x b) y) = S.hT (∑ b, k b • x b) y := fun x y => by
-    rw [hℓ, map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hℓ, map_sum, LinearMap.sum_apply]
     exact Finset.sum_congr rfl fun b _ => (hT_smulL S _ _ _).symm
   have hrange : LinearMap.range A = LinearMap.ker ℓ := by
     have hle : LinearMap.range A ≤ LinearMap.ker ℓ := by
@@ -238,7 +240,8 @@ theorem exists_move {T T' : E} (F : FlagG S r T) (P Q : FlagG S r T')
     exact this
   have hn₀sum : ∀ g : Fin (r + 1) ⊕ Fin (r + 1) → E, n₀ (∑ i, g i • b₂ i) = ∑ i, g i • tg i := by
     intro g
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun i _ => by rw [map_smul, hn₀b]
 
   have hperp : ∀ (w : W) i, S.hT (tg i) ((w : S.V) - xm w) = 0 := by

@@ -48,7 +48,8 @@ theorem sum_eq_trace (D : D7) : TraceMapNormalisation D := fun y => by
   have hE := D.host.hostE_isGalois
   have h := trace_eq_sum_automorphisms (K := D.host.K) (L := D.host.E) y
   change _ = D.host.φ₀ (algebraMap D.host.K D.host.E _)
-  rw [h, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h, map_sum]
   exact Fintype.sum_bijective (galK D.host ∘ D.eTau) ((galK_bijective D.host).comp D.eTau.bijective) _ _
     (fun τ => rfl)
 

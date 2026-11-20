@@ -38,7 +38,8 @@ theorem rel_zero {K F C Pt : Type} [Field K] [Field F] [Algebra K F] [IsGalois K
       intro y
       obtain ⟨x, rfl⟩ := (hbij g).2 y
       have h1 := congrArg g (ha'rel x)
-      rw [map_sum, map_zero] at h1
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, map_zero] at h1
       simp only [map_mul, ← heq] at h1
       exact h1
     have hdiff : ∀ y, ∑ j ∈ s.erase i0, (g (a' j) - a' j) * v (b j) y = 0 := by
@@ -56,7 +57,8 @@ theorem rel_zero {K F C Pt : Type} [Field K] [Field F] [Algebra K F] [IsGalois K
   choose! c hc using hK
   have hv0 : v (∑ i ∈ s, c i • b i) = 0 := by
     funext y
-    rw [map_sum, Finset.sum_apply, Pi.zero_apply, ← ha'rel y]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_apply, Pi.zero_apply, ← ha'rel y]
     refine Finset.sum_congr rfl fun i hi => ?_
     rw [map_smul, Pi.smul_apply, Algebra.smul_def, hc i hi]
   have hsum0 : ∑ i ∈ s, c i • b i = 0 := hinj (by rw [hv0, map_zero])

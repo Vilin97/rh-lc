@@ -140,9 +140,11 @@ theorem exists_lagrangian (hτ : ∀ x, τ (τ x) = x) (hN : ∀ z, τ z = z →
         intro y
         have h1 : g (ψ y) = 0 := hg ⟨y, rfl⟩
         rw [hga] at h1
-        rw [← hφ, Submodule.coe_sum, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [← hφ, Submodule.coe_sum, map_sum]
         have h2 := congrArg τ h1
-        rw [map_sum, map_zero] at h2
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum, map_zero] at h2
         rw [← h2]
         refine Finset.sum_congr rfl fun i _ => ?_
         rw [Submodule.coe_smul, hφ, hsm, map_mul, hsy (b i) y, mul_comm]; rfl

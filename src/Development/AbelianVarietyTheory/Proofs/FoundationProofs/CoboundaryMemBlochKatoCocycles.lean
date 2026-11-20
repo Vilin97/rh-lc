@@ -62,7 +62,8 @@ theorem exists_generators [IsLocalRing O] (I : Ideal O) [hI : I.IsMaximal] {N Z 
     intro x _
     choose c hc using fun i => Ideal.Quotient.mk_surjective (b.repr (π x) i)
     have h0 : π (x - ∑ i, c i • z i) = 0 := by
-      rw [map_sub, map_sum, sub_eq_zero, ← b.sum_repr (π x)]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, map_sum, sub_eq_zero, ← b.sum_repr (π x)]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_smul, hz, ← hc]
       rfl

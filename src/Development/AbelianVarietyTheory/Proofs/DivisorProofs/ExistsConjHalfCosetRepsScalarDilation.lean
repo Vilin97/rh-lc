@@ -151,7 +151,8 @@ theorem int_sum {D : D7} (Q : Finset (Pl D.host.E)) (e : AE D) (he : IsIdemSum e
     finPart D (cA D (e * incA D ((N : D.host.E) * (ϖ : D.host.E)⁻¹))) ∈ intAE D := by
   rw [GlobalTheory.FinPl.FrameLat.cA_int_iff]
   obtain ⟨⟨es, hes, rfl⟩, -⟩ := he
-  rw [Finset.sum_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.sum_mul, map_sum]
   exact AddSubgroup.sum_mem _ fun PP hP => int_at PP (es PP) (hes PP hP) N (hN PP hP) ϖ (hϖ PP hP).1 (hϖ PP hP).2
 
 end GlobalTheory.ScalarReps

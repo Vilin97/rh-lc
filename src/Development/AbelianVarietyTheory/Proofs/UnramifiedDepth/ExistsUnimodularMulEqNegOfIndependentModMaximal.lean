@@ -104,7 +104,8 @@ theorem exists_unimodular_mul_eq_neg_of_indepMod : ∀ (C : Type) [Field C] (V :
     rw [this]
     exact (hunit _).1 hY
   · have := congrArg O.subtype (hYΦ b c)
-    rw [map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at this
     simp only [map_mul, apply_ite O.subtype, map_neg, map_one, map_zero] at this
     exact this
 

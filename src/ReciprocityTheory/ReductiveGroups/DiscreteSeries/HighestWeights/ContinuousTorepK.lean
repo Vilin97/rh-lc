@@ -303,7 +303,8 @@ lemma torep_wt_w {ε : Fin n → Bool} {Λ : Fin n → ℝ} (T : KType ε Λ) :
   have hD1 : F 1 = NormedSpace.exp (T.dτ (Matrix.diagonal d)) := by
     rw [oneParam_lemma_5 F _ hadd h0 hF 1, one_smul]
   have hDw : T.dτ (Matrix.diagonal d) T.w = (((∑ a, Λ a * θ a : ℝ) : ℂ) * Complex.I) • T.w := by
-    rw [torep_diag_sum d, map_sum, ContinuousLinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [torep_diag_sum d, map_sum, ContinuousLinearMap.sum_apply]
     simp only [map_smul, ContinuousLinearMap.smul_apply, T.w_wt, smul_smul, hd]
     rw [← Finset.sum_smul]
     congr 1

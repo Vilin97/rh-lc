@@ -27,7 +27,8 @@ theorem sum_coord {K B V : Type _} [Field K] [CommRing B] [AddCommGroup V] [Modu
     (μ : V →ₗ[K] V' →ₗ[K] V'') (φ : Module.Dual K V'') (x : V) (y : V') :
     ∑ s, ∑ s', o (b.coord s x) * o (b'.coord s' y) * o (φ (μ (b s) (b' s'))) = o (φ (μ x y)) := by
   conv_rhs => rw [← b.sum_repr x, ← b'.sum_repr y]
-  simp only [map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply, smul_eq_mul, map_mul, Module.Basis.coord_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply, smul_eq_mul, map_mul, Module.Basis.coord_apply,
     Finset.mul_sum]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun s _ => Finset.sum_congr rfl fun s' _ => by ring

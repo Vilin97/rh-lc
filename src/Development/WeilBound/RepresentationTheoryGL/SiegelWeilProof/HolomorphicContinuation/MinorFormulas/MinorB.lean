@@ -24,7 +24,8 @@ theorem deriv_det {R A : Type*} [CommRing R] [CommRing A] [Algebra R A] (D : Der
     (M : Matrix (Fin ρ) (Fin ρ) A) :
     D M.det = ∑ c, (Matrix.updateCol M c (fun a => D (M a c))).det := by
   simp only [Matrix.det_apply]
-  rw [map_sum, Finset.sum_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_comm]
   refine Finset.sum_congr rfl fun σ _ => ?_
   rw [Derivation.map_smul_of_tower, deriv_prod, Finset.smul_sum]
   refine Finset.sum_congr rfl fun c _ => ?_

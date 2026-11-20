@@ -150,7 +150,8 @@ theorem indFun_mem_spanZ {K : Subgroup G} (hK : E K) {χ : K → ℂ} (hχ : IsC
     indFun K.subtype χ ∈ spanZ E := by
   classical
   obtain ⟨m, hm⟩ := hχ.exists_nat
-  rw [hm, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hm, map_sum]
   refine Submodule.sum_mem _ fun ψ hψ ↦ ?_
   obtain ⟨L, μ, hLμ⟩ := hmono K hK ψ (mem_irrChars.mp hψ)
   rw [map_smul, Nat.cast_smul_eq_nsmul ℂ, hLμ, indFun_subtype_indLin]
@@ -238,7 +239,8 @@ theorem mem_spanZ_of_mem_spanA {ζ : ℂ} (hζ : IsIntegral ℤ ζ) {f : G → �
     exists_int_charInner_of_mem_spanZ (hg i) (mem_irrChars.mp hψ)
   choose m hm using hn
   have h1 : charInner G f ψ = ∑ i, ((c i * m i : ℤ) : ℂ) * (a i : ℂ) := by
-    rw [hfeq, map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hfeq, map_sum, LinearMap.sum_apply]
     refine Finset.sum_congr rfl fun i _ ↦ ?_
     rw [← Int.cast_smul_eq_zsmul ℂ, map_smul, map_smul, LinearMap.smul_apply, LinearMap.smul_apply, hm i,
       smul_eq_mul, smul_eq_mul]
@@ -252,9 +254,11 @@ theorem mem_spanZ_of_mem_spanA {ζ : ℂ} (hζ : IsIntegral ℤ ζ) {f : G → �
     push_cast
     rfl
   have hπA := congrArg π hA
-  rw [map_sum, map_zsmul, hπ, smul_eq_mul, mul_one] at hπA
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_zsmul, hπ, smul_eq_mul, mul_one] at hπA
   simp only [map_zsmul, smul_eq_mul] at hπA
-  rw [hk, hf'def, map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hk, hf'def, map_sum, LinearMap.sum_apply]
   rw [← hπA]
   push_cast
   refine Finset.sum_congr rfl fun i _ ↦ ?_

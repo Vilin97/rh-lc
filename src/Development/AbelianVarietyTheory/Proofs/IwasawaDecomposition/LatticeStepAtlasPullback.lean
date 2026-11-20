@@ -60,7 +60,8 @@ theorem exists_comb {Z₁ Z B : Mdl Y i₀} {g : Z.X ⟶ B.X} (hg : IsMap Z B g)
 theorem row_comb {K N : Type} [Field K] [AddCommGroup N] [Module K N] {m n r : ℕ} (hr : r ≤ m) (L : N →ₗ[K] (Fin n → K))
     (a : Fin n → K) (u : Fin m → N) (cf : Fin m → K) (hcf : ∀ j : Fin m, r ≤ (j : ℕ) → cf j = 0)
     (ha : ∀ l : Fin r, ∑ i, a i * L (u (Fin.castLE hr l)) i = 0) : ∑ i, a i * L (∑ j, cf j • u j) i = 0 := by
-  simp only [map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_eq_zero fun j _ => ?_
   by_cases hj : r ≤ (j : ℕ)

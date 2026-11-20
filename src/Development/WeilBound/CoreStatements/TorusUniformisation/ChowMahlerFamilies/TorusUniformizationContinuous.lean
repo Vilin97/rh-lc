@@ -50,7 +50,8 @@ theorem span_tr {X : Scheme.{0}} {G : Over X} [GrpObj G] [Smooth G.hom] {R R' : 
     (fun r n hn => Submodule.smul_mem _ r hn) (fun n n' hn hn' => add_mem hn hn') e'
   have he : e ∈ Submodule.span R (Set.range s) := hs ▸ Submodule.mem_top
   obtain ⟨a, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun _).1 he
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Submodule.sum_mem _ fun i _ => ?_
   rw [j.map_smulₛₗ]
   exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)
@@ -140,7 +141,8 @@ theorem local_formula {X : Scheme.{0}} {Ω : Type} [Field Ω] {K : Type} {J : K 
     simp only [Category.assoc])
   obtain ⟨core, hcore⟩ := h.herm (z ≫ ρ) Ec Mc
   have hDs : ∀ a, j' (D a) = ∑ i, g (c a i) • j' (j (s i)) := fun a => by
-    rw [← hc a, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hc a, map_sum]
     exact Finset.sum_congr rfl fun i _ => j'.map_smulₛₗ _ _
   rw [hv]
   change h.ip (z ≫ ρ) (Mc.pt (j' (D a))) (Mc.pt (j' (D b))) = _

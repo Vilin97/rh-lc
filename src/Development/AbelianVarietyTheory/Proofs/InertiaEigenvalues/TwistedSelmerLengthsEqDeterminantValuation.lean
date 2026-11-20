@@ -249,7 +249,8 @@ theorem le_bk (hψ : ∀ σ ∈ DecV N v, ψ σ = 1) :
         one_smul]
       beta_reduce
       rw [GlobalTheory.BKIntegralToRational.cocycle_of_crys _ _ hf g h j]
-      simp only [← Submodule.mkQ_apply, map_add, map_sum, map_mul, add_div, Finset.sum_div, mul_div_assoc,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [← Submodule.mkQ_apply, map_add, map_sum, map_mul, add_div, Finset.sum_div, mul_div_assoc,
         ← LinearMap.map_smul, Algebra.smul_def]⟩
   have hzz : z = x • z' := by
     apply Subtype.ext

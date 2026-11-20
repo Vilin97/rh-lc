@@ -127,7 +127,8 @@ theorem layer_eigen {act : Mat p q →ₗ[ℂ] Module.End ℂ V} (h : IsLieAct a
         by_cases hi : i = a
         · subst hi; simp
         · simp [hi]
-      simp only [e, Finset.sum_add_distrib, ← map_sum, ih y hy]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [e, Finset.sum_add_distrib, ← map_sum, ih y hy]
       simp [add_smul, add_assoc]
     intro x hx
     have h2 := this hx
@@ -146,7 +147,8 @@ theorem exists_grading : ∀ (p q : ℕ) (V : Type) [AddCommGroup V] [Module ℂ
       conv_lhs => rw [Matrix.matrix_eq_sum_single Z]
       simp [Eab, Matrix.smul_single]
     rw [hZ]
-    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply]
     exact Submodule.sum_mem _ fun a _ => Submodule.sum_mem _ fun b _ =>
       Submodule.smul_mem _ _ (sup_stable h hK hL a b y hy)
 

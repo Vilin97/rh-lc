@@ -31,7 +31,8 @@ theorem coeff_eq_zero_of_const (N : ℕ) (γ : ℕ → ℝ) (K : ℝ)
 theorem map_mul_add_pow {ι : Type} (Φ : MvPolynomial ι ℝ →ₗ[ℝ] ℝ) (A x y : MvPolynomial ι ℝ) (c : ℝ) (n : ℕ) :
     Φ (A * (MvPolynomial.C c * x + y) ^ n) =
       ∑ m ∈ Finset.range (n + 1), c ^ m * ((n.choose m : ℝ) * Φ (A * x ^ m * y ^ (n - m))) := by
-  rw [add_pow, Finset.mul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [add_pow, Finset.mul_sum, map_sum]
   refine Finset.sum_congr rfl fun m _ => ?_
   have e : A * ((MvPolynomial.C c * x) ^ m * y ^ (n - m) * (n.choose m : MvPolynomial ι ℝ)) =
       (c ^ m * (n.choose m : ℝ)) • (A * x ^ m * y ^ (n - m)) := by

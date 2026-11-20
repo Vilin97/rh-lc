@@ -26,7 +26,8 @@ theorem colMatrix_transform {K : Type*} [Field K] {n : ℕ} (σ : K →+* ℂ) {
     (u : ι → Fin n → K) (P : Matrix ι ι K) :
     colMatrix σ (fun a => ∑ b, P b a • u b) = colMatrix σ u * P.map σ := by
   ext j a
-  simp only [colMatrix, Matrix.mul_apply, Matrix.of_apply, Matrix.map_apply, Finset.sum_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [colMatrix, Matrix.mul_apply, Matrix.of_apply, Matrix.map_apply, Finset.sum_apply,
     Pi.smul_apply, smul_eq_mul, map_sum, map_mul]
   refine Finset.sum_congr rfl fun b _ => ?_
   ring

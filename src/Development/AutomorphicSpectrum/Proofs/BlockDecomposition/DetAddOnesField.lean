@@ -51,8 +51,10 @@ theorem det_add_ones {R : Type*} [CommRing R] [IsDomain R] {n : ℕ}
     ext i j
     simp
   rw [hsum, ← hdet, ← hdet, hadj] at h
-  rw [h, map_add, map_sum]
-  simp [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h, map_add, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum]
 
 theorem entry (n : ℕ) (l : Fin n → ℂ) (a b : Fin n) :
     ((Polynomial.X : Polynomial ℂ) • (1 : Matrix (Fin n) (Fin n) (Polynomial ℂ)) +

@@ -54,7 +54,8 @@ theorem repr_mem_of_coeff {ι : Type} [Fintype ι] {n : ℕ} (lam : ι → Forma
       rw [val_eq_sum_repr, coeff_sum]; simp [c]
     have e2 : φ (AddMonoidAlgebra.coeff v.1 m) = AddMonoidAlgebra.coeff v.1 m := hφ1 ⟨_, RingHom.mem_fieldRange.2 (h m)⟩
     have e3 : φ (AddMonoidAlgebra.coeff v.1 m) = ∑ b, φ (c b) * AddMonoidAlgebra.coeff (bVVfun ℂ lam b) m := by
-      rw [e1, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [e1, map_sum]
       refine Finset.sum_congr rfl fun b _ => ?_
       have : c b * AddMonoidAlgebra.coeff (bVVfun ℂ lam b) m = (⟨_, hK b m⟩ : K') • c b := by
         rw [Subfield.smul_def, smul_eq_mul, mul_comm]
@@ -78,9 +79,11 @@ theorem coeff_map_mem {ι : Type} [Fintype ι] {n n' : ℕ} {σ : ι → Formali
   refine coeff_mem_of_repr σ' κ _ (fun a => ?_) m
   have e : f v = ∑ b, (bVV ℂ σ).repr v b • f (bVV ℂ σ b) := by
     conv_lhs => rw [← (bVV ℂ σ).sum_repr v]
-    simp only [map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul]
   rw [e]
-  simp only [map_sum, map_smul, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.smul_apply, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.smul_apply, smul_eq_mul]
   rw [← RingHom.coe_fieldRange]
   refine Subfield.sum_mem _ fun b _ => ?_
   exact Subfield.mul_mem _ (RingHom.mem_fieldRange.2 (repr_mem_of_coeff σ κ v hv b)) (RingHom.mem_fieldRange.2 (hf a b))

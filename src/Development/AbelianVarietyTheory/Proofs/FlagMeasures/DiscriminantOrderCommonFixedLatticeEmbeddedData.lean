@@ -111,7 +111,8 @@ theorem det_one_sub_le {K U : Type} [Field K] [StarRing K] [AddCommGroup U] [Mod
     have h1 : u b - η (u b) = ∑ c, A c b • u c := by
       simp only [hA, LinearMap.toMatrix_apply]
       exact (u.sum_repr _).symm
-    simp only [bEta, Matrix.of_apply, h1, map_sum, map_smulₛₗ, Matrix.mul_apply, Matrix.transpose_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [bEta, Matrix.of_apply, h1, map_sum, map_smulₛₗ, Matrix.mul_apply, Matrix.transpose_apply,
       Matrix.conjTranspose_apply, hG, smul_eq_mul]
     refine Finset.sum_congr rfl fun c _ => ?_
     rw [mul_comm]; rfl
@@ -121,7 +122,8 @@ theorem det_one_sub_le {K U : Type} [Field K] [StarRing K] [AddCommGroup U] [Mod
     have h1 : ∀ b, h (∑ a, v a • u a) (u b) = 0 := by
       intro b
       have := congrFun hvG b
-      simpa [Matrix.vecMul, dotProduct, hG, map_sum] using this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa [Matrix.vecMul, dotProduct, hG, map_sum] using this
     have h2 : h (∑ a, v a • u a) = 0 := u.ext fun b => h1 b
     have h3 : (∑ a, v a • u a) = 0 := by
       by_contra hne

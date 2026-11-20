@@ -312,7 +312,8 @@ theorem TypeVec.up {V W : Type} [AddCommGroup V] [Module ℂ V] [AddCommGroup W]
   let x' : S.toSubmodule := ∑ u ∈ O, u
   have hx'fix : ∀ k ∈ KOne F n, ρS k x' = x' := by
     intro k hk
-    simp only [x', map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [x', map_sum]
     refine Finset.sum_nbij' (fun u => ρS k u) (fun u => ρS k⁻¹ u) ?_ ?_ ?_ ?_ (fun _ _ => rfl)
     · intro u hu
       obtain ⟨g, hg, rfl⟩ := (hmemO u).1 hu
@@ -327,7 +328,8 @@ theorem TypeVec.up {V W : Type} [AddCommGroup V] [Module ℂ V] [AddCommGroup W]
       change (ρS k * ρS k⁻¹) u = u
       rw [← map_mul, mul_inv_cancel, map_one, Module.End.one_apply]
   have hfx' : f x' = (O.card : ℂ) • y := by
-    simp only [x', map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [x', map_sum]
     have : ∀ u ∈ O, f u = y := by
       intro u hu
       obtain ⟨g, hg, rfl⟩ := (hmemO u).1 hu
@@ -347,7 +349,8 @@ theorem TypeVec.up {V W : Type} [AddCommGroup V] [Module ℂ V] [AddCommGroup W]
       rw [Submodule.coe_sum]
       rfl
     have hfT : f T = (O.card : ℂ) • z.coeff.sum fun g c => c • τ (ℓ g) y := by
-      simp only [T, Finsupp.sum, map_sum, map_smul, f.isIntertwining, hfx', Finset.smul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [T, Finsupp.sum, map_sum, map_smul, f.isIntertwining, hfx', Finset.smul_sum]
       refine Finset.sum_congr rfl fun g _ => ?_
       rw [f.isIntertwining, hfx', map_smul]
       exact smul_comm _ _ _
@@ -457,7 +460,8 @@ theorem TypeVec.factor {α : Type} [Fintype α] [DecidableEq α] {m : α → Typ
     apply hq
     rw [← hcoord]
     have : Φ w = z.coeff.sum fun g c => c • ρ a (ℓ g) (Φ y) := by
-      simp only [hw, Finsupp.sum, map_sum, map_smul, hequiv]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hw, Finsupp.sum, map_sum, map_smul, hequiv]
     rw [this, h0, map_zero]
 
 end Local
@@ -477,7 +481,8 @@ theorem exists_eigen_of_map {G V Y : Type} [Group G] [Finite G] [AddCommGroup V]
   · intro hP
     apply hw
     have hΛ : Λ (∑ x : H, ((ψ x : ℂ))⁻¹ • ρ x w) = (Fintype.card H : ℂ) • Λ w := by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       have : ∀ x : H, Λ (((ψ x : ℂ))⁻¹ • ρ x w) = Λ w := by
         intro x
         rw [map_smul, h x x.2, smul_smul, inv_mul_cancel₀ (Units.ne_zero _), one_smul]
@@ -486,7 +491,8 @@ theorem exists_eigen_of_map {G V Y : Type} [Group G] [Finite G] [AddCommGroup V]
     rw [hP, map_zero] at hΛ
     exact (smul_eq_zero.1 hΛ.symm).resolve_left (Nat.cast_ne_zero.2 Fintype.card_ne_zero)
   · intro y hy
-    rw [map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.smul_sum]
     refine Fintype.sum_equiv (Equiv.mulLeft (⟨y, hy⟩ : H)) _ _ ?_
     intro x
     simp only [Equiv.coe_mulLeft, Subgroup.coe_mul, map_mul, Units.val_mul, map_smul,

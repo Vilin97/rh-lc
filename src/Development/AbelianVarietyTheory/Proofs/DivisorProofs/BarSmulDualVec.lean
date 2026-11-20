@@ -122,7 +122,8 @@ theorem bar_smul_dualVec {n m : ℕ} (e : m = n) (b : Module.Basis (Fin n) ℤ D
     Dw.unimod.1 (b.ext fun i => neg_injective (by
       rw [LinearMap.IsAlt.neg Dw.alt, LinearMap.IsAlt.neg Dw.alt, h]))
   refine hf _ _ fun i => ?_
-  rw [← Dw.adj, EF_dualVec, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Dw.adj, EF_dualVec, map_sum]
   simp [EF_dualVec, actMat_apply, Finsupp.single_apply]
 
 end Lattice
@@ -142,7 +143,8 @@ theorem ringAct (hM : MapSt) : RingActSt := by
         ∑ i, actMat b a j i • tateMap GG GG.dual A pol.hom (τ _)
       rw [← tateMap_comp, ← h1, tateMap_comp, ← hP.lin]
       erw [bar_smul_dualVec rfl b a j]
-      simp only [map_sum, map_zsmul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_zsmul]
       rfl
     refine (tateMap_bcChar S.R _ _).trans ?_
     rw [h2]
@@ -153,14 +155,16 @@ theorem ringAct (hM : MapSt) : RingActSt := by
     change tateMap _ _ S.R _ (bcTate S.R _) = ∑ k, actMat b a k i • bcTateHom S.R GG ((ct hP rfl b).t k)
     rw [tateMap_bcTate, h0, ← hP.lin, smul_basis]
     change bcTateHom S.R GG _ = _
-    simp only [map_sum, map_zsmul, h0]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_zsmul, h0]
   have hbij := omegaMap_polBC_bijective S.R pol
   refine (hM p D S S _ _ _ _ A A (RingHom.id A) _ o rfl rfl π π γ γ Lie Om Lie Om _ _ _ _ C C
     (toSelf _ ≫ PDivGroup.baseChangeMap S.R (act a : GG ⟶ GG)) (actMat b a) l m hOf hOf (fun _ => rfl) (fun _ => rfl)
     (fun j => ?_) (fun y j => ?_) fun w x hx => ?_).1
   · rw [dualHom_comp, tateMap_comp]
     erw [ht' j]
-    simp only [map_sum, map_zsmul, tateMap_toSelf]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_zsmul, tateMap_toSelf]
     rfl
   · have h1 : ∀ v, eL (1 ⊗ₜ l y) v = eL (1 ⊗ₜ y) (omegaMap _ _ (PDivGroup.baseChangeMap S.R (act a : GG ⟶ GG)) v) := fun v => by
       obtain ⟨v, rfl⟩ := hbij.2 v
@@ -173,7 +177,8 @@ theorem ringAct (hM : MapSt) : RingActSt := by
         rw [hO, hL, hl, ← hL, hm', toBase_omegaMap]
     rw [ConstTate.alDual_apply, h1, ← dlog_tateMap]
     erw [ht' j]
-    simp [mv, Matrix.mulVec, dotProduct, map_sum, map_zsmul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [mv, Matrix.mulVec, dotProduct, map_sum, map_zsmul]
   · have h1 : eO (1 ⊗ₜ m w) = omegaDualMap _ _ (PDivGroup.baseChangeMap S.R (act a : GG ⟶ GG)) (eO (1 ⊗ₜ w)) := by
       have h2 := hP.adj (H.bar a)
       rw [bar_bar] at h2
@@ -181,7 +186,8 @@ theorem ringAct (hM : MapSt) : RingActSt := by
       rw [hO, hm, toBase_omegaMap, ← hO, omegaDualMap_apply, ← LinearMap.comp_apply, ← LinearMap.comp_apply,
         ← omegaMap_comp, ← omegaMap_comp, polBC_adj S.R pol _ _ h2]
     rw [h1, ← map_smul, hx]
-    simp only [ConstTate.al_apply, map_sum, map_smul, ← hodgeTate_tateMap, ht, map_zsmul, Finset.smul_sum, mv,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [ConstTate.al_apply, map_sum, map_smul, ← hodgeTate_tateMap, ht, map_zsmul, Finset.smul_sum, mv,
       Matrix.mulVec, dotProduct, Finset.sum_smul, Matrix.map_apply]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun i _ => ?_

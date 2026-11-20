@@ -60,7 +60,8 @@ theorem UpperTheory.V.AlgebraTools.lag_coi :
         simp only [hLe, Finset.sum_ite_eq', Finset.mem_univ, if_true, sub_self]
     obtain ⟨g, hg⟩ := h1
     have h2 := congrArg (aeval P) hg
-    rw [map_mul, hm, zero_mul, map_sub, map_one, map_sum, sub_eq_zero] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_mul, hm, zero_mul, map_sub, map_one, map_sum, sub_eq_zero] at h2
     simp only [hL]
     exact h2.symm
   refine ⟨⟨⟨fun i => ?_, fun i j hij => ?_⟩, hsum⟩, hP, hq, hcomm⟩

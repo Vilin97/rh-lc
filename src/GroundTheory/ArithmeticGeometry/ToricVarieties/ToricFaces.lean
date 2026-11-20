@@ -82,7 +82,8 @@ theorem exists_separating_rational {σ σ' : PointedCone ℝ (ℝ ⊗[ℤ] N)}
       · simpa using h2 _ (subset_hull (Finset.mem_coe.2 (Finset.mem_image_of_mem _ hn')))
   obtain ⟨hu1, hu2, hE1, hE2⟩ := separation_of_generators SR SR' TR hT h h'
   have hsum : (∑ t ∈ TR, t) = toRealDual N (∑ t ∈ TM, t) := by
-    rw [hTR, Finset.sum_image (fun x _ y _ hxy => toRealDual_injective hxy), map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hTR, Finset.sum_image (fun x _ y _ hxy => toRealDual_injective hxy), map_sum]
   rw [hsum] at hu1 hu2 hE1 hE2
   exact ⟨∑ t ∈ TM, t, mem_dualMonoid.2 hu1, mem_dualMonoid.2 fun x hx => by simpa using hu2 x hx,
     hE1, hE2⟩

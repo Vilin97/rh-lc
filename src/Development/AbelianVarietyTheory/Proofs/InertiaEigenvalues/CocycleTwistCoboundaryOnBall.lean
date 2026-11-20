@@ -201,7 +201,8 @@ theorem tw_mul (ha : IsActC act) (hU : Frame χ K m U g) {σ τ : GQ l} (hσ : �
   have hv : (fun a => act σ (twAct act χ i U τ x a))
       = chiC χ i τ • (U τ).mulVec (fun b => act σ (act τ (x b))) := by
     funext a
-    simp only [twAct, Pi.smul_apply, smul_eq_mul, Matrix.mulVec, dotProduct, map_mul, map_sum, hfix, hc]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [twAct, Pi.smul_apply, smul_eq_mul, Matrix.mulVec, dotProduct, map_mul, map_sum, hfix, hc]
   have hστ : (fun b => act (σ * τ) (x b)) = fun b => act σ (act τ (x b)) := by
     funext b
     rw [map_mul]

@@ -112,7 +112,8 @@ theorem cw_rest (w : HeightOneSpectrum (𝓞 E)) (T : Finset (Pl F)) :
 theorem idem_eq_sum (v : Pl F) : (io (idem F v) : AE F E) = ∑ w ∈ Formalism.L2.Host.aboveF (L := E) F v, ew F w + 0 := by
   classical
   refine ae_ext (by rw [inf_io rfl, add_zero, map_sum, Finset.sum_eq_zero fun w _ => inf_ew w]) fun u => ?_
-  rw [add_zero, map_sum, cw_idem]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [add_zero, map_sum, cw_idem]
   simp only [cw_ew, Finset.sum_ite_eq, mem_aboveF]
 
 abbrev PI (a : AE F E) : (AE F E)ˣ →* (AE F E)ˣ := unitP (R := AE F E) a

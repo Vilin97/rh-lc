@@ -102,7 +102,8 @@ theorem end_ext (hF : IsFrame h δ e f W) {A B : Module.End L V} (he : ∀ i, A 
     (hf : ∀ i, A (f i) = B (f i)) (hw : ∀ w ∈ W, A w = B w) : A = B := by
   ext x
   obtain ⟨a, b, w, hwW, rfl⟩ := hF.2.2.2.2.2 x
-  simp [map_add, map_sum, he, hf, hw w hwW]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_add, map_sum, he, hf, hw w hwW]
 
 theorem isPieces_piece (hh : IsHerm s h) (hδ : δ ≠ 0) (hF : IsFrame h δ e f W) :
     IsPieces (piece hh δ e f) := by
@@ -159,16 +160,19 @@ theorem piece_mem {Λ : AddSubgroup V} (hΛ : IsLat L Λ) (hA : IsAdapted h e f 
   obtain ⟨ha, hb, hww⟩ := (hA a b w hw).1 hx
   rcases i with _ | i | i
   · have : piece hh δ e f none (∑ i, a i • e i + ∑ i, b i • f i + w) = w := by
-      simp [map_add, map_sum, piece_e hh hδ hF, piece_f hh hδ hF, piece_w hh hF _ hw]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [map_add, map_sum, piece_e hh hδ hF, piece_f hh hδ hF, piece_w hh hF _ hw]
     rw [this]
     have := (hA 0 0 w hw).2 ⟨fun i => by simp, fun i => by simp, hww⟩
     simpa using this
   · have : piece hh δ e f (some (Sum.inl i)) (∑ i, a i • e i + ∑ i, b i • f i + w) = a i • e i := by
-      simp [map_add, map_sum, piece_e hh hδ hF, piece_f hh hδ hF, piece_w hh hF _ hw]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [map_add, map_sum, piece_e hh hδ hF, piece_f hh hδ hF, piece_w hh hF _ hw]
     rw [this]
     exact lat_smul hΛ (by simpa using ha i) (e_mem hA hh i)
   · have : piece hh δ e f (some (Sum.inr i)) (∑ i, a i • e i + ∑ i, b i • f i + w) = b i • f i := by
-      simp [map_add, map_sum, piece_e hh hδ hF, piece_f hh hδ hF, piece_w hh hF _ hw]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [map_add, map_sum, piece_e hh hδ hF, piece_f hh hδ hF, piece_w hh hF _ hw]
     rw [this]
     exact lat_smul hΛ (by simpa using hb i) (f_mem hA hh i)
 

@@ -274,7 +274,8 @@ theorem isSq_sub [IsLocallyNoetherian X] (hC : Published.ArCalc) (hX : IsArithVa
     exact finsum_eq_zero_of_forall_eq_zero hloc
   have e₃ : Ψ (MvPolynomial.X none * ((MvPolynomial.X (some 0) - MvPolynomial.X (some 1)) *
       MvPolynomial.X (some 2) ^ d)) = -∑ t, c t * (slide L L' N t).archInt P (d + 1) hr := by
-    rw [← hc.pow, Finset.mul_sum, map_sum, ← zero_sub, ← e₂, ← Finset.sum_sub_distrib]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hc.pow, Finset.mul_sum, map_sum, ← zero_sub, ← e₂, ← Finset.sum_sub_distrib]
     refine Finset.sum_congr rfl fun t _ => ?_
     rw [mul_smul_comm, map_smul, smul_eq_mul, ← mul_sub, ← (hmix t).2]
     congr 4
@@ -813,7 +814,8 @@ theorem compare_of_adjacent : GlobalTheory.Published.ArCalc → ∀ (k : Type) [
   have sq (j : κ) : IsSq d (comb L n) (L j) (Φ (MvPolynomial.X j ^ 2 * lin (fun j => (n j : ℝ)) ^ d)) := by
     convert isSq_of_comb hC hX hΦ (isometric_comb_single L j) (.refl (comb L n)) using 4
     simp [lin, Pi.single_apply, apply_ite]
-  rw [← sum_eq H hC hX hG ha (fun i => (sq _).congr hC hX (hx i)) fun i => (sq _).congr hC hX (hx' i), sub_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← sum_eq H hC hX hG ha (fun i => (sq _).congr hC hX (hx i)) fun i => (sq _).congr hC hX (hx' i), sub_mul,
     map_sub, Finset.sum_mul, Finset.sum_mul, map_sum, map_sum]
 
 end GlobalTheory.AdjMix

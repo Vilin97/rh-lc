@@ -62,16 +62,20 @@ theorem quadratic_column_derivative : QuadColDerivSt := by
   intro k _ d n β
   classical
   refine ⟨?_, ?_, ?_⟩
-  · simp [quadCol, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp [quadCol, map_sum]
   · intro u b
-    simp only [dAdd, quadCol, map_sum, pderiv_C_mul_X_mul_X, pderiv_C_mul', map_add, map_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [dAdd, quadCol, map_sum, pderiv_C_mul_X_mul_X, pderiv_C_mul', map_add, map_mul,
       MvPowerSeries.constantCoeff_X, mul_zero, add_zero, Finset.sum_const_zero]
   · intro u v b b'
 
-    simp only [dAdd, quadCol, map_sum, pderiv_C_mul_X_mul_X, pderiv_C_mul', map_add, Finset.mul_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [dAdd, quadCol, map_sum, pderiv_C_mul_X_mul_X, pderiv_C_mul', map_add, Finset.mul_sum,
       mul_add, pderiv_X_eq_C_ite]
     simp only [← mul_assoc, ← map_mul]
-    simp only [← map_add, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [← map_add, ← map_sum]
     congr 1
     rw [← sum_quadratic_column_indicator_eq_dotProduct_mulVec β u v b b']
     refine Finset.sum_congr rfl fun x _ => Finset.sum_congr rfl fun y _ =>

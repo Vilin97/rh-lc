@@ -32,7 +32,8 @@ theorem norm_fderiv_chart_le : ∀ (E : Type) [Field E] [NumberField E] [IsTotal
     intro X h
     have e : lieD X φ.1 h = ∑ i, ((lieBasis E a).coord i X) • lieD (lieBasis E a i) φ.1 h := by
       conv_lhs => rw [← sum_lieCoord X]
-      simp only [lieD, map_sum, map_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [lieD, map_sum, map_smul]
     rw [e, hDdef, Finset.sum_mul]
     refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun i _ => ?_)
     rw [norm_smul]

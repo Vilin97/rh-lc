@@ -147,7 +147,8 @@ theorem aeval_swapSum {S : Type*} [CommRing S] [Algebra ℝ S] (d : ℕ) (a b : 
   rw [Polynomial.eval₂_eq_sum_range' _ (swapPow_natDegree_lt a b (d + 2))] at h1
   have h2 : aeval x (swapSum d a b) = (algebraMap ℝ S a * x 0 + algebraMap ℝ S b * x 1 + x 2) ^ (d + 2) +
       (algebraMap ℝ S b * x 0 + algebraMap ℝ S a * x 1 + x 2) ^ (d + 2) := by
-    simp only [swapSum, lin, map_add, map_pow, map_sum, map_mul, aeval_C, aeval_X, Fin.sum_univ_three,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [swapSum, lin, map_add, map_pow, map_sum, map_mul, aeval_C, aeval_X, Fin.sum_univ_three,
       Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, Matrix.head_cons, Matrix.tail_cons, map_one, one_mul]
   rw [h2, ← h1]
   exact Finset.sum_congr rfl fun i _ => mul_comm _ _
@@ -214,7 +215,8 @@ theorem aeval_fibPoly (m : ℕ) (a b : ℝ) :
     ring
   simp_rw [hI]
   rw [intervalIntegral.integral_finsetSum fun j _ => by apply Continuous.intervalIntegrable; fun_prop]
-  simp only [fibPoly, map_sum, map_mul, map_pow, aeval_C, aeval_X, Matrix.cons_val_zero, Matrix.cons_val_one,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [fibPoly, map_sum, map_mul, map_pow, aeval_C, aeval_X, Matrix.cons_val_zero, Matrix.cons_val_one,
     Matrix.head_cons, Algebra.algebraMap_self, RingHom.id_apply]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [intervalIntegral.integral_const_mul]
@@ -222,7 +224,8 @@ theorem aeval_fibPoly (m : ℕ) (a b : ℝ) :
 
 theorem fibPoly_aeval_isHomogeneous (m : ℕ) :
     (aeval ![X 0 + X 1, X 0 * X 1] (fibPoly m) : MvPolynomial (Fin 3) ℝ).IsHomogeneous (2 * m) := by
-  simp only [fibPoly, map_sum, map_mul, map_pow, aeval_C, aeval_X, Matrix.cons_val_zero, Matrix.cons_val_one,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [fibPoly, map_sum, map_mul, map_pow, aeval_C, aeval_X, Matrix.cons_val_zero, Matrix.cons_val_one,
     Matrix.head_cons, algebraMap_eq]
   refine IsHomogeneous.sum _ _ _ fun j hj => ?_
   have hj := Finset.mem_range.1 hj
@@ -284,7 +287,8 @@ theorem sum_monomial_coeffs_swap (d : ℕ) (a b : ℤ) : upperParabolic (idx d) 
 theorem dvd_downP_sub_baseT (d : ℕ) (R : ℕ → MvPolynomial (Fin 2) ℝ) :
     (X 3 - X 1 * X 2 : MvPolynomial (Fin 4) ℝ) ∣
       downP (idx d) expo (coefW R) - aeval ![X 1 + X 2, X 3, X 0] (baseT d R) := by
-  rw [downP, baseT, map_sum, ← Finset.sum_sub_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [downP, baseT, map_sum, ← Finset.sum_sub_distrib]
   refine Finset.dvd_sum fun x _ => ?_
   simp only [coefW, map_mul, map_pow, aeval_aeval_two, map_add, aeval_X, Matrix.cons_val_zero, Matrix.cons_val_one,
     Matrix.cons_val_two, Matrix.head_cons, Matrix.tail_cons]
@@ -294,7 +298,8 @@ theorem dvd_downP_sub_baseT (d : ℕ) (R : ℕ → MvPolynomial (Fin 2) ℝ) :
 
 theorem pm_aeval_isHomogeneous (m : ℕ) :
     (aeval ![X 0 + X 1, X 0 * X 1] (pm m) : MvPolynomial (Fin 3) ℝ).IsHomogeneous (2 * m) := by
-  rw [pm, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [pm, map_sum]
   refine IsHomogeneous.sum _ _ _ fun j hj => ?_
   have hj := Finset.mem_range.1 hj
   have h0 := isHomogeneous_X ℝ (0 : Fin 3)
@@ -313,7 +318,8 @@ theorem baseT_aeval_isHomogeneous (d : ℕ) (a b : ℤ) :
     (aeval ![X 0 + X 1, X 0 * X 1, X 2] (baseT d (swapR d a b)) : MvPolynomial (Fin 3) ℝ).IsHomogeneous d := by
   have h0 := isHomogeneous_X ℝ (0 : Fin 3)
   have h1 := isHomogeneous_X ℝ (1 : Fin 3)
-  rw [baseT, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [baseT, map_sum]
   refine IsHomogeneous.sum _ _ _ fun x hx => ?_
   have hk : x.2 < x.1 := (Finset.mem_filter.1 hx).2
   simp only [map_mul, map_pow, aeval_aeval_two, aeval_X, Matrix.cons_val_zero, Matrix.cons_val_one,

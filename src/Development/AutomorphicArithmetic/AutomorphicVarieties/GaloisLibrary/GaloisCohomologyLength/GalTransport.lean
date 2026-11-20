@@ -46,7 +46,8 @@ theorem UpperTheory.V.LDataCardLeFinrank.galTransport :
     rw [AlgEquiv.smul_def]
     have hs := congrArg (fun z : E => (z : Ω)) (b.sum_repr ⟨y, hy⟩)
     simp only [IntermediateField.coe_sum, IntermediateField.coe_smul] at hs
-    rw [← hs, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hs, map_sum]
     simp [map_smul, hb]
   · intro l _ g
     haveI : CharZero Ω := charZero_of_injective_algebraMap (algebraMap F Ω).injective

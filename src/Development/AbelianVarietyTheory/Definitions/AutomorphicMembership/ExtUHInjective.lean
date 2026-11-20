@@ -633,7 +633,8 @@ theorem valC_fd {n : ℕ} (emb : ι → E →+* K) (σ : K →+* ℂ) (lam : ι 
       Submodule.span ℂ (Set.range fun i => evV emb (1 : Matrix (Fin n) (Fin n) E) lam σ (bVV K lam i)) := by
     rw [Submodule.span_le]
     rintro _ ⟨v, rfl⟩
-    rw [SetLike.mem_coe, ← (bVV K lam).sum_repr v, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [SetLike.mem_coe, ← (bVV K lam).sum_repr v, map_sum]
     refine Submodule.sum_mem _ fun i _ => ?_
     rw [LinearMap.map_smulₛₗ]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)

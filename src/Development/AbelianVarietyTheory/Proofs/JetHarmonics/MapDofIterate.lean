@@ -32,7 +32,8 @@ theorem map_ev_axis {d : ℕ} (g : PS R 2 d) :
 theorem map_Dof {d : ℕ} (F : Fin d → PS R 2 d) (u : Fin d → R) (f : PS R 1 d) :
     MvPowerSeries.map φ (Dof F u f) =
       Dof (fun i => MvPowerSeries.map φ (F i)) (fun i => φ (u i)) (MvPowerSeries.map φ f) := by
-  simp only [Dof, map_sum, map_mul, map_C, map_ev_axis, map_pderiv]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Dof, map_sum, map_mul, map_C, map_ev_axis, map_pderiv]
 
 theorem map_Dof_iterate {d : ℕ} (F : Fin d → PS R 2 d) (u : Fin d → R) (n : ℕ) (f : PS R 1 d) :
     MvPowerSeries.map φ ((Dof F u)^[n] f) =

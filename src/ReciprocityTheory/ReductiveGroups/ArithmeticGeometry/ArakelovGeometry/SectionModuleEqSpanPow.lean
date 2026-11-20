@@ -44,7 +44,8 @@ private theorem coneMap_of_isHomogeneous (y : κ → Ω) {p : MvPolynomial κ �
     (hp : p.IsHomogeneous n) : coneMap ℤ y p = C (MvPolynomial.aeval y p) * X ^ n := by
   conv_lhs => rw [p.as_sum]
   conv_rhs => rw [p.as_sum]
-  rw [map_sum, map_sum, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun d hd => ?_
   have hdeg : d.degree = n := by
     have := hp (MvPolynomial.mem_support_iff.mp hd)
@@ -56,7 +57,8 @@ private theorem coneMap_of_isHomogeneous (y : κ → Ω) {p : MvPolynomial κ �
 
 private theorem coeff_coneMap_mem (y : κ → Ω) (p : MvPolynomial κ ℤ) (N : ℕ) :
     (coneMap ℤ y p).coeff N ∈ sec ℤ y N := by
-  rw [← MvPolynomial.sum_homogeneousComponent p, map_sum, Polynomial.finsetSum_coeff]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← MvPolynomial.sum_homogeneousComponent p, map_sum, Polynomial.finsetSum_coeff]
   refine Submodule.sum_mem _ fun k _ => ?_
   rw [coneMap_of_isHomogeneous y (MvPolynomial.homogeneousComponent_isHomogeneous k p),
     Polynomial.coeff_C_mul_X_pow]
@@ -105,7 +107,8 @@ private theorem sec_le_of_monomial (x : κ → Ω) (n : ℕ) (P : Submodule ℤ 
     sec ℤ x n ≤ P := by
   rintro z ⟨p, hp, rfl⟩
   show MvPolynomial.aeval x p ∈ P
-  rw [p.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [p.as_sum, map_sum]
   refine Submodule.sum_mem _ fun d hd => ?_
   have hdeg : d.degree = n := by
     rw [Finsupp.degree_eq_weight_one]; exact hp (MvPolynomial.mem_support_iff.mp hd)

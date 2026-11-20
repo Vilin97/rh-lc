@@ -79,10 +79,12 @@ theorem ker_chartEval (x : Cone n (AlgebraicClosure ℚ)) (c : (k : ι) → Fin 
           rw [← map_one (Ideal.Quotient.mk J), Ideal.Quotient.eq]
           exact Ideal.subset_span ⟨k, rfl⟩
         rw [map_pow, hk, one_pow]
-      rw [← Ideal.Quotient.eq, hF, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← Ideal.Quotient.eq, hF, map_sum]
       simp only [map_mul, h1, mul_one]
       conv_lhs => rw [← sum_compDegs f]
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
     have hFP : F ∈ orbitIdeal x := by
       have hhom : IsWeightedHomogeneous (coordDeg n) F N := by
         have : F ∈ weightedHomogeneousSubmodule ℤ (coordDeg n) N := by
@@ -112,16 +114,19 @@ theorem ker_chartEval (x : Cone n (AlgebraicClosure ℚ)) (c : (k : ι) → Fin 
         rw [hy]
         rw [hs]
         ring
-      rw [hF, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hF, map_sum]
       refine (Finset.sum_congr rfl hterm).trans ?_
-      rw [← Finset.mul_sum, ← map_sum, sum_compDegs, show aeval z f = 0 from hf, mul_zero]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← Finset.mul_sum, ← map_sum, sum_compDegs, show aeval z f = 0 from hf, mul_zero]
     have : f = F + (f - F) := by ring
     rw [this]
     exact Ideal.add_mem _ (Ideal.mem_sup_left hFP) (Ideal.mem_sup_right hFJ)
   · refine sup_le (fun f hf ↦ ?_) (Ideal.span_le.mpr ?_)
     · rw [mem_ker_chartEval_iff]
       rw [orbitIdeal, mem_mCoordIdeal_iff] at hf
-      rw [← sum_compDegs f, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← sum_compDegs f, map_sum]
       refine Finset.sum_eq_zero fun m _ ↦ ?_
       have hs := aeval_blockScale_of_isWeightedHomogeneous (fun k ↦ (x k (c k))⁻¹) (flatCone x)
         (weightedHomogeneousComponent_isWeightedHomogeneous m f)

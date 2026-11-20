@@ -113,14 +113,16 @@ theorem SmallFormsFinite.proof : SmallFormsFinite.Statement := by
   rintro σ ⟨hσ, hsmall⟩
   set n : Fin r → ℤ := fun i => b.repr ⟨σ, hσ⟩ i
   have hσn : aeval y (∑ i, n i • g i) = σ := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp_rw [map_zsmul, hgy]
     have := congrArg Subtype.val (b.sum_repr ⟨σ, hσ⟩)
     rw [Submodule.coe_sum] at this
     simpa only [Submodule.coe_smul] using this
   have hb := hbox n fun z hz => by
     have := hsmall _ (hsum n) hσn z hz
-    simpa [G, map_sum, zsmul_eq_mul] using this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [G, map_sum, zsmul_eq_mul] using this
   refine ⟨n, fun i _ => ?_, by simpa [map_sum] using hσn⟩
   have := abs_le.mp (hb i)
   constructor

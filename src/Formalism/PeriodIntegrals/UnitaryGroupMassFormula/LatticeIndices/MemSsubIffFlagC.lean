@@ -110,17 +110,21 @@ private theorem mem_span_image_iff_pr1_pr2_mem_span {ι : Type} [Fintype ι] (s 
   constructor
   · rintro ⟨c, rfl⟩
     refine ⟨⟨fun i => (θ (c i)).1, ?_⟩, ⟨fun i => (θ (c i)).2, ?_⟩⟩
-    · rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [map_sum]
       simp only [h1]
-    · rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [map_sum]
       simp only [h2]
   · rintro ⟨⟨a, ha⟩, ⟨b, hb⟩⟩
     refine ⟨fun i => θ.symm (a i, b i), ?_⟩
     apply hinj
-    · rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [map_sum]
       simp only [h1, AlgEquiv.apply_symm_apply]
       exact ha
-    · rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [map_sum]
       simp only [h2, AlgEquiv.apply_symm_apply]
       exact hb
 
@@ -128,14 +132,16 @@ private theorem pr1_lin_eq_cmp1_mulVec (g : HA R σ J) (v : Fin n → R ⊗[F] E
     pr1 θ (lin R σ J g v) = cmp1 σ J θ g *ᵥ pr1 θ v := by
   have hp : ∀ (w : Fin n → R ⊗[F] E) (k : Fin n), pr1 θ w k = (θ (w k)).1 := fun _ _ => rfl
   funext i
-  simp only [hp, lin, Matrix.mulVecLin_apply, Matrix.mulVec, dotProduct, cmp1, Matrix.map_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hp, lin, Matrix.mulVecLin_apply, Matrix.mulVec, dotProduct, cmp1, Matrix.map_apply,
     map_sum, Prod.fst_sum, map_mul, Prod.fst_mul]
 
 private theorem pr2_lin_eq_cmp2_mulVec (g : HA R σ J) (v : Fin n → R ⊗[F] E) :
     pr2 θ (lin R σ J g v) = cmp2 σ J θ g *ᵥ pr2 θ v := by
   have hp : ∀ (w : Fin n → R ⊗[F] E) (k : Fin n), pr2 θ w k = (θ (w k)).2 := fun _ _ => rfl
   funext i
-  simp only [hp, lin, Matrix.mulVecLin_apply, Matrix.mulVec, dotProduct, cmp2, Matrix.map_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hp, lin, Matrix.mulVecLin_apply, Matrix.mulVec, dotProduct, cmp2, Matrix.map_apply,
     map_sum, Prod.snd_sum, map_mul, Prod.snd_mul]
 
 theorem mem_Ssub_iff_flagC {r : ℕ} (P : Frame E n r) (g : HA R σ J) :

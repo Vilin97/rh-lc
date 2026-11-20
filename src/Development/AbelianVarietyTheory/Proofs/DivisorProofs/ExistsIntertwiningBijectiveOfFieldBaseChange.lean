@@ -45,7 +45,8 @@ theorem IsExtension.exists_basis {a : V →ₛₗ[algebraMap K F] V'} (h : IsExt
     refine (Module.forall_dual_apply_eq_zero_iff K (g i)).1 fun ℓ => ?_
     obtain ⟨Λ, hΛ⟩ := h.coord ℓ
     have := congrArg Λ hg
-    rw [map_sum, map_zero] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero] at this
     simp only [hΛ _ _] at this
     exact linearIndependent_iff'.1 v.linearIndependent s (fun j => ℓ (g j)) this i hi
   have sp : ⊤ ≤ Submodule.span F (Set.range fun i => a (v i)) := by
@@ -99,7 +100,8 @@ theorem exists_intertwining_bijective_of_extension (K F : Type) [Field K] [Field
     have : E (v j) = ∑ k, ℓ (w'.repr (E' (v' j)) k) • w k := by
       show Λ (E' (iV (v j))) = _
       rw [← hv']
-      conv_lhs => rw [← w'.sum_repr (E' (v' j)), map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        conv_lhs => rw [← w'.sum_repr (E' (v' j)), map_sum]
       simp only [hw', hΛ _ _]
     rw [this, w.repr_sum_self]
   refine ⟨E, ?_, fun i x => ?_⟩

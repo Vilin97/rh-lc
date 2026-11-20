@@ -140,7 +140,8 @@ theorem qminor_trn (L : E →L[ℂ] E') {a b : Mat k r} (ha : a ∈ GV k r) (hb 
     ∀ g ∈ GV k r, qminorOp Eop p q u (trn L a b f) g = trn L a b (qminorOp Eop' p q u f) g := by
   intro g hg
   unfold qminorOp
-  simp only [Finset.sum_apply, Pi.smul_apply, trn, map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finset.sum_apply, Pi.smul_apply, trn, map_sum, map_smul]
   refine Finset.sum_congr rfl fun σ _ => ?_
   congr 1
   have e1 : ∀ (F : Fin (2 * r + k + 1) → Fin (2 * r + k + 1) → (Mat k r → E') → (Mat k r → E')),

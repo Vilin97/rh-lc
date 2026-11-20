@@ -241,7 +241,8 @@ private theorem back_subG (inj : Function.Injective fun x : Orb × ZMod d => tau
       (subG r tau gm plc (MvPolynomial.X y)) = MvPolynomial.X y := by
     intro y
     obtain ⟨⟨α, g⟩, rfl⟩ := (eW r tau N).symm.surjective y
-    rw [subG_X, Equiv.apply_symm_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [subG_X, Equiv.apply_symm_apply, map_sum]
     simp only [map_mul, MvPolynomial.aeval_C, MvPolynomial.aeval_X, MvPolynomial.algebraMap_eq]
     have hs : ∀ col, ∑ x, MvPolynomial.C (coS hd r tau gm plc (lam r tau plc (α, col)) x) * MvPolynomial.X x
         = ∑ g', MvPolynomial.C (Mm hd r tau gm α col g') * MvPolynomial.X ((eW r tau N).symm (α, g')) :=
@@ -253,7 +254,8 @@ private theorem back_subG (inj : Function.Injective fun x : Orb × ZMod d => tau
         MvPolynomial.X ((eW r tau N).symm (α, g')) =
         MvPolynomial.C (if g' = g then (1:C) else 0) * MvPolynomial.X ((eW r tau N).symm (α, g')) := by
       intro g'
-      rw [← Finset.sum_mul, ← map_sum, ← gram_matrix_mul_right gm_hyp α g g']
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← Finset.sum_mul, ← map_sum, ← gram_matrix_mul_right gm_hyp α g g']
       simp only [mul_comm]
     simp only [hg]
     simp
@@ -662,7 +664,8 @@ private theorem pderiv_subG_lam (inj : Function.Injective fun x : Orb × ZMod d 
   have hX : ∀ y, MvPolynomial.pderiv (lam r tau plc (α0, col0)) (subG r tau gm plc (MvPolynomial.X y)) =
       if (eW r tau N y).1 = α0 then MvPolynomial.C (Gm r tau gm α0 col0 (eW r tau N y).2) else 0 := by
     intro y
-    rw [subG_X, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [subG_X, map_sum]
     simp only [MvPolynomial.pderiv_C_mul, MvPolynomial.pderiv_X, Pi.single_apply, (lam_inj plc inj).eq_iff,
       Prod.mk.injEq, mul_ite, mul_one, mul_zero]
     by_cases hy : (eW r tau N y).1 = α0
@@ -742,7 +745,8 @@ private theorem lap_plane (inj : Function.Injective fun x : Orb × ZMod d => tau
     have e1 : (⟨tau o t, a1, plc (ρ, col)⟩ : Letter T r n) = lam r tau plc ((ρ, ⟨o, ⟨t, a1⟩⟩), col) := rfl
     have e2 : (⟨tau o (t + hd), a2, plc (ρ, col)⟩ : Letter T r n) =
         lam r tau plc ((ρ, ⟨o, ⟨t + hd, a2⟩⟩), col) := rfl
-    rw [e1, e2, pderiv_subG_lam plc inj, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e1, e2, pderiv_subG_lam plc inj, map_sum]
     apply Finset.sum_congr rfl
     intro g _
     rw [MvPolynomial.pderiv_C_mul, pderiv_subG_lam plc inj, Finset.mul_sum]
@@ -759,7 +763,8 @@ private theorem lap_plane (inj : Function.Injective fun x : Orb × ZMod d => tau
   rw [Finset.sum_comm]
   apply Finset.sum_eq_zero
   intro g' _
-  rw [← Finset.sum_mul, ← map_sum, gm_hyp]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Finset.sum_mul, ← map_sum, gm_hyp]
   by_cases hgg : g = g'
   · simp [hgg]
   · rw [hD ρ g g' hgg, map_zero, mul_zero]

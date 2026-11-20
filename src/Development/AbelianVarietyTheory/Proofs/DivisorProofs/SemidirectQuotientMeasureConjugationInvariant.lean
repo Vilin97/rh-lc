@@ -71,7 +71,8 @@ theorem supMeas_sfinite_invariant : ∀ {G : Type} [Group G] [TopologicalSpace G
         exact N.inv_mem hn
     unfold supMeas; infer_instance
   · unfold supMeas
-    rw [Measure.map_sum (by fun_prop : Measurable (fun x : ↥(Q ⊔ N) => g * x)).aemeasurable]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Measure.map_sum (by fun_prop : Measurable (fun x : ↥(Q ⊔ N) => g * x)).aemeasurable]
     simp_rw [step2, ← step3]
     refine Eq.trans ?_ (Measure.sum_comp_equiv (MulAction.toPerm g : Equiv.Perm (↥(Q ⊔ N) ⧸ N.subgroupOf (Q ⊔ N))) (fun k : ↥(Q ⊔ N) ⧸ N.subgroupOf (Q ⊔ N) => νN.map
       (fun n => Subgroup.inclusion (le_sup_right : N ≤ Q ⊔ N) n * Quotient.out k)))

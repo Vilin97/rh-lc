@@ -41,7 +41,8 @@ theorem exists_corestriction_cocycle : ∀ (R G X : Type) [CommRing R] [Group G]
       exact QuotientGroup.eq.mpr (by simpa [mul_assoc] using hg)
     rw [this]
   · intro g h
-    simp only [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum]
     rw [← Equiv.sum_comp (MulAction.toPerm h)
       (fun q : G ⧸ H => ρ (g • q).out (f ((g • q).out⁻¹ * g * q.out))), ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun q _ => ?_
@@ -71,7 +72,8 @@ theorem exists_corestriction_cocycle : ∀ (R G X : Type) [CommRing R] [Group G]
     have hre : ∑ q : G ⧸ H, (f₀ q.out + ρ q.out x) =
         ∑ q : G ⧸ H, (f₀ (g • q).out + ρ (g • q).out x) :=
       (Equiv.sum_comp (MulAction.toPerm g) (fun q : G ⧸ H => f₀ q.out + ρ q.out x)).symm
-    rw [hidx, map_sum, hre, ← Finset.sum_sub_distrib, ← Finset.sum_sub_distrib,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hidx, map_sum, hre, ← Finset.sum_sub_distrib, ← Finset.sum_sub_distrib,
       ← Finset.sum_sub_distrib]
     refine Y.sum_mem fun q _ => ?_
     set s' := (g • q).out

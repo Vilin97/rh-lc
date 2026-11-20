@@ -43,7 +43,8 @@ theorem coboundary_block_zero : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (n
   have hD : M.map (ks P) *ᵥ (fun x => actSt P (g : GQ l) (β x)) =
       fun x => actSt P (g : GQ l) ((M.map (ks P) *ᵥ β) x) := by
     funext x
-    simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Matrix.map_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Matrix.map_apply]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [act_ks P g (hK x j)]
   have hC : M.map (ks P) * (ρ₀ g : Matrix (n × Fin r) (n × Fin r) ℚ_[l]).map (algebraMap ℚ_[l] (Bst P)) =

@@ -28,7 +28,8 @@ theorem map_blk (hj : k + r + 1 ≤ m) (P : Matrix (Fin (r + 1)) (Fin (r + 1)) R
     (g : N →ₛₗ[φ] N') (i : Fin m) : g (blk hj P u i) = blk hj (P.map φ) (fun j => g (u j)) i := by
   unfold blk
   split_ifs
-  · simp only [map_sum, map_smulₛₗ, Matrix.map_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [map_sum, map_smulₛₗ, Matrix.map_apply]
   · rfl
 
 theorem blk_blk (hj : k + r + 1 ≤ m) (P Q : Matrix (Fin (r + 1)) (Fin (r + 1)) R) (u : Fin m → N) :
@@ -322,7 +323,8 @@ theorem crdL_sum {Sb : D.C.Sub A.ch r} {hj : k + r + 1 ≤ Dw.mult σ} (hS : IsF
     {φ : A.ch.R a →+* K} {z : Sp K ⟶ X} (e : spMap φ ≫ A.ch.χ a = z) (h : ⊤ ≤ z ⁻¹ᵁ D.C.B (Sb.α a))
     {u : TVecs Dw M.t (z ≫ π)} (hu : up u = (A.fr a).bc φ) (v : Fin (r + 1) → K) :
     crdL (D.b (Sb.α a)) z h (∑ i : Fin (r + 1), v i • u σ ⟨k + i, by omega⟩) = ((Sb.M a).map φ).mulVec v := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [map_smul, ← crd_eq, ← hS a K φ z e h u hu]
   funext j
   simp [Matrix.mulVec, dotProduct, Finset.sum_apply, mul_comm]

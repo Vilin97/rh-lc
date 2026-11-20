@@ -40,7 +40,8 @@ theorem locCo_form {F : Type} [Field F] [NumberField F] {W : Type} [AddCommGroup
     (GlobalTheory.LatVac.locCo co v x).1 ⬝ᵥ (GlobalTheory.LatVac.locCo co v u).2 -
       (GlobalTheory.LatVac.locCo co v u).1 ⬝ᵥ (GlobalTheory.LatVac.locCo co v x).2 = evFin F v (B x u) := by
   rw [co.form]
-  simp [GlobalTheory.LatVac.locCo, dotProduct, map_sum, map_mul, map_sub]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [GlobalTheory.LatVac.locCo, dotProduct, map_sum, map_mul, map_sub]
 
 theorem locCo_surj {F : Type} [Field F] [NumberField F] {W : Type} [AddCommGroup W] [Module (AF F) W]
     {B : W → W → AF F} {κ : Type} [Fintype κ] (co : Darboux B κ) (v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl F)

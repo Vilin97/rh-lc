@@ -28,7 +28,8 @@ theorem field_indep {k : Type} [Field k] (p : ℕ) [hp : Fact p.Prime] [CharP k 
   let c' : ℕ → K := fun j => if h : j < p ^ N then ⟨c j, hc j h⟩ else 0
   let P : K[X] := ∑ j ∈ Finset.range (p ^ N), monomial j (c' j)
   have hP : aeval t P = 0 := by
-    rw [← hs, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hs, map_sum]
     refine Finset.sum_congr rfl fun j hj => ?_
     rw [aeval_monomial]
     simp only [c', dif_pos (Finset.mem_range.1 hj)]
@@ -176,7 +177,8 @@ theorem residue_indep : ∀ (p : ℕ) [Fact p.Prime] (Ω : Type) [Field Ω] [Alg
         push_cast
         exact Finset.sum_congr rfl fun j hj => by rw [hd' j (Finset.mem_range.1 hj)]
       have := (hmem _).2 (e ▸ hs)
-      simpa only [map_sum, map_mul, map_pow] using this)
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa only [map_sum, map_mul, map_pow] using this)
   intro j hj
   rw [← hd' j hj]
   exact (hmem _).1 (key j hj)

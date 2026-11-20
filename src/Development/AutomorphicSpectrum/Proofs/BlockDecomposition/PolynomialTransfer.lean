@@ -46,7 +46,8 @@ theorem xT_mem : xT (s := s) T ∈ trJ T s := Ideal.mem_map_of_mem _ (e_mem _ _)
 theorem sum_eq (b : ℕ →₀ T.B) :
     (b.sum fun k c => trF T s c * (trD T s).dpow k (xT (s := s) T)) =
       Ideal.Quotient.mk (trI T s) (b.sum fun k c => algebraMap T.B (pq T.B).P c * (eta T.δ).dpow k ((pq T.B).e 1)) := by
-  rw [Finsupp.sum, Finsupp.sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finsupp.sum, Finsupp.sum, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [map_mul, (trD_spec T s).1.dpow_comp _ (e_mem _ _)]
   rfl

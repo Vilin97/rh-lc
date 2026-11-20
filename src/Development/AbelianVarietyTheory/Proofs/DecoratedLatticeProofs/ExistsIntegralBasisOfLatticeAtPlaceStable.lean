@@ -136,7 +136,8 @@ theorem exists_basis_of_dense {A E : Type} [CommRing A] [Field E] [NumberField E
     have e : ((ε • B'.map ι) *ᵥ y) i = ε * ι ((B' *ᵥ fun k => (N : E)⁻¹ * u k) i) +
         ∑ k, (ε * ι ((B' *ᵥ (Pi.single k (m : E) : Fin n → E)) i)) * z k := by
       simp only [Matrix.mulVec_single, Matrix.mulVec, dotProduct_single]
-      simp only [dotProduct, map_sum, Finset.mul_sum, ← Finset.sum_add_distrib]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [dotProduct, map_sum, Finset.mul_sum, ← Finset.sum_add_distrib]
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [hyk k, Matrix.smul_apply, Matrix.map_apply, smul_eq_mul, map_mul ι (B' i k), map_mul ι (B' i k), map_natCast]
       linear_combination (ι (B' i k) * ι ((N : E)⁻¹ * u k)) * hε

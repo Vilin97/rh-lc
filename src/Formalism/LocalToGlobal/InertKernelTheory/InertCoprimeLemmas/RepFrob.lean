@@ -152,7 +152,8 @@ theorem frob_wK {σ : MaximalUnramifiedExtension p →+* MaximalUnramifiedExtens
   set S := ∑ i ∈ Finset.Iic N, (WittVector.teichmuller p
         (((_root_.frobeniusEquiv (Formalism.MainNotions.FormalGroupSystem.kb p) p).symm ^ i) (x.coeff i)) * (p : WW p) ^ i) with hS
   have hfS : f S = g S := by
-    rw [hS, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hS, map_sum, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_mul, map_mul, ht, map_pow, map_pow, map_natCast, map_natCast]
   have hx : x = S + (p : WW p) ^ (N + 1) * c := by rw [← hc]; ring

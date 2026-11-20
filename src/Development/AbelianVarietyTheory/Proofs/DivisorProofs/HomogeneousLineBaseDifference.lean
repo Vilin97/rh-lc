@@ -54,12 +54,14 @@ theorem onLine_sub_onBase_factor (d : ℕ) (a b : ℤ) : ∃ K : MvPolynomial (F
     ((((isHomogeneous_C (Fin 5) (a : ℝ)).sub (isHomogeneous_C (Fin 5) (b : ℝ))).pow 2).mul hR) (by omega), ?_⟩
   have hL : onLine d a b = (C (a : ℝ) * X 0 + C (b : ℝ) * (X 3 + X 4 - X 0) + X 2) ^ (d + 2) +
       (C (b : ℝ) * X 0 + C (a : ℝ) * (X 3 + X 4 - X 0) + X 2) ^ (d + 2) := by
-    simp only [onLine, swapSum, lin, map_add, map_pow, map_sum, map_mul, aeval_C, aeval_X, algebraMap_eq,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [onLine, swapSum, lin, map_add, map_pow, map_sum, map_mul, aeval_C, aeval_X, algebraMap_eq,
       Fin.sum_univ_three, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, Matrix.head_cons,
       Matrix.tail_cons, map_one, one_mul]
   have hB : onBase d a b = (C (a : ℝ) * X 4 + C (b : ℝ) * X 3 + X 2) ^ (d + 2) +
       (C (b : ℝ) * X 4 + C (a : ℝ) * X 3 + X 2) ^ (d + 2) := by
-    simp only [onBase, swapSum, lin, map_add, map_pow, map_sum, map_mul, aeval_C, aeval_X, algebraMap_eq,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [onBase, swapSum, lin, map_add, map_pow, map_sum, map_mul, aeval_C, aeval_X, algebraMap_eq,
       Fin.sum_univ_three, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, Matrix.head_cons,
       Matrix.tail_cons, map_one, one_mul]
   have hs : (C (b : ℝ) * X 0 + C (a : ℝ) * (X 3 + X 4 - X 0) + X 2 : MvPolynomial (Fin 5) ℝ) =

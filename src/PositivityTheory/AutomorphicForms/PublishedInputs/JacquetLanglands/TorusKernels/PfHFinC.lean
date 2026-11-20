@@ -172,7 +172,8 @@ theorem rot_eig (φ : TR.Sm F 2) (z : InfinitePlace F → ℂ) (h : ∀ v, TR.Eo
     ext i j u
     fin_cases i <;> fin_cases j <;> simp [X, Finset.sum_apply, Pi.single_apply]
   have hL : TR.lie F 2 X φ = μ • φ := by
-    rw [hX, map_sum, LinearMap.sum_apply, hμ, Finset.sum_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hX, map_sum, LinearMap.sum_apply, hμ, Finset.sum_smul]
     refine Finset.sum_congr rfl fun v _ => ?_
     rw [map_smul, map_sub, LinearMap.smul_apply, LinearMap.sub_apply, mul_comm, mul_smul, Complex.coe_smul, ← h v]
     simp only [TR.Eop]

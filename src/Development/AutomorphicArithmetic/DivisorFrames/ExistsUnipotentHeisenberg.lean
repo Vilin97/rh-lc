@@ -65,7 +65,8 @@ private theorem unip_fix {σ : E →ₐ[F] E} {d d₁ : ℕ} {W : Spc F E d} {H'
 
 private theorem hA_herm {σ : E →ₐ[F] E} (hσ : ∀ a, σ (σ a) = a) {n : ℕ} {J : Matrix (Fin n) (Fin n) E}
     (hJ : ∀ i j, σ (J j i) = J i j) (v w : Fin n → AE F E) : cA σ (hA σ J v w) = hA σ J w v := by
-  simp only [hA, dotProduct, Matrix.mulVec, map_sum, map_mul, cA_cA hσ, incM, Matrix.map_apply, cA_inclR]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hA, dotProduct, Matrix.mulVec, map_sum, map_mul, cA_cA hσ, incM, Matrix.map_apply, cA_inclR]
   simp_rw [Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun y _ => ?_
@@ -90,7 +91,8 @@ private theorem hA_gram (σ : E →ₐ[F] E) {n m : ℕ} (J : Matrix (Fin n) (Fi
     funext i; exact RingHom.map_mulVec (cA σ).toRingHom (incM F A) z' i
   have e : (incM F A)ᵀ * incM F J * (incM F A).map (cA σ) = incM F (Aᵀ * J * A.map σ) := by
     ext i j
-    simp only [incM, Matrix.mul_apply, Matrix.map_apply, Matrix.transpose_apply, map_sum, map_mul, cA_inclR]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [incM, Matrix.mul_apply, Matrix.map_apply, Matrix.transpose_apply, map_sum, map_mul, cA_inclR]
   rw [hA, hA, hc, ← Matrix.vecMul_transpose (incM F A) z, ← Matrix.dotProduct_mulVec]
   simp only [Matrix.mulVec_mulVec]
   rw [← Matrix.mul_assoc, e]

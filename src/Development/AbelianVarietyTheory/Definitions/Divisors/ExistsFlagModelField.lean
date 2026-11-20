@@ -23,7 +23,8 @@ theorem idem_low {R L : Type} [CommRing R] [Field L] (φ : R →+* L) (hφ : Fun
   have hcol : ∀ k, (fun i => φ (e i k)) ∈ N := fun k => (hN _).2 (by
     funext i
     have := congrArg φ (congrFun (congrFun he i) k)
-    rw [Matrix.mul_apply, map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Matrix.mul_apply, map_sum] at this
     simpa [Matrix.mulVec, dotProduct] using this)
   obtain rfl | rfl : m = 0 ∨ m = 1 := by omega
   · have hb : N = ⊥ := Submodule.finrank_eq_zero.1 hr
@@ -44,7 +45,8 @@ theorem idem_low {R L : Type} [CommRing R] [Field L] (φ : R →+* L) (hφ : Fun
         exact hv0 (Subtype.ext (funext h))
       have h1 := congrFun ((hN _).1 v.2) i
       simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, hE] at h1
-      rw [map_sum, map_one, ← (Equiv.funUnique (Fin 1) (Fin n)).symm.sum_comp]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, map_one, ← (Equiv.funUnique (Fin 1) (Fin n)).symm.sum_comp]
       simp only [Fin.prod_univ_one, Equiv.funUnique_symm_apply, uniqueElim_const, hE]
       apply mul_right_cancel₀ hi
       rw [_root_.one_mul, Finset.sum_mul]
@@ -94,7 +96,8 @@ theorem initSpan_frVec_top {S : Type} [CommRing S] [Algebra c.F S] (P : FrPt Xo 
     obtain ⟨a, ha⟩ := (P.basis σ w (htan cv w hw) ((heig cv w hw).2 ((vec_mem_eigLie M _ h σ _).1 hv'))).exists
     have h4 := (VecComb.isCombAt_iff_vec E H Dw l Xo c O β Y M S _ P.x Λ _ _ (P.u σ) a w hv).1 ha
     refine mem_initSpan.2 ⟨a, fun j hj => absurd j.2 (not_lt.2 hj), ?_⟩
-    rw [← (hco w (htan cv w hw)).unique h4 hw, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← (hco w (htan cv w hw)).unique h4 hw, map_sum]
     simp only [map_smul, LinearEquiv.apply_symm_apply]
 
 def ofFrames (hm : ∀ σ, Dw.mult σ ≤ 1) (F : Frames Y (𝟙 Y.X)) (hF : F.TopEigen) : FlagModel Y where
@@ -176,12 +179,14 @@ def pm (M : MChart Y) (σ : E →+* ℂ) : Matrix (Fin M.n) (Fin M.n) Γ(Y.X, M.
 theorem pm_map (M : MChart Y) (σ : E →+* ℂ) (x : Sp S ⟶ Y.X) (h : ⊤ ≤ x ⁻¹ᵁ M.U) :
     (pm p M σ).map (ev x M.U h) = ∑ k, str x (p.κ σ k) • (M.ρ (p.a σ k)).map (ev x M.U h) := by
   ext i j
-  simp only [pm, Matrix.map_apply, Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul, map_sum, map_mul, ev_str]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [pm, Matrix.map_apply, Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul, map_sum, map_mul, ev_str]
 
 theorem vec_pm (M : MChart Y) (σ : E →+* ℂ) (x : Sp S ⟶ Y.X) (h : ⊤ ≤ x ⁻¹ᵁ M.U) (cv : Fin M.n → S) :
     vec M x h (((pm p M σ).map (ev x M.U h)).mulVec cv) =
       ∑ k, str x (p.κ σ k) • actR Y.t.act (p.a σ k) (vec M x h cv) := by
-  rw [pm_map, Matrix.sum_mulVec, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [pm_map, Matrix.sum_mulVec, map_sum]
   simp only [Matrix.smul_mulVec, map_smul, actR_vec]
 
 theorem pm_gen [Algebra c.F S] (M : MChart Y) (σ : E →+* ℂ) {y : Sp S ⟶ Xo.XF c}
@@ -239,7 +244,8 @@ theorem exists_eCh (hm : ∀ σ, Dw.mult σ ≤ 1) (hg : GenIn Y) (M : GChart Y)
     by_contra h
     push Not at h
     have := congrArg (Y.X.evaluation M.U x hx) (pm_low p hm hg M.toMChart σ).2.1
-    rw [map_sum, map_one, Finset.sum_eq_zero fun ix _ => h ix] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_one, Finset.sum_eq_zero fun ix _ => h ix] at this
     exact zero_ne_one this
   choose ix hix using ex
   let d := fun σ => ∏ i, pm p M.toMChart σ (ix σ i) (ix σ i)
@@ -321,7 +327,8 @@ def eigFrames (hm : ∀ σ, Dw.mult σ ≤ 1) (hc : ∀ x : Y.X, ∃ k : ECh Y p
         (by rw [ev_congr (Category.comp_id z) _ _ ab])
     rw [Matrix.mulVec_single_one] at h3
     simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, Matrix.col_apply] at h3
-    simp only [Cm, Um, Matrix.mul_apply, Matrix.map_apply, map_sum, map_mul, e1, ev_res z _ hz a, ev_res z _ hz b,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Cm, Um, Matrix.mul_apply, Matrix.map_apply, map_sum, map_mul, e1, ev_res z _ hz a, ev_res z _ hz b,
       ev_res z _ a a']
     exact h3.symm
 

@@ -49,7 +49,8 @@ theorem coeff_glue_prod (r : Ψ → MvPolynomial (Fin N) ℚ) (d : Ψ → (Fin N
       ∑ a ∈ (r τ).support, monomial (Finsupp.mapDomain (sliceEmb τ) a) (AddMonoidAlgebra.coeff (r τ) a) := by
     intro τ
     conv_lhs => rw [as_sum (r τ)]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [rename_monomial]
   simp_rw [h]
   rw [Finset.prod_univ_sum]

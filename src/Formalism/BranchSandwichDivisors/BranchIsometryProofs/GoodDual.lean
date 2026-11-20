@@ -45,7 +45,8 @@ theorem ext_zero {ι : Type*} [Fintype ι] (b : Basis ι K V) (A : Submodule R V
     apply Subtype.ext
     simp [hdn]
   have h2 : d • D a = 0 := by
-    rw [← map_smul, h1, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_smul, h1, map_sum]
     exact Finset.sum_eq_zero fun i _ => by rw [map_smul, hD, smul_zero]
   have hd' : algebraMap R K d ≠ 0 := (map_ne_zero_iff _ (IsFractionRing.injective R K)).mpr hd
   rw [Algebra.smul_def] at h2

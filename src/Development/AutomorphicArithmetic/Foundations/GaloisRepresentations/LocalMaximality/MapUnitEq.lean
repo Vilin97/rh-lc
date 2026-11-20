@@ -45,7 +45,8 @@ private lemma kos_mem_C (act : S →ₐ[ℂ] Module.End ℂ E) (M : Submodule �
 private lemma wd_pw (act : S →ₐ[ℂ] Module.End ℂ E) (r : κ → S) (s : S) (y : Finset κ → E) :
     wd (fun l => act (r l)) (pwR act _ s y) = pwR act _ s (wd (fun l => act (r l)) y) := by
   funext t
-  simp only [pwR_apply, wd, LinearMap.pi_apply, LinearMap.sum_apply, LinearMap.smul_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [pwR_apply, wd, LinearMap.pi_apply, LinearMap.sum_apply, LinearMap.smul_apply,
     LinearMap.comp_apply, LinearMap.proj_apply, map_sum, map_zsmul, act_comm act s]
 
 private lemma kos_B_stab (act : S →ₐ[ℂ] Module.End ℂ E) (R : Subalgebra ℂ S) (M : Submodule ℂ E)

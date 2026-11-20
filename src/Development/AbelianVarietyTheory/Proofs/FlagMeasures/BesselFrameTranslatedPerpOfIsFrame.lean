@@ -36,7 +36,8 @@ theorem exists_chart {E : Type} [NormedRing E] [NormedAlgebra ℝ E] [FiniteDime
   have he : ∀ i, σ (e i) = -e i := fun i => (hS _).1 (b i).2
   have hsp : ∀ X, σ X = -X → X ∈ Submodule.span ℝ (Set.range e) := fun X hX => by
     have h := congrArg S.subtype (b.sum_repr ⟨X, (hS X).2 hX⟩)
-    rw [map_sum] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at h
     simp only [map_smul, Submodule.subtype_apply] at h
     rw [← h]
     exact Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)

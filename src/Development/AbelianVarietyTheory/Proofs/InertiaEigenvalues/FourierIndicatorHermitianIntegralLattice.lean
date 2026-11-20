@@ -31,7 +31,8 @@ theorem fourB_indicator_intLattice : ∀ (F E : Type) [NontriviallyNormedField F
       intro x
       by_cases hx : x ∈ Λ
       · rw [Set.indicator_of_mem hx, Set.indicator_of_mem hx, Pi.one_apply, one_mul, hB]
-        simp only [dotProduct, Pi.star_apply, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [dotProduct, Pi.star_apply, map_sum]
         refine Finset.sum_induction _ (fun t => ψ t = 1) (fun u v hu hv => by
           rw [AddChar.map_add_eq_mul, hu, hv, one_mul]) (AddChar.map_zero_eq_one ψ) fun i _ => ?_
         exact (key (j y i)).2 (hy i) _ (by rw [hU.norm_star]; exact hx i)

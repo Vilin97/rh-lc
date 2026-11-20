@@ -61,12 +61,15 @@ theorem psi_half_trace {σ : E →ₐ[F] E} (hcm : IsCMExt F E σ) (v : HeightOn
   set z : AF F ⊗[F] E := ∑ i, ∑ j, x i j * inclR (AF F) (b j i) with hz
   set a : Fv F v := ∑ i, ∑ j, splitProj τ (compFin F E v (x i j)) * τ (b j i) with ha
   have hzi : ∀ w, compInf F E w z = 0 := fun w => by
-    simp only [hz, map_sum, map_mul, hinf, zero_mul, Finset.sum_const_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hz, map_sum, map_mul, hinf, zero_mul, Finset.sum_const_zero]
   have hzf : ∀ v' ≠ v, compFin F E v' z = 0 := fun v' h => by
-    simp only [hz, map_sum, map_mul, hfin v' h, zero_mul, Finset.sum_const_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hz, map_sum, map_mul, hfin v' h, zero_mul, Finset.sum_const_zero]
   have hpi : ∀ t : E →ₐ[F] Fv F v, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.piW t z =
       ∑ i, ∑ j, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.piW t (x i j) * t (b j i) := fun t => by
-    simp only [hz, map_sum, map_mul, GlobalTheory.OppLinChar.piW_inclR]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hz, map_sum, map_mul, GlobalTheory.OppLinChar.piW_inclR]
   have h1 : splitProj τ (compFin F E v z) = a := hpi τ
   have h2 : splitProj (τ.comp σ) (compFin F E v z) = a := by
     refine (hpi (τ.comp σ)).trans ?_

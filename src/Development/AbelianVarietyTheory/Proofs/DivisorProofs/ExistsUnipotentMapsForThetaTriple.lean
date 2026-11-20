@@ -139,7 +139,8 @@ theorem splitTrace' {F E : Type} [Field F] [NumberField F] [Field E] [NumberFiel
     simp
   show GlobalTheory.AdelicU.evFin F v (Algebra.trace (AF F) _ _) = _
   rw [trace_at hcm t hzAt]
-  simp only [GlobalTheory.WeilM.hTens, map_mul, map_neg, map_one, map_sum, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM, Matrix.map_apply, piW_cA', piW_inclR',
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [GlobalTheory.WeilM.hTens, map_mul, map_neg, map_one, map_sum, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM, Matrix.map_apply, piW_cA', piW_inclR',
     GlobalTheory.AdelicU.comp_conj_conj hcm, AlgHom.comp_apply, hJ, hK]
   simp only [Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, Matrix.neg_apply, Finset.mul_sum, Finset.sum_mul]
   rw [sub_eq_add_neg]

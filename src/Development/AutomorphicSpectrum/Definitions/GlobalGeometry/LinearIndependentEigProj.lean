@@ -191,7 +191,8 @@ variable {A : Type} [CommRing A] {K : Type} [Field K] [Algebra A K]
 
 theorem eigProj_act (a : 𝓞 E) (x : V) : HT.eigProj ρ σ (ρ a x) = σ (a : E) • HT.eigProj ρ σ x := by
   rw [← HT.LatBasic.mem_eigSp.1 (HT.LatBasic.eigProj_mem ρ σ x) a]
-  simp only [HT.eigProj, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [HT.eigProj, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [← Module.End.mul_apply, ← Module.End.mul_apply, ← map_mul, ← map_mul, mul_comm]
 
@@ -204,7 +205,8 @@ theorem linearIndependent_eigProj (h : HT.IsFreeOn ρ X t) : LinearIndependent K
     rw [Fintype.sum_prod_type, ← hc]
     simp only [HT.eigProj, LinearMap.sum_apply, LinearMap.smul_apply, Finset.smul_sum, smul_smul])
   have h2 : c i * σ (∑ k, HT.dualInt E k * integralBasis E k) = 0 := by
-    rw [map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.mul_sum]
     exact Finset.sum_eq_zero fun k _ => by rw [map_mul, ← mul_assoc, h1 (i, k), zero_mul]
   rwa [HT.LatBasic.sum_dualInt_mul, map_one, mul_one] at h2
 
@@ -218,7 +220,8 @@ theorem span_eigProj (h : HT.IsFreeOn ρ X t) :
     have h1 := h.2.1
     rw [h.2.2, Submodule.span_span_of_tower] at h1
     obtain ⟨c, hc⟩ := (Submodule.mem_span_range_iff_exists_fun K).1 (h1.ge (Submodule.mem_top (x := x)))
-    rw [← HT.LatBasic.eigProj_of_mem hx, ← hc, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← HT.LatBasic.eigProj_of_mem hx, ← hc, map_sum]
     refine Submodule.sum_mem _ fun q _ => ?_
     rw [map_smul, eigProj_act]
     exact Submodule.smul_mem _ _ (Submodule.smul_mem _ _ (Submodule.subset_span ⟨q.1, rfl⟩))
@@ -236,7 +239,8 @@ theorem eigQuot_eq_span (h : HT.IsFreeOn ρ X t) (hσ : ∀ a : 𝓞 E, σ (a : 
     rintro _ ⟨i, rfl⟩
     refine ⟨t i, ?_, rfl⟩
     have e : t i = ρ 1 (t i) := by simp
-    rw [h.2.2, e, ← (RingOfIntegers.basis E).sum_repr 1, map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h.2.2, e, ← (RingOfIntegers.basis E).sum_repr 1, map_sum, LinearMap.sum_apply]
     refine Submodule.sum_mem _ fun k _ => ?_
     rw [map_zsmul, LinearMap.smul_apply]
     exact zsmul_mem (Submodule.subset_span (Set.mem_range.2 ⟨(i, k), rfl⟩)) _
@@ -348,7 +352,8 @@ theorem isFreeOn_latH (A : Subring Ω) (hA : ∀ a, chi σ a ∈ A) (h2 : Module
           fun q : Fin 1 × Module.Free.ChooseBasisIndex ℤ (𝓞 E) =>
             actH σ bar (RingOfIntegers.basis E q.2) (gen δ t)) := by
         intro a
-        rw [← (RingOfIntegers.basis E).sum_repr a, map_sum, LinearMap.sum_apply]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [← (RingOfIntegers.basis E).sum_repr a, map_sum, LinearMap.sum_apply]
         refine Submodule.sum_mem _ fun k _ => ?_
         rw [map_zsmul, LinearMap.smul_apply]
         exact zsmul_mem (Submodule.subset_span (Set.mem_range.2 ⟨(0, k), rfl⟩)) _

@@ -48,7 +48,8 @@ theorem gt_coeff_sum_pow (n : ℕ) (e : Fin 2 →₀ ℕ) :
       MvPowerSeries.X_pow_eq, MvPowerSeries.X_pow_eq, MvPowerSeries.monomial_mul_monomial,
       MvPowerSeries.coeff_monomial]
     split_ifs <;> simp
-  rw [add_pow, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [add_pow, map_sum]
   simp_rw [hterm]
   rw [Finset.sum_eq_single (e 0)]
   · by_cases h : e 0 + e 1 = n

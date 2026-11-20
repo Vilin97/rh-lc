@@ -180,7 +180,8 @@ theorem flag_fwd_kept (M : FlagModel y Ψ N j) (keep : Ψ × Fin N → Prop) {κ
         (fun I m => am (F.u' I ⟨κ k₁, m⟩)) M.j_le (hHB p.1) (hbV p.1) (hbdet p.1) (hbinv p.1)
         (fun I m => hOV _ (hO (hG.2.1 _ I).2)) (fun m I => hOV _ (hO (hG.2.1 _ I).1)) (fun I I' hI hI' => by
           have := congrArg am (hF.2.2.1 p (κ k₁) hp I I' hI hI')
-          rw [map_sum] at this
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [map_sum] at this
           simp only [map_mul] at this
           rw [this]
           split_ifs <;> simp)
@@ -245,11 +246,13 @@ theorem flag_fwd_kept (M : FlagModel y Ψ N j) (keep : Ψ × Fin N → Prop) {κ
     let rR : R := Subring.inclusion hOR ⟨r, _, hr⟩
     have e1 : ∑ I, uR I * minorIJ (HR p.1) I (stepCols N j p.2) = rR * wR := Subtype.ext (by
       show R.subtype _ = r * wc p
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simp only [map_mul, ← minorIJ_map, hHR]
       exact hw)
     have e2 := congrArg ψ e1
-    rw [map_sum] at e2
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at e2
     simp only [map_mul, ← minorIJ_map] at e2
     have e3 : ∀ I, ψ (uR I) = valAt M.x (F.u ⟨k, m⟩ I) (z ∘ v') := fun I =>
       (hψ _).trans (regVal_eq hz _ (val_lift_of am hb' hx hz (hG.2.1 _ I).1))

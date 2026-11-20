@@ -69,7 +69,8 @@ theorem per_coords (P : Λ →+ (Fin g → ℂ)) (τ A : Matrix (Fin g) (Fin g) 
     P x = Aᵀ *ᵥ (cst (uCo bas x) + τ *ᵥ cst (vCo bas x)) := by
   have hx : P x = ∑ i, uCo bas x i • P (bas (.inl i)) + ∑ j, vCo bas x j • P (bas (.inr j)) := by
     conv_lhs => rw [← sum_coords bas x]
-    simp [mk, map_sum, map_zsmul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [mk, map_sum, map_zsmul]
   rw [hx]
   funext k
   have hsym : ∀ i j, τ i j = τ j i := fun i j => by
@@ -100,7 +101,8 @@ theorem form_coords (E : LinearMap.BilinForm ℤ Λ)
     · simp [h]
     · simp [h, Ne.symm h]
   conv_lhs => rw [← sum_coords bas x, ← sum_coords bas y]
-  simp only [mk, map_add, map_sum, map_zsmul, LinearMap.add_apply, LinearMap.sum_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [mk, map_add, map_sum, map_zsmul, LinearMap.add_apply, LinearMap.sum_apply,
     LinearMap.smul_apply, smul_eq_mul, (hE _ _).1, (hE _ _).2.1, (hE _ _).2.2, hba,
     mul_zero, Finset.sum_const_zero, add_zero, zero_add, mul_ite, mul_one, mul_neg,
     Finset.sum_ite_eq, Finset.mem_univ, if_true, Finset.sum_neg_distrib, dotProduct]
@@ -136,7 +138,8 @@ end
 theorem functional_rep {g : ℕ} (φ : (Fin g → ℤ) →+ ℤ) : ∃ p : Fin g → ℤ, ∀ u, φ u = u ⬝ᵥ p := by
   refine ⟨fun i => φ (Pi.single i 1), fun u => ?_⟩
   conv_lhs => rw [← Finset.univ_sum_single u]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   have : (Pi.single i (u i) : Fin g → ℤ) = u i • Pi.single i 1 := by
     funext k
@@ -528,7 +531,8 @@ theorem at_point {n a g : ℕ} {Λ : Type} [AddCommGroup Λ] (L : Flat.LogPeriod
       simp only [hperF, uCo_mk, vCo_mk, cst_zero, mulVec_zero, add_zero] at h1
       have h2 : star ((A z)ᵀ *ᵥ cst u) = (A z)ᴴ *ᵥ cst u := by
         funext i
-        simp [cst, mulVec, dotProduct, Matrix.conjTranspose_apply, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp [cst, mulVec, dotProduct, Matrix.conjTranspose_apply, map_sum]
       rw [h2] at h1
       rw [hG, ← Matrix.mulVec_mulVec, ← Matrix.mulVec_mulVec]
       have h3 : Hb *ᵥ ((A z)ᴴ *ᵥ (fun k => (u k : ℂ))) = 0 := h1

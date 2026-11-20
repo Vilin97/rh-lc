@@ -67,7 +67,8 @@ theorem sigR_inclR (a : E) : sigR (Fv F v) σ (inclR (F := F) (Fv F v) a) = incl
 
 theorem hermitian_snd_projection (J : Matrix (Fin n) (Fin n) E) (x y : Fin n → Fv F v ⊗[F] E) :
     D.π₂ (hR (Fv F v) σ J x y) = c1 D x ⬝ᵥ (Mj D J *ᵥ c2 D y) := by
-  simp only [hR, Formalism.UG.hform, map_sum, map_mul, D.hσ2, JR, Matrix.map_apply, dotProduct,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hR, Formalism.UG.hform, map_sum, map_mul, D.hσ2, JR, Matrix.map_apply, dotProduct,
     Matrix.mulVec, c1, c2, Mj, Matrix.of_apply, Finset.mul_sum]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   ring
@@ -79,7 +80,8 @@ theorem hermitian_fst_projection {J : Matrix (Fin n) (Fin n) E} (hJ : ∀ i j, �
     intro i j
     rw [← hJ i j, ← sigR_inclR, D.hσ1]
     rfl
-  simp only [hR, Formalism.UG.hform, map_sum, map_mul, D.hσ1, JR, Matrix.map_apply, key, dotProduct,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hR, Formalism.UG.hform, map_sum, map_mul, D.hσ1, JR, Matrix.map_apply, key, dotProduct,
     Matrix.mulVec, c1, c2, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_

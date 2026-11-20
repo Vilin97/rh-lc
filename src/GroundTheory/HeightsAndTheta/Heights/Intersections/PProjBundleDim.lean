@@ -91,7 +91,8 @@ theorem trdeg_projBundle (P : Ideal (MRing ι)) [P.IsPrime] (hPz : IsHorizontal 
     have hX : (X b : MvPolynomial (Fin n) (FnField P)) = ∑ j, C (D b j) * ∑ a, C (B a j) * X a := by
       simp_rw [Finset.mul_sum, ← mul_assoc, ← C_mul]
       rw [Finset.sum_comm]
-      simp_rw [← Finset.sum_mul, ← map_sum, h1]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp_rw [← Finset.sum_mul, ← map_sum, h1]
       simp
     rw [hX]
     exact (Subalgebra.mem_algebraicClosure S _).1 (Subalgebra.sum_mem _ fun j _ =>

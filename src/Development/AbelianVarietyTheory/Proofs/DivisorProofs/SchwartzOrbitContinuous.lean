@@ -188,7 +188,8 @@ theorem soCont (hP : KP) : SoCont := by
     simp only [Model.I]
     rw [← integral_finset_sum _ fun j _ => hint (t j) (htT j) (w j)]
     congr 1
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact thetaSum_finset_sum _ _ fun j _ => hpres _ _ (hmem _ (htT j).1 (w j))
   rw [hI f hSoLim]
   refine Tendsto.congr (fun k => (hI (u k) (hSo k)).symm) ?_

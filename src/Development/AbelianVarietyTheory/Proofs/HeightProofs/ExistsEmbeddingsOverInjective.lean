@@ -204,6 +204,7 @@ theorem generic_points_dense : (∀ (K : Type) [Field K] [Countable K] (sg : K �
   obtain ⟨σ, hσ, rfl⟩ := hroot _ r hr
   refine absurd hrε (not_lt.2 ?_)
   have hc' := hc σ hσ
-  simpa only [b, map_sum, map_mul, map_natCast, mul_sub, Finset.sum_sub_distrib] using hc'
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa only [b, map_sum, map_mul, map_natCast, mul_sub, Finset.sum_sub_distrib] using hc'
 
 end GlobalTheory

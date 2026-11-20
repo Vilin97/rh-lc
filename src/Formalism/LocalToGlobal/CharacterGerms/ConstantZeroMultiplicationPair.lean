@@ -112,7 +112,8 @@ theorem Sv_eq_sum (Y : FBChart C V O dd) (v : Fin dd → C) :
     Sv Y v = ∑ j, MvPowerSeries.C (v j) *
       ev (n := 1) (![pt C dd 0, 0] : Fin 2 → Pt C 1 dd) (MvPowerSeries.pderiv C ((1 : Fin 2), j) Y.u1) := by
   ext μ
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   show ∑ j, v j * MvPowerSeries.coeff (io0 μ + Finsupp.single ((1 : Fin 2), j) 1) Y.u1 = _
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [MvPowerSeries.coeff_C_mul, coeff_E, MvPowerSeries.coeff_pderiv, zero_axis_embedding_second, Nat.cast_zero, zero_add, mul_one]
@@ -224,7 +225,8 @@ theorem coeff_l_frob0 (P : PS C 1 dd) (hP : IntS V P) (hPz : MvPowerSeries.const
   have hsq : ∀ (s : Fin 1 × Fin dd), s = ((0 : Fin 1), s.2) := fun s => Prod.ext (Subsingleton.elim _ _) rfl
   have hD2 : Agr (2 * V.l) (P - D1 - D3) 0 := by
     intro μ hμ
-    rw [map_sub, map_sub, map_zero, hD1def, hD3def, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_sub, map_zero, hD1def, hD3def, map_sum]
     simp only [MvPowerSeries.coeff_monomial]
     by_cases hex : ∃ i, ¬ V.l ∣ μ ((0 : Fin 1), i)
     · rw [if_pos hex, sub_self, zero_sub, neg_eq_zero]
@@ -274,7 +276,8 @@ theorem coeff_l_frob0 (P : PS C 1 dd) (hP : IntS V P) (hPz : MvPowerSeries.const
     hB1' (Finsupp.single () V.l)
   have hD3 : MvPowerSeries.subst (fun q : Fin 1 × Fin dd => γ q.2) D3 =
       ∑ i, MvPowerSeries.C (MvPowerSeries.coeff (Finsupp.single ((0 : Fin 1), i) V.l) P) * γ i ^ V.l := by
-    rw [hD3def, ← MvPowerSeries.coe_substAlgHom hG, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hD3def, ← MvPowerSeries.coe_substAlgHom hG, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [MvPowerSeries.coe_substAlgHom hG, MvPowerSeries.subst_monomial hG, Finsupp.prod_single_index (by simp)]
     rfl
@@ -292,7 +295,8 @@ theorem coeff_l_frob0 (P : PS C 1 dd) (hP : IntS V P) (hPz : MvPowerSeries.const
           MvPowerSeries.subst (fun q : Fin 1 × Fin dd => γ q.2) D3 := by
     conv_lhs => rw [hsplit]
     rw [MvPowerSeries.subst_add hG, MvPowerSeries.subst_add hG]
-  rw [eP, map_add, map_add, hA2', add_zero, hD3, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [eP, map_add, map_add, hA2', add_zero, hD3, map_sum]
   have e : ∀ (a : C) (s t : Fin dd → C),
       a + ∑ i, s i - ∑ i, t i = a + ∑ i, (s i - t i) := fun a s t => by
     rw [Finset.sum_sub_distrib]

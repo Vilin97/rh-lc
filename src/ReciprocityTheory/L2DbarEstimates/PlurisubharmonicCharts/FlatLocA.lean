@@ -19,13 +19,15 @@ theorem flA_expand (w : V n) : w = ∑ j, w j • bas n j := by
 theorem flA_apply_sum (D : V n →L[ℂ] V n) (ξ : Fin n → ℂ) (a : Fin n) :
     D (WithLp.toLp 2 ξ) a = ∑ j, ξ j * D (bas n j) a := by
   conv_lhs => rw [flA_expand (WithLp.toLp 2 ξ)]
-  simp [map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, map_smul]
 
 theorem flA_decomp (D : V n →L[ℝ] ℂ) (w : V n) :
     D w = ∑ b, (w b * ((D (bas n b) - I * D (I • bas n b)) / 2) +
       conj (w b) * ((D (bas n b) + I * D (I • bas n b)) / 2)) := by
   conv_lhs => rw [flA_expand w]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun b _ => ?_
   have hcb : w b • bas n b = (w b).re • bas n b + (w b).im • (I • bas n b) := by
     conv_lhs => rw [← Complex.re_add_im (w b)]
@@ -110,7 +112,8 @@ theorem flA_leviV_comp {U : V n → ℂ} {G : V n → V n} {y : V n}
     simp
   simp only [leviV]
   simp_rw [hwd, flA_apply_sum]
-  simp only [map_sum, map_mul, Finset.mul_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, Finset.mul_sum, Finset.sum_mul]
   conv_rhs => rw [sum_four_comm_bis, Finset.sum_comm]
   refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun k _ =>
     Finset.sum_congr rfl fun b _ => Finset.sum_congr rfl fun a _ => ?_

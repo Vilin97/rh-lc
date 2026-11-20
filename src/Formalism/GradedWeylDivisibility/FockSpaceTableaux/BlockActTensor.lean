@@ -12,7 +12,8 @@ theorem ldtensor_blockAct_comp (K : Type*) [CommRing K] {S : Type*} {k n : ℕ}
       (blockEmb K s).comp (rowAct K (g s)) := by
   apply MvPolynomial.algHom_ext
   intro v
-  simp [blockEmb, blockAct, rowAct, map_sum, rename_C]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [blockEmb, blockAct, rowAct, map_sum, rename_C]
 
 theorem ldtensor_blockAct_blockEmb (K : Type*) [CommRing K] {S : Type*} {k n : ℕ}
     (g : S → Matrix (Fin k) (Fin k) K) (s : S) (F : MvPolynomial (Fin k × Fin n) K) :

@@ -25,7 +25,8 @@ theorem evalAt_schur_two (w : Fin 2 → ℂˣ) (l : Fin 2 → ℤ) (hl : l 1 ≤
   have hev : ∀ v : Fin 2 → ℂˣ, evalAt v P =
       ∑ j ∈ Finset.Icc (-l 0) (-l 1), ((v 0 : ℂ)) ^ (-j) * ((v 1 : ℂ)) ^ (l 0 + l 1 + j) := by
     intro v
-    simp [hP, map_sum, evalAt_single, monomialChar_apply, Fin.prod_univ_two,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [hP, map_sum, evalAt_single, monomialChar_apply, Fin.prod_univ_two,
       Units.val_zpow_eq_zpow_val]
   have key : schur l = P := by
     refine mul_left_cancel₀ (alternant_staircase_ne_zero (n := 2)) ?_

@@ -125,7 +125,8 @@ private theorem scale {S : Type} [CommRing S] (φ ψ : MvPolynomial (Fin 2) ℤ 
   have hC : ∀ r : ℤ, ψ (C r) = φ (C r) := fun r => by
     rw [show (C r : MvPolynomial (Fin 2) ℤ) = (r : MvPolynomial (Fin 2) ℤ) from eq_intCast C r,
       map_intCast, map_intCast]
-  rw [a.as_sum, map_sum, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [a.as_sum, map_sum, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun d hd => ?_
   have hdeg : ∑ i ∈ d.support, d i = n := by
     by_contra hne

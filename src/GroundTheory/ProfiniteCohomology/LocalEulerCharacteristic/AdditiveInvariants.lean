@@ -27,7 +27,8 @@ theorem exists_invariant_preimage (hΓ : (Fintype.card Γ : k) ≠ 0) {g : X₂ 
   obtain ⟨x, rfl⟩ := hs y
   refine ⟨(Fintype.card Γ : k)⁻¹ • ρ₂.norm x, fun γ => by rw [map_smul, self_norm_apply], ?_⟩
   have hnorm : g (ρ₂.norm x) = ρ₃.norm (g x) := by
-    simp [Representation.norm, LinearMap.sum_apply, map_sum, hg.isIntertwining]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Representation.norm, LinearMap.sum_apply, map_sum, hg.isIntertwining]
   have hinv : ρ₃.norm (g x) = (Fintype.card Γ : k) • g x := by
     have hy' : ∀ γ, ρ₃ γ (g x) = g x := hy
     simp only [Representation.norm, LinearMap.sum_apply, hy', Finset.sum_const, Finset.card_univ]

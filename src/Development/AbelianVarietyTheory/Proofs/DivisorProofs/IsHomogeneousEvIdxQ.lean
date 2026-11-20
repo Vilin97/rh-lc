@@ -81,7 +81,8 @@ theorem isHomogeneous_evIdxQ (D : D7) (N : ℕ) {G : MvPolynomial (Vm D.what₂.
     · simp only [evIdxQ, aeval_X, wt]
       refine IsHomogeneous.C_mul ?_ _
       exact IsHomogeneous.sum _ _ _ fun l _ => by simpa using (isHomogeneous_X ℚ (Sum.inr (b, l) : Idx D N)).pow k
-  rw [G.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [G.as_sum, map_sum]
   refine IsHomogeneous.sum _ _ _ fun u hu => ?_
   have h1 : Finsupp.weight (wt D.what₂.Tau N) u = d := hG (mem_support_iff.1 hu)
   rw [monomial_eq, map_mul, Finsupp.prod, map_prod, ← h1, Finsupp.weight_apply, Finsupp.sum]
@@ -183,7 +184,8 @@ theorem evC_eq_aeval (G : MvPolynomial (Vm D.what₂.Tau N) ℚ) :
     rcases v with ⟨b, y⟩ | ⟨b, k⟩
     · simp only [AlgHom.comp_apply, evV, evIdxQ, aeval_X, lnOf, Sum.elim_inl, lnLB_rootLn z jc]
     · cases b <;>
-      simp only [AlgHom.comp_apply, evV, evIdxQ, aeval_X, lnOf, Sum.elim_inr, map_mul, map_add, map_sum, map_pow, aeval_C,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [AlgHom.comp_apply, evV, evIdxQ, aeval_X, lnOf, Sum.elim_inr, map_mul, map_add, map_sum, map_pow, aeval_C,
         Fintype.sum_sum_type, wholeLn, lnLB_false, lnLB_true, mdlOf_lieW, mdlOf_omW] <;>
       congr 2 <;> exact Finset.sum_congr rfl fun _ _ => congrArg (· ^ k) (aeval_X _ _)
   exact congrArg (fun f => f G) this
@@ -252,7 +254,8 @@ theorem arMix_dRt_of_pair (hP : PairSt) (D : D7) (O : Setup D) (hO : O.Core) (p 
     · refine (aeval_X _ _).trans (Eq.symm ?_)
       change rename (symOf O.S Sx R p) (evIdx D O.N (X (Sum.inr (b, k)))) =
         (C ((k.factorial : ℝ)⁻¹) : MvPolynomial (Sym D.host.E →₀ ℤ) ℝ) * ∑ l, X (symOf O.S Sx R p (Sum.inr (b, l))) ^ k
-      simp only [evIdx, aeval_X, rename_X, map_mul, rename_C, map_sum, map_pow]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [evIdx, aeval_X, rename_X, map_mul, rename_C, map_sum, map_pow]
       rfl
   change numL _ _ ((arIn O.s O.Φ O.met.hm).mixEv Sx R p c _) = _
   rw [hev, ← evIdx_toR]

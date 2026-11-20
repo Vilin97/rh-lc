@@ -158,7 +158,8 @@ theorem degLt_pderiv {n : ℕ} {P : MvPolynomial ι k} (h : DegLt (n + 1) P) (l 
     DegLt n (MvPolynomial.pderiv l P) := by
   classical
   intro m hm
-  rw [MvPolynomial.as_sum P, map_sum, MvPolynomial.coeff_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [MvPolynomial.as_sum P, map_sum, MvPolynomial.coeff_sum]
   refine Finset.sum_eq_zero fun s hs => ?_
   rw [MvPolynomial.pderiv_monomial, MvPolynomial.coeff_monomial]
   by_cases hsm : s - Finsupp.single l 1 = m
@@ -283,7 +284,8 @@ theorem exp_cut (t : k) (q : PS k 1 d) (hq0 : constantCoeff q = 0) (N : ℕ) :
   refine ⟨C (t ^ (N + 1)) * PowerSeries.subst (t • q) R, ?_⟩
   unfold FB.expS
   rw [hexp]
-  simp only [key, map_add, map_sum, map_mul, map_pow, map_smul, hX]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [key, map_add, map_sum, map_mul, map_pow, map_smul, hX]
   simp only [smul_pow, smul_smul, MvPowerSeries.smul_eq_C_mul, map_mul, map_pow]
   congr 1
   all_goals first
@@ -298,9 +300,11 @@ theorem wickExp_of (hH : HalfSt) : WickExpSt := by
     rw [show G * (q ^ (P.totalDegree + 1) * Y) = (G * Y) * q ^ (P.totalDegree + 1) by ring,
       half_pow hH F u c q hc hq0 hq1 hq2 (P.totalDegree + 1) P (G * Y), iterate_eq_zero,
       dpolyOf_zero_P, map_zero, mul_zero]
-  rw [hY, mul_add, dpolyOf_add_f, map_add, hrem, add_zero, Finset.mul_sum, dpolyOf_sum_f, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hY, mul_add, dpolyOf_add_f, map_add, hrem, add_zero, Finset.mul_sum, dpolyOf_sum_f, map_sum]
   unfold expSecond
-  rw [dpolyOf_sum_P, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [dpolyOf_sum_P, map_sum]
   refine Finset.sum_congr rfl fun n _ => ?_
   rw [mul_left_comm G, dpolyOf_Cmul_f, map_mul, MvPowerSeries.constantCoeff_C,
     half_pow hH F u c q hc hq0 hq1 hq2 n P G, dpolyOf_smul_P, map_mul, MvPowerSeries.constantCoeff_C]

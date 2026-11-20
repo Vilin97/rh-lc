@@ -27,7 +27,8 @@ theorem mvPowerSeries_derivation_coeffwise (σ R : Type) [CommRing R] (D : Deriv
     ext α
     rw [smul_eq_mul, smul_eq_mul, map_add]
     erw [hL]
-    rw [MvPowerSeries.coeff_mul, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [MvPowerSeries.coeff_mul, map_sum,
       MvPowerSeries.coeff_mul, mul_comm G, MvPowerSeries.coeff_mul, ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun p _ => ?_
     rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul]

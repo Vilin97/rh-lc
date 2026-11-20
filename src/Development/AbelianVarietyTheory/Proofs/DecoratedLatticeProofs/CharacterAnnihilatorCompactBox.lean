@@ -25,7 +25,8 @@ theorem trace_mul_smul_single (D : D7) {m n : ℕ} (y : Mx D n m) (r : AF D.host
 theorem finPart_sum_tmul (D : D7) {d : ℕ} (x : Fin d → Af D.host.F) (e : Fin d → D.host.E) :
     finPart D (∑ l, pairA D.host.F 0 (x l) ⊗ₜ[D.host.F] e l) = ∑ l, x l ⊗ₜ[D.host.F] e l := by
   unfold finPart
-  rw [AlgHom.toRingHom_eq_coe, RingHom.coe_coe, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [AlgHom.toRingHom_eq_coe, RingHom.coe_coe, map_sum]
   rfl
 
 theorem annih_mem_box : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ (-1) → ∀ (m n : ℕ), ∀ V ∈ nhds (0 : Mx D m n), ∃ K : Set (Mx D n m), IsCompact K ∧ ∀ y : Mx D n m, (∀ ξ ∈ V, ξ.map (infPart D) = 0 → ψ (Algebra.trace (AF D.host.F) (AE D) (y ⬝ ξ).trace) = 1) → InBox K y := by

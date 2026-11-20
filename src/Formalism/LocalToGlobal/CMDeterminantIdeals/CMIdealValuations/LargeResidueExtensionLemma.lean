@@ -29,7 +29,8 @@ theorem substFr_substFr {R : Type} [CommRing R] (U U' : ∀ b, Matrix (Fin (m b)
   unfold substFr
   rw [bind₁_bind₁]
   refine congrArg (fun g => bind₁ g P) (funext fun v => ?_)
-  simp only [map_sum, map_mul, bind₁_C_right, bind₁_X_right, Matrix.mul_apply, Finset.mul_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, bind₁_C_right, bind₁_X_right, Matrix.mul_apply, Finset.mul_sum, Finset.sum_mul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun l _ => Finset.sum_congr rfl fun j _ => ?_
   ring
@@ -54,7 +55,8 @@ theorem map_substFr {R S : Type} [CommRing R] [CommRing S] (f : R →+* S) (U : 
   unfold substFr
   rw [map_bind₁]
   refine congrArg (fun g => bind₁ g (MvPolynomial.map f P)) (funext fun v => ?_)
-  simp [map_sum, map_mul, map_C, map_X]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, map_mul, map_C, map_X]
 
 theorem evalFr_C_mul {R : Type} [CommRing R] (a : R) (P : MvPolynomial (FrVar m) R)
     (Y : ∀ b, Matrix (Fin (m b)) (Fin (m b)) R) : evalFr (C a * P) Y = a * evalFr P Y := by

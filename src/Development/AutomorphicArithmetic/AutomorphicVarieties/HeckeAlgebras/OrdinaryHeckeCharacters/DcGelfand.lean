@@ -94,7 +94,8 @@ private theorem dcG_two {A H M : Type} [CommRing A] [Group H] [AddCommGroup M] [
       LinearMap.sum_apply]
   rw [h, h, Finset.sum_product]
   refine Finset.sum_congr rfl fun p _ => ?_
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun q _ => ?_
   obtain ⟨m, hm⟩ := QuotientGroup.mk_out_eq_mul K (p.out * q.out)
   have h2 : (p.out • q : H ⧸ K) = ((p.out * q.out : H) : H ⧸ K) := by

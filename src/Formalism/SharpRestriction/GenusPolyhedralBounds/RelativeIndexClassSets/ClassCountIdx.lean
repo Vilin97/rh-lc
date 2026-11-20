@@ -78,7 +78,8 @@ theorem mem_S_of_loc (x : E ⊗[F] FiniteAdeleRing (𝓞 F) F) (h : ∀ w, prV (
     rw [← sub_eq_zero]
     apply afsplit_inj
     intro w
-    rw [map_sub, map_add, map_sum, map_mul, map_mul, sub_eq_zero, afsplit_prV_tmul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_add, map_sum, map_mul, map_mul, sub_eq_zero, afsplit_prV_tmul]
     unfold levelafC
     rw [afsplit_prV_tmul]
     by_cases hw : w ∈ hfin.toFinset

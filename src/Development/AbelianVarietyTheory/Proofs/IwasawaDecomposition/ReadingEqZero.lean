@@ -96,7 +96,8 @@ theorem reading_eq_zero {L L' : Type} [Field L] [Field L'] (ι : L →+* L') (σ
       · simp [Pi.single_apply, hak]⟩
     exact (eq_of_heq (h1.trans hz.symm)).trans (map_zero j')
   refine LinearMap.ext fun x => ?_
-  rw [pi_eq_sum_univ' x, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [pi_eq_sum_univ' x, map_sum]
   refine Finset.sum_eq_zero fun k _ => ?_
   rw [map_smulₛₗ, hk, smul_zero]
 

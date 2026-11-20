@@ -259,7 +259,8 @@ theorem exists_coords_and_series (h5 : 5 ≤ l) {σ : ℂ_[l] →+* ℂ_[l]} (h�
       fun r => ⟨hinj (by rw [map_iterate hτ]; exact (hD.fix r).1), hinj (by rw [map_iterate hτ]; exact (hD.fix r).2)⟩⟩
   have hTr : TrDual d τ o o' := by
     refine ⟨hD.card, fun r r' => hinj ?_⟩
-    rw [sum_even d hd (fun n => τ^[n] (o r * o' r')), map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [sum_even d hd (fun n => τ^[n] (o r * o' r')), map_sum]
     simp only [map_iterate hτ, map_mul (MaximalUnramifiedExtension l).subtype]
     rw [hD.dual r r']
     split_ifs <;> simp
@@ -294,11 +295,13 @@ theorem exists_coords_and_series (h5 : 5 ≤ l) {σ : ℂ_[l] →+* ℂ_[l]} (h�
       zOm σ (fun r => (MaximalUnramifiedExtension l).subtype (o r)) (fun r => (MaximalUnramifiedExtension l).subtype (o' r)) s := fun s => by
     unfold zXY zOm
     by_cases hs : s.val % 2 = 0
-    · rw [if_pos hs, if_pos (Nat.even_iff.2 hs), subst_sum hRs, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [if_pos hs, if_pos (Nat.even_iff.2 hs), subst_sum hRs, map_sum]
       refine Finset.sum_congr rfl fun r _ => ?_
       rw [subst_mul hRs, subst_C, hRat, map_mul, map_C, map_lg, map_iterate hτ]
       rfl
-    · rw [if_neg hs, if_neg (fun h => hs (Nat.even_iff.1 h)), subst_sum hRs, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [if_neg hs, if_neg (fun h => hs (Nat.even_iff.1 h)), subst_sum hRs, map_sum]
       refine Finset.sum_congr rfl fun r _ => ?_
       rw [subst_mul hRs, subst_C, hRat, map_mul, map_C, map_lg, map_iterate hτ]
       rfl
@@ -316,7 +319,8 @@ theorem exists_coords_and_series (h5 : 5 ≤ l) {σ : ℂ_[l] →+* ℂ_[l]} (h�
     convert h using 1
     · rfl
     unfold beXY
-    rw [subst_sum hRs, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [subst_sum hRs, map_sum]
     refine Finset.sum_congr rfl fun r _ => ?_
     rw [subst2_comp hRs (constantCoeff_X _) (constantCoeff_X _), subst_X hRs, subst_X hRs, subst_inPar hl b (hR0 _) (hR0 _),
       map_pair b (cc_ps (hR0 _) (cc_lgF hl)) (cc_ps (hR0 _) (cc_lgF hl)), ← map_lg, ← map_lg, hR]

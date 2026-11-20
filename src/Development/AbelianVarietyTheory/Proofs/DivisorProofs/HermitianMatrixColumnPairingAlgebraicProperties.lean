@@ -60,7 +60,8 @@ theorem pr_alg : ∀ (F : Type) [Field F] [CharZero F] (E : Type) [Field E] [Alg
   refine ⟨prLin c Q, fun x y => by rw [hap, pr_eq_trace], fun x y => ?_, fun y hy => ?_, fun x y a => ?_, hap⟩
   ·
     have h : Matrix.trace (Qᵀ * (y * (x.map c)ᵀ)) = c (Matrix.trace (Qᵀ * (x * (y.map c)ᵀ))) := by
-      simp only [Matrix.trace, diag, mul_apply, transpose_apply, map_apply, map_sum, map_mul, hc, hQ.1]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Matrix.trace, diag, mul_apply, transpose_apply, map_apply, map_sum, map_mul, hc, hQ.1]
       rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun k _ => ?_
       exact congrArg _ (Finset.sum_congr rfl fun j _ => mul_comm _ _)
@@ -86,7 +87,8 @@ theorem pr_alg : ∀ (F : Type) [Field F] [CharZero F] (E : Type) [Field E] [Alg
   ·
     have h : ((y * (a.map c)ᵀ).map c)ᵀ = a * (y.map c)ᵀ := by
       ext i j
-      simp [mul_apply, map_sum, hc, mul_comm]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [mul_apply, map_sum, hc, mul_comm]
     rw [hap, hap, h, Matrix.mul_assoc]
 
 end GlobalTheory.KSp

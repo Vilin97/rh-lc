@@ -77,7 +77,8 @@ theorem exists_isIdempotentElem_lift_quotient_of_isIntegral (A B : Type) [CommRi
   have hsum : b₀ * b₀ - b₀ = ∑ i, r₀ i * algebraMap A B₀ (a i) := by
     apply Subtype.ext
     show b * b - b = B₀.val (∑ i, r₀ i * algebraMap A B₀ (a i))
-    rw [map_sum, ← hs]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, ← hs]
     refine Finset.sum_congr rfl fun i _ ↦ ?_
     rw [map_mul, AlgHom.commutes, hsa i, smul_eq_mul]
     rfl

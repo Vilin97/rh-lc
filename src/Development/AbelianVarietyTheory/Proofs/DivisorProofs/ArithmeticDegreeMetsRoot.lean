@@ -113,7 +113,8 @@ theorem arDeg_relabel : Hypotheses2 → HypothesesH → ∀ (D : D7) (O : Setup 
   have hlin : linRoot (fun ρ i => u (σ ρ) i) =
       MvPolynomial.rename (fun y : D.what₂.Tau × Fin O.N => (σ.symm y.1, y.2)) (linRoot u) := by
     unfold linRoot
-    rw [map_neg, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_neg, map_sum]
     congr 1
     refine Fintype.sum_equiv (Equiv.prodCongr σ (Equiv.refl _)) _ _ fun y => ?_
     simp [MvPolynomial.rename_X, MvPolynomial.algebraMap_eq]

@@ -14,7 +14,8 @@ private theorem ac_sum {G R ι : Type} [TopologicalSpace G] [CommRing R] {I : Id
     {f : ι → G → R} (hf : ∀ i, AdicCont I (f i)) : AdicCont I fun g => ∑ i ∈ s, f i g := by
   classical
   intro N
-  simp only [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum]
   induction s using Finset.induction_on with
   | empty =>
     simp only [Finset.sum_empty]

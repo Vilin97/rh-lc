@@ -154,7 +154,8 @@ theorem locW {B : Base F E} (hB : B.IsGood σ) {ν : Chr F E} {z : ℕ} (hz : 1 
 
 theorem inf_sum (W : Finset (HeightOneSpectrum (𝓞 E))) {c : AE F E} (h0 : infTens F E c = 0) :
     infTens F E (∑ w ∈ W, ew F w + c) = 0 := by
-  rw [map_add, h0, add_zero, map_sum, Finset.sum_eq_zero fun w _ => inf_ew w]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_add, h0, add_zero, map_sum, Finset.sum_eq_zero fun w _ => inf_ew w]
 
 open Classical in
 theorem prodW {B : Base F E} (hB : B.IsGood σ) {ν : Chr F E} {z : ℕ} (hz : 1 ≤ z) (W : Finset (HeightOneSpectrum (𝓞 E)))
@@ -211,7 +212,8 @@ open Classical in
 theorem rest_split {T T' : Finset (Pl F)} (h : T ⊆ T') :
     (io (rest T) : AE F E) = ∑ w ∈ ab (T' \ T), ew F w + io (rest T') := by
   refine ae_ext (by rw [inf_io (rest_fst _), inf_sum _ (inf_io (rest_fst _))]) fun u => ?_
-  rw [map_add, map_sum, cw_rest, cw_rest]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_add, map_sum, cw_rest, cw_rest]
   simp only [cw_ew, Finset.sum_ite_eq, mem_ab, Finset.mem_sdiff]
   by_cases h1 : u.under (𝓞 F) ∈ T
   · simp [h1, h h1]

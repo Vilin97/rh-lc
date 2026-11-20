@@ -58,7 +58,8 @@ theorem row_action_comp (g h : Matrix (Fin r) (Fin r) ℂ) (f : MvPolynomial (Fi
   have hcomp : (Formalism.GradedWeylDivisibility.rowAct ℂ (n := n) h).comp (Formalism.GradedWeylDivisibility.rowAct ℂ (n := n) g) = Formalism.GradedWeylDivisibility.rowAct ℂ (n := n) (g * h) := by
     apply MvPolynomial.algHom_ext
     intro v
-    simp only [Formalism.GradedWeylDivisibility.rowAct, AlgHom.comp_apply, MvPolynomial.aeval_X, map_sum, map_mul, MvPolynomial.aeval_C,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Formalism.GradedWeylDivisibility.rowAct, AlgHom.comp_apply, MvPolynomial.aeval_X, map_sum, map_mul, MvPolynomial.aeval_C,
       MvPolynomial.algebraMap_eq, Matrix.mul_apply, Finset.mul_sum]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun c _ => ?_

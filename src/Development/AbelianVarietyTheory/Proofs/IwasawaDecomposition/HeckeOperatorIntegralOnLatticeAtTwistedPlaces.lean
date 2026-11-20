@@ -16,7 +16,8 @@ theorem exists_preimage_comb {K L V W : Type} [Field K] [Field L] [AddCommGroup 
     ∃ F : Finset V, (↑F ⊆ {x : V | f x ∈ S}) ∧ x = ∑ y ∈ F, c (f y) • y := by
   classical
   refine ⟨S.preimage f hf.injOn, fun y hy => by simpa using hy, hf ?_⟩
-  rw [hx, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hx, map_sum]
   simp only [LinearMap.map_smulₛₗ]
   exact (Finset.sum_preimage f S hf.injOn (fun g => σ (c g) • g) (fun g hg hn => absurd (hS g hg) hn)).symm
 

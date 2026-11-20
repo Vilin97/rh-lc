@@ -501,7 +501,8 @@ theorem PositivityTheory.Xgn.kernel_rank_algebraic_bound : ∀ (E : Type) [Field
       ρ (RingOfIntegers.basis E q.2) (x q.1)) with hS
     have hR : ∀ (a : 𝓞 E) (i : Fin r), ρ a (x i) ∈ S := by
       intro a i
-      rw [← (RingOfIntegers.basis E).sum_repr a, map_sum, LinearMap.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← (RingOfIntegers.basis E).sum_repr a, map_sum, LinearMap.sum_apply]
       refine S.sum_mem fun q _ => ?_
       rw [map_zsmul, LinearMap.smul_apply]
       exact S.toAddSubgroup.zsmul_mem (Submodule.subset_span ⟨(i, q), rfl⟩) _

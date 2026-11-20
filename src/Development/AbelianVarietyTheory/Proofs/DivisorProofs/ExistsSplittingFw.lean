@@ -149,11 +149,13 @@ def cornerEquiv (i0 : Fin m) : U ≃ₗ[L] (Fin m → corner σ i0) where
     show ∑ i, σ (Matrix.single i i0 1) (σ (Matrix.single i0 i 1) u) = u
     rw [show ∑ i, σ (Matrix.single i i0 1) (σ (Matrix.single i0 i 1) u) = ∑ i, σ (Matrix.single i i 1) u from
       Finset.sum_congr rfl fun i _ => by rw [← Module.End.mul_apply, E_mul]]
-    rw [← LinearMap.sum_apply, ← map_sum, sum_single_one, map_one, Module.End.one_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← LinearMap.sum_apply, ← map_sum, sum_single_one, map_one, Module.End.one_apply]
   right_inv w := by
     funext j; apply Subtype.ext
     show σ (Matrix.single i0 j 1) (∑ i, σ (Matrix.single i i0 1) (w i)) = w j
-    rw [map_sum, Finset.sum_eq_single j]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_eq_single j]
     · rw [← Module.End.mul_apply, E_mul, (mem_corner σ).1 (w j).2]
     · intro i _ hij
       rw [← Module.End.mul_apply, E_mul_ne _ _ _ _ _ (Ne.symm hij), LinearMap.zero_apply]

@@ -192,7 +192,8 @@ theorem matH_mulVec (y : Formalism.L2.Col.HomE D.host.E a b) (n : Formalism.L2.C
   have hn : n = ∑ j, n j • (Pi.single j (1 : D.host.E) : Formalism.L2.Col.Sp D.host.E a) := by
     ext k; simp [Finset.sum_apply, Pi.single_apply]
   conv_rhs => rw [hn]
-  simp only [Matrix.mulVec, dotProduct, matH, map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mulVec, dotProduct, matH, map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
   exact Finset.sum_congr rfl fun j _ => mul_comm _ _
 
 theorem matH_mem (N : Submodule (𝓞 D.host.E) (Formalism.L2.Col.Sp D.host.E a)) (N' : Submodule (𝓞 D.host.E) (Formalism.L2.Col.Sp D.host.E b))

@@ -22,7 +22,8 @@ private theorem semiconj_gen {R : Type} [CommRing R] [Algebra ℝ R] {ι : Type}
     | zero => simp
     | tmul c r =>
       rw [unitMap_tmul, mul_smul_comm, h, Matrix.matrix_eq_sum_single (P * Matrix.single i j r * Q)]
-      simp only [map_sum, Finset.sum_mul, Finset.smul_sum, Algebra.TensorProduct.tmul_mul_tmul, one_mul,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, Finset.sum_mul, Finset.smul_sum, Algebra.TensorProduct.tmul_mul_tmul, one_mul,
         unitMap_tmul, ent, smul_mul_assoc]
     | add x y hx hy =>
       simp only [map_add, mul_add, hx, hy, Finset.sum_add_distrib, add_mul]

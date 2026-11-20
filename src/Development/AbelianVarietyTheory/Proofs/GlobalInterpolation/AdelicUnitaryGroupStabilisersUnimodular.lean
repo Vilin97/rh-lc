@@ -44,7 +44,8 @@ theorem exists_stepData (h : IsCMExt F E σ) {M : ℕ} {J : Matrix (Fin (M + 1))
     have h1 : ∀ i, hfLin (σ : E →+* E) J y (b i) = 0 := fun i => by
       have h2 : hfLin (σ : E →+* E) J (b i) y = 0 := by
         rw [← show _ = (0 : E) from congrFun hc0 i]
-        simp only [y, Submodule.coe_sum, Submodule.coe_smul, map_sum, map_smul, Matrix.mulVec,
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [y, Submodule.coe_sum, Submodule.coe_smul, map_sum, map_smul, Matrix.mulVec,
           dotProduct, hG, smul_eq_mul]
         exact Finset.sum_congr rfl fun j _ => mul_comm _ _
       exact (herm _ _).symm.trans ((congrArg _ h2).trans (map_zero _))

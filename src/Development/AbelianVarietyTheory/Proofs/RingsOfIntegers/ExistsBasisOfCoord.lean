@@ -32,7 +32,8 @@ theorem exists_basis_of_coord {F : Type} [Field F] (v : AddValuation F (WithTop 
 
   have key : ∀ (c : Fin n → F) (p : J), φ (∑ i, c i • (t (e i) • B (e i))) p = c (e.symm p) * t p := by
     intro c p
-    simp only [map_sum, map_smul, hB, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Pi.single_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, hB, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Pi.single_apply]
     rw [Finset.sum_eq_single (e.symm p)]
     · simp
     · intro i _ hi

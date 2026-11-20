@@ -160,7 +160,8 @@ theorem perSBound : PerSBound := by
     exact inj_phi T s P0 P cB g h hlift ρ hN y (fun i => (Submodule.mem_inf.mp (hy i)).2) h0'
   have hΦ3 : ∀ y ∈ Pi0, ‖ρR (fΦ y)‖ ≤ ((n : ℝ) * Fintype.card P.H) * ‖ρP y‖ := by
     intro y _
-    rw [hfΦ, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hfΦ, map_sum]
     refine (norm_sum_le _ _).trans ?_
     have hterm : ∀ i, ‖ρR (ρ.asAlgebraHom (epsSum P * MonoidAlgebra.of K G (g i)) (y i))‖ ≤
         (Fintype.card P.H : ℝ) * ‖ρP y‖ := by

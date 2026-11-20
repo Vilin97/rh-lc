@@ -470,7 +470,8 @@ theorem exists_bes {ρ : ℕ} (B : BesLev D ρ) {s : k} (hs : s ≠ 0) (FA : Fra
   · rw [show j = ⟨ρ, by omega⟩ from Fin.ext h]
     refine (hF r (Sum.inl (Sum.inr ()))).trans (congrArg (s * ·) ?_)
     change (B.d.i₀.map (prH p) * F₀.β) r (Sum.inr ()) = prH p (∑ u, B.d.i₀ r u * vecB B.o B.ζ u)
-    rw [Matrix.mul_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Matrix.mul_apply, map_sum]
     exact Finset.sum_congr rfl fun u _ => by rw [h₀.2, one_mul, map_mul]; rfl
   · rw [show j = ⟨2 * ρ - i.val, by omega⟩ from Fin.ext (by simp only; omega)]
     exact hF r (Sum.inr (Sum.inr i))
@@ -501,7 +502,8 @@ theorem exists_isLoc (F : Frame k S.rank Y) (gk : GL Y k) : ∃ g, p.IsLoc F g g
       (A.map p.ι : Mx D S.rank S.rank) * B.map p.ι = p.e • (1 : Mx D S.rank S.rank) := fun A B h => by
     ext i j
     have := congrArg p.ι (congrFun (congrFun h i) j)
-    rw [Matrix.mul_apply, map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Matrix.mul_apply, map_sum] at this
     rw [Matrix.mul_apply, Matrix.smul_apply]
     simp only [Matrix.map_apply, ← hm]
     rw [this, Matrix.one_apply, Matrix.one_apply]

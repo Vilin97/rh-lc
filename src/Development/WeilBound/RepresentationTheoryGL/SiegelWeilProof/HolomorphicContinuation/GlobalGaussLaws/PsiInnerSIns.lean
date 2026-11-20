@@ -32,12 +32,14 @@ theorem map_inner (V : HSp D) (τ : D.what₂.Tau) (x y : Mx D V.rank n) :
 set_option synthInstance.maxHeartbeats 400000 in
 theorem psiT_trace {a : ℕ} (τ : D.what₂.Tau) (M : Matrix (Fin a) (Fin a) (AE D)) :
     psiT D τ (Matrix.trace M) = Matrix.trace (M.map (psiT D τ)) := by
-  simp only [Matrix.trace, Matrix.diag, Matrix.map_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.trace, Matrix.diag, Matrix.map_apply, map_sum]
 
 set_option synthInstance.maxHeartbeats 400000 in
 theorem finPart_trace {a : ℕ} (M : Matrix (Fin a) (Fin a) (AE D)) :
     finPart D (Matrix.trace M) = Matrix.trace (M.map (finPart D)) := by
-  simp only [Matrix.trace, Matrix.diag, Matrix.map_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.trace, Matrix.diag, Matrix.map_apply, map_sum]
 
 set_option synthInstance.maxHeartbeats 400000 in
 theorem finMap_inner (V : HSp D) (x y : Mx D V.rank n) (hy : y.map (finPart D) = 0) :

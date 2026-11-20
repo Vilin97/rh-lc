@@ -50,7 +50,8 @@ private theorem small {O : Type} [CommRing O] [IsLocalRing O] (h2 : IsUnit (2 : 
   have hεe : ∀ u, τ (ε u) = sg C (wf u) * ε u := fun u => hε u
   have hτsum : ∀ a : κ → O, τ (∑ u, a u • ε u) = ∑ u, (a u * sg O (wf u)) • ε u := by
     intro a
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun u _ => ?_
     rw [map_smul, hεe, sg_smul (O := O), smul_smul]
   have hzero : ∀ (y : ↥(RingHom.ker p)) (i : ZMod 2), τ (y : C) = sg C i * y → ∀ u, wf u ≠ i → co u y = 0 := by
@@ -259,7 +260,8 @@ theorem UpperTheory.V.Fr.ep_mazur :
   · intro c hc
     apply P.indep c
     have h' : Ideal.Quotient.mkₐ O J (∑ u, c u • P.f u) = 0 := by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simp only [map_smul]
       exact hc
     exact Ideal.Quotient.eq_zero_iff_mem.1 h'

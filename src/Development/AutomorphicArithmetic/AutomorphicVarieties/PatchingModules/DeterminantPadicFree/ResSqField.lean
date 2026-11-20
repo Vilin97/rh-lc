@@ -14,7 +14,8 @@ private theorem UpperTheory.V.Pa.Det.resSq_fin {K K' : Type} [Field K] [Field K'
   have key : φ = ∑ i, (PowerSeries.mk fun n => b.repr (PowerSeries.coeff n φ) i) •
       PowerSeries.C (b i) := by
     ext n
-    simp only [Algebra.smul_def, RingHom.algebraMap_toAlgebra, map_sum, PowerSeries.coeff_mul_C,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Algebra.smul_def, RingHom.algebraMap_toAlgebra, map_sum, PowerSeries.coeff_mul_C,
       PowerSeries.coeff_map, PowerSeries.coeff_mk]
     simp_rw [← Algebra.smul_def]
     exact (b.sum_repr _).symm

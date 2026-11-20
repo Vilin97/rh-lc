@@ -36,7 +36,8 @@ theorem aeval_qq_pow_sub_lt_one : ∀ (p : ℕ) [Fact p.Prime] (Ωl : Type) [Fie
     rw [Algebra.smul_def]
   have e2 : algebraMap (O0 p) Ωl (∑ i ∈ Finset.range (p ^ n), f.coeff i ^ p ^ n * qO p ^ i) =
       ((∑ i ∈ Finset.range (p ^ n), t i ^ p ^ n : integralClosure (O0 p) Ωl) : Ωl) := by
-    rw [map_sum, AddSubmonoidClass.coe_finset_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, AddSubmonoidClass.coe_finset_sum]
     exact Finset.sum_congr rfl fun i _ => (term i).symm
   have e3 : aeval (T.qq n) f ^ p ^ n - algebraMap (O0 p) Ωl
       (∑ i ∈ Finset.range (p ^ n), f.coeff i ^ p ^ n * qO p ^ i) = (p : Ωl) * (r : Ωl) := by

@@ -136,7 +136,8 @@ theorem one_sub_eps_mem (he : IsIdemSum e S) {P : Formalism.L2.DIV.Pl D.host.E} 
   have e1 : (⟨_, hO⟩ : OhE D) = ∑ Q ∈ S.attach, ⟨_, finQ_int (hi Q.1 Q.2)⟩ := Subtype.ext (by
     refine Eq.trans ?_ (map_sum (OhE D).subtype _ _).symm
     change finQ D e = ∑ Q ∈ S.attach, finQ D (es Q.1)
-    rw [hs, map_sum, Finset.sum_attach S fun P => finQ D (es P)])
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hs, map_sum, Finset.sum_attach S fun P => finQ D (es P)])
   rw [RingHom.map_sub, RingHom.map_one, e1, StandardFirstTheta.GlobalTheory.CompanionTheory.StdFstTheta.hom_sum,
     Finset.sum_eq_single ⟨P, hP⟩ (fun Q _ hQ => ?_) (fun h => (h (Finset.mem_attach _ _)).elim), hr P hP,
     (GlobalTheory.IdemRes.resS_idem_eq_one D _ _ (hes P hP)).2, sub_self]
@@ -164,7 +165,8 @@ theorem eps_zeroAt (he : IsIdemSum e S) {q : ℕ} (hp : q.Prime) (hq : Formalism
   refine ⟨1, one_pos, Nat.coprime_one_left _,
     finQ D (e * incA D ((((q : 𝓞 D.host.E) ^ k : 𝓞 D.host.E) : D.host.E)⁻¹)), ?_, ?_⟩
   · obtain ⟨es, hes, hs⟩ := he.1
-    rw [hs, Finset.sum_mul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hs, Finset.sum_mul, map_sum]
     refine sum_mem fun P hP => finQ_int (GlobalTheory.IdemRes.toEAf_mem_of_finPart ?_)
     by_contra hn
     exact not_mem_of_inert he hP hq (P.isPrime.mem_of_pow_mem k (((hes P hP).2 _ hx0).2 hn))

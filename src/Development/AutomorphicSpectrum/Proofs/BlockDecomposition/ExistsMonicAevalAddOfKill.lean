@@ -239,7 +239,8 @@ theorem exists_monic_compact_part {W : Type} [AddCommGroup W] [Module ℂ W] [Fi
     intro g m
     apply Subtype.ext
     change evK g (T m.1) = _
-    rw [hTe, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hTe, map_sum]
     simp only [T', LinearMap.sum_apply, LinearMap.smul_apply, Module.End.mul_apply,
       Submodule.coe_sum, Submodule.coe_smul_of_tower, map_smul]
     refine Finset.sum_congr rfl fun i _ => ?_

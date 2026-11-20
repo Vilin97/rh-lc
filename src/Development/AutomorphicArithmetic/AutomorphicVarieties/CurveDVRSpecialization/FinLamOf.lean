@@ -25,7 +25,8 @@ private theorem flo_sub_mem {O R : Type} [CommRing O] [IsLocalRing O] [Finite (R
     have := Finset.mem_range.1 hi
     omega
   have hres : res O R s = ((q - 1 : ℕ) : ResidueField O) * res O R a ^ (q - 1 - 1) := by
-    rw [hs, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hs, map_sum]
     simp only [map_mul, map_pow, ← h]
     rw [Finset.sum_congr rfl hterm, Finset.sum_const, Finset.card_range, nsmul_eq_mul]
   have hcast : ((q - 1 : ℕ) : ResidueField O) = -1 := by

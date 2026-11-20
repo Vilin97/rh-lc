@@ -171,7 +171,8 @@ theorem aeval_dualVar (p : ℂ[X]) :
     aeval (dualVar F) p = algebraMap ℂ[X] (RatFunc ℂ) (dualPoly F p) /
       algebraMap ℂ[X] (RatFunc ℂ) (X ^ p.natDegree) := by
   have hX : (RatFunc.X : RatFunc ℂ) ≠ 0 := RatFunc.X_ne_zero
-  rw [aeval_eq_sum_range, dualPoly, map_sum, Finset.sum_div]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [aeval_eq_sum_range, dualPoly, map_sum, Finset.sum_div]
   refine Finset.sum_congr rfl fun i hi => ?_
   have hi' : i ≤ p.natDegree := Nat.lt_succ_iff.1 (Finset.mem_range.1 hi)
   have hpow : (RatFunc.X : RatFunc ℂ) ^ p.natDegree =

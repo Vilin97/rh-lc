@@ -241,7 +241,8 @@ theorem integral_eq {m : ℕ}
       (Nat.card (unipB (ZMod g) (Fin m)) : ℂ) * I F := by
     have : (fun y => (Nat.card (unipB (ZMod g) (Fin m)) : ℂ) * F y) = (Nat.card (unipB (ZMod g) (Fin m)) : ℂ) • F := rfl
     rw [this, map_smul, smul_eq_mul]
-  rw [← e1, congrArg I e2, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← e1, congrArg I e2, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun κ _ => ?_
   rw [map_smul, smul_eq_mul, hI _ hT, mul_comm]
 

@@ -130,7 +130,8 @@ theorem mem_of_basis {V Z : Type} [AddCommGroup V] [Module C V] [AddCommGroup Z]
     (e : Module.Basis (Fin r) C V) (T : V →ₗ[C] Z) (M : AddSubgroup Z)
     (hM : ∀ a ∈ RC, ∀ z ∈ M, a • z ∈ M) (hT : ∀ k, T (e k) ∈ M) (x : V) (hx : ∀ k, e.repr x k ∈ RC) :
     T x ∈ M := by
-  rw [← e.sum_repr x, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← e.sum_repr x, map_sum]
   exact M.sum_mem fun k _ => by rw [map_smul]; exact hM _ (hx k) _ (hT k)
 
 theorem onto_of_mod (hv : ∀ c, c ∈ RC ↔ v c ≤ 1) {w : C} (hw : v w < 1) {s n : ℕ}

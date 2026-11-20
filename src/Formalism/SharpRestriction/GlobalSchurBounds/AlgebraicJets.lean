@@ -35,7 +35,8 @@ theorem kRat_iff_entIn (i : ℕ) : M.KRat i ↔ EntIn M i (Set.range D.what₂.e
     refine ⟨fun b => D.what₂.embLL ((M.lat (i + 1)).b.repr y b), fun b => ⟨_, rfl⟩, ?_⟩
     rw [← hy]
     conv_lhs => rw [← (M.lat (i + 1)).b.sum_repr y]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun b _ => by rw [LinearMap.map_smulₛₗ]
   · intro h x
     choose t ht hK using h
@@ -44,7 +45,8 @@ theorem kRat_iff_entIn (i : ℕ) : M.KRat i ↔ EntIn M i (Set.range D.what₂.e
     have h1 : C.K i (M.emb i x) = C.Klin i (M.emb i x) := rfl
     rw [h1]
     conv_rhs => rw [← (M.lat i).b.sum_repr x]
-    simp only [map_sum, LinearMap.map_smulₛₗ, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.map_smulₛₗ, map_smul]
     refine Finset.sum_congr rfl fun a _ => ?_
     have h2 : C.Klin i (M.emb i ((M.lat i).b a)) = C.K i (M.emb i ((M.lat i).b a)) := rfl
     rw [h2, hK a]
@@ -135,7 +137,8 @@ theorem exists_map_eq {σ : Type} (F : IntermediateField ℚ ℂ) (Q : MvPolynom
     ∃ Q₀ : MvPolynomial σ F, MvPolynomial.map (algebraMap F ℂ) Q₀ = Q := by
   refine ⟨∑ α ∈ Q.support, MvPolynomial.monomial α (⟨AddMonoidAlgebra.coeff Q α, h α⟩ : F), ?_⟩
   conv_rhs => rw [Q.as_sum]
-  simp only [map_sum, MvPolynomial.map_monomial]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, MvPolynomial.map_monomial]
   rfl
 
 theorem coeff_map_mem {σ : Type} (F : IntermediateField ℚ ℂ) (Q₀ : MvPolynomial σ F) (α : σ →₀ ℕ) :
@@ -186,7 +189,8 @@ theorem exists_jetPoly (D : D7) (F : IntermediateField ℚ ℂ) {N N' : ℕ} (s 
   rw [polD_eq]
   unfold GL3Theta.applyAt0
   rw [Finset.sum_subset (MvPolynomial.support_map_subset _ _) ?hz]
-  · simp only [map_sum, map_mul, MvPolynomial.coeff_map]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [map_sum, map_mul, MvPolynomial.coeff_map]
     refine Finset.sum_congr rfl fun α _ => ?_
     rw [mul_assoc]
     exact congrArg₂ (· * ·) rfl (MvPolynomial.eval₂Hom_C _ _ _)
@@ -229,7 +233,8 @@ theorem stmt_entAlg {D : D7} {u : D.what₂.Word} {C : ColumnChain D.R D.what₂
   refine ⟨fun τ => (C.sDiv i τ).toNat, MvPolynomial.map (algebraMap Qbar ℂ) ((∏ τ, detP D Qbar _ τ ^ (-(C.sDiv i τ)).toNat) *
     ∑ c, MvPolynomial.C ((((Nat.card (C.stab i c) : ℕ) : Qbar))⁻¹ * (⟨C.rhoDet i c, hρ.1 c⟩ * ⟨C.rhoDet' i c', hρ.2 c'⟩)) * R c),
     fun α => coeff_map_mem _ _ _, fun y' => ?_⟩
-  rw [evFr_map, map_mul, map_prod, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [evFr_map, map_mul, map_prod, map_sum]
   have hK : C.K i (M.emb i ((M.lat i).b a)) c' y' = (∏ τ, C.de (i + 1) y' τ ^ C.sDiv i τ)⁻¹ *
       ∑ c, (((Nat.card (C.stab i c) : ℕ) : ℂ))⁻¹ * (C.rhoDet i c * C.rhoDet' i c') * evF D Qbar (O.frm (i + 1) y') (R c) := by
     simp only [ColumnChain.K, Formalism.ThetaLiftIndependence.kerOpM, ColumnChain.wt, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, ColumnChain.Kmap,

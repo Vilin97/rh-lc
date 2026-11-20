@@ -196,12 +196,14 @@ theorem exists_lift (hD : LeftInv D c) (hb : h ≫ p0 = cbase m U)
     obtain ⟨u, hu⟩ := unit_of_eq hp ψ (vEn x) (b := (algebraMap R K).comp bO) (v := algebraMap R K ∘ V (vEn x))
       (hv := span_range_comp_eq_top _ (hV _) _) (by rw [e, Category.assoc, hzV, spMap_pt])
     have hL : algebraMap R K (∑ q, φ0 (lform D (wLet w ∘ (vEn x).2.1) q) * V (vEn x) q) = u := by
-      rw [map_sum, ← lead_eq (w := w) hD ψ (vEn x).2.2 u]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, ← lead_eq (w := w) hD ψ (vEn x).2.2 u]
       refine Finset.sum_congr rfl fun q _ => ?_
       rw [map_mul, ← hu, hC]
       rfl
     have hR : algebraMap R K (∑ q, φ0 (lform D (rd w x) q) * V (vEn x) q) = u * ψ (MvPolynomial.X x) := by
-      rw [map_sum, ← read_eq hD ψ x u]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, ← read_eq hD ψ x u]
       refine Finset.sum_congr rfl fun q _ => ?_
       rw [map_mul, ← hu, hC]
       rfl
@@ -209,7 +211,8 @@ theorem exists_lift (hD : LeftInv D c) (hb : h ≫ p0 = cbase m U)
       have := hmin x.1 (x.2.1.2 + 1) (Nat.succ_le_of_lt x.2.1.2.2) (π.comp bO) (π ∘ V (vEn x))
         (span_range_comp_eq_top _ (hV _) π) (by rw [Category.assoc, hzV, spMap_pt])
       rw [hk] at this
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simp only [map_mul]
       exact this
     obtain ⟨t, ht⟩ := (IsLocalRing.residue_ne_zero_iff_isUnit _).1 hne

@@ -32,7 +32,8 @@ private theorem glue_frame {X : Scheme.{0}} {P Q : X.Modules} (m : P ⟶ Q) {l :
     rw [← show ⇑(appLinear m V) = ⇑(m.app V) from rfl, injective_iff_map_eq_zero]
     intro s hs
     obtain ⟨a, rfl⟩ := (ht y V h).2 s
-    rw [Fintype.linearCombination_apply, map_sum] at hs
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Fintype.linearCombination_apply, map_sum] at hs
     simp only [map_smul, appLinear_apply, hres] at hs
     rw [show a = 0 from funext (Fintype.linearIndependent_iff.1 (hc V) a hs), map_zero]
   have hcov : (⊤ : X.Opens) ≤ iSup W := fun y _ => TopologicalSpace.Opens.mem_iSup.2 ⟨y, hy y⟩
@@ -67,7 +68,8 @@ private theorem exists_isFrame_sub {X : Scheme.{0}} {F : X.Modules} {U : X.Opens
   have hincl (V : X.Opens) (h : V ≤ U) (b : Fin l → Γ(X, V)) :
       P.incl.app V (Fintype.linearCombination Γ(X, V) (fun k => resM P.toMod h (e k)) b) =
         ∑ k, b k • resM F h (c (Fin.castLE hl k)) := by
-    rw [Fintype.linearCombination_apply, ← appLinear_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Fintype.linearCombination_apply, ← appLinear_apply, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_smul, appLinear_apply, app_resM]
     rfl
@@ -100,7 +102,8 @@ private theorem pull_comb {T Y Z : Scheme.{0}} (x : T ⟶ Y) (q : Y ⟶ Z) (E : 
       ∑ m, x.appLE U (x ⁻¹ᵁ U) le_rfl (a m) • pullbackSections (x ≫ q) E h₂ (e m) := by
   have h3 := QCoh.pullback_map_app_pullbackSections x i (le_refl (x ⁻¹ᵁ U)) s
   refine (congrArg (((Scheme.Modules.pullbackComp x q).hom.app E).app _) h3).trans ?_
-  rw [hs, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hs, map_sum, map_sum]
   refine Finset.sum_congr rfl fun m _ => ?_
   rw [QCoh.pullbackSections_smul, Scheme.Modules.Hom.app_smul,
     ← Vert.DivPull.pullbackComp_inv_app x q E h₁ le_rfl h₂]
@@ -123,7 +126,8 @@ private theorem pull_incl_cellCol (ι : Type) [Fintype ι] (N : ℕ) (τ : ι) (
     (fun i => cellRing ι N w ((cellGL Prod.fst Prod.snd w τ).1 i k)) le_top le_top ?_).trans
     (Finset.sum_congr rfl fun i _ => congrArg _ (QCoh.res_pullbackSections _ _ _ _ _).symm)
   refine (congrArg ((freeIso ι N).inv.app _) hs).trans ?_
-  rw [cellCol, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [cellCol, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [Scheme.Modules.Hom.app_smul, app_resM]
   congr 1
@@ -234,16 +238,19 @@ theorem _root_.GlobalTheory.T.pullback_flag_sections_frame : ∀ (ι : Type) [Fi
           (cellRing ι N w ((cellGL Prod.fst Prod.snd w a).1 i (Fin.castLE l.is_le k)))) •
             resM _ (le_top : W ≤ ⊤) (q i) := by
       intro k
-      rw [GlobalTheory.Twist.app_resM, pull_incl_cellCol ι N a l w (flagPt (Prod.fst : ι × Fin (N + 1) → ι) Prod.snd g) (e k) _ (hinc k), map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [GlobalTheory.Twist.app_resM, pull_incl_cellCol ι N a l w (flagPt (Prod.fst : ι × Fin (N + 1) → ι) Prod.snd g) (e k) _ (hinc k), map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [GlobalTheory.Twist.resM_smul, GlobalTheory.Twist.resM_resM]
     have h2 : resM _ (le_top : W ≤ ⊤) (GlobalTheory.FlagZ.Taut.colSec ((flagPt (Prod.fst : ι × Fin (N + 1) → ι) Prod.snd g) ≫ flStr ι N) (g a).1 (Fin.castLE l.is_le j)) =
         ∑ i, resG (Sp A) (le_top : W ≤ ⊤) ((Scheme.ΓSpecIso (CommRingCat.of A)).inv.hom ((g a).1 i (Fin.castLE l.is_le j))) •
           resM _ (le_top : W ≤ ⊤) (q i) := by
-      rw [GlobalTheory.FlagZ.Taut.colSec, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [GlobalTheory.FlagZ.Taut.colSec, map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [GlobalTheory.Twist.resM_smul]
-    rw [h2, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h2, map_sum]
     simp_rw [Scheme.Modules.Hom.app_smul, h1, Finset.smul_sum, smul_smul]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun i _ => ?_

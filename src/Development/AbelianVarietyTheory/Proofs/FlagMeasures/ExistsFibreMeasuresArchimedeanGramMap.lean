@@ -95,7 +95,8 @@ theorem gramB_surj_of_free (F E : Type) [Field F] [NumberField F] [Field E] [Num
     have hX0 : ∑ i, s (g i) • X i = 0 := by
       funext l
       have := congrArg s (congrFun hv l)
-      simp only [v, map_sum, map_mul, s, sigR_invol (Ainf F) σ hσ, Pi.zero_apply, map_zero] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [v, map_sum, map_mul, s, sigR_invol (Ainf F) σ hσ, Pi.zero_apply, map_zero] at this
       simpa [Finset.sum_apply, Pi.smul_apply, smul_eq_mul] using this
     have := Fintype.linearIndependent_iff.1 hX _ hX0 i
     have e2 := congrArg s this

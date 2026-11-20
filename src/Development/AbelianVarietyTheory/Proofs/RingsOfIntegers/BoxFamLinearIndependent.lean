@@ -55,7 +55,8 @@ theorem exists_tensor_pow (F O : Type) [Field F] [CommRing O] [Algebra F O] {A :
       refine congrFun (hβ (fun l => φ (∑ a : Fin j → Fin m, c (Fin.cons l a) • ∏ i, em i (β (α i) (a i))))
         fun α₀ => ?_) l
       have := congrArg (fun t => TensorProduct.rid F O (LinearMap.lTensor O φ t)) (key α₀ α)
-      simpa only [map_sum (LinearMap.lTensor O φ), map_sum (TensorProduct.rid F O), LinearMap.lTensor_tmul,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa only [map_sum (LinearMap.lTensor O φ), map_sum (TensorProduct.rid F O), LinearMap.lTensor_tmul,
         TensorProduct.rid_tmul, map_zero] using this
     funext a
     have := congrFun (key2 (a 0)) (Fin.tail a)
@@ -84,7 +85,8 @@ theorem exists_test {F : Type} [Field F] (p : X ⟶ Spec (CommRingCat.of F)) (x 
     ext a
     exact (em i).commutes a
   · refine h c fun α => eq_zero_of_germOf (B := CommRingCat.of B) _ fun z => ?_
-    rw [← hc α z, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hc α z, map_sum]
     refine Finset.sum_congr rfl fun a _ => ?_
     rw [Algebra.smul_def, map_mul, map_prod]
     congr 1

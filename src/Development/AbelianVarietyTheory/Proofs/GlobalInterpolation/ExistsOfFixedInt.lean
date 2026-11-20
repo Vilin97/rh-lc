@@ -53,7 +53,8 @@ variable {c J}
 
 theorem h_conj (hc : ∀ a, c (c a) = a) (hJ : ∀ i j, c (J j i) = J i j) (x y : Fin M → A) :
     c (hform c J x y) = hform c J y x := by
-  simp only [hform, map_sum, map_mul, hc]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hform, map_sum, map_mul, hc]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   rw [hJ]; ring
@@ -168,7 +169,8 @@ theorem exists_next [Nontrivial A] (hc : ∀ a, c (c a) = a) (hJ : ∀ i j, c (J
     rw [hπ]
     exact sub_mem hy (sum_mem fun i _ => smul_mem' ((hL y).1 hy _ (heL i)) (heL i))
   have hπe : ∀ y j, hform c J (e j) (π y) = 0 := fun y j => by
-    rw [hπ, ← hLin_apply, map_sub, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hπ, ← hLin_apply, map_sub, map_sum]
     simp [hLin_apply, he]
   let N : Submodule O (Fin M → A) := L.map (π.restrictScalars O)
   have hN : ∀ y, y ∈ N ↔ y ∈ L ∧ ∀ j, hform c J (e j) y = 0 := fun y => by
@@ -307,7 +309,8 @@ theorem exists_basis (hL : ∀ y, y ∈ L ↔ ∀ z ∈ L, hform c J z y ∈ O) 
       have := congrArg Subtype.val hg
       simpa [f, Subalgebra.smul_def] using this
     have h2 := congrArg (hLin c J (e j)) h1
-    rw [map_sum, map_zero] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero] at h2
     simp only [map_smul, hLin_apply, he, smul_eq_mul, mul_ite, mul_one, mul_zero,
       Finset.sum_ite_eq, Finset.mem_univ, if_true] at h2
     exact Subtype.ext h2

@@ -172,7 +172,8 @@ theorem UpperTheory.V.Z.Kato.Nb.sXiAct :
   have hcnd := fun m : GL (Fin 2) (ZMod M) => cnd_iff l N M hN (hl1.trans hln) g δ hδN hδl ν h1 h2' _ _ (hrel m)
   show AdicCompletion.eval (idl l) (X.Kl l) n (X.kmap l _ (Xi X l n N M₀ M w g x y P a _) - _) = 0
   unfold Xi
-  rw [map_sum, map_sub, map_sum, map_sum, sub_eq_zero]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sub, map_sum, map_sum, sub_eq_zero]
   refine Finset.sum_equiv e (fun m => ?_) (fun m hm => ?_)
   · simp only [Finset.mem_filter, Finset.mem_univ, true_and]
     rw [hcnd m, hdet m, hP]

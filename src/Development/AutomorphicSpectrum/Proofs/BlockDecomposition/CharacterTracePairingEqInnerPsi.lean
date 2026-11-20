@@ -34,7 +34,8 @@ theorem trace_tmap [Module.Finite F E] (f : R →ₐ[F] S) (z : R ⊗[F] E) :
   let b := Module.Free.chooseBasis F E
   rw [Algebra.trace_eq_matrix_trace (Algebra.TensorProduct.basis R b),
     Algebra.trace_eq_matrix_trace (Algebra.TensorProduct.basis S b)]
-  simp only [Matrix.trace, Matrix.diag, Algebra.leftMulMatrix_eq_repr_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.trace, Matrix.diag, Algebra.leftMulMatrix_eq_repr_mul, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [← repr_tmap, map_mul]
   simp only [Algebra.TensorProduct.basis_apply, Algebra.TensorProduct.map_tmul, map_one, AlgHom.coe_id, id_eq]
@@ -56,7 +57,8 @@ theorem tmap_gramR (f : R →ₐ[F] S) (σ : E →ₐ[F] E) {M n : ℕ} (J : Mat
     (gramR R σ J X).map (Algebra.TensorProduct.map f (AlgHom.id F E)) =
       gramR S σ J (fun a i => Algebra.TensorProduct.map f (AlgHom.id F E) (X a i)) := by
   ext a c
-  simp only [Matrix.map_apply, gramR, hR, Formalism.UG.hform, JR, map_sum, map_mul, tmap_sigR, tmap_inclR]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.map_apply, gramR, hR, Formalism.UG.hform, JR, map_sum, map_mul, tmap_sigR, tmap_inclR]
 
 theorem tmap_phase [Module.Finite F E] (f : R →ₐ[F] S) (σ : E →ₐ[F] E) {M n : ℕ}
     (J : Matrix (Fin M) (Fin M) E) (B : Matrix (Fin n) (Fin n) (R ⊗[F] E))
@@ -66,7 +68,8 @@ theorem tmap_phase [Module.Finite F E] (f : R →ₐ[F] S) (σ : E →ₐ[F] E) 
         (Matrix.trace (B.map (Algebra.TensorProduct.map f (AlgHom.id F E)) *
           gramR S σ J (fun a i => Algebra.TensorProduct.map f (AlgHom.id F E) (X a i)))) := by
   rw [map_mul, AlgHom.commutes, trace_tmap, ← tmap_gramR]
-  simp only [Matrix.trace, Matrix.diag, Matrix.mul_apply, Matrix.map_apply, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.trace, Matrix.diag, Matrix.mul_apply, Matrix.map_apply, map_sum, map_mul]
 
 end Gen
 

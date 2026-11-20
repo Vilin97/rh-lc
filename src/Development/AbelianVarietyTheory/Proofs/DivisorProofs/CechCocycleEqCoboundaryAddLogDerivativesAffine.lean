@@ -81,7 +81,8 @@ theorem exists_dlog_add_coboundary : ∀ (E : Type) [Field E] [NumberField E] [I
       exact add_sub_cancel_right _ _
     have : S'.mkQ z = ∑ k, r k • S'.mkQ (ek k) := by
       have h0 : S'.mkQ (z - ∑ k, r k • ek k) = 0 := (Submodule.Quotient.mk_eq_zero _).2 hmem
-      rw [map_sub, map_sum] at h0
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, map_sum] at h0
       simp only [map_smul] at h0
       exact sub_eq_zero.1 h0
     rw [this]
@@ -111,7 +112,8 @@ theorem exists_dlog_add_coboundary : ∀ (E : Type) [Field E] [NumberField E] [I
       exact (add_sub_cancel_right _ _).symm
     have hq : S'.mkQ z = ∑ k, r k • S'.mkQ (ek' k) := by
       have h0 : S'.mkQ (z - ∑ k, r k • ek' k) = 0 := (Submodule.Quotient.mk_eq_zero _).2 hmem
-      rw [map_sub, map_sum] at h0
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, map_sum] at h0
       simp only [map_smul] at h0
       exact sub_eq_zero.1 h0
     rw [hq]

@@ -51,7 +51,8 @@ theorem levFn_flag {D : D7} {n : ℕ} (β : GL (Fin n) (Lev.EAf D)) (L : LevDat 
 
 theorem hmod_sum {G W ι : Type} [Fintype ι] [NormedAddCommGroup W] [InnerProductSpace ℂ W] (M : Formalism.IndefR.Links.HMod (G → W))
     (a : ι → ℂ) (y : ι → M.H) (h : G) : M.e (∑ g, a g • y g) h = ∑ g, a g • M.e (y g) h := by
-  simp [map_sum, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, Finset.sum_apply]
 
 theorem avg_law {G H W : Type} [Group G] [Fintype G] [Mul H] [AddCommGroup W] [Module ℂ W]
     (inU : G → Prop) [DecidablePred inU] (N : ℂ) (Λ : G → ℂ) (f : H → W) (r : G → H) (h k : H) (gk : G)
@@ -256,12 +257,14 @@ theorem avg_level : ∀ (D : D7) (X : RealSide D) (E : IntegralHeckeForms.XD D) 
   · have e1 : X.R.thG j t (∑ g, (if X.cG (X.R.eG g) ∈ D.nexp.U then ((Finset.univ.filter fun g => X.cG (X.R.eG g) ∈ D.nexp.U).card : ℂ)⁻¹ * (((levFn (Y.Z.ρ.B i j b).F.βS ((Y.Z.ρ.B i j b).levS (Y.Z.ρ.tw i b 0 ∅ 1)) (finE (Vc D j) (κ g)) : ℂˣ) : ℂ))⁻¹ * levChi (Vc D j) (X.R.βV j) (flagL (X.R.datVt j t)) (κ g) else 0) • y' g) =
         ∑ g, (if X.cG (X.R.eG g) ∈ D.nexp.U then ((Finset.univ.filter fun g => X.cG (X.R.eG g) ∈ D.nexp.U).card : ℂ)⁻¹ * (((levFn (Y.Z.ρ.B i j b).F.βS ((Y.Z.ρ.B i j b).levS (Y.Z.ρ.tw i b 0 ∅ 1)) (finE (Vc D j) (κ g)) : ℂˣ) : ℂ))⁻¹ * levChi (Vc D j) (X.R.βV j) (flagL (X.R.datVt j t)) (κ g) else 0) •
           X.R.gW j (sg0 D X.A3.A) g (X.R.thG j t y0) := by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun g _ => ?_
       rw [map_smul, GlobalTheory.T.thetaProjection_intertwines_levelLifts X.R.toRealDat X.F.lv2 hC j t g (κ g) (hκ g) y0 (y' g) (hy' g).1]
     rw [e1]
     funext g'
-    simp only [map_sum, map_smul, MultilinearMap.sum_apply, MultilinearMap.smul_apply, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, MultilinearMap.sum_apply, MultilinearMap.smul_apply, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
     have hN : ((Finset.univ.filter fun g => X.cG (X.R.eG g) ∈ D.nexp.U).card : ℂ) ≠ 0 := by
       have h1 : X.cG (X.R.eG 1) ∈ D.nexp.U := by rw [map_one, map_one]; exact D.nexp.U.one_mem
       exact Nat.cast_ne_zero.2 (Finset.card_pos.2 ⟨1, by simpa using h1⟩).ne'

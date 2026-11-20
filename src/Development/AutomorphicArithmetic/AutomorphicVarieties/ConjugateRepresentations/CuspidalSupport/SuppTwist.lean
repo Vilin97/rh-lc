@@ -10,7 +10,8 @@ open scoped TensorProduct
 
 private theorem sum_map {ι α : Type} [Fintype ι] (f : α → α) (C : ι → Multiset α) :
     ∑ i, (C i).map f = (∑ i, C i).map f := by
-  rw [← Multiset.coe_mapAddMonoidHom, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Multiset.coe_mapAddMonoidHom, map_sum]
 
 private theorem sat_twist {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ} (π : CG E a) {w : Pl E}
     {B : Multiset ℂˣ} (h : π.HasSat w B) {χ : HChar E} (hχ : χ.UnrAt w) :

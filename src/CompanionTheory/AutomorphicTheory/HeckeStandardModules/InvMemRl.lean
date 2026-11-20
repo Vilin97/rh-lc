@@ -72,7 +72,8 @@ theorem key_M0 {l : ℕ} [Fact l.Prime] {c : ℕ} (hc : c ≠ 0) (x : L)
   have hτ : τ (((m * c ^ 2 : ℕ) : L) * x) =
       ∑ r, ((RingOfIntegers.basis L).repr y r : ℂ) * τ (RingOfIntegers.basis L r : L) := by
     have := congrArg (τ.comp (algebraMap (𝓞 L) L)) hy
-    rw [show τ (((m * c ^ 2 : ℕ) : L) * x) = (τ.comp (algebraMap (𝓞 L) L)) y from rfl, ← this, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [show τ (((m * c ^ 2 : ℕ) : L) * x) = (τ.comp (algebraMap (𝓞 L) L)) y from rfl, ← this, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_zsmul, zsmul_eq_mul]
     rfl

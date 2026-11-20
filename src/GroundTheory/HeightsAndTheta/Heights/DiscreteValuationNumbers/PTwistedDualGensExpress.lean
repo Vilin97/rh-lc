@@ -81,7 +81,8 @@ theorem TwistedDualGensExpress.proof : TwistedDualGensExpress.Statement := by
         exact mul_mem (pow_mem hwA _) he)
     refine ⟨e, ?_⟩
     have : w ^ n * ψ v = ∑ q, a'' q * (w ^ n * ψ (b l q)) := by
-      rw [hrep, map_sum, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hrep, map_sum, Finset.mul_sum]
       refine Finset.sum_congr rfl fun q _ => ?_
       rw [map_smul, smul_eq_mul]
       ring

@@ -43,7 +43,8 @@ theorem h_om_f' (f f' : Fin (r + 1) → V) (b : Fin (r + 1)) :
   have : H.h (H.om f f') (f' b) =
       M.L.cj (((H.Zhat f f').adjugate * (H.Zhat f f')) (Fin.last r) b) := by
     unfold HermSp.om
-    rw [h_sum_left, Matrix.mul_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h_sum_left, Matrix.mul_apply, map_sum]
     refine Finset.sum_congr rfl fun a _ => ?_
     rw [map_mul, H.h_herm (f' b) (f a)]
     rfl

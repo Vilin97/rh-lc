@@ -57,7 +57,8 @@ theorem coeff_prod_one_sub (s : Finset (Fin m)) (α : Fin m → ℂ) (b : ℕ) :
     rw [prod_add]
     refine sum_congr rfl (fun t _ => ?_)
     rw [prod_const_one, mul_one, prod_mul_distrib, prod_const, ← map_prod]
-  rw [e, map_sum, mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, map_sum, mul_sum]
   simp_rw [coeff_C_mul_X_pow]
   rw [← sum_filter]
   apply sum_congr

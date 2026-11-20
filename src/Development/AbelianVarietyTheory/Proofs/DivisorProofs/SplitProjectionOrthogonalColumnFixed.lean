@@ -28,7 +28,8 @@ theorem colPerp_conj_place_pair : ∀ {F E : Type} [Field F] [NumberField F] [Fi
   have h0 := hy i hi
   simp only [LinearMap.coe_comp, Function.comp_apply, Matrix.mulVecLin_apply, LinearMap.proj_apply] at h0
   have h1 := congrArg (fun z => splitProj (τ.comp σ) (compFin F E v z)) h0
-  simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, map_zero, Matrix.map_apply] at h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, map_zero, Matrix.map_apply] at h1
   have hc : ∀ e : E, compFin F E v (inclR (AF F) e) = inclR (Fv F v) e := by
     intro e
     simp [compFin, inclR]
@@ -36,7 +37,8 @@ theorem colPerp_conj_place_pair : ∀ {F E : Type} [Field F] [NumberField F] [Fi
   have hs : ∀ e : E, τ (σ (σ e)) = τ e := fun e => by
     simpa using congrArg (fun f : E →ₐ[F] Fv F v => f e) hcc
   simp only [hc, splitProj_inclR] at h1
-  simp only [Formalism.UG.cT, Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, map_sum, map_mul] at h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Formalism.UG.cT, Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, map_sum, map_mul] at h1
   simp only [AlgHom.comp_apply, RingHom.coe_coe, hs, hJ.1] at h1
   rw [← h1]
   simp only [Matrix.mulVec, dotProduct, Matrix.map_apply]

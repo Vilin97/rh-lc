@@ -36,7 +36,8 @@ theorem isFrame_colOn (N : ℕ) (X : Scheme.{0}) (U : X.Opens) (M : GL (Fin N) �
   · rw [← RingHom.map_det]
     exact (Matrix.isUnits_det_units M).map _
   · rw [Module.Basis.map_apply, Matrix.toLinearEquiv_apply, Matrix.toLin_self]
-    simp only [colOn, map_sum, resM_smul, resM_resM, VB.IsFrame.basis_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [colOn, map_sum, resM_smul, resM_resM, VB.IsFrame.basis_apply]
     rfl
 
 end GlobalTheory.FlagZ.TautCell

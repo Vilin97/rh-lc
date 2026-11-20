@@ -280,7 +280,8 @@ lemma pair_sum {K : Type u} [Field K] {R' : Type*} [CommSemiring R'] {n : Type} 
     have : (c (∑ a, Mf i a * Mt i' a) : R') = if i = i' then 1 else 0 := by
       rw [h1]
       split_ifs <;> simp
-    rw [← this, map_sum, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← this, map_sum, Finset.sum_mul]
     refine Finset.sum_congr rfl fun a _ => ?_
     rw [map_mul]
     ring
@@ -370,10 +371,12 @@ lemma op_change [Fintype H] [DecidableEq H] {N1 : ℕ} (x : Bool × H → Matrix
   rw [← AlgHom.comp_apply, map_minorProd]
   congr 1
   funext i b
-  simp only [AlgHom.comp_apply, oldRowLow, map_sum, map_mul, rename_C, rename_X, aeval_C, aeval_X,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [AlgHom.comp_apply, oldRowLow, map_sum, map_mul, rename_C, rename_X, aeval_C, aeval_X,
     algebraMap_eq, phi_eq]
   conv_lhs => rw [← bT_mul_bM x hx τ]
-  simp only [Matrix.mul_apply, map_sum, Finset.sum_mul, Finset.mul_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mul_apply, map_sum, Finset.sum_mul, Finset.mul_sum, map_mul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun a _ => ?_
   ring
@@ -391,9 +394,11 @@ lemma beta_change [Fintype H] [DecidableEq H] {N1 : ℕ}
         (∑ y, MvPowerSeries.C (bA x y z) * MvPowerSeries.X y :
           MvPowerSeries (Bool × H × Fin N0 × Fin N1) K)) :=
     MvPowerSeries.hasSubst_of_constantCoeff_zero fun j => by simp
-  rw [← MvPowerSeries.coe_substAlgHom hs, map_sum, Fintype.sum_prod_type]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← MvPowerSeries.coe_substAlgHom hs, map_sum, Fintype.sum_prod_type]
   refine Finset.sum_congr rfl fun t _ => ?_
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [map_mul, MvPowerSeries.substAlgHom_X]
   simp only [MvPowerSeries.substAlgHom_apply, MvPowerSeries.subst_C]
   rw [Fintype.sum_prod_type, Fintype.sum_prod_type, Finset.sum_comm,
@@ -446,7 +451,8 @@ lemma bA_norm_le [DecidableEq H] {N1 : ℕ} (x : Bool × H → Matrix (Fin N0) (
 lemma rename_mem_opInt {σ ρ : Type} (f : σ → ρ) (P : MvPolynomial σ K)
     (hP : P ∈ opInt K σ) : rename f P ∈ opInt K ρ := by
   classical
-  rw [P.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [P.as_sum, map_sum]
   refine Subring.sum_mem _ fun μ _ => ?_
   rw [rename_monomial]
   intro κ

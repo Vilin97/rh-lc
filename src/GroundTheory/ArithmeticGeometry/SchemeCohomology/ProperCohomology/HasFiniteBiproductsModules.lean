@@ -60,7 +60,8 @@ theorem isQuasicoherent_biproduct [∀ i, (M i).IsQuasicoherent] : (⨁ M).IsQua
       fun j => qcoh_exists_res_eq (M j) V.2 f _
     choose e m' hm' using key
     refine ⟨∑ j, e j, ∑ j, (biproduct.ι M j).app _ (f ^ (∑ k, e k - e j) • m' j), ?_⟩
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     conv_rhs => rw [biproduct_app_eq_sum M _ m, Finset.smul_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [resF_app, resF_smul, hm' j, smul_smul, map_pow, ← pow_add,

@@ -49,7 +49,8 @@ private theorem transfer {V W : Type} [AddCommGroup V] [Module B V] [Module ℚ_
       y = ∑ a, Thick.sm V (Bst (PP l)) (c a) (x a) ↔
         Φ y = ∑ a, (LinearMap.mulLeft B (toSt (c a))).comp (Φ (x a)) := by
     intro y c x
-    rw [← Φ.injective.eq_iff, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Φ.injective.eq_iff, map_sum]
     simp only [h2]
   unfold TypeSt TypeLit
   refine (Equiv.piCongrRight fun _ : Fin n => Φ.toEquiv).exists_congr fun x => ?_

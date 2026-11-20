@@ -183,8 +183,10 @@ theorem schur_data_mul_finGL : ∀ (E : Type) [Field E] [NumberField E] [IsTotal
     congr 1
     refine ad_ext ?_ ?_
     · rw [pInf_sFin_eq_zero]
-      simp only [Matrix.mul_apply, map_sum, map_mul, hXi', mul_zero, Finset.sum_const_zero, zero_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Matrix.mul_apply, map_sum, map_mul, hXi', mul_zero, Finset.sum_const_zero, zero_mul]
     · rw [pFin_sFin_eq, Finset.sum_comm]
-      simp only [Matrix.mul_apply, map_sum, map_mul, Finset.sum_mul, Matrix.map_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Matrix.mul_apply, map_sum, map_mul, Finset.sum_mul, Matrix.map_apply]
 
 end GlobalTheory.SchurExt.AdBridge

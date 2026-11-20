@@ -29,7 +29,8 @@ theorem cst_comp {A C : Type} [CommRing A] [CommRing C] {Z : Scheme.{0}} (q : Z 
 
 theorem cst_sum {A : Type} [CommRing A] {Z : Scheme.{0}} (q : Z ⟶ Sp A) (z : Z) {K : Type} (S : Finset K) (a : K → A) :
     cst q z (∑ i ∈ S, a i) = ∑ i ∈ S, cst q z (a i) := by
-  simp only [cst, gs_eq q z ⊤ trivial, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [cst, gs_eq q z ⊤ trivial, map_sum]
 
 theorem cst_zero {A : Type} [CommRing A] {Z : Scheme.{0}} (q : Z ⟶ Sp A) (z : Z) : cst q z 0 = 0 := by
   simp only [cst, gs_eq q z ⊤ trivial, map_zero]

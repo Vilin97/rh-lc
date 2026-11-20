@@ -91,7 +91,8 @@ lemma xn_part1 (ι : κ → Fin r) (hι : Function.Injective ι) {p : ℕ} (hp :
         {v : Fin r × Fin n | ∃ i, v.1 = ι (a i)} := by
       rintro ⟨i, hi⟩
       exact hb (Finset.mem_image.2 ⟨i, Finset.mem_univ _, (hι hi).symm⟩)
-    rw [xn_lap ι hp a b, map_sum, Finset.sum_eq_single (Fin.last p), ← xn_cof_last ι hp a]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [xn_lap ι hp a b, map_sum, Finset.sum_eq_single (Fin.last p), ← xn_cof_last ι hp a]
     · rw [Derivation.leibniz, xn_pderiv_supported _ _ hns _ (xn_cof_supported ι hp a _), smul_zero,
         zero_add, MvPolynomial.pderiv_X, smul_eq_mul]
       simp [Pi.single_apply, Fin.ext_iff]
@@ -605,7 +606,8 @@ lemma xn_hW {μ : Fin n → ℕ} {f : MvPolynomial (Fin r × Fin n) ℂ} (hf : f
       ring
   conv_lhs => rw [f.as_sum]
   conv_rhs => rw [f.as_sum]
-  rw [map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun d hd => ?_
   rw [hmono, hwh (MvPolynomial.mem_support_iff.1 hd)]
 

@@ -87,13 +87,15 @@ theorem transcendental (hP : IsHomogIdeal P) (j : Fin n) (hj : X j ∉ P) :
       rw [Polynomial.aeval_eq_sum_range]
       rfl
     calc aeval ξ G = ξ j ^ M * ∑ e ∈ Finset.range N, (p.coeff e : _) * ξ j ^ e := by
-          simp only [G, map_sum, map_mul, map_pow, aeval_X, heval, Finset.mul_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            simp only [G, map_sum, map_mul, map_pow, aeval_X, heval, Finset.mul_sum]
           refine Finset.sum_congr rfl fun e _ => by ring
       _ = 0 := by rw [← h0, hpe, mul_zero]
   have hcoeff : ∀ e < N, p.coeff e = 0 := by
     intro e he
     have hcomp : homogeneousComponent (M + e) G = h e * X j ^ e := by
-      simp only [G, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [G, map_sum]
       rw [Finset.sum_eq_single e]
       · exact homogeneousComponent_eq_self ((hhom e).mul (isHomogeneous_X_pow j e))
       · intro b _ hb

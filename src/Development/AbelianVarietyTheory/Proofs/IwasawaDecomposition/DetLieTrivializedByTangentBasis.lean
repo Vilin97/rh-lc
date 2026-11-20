@@ -44,7 +44,8 @@ theorem frameChg_map (hB : ∀ (S S' : Type) [CommRing S] [CommRing S'] (φ : S 
   have h1 := (lieBasis M (tau hA ≫ p) (le_preimage_map p hle (tau_le hA le_rfl))).sum_toMatrix_smul_self
     ((B _ (tau hA)).map (tanEquiv h (tau hA))) j
   have h2 := congrArg (tanPull (G := Z.t.G) _ e') h1
-  rw [map_sum] at h2
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum] at h2
   simp only [map_smulₛₗ, Module.Basis.map_apply, tanPull_tanEquiv h _ e e', hB _ _ _ _ _ e,
     tanPull_lieBasis M _ e' _ hM] at h2
   rw [Module.Basis.toMatrix_apply, Module.Basis.map_apply, ← h2, Module.Basis.repr_sum_self]

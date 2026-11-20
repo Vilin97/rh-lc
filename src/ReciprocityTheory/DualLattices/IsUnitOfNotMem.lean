@@ -85,7 +85,8 @@ theorem root_eq (hv : v.Integers R) {n : ℕ} (hn : (n : R) ∉ mI hv) {x y : R}
     have hres : res hv (∑ i ∈ range n, x ^ i * y ^ (n - 1 - i)) = (n : R ⧸ mI hv) * res hv x ^ (n - 1) := by
       have hxy' : res hv x = res hv y := by
         rw [← sub_eq_zero, ← map_sub]; exact Ideal.Quotient.eq_zero_iff_mem.2 hxy
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simp only [map_mul, map_pow, ← hxy']
       rw [Finset.sum_congr rfl (g := fun _ => res hv x ^ (n - 1)), Finset.sum_const, Finset.card_range,
         nsmul_eq_mul]

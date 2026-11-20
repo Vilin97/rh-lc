@@ -120,7 +120,8 @@ theorem proj_schr_at (ψ : AddChar (AF F) ℂ) (v : Pl F) (φ₀ : (κ → Fv F 
     have e1 : (repl v y x ⬝ᵥ fun i => liftV v (q i)) +
         ⅟(2 : AF F) * ((fun i => liftV v (p i)) ⬝ᵥ fun i => liftV v (q i)) =
         liftV v (x ⬝ᵥ q + ⅟(2 : Fv F v) * (p ⬝ᵥ q)) := by
-      simp only [dotProduct, mul_liftV, evFin_repl, evFin_liftV, ← map_sum, GlobalTheory.VacAny.evFin_invOf_two, map_add]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [dotProduct, mul_liftV, evFin_repl, evFin_liftV, ← map_sum, GlobalTheory.VacAny.evFin_invOf_two, map_add]
     simp only [schr, e1, e2]
     rfl
   rw [proj_apply, proj_apply, e, h _ hs]

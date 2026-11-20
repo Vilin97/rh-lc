@@ -61,7 +61,8 @@ theorem d_val {a b : IdF A} {j : ℕ} (f : CH.Cn (sq a b) j) (z : ∀ s : Compos
     (hv : ∀ s, (show sqM a b _ from f s).1 = Ideal.Quotient.mk _ (z s)) (s : ComposableArrows C (j + 1)) :
     (show sqM a b _ from CH.d _ j f s).1 = Ideal.Quotient.mk _
       (∑ i : Fin (j + 2), (-1 : ℤ) ^ (i : ℕ) • (A.map (toLast i s)).hom (z (face i s))) := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   change Subtype.val (∑ i : Fin (j + 2), (-1 : ℤ) ^ (i : ℕ) • ((sq a b).map (toLast i s)).hom (f (face i s)) :
       sqM a b _) = _
   rw [AddSubmonoidClass.coe_finsetSum]

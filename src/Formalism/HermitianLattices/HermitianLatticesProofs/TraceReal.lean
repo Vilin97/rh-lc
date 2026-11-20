@@ -139,7 +139,8 @@ theorem traceReal_main (h : V →ₗ⋆[K] V →ₗ[K] K) (hS : h.IsSymm)
     calc B x y = B (∑ i, v.repr x i • v i) (∑ j, v.repr y j • v j) := by
           rw [v.sum_repr, v.sum_repr]
       _ = ∑ i, ∑ j, v.repr x i * v.repr y j * B (v i) (v j) := by
-          simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
+          set_option synthInstance.maxHeartbeats 100000 in
+            simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
             Finset.mul_sum]
           rw [Finset.sum_comm]
           refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
@@ -178,7 +179,8 @@ theorem traceReal_main (h : V →ₗ⋆[K] V →ₗ[K] K) (hS : h.IsSymm)
       rw [Finset.smul_sum]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [hQs, hQs, smul_smul, smul_smul, mul_comm]
-    rw [hax, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hax, map_sum]
     simp only [hιq]
     calc ‖∑ j, ((v.repr x j : ℚ) : ℝ) • ι (a • v j)‖
         ≤ ∑ j, ‖((v.repr x j : ℚ) : ℝ) • ι (a • v j)‖ := norm_sum_le _ _

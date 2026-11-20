@@ -210,7 +210,8 @@ theorem exists_cmLat_rankOne (H : Host E) {p q : ℕ} (Y : FD.Data E r) (x₀ : 
       rw [← hS', Submodule.span_le]
       intro a ha
       refine (hN _).2 ⟨fun j => (e _).symm (y (⟨a, ha⟩, σ j)), φ.injective (Subtype.ext ?_)⟩
-      rw [map_sum, AddSubmonoidClass.coe_finsetSum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, AddSubmonoidClass.coe_finsetSum]
       simp only [hf, LinearEquiv.apply_symm_apply, hy]
       rw [Equiv.sum_comp σ (fun j => ((n : E) * B.repr (φ a : Fin r → E) j) • lam j)]
       simp only [mul_smul, ← Finset.smul_sum, ← hB, B.sum_repr]

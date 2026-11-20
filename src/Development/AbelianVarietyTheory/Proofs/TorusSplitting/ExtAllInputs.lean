@@ -47,7 +47,8 @@ private theorem ext_detPerturbation : _root_.ReciprocityTheory.ChartRestriction.
     simp [hcoef, hpick]
   have hexp : f (fun j => w (σ₀ j) + ∑ k, ε j k • w k)
       = ∑ r : Fin i → Option κ, (∏ j, coef j (r j)) • f (fun j => w (pick j (r j))) := by
-    rw [hcol, MultilinearMap.map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hcol, MultilinearMap.map_sum]
     refine Finset.sum_congr rfl fun r _ => ?_
     exact f.map_smul_univ (fun j => coef j (r j)) (fun j => w (pick j (r j)))
   set r0 : Fin i → Option κ := fun _ => none with hr0

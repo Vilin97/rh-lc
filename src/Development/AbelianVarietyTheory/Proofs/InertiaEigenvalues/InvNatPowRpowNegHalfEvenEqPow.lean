@@ -308,7 +308,8 @@ theorem unram_at {χ : (AE D)ˣ →* Circle} {Q S' : Finset (Pl D.host.E)} (hχ 
     ring
   refine hχ y hinf (key _ h1 h2) (key _ h1' h3) ?_
   have h0 : idemAt P * (idem Q + cA D (idem Q)) = 0 := by
-    rw [mul_add, idem, map_sum, Finset.mul_sum, Finset.mul_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [mul_add, idem, map_sum, Finset.mul_sum, Finset.mul_sum,
       Finset.sum_eq_zero fun j hj => hS.mul_eq_zero hP (hQ hj) fun e => hn (e ▸ hj),
       Finset.sum_eq_zero fun j hj => hS.mul_conj hP (hQ hj), add_zero]
   linear_combination (idem Q + cA D (idem Q)) * h1 + ((y : AE D) - 1) * h0
@@ -409,10 +410,12 @@ theorem vec_rel (B : Base S T) (hB : B.Good) (hbT : Lev.IsBaseFrame T B.F.βT B.
     simp [Finset.sum_apply, Pi.smul_apply, Φ1, ω1]
   have hv : B.vecAt Q (fun PP y => if PP.1 = P then ((prim y : ℚ) : ℂ) else φ PP.1 y) =
       Tm (B.F.datumFn B.G (B.de.Q ∪ Q) (B.locFn Q fun PP y => if PP.1 = P then ((prim y : ℚ) : ℂ) else φ PP.1 y)) := rfl
-  rw [hv, hfun, map_add, map_sum, hv1]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hv, hfun, map_add, map_sum, hv1]
   congr 1
   refine Finset.sum_congr rfl fun k hk => ?_
-  rw [map_smul, map_sum, Finset.smul_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_smul, map_sum, Finset.smul_sum, Finset.smul_sum]
   refine Finset.sum_congr rfl fun γ hγ => ?_
   rw [hlaw k hk γ hγ, smul_smul]
   congr 1

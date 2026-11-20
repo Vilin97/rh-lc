@@ -38,7 +38,8 @@ theorem entry_bound (T : GoodSet K G) (s : T.S) (P0 P : Pair K G) (g' g : G) (σ
       ((Fintype.card G : ℕ) : ℝ) ^ 3 := by
   have hd : (Module.finrank K (T.W s) : ℝ) ≤ (Fintype.card G : ℝ) := by
     exact_mod_cast finrank_le_card (T.tau s) (T.irr s)
-  rw [epsS, epsS, prod_expand, map_sum, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [epsS, epsS, prod_expand, map_sum, map_sum, map_sum]
   refine (norm_sum_le _ _).trans ?_
   have hterm : ∀ x y : G, ‖σ (LinearMap.trace K (T.W s) ((T.tau s).asAlgebraHom
       ((chiT P0 x * chiT P y) • MonoidAlgebra.of K G (x * g' * (y * g)))))‖ ≤ (Fintype.card G : ℝ) := by
@@ -55,7 +56,8 @@ theorem entry_bound (T : GoodSet K G) (s : T.S) (P0 P : Pair K G) (g' g : G) (σ
         (∑ y : G, (chiT P0 x * chiT P y) • MonoidAlgebra.of K G (x * g' * (y * g)))))‖
       ≤ ∑ x : G, ∑ y : G, (Fintype.card G : ℝ) := by
         refine Finset.sum_le_sum fun x _ => ?_
-        rw [map_sum, map_sum, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum, map_sum, map_sum]
         exact (norm_sum_le _ _).trans (Finset.sum_le_sum fun y _ => hterm x y)
     _ = ((Fintype.card G : ℕ) : ℝ) ^ 3 := by
         simp only [Finset.sum_const, Finset.card_univ, nsmul_eq_mul]

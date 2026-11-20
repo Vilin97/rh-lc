@@ -68,7 +68,8 @@ theorem isContOn_of_local [Fintype κ] [LocallyCompactSpace (AdeleRing (𝓞 F) 
       rw [pureA_adeleJoin, hgy i j, if_neg hij, mul_zero]
     · intro h
       exact absurd (Finset.mem_univ j) h
-  rw [hf, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hf, map_sum]
   exact Finset.sum_congr rfl (fun i _ => by rw [hT, hfs])
 
 end GlobalTheory.WeilCont

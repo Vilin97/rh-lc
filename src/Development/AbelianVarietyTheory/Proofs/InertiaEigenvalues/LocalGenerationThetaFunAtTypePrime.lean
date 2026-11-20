@@ -230,7 +230,8 @@ theorem form_comb (hψ : IsStdChar D ψ (-1)) (he : IsSplitIdem D e) {ℓ : (WO 
     {f : WO S T' → ℂ} (hf : IsThetaFunO ψ S T' f) {x : WO S T'} (hx : IsHalf (cA D e) x) :
     ℓ (heisO ψ S T' x (comb ψ S T' c f)) = (c.sum fun y z => z * ψ (symplO S T' x y)) * ℓ (heisO ψ S T' x f) := by
   unfold comb Finsupp.sum
-  rw [heisO_sum, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [heisO_sum, map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun y hy => ?_
   rw [heisO_smul, map_smul, smul_eq_mul, form_heis hψ he hℓ hf hx (hc y hy), mul_assoc]
 
@@ -581,7 +582,8 @@ theorem gen_at_type_prime : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T
     rwa [hσx x hx, hσx x' hx'] at a3
   have hsum : f = ∑ g ∈ Fs, P g := by
     refine eq_of_forms hψ he.1 hf (theta_sum _ _ f hf fun g _ => hP2 g) fun ℓ hℓ x hx => ?_
-    rw [heisO_sum, map_sum, Finset.sum_congr rfl fun g _ => hP3 g ℓ hℓ x hx]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [heisO_sum, map_sum, Finset.sum_congr rfl fun g _ => hP3 g ℓ hℓ x hx]
     by_cases h0 : ℓ (heisO R.ψ (Vc D i) (Wc D i) x f) = 0
     · simp [h0]
     · obtain ⟨g, ⟨hg, hxg⟩, hu⟩ := hFs ⟨ℓ, hℓ⟩ (coR R i φ x) (by simp only [Φ]; rwa [hσx x hx])

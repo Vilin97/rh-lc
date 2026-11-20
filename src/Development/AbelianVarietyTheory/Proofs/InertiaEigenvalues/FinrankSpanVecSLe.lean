@@ -43,9 +43,11 @@ theorem finrank_span_vecS_le (W : Submodule K (Fin a → Fin n → K)) :
     rintro _ ⟨w, hw, rfl⟩
     have h : w = ∑ i, b.repr ⟨w, hw⟩ i • (b i : Fin a → Fin n → K) := by
       have := congrArg W.subtype (b.sum_repr ⟨w, hw⟩)
-      rw [map_sum] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum] at this
       exact this.symm
-    rw [h, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h, map_sum]
     refine Submodule.sum_mem _ fun i _ => ?_
     rw [map_smulₛₗ]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)

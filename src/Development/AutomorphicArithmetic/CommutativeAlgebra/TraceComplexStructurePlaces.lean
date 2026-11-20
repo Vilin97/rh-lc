@@ -120,7 +120,8 @@ private theorem jt_S {p : ℕ} [Fact p.Prime] (D : Datum p) (c : 𝓞 D.F) :
   have hc : (starRingEnd ℂ) (∑ τ ∈ Finset.univ.filter (fun τ : D.F →+* ℂ => τ (D.ω : D.F) ≠ D.ρc),
         (D.n : ℂ) * τ (c : D.F)) =
       ∑ τ ∈ Finset.univ.filter (fun τ : D.F →+* ℂ => ¬ τ (D.ω : D.F) ≠ D.ρc), (D.n : ℂ) * τ (c : D.F) := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_nbij' (fun σ => (starRingEnd ℂ).comp σ) (fun σ => (starRingEnd ℂ).comp σ) ?_ ?_ ?_ ?_ ?_
     · intro σ hσ
       have hσ' : σ (D.ω : D.F) ≠ D.ρc := (Finset.mem_filter.mp hσ).2

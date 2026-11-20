@@ -20,7 +20,8 @@ theorem hypWComm : StatHypWComm := by
     have h1 : (W.Xx.map (act h') * R').map (act h) = W.Xx.map (act h) := by rw [e2]
     rw [← h1]
     ext i j
-    simp only [Matrix.mul_apply, Matrix.map_apply, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mul_apply, Matrix.map_apply, map_sum, map_mul]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [← hR']
     simp [Matrix.map_apply, hfix]

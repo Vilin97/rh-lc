@@ -409,12 +409,14 @@ theorem heckeD_mem {ρ : Representation ℂ (GQ L n) W} {J : Subgroup (GAf L n)}
           group) (fixed_of_type hB hv hf)
     rw [Finset.sum_image (hinj.injOn)] at e
     conv_rhs => rw [e]
-    rw [heckeD_type hB hv h1 h2 hf, map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [heckeD_type hB hv h1 h2 hf, map_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl fun γ _ => ?_
     rw [← map_smul, ← hf.2 ⟨κ, hκ⟩, rt_rt, rt_rt]
     simp
   refine ⟨⟨fun γ g => ?_, ?_⟩, key⟩
-  · rw [heckeD_type hB hv h1 h2 hf, Finset.sum_apply, Finset.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [heckeD_type hB hv h1 h2 hf, Finset.sum_apply, Finset.sum_apply, map_sum]
     refine Finset.sum_congr rfl fun δ _ => ?_
     show f (γ * g * δ) = ρ γ (f (g * δ))
     rw [mul_assoc, hf.1.1]
@@ -443,7 +445,8 @@ theorem heckeD_comm {ρ : Representation ℂ (GQ L n) W} {J : Subgroup (GAf L n)
       (fun γ hγ => (hs γ).1 (h1 γ hγ)) (fun x hx => h2' x ((hS x).2 hx)) (fun γ hγ => (hS γ).1 (h1' γ hγ)) f
       fun κ hκ ht => fixed_of_type hB hv hf κ ((hyp_at hB hv κ ht).1.2 hκ) ht
   · obtain ⟨-, hc, -⟩ := GlobalTheory.SplitAdelic.main L n s
-    simp only [map_sum, rt_rt]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, rt_rt]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun δ hδ => Finset.sum_congr rfl fun γ hγ => ?_
     rw [(hc γ δ (h1 γ hγ).1 fun w hw => (h1' δ hδ).1 w ?_).eq]
@@ -600,7 +603,8 @@ theorem eigen_integral {ρ : Representation ℂ (GQ L n) W} (hρ : IsAlgWeight L
       exact (RingOfIntegers.isIntegral_coe (β p.2)).map p.1.toIntAlgHom)
   have hOA : ∀ (τ : L →+* ℂ) (o : 𝓞 L), τ (o : L) ∈ A := by
     intro τ o
-    rw [← β.sum_repr o, RingOfIntegers.coe_eq_algebraMap, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← β.sum_repr o, RingOfIntegers.coe_eq_algebraMap, map_sum, map_sum]
     refine sum_mem fun i _ => ?_
     rw [map_zsmul, map_zsmul]
     exact zsmul_mem (hSA ⟨(τ, i), rfl⟩) _
@@ -662,7 +666,8 @@ theorem eigen_integral {ρ : Representation ℂ (GQ L n) W} (hρ : IsAlgWeight L
     obtain ⟨x, hx, rfl⟩ := hz
     have := congrFun hμ (g₀ * x)
     rw [Finset.sum_apply, Pi.smul_apply] at this
-    rw [← Finsupp.smul_apply, ← map_smul, ← this, map_sum, Finsupp.finsetSum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Finsupp.smul_apply, ← map_smul, ← this, map_sum, Finsupp.finsetSum_apply]
     exact sum_mem fun γ hγ => Submodule.subset_span ⟨x * γ, triv_mul hx (hR γ hγ), by rw [← mul_assoc]; rfl⟩
   | zero => simp
   | add a b _ _ ha hb => rw [smul_add]; exact add_mem ha hb

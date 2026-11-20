@@ -158,7 +158,8 @@ private theorem esymm_root {O R B : Type} [CommRing O] [CommRing R] [Algebra O R
       MvPolynomial.rename (fun i => (j, i)) (MvPolynomial.map (β.comp (algebraMap O R)) p) := by
     intro p
     simp [emb, MvPolynomial.map_rename, MvPolynomial.map_map]
-  rw [hE, MvPolynomial.map_esymm, MvPolynomial.esymm, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hE, MvPolynomial.map_esymm, MvPolynomial.esymm, map_sum, map_sum]
   simp only [map_prod, MvPolynomial.rename_X]
   have hroot := MSplitAlg.prod_root P n j
   have hc' : ((Finset.univ.val.map (MSplitAlg.root P n j)).map fun t => Polynomial.X - Polynomial.C t).prod.coeff (n - k)
@@ -205,7 +206,8 @@ theorem UpperTheory.V.Pa.Lev.multiTwo :
     rw [TensorProduct.smul_tmul', smul_eq_mul, mul_one]
   have hφψ : ∀ v, φ (ψ v) = act f v := by
     intro v
-    rw [hψv, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hψv, map_sum]
     have hterm : ∀ i : Fin q → ι, φ (mkq (MvPolynomial.map β (∏ j, emb O R j (a (i j)))) ⊗ₜ[B]
         tr (act (∏ j, emb O R j (c (i j))) v)) =
         (act (∏ j, emb O R j (a (i j))) * (List.ofFn e).prod * act (∏ j, emb O R j (c (i j)))) v := by
@@ -272,7 +274,8 @@ theorem UpperTheory.V.Pa.Lev.multiTwo :
     rw [← hpu]
     apply Finset.prod_congr rfl
     intro j _
-    rw [← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum]
     congr 1
     conv_rhs => rw [← (hkDualExp O n ι a c hd (Hk.NN n (Nq j : O))).1]
     refine Finset.sum_congr rfl fun k _ => ?_
@@ -291,7 +294,8 @@ theorem UpperTheory.V.Pa.Lev.multiTwo :
       exact tr_list H (List.nodup_finRange q) (fun j => c (i j)) hvW
     choose bb hbb1 hbb2 using hb
     rw [hψv]
-    simp only [hbb2, ← TensorProduct.smul_tmul, Algebra.smul_def, hbb1, ← map_mul, ← TensorProduct.sum_tmul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hbb2, ← TensorProduct.smul_tmul, Algebra.smul_def, hbb1, ← map_mul, ← TensorProduct.sum_tmul,
       ← map_sum]
     rw [hpoly, e1]
   refine ⟨φ, ψ, hφ2, hψ, hφψ, ?_⟩

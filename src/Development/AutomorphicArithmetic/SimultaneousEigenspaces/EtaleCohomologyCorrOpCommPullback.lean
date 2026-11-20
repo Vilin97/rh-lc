@@ -66,7 +66,8 @@ theorem UpperTheory.etaleCohomology_corrOp_comm_pullback :
   refine LinearMap.ext fun x => hinj ?_
   show pullTot l (sch.map (pullback.snd c u)) (pullTot l (sch.map u) (A x)) =
     pullTot l (sch.map (pullback.snd c u)) (A₁ (pullTot l (sch.map u) x))
-  rw [key', ← pullTot_comp_apply, ← pullback.condition, pullTot_comp_apply, hc, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [key', ← pullTot_comp_apply, ← pullback.condition, pullTot_comp_apply, hc, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [← pullTot_comp_apply, ← pullTot_comp_apply]
   have hm : pullback.fst c u ≫ σ j ≫ t = (σ₁ j ≫ t₁) ≫ u := by

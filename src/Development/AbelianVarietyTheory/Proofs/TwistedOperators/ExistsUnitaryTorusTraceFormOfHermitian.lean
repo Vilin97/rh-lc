@@ -67,7 +67,8 @@ theorem hform_smul_right (c : A) (a b : Fin n → A) :
 
 theorem hform_symm (hs : ∀ e, s (s e) = e) (hJ : ∀ i j, s (J j i) = J i j) (a b : Fin n → A) :
     Formalism.UG.hform s J b a = s (Formalism.UG.hform s J a b) := by
-  simp only [Formalism.UG.hform, map_sum, map_mul, hs, hJ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Formalism.UG.hform, map_sum, map_mul, hs, hJ]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 

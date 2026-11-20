@@ -11,7 +11,8 @@ private theorem multi_cont {V : Type} [NormedAddCommGroup V] [NormedSpace ℝ V]
       (∏ i, b.coord (r i) (x i)) • μ fun i => b (r i) := by
     funext x
     have h : x = fun i => ∑ j, b.coord j (x i) • b j := funext fun i => (b.sum_repr (x i)).symm
-    conv_lhs => rw [h, μ.map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [h, μ.map_sum]
     simp only [μ.map_smul_univ]
   rw [e]
   refine continuous_finset_sum _ fun r _ => Continuous.fun_smul ?_ continuous_const
@@ -67,7 +68,8 @@ theorem UpperTheory.V.AlgRepEndIrreducible.infAbs :
   have h2 : ∀ t, μ (fun i => toL (adHerm (k t) (Y i)).1) = l (κ (k t) (ω Y)) := fun t => by
     rw [hμ, hω]
   simp only [h2] at h1
-  rw [map_sub, (hd (ω Y)).unique h1, map_sum, sub_eq_zero]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sub, (hd (ω Y)).unique h1, map_sum, sub_eq_zero]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [← hμ]
   congr 1

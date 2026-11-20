@@ -128,7 +128,8 @@ theorem exists_bounded_basis {n : ℕ} (hn : 1 ≤ n) (Λ : Submodule (𝓞 E) (
       obtain ⟨c, rfl⟩ := (mem_span_range_iff_exists_fun ℤ).1 ((hb y).2 hy)
       choose k hk using hk
       refine ⟨∑ j, c j * k j, ?_⟩
-      rw [← traceHerm_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← traceHerm_apply, map_sum]
       simp only [map_zsmul, hk]
       simp)
   have hle' : ∀ i (τ : E →+* ℂ), ∑ k, ‖τ (v i k)‖ ^ 2 ≤ 2 * (fdeg E : ℝ) * n ^ 2 * rdE E ^ 2 := by

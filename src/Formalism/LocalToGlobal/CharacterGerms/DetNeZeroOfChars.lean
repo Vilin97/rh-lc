@@ -20,7 +20,8 @@ theorem char_indep (χ : ι' → A →+* L) (hχ : Function.Injective χ) (φ : 
     have hx : ∀ j, χ j x = ∑ i, φ (r i) * χ j (b i) := by
       intro j
       have h1 : χ j (e * x) = χ j x := by rw [map_mul, he, one_mul]
-      rw [← h1, hr, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← h1, hr, map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [Algebra.smul_def, map_mul, hφ]
     calc ∑ j, c j * χ j x = ∑ j, ∑ i, c j * (φ (r i) * χ j (b i)) := by

@@ -220,7 +220,8 @@ theorem Rep.out (hM : M.IsLB) {K : Type} [Fintype K] (φ : K → (Y ⟶ X)) (ε 
   obtain ⟨K', _, φ', ε', t', ht', e, rfl⟩ := h
   obtain ⟨t, ht, hv⟩ := exists_gen hM (φ' := φ) (ε' := ε) (fun U _ h => by
     have := congrArg (FreeAbelianGroup.lift fun ψ => Additive.ofMul (h ψ)) e
-    simp only [map_sum, map_zsmul, lift_apply_of] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_zsmul, lift_apply_of] at this
     apply Additive.ofMul.injective
     simpa only [ofMul_prod, ofMul_zpow] using this) t' ht'
   exact ⟨t, ht, funext fun Z => funext fun r => funext fun z => funext fun J => hv Z r z J.1 J.2⟩

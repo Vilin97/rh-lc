@@ -311,7 +311,8 @@ theorem pet_tie : ∀ (D : D7) (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor
         ← integral_finset_sum _ fun j _ => integrable_finset_sum _ fun j' _ =>
           (hint j j').const_mul (as j * starRingEnd ℂ (as j'))]
       refine integral_congr_ae (Filter.Eventually.of_forall fun q => ?_)
-      simp only [hap, map_sum, map_mul, Finset.sum_mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hap, map_sum, map_mul, Finset.sum_mul_sum]
       exact Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun j' _ => by ring
     have e3 : ∀ z, prd ((U σ).X k) (Rec.laZ (U σ) a k) ((∑ j, as j • rdU (U σ) (fs j)) k)
         ((∑ j, as j • rdU (U σ) (fs j)) k) z =

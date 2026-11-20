@@ -55,7 +55,8 @@ theorem colSub_mul {d a : ℕ} (A B : ι → Matrix (Fin a) (Fin a) ℂ) (P : Po
   have : (colSub (fun τ => A τ * B τ) : Pol ι d a →ₐ[ℂ] Pol ι d a) = (colSub A).comp (colSub B) := by
     apply MvPolynomial.algHom_ext
     intro y
-    simp only [AlgHom.comp_apply, colSub, aeval_X, map_sum, map_mul, algHom_C, algebraMap_eq, Matrix.mul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [AlgHom.comp_apply, colSub, aeval_X, map_sum, map_mul, algHom_C, algebraMap_eq, Matrix.mul_apply,
       Finset.mul_sum, map_sum, Finset.sum_mul]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => ?_
@@ -67,7 +68,8 @@ theorem sum_scalAt_eq_zero {d a : ℕ} (τ₀ : ι) (N : ℕ) (hN : 0 < N) (P : 
     ∑ k ∈ Finset.range (N + P.totalDegree + 1), (ω ^ k) ^ N • colSub (scalAt τ₀ (ω ^ k)) P = 0 := by
   generalize hM : N + P.totalDegree + 1 = M at hω ⊢
   conv_lhs => rw [as_sum P]
-  simp only [map_sum, colSub_scalAt_monomial, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, colSub_scalAt_monomial, Finset.smul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_eq_zero fun t ht => ?_
   have hsum : ∑ k ∈ Finset.range M, (ω ^ (N + degAt τ₀ t)) ^ k = 0 := by
@@ -87,7 +89,8 @@ theorem sum_scalAt_eq_zero {d a : ℕ} (τ₀ : ι) (N : ℕ) (hN : 0 < N) (P : 
     congr 1
     rw [← pow_mul, ← pow_mul, ← pow_mul, show (N + degAt τ₀ t) * k = k * N + k * degAt τ₀ t by ring, pow_add]
     ring
-  rw [Finset.sum_congr rfl this, ← map_sum, ← Finset.mul_sum, hsum, mul_zero, map_zero]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.sum_congr rfl this, ← map_sum, ← Finset.mul_sum, hsum, mul_zero, map_zero]
 
 end GlobalTheory.MinorFrame
 
@@ -172,10 +175,12 @@ theorem integral_detZpow_colSub_eq_zero :
     ring
   have hsum0 : ∀ g, ∑ k ∈ Finset.range M, f (u k * g) = 0 := by
     intro g
-    simp only [hpt, ← Finset.mul_sum, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hpt, ← Finset.mul_sum, ← map_sum]
     have : ∑ k ∈ Finset.range M, (ω ^ k) ^ N • colSub (B g) (colSub (scalAt τ₀ (ω ^ k)) P) =
         colSub (B g) (∑ k ∈ Finset.range M, (ω ^ k) ^ N • colSub (scalAt τ₀ (ω ^ k)) P) := by
-      rw [map_sum]; simp only [map_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]; simp only [map_smul]
     rw [this, sum_scalAt_eq_zero τ₀ N hN P hω, map_zero, map_zero, mul_zero]
   have hkey : (M : ℂ) * ∫ x, f x ∂ν = 0 := by
     calc (M : ℂ) * ∫ x, f x ∂ν = ∑ k ∈ Finset.range M, ∫ x, f (u k * x) ∂ν := by

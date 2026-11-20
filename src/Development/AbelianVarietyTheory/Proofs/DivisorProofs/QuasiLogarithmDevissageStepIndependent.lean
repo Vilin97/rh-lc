@@ -223,7 +223,8 @@ theorem GlobalTheory.step_independent : ∀ (p : ℕ) [Fact p.Prime] (B O Q : Ty
   have hc1 : ∀ α, coeff α (map Θ E - comb (fun i => θ (β i)) (fun i => map Θ (e i))) =
       -algebraMap O C (θ (t α)) := by
     intro α
-    rw [map_sub, coeff_map, cE, hcΘ, map_sub, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, coeff_map, cE, hcΘ, map_sub, map_sum]
     simp only [map_mul, hΘ]; ring
   have h2 : map Θ E - comb (fun i => a * γ i) (fun i => map Θ (e i)) =
       algebraMap O C a • (F - comb γ (fun i => map Θ (e i))) := by

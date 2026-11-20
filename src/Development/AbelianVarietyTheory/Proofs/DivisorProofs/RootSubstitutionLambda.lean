@@ -19,10 +19,12 @@ theorem rootL_bijective_lam {D : D7} (O : Setup D) : Function.Bijective (rootL O
 theorem aeval_rootSub_lamA : ∀ (D : D7) (O : Setup D),
     aeval (GlobalTheory.RelabDR.rootSub O) (lamA D.what₂.Tau O.N O.j) = -∑ z, X z := by
   intro D O
-  rw [← (rootL_bijective_lam O).sum_comp (fun z => (X z : MvPolynomial _ ℝ)), Fintype.sum_prod_type,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← (rootL_bijective_lam O).sum_comp (fun z => (X z : MvPolynomial _ ℝ)), Fintype.sum_prod_type,
     ← Finset.sum_neg_distrib, lamA, map_sum]
   refine Finset.sum_congr rfl fun τ _ => ?_
-  simp only [pHigh, pLow, pow_one, map_sub, map_sum, aeval_X, Finset.sum_filter]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [pHigh, pLow, pow_one, map_sub, map_sum, aeval_X, Finset.sum_filter]
   rw [← Finset.sum_sub_distrib, ← Finset.sum_neg_distrib]
   refine Finset.sum_congr rfl fun i _ => ?_
   by_cases hi : (i : ℕ) < O.j

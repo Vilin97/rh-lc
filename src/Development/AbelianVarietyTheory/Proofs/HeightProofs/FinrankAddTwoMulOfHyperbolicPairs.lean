@@ -17,11 +17,13 @@ theorem finrank_add_two_mul_of_hyperbolic_pairs :
   have coeff_e : ∀ (c : Fin i ⊕ Fin i → E) (a : Fin i),
       h (e a) (∑ j, c j • Sum.elim e f j) = c (Sum.inr a) := by
     intro c a
-    simp [map_sum, map_smul, Fintype.sum_sum_type, hee, hef]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, map_smul, Fintype.sum_sum_type, hee, hef]
   have coeff_f : ∀ (c : Fin i ⊕ Fin i → E) (a : Fin i),
       h (f a) (∑ j, c j • Sum.elim e f j) = c (Sum.inl a) := by
     intro c a
-    simp [map_sum, map_smul, Fintype.sum_sum_type, hff, hfe]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, map_smul, Fintype.sum_sum_type, hff, hfe]
   have hli : LinearIndependent E (Sum.elim e f) := by
     refine Fintype.linearIndependent_iff.2 fun c hc j => ?_
     rcases j with a | a

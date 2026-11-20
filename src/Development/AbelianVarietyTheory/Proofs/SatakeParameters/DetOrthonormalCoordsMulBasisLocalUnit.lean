@@ -144,7 +144,8 @@ theorem det_unit_of_base {R : Ranks} {F E : Type} [Field F] [NumberField F] [Fie
       rw [hx2] at h4
       rw [show (fun k => ρ (x k)) = ⇑ρ ∘ x from rfl, ← h4, Pi.single_apply, Pi.single_apply]
       split_ifs <;> simp
-    rw [← h3, ← hcc, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← h3, ← hcc, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_smul, hf]
 

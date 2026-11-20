@@ -57,7 +57,8 @@ theorem chart_pow {R : Type} [CommRing R] (c : ∀ k, ι k) (n : ℕ) :
 theorem weight_ex (c : ∀ k, ι k) (n : ℕ) :
     Finsupp.weight (blockWeight ι) (ex c n) = fun _ => n := by
   funext k
-  rw [ex, map_sum, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [ex, map_sum, Finset.sum_apply]
   simp only [Finsupp.weight_apply, Finsupp.sum_single_index, zero_smul, blockWeight, Pi.smul_apply,
     Pi.single_apply, smul_eq_mul]
   simp
@@ -147,10 +148,12 @@ theorem exists_uniform [∀ k, Fintype (ι k)] [FiniteDimensional F F']
       Ideal.sum_mem _ fun i _ => V'.mul_mem_left _ (hV i)
     have h2 : (C a : MRing ι F') = ∑ i, C (algebraMap F F' (b.repr a i)) * C (b i) := by
       conv_lhs => rw [← b.sum_repr a]
-      simp only [map_sum, Algebra.smul_def, map_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, Algebra.smul_def, map_mul]
     convert h1 using 1
     rw [h2]
-    simp only [map_sum, map_mul, map_C, mul_sub, Finset.sum_sub_distrib, Finset.sum_mul, mul_assoc]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, map_C, mul_sub, Finset.sum_sub_distrib, Finset.sum_mul, mul_assoc]
 
 theorem lift_form [∀ k, Fintype (ι k)] {n : ℕ} (h : ∀ c a, Good (F := F) V' n c a) {m : K → ℕ}
     (hm : ∀ k, n * Fintype.card (ι k) < m k) {q : MRing ι F'} (hq : IsMultiHomog q m) :

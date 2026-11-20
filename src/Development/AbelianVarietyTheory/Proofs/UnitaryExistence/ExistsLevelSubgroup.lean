@@ -31,9 +31,11 @@ theorem det_gram_ne_zero {E : Type} [Field E] [NumberField E] [StarRing E] (S : 
     have hi : ∀ i, S.hT (S.frame i) (S.frame.equivFun.symm v) = 0 := by
       intro i
       have := congrFun h0 i
-      rw [Module.Basis.equivFun_symm_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Module.Basis.equivFun_symm_apply, map_sum]
       simpa [Matrix.mulVec, dotProduct, Formalism.BasicNotions.HSpace.gram, mul_comm] using this
-    rw [← S.frame.sum_repr x, map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← S.frame.sum_repr x, map_sum, LinearMap.sum_apply]
     refine Finset.sum_eq_zero fun i _ => ?_
     rw [LinearMap.map_smulₛₗ, LinearMap.smul_apply, hi, smul_zero]
   exact S.frame.equivFun.symm.map_eq_zero_iff.1 hy

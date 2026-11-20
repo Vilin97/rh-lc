@@ -39,7 +39,8 @@ theorem kMat_one (σ : K →+* ℂ) (n : ℕ) : kMat σ (1 : Matrix (Fin n) (Fin
 theorem cpt_mulVec (σ : K →+* ℂ) {m n : ℕ} (M : Matrix (Fin m) (Fin n) K) (x : Fin n → K) :
     cpt σ (M.mulVec x) = (M.map σ).mulVec (cpt σ x) := by
   ext i
-  simp [cpt, Matrix.mulVec, dotProduct, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [cpt, Matrix.mulVec, dotProduct, map_sum]
 
 theorem cpt_injective (σ : K →+* ℂ) {n : ℕ} : Function.Injective (cpt σ (n := n)) := by
   intro x y h
@@ -91,10 +92,12 @@ theorem relMat_spec {E : Type} [AddCommGroup E] [Module ℂ E] {D n : ℕ} (f : 
   have hm : (relMat f g).mulVec y = ∑ k, y k • solve f (g (Pi.single k 1)) := by
     ext i
     simp [relMat, Matrix.mulVec, dotProduct, mul_comm]
-  rw [hm, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hm, map_sum]
   simp only [map_smul, solve_spec f (h _)]
   conv_rhs => rw [hy]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [map_smul]
 
 theorem relMat_self {E : Type} [AddCommGroup E] [Module ℂ E] {D : ℕ} (f : (Fin D → ℂ) →ₗ[ℂ] E)

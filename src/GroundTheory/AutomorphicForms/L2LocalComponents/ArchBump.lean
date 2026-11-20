@@ -171,7 +171,8 @@ theorem realCompM_mem_unitaryGroup {k : archGroup K n} (hk : k ∈ archCompact K
       z ᵥ* realCompM ⟨w, hw⟩ ((k : (ArchMatrix K n)ˣ) : ArchMatrix K n) := by
     rw [← hy]
     ext j
-    simp only [vecMul, dotProduct, map_sum, map_mul, realCompM_apply, Matrix.map_apply, realComp_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [vecMul, dotProduct, map_sum, map_mul, realCompM_apply, Matrix.map_apply, realComp_apply]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [infAt_infEmb_apply]
     congr 1
@@ -201,7 +202,8 @@ theorem complexCompM_mem_unitaryGroup {k : archGroup K n} (hk : k ∈ archCompac
       z ᵥ* complexCompM ⟨w, hw⟩ ((k : (ArchMatrix K n)ˣ) : ArchMatrix K n) := by
     rw [← hy]
     ext j
-    simp only [vecMul, dotProduct, map_sum, map_mul, complexCompM_apply, Matrix.map_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [vecMul, dotProduct, map_sum, map_mul, complexCompM_apply, Matrix.map_apply,
       complexComp_apply]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [infAt_infEmb_apply]

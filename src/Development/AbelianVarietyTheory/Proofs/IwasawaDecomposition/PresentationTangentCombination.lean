@@ -154,7 +154,8 @@ theorem grNorm_eq_ratio : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E]
     apply hσ
     have hmem : F k hk σ ∈ P := hle (Ideal.subset_span ⟨Fintype.equivFin _ σ, by simp⟩)
     calc _ = algebraMap R P.ResidueField (F k hk σ) := by
-          simp only [F, map_sum, map_mul, map_prod, map_minor]
+          set_option synthInstance.maxHeartbeats 100000 in
+            simp only [F, map_sum, map_mul, map_prod, map_minor]
       _ = 0 := Ideal.algebraMap_residueField_eq_zero.2 hmem
   refine ⟨_, _, fun j => F (i + 1) (Nat.succ_le_of_lt i.2) ((Fintype.equivFin _).symm j),
     fun j => F i i.2.le ((Fintype.equivFin _).symm j), hrad _ _, hrad _ _, fun C φ => ?_⟩

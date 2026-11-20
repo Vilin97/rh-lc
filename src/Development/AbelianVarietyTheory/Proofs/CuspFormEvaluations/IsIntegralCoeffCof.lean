@@ -72,7 +72,8 @@ theorem isIntegral_coeff_cof {K : Type} [Field K] (P : MvPolynomial (LtN Dw n) K
     (hP : ∀ m, P.coeff m ∈ (integralClosure ℤ K).toSubring) (m) : IsIntegral ℤ ((cof Dw pl K n P).coeff m) := by
   obtain ⟨Q, rfl⟩ : ∃ Q, MvPolynomial.map (integralClosure ℤ K).toSubring.subtype Q = P := by
     refine ⟨∑ m ∈ P.support, monomial m ⟨P.coeff m, hP m⟩, ?_⟩
-    simp only [map_sum, map_monomial, Subring.subtype_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_monomial, Subring.subtype_apply]
     exact P.as_sum.symm
   rw [← map_cof, coeff_map]
   exact ((cof Dw pl _ n Q).coeff m).2

@@ -64,7 +64,8 @@ theorem derivAt0_comp_mem : ∀ (ι : Type) [Fintype ι] (a b n : ℕ) (K₀ : S
     have h2 : (fun i => L (coordX (g i))) =
         fun i => ∑ k : DVar ι a b, L (coordX (g i)) k.1 k.2.1 k.2.2 • coordX k :=
       funext fun i => eq_sum_coordX _
-    rw [h2, ContinuousMultilinearMap.map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h2, ContinuousMultilinearMap.map_sum, Finset.mul_sum]
     refine sum_mem fun f _ => ?_
     rw [ContinuousMultilinearMap.map_smul_univ, smul_eq_mul, mul_left_comm]
     refine mul_mem (prod_mem fun i _ => hL _ _ _ _) ?_

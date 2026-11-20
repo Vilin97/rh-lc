@@ -119,7 +119,8 @@ theorem crd_lin {k : Type} [CommRing k] {X : Scheme.{0}} {p : X ⟶ Sp k} {H : L
     (hx : x ≫ p = 𝟙 _) {v : J → k} (hv : Crd H s x v) : Crd H s' x (n.mulVec v) := by
   obtain ⟨l, c, hl, hv⟩ := hv
   refine ⟨l, c, hl, fun i => ?_⟩
-  rw [hn i l, CrdCalc.valR_eq x _ hl, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hn i l, CrdCalc.valR_eq x _ hl, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_mul, ← CrdCalc.valR_eq, ← CrdCalc.valR_eq, GlobalTheory.Points.valR_constFn_of_section p x hx _ hl, hv,
     mul_left_comm]

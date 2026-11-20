@@ -55,7 +55,8 @@ theorem form_zero (hσ : ∀ x, σ (σ x) = x) {n n₁ : ℕ} (J : Matrix (Fin n
   funext i
   have := congrArg σ (h (Pi.single i 1))
   rw [Matrix.mulVec_single_one] at this
-  simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, map_zero, Finset.mul_sum] at this
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, map_zero, Finset.mul_sum] at this
   simp only [Matrix.mulVec, dotProduct, Matrix.mul_apply, Finset.sum_mul, Pi.zero_apply]
   rw [Finset.sum_comm, ← this]
   refine Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => ?_

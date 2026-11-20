@@ -82,7 +82,8 @@ theorem norm_hermC_col (X : FD.Data E r) {x : FD.Frame X.Ψ r} (hx : x ∈ X.dom
   have e : FD.hermC τ.1 X.Gm (FD.col (FD.mat x τ) b) v =
       ∑ i, starRingEnd ℂ (w i) * FD.hermC τ.1 X.Gm (FD.col (FD.mat x τ) b) (FD.col (FD.mat x τ) i) := by
     rw [← hv]
-    simp only [FD.hermC, FD.col, Matrix.mulVec, dotProduct, map_sum, map_mul, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [FD.hermC, FD.col, Matrix.mulVec, dotProduct, map_sum, map_mul, Finset.mul_sum]
     conv_rhs => rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun a _ => ?_
     conv_rhs => rw [Finset.sum_comm]

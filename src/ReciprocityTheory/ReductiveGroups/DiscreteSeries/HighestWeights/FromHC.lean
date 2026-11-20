@@ -28,7 +28,8 @@ theorem derivExists_allPos : DerivExistsAllPosStatement := by
       rw [← Finset.sum_smul]
       congr 1
       conv_lhs => rw [← b.sum_repr' v]
-      rw [map_sum, inner_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, inner_sum]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [map_smul, inner_smul_right, hL i j X hX, mul_comm]
     rw [hv]

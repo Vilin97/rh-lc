@@ -44,7 +44,8 @@ theorem GlobalTheory.lieMult_of_eigenbasis : ∀ (k : Type) [Field k] (O : Type)
     conv_lhs => rw [← Finset.univ_sum_single c]
     have : ∀ j, (Pi.single j (c j) : Fin n → k) = c j • (Pi.single j 1 : Fin n → k) := fun j => by
       rw [← Pi.single_smul, smul_eq_mul, _root_.mul_one]
-    simp only [this, map_sum, map_smul, hdiag]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [this, map_sum, map_smul, hdiag]
     simp [Finset.sum_apply, Pi.single_apply, mul_comm]
   let N := Nat.card {i // τs i = τ}
   let q : Fin N ≃ {i // τs i = τ} := (Finite.equivFin _).symm

@@ -53,7 +53,8 @@ theorem lin_eq_sum {Λ : Type} [CommRing Λ] {a : ℕ} {B : Type} [AddCommGroup 
     ext j
     simp [Finset.sum_apply, Pi.single_apply]
   conv_lhs => rw [hc]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [map_smul]
 
 variable {Λ : Type} [CommRing Λ] [IsLocalRing Λ]
@@ -230,7 +231,8 @@ theorem assemble [IsNoetherianRing Λ] [Finite (ResidueField Λ)] (F : ModuleCat
   have w1 : ∀ c, (φ ≫ f).hom (p n c) = ∑ i, c i • x'.1 i := by
     intro c
     show f.hom (φ.hom (p n c)) = _
-    rw [h1, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h1, map_sum]
     simp only [map_smul, hx]
   have w2 : (F.map (φ ≫ f)).hom (ξ n) = (F.map f).hom (e B hB x) := by
     rw [F.map_comp, ModuleCat.hom_comp, LinearMap.comp_apply, h2]

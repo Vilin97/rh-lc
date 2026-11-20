@@ -123,7 +123,8 @@ theorem slope_step : ∀ (K : Type) [Field K] [NumberField K] (r : ℕ) (hE : He
     Submodule.span_le.mpr (by rintro _ ⟨a, rfl⟩; exact hvfr.1 a)
   have hfcomb : ∀ c : Fin (n + 1) → 𝓞 K, f (∑ i, c i • v i) = c (Fin.last n) • f u := by
     intro c
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp_rw [LinearMap.map_smul_of_tower]
     rw [Fin.sum_univ_castSucc]
     simp [hv_cs, hfw, hv_last]

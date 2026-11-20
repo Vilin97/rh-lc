@@ -96,7 +96,8 @@ def linearPoly (ℓ : (Fin (N + 1) → ℂ) →ₗ[ℂ] ℂ) : MvPolynomial (Fin
 
 lemma eval_linearPoly (ℓ : (Fin (N + 1) → ℂ) →ₗ[ℂ] ℂ) (v : Fin (N + 1) → ℂ) :
     eval v (linearPoly ℓ) = ℓ v := by
-  rw [linearPoly, map_sum, LinearMap.pi_apply_eq_sum_univ ℓ v]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [linearPoly, map_sum, LinearMap.pi_apply_eq_sum_univ ℓ v]
   refine Finset.sum_congr rfl fun i _ => ?_
   simp only [map_mul, eval_C, eval_X, smul_eq_mul]
   rw [mul_comm]

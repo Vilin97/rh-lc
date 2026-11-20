@@ -24,7 +24,8 @@ theorem actU_X (u : Matrix (Fin m) (Fin m) ℂ) (a : Fin m) (i : Fin n) (b : Boo
 
 theorem lin_lf (φ : PX m n →ₗ[ℂ] PX m n) (b : Bool) (N M : Matrix (Fin m) (Fin m) ℂ) (a : Fin m) (i : Fin n)
     (h : ∀ c, φ (X (c, i, b)) = lf b N c i) : φ (lf b M a i) = lf b (M * N) a i := by
-  simp only [lf, C_mul', map_sum, map_smul, h, Finset.smul_sum, smul_smul, Matrix.mul_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [lf, C_mul', map_sum, map_smul, h, Finset.smul_sum, smul_smul, Matrix.mul_apply]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun e _ => ?_
   rw [Finset.sum_mul]
@@ -239,7 +240,8 @@ theorem kill_diag (Λ : PX m n →ₗ[ℂ] ℂ) (hΛ : ∀ u ∈ unitaryGroup (F
     · push Not at h
       obtain ⟨a, ha⟩ := h
       rw [kill_charged Λ hΛ s a ha, mul_zero]
-  rw [P.as_sum, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [P.as_sum, map_sum, map_sum]
   refine Finset.sum_eq_zero fun s _ => ?_
   rw [show (monomial s (AddMonoidAlgebra.coeff P s) : PX m n) = AddMonoidAlgebra.coeff P s • monomial s 1 by rw [smul_monomial, smul_eq_mul, mul_one],
     (dY (diagonal d)).map_smul, map_smul, hmon, smul_zero]

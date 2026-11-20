@@ -73,7 +73,8 @@ theorem dopL_mem {ι : Type} [Fintype ι] (b : Module.Basis ι ℝ (V × V)) (w 
   have : dopL lam w f = ∑ i, (b.repr w i : ℂ) • dopL lam (b i) f := by
     ext x
     have h := congrArg (evD lam f x) (b.sum_repr w).symm
-    rw [map_sum] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at h
     rw [SchwartzMap.sum_apply]
     refine h.trans (Finset.sum_congr rfl fun i _ => ?_)
     rw [map_smul]

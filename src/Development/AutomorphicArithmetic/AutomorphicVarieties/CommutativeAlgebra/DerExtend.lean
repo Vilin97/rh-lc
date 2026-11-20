@@ -80,7 +80,8 @@ theorem UpperTheory.V.Alg.der_extend :
     have hspan : ∀ g ∈ Ideal.span (Set.range (MvPowerSeries.X : W.σ → MvPowerSeries W.σ O)),
         D (W.π g) = 0 := fun g hg => by
       obtain ⟨c, rfl⟩ := Ideal.mem_span_range_iff_exists_fun.1 hg
-      rw [map_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, map_sum]
       refine Finset.sum_eq_zero fun i _ => ?_
       have h1 : D (W.π (c i) * W.z i) = W.origin h (W.π (c i)) • D (W.z i) + W.origin h (W.z i) • D (W.π (c i)) :=
         hD _ _

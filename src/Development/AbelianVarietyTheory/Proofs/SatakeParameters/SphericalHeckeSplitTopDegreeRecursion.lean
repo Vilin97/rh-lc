@@ -200,7 +200,8 @@ theorem top_step : ∀ {D : D7} (V : HSp D) (P : Pl D.host.E), conjPl P ≠ P �
     have lhs : ∑ γ ∈ rep V P (List.ofFn d₁), π γ (∑ γ' ∈ rep V P (List.ofFn aF), π γ' u) =
         ∑ γ ∈ rep V P (List.ofFn d₁), ∑ γ' ∈ rep V P (List.ofFn aF), π (γ * γ') u := by
       refine Finset.sum_congr rfl fun γ _ => ?_
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun γ' _ => ?_
       rw [map_mul, Module.End.mul_apply]
     rw [lhs, hsum', ← Finset.add_sum_erase _ _ hghT, if_pos rfl]

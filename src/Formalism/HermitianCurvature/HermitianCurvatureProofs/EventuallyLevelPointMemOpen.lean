@@ -47,7 +47,8 @@ theorem map_AAx {A B : Type} [Ring A] [Algebra ℂ A] [Ring B] [Algebra ℂ B] (
     (hm : m ≤ r) (u : ℂ) :
     φ (C3.AAx k r Eu xi m hm u) = C3.AAx k r (fun p q => φ (Eu p q)) xi m hm u := by
   unfold C3.AAx
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun c _ => ?_
   split_ifs
   · rw [map_smul, PBN.MC.map_qminor]

@@ -45,7 +45,8 @@ theorem expMv_phAt_sub_nsmul : ∀ (p : ℕ) [Fact p.Prime] (g : GL3Theta.G1 p) 
     rw [neg_mul, mul_neg]
     congr 1
   have hsum0 : MvPowerSeries.constantCoeff (∑ _i ∈ Finset.range n, -b) = 0 := by
-    rw [map_sum]; simp [hb]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]; simp [hb]
   rw [hsum, GlobalTheory.CurveToStdLog.expMv_add ha hsum0,
     GlobalTheory.CurveToStdLog.expMv_sum _ (fun _ => hnb), Finset.prod_const, Finset.card_range, hneg,
     ← GlobalTheory.CurveToStdLog.inv_ePhi1 g hE hh']

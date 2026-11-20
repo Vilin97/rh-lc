@@ -107,7 +107,8 @@ lemma scaleMap_homog {m : ℕ} {a : Pn} (ha : a ∈ grading A n m) :
   have hh : a.IsHomogeneous m := (mem_homogeneousSubmodule m a).1 ha
   conv_lhs => rw [a.as_sum]
   conv_rhs => rw [a.as_sum]
-  rw [map_sum, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl (fun e he => ?_)
   have hdeg : e.degree = m := by
     have := hh (mem_support_iff.mp he)

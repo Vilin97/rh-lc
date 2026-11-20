@@ -70,7 +70,8 @@ theorem sc_of (hN1 : ConnectionIntegrality) (hN2 : ConnectionCommutator) (hN3 : 
     refine MvPolynomial.mem_range_map_iff_coeffs_subset.mpr fun a ha => ?_
     obtain ⟨n', _, rfl⟩ := MvPolynomial.mem_coeffs_iff.mp ha
     exact RingHom.mem_range.mp (hPint n')
-  rw [ordNabla_wick hN2 hN3 B h m s ξh (fun l => (0, ψ l)) (fun _ => rfl) haa hab P (FB.expS k x * f), map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [ordNabla_wick hN2 hN3 B h m s ξh (fun l => (0, ψ l)) (fun _ => rfl) haa hab P (FB.expS k x * f), map_sum]
   refine Submodule.sum_mem _ fun n _ => ?_
   refine cc_ordEval_mem J e E0 hE0 (opL B h m s ξh) (opR B h m s ξh) (fun i => hgood _) (fun j => hgood _) _ hσ _
     fun mo => ?_

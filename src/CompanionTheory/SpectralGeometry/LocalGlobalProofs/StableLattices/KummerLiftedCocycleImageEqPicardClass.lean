@@ -202,6 +202,7 @@ theorem verma : CompanionTheory.D.DSIC.Verma := by
       all_goals simp
     · simp
   · intro a b f
-    simp [yy, LinearMap.sum_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [yy, LinearMap.sum_apply, map_sum]
 
 end GlobalTheory.CompanionTheory.DSVerma

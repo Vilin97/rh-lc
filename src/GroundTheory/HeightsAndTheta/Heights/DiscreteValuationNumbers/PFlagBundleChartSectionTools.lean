@@ -316,7 +316,8 @@ theorem eval_trunc_eq_zero (y : (Σ k, ι k) → Ω) (w : Module.Basis (Fin N) �
       simp
     · funext p
       rcases p with ⟨_ | k, p⟩
-      · simp [G, projCoord, truncCoord, map_sum, apply_ite]
+      set_option synthInstance.maxHeartbeats 100000 in
+        · simp [G, projCoord, truncCoord, map_sum, apply_ite]
       · simp [G, projCoord]
   have h0 : eval₂ (C.comp (algebraMap F Ω)) G q = 0 :=
     ht (by rw [map_zero, ← key t]; exact eval_eq_zero_of_mem_projIdeal y w φ _ hq)
@@ -343,7 +344,8 @@ theorem bind₁_isMultiHomog (g : (Σ o, bundleIdx ι M o) → MRing (bundleIdx 
         funext o; cases o <;> simp [Λ, substDeg, blockWeight, Pi.single_apply]
       rw [this, show g ⟨some k, p⟩ = X ⟨some k, p⟩ from hs k p]
       exact isWeightedHomogeneous_X F _ _
-  rw [← q.support_sum_monomial_coeff, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← q.support_sum_monomial_coeff, map_sum]
   refine IsWeightedHomogeneous.sum _ _ _ fun m hm => ?_
   have hmd : Finsupp.weight (blockWeight (bundleIdx ι M)) m = d := hq (mem_support_iff.mp hm)
   rw [bind₁_monomial]
@@ -353,7 +355,8 @@ theorem bind₁_isMultiHomog (g : (Σ o, bundleIdx ι M o) → MRing (bundleIdx 
   rw [zero_add] at this
   have hΛ : substDeg e d = ∑ v ∈ m.support, m v • Λ (blockWeight (bundleIdx ι M) v) := by
     show Λ d = _
-    rw [← hmd, Finsupp.weight_apply, Finsupp.sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hmd, Finsupp.weight_apply, Finsupp.sum, map_sum]
     simp only [map_nsmul]
   rw [hΛ]
   exact this
@@ -363,7 +366,8 @@ theorem bind₁_scale (u : MRing (bundleIdx ι M) F) {q : MRing (bundleIdx ι M)
     bind₁ (fun v => u ^ blockWeight (bundleIdx ι M) v none * X v) q = u ^ d none * q := by
   conv_lhs => rw [← q.support_sum_monomial_coeff]
   conv_rhs => rw [← q.support_sum_monomial_coeff]
-  rw [map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun m hm => ?_
   have hmd : Finsupp.weight (blockWeight (bundleIdx ι M)) m = d := hq (mem_support_iff.mp hm)
   have hs : ∑ v ∈ m.support, blockWeight (bundleIdx ι M) v none * m v = d none := by
@@ -427,7 +431,8 @@ theorem exists_section_form (y : (Σ k, ι k) → Ω) (B : ChartBundle F (segreV
           simp [truncCoord, this]
       · simp
     rw [← h1, hψ]
-    simp only [projCoord, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [projCoord, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
       map_sum, map_mul, Finset.mul_sum]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun l _ => Finset.sum_congr rfl fun j _ => ?_

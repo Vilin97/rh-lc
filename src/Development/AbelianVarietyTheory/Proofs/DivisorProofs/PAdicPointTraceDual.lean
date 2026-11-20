@@ -167,7 +167,8 @@ theorem mem_latTQuot_of_smul_mem_latT : ∀ {p : ℕ} [Fact p.Prime] {C : Type} 
         rw [map_smul, splitMap_idem, Pi.smul_apply, smul_eq_mul]
       have e2 : splitMap σf (coordC C ℓ j (d • w)) ψ =
           ∑ k, algebraMap O C (r k) * ψ (a k) := by
-        rw [hra, map_sum, Finset.sum_apply]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [hra, map_sum, Finset.sum_apply]
         simp only [splitMap_tmul, σf, RingHom.comp_apply, algebraMap_embO]
       rw [← e2, e1]
       by_cases hψ : ψ = φ
@@ -183,7 +184,8 @@ theorem mem_latTQuot_of_smul_mem_latT : ∀ {p : ℕ} [Fact p.Prime] {C : Type} 
 
   have h3 : d • w = d • proj h P.actV φ (∑ j, o j • ((1 : C) ⊗ₜ[ℤ_[p]] u j)) := by
     conv_lhs => rw [← h1, baseChange_eq_sum C hE]
-    rw [map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [ho, ← hact, map_smul, LinearMap.smul_apply, ← proj, ← algebraMap_smul C (o j), map_smul,
       smul_smul]

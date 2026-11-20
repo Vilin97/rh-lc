@@ -55,7 +55,8 @@ theorem exists_int_lift : ∀ (D : D7) (Q : Finset (Pl D.host.E)) (es : Pl D.hos
       rw [AddSubmonoidClass.coe_finset_sum]
       exact (Finset.sum_attach Q (fun P => toEAf D (es P) *
         ((oToS D.host.F D.host.E (a P) : Formalism.L2.Herm.intAf D.host.F D.host.E) : EAf D))).symm
-    rw [hN, map_sum, Finset.sum_eq_single ⟨P, hP⟩]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hN, map_sum, Finset.sum_eq_single ⟨P, hP⟩]
     · obtain ⟨h, h1⟩ := GlobalTheory.IdemRes.resS_idem_eq_one D (es P) P (hI P hP)
       show resS D.host.F P (⟨toEAf D (es P), hint P hP⟩ * oToS D.host.F D.host.E (a P)) = Y P
       rw [map_mul, resS_oToS, ha, h1, one_mul]

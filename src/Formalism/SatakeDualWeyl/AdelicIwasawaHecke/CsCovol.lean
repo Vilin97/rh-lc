@@ -139,7 +139,8 @@ theorem csCovol_column
   set x : V := ∑ k, ((cc k : ℚ) : K) • m k with hx
   have hmx : ∀ i, Algebra.trace ℚ K (h (m i) x) = (Pi.single j (1 : ℚ) : Fin N → ℚ) i := by
     intro i
-    rw [← hGc, hx, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hGc, hx, map_sum, map_sum]
     simp only [map_smul, smul_eq_mul, htr]
     simp only [Matrix.mulVec, dotProduct, hGdef, Matrix.of_apply]
     exact Finset.sum_congr rfl (fun k _ => mul_comm _ _)

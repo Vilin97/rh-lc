@@ -93,7 +93,8 @@ theorem exists_finsupp_heckeVec (S : Subring ℂ) {G : Type} [Group G] {K : Subg
   refine ⟨∑ c ∈ s, Finsupp.single c.out (h c.out), fun g => ?_, fun V _ _ ρ x => ?_⟩
   · rw [Finsupp.finset_sum_apply]
     exact Subring.sum_mem _ fun c _ => single_mem S _ (hS _) g
-  · rw [← opHom_apply ρ x, map_sum, heckeVec, finsum_eq_sum_of_support_subset (s := s)]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [← opHom_apply ρ x, map_sum, heckeVec, finsum_eq_sum_of_support_subset (s := s)]
     · refine Finset.sum_congr rfl fun c _ => ?_
       rw [opHom_apply, opOf_single]
     · intro c hc

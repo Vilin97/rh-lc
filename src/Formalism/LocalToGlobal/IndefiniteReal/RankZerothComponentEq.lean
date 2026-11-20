@@ -143,7 +143,8 @@ theorem gram_change (X : Formalism.L2.SG.HidaSetting.HidaSetting D) (v : NumberF
   rw [Matrix.map_apply, X.φ_eq, X.J_eq]
   show _ = tauE D (X.pl v) ((D.sp.Y 0).hT (X.bas i) (X.bas j))
   rw [← (D.sp.Y 0).frame.sum_repr (X.bas i), ← (D.sp.Y 0).frame.sum_repr (X.bas j)]
-  simp only [map_sum, map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, map_mul,
     RingHom.id_apply, starRingEnd_apply, Eqv.tauE_star, Matrix.mul_apply, conjTranspose_apply, frC, gramAt,
     Matrix.map_apply, Module.Basis.toMatrix_apply, HSpace.gram]
   simp only [Finset.sum_mul, Finset.mul_sum]

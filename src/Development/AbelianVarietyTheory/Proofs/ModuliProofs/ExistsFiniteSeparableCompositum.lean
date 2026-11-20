@@ -27,7 +27,8 @@ theorem exists_finite_separable_compositum (K K' k : Type) [Field K] [Field K'] 
   have h₂ : Algebra.IsSeparable K' k' :=
     (IntermediateField.isSeparable_adjoin_iff_isSeparable _ _).2 (by rintro _ ⟨i, rfl⟩; exact sepσ _)
   have hmem : ∀ z : k, σ z ∈ k' := fun z => by
-    rw [← bs.sum_repr z, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← bs.sum_repr z, map_sum]
     refine sum_mem fun i _ => ?_
     rw [map_smul, Algebra.smul_def, IsScalarTower.algebraMap_apply K K' Ω]
     exact mul_mem (k'.algebraMap_mem _) (IntermediateField.subset_adjoin _ _ ⟨i, rfl⟩)

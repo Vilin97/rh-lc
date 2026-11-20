@@ -46,7 +46,8 @@ theorem fm_smul_left (f g : α →₀ ℂ) (r : ℂ) : P.fm (r • f) g = conj r
 
 theorem fm_conj (f g : α →₀ ℂ) : conj (P.fm g f) = P.fm f g := by
   unfold fm
-  simp only [Finsupp.sum, map_sum, map_mul, Complex.conj_conj, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finsupp.sum, map_sum, map_mul, Complex.conj_conj, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun y _ => Finset.sum_congr rfl fun x _ => ?_
   rw [P.herm y x]; ring

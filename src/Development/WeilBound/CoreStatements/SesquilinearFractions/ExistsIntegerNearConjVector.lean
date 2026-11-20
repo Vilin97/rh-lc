@@ -26,7 +26,8 @@ theorem exists_integer_near_conj_vector : ∀ (E : Type) [Field E] [NumberField 
     have h1 := hc τ
     rw [hcτ (ComplexEmbedding.conjugate τ)] at h1
     have h2 := congrArg (starRingEnd ℂ) h1
-    rw [Complex.conj_conj, map_sum] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Complex.conj_conj, map_sum] at h2
     rw [← h2]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_mul, ComplexEmbedding.conjugate_coe_eq, Complex.conj_conj]
@@ -47,7 +48,8 @@ theorem exists_integer_near_conj_vector : ∀ (E : Type) [Field E] [NumberField 
   have hτa : τ ((∑ i, round (x i) • RingOfIntegers.basis E i : 𝓞 E) : E) =
       ∑ i, (round (x i) : ℂ) * τ (RingOfIntegers.basis E i : E) := by
     change (τ.comp (algebraMap (𝓞 E) E)) (∑ i, round (x i) • RingOfIntegers.basis E i) = _
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_zsmul, zsmul_eq_mul]
     rfl

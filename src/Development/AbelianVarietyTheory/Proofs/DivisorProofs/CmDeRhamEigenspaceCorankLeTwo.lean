@@ -93,7 +93,8 @@ theorem exists_eigenbasis {V : Type*} [AddCommGroup V] [Module ℂ V] {g : ℕ} 
     have hw : w = ∑ j, ((w j).re • (Pi.single j 1 : Fin g → ℂ) + (w j).im • (Pi.single j Complex.I : Fin g → ℂ)) := by
       funext l
       simp [Finset.sum_apply, Pi.single_apply, Finset.sum_add_distrib]
-    rw [hw, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hw, map_sum]
     refine Submodule.sum_mem _ fun j _ => ?_
     rw [map_add, map_smul, map_smul]
     refine Submodule.add_mem _ ?_ ?_

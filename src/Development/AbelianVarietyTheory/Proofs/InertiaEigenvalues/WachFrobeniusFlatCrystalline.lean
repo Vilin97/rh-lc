@@ -41,7 +41,8 @@ theorem span_φ (T : LocLat G Qp LL O) (hT : IsCrys PD T.ρ) {r : ℕ}
       rw [Submodule.coe_sum] at h0
       simp only [Submodule.coe_smul] at h0
       exact h0.symm
-    rw [hy', map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hy', map_sum]
     refine Submodule.sum_mem _ fun m _ => ?_
     rw [φD_smulA, ← algebraMap_smul W.EE, Submodule.restrictScalars_mem]
     exact Submodule.smul_mem _ _ (Submodule.subset_span (Set.mem_range_self m))
@@ -86,7 +87,8 @@ theorem phi_flat (T : LocLat G Qp LL O) (hT : IsCrys PD T.ρ) {r : ℕ}
   set e : Fin l → LetA O n := fun j => fun _ => ((1 : PowerSeries O) + PowerSeries.X) ^ (j : ℕ) with he
   have hexp : ∑ m, algebraMap (LetA O n) W.EE (∑ j, e j * W.φA (a j m)) • W.φD T (bN m) = 0 := by
     rw [← hsum]
-    simp_rw [algebraMap_smul, hzj, map_sum, φD_smulA, Finset.smul_sum, smul_smul, Finset.sum_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp_rw [algebraMap_smul, hzj, map_sum, φD_smulA, Finset.smul_sum, smul_smul, Finset.sum_smul]
     exact Finset.sum_comm
   have hc : ∀ m, ∑ j, e j * W.φA (a j m) = 0 := by
     intro m

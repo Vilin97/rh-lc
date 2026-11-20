@@ -92,7 +92,8 @@ theorem iotaQ_log {x : AInf K p} (hx : x ∈ RingHom.ker (fontaineTheta (normInt
       mul_zero]
   have h0 := isAdicSum_of_eq_zero (I := Ideal.span {(p : acrisQ K p m)}) hzero
   have h := hsum.unique h0
-  rw [iotaQ, RingHom.comp_apply, h, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [iotaQ, RingHom.comp_apply, h, map_sum, map_sum]
   exact Finset.sum_congr rfl fun n _ => hterm n
 
 end Plus
@@ -177,7 +178,8 @@ theorem iota_periodT {ε : 𝒪♭} (hε : PreTilt.untilt ε = 1) :
   rw [← IsPerfectoidField.ker_evalB, RingHom.mem_ker, map_sub, sub_eq_zero] at h1
   rw [h1, ← IsPerfectoidField.evalB_toBDeRhamPlus]
   congr 1
-  rw [map_sum, Finset.sum_Ico_eq_sum_range, Nat.add_sub_cancel]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_Ico_eq_sum_range, Nat.add_sub_cancel]
   refine Finset.sum_congr rfl fun n _ => ?_
   rw [logTermZero]
   simp only [Subalgebra.coe_mul, Subalgebra.coe_pow, Subalgebra.coe_neg, Subalgebra.coe_one,

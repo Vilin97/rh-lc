@@ -65,7 +65,8 @@ theorem perToVal2F (D : D7) (B : ColBrF D) (hB : B.Tied) (u : D.what₂.Word) (t
         apply D.what₂.embLL.injective
         rw [hB.dcPt u t x F, hf]
         refine (congrArg f hx0).trans ?_
-        rw [map_sum, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum, map_sum]
         refine Finset.sum_congr rfl fun y hy => ?_
         rw [map_smul, smul_eq_mul, map_mul, (ha y hy).1, hf]
       rw [heq]

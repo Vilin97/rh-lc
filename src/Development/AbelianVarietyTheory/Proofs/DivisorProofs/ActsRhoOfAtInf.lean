@@ -19,7 +19,8 @@ theorem trace_evI_heis {F : Type} [Field F] [NumberField F] [Invertible (2 : AF 
       trP F κ (locV x) (locV b) + trP F κ (locV a) (locV b) / 2 := by
   have hdot : ∀ y : κ → AF F, evIHom F (y ⬝ᵥ b) = ∑ i, locV y i * locV b i := by
     intro y
-    simp only [dotProduct, map_sum, map_mul, locV, evI_eq_evIHom]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [dotProduct, map_sum, map_mul, locV, evI_eq_evIHom]
   have h2 : ∀ t : AF F, evIHom F (⅟(2 : AF F) * t) = (1 / 2 : ℝ) • evIHom F t := by
     intro t
     have h : (2 : ℝ) • evIHom F (⅟(2 : AF F) * t) = evIHom F t := by

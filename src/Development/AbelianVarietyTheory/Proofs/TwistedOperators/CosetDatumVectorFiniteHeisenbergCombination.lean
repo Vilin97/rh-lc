@@ -140,7 +140,8 @@ theorem model_coset {D : D7} (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D)
     have := hTm.vac
     rwa [one_smul] at this
   have hTΨ : Tm Ψ = (R.card : ℂ)⁻¹ • ∑ r ∈ R, heisO ψ S T r f₀ := by
-    rw [hΨ, map_smul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hΨ, map_smul, map_sum]
     congr 1
     refine Finset.sum_congr rfl fun r hr => ?_
     rw [hTm.modul _ (GlobalTheory.isSBHalf_halfInd e Λ) r (hR1 r hr).1, hvac]

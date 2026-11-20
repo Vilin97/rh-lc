@@ -98,8 +98,10 @@ theorem exists_homogenize (p : (k : K) → ι k) (Q : MvPolynomial (Fin (Fintype
     unfold blkDeg at h2
     omega
   · intro z hz
-    rw [map_sum]
-    conv_rhs => rw [hren, Q'.as_sum, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_rhs => rw [hren, Q'.as_sum, map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun m hm => ?_
     rw [eval_monomial, eval_monomial, Finsupp.prod_fintype _ _ (fun _ => pow_zero _),
       Finsupp.prod_fintype _ _ (fun _ => pow_zero _)]
@@ -125,7 +127,8 @@ theorem exists_homogenize (p : (k : K) → ι k) (Q : MvPolynomial (Fin (Fintype
       Finset.prod_ne_zero_iff.2 fun k _ => pow_ne_zero _ (hz k)
     field_simp
   · rintro z ⟨k, hk⟩
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_eq_zero fun m hm => ?_
     rw [eval_monomial, Finsupp.prod_fintype _ _ (fun _ => pow_zero _)]
     refine mul_eq_zero_of_right _ (Finset.prod_eq_zero (Finset.mem_univ ⟨k, p k⟩) ?_)

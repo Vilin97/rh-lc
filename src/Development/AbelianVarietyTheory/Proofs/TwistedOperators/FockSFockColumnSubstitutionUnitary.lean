@@ -35,8 +35,10 @@ theorem colSub_comp {d a : ℕ} (h g : ι → Matrix (Fin a) (Fin a) ℂ) :
   refine algHom_ext fun v => ?_
   rw [AlgHom.comp_apply]
   unfold colSub
-  rw [aeval_X, aeval_X, map_sum]
-  simp only [map_mul, aeval_C, aeval_X, algebraMap_eq, Matrix.mul_apply, map_sum, Finset.mul_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [aeval_X, aeval_X, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_mul, aeval_C, aeval_X, algebraMap_eq, Matrix.mul_apply, map_sum, Finset.mul_sum, Finset.sum_mul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun k _ => ?_
   ring

@@ -210,7 +210,8 @@ theorem sup_le_gram (hR : ResolutionSupBound.Statement) (d : HSMDatum D Ω κ) :
   have hdeg : ∀ (a : ℂ) z, a ≠ 0 → h (a • z) = h z := fun a z ha => isDegZero_normSq hb.1 c a z ha
   have hevf : ∀ w, eval w f = ∑ i, c i * secFun (b i) w := by
     intro w
-    simp [hf, secFun, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [hf, secFun, map_sum]
   have hpt : ∀ w : Ix κ → ℂ, w ≠ 0 → ptNorm d.m (RingHom.id ℂ) n f w ^ 2 = h w := by
     intro w hw
     have hρ : 0 < d.m.ρ w := d.m.pos w hw

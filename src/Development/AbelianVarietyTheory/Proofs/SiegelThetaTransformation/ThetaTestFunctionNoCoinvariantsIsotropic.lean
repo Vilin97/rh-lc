@@ -64,7 +64,8 @@ theorem gen_of_red (D : Level X) {u : Fin r → Fin r → E} {k : GL (Fin r) (�
   choose k'' hk'' using fun i j => Ideal.Quotient.mk_surjective
     (((k⁻¹ : GL (Fin r) (𝓞 E ⧸ D.𝔪)) : Matrix (Fin r) (Fin r) (𝓞 E ⧸ D.𝔪)) i j)
   have hone (j l) : ∑ i, k' j i * k'' i l - (1 : Matrix (Fin r) (Fin r) (𝓞 E)) j l ∈ D.𝔪 := by
-    rw [← Ideal.Quotient.eq, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Ideal.Quotient.eq, map_sum]
     have := congrFun (congrFun k.mul_inv j) l
     rw [Matrix.mul_apply, ← hk'] at this
     simp only [map_mul, hk'']

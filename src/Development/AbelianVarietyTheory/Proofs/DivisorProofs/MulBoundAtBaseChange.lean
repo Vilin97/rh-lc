@@ -89,7 +89,8 @@ theorem toExt_mulW (j : ℕ) (u : Fin G.N → F) (f : G.Sec j) :
     (Nat.cast_succ j).symm) (GlobalTheory.chartPullPull G.L (G.fst E)) (G.chartAdj E j) (G.chartAdj E (j + 1))
     (fun t => ⟨((t.1.1 PUnit.unit, t.1.2 PUnit.unit), t.2 PUnit.unit), rfl, rfl, rfl⟩) _ le_rfl _ f).trans ?_
   refine congrArg (fun s => ProdChart.mul _ s _) ?_
-  rw [Fintype.linearCombination_apply, Fintype.linearCombination_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Fintype.linearCombination_apply, Fintype.linearCombination_apply, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   exact (map_smulₛₗ _ _ _).trans (congrArg _ (pullChart_ofSec _ _ _ (G.b k)))
 
@@ -174,7 +175,8 @@ theorem MulStable.mulBoundAt_baseChange (h : X.MulStable) {τ : E →+* ℂ} {β
   change Fin X.N → ℂ at u
   obtain rfl : g = fun t : Fin X.N × Fin m => ∑ s, (if s.1 = t.1 then a t.2 s.2 else 0) • X.toExtV E (j + 1) (G s) :=
     funext fun t : Fin X.N × Fin m => Subtype.ext <| (e t.1 t.2).trans <| by
-      simp only [Fintype.sum_prod_type, ite_smul, zero_smul, Finset.sum_ite_irrel, Finset.sum_const_zero,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Fintype.sum_prod_type, ite_smul, zero_smul, Finset.sum_ite_irrel, Finset.sum_const_zero,
         Finset.sum_ite_eq', Finset.mem_univ, if_true, Submodule.coe_sum, Submodule.coe_smul, map_sum, map_smul, hG]
   refine (cnrm_extend_comb (X.isExtension_extMap E (j + 1)) _ τ _ _ G).trans_le
     (le_of_eq_of_le (congrArg (cnrm _ _ · G) (funext fun s => ?_))

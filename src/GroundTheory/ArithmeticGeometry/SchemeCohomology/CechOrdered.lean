@@ -85,7 +85,8 @@ lemma bd_cone {q : ℕ} (c : ι) (z : Chain ι (q + 1)) :
   | zero => simp
   | add z z' hz hz' => rw [map_add, map_add, hz, hz', map_add, map_add]; abel
   | single t k =>
-    rw [cone_single, bd_single, Fin.sum_univ_succ, bd_single, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [cone_single, bd_single, Fin.sum_univ_succ, bd_single, map_sum]
     simp only [Fin.val_zero, pow_zero, one_smul, cons_comp_succAbove_zero', Fin.val_succ,
       cons_comp_succAbove_succ', map_zsmul, cone_single, pow_succ, mul_neg, mul_one, neg_smul,
       Finset.sum_neg_distrib, sub_eq_add_neg]
@@ -158,7 +159,8 @@ lemma eq_of_supp {M : Type*} [AddCommGroup M] (f g : Chain ι q →+ M) {z : Cha
     (hz : Supp Q z) (h : ∀ t (k : ℤ), Q t → f (Finsupp.single t k) = g (Finsupp.single t k)) :
     f z = g z := by
   rw [← Finsupp.sum_single z]
-  simp only [Finsupp.sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finsupp.sum, map_sum]
   exact Finset.sum_congr rfl fun t ht => h t _ (hz t (Finsupp.mem_support_iff.mp ht))
 
 end Supp
@@ -200,7 +202,8 @@ lemma lin_bd_single (B : (Fin (q + 1) → ι) → Chain ι r) (z : Chain ι (q +
 lemma lin_bd_single_apply (B : (Fin (q + 1) → ι) → Chain ι r) (t : Fin (q + 2) → ι) :
     lin B (bd q (Finsupp.single t 1)) =
       ∑ a : Fin (q + 2), ((-1 : ℤ) ^ (a : ℕ)) • B (t ∘ a.succAbove) := by
-  rw [bd_single, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [bd_single, map_sum]
   simp
 
 lemma Supp.bd {Q : (Fin (q + 2) → ι) → Prop} {R : (Fin (q + 1) → ι) → Prop} {z : Chain ι (q + 1)}
@@ -230,11 +233,13 @@ lemma bd_ocone {q : ℕ} (c : ι) (S : Set ι) (hc : ∀ s ∈ S, c ≤ s) (z : 
     (AddMonoidHom.id _ - (ocone c).comp (bd q)) hz fun t k ⟨ht, htS⟩ => ?_
   simp only [AddMonoidHom.coe_comp, Function.comp_apply, AddMonoidHom.sub_apply,
     AddMonoidHom.id_apply]
-  rw [ocone_single, bd_single, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [ocone_single, bd_single, map_sum]
   have hface : ∀ a : Fin (q + 2), t 0 ≤ (t ∘ a.succAbove) 0 := fun a =>
     ht.monotone (Fin.zero_le _)
   by_cases hct : c < t 0
-  · rw [if_pos hct, map_zsmul, ← cone_single, bd_cone, bd_single, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [if_pos hct, map_zsmul, ← cone_single, bd_cone, bd_single, map_sum]
     simp only [ocone_single, smul_sub, map_zsmul, Finset.smul_sum]
     congr 1
     · simp
@@ -347,7 +352,8 @@ theorem bd_proj : ∀ (q : ℕ) (i : Fin (q + 2) → ι),
     change bd 0 (ocone (minR i) (lin (proj 0) (bd 0 (Finsupp.single i 1)))) = _
     rw [hw, bd_ocone_zero (minR i) (Set.range i) (fun s ⟨a, ha⟩ => ha ▸ minR_le i a)]
     · have : aug (bd 0 (Finsupp.single i 1)) = 0 := by
-        rw [bd_single, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [bd_single, map_sum]
         simp [aug_single, Fin.sum_univ_two]
       rw [this, zero_smul, sub_zero]
     · exact Supp.bd (Supp.single (Q := fun t => InRange i t) _ fun a => ⟨a, rfl⟩)
@@ -370,7 +376,8 @@ theorem proj_of_strictMono : ∀ (q : ℕ) (i : Fin (q + 1) → ι), StrictMono 
       rw [← ha]
       exact hi.monotone (Fin.zero_le a))
     rw [lin_bd_single_apply, hmin]
-    simp only [fun a : Fin (q + 2) => proj_of_strictMono q _ (hi.comp (Fin.strictMono_succAbove a)),
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [fun a : Fin (q + 2) => proj_of_strictMono q _ (hi.comp (Fin.strictMono_succAbove a)),
       map_sum, map_zsmul, ocone_single, one_smul]
     rw [Fin.sum_univ_succ]
     have h1 : i 0 < (i ∘ (0 : Fin (q + 2)).succAbove) 0 := hi (by simp)
@@ -500,7 +507,8 @@ lemma pair_d {q : ℕ} (σ : Cochain P U q) {V : Opens X} {z : Chain ι (q + 1)}
     (hz : Supp (fun t => V ≤ inter U t) z) : pair (d P U q σ) V z = pair σ V (bd q z) := by
   refine eq_of_supp (pair (d P U q σ) V) ((pair σ V).comp (bd q)) hz fun t k ht => ?_
   simp only [AddMonoidHom.coe_comp, Function.comp_apply]
-  rw [pair_single _ _ _ ht, bd_single, map_sum, d_apply, map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [pair_single _ _ _ ht, bd_single, map_sum, d_apply, map_sum, Finset.smul_sum]
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [map_zsmul, res_res, map_zsmul, pair_single _ _ _ (ht.trans (inter_le_comp U t a.succAbove)),
     smul_comm]
@@ -554,7 +562,8 @@ theorem altProj_eq_zero [Fintype ι] {q : ℕ} (hq : Fintype.card ι ≤ q) (σ 
 theorem d_altProj (q : ℕ) (σ : Cochain P U q) :
     d P U q (altProj P U q σ) = altProj P U (q + 1) (d P U q σ) := by
   funext i
-  rw [d_apply, altProj_apply, pair_d σ (supp_inter U (proj_supp (q + 1) i) fun t ht => ht.2),
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [d_apply, altProj_apply, pair_d σ (supp_inter U (proj_supp (q + 1) i) fun t ht => ht.2),
     bd_proj, lin_bd_single_apply, map_sum]
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [altProj_apply, res_pair σ _ (supp_inter U (proj_supp q _) fun t ht => ht.2), map_zsmul]
@@ -563,7 +572,8 @@ theorem d_homotopy_add (q : ℕ) (σ : Cochain P U (q + 1)) :
     d P U q (homotopy P U q σ) + homotopy P U (q + 1) (d P U (q + 1) σ) =
       σ - altProj P U (q + 1) σ := by
   funext i
-  rw [Pi.add_apply, Pi.sub_apply, d_apply, homotopy_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Pi.add_apply, Pi.sub_apply, d_apply, homotopy_apply,
     pair_d σ (supp_inter U (hom_supp (q + 1) i) fun t ht => ht), bd_hom, map_sub, map_sub,
     lin_bd_single_apply, map_sum, pair_single _ _ _ le_rfl, one_smul, res_refl, altProj_apply]
   have : ∑ a : Fin (q + 2), ((-1 : ℤ) ^ (a : ℕ)) •

@@ -236,7 +236,8 @@ theorem higherPart_mem_degGe [Fintype σ] {u : ι → MvPowerSeries σ R} {i : �
 theorem subst_eq_linearPart_add [Fintype σ] (u : ι → MvPowerSeries σ R) (i : ι)
     {v : σ → MvPowerSeries τ R} (hv : HasSubst v) :
     (u i).subst v = ∑ j, linearPart u i j • v j + (higherPart u i).subst v := by
-  rw [higherPart, ← coe_substAlgHom hv, map_sub, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [higherPart, ← coe_substAlgHom hv, map_sub, map_sum]
   simp [subst_X hv]
 
 theorem linearPart_subst [Fintype σ] {u : ι → MvPowerSeries σ R} {v : σ → MvPowerSeries τ R}

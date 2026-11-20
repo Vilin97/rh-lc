@@ -256,14 +256,16 @@ theorem Psi_inj : Function.Injective (Psi l O b) := by
   have hs' : ∀ j, ∃ cj : ℤ_[l], algebraMap ℤ_[l] ℚ_[l] cj = (s : ℤ_[l]) • x j := fun j => hs j
   choose c hc using hs'
   have h1 : (∑ j, iotaK l O (x j) * algebraMap O (FractionRing O) (b j)) ∈ (1 : Submodule O (FractionRing O)) := by
-    rw [← Submodule.Quotient.mk_eq_zero, ← Submodule.mkQ_apply, map_sum, ← hv, Psi_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Submodule.Quotient.mk_eq_zero, ← Submodule.mkQ_apply, map_sum, ← hv, Psi_apply]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [← hx j]
     rfl
   obtain ⟨o, ho⟩ := Submodule.mem_one.mp h1
   have h2 : algebraMap O (FractionRing O) ((s : ℤ_[l]) • o) =
       algebraMap O (FractionRing O) (∑ j, c j • b j) := by
-    rw [Algebra.smul_def, map_mul, ho, Finset.mul_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Algebra.smul_def, map_mul, ho, Finset.mul_sum, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [Algebra.smul_def, map_mul, ← mul_assoc]
     congr 1
@@ -292,7 +294,8 @@ theorem Psi_surj [IsLocalHom (algebraMap ℤ_[l] O)] : Function.Surjective (Psi 
   refine ⟨fun j => QZ.mk l (algebraMap ℤ_[l] ℚ_[l] (b.equivFun (a * w) j) / ((l : ℕ) : ℚ_[l]) ^ m), ?_⟩
   rw [Psi_apply]
   simp only [PsiJ_mk, ← Submodule.mkQ_apply]
-  rw [← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum]
   congr 1
   have hl0 : ((l : ℕ) : O) ≠ 0 := by
     rw [← map_natCast (algebraMap ℤ_[l] O)]
@@ -308,7 +311,8 @@ theorem Psi_surj [IsLocalHom (algebraMap ℤ_[l] O)] : Function.Surjective (Psi 
     rw [← map_mul, ← hw, map_pow, map_natCast]
   have hsum : ∑ j, algebraMap O (FractionRing O) (algebraMap ℤ_[l] O (b.equivFun (a * w) j)) *
       algebraMap O (FractionRing O) (b j) = algebraMap O (FractionRing O) (a * w) := by
-    conv_rhs => rw [← b.sum_equivFun (a * w), map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_rhs => rw [← b.sum_equivFun (a * w), map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [Algebra.smul_def, map_mul (algebraMap O (FractionRing O))]
   calc ∑ j, iotaK l O (algebraMap ℤ_[l] ℚ_[l] (b.equivFun (a * w) j) / ((l : ℕ) : ℚ_[l]) ^ m) *

@@ -61,7 +61,8 @@ theorem sz_neg (u : Fin N → AF F) : sz (-u) = sz u := by
 
 theorem inf_mulVec (M : Matrix (Fin N) (Fin N) (AF F)) (u : Fin N → AF F) (l : Fin N) :
     inf (M.mulVec u) l = ∑ m, fstA F (M l m) * inf u m := by
-  simp only [inf, Matrix.mulVec, dotProduct, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [inf, Matrix.mulVec, dotProduct, map_sum, map_mul]
 
 theorem sz_mulVec_le [IsTotallyReal F] (M : Matrix (Fin N) (Fin N) (AF F)) :
     ∃ A : ℝ, 0 ≤ A ∧ ∀ u, sz (M.mulVec u) ≤ A * sz u := by

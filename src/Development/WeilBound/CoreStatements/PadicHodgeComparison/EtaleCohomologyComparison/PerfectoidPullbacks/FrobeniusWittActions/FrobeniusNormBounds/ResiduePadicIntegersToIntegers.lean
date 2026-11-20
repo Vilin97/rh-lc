@@ -69,7 +69,8 @@ theorem residue_field_card_le_finrank (r : Res l K) [FiniteDimensional ℚ_[l] K
       rfl
     have hk : ∑ i ∈ t, PadicInt.toZMod (hZ i) • (i : r.k) = 0 := by
       have := congrArg r.ρ hsum
-      rw [map_sum, map_zero] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, map_zero] at this
       rw [← this]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_mul, hy, residue_padicIntegers_to_integers, Algebra.smul_def]

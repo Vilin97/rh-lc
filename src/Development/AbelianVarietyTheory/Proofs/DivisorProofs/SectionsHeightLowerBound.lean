@@ -160,7 +160,8 @@ theorem semilinear_gen {W : Submodule (𝓞 K) V} {N n : ℕ} {b : Module.Basis 
   simp only [hβ', map_mul, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun l _ => ?_
-  simp only [he, map_sum, map_mul, Finset.sum_mul, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [he, map_sum, map_mul, Finset.sum_mul, Finset.mul_sum]
   exact Finset.sum_congr rfl fun j _ => by ring
 
 omit [NumberField K] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] in
@@ -170,7 +171,8 @@ theorem adjoin_ratios_eq_top {ev : V →ₗ[K] Ω} (hR : GlobalTheory.DegVal.Gen
     IntermediateField.adjoin K (Set.range fun j => ev (u j) / ev (u i)) = ⊤ := by
   have key (v : V) : ev v / ev (u i) ∈ IntermediateField.adjoin K (Set.range fun j => ev (u j) / ev (u i)) := by
     obtain ⟨a, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun K).1 (hu.ge (Submodule.mem_top (x := v)))
-    rw [map_sum, Finset.sum_div]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_div]
     refine sum_mem fun j _ => ?_
     rw [map_smul, smul_div_assoc]
     exact IntermediateField.smul_mem _ (IntermediateField.subset_adjoin _ _ (Set.mem_range_self j))
@@ -198,7 +200,8 @@ theorem selfInter_eq (hFS : GlobalTheory.Published.FubiniStudyChowHeight) (hC : 
   have hgc : g * c = 1 := by
     ext j l
     have e := congrArg (fun v => b.repr v j) (hc l)
-    simp only [hg, map_sum, map_smul, Module.Basis.repr_self, Finsupp.finsetSum_apply, Finsupp.smul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hg, map_sum, map_smul, Module.Basis.repr_self, Finsupp.finsetSum_apply, Finsupp.smul_apply,
       Finsupp.single_apply, smul_eq_mul, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ,
       if_true] at e
     rw [Matrix.mul_apply, Matrix.one_apply]
@@ -224,10 +227,12 @@ theorem selfInter_eq (hFS : GlobalTheory.Published.FubiniStudyChowHeight) (hC : 
     rw [HeightUnique.linSubst_linSubst, ← hgJ] at h₂
     convert h₂ using 3 with k
     have e : ev (gw k) = ∑ j, algebraMap K Ω (g j k) * ev (b j) := by
-      simp only [hg, map_sum, map_smul, Algebra.smul_def]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hg, map_sum, map_smul, Algebra.smul_def]
     rw [e]
     conv_lhs => rw [hgJ]
-    simp only [Matrix.mul_apply, map_sum, map_mul, Finset.sum_mul, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mul_apply, map_sum, map_mul, Finset.sum_mul, Finset.mul_sum]
     rw [Finset.sum_comm]
     exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
   have hδ : (0 : ℝ) < ((D : ℝ) + 1) * δ := mul_pos (by positivity) (Nat.cast_pos.2 hD)
@@ -248,7 +253,8 @@ theorem selfInter_eq (hFS : GlobalTheory.Published.FubiniStudyChowHeight) (hC : 
       exact w.2
     obtain ⟨β, hβ⟩ := (Submodule.mem_span_range_iff_exists_fun (𝓞 K)).1 hwm
     have h1 := (X.mem_basicOpen _ x hj).1 ((mem_nonzeroLocus_iff _ j hj).1 hw)
-    rw [GlobalTheory.ImageModel.sec_linear K V Ω Nm W ev D X p L ψ s hM hR.1 _ β gw w hβ.symm j, map_sum] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [GlobalTheory.ImageModel.sec_linear K V Ω Nm W ev D X p L ψ s hM hR.1 _ β gw w hβ.symm j, map_sum] at h1
     obtain ⟨k, -, hk⟩ := IsLocalRing.exists_of_isUnit_sum h1
     rw [map_mul] at hk
     exact TopologicalSpace.Opens.mem_iSup.2 ⟨k, (mem_nonzeroLocus_iff (s (gw k)) j hj).2

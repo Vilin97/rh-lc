@@ -60,7 +60,8 @@ theorem GlobalTheory.SeqCx.vertical_exact_of_columns : ∀ (V W : Type) (D : Set
       exact h (Finset.mem_image.2 ⟨(l, w), Finsupp.mem_support_iff.2 hne, rfl⟩)
   have hvdec : vbd V W x = ∑ l ∈ T, Finsupp.mapDomain (fun w => (l, w)) (bd W (g l)) := by
     conv_lhs => rw [hdec]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl (fun l _ => vbd_mapDomain l (g l))
   have hcyc : ∀ l ∈ T, bd W (g l) = 0 := by
     intro l hl
@@ -94,7 +95,8 @@ theorem GlobalTheory.SeqCx.vertical_exact_of_columns : ∀ (V W : Type) (D : Set
     rw [chains, Finsupp.mem_supported] at hyl
     have := hyl (Finset.mem_coe.2 hw)
     exact ⟨this.1, (hpre l hl).1, this.2⟩
-  · rw [map_sum, hdec]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum, hdec]
     exact Finset.sum_congr rfl (fun l hl => by rw [vbd_mapDomain, hybd l hl])
 
 section

@@ -47,10 +47,12 @@ theorem crv_var {k r : ℕ} (X g : Mat k r) (i : Vr (2 * r + k + 1)) :
     simpa [dirv] using h2
   rcases i with ⟨a, b⟩ | ⟨a, b⟩
   · refine (hab a b).congr_deriv ?_
-    simp only [lin, map_sum, map_mul, eval_C, eval_X, vars, Sum.elim_inl, Matrix.mul_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [lin, map_sum, map_mul, eval_C, eval_X, vars, Sum.elim_inl, Matrix.mul_apply]
     exact Finset.sum_congr rfl fun c _ => mul_comm _ _
   · refine (hab a b).star.congr_deriv ?_
-    simp only [lin, map_sum, map_mul, eval_C, eval_X, vars, Sum.elim_inr, Matrix.mul_apply, star_sum, star_mul']
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [lin, map_sum, map_mul, eval_C, eval_X, vars, Sum.elim_inr, Matrix.mul_apply, star_sum, star_mul']
     exact Finset.sum_congr rfl fun c _ => mul_comm _ _
 
 theorem hasDerivAt_poly {k r : ℕ} (X g : Mat k r) (q : MvPolynomial (Vr (2 * r + k + 1)) ℂ) :
@@ -60,7 +62,8 @@ theorem hasDerivAt_poly {k r : ℕ} (X g : Mat k r) (q : MvPolynomial (Vr (2 * r
   have h0 : crv (false, X) g 0 = g := by simp [crv]
   rw [h0] at h
   convert h using 1
-  simp only [dP, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dP, map_sum, map_mul]
 
 theorem eval_qD {k j ρ : ℕ} (g : Mat k (j + ρ)) : eval (vars g) (qD k j ρ) = DjU k j ρ g := by
   rw [qD, DjU, RingHom.map_det]

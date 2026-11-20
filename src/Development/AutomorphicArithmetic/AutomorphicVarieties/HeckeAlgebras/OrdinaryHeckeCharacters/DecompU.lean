@@ -88,18 +88,22 @@ private theorem core {E : Type} [Field E] [NumberField E] [IsCMField E] {n m : �
     have e : ∑ j, a u i j • autRep E n (k u) (Φ j ℓ) = Φ i ℓ := by
       apply Subtype.ext
       have := congrArg (fun y => tf y ℓ) (hF u i)
-      simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, hT] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, hT] at this
       rw [Submodule.coe_sum]
       exact this
     have e2 := congrArg (fun y => (P t y).1) e
-    simp only [map_sum, map_smul, hPe, Submodule.coe_sum] at e2
-    simp only [map_sub, map_sum, map_smul, LinearMap.sub_apply, LinearMap.sum_apply, LinearMap.smul_apply, hT, hG]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, hPe, Submodule.coe_sum] at e2
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sub, map_sum, map_smul, LinearMap.sub_apply, LinearMap.sum_apply, LinearMap.smul_apply, hT, hG]
     exact sub_eq_zero.2 e2
   · rw [Finset.sum_apply]
     refine sub_eq_zero.1 (hinj _ (sub_mem (Submodule.sum_mem _ fun t _ => hGA t i) (hFA i)) fun ℓ => ?_)
     have e := congrArg Subtype.val (hPs (Φ i ℓ) (Submodule.mem_iSup_of_mem i ⟨ℓ, rfl⟩))
     rw [Submodule.coe_sum] at e
-    simp only [map_sub, map_sum, LinearMap.sub_apply, LinearMap.sum_apply, hG]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sub, map_sum, LinearMap.sub_apply, LinearMap.sum_apply, hG]
     exact sub_eq_zero.2 e
 
 private theorem core2 {E : Type} [Field E] [NumberField E] [IsCMField E] {n m d : ℕ} {Γ Ga Gp D : Type} [Group Γ] [Group Ga]

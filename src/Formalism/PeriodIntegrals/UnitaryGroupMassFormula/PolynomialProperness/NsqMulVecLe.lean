@@ -86,7 +86,8 @@ theorem herm_sum_left {n : ℕ} {ι : Type*} [Fintype ι] (H : Matrix (Fin n) (F
     (x : ι → Fin n → ℂ) (y : Fin n → ℂ) :
     herm H (∑ c, u c • x c) y = ∑ c, u c * herm H (x c) y := by
   unfold herm
-  rw [← mulVecLin_apply, map_sum, dotProduct_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← mulVecLin_apply, map_sum, dotProduct_sum]
   refine Finset.sum_congr rfl fun c _ => ?_
   rw [map_smul, mulVecLin_apply, dotProduct_smul, smul_eq_mul]
 
@@ -102,7 +103,8 @@ theorem mulVec_fmul (k r : ℕ) (z : Fin (2 * r + k + 1) → ℂ) (g : B.Mat k r
     (c : Matrix (Fin (r + 1)) (Fin (r + 1)) ℂ) (b : Fin (r + 1)) :
     g *ᵥ fmul k r z c b = ∑ a, c a b • (g *ᵥ fvec k r z a) := by
   unfold fmul
-  rw [← mulVecLin_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← mulVecLin_apply, map_sum]
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [map_smul, mulVecLin_apply]
 

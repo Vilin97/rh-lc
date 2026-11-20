@@ -228,7 +228,8 @@ theorem IsQuasiRegularSeq.quotSMulTop {f : Option ι → R} (h : IsQuasiRegularS
   obtain rfl : c = fun α => Submodule.Quotient.mk (d α) := funext fun α => (hd α).symm
   have hc' : (Submodule.Quotient.mk (∑ α, monoVal (f ∘ some) α.1 • d α) :
       QuotSMulTop (f none) M) = 0 := by
-    rw [← hc, ← Submodule.mkQ_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hc, ← Submodule.mkQ_apply, map_sum]
     rfl
   obtain ⟨ω, -, hω⟩ := (Submodule.mem_smul_pointwise_iff_exists _ _ _).mp
     ((Submodule.Quotient.mk_eq_zero _).mp hc')

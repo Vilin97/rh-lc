@@ -60,10 +60,12 @@ theorem ReadsG.period_eq {G G' : Pm.Mt} {f : SmT MX →ₗ[ℂ] (GA D D.sp.X' �
     (w : Pm.Wrow) (hw : ∀ c, eW w c ∈ LinearMap.range j) : Pm.period w G = Pm.period w G' := by
   choose v hv using hw
   have e : w = ∑ c, eW.symm (Pi.single c (j (v c))) := by
-    rw [← map_sum, LinearEquiv.eq_symm_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, LinearEquiv.eq_symm_apply]
     simp only [hv]
     exact (Finset.univ_sum_single _).symm
-  rw [e, map_sum, LinearMap.sum_apply, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, map_sum, LinearMap.sum_apply, LinearMap.sum_apply]
   refine Finset.sum_congr rfl fun c _ => ?_
   obtain ⟨g, hg⟩ := hasMat_exists (K.y c)
   have hc : (Nat.card (M.stabilizer₂ c) : ℂ) ≠ 0 := by

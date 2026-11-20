@@ -31,7 +31,8 @@ theorem isHomogeneous_colVar (v : Vm D.what₂.Tau N) : (colVar D N v).IsHomogen
 theorem isHomogeneous_collapseQ {d : ℕ} {G : MvPolynomial (Vm D.what₂.Tau N) ℚ}
     (hG : G.IsWeightedHomogeneous (wt D.what₂.Tau N) d) : (collapseQ D N G).IsHomogeneous d := by
   classical
-  rw [G.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [G.as_sum, map_sum]
   refine IsHomogeneous.sum _ _ _ fun m hm => ?_
   have hw : Finsupp.weight (wt D.what₂.Tau N) m = d := hG (mem_support_iff.1 hm)
   rw [collapseQ, aeval_monomial, Algebra.algebraMap_eq_smul_one, smul_mul_assoc, one_mul, smul_eq_C_mul]
@@ -50,7 +51,8 @@ theorem toR_collapseQ (G : MvPolynomial (Vm D.what₂.Tau N) ℚ) : toR (collaps
     · simp [collapseQ]
     · rcases v with ⟨_, x⟩ | ⟨_, k⟩
       · simp [collapseQ, colVar, collapse]
-      · simp [collapseQ, colVar, collapse, chTot, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        · simp [collapseQ, colVar, collapse, chTot, map_sum]
   exact RingHom.congr_fun e G
 
 end GlobalTheory.ConsNumber

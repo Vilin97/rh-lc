@@ -227,7 +227,8 @@ theorem anFacts_of_poly (hφ : Function.Injective φ) (x0 : R.Y) (hx : ∀ p, φ
     obtain ⟨q, hq, rfl⟩ := hg
     have h1 : AddMonoidAlgebra.coeff q (ex k 0) = 0 := by rw [← eval_single_eq_coeff q hq, ← hx]; exact h0 0
     change R.s w t 0 ^ (0 + 1) * φ q ∈ _
-    rw [zero_add, pow_one, hs, ← map_mul, q.as_sum, Finset.mul_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [zero_add, pow_one, hs, ← map_mul, q.as_sum, Finset.mul_sum, map_sum]
     refine Submodule.sum_mem _ fun β hβ => ?_
     have hd : β.degree = k := by
       by_contra hc
@@ -295,7 +296,8 @@ theorem anFacts_of_poly (hφ : Function.Injective φ) (x0 : R.Y) (hx : ∀ p, φ
     rw [hsp, hk, show 2 * T / 2 = T by omega]
     rintro _ ⟨q, hq, rfl⟩
     change φ q ∈ _
-    rw [q.as_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [q.as_sum, map_sum]
     refine Submodule.sum_mem _ fun β hβ => ?_
     have hd : β.degree = T := by
       by_contra hc
@@ -426,7 +428,8 @@ theorem exampleEvaluation_span_univ (σ : B₀.KO →+* ℂ) (u : WeightFamilies
     exact ⟨_, IsHomogeneous.map (cutR_le (hC B₀) j u F.2) σ, (evalEmbedding_single σ (deg u) F.1).symm⟩
   · rintro _ ⟨q, hq, rfl⟩
     change fn _ q ∈ _
-    rw [q.as_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [q.as_sum, map_sum]
     refine Submodule.sum_mem _ fun β hβ => ?_
     have hd : β.degree = u.n / 2 := by
       by_contra hc

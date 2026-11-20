@@ -285,12 +285,14 @@ theorem letterwise (s r n m k : ℕ) [NeZero n] (hs : 1 ≤ s) (h2 : l = 2 → 2
     (by
       ext1 a c
       have h := congrArg ι (congrFun (congrFun (hGP i) a) c)
-      simpa only [Matrix.smul_apply, smul_eq_mul, Matrix.mul_apply, Matrix.map_apply, map_mul, map_pow, map_sum,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa only [Matrix.smul_apply, smul_eq_mul, Matrix.mul_apply, Matrix.map_apply, map_mul, map_pow, map_sum,
         hact, hphi, hQ] using h)
     (by
       funext a
       have h := congrArg ι (congrFun (hy i) a)
-      simpa only [Pi.smul_apply, Pi.sub_apply, smul_eq_mul, Matrix.mulVec, dotProduct, Matrix.map_apply, map_mul,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa only [Pi.smul_apply, Pi.sub_apply, smul_eq_mul, Matrix.mulVec, dotProduct, Matrix.map_apply, map_mul,
         map_pow, map_sum, map_sub, hact, hphi, hQ] using h)
     (by rw [← mul_assoc, ← pow_add, map_pow, ← mul_pow, ← mul_pow, tau_eq s hs τ hτ])
     (by rw [← mul_assoc, hbΛ, ← pow_add, add_comm])

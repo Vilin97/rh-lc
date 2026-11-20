@@ -26,7 +26,8 @@ theorem idem_mul_idemAt {Q : Finset (Pl D.host.E)} (hQ : SplitSet Q) {PP : Pl D.
     rw [idem, Finset.sum_mul]
     exact Finset.sum_eq_zero fun q hq => hQ.mul_conj hq hP
   have h3 : cA D (idem Q) * idemAt PP = 0 := by
-    rw [idem, map_sum, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [idem, map_sum, Finset.sum_mul]
     exact Finset.sum_eq_zero fun q hq => by rw [mul_comm]; exact hQ.mul_conj hP hq
   have h4 : cA D (idem Q) * cA D (idemAt PP) = cA D (idemAt PP) := by rw [← map_mul, h1]
   rw [add_mul, mul_add, mul_add, h1, h2, h3, h4, add_zero, zero_add]

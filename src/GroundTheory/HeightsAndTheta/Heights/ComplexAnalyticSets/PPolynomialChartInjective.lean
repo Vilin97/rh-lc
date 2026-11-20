@@ -38,7 +38,8 @@ theorem PolynomialChartInjective.full : PolynomialChartInjective.Statement := by
       rintro _ ⟨j, rfl⟩
       have h0 := congrFun hv j
       simp only [hL, ContinuousLinearMap.pi_apply, Pi.zero_apply] at h0
-      rw [pi_eq_sum_univ' v, map_sum] at h0
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [pi_eq_sum_univ' v, map_sum] at h0
       simp only [map_smul, smul_eq_mul, hrow] at h0
       simpa [ψ, mul_comm] using h0
     rw [hspan] at hker

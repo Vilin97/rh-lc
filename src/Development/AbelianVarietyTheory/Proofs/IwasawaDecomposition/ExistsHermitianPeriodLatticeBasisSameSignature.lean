@@ -87,10 +87,12 @@ theorem exists_isPerBasis : ∀ (E : Type) [Field E] [NumberField E] [IsCMField 
     have hk := congrFun hker k'
     simp only [Matrix.vecMul, dotProduct, Matrix.of_apply, Pi.zero_apply] at hk
     have : ((Di.EF (a • v) (x k') : ℤ) : ℚ) = 0 := by
-      rw [hv, Finset.smul_sum, map_sum, LinearMap.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hv, Finset.smul_sum, map_sum, LinearMap.sum_apply]
       push_cast
       simp_rw [← mul_smul, hhm]
-      rw [← map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← map_sum]
       have : ∑ k, ((a * c k : 𝓞 E) : E) * hm k k' = (a : E) * ((d : 𝓞 E) : E) * ∑ k, c₀ k * hm k k' := by
         rw [Finset.mul_sum]
         refine Finset.sum_congr rfl fun k _ => ?_

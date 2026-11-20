@@ -92,7 +92,8 @@ theorem DualSystem.apply_eq (D : DualSystem E Y) (β : balancedForms E Y) (x x' 
     intro a b u v
     rw [mul_comm, mul_smul, h2 (bar E b) (a • u) v, bar_bar]
   conv_lhs => rw [← D.expand x, ← D.expand x']
-  simp only [map_sum, AddMonoidHom.finsetSum_apply, key]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, AddMonoidHom.finsetSum_apply, key]
   exact Finset.sum_comm
 
 theorem DualSystem.pairing_of_sum (D : DualSystem E Y) (l : Exponent E Y)
@@ -109,13 +110,15 @@ theorem DualSystem.pairing_of_sum (D : DualSystem E Y) (l : Exponent E Y)
   refine Finset.sum_congr rfl fun j _ => ?_
   conv_rhs => rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun k _ => ?_
-  rw [h, Finset.sum_smul, map_sum, AddMonoidHom.finsetSum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h, Finset.sum_smul, map_sum, AddMonoidHom.finsetSum_apply]
 
 theorem DualSystem.dual_expand (D : DualSystem E Y) (y : Module.Dual (𝓞 E) Y) :
     y = ∑ j, y (D.e j) • D.y j := by
   refine LinearMap.ext fun x => ?_
   conv_lhs => rw [← D.expand x]
-  rw [map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, LinearMap.sum_apply]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_smul, LinearMap.smul_apply, smul_eq_mul, smul_eq_mul, mul_comm]
 
@@ -123,7 +126,8 @@ theorem DualSystem.form_eq (D : DualSystem E Y) (l : Exponent E Y) (y y' : Modul
     l.form y y' = ∑ p : Fin D.n × Fin D.n,
       y (l.form (D.y p.1) (D.y p.2) • D.e p.1) * bar E (y' (D.e p.2)) := by
   conv_lhs => rw [D.dual_expand y, D.dual_expand y']
-  simp only [map_sum, AddMonoidHom.finsetSum_apply, l.smul_left, l.smul_right, map_smul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, AddMonoidHom.finsetSum_apply, l.smul_left, l.smul_right, map_smul,
     smul_eq_mul, Fintype.sum_prod_type]
   conv_lhs => rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun k _ => ?_
@@ -175,7 +179,8 @@ noncomputable def Exponent.ofFamily {ι : Type} [Fintype ι] (x : ι → Y)
   hermitian y y' := by
     simp only [AddMonoidHom.mk'_apply]
     change _ = IsCMField.ringOfIntegersComplexConj E _
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_mul, mul_comm]
     exact congrArg _ (bar_bar E _).symm
@@ -189,7 +194,8 @@ noncomputable def Exponent.ofFamily {ι : Type} [Fintype ι] (x : ι → Y)
     simp only [AddMonoidHom.mk'_apply]
     have hs : (τ ((∑ i, y (x i) * bar E (y (x i)) : 𝓞 E) : E)).re
         = ∑ i, Complex.normSq (τ (y (x i) : E)) := by
-      rw [← Finset.sum_congr rfl fun i _ => key (y (x i)), ← Complex.re_sum, ← map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← Finset.sum_congr rfl fun i _ => key (y (x i)), ← Complex.re_sum, ← map_sum]
       congr 2
       exact map_sum (algebraMap (𝓞 E) E) _ _
     rw [hs]

@@ -76,7 +76,8 @@ theorem coef_mem [IsFractionRing B Ω] {P : Type} [AddCommGroup P] [Module B P] 
   have h2 : ∑ a, (u ^ n * T a - (b.repr x a : Ω)) • ι (b a) = 0 := by
     simp only [sub_smul, Finset.sum_sub_distrib, mul_smul, ← Finset.smul_sum, e]
     have := congrArg ι (b.sum_repr x)
-    simp only [map_sum, map_smul, Subalgebra.smul_def] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, Subalgebra.smul_def] at this
     rw [this, sub_self]
   have := Fintype.linearIndependent_iff.1 h1 _ h2 a
   exact ⟨n, by rw [sub_eq_zero.1 this]; exact (b.repr x a).2⟩

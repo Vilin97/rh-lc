@@ -32,7 +32,8 @@ theorem cohomologyMap_normClass {B B' : Rep k F} [IsDiscreteRep B] [IsDiscreteRe
   apply cochainOf_injective
   funext σ
   change f.hom ((∑ g, B.ρ g) m) = (∑ g, B'.ρ g) (f.hom m)
-  rw [LinearMap.sum_apply, LinearMap.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [LinearMap.sum_apply, LinearMap.sum_apply, map_sum]
   exact Finset.sum_congr rfl fun g _ => Rep.hom_comm_apply f g m
 
 end NormClassMap

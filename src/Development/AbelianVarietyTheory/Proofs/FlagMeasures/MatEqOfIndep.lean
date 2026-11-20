@@ -38,9 +38,11 @@ theorem fm_conj {e f : Fin m → V} (ψ τ : V ≃ₗ[K] V) {P B : Matrix (Fin m
   have hτ' : ∀ a, τ (f a) = ∑ c, B c a • f c := hτ
   apply ψ.injective
   show ψ (ψ.symm (τ (ψ (e b)))) = _
-  rw [LinearEquiv.apply_symm_apply, hψ b, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [LinearEquiv.apply_symm_apply, hψ b, map_sum]
   simp only [map_smul, hτ']
-  rw [sum_smul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [sum_smul_sum, map_sum]
   simp only [map_smul, hψ]
   rw [sum_smul_sum]
   refine Finset.sum_congr rfl fun c _ => ?_
@@ -100,7 +102,8 @@ theorem dict_coords : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u u' : D.wh
     apply c.e.injective
     have e1 : c.e (τ (frame F'0 b)) = c.grp ρ n (G.f' b) := by
       rw [c.f'_eq]; simp [GCoord.grp, τ]
-    rw [e1, hBf b, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e1, hBf b, map_sum]
     simp only [map_smul, c.f'_eq]
   set ψ : (VS D).V ≃ₗ[D.host.E] (VS D).V := t₀.lin.trans ρ with hψdef
   have hψ : ∀ b, ψ ((X.Fu u').fvec b) = ∑ a, U' a b • frame F'0 a := by

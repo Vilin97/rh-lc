@@ -20,7 +20,8 @@ theorem root_statement : RootStatement := by
   · rw [(h6 w).2.2.1 k]
     simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, (hty _).2 k a hk, mul_zero,
       Finset.sum_const_zero]
-  · rw [(h6 w).2.2.1 n, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [(h6 w).2.2.1 n, map_sum]
     simp only [map_smul]
     exact hxk w hw
 

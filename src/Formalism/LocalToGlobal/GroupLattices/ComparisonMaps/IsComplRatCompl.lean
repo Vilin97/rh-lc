@@ -17,7 +17,8 @@ private theorem lc_repr_lemma (c0 : V0 →ₛₗ[e] W0) (b : Module.Basis ι LL 
   rw [Finsupp.linearCombination_apply, Finsupp.sum_mapRange_index (h := fun i a => a • c0 (b i)) (fun i => zero_smul _ _)]
   conv_rhs => rw [← b.linearCombination_repr x]
   rw [Finsupp.linearCombination_apply]
-  simp only [Finsupp.sum, map_sum, LinearMap.map_smulₛₗ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finsupp.sum, map_sum, LinearMap.map_smulₛₗ]
 
 theorem span_basis_eq (c0 : V0 →ₛₗ[e] W0) (b : Module.Basis ι LL V0) :
     Submodule.span Kf (Set.range fun i => c0 (b i)) = spanK c0 := by
@@ -117,7 +118,8 @@ private theorem li_core_lemma_2 {κ : Type*} (c0 : V0 →ₛₗ[e] W0) (b : Modu
     simp only [LinearMap.comp_apply, Submodule.subtype_apply, Finsupp.lapply_apply] at h1
     rw [h1, hv.repr_eq_single i _ rfl, Finsupp.single_apply]
   have h2 := congrArg (extK c0 c1 b hli φ) hs
-  rw [map_sum, map_zero] at h2
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_zero] at h2
   simp only [map_smul, extK_apply] at h2
   rw [Finset.sum_eq_single k (fun i _ hik => by rw [hφv, if_neg hik]; simp [c1])
     (fun h => absurd hk h), hφv, if_pos rfl] at h2

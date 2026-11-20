@@ -13,14 +13,16 @@ private theorem cas_inter {E : Type} [Field E] [NumberField E] {a n : ℕ} (e : 
   have h' : ∀ X m, f (shift L r X m) = shift L' r X (f m) := fun X m => by
     simp only [shift_apply, LinearMap.add_apply, LinearMap.smul_apply, Module.End.one_apply, map_add, h,
       LinearMap.map_smul_of_tower]
-  simp only [cas, LinearMap.sum_apply, LinearMap.sub_apply, Module.End.mul_apply, map_sum, map_sub, h']
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [cas, LinearMap.sum_apply, LinearMap.sub_apply, Module.End.mul_apply, map_sum, map_sub, h']
 
 private theorem cas_alg {E : Type} [Field E] [NumberField E] {a n : ℕ} (e : Fin n → Herm E a)
     {A B : Type} [Ring A] [Algebra ℂ A] [Module ℝ A]
     [Ring B] [Algebra ℂ B] [Module ℝ B]
     (L : Lie E a →ₗ[ℝ] A) (L' : Lie E a →ₗ[ℝ] B) (f : A →ₐ[ℂ] B) (h : ∀ X, f (L X) = L' X) :
     f (cas L e) = cas L' e := by
-  simp only [cas, map_sum, map_sub, map_mul, h]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [cas, map_sum, map_sub, map_mul, h]
 
 theorem UpperTheory.V.Lit.Bor.casTens :
     UpperTheory.V.Lit.Bor.CasTens := by

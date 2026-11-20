@@ -110,7 +110,8 @@ variable {k : Type*} [Field k] {Z C : Type*} [Fintype Z] [Fintype C] (D : Data k
 theorem coeff_zvec (d : Z) (c : C) :
     coeff (Finsupp.single d 1) (D.zvec c) = if D.ι d = c then 1 else 0 := by
   unfold zvec
-  rw [map_sum, Finset.sum_eq_single d]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_eq_single d]
   · split_ifs <;> simp [coeff_X]
   · intro e _ hne
     split_ifs
@@ -122,7 +123,8 @@ theorem coeff_zvec (d : Z) (c : C) :
 
 theorem coeff_minus_one_holds : D.CoeffOfFirstMultiplier := by
   intro d b
-  rw [m_succ, coeff_C_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [m_succ, coeff_C_mul, map_sum]
   congr 1
   rw [Finset.sum_eq_single (D.ι d)]
   · rw [coeff_mul_C, coeff_frob_smul _ D.q_pos]

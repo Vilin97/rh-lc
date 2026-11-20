@@ -73,9 +73,11 @@ theorem exists_functions (hB : BaseFacts S M U₀ EE) (Q : Clos ρ M U₀ EE) (z
         ∑ k, resG M.Z inf_le_right (Q.c l j k) * f k) = ∑ j, ψ (S.proj (S.TT M z') 0 j i) *
           ((Q.c l).map (valR y (Q.W l))).mulVec (fun k => valR y _ (f k)) j := by
     intro K _ y ψ hy hψ
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
-    rw [map_mul, map_sum, ← CrdCalc.valR_eq, GlobalTheory.Points.valR_constFn_of_over M.s ψ y hψ _ hy]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_mul, map_sum, ← CrdCalc.valR_eq, GlobalTheory.Points.valR_constFn_of_over M.s ψ y hψ _ hy]
     refine congrArg _ (Finset.sum_congr rfl fun k _ => ?_)
     rw [map_mul, ← CrdCalc.valR_eq, ← CrdCalc.valR_eq, CrdCalc.valR_res y _ hy]
     rfl

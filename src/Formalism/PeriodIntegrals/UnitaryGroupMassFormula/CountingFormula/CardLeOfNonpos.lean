@@ -15,7 +15,8 @@ def ctau (S : HSpace E) (τ : E →+* ℂ) (x : S.V) : Fin S.rank → ℂ := fun
 theorem hT_coord (S : HSpace E) (x y : S.V) :
     S.hT x y = ∑ i, ∑ j, star (S.frame.repr x i) * (S.gram i j * S.frame.repr y j) := by
   conv_lhs => rw [← S.frame.sum_repr x, ← S.frame.sum_repr y]
-  simp only [map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul,
     Finset.mul_sum, starRingEnd_apply]
   conv_lhs => rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
@@ -25,7 +26,8 @@ theorem hT_coord (S : HSpace E) (x y : S.V) :
 theorem tau_hT (S : HSpace E) (τ : E →+* ℂ) (hτ : ∀ a, τ (star a) = starRingEnd ℂ (τ a)) (x y : S.V) :
     τ (S.hT x y) = star (ctau S τ x) ⬝ᵥ ((S.gram.map τ) *ᵥ ctau S τ y) := by
   rw [hT_coord]
-  simp only [dotProduct, mulVec, ctau, map_sum, map_mul, hτ, Pi.star_apply, Matrix.map_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dotProduct, mulVec, ctau, map_sum, map_mul, hτ, Pi.star_apply, Matrix.map_apply,
     Finset.mul_sum, Complex.star_def]
 
 theorem hT_span_zero (S : HSpace E) {ι : Type} (f : ι → S.V) (y : S.V) (h : ∀ i, S.hT (f i) y = 0) :
@@ -92,7 +94,8 @@ theorem finrank_perp_add (S : HSpace E) {r : ℕ} (e : Fin r → S.V) (he : Line
     have hφy : ∀ y, φ (ψ y) = S.hT (∑ i, star (c i) • e i) y := by
       intro y
       rw [LinearMap.pi_apply_eq_sum_univ φ (ψ y)]
-      simp [ψ, map_sum, LinearMap.sum_apply, c, mul_comm, starRingEnd_apply, star_star]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [ψ, map_sum, LinearMap.sum_apply, c, mul_comm, starRingEnd_apply, star_star]
     have hzero : ∑ i, star (c i) • e i = 0 := by
       apply S.nondeg.1
       intro y

@@ -33,7 +33,8 @@ theorem exists_coords {O : Type} [CommRing O] [StarRing O] [IsDedekindDomain O]
     simp only [Submodule.coe_sum, Submodule.coe_smul, LinearMap.sum_apply, LinearMap.smul_apply,
       smul_eq_mul] at h
     exact h.symm
-  rw [← Forms.balTensorLift_mk, ← e.sum_repr (Forms.balTensorMk O a b), map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Forms.balTensorLift_mk, ← e.sum_repr (Forms.balTensorMk O a b), map_sum]
   simp only [map_zsmul]
   simp only [h1, Finset.sum_smul, Finset.smul_sum, smul_smul]
   rw [Finset.sum_comm]

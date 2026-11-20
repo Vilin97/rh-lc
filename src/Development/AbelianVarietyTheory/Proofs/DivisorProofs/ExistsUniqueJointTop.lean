@@ -82,7 +82,8 @@ theorem jointTop_rename (f : τ → σ) (hf : Function.Injective f) (z : Fin k �
     rename_injective f hf
   have h0 : ∀ R : MvPolynomial τ ℂ, rename f R = 0 ↔ R = 0 := fun R => map_eq_zero_iff _ hi
   simp only [JointTop, mixedOp_apply, rowOp_apply, Function.comp_apply, polar_rename f hf]
-  simp only [pderiv_rename hf, ← map_sum, ← map_sub, ← map_smul, h0, hi.eq_iff]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [pderiv_rename hf, ← map_sum, ← map_sub, ← map_smul, h0, hi.eq_iff]
 
 theorem sum_castLE (hp : p ≤ k) {M : Type} [AddCommMonoid M] (f : Fin k → M)
     (hf : ∀ c : Fin k, p ≤ c → f c = 0) : ∑ c : Fin p, f (Fin.castLE hp c) = ∑ c, f c :=

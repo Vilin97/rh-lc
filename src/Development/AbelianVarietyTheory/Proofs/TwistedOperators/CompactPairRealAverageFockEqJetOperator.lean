@@ -181,7 +181,8 @@ theorem substF_rename (g : ι → Matrix (Fin a) (Fin a) ℂ) (h : ι → Matrix
   rw [MvPolynomial.aeval_rename, ← AlgHom.comp_apply, MvPolynomial.comp_aeval]
   refine congrArg (fun f => aeval f P) ?_
   funext v
-  simp only [Function.comp_apply, map_sum, map_mul, MvPolynomial.rename_C, MvPolynomial.rename_X,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Function.comp_apply, map_sum, map_mul, MvPolynomial.rename_C, MvPolynomial.rename_X,
     Matrix.transpose_apply]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_

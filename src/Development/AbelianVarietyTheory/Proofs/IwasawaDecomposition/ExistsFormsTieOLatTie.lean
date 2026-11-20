@@ -110,7 +110,8 @@ theorem formsTie [NumberField K] [StarRing K] (σ : K →+* ℂ) (hσ : ∀ x, �
   inner x y := by
     rw [EuclideanSpace.inner_eq_star_dotProduct, emb_ofLp, emb_ofLp, Matrix.star_mulVec, dotProduct_comm,
       ← Matrix.dotProduct_mulVec, Matrix.mulVec_mulVec, h0]
-    simp only [Formalism.DivisionValues.hform, Matrix.toLinearMapₛₗ₂'_apply, map_sum, map_mul, smul_eq_mul, dotProduct,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Formalism.DivisionValues.hform, Matrix.toLinearMapₛₗ₂'_apply, map_sum, map_mul, smul_eq_mul, dotProduct,
       Matrix.mulVec, Finset.mul_sum, Pi.star_apply, Matrix.map_apply, RingHom.id_apply, starRingEnd_apply]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun k _ => ?_
     simp only [hσ, starRingEnd_apply]
@@ -159,12 +160,14 @@ theorem exists_lat [NumberField K] {O : Type} [CommRing O] (o : O →+* K) (σ :
     have hx' : x ∈ Submodule.span ℤ (G : Set (Fin n → K)) := by rw [hG]; exact hx
     obtain ⟨f, -, hf⟩ := Submodule.mem_span_finset.mp hx'
     refine ⟨f, ?_⟩
-    rw [← hf, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hf, map_sum]
     refine Finset.sum_congr rfl fun g _ => ?_
     rw [map_zsmul, Int.cast_smul_eq_zsmul]
 
   have hcomb : ∀ a : (Fin n → K) → K, ∑ g ∈ G, σ (a g) • j g = j (∑ g ∈ G, a g • g) := fun a => by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun g _ => (LinearMap.map_smulₛₗ j (a g) g).symm
   refine ⟨⟨G.image j, hspan⟩, ⟨fun v hv => ?_, fun x => ⟨fun hx => ?_, fun ⟨c, hc⟩ => ?_⟩⟩, fun hint => ?_⟩
   · obtain ⟨g, -, rfl⟩ := Finset.mem_image.mp hv

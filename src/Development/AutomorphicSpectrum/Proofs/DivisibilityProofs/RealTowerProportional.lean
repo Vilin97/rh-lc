@@ -37,7 +37,8 @@ theorem eval_toWt {Ψ : Type} {N : ℕ} (lam : Ψ × Fin N → ℝ) (P : MvPolyn
 
 theorem eval_degPoly_comap_some {e : ℕ} {σ : Type} [Fintype σ] (S : PB.AnSys e (Option σ)) (c : σ → ℝ) :
     eval c (S.comap some).degPoly = eval (fun o : Option σ => o.elim 0 c) S.degPoly := by
-  simp only [PB.AnSys.degPoly, PB.formPoly, map_sum, map_mul, map_prod, eval_C, eval_X]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [PB.AnSys.degPoly, PB.formPoly, map_sum, map_mul, map_prod, eval_C, eval_X]
   refine Fintype.sum_of_injective (fun w j => some (w j)) ?_ _ _ ?_ ?_
   · intro w w' hw
     funext j
@@ -111,7 +112,8 @@ theorem geoFun_monomial_of_ne {Ψ : Type} [Fintype Ψ] {N : ℕ} (M : RootModel 
 
 theorem neg_sum_eq_linA {Ψ : Type} [Fintype Ψ] {N : ℕ} (a : Option (Ψ × Fin N) → ℝ) :
     (-∑ x, C (a x) * X x : RPA Ψ N) = linA (fun τ i => a (some (τ, i))) (-a none) := by
-  simp only [linA, toA, linRoot, Fintype.sum_option, map_neg, map_sum, map_mul, rename_C, rename_X]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [linA, toA, linRoot, Fintype.sum_option, map_neg, map_sum, map_mul, rename_C, rename_X]
   ring
 
 theorem dimFl_eq_antisymDegree (Ψ : Type) [Fintype Ψ] (N : ℕ) : dimFl Ψ N = antisymDegree Ψ N := by

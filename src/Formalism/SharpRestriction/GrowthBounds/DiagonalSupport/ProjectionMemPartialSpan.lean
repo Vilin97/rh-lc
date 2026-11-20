@@ -131,13 +131,16 @@ theorem pj_mul (j : ι) (q : MvPolynomial σ O →ₗ[O] MvPolynomial σ O) {A M
       = pj π j q ((∑ a ∈ A.support, monomial a (AddMonoidAlgebra.coeff A a)) * ∑ b ∈ M.support, monomial b (AddMonoidAlgebra.coeff M b)) := by
         rw [← eA, ← eM]
     _ = ∑ a ∈ A.support, ∑ b ∈ M.support, pj π j q (monomial a (AddMonoidAlgebra.coeff A a) * monomial b (AddMonoidAlgebra.coeff M b)) := by
-        rw [Finset.sum_mul_sum, map_sum]
-        simp only [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [Finset.sum_mul_sum, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum]
     _ = ∑ a ∈ A.support, ∑ b ∈ M.support, q (monomial a (AddMonoidAlgebra.coeff A a)) * monomial b (AddMonoidAlgebra.coeff M b) :=
         Finset.sum_congr rfl fun a ha => Finset.sum_congr rfl fun b hb =>
           pj_mono_mul π j q (supp_of_mem hA ha) (supp_of_mem hM hb) _ _
     _ = q A * M := by
-        rw [← Finset.sum_mul_sum, ← map_sum, ← eA, ← eM]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [← Finset.sum_mul_sum, ← map_sum, ← eA, ← eM]
 
 theorem pj_fix (j : ι) (q : MvPolynomial σ O →ₗ[O] MvPolynomial σ O) (Xj : Submodule O (MvPolynomial σ O))
     (hX : ∀ x ∈ Xj, x ∈ supported O {v | π v = j}) (hq : ∀ x ∈ Xj, q x = x) {F : MvPolynomial σ O}
@@ -178,7 +181,8 @@ theorem projection_mem_partial_span (X : ι → Submodule O (MvPolynomial σ O))
       rw [Finset.mul_sum]
       refine Finset.sum_congr rfl fun b _ => ?_
       rw [mul_left_comm, monomial_mul, mul_one, Finsupp.filter_add_filter_not]
-    rw [hsum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hsum, map_sum]
     refine Submodule.sum_mem _ fun b hb => ?_
     have hb1 : monomial (b.filter (fun v => π v = j)) (AddMonoidAlgebra.coeff M b) ∈ supported O {v | π v = j} := by
       refine monomial_mem _ fun v hv => ?_

@@ -62,7 +62,8 @@ theorem exists_lift {E : Type} [AddCommGroup E] [Module Ω E] (Δ : AddSubgroup 
   choose z hz hz' using hz
   refine ⟨∑ i, (φ i).smulRight (z i), fun x => ?_, fun x hx => ?_⟩
   · conv_rhs => rw [← hv x]
-    simp [map_sum, hz']
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, hz']
   · simp only [LinearMap.sum_apply, LinearMap.smulRight_apply]
     exact AddSubgroup.sum_mem _ fun i _ => hΔ _ (hφ i x hx) _ (hz i)
 

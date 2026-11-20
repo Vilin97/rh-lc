@@ -160,7 +160,8 @@ private theorem dot_H_lemma {K : Type} [Field K] [NumberField K] [StarRing K] (S
   have hp : ∀ (x y : Fin S.dim → K) (u w : Fin S.dim → S.V),
       S.pair (∑ k, x k • u k) (∑ l, y l • w l) = ∑ k, ∑ l, star (x k) * y l * S.pair (u k) (w l) := by
     intro x y u w
-    simp only [map_sum, map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, map_smul, smul_eq_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, map_smul, smul_eq_mul,
       starRingEnd_apply, RingHom.id_apply, Finset.mul_sum]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun l _ => ?_
@@ -212,7 +213,8 @@ theorem group_action_matrix_adjoint : GaMatAdj := by
   intro K _ _ _ S G _ _ r hr a
   rw [S.gaMat_eq_lift r (gaStar a)]
   unfold gaStar
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [MonoidAlgebra.lift_single]
   unfold CSD.gaMat
   rw [Matrix.conjTranspose_sum, Finset.sum_mul, Finset.mul_sum]
@@ -231,7 +233,8 @@ theorem gaMat_lvlIdem (P : Subgroup G) (ψ : P →* Kˣ) :
       ∑ h : P, ((Nat.card P : K)⁻¹ * ((ψ h⁻¹ : Kˣ) : K)) • S.actMat r (h : G) := by
   rw [S.gaMat_eq_lift r]
   unfold lvlIdem
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun h _ => ?_
   rw [MonoidAlgebra.lift_single]
   rfl
@@ -747,7 +750,8 @@ theorem IsAbsIrrChar.map_inv {χ : G → K} (h : IsAbsIrrChar χ) (σ : K →+* 
   have hone : A 1 = 1 := by simp [A, Module.End.one_eq_id]
   have htr : ∀ s, ((A s).map τ).trace = σ (χ s) := by
     intro s
-    rw [← hτ, ← hA s, Matrix.trace, Matrix.trace, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hτ, ← hA s, Matrix.trace, Matrix.trace, map_sum]
     rfl
   have hmap : ∀ s u, (A (s * u)).map τ = (A s).map τ * (A u).map τ := by
     intro s u
@@ -826,7 +830,8 @@ theorem convA {k V G : Type} [Field k] [IsAlgClosed k] [Group G] [Fintype G] [Ad
   set T : V →ₗ[k] V := ∑ s, φ s • ρ s with hTdef
   have hT : ∀ g v, T (ρ g v) = ρ g (T v) := by
     intro g v
-    simp only [hTdef, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hTdef, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul]
     rw [← Equiv.sum_comp (MulAut.conj g).toEquiv]
     refine Finset.sum_congr rfl fun s _ => ?_
     have e1 : φ ((MulAut.conj g).toEquiv s) = φ s := by simpa [MulAut.conj_apply] using hφ g s
@@ -839,7 +844,8 @@ theorem convA {k V G : Type} [Field k] [IsAlgClosed k] [Group G] [Fintype G] [Ad
     intro u
     have : LinearMap.trace k V (T * ρ u) = c * ρ.character u := by
       rw [hc]; simp [character, Module.End.mul_eq_comp]
-    rw [← this, hTdef, Finset.sum_mul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← this, hTdef, Finset.sum_mul, map_sum]
     refine Finset.sum_congr rfl fun s _ => ?_
     rw [smul_mul_assoc, map_smul, smul_eq_mul, character, map_mul]
   have h2 := h1 1
@@ -900,7 +906,8 @@ theorem conv_char {χ χ' : G → K} (h : IsAbsIrrChar χ) (h' : IsAbsIrrChar χ
   apply hj
   rw [hfin, hsum] at hA
   simp only [hρ'] at hA
-  rw [map_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_mul, map_sum]
   simp only [map_mul]
   rw [hA]
   split_ifs
@@ -1552,7 +1559,8 @@ theorem aug_idemOf_one : aug K G (idemOf ({fun _ : G => (1 : K)} : Finset (G →
 theorem aug_lvlIdem_one (P : Subgroup G) : aug K G (lvlIdem P (1 : P →* Kˣ)) = 1 := by
   classical
   unfold lvlIdem aug
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   have e : ∀ h : P, (MonoidAlgebra.lift K K G (1 : G →* K)) (MonoidAlgebra.single (h : G)
       ((Nat.card P : K)⁻¹ * (((1 : P →* Kˣ) h⁻¹ : Kˣ) : K))) = (Nat.card P : K)⁻¹ := by
     intro h

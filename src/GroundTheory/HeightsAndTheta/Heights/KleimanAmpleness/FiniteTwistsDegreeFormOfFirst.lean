@@ -21,7 +21,8 @@ theorem aeval_CX_of_isHomogeneous {r : ℕ} (η : Fin r → Ω) {f : MvPolynomia
     aeval (fun j => Polynomial.C (η j) * Polynomial.X) f = Polynomial.C (aeval η f) * Polynomial.X ^ e := by
   conv_lhs => rw [f.as_sum]
   conv_rhs => rw [f.as_sum]
-  simp only [map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun d hd => ?_
   have he : ∑ i ∈ d.support, d i = e := by
     rw [← hf (mem_support_iff.mp hd), Finsupp.weight_apply]

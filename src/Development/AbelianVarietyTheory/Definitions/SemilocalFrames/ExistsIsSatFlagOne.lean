@@ -193,7 +193,8 @@ theorem isIsoFlag_flagAt (I : AutInst) (Λ : Submodule (𝓞 I.E) (Fin I.n → I
       have h1 := congrArg (I.φ v) (hi x hx y hy)
       rw [map_zero] at h1
       rw [← h1]
-      simp only [Formalism.UG.hform, map_sum, map_mul, dotProduct, Matrix.mulVec, Finset.mul_sum, Pi.star_apply,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Formalism.UG.hform, map_sum, map_mul, dotProduct, Matrix.mulVec, Finset.mul_sum, Pi.star_apply,
         Matrix.map_apply, starRingEnd_apply, I.cm.cmUnram.2.1, mul_assoc]
     intro x hx y hy
     induction hx using Submodule.span_induction with

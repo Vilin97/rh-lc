@@ -97,7 +97,8 @@ theorem lift_finSum_smooth : GlobalTheory.IndefiniteRowSideFullHecke.CuspAlongSm
   have key : ∀ g, thetaKO (G.col t j).ω g h (∑ l, fock R.ψ R.θ false (G.Xp j) (G.Xp (j + 1)) (f l) (p l)) *
       (∑ i, (F i).1 (w i)) g = ∑ l, ∑ i, thetaKO (G.col t j).ω g h (fock R.ψ R.θ false (G.Xp j) (G.Xp (j + 1)) (f l) (p l)) *
         (F i).1 (w i) g := fun g => by
-    simp only [thetaKO, map_sum, Finset.sum_apply, Finset.sum_mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [thetaKO, map_sum, Finset.sum_apply, Finset.sum_mul_sum]
   rw [integral_congr_ae (Filter.Eventually.of_forall key)]
   rw [integral_finset_sum _ fun l _ => integrable_finset_sum _ fun i _ => (hI l i (p l) (w i) h).1]
   simp_rw [integral_finset_sum _ fun i _ => (hI _ i _ (w i) h).1]

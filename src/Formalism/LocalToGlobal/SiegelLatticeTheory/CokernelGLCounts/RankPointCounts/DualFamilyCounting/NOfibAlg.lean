@@ -24,11 +24,13 @@ theorem hfe (a b : Fin D.R.rS) : (VS D).hT (X.fY a) (X.eX b) = if a = b then 1 e
 
 theorem hT_sumL {ι : Type*} (s : Finset ι) (c : ι → D.host.E) (y : ι → (VS D).V) (x : (VS D).V) :
     (VS D).hT (∑ i ∈ s, c i • y i) x = ∑ i ∈ s, star (c i) * (VS D).hT (y i) x := by
-  simp [map_sum, LinearMap.sum_apply, map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, starRingEnd_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, LinearMap.sum_apply, map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, starRingEnd_apply]
 
 theorem hT_sumR {ι : Type*} (s : Finset ι) (c : ι → D.host.E) (y : ι → (VS D).V) (x : (VS D).V) :
     (VS D).hT x (∑ i ∈ s, c i • y i) = ∑ i ∈ s, c i * (VS D).hT x (y i) := by
-  simp [map_sum, map_smul, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, map_smul, smul_eq_mul]
 
 theorem hT_smulL (c : D.host.E) (x y : (VS D).V) : (VS D).hT (c • x) y = star c * (VS D).hT x y := by
   simp [map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, starRingEnd_apply]

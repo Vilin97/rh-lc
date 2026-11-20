@@ -228,7 +228,8 @@ theorem GlobalTheory.HTFaith.faithful : ∀ (p : ℕ) [Fact p.Prime] (D : Global
   choose E hE using fun k l => hsurj (Matrix.single k l 1)
   let y := ∑ k, E k i * x' * E j k
   have hy : Φ y = Matrix.scalar _ (Φ x' i j) := by
-    simp only [y, map_sum, map_mul, hE, Matrix.single_mul_mul_single, _root_.one_mul, _root_.mul_one]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [y, map_sum, map_mul, hE, Matrix.single_mul_mul_single, _root_.one_mul, _root_.mul_one]
     ext a b
     rw [Matrix.sum_apply]
     by_cases hab : a = b

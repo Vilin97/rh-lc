@@ -140,7 +140,8 @@ theorem fock_minorPol_zero : ∀ {D : D7} (ψ : AddChar (AF D.host.F) ℂ) (θ :
   have hP : P = ∑ v ∈ P.support, AddMonoidAlgebra.coeff P v • MvPolynomial.monomial v (1 : ℂ) := by
     conv_lhs => rw [MvPolynomial.as_sum P]
     exact Finset.sum_congr rfl fun v _ => by rw [MvPolynomial.smul_monomial, smul_eq_mul, mul_one]
-  conv_lhs => rw [hP, map_sum, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [hP, map_sum, Finset.sum_apply]
   rw [Formalism.MainNotions.GL3Theta.applyAt0, Finset.mul_sum]
   refine Finset.sum_congr rfl fun v hv => ?_
   rw [map_smul, Pi.smul_apply, smul_eq_mul, hmono v]

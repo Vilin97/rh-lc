@@ -20,18 +20,21 @@ variable {ι : Type} [Fintype ι] [DecidableEq ι] {N : ℕ}
 omit [Fintype ι] [DecidableEq ι] in
 theorem rename_pLow (σ : Equiv.Perm ι) (j : ℕ) (τ : ι) (k : ℕ) :
     rename (Prod.map σ id) (pLow (N := N) j τ k) = pLow j (σ τ) k := by
-  simp [pLow, map_sum, map_pow, rename_X]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [pLow, map_sum, map_pow, rename_X]
 
 omit [Fintype ι] [DecidableEq ι] in
 theorem rename_pHigh (σ : Equiv.Perm ι) (j : ℕ) (τ : ι) (k : ℕ) :
     rename (Prod.map σ id) (pHigh (N := N) j τ k) = pHigh j (σ τ) k := by
-  simp [pHigh, map_sum, map_pow, rename_X]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [pHigh, map_sum, map_pow, rename_X]
 
 omit [DecidableEq ι] in
 theorem rename_lamA (σ : Equiv.Perm ι) (j : ℕ) :
     rename (Prod.map σ id) (lamA ι N j) = lamA ι N j := by
   unfold lamA
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [map_sub, rename_pLow, rename_pHigh]
   exact Equiv.sum_comp σ (fun τ => (pHigh j τ 1 - pLow j τ 1 : Pol ι N))
 

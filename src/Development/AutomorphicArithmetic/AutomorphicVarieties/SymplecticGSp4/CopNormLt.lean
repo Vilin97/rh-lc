@@ -71,7 +71,8 @@ private theorem cop_bdd {l : ℕ} [Fact l.Prime] {R : Type} [CommRing R] [IsNoet
   have h4 : a - ∑ i, u i • b i ∈ RingHom.ker f := congrArg Subtype.val h3
   have h5 := h2 _ (hP ▸ h4)
   have h6 : ‖(F (∑ i, u i • b i)).snd‖ ≤ ∑ i, ‖(F (b i)).snd‖ := by
-    rw [map_sum, TrivSqZeroExt.snd_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, TrivSqZeroExt.snd_sum]
     refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun i _ => ?_)
     rw [map_smul, TrivSqZeroExt.snd_smul, Algebra.smul_def, norm_mul]
     exact mul_le_of_le_one_left (norm_nonneg _) ((cop_intIff _).1 isIntegral_algebraMap)

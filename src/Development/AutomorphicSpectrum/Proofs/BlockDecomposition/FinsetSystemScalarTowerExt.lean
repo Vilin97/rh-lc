@@ -114,7 +114,8 @@ theorem exP_flat : ∀ {B A : Type} [CommRing B] [CommRing A] [Algebra B A] [Mod
     intro m c
     funext i
     change ∑ k : Fin (m + 2), _ = ψ _ (∑ k : Fin (m + 2), _)
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_zsmul]
     congr 1

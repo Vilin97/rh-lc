@@ -73,7 +73,8 @@ theorem GlobalTheory.CovRep.rep_of_basis : ∀ (l : ℕ) [Fact l.Prime] (Γ : Ty
     refine Finset.sum_congr rfl fun t _ => ?_
     rw [← Finset.sum_smul]
     congr 1
-    simp only [Matrix.mulVec, dotProduct, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, dotProduct, map_sum, map_mul]
     exact Finset.sum_congr rfl fun s _ => mul_comm _ _
   have hmul : ∀ g h, Mf (g * h) = Mf g * Mf h := by
     intro g h

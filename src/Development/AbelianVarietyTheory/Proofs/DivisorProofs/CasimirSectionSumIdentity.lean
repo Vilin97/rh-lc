@@ -63,7 +63,8 @@ theorem position_cas_of (B : W →ₗ⋆[ℂ] W →ₗ[ℂ] ℂ) (x : (Fin 1 →
       intro h; simp [factorOp, hu, hX]
     simp only [formT_apply, e]
     rw [hsum (fun y => B (∑ z, adP Z y z • X z) (∑ w, adP Z y w • X w))]
-    simp only [map_sum, map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, Finset.sum_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, Finset.sum_mul,
       Finset.mul_sum]
     rw [Finset.sum_comm]
     conv_rhs => rw [Finset.sum_comm]
@@ -129,7 +130,8 @@ lemma casK_form (k : ℕ) {actW : Mat R S →ₗ[ℂ] Module.End ℂ W} {B : W �
     (hU : IsUnitary actW B) (Ψ : (Fin k → NC R S) → W) :
     formT k B Ψ (GlobalTheory.BlockReps.casK (tAct k actW) Ψ) = ∑ a, ∑ b, (if sameBlock a b then
       formT k B (tAct k actW (Eab b a) Ψ) (tAct k actW (Eab b a) Ψ) else 0) := by
-  simp only [GlobalTheory.BlockReps.casK, LinearMap.sum_apply, Module.End.mul_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [GlobalTheory.BlockReps.casK, LinearMap.sum_apply, Module.End.mul_apply, map_sum]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
   by_cases h : sameBlock a b
   · simp only [GlobalTheory.BlockReps.unitK, if_pos h, if_pos (same_symm' h)]
@@ -140,7 +142,8 @@ lemma casK_pt (k : ℕ) {actW : Mat R S →ₗ[ℂ] Module.End ℂ W} {B : W →
     (hU : IsUnitary actW B) (Ψ : (Fin k → NC R S) → W) :
     formT k B Ψ (fun g => GlobalTheory.BlockReps.casK actW (Ψ g)) = ∑ a, ∑ b, (if sameBlock a b then
       formT k B (fun g => actW (Eab b a) (Ψ g)) (fun g => actW (Eab b a) (Ψ g)) else 0) := by
-  simp only [formT_apply, GlobalTheory.BlockReps.casK, LinearMap.sum_apply, Module.End.mul_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [formT_apply, GlobalTheory.BlockReps.casK, LinearMap.sum_apply, Module.End.mul_apply, map_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [Finset.sum_comm]
@@ -208,7 +211,8 @@ theorem casDom (R S k : ℕ) (W : Type) [AddCommGroup W] [Module ℂ W] (actW : 
             (fun h => actW (Eab b a) (section1 Ψ i g h)) =
           ((Fintype.card (NC R S) : ℝ) : ℂ) *
             formT k B ((∑ i, factorOp k i (Eab b a)) Ψ) (fun g => actW (Eab b a) (Ψ g)) := by
-        simp only [position_section, ← Finset.mul_sum, LinearMap.sum_apply, map_sum, LinearMap.sum_apply]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [position_section, ← Finset.mul_sum, LinearMap.sum_apply, map_sum, LinearMap.sum_apply]
         push_cast
         rfl
       have e2 := congrArg Complex.re e

@@ -16,7 +16,8 @@ private theorem trace_block_permutation (K : Type) [Field K] (X : Type) [Fintype
     intro f
     funext p
     simp
-  rw [hdec, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hdec, map_sum]
   refine Finset.sum_congr rfl fun q _ => ?_
   rw [LinearMap.trace_comp_comm', LinearMap.comp_assoc]
   split_ifs with h
@@ -96,7 +97,8 @@ theorem isChar_finsum_conj_ext0_of_isChar :
       = ∑ q, if g⁻¹ • q = q then LinearMap.trace K (Fin n → K) (σ (cosetCocycle H g q)) else 0 :=
     trace_block_permutation K (G ⧸ H) (Fin n → K) (fun q => g⁻¹ • q)
       (fun q => σ (cosetCocycle H g q))
-  rw [finsum_eq_sum_of_fintype, hc, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [finsum_eq_sum_of_fintype, hc, map_sum]
   refine Finset.sum_congr rfl fun q _ => ?_
   by_cases h : g⁻¹ • q = q
   · have hm : q.out⁻¹ * g * q.out ∈ H := (inv_smul_eq_iff_conj_mem H g q).mp h

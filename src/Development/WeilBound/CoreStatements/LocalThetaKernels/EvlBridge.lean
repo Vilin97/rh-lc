@@ -86,7 +86,8 @@ theorem acts_iff (ψ : AddChar (AF F) ℂ) {u : V} (hu : At (evFin F v) u) {φ �
 theorem ev_form (u u' : V) : evFin F v (Bf u u') =
     (locCo co v u).1 ⬝ᵥ (locCo co v u').2 - (locCo co v u').1 ⬝ᵥ (locCo co v u).2 := by
   rw [co.form]
-  simp only [dotProduct, map_sub, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dotProduct, map_sub, map_sum, map_mul]
   rfl
 
 theorem psi_form (ψ : AddChar (AF F) ℂ) {u : V} (hu : At (evFin F v) u) (u' : V) : ψ (Bf u u') =

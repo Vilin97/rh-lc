@@ -21,7 +21,8 @@ theorem signConst_of_nonneg (l : V →ₗ[ℚ] ℚ) (s : Finset V) (h : ∀ v �
     intro x hx
     simp only [coneOn, Set.mem_setOf_eq] at hx
     obtain ⟨t, -, rfl⟩ := hx
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_eq_zero (fun i hi => by rw [map_smul, hz i hi, smul_zero])
   · refine Or.inr (Or.inl ?_)
     push_neg at hz
@@ -29,7 +30,8 @@ theorem signConst_of_nonneg (l : V →ₗ[ℚ] ℚ) (s : Finset V) (h : ∀ v �
     intro x hx
     simp only [coneOn, Set.mem_setOf_eq] at hx
     obtain ⟨t, ht, rfl⟩ := hx
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     have hnn : ∀ i ∈ s, 0 ≤ l (t i • i) := fun i hi => by
       rw [map_smul, smul_eq_mul]; exact mul_nonneg (ht i hi).le (h i hi)
     have hpos : 0 < l (t w • w) := by
@@ -43,7 +45,8 @@ theorem signConst_of_nonpos (l : V →ₗ[ℚ] ℚ) (s : Finset V) (h : ∀ v �
     intro x hx
     simp only [coneOn, Set.mem_setOf_eq] at hx
     obtain ⟨t, -, rfl⟩ := hx
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_eq_zero (fun i hi => by rw [map_smul, hz i hi, smul_zero])
   · refine Or.inr (Or.inr ?_)
     push_neg at hz
@@ -51,7 +54,8 @@ theorem signConst_of_nonpos (l : V →ₗ[ℚ] ℚ) (s : Finset V) (h : ∀ v �
     intro x hx
     simp only [coneOn, Set.mem_setOf_eq] at hx
     obtain ⟨t, ht, rfl⟩ := hx
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     have hnp : ∀ i ∈ s, 0 ≤ -l (t i • i) := fun i hi => by
       rw [map_smul, smul_eq_mul]; nlinarith [(ht i hi).le, h i hi]
     have hneg : l (t w • w) < 0 := by

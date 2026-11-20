@@ -76,7 +76,8 @@ theorem exists_isWittFrame_col0 : ∀ (F E : Type) [Field F] [NumberField F] [Fi
     simp only [Bf, toLinearMapₛₗ₂'_apply, smul_eq_mul, RingHom.id_apply, RingHom.coe_coe]
     exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
   have hs : ∀ u v, Bf u v = (σ : E →+* E) (Bf v u) := fun u v => by
-    simp only [hB', map_sum, map_mul, RingHom.coe_coe, sigma_sigma hσ, hJ.1]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hB', map_sum, map_mul, RingHom.coe_coe, sigma_sigma hσ, hJ.1]
     rw [Finset.sum_comm]
     exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
   have hform : ∀ u v, Bf u v = form σ V.J v u := fun u v => by

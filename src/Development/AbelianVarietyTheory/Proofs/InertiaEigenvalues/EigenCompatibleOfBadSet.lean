@@ -320,7 +320,8 @@ theorem exists_rat (Y : R3.Read (A3 := A3) R.toRealDat F.lv2 X0) (hlev : R.toLev
         Module.End ℂ (MMap (R.MW i (sg0 D A3.A)))) ∘ₗ (R.HW i (sg0 D A3.A)).e)
     (by
       rintro (_ | p | t) x
-      · simp only [Sum.elim_inl, LinearMap.comp_apply, LinearMap.sub_apply, LinearMap.sum_apply, LinearMap.smul_apply,
+      set_option synthInstance.maxHeartbeats 100000 in
+        · simp only [Sum.elim_inl, LinearMap.comp_apply, LinearMap.sub_apply, LinearMap.sum_apply, LinearMap.smul_apply,
           Module.End.one_apply, map_sub, map_sum]
         congr 1
         exact Finset.sum_congr rfl fun g _ => by rw [map_smulₛₗ, map_smul, hact']
@@ -380,7 +381,8 @@ theorem exists_goodL (Y : R3.Read (A3 := A3) R.toRealDat F.lv2 X0) (hlev : R.toL
     Module.End.mem_eigenspace_iff.2 ?_⟩, fun h => hx0 (by rw [h, map_zero]), fun k P hk hs hP => ?_⟩
   · rw [one_smul, ← finsum_comp_equiv (R.eG.trans cG).toEquiv, finsum_eq_sum_of_fintype, LinearMap.sum_apply]
     apply fi.e.injective
-    rw [map_sum, ← h1]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, ← h1]
     refine Finset.sum_congr rfl fun g _ => ?_
     have hc : ((D.nexp.eLL0 ((R.eG.trans cG) g) : ↥D.LL0) : D.what₂.LL) = (idemOf A3.A.X).coeff g :=
       D.what₂.embLL.injective ((D.nStage_trivialCharacter_coeff_eq _).trans (hidem g).symm)

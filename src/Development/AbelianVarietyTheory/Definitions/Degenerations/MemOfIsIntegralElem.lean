@@ -113,7 +113,8 @@ theorem exists_sum (R : K) {n : ℕ} (hn : 0 < n) (hR : R ^ n = i PowerSeries.X)
     exact mul_mem (hp S _ N hN (hω z ▸ S.one_mem)) (pow_mem (hp S _ n hn (hR ▸ hS _)) _)
   · have := hasSum_sum fun t (_ : t ∈ hT.toFinset) => (hasSum_map_powerSeries_mk_finsum k C X (gam.comp i) h1 h2
       (fun z => e z / n) hd fun z => if T z = t then 1 else 0).mul_left (gam t)
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [map_mul]
     refine (congrArg (HasSum · _) (funext fun z => ?_)).mp this
     rw [Finset.sum_eq_single (T z) (fun t _ ht => by simp [ht.symm]) fun h => (h (hT.mem_toFinset.2 ⟨z, rfl⟩)).elim]

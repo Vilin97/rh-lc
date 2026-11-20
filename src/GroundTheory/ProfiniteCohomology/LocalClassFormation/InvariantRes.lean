@@ -73,9 +73,11 @@ theorem continuous_restrictScalarsHom_of_tower :
     have hx' : x = ∑ i, (b.repr ⟨x, hx⟩ i) • (b i : Ω) := by
       calc x = S.val (∑ i, b.repr ⟨x, hx⟩ i • b i) := by rw [b.sum_repr]; rfl
         _ = ∑ i, (b.repr ⟨x, hx⟩ i) • (b i : Ω) := by
-          rw [map_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [map_sum]
           exact Finset.sum_congr rfl fun i _ => map_smul S.val _ _
-    rw [hx', map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hx', map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, hT]
 

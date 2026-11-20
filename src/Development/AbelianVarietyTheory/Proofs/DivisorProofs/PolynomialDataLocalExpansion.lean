@@ -75,7 +75,8 @@ theorem exists_sum_local : ∀ (F E : Type) [Field F] [NumberField F] [Field E] 
   · have hS : Φ ∈ GlobalTheory.WeilM.schA F (Fin a × Fin (a + a')) := by
       rw [← hg]
       exact Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _ (by rw [h3]; exact (hF i).mem hG _)
-    rw [← hl' _ hS, ← hg, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hl' _ hS, ← hg, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     simp only [LinearMap.smul_apply, LinearMap.comp_apply, map_smul]
     rw [hTL, Function.update_eq_self, h3]

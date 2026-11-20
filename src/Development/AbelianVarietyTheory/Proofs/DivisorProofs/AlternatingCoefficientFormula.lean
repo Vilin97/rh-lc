@@ -83,7 +83,8 @@ theorem detE_eq {N : ℕ} (n : Fin N → ℕ) :
 theorem eval_iterate_pderiv_detE {N : ℕ} (n : Fin N → ℕ) (v : Fin N → ℝ) (i : Fin N) (m : ℕ) :
     eval v ((pderiv i)^[m] (detE n)) = ∑ σ : Equiv.Perm (Fin N), ((Equiv.Perm.sign σ : ℤ) : ℝ) *
       ∏ j, dv (Finsupp.single i m j) (n (σ j)) (v j) := by
-  rw [detE_eq, iterate_pderiv_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [detE_eq, iterate_pderiv_sum, map_sum]
   refine Finset.sum_congr rfl fun σ _ => ?_
   rw [iterate_pderiv_monomial, eval_monomial, Finsupp.prod_fintype _ _ (fun _ => pow_zero _)]
   have h : ∏ j, ((n (σ j)).descFactorial (Finsupp.single i m j) : ℝ) =
@@ -99,7 +100,8 @@ theorem eval_iterate_pderiv_detE {N : ℕ} (n : Fin N → ℕ) (v : Fin N → �
 theorem eval_detE {N : ℕ} (n : Fin N → ℕ) (v : Fin N → ℝ) :
     eval v (detE n) = ∑ σ : Equiv.Perm (Fin N), ((Equiv.Perm.sign σ : ℤ) : ℝ) *
       ∏ j, dv 0 (n (σ j)) (v j) := by
-  rw [detE_eq, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [detE_eq, map_sum]
   refine Finset.sum_congr rfl fun σ _ => ?_
   rw [eval_monomial, Finsupp.prod_fintype _ _ (fun _ => pow_zero _)]
   simp [dv, Finset.prod_mul_distrib, mul_assoc]

@@ -53,7 +53,8 @@ theorem PiQuotCokerFiniteLength.proof : PiQuotCokerFiniteLength.Statement := by
     choose x hx using fun P => Ideal.Quotient.mk_surjective (v P)
     refine ⟨Submodule.Quotient.mk (∑ P, a P * x P), ?_⟩
     funext Q
-    rw [hfac, Pi.smul_apply, ← hx Q, map_sum, Finset.sum_eq_single Q]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hfac, Pi.smul_apply, ← hx Q, map_sum, Finset.sum_eq_single Q]
     · rw [← hab Q, Algebra.smul_def, Ideal.Quotient.algebraMap_eq, map_add, map_mul,
         Ideal.Quotient.eq_zero_iff_mem.mpr (hb Q), add_zero]
     · intro P _ hPQ

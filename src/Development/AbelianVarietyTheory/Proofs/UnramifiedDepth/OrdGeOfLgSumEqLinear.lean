@@ -94,7 +94,8 @@ theorem ordGe_of_lgSum_eq_linear :
       rw [h3] at h1
       rw [eq_sub_of_add_eq' h1]
       refine v.map_le_sub ?_ ?_
-      · rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        · rw [map_sum]
         refine v.map_le_sum fun j _ => ?_
         rw [coeff_C_mul, coeff_X]
         split_ifs with hj

@@ -42,7 +42,8 @@ theorem intPS_X : IntPS R (PowerSeries.X : PowerSeries K) := by
 
 theorem intPS_sum {ι : Type} (s : Finset ι) {F : ι → PowerSeries K} (hF : ∀ i ∈ s, IntPS R (F i)) :
     IntPS R (∑ i ∈ s, F i) := fun n => by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact R.sum_mem (fun i hi => hF i hi n)
 
 theorem intPS_of_mul_eq_one {U V : PowerSeries K} (hU : IntPS R U)
@@ -126,7 +127,8 @@ theorem subst_C' (a : PowerSeries K) (c : K) :
 theorem subst_sum {ι : Type} {a : PowerSeries K} (ha : PowerSeries.HasSubst a) (s : Finset ι)
     (F : ι → PowerSeries K) :
     PowerSeries.subst a (∑ i ∈ s, F i) = ∑ i ∈ s, PowerSeries.subst a (F i) := by
-  rw [← PowerSeries.coe_substAlgHom ha, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← PowerSeries.coe_substAlgHom ha, map_sum]
 
 theorem subst_wpShift_zero {a : PowerSeries K} (ha : PowerSeries.HasSubst a) (e : PowerSeries K) :
     PowerSeries.subst a (wpShift e 0) = 1 + a ^ 2 * PowerSeries.subst a e := by
@@ -159,7 +161,8 @@ theorem veluXOfSigma' : VeluXFromZ := by
     rw [subst_rescale h, PowerSeries.subst_comp_subst_apply hl hm, subst_mulBy_l h]
   have F3 := congrArg (PowerSeries.subst l) hE.2.2
   rw [← PowerSeries.coe_substAlgHom hl] at F3
-  simp only [map_add, map_mul, map_sum, map_sub, PowerSeries.coe_substAlgHom] at F3
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_add, map_mul, map_sum, map_sub, PowerSeries.coe_substAlgHom] at F3
   simp only [subst_C'] at F3
   simp only [hw, ← hZr, map_pow, map_add] at F3
   have hsum : ∑ P, (xs P + PowerSeries.C c0 - (PowerSeries.C (xP P) + PowerSeries.C c0)) =

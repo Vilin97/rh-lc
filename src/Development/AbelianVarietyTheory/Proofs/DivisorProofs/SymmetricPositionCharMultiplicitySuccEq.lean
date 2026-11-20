@@ -26,7 +26,8 @@ theorem proj_mem (τ : Representation ℂ G V) (A : Subgroup G) [Fintype A] (χ 
     (hχ : ∀ x ∈ A, ∀ y ∈ A, χ (x * y) = χ x * χ y) (v : V) : proj τ A χ v ∈ eig τ A χ := by
   rw [mem_eig_iff]
   intro g hg
-  rw [proj_apply, map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [proj_apply, map_sum, Finset.smul_sum]
   refine Fintype.sum_equiv (Equiv.mulLeft (⟨g, hg⟩ : A)) _ _ fun a => ?_
   have h : χ (a : G)⁻¹ = χ g * χ (g * a)⁻¹ := by
     rw [mul_comm, ← hχ _ (A.inv_mem (A.mul_mem hg a.2)) _ hg]
@@ -84,7 +85,8 @@ theorem finrank_eig_le [FiniteDimensional ℂ V] (τ : Representation ℂ G V) (
       rw [e2, map_smul, ← sub_eq_zero, ← sub_smul, smul_eq_zero, sub_eq_zero] at e1
       rw [e1.resolve_left hne, smul_zero, zero_smul]
   have h2 := congrArg (proj τ A χ) h0'
-  rw [proj_apply τ B, map_sum, map_zero, Finset.sum_congr rfl fun b _ => key b, ← Finset.sum_smul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [proj_apply τ B, map_sum, map_zero, Finset.sum_congr rfl fun b _ => key b, ← Finset.sum_smul,
     smul_eq_zero] at h2
   refine Subtype.ext (h2.resolve_left ?_)
   rw [Finset.sum_ite, Finset.sum_const_zero, add_zero, Finset.sum_const, nsmul_eq_mul]

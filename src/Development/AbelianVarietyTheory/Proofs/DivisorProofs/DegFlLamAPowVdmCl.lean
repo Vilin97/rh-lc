@@ -81,7 +81,8 @@ theorem degFl_rename_fibre {ι : Type} [Fintype ι] [DecidableEq ι] {N : ℕ} (
 theorem rename_pLow {ι : Type} [Fintype ι] [DecidableEq ι] {N j : ℕ} (h : j ≤ N)
     (w : ι → Equiv.Perm (Fin j) × Equiv.Perm (Fin (N - j))) (τ : ι) :
     rename (fun x : ι × Fin N => (x.1, blockPerm h (w x.1) x.2)) (pLow j τ 1 : Pol ι N) = pLow j τ 1 := by
-  simp only [pLow, map_sum, map_pow, rename_X, Finset.sum_filter]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [pLow, map_sum, map_pow, rename_X, Finset.sum_filter]
   rw [← Equiv.sum_comp (blockPerm h (w τ)) (fun i : Fin N => if (i : ℕ) < j then (X (τ, i) : Pol ι N) ^ 1 else 0)]
   refine Finset.sum_congr rfl fun i _ => ?_
   simp only [blockPerm_lt]
@@ -90,7 +91,8 @@ theorem rename_pLow {ι : Type} [Fintype ι] [DecidableEq ι] {N j : ℕ} (h : j
 theorem rename_pHigh {ι : Type} [Fintype ι] [DecidableEq ι] {N j : ℕ} (h : j ≤ N)
     (w : ι → Equiv.Perm (Fin j) × Equiv.Perm (Fin (N - j))) (τ : ι) :
     rename (fun x : ι × Fin N => (x.1, blockPerm h (w x.1) x.2)) (pHigh j τ 1 : Pol ι N) = pHigh j τ 1 := by
-  simp only [pHigh, map_sum, map_pow, rename_X, Finset.sum_filter]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [pHigh, map_sum, map_pow, rename_X, Finset.sum_filter]
   rw [← Equiv.sum_comp (blockPerm h (w τ)) (fun i : Fin N => if j ≤ (i : ℕ) then (X (τ, i) : Pol ι N) ^ 1 else 0)]
   refine Finset.sum_congr rfl fun i _ => ?_
   have := blockPerm_lt h (w τ) i
@@ -100,7 +102,8 @@ theorem rename_pHigh {ι : Type} [Fintype ι] [DecidableEq ι] {N j : ℕ} (h : 
 theorem rename_lamA {ι : Type} [Fintype ι] [DecidableEq ι] {N j : ℕ} (h : j ≤ N)
     (w : ι → Equiv.Perm (Fin j) × Equiv.Perm (Fin (N - j))) :
     rename (fun x : ι × Fin N => (x.1, blockPerm h (w x.1) x.2)) (lamA ι N j) = lamA ι N j := by
-  simp only [lamA, map_sum, map_sub, rename_pLow, rename_pHigh]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [lamA, map_sum, map_sub, rename_pLow, rename_pHigh]
 
 theorem sign_revPerm_cast {R : Type} [CommRing R] (n : ℕ) :
     ((Equiv.Perm.sign (Fin.revPerm : Equiv.Perm (Fin n)) : ℤ) : R) = (-1) ^ (∑ i : Fin n, (i : ℕ)) := by

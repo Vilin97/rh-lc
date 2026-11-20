@@ -82,7 +82,8 @@ private theorem Lam_sub (D E : Fin β.d → PowerSeries Φ.R) :
 
 private theorem Lam_sb (g : ℕ) (D : Fin β.d → PowerSeries Φ.R) :
     abelian₂ Φ β (fun i => sb g (D i)) = sb g (abelian₂ Φ β D) := by
-  simp only [abelian₂, map_sum, sb_C, map_sb]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [abelian₂, map_sum, sb_C, map_sb]
 
 private theorem val_mul (b : c.O) (k : Fin β.d) :
     ∑ i, β.val i * algebraMap ℤ_[l] (PadicAlgCl l) (β.mat b i k) = (b : PadicAlgCl l) * β.val k := by
@@ -97,10 +98,12 @@ private theorem val_mul (b : c.O) (k : Fin β.d) :
 
 private theorem Lam_act (b : c.O) (D : Fin β.d → PowerSeries Φ.R) :
     abelian₂ Φ β (Φ.act (β.mat b) D) = PowerSeries.C (algebraMap (PadicAlgCl l) ℂ_[l] (b : PadicAlgCl l)) * abelian₂ Φ β D := by
-  simp only [abelian₂, Fr.act, map_sum, map_mul, PowerSeries.map_C, Φ.jh_alg, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [abelian₂, Fr.act, map_sum, map_mul, PowerSeries.map_C, Φ.jh_alg, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun k _ => ?_
-  rw [← mul_assoc, ← map_mul, ← map_mul, ← val_mul β b k, map_sum, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← mul_assoc, ← map_mul, ← map_mul, ← val_mul β b k, map_sum, map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_mul, map_mul, mul_assoc]
 
@@ -123,7 +126,8 @@ private theorem approx (hj : ∀ x ∈ A, ‖j x‖ ≤ 1) (hβ : ∀ i, ‖β.v
   · rw [PowerSeries.coeff_mk]
     exact norm_sum_le_one _ _ fun i _ => nmul (hβ i) (hj _ (y i n).2.1)
   · ext n
-    rw [map_add, PowerSeries.coeff_C_mul, Lam_coeff, Lam_coeff, PowerSeries.coeff_map, PowerSeries.coeff_mk, Fr.lam, Fr.lam,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_add, PowerSeries.coeff_C_mul, Lam_coeff, Lam_coeff, PowerSeries.coeff_map, PowerSeries.coeff_mk, Fr.lam, Fr.lam,
       map_sum, Finset.mul_sum, ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [hye, PowerSeries.coeff_mk, map_add, map_mul, map_mul, map_pow, map_natCast, Φ.jh_comp_incl]
@@ -162,7 +166,8 @@ theorem UpperTheory.Kd.C7.pClause2 :
   have h5 : (l : ℂ_[l]) ^ c₂ * v * f (intg φ k Gs r ξ) =
       f (intg φ k (sb g H) r ξ - φ (g : ZMod l) * (g : Qbar l) ^ k * intg φ k H r ξ) +
         (l : ℂ_[l]) ^ (2 * r) * ∑ m ∈ Finset.range (l ^ (3 * r)), f (a m) * W.coeff m := by
-    rw [← hθ, hint, hint, hint, Finset.mul_sum, ← Finset.sum_sub_distrib, map_sum, map_sum, Finset.mul_sum, Finset.mul_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hθ, hint, hint, hint, Finset.mul_sum, ← Finset.sum_sub_distrib, map_sum, map_sum, Finset.mul_sum, Finset.mul_sum,
       ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun m _ => ?_
     have h6 := h3 m

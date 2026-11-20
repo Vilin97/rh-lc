@@ -167,7 +167,8 @@ theorem mem_locRing (w : HeightOneSpectrum (𝓞 K)) (x : K) : x ∈ locRing w �
 theorem mem_range_of_coeff_mem {σ : Type} (R0 : Subring K) {P : MvPolynomial σ K} (h : ∀ m, AddMonoidAlgebra.coeff P m ∈ R0) :
     P ∈ (map (σ := σ) R0.subtype).range := by
   refine ⟨∑ m ∈ P.support, monomial m ⟨AddMonoidAlgebra.coeff P m, h m⟩, ?_⟩
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [map_monomial, Subring.coe_subtype]
   exact P.support_sum_monomial_coeff
 

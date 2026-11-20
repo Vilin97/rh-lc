@@ -38,7 +38,8 @@ private theorem act_transp (J : L V →ₗᵢ[ℂ] H) (J' : L W →ₗᵢ[ℂ] H
       filter_upwards [(0 : W →L[ℂ] W).coeFn_compLpL (sh W a x), Lp.coeFn_zero W 2 (volume : Measure ℝ)] with y a b
       rw [a, b]; rfl)]
     simp only [ContinuousLinearMap.comp_apply]
-    rw [hT', h1, hT, map_add, Finsupp.sum, Finsupp.sum, map_sum, (convSpec _ hk' x).2.2, (convSpec _ hk _).2.2,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hT', h1, hT, map_add, Finsupp.sum, Finsupp.sum, map_sum, (convSpec _ hk' x).2.2, (convSpec _ hk _).2.2,
       ← ContinuousLinearMap.integral_comp_comm _ (convSpec _ hk _).2.1]
     simp only [lift_sh]
   · beta_reduce
@@ -51,7 +52,8 @@ private theorem act_transp (J : L V →ₗᵢ[ℂ] H) (J' : L W →ₗᵢ[ℂ] H
     let Φ : (V →L[ℂ] V) →L[ℂ] (W →L[ℂ] W) :=
       (ContinuousLinearMap.compL ℂ W V W S) ∘L ((ContinuousLinearMap.compL ℂ W V V).flip S')
     have hΦ : ∀ c, Φ c = S ∘L c ∘L S' := fun c => rfl
-    simp only [← hΦ, symb, Finsupp.sum, map_add, map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [← hΦ, symb, Finsupp.sum, map_add, map_sum, map_smul]
     rw [← Φ.integral_comp_comm hi]
     simp only [map_smul]
 

@@ -278,7 +278,8 @@ noncomputable def augc : DCx.AugCol (cosK j F P).cx (cechCos (pmap j P) (j ⋙ F
     funext s
     change (Cos.d ((cechCos (pmap j P) (j ⋙ F)).cos 0) p (eta j F P p x)) s =
       (F.map (zz j P (s.obj (Fin.last 0)))).hom (Cos.d (cosK j F P) p x)
-    rw [Cos.d_apply, Cos.d_apply, Finset.sum_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Cos.d_apply, Cos.d_apply, Finset.sum_apply, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [Pi.smul_apply, map_zsmul]
     congr 1

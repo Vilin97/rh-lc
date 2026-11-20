@@ -35,20 +35,24 @@ theorem exists_scaled_ext {K : Type} [Field K] (σ : K →+* ℂ) {n : ℕ} {W H
     simp [Finset.sum_apply, Pi.single_apply]
   have hj : ∀ x, j x = ∑ i, σ (x i) • b i := fun x => by
     conv_lhs => rw [hdec x]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun i _ => by rw [map_smulₛₗ, hb]
   have hk : ∀ x, k x = ∑ i, σ (x i) • k (Pi.single i 1) := fun x => by
     conv_lhs => rw [hdec x]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun i _ => by rw [map_smulₛₗ]
   have hA : ∀ x, u (j x) = k x := fun x => by
-    rw [hj, map_sum, hk]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hj, map_sum, hk]
     exact Finset.sum_congr rfl fun i _ => by rw [map_smul, hu]
   have hbas : ∀ i l, ⟪u (b i), u (b l)⟫_ℂ = (c : ℂ) * ⟪b i, b l⟫_ℂ := fun i l => by
     rw [hu, hu, hb, hb, hc]
   have key : ∀ z w, ⟪u z, u w⟫_ℂ = (c : ℂ) * ⟪z, w⟫_ℂ := fun z w => by
     rw [← b.sum_repr z, ← b.sum_repr w]
-    simp only [map_sum, map_smul, sum_inner, inner_sum, inner_smul_left, inner_smul_right, hbas, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, sum_inner, inner_sum, inner_smul_left, inner_smul_right, hbas, Finset.mul_sum]
     exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun l _ => by ring
   refine ⟨u, fun w => ?_, hA⟩
   have h := key w w

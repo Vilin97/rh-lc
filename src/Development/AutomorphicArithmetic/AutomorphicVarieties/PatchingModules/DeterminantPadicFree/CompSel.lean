@@ -5,13 +5,15 @@ private theorem mapL {A B : Type} [CommRing A] [CommRing B] {n : ℕ} (j : A →
     (hp : ∀ a y, p (j a * y) = a * p y) (M : Matrix (Fin n) (Fin n) A) (Z : Matrix (Fin n) (Fin n) B) :
     (M.map j * Z).map p = M * Z.map p := by
   ext a b
-  simp [Matrix.mul_apply, map_sum, hp]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Matrix.mul_apply, map_sum, hp]
 
 private theorem mapR {A B : Type} [CommRing A] [CommRing B] {n : ℕ} (j : A →+* B) (p : B →+ A)
     (hp : ∀ a y, p (j a * y) = a * p y) (M : Matrix (Fin n) (Fin n) A) (Z : Matrix (Fin n) (Fin n) B) :
     (Z * M.map j).map p = Z.map p * M := by
   ext a b
-  simp only [Matrix.mul_apply, map_sum, Matrix.map_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mul_apply, map_sum, Matrix.map_apply]
   refine Finset.sum_congr rfl fun c _ => ?_
   rw [mul_comm, hp, mul_comm]
 

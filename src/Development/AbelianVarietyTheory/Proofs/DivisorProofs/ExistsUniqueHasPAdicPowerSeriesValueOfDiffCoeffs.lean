@@ -56,7 +56,8 @@ def psum (z : σ → B) (f : MvPowerSeries σ Q) (n : ℕ) : Q :=
 theorem psum_eq (z : σ → B) (f : MvPowerSeries σ Q) (n : ℕ) :
     psum z f n = ∑ α ∈ Finset.Iic (box σ n),
       coeff α f * algebraMap B Q (α.prod fun i e => z i ^ e) := by
-  simp only [psum, trunc', truncFinset_apply, map_sum, MvPolynomial.eval_monomial]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [psum, trunc', truncFinset_apply, map_sum, MvPolynomial.eval_monomial]
   refine Finset.sum_congr rfl fun α _ => ?_
   rw [map_finsuppProd]
   simp [map_pow]

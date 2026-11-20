@@ -205,7 +205,8 @@ lemma tri_map (k : V ≃ₗ[E] V) {n : ℕ} {f g : Fin n → V} (h : Tri E f g) 
   obtain ⟨A, hA, hC⟩ := h
   exact ⟨A, hA, fun b => by
     show k (g b) = ∑ a, A a b • k (f a)
-    rw [hC b, map_sum]; simp only [map_smul]⟩
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hC b, map_sum]; simp only [map_smul]⟩
 
 lemma tri_trans {n : ℕ} {f g h : Fin n → V} (h1 : Tri E f g) (h2 : Tri E g h) : Tri E f h := by
   obtain ⟨A, ⟨hA0, hA1⟩, hA⟩ := h1

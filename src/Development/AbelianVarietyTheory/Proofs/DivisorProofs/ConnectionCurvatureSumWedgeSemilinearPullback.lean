@@ -15,7 +15,8 @@ variable {R R' : Type} [CommRing R] [CommRing R'] {C C' : Type} [Category.{0} C]
 theorem pOm_wsum (F : C ⥤ CommAlgCat.{0} R) {n : ℕ} (u v : Fin n → Glob1 F) {T T' : C} (w : T ⟶ T') :
     pOm F 2 w (wsum F u v T) = wsum F u v T' := by
   unfold wsum
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun k _ ↦ ?_
   rw [pOm_wedge, ← (u k).2 w, ← (v k).2 w]
 
@@ -24,7 +25,8 @@ theorem qOm_wsum {σ : R →+* R'} {F : C ⥤ CommAlgCat.{0} R} {F' : C' ⥤ Com
     qOm m 2 T (wsum F u v (m.G.obj T)) =
       wsum F' (fun k ↦ pullGlob1 m (u k)) (fun k ↦ pullGlob1 m (v k)) T := by
   unfold wsum
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_congr rfl fun k _ ↦ qOm_wedge m _ _
 
 end Helpers

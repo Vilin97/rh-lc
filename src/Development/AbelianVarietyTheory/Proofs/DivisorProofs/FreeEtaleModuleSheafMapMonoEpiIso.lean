@@ -86,7 +86,8 @@ theorem free_map_epi (R : Type) [CommRing R] {P Q : PSh} (f : P ⟶ Q)
   refine ⟨∑ i : c.support, c i.1 • freeGen R P W (x i), ?_⟩
   have e1 : Sec.map ((free R).map f) (∑ i : c.support, c i.1 • freeGen R P W (x i)) =
       ∑ i : c.support, c i.1 • freeGen R Q W (Q.map k.op i.1) := by
-    simp only [Sec.map, map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Sec.map, map_sum, map_smul]
     refine Finset.sum_congr rfl fun i _ => ?_
     congr 1
     rw [← hx i]; exact (GlobalTheory.T.free_sections_ext_res_map R P ((free R).obj P)).2.2.2 Q f W (x i)

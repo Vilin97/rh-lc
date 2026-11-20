@@ -543,7 +543,8 @@ theorem sum_degPiece_tail (h : j ≤ i) : -∑ m ∈ Finset.Icc (i + 1) N, ct.de
 theorem degWt_intCast (l : PsiT D → ℕ → ℤ) {L : LB ct.YY.X} (h : IsGrLB ct.YY (ct.expo l) L) :
     ct.degWt c (fun τ i => l τ i) = VB.degLB k (L.pull c.f) := by
   rw [← c.degGr_eq ct.hasDR h, expo_eq_sum, degWt, ← finsum_comp_equiv D.eTau, finsum_eq_sum_of_fintype]
-  simp only [degPiece, map_sum, map_zsmul, map_neg]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [degPiece, map_sum, map_zsmul, map_neg]
   simp
 
 end At

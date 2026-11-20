@@ -22,7 +22,8 @@ theorem rootOfUnity_eq_one_of_map_eq_one {R K : Type} [CommRing R] [IsLocalRing 
     rw [← sub_eq_zero, ← map_one (IsLocalRing.residue R), ← map_sub, IsLocalRing.residue_eq_zero_iff]
     exact hx
   have hS : IsUnit (∑ i ∈ Finset.range n, w ^ i) := by
-    rw [← IsLocalRing.residue_ne_zero_iff_isUnit, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← IsLocalRing.residue_ne_zero_iff_isUnit, map_sum]
     simp only [map_pow, hres, one_pow, Finset.sum_const, Finset.card_range, nsmul_eq_mul, _root_.mul_one]
     have := (IsLocalRing.residue_ne_zero_iff_isUnit (n : R)).2 hn
     simpa using this

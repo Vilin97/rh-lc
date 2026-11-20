@@ -54,7 +54,8 @@ theorem psIn_map {d n n' : ℕ} (m : ℕ) (r : Fin n → Fin n') (f : MvPowerSer
   rw [MvPolynomial.map_rename]
   congr 1
   unfold psTrunc
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [MvPolynomial.map_monomial, MvPowerSeries.coeff_map]
 
 theorem subst_square {n n' d : ℕ} (m : ℕ) (φ : Fin n × Fin d → MvPolynomial (Fin n' × Fin d) S) :

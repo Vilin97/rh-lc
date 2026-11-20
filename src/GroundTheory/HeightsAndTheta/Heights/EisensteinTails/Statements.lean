@@ -104,10 +104,12 @@ variable {ι : Type*} [Fintype ι] {V : ι → Type*} [∀ i, AddCommGroup (V i)
 def corePi (h : ∀ i, InnerProductSpace.Core ℂ (V i)) : InnerProductSpace.Core ℂ (∀ i, V i) where
   inner x y := ∑ i, (h i).inner (x i) (y i)
   conj_inner_symm x y := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun i _ ↦ (h i).conj_inner_symm (x i) (y i)
   re_inner_nonneg x := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_nonneg fun i _ ↦ (h i).re_inner_nonneg (x i)
   add_left x y z := by
     simp only [Pi.add_apply, (h _).add_left, Finset.sum_add_distrib]
@@ -116,7 +118,8 @@ def corePi (h : ∀ i, InnerProductSpace.Core ℂ (V i)) : InnerProductSpace.Cor
   definite x hx := by
     have hx' : ∑ i, (h i).inner (x i) (x i) = 0 := hx
     have hre : ∑ i, RCLike.re ((h i).inner (x i) (x i)) = 0 := by
-      rw [← map_sum, hx', map_zero]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← map_sum, hx', map_zero]
     have hz := (Finset.sum_eq_zero_iff_of_nonneg fun i _ ↦ (h i).re_inner_nonneg (x i)).1 hre
     funext i
     exact core_eq_zero_of_re (h i) _ (hz i (Finset.mem_univ i))
@@ -155,7 +158,8 @@ def orthogonalSum (h : ∀ i, HermitianMetric L (E i)) : HermitianMetric L (∀ 
   form σ := coreComap (corePi fun i ↦ (h i).form σ) (fibrePi E σ).toLinearMap
     (fibrePi E σ).injective
   form_conj σ x y := by
-    simp only [coreComap_inner, corePi_inner, LinearEquiv.coe_coe, fibrePi_conjMap,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [coreComap_inner, corePi_inner, LinearEquiv.coe_coe, fibrePi_conjMap,
       (h _).form_conj, map_sum]
 
 end Bundles

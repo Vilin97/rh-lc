@@ -218,7 +218,8 @@ theorem twistSub_X_mem_supported (w : Set ι) (j : Fin n) (v : ι × Fin n) (hv 
 theorem twistSub_wfree (w : Set ι) (j : Fin n) (P : MvPolynomial (ι × Fin n) R) (hP : WFree w P) :
     WFree w (twistSub LL S j P) := by
   rw [wfree_iff_supported]
-  rw [P.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [P.as_sum, map_sum]
   refine Subalgebra.sum_mem _ fun ν hν => ?_
   rw [monomial_eq, map_mul, Finsupp.prod, map_prod]
   refine Subalgebra.mul_mem _ ?_ (Subalgebra.prod_mem _ fun v hv => ?_)
@@ -334,20 +335,24 @@ theorem untw_comp (w : Set ι) (hw : ∀ l ∈ w, LL.vec l = true) (hd : Disjoin
       unfold twistSub
       rw [eval₂Hom_X', eval₂Hom_X', if_pos (Set.mem_union_left w hS), if_pos hS]
       split_ifs
-      · rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        · rw [map_sum]
         refine Finset.sum_congr rfl fun b _ => ?_
         rw [map_mul, untw_C, untw_X, if_neg hnw]
-      · rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        · rw [map_sum]
         refine Finset.sum_congr rfl fun b _ => ?_
         rw [map_mul, untw_C, untw_X, if_neg hnw]
     · by_cases hW : v.1 ∈ w
       · rw [Formalism.MainNotions.TestSideWords.TwistedFiltration.G2.twistSub_X_out LL S j v hS]
         unfold twistSub
         rw [eval₂Hom_X', if_pos (Set.mem_union_right S hW), if_pos (hw _ hW)]
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         simp_rw [map_mul, untw_C, untw_X, if_pos hW, Finset.mul_sum, ← mul_assoc, ← C_mul]
         rw [Finset.sum_comm]
-        simp_rw [← Finset.sum_mul, ← map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp_rw [← Finset.sum_mul, ← map_sum]
         have hm : ∀ b' : Fin n, ∑ b : Fin n, twistMat R n j 1 b v.2 * twistMat R n j (-1) b' b =
             (1 : Matrix (Fin n) (Fin n) (GLLaurent R n)) b' v.2 := by
           intro b'

@@ -125,7 +125,8 @@ theorem continuous_resG : Continuous (resG E : G E' Ω →* G E Ω) := by
   simp only [IntermediateField.coe_sum, IntermediateField.coe_smul] at hx'
   rw [← hx']
   show (resG E σ) _ = _
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_smul, resG_apply, hb]
 

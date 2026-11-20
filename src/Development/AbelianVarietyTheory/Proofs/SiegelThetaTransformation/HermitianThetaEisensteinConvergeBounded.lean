@@ -33,7 +33,8 @@ theorem approx_entry (hΨ : IsType Ψ) : ∃ K : ℝ, ∀ w : Ψ → ℂ, ∃ a 
     have h2 : ComplexEmbedding.conjugate (ComplexEmbedding.conjugate τ.1) = τ.1 := star_star _
     have e1 := hx τ.1
     have e2 := congrArg conj (hx (ComplexEmbedding.conjugate τ.1))
-    simp only [x, h0, h1, h2, map_zero, add_zero, zero_add, conj_conj, map_sum, map_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [x, h0, h1, h2, map_zero, add_zero, zero_add, conj_conj, map_sum, map_mul,
       ComplexEmbedding.conjugate_coe_eq] at e1 e2
     have : w τ = (w τ + w τ) / 2 := by ring
     rw [this]
@@ -46,7 +47,8 @@ theorem approx_entry (hΨ : IsType Ψ) : ∃ K : ℝ, ∀ w : Ψ → ℂ, ∃ a 
   · refine IsIntegral.mul ?_ ?_
     · simpa using isIntegral_algebraMap (R := ℤ) (A := E) (x := ⌊(c i).re⌋)
     · rw [integralBasis_apply]; exact RingOfIntegers.isIntegral_coe _
-  · rw [hre, map_sum, ← Finset.sum_sub_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [hre, map_sum, ← Finset.sum_sub_distrib]
     refine le_trans ((norm_sum_le _ _).trans (Finset.sum_le_sum fun i _ => ?_))
       (Finset.single_le_sum (f := fun σ : E →+* ℂ => ∑ i, ‖σ (integralBasis E i)‖)
         (fun _ _ => Finset.sum_nonneg fun _ _ => norm_nonneg _) (Finset.mem_univ τ.1))
@@ -80,7 +82,8 @@ theorem im_nonneg {W : Matrix (Fin N) (Fin N) ℂ} (h : (imH W).PosSemidef) (v :
     0 ≤ (v ⬝ᵥ W *ᵥ star v).im := by
   have h1 := h.re_dotProduct_nonneg (star v)
   have h2 : v ⬝ᵥ Wᴴ *ᵥ star v = conj (v ⬝ᵥ W *ᵥ star v) := by
-    simp only [dotProduct, mulVec, Finset.mul_sum, conjTranspose_apply, map_sum, map_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [dotProduct, mulVec, Finset.mul_sum, conjTranspose_apply, map_sum, map_mul,
       Pi.star_apply, Complex.star_def, conj_conj]
     rw [Finset.sum_comm]
     exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring

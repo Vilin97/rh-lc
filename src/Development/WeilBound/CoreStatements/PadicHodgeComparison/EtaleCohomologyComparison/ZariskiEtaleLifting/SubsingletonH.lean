@@ -48,7 +48,8 @@ theorem local_of (hD : D.Out l) : Local l := by
     rw [Eps.μ, map_sub, map_one, ε.qU_val]
   have hξ : (∑ i ∈ Finset.range (bs l k n).p, (base l).cris n (ε.qk 1) ^ i) ∈ (bs l k n).I := by
     have := fil_le k (base l) n (hε.2.2.1 (base l) n)
-    simpa only [map_sum, map_pow] using this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa only [map_sum, map_pow] using this
   obtain ⟨L, hL⟩ := P.line_univ (thU (Lc F κ k n) (ε.qU n) (ε.qU_mem k n)) (fun _ _ i g => (flt F κ ε k n ρ hρ).FAcyc i g)
     (P.thick_line F (bs l k n) rfl (κb κ k n) ((base l).cris n) ρ hρ ε.μ (ε.μ_mem k (base l) n) (ε.qU n) (ε.qU_mem k n)
       ((base l).cris n (ε.qk 1)) Fact.out hq hμ hξ)

@@ -19,7 +19,8 @@ namespace GlobalTheory.Hk3
 theorem conv_map_idem {K : Type} [Field K] {H : Type} [Group H] [Fintype H] (z : MonoidAlgebra K H) (hz : z * z = z)
     (σ : K →+* ℂ) (g : H) : ∑ a, σ (z.coeff a) * σ (z.coeff (a⁻¹ * g)) = σ (z.coeff g) := by
   conv_rhs => rw [← hz]
-  rw [MonoidAlgebra.coeff_mul_apply_left, Finsupp.sum_fintype _ _ (by simp), map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [MonoidAlgebra.coeff_mul_apply_left, Finsupp.sum_fintype _ _ (by simp), map_sum]
   simp [map_mul]
 
 theorem coeff_conj_central {K : Type} [Field K] {H : Type} [Group H] (z : MonoidAlgebra K H)
@@ -60,7 +61,8 @@ theorem eH_laws : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {
     rw [coeff_conj_central _ (fun b => idemOf_central A.X hX b) g h]
   have happ : ∀ x v, (R.HW i (sg0 D A)).e (eH R i x) v = R.eWf i (sg0 D A) ((R.HW i (sg0 D A)).e x v) := fun x v => by
     unfold eH RealDat.eWf gaL
-    simp only [LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, MultilinearMap.sum_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, MultilinearMap.sum_apply,
       MultilinearMap.smul_apply]
     refine Finset.sum_congr rfl fun g _ => congrArg _ ?_
     rw [hC.models.gW i (sg0 D A) g x]; rfl

@@ -79,7 +79,8 @@ theorem exists_coords {G : Type} [Group G] [TopologicalSpace G] {LL O : Type} [F
     refine Finset.sum_congr rfl fun j _ => ?_
     change _ = algebraMap ℤ_[l] O (a j) • u j
     rw [← algebraMap_smul LL (algebraMap ℤ_[l] O (a j)), hc, algebraMap_smul]
-  rw [hy, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hy, map_sum]
   refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg (by positivity) fun j _ => ?_
   rw [map_smul]
   change ‖u.repr (y : Y.V) j * _‖ ≤ _
@@ -98,7 +99,8 @@ theorem actVB_sum_tmul {G : Type} [Group G] {Qp K₀ K : Type} [Field Qp] [Field
     (hz : ∀ i, algebraMap Qp B (z i) = c • PD.actB g (x i) - x i) :
     w.equivFun.symm z ⊗ₜ[Qp] (1 : B) =
       actVB PD ρ g (∑ i, w i ⊗ₜ[Qp] x i) - ∑ i, w i ⊗ₜ[Qp] x i := by
-  rw [map_sum, ← Finset.sum_sub_distrib, Module.Basis.equivFun_symm_apply, sum_tmul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, ← Finset.sum_sub_distrib, Module.Basis.equivFun_symm_apply, sum_tmul]
   refine Finset.sum_congr rfl fun i _ => ?_
   change _ = ρ g (w i) ⊗ₜ[Qp] PD.actB g (x i) - _
   rw [hc, smul_tmul, smul_tmul, ← tmul_sub, ← hz i, Algebra.algebraMap_eq_smul_one]

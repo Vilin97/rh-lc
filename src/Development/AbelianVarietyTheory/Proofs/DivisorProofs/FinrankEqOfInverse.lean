@@ -366,7 +366,8 @@ theorem part_rank_dim_shift : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] 
       exact ⟨_, ⟨_, (lie2 u hu).1, rfl⟩, by rw [toLin_incl, (lie2 u hu).2]⟩
   · have := basis_transport C (Matrix.toLin' (P.map (algebraMap O C)))
       (Matrix.toLin' (I.map (algebraMap O C))) (S' := wQuot C D' τ) ?_ ?_ hg
-    · simpa only [map_sum, map_smul] using this
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simpa only [map_sum, map_smul] using this
     · rintro y ⟨hy, hy0⟩
       refine ⟨⟨tP y hy, ?_⟩, eig_IP C hIP he τ hy.1⟩
       have hy1 : alC C D y = 0 := hy0
@@ -393,7 +394,8 @@ theorem part_rank_dim_shift : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] 
       rw [hbb, Matrix.mulVec_mulVec, ← g2, ← Matrix.mulVec_mulVec, ht1, Matrix.mulVec_zero]
   · have := basis_transport C (Matrix.toLin' (Q.map (algebraMap O C)))
       (Matrix.toLin' (J.map (algebraMap O C))) (S' := alQuot C D' τ) ?_ ?_ hk
-    · simpa only [map_sum, map_smul] using this
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simpa only [map_sum, map_smul] using this
     · rintro _ ⟨w, hw, rfl⟩
       refine ⟨⟨_, tP w hw, a1 w⟩, ?_⟩
       show Matrix.toLin' _ (Matrix.toLin' _ (alC C D w)) = alC C D w

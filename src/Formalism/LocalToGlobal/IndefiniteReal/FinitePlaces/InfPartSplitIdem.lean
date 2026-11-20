@@ -49,7 +49,8 @@ theorem infPart_splitIdem {e : AE D} (he : IsSplitIdem D e) : infPart D e = 0 :=
 
 theorem infPart_idemSum {P : Finset (Formalism.L2.DIV.Pl D.host.E)} {e : AE D} (he : IsIdemSum e P) : infPart D e = 0 := by
   obtain ⟨es, hes, hsum, -⟩ := idemSum_orth P e he
-  rw [hsum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hsum, map_sum]
   exact Finset.sum_eq_zero fun PP hPP => infPart_splitIdem (hes PP hPP)
 
 theorem idemSum_mul_self {P : Finset (Formalism.L2.DIV.Pl D.host.E)} {e : AE D} (he : IsIdemSum e P) : e * e = e := by

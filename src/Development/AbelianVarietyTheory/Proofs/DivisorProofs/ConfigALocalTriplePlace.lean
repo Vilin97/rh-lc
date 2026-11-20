@@ -25,7 +25,8 @@ theorem symp_vecMulVec_eq_zero {n d : ℕ} (J : Matrix (Fin n) (Fin n) E) (JB : 
     simp [cA, inclR, Algebra.TensorProduct.map_tmul]
   have h0 : ∑ i, ∑ k, incV F x i * incM F J i k * cA σ (incV F x k) = 0 := by
     have : ∑ i, ∑ k, incV F x i * incM F J i k * cA σ (incV F x k) = inclR (F := F) (AF F) (form σ J x x) := by
-      simp only [form, dotProduct, Matrix.mulVec, incV, incM, Matrix.map_apply, map_sum, map_mul, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [form, dotProduct, Matrix.mulVec, incV, incM, Matrix.map_apply, map_sum, map_mul, Finset.mul_sum]
       exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun k _ => by rw [hc k]; ring
     rw [this, hx, map_zero]
   have hT : hTens (cA σ) (incM F J) JB (Matrix.vecMulVec (incV F x) p) (Matrix.vecMulVec (incV F x) q) = 0 := by

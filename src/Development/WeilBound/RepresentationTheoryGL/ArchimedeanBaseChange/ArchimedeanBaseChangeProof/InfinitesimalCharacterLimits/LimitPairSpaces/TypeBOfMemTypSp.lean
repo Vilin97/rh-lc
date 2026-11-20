@@ -79,10 +79,12 @@ theorem sep_left {X Y V : Type} [AddCommGroup V] [Module ℂ V] (j : V →ₗ[�
     simp [Finset.sum_apply, mul_comm]
   have e2 : (⟨χ, hχ⟩ : A) = ∑ i, g i y • L (j (f i)) := by
     have h3 : L ((j.comp A.subtype) ⟨χ, hχ⟩) = ⟨χ, hχ⟩ := LinearMap.congr_fun hL _
-    rw [← h3, LinearMap.comp_apply, Submodule.subtype_apply, e, e1, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← h3, LinearMap.comp_apply, Submodule.subtype_apply, e, e1, map_sum]
     simp only [map_smul]
   have e3 := congrArg (fun v : A => j (v : V) x) e2
-  simp only [Submodule.coe_sum, Submodule.coe_smul, map_sum, map_smul, Finset.sum_apply, Pi.smul_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Submodule.coe_sum, Submodule.coe_smul, map_sum, map_smul, Finset.sum_apply, Pi.smul_apply,
     smul_eq_mul] at e3
   rw [← congrFun e x, e3]
   exact Finset.sum_congr rfl fun i _ => mul_comm _ _

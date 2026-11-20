@@ -193,7 +193,8 @@ theorem main : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberField
     rw [hφ]
     have hu : GlobalTheory.LatVac.locCo M.co v (M.co.e.symm U) = u := by
       ext k <;> simp [GlobalTheory.LatVac.locCo, U, GlobalTheory.LatVac.evFin_liftV]
-    rw [← hu, ← hc, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hu, ← hc, map_sum]
     exact Finset.sum_congr rfl fun i _ => (locCo_smul _ _ _ _).symm
   have hOc : IsCompact (v.adicCompletionIntegers F : Set (Fv F v)) := PI.AdicCompletionValuation.isCompact_adicCompletionIntegers F v
   have hOo : IsOpen (v.adicCompletionIntegers F : Set (Fv F v)) := Valued.isOpen_valuationSubring _
@@ -211,7 +212,8 @@ theorem main : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberField
     fun u => ∑ k, u.1 k • f1 k + ∑ k, u.2 k • f2 k
   have hsec : ∀ u, φ (sec u) = u := by
     intro u
-    simp only [sec, map_add, map_sum, map_smul, hf1, hf2]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [sec, map_add, map_sum, map_smul, hf1, hf2]
     ext k <;> simp [Prod.fst_sum, Prod.snd_sum, Finset.sum_apply, Pi.single_apply]
   have hsc : Continuous sec :=
     (continuous_finset_sum _ fun k _ => ((continuous_apply k).comp continuous_fst).smul continuous_const).add

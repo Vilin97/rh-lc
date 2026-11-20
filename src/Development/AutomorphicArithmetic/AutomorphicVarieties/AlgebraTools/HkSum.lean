@@ -67,7 +67,8 @@ theorem UpperTheory.V.AlgebraTools.hkSum :
         _ = b.th (a i) * (b.th (dd (NN n q * (c i * x))) * b.one) := by rw [hs]
         _ = b.th (a i * dd (c i * (NN n q * x))) * b.one := by
             rw [map_mul, mul_left_comm (NN n q) (c i) x, mul_assoc]
-    rw [Finset.sum_congr rfl fun i _ => step i, ← Finset.sum_mul, ← map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_congr rfl fun i _ => step i, ← Finset.sum_mul, ← map_sum,
       (UpperTheory.V.AlgebraTools.hkDualExp R n ι a c hd (NN n q * x)).1]
   have he0 := UpperTheory.V.AlgebraTools.hkFaith R n q H b hb e (fun x => by
     rw [he, sub_mul, sub_mul, hx x, ← map_mul, sub_self])

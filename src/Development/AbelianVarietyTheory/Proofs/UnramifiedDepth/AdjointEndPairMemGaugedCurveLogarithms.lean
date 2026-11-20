@@ -215,7 +215,8 @@ theorem taylor {F : MvPowerSeries (Fin 2 × κ) C} (hF : F ∈ ordGe C (wz κ) 1
   intro e he
   by_cases h1 : Finsupp.weight (wz κ) e = 1
   · obtain ⟨i, μ, rfl⟩ := exists_em e h1
-    rw [← coeff_dz, map_sub, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← coeff_dz, map_sub, map_sum]
     simp [dz_X_mul]
   · have : F - ∑ j, X ((1 : Fin 2), j) * rename (e0 κ) (dz j F) ∈ ordGe C (wz κ) 1 :=
       Submodule.sub_mem _ hF (Submodule.sum_mem _ fun j _ => ordGe_mul (ordGe_X ((1 : Fin 2), j)) (ordGe_zero _))
@@ -229,7 +230,8 @@ variable {V : VF C} {d : ℕ} {I : Fin 2 → Type} [∀ g, Fintype (I g)] {κ : 
 
 theorem sg_eq (X : RawChart C d I κ) (v : κ → C) : X.sg v = -∑ i, v i • dz i X.h := by
   ext μ
-  rw [map_neg, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_neg, map_sum]
   show -∑ i, v i * coeff (μ.mapDomain (fun x : κ => ((0 : Fin 2), x)) + Finsupp.single ((1 : Fin 2), i) 1) X.h = _
   congr 1
   refine Finset.sum_congr rfl fun i _ => ?_
@@ -248,12 +250,14 @@ theorem h_ord (H : RLaw X V) : X.h ∈ ordGe C (wz κ) 1 := by
 
 theorem subst_sum_smul {σ τ ι : Type} [Fintype ι] {a : σ → MvPowerSeries τ C} (ha : HasSubst a) (c : ι → C)
     (f : ι → MvPowerSeries σ C) : subst a (∑ y, c y • f y) = ∑ y, c y • subst a (f y) := by
-  rw [← coe_substAlgHom ha, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← coe_substAlgHom ha, map_sum]
   simp only [map_smul]
 
 theorem lin_const (H : RLaw X V) (M : Matrix κ κ C) {τ : Type} {a : κ → MvPowerSeries τ C}
     (ha : ∀ i, constantCoeff (a i) = 0) (x : κ) : constantCoeff (∑ y, M x y • subst a (X.lg y)) = 0 := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_eq_zero fun y _ => ?_
   rw [constantCoeff_smul, constantCoeff_subst_zero ha (lg_const H y), smul_zero]
 
@@ -340,7 +344,8 @@ theorem hAt_two (H : RLaw X V) {τ : Type} {w : τ → ℕ} {a b : κ → MvPowe
     hAt X a b - ∑ j, b j * subst a (dz j X.h) ∈ ordGe C w 2 := by
   have hP := hasSubst_pair ha hb
   have := ordGe_subst hP (pair_ord a hw) (taylor (h_ord H))
-  rw [subst_sub hP, ← coe_substAlgHom hP, map_sum] at this
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [subst_sub hP, ← coe_substAlgHom hP, map_sum] at this
   convert this using 2
   · rw [coe_substAlgHom hP]; rfl
   · refine Finset.sum_congr rfl fun j _ => ?_
@@ -365,7 +370,8 @@ theorem dz_left (H : RLaw X V) (M : Matrix κ κ C) (i : κ) :
   classical
   have hX : ∀ i : κ, constantCoeff (MvPowerSeries.X i : MvPowerSeries κ C) = 0 := fun i => constantCoeff_X i
   have h := dz_of_two i (hAt_two H (matrixEnd_const H M (gp_const (0 : Fin 2))) (gp_const 1) gp_ord)
-  rw [map_sub, sub_eq_zero, map_sum] at h
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sub, sub_eq_zero, map_sum] at h
   have e : ∀ f : MvPowerSeries κ C, subst (endP X M (gp C κ (0 : Fin 2))) f =
       rename (e0 κ) (subst (endP X M (MvPowerSeries.X : κ → MvPowerSeries κ C)) f) := by
     intro f
@@ -384,13 +390,15 @@ theorem dz_right (H : RLaw X V) (M : Matrix κ κ C) (i : κ) :
   classical
   have h := dz_of_two i (hAt_two H (gp_const (0 : Fin 2)) (matrixEnd_const H M (gp_const 1))
     (one_le_weightedOrder_expMulLog H M (gp_const 1) gp_ord))
-  rw [map_sub, sub_eq_zero, map_sum] at h
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sub, sub_eq_zero, map_sum] at h
   rw [h]
   refine Finset.sum_congr rfl fun j _ => ?_
   have h2 := dz_of_two i (ordGe_mul (matrixEnd_two H M (gp_const (1 : Fin 2)) gp_ord j)
     (ordGe_zero (subst (gp C κ (0 : Fin 2)) (dz j X.h))))
   rw [sub_mul, map_sub, sub_eq_zero] at h2
-  rw [h2, subst_gp, Finset.sum_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h2, subst_gp, Finset.sum_mul, map_sum]
   unfold gp
   simp [dz_X_mul]
 
@@ -412,7 +420,8 @@ theorem defect_int (H : RLaw X V) {M M' : Matrix κ κ C} (hE : IsEnd X V M M') 
     ring
   rw [key]
   intro μ
-  rw [map_neg, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_neg, map_sum]
   refine (VF.Ge.sum fun i _ => ?_).neg
   rw [coeff_smul, coeff_dz, ← coeff_mvExp_weight_one hG1 _ (weight_em i μ)]
   exact (hv i).mul_int (hE.2.2 _)

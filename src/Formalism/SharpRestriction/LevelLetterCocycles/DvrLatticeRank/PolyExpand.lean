@@ -91,7 +91,8 @@ private theorem sum_coeff_smul_eq_sum_coeff_y_pow_mul_smul {y : PowerSeries LL} 
     ∑ j, coeff i (A j) • v j = ∑ j, coeff i (y ^ N * A' j) • v j := by
   have e : ∀ j, coeff i (A j) = ∑ k ∈ range N, p j k * coeff i (y ^ k) + coeff i (y ^ N * A' j) := by
     intro j
-    rw [hA j, map_add, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hA j, map_add, map_sum]
     simp only [coeff_C_mul]
   have hk0 : ∀ k ∈ range N, ∑ j, (p j k * coeff i (y ^ k)) • v j = 0 := by
     intro k hk

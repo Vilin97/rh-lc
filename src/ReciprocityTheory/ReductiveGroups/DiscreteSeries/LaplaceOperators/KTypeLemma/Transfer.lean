@@ -61,7 +61,8 @@ theorem transfer (n : ℕ) : TransferStatement n := by
       T.op k₀ (lWord ((D i).map Neg.neg) (psM T μ) x₀ (v i)) := fun i => by
     rw [tt_rWord_local T μ hU hW (fun D => (hword D).1) hWU hloc (D i) g₀ hg₀W hg₀]
     rfl
-  rw [Finset.sum_congr rfl fun i _ => hA i, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.sum_congr rfl fun i _ => hA i, ← map_sum]
   suffices h : ∑ i, lWord ((D i).map Neg.neg) (psM T μ) x₀ (v i) = 0 by rw [h, map_zero]
   have hopc : Continuous fun k : KG ε => T.op k := continuous_subtype_val.comp T.cont
   have hAc : Continuous fun k : KG ε => T.op k * projW T * T.op k⁻¹ :=

@@ -69,7 +69,8 @@ theorem congAt_local {D : D7} {X : Fields} (s : Seam D X) (P : HeightOneSpectrum
   have ex : k x - x = ∑ b, x b • (k (Pi.single b 1) - Pi.single b 1) := by
     conv_lhs => rw [show x = ∑ b, x b • (Pi.single b (1 : X.E) : Sp X.E N) by
       funext m; simp [Finset.sum_apply, Pi.single_apply]]
-    simp only [map_sum, map_smul, ← Finset.sum_sub_distrib, smul_sub]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, ← Finset.sum_sub_distrib, smul_sub]
   rw [ex, Pi.smul_apply, Finset.sum_apply, smul_eq_mul, Finset.mul_sum]
   refine intAt_sum _ fun b _ => ?_
   have e2 : (((qOf P ^ n : ℕ) : X.E))⁻¹ * (x b • (k (Pi.single b 1) - Pi.single b 1) : Sp X.E N) l =

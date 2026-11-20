@@ -195,7 +195,8 @@ private theorem absSpec2 {A O Ω : Type} [CommRing A] [IsCNL A] [CommRing O] [Is
   · intro K K' κ _ u hyp f hf
     obtain ⟨h1, h2⟩ := hgood K f hf
     refine hsp _ K' _ (sum_clOrd X W _ _ c (U K) (U K') u hyp _ h1) ?_
-    rw [LinearMap.sum_apply, map_sum, LinearMap.sum_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [LinearMap.sum_apply, map_sum, LinearMap.sum_apply, map_sum]
     refine Finset.sum_congr rfl fun q _ => ?_
     rw [(ctrlEq Γ Ga Gp X O Ω W m _).1, h2, mapFn_ra]
 
@@ -217,7 +218,8 @@ private theorem tr_uOp {Ω : Type} [Field Ω] {d m : ℕ} (g : Ga) (a : Gp) (ha 
   set f := fun q : ↥X.I.N ⧸ (X.I.Nconj a).subgroupOf X.I.N => X.rpF Ω d m (↑(Quotient.out q) * a) with hf
   by_cases h : (Function.support f).Finite
   · rw [finsum_eq_sum f h]
-    rw [LinearMap.sum_apply, LinearMap.sum_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [LinearMap.sum_apply, LinearMap.sum_apply, map_sum]
     refine Finset.sum_congr rfl fun q _ => ?_
     exact tr_rpF X g _ F
   · rw [finsum_of_infinite_support h]

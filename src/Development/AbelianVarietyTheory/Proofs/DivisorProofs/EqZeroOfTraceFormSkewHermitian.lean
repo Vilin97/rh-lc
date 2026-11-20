@@ -37,7 +37,8 @@ lemma form_skew_of_matrix {r : ℕ} (G Y : Matrix (Fin r) (Fin r) E)
     herm G (Y *ᵥ u) w + herm G u (Y *ᵥ w) = 0 := by
   have hc : (fun b => cc ((Y *ᵥ w) b)) = Y.map cc *ᵥ (fun b => cc (w b)) := by
     funext b
-    simp [mulVec, dotProduct, cc, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [mulVec, dotProduct, cc, map_sum, map_mul]
   rw [herm_eq_dot, herm_eq_dot, hc, mulVec_mulVec, ← vecMul_transpose, ← dotProduct_mulVec,
     mulVec_mulVec, ← dotProduct_add, ← add_mulVec, h, zero_mulVec, dotProduct_zero]
 
@@ -87,7 +88,8 @@ theorem traceForm_nondegenerate : ∀ (E : Type) [Field E] [NumberField E] [IsCM
             rw [← Matrix.mul_assoc, nonsing_inv_mul G hGu, Matrix.one_mul]
         _ = -(G⁻¹ * (Yᵀ * G)) := by rw [h0, Matrix.mul_neg]
     have h2 : (Y.map cc).trace = cc Y.trace := by
-      simp [trace, cc, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [trace, cc, map_sum]
     rw [← h2, h1, trace_neg, trace_mul_comm, Matrix.mul_assoc, mul_nonsing_inv G hGu,
       Matrix.mul_one, trace_transpose]
 

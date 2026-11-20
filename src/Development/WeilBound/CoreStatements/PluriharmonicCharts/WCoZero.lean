@@ -16,7 +16,8 @@ variable {Φ : Type} [Field Φ] {y : (Σ k, ι k) → Φ} {Ψ : Type} [Fintype �
 theorem wCo_zero (M : FlagModel y Ψ N j) {p : Ψ × Fin N} {k₀ : K} (hk : M.blk p = some k₀) (ca cb : Fin N)
     (m : ι k₀) : M.wCo p k₀ ca cb 0 ⟨none, m⟩ = M.wCo p k₀ ca cb 0 ⟨some k₀, m⟩ := by
   simp only [FlagModel.wCo, Matrix.single_zero, add_zero, mul_one]
-  rw [M.y_step p k₀ hk m, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [M.y_step p k₀ hk m, map_sum]
   exact Finset.sum_congr rfl fun I _ => by rw [map_mul, CPts.minorIJ_map]
 
 def mkAlg (M : FlagModel y Ψ N j) {d : ℕ} {τ : Ψ} {a b : Fin N} {k₀ : K} {ca cb : Fin N} (hb : (b : ℕ) = a + 1)

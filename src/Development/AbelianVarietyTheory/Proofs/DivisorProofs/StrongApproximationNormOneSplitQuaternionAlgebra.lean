@@ -86,7 +86,8 @@ theorem Ψ_smul (c : AF F) (m : Matrix (Fin 2) (Fin 2) (AF F)) : Ψ φ (c • m)
 
 theorem Ψ_map (M : Matrix (Fin 2) (Fin 2) F) : Ψ φ (M.map (algebraMap F (AF F))) = rat (φ.symm M) := by
   conv_rhs => rw [Matrix.matrix_eq_sum_single M]
-  simp only [Ψ, Matrix.map_apply, map_sum, rat_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Ψ, Matrix.map_apply, map_sum, rat_sum]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   rw [show Matrix.single i j (M i j) = M i j • Matrix.single i j (1 : F) by rw [Matrix.smul_single, smul_eq_mul, mul_one],
     map_smul, rat_smul]
@@ -103,7 +104,8 @@ theorem Φ_rat (y : ℍ[F, a, b]) : Φ φ (rat y) = (φ y).map (algebraMap F (AF
 
 theorem Φ_Ψ (m : Matrix (Fin 2) (Fin 2) (AF F)) : Φ φ (Ψ φ m) = m := by
   conv_rhs => rw [Matrix.matrix_eq_sum_single m]
-  simp only [Ψ, map_sum, map_smul, Φ_rat, AlgEquiv.apply_symm_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Ψ, map_sum, map_smul, Φ_rat, AlgEquiv.apply_symm_apply]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   ext k l; simp [Matrix.single_apply]
 

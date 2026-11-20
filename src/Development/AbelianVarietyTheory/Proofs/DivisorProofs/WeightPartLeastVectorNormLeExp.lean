@@ -45,7 +45,8 @@ theorem ubound {o Ω : Type} [CommRing o] [Field Ω] [Algebra o Ω] [ArithBase o
   have e : l.q (m • χ) / S.N = l.q χ := by
     rw [hsc, hm, Nat.cast_pow, mul_div_cancel_left₀ _ hm0]
   rw [e, ← hwt] at key
-  simpa only [map_sum, map_mul] using key
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa only [map_sum, map_mul] using key
 
 set_option maxHeartbeats 1600000 in
 

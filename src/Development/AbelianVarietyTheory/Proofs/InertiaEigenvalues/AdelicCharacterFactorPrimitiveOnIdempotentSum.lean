@@ -45,7 +45,8 @@ theorem exists_factor {M ι : Type} [AddCommGroup M] (k : ι → Type) [∀ i, A
   refine ⟨ψP, fun m => ?_⟩
   have hs : χ m = χ (∑ i ∈ Q, L (Pi.single i (R i m))) := by
     refine key _ _ fun j hj => ?_
-    rw [map_sum, Finset.sum_congr rfl (fun i _ => hL (Pi.single i (R i m)) j hj),
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_congr rfl (fun i _ => hL (Pi.single i (R i m)) j hj),
       Finset.sum_eq_single j (fun i _ hij => Pi.single_eq_of_ne (Ne.symm hij) _) (fun h => absurd hj h),
       Pi.single_eq_same]
   have hprod : ∀ (s : Finset ι) (f : ι → M), χ (∑ i ∈ s, f i) = ∏ i ∈ s, χ (f i) := by

@@ -202,7 +202,8 @@ theorem coord_conj {τ : E →+* ℂ} {G : Matrix (Fin r) (Fin r) E} {p q : ℕ}
       (FD.col ((P.submatrix id π).map (starRingEnd ℂ)) i) (fun a => conj (u a)) =
       -conj (hermC τ G (FD.col P (π i)) u) := by
     rw [hermC_neg]
-    simp [hermC, FD.col, ComplexEmbedding.conjugate_coe_eq, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [hermC, FD.col, ComplexEmbedding.conjugate_coe_eq, map_sum]
   have h3 : (((P.submatrix id π).map (starRingEnd ℂ))⁻¹ *ᵥ fun a => conj (u a)) i = conj ((P⁻¹ *ᵥ u) (π i)) := by
     rw [GlobalTheory.Ker.ONBasis.inv_map_conj (isUnit_iff_ne_zero.2 (det_submatrix_ne hd π))]
     have := Matrix.inv_submatrix_equiv P (Equiv.refl _) π

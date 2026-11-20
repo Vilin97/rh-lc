@@ -214,7 +214,8 @@ theorem smul_mv [TopologicalSpace R] (g : HA R σ J) (u : Matrix (Fin a) (Fin a)
     (X : Fin a → Fin n → R ⊗[F] E) : g • mv u X = mv u (g • X) := by
   funext b
   show lin R σ J g (∑ c, u c b • X c) = ∑ c, u c b • lin R σ J g (X c)
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [map_smul]
 
 theorem hR_sum_left {ι : Type} (t : Finset ι) (x : ι → Fin n → R ⊗[F] E) (y : Fin n → R ⊗[F] E) :

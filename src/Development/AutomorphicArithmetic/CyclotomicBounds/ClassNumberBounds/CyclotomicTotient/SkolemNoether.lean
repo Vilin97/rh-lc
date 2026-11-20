@@ -17,7 +17,8 @@ theorem exists_conj_of_algHom {B : Type} [CommRing B] [IsLocalRing B] {r : ℕ}
       rw [Matrix.single_mul_single_same, mul_one]
     · rw [Matrix.single_mul_single_of_ne _ _ _ _ h, map_zero]
   have hsum : ∑ j, θ (Matrix.single j j (1 : B)) = 1 := by
-    rw [← map_sum, ← map_one θ]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, ← map_one θ]
     congr 1
     ext p q
     rw [Matrix.sum_apply, Finset.sum_eq_single p]

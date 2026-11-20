@@ -67,7 +67,8 @@ theorem matrices_of_lines {A N : Type} [CommRing A] [AddCommGroup N] [Module A N
   let E : Mx F⟦X⟧ n n := Matrix.of fun j k => e (b k) j
   have hE : ∀ a : Fin n → A, e (∑ m, a m • b m) = E.mulVec fun m => lev (a m) := fun a => by
     apply hinj
-    rw [← he, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← he, map_sum]
     simp only [hL, he, serAct_lines]
     rw [← lines_sum]
     congr 1
@@ -234,7 +235,8 @@ theorem matrices_at [CharZero LL] {n : ℕ} (b : Module.Basis (Fin n) (LetA O f)
         (G : Mx LL⟦X⟧ n n) * Matrix.diagonal (fun a => (X : LL⟦X⟧) ^ (U a).toNat) := by
   have h1 : ∀ y : ↥(W.N T), W.φD T y = ∑ k, W.φA (b.repr y k) • W.φD T (b k : W.DD T) := fun y => by
     conv_lhs => rw [← b.sum_repr y]
-    simp only [Submodule.coe_sum, Submodule.coe_smul, map_sum, φD_smulA]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Submodule.coe_sum, Submodule.coe_smul, map_sum, φD_smulA]
   have h2 : ∀ y : ↥(W.N T), W.φD T y ∈ W.N T := fun y => by
     rw [h1]
     refine Submodule.sum_mem _ fun k _ => Submodule.smul_mem _ _ ?_

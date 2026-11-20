@@ -107,7 +107,8 @@ theorem exists_eq_sum_pSum_mul_of_isHomogeneous :
   · have h : homogeneousComponent (dimFl ι N + 1) F = F := by
       rw [homogeneousComponent_of_mem ((mem_homogeneousSubmodule _ F).2 hF), if_pos rfl]
     rw [← h, hQ]
-    simp only [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum]
     refine Finset.sum_congr rfl fun τ _ => Finset.sum_congr rfl fun k _ => ?_
     rw [homogeneousComponent_mul_of_left _ (pSum_isHomogeneous' τ k)]
     split_ifs <;> simp

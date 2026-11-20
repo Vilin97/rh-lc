@@ -58,7 +58,8 @@ theorem exists_model_of_frame [IsCommMonObj G] [Smooth G.hom] (hξ : IsCptGen ξ
       apply Subtype.ext
       simp [comb]
       rfl
-    rw [e1, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e1, map_sum]
     exact Finset.sum_congr rfl fun i _ => hsm (x i) (ψ (x i)) _ (hψ (x i))
   have hle : ⊤ ≤ Submodule.span K (Set.range u) := by
     have hr : Set.range ev ⊆ (Submodule.span K (Set.range u) : Set F) := by

@@ -50,7 +50,8 @@ theorem PPAS.RiemannData.snd_valR_tangent : ∀ (T : Scheme.{0}) (P : PPAS T) (y
     rw [Scheme.Hom.appLE_eq_app]
     exact (Points.valR_comp _ _ _ _).symm
   rw [h4]
-  conv_lhs => rw [← Finset.univ_sum_single w, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [← Finset.univ_sum_single w, map_sum]
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [PPAS.RiemannData.cov, ← smul_eq_mul, ← map_smul, ← Pi.single_smul, smul_eq_mul, mul_one]
 

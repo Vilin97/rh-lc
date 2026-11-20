@@ -124,7 +124,8 @@ private theorem sub_proj_mem_perp_Ist (y : V) :
     rw [Submodule.span_le]
     rintro _ ⟨b, hb, rfl⟩
     have hb' : N.j ≤ b.val := hb
-    rw [SetLike.mem_coe, LinearMap.mem_ker, map_sub, LinearMap.sub_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [SetLike.mem_coe, LinearMap.mem_ker, map_sub, LinearMap.sub_apply,
       _root_.GlobalTheory.DegCnt.NFGeom.proj_apply, map_sum, LinearMap.sum_apply]
     simp_rw [map_smul, LinearMap.smul_apply, N.ist_e _ _ hb']
     simp [hb']
@@ -784,7 +785,8 @@ theorem _root_.GlobalTheory.DegCnt.NFGeom.isCompl [FiniteDimensional K V] :
     have hi : ∀ b : Fin r, N.j ≤ b.val →
         H.B (N.F.e b.castSucc) (v - p2 - s • N.F.z) = 0 := by
       intro b hb
-      rw [map_sub, map_sub, map_smulₛₗ, _root_.Formalism.HermitianLatticeCounting.P.pairing_isotropicSpan_lastVector _ (_root_.Formalism.HermitianLatticeCounting.P.e_mem_X _ b), smul_zero, sub_zero, hp2, map_sum,
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, map_sub, map_smulₛₗ, _root_.Formalism.HermitianLatticeCounting.P.pairing_isotropicSpan_lastVector _ (_root_.Formalism.HermitianLatticeCounting.P.e_mem_X _ b), smul_zero, sub_zero, hp2, map_sum,
         Finset.sum_eq_single_of_mem b (Finset.mem_filter.2 ⟨Finset.mem_univ _, hb⟩)]
       · rw [map_smulₛₗ, N.ist_e _ _ hb, if_pos rfl, starRingEnd_apply,
           star_star, smul_eq_mul, mul_one, sub_self]
@@ -792,7 +794,8 @@ theorem _root_.GlobalTheory.DegCnt.NFGeom.isCompl [FiniteDimensional K V] :
         rw [map_smulₛₗ, N.ist_e _ _ (Finset.mem_filter.1 ha).2,
           if_neg (fun h => hab h.symm), smul_zero]
     have hii : H.B N.F.z (v - p2 - s • N.F.z) = 0 := by
-      rw [map_sub, map_sub, map_smulₛₗ, hp2, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, map_sub, map_smulₛₗ, hp2, map_sum]
       have h0 : ∀ a ∈ Finset.univ.filter (fun a : Fin r => N.j ≤ a.val),
           H.B N.F.z (star (H.B (N.F.e a.castSucc) v) •
             N.ist a) = 0 := by
@@ -861,7 +864,8 @@ theorem _root_.GlobalTheory.DegCnt.NFGeom.finrank_Wt [FiniteDimensional K V] :
       H.B (N.F.e i.1.castSucc) (∑ a, g a • N.ist a.1) =
         star (g i) := by
     intro g i
-    rw [map_sum, Finset.sum_eq_single i]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_eq_single i]
     · rw [map_smulₛₗ, N.ist_e _ _ i.2, if_pos rfl, smul_eq_mul, mul_one,
         starRingEnd_apply]
     · intro a _ hai

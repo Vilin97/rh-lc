@@ -144,7 +144,8 @@ theorem exists_idemSum (P : Finset (Pl D.host.E)) (h : ∀ Q ∈ P, ∀ Q' ∈ P
 
 theorem sum_mul_mem {R R' ι : Type} [CommRing R] [CommRing R'] (f : R →+* R') (B : Subring R') (p : ι → R) (c : R)
     (s : Finset ι) (h : ∀ i ∈ s, f (p i * c) ∈ B) : f ((∑ i ∈ s, p i) * c) ∈ B := by
-  rw [Finset.sum_mul, map_sum]; exact sum_mem h
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.sum_mul, map_sum]; exact sum_mem h
 
 theorem idemSum_div_int {e : Formalism.L2.Theta.AE D} {S : Finset (Pl D.host.E)} (he : IsIdemSum e S) {a : 𝓞 D.host.E}
     (h0 : a ≠ 0) (ha : ∀ P ∈ S, a ∉ P.asIdeal) :

@@ -33,7 +33,8 @@ theorem polMat_diag {q : (Fin d → ℂ) → ℝ} {b : Matrix (Fin d) (Fin d) �
       (((∑ k, ∑ l, b k l * ξ k * starRingEnd ℂ (ξ l)).re / Real.pi : ℝ) : ℂ) := by
     have h1 : ∑ k, ∑ l, (bᴴ) k l * ξ k * starRingEnd ℂ (ξ l) =
         starRingEnd ℂ (∑ k, ∑ l, b k l * ξ k * starRingEnd ℂ (ξ l)) := by
-      simp only [map_sum, map_mul, Complex.conj_conj, conjTranspose_apply, Complex.star_def]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_mul, Complex.conj_conj, conjTranspose_apply, Complex.star_def]
       rw [Finset.sum_comm]
       exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
     have h2 : ∑ k, ∑ l, B k l * ξ k * starRingEnd ℂ (ξ l) = ((1 / (2 * Real.pi) : ℝ) : ℂ) *

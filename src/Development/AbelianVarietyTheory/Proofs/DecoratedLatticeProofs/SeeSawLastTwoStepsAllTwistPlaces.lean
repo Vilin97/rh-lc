@@ -113,7 +113,8 @@ theorem sum_conv_cons : ∀ (D : D7) (S T : HSp D) (om : GA D S × GA D T →* M
   refine Finsupp.sum_congr fun g _ => ?_
   rw [Finsupp.sum_sum_index (h := fun g x => x • om (g, 1) X) (fun _ => zero_smul ℂ _) (fun _ _ _ => add_smul _ _ _)]
   simp only [Finsupp.sum_single_index, zero_smul]
-  simp only [Finsupp.sum, map_sum, map_smul, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finsupp.sum, map_sum, map_smul, Finset.smul_sum]
   refine Finset.sum_congr rfl fun h _ => ?_
   rw [smul_smul]
   congr 1
@@ -139,7 +140,8 @@ theorem comb_aconv_cons : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (S T : H
 theorem sum_om_comb_comm : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D) (χS χT : (AE D)ˣ →* Circle) (om : GA D S × GA D T →* Module.End ℂ (WO S T → ℂ)), IsWeilDatumO ψ S T χS χT om → ∀ (b : GA D S →₀ ℂ) (e : WO S T →₀ ℂ) (f : WO S T → ℂ), IsThetaFunO ψ S T f → (∀ g ∈ b.support, ∀ u ∈ e.support, actO S T g 1 u = u) → ∑ g ∈ b.support, b g • om (g, 1) (comb ψ S T e f) = comb ψ S T e (∑ g ∈ b.support, b g • om (g, 1) f) := by
   intro D ψ S T χS χT om hw b e f hf hact
   unfold comb
-  simp only [map_sum, map_smul, Finset.smul_sum, GlobalTheory.HeisComb.heisO_finset_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, Finset.smul_sum, GlobalTheory.HeisComb.heisO_finset_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun u hu => Finset.sum_congr rfl fun g hg => ?_
   rw [hw.om_heis g 1 u f hf, hact g hg u hu, smul_comm]

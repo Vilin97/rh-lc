@@ -202,7 +202,8 @@ theorem exists_expansion (F : IntermediateField ℚ ℂ) [NumberField F] (σ : F
   ext mo
   simp only [MvPolynomial.coeff_sum, MvPolynomial.coeff_smul, MvPolynomial.coeff_map, smul_eq_mul, hPc]
   have h := congrArg τ (hlam' q mo).1
-  rw [τ.apply_symm_apply, map_sum] at h
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [τ.apply_symm_apply, map_sum] at h
   refine Eq.trans (Finset.sum_congr rfl fun k _ => ?_) h.symm
   rw [map_mul τ (β k), ← hτ]
   rfl
@@ -276,10 +277,12 @@ theorem exists_forms_of_transSum : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ)
     Finset.sum_congr rfl fun k _ => congrArg (β k * ·) (hv k).symm, stdF,
     pureTensorO_transSum_lin D H Dw ψ θ V W χV χW om ΛV ΛW s f₀ hP ι l e he]
   simp only [apply_ite σ, map_one, map_zero, Finset.mul_sum]
-  rw [Finset.sum_comm, thetaKO, map_sum, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.sum_comm, thetaKO, map_sum, Finset.sum_apply]
   refine Finset.sum_congr rfl fun q _ => ?_
   rw [← map_smul, ← map_smul, ← hsum]
-  simp only [thetaKO, map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [thetaKO, map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
   rfl
 
 end GlobalTheory.LevelSeries.SerId

@@ -31,7 +31,8 @@ theorem epM_eq (h1 : I.ρf 1 = 1) (hm : ∀ g h, I.ρf (g * h) = I.ρf g * I.ρf
     (χ : P →* (𝓞 K)ˣ) (hχ : ∀ h, (((χ h : (𝓞 K)ˣ) : 𝓞 K) : K) = ((ψ h : Kˣ) : K)) :
     (I.epM P ψ).mulVecLin = Formalism.IndefR.TransferLatticeStatement.epP P χ (I.rep h1 hm) := by
   rw [← Matrix.toLin'_apply']
-  simp only [epM, Formalism.IndefR.TransferLatticeStatement.epP, map_smul, map_sum, hχ, map_inv]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [epM, Formalism.IndefR.TransferLatticeStatement.epP, map_smul, map_sum, hχ, map_inv]
   congr 1
   refine Finset.sum_congr (by congr; exact Subsingleton.elim _ _) (fun h _ => ?_)
   have e := hχ h⁻¹
@@ -43,7 +44,8 @@ theorem eMat_eq (h1 : I.ρf 1 = 1) (hm : ∀ g h, I.ρf (g * h) = I.ρf g * I.ρ
     [Module K W] (τ : Representation K G W) :
     (I.eMat τ).mulVecLin = Formalism.IndefR.TransferLatticeStatement.eS τ (I.rep h1 hm) := by
   rw [← Matrix.toLin'_apply']
-  simp only [eMat, Formalism.IndefR.TransferLatticeStatement.eS, map_smul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [eMat, Formalism.IndefR.TransferLatticeStatement.eS, map_smul, map_sum]
   rfl
 
 theorem passage_of_steps [IsTotallyComplex K] {s : ℕ} (H : I.Hyp s) {S : Type} [Fintype S] {Ws : S → Type}

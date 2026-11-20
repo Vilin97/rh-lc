@@ -64,7 +64,8 @@ theorem exists_coboundary_add_dlog : ∀ (E : Type) [Field E] [NumberField E] [I
           ∑ b, φ (θ a b) * ((valR (w b) _ (t.PP.L.g (j i) (j i')).val).snd *
             valR g₀ _ (t.PP.L.g (j i) (j i'))⁻¹.val) * (valR (w a) O f).snd := by
       intro a
-      rw [valR_mul _ _ hgO, valR_res _ hO hgO, hdv a O (hO.trans hPU) f S φ g₀ (w a) hg hgO (hw a), hθ a i i',
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [valR_mul _ _ hgO, valR_res _ hO hgO, hdv a O (hO.trans hPU) f S φ g₀ (w a) hg hgO (hw a), hθ a i i',
         valR_add _ _ hgP, GlobalTheory.CechInv.valR_sub _ _ hgP, valR_res _ _ hgP, valR_res _ _ hgP, valR_eq _ _ hgP,
         map_sum, add_mul, sub_mul, Finset.sum_mul]
       refine congrArg (_ + ·) (Finset.sum_congr rfl fun b _ => ?_)
@@ -74,12 +75,14 @@ theorem exists_coboundary_add_dlog : ∀ (E : Type) [Field E] [NumberField E] [I
     have hsm : ∀ k (hk : O ≤ W k), valR g₀ O (∑ a, smulFld (hh a k) (dd a) O f) =
         ∑ a, valR g₀ (W k) (hh a k) * (valR (w a) O f).snd := by
       intro k hk
-      rw [valR_eq _ _ hgO, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [valR_eq _ _ hgO, map_sum]
       refine Finset.sum_congr rfl fun a _ => ?_
       rw [← valR_eq _ _ hgO, smulFld_of_le hk, valR_mul _ _ hgO, valR_res _ hk hgO,
         hdv a O (hk.trans (hWU k)) f S φ g₀ (w a) hg hgO (hw a)]
     beta_reduce
-    rw [hc i i' O hO f, GlobalTheory.CechInv.valR_sub _ _ hgO, hsm i hO1, hsm i' hO2, valR_eq _ _ hgO, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hc i i' O hO f, GlobalTheory.CechInv.valR_sub _ _ hgO, hsm i hO1, hsm i' hO2, valR_eq _ _ hgO, map_sum]
     simp only [← valR_eq _ _ hgO, key, Matrix.of_apply, Finset.sum_add_distrib, Finset.sum_sub_distrib]
 
 end GlobalTheory.KSCocycle

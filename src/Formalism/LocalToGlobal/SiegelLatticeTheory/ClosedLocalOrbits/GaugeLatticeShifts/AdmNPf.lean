@@ -75,7 +75,8 @@ theorem crd_smul' (a : D.host.E) (v : (VS D).V) : X.crd (a • v) = X.ιE.symm a
 
 theorem crd_sum' {ι : Type} (t : Finset ι) (f : ι → (VS D).V) : X.crd (∑ i ∈ t, f i) = ∑ i ∈ t, X.crd (f i) := by
   funext i
-  simp [Formalism.L2.SG.HidaSetting.HidaSetting.crd, crdOf, map_sum, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Formalism.L2.SG.HidaSetting.HidaSetting.crd, crdOf, map_sum, Finset.sum_apply]
 
 theorem incl_sub' (x y : Fin X.B.I.n → X.B.I.E) : incl X.B.I (x - y) = incl X.B.I x - incl X.B.I y := by
   funext i
@@ -89,7 +90,8 @@ theorem incl_smul' (c : X.B.I.E) (x : Fin X.B.I.n → X.B.I.E) :
 theorem incl_sum' {ι : Type} (t : Finset ι) (x : ι → Fin X.B.I.n → X.B.I.E) :
     incl X.B.I (∑ j ∈ t, x j) = ∑ j ∈ t, incl X.B.I (x j) := by
   funext i
-  simp [incl, map_sum, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [incl, map_sum, Finset.sum_apply]
 
 theorem ratLink_incl {x : X.B.I.GA} {γ : (VS D).V ≃ₗ[D.host.E] (VS D).V} (h : RatLink X x γ) (y : (VS D).V) :
     incl X.B.I (X.crd (γ y)) = X.B.I.fmat x.2 *ᵥ incl X.B.I (X.crd y) := by

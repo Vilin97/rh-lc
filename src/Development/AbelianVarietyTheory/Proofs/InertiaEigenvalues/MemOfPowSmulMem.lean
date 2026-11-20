@@ -76,7 +76,8 @@ theorem mem_of_pow_smul_mem (hp : ∀ a : O, (PD.p : O) * a = 0 → a = 0) (T : 
   set a := b.repr ⟨_, hx⟩ with ha
   have h1 : ∑ j, algebraMap (LetA O n) W.EE (a j) • (b j : W.DD T) = ((PD.p : O) ^ m) • x := by
     have := congrArg (W.N T).subtype (b.sum_repr ⟨_, hx⟩)
-    rw [map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at this
     simpa only [algebraMap_smul, map_smul, Submodule.subtype_apply] using this
   have h2 : ∑ j, ((PD.p : W.EE) ^ m * e j) • (b j : W.DD T) = ((PD.p : O) ^ m) • x := by
     rw [← he, Finset.smul_sum]

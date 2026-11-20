@@ -184,7 +184,8 @@ theorem mem_latHat_iff {L : Submodule (𝓞 E) (Fin n → E)} (hL : L.FG) (y : F
     have e : y = ∑ j, fun i => A j ⊗ₜ[F] (s j : Fin n → E) i := by
       funext i
       refine GlobalTheory.LatticeLocalGlobal.ext_components _ _ fun v => (ea v i).trans ?_
-      rw [Finset.sum_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Finset.sum_apply, map_sum]
       rfl
     rw [e]
     exact sum_mem fun j _ => AddSubgroup.subset_closure ⟨A j, fun v => ha v j, s j, (s j).2, rfl⟩

@@ -81,7 +81,8 @@ theorem incV_vecMul {m n : ℕ} (A : Matrix (Fin m) (Fin n) E) (v : Fin m → E)
 
 theorem incV_dot {n : ℕ} (v w : Fin n → E) :
     incV F v ⬝ᵥ incV F w = inclR (F := F) (AF F) (v ⬝ᵥ w) := by
-  simp [incV, dotProduct, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [incV, dotProduct, map_sum]
 
 theorem incV_single {n : ℕ} (i : Fin n) : (Pi.single i 1 : Fin n → AE F E) = incV F (Pi.single i (1 : E)) := by
   funext r; by_cases h : r = i
@@ -179,7 +180,8 @@ theorem stab_normalises_unip : ∀ (F E : Type) [Field F] [NumberField F] [Field
       have hσinj : Function.Injective σ := σ.toRingHom.injective
       apply hσinj
       rw [Pi.zero_apply, map_zero, ← hc0 i]
-      simp only [vecMul, mulVec, dotProduct, map_sum, map_mul, hc₀, Pi.zero_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [vecMul, mulVec, dotProduct, map_sum, map_mul, hc₀, Pi.zero_apply]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [hY.herm, mul_comm]
     have h1 := hH.xy

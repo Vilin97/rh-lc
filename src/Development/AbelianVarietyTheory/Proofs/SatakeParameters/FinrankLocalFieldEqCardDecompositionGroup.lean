@@ -139,7 +139,8 @@ theorem approx (β γ : PadicAlgCl l) (f : ℚ_[l][X]) {ε : ℝ} (hε : 0 < ε)
     intro x hx
     have e1 : aeval x G = ∑ i ∈ Finset.range (n + 1),
         algebraMap ℚ_[l] (PadicAlgCl l) (g i : ℚ_[l]) * x ^ i := by
-      simp only [G, map_sum, map_mul, map_pow, aeval_C, aeval_X, map_ratCast, eq_ratCast]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [G, map_sum, map_mul, map_pow, aeval_C, aeval_X, map_ratCast, eq_ratCast]
     have e2 : aeval x f = ∑ i ∈ Finset.range (n + 1),
         algebraMap ℚ_[l] (PadicAlgCl l) (f.coeff i) * x ^ i := by
       rw [aeval_eq_sum_range, ← hn]

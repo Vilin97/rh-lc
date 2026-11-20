@@ -103,7 +103,8 @@ theorem ipT_pos_fd [∀ i, FiniteDimensional ℂ (E i)] (x : ⨂[ℂ] i, E i) (h
   set c := B.repr x
   have hsum : ipT x x = ∑ p, c p * conj (c p) := by
     conv_lhs => rw [← B.sum_repr x]
-    simp only [map_sum, map_smul, map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, hB, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, hB, smul_eq_mul]
     simp [Finset.mul_sum, c]
     exact Finset.sum_congr rfl (fun _ _ => mul_comm _ _)
   have hc : c ≠ 0 := by

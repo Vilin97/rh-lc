@@ -53,7 +53,8 @@ theorem exists_finite {p q r s : ℕ} {T0 : GrpData (p * r + q * s) (p * s + q *
   refine ⟨(MvPolynomial.restrictTotalDegree (Ix p q × Ix r s) ℂ P.totalDegree).map F.ι,
     inferInstance, fun k hk => ?_⟩
   conv_rhs => rw [← MvPolynomial.sum_homogeneousComponent P]
-  rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum]
   refine Submodule.sum_mem _ fun d hd => ?_
   obtain ⟨Q, hQ, e⟩ := H k hk d _ (MvPolynomial.homogeneousComponent_mem d P)
   rw [e]

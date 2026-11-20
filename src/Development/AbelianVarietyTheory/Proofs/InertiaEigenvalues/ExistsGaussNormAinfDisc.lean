@@ -160,7 +160,8 @@ theorem exists_gauss (l : ℕ) [hl : Fact l.Prime] (R : Type) [CommRing R] [Char
   obtain ⟨n, hn⟩ := pow_unbounded_of_one_lt s⁻¹ hl1
   obtain ⟨c, hc⟩ := WittVector.dvd_sub_sum_teichmuller_iterateFrobeniusEquiv_coeff x n
   rw [sub_eq_iff_eq_add] at hc
-  rw [hc, map_add, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hc, map_add, map_sum]
   refine add_mem ?_ (Submodule.sum_mem _ fun i _ => ?_)
   · have := mono (n + 1) 0 c (by
       have h2 : (l : ℝ) ^ n ≤ (l : ℝ) ^ (n + 1) := pow_le_pow_right₀ hl1.le n.le_succ

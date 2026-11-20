@@ -91,15 +91,19 @@ theorem kisin_jB_toB (hm : ∀ v ∈ LA t ϖ P, ∃ z : TW (OA l O) T, I.j (incl
     crisComparisonLToBcrisTensorMap hm (fun i => toB l O (c i)) = TWincl (toB l O) T z := by
   have hz' : z = ∑ i, c i • zz hm i := by
     apply twincl_injective (T := T) (inclO l O) inclO_injective
-    rw [← hz, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hz, map_sum]
     have hc : inclL t ϖ P c = ∑ i, inclO l O (c i) • inclL t ϖ P (Pi.single i 1) := by
       conv_lhs => rw [pi_eq_sum_univ' c]
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       exact Finset.sum_congr rfl fun i _ => inclL_smul' _ _
-    rw [hc, Finset.smul_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hc, Finset.smul_sum, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [twincl_smul, ← zz_spec hm i, smul_comm, LinearEquiv.map_smul]
-  rw [hz', map_sum, crisComparisonLToBcrisTensorMap, Module.Basis.constr_apply_fintype]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hz', map_sum, crisComparisonLToBcrisTensorMap, Module.Basis.constr_apply_fintype]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [twincl_smul, Pi.basisFun_equivFun]
   rfl

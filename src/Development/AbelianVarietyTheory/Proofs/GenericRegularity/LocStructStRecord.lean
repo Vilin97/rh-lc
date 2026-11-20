@@ -385,7 +385,8 @@ theorem ev_sec (i : Fin (WeightFamilies.dimY D j + 1)) : h.ev (Formalism.MainNot
     ∑ k, h.ev (algebraMap (Kp (xplus X E hM) la G.N) (Rp (xplus X E hM) la G.N) (algebraMap (Op (xplus X E hM) la G.N) (Kp (xplus X E hM) la G.N) (Tv (xplus X E hM) la G.N (i, k)))) *
       h.ev (emb (xplus X E hM) la G.N (X.inc wL (G.w k))) := by
   unfold Formalism.MainNotions.Gaps.EtaleWeightGaps.sec
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [Algebra.smul_def, map_mul]
   rfl

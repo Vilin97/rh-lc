@@ -69,7 +69,8 @@ lemma jetPair_C_mul_right (c : K) (P : MvPolynomial ι K) (F : MvPowerSeries ι 
 
 lemma jetPair_sum_right {α : Type*} (s : Finset α) (P : MvPolynomial ι K)
     (F : α → MvPowerSeries ι K) : jetPair P (∑ a ∈ s, F a) = ∑ a ∈ s, jetPair P (F a) := by
-  simp only [jetPair, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [jetPair, map_sum, Finset.mul_sum]
   exact Finset.sum_comm
 
 lemma jetPair_C_left (c : K) (F : MvPowerSeries ι K) :
@@ -210,7 +211,8 @@ lemma jetPair_poly (A : ι → ι' → K) (P : MvPolynomial ι K) :
     have hsum : ∀ (f : ι' → MvPolynomial ι K),
         ((∑ j, f j : MvPolynomial ι K) : MvPowerSeries ι K) = ∑ j, (f j : MvPowerSeries ι K) := by
       intro f
-      rw [← MvPolynomial.coeToMvPowerSeries.ringHom_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← MvPolynomial.coeToMvPowerSeries.ringHom_apply, map_sum]
       simp only [MvPolynomial.coeToMvPowerSeries.ringHom_apply]
     rw [jetPair_mul_X, mvPowerSeries_pderiv_coe_eq_coe_pderiv, pderiv_aeval_linP, hsum, jetPair_sum_right]
     rw [map_mul, MvPolynomial.aeval_X]
@@ -241,7 +243,8 @@ theorem jet_pair_linearity : JetPairLin.{u} := by
   have ha0 : ∀ j, MvPowerSeries.constantCoeff (a j) = 0 := fun j => by simp [ha]
   have hs : MvPowerSeries.HasSubst a := MvPowerSeries.hasSubst_of_constantCoeff_zero ha0
   have hcoe : ∀ j, a j = ((linP A j : MvPolynomial ι K) : MvPowerSeries ι K) := fun j => by
-    rw [ha, linP, ← MvPolynomial.coeToMvPowerSeries.ringHom_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [ha, linP, ← MvPolynomial.coeToMvPowerSeries.ringHom_apply, map_sum]
     simp
   have hmon : ∀ μ : ι' →₀ ℕ, (μ.prod fun s e => a s ^ e) =
       ((MvPolynomial.aeval (linP A) (MvPolynomial.monomial μ (1 : K)) : MvPolynomial ι K) :
@@ -300,8 +303,10 @@ lemma subst_linSub {K : Type u} [Field K] {d N0 N1 : ℕ} {ι ι' : Type} [Finty
     | (rw [← MvPowerSeries.coe_substAlgHom ha]
        exact (MvPowerSeries.substAlgHom ha).commutes c)
   unfold linSub
-  rw [← MvPowerSeries.coe_substAlgHom ha, map_sum]
-  simp only [map_mul, MvPowerSeries.coe_substAlgHom, hC, MvPowerSeries.subst_X ha, h, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← MvPowerSeries.coe_substAlgHom ha, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_mul, MvPowerSeries.coe_substAlgHom, hC, MvPowerSeries.subst_X ha, h, map_sum,
     Finset.mul_sum, Finset.sum_mul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl (fun i _ => Finset.sum_congr rfl (fun y _ => ?_))
@@ -436,7 +441,8 @@ theorem thmAGen : ThmAGen.{u} := by
     have h1 := hbe.2.2.1 0 (by rwa [MvPowerSeries.coeff_zero_eq_constantCoeff_apply])
     simp [degE] at h1
   have hB : MvPowerSeries.constantCoeff (bSum (frameM (N1 := N1) x) be) = 0 := by
-    simp only [bSum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [bSum, map_sum]
     refine Finset.sum_eq_zero (fun ab _ => ?_)
     rw [cc_subst_lemma, hbe0]
     intro s
@@ -460,7 +466,8 @@ theorem thmAGen : ThmAGen.{u} := by
       exact hlin z
     · rw [← MvPowerSeries.coe_substAlgHom hsub, map_smul]
       congr 1
-      simp only [bSum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [bSum, map_sum]
       refine Finset.sum_congr rfl (fun ab _ => ?_)
       rw [MvPowerSeries.coe_substAlgHom, MvPowerSeries.subst_comp_subst_apply (hL ab.1 ab.2) hsub]
       congr 1

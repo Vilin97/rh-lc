@@ -122,7 +122,8 @@ variable {A : Type} [CommRing A] {n : Type} [Fintype n] [DecidableEq n] {r : ℕ
   {D : PI.LevelKSplit.W.SemiG.Dat A n r}
 
 theorem h_e_pXv (H : D.Hyp) (b : Fin r) (v : n → A) : D.h (D.e b) (D.pXv v) = D.h (D.e b) v := by
-  rw [← Dat.hL_apply, Dat.pXv, LinearMap.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Dat.hL_apply, Dat.pXv, LinearMap.sum_apply, map_sum]
   simp only [LinearMap.smulRight_apply, map_smul, smul_eq_mul, Dat.hL_apply, H.ef, mul_ite, mul_one,
     mul_zero, Finset.sum_ite_eq, Finset.mem_univ, if_true]
 
@@ -133,12 +134,14 @@ theorem h_f_pX (H : D.Hyp) (b : Fin r) (v : n → A) : D.h (D.f b) (D.pX v) = D.
     by_cases hab : a = b
     · subst hab; simp
     · rw [if_neg hab, if_neg (Ne.symm hab), map_zero]
-  rw [← Dat.hL_apply, Dat.pX, LinearMap.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Dat.hL_apply, Dat.pX, LinearMap.sum_apply, map_sum]
   simp only [LinearMap.smulRight_apply, map_smul, smul_eq_mul, Dat.hL_apply, hfe, mul_ite, mul_one,
     mul_zero, Finset.sum_ite_eq, Finset.mem_univ, if_true]
 
 theorem h_f_pXv (H : D.Hyp) (b : Fin r) (v : n → A) : D.h (D.f b) (D.pXv v) = 0 := by
-  rw [← Dat.hL_apply, Dat.pXv, LinearMap.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Dat.hL_apply, Dat.pXv, LinearMap.sum_apply, map_sum]
   simp only [LinearMap.smulRight_apply, map_smul, smul_eq_mul, Dat.hL_apply, H.ff, mul_zero,
     Finset.sum_const_zero]
 
@@ -150,7 +153,8 @@ theorem pL_apply (v : n → A) : pL D v = v - D.pX v - D.pXv v := rfl
 
 theorem h_e_pL (H : D.Hyp) (b : Fin r) (v : n → A) : D.h (D.e b) (pL D v) = 0 := by
   have h0 : D.h (D.e b) (D.pX v) = 0 := by
-    rw [← Dat.hL_apply, Dat.pX, LinearMap.sum_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Dat.hL_apply, Dat.pX, LinearMap.sum_apply, map_sum]
     simp only [LinearMap.smulRight_apply, map_smul, smul_eq_mul, Dat.hL_apply, H.ee, mul_zero,
       Finset.sum_const_zero]
   rw [pL_apply, ← Dat.hL_apply, map_sub, map_sub]
@@ -184,8 +188,10 @@ theorem fix_of_pL_zero {S : (n → A) →ₗ[A] (n → A)} (hSe : ∀ a, S (D.e 
     exact hu
   rw [hu', map_add]
   congr 1
-  · simp only [Dat.pX, LinearMap.sum_apply, LinearMap.smulRight_apply, map_sum, map_smul, hSe]
-  · simp only [Dat.pXv, LinearMap.sum_apply, LinearMap.smulRight_apply, map_sum, map_smul, hSf]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [Dat.pX, LinearMap.sum_apply, LinearMap.smulRight_apply, map_sum, map_smul, hSe]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [Dat.pXv, LinearMap.sum_apply, LinearMap.smulRight_apply, map_sum, map_smul, hSf]
 
 end DatL
 

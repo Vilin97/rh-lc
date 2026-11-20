@@ -38,6 +38,7 @@ theorem transport_power_sums : ∀ (g : ℂ ≃+* ℂ) (ι S : Type) [Fintype ι
   have key := GlobalTheory.T.levelOne_modularForm_value_galois_transport g (∑ s, μ s * m s) N _ _ τ₀ τ₁ ω₀ ω₁ hN
     (fun γ => (GlobalTheory.T.permutedModularFamily_sum_esymm_slash_invariant ι act _ _ hact hM γ).1) hQ h4 h6
   rw [sum_prod_pow_div_pow m μ (fun s i => f s i τ₀), sum_prod_pow_div_pow m μ (fun s i => f' s i τ₁)] at key
-  simpa only [map_sum, map_prod, map_pow] using key
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa only [map_sum, map_prod, map_pow] using key
 
 end GlobalTheory.QFam

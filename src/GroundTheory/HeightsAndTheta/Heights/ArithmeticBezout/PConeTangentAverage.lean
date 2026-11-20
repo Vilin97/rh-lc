@@ -27,7 +27,8 @@ theorem mem_coneTangent_self {n : ℕ} (h : HermNorm n) {J : Ideal (MvPolynomial
     _ = ∑ d ∈ Finset.range (q.totalDegree + 1),
           eval (h.pointOf y) (∑ j, X j * pderiv j (homogeneousComponent d q)) := by
         conv_lhs => rw [← sum_homogeneousComponent q]
-        simp only [map_sum, Finset.mul_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, Finset.mul_sum]
         exact Finset.sum_comm
     _ = 0 := Finset.sum_eq_zero fun d _ => hd d
 

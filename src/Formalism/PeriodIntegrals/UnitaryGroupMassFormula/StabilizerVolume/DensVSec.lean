@@ -38,7 +38,8 @@ theorem exists_leftInv_of_linIndep {K : Type} [CommRing K] [IsSemisimpleRing K] 
     simp [ι, Fintype.linearCombination_apply_single]
   have e1 : ∑ k, Z i k * p (Pi.single k 1) i' = p (Z i) i' := by
     conv_rhs => rw [hZi]
-    simp only [map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
   rw [e1, ← hι, hp, Pi.single_apply]
   by_cases h : i = i'
   · subst h; simp
@@ -79,7 +80,8 @@ theorem secGram_holds : SecGram := by
     have hX0 : ∑ i, s (g i) • x i = 0 := by
       funext l
       have := congrArg s (congrFun hv l)
-      simp only [v, map_sum, map_mul, s, sigR_invol R σ hσ, Pi.zero_apply, map_zero] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [v, map_sum, map_mul, s, sigR_invol R σ hσ, Pi.zero_apply, map_zero] at this
       simpa [Finset.sum_apply, Pi.smul_apply, smul_eq_mul] using this
     have := Fintype.linearIndependent_iff.1 hx _ hX0 i
     have e2 := congrArg s this

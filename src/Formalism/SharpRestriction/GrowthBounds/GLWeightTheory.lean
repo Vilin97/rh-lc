@@ -75,7 +75,8 @@ theorem true_derivative_digit_class (D : Formalism.BasicNotions.D7) : TrueDeriva
   intro R _ σ P hP rho k F hF
   have hF' : ∀ m ∈ F.support, digitOfL P m = rho := fun m hm =>
     (show (↑F.support : Set (σ →₀ ℕ)) ⊆ {m | digitOfL P m = rho} from hF) hm
-  rw [F.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [F.as_sum, map_sum]
   refine Submodule.sum_mem _ fun m hm => ?_
   rw [MvPolynomial.pderiv_monomial, DigitClassL, MvPolynomial.monomial_mem_restrictSupport]
   by_cases hmk : m k = 0

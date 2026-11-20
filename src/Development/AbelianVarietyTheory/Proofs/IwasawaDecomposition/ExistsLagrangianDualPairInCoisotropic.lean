@@ -112,7 +112,8 @@ theorem exists_lagrangian_dual_in_coisotropic : ∀ (r : ℕ) (M : Matrix (Fin r
     have hc : ∀ i, b.repr ⟨v, hvL'⟩ i = 0 := by
       intro i
       have h := hvf i
-      rw [hv', map_sum] at h
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hv', map_sum] at h
       simpa [map_smul, hfe] using h
     have h0 : (⟨v, hvL'⟩ : L) = 0 := b.repr.injective (by ext i; simp [hc])
     simpa using congrArg Subtype.val h0

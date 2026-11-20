@@ -32,11 +32,13 @@ def IsBas (c : R →+* W) (S : Set W) (b : Fin m → W) : Prop :=
 
 theorem map_comb {c : R →+* W} {c' : R' →+* W'} {ρ : W →+* W'} {g : R →+* R'} (h : ∀ a, ρ (c a) = c' (g a))
     (b : Fin m → W) (z : Fin m → R) : ρ (comb c b z) = comb c' (fun i => ρ (b i)) (fun i => g (z i)) := by
-  simp only [comb, map_sum, map_mul, h]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [comb, map_sum, map_mul, h]
 
 theorem comb_vecMul {c : R →+* W} {b v : Fin m → W} {a : Matrix (Fin m) (Fin m) R} (h : ∀ i, v i = comb c b (a i))
     (z : Fin m → R) : comb c v z = comb c b (Matrix.vecMul z a) := by
-  simp only [comb, h, Matrix.vecMul, dotProduct, map_sum, map_mul, Finset.mul_sum, Finset.sum_mul, _root_.mul_assoc]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [comb, h, Matrix.vecMul, dotProduct, map_sum, map_mul, Finset.mul_sum, Finset.sum_mul, _root_.mul_assoc]
   exact Finset.sum_comm
 
 theorem comb_single (c : R →+* W) (b : Fin m → W) (i : Fin m) : b i = comb c b (Pi.single i 1) := by
@@ -51,7 +53,8 @@ theorem IsBas.transfer {c : R →+* W} {c' : R →+* W'} {ρ : W →+* W'} (h : 
   obtain ⟨s, hs, rfl⟩ := (hS _).1 hs'
   refine (existsUnique_congr fun z => ?_).1 (hb.2 s hs)
   have e : comb c' (fun i => ρ (b i) * U) z = ρ (comb c b z) * U := by
-    simp only [comb, map_sum, map_mul, h, Finset.sum_mul, _root_.mul_assoc]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [comb, map_sum, map_mul, h, Finset.sum_mul, _root_.mul_assoc]
   rw [e, Units.mul_left_inj, hρ.eq_iff]
 
 theorem IsBas.reduce {c : R →+* W} {c' : R' →+* W'} {c'' : R'' →+* W''} {ρ : W →+* W'} {ρ' : W' →+* W''}
@@ -215,7 +218,8 @@ theorem ev_comb {R : Type} [CommRing R] {m : ℕ} (g : R →+* Γ(Y, ⊤)) (a : 
 theorem exists_comb {M : LB Y} {m : ℕ} (a : Fin m → Γ(Y, ⊤)) (b : Fin m → LB.Sec M) :
     ∃ s : LB.Sec M, ∀ j, s.f j = ∑ i, resTop _ (a i) * (b i).f j :=
   ⟨⟨fun j => ∑ i, resTop _ (a i) * (b i).f j, fun j j' => by
-    rw [map_sum, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum, Finset.mul_sum]
     exact Finset.sum_congr rfl fun i _ => (DVR.SecOps.secScale (a i) (b i)).compat j j'⟩, fun _ => rfl⟩
 
 theorem comb_mem {R : Type} [CommRing R] {m : ℕ} (g : R →+* Γ(Y, ⊤)) (a : Fin m → R) {b : Fin m → Vals L Y}

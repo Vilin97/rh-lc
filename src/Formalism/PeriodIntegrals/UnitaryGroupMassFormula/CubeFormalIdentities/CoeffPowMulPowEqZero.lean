@@ -137,7 +137,8 @@ theorem expMv_add {D E : MvPowerSeries σ ℂ_[p]} (hD : constantCoeff D = 0) (h
       coeff α (D ^ m * E ^ (n - m)) / ((m.factorial : ℂ_[p]) * ((n - m).factorial : ℂ_[p])) := by
     rw [coeff_expMv]
     refine Finset.sum_congr rfl fun n _ => ?_
-    rw [add_pow, map_sum, Finset.sum_div]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [add_pow, map_sum, Finset.sum_div]
     refine Finset.sum_congr rfl fun m hm => ?_
     have hmn : m ≤ n := Nat.lt_succ_iff.mp (Finset.mem_range.mp hm)
     rw [mul_comm _ ((n.choose m : ℕ) : MvPowerSeries σ ℂ_[p]), ← nsmul_eq_mul, map_nsmul, nsmul_eq_mul]

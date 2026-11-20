@@ -134,7 +134,8 @@ theorem decay {B : Base F E} {a a' n₁ d₁ : ℕ} {G : Geo σ a a'} {X : Chars
   refine ⟨∑ j, C j, fun k hk l hl => ?_⟩
   choose f₁ hf₁ hb₁ using fun j => hCb j ⟨k, hk⟩ (GlobalTheory.XTermMaj.crd F E (l : AE F E)) hl
   have hS : G.M.co.e (shiftA H₀ H' l) = ∑ i, GlobalTheory.XTermMaj.crd F E (l : AE F E) i • S i := by
-    simp only [S, ← map_smul, ← map_sum, ← smul_assoc, ← Finset.sum_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [S, ← map_smul, ← map_sum, ← smul_assoc, ← Finset.sum_smul]
     congr 2
     rw [shiftA]
     congr 1
@@ -147,7 +148,8 @@ theorem decay {B : Base F E} {a a' n₁ d₁ : ℕ} {G : Geo σ a a'} {X : Chars
     simp only at h1
     rw [h1, Darboux.rho, hS]
     change coeL (∑ j, f₁ j) y = (sliceL c ∘ₗ e) (schrL B.ψ _ _) y
-    rw [map_sum, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum, map_sum]
     exact congrFun (Finset.sum_congr rfl fun j _ => hf₁ j) y
   · rw [Finset.sum_mul]
     exact (Finset.le_sum_of_subadditive _ (map_zero _).le (map_add_le_add _) _ _).trans
@@ -176,7 +178,8 @@ theorem seminorm (hKP : KP) {B : Base F E} {n d : ℕ} {X : Spc F E n} {W : Spc 
   calc ∫⁻ g₀ in M.dom, ‖thetaSum F (om (g₀, 1) (∑ j, pureA F (f j) (φ j)))‖ₑ ∂M.μ
       ≤ ∫⁻ g₀ in M.dom, ∑ j, ‖theta om (pureA F (f j) (φ j)) g₀ 1‖ₑ ∂M.μ := by
         refine lintegral_mono fun g₀ => ?_
-        rw [map_sum, GlobalTheory.WeilSeminorm.thetaSum_finset_sum _ _ fun j _ => pres _ _ (memA j)]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum, GlobalTheory.WeilSeminorm.thetaSum_finset_sum _ _ fun j _ => pres _ _ (memA j)]
         exact enorm_sum_le _ _
     _ = ∑ j, ∫⁻ g₀ in M.dom, ‖theta om (pureA F (f j) (φ j)) g₀ 1‖ₑ ∂M.μ :=
         lintegral_finsetSum _ fun j _ => (cont j).enorm.measurable

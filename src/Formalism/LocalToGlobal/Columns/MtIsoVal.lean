@@ -158,7 +158,8 @@ theorem mti_map_blockAct (g : ι → Matrix (Fin n) (Fin n) K) (P : Pol K ι n) 
     · intro a
       simp [Formalism.GradedWeylDivisibility.blockAct]
     · intro v
-      simp [Formalism.GradedWeylDivisibility.blockAct, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [Formalism.GradedWeylDivisibility.blockAct, map_sum]
   exact congrArg (fun φ : Pol K ι n →+* Pol K' ι n => φ P) h
 
 theorem mti_map_detPow (g : GL (Fin n) K) (c : ℤ) :

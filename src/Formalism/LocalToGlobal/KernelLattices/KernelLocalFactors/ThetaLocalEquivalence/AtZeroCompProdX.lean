@@ -65,7 +65,8 @@ theorem atZero_prodX (G : VCx ι a b → ℂ) (hG : ContDiff ℂ ⊤ G) {k : ℕ
   rw [h1, atZero_monomial, one_mul]
   symm
   refine iter_eq_derivAt0 G hG _ k ?_ r ?_
-  · rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum]
     simp [Finsupp.toMultiset_single, Multiset.card_sum]
   · intro i
     rw [Finsupp.finsetSum_apply, Finset.card_filter]
@@ -82,7 +83,8 @@ theorem atZero_comp_prodX {κ : Type} [Fintype κ] (G : VCx ι a b → ℂ) (hG 
     funext z; simp
   rw [h, ContinuousLinearMap.iteratedFDeriv_comp_right _ hG _ le_top]
   simp only [ContinuousMultilinearMap.compContinuousLinearMap_apply, map_zero, LinearMap.coe_toContinuousLinearMap', hL]
-  rw [ContinuousMultilinearMap.map_sum, Finset.prod_univ_sum, map_sum, Fintype.piFinset_univ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [ContinuousMultilinearMap.map_sum, Finset.prod_univ_sum, map_sum, Fintype.piFinset_univ]
   refine Finset.sum_congr rfl fun s _ => ?_
   rw [ContinuousMultilinearMap.map_smul_univ, Finset.prod_mul_distrib, ← map_prod, C_mul', map_smul, atZero_prodX G hG]
 
@@ -168,10 +170,12 @@ theorem subC_polDx (cD : ι → ℂ) (g : ι → Matrix (Fin a) (Fin a) ℂ) (h 
       (polDx (a := a) cD fun v => ∑ β, h v.1 v.2.1 β * y' (v.1, β, v.2.2)).comp (Formalism.GradedWeylDivisibility.blockAct ℂ g) := by
   apply MvPolynomial.algHom_ext
   rintro ⟨τ, α, s⟩
-  simp only [AlgHom.comp_apply, polDx, subC, Formalism.GradedWeylDivisibility.blockAct, aeval_X, map_sum, map_mul, algHom_C, algebraMap_eq]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [AlgHom.comp_apply, polDx, subC, Formalism.GradedWeylDivisibility.blockAct, aeval_X, map_sum, map_mul, algHom_C, algebraMap_eq]
   by_cases hs : s.1 < b
   · simp only [dif_pos hs, Fintype.sum_prod_type, Finset.mul_sum]
-    simp only [map_sum, Finset.mul_sum, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, Finset.mul_sum, Finset.sum_mul]
     conv_rhs => rw [Finset.sum_comm]
     conv_rhs => enter [2, k]; rw [Finset.sum_comm]
     conv_rhs => rw [Finset.sum_comm]

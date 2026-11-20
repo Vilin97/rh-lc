@@ -241,7 +241,8 @@ theorem map_jac (S B : Type*) [CommRing S] [CommRing B] [Algebra R S] [Algebra S
     (f : Fin (D + 1) → A) :
     exteriorPowerMapOver B D (KaehlerDifferential.map R S A B) (jac R f)
       = jac S (fun i => algebraMap A B (f i)) := by
-  rw [jac, jac, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [jac, jac, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_smul, dWedge, exteriorPowerMapOver_ιMulti, ← algebraMap_smul B]
   simp [dWedge]

@@ -99,7 +99,8 @@ theorem trans_mulVec (g : Geo M π) (hb : IntOn A σ k hU b) (hb' : IntOn A σ k
   simp only [Matrix.mulVec, dotProduct, trans_map g z hz hz']
   simp only [crd] at h0 ⊢
   rw [Fintype.sum_sum_type]
-  simp only [map_add, map_sum, map_smul, Finsupp.add_apply, Finsupp.finset_sum_apply, Finsupp.smul_apply, smul_eq_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_add, map_sum, map_smul, Finsupp.add_apply, Finsupp.finset_sum_apply, Finsupp.smul_apply, smul_eq_mul,
     h0, mul_zero, Finset.sum_const_zero, zero_add]
   exact Finset.sum_congr rfl fun _ _ => mul_comm _ _
 

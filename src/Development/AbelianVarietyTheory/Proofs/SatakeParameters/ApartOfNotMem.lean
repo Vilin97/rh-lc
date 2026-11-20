@@ -45,7 +45,8 @@ theorem z_eq_of_equiv {ι : Qbar l ≃+* ℂ} {Kw : Levels E a} {J : Type} (O : 
     simp only [MonoidHom.one_apply, Units.val_one, one_smul] at this ⊢
     rw [← he, this]
   have hop : e.toLinearEquiv (opOf σ.ρ (O.f j) v) = opOf σ'.ρ (O.f j) (e.toLinearEquiv v) := by
-    simp only [opOf, Finsupp.sum, map_sum, map_smul, he]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [opOf, Finsupp.sum, map_sum, map_smul, he]
   have h2 := O.act j σ' _ hv'
   rw [← hop, O.act j σ v hv, map_smul] at h2
   have hne' : e.toLinearEquiv v ≠ 0 := by simpa using hv0

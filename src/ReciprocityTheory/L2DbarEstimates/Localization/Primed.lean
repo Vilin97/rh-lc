@@ -44,7 +44,8 @@ theorem primed_inner_norm (n : ℕ) {M : Type*} [TopologicalSpace M] (z : M → 
     (g : M → V n) (x : M) :
     ‖⟪dbarF n z F0 x, g x⟫_ℂ‖ = ‖dbarDot n z F0 x (fun j => g x j)‖ := by
   have : ⟪dbarF n z F0 x, g x⟫_ℂ = starRingEnd ℂ (dbarDot n z F0 x (fun j => g x j)) := by
-    simp [dbarF, dbarDot, PiLp.inner_apply, map_sum, mul_comm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [dbarF, dbarDot, PiLp.inner_apply, map_sum, mul_comm]
   rw [this, Complex.norm_conj]
 
 theorem primedIneq (n : ℕ) (M : Type*) [TopologicalSpace M] [T2Space M]

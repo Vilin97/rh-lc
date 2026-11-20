@@ -99,7 +99,8 @@ theorem iSupIndep_and_smul_mem_iSup : ∀ (E : Type) [Field E] [NumberField E] [
     intro h
     have key : ∑ σ, tensAct ρ (t σ) h = D • h := by
       apply hinj
-      rw [map_sum, map_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, map_smul]
       simp_rw [inK_apply_map, hsum, algebraMap_smul]
     rw [← key]
     refine Submodule.sum_mem _ fun σ _ => (le_iSup (fun σ => eigLat ρ σ) σ) ?_

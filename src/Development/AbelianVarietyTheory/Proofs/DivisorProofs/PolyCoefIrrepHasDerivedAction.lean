@@ -33,7 +33,8 @@ lemma not_cdom {Λ : Fin n → ℝ} {a b : Fin n} (hab : a < b) :
     abel
   rw [hl] at he
   have h := congrArg ψ he
-  simp only [map_sum, map_smul, Formalism.REAL.root, map_sub, hψ, smul_eq_mul] at h
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, Formalism.REAL.root, map_sub, hψ, smul_eq_mul] at h
   have hr : ∑ x, ∑ y, (c x y : ℝ) * (((x : ℕ) : ℝ) - ((y : ℕ) : ℝ)) ≤ 0 := by
     refine Finset.sum_nonpos fun x _ => Finset.sum_nonpos fun y _ => ?_
     by_cases h0 : c x y = 0

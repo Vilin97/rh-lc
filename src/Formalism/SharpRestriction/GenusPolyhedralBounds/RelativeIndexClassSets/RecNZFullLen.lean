@@ -105,7 +105,8 @@ theorem length_pi_span_quot (A O : Type*) [CommRing A] [CommRing O] [Algebra A O
       ext k
       simp [Finset.sum_apply, Pi.single_apply]
     conv_lhs => rw [hx]
-    simp only [← Submodule.mkQ_apply, map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [← Submodule.mkQ_apply, map_sum, map_smul]
   have hΦg : ∀ x : ι → A, Φ (algebraMap A O ∘ x) = (1 : O) ⊗ₜ[A] (Submodule.Quotient.mk x : (ι → A) ⧸ N) := by
     intro x
     change ∑ i, algebraMap A O (x i) ⊗ₜ[A] (Submodule.Quotient.mk (Pi.single i 1) : (ι → A) ⧸ N) = _
@@ -148,7 +149,8 @@ theorem length_pi_span_quot (A O : Type*) [CommRing A] [CommRing O] [Algebra A O
     refine LinearMap.ext fun v => ?_
     simp only [LinearMap.comp_apply, LinearMap.id_apply, Submodule.mkQ_apply, Submodule.liftQ_apply]
     change Ψ (∑ i, v i ⊗ₜ[A] (Submodule.Quotient.mk (Pi.single i 1) : (ι → A) ⧸ N)) = _
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [Ψ, TensorProduct.AlgebraTensorModule.lift_tmul, LinearMap.toSpanSingleton_apply,
       LinearMap.smul_apply, Submodule.liftQ_apply]
     change ∑ i, v i • (Submodule.Quotient.mk (algebraMap A O ∘ Pi.single i 1) : (ι → O) ⧸ S) = _
@@ -156,7 +158,8 @@ theorem length_pi_span_quot (A O : Type*) [CommRing A] [CommRing O] [Algebra A O
       ext k
       simp [Finset.sum_apply, Pi.single_apply]
     conv_rhs => rw [hv]
-    rw [← Submodule.mkQ_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Submodule.mkQ_apply, map_sum]
     simp only [map_smul, Submodule.mkQ_apply, hs]
   exact LinearEquiv.length_eq (LinearEquiv.ofLinear Φbar Ψ h1 h2)
 

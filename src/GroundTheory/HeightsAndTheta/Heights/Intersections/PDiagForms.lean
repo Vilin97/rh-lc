@@ -175,7 +175,8 @@ theorem dForm_mul_detE (e : Module.Basis (Fin 2) Ω E) (ψ ψ' : E →ₗ[Ω] Ω
   have hx : ∀ (χ : E →ₗ[Ω] Ω) (v : E), χ v = e.repr v 0 * χ (e 0) + e.repr v 1 * χ (e 1) := by
     intro χ v
     have h := congrArg χ (e.sum_repr v)
-    rw [map_sum, Fin.sum_univ_two, map_smul, map_smul, smul_eq_mul, smul_eq_mul] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Fin.sum_univ_two, map_smul, map_smul, smul_eq_mul, smul_eq_mul] at h
     exact h.symm
   rw [hx ψ u, hx ψ' w, hx ψ w, hx ψ' u]
   simp only [T.detE]

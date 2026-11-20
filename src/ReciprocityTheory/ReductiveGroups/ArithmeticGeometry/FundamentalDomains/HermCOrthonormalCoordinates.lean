@@ -62,7 +62,8 @@ private lemma hermC_fin_sum_smul_right_mul_conj {n : ℕ} {τ : E →+* ℂ} {G 
     (q : Fin n → ℂ) (f : Fin n → Fin r → ℂ) :
     hermC τ G u (∑ j, q j • f j) = ∑ j, hermC τ G u (f j) * conj (q j) := by
   unfold hermC
-  simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum, map_mul, Finset.sum_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum, map_mul, Finset.sum_mul,
     Finset.mul_sum]
   conv_rhs => rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun a _ => ?_
@@ -184,7 +185,8 @@ lemma mj_coord {x : Frame X.Ψ r} (ho : X.IsOrtho x) (Z : X.Coord) (hy : X.xZ x 
     congr 1
     simp only [← hβ]
     refine Finset.sum_congr rfl fun a _ => ?_
-    rw [hγ a, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hγ a, map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun b _ => ?_
     rw [map_mul, hconj]
     ring

@@ -38,7 +38,8 @@ theorem form_unitary {J g : Matrix α α A} (hg : gᵀ * J * g.map c = J) (a b :
     ((g *ᵥ a) ⬝ᵥ J *ᵥ fun i => c ((g *ᵥ b) i)) = a ⬝ᵥ J *ᵥ fun i => c (b i) := by
   have h : (fun i => c ((g *ᵥ b) i)) = g.map c *ᵥ fun i => c (b i) := by
     funext i
-    simp [Matrix.mulVec, dotProduct, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Matrix.mulVec, dotProduct, map_sum]
   rw [h, Matrix.mulVec_mulVec, Matrix.dotProduct_mulVec, Matrix.vecMul_mulVec, ← Matrix.mul_assoc, hg,
     Matrix.dotProduct_mulVec]
 
@@ -167,7 +168,8 @@ theorem entries_bound {C : Set (UA σ X.J)} (hC : IsCompact C) (τ : ∀ w : Inf
 theorem norm_mulVec_le (φ : AE F E →+* ℂ) (A : Matrix (Fin n) (Fin n) (AE F E)) (z : Fin n → AE F E) {N T : ℝ}
     (hN : 0 ≤ N) (hA : ∀ i j, ‖φ (A i j)‖ ≤ N) (hz : ∀ j, ‖φ (z j)‖ ≤ T) (i : Fin n) :
     ‖φ ((A *ᵥ z) i)‖ ≤ n * (N * T) := by
-  simp only [Matrix.mulVec, dotProduct, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mulVec, dotProduct, map_sum, map_mul]
   refine (norm_sum_le _ _).trans ?_
   have := Finset.sum_le_card_nsmul Finset.univ (fun j => ‖φ (A i j) * φ (z j)‖) (N * T) fun j _ => by
     rw [norm_mul]

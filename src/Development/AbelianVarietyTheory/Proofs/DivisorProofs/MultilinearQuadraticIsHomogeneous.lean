@@ -23,8 +23,10 @@ theorem multilinear_quadratic_isHomogeneous : ∀ (P : Type) [AddCommGroup P] (g
     have hx : (fun _ : Fin g => ∑ i, ∑ j, (m i * m j) • a i j) =
         fun _ => ∑ p : Fin n × Fin n, (m p.1 * m p.2) • a p.1 p.2 := by
       funext _; exact (Fintype.sum_prod_type' (fun i j => (m i * m j) • a i j)).symm
-    rw [hx, MultilinearMap.map_sum]
-    simp only [map_sum, map_mul, MvPolynomial.eval_C, map_prod, MvPolynomial.eval_X]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hx, MultilinearMap.map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, MvPolynomial.eval_C, map_prod, MvPolynomial.eval_X]
     refine Finset.sum_congr rfl fun r _ => ?_
     rw [MultilinearMap.map_smul_univ, smul_eq_mul, mul_comm]
 

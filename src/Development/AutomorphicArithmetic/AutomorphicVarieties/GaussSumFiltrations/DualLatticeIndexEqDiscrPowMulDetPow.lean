@@ -141,7 +141,8 @@ theorem mem_dualL_iff (G : Matrix κ κ ℤ) (y : κ → F) :
       fun i => mem_trD.1 (h i) (l i) (hl i)
     choose n hn using hc
     refine ⟨∑ i, n i, ?_⟩
-    rw [BF_eq_vecMul, dotProduct, map_sum, Int.cast_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [BF_eq_vecMul, dotProduct, map_sum, Int.cast_sum]
     exact Finset.sum_congr rfl fun i _ => hn i
 
 end GlobalTheory.HilbertThetaSeries.DualLevel

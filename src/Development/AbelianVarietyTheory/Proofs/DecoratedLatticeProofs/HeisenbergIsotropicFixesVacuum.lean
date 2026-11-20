@@ -78,7 +78,8 @@ theorem indicatorIdempotent_eq_add_sum (P : Pl D → Prop) (Qs : Finset (Pl D)) 
   congr 1
   refine FiniteAdeleRing.ext (R := 𝓞 D.host.F) D.host.F fun w => ?_
   change evalV D.host.F w (GlobalTheory.SelfDualAt.indP P) = evalV D.host.F w (halfOff P + halfOff P + ∑ i ∈ Qs, α i)
-  rw [map_add, map_add, map_sum, GlobalTheory.SelfDualAt.evalV_indP, evalV_halfOff]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_add, map_add, map_sum, GlobalTheory.SelfDualAt.evalV_indP, evalV_halfOff]
   by_cases hw : w ∈ Qs
   · obtain ⟨hP, h2⟩ := (hQ w).1 hw
     rw [Finset.sum_eq_single_of_mem w hw (fun v hv hvw => h0 v hv w (Ne.symm hvw)), h1 w hw, if_pos hP,
@@ -131,7 +132,8 @@ theorem GlobalTheory.FinPl.FlatFix.fix_of_isotropic : ∀ {D : D7} (ψ : AddChar
     ext i j
     rw [Matrix.smul_apply, smul_eq_mul]
     exact GlobalTheory.SelfDualAt.algebraMap_placeIdempotent_mul P _ (LatMem.latO_mxAt hz i j)
-  rw [← hzc, hdec, map_add, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hzc, hdec, map_add, map_sum]
   refine fix_add hiso ?_ ?_
   · have hm := GlobalTheory.LatticeStable.smul_mem_latO D S T _ _ P _ (int_alg_pair (halfOff_int P)) z hz
     have e2 : algebraMap (AF D.host.F) (AE D) (pairA D.host.F 0 (halfOff P + halfOff P)) • z =

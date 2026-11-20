@@ -71,9 +71,11 @@ private lemma ev_bilL_lemma_9 {n : ℕ} (G : FGLaw S d) (c : Fin d → Fin d →
     fun j i => germEval_oneStandardPoint_self_lemma_3 _ ha j _
   rw [key]
   unfold Formalism.MainNotions.ModuliIntegralCharts.H1.CIndFrFix.bilL
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun l _ => ?_
   rw [map_smul, map_mul, ← key, ← key, hl, hl]
   all_goals rfl

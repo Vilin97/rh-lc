@@ -186,7 +186,8 @@ theorem le_v_coef {k : ℕ} {g : GtPtF D.toPre F} {w : Frm D.toPre F k g.b} (hw 
   obtain ⟨n, a, σ, σF, hσ, ha, hsum⟩ := hs
   choose x hx using fun i => exists_isCoef g hw χ (σF i)
   have e : coef s g w χ = ∑ i, a i * x i := coef_eq fun z J hJ => by
-    rw [SectionScalarValuation.sval_lin (fun i => gF D.toPre F (a i)) σF (fun j => hsum j) _ z hJ, cst_eq, map_sum, Finset.sum_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [SectionScalarValuation.sval_lin (fun i => gF D.toPre F (a i)) σF (fun j => hsum j) _ z hJ, cst_eq, map_sum, Finset.sum_mul,
       Finset.sum_mul, Finset.sum_mul]
     refine Finset.sum_congr rfl fun i _ => ?_
     have b : gs (lift (𝟙 (TF (R := V) F)) g.b).left z ⊤ (gF D.toPre F (a i)) = cst F z (a i) := by

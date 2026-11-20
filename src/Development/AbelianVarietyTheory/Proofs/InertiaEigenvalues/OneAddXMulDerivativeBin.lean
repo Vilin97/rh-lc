@@ -297,7 +297,8 @@ omit [IsDomain O] [CharZero O] in
 theorem _root_.GlobalTheory.CycFr.act_l_pow_lvl (k : ℕ) : _root_.GlobalTheory.CycFr.act O ((l : ℤ_[l]) ^ k) (_root_.GlobalTheory.CycFr.lvl l O 0) = _root_.GlobalTheory.CycFr.lvl l O k := by
   have hb : _root_.GlobalTheory.CycFr.bin O ((l : ℤ_[l]) ^ k) = (1 + X) ^ l ^ k := by
     rw [← Nat.cast_pow, _root_.GlobalTheory.CycFr.bin_nat]
-  rw [_root_.GlobalTheory.CycFr.lvl, _root_.GlobalTheory.CycFr.lvl, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [_root_.GlobalTheory.CycFr.lvl, _root_.GlobalTheory.CycFr.lvl, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_pow, pow_zero, pow_one, _root_.GlobalTheory.CycFr.act_one_add_X, hb]
 

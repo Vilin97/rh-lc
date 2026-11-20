@@ -110,7 +110,8 @@ theorem index_smul_mem [IsTopologicalGroup G'] (PD : PeriodData G Qp K₀ K B Bd
         (c ((Quotient.out (g • q))⁻¹ * g * Quotient.out q))) =
         T.L.T.mkQ (trCochain ι T z g) + ∑ q : G' ⧸ ι.range, repD T.L (Quotient.out (g • q))
           (actD T.L ((Quotient.out (g • q))⁻¹ * g * Quotient.out q) w - w) := by
-      rw [trCochain_apply, map_sum, ← Finset.sum_add_distrib]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [trCochain_apply, map_sum, ← Finset.sum_add_distrib]
       refine Finset.sum_congr rfl fun q _ => ?_
       obtain ⟨a, ha⟩ := MonoidHom.mem_range.mp (hD.1 g q)
       rw [← ha, hcsplit a, hinv, map_add]

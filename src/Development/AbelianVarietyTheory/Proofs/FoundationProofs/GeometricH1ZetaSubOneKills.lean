@@ -156,10 +156,12 @@ theorem h1_killed_by_zeta_sub_one_geo : ∀ (p : ℕ) [Fact p.Prime], p ≠ 2 �
   have hperm : ∑ g ∈ E, σ g y * c (σ g) = x := by
     rw [hx, ← Finset.sum_image (f := fun g' => g' y * c g') hσinj, himg]
   have hhx : h x = ∑ g ∈ E, h (g y) * h (c g) := by
-    rw [hx, map_sum]; simp only [map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hx, map_sum]; simp only [map_mul]
   have hζ : h (T.ζ j) = T.ζ j := (((mem_geoTop_iff T h).mp hh).2 j).1
   have hsumh : ∑ g ∈ E, h (g y) = T.ζ j - 1 := by
-    rw [← map_sum, hsum, map_sub, map_one, hζ]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, hsum, map_sub, map_one, hζ]
   have step : ∀ g ∈ E, Cong p k (h (g y) * h (c g)) (σ g y * c (σ g) - h (g y) * c h) := by
     intro g hg
     have hgH := hEH g hg

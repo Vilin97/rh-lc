@@ -61,7 +61,8 @@ theorem jetRel_equivariant : ∀ (V W : Type) [NormedAddCommGroup V] [InnerProdu
     apply j.injective
     have h := congrArg (fun F : Arr V n m => F α) hG
     simp only [arr_operator_apply, factorAction_apply', happ] at h
-    rw [h, map_add, map_sum, hT]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h, map_add, map_sum, hT]
     congr 1
     refine Finset.sum_congr rfl fun i _ => ?_
     split_ifs <;> simp
@@ -78,7 +79,8 @@ theorem jetRel_equivariant : ∀ (V W : Type) [NormedAddCommGroup V] [InnerProdu
     simp only [List.nil_append] at h
     rw [← h, hJ.2.1 _ c d hcd y (G α) _ (hT _), hJ.2.2.1 _ c d hcd y y' _ hy]
     ring
-  simp only [hR, hG', map_add, map_sum, Finset.sum_add_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hR, hG', map_add, map_sum, Finset.sum_add_distrib]
   congr 1
   rw [Finset.sum_comm]
   conv_rhs => rw [Finset.sum_comm]

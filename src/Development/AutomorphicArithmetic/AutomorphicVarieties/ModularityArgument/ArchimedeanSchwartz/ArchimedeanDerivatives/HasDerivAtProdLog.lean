@@ -229,7 +229,8 @@ theorem UpperTheory.V.Z.Inf.ptwOf :
       ∑ p : Equiv.Perm (Fin n), (((Equiv.Perm.sign p : ℤˣ) : ℤ) : ℂ) *
         chart (((List.finRange n).map fun j : Fin n =>
           Formalism.REAL.Tm (Eop τ) (u - e τ + n - 1 - ((j : ℕ) : ℂ)) (p j) j).prod φ).1 g x := by
-    simp only [← chartL_apply, Formalism.REAL.qdet, Formalism.REAL.qminor, LinearMap.sum_apply, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [← chartL_apply, Formalism.REAL.qdet, Formalism.REAL.qminor, LinearMap.sum_apply, map_sum,
       Module.End.mul_apply, Module.End.intCast_apply, map_zsmul, zsmul_eq_mul, List.ofFn_eq_map, id]
   have hcap : Formalism.REAL.qdet (Eop (a := n) τ) (u - e τ + n - 1) =
       (cap τ (u - e τ + ((n : ℂ) - 1) / 2) : Module.End ℂ (Sm K n)) := by

@@ -158,7 +158,8 @@ theorem big_mem (hK : KP) (hT : IsTriple B G X om om') (π : Representation ℂ 
   obtain ⟨ℓ, hℓ⟩ := exists_linear_I G.M om (fun x Φ h => hp.weil.isUSplitting.pres x Φ h) _ le_rfl
     (GlobalTheory.T.theta_kernel_decay hK F E σ B a a' G X om om' hT).1
   obtain ⟨m, ψ, r, hψ, hr, rfl⟩ := exists_sum_tens v Ψ hΨ
-  rw [← hℓ _ hΨ, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hℓ _ hΨ, map_sum]
   refine Submodule.sum_mem _ fun i _ => ?_
   have hL : ∀ φ ∈ SB (Fin a × Fin (a + a') → Fv F v), (ℓ ∘ₗ tensAt v (r i)) φ = G.M.I om (tens (evFin F v) φ (r i)) :=
     fun φ h => hℓ _ (hr i φ h).2
@@ -246,7 +247,8 @@ theorem small_mem (hK : KP) (hM : IsMatched B G X om om' R Rf) (hv : X.Good v) (
   by_cases hv1 : v = B.v₁
   · subst hv1
     obtain ⟨N, ψ, r, hψ, hrest, hso, rfl⟩ := GlobalTheory.T.schwartz_factorization_base_place F E σ B a a' G X om om' hT _ hΨ
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Submodule.sum_mem _ fun i _ => ?_
     have hl : ∀ z : UA σ G.W.J, ∃ Λ : ((Fin a' × Fin (a + a') → Fv F B.v₁) → ℂ) →ₗ[ℂ] ℂ,
         augAt om' B.v₁ ≤ LinearMap.ker Λ ∧ ∀ φ ∈ G.M'.SoLoc B.ψ B.τ₁,
@@ -267,7 +269,8 @@ theorem small_mem (hK : KP) (hM : IsMatched B G X om om' R Rf) (hv : X.Good v) (
     rw [hL _ h, hL _ (GlobalTheory.T.local_schwartz_stable_under_W hK.base F E σ B a a' G X om om' hT B.v₁ hv B.τ₁ _ (loc g) φ h φ₁ h₁ hA),
       ← hA (r i) (hrest i φ h.1), I_right]
   · obtain ⟨N, ψ, r, hψ, hr, rfl⟩ := GlobalTheory.T.schwartz_factorization_away_base F E σ B a a' G X om om' hT _ hΨ v hv1
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Submodule.sum_mem _ fun i _ => ?_
     have hL : ∀ φ ∈ SB (Fin a' × Fin (a + a') → Fv F v), (ℓ ∘ₗ tensAt v (r i)) φ = G.M'.I om' (tens (evFin F v) φ (r i)) :=
       fun φ h => hℓ _ (hr i φ h).2

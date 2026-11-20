@@ -117,7 +117,8 @@ theorem dualSubmoduleToDual_surjective (B : LinearMap.BilinForm ℝ V) (hB : B.N
   have hspec := LinearMap.BilinForm.dualSubmoduleParing_spec B ⟨y, hymem⟩ (bΛ j)
   simp only [algebraMap_int_eq, Int.coe_castRingHom] at hspec
   rw [LinearMap.BilinForm.dualSubmoduleToDual_apply_apply, hspec]
-  simp only [hbΛ, hy, map_sum, LinearMap.sum_apply, map_zsmul, LinearMap.smul_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hbΛ, hy, map_sum, LinearMap.sum_apply, map_zsmul, LinearMap.smul_apply,
     LinearMap.BilinForm.apply_dualBasis_left, smul_ite, smul_zero, zsmul_eq_mul, mul_one,
     Finset.sum_ite_eq, Finset.mem_univ, if_true]
   congr 2

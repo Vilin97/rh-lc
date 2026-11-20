@@ -29,7 +29,8 @@ theorem algebraMap_C (c : ℂ) : algebraMap ℝt 𝕂 (C c) = algebraMap ℂ �
 theorem chartForm_projPar :
     Vertical.chartForm (projPar A) =
       C (projVar e 0)⁻¹ * (ComplexSets.linPoly A 0).map (algebraMap ℂ 𝕂) := by
-  simp only [Vertical.chartForm, linForm, projPar, ComplexSets.linPoly, map_sum, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Vertical.chartForm, linForm, projPar, ComplexSets.linPoly, map_sum, map_mul,
     MvPolynomial.map_C, MvPolynomial.map_X, Finset.mul_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [← mul_assoc, ← C_mul, div_eq_inv_mul]
@@ -38,7 +39,8 @@ theorem secForm_projPar (i : Fin e) :
     Vertical.secForm (projPar A) i =
       C (projVar e i.succ) * (ComplexSets.linPoly A 0).map (algebraMap ℂ 𝕂) -
         C (projVar e 0) * (ComplexSets.linPoly A i.succ).map (algebraMap ℂ 𝕂) := by
-  simp only [Vertical.secForm, linForm, projPar, ComplexSets.linPoly, map_sum, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Vertical.secForm, linForm, projPar, ComplexSets.linPoly, map_sum, map_mul,
     MvPolynomial.map_C, MvPolynomial.map_X, Finset.mul_sum, ← Finset.sum_sub_distrib]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [C_sub, C_mul, C_mul]

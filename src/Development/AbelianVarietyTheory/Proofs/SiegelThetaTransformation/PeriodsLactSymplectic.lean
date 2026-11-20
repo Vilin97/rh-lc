@@ -39,7 +39,8 @@ theorem IsUn.lact_mem {γ : GL (Fin r) E} (hγ : IsUn X γ) {x : Frame X.Ψ r} (
     intro τ
     ext a b
     have h := congrArg τ.1 (hent a b)
-    simp only [map_sum, map_mul, cc, NumberField.IsCMField.complexEmbedding_complexConj] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, cc, NumberField.IsCMField.complexEmbedding_complexConj] at h
     simp only [Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, Finset.sum_mul]
     rw [Finset.sum_comm]
     exact h

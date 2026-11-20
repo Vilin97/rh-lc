@@ -36,7 +36,8 @@ theorem besz_pairings : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [Topo
         t * p.pr ((star (B.d.i₀ *ᵥ vecB B.o B.ζ) ᵥ* B.V.gram ᵥ* M) i) := by
     intro t ι _ M i
     change _ = t * GlobalTheory.LocMod.Witness.prH p _
-    rw [Matrix.vecMul, dotProduct, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Matrix.vecMul, dotProduct, map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun r _ => ?_
     rw [map_mul]
     change t * GlobalTheory.LocMod.Witness.prH p (M r i) * GlobalTheory.LocMod.Witness.prH p _ =
@@ -67,7 +68,8 @@ theorem besz_pairings : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [Topo
     intro j hj
     simp_rw [h3 j hj, hl]
     change _ = s * GlobalTheory.LocMod.Witness.prH p _
-    rw [← hdot, dotProduct, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hdot, dotProduct, map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun r _ => ?_
     rw [map_mul]
     change s * GlobalTheory.LocMod.Witness.prH p _ * GlobalTheory.LocMod.Witness.prH p _ =

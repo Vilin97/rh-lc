@@ -27,7 +27,8 @@ def jc (y x : Mx D ρ p) : hermA D ρ :=
     have key : ∀ a b : Mx D ρ p, adj (HMul.hMul a (adj b) : Mx D ρ ρ) = (HMul.hMul b (adj a) : Mx D ρ ρ) := by
       intro a b
       ext i j
-      simp only [adj, Matrix.transpose_apply, Matrix.map_apply, Matrix.mul_apply, map_sum, map_mul,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [adj, Matrix.transpose_apply, Matrix.map_apply, Matrix.mul_apply, map_sum, map_mul,
         Formalism.L2.Theta.cA_cA]
       exact Finset.sum_congr rfl fun _ _ => mul_comm _ _
     show adj _ = _

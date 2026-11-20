@@ -300,10 +300,12 @@ theorem bijective_of_inverse [Algebra ℤ_[p] C] (h1 : ∀ t, ∑ k, φ k (ψ k 
       rw [Nat.cast_smul_eq_nsmul, TensorProduct.tmul_smul]
   refine ⟨fun z z' h => Prod.ext (funext fun l => ?_) (funext fun l => ?_), fun x => ?_⟩
   · have := congrArg ((ψ l).baseChange C) h
-    simp only [map_add, map_sum, a1, a2, Finset.sum_ite_eq', Finset.mem_univ, if_true] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_add, map_sum, a1, a2, Finset.sum_ite_eq', Finset.mem_univ, if_true] at this
     exact smul_right_injective _ hC (add_right_cancel this)
   · have := congrArg ((ψ' l).baseChange C) h
-    simp only [map_add, map_sum, a3, a4, Finset.sum_ite_eq', Finset.mem_univ, if_true] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_add, map_sum, a3, a4, Finset.sum_ite_eq', Finset.mem_univ, if_true] at this
     exact smul_right_injective _ hC (add_left_cancel this)
   · refine ⟨(fun k => (ψ k).baseChange C ((N : C)⁻¹ • x), fun k => (ψ' k).baseChange C ((N : C)⁻¹ • x)), ?_⟩
     exact (a5 _).trans (smul_inv_smul₀ hC x)
@@ -323,11 +325,13 @@ theorem det_ne_zero_of_inverse {E : Type} [Field E] [NumberField E] [StarRing (�
   obtain ⟨s, s', hs⟩ := h1 y
   refine (smul_eq_zero_iff_right hN.ne').1 ?_
   rw [← map_nsmul, ← hs]
-  simp only [map_add, map_sum, LinearMap.sum_apply, hφ, hφ', Finset.sum_const_zero, add_zero]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_add, map_sum, LinearMap.sum_apply, hφ, hφ', Finset.sum_const_zero, add_zero]
   refine Finset.sum_eq_zero fun b _ => ?_
   have e : ∑ k, g k b * w k = 0 := by simpa [Matrix.vecMul, dotProduct, mul_comm] using congrFun hwg b
   simp only [← Module.End.mul_apply, ← map_mul]
-  rw [← LinearMap.sum_apply, ← map_sum, ← LinearMap.sum_apply, ← map_sum, e]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← LinearMap.sum_apply, ← map_sum, ← LinearMap.sum_apply, ← map_sum, e]
   simp
 
 theorem star_gram {E : Type} [Field E] [NumberField E] [StarRing (𝓞 E)] {A B : Point p v O (𝓞 E)}

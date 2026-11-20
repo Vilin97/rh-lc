@@ -34,7 +34,8 @@ theorem c1F_comb (hX : IsRegVar p D) (σ : k →+* ℂ) {ι : Type} [Fintype ι]
         induction b using Quotient.inductionOn with | h M => ?_
         exact (B L M).2.2.2.1)
   have hf : ∀ M : HermLB p, f M.icls = c1F hX σ M := fun _ => rfl
-  rw [← hf, icls_comb, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hf, icls_comb, map_sum]
   simp only [map_zsmul, hf]
 
 theorem dens_pow_sum (n : ℕ) (H : Matrix (Fin n) (Fin n) ℂ) :
@@ -75,7 +76,8 @@ theorem evalF_lin_pow (hX : IsRegVar p D) (σ : k →+* ℂ) {ι : Type} [Fintyp
     evalF (hX.atlas σ) (fun i => c1F hX σ (L i)) (lin (fun i => (n i : ℝ)) ^ D) x =
       ((c1F hX σ (comb L n) x ^ D : Ev D) : Alt D) := by
   rw [c1F_comb]
-  simp only [evalF, fld, lin, map_pow, map_sum, map_mul, MvPolynomial.map_C,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [evalF, fld, lin, map_pow, map_sum, map_mul, MvPolynomial.map_C,
     MvPolynomial.map_X, MvPolynomial.aeval_C, MvPolynomial.aeval_X, Finset.sum_apply, Pi.smul_apply]
   congr 2
 

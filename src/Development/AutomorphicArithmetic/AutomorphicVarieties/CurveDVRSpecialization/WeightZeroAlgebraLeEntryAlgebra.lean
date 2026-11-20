@@ -267,7 +267,8 @@ private theorem A_le {O R : Type} [CommRing O] [CommRing R] [Algebra O R] (W : W
     obtain ⟨μ, -, hd⟩ := part_span O R ℤ W {n | Finsupp.weight W.wt n = j} j fun _ h => h
     obtain ⟨b, hb, rfl⟩ := hd f hf
     show W.π _ ∈ T
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact sum_mem fun m _ => by
       rw [map_mul]
       exact mul_mem (h0 _ ⟨_, hb m, rfl⟩) (hm m)

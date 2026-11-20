@@ -43,7 +43,8 @@ theorem map_substR [CommRing R] [CommRing S] (f : R →+* S)
   | add p q hp hq => simp only [map_add, hp, hq]
   | mul_X p v hp =>
     rw [map_mul, map_mul, map_mul, hp]
-    simp [substR, map_sum, Matrix.map_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [substR, map_sum, Matrix.map_apply]
 
 theorem map_natActR [Field R] [Field S] (f : R →+* S) (g : ∀ v, Fin (P.n' v) → GL (Fin (P.m + 1)) R) (Q : XR P R) :
     MvPolynomial.map f (natActR P R g Q) =
@@ -140,7 +141,8 @@ theorem evC_natAct (h : P.m + 1 = n) (pos : (Σ v : Fin P.nV, Fin (P.n' v)) ≃ 
     | mul_X p x hp =>
       rw [map_mul, map_mul, map_mul, hp]
       congr 1
-      simp only [substR, MvPolynomial.aeval_X, map_sum, map_mul, MvPolynomial.eval_C, MvPolynomial.eval_X]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [substR, MvPolynomial.aeval_X, map_sum, map_mul, MvPolynomial.eval_C, MvPolynomial.eval_X]
       rw [← hz x.1 x.2.1, Matrix.mul_apply]
   have hdet : ∀ v s, (hAt P h pos M g v s : Matrix (Fin (P.m + 1)) (Fin (P.m + 1)) ℂ).det ≠ 0 := fun v s =>
     ((Matrix.isUnit_iff_isUnit_det _).1 (Units.isUnit _)).ne_zero

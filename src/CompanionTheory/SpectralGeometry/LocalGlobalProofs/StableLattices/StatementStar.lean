@@ -55,7 +55,8 @@ private theorem map_word_one {A B : Type} [Ring A] [Ring B] [Algebra ℂ A] [Alg
 private theorem map_stdPoly_one {A B : Type} [Ring A] [Ring B] [Algebra ℂ A] [Algebra ℂ B]
     (f : A →ₐ[ℂ] B) {M : ℕ} (b : Fin M → A) : f (stdPoly 1 b) = stdPoly 1 (fun i => f (b i)) := by
   unfold stdPoly
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun π _ => ?_
   rw [map_mul, map_intCast, map_word_one, List.map_ofFn]
   rfl

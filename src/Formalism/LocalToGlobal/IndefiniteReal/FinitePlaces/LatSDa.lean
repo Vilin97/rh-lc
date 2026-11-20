@@ -65,10 +65,12 @@ theorem lsd_coordO : ∃ r : 𝓞 D.host.F, r ≠ 0 ∧ ∀ (x : 𝓞 D.host.E) 
       Algebra.smul_def]⟩
   choose y hy using hl
   refine ⟨∑ l, (ω.repr x l : ℤ) • y l, ?_⟩
-  rw [hx, map_sum, Finsupp.finset_sum_apply, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hx, map_sum, Finsupp.finset_sum_apply, Finset.mul_sum]
   have hc : ((∑ l, (ω.repr x l : ℤ) • y l : 𝓞 D.host.F) : D.host.F) =
       ∑ l, (ω.repr x l : ℤ) • ((y l : 𝓞 D.host.F) : D.host.F) := by
-    rw [show ((∑ l, (ω.repr x l : ℤ) • y l : 𝓞 D.host.F) : D.host.F) =
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [show ((∑ l, (ω.repr x l : ℤ) • y l : 𝓞 D.host.F) : D.host.F) =
       algebraMap (𝓞 D.host.F) D.host.F (∑ l, (ω.repr x l : ℤ) • y l) from rfl, map_sum]
     exact Finset.sum_congr rfl fun l _ => map_zsmul _ _ _
   rw [hc]
@@ -216,14 +218,16 @@ open Formalism.IndefR.PHeisFC in
 theorem lsd_finPart_expand (z : AE D) :
     finPart D z = ∑ k, sndA D.host.F (cE D.host.F D.host.E z k) ⊗ₜ[D.host.F] Module.finBasis D.host.F D.host.E k := by
   conv_lhs => rw [VacEx.expand_cE z]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   rfl
 
 open Formalism.IndefR.PHeisFC in
 theorem lsd_infPart_expand (z : AE D) :
     infPart D z = ∑ k, fstA D.host.F (cE D.host.F D.host.E z k) ⊗ₜ[D.host.F] Module.finBasis D.host.F D.host.E k := by
   conv_lhs => rw [VacEx.expand_cE z]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   rfl
 
 theorem lsdE_finPart (i : Fin T.rank) (j : Fin S.rank) (β : Af D.host.F) (e : D.host.E) (i' : Fin T.rank)
@@ -266,8 +270,10 @@ theorem latO_isOpen (hΛS : IsSelfDualC S ΛS) (hΛT : IsSelfDualC T ΛT) :
     (Module.finBasis D.host.F D.host.E k), ?_, fun i j => ?_⟩
   · exact AddSubgroup.sum_mem _ fun i _ => AddSubgroup.sum_mem _ fun j _ => AddSubgroup.sum_mem _ fun k _ =>
       hmem i j k _ (hw i j k)
-  · rw [Matrix.sub_apply, map_sub, lsd_finPart_expand, Matrix.sum_apply, map_sum]
-    simp only [Matrix.sum_apply, map_sum, lsdE_finPart]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [Matrix.sub_apply, map_sub, lsd_finPart_expand, Matrix.sum_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.sum_apply, map_sum, lsdE_finPart]
     rw [Finset.sum_eq_single i (fun b _ hb => by simp [Ne.symm hb]) (by simp),
       Finset.sum_eq_single j (fun b _ hb => by simp [Ne.symm hb]) (by simp)]
     simp only [and_self, if_true]

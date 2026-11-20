@@ -15,7 +15,8 @@ theorem invol (h : IsCMExt F E σ) (z : E) : σ (σ z) = z := by
 
 theorem form_skew (h : IsCMExt F E σ) {n : ℕ} {J : Matrix (Fin n) (Fin n) E} (hJ : ∀ i j, σ (J j i) = -J i j)
     (u v : Fin n → E) : σ (form σ J v u) = -form σ J u v := by
-  simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, invol h, hJ, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, invol h, hJ, Finset.mul_sum]
   rw [Finset.sum_comm, ← Finset.sum_neg_distrib]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [← Finset.sum_neg_distrib]

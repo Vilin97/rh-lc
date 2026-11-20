@@ -19,7 +19,8 @@ private theorem rank_eq_of_scalar_extension_data {H H' : Type} [AddCommGroup H] 
     rw [← Module.forall_dual_apply_eq_zero_iff k]
     intro l
     have h1 := congrArg (π l) hc
-    rw [map_sum, map_zero] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero] at h1
     simp only [hπ] at h1
     exact linearIndependent_iff'.1 e.linearIndependent s (fun j => l (c j)) h1 j hj
   have hsp : ⊤ ≤ Submodule.span K (Set.range fun j => ι (e j)) := by

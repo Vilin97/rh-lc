@@ -21,7 +21,8 @@ theorem ev_map {r : ℕ} (Φ : MvPolynomial (Fin r) ℚ) {K L : Type} [CommRing 
 
 theorem gen_map {r : ℕ} {K L : Type} [CommRing K] [CommRing L] (φ : K →+* L) (f : Fin r → K) :
     (gen f).map φ = gen (fun i => φ (f i)) := by
-  simp [gen, Polynomial.map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [gen, Polynomial.map_sum]
 
 theorem gen_coeff {r : ℕ} {K : Type} [CommRing K] (F : K[X]) (h : F.natDegree < r) :
     gen (fun i : Fin r => F.coeff i) = F := by

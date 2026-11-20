@@ -85,7 +85,8 @@ theorem ddRE_ne_bot [Algebra.IsSeparable Qp K] (hs : ∃ s ∈ PD.Fil (-1), PD.�
       rw [h0] at h2
       exact h2
     have : y = act LL (AlgHom.id LL LL) (1 : LL ⊗[Qp] BdR) y := by rw [map_one]; rfl
-    rw [Submodule.mem_bot, this, h1, map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Submodule.mem_bot, this, h1, map_sum, LinearMap.sum_apply]
     refine Finset.sum_eq_zero fun i _ => ?_
     rw [map_mulLeft, map_mul, Module.End.mul_apply, hz, map_zero]
   rw [multV, hb] at hm

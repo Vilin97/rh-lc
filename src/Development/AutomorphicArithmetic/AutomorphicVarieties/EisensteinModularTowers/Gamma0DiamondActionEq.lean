@@ -65,7 +65,8 @@ theorem UpperTheory.gamma0_diamond_action_eq :
     linear_combination (N : ℤ) * hk11
   rw [← UpperTheory.smoothedEisenstein_congr_of_modEq (c : ℤ) (w + 1) (N * l ^ L) ζ hM hζ c1 c2, ← UpperTheory.smoothedEisenstein_congr_of_modEq (d : ℤ) 1 (N * l ^ L) ζ hM hζ c3 c4]
   unfold cmul
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   have hz1 : s (ζ ^ ((N : ℤ) ^ 2 * en g 0 1)) = ζ ^ ((N : ℤ) * (u.val * ((N : ℤ) * en g 0 1))) := by
     rw [← hz, sq, mul_assoc]

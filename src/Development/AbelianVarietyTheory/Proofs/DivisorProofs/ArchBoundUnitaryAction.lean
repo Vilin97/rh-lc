@@ -72,9 +72,11 @@ theorem norm_piInf_actAB_le (σ : E →ₐ[F] E) (n d : ℕ)
   rw [e, hg1, hh1]
   calc ‖piInf τ (∑ l, ∑ k, (g : Matrix (Fin n) (Fin n) _) i k * x k l * (h : Matrix (Fin d) (Fin d) _) j l)‖
       ≤ ∑ l : Fin d, ∑ k : Fin n, ((heightGL F g : ℝ) * heightGL F h * B) := by
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun l _ => ?_)
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun k _ => ?_)
         rw [map_mul, map_mul, norm_mul, norm_mul]
         calc ‖piInf τ ((g : Matrix (Fin n) (Fin n) _) i k)‖ * ‖piInf τ (x k l)‖ *

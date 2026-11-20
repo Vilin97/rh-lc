@@ -175,7 +175,8 @@ theorem trace_real_blocks {ι : Type} [Fintype ι] {r : ℕ} (N : ι → Matrix 
       (((toLin' (N τ)).restrictScalars ℝ) ∘ₗ LinearMap.proj τ) := by
     refine LinearMap.ext fun u => funext fun τ => ?_
     simp [hf, Finset.sum_apply, Pi.single_apply]
-  rw [this, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [this, map_sum]
   refine Finset.sum_congr rfl fun τ _ => ?_
   rw [LinearMap.trace_comp_comm', LinearMap.comp_assoc, LinearMap.proj_comp_single_same,
     LinearMap.comp_id, trace_real_toLin']
@@ -211,7 +212,8 @@ theorem span_integers_eq_top (Φ : CMType E) :
   let δ : Φ → ℂ := fun τ => f (Pi.single τ 1) - Complex.I * f (Pi.single τ Complex.I)
   have key : ∀ z : Φ → ℂ, f z = ∑ τ, (z τ * δ τ).re := by
     intro z
-    conv_lhs => rw [← Finset.univ_sum_single z, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [← Finset.univ_sum_single z, map_sum]
     refine Finset.sum_congr rfl fun τ _ => ?_
     have : (Pi.single τ (z τ) : Φ → ℂ) =
         (z τ).re • (Pi.single τ 1 : Φ → ℂ) + (z τ).im • (Pi.single τ Complex.I : Φ → ℂ) := by
@@ -366,7 +368,8 @@ theorem baseChange_EF (ξ : E) (Gm : Matrix (Fin r) (Fin r) E)
       have h2 : realMap D Φ φ (t ⊗ₜ x) τ ⬝ᵥ (Gm.map τ.1) *ᵥ star (realMap D Φ φ (s ⊗ₜ y) τ) =
           ((t * s : ℝ) : ℂ) * τ.1 (FD.herm Gm (φ x) (φ y)) := by
         rw [← hermC_eq]
-        simp only [FD.hermC, FD.herm, realMap_tmul, map_sum, map_mul, FD.cc,
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [FD.hermC, FD.herm, realMap_tmul, map_sum, map_mul, FD.cc,
           IsCMField.complexEmbedding_complexConj, Finset.mul_sum, Complex.conj_ofReal]
         refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
         push_cast

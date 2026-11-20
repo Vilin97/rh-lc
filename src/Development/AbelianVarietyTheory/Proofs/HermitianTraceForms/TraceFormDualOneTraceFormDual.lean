@@ -351,7 +351,8 @@ theorem exists_traceFormDual_eq {ξ : E} (hξ : ξ ≠ 0) (hG : G.det ≠ 0)
     obtain ⟨c, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun ℤ).1 hy'
     have : (⟨∑ i, c i • b i, hy⟩ : Λ) = ∑ i, c i • (⟨b i, hbm i⟩ : Λ) := by
       ext1; simp
-    rw [this, map_sum, Submodule.coe_sum, map_sum, Int.cast_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [this, map_sum, Submodule.coe_sum, map_sum, Int.cast_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_zsmul, Submodule.coe_smul_of_tower, map_zsmul, Module.Basis.constr_basis,
       smul_eq_mul, Int.cast_mul, zsmul_eq_mul]

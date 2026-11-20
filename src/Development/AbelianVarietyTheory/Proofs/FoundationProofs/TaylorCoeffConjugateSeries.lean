@@ -217,7 +217,8 @@ theorem taylor_fnConj : ∀ (D : D7) (N N' : ℕ) (M : IntermediateField ℚ ℂ
     simp [GL3Theta.applyAt0, x, hk, Finsupp.prod]
   rw [hx, hcj]
   refine ⟨x.2, ?_⟩
-  simp only [GL3Theta.applyAt0, x, hk, h1, map_sum, map_mul, map_intCast, map_natCast]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [GL3Theta.applyAt0, x, hk, h1, map_sum, map_mul, map_intCast, map_natCast]
   refine Finset.sum_congr rfl fun α _ => ?_
   rw [← hcj]
   simp [Finsupp.prod]

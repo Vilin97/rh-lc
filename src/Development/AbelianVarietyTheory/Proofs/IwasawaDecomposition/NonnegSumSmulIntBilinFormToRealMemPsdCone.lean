@@ -23,7 +23,8 @@ theorem eq_zero_of_self_eq_zero {X : Type} [AddCommGroup X] (γ : LinearMap.Bili
 
 theorem sum_expand {X₁ ι : Type} [AddCommGroup X₁] [Fintype ι] (B : X₁ →ₗ[ℤ] X₁ →ₗ[ℤ] ℝ) (b : ι → X₁) (z : ι → ℤ) :
     ∑ k, ∑ l, (z k : ℝ) * z l * B (b k) (b l) = B (∑ k, z k • b k) (∑ l, z l • b l) := by
-  simp only [map_sum, map_zsmul, LinearMap.sum_apply, LinearMap.smul_apply, zsmul_eq_mul, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_zsmul, LinearMap.sum_apply, LinearMap.smul_apply, zsmul_eq_mul, Finset.mul_sum]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun l _ => by ring
 

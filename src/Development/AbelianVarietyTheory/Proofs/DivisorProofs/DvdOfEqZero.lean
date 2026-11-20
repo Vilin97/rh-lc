@@ -31,7 +31,8 @@ theorem frob_mu (ε : PreTilt O p) : frobenius (mu ε) = mu ε * frobenius (xi �
 
 theorem frob_xi (ε : PreTilt O p) : ∃ d, frobenius (xi ε) = p + mu ε * d := by
   have h : frobenius (xi ε) = ∑ i ∈ Finset.range p, (teichmuller p ε : Ainf p O) ^ i := by
-    rw [xi, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [xi, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_pow, frob_teich, root, frobeniusEquiv_symm_pow_p]
   have hd : ∀ i : ℕ, mu ε ∣ (teichmuller p ε : Ainf p O) ^ i - 1 := fun i => by

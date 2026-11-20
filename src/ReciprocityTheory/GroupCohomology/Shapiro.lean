@@ -92,7 +92,8 @@ theorem shpPush_hd (n : ℕ) (F : hcoch C G n) (F' : hcoch C G (n + 1)) (h : F'.
     (shpPush ev hφ (n + 1) F').1 = hd n (shpPush ev hφ n F).1 := by
   funext x
   rw [shpPush_apply, h]
-  simp only [hd, map_sum, map_zsmul, shpPush_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hd, map_sum, map_zsmul, shpPush_apply]
 
 variable (j : C.V → C(G, M.V)) (hj : Topology.IsEmbedding j) (hjc : ∀ c g, j c g = ev.u (C.rho g c))
   (hr : ∀ f : C(G, M.V), (∀ (x : U) g, f (x * g) = M.rho x (f g)) → f ∈ Set.range j)

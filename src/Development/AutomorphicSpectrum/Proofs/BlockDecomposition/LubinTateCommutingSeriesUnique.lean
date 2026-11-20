@@ -223,7 +223,8 @@ theorem finiteRing_sq_sub_mul_sq_eq_of_card {R C : Type} [CommRing R] [CommRing 
       mk (∑ i ∈ Finset.range D, h' (PowerSeries.coeff i φ) * y ^ i) = nev (mk y) φ := by
     intro y N D hN hD
     rw [nev_eq_sum hN hD]
-    simp [map_sum, hmk]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, hmk]
   obtain ⟨N, hN⟩ := hn m
   obtain ⟨D0, hD0⟩ := hE m k
   obtain ⟨c, hcS, hcF⟩ := hD0 (max D0 N) (le_max_left _ _)

@@ -63,8 +63,10 @@ theorem coords_den {F E : Type} [Field F] [NumberField F] [Field E] [NumberField
   refine ⟨∑ i, (e.repr o i) • r (i, k), ?_⟩
   have ho : algebraMap (𝓞 E) E o = ∑ i, (e.repr o i) • algebraMap (𝓞 E) E (e i) := by
     conv_lhs => rw [← e.sum_repr o]
-    simp [map_sum]
-  rw [ho, map_sum, map_sum, Finsupp.finset_sum_apply, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [ho, map_sum, map_sum, Finsupp.finset_sum_apply, Finset.mul_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_zsmul, map_zsmul, Finsupp.smul_apply, hr (i, k)]
   simp only [zsmul_eq_mul]

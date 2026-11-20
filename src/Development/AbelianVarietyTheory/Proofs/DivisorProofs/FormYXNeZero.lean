@@ -31,7 +31,8 @@ theorem cA_inclR (σ : E →ₐ[F] E) (a : E) : cA σ (inclR (AF F) a) = inclR (
 
 theorem formA_incV (σ : E →ₐ[F] E) {d : ℕ} (J : Matrix (Fin d) (Fin d) E) (v w : Fin d → E) :
     formA σ J (incV F v) (incV F w) = inclR (AF F) (form σ J v w) := by
-  simp [formA, form, incV, incM, cA_inclR, dotProduct, Matrix.mulVec, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [formA, form, incV, incM, cA_inclR, dotProduct, Matrix.mulVec, map_sum, map_mul]
 
 theorem formA_mat (σ : E →ₐ[F] E) {d : ℕ} {J : Matrix (Fin d) (Fin d) E} (u : UA σ J) (v w : Fin d → AE F E) :
     formA σ J (mat u *ᵥ v) (mat u *ᵥ w) = formA σ J v w := by

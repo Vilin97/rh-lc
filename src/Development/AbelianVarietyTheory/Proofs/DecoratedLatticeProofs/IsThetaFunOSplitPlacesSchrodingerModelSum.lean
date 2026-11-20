@@ -23,7 +23,8 @@ theorem isThetaFunO_sum_placeModel : ∀ (D : D7) (ψ : AddChar (AF D.host.F) �
       (fun j _ h => GlobalTheory.SeeSaw.LocPlModel.e_mul_e _ _ (fun h' => h (inj h').symm)) (fun h => (h (Finset.mem_univ _)).elim)]
     exact (L i).q.split.1
   have hinf : infPart D (∑ i, (L i).q.e) = 0 := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_eq_zero fun i _ => GlobalTheory.LocMod.LinTheta.infPart_of_isSplitIdem (L i).q.split
   exact GlobalTheory.PlaceThetaVal.isThetaFunO_placeModel_apply hψ S T M M' hM hM' _ f₀ Φ T' hidem hinf hT' hvac.1 hΦ
 

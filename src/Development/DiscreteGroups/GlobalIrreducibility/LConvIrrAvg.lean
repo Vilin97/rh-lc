@@ -41,7 +41,8 @@ theorem avg_exists [TopologicalSpace G] [IsTopologicalGroup G] (hsm : IsSmooth �
   refine ⟨(O.card : ℂ)⁻¹ • ∑ m ∈ O, m, Z.smul_mem _ (Z.sum_mem fun m hm => ?_), fun κ hκ => ?_, ?_⟩
   · obtain ⟨k, _, rfl⟩ := (hmem m).1 hm
     exact hZ k z hz
-  · rw [map_smul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_smul, map_sum]
     congr 1
     refine Finset.sum_nbij' (fun m => ρ κ m) (fun m => ρ κ⁻¹ m) (fun m hm => ?_) (fun m hm => ?_)
       (fun m _ => rho_inv ρ κ m) (fun m _ => ?_) (fun _ _ => rfl)
@@ -58,7 +59,8 @@ theorem avg_exists [TopologicalSpace G] [IsTopologicalGroup G] (hsm : IsSmooth �
       rw [e, norm_pi]
     have hsum : iota B hB x - iota B hB ((O.card : ℂ)⁻¹ • ∑ m ∈ O, m) =
         (O.card : ℂ)⁻¹ • ∑ m ∈ O, (iota B hB x - iota B hB m) := by
-      rw [Finset.sum_sub_distrib, Finset.sum_const, smul_sub, map_smul, map_sum,
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Finset.sum_sub_distrib, Finset.sum_const, smul_sub, map_smul, map_sum,
         ← Nat.cast_smul_eq_nsmul ℂ, smul_smul, inv_mul_cancel₀ hcardC, one_smul]
     rw [dist_eq_norm, dist_eq_norm, hsum, norm_smul]
     calc ‖((O.card : ℂ))⁻¹‖ * ‖∑ m ∈ O, (iota B hB x - iota B hB m)‖

@@ -49,7 +49,8 @@ theorem thetaAt_eq_sum_heis_translates : ∀ (D : D7) (ψ : AddChar (AF D.host.F
     funext t
     rw [hΦ t, Finset.sum_apply]
     rfl
-  rw [hall Tm hTm, hΦ', map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hall Tm hTm, hΦ', map_sum]
   refine Finset.sum_congr rfl fun i hi => ?_
   rw [map_smul, hTm.trans _ (hSB i hi) (xs i) (hx i hi)]
   congr 2

@@ -58,7 +58,8 @@ theorem UpperTheory.V.Ws.isClosed_zeroLocus_mvPolynomial_eval_adicContinuous :
     change L (m y) = 0
     rw [hL]; exact hy0)
   have h1 : K.mkQ (m x) = K.mkQ (m x - m y) := by rw [map_sub, h0, sub_zero]
-  rw [h1, pi_eq_sum_univ' (m x - m y), map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h1, pi_eq_sum_univ' (m x - m y), map_sum]
   refine Submodule.sum_mem _ fun s _ => ?_
   rw [map_smul]
   exact Submodule.smul_mem_smul (hy s) Submodule.mem_top

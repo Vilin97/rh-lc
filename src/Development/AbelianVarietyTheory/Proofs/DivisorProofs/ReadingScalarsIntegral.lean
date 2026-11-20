@@ -60,7 +60,8 @@ theorem readExt_scalar_mem_range
   have hsum : ∀ x : L ⊗[O] M, ∀ (d : O) (c : _ → L), d • x = ∑ a, c a ⊗ₜ v a →
       ∑ a, eL (c a) • rd (v a) = eL (algebraMap O L d) • readExt rd eL hL x := fun x d c e => by
     have := congrArg (readExt rd eL hL) e
-    rw [← algebraMap_smul L d x, readExt_smul, map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← algebraMap_smul L d x, readExt_smul, map_sum] at this
     rw [this]
     rfl
   obtain ⟨d₁, hd₁, c₁, e₁⟩ := exists_smul_eq_sum_tmul_finBasis x₁
@@ -186,7 +187,8 @@ theorem scalar_of_reading : AtFit fun Fm x hx i p w j ρ hρ ν _ => ∀ e : Fra
       rw [smul_comm]
   have hS : R (∑ k, a k • rd (y k)) = ∑ k, (e (algebraMap ((Fm.ex x hx i).nch.Oe w) (FractionRing ((Fm.ex x hx i).nch.Oe w)) (a k)) * ν⁻¹) •
       adForm (R2 p) j (y k) (p.v₀ j (sg0 (Fm.D x i) p.P.A3.A)) := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [← algebraMap_smul (FractionRing ((Fm.ex x hx i).nch.Oe w)) (a k) (rd (y k)), hRdef, readExt_smul, ← hRdef,
       hrd _ (hy k), mul_smul]

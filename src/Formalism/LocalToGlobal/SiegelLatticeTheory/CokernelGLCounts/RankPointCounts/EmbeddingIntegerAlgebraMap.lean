@@ -43,7 +43,8 @@ theorem chat_bcP (p : PlF D) (w : (VS D).V →ₗ[D.host.E] D.host.E) (y : (VS D
     chat p w (baseChange₂ D p y) = (D.s.atP p).ιE (w y) := by
   unfold chat
   conv_rhs => rw [← (VS D).frame.sum_repr y]
-  rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [LinearMap.map_smul, smul_eq_mul, map_mul, mul_comm]
   rfl

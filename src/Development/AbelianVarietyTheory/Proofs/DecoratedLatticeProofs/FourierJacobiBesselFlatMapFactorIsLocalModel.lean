@@ -94,7 +94,8 @@ theorem map_pr_mul {l m m' : Type} [Fintype m] (M : Matrix l m D.host.E) (N : Ma
 theorem pr_mulVec {l m : Type} [Fintype m] (M : Matrix l m D.host.E) (v : m → D.host.E) (r : l) :
     p.pr ((M *ᵥ v) r) = ∑ a, p.pr (M r a) * p.pr (v a) := by
   change prH p (∑ a, M r a * v a) = ∑ a, prH p (M r a) * prH p (v a)
-  simp only [map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul]
 
 theorem wittDecomposition_coreProj_mul_core_eq_one {S S₀ : HSp D} {ρ : ℕ} (d : HypDec S S₀ ρ) : d.q0 * d.i₀ = 1 :=
   rat_injective (by rw [rat_mul, rat_one]; exact d.p0_j0)
@@ -225,13 +226,15 @@ theorem incA_mul_ι (a : D.host.E) (x : k) : (incA D a : AE D) * p.ι x = p.ι (
 theorem rat_mul_ι {l m n : ℕ} (M : Matrix (Fin l) (Fin m) D.host.E) (N : Matrix (Fin m) (Fin n) k) :
     (rat M : Mx D l m) * (N.map p.ι : Mx D m n) = (M.map p.pr * N).map p.ι := by
   ext i j
-  simp only [Matrix.mul_apply, Matrix.map_apply, map_sum, rat]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mul_apply, Matrix.map_apply, map_sum, rat]
   exact Finset.sum_congr rfl fun a _ => incA_mul_ι p _ _
 
 theorem ι_mul_rat {l m n : ℕ} (N : Matrix (Fin l) (Fin m) k) (M : Matrix (Fin m) (Fin n) D.host.E) :
     (N.map p.ι : Mx D l m) * (rat M : Mx D m n) = (N * M.map p.pr).map p.ι := by
   ext i j
-  simp only [Matrix.mul_apply, Matrix.map_apply, map_sum, rat]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mul_apply, Matrix.map_apply, map_sum, rat]
   exact Finset.sum_congr rfl fun a _ => by rw [mul_comm (N i a), mul_comm, incA_mul_ι]
 
 theorem infPart_eq_zero {e : AE D} (he : IsSplitIdem D e) {z : AE D} (hz : e * z = z ∨ cA D e * z = z) :

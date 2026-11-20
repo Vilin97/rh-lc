@@ -151,7 +151,8 @@ theorem aeval_smul_of_isHomogeneous {G : Type*} [CommRing G] [Algebra K G]
 theorem aeval_eq_zero_of_homogeneousComponent {G : Type*} [CommRing G] [Algebra K G]
     {g : MvPolynomial σ K} {ξ : σ → G} (h : ∀ n, aeval ξ (homogeneousComponent n g) = 0) :
     aeval ξ g = 0 := by
-  rw [← sum_homogeneousComponent g, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← sum_homogeneousComponent g, map_sum]
   exact Finset.sum_eq_zero fun n _ => h n
 
 theorem aeval_smul_eq_zero {G : Type*} [CommRing G] [Algebra K G]

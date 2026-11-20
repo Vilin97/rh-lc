@@ -12,7 +12,8 @@ theorem coe_ofValues_mul {n : ℕ} (u v : ReciprocityTheory.L2DbarEstimates.V n 
     ((ofValues (fun ξ η => u ξ * v η) : Ev n) : Alt n) =
       ExteriorAlgebra.ι ℂ (∑ a, u (GlobalTheory.GoodMetric.coordVec a) • Pi.single (Sum.inl a) (1 : ℂ) : Fin n ⊕ Fin n → ℂ) *
       ExteriorAlgebra.ι ℂ (∑ b, v (GlobalTheory.GoodMetric.coordVec b) • Pi.single (Sum.inr b) (1 : ℂ) : Fin n ⊕ Fin n → ℂ) := by
-  simp only [ofValues, map_sum, map_smul, Finset.sum_mul_sum, AddSubmonoidClass.coe_finsetSum, Subalgebra.coe_smul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [ofValues, map_sum, map_smul, Finset.sum_mul_sum, AddSubmonoidClass.coe_finsetSum, Subalgebra.coe_smul,
     smul_mul_smul_comm]
   rfl
 

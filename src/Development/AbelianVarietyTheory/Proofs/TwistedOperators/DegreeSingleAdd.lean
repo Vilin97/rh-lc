@@ -287,7 +287,8 @@ lemma comm_high (i : ι) (J : ι →₀ ℕ) (hJ : ∀ j ∈ J.support, i ≤ j)
   rw [step_succ e c act δ i J hJ, straighten_apply,
     strip_eq (fun j hj => hx j (by simpa using hj)), ← add_assoc]
   congr 2
-  rw [mulLin_apply, mulLin_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [mulLin_apply, mulLin_apply, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   by_cases hj : j ≤ i
   · simp [hx j hj]
@@ -315,7 +316,8 @@ lemma defect_swap (m : MvPolynomial ι R ⊗[R] V) (x y : g) :
 lemma defect_e (i : ι) (J : ι →₀ ℕ) (hJ : ∀ j ∈ J.support, i ≤ j) (x : g) (v : V) :
     defect c δ (zv J v) x (e i) = 0 := by
   have hx : x = strip e c Finset.univ x + ∑ j, c j x • e j := by simp [strip_apply]
-  rw [hx, map_add, LinearMap.add_apply, map_sum, LinearMap.sum_apply, Finset.sum_eq_zero, add_zero]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hx, map_add, LinearMap.add_apply, map_sum, LinearMap.sum_apply, Finset.sum_eq_zero, add_zero]
   · rw [defect_apply, comm_high hce hf i J hJ _ fun j _ => c_strip hce (Finset.mem_univ _) x]
     abel
   · intro j _
@@ -336,7 +338,8 @@ lemma defect_strip (m : MvPolynomial ι R ⊗[R] V) (s : Finset ι)
     defect c δ m x y = defect c δ m (strip e c s x) (strip e c s y) := by
   have h' : ∀ j ∈ s, ∀ x, defect c δ m (e j) x = 0 := fun j hj x => by
     rw [defect_swap, h j hj, neg_zero]
-  rw [strip_apply e c s y, map_sub, map_sum, Finset.sum_eq_zero fun j hj => by
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [strip_apply e c s y, map_sub, map_sum, Finset.sum_eq_zero fun j hj => by
     rw [map_smul, h j hj, smul_zero], sub_zero, strip_apply, map_sub, map_sum,
     LinearMap.sub_apply, LinearMap.sum_apply, Finset.sum_eq_zero fun j hj => by
     rw [map_smul, LinearMap.smul_apply, h' j hj, smul_zero], sub_zero]
@@ -385,7 +388,8 @@ lemma defect_eq_zero (hp : Pres δ)
         have : defect c δ (rho c δ b (zv J v)) a (e i) =
             ∑ j, c j b • defect c δ (mulX j (zv J v)) a (e i) +
               defect c δ (δ b (zv J v)) a (e i) := by
-          simp only [defect_apply, rho_apply c δ b, mulLin_apply c b, map_add, map_sum, map_smul,
+          set_option synthInstance.maxHeartbeats 100000 in
+            simp only [defect_apply, rho_apply c δ b, mulLin_apply c b, map_add, map_sum, map_smul,
             smul_sub, Finset.sum_sub_distrib]
           abel
         rw [this, ih _ _ _ (hp _ _ _ hz), add_zero]

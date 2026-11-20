@@ -100,7 +100,8 @@ theorem eq_zero_of_pair2 [Module.Finite R V] [Module.Projective R V] (t : ⋀[R]
   let e : Fin n → V := fun i ↦ f (Pi.single i 1)
   have he : ∀ x, ∑ i, c i x • e i = x := fun x ↦ by
     have h1 : f (s x) = x := LinearMap.congr_fun hs x
-    conv_rhs => rw [← h1, ← Finset.univ_sum_single (s x), map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_rhs => rw [← h1, ← Finset.univ_sum_single (s x), map_sum]
     refine Finset.sum_congr rfl fun i _ ↦ ?_
     rw [← map_smul]
     congr 1
@@ -115,7 +116,8 @@ theorem eq_zero_of_pair2 [Module.Finite R V] [Module.Projective R V] (t : ⋀[R]
     have hg0 : ∀ i, g i i = 0 := fun i ↦ by simp [g, wedge_basis_self_zero]
     have h1 : i2 a b = ∑ i, ∑ j, g i j := by
       conv_lhs => rw [← wedge_basis_apply, ← he a, ← he b]
-      simp only [map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply, Finset.smul_sum, g, smul_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply, Finset.smul_sum, g, smul_smul]
       rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun i _ ↦ Finset.sum_congr rfl fun j _ ↦ ?_
       rw [mul_comm]

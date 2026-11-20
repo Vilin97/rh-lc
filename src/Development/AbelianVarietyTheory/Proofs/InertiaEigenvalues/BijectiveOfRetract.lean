@@ -209,7 +209,8 @@ theorem bijective_of_retract (M : Type) [AddCommGroup M] [Module O M] [Topologic
         map_H2_comp (twist ε M) (twist ε (N' i)) (twist ε M) (p' i) (hp' i) (twist_equiv ε _) (s' i)
           (hs' i) (twist_equiv ε _)]
       rfl
-    rw [map_add, map_sum, map_sum, Finset.sum_congr rfl (fun j _ => k1 j),
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_add, map_sum, map_sum, Finset.sum_congr rfl (fun j _ => k1 j),
       Finset.sum_congr rfl (fun i _ => k2 i), ← LinearMap.sum_apply, ← LinearMap.sum_apply,
       ← map_H2_sum (twist ε M) (twist ε M) _ _ _ _ (cont_sum _ _ fun j => (hs j).comp (hp j))
         (twist_equiv ε _),

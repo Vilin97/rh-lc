@@ -102,7 +102,8 @@ theorem GlobalTheory.WeilDeligne.PrimDecomp.mk_restrict_strand_eq : ∀ (E Ω : 
     | zero => simp
     | add x y hx hy => simp only [map_add, Submodule.coe_add, hx, hy]
     | tmul x c =>
-      rw [WDRep.tensor_ρ, TensorProduct.map_tmul, heT, restrict_ρ_apply, heT, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [WDRep.tensor_ρ, TensorProduct.map_tmul, heT, restrict_ρ_apply, heT, map_sum]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [WDRep.sp_ρ, diagEnd_apply, WDRep.tw_ρ, LinearMap.smul_apply, Submodule.coe_smul,
         restrictρ_ρ_apply, map_smul, map_smul, ρ_pow_N, smul_smul, smul_smul]
@@ -119,7 +120,8 @@ theorem GlobalTheory.WeilDeligne.PrimDecomp.mk_restrict_strand_eq : ∀ (E Ω : 
     | tmul x c =>
       have hNs : ∀ (k : ℕ) (y : V), a.N ((a.N ^ k) y) = (a.N ^ (k + 1)) y := fun k y => by
         rw [pow_succ', End.mul_apply]
-      rw [WDRep.tensor_N, LinearMap.add_apply, LinearMap.rTensor_tmul, LinearMap.lTensor_tmul,
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [WDRep.tensor_N, LinearMap.add_apply, LinearMap.rTensor_tmul, LinearMap.lTensor_tmul,
         WDRep.tw_N, restrictρ_N, LinearMap.zero_apply, zero_tmul, zero_add, heT,
         restrict_N_apply, heT, map_sum]
       simp only [map_smul, hNs, WDRep.sp_N]

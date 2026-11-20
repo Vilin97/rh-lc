@@ -47,7 +47,8 @@ lemma bound_castLE {n : ℕ} (h : n ≤ X.p0) (Z : X.Coord) (τ : X.Ψ) (y : Fin
     rw [← hconj (Matrix.of (Z τ) *ᵥ fun c => conj (w c))]
     congr 1
     funext m
-    simp [Matrix.mulVec, dotProduct, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Matrix.mulVec, dotProduct, map_sum]
   have hop0 : 0 ≤ Data.opN (Matrix.of (Z τ)) := by
     unfold Data.opN
     apply Real.sSup_nonneg

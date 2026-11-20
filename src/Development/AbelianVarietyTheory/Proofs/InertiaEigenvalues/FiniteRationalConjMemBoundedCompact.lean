@@ -22,7 +22,8 @@ theorem norm_entry_le_one {g : GL (Fin n) L} (hg : g ∈ GQ0 L n) (φ : L →+* 
   have h1 := congrFun (congrFun h0 i) i
   simp only [Matrix.mul_apply, conjT, Matrix.transpose_apply, Matrix.map_apply, Matrix.one_apply_eq] at h1
   have h2 := congrArg φ h1
-  simp only [map_sum, map_mul, map_one] at h2
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, map_one] at h2
   have h3 : ∑ k, ((‖φ ((g : Matrix (Fin n) (Fin n) L) i k)‖ ^ 2 : ℝ) : ℂ) = 1 := by
     rw [← h2]
     refine Finset.sum_congr rfl fun k _ => ?_

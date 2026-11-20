@@ -75,7 +75,8 @@ variable {φ : Fin (N + 1) → Fin m → K}
 
 theorem latticeMap_mem_prodSpan (hφ : IsDualBasis L φ) {d : ℕ}
     {f : MvPolynomial (Coord fun _ : Unit ↦ N) ℤ} (hf : f.IsHomogeneous d) : latticeMap φ f ∈ prodSpan L d := by
-  rw [f.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [f.as_sum, map_sum]
   refine Submodule.sum_mem _ fun s hs ↦ ?_
   have hdeg : s.degree = d := by
     have := hf (mem_support_iff.mp hs)

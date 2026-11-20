@@ -145,7 +145,8 @@ theorem harm_rename [Fintype T] {k : Type} [Field k] (cc : T → T) (isX : T →
     intro b
     show pderiv (lEq ⟨τ, i, b⟩) (pderiv (lEq ⟨cc τ, i', b⟩) (rename lEq P)) = _
     rw [pderiv_rename lEq.injective, pderiv_rename lEq.injective]
-  simp only [e, ← map_sum, h3, map_zero]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [e, ← map_sum, h3, map_zero]
 
 end Letters
 

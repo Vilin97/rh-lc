@@ -206,7 +206,8 @@ theorem frame_near {g : GL (Fin n) (AfE F E)} {p : DecoF E n ST SG Q} (h : IsPtO
       (locM F w.1 g⁻¹ * ratM w.1 (p.deco.1.liftFr w).toLinearMap : Matrix (Fin n) (Fin n) _) i j := by
     rw [Matrix.mul_apply, Finset.mul_sum]
     unfold Col2.pullV
-    rw [Matrix.mulVec, dotProduct, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Matrix.mulVec, dotProduct, map_sum]
     refine Finset.sum_congr rfl fun l _ => ?_
     rw [map_mul, adAt_inclE, ratM_apply, Pi.smul_apply, Algebra.smul_def, map_mul]
     change locM F w.1 g⁻¹ i l * _ = _ * (_ * algebraMap E _ (z l))
@@ -290,7 +291,8 @@ theorem locTop_shift (hc : cst.Ok) {P : rowSG Pr sel mu} (hP : P.1 ∈ Pr.vGs)
   split_ifs with h
   · have ev : ∀ z : Sp X.E (R.N (m2 + 1)), η z = ∑ j, z j * η (Pi.single j 1) := fun z => by
       conv_lhs => rw [pi_eq_sum_univ' z]
-      simp [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [map_sum]
     have he : IntAt P.1 ((epsSg : ℤ) : X.E) := intCast_mem (intRing P.1) _
     have hd : IntAt P.1 ((epsSg : X.E) * η (b - a)) := by
       rw [ev]

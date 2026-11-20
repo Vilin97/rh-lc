@@ -22,7 +22,8 @@ variable {D : D7}
 theorem hT_eq_coords (S : HSp D) (x y : S.V) :
     S.hT x y = ∑ i, ∑ j, star (S.frame.repr x i) * S.gram i j * S.frame.repr y j := by
   conv_lhs => rw [← S.frame.sum_repr x, ← S.frame.sum_repr y]
-  simp only [map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
     starRingEnd_apply, Finset.mul_sum, RingHom.id_apply]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
@@ -52,7 +53,8 @@ theorem exists_orthogonalSum_testGrid_of_levelChoiceGrid {D : D7} (A B : GlobalT
     intro x p
     show B.V.hT _ (d.ι x) = 0
     conv_lhs => rw [← A.V.frame.sum_repr x]
-    simp only [map_sum, map_smul, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, smul_eq_mul]
     refine Finset.sum_eq_zero fun k _ => ?_
     have h1 := B.V.herm.eq (d.ι (A.V.frame k)) (B.V.frame.equivFun.symm (fun i => d.a i p))
     have h2 : d.ι (A.V.frame k) = B.V.frame.equivFun.symm (fun i => frameMat B.V A.V d.ι i k) := by
@@ -75,7 +77,8 @@ theorem exists_orthogonalSum_testGrid_of_levelChoiceGrid {D : D7} (A B : GlobalT
         B.V.frame.equivFun (d.ι x + ∑ p, t p • B.V.frame.equivFun.symm (fun k => d.a k p)) =
           frameMat B.V A.V d.ι *ᵥ A.V.frame.equivFun x + d.a *ᵥ t := by
       intro x t
-      rw [map_add, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_add, map_sum]
       congr 1
       · simp only [Module.Basis.equivFun_apply, frameMat]
         exact (LinearMap.toMatrix_mulVec_repr _ _ _ _).symm

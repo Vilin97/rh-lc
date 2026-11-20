@@ -70,7 +70,8 @@ theorem HermFam.form_sum_right (h : HermFam K V) (σ : K →+* ℂ) (x : V) {ι 
 
 theorem HermFam.form_sum_left (h : HermFam K V) (σ : K →+* ℂ) (y : V) {ι : Type*}
     (s : Finset ι) (f : ι → V) : h.form σ (∑ i ∈ s, f i) y = ∑ i ∈ s, h.form σ (f i) y := by
-  rw [← h.conj_symm, h.form_sum_right, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← h.conj_symm, h.form_sum_right, map_sum]
   simp only [h.conj_symm]
 
 theorem HermFam.form_expand (h : HermFam K V) (σ : K →+* ℂ) {n : ℕ} (c : Fin n → K)

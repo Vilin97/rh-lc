@@ -116,7 +116,8 @@ theorem besselDatum_middleVector_norm_eq {A B : HSp D} {c : ℕ} {ε : D.host.E}
   rw [h2] at h1
   refine Eq.trans ?_ (congrArg (tauE D τ) h1)
   show star _ ⬝ᵥ _ = _
-  simp only [dotProduct, mulVec, gramAt, Matrix.mul_apply, Formalism.UG.cT, transpose_apply, map_apply, map_sum, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dotProduct, mulVec, gramAt, Matrix.mul_apply, Formalism.UG.cT, transpose_apply, map_apply, map_sum, map_mul,
     Pi.star_apply, HermitianOrthogonalExtensionData.besDat, Finset.mul_sum, Finset.sum_mul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_

@@ -32,14 +32,16 @@ theorem exists_normalised {K L B ι : Type*} [Field K] [Field L] [Algebra K L] [
     · exact hmax i hi
     · simp [Finsupp.notMem_support_iff.mp hi]
   refine ⟨c i₀, ∑ i ∈ c.support, (⟨_, hmem i⟩ : O) ⊗ₜ b i, h0, ?_, ?_, fun i => ⟨⟨_, hmem i⟩, ?_⟩⟩
-  · rw [map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum, Finset.smul_sum]
     conv_lhs => rw [← (Algebra.TensorProduct.basis L b).linearCombination_repr w, ← hc,
       Finsupp.linearCombination_apply, Finsupp.sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     simp [Algebra.TensorProduct.basis_apply, TensorProduct.smul_tmul', mul_div_cancel₀ _ h0]
   · intro h
     have := congrArg (fun z => (Algebra.TensorProduct.basis (IsLocalRing.ResidueField O) b).repr z i₀) h
-    simp only [map_sum, Algebra.TensorProduct.map_tmul, AlgHom.coe_id, id,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, Algebra.TensorProduct.map_tmul, AlgHom.coe_id, id,
       Algebra.TensorProduct.basis_repr_tmul, Finsupp.coe_finsetSum, Finset.sum_apply, map_zero,
       Module.Basis.repr_self, Finsupp.coe_zero, Pi.zero_apply] at this
     rw [Finset.sum_eq_single i₀] at this

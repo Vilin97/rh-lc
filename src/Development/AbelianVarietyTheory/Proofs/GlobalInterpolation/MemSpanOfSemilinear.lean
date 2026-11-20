@@ -68,7 +68,8 @@ theorem mem_span_of_semilinear {B K O Kf V W ι : Type*} [CommRing B] [IsDomain 
   have heq : ∀ i, σ (k i) = algebraMap O Kf (o i) := by
     apply Fintype.linearIndependent_iffₛ.1 hli
     simp only [algebraMap_smul, ho]
-    rw [← hk, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hk, map_sum]
     simp [hφ]
   rw [← hk]
   refine Submodule.sum_mem _ fun i _ => ?_

@@ -92,7 +92,8 @@ theorem polyDeriv_subst {σ κ W : Type} [NormedAddCommGroup W] [NormedSpace ℂ
       -MvPolynomial.monomial_zero']
   | add P Q hP hQ => simp only [map_add, I2.polyDeriv_add, hP, hQ]
   | mul_X P l hP =>
-    rw [map_mul, hΦ, Finset.mul_sum, I2.jof_polyDeriv_sum, GlobalTheory.ThFr.polyDeriv_mul_X hF, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_mul, hΦ, Finset.mul_sum, I2.jof_polyDeriv_sum, GlobalTheory.ThFr.polyDeriv_mul_X hF, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [mul_left_comm, MvPolynomial.C_mul', I2.polyDeriv_smul, GlobalTheory.ThFr.polyDeriv_mul_X hF, funext hP]
     simp

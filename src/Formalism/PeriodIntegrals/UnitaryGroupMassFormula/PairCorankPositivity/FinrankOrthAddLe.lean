@@ -39,7 +39,8 @@ theorem finrank_orth_add_le (S : HSpace E) {ι : Type} [Fintype ι] (u : ι → 
       intro v
       have h1 : f (Φ v) = 0 := hfle (LinearMap.mem_range_self Φ v)
       rw [LinearMap.pi_apply_eq_sum_univ f (Φ v)] at h1
-      rw [hw, map_sum, LinearMap.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hw, map_sum, LinearMap.sum_apply]
       rw [← h1]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [LinearMap.map_smulₛₗ, LinearMap.smul_apply, starRingEnd_apply, star_star, smul_eq_mul,

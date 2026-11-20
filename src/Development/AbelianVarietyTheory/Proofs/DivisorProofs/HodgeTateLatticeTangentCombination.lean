@@ -50,7 +50,8 @@ theorem dlogDvd_sum {p m : ℕ} (v : TanM x t.G) (hv : DlogDvd t x p m (tv v).le
   have h3 : g = red _ (∑ j, c j • actR t.act (a j) v) := Over.OverMorphism.ext (by rw [hg]; rfl)
   rw [h3]
   show dlog _ hq χ _ ∈ _
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Ideal.sum_mem _ fun j _ => ?_
   rw [map_smul, Algebra.smul_def]
   refine Ideal.mul_mem_left _ _ ?_
@@ -75,7 +76,8 @@ theorem latHT_comb_act : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] 
   have h2 : ∀ j, bcTan (intO C).subtype hx (actR t.act (a j) (tanOf hvO)) =
       actR t.act (a j) (bcTan (intO C).subtype hx (tanOf hvO)) := fun j => tan_ext (Category.assoc _ _ _).symm
   have h3 : bcTan (intO C).subtype hx V = ((p : C) ^ m) • ∑ j, c j • actR t.act (a j) (tanOf hw) := by
-    simp only [V, map_sum, map_smulₛₗ, h2, h1, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [V, map_sum, map_smulₛₗ, h2, h1, Finset.smul_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     exact smul_comm (c j) ((p : C) ^ m) _
   rw [← hWe]

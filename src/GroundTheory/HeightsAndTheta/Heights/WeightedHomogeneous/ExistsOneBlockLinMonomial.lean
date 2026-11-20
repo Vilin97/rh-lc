@@ -110,7 +110,8 @@ theorem linForm_isHomogeneous (c : 𝓞 K) (j : Fin (i + 1)) : (linForm om i c j
 theorem oneBlockLin_linForm (c : 𝓞 K) (j : Fin (i + 1)) :
     oneBlockLin om i (linForm om i c j) = C c * X j := by
   conv_rhs => rw [← om.sum_repr c]
-  simp only [linForm, oneBlockLin, map_sum, map_mul, eval₂Hom_C, eval₂Hom_X', Int.coe_castRingHom,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [linForm, oneBlockLin, map_sum, map_mul, eval₂Hom_C, eval₂Hom_X', Int.coe_castRingHom,
     Finset.sum_mul]
   refine Finset.sum_congr rfl fun a _ ↦ ?_
   rw [zsmul_eq_mul, map_mul, map_intCast, mul_assoc]
@@ -174,7 +175,8 @@ theorem mem_secM_oneBlockPt_iff [NumberField K] (N : ℕ) (hN : 1 ≤ N) (s : Fr
       rw [zsmul_eq_mul, ← map_intCast (C : 𝓞 K →+* MvPolynomial (Fin (i + 1)) (𝓞 K)) n]
       simpa using hF.C_mul (n : 𝓞 K)
   · rintro ⟨F, hF, rfl⟩
-    rw [F.as_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [F.as_sum, map_sum]
     refine Submodule.sum_mem _ fun α hα ↦ ?_
     have hdeg : α.degree = N := by
       have h := hF (mem_support_iff.mp hα)

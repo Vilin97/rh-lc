@@ -96,7 +96,8 @@ theorem Epow_clm (hR : RCalc) (T : L →L[ℂ] L) (s : Bool) {f : Mat n → L} (
     by_cases hab : a = b <;> simp [Epow, hab]
   | succ m ih =>
     intro a b x hx
-    simp only [Epow, Finset.sum_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Epow, Finset.sum_apply, map_sum]
     refine Finset.sum_congr rfl fun c _ => ?_
     rw [GlobalTheory.CompanionTheory.WaveAll.Eu_congr GlobalTheory.CompanionTheory.WaveAll.isOpen_GLs (ih c b) s a c hx]
     exact Eu_clm T s a c (GlobalTheory.CompanionTheory.WaveAll.Epow_smooth hR hf s m c b) hx

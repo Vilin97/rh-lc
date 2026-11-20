@@ -85,7 +85,8 @@ theorem _root_.GlobalTheory.T.exists_const_mean_logArea_logThetaNorm_le : ∃ C1
     have hle : fld D δ t0 ≤ M := by
       refine IntermediateField.adjoin_le_iff.2 ?_
       rintro y (⟨y, rfl⟩ | hy)
-      · rw [← b.sum_repr y, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        · rw [← b.sum_repr y, map_sum]
         refine sum_mem fun i _ => ?_
         rw [map_rat_smul]
         exact M.smul_mem (hM _ (Or.inl ⟨i, rfl⟩))

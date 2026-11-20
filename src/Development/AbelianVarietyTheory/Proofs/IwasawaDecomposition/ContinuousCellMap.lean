@@ -44,7 +44,8 @@ def polyOnCell (b : Frames k V) : Subalgebra k (Frames k V → k) where
 theorem dual_mem_polyOnCell (b : Frames k V) (i : ι) (φ : Dual k (V i)) (a : Fin (finrank k (V i))) :
     (fun b' : Frames k V => φ (b' i a)) ∈ polyOnCell b :=
   ⟨∑ l, MvPolynomial.C (φ (b i l)) * polyMat (k := k) (V := V) i l a, fun u => by
-    simp only [cellFrame_apply, map_sum, map_smul, smul_eq_mul, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [cellFrame_apply, map_sum, map_smul, smul_eq_mul, map_mul]
     refine Finset.sum_congr rfl fun l _ => ?_
     rw [MvPolynomial.eval_C (f := u), ← map_polyMat u i, Matrix.map_apply, mul_comm]⟩
 
@@ -67,7 +68,8 @@ theorem repr_mem_polyOnCell (b : Frames k V) (i : ι) (v : V i) (a : Fin (finran
   ⟨∑ c, (polyMat (k := k) (V := V) i).adjugate a c * MvPolynomial.C ((b i).repr v c), fun u => by
     show (cellFrame b u i).repr v a = _
     rw [repr_cellFrame]
-    simp only [Matrix.mulVec, dotProduct, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, dotProduct, map_sum, map_mul]
     refine Finset.sum_congr rfl fun c _ => ?_
     rw [MvPolynomial.eval_C (f := u), eval_adjugate_polyMat]⟩
 

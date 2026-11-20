@@ -31,7 +31,8 @@ theorem exists_eval_eq_shift (z : Fin n → R) (P : MvPolynomial (Fin n) R)
       change _ * monoVal z _ = _
       rw [monoVal_add, monoVal_single, pow_one]
       ring
-    simp only [map_sum, key]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, key]
     rw [MvPolynomial.eval_eq]
     refine Finset.sum_congr rfl fun β _ => ?_
     rw [← Finset.sum_mul, hg β]

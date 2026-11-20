@@ -58,8 +58,10 @@ theorem norm_comp_homogeneous_isHomogeneous :
     congr 1
     ext i j
     show eval y (M i j) = _
-    simp only [M, map_sum, eval_monomial]
-    rw [eval_eq' _ G, map_sum, Matrix.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [M, map_sum, eval_monomial]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [eval_eq' _ G, map_sum, Matrix.sum_apply]
     refine Finset.sum_congr rfl (fun s _ => ?_)
     have : AddMonoidAlgebra.coeff G s * ∏ k, (algebraMap K L (y k)) ^ (s k) = (∏ k, y k ^ s k) • AddMonoidAlgebra.coeff G s := by
       rw [Algebra.smul_def, mul_comm]

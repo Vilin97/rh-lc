@@ -80,7 +80,8 @@ theorem UpperTheory.V.Z.Kato.Joint.finP :
     ∑ n ∈ Finset.range B, ι.symm (cc n) • LinearMap.proj n
   have hlam₀ : ∀ a : ℕ → Qbar l, lam₀ a = ι.symm (GlobalTheory.EisM.lam B cc fun i => ι (a i)) := by
     intro a
-    simp [lam₀, GlobalTheory.EisM.lam, map_sum, map_mul, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [lam₀, GlobalTheory.EisM.lam, map_sum, map_mul, LinearMap.sum_apply]
   have hfs₀ : FinSupp lam₀ := by
     refine ⟨Finset.range B, fun f hf => ?_⟩
     rw [hlam₀, GlobalTheory.EisM.lam, Finset.sum_eq_zero, map_zero]

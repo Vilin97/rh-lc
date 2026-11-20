@@ -233,5 +233,6 @@ theorem UpperTheory.ConvolutionTheory.BW.datBasics :
     exact (Commute.sum_left _ _ _ fun i _ => comm_rt i a).smul_left c
   · obtain ⟨c, hc⟩ := J_eq d j
     exact ⟨c • ∑ i ∈ Finset.univ.filter fun i => d.idx i = j, ιC E n (toL (Matrix.single i i 1)), by
-      rw [map_smul, map_sum, Finset.sum_congr rfl fun i _ => uC_ιC _]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_smul, map_sum, Finset.sum_congr rfl fun i _ => uC_ιC _]
       exact hc⟩

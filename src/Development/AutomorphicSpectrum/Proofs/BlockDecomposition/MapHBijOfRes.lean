@@ -360,7 +360,8 @@ theorem rho_ev (X : Pt E') (cc : ℕ →₀ Φ.A.obj (m.G.obj X.T)) (y : ℕ →
         (cc.sum fun k u => (Φ.A.map (Q.j (m.G.obj X.T))).hom u * Φ.dp k (Q.X (m.G.obj X.T)))) =
       Ideal.Quotient.mk _ (y.sum fun k u => (Φ'.A.map (Q'.j X.T)).hom u * Φ'.dp k (Q'.X X.T)) := by
   classical
-  rw [Finsupp.sum_of_support_subset cc (Finset.subset_union_left (s₂ := y.support)) _ (by intros; simp),
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finsupp.sum_of_support_subset cc (Finset.subset_union_left (s₂ := y.support)) _ (by intros; simp),
     Finsupp.sum_of_support_subset y (Finset.subset_union_right (s₁ := cc.support)) _ (by intros; simp),
     map_sum, map_sum, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_

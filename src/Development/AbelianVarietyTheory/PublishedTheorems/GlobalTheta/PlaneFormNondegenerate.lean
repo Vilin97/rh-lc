@@ -146,7 +146,8 @@ theorem average (hρ : Ops c ρ) (hα : Splits c A α) (U : AddSubgroup W) (hU :
     [Fintype (A ⧸ U.addSubgroupOf A)] (m : M) (hm : ∀ u ∈ U, ρ u m = m) (a : W) (ha : a ∈ A) :
     ρ a (∑ q : A ⧸ U.addSubgroupOf A, (α q.out.1)⁻¹ • ρ q.out.1 m)
       = α a • ∑ q : A ⧸ U.addSubgroupOf A, (α q.out.1)⁻¹ • ρ q.out.1 m := by
-  rw [← inv_smul_eq_iff₀ (hα.ne a ha), map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← inv_smul_eq_iff₀ (hα.ne a ha), map_sum, Finset.smul_sum]
   refine Fintype.sum_equiv (Equiv.addLeft ((⟨a, ha⟩ : A) : A ⧸ U.addSubgroupOf A)) _ _ fun q => ?_
   rw [hα.comp hρ ha q.out.2]
   set p := (Equiv.addLeft ((⟨a, ha⟩ : A) : A ⧸ U.addSubgroupOf A)) q with hp
@@ -175,7 +176,8 @@ theorem exists_eigen (h : Alt c) (hρ : Ops c ρ) (hα : Splits c A α) (T : Set
       by_contra hne
       exact hcon ⟨_, N.sum_mem fun q _ => N.smul_mem _ (hN _ _ (hN _ _ hvN)), hne, average hρ hα U hU _ hm⟩
     refine hρ.eq_zero h (x := w) ?_
-    rw [map_sum, ← h0]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, ← h0]
     refine Finset.sum_congr rfl fun q _ => ?_
     rw [hρ.comm h q.out.1 w, map_smul, map_smul, smul_comm]
   let χ : A ⧸ U.addSubgroupOf A → (Multiplicative (h.perp U) →* ℂ) := fun q =>
@@ -198,7 +200,8 @@ theorem exists_eigen (h : Alt c) (hρ : Ops c ρ) (hα : Splits c A α) (T : Set
     refine Fintype.linearIndependent_iff.1 hli (fun q => φ ((α q.out.1)⁻¹ • ρ q.out.1 v)) ?_ q
     funext w
     have := congrArg φ (hz w.toAdd.1 w.toAdd.2)
-    rw [map_sum, map_zero] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero] at this
     rw [Finset.sum_apply, Pi.zero_apply, ← this]
     refine Finset.sum_congr rfl fun q _ => ?_
     rw [φ.map_smul (c q.out.1 w.toAdd.1 ^ 2), smul_eq_mul, mul_comm]
@@ -216,7 +219,8 @@ theorem eq_zero_of_sum {ι : Type} (s : Finset ι) (β : ι → W → ℂ) (hβ 
     intro m hm hv
     obtain ⟨a, ha, hne⟩ := hβ j
     have key : ∑ i ∈ s, (β i a - β j a) • m i = (α a - β j a) • ∑ i ∈ insert j s, m i := by
-      rw [sub_smul, ← hv a ha, map_sum, Finset.smul_sum, ← Finset.sum_sub_distrib, Finset.sum_insert hj, hm j a ha, sub_self,
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [sub_smul, ← hv a ha, map_sum, Finset.smul_sum, ← Finset.sum_sub_distrib, Finset.sum_insert hj, hm j a ha, sub_self,
         zero_add]
       exact Finset.sum_congr rfl fun i _ => by rw [hm i a ha, sub_smul]
     have := ih (fun i => (β i a - β j a) • m i) (fun i b hb => by rw [map_smul, hm i b hb, smul_comm])

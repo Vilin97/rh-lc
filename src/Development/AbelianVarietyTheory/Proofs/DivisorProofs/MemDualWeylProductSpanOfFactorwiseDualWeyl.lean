@@ -43,7 +43,8 @@ theorem mr_map_mul (q : MvPolynomial σ k) (F : MvPolynomial σ A) :
     mr L (map (algebraMap k A) q * F) = map (algebraMap k B) q * mr L F := by
   classical
   ext n
-  simp only [coeff_mr, coeff_mul, coeff_map, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [coeff_mr, coeff_mul, coeff_map, map_sum]
   refine Finset.sum_congr rfl fun x _ => ?_
   rw [← Algebra.smul_def (AddMonoidAlgebra.coeff q x.1) (AddMonoidAlgebra.coeff F x.2), LinearMap.map_smul, Algebra.smul_def]
 end

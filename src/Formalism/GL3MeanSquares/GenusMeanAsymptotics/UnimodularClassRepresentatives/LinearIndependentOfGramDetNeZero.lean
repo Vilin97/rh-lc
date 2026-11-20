@@ -160,7 +160,8 @@ variable {K V : Type*} [Field K] [StarRing K] [AddCommGroup V] [Module K V]
 
 theorem gram_mulVec (x : Fin n → V) (c : Fin n → K) (i : Fin n) :
     ((Matrix.of fun i j => h (x i) (x j)) *ᵥ c) i = h (x i) (∑ j, c j • x j) := by
-  simp only [Matrix.mulVec, dotProduct, Matrix.of_apply, map_sum, map_smul, smul_eq_mul, mul_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mulVec, dotProduct, Matrix.of_apply, map_sum, map_smul, smul_eq_mul, mul_comm]
 
 theorem linearIndependent_of_gram_det_ne_zero (x : Fin n → V)
     (hdet : (Matrix.of fun i j => h (x i) (x j)).det ≠ 0) : LinearIndependent K x := by

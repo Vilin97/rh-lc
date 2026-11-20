@@ -160,7 +160,8 @@ theorem th_add (h𝔞 : ∀ p, p ∈ 𝔞 ↔ ε p = 0) (n : ℕ) (x : P) (hx : 
         PowerSeries.mk (fun k ↦ algebraMap B P (δ.dpow k (ε y))) := by
     ext k
     simp only [PowerSeries.coeff_mul, PowerSeries.coeff_mk, map_add]
-    rw [δ.dpow_add hu hv, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [δ.dpow_add hu hv, map_sum]
     simp only [map_mul]
   have hE : PowerSeries.mk (fun k ↦ η.dpow k (x + y - algebraMap B P (ε (x + y)))) =
       PowerSeries.mk (fun k ↦ η.dpow k (x - algebraMap B P (ε x))) *

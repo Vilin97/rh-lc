@@ -58,7 +58,8 @@ theorem rzMap_sec_eq (i : Fin (WeightFamilies.dimY D j + 1)) :
     rzMap X la N Ω gF (Formalism.MainNotions.Gaps.EtaleWeightGaps.sec X la w i) =
       ∑ k, algebraMap (Op X la N) (Kp X la N) (Tv X la N (i, k)) ⊗ₜ[X.Kl la]
         ((1 : X.Kl la) ⊗ₜ[B.KO] gF (X.inc wL (w k))) := by
-  rw [Formalism.MainNotions.Gaps.EtaleWeightGaps.sec, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Formalism.MainNotions.Gaps.EtaleWeightGaps.sec, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [map_smul, rzMap_emb, TensorProduct.smul_tmul', smul_eq_mul, mul_one]
 

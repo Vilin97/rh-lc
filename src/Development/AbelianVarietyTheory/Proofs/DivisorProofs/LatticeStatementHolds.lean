@@ -85,7 +85,8 @@ theorem latSt : LatSt := by
     have h0 : Dw.EF (y m') (a k) = ∑ m, cc m' m * Dw.EF (a m) (a k) := by
       calc Dw.EF (y m') (a k) = Dw.EF (∑ m, a.repr (y m') m • a m) (a k) := by rw [a.sum_repr]
         _ = ∑ m, cc m' m * Dw.EF (a m) (a k) := by
-          simp only [map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply, smul_eq_mul, cc]
+          set_option synthInstance.maxHeartbeats 100000 in
+            simp only [map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply, smul_eq_mul, cc]
     rw [← h0, hy, Module.Basis.coord_apply, Module.Basis.repr_self, Finsupp.single_apply]
     simp [eq_comm]
   let tb := Algebra.TensorProduct.basis (c.V W) a
@@ -114,14 +115,16 @@ theorem latSt : LatSt := by
     rw [EigenSplit.baseChangeAction_apply, actZ_apply] at hm
     have e1 : ∑ m, T i m ⊗ₜ[ℤ] (o • a m)
         = ((LinearMap.lsmul (𝓞 E) Dw.La o).restrictScalars ℤ).baseChange (c.V W) (∑ m, T i m ⊗ₜ[ℤ] a m) := by
-      simp [map_sum, LinearMap.baseChange_tmul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [map_sum, LinearMap.baseChange_tmul]
     rw [e1, hT, hm, ← hT, Finset.smul_sum]
     simp [TensorProduct.smul_tmul', smul_eq_mul]
   · intro i j
     have e2 : ∑ m, ∑ m', S i m * T j m' * ((Dw.EF (a m) (a m') : ℤ) : c.V W) = f i (b j) := by
       rw [Finset.sum_comm]
       simp_rw [mul_comm (S i _) (T j _), _root_.mul_assoc, ← Finset.mul_sum, hS]
-      rw [← hT j, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hT j, map_sum]
       refine Finset.sum_congr rfl fun m' _ => ?_
       have e3 : T j m' ⊗ₜ[ℤ] a m' = T j m' • ((1 : c.V W) ⊗ₜ[ℤ] a m') := by
         rw [TensorProduct.smul_tmul', smul_eq_mul, _root_.mul_one]

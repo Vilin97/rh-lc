@@ -29,7 +29,8 @@ theorem bcP_endP (p : PlF D) (Q : (VS D).V →ₗ[D.host.E] (VS D).V) (x : (VS D
     endP p Q (baseChange₂ D p x) = baseChange₂ D p (Q x) := by
   rw [endP, Fintype.linearCombination_apply]
   conv_rhs => rw [← (VS D).frame.sum_repr x]
-  rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_smul, baseChange_smul₂]
   rfl

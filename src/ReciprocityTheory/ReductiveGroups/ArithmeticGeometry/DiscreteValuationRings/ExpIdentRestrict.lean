@@ -82,7 +82,8 @@ theorem expIdent_mono (U : UnifPre I D A G) (e k : ℕ)
   have hle : U.expW e p j₁ S' jf jt ≤ U.expW e p j₁ S jf jt :=
     inf_le_inf_left _ (Finset.inf_mono hSS)
   have key := congrArg (rs hle) hS
-  simp only [rs, res, Units.coe_map, MonoidHom.coe_coe, map_mul, map_pow, map_sum] at key
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [rs, res, Units.coe_map, MonoidHom.coe_coe, map_mul, map_pow, map_sum] at key
   rw [sum_attach_mono hSS _ (fun α hα => by
     have h0 := hvan α.1 hα (jf α.1)
     erw [h0, map_zero, zero_mul])]
@@ -119,7 +120,8 @@ theorem expIdent_restrict [DecidableEq D.toPre.X] (U : UnifPre I D A G) (e k : �
           (((U.gt e).pG.left.app _).hom ((f α).f (jf α))) *
         (res (hO.trans (U.expWeight_le_chart_weight e p j₁ jf jt hα)) (((U.gt e).t α).s (jt α))).val else 0) := by
   have key := congrArg (rs hO) (h p j₁ jf jt hj hcoh)
-  simp only [rs, res, Units.coe_map, MonoidHom.coe_coe, map_mul, map_pow, map_sum, map_map_hom] at key
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [rs, res, Units.coe_map, MonoidHom.coe_coe, map_mul, map_pow, map_sum, map_map_hom] at key
   rw [sum_attach_dite] at key
   refine key.trans (Finset.sum_congr rfl fun α hα => ?_)
   simp only [dif_pos hα]
@@ -153,7 +155,8 @@ theorem expIdent_pull [DecidableEq D.toPre.X] (U : UnifPre I D A G) (e k : ℕ)
         else 0) := by
   have key := expIdent_restrict U e k σ f S h p j₁ jf jt hj hcoh (le_refl _)
   have key2 := congrArg (fun x => rs hO ((hh.app _).hom x)) key
-  simp only [map_mul, map_pow, map_sum] at key2
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_mul, map_pow, map_sum] at key2
   refine key2.trans (Finset.sum_congr rfl fun α hα => ?_)
   simp only [dif_pos hα, map_mul]
 

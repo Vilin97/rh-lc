@@ -28,7 +28,8 @@ theorem herm_smul_left (x w : Fin n → E) (e : E) :
   ring
 
 theorem herm_conj (h : IsHermForm c G) (x y : Fin n → E) : c (hermE c G x y) = hermE c G y x := by
-  simp only [hermE, map_sum, map_mul, h.1, h.2.2.1]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hermE, map_sum, map_mul, h.1, h.2.2.1]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
   ring

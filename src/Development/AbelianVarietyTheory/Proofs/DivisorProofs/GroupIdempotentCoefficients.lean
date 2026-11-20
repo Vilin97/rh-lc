@@ -26,7 +26,8 @@ theorem idemOf_props {K : Type} [Field K] [NumberField K] {G : Type} [Group G] [
   · obtain ⟨b, hb⟩ := idemOf_integral X hX g
     rw [← hb]
     exact b.isIntegral_coe
-  · rw [coeff_idemOf, coeff_idemOf, map_sum, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [coeff_idemOf, coeff_idemOf, map_sum, map_sum, map_sum]
     refine Finset.sum_congr rfl fun χ hχ => ?_
     have h1 := (hX χ hχ).map_inv σ 1
     have h2 := (hX χ hχ).map_inv σ g

@@ -112,7 +112,8 @@ theorem mem_unramified_of_frobenius_iterate_fixed_fil_alt :
       ∑ j ∈ Finset.range n, (⇑P.φB)^[j] (algebraMap ↥(K0 K) P.R.B b * c) := by
     intro b
     apply (P.PD K).fund
-    · rw [P.PD_φ, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [P.PD_φ, map_sum]
       have e1 : ∀ j, P.φB ((⇑P.φB)^[j] (algebraMap ↥(K0 K) P.R.B b * c)) =
           (⇑P.φB)^[j + 1] (algebraMap ↥(K0 K) P.R.B b * c) :=
         fun j => (Function.iterate_succ_apply' _ _ _).symm
@@ -123,7 +124,8 @@ theorem mem_unramified_of_frobenius_iterate_fixed_fil_alt :
       have h := Finset.sum_range_succ' (fun j => (⇑P.φB)^[j] (algebraMap ↥(K0 K) P.R.B b * c)) n
       rw [Finset.sum_range_succ, hfn] at h
       exact (add_right_cancel h).symm
-    · rw [P.PD_ι, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [P.PD_ι, map_sum]
       refine Submodule.sum_mem _ fun j _ => ?_
       rw [iterate_φB_mul, map_mul, ιB_algebraMap, ← Algebra.smul_def]
       exact Submodule.smul_of_tower_mem _ _ (hF j)
@@ -144,6 +146,7 @@ theorem mem_unramified_of_frobenius_iterate_fixed_fil_alt :
   have h0 := congrFun hv ⟨0, hn0⟩
   simp only [v, Function.iterate_zero, id] at h0
   rw [h0]
-  simp [Matrix.mulVec, dotProduct, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Matrix.mulVec, dotProduct, map_sum, map_mul]
 
 end GlobalTheory.CrisPerFix

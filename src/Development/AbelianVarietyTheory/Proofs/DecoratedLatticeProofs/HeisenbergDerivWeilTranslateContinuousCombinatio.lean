@@ -74,7 +74,8 @@ theorem dLine_eq_sum (hψ : IsStdChar D ψ (-1)) {θ : GlobalTheory.IndefiniteRo
   simp only [Pi.smul_apply, smul_eq_mul]
   simp only [fun i => key (N i) (hN i) (hN0 i), hN1]
   conv_lhs => rw [← b.sum_repr (piW θ T S (L 1))]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_smul, Complex.real_smul, Module.Basis.coord_apply]
 
@@ -109,7 +110,8 @@ theorem dLine_om_comb : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp
       ((continuous_pi' hθ T S).comp hc))
   · obtain ⟨g, k⟩ := p
     have e := om_dLine hW g k (hMp (g, k)) (hMp0 (g, k)) hM hM0 (fun t => (actO_actO_inv g k (M t)).symm) hf
-    rw [← e, dLine_eq_sum hψ h b (hMp (g, k)) (hMp0 (g, k)) N hN hN0 hN1 hf, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← e, dLine_eq_sum hψ h b (hMp (g, k)) (hMp0 (g, k)) N hN hN0 hN1 hf, map_sum]
     simp only [map_smul]
 
 end GlobalTheory.HeisLineComb

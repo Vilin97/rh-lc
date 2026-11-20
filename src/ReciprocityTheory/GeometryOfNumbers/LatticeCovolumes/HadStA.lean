@@ -13,7 +13,8 @@ variable {K : Type*} [Field K] [NumberField K]
 theorem qf_im_eq_zero {n : ℕ} (F : Fin n → Fin n → ℂ) (hF : ∀ i j, starRingEnd ℂ (F i j) = F j i)
     (c : Fin n → ℂ) : (∑ i, ∑ j, starRingEnd ℂ (c i) * c j * F i j).im = 0 := by
   rw [← Complex.conj_eq_iff_im]
-  simp only [map_sum, map_mul, Complex.conj_conj, hF]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, Complex.conj_conj, hF]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   ring
@@ -117,7 +118,8 @@ theorem relIndex_le_of_append {E' : Submodule (𝓞 K) V'} {E : Submodule (𝓞 
       have h1 : ∑ k, algebraMap (𝓞 K) K (d k) • Fin.append (fun i => α (v i)) w' k = α x := by
         rw [← hd]
         exact Finset.sum_congr rfl fun k _ => algebraMap_smul K (d k) _
-      rw [h1, ← hc, map_sum, Fin.sum_univ_add]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [h1, ← hc, map_sum, Fin.sum_univ_add]
       simp [Fin.append_left, Fin.append_right, map_smul]
     rw [← hc]
     refine Submodule.sum_mem _ fun i _ => ?_

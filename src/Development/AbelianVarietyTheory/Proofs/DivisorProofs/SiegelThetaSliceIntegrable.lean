@@ -112,7 +112,8 @@ theorem pureA_glue (M : Matrix κ m F) (f : (κ → mixedEmbedding.mixedSpace F)
   · congr 1
     rw [archM_apply, ← sum_eq_mulVec]
     funext i
-    rw [fst_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [fst_sum, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     show InfiniteAdeleRing.ringEquiv_mixedSpace F ((InfiniteAdeleRing.ringEquiv_mixedSpace F).symm (eI F m p.1 j) *
       algebraMap F (InfiniteAdeleRing F) (M i j)) = _

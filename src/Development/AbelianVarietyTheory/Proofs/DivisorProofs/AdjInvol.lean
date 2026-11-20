@@ -262,7 +262,8 @@ theorem chain_at {f : (ι → Mt n) → ℂ} (hf : SmFn Hm f) {E : Type} [Normed
     rw [this]; rfl
   rw [e] at c4 c5
   refine c5.trans ?_
-  rw [← sum_sgl (adj Hm _ * _), map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← sum_sgl (adj Hm _ * _), map_sum]
   refine Finset.sum_congr rfl fun τ _ => ?_
   rw [← c2 _ (sgl_skew hH ((skew_iff hH _).1 c4 τ))]
   simp only [exp_sgl]

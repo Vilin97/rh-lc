@@ -74,7 +74,8 @@ private theorem lattice_sum_le (F : Type) [Field F] [NumberField F] {κ : Type} 
   refine le_trans ?_ (Finset.sum_le_sum fun j _ => hC j (f j))
   rw [← Summable.tsum_finsetSum fun _ _ => ENNReal.summable]
   refine ENNReal.tsum_le_tsum fun ξ => ?_
-  rw [map_sum, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_apply]
   simp only [hT']
   exact enorm_sum_le _ _
 

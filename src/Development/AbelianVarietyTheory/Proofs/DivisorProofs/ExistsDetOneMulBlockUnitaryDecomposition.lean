@@ -69,7 +69,8 @@ variable {D : D7}
 theorem hf_incA (V : HSp D) (x0 : Fin V.rank → D.host.E) :
     hf (cA D) (V.gram.map (incA D))ᵀ (fun a => incA D (x0 a)) (fun a => incA D (x0 a)) =
       incA D (hf (starRingEnd D.host.E) V.gramᵀ x0 x0) := by
-  simp only [hf, map_sum, map_mul, Matrix.transpose_apply, Matrix.map_apply, GlobalTheory.DualPairCheck.cA_incA,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hf, map_sum, map_mul, Matrix.transpose_apply, Matrix.map_apply, GlobalTheory.DualPairCheck.cA_incA,
     starRingEnd_apply]
 
 theorem exists_aniso_gram (V : HSp D) (hV : 0 < V.rank) :

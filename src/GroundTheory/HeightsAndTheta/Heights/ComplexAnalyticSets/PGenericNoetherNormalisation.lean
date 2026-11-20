@@ -100,7 +100,8 @@ theorem exists_leadingCoeff_nagata (fne : f ≠ 0) :
       using degreeOf_nagata_ne_of_ne f _ _ h1 vin <| ne_of_not_mem_cons h2
   have coeff : (finSuccEquiv A n ((nagataEquiv f) (h v + ∑ x ∈ f.support \ {v}, h x))).leadingCoeff =
       (finSuccEquiv A n ((nagataEquiv f) (h v))).leadingCoeff := by
-    simp only [map_add, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_add, map_sum]
     rw [add_comm]
     apply leadingCoeff_add_of_degree_lt <| (lt_of_le_of_lt <| degree_sum_le _ _) ?_
     have h2 : h v ≠ 0 := by simpa [h] using mem_support_iff.mp vin

@@ -48,7 +48,8 @@ theorem ghost_succ_xi {ε : PreTilt O p} (hε : IsPrimitiveSystem ε) (k : ℕ) 
     rw [h0, one_pow]
   change ghostHom p O (k + 1) (xi ε) = p
   unfold xi
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [map_pow]
   change ∑ i ∈ Finset.range p, (ghost p O (k + 1) (WittVector.teichmuller p (root ε))) ^ i = p
   simp [h]

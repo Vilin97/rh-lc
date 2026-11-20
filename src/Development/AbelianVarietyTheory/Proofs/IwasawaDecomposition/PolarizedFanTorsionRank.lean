@@ -37,7 +37,8 @@ theorem ell_eq_sum {X : Type} [AddCommGroup X] {ι : Type} [Fintype ι] (b : Mod
     LinearMap.BilinForm.ext_basis b fun k l => by
       simp [LinearMap.sum_apply, Finsupp.single_apply]
   conv_lhs => rw [e]
-  simp only [map_sum, map_smul, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, smul_eq_mul]
   exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => mul_comm _ _
 
 theorem exists_monomial : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (q g d : ℕ) (φs : InvFun ℤ) (𝒩 : Finset ℕ)

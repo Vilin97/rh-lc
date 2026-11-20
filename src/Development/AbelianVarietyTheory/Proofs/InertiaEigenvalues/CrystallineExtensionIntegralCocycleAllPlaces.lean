@@ -63,7 +63,8 @@ theorem Q_pow_φ_mem [NeZero n] (T : LocLat G Qp LL O) (M : ZMod n → ℕ)
     (x : W.DD T) (hx : x ∈ W.N T) : W.Q ^ (mx M) • W.φD T x ∈ W.N T := by
   have hx' : x = ∑ i : ZMod n, (letE i : LetA O n) • x := by
     rw [← Finset.sum_smul, sum_letE, one_smul]
-  rw [hx', map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hx', map_sum, Finset.smul_sum]
   refine Submodule.sum_mem _ fun i _ => ?_
   have hle : M (i + 1) ≤ mx M := le_ciSup (Set.finite_range M).bddAbove (i + 1)
   have hmem : (letE i : LetA O n) • x ∈ W.Nl T (i + 1 - 1) := by

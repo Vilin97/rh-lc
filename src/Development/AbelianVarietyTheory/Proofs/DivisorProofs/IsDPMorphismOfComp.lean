@@ -89,7 +89,8 @@ def dp : DividedPowers (J.map (algebraMap B S)) where
     exact Ideal.mul_mem_left _ _ (Ideal.mem_map_of_mem _ (δ.dpow_mem hn hj))
   dpow_add hx hy := by
     obtain ⟨u, j, j', hj, hj', rfl, rfl⟩ := rep₂ M hx hy
-    rw [← mul_add, ← map_add, ext_eq M δ _ _ (J.add_mem hj hj'), δ.dpow_add hj hj', map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← mul_add, ← map_add, ext_eq M δ _ _ (J.add_mem hj hj'), δ.dpow_add hj hj', map_sum,
       Finset.mul_sum]
     refine Finset.sum_congr rfl fun k hk ↦ ?_
     rw [ext_eq M δ _ _ hj, ext_eq M δ _ _ hj', ← (Finset.HasAntidiagonal.mem_antidiagonal.1 hk : k.1 + k.2 = _), map_mul]

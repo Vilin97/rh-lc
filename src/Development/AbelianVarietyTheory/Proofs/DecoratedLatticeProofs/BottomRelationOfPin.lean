@@ -171,7 +171,8 @@ theorem GlobalTheory.MiTop.botRel_two : GlobalTheory.Published.DiscreteSeriesCla
       intro C₁
       rw [← hcf]
       funext g
-      simp only [SBes.colForm, Finsupp.sum, map_sum, map_smul, Finset.sum_apply, Pi.smul_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [SBes.colForm, Finsupp.sum, map_sum, map_smul, Finset.sum_apply, Pi.smul_apply]
     rw [hlin C, hlin C',
       GlobalTheory.SeeSaw.perSum_all D W.Q.Rl.ψ hψ D.R.rS d.B.lev _ (contAut_rTrans _ (contAut_multT hT v)) _ cf.support cf
         (fun i => d.B.colForm C.1 (ξ i)) (fun i _ => hcont C (ξ i)),

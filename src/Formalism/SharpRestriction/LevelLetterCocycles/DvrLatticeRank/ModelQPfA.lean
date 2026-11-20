@@ -99,7 +99,8 @@ theorem finite_of (Pt : ZMod n → LL → (K →ₐ[Qp] LL) → Prop) (π' Eπ :
       · refine Submodule.mem_sup_left ?_
         have hl : (l : LcQ W T π' c) ∈ Submodule.span O (Set.range gL) := by rw [hgL]; trivial
         obtain ⟨o, ho⟩ := (Submodule.mem_span_range_iff_exists_fun O).1 hl
-        rw [← ho, Finset.mul_sum, map_sum, TensorProduct.tmul_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [← ho, Finset.mul_sum, map_sum, TensorProduct.tmul_sum]
         refine Submodule.sum_mem _ fun j _ => ?_
         rw [TensorProduct.tmul_smul, TensorProduct.sum_tmul]
         refine Submodule.smul_mem _ _ (Submodule.sum_mem _ fun r hr => ?_)
@@ -134,17 +135,20 @@ theorem finite_of (Pt : ZMod n → LL → (K →ₐ[Qp] LL) → Prop) (π' Eπ :
 
   obtain ⟨cf, hcf⟩ := (Submodule.mem_span_range_iff_exists_fun O).1 hy
   have hyL1 : smulE W T π' c Ei y ∈ LamLA W T π' Eπ h' c ⊤ := by
-    rw [← hcf, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hcf, map_sum]
     exact Submodule.sum_mem _ fun p _ => by rw [map_smul]; exact Submodule.smul_mem _ _ (hmem p)
   have hyeq : (⟨_, hyL1⟩ : ↥(LamLA W T π' Eπ h' c ⊤)) = ∑ p, cf p • ⟨_, hmem p⟩ := by
     apply Subtype.ext
     rw [Submodule.coe_sum]
     simp only [Submodule.coe_smul]
-    rw [← hcf, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hcf, map_sum]
     exact Finset.sum_congr rfl fun p _ => map_smul _ _ _
   have hyL2 : mkQ ⟨_, hyL1⟩ ∈ Submodule.span O ((Finset.univ.image fun p => mkQ ⟨_, hmem p⟩ : Finset _) :
       Set (QL W T Pt π' Eπ h' c)) := by
-    rw [hyeq, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hyeq, map_sum]
     exact Submodule.sum_mem _ fun p _ => by
       rw [map_smul]
       exact Submodule.smul_mem _ _ (Submodule.subset_span

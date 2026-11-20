@@ -97,7 +97,8 @@ theorem prod_shift {ι : Type} (k : ι → Type) [∀ i, CommRing (k i)] {S : Ty
     · rw [(hs j hj).2 hji, Pi.single_eq_of_ne hji]
   · have h1 : χ s = χ (∑ i ∈ Pg, (σ (Pi.single i (p i s)) 0 + σ 0 (Pi.single i (p' i s)))) := by
       refine hdep _ _ (fun j hj => ?_)
-      simp only [map_sum, map_add, (hσ _ _ j hj).1, (hσ _ _ j hj).2, Pi.zero_apply, add_zero,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_add, (hσ _ _ j hj).1, (hσ _ _ j hj).2, Pi.zero_apply, add_zero,
         zero_add]
       constructor
       · rw [Finset.sum_eq_single j (fun b _ hb => Pi.single_eq_of_ne (Ne.symm hb) _)

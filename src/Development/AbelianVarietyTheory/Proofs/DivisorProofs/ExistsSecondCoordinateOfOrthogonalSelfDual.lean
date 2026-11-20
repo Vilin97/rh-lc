@@ -81,7 +81,8 @@ theorem selfDual_exists_snd_of_orth : ∀ {F : Type} [Field F] [NumberField F] (
   have key : u ⬝ᵥ l.2 - l.1 ⬝ᵥ y' = u ⬝ᵥ m.2 := by
     rw [hy, hm2, dotProduct_sub, dotProduct_sum]
     congr 1
-    rw [hsum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hsum, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [LinearMap.map_smul, hgb, dotProduct_smul]
   rw [key]

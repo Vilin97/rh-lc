@@ -199,7 +199,8 @@ theorem loc_div (Λ : Submodule (𝓞 E) S.V) (hU : Formalism.HermitianLatticesT
   have hsum : S.hT w (frameAct (frame F) ξ (Fin.castSucc c)) =
       ∑ a, ξ a (Fin.castSucc c) • S.hT w (frame F a) := by
     unfold frameAct
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl (fun a _ => ?_)
     rw [LinearMap.map_smul, smul_eq_mul, Algebra.smul_def]
   refine ⟨s, hs, ?_⟩

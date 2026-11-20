@@ -136,7 +136,8 @@ def FinGradedSub.coneSubE : Submodule (Poly S N) (ConeE S x E) where
   zero_mem' c := by rw [map_zero]; exact zero_mem _
   smul_mem' p w hw c := by
     change coeffE S x E c (p • w) ∈ M.piece c
-    rw [← sum_homogeneousComponent p, Finset.sum_smul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← sum_homogeneousComponent p, Finset.sum_smul, map_sum]
     refine Submodule.sum_mem _ fun e _ => ?_
     rw [coeffE_smul_of_isHomogeneous (homogeneousComponent_isHomogeneous e p)]
     have := M.smul_mem e (c - e) _ _ (homogeneousComponent_isHomogeneous e p) (hw (c - e))

@@ -74,7 +74,8 @@ lemma coeff_prod_one_sub (i : ℕ) :
     rw [Finset.prod_neg, Finset.prod_mul_distrib, Finset.prod_const, ← map_prod, map_mul, map_pow,
       map_neg, map_one]
     ring
-  rw [h1, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h1, map_sum]
   simp_rw [PowerSeries.coeff_C_mul_X_pow]
   rw [← Finset.sum_filter]
   have hf : ((univ : Finset σ).powerset.filter fun t => i = t.card) = (univ : Finset σ).powersetCard i := by
@@ -137,7 +138,8 @@ lemma aeval_tri {S : Type*} [CommRing S] [Algebra R S] (e h : ℕ → S) (he0 : 
     intro hk
     rcases k with _ | k
     · rw [tri, map_one, hh0]
-    · rw [tri_succ, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [tri_succ, map_sum]
       have hrel := rel (k + 1) (by omega) hk
       rw [Finset.sum_range_succ'] at hrel
       simp only [pow_zero, one_mul, he0, Nat.sub_zero] at hrel

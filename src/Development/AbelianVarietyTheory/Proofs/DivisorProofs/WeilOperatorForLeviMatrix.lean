@@ -23,7 +23,8 @@ theorem hom_mulVec {S T : Type} [CommRing S] [CommRing T] (f : S →+* T) (g : F
     (hg : f.comp g = g') (M : Matrix κ κ F) (x : κ → S) (i : κ) :
     f ((M.map g *ᵥ x) i) = (M.map g' *ᵥ (fun j => f (x j))) i := by
   subst hg
-  simp [Matrix.mulVec, dotProduct, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Matrix.mulVec, dotProduct, map_sum, map_mul]
 
 theorem spAct_levi {R : Type} [CommRing R] [Algebra F R] (A : Matrix κ κ F) (w : (κ → R) × (κ → R)) :
     GlobalTheory.SympChange.spAct (GlobalTheory.SympChange.leviM A) w =

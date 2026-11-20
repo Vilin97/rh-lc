@@ -54,7 +54,8 @@ theorem zeta_sub_one_mem_span : ∀ (p : ℕ) [Fact p.Prime], p ≠ 2 → ∀ (�
   let Y : Ω → Ω := fun ρ => ∑ e ∈ E with e r = ρ, e y
   have hYgal : ∀ h ∈ Hinf T, ∀ ρ, h (Y ρ) = Y (h ρ) := by
     intro h hh ρ
-    simp only [Y, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Y, map_sum]
     have hmem : ∀ k ∈ Hinf T, ∀ e ∈ E, k * e ∈ Hinf T := fun k hk e he => mul_mem hk (hE' e he)
     refine Finset.sum_nbij' (fun e => rep (h * e)) (fun e => rep (h⁻¹ * e)) ?_ ?_ ?_ ?_ ?_
     · intro e he

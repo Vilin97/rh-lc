@@ -72,7 +72,8 @@ theorem isometric_wtLine_pull (lam : ι → Fin N → ℤ) (x : ι × Fin (N + 1
       fun y => coef lam y.1).pull (forget x) (toZ_ext _ _)) := by
   classical
   refine icls_eq_iff.1 ?_
-  rw [icls_wtLine, icls_pull, icls_comb, map_sum, Fintype.sum_eq_add_sum_subtype_ne _ x, hx, zero_smul, zero_add]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [icls_wtLine, icls_pull, icls_comb, map_sum, Fintype.sum_eq_add_sum_subtype_ne _ x, hx, zero_smul, zero_add]
   refine Finset.sum_congr rfl fun y _ => ?_
   rw [map_zsmul, ← icls_pull, icls_eq_iff.2 (isometric_pull_detDual x y)]
 

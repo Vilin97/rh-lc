@@ -128,7 +128,8 @@ theorem frame_values {O I : Type} (ev : L →+ ER) (hev : ∀ a : A, ∃ r : F, 
       have hne : t i ≠ s₀ := fun h => hn (h ▸ ht i)
       obtain ⟨a, ha⟩ := hχ _ _ hne
       have e1 : T a w = ∑ j, (d j * χ (t j) a) • B j := by
-        conv_lhs => rw [hw', map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          conv_lhs => rw [hw', map_sum]
         refine Finset.sum_congr rfl fun j _ => ?_
         rw [map_smul, hB]
         show d j • T a (ev (c j)) = _

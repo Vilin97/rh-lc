@@ -98,7 +98,8 @@ theorem hasDerivAt_big (hP : GlobalTheory.FunPr.Hypotheses₂) (hθ : IsInfFam �
     funext x
     refine (hp x).unique ?_
     rw [e1]
-    simp only [map_sum, Finset.sum_apply, GlobalTheory.EvZeroInf.pure_eq_tens]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, Finset.sum_apply, GlobalTheory.EvZeroInf.pure_eq_tens]
     exact HasDerivAt.fun_sum fun i _ => (hδ _ (hf i).1).2 _ (hrest i) x
   have := hI (kapX X e hO.JX h)
   rw [e2] at this

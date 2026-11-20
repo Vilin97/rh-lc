@@ -203,7 +203,8 @@ theorem theta_Hd_le (R : Type) [CommRing R] (m d : ℕ) (vec : Bool) :
   intro y hy
   obtain ⟨P, hP, rfl⟩ := Submodule.mem_map.1 hy
   rw [mem_Hd] at hP
-  rw [AlgHom.toLinearMap_apply, P.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [AlgHom.toLinearMap_apply, P.as_sum, map_sum]
   refine Submodule.sum_mem _ (fun μ hμ => ?_)
   unfold theta
   rw [MvPolynomial.aeval_monomial, ← Algebra.smul_def]

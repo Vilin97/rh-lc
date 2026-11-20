@@ -81,7 +81,8 @@ theorem hform_crdA {D : D7} (A : UnitaryGroupInstance D) (v w : (VS D).V) :
     A.ιE (Formalism.UG.hform (starRingEnd A.I.E) A.I.J (crdOf A.I A.ιE A.bas v) (crdOf A.I A.ιE A.bas w)) =
       (VS D).hT v w := by
   conv_rhs => rw [← A.bas.sum_repr v, ← A.bas.sum_repr w]
-  simp only [map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
     Formalism.UG.hform, map_mul, crdOf, starRingEnd_apply, A.ιE_conj, RingEquiv.apply_symm_apply,
     A.J_eq, Finset.mul_sum]
   rw [Finset.sum_comm]
@@ -137,7 +138,8 @@ theorem hform_crdA {D : D7} (A : UnitaryGroupInstance D) (v w : (VS D).V) :
     A.ιE (Formalism.UG.hform (starRingEnd A.I.E) A.I.J (crdOf A.I A.ιE A.bas v) (crdOf A.I A.ιE A.bas w)) =
       (VS D).hT v w := by
   conv_rhs => rw [← A.bas.sum_repr v, ← A.bas.sum_repr w]
-  simp only [map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
     Formalism.UG.hform, map_mul, crdOf, starRingEnd_apply, A.ιE_conj, RingEquiv.apply_symm_apply,
     A.J_eq, Finset.mul_sum]
   rw [Finset.sum_comm]
@@ -210,7 +212,8 @@ theorem hform_crdA {D : D7} (A : UnitaryGroupInstance D) (v w : (VS D).V) :
     A.ιE (Formalism.UG.hform (starRingEnd A.I.E) A.I.J (crdOf A.I A.ιE A.bas v) (crdOf A.I A.ιE A.bas w)) =
       (VS D).hT v w := by
   conv_rhs => rw [← A.bas.sum_repr v, ← A.bas.sum_repr w]
-  simp only [map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
     Formalism.UG.hform, map_mul, crdOf, starRingEnd_apply, A.ιE_conj, RingEquiv.apply_symm_apply,
     A.J_eq, Finset.mul_sum]
   rw [Finset.sum_comm]
@@ -300,7 +303,8 @@ theorem hform_crdA {D : D7} (A : UnitaryGroupInstance D) (v w : (VS D).V) :
     A.ιE (Formalism.UG.hform (starRingEnd A.I.E) A.I.J (crdOf A.I A.ιE A.bas v) (crdOf A.I A.ιE A.bas w)) =
       (VS D).hT v w := by
   conv_rhs => rw [← A.bas.sum_repr v, ← A.bas.sum_repr w]
-  simp only [map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
     Formalism.UG.hform, map_mul, crdOf, starRingEnd_apply, A.ιE_conj, RingEquiv.apply_symm_apply,
     A.J_eq, Finset.mul_sum]
   rw [Finset.sum_comm]

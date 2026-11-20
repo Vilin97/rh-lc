@@ -80,7 +80,8 @@ theorem coeff_expMv (f : MvPowerSeries σ ℂ_[p]) (α : σ →₀ ℕ) :
 
 theorem coeff_expT (f : MvPowerSeries σ ℂ_[p]) (N : ℕ) (α : σ →₀ ℕ) :
     coeff α (expT f N) = ∑ n ∈ Finset.range N, coeff α (f ^ n) / (n.factorial : ℂ_[p]) := by
-  simp only [expT, map_sum, map_smul, smul_eq_mul, div_eq_inv_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [expT, map_sum, map_smul, smul_eq_mul, div_eq_inv_mul]
 
 theorem coeff_expMv_eq_expT {f : MvPowerSeries σ ℂ_[p]} (hf : constantCoeff f = 0) {α : σ →₀ ℕ}
     {N : ℕ} (hN : Finsupp.degree α < N) : coeff α (expMv f) = coeff α (expT f N) := by
@@ -93,7 +94,8 @@ theorem coeff_expMv_eq_expT {f : MvPowerSeries σ ℂ_[p]} (hf : constantCoeff f
 
 theorem pderiv_expT (f : MvPowerSeries σ ℂ_[p]) (i : σ) (N : ℕ) :
     pderiv ℂ_[p] i (expT f (N + 1)) = pderiv ℂ_[p] i f * expT f N := by
-  simp only [expT, map_sum, Derivation.map_smul, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [expT, map_sum, Derivation.map_smul, Finset.mul_sum]
   rw [Finset.sum_range_succ']
   simp only [pow_zero, Derivation.map_one_eq_zero, smul_zero, add_zero]
   refine Finset.sum_congr rfl fun n _ => ?_

@@ -171,7 +171,8 @@ lemma lval_posPart {k : ℤ} {q : ℕ} (σ : Cochain (twistAb A n k) (cover A n)
 lemma d_posPart {k : ℤ} {q : ℕ} (σ : Cochain (twistAb A n k) (cover A n) q) :
     d _ _ q (posPart σ) = posPart (d _ _ q σ) := by
   refine cochain_ext fun i => ?_
-  rw [lval_d, lval_posPart, lval_d, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [lval_d, lval_posPart, lval_d, map_sum]
   simp only [lval_posPart, map_zsmul]
 
 lemma topCoeff_d {k : ℤ} {q : ℕ} (hq : q + 1 = n) (τ : Cochain (twistAb A n k) (cover A n) q) :

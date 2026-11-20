@@ -31,14 +31,16 @@ private theorem cyclotomic_pow_sub_one_nilpotent {B : Type*} [CommRing B] (p : �
     omega
   · letI : Algebra (ZMod p) B := ZMod.algebra B p
     have h2 := congrArg (Polynomial.aeval z) (geom_sum_eq_pow_poly p)
-    simp only [map_sum, map_pow, map_sub, map_one, Polynomial.aeval_X] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_pow, map_sub, map_one, Polynomial.aeval_X] at h2
     rw [h2] at h
     rw [← pow_mul, mul_comm, pow_mul, h]
 
 private theorem dvd_prod_shift_sub_prod {A : Type*} [CommRing A] (p : ℕ) [Fact p.Prime] (z : A)
     (h : (p : A) ∣ (z - 1) ^ p ∨ (p : A) ∣ (∑ i ∈ Finset.range p, z ^ i) ^ p) :
     (p : A) ∣ (z ^ p - 1) ^ (p - 1) := by
-  simp only [← Ideal.mem_span_singleton, ← Ideal.Quotient.eq_zero_iff_mem, map_pow, map_sub,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← Ideal.mem_span_singleton, ← Ideal.Quotient.eq_zero_iff_mem, map_pow, map_sub,
     map_one, map_sum] at h ⊢
   refine cyclotomic_pow_sub_one_nilpotent p ?_ _ h
   rw [← map_natCast (Ideal.Quotient.mk (span {(p : A)})), Ideal.Quotient.eq_zero_iff_mem]
@@ -69,7 +71,8 @@ theorem p_dvd_mu_pow [IsDomain R] (η : tateModule p R) :
   · right
     have := p_dvd_pow_of_theta (∑ i ∈ Finset.range p, Ainf.teich p y ^ i)
       (by simpa only [map_sum, map_pow] using h)
-    simpa only [map_sum, map_pow] using this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa only [map_sum, map_pow] using this
   · left
     have := p_dvd_pow_of_theta (Ainf.teich p y - 1) (by simpa only [map_sub, map_one] using h)
     simpa only [map_sub, map_one] using this

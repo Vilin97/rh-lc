@@ -95,7 +95,8 @@ theorem dens : CompanionTheory.D.LK.Dens := by
     refine ⟨∑ i, u i * psi ε (r i), fun s => ?_⟩
     have hu' : ∀ i, ev E (u i) v = φ (b i) := fun i => by simpa using hu i
     conv_rhs => rw [← b.sum_repr s]
-    simp only [map_sum, map_mul, LinearMap.sum_apply, Module.End.mul_apply, ev_psi ε E L hL, hr, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, LinearMap.sum_apply, Module.End.mul_apply, ev_psi ε E L hL, hr, map_smul]
     refine Finset.sum_congr rfl fun i _ => ?_
     simp [hu']
 

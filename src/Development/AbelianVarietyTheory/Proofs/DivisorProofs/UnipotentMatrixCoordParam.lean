@@ -22,7 +22,8 @@ theorem sigma_sigma (σ : E →ₐ[F] E) (h : IsCMExt F E σ) (x : E) : σ (σ x
 
 theorem form_swap (σ : E →ₐ[F] E) (hσ : ∀ x, σ (σ x) = x) {n : ℕ} (J : Matrix (Fin n) (Fin n) E)
     (hJ : ∀ i j, σ (J j i) = -J i j) (v w : Fin n → E) : form σ J w v = -σ (form σ J v w) := by
-  simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, Finset.mul_sum, ← Finset.sum_neg_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, Finset.mul_sum, ← Finset.sum_neg_distrib]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   rw [hJ]; ring
@@ -64,7 +65,8 @@ theorem mul_incM_apply {n : ℕ} {κ : Type} (M : Matrix (Fin n) (Fin n) (AE F E
 theorem vecMul_incM_apply (σ : E →ₐ[F] E) {n : ℕ} {κ : Type} (J : Matrix (Fin n) (Fin n) E)
     (P : Matrix (Fin n) κ E) (v : Fin n → AE F E) (o : κ) :
     (v ᵥ* incM F (J * P.map σ)) o = fA σ J v (incV F (fun k => P k o)) := by
-  simp [fA, Matrix.vecMul, Matrix.mulVec, dotProduct, incM, incV, Matrix.mul_apply, cA_inclR, map_sum, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [fA, Matrix.vecMul, Matrix.mulVec, dotProduct, incM, incV, Matrix.mul_apply, cA_inclR, map_sum, map_mul,
     Finset.mul_sum]
 
 theorem eq_zero_of_cartan (B : Base F E) {n₁ : ℕ} (Y₁ : Spc F E n₁)

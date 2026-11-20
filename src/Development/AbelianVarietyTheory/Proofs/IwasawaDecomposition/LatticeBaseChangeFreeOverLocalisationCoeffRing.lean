@@ -19,7 +19,8 @@ theorem bcEnd_comp (s : A →+* O) (e : (ι → A) →ₗ[A] (ι → A)) (r : ι
     ext i; simp [Finset.sum_apply, Pi.single_apply]
   conv_rhs => rw [hr]
   ext i
-  simp [bcEnd, Finset.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [bcEnd, Finset.sum_apply, map_sum]
 
 theorem free_quot [IsDomain O] [IsPrincipalIdealRing O] (s : A →+* O) (N : Submodule A (ι → A))
     (e : (ι → A) →ₗ[A] (ι → A)) (he1 : ∀ x, e x ∈ N) (he2 : ∀ x ∈ N, e x = x) :

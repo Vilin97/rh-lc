@@ -29,7 +29,8 @@ theorem trace_map_tensor {F E : Type} [Field F] [Field E] [Algebra F E] {R R' : 
       f (Algebra.trace R (R ⊗[F] E) x) := by
   rw [Algebra.trace_eq_matrix_trace (Algebra.TensorProduct.basis R' b),
     Algebra.trace_eq_matrix_trace (Algebra.TensorProduct.basis R b)]
-  simp only [Matrix.trace, Matrix.diag, Algebra.leftMulMatrix_eq_repr_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.trace, Matrix.diag, Algebra.leftMulMatrix_eq_repr_mul, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   have h : Algebra.TensorProduct.map f (AlgHom.id F E) (x * Algebra.TensorProduct.basis R b k) =
       Algebra.TensorProduct.map f (AlgHom.id F E) x * Algebra.TensorProduct.basis R' b k := by

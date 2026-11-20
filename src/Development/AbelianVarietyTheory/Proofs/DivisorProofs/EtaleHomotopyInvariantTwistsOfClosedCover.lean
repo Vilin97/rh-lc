@@ -44,7 +44,8 @@ theorem polyProd_bij (A B : Type) [CommRing A] [CommRing B] :
   · rintro ⟨p, p'⟩
     let N := max p.natDegree p'.natDegree + 1
     refine ⟨∑ k ∈ Finset.range N, Polynomial.monomial k (p.coeff k, p'.coeff k), ?_⟩
-    simp only [RingHom.prod_apply, Polynomial.coe_mapRingHom, Polynomial.map_sum, Polynomial.map_monomial]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [RingHom.prod_apply, Polynomial.coe_mapRingHom, Polynomial.map_sum, Polynomial.map_monomial]
     refine Prod.ext ?_ ?_
     · exact (Polynomial.as_sum_range' p N (by omega)).symm
     · exact (Polynomial.as_sum_range' p' N (by omega)).symm

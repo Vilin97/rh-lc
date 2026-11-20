@@ -48,7 +48,8 @@ theorem eigProj_toH_eq_zero {E : Type} [Field E] [NumberField E] [IsCMField E] {
   refine eigW_induction (P := fun w => HT.eigProj 𝓗.ρH σ (toH S p w) = 0) hw ?_ ?_ ?_
   · intro a y
     have hc : HT.eigProj 𝓗.ρH σ (𝓗.ρH a (toH S p y)) = 𝓗.ρH a (HT.eigProj 𝓗.ρH σ (toH S p y)) := by
-      simp only [HT.eigProj, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [HT.eigProj, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul]
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [← Module.End.mul_apply, ← Module.End.mul_apply, ← map_mul, ← map_mul, mul_comm]
     have hm := HT.LatBasic.mem_eigSp.1 (HT.LatBasic.eigProj_mem 𝓗.ρH σ (toH S p y)) a
@@ -98,7 +99,8 @@ theorem exists_trans {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Hos
       refine (toH_sub S q _ _).trans (congrArg₂ (· - ·) (toH_spec S p q h he (xp j)).symm ?_)
       exact (toH_sum _ S q _).trans (Finset.sum_congr rfl fun l _ => toH_smul S q _ _)
     have h2 := (congrArg (HT.eigProj 𝓗.ρH σ) h1).symm.trans h0
-    rw [map_sub, sub_eq_zero, map_sum] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, sub_eq_zero, map_sum] at h2
     refine ((hAp j).symm.trans h2).trans ?_
     simp only [map_smul, hAq, Finset.smul_sum, Matrix.mul_apply, Finset.sum_smul, Matrix.map_apply, Matrix.of_apply,
       smul_smul]

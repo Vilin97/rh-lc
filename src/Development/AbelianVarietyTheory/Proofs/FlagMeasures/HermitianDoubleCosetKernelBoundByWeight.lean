@@ -77,10 +77,12 @@ theorem exists_coord {L : LocE F E} {r k : ℕ} (S : Frames L r k) (g : Fin (r +
     rwa [LinearMap.mem_ker, map_sub, sub_eq_zero] at this
   refine ⟨c, ?_, ?_⟩
   · have : x = n (n⁻¹ x) := (n.apply_symm_apply x).symm
-    rw [this, ← hc, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [this, ← hc, map_sum]
     simp
   · show _ = hfLin L S.Hm (gs j) x
-    rw [← h5, ← hc, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← h5, ← hc, map_sum]
     have : ∀ i, hfLin L S.Hm (gs j) (c i • g i) = if i = j.castSucc then c i else 0 := by
       intro i
       rw [map_smul]

@@ -193,7 +193,8 @@ theorem exists_ratLagr : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [N
     rw [hfe, hΦ]
     congr 1
     ext i j
-    simp [incM, incV, Matrix.vecMulVec_apply, Matrix.mul_apply, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [incM, incV, Matrix.vecMulVec_apply, Matrix.mul_apply, map_sum, map_mul]
   refine ⟨LinearMap.range (f ∘ₗ Φ), ?_, ?_, ?_⟩
   · rintro _ ⟨p, rfl⟩ _ ⟨q, rfl⟩
     have h := isotropic M M₁ hH (incV F p.1) (incV F q.1) _ _ (hKz _ p.2.2) (hKz _ q.2.2)

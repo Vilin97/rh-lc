@@ -26,7 +26,8 @@ theorem h_smul_right (a : E) (x y : V) : H.h x (a • y) = M.L.cj a * H.h x y :=
 
 theorem h_sum_right {ι : Type} (s : Finset ι) (x : V) (v : ι → V) :
     H.h x (∑ i ∈ s, v i) = ∑ i ∈ s, H.h x (v i) := by
-  rw [H.h_herm (∑ i ∈ s, v i) x, h_sum_left, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [H.h_herm (∑ i ∈ s, v i) x, h_sum_left, map_sum]
   exact Finset.sum_congr rfl fun i _ => (H.h_herm (v i) x).symm
 
 end Herm

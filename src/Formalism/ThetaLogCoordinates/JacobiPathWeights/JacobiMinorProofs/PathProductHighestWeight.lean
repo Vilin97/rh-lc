@@ -98,8 +98,10 @@ theorem map_step {A A' : Type*} [CommRing A] [CommRing A'] (φ : A →+* A') {n 
     φ (stepF up K Xv J) = stepF up K' (fun a => φ (Xv a)) J := by
   unfold stepF
   cases up
-  · simp only [Bool.false_eq_true, if_false, contrF, map_sum, map_mul, map_intCast, hK]
-  · simp only [if_true, wedgeF, map_sum, map_mul, map_intCast, hK]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [Bool.false_eq_true, if_false, contrF, map_sum, map_mul, map_intCast, hK]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [if_true, wedgeF, map_sum, map_mul, map_intCast, hK]
 
 theorem map_pathWord {A A' : Type*} [CommRing A] [CommRing A'] (φ : A →+* A') {n : ℕ}
     (isVec : ℕ → Bool) (μ : ℕ → Fin n → ℤ) (c : ℤ) (Xr : ℕ → Fin n → A) :

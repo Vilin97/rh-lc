@@ -20,7 +20,8 @@ theorem coeff_monic_poly_sum {K R : Type} [CommRing K] [CommRing R] (φ : K →+
     (b : Fin n → K) (G : Matrix (Fin n) (Fin n) K) (x : Fin n → R) :
     φ u * ∑ l, φ (∑ k, (s * b k) * G k l) * x l = ∑ k, ∑ l, φ (b k) * φ (G k l) * x l := by
   have hus : φ u * φ s = 1 := by rw [← map_mul, mul_comm, h, map_one]
-  simp only [map_sum, map_mul, Finset.sum_mul, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, Finset.sum_mul, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun l _ => ?_
   linear_combination (φ (b k) * φ (G k l) * x l) * hus

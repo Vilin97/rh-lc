@@ -64,7 +64,8 @@ theorem trLin_toLieC_of_trace {D : D7} {S T : HSp D} (C : Ctx S T) (R : GlobalTh
   rw [GlobalTheory.HolRead.AdExt.toLie_val, mat_conjL]
   have hN : trace ((mat W (C.m.e ρ)).map (starRingEnd ℂ)) = 0 := by
     have : trace ((mat W (C.m.e ρ)).map (starRingEnd ℂ)) = starRingEnd ℂ (trace (mat W (C.m.e ρ))) := by
-      simp [Matrix.trace, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [Matrix.trace, map_sum]
     rw [this, hW, map_zero]
   set N := (mat W (C.m.e ρ)).map (starRingEnd ℂ)
   have hM : trace (B ρ * N * (B ρ)⁻¹) = 0 := by

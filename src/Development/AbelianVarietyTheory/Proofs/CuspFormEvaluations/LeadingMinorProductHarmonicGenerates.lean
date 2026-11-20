@@ -33,7 +33,8 @@ theorem rename_letAct_invTranspose_eq_colAct {Ix : Type} [Fintype Ix] {pl : Ix �
   rcases half_cases (Ψ := InPsi H) (ComplexEmbedding.involutive_conjugate E)
     (not_mem_hostType_iff H) τ with h | ⟨τ, h, rfl⟩
   · have h₁ : ∃ t, pl t = τ := (hpl.2 τ).1 h
-    rw [dif_pos h₁, thetaLetterEquiv_of_mem Dw h, colSubst_X_xVar, xForm_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [dif_pos h₁, thetaLetterEquiv_of_mem Dw h, colSubst_X_xVar, xForm_apply, map_sum]
     have e : (⟨pl h₁.choose, (hpl.2 _).2 ⟨_, rfl⟩⟩ : {τ : E →+* ℂ // InPsi H τ}) = ⟨τ, h⟩ :=
       Subtype.ext h₁.choose_spec
     refine Finset.sum_congr rfl fun j _ => ?_
@@ -46,7 +47,8 @@ theorem rename_letAct_invTranspose_eq_colAct {Ix : Type} [Fintype Ix] {pl : Ix �
     have h₁ : ∃ t, ComplexEmbedding.conjugate (pl t) = ComplexEmbedding.conjugate τ := by
       obtain ⟨t, ht⟩ := (hpl.2 τ).1 h
       exact ⟨t, by rw [ht]⟩
-    rw [dif_neg h₀, dif_pos h₁, thetaLetterEquiv_conjugate Dw h, colSubst_X_yVar, yForm_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [dif_neg h₀, dif_pos h₁, thetaLetterEquiv_conjugate Dw h, colSubst_X_yVar, yForm_apply, map_sum]
     have e : (⟨pl h₁.choose, (hpl.2 _).2 ⟨_, rfl⟩⟩ : {τ : E →+* ℂ // InPsi H τ}) = ⟨τ, h⟩ :=
       Subtype.ext ((ComplexEmbedding.involutive_conjugate E).injective h₁.choose_spec)
     refine Finset.sum_congr rfl fun j _ => ?_

@@ -178,7 +178,8 @@ theorem mem_span_detSet_iff : ∀ (E : Type) [Field E] [NumberField E] (n : ℕ)
             (fun k => algebraMap E (FiniteAdeleRing (𝓞 E) E) ((b : E) * X k j)) i) =
             algebraMap E _ (b : E) * comp P ((g⁻¹).1.mulVec
             (fun k => algebraMap E (FiniteAdeleRing (𝓞 E) E) (X k j)) i) := by
-          simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, comp_alg, Finset.mul_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, comp_alg, Finset.mul_sum]
           exact Finset.sum_congr rfl fun k _ => by ring
         rw [e, map_mul, val_alg]
         exact (mul_le_mul' (hbc i j P) le_rfl).trans (hc i j P)

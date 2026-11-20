@@ -68,9 +68,11 @@ def latPt (x : Λ) : Ψ → Fin (j + j') → ℂ := ∑ k, ((C.lam.repr x k : �
 theorem perExt_latPt (R : RiemLat E g Λ) (x : Λ) : C.perExt R (C.latPt x) = R.P x := by
   have hb : ∀ k, C.perExt R (C.bas k) = R.P (C.lam k) := fun k => by
     simp [perExt, Module.Basis.constr_basis]
-  conv_rhs => rw [← C.lam.sum_repr x, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_rhs => rw [← C.lam.sum_repr x, map_sum]
   unfold latPt
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [map_smul, hb, Int.cast_smul_eq_zsmul, map_zsmul]
 
 omit [NumberField E] in
@@ -141,7 +143,8 @@ open Classical in
 
 theorem perExt_eq_sum_single (R : RiemLat E g Λ) (y : Ψ → Fin (j + j') → ℂ) :
     C.perExt R y = ∑ τ, C.perExt R (Pi.single τ (y τ)) := by
-  rw [← map_sum, Finset.univ_sum_single]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum, Finset.univ_sum_single]
 
 theorem perExt_cxStr {R : RiemLat E g Λ} {A : Ψ → Matrix (Fin (j + j')) (Sg j j') ℂ} (hA : C.IsAdapted R A)
     (y : Ψ → Fin (j + j') → ℂ) : C.perExt R (C.cxStr A y) = Complex.I • C.perExt R y := by

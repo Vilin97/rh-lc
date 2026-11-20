@@ -25,7 +25,8 @@ private lemma key_zero {K : Type} [Field K] [StarRing K] (φ : K →+* ℂ)
   have hpos := hH.dotProduct_mulVec_pos hy'
   have h1 : φ (dotProduct (star y) (Matrix.mulVec H y)) =
       dotProduct (star (fun i => φ (y i))) (Matrix.mulVec (H.map φ) fun i => φ (y i)) := by
-    simp only [dotProduct, Matrix.mulVec, map_sum, map_mul, Pi.star_apply, Matrix.map_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [dotProduct, Matrix.mulVec, map_sum, map_mul, Pi.star_apply, Matrix.map_apply,
       hφ, starRingEnd_apply]
   rw [hy, map_zero] at h1
   rw [← h1] at hpos

@@ -101,17 +101,20 @@ theorem hT_comb (g : ι → S.V) (hG : IsUnit (gramOf g).det) (x y : S.V) (α β
     simpa [starRingEnd_apply] using this.symm
   rw [map_add, map_add, LinearMap.add_apply, LinearMap.add_apply]
   have hxB : S.hT x (∑ n, β n • g n) = star (cOf g x) ⬝ᵥ ((gramOf g) *ᵥ β) := by
-    simp only [map_sum, LinearMap.map_smul, smul_eq_mul, h2]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.map_smul, smul_eq_mul, h2]
     simp only [Matrix.mulVec, dotProduct, star_sum, star_mul', Pi.star_apply, Finset.mul_sum]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun n _ => ?_
     rw [← gram_herm g n k]; ring
   have hAy : S.hT (∑ m, α m • g m) y = star α ⬝ᵥ ((gramOf g) *ᵥ cOf g y) := by
-    simp only [map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul,
       starRingEnd_apply, h1]
     simp [dotProduct]
   have hAB : S.hT (∑ m, α m • g m) (∑ n, β n • g n) = star α ⬝ᵥ ((gramOf g) *ᵥ β) := by
-    simp only [map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul,
       starRingEnd_apply, dotProduct, Matrix.mulVec, Pi.star_apply, gramOf, Finset.mul_sum, RingHom.id_apply]
     refine Finset.sum_comm.trans (Finset.sum_congr rfl fun m _ => Finset.sum_congr rfl fun n _ => ?_)
     ring

@@ -108,9 +108,11 @@ theorem frame_mat_sub_one_lt : ∀ (D : D7) (V : HSp D) (β : GL (Fin V.rank) (E
     rw [e]
     exact cpt_sg_lt_one Q _ (h j i)
   have hint : ∀ x ∈ GlobalTheory.StdFrames.OA D, Valued.v (cpt (cP Q) x) ≤ 1 := fun x hx => (mem_OA x).1 hx (cP Q)
-  rw [← Matrix.sub_apply, hYsub, Matrix.mul_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Matrix.sub_apply, hYsub, Matrix.mul_apply, map_sum]
   refine Valuation.map_sum_lt' _ zero_lt_one fun j _ => ?_
-  rw [map_mul, Valuation.map_mul, Matrix.mul_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_mul, Valuation.map_mul, Matrix.mul_apply, map_sum]
   refine lt_of_le_of_lt (mul_le_of_le_one_right' (hint _ (hGi j b))) ?_
   refine Valuation.map_sum_lt' _ zero_lt_one fun i _ => ?_
   rw [map_mul, Valuation.map_mul]

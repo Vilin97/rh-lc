@@ -105,7 +105,8 @@ theorem isIntegral_of_projection {σ R A : Type*} [Fintype σ] [CommRing R] [Alg
     rw [← hdeg d hd]
     exact (prod_pow_natDegree_coeff' Finset.univ v d hv).1
   have hQ2 : Q.coeff m = algebraMap k R (eval c g) := by
-    rw [hQe, Polynomial.finsetSum_coeff, eval_eq', map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hQe, Polynomial.finsetSum_coeff, eval_eq', map_sum]
     refine Finset.sum_congr rfl fun d hd => ?_
     rw [Polynomial.coeff_C_mul, ← hdeg d hd, (prod_pow_natDegree_coeff' Finset.univ v d hv).2]
     simp [hv1]
@@ -262,7 +263,8 @@ theorem exists_monic_minimal {R A : Type*} [CommRing R] [IsDomain R] [IsIntegral
   have hq0 : (q : Polynomial R) = 0 := by
     by_contra h0
     have h1 := minpoly.IsIntegrallyClosed.degree_le_of_ne_zero (s := t) h0 (by
-      rw [hq, map_sum, ← ha]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hq, map_sum, ← ha]
       simp only [Polynomial.aeval_monomial]
       rfl)
     have h2 := Polynomial.mem_degreeLT.1 q.2
@@ -403,7 +405,8 @@ theorem exists_form_degree_le_of_isHilbertPoly [Infinite k] [Finite ι]
   obtain ⟨m, hm⟩ : ∃ m, eval y (homogeneousComponent m g) ≠ 0 := by
     by_contra! hm
     apply hg
-    rw [← sum_homogeneousComponent g, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← sum_homogeneousComponent g, map_sum]
     exact Finset.sum_eq_zero fun m _ => hm m
   obtain ⟨i, hi⟩ : ∃ i, y i ≠ 0 := by
     by_contra! h0
@@ -460,7 +463,8 @@ theorem exists_form_degree_le_of_isHilbertPoly [Infinite k] [Finite ι]
     fun a => (comp_aeval_apply z (Ideal.Quotient.mkₐ k P) a).symm
   have hle := (le_factorial_mul_leadingCoeff hH hdeg' hp0
     (mul_choose_le_finrank P z hz (isHomogeneous_X k i) (fun a ha => hind a (by
-      rw [← Ideal.Quotient.eq_zero_iff_mem, map_sum] at ha
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← Ideal.Quotient.eq_zero_iff_mem, map_sum] at ha
       rw [← ha]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [map_mul, map_pow, ← e1]

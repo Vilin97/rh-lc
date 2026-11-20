@@ -39,7 +39,8 @@ theorem row_along (h : IsoVec T ξ) (a : Fin S.rank → AE D) : row S T ξ (alon
     simp only [dotProduct, Matrix.mulVec, Finset.mul_sum, mul_assoc]
     rfl
   have h2 := congrArg (fun x => incA D x * a j) h1
-  simp only [map_sum, Finset.sum_mul, map_zero, zero_mul] at h2
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Finset.sum_mul, map_zero, zero_mul] at h2
   refine Eq.trans (Finset.sum_congr rfl fun c _ => Finset.sum_congr rfl fun d _ => ?_) h2
   rw [RingHom.map_mul _ _ (ξ d), mul_assoc]
   rfl
@@ -48,7 +49,8 @@ theorem hO_along (a : Fin S.rank → AE D) (y : WO S T) :
     hO S T (along S T ξ a) y = ∑ i, ∑ j, incA D (S.gram⁻¹ i j) * cA D (row S T ξ y j) * a i := by
   unfold hO row
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
-  simp only [map_sum, Finset.mul_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Finset.mul_sum, Finset.sum_mul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun c _ => Finset.sum_congr rfl fun d _ => ?_
   rw [RingHom.map_mul (cA D), GlobalTheory.DualPairCheck.cA_incA, star_mul', star_star, GlobalTheory.DualPairCheck.gram_star, RingHom.map_mul]
@@ -73,7 +75,8 @@ theorem actO_transv {z : GA D T} {t : AE D} (hz : (matHom T z).1 = 1 + t • (ni
   refine Matrix.ext fun i j => ?_
   change t * ∑ d, incA D (ξ i * ∑ c, star (ξ c) * T.gram c d) * y d j = incA D (ξ i) * (t * row S T ξ y j)
   rw [row, Finset.sum_comm, mul_left_comm, Finset.mul_sum]
-  simp only [RingHom.map_mul _ (ξ i), map_sum, Finset.sum_mul, Finset.mul_sum, mul_assoc]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [RingHom.map_mul _ (ξ i), map_sum, Finset.sum_mul, Finset.mul_sum, mul_assoc]
 
 theorem actO_along (h : IsoVec T ξ) {z : GA D T} (hz : z ∈ ZI T ξ) (a : Fin S.rank → AE D) :
     actO S T 1 z (along S T ξ a) = along S T ξ a := by
@@ -93,7 +96,8 @@ theorem norm_ne_zero (hS : ∀ τ, (gramAt D S τ).PosDef) {m : Fin S.rank → D
   intro h0
   refine h.ne' ?_
   rw [← (tauE D τ).map_zero, ← h0, hinv]
-  simp only [dotProduct, Matrix.mulVec, map_sum, map_mul, hs, Pi.star_apply, star_star, Matrix.map_apply, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dotProduct, Matrix.mulVec, map_sum, map_mul, hs, Pi.star_apply, star_star, Matrix.map_apply, Finset.mul_sum]
   exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
 
 theorem trace_three (s : AF D.host.F) (a b c : D.host.E) :
@@ -117,7 +121,8 @@ theorem exists_transv (hψ : IsStdChar D ψ (-1)) (hS : ∀ τ, (gramAt D S τ).
   haveI : Module.Finite D.host.F D.host.E := Module.finite_of_finrank_pos (by rw [D.sp.cm.deg2]; norm_num)
   obtain ⟨m, hm⟩ : ∃ m : Fin S.rank → D.host.E, ∀ j, row S T ξ (ratW T S x) j = incA D (m j) :=
     ⟨fun j => ∑ c, ∑ d, star (ξ c) * T.gram c d * x d j, fun j => by
-      simp only [map_sum, RingHom.map_mul _ _ (x _ _)]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, RingHom.map_mul _ _ (x _ _)]
       rfl⟩
   have hm0 : m ≠ 0 := fun h0 => hx (funext fun j => by rw [hm, h0, Pi.zero_apply, RingHom.map_zero]; rfl)
   have hN := norm_ne_zero hS hm0
@@ -127,7 +132,8 @@ theorem exists_transv (hψ : IsStdChar D ψ (-1)) (hS : ∀ τ, (gramAt D S τ).
     exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
   have hh : ∀ t : AE D, hO S T (along S T ξ (t • row S T ξ (ratW T S x))) (ratW T S x) =
       t * incA D (∑ i, ∑ j, S.gram⁻¹ i j * star (m j) * m i) := fun t => by
-    simp only [hO_along, Pi.smul_apply, hm, GlobalTheory.DualPairCheck.cA_incA, map_sum, RingHom.map_mul, Finset.mul_sum, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hO_along, Pi.smul_apply, hm, GlobalTheory.DualPairCheck.cA_incA, map_sum, RingHom.map_mul, Finset.mul_sum, smul_eq_mul]
     exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
   generalize ∑ i, ∑ j, S.gram⁻¹ i j * star (m j) * m i = N at hN hNs hh
   have hx0 := GlobalTheory.DualPairCheck.star_purely_imaginary_eq_neg D

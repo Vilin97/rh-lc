@@ -138,7 +138,8 @@ theorem gaL_comm {G : Type} [Group G] [Fintype G] (hL : LiftsExist V β L) (eG :
   have e2 : actG0 V β L (eG g) (∑ h, c h • actG0 V β L (eG h) F) =
       ∑ h, c h • actG0 V β L (eG g) (actG0 V β L (eG h) F) := by
     show actL V β L (eG g) (∑ h, c h • actL V β L (eG h) F) = ∑ h, c h • actL V β L (eG g) (actL V β L (eG h) F)
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun h _ => ?_
     rw [LinearMap.map_smul]
   rw [e2]

@@ -35,7 +35,8 @@ theorem ip_sum_diag (s : Finset α) (f f' : α → Matrix κ ι ℚ → ℂ) (hf
     SW.ip (∑ a ∈ s, f a) (∑ a ∈ s, f' a) = ∑ a ∈ s, SW.ip (f a) (f' a) := by
   rw [(sum_left s f hf (sum_left s f' hf' isSB_zero).1).2]
   refine Finset.sum_congr rfl fun a ha => ?_
-  rw [TensVac.ip_conj (sum_left s f' hf' isSB_zero).1 (hf a ha), (sum_left s f' hf' (hf a ha)).2,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [TensVac.ip_conj (sum_left s f' hf' isSB_zero).1 (hf a ha), (sum_left s f' hf' (hf a ha)).2,
     map_sum, Finset.sum_eq_single_of_mem a ha, ← TensVac.ip_conj (hf' a ha) (hf a ha)]
   intro b hb hba
   rw [← TensVac.ip_conj (hf' b hb) (hf a ha)]

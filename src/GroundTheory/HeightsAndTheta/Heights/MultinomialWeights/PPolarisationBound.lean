@@ -27,7 +27,8 @@ theorem PolarisationBound.proof (hC : PolarisationCoeff.Statement) : Polarisatio
       rw [hC σ Φ n m hm, hC σ Ψ n m hm, hΦΨ]
     conv_lhs => rw [F.as_sum]
     conv_rhs => rw [F.as_sum]
-    rw [map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum]
     refine Finset.sum_congr rfl (fun m hmF => ?_)
     have hdeg : (m.sum fun _ e => e) = n := by
       have := hF (mem_support_iff.1 hmF)

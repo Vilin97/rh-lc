@@ -35,7 +35,8 @@ theorem det_comb_rows {C : Type} [CommRing C] {N k : ℕ} (n : Fin k → Fin N �
     ext r l; simp [Finset.sum_apply]
   rw [hM]
   change Matrix.detRowAlternating.toMultilinearMap _ = _
-  rw [MultilinearMap.map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [MultilinearMap.map_sum]
   refine Finset.sum_congr rfl fun s _ => ?_
   rw [MultilinearMap.map_smul_univ, smul_eq_mul]
   rfl

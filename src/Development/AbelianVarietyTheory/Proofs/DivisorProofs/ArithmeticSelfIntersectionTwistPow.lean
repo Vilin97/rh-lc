@@ -82,7 +82,8 @@ theorem aeval_subst {ι : Type} [Fintype ι] (e : ℕ) (n : ι → ℤ) (D : ℕ
       (e : ℝ) • (MvPolynomial.X none * rename some (lin fun i => (n i : ℝ)) ^ D) := by
   have h1 : aeval (fun j : Option ι => lin fun i => ((Pi.single j (j.elim (e : ℤ) fun _ => 1) : Option ι → ℤ) i : ℝ))
       (rename some (lin fun i => (n i : ℝ))) = rename some (lin fun i => (n i : ℝ)) := by
-    simp [lin, aeval_rename, map_sum, Fintype.sum_option, Pi.single_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [lin, aeval_rename, map_sum, Fintype.sum_option, Pi.single_apply]
   rw [map_mul, map_pow, h1, aeval_X]
   simp [lin, Fintype.sum_option, Pi.single_apply, smul_eq_C_mul, mul_assoc]
 

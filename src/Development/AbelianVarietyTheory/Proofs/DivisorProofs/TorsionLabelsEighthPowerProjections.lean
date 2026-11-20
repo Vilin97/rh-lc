@@ -71,7 +71,8 @@ theorem sum_symmetrised_bilinear_matrix_eq {J X Y : Type} [Fintype J] [AddCommGr
     ∑ ab : J × J, W ab.1 ab.2 • (c ab.1 (l ab.2) + c ab.2 (l ab.1)) =
       ∑ u, c u (∑ w, (W + W.transpose) u w • l w) := by
   rw [Fintype.sum_prod_type]
-  simp only [smul_add, Finset.sum_add_distrib, map_add, map_sum, map_zsmul, Matrix.add_apply, Matrix.transpose_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [smul_add, Finset.sum_add_distrib, map_add, map_sum, map_zsmul, Matrix.add_apply, Matrix.transpose_apply,
     add_smul]
   congr 1
   exact Finset.sum_comm

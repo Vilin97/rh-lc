@@ -64,7 +64,8 @@ theorem finPart_right : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Nu
     exact htriv _ (by show ef.1 * _ = 0; rw [hef1, zero_mul]) fun v => hnorm v m₃ o ho
   have hdot : ∀ c c' : Fin n × Fin d → F, emb c ⬝ᵥ emb c' = ef * algebraMap F (AF F) (c ⬝ᵥ c') := by
     intro c c'
-    simp only [dotProduct, emb, map_sum, Finset.mul_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [dotProduct, emb, map_sum, Finset.mul_sum, map_mul]
     refine Finset.sum_congr rfl fun i _ => ?_
     linear_combination (algebraMap F (AF F) (c i) * algebraMap F (AF F) (c' i)) * hff
 

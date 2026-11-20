@@ -33,7 +33,8 @@ theorem fderiv_frame (f : Mat n → V) {x : Mat n} (hx : x ∈ GLs n) (ξ : Mat 
       rw [← Matrix.mul_assoc, Matrix.mul_nonsing_inv _ hu, Matrix.one_mul]
     conv_lhs => rw [← this, ← sum_eps (x⁻¹ * ξ), Finset.mul_sum]
     exact Finset.sum_congr rfl fun p _ => mul_smul_comm _ _ _
-  conv_lhs => rw [e, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [e, map_sum]
   exact Finset.sum_congr rfl fun p _ => map_smul _ _ _
 
 theorem contDiffOn_coeff (p : Bool × Fin n × Fin n) (ξ : Mat n) :

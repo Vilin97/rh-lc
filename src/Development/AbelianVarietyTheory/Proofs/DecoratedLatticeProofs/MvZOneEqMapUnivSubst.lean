@@ -33,7 +33,8 @@ theorem mvZ_one_eq_map_univSubst {ι : Type} [Fintype ι] {a b : ℕ} (g : ι �
         (aeval (fun v => ∑ j, C (X (v.1, v.2.2, j)) * X (v.1, v.2.1, j))) := by
     apply MvPolynomial.algHom_ext
     intro v
-    simp only [mvZ, aeval_X, AlgHom.comp_apply, Matrix.one_apply, ite_mul, one_mul, zero_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [mvZ, aeval_X, AlgHom.comp_apply, Matrix.one_apply, ite_mul, one_mul, zero_mul,
       apply_ite C, C_0, map_sum, map_mul, mapAlgHom_apply, map_C, map_X]
     rw [Finset.sum_comm]
     simp [Finset.sum_ite_eq', coe_aeval_eq_eval]
@@ -43,7 +44,8 @@ theorem mvZ_one_eq_map_univSubst {ι : Type} [Fintype ι] {a b : ℕ} (g : ι �
 theorem linear_eq_sum_coeff {σ : Type} (Λ : MvPolynomial σ ℂ →ₗ[ℂ] ℂ) (S : Finset (σ →₀ ℕ)) (p : MvPolynomial σ ℂ)
     (hp : p.support ⊆ S) : Λ p = ∑ m ∈ S, AddMonoidAlgebra.coeff p m * Λ (monomial m 1) := by
   conv_lhs => rw [p.as_sum]
-  rw [map_sum, Finset.sum_subset hp]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_subset hp]
   · refine Finset.sum_congr rfl fun m _ => ?_
     rw [show monomial m (AddMonoidAlgebra.coeff p m) = AddMonoidAlgebra.coeff p m • monomial m (1 : ℂ) by rw [smul_monomial, smul_eq_mul, mul_one], map_smul, smul_eq_mul]
   · intro m _ hm
@@ -124,7 +126,8 @@ theorem avg_span : ∀ (ι : Type) [Fintype ι] (a b : ℕ) (hab : a ≤ b), 0 <
       intro k; rw [hΛ, Finset.sum_mul]; exact Finset.sum_congr rfl fun _ _ => by ring
     simp only [e]
     rw [integral_finset_sum _ (fun m _ => (hint m F).mul_const _)]
-    simp only [Q, LinearMap.sum_apply, LinearMap.smulRight_apply, map_sum, map_smul, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Q, LinearMap.sum_apply, LinearMap.smulRight_apply, map_sum, map_smul, smul_eq_mul]
     refine Finset.sum_congr rfl fun m _ => ?_
     rw [integral_mul_const]; rfl
   have heq : ∀ u, IsUni u → ∀ F ∈ Vn lam n, Q (lft u F) = mvZ u (fun _ => 1) (Q F) := by
@@ -146,7 +149,8 @@ theorem avg_span : ∀ (ι : Type) [Fintype ι] (a b : ℕ) (hab : a ≤ b), 0 <
   obtain ⟨m, y', s, hinv, hspan⟩ := GlobalTheory.T.howeSpan_families_of_places ι a b hab ha lam n Q heq
   refine ⟨m, y', s, hinv, fun F hF Λ => ?_⟩
   simp_rw [ontoUni_inv hr]
-  rw [← hQ, hspan F hF, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hQ, hspan F hF, map_sum]
   simp [map_smul]
 
 end GlobalTheory.KJAvg

@@ -29,7 +29,8 @@ theorem continuous_psi_symp_atPlace : ∀ {F E : Type} [Field F] [NumberField F]
     fun m => (GlobalTheory.VacAny.continuous_atPlace v).comp (continuous_subtype_val.comp (continuous_apply m))
   refine hψ.comp ?_
   delta GlobalTheory.WeilM.symp GlobalTheory.WeilM.hTens
-  simp only [Matrix.sum_apply, Matrix.smul_apply, map_sum, map_smul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.sum_apply, Matrix.smul_apply, map_sum, map_smul,
     Finset.sum_mul, Finset.mul_sum, smul_mul_assoc, mul_smul_comm, smul_eq_mul]
   fun_prop
 

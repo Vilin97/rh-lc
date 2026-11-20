@@ -18,7 +18,8 @@ private theorem core1 {B Γ F A : Type} [CommRing B] [Monoid Γ] [Ring F] [Algeb
       rw [_root_.smul_pow, ← pow_mul, mul_comm, pow_mul, pow_succ, mul_smul, ← one_mul (Φ y₁ ^ N),
         ← smul_mul_assoc, hT, zero_mul, smul_zero]
     have h1 : (1 - T ^ (e + 1) • Φ y₁) * Φ (∑ k ∈ Finset.range N, (T ^ (e + 1) • y₁) ^ k) = 1 := by
-      simp only [map_sum, map_pow, map_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_pow, map_smul]
       rw [mul_neg_geom_sum, h0, sub_zero]
     refine ⟨(∑ k ∈ Finset.range N, (T ^ (e + 1) • y₁) ^ k) * (z + T ^ e • (y₁ * y₂)), ?_⟩
     rw [mul_sub, mul_smul_comm, map_mul, ← mul_assoc, h1, one_mul]
@@ -181,7 +182,8 @@ private theorem map_gen {B C G : Type} [CommRing B] [CommRing C] [Group G] (s : 
     (hψ : ∀ g ∈ s, ψ (MvPolynomial.X g) = y.coeff g) : MonoidAlgebra.mapRingHom G ψ (gen B s) = y := by
   classical
   ext g
-  simp only [gen, map_sum, MonoidAlgebra.mapRingHom_single, MonoidAlgebra.coeff_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [gen, map_sum, MonoidAlgebra.mapRingHom_single, MonoidAlgebra.coeff_sum,
     MonoidAlgebra.coeff_single, Finsupp.finset_sum_apply, Finsupp.single_apply, Finset.sum_ite_eq']
   split_ifs with hg
   · exact hψ g hg

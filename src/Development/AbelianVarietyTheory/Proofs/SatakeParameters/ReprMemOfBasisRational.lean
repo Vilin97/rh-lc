@@ -35,9 +35,11 @@ theorem repr_map_mem {K V κ : Type} [Field K] [AddCommGroup V] [Module K V] [Fi
     (v : V) (hv : ∀ j, b.repr v j ∈ F) (i : κ) : b.repr (g v) i ∈ F := by
   have h1 : g v = ∑ j, b.repr v j • g (b j) := by
     conv_lhs => rw [← b.sum_repr v]
-    simp only [map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul]
   rw [h1]
-  simp only [map_sum, map_smul, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.smul_apply, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.smul_apply, smul_eq_mul]
   exact F.sum_mem fun j _ => F.mul_mem (hv j) (hg i j)
 
 theorem levFn_isOfFinOrder {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {n : ℕ}
@@ -87,7 +89,8 @@ theorem action_rational (V : TH.HSp D) (C : CoefDat D V) {S : CSD D.what₂.LL} 
       (repr_map_mem _ _ _ (hrho γE) _ (hr j)) i
   · rw [he, ← hM.1 γ γE hγ]
     conv_lhs => rw [← (S.bV.map e).sum_repr (rho γE (e (S.bV j)))]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [he, LinearMap.map_smulₛₗ, Module.Basis.map_apply]
 

@@ -21,7 +21,8 @@ lemma unitK_adj (hB : IsUnitary actW B) (a b : Ix R S) (x y : W) :
 
 lemma casK_adj (hB : IsUnitary actW B) (x y : W) :
     B (casK actW x) y = B x (casK actW y) := by
-  simp only [casK, LinearMap.sum_apply, Module.End.mul_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [casK, LinearMap.sum_apply, Module.End.mul_apply, map_sum]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
   rw [unitK_adj hB, unitK_adj hB]
 

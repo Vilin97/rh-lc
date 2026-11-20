@@ -41,7 +41,8 @@ theorem eq_zero_of_orth_frame (F : LFlag S r T) (F' : LFlag S r T') (b₀ : Fin 
     refine Matrix.eq_zero_of_vecMul_eq_zero hd ?_
     funext b
     have := h (b₀.succAbove b)
-    simp only [map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
       starRingEnd_apply] at this
     simpa [Matrix.vecMul, dotProduct, Zhat, brS, FlagG.fvec] using this
   have : ∀ a, c a = 0 := fun a => by simpa using congrFun h0 a
@@ -70,7 +71,8 @@ theorem eq_zero_of_span_E {x : (hS D).V} (hx : x ∈ Submodule.span D.host.E (Se
   obtain ⟨c, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun D.host.E).1 hx
   have : ∀ a, c a = 0 := fun a => by
     have := h a
-    simp only [map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
       D.sp.hyp_ef] at this
     simpa using this
   simp [this]
@@ -80,7 +82,8 @@ theorem eq_zero_of_span_F {x : (hS D).V} (hx : x ∈ Submodule.span D.host.E (Se
   obtain ⟨c, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun D.host.E).1 hx
   have : ∀ a, c a = 0 := fun a => by
     have := h a
-    simp only [map_sum, map_smul, smul_eq_mul, D.sp.hyp_ef] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, smul_eq_mul, D.sp.hyp_ef] at this
     simpa using this
   simp [this]
 

@@ -101,7 +101,8 @@ theorem cechD_cechMap {M N : Type} [AddCommGroup M] [Module (MRingOver S ι) M] 
     KH.cechD S ι N n (KH.cechMap S ι g n z) = KH.cechMap S ι g (n + 1) (KH.cechD S ι M n z) := by
   funext I
   rw [cechMap_apply]
-  simp only [KH.cechD, LinearMap.pi_apply, LinearMap.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [KH.cechD, LinearMap.pi_apply, LinearMap.sum_apply, map_sum]
   refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun i _ => ?_
   split_ifs with hI
   · change KH.faceSign I.1 k i • KH.cellRes S N _ I.1 (KH.cechMap S ι g n z ⟨_, hI⟩) =

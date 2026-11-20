@@ -21,12 +21,14 @@ theorem deX_map {Lt k k' : Type} [Fintype Lt] [CommRing k] [CommRing k'] (f : k 
   simp only [map_prod, RingHom.map_det]
   refine Finset.prod_congr rfl fun s _ => Finset.prod_congr rfl fun c _ => congrArg Matrix.det ?_
   ext i j
-  simp [map_sum, map_mul, map_C, map_X]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, map_mul, map_C, map_X]
 
 theorem dual_map_eval {σ V k : Type} [Field k] (χ : Module.Dual k (MvPolynomial σ k)) (p : MvPolynomial σ (MvPolynomial V k)) (x : V → k) :
     MvPolynomial.eval x (∑ m ∈ p.support, AddMonoidAlgebra.coeff p m * C (χ (monomial m 1))) = χ (MvPolynomial.map (MvPolynomial.eval x) p) := by
   conv_rhs => rw [p.as_sum]
-  rw [map_sum, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, map_sum]
   refine Finset.sum_congr rfl fun m _ => ?_
   rw [map_mul, eval_C, map_monomial]
   rw [show monomial m (MvPolynomial.eval x (AddMonoidAlgebra.coeff p m)) = (MvPolynomial.eval x (AddMonoidAlgebra.coeff p m)) • (monomial m 1 : MvPolynomial σ k) by

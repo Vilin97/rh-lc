@@ -322,7 +322,8 @@ theorem map_partialDeriv_self_eq_pow_mul
       = coord k ι S₁ s * φ (partialDeriv k ι S s f)
         + coord k ι S₁ s ^ (e + 1)
           * ∑ i ∈ T.erase s, coord k ι S₁ i * partialDeriv k ι S₁ i g := by
-    rw [coord_mul_partialDeriv_map_eq_map_add_sum_erase k ι S S₁ φ T s hin hs hout hsT f, map_add, map_mul, hs, map_sum, hsum2]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [coord_mul_partialDeriv_map_eq_map_add_sum_erase k ι S S₁ φ T s hin hs hout hsT f, map_add, map_mul, hs, map_sum, hsum2]
   rw [h2] at h1
   have h0 : (φ (partialDeriv k ι S s f)
       - coord k ι S₁ s ^ e
@@ -403,7 +404,8 @@ theorem map_derivIdeal_le_span_pow_mul [Fintype ι]
       rw [h1]
       exact finset_sum_smul_derivation_apply Finset.univ (fun i => D (coord k ι S i))
         (fun i => partialDeriv k ι S i) x
-    rw [hDx, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hDx, map_sum]
     refine sum_mem fun i _ => ?_
     rw [map_mul]
     exact Ideal.mul_mem_left _ _ (hkey x hx i)

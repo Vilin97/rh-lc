@@ -62,7 +62,8 @@ theorem isotypic_projector_trace_formula (D : Formalism.BasicNotions.D7) (h2 : a
         simp [Module.Basis.coord_apply]
       rw [Finset.sum_congr rfl fun i _ => hterm i]
       conv_rhs => rw [← b.sum_repr l]
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       exact Finset.sum_congr rfl fun i _ => (map_smul _ _ _).symm
     · intro y hy
       have hWm : IsSubrepresentation E (isoSub E mu) := fun a c => isotypic_stable_under_gl_operator E mu a c

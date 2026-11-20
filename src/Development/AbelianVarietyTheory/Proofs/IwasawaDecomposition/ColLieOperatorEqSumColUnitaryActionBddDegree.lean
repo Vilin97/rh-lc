@@ -23,7 +23,8 @@ theorem rename_subst (a : ι → Matrix (Fin m) (Fin m) ℂ) (b : ι → Matrix 
       (subst (fun ρ => (b ρ)ᵀ) (fun ρ => (a ρ)ᵀ)).comp (MvPolynomial.rename (sw ι n m)) := by
     apply MvPolynomial.algHom_ext
     rintro ⟨ρ, c, i⟩
-    simp only [subst, AlgHom.comp_apply, MvPolynomial.aeval_X, MvPolynomial.rename_X, map_sum, map_smul, sw,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [subst, AlgHom.comp_apply, MvPolynomial.aeval_X, MvPolynomial.rename_X, map_sum, map_smul, sw,
       Matrix.transpose_apply]
     rw [Finset.sum_comm]
     simp only [mul_comm]
@@ -52,7 +53,8 @@ theorem rename_rowSub (τ : ι) (u : Matrix.unitaryGroup (Fin n) ℂ) (Q : Pol �
 
 theorem rename_rowLie (τ : ι) (k l : Fin n) (Q : Pol ι n m) :
     MvPolynomial.rename (sw ι n m) (rowLie m τ k l Q) = colLie m τ k l (MvPolynomial.rename (sw ι n m) Q) := by
-  rw [rowLie_apply, colLie_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [rowLie_apply, colLie_apply, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_mul, MvPolynomial.rename_X, ← MvPolynomial.pderiv_rename sw_injective]
   rfl
@@ -74,7 +76,8 @@ theorem colLie_eq_sum_colSub : ∀ (ι : Type) [Fintype ι] (m n d : ℕ) (τ : 
     exact MvPolynomial.rename_id_apply P
   have h1 := congrArg (MvPolynomial.rename (sw ι n m))
     (h (MvPolynomial.rename (sw ι m n) P) ((MvPolynomial.totalDegree_rename_le _ _).trans hP))
-  rw [rename_rowLie, map_sum, e] at h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [rename_rowLie, map_sum, e] at h1
   rw [← h1, Finset.sum_map]
   refine Finset.sum_congr rfl fun u _ => ?_
   rw [map_smul, rename_rowSub, e]

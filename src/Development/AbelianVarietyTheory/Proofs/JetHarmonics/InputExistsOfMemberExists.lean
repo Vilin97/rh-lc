@@ -44,7 +44,8 @@ theorem trace_pairE (ξ : Module.Dual ℤ X) (x : X) (b : 𝓞 E) :
   have hk : ∀ k, Algebra.trace ℚ E (SemisimplePairingSeparation.pairE E ξ x * integralBasis E k) =
       ((ξ ((RingOfIntegers.basis E k) • x) : ℤ) : ℚ) := fun k => by
     unfold SemisimplePairingSeparation.pairE
-    rw [Finset.sum_mul, map_sum, Finset.sum_eq_single k]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_mul, map_sum, Finset.sum_eq_single k]
     · have h := (Algebra.traceForm ℚ E).apply_dualBasis_left (traceForm_nondegenerate ℚ E) (integralBasis E) k k
       rw [Algebra.traceForm_apply, if_pos rfl] at h
       rw [mul_right_comm, mul_comm, ← zsmul_eq_mul, map_zsmul, h]; simp
@@ -585,7 +586,8 @@ theorem emb_cc (τ : E →+* ℂ) (a : E) : τ (cc a) = starRingEnd ℂ (τ a) :
 theorem emb_ssNu (χ : X × X →₀ ℤ) (τ : E →+* ℂ) :
     (((τ (SemisimplePairingSeparation.ssNu E g ξ χ)).re : ℝ) : ℂ) = τ (SemisimplePairingSeparation.ssNu E g ξ χ) := by
   rw [← Complex.conj_eq_iff_re]
-  simp only [SemisimplePairingSeparation.ssNu, Finsupp.sum, map_mul, map_sum, map_add, map_inv₀, map_natCast, map_intCast, emb_cc,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [SemisimplePairingSeparation.ssNu, Finsupp.sum, map_mul, map_sum, map_add, map_inv₀, map_natCast, map_intCast, emb_cc,
     Complex.conj_conj]
   congr 1
   exact Finset.sum_congr rfl fun p _ => by ring
@@ -598,7 +600,8 @@ theorem EFf_swap {r : ℕ} (Z : ReciprocityTheory.ChartRestriction.G.FD.Data E r
     EFf Z.ξ0 Z.Gm v w = -EFf Z.ξ0 Z.Gm w v := by
   have h1 : cc (herm Z.Gm w v) = herm Z.Gm v w := by
     have hG : ∀ a b, IsCMField.complexConj E (Z.Gm a b) = Z.Gm b a := Z.Gm_herm
-    simp only [herm, cc, map_sum, map_mul, IsCMField.complexConj_apply_apply, hG]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [herm, cc, map_sum, map_mul, IsCMField.complexConj_apply_apply, hG]
     rw [Finset.sum_comm]
     exact Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => by ring
   have h2 : ∀ a : E, Algebra.trace ℚ E (cc a) = Algebra.trace ℚ E a := fun a =>

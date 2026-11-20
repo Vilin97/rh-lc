@@ -43,14 +43,16 @@ variable {K : GlobalTheory.UnitLemma.UQ} (B : GlobalTheory.UnitLemma.InvAlg K)
 
 theorem herm_sum_smul_left {ι : Type} (s : Finset ι) (a : ι → K.E) (y : ι → B.A) (β z : B.A) :
     B.herm β (∑ i ∈ s, a i • y i) z = ∑ i ∈ s, a i * B.herm β (y i) z := by
-  simp only [GlobalTheory.UnitLemma.InvAlg.herm, Finset.mul_sum, Finset.sum_mul, map_sum, Algebra.smul_def]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [GlobalTheory.UnitLemma.InvAlg.herm, Finset.mul_sum, Finset.sum_mul, map_sum, Algebra.smul_def]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [show β * (algebraMap K.E B.A (a i) * y i) * B.σ z = a i • (β * y i * B.σ z) by
     rw [Algebra.smul_def]; ring, map_smul, smul_eq_mul]
 
 theorem herm_sum_smul_right {ι : Type} (s : Finset ι) (a : ι → K.E) (z : ι → B.A) (β y : B.A) :
     B.herm β y (∑ i ∈ s, a i • z i) = ∑ i ∈ s, K.c (a i) * B.herm β y (z i) := by
-  simp only [GlobalTheory.UnitLemma.InvAlg.herm, map_sum, Finset.mul_sum, Algebra.smul_def, map_mul, B.σ_alg]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [GlobalTheory.UnitLemma.InvAlg.herm, map_sum, Finset.mul_sum, Algebra.smul_def, map_mul, B.σ_alg]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [show β * y * (algebraMap K.E B.A (K.c (a i)) * B.σ (z i)) = K.c (a i) • (β * y * B.σ (z i)) by
     rw [Algebra.smul_def]; ring, map_smul, smul_eq_mul]
@@ -216,7 +218,8 @@ theorem unimodular_iff : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E],
       congr 2
     rw [h1]
     ext j k
-    simp only [hHdef, hvdef, Matrix.map_apply, Matrix.of_apply, herm_sum_smul_left, herm_sum_smul_right,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hHdef, hvdef, Matrix.map_apply, Matrix.of_apply, herm_sum_smul_left, herm_sum_smul_right,
       map_sum, map_mul, hc, RingEquiv.apply_symm_apply, Matrix.mul_apply, Matrix.transpose_apply, gram,
       Finset.sum_mul, Finset.mul_sum]
     congr 1

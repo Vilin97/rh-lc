@@ -38,7 +38,8 @@ theorem sum_dual_smul_eq_zero {W ι I : Type} [AddCommGroup W] [Module ℂ W] (F
   rw [Finset.sum_congr rfl fun a ha => by rw [hv' a ha, Finset.smul_sum], Finset.sum_comm]
   refine Finset.sum_eq_zero fun k hk => ?_
   have h3 := congrArg φ (h2 k hk)
-  rw [map_sum, map_zero] at h3
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_zero] at h3
   simp_rw [smul_smul]
   rw [← Finset.sum_smul, Finset.sum_congr rfl fun a _ => by rw [mul_comm, ← smul_eq_mul, ← map_smul], h3, zero_smul]
 
@@ -85,10 +86,12 @@ theorem linearIndependent_complex : ∀ (D : D7) (S T : HSp D) (B : Base S T), B
   · rw [Finset.sum_apply]
     exact sum_mem fun a _ => Submodule.smul_mem _ (φ (c a) : ℂ) (hf a y).1
   · have h0 := congrArg (harmFn T.rank B.w B.F.BS) (congrFun h y)
-    rw [Finset.sum_apply, map_sum, Pi.zero_apply, map_zero] at h0
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_apply, map_sum, Pi.zero_apply, map_zero] at h0
     simp only [Pi.smul_apply, map_smul] at h0
     have := sum_dual_smul_eq_zero F hb (fun a => coefLatFn_mem_span hc hF B.w.lam _ (hf a y).2) s c h0 φ
-    rw [Finset.sum_apply, map_sum, ← this]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_apply, map_sum, ← this]
     exact Finset.sum_congr rfl fun a _ => (harmFn T.rank B.w B.F.BS).map_smul (φ (c a) : ℂ) (f a y)
 
 end GlobalTheory.PlaceIndep

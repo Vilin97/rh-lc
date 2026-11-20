@@ -21,7 +21,8 @@ private theorem rowAct_mul_lemma_0 {k n : ℕ} (g h : Matrix (Fin k) (Fin k) K) 
   have e : (rowAct K (n := n) g).comp (rowAct K (n := n) h) = rowAct K (n := n) (h * g) := by
     apply MvPolynomial.algHom_ext
     intro v
-    simp only [AlgHom.comp_apply, rowAct, aeval_X, map_sum, map_mul, aeval_C, algebraMap_eq,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [AlgHom.comp_apply, rowAct, aeval_X, map_sum, map_mul, aeval_C, algebraMap_eq,
       Matrix.mul_apply, Finset.mul_sum, Finset.sum_mul]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl (fun _ _ => Finset.sum_congr rfl (fun _ _ => ?_))
@@ -160,7 +161,8 @@ theorem rowAct_D {k : ℕ} (c : K) (f : MvPolynomial (Fin (k + 1) × Fin (k + 1)
     rw [smul_monomial, C_mul_monomial, C_mul_monomial, smul_eq_mul]
     congr 1
     ring
-  rw [f.as_sum, map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [f.as_sum, map_sum, Finset.smul_sum]
   refine Finset.sum_congr rfl (fun u hu => ?_)
   rw [hmono, h u (mem_support_iff.mp hu)]
 

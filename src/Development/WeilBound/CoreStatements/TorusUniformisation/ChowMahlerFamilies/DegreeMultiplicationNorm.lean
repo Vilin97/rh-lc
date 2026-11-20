@@ -411,7 +411,8 @@ theorem pull_par {H : LB B.left} (hH : H.IsLB) (hΘ : ∃ t : LB.Gen (Theta B H)
   have ht := (cls_eq_zero_iff (LB.isLB_linComb hH _ _)).2 hΘ
   rw [cls_linComb hH] at ht
   have this := congrArg (pull (lift x (lift y y⁻¹)).left) ht
-  rw [map_zero, map_sum] at this
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_zero, map_sum] at this
   simp only [map_zsmul, ← pull_comp, ← Over.comp_left] at this
   have hsum : ∀ F : Finset (Fin 3) → Pic T.left, ∑ I : ULift.{0} (Finset (Fin 3)), F I.down =
       F ∅ + F {0} + F {1} + F {2} + F {0, 1} + F {0, 2} + F {1, 2} + F {0, 1, 2} := fun F => by

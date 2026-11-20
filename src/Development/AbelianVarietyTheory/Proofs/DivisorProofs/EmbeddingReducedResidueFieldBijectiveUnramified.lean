@@ -93,11 +93,13 @@ theorem red_bijective (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Ho
   have hAC' : ∀ σ τ, ∑ i, red io X σ (b i) * Cr i τ = if σ = τ then 1 else 0 := by
     intro σ τ
     have := congrArg (residue X.O) (hAC σ τ)
-    simpa [map_sum, red, Cr, apply_ite (residue X.O)] using this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [map_sum, red, Cr, apply_ite (residue X.O)] using this
   have hCA' : ∀ i i', ∑ τ, Cr i τ * red io X τ (b i') = if i = i' then 1 else 0 := by
     intro i i'
     have := congrArg (residue X.O) (hCA i i')
-    simpa [map_sum, red, Cr, apply_ite (residue X.O)] using this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [map_sum, red, Cr, apply_ite (residue X.O)] using this
   refine ⟨fun σ τ hst => ?_, fun χ => ?_⟩
   · by_contra hne
     have h1 := hAC' σ τ

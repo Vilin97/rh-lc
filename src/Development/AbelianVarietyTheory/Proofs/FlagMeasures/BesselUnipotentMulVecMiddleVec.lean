@@ -26,7 +26,8 @@ theorem gramProj_comb {n r : ℕ} (P : Submodule ℂ (EuclideanSpace ℂ (Fin n)
   have hlin : (fun a => P.starProjection (WithLp.toLp 2 (∑ b, U b a • v b))) =
       fun a => ∑ b, U b a • P.starProjection (WithLp.toLp 2 (v b)) := by
     funext a
-    simp [map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, map_smul]
   rw [hlin, gram_sum_smul_eq_conjTranspose_mul_gram_mul, Matrix.det_mul, Matrix.det_mul, Matrix.det_conjTranspose, hU]
   simp
 

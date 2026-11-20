@@ -53,12 +53,14 @@ theorem mem_span_image_eigen {K L V W Γ G : Type} [Field K] [Field L] [CharZero
     refine Submodule.span_le.2 ?_
     rintro _ ⟨v, rfl⟩
     refine Submodule.subset_span ⟨∑ u : P, (((lam u)⁻¹ : Kˣ) : K) • ρ u v, fun x => ?_, ?_⟩
-    · rw [map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [map_sum, Finset.smul_sum]
       refine Fintype.sum_equiv (Equiv.mulLeft x) _ _ fun u => ?_
       rw [map_smul, ← hρ, smul_smul, Equiv.coe_mulLeft, map_mul, Subgroup.coe_mul]
       congr 1
       rw [mul_inv, Units.val_mul, Units.mul_inv_cancel_left]
-    · rw [map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [map_sum, LinearMap.sum_apply]
       exact Finset.sum_congr rfl fun u _ => by rw [map_smulₛₗ, LinearMap.smul_apply, hc, hs]
   have h3 := h2 hw
   rw [Submodule.mem_comap, h1] at h3

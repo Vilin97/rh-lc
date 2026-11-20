@@ -85,7 +85,8 @@ theorem cmul_hahn {Ω Ωl : Type} [Field Ω] [CharZero Ω] [Field Ωl] (j : Ω �
     ext i; rw [key, hD, PowerSeries.coeff_mk]
   rw [e1, e2, ← map_mul, key]
   split_ifs
-  · rw [PowerSeries.coeff_mul, Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk, cmul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [PowerSeries.coeff_mul, Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk, cmul, map_sum]
     simp only [PowerSeries.coeff_mk, map_mul]
   · rfl
 

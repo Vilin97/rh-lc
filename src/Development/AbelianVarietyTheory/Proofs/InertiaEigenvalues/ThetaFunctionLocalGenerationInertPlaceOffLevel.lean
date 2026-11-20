@@ -65,7 +65,8 @@ theorem rel_transfer (hp : LocPair ϖ σ q δ JS JT ψ ρ ω) {ι : Type} [Finty
     have := hST (Pi.single k 1)
     simpa [T, T'] using this
   have := congrArg B h0
-  rw [map_sum, map_zero] at this
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_zero] at this
   simpa only [hB _ _ (ht _), e] using this
 
 theorem exists_killed (hp : LocPair ϖ σ q δ JS JT ψ ρ ω) (𝒜 : Set (Module.End ℂ M))
@@ -89,7 +90,8 @@ theorem exists_killed (hp : LocPair ϖ σ q δ JS JT ψ ρ ω) (𝒜 : Set (Modu
   have hAv : ∀ s, LocVac ρ s → LocVac ρ (A s) := fun s hs u hu => by rw [← h𝒜 A hA, hs u hu]
   have h0 : ∑ k, ρ (x k) (l (A (t k)) • w) = 0 := by
     have e := congrArg (fun z => B (A z)) hs
-    simp only [hf A hA, map_zero, map_sum, h𝒜 A hA] at e
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hf A hA, map_zero, map_sum, h𝒜 A hA] at e
     rw [← e]
     exact Finset.sum_congr rfl fun k _ => (hB _ _ (hAv _ (hW (ht k)))).symm
   let W' : Submodule ℂ M := W ⊓ LinearMap.ker (l ∘ₗ A)
@@ -131,7 +133,8 @@ theorem howe_killed (hH : HoweUnram) (hp : LocPair ϖ σ q δ JS JT ψ ρ ω) (�
   have e : f = ∑ j, ∑ k, ρ (x k) (l j (t k) • (b j : M)) := by
     rw [Finset.sum_comm, ← hsum]
     refine Finset.sum_congr rfl fun k _ => ?_
-    rw [← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum]
     congr 1
     have := congrArg Subtype.val (b.sum_repr ⟨t k, htW k⟩)
     simpa only [hl', Submodule.coe_sum, Submodule.coe_smul] using this.symm
@@ -152,11 +155,14 @@ theorem howe_killed (hH : HoweUnram) (hp : LocPair ϖ σ q δ JS JT ψ ρ ω) (�
         (congrArg (ρ _) (hp.fix g 1 hg hone s hs))⟩
     choose mv hmv using hn
     have e1 : ∑ k, ρ (mv (x k)) (t k) = ∑ k, ρ (x k) (t k) := by
-      rw [hsum, ← hK g hg, ← hsum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hsum, ← hK g hg, ← hsum, map_sum]
       exact Finset.sum_congr rfl fun k _ => (hmv _ _ (ht k).1).symm
     have e2 := congrArg B e1
-    simp only [map_sum, hB _ _ (ht _).1, LinearMap.smulRight_apply] at e2
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, hB _ _ (ht _).1, LinearMap.smulRight_apply] at e2
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact (Finset.sum_congr rfl fun k _ => hmv _ _ ((vacSub ρ).smul_mem _ hb.1)).trans e2
 
 end Local
@@ -477,7 +483,8 @@ theorem step_inert : GlobalTheory.Hk3.HoweUnram → ∀ (D : D7) (G : Type) [Gro
       ∑ u : c.support, Finsupp.single ((1 - e) • (u : WO (Vc D i) (Wc D i))) (a u * c u)
     have e2 : ∀ φ, (c'.sum fun u z => z • heisO R.ψ (Vc D i) (Wc D i) u φ) =
         ∑ u : c.support, a u • (c u • heisL R.ψ _ _ ((1 - e) • (u : WO (Vc D i) (Wc D i)))) φ := fun φ => by
-      rw [← Finsupp.linearCombination_apply ℂ, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← Finsupp.linearCombination_apply ℂ, map_sum]
       refine Finset.sum_congr rfl fun u _ => ?_
       rw [Finsupp.linearCombination_single, mul_smul]
       rfl

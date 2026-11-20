@@ -176,7 +176,8 @@ theorem mulVec_mem {V : HSp D} (h : OrthFrame V) {κ : Formalism.AUTREP.GAf D.ho
   rw [mem_latHat_iff h] at hy ⊢
   intro i
   change (sw D).toRingHom (∑ j, (sw D).symm (κ.1.1 i j) * y j) ∈ _
-  rw [map_sum (sw D).toRingHom]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum (sw D).toRingHom]
   refine sum_mem fun j _ => ?_
   change sw D _ ∈ _
   rw [RingEquiv.map_mul, RingEquiv.apply_symm_apply]

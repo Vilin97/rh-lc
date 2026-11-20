@@ -96,7 +96,8 @@ theorem constantCoeff_sub2_eq_zero {τ : Type} {be : MvPowerSeries (Fin 2) (K0 p
 theorem cc_sumBe {ι : Type} [Fintype ι] {be : MvPowerSeries (Fin 2) (K0 p)} (h0 : MvPowerSeries.constantCoeff be = 0) :
     MvPowerSeries.constantCoeff (sumBe p be : MvPowerSeries (ι ⊕ ι) (K0 p)) = 0 := by
   unfold sumBe
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_eq_zero fun e _ => constantCoeff_sub2_eq_zero h0 _ _ (by simp) (by simp)
 
 theorem first_kernel_of_sum : FirstKernelGeneratorOfSum := by
@@ -139,7 +140,8 @@ variable {l : ℕ} [Fact l.Prime]
 theorem map_logF : PowerSeries.map (k0ToC l) (logF l) = lgF ℂ_[l] l := by
   ext n
   rw [PowerSeries.coeff_map]
-  simp only [logF, lgF, PowerSeries.coeff_mk, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [logF, lgF, PowerSeries.coeff_mk, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [pow_mul]
   split_ifs <;> simp
@@ -164,7 +166,8 @@ theorem map_expS {σ : Type} (g : MvPowerSeries σ (K0 l)) (hg : MvPowerSeries.c
     MvPowerSeries.map (k0ToC l) (expS l g) = mvExp (MvPowerSeries.map (k0ToC l) g) := by
   rw [expS_eq g hg, mvExp_eq]
   ext d
-  rw [MvPowerSeries.coeff_map, Formalism.HermitianLattices.ExpSeriesBivariate.ExpSeriesAddition.coeff_expS g hg d (d.degree + 1) (Nat.lt_succ_self _),
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [MvPowerSeries.coeff_map, Formalism.HermitianLattices.ExpSeriesBivariate.ExpSeriesAddition.coeff_expS g hg d (d.degree + 1) (Nat.lt_succ_self _),
     Formalism.HermitianLattices.ExpSeriesBivariate.ExpSeriesAddition.coeff_expS _ (by rw [MvPowerSeries.constantCoeff_map, hg, map_zero]) d (d.degree + 1)
       (Nat.lt_succ_self _), map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
@@ -246,7 +249,8 @@ theorem lg_flin (hl : 2 ≤ l) {σ m : Type} [Fintype m] (c : m → ℂ_[l]) (v 
       ∑ k, MvPowerSeries.C (c k) * PowerSeries.subst (v k) lgC := by
   unfold Formalism.L2.Th1.C.flin
   have hA : MvPowerSeries.constantCoeff (∑ k, MvPowerSeries.C (c k) * PowerSeries.subst (v k) lgC) = 0 := by
-    simp only [map_sum, map_mul, MvPowerSeries.constantCoeff_C]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, MvPowerSeries.constantCoeff_C]
     exact Finset.sum_eq_zero fun k _ => by rw [PowerSeries.constantCoeff_subst_eq_zero (hv k) _ cc_lgC, mul_zero]
   rw [← PowerSeries.subst_comp_subst_apply (PowerSeries.HasSubst.of_constantCoeff_zero' (expSpec ℂ_[l] l hl).1)
     (PowerSeries.HasSubst.of_constantCoeff_zero hA), (expSpec ℂ_[l] l hl).2.1,
@@ -257,7 +261,8 @@ theorem cc_flin (hl : 2 ≤ l) {σ m : Type} [Fintype m] (c : m → ℂ_[l]) (v 
     MvPowerSeries.constantCoeff (Formalism.L2.Th1.C.flin lgC (expF ℂ_[l] l) c v) = 0 := by
   unfold Formalism.L2.Th1.C.flin
   have hA : MvPowerSeries.constantCoeff (∑ k, MvPowerSeries.C (c k) * PowerSeries.subst (v k) lgC) = 0 := by
-    simp only [map_sum, map_mul, MvPowerSeries.constantCoeff_C]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, MvPowerSeries.constantCoeff_C]
     exact Finset.sum_eq_zero fun k _ => by rw [PowerSeries.constantCoeff_subst_eq_zero (hv k) _ cc_lgC, mul_zero]
   exact PowerSeries.constantCoeff_subst_eq_zero hA _ (expSpec ℂ_[l] l hl).1
 
@@ -283,7 +288,8 @@ theorem coord (hl : 2 ≤ l) (f f' : ι → n → MaximalUnramifiedExtension l) 
   rw [lg_flin hl _ _ fun k => by cases k <;> simp]
   unfold hypLin
   rw [← MvPowerSeries.coe_substAlgHom hasSubst_single_var_log, ← MvPowerSeries.coe_substAlgHom hasSubst_renS]
-  simp only [map_sum, map_add, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_add, map_mul]
   simp only [MvPowerSeries.coe_substAlgHom hasSubst_single_var_log, MvPowerSeries.coe_substAlgHom hasSubst_renS,
     MvPowerSeries.subst_C, MvPowerSeries.subst_X hasSubst_single_var_log]
   rw [Fintype.sum_sum_type, sum_extended_index, sum_extended_index, ← Finset.sum_add_distrib]
@@ -336,8 +342,10 @@ theorem M_eq {ι : Type} [Fintype ι] (be : MvPowerSeries (Fin 2) (K0 l)) :
   have hsum : inParam l (∑ e : ι, sub2 l be (MvPowerSeries.X (Sum.inl e)) (MvPowerSeries.X (Sum.inr e))) =
       ∑ e : ι, inParam l (sub2 l be (MvPowerSeries.X (Sum.inl e)) (MvPowerSeries.X (Sum.inr e))) := by
     unfold inParam
-    rw [← MvPowerSeries.coe_substAlgHom hasSubst_log, map_sum]
-  rw [hsum, map_sum, ← MvPowerSeries.coe_substAlgHom hasSubst_renS, map_sum, sum_extended_index]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← MvPowerSeries.coe_substAlgHom hasSubst_log, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hsum, map_sum, ← MvPowerSeries.coe_substAlgHom hasSubst_renS, map_sum, sum_extended_index]
   refine Finset.sum_congr rfl fun e _ => ?_
   rw [MvPowerSeries.coe_substAlgHom hasSubst_renS, map_inParam, map_inParam]
   unfold sub2
@@ -703,7 +711,8 @@ theorem sum_beta_even : SumBeEven := by
       sumBe p be = ∑ e : ι, MvPowerSeries.subst (sgn (K0 p) ![Sum.inl e, Sum.inr e] ![1, 1])
         (sub2 p be (-MvPowerSeries.X 0) (-MvPowerSeries.X 1) - be) := by
     unfold sumBe
-    rw [← MvPowerSeries.coe_substAlgHom hN, map_sum, MvPowerSeries.coe_substAlgHom hN, ← Finset.sum_sub_distrib]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← MvPowerSeries.coe_substAlgHom hN, map_sum, MvPowerSeries.coe_substAlgHom hN, ← Finset.sum_sub_distrib]
     refine Finset.sum_congr rfl fun e _ => ?_
     have hσ := hasSubst_sgn (R := K0 p) (![Sum.inl e, Sum.inr e] : Fin 2 → ι ⊕ ι) ![1, 1]
     rw [formalSum_subst hN _ _ _ (by simp) (by simp), MvPowerSeries.subst_X hN, MvPowerSeries.subst_X hN,

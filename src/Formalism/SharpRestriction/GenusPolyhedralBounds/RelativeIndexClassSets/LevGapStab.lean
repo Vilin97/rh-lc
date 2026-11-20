@@ -150,7 +150,8 @@ theorem trV_int (v : HeightOneSpectrum (𝓞 F)) (y : E ⊗[F] v.adicCompletion 
   obtain ⟨a, rfl⟩ := levelv_S_le_range v y hy
   show trV E v (∑ i, algebraMap (𝓞 E) E (RingOfIntegers.basis E i) ⊗ₜ[F]
     ((a i : v.adicCompletionIntegers F) : v.adicCompletion F)) ∈ _
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine sum_mem fun i _ => ?_
   rw [trV_tmul]
   obtain ⟨t, ht⟩ := adelstab_trace_int (F := F) (RingOfIntegers.basis E i)

@@ -16,7 +16,8 @@ theorem ltr_mul_left {ι : Type} [Fintype ι] [DecidableEq ι] (g h : Matrix ι 
   have : ltr (g * h) = (ltr h).comp (ltr g) := by
     apply MvPolynomial.algHom_ext
     rintro ⟨i, j⟩
-    simp only [ltr, MvPolynomial.aeval_X, AlgHom.comp_apply, map_sum, map_mul, MvPolynomial.aeval_C,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [ltr, MvPolynomial.aeval_X, AlgHom.comp_apply, map_sum, map_mul, MvPolynomial.aeval_C,
       MvPolynomial.algebraMap_eq, Matrix.mul_apply, Finset.sum_mul, Finset.mul_sum, mul_assoc]
     exact Finset.sum_comm
   rw [this]; rfl

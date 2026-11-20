@@ -50,6 +50,7 @@ theorem descUr_mem : ∀ (D : D7) (i : D.nd.Loc) (w : HeightOneSpectrum (𝓞 D.
     u j - ((Br.loc D.nbr i w hw M g).mulVec (fun j => r (v' j)) j - r (v' j))
   rw [hj', map_sub, map_sub, hri]
   congr 2
-  simp only [Matrix.mulVec, dotProduct, map_sum, descUr_entry, hrl']
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mulVec, dotProduct, map_sum, descUr_entry, hrl']
 
 end GlobalTheory.UseLoc

@@ -213,7 +213,8 @@ private lemma congr_one [CompleteSpace K] [CharZero K] (hU : UnrOK K l σ) (ζ :
     (by ext i j; exact hh i j) (Matrix.isUnit_det_of_right_inverse hHG')
   refine ⟨Matrix.of fun i j => (P i j : K), fun i j => (P i j).2, fun r r' => ?_⟩
   have := congrArg (intFix hU).subtype (congrFun (congrFun hP r) r')
-  simp only [Matrix.mul_apply, Matrix.one_apply, map_sum, map_mul, Matrix.conjTranspose_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mul_apply, Matrix.one_apply, map_sum, map_mul, Matrix.conjTranspose_apply,
     Subring.coe_subtype, hst] at this
   refine this.trans ?_
   split_ifs <;> rfl
@@ -237,7 +238,8 @@ private lemma tr_shift (i : ℕ) (x : K) (hx : (σ ^ (2 * i)) x = x) : tr σ i (
 omit [IsUltrametricDist K] in
 private lemma tr_map (i m : ℕ) (x : K) : (σ ^ m) (tr σ i x) = tr σ i ((σ ^ m) x) := by
   unfold tr
-  simp only [map_sum, pp, add_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, pp, add_comm]
 
 omit [IsUltrametricDist K] in
 private lemma tr_shift' (i : ℕ) (x : K) (hx : (σ ^ (2 * i)) x = x) (j : ℕ) :
@@ -325,7 +327,8 @@ private lemma main [CompleteSpace K] [CharZero K] (hU : UnrOK K l σ) (ζ : K)
     IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg zero_le_one fun a _ =>
       hmul (hP r a).1 (hn a).1
   have f1 : ∀ r, (σ ^ (2 * i)) (∑ a, P r a * om a) = ∑ a, P r a * om a := fun r => by
-    simp only [map_sum, map_mul, fix_even (hP _ _).2, (hf _).1]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, fix_even (hP _ _).2, (hf _).1]
   have hPi : ∀ r a, (σ ^ i) (P r a) = σ (P r a) := fun r a => by
     rw [hj, add_comm, ← pp, fix_even (hP _ _).2, pow_one]
   have hPs : ∀ r a k, (σ ^ (2 * k)) (σ (P r a)) = σ (P r a) := fun r a k =>
@@ -335,7 +338,8 @@ private lemma main [CompleteSpace K] [CharZero K] (hU : UnrOK K l σ) (ζ : K)
   · simp only [← RingHom.coe_pow]
     exact ⟨f1 r, hfi (f1 r)⟩
   · rw [tr_eq, ← hPH r r', ← RingHom.coe_pow]
-    simp only [H, Matrix.of_apply, tr, map_sum, map_mul, hPi, hPs, fix_even (hP _ _).2,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [H, Matrix.of_apply, tr, map_sum, map_mul, hPi, hPs, fix_even (hP _ _).2,
       Finset.sum_mul, Finset.mul_sum]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun b _ => ?_

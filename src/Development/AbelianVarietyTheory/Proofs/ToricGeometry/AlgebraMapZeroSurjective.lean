@@ -112,7 +112,8 @@ theorem dehom_X_self (c : σ) : dehom I c (X c) = 1 := by
 attribute [local instance] MvPolynomial.gradedAlgebra in
 theorem dehom_eq_zero_of_mem (hI : I.IsHomogeneous (homogeneousSubmodule σ ℂ)) (c : σ) {F : MvPolynomial σ ℂ}
     (hF : F ∈ I) : dehom I c F = 0 := by
-  rw [← sum_homogeneousComponent F, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← sum_homogeneousComponent F, map_sum]
   refine Finset.sum_eq_zero fun n _ => ?_
   apply HomogeneousLocalization.val_injective
   rw [val_dehom_of_isHomogeneous I c (homogeneousComponent_isHomogeneous n F),

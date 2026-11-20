@@ -81,7 +81,8 @@ theorem exists_dRho_pure_all (hψ : IsStdChar D ψ (-1)) (hθ : IsInfFam θ)
       pureTensorL A f (∑ k : Fin T.rank × Fin S.rank,
         α k • (MvPolynomial.X ((τ, k.1, k.2) : FVar D T.rank S.rank) * P)) := by
     conv_lhs => rw [eq_sum_unitMap (hfS τ).1 (hfT τ).1 z]
-    rw [GlobalTheory.FockSubst.aPlus_dir_sum hψ hθ τ (sS τ) (sT τ) hm, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [GlobalTheory.FockSubst.aPlus_dir_sum hψ hθ τ (sS τ) (sT τ) hm, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [GlobalTheory.FockSubst.aPlus_dir_smul hψ hθ τ (sS τ) (sT τ) hm _ _ (cplxO_unitMap (hfS τ) (hfT τ) k.1 k.2), map_smul,
       pure_X_mul hadd hsm hA hc Aadd Asm hf]

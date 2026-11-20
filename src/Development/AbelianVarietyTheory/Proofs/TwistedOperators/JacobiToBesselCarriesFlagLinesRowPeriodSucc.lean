@@ -47,7 +47,8 @@ theorem GlobalTheory.RowShape.cols_jacBes_rowN : Big fun {D} {Γ} _ _ {Pl0 T} {A
       GlobalTheory.MixModel.rat N *ᵥ ratV z = ratV (N *ᵥ z) := by
     intro m n N z
     funext k
-    simp [GlobalTheory.MixModel.rat, ratV, Matrix.mulVec, dotProduct, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [GlobalTheory.MixModel.rat, ratV, Matrix.mulVec, dotProduct, map_sum, map_mul]
   have hL : colMul (rowJac ch.G i (by omega) (σ + 1) (by omega)).jX a s =
       fun k => s * incA D ((ch.G.rowDec i (by omega)).a k ⟨a.1, by omega⟩) := by
     funext k

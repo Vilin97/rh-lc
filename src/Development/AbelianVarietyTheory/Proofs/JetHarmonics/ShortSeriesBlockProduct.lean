@@ -166,7 +166,8 @@ theorem mul_mem_HHa (cc : T → T) (isX : T → Prop) {a₁ a₂ : T → ℕ →
       rw [Derivation.leibniz, z, smul_zero, add_zero, smul_eq_mul, Derivation.leibniz, z, smul_zero,
         add_zero, smul_eq_mul, e1 τ i, e1 (cc τ) i', pderiv_rename (col_injective natAdd_inj'),
         pderiv_rename (col_injective natAdd_inj')]
-    rw [Finset.sum_congr rfl (fun x _ => hL x), Finset.sum_congr rfl (fun x _ => hR x),
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_congr rfl (fun x _ => hL x), Finset.sum_congr rfl (fun x _ => hR x),
       ← Finset.mul_sum, ← Finset.mul_sum, ← map_sum, ← map_sum, h₁H τ hτ i i', h₂H τ hτ i i',
       map_zero, map_zero, mul_zero, mul_zero, add_zero]
   · intro σ i i' hii' t
@@ -365,7 +366,8 @@ theorem blockPoly_mem_harmL {n₁ n₂ : ℕ} {Λ₁ : GenLat E n₁} {Λ₂ : G
         simp [LinearMap.funLeft_apply, Fin.append_right]
     · intro σ i
       unfold letB
-      simp only [map_sum, map_mul, rename_C, rename_X]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_mul, rename_C, rename_X]
       rw [Fin.sum_univ_add]
       simp [Fin.append_left, Fin.append_right, col]
   · refine rename_mem_symO (Fin.natAdd n₁) Λ₂ _ ?_ h₂.2
@@ -383,7 +385,8 @@ theorem blockPoly_mem_harmL {n₁ n₂ : ℕ} {Λ₁ : GenLat E n₁} {Λ₂ : G
         simp [LinearMap.funLeft_apply, Fin.append_right]
     · intro σ i
       unfold letB
-      simp only [map_sum, map_mul, rename_C, rename_X]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_mul, rename_C, rename_X]
       rw [Fin.sum_univ_add]
       simp [Fin.append_left, Fin.append_right, col]
 

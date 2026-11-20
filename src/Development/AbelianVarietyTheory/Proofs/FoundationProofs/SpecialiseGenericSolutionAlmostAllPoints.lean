@@ -80,7 +80,8 @@ theorem specialise_generic_solution : ∀ (k A : Type) [Field k] [IsAlgClosed k]
     apply GlobalTheory.T.mem_maximal_pow_of_jets_vanish k A N (Δ' i) hN
     · rw [hΔ' i 0 hN0, h01 i, hone]
     · intro l hl u w
-      rw [hΔ' i l hl, hleib i l u w, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hΔ' i l hl, hleib i l u w, map_sum]
       refine Finset.sum_congr rfl fun p hp => ?_
       have hp' : p < l + 1 := Finset.mem_range.1 hp
       rw [map_nsmul, hmul _ (hSΔ i p (by omega) u) _ (hSΔ i (l - p) (by omega) w),
@@ -128,7 +129,8 @@ theorem specialise_generic_solution : ∀ (k A : Type) [Field k] [IsAlgClosed k]
     exact hunit _ (hy j0) hj0 (hTS _ (by simp [T])) this
   · apply (hφ f).2
     have : φ f = L (∑ j, y j * ξ (v j)) := by
-      simp only [f, map_sum, map_smul, smul_eq_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [f, map_sum, map_smul, smul_eq_mul]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [hmul _ (hy j) _ (hξS _), hLξ]
     rw [this, heq0, map_zero]
@@ -136,7 +138,8 @@ theorem specialise_generic_solution : ∀ (k A : Type) [Field k] [IsAlgClosed k]
     apply hQpow i
     intro l hl
     have : Δ' i l f = L (∑ j, y j * Δ i l (v j)) := by
-      simp only [f, map_sum, map_smul, smul_eq_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [f, map_sum, map_smul, smul_eq_mul]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [hmul _ (hy j) _ (hSΔ i l hl _), hΔ' i l hl]
     rw [this, heqΔ i l hl, map_zero]

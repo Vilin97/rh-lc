@@ -15,7 +15,8 @@ private theorem sandwich_map_smul {R X : Type} [CommRing R] [CommRing X] {n : �
     (hα : ∀ u v, α (u * v) = α u * α v) :
     (c • (P * Z * Q)).map φ = α c • (P.map α * Z.map φ * Q.map α) := by
   ext i j
-  simp only [Matrix.map_apply, Matrix.smul_apply, Matrix.mul_apply, smul_eq_mul, Finset.sum_mul, Finset.mul_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.map_apply, Matrix.smul_apply, Matrix.mul_apply, smul_eq_mul, Finset.sum_mul, Finset.mul_sum,
     map_sum]
   refine Finset.sum_congr rfl fun b _ => Finset.sum_congr rfl fun a _ => ?_
   rw [show c * (P i a * Z a b * Q b j) = (c * (P i a * Q b j)) * Z a b by ring, h, hα, hα]

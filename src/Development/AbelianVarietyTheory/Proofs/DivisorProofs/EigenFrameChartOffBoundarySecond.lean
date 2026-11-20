@@ -73,7 +73,8 @@ private theorem conj_rel {m : ℕ} {M G N : Matrix (Fin m) (Fin m) ℂ} {c : ℝ
     Mᵀ = (c : ℂ) • (G.map (starRingEnd ℂ) * N.map (starRingEnd ℂ) * (G.map (starRingEnd ℂ))ᴴ) := by
   ext a b
   have := congrArg (starRingEnd ℂ) (congrFun (congrFun h a) b)
-  simpa [Matrix.mul_apply, map_sum] using this
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa [Matrix.mul_apply, map_sum] using this
 
 open AlgebraicGeometry CategoryTheory Formalism.L2.Pj GlobalTheory.Toroidal GlobalTheory.ShFam in
 

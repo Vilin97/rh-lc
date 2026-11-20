@@ -131,7 +131,8 @@ private theorem step (τ : Type) [Fintype τ] [DecidableEq τ] (n : ℕ) (u : τ
     exact (FXRep.basis _).mono (by linarith [Nat.cast_nonneg (α := ℝ) n]) (Nat.zero_le _)
   · have hn : (β u : ℕ) + 1 = n := by have := (β u).2; omega
     have hv := congrArg (rename (fun j => (u.1, j))) (vieta n u.2)
-    simp only [map_pow, rename_X, map_sum, map_mul, Prod.mk.eta, rename_C] at hv
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_pow, rename_X, map_sum, map_mul, Prod.mk.eta, rename_C] at hv
     rw [hn, hv, Finset.sum_mul]
     have key := FXRep.sum (φ := aeval (fun ti : τ × Fin n =>
         rename (fun j => (ti.1, j)) (esymm (Fin n) ℂ (ti.2 + 1))))

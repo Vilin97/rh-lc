@@ -72,7 +72,8 @@ theorem galOCr_iC_of_covers {h : GQ l} {γ : TameGal K l e a} (hc : Covers K t �
     simp only [Pi.mul_apply, Pi.single_eq_same, one_mul]
     rfl
   change F f = F' f
-  rw [hx, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hx, map_sum, map_sum]
   refine Finset.sum_congr rfl fun τ _ => ?_
   rw [map_mul, map_mul, hs, ← RingHom.comp_apply F d, hd]
   rfl
@@ -260,11 +261,13 @@ theorem actB_jB_toBcris {ι : Type} [Fintype ι] [DecidableEq ι] {P : PhiMod O 
     apply Subtype.ext
     rw [Submodule.coe_sum, hσ]
     conv_lhs => rw [P.eq_sum_phi_bas σ.1]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [Δ.act_smul_tot]
     rfl
-  rw [e1, e2, map_sum, map_sum, map_sum, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e1, e2, map_sum, map_sum, map_sum, map_sum, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   have hL := actB_jB_of_mem_L hcmp hdesc hc (hw i) (hw' i) rfl (hwS i) (hwS' i)
   rw [toBcris_smul P (f i) (w i) (hwS i), toBcris_smul P (f' i) (w' i) (hwS' i), jB.map_smul, jB.map_smul]

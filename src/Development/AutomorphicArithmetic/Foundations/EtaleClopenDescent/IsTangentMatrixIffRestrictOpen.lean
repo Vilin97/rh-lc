@@ -53,7 +53,8 @@ private theorem Wit.loc {B B' : Type} [CommRing B] [CommRing B'] [Algebra ℂ B]
       fun i => u • KaehlerDifferential.map ℂ ℂ B B' (ω₁ i), fun i => ?_, ?_⟩
     · rw [he]; exact hb i
     · have : ω = u • (algebraMap B B' (c : B) • ω) := by rw [smul_smul, hu, one_smul]
-      rw [this, hc'', map_sum, Finset.smul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [this, hc'', map_sum, Finset.smul_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_smul, ← algebraMap_smul B' (b i), smul_comm]
 

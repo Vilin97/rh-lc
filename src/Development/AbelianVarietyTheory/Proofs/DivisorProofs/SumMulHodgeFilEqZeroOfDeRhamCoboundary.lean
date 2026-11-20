@@ -41,11 +41,13 @@ theorem sum_mul_eq_zero_of_isCob : GlobalTheory.Published.AbelianHodgeDeRham →
   have hF1 := (mem_hodgeFiltration_iff_pointwiseCoboundary D B' _).2 ⟨k, hk⟩
   let c' : primDR B' := ∑ i, d i • m.pull ⟨_, hβ i⟩
   have hc' : (c' : FirstDeRham (B'.hom ≫ 𝟙 _)) = CatCoh.H1.mk _ (∑ i, d i • m.isMor.coef.pullbackOneCocycle (β i)) := by
-    simp only [c', Submodule.coe_sum, Submodule.coe_smul, map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [c', Submodule.coe_sum, Submodule.coe_smul, map_sum, map_smul]
     rfl
   have h0 : y' c' = 0 := hFil c' (Submodule.mem_comap.2 (by rw [Submodule.subtype_apply, hc']; exact hF1))
   rw [← h0]
-  simp only [c', map_sum, map_smul, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [c', map_sum, map_smul, smul_eq_mul]
   exact Finset.sum_congr rfl fun i _ ↦ by rw [hy' _]
 
 end GlobalTheory.PtExt

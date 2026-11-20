@@ -49,7 +49,8 @@ theorem finite_of_relations {n : ℕ} {L : Type} [Fintype L] (φ : MvPolynomial 
   have hint : ∀ i, IsIntegral S (bcPres (S := S) φ (X i)) := by
     intro i
     refine ⟨q i, hq i, ?_⟩
-    rw [← Polynomial.aeval_def, Polynomial.aeval_algHom_apply, hG i, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Polynomial.aeval_def, Polynomial.aeval_algHom_apply, hG i, map_sum]
     refine Finset.sum_eq_zero (fun l _ => ?_)
     rw [map_mul, bcPres_map, hrel, TensorProduct.tmul_zero, mul_zero]
   haveI : Algebra.IsIntegral S (S ⊗[R] A) := by
@@ -214,7 +215,8 @@ theorem eventually_finite_baseChange : ∀ (J : Type) [SmallCategory J] [IsFilte
     Polynomial.aeval (X i) (q i) - ∑ l, H i l * MvPolynomial.map (F.map f₁).hom (rel l)
   have hE : ∀ i, MvPolynomial.map (c.ι.app k₁).hom (E i) = 0 := by
     intro i
-    simp only [E, map_sub, map_sum, map_mul, map_aeval_X, hq, hH, MvPolynomial.map_map]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [E, map_sub, map_sum, map_mul, map_aeval_X, hq, hH, MvPolynomial.map_map]
     rw [← CommRingCat.hom_comp, c.w f₁, sub_eq_zero, ← hG i]
     rfl
   let U : Finset (F.obj k₁) := Finset.univ.biUnion (fun i => (E i).coeffs)
@@ -243,7 +245,8 @@ theorem eventually_finite_baseChange : ∀ (J : Type) [SmallCategory J] [IsFilte
     rw [Category.assoc, Functor.map_comp, CommRingCat.hom_comp]
   have h3 : MvPolynomial.map (F.map (g₂ ≫ f)).hom (E i) = 0 := by
     rw [Functor.map_comp, CommRingCat.hom_comp, ← MvPolynomial.map_map, hE2, map_zero]
-  simp only [E, map_sub, map_sum, map_mul, map_aeval_X, MvPolynomial.map_map, sub_eq_zero] at h3
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [E, map_sub, map_sum, map_mul, map_aeval_X, MvPolynomial.map_map, sub_eq_zero] at h3
   rw [halg]
   exact h3
 

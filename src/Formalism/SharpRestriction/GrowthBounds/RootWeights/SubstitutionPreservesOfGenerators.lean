@@ -72,11 +72,13 @@ private theorem v1r_act_mul_lemma (h1 h1' h2 h2' : Matrix (Fin n) (Fin n) L) :
   · rintro ⟨l, a⟩
     by_cases hl : l ∈ S
     · by_cases hv : LL.vec l = true
-      · simp [matrixSubst, hl, hv, Matrix.mul_apply, Finset.mul_sum, Finset.sum_mul, map_sum, ← mul_assoc]
+      set_option synthInstance.maxHeartbeats 100000 in
+        · simp [matrixSubst, hl, hv, Matrix.mul_apply, Finset.mul_sum, Finset.sum_mul, map_sum, ← mul_assoc]
         rw [Finset.sum_comm]
         refine Finset.sum_congr rfl fun c _ => Finset.sum_congr rfl fun b _ => ?_
         ring
-      · simp [matrixSubst, hl, hv, Matrix.mul_apply, Finset.mul_sum, Finset.sum_mul, map_sum, ← mul_assoc]
+      set_option synthInstance.maxHeartbeats 100000 in
+        · simp [matrixSubst, hl, hv, Matrix.mul_apply, Finset.mul_sum, Finset.sum_mul, map_sum, ← mul_assoc]
         rw [Finset.sum_comm]
     · simp [matrixSubst, hl]
 
@@ -101,13 +103,15 @@ theorem substitution_preserves_diagonal (hTo : TorusActsThroughWeight) (hGr : Bi
     SubstitutionPreservesExtension LL S φ W (Matrix.diagonal fun a => ((D a : Lˣ) : L)) (Matrix.diagonal fun a => (((D a)⁻¹ : Lˣ) : L)) := by
   apply substitution_preserves_of_generators
   intro w hw
-  rw [sum_weightComponents LL S w, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [sum_weightComponents LL S w, map_sum]
   refine Submodule.sum_mem _ fun nu _ => ?_
   have hc : weightComponent LL S nu w ∈ W := hGr R ι LL n S W hW w hw nu
   have key : matrixSubst LL S φ (Matrix.diagonal fun a => ((D a : Lˣ) : L))
       (Matrix.diagonal fun a => (((D a)⁻¹ : Lˣ) : L)) (weightComponent LL S nu w) =
       MvPolynomial.C (((∏ a, D a ^ (nu a) : Lˣ) : L)) * MvPolynomial.map φ (weightComponent LL S nu w) := by
-    rw [weightComponent, map_sum, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [weightComponent, map_sum, map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun m hm => ?_
     have hm' : wtS LL S m = nu := (Finset.mem_filter.1 hm).2
     rw [hTo R L ι LL n S φ D m, MvPolynomial.map_monomial, MvPolynomial.C_mul_monomial, hm', mul_comm]

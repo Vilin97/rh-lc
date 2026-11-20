@@ -64,7 +64,8 @@ theorem jetL_monomial {κ : Type} [Fintype κ] (v : κ → V) (G : V → ℂ) (u
 theorem jetL_apply {κ : Type} [Fintype κ] (v : κ → V) (G : V → ℂ) (P : MvPolynomial κ ℂ) :
     jetL v G P = ∑ m ∈ P.support, P.coeff m * monoJet v G m := by
   conv_lhs => rw [P.as_sum]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun m _ => ?_
   have e : MvPolynomial.monomial m (P.coeff m) = P.coeff m • MvPolynomial.monomial m (1 : ℂ) := by
     rw [MvPolynomial.smul_monomial, smul_eq_mul, mul_one]
@@ -174,7 +175,8 @@ theorem monomial_mem_span {κ : Type} [Fintype κ] (m : κ →₀ ℕ) :
     rw [MvPolynomial.monomial_eq, MvPolynomial.C_1, one_mul, Finsupp.prod_fintype _ _ (fun i => pow_zero _)]
     refine Finset.prod_congr rfl fun i _ => ?_
     have := congrArg (Polynomial.aeval (MvPolynomial.X i : MvPolynomial κ ℂ)) (hc (m i))
-    rw [Polynomial.aeval_X_pow, Finsupp.sum, map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Polynomial.aeval_X_pow, Finsupp.sum, map_sum] at this
     rw [← this]
     simp only [map_smul]
   rw [e1, Finset.prod_univ_sum]

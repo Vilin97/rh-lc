@@ -71,7 +71,8 @@ theorem graded_indep
         ih' (k i₀) (fun i => σ g (β * b i) - β * b i)
           (fun i hi => (F _).sub_mem (hFG _ _ _ (he i hi)) (he i hi)) (by
             convert (FM _).sub_mem (hMG g _ _ hz) hz using 1
-            simp only [map_add, map_sum, hρ, hd, sub_smul, Finset.sum_sub_distrib]
+            set_option synthInstance.maxHeartbeats 100000 in
+              simp only [map_add, map_sum, hρ, hd, sub_smul, Finset.sum_sub_distrib]
             abel)
       have hκ : ∀ i, ∃ κ ∈ F 0, (∀ g, σ g κ = κ) ∧ (k i₀ ≠ k i → κ = 0) ∧
           (i ∈ s → β * b i - κ ∈ F (k i₀ - k i + 1)) := fun i => by
@@ -140,7 +141,8 @@ theorem step
     rw [heq] at hsum ⊢
     refine Submodule.add_mem _ (Submodule.subset_span ⟨k i + 1, b i, _, fun g => ?_, hmem, ?_, rfl⟩)
       (ih _ (hn ▸ Finset.card_erase_lt_of_mem hi) _ rfl _ (fun j hj => ?_) ?_)
-    · simp only [map_add, map_sum, hρ, hd, (hκ _).2.1]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp only [map_add, map_sum, hρ, hd, (hκ _).2.1]
     · rw [show c + 1 - (k i + 1) = c - k i by ring]
       exact hb i hi
     · refine (F _).sub_mem (hb j (Finset.mem_of_mem_erase hj)) ?_

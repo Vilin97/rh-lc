@@ -34,10 +34,12 @@ theorem finInt {K : Type*} [TopologicalSpace K] [MeasurableSpace K] [BorelSpace 
       simp only [Submodule.coe_smul] at h3
       exact h3.symm
     conv_lhs => rw [h2]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, smul_eq_mul, ← hL i ⟨v k, hv k⟩]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp_rw [map_smul, smul_eq_mul]
   have hint : ∀ i, Integrable (fun k => w k * L i (v k) * l (b i)) μ := fun i =>
     integrable_of_cpt μ hK ((hw.mul (hc (L i))).mul continuous_const)

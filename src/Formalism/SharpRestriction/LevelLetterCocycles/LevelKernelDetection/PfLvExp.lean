@@ -137,11 +137,13 @@ theorem expSemi_holds (Lb : LevB W) (hR : Ring9 W) (T : LocLat G Qp LL O) (c : Z
   simp only [Pf_LvExp_coeff_expN]
   apply (Pf_LvExp_Φ W s (Dc W T c)).injective
   funext ζ
-  rw [map_sum, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_apply]
   simp only [Pf_LvExp_Φ_smul]
   apply Subtype.ext
   apply Pf_LvExp_ιV_inj (PD := PD) T
-  simp only [Submodule.coe_sum, Submodule.coe_smul, map_sum, map_smul, Pf_LvExp_Φ_coefN]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Submodule.coe_sum, Submodule.coe_smul, map_sum, map_smul, Pf_LvExp_Φ_coefN]
   simp only [← levN_eq]
   have hg : ∀ k' < m, W.levN T c ζ y k' = 0 := fun k' hk' => by
     rw [levN_eq, ← Pf_LvExp_Φ_coefN Lb s T c y k' ζ, hm' k' hk', map_zero]

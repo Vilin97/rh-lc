@@ -35,7 +35,8 @@ theorem incM_map_cA (γ : Matrix (Fin n) (Fin n) E) : (incM F (γ.map σ)) = (in
   simp [incM, Matrix.map_apply, GlobalTheory.LeviLine.cA_inclR]
 
 theorem trace_map_cA (M : Matrix (Fin n) (Fin n) (AE F E)) : (M.map (cA σ)).trace = cA σ M.trace := by
-  simp [Matrix.trace, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Matrix.trace, map_sum]
 
 theorem trace_tst (ε : ℤˣ) (γ : Matrix (Fin n) (Fin n) E) (β : Matrix (Fin n) (Fin n) (AE F E))
     (hβ : βᵀ = -((ε : ℤ) • β.map (cA σ))) :

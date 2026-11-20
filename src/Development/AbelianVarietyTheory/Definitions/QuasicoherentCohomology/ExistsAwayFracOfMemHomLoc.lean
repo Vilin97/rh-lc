@@ -236,7 +236,8 @@ instance homLoc.decomposition [Decomposition ℳ] (s : Finset ι) : Decompositio
     (fun T v hv h j hj => by
       choose! k hk using fun i hi => exists_awayFrac_of_mem_homLoc ℳ (hv i hi)
       choose! m hm e using fun i hi => hk i hi (T.sup k) (Finset.le_sup hi)
-      rw [← Finset.sum_congr rfl e, ← map_sum, awayFrac_eq_zero_iff] at h
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← Finset.sum_congr rfl e, ← map_sum, awayFrac_eq_zero_iff] at h
       obtain ⟨l, hl⟩ := h
       rw [← e j hj, awayFrac_eq_zero_iff]
       refine ⟨l, ?_⟩

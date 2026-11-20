@@ -89,7 +89,8 @@ theorem eq_of_adic {Ω Idx : Type} [CommRing Ω] (J : Ideal Ω) [IsHausdorff J �
     rw [Finset.union_comm, split, sub_add_eq_sub_sub]
     exact sub_mem hS2' (Ideal.sum_mem _ fun α hα => hS1' α (Finset.mem_sdiff.1 hα).2)
   have e : s' - c * T s = (s' - ∑ α ∈ S ∪ S', t' α) + c * T (-(s - ∑ α ∈ S ∪ S', t α)) := by
-    simp only [ht, ← Finset.mul_sum, ← map_sum, map_neg, map_sub]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [ht, ← Finset.mul_sum, ← map_sum, map_neg, map_sub]
     ring
   rw [e]
   exact add_mem (Ideal.pow_le_pow_right (by omega) m2)

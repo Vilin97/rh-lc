@@ -31,7 +31,8 @@ theorem deriv_sum' {n N M : ℕ} (J : Ideal (On p n)) (D : Derivation (O0 p) (On
       Ideal.Quotient.mk J (∑ i : Fin N, ∑ j : Fin M,
         ((i : ℕ) * cx + (j : ℕ) * cy) * algebraMap (O0 p) (On p n) (a i j) * xn p n ^ (i : ℕ) *
           yn p n ^ (j : ℕ)) := by
-  simp only [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   rw [Derivation.leibniz, Derivation.leibniz, Derivation.map_algebraMap, deriv_pow J D _ _ hx,
     deriv_pow J D _ _ hy, smul_zero, add_zero, smul_mk, smul_mk, smul_mk, ← map_add]
@@ -360,7 +361,8 @@ theorem local_coords : ∀ (p : ℕ) [Fact p.Prime] (Ωl : Type) [Field Ωl] [Al
     algebraMap (O0 p) (On p (m + 1)) (a i j) * xn p (m + 1) ^ (i : ℕ) * yn p (m + 1) ^ (j : ℕ) with hw0
   have hw : ι w0 = x := by
     rw [hxe, hw0]
-    simp only [map_sum, map_mul, map_pow, AlgHom.commutes, hι.1, hι.2, Int.cast_one, one_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, map_pow, AlgHom.commutes, hι.1, hι.2, Int.cast_one, one_mul]
   obtain ⟨w, hwu⟩ := isUnit_of_inv ι (GlobalTheory.T.towerLevelEmbedding_injective_range_adjoinRoots p Ω hc T (m + 1) hL ι hι).1 w0 (hw ▸ hx0) (hw ▸ hxi)
   obtain ⟨α, β, hd⟩ := GlobalTheory.K5.exists_isDlog p (m + 1) w
   obtain ⟨d1, d2⟩ := coef m a w α β (hwu.trans hw0) hd
@@ -368,7 +370,8 @@ theorem local_coords : ∀ (p : ℕ) [Fact p.Prime] (Ωl : Type) [Field Ωl] [Al
   obtain ⟨f2, d2⟩ := Ideal.mem_span_singleton'.1 d2
   replace d1 := congrArg ι d1
   replace d2 := congrArg ι d2
-  simp only [map_sum, map_mul, map_pow, map_sub, map_natCast, map_one, AlgHom.commutes, hι.1, hι.2, hwu, hw, zeta_one] at d1 d2
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, map_pow, map_sub, map_natCast, map_one, AlgHom.commutes, hι.1, hι.2, hwu, hw, zeta_one] at d1 d2
   simp only [Int.cast_natCast] at k1 k2
   have hinv : x * x⁻¹ = 1 := mul_inv_cancel₀ hx0
   refine ⟨w, α, β, z, z', hd, hwu ▸ hw, hz, ⟨(ι f1 + c1) * x⁻¹,

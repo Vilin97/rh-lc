@@ -30,7 +30,8 @@ theorem map_smul_cc (c : E) (A : Matrix (Fin r) (Fin r) E) : (c • A).map cc = 
   ext i j; simp [cc, map_mul]
 
 theorem trace_map_cc (A : Matrix (Fin r) (Fin r) E) : (A.map cc).trace = cc A.trace := by
-  simp [Matrix.trace, cc, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Matrix.trace, cc, map_sum]
 
 end GlobalTheory.LieDisc.HAdjAlg
 

@@ -14,7 +14,8 @@ theorem UpperTheory.WildB.casimir :
   have hs : ∀ (z : Fin n → ℤ) (c : Fin n → 𝓞 E),
       algebraMap (𝓞 E) E (∑ j, z j • c j) = ∑ j, (z j : ℚ) • (c j : E) := by
     intro z c
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_zsmul, Int.cast_smul_eq_zsmul]
   refine ⟨n, a, b, lam, fun x => ?_, fun x => ?_,

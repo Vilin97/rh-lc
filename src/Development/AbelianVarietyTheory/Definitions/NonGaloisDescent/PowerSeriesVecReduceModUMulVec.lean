@@ -561,7 +561,8 @@ theorem hatSpan_extc {B : Subalgebra O K⟦X⟧} (hB : B ≤ Rpi O K l e) (τ : 
     have : (P.mx τ *ᵥ m) i = ((∑ j, ⟨m j, le_away _ _ (hB (hm j))⟩ * ⟨P.mx τ i j, hX i j⟩ :
         RpiE O K l e) : K⟦X⟧) := by
       simp [Matrix.mulVec, dotProduct, mul_comm]
-    rw [hatV, this, hat_coe, map_sum, Finset.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hatV, this, hat_coe, map_sum, Finset.sum_apply]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_mul, Pi.smul_apply, Algebra.smul_def, hatV, Matrix.col_apply, hat_of_mem l e (hX i j),
       toHatE_eq l e (f := ⟨m j, le_away _ _ (hB (hm j))⟩) (g := ⟨m j, hB (hm j)⟩) rfl]

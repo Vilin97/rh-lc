@@ -92,7 +92,8 @@ theorem polForm_exists : GlobalTheory.Published.AbelianDeRham → ∀ {E : Type}
   let b' : Fin n → primDR A := fun k ↦ ⟨b k, hm _⟩
   have hz' : IsChern (dp0 K) (A.hom ≫ 𝟙 _) (Xo.univ.t.PP.L.pull π) (∑ k, cup _ (a' k).1 (b' k).1) := by
     have : z = ∑ k, cup _ (a k) (b k) := by
-      rw [← e.apply_symm_apply z, ← hab, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← e.apply_symm_apply z, ← hab, map_sum]
       exact Finset.sum_congr rfl fun k _ ↦ he _ _
     exact this ▸ hz
   have hpol : IsPolForm (dp0 K) (𝟙 _) A (Xo.univ.t.PP.L.pull π) (wedgeForm (dp0 K) (𝟙 _) A a' b') :=

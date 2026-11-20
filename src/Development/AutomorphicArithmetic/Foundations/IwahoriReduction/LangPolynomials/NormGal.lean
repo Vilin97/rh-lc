@@ -191,7 +191,8 @@ private theorem ng_kum {l : ℕ} [Fact l.Prime] (hl : l ≠ 2) {Ω : Type} [Fiel
           ((((x : ZMod (l ^ (m + 1))).val : ℕ) : Qbar l) - 1) * Z (m + 1) s x +
         (Z m s 1 - ∑ i, β.val i * (((k' i).val : ℕ) : Qbar l)) := by
       rw [hZ.nrm m s hsI 1, hxs]
-      simp only [map_sub, map_sum, map_natCast, Nat.cast_sum, mul_sub, Finset.mul_sum, Finset.sum_sub_distrib, sub_mul, one_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sub, map_sum, map_natCast, Nat.cast_sum, mul_sub, Finset.mul_sum, Finset.sum_sub_distrib, sub_mul, one_mul]
       rw [Finset.sum_comm]
       ring
     have hC : Cg n (∑ i, β.val i * algebraMap ℤ_[l] (PadicAlgCl l) (xs i)) 0 := by
@@ -218,7 +219,8 @@ private theorem ng_kum {l : ℕ} [Fact l.Prime] (hl : l ≠ 2) {Ω : Type} [Fiel
       rw [← Nat.cast_pow, map_natCast]
       exact ZMod.natCast_self (l ^ n)
     rw [map_mul, e0, zero_mul, hxs] at h2
-    simp only [map_sub, map_sum, map_natCast, Nat.cast_sum, ZMod.natCast_zmod_val] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sub, map_sum, map_natCast, Nat.cast_sum, ZMod.natCast_zmod_val] at h2
     exact sub_eq_zero.1 h2
   have h3 := (kalg _ _ _ _ (hprod (Finset.univ.filter fun x : (ZMod (l ^ (m + 1)))ˣ => red l m x = 1) i) (kalg _ _ _ _ (hk' i) (hk' i)).2.1).1
   rw [heq i, add_neg_cancel] at h3

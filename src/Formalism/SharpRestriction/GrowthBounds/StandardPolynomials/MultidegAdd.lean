@@ -157,7 +157,8 @@ theorem TCls.mul {w : O} {d d' : X.TT × Bool → ℕ} {o o' c c' : ℕ} {P Q : 
         w ^ (max c (ndM X x.1 - o) + max c' (ndM X x.2 - o')) * (a * b) by ring, hk, pow_add]
       ring
     choose! f hf using key
-    rw [Finset.sum_congr rfl hf, ← map_sum, ← Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_congr rfl hf, ← map_sum, ← Finset.mul_sum]
     exact ⟨_, rfl⟩
 
 theorem TCls.pow {w : O} {d : X.TT × Bool → ℕ} {o c : ℕ} {P : RHH O X} (hP : TCls w d o c P) (u : ℕ) :

@@ -107,7 +107,8 @@ theorem linearIndependent_periods (R : RiemLat E g Λ) {ι : Type} [Fintype ι] 
   have htop : ⊤ ≤ Submodule.span ℝ (Set.range fun i => R.P (b i)) := by
     rw [← hspan, Submodule.span_le]
     rintro _ ⟨v, rfl⟩
-    rw [← b.sum_repr v, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← b.sum_repr v, map_sum]
     refine Submodule.sum_mem _ fun i _ => ?_
     rw [map_zsmul, ← Int.cast_smul_eq_zsmul ℝ]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)
@@ -123,7 +124,8 @@ def comb (R : RiemLat E g Λ) {ι : Type} [Fintype ι] (b : ι → Λ) (a : ι �
 
 theorem comb_repr (R : RiemLat E g Λ) {ι : Type} [Fintype ι] (b : Module.Basis ι ℤ Λ) (v : Λ) :
     comb R b (fun i => ((b.repr v i : ℤ) : ℝ)) = R.P v := by
-  conv_rhs => rw [← b.sum_repr v, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_rhs => rw [← b.sum_repr v, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_zsmul, ← Int.cast_smul_eq_zsmul ℂ]
   simp

@@ -48,7 +48,8 @@ def sumPi (hι : Function.Injective ι) (hz : ∀ t, t ∉ Set.range ι → Subs
     (∑ a, (DirectSum.lof R I M (ι a)).comp (LinearMap.proj a))
     (by
       refine LinearMap.ext fun f => funext fun b => ?_
-      simp only [LinearMap.comp_apply, LinearMap.pi_apply, LinearMap.sum_apply, LinearMap.proj_apply, LinearMap.id_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [LinearMap.comp_apply, LinearMap.pi_apply, LinearMap.sum_apply, LinearMap.proj_apply, LinearMap.id_apply, map_sum]
       rw [Finset.sum_eq_single b]
       · exact DirectSum.component.lof_self R _ _
       · intro a _ hab

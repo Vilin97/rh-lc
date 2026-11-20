@@ -102,12 +102,14 @@ theorem liftE_eq (v : Pl F) (y : Fv F v ⊗[F] E) : liftE v y = Supp.singleTens 
 theorem map_liftE_mul (v : Pl F) {a b c : Type} [Fintype b] (x : Matrix a b (Fv F v ⊗[F] E)) (P : Matrix b c (AE F E)) :
     x.map (liftE v) * P = (x * P.map (compFin F E v)).map (liftE v) := by
   ext i j
-  simp only [Matrix.mul_apply, Matrix.map_apply, map_sum, liftE_eq, Supp.singleTens_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mul_apply, Matrix.map_apply, map_sum, liftE_eq, Supp.singleTens_mul]
 
 theorem mul_map_liftE (v : Pl F) {a b c : Type} [Fintype b] (P : Matrix a b (AE F E)) (x : Matrix b c (Fv F v ⊗[F] E)) :
     P * x.map (liftE v) = (P.map (compFin F E v) * x).map (liftE v) := by
   ext i j
-  simp only [Matrix.mul_apply, Matrix.map_apply, map_sum, liftE_eq]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mul_apply, Matrix.map_apply, map_sum, liftE_eq]
   refine Finset.sum_congr rfl fun t _ => ?_
   rw [mul_comm, Supp.singleTens_mul, mul_comm]
 

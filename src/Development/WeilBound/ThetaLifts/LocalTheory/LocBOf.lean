@@ -227,7 +227,8 @@ theorem locB_of (H : Hyp) (J : Hyp2) (hC : ConeFacB) (hS : StdB) : LocB' := by
     · beta_reduce
       split_ifs
       exacts [(hΛ v _ ((a2 j).2.1 v)).2, vac_sb t₁.geo.hM' v]
-    · rw [map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [map_sum, Finset.smul_sum]
       exact Finset.sum_congr rfl fun i _ => by rw [h3 _ _ (a1 i).2.1 (ev_of_off (a1 i).2.2), pure_smul]
     · rw [cone_sum cadd _ fun j => admissible_pure_tensor_schwartz t.geo.hM' _ ⟨(a2 j).2.1, ev_of_off (a2 j).2.2⟩]
       refine Finset.sum_congr rfl fun j _ => ?_

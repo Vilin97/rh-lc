@@ -91,7 +91,8 @@ theorem exists_antideriv (n : ℕ) (ψ : MvPolynomial (Fin (n + 1)) ℝ →ₗ[�
     ((-1 : ℝ) ^ (∑ j : Fin (n + 1), (n - (j : ℕ))))
   refine ⟨J₁, by rw [hD, prod_neg_X_pow_eq_monomial], ?_⟩
   have hR0 : ψ R = 0 := by
-    rw [R.as_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [R.as_sum, map_sum]
     refine Finset.sum_eq_zero fun β hβ => ?_
     obtain ⟨h1, h2⟩ := hR β hβ
     rw [expo_apply] at h1
@@ -136,10 +137,12 @@ theorem alt_sum_mul (n : ℕ) (ψ : MvPolynomial (Fin (n + 1)) ℝ →ₗ[ℝ] �
       ((Equiv.Perm.sign τ : ℤ) : ℝ) * ψ ((∑ j : Fin (n + 1), X j) * ∏ j : Fin (n + 1), (-X j) ^ (n - (j : ℕ))) := by
   have h1 : rename τ ((∑ j : Fin (n + 1), X j) * ∏ j : Fin (n + 1), (-X j : MvPolynomial (Fin (n + 1)) ℝ) ^ (n - (j : ℕ)))
       = (∑ j : Fin (n + 1), X j) * ∏ j : Fin (n + 1), (-X (τ j)) ^ (n - (j : ℕ)) := by
-    simp only [map_mul, map_sum, map_prod, map_pow, map_neg, rename_X]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_mul, map_sum, map_prod, map_pow, map_neg, rename_X]
     congr 1
     exact Equiv.sum_comp τ (fun j => (X j : MvPolynomial (Fin (n + 1)) ℝ))
-  rw [← hψ, h1, Finset.sum_mul, map_sum, Finset.sum_eq_single (τ 0)]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hψ, h1, Finset.sum_mul, map_sum, Finset.sum_eq_single (τ 0)]
   · intro k _ hk
     exact alt_X_mul_eq_zero n ψ hψ τ k hk
   · simp

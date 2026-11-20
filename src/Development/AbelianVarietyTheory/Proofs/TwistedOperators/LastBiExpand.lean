@@ -52,6 +52,7 @@ theorem GlobalTheory.LastSeeSawGen.lastBi_expand : ∀ (D : D7) (k : Type) [Fiel
       (Ξ₂ i) O₂' (P i) Ξ' hΛ (hc i hi).1 (hc i hi).2 rfl rfl (fun _ => rfl) hone
   have e1 : GlobalTheory.FinPl.lastBi B.o o'' τ (T₁ Φ₁) (T₂ Φ₂) = Λ Ξ := funext fun u => hΞK u
   have e2 : GlobalTheory.FinPl.lastBi B.o o'' τ (T₁ O₁) (T₂ O₂) = Λ Ξ' := funext fun u => hΞ'K u
-  rw [e1, e2, hsum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e1, e2, hsum, map_sum]
   refine Finset.sum_congr rfl fun i hi => ?_
   rw [map_smul, key i hi]

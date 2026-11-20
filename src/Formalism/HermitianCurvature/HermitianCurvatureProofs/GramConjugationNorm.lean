@@ -61,10 +61,12 @@ theorem gram_re_nonneg (k : Pt E → Pt E → ℂ) (V : Pt E → H) (P : Finset 
 theorem gram_conj (k : Pt E → Pt E → ℂ) (V : Pt E → H) (P : Finset (Pt E))
     (hk : PSDOn P k) : conj (gram k V P) = gram k V P := by
   unfold gram
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   conv_rhs => rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun p hp => ?_
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun p' hp' => ?_
   rw [map_mul, inner_conj_symm, hk.1 p hp p' hp']
 

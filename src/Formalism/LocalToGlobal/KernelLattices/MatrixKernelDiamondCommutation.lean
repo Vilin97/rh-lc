@@ -64,7 +64,8 @@ def Nbr.UYfun (n : Nbr S) (Yb : Type) : Module.End K (S.D → Yb → S.V) where
 theorem Nbr.UYfun_mem (n : Nbr S) (Y : Cpl S) {G : S.D → Y.Yb → S.V} (hG : G ∈ CplFun Y) : n.UYfun Y.Yb G ∈ CplFun Y := by
   intro g d y
   show ∑ d' ∈ n.up (g • d), G d' (g • y) = S.ρ g (∑ d' ∈ n.up d, G d' y)
-  rw [n.sum_up_smul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [n.sum_up_smul, map_sum]
   exact Finset.sum_congr rfl fun d' _ => hG g d' y
 
 def Nbr.UY (n : Nbr S) (Y : Cpl S) : Module.End K (CplFun Y) :=
@@ -75,7 +76,8 @@ def cp1Op {S₀ : GSD K} {Y : Cpl S} (k1 : S₀.D → S.D → Y.Yb → (S₀.V �
     (h₀ : S₀.Ok) (s₀ : S₀.Sec) : S₀.EqFun →ₗ[K] CplFun Y where
   toFun φ := ⟨fun d y => S₀.csOf h₀ s₀ fun d₀ => k1 d₀ d y ((φ : S₀.D → S₀.V) d₀), fun g d y => by
     unfold GSD.csOf
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun c _ => ?_
     have h1 := he1 1 g (s₀.rep c) d y
     rw [one_smul, inv_one, map_one] at h1

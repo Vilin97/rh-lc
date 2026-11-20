@@ -45,7 +45,8 @@ theorem mem_ramified_iff_model (M : FreeRankModel A) (φ : A.Mu0) :
   have key : ∀ v, A.Nm v (φ : C.cls 0 → C.Y 0 → ℂ) = 0 ↔
       ∀ x : M.X, ∑ c : M.H, M.E φ ((Pi.mulSingle v c : A.vT → M.H) • x) = 0 := by
     intro v
-    rw [norm_eq_sum_rho, Submodule.coe_eq_zero, ← M.E.map_eq_zero_iff, map_sum, funext_iff]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [norm_eq_sum_rho, Submodule.coe_eq_zero, ← M.E.map_eq_zero_iff, map_sum, funext_iff]
     refine forall_congr' fun x => ?_
     rw [Finset.sum_apply, Pi.zero_apply]
     have : ∑ a : (A.Fv v)ˣ, M.E ⟨A.rhoT v a φ, rho_mem_forms A v a φ⟩ x =

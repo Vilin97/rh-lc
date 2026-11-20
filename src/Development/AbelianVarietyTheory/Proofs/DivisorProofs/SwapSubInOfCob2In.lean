@@ -450,7 +450,8 @@ theorem GlobalTheory.symmetric_cocycle_is_coboundary_mod : ∀ (p : ℕ) [Fact p
     intro k α hk
     rw [hg]
     show _ = coeff α (∑ j ∈ Finset.range k, piece j)
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_subset (Finset.range_mono hk) fun j _ hj => hpz j α (Or.inr ?_)
     rw [Finset.mem_range, not_lt] at hj
     omega

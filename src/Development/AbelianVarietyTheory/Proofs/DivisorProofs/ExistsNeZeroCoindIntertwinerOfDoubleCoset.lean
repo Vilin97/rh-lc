@@ -14,7 +14,8 @@ theorem exists_ne_zero_intertwiningMap_coind_of_doubleCoset :
     { toFun := fun f => ⟨fun y => ∑ p' : P', σ' p' (T (f.1 (x⁻¹ * (p' : G)⁻¹ * y))), by
         intro q y
         beta_reduce
-        rw [map_sum, ← Equiv.sum_comp (Equiv.mulLeft q)
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum, ← Equiv.sum_comp (Equiv.mulLeft q)
           (fun p' : P' => σ' p' (T (f.1 (x⁻¹ * (p' : G)⁻¹ * (P'.subtype q * y)))))]
         refine Finset.sum_congr rfl fun p' _ => ?_
         simp [mul_assoc]⟩

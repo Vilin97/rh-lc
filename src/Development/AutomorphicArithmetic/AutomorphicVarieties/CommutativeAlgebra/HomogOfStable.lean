@@ -19,7 +19,8 @@ private theorem hos_expand {O S σ : Type} [CommRing O] [CommRing S] [Algebra O 
     ext d
     rw [MvPolynomial.coeff_sum, coeff_truncTotal_eq_ite]
     simp only [MvPolynomial.coeff_monomial, Finset.sum_ite_eq', hD]
-  rw [ht, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [ht, map_sum]
   refine Finset.sum_congr rfl fun d _ => ?_
   rw [MvPolynomial.aeval_monomial]
 
@@ -113,7 +114,8 @@ private theorem hos_art {O : Type} [CommRing O] [IsLocalRing O] {X : Type} [AddC
       _ = ∑ k ∈ s, ∑ d ∈ D, if Finsupp.weight wt d = k then
           (t' (Multiplicative.ofAdd k) : MvPowerSeries (Fin n) S) * i (T d) else 0 := by
           refine Finset.sum_congr rfl fun k _ => ?_
-          rw [hT, map_sum, Finset.mul_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [hT, map_sum, Finset.mul_sum]
           refine Finset.sum_congr rfl fun d _ => ?_
           split_ifs <;> simp
       _ = ∑ d ∈ D, ∑ k ∈ s, if Finsupp.weight wt d = k then

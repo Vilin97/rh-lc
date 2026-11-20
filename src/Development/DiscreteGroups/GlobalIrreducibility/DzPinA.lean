@@ -84,7 +84,8 @@ theorem gs_eq {g : ℕ} [Fact g.Prime] (ψ₀ : AddChar (ZMod g) Circle) {K : Ty
     (∑ᶠ z : Kˣ, (((η⁻¹) z : ℂˣ) : ℂ) * ((ψ₀ (Algebra.trace (ZMod g) K (z : K)) : Circle) : ℂ)) =
       Φ (gaussSum (ω ^ a)⁻¹ (Stick.psi g K ζ hζ)) := by
   classical
-  rw [finsum_eq_sum_of_fintype, gaussSum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [finsum_eq_sum_of_fintype, gaussSum, map_sum]
   rw [← sum_units_eq (fun x => Φ ((ω ^ a)⁻¹ x * Stick.psi g K ζ hζ x))
     (by rw [MulChar.map_zero, zero_mul, map_zero])]
   refine Finset.sum_congr rfl fun z _ => ?_

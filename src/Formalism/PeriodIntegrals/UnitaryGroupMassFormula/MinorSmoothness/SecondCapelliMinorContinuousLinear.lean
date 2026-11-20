@@ -75,7 +75,8 @@ lemma chatL_local (hD : IsOpen D) (u : ℂ) (a β : Mx k r → Fin (mdim k r i) 
 lemma chatL_clm (hD : IsOpen D) (u : ℂ) (a β : Mx k r → Fin (mdim k r i) → ℂ)
     (L : E →L[ℂ] E') (f : Mx k r → E) (hf : SmoothLev k r i D f) (g : Mx k r) (hg : g ∈ Glev k r i ∩ D) :
     chatL (EH k r) (posL k r i) u a β (fun y => L (f y)) g = L (chatL (EH k r) (posL k r i) u a β f g) := by
-  simp only [chatL, map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [chatL, map_sum, map_smul]
   refine Finset.sum_congr rfl fun i0 _ => Finset.sum_congr rfl fun j0 _ => ?_
   congr 1
   exact qminor_clm hD _ _ u L f hf g hg
@@ -115,7 +116,8 @@ lemma second_capelli_minor_continuousLinear (hD : IsOpen D) (u : ℂ) (a a' β �
     (L : E →L[ℂ] E') (f : Mx k r → E) (hf : SmoothLev k r i D f) (g : Mx k r) (hg : g ∈ Glev k r i ∩ D) :
     chat2L (EH k r) (posL k r i) u a a' β β' (fun y => L (f y)) g =
       L (chat2L (EH k r) (posL k r i) u a a' β β' f g) := by
-  simp only [chat2L, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [chat2L, map_sum]
   refine Finset.sum_congr rfl fun i0 _ => Finset.sum_congr rfl fun i1 _ =>
     Finset.sum_congr rfl fun j0 _ => Finset.sum_congr rfl fun j1 _ => ?_
   split_ifs

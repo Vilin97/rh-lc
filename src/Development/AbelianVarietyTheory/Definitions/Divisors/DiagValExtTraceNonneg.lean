@@ -180,7 +180,8 @@ theorem crd_app (φ : F ⟶ E) (t : Γ(F, U)) (hy : y ∈ ptsIn p σ U) (h : y �
     c₀.crd p σ (φ.app U t) y =
       (Matrix.of fun a b => c₀.crd p σ (φ.app c.U (c.e b)) y a) *ᵥ c.crd p σ t y := by
   have hW := mem_ptsIn_inf.2 ⟨hy, h⟩
-  rw [← c₀.crd_resM _ inf_le_left hW, ← app_resM,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← c₀.crd_resM _ inf_le_left hW, ← app_resM,
     ← (c.isFrame.basis inf_le_right).sum_repr (resM F _ t), map_sum, crd_sum]
   funext a
   simp only [Scheme.Modules.Hom.app_smul, crd_smul, IsFrame.basis_apply, app_resM,

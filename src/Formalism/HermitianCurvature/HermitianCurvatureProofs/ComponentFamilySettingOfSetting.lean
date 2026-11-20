@@ -1128,7 +1128,8 @@ theorem d_moduleOfWdOn : ModuleOfWdOn := by
   intro X _ _ K Y _ _ res A _ _ _ S _ _ φ Qop QQ hQ w x hx a
   have hC := corr_RR K res φ Qop QQ hQ w
   refine ⟨K.sum_mem fun b _ => (hC a b (x b) (hx b)).1, ?_⟩
-  simp only [actOp, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [actOp, map_sum]
   exact Finset.sum_congr rfl fun b _ => (hC a b (x b) (hx b)).2
 
 section pos
@@ -1541,7 +1542,8 @@ theorem core (r : ℕ) (P : Fin (r + 1) → Fin (r + 1)) (hP : ∀ a, P (P a) = 
     refine Finset.sum_nbij' φ φ hφmem hφmem hφφ hφφ ?_
     intro b hb
     rw [hφc b hb, hφs b hb]
-  rw [s1, s2, Finset.sum_neg_distrib, s3, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [s1, s2, Finset.sum_neg_distrib, s3, map_sum]
   rfl
 
 section geo

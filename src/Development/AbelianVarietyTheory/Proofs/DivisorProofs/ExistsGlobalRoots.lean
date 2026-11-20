@@ -116,7 +116,8 @@ theorem exists_global_roots : RootSt := by
   · exact root_assoc_sum (hyp (k + 2) (by omega))
   · rw [hc, map_sub, map_one, hy 1 (by omega), ← hind U]
     rfl
-  · rw [hc, map_sum, AddSubmonoidClass.coe_finsetSum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [hc, map_sum, AddSubmonoidClass.coe_finsetSum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_pow, hy (k + 2) (by omega), ← hind U]
     rfl

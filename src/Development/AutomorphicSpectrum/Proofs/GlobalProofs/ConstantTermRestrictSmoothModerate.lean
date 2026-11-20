@@ -360,7 +360,8 @@ theorem cT_gram_mul_apply (V : HSp D) {p q : Type} (A : Matrix (Fin V.rank) p D.
     (B : Matrix (Fin V.rank) q D.host.E) (a : p) (b : q) :
     (Formalism.UG.cT (D.sp.cm.sig : D.host.E →+* D.host.E) A * V.gram * B) a b =
       V.hT (V.frame.equivFun.symm fun j => A j a) (V.frame.equivFun.symm fun j => B j b) := by
-  simp only [Module.Basis.equivFun_symm_apply, map_sum, LinearMap.sum_apply, map_smulₛₗ, LinearMap.smul_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Module.Basis.equivFun_symm_apply, map_sum, LinearMap.sum_apply, map_smulₛₗ, LinearMap.smul_apply,
     Matrix.mul_apply, Formalism.UG.cT, Matrix.transpose_apply, Matrix.map_apply, HSpace.gram, Finset.sum_mul,
     Finset.mul_sum, smul_eq_mul]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_

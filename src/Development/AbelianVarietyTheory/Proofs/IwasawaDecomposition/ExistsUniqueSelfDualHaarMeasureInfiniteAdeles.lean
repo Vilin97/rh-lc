@@ -138,7 +138,8 @@ theorem BR_symm (hσ : ∀ x, σ (σ x) = x) (hJ : IsHermND σ J) (X Y : Fin 1 �
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [← trace_sigR R σ]
   congr 1
-  simp only [hR, Formalism.UG.hform, map_sum, map_mul, sigR_sigR R σ hσ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hR, Formalism.UG.hform, map_sum, map_mul, sigR_sigR R σ hσ]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   have : sigR R σ (JR R J j i) = JR R J i j := by

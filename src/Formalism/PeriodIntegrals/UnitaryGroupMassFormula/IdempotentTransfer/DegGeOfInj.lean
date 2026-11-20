@@ -90,10 +90,12 @@ theorem deg_ge_of_inj (ρ : V →+ E) (ρ' : W →+ F) (L : Submodule R V) (M : 
     L.sum_mem fun i _ => L.toAddSubgroup.zsmul_mem (hxL i) (a i)
   have hw_comb : ∀ a : Fin n → ℤ, ∑ i, a i • w i = ρ' (f (∑ i, a i • x i)) := by
     intro a
-    simp [w, map_sum, map_zsmul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [w, map_sum, map_zsmul]
   have hb_comb : ∀ a : Fin n → ℤ, ∑ i, a i • ((b i : zL) : E) = ρ (∑ i, a i • x i) := by
     intro a
-    simp [map_sum, map_zsmul, hxe]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, map_zsmul, hxe]
   have hbound : ∀ a : Fin n → ℤ, ‖∑ i, (a i : ℝ) • w i‖ ≤ C * ‖∑ i, (a i : ℝ) • ((b i : zL) : E)‖ := by
     intro a
     simp only [Int.cast_smul_eq_zsmul]

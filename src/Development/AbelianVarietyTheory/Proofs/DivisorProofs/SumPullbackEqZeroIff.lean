@@ -31,7 +31,8 @@ theorem sum_pullback_eq_zero_iff {X : Scheme.{0}} {R : Type} [CommRing R] (w : S
     { (Scheme.ΓSpecIso (CommRingCat.of R)).symm.commRingCatIsoToRingEquiv with commutes' := halg }
   have key : h.equiv (TensorProduct.congr φ.toLinearEquiv (LinearEquiv.refl _ _) (∑ l, c l ⊗ₜ[Γ(X, V)] q l)) =
       ∑ l, (Scheme.ΓSpecIso (CommRingCat.of R)).inv.hom (c l) • pullbackSections w Q hw (q l) := by
-    rw [map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum]
     refine Finset.sum_congr rfl fun l _ => ?_
     rw [TensorProduct.congr_tmul, IsBaseChange.equiv_tmul]
     rfl
@@ -41,7 +42,8 @@ theorem mem_kerAt_iff {X : Scheme.{0}} {R : Type} [CommRing R] (w : Sp R ⟶ X) 
     {V : X.Opens} (hw : ⊤ ≤ w ⁻¹ᵁ V) {r : ℕ} (e : Fin r → Γ(F, V)) (c : Fin r → R) :
     c ∈ kerAt w u hw e ↔
       ∑ l, (Scheme.ΓSpecIso (CommRingCat.of R)).inv.hom (c l) • pullbackSections w Q hw (u.app V (e l)) = 0 := by
-  simp only [kerAt, Set.mem_setOf_eq, map_sum, Scheme.Modules.Hom.app_smul, pullback_map_app_pullbackSections]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [kerAt, Set.mem_setOf_eq, map_sum, Scheme.Modules.Hom.app_smul, pullback_map_app_pullbackSections]
 
 theorem eq_zero_of_tmul {R S N : Type} [CommRing R] [CommRing S] [AddCommGroup N] [Module S N] (φ : R ≃+* S) (x : N)
     (h : ∀ (𝔪 : Ideal R) [𝔪.IsMaximal],
@@ -100,7 +102,8 @@ theorem main : ∀ (X : Scheme.{0}) (R : Type) [CommRing R] (F Q : X.Modules) [Q
             ∑ l, (Scheme.ΓSpecIso (CommRingCat.of (Localization.AtPrime 𝔪))).inv.hom
               (algebraMap R (Localization.AtPrime 𝔪) (c l)) • pullbackSections _ _ (le_rfl : ⊤ ≤ _ ⁻¹ᵁ ⊤)
                 (pullbackSections w Q hw (u.app V (e l))) := by
-          simp only [map_sum, Scheme.Modules.Hom.app_smul]
+          set_option synthInstance.maxHeartbeats 100000 in
+            simp only [map_sum, Scheme.Modules.Hom.app_smul]
           refine Finset.sum_congr rfl fun l _ => ?_
           congr 1
           exact GlobalTheory.Vert.DivPull.pullbackComp_inv_app _ w Q hw le_rfl hw' _

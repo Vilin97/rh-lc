@@ -28,7 +28,8 @@ variable {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type} {A : FamIn D.
 theorem star_eC (hX : ∀ χ ∈ A.X, IsAbsIrrChar χ) (σ : D.what₂.LL →+* ℂ) (g : G) :
     starRingEnd ℂ (RealDat.eC (A := A) σ g) = RealDat.eC (A := A) σ g⁻¹ := by
   unfold RealDat.eC
-  rw [coeff_idemOf, coeff_idemOf, map_sum, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [coeff_idemOf, coeff_idemOf, map_sum, map_sum, map_sum]
   refine Finset.sum_congr rfl fun χ hχ => ?_
   have h1 := (hX χ hχ).map_inv σ 1
   have h2 := (hX χ hχ).map_inv σ g⁻¹
@@ -122,7 +123,8 @@ theorem integral_eWf_move : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T
   have eR : ∀ h, star (Φ h) * (R.HW i σ).e (GlobalTheory.LiftLower.projH R i σ y) (fun ρ => v ρ) h =
       ∑ g, RealDat.eC (A := A) σ g * (star (Φ h) * (R.HW i σ).e (R.gW i σ g y) (fun ρ => v ρ) h) := by
     intro h
-    simp only [GlobalTheory.LiftLower.projH, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [GlobalTheory.LiftLower.projH, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul,
       MultilinearMap.sum_apply, MultilinearMap.smul_apply, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Finset.mul_sum]
     refine Finset.sum_congr rfl fun g _ => ?_
     ring

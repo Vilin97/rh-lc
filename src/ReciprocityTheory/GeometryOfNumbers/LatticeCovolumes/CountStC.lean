@@ -87,7 +87,8 @@ private lemma form_sum_smul_right (h : HermFam K V) (σ : K →+* ℂ) (x : V) {
 private lemma form_sum_smul_left (h : HermFam K V) (σ : K →+* ℂ) (y : V) {ι : Type*}
     (s : Finset ι) (a : ι → K) (u : ι → V) :
     h.form σ (∑ i ∈ s, a i • u i) y = ∑ i ∈ s, starRingEnd ℂ (σ (a i)) * h.form σ (u i) y := by
-  rw [← h.conj_symm σ y, form_sum_smul_right h σ y s a u, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← h.conj_symm σ y, form_sum_smul_right h σ y s a u, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_mul, h.conj_symm]
 

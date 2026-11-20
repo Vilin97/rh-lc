@@ -83,7 +83,8 @@ theorem sub_avg [CharZero C] {ζ : C} {p : ℕ} (hp : 0 < p) (hζ : IsPrimitiveR
     f + -((p : C)⁻¹ • ∑ j ∈ Finset.range p, PowerSeries.rescale (ζ ^ j) f) = filt (fun m => ¬ p ∣ m) f := by
   ext m
   have hp' : (p : C) ≠ 0 := by exact_mod_cast hp.ne'
-  rw [coeff_filt, map_add, map_neg, PowerSeries.coeff_smul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [coeff_filt, map_add, map_neg, PowerSeries.coeff_smul, map_sum]
   simp_rw [PowerSeries.coeff_rescale]
   rw [← Finset.sum_mul, sum_pow_root hζ]
   by_cases h : p ∣ m

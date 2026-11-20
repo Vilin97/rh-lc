@@ -70,7 +70,8 @@ theorem eq_linear {N : ℕ} (g : MvPowerSeries (Fin 1 × Fin N) S)
     g = ∑ q, C (coeff (Finsupp.single ((0 : Fin 1), q) 1) g) * X ((0 : Fin 1), q) := by
   classical
   ext n
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   by_cases hn : n.degree = 1
   · obtain ⟨⟨i, q⟩, rfl⟩ := degree_eq_one n hn
     fin_cases i
@@ -213,7 +214,8 @@ theorem expAct_core {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host
     rw [Finset.sum_comm]
     apply Finset.sum_congr rfl
     intro q _
-    rw [← Finset.sum_mul, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Finset.sum_mul, ← map_sum]
     congr 2
     have := hE ((ltIdx Dw).symm q) i
     simpa [w] using this

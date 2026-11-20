@@ -109,7 +109,8 @@ theorem mem_range_of_le_one {w : HeightOneSpectrum (𝓞 c.F)} {T : CDVR} {io : 
 theorem map_tval {T : Type} [Fintype T] [DecidableEq T] {N : T → ℕ} (la : ∀ t, Fin (N t) → ℕ) {S S' : Type} [CommRing S]
     [CommRing S'] (φ : S →+* S') (x : TIdx la → S) (y : ∀ t, Matrix (Fin (N t)) (Fin (N t)) S) :
     φ (tval la x y) = tval la (fun I => φ (x I)) fun t => (y t).map φ := by
-  simp only [tval, map_sum, map_mul, map_prod]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [tval, map_sum, map_mul, map_prod]
   refine Finset.sum_congr rfl fun I _ => congrArg _ (Finset.prod_congr rfl fun t _ => ?_)
   generalize intVec (la t) (I t) = p
   induction p using MvPolynomial.induction_on with

@@ -65,7 +65,8 @@ private theorem orbit_of_sums (hn : 0 < n) (θ θ' : Kˣ →* ℂˣ)
   let l1 : (Kˣ →* ℂˣ) →₀ ℂ := ∑ i ∈ Finset.range n, Finsupp.single (θ ^ g ^ i) 1
   let l2 : (Kˣ →* ℂˣ) →₀ ℂ := ∑ i ∈ Finset.range n, Finsupp.single (θ' ^ g ^ i) 1
   have hl : Finsupp.linearCombination ℂ v l1 = Finsupp.linearCombination ℂ v l2 := by
-    simp only [l1, l2, map_sum, Finsupp.linearCombination_single, one_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [l1, l2, map_sum, Finsupp.linearCombination_single, one_smul]
     funext z
     simp only [Finset.sum_apply, v, MonoidHom.pow_apply, Units.val_pow_eq_pow_val]
     have := h z

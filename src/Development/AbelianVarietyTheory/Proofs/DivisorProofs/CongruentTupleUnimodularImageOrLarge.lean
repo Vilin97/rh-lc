@@ -16,7 +16,8 @@ theorem dichQuadBound {X : Type} [AddCommGroup X] (β : LinearMap.BilinForm ℤ 
     simp only [map_sub, LinearMap.sub_apply] at h
     rw [hs (u j) (u i)] at h; linarith
   have hexp : β (∑ i, u i) (∑ i, u i) = ∑ i, ∑ j, β (u i) (u j) := by
-    simp only [map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.sum_apply]
     first | rfl | exact Finset.sum_comm
   have h2 : 2 * ∑ i, ∑ j, β (u i) (u j) ≤ 2 * ((Fintype.card ι : ℤ) * ∑ i, β (u i) (u i)) := by
     calc 2 * ∑ i, ∑ j, β (u i) (u j) = ∑ i, ∑ j, 2 * β (u i) (u j) := by simp [Finset.mul_sum]
@@ -93,7 +94,8 @@ theorem dichRelLift {X₀ : Type} [AddCommGroup X₀] [Module.Free ℤ X₀] [Mo
     have h0 := hμ (d i) (Finset.mem_image_of_mem _ (Finset.mem_univ i))
     rw [hid, sub_eq_zero] at h0
     conv_lhs => rw [← b.sum_repr (a i)]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [map_zsmul, Module.Basis.constr_basis]
     exact h0.symm
 
@@ -211,7 +213,8 @@ theorem dichotomy : ∀ (O : Type) [CommRing O] [Module.Finite ℤ O] (bar : O �
     nlinarith
 
   have hkc : ∀ c : ι → ℤ, ∑ i, c i • k (a i) = k (∑ i, c i • a i) := fun c => by
-    rw [map_sum]; simp only [map_zsmul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]; simp only [map_zsmul]
   have hrel : ∀ c ∈ S, ∑ i, c i • μ i = 0 := by
     intro c hc
     refine hvan _ ?_ (dD0 c) (hDS c hc) (dichQuadBound β hsym hp c μ)
@@ -219,7 +222,8 @@ theorem dichotomy : ∀ (O : Type) [CommRing O] [Module.Finite ℤ O] (bar : O �
     rwa [hkc, hSa c hc, map_zero] at h
   obtain ⟨g, hg⟩ := hSl X μ hrel
   have hg' : ∀ c : ι → ℤ, g (∑ l, c l • a l) = ∑ l, c l • μ l := fun c => by
-    rw [map_sum]; simp only [map_zsmul, hg]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]; simp only [map_zsmul, hg]
   have hgk : ∀ x, CongMod N (g x) (k x) := by
     intro x
     rw [← hcf x, hg', ← hkc]
@@ -250,7 +254,8 @@ theorem dichotomy : ∀ (O : Type) [CommRing O] [Module.Finite ℤ O] (bar : O �
     exact sub_eq_zero.1 hx
   have hlinT' : ∀ o ∈ T, ∀ x, g (o • x) = o • g x := by
     intro o ho x
-    rw [← hcf x, Finset.smul_sum, map_sum, map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hcf x, Finset.smul_sum, map_sum, map_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl fun l _ => ?_
     rw [smul_comm o (cf x l) (a l), map_zsmul, map_zsmul, hlinT o ho l, smul_comm]
   have hlin : ∀ (o : O) x, g (o • x) = o • g x := by

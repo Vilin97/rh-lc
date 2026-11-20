@@ -49,7 +49,8 @@ def blockEquiv (ι : Type) (N j : ℕ) (hj : j ≤ N) : (Σ a : ι × Bool, Fin 
 
 theorem rename_lin_comp {κ ι : Type} [Fintype κ] [Fintype ι] (e : κ ≃ ι) (f : ι → ℝ) :
     rename e (lin fun z => f (e z)) = lin f := by
-  simp only [lin, map_sum, map_mul, rename_C, rename_X]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [lin, map_sum, map_mul, rename_C, rename_X]
   exact Fintype.sum_equiv e _ _ fun _ => rfl
 
 theorem isHomogeneous_lin_pow {κ : Type} [Fintype κ] (f : κ → ℝ) (d : ℕ) : ((lin f) ^ d).IsHomogeneous d := by

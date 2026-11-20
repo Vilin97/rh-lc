@@ -54,9 +54,11 @@ private theorem trace_pi_eq_sum_trace_blocks {J : Type} [Fintype J] [DecidableEq
       Function.eval, LinearMap.coe_single]
     rw [Finset.sum_comm]
     simp only [Finset.univ_sum_single]
-    rw [← map_sum, Finset.univ_sum_single]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, Finset.univ_sum_single]
   conv_lhs => rw [hf]
-  simp only [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [Finset.sum_eq_single i]
   · rw [LinearMap.trace_comp_comm', LinearMap.comp_assoc, LinearMap.proj_comp_single_same,

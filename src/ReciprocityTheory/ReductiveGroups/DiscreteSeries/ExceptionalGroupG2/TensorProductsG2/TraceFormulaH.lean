@@ -242,7 +242,8 @@ theorem tf_trace_data (dual : Bool) {lam : Fin n → ℝ} [CompleteSpace H] {ε 
   have hJu : ∀ c', starRingEnd ℂ (inner ℂ (tfJ ε (u c')) (w c')) =
       ∑ b, tfSgn ε b * starRingEnd ℂ (inner ℂ (u c' b) (w c' b)) := by
     intro c'
-    rw [PiLp.inner_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [PiLp.inner_apply, map_sum]
     refine sum_congr rfl fun b _ => ?_
     rw [tfJ_apply, inner_smul_left, map_mul, Complex.conj_conj]
   have haa : ∀ c', inner ℂ (tfJ ε (u c')) (w c') = (κ : ℂ) * ((‖a c'‖ ^ 2 : ℝ) : ℂ) := by

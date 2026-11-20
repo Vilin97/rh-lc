@@ -67,7 +67,8 @@ theorem adeleMap_norm_eq_prod (τ : ι → (M ≃ₐ[K] M))
     ext i j
     rw [Matrix.diagonal_mul, Matrix.mul_apply]
     have h := congrArg (fun z ↦ τ i • adeleMap L M z) (hy j)
-    simp only [map_mul, map_sum, smul_mul', Finset.smul_sum, adeleMap_algebraMap,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_mul, map_sum, smul_mul', Finset.smul_sum, adeleMap_algebraMap,
       adeleMap_adeleMap, AdeleBaseChange.smul_algebraMap, smul_adeleMap] at h
     simp only [Matrix.map_apply, Matrix.of_apply, D, h]
     exact Finset.sum_congr rfl fun k _ ↦ mul_comm _ _

@@ -90,7 +90,8 @@ theorem additive_comb (φ : HermLine ι → ℝ)
     simp [Finset.sum_apply, Pi.single_apply]
   show ψ n = _
   conv_lhs => rw [hn]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_zsmul, zsmul_eq_mul]
   show _ * φ (combLine ℓ (Pi.single j 1)) = _

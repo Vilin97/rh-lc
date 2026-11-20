@@ -223,7 +223,8 @@ theorem coord_eq (x : AE F E) (i : Fin (Module.finrank F E)) : coord F E x i = (
 theorem sum_vec_mat (x : AE F E) : ∑ i, vec F E x i • mat F E (bas F E i) = mat F E x := by
   conv_rhs => rw [← (bas F E).sum_repr x]
   refine Matrix.ext fun j k => ?_
-  simp only [mat, vec, map_sum, map_smul, Matrix.sum_apply, Matrix.smul_apply, Matrix.map_apply, smul_eq_mul, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [mat, vec, map_sum, map_smul, Matrix.sum_apply, Matrix.smul_apply, Matrix.map_apply, smul_eq_mul, map_mul]
 
 theorem mat_mul (x y : AE F E) : mat F E (x * y) = mat F E x * mat F E y := by
   simp only [mat, map_mul, Matrix.map_mul]
@@ -278,7 +279,8 @@ theorem repr_mul_snd {x : AE F E} (hx : ∀ i, ((bas F E).repr x i).2 = ((bas F 
   have key : ∀ y : AE F E, sndA F ((bas F E).repr (y * z) k) =
       ∑ i, sndA F ((bas F E).repr y i) * sndA F ((bas F E).repr (bas F E i * z) k) := fun y => by
     conv_lhs => rw [← (bas F E).sum_repr y, Finset.sum_mul]
-    simp only [smul_mul_assoc, map_sum, map_smul, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.coe_smul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [smul_mul_assoc, map_sum, map_smul, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.coe_smul,
       Pi.smul_apply, smul_eq_mul, map_mul]
   have h1 := key 1
   rw [one_mul] at h1
@@ -365,7 +367,8 @@ theorem exists_compact (R : ℝ) : ∃ K : Set (AE F E), IsCompact K ∧
   · have : sndA F ((bas F E).repr (g.1 * 1) i) =
         ∑ j, sndA F ((bas F E).repr 1 j) * sndA F ((bas F E).repr (g.1 * bas F E j) i) := by
       conv_lhs => rw [← (bas F E).sum_repr 1, Finset.mul_sum]
-      simp only [mul_smul_comm, map_sum, map_smul, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.coe_smul,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [mul_smul_comm, map_sum, map_smul, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.coe_smul,
         Pi.smul_apply, smul_eq_mul, map_mul]
     rw [mul_one] at this
     exact this.symm

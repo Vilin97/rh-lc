@@ -84,7 +84,8 @@ theorem embedding_linear_independent (I : AutInst) :
       rw [hv]
       exact this
     · have := congrArg (starRingEnd ℂ) (congrFun hg v)
-      simp only [Finset.sum_apply, Pi.smul_apply, Pi.zero_apply, Complex.real_smul, map_sum, map_mul,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Finset.sum_apply, Pi.smul_apply, Pi.zero_apply, Complex.real_smul, map_sum, map_mul,
         Complex.conj_ofReal, map_zero] at this
       rw [hv]
       simp only [RingHom.coe_comp, Function.comp_apply]

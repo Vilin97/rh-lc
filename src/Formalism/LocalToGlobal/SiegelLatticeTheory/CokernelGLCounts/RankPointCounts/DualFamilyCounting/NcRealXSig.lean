@@ -128,7 +128,8 @@ def negF (e f : Fin r → Fin (2 * r + k + 1) → ℂ) (z0 : Fin (2 * r + k + 1)
 theorem hJ_fe (hF : IsFrameJ ε e f wf z0) (a b : Fin r) : hJ ε (f a) (e b) = if a = b then 1 else 0 := by
   have hs : ∀ x y : Fin (2 * r + k + 1) → ℂ, hJ ε y x = conj (hJ ε x y) := by
     intro x y
-    simp only [hJ, dotProduct, Formalism.REAL.Jm, mulVec_diagonal, map_sum, map_mul, Pi.star_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hJ, dotProduct, Formalism.REAL.Jm, mulVec_diagonal, map_sum, map_mul, Pi.star_apply,
       Complex.star_def, Complex.conj_conj]
     refine Finset.sum_congr rfl fun i _ => ?_
     split_ifs <;> simp <;> ring
@@ -142,7 +143,8 @@ theorem posF_gram (hF : IsFrameJ ε e f wf z0) (i j : Fin r ⊕ Fin k) :
       if i = j then (((Sum.elim (fun _ => (2 : ℝ)) (fun _ => (1 : ℝ))) i : ℝ) : ℂ) else 0 := by
   have hs : ∀ x y : Fin (2 * r + k + 1) → ℂ, hJ ε y x = conj (hJ ε x y) := by
     intro x y
-    simp only [hJ, dotProduct, Formalism.REAL.Jm, mulVec_diagonal, map_sum, map_mul, Pi.star_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hJ, dotProduct, Formalism.REAL.Jm, mulVec_diagonal, map_sum, map_mul, Pi.star_apply,
       Complex.star_def, Complex.conj_conj]
     refine Finset.sum_congr rfl fun i _ => ?_
     split_ifs <;> simp <;> ring
@@ -163,7 +165,8 @@ theorem negF_gram (hF : IsFrameJ ε e f wf z0) (i j : Fin r ⊕ Unit) :
       if i = j then (((Sum.elim (fun _ => (-2 : ℝ)) (fun _ => (-1 : ℝ))) i : ℝ) : ℂ) else 0 := by
   have hs : ∀ x y : Fin (2 * r + k + 1) → ℂ, hJ ε y x = conj (hJ ε x y) := by
     intro x y
-    simp only [hJ, dotProduct, Formalism.REAL.Jm, mulVec_diagonal, map_sum, map_mul, Pi.star_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hJ, dotProduct, Formalism.REAL.Jm, mulVec_diagonal, map_sum, map_mul, Pi.star_apply,
       Complex.star_def, Complex.conj_conj]
     refine Finset.sum_congr rfl fun i _ => ?_
     split_ifs <;> simp <;> ring
@@ -196,7 +199,8 @@ theorem hJ_Qm_self (hF : IsFrameJ ε e f wf z0) (zB : Fin (2 * r + k + 1) → �
     hJ ε (Qm e f wf z0 *ᵥ zB) (Qm e f wf z0 *ᵥ zB) = -((Tz k r zB : ℝ) : ℂ) := by
   have hs : ∀ x y : Fin (2 * r + k + 1) → ℂ, hJ ε y x = conj (hJ ε x y) := by
     intro x y
-    simp only [hJ, dotProduct, Formalism.REAL.Jm, mulVec_diagonal, map_sum, map_mul, Pi.star_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hJ, dotProduct, Formalism.REAL.Jm, mulVec_diagonal, map_sum, map_mul, Pi.star_apply,
       Complex.star_def, Complex.conj_conj]
     refine Finset.sum_congr rfl fun i _ => ?_
     split_ifs <;> simp <;> ring

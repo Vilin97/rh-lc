@@ -77,7 +77,8 @@ theorem gen_of_jointEpi : ∀ (T : Scheme.{0}) (L Q : T.Modules) (N : ℕ) (s : 
     have hmem (j : Fin (N + 1)) : T.presheaf.germ W x hxW (c j) ∈ IsLocalRing.maximalIdeal _ :=
       fun hu' => hno j ((T.mem_basicOpen (c j) x hxW).2 hu')
     have : T.presheaf.germ W x hxW (∑ j, a j * c j) ∈ IsLocalRing.maximalIdeal _ := by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       exact Ideal.sum_mem _ fun j _ => by
         rw [map_mul]; exact Ideal.mul_mem_left _ _ (hmem j)
     rw [hac, map_one] at this

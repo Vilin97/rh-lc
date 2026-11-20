@@ -94,7 +94,8 @@ theorem det_mul_eq_sum_rows {V : Type} [CommRing V] {m g : ℕ} (M : Matrix (Fin
     ext i j; simp [Matrix.mul_apply, Finset.sum_apply]
   rw [h]
   show Matrix.detRowAlternating.toMultilinearMap (fun i => ∑ k, M i k • C k) = _
-  rw [MultilinearMap.map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [MultilinearMap.map_sum]
   refine Finset.sum_congr rfl fun J _ => ?_
   rw [MultilinearMap.map_smul_univ, smul_eq_mul]
   rfl
@@ -220,7 +221,8 @@ theorem maxMinors_split : ∀ (R : Type) [CommRing R] [IsDomain R] [CharZero R] 
   have hNdvd : B.det ∣ (N : R') := by
     obtain ⟨a, ha⟩ := (Submodule.mem_span_range_iff_exists_fun R).1 hkey
     have : (N : R') = ψ (((n₀ : R) * D) ^ r) := by simp [hNdef]
-    rw [this, ← ha, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [this, ← ha, map_sum]
     exact Finset.dvd_sum fun q _ => by
       rw [smul_eq_mul, map_mul, hψA]
       exact Dvd.dvd.mul_left (hdiv q) _

@@ -13,9 +13,11 @@ namespace GlobalTheory.LatSplitPrime
 theorem sum_orth {O M ι : Type} [CommRing O] [AddCommGroup M] [Module O M] {σ : O →+* O}
     (h : M →ₗ[O] M →ₛₗ[σ] O) [Fintype ι] (c : ι → O) (w : ι → M) (ho : ∀ i j, i ≠ j → h (w i) (w j) = 0) :
     h (∑ i, c i • w i) (∑ i, c i • w i) = ∑ i, c i * σ (c i) * h (w i) (w i) := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
-  simp only [map_sum, map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, RingHom.id_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, RingHom.id_apply]
   rw [Finset.sum_eq_single j (fun i _ hi => by rw [ho i j hi, mul_zero]) (by simp)]
   ring
 
@@ -117,7 +119,8 @@ theorem exists_pos : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r p
   have h1 : 0 < F (InfinitePlace.mk τ) (fun a w => w.embedding (x a)) := Set.mem_iInter.1 hx (InfinitePlace.mk τ)
   have h2 : 0 < ((InfinitePlace.mk τ).embedding
       (FD.herm G x x - ∑ i, m i * (FD.herm G x (v i) * FD.herm G (v i) x))).re := by
-    simp only [map_sub, map_sum, map_mul, map_herm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sub, map_sum, map_mul, map_herm]
     exact h1
   rcases InfinitePlace.embedding_mk_eq τ with h | h
   · rwa [h] at h2
@@ -288,12 +291,14 @@ theorem exists_proj {k : ℕ} (v : Fin k → M) (m : Fin k → O) (n : O) (hn : 
     simp [π, LinearMap.sum_apply]
   refine ⟨π, e, fun x j => ?_, fun x hx => ?_, fun x hx y => ?_⟩
   · rw [e]
-    simp only [map_sub, map_sum, map_smul, LinearMap.sub_apply, LinearMap.sum_apply, LinearMap.smul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sub, map_sum, map_smul, LinearMap.sub_apply, LinearMap.sum_apply, LinearMap.smul_apply,
       smul_eq_mul]
     rw [Finset.sum_eq_single j (fun i _ hi => by rw [ho i j hi, mul_zero]) (by simp), ← hm j]
     ring
   · rw [e, Finset.sum_eq_zero fun i _ => by rw [hx i, mul_zero, zero_smul], sub_zero]
-  · rw [e, map_sub, map_sum, Finset.sum_eq_zero fun i _ => by rw [map_smulₛₗ, hx i, smul_zero], sub_zero,
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [e, map_sub, map_sum, Finset.sum_eq_zero fun i _ => by rw [map_smulₛₗ, hx i, smul_zero], sub_zero,
       map_smulₛₗ, hn, smul_eq_mul]
 
 end Abstract
@@ -368,13 +373,15 @@ theorem exists_family (h : M →ₗ[𝓞 E] M →ₛₗ[σ] 𝓞 E) (G : Matrix 
   have hu : ∀ τ : E →+* ℂ, 0 < (τ (h (π y) (π y) : E)).re := fun τ => by
     have e1 : h (π y) (π y) = N * (N * h y y - ∑ i, m i * (h y (v i) * h (v i) y)) := by
       rw [π3 _ (π1 y), e]
-      simp only [map_sub, map_sum, map_smul, LinearMap.sub_apply, LinearMap.sum_apply, LinearMap.smul_apply,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sub, map_sum, map_smul, LinearMap.sub_apply, LinearMap.sum_apply, LinearMap.smul_apply,
         smul_eq_mul, mul_assoc]
     have e2 : (h (π y) (π y) : E) = (N : E) ^ 2 * (((t : 𝓞 E) : E) * FD.cc ((t : 𝓞 E) : E)) *
         (FD.herm G x x - ∑ i, (m i : E) / N * (FD.herm G x (φ (v i)) * FD.herm G (φ (v i)) x)) := by
       rw [e1]
       change algebraMap (𝓞 E) E _ = _
-      simp only [map_mul, map_sub, map_sum, map_natCast, hh, hy', herm_smul_left, herm_smul_right]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_mul, map_sub, map_sum, map_natCast, hh, hy', herm_smul_left, herm_smul_right]
       rw [mul_sub, mul_sub, Finset.mul_sum, Finset.mul_sum]
       congr 1
       · ring
@@ -539,7 +546,8 @@ theorem exists_split_prime_to : ∀ (E : Type) [Field E] [NumberField E] [IsCMFi
     change ((H.bar (h x y) : 𝓞 E) : E) = _
     rw [hbar, hh, hh, FD.herm, FD.herm, Finset.sum_comm]
     have hG' : ∀ a b, IsCMField.complexConj E (G a b) = G b a := hG
-    simp only [FD.cc, map_sum, map_mul, hG', IsCMField.complexConj_apply_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [FD.cc, map_sum, map_mul, hG', IsCMField.complexConj_apply_apply]
     exact Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => by ring)
   have hρ : σ H.rt = -H.rt := RingOfIntegers.ext (by
     change ((H.bar H.rt : 𝓞 E) : E) = _
@@ -622,7 +630,8 @@ theorem exists_split_prime_to : ∀ (E : Type) [Field E] [NumberField E] [IsCMFi
       Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)) (π1 x)
   · obtain ⟨c, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun _).1 ha
     have h1 : h (∑ i, c i • v i) b = 0 := by
-      rw [← hs, map_sum, Finset.sum_eq_zero fun i _ => by rw [map_smulₛₗ, hb i, smul_zero], map_zero]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hs, map_sum, Finset.sum_eq_zero fun i _ => by rw [map_smulₛₗ, hb i, smul_zero], map_zero]
     have h2 := hEF (∑ i, c i • v i) b
     rw [← hh, h1] at h2
     generalize ∑ i, c i • v i = z at h2 ⊢
@@ -631,7 +640,8 @@ theorem exists_split_prime_to : ∀ (E : Type) [Field E] [NumberField E] [IsCMFi
     obtain ⟨t, ht, e1⟩ := hval (∑ i, c i • v i)
     rw [e1]
     refine mul_nonneg ht.le (Finset.sum_nonneg fun τ _ => ?_)
-    rw [sum_orth h c v ho, RingOfIntegers.coe_eq_algebraMap, map_sum, map_sum, Complex.re_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [sum_orth h c v ho, RingOfIntegers.coe_eq_algebraMap, map_sum, map_sum, Complex.re_sum]
     refine Finset.sum_nonneg fun i _ => ?_
     have e2 : algebraMap (𝓞 E) E (σ (c i)) = FD.cc (algebraMap (𝓞 E) E (c i)) := hbar (c i)
     rw [map_mul, map_mul, map_mul, map_mul, e2, GlobalTheory.OneSpace.emb_cc, Complex.mul_conj, Complex.re_ofReal_mul]

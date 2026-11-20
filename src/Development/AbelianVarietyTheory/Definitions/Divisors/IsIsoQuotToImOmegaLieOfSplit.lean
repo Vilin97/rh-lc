@@ -859,7 +859,8 @@ theorem exists_basis_augCot (R : Type) [CommRing R] :
     rw [map_smul]
     refine Submodule.smul_mem _ _ ?_
     change δ x ∈ _
-    rw [← b.sum_repr x, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← b.sum_repr x, map_sum]
     exact Submodule.sum_mem _ fun i _ => by
       rw [map_zsmul]
       exact zsmul_mem (Submodule.subset_span (Set.mem_range_self i)) _

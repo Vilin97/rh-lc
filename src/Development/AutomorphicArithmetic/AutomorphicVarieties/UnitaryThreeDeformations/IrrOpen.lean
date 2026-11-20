@@ -328,7 +328,8 @@ private theorem frame {O K G Γ ι : Type} [CommRing O] [IsLocalRing O] [Field K
   have e1 : (r' y).mat.trace = 0 := by
     refine Subtype.ext ?_
     show A.val (r' y).mat.trace = 0
-    rw [← e, trace, trace, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← e, trace, trace, map_sum]
     refine Finset.sum_congr rfl fun i _ => (c1 y i i).trans ?_
     simp [wt]
   have e2 : ∀ i, residue A ((r' y).mat i i) = φ ((r0 F.η F.Ψ y).mat i i) := fun i =>

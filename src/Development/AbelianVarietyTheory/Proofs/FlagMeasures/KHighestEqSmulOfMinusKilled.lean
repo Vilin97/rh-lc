@@ -161,7 +161,8 @@ theorem thetaA_eq_sum_slice {V : Type} [NormedAddCommGroup V] [InnerProductSpace
     rw [List.ofFn_succ]
     simp only [Fin.cons_zero, Fin.cons_succ, List.reverse_cons, ew_append_singleton, Module.End.mul_apply]
   simp only [hterm]
-  rw [← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum]
   congr 1
   have hat : ∀ a b, at1 (sliceLin V n α' F) a b = F (Fin.cons (a, b) α') := by
     intro a b
@@ -176,9 +177,11 @@ theorem thetaA_casK {V : Type} [NormedAddCommGroup V] [InnerProductSpace ℂ V] 
     thetaA E j (CasK ε (arrE E j) F) = CasK ε E (thetaA E j F) := by
   have harr : ∀ (c d : Fin n) (H : Arr V n j), thetaA E j (arrE E j c d H) = E c d (thetaA E j H) :=
     ((arrModule V n ε E j).1 hE).2
-  rw [compactCasimir_apply, compactCasimir_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [compactCasimir_apply, compactCasimir_apply, map_sum]
   refine Finset.sum_congr rfl (fun a _ => ?_)
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl (fun b _ => ?_)
   split_ifs with h
   · rw [harr, harr]

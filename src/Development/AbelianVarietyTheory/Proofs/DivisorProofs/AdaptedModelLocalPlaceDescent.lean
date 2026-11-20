@@ -31,7 +31,8 @@ theorem wfac_zero (σ : E →ₐ[F] E) {d d₁ : ℕ} (JW : Matrix (Fin d) (Fin 
   have hc : ∀ e : E, cA σ (inclR (F := F) (AF F) e) = inclR (F := F) (AF F) (σ e) := fun e => rfl
   have e1 : ∑ j, ∑ l, incV F w j * incM F JW j l * cA σ ((incM F ι *ᵥ z) l) =
       ∑ q, inclR (F := F) (AF F) (form σ JW w (fun l => ι l q)) * cA σ (z q) := by
-    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hc, incV, incM, Matrix.map_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hc, incV, incM, Matrix.map_apply,
       Finset.mul_sum, Finset.sum_mul]
     conv_rhs => rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun j _ => ?_
@@ -71,7 +72,8 @@ theorem isoA_iso_at : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Numb
       have h1 := congrArg (inclR (F := F) (AF F)) hH.xx
       rw [map_zero] at h1
       rw [← h1]
-      simp only [form, incV, incM, Matrix.map_apply, hc, dotProduct, Matrix.mulVec, Finset.mul_sum, map_sum, map_mul,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [form, incV, incM, Matrix.map_apply, hc, dotProduct, Matrix.mulVec, Finset.mul_sum, map_sum, map_mul,
         mul_assoc]
     rw [symp, hTens_vecMulVec, h, zero_mul, mul_zero, map_zero]
   intro u hu _ u' hu' _

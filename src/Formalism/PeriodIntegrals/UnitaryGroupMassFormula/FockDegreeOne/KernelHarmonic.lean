@@ -18,7 +18,8 @@ theorem lowOp_Xd (c d : Ix r s) (l l' : Ln p q r s) (P : Pol p q r s) :
         ((if ((a, d) : Ln p q r s) = l then pderiv ((a, c) : Ln p q r s) (pderiv l' P) else 0) +
          (if ((a, c) : Ln p q r s) = l then pderiv ((a, d) : Ln p q r s) (pderiv l' P) else 0))
         else 0) := by
-  rw [lowOp_apply, lowOp_apply, map_sum, Finset.mul_sum, ← Finset.sum_add_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [lowOp_apply, lowOp_apply, map_sum, Finset.mul_sum, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun a _ => ?_
   by_cases h : linePos ((a, d) : Ln p q r s) = true
   · simp only [h, ↓reduceIte]
@@ -55,7 +56,8 @@ theorem lowOp_posOp (c d : Ix r s) (hcd : ¬ sameBlock c d) (a b : Ix p q) (P : 
         pderiv ((a, c) : Ln p q r s) (pderiv ((b, d) : Ln p q r s) P) else 0) := by
   have hcd' : c ≠ d := by
     rintro rfl; exact hcd (by rcases c with c | c <;> simp [sameBlock])
-  rw [posOp_apply, posOp_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [posOp_apply, posOp_apply, map_sum]
   have hterm : ∀ e : Ix r s,
       lowOp (p := p) (q := q) c d (if linePos ((a, e) : Ln p q r s) = true then
         X ((a, e) : Ln p q r s) * pderiv ((b, e) : Ln p q r s) P else 0) =
@@ -99,7 +101,8 @@ theorem lowOp_negOp (c d : Ix r s) (hcd : ¬ sameBlock c d) (a b : Ix p q) (hab 
     rintro rfl; exact hcd (by rcases c with c | c <;> simp [sameBlock])
   have hba : linePos ((b, d) : Ln p q r s) = linePos ((a, d) : Ln p q r s) :=
     (FockRL.linePos_left b a d).2 (FockRL.sameBlock_symm hab)
-  rw [negOp_apply, negOp_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [negOp_apply, negOp_apply, map_sum]
   have hterm : ∀ e : Ix r s,
       lowOp (p := p) (q := q) c d (if linePos ((b, e) : Ln p q r s) = true then 0 else
         X ((b, e) : Ln p q r s) * pderiv ((a, e) : Ln p q r s) P) =

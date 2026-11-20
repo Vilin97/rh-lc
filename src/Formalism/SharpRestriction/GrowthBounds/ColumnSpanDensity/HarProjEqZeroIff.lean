@@ -190,7 +190,8 @@ theorem oneTop_abs (K : Type) [Field K] [CharZero K] (k P Q p : ℕ) (hk : 1 ≤
   · intro x
     apply α.injective
     apply Subtype.ext
-    rw [map_sum, Submodule.coe_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Submodule.coe_sum,
       Finset.sum_congr rfl (fun j hj => hterm j (Nat.lt_succ_iff.1 (Finset.mem_range.1 hj)) x)]
     exact (IP K k P Q hk).2.1 _ (α x).2
   · intro g j hj

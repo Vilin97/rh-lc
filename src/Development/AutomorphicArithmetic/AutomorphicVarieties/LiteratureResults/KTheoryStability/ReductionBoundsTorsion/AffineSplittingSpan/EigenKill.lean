@@ -35,7 +35,8 @@ theorem kill_sum {A : Type} (φ : A → A) (m : ℕ) {ι : Type} [Fintype ι] [D
   have hF' : F = ∑ j, fun y => (z j * E j y).re := by
     funext y
     rw [Finset.sum_apply, ← Complex.re_sum, ← hF y, Complex.ofReal_re]
-  rw [hF', map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hF', map_sum]
   refine Finset.sum_eq_zero fun j _ => ?_
   rw [← Finset.prod_erase_mul _ _ (Finset.mem_univ j), map_mul, Module.End.mul_apply,
     kill_one φ m (E j) (Λ j) (z j) (hE j), map_zero]

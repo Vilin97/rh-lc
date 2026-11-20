@@ -185,7 +185,8 @@ theorem cls_biLB {L : LB G.left} (hL : L.IsLB) (x z : T ⟶ A) (hb : (biLB t P h
 
 theorem pull_bi (c : Pic G.left) (g : T' ⟶ T) (x z : T ⟶ A) :
     pull g.left (bi t P h c x z) = bi t P h c (g ≫ x) (g ≫ z) := by
-  simp only [bi, map_sum, pull_lam, Category.assoc]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [bi, map_sum, pull_lam, Category.assoc]
 
 theorem bi_one_left (c : Pic G.left) (z : T ⟶ A) : bi t P h c 1 z = 0 := by
   simp only [bi, MonObj.one_comp, lam_one_left, Finset.sum_const_zero]
@@ -246,7 +247,8 @@ theorem bi_tmul (x z : T ⟶ G) (m n : M) :
     have := lam_act hL hadj (x ≫ a.act c) z (star d)
     rw [star_star, Category.assoc, ← a.mul] at this
     exact this.symm
-  simp only [bi, Category.assoc, tmul_crd, tmul_crd_assoc, ← a.mul, hφ, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [bi, Category.assoc, tmul_crd, tmul_crd_assoc, ← a.mul, hφ, ← map_sum]
   change _ = φ (h m n)
   congr 1
   rw [herm_expand (starRingEnd O) (fun m n => h m n) h.add_left h.smul_left (fun m n => (h.star_apply m n).symm) P m n]
@@ -315,7 +317,8 @@ theorem bi_eq_sum {I : Type} [Fintype I] (l : I → (M →ₗ[O] O)) (hl : ∀ m
     have := lam_act hL hadj (x ≫ a.act c) z (star d)
     rw [star_star, Category.assoc, ← a.mul] at this
     exact this.symm
-  simp only [bi_tmul t P h hL hΘ hadj, Category.assoc, IsTensor.tmul_mapLeft, IsTensor.self_tmul, hφ, ← map_sum, ← hl]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [bi_tmul t P h hL hΘ hadj, Category.assoc, IsTensor.tmul_mapLeft, IsTensor.self_tmul, hφ, ← map_sum, ← hl]
   rfl
 
 end Laws

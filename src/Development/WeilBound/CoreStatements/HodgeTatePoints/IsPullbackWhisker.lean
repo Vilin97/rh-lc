@@ -444,7 +444,8 @@ theorem pt_of_vec : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : 
       intro j
       rw [hX, map_mul, map_mul, map_pow, mul_pow, _root_.mul_assoc]
       rfl
-    rw [h2, Finset.sum_congr rfl fun j _ => this j, ← Finset.sum_mul, ← map_sum, hq, map_zero, zero_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h2, Finset.sum_congr rfl fun j _ => this j, ← Finset.sum_mul, ← map_sum, hq, map_zero, zero_mul]
   · obtain ⟨χ', a1, a2⟩ := exists_low hp χ h0
     rw [toFirst_eq, ← Category.assoc, homAt_comp, ← a2, ← homAt_comp, Category.assoc, x_trTo] at h
     obtain ⟨χ₀, -, hu⟩ := (PositivityTheory.HtPt.Cd.germ_univ E H hstar X0 t k x d g).2 Unit 1 1 (MonObj.comp_one _)

@@ -113,7 +113,8 @@ theorem isDomain_CK : IsDomain (CK K) := by
   have ha' : z = ∑ i, inC K (a i) * inI K (b i) :=
     ha.trans (Finset.sum_congr (M := CK K) rfl fun i _ => GlobalTheory.AcrisK.tmul_eq K _ _)
   have h0 := GlobalTheory.LocTensor.tied_tensor_inj l P AI T _ _ hb (fun i => jB T (a i)) (by
-    rw [← hz, ha', map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hz, ha', map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [RingHom.comp_apply, map_mul, map_mul, ← inK_oK, conj_inC, conj_inK, mul_comm]
     rfl)

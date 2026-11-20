@@ -15,7 +15,8 @@ theorem hv_apply (sc : ℝ) (z w : VV ι a b) :
 
 theorem hv_swap (sc : ℝ) (z w : VV ι a b) :
     HV sc w z = (starRingEnd ℂ) (HV sc z w) := by
-  simp only [hv_apply, map_mul, map_sum, Complex.conj_ofReal, Complex.conj_conj]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hv_apply, map_mul, map_sum, Complex.conj_ofReal, Complex.conj_conj]
   congr 1
   exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => mul_comm _ _
 

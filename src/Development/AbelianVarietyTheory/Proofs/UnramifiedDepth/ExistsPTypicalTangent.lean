@@ -158,7 +158,8 @@ theorem delete_step [IsAlgClosed C] [CharZero C] (G : LogFGL v d) {p : ℕ} (hp 
   have hlgδ : ∀ a m, PowerSeries.coeff m (G.lgCurve (G.sumF g) a) =
       (if l ∣ m then (l : C) else 0) * PowerSeries.coeff m (G.lgCurve ga a) := by
     intro a m
-    rw [sumF_lg G g hgg a, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [sumF_lg G g hgg a, map_sum]
     simp only [g, pt_lg_rescale G _ (fun b => (hg b).1) a, PowerSeries.coeff_rescale]
     rw [← Finset.sum_mul, root_sum hζ m]
   have hlgε : ∀ a m, PowerSeries.coeff m (G.lgCurve ε a) =

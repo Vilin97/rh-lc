@@ -43,7 +43,8 @@ theorem lin_eq_zero {k : Type} [Field k] [IsAlgClosed k] (Φ : FibPre k) [Smooth
   refine GlobalTheory.ZH.WtLin.linIndep k Φ N q J cls F hG a fun l => ?_
   refine eq_zero_of_points Φ.G.hom _ _ fun x hx hU => ?_
   have h1 := h _ ⟨x, hx, l, 1, hU, fun _ => rfl⟩
-  rw [CrdCalc.valR_eq x _ hU, map_sum, ← h1]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [CrdCalc.valR_eq x _ hU, map_sum, ← h1]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_mul, ← CrdCalc.valR_eq, ← CrdCalc.valR_eq, Units.val_one, _root_.one_mul]
   exact congrArg (· * _) (GlobalTheory.Points.valR_constFn_of_section Φ.G.hom x hx _ hU (a i))

@@ -106,7 +106,8 @@ theorem exists_param_definite {V : HSp D} (hs : V.SigOK) (hp : V.IsPosDef) (c : 
     rw [opOf, Finsupp.sum_single_index (by exact zero_smul _ _), one_smul, Finset.sum_apply, LinearMap.sum_apply,
       Finset.sum_apply] at h3
     have h5 := congrArg ℓ h4
-    rw [map_sum, Pi.smul_apply, map_smul] at h5
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Pi.smul_apply, map_smul] at h5
     exact h3.trans h5.symm
   obtain ⟨B, hB', -⟩ := GlobalTheory.T.exists_satake_parameters_bounded_eigenfunction D V _ _ S hsph _ hbd hℓ hlev s heig
   exact ⟨B, (GlobalTheory.LFun.isParamFunV_iff_isSysParamD_of_level hsph hℓ hlev heig B).1 hB'⟩

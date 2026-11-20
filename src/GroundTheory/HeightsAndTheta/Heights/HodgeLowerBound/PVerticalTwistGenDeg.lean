@@ -128,7 +128,8 @@ theorem VerticalTwistGenDeg.proof : VerticalTwistGenDeg.Statement := by
   have hB : ∀ (bs : Fin (n + 1) → K → ℤ) (i : Fin (n + 1)), bs i = ∑ p ∈ s, b p → F bs = 0 := by
     intro bs i hi
     have e2 : bs = Function.update bs i (∑ p ∈ s, b p) := by rw [← hi, Function.update_eq_self]
-    rw [e2, ← MultilinearMap.toLinearMap_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e2, ← MultilinearMap.toLinearMap_apply, map_sum]
     refine Finset.sum_eq_zero fun p hp => ?_
     rw [MultilinearMap.toLinearMap_apply]
     exact hposition p hp _ i (Function.update_self _ _ _)

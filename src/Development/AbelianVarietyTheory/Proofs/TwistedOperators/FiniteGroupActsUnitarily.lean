@@ -29,20 +29,23 @@ theorem pairAt_eq_of_rat (x y : S.V) (hx : ∀ i, S.bV.repr x i ∈ cmMax K) : p
 
   have hexp : S.pair x y = ∑ i, ∑ j, star (S.bV.repr x i) * S.gramV i j * S.bV.repr y j := by
     conv_lhs => rw [← S.bV.sum_repr x, ← S.bV.sum_repr y]
-    simp only [map_sum, LinearMap.sum_apply, map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, CSD.gramV, Matrix.of_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.sum_apply, map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, CSD.gramV, Matrix.of_apply,
       starRingEnd_apply, RingHom.id_apply, Finset.mul_sum]
     conv_rhs => rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
     ring
   rw [hexp]
-  simp only [pairAt, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [pairAt, map_sum, map_mul]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
 
   have hc : ∀ τ : K →+* ℂ, τ (star (S.bV.repr x i)) = starRingEnd ℂ (τ (S.bV.repr x i)) := hx i
   rw [hc σ]
 
 theorem csumAt_eq_of_rat (f f' : S.Cl → S.V) (hf : S.IsRat f) : csumAt S σ f f' = σ (S.csum f f') := by
-  simp only [csumAt, CSD.csum, map_sum, map_mul, map_inv₀, map_natCast]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [csumAt, CSD.csum, map_sum, map_mul, map_inv₀, map_natCast]
   refine Finset.sum_congr rfl fun c _ => ?_
   rw [pairAt_eq_of_rat S σ (f c) (f' c) (fun i => hf c i)]
 
@@ -90,7 +93,8 @@ theorem csumAt_map (hb : S.HasRatBasis) (U : Module.End K S.Forms)
     rw [csumAt_eq_of_rat S σ _ _ (hU _ (hbr i)), csumAt_eq_of_rat S σ _ _ (hbr i), hc]
 
   rw [← b.sum_repr f, ← b.sum_repr f']
-  simp only [map_sum, map_smul, Submodule.coe_sum, Submodule.coe_smul, csumAt_sum_left, csumAt_sum_right,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, Submodule.coe_sum, Submodule.coe_smul, csumAt_sum_left, csumAt_sum_right,
     csumAt_smul_left, csumAt_smul_right', key]
 
 end ClassSum

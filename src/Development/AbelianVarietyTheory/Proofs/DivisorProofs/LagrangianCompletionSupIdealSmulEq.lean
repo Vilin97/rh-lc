@@ -254,7 +254,8 @@ theorem lagrangian_completion_sup_smul_eq : ∀ (C : Type) [CommRing C] (I : Ide
     have hfI : ∀ x, f x ∈ I := fun x => by rw [hf]; exact hFiso _ (hGF' (hPmem x)) _ hkF
     refine ⟨∑ j, f (v j) • (y j - e (y j)), ?_, ?_, ?_⟩
     · exact Submodule.sum_mem _ fun j _ => Submodule.smul_mem_smul (hfI _) Submodule.mem_top
-    · simp [map_sum, map_smul, hker]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp [map_sum, map_smul, hker]
     · intro g hg
       have h1 : ∀ j, φ g (y j - e (y j)) = s g j := by
         intro j
@@ -263,8 +264,10 @@ theorem lagrangian_completion_sup_smul_eq : ∀ (C : Type) [CommRing C] (I : Ide
         rw [← this, hy]
       have h2 : f g = ∑ j, f (v j) * s g j := by
         conv_lhs => rw [hexp g]
-        simp [map_sum, map_smul, mul_comm]
-      rw [map_sub, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp [map_sum, map_smul, mul_comm]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, map_sum]
       simp only [map_smul, h1, smul_eq_mul]
       rw [← h2, hf, hPG g hg, sub_self]
   refine ⟨G ⊔ (LinearMap.ker e ⊓ ⨅ x ∈ G, LinearMap.ker (φ x)), hcompl, hEr, ?_, hiso, hEst, ?_⟩

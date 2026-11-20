@@ -287,7 +287,8 @@ theorem alt_closed (p : ℕ) (d : ExteriorAlgebra K V →+ ExteriorAlgebra K V) 
   constructor
   · change dtotHom d (alt f h a v) = 0
     unfold alt
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     apply Finset.sum_eq_zero
     intro σ _
     rw [map_zsmul]

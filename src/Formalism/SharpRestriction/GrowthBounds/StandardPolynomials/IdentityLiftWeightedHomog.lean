@@ -114,7 +114,8 @@ theorem identity_lift_monomial (w : O) (M : MonH X) :
 theorem identity_lift_eq_sum (w : O) (P : RHH O X) :
     lift1 X O w P = ∑ m ∈ P.support, monomial m (algebraMap O (KK O) (w ^ ndM X m) * P.coeff m) := by
   conv_lhs => rw [← MvPolynomial.support_sum_monomial_coeff P]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun m _ => ?_
   have e : (monomial m (P.coeff m) : RHH O X) = C (P.coeff m) * monomial m 1 := by
     rw [C_mul_monomial, mul_one]

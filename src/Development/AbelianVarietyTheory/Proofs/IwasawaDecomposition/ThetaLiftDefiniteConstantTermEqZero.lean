@@ -54,7 +54,8 @@ theorem continuous_family {D : D7} {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D
   have e : (fun q : (GA D S × GA D T) × X => om q.1 (L q.2) 0) =
       fun q => ∑ i, b.coord i q.2 * om q.1 (L (b i)) 0 := by
     funext q
-    conv_lhs => rw [← b.sum_repr q.2, map_sum, map_sum, Finset.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [← b.sum_repr q.2, map_sum, map_sum, Finset.sum_apply]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, map_smul]
     rfl
@@ -108,7 +109,8 @@ theorem zcusp_lift : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D)
     have h2 : ∀ z : ZI T ξ,
         ∑ k, om (1, (z : GA D T)) (heisO ψ S T (along S T ξ (a k)) (om (h, g) (L x))) 0 = 0 := by
       intro z
-      rw [← Finset.sum_apply, ← map_sum, ha, map_zero]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← Finset.sum_apply, ← map_sum, ha, map_zero]
       rfl
     simp only [h2, GlobalTheory.T.integral_om_heisO_along_eq_integral_om D ψ S T χS χT om H hpos ξ hξ μ 𝓖 hμ h𝓖 _ hf, integral_zero, Finset.sum_const,
       Finset.card_univ, Fintype.card_fin, nsmul_eq_mul] at h1

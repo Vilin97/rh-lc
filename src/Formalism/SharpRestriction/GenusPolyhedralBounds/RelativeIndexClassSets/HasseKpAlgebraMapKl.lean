@@ -37,7 +37,8 @@ theorem cw_mul (d : A →+ A) (hd : ∀ x y, d (x * y) = x * d y + y * d x) (f g
   classical
   ext n
   rw [mul_comm g (cw d f)]
-  simp only [coeff_cw, MvPowerSeries.coeff_mul, map_add, map_sum, hd, ← Finset.sum_add_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [coeff_cw, MvPowerSeries.coeff_mul, map_add, map_sum, hd, ← Finset.sum_add_distrib]
   exact Finset.sum_congr rfl fun q _ => by ring
 
 def dv (τ : A →+* MvPowerSeries σ A) (p : σ) : A →+ A := co τ (Finsupp.single p 1)
@@ -740,7 +741,8 @@ variable (X : PJ D B P j) (la : HeightOneSpectrum (𝓞 B.KO)) {N : ℕ} {wL : W
 theorem hasseRp_sec (β : Idx D j N →₀ ℕ) (i : Fin (WeightFamilies.dimY D j + 1)) : hasseRp X la N β (sec X la w i) =
     ∑ k, algebraMap (Op X la N) (Kp X la N) (hasseOp X la N β (Tv X la N (i, k))) • emb X la N (X.inc wL (w k)) := by
   show hasseRp X la N β (∑ k, algebraMap (Op X la N) (Kp X la N) (Tv X la N (i, k)) • emb X la N (X.inc wL (w k))) = _
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [show emb X la N (X.inc wL (w k)) = bcV X la N ((1 : X.Kl la) ⊗ₜ[B.KO] (X.inc wL (w k))) from rfl, hasseRp_smul_bcV, hasseKp_algebraMap]
 

@@ -34,7 +34,8 @@ theorem character_one_mul_sum_conj_mul {G V : Type} [Group G] [Fintype G] [AddCo
   have key : ∀ z : G, ∑ h : G, ρ.character (h * x * h⁻¹ * z) = c * ρ.character z := by
     intro z
     have := congrArg (fun A => LinearMap.trace ℂ V (A * ρ z)) hc
-    simp only [Finset.sum_mul, map_sum, smul_mul_assoc, one_mul, map_smul, smul_eq_mul, ← map_mul] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Finset.sum_mul, map_sum, smul_mul_assoc, one_mul, map_smul, smul_eq_mul, ← map_mul] at this
     exact this
   have h1 := key 1
   simp only [mul_one, Representation.char_conj, Finset.sum_const, Finset.card_univ, nsmul_eq_mul] at h1

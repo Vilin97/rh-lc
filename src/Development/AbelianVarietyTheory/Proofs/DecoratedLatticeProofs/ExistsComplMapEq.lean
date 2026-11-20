@@ -231,7 +231,8 @@ theorem GlobalTheory.Core.Rk.SWQ.LatHalf.mem_latO_iff_intM : ∀ (D : D7) (q : F
         (iota_mem h hs h1 h4 (𝔞 := {x | x ∈ D.host.AA}) ha₀ hM)
       funext i
       rw [← hπ, Pi.smul_apply, smul_eq_mul, mul_inv_cancel_left₀ hπ0]
-      simp only [Matrix.mulVec, dotProduct, map_sum, Matrix.map_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Matrix.mulVec, dotProduct, map_sum, Matrix.map_apply]
       refine Finset.sum_congr rfl fun j _ => ?_
       conv_lhs => rw [hu, mul_comm, h4, e, one_mul, mul_comm]
 

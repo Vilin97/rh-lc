@@ -104,7 +104,8 @@ theorem locM_unitri (s : Matrix (Fin (r + 1)) (Fin (r + 1)) E)
 theorem mat_entry (s s' : Matrix (Fin (r + 1)) (Fin (r + 1)) E) (a b : Fin (r + 1)) :
     (cT (A.L p) (locM G p s) * (G.S p).Zh * locM G p s') a b =
       sc G p a * sc G p b * (A.loc p).ιE (((s.map sig).transpose * G.Zh * s') a b) := by
-  simp only [Matrix.mul_apply, cT, locM, Matrix.of_apply, Zh_scale, Matrix.transpose_apply, Matrix.map_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mul_apply, cT, locM, Matrix.of_apply, Zh_scale, Matrix.transpose_apply, Matrix.map_apply,
     map_sum, map_mul, cj_sc, cj_sci, cj_ι, Finset.mul_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun l _ => Finset.sum_congr rfl fun i _ => ?_
   have h1 := sc_mul_sci G p i
@@ -141,7 +142,8 @@ theorem mat_iff (s s' : Matrix (Fin (r + 1)) (Fin (r + 1)) E) :
 
 theorem bc_sum (s : Matrix (Fin (r + 1)) (Fin (r + 1)) E) (v : Fin (r + 1) → G.V) (j : Fin (r + 1)) :
     A.bc p (∑ i, s i j • v i) = ∑ i, (A.loc p).ιE (s i j) • A.bc p (v i) := by
-  simp only [← bcL_apply, map_sum, map_smulₛₗ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← bcL_apply, map_sum, map_smulₛₗ]
 
 theorem loc_of_glob (u : Fin (r + 1) → Fin (k + 2 * r + 1) → (A.loc p).Ep) (v : Fin (r + 1) → G.V)
     (hu : ∀ a, u a = sc G p a • A.bc p (v a)) (s : Matrix (Fin (r + 1)) (Fin (r + 1)) E) (h : G.GLV)
@@ -216,7 +218,8 @@ theorem decomp : LinearIndependent E (gg G) ∧ IsCompl (Submodule.span E (Set.r
     rw [Fintype.linearIndependent_iff]
     intro c hc i
     have h1 := congrArg (bcL A p _) hc
-    simp only [map_sum, map_smulₛₗ, map_zero, bcL_apply, bc_gg, smul_smul] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smulₛₗ, map_zero, bcL_apply, bc_gg, smul_smul] at h1
     have h2 := Fintype.linearIndependent_iff.1 hli _ h1 i
     apply (A.loc p).ιE.injective
     rw [map_zero]

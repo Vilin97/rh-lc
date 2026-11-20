@@ -216,7 +216,8 @@ theorem archW_smul (a : AF F) (w : (κ → AF F) × (κ → AF F)) : archW (a �
 omit [Fintype κ] in
 theorem archW_sum {ι : Type} [Fintype ι] (w : ι → (κ → AF F) × (κ → AF F)) : archW (∑ i, w i) = ∑ i, archW (w i) := by
   refine Prod.ext (funext fun i => ?_) (funext fun i => ?_) <;>
-    simp only [archW, Prod.fst_sum, Prod.snd_sum, Finset.sum_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [archW, Prod.fst_sum, Prod.snd_sum, Finset.sum_apply, map_sum]
 
 theorem finOp_arch (ψ : AddChar (AF F) ℂ) (g : (κ → Af F) → ℂ) (a : Ainf F) (w : (κ → AF F) × (κ → AF F)) :
     finOp ψ g (mk a 0 • w) = g := by
@@ -316,7 +317,8 @@ theorem slice_decay {κ₁ ι T : Type} [Fintype κ₁] [Fintype ι] (ψ : AddCh
   have hmem : finOp ψ g (∑ i, x i • S i) ∈ hfin.toFinset := by
     rw [Set.Finite.mem_toFinset]
     refine ⟨_, ⟨_, hx, rfl⟩, ?_⟩
-    simp only [finOp, m, d, s, Prod.fst_sum, Prod.snd_sum, Finset.sum_apply, map_sum, Prod.smul_fst, Prod.smul_snd,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [finOp, m, d, s, Prod.fst_sum, Prod.snd_sum, Finset.sum_apply, map_sum, Prod.smul_fst, Prod.smul_snd,
       Pi.smul_apply, smul_eq_mul, map_mul]
     rfl
   obtain ⟨f₁, h1, h2⟩ := hC _ t x rfl
@@ -354,7 +356,8 @@ theorem exists_slice_clm {B : Base F E} {n d n₁ d₁ : ℕ} {X : Spc F E n} {W
   have h2 : ∀ k, e (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure f (φ k)) = pureA F (ei f : (Fin n₁ × Fin d₁ → mixedEmbedding.mixedSpace F) → ℂ)
       (fun y => ∏ᶠ v, ev v (φ k v) fun i => evalV F v (y i)) := fun k =>
     hloc f (φ k) (hφSB k) (hφvac k)
-  rw [LinearMap.comp_apply, h1, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [LinearMap.comp_apply, h1, map_sum, map_sum]
   funext y
   rw [Finset.sum_apply]
   change (∑ k, c k * ∏ᶠ v, ev v (φ k v) fun i => evalV F v (c₀ i)) * ei f y = _
@@ -369,7 +372,8 @@ theorem form_swap (hcm : IsCMExt F E σ) {n : ℕ} {J : Matrix (Fin n) (Fin n) E
   have hσ : ∀ z, σ (σ z) = z := fun z => by
     obtain ⟨τ⟩ : Nonempty (E →+* ℂ) := inferInstance
     exact τ.injective (by rw [hcm.2.2.2, hcm.2.2.2, star_star])
-  simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, hJ, Finset.mul_sum, ← Finset.sum_neg_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, hJ, Finset.mul_sum, ← Finset.sum_neg_distrib]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 
@@ -414,7 +418,8 @@ theorem arch_decay : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberF
   refine ⟨∑ j, C j, fun k hk l hl => ?_⟩
   choose f₁ hf₁ hb₁ using fun j => hCb j ⟨k, hk⟩ (GlobalTheory.XTermMaj.crd F E (l : AE F E)) hl
   have hS : G.M.co.e (shiftA H H' l) = ∑ i, GlobalTheory.XTermMaj.crd F E (l : AE F E) i • S i := by
-    simp only [S, ← map_smul, ← map_sum, ← smul_assoc, ← Finset.sum_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [S, ← map_smul, ← map_sum, ← smul_assoc, ← Finset.sum_smul]
     congr 2
     rw [shiftA]
     congr 1
@@ -427,7 +432,8 @@ theorem arch_decay : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberF
     simp only at h1
     rw [h1, Darboux.rho, hS]
     change coeL (∑ j, f₁ j) y = (sliceL c ∘ₗ e) (schrL B.ψ _ _) y
-    rw [map_sum, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum, map_sum]
     exact congrFun (Finset.sum_congr rfl fun j _ => hf₁ j) y
   · rw [Finset.sum_mul]
     exact (Finset.le_sum_of_subadditive _ (map_zero _).le (map_add_le_add _) _ _).trans (Finset.sum_le_sum fun j _ => hb₁ j)

@@ -70,12 +70,14 @@ theorem matchMono : PositivityTheory.PfSWUS.MatchMono := by
           Matrix.of (fun i j => θ τ (HeckeCharacterZeroLocus.SiegelWeilU.projInf X j i)) * (gAt θ a τ).1 := by
         intro τ
         ext i j
-        simp only [compAt, Matrix.map_apply, Matrix.mul_apply, map_sum, map_mul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [compAt, Matrix.map_apply, Matrix.mul_apply, map_sum, map_mul]
         rfl
       have hfin : (fun i j => finPart D ((HMul.hMul (tupOf X) a.1 : Mx D V.rank n) i j)) =
           fun i j => ∑ k, HeckeCharacterZeroLocus.SiegelWeilU.projFin X k i * finPart D (a.1 k j) := by
         funext i j
-        simp only [Matrix.mul_apply, map_sum, map_mul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [Matrix.mul_apply, map_sum, map_mul]
         rfl
       show φ (HMul.hMul (tupOf X) a.1) = PositivityTheory.SiegelWeilFormula.Gen.phiInf θ l fr (gAt θ a) P (HeckeCharacterZeroLocus.SiegelWeilU.projInf X) *
         (g fun i j => ∑ k, HeckeCharacterZeroLocus.SiegelWeilU.projFin X k i * finPart D (a.1 k j))

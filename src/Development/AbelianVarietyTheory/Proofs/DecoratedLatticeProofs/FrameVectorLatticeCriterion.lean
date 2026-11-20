@@ -20,7 +20,8 @@ theorem mulVec_sec_split {D : D7} {k : Type} [Field k] [ValuativeRel k] [Topolog
     (q : GlobalTheory.FinPl.SplitPt D k) {n : ℕ} (g : Matrix (Fin n) (Fin n) (AE D)) (w : Fin n → k) :
     g *ᵥ (fun i => q.sec (w i)) = fun i => q.sec ((g.map q.pr *ᵥ w) i) := by
   funext i
-  simp only [mulVec, dotProduct, Matrix.map_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [mulVec, dotProduct, Matrix.map_apply, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   have h1 := GlobalTheory.LocMod.PinEx.sec_mul q (q.pr (g i j)) (w j)
   have h2 := q.sec_pr (g i j)

@@ -37,7 +37,8 @@ theorem exists_basis_det_ne_zero_of_points {O B Ix : Type} [CommRing O] [IsDomai
     ext a
     have := congrFun hMv a
     simp only [Matrix.mulVec, dotProduct, Matrix.of_apply, Pi.zero_apply] at this
-    rw [map_sum, Finset.sum_apply, Pi.zero_apply, ← this]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_apply, Pi.zero_apply, ← this]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_smul, Pi.smul_apply, smul_eq_mul, mul_comm]
   have h5 : ∑ a, v a • b a = 0 := hφ (h4.trans (map_zero φ).symm)
@@ -82,7 +83,8 @@ theorem discr_jacobian_of_points :
   have hq : ∀ (G : S) (r : Ix → O), G - ∑ a, r a • β a ∈ I ↔
       Ideal.Quotient.mk I G = ∑ a, r a • b a := by
     intro G r
-    rw [← Ideal.Quotient.eq, ← Ideal.Quotient.mkₐ_eq_mk O, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Ideal.Quotient.eq, ← Ideal.Quotient.mkₐ_eq_mk O, map_sum]
     simp only [map_smul, Ideal.Quotient.mkₐ_eq_mk, hβ]
   refine ⟨β, fun G => ⟨b.equivFun (Ideal.Quotient.mk I G), ?_, fun r hr => ?_⟩, ?_, ?_⟩
   · exact (hq G _).2 (b.sum_equivFun _).symm
@@ -96,7 +98,8 @@ theorem discr_jacobian_of_points :
         have h1 := congrArg (e a) hu
         have h2 : e a (MvPowerSeries.C (MvPowerSeries.constantCoeff (F i)))
             = MvPowerSeries.constantCoeff (F i) := (e a).commutes _
-        rw [hF, map_add, h2, map_sum] at h1
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [hF, map_add, h2, map_sum] at h1
         rw [eq_neg_of_add_eq_zero_left h1.symm]
         refine neg_mem (Ideal.sum_mem _ fun j _ => ?_)
         rw [map_mul]

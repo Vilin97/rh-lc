@@ -63,7 +63,8 @@ theorem coord_eq_zero_of_mem (w : ι → Equiv.Perm (Fin N)) (τ : ι) (l : ℕ)
   have hsum : (freeModule (Fl ι N) (Fin N)).presheaf.germ V y hyV
       (Fintype.linearCombination Γ(Fl ι N, V) (fun k => resM _ h (colU w τ k)) c) =
         ∑ i, (Fl ι N).presheaf.germ V y hyV (c i) • B i := by
-    simp only [Fintype.linearCombination_apply, map_sum, GlobalTheory.QCoh.germ_smul, GlobalTheory.Twist.germ_resM, B,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Fintype.linearCombination_apply, map_sum, GlobalTheory.QCoh.germ_smul, GlobalTheory.Twist.germ_resM, B,
       VB.IsFrame.stalkBasis_apply]
   rw [hsum] at hmem
   have hle : Submodule.span ((Fl ι N).presheaf.stalk y) {v | ∃ j : Fin N, (j : ℕ) < l ∧
@@ -100,7 +101,8 @@ theorem exists_frame_cell (w : ι → Equiv.Perm (Fin N)) (τ : ι) (l : Fin (N 
   have hcomb (a : Fin l → Γ(Fl ι N, V)) :
       (Univ.sub ι N τ l).incl.app V (Fintype.linearCombination Γ(Fl ι N, V) (fun j => resM (Univ.sub ι N τ l).toMod h (e j)) a) =
         Fintype.linearCombination Γ(Fl ι N, V) (fun k => resM _ h (colU w τ k)) (ext a) := by
-    rw [Fintype.linearCombination_apply, Fintype.linearCombination_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Fintype.linearCombination_apply, Fintype.linearCombination_apply, map_sum]
     refine Fintype.sum_of_injective _ hinj _ _ (fun k hk => ?_) fun j => ?_
     · rw [show ext a k = 0 from Function.extend_apply' _ _ _ (fun ⟨j, hj⟩ => hk ⟨j, hj⟩), zero_smul]
     · rw [Scheme.Modules.Hom.app_smul, show ext a (Fin.castLE l.is_le j) = a j from hinj.extend_apply _ _ _]

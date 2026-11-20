@@ -17,14 +17,16 @@ theorem cpV_eq_sum (v : Fin n × Fin n → ℂ) : cpV v = ∑ x, v x • cpFock 
   simp [cpV, cpFock, LinearMap.sum_apply, Finset.sum_mul]
 
 theorem cmV_eq_sum (v : Fin n × Fin n → ℂ) : cmV v = ∑ x, star (v x) • cmFock (n := n) x.1 x.2 := by
-  rw [cmV, dualV, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [cmV, dualV, map_sum]
   simp only [map_smul]
   rfl
 
 theorem toMatrix_cmV (v : Fin n × Fin n → ℂ) :
     LinearMap.toMatrix (fockBasis n) (fockBasis n) (cmV v) =
       (LinearMap.toMatrix (fockBasis n) (fockBasis n) (cpV v))ᴴ := by
-  rw [cmV_eq_sum, cpV_eq_sum, map_sum, map_sum, Matrix.conjTranspose_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [cmV_eq_sum, cpV_eq_sum, map_sum, map_sum, Matrix.conjTranspose_sum]
   refine Finset.sum_congr rfl fun x _ => ?_
   rw [map_smul, map_smul, Matrix.conjTranspose_smul, lf_toMatrix_cm, lf_toMatrix_cp, fockMatrix_conjTranspose_eq_transpose]
 

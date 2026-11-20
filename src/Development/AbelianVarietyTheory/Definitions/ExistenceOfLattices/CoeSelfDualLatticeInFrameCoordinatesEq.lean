@@ -144,7 +144,8 @@ theorem trace_model_eq_trace_hT (V : HSp D) {r : ℕ} (hr : V.rank = r) (u v : F
   subst hr
   have h : herm (GlobalTheory.RecDict.gmW V rfl) (u ∘ Fin.cast rfl) (v ∘ Fin.cast rfl) =
       -V.hT (V.frame.equivFun.symm v) (V.frame.equivFun.symm u) := by
-    simp only [Module.Basis.equivFun_symm_apply, map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ₂, map_smul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Module.Basis.equivFun_symm_apply, map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ₂, map_smul,
       herm, smul_eq_mul, ← Finset.sum_neg_distrib]
     refine Finset.sum_congr rfl fun a _ => ?_
     rw [Finset.mul_sum, ← Finset.sum_neg_distrib]

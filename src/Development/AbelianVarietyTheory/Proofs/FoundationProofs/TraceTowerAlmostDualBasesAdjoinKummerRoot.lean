@@ -72,7 +72,8 @@ theorem GlobalTheory.traceTower_dualData : ∀ (p : ℕ) [Fact p.Prime] (Ω : Ty
       exact f.apply_symm_apply r
     have h0 := hz _ ((Hinf T).inv_mem hf) hne'
     calc ∑ k, v k * f (u k) = f (∑ k, u k * f⁻¹ (v k)) := by
-          rw [map_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [map_sum]
           refine Finset.sum_congr rfl fun k _ => ?_
           rw [map_mul]
           have : f (f⁻¹ (v k)) = v k := f.apply_symm_apply (v k)
@@ -83,7 +84,8 @@ theorem GlobalTheory.traceTower_dualData : ∀ (p : ℕ) [Fact p.Prime] (Ω : Ty
   · intro x hx
     refine ⟨int_sum _ _ fun ρ _ => int_gal _ hx.1, fun f hf => ?_⟩
     show f (∑ ρ ∈ O, g ρ x) = ∑ ρ ∈ O, g ρ x
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     calc ∑ ρ ∈ O, f (g ρ x) = ∑ ρ ∈ O, g (f ρ) x :=
           Finset.sum_congr rfl fun ρ hρ => (kk f hf ρ hρ x hx).1
       _ = ∑ ρ ∈ O, g ρ x := by

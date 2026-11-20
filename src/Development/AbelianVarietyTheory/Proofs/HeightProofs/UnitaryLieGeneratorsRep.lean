@@ -161,9 +161,11 @@ theorem glRel_and_span : ∀ (n : ℕ) (J : Matrix (Fin n) (Fin n) ℂ), Jᴴ = 
       · subst h; rw [Matrix.single_mul_single_same, one_mul]
       · rw [Matrix.single_mul_single_of_ne (h := h), map_zero]
   · intro X
-    rw [← hX, Matrix.matrix_eq_sum_single X.1, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hX, Matrix.matrix_eq_sum_single X.1, map_sum]
     refine Submodule.sum_mem _ fun a _ => ?_
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Submodule.sum_mem _ fun b _ => ?_
     have : Matrix.single a b (X.1 a b) = X.1 a b • Matrix.single a b (1 : ℂ) := by
       rw [Matrix.smul_single, smul_eq_mul, mul_one]

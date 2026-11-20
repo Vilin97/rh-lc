@@ -28,7 +28,8 @@ noncomputable def polOf (φ : Module.Dual ℝ (MvPolynomial σ ℝ)) (d : ℕ) :
 
 theorem eval_polOf (φ : Module.Dual ℝ (MvPolynomial σ ℝ)) (d : ℕ) (u : σ → ℝ) :
     eval u (polOf φ d) = φ ((∑ x, C (u x) * X x) ^ d) := by
-  rw [sum_C_mul_X_pow, map_sum, polOf, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [sum_C_mul_X_pow, map_sum, polOf, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [map_smul, eval_monomial, smul_eq_mul, Finsupp.prod_fintype _ _ (by simp)]
   simp only [Finsupp.coe_equivFunOnFinite_symm]
@@ -73,7 +74,8 @@ theorem monomial_kill (φ : Module.Dual ℝ (MvPolynomial σ ℝ)) (d : ℕ) (hP
 
 theorem homog_kill (φ : Module.Dual ℝ (MvPolynomial σ ℝ)) (d : ℕ) (hP : polOf φ d = 0)
     (Q : MvPolynomial σ ℝ) (hQ : Q.IsHomogeneous d) : φ Q = 0 := by
-  rw [Q.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Q.as_sum, map_sum]
   refine Finset.sum_eq_zero fun m hm => ?_
   have hdeg : ∑ x, m x = d := by
     have := hQ (mem_support_iff.mp hm)

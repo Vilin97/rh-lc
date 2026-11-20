@@ -90,7 +90,8 @@ theorem exists_arch_section (h : IsCMExt F E σ) (τ : ∀ w : InfinitePlace F, 
     have h3 : ∀ t z, c • realAd F t • x z = 0 := fun t z => by rw [smul_comm, x1 _ c hc, smul_zero]
     rw [smul_sub, smul_sub, smul_smul c, h2]
     simp only [sub_self, Finset.smul_sum, smul_add, h3, add_zero, Finset.sum_const_zero]
-  · simp only [map_sub, map_sum, map_add, sm, x2, PositivityTheory.ThKEst.LatArchPf.emb_realAd h.1]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [map_sub, map_sum, map_add, sm, x2, PositivityTheory.ThKEst.LatArchPf.emb_realAd h.1]
     rw [show evInf F w (fA F 1) = 0 from rfl, Finset.sum_eq_single w (fun v _ hv => by simp [Pi.single_eq_of_ne hv.symm])
       (by simp)]
     simp

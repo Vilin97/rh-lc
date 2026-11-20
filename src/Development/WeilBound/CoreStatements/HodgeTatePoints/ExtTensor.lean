@@ -65,7 +65,8 @@ theorem ext_tensor : ∀ (R : Type) [CommRing R] [IsDomain R] (T : Type) [CommGr
   · rw [← hrange]
     refine ⟨M g, funext fun s => ?_⟩
     change L (M g) s = _
-    simp only [M, LinearMap.sum_apply, LinearMap.smulRight_apply, LinearMap.proj_apply, map_sum, map_smul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [M, LinearMap.sum_apply, LinearMap.smulRight_apply, LinearMap.proj_apply, map_sum, map_smul,
       Finset.sum_apply, Pi.smul_apply, hL, m]
     simp [Pi.single_apply, apply_ite, mul_comm]
   · rw [Htat.ext_span] at hg

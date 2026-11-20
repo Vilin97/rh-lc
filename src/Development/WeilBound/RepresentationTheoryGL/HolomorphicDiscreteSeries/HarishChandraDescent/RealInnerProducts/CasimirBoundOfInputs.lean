@@ -19,11 +19,13 @@ variable {n : ℕ} {M : Type} [AddCommGroup M] [Module ℂ M]
 
 theorem comm_casimir (E : Fin n → Fin n → Module.End ℂ M) (f : Module.End ℂ M)
     (hf : ∀ a b x, f (E a b x) = E a b (f x)) (x : M) : f (casimir E x) = casimir E (f x) := by
-  simp only [casimir, LinearMap.sum_apply, Module.End.mul_apply, map_sum, hf]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [casimir, LinearMap.sum_apply, Module.End.mul_apply, map_sum, hf]
 
 theorem comm_casimirK (ε : Fin n → Bool) (E : Fin n → Fin n → Module.End ℂ M) (f : Module.End ℂ M)
     (hf : ∀ a b x, f (E a b x) = E a b (f x)) (x : M) : f (casimirK ε E x) = casimirK ε E (f x) := by
-  simp only [casimirK, LinearMap.sum_apply, Module.End.mul_apply, map_sum, hf]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [casimirK, LinearMap.sum_apply, Module.End.mul_apply, map_sum, hf]
 
 end Comm
 
@@ -175,7 +177,8 @@ theorem casimir_bound_of_inputs : SqId → Markov → PosNeg → Inv → Commuta
     have key : ∀ x, T' (casimir (smE ε ρ) x) = casimir (smE ε ρ) (T' x) := fun x => by
       calc T' (casimir (smE ε ρ) x) = ∑ a, ∑ b, T' (actM (smE ε ρ) (Matrix.single a b 1)
               (actM (smE ε ρ) (Matrix.single b a 1) x)) := by
-            simp only [casimir, LinearMap.sum_apply, Module.End.mul_apply, map_sum, actM_single']
+            set_option synthInstance.maxHeartbeats 100000 in
+              simp only [casimir, LinearMap.sum_apply, Module.End.mul_apply, map_sum, actM_single']
         _ = ∑ a, ∑ b, actM (smE ε ρ) (i.1 * Matrix.single a b 1 * i.1⁻¹)
               (actM (smE ε ρ) (i.1 * Matrix.single b a 1 * i.1⁻¹) (T' x)) := by
             simp only [hT'2]

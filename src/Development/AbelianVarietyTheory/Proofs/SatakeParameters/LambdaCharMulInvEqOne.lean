@@ -180,7 +180,8 @@ theorem ent_mul {N : ℕ} (g : Sp E N ≃ₗ[E] Sp E N) (p p' : ℕ) (hp : p < N
     · intro h
       exact absurd (Finset.mem_range.2 i.2) h
   have h1 : g (g⁻¹ (eN E N p')) = eN E N p' := LinearEquiv.apply_symm_apply g _
-  rw [e (g⁻¹ (eN E N p')), map_sum] at h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e (g⁻¹ (eN E N p')), map_sum] at h1
   have h2 := congrFun h1 ⟨p, hp⟩
   rw [Finset.sum_apply] at h2
   refine Eq.trans (Finset.sum_congr rfl fun l _ => ?_) (h2.trans ?_)

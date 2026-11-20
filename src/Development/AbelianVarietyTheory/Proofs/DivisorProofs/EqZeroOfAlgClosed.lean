@@ -33,7 +33,8 @@ theorem rank_eq_of_coord {K K' V V' : Type} [Field K] [Field K'] [AddCommGroup V
     choose a ha using fun i => hb (x i)
     have h2 := hi (fun j => ∑ i ∈ s, a i j • v i) (by
       rw [← hx]
-      simp only [map_sum, map_smulₛₗ, Finset.smul_sum, smul_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smulₛₗ, Finset.smul_sum, smul_smul]
       rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [ha i, Finset.sum_smul]
@@ -44,7 +45,8 @@ theorem rank_eq_of_coord {K K' V V' : Type} [Field K] [Field K'] [AddCommGroup V
   have h2 : ⊤ ≤ Submodule.span K' (Set.range fun i => φ (v i)) := fun v' _ => by
     obtain ⟨g, rfl⟩ := hs v'
     refine Submodule.sum_mem _ fun j _ => Submodule.smul_mem _ _ ?_
-    rw [← v.linearCombination_repr (g j), Finsupp.linearCombination_apply, Finsupp.sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← v.linearCombination_repr (g j), Finsupp.linearCombination_apply, Finsupp.sum, map_sum]
     refine Submodule.sum_mem _ fun i _ => ?_
     rw [map_smulₛₗ]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)

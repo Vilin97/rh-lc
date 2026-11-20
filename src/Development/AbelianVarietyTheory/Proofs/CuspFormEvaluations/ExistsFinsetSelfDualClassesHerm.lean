@@ -215,7 +215,8 @@ theorem exists_short_basis {S : HermForm K r} {L : Submodule (𝓞 K) (Fin r →
         obtain ⟨c, rfl⟩ := (mem_span_range_iff_exists_fun ℤ).1 ((hb y).2 hy)
         choose k hk using hk
         refine ⟨∑ j, c j * k j, ?_⟩
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         simp only [map_zsmul, hk]
         simp
       have h := hmin _ hmem (smul_ne_zero (by exact_mod_cast discr_ne_zero K) hu)
@@ -290,7 +291,8 @@ theorem exists_finset_submodule {R : Type} [CommRing R] [IsDedekindDomain R] {r 
         rw [mkQ_apply, Quotient.mk_eq_zero]
         exact ⟨m' ᵥ* N.adjugate, by
           rw [vecMulLinear_apply, vecMul_vecMul, adjugate_mul, vecMul_smul, vecMul_one]⟩
-      rw [mem_comap, h', map_add, h0, add_zero, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [mem_comap, h', map_add, h0, add_zero, map_sum]
       refine sum_mem fun j _ => ?_
       rw [map_smul]
       exact smul_mem _ _ (subset_span ⟨j, rfl⟩)

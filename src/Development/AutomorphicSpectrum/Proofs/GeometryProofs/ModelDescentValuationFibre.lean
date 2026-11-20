@@ -223,7 +223,8 @@ theorem extBasis_repr (w : Module.Basis (Fin r) Ω (Fin r → Ω)) (e : Fin r �
   classical
   have e1 : bcMap Ω Ω' (Fin r) e = ∑ i, algebraMap Ω Ω' (w.repr e i) • extBasis Ω' w i := by
     conv_lhs => rw [← w.sum_repr e]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [bcMap_smul, extBasis_apply]
   rw [e1, GroundTheory.Heights₂.Heights.NumbersDVR.GradedFrameCharacterisation.repr_sum_smul]
@@ -242,7 +243,8 @@ theorem exists_coeff_of_mem_span {ι : Type} (x' : ι → Ω') (c : ι) (R : Sub
     obtain ⟨t, ht, _, ⟨v, hv, rfl⟩, rfl⟩ := hz
     obtain ⟨a, ha, rfl⟩ := hgen v hv
     refine ⟨fun j => t * algebraMap Ω Ω' (a j), fun j => Subalgebra.mul_mem _ ht (hR _ (ha j)), ?_⟩
-    rw [map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [bcMap_smul, smul_smul]
   | zero => exact ⟨0, fun _ => Subalgebra.zero_mem _, by simp⟩

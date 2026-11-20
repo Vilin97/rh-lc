@@ -89,7 +89,8 @@ theorem smul_mem_range [Finite Y] {a : ℕ} (Φ : Matrix (Fin a) (Fin a) A) (c :
   have hf : LinearMap.range (matAct (M := Y) Φ) ≤ (LinearMap.range (matAct (M := Quo c Y) Φ)).comap f := by
     rintro _ ⟨x, rfl⟩
     refine ⟨f x, funext fun b => ?_⟩
-    simp [f, matAct, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [f, matAct, map_sum]
   have hs : Function.Surjective (Submodule.mapQ _ _ f hf) := by
     intro q
     obtain ⟨x, rfl⟩ := Submodule.Quotient.mk_surjective _ q

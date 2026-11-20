@@ -113,7 +113,8 @@ theorem bRaw_cjT (hcj : ∀ x, cj (cj x) = x) (Z : Matrix (Fin (r + 1)) (Fin (r 
     (hy' : ∀ b, (y' b : E) = ∑ a, cj ((Z.map O.subtype) a b) * w a) :
     bRaw O cj Z y y' = ∑ a, cj (w a) * (y a : E) := by
   unfold bRaw
-  simp only [hy', map_sum, map_mul, hcj, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hy', map_sum, map_mul, hcj, Finset.sum_mul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun a _ => ?_
   have e : ∑ j, (Z.map O.subtype) a j * cj (w a) * ((Z.map O.subtype)⁻¹.mulVec (fun i => (y i : E))) j =
@@ -150,7 +151,8 @@ theorem bRaw_headCols_right (hcj : ∀ x, cj (cj x) = x) (hO : ∀ x ∈ O, cj x
 theorem cj_bRaw_single (hcj : ∀ x, cj (cj x) = x) (Z : Matrix (Fin (r + 1)) (Fin (r + 1)) O)
     (y' : Fin (r + 1) → O) :
     cj (bRaw O cj Z (Pi.single (Fin.last r) 1) y') = lamS O cj Z y' := by
-  simp only [bRaw, lamS, lamStarC, coe_single, Matrix.mulVec_single_one, map_sum, map_mul, hcj,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [bRaw, lamS, lamStarC, coe_single, Matrix.mulVec_single_one, map_sum, map_mul, hcj,
     Matrix.transpose_apply]
   exact Finset.sum_congr rfl fun j _ => mul_comm _ _
 

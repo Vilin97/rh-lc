@@ -184,7 +184,8 @@ theorem len_ker_le (F : A →ₗ[O] Matrix δ δ O) (κ : (δ → KO O) →ₗ[O
       simpa [L, relMap, bigRect, Fintype.sum_prod_type, Finset.sum_apply] using hk
     rw [LinearMap.mem_ker] at hL
     have hs : ∑ j, actQ (F (θ j)) (φ v j) = κ (L θ) := by
-      simp only [L, LinearMap.coe_mk, AddHom.coe_mk, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [L, LinearMap.coe_mk, AddHom.coe_mk, map_sum]
       refine Finset.sum_congr rfl fun j _ => ?_
       exact hact _ _
     rw [hs, hL, map_zero]
@@ -399,7 +400,8 @@ theorem kap_act (B : Matrix δ δ O)
     funext b
     show ∑ j, B b j • (Submodule.mkQ _ (w j)) =
       Submodule.mkQ _ (∑ j, algebraMap O (FractionRing O) (B b j) * w j)
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [← map_smul, Algebra.smul_def]
   rw [hr, kap_mk, kap_mk]
@@ -926,7 +928,8 @@ theorem inSpan_tSpan (Kf : Type) [CommRing Kf] [Algebra (N.O i) Kf] {a : X' → 
       ∑ k, algebraMap (N.O i) Kf (f k x') • repF N i rep Kf (g k) x' := by
     rw [Finset.sum_apply]
     change (algebraMap (N.O i) Kf).mapMatrix (∑ k, f k x' • rep x' (g k)) = _
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl (fun k _ => ?_)
     rw [repF_apply]
     ext p q
@@ -936,7 +939,8 @@ theorem inSpan_tSpan (Kf : Type) [CommRing Kf] [Algebra (N.O i) Kf] {a : X' → 
       (fun k _ => Finset.mem_image_of_mem g (Finset.mem_univ k))]
   refine Finset.sum_congr rfl (fun γ _ => ?_)
   beta_reduce
-  rw [Finset.sum_apply, map_sum, Finset.sum_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.sum_apply, map_sum, Finset.sum_smul]
   refine Finset.sum_congr rfl (fun k hk => ?_)
   rw [(Finset.mem_filter.mp hk).2]
 

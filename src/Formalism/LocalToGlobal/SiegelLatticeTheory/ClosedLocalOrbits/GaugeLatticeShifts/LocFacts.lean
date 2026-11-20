@@ -445,7 +445,8 @@ theorem lf_riesz (φ : (VS D).V →ₗ[D.host.E] D.host.E) : ∃ μ : (VS D).V, 
   have key : (VS D).hT (∑ j, star (φ ((VS D).frame j)) • bs j) = φ := by
     apply (VS D).frame.ext
     intro i
-    rw [map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, LinearMap.sum_apply]
     have hs : ∀ j, (VS D).hT (star (φ ((VS D).frame j)) • bs j) ((VS D).frame i) =
         φ ((VS D).frame j) * (if i = j then 1 else 0) := by
       intro j
@@ -477,7 +478,8 @@ theorem lf_riesz_lat {Λ : Submodule (𝓞 D.host.E) (VS D).V} (hL : Submodule.I
       rw [← hb j, ← algebraMap_smul D.host.E (c j), hc j, Algebra.smul_def, ← smul_smul,
         algebraMap_smul]
     have h1 := congrArg (fun z => ((f z : 𝓞 D.host.E) : D.host.E)) hy
-    simp only [map_smul, map_sum, smul_eq_mul] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_smul, map_sum, smul_eq_mul] at h1
     push_cast at h1
     have hd0 : ((d : 𝓞 D.host.E) : D.host.E) ≠ 0 := by
       have := nonZeroDivisors.ne_zero d.2
@@ -543,7 +545,8 @@ theorem locUnimodC_holds (D : D7) (Z : LocDat D) : LocUnimodC D Z := by
         have e : ∀ i, LocFacts₂ Z.M p (baseChange₂ D p v) (baseChange₂ D p (μ i)) = (D.s.atP p).ιE ((VS D).hT (μ i) v) := by
           intro i; rw [baseChangeAt_form Z.M p (Z.hcj p), brS]
         simp only [e, ← baseChange_smul₂]
-        rw [← map_sum, ← hV v]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [← map_sum, ← hV v]
       | zero => simp [LocFacts.localForm_zero_left₂]
       | add w w' _ _ h1 h2 =>
         simp only [LocFacts.localForm_add_left₂, add_smul, Finset.sum_add_distrib]

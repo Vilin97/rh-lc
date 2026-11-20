@@ -13,7 +13,8 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 theorem hT_frame {E : Type} [Field E] [NumberField E] [StarRing E] (S : HSpace E) (x : S.V) :
     S.hT x x = ∑ i, ∑ j, star (S.frame.repr x i) * S.gram i j * S.frame.repr x j := by
   conv_lhs => rw [← S.frame.sum_repr x]
-  simp only [map_sum, map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, starRingEnd_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, starRingEnd_apply,
     HSpace.gram, Finset.mul_sum, RingHom.id_apply]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
@@ -46,7 +47,8 @@ theorem aniso_of_definite {E : Type} [Field E] [NumberField E] [StarRing E] (S :
               simp [v, Matrix.reindex_apply]
           _ = τ (S.hT x x) := by
               rw [hT_frame]
-              simp [map_sum, map_mul, hτ, Complex.star_def, mul_assoc]
+              set_option synthInstance.maxHeartbeats 100000 in
+                simp [map_sum, map_mul, hτ, Complex.star_def, mul_assoc]
       rw [hexp, hx0, map_zero]
     let w : Fin p ⊕ Fin q → ℂ := Matrix.mulVec (↑P⁻¹ : Matrix (Fin p ⊕ Fin q) (Fin p ⊕ Fin q) ℂ) v
     have hvw : v = Matrix.mulVec (↑P : Matrix (Fin p ⊕ Fin q) (Fin p ⊕ Fin q) ℂ) w := by

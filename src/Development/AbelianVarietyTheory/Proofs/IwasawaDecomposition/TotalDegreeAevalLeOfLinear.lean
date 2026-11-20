@@ -10,7 +10,8 @@ theorem totalDegree_aeval_le_of_linear {κ : Type} (f : κ → MvPolynomial κ �
       ≤ MvPolynomial.totalDegree P := by
   classical
   conv_lhs => rw [P.as_sum]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine (MvPolynomial.totalDegree_finsetSum _ _).trans ?_
   refine Finset.sup_le fun s hs => ?_
   rw [aeval_monomial]

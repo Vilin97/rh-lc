@@ -110,7 +110,8 @@ lemma isotropicIndex_bounds {ξ : Fin r → E} (hξ : herm X.Gm ξ ξ = 0) (hne 
   have hw0 : w ≠ 0 := emb_ne hne τ.1
   have hww : hermC τ.1 X.Gm w w = 0 := by
     have e : hermC τ.1 X.Gm w w = τ.1 (herm X.Gm ξ ξ) := by
-      simp only [hw, hermC, herm, Data.emb, map_sum, map_mul, cc, IsCMField.complexEmbedding_complexConj]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hw, hermC, herm, Data.emb, map_sum, map_mul, cc, IsCMField.complexEmbedding_complexConj]
     rw [e, hξ, map_zero]
 
   set z : Fin r → ℂ := P⁻¹ *ᵥ w with hz

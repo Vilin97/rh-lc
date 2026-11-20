@@ -55,7 +55,8 @@ theorem interPoly_prod (s : Fin Y.dim → κ) : Y.interPoly Δ (∏ i, MvPolynom
 theorem interPoly_prod_sum [Fintype κ] (a : Fin Y.dim → κ → ℤ) :
     Y.interPoly Δ (∏ i, ∑ x, C (a i x : ℝ) * MvPolynomial.X x) = Y.inter fun i => ∑ x, a i x • Δ x := by
   classical
-  rw [Fintype.prod_sum, map_sum, ← interForm_apply, MultilinearMap.map_sum, Int.cast_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Fintype.prod_sum, map_sum, ← interForm_apply, MultilinearMap.map_sum, Int.cast_sum]
   refine Finset.sum_congr rfl fun p _ => ?_
   rw [interForm_apply]
   have e1 : (∏ i, C (a i (p i) : ℝ) * MvPolynomial.X (p i) : MvPolynomial κ ℝ) =

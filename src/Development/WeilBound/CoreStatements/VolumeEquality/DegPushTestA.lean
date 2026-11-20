@@ -31,9 +31,11 @@ theorem degFl_rename (F : RP Ψ N) : degFl (rename (e.prodCongr (Equiv.refl (Fin
 theorem rename_muSmall (j : ℕ) : (rename (e.prodCongr (Equiv.refl (Fin N))) (muSmall j : RP Ψ N) : RP Ψ' N) = muSmall j := by
   unfold muSmall
   split_ifs
-  · simp only [map_sum, rename_X, Equiv.prodCongr_apply, Prod.map_apply, Equiv.refl_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [map_sum, rename_X, Equiv.prodCongr_apply, Prod.map_apply, Equiv.refl_apply]
     exact Fintype.sum_equiv e _ _ (fun _ => rfl)
-  · simp only [pkLow, map_neg, map_sum, map_pow, rename_X, Equiv.prodCongr_apply, Prod.map_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [pkLow, map_neg, map_sum, map_pow, rename_X, Equiv.prodCongr_apply, Prod.map_apply,
       Equiv.refl_apply]
     congr 1
     exact Fintype.sum_equiv e _ _ (fun _ => rfl)

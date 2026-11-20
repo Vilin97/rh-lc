@@ -29,7 +29,8 @@ theorem sum_proj_shift {o Ω : Type} [CommRing o] [Field Ω] [Algebra o Ω] {S :
         ∑ j, algebraMap o Ω (S.ρ t j i₀) * S.ev h₀ j := by
     intro h₀
     rw [ThetaSys.proj, finsum_eq_sum_of_fintype]
-    simp only [Matrix.smul_apply, Matrix.sum_apply, smul_eq_mul, map_mul, map_sum, Finset.mul_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.smul_apply, Matrix.sum_apply, smul_eq_mul, map_mul, map_sum, Finset.mul_sum,
       Finset.sum_mul]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun t _ => Finset.sum_congr rfl fun j _ => by ring
@@ -290,7 +291,8 @@ theorem main : ∀ (g n : ℕ) (F : SFam g n (zetaAway n)) (W : Matrix (Fin 8) (
       rw [rechart_proj]
       exact e1
     rw [← e1', hi₀] at hnorm
-    rw [← hnorm, hSm, hmem hh, ← hy₀', map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hnorm, hSm, hmem hh, ← hy₀', map_sum]
     simp only [map_mul]
   rw [hpart, norm_val_div (M := D.X.M) (gPt p ≫ y) hk'pos hξ hw (hmemO hh) hthO hthne, hSmn, hth0,
     mul_div_cancel_left₀ _ hδ.ne', hq', hν', AddEquiv.apply_symm_apply]

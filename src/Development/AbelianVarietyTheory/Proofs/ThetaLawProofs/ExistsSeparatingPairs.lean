@@ -21,14 +21,16 @@ theorem exists_separating_pairs {R S : Type} [CommRing R] [CommRing S] (φ : R �
   obtain ⟨t, ht, h1⟩ := (Algebra.FormallyUnramified.iff_exists_tensorProduct (R := R) (S := S)).1 inferInstance
   obtain ⟨s, rfl⟩ := TensorProduct.exists_finset t
   refine ⟨s, ?_, fun e e' hee hne => ?_⟩
-  · simpa [map_sum] using h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simpa [map_sum] using h1
   · letI : Algebra R ℂ := (e.comp φ).toAlgebra
     let a : S →ₐ[R] ℂ := { e with commutes' := fun _ => rfl }
     let a' : S →ₐ[R] ℂ := { e' with commutes' := fun r => (RingHom.congr_fun hee r).symm }
     let F := Algebra.TensorProduct.lift a a' (fun _ _ => Commute.all _ _)
     ext x
     have h2 := congrArg F (ht x)
-    simp only [F, map_mul, map_sub, map_sum, Algebra.TensorProduct.lift_tmul, map_one, map_zero] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [F, map_mul, map_sub, map_sum, Algebra.TensorProduct.lift_tmul, map_one, map_zero] at h2
     rcases mul_eq_zero.1 h2 with h3 | h3
     · have h4 := (sub_eq_zero.1 h3).symm
       rw [_root_.one_mul, _root_.mul_one] at h4

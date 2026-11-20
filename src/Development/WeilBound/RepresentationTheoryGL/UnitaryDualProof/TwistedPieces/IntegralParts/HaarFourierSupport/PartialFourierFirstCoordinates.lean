@@ -17,7 +17,8 @@ theorem tau_sum (x : Matrix (Fin n) (Fin n) k) : τ x = ∑ i, ∑ j, x i j * τ
   have e : ∀ i j, Matrix.single i j (x i j) = x i j • Matrix.single i j (1 : k) := fun i j => by
     rw [Matrix.smul_single, smul_eq_mul, mul_one]
   conv_lhs => rw [Matrix.matrix_eq_sum_single x]
-  simp only [e, map_sum, map_smul, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [e, map_sum, map_smul, smul_eq_mul]
 
 theorem continuous_tau : Continuous τ := by
   rw [show (⇑τ) = fun x => ∑ i, ∑ j, x i j * τ (Matrix.single i j 1) from funext (tau_sum τ)]

@@ -156,7 +156,8 @@ theorem fnl_extSpan {n : ℕ} (Z : Submodule K (Fin n → K)) (y : Fin n → Ω)
 theorem map_mulVec' {m n : ℕ} (A : Matrix (Fin m) (Fin n) K) (x : Fin n → K) :
     (A.map j) *ᵥ (fun i => j (x i)) = fun i => j ((A *ᵥ x) i) := by
   funext i
-  simp [Matrix.mulVec, dotProduct, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Matrix.mulVec, dotProduct, map_sum, map_mul]
 
 theorem mem_extSpan {n : ℕ} {Z : Submodule K (Fin n → K)} {z : Fin n → K} (hz : z ∈ Z) :
     (fun i => j (z i)) ∈ extSpan j Z := by
@@ -295,7 +296,8 @@ theorem aniso {v0 : InfinitePlace K} (hv0 : IsConjAt v0) {n : ℕ}
   have hp := hpos.dotProduct_mulVec_pos hx'
   have e : star (fun i => v0.embedding (x i)) ⬝ᵥ (H.map v0.embedding) *ᵥ
       (fun i => v0.embedding (x i)) = v0.embedding (star x ⬝ᵥ H *ᵥ x) := by
-    simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Pi.star_apply, hv0', Matrix.map_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Pi.star_apply, hv0', Matrix.map_apply,
       starRingEnd_apply]
   rw [e, h, map_zero] at hp
   exact lt_irrefl _ hp

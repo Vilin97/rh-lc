@@ -29,10 +29,12 @@ theorem matrix_mul_of_comp {A M J : Type} [CommRing A] [AddCommGroup M] [Module 
   ext l i
   have key := h i
   refine congrFun (uniq (fun l => (m₁ * m₂) l i) (fun l => (x • m₃) l i) ?_) l
-  rw [h₂, h₃, map_sum, Finset.smul_sum] at key
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h₂, h₃, map_sum, Finset.smul_sum] at key
   simp only [map_smul, h₁, Finset.smul_sum, smul_smul] at key
   rw [Finset.sum_comm] at key
-  simp only [Matrix.mul_apply, map_sum, map_mul, Finset.sum_smul, Matrix.smul_apply, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mul_apply, map_sum, map_mul, Finset.sum_smul, Matrix.smul_apply, smul_eq_mul]
   refine Eq.trans ?_ key
   exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by rw [mul_comm]
 
@@ -223,7 +225,8 @@ theorem irred_of_comm [IsDomain o] (hc : Fintype.card S.J = S.N ^ S.g)
   have hP : ∀ a, Λ (S.proj T c) (Λ (S.ρ a) u) ∈ W := fun a => by
     have e : Λ (S.proj T c) (Λ (S.ρ a) u) = y (Ring.inverse (Nat.card T : o)) •
         (∑ t : T, ψ (S.r • eStd S.g _ t a)) • Λ (S.ρ a) u := by
-      rw [proj_eq, hΛs, map_sum, LinearMap.smul_apply, LinearMap.sum_apply, Finset.sum_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [proj_eq, hΛs, map_sum, LinearMap.smul_apply, LinearMap.sum_apply, Finset.sum_smul]
       congr 1
       refine Finset.sum_congr rfl fun t _ => ?_
       rw [hΛs, LinearMap.smul_apply, comm, smul_comm, ← map_smul, hu]
@@ -248,7 +251,8 @@ theorem irred_of_comm [IsDomain o] (hc : Fintype.card S.J = S.N ^ S.g)
     exact ⟨φ.smulRight v, by simp [hφ]⟩
   obtain ⟨d, hd⟩ := (Submodule.mem_span_range_iff_exists_fun F).mp
     (hspan ▸ Submodule.mem_top : f ∈ Submodule.span F (Set.range fun a => Λ (S.ρ (σ a))))
-  rw [← hv, ← hf, ← hd, LinearMap.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hv, ← hf, ← hd, LinearMap.sum_apply, map_sum]
   refine W.sum_mem fun a _ => ?_
   rw [LinearMap.smul_apply, map_smul]
   exact W.smul_mem _ (hP _)

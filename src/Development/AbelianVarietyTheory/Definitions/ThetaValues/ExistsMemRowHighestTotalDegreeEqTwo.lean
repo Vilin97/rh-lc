@@ -97,13 +97,15 @@ theorem rowAddY_X_of_ne {t t' : T} (a : Fin q) {b b' : Fin q} (s : R) (k : κ)
 
 theorem rowAdd_rowForm_self (t : T) (r r' : Fin p ⊕ Fin q) (s : R) (v : κ → R) :
     rowAdd t r r' s (rowForm t r' v) = rowForm t r' v + C s * rowForm t r v := by
-  simp only [rowForm_apply, map_sum, map_mul, algHom_C, algebraMap_eq, rowAdd_X_self, mul_add,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [rowForm_apply, map_sum, map_mul, algHom_C, algebraMap_eq, rowAdd_X_self, mul_add,
     Finset.sum_add_distrib, Finset.mul_sum, mul_left_comm]
 
 theorem rowAdd_rowForm_of_ne {t t' : T} (r : Fin p ⊕ Fin q) {r' r'' : Fin p ⊕ Fin q} (s : R)
     (v : κ → R) (h : ¬ (t' = t ∧ r'' = r')) :
     rowAdd t r r' s (rowForm t' r'' v) = rowForm t' r'' v := by
-  simp only [rowForm_apply, map_sum, map_mul, algHom_C, algebraMap_eq, rowAdd_X_of_ne _ _ _ h]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [rowForm_apply, map_sum, map_mul, algHom_C, algebraMap_eq, rowAdd_X_of_ne _ _ _ h]
 
 @[simp] theorem rowAdd_zero (t : T) (r r' : Fin p ⊕ Fin q) :
     (rowAdd t r r' (0 : R) : Poly R T p q κ →ₐ[R] _) = AlgHom.id R _ := by

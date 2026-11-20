@@ -60,7 +60,8 @@ private lemma sum_evFull {F : Type} [Field F] [NumberField F] {g : ℕ} (ty : Fi
       (((evAt ty e (ComplexEmbedding.conjugate τ)).map (starRingEnd ℂ)).map fun r => r ^ j).sum =
       (starRingEnd ℂ) (∑ i, ty i x * e i ^ j) := by
     simp_rw [Multiset.map_map, sum_evAt, Finset.mul_sum, mul_ite, mul_zero]
-    rw [Finset.sum_comm, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_comm, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [Finset.sum_eq_single (ComplexEmbedding.conjugate (ty i))]
     · rw [if_pos (cc _).symm, ComplexEmbedding.conjugate_coe_eq]

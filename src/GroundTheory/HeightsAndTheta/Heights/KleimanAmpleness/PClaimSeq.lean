@@ -20,7 +20,8 @@ variable {R : Type u} [CommRing R] {N : ℕ}
 theorem homogeneousComponent_mul_form (r g : Poly R N) {d : ℕ} (hg : g.IsHomogeneous d) (e : ℕ) :
     homogeneousComponent e (r * g) ∈ Submodule.span R
       {z | ∃ (h : Poly R N) (d' : ℕ), h.IsHomogeneous d' ∧ d' + d = e ∧ z = h * g} := by
-  rw [show r * g = ∑ i ∈ Finset.range (r.totalDegree + 1), homogeneousComponent i r * g by
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [show r * g = ∑ i ∈ Finset.range (r.totalDegree + 1), homogeneousComponent i r * g by
     rw [← Finset.sum_mul, sum_homogeneousComponent], map_sum]
   refine Submodule.sum_mem _ fun i _ => ?_
   have hm : homogeneousComponent i r * g ∈ homogeneousSubmodule (Fin (N + 1)) R (i + d) :=
@@ -36,7 +37,8 @@ theorem mem_span_forms_of_mem_ideal {G : Set (Poly R N)} (deg : Poly R N → ℕ
     f ∈ Submodule.span R {z | ∃ g ∈ G, ∃ (h : Poly R N) (d' : ℕ), h.IsHomogeneous d' ∧
       d' + deg g = e ∧ z = h * g} := by
   obtain ⟨c, t, htG, -, rfl⟩ := Submodule.mem_span_iff_exists_finset_subset.mp hf
-  rw [← homogeneousComponent_eq_self he, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← homogeneousComponent_eq_self he, map_sum]
   refine Submodule.sum_mem _ fun g hg => ?_
   have hc := homogeneousComponent_mul_form (c g) g (hG g (htG hg)) e
   rw [smul_eq_mul]

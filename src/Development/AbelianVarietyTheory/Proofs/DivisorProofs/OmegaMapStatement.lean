@@ -36,7 +36,8 @@ theorem lin_frame {s : Fin r → Γ(F, U)} (hs : GlobalTheory.VB.IsFrame s) (t :
 
 theorem lin_resM {s : Fin r → Γ(F, U)} (hs : GlobalTheory.VB.IsFrame s) (t : Fin r → Γ(G, U)) {V V' : X.Opens} (h : V ≤ U)
     (h' : V' ≤ V) (σ : Γ(F, V)) : resM G h' (lin hs t h σ) = lin hs t (h'.trans h) (resM F h' σ) := by
-  rw [lin_apply, lin_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [lin_apply, lin_apply, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [resM_smul, resM_resM, hs.repr_resM h h']
 
@@ -60,7 +61,8 @@ theorem exists_hom [IsIntegral X] (hG : GlobalTheory.VB.IsVB G r') (hU : (U : Se
       refine ⟨V ⊓ W, inf_le_left, ∑ j, (he.basis inf_le_right).repr (resM F inf_le_left σ) j • resM G inf_le_right (t j),
         ⟨x.2, hx⟩, ?_⟩
       conv_rhs => rw [← (he.basis (inf_le_right : V ⊓ W ≤ W)).sum_repr (resM F inf_le_left σ)]
-      simp only [map_sum, resM_smul, map_smul, GlobalTheory.VB.IsFrame.basis_apply, nat inf_le_right (ht _)]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, resM_smul, map_smul, GlobalTheory.VB.IsFrame.basis_apply, nat inf_le_right (ht _)]
     choose W hW τ hx hτ using loc
     have hc : V ≤ iSup W := fun x hxV => TopologicalSpace.Opens.mem_iSup.2 ⟨⟨x, hxV⟩, hx _⟩
     obtain ⟨t, ht⟩ := exists_sec_of_cover W hW hc τ fun x y => resM_inj hG hU (by
@@ -112,7 +114,8 @@ theorem exists_local {V : X.Opens} {e : Fin r → Γ(F, V)} {e' : Fin r → Γ(G
   rw [lin_resM, resM_resM] at k
   rw [resM_resM]
   refine Eq.trans ?_ k.symm
-  rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum]
   refine Finset.sum_congr rfl fun l _ => ?_
   rw [resM_smul, resM_smul, resM_resM, resM_resM]
   have k' := congrArg (resG X (inf_le_inf_right U (hV (j, l)))) (ht (j, l))
@@ -128,7 +131,8 @@ theorem app_eq [IsIntegral X] (hG : GlobalTheory.VB.IsVB G r') (hU : (U : Set X)
   refine resM_inj hG hU ?_
   rw [← app_resM, resM_smul, ← (hs.basis (inf_le_right : V ⊓ U ≤ U)).sum_repr (resM F inf_le_left (e i)),
     ← (hs'.basis (inf_le_right : V ⊓ U ≤ U)).sum_repr (resM G inf_le_left (e' i))]
-  simp only [map_sum, Scheme.Modules.Hom.app_smul, GlobalTheory.VB.IsFrame.basis_apply, app_resM, hu, resM_smul, Finset.smul_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Scheme.Modules.Hom.app_smul, GlobalTheory.VB.IsFrame.basis_apply, app_resM, hu, resM_smul, Finset.smul_sum,
     smul_smul]
   exact Finset.sum_congr rfl fun j _ => congrArg (· • resM G inf_le_right (s' j)) (H i j)
 
@@ -154,7 +158,8 @@ theorem comb_op {f : c.F →+* k} {u : Vecs Dw t k} (hu : GlobalTheory.LocM.IsFr
   obtain rfl := (comb_iff U cf v).1 hv
   refine ⟨isTan_tv _, (comb_iff U _ _).2 ?_⟩
   have e : g • actR t.act a (∑ i, cf i • U i) = ∑ i, (cf i * (g * f (embK c (x i).1 a))) • U i := by
-    rw [map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, (eig_iff (U i) a _).1 ((hu.1 (x i).1 (x i).2).2 a), smul_smul, smul_smul, mul_comm g, mul_assoc]
   rw [← e]
@@ -253,9 +258,11 @@ theorem norm_le (hF : IsLat Z h x true b F s) (hF' : IsLat Z h x true b' F' s') 
     fun i => ev (coef false he' (hF'.frame a) l i)
   obtain ⟨k₁, k₂⟩ := comb_op f hv (valF (spMap (intO ↥y.C.S).subtype ≫ w) ⊤ g) c
   have k₃ := (hF.norm y w hw a φ hφ V e he hV _ _ k₂).1 (hop v k₁ ((hF'.norm y w hw a φ hφ V e' he' hV _ v hv).2 fun m => by
-    simp only [hev, ← map_mul, ← map_sum, mul_comm (coef false _ _ _ _), coef_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hev, ← map_mul, ← map_sum, mul_comm (coef false _ _ _ _), coef_mul]
     split_ifs <;> simp)) j
-  rw [hev, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hev, map_sum]
   convert k₃ using 3 with i
   rw [map_mul, map_mul, ← hev (resG _ _ _), valF_eig g c _ (hφ.trans hg) _ hw', hev]
   ring

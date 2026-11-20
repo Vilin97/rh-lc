@@ -68,7 +68,8 @@ theorem full_of_det {ι : Type} (D : Submodule L M) {r : ℕ} (d : Module.Basis 
         have := congrArg Subtype.val (d.sum_repr ⟨f ((n : ℤ) - w), hf _⟩)
         simpa only [F, PowerSeries.coeff_mk, AddSubmonoidClass.coe_finsetSum, Submodule.coe_smul] using this.symm
       rw [h1, ← he]
-      simp only [conv_apply _ _ w (h0 _), hU, Matrix.mulVec, dotProduct, map_sum, Finset.sum_smul,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [conv_apply _ _ w (h0 _), hU, Matrix.mulVec, dotProduct, map_sum, Finset.sum_smul,
         Finset.smul_sum, smul_smul]
       rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun j _ => ?_
@@ -205,7 +206,8 @@ theorem full_of_span {X : Type} (D : Submodule LL (T.V ⊗[Qp] B)) [Module.Finit
     have : Pi.basisFun BdR (Fin r) a = ∑ j, b j • g (x j) := by
       funext a'
       have := form_ker T ι (v.coord a') hx
-      rw [map_sub, sub_eq_zero, map_sum, form_tmul] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, sub_eq_zero, map_sum, form_tmul] at this
       simp only [form_mul] at this
       simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, g, ← this]
       by_cases h : a' = a
@@ -230,7 +232,8 @@ theorem full_of_span {X : Type} (D : Submodule LL (T.V ⊗[Qp] B)) [Module.Finit
       (fun m n h => antitone_int_of_succ_le PD.Fil_anti h) PD.Fil_mul PD.Fil_exh PD.Fil_sep ι t ev hev
       (fun a => P a a') (U j) _ c fun M => ?_
     have := form_fil PD T ι hι (v.coord a') _ (hc M)
-    simp only [map_sub, map_sum, form_mul, hU, map_smul, form_smul] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sub, map_sum, form_mul, hU, map_smul, form_smul] at this
     simp only [Finset.mul_sum, mul_left_comm (t ^ _)]
     exact this
   have := congrArg Matrix.det key

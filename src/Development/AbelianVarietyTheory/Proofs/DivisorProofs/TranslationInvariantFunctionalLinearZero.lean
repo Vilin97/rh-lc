@@ -54,7 +54,8 @@ theorem kills_linear_mul : ∀ (V : Type) [NormedAddCommGroup V] [NormedSpace �
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [SchwartzMap.sub_apply, hf, hk, ContinuousLinearMap.smul_apply, smul_eq_mul]
     ring
-  rw [hsum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hsum, map_sum]
   refine Finset.sum_eq_zero fun j _ => ?_
   rw [map_sub, hT (a j • L) (k j) (f' j) (hf j), sub_self]
 

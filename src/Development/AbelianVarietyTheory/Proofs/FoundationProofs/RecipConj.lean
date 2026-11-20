@@ -65,7 +65,8 @@ theorem recip_conj : ∀ (l : ℕ) [Fact l.Prime], l ≠ 2 → ∃ c : ℕ, ∀ 
     · rw [h]; exact zero_mem _
     · exact hP _ (coeff_mem_coeffs h)
   have hτP : τ⁻¹ (P.eval ζ) = P.eval (ζ ^ n) := by
-    rw [eval_eq_sum_range, eval_eq_sum_range, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [eval_eq_sum_range, eval_eq_sum_range, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_mul, map_pow, hτζ, (hco i).2 _ hτi]
   have hζA : ζ ∈ A := by

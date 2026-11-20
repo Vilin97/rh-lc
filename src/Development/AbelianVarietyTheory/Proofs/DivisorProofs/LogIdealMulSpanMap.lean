@@ -88,7 +88,8 @@ theorem embInd (G : HTGroup p) {ι : Type} [Fintype ι] (f : Module.Basis ι ℚ
     · obtain ⟨i, σ, hσ⟩ := G.emb_all τ h
       have e1 : ∀ k, τ (f k) = σ (G.emb i (f k)) := fun k => by rw [hσ]; rfl
       simp only [e1]
-      rw [show ∑ x, a x • σ (G.emb i (f x)) = σ (∑ x, a x • G.emb i (f x)) by
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [show ∑ x, a x • σ (G.emb i (f x)) = σ (∑ x, a x • G.emb i (f x)) by
         rw [map_sum]; exact Finset.sum_congr rfl fun x _ => by
           rw [Algebra.smul_def, Algebra.smul_def, map_mul, AlgEquiv.commutes], h1 i, map_zero]
     · obtain ⟨i, σ, hσ⟩ := G.emb_all _ h
@@ -97,7 +98,8 @@ theorem embInd (G : HTGroup p) {ι : Type} [Fintype ι] (f : Module.Basis ι ℚ
         simp only [RingHom.comp_apply, RingHom.coe_coe, IsCMField.complexConj_apply_apply] at this
         exact this
       simp only [e1]
-      rw [show ∑ x, a x • σ (G.emb i (IsCMField.complexConj G.F (f x))) =
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [show ∑ x, a x • σ (G.emb i (IsCMField.complexConj G.F (f x))) =
           σ (∑ x, a x • G.emb i (IsCMField.complexConj G.F (f x))) by
         rw [map_sum]; exact Finset.sum_congr rfl fun x _ => by
           rw [Algebra.smul_def, Algebra.smul_def, map_mul, AlgEquiv.commutes], h2 i, map_zero]
@@ -141,7 +143,8 @@ theorem sh_linInd (G : HTGroup p) {ι : Type} (e : ι → G.C) (he : LinearIndep
   intro s g hg l hl
   have key : ∑ i ∈ s, IsCMField.complexConj G.F (g i) • e i = 0 := by
     have h := congrArg (shA G) hg
-    rw [map_sum, map_zero] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero] at h
     simpa only [shA_apply, sh_smul, sh_sh] using h
   have h := he s _ key l hl
   simpa using h
@@ -177,13 +180,15 @@ theorem inj (G : HTGroup p) (x : ℚ_[p] ⊗[ℚ] G.C) (h1 : ∀ w, G.locW w x =
       G.locW w (∑ kl, a kl • ((1 : ℚ_[p]) ⊗ₜ (g (f kl.1) • R kl.2))) = 0 →
       ∀ l, ∑ k, a (k, l) • G.emb w (g (f k)) = 0 := by
     intro w g R hR h0 l
-    rw [map_sum] at h0
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at h0
     simp only [map_smul, locW_one_tmul, himg] at h0
     rw [Fintype.sum_prod_type, Finset.sum_comm] at h0
     simp only [← smul_assoc, ← Finset.sum_smul] at h0
     have h3 := Fintype.linearIndependent_iff.1 (linInd G w R hR) _ h0 l
     have h4 := congrArg (G.Fw w).val h3
-    rw [map_sum, map_zero] at h4
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero] at h4
     simpa [HTGroup.embW, embOf_apply] using h4
   have hz : ∀ l, (fun k => a (k, l)) = 0 := by
     intro l

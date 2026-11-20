@@ -208,7 +208,8 @@ theorem GlobalTheory.TaylorStrat.stratification_coeff_eq_nabla_pow : ∀ (O K : 
   rw [hphi, hnab, P.xiExt_apply, Matrix.mulVec_mulVec, key]
   show (n.factorial : K⟦X⟧) * coeff n (((Y τ).map C * (W τ).map sh) i j) =
     (Y τ *ᵥ fun k => (PowerSeries.derivative K)^[n] ((W τ *ᵥ Pi.single j 1) k)) i
-  rw [Matrix.mul_apply, map_sum, Finset.mul_sum, Matrix.mulVec, dotProduct]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.mul_apply, map_sum, Finset.mul_sum, Matrix.mulVec, dotProduct]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [Matrix.map_apply, Matrix.map_apply, coeff_C_mul, mul_left_comm, hsh, Matrix.mulVec_single_one]
   rfl

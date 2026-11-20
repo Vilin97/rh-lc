@@ -51,7 +51,8 @@ theorem latAtV_param : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [Num
       obtain ⟨c', rfl⟩ := (Submodule.mem_span_range_iff_exists_fun ℤ).1 hy'
       refine ⟨fun m => ⟨(c m.1 * c' m.2) • GlobalTheory.AdelicU.evFin F v a, zsmul_mem hint _⟩, ?_⟩
       have ha' := GlobalTheory.VacAny.eq_atPlace_of_at v a ha
-      simp only [hI, vecMulVec_sum_zsmul, map_sum, map_zsmul, Finset.smul_sum, map_zsmul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hI, vecMulVec_sum_zsmul, map_sum, map_zsmul, Finset.smul_sum, map_zsmul]
       refine Finset.sum_congr rfl fun m _ => ?_
       rw [← ha', smul_comm, smul_assoc]
     | zero => exact ⟨fun _ => 0, by simp⟩

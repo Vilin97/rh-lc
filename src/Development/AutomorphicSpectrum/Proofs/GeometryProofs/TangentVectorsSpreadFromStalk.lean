@@ -120,7 +120,8 @@ theorem exists_chart_spread : ∀ (X : Scheme.{0}) (G : Over X) [GrpObj G] [IsCo
     rw [← Scheme.Hom.comp_apply, hxθ]
     exact Scheme.fromSpecStalk_closedPoint
   · have hsum : j (∑ k, c' i k • B₁ k) = s i := by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Eq.trans (Finset.sum_congr rfl fun k _ => ?_) (B.sum_repr (s i))
       rw [j.map_smulₛₗ, hc', hjB]
     rw [← hj, hsum, hs]

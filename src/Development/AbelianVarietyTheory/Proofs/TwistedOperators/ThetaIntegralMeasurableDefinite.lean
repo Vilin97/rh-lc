@@ -23,7 +23,8 @@ theorem isCuspFun_of_posDef {D : D7} {V : HSp D} (hV : ∀ τ, (gramAt D V τ).P
   have hx : star (fun i => tauE D τ0 (C i ⟨0, hr⟩)) ⬝ᵥ (gramAt D V τ0 *ᵥ fun i => tauE D τ0 (C i ⟨0, hr⟩)) = 0 := by
     rw [Matrix.zero_apply, map_zero] at h1
     rw [← h1, Matrix.mul_assoc]
-    simp only [gramAt, Matrix.mul_apply, map_sum, map_mul, dotProduct, Matrix.mulVec, Matrix.map_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [gramAt, Matrix.mul_apply, map_sum, map_mul, dotProduct, Matrix.mulVec, Matrix.map_apply]
     refine Finset.sum_congr rfl fun i _ => ?_
     congr 1
     exact (hτ _).symm

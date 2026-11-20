@@ -88,7 +88,8 @@ theorem meanInf_posLog_le :
   have hxM : algebraMap K M x = ∑ i, (w i : M) * (z i * c (z i)) := by
     apply Subtype.ext
     change σ x = M.val _
-    rw [hx, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hx, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_mul, map_mul, map_ratCast]
     rfl
@@ -113,7 +114,8 @@ theorem meanInf_posLog_le :
           have : (ρ.comp (IsScalarTower.toAlgHom ℚ K M)) x
               = ∑ i, (w i : ℂ) * (ρ (z i) * ρ (c (z i))) := by
             change ρ (algebraMap K M x) = _
-            rw [hxM, map_sum]
+            set_option synthInstance.maxHeartbeats 100000 in
+              rw [hxM, map_sum]
             refine Finset.sum_congr rfl fun i _ => ?_
             rw [map_mul, map_mul, map_ratCast]
           rw [this]

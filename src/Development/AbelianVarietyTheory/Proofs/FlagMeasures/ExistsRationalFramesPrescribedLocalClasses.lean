@@ -145,7 +145,8 @@ theorem chg_scaled (Z : LocDat D) (p : PlF D) {f g : Fin (D.R.rS + 1) → (VS D)
     Chg (scaled Z p f) (Matrix.diagonal (fun a => Ring.inverse (frFac Z.δ p a)) * t.map (D.s.atP p).ιE *
       Matrix.diagonal (frFac Z.δ p)) (scaled Z p g) := by
   intro b
-  simp only [scaled, h b, map_sum, baseChange_smul₂, Finset.smul_sum, smul_smul, Matrix.mul_diagonal,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [scaled, h b, map_sum, baseChange_smul₂, Finset.smul_sum, smul_smul, Matrix.mul_diagonal,
     Matrix.diagonal_mul, Matrix.map_apply]
   refine Finset.sum_congr rfl fun a _ => ?_
   congr 1

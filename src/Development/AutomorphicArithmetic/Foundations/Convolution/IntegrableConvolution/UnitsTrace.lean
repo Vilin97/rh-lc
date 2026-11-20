@@ -369,7 +369,8 @@ private theorem core [FiniteDimensional ℂ W] [Nontrivial W] (o : Fin d)
   have hone : ∀ T : Module.End ℂ W, LinearMap.trace ℂ W T =
       ∑ p : Fin (m + 1) → Fin d, LinearMap.trace ℂ W (FF r hc p * T) := by
     intro T
-    rw [← map_sum, ← Finset.sum_mul, FF_sum, one_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, ← Finset.sum_mul, FF_sum, one_mul]
   have h1 : LinearMap.trace ℂ W (S * Ue) =
       ∑ a : Fin d, LinearMap.trace ℂ W (FF r hc (fun _ => a) * (S * Ue)) := by
     rw [hone (S * Ue)]

@@ -159,7 +159,8 @@ theorem eI_mul (I : MaximalSpectrum R) {r : R} (hr : r ∈ I.asIdeal) : eI I * r
 
 theorem sum_eI : ∑ I : MaximalSpectrum R, eI I = 1 := by
   apply (IsArtinianRing.equivPi R).injective
-  rw [map_sum, map_one]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_one]
   simp only [eI, AlgEquiv.apply_symm_apply]
   exact Finset.univ_sum_single 1
 

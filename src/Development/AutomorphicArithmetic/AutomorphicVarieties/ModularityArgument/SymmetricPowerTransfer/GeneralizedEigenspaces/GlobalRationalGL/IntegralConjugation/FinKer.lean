@@ -65,9 +65,11 @@ theorem UpperTheory.V.Z.Sym.Dict.Br.adEx :
   have hM : Formalism.UG.cT (cjF (L := L)) M * M = 1 := by
     refine Matrix.ext fun i j => Subtype.ext (funext fun w => ?_)
     have h1 := congrArg (R.ρ _ w rfl) (congrFun (congrFun (hx (un w)) i) j)
-    rw [Matrix.mul_apply, map_sum] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Matrix.mul_apply, map_sum] at h1
     change pLoc L w _ = pLoc L w _
-    rw [Matrix.mul_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Matrix.mul_apply, map_sum]
     have h2 : pLoc L w ((1 : Matrix (Fin n) (Fin n) (Af L)) i j) = R.ρ _ w rfl ((1 : Matrix (Fin n) (Fin n) _) i j) := by
       by_cases h : i = j <;> simp [Matrix.one_apply, h]
     rw [h2, ← h1]

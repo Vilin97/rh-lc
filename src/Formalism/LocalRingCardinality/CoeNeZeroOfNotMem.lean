@@ -489,7 +489,8 @@ theorem li_of_semilinear {M : Type} [AddCommGroup M] [Module ℂ M] {σ : K →+
   intro g hg i
   have h1 : ∑ i, σ (g i) • e (v i) = 0 := by
     have := congrArg e hg
-    rw [map_sum, map_zero] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero] at this
     rw [← this]
     exact Finset.sum_congr rfl fun i _ => by rw [map_smulₛₗ]
   have := Fintype.linearIndependent_iff.1 h _ h1 i
@@ -577,7 +578,8 @@ theorem factStepBz {D : D7} (X : DivX D) : FactStepBz X := by
     funext i
     apply jM_inj X j
     unfold famOf
-    rw [hs, hZ i, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hs, hZ i, map_sum]
     exact Finset.sum_congr rfl fun k _ => by rw [map_smulₛₗ, hs0]
   have hdZ : Z.det ≠ 0 := det_ne_zero_of_li _ Z (hcZ ▸ hc)
 

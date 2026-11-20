@@ -202,7 +202,8 @@ theorem projZ : ProjZ := by
     simp only [π, LinearMap.coe_comp, Function.comp_apply, Submodule.coe_subtype]
     rw [Submodule.projectionOnto_apply_left (hCm s) ⟨x, hx⟩]
   refine ⟨Tmap π, fun P => ?_, fun J => ?_⟩
-  · rw [MvPolynomial.as_sum P, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [MvPolynomial.as_sum P, map_sum]
     refine Submodule.sum_mem _ fun m _ => ?_
     have : monomial m (AddMonoidAlgebra.coeff P m) = AddMonoidAlgebra.coeff P m • monomial m (1 : ℤ) := by
       rw [smul_monomial, smul_eq_mul, mul_one]

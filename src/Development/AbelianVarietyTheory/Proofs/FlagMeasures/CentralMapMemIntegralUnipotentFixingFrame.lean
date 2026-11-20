@@ -26,9 +26,11 @@ theorem nil_eq_zero (e : Fin r → S.V) (c : Matrix (Fin r) (Fin r) E) (x : S.V)
 
 theorem hT_nil (e : Fin r → S.V) (he : ∀ a b, S.hT (e a) (e b) = 0) (c : Matrix (Fin r) (Fin r) E)
     (x : S.V) (a : Fin r) : S.hT (e a) (nil e c x) = 0 := by
-  rw [nil_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [nil_apply, map_sum]
   refine Finset.sum_eq_zero fun b _ => ?_
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_eq_zero fun b' _ => ?_
   rw [LinearMap.map_smul, he, smul_zero]
 
@@ -59,15 +61,18 @@ theorem cen_isom (e : Fin r → S.V) (he : ∀ a b, S.hT (e a) (e b) = 0) (c : M
 
   have hnn : ∀ x y, S.hT (nil e c x) (nil e c y) = 0 := by
     intro x y
-    rw [nil_apply e c x, map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [nil_apply e c x, map_sum, LinearMap.sum_apply]
     refine Finset.sum_eq_zero fun a _ => ?_
-    rw [map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, LinearMap.sum_apply]
     refine Finset.sum_eq_zero fun a' _ => ?_
     rw [LinearMap.map_smulₛₗ, LinearMap.smul_apply, hT_nil e he c y a, smul_zero]
 
   have hcross : ∀ x y, S.hT (nil e c x) y + S.hT x (nil e c y) = 0 := by
     intro x y
-    simp only [nil_apply, map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [nil_apply, map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply,
       LinearMap.map_smul, smul_eq_mul, map_mul, RingHom.id_apply, hstar, hsym]
     rw [Finset.sum_comm, ← Finset.sum_add_distrib]
     refine Finset.sum_eq_zero fun a _ => ?_

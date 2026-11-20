@@ -257,7 +257,8 @@ private theorem hk_comm (k : ℕ) (w : Pl F) (c : ℕ) {φ : TR.Sm F 2} (hφ : �
     (A : Module.End ℂ (TR.Sm F 2)) (hA : ∀ g ψ, A (locSm F w g ψ) = locSm F w g (A ψ)) : A (hk k w c φ) = hk k w c (A φ) := by
   obtain ⟨S, hS⟩ := exists_reps w
   have hφ' : A φ ∈ Hi.fixd (locSm F w) (K1 w c) := fun u hu => by rw [← hA, hφ u hu]
-  rw [hk, LinearMap.smul_apply, LinearMap.smul_apply, (uopSum F w _ (locSm F w) c φ hφ).2 S hS,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hk, LinearMap.smul_apply, LinearMap.smul_apply, (uopSum F w _ (locSm F w) c φ hφ).2 S hS,
     (uopSum F w _ (locSm F w) c _ hφ').2 S hS, map_smul, map_add, map_sum]
   simp only [hA]
   split_ifs
@@ -319,7 +320,8 @@ private theorem hk_hk {k : ℕ} {c : Pl F → ℕ} {ω : HChar F} {φ : TR.Sm F 
     split_ifs <;> rfl
   rw [hA _ ((hk_hol h w').level w), hA _ (h.level w)]
   refine hk_comm k w' _ (h.level w') A fun g ψ => ?_
-  simp only [A, LinearMap.smul_apply, LinearMap.add_apply, LinearMap.sum_apply, map_smul, map_add, map_sum, locSm_comm e]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [A, LinearMap.smul_apply, LinearMap.add_apply, LinearMap.sum_apply, map_smul, map_add, map_sum, locSm_comm e]
   split_ifs
   · rw [locSm_comm e]
   · simp

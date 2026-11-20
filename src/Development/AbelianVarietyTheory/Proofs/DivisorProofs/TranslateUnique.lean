@@ -291,9 +291,11 @@ theorem isKS_add (hv : ∀ a, IsTanAtG t (chart U) (v a)) (h : IsKS t V U v D Θ
         (valR (w a) O f).snd := by
       intro r hr
       have hgr := le_preimage_mono g hr hgO
-      rw [valR_eq _ _ hgO, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [valR_eq _ _ hgO, map_sum]
       refine Finset.sum_congr rfl fun a _ => ?_
-      rw [← valR_eq _ _ hgO, smulFld_of_le hr, valR_mul _ _ hgO, valR_res _ hr hgO,
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← valR_eq _ _ hgO, smulFld_of_le hr, valR_mul _ _ hgO, valR_res _ hr hgO,
         hdv a O (hr.trans (hpU r)) f S φ g (w a) hg hgO (hw a), ← Finset.sum_mul, valR_eq _ _ hgr, map_sum]
       refine congrArg (· * _) (Finset.sum_congr rfl fun b _ => ?_)
       rw [← valR_eq _ _ hgr, valR_mul _ _ hgr, valR_mul _ _ hgr, valR_base U _ hg hgr, valR_res _ _ hgr,

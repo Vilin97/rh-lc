@@ -121,7 +121,8 @@ theorem span_coord_of_basis {ι : Type*} [Fintype ι] (bL : Module.Basis ι ℝ 
     (hξ : ∀ i, inner ℝ ((coordEquiv b).symm (h.ofLie (bL i))) ξ = 0) : ξ = 0 := by
   have hall : ∀ v : h.lieSubalgebra, inner ℝ ((coordEquiv b).symm (h.lieEquiv v)) ξ = 0 := by
     intro v
-    rw [← bL.sum_repr v, map_sum, map_sum, sum_inner]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← bL.sum_repr v, map_sum, map_sum, sum_inner]
     refine Finset.sum_eq_zero fun i _ => ?_
     rw [map_smul, map_smul, real_inner_smul_left, lieEquiv_apply, hξ i, mul_zero]
   have := hall (h.lieEquiv.symm (coordEquiv b ξ))

@@ -101,7 +101,8 @@ theorem act_rat (γ : HA R σ J) (g : GL (Fin M) E) (hγ : HA.mat R σ J γ = bc
   simp only [actW, actTup, ratTup, hγ]
   show ∑ j, inclR (F := F) R ((g : Matrix (Fin M) (Fin M) E) i j) * inclR (F := F) R (X a j) =
     inclR (F := F) R (∑ j, (g : Matrix (Fin M) (Fin M) E) i j * X a j)
-  simp [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum]
 
 end Rat
 

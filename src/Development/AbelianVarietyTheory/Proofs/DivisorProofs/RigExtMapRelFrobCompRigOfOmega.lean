@@ -53,7 +53,8 @@ theorem convPow_prime_apply (h : (p : R) = 0) {B ι : Type} [CommRing B] [Algebr
     rw [ofConv_toConv, hf, ofConv_sum, LinearMap.sum_apply]
     simp only [hj])
   have h0 := natCast_eq_zero_of_algebra h (WithConv (A →ₗ[R] B))
-  rw [e, ← frobRing_apply h0, map_sum, ofConv_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, ← frobRing_apply h0, map_sum, ofConv_sum, LinearMap.sum_apply]
   simp only [frobRing_apply, smul_pow, ← map_pow, hj]
 
 end PDiv
@@ -92,7 +93,8 @@ theorem verschiebung_app_eq_sum (n : ℕ) {ι : Type} (s : Finset ι) (φ : ι �
     (e : ι → G.A n) (hs : ∀ a, ∑ i ∈ s, φ i a • e i = a) (a : G.A n) :
     (verschiebung h G).app n a = ∑ i ∈ s, (φ i ^ p) a • (frobProj h G).app n (e i) :=
   frobTwist_ext_dual h n fun χ => by
-    rw [frobTwistDual_verschiebung, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [frobTwistDual_verschiebung, map_sum]
     refine (convPow_prime_apply h s φ (fun i => χ (e i)) χ.ofConv
       (fun a => by simpa only [map_sum, map_smul] using congrArg χ.ofConv (hs a).symm) a).trans
       (Finset.sum_congr rfl fun i _ => ?_)
@@ -101,7 +103,8 @@ theorem verschiebung_app_eq_sum (n : ℕ) {ι : Type} (s : Finset ι) (φ : ι �
 theorem relFrob_app_verschiebung_app (n : ℕ) (a : G.A n) :
     (relFrob h G).app n ((verschiebung h G).app n a) = mulBy R _ p a := by
   obtain ⟨s, hs⟩ := exists_dualSystem R (G.A n)
-  rw [verschiebung_app_eq_sum h G n s Prod.fst Prod.snd hs, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [verschiebung_app_eq_sum h G n s Prod.fst Prod.snd hs, map_sum]
   simp only [map_smul, relFrob_app_frobProj]
   refine (convPow_prime_apply h s Prod.fst Prod.snd LinearMap.id (fun a => (hs a).symm) a).symm.trans ?_
   exact (congrArg (fun f => f.ofConv a)

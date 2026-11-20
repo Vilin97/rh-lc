@@ -89,7 +89,8 @@ theorem span_and_rank {g n : ℕ} {ρ : Type} [Fintype ρ] (K : AddSubgroup (Fin
       rw [Submodule.coe_sum] at this
       exact this.symm
     have h0 : v - ∑ j, c j • lam j ∈ LinearMap.ker p := by
-      rw [LinearMap.mem_ker, map_sub, map_sum, hc]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [LinearMap.mem_ker, map_sub, map_sum, hc]
       simp only [map_zsmul, hpl, sub_self]
     rw [hker] at h0
     obtain ⟨s, hs⟩ := h0
@@ -99,7 +100,8 @@ theorem span_and_rank {g n : ℕ} {ρ : Type} [Fintype ρ] (K : AddSubgroup (Fin
       ext i
       simp [Finset.sum_apply, Pi.single_apply, ha]
     have hv2 : v = ∑ j, c j • lam j + ∑ j, a j • emb (Pi.single j (2 * Real.pi * Complex.I : ℂ)) := by
-      rw [eq_add_of_sub_eq' hs.symm, hs', map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [eq_add_of_sub_eq' hs.symm, hs', map_sum]
       simp only [map_zsmul]
     rw [SetLike.mem_coe, hv2]
     exact add_mem (sum_mem fun j _ => zsmul_mem (Submodule.subset_span (Set.mem_range_self (f := f) (Sum.inl j))) _)

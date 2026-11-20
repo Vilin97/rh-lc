@@ -46,7 +46,8 @@ theorem cT_qr (c : R →+* R) (hc : ∀ x, c (c x) = x) (Jm : Matrix (Fin M) (Fi
   set N := Matrix.vecMulVec a (rowV c Jm a) with hNdef
   have hcv : ∀ i, c (rowV c Jm a i) = ∑ m, Jm i m * a m := by
     intro i
-    simp only [rowV, map_sum, map_mul, hc, hJ]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [rowV, map_sum, map_mul, hc, hJ]
     exact Finset.sum_congr rfl fun m _ => by ring
   have hN : Formalism.UG.cT c N * Jm = Jm * N := by
     ext i j
@@ -71,7 +72,8 @@ theorem cT_qr (c : R →+* R) (hc : ∀ x, c (c x) = x) (Jm : Matrix (Fin M) (Fi
 theorem hform_fix (c : R →+* R) (hc : ∀ x, c (c x) = x) (Jm : Matrix (Fin M) (Fin M) R)
     (hJ : ∀ i j, c (Jm j i) = Jm i j) (a : Fin M → R) :
     c (Formalism.UG.hform c Jm a a) = Formalism.UG.hform c Jm a a := by
-  simp only [Formalism.UG.hform, map_sum, map_mul, hc, hJ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Formalism.UG.hform, map_sum, map_mul, hc, hJ]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 

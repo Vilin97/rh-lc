@@ -19,7 +19,8 @@ theorem expand {J : Type} [Fintype J] [DecidableEq J] {m : ℕ} (G : Multilinear
   have e : a = fun l => ∑ j, a l j • (Pi.single j 1 : J → ℝ) := by
     funext _ i
     simp [Pi.single_apply]
-  conv_lhs => rw [e, G.map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [e, G.map_sum]
   simp only [G.map_smul_univ, smul_eq_mul]
 
 theorem continuous_form {J : Type} [Fintype J] {m : ℕ} (G : MultilinearMap ℝ (fun _ : Fin m => J → ℝ) ℝ) :
@@ -36,7 +37,8 @@ theorem diag_zero_of_int {J : Type} [Fintype J] {m : ℕ} (G : MultilinearMap �
   have hP : ∀ a : J → ℝ, MvPolynomial.eval a P = G (fun _ => a) := by
     intro a
     rw [expand]
-    simp only [P, map_sum, map_mul, map_prod, MvPolynomial.eval_X, MvPolynomial.eval_C]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [P, map_sum, map_mul, map_prod, MvPolynomial.eval_X, MvPolynomial.eval_C]
   have h0 : P = 0 := by
     refine MvPolynomial.funext_set (fun _ => Set.range (Int.cast : ℤ → ℝ))
       (fun _ => Set.infinite_range_of_injective Int.cast_injective) fun x hx => ?_

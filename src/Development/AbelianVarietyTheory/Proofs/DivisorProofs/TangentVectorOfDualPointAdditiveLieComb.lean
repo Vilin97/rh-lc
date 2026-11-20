@@ -338,7 +338,8 @@ theorem isD_lieComb : ∀ (R : Type) [CommRing R] [IsDomain R] (D : DegPre R) [A
   rw [hx0] at h0 ⊢
   refine (key.2 U f h0).trans ?_
   congr 2
-  simp only [δW, Finset.sum_apply, Pi.smul_apply, map_sum, map_smul, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [δW, Finset.sum_apply, Pi.smul_apply, map_sum, map_smul, smul_eq_mul]
   rfl
 
 end GlobalTheory

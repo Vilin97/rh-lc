@@ -127,7 +127,8 @@ theorem exists_lie_matrices {R O : Type} [CommRing R] [CommRing O] {G : Over (Sp
     obtain ⟨cf, hcf⟩ := h₃ i x.hom x.isTangent (Lie.mem_eig_iff_left.1 hm)
     refine ⟨cf, ?_⟩
     have : x = ∑ k, cf k • u' i k := Lie.ext ((Lie.isLieComb_iff cf (u' i) x.hom).1 hcf)
-    rw [this, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [this, map_sum]
     simp only [map_smul]
   · have hm : u' i k ∈ Lie.eig act (τ i) := Lie.mem_eig_iff_left.2 (h₂ i k)
     rw [hA, hm a, map_smul]

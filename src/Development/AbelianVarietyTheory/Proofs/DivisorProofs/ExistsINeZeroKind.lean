@@ -205,11 +205,13 @@ theorem exists_I_ne_zero (hM : IsMatched B G X om om' R Rf) (hc : OneConst B G X
   have hs : ∀ f : Fin m → SInf F _, ∑ i, pureA F (f i) (g i) ∈ schA F (Fin a × Fin (a + a')) := fun f =>
     Submodule.sum_mem _ fun i _ => Submodule.subset_span ⟨f i, g i, (h1 i).1, rfl⟩
   have key : ∀ f : Fin m → SInf F _, G.M.I om (∑ i, pureA F (f i) (g i)) x = ∑ i, Tl i (f i) := fun f => by
-    rw [I_eq_l hM.triple hl (hs f), ← LinearMap.comp_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [I_eq_l hM.triple hl (hs f), ← LinearMap.comp_apply, map_sum]
     exact Finset.sum_congr rfl fun i _ => hTl i (f i)
   have h3 : ∀ k, ∑ i, Tl i (s k i) = 0 := fun k => by
     obtain ⟨T, hT, p, p', f₁, φ, f₁', φ', h4, -, e, -⟩ := (h2 k).2
-    rw [← key, I_eq_l hM.triple hl (hs _), e, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← key, I_eq_l hM.triple hl (hs _), e, map_sum, map_sum]
     refine Finset.sum_eq_zero fun i _ => ?_
     have h5 : IsFinPart G.M (X.T ∪ T) (φ i) := ⟨(h4 i).2.1, fun v hv => (h4 i).2.2 v fun h => hv (Finset.mem_union_right _ h)⟩
     rw [← I_eq_l hM.triple hl (h5.fam.mem hM.triple.geo.hM _), I_zero_of_finPart hM hc hco hl (h4 i).1 (h0 _ (h4 i).1) T _ h5]

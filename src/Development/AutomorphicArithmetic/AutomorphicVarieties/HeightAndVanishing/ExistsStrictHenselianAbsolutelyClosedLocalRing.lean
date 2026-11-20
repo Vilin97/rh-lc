@@ -22,7 +22,8 @@ private theorem one_of_pow {l : ℕ} [Fact l.Prime] (c : Coef l) {x : c.Oˣ} (hx
     have h3 : IsLocalRing.residue c.O x = 1 := by
       rw [← sub_eq_zero, ← map_one (IsLocalRing.residue c.O), ← map_sub]
       exact (IsLocalRing.residue_eq_zero_iff _).2 h
-    rw [map_sum, map_zero] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero] at h2
     simp only [map_pow, h3, one_pow, Finset.sum_const, Finset.card_range, nsmul_eq_mul, mul_one] at h2
     have h4 := hu.map (IsLocalRing.residue c.O)
     rw [map_natCast, h2] at h4

@@ -60,7 +60,8 @@ private theorem muHom_single (i k : Fin n) (b : R ⊗[ℚ] E) :
 
 private theorem muHom_muInv (M : Matrix (Fin n) (Fin n) (R ⊗[ℚ] E)) :
     muHom R E n (muInv R E n M) = M := by
-  simp only [muInv, map_sum, muHom_single]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [muInv, map_sum, muHom_single]
   exact (Matrix.matrix_eq_sum_single M).symm
 
 private def muEquiv : R ⊗[ℚ] Matrix (Fin n) (Fin n) E ≃+* Matrix (Fin n) (Fin n) (R ⊗[ℚ] E) where

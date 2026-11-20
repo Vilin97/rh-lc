@@ -82,7 +82,8 @@ theorem existsUnique_isLin {k : Type} [CommRing k] (p : X ⟶ Sp k) {J : Type} [
     (s : J → H.Sec) (a : J → k) : ∃! φ : H.Sec, IsLin p s a φ := by
   refine ⟨⟨fun l => ∑ j, constFn p (H.U l) (a j) * (s j).f l, fun i j => ?_⟩, fun l => rfl, ?_⟩
   · change resG X inf_le_left _ = _ * resG X inf_le_right _
-    rw [map_sum, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun n _ => ?_
     rw [map_mul, map_mul, res_const, res_const]
     have : resG X inf_le_left _ = _ * resG X inf_le_right _ := (s n).compat i j

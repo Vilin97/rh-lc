@@ -45,14 +45,16 @@ theorem expFactor_allOrbits : ∀ (D : D7) (p : ℕ) [Fact p.Prime] (R : Finset 
     rw [hlin ab]
   have hcc : constantCoeff ((-1 : ℂ_[p]) •
       Formalism.DworkPowerSeriesWeights.bSum (Formalism.DworkPowerSeriesWeights.idM : ZV (nP D p) M N' → ZV (nP D p) M N' → ℂ_[p]) be) = 0 := by
-    rw [hB, Finset.smul_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hB, Finset.smul_sum, map_sum]
     refine Finset.sum_eq_zero fun ab _ => ?_
     rw [MvPowerSeries.constantCoeff_smul, constantCoeff_subst_eq_zero (hX ab) (fun s => constantCoeff_X _) hbe,
       smul_zero]
   rw [Formalism.InvariantFactorPaths.G7.LogarithmEquivalence.subst_mvExp' ha hcc]
   show mvExp _ = mvExp _
   congr 1
-  rw [hB, ← coe_substAlgHom ha, map_smul, map_sum, coe_substAlgHom ha]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hB, ← coe_substAlgHom ha, map_smul, map_sum, coe_substAlgHom ha]
   have hterm : ∀ ab : Fin M × Fin N', subst a (subst (fun s : ZMod (nP D p) =>
         (X (s, ab.1, ab.2) : MvPowerSeries (ZV (nP D p) M N') ℂ_[p])) be) =
       subst (fun s : ZMod (nP D p) =>

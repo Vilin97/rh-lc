@@ -89,7 +89,8 @@ theorem class_eq_zero_of_orth {G : Type} [Group G] [Fintype G] (f : G → ℂ) (
     let T : V →ₗ[ℂ] V := ∑ x, f x • V.ρ x⁻¹
     have hcomm : ∀ h : G, ∀ v : V, T (V.ρ h v) = V.ρ h (T v) := by
       intro h v
-      simp only [T, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [T, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul]
       have e1 : ∀ x, V.ρ x⁻¹ (V.ρ h v) = V.ρ (x⁻¹ * h) v := fun x => by rw [map_mul, Module.End.mul_apply]
       have e2 : ∀ x, V.ρ h (V.ρ x⁻¹ v) = V.ρ (h * x⁻¹) v := fun x => by rw [map_mul, Module.End.mul_apply]
       simp only [e1, e2]
@@ -114,7 +115,8 @@ theorem class_eq_zero_of_orth {G : Type} [Group G] [Fintype G] (f : G → ℂ) (
         rcases mul_eq_zero.1 h1 with h | h
         · exact absurd h (inv_ne_zero hG)
         · exact h
-      simp only [T, map_sum, map_smul, smul_eq_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [T, map_sum, map_smul, smul_eq_mul]
       rw [← h2]
       refine Finset.sum_congr rfl fun x _ => ?_
       rw [← hV x⁻¹]
@@ -130,7 +132,8 @@ theorem class_eq_zero_of_orth {G : Type} [Group G] [Fintype G] (f : G → ℂ) (
       have hS' : T ∘ₗ V.ρ y = ∑ x, f x • (V.ρ x⁻¹ ∘ₗ V.ρ y) := LinearMap.ext fun v => by
         simp only [T, LinearMap.comp_apply, LinearMap.sum_apply, LinearMap.smul_apply]
       rw [hS']
-      simp only [map_sum, map_smul, smul_eq_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, smul_eq_mul]
       refine Finset.sum_congr rfl fun x _ => ?_
       rw [← hV]
       congr 1

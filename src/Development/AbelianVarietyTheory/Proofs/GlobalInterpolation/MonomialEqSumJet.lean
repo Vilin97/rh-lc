@@ -94,7 +94,8 @@ theorem lam_hYY (y Y : Matrix (Fin N') (Fin N) D.host.E) :
   refine Finset.sum_congr rfl fun τ _ => ?_
   obtain ⟨g, hg⟩ := exists_lamHom lam (TaylorLogMetric.embT D τ)
   rw [hg]
-  simp only [vecY, TaylorLogMetric.tauEmb, hg, map_sum, map_mul, Fintype.sum_prod_type]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [vecY, TaylorLogMetric.tauEmb, hg, map_sum, map_mul, Fintype.sum_prod_type]
 
 theorem dirDer_sum {σ ι : Type} [Fintype σ] (s : Finset ι) (c : ι → ℂ_[p]) (w : ι → σ → ℂ_[p]) :
     dirDer (∑ l ∈ s, c l • w l) = ∑ l ∈ s, c l • dirDer (w l) := by
@@ -154,7 +155,8 @@ theorem exists_comb (n : ℕ) : ∀ α : TaylorLogMetric.Mono D N N', α.degree 
     · rw [jetAt_add_single, h1, Fintype.sum_prod_type]
       refine Finset.sum_congr rfl fun l _ => ?_
       rw [← dirDer_single, ← hz, dirDer_sum, jet_eq]
-      simp only [jet_snoc, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, constantCoeff_smul,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [jet_snoc, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, constantCoeff_smul,
         smul_eq_mul, Finset.mul_sum, mul_assoc]
     · rw [Finsupp.prod_add_index' (by simp) (fun _ _ _ => pow_add _ _ _), h2, Finsupp.prod_single_index (by simp),
         pow_one, Fintype.sum_prod_type, Finset.sum_mul]

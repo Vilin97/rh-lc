@@ -26,7 +26,8 @@ private theorem ss_proj {R V : Type} [Ring R] [AddCommGroup V] [Module R V]
   · intro w hw
     rw [Finset.sum_coe_sort K (fun i => Q i w)]
     apply e.injective
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     have h1 : ∀ i, e (Q i w) = DFinsupp.single i (e w i) := fun i => by simp [Q]
     simp_rw [h1]
     ext1 m
@@ -152,7 +153,8 @@ theorem UpperTheory.exists_equivariant_projections_of_sum_irreducible :
     induction hw using Submodule.span_induction with
     | mem x hx =>
       simp_rw [hQ]
-      rw [← map_sum, hsum' _ (Finset.mem_image_of_mem _ hx), LinearEquiv.apply_symm_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← map_sum, hsum' _ (Finset.mem_image_of_mem _ hx), LinearEquiv.apply_symm_apply]
     | zero => simp
     | add x y _ _ hx hy => simp_rw [map_add]; rw [Finset.sum_add_distrib, hx, hy]
     | smul c x _ hx => simp_rw [map_smul]; rw [← Finset.smul_sum, hx]

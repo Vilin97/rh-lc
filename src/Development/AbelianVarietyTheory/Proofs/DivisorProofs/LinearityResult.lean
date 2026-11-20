@@ -73,7 +73,8 @@ theorem linSt : LinSt := by
   have hexp : ∀ c c' : Fin N → ℂ_[p], eC (∑ k, c k • v k) (∑ l, c' l • v l) =
       ∑ k, ∑ l, c k * c' l * Gc k l := by
     intro c c'
-    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, hv]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, hv]
     conv_rhs => rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [Finset.mul_sum]
@@ -81,7 +82,8 @@ theorem linSt : LinSt := by
     ring
   have hexp1 : ∀ (c : Fin N → ℂ_[p]) (m : Fin N), eC (∑ k, c k • v k) (v m) = (Matrix.vecMul c Gc) m := by
     intro c m
-    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, hv]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, hv]
     rfl
   have hli : LinearIndependent ℂ_[p] v := by
     rw [Fintype.linearIndependent_iff]

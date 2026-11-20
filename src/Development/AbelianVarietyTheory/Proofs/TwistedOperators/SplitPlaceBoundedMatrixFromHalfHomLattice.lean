@@ -107,7 +107,8 @@ theorem honto : ∀ (D : D7) (S T : HSp D) (ΛS : Submodule (𝓞 D.host.E) (Fin
   · rw [Matrix.smul_apply, smul_eq_mul, ← mul_assoc, hsi.1]
   · have hmap : (e • u₀).map π = c • (X * (Z * G)) := by
       refine Matrix.ext fun i l => ?_
-      rw [Matrix.map_apply, Matrix.smul_apply, smul_eq_mul, RingHom.map_mul, pi_idem hsi hπ, one_mul, hu₀,
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Matrix.map_apply, Matrix.smul_apply, smul_eq_mul, RingHom.map_mul, pi_idem hsi hπ, one_mul, hu₀,
         Matrix.sum_apply, map_sum, Matrix.smul_apply, smul_eq_mul, Matrix.mul_apply, Finset.mul_sum]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [pi_rk hsi hπ S T a (fun k => cA D (σ (Z j k))) (fun k => σ (X k j)) i l]

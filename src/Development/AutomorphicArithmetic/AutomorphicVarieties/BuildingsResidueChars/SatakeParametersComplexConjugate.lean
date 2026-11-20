@@ -35,9 +35,11 @@ theorem UpperTheory.satake_parameters_complex_conjugate :
   · have e : CG.mk (GlobalTheory.ThetaPull.thetaSub P) = CG.mk P := Quotient.sound (theta_iso hP)
     exact e ▸ UpperTheory.theta_satake_parameters_inverse E a P w B hB
   · unfold satTot
-    rw [← Multiset.coe_mapAddMonoidHom (fun x : ℂˣ => x⁻¹), map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Multiset.coe_mapAddMonoidHom (fun x : ℂˣ => x⁻¹), map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
-    rw [map_sum, ← Equiv.sum_comp Fin.revPerm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, ← Equiv.sum_comp Fin.revPerm]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [Multiset.coe_mapAddMonoidHom, Multiset.map_map, Multiset.map_map]
     refine Multiset.map_congr rfl fun x _ => ?_

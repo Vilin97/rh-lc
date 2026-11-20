@@ -263,7 +263,8 @@ theorem connecting_form {R : Type} [CommRing R] {C : Type 1} [Category.{0} C] {�
     change ∑ i : Fin (n + 2), (-1 : ℤ) ^ (i : ℕ) • (Φ.A.map (toLast i s)).hom (∑ I : Idx n d, E.form σ I.1 (y I) (face i s)) = _
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun i _ => ?_
-    rw [map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.smul_sum]
   · rw [Fintype.sum_prod_type, ← Finset.sum_sub_distrib]
     refine Ideal.sum_mem _ fun I _ => ?_
     have := d_form hF E σ hc hT I.1 (y I) s

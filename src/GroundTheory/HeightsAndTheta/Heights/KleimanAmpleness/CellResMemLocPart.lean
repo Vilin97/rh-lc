@@ -30,7 +30,8 @@ theorem map_constD {V W : Type} [AddCommGroup V] [AddCommGroup W] (g : V →+ W)
     (f : Cell K ι n → V) (I : Cell K ι (n + 1)) :
     g (constD K ι V n f I) = constD K ι W n (fun J => g (f J)) I := by
   unfold constD
-  simp only [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum]
   refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun i _ => ?_
   split_ifs <;> simp [map_zsmul]
 
@@ -164,7 +165,8 @@ theorem proof (h₁ : CechConstVanish.Statement) (h₂ : CechPointEval.Statement
       (∀ k, I.1 k ⊆ G k) → φ I.1 (cechD F ι _ n x I) = constD K ι Ω n (fun J => φ J.1 (x J)) I := by
     intro n x I hI
     rw [cechD_apply]
-    simp only [constD, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [constD, map_sum]
     refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun i _ => ?_
     split_ifs with hc
     · rw [map_zsmul, hres _ _ (face_subset I.1 k i) hc.1 hI]

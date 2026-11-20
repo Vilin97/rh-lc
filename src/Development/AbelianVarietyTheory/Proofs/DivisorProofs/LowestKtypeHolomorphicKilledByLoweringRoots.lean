@@ -422,7 +422,8 @@ theorem lowK_killed : ∀ (n p : ℕ) (ε : Fin n → Bool) (lam : Fin n → ℝ
       have h1 : dRepC J σ Z w = ∑ i, ∑ j, Z i j • dRepC J σ (Matrix.single i j 1) w := by
         have : B Z ⟨w, hw⟩ = ∑ i, ∑ j, Z i j • B (Matrix.single i j 1) ⟨w, hw⟩ := by
           conv_lhs => rw [Matrix.matrix_eq_sum_single Z]
-          simp only [map_sum, LinearMap.sum_apply]
+          set_option synthInstance.maxHeartbeats 100000 in
+            simp only [map_sum, LinearMap.sum_apply]
           refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
           rw [← LinearMap.smul_apply, ← map_smul, Matrix.smul_single, smul_eq_mul, mul_one]
         exact this

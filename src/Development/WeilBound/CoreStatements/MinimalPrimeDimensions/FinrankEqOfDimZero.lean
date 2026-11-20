@@ -25,7 +25,8 @@ theorem ker_aeval_eq (τ : Fin m → Ω) (k : Fin m) (hk : τ k = 1) :
       ∑ d ∈ Finset.range (g.totalDegree + 1), aeval τ (homogeneousComponent d g) := by
     intro g
     conv_lhs => rw [← sum_homogeneousComponent g]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
   apply le_antisymm
   · intro g hg
     rw [RingHom.mem_ker] at hg
@@ -40,7 +41,8 @@ theorem ker_aeval_eq (τ : Fin m → Ω) (k : Fin m) (hk : τ k = 1) :
       have := (isHomogeneous_X_pow (R := κ) k (N - d)).mul (homogeneousComponent_isHomogeneous d g)
       rwa [hdN] at this
     have hh0 : aeval τ h = 0 := by
-      simp only [hh, map_sum, map_mul, map_pow, aeval_X, hk, one_pow, one_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hh, map_sum, map_mul, map_pow, aeval_X, hk, one_pow, one_mul]
       rw [← hcomp]
       exact hg
     have hdiff : g - h ∈ Ideal.span {X k - 1} := by

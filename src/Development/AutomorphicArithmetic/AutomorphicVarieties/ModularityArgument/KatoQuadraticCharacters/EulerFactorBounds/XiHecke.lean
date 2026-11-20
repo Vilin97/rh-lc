@@ -105,7 +105,8 @@ private theorem xi_prod (M₀ M w : ℕ) [NeZero M] (g : SL(2, ℤ)) (x y : Row 
   intro u
   rw [Finset.sum_apply]
   unfold Xi
-  rw [Finset.sum_comm, ← Finset.sum_sub_distrib, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.sum_comm, ← Finset.sum_sub_distrib, map_sum]
   refine Finset.sum_eq_zero fun m _ => ?_
   rw [← Finset.smul_sum, ← smul_sub, map_smul, cls_prod, smul_zero]
 
@@ -146,7 +147,8 @@ private theorem step (M₀ M w : ℕ) [NeZero N] [NeZero M₀] [NeZero M] (g : S
     rfl
   show AdicCompletion.eval (idl l) (X.Kl l) n (X.kmap l _ (Xi X l n N M₀ M w g _ _ _ a _) - (p : ℤ_[l]) • Xi X l n N M₀ M w g x y P _ u) = 0
   unfold Xi
-  rw [Finset.smul_sum, map_sum, map_sub, map_sum, map_sum, sub_eq_zero]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.smul_sum, map_sum, map_sub, map_sum, map_sum, sub_eq_zero]
   refine Finset.sum_equiv (Equiv.mulRight D) (fun m => ?_) (fun m hm => ?_)
   · simp only [Finset.mem_filter, Finset.mem_univ, true_and]
     rw [hdet m, hrel, ← cnd_iff l N M hN hl g h hN1 hl1 hN0 hl0]

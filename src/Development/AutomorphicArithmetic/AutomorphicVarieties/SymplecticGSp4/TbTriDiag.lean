@@ -47,7 +47,8 @@ private theorem tb_avg {k G W : Type} [Field k] [CharZero k] [Group G] [AddCommG
     intro g
     have e1 : ∑ q, F (g • q) = S := Equiv.sum_comp (MulAction.toPerm g) F
     refine e1.symm.trans ?_
-    simp only [hF, Finset.sum_add_distrib, Finset.sum_const, Finset.card_univ, ← map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hF, Finset.sum_add_distrib, Finset.sum_const, Finset.card_univ, ← map_sum,
       Nat.cast_smul_eq_nsmul, ← hS]
   have hn : (Fintype.card (G ⧸ H) : k) ≠ 0 := Nat.cast_ne_zero.2 Fintype.card_ne_zero
   refine ⟨x - (Fintype.card (G ⧸ H) : k)⁻¹ • S, fun g => ?_⟩

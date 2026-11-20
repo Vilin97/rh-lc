@@ -44,7 +44,8 @@ theorem exists_multiset_qdet {M : Type} [AddCommGroup M] [Module ℂ M] {n : ℕ
     exact Finset.prod_congr rfl fun k _ => by ring
   rw [e2, GlobalTheory.CapelliTop.qdet_expand, ← Finset.add_sum_erase _ _ (Finset.mem_univ (∅ : Finset (Fin n))),
     GlobalTheory.CapelliTop.subdet_empty]
-  simp only [R, eval_add, eval_finset_sum, eval_mul, eval_C, hQe, LinearMap.add_apply, LinearMap.sum_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [R, eval_add, eval_finset_sum, eval_mul, eval_C, hQe, LinearMap.add_apply, LinearMap.sum_apply,
     LinearMap.smul_apply, map_add, map_sum, map_smul, Module.End.one_apply, hf, smul_eq_mul, mul_one]
   congr 1
   exact Finset.sum_congr rfl fun S _ => mul_comm _ _

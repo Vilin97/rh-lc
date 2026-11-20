@@ -79,7 +79,8 @@ local notation "ι" => inclE (F := F) (E := E) (FiniteAdeleRing (𝓞 F) F)
 theorem csDual_hform_incl (σ : E →ₐ[F] E) (J : Matrix n n E) (y x : n → E) :
     hform (sigR σ (FiniteAdeleRing (𝓞 F) F)) (J.map ι) (fun i => ι (y i)) (fun i => ι (x i)) =
       ι (hform (σ : E →+* E) J y x) := by
-  simp [hform, csDual_sig_incl, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [hform, csDual_sig_incl, map_sum, map_mul]
 
 theorem csDual_span (σ : E →ₐ[F] E) (J : Matrix n n E) (M : Submodule (𝓞 E) (n → E)) (x : n → E)
     (hx : ∀ y ∈ M, hform (σ : E →+* E) J y x ∈ (algebraMap (𝓞 E) E).range)

@@ -39,7 +39,8 @@ theorem functional_mem_range {A' B : Type} [CommRing A'] [IsDomain A'] [IsIntegr
     rw [Submodule.coe_smul, ← hy, Submodule.coe_sum, Finset.sum_apply]
     simp [hb, Pi.single_apply, mul_comm])
   have h2 : g (∑ k, y' k * z k) = g a * f y := by
-    rw [← smul_eq_mul, ← map_smul, h1, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← smul_eq_mul, ← map_smul, h1, map_sum, map_sum]
     simp [hz]
   obtain ⟨w, hw⟩ := (dvd_descends_of_isIntegral A' B g hi hg).1 a _ ha ⟨_, h2⟩
   rw [hw, map_mul] at h2
@@ -105,7 +106,8 @@ theorem exists_presentation_descends (B : Type) [CommRing B] [IsDomain B] (h : �
   let u' : Fin m → P' := fun i => ⟨v i, (hP' _).2 (hv' i ▸ (u i).2)⟩
   have hRm : (Matrix.of R').map g = R := by ext i j; exact hR' i j
   have hsum : ∀ x : Fin m → A', piMap g (Fin h) (∑ i, x i • u' i : P').1 = (f (g ∘ x)).1 := fun x => by
-    rw [← hu, Submodule.coe_sum, Submodule.coe_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hu, Submodule.coe_sum, Submodule.coe_sum, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [Submodule.coe_smul, Submodule.coe_smul, map_smulₛₗ, hv']
     rfl

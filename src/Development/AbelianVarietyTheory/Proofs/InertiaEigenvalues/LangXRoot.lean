@@ -183,7 +183,8 @@ theorem lang_span [FiniteDimensional k V] (q : ℕ) (hq : 1 < q) (F : V →+ V)
     have hFz : F z - z = y ^ q • u := by
       have e1 : F z = ∑ i ∈ Finset.range s, (x i) ^ q • (⇑F)^[i + 1] v +
           y ^ q • (⇑F)^[s + 1] v := by
-        rw [hz, map_sum, Finset.sum_range_succ]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [hz, map_sum, Finset.sum_range_succ]
         congr 1
         · refine Finset.sum_congr rfl fun i _ => ?_
           rw [hF, Function.iterate_succ_apply']

@@ -69,7 +69,8 @@ theorem phi1_bijective (hΨ : ∀ σ : E →+* ℂ, σ ∈ Ψ ↔ ComplexEmbeddi
     let B := Algebra.TensorProduct.basis ℝ (RingOfIntegers.basis E)
     have hx := li1 hΨ (fun k => B.repr t k) (fun τ hτ => by
       have h1 := congrFun ht ⟨τ, hτ⟩
-      rw [← B.sum_repr t, map_sum] at h1
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← B.sum_repr t, map_sum] at h1
       simpa [B, Algebra.TensorProduct.basis_apply, phi1_tmul, Finset.sum_apply, Complex.real_smul]
         using h1)
     have : B.repr t = 0 := by

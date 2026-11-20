@@ -162,7 +162,8 @@ theorem apply_sq_sub_eq (hC : Published.ArCalc) (hP : Published.Principalisation
       Ψ ((∑ i, MvPolynomial.X (y' i) ^ 2 - ∑ i, MvPolynomial.X (y i) ^ 2) * R) := by
   subst hD
   obtain ⟨I, _, c, n, rfl⟩ := FlagCmp.exists_sum_pow hR
-  simp only [Finset.mul_sum _ (fun j => c j • _), mul_smul_comm, map_sum Ψ (fun j => c j • _), map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finset.mul_sum _ (fun j => c j • _), mul_smul_comm, map_sum Ψ (fun j => c j • _), map_smul]
   refine Finset.sum_congr rfl fun j _ => congrArg (c j • ·) ?_
   have e₁ := FlagCmp.compare hC hP hX H fl m κ L Ψ hΨ x y hx hy (n j)
   have e₂ := FlagCmp.compare hC hP hX H' fl' m' κ L Ψ hΨ x' y' hx' hy' (n j)
@@ -216,7 +217,8 @@ theorem vanishOn_regFlagged : GlobalTheory.CovTop.Hypotheses2 → VanishOn RegFl
           exact Finset.sum_congr rfl fun i _ =>
             HermLB.icls_eq_iff.2 (VMetric.isometric_grLB_pull _ _ _ _ _ _ _ _ _ _ π rfl i)
         simp only [HermLB.icls_pull] at e
-        simp [A, g, HermLB.icls_pull, icls_comb, Fintype.sum_sigma, ← map_sum, e]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp [A, g, HermLB.icls_pull, icls_comb, Fintype.sum_sigma, ← map_sum, e]
       · exact ⟨Pi.single (.inr z) 1, by simp [lin, Pi.single_apply, apply_ite], by simp [Pi.single_apply, A]⟩)
   have hR : (rename Sum.inl (rename Sum.inl ((∑ z, MvPolynomial.X z) ^ n * Q)) : MvPolynomial
       (((Σ a, Fin (r a)) ⊕ (Σ a, Fin (r a))) ⊕ ((Σ a, Fin (r a)) ⊕ (Σ a, Fin (r a)))) ℝ).IsHomogeneous (n + e) := by
@@ -229,18 +231,21 @@ theorem vanishOn_regFlagged : GlobalTheory.CovTop.Hypotheses2 → VanishOn RegFl
     (fun i => (VMetric.isometric_grLB_pull _ _ _ _ _ _ _ _ _ _ ρ rfl i).symm) (fun _ => .refl _)
     (fun i => hpull (H a) _ i) (fun i => hpull (H' a) _ i) hR
   have e₄ := Finset.sum_congr rfl fun a (_ : a ∈ Finset.univ) => e₃ a
-  rw [← map_sum, ← map_sum, ← Finset.sum_mul, ← Finset.sum_mul, Finset.sum_sub_distrib, Finset.sum_sub_distrib] at e₄
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum, ← map_sum, ← Finset.sum_mul, ← Finset.sum_mul, Finset.sum_sub_distrib, Finset.sum_sub_distrib] at e₄
   have e₅ := e₂ (rename Sum.inl Q * rename Sum.inr
     ((∑ z, MvPolynomial.X (some (.inr z)) ^ 2 - ∑ z, MvPolynomial.X (some (.inl z)) ^ 2) * MvPolynomial.X none ^ n))
   rw [LinearMap.smul_apply, e₁, zero_mul, smul_zero] at e₅
   rw [← FlagCmp.isArFun_restrict_inl HP.p4.arIso hX _ _ hΦ hΨ, map_mul]
   refine Eq.trans ?_ (e₄.trans (Eq.trans ?_ e₅))
-  · simp only [map_sub, map_sum, map_pow, rename_X, Fintype.sum_sigma]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [map_sub, map_sum, map_pow, rename_X, Fintype.sum_sigma]
   · congr 1
     have eQ : aeval (fun z => MvPolynomial.X (.inl (.inl z))) Q = (rename Sum.inl (rename Sum.inl Q) : MvPolynomial
       (((Σ a, Fin (r a)) ⊕ (Σ a, Fin (r a))) ⊕ ((Σ a, Fin (r a)) ⊕ (Σ a, Fin (r a)))) ℝ) := by
       rw [rename_rename, rename_eq_aeval]; rfl
-    simp only [map_mul, aeval_rename, Sum.elim_comp_inl, eQ, map_sub, map_sum, map_pow, rename_X, aeval_X, Sum.elim_inr,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_mul, aeval_rename, Sum.elim_comp_inl, eQ, map_sub, map_sum, map_pow, rename_X, aeval_X, Sum.elim_inr,
       Option.elim, Fintype.sum_sigma]
     ring
 

@@ -48,7 +48,8 @@ theorem map_expS {ι : Type} (f : MvPowerSeries ι (FormalGroupSystem.K0 p)) :
   rw [coeff_map]
   show φ (expS p f n) = Formalism.MainNotions.TaylorLogMetric.expMv (map φ f) n
   unfold expS Formalism.MainNotions.TaylorLogMetric.expMv
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   have hd : n.degree = n.sum fun _ k => k := rfl
   rw [hd]
   refine Finset.sum_congr rfl fun k _ => ?_

@@ -49,7 +49,8 @@ theorem heckePol_res (D : D7) (a : D.nd.Loc) (x x' : D.nd.X a) (w : PlE D.host) 
     (heckePol D.nd a x w).map (IsLocalRing.residue (D.nd.O a)) =
       (heckePol D.nd a x' w).map (IsLocalRing.residue (D.nd.O a)) := by
   unfold heckePol
-  simp only [Polynomial.map_add, Polynomial.map_pow, Polynomial.map_X, Polynomial.map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Polynomial.map_add, Polynomial.map_pow, Polynomial.map_X, Polynomial.map_sum,
     Polynomial.map_mul, Polynomial.map_C, map_mul]
   congr 1
   refine Finset.sum_congr rfl fun k _ => ?_
@@ -160,7 +161,8 @@ theorem span_descent {k L : Type} [Field k] [Field L] (φ : k →+* L) {n : ℕ}
   have hfc : ∀ M : Matrix (Fin n) (Fin n) k, f M = ∑ i, ∑ j, M i j * c i j := by
     intro M
     conv_lhs => rw [Matrix.matrix_eq_sum_single M]
-    simp only [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
     have : Matrix.single i j (M i j) = M i j • Matrix.single i j (1 : k) := by
       rw [Matrix.smul_single, smul_eq_mul, mul_one]
@@ -178,7 +180,8 @@ theorem span_descent {k L : Type} [Field k] [Field L] (φ : k →+* L) {n : ℕ}
     show F ((S i).map φ) = 0
     rw [hF]
     have := congrArg φ h0
-    simp only [map_sum, map_mul, map_zero] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, map_zero] at this
     rw [← this]
     refine Finset.sum_congr rfl fun p _ => Finset.sum_congr rfl fun q _ => ?_
     rw [Matrix.map_apply, mul_comm]

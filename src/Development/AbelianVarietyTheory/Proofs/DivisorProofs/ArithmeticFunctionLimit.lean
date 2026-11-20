@@ -50,7 +50,8 @@ theorem lFam_comb {t : ℝ → ℝ} {ι : Type} [Fintype ι] {L : ℝ → ι →
   let g : ι → ℝ → wtSub p := fun i R => ⟨u i R, hu i R, hc i R⟩
   let G : ℝ → wtSub p := fun R => ∑ i, n i • g i R
   refine ⟨fun R => (G R).1, fun R => (G R).2.1, fun R => (G R).2.2, fun R => icls_eq_iff.1 ?_, fun σ y => ?_⟩
-  · rw [icls_raise, icls_comb, icls_comb, map_sum, ← Finset.sum_add_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [icls_raise, icls_comb, icls_comb, map_sum, ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_zsmul, ← smul_add, ← icls_raise, icls_eq_iff.2 (hi i R)]
   · have H := (famAt_pi (w := fun R z i => u i R σ z) (w₀ := fun _ _ => 0) fun i => hf i σ y).comp_contDiff

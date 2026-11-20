@@ -38,7 +38,8 @@ theorem main {k : Type} [Field k] {V : Type} [AddCommGroup V] [Module (LaurentSe
     set c := B.repr ⟨π y, hyP⟩ with hc
     have hsum := congrArg Subtype.val (B.sum_repr ⟨π y, hyP⟩)
     have h0 : π (y - ∑ j, c j • b j) = 0 := by
-      rw [map_sub, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, map_sum]
       simp only [map_smul, hb]
       simp only [Submodule.coe_sum, Submodule.coe_smul] at hsum
       rw [hsum, sub_self]

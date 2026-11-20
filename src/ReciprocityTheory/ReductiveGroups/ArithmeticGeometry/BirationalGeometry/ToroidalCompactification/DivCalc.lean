@@ -83,7 +83,8 @@ theorem dvd_of_tensor {V F A : Type} [CommRing V] [IsDomain V] [IsDiscreteValuat
   let b' : Fin n → R := fun i => ⟨b i, (hb i).le⟩
   have hR : a ⊗ₜ[V] (1 : R) = ∑ i, c i ⊗ₜ[V] b' i := by
     apply Module.Flat.lTensor_preserves_injective_linearMap (M := A) incl hincl
-    simp only [map_sum, LinearMap.lTensor_tmul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.lTensor_tmul]
     exact h
   have hmu1 : mu 1 = 1 := by
     show lam (Ideal.Quotient.mk mI 1) = 1
@@ -94,7 +95,8 @@ theorem dvd_of_tensor {V F A : Type} [CommRing V] [IsDomain V] [IsDiscreteValuat
     rw [Ideal.Quotient.eq_zero_iff_mem.mpr (hb i), map_zero]
   have hk : a ⊗ₜ[V] (1 : V ⧸ (Ideal.span {ϖ} : Ideal V)) = 0 := by
     have e := congrArg (LinearMap.lTensor A mu) hR
-    simp only [map_sum, LinearMap.lTensor_tmul, hmu1, hmub, TensorProduct.tmul_zero,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.lTensor_tmul, hmu1, hmub, TensorProduct.tmul_zero,
       Finset.sum_const_zero] at e
     exact e
   have hq : (Submodule.Quotient.mk a : A ⧸ (Ideal.span {ϖ} : Ideal V) • (⊤ : Submodule V A)) = 0 := by

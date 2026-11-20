@@ -33,7 +33,8 @@ theorem hform_mul_left {M a : ℕ} (Jm : Matrix (Fin M) (Fin M) A) (Y : Fin a �
       ∑ k, s (C i k) * Formalism.UG.hform s Jm (Y k) (Y j) := by
 
   unfold Formalism.UG.hform
-  simp only [map_sum, map_mul, Finset.mul_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, Finset.mul_sum, Finset.sum_mul]
   conv_rhs => rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun p _ => ?_
   conv_rhs => rw [Finset.sum_comm]
@@ -51,7 +52,8 @@ theorem pol_solve {a : ℕ} (h πA : A) (hh : h + h = 1) (hsh : s h = h)
     simp [Matrix.map_apply, Matrix.transpose_apply, hS]
   have h2 : ((h • (Tinv * Sm))ᵀ).map s = h • (Sm * (Tinv.map s)ᵀ) := by
     ext i k
-    simp [Matrix.mul_apply, Matrix.map_apply, Matrix.transpose_apply, hS, hsh, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Matrix.mul_apply, Matrix.map_apply, Matrix.transpose_apply, hS, hsh, map_sum]
   have e1 : Tm * (Tinv * Sm) = Sm := by rw [← Matrix.mul_assoc, hTT, Matrix.one_mul]
   have e2 : Sm * ((Tinv.map s)ᵀ * Tm) = Sm := by rw [hTs, Matrix.mul_one]
   have key : ∀ X Y Z : Matrix (Fin a) (Fin a) A,
@@ -85,7 +87,8 @@ theorem intA_sum {ι : Type} (t : Finset ι) (f : ι → Fv F v ⊗[F] E) (hf : 
     intA b v (∑ i ∈ t, f i) := by
 
   intro k
-  rw [map_sum, Finsupp.finset_sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finsupp.finset_sum_apply]
   exact sum_mem fun i hi => hf i hi k
 
 theorem intA_smul {c : Fv F v} (hc : c ∈ v.adicCompletionIntegers F) {z : Fv F v ⊗[F] E}
@@ -133,7 +136,8 @@ theorem intA_sig (σ : E →ₐ[F] E)
     (hg : ∀ k m, algebraMap F (Fv F v) (b.repr (σ (b k)) m) ∈ v.adicCompletionIntegers F)
     {z : Fv F v ⊗[F] E} (hz : intA b v z) : intA b v (sigR (Fv F v) σ z) := by
 
-  rw [← (Algebra.TensorProduct.basis (Fv F v) b).sum_repr z, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← (Algebra.TensorProduct.basis (Fv F v) b).sum_repr z, map_sum]
   refine intA_sum _ _ fun k _ => ?_
   rw [sigR_smul, Algebra.TensorProduct.basis_apply, ← incl_eq_tmul, sigR_incl]
   exact intA_smul (hz k) (intA_incl _ (hg k))

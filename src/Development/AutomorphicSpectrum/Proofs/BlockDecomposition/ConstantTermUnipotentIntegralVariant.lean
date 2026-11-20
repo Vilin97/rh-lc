@@ -127,7 +127,8 @@ theorem fderiv_chart_eq (φ : Sm E a) (h : GA E a) {y : Lie E a} (hy : y ∈ inv
       fderiv ℝ (chart φ.1 (h * infGL E a u)) (oneL E a) (bs E a i) := fun i => chart_val _ _ _
   simp only [h2]
   rw [lieD]
-  conv_lhs => rw [← (bs E a).sum_repr X, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [← (bs E a).sum_repr X, map_sum]
   simp only [map_smul, hX]
   exact Finset.sum_congr rfl fun i _ => rfl
 

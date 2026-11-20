@@ -33,9 +33,12 @@ theorem frame_psi_eq_phiInv : ∀ (p : ℕ) [Fact p.Prime] (O : Type) [CommRing 
       funext j
       simp only [Pi.add_apply, map_add]
   have hw : (fun i => ψ (w i)) = ∑ i, Pi.single i (ψ (w i)) := (Finset.univ_sum_single _).symm
-  rw [hw, map_sum]
-  conv_rhs => rw [← Finset.univ_sum_single w, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hw, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_rhs => rw [← Finset.univ_sum_single w, map_sum]
   funext j
-  simp only [Finset.sum_apply, key, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finset.sum_apply, key, map_sum]
 
 end GlobalTheory.DetInv

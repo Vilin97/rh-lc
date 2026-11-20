@@ -38,7 +38,8 @@ theorem embedding_matrix_independent : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [
           = ∑ j, ι (b.repr x j) * algebraMap O C (σ (b j)) := by
         intro σ
         conv_lhs => rw [← b.sum_repr x]
-        rw [map_sum, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum, map_sum]
         exact Finset.sum_congr rfl (fun j _ => hlin σ _ _)
       simp_rw [hx, Finset.mul_sum]
       rw [Finset.sum_comm]

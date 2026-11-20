@@ -26,7 +26,8 @@ theorem linAt_comp {κ : Type*} [Fintype κ] (c₁ : σ → σ' → ℂ_[p]) (c�
   congr 1
   funext k
   rw [← coe_substAlgHom (hasSubst_linear c₂)]
-  simp only [map_sum, map_mul, AlgHom.commutes, substAlgHom_X, Finset.mul_sum, Finset.sum_mul, mul_assoc]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, AlgHom.commutes, substAlgHom_X, Finset.mul_sum, Finset.sum_mul, mul_assoc]
   rw [Finset.sum_comm]
 
 theorem linAt_delta [DecidableEq σ] (F : MvPowerSeries σ ℂ_[p]) :

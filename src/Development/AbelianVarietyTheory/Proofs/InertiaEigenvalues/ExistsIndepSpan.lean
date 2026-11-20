@@ -95,12 +95,14 @@ theorem comap_pull {V : Type} [AddCommGroup V] [Module k⸨X⸩ V] [Module k⟦X
     have h0 : x - ∑ j, a j • s j ∈ LinearMap.range f := by
       rw [← Submodule.ker_mkQ (LinearMap.range f), LinearMap.mem_ker]
       change (π.restrictScalars k⟦X⟧) _ = 0
-      rw [map_sub, map_sum, sub_eq_zero]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, map_sum, sub_eq_zero]
       simp only [map_smul, LinearMap.restrictScalars_apply, hs, ha]
     obtain ⟨w, hw⟩ := h0
     have hwN : f w ∈ N := hw ▸ N.sub_mem hx (N.sum_mem fun j _ => N.smul_mem _ (hsN j))
     have hx2 : x = f w + ∑ j, a j • s j := by rw [hw, sub_add_cancel]
-    rw [hx2, map_add, map_sum, ← h]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hx2, map_add, map_sum, ← h]
     refine Submodule.add_mem_sup ⟨_, Submodule.subset_span ⟨w, hwN, rfl⟩, rfl⟩
       (Submodule.sum_mem _ fun j _ => ?_)
     obtain ⟨b, hb⟩ := R.φ_int (a j)
@@ -127,7 +129,8 @@ theorem comap_pull {V : Type} [AddCommGroup V] [Module k⸨X⸩ V] [Module k⟦X
     have h2 : ∀ m, u (a m • D.φ i (s m)) = if m = j then algebraMap k⟦X⟧ k⸨X⸩ (a m) else 0 := fun m => by
       rw [← algebraMap_smul k⸨X⸩ (a m), map_smul, hu, LinearMap.comp_apply, hs, ht]
       split_ifs <;> simp
-    rw [map_sum] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at h1
     simpa [h2] using h1
   have hz : g (y - p) = 0 := by
     rw [← hq']

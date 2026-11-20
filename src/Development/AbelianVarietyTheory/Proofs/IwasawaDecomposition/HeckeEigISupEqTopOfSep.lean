@@ -74,7 +74,8 @@ theorem _root_.GlobalTheory.heckeEig_iSup_eq_top_of_sep {O X M : Type} [CommRing
   have hcm : algebraMap O K c • m = ∑ x, F x • ψ (E x) m := by
     rw [algebraMap_smul]
     have := congrArg (fun f => ψ f m) hsum
-    simp only [map_sum, map_smul, AlgHom.commutes] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, AlgHom.commutes] at this
     rw [LinearMap.sum_apply] at this
     simp only [LinearMap.smul_apply] at this
     rw [this, Module.algebraMap_end_apply]

@@ -68,7 +68,8 @@ theorem cech_nat {P Q : PM.{w} R ι} (φ : ∀ S, P.M S →ₗ[R] Q.M S)
     (nat : ∀ {S T : Finset ι} (h : S ⊆ T) x, φ T (P.res h x) = Q.res h (φ S x)) (p : ℕ) (x : P.cech.X p)
     (t : Fin (p + 2) → ι) : φ _ (P.cech.d p x t) = Q.cech.d p (fun i => φ _ (x i)) t := by
   rw [Cos.d_apply, Cos.d_apply]
-  simp only [Finset.sum_apply, Pi.smul_apply, map_sum, map_zsmul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finset.sum_apply, Pi.smul_apply, map_sum, map_zsmul]
   refine Finset.sum_congr rfl fun k _ => ?_
   congr 1
   exact nat _ _

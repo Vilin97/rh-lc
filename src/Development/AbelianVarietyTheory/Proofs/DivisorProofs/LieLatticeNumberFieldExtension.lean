@@ -44,7 +44,8 @@ theorem exists_isLieAtWith : Hypotheses2 → HypothesesH → ∀ (D : D7) (O : S
     have h2 : ∀ k, bcTan (t := O.s.T.Z.t) io hio' (b (e k)) = tanOf (y.tan (e k).1 (e k).2) :=
       fun k => tan_ext ((hb (e k)).trans (left_tanOf _).symm)
     have h1 := congrArg (bcTan (t := O.s.T.Z.t) io hio') hc
-    rw [map_zero, map_sum] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_zero, map_sum] at h1
     simp only [map_smulₛₗ, h2] at h1
     exact io.injective ((Fintype.linearIndependent_iff.1 hQ (fun k => io (c k)) h1 i).trans (map_zero io).symm)
   have hli : ∀ σ : K →+* ℂ, LinearIndependent ℂ

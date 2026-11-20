@@ -266,7 +266,8 @@ theorem UpperTheory.V.Ws.blockPart :
       fun g i j h => ?_
     · ext a b
       have := congrArg 𝔞.toK (congrFun (congrFun (hm g) a) b)
-      simp only [Matrix.mul_apply, adj_apply, map_sum, map_mul, map_zsmul, Matrix.smul_apply, smul_eq_mul, Matrix.one_apply] at this ⊢
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Matrix.mul_apply, adj_apply, map_sum, map_mul, map_zsmul, Matrix.smul_apply, smul_eq_mul, Matrix.one_apply] at this ⊢
       rw [apply_ite 𝔞.toK, map_one, map_zero] at this
       exact this
     · obtain ⟨g, hg⟩ := h02

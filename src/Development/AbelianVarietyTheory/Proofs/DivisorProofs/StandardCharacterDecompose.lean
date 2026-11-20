@@ -27,16 +27,19 @@ theorem psi_split : ∀ (F : Type) [Field F] [NumberField F] (κ : Type) [Fintyp
   have h1 : y.1 = ∑ i, (x i).1 * algebraMap F (Ainf F) (z i) := by
     rw [hy, dotProduct]
     change fstA F (∑ i, x i * algebraMap F (AF F) (z i)) = _
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     rfl
   have h2 : y.2 = (fun i => (x i).2) ⬝ᵥ ratFin F κ z := by
     rw [hy, dotProduct, dotProduct]
     change sndA F (∑ i, x i * algebraMap F (AF F) (z i)) = _
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     rfl
   have hev : evI F (pairA F y.1 0) = ∑ i, evI F (x i) * ratInf F κ z i := by
     change InfiniteAdeleRing.ringEquiv_mixedSpace F y.1 = _
-    rw [h1, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h1, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_mul]
     congr 1

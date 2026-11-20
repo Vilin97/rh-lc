@@ -83,7 +83,8 @@ theorem gelfA_conj {A : Type} [Ring A] [Algebra ℂ A] (N : ℕ) (Q : Matrix (Fi
   have hE' : (fun a b => Q (g.1 * Matrix.single a b 1 * (g⁻¹).1)) =
       fun a b => ∑ c, ∑ d, ((g.1)ᵀ a c * ((g⁻¹).1)ᵀ d b) • Q (Matrix.single c d 1) := by
     funext a b
-    simp only [← map_smul, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [← map_smul, ← map_sum]
     congr 1
     rw [Matrix.matrix_eq_sum_single (g.1 * _ * (g⁻¹).1)]
     refine Finset.sum_congr rfl fun c _ => Finset.sum_congr rfl fun d _ => ?_

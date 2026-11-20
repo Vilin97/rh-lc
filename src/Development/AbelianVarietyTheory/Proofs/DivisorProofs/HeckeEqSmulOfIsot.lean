@@ -42,7 +42,8 @@ theorem avg_fixed (ρ : G →* Module.End ℂ A) {x : A} (hx : ∀ s ∈ S, ρ s
     have e : k * q.out = (k • q).out * (((k • q).out)⁻¹ * (k * q.out)) := by group
     have e2 : ρ k (ρ q.out x) = ρ (k * q.out) x := by rw [map_mul]; rfl
     rw [e2, e, map_mul, Module.End.mul_apply, hx _ hmem]
-  simp only [avg, LinearMap.smul_apply, LinearMap.sum_apply, map_smul, map_sum, key]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [avg, LinearMap.smul_apply, LinearMap.sum_apply, map_smul, map_sum, key]
   congr 1
   exact Equiv.sum_comp (MulAction.toPerm k) (fun q : G ⧸ S => ρ q.out x)
 
@@ -53,7 +54,8 @@ theorem avg_of_fixed (ρ : G →* Module.End ℂ A) {y : A} (hy : ∀ k, ρ k y 
 
 theorem avg_map (ρ : G →* Module.End ℂ A) (ρ' : G →* Module.End ℂ B) (Φ : A →ₗ[ℂ] B)
     (h : ∀ g a, Φ (ρ g a) = ρ' g (Φ a)) (a : A) : Φ (avg S ρ a) = avg S ρ' (Φ a) := by
-  simp only [avg, LinearMap.smul_apply, LinearMap.sum_apply, map_smul, map_sum, h]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [avg, LinearMap.smul_apply, LinearMap.sum_apply, map_smul, map_sum, h]
 
 end Avg
 
@@ -222,7 +224,8 @@ theorem hecke_eq_smul_of_isot : ∀ {D : D7} {V : HSp D} {n : ℕ} (hF : D.host.
       apply Subtype.ext
       rw [Submodule.coe_sum]
       simpa [principalLevelFrame.Hecke₃, principalLevelFrame.heckeG, LinearMap.sum_apply, piRep_coe] using h1
-    rw [hOn, ← map_smul, ← h2, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hOn, ← map_smul, ← h2, map_sum]
     exact Finset.sum_congr rfl fun γ _ => (hE _ x).symm
   let W : Submodule ℂ (MMap M) := Submodule.span ℂ {T | ∃ Φ : π.S →ₗ[ℂ] MMap M, principalLevelFrame.IsEqvA (principalLevelFrame.actM Q M) π Φ ∧ ∃ x : π.S,
       (∀ κ, Q.ψ κ ∈ hyp V Pr → Formalism.L2.NG.rt D.host.E n κ (x : Formalism.AUTREP.GAf D.host.E n → ℂ) = x) ∧ T = Φ x}

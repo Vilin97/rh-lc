@@ -38,7 +38,8 @@ theorem hform_smul_left (c : R →+* R) (Jm : Matrix (Fin M) (Fin M) R) (x y : F
 theorem hform_conj (c : R →+* R) (hc : ∀ x, c (c x) = x) (Jm : Matrix (Fin M) (Fin M) R)
     (hJ : ∀ i j, c (Jm j i) = Jm i j) (x y : Fin M → R) :
     c (Formalism.UG.hform c Jm x y) = Formalism.UG.hform c Jm y x := by
-  simp only [Formalism.UG.hform, map_sum, map_mul, hc]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Formalism.UG.hform, map_sum, map_mul, hc]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   rw [hJ]
@@ -62,7 +63,8 @@ theorem qr_unitary (c : R →+* R) (hc : ∀ x, c (c x) = x) (Jm : Matrix (Fin M
   have hq : qr c Jm u k = 1 + k • Matrix.vecMulVec u v := by rw [hv]; rfl
   have hcv : ∀ i, c (v i) = Jm.mulVec u i := by
     intro i
-    simp only [hv, map_sum, map_mul, hc, Matrix.mulVec, dotProduct]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hv, map_sum, map_mul, hc, Matrix.mulVec, dotProduct]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [hJ]
     ring
@@ -156,7 +158,8 @@ theorem continuous_phi_pB (P : PlaceMap F K) (B : Module.Basis (Fin 2) F E) (ψ 
   have h : (fun x : AF F ⊗[F] E => phi K ψ (w * pB P x)) =
       fun x => ∑ i, P.proj (cd (B.coord i) x) * phi K ψ (w * inclR K (B i)) := by
     funext x
-    rw [pB_eq_sum P B, Finset.mul_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [pB_eq_sum P B, Finset.mul_sum, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [mul_smul_comm, map_smul, smul_eq_mul]
   rw [h]
@@ -189,7 +192,8 @@ theorem lift_fixes (P : PlaceMap F K) {L : HA K σ J →* HA (AF F) σ J} (hL : 
     ext i
     have hs : ∑ j, (((HA.mat K σ J x).1 : Matrix (Fin M) (Fin M) (K ⊗[F] E)) - 1) i j * inclR K (t j) =
         ((((HA.mat K σ J x).1 : Matrix (Fin M) (Fin M) (K ⊗[F] E)) - 1).mulVec (incV K t)) i := rfl
-    simp only [Matrix.mulVec, dotProduct, hL x i, vA, iB_mul_one_tmul, ← map_sum, Pi.zero_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, dotProduct, hL x i, vA, iB_mul_one_tmul, ← map_sum, Pi.zero_apply]
     rw [hs, Matrix.sub_mulVec, hz, Matrix.one_mulVec, sub_self]
     simp
   rw [Matrix.sub_mulVec, Matrix.one_mulVec, sub_eq_zero] at h0
@@ -265,7 +269,8 @@ theorem not_isCompact_planeSupp : ∀ {F E : Type} [Field F] [NumberField F] [Fi
     have h1 : Φ (L g) = phi K ψ (Formalism.UG.hform (sigR K σ) (JR K J) z
         (((HA.mat K σ J g).1 : Matrix (Fin M) (Fin M) (K ⊗[F] E)).mulVec z)) := by
       rw [← sum_form]
-      simp only [Φ, pB_lift P hL, map_sum, w]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Φ, pB_lift P hL, map_sum, w]
     rw [h1, hg, qr_mulVec, huz', mul_one, hform_add_right, hform_smul_right, hzu, mul_one, map_add, hphi, ← hC₀]
     ring
   have hmem : L g ∈ PlaneSupp σ J ε a b := by

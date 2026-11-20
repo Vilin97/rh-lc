@@ -151,7 +151,8 @@ theorem badW_of_del_bound_of_T_bound (p : PtAt ex Csz) (i : Fin D.R.m) (T : ℕ)
       refine Finset.sum_congr rfl fun g _ => ?_
       rw [LinearMap.smul_apply, mul_smul]
       rfl
-    rw [hsumE, LinearMap.sum_apply, hG, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hsumE, LinearMap.sum_apply, hG, map_sum]
     refine Finset.sum_congr rfl fun g _ => ?_
     rw [LinearMap.smul_apply, hequivE, map_smulₛₗ, hid]
   let aO : Option P' → (Fin N → D.what₂.LL) →ₗ[D.what₂.LL] (Fin N → D.what₂.LL) := fun o =>

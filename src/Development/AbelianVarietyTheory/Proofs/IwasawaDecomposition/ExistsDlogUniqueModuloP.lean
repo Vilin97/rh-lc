@@ -113,7 +113,8 @@ theorem dlog_exists_unique : ∀ (E : Type) [Field E] [NumberField E] [IsCMField
     have h3 : w = red _ (∑ i, a i • LieMet.tanOf (he i)) := Over.OverMorphism.ext (by rw [hw, red_left, h2])
     rw [h3]
     show dlog _ hq c _ = _
-    rw [map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, ← hh, mul_comm]
     rfl

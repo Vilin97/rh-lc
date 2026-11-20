@@ -52,7 +52,8 @@ theorem hasDerivAt_translate (hs : ∀ z w, hx X bas idx x w z = conj (hx X bas 
       (gaussR X bas idx x (ζ + t • u) * Φ (ζ + t • u)))
       (gaussR X bas idx x ζ * (-(π * ∑ k, hx X bas idx x (u k) (ζ k)) * Φ ζ + fderiv ℝ Φ ζ u)) 0 := by
   have hab : ∑ k, hx X bas idx x (ζ k) (u k) = conj (∑ k, hx X bas idx x (u k) (ζ k)) := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun k _ => hs (u k) (ζ k)
   have hph : ∀ t : ℝ, (((∑ k, hx X bas idx x (ζ k) ((t • u) k)).im : ℝ) : ℂ) =
       (t : ℂ) * (((∑ k, hx X bas idx x (ζ k) (u k)).im : ℝ) : ℂ) := by

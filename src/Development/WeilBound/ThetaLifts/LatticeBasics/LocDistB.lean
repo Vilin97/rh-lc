@@ -36,7 +36,8 @@ theorem ind_index (χ : G → ℂ) (l : (G → ℂ) →ₗ[ℂ] ℂ) (hl : ∀ �
     · rw [ind, Set.indicator_of_notMem (by exact hx)]
       exact (Finset.sum_eq_zero fun q _ => Set.indicator_of_notMem
         (fun h => hx ((mul_mem_cancel_right q.out.2).1 (hHK h))) _).symm
-  rw [this, map_sum, Finset.sum_congr rfl fun q _ => by rw [hl _ hH, hχ _ q.out.2, one_mul]]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [this, map_sum, Finset.sum_congr rfl fun q _ => by rw [hl _ hH, hχ _ q.out.2, one_mul]]
   simp [Subgroup.relIndex, Subgroup.index, Nat.card_eq_fintype_card]
 
 theorem ind_zero (χ : G → ℂ) (l : (G → ℂ) →ₗ[ℂ] ℂ) (hl : ∀ φ ∈ SB G, ∀ h, l (fun x => φ (x * h)) = χ h * l φ)
@@ -134,7 +135,8 @@ theorem left_of_right (χ : G →* ℂ) (θ : G →* G) (cθ : Continuous θ) (i
     ext x; rw [dec, hs]; simp [mul_assoc]
   rw [d2]
   conv_rhs => rw [d1]
-  rw [map_sum, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun q _ => ?_
   rw [map_smul, map_smul, hl _ (ind_mem o' c'), hl _ (ind_mem o c), key, map_mul, smul_eq_mul, smul_eq_mul]
   ring

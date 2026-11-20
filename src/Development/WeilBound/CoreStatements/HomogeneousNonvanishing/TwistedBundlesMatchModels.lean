@@ -84,7 +84,8 @@ theorem isVB_comap_equiv (X : Scheme.{0}) (Ω : Type) [Field Ω] (ξ : Spec (Com
     rw [hsp, Submodule.mem_span_range_iff_exists_fun, Submodule.mem_span_range_iff_exists_fun]
     refine exists_congr fun c => ?_
     rw [← φ.symm.injective.eq_iff, LinearEquiv.symm_apply_apply]
-    simp only [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum]
     refine Iff.of_eq (congrArg (· = v) ?_)
     refine Finset.sum_congr rfl fun i _ => ?_
     show φ.symm ((c i : Ω) • b i) = (c i : Ω) • φ.symm (b i)

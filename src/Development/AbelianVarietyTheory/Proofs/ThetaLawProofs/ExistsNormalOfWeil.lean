@@ -69,7 +69,8 @@ theorem exists_normal_of_weil (hT : ThetaUnifAV) (hmul : Out.MulNSt) (x : KeyIn 
     have h1 : ∀ m : Fin x.P.g → ℤ, (fun i => (m i : ℂ)) = ∑ i, m i • (Pi.single i 1 : Fin x.P.g → ℂ) := by
       intro m; ext k; simp [Finset.sum_apply, Pi.single_apply]
     rw [h1 m, h1 n]
-    simp only [Matrix.mulVec_sum, Matrix.mulVec_smul, map_add, map_sum, map_zsmul, (hφ _).1, (hφ _).2]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec_sum, Matrix.mulVec_smul, map_add, map_sum, map_zsmul, (hφ _).1, (hφ _).2]
   have hΛ : ∀ z, φ z ∈ u.Λ ↔ ∃ m n : Fin x.P.g → ℤ, z = (fun i => (m i : ℂ)) + τ.mulVec (fun i => (n i : ℂ)) := by
     refine fun z => ⟨fun hz => ?_, ?_⟩
     · obtain ⟨l, hl⟩ := (hFΛ (F.symm (φ z))).1 (by rwa [F.apply_symm_apply])

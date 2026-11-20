@@ -31,7 +31,8 @@ theorem arch (V : Type) [NormedAddCommGroup V] [NormedSpace ℝ V] [FiniteDimens
     ext x
     rw [hsum x, SchwartzMap.sum_apply]
   have : T (f - f 0 • f₀) = 0 := by
-    rw [e, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, map_sum]
     exact Finset.sum_eq_zero fun i _ => kills_linear_mul V T hT (L i) (h i) (g i) (hg i)
   rw [map_sub, map_smul, sub_eq_zero] at this
   rw [this, smul_eq_mul, mul_comm]

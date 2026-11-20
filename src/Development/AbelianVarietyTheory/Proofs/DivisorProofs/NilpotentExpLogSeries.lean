@@ -98,7 +98,8 @@ theorem exp_truncLog_one_add : ∀ (A : Type) [Ring A] [Algebra ℚ A] (D : ℕ)
     rw [map_mul, map_pow, aeval_X, h, zero_mul]
   have hS : aeval n (logPoly (N + 1)) =
       ∑ j ∈ Finset.range (N + 1), ((-1 : ℚ) ^ j / ((j : ℚ) + 1)) • n ^ (j + 1) := by
-    rw [logPoly, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [logPoly, map_sum]
     refine sum_congr rfl fun j _ => ?_
     rw [map_mul, aeval_C, map_pow, aeval_X, Algebra.smul_def]
   have hpow : (aeval n (logPoly (N + 1))) ^ (N + 1) = 0 := by
@@ -106,7 +107,8 @@ theorem exp_truncLog_one_add : ∀ (A : Type) [Ring A] [Algebra ℚ A] (D : ℕ)
   rw [← hS, IsNilpotent.exp_eq_sum hpow]
   have hE : aeval n ((expPoly (N + 1)).comp (logPoly (N + 1))) =
       ∑ i ∈ range (N + 1), ((i.factorial : ℚ))⁻¹ • (aeval n (logPoly (N + 1))) ^ i := by
-    rw [aeval_comp, expPoly, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [aeval_comp, expPoly, map_sum]
     refine sum_congr rfl fun i _ => ?_
     rw [map_mul, aeval_C, map_pow, aeval_X, Algebra.smul_def]
   rw [← hE]

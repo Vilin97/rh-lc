@@ -142,7 +142,8 @@ theorem khw_extract (ε : Fin n → Bool) {lam : Fin n → ℝ} (hlam : StrictAn
       tcoef φ y = ∑ t, φ (fockBasis n t) • tcoef ((fockBasis n).coord t) y := by
     intro φ
     conv_lhs => rw [tcoef_expand y]
-    simp [map_sum, tcoef_tmul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, tcoef_tmul]
   refine ⟨s, hs, ?_⟩
   unfold IsKHWVec
   refine ⟨fun a => ?_, fun a b hab heq => ?_⟩

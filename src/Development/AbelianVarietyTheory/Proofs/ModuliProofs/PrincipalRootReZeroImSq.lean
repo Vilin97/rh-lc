@@ -359,7 +359,8 @@ theorem nonneg_span {M : Type} [AddCommGroup M] (B : LinearMap.BilinForm ℤ M) 
   simp only [← e]
   have key : ∀ c : Fin n → ℝ, B.baseChange ℝ (∑ i, c i • (1 : ℝ) ⊗ₜ[ℤ] m i) (∑ i, c i • (1 : ℝ) ⊗ₜ[ℤ] m i) =
       ∑ i, ∑ j, c i * c j * B (m j) (m i) := fun c => by
-    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, LinearMap.BilinForm.baseChange_tmul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, LinearMap.BilinForm.baseChange_tmul,
       smul_eq_mul, zsmul_eq_mul, Finset.mul_sum]
     exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
   rw [key]
@@ -375,7 +376,8 @@ theorem nonneg_span {M : Type} [AddCommGroup M] (B : LinearMap.BilinForm ℤ M) 
   have h₁ := h (∑ i, k i • m i) (N.sum_mem fun i _ => N.smul_mem _ (hm i))
   have h₂ : ((B (∑ i, k i • m i) (∑ i, k i • m i) : ℤ) : ℝ) =
       ((b : ℤ) : ℝ) ^ 2 * ∑ i, ∑ j, (a i : ℝ) * a j * (B (m j) (m i) : ℝ) := by
-    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, Finset.mul_sum]
     push_cast
     exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by rw [hk', hk']; ring
   rw [h₂, mul_left_comm] at h₁

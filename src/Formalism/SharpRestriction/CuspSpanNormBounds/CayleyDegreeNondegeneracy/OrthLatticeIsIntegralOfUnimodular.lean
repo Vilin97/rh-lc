@@ -53,7 +53,8 @@ theorem eq_zero_of_embedding_mem_isotropic {x : (D.sp.X 0).V} (hx : D.sp.iXY 0 x
   have h0 : ∀ i, c i = 0 := by
     intro i
     have h1 := (D.sp.hyp_orthX i x).2
-    rw [← hc, map_sum, LinearMap.sum_apply] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hc, map_sum, LinearMap.sum_apply] at h1
     simp only [map_smulₛₗ, LinearMap.smul_apply, D.sp.hyp_ef, smul_eq_mul, mul_ite, mul_one, mul_zero,
       Finset.sum_ite_eq', Finset.mem_univ, if_true] at h1
     simpa using h1

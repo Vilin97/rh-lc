@@ -73,7 +73,8 @@ theorem comp_smul (hM : IsMultigrading ι M piece) [DirectSum.Decomposition piec
       (∑ d ∈ s.support with (fun k => (Finsupp.weight (blockWeight ι) d k : ℤ)) = m - c,
         monomial d (AddMonoidAlgebra.coeff s d)) • x := by
   conv_lhs => rw [s.as_sum]
-  rw [Finset.sum_smul, map_sum, Finset.sum_filter, Finset.sum_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.sum_smul, map_sum, Finset.sum_filter, Finset.sum_smul]
   refine Finset.sum_congr rfl fun d _ => ?_
   have h := monomial_smul_mem hM d (AddMonoidAlgebra.coeff s d) hx
   rw [comp_apply]

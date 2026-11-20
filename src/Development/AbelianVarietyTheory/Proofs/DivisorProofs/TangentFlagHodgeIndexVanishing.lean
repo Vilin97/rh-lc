@@ -196,7 +196,8 @@ theorem IsKS.row (P : AbelianDeRham) {Φ : Finset (E →+* ℂ)} {y : FrPt Xo c 
     refine LinearMap.ext fun h => ?_
     obtain ⟨a, ha⟩ := exists_sub_mem_Fil hρ hL hvs (kb := kb) (fun k => hl₂ k.1 k.2) h
     have := iso f hf _ ha
-    rw [map_sub, map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_sum] at this
     simpa [h0] using this
   have ed : ∀ k, th (hb k) - kb k ∈ Fil B := fun k => by
     have := (hl k.1 k.2).baseChange (hφ := hφ) hF hL (hth _) (htv _)

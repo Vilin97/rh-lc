@@ -66,13 +66,15 @@ theorem sand_exps [Nontrivial O] (E : EtTie W RA RW inclR φR gR πA)
     intro y hy
     refine ⟨fun j => b.repr ⟨y, hy⟩ j, ?_⟩
     have := congrArg (W.N T).subtype (b.sum_repr ⟨y, hy⟩)
-    rw [map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at this
     exact this.symm
   have hj : ∀ (c : Fin (Module.finrank O ↥T.L.T) → LetA O n)
       (w : Fin (Module.finrank O ↥T.L.T) → W.DD T),
       E.jD T (∑ j, c j • w j) = ∑ j, inclR (E.io (c j)) • E.jD T (w j) := by
     intro c w
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun j _ => jD_smulA E T _ _
   have hsp : ⊤ ≤ Submodule.span RW (Set.range fun i => E.jD T (b i : W.DD T)) := by
     rw [← E.jD_span T, Submodule.span_le]
@@ -107,7 +109,8 @@ theorem sand_exps [Nontrivial O] (E : EtTie W RA RW inclR φR gR πA)
         refine Submodule.span_le.mpr ?_
         rintro _ ⟨z, hz, rfl⟩
         obtain ⟨c, rfl⟩ := hexp z hz
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         refine Submodule.sum_mem _ fun j _ => ?_
         rw [φD_smulA]
         exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨j, rfl⟩)
@@ -189,7 +192,8 @@ theorem le_mx [NeZero n] (M : ZMod n → ℕ) (i : ZMod n) : M i ≤ mx M :=
 theorem upper_exp [NeZero n] (T : LocLat G Qp LL O) (M h : ZMod n → ℕ) (hp : p5 W T M h) :
     ∀ x ∈ W.N T, W.Q ^ mx M • W.φD T x ∈ W.N T := by
   intro x hx
-  rw [decomp T x, map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [decomp T x, map_sum, Finset.smul_sum]
   refine Submodule.sum_mem _ fun j _ => ?_
   have h1 := hp.1 (j + 1) _ (by rw [add_sub_cancel_right]; exact smul_mem_Nl T j x hx)
   obtain ⟨d, hd⟩ := Nat.exists_eq_add_of_le (le_mx M (j + 1))

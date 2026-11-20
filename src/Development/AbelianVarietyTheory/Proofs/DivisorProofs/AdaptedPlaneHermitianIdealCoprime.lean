@@ -61,7 +61,8 @@ theorem form_smul_left (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n
 
 theorem form_swap {σ : E →ₐ[F] E} (h : IsCMExt F E σ) {n : ℕ} {J : Matrix (Fin n) (Fin n) E}
     (hJ : ∀ i j, σ (J j i) = J i j) (a b : Fin n → E) : form σ J b a = σ (form σ J a b) := by
-  simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, cm_conj_conj h, Finset.mul_sum, hJ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, cm_conj_conj h, Finset.mul_sum, hJ]
   conv_rhs => rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   ring
@@ -120,7 +121,8 @@ theorem exists_val_eq_one {σ : E →ₐ[F] E} {J : Matrix (Fin n) (Fin n) E} (�
     exact lt_of_le_of_ne (val_le_one τ hB (hC l hl)) (hcon _ (hC l hl))
   let φ : (Fin n → Fv F v) → Fv F v := fun u => u ⬝ᵥ (J.map τ *ᵥ fun j => τ (σ (y₀ j)))
   have hφ : ∀ l : Fin n → E, φ (fun i => τ (l i)) = τ (form σ J l y₀) := fun l => by
-    simp [φ, form, dotProduct, Matrix.mulVec, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [φ, form, dotProduct, Matrix.mulVec, map_sum, map_mul]
   have key : ∀ z ∈ latLoc F L v, Valued.v (φ (splitVec τ z)) < 1 := fun z hz => by
     refine latLoc_induction (p := fun z => Valued.v (φ (splitVec τ z)) < 1) (fun a ha l hl => ?_) ?_
       (fun y z hy hz => ?_) (fun y hy => ?_) hz
@@ -169,7 +171,8 @@ theorem col_facts (τ : E →ₐ[F] Fv F v) {β : GL (Fin n) (Fv F v)} (hβ : Is
 
 theorem pair_apply (σ : E →ₐ[F] E) (J : Matrix (Fin n) (Fin n) E) (τ : E →ₐ[F] Fv F v) (z' z : Fin n → E) :
     (fun i => (τ.comp σ) (z' i)) ⬝ᵥ Jᵀ.map τ *ᵥ (fun i => τ (z i)) = τ (form σ J z z') := by
-  simp only [form, dotProduct, Matrix.mulVec, Matrix.map_apply, Matrix.transpose_apply, map_sum, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, Matrix.mulVec, Matrix.map_apply, Matrix.transpose_apply, map_sum, map_mul,
     AlgHom.comp_apply, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_

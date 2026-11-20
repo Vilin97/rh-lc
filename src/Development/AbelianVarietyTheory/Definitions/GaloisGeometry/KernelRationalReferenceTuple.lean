@@ -297,7 +297,8 @@ variable {R : Ranks} {LL : Type} [Field LL] [NumberField LL] [StarRing LL] {embL
   {C : ColumnChain R Tau hc} {A : ColumnsAtT R C} {P : PeriodMap R C}
 
 theorem emb_mem_Fi (M : MemberForms LL embLL Pl Tau hc C A P) (i : ℕ) (x : (M.lat i).V) : M.emb i x ∈ M.Fi i := by
-  rw [← (M.emb_basis i).2, ← (M.lat i).b.sum_repr x, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← (M.emb_basis i).2, ← (M.lat i).b.sum_repr x, map_sum]
   exact Submodule.sum_mem _ (fun a _ => by
     rw [LinearMap.map_smulₛₗ]; exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨a, rfl⟩))
 

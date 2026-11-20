@@ -162,7 +162,8 @@ theorem mem_intLoc_iff (hw : IsInertAt F E v w) (h : w.under (𝓞 F) = v) (y : 
     · rw [h3 u e]; exact zero_mem _
   obtain ⟨m, g, hg⟩ := Module.Finite.exists_fin (R := ℤ) (M := 𝓞 E)
   obtain ⟨r, hr, e⟩ := P.levelaf_decomp g hg h4
-  rw [← h1, ← c.apply_symm_apply Y, e, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← h1, ← c.apply_symm_apply Y, e, map_sum, map_sum]
   exact sum_mem fun j _ => tmul_mem_intLoc (hr j v) (g j)
 
 def complEquiv (hw : IsInertAt F E v w) (h : w.under (𝓞 F) = v) : Fv F v ⊗[F] E ≃+* w.adicCompletion E :=
@@ -378,7 +379,8 @@ theorem mem_latAt_iff (hw : IsInertAt F E v w) (hc : IsConjAt σ h c) (hL : IsSe
   have e : ∀ x y, toCompl h (hLin σ J (Fv F v) y x) =
       hform c (J.map (algebraMap E _)) (toCompl h ∘ x) (toCompl h ∘ y) := fun x y => by
     rw [← JR_map h]
-    simp only [hLin, hR, hform, map_sum, map_mul, ← hc _, Function.comp_apply, Matrix.map_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hLin, hR, hform, map_sum, map_mul, ← hc _, Function.comp_apply, Matrix.map_apply]
   obtain ⟨y, rfl⟩ := exists_comp h z
   rw [← mem_latLoc_iff hw, hL]
   refine ⟨fun hy z hz => ?_, fun hy x hx => ?_⟩

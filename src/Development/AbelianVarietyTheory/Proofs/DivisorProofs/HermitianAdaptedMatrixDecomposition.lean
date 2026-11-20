@@ -53,7 +53,8 @@ theorem decompose : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [Number
         Matrix.vecMulVec (incV F H.x) (incV F a) + incM F H.ι * incM F (Matrix.of u)ᵀ +
           Matrix.vecMulVec (incV F H.y) (incV F b) := by
       ext i j
-      simp [incM, incV, Matrix.vecMulVec_apply, Matrix.mul_apply, map_sum, map_add, map_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [incM, incV, Matrix.vecMulVec_apply, Matrix.mul_apply, map_sum, map_add, map_mul]
     rw [e1, e2] at hI'
     conv_lhs => rw [← Matrix.one_mul w, hI']
     have hv : ∀ (p : Fin n → AE F E) (q : Fin n → AE F E), Matrix.vecMulVec p q * w = Matrix.vecMulVec p (q ᵥ* w) := by

@@ -76,12 +76,14 @@ theorem model_good_span {G0 E : Type} [Group G0] [Fintype G0] [NormedAddCommGrou
   obtain ⟨h1, h2, h3⟩ := model_form P M hM hj
   rw [goodAt, level_idempotent_bot, mul_one]
   refine range_adjoint_le_span h1 h2 (sum_selfAdj r _ (fun g => ?_) fun g v w => ?_) fun v => ?_
-  · simp only [coeff_idemOf, map_sum, map_mul, map_div₀, map_natCast, inv_inv]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [coeff_idemOf, map_sum, map_mul, map_div₀, map_natCast, inv_inv]
     refine Finset.sum_congr rfl fun c hc => ?_
     rw [← (hX c hc).map_inv σ, ← (hX c hc).map_inv σ, inv_one, inv_inv]
   · rw [h3, h3, hr.unitary]
   · rw [← he (j v)]
-    simp only [LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smulₛₗ, hΘ, RingHom.id_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smulₛₗ, hΘ, RingHom.id_apply]
 
 end Pres
 
@@ -97,7 +99,8 @@ theorem proj_lifts_core {R : RealDat D A Ks} {F : Face D A} {s : ℕ} (hC : Core
   have hs : ∀ a, sg0 D A a = D.what₂.embLL a := fun a => by rw [sg0, sgAt_mk _ R.hv0]
   have h2 : R.thG i t y = ∑ g, D.what₂.embLL ((idemOf A.X).coeff g) • R.gW i (sg0 D A) g z := by
     refine (hC.models.HW i _).1 ?_
-    rw [hC.thP.thG, ← hz, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hC.thP.thG, ← hz, map_sum]
     refine (postOn_gaL (R.MW i (sg0 D A)) (R.βW i) (R.datWp i R.triv) R.eG _ _).trans ?_
     exact Finset.sum_congr rfl fun g _ => by rw [map_smul, hC.models.gW, RealDat.eC, hs]; rfl
   rw [h2]

@@ -124,7 +124,8 @@ theorem exists_families (hL : Laws) (hT : DVR.TwistBaseChangeStatement) {R R' : 
       (fun _ => b' i α - ∑ l, c i l • b l α) ?_ 0)
     · rw [Fin.sum_univ_one, _root_.mul_one] at ha
       rw [Subsingleton.elim i 0]; exact hg (ha.trans (map_zero _).symm)
-    · rw [Fin.sum_univ_one, one_smul, map_sub, map_sum, sub_eq_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [Fin.sum_univ_one, one_smul, map_sub, map_sum, sub_eq_zero]
       refine (eq_pullOver_of_secScal hM pb.w (c₁ α) (q₃ i α)).trans
         ((hc' i α).trans (Finset.sum_congr rfl fun l _ => ?_))
       rw [map_smulₛₗ]
@@ -136,7 +137,8 @@ theorem exists_families (hL : Laws) (hT : DVR.TwistBaseChangeStatement) {R R' : 
     refine congrArg (fun q => LB.Sec.f q j) (?_ : famProj D'.toPre F' k x (s₂' i) =
       famProj D'.toPre F' k x (∑ l, π (c i l) • s' l))
     refine ((hmv _ _).1 (q₄ i x)).symm.trans ((congrArg mv (e₂ i (hD.xe x))).trans ?_)
-    rw [map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum]
     refine Finset.sum_congr rfl fun l _ => ?_
     rw [map_smulₛₗ, map_smul, (hmv _ _).1 (b₂ l x)]
     rfl
@@ -147,7 +149,8 @@ theorem exists_families (hL : Laws) (hT : DVR.TwistBaseChangeStatement) {R R' : 
   rintro _ ⟨v, rfl⟩
   have hv : v ∈ Submodule.span (FractionRing R') (Set.range F₁) := hspan ▸ Submodule.mem_top
   obtain ⟨a, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun _).1 hv
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Submodule.sum_mem _ fun i _ => by
     rw [map_smulₛₗ]; exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)
 
@@ -236,13 +239,15 @@ theorem qkToAkU_specialises : Laws → Laws2 → DVR.TwistBaseChangeStatement �
   obtain ⟨l, -, hl⟩ := TorsionImage.exists_smul_of_phiVal p₀ ν ν₀ hν hν₀
   obtain ⟨Φ', hΦ'⟩ := phiFun_of_globalFns hG R' I' D' F' k hk p₁ ν' hν'
   have m : ∀ i, mv (aS (b i)) = l • mv (∑ j, c i j • b j) := fun i => e.injective (by
-    rw [map_smul, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_smul, map_sum, map_sum]
     simp only [map_smulₛₗ, RingHom.id_apply, E]
     exact hl _ _ _ ((phiRel_iff hG p₀ ν hν _ _).1 (hc i).1) ((phiRel_iff hG p₀ ν₀ hν₀ _ _).1
       (Hν _ _ _ _ ((he _ _).2 (E i)) ((he _ _).2 rfl) (act _ _ ((haS _ _).2 rfl)))))
   have m₁ : ∀ i, mv' (aS (b i)) = a' (mv' (b i)) := fun i => ((ha' _ _).1 (act' _ _ ((haS _ _).2 rfl))).symm
   have m₂ : ∀ i, e' (mv' (∑ j, c i j • b j)) = Φ' (s' i) := fun i => by
-    rw [map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum]
     simp only [map_smulₛₗ, RingHom.id_apply, E']
     exact (hΦ' _ _).1 (hc i).2
   obtain ⟨l', hl', m'⟩ : ∃ l' : F', l' ≠ 0 ∧ ∀ i, e' (a' (mv' (b i))) = l' • Φ' (s' i) := by

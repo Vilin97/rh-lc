@@ -160,8 +160,10 @@ theorem ratForm_eq (θ : K) (x y : ι → K ⊗[K] E) :
     refine Finset.sum_congr rfl fun t _ => Finset.sum_congr rfl fun t' _ => ?_
     push_cast
     ring
-  rw [ratForm, key, map_sum]
-  simp only [dotProduct, mulVec, ratGram, Finset.mul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [ratForm, key, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dotProduct, mulVec, ratGram, Finset.mul_sum, map_sum]
   refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun j' _ => ?_
   rw [← Rat.smul_def, map_smul, smul_eq_mul]
   ring

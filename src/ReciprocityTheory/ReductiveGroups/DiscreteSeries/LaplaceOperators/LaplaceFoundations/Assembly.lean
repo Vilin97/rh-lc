@@ -83,7 +83,8 @@ theorem cay_inG {ε : Fin (2 * r + k + 1) → Bool} {P : Mat k r} (hP : Formalis
 
 theorem conj_sum_sub {ι : Type*} (s : Finset ι) (a : ι → ℂ) :
     starRingEnd ℂ (∑ i ∈ s, (a i - starRingEnd ℂ (a i))) = -∑ i ∈ s, (a i - starRingEnd ℂ (a i)) := by
-  rw [map_sum, ← Finset.sum_neg_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, ← Finset.sum_neg_distrib]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_sub, Complex.conj_conj, neg_sub]
 

@@ -127,9 +127,11 @@ theorem massS_ratio (D : D7) (h1 : UnitaryVolumeMass.stMassRatio D) (j : ℕ) (h
   have hsym : ∀ n : ℕ, (Cnt.stdH D.host.E n).IsSymm := fun n => by
     first
       | exact fun x y => by
-          simp [Cnt.stdH, LinearMap.mk₂'ₛₗ_apply, starRingEnd_apply, star_sum, map_sum, star_mul, star_star]
+          set_option synthInstance.maxHeartbeats 100000 in
+            simp [Cnt.stdH, LinearMap.mk₂'ₛₗ_apply, starRingEnd_apply, star_sum, map_sum, star_mul, star_star]
       | exact ⟨fun x y => by
-          simp [Cnt.stdH, LinearMap.mk₂'ₛₗ_apply, starRingEnd_apply, star_sum, map_sum, star_mul, star_star]⟩
+          set_option synthInstance.maxHeartbeats 100000 in
+            simp [Cnt.stdH, LinearMap.mk₂'ₛₗ_apply, starRingEnd_apply, star_sum, map_sum, star_mul, star_star]⟩
   have hr := h1 j hj (Fin j → D.host.E) (Fin (j - 1) → D.host.E) (Cnt.stdH D.host.E j) (Cnt.stdH D.host.E (j - 1))
     (Cnt.stdLat D.host.E j) (Cnt.stdLat D.host.E (j - 1)) (hsym j) (hsym (j - 1))
     (cnt_stdLat_isOrtho D.host.E j) (cnt_stdLat_isOrtho D.host.E (j - 1))
@@ -427,7 +429,8 @@ theorem card_quot_le_pow {R : Type} [CommRing R] {N : Type} [AddCommGroup N] [Mo
         | exact hf.2
     refine ⟨fun x => Ideal.Quotient.mk I (f x), ?_⟩
     have e1 : M'.mkQ (∑ x : s, f x • lift x) = ∑ x : s, f x • (x : N ⧸ M') := by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       exact Finset.sum_congr rfl fun x _ => by rw [map_smul, hlift]
     have e2 := e1.trans ((Finset.sum_coe_sort s (fun i => f i • i)).trans hf')
     have hM'mem : ∑ x : s, f x • lift x - n ∈ M' := by

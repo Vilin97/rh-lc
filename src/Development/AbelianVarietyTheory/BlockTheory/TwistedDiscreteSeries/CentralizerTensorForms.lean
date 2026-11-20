@@ -70,7 +70,8 @@ theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.CentralizerTensorForms.fo
   congr 1
   funext i
   unfold _root_.Formalism.UG.cT
-  simp [vecMul, mulVec, dotProduct, map_sum, mul_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [vecMul, mulVec, dotProduct, map_sum, mul_comm]
 
 end Ring
 

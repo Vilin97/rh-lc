@@ -67,7 +67,8 @@ theorem exists_short_eigen {H : Type} [Group H] [Finite H] (st : H → V →ₗ[
     have := Λ.smul_mem a (hΛ h y (hsΛ hy))
     rwa [← algebraMap_smul K a] at this
   · beta_reduce
-    rw [map_sum, Finset.smul_sum, ← Equiv.sum_comp (Equiv.mulRight g) fun h => _ • _ • st h y]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.smul_sum, ← Equiv.sum_comp (Equiv.mulRight g) fun h => _ • _ • st h y]
     refine Finset.sum_congr rfl fun h _ => ?_
     rw [map_smul, ← hst, smul_smul, Equiv.coe_mulRight, map_mul, mul_inv, ← Units.val_mul, mul_left_comm, mul_inv_cancel, mul_one]
   · refine (norm_sum_le_of_gram hG hc _ _ σ).trans ?_

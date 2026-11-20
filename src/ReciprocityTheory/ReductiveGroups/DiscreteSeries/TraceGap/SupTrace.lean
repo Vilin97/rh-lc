@@ -107,7 +107,8 @@ theorem supTrace (n : ℕ) : SupTraceStatement n := by
   set Q := ∑ s ∈ Finset.univ.filter (IsPhysSet ε), ((-1 : ℂ) ^ s.card) • Qm s s with hQdef
   have hQ : ∀ m, MvPolynomial.eval (entVar m) Q = physDet ε m := by
     intro m
-    rw [← strPhys_eq_physDet, strPhys, hQdef, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← strPhys_eq_physDet, strPhys, hQdef, map_sum]
     refine Finset.sum_congr rfl fun s _ => ?_
     rw [MvPolynomial.smul_eval, hQm]
     rfl

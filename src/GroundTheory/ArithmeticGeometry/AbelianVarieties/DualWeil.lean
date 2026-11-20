@@ -74,11 +74,13 @@ theorem pullbackPt_apply (R₀ R : E.toAffine.Point) :
     φ.sum_single_apply, φ.sum_single_zero_apply, smul_eq_mul]
 
 theorem divisorDegree_pullbackPt (R₀ : E.toAffine.Point) : divisorDegree E (φ.pullbackPt R₀) = 0 := by
-  simp [pullbackPt, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [pullbackPt, map_sum]
 
 theorem divisorSum_pullbackPt (R₀ : E.toAffine.Point) :
     divisorSum E (φ.pullbackPt R₀) = (φ.degree : ℤ) • R₀ := by
-  simp only [pullbackPt, map_zsmul, map_sum, map_sub, divisorSum_single, one_smul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [pullbackPt, map_zsmul, map_sum, map_sub, divisorSum_single, one_smul,
     add_sub_cancel_right, Finset.sum_const, Finset.card_univ]
   rw [← φ.ramIdx_mul_card_ker, Nat.card_eq_fintype_card, ← natCast_zsmul, smul_smul]
   push_cast

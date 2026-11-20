@@ -23,7 +23,8 @@ theorem coefwise_del_sum_smul {n : ℕ} {ι : Type} [Fintype ι] {v : V n} (g : 
   refine (bas n).ext_elem fun S => ?_
   have e : (fun x => (bas n).repr (∑ k, g k x • Q k x) S) = fun x => ∑ k, g k x * (bas n).repr (Q k x) S :=
     funext fun x => by simp only [map_sum, map_smul, Finsupp.finset_sum_apply, Finsupp.smul_apply, smul_eq_mul]
-  rw [FormMul.repr_coefwise, e,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [FormMul.repr_coefwise, e,
     del_sum (A := fun k x => g k x * (bas n).repr (Q k x) S) (fun k _ => (hg k).mul (hQ k S)),
     ContinuousLinearMap.sum_apply, map_sum, Finsupp.finset_sum_apply]
   refine Finset.sum_congr rfl fun k _ => ?_

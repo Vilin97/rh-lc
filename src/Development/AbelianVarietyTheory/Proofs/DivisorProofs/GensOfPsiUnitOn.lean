@@ -95,7 +95,8 @@ theorem finite_sublevel {X : Type} [AddCommGroup X] [Module.Free ℤ X] [Module.
     have h1 : β (x - y) (x - y) = 0 := by
       generalize x - y = z at h0
       have e := congrArg (fun w => β w z) (b.sum_repr z)
-      simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, h0, smul_zero,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, h0, smul_zero,
         Finset.sum_const_zero] at e
       exact e.symm
     exact (hp _ hz).ne' h1

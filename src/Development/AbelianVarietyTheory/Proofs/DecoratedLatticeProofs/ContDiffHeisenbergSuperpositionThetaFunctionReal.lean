@@ -35,7 +35,8 @@ theorem clm_expand (φ : RW T S →L[ℝ] ℂ) : φ = ∑ i, φ (bas S T i) • 
   ext u
   have e : φ u = ∑ i, (bas S T).repr u i • φ (bas S T i) := by
     conv_lhs => rw [← (bas S T).sum_repr u]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [map_smul]
   rw [e]
   simp [coordC, ContinuousLinearMap.sum_apply, Complex.real_smul, mul_comm]

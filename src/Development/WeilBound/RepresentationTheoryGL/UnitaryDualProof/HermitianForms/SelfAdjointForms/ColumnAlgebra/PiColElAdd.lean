@@ -71,7 +71,8 @@ theorem collapse {X : Type} (T : Finset X) (hT : 0 < T.card) (f : X → Circle) 
 theorem fp_comm (ξ : Fin (m + 1) → k) (p : AddSubgroup (Fin (m + 1) → k) × Finset (Fin (m + 1) → k)) (y : Fin (m + 1) → k)
     (x : V) : π (colEl k m N h y) (fp ψ h π ξ p x) = fp ψ h π ξ p (π (colEl k m N h y) x) := by
   unfold fp
-  rw [map_smul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_smul, map_sum]
   congr 1
   refine Finset.sum_congr rfl fun t _ => ?_
   rw [map_smul, ← pi_colEl_add, ← pi_colEl_add, add_comm y t]
@@ -199,7 +200,8 @@ theorem avg_selfadj (hB : Lv ψ h π s B) (ξ : Fin (m + 1) → k) {A : AddSubgr
       AddChar.map_neg_eq_inv, Circle.coe_inv_eq_conj, psi_mul_conj, one_mul]
   rw [avg_eq_fp ξ hpw]
   unfold fp
-  rw [LinearMap.map_smulₛₗ, map_sum, Finset.sum_congr rfl hterm, Finset.sum_const, ← Nat.cast_smul_eq_nsmul ℂ,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [LinearMap.map_smulₛₗ, map_sum, Finset.sum_congr rfl hterm, Finset.sum_const, ← Nat.cast_smul_eq_nsmul ℂ,
     smul_smul, map_inv₀, map_natCast, inv_mul_cancel₀ (by exact_mod_cast (card_pos hpw).ne' : (pw.2.card : ℂ) ≠ 0),
     one_smul]
 

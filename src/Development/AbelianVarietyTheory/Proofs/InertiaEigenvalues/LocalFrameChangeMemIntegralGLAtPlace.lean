@@ -150,7 +150,8 @@ theorem kappa_integral_at : ∀ (D : D7) (P : Pl D.host.E) (m n : ℕ) (U Y : Ma
   have hAB : topAt P hmn U * κ.map cp = topAt P hmn Y := by
     refine Matrix.ext fun i j => ?_
     have h := congrArg cp (congrFun (congrFun hUk (Fin.castLE hmn i)) j)
-    simp only [Matrix.mul_apply, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mul_apply, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_sum,
       map_mul, map_add, map_sub, map_one, hc, sub_self, zero_mul, add_zero, one_mul] at h
     rw [Matrix.mul_apply]
     simp only [Matrix.map_apply]

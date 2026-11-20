@@ -37,7 +37,8 @@ private theorem mul_inv_mul_eq_mul_inv_mul_of_factorizations (c d : ℂ) (x : A)
 theorem opM_eq (ρ : Mt n →ₗ[ℂ] A) (p q : Mt n) :
     opM ρ p q = (pᵀ).map (algebraMap ℂ A) * opM ρ 1 1 * (qᵀ).map (algebraMap ℂ A) := by
   ext a b
-  simp only [opM, Matrix.of_apply, Matrix.mul_apply, Matrix.map_apply, Matrix.transpose_apply, one_mul, mul_one,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [opM, Matrix.of_apply, Matrix.mul_apply, Matrix.map_apply, Matrix.transpose_apply, one_mul, mul_one,
     single_one_mul_single_one', map_sum, map_smul, Finset.sum_mul, mul_inv_mul_eq_mul_inv_mul_of_factorizations]
   rw [Finset.sum_comm]
 

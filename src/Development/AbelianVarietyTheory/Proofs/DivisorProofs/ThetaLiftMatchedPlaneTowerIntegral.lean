@@ -30,7 +30,8 @@ theorem fm_swap {σ : E →ₐ[F] E} (hσ : ∀ x, σ (σ x) = x) {n : ℕ} {J :
     have := hJ i j
     simp only [Matrix.smul_apply, Matrix.map_apply, smul_eq_mul, map_mul, hσ] at this
     exact this
-  simp only [fm, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, Finset.mul_sum, AlgHom.coe_toRingHom]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [fm, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, Finset.mul_sum, AlgHom.coe_toRingHom]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   have := hJ' i j
@@ -68,7 +69,8 @@ theorem det_ne_zero_cartan (B : Base F E) {n : ℕ} (Y : Spc F E n)
   have hMv : M *ᵥ v' = 0 := by
     ext i
     have := congrArg τ (congrFun hJv i)
-    simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Pi.zero_apply, map_zero] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Pi.zero_apply, map_zero] at this
     simp only [M, v', Matrix.smul_mulVec, Matrix.mulVec, dotProduct, Matrix.map_apply, Pi.smul_apply, smul_eq_mul,
       Pi.zero_apply, Matrix.smul_apply, mul_assoc, ← Finset.mul_sum, this, mul_zero]
   have hx : star v' ≠ 0 := fun h => hv' (by simpa using congrArg star h)
@@ -157,7 +159,8 @@ theorem gen_iff' {σ : E →ₐ[F] E} (hσ : ∀ x, σ (σ x) = x) {c : E} (hc :
         cT (cA σ).toRingHom (Matrix.of fun i (_ : Fin 1) => incV F H'.x i) *
           (inclR (F := F) (AF F) c • (incM F W.J).map (cA σ).toRingHom) := by
       ext k j
-      simp only [adMat, cT, Matrix.map_apply, Matrix.mul_apply, Matrix.transpose_apply, Matrix.of_apply, Matrix.smul_apply,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [adMat, cT, Matrix.map_apply, Matrix.mul_apply, Matrix.transpose_apply, Matrix.of_apply, Matrix.smul_apply,
         smul_eq_mul, map_sum, map_mul, incV, incM, cAr_inclR, RingHom.coe_coe]
     have hu : (mat u)ᵀ * incM F W.J * (mat u).map (cA σ).toRingHom = incM F W.J := u.2
     rw [e]

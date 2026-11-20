@@ -41,7 +41,8 @@ theorem isSst_of_periodMatrix : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (A
     | tmul v c =>
       funext i
       rw [stRep_tmul, hcrd, hcrd, ← LinearMap.toMatrix_mulVec_repr b b (ρ g) v]
-      simp only [hM, Matrix.mulVec, dotProduct, Matrix.map_apply, Algebra.smul_def, map_mul, AlgHom.commutes,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hM, Matrix.mulVec, dotProduct, Matrix.map_apply, Algebra.smul_def, map_mul, AlgHom.commutes,
         map_sum, Finset.sum_mul, mul_assoc]
     | add x y hx hy =>
       rw [map_add, map_add, hx, hy, ← Matrix.mulVec_add]

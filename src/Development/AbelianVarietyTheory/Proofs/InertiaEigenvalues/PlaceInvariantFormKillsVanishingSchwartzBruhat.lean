@@ -70,7 +70,8 @@ theorem form_placeModel_eq_zero_of_vanish : ∀ (D : D7) (ψ : AddChar (AF D.hos
     · rw [Finset.sum_congr rfl fun y hy => by rw [hsym y hy], h2 hex, zero_mul]
   have hsum : ∑ y ∈ Y, ℓ (Tm (fun t => ψ (symplO S T t y) * Ψ t)) =
       ℓ (Tm (fun t => ∑ y ∈ Y, ψ (symplO S T t y) * Ψ t)) := by
-    rw [← map_sum ℓ, ← map_sum Tm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum ℓ, ← map_sum Tm]
     congr 2
     funext t
     simp [Finset.sum_apply]

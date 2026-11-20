@@ -40,7 +40,8 @@ theorem sum_ae {m : ℕ} (b : Fin m → C) (g : Fin m → ℂ) :
     ((∑ i, g i • uniformisationL2 V σ rd dict mu h (b i) : Lp ℂ 2 (muQ1 V)) : AutQ V → ℂ) =ᵐ[muQ1 V]
       onQ V (adel V dict mu (∑ i, g i • rd (b i))) := by
   have e : onQ V (adel V dict mu (∑ i, g i • rd (b i))) = ∑ i, g i • jFn V σ rd dict mu (b i) := by
-    rw [map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, map_smul]
     rfl

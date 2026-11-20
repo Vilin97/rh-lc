@@ -15,7 +15,8 @@ theorem semilinear_injective_of_indep {K L V W ι : Type} [Field K] [Field L] [A
   refine (injective_iff_map_eq_zero c).2 fun v hv => ?_
   have hexp : c v = ∑ i ∈ (b.repr v).support, φ (b.repr v i) • c (b i) := by
     conv_lhs => rw [← b.linearCombination_repr v]
-    rw [Finsupp.linearCombination_apply, Finsupp.sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finsupp.linearCombination_apply, Finsupp.sum, map_sum]
     exact Finset.sum_congr rfl fun i _ => map_smulₛₗ c _ _
   have hz := linearIndependent_iff'.1 h (b.repr v).support (fun i => φ (b.repr v i)) (by rw [← hv, hexp])
   have hrepr : b.repr v = 0 := by
@@ -44,11 +45,13 @@ theorem hkF_transfer {D : D7} (V : HSp D) {K U W W' : Type} [Field K] [AddCommGr
   rw [hkF_single_one, Pi.smul_apply]
   have key : ∑ γ ∈ GlobalTheory.Hk3.rep V P d, v (h * (finHom V).rangeRestrict γ) = a • v h := by
     apply inj
-    rw [map_sum, map_smulₛₗ]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_smulₛₗ]
     simp only [← fun x => (hv x).1]
     exact e'
   simp only [fun x => (hv x).2]
-  rw [← map_smulₛₗ, ← key, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_smulₛₗ, ← key, map_sum]
 
 theorem eigF_conj : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type} {A : FamIn D.what₂.LL G Pl0 T0 D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks), R.models_jV → ∀ gramR c0R c0L, GlobalTheory.GalLift.Comparison₂ R gramR c0R c0L → ∀ (i : Fin D.R.m) (σ : D.what₂.LL →+* ℂ) (c : CoefA (Vc D i)) (c₁ : VsV D i D.what₂.LL →ₛₗ[σ] c.W) (H : HMod (Bridge.Gf (Vc D i) → c.W)) (j : A.fam.amb.FL i A.μ0 →ₛₗ[σ] H.H), GlobalTheory.IndefiniteRowSideFullHecke.WeilGramSignature.IsConjForms R i σ (c0L i) c c₁ H j → ∀ a x, GlobalTheory.ConjScalar.EigK R i a x → GlobalTheory.ConjScalar.EigF R i (fun P d => σ (a P d)) (H.e (j x)) := by
   intro D G _ _ Pl0 T0 A Ks _ _ _ R _ gramR c0R c0L hT i σ c c₁ H j hc a x hx

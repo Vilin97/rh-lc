@@ -48,7 +48,8 @@ theorem teich_sum_one (A : PAlg l) {ι : Type} [Fintype ι] {e : ι → A.A}
       rw [← map_mul, he.ortho hij, WittVector.teichmuller_zero]⟩
   refine eq_of_idem A ho.isIdempotentElem_sum IsIdempotentElem.one ?_
   show WittVector.constantCoeff (∑ a, (WittVector.teichmuller l (e a) : A.W)) = WittVector.constantCoeff (1 : A.W)
-  rw [map_sum, map_one]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_one]
   simp only [WittVector.constantCoeff_apply, WittVector.teichmuller_coeff_zero]
   exact he.complete
 
@@ -197,7 +198,8 @@ theorem lcLog : CrystallineSemistableComparison.E.LcIdem → CrystallineSemistab
   obtain ⟨y, hy⟩ := (hEx l A n).1 _ h1
   have hloc := fun a : ZMod (l ^ n) => log_on_part hEx hMul hEps A n hη' hz (he.idem a) (hE a) h1 hy
   have hsumA : ∑ a, A.toAcr n (WittVector.teichmuller l (e a)) = 1 := by
-    rw [← map_sum, teich_sum_one A he, map_one]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, teich_sum_one A he, map_one]
   have hlc := ((hS l H A hA n).2.2.2 f e he (fun a p hpn => (hiff a p).1 hpn))
   have hfin : y = (ACris.periodT (untilt_epsilon (p := l)) : Acris l) • lcA A n f := by
     rw [Algebra.smul_def, hlc]

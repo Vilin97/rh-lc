@@ -231,7 +231,8 @@ theorem idem_div_int {e : AE D} {P : Finset (Formalism.L2.DIV.Pl D.host.E)} (he 
     (hP : ∀ PP ∈ P, (N : 𝓞 D.host.E) ∉ PP.asIdeal) :
     toEAf D (e * incA D (N : D.host.E)⁻¹) ∈ Formalism.L2.Herm.intAf D.host.F D.host.E := by
   obtain ⟨⟨es, hes, rfl⟩, -⟩ := he
-  rw [Finset.sum_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.sum_mul, map_sum]
   refine sum_mem fun PP hPP => GlobalTheory.IdemIntegral.toEAf_mem_of_finPart ?_
   by_contra h
   refine hP PP hPP (((hes PP hPP).2 _ (Nat.cast_ne_zero.2 hN)).2 ?_)
@@ -357,7 +358,8 @@ theorem thetaAt_eq_sum {ψ : AddChar (AF D.host.F) ℂ} {e : AE D} {Λ : AddSubg
     simp only [Pi.smul_apply, smul_eq_mul]
     ring
   have hvac : Tm (halfInd e Λ) = f₀ := by simpa using hTm.vac
-  rw [hall Tm hTm, hΦ', map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hall Tm hTm, hΦ', map_sum]
   refine Finset.sum_congr rfl fun q _ => ?_
   rw [map_smul, hTm.modul _ (GlobalTheory.isSBHalf_halfInd e Λ) _ (hY q), hvac]
 
@@ -368,7 +370,8 @@ theorem hRat_std (hG : S.gram = 1) (X Y : Fin S.rank → Fin T.rank → D.host.E
   rw [hG, inv_one, Finset.mul_sum]
   refine Finset.sum_congr rfl fun b _ => ?_
   rw [Finset.sum_eq_single b (fun k _ hk => by simp [Matrix.one_apply_ne hk.symm]) (by simp)]
-  simp only [Module.Basis.equivFun_symm_apply, map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Module.Basis.equivFun_symm_apply, map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply,
     map_smul, smul_eq_mul, Finset.mul_sum, Matrix.one_apply_eq, Matrix.of_apply, star_mul', hc, HSpace.gram]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun p _ => Finset.sum_congr rfl fun q _ => ?_
@@ -487,7 +490,8 @@ theorem thetaVector_eq_sum_heisenberg : ∀ (D : D7) (G : Type) [Group G] [Finty
     have h2 : ∀ y z, Dw.EF y z = -Dw.EF z y := fun y z => (LinearMap.IsAlt.neg Dw.alt z y).symm
     have h3 : ((pairL (l := l) x (fun b => levRep (q b)) : ℤ) : ℚ) = -(((ε : ℤ) : ℚ) * Algebra.trace ℚ D.host.E (D.host.xi0 *
         ∑ b, (Wc D i).hT ((Wc D i).frame.equivFun.symm (ι (cSep l • levRep (q b)))) ((Wc D i).frame.equivFun.symm (ι (x b))))) := by
-      rw [pairL, Int.cast_sum, Finset.mul_sum, map_sum, Finset.mul_sum, ← Finset.sum_neg_distrib]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [pairL, Int.cast_sum, Finset.mul_sum, map_sum, Finset.mul_sum, ← Finset.sum_neg_distrib]
       exact Finset.sum_congr rfl fun b _ => by rw [h2, Int.cast_neg, hε]
     have h4 := congrArg (fun z : ℚ => (z : ℂ)) h3
     rw [show (((ε : ℤ) : D.host.E) / (l.M : D.host.E)) = ((((ε : ℤ) : ℚ) / (l.M : ℚ) : ℚ) : D.host.E) by push_cast; rfl, h1]

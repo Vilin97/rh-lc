@@ -104,10 +104,12 @@ theorem sum_mem_span (R : ι → P → P → Prop) (ρ : ι → V →ₗ[ℂ] V)
   have S_apply : ∀ j ζ, S j ζ = Pv ⟨T j ζ, memM j ζ⟩ := fun _ _ => rfl
   have key : ∑ j, T j (ξ j) = ∑ j, S j (ξ j) := by
     have hsum : (∑ j, (⟨T j (ξ j), memM j (ξ j)⟩ : M)) ∈ N' := by
-      rw [Submodule.mem_comap, map_sum, mem_lift]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Submodule.mem_comap, map_sum, mem_lift]
       simpa using hx
     have := Pv_fix _ hsum
-    rw [map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at this
     simp only [S_apply]
     rw [this, Submodule.coe_sum]
   rw [key]

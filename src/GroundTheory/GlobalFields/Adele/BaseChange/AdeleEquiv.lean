@@ -70,19 +70,24 @@ def sndAddHom : 𝔸[L] →+ FiniteAdeleRing (𝓞 L) L where
 
 theorem adeleTensorEquiv_sum_coord (y : 𝔸[L]) :
     adeleTensorEquiv K L (∑ i, b i ⊗ₜ coord b i y) = y := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp_rw [adeleTensorEquiv_tmul]
   refine Prod.ext ?_ ?_
   · change fstAddHom (∑ i, algebraMap L 𝔸[L] (b i) * adeleMap K L (coord b i y)) = y.1
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     conv_rhs => rw [← GroundTheory.Global.InfinitePlace.tensorInfiniteAdeleRingEquiv_sum_adeleCoord b y.1]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp_rw [GroundTheory.Global.InfinitePlace.tensorInfiniteAdeleRingEquiv_tmul']
     rfl
   · change sndAddHom (∑ i, algebraMap L 𝔸[L] (b i) * adeleMap K L (coord b i y)) = y.2
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     conv_rhs => rw [← finiteTensorMap_sum_finiteCoord b y.2]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp_rw [finiteTensorMap_tmul]
     rfl
 

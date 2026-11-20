@@ -44,7 +44,8 @@ theorem ck_pairPull (p : ℕ) [Fact p.Prime] [CharZero O] [CharP (ResidueField O
       ((B'.toITh p).c1 (((GlobalTheory.FlagPairExists.pairPull f.comp_str P).toFPair p).x' i)) =
       picSymPull f.f (Gk (B.toITh p) k ((B.toITh p).c1 ((P.toFPair p).x i))
         ((B.toITh p).c1 ((P.toFPair p).x' i))) := by
-    simp only [Gk, map_sum, map_mul, map_pow]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Gk, map_sum, map_mul, map_pow]
     refine Finset.sum_congr rfl fun a _ => ?_
     change c1 _ _ ^ a * c1 _ _ ^ _ = picSymPull f.f (c1 _ _) ^ a * picSymPull f.f (c1 _ _) ^ _
     rw [← GlobalTheory.T.chern_root_flag_pullback _ _ f.f _ _ P.fl i, ← GlobalTheory.T.chern_root_flag_pullback _ _ f.f _ _ P.fl' i]

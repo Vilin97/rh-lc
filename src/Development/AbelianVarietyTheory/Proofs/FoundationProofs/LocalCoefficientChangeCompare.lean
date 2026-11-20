@@ -74,7 +74,8 @@ theorem vecS_mulVec (B : LocBridge l E Ω Gw O) {k : ℕ} (M : ↥Gw →* Matrix
   funext i
   change Br.toLLK B (∑ j, algebraMap O (FractionRing O) (M (Br.ι B g) i j) * u j) =
     ∑ j, Br.locM B M g i j * Br.toLLK B (u j)
-  simp only [map_sum, map_mul, locM_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, locM_apply]
 
 set_option synthInstance.maxHeartbeats 400000 in
 
@@ -118,7 +119,8 @@ theorem push_mem (B₀ : LocBridge l E Ω Gw O₀) (B : LocBridge l E Ω Gw O) (
     intro g v
     funext i
     change φ (∑ j, Br.locM B₀ M₀ (θ g) i j * v j) = ∑ j, Br.locM B (mapM f M₀) g i j * φ (v j)
-    simp only [map_sum, map_mul, locM_apply, hφ, fracMap_alg, hθι]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, locM_apply, hφ, fracMap_alg, hθι]
     rfl
   refine (mem_HfD_iff P B _ _).2 ⟨_, crystallineCocycle_transport_conjugation P B₀.Kw B.Kw B₀.LL B.LL θ hθ σ hσ' _ _ φ.toLinearMap hp z hzf,
     fun j => φ (m j), fun g => ?_⟩

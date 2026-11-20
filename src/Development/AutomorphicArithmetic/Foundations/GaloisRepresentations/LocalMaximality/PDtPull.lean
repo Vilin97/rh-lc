@@ -115,11 +115,13 @@ theorem UpperTheory.Gal.productCup_of_system.dtPull_of :
     have hAh : ev.mapMatrix ah = A e := by
       ext m l
       change ev (⟨g m l, hgl m l⟩ + ∑ l', ⟨tt K' x l', hle (htB l')⟩ * ⟨c m l' l, hcl m l' l⟩) = A e m l
-      rw [map_add, map_sum, hge]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_add, map_sum, hge]
       simp only [map_mul, ht0, zero_mul, Finset.sum_const_zero, add_zero]
     have hD : ∀ m, D ℂ K' (j2 (tt K x m)) = ∑ l, (ah m l : K') • D ℂ K' (tt K' x l) := by
       intro m
-      rw [hgt m, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hgt m, map_sum]
       simp_rw [hah, add_smul, Finset.sum_add_distrib, Derivation.leibniz, hcD, Finset.smul_sum,
         Finset.sum_smul, smul_smul]
       rw [Finset.sum_add_distrib]

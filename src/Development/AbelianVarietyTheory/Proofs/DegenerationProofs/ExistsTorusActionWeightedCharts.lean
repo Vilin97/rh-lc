@@ -65,7 +65,8 @@ theorem isLin_comp {k : Type} [CommRing k] {X : Scheme.{0}} {p : X ⟶ Sp k} {H 
     IsLin p F' b φ := by
   intro l
   rw [h l]
-  simp only [fun i => hF i l, hab, constFn_eq, map_sum, map_mul, Finset.sum_mul, Finset.mul_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [fun i => hF i l, hab, constFn_eq, map_sum, map_mul, Finset.sum_mul, Finset.mul_sum,
     _root_.mul_assoc]
   exact Finset.sum_comm
 
@@ -320,7 +321,8 @@ theorem exists_mem_of_isLin {k : Type} [CommRing k] {X : Scheme.{0}} {p : X ⟶ 
   have hl' : x ∈ H.U l := X.basicOpen_le _ hl
   by_contra hn
   have h1 := (Scheme.mem_basicOpen X _ x hl').1 hl
-  rw [h l, map_sum] at h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h l, map_sum] at h1
   refine (IsLocalRing.mem_maximalIdeal _).1 (Ideal.sum_mem _ fun i _ => ?_) h1
   rw [map_mul]
   refine Ideal.mul_mem_left _ _ ((IsLocalRing.mem_maximalIdeal _).2 fun hu => hn ⟨i, ?_⟩)

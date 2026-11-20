@@ -56,7 +56,8 @@ theorem isWeightedHomogeneous_aeval {σ : Type*} {F : MvPolynomial σ ℤ} {τ :
     (hF : F.IsHomogeneous τ) {g : σ → MvPolynomial (Coord n) ℤ} {δ : ι → ℕ}
     (hg : ∀ j, IsWeightedHomogeneous (coordDeg n) (g j) δ) :
     IsWeightedHomogeneous (coordDeg n) (aeval g F) (τ • δ) := by
-  rw [F.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [F.as_sum, map_sum]
   refine IsWeightedHomogeneous.sum _ _ _ fun m hm ↦ ?_
   have hdeg : ∑ j ∈ m.support, m j = τ := by
     have h := hF (mem_support_iff.mp hm)

@@ -188,7 +188,8 @@ private theorem moves_generate_lattices {D : D7} {ψ : AddChar (AF D.host.F) ℂ
       ((splitFacO χS χT x₀ y₀ : ℂ) * ((Real.sqrt ((R.card : ℝ) * R'.card) : ℝ) : ℂ)⁻¹) •
       ∑ p ∈ R ×ˢ R', α (P (γ p)) •
         Formalism.L2.Th1.H.opU H (P (γ p)) (rd f) := by
-    rw [hmain, map_smul, ← Finset.sum_product', map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hmain, map_smul, ← Finset.sum_product', map_sum]
     congr 1
     refine Finset.sum_congr rfl fun p hp => ?_
     rw [hpf p hp, map_smul, hrd _ hf.2.theta,

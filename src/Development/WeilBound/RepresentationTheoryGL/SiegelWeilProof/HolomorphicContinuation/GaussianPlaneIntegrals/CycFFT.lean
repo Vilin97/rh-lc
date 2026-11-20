@@ -14,7 +14,8 @@ theorem coeff_inv (v : Matrix (Rw ε true) (Rw ε true) ℂ) (Q : PX m n) (hQ : 
   have h1 : act (blk ε true v) Q = ∑ ν ∈ (Th ε Q).support,
       emb ε true (sub v (v.map star) ((Th ε Q).coeff ν)) * emb ε false (monomial ν 1) := by
     conv_lhs => rw [decomp (ε := ε) Q]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl (fun ν _ => ?_)
     rw [map_mul]
     congr 1
@@ -22,7 +23,8 @@ theorem coeff_inv (v : Matrix (Rw ε true) (Rw ε true) ℂ) (Q : PX m n) (hQ : 
     · exact DFunLike.congr_fun (act_emb_other true false (by decide) v) _
   rw [hQ] at h1
   have h2 := congrArg (fun P => AddMonoidAlgebra.coeff (Th ε P) μ) h1
-  simp only [map_sum, th_prod, coeff_sum_monomial] at h2
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, th_prod, coeff_sum_monomial] at h2
   by_cases hμ : μ ∈ (Th ε Q).support
   · rw [if_pos hμ] at h2
     exact h2.symm
@@ -60,13 +62,15 @@ theorem cycFFT : CycFFT := by
     conv_lhs => rw [decomp (ε := ε) Q]
     rw [← Finset.sum_coe_sort (Th ε Q).support]
     simp_rw [← ha]
-    simp only [r, map_sum, map_smul, Finset.sum_mul, Finset.mul_sum, smul_mul_assoc, mul_smul_comm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [r, map_sum, map_smul, Finset.sum_mul, Finset.mul_sum, smul_mul_assoc, mul_smul_comm]
     exact Finset.sum_comm
   have hr : ∀ j, r j ∈ pairAlg (Rw ε false) (Fin n) (Fin n) := by
     intro j
     refine hF _ _ _ (r j) (fun u hu => ?_)
     have h1 := hact _ (blk_unitary false u hu) (blk_block false u)
-    rw [hQ', map_sum] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hQ', map_sum] at h1
     have h2 : ∀ i : bs, act (blk ε false u) (emb ε true (i : PV (Rw ε true) (Fin n) (Fin n)) * emb ε false (r i)) =
         emb ε true (i : PV (Rw ε true) (Fin n) (Fin n)) * emb ε false (sub u (u.map star) (r i)) := by
       intro i

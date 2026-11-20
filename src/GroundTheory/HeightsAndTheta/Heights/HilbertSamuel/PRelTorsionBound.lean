@@ -155,7 +155,8 @@ theorem aeval_mul_mem (R : Subalgebra ℤ Ω) (y : (Σ k, ι k) → Ω) (c0 : �
     (ha : ∀ k, Fintype.card (ι k) * N < a k) (hab : a + d = b + Pi.single k0 1)
     {A : MvPolynomial (Σ k, ι k) R} (hA : A ∈ weightedHomogeneousSubmodule R (blockWeight (ι := ι)) a) :
     aeval y (A * G) ∈ (relSecM R y b).map (LinearMap.mulLeft R (y ⟨k0, c0 k0⟩)) := by
-  rw [A.as_sum, Finset.sum_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [A.as_sum, Finset.sum_mul, map_sum]
   refine Submodule.sum_mem _ fun μ hμ => ?_
   have hwμ : Finsupp.weight blockWeight μ = a := hA (mem_support_iff.1 hμ)
   rw [weight_blockWeight] at hwμ
@@ -217,12 +218,14 @@ theorem proof : RelTorsionBound.Statement := by
       IsWeightedHomogeneous.weightedHomogeneousComponent_same ((mem_weightedHomogeneousSubmodule _ _ _ _).1 hF)
     rw [← h1]
     conv_lhs => rw [← hA]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [smul_eq_mul]
   suffices h : aeval y F ∈ (relSecM R y b).map (LinearMap.mulLeft R (y ⟨k0, c0 k0⟩)) by
     obtain ⟨g', hg', hgx⟩ := h
     exact ⟨g', hg', by simpa using hgx.symm⟩
-  rw [hFsum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hFsum, map_sum]
   refine Submodule.sum_mem _ fun G hG => ?_
   rw [comp_mul _ _ (hT G hG).1]
   split_ifs with hle

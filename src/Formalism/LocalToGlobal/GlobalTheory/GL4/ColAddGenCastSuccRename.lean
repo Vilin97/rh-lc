@@ -102,7 +102,8 @@ theorem rowAct_rename (R : Type) [CommRing R] {r n : ℕ} (g : Matrix (Fin r) (F
       (rename (colEmb r n)).comp (rowAct R (n := n) g) := by
     apply MvPolynomial.algHom_ext
     intro v
-    simp [rowAct, colEmb, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [rowAct, colEmb, map_sum]
   exact congrArg (fun φ => φ f) h
 
 theorem blockMat_eq_extM {n : ℕ} (g : Matrix (Fin n) (Fin n) ℂ) : blockMat g = Formalism.BranchingDeterminantCap.extM ℂ g := by

@@ -43,7 +43,8 @@ theorem top_coord (g : Fin (r + 1) → S.V) (gs : Fin r → S.V)
     rintro rfl
     simp at hi
   have h2 := LinearMap.mem_ker.1 (hK hB)
-  rw [← e', map_sub, map_sum, sub_eq_zero] at h2
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← e', map_sub, map_sum, sub_eq_zero] at h2
   have h3 : ∀ i, FramePsi.pairL L S.Hm (gs j) (al i • g i) = if i = j.castSucc then al i else 0 := by
     intro i
     rw [map_smul]

@@ -59,7 +59,8 @@ theorem riesz_hermitian_holds : RieszH := by
       map_smul' := fun r c => by simp [Finset.smul_sum, smul_smul] }
   have hΦ : ∀ c, h (∑ i, star (c i) • b i) = Φ c := by
     intro c
-    simp [Φ, map_sum, LinearMap.map_smulₛₗ, starRingEnd_apply, star_star]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Φ, map_sum, LinearMap.map_smulₛₗ, starRingEnd_apply, star_star]
   have hinj : Function.Injective Φ := by
     rw [injective_iff_map_eq_zero]
     intro c hc

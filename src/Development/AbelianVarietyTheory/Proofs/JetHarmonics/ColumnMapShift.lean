@@ -14,7 +14,8 @@ theorem aeval_weightedHomogeneous {K σ τ : Type} [CommRing K] {w : σ → ℕ}
     (v : σ → MvPolynomial τ K) (hv : ∀ i, IsWeightedHomogeneous w' (v i) (w i)) :
     IsWeightedHomogeneous w' (aeval v φ) m := by
   classical
-  rw [φ.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [φ.as_sum, map_sum]
   refine IsWeightedHomogeneous.sum _ _ _ fun d hd => ?_
   rw [aeval_monomial]
   have hdeg : (Finsupp.weight w) d = m := hφ (mem_support_iff.mp hd)
@@ -61,10 +62,12 @@ theorem rowShift_colMap (g : T → Fin n → Fin n → k) (σ : T) (i i' : Fin (
     simp only [AlgHom.comp_apply]
     by_cases h : (⟨τ, j⟩ : Σ s, Fin (r s)) = ⟨σ, i⟩
     · cases h
-      simp only [rowShift_X_self, colMap_X, map_sum, map_mul, map_add, algHom_C, algebraMap_eq,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [rowShift_X_self, colMap_X, map_sum, map_mul, map_add, algHom_C, algebraMap_eq,
         Finset.mul_sum, ← Finset.sum_add_distrib]
       exact Finset.sum_congr rfl fun _ _ => by ring
-    · simp only [rowShift_X_ne σ i i' t τ j h, colMap_X, map_sum, map_mul, algHom_C, algebraMap_eq]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp only [rowShift_X_ne σ i i' t τ j h, colMap_X, map_sum, map_mul, algHom_C, algebraMap_eq]
   exact DFunLike.congr_fun h P
 
 theorem rowInv_colMap (g : T → Fin n → Fin n → k) {P : MvPolynomial (Letter T r n) k}

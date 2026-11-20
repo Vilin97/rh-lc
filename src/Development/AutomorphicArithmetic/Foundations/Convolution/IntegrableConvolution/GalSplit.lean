@@ -52,10 +52,12 @@ private theorem phi_bij (σ : E ≃ₐ[F] E) (hσ : ∀ τ : E ≃ₐ[F] E, τ �
   have hr : Function.RightInverse Ψ (phi σ p m) := by
     intro f
     funext k
-    simp only [Ψ, map_sum, Finset.sum_apply, phi_tmul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Ψ, map_sum, Finset.sum_apply, phi_tmul]
     have h1 : ∀ i, ∑ j, p ((σ ^ (k : ℕ)) (b j)) * p (N j i) = if k = i then 1 else 0 := fun i => by
       have h2 := congrArg p (congrFun (congrFun hMN k) i)
-      simp only [Matrix.mul_apply, Matrix.one_apply, M, Matrix.of_apply, map_sum, map_mul] at h2
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Matrix.mul_apply, Matrix.one_apply, M, Matrix.of_apply, map_sum, map_mul] at h2
       rw [h2]
       split_ifs <;> simp
     calc _ = ∑ i, (∑ j, p ((σ ^ (k : ℕ)) (b j)) * p (N j i)) * f i := by
@@ -76,7 +78,8 @@ private theorem phi_bij (σ : E ≃ₐ[F] E) (hσ : ∀ τ : E ≃ₐ[F] E, τ �
       have hx : (fun i : Fin (m + 1) => (σ ^ (i : ℕ)) x) = M.mulVec c := by
         funext i
         conv_lhs => rw [← b.sum_repr x]
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         simp only [Matrix.mulVec, dotProduct, M, Matrix.of_apply, c]
         refine Finset.sum_congr rfl fun j _ => ?_
         rw [map_smul, Algebra.smul_def, mul_comm]
@@ -86,7 +89,8 @@ private theorem phi_bij (σ : E ≃ₐ[F] E) (hσ : ∀ τ : E ≃ₐ[F] E, τ �
         exact congrFun this j
       have h3 : ∀ j, ∑ i, p (N j i) * (p ((σ ^ (i : ℕ)) x) * a) = b.repr x j • a := fun j => by
         calc _ = p (∑ i, N j i * (σ ^ (i : ℕ)) x) * a := by
-              simp only [map_sum, map_mul, Finset.sum_mul, mul_assoc]
+              set_option synthInstance.maxHeartbeats 100000 in
+                simp only [map_sum, map_mul, Finset.sum_mul, mul_assoc]
           _ = _ := by rw [hc]; simp only [c, p.commutes, Algebra.smul_def]
       simp only [Ψ, phi_tmul, h3, TensorProduct.tmul_smul, TensorProduct.smul_tmul']
       rw [← TensorProduct.sum_tmul, b.sum_repr]

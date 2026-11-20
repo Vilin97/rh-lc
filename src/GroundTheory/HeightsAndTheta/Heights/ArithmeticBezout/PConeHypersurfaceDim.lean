@@ -41,7 +41,8 @@ theorem finite_of_rel {n m : ℕ} (I : Ideal (MvPolynomial (Fin n) ℂ))
       have hpoly : ∀ q : MvPolynomial (Fin n) ℂ, q.totalDegree < N →
           Ideal.Quotient.mk I q ∈ M := by
         intro q hq
-        rw [q.as_sum, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [q.as_sum, map_sum]
         refine Submodule.sum_mem _ fun d hd => ?_
         have hd' : (d.sum fun _ e => e) < N := lt_of_le_of_lt (le_totalDegree hd) hq
         have h1 := ih _ hd' d rfl
@@ -72,7 +73,8 @@ theorem finite_of_rel {n m : ℕ} (I : Ideal (MvPolynomial (Fin n) ℂ))
           have h2 : Ideal.Quotient.mk I (X i ^ r i) =
               Ideal.Quotient.mk I (∑ j, L j * H i j) :=
             Ideal.Quotient.eq.mpr (hrel i)
-          rw [h1, map_mul, h2, ← map_mul, Finset.mul_sum, map_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [h1, map_mul, h2, ← map_mul, Finset.mul_sum, map_sum]
           refine Finset.sum_congr rfl fun j _ => ?_
           rw [hsmul, aeval_X]
           congr 1
@@ -94,7 +96,8 @@ theorem finite_of_rel {n m : ℕ} (I : Ideal (MvPolynomial (Fin n) ℂ))
     rw [← hM, eq_top_iff]
     rintro x -
     obtain ⟨p, rfl⟩ := Ideal.Quotient.mk_surjective x
-    rw [p.as_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [p.as_sum, map_sum]
     refine Submodule.sum_mem _ fun d _ => ?_
     have : Ideal.Quotient.mk I (monomial d (AddMonoidAlgebra.coeff p d)) =
         (C (AddMonoidAlgebra.coeff p d) : MvPolynomial (Fin m) ℂ) • Ideal.Quotient.mk I (monomial d 1) := by

@@ -136,7 +136,8 @@ variable {i : ℕ} {v : (D.mem u).A.vT} (H : Unf D u i v)
 lemma P_U {φ : Fn D u i} (hφ : φ ∈ (D.fm u).Fi i) (Λ) {f} (hf : f ≠ 0) (y) :
     H.P Λ f (Uop D u i v φ) y = opU (fun x => H.Q Λ x φ y) f := by
   obtain ⟨e, he, ht⟩ := H.up_tie Λ f hf
-  rw [P_apply, Uop_apply, map_sum, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [P_apply, Uop_apply, map_sum, Finset.sum_apply]
   unfold opU
   refine Finset.sum_equiv e.toEquiv (fun x => ?_) (fun x hx => ?_)
   · simp [he, fnl_apply]
@@ -149,7 +150,8 @@ lemma Q_dn (s : (D.mem u).A.Fv v → ℂ) {φ : Fn D u i} (hφ : φ ∈ (D.fm u)
         (D.fm u).dnT i v (H.cx Λ x) g (φ ((D.fm u).dn i v (H.cx Λ x) g))) =
     ∑ f ∈ Finset.univ.filter (fun f => f ≠ 0), s (pair f x) • H.P Λ f φ := by
   obtain ⟨e, he, ht⟩ := H.dn_tie Λ x hx
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   symm
   refine Finset.sum_equiv (fnl e).toEquiv (fun f => ?_) (fun f hf => ?_)
   · simp
@@ -192,13 +194,15 @@ lemma Q_dia {φ : Fn D u i} (hφ : φ ∈ (D.fm u).Fi i) (Λ) {x} (hx : x ≠ 0)
 lemma P_Nm {φ : Fn D u i} (hφ : φ ∈ (D.fm u).Fi i) (Λ) {f} (hf : f ≠ 0) (y) :
     H.P Λ f (Nm D u i v φ) y = nmP (fun f => H.P Λ f φ y) f := by
   unfold Nm nmP diaP
-  rw [LinearMap.sum_apply, map_sum, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [LinearMap.sum_apply, map_sum, Finset.sum_apply]
   exact Finset.sum_congr rfl (fun a _ => by rw [H.P_dia hφ Λ hf a])
 
 lemma Q_Nm {φ : Fn D u i} (hφ : φ ∈ (D.fm u).Fi i) (Λ) {x} (hx : x ≠ 0) (y) :
     H.Q Λ x (Nm D u i v φ) y = nmV (fun x => H.Q Λ x φ y) x := by
   unfold Nm nmV diaV
-  rw [LinearMap.sum_apply, map_sum, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [LinearMap.sum_apply, map_sum, Finset.sum_apply]
   exact Finset.sum_congr rfl (fun a _ => by rw [H.Q_dia hφ Λ hx a])
 
 end Unf
@@ -346,12 +350,14 @@ theorem adjoint {φ ψ : Fn D u i} (hφ : φ ∈ (D.fm u).Fi i) (hψ : ψ ∈ (D
       H.ipL Λ (H.tf Λ f (Uop D u i v φ (H.cf Λ f))) (H.tf Λ f (ψ (H.cf Λ f))) =
         ∑ x ∈ Finset.univ.filter (fun x => pair f x = 1), H.ipL Λ (H.Q Λ x φ) (H.P Λ f ψ) := by
     intro f hf
-    rw [← P_apply, H.P_U' hφ Λ (Finset.mem_filter.mp hf).2, map_sum, LinearMap.sum_apply]; rfl
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← P_apply, H.P_U' hφ Λ (Finset.mem_filter.mp hf).2, map_sum, LinearMap.sum_apply]; rfl
   have e2 : ∀ x ∈ Finset.univ.filter (fun x : Fin (D.R.N i) → (D.mem u).A.Fv v => x ≠ 0),
       H.ipL Λ (H.tx Λ x (φ (H.cx Λ x))) (H.tx Λ x (Dop D u i v ψ (H.cx Λ x))) =
         ∑ f ∈ Finset.univ.filter (fun f => pair f x = 1), H.ipL Λ (H.Q Λ x φ) (H.P Λ f ψ) := by
     intro x hx
-    rw [← Q_apply H Λ x (Dop D u i v ψ), H.Q_D' hψ Λ (Finset.mem_filter.mp hx).2, map_sum]; rfl
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Q_apply H Λ x (Dop D u i v ψ), H.Q_D' hψ Λ (Finset.mem_filter.mp hx).2, map_sum]; rfl
   rw [Finset.sum_congr rfl e1, Finset.sum_congr rfl e2]
   refine Finset.sum_comm' (fun f x => ?_)
   simp only [Finset.mem_filter, Finset.mem_univ, true_and]
@@ -389,7 +395,8 @@ theorem FF_eq {φ : Fn D u i} (hφ : φ ∈ (D.fm u).Fi i) (hN : Nm D u i v φ =
   have hf' : f ≠ 0 := by rintro rfl; simpa [pair] using (Finset.mem_filter.mp hf).2
   unfold opGs Gs
   beta_reduce
-  rw [LinearMap.sum_apply, map_sum, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [LinearMap.sum_apply, map_sum, Finset.sum_apply]
   refine Finset.sum_congr rfl (fun c _ => ?_)
   rw [LinearMap.smul_apply, map_smul, H.P_dia hφ Λ hf' c]; rfl
 
@@ -478,14 +485,16 @@ theorem Gs_GsD (hM : DiaMul D u) : ∀ i, i ≤ D.R.m → ∀ v, ∀ φ ∈ (D.f
   intro i hi v φ hφ
   obtain ⟨h1, hmul⟩ := hM i hi v φ hφ
   rw [← gauss_fn h1, GsD_apply, Gs_apply]
-  simp only [map_sum, map_smul, Finset.smul_sum, smul_smul, hmul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, Finset.smul_sum, smul_smul, hmul]
 
 theorem GsD_Gs (hM : DiaMul D u) : ∀ i, i ≤ D.R.m → ∀ v, ∀ φ ∈ (D.fm u).Fi i,
     GsD D u i v (Gs D u i v φ) = ((D.mem u).A.T : ℂ) • φ - Nm D u i v φ := by
   intro i hi v φ hφ
   obtain ⟨h1, hmul⟩ := hM i hi v φ hφ
   rw [← gauss_fn h1, Gs_apply, GsD_apply]
-  simp only [map_sum, map_smul, Finset.smul_sum, smul_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, Finset.smul_sum, smul_smul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl (fun a _ => Finset.sum_congr rfl (fun b _ => ?_))
   rw [mul_comm a b⁻¹, hmul, mul_comm]
@@ -493,7 +502,8 @@ theorem GsD_Gs (hM : DiaMul D u) : ∀ i, i ≤ D.R.m → ∀ v, ∀ φ ∈ (D.f
 lemma ipC_sum_left {i : ℕ} {ι : Type} [Fintype ι] (s : ι → ℂ) (F : ι → Fn D u i) (ψ : Fn D u i) :
     (D.fm u).ipC i (∑ a, s a • F a) ψ = ∑ a, (starRingEnd ℂ) (s a) * (D.fm u).ipC i (F a) ψ := by
   unfold MemberForms.ipC
-  simp only [Finset.sum_apply, Pi.smul_apply, map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finset.sum_apply, Pi.smul_apply, map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply,
     LinearMap.smul_apply, smul_eq_mul, Finset.mul_sum]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl (fun a _ => Finset.sum_congr rfl (fun c _ => by ring))
@@ -501,7 +511,8 @@ lemma ipC_sum_left {i : ℕ} {ι : Type} [Fintype ι] (s : ι → ℂ) (F : ι �
 lemma ipC_sum_right {i : ℕ} {ι : Type} [Fintype ι] (s : ι → ℂ) (F : ι → Fn D u i) (φ : Fn D u i) :
     (D.fm u).ipC i φ (∑ a, s a • F a) = ∑ a, s a * (D.fm u).ipC i φ (F a) := by
   unfold MemberForms.ipC
-  simp only [Finset.sum_apply, Pi.smul_apply, map_sum, map_smul, smul_eq_mul, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finset.sum_apply, Pi.smul_apply, map_sum, map_smul, smul_eq_mul, Finset.mul_sum]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl (fun a _ => Finset.sum_congr rfl (fun c _ => by ring))
 
@@ -605,7 +616,8 @@ theorem finiteModel_of_heckeEstimate (C : ℝ) (h4 : Conclusion4 D u C) : divisi
     have rG := ram_of hF hM hX hU i hi' v _ hG
     have hKφ := hram φ hφ
     have hKG : KT D u i (Gs D u i v φ) = Gs D u (i + 1) v (KT D u i φ) := by
-      rw [Gs_apply, Gs_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Gs_apply, Gs_apply, map_sum]
       exact Finset.sum_congr rfl (fun a _ => by rw [map_smul, hdia a φ hφF])
     have hχ := rG.2.1
     have e1 : Uop D u (i + 1) v (KT D u i (Dop D u i v (Gs D u i v φ))) =
@@ -776,7 +788,8 @@ lemma FreeT.key (W : FreeT D u) (v) (φ : (D.mem u).A.Mu0) (x : W.X) :
     apply Subtype.ext
     rw [Submodule.coe_sum]
     simp [ColumnsAtT.Nm, LinearMap.sum_apply]
-  rw [this, map_sum, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [this, map_sum, Finset.sum_apply]
   exact Finset.sum_congr rfl (fun a _ => (W.equiv v a φ _ x).symm)
 
 theorem rank_nat (W : FreeT D u) :
@@ -867,7 +880,8 @@ theorem muMax_line (h0 : (D.fm u).ramL ≠ ⊥) : (D.fm u).ramLat.muMax ≤ ((D.
   linarith
 
 lemma emb_mem (i : ℕ) (x : Vl D u i) : (D.fm u).emb i x ∈ (D.fm u).Fi i := by
-  rw [← ((D.fm u).emb_basis i).2, ← ((D.fm u).lat i).b.sum_repr x, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← ((D.fm u).emb_basis i).2, ← ((D.fm u).lat i).b.sum_repr x, map_sum]
   exact Submodule.sum_mem _ (fun a _ => by
     rw [LinearMap.map_smulₛₗ]; exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨a, rfl⟩))
 
@@ -2017,7 +2031,8 @@ theorem cplx_of_place (h : (D.fm u).PRat)
       (D.fm u).ipP (Pt D u (∑ a, z a • e a)) (Pt D u (∑ a, z a • e a)) =
       ∑ a, (starRingEnd ℂ) (z a) * ∑ b, z b * (D.fm u).ipP (Pt D u (e a)) (Pt D u (e b)) := by
     intro z
-    simp only [map_sum, map_smul, LinearMap.map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, LinearMap.map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
       Finset.mul_sum]
     rw [Finset.sum_comm]
     exact Finset.sum_congr rfl (fun a _ => Finset.sum_congr rfl (fun b _ => by ring))
@@ -2037,7 +2052,8 @@ theorem cplx_of_place (h : (D.fm u).PRat)
         ptB D u * ((D.fm u).ipC D.R.m (∑ a, z a • e a) (∑ a, z a • e a)).re) z hclosed (fun r => ?_)
   have hr : ∑ a, (Pi.map (fun _ : ((D.fm u).lat D.R.m).ι => (D.what₂.embLL : D.what₂.LL → ℂ)) r) a • e a =
       (D.fm u).emb D.R.m (∑ a, r a • ((D.fm u).lat D.R.m).b a) := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl (fun a _ => by rw [LinearMap.map_smulₛₗ]; rfl)
   rw [hr]
   exact cplx_rat h hb _

@@ -26,7 +26,8 @@ theorem character_extendScalarsRep (K L : Type) [Field K] [Field L] [Algebra K L
     change LinearMap.trace K _ (ρ g) = _
     rw [← Matrix.trace_toLin'_eq, Matrix.toLin'_toMatrix']
   rw [h1, h2]
-  simp [Matrix.trace, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Matrix.trace, map_sum]
 
 theorem isChar_baseChange : ∀ (K L : Type) [Field K] [Field L] [Algebra K L] (G : Type) [Group G]
     (χ : G → L), IsChar K L χ → IsChar L L χ := by

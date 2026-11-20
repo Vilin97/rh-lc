@@ -352,7 +352,8 @@ theorem mul_s2_mem_Qbar_of_isogenyFormula (e : PowerSeries ℂ) (he : InQ e) (s 
   have htri : t ∈ Formalism.MainNotions.TaylorLogMetric.Qbar := by
     refine tri_alg n (fun i k => coeff (2 * k) (B i)) (fun i k => hBq i _) hB0 q t ?_
     intro k _
-    rw [← coeff_mvExp_gauss t k, h5, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← coeff_mvExp_gauss t k, h5, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [coeff_C_mul, coeff_X_pow_mul']
     congr 1

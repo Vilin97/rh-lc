@@ -44,7 +44,8 @@ noncomputable def core (P : Finset α) (k : α → α → ℂ) (hk : PSDOn P k) 
   inner U V := form P k U V
   conj_inner_symm U V := by
     unfold form
-    simp only [map_sum, map_mul, inner_conj_symm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, inner_conj_symm]
     rw [sum_comm]
     refine sum_congr rfl fun p hp => sum_congr rfl fun p' hp' => ?_
     rw [hk.1 p' hp' p hp]

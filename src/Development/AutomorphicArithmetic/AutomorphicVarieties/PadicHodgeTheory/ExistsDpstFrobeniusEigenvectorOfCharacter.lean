@@ -65,7 +65,8 @@ private theorem exists_int_basis {l : ℕ} [Fact l.Prime] {G : Type} [Group G] [
   have h1 : ρ g (b.extendOfIsLattice ℚ_[l] j) =
       ∑ k, ((b.repr ⟨_, hst g _ (b j).2⟩ k : ℤ_[l]) : ℚ_[l]) • b.extendOfIsLattice ℚ_[l] k := by
     have := congrArg Λ.subtype (b.sum_repr ⟨_, hst g _ (b j).2⟩)
-    rw [map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at this
     simp only [Basis.extendOfIsLattice_apply]
     exact this.symm
   rw [h1, Basis.repr_sum_self]
@@ -148,29 +149,34 @@ private theorem period {l : ℕ} [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l
   let x : V ⊗[ℚ_[l]] Bst P := ∑ i, e i ⊗ₜ (Polynomial.C (AI.ιA (W i j0)) : Bst P)
   have hx : x ∈ Dpst P ρ := ⟨K', hKK, (mem_Dst P _).2 fun g => by
     have h1 : ∀ i, AI.ιA (W i j0) = ∑ k, e.repr (ρ' g (e k)) i • P.actQ g (AI.ιA (W k j0)) := fun i => by
-      conv_lhs => rw [← hWg g, Matrix.mul_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        conv_lhs => rw [← hWg g, Matrix.mul_apply, map_sum]
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [map_mul, Matrix.map_apply, Matrix.map_apply, ιA_zlW AI Ti, hM, ← AI.ιA_act, Algebra.smul_def]
       rfl
     have h2 : x = ∑ i, ∑ k, (e.repr (ρ' g (e k)) i • e i) ⊗ₜ[ℚ_[l]]
         (Polynomial.C (P.actQ g (AI.ιA (W k j0))) : Bst P) := by
       refine Finset.sum_congr rfl fun i _ => ?_
-      rw [h1 i, map_sum, tmul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [h1 i, map_sum, tmul_sum]
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [← Polynomial.smul_C, smul_tmul]
     conv_rhs => rw [h2, Finset.sum_comm]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [stRep_tmul, actSt_C, ← sum_tmul, e.sum_repr]⟩
   refine ⟨⟨x, hx⟩, fun h0 => hij ?_, fun g a b hg => Subtype.ext ?_⟩
   · have h1 : x = 0 := congrArg Subtype.val h0
     have h2 := congrArg (fun y => TensorProduct.lid ℚ_[l] _ (LinearMap.rTensor (Bst P) (e.coord i0) y)) h1
-    simp only [x, map_sum, LinearMap.rTensor_tmul, lid_tmul, Module.Basis.coord_apply, Module.Basis.repr_self,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [x, map_sum, LinearMap.rTensor_tmul, lid_tmul, Module.Basis.coord_apply, Module.Basis.repr_self,
       Finsupp.single_apply, ite_smul, one_smul, zero_smul, Finset.sum_ite_eq', Finset.mem_univ, if_true, map_zero,
       Polynomial.C_eq_zero] at h2
     exact AI.ιA_inj (h2.trans (map_zero _).symm)
   · rw [coe_actD, Submodule.coe_smul, coe_phiD_pow, coe_phiD_pow]
-    simp only [x, map_sum, phiV_pow, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [x, map_sum, phiV_pow, Finset.smul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [stRep_tmul, actSt_C, hρ, smul_tmul', ← AI.ιA_act]
     congr 3

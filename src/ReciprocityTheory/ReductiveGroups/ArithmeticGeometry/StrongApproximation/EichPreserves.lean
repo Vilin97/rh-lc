@@ -68,7 +68,8 @@ theorem hf_symm (hσ : ∀ x, σ (σ x) = x) (hJ : Jᵀ = J.map σ) (x y : ι �
     have := congrFun (congrFun hJ i) j
     simp only [transpose_apply, map_apply] at this
     exact this.symm
-  simp only [hf, map_sum, map_mul, hσ, hJ']
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hf, map_sum, map_mul, hσ, hJ']
   rw [Finset.sum_comm]
   apply Finset.sum_congr rfl; intro i _
   apply Finset.sum_congr rfl; intro j _
@@ -82,7 +83,8 @@ theorem hf_mulVec (g : Matrix ι ι R) (x y : ι → R) :
     rw [hf_eq, dotProduct_comm]
   have hs : σ ∘ (g *ᵥ y) = g.map σ *ᵥ (σ ∘ y) := by
     funext i
-    simp [mulVec, dotProduct, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [mulVec, dotProduct, map_sum]
   rw [key, key, hs, ← mulVec_mulVec, ← mulVec_mulVec]
   conv_rhs => rw [dotProduct_mulVec, vecMul_transpose]
 

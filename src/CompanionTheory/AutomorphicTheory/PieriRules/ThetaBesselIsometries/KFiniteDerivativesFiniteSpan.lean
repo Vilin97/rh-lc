@@ -77,7 +77,8 @@ theorem exists_box_generators (k r : ℕ) : ∃ (J : Type) (_ : Fintype J) (Z : 
             Mx k r) := by rw [← hdecomp]
       _ = ∑ x, c x • ((Submodule.linearProjOfIsCompl (lieSubspace k r) q hq (E x) : lieSubspace k r) :
             Mx k r) := by
-          rw [map_sum, Submodule.coe_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [map_sum, Submodule.coe_sum]
           simp only [map_smul, Submodule.coe_smul]
 
 theorem dsig_sum_letter {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H] {σ : Mx k r → (H →L[ℂ] H)}
@@ -87,7 +88,8 @@ theorem dsig_sum_letter {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ
   obtain ⟨Lm, hL⟩ := Gp91.GlobalTheory.DerivedAction.exists_lin hv
   have hsum : InLieHpk k r (∑ j, c j • Z j) :=
     Submodule.sum_mem (lieSubspace k r) (fun j _ => Submodule.smul_mem (lieSubspace k r) (c j) (hZ j))
-  rw [(hL _ hsum).1, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [(hL _ hsum).1, map_sum]
   apply Finset.sum_congr rfl
   intro j _
   rw [map_smul, (hL _ (hZ j)).1]
@@ -108,7 +110,8 @@ theorem dsig_sum_vec (R : Rep k r) {X : Mx k r} (hX : InLieHpk k r X) {ι : Type
   have heq : (fun t : ℝ => (R.σ (NormedSpace.exp ((t : ℂ) • X))) (∑ i ∈ s, c i • v i)) =
       fun t : ℝ => ∑ i ∈ s, c i • (R.σ (NormedSpace.exp ((t : ℂ) • X))) (v i) := by
     funext t
-    simp only [map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul]
   show deriv (fun t : ℝ => (R.σ (NormedSpace.exp ((t : ℂ) • X))) (∑ i ∈ s, c i • v i)) 0 = _
   rw [heq, hsum.deriv]
 

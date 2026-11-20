@@ -23,7 +23,8 @@ theorem trace_pi_blocks {ι : Type} [Fintype ι] [DecidableEq ι] (P : ι → Ty
     · intro i _ hij
       simp [Pi.single_eq_of_ne hij.symm]
     · simp
-  rw [h, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [LinearMap.trace_comp_comm']
   have h2 : (S i ∘ₗ LinearMap.proj i) ∘ₗ LinearMap.single ℂ P i = S i := by

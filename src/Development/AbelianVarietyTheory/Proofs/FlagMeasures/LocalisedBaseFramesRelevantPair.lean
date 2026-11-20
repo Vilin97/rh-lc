@@ -255,7 +255,8 @@ private theorem exists_dual_family_of_flag {r : ℕ} {T : D.host.E} (F : FlagG (
       simpa only [hΨ] using h
     have hx : ∀ y, (VS D).hT (∑ i, star (φ (fun j => if i = j then 1 else 0)) • F.e i) y = 0 := by
       intro y
-      rw [map_sum, LinearMap.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, LinearMap.sum_apply]
       refine (Finset.sum_congr rfl (fun i _ => ?_)).trans (hz y)
       rw [LinearMap.map_smulₛₗ, LinearMap.smul_apply, starRingEnd_apply, star_star, smul_eq_mul, mul_comm]
     have hx0 := (VS D).nondeg.1 _ hx

@@ -193,7 +193,8 @@ theorem isSemisimpleModule_repD_of_locally_unitary : ∀ (G : Type) [Group G] (K
       have hρ : ((π κ (π.asModuleEquiv (gfun e : π.asModule)) : D) : V) = ρ κ (vec e) := by
         rw [← gval]; rfl
       rw [hρ]
-      simp only [vec, map_sum, map_smul, hact κ κ.2, Finset.smul_sum, smul_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [vec, map_sum, map_smul, hact κ κ.2, Finset.smul_sum, smul_smul]
       rw [Finset.sum_comm]
       simp only [vec, Matrix.toEuclideanLin_apply, Matrix.mulVec, dotProduct, PiLp.smul_apply, smul_eq_mul, Finset.mul_sum, Finset.sum_smul, smul_smul]
       exact Finset.sum_congr rfl fun y _ => Finset.sum_congr rfl fun x _ => by rw [mul_comm (e.ofLp x)]

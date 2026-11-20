@@ -94,7 +94,8 @@ theorem wat_iff_type : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Ty
   rw [mem_wat_iff R F hg hW, and_comm]
   refine and_congr ?_ (forall_congr' fun p => ?_)
   · rw [← hinj.eq_iff]
-    simp only [eH, RealDat.eC, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, hg i _ _ x]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [eH, RealDat.eC, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, hg i _ _ x]
   · rw [← hinj.eq_iff, hg, map_smul]
 
 end GlobalTheory.WatType

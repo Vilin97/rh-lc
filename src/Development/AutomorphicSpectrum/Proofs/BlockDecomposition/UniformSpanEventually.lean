@@ -36,7 +36,8 @@ theorem span_range_eq_top_iff_surjective {X : Scheme.{0}} {k : ℕ} {A B : X.Mod
     rw [eq_top_iff]
     intro y _
     obtain ⟨x, rfl⟩ := h y
-    rw [biproduct_app_eq_sum (fun _ : Fin k => A) U x, ← GlobalTheory.QCoh.appLinear_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [biproduct_app_eq_sum (fun _ : Fin k => A) U x, ← GlobalTheory.QCoh.appLinear_apply, map_sum]
     refine Submodule.sum_mem _ fun i _ => Submodule.subset_span
       (Set.mem_iUnion.2 ⟨i, (biproduct.π (fun _ : Fin k => A) i).app U x, ?_⟩)
     rw [GlobalTheory.QCoh.appLinear_apply, hι]

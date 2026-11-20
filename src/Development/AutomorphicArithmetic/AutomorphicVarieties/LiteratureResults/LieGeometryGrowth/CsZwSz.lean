@@ -18,9 +18,11 @@ private theorem hv_coord (E : Type) [Field E] [NumberField E] (a : ℕ) :
     LinearMap.single ℝ (fun _ => Cinf E) n.2.1 ∘ₗ LinearMap.single ℝ (fun _ => ℂ) n.2.2), fun v => ?_⟩
   have h1 : P v.1 = v := LinearMap.congr_fun hP v
   simp only [LinearMap.coe_toContinuousLinearMap', LinearMap.comp_apply]
-  rw [← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum]
   refine h1.symm.trans (congrArg P ?_)
-  simp only [Fintype.sum_prod_type, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Fintype.sum_prod_type, ← map_sum]
   simp only [LinearMap.coe_single, Finset.univ_sum_single]
 
 theorem UpperTheory.V.Lit.Geo.Cs.zwSz :

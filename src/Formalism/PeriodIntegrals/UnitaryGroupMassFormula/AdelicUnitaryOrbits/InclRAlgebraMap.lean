@@ -35,7 +35,8 @@ lemma hform_incl (R : Type) [CommRing R] [Algebra F R] (σ : E →ₐ[F] E) {n :
     (J : Matrix (Fin n) (Fin n) E) (v w : Fin n → E) :
     Formalism.UG.hform (sigR R σ) (JR R J) (fun i => inclR R (v i)) (fun i => inclR R (w i)) =
       inclR R (hE σ J v w) := by
-  simp only [hE, Formalism.UG.hform, map_sum, map_mul, JR, Matrix.map_apply, sigR_inclR]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hE, Formalism.UG.hform, map_sum, map_mul, JR, Matrix.map_apply, sigR_inclR]
   rfl
 
 lemma inclR_algebraMap (R : Type) [CommRing R] [Algebra F R] (b : F) :

@@ -62,7 +62,8 @@ theorem lft_mul_rgt (T : Module.End ℂ V) (M : Matrix ι ι ℂ) : lft ι T * r
   apply LinearMap.ext
   intro x
   funext i
-  simp [lft_apply, rgt_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [lft_apply, rgt_apply, map_sum]
 
 theorem yF_eq (Kf : Fin n → Fin n → Module.End ℂ V) (c : Fin n → Fin n → Matrix ι ι ℂ) (a b : Fin n) :
     yF Kf c a b = lft ι (Kf a b) + rgt V (spinM c a b) := rfl

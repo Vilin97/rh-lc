@@ -30,13 +30,15 @@ omit [NumberField E] [IsCMField E] in
 theorem hermC_flip (τ : E →+* ℂ) (G : Matrix (Fin r) (Fin r) E) (u v : Fin r → ℂ) :
     hermC (ComplexEmbedding.conjugate τ) (-G) (fun a => conj (u a)) (fun a => conj (v a)) =
       -conj (hermC τ G u v) := by
-  simp [hermC, ComplexEmbedding.conjugate_coe_eq, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [hermC, ComplexEmbedding.conjugate_coe_eq, map_sum]
 
 theorem conj_hermC (X : Data E r) (τ : E →+* ℂ) (u v : Fin r → ℂ) :
     conj (hermC τ X.Gm u v) = hermC τ X.Gm v u := by
   have h : ∀ a b, conj (τ (X.Gm a b)) = τ (X.Gm b a) := fun a b => by
     rw [← X.Gm_herm a b, cc, IsCMField.complexEmbedding_complexConj]
-  simp only [hermC, map_sum, map_mul, h, Complex.conj_conj]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hermC, map_sum, map_mul, h, Complex.conj_conj]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
 

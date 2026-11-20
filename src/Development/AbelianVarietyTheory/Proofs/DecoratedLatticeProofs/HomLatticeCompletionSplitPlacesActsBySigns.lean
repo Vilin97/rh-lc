@@ -65,7 +65,8 @@ theorem latO_acts_by_signs : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] 
       have hdec : α = ∑ i ∈ I.toFinset, GlobalTheory.FinPl.LatMem.indP D.host.F (· = (p i).v) * α := by
         apply af_ext'
         intro v
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         simp only [map_mul, GlobalTheory.FinPl.LatMem.evalV_indP]
         by_cases hv : P v
         · obtain ⟨i, rfl⟩ := (hP.mem v).1 hv

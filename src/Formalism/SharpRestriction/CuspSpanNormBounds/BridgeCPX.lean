@@ -1169,7 +1169,8 @@ theorem clm_expand {Wp Wq : Type*} [NormedAddCommGroup Wp] [InnerProductSpace �
         (innerSL ℂ (stdOrthonormalBasis ℂ Wq p.2)).smulRight (stdOrthonormalBasis ℂ Wp p.1) := by
   ext v
   rw [_root_.sum_apply, Fintype.sum_prod_type, Finset.sum_comm]
-  conv_lhs => rw [← (stdOrthonormalBasis ℂ Wq).sum_repr' v, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [← (stdOrthonormalBasis ℂ Wq).sum_repr' v, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_smul]
   conv_lhs => rw [← (stdOrthonormalBasis ℂ Wp).sum_repr' (T (stdOrthonormalBasis ℂ Wq j)), Finset.smul_sum]
@@ -1661,7 +1662,8 @@ theorem compactProj : CompactProj := by
     have e4 : ∀ a, ee c a • ρ a x = ∑ l, t l • (ee c a • ρ a (b l : H)) := by
       intro a
       conv_lhs => rw [← h3]
-      rw [map_sum, Finset.smul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Finset.smul_sum]
       refine Finset.sum_congr rfl fun l _ => by rw [map_smul, smul_comm]
     simp_rw [e4]
     have hI3 : ∀ l : Fin d, Integrable (fun a => t l • ee c a • ρ a (b l : H)) μ := fun l => (hIv _).smul (t l)

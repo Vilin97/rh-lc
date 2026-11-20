@@ -70,7 +70,8 @@ theorem integral_norm_sq_expSum (s : Finset ℕ) (b : ℕ → ℂ) (y : ℝ) :
       = ∑ n ∈ s, ∑ m ∈ s, b n * (starRingEnd ℂ) (b m) *
         Complex.exp (2 * Real.pi * I * ((n : ℂ) - m) * t) := by
     intro t
-    rw [Complex.ofReal_pow, ← Complex.mul_conj', map_sum, Finset.sum_mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Complex.ofReal_pow, ← Complex.mul_conj', map_sum, Finset.sum_mul_sum]
     refine Finset.sum_congr rfl fun n _ => Finset.sum_congr rfl fun m _ => ?_
     rw [map_mul, ← Complex.exp_conj]
     simp only [map_mul, conj_ofReal, conj_I, map_natCast, map_ofNat]

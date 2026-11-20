@@ -91,7 +91,8 @@ def linT (y : σ) : MvPolynomial σ S := ∑ x, C (L x y) * X x
 
 theorem pderiv_linP (x y : σ) : pderiv y (linP L x) = C (L x y) := by
   unfold linP
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [pderiv_C_mul, pderiv_X, Pi.single_apply]
   rw [Finset.sum_eq_single y]
   · simp
@@ -102,7 +103,8 @@ theorem pderiv_linP (x y : σ) : pderiv y (linP L x) = C (L x y) := by
 
 theorem constantCoeff_linP (x : σ) : constantCoeff (linP L x) = 0 := by
   unfold linP
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_eq_zero fun y _ => by rw [map_mul, constantCoeff_X, mul_zero]
 
 theorem constantCoeff_aeval_linP (F : MvPolynomial σ S) : constantCoeff (aeval (linP L) F) = constantCoeff F := by
@@ -175,19 +177,22 @@ def linS (x : σ) : MvPowerSeries σ K := ∑ y, MvPowerSeries.C (Lk x y) * MvPo
 
 theorem linS_eq (x : σ) : linS Lk x = ((linP Lk x : MvPolynomial σ K) : MvPowerSeries σ K) := by
   unfold linS linP
-  rw [← coeToMvPowerSeries.ringHom_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← coeToMvPowerSeries.ringHom_apply, map_sum]
   refine Finset.sum_congr rfl fun y _ => ?_
   rw [map_mul, coeToMvPowerSeries.ringHom_apply, coeToMvPowerSeries.ringHom_apply, coe_C, coe_X]
 
 theorem hasSubst_linS : MvPowerSeries.HasSubst (linS Lk) :=
   MvPowerSeries.hasSubst_of_constantCoeff_zero fun x => by
     unfold linS
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_eq_zero fun y _ => by rw [map_mul, MvPowerSeries.constantCoeff_X, mul_zero]
 
 theorem map_linP (x : σ) : map (algebraMap K S) (linP Lk x) = linP (fun x y => algebraMap K S (Lk x y)) x := by
   unfold linP
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_congr rfl fun y _ => by rw [map_mul, map_C, map_X]
 
 theorem coeff_prod_linS (m n : σ →₀ ℕ) :
@@ -258,7 +263,8 @@ theorem pr_sub (Gd : (σ →₀ ℕ) → Prop) [DecidablePred Gd]
         rw [hc n hn, Algebra.smul_def]
         by_cases hg : Gd n
         · simp only [if_pos hg]
-          rw [map_mul, map_sum, algebraMap_facS, Finset.mul_sum, Finset.sum_mul]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [map_mul, map_sum, algebraMap_facS, Finset.mul_sum, Finset.sum_mul]
           refine Finset.sum_congr rfl fun m _ => ?_
           rw [map_mul, coeff_prod_linS]
           ring
@@ -304,7 +310,8 @@ def LkB (z z' : X.ZA j) : Kc :=
 theorem linS_LkB (z : X.ZA j) : linS (LkB X Kc j B) z = actS X Kc j B z := by
   rw [actS_eq]
   unfold linS LkB
-  simp only [map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Finset.sum_mul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun a' _ => ?_
   rw [Finset.sum_eq_single (⟨z.1, (z.2.1, a', z.2.2.2)⟩ : X.ZA j)]
@@ -715,7 +722,8 @@ theorem ringHom_scale {I R T : Type} [Fintype I] [DecidableEq I] [CommRing R] [C
     ring
   conv_lhs => rw [G.as_sum]
   conv_rhs => rw [G.as_sum]
-  rw [map_sum, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, Finset.mul_sum]
   exact Finset.sum_congr rfl fun m hm' => by rw [hm, hG m hm']
 
 theorem alg_eq (j : ℕ) (a : X.G.Kf) : algebraMap X.G.Kf (DA X Kc j) a = cD X Kc j (algebraMap X.G.Kf Kc a) := by
@@ -734,7 +742,8 @@ theorem subD_subst_X (j : ℕ) (A : ∀ v : Fin (X.Pj j).nV, GL (Fin ((X.Pj j).m
   cases j <;>
   · obtain ⟨v, s, a, t⟩ := x
     rw [Matrix.mul_apply]
-    simp only [Places.subst, MvPolynomial.aeval_X, map_sum, map_mul, subD_X, subD_C]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Places.subst, MvPolynomial.aeval_X, map_sum, map_mul, subD_X, subD_C]
     refine Fintype.sum_equiv (finCongr (rankJ X _)) _ _ fun b => ?_
     rfl
 

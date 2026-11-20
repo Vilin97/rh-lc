@@ -111,11 +111,13 @@ theorem coefwise_eq {v : V n} {T : (V n → ℂ) → ℂ} (h₁ : ∀ f g, f =�
       ∑ i : Fin n × Fin n, (bas n).repr (dz i.1 * dzb i.2) S • T (c i.1 i.2) := by
     rw [← h₂ _ (fun i => c i.1 i.2) fun i => hc _ _]
     refine h₁ _ _ (h.mono fun u hu => ?_)
-    simp only [hu, map_sum, map_smul, Finsupp.finsetSum_apply, Finsupp.smul_apply, smul_eq_mul, Fintype.sum_prod_type,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hu, map_sum, map_smul, Finsupp.finsetSum_apply, Finsupp.smul_apply, smul_eq_mul, Fintype.sum_prod_type,
       mul_comm]
   refine (bas n).repr.injective (Finsupp.ext fun S => ?_)
   rw [coefwise, (bas n).repr_sum_self, e]
-  simp only [map_sum, map_smul, Finsupp.finsetSum_apply, Finsupp.smul_apply, smul_eq_mul, Fintype.sum_prod_type,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, Finsupp.finsetSum_apply, Finsupp.smul_apply, smul_eq_mul, Fintype.sum_prod_type,
       mul_comm]
 
 variable {g : ℕ}

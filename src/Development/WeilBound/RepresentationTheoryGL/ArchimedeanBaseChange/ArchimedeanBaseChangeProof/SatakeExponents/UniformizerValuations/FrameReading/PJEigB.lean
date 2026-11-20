@@ -50,7 +50,8 @@ theorem hkG_eqv {ρ : Representation ℂ Γ V} {σ : Representation ℂ Γ W} (�
     (hfin : (Function.support fun q : Γ ⧸ K => f q.out).Finite) (v : V) :
     φ.toLinearEquiv (hkG ρ K f v) = hkG σ K f (φ.toLinearEquiv v) := by
   unfold hkG
-  rw [hsum_eq ρ K f hfin.coe_toFinset.ge, hsum_eq σ K f hfin.coe_toFinset.ge, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hsum_eq ρ K f hfin.coe_toFinset.ge, hsum_eq σ K f hfin.coe_toFinset.ge, map_sum]
   refine Finset.sum_congr rfl fun q _ => ?_
   rw [map_smul, eqv_apply]
 

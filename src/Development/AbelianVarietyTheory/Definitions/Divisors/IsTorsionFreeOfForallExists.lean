@@ -161,7 +161,8 @@ theorem IsVB.isTorsionFree (h : IsVB F r) : IsTorsionFree F := by
   obtain ⟨a, ha⟩ := (he U le_rfl).2 (resM F hle s)
   have h0 : ∑ i, X.presheaf.germ U _ hU (a i) • he.stalkBasis _ hU i = 0 := by
     rw [← hs, ← germ_resM hle hU, ← ha]
-    simp only [Fintype.linearCombination_apply, map_sum, QCoh.germ_smul, resM_self,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Fintype.linearCombination_apply, map_sum, QCoh.germ_smul, resM_self,
       IsFrame.stalkBasis_apply]
   have h1 : a = 0 := funext fun i => germ_injective_of_isIntegral X _ hU
     ((Fintype.linearIndependent_iff.1 (he.stalkBasis _ hU).linearIndependent _ h0 i).trans
@@ -449,7 +450,8 @@ theorem deg_eq_sum_eigen {O ι : Type} [CommRing O] [Fintype ι] {σ : ι → (O
         (∑ j, stalkLinear (eigenι _ _) _ ∘ₗ LinearMap.proj j)
         (by
           refine LinearMap.pi_ext' fun i => LinearMap.ext fun t => funext fun j => ?_
-          simp only [LinearMap.comp_apply, LinearMap.pi_apply, LinearMap.sum_apply, map_sum,
+          set_option synthInstance.maxHeartbeats 100000 in
+            simp only [LinearMap.comp_apply, LinearMap.pi_apply, LinearMap.sum_apply, map_sum,
             LinearMap.proj_apply, LinearMap.id_apply, LinearMap.single_apply]
           rw [Finset.sum_eq_single j (fun i' _ h' => ?_) (by simp), ← LinearMap.comp_apply,
             ← QCoh.stalkLinear_comp, hσ.ι_proj, QCoh.stalkLinear_id, LinearMap.id_apply]

@@ -165,7 +165,8 @@ theorem core (h : V →ₗ⋆[E] V →ₗ[E] E) (hs : h.IsSymm) (hnd : h.Nondege
   have K1 : ∀ v a, h (v + ∑ b, h (e b) v • w b) (e' a) = star (h (e a) v) := by
     intro v a
     have hk := congrArg (h v) (key a)
-    rw [map_sum, map_sub] at hk
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sub] at hk
     simp only [hr] at hk
     rw [map_add, LinearMap.add_apply, LinearMap.map_sum₂]
     simp only [hl]
@@ -183,7 +184,8 @@ theorem core (h : V →ₗ⋆[E] V →ₗ[E] E) (hs : h.IsSymm) (hnd : h.Nondege
     set P' := v' + ∑ b, h (e b) v' • w b with hP'
     have hBB : h (∑ a, cc a v • e' a) (∑ a, cc a v' • e' a) = 0 := hiso _ (hBX v) _ (hBX v')
     have hPB : h P (∑ a, cc a v' • e' a) = ∑ a, cc a v' * star (h (e a) v) := by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       exact Finset.sum_congr rfl fun a _ => by rw [hr, K1]
     have hBP : h (∑ a, cc a v • e' a) P' = ∑ a, star (cc a v) * h (e a) v' := by
       rw [LinearMap.map_sum₂]
@@ -199,7 +201,8 @@ theorem core (h : V →ₗ⋆[E] V →ₗ[E] E) (hs : h.IsSymm) (hnd : h.Nondege
         rw [Finset.sum_comm]
         exact Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => by simp only [G]; ring
       rw [hP, hP']
-      simp only [map_add, LinearMap.add_apply, map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_add, LinearMap.add_apply, map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ,
         LinearMap.smul_apply, smul_eq_mul, starRingEnd_apply, e1, RingHom.id_apply, mul_add]
       rw [Finset.sum_add_distrib, hdbl]
       ring

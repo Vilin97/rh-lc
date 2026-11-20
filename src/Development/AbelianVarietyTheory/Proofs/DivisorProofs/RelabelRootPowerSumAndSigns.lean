@@ -56,7 +56,8 @@ lemma rename_rootIdx_lin (ι : Type) [Fintype ι] [DecidableEq ι] (N j : ℕ) (
     rw [Fintype.sum_sigma]
     simp only [eSum, Finset.mul_sum]
   rw [hR, ← Equiv.sum_comp (rootEquiv ι N j h), Fintype.sum_prod_type]
-  simp only [map_sum, map_mul, rename_C, rename_X, rootEquiv_apply, rootIdx_fst_snd]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, rename_C, rename_X, rootEquiv_apply, rootIdx_fst_snd]
 
 theorem relabel_sums : ∀ (ι : Type) [Fintype ι] [DecidableEq ι] (N j : ℕ), j ≤ N →
     rename (rootIdx ι N j) (∑ τ, pSum τ 2 : Pol ι N) = sq2 (rkB ι N j) ∧
@@ -67,7 +68,8 @@ theorem relabel_sums : ∀ (ι : Type) [Fintype ι] [DecidableEq ι] (N j : ℕ)
   refine ⟨?_, ?_, ?_⟩
   · unfold sq2
     rw [← Equiv.sum_comp (rootEquiv ι N j h), Fintype.sum_prod_type]
-    simp only [pSum, map_sum, map_pow, rename_X, rootEquiv_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [pSum, map_sum, map_pow, rename_X, rootEquiv_apply]
   · have hA : (lamA ι N j : Pol ι N) =
         ∑ τ, ∑ i : Fin N, C (cond (decide ((i : ℕ) < j)) (-1 : ℝ) 1) * X (τ, i) := by
       unfold lamA pHigh pLow

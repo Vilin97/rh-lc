@@ -22,7 +22,8 @@ lemma exists_smulHom_eq_comp_idealSumMap (J : Ideal A) {a : A} (ha : a ∈ J) :
   rw [← span_idealGen J] at ha
   obtain ⟨c, hc⟩ := (Ideal.mem_span_range_iff_exists_fun).1 ha
   refine ⟨biproduct.lift fun j => smulHom F (algebraMap A Γ(X, ⊤) (c j)), ?_⟩
-  simp only [idealSumMap, biproduct.lift_desc, smulHom_comp_smulHom, ← map_mul, ← smulHom_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [idealSumMap, biproduct.lift_desc, smulHom_comp_smulHom, ← map_mul, ← smulHom_sum,
     ← map_sum]
   rw [hc]
 

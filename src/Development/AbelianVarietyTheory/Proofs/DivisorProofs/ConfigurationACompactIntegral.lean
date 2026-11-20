@@ -30,7 +30,8 @@ theorem totalDegree_fockAct2_le {p q r s : ℕ} {Y : Mat r s} (hY : IsKC Y) (g :
   have hN : fockAct2 p q r s Y g ∈ N := by
     have e : fockAct2 p q r s Y g = ∑ i ∈ Finset.range (g.totalDegree + 1),
         fockAct2 p q r s Y (MvPolynomial.homogeneousComponent i g) := by
-      rw [← map_sum, MvPolynomial.sum_homogeneousComponent]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← map_sum, MvPolynomial.sum_homogeneousComponent]
     rw [e]
     refine N.sum_mem fun i hi => ?_
     have hm : fockAct2 p q r s Y (MvPolynomial.homogeneousComponent i g) ∈ homog (Ix p q × Ix r s) i := by

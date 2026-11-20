@@ -94,7 +94,8 @@ theorem ll_mem_of_zero (y : (Σ k, ι k) → Ω) {F : MRing ι} {α : K → ℕ}
     (h0 : aeval y F = 0) : F ∈ mCoordIdeal y := by
   classical
   have key : mConeMap y F = C (aeval y F) * ∏ k, (X k : MvPolynomial K Ω) ^ α k := by
-    rw [mConeMap, aeval_def, aeval_def, eval₂_eq', eval₂_eq', map_sum, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [mConeMap, aeval_def, aeval_def, eval₂_eq', eval₂_eq', map_sum, Finset.sum_mul]
     refine Finset.sum_congr rfl fun m hm => ?_
     have h1 : ∏ p : (Σ k, ι k), (X p.1 : MvPolynomial K Ω) ^ m p = ∏ k, (X k : MvPolynomial K Ω) ^ α k := by
       rw [Fintype.prod_sigma]

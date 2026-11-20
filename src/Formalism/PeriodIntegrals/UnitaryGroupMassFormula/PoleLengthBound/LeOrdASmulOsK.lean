@@ -63,7 +63,8 @@ theorem rD_smul (β : Idx D j G.N →₀ ℕ) (r : Op X la G.N) (x : ↥(HK X la
     apply Subtype.ext
     rw [Submodule.coe_sum]
     exact hasse_smul_Op G la β r x
-  rw [e, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, map_sum]
   refine Finset.sum_congr rfl fun q _ => ?_
   rw [LinearMap.map_smul_of_tower, rD_eq G la q.2 x (hP q.2 _ x.2)]
   rfl

@@ -298,7 +298,8 @@ theorem flag_mul_pull : Hypotheses2 → ∀ (k : Type) [CommRing k] (B Y : Schem
   generalize e.inv ≫ Limits.pullback.fst π g = j at hj
   obtain ⟨gr, hgr, hI⟩ := GlobalTheory.FlagOverField.exists_interPoly_eq hP.p16 σ hE' (isFlagBundle_sqFlag hj hF)
   rw [← hI Q c hc, Q.as_sum]
-  simp only [map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun m hm => ?_
   obtain ⟨s, e₀⟩ := exists_monomial_eq_prod_X V.dim m (by
     rw [Finsupp.degree_eq_weight_one]

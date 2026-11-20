@@ -82,7 +82,8 @@ theorem arForm_pull : GlobalTheory.Published.ArCalc → ∀ (k : Type) [CommRing
       funext fun j => (eq_sum_fam (v j) (support_subset v j)).symm
     have hv' : (fun j => ∑ b, a j b • cl ((F b).pull π hπ)) = fun j => pullCl π hπ (v j) := funext fun j => by
       conv_rhs => rw [eq_sum_fam (v j) (support_subset v j)]
-      simp only [map_sum, LinearMap.map_smul, pullCl_cl, a, F]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, LinearMap.map_smul, pullCl_cl, a, F]
     rw [hv] at e₁
     rw [hv'] at e₂
     rw [← e₂, ← e₁, LinearMap.smul_apply, smul_eq_mul]

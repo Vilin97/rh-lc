@@ -112,7 +112,8 @@ end Coefficient
 theorem fibreVec_finset_sum {K : Type*} [Field K] [NumberField K] {E : HermitianBundle K} (σ : K →+* ℂ)
     {ι : Type*} (S : Finset ι) (f : ι → E.carrier) :
     fibreVec E.metric σ (∑ i ∈ S, f i) = ∑ i ∈ S, fibreVec E.metric σ (f i) := by
-  simp only [fibreVec, tmul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [fibreVec, tmul_sum, map_sum]
 
 theorem S6.LineCoordinates.proof : S6.LineCoordinates.Statement := by
   intro K _ _ E X _ _ L hI hr ho
@@ -138,7 +139,8 @@ theorem S6.LineCoordinates.proof : S6.LineCoordinates.Statement := by
   have hsum : ∀ v : E.carrier, ∑ x, (comp x v : E.carrier) = v := by
     intro v
     conv_rhs => rw [← Φ.apply_symm_apply v, ← DirectSum.sum_univ_of (Φ.symm v)]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun x _ => ?_
     show _ = DirectSum.coeLinearMap L (DirectSum.of (fun i => L i) x (Φ.symm v x))
     rw [DirectSum.coeLinearMap_of]
@@ -202,7 +204,8 @@ theorem S6.LineCoordinates.proof : S6.LineCoordinates.Statement := by
       refine ⟨∑ i, (w i : E.carrier), ?_⟩
       have h2 : ∀ i, ψ (w i) = Pi.single i (f i) := fun i => by
         rw [hψ_line i _ (w i).2, ← hw i]
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simp only [h2]
       exact Finset.univ_sum_single f
   have hfin : Module.finrank (𝓞 K) E.carrier = n := by

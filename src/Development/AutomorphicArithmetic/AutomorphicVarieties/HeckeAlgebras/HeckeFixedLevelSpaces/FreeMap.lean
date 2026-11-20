@@ -307,7 +307,8 @@ private theorem ctrl_UF_eq_U_ctrl {O Ω : Type} [Field Ω] [CommRing O] [IsLocal
       Pi.smul_apply, smul_eq_mul, MonoidHom.inr_apply] at this ⊢
     rw [Prod.snd_mul, map_mul, _root_.mul_inv_rev, Units.val_mul, ← Matrix.mulVec_mulVec, this]
     simp [mul_inv_cancel_left₀]
-  simp only [Frame.UF, Frame.U, Iwa.uOp, finsum_eq_sum_of_fintype, LinearMap.smul_apply, map_smul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Frame.UF, Frame.U, Iwa.uOp, finsum_eq_sum_of_fintype, LinearMap.smul_apply, map_smul,
     LinearMap.sum_apply, map_sum, Finset.smul_sum]
   refine Finset.sum_congr rfl fun q _ => ?_
   rw [key q, smul_smul]
@@ -371,7 +372,8 @@ private theorem UF_maps_clOrd_of_maps_cl {O Ω : Type} [Field Ω] [CommRing O] [
 private theorem sum_raF_rpF_comm {Ω : Type} [Field Ω] (d : ℕ) {m : ℕ} (τ : X.Ub →* GL (Fin m) Ω)
     (κ : Type) [Fintype κ] (u : κ → X.Ub) (b : Gp) (F : Fin m → X.Fn Ω d) :
     (∑ q, X.raF d τ (u q)) (X.rpF Ω d m b F) = X.rpF Ω d m b ((∑ q, X.raF d τ (u q)) F) := by
-  simp only [LinearMap.sum_apply, map_sum, raF_rpF_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [LinearMap.sum_apply, map_sum, raF_rpF_comm]
 
 private theorem raF_mem_pi_AF {Ω : Type} [Field Ω] {d m : ℕ} (τ : X.Ub →* GL (Fin m) Ω)
     (ξ : Gp →* GL (Fin d) Ω) (u : X.Ub) (F : Fin m → X.Fn Ω d)
@@ -580,7 +582,8 @@ theorem absSpec {A O Ω : Type} [CommRing A] [IsCNL A] [CommRing O] [IsDomain O]
   · intro K K' κ _ u hS f hf
     obtain ⟨h1, h2⟩ := hspec K c le_rfl f hf
     refine hsp _ _ ⟨⟨K', c, le_rfl, sum_raF_maps_clOrd_of_maps_fixd X W τ' (U K) (U K') c φ' κ u hS _ h1⟩, ?_⟩
-    rw [LinearMap.sum_apply, map_sum, LinearMap.sum_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [LinearMap.sum_apply, map_sum, LinearMap.sum_apply, map_sum]
     simp only [ctrl_raF_comm, h2, mapFn_ra]
     all_goals rfl
 

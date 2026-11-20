@@ -120,7 +120,8 @@ theorem mem_span_sup_sq_of_polyDiff_mem (p : Fin n → ℂ) {ι : Type*} [Fintyp
   obtain ⟨c, hc⟩ := (Submodule.mem_span_range_iff_exists_fun ℂ).1 hd
   have hg0 : eval p (f - ∑ i, C (c i) * h i) = 0 := by simp [hf, hh]
   have hg1 : polyDiff p (f - ∑ i, C (c i) * h i) = 0 := by
-    simp only [map_sub, map_sum, C_mul', map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sub, map_sum, C_mul', map_smul]
     rw [← hc]
     simp
   have hsum : ∑ i, C (c i) * h i ∈ Ideal.span (Set.range h) :=

@@ -236,7 +236,8 @@ theorem lineRank : LineRank := by
       rw [map_smul, hav g hg, smul_comm]
     refine ⟨_, hy, fun f hf => ?_⟩
     refine prj_avg μ t ht _ _ ?_ ((mem_eigL μ).2 fun g hg => ?_)
-    · simp only [map_smul, map_sum, hf]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp only [map_smul, map_sum, hf]
     · rw [← hf, hy g hg, map_smul]
   have he0 : ∃ e₀, IsE e₀ ∧ ∀ x, IsE x → ∃ c : ℂ, x = c • e₀ := by
     by_cases h : IsE e

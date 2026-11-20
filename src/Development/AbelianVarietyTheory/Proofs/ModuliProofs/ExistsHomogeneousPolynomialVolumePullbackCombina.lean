@@ -213,7 +213,8 @@ theorem exists_poly
     have n₀ : (d₀ : ℚ) ≠ 0 := by exact_mod_cast (by omega : d₀ ≠ 0)
     funext o
     rcases o with _ | i
-    · simp only [m, y, Option.elim, map_sum, map_mul, eval_C, eval_X]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp only [m, y, Option.elim, map_sum, map_mul, eval_C, eval_X]
       push_cast
       rw [Finset.mul_sum, Finset.mul_sum, ← Finset.sum_neg_distrib]
       exact Finset.sum_congr rfl fun i _ => by field_simp

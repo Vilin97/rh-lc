@@ -28,7 +28,8 @@ theorem linM_apply (D : Matrix κ ι F) (a : ι → mixedEmbedding.mixedSpace F)
 theorem linM_mul (L : Matrix ι κ F) (D : Matrix κ ι F) (a : ι → mixedEmbedding.mixedSpace F) :
     linM L (linM D a) = linM (L * D) a := by
   funext i
-  simp only [linM_apply, Finset.mul_sum, Matrix.mul_apply, map_sum, Finset.sum_mul, map_mul, mul_assoc]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [linM_apply, Finset.mul_sum, Matrix.mul_apply, map_sum, Finset.sum_mul, map_mul, mul_assoc]
   exact Finset.sum_comm
 
 theorem linM_one (a : ι → mixedEmbedding.mixedSpace F) : linM (1 : Matrix ι ι F) a = a := by

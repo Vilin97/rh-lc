@@ -123,7 +123,8 @@ def coord (pr : Fin n → (G ⟶ A)) {T : Over S} (x : T ⟶ G) : Fin n → (T �
 omit [GrpObj G] in
 theorem pull_matLB (h : (matLB P pr W).IsLB) {T : Over S} (x : T ⟶ G) :
     pull x.left (cls _ h) = form (pairCls (cls P hP)) W (coord pr x) (coord pr x) := by
-  rw [cls_linComb hP, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [cls_linComb hP, map_sum]
   refine Finset.sum_congr rfl fun uv _ => ?_
   rw [map_zsmul]
   exact congrArg (W uv.1 uv.2 • ·) (pull_pairCls _ x _ _)

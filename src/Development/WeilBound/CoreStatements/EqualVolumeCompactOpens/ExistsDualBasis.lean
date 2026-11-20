@@ -61,7 +61,8 @@ theorem exists_dualBasis {Λ : Submodule (𝓞 E) (Fin N → E)} (h : IsLat Λ) 
       ext i
       simp [Finset.sum_apply, Pi.single_apply]
     conv_lhs => rw [hx, hgx]
-    rw [map_sum, Submodule.coe_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Submodule.coe_sum]
     refine Finset.sum_congr rfl (fun j _ => ?_)
     rw [hL, IsScalarTower.algebraMap_smul, map_smul]
     rfl
@@ -99,7 +100,8 @@ theorem coordR_neg (x : Fin N → R ⊗[F] E) : coordR l R (-x) = -coordR l R x 
   simp [coordR]
 
 theorem coordR_tmul (a : R) (x : Fin N → E) : coordR l R (fun i => a ⊗ₜ[F] x i) = l x • a := by
-  simp only [coordR, LinearMap.lTensor_tmul, TensorProduct.rid_tmul, ← Finset.sum_smul, LinearMap.comp_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [coordR, LinearMap.lTensor_tmul, TensorProduct.rid_tmul, ← Finset.sum_smul, LinearMap.comp_apply,
     ← map_sum]
   congr 2
   exact Finset.univ_sum_single x

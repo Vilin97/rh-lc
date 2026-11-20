@@ -95,7 +95,8 @@ theorem not_killed_scalar (X : Data E r) (cu : CuspFD X ρ) {n : ℕ} (hn : 0 < 
       exact hτ ((X.cmType τ).2 fun h'' => h' ⟨⟨_, h''⟩⟩)
   have hv : ∀ τ : X.Ψ, (τ.1 (hq ((n : E) • (1 : Matrix (Fin ρ) (Fin ρ) E)) η)).re =
       ∑ b, n * Complex.normSq (τ.1 (η b)) := fun τ => by
-    simp only [hq, Matrix.smul_apply, Matrix.one_apply, smul_eq_mul, mul_ite, mul_one, mul_zero,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hq, Matrix.smul_apply, Matrix.one_apply, smul_eq_mul, mul_ite, mul_one, mul_zero,
       ite_mul, zero_mul, Finset.sum_ite_eq, Finset.mem_univ, if_true, map_sum, map_mul,
       map_natCast, GlobalTheory.FJCuspCheck.emb_cc, Complex.re_sum]
     refine Finset.sum_congr rfl fun b _ => ?_

@@ -66,7 +66,8 @@ private theorem unit_eq_one_of_pow_eq_one_of_residue_one {R : Type} [CommRing R]
     rwa [map_sub, map_one, sub_eq_zero] at this
   have hs : IsUnit (∑ i ∈ Finset.range N, (u : R) ^ i) := by
     rw [← residue_ne_zero_iff_isUnit] at hN ⊢
-    simpa [map_sum, hu] using hN
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [map_sum, hu] using hN
   exact Units.ext (sub_eq_zero.1 (hs.mul_left_eq_zero.1 e))
 
 private theorem de_mul' {R D : Type} [CommRing R] [Group D] (r : D →* GG 3 R) (g h : D) (hg : (r g).right = 1) :

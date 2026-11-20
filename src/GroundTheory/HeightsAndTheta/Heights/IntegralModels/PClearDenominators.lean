@@ -71,7 +71,8 @@ lemma pullSectionOn_res {U V : Z.Opens} (h : V ≤ U) (i : g ⁻¹ᵁ V ⟶ g �
 
 lemma pullSectionOn_sum (U : Z.Opens) {n : ℕ} (t : Fin n → Γ(M, U)) (r : Fin n → Γ(Z, U)) :
     pullSectionOn g M U (∑ i, r i • t i) = ∑ i, g.app U (r i) • pullSectionOn g M U (t i) := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [pullSectionOn_smul]
 
 end Pull

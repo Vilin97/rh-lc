@@ -67,7 +67,8 @@ private theorem smoothMod_thLift (hK : KP) (hP : IsPair B M χX χW om r s r' s'
       rw [← integral_finset_sum _ fun i hi => ((hreg _ (hΨ i hi)).1 _).const_mul _]
       refine integral_congr_ae (.of_forall fun h => ?_)
       simp only [theta]
-      rw [← hl _ (hpres _ _ hs), map_sum, map_sum, map_sum, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hl _ (hpres _ _ hs), map_sum, map_sum, map_sum, Finset.mul_sum]
       refine Finset.sum_congr rfl fun i hi => ?_
       rw [map_smul, map_smul, hl _ (hpres _ _ (hΨ i hi)), smul_eq_mul, map_mul, Complex.conj_ofReal]
       ring)

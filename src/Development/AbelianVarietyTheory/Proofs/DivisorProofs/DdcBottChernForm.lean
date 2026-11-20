@@ -115,7 +115,8 @@ theorem chernAt_two {q : Type} [Fintype q] [DecidableEq q] (G : V n → Matrix q
   have e : GlobalTheory.SecForm.ofValuesTwo (chernTwo G v) = (1 / 4 : ℂ) • four fun a b c d =>
       kappa ^ 2 * (1 / 2 * ∑ i, ∑ j, curvMinor G v i j (coordVec a) (coordVec b) (coordVec c) (coordVec d)) := rfl
   have h := congrArg (MvPolynomial.aeval (R := ℂ) (sym (n := n))) (two_mul_coeff_two (GlobalTheory.GoodMetric.curvPoly G v))
-  simp only [map_mul, map_sum, map_sub, map_ofNat, aeval_curvPoly] at h
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_mul, map_sum, map_sub, map_ofNat, aeval_curvPoly] at h
   rw [e, four_mul, four_mul, four_sum]
   simp only [four_sum, curvMinor, four_sub, four_wedge, ← smul_sub, ← Finset.smul_sum]
   rw [← h, chernAt, GlobalTheory.GoodMetric.chernPoly, two_mul]

@@ -110,7 +110,8 @@ variable {F E : Type} [Field F] [Field E] [Algebra F E] (R : Type) [CommRing R] 
 
 theorem hR_incl {M : ℕ} (J : Matrix (Fin M) (Fin M) E) (x y : Fin M → E) :
     hR R σ J (fun i => inclR R (x i)) (fun i => inclR R (y i)) = inclR R (hE σ J x y) := by
-  simp [hR, hE, Formalism.UG.hform, map_sum, JR, sigR, inclR]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [hR, hE, Formalism.UG.hform, map_sum, JR, sigR, inclR]
 
 theorem qR_incl [CharZero F] (h2 : Module.finrank F E = 2) {M : ℕ} (J : Matrix (Fin M) (Fin M) E)
     (x : Fin M → E) (a : F) (h : hE σ J x x = algebraMap F E a) :
@@ -162,7 +163,8 @@ theorem unitaryOrthogonalComplement_gram_step [CharZero F] (h2 : Module.finrank 
 theorem ratTup_lrAct {n M : ℕ} (γ : Matrix (Fin n) (Fin n) E) (X : Fin n → Fin M → E) :
     ratTup (F := F) R (lrAct 1 γ X) = lrAct 1 (γ.map (inclR R)) (ratTup (F := F) R X) := by
   funext a i
-  simp [ratTup, lrAct_one_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [ratTup, lrAct_one_apply, map_sum]
 
 end Alg
 

@@ -117,7 +117,8 @@ theorem hsInnerR_apply (X Y : MatProd p q) : hsInnerR X Y = hsInner X Y := rfl
 
 theorem hsInner_sum_right {κ : Type*} (s : Finset κ) (X : MatProd p q) (c : κ → ℝ)
     (Y : κ → MatProd p q) : hsInner X (∑ m ∈ s, c m • Y m) = ∑ m ∈ s, c m * hsInner X (Y m) := by
-  rw [← hsInnerR_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hsInnerR_apply, map_sum]
   simp [hsInnerR_apply]
 
 theorem hsInner_sum_left {κ : Type*} (s : Finset κ) (X : MatProd p q) (c : κ → ℝ)
@@ -354,7 +355,8 @@ theorem tInner_zero_right (Y : Matrix ι ι ℂ) : tInner Y 0 = 0 := by simp [tI
 
 theorem tInner_sum_right {κ : Type*} (s : Finset κ) (X : Matrix ι ι ℂ) (c : κ → ℝ)
     (Y : κ → Matrix ι ι ℂ) : tInner X (∑ m ∈ s, c m • Y m) = ∑ m ∈ s, c m * tInner X (Y m) := by
-  rw [← tInnerR_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← tInnerR_apply, map_sum]
   simp [tInnerR_apply]
 
 variable (F : OrthoFrame)

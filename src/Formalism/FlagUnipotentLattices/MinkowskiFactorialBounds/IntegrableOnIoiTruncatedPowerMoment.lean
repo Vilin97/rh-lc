@@ -564,9 +564,11 @@ lemma gi_adj_last {R : Type*} [CommRing R] (r : ℕ) (M : Matrix (Fin (r + 1)) (
 lemma gi_sesq_sum {V ι : Type*} [AddCommGroup V] [Module ℂ V] [Fintype ι] (h : V →ₗ[ℂ] V →ₗ⋆[ℂ] ℂ)
     (c : ι → ℂ) (y : ι → V) :
     h (∑ a, c a • y a) (∑ b, c b • y b) = ∑ b, ∑ a, c a * conj (c b) * h (y a) (y b) := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun b _ => ?_
-  rw [map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, LinearMap.sum_apply]
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [map_smulₛₗ, map_smul, LinearMap.smul_apply]
   simp only [smul_eq_mul]
@@ -607,7 +609,8 @@ theorem dual_vector_norm_sq : Formalism.HermitianLatticeCounting.ExpansionTerms.
 
   have p1 : h x' (f' L) = M.det := by
     have : h x' (f' L) = (M.adjugate * M) L L := by
-      rw [hx', Matrix.mul_apply, map_sum, LinearMap.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hx', Matrix.mul_apply, map_sum, LinearMap.sum_apply]
       refine Finset.sum_congr rfl fun a _ => ?_
       rw [map_smul, LinearMap.smul_apply, smul_eq_mul]
       rfl

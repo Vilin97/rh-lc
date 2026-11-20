@@ -60,7 +60,8 @@ theorem adeleBasis_apply (i : ι) : adeleBasis b i = algebraMap L 𝔸[L] (b i) 
 theorem adeleBasis_repr (y : 𝔸[L]) (i : ι) : (adeleBasis b).repr y i = coord b i y := by
   have hy : ∑ j, coord b j y • adeleBasis b j = y := by
     conv_rhs => rw [← adeleTensorEquiv_sum_coord b y]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun j _ ↦ ?_
     rw [adeleTensorEquiv_tmul, adeleBasis_apply, Algebra.smul_def, algebraMap_adeleRing, mul_comm]
   conv_lhs => rw [← hy]
@@ -73,7 +74,8 @@ theorem adeleBasis_repr_algebraMap (l : L) (i : ι) :
   classical
   have hl : algebraMap L 𝔸[L] l = ∑ j, algebraMap K 𝔸[K] (b.repr l j) • adeleBasis b j := by
     conv_lhs => rw [← b.sum_repr l]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun j _ ↦ ?_
     rw [adeleBasis_apply, Algebra.smul_def, map_mul, Algebra.smul_def, algebraMap_adeleRing,
       adeleMap_algebraMap]

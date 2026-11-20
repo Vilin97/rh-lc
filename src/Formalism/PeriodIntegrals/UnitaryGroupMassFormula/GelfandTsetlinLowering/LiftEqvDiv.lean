@@ -97,7 +97,8 @@ private theorem coeff_eq_of_eval_lemma {σ τ : Type*}
       apply Polynomial.funext
       intro t
       have e := congrArg (AddMonoidAlgebra.coeff · m) (hPQ t)
-      rw [hP t, hQ t, map_sum] at e
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hP t, hQ t, map_sum] at e
       simp only [map_smul, MvPolynomial.coeff_sum, MvPolynomial.coeff_smul, smul_eq_mul] at e
       simp only [p, q, Polynomial.eval_finsetSum, Polynomial.eval_monomial]
       simpa [mul_comm] using e

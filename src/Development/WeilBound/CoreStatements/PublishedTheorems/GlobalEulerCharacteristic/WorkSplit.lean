@@ -110,7 +110,8 @@ theorem exists_split (ℓ : ℕ) [Fact ℓ.Prime] (K : FiniteSubfield) (S : Set 
         have := congrArg (fun e : E => (e : maxUnramifiedOutside K.1 ℚ̄ S)) (bE.sum_repr ⟨x, hx⟩)
         simp only [IntermediateField.coe_sum, IntermediateField.coe_smul] at this
         exact this.symm
-      rw [hsum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hsum, map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [show ∀ (r : K.1) (y : maxUnramifiedOutside K.1 ℚ̄ S), g (r • y) = r • g y from
         fun r y => g.toLinearEquiv.map_smul r y, hb i]

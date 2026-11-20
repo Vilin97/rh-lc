@@ -225,7 +225,8 @@ theorem gelf_rTr (hθ : IsInfFam θ) (hh : IsRealPt θ h) (τ : D.what₂.Tau) (
     rw [← transpose_mul, mul_eq_one_comm.1 (infMat_mul_inv θ V τ h), transpose_one]
   have key := GlobalTheory.Dec.GelfAd.trace_pow_comm (fun a b => derEnd hθ τ (Matrix.single a b 1)) T _ _ hQP
     (fun a b => by
-      simp only [← map_smul, ← map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [← map_smul, ← map_sum]
       have e : ∑ c, ∑ d, ((infMat D.sp.cm.sig V.gram (θ τ) h⁻¹)ᵀ a c * (infMat D.sp.cm.sig V.gram (θ τ) h)ᵀ d b) •
           (Matrix.single c d 1 : Matrix (Fin V.rank) (Fin V.rank) ℂ) = adAt θ h τ (Matrix.single a b 1) := by
         rw [matrix_eq_sum_single (adAt θ h τ _)]

@@ -89,7 +89,8 @@ theorem form_zero' (J : Matrix (Fin n) (Fin n) R) (v : Fin n → R) :
 theorem herm_swap (c : R →+* R) (hc : ∀ r, c (c r) = r) (J : Matrix (Fin n) (Fin n) R)
     (hJ : ∀ i j, c (J j i) = J i j) (v w : Fin n → R) :
     w ⬝ᵥ J *ᵥ (fun i => c (v i)) = c (v ⬝ᵥ J *ᵥ fun i => c (w i)) := by
-  simp only [dotProduct, mulVec, map_sum, map_mul, hc, hJ, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dotProduct, mulVec, map_sum, map_mul, hc, hJ, Finset.mul_sum]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
 

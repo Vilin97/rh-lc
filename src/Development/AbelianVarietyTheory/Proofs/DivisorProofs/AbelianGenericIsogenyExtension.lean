@@ -224,7 +224,8 @@ theorem hasLatticesComplete (hX : CovTop.HypothesesXH) (hB : Published.BarsottiT
   have key : InLat R (fun l => E.symm (b l)) = fun s => E s ∈ Λ := funext fun s => propext <| by
     rw [← hb, Submodule.mem_span_range_iff_exists_fun]
     refine exists_congr fun r => ?_
-    rw [← E.apply_eq_iff_eq, map_sum, eq_comm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← E.apply_eq_iff_eq, map_sum, eq_comm]
     simp only [E₁, E.apply_symm_apply, algebraMap_smul]
   refine ⟨N, fun l => E.symm (b l), ?_⟩
   rw [key]

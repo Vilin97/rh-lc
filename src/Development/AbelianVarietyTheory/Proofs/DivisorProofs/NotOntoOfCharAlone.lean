@@ -139,7 +139,8 @@ theorem adForm_goodOp (hU : R.LUnif) (i : Fin D.R.m) (x : Fin (R.nW i) → D.wha
     adForm R i (goodOp R i x) = postOn _ (R.eWf i (sg0 D A)) (adForm R i x) := by
   have h := (hU i (sg0 D A)).2.2
   unfold adForm goodOp
-  rw [Arith.FormsL.eOp_apply, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Arith.FormsL.eOp_apply, map_sum, map_sum]
   have e : ∀ T : MMap (R.MW i (sg0 D A)), postOn _ (R.eWf i (sg0 D A)) T = ∑ g, RealDat.eC (A := A) (sg0 D A) g •
       postOn _ (actL (Wc D i) (R.βW i) (R.datWp i R.triv) (R.eG g)) T := fun T => by
     ext v y

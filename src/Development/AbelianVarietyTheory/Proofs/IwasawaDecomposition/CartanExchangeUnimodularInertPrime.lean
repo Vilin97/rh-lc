@@ -229,7 +229,8 @@ theorem cartanInert : ∀ {E : Type} [Field E] [NumberField E] [StarRing E] (n :
   have hσ : ∀ x : E, Valued.v (starRingEnd E x) = Valued.v x := fun x => by
     rw [hv, hv, starRingEnd_apply, valuation_star P hP]
   have hB : ∀ u v : Sp E n, starRingEnd E (hStd E n u v) = hStd E n v u := fun u v => by
-    simp only [hStd_apply, map_sum, starRingEnd_apply, star_mul, star_star]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hStd_apply, map_sum, starRingEnd_apply, star_mul, star_star]
   have hτO : τ ∈ Formalism.UG.intL E := by rw [GlobalTheory.UnitarySwap.mem_int, hv]; exact hτ
   have hϖ' : Valued.v (ϖ : E) = WithZero.exp (-1 : ℤ) := by rw [hv]; exact hϖv
   obtain ⟨s, hs, -, hs1, hs2⟩ := GlobalTheory.UnitarySwap.exists_swap (L := E) (V := Sp E n) (B := hStd E n)

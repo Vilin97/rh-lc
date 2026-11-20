@@ -41,7 +41,8 @@ theorem exists_approx_finset (T : Finset (HeightOneSpectrum (𝓞 K))) (N : 𝓞
     rw [← Finset.add_sum_erase T c hv]
     push_cast
     rfl
-  rw [e, map_add, map_sum, Finset.sum_congr rfl hov', ← Finset.mul_sum, mul_add, ← hov]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, map_add, map_sum, Finset.sum_congr rfl hov', ← Finset.mul_sum, mul_add, ← hov]
   ring
 
 theorem exists_mem_near (L : Submodule (𝓞 K) V) (hL : L.FG) (T : Finset (HeightOneSpectrum (𝓞 K)))
@@ -74,7 +75,8 @@ theorem exists_mem_near (L : Submodule (𝓞 K) V) (hL : L.FG) (T : Finset (Heig
   refine ⟨∑ i, (⟨o i, ho i⟩ : v.adicCompletionIntegers K) • toLocal v (g i), ?_, ?_⟩
   · rw [hLv v]
     exact sum_mem fun i _ => smul_mem _ _ (subset_span ⟨i, rfl⟩)
-  · rw [← hcc v hv, map_sum, ← Finset.sum_sub_distrib, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [← hcc v hv, map_sum, ← Finset.sum_sub_distrib, Finset.smul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [LatticeOfLocalisations.toLocal_smul', ← algebraMap_smul (v.adicCompletion K) (cc v i),
       ← algebraMap_smul (v.adicCompletion K) (⟨o i, ho i⟩ : v.adicCompletionIntegers K),

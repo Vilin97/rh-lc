@@ -72,7 +72,8 @@ theorem evalPoints_first_order_of_sq_eq_zero {R : Type} [CommRing R] {d : ℕ} (
   have hc : ∀ mu, MvPowerSeries.coeff mu (c2 ph u) = ∑ i, u i * MvPowerSeries.coeff
     (mu.mapDomain (fun q : Fin 2 × Fin d => (q.1.succ, q.2)) + Finsupp.single ((0 : Fin 3), i) 1) ph :=
     fun _ => rfl
-  simp only [hc, map_sum, Finset.sum_mul, Finset.mul_sum, ite_mul, mul_ite, zero_mul, mul_zero]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hc, map_sum, Finset.sum_mul, Finset.mul_sum, ite_mul, mul_ite, zero_mul, mul_zero]
   rw [Finset.sum_comm, Finset.sum_comm (t := Finset.univ)]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [← Finset.sum_filter]

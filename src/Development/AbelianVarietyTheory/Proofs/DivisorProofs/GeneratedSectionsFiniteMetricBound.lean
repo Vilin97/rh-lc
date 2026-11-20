@@ -89,7 +89,8 @@ theorem exists_bound_affine {X : Scheme.{0}} [IsIntegral X] (p : X ⟶ Sp (𝓞 
     rfl
   have h₅ : algebraMap F (AlgebraicClosure F) d =
       (∑ j, (Points.valMap yt W hyt).hom (c j) * (Points.valMap yt W hyt).hom (b j) : e.O) := by
-    rw [← h₃, h₄, ← hc, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← h₃, h₄, ← hc, map_sum]
     simp only [map_mul]
   obtain ⟨j, hj⟩ := exists_w_le e _ _ (h₅.symm.trans_ne (by simpa using hd))
   refine ⟨j, ?_⟩

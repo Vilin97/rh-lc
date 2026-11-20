@@ -41,7 +41,8 @@ theorem mult_le_rank : (∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (
     refine (GlobalTheory.LieMet.isComb_iff b _ (GlobalTheory.LieMet.tanOf ht)).2 ?_
     apply Φ.injective
     ext l
-    simp [b, map_sum, Pi.single_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [b, map_sum, Pi.single_apply]
   have hs := GlobalTheory.LocM.StepFrame.step_eq fu le_rfl (fun j => GlobalTheory.LieMet.isTan_tv (b j)) hcomb
   omega
 

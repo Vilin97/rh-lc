@@ -20,7 +20,8 @@ instance Kphi_fin (φ : F →+* PadicAlgCl l) : FiniteDimensional ℚ_[l] (Kphi 
 
 theorem phi_mem (φ : F →+* PadicAlgCl l) (x : F) : φ x ∈ Kphi φ := by
   have hx := (Module.finBasis ℚ F).sum_repr x
-  rw [← hx, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hx, map_sum]
   refine sum_mem (fun i _ => ?_)
   rw [map_rat_smul, Rat.smul_def]
   refine mul_mem ?_ (IntermediateField.subset_adjoin _ _ ⟨i, rfl⟩)

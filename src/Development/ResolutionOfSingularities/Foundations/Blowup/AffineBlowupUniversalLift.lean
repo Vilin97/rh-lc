@@ -53,7 +53,8 @@ theorem exists_algebraMap_eq_polynomialEvalInvSelf (I : Ideal R) (φ : R →+* S
       Polynomial.eval₂
         (((algebraMap S (Localization.Away s)) : S →+* Localization.Away s).comp φ)
         (Localization.Away.invSelf s) (p : Polynomial R) := rfl
-  rw [map_sum, hEval, Polynomial.eval₂_eq_sum_range]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, hEval, Polynomial.eval₂_eq_sum_range]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [RingHom.comp_apply, hc i, map_mul, map_pow, mul_assoc, ← mul_pow,
     algebraMap_mul_invSelf s, one_pow, mul_one]

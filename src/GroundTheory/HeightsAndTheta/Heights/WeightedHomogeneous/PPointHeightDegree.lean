@@ -67,13 +67,15 @@ theorem PointHeightDegree.proof (hPts : OneBlockPoints.Statement) (hLine : Latti
 
   have hx : latticePoint φ (τ.comp (algebraMap K K')) (fun j ↦ τ (v j)) = fun _ b ↦ τ (y b) := by
     funext u b
-    simp [latticePoint, hy_def, latticeValue, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [latticePoint, hy_def, latticeValue, map_sum, map_mul]
 
   have hσ : ∀ σ' : K' →+* ℂ, (fun (_ : Unit) b ↦ σ' (y b)) =
       latticePoint φ (σ'.comp (algebraMap K K')) (fun j ↦ σ' (v j)) := by
     intro σ'
     funext u b
-    simp [latticePoint, hy_def, latticeValue, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [latticePoint, hy_def, latticeValue, map_sum, map_mul]
 
   have hy0 : y ≠ 0 := by
     intro h0

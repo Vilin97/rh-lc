@@ -141,7 +141,8 @@ theorem exists_calc (hA : GlobalTheory.Published.ArCalc) (V : Cover Y) {e : ℕ}
       · exact hessRel_fnB ε π u hu' hc
       · exact h ε π hd i
     · change leviL K a j y hy w _ = _
-      rw [Fintype.sum_option, map_add, map_sum, map_smul, add_comm]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Fintype.sum_option, map_add, map_sum, map_smul, add_comm]
       refine congrArg₂ (· + ·) (congrArg (_ * ·) (K.c1_ar u hu a j y hy w)) (Finset.sum_congr rfl fun i _ => ?_)
       refine ((leviL K a j y hy w).map_smul _ _).trans ?_
       exact congrArg (_ * ·) (leviEq_of_φ _ (first_chern_class_potential M P hP i a) j y hy w)
@@ -370,7 +371,8 @@ theorem exists_reads (hA : GlobalTheory.Published.ArCalc) (h : O.Core) : ∃ A T
       · simp [Prod.fst_sum, Pi.single_apply]
       · simp [Prod.snd_sum]
     change leviL K a j y hy w (show K.V from (fun x : DV.Rt D.what₂.Tau O.N => -u x.1 x.2, 0)) = _
-    rw [e, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, map_sum]
     refine Finset.sum_congr rfl fun x _ => ((leviL K a j y hy w).map_smul _ _).trans ?_
     exact congrArg (_ * ·) (leviEq_of_φ _ (first_chern_class_potential _ _ _ x a) j y hy w)
   · rw [Fintype.sum_unique]

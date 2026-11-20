@@ -88,13 +88,15 @@ theorem sum_mem_sph {a : NG.AlgWt L n} {v : HeightOneSpectrum (𝓞 L⁺)} {α :
         group) hfix
   rw [Finset.sum_image (mul_right_injective κ).injOn, e1] at e2
   conv_rhs => rw [e2]
-  simp only [map_sum, rt_rt]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, rt_rt]
 
 theorem form_sum {a : NG.AlgWt L n} {B : (GAf L n → a.W) →ₗ⋆[ℂ] (GAf L n → a.W) →ₗ[ℂ] ℂ} (hB : IsPetersson a B)
     {v : HeightOneSpectrum (𝓞 L⁺)} {α : GAf L n} {R : Finset (GAf L n)} (h : IsReps v α R)
     {f g : GAf L n → a.W} (hf : f ∈ sph a v) (hg : g ∈ sph a v) :
     B f (∑ γ ∈ R, NG.rt L n γ g) = R.card * B f (NG.rt L n α g) := by
-  rw [map_sum, ← nsmul_eq_mul, ← Finset.sum_const]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, ← nsmul_eq_mul, ← Finset.sum_const]
   refine Finset.sum_congr rfl fun γ hγ => ?_
   obtain ⟨k₁, h₁, k₂, h₂, rfl⟩ := h.1 γ hγ
   rw [← rt_rt, hg.2 k₂ h₂, ← rt_rt]
@@ -105,7 +107,8 @@ theorem form_sum_left {a : NG.AlgWt L n} {B : (GAf L n → a.W) →ₗ⋆[ℂ] (
     {v : HeightOneSpectrum (𝓞 L⁺)} {α : GAf L n} {R : Finset (GAf L n)} (h : IsReps v α R)
     {f g : GAf L n → a.W} (hf : f ∈ sph a v) (hg : g ∈ sph a v) :
     B (∑ γ ∈ R, NG.rt L n γ f) g = R.card * B f (NG.rt L n α⁻¹ g) := by
-  rw [map_sum, LinearMap.sum_apply, ← nsmul_eq_mul, ← Finset.sum_const]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, LinearMap.sum_apply, ← nsmul_eq_mul, ← Finset.sum_const]
   refine Finset.sum_congr rfl fun γ hγ => ?_
   obtain ⟨k₁, h₁, k₂, h₂, rfl⟩ := h.1 γ hγ
   have e : g = NG.rt L n (k₁ * α) (NG.rt L n α⁻¹ g) := by

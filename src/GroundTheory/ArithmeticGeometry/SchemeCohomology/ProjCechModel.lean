@@ -133,7 +133,8 @@ lemma lval_d {k : ℤ} {p : ℕ} (σ : Cochain (twistAb A n k) (cover A n) p)
     lval (d _ _ p σ) i = ∑ a : Fin (p + 2), ((-1 : ℤ) ^ (a : ℕ)) • lval σ (i ∘ a.succAbove) := by
   have key : d _ _ p σ i = theta i k (∑ a : Fin (p + 2), ((-1 : ℤ) ^ (a : ℕ)) •
       ⟨lval σ (i ∘ a.succAbove), LDeg_mono (range_comp_subset _ _) k (lval_mem σ _)⟩) := by
-    rw [d_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [d_apply, map_sum]
     refine Finset.sum_congr rfl fun a _ => ?_
     rw [map_zsmul]
     congr 1

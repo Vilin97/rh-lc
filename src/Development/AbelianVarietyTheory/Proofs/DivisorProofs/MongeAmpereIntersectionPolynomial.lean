@@ -36,7 +36,8 @@ theorem hasChernIntegral_ofDivisors (hG : GlobalTheory.Published.GoodChernNumber
     rw [Finset.prod_mul_distrib, map_prod]
   have e2 : (Y.interPoly fun x : Root (fun _ : ι => 1) => Δ x.1)
       ((∑ i, C (t i) * X (⟨i, 0⟩ : Root fun _ : ι => 1)) ^ Y.dim) = Y.interPoly Δ ((∑ i, C (t i) * X i) ^ Y.dim) := by
-    rw [hexp (fun i => X (⟨i, 0⟩ : Root fun _ : ι => 1)), hexp (fun i => (X i : MvPolynomial ι ℝ)), map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hexp (fun i => X (⟨i, 0⟩ : Root fun _ : ι => 1)), hexp (fun i => (X i : MvPolynomial ι ℝ)), map_sum, map_sum]
     refine Finset.sum_congr rfl fun s _ => ?_
     rw [C_mul', C_mul', map_smul, map_smul, Var.interPoly_prod, Var.interPoly_prod]
     rfl

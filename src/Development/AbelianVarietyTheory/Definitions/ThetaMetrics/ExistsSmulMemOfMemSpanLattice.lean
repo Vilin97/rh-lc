@@ -23,7 +23,8 @@ theorem sesqGram_of_eq_sum (B : V →ₛₗ[σ] V →ₛₗ[ComplexEmbedding.con
     [Fintype ι] {e : ι → V} {f : κ → V} {g : Matrix κ ι K} (hf : ∀ i, f i = ∑ j, g i j • e j) :
     sesqGram B f = g.map σ * sesqGram B e * (g.map σ)ᴴ := by
   ext i j
-  simp only [sesqGram_apply, hf, map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [sesqGram_apply, hf, map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply,
     LinearMap.smul_apply, smul_eq_mul, Matrix.mul_apply, Matrix.map_apply,
     Matrix.conjTranspose_apply, ComplexEmbedding.conjugate_coe_eq, Finset.sum_mul, Finset.mul_sum]
   refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun l _ => ?_
@@ -106,7 +107,8 @@ noncomputable def ofGram {ι : Type*} [Fintype ι] (b : Basis ι K V)
     (fun σ a x y => by simp [Finset.mul_sum, mul_assoc])
     (fun σ x y => by
       rw [Finset.sum_comm]
-      simp only [map_sum, map_mul, Complex.conj_conj]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_mul, Complex.conj_conj]
       refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
       have := (hG σ).isHermitian.apply j i
       rw [RCLike.star_def] at this
@@ -131,7 +133,8 @@ noncomputable def diag {ι : Type*} [Fintype ι] (d : (K →+* ℂ) → ι → �
       simp only [Pi.smul_apply, smul_eq_mul, map_mul, Finset.mul_sum]
       exact Finset.sum_congr rfl fun i _ => by ring)
     (fun σ x y => by
-      simp only [map_sum, map_mul, Complex.conj_conj, Complex.conj_ofReal]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_mul, Complex.conj_conj, Complex.conj_ofReal]
       exact Finset.sum_congr rfl fun i _ => by ring)
     (fun σ => by
       classical
@@ -245,7 +248,8 @@ theorem posSemidef_gram (σ : K →+* ℂ) {ι : Type*} [Finite ι] (e : ι → 
     Matrix.of fun i j => b.repr ⟨e i, Submodule.subset_span ⟨i, rfl⟩⟩ j
   have hf : ∀ i, e i = ∑ j, g i j • (b j : V) := fun i => by
     have := congrArg W.subtype (b.sum_repr ⟨e i, Submodule.subset_span ⟨i, rfl⟩⟩).symm
-    rw [map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at this
     exact this
   rw [h.gram_of_eq_sum σ hf]
   exact (h.posDef_gram σ hb).posSemidef.mul_mul_conjTranspose_same _
@@ -305,7 +309,8 @@ theorem gramDet_pos_iff {e : ι → V} : 0 < h.gramDet σ e ↔ LinearIndependen
   have hz : (fun j => σ (c j)) ᵥ* h.gram σ e = 0 := by
     ext j
     have := congrArg (fun x => h.form σ x (e j)) hc
-    simpa [Matrix.vecMul, dotProduct, map_sum, LinearMap.map_smulₛₗ] using this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [Matrix.vecMul, dotProduct, map_sum, LinearMap.map_smulₛₗ] using this
   have := congrFun (Matrix.eq_zero_of_vecMul_eq_zero hd hz) i
   simpa using this
 

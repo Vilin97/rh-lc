@@ -33,7 +33,8 @@ theorem exists_tensor_finiteAdele_equiv : ∀ (F E : Type) [Field F] [NumberFiel
     obtain ⟨m, g, hg⟩ := Module.Finite.exists_fin (R := ℤ) (M := 𝓞 E)
     obtain ⟨r, hr, e⟩ := levelaf_decomp g hg h
     have e' : y = c.symm (c y) := (c.symm_apply_apply y).symm
-    rw [e', e, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e', e, map_sum]
     refine sum_mem fun i _ => AddSubgroup.subset_closure ⟨r i, hr i, g i, ?_⟩
     rw [hc']
   · rw [hj, hc, hι, map_one, one_mul, adMap_apply]

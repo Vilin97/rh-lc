@@ -140,7 +140,8 @@ theorem hodge_gram_conj {D : D7} {A : Amb D} {N j : ℕ} {S : Sig A N j} {κ : L
       (fun τ i => by rw [hf' τ i, ← Category.assoc, GlobalTheory.ShFam.HodgeConj.spMap_dual_conj_conj', Category.id_comp])
     rw [x.hodge_gram hH, x.hodge_gram hf, hf'.co τ hg hx]
     ext a b
-    simp only [Matrix.smul_apply, Matrix.map_apply, Matrix.mul_apply, Matrix.conjTranspose_apply, map_sum, map_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.smul_apply, Matrix.map_apply, Matrix.mul_apply, Matrix.conjTranspose_apply, map_sum, map_mul,
       smul_eq_mul, RCLike.star_def, Complex.conj_conj, Complex.conj_ofReal]
 
 theorem hodgeLocal_of_conj : ∀ (D : D7) (A : Amb D) (N j : ℕ) (S : Sig A N j) (κ : Lv A) (s : FinalTheorems S κ) (x : ToroidalCompactificationData s) (σ : κ.c.F →+* ℂ), ¬ Formalism.L2.PjFree.GoodEmb κ.c σ → HodgeLocal x ((starRingEnd ℂ).comp σ) → HodgeLocal x σ := by

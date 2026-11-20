@@ -78,7 +78,8 @@ theorem basis_of_basisF {K F W M ι κ : Type} [Field K] [Field F] [AddCommGroup
     LinearIndependent F (fun i => e (b' i)) ∧ Submodule.span F (Set.range fun i => e (b' i)) = ⊤ := by
   have hexp' : ∀ x : W, e x = ∑ i, σ (b'.repr x i) • e (b' i) := fun x => by
     conv_lhs => rw [← b'.sum_repr x]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun i _ => LinearMap.map_smulₛₗ e _ _
   have hspan : Submodule.span F (Set.range fun i => e (b' i)) = ⊤ := by
     rw [eq_top_iff, ← hb.2, Submodule.span_le]

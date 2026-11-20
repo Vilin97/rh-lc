@@ -28,7 +28,8 @@ theorem chartProjMatrix_mulVec {m d : ℕ} (σ : Fin m ≃ ((k : K) → ι k))
   have hv : (fun i' => x (σ.symm i')) = ∑ a, x a • fun i' => if σ a = i' then (1 : ℂ) else 0 := by
     rw [pi_eq_sum_univ (fun i' => x (σ.symm i'))]
     exact (Equiv.sum_comp σ _).symm.trans (by simp)
-  rw [hv, map_sum, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hv, map_sum, Finset.sum_apply]
   simp only [map_smul, Pi.smul_apply, smul_eq_mul, Matrix.mulVec, dotProduct, chartProjMatrix]
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [mul_comm]

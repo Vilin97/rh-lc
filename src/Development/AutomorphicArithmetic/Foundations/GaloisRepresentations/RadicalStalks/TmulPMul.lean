@@ -55,7 +55,8 @@ private lemma core (p : ℕ) [Fact p.Prime] (k : Type) [Field k] [CharP k p] (C 
       (by intros; simp [mul_add])
       (by intro n m t; rw [map_zsmul, mul_smul_comm])
     have h0 := congrArg (TensorProduct.lift L) hs
-    rw [map_sum, map_zero] at h0
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero] at h0
     have step : ∀ i ∈ s, TensorProduct.lift L (B i ⊗ₜ[ℤ] c i) = if i = j then Ideal.Quotient.mk J (c i) else 0 := by
       intro i _
       rw [TensorProduct.lift.tmul]

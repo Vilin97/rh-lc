@@ -109,7 +109,8 @@ theorem int_pair (p κ : ℕ) (hMD : MultDiv O p κ (k := m + 1) d) (G : MvPolyn
     · exact ⟨0, fun h => absurd h hμ⟩
   choose w hw using hw
   refine ⟨∑ μ ∈ G.support, AddMonoidAlgebra.coeff G μ * AddMonoidAlgebra.coeff E μ * w μ, ?_⟩
-  rw [fockR_eq_sum _ _ G.support (support_map_subset _ _), Finset.mul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [fockR_eq_sum _ _ G.support (support_map_subset _ _), Finset.mul_sum, map_sum]
   refine Finset.sum_congr rfl ?_
   intro μ hμ
   have h := congrArg (algebraMap O Kf) (hw μ hμ)

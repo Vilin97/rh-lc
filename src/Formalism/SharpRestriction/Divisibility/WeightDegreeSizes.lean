@@ -1500,7 +1500,8 @@ variable {K : Type} [Field K] {σ : K →+* ℂ} {V : Type} [AddCommGroup V] [Mo
 
 theorem form_expand (v : V) : j v = ∑ i, σ (b.repr v i) • j (b i) := by
   conv_lhs => rw [← b.sum_repr v]
-  simp only [map_sum, LinearMap.map_smulₛₗ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.map_smulₛₗ]
 
 theorem form_inj (hli : LinearIndependent ℂ (fun i => j (b i))) : Function.Injective j := by
   intro x y hxy
@@ -1525,7 +1526,8 @@ theorem form_span_top (hli : LinearIndependent ℂ (fun i => j (b i)))
     intro v
     rw [form_expand b j v]
     conv_rhs => rw [← b.sum_repr v]
-    simp only [map_sum, map_smul, smul_eq_mul, map_mul, hFb]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, smul_eq_mul, map_mul, hFb]
   have hF0 : F = 0 := LinearMap.ext_on hU (by
     rintro _ ⟨v, hv, rfl⟩
     have : f v = 0 := hfU hv
@@ -1594,7 +1596,8 @@ theorem stmtRRlatS : FullLatticesFromInputsSide S := by
       have hz' : S.jEE z = Tl (S.eOp μ x) := by rw [hex]; exact hz.symm
       have hsum : Tl (S.eOp μ x) = S.jEE (∑ g ∈ (S.Mtilde μ).gen,
           D.what₂.OtoLL (c g) • (((D.what₂.restRowsFiniteGroupCard : D.what₂.LL))⁻¹ • y g)) := by
-        rw [hx, map_sum, map_sum, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [hx, map_sum, map_sum, map_sum]
         refine Finset.sum_congr rfl fun g hg => ?_
         rw [map_smul, map_smul, hTe g hg]
         simp only [LinearMap.map_smulₛₗ]

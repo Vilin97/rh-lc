@@ -290,7 +290,8 @@ variable {D : D7} {N N' r : ℕ} {p : ℕ} [Fact p.Prime] (lam : Qbar →+* ℂ_
 
 theorem atLogA_cc (k : D.what₂.Tau × Fin N' × Fin N) :
     MvPowerSeries.constantCoeff (RestC.atLogA lam Λ C wq b k) = 0 := by
-  simp only [RestC.atLogA, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [RestC.atLogA, map_sum, map_mul]
   refine Finset.sum_eq_zero fun i _ => ?_
   rw [RestC.cc_psubst' (MvPowerSeries.constantCoeff_X i) (RestC.cc_flog _ wq), mul_zero]
 
@@ -300,7 +301,8 @@ theorem pderiv_atLogA (j : Fin r) (k : D.what₂.Tau × Fin N' × Fin N) :
         (((C.u⁻¹ : ℂ_[p]ˣ) : ℂ_[p]) * lamC lam (embT D k.1 (b j k.2.1 k.2.2))) *
       PowerSeries.subst (MvPowerSeries.X j : MvPowerSeries (Fin r) ℂ_[p])
         (PowerSeries.derivative ℂ_[p] (flog (C • wModel lam Λ) wq)) := by
-  simp only [RestC.atLogA, map_sum, RestC.pderiv_C_mul, pderiv_psubstX, mul_ite, mul_zero]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [RestC.atLogA, map_sum, RestC.pderiv_C_mul, pderiv_psubstX, mul_ite, mul_zero]
   rw [Finset.sum_ite_eq' Finset.univ j, if_pos (Finset.mem_univ j)]
 
 theorem atLog_def (G : MvPowerSeries (D.what₂.Tau × Fin N' × Fin N) ℂ_[p]) :
@@ -313,7 +315,8 @@ theorem atLog_der (w : PowerSeries ℂ_[p]) (hw : w * dX (flog (C • wModel lam
   have hs := RestC.atLogA_hasSubst lam Λ C wq b
   rw [atLog_def, atLog_def, dl_apply, Formalism.G.LogCR.pderiv_subst ha0, RestC.der_eq]
   simp only [pderiv_atLogA]
-  rw [← MvPowerSeries.coe_substAlgHom hs, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← MvPowerSeries.coe_substAlgHom hs, map_sum]
   simp only [map_mul, AlgHom.commutes]
   rw [Finset.mul_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
@@ -393,7 +396,8 @@ theorem coef_comb {Y : Submodule (𝓞 D.host.E) (Matrix (Fin N') (Fin N) D.host
       have := congrFun (congrFun hc a) b'
       simpa [Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul] using this
     have h2 := congrArg (fun x => lam (RestC.embQ (D := D) τ x)) h1
-    simp only [map_mul, map_sum, map_natCast] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_mul, map_sum, map_natCast] at h2
     have h3 : ∀ i, lamC lam (D.host.φ₀ ((c i : D.host.K) : D.host.E)) =
         lam (RestC.embQ (D := D) τ ((c i : D.host.K) : D.host.E)) := by
       intro i
@@ -414,7 +418,8 @@ theorem der_comb {y : Matrix (Fin N') (Fin N) D.host.E} {b : Fin r → Matrix (F
     (G : MvPowerSeries (D.what₂.Tau × Fin N' × Fin N) ℂ_[p]) :
     der D lam y G = ∑ i, algebraMap ℂ_[p] (MvPowerSeries (D.what₂.Tau × Fin N' × Fin N) ℂ_[p]) (α i) *
       der D lam (b i) G := by
-  simp only [RestC.der_eq, hα, map_sum, map_mul, Finset.sum_mul, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [RestC.der_eq, hα, map_sum, map_mul, Finset.sum_mul, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun k _ => ?_
   ring

@@ -22,7 +22,8 @@ namespace GlobalTheory.MBLow.Cl.JetGen
 theorem mul_dot_basis {X : Type} [AddCommGroup X] {r : ℕ} (bX : Module.Basis (Fin r) ℤ X) (f : X →+ ℂ) {c : ℂ}
     (hc : c ≠ 0) (χ : X) : c * (co bX χ ⬝ᵥ fun l => f (bX l) / c) = f χ := by
   conv_rhs => rw [← bX.sum_repr χ]
-  rw [map_sum, dotProduct, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, dotProduct, Finset.mul_sum]
   refine Finset.sum_congr rfl fun l _ => ?_
   rw [map_zsmul, zsmul_eq_mul]
   simp only [co]

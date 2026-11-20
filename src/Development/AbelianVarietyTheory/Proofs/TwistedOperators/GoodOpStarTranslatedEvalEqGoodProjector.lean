@@ -143,7 +143,8 @@ theorem goodOp_star_ev : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : 
 
   have hstar : (star (Gd.Rg (star φ)) : L2X X) =
       ∑ γ, star (D.ntypes.e0.coeff γ) • star (X.B.R (1, s γ) (star φ)) := by
-    rw [← conjL_apply (muX X), hRg, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← conjL_apply (muX X), hRg, map_sum]
     refine Finset.sum_congr rfl fun γ _ => ?_
     rw [LinearIsometryEquiv.map_smulₛₗ, conjL_apply]
     rfl

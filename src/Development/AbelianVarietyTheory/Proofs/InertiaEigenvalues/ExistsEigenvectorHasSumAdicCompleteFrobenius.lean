@@ -27,7 +27,8 @@ theorem abssum_eigen_lim : ∀ (l : ℕ) [Fact l.Prime] (A : Type) [CommRing A] 
   simp only [← RingHom.coe_pow] at hw ⊢
   have hSψ : ∀ N, (φ ^ h) (S N) = (l : A) * S N := by
     intro N
-    simp only [S, map_sum, map_mul, map_pow, map_natCast, hw, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [S, map_sum, map_mul, map_pow, map_natCast, hw, Finset.mul_sum]
     apply Finset.sum_congr rfl
     intro k _
     ring
@@ -55,7 +56,8 @@ theorem abssum_eigen_lim : ∀ (l : ℕ) [Fact l.Prime] (A : Type) [CommRing A] 
     rw [hsum.hasSum_iff_tendsto_nat]
     have hpart : ∀ N, ∑ i ∈ Finset.range N, (l : ℂ_[l]) ^ i * Θ (w i) = Θ (S N) := by
       intro N
-      simp [S, map_sum, map_mul, map_pow, map_natCast]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [S, map_sum, map_mul, map_pow, map_natCast]
     simp only [hpart]
     rw [tendsto_iff_norm_sub_tendsto_zero]
     refine squeeze_zero (fun _ => norm_nonneg _) (fun N => ?_)

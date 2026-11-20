@@ -51,7 +51,8 @@ private theorem dom_fg {k R A ι : Type} [Field k] [IsAlgClosed k] [CommRing R] 
   have hψ : ∀ (c : ι → R) (u : Finset ι),
       ψ (∑ i ∈ u, c i ⊗ₜ[k] e i) = ∑ i ∈ u, φ (c i) • e i := by
     intro c u
-    simp [ψ, map_sum, Algebra.TensorProduct.lift_tmul, Algebra.smul_def]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [ψ, map_sum, Algebra.TensorProduct.lift_tmul, Algebra.smul_def]
   have h2 := congrArg ψ h
   rw [map_mul, hψ, hψ, map_zero] at h2
   rcases mul_eq_zero.mp h2 with h3 | h3
@@ -89,12 +90,14 @@ private theorem dom_tensor (k K L : Type) [Field k] [IsAlgClosed k] [Field K] [F
     have := Module.Flat.rTensor_preserves_injective_linearMap (M := K) R.val.toLinearMap Subtype.val_injective
     exact this
   have hja : j (∑ i ∈ (E x).support, a i ⊗ₜ[k] e i) = x := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     conv_rhs => rw [hrep x]
     refine Finset.sum_congr rfl fun i _ => ?_
     simp [j, a]
   have hjb : j (∑ i ∈ (E y).support, b i ⊗ₜ[k] e i) = y := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     conv_rhs => rw [hrep y]
     refine Finset.sum_congr rfl fun i _ => ?_
     simp [j, b]

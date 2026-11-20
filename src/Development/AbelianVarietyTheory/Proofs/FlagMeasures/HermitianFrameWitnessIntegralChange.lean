@@ -101,13 +101,15 @@ theorem witness_change : ∀ {F : Type} [Field F] [ValuativeRel F] [TopologicalS
   refine ⟨hT, hT', ⟨n * kA, mul_mem hn hkA, ?_, ?_⟩, ⟨n' * kB, mul_mem hn' hkB, ?_, ?_⟩, ?_⟩
   · funext b
     show g b = n (kA (P.A.f b))
-    rw [hg b, hkAf b, map_sum, hf]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hg b, hkAf b, map_sum, hf]
     simp only [map_smul]
   · show t.abelian₂ = _
     rw [img_mul, hkAL, hLam]
   · funext b
     show g' b = n' (kB (P.B.f b))
-    rw [hg' b, hkBf b, map_sum, hf']
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hg' b, hkBf b, map_sum, hf']
     simp only [map_smul]
   · show t.abelian₂ = _
     rw [img_mul, hkBL, hLam']

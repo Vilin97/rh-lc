@@ -227,7 +227,8 @@ theorem cohOn.directSumMap_bijective {ι : Type} [Finite ι] {U : ι → X.Opens
   refine ⟨∑ k ∈ Finset.univ.biUnion T, DirectSum.lof R κ (fun k => cohOn (F k) V n) k
     (cohOn.map R (cofanProj hc k) V n
       (cechHEquivCohOn R hV ha n (cechClass (cechCube R c.pt V U) n z))), Eq.trans ?_ h.symm⟩
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_congr rfl fun k _ => by rw [cohOn.directSumMap_lof, cohOn.map_map]
 
 variable (F) [HasCoproduct F]

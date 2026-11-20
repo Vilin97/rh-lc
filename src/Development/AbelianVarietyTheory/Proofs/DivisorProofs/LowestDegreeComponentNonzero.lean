@@ -147,7 +147,8 @@ theorem fockAct1_wit (h : P ≤ R) (h' : Q ≤ S) (k k' : ℕ) (x : ℚ) (hk : x
     · have hab : a ≠ b := by rintro rfl; exact hs (sameBlock_self a)
       rw [hZ a b hs, zero_smul, if_neg hab, zero_smul]
   conv_lhs => rw [hZs]
-  simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, term]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, term]
   simp only [ite_smul, zero_smul, Finset.sum_ite_eq, Finset.mem_univ, if_true]
   rw [← Finset.sum_smul, Matrix.trace, Finset.mul_sum]
   congr 1

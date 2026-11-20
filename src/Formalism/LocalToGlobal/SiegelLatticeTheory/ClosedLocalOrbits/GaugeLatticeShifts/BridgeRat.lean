@@ -52,7 +52,8 @@ theorem hat_ratLink (A : X.B.I.Gf) {b : X.B.I.GA} {β : (VS D).V ≃ₗ[D.host.E
       (M : Matrix (Fin X.B.I.n) (Fin X.B.I.n) X.B.I.E).map (Formalism.UG.inclE (F := X.B.I.F) (Af X.B.I.F)) *ᵥ
         incl X.B.I (X.crd y) := by
     funext i
-    simp [incl, Matrix.mulVec, dotProduct, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [incl, Matrix.mulVec, dotProduct, map_sum, map_mul]
   simp only [hat]
   rw [hcrd y, Formalism.L2.SG.PoincareInHH.Cut.fmat_mul X, Formalism.L2.SG.PoincareInHH.Cut.fmat_mul X, hfm,
     Matrix.mulVec_mulVec, mul_assoc _ (X.B.I.fmat A), ← Formalism.L2.SG.PoincareInHH.Cut.fmat_mul X,

@@ -37,7 +37,8 @@ theorem eq_of_root {R : Type} [CommRing R] [IsDomain R] [IsLocalRing R] (q : ℕ
   have h2 : (∑ i ∈ Finset.range q, x ^ i * y ^ (q - 1 - i)) = 1 :=
     mul_right_cancel₀ (sub_ne_zero.2 hne) (by rw [h1, _root_.one_mul])
   have h3 := congrArg (IsLocalRing.residue R) h2
-  rw [map_sum, map_one] at h3
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_one] at h3
   simp only [map_mul, map_pow, h] at h3
   rw [geom_sum₂_self] at h3
   have h4 : ((q : ℕ) : IsLocalRing.ResidueField R) = 0 := by

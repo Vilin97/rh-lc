@@ -317,7 +317,8 @@ theorem mid_frame : ∀ (D : D7) (V V' : HSp D) (ι : V'.V →ₗ[D.host.E] V.V)
     refine GlobalTheory.T.block_basis_change_entries V.rank V'.rank a hdim _ hPu _ _ _ _ f1 ?_ ?_ ?_
     · rw [← Matrix.map_mul, hBB, Matrix.map_one _ (map_zero _) (map_one _)]
     · intro i j
-      simp only [Matrix.map_apply, hB i j, map_sum, map_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Matrix.map_apply, hB i j, map_sum, map_mul]
     · intro b hb
       have h1 := hperp b hb
       have h2 : ((frameMat V V' ι).map (tauE D τ))ᴴ * gramAt D V τ = (Formalism.UG.cT (D.sp.cm.sig : D.host.E →+* D.host.E) (frameMat V V' ι) * V.gram).map (tauE D τ) := by
@@ -647,7 +648,8 @@ theorem gelf_slices_monic : ∀ (D : D7) (θ : D.what₂.Tau → (Ainf D.host.F 
             (⟨a + u.val, by omega⟩ : Fin V.rank) (1 : ℂ) * (C.1.map (tauE D τ))⁻¹) := by
       funext p q
       rw [hBe p q]
-      simp only [map_sum, map_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul]
     rw [e, gelfA_conj _ hBB]
     exact hq F h1 h2 g hg
   choose q hqm hq using key

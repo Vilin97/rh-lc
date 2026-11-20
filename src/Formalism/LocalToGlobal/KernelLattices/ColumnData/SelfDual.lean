@@ -388,7 +388,8 @@ theorem SelfDualRec_of_curve (hC : CurveSelfDualRec) : SelfDualRec := by
       unfold hYY
       rw [← FL.sum_tau_trace, Finset.mul_sum]
       refine Finset.sum_congr rfl fun τ _ => ?_
-      simp only [map_sum, map_mul, FL.emb_conj, Finset.mul_sum, Matrix.of_apply, hXv]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_mul, FL.emb_conj, Finset.mul_sum, Matrix.of_apply, hXv]
       refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
       ring
     rw [e1] at hcY

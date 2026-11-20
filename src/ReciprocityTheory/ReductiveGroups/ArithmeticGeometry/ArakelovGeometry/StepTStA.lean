@@ -139,7 +139,8 @@ theorem mem_pts_iff (v : J → Ω) (z : J → ℂ) :
       have h2 := H k (qmap (homogeneousComponent k f)) ((homogeneousComponent_isHomogeneous k f).map _)
         (by rw [aeval_qmap, h1])
       rwa [aeval_qmap] at h2
-    rw [← sum_homogeneousComponent (φ := f), map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← sum_homogeneousComponent (φ := f), map_sum]
     exact Finset.sum_eq_zero fun k _ => hk k
 
 theorem pts_matAct_gen (x : J → Ω) (A : Matrix J J ℚ) (hA : IsInvMat A) (z : J → ℂ) :

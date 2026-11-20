@@ -66,7 +66,8 @@ theorem conj_values_hecke : GlobalTheory.Published.CuspRapidDecay → ∀ D : D7
   refine ⟨fun u v => good_val hP hc.inf (u : SmT s.M →ₗ[ℂ] (GA D s.V → ℂ)) u.2 v, fun P d R => ?_, fun R f => ?_⟩
   · simp only [Hecke₂, conj_eq_one_iff']
   · funext g
-    simp [heckeLin, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [heckeLin, map_sum]
 
 end GlobalTheory.ConjVal
 

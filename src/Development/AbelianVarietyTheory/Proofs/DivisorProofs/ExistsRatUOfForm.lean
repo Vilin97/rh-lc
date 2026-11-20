@@ -50,7 +50,8 @@ theorem incV_dot_form {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (u v : Fin n → 
     incV F u ⬝ᵥ (incM F J *ᵥ fun i => cA σ (incV F v i)) = inclR (F := F) (AF F) (form σ J u v) := by
   have e : (fun i => cA σ (incV F v i)) = incV F (fun i => σ (v i)) := funext fun i => GlobalTheory.PlaneLevi.cA_inclR σ (v i)
   rw [e, incM_mulVec, form]
-  simp only [incV, dotProduct, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [incV, dotProduct, map_sum, map_mul]
 
 theorem mat_mul_mulVec {n : ℕ} {J : Matrix (Fin n) (Fin n) E} (g h : UA σ J) (v : Fin n → AE F E) :
     mat (g * h) *ᵥ v = mat g *ᵥ (mat h *ᵥ v) := by

@@ -135,7 +135,8 @@ theorem exists_isEval_rate [IsPrecomplete (Ideal.span {(p : C)}) C] (hp : IsUnit
   obtain ⟨u, hu⟩ := (hp.pow D).exists_right_inv
   have hr : ∀ n, ∃ w : C, (p : B) ^ D * (psum κ L (i x) n - u * i S) = i ((p : C) ^ (n / (M * 2)) * w) :=
     fun n => (hS n).imp fun z hz => by
-      rw [← hz, map_sub, map_sum, mul_sub, ← mul_assoc, hu, one_mul, psum, mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hz, map_sub, map_sum, mul_sub, ← mul_assoc, hu, one_mul, psum, mul_sum]
       simp only [hw]
   refine ⟨u * i S, fun r => ⟨(D + r) * (M * 2), fun n hn => ?_⟩, D, M * 2, hN, ht, hr⟩
   obtain ⟨z, hz⟩ := hr n
@@ -154,7 +155,8 @@ theorem IsEval.map {K' : Type*} [CommRing K'] {κ' : K' →+* B'} (ψ : B →+* 
     (h : IsEval p i κ L x y) : IsEval p i' κ' (PowerSeries.map τ L) (ψ x) (ψ y) := by
   have := Tends.map ψ hψ h
   intro r
-  simpa only [psum, map_sum, map_mul, map_pow, hκ, coeff_map] using this r
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa only [psum, map_sum, map_mul, map_pow, hκ, coeff_map] using this r
 
 theorem IsEval.C_mul (hp : IsUnit (p : B)) {c : K} (hc : ∃ (D : ℕ) (z : C), (p : B) ^ D * κ c = i z)
     {L : PowerSeries K} {x y : B} (h : IsEval p i κ L x y) : IsEval p i κ (PowerSeries.C c * L) x (κ c * y) := by
@@ -214,7 +216,8 @@ theorem IsEval.subst (hp : IsUnit (p : B)) (h : ∀ c, i (o c) = κ (a c)) {L : 
       sum_congr rfl fun j hj => by rw [hc n j (mem_range.1 hj), map_sum, sum_mul]
     rw [e, psum, sum_comm, ← sum_sub_distrib]
     refine sum_congr rfl fun k _ => ?_
-    simp only [map_sub, map_sum, map_mul, map_pow i, h, mul_sub, mul_sum, mul_assoc]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sub, map_sum, map_mul, map_pow i, h, mul_sub, mul_sum, mul_assoc]
   intro r
   obtain ⟨N, hN'⟩ := hw r
   refine ⟨max N ((D + r) * (M * 2)), fun n hn => ?_⟩
@@ -225,7 +228,8 @@ theorem IsEval.subst (hp : IsUnit (p : B)) (h : ∀ c, i (o c) = κ (a c)) {L : 
   have h2 : psum κ L (i y) n - psum κ (L.subst (PowerSeries.map a u)) (i x) n =
       i ((p : C) ^ r * ((p : C) ^ d * ∑ k ∈ range n, v k)) := by
     refine (hp.pow D).mul_left_cancel ?_
-    rw [hs, mul_sum, sum_congr rfl hv, ← map_sum, ← mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hs, mul_sum, sum_congr rfl hv, ← map_sum, ← mul_sum]
     simp only [hd, map_mul, map_pow, map_natCast]
     ring
   exact ⟨z - (p : C) ^ d * ∑ k ∈ range n, v k, by rw [mul_sub, map_sub, ← hz, ← h2]; ring⟩

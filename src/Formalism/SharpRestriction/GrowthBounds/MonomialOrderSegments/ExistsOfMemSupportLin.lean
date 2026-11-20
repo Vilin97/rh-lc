@@ -12,7 +12,8 @@ variable {K : Type} [Field K]
 theorem lin_eq_sum {σ τ : Type} (T : MvPolynomial σ K →ₗ[K] MvPolynomial τ K) (Z : MvPolynomial σ K) :
     T Z = ∑ ζ ∈ Z.support, Z.coeff ζ • T (monomial ζ 1) := by
   conv_lhs => rw [Z.as_sum]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun ζ _ => ?_
   rw [show monomial ζ (Z.coeff ζ) = Z.coeff ζ • monomial ζ (1 : K) by rw [smul_monomial, smul_eq_mul, mul_one], map_smul]
 
@@ -215,7 +216,8 @@ theorem inv_step [CharZero K] {v : AddValuation K (WithTop ℚ)} {p : ℕ} (hSeg
     intro ζ hζ
     rw [coeff_smul, smul_eq_mul, AddValuation.map_mul]
     exact add_nonneg (hInt ζ) (tI ζ (hpre ζ hζ) α)
-  · rw [lin_eq_sum Th Z, map_sum, ← hph, D.ph_lin_sum p Z]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [lin_eq_sum Th Z, map_sum, ← hph, D.ph_lin_sum p Z]
     refine Finset.sum_congr rfl fun ζ hζ => ?_
     rw [map_smul, tph ζ (hpre ζ hζ)]
   · intro ζ' hζ'
@@ -288,7 +290,8 @@ theorem Sp_monomial (p : ℕ) (ζ : D.EM) : D.Sp p (monomial ζ (1 : K)) = monom
   rw [Sp, lsup_monomial, one_smul]
 
 theorem ph_Sp (p : ℕ) (Z : MvPolynomial (D.ML × Fin D.r) K) : D.ph p (D.Sp p Z) = D.ph p Z := by
-  rw [Sp, lsup_apply, map_sum, ph_eq_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Sp, lsup_apply, map_sum, ph_eq_sum]
   refine Finset.sum_congr rfl fun ζ _ => ?_
   rw [map_smul, ph_monomial, phE_splitE, smul_monomial, smul_eq_mul, mul_one]
 

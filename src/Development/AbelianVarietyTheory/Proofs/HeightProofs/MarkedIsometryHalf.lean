@@ -30,7 +30,8 @@ theorem perFr_of_unitary {E : Type} [Field E] [NumberField E] [IsCMField E] {r :
     perFr X' x' (γ.1 *ᵥ v) τ i = perFr X x v τ i := by
   have hemb : ∀ τ' : E →+* ℂ, Data.emb τ' (γ.1 *ᵥ v) = (γ.1.map τ') *ᵥ Data.emb τ' v := fun τ' => by
     funext a
-    simp [Data.emb, Matrix.mulVec, dotProduct, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Data.emb, Matrix.mulVec, dotProduct, map_sum]
   have hdetγ : ∀ τ' : E →+* ℂ, IsUnit ((γ.1.map τ').det) := fun τ' => by
     have hd : (γ.1.map τ').det = τ' γ.1.det := (RingHom.map_det τ' _).symm
     rw [hd]

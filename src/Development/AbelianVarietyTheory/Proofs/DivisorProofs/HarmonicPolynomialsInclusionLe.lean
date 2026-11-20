@@ -92,7 +92,8 @@ theorem fockAct1_Eab_polIncl (r₀ : Fin (R + 1)) (s₀ : Fin (S + 1)) (a b : Ix
     (f : Pol P Q R S) :
     fockAct1 P Q (R + 1) (S + 1) (Eab a b) (polIncl P Q r₀ s₀ f) =
       polIncl P Q r₀ s₀ (fockAct1 P Q R S (Eab a b) f) := by
-  rw [fockAct1_Eab, fockAct1_Eab, LinearMap.sum_apply, LinearMap.sum_apply, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [fockAct1_Eab, fockAct1_Eab, LinearMap.sum_apply, LinearMap.sum_apply, map_sum,
     Fintype.sum_sum_type, Fintype.sum_sum_type, Fin.sum_univ_succAbove _ r₀, Fin.sum_univ_succAbove _ s₀]
   have h1 : ∑ i : Fin R, omE ((a, Sum.inl (r₀.succAbove i)) : Ln P Q (R + 1) (S + 1)) (b, Sum.inl (r₀.succAbove i))
       (polIncl P Q r₀ s₀ f) = ∑ i : Fin R, polIncl P Q r₀ s₀ (omE ((a, Sum.inl i) : Ln P Q R S) (b, Sum.inl i) f) :=
@@ -119,7 +120,8 @@ theorem fockAct1_polIncl (r₀ : Fin (R + 1)) (s₀ : Fin (S + 1)) {X : Mat P Q}
     conv_lhs => rw [Matrix.matrix_eq_sum_single X]
     simp only [Eab, Matrix.smul_single, smul_eq_mul, mul_one]
   rw [hZ]
-  simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
   by_cases h : sameBlock a b
   · rw [fockAct1_Eab_polIncl r₀ s₀ a b h]
@@ -135,7 +137,8 @@ theorem minusPart_polIncl (r₀ : Fin (R + 1)) (s₀ : Fin (S + 1)) {Z : Mat (R 
     (f : Pol P Q R S) :
     minusPart (fockAct2 P Q (R + 1) (S + 1) Z) (polIncl P Q r₀ s₀ f) =
       polIncl P Q r₀ s₀ (minusPart (fockAct2 P Q R S (Z.submatrix (skipIx r₀ s₀) (skipIx r₀ s₀))) f) := by
-  rw [GlobalTheory.JointHarm.minusPart_fockAct2_offDiagonal hZ, GlobalTheory.JointHarm.minusPart_fockAct2_offDiagonal (isPC_submatrix r₀ s₀ hZ), map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [GlobalTheory.JointHarm.minusPart_fockAct2_offDiagonal hZ, GlobalTheory.JointHarm.minusPart_fockAct2_offDiagonal (isPC_submatrix r₀ s₀ hZ), map_sum]
   refine Finset.sum_congr rfl fun a _ => ?_
   have hz : ∀ (v : Ln P Q (R + 1) (S + 1)) (g : Pol P Q R S), (∀ m, Prod.map id (skipIx r₀ s₀) m ≠ v) →
       pderiv v (polIncl P Q r₀ s₀ g) = 0 := fun v g hv =>
@@ -146,7 +149,8 @@ theorem minusPart_polIncl (r₀ : Fin (R + 1)) (s₀ : Fin (S + 1)) {Z : Mat (R 
     · obtain ⟨d', rfl⟩ := hd
       exact ⟨_, pderiv_polIncl r₀ s₀ b d' f⟩
     · exact ⟨0, by rw [map_zero]; exact hz _ _ (incl_ne_of_not_mem r₀ s₀ b d hd)⟩
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   symm
   refine Fintype.sum_of_injective (M := Pol P Q (R + 1) (S + 1)) (skipIx r₀ s₀) (skipIx_injective r₀ s₀) _ _ ?_ ?_
   · intro c hc
@@ -156,7 +160,8 @@ theorem minusPart_polIncl (r₀ : Fin (R + 1)) (s₀ : Fin (S + 1)) {Z : Mat (R 
     · obtain ⟨g, hg⟩ := hren (a, d)
       rw [hg, hz _ _ (incl_ne_of_not_mem r₀ s₀ a c hc), smul_zero]
   · intro c
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Fintype.sum_of_injective (M := Pol P Q (R + 1) (S + 1)) (skipIx r₀ s₀) (skipIx_injective r₀ s₀) _ _ ?_ ?_
     · intro d hd
       split_ifs

@@ -28,10 +28,12 @@ theorem valAt_form {K : Type} [Field K] (O : ValuationSubring K) {Z : Scheme.{0}
   · have e1 : (M.transpose * J.map (Int.castRingHom Z.functionField) * M) i j =
         φ (∑ r, S r i * ∑ s, (J r s : Z.presheaf.stalk (yt (IsLocalRing.closedPoint O))) * S s j) := by
       rw [Matrix.mul_assoc, Matrix.mul_apply]
-      simp only [map_sum, map_mul, map_intCast, hS, Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_mul, map_intCast, hS, Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply,
         eq_intCast]
     rw [e1, hval]
-    simp only [map_sum, map_mul, map_intCast, ← hS, hval, dotProduct, Matrix.mulVec, Matrix.map_apply, eq_intCast]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, map_intCast, ← hS, hval, dotProduct, Matrix.mulVec, Matrix.map_apply, eq_intCast]
 
 theorem form_frame_small : ∀ {F : Type} [Field F] [NumberField F] {Y : Var F} {C : CxSt F} {g : ℕ} (A : Fin g → Adl C Y) (p k : ℕ), p.Prime →
     ∀ (V : Cover Y) (W : Y.X.Opens) {ι : Type} (U0 : ι → V.X.Opens)

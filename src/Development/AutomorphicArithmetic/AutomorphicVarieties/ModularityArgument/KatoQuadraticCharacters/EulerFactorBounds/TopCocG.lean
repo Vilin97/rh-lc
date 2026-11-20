@@ -34,7 +34,8 @@ private theorem pol_cont {Ω : Type} [Field Ω] [Algebra ℚ Ω] [IsAlgClosure �
     exact (show _ = _ from h1).trans (show _ = _ from hf i).symm
   have hgal : X.galB l s t u =
       X.kmap l (X.gal s) (t ![u 0, (cyclotomicCharacter Ω l s.toRingEquiv : ℤ_[l]) * u 1]) := rfl
-  rw [hgal, htc, htc, map_sum, ← Finset.sum_sub_distrib, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hgal, htc, htc, map_sum, ← Finset.sum_sub_distrib, map_sum]
   refine Finset.sum_eq_zero fun i _ => ?_
   simp only [Matrix.cons_val_zero, Matrix.cons_val_one]
   rw [map_smul, map_sub, map_smul, hk, ← map_smul, ← map_sub]

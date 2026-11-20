@@ -115,7 +115,8 @@ variable {ι V : Type} [Fintype ι] [AddCommGroup V] [Module ℂ V]
 theorem mem_of_entries (P : Submodule ℂ V) (f : Mat R S →ₗ[ℂ] Module.End ℂ V) (X : Mat R S) (v : V)
     (h : ∀ a b, X a b ≠ 0 → f (Eab a b) v ∈ P) : f X v ∈ P := by
   rw [Matrix.matrix_eq_sum_single X]
-  simp only [map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.sum_apply]
   refine Submodule.sum_mem _ fun a _ => Submodule.sum_mem _ fun b _ => ?_
   by_cases hab : X a b = 0
   · simp [hab]
@@ -202,7 +203,8 @@ theorem top_step (act : ι → Mat R S →ₗ[ℂ] Module.End ℂ V)
       · have e := hComm w' w hw D L hDkc hLkc
         simp only [hw, if_false, sub_zero]
         rw [← Module.End.mul_apply, e, Module.End.mul_apply]
-    rw [happ, Finset.sum_congr rfl (fun w' _ => hterm w'), Finset.sum_sub_distrib,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [happ, Finset.sum_congr rfl (fun w' _ => hterm w'), Finset.sum_sub_distrib,
       Finset.sum_ite_eq', if_pos (Finset.mem_univ _), ← map_sum, ← happ, hx, map_smul, sub_smul,
       one_smul]
   have hTe : ∀ v ∈ T, h v = C • v := by

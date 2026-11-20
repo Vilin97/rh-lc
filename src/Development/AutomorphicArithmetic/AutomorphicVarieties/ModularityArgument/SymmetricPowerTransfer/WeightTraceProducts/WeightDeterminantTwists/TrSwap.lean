@@ -33,7 +33,8 @@ private theorem homogeneous_trace_mul {d : ℕ} (n : ℕ) (g h : GL (Fin d) ℂ)
       rw [MvPolynomial.notMem_support_iff.1 hm', monomial_zero]
   rw [hcomp]
   conv_lhs => rw [hQsum]
-  rw [map_sum, MvPolynomial.coeff_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, MvPolynomial.coeff_sum]
   apply Finset.sum_congr rfl
   intro m' _
   rw [show monomial m' (coeff m' (sbs (fun _ : Unit => h) (monomial m 1))) =

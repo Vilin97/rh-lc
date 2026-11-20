@@ -31,7 +31,8 @@ theorem mem_of_baseChange_mem_span (p : PlF D) (W : Submodule D.host.E (VS D).V)
     intro x
     show ∑ i, (D.s.atP p).ιE (φ ((VS D).frame i)) * (D.s.atP p).ιE ((VS D).frame.repr x i) = _
     conv_rhs => rw [← (VS D).frame.sum_repr x]
-    simp only [map_sum, map_smul, smul_eq_mul, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, smul_eq_mul, map_mul]
     refine Finset.sum_congr rfl fun i _ => ?_
     ring
   have hle : Submodule.span (D.s.atP p).Ep (baseChange₂ D p '' (W : Set (VS D).V)) ≤ LinearMap.ker ψ := by

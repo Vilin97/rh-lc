@@ -35,7 +35,8 @@ theorem colForm_bound : ∀ (D : D7) (X : Formalism.L2.SG.HidaSetting.HidaSettin
     have e1 : B.colForm T.1 ξ a = (T.1 ξ) (B.toH a) := rfl
     rw [e1]
     conv_lhs => rw [hξ]
-    rw [map_sum, Finset.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_apply]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, Pi.smul_apply, smul_eq_mul]
     rfl

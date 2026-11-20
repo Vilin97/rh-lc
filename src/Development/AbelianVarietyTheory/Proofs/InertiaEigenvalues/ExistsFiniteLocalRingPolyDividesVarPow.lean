@@ -52,7 +52,8 @@ theorem aeval_C_mul_X_coeff {ι L : Type} [Fintype ι] [CommRing L] (F : MvPolyn
       ∑ m ∈ F.support, if m.degree = d then F.coeff m * ∏ q, b q ^ m q else 0 := by
   classical
   conv_lhs => rw [F.as_sum]
-  rw [map_sum, Polynomial.finsetSum_coeff]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Polynomial.finsetSum_coeff]
   refine Finset.sum_congr rfl fun m _ => ?_
   rw [MvPolynomial.aeval_monomial, Finsupp.prod_fintype _ _ (fun i => pow_zero _)]
   have hprod : (∏ q, (C (b q) * X : L[X]) ^ m q) = C (∏ q, b q ^ m q) * X ^ m.degree := by
@@ -99,7 +100,8 @@ theorem exists_point {ι L : Type} [Fintype ι] [Field L] [Infinite L] (K : Set 
     fun q hq => by simp [hq, hxq q hq], ?_⟩
   have key : MvPolynomial.eval x H = ∑ m' ∈ F.support, if m'.degree = m.degree then
       F.coeff m' * ∏ q, (if q ∈ K then 0 else x q) ^ m' q else 0 := by
-    simp only [H, Finset.sum_filter, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [H, Finset.sum_filter, map_sum]
     refine Finset.sum_congr rfl fun m' _ => ?_
     by_cases hd : m'.degree = m.degree
     · by_cases hz : ∀ q ∈ K, m' q = 0

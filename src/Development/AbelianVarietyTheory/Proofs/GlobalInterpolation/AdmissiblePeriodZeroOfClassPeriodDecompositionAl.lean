@@ -205,7 +205,8 @@ theorem admissiblePeriodZero_of_classPeriodDecomposition {D : D7} (h : ∀ u, Fo
   refine ⟨∑ c, ((Nat.card ((D.fm u).stabilizer₂ c) : ℕ) : D.what₂.LL)⁻¹ * y c, ?_, ?_⟩
   · have hz : (D.fm u).ptEmb x ∈ (D.fm u).ptC := ((T.valP.rat _).1 ⟨x, rfl⟩).1
     have hG : T.jM ((D.eMt u).symm F) ∈ (D.fm u).ptC := T.per.2.1 _
-    rw [T.per.2.2, petersson_eq_sum_restrict T _ _ hG hz, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [T.per.2.2, petersson_eq_sum_restrict T _ _ hG hz, map_sum]
     refine Finset.sum_congr rfl fun c _ => ?_
     rw [map_mul, map_inv₀, map_natCast, hy c]
     unfold Formalism.MainNotions.RT.PeriodPointConditions.pcL

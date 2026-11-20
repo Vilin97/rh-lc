@@ -65,7 +65,8 @@ private theorem unip_pow (l : ℕ) [Fact l.Prime] (O : Type) [CommRing O] [IsLoc
     rw [← add_assoc, pow_succ l, pow_mul, ← mul_geom_sum, Matrix.mul_apply, pow_succ]
     refine Ideal.sum_mem _ fun a _ => Ideal.mul_mem_mul (ih i a) ?_
     have h3 : (residue O).mapMatrix (∑ t ∈ Finset.range l, (M ^ l ^ (n + k)) ^ t) = 0 := by
-      simp only [map_sum, map_pow (residue O).mapMatrix (M ^ l ^ (n + k)), h2, one_pow]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_pow (residue O).mapMatrix (M ^ l ^ (n + k)), h2, one_pow]
       simp
     exact (residue_eq_zero_iff _).1 (congrFun (congrFun h3 a) j)
 

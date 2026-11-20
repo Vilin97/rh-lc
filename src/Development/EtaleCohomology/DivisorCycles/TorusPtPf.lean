@@ -53,7 +53,8 @@ lemma entry_exp {N n : ℕ} {p : Fin n → Mat C N} (hp : Sys p) (e : Fin n → 
     (PowerSeries.mk fun k => ((k.factorial : C)⁻¹ • (∑ i, e i • p i) ^ k) a b) =
       ∑ j, PowerSeries.C (p j a b) * E (e j) := by
   ext k
-  simp only [PowerSeries.coeff_mk, map_sum, PowerSeries.coeff_C_mul, coeff_E, pow_sys hp, Matrix.smul_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [PowerSeries.coeff_mk, map_sum, PowerSeries.coeff_C_mul, coeff_E, pow_sys hp, Matrix.smul_apply,
     Matrix.sum_apply, smul_eq_mul, Finset.mul_sum]
   refine Finset.sum_congr rfl fun j _ => by ring
 

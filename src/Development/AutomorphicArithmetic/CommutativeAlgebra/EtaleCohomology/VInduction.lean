@@ -189,11 +189,13 @@ private theorem IsVal.van {n : ℕ} {C : M.V n →+ (Module.Dual K (HdR M.q n) �
   obtain ⟨m, hm⟩ := b.inj a hM n
   choose xs hxs using fun k => hN (v k)
   have h1 := hm (R.t ^ u • ∑ k, (c k • xs k)) (by
-    simp only [map_smul, map_sum, hxs]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_smul, map_sum, hxs]
     simp only [smul_comm (c _) (R.t ^ N), ← Finset.smul_sum]
     rw [smul_comm, h, smul_zero])
   have h2 := congrArg (fun y => p.κ a n y ψ) h1
-  simp only [p.lin a hM, map_zero, AddMonoidHom.zero_apply, map_sum, AddMonoidHom.finset_sum_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [p.lin a hM, map_zero, AddMonoidHom.zero_apply, map_sum, AddMonoidHom.finset_sum_apply,
     hC.spec _ _ _ (hxs _)] at h2
   have h3 := (mul_eq_zero.mp ((mul_eq_zero.mp h2).resolve_left (tB_pow_ne hF m))).resolve_left (tB_pow_ne hF u)
   have h4 : R.i (R.t ^ N) * ∑ k, R.i (c k) * C (M.toV n (v k)) ψ = 0 := by
@@ -273,7 +275,8 @@ theorem injAbs : UpperTheory.Ru.crystallineComparison.InjAbs := by
     obtain ⟨a', _, ⟨m⟩⟩ := hL.refine (P s) M (uu s) (hu s) (hP s).1 hM a₀ a
     have := inj_conn hF hS hL e b p (hP s).1 (hP s).2 a' j (fun k => Model.pullT (uu s) (hu s) j (v k)) c u (by
       have h1 := congrArg (D.pullA m j) h
-      simpa only [map_smul, map_sum, map_zero, ← e.nat m (hP s).1 hM] using h1) f'
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa only [map_smul, map_sum, map_zero, ← e.nat m (hP s).1 hM] using h1) f'
     simpa only [toV_pullT] using this
   let L : M.V j →ₗ[ℚ_[l]] ∀ s, (P s).V j := LinearMap.pi fun s => Model.pullV (uu s) (hu s) j
   have hk : LinearMap.ker L = ⊥ := LinearMap.ker_eq_bot'.2 fun w hw => hinj j w fun s => congrFun hw s
@@ -282,9 +285,11 @@ theorem injAbs : UpperTheory.Ru.crystallineComparison.InjAbs := by
   have hf : ∀ w, f w = ∑ s, f' s (Model.pullV (uu s) (hu s) j w) := by
     intro w
     have h1 : g (L w) = w := LinearMap.congr_fun hg w
-    conv_lhs => rw [← h1, ← Finset.univ_sum_single (L w), map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [← h1, ← Finset.univ_sum_single (L w), map_sum, map_sum]
     rfl
-  simp only [hf, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hf, map_sum, Finset.sum_mul]
   rw [Finset.sum_comm]
   exact Finset.sum_eq_zero fun s _ => hs s (f' s)
 

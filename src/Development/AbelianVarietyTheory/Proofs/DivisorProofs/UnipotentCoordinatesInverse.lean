@@ -55,14 +55,16 @@ theorem fA_smul_left (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) 
 
 theorem fA_incV (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (x y : Fin n → E) :
     fA σ J (incV F x) (incV F y) = inclR (F := F) (AF F) (form σ J x y) := by
-  simp only [fA, form, incV, incM, dotProduct, Matrix.mulVec, Matrix.map_apply, map_sum, map_mul, cA_inclR]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [fA, form, incV, incM, dotProduct, Matrix.mulVec, Matrix.map_apply, map_sum, map_mul, cA_inclR]
 
 theorem fA_swap {σ : E →ₐ[F] E} (hσ : ∀ e, σ (σ e) = e) {n : ℕ} {J : Matrix (Fin n) (Fin n) E}
     (hJ : ∀ i j, σ (J j i) = -J i j) (v w : Fin n → AE F E) :
     fA σ J w v = -cA σ (fA σ J v w) := by
   have hJ' : ∀ i k, cA σ (incM F J i k) = -incM F J k i := by
     intro i k; simp [incM, cA_inclR, hJ]
-  simp only [fA, dotProduct, Matrix.mulVec, map_sum, map_mul, cA_cA hσ, hJ', Finset.mul_sum, ← Finset.sum_neg_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [fA, dotProduct, Matrix.mulVec, map_sum, map_mul, cA_cA hσ, hJ', Finset.mul_sum, ← Finset.sum_neg_distrib]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun k _ => ?_
   ring

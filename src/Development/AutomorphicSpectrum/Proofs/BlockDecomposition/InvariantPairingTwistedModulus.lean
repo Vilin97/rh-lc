@@ -246,7 +246,8 @@ theorem shift_invariant_of_exact_twist : ∀ {k : Type} [Field k] [ValuativeRel 
   obtain ⟨I, hI⟩ := h₁ (max r₁ r₂) (le_max_left _ _)
   obtain ⟨I', hI'⟩ := h₂ (max r₁ r₂) (le_max_right _ _)
   rw [hI, hI']
-  simp only [map_sum, LinearMap.sum_apply, shiftF_ind, B_ind_ind B hT, hAll]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.sum_apply, shiftF_ind, B_ind_ind B hT, hAll]
 
 end GlobalTheory.CompanionTheory.BZCore
 

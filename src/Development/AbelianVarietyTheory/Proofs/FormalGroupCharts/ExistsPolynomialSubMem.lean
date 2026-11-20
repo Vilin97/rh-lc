@@ -61,7 +61,8 @@ theorem mem_of_coeff_eq_zero {R σ : Type*} [CommRing R] [Finite σ] (N : ℕ)
   have hG : ∀ α e, coeff e (G α) = if A (α + e) = α then coeff (α + e) g else 0 := fun _ _ => rfl
   have : g = ∑ α ∈ S, monomial α 1 * G α := by
     ext d
-    simp only [map_sum, coeff_monomial_mul, one_mul, hG]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, coeff_monomial_mul, one_mul, hG]
     by_cases hd : N ≤ d.degree
     · rw [Finset.sum_eq_single_of_mem (A d) ((hS _).2 (hA d hd).2)]
       · simp [(hA d hd).1, add_tsub_cancel_of_le (hA d hd).1]

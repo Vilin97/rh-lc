@@ -90,7 +90,8 @@ theorem eventually_sub_mem_pow (hξ : RingHom.ker (Per.θ l) = Ideal.span {ξ}) 
     (fun i _ => ht ((((_root_.frobeniusEquiv (Per.Fl l) l).symm ^ i) (y.coeff i))))
   filter_upwards [hall] with g hg
   rw [sub_eq_iff_eq_add] at hc
-  rw [hc, map_add, map_mul, map_pow, map_natCast, map_sum, add_sub_add_comm, ← mul_sub,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hc, map_add, map_mul, map_pow, map_natCast, map_sum, add_sub_add_comm, ← mul_sub,
     ← Finset.sum_sub_distrib]
   refine add_mem (Ideal.mul_mem_right _ _ (Ideal.pow_mem_pow hlI _)) (sum_mem fun i hi => ?_)
   rw [map_mul, map_pow, map_natCast, ← sub_mul]

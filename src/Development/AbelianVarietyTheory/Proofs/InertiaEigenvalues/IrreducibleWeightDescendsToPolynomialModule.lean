@@ -68,7 +68,8 @@ theorem weight_descends : ∀ (L : Type) [Field L] [NumberField L] [IsCMField L]
     have hx : mapVV e lam x = bC.equivFun.symm (fun i => e (bK.repr x i)) := by
       rw [Module.Basis.equivFun_symm_apply]
       conv_lhs => rw [← bK.sum_repr x]
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [LinearMap.map_smulₛₗ, hbC]
     rw [hx, ← Module.Basis.equivFun_apply, LinearEquiv.apply_symm_apply]

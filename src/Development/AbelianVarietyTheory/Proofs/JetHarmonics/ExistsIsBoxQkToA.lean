@@ -51,7 +51,8 @@ theorem position_zero (i : Fin j) : intersection_update_fsHerm_neg_one pD i 0 = 
 
 theorem sum_position (x : D'.X) : ∑ i, intersection_update_fsHerm_neg_one pD i (pD.xe x i) = x := by
   apply pD.xe.injective
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [xe_position]
   exact Finset.univ_sum_single _
 

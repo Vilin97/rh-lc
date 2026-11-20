@@ -45,10 +45,12 @@ variable (F) in
 def idemS (S : Finset (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl F)) : AF F := ∑ v ∈ S, idem F v
 
 theorem fst_idemS (S : Finset (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl F)) : fstA F (idemS F S) = 0 := by
-  simp [idemS, map_sum, fst_idem]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [idemS, map_sum, fst_idem]
 
 theorem evFin_idemS (S : Finset (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl F)) (u : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl F) : evFin F u (idemS F S) = if u ∈ S then 1 else 0 := by
-  simp [idemS, map_sum, evFin_idem, Finset.sum_ite_eq]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [idemS, map_sum, evFin_idem, Finset.sum_ite_eq]
 
 theorem idemS_mul_self (S : Finset (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl F)) : idemS F S * idemS F S = idemS F S :=
   af_ext' (by simp [map_mul, fst_idemS]) fun u => by rw [map_mul, evFin_idemS]; split_ifs <;> simp

@@ -33,7 +33,8 @@ theorem heckeAct_indicator_eq_sum {K : Subgroup G} (hKc : IsCompact (K : Set G))
   have hf := indicator_mem_locallyConstantCompactSupport (R := ℂ) hUc hUo (1 : ℂ)
   have hvs := smooth_of_mem_fixedVectors hKo hv
   refine eq_of_forall_dual fun φ => ?_
-  rw [dual_heckeAct μ hf hvs φ, map_smul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [dual_heckeAct μ hf hvs φ, map_smul, map_sum]
   have hmeas : ∀ s : G, MeasurableSet (s • (K : Set G)) := fun s => (hKo.smul s).measurableSet
   have hpt : ∀ g, U.indicator (fun _ => (1 : ℂ)) g * φ (ρ g v) =
       ∑ s ∈ S, (s • (K : Set G)).indicator (fun _ => φ (ρ s v)) g := by

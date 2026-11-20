@@ -112,7 +112,8 @@ private theorem mem_of_perp {K : Type} [Field K] (σ s : 𝓞 E →+* K) (hs : �
     intro u
     rw [← skewK]
     conv_lhs => rw [he K u]
-    simp only [hx, map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hx, map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul]
     exact Finset.sum_congr rfl fun m _ => mul_comm _ _
   apply hf
   rw [hfx, hw x, neg_zero]
@@ -171,13 +172,15 @@ theorem UpperTheory.lattice_data_valuation_of_difference :
       have h3 : ∀ j, ∑ m, ∑ m', (S j m : ℂ_[p]) * (T i m' : ℂ_[p]) * ((Dw.EF (a m) (a m') : ℤ) : ℂ_[p]) =
           if j = i then 1 else 0 := fun j => by
         have := congrArg (intO ℂ_[p]).subtype (hL.2.1 j i)
-        simp only [map_sum, map_mul, map_intCast, Subring.subtype_apply] at this
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, map_mul, map_intCast, Subring.subtype_apply] at this
         rw [this]
         split_ifs <;> simp
       calc _ = (t i : ℂ_[p]) := rfl
         _ = ∑ j, (t j : ℂ_[p]) * if j = i then 1 else 0 := by simp
         _ = _ := by
-          simp only [← h3, pr, map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply, smul_eq_mul,
+          set_option synthInstance.maxHeartbeats 100000 in
+            simp only [← h3, pr, map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply, smul_eq_mul,
             LinearMap.BilinForm.baseChange_tmul, Finset.mul_sum, Subring.coe_mul, zsmul_eq_mul, _root_.mul_one]
           symm
           rw [Finset.sum_comm]
@@ -189,13 +192,16 @@ theorem UpperTheory.lattice_data_valuation_of_difference :
     rw [mem_span_iff] at hz
     have he : IsEigL Dw ((intO ℂ_[p]).subtype.comp s) (∑ m, (T j m : ℂ_[p]) ⊗ₜ[ℤ] a m) := fun o => by
       have := congrArg (LinearMap.rTensor Dw.La (intO ℂ_[p]).subtype.toAddMonoidHom.toIntLinearMap) (hL.1 j o)
-      simp only [map_sum, LinearMap.rTensor_tmul] at this
-      simp only [map_sum, LinearMap.baseChange_tmul, LinearMap.restrictScalars_apply, LinearMap.lsmul_apply,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, LinearMap.rTensor_tmul] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, LinearMap.baseChange_tmul, LinearMap.restrictScalars_apply, LinearMap.lsmul_apply,
         Finset.smul_sum, TensorProduct.smul_tmul', smul_eq_mul]
       exact this
     have h4 := perp_of_mem Dw σ _ hs' _ hyz _ he
     have h5 : ∑ m, (T j m : ℂ_[p]) * pr Dw (y - z) (a m) = 0 := by
-      rw [← h4, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← h4, map_sum]
       refine Finset.sum_congr rfl fun m _ => ?_
       rw [pr, ← smul_eq_mul, ← map_smul, TensorProduct.smul_tmul', smul_eq_mul, _root_.mul_one]
     rw [hsub, sub_eq_zero] at h5

@@ -35,7 +35,8 @@ lemma vec_sum (y : I.Ginf) {N : ℕ} (z : Fin N → ℤ) (e : Fin N → Fin I.n 
   funext v
   have h : (fun k => I.φ v (∑ i, z i • e i k)) = ∑ i, ((z i : ℝ)) • fun k => I.φ v (e i k) := by
     funext k
-    simp [Finset.sum_apply, map_sum, Complex.real_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Finset.sum_apply, map_sum, Complex.real_smul]
   simp only [CuspGeo.vec, Finset.sum_apply, Pi.smul_apply]
   rw [h, Matrix.mulVec_sum, Matrix.mulVec_sum]
   simp [Matrix.mulVec_smul]
@@ -84,7 +85,8 @@ lemma span_of_zbasis {N : ℕ} (e₀ : Fin N → Fin I.n → I.E) (he₀ : IsZBa
     rw [ha, Matrix.mulVec_mulVec, Matrix.mul_nonsing_inv _ (isUnit_iff_ne_zero.mpr hG), Matrix.one_mulVec]
   have hw : w = ∑ j, a j • vec I 1 (e' j) := by
     apply ρ.injective
-    rw [← hGa, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hGa, map_sum]
     funext i
     simp [hGdef, gm, Matrix.mulVec, dotProduct, Finset.sum_apply, mul_comm]
   have hz : ∀ j, ∃ z : Fin N → ℤ, e' j = ∑ i, z i • e₀ i := fun j =>

@@ -253,7 +253,8 @@ theorem linExt_extL {r₁ r₂ : ℕ} (lam : (Fin r₂ → O) →ₗ[O] O)
     funext j
     simp [cst, Finset.sum_apply, Pi.single_apply]
   conv_lhs => rw [hy]
-  rw [map_sum, map_sum, linExt_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, linExt_apply]
   apply Finset.sum_congr rfl
   intro i _
   rw [map_smul, map_smul, CL.extL_cst, linExt_cst]

@@ -62,7 +62,8 @@ theorem delAt_dbarAt_pull_comp (m n : ℕ) (τ : V m → V n) (U : Set (V m)) (�
       algebraMap ℂ (Alt m) ((bas n).repr (β (τ x)) S) * pull (fderiv ℂ τ x) (bas n S) := by
     funext x
     conv_lhs => rw [← (bas n).sum_repr (β (τ x))]
-    simp only [map_sum, map_smul, Algebra.smul_def, map_mul, AlgHom.commutes]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, Algebra.smul_def, map_mul, AlgHom.commutes]
   have hsum := (GlobalTheory.T.delOperatorAt_dbarOperatorAt_linear_local m v).2.2.1 (Finset (Fin (n + n))) Finset.univ
     (fun S x => algebraMap ℂ (Alt m) ((bas n).repr (β (τ x)) S) * pull (fderiv ℂ τ x) (bas n S))
     (fun S _ => hprod S)
@@ -79,7 +80,8 @@ theorem delAt_dbarAt_pull_comp (m n : ℕ) (τ : V m → V n) (U : Set (V m)) (�
       intro S
       rw [(hL S).1 (fun a => (Algebra.commutes _ _).symm), (hcl S).1, mul_zero, add_zero, (hfun S).1, (hch S).1,
         map_mul]
-    simp only [key, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [key, ← map_sum]
     congr 1
     unfold delAt coefwise
     simp only [Finset.mul_sum, Finset.sum_mul, smul_mul_assoc, mul_smul_comm]
@@ -90,7 +92,8 @@ theorem delAt_dbarAt_pull_comp (m n : ℕ) (τ : V m → V n) (U : Set (V m)) (�
       intro S
       rw [(hL S).2 (fun a => (Algebra.commutes _ _).symm), (hcl S).2, mul_zero, add_zero, (hfun S).2, (hch S).2,
         map_mul]
-    simp only [key, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [key, ← map_sum]
     congr 1
     unfold dbarAt coefwise
     simp only [Finset.mul_sum, Finset.sum_mul, smul_mul_assoc, mul_smul_comm]

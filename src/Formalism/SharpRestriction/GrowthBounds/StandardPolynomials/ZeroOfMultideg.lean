@@ -61,7 +61,8 @@ theorem PreSys.core (D : Formalism.BasicNotions.D7) [CharZero (KK O)]
     intro l
     have : (mdHom X l) Brem = (∑ j, ∑ a, uC j a * (mdHom X l) (P.pl j a)) + ∑ a, uM a * (mdHom X l) (P.aM a) := by
       rw [hBrem]
-      simp only [map_add, map_sum, map_nsmul, smul_eq_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_add, map_sum, map_nsmul, smul_eq_mul]
     exact this
   rw [key]
   refine hT e he1 hen (fun j i => L.lv j i - uH j i) (fun j i => Nat.sub_le _ _)

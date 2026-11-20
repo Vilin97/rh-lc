@@ -126,7 +126,8 @@ theorem altOp_single_mul {R : Type} [CommRing R] {V : Type} [AddCommGroup V] [Mo
   simp only [altOp, Finsupp.sum_single_index, zero_smul, one_smul, altPull_apply, Module.End.mul_apply]
   congr 1
   funext a i
-  simp only [matAct_apply, Matrix.mul_apply, map_sum, map_mul, LinearMap.sum_apply, Module.End.mul_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [matAct_apply, Matrix.mul_apply, map_sum, map_mul, LinearMap.sum_apply, Module.End.mul_apply]
   exact Finset.sum_comm
 
 theorem HxiT_single_one {A : Over S} [GrpObj A] (act : OActN O A) {B B' : Scheme.{0}} (p : S ⟶ B) (b : B' ⟶ B)
@@ -151,7 +152,8 @@ theorem opT_comm_pull {A : Over S} [GrpObj A] (act : OActN O A) {B B' : Scheme.{
     (h : ∀ M, u ≫ matBC act p b M = matBC act p b M ≫ u) (y : HEt l E (ksBC A m p b) n t) :
     pullEt l E u n t (opT l act p b ε n t y) = opT l act p b ε n t (pullEt l E u n t y) := by
   unfold opT Finsupp.sum
-  simp only [LinearMap.sum_apply, map_sum, LinearMap.smul_apply, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [LinearMap.sum_apply, map_sum, LinearMap.smul_apply, map_smul]
   refine Finset.sum_congr rfl fun M _ => ?_
   have h1 := LinearMap.congr_fun (pullEt_comp (E := E) l u (matBC act p b M) n t) y
   have h2 := LinearMap.congr_fun (pullEt_comp (E := E) l (matBC act p b M) u n t) y

@@ -32,7 +32,8 @@ theorem idem_mul_of_ne {τ σ : ZMod a} (h : τ ≠ σ) : idem c τ * idem c σ 
 
 theorem sum_idem : ∑ τ, idem c τ = 1 := by
   simp only [idem]
-  rw [← map_sum, Finset.univ_sum_single (fun _ : ZMod a => (1 : O))]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum, Finset.univ_sum_single (fun _ : ZMod a => (1 : O))]
   exact map_one c
 
 theorem idem_mul_sum (x : ZMod a → R) (τ : ZMod a) : idem c τ * ∑ σ, idem c σ * x σ = idem c τ * x τ := by
@@ -40,7 +41,8 @@ theorem idem_mul_sum (x : ZMod a → R) (τ : ZMod a) : idem c τ * ∑ σ, idem
     rw [← mul_assoc, idem_mul_of_ne c h.symm, zero_mul]) (by simp), ← mul_assoc, idem_mul_self]
 
 theorem eq_sum_idem (x : ZMod a → O) : c x = ∑ τ, idem c τ * algebraMap O R (x τ) := by
-  conv_lhs => rw [← Finset.univ_sum_single x, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [← Finset.univ_sum_single x, map_sum]
   refine Finset.sum_congr rfl fun τ _ => ?_
   rw [mul_comm, ← Algebra.smul_def, idem, ← map_smul, ← Pi.single_smul, smul_eq_mul, mul_one]
 
@@ -72,7 +74,8 @@ theorem map_glue {B' R' : Type} [CommRing B'] [CommRing R'] [Algebra O B'] [Alge
     {c' : (ZMod a → O) →ₐ[O] R'} {f' : B' →ₐ[O] R'} (s : R →+* R') (k : ZMod a)
     (hs : ∀ τ, s (idem c τ) = idem c' (τ + k)) {x : ZMod a → B} {y : ZMod a → B'}
     (h : ∀ τ, s (f (x (τ - k))) = f' (y τ)) : s (glue c f x) = glue c' f' y := by
-  rw [glue_apply, glue_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [glue_apply, glue_apply, map_sum]
   refine Fintype.sum_equiv (Equiv.addRight k) _ _ fun τ => ?_
   rw [map_mul, hs, Equiv.coe_addRight, ← h, add_sub_cancel_right]
 
@@ -387,7 +390,8 @@ theorem exists_eq_sum_toAc {J : Type} [Fintype J] (o : Module.Basis J ℤ_[l] O)
   refine ⟨fun j => mk fun n => GlobalTheory.Decompl.crd o j (y n), funext fun τ => ?_⟩
   refine (equivA O K).symm.injective (PowerSeries.ext fun n => ?_)
   rw [← congrFun (hy n) τ, ← GlobalTheory.Decompl.sum_crd o (y n)]
-  simp only [map_sum, Finset.sum_apply, Pi.smul_apply, map_smul, splitHom_tmul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Finset.sum_apply, Pi.smul_apply, map_smul, splitHom_tmul]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [show toAc t K (mk fun n => GlobalTheory.Decompl.crd o j (y n)) τ =
     equivA O K (PowerSeries.map (emb t τ).toRingHom _) from rfl, AlgEquiv.symm_apply_apply,
@@ -490,7 +494,8 @@ theorem galOA_teichR (g : GQ l) : galOA O g (ϖ.teichR O) = (1 + 1 ⊗ₜ ϖ.mu 
 theorem galOA_iTot {g : GQ l} (hg : g ∈ ϖ.GfieldInf a) (f : ZMod a → A O K) :
     galOA O g (ϖ.iTot t K f) = ϖ.iTot t K f := by
   obtain ⟨x, rfl⟩ := exists_eq_sum_toAc t K (Module.Free.chooseBasis ℤ_[l] O) f
-  simp only [map_sum, map_smul, iTot_toAc, galOA_tmul, ϖ.gal_ev l a hg]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, iTot_toAc, galOA_tmul, ϖ.gal_ev l a hg]
 
 variable (O)
 

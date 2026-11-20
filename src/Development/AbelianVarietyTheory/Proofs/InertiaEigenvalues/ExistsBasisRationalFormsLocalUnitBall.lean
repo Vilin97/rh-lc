@@ -150,7 +150,8 @@ theorem supLattice_fg (YS : NX.NExpRealS Rl cG S) (fw : FWTie T0 Rl.toRealDat κ
     rw [Submodule.mem_span_range_iff_exists_fun]
     refine ⟨fun k => d (c k), ?_⟩
     calc ∑ k, d (c k) • (YS.fi j).e.symm (g' k) = (YS.fi j).e.symm (∑ k, c k • g' k) := by
-          rw [map_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [map_sum]
           refine Finset.sum_congr rfl fun k _ => ?_
           rw [← algebraMap_smul T0.Q.c.F (c k) (g' k)]
           have e1 : ((c k : T0.Q.c.F)) = (YS.fi j).eK ((YS.fi j).eK.symm (c k)) := ((YS.fi j).eK.apply_symm_apply _).symm

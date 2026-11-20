@@ -102,7 +102,8 @@ theorem _root_.GlobalTheory.TestLat.SlopeModel.sumGram_posDef (lam : ι → _roo
       Finset.sum_const_zero, Finset.sum_ite_eq, Finset.mem_univ, if_true]
     rw [hW, Finset.mul_sum]
     refine Finset.sum_congr rfl fun c _ => ?_
-    simp only [map_sum, map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
       Finset.mul_sum, Finset.sum_mul]
     rw [Finset.sum_comm (γ := _root_.Formalism.L2.DIV.VVIdx lam) (f := fun i j => D * _)]
     simp only [Complex.star_def, RingHom.id_apply]

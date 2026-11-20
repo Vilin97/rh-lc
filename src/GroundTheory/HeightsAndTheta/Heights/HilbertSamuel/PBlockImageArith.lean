@@ -84,7 +84,8 @@ theorem aeval_mul_pow_of_block (y w : (Σ k, ι k) → Ω) (k₀ : K) (z : Ω)
   classical
   conv_rhs => rw [f.as_sum]
   conv_lhs => rw [f.as_sum]
-  rw [map_sum, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun m hm ↦ ?_
   rw [aeval_monomial, aeval_monomial, mul_assoc]
   congr 1

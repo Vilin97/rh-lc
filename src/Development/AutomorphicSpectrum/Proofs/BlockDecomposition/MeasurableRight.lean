@@ -28,12 +28,14 @@ theorem rh_of_idem {A R : Type} [Ring A] [Ring R] (f : A →+* R) {e y : A} (he 
 
 theorem rh_sum_right {A R ι : Type} [Ring A] [Ring R] (f : A →+* R) (s : Finset ι) (p q : ι → A) (h : ∀ k, f (q k) = 0) :
     f (∑ k ∈ s, p k * q k) = 0 := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_eq_zero fun k _ => by rw [map_mul, h k, mul_zero]
 
 theorem rh_sum_left {A R ι : Type} [Ring A] [Ring R] (f : A →+* R) (s : Finset ι) (p q : ι → A) (h : ∀ k, f (p k) = 0) :
     f (∑ k ∈ s, p k * q k) = 0 := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_eq_zero fun k _ => by rw [map_mul, h k, zero_mul]
 
 theorem rh_add_zero {A R : Type} [Ring A] [Ring R] (f : A →+* R) (p q : A) (h : f q = 0) : f (p + q) = f p := by

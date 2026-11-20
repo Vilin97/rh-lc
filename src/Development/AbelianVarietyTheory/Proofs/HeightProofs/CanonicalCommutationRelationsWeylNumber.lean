@@ -61,7 +61,8 @@ theorem weyl_number : ∀ (M R : Type) [AddCommGroup M] [Module ℂ M] [AddCommG
     simp only [hA, hjj, hneg, smul_add, smul_smul, neg_mul, Complex.I_mul_I]
     module
   have hsum : ∀ x, ∑ k, ((om x (j (e k)) : ℝ) : ℂ) • A (e k) = A x := fun x => by
-    conv_rhs => rw [← he x, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_rhs => rw [← he x, map_sum]
     simp only [hAs]
   refine ⟨n, e, -4 * Complex.I * κ, by simp [hκ], fun u => ?_⟩
   have key : ∀ k, A u * ((Dop (e k) - Complex.I • Dop (j (e k))) * A (e k)) =

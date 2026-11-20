@@ -43,7 +43,8 @@ theorem hTens_pure {R A : Type} [CommRing R] [CommRing A] [Algebra R A] (c : A �
 
 theorem form_swap {σ : E →ₐ[F] E} (hσ : ∀ e, σ (σ e) = e) {d : ℕ} {J : Matrix (Fin d) (Fin d) E}
     (hJ : ∀ i j, σ (J j i) = -J i j) (a b : Fin d → E) : form σ J a b = -σ (form σ J b a) := by
-  simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, Finset.mul_sum, ← Finset.sum_neg_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, Finset.mul_sum, ← Finset.sum_neg_distrib]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   rw [hJ]; ring
@@ -51,14 +52,16 @@ theorem form_swap {σ : E →ₐ[F] E} (hσ : ∀ e, σ (σ e) = e) {d : ℕ} {J
 theorem sum_vv (σ : E →ₐ[F] E) {d : ℕ} (J : Matrix (Fin d) (Fin d) E) (u v : Fin d → E) :
     (∑ j, ∑ l, incV F u j * incM F J j l * cA σ (incV F v l)) = inclR (F := F) (AF F) (form σ J u v) := by
   have hc : ∀ x : E, cA σ (inclR (F := F) (AF F) x) = inclR (F := F) (AF F) (σ x) := fun x => rfl
-  simp only [form, dotProduct, Matrix.mulVec, incV, incM, Matrix.map_apply, hc, map_sum, map_mul, Finset.mul_sum, mul_assoc]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, Matrix.mulVec, incV, incM, Matrix.map_apply, hc, map_sum, map_mul, Finset.mul_sum, mul_assoc]
 
 theorem sum_vm (σ : E →ₐ[F] E) {d d₁ : ℕ} (J : Matrix (Fin d) (Fin d) E) (u : Fin d → E)
     (ι : Matrix (Fin d) (Fin d₁) E) (z : Fin d₁ → AE F E) :
     (∑ j, ∑ l, incV F u j * incM F J j l * cA σ ((incM F ι *ᵥ z) l)) =
       ∑ m, inclR (F := F) (AF F) (form σ J u (fun l => ι l m)) * cA σ (z m) := by
   have hc : ∀ x : E, cA σ (inclR (F := F) (AF F) x) = inclR (F := F) (AF F) (σ x) := fun x => rfl
-  simp only [form, dotProduct, Matrix.mulVec, incV, incM, Matrix.map_apply, hc, map_sum, map_mul, Finset.mul_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, Matrix.mulVec, incV, incM, Matrix.map_apply, hc, map_sum, map_mul, Finset.mul_sum,
     Finset.sum_mul, mul_assoc]
   exact (Finset.sum_congr rfl fun _ _ => Finset.sum_comm).trans Finset.sum_comm
 
@@ -67,7 +70,8 @@ theorem sum_mv (σ : E →ₐ[F] E) {d d₁ : ℕ} (J : Matrix (Fin d) (Fin d) E
     (∑ j, ∑ l, (incM F ι *ᵥ z) j * incM F J j l * cA σ (incV F v l)) =
       ∑ m, z m * inclR (F := F) (AF F) (form σ J (fun j => ι j m) v) := by
   have hc : ∀ x : E, cA σ (inclR (F := F) (AF F) x) = inclR (F := F) (AF F) (σ x) := fun x => rfl
-  simp only [form, dotProduct, Matrix.mulVec, incV, incM, Matrix.map_apply, hc, map_sum, map_mul, Finset.mul_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, Matrix.mulVec, incV, incM, Matrix.map_apply, hc, map_sum, map_mul, Finset.mul_sum,
     Finset.sum_mul, mul_assoc]
   refine ((Finset.sum_congr rfl fun _ _ => Finset.sum_comm).trans Finset.sum_comm).trans ?_
   refine Finset.sum_congr rfl fun m _ => Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun l _ => ?_

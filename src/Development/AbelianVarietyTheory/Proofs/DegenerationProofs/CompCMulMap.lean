@@ -18,7 +18,8 @@ lemma coeff_comp {ι : Type} (b : Module.Basis ι O O₁) (j : ι) (f : PowerSer
 lemma decomp {ι : Type} [Fintype ι] (b : Module.Basis ι O O₁) (f : PowerSeries O₁) :
     f = ∑ j, C (b j) * map (algebraMap O O₁) (comp b j f) := by
   ext n
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [coeff_C_mul, coeff_map, coeff_comp]
   conv_lhs => rw [← b.sum_repr (coeff n f)]
   refine Finset.sum_congr rfl fun j _ => ?_
@@ -45,16 +46,20 @@ lemma ext_C_mul_map (h : ∀ a : O, io (algebraMap O O₁ a) = i (C a)) (a : O�
   rw [ext_apply]
   simp only [comp_C_mul_map, map_mul, ← h, ← mul_assoc, ← Finset.sum_mul]
   congr 1
-  conv_rhs => rw [← b.sum_repr a, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_rhs => rw [← b.sum_repr a, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [Algebra.smul_def, map_mul, mul_comm]
 
 lemma ext_mul (h : ∀ a : O, io (algebraMap O O₁ a) = i (C a)) (f g : PowerSeries O₁) :
     ext b i io (f * g) = ext b i io f * ext b i io g := by
-  conv_lhs => rw [decomp b f, decomp b g, Finset.sum_mul_sum, map_sum]
-  conv_rhs => rw [decomp b f, decomp b g, map_sum, map_sum, Finset.sum_mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [decomp b f, decomp b g, Finset.sum_mul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_rhs => rw [decomp b f, decomp b g, map_sum, map_sum, Finset.sum_mul_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   have e : C (b j) * map (algebraMap O O₁) (comp b j f) * (C (b k) * map (algebraMap O O₁) (comp b k g))
       = C (b j * b k) * map (algebraMap O O₁) (comp b j f * comp b k g) := by

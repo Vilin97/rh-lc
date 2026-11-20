@@ -53,7 +53,8 @@ theorem theta_xi [IsDomain O] {ε : PreTilt O p} (hε : IsPrimitiveSystem ε) :
     fontaineTheta O p (xi ε) = 0 := by
   have h1 := hε 1
   rw [pow_one] at h1
-  rw [xi, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [xi, map_sum]
   simp only [map_pow, fontaineTheta_teichmuller]
   exact h1.geom_sum_eq_zero (Fact.out : p.Prime).one_lt
 

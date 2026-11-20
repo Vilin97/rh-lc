@@ -82,7 +82,8 @@ private theorem e_mul_sig_sum (h3 : ∀ i j, (w i).e * (w j).bar = 0) (i : Fin s
     have h : (x j : ℤ_[p] ⊗[ℤ] R) ∈ (LinearMap.mulLeft ℤ_[p] (w j).e).range := (x j).2
     obtain ⟨y, hy⟩ := h
     exact ⟨y, hy⟩
-  rw [sumMap_apply, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [sumMap_apply, map_sum, Finset.mul_sum]
   refine Finset.sum_eq_zero fun j _ => ?_
   obtain ⟨y, hy⟩ := hx j
   have hb : sig p R (w j).e = (w j).bar := rfl
@@ -115,7 +116,8 @@ private def splitEquiv (h1 : ∀ i j, i ≠ j → (w i).e * (w j).e = 0)
         refine ⟨(fun i => ⟨(w i).e * a, a, rfl⟩,
           fun i => ⟨(w i).e * sig p R a, sig p R a, rfl⟩), ?_⟩
         change sumMap w _ + sig p R (sumMap w _) = a
-        rw [sumMap_apply, sumMap_apply, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [sumMap_apply, sumMap_apply, map_sum]
         change ∑ i, (w i).e * a + ∑ i, sig p R ((w i).e * sig p R a) = a
         simp only [map_mul, sig_sig]
         rw [← Finset.sum_mul, ← Finset.sum_mul, ← add_mul]
@@ -157,7 +159,8 @@ private theorem det_linearForms_basis_change {A M O κ : Type} [CommRing A] [Add
     rw [Matrix.mul_apply]
     simp only [Matrix.of_apply, Matrix.transpose_apply, Matrix.map_apply]
     conv_lhs => rw [← γ.sum_toMatrix_smul_self γ' m]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_smul, Algebra.smul_def]
   rw [key, Matrix.det_mul, Matrix.det_transpose, RingHom.map_det, RingHom.mapMatrix_apply]
@@ -325,7 +328,8 @@ theorem UpperTheory.discr_CMDatum_eq_prod_places :
           simp only [ρ, Sum.elim_inr, Equiv.apply_symm_apply]
           exact hss τ
       have := congrArg (tauExt τ) h2
-      rw [map_add, map_sum, map_sum, map_one] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_add, map_sum, map_sum, map_one] at this
       simp only [he0, hb0, Finset.sum_const_zero, add_zero] at this
       exact hO this
     have hinj : Function.Injective (UpperTheory.PlacesDiscr.restrEmb hv (E := E)) := by

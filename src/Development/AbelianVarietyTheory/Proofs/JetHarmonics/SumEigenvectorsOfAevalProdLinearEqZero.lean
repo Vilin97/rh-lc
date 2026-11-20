@@ -40,7 +40,8 @@ theorem sum_eigenvectors_of_aeval_prod_linear_eq_zero :
         LinearMap.zero_apply] at h3
       exact (neg_add_eq_zero.mp h3)
     · have h2 := congrArg (fun p => Polynomial.aeval (-Ω) p w) hsum
-      simp only [map_sum, map_one, LinearMap.sum_apply, Module.End.one_apply] at h2
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_one, LinearMap.sum_apply, Module.End.one_apply] at h2
       exact h2.symm
 
 end GlobalTheory

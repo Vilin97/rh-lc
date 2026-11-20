@@ -116,7 +116,8 @@ theorem exists_besCols {p : SplitPt D k} {ρ : ℕ} (B : BesLev D ρ) {θ s : k}
   · rw [show j = ⟨ρ, by omega⟩ from Fin.ext h]
     refine (hF r (Sum.inl (Sum.inr ()))).trans (congrArg (s * ·) ?_)
     change (B.d.i₀.map (prH (ofSplit p)) * F₀.β) r (Sum.inr ()) = prH (ofSplit p) (∑ u, B.d.i₀ r u * vecB B.o B.ζ u)
-    rw [Matrix.mul_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Matrix.mul_apply, map_sum]
     exact Finset.sum_congr rfl fun u _ => by rw [h₀.2, one_mul, map_mul]; rfl
   · rw [show j = ⟨2 * ρ - i.val, by omega⟩ from Fin.ext (by simp only; omega)]
     exact hF r (Sum.inr (Sum.inr i))

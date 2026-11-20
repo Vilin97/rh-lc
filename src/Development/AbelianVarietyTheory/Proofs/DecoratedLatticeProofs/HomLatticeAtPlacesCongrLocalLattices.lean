@@ -108,7 +108,8 @@ theorem latV_le_of_local (S : HSp D) (N M : Lat S) (hN : Submodule.IsLattice D.h
     have e : indQ D B = ∑ v ∈ B, indQ D {v} := by simp only [indQ, Finset.sum_singleton]
     rw [← Finset.mul_sum, ← e, ← mul_add, add_sub_cancel, mul_one]
   show Ψ α ∈ latV S M P
-  rw [hsplit, map_add, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hsplit, map_add, map_sum]
   refine add_mem (AddSubgroup.sum_mem _ fun v _ => ?_) ?_
   · by_cases hv : P v
     · have h1 : Ψ (α * indQ D {v}) ∈ latV S N (· = v) := by

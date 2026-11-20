@@ -110,7 +110,8 @@ theorem exists_formFrame' (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fi
             rw [Finset.sum_comm]
             exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
         _ = σ ((Φ *ᵥ x) j) := by
-            rw [h2]; simp [Matrix.mulVec, dotProduct, map_sum, map_mul]
+            set_option synthInstance.maxHeartbeats 100000 in
+              rw [h2]; simp [Matrix.mulVec, dotProduct, map_sum, map_mul]
     rw [e]; exact GlobalTheory.AdelicU.SelfDual.sig_mem_range σ (hΦ x hx j)
   refine ⟨k, S, (Jᵀ)⁻¹ * (Φ.map σ)ᵀ, hS, fun j => hdual _ (hT j), hT, ?_⟩
   rw [Matrix.transpose_mul, ← Matrix.mul_assoc, Matrix.mul_assoc _ (Φ.map σ)ᵀ, ← Matrix.transpose_mul,

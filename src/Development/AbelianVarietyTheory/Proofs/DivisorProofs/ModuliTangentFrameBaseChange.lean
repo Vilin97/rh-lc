@@ -155,7 +155,8 @@ theorem ringBasis_of_split : ∀ (E : Type) [Field E] [NumberField E] [IsCMField
               (P.map (((intO ℂ_[p]).subtype.comp ψ₃).comp ψ)) := by
         funext k
         have := congrArg (fun v => ((intO ℂ_[p]).subtype.comp ψ₃) (v k)) hα
-        simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum, map_mul, RingHom.map_vecMul] at this
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum, map_mul, RingHom.map_vecMul] at this
         simpa [Finset.sum_apply, Matrix.map_map, Function.comp_def] using this
       show (fun k => ((intO ℂ_[p]).subtype.comp ψ₃) (ψ (h j k))) ⬝ᵥ cf ∈ intO ℂ_[p]
       rw [split_form hd hE _ _ _ hα']

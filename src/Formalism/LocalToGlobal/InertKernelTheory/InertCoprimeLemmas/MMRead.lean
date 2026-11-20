@@ -96,7 +96,8 @@ private theorem exists_integral_subst_inverse_of_unit_linear (h : PowerSeries �
   have hcoeffP : ∀ N k, PowerSeries.coeff k (∑ m ∈ Finset.range N, PowerSeries.C (b m) * h ^ m) =
       ∑ m ∈ Finset.range N, b m * PowerSeries.coeff k (h ^ m) := by
     intro N k
-    simp only [map_sum, PowerSeries.coeff_C_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, PowerSeries.coeff_C_mul]
   have hA : ∀ N, ∀ k < N, PowerSeries.coeff k
       (PowerSeries.X - ∑ m ∈ Finset.range N, PowerSeries.C (b m) * h ^ m) = 0 := by
     intro N

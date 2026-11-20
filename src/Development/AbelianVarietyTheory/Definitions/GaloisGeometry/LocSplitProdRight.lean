@@ -104,7 +104,8 @@ theorem LocSplit.dcOp_mem (ρ : Γ →* Module.End ℂ W) {J L : Subgroup G} {χ
     rw [hjj, map_mul, hχ ⟨j₁, hj₁J⟩ hj₁L, one_mul]
   have hsum := sum_mul_reps ι ρ hχ hA hA hAL hAL hF hj₁J hj₁L g
   simp only [dcOp]
-  rw [← hsum, map_sum, Finset.smul_sum, hχj]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hsum, map_sum, Finset.smul_sum, hχj]
   refine Finset.sum_congr rfl fun a ha => ?_
   have e : ι γ * g * (j : G) * a = ι γ * (g * j₁ * a) * ((⟨j₂, hj₂J⟩ : J) : G) := by
     rw [hj]; simp only [mul_assoc]; rw [(hc a (hAL a ha)).eq]

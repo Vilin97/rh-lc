@@ -40,7 +40,8 @@ theorem coeff_eq_zero_of_invBl (S : Finset (ArcLt Dw →₀ ℕ)) (f : (ArcLt Dw
     fun τ => (Matrix.det_one (n := Fin (Dw.mult τ)) (R := ℂ)).trans_ne one_ne_zero
   have hQ : Q ≠ 0 := fun h0 => (hQe _).2 hone (by rw [h0, map_zero])
   have hP : ∑ mo ∈ S, MvPolynomial.monomial mo (f mo) = 0 := eq_zero_of_eval_off hQ fun x hx => by
-    rw [map_sum, ← h x ((hQe x).1 hx)]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, ← h x ((hQe x).1 hx)]
     exact Finset.sum_congr rfl fun mo _ => MvPolynomial.eval_monomial
   intro mo hmo
   have := congrArg (AddMonoidAlgebra.coeff · mo) hP

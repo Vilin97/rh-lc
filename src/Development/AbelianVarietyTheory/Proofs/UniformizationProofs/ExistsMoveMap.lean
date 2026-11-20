@@ -105,7 +105,8 @@ theorem fn_indep {U : Y.Opens} (hU : IsAffineOpen U) {n : ℕ} (c : Fin n → F)
   have li : LinearIndependent S c := Fintype.linearIndependent_iff.2 fun g hg => hc g hg
   have li' := Fintype.linearIndependent_iff.1 (Module.Flat.linearIndependent_one_tmul (S := FnOver π U) li)
   refine li' a (hpo.out.equiv.injective ?_) i
-  rw [map_zero, ← h, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_zero, ← h, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_smul, hpo.out.equiv_tmul, one_smul, Algebra.smul_def, Algebra.smul_def, mul_comm]
   congr 1
@@ -122,7 +123,8 @@ theorem sec_indep {L : LB X} {K : Type} [Fintype K] {φ : K → (Y ⟶ X)} (ε :
   have hle' : p ⁻¹ᵁ U ≤ LB.wchart L φ' j := fun z hz => (wchart_eq hφ j).ge (hle hz)
   have e := fn_indep H hU c hc (fun i => resFn π hle (chartLin π (LB.LinComb L φ ε) j (a i))) (by
     have := congrArg (resFn π' hle' ∘ₗ chartLin π' (LB.LinComb L φ' ε) j) h
-    rw [map_zero, map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_zero, map_sum] at this
     refine Eq.trans (Finset.sum_congr rfl fun i _ => ?_) this
     rw [map_smul]
     refine congrArg (c i • ·) (fn_ext fun z hz => ?_)

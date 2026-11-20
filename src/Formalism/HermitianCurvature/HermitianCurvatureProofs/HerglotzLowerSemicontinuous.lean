@@ -23,7 +23,8 @@ lemma normSq_tp (B : Finset (Fin d → ℤ)) (c : (Fin d → ℤ) → ℂ) (y : 
   push_cast
   rw [← Complex.mul_conj']
   unfold tp
-  rw [map_sum, Finset.sum_mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_mul_sum]
   refine Finset.sum_congr rfl (fun σ _ => Finset.sum_congr rfl (fun σ' _ => ?_))
   rw [← ee_mul_conj, map_mul]
   ring

@@ -62,7 +62,8 @@ private theorem ho_root {O : Type} [CommRing O] [IsDomain O] [IsLocalRing O] {u 
     rw [hu, sub_self] at this
     exact (mul_eq_zero.1 this).resolve_left (sub_ne_zero.2 hne)
   have h1 := congrArg (residue O) hs
-  simp only [map_sum, map_pow, h, one_pow, Finset.sum_const, Finset.card_range, nsmul_eq_mul, mul_one, map_zero] at h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_pow, h, one_pow, Finset.sum_const, Finset.card_range, nsmul_eq_mul, mul_one, map_zero] at h1
   have h2 := hn.map (residue O)
   rw [map_natCast, h1] at h2
   exact not_isUnit_zero h2

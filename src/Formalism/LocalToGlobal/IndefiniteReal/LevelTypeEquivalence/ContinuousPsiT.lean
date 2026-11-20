@@ -38,7 +38,8 @@ theorem dH_comp_bound {ψ : AddChar (AF D.host.F) ℂ} {f : WO S T → ℂ} {L M
   have hc : ∀ i j, ‖(A (Pi.single (l i) (1 : ℝ))) j‖ ≤ ‖A‖ := fun i j =>
     (norm_le_pi_norm _ j).trans ((A.le_opNorm _).trans
       (by simpa using mul_le_mul_of_nonneg_left (he1 (l i)) (norm_nonneg A)))
-  rw [show (fun i => A (Pi.single (l i) (1 : ℝ))) =
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [show (fun i => A (Pi.single (l i) (1 : ℝ))) =
       fun i => ∑ j, (A (Pi.single (l i) (1 : ℝ))) j • Pi.single j (1 : ℝ) from funext fun i => hexp _,
     ContinuousMultilinearMap.map_sum]
   simp only [ContinuousMultilinearMap.map_smul_univ]

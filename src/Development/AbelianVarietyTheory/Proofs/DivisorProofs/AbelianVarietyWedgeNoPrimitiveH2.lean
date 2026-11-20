@@ -82,7 +82,8 @@ theorem mixed_injective [IsSeparated A.hom] [QuasiCompact A.hom] (u : HO1 A.hom 
     (hu : TensorProduct.lift (mixed A) u = 0) : u = 0 := by
   obtain ⟨n, x, y, rfl⟩ := exists_fin_sum_tmul u
   refine GlobalTheory.T.kunneth_cup_tensor_injective K A A inferInstance inferInstance inferInstance inferInstance n x y ?_
-  simpa [map_sum] using hu
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa [map_sum] using hu
 
 theorem symm_of_prim [IsSeparated A.hom] [QuasiCompact A.hom] (hp : StructureSheafH1Primitive A) (t : HO1 A.hom ⊗[K] HO1 A.hom)
     (ht : structureSheafH2Pullback μ[A] (TensorProduct.lift (cup (OAff A.hom)) t)

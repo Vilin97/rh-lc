@@ -1141,7 +1141,8 @@ theorem Pj_idem (ρ : M.Ty P) : Pj d ρ * Pj d ρ = Pj d ρ := by
 
 theorem sum_Pj : ∑ ρ, Pj d ρ = 1 := by
   unfold Pj
-  rw [← map_sum, ← map_one d.κ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum, ← map_one d.κ]
   congr 1
   rw [Finset.sum_ite_eq]
   simp

@@ -48,7 +48,8 @@ private theorem derivation_prod_eq_zero_of_forall' {R A ι : Type} [CommRing R] 
 private theorem derivation_det_eq_zero_of_entries {R A : Type} [CommRing R] [CommRing A] [Algebra R A]
     (D : Derivation R A A) {k : ℕ} (M : Matrix (Fin k) (Fin k) A) (h : ∀ i j, D (M i j) = 0) :
     D M.det = 0 := by
-  rw [Matrix.det_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.det_apply, map_sum]
   refine Finset.sum_eq_zero fun σ _ => ?_
   rw [Units.smul_def, map_zsmul, derivation_prod_eq_zero_of_forall' D _ _ (fun i _ => h _ _), smul_zero]
 
@@ -58,7 +59,8 @@ theorem heart_pderiv_minor {Lt : Type} [Fintype Lt] [DecidableEq Lt] (N0 N1 : �
   simp only [minorXZ]
   apply derivation_det_eq_zero_of_entries
   intro i j
-  rw [Matrix.of_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.of_apply, map_sum]
   refine Finset.sum_eq_zero fun a0 _ => ?_
   rw [Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_X]
   simp [Pi.single_apply, hs, Ne.symm hs]

@@ -193,7 +193,8 @@ theorem inverse_of_local_symbol : SeInverse := by
   haveI : ExpChar A p := ExpChar.prime (Fact.out)
   rw [show ∀ x : A, x ^ p ^ 2 = iterateFrobenius A p 2 x from
     fun x => by rw [iterateFrobenius_def]]
-  rw [map_sum, Finset.sum_range_succ']
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_range_succ']
   simp only [map_mul, map_pow, map_neg, map_one, iterateFrobenius_def]
   have hidx : ∀ l : ℕ, e - 2 * ((l + 1 : ℕ) : ZMod n) = e - 2 - 2 * (l : ZMod n) := by
     intro l

@@ -157,7 +157,8 @@ theorem pairTop (Ξ : Sesq M) (P₁ P₂ : R[X]) (a b : ℕ) (h : ℝ) (X X' : M
   · intro Y
     beta_reduce
     rw [evR_smul P₁ a ha Y X, evR_smul P₂ b hb (Y + h) X']
-    simp only [map_sum, LinearMap.sum_apply, map_smul, map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.sum_apply, map_smul, map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul,
       RingHom.id_apply, Polynomial.eval_finsetSum, Polynomial.eval_mul, Polynomial.eval_C,
       Polynomial.eval_pow, Polynomial.eval_X, Polynomial.eval_add, map_pow, map_add, Complex.conj_ofReal,
       Complex.ofReal_add, Finset.mul_sum, Finset.sum_mul]
@@ -317,7 +318,8 @@ theorem monic_extract {V : Type} [AddCommGroup V] [Module ℂ V] (ev : M →ₗ[
   simp only [Fin.val_last, hc1, one_smul] at h
   rw [h]
   refine Finset.sum_congr rfl (fun i _ => ?_)
-  rw [evR_smul A₀ n hn.le (y i) x, map_sum, Finset.sum_range]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [evR_smul A₀ n hn.le (y i) x, map_sum, Finset.sum_range]
   simp only [map_smul]
 
 end

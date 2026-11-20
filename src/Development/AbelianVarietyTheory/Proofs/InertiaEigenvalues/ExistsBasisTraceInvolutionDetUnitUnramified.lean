@@ -20,7 +20,8 @@ theorem GlobalTheory.UnitLemma.Unr.exists_basis_trace_conj_unit : ∀ (K K' : UQ
     ext k l
     simp only [Matrix.mul_apply, Matrix.of_apply]
     conv_lhs => rw [← w.sum_repr (K'.c (w l))]
-    rw [Finset.mul_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.mul_sum, map_sum]
     refine Finset.sum_congr rfl fun m _ => ?_
     rw [mul_smul_comm, map_smul, smul_eq_mul, mul_comm]
   have hdet : (Matrix.of fun k l => Algebra.trace K.E K'.E (w k * K'.c (w l))).det = algebraMap K.O K.E (u * v) := by

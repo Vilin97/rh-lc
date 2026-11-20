@@ -20,7 +20,8 @@ abbrev S : Type :=
 theorem map_linPoly (k : Fin (e + 1)) :
     MvPolynomial.map (algebraMap ℂ (Kf e)) (ComplexSets.linPoly A k) =
       linForm fun j => algebraMap ℂ (Kf e) (A k j) := by
-  simp [ComplexSets.linPoly, linForm, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [ComplexSets.linPoly, linForm, map_sum]
 
 theorem projVar_ne_zero (k : Fin (e + 1)) : projVar e k ≠ 0 := by
   rw [projVar, ne_eq, IsFractionRing.to_map_eq_zero_iff]; exact X_ne_zero k

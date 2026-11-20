@@ -134,7 +134,8 @@ theorem h_eqG (x y : (VS D).V) :
   have key : (VS D).hT y x = ∑ j, ∑ i, star ((VS D).frame.repr y j) *
       ((VS D).frame.repr x i * (VS D).hT ((VS D).frame j) ((VS D).frame i)) := by
     conv_lhs => rw [← (VS D).frame.sum_repr y, ← (VS D).frame.sum_repr x]
-    simp only [map_sum, map_smulₛₗ, smul_eq_mul, starRingEnd_apply, LinearMap.sum_apply, LinearMap.smul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smulₛₗ, smul_eq_mul, starRingEnd_apply, LinearMap.sum_apply, LinearMap.smul_apply,
       RingHom.id_apply, Finset.mul_sum]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun i _ => ?_

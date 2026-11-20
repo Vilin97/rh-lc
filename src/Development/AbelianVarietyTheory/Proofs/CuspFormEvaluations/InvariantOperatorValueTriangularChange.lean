@@ -203,7 +203,8 @@ theorem dEnd_comb (F : Fin d → PS S 2 d) {κ : Type} [Fintype κ] (c : κ → 
     (hv : ∀ e, v e = ∑ j, c j * w j e) : dEnd F v = ∑ j, c j • dEnd F (w j) := by
   refine LinearMap.ext fun g => ?_
   rw [LinearMap.sum_apply]
-  simp only [LinearMap.smul_apply, dEnd_apply, Dof, hv, map_sum, map_mul, Finset.sum_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [LinearMap.smul_apply, dEnd_apply, Dof, hv, map_sum, map_mul, Finset.sum_mul,
     Finset.smul_sum, MvPowerSeries.smul_eq_C_mul]
   conv_rhs => rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun e _ => ?_
@@ -299,7 +300,8 @@ theorem nabVal_triangular : ∀ (E : Type) [Field E] [NumberField E] [IsCMField 
           PiTensorProduct.singleAlgHom (R := S) (A := fun _ : Fin n => Algebra.adjoin S s) ℓ.2.2
             (X ⟨ℓ.1, ℓ.2.1⟩)) P) := by
     intro U X hX
-    rw [MvPolynomial.coe_eval₂Hom, MvPolynomial.eval₂_eq', map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [MvPolynomial.coe_eval₂Hom, MvPolynomial.eval₂_eq', map_sum]
     refine Finset.sum_congr rfl fun m _ => ?_
     rw [show φ (P.coeff m) = algebraMap S _ (algebraMap c.F S (P.coeff m)) from rfl, hpull]
     congr 1
@@ -323,7 +325,8 @@ theorem nabVal_triangular : ∀ (E : Type) [Field E] [NumberField E] [IsCMField 
     intro τ i
     apply Subtype.val_injective
     change dEnd (B.FK S) (uvec' ⟨τ, i⟩) = (Algebra.adjoin S s).val (∑ j, cf τ i j • X ⟨τ, j⟩)
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [map_smul]
     exact dEnd_comb (B.FK S) (cf τ i) (fun j => uvec ⟨τ, j⟩) _ (huv τ i)
   rw [hval uvec' X' (fun l => rfl), hval uvec X (fun l => rfl)]
@@ -332,7 +335,8 @@ theorem nabVal_triangular : ∀ (E : Type) [Field E] [NumberField E] [IsCMField 
       fun ℓ => ∑ j, algebraMap S (⨂[S] _ : Fin n, Algebra.adjoin S s) (cf ℓ.1 ℓ.2.1 j) *
         PiTensorProduct.singleAlgHom (R := S) (A := fun _ : Fin n => Algebra.adjoin S s) ℓ.2.2 (X ⟨ℓ.1, j⟩) := by
     funext ℓ
-    rw [hx', map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hx', map_sum]
     simp only [map_smul]
     simp only [Algebra.smul_def]
   have h3 := eval₂_triangular φ hI hD (fun τ i j => algebraMap S (⨂[S] _ : Fin n, Algebra.adjoin S s) (cf τ i j))

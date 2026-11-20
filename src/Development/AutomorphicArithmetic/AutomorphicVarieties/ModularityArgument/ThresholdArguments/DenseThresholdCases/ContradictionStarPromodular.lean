@@ -113,9 +113,11 @@ private theorem con_trace {K : Type} [Field K] [IsAlgClosed K] {l : ℕ} [Fact l
     rw [eval_sub, eval_X, eval_C, sub_eq_zero] at hi
     rw [hi]; exact (hdi i).pow N
   have h4 : IsIntegral (ZMod l) (M.trace - ∑ i, d i) := by
-    rw [← isIntegral_algHom_iff φ Subtype.val_injective, map_sub, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← isIntegral_algHom_iff φ Subtype.val_injective, map_sub, map_sum]
     refine IsIntegral.sub ?_ (IsIntegral.sum _ fun i _ => hdi i)
-    rw [Matrix.trace, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Matrix.trace, map_sum]
     exact h1
   have h5 : M.trace - ∑ i, d i ∈ maximalIdeal V := by
     rw [Matrix.trace, ← Finset.sum_sub_distrib]

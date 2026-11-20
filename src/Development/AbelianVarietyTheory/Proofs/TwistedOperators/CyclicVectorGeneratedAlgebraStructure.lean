@@ -16,7 +16,8 @@ def lowPoly (c : n → A) : A[X] :=
 theorem aeval_lowPoly_mulVec (M : Matrix n n A) (v c : n → A) :
     aeval M (lowPoly c) *ᵥ v = krylov M v *ᵥ c := by
   funext i
-  simp only [lowPoly, map_sum, map_smul, map_pow, aeval_X, Matrix.sum_mulVec, Matrix.smul_mulVec,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [lowPoly, map_sum, map_smul, map_pow, aeval_X, Matrix.sum_mulVec, Matrix.smul_mulVec,
     Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
   simp only [krylov, Matrix.mulVec, dotProduct, Matrix.of_apply]
   exact Finset.sum_congr rfl fun j _ => mul_comm _ _

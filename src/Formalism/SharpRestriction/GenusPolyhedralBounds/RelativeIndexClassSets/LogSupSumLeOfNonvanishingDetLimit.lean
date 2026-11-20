@@ -579,7 +579,8 @@ theorem core_arch {N2 : (K →+* ℂ) → V → ℝ} {dH : ℕ} (Hm : Herm N2 dH
     obtain ⟨a, ha, _⟩ := h i
     exact (norm_nonneg a).trans ha
   have hN : ∀ f, 0 ≤ N2 σ f := fun f => by rw [← Hm.norm_e]; exact norm_nonneg _
-  rw [detPoly_expand, MvPolynomial.coeff_sum, map_sum, Finset.prod_univ_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [detPoly_expand, MvPolynomial.coeff_sum, map_sum, Finset.prod_univ_sum, Finset.mul_sum]
   refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun b _ => ?_)
   rw [MvPolynomial.coeff_monomial]
   split_ifs
@@ -1135,13 +1136,15 @@ theorem tr_iota_mem_span [FiniteDimensional K V] (Hm : Herm N2 dH) (f : V) :
       tr_iota Hm ((Module.finBasis ℚ K p.2) • (Module.finBasis K V p.1))) := by
   set b := Module.finBasis K V
   set ω := Module.finBasis ℚ K
-  rw [← b.sum_repr f, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← b.sum_repr f, map_sum]
   refine Submodule.sum_mem _ fun j _ => ?_
   have hcc : b.repr f j = ∑ i, ((ω.repr (b.repr f j) i : ℚ) : K) * ω i := by
     conv_lhs => rw [← ω.sum_repr (b.repr f j)]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [Algebra.smul_def, eq_ratCast]
-  rw [hcc, Finset.sum_smul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hcc, Finset.sum_smul, map_sum]
   refine Submodule.sum_mem _ fun i _ => ?_
   rw [mul_smul, tr_iota_smul_rat]
   exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨(j, i), rfl⟩)
@@ -1847,12 +1850,14 @@ theorem len_sat_le {R F : Type} [CommRing R] [IsDomain R] [IsDiscreteValuationRi
     rw [Matrix.mul_apply]
     have h1 : z k = ∑ l, w.repr (bz k) l • ((w l : U) : V1) := by
       have h := congrArg U.subtype (w.sum_repr (bz k))
-      rw [map_sum] at h
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum] at h
       rw [← hbz k]
       simpa using h.symm
     simp only [Matrix.of_apply]
     rw [h1]
-    simp only [map_sum, map_smul, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, smul_eq_mul]
     refine Finset.sum_congr rfl fun l _ => ?_
     simp only [C, Wm, RingHom.mapMatrix_apply, Matrix.map_apply, Matrix.of_apply,
       LinearMap.toMatrix_apply, hW0]
@@ -2023,7 +2028,8 @@ theorem len_le_gaussC {M : Submodule (𝓞 K) V} (hfgM : M.FG) {ρ : ℕ} {z : F
 
   have hent : ∀ i k, φ1 i (z1 k) = jF (polyOf (φ i) (z k)) := by
     intro i k
-    rw [hz1def, polyOf_eq_sum, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hz1def, polyOf_eq_sum, map_sum, map_sum]
     refine Finset.sum_congr rfl fun γ _ => ?_
     rw [map_smul, smul_eq_mul, hφ1, ← map_mul, mul_comm, MvPolynomial.C_mul_monomial, mul_one]
   have hdet : (Matrix.of fun i k => φ1 i (z1 k)).det = jF (detPoly φ z) := by
@@ -2048,7 +2054,8 @@ theorem len_le_gaussC {M : Submodule (𝓞 K) V} (hfgM : M.FG) {ρ : ℕ} {z : F
     have hmv : (Matrix.of fun i k => φ1 i (z1 k)).mulVec g = 0 := by
       funext i
       have := congrArg (φ1 i) hg
-      rw [map_sum, map_zero] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, map_zero] at this
       simp only [map_smul, smul_eq_mul] at this
       simp only [Matrix.mulVec, dotProduct, Matrix.of_apply, Pi.zero_apply]
       rw [← this]

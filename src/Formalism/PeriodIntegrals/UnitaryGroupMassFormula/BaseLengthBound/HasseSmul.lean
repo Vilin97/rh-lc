@@ -25,7 +25,8 @@ theorem hasseSmul_holds : HasseSmul := by
     erw [hasse_algebraMap_Op]
     rw [Submodule.coe_smul_of_tower, Algebra.smul_def]
     congr 1
-  rw [key, map_sum, Finset.sum_eq_single (0, β)]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [key, map_sum, Finset.sum_eq_single (0, β)]
   · rw [LinearMap.map_smul_of_tower, hasseOp_zero, algebraMap_smul]
   · intro q hq hne
     rw [LinearMap.map_smul_of_tower]

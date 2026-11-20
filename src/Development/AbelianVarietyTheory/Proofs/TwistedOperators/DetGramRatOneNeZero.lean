@@ -222,7 +222,8 @@ theorem isometric_iff (G : Matrix (Fin r) (Fin r) E) (x : k ⊗[(maximalRealSubf
       refine ⟨ψ y, ?_⟩
       conv_rhs => rw [h2 y]
       funext a
-      simp only [map_sum, g1, Matrix.mulVec, dotProduct, Matrix.of_apply, Finset.sum_apply, Pi.smul_apply,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, g1, Matrix.mulVec, dotProduct, Matrix.of_apply, Finset.sum_apply, Pi.smul_apply,
         smul_eq_mul]
       exact Finset.sum_congr rfl fun _ _ => mul_comm _ _
     · ext i j
@@ -238,11 +239,13 @@ theorem isometric_iff (G : Matrix (Fin r) (Fin r) E) (x : k ⊗[(maximalRealSubf
     · change gramForm k G (Q *ᵥ ψ y) (Q *ᵥ ψ y') = _
       have e : (fun b => ccBase E k ((Q *ᵥ ψ y') b)) = Q.map (ccBase E k) *ᵥ fun b => ccBase E k (ψ y' b) := by
         funext b
-        simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Matrix.map_apply]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Matrix.map_apply]
       rw [gramForm_eq, e, ← Matrix.vecMul_transpose, ← Matrix.dotProduct_mulVec, Matrix.mulVec_mulVec,
         Matrix.mulVec_mulVec, ← h]
       conv_rhs => rw [h2 y, h2 y']
-      simp only [traceForm, map_sum, map_mul, involBase_inclBase, Finset.mul_sum, Finset.sum_mul,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [traceForm, map_sum, map_mul, involBase_inclBase, Finset.mul_sum, Finset.sum_mul,
         dotProduct, Matrix.mulVec, gram, Matrix.of_apply]
       rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun i _ => ?_
@@ -266,8 +269,10 @@ theorem det_gram (x : k ⊗[(maximalRealSubfield E)] plus P) :
     ext i j
     have e : inclPlus P k x * 1 ⊗ₜ B i = ∑ l, c.repr (x * c i) l • ((1 : k) ⊗ₜ[(maximalRealSubfield E)] B l) := by
       have hc : ∀ l, inclPlus P k (c l) = 1 ⊗ₜ B l := fun l => by simp [c, inclPlus, hB]
-      simp only [← hc, ← map_smul, ← map_sum, c.sum_repr, map_mul]
-    simp only [gram, traceForm, Matrix.of_apply, e, Matrix.mul_apply, Matrix.transpose_apply,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [← hc, ← map_smul, ← map_sum, c.sum_repr, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [gram, traceForm, Matrix.of_apply, e, Matrix.mul_apply, Matrix.transpose_apply,
       RingHom.mapMatrix_apply, Matrix.map_apply, Algebra.leftMulMatrix_eq_repr_mul, Finset.sum_mul,
       map_sum, smul_mul_assoc, map_smul, map_one, one_mul, ← Algebra.smul_def]
   rw [h, Matrix.det_mul, Matrix.det_transpose, ← RingHom.map_det, ← Algebra.norm_eq_matrix_det,

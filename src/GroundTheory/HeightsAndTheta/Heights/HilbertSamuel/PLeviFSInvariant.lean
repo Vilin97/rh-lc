@@ -110,7 +110,8 @@ theorem herm_self (a : J → ℂ) : herm a a = (sqSum a : ℂ) := by
   exact Finset.sum_congr rfl fun p _ => Complex.conj_mul' (a p)
 
 theorem herm_swap (a b : J → ℂ) : herm b a = conj (herm a b) := by
-  simp only [herm, map_sum, map_mul, Complex.conj_conj]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [herm, map_sum, map_mul, Complex.conj_conj]
   exact Finset.sum_congr rfl fun p _ => mul_comm _ _
 
 theorem reInner_sq_add (a b : J → ℂ) :

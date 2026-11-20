@@ -76,7 +76,8 @@ theorem eq_of_commute_pow {O : Type} [CommRing O] [IsDomain O] (l : ℕ) (hl0 : 
       rw [he, map_mul, map_pow, hp, mul_pow, mul_assoc, mul_assoc] at hd
       have hc := congrArg PowerSeries.constantCoeff
         (mul_left_cancel₀ (pow_ne_zero _ PowerSeries.X_ne_zero) hd)
-      simp only [map_mul, map_pow, map_sum, map_add, map_one, PowerSeries.constantCoeff_X, hf0, hg0,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_mul, map_pow, map_sum, map_add, map_one, PowerSeries.constantCoeff_X, hf0, hg0,
         add_zero, one_pow, mul_one, Finset.sum_const, Finset.card_range, nsmul_eq_mul,
         constantCoeff_algHom φ hφ0] at hc
       have he0 : PowerSeries.constantCoeff e = 0 := by

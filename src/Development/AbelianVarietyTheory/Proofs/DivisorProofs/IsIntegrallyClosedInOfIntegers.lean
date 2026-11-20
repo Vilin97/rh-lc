@@ -23,7 +23,8 @@ theorem exists_tensor_eq {R O M N : Type} [CommRing R] [CommRing O] [Algebra R O
   choose s hs using fun i => hB (b.coord i)
   refine ⟨∑ i, φ (1 ⊗ₜ b i) ⊗ₜ s i, fun n => ?_⟩
   conv_rhs => rw [← b.sum_repr n]
-  simp only [map_sum, LinearMap.baseChange_tmul, LinearMap.flip_apply, hs, TensorProduct.rid_tmul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.baseChange_tmul, LinearMap.flip_apply, hs, TensorProduct.rid_tmul,
     TensorProduct.tmul_sum, Module.Basis.coord_apply, TensorProduct.tmul_smul]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [← algebraMap_smul O (b.repr n i) ((1 : O) ⊗ₜ[R] b i), map_smul, algebraMap_smul]

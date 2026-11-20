@@ -212,7 +212,8 @@ theorem EE_aeval (Eπ : LetA O n) (h' : ℕ) (uE uE' : LetA O n) (huu : uE' * uE
             rw [h2]; rfl
         _ = algebraMap (LetA O n) W.EE (W.γA W.gam ((twA W uE' h' ^ k) a) * uE' ^ h') := by
             rw [map_mul, mul_comm]
-  rw [aeval_end_apply, aeval_end_apply, Finset.mul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [aeval_end_apply, aeval_end_apply, Finset.mul_sum, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [mul_smul_comm, hk i, Algebra.smul_def, Algebra.smul_def, map_mul,
     ← IsScalarTower.algebraMap_apply]

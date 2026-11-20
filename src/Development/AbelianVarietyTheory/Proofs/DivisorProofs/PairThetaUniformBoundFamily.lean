@@ -59,7 +59,8 @@ theorem GlobalTheory.ThetaKernelDeriv.hasDerivAt_theta_sum : KP → ∀ (F E : T
   have hsum : ∀ u : Fin m → SInf F (Fin n × Fin d),
       theta om (∑ i, pureA F (u i) (φ i)) g h = ∑ i, theta om (pureA F (u i) (φ i)) g h := by
     intro u
-    simp only [theta, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [theta, map_sum]
     induction (Finset.univ : Finset (Fin m)) using Finset.induction_on with
     | empty => simp [thetaSum]
     | insert a S ha ih =>

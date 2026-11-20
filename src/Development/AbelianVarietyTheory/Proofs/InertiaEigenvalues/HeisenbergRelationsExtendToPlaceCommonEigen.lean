@@ -44,7 +44,8 @@ theorem comb_eq_linearCombination (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D)
 theorem comb_sum_single (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D) {ι : Type} (s : Finset ι) (r : ι → WO S T)
     (z : ι → ℂ) (X : WO S T → ℂ) :
     comb ψ S T (∑ i ∈ s, Finsupp.single (r i) (z i)) X = ∑ i ∈ s, z i • heisO ψ S T (r i) X := by
-  rw [comb_eq_linearCombination, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [comb_eq_linearCombination, map_sum]
   simp only [Finsupp.linearCombination_single]
 
 theorem comb_fun_zero (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D) (c : WO S T →₀ ℂ) :

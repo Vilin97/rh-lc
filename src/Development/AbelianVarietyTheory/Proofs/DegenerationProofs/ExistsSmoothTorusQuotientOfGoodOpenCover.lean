@@ -254,7 +254,8 @@ theorem basicOpen_le_of_sum [Module.Free ℤ X] [Module.Finite ℤ X] [IsMonHom 
       have h₁ : (q ≫ g₀).left z ∈ W := mem_of_act_mem hW p (q ≫ g₀) (hs hz.2)
       rw [Over.comp_left, Scheme.Hom.comp_apply, hg] at h₁
       exact hyW h₁
-    rw [map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at this
     refine Eq.trans (Finset.sum_congr rfl fun χ _ => ?_) this
     rw [ha χ _ p (q ≫ g₀) _ k, ← chV_val, val_comp q h₀ k]
   have h₂ := congrArg Z.left.basicOpen key
@@ -273,7 +274,8 @@ theorem exists_invariant [Module.Free ℤ X] [Module.Finite ℤ X] [hi : IsMonHo
   obtain ⟨f, hf, hx⟩ := h₁.exists_basicOpen_le (V := W) ⟨x, hxW⟩ hxV
   obtain ⟨d, hd, rfl⟩ := (functions_graded_by_weights S G X i hi V h₁ h₂).1 f
   have hx' := (G.left.mem_basicOpen _ x hxV).1 hx
-  rw [Finsupp.sum, map_sum] at hx'
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finsupp.sum, map_sum] at hx'
   obtain ⟨χ, hχ, h⟩ := IsLocalRing.exists_of_isUnit_sum hx'
   have hw : IsWt i V (d χ * ((u (Multiplicative.ofAdd χ))⁻¹).val) 0 := by
     simpa only [add_neg_cancel] using (hd χ).mul (IsWt.inv (hu χ))

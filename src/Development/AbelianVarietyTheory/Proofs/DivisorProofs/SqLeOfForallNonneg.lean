@@ -122,7 +122,8 @@ theorem bddAct_of_isIntegral {O : Type} [CommRing O] (bar : O → O) (hmul : ∀
     exact hcs _ _
   have hrec : ∑ i ∈ Finset.range (P.natDegree + 1), P.coeff i * F i = 0 := by
     have h0 : β x ((Polynomial.aeval (bar c * c) P) • x) = 0 := by rw [Polynomial.aeval_def, hP, zero_smul, map_zero]
-    rw [Polynomial.aeval_eq_sum_range, Finset.sum_smul, map_sum] at h0
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Polynomial.aeval_eq_sum_range, Finset.sum_smul, map_sum] at h0
     rw [← h0]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [hFdef]

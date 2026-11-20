@@ -122,7 +122,8 @@ theorem equivariant (g : Gen.GE N) (m : Fin D.R.r → KmodO (X.Ok i k')) :
     p.compLeft (Fin D.R.r) (Trep i s k' 1 g m) = Trep i s k 1 g (p.compLeft (Fin D.R.r) m) := by
   funext a
   show p (Trep i s k' 1 g m a) = _
-  rw [trep_one_apply, trep_one_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [trep_one_apply, trep_one_apply, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [phiK_eq i k k', algebraMap_smul, map_smul]
   rfl

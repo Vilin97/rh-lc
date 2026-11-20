@@ -62,7 +62,8 @@ theorem kerRSt : KerRSt := by
     have e2 : (∑ l, c l • fun m => φ (f.repr (σ (x l)) m)) = k := by
       apply smul_right_injective (Fin r → R) hπ
       change φ π • _ = φ π • _
-      rw [← e, map_sum, Finset.smul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← e, map_sum, Finset.smul_sum]
       refine Finset.sum_congr rfl fun l _ => ?_
       rw [map_smul, hG', smul_comm]
     have e3 : c = k + ∑ l, c l • fun m => φ (f.repr (f l - σ (x l)) m) := by
@@ -82,7 +83,8 @@ theorem kerRSt : KerRSt := by
       refine Submodule.subset_span ⟨∑ l, f.repr w l • x l, (hq0 _).1 ?_, ?_⟩
       · rw [← hw]
         conv_rhs => rw [← f.sum_repr w]
-        simp only [map_sum, map_smul, hx]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, map_smul, hx]
       · funext i
         simp [hpi, Finset.sum_apply]
     | zero => simp

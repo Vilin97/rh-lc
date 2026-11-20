@@ -52,7 +52,8 @@ theorem c_inj : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T0 : Type) (A
   have hs := B.sum_repr z
   have h0 : ∑ j, B.repr z j • c (GlobalTheory.CoefModel.mapVV D.what₂.embLL (lamV D i) (bVV D.what₂.LL (lamV D i) j)) = 0 := by
     calc _ = c (∑ j, B.repr z j • B j) := by
-            rw [map_sum]
+            set_option synthInstance.maxHeartbeats 100000 in
+              rw [map_sum]
             refine Finset.sum_congr rfl fun j _ => ?_
             rw [map_smul, Module.Basis.mk_apply]
       _ = 0 := by rw [hs, hz]

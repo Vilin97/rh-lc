@@ -116,7 +116,8 @@ theorem mem_imM_of_smul_mem (F : Hom P Q)
     obtain ⟨c, hc⟩ := hYb τ
     refine ⟨max c 0, fun n => ?_⟩
     change ‖coeff n (∑ j, Y τ i j * v τ j)‖ ≤ max c 0
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg (le_max_right _ _) fun j _ => ?_
     have := norm_coeff_mul_le (w := fun _ => 1) (fun _ => zero_le_one) (fun _ _ => by simp)
       (le_max_right c 0) zero_le_one (f := Y τ i j) (g := v τ j)

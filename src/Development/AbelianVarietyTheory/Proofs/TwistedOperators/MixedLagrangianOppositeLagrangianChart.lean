@@ -197,7 +197,8 @@ theorem mixCoS_inl (a : Fin (spW₁ G i j).rank) (k : Fin (spV G i j).rank) :
   have hx : (mulG (spW₁ G i j) (colV e u)ᵀ).map (fun a => cpt w (toEAf D a)) =
       ((u.map fun a => cpt w (toEAf D a)).submatrix id fun k => e (.inl k))ᵀ * (spW₁ G i j).gram.map κ := by
     ext a b
-    simp [mulG, Matrix.mul_apply, map_sum, map_mul, colV, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM, hinc]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [mulG, Matrix.mul_apply, map_sum, map_mul, colV, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM, hinc]
   have key : ∀ {n p : ℕ} (b : Matrix (Fin p) (Fin p) (Kw w)) (U : Matrix (Fin n) (Fin p) (Kw w))
       (g c : Matrix (Fin n) (Fin n) (Kw w)) (a : Fin n) (k : Fin p), (b * (Uᵀ * g) * c) k a = (cᵀ * gᵀ * U * bᵀ) a k :=
     fun b U g c a k => by
@@ -214,7 +215,8 @@ theorem mixCoS_inr (a : Fin (spW₁ G i j).rank) (k : Fin (spV₁ G i j).rank) :
   have hx : (adjV₁ e u).map (fun a => cpt w (toEAf D a)) =
       -(((u.map fun a => cpt w (toEAf D (cA D a))).submatrix id fun k => e (.inr k)) * (spV₁ G i j).gram.map κ) := by
     ext a b
-    simp [adjV₁, mulG, Matrix.mul_apply, map_sum, map_mul, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM, hinc]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [adjV₁, mulG, Matrix.mul_apply, map_sum, map_mul, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM, hinc]
   have key : ∀ {n p : ℕ} (b : Matrix (Fin n) (Fin n) (Kw w)) (U : Matrix (Fin n) (Fin p) (Kw w))
       (g c : Matrix (Fin p) (Fin p) (Kw w)), b * -(U * g) * c = b * U * -(g * c) := fun b U g c => by
     simp only [Matrix.mul_neg, Matrix.neg_mul, Matrix.mul_assoc]

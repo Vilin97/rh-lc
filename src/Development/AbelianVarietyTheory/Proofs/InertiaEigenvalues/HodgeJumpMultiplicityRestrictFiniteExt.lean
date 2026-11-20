@@ -59,7 +59,8 @@ theorem multV_restrict : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : Loc
       · have e : sm ℚ_[l] P.R.BdR ↥LL.1 V (idem P.R.BdR τ) y = sm ℚ_[l] P.R.BdR ↥LL.1 V (idem P.R.BdR τ)
             (sm ℚ_[l] P.R.BdR ↥LL.1 V (idem P.R.BdR (τ.comp (IntermediateField.inclusion h))) y) := by
           rw [← sm_mul, mul_comm, hI]
-        rw [e, hy', map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [e, hy', map_sum]
         exact Finset.sum_congr rfl fun i _ => sm_comm _ _ _
   rw [hA.multV_eq, hA'.multV_eq]
 

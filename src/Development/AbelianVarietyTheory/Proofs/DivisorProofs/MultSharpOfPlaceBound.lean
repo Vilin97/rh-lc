@@ -39,7 +39,8 @@ theorem card_mul_finrank_eig {G : Type} [Group G] {V : Type} [AddCommGroup V] [M
       rw [mem_eig]
       intro g hg
       have hg' : g ∈ P := hg
-      simp only [he, LinearMap.smul_apply, LinearMap.coe_sum, Finset.sum_apply, map_smul, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [he, LinearMap.smul_apply, LinearMap.coe_sum, Finset.sum_apply, map_smul, map_sum]
       rw [smul_comm (ψ g)]
       congr 1
       rw [Finset.smul_sum]
@@ -52,7 +53,8 @@ theorem card_mul_finrank_eig {G : Type} [Group G] {V : Type} [AddCommGroup V] [M
       rw [Finset.sum_congr rfl (g := fun _ => v) fun x _ => by
         rw [hv x x.2, smul_smul, inv_mul_cancel₀ (h0 x x.2), one_smul]]
       rw [Finset.sum_const, Finset.card_univ, ← Nat.cast_smul_eq_nsmul ℂ, smul_smul, inv_mul_cancel₀ hc, one_smul]
-  rw [← hp.trace, he, map_smul, map_sum, smul_eq_mul, ← mul_assoc, mul_inv_cancel₀ hc, one_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hp.trace, he, map_smul, map_sum, smul_eq_mul, ← mul_assoc, mul_inv_cancel₀ hc, one_mul]
   refine Finset.sum_congr rfl fun x _ => ?_
   rw [map_smul, smul_eq_mul, mul_comm]
 
@@ -74,7 +76,8 @@ theorem levelMult_ofLocal {K : Type} [Field K] (s : K →+* ℂ) {Pg : Finset (P
   classical
   apply s.injective
   unfold levelMult
-  rw [map_mul, map_inv₀, map_natCast, map_natCast, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_mul, map_inv₀, map_natCast, map_natCast, map_sum]
   have hcard : Nat.card (LevelP.ofLocal Hl cl).H = ∏ PP, Fintype.card (Hl PP) := by
     rw [← Fintype.card_pi, ← Nat.card_eq_fintype_card]
     exact Nat.card_congr (piEquiv Hl)

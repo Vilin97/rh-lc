@@ -72,7 +72,8 @@ theorem exists_full_frac : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) [IsDoma
     have h4 : ∑ q : GQ l ⧸ GK K, Fn (s * q.out) = ∑ q : GQ l ⧸ GK K, Fn q.out :=
       Fintype.sum_equiv (MulAction.toPerm s) _ _ fun q => by
         rw [MulAction.toPerm_apply, ← MulAction.Quotient.mk_smul_out, h3, smul_eq_mul]
-    simp only [fa, map_mul, map_inv₀, map_natCast, map_sum, h1]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [fa, map_mul, map_inv₀, map_natCast, map_sum, h1]
     rw [Finset.sum_add_distrib, h4, Finset.sum_const, Finset.card_univ, nsmul_eq_mul]
     field_simp
     ring

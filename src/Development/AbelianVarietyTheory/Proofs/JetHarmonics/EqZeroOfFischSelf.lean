@@ -30,7 +30,8 @@ theorem pderiv_rowAct (g : ∀ σ, Matrix (Fin (r σ)) (Fin (r σ)) k) (σ : T) 
   have hX : ∀ ℓ : Letter T r n, pderiv (⟨σ, j, b⟩ : Letter T r n) (rowAct g (X ℓ)) =
       ∑ i, g σ i j • rowAct g (pderiv (⟨σ, i, b⟩ : Letter T r n) (X ℓ)) := by
     rintro ⟨σ', i', b'⟩
-    rw [rowAct_X, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [rowAct_X, map_sum]
     simp only [pderiv_C_mul, pderiv_X, Pi.single_apply]
     by_cases h : σ' = σ
     · subst h
@@ -59,15 +60,18 @@ theorem rowStable_harmK (cc : T → T) (isX : T → Prop) : RowStable (harmK r n
   intro g _ P hP
   rw [mem_harmK_iff] at hP ⊢
   intro τ hτ i i'
-  simp only [pderiv_rowAct, map_sum, Derivation.map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [pderiv_rowAct, map_sum, Derivation.map_smul]
   rw [Finset.sum_comm]
   refine Finset.sum_eq_zero fun j' _ => ?_
   rw [← Finset.smul_sum, Finset.sum_comm]
-  simp only [← Finset.smul_sum, ← map_sum, hP τ hτ, map_zero, smul_zero, Finset.sum_const_zero]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← Finset.smul_sum, ← map_sum, hP τ hτ, map_zero, smul_zero, Finset.sum_const_zero]
 
 theorem rowStable_degree (D : ℕ) : RowStable (restrictTotalDegree (Letter T r n) k D) := by
   intro g _ P hP
-  rw [← sum_homogeneousComponent P, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← sum_homogeneousComponent P, map_sum]
   refine Submodule.sum_mem _ fun i hi => ?_
   rw [mem_restrictTotalDegree] at hP ⊢
   have h : (rowAct g (homogeneousComponent i P)).IsHomogeneous (1 * i) :=
@@ -110,7 +114,8 @@ theorem eq_zero_of_fisch_self {P : MvPolynomial σ ℚ} (h : fisch P P = 0) : P 
   by_contra h0
   have : 0 < fisch P P := by
     nth_rewrite 1 [P.as_sum]
-    rw [map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, LinearMap.sum_apply]
     refine Finset.sum_pos (fun m hm => ?_) (support_nonempty.2 h0)
     rw [fisch_monomial, mul_left_comm]
     have hf : 0 < (m.prod fun _ e => e.factorial : ℕ) := Finset.prod_pos fun i _ => Nat.factorial_pos _
@@ -136,7 +141,8 @@ theorem fisch_rowAct (g : ∀ σ, Matrix (Fin (r σ)) (Fin (r σ)) ℚ) (P Q : M
   | add p q hp hq => simp only [map_add, LinearMap.add_apply, hp, hq]
   | mul_X p s hp =>
     obtain ⟨σ, i, b⟩ := s
-    rw [map_mul, rowAct_X, Finset.mul_sum, map_sum, LinearMap.sum_apply, fisch_mul_X, pderiv_rowAct, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_mul, rowAct_X, Finset.mul_sum, map_sum, LinearMap.sum_apply, fisch_mul_X, pderiv_rowAct, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [← smul_eq_C_mul, mul_smul_comm, map_smul, LinearMap.smul_apply, fisch_mul_X, hp, map_smul]
     rfl
@@ -208,7 +214,8 @@ theorem exists_weight_lt (f : MvPolynomial σ k →ₐ[k] MvPolynomial σ k)
   have e : f P - P = ∑ m ∈ P.support, P.coeff m • (f (monomial m 1) - monomial m 1) := by
     nth_rewrite 1 [P.as_sum]
     nth_rewrite 3 [P.as_sum]
-    rw [map_sum, ← Finset.sum_sub_distrib]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, ← Finset.sum_sub_distrib]
     refine Finset.sum_congr rfl fun m _ => ?_
     rw [smul_sub, ← map_smul, smul_monomial, smul_eq_mul, mul_one]
   rw [e] at hm'
@@ -282,12 +289,15 @@ theorem RowStable.component_mem [Infinite k] {U : Submodule k (MvPolynomial (Let
         simp [w, rowAct, smul_eq_C_mul, mul_pow, eval_monomial]
         ring
     have h0 := hφ _ (hU g hg P hP)
-    rw [P.as_sum, map_sum, map_sum] at h0
-    rw [map_zero, ← h0, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [P.as_sum, map_sum, map_sum] at h0
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_zero, ← h0, map_sum]
     refine Finset.sum_congr rfl fun m _ => ?_
     rw [hm, map_smul, smul_eq_mul, eval_monomial, eval_monomial, one_mul, mul_comm]
   have := congrArg (AddMonoidAlgebra.coeff · a) hQ
-  rw [weightedHomogeneousComponent_apply, map_sum, Finset.sum_filter]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [weightedHomogeneousComponent_apply, map_sum, Finset.sum_filter]
   rw [coeff_zero, coeff_sum] at this
   exact (Finset.sum_congr rfl fun m _ => by rw [coeff_monomial]).trans this
 
@@ -441,7 +451,8 @@ theorem harmK_le_span [CharZero k] (cc : T → T) (isX : T → Prop) :
   refine (mem_harmK_iff _ _ _).2 fun τ hτ j j' => ?_
   ext m
   simp only [hLd, coeff_sum, hL]
-  rw [← map_sum, ← coeff_sum, hP τ hτ j j']
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum, ← coeff_sum, hP τ hτ j j']
   simp
 
 theorem harmK_le_of_top [CharZero k] [Finite T] (cc : T → T) (isX : T → Prop)
@@ -464,7 +475,8 @@ theorem harmK_le_of_top [CharZero k] [Finite T] (cc : T → T) (isX : T → Prop
     rw [mem_harmK_iff] at hQ ⊢
     intro τ hτ j j'
     have := congrArg (map (algebraMap ℚ k)) (hQ τ hτ j j')
-    rw [map_sum, map_zero] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero] at this
     rw [← this]
     exact Finset.sum_congr rfl fun b _ => by rw [MvPolynomial.pderiv_map, MvPolynomial.pderiv_map]
 

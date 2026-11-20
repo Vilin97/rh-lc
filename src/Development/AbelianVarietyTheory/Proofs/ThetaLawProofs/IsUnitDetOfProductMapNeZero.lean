@@ -201,8 +201,10 @@ theorem _root_.GlobalTheory.DiscrJacobian.isUnit_det_of_productMap_ne_zero [IsLo
         (IsScalarTower.toAlgHom R (ResidueField R) C) (ev (b j))) =
         ρ (b i) * (IsScalarTower.toAlgHom R (ResidueField R) C) (ev (∑ j, M i j • b j)) := by
       intro i
-      simp [map_sum, Finset.mul_sum, mul_smul_comm]
-    simp only [map_sum, map_smul, Algebra.TensorProduct.productMap_apply_tmul, AlgHom.comp_apply,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [map_sum, Finset.mul_sum, mul_smul_comm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, Algebra.TensorProduct.productMap_apply_tmul, AlgHom.comp_apply,
       hrow, hcon, map_zero, mul_zero, Finset.sum_const_zero]
   set w := ∑ j, M i0 j • b j with hw
   have hwunit : IsUnit w := by
@@ -334,7 +336,8 @@ private theorem tensorMap_det_mul_tmul_sub_eq_zero {g : ℕ} [Module.Finite R B]
       algebraMap S B s ⊗ₜ[R] (1 : B) - (1 : B) ⊗ₜ[R] algebraMap S B s := by
     simp [π]
   rw [← hπs, ← map_mul, ← hc, Finset.mul_sum]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_eq_zero fun l _ => ?_
   rw [mul_left_comm, map_mul, RingHom.mem_ker.mp (hker l), mul_zero]
 
@@ -347,7 +350,8 @@ private theorem algebraMap_derivation_eq_sum_mu_mul {g : ℕ} (D : Derivation R 
       ∑ j, a i j * (x j ⊗ₜ[R] (1 : B) - (1 : S) ⊗ₜ[R] algebraMap S B (x j))) (i : Fin g) :
     algebraMap S B (D (f i)) = ∑ j, _root_.GlobalTheory.DiscrJacobian.mu R S B (a i j) * algebraMap S B (D (x j)) := by
   have := congrArg (_root_.GlobalTheory.DiscrJacobian.der D) (ha i)
-  rw [_root_.GlobalTheory.DiscrJacobian.der_tmul, mul_one, map_sum] at this
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [_root_.GlobalTheory.DiscrJacobian.der_tmul, mul_one, map_sum] at this
   rw [this]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [_root_.GlobalTheory.DiscrJacobian.der_mul, map_sub, map_sub]
@@ -455,7 +459,8 @@ theorem _root_.GlobalTheory.DiscrJacobian.associated_discr_norm_jacobian (R : Ty
       rw [Finset.sum_eq_single j (fun k _ hk => by rw [pderiv_X_of_ne hk, map_zero, mul_zero])
         (by simp), pderiv_X_self, map_one, mul_one]
     calc ∑ i, ∑ j, M i j • (b i * b j) = Algebra.TensorProduct.lmul' R De := by
-          rw [hDe]; simp [map_sum, Algebra.TensorProduct.lmul'_apply_tmul]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [hDe]; simp [map_sum, Algebra.TensorProduct.lmul'_apply_tmul]
       _ = _root_.GlobalTheory.DiscrJacobian.mu R (MvPowerSeries (Fin g) R)
           (MvPowerSeries (Fin g) R ⧸ Ideal.span (Set.range f)) (Matrix.of a).det := hlm _
       _ = _ := by
@@ -517,7 +522,8 @@ theorem _root_.GlobalTheory.DiscrJacobian.associated_discr_norm_jacobian (R : Ty
       obtain ⟨s, rfl⟩ := Ideal.Quotient.mk_surjective w
       obtain ⟨c, u, hu⟩ := hgen s
       refine ⟨c, ?_⟩
-      rw [hu, map_add, Ideal.Quotient.mk_algebraMap, add_sub_cancel_left, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hu, map_add, Ideal.Quotient.mk_algebraMap, add_sub_cancel_left, map_sum]
       exact Ideal.sum_mem _ fun j _ => by
         rw [map_mul]; exact Ideal.mul_mem_right _ _ (Ideal.subset_span ⟨j, rfl⟩)
     have hmB : ∀ w ∈ (maximalIdeal R).map
@@ -566,7 +572,8 @@ theorem _root_.GlobalTheory.DiscrJacobian.associated_discr_norm_jacobian (R : Ty
         hev _ (Ideal.subset_span (Set.mem_range_self
           (f := fun j => Ideal.Quotient.mk (Ideal.span (Set.range f)) (X j)) j))
       have := congrArg Φ (ha i)
-      simp only [Φ, map_sum, map_mul, map_sub, Algebra.TensorProduct.productMap_apply_tmul,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Φ, map_sum, map_mul, map_sub, Algebra.TensorProduct.productMap_apply_tmul,
         map_one, mul_one, one_mul] at this
       rw [← hred, this]
       refine Finset.sum_congr rfl fun j _ => ?_

@@ -44,7 +44,8 @@ theorem norm_le_card_of_heckeVec_eq_smul :
   have hsum : heckeVec ρ K h x = ∑ q ∈ S, h q.out • ρ q.out x :=
     finsum_eq_sum_of_support_subset _ hsupp
   have key : c * Bf x x = ∑ q ∈ S, h q.out * Bf x (ρ q.out x) := by
-    rw [← smul_eq_mul, ← map_smul, ← hc, hsum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← smul_eq_mul, ← map_smul, ← hc, hsum, map_sum]
     simp
   have hcard : Nat.card {q : G ⧸ K // h q.out ≠ 0} = S.card :=
     Nat.card_eq_card_finite_toFinset hfin

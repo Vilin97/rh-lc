@@ -50,7 +50,8 @@ theorem hTens_kap (σ : E →ₐ[F] E) {v : Pl F} {w : HeightOneSpectrum (𝓞 E
       ptAt hw h z * inclR (F := F) (AF F) a = ptAt hw h (z * algebraMap E (w.adicCompletion E) a) := by
     intro a z
     rw [mul_comm, inclR_mul_ptAt, mul_comm]
-  simp only [hTens, incM, kap_apply, Matrix.map_apply, cA_ptAt hw h σ hc, hr, ← map_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hTens, incM, kap_apply, Matrix.map_apply, cA_ptAt hw h σ hc, hr, ← map_mul, map_sum]
 
 end GlobalTheory.InertTens
 

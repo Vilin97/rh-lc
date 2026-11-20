@@ -25,7 +25,8 @@ theorem exists_dual {O κ : Type} [CommRing O] [Fintype κ] [DecidableEq κ] (b 
     have h1 : Matrix.vecMul (b.repr (x - y)) T = 0 := by
       funext l
       have h2 : Algebra.trace ℤ O ((x - y) * b l) = 0 := by rw [sub_mul, map_sub, h, sub_self]
-      rw [← b.sum_repr (x - y), Finset.sum_mul, map_sum] at h2
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← b.sum_repr (x - y), Finset.sum_mul, map_sum] at h2
       simp only [smul_mul_assoc, map_smul, smul_eq_mul] at h2
       exact h2
     have h3 := Matrix.eq_zero_of_vecMul_eq_zero hd' h1
@@ -38,18 +39,22 @@ theorem exists_dual {O κ : Type} [CommRing O] [Fintype κ] [DecidableEq κ] (b 
     have h1 := congrFun (congrFun (Matrix.adjugate_mul T) i) k
     simp only [Matrix.mul_apply, Matrix.smul_apply, Matrix.one_apply, smul_eq_mul, mul_ite, _root_.mul_one, mul_zero] at h1
     rw [← h1]
-    simp only [c, Finset.sum_mul, map_sum, smul_mul_assoc, map_smul, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [c, Finset.sum_mul, map_sum, smul_mul_assoc, map_smul, smul_eq_mul]
     rfl
   have hc2 : ∀ i x, Algebra.trace ℤ O (c i * x) = T.det * b.repr x i := by
     intro i x
     conv_lhs => rw [← b.sum_repr x]
-    simp only [Finset.mul_sum, map_sum, mul_smul_comm, map_smul, hc, smul_eq_mul, mul_ite, mul_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Finset.mul_sum, map_sum, mul_smul_comm, map_smul, hc, smul_eq_mul, mul_ite, mul_zero]
     simp [mul_comm]
   refine ⟨c, fun a k => nd _ _ fun l => ?_, nd _ _ fun l => ?_⟩
   · rw [mul_comm a, _root_.mul_assoc, hc2]
-    simp only [Finset.sum_mul, map_sum, smul_mul_assoc, map_smul, hc, smul_eq_mul, mul_ite, mul_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Finset.sum_mul, map_sum, smul_mul_assoc, map_smul, hc, smul_eq_mul, mul_ite, mul_zero]
     simp [mul_comm]
-  · simp only [Finset.sum_mul, map_sum, _root_.mul_assoc, hc2]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [Finset.sum_mul, map_sum, _root_.mul_assoc, hc2]
     rw [← zsmul_eq_mul, map_smul, Algebra.trace_eq_matrix_trace b, smul_eq_mul, Matrix.trace, ← Finset.mul_sum]
     congr 1
     refine Finset.sum_congr rfl fun i _ => ?_
@@ -65,15 +70,18 @@ theorem eig_proj (hc : ∀ a k, a * c k = ∑ i, b.repr (a * b i) k • c i) (a 
   have h1 : ∀ i, ρ a (ρ (b i) v) = ∑ k, b.repr (a * b i) k • ρ (b k) v := fun i => by
     rw [← Module.End.mul_apply, ← map_mul]
     conv_lhs => rw [← b.sum_repr (a * b i)]
-    simp only [map_sum, map_zsmul, LinearMap.sum_apply, LinearMap.smul_apply]
-  simp only [map_sum, map_smul, h1, Finset.smul_sum, smul_smul, ← map_mul, hc, map_zsmul, Finset.sum_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_zsmul, LinearMap.sum_apply, LinearMap.smul_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, h1, Finset.smul_sum, smul_smul, ← map_mul, hc, map_zsmul, Finset.sum_smul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun i _ => ?_
   rw [smul_comm, smul_assoc]
 
 theorem proj_eig {d : ℤ} (hc : ∑ i, c i * b i = (d : O)) (v : M) (hv : ∀ a, ρ a v = σ a • v) :
     ∑ i, σ (c i) • ρ (b i) v = (d : S) • v := by
-  simp only [hv, smul_smul, ← map_mul, ← Finset.sum_smul, ← map_sum, hc, map_intCast]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hv, smul_smul, ← map_mul, ← Finset.sum_smul, ← map_sum, hc, map_intCast]
 
 end Lin
 
@@ -117,7 +125,8 @@ theorem exists_eigFam {R : Type} [CommRing R] {ξ : Sp R ⟶ X} {g : ℕ} {e : F
     rw [e1] at this
     exact this
   have hU : ∀ k, ∑ j, φ (∑ i, σ (c i) * ρ (b i) k j) • T j = ∑ i, (φ.comp σ) (c i) • actR t.act (b i) (T k) := fun k => by
-    simp only [hA, map_sum, map_mul, Finset.sum_smul, Finset.smul_sum, smul_smul, RingHom.comp_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hA, map_sum, map_mul, Finset.sum_smul, Finset.smul_sum, smul_smul, RingHom.comp_apply]
     exact Finset.sum_comm
   refine ⟨fun k u hu a => ?_, fun w v hw hv => ?_⟩
   · rw [hT] at hu
@@ -138,7 +147,8 @@ theorem exists_eigFam {R : Type} [CommRing R] {ξ : Sp R ⟶ X} {g : ℕ} {e : F
       simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Finset.sum_smul, mul_smul]
       rw [Finset.sum_comm]
       simp only [← Finset.smul_sum, hU]
-      simp only [map_sum, map_smul, Finset.smul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, Finset.smul_sum]
       rw [Finset.sum_comm]
       exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun k _ => smul_comm _ _ _
     have hu := he.2 S φ _ (GlobalTheory.LieMet.isTan_tv (∑ j, (((discr E : ℤ) : S) • w) j • T j))

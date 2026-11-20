@@ -80,7 +80,8 @@ theorem GlobalTheory.BKLim.Frame.isCr_of_wSeed : ∀ (l : ℕ) [Fact l.Prime] (K
   set P := s.X.map bk.iS * Z.map im with hPdef
   have hPG : (P.map Gm).map q = P.map q := by
     ext a b
-    simp only [hPdef, Matrix.map_apply, Matrix.mul_apply, map_sum, map_mul, hq, hqS]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hPdef, Matrix.map_apply, Matrix.mul_apply, map_sum, map_mul, hq, hqS]
   have hPu : IsUnit (P.map q) := by
     rw [hPdef, Matrix.map_mul]
     refine IsUnit.mul ?_ ?_

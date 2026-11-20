@@ -64,7 +64,8 @@ theorem lin_X (A : σ → σ → ℂ) (v : σ) : lin A (X v) = ∑ w, A v w • 
 
 theorem pderiv_lin_X (A : σ → σ → ℂ) (v u : σ) : pderiv v (lin A (X u)) = C (A u v) := by
   classical
-  rw [lin_X, map_sum, Finset.sum_eq_single v]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [lin_X, map_sum, Finset.sum_eq_single v]
   · simp [smul_eq_C_mul]
   · intro w _ hw
     simp [pderiv_X, Pi.single_apply, hw]
@@ -102,7 +103,8 @@ theorem pair_lin (A : σ → σ → ℂ) (P Q : MvPolynomial σ ℂ) :
     rw [this, C_apply, pair_monomial, pair_monomial, coeff_zero_lin]
   | add P P' h h' => simp only [map_add, LinearMap.add_apply, h, h']
   | mul_X P u h =>
-    rw [pair_mul_X, pderiv_lin, map_mul, lin_X, Finset.mul_sum, map_sum, map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [pair_mul_X, pderiv_lin, map_mul, lin_X, Finset.mul_sum, map_sum, map_sum, LinearMap.sum_apply]
     refine Finset.sum_congr rfl fun w _ => ?_
     rw [mul_smul_comm, map_smul, map_smul, LinearMap.smul_apply, pair_mul_X, h]
 

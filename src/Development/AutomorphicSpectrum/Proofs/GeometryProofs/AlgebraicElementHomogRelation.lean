@@ -79,7 +79,8 @@ theorem cone_form (y : (Σ k, ι k) → Ω) {h : MRing ι} {d : K → ℕ} (hh :
     simp only [algebraMap_int_eq, eq_intCast, Int.coe_castRingHom, map_intCast]
     ring
   rw [h.as_sum]
-  simp only [map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Finset.sum_mul]
   exact Finset.sum_congr rfl key
 
 theorem mem_of_aeval_eq_zero {y : (Σ k, ι k) → Ω} {h : MRing ι} {d : K → ℕ} (hh : IsMultiHomog h d)

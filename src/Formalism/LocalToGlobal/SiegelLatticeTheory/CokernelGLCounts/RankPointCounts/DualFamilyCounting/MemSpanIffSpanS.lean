@@ -21,7 +21,8 @@ theorem spanS_smul_mem {ι : Type} [Fintype ι] {b : ι → V} {a : K} (ha : a �
 
 theorem form_sum_orth {ι : Type} [Fintype ι] {b : ι → V} (ho : ∀ i j, i ≠ j → h (b i) (b j) = 0)
     (c : ι → K) (i : ι) : h (b i) (∑ j, c j • b j) = c i * h (b i) (b i) := by
-  simp only [map_sum, map_smul, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, smul_eq_mul]
   rw [Finset.sum_eq_single i (fun j _ hji => by rw [ho i j (Ne.symm hji), mul_zero])
     (fun hi => absurd (Finset.mem_univ i) hi)]
 
@@ -46,7 +47,8 @@ theorem mem_spanS_iff_sub {ι : Type} [Fintype ι] [DecidableEq ι] {b : ι → 
       rw [dif_pos rfl, zero_smul, zero_add]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [dif_neg j.2]
-    · rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [map_sum]
       refine Finset.sum_eq_zero fun j _ => ?_
       rw [map_smul, ho i₀ j (Ne.symm j.2), smul_zero]
 

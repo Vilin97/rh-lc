@@ -34,7 +34,8 @@ theorem repr_app (ψ : F' ⟶ F) {U V : X.Opens} {s' : Fin r → Γ(F', U)} {s :
     (hs.basis h).repr (ψ.app V u) i = (hs'.basis h).repr u i := by
   have k : ψ.app V u = ∑ j, (hs'.basis h).repr u j • hs.basis h j := by
     conv_lhs => rw [← (hs'.basis h).sum_repr u]
-    rw [← appLinear_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← appLinear_apply, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_smul, appLinear_apply, IsFrame.basis_apply, IsFrame.basis_apply, app_resM, e]
   rw [k, Module.Basis.repr_sum_self]
@@ -72,7 +73,8 @@ theorem pull_app (hV : ⊤ ≤ w ⁻¹ᵁ V) (hV' : ⊤ ≤ w ⁻¹ᵁ V') (l : 
     ((Scheme.Modules.pullback w).map ψ).app ⊤ (pullbackSections w F' hV' (e' l)) =
       ∑ k, (Scheme.ΓSpecIso (CommRingCat.of R)).inv.hom (evAt w hV' (mat ψ hle he e' k l)) •
         pullbackSections w F hV (e k) := by
-  rw [pullback_map_app_pullbackSections, app_eq_sum ψ hle he, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [pullback_map_app_pullbackSections, app_eq_sum ψ hle he, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [pullbackSections_smul, inv_evAt]
   congr 1
@@ -107,11 +109,13 @@ theorem exists_of_mem [F.IsQuasicoherent] [F'.IsQuasicoherent] {ρ : F ⟶ Q} (h
     simp only [Fintype.linearCombination_apply, GlobalTheory.Twist.resM_self] at hn ⊢
     refine Eq.trans hn.symm ?_
     change appLinear ((Scheme.Modules.pullback w).map ψ) ⊤ _ = _
-    simp only [map_sum, map_smul, appLinear_apply, pull_app w ψ hle he e' hV hV', Finset.smul_sum, Finset.sum_smul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, appLinear_apply, pull_app w ψ hle he e' hV hV', Finset.smul_sum, Finset.sum_smul,
       mul_smul]
     exact Finset.sum_comm
   have k2 := congrArg G.hom.hom (congrFun key k)
-  simp only [map_sum, map_mul] at k2
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul] at k2
   have t (y : R) : G.hom.hom (G.inv.hom y) = y := G.inv_hom_id_apply y
   simpa only [t] using k2
 
@@ -129,11 +133,13 @@ theorem valF_coef {k : Type} [Field k] (x : Sp k ⟶ X) (ψ : F' ⟶ F) {V V' U 
   by_cases hU : ⊤ ≤ x ⁻¹ᵁ (V' ⊓ U)
   · have h₁ : V' ⊓ U ≤ V ⊓ U := inf_le_inf_right _ hle
     rw [valF_eq_valHom x _ hU]
-    simp only [← valHom_resG x (inf_le_left : V' ⊓ U ≤ V') hU, ← valHom_resG x h₁ hU, ← map_mul, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [← valHom_resG x (inf_le_left : V' ⊓ U ≤ V') hU, ← valHom_resG x h₁ hU, ← map_mul, ← map_sum]
     congr 1
     simp only [coef]
     rw [← repr_app ψ hs' hs es, app_resM, app_eq_sum ψ hle he]
-    simp only [map_sum, resM_smul, map_smul, Finsupp.finsetSum_apply, Finsupp.smul_apply, smul_eq_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, resM_smul, map_smul, Finsupp.finsetSum_apply, Finsupp.smul_apply, smul_eq_mul,
       ← IsFrame.repr_resM, resM_resM]
   · have hU' : ¬ ⊤ ≤ x ⁻¹ᵁ (V ⊓ U) := fun h => hU fun q hq => ⟨hx hq, (h hq).2⟩
     rw [valF, dif_neg hU]
@@ -163,7 +169,8 @@ theorem norm_iff [F.IsQuasicoherent] [F'.IsQuasicoherent] (C : Type) [Nontrivial
         ∑ l, (d l : C) * ∑ i, cf i * valF (spMap (intO C).subtype ≫ w) _ (coef true he' hs' l i) := by
       have hc' : ∀ k, (c k : C) = ∑ l, (d l : C) * (evAt w hV' (mat ψ hle he e' k l) : C) := fun k => by
         have := congrArg (intO C).subtype (hd k)
-        rw [map_sum] at this
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum] at this
         simp only [map_mul] at this
         exact this
       simp only [key, hc', Finset.sum_mul]

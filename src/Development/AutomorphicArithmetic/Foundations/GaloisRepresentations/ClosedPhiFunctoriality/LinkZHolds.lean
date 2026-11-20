@@ -24,7 +24,8 @@ theorem UpperTheory.Gal.ClosedPhiFromClosedTrace.linkZ_holds :
       (Pi.map (zC l) * Y₁.map (fI l) - Y.map (fI l) * R.map (fA bk)) i j := by
     intro i j
     have h := map_dvd (fI l) (h1 i j)
-    simp only [Matrix.sub_apply, Matrix.mul_apply, map_sub, map_sum, map_mul, Matrix.map_apply, hfz, hfe,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.sub_apply, Matrix.mul_apply, map_sub, map_sum, map_mul, Matrix.map_apply, hfz, hfe,
       map_pow, map_natCast] at h ⊢
     exact (pow_dvd_pow _ (le_max_right _ _)).trans h
   have h3 := hn k d d' F.A F'.A F'.A' Q Q' Q₁ Q₁' R F'.A_mul hS hS₁

@@ -101,7 +101,8 @@ theorem maj_rmul_any (X : Data E r) (y : Frame X.Ψ r) {b : Frame X.Ψ r} (hb : 
       Bᵀ *ᵥ (fun a => conj (hermC τ.1 X.Gm v (X.colP y τ a))) := by
     funext a
     rw [colP_rmul_eq X y hb, hermC_sum_right]
-    simp only [mulVec, dotProduct, hermC_smul_right, Matrix.transpose_apply, map_sum, map_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [mulVec, dotProduct, hermC_smul_right, Matrix.transpose_apply, map_sum, map_mul,
       Complex.conj_conj]
     rfl
   have hB1 : IsUnit (B.map (starRingEnd ℂ)).det := by
@@ -123,7 +124,8 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E]
 theorem emb_mulVec' {r : ℕ} (τ : E →+* ℂ) (M : Matrix (Fin r) (Fin r) E) (v : Fin r → E) :
     Data.emb τ (M *ᵥ v) = (M.map τ) *ᵥ Data.emb τ v := by
   funext a
-  simp [Data.emb, Matrix.mulVec, dotProduct, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Data.emb, Matrix.mulVec, dotProduct, map_sum]
 
 theorem maj_le_four {r : ℕ} (X : DataX E r) {x : Frame X.Ψ r} (hx : IsOrth X.toData x) {ρ : ℝ}
     (hρ : (r : ℝ) ^ 2 * ρ ≤ 1 / 100) {γ : GL (Fin r) E} (hγ : γ ∈ X.Γ) {z z' : V (nd X.toData)}

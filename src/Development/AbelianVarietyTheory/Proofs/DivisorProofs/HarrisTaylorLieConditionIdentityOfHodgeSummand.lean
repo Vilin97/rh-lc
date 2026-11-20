@@ -125,7 +125,8 @@ theorem lieAt_id_of_liftFil : ∀ (p : ℕ) [Fact p.Prime] (D : GlobalTheory.UPe
     rw [_root_.mul_one, add_sub_cancel] at k2
     exact (LE1 _).unique ((hu j).push _) k2
   have hprod : v' = (List.ofFn u).prod := by
-    rw [liftFil, Submodule.mem_comap, map_sub, map_sum] at hsum
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [liftFil, Submodule.mem_comap, map_sub, map_sum] at hsum
     have k2 := (isLieImage_sum _ _ _ hu).add (isLieImage_one_iff.2 hsum)
     rw [_root_.mul_one, add_sub_cancel] at k2
     exact (LE1 _).unique hH0 k2

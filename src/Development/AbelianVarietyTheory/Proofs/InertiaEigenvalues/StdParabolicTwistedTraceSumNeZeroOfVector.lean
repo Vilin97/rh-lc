@@ -34,7 +34,8 @@ theorem stdTrace_ne_zero : ∀ (p : ℕ) [Fact p.Prime] (r a : ℕ) (θ : (ZMod 
     simp [hc, map_mul, mul_inv, Units.val_mul, mul_comm]
   set E : Module.End ℂ ρ := ∑ x ∈ S, c x • ρ.ρ x with hE
   have htr : stdTrace a θ ρ.character = LinearMap.trace ℂ ρ E := by
-    rw [hE, map_sum, stdTrace, hS, Finset.sum_filter]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hE, map_sum, stdTrace, hS, Finset.sum_filter]
     refine Finset.sum_congr rfl fun x _ => ?_
     split_ifs <;> simp [FDRep.character, hc]
   have himg : ∀ x ∈ S, S.image (x * ·) = S := fun x hx => by

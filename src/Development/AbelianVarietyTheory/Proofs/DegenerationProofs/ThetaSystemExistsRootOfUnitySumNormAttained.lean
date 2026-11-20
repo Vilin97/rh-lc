@@ -42,7 +42,8 @@ theorem thetaSys_exists_norm_FF_eq :
       apply Subtype.ext
       simp [ThetaSys.FF, finsum_eq_sum_of_fintype]
     rw [this]
-    simp [hE, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [hE, map_sum]
   have hB : ‖E t‖ = B := le_antisymm (hle t i) hge
   have hB0 : 0 ≤ B := hB ▸ norm_nonneg _
   have h0 : ‖∑ s, E s‖ ≤ B :=

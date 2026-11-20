@@ -74,7 +74,8 @@ theorem dual_local_bases_pair : ∀ (D : D7) (p : ℕ) [Fact p.Prime] (ι : ℂ 
     have e := congrFun (congrFun k₂ a₂) a₁
     rw [Matrix.mul_apply, Matrix.one_apply] at e
     have e' := congrArg D.host.conj e
-    simp only [rowL, k₁, map_mul, map_sum, Matrix.transpose_apply, Matrix.map_apply] at e' ⊢
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [rowL, k₁, map_mul, map_sum, Matrix.transpose_apply, Matrix.map_apply] at e' ⊢
     have e'' : D.host.conj (if a₂ = a₁ then 1 else 0) = if a₁ = a₂ then 1 else 0 := by
       by_cases h : a₁ = a₂
       · simp [h]

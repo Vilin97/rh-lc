@@ -56,7 +56,8 @@ private theorem exists_mem_basicOpen_of_sum_mul_eq_one {X : Scheme.{u}} {V : X.O
     exact hcon i ((X.mem_basicOpen (d i) w hw).mpr hu)
   have h1 : (1 : ↥(X.presheaf.stalk w)) ∈ IsLocalRing.maximalIdeal ↥(X.presheaf.stalk w) := by
     have hone : (X.presheaf.germ V w hw).hom (1 : ↥Γ(X, V)) = 1 := map_one _
-    rw [← hone, ← hsum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hone, ← hsum, map_sum]
     refine Ideal.sum_mem _ fun i _ => ?_
     rw [map_mul]
     exact Ideal.mul_mem_left _ _ (hmem i)

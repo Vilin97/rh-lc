@@ -65,14 +65,16 @@ theorem value_nonneg_all : LL → TwistBCSpanStatement → TWM.VRatioGtStatement
 theorem comb_of_fixed {K M J : Type} [CommSemiring K] [AddCommMonoid M] [Module K M] [Fintype J] (f : M ≃ₗ[K] M)
     {c : K} {σ : M} {b : J → K} {s : J → M} {r : J → J → K} (h : c • σ = ∑ j, b j • s j) (fix : f σ = σ)
     (hs : ∀ i, f (s i) = ∑ j, r j i • s j) : c • σ = ∑ i, b i • ∑ j, r j i • s j := by
-  rw [← fix, ← map_smul, h, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← fix, ← map_smul, h, map_sum]
   simp only [map_smul, hs]
 
 theorem comb_comb {F K M I J : Type} [CommSemiring F] [CommSemiring K] [AddCommMonoid M] [Module K M] [Fintype I]
     [Fintype J] (κ : F →+* K) {σ : M} {a : I → F} {t : I → M} {s : J → M} {r : I → J → F}
     (h : σ = ∑ i, κ (a i) • t i) (ht : ∀ i, t i = ∑ j, κ (r i j) • s j) : σ = ∑ j, κ (∑ i, a i * r i j) • s j := by
   rw [h]
-  simp only [ht, Finset.smul_sum, map_sum, Finset.sum_smul, map_mul, mul_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [ht, Finset.smul_sum, map_sum, Finset.sum_smul, map_mul, mul_smul]
   exact Finset.sum_comm
 
 variable {o Ω : Type} [CommRing o] [Field Ω] [Algebra o Ω] {S : ThetaSys o Ω}

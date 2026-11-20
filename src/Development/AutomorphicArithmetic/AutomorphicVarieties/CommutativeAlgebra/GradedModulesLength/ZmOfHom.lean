@@ -25,7 +25,8 @@ private theorem zm_of_hom (h0 : ∀ (n : ℕ) j a, a ∈ 𝒜 j → j ≠ -(2 * 
   classical
   show ∀ h n, ι n (h * g) ∈ p
   intro h n
-  rw [← DirectSum.sum_support_decompose 𝒜 h, Finset.sum_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← DirectSum.sum_support_decompose 𝒜 h, Finset.sum_mul, map_sum]
   refine Ideal.sum_mem _ fun i _ => ?_
   by_cases hi : i = -(2 * (n : ℤ)) - j
   · subst hi

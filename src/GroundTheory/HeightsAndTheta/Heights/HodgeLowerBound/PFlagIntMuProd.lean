@@ -22,7 +22,8 @@ def rhoBlockOne : Fin N →₀ ℕ :=
 omit [DecidableEq Ψ] in
 theorem muPoly_eq_sum : muPoly Ψ N j = ∑ τ, rename (sliceEmb τ) (muOne N j) := by
   unfold muPoly muOne
-  simp only [map_sum, rename_X]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, rename_X]
   rw [Finset.sum_filter, Fintype.sum_prod_type]
   refine Finset.sum_congr rfl fun τ _ => ?_
   rw [Finset.sum_filter]
@@ -39,7 +40,8 @@ theorem monomial_rhoBlock :
 theorem flagInt_sum {ι : Type} (s : Finset ι) (P : ι → RootPoly Ψ N) :
     flagInt Ψ N (∑ i ∈ s, P i) = ∑ i ∈ s, flagInt Ψ N (P i) := by
   unfold flagInt antisym
-  simp only [map_sum, Finset.smul_sum, coeff_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Finset.smul_sum, coeff_sum]
   exact Finset.sum_comm
 
 theorem flagInt_smul (c : ℚ) (P : RootPoly Ψ N) : flagInt Ψ N (c • P) = c * flagInt Ψ N P := by

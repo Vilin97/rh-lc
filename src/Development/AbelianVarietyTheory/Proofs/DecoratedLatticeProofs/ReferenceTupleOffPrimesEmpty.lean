@@ -125,7 +125,8 @@ theorem K_mem_Fi (I : TC B X) (h : I.Ok) (hP : TC.Pins B X) (ht : I.IsTw) (l : I
   have hK : (I.chain l u I.mu0).K i φ c' = ∑ c, (I.chain l u I.mu0).wt i c • (I.chain l u I.mu0).Kmap i c c' (φ c) := rfl
   rw [hK]
   refine ⟨Submodule.sum_mem _ fun c _ => Submodule.smul_mem _ _ (kmap_val I l u I.mu0 i hi c c' _ (hφ c).1), fun g => ?_⟩
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun c _ => ?_
   rw [map_smul, GlobalTheory.T.stabilizer_form_value_step I h hP ht l Z u i hi c c' g _ (hφ c).1]
 

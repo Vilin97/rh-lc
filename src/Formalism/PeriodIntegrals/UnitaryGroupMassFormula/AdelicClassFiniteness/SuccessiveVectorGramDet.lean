@@ -92,14 +92,16 @@ theorem successive_vector_gram_det : SvGramDet := by
       Algebra.trace ℚ E (hform (starRingEnd E) J x (∑ k, q k • e k)) =
         ∑ k, q k * Algebra.trace ℚ E (hform (starRingEnd E) J x (e k)) := by
     intro x q
-    rw [← hRt, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hRt, map_sum]
     simp only [map_smul, smul_eq_mul]
     simp only [hRt]
   have Bl : ∀ (y : Fin m → E) (q : Fin (m * Module.finrank ℚ E) → ℚ),
       Algebra.trace ℚ E (hform (starRingEnd E) J (∑ k, q k • e k) y) =
         ∑ k, q k * Algebra.trace ℚ E (hform (starRingEnd E) J (e k) y) := by
     intro y q
-    rw [← hLt, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hLt, map_sum]
     simp only [map_smul, smul_eq_mul]
     simp only [hLt]
   have hGe : ∀ i j, gramTr J e i j = Algebra.trace ℚ E (hform (starRingEnd E) J (e i) (e j)) :=

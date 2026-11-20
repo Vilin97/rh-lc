@@ -147,7 +147,8 @@ theorem pderiv_subst (g : κ → κ → R) (j : κ) (Q : MvPolynomial κ R) :
   | add p q hp hq => simp only [map_add, hp, hq, mul_add, Finset.sum_add_distrib]
   | mul_X p k hp =>
     have h1 : pderiv j (subst g (X k)) = C (g k j) := by
-      rw [subst_X, map_sum, Finset.sum_eq_single j]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [subst_X, map_sum, Finset.sum_eq_single j]
       · simp
       · intro b _ hb
         simp [pderiv_X_of_ne hb]

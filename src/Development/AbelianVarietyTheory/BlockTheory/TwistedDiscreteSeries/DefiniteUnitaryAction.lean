@@ -39,17 +39,20 @@ theorem pairAt_smul_right (a : K) (x y : S.V) : pairAt S σ x (a • y) = σ a *
 theorem pairAt_eq (h : ∀ a, σ (star a) = starRingEnd ℂ (σ a)) (x y : S.V) : pairAt S σ x y = σ (S.pair x y) := by
   have e : S.pair x y = ∑ i, ∑ j, star (S.bV.repr x i) * S.gramV i j * S.bV.repr y j := by
     conv_lhs => rw [← S.bV.sum_repr x, ← S.bV.sum_repr y]
-    simp only [map_sum, LinearMap.sum_apply, map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, RingHom.id_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.sum_apply, map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, RingHom.id_apply,
       starRingEnd_apply, CSD.gramV, Matrix.of_apply, Finset.mul_sum]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
     ring
   rw [e]
-  simp only [pairAt, map_sum, map_mul, h]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [pairAt, map_sum, map_mul, h]
 
 theorem classSumAt_eq (h : ∀ a, σ (star a) = starRingEnd ℂ (σ a)) (f f' : S.Forms) :
     classSumAt S σ f f' = σ (S.csum f f') := by
-  simp only [classSumAt, CSD.csum, map_sum, map_mul, map_inv₀, map_natCast, pairAt_eq S σ h]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [classSumAt, CSD.csum, map_sum, map_mul, map_inv₀, map_natCast, pairAt_eq S σ h]
 
 theorem isUnitaryAt_iff (h : ∀ a, σ (star a) = starRingEnd ℂ (σ a)) {G : Type} [Group G] (r : Representation K G S.Forms) :
     IsUnitaryAt S σ r ↔ ∀ (g : G) (f f' : S.Forms),

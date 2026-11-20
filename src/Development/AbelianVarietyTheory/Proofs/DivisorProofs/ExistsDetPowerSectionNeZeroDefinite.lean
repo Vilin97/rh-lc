@@ -132,7 +132,8 @@ theorem hermC_mulVec (τ : E →+* ℂ) (G : Matrix (Fin r) (Fin r) E) (P : Matr
       _ = ∑ k, ∑ l, ∑ a, ∑ b, f a b k l := Finset.sum_congr rfl fun k _ => Finset.sum_comm
   simp only [hermC, gram, col, Matrix.of_apply, Matrix.mulVec, dotProduct]
   calc _ = ∑ a, ∑ b, ∑ k, ∑ l, P a k * v k * τ (G a b) * conj (P b l * w l) := by
-        simp only [map_sum, Finset.sum_mul, Finset.mul_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, Finset.sum_mul, Finset.mul_sum]
         exact Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => Finset.sum_comm
     _ = ∑ k, ∑ l, ∑ a, ∑ b, P a k * v k * τ (G a b) * conj (P b l * w l) := sw _
     _ = _ := by
@@ -153,7 +154,8 @@ theorem not_iso (X : Data E r) (hp : X.p0 = 0 ∨ X.p0 = r) (ξ : Fin r → E) :
   set u : Fin r → ℂ := fun a => τ (ξ a) with hu_def
   have hu : hermC τ X.Gm u u = 0 := by
     have := congrArg τ h0
-    simp only [herm, cc, map_sum, map_mul, map_zero, IsCMField.complexEmbedding_complexConj] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [herm, cc, map_sum, map_mul, map_zero, IsCMField.complexEmbedding_complexConj] at this
     simpa [hermC, u] using this
   obtain ⟨e, he, hsg⟩ : ∃ e : ℂ, e ≠ 0 ∧ ∀ a : Fin r, ((sgn X.p0 (a : ℕ) : ℝ) : ℂ) = e := by
     rcases hp with h | h

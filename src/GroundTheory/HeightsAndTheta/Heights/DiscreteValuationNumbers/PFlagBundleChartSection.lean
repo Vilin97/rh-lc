@@ -98,7 +98,8 @@ theorem FlagBundleChartSection.proof : FlagBundleChartSection.Statement := by
       have hφv : algebraMap Ω Φ (φ p vi) =
           ∑ j, algebraMap Ω Φ (w.repr vi j) * algebraMap Ω Φ (φ p (w j)) := by
         conv_lhs => rw [← w.sum_repr vi]
-        simp only [map_sum, map_smul, smul_eq_mul, map_mul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, map_smul, smul_eq_mul, map_mul]
       rw [hevY p, hφv]
       simp only [projCoord]
       rw [Finset.mul_sum, Finset.mul_sum, ← Finset.sum_sub_distrib]

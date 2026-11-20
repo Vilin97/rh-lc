@@ -533,10 +533,12 @@ theorem alg_eGood {W : Type} [AddCommGroup W] [Module ℂ W] (E : ∀ i, P i →
     exact tens_one
   have hlab : Φ (tens (fun i => E i (lab i))) F = F := by
     have h1 : Φ (∑ p : ∀ i, P i, tens (fun i => E i (p i))) F = F := by rw [hone, map_one]; rfl
-    rw [map_sum, LinearMap.sum_apply, Finset.sum_eq_single lab (fun p _ hp => hne p hp)
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, LinearMap.sum_apply, Finset.sum_eq_single lab (fun p _ hp => hne p hp)
       (fun hh => absurd (Finset.mem_univ _) hh)] at h1
     exact h1
-  rw [eGood, map_sum, LinearMap.sum_apply, Finset.sum_eq_single lab]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [eGood, map_sum, LinearMap.sum_apply, Finset.sum_eq_single lab]
   · rw [if_pos hg]; exact hlab
   · intro p _ hp
     split_ifs

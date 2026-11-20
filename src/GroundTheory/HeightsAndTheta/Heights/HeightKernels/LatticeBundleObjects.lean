@@ -119,7 +119,8 @@ def matrixCore {V : Type*} [AddCommGroup V] [Module ℂ V] {ι : Type*} [Fintype
   inner x y := star (Ψ x) ⬝ᵥ (H *ᵥ Ψ y)
   conj_inner_symm x y := by
     have hh := hH.1
-    simp only [dotProduct, mulVec, Pi.star_apply, map_sum, map_mul, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [dotProduct, mulVec, Pi.star_apply, map_sum, map_mul, Finset.mul_sum]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
     have hij : starRingEnd ℂ (H j i) = H i j := by
@@ -146,7 +147,8 @@ def matrixMetric {N : ℕ} (M : Submodule (𝓞 K) (Fin N → K)) [Module.Finite
   form σ := matrixCore (latticeCoord σ M) (latticeCoord_injective σ M) (H σ) (hH σ)
   form_conj σ x y := by
     rw [matrixCore_inner, matrixCore_inner, latticeCoord_conjMap, latticeCoord_conjMap, hconj]
-    simp only [dotProduct, mulVec, Pi.star_apply, map_sum, map_mul, Matrix.map_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [dotProduct, mulVec, Pi.star_apply, map_sum, map_mul, Matrix.map_apply,
       RCLike.star_def, Complex.conj_conj]
 
 theorem matrixMetric_inner {N : ℕ} (M : Submodule (𝓞 K) (Fin N → K)) [Module.Finite (𝓞 K) M]
@@ -269,7 +271,8 @@ theorem gramAt_diagMetric_conj {n : ℕ} {d : (K →+* ℂ) → Fin n → ℝ}
     gramAt (diagMetric d (conjugate σ)) (conjugate σ) u =
       (gramAt (diagMetric d σ) σ u).map (starRingEnd ℂ) := by
   ext i j
-  simp [gramAt, embVec, diagMetric, dotProduct, mulVec_diagonal, conjugate_coe_eq, hc, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [gramAt, embVec, diagMetric, dotProduct, mulVec_diagonal, conjugate_coe_eq, hc, map_sum]
 
 omit [NumberField K] in
 theorem schurMetric_posDef {n m k : ℕ} {d : (K →+* ℂ) → Fin n → ℝ} (hd : ∀ σ x, 0 < d σ x)

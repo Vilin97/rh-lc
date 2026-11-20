@@ -30,10 +30,12 @@ theorem tyS_sum {l : ℕ} (hl : 2 ≤ l) {ι : Type} (S : Finset ι) (a : ι →
     tyS l (fun s => ∑ i ∈ S, a i s) = ∑ i ∈ S, tyS l (a i) := by
   apply tyS_eq hl
   · intro s
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun i _ => coeff_tyS_pow hl _ _
   · intro m hm
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_eq_zero fun i _ => coeff_tyS_of_ne _ m hm
 
 theorem tyS_rescale {l : ℕ} (hl : 2 ≤ l) (c : C) (a : ℕ → C) :
@@ -183,7 +185,8 @@ theorem exists_start (hR : RLaw X V) (hP : HasProj X V) (g : Fin 2) (w : I g →
   refine ⟨b, fun s q => -PowerSeries.coeff (V.l ^ s) (alongCv γ (X.sg (X.u (1 - g) q))), ?_, hb0 0 rfl, ?_⟩
   · convert h2 using 1
     refine Prod.ext (funext fun i => ?_) (funext fun q => ?_)
-    · simp only [emb, typ, map_sum, PowerSeries.coeff_smul, smul_eq_mul, hb1]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp only [emb, typ, map_sum, PowerSeries.coeff_smul, smul_eq_mul, hb1]
     · simp only [emb, typ, one_smul, zero_sub, map_neg]
   · intro q
     simp only [pow_zero]

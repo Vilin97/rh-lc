@@ -50,11 +50,13 @@ theorem filMono_of_kerRes : KerRes → FilMono := by
         (∑ p ∈ Finset.univ.filter (fun p : MonoDeg (Fin G.D) a × Fin G.D => MonoDeg.mulVar p.2 p.1 = γ), m' p.1 p.2) =
         ∑ p ∈ Finset.univ.filter (fun p : MonoDeg (Fin G.D) a × Fin G.D => MonoDeg.mulVar p.2 p.1 = γ),
           mulPow G s h' p.1 (G.mulW j (s p.2) (m' p.1 p.2)) := fun γ => by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun p hp => ?_
       rw [← (Finset.mem_filter.1 hp).2, mulPow_mulVar G s h h']
     rw [Finset.sum_congr rfl fun γ _ => key γ, Finset.sum_fiberwise, Fintype.sum_prod_type, e]
     refine Finset.sum_congr rfl fun α _ => ?_
-    rw [e' α, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e' α, map_sum]
 
 end GlobalTheory.HSCore

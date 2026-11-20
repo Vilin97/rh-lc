@@ -42,7 +42,8 @@ theorem evFin_form {W : Type} [AddCommGroup W] [Module (AF F) W] {B : W → W �
     evFin F v (B z γ) = (GlobalTheory.LatVac.locCo co v z).1 ⬝ᵥ (GlobalTheory.LatVac.locCo co v γ).2 -
       (GlobalTheory.LatVac.locCo co v γ).1 ⬝ᵥ (GlobalTheory.LatVac.locCo co v z).2 := by
   rw [co.form]
-  simp only [dotProduct, map_sub, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dotProduct, map_sub, map_sum, map_mul]
   rfl
 
 theorem psi_form {W : Type} [AddCommGroup W] [Module (AF F) W] {B : W → W → AF F} {κ : Type} [Fintype κ]

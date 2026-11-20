@@ -67,7 +67,8 @@ theorem DegZeroLocNoetherian.proof (h : DegZeroLocQuot.Statement.{u}) :
     intro b f hf
     conv_lhs => rw [f.as_sum]
     conv_rhs => rw [f.as_sum]
-    rw [map_sum, map_sum, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum, Finset.sum_mul]
     refine Finset.sum_congr rfl fun m hm => ?_
     have hw : Finsupp.weight (blockWeight ι) m = b := hf (mem_support_iff.mp hm)
     have hmon : monomial m (AddMonoidAlgebra.coeff f m) = AddMonoidAlgebra.coeff f m • monomial m (1 : F) := by

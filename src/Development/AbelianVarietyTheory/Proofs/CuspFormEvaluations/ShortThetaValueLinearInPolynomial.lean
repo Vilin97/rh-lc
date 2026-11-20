@@ -74,7 +74,8 @@ theorem formula_linear {ι F S Qt J : Type} [Field F] [CommRing S] [Algebra F S]
   have hlin : ∀ (q : Qt) (j : J), B.constr F (G q j) (∑ i, cf i • Q i) =
       ∑ i, algebraMap F S (cf i) * B.constr F (G q j) (Q i) := by
     intro q j
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, Algebra.smul_def]
   rw [hpre _ hQs]
@@ -124,7 +125,8 @@ theorem shortThetaValue_linear : ChartIndepSt2 → ∀ (E : Type) [Field E] [Num
   change φ v = φ (∑ i, algebraMap c.F S (cf i) * u i)
   rw [hφv]
   refine hlin.trans ?_
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_mul φ, AlgHom.commutes, hnat i]
 

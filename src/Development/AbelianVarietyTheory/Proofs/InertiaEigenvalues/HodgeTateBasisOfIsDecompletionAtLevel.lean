@@ -32,7 +32,8 @@ theorem htBasis_of_isDec : ∀ (l : ℕ) [Fact l.Prime] (act : GQ l →* (PadicC
         fun a => act σ (e k a) := by
       funext a
       conv_rhs => rw [← hDe (e k)]
-      simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum, map_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum, map_mul]
     have h1 := hfix σ hσ k
     unfold twAct at h1 ⊢
     rw [Matrix.mulVec_smul, Matrix.mulVec_mulVec, hrel σ hσ, ← Matrix.mulVec_mulVec, hmap, h1, hDe]

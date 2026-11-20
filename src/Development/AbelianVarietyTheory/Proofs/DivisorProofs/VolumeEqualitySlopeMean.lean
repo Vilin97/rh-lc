@@ -71,7 +71,8 @@ theorem lattice_change_at : ∀ (D : D7) (Y : ShimX D.what₂.Tau), DeRhamMinusH
   have lhs : Y.arDeg (Sx.erase p) R (comb _ Q) - Y.arDeg (insert p Sx) R (comb _ Q) =
       ∑ τ, ∑ k ∈ Finset.Icc 1 Y.N, (Y.arDeg (Sx.erase p) R (pSum τ k * Q τ k) -
         Y.arDeg (insert p Sx) R (pSum τ k * Q τ k)) := by
-    simp only [comb, map_sum, Finset.sum_sub_distrib]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [comb, map_sum, Finset.sum_sub_distrib]
   rw [lhs]
   unfold shAll restTerm
   simp only [Finset.mul_sum (s := Finset.univ)]

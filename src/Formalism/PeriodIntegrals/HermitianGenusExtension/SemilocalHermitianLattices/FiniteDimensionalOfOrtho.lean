@@ -52,12 +52,14 @@ namespace StandardSymmetricSums
 theorem form_sum {h : V →ₗ⋆[K] V →ₗ[K] K} {n : ℕ} {e : Fin n → V}
     (he : ∀ i j, h (e i) (e j) = if i = j then 1 else 0) (c d : Fin n → K) :
     h (∑ i, c i • e i) (∑ j, d j • e j) = ∑ i, star (c i) * d i := by
-  simp [map_sum, LinearMap.sum_apply, he, mul_comm, starRingEnd_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, LinearMap.sum_apply, he, mul_comm, starRingEnd_apply]
 
 theorem form_left {h : V →ₗ⋆[K] V →ₗ[K] K} {n : ℕ} {e : Fin n → V}
     (he : ∀ i j, h (e i) (e j) = if i = j then 1 else 0) (i : Fin n) (d : Fin n → K) :
     h (e i) (∑ j, d j • e j) = d i := by
-  simp [map_sum, he]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, he]
 
 theorem star_int (r : 𝓞 K) : ∃ t : 𝓞 K, algebraMap (𝓞 K) K t = star (algebraMap (𝓞 K) K r) :=
   ⟨RingOfIntegers.mapRingHom (starRingEnd K) r, rfl⟩
@@ -96,7 +98,8 @@ theorem isTotPosDef_of_ortho (hK : Formalism.HermitianLatticesTheory.IsCMUnram K
   obtain ⟨e, hli, hsp, -, he⟩ := hL
   intro x hx φ
   obtain ⟨c, rfl⟩ := exists_coord hsp x
-  rw [form_sum he, map_sum, Complex.re_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [form_sum he, map_sum, Complex.re_sum]
   have hc : ∃ i, c i ≠ 0 := by
     by_contra hcon
     push Not at hcon

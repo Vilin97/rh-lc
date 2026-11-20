@@ -17,10 +17,12 @@ theorem cartierMap_eq_extD_imp_eq_zero :
   obtain ⟨c, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun K).1 hmem
   obtain ⟨-, Q, π, -, hQ, -, hπ, hQd, -⟩ := GlobalTheory.T.cartier_projection_properties K p n x hx
   have hγs : γ (∑ I, c I • logWedge x I) = ∑ I, (c I ^ p) • logWedge x I := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun I _ => GlobalTheory.T.logFrobeniusLift_smul_logCoordinateWedge K p n x γ hγ (c I) I
   have hfix : Q (γ (∑ I, c I • logWedge x I)) = γ (∑ I, c I • logWedge x I) := by
-    rw [hγs, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hγs, map_sum]
     refine Finset.sum_congr rfl fun I _ => ?_
     rw [hQ, hπ]
   have h0 : ∑ I, (c I ^ p) • logWedge x I = 0 := by

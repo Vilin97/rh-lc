@@ -75,7 +75,8 @@ theorem wv_mulVec (c : R →+* R) (Jm : Matrix (Fin M) (Fin M) R) (g : GL (Fin M
   have h3 : (fun i => c (((g : Matrix (Fin M) (Fin M) R) *ᵥ a) i)) =
       (fun i => c (a i)) ᵥ* Formalism.UG.cT c (g : Matrix (Fin M) (Fin M) R) := by
     ext i
-    simp [mulVec, vecMul, dotProduct, Formalism.UG.cT, map_sum, mul_comm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [mulVec, vecMul, dotProduct, Formalism.UG.cT, map_sum, mul_comm]
   rw [h2, h2, h3, vecMul_vecMul, h1, vecMul_vecMul]
 
 theorem conj_qr (c : R →+* R) (Jm : Matrix (Fin M) (Fin M) R) (g : GL (Fin M) R)
@@ -95,7 +96,8 @@ theorem hform_mulVec (c : R →+* R) (Jm : Matrix (Fin M) (Fin M) R) (g : GL (Fi
 theorem hform_self_fixed (c : R →+* R) (hc : ∀ x, c (c x) = x) (Jm : Matrix (Fin M) (Fin M) R)
     (hJ : ∀ i j, c (Jm j i) = Jm i j) (a : Fin M → R) :
     c (Formalism.UG.hform c Jm a a) = Formalism.UG.hform c Jm a a := by
-  simp only [Formalism.UG.hform, map_sum, map_mul, hc, hJ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Formalism.UG.hform, map_sum, map_mul, hc, hJ]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 
@@ -108,7 +110,8 @@ theorem qr_unitary (c : R →+* R) (hc : ∀ x, c (c x) = x) (Jm : Matrix (Fin M
   have hcT : Formalism.UG.cT c (qr c Jm a k) = 1 + c k • vecMulVec u (fun i => c (a i)) := by
     ext i j
     have hcw : c (w i) = u i := by
-      simp only [hw, hu, wv, map_sum, map_mul, hc, hJ, mulVec, dotProduct]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hw, hu, wv, map_sum, map_mul, hc, hJ, mulVec, dotProduct]
       exact Finset.sum_congr rfl fun l _ => mul_comm _ _
     by_cases hij : i = j
     · subst hij

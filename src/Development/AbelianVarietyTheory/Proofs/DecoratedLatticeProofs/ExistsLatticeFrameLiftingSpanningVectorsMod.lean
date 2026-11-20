@@ -77,7 +77,8 @@ theorem exists_lift {A : Type} [CommRing A] (S : Subring A) (g : ℕ) {e t : S} 
       Finset.sum_apply] at h1
     have h2 : (((M *ᵥ c) i : S) : A) = ∑ j, c j • ((β₀⁻¹).val *ᵥ b j) i := by
       change S.subtype (∑ j, M i j * c j) = _
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       exact Finset.sum_congr rfl fun j _ => mul_comm _ _
     rw [h2, AddSubgroupClass.coe_sub, MulMemClass.coe_mul, SubringClass.coe_natCast, ← h1, add_sub_cancel_right]
   choose c r hcr using hcol

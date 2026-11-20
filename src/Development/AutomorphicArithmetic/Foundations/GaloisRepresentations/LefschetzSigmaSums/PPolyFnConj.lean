@@ -33,7 +33,8 @@ private theorem polyFn_conj (σ : ℂ ≃+* ℂ) {H J : Type} [Group H] (K : Sub
   funext g
   unfold polyFn wmap
   rw [Finsupp.sum_mapRange_index (by intro w; simp)]
-  simp [Finsupp.sum, Finset.sum_apply, map_sum, wordFn_conj]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Finsupp.sum, Finset.sum_apply, map_sum, wordFn_conj]
 
 private theorem wmap_wmul {J : Type} (f : ℂ →+* ℂ) (a s : List J →₀ ℂ) :
     wmap f (wmul a s) = wmul (wmap f a) (wmap f s) := by

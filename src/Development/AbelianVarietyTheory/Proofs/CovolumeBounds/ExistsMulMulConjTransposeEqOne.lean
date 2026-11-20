@@ -267,7 +267,8 @@ theorem IsOrthonormal.linearIndependent {ι : Type*} [DecidableEq ι] {s : ι �
   rw [linearIndependent_iff']
   intro t g hg i hi
   have := congrArg (fun v => h v (s i)) hg
-  simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, hs _ i, smul_eq_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, hs _ i, smul_eq_mul,
     mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', hi, if_true, map_zero,
     LinearMap.zero_apply] at this
   exact this
@@ -275,7 +276,8 @@ theorem IsOrthonormal.linearIndependent {ι : Type*} [DecidableEq ι] {s : ι �
 theorem IsOrthonormal.apply_eq_sum {ι : Type*} [Fintype ι] [DecidableEq ι] {b : Basis ι K V}
     (hb : IsOrthonormal h b) (x y : V) : h x y = ∑ i, b.repr x i * star (b.repr y i) := by
   conv_lhs => rw [← b.sum_repr x, ← b.sum_repr y]
-  simp only [map_sum, map_smul, LinearMap.map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, LinearMap.map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply,
     hb _ _, smul_eq_mul, mul_ite, mul_one, mul_zero, starRingEnd_apply]
   refine Finset.sum_congr rfl fun i _ => ?_
   simp [mul_comm]

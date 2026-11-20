@@ -63,7 +63,8 @@ theorem map_Ufl {xj : (Fin n' → F) →ₗ[F] (Fin n → F)} {x : (Fin (n' + c'
       rw [hsingle, ← sub_add_cancel (x (Loc.eN F (n' + c') (n' + (l.1 - n'))))
         (Loc.eN F (n + c) (n + (l.1 - n')))]
       exact Submodule.add_mem _ (Ufl_mono (by omega) (h3 (l.1 - n'))) (eN_mem_Ufl (by omega))
-  rw [← Finset.univ_sum_single v, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Finset.univ_sum_single v, map_sum]
   refine Submodule.sum_mem _ fun l _ => ?_
   by_cases hl : l.1 < n' + s
   · have hsm : (Pi.single l (v l) : Fin (n' + c') → F) = v l • Pi.single l 1 := by

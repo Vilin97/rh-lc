@@ -142,7 +142,8 @@ theorem idemSum_conj_orth (hes : ∀ PP ∈ P, Formalism.L2.NTheta.IsIdemAt (es 
   have hsum : ∑ x ∈ P ×ˢ P, es x.1 * cA D (es x.2) = 0 := by
     rw [Finset.sum_product]
     show ∑ x ∈ P, ∑ y ∈ P, es x * cA D (es y) = 0
-    rw [← Finset.sum_mul_sum, ← map_sum, ← he, hc]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Finset.sum_mul_sum, ← map_sum, ← he, hc]
   refine idem_sum_zero (K := D.host.F) (P ×ˢ P) (fun x => es x.1 * cA D (es x.2)) ?_ hsum (PP, PP')
     (Finset.mem_product.2 ⟨hPP, hPP'⟩)
   rintro ⟨a, b⟩ hab
@@ -213,7 +214,8 @@ theorem idemSum_eps (h : IsIdemSum e P) :
     simpa [Algebra.TensorProduct.algebraMap_apply] using hab
   choose! v ε hpl hε using fun PP (hPP : PP ∈ P) => (hes PP hPP).1.2.2
   have hsum : algebraMap (AF D.host.F) (AE D) (∑ PP ∈ P, ε PP) = e + cA D e := by
-    rw [map_sum, he, map_sum, ← Finset.sum_add_distrib]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, he, map_sum, ← Finset.sum_add_distrib]
     exact Finset.sum_congr rfl (fun PP hPP => (hε PP hPP).symm)
   refine ⟨∑ PP ∈ P, ε PP, ?_, hsum⟩
   apply hinj
@@ -794,7 +796,8 @@ theorem isIdemSum_conj {e : AE D} {P : Finset (Formalism.L2.DIV.Pl D.host.E)} (h
   · rw [Finset.sum_image (fun a _ b _ (hab : Formalism.L2.DIV.conjPl a = Formalism.L2.DIV.conjPl b) => by
       rw [← Formalism.L2.DIV.conjPl_conjPl a, hab, Formalism.L2.DIV.conjPl_conjPl])]
     simp only [Formalism.L2.DIV.conjPl_conjPl]
-    rw [he, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [he, map_sum]
   · rw [cA_cA, mul_comm]; exact hc
 
 theorem exists_anti :

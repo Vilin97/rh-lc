@@ -119,6 +119,7 @@ theorem dsigCW_intertwine {n : ℕ} (ε : Fin n → Bool)
 theorem actU_isometry : ∀ {n : ℕ} (ε : Fin n → Bool) {H H' : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H] [NormedAddCommGroup H'] [InnerProductSpace ℂ H'] [CompleteSpace H'] (ρ : Matrix (Fin n) (Fin n) ℂ → (H →L[ℂ] H)) (ρ' : Matrix (Fin n) (Fin n) ℂ → (H' →L[ℂ] H')) (T : H' →ₗᵢ[ℂ] H), (∀ (g : UJ ε) (w : H'), T (ρ' (uMat g) w) = ρ (uMat g) (T w)) → ∀ (p : FreeAlgebra ℂ (Fin n × Fin n)) (w : H'), actU ε ρ p (T w) = T (actU ε ρ' p w) := by
   intro n ε H H' _ _ _ _ _ _ ρ ρ' T hT p w
   unfold actU
-  simp only [Finsupp.sum, map_sum, map_smul, dsigCW_intertwine ε ρ ρ' T hT]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finsupp.sum, map_sum, map_smul, dsigCW_intertwine ε ρ ρ' T hT]
 
 end GlobalTheory.ActUIso

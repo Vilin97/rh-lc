@@ -35,7 +35,8 @@ theorem sigR_inclR (σ : E →ₐ[F] E) (R : Type) [CommRing R] [Algebra F R] (e
 
 theorem hE_swap {σ : E →ₐ[F] E} (hcm : IsCMExt F E σ) {n : ℕ} {J : Matrix (Fin n) (Fin n) E}
     (hJ : IsHermND σ J) (x y : Fin n → E) : hE σ J x y = σ (hE σ J y x) := by
-  simp only [hE, Formalism.UG.hform, map_sum, map_mul, AlgHom.coe_toRingHom, sigma_sigma hcm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hE, Formalism.UG.hform, map_sum, map_mul, AlgHom.coe_toRingHom, sigma_sigma hcm]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   rw [hJ.1 j i]; ring
@@ -47,7 +48,8 @@ theorem sum_expand {A : Type} [CommRing A] (s : A →+* A) (hs : ∀ x, s (s x) 
       ∑ i, (B *ᵥ v) i * s ((B *ᵥ v) i) + c * s c * ∑ i, (B *ᵥ u) i * s ((B *ᵥ u) i) := by
   have hT' : ∑ i, (B *ᵥ v) i * s ((B *ᵥ u) i) = 0 := by
     have := congrArg s hT
-    simpa [map_sum, map_mul, hs, mul_comm] using this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [map_sum, map_mul, hs, mul_comm] using this
   have key : ∀ i, (B *ᵥ (v + c • u)) i * s ((B *ᵥ (v + c • u)) i) =
       (B *ᵥ v) i * s ((B *ᵥ v) i) + c * (s ((B *ᵥ v) i) * (B *ᵥ u) i) +
         s c * ((B *ᵥ v) i * s ((B *ᵥ u) i)) + c * s c * ((B *ᵥ u) i * s ((B *ᵥ u) i)) := by
@@ -59,7 +61,8 @@ theorem sum_expand {A : Type} [CommRing A] (s : A →+* A) (hs : ∀ x, s (s x) 
 
 theorem cross_eq {A : Type} [CommRing A] (s : A →+* A) {n : ℕ} (B : Matrix (Fin n) (Fin n) A) (v u : Fin n → A) :
     ∑ i, s ((B *ᵥ v) i) * (B *ᵥ u) i = ∑ j, s (v j) * ((Formalism.UG.cT s B * B) *ᵥ u) j := by
-  simp only [Matrix.mulVec, dotProduct, Matrix.mul_apply, Formalism.UG.cT, Matrix.transpose_apply, Matrix.map_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mulVec, dotProduct, Matrix.mul_apply, Formalism.UG.cT, Matrix.transpose_apply, Matrix.map_apply,
     map_sum, map_mul, Finset.sum_mul, Finset.mul_sum]
   conv_lhs => arg 2; ext x; rw [Finset.sum_comm]
   rw [Finset.sum_comm]
@@ -111,7 +114,8 @@ theorem archimedean_norm_add_smul_first_column : ∀ (F E : Type) [Field F] [Num
     have : ∑ j, sigR w.Completion σ (inclR (F := F) w.Completion (y j)) *
         ((JR w.Completion J *ᵥ fun j => inclR (F := F) w.Completion (Y j 0)) j * c0 0) =
         inclR (F := F) w.Completion (hE σ J y (GlobalTheory.EisMidHt.firstColumn Y)) * c0 0 := by
-      simp only [hE, Formalism.UG.hform, JR, Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum, map_mul,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hE, Formalism.UG.hform, JR, Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum, map_mul,
         Finset.sum_mul, Finset.mul_sum, sigR_inclR, GlobalTheory.EisMidHt.firstColumn, AlgHom.coe_toRingHom]
       refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
       ring
@@ -125,7 +129,8 @@ theorem archimedean_norm_add_smul_first_column : ∀ (F E : Type) [Field F] [Num
         Algebra.norm w.Completion (inclR (F := F) w.Completion c) *
           ∑ i, Algebra.norm w.Completion ((B *ᵥ fun i => inclR (F := F) w.Completion (X i 0)) i) := by
     apply (algebraMap w.Completion (w.Completion ⊗[F] E)).injective
-    simp only [map_add, map_mul, map_sum, GlobalTheory.Doubling.algebraMap_norm_eq hcm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_add, map_mul, map_sum, GlobalTheory.Doubling.algebraMap_norm_eq hcm]
     exact sum_expand _ hs B _ _ _ hT
   rw [hsum]
   set φ := InfinitePlace.Completion.ringEquivRealOfIsReal hr
@@ -134,7 +139,8 @@ theorem archimedean_norm_add_smul_first_column : ∀ (F E : Type) [Field F] [Num
     exact ((InfinitePlace.Completion.isometry_extensionEmbeddingOfIsReal hr).norm_map_of_map_zero
       (map_zero _) x).symm
   have hp : ∀ z : Fin n → w.Completion ⊗[F] E, 0 ≤ φ (∑ i, Algebra.norm w.Completion (z i)) := fun z => by
-    rw [map_sum]; exact Finset.sum_nonneg fun i _ => (GlobalTheory.PoleFactor.norm_completion_tensor_pos hcm w hr _).1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]; exact Finset.sum_nonneg fun i _ => (GlobalTheory.PoleFactor.norm_completion_tensor_pos hcm w hr _).1
   have hq := (GlobalTheory.PoleFactor.norm_completion_tensor_pos hcm w hr (inclR (F := F) w.Completion c)).1
   rw [hn, hn, hn, hn, map_add, map_mul, abs_of_nonneg (add_nonneg (hp _) (mul_nonneg hq (hp _))),
     abs_of_nonneg (hp _), abs_of_nonneg hq, abs_of_nonneg (hp _)]

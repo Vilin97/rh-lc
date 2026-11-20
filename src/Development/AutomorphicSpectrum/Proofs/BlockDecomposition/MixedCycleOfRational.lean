@@ -185,7 +185,8 @@ theorem cone_of_isMultiHomog {F : Pol n} {d : Fin (m + 1) → ℕ} (hF : IsMulti
   classical
   conv_lhs => rw [F.as_sum]
   conv_rhs => rw [F.as_sum]
-  rw [map_sum, map_sum, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun μ hμ => ?_
   have hX : ∏ p : Σ k, Bk n k, (MvPolynomial.X p.1 : MvPolynomial (Fin (m + 1)) D) ^ μ p =
       ∏ k, MvPolynomial.X k ^ d k := by
@@ -237,7 +238,8 @@ theorem cone_eq_zero_iff {P : Ideal (Pol n)} (hh : IsMultiHomogIdeal P)
     (geoMultiHomog_iff _ _).2 (weightedHomogeneousComponent_isWeightedHomogeneous _ _)
   have hcone : cone ε F = ∑ e ∈ S, C (ε (weightedHomogeneousComponent (coordDeg n) e F)) *
       ∏ k, MvPolynomial.X k ^ e k := by
-    conv_lhs => rw [hsum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [hsum, map_sum]
     exact Finset.sum_congr rfl fun e _ => cone_of_isMultiHomog ε (hcomp e)
   constructor
   · intro h0

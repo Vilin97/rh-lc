@@ -98,17 +98,20 @@ theorem GlobalTheory.KZ.H3.kum_family : ∀ (Ω : Type) [Field Ω] [Algebra ℚ 
       rw [GlobalTheory.T.integralConjugateSL2Int_laws.2.1, map_intCast]
     obtain ⟨M, hM, hQ⟩ := near_fin _ _ fun i => GlobalTheory.T.kummerCharacters_eqOn_principalCongruence Ω ε X l n (c i) _ _ (hK i) (hχ n i)
     refine ⟨M, hM, fun δ hδ => ?_⟩
-    simp only [map_sum, map_mul, MvPolynomial.algHom_C, (mon_expand (ZMod (l ^ n)) w).1, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, MvPolynomial.algHom_C, (mon_expand (ZMod (l ^ n)) w).1, Finset.mul_sum]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun i _ => ?_
-    rw [← hQ δ hδ i, map_sum, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hQ δ hδ i, map_sum, Finset.sum_mul]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_mul, MvPolynomial.algebraMap_eq]; ring
   · intro n
     obtain ⟨M, hM, hQ⟩ := near_fin _ _ fun i => GlobalTheory.T.kummerCharacters_eqOn_principalCongruence Ω ε X l n (c i) _ _
       (GlobalTheory.T.isKummerCharacterAtLevel_succ_reduce Ω ε X l n (c i) (χ (n + 1) i) (hχ (n + 1) i)) (hχ n i)
     refine ⟨M, hM, fun δ hδ => ?_⟩
-    simp only [map_sum, map_mul, MvPolynomial.map_C, map_mon]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, MvPolynomial.map_C, map_mon]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [← hQ δ hδ i]
   · intro n i

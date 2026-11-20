@@ -267,7 +267,8 @@ theorem om_vac_algComb : ∀ {D : D7} {ψ : AddChar (AF D.host.F) ℂ} {θ : Inf
     fun u v hu hv' => mem_algebraicClosure_iff.1 (GlobalTheory.BotFourier.psiH_mem hψ hS hT hu hv')
   have hF : om (x, h) (∑ i, c i • heisO ψ S T (u i) (om (x⁻¹, h⁻¹) (heisO ψ S T w v))) =
       ∑ i, c i • heisO ψ S T (actO S T x h (u i)) (heisO ψ S T w v) := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, hom.om_heis x h (u i) _ hφth, hback]
   refine ⟨a⁻¹, ∑ i, c i • heisO ψ S T (actO S T x h (u i)) (heisO ψ S T w v), ?_, ?_⟩

@@ -34,7 +34,8 @@ theorem extL_expand (lam : Fin n → ℤ) (i : Jd n lam) (F : Module.End ℂ (Mv
     rw [Submodule.coe_sum]
     simp only [Submodule.coe_smul]
   conv_rhs => rw [e]
-  rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum]
   refine Finset.sum_congr rfl fun l _ => ?_
   rw [map_smul, map_smul, smul_eq_mul, mul_comm, Cxc.extL_spec lam l ⟨g, hg⟩]
 
@@ -94,7 +95,8 @@ theorem atTrace' : AtTrace := by
   simp only [Matrix.diag_apply, At_pow, matB]
   have e : ∑ a, Cxc.extL lam i ((Et lam ^ k) a a ((wb lam j : Formalism.BasicNotions.nablaSq ℂ n (dw lam)) : MvPolynomial (Fin n × Fin n) ℂ)) =
       Cxc.extL lam i ((Et lam ^ k).trace ((wb lam j : Formalism.BasicNotions.nablaSq ℂ n (dw lam)) : MvPolynomial (Fin n × Fin n) ℂ)) := by
-    rw [Matrix.trace, LinearMap.sum_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Matrix.trace, LinearMap.sum_apply, map_sum]
     rfl
   rw [e, trace_on_model lam hlam k (wb lam j).2, map_smul, extL_wb, gelfC_eq, Matrix.smul_apply]
 

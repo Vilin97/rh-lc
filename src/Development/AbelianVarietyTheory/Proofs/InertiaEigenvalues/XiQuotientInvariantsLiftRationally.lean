@@ -50,7 +50,8 @@ theorem mem_range_iff (S : Submodule R M) (x : T ⊗[R] M) :
     exact Submodule.sum_mem _ fun k _ => ⟨b k ⊗ₜ[R] ⟨_, h k⟩, rfl⟩
 
 theorem co_sum [DecidableEq ι] (m : ι → M) (k : ι) : co b k (∑ j, b j ⊗ₜ[R] m j) = m k := by
-  simp [map_sum, co_tmul, Finsupp.single_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, co_tmul, Finsupp.single_apply]
 
 end Coord
 
@@ -78,7 +79,8 @@ theorem co_Phi {ι : Type} [Fintype ι] (bT : Basis ι R T) (bV : Basis ι F V)
     (x : T ⊗[R] M) (k : ι) : co bV k (Phi i hi β hβ x) = β (co bT k x) := by
   classical
   conv_lhs => rw [← sum_co bT x]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [Phi_tmul, hb]
   exact co_sum bV _ k
 
@@ -402,7 +404,8 @@ theorem exists_bases {R F T V : Type} [CommRing R] [IsDomain R] [IsPrincipalIdea
     rw [← hsp, Submodule.span_le]
     rintro _ ⟨t, rfl⟩
     change j t ∈ _
-    rw [← bT.sum_repr t, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← bT.sum_repr t, map_sum]
     refine Submodule.sum_mem _ fun k _ => ?_
     rw [map_smul]
     exact Submodule.smul_of_tower_mem _ _ (Submodule.subset_span ⟨k, rfl⟩)

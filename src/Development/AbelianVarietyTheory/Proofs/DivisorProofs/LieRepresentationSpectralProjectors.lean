@@ -88,7 +88,8 @@ theorem spectral (K : Type) [Field K] [NumberField K] (g : ℕ) (Φ : K →+* Ma
   · have hne : S.Nonempty := ⟨_, hmemS (IsAlgClosed.lift (R := ℚ) (M := ℂ) (S := K)).toRingHom⟩
     rw [← Finset.sum_image (f := P) (fun τ _ τ' _ h => hinjθ τ τ' h), himage]
     show ∑ r ∈ S, aeval T (Lagrange.basis S id r) = 1
-    rw [← map_sum, Lagrange.sum_basis hinjS hne, map_one]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, Lagrange.sum_basis hinjS hne, map_one]
   · obtain ⟨q, hq, hτq⟩ := hpoly x
     rw [hq, aeval_mul_of_mul_eq (heig _ (hmemS τ)), hτq]
   · obtain ⟨q, hq, hτq⟩ := hpoly x

@@ -70,7 +70,8 @@ theorem BoundedGenerators.proof (h : HermitianForm F E W) (v : Basis ι E W)
     set r := b.repr ⟨Φ x, hxL⟩
     have hx' : x = ∑ i, r i • e i := by
       apply hΦinj
-      rw [← hsum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hsum, map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_zsmul, heb i]
     rw [hx']

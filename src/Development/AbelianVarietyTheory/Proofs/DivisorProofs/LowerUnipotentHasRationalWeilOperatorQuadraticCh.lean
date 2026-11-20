@@ -125,7 +125,8 @@ theorem invOf_two_eq' (R : Type) [CommRing R] [Algebra F R] [Invertible (2 : R)]
 theorem evFin_quad (b : Matrix κ κ F) (v : Pl F) (x : κ → AF F) :
     evFin F v (quad (⅟2) (-(b.map (algebraMap F (AF F)))) x) =
       quad (⅟2) (-(b.map (algebraMap F (Fv F v)))) (fun i => evFin F v (x i)) := by
-  simp [quad, dotProduct, Matrix.mulVec, map_sum, GlobalTheory.VacAny.evFin_invOf_two]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [quad, dotProduct, Matrix.mulVec, map_sum, GlobalTheory.VacAny.evFin_invOf_two]
 
 theorem psi_quad_rat (ψ : AddChar (AF F) ℂ) (hψ : IsStd ψ) (b : Matrix κ κ F) (ξ : κ → F) :
     ψ (quad (⅟2) (-(b.map (algebraMap F (AF F)))) (fun i => algebraMap F (AF F) (ξ i))) = 1 := by

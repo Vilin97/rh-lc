@@ -128,7 +128,8 @@ theorem ιCD_aB_mem_one (a : Ainf l) : ιCD l (Per6.aB l a) ∈ Per6.FilD l 1 �
       apply (frobeniusEquiv (PreTilt ↥(normInteger ℂ_[l]) l) l).injective
       rw [RingEquiv.apply_symm_apply, frobeniusEquiv_apply, frobenius_def, ← map_pow,
         frobeniusEquiv_symm_pow_p, tiltMap_εO]
-    rw [map_sum, AInf.xi]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, AInf.xi]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_pow, frob_ainfMap_teich, e]
   have h1 : ιCD l (Per6.aB l a) ∈ Per6.FilD l 1 ↔

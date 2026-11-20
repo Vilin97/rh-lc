@@ -64,7 +64,8 @@ omit [IsNonarchimedeanLocalField F] [CharZero F] in
 theorem hf_sum_right {L : LocE F E} {r k : ℕ} (S : Frames L r k) {ι : Type} [Fintype ι] (x : S.V)
     (c : ι → E) (g : ι → S.V) :
     hf L S.Hm x (∑ l, c l • g l) = ∑ l, hf L S.Hm x (g l) * L.cj (c l) := by
-  rw [FrameBasic.hf_conj L S.herm.1 x, UnimodTerm.hf_sum_left S, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [FrameBasic.hf_conj L S.herm.1 x, UnimodTerm.hf_sum_left S, map_sum]
   refine Finset.sum_congr rfl fun l _ => ?_
   rw [map_mul, ← FrameBasic.hf_conj L S.herm.1 x (g l)]
 

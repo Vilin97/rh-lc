@@ -292,7 +292,8 @@ theorem orth_of_disjoint : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (S T : 
     exact map_sum Tm _ _
   have eq2 : Ω (Tm Φ₂) = ∑ q ∈ Q, Ω (Tm (P Φ₂ q)) := by
     conv_lhs => rw [hcover Φ₂ hsup₂]
-    rw [map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum]
   rw [eq1, eq2, thetaInner_sum_sum hψ hμ Q _ _ (fun q _ => hθ _ (hP₁ q)) (fun q _ => hΩt _ (hθ _ (hP₂ q)))]
   refine Finset.sum_eq_zero fun q hq => Finset.sum_eq_zero fun q' hq' => ?_
   by_cases hqq : q = q'

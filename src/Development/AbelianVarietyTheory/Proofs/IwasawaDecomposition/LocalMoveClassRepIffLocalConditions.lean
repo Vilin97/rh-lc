@@ -171,7 +171,8 @@ theorem exists_single {g : GL (Fin n) (AfE F E)} {N : Submodule (𝓞 E) (Sp E n
 theorem apply_eq_sum (f : Sp E n ≃ₗ[E] Sp E n) (v : Sp E n) (i : Fin n) :
     f v i = ∑ k, f (Pi.single k 1) i * v k := by
   conv_lhs => rw [← Finset.univ_sum_single v]
-  rw [map_sum, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_apply]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [show (Pi.single k (v k) : Sp E n) = v k • Pi.single k 1 by
     ext m
@@ -211,7 +212,8 @@ theorem adAt_mul_fr {g : GL (Fin n) (AfE F E)} {p : DecoF E n ST SG Q} (hg : IsP
     algebraMap E (P.1.adicCompletion E) (p.fr P ((((θ P)⁻¹ : ↥(GLint E n P.1)).1) (Pi.single j 1)) i) =
       ∑ k, adAt F P.1 ((g : Matrix (Fin n) (Fin n) (AfE F E)) i k) *
         algebraMap E _ ((((θ P)⁻¹ : ↥(GLint E n P.1)).1) (Pi.single j 1) k) := by
-  rw [apply_eq_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [apply_eq_sum, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [map_mul, hg.fr P i k]
 
@@ -299,7 +301,8 @@ theorem pt_of_conds {g s : GL (Fin n) (AfE F E)} {p : DecoF E n ST SG Q} {h : GL
     have k1 := hasRes_pullV (g := g) (m := s⁻¹) (A := (h w).1) (h4 w) (hg.be w x hx) r
     rw [inv_inv] at k1
     exact k1
-  · rw [Units.val_mul, Matrix.mul_apply, map_sum, fr_smul, adAt_mul_fr hg θ P i j]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [Units.val_mul, Matrix.mul_apply, map_sum, fr_smul, adAt_mul_fr hg θ P i j]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_mul, h5 P k j]
 

@@ -44,12 +44,14 @@ theorem classSetAssembly_tr_qsmul_right (h : V →ₗ⋆[K] V →ₗ[K] K) (q : 
 theorem classSetAssembly_tr_sum_left (h : V →ₗ⋆[K] V →ₗ[K] K) {ι : Type*} (s : Finset ι)
     (f : ι → V) (y : V) :
     Algebra.trace ℚ K (h (∑ i ∈ s, f i) y) = ∑ i ∈ s, Algebra.trace ℚ K (h (f i) y) := by
-  rw [map_sum, LinearMap.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, LinearMap.sum_apply, map_sum]
 
 theorem classSetAssembly_tr_sum_right (h : V →ₗ⋆[K] V →ₗ[K] K) {ι : Type*} (s : Finset ι)
     (f : ι → V) (y : V) :
     Algebra.trace ℚ K (h y (∑ i ∈ s, f i)) = ∑ i ∈ s, Algebra.trace ℚ K (h y (f i)) := by
-  rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum]
 
 theorem classSetAssembly_trace_int (o : NumberField.RingOfIntegers K) :
     ∃ z : ℤ, Algebra.trace ℚ K (algebraMap (NumberField.RingOfIntegers K) K o) = z := by
@@ -118,7 +120,8 @@ theorem classSetAssembly_qindep {n : ℕ} (ι : V →+ EuclideanSpace ℝ (Fin n
     (hg : ∑ i, (g i : K) • u i = 0) : g = 0 := by
   have hsum : ∑ i, ((g i : ℚ) : ℝ) • (ι ∘ u) i = 0 := by
     have e := congrArg ι hg
-    rw [map_sum, map_zero] at e
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero] at e
     rw [← e]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [Function.comp_apply, addHom_ratCast_smul_lemma_3 ι (g i) (u i)]
@@ -496,7 +499,8 @@ theorem classSetAssembly_exists_isom {n : ℕ} (h : V →ₗ⋆[K] V →ₗ[K] K
   show Algebra.trace ℚ K (h (φ x) (φ y)) = Algebra.trace ℚ K (h x y)
   obtain ⟨s, hs⟩ := classSetAssembly_span h hpos ι hι u hu y
   have hφy : φ y = ∑ j, (s j : K) • u' j := by
-    rw [hs, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hs, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_smul, hφu j]
   rw [hφy, hs, classSetAssembly_tr_sum_right, classSetAssembly_tr_sum_right]

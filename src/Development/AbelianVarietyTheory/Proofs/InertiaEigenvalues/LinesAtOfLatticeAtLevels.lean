@@ -224,7 +224,8 @@ theorem senOp_at [CharZero LL] (hinj : Function.Injective (algebraMap O LL)) {g 
       refine exists_of_mem_qN W T i 1 ?_
       rw [Nat.cast_one, ← Submodule.subtype_apply, ← Submodule.mem_comap]
       refine (Submodule.Quotient.mk_eq_zero ((qN W T i 1).submoduleOf (qN W T i 0))).1 ?_
-      rw [← Submodule.mkQ_apply, map_sub, map_sub, hpr, map_sum, map_sum, sub_eq_zero]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← Submodule.mkQ_apply, map_sub, map_sub, hpr, map_sum, map_sum, sub_eq_zero]
       simp only [map_smul, Submodule.mkQ_apply, ← hβ', LinearMap.toMatrix_apply]
       rw [β.sum_repr, hβ']
       rfl

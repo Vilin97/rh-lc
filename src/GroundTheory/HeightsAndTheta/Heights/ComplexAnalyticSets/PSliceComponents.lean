@@ -51,7 +51,8 @@ theorem isPrime_sup {W : Ideal (MvPolynomial (Fin n) F)} {t : Fin n → F} (hW :
     fun hg => by rw [← hφ]; exact ChartLocDomain.aeval_mul_of_isHomogeneous hg _ _
   have hle : W ⊔ Ideal.span {linForm t - 1} ≤ RingHom.ker ψ := by
     refine sup_le (fun g hg => ?_) ?_
-    · rw [RingHom.mem_ker, ← sum_homogeneousComponent g, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [RingHom.mem_ker, ← sum_homogeneousComponent g, map_sum]
       refine Finset.sum_eq_zero fun k _ => ?_
       rw [hhom (homogeneousComponent_isHomogeneous k g)]
       have : φ (homogeneousComponent k g) = 0 := by

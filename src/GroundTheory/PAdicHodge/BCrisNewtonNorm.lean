@@ -252,7 +252,8 @@ theorem norm_theta_le (x : AInf K p) :
     have hθ : ((θ x : 𝒪) : K) = ∑ i ∈ Finset.Iic n,
         ((PreTilt.untilt (tcoeff x i) : 𝒪) : K) * (p : K) ^ i + (p : K) ^ (n + 1) * ((θ d : 𝒪) : K) := by
       have e := congrArg (fun y => ((θ y : 𝒪) : K)) (eq_add_of_sub_eq hd)
-      simp only [map_add, map_sum, map_mul, map_pow, map_natCast, fontaineTheta_teichmuller] at e
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_add, map_sum, map_mul, map_pow, map_natCast, fontaineTheta_teichmuller] at e
       push_cast at e
       rw [e, add_comm]
     rw [hθ]

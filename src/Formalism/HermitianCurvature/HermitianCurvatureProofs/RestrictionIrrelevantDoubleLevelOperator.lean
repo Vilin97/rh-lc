@@ -2539,7 +2539,8 @@ theorem qmF_intertwine {W W' : Type*} [AddCommGroup W] [Module ℂ W] [AddCommGr
     (h : ∀ a b v, A (Eop' a b v) = Eop a b (A v)) (a b : Fin t → Fin n) (u : ℂ) (v : W') :
     A (qmF Eop' a b u v) = qmF Eop a b u (A v) := by
   unfold qmF
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun σ _ => ?_
   rw [_root_.map_smul]
   congr 1

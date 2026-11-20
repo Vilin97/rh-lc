@@ -156,7 +156,8 @@ theorem exists_tanMat : ∀ (R₀ : Type) [CommRing R₀] (B : BX R₀) (O : LAl
     | zero => rw [map_zero]; exact P0
     | add x y hx hy => rw [map_add]; exact Padd _ _ hx hy
     | tmul m i =>
-      rw [← gb.sum_repr m, TensorProduct.sum_tmul, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← gb.sum_repr m, TensorProduct.sum_tmul, map_sum]
       refine Finset.sum_induction _ P Padd P0 fun l _ => ?_
       rw [TensorProduct.smul_tmul]
       generalize (gb.repr m l) • i = j

@@ -74,7 +74,8 @@ theorem exists_separability_element (O : Type) [CommRing O] [Module.Free ℤ O] 
         exact hsq x hx)
   rw [Polynomial.aeval_algebraMap_apply] at h0
   refine ⟨N ^ p.natDegree, Polynomial.aeval (N : O ⊗[ℤ] O) p, pow_pos hN _, ?_, fun c => ?_⟩
-  · rw [Polynomial.aeval_eq_sum_range, Finset.sum_range_succ, map_add, hp.coeff_natDegree,
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [Polynomial.aeval_eq_sum_range, Finset.sum_range_succ, map_add, hp.coeff_natDegree,
       one_smul, map_sum, Finset.sum_eq_zero, zero_add, map_pow, map_natCast, Nat.cast_pow]
     intro k hk
     have : p.coeff k ∈ I :=

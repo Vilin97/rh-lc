@@ -10,7 +10,8 @@ private theorem multiset_map_pts {J P Q : Type} [Fintype J] {I : J → Type} [�
     (v : (j : J) → I j → P) (g : P → Q) :
     Multiset.map g (crystallineComparison.pts a v) = crystallineComparison.pts a (fun j i => g (v j i)) := by
   simp only [crystallineComparison.pts]
-  rw [show Multiset.map g = Multiset.mapAddMonoidHom g from rfl, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [show Multiset.map g = Multiset.mapAddMonoidHom g from rfl, map_sum]
   simp [Multiset.map_nsmul, Multiset.map_map]
 
 private theorem identity_of_comp_injective_semiconj_image (q n : ℕ) {P Q : Type} (F' : P → P) (F : Q → Q) (g : P → Q)

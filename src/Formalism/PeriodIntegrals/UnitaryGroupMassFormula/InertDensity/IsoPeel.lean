@@ -35,7 +35,8 @@ theorem iso_li_cons {n c : ℕ} (x : Fin n → L) (U : Fin c → Fin n → L) (a
   rw [Fin.sum_univ_succ] at hg
   simp only [Fin.cons_zero, Fin.cons_succ] at hg
   have h1 := congrArg φ hg
-  simp only [map_add, map_sum, map_smul, hφx, hφU, smul_eq_mul, mul_one, add_zero, mul_add, mul_zero,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_add, map_sum, map_smul, hφx, hφU, smul_eq_mul, mul_one, add_zero, mul_add, mul_zero,
     map_zero] at h1
   have h2 : ∑ i, g i.succ • U i = 0 := by
     have e : ∑ i, g i.succ • U i + (g 0 + ∑ i, g i.succ * a i) • x = 0 := by

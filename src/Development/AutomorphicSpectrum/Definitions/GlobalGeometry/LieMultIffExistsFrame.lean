@@ -220,7 +220,8 @@ theorem trace_basis_mul_sesq (D : Datum H) (x y : D.La) (j) :
     convert this
     unfold HT.dualInt
     congr!
-  simp only [sesq, Finset.mul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [sesq, Finset.mul_sum, map_sum]
   have : ∀ k, Algebra.trace ℚ E ((RingOfIntegers.basis E j : E) *
       ((D.EF (RingOfIntegers.basis E k • x) y : E) * HT.dualInt E k)) =
       (D.EF (RingOfIntegers.basis E k • x) y : ℚ) * if j = k then 1 else 0 := by

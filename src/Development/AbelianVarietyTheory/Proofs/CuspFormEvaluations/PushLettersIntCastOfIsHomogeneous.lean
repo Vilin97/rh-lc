@@ -42,7 +42,8 @@ theorem basisComponent_sum (b : Module.Basis ι R S) (J : Finset ι) (Q : ι →
     basisComponent b i (∑ j ∈ J, b j • MvPolynomial.map (algebraMap R S) (Q j)) = Q i := by
   classical
   ext m
-  simp only [coeff_basisComponent, coeff_sum, coeff_smul, coeff_map, smul_eq_mul, mul_comm (b _),
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [coeff_basisComponent, coeff_sum, coeff_smul, coeff_map, smul_eq_mul, mul_comm (b _),
     ← Algebra.smul_def, map_sum, map_smul, Module.Basis.repr_self, Finsupp.coe_finsetSum,
     Finset.sum_apply, Finsupp.smul_apply, Finsupp.single_apply]
   rw [Finset.sum_eq_single i] <;> simp +contextual [hi]
@@ -68,7 +69,8 @@ theorem basisComponent_mem_rowHighest (b : Module.Basis ι R S) (i : ι) {P : Po
   refine mem_rowHighest_iff_rowAdd.2 ⟨fun t a b' => ?_, fun t r m hm => h₂ t r fun e => hm ?_,
     fun t r r' hr s => ?_⟩
   · have := h₁ t a b'
-    rw [hJ, map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hJ, map_sum] at this
     simp only [map_smul, ← map_laplacian] at this
     rw [← basisComponent_sum b J (fun j => laplacian t a b' (basisComponent b j P)) hi, this]
     simp [basisComponent]
@@ -104,7 +106,8 @@ theorem aeval_C_mul_X_of_isHomogeneous {σ : Type*} (r : R) {P : MvPolynomial σ
     (hP : P.IsHomogeneous d) : aeval (fun v => (C r * X v : MvPolynomial σ R)) P = r ^ d • P := by
   conv_lhs => rw [P.as_sum]
   conv_rhs => rw [P.as_sum]
-  rw [map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.smul_sum]
   refine Finset.sum_congr rfl fun m hm => ?_
   have hd : ∑ v ∈ m.support, m v = d := by
     rw [← hP (mem_support_iff.1 hm), Finsupp.weight_apply]; simp [Finsupp.sum]
@@ -426,7 +429,8 @@ theorem mem_range_map_ringOfIntegers_iff {σ : Type*} {P : MvPolynomial σ K} :
   · intro h
     refine ⟨∑ m ∈ P.support, monomial m ⟨_, h m⟩, ?_⟩
     conv_rhs => rw [P.as_sum]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun m _ => map_monomial _ _ _
 
 theorem symO_pi_one : symO p q τ (Submodule.pi Set.univ fun _ : Fin n => (1 : Submodule (𝓞 E) E)) =

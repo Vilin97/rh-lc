@@ -73,13 +73,15 @@ theorem testSt_of_ptSt : PtSt → TestSt := by
       Matrix.of fun r l => ∑ i, ((β (h r i) : intO ℂ_[resP v]) : ℂ_[resP v]) * ψ (a l i) := by
     ext r l
     simp only [Matrix.map_apply, valMat, Matrix.of_apply]
-    rw [hMα, hval, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hMα, hval, map_sum]
     simp only [map_mul, hβα]
   have hm' : (valMat V M' (T (V.π (below z))) z).map io =
       Matrix.of fun r l => ∑ i, ((β' (h' r i) : intO ℂ_[resP v]) : ℂ_[resP v]) * ψ (a' l i) := by
     ext r l
     simp only [Matrix.map_apply, valMat, Matrix.of_apply]
-    rw [hMα', hval, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hMα', hval, map_sum]
     simp only [map_mul, hβα']
   subst hφ
   refine ⟨k1, ?_⟩

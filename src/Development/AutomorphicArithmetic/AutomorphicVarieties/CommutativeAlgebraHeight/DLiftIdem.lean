@@ -38,7 +38,8 @@ private theorem dli_mem_max {A B E : Type} [CommRing A] [CommRing B] [Ring E] [A
     | succ i ih => rw [pow_succ z, pow_succ' (ι m), mul_assoc, ← mul_assoc z, hz, one_mul, ih]
   rw [← aeval_def, aeval_eq_sum_range] at hp0
   have h2 : ι (∑ i ∈ Finset.range (p.natDegree + 1), p.coeff i • m ^ (p.natDegree - i)) = ι 0 := by
-    rw [map_zero, ← zero_mul (ι m ^ p.natDegree), ← hp0, map_sum, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_zero, ← zero_mul (ι m ^ p.natDegree), ← hp0, map_sum, Finset.sum_mul]
     refine Finset.sum_congr rfl fun i hi => ?_
     have hi' : i ≤ p.natDegree := Nat.lt_succ_iff.1 (Finset.mem_range.1 hi)
     rw [map_smul, map_pow, smul_mul_assoc]
@@ -153,5 +154,6 @@ theorem UpperTheory.V.CA.d_lift_idem :
     simpa using congr_fun h₂ (Fintype.equivFin ι i)
   refine ⟨_, ⟨ho, ?_⟩, hv⟩
   have := dli_idem_zero ho.isIdempotentElem_sum.one_sub (hk _ (by
-    rw [map_sub, map_one, map_sum, Finset.sum_congr rfl fun i _ => hv i, hf.complete, sub_self]))
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_one, map_sum, Finset.sum_congr rfl fun i _ => hv i, hf.complete, sub_self]))
   exact (sub_eq_zero.1 this).symm

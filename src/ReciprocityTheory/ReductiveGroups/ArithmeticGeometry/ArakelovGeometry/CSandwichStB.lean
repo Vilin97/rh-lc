@@ -86,7 +86,8 @@ theorem traceMat_injective {x : Ix κ → Ω} {e : Fin (D + 1) → Ix κ} (hfr :
         rw [Submodule.coe_smul, smul_mul_assoc]
       rw [h1]
       show secTraceHom x e hfr (n + k) (∑ j, u j • (⟨_, hmemN j l⟩ : sec ℤ x (n + k))) = 0
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simp only [map_zsmul]
       have h3 : ∀ j, secTraceHom x e hfr (n + k) ⟨_, hmemN j l⟩ = aeval (x ∘ e) (g j l) :=
         fun j => (hgv j l).symm

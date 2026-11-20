@@ -172,7 +172,8 @@ theorem exists_approx (hS : IsPrecomplete I S) (g : ℕ → A → ι →₀ S)
         (fun i hi => Finset.mem_biUnion.2 ⟨k, hk, hi⟩) (fun i c => s c * b i) (fun _ _ => by simp),
         Finset.sum_comm]
       refine Finset.sum_congr rfl fun i _ => ?_
-      simp only [P, map_sum, Finset.sum_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [P, map_sum, Finset.sum_mul]
     have e : x - ∑ i ∈ F, s (f i) * b i = r n + ∑ i ∈ F, s (P n i - f i) * b i := by
       rw [hrx, hsum]
       simp only [map_sub, sub_mul, Finset.sum_sub_distrib]

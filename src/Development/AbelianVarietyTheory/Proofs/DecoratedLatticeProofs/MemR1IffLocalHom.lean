@@ -66,7 +66,8 @@ theorem R1cond_of_colCond {x : Sp E (M + c) ≃ₗ[E] Sp E (M + c)} (h : ColCond
     have hv' : v = ∑ m, v m • (Pi.single m 1 : Sp E (M + c)) := by
       funext t
       simp [Finset.sum_apply, Pi.single_apply]
-    rw [hv', map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hv', map_sum]
     simp only [map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
     refine Finset.sum_eq_zero fun m _ => ?_
     by_cases hm : M + i ≤ m.val

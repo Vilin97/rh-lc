@@ -46,7 +46,8 @@ theorem fieldDep : ∀ (K : Type) [Field K] (A : Over (Sp K)) [GrpObj A] (g : �
     (fun i i' => ∑ b, (A.hom.appLE ⊤ (W i ⊓ W i') le_top).hom
       ((Scheme.ΓSpecIso (CommRingCat.of K)).inv.hom (c b)) * e b i i') (by
       intro i i' i''
-      simp only [map_sum, map_mul, resG_appLE]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_mul, resG_appLE]
       rw [← Finset.sum_add_distrib]
       refine Finset.sum_congr rfl fun b _ => ?_
       rw [← mul_add, he b]) h' hh'

@@ -147,7 +147,8 @@ theorem prodDat_sum {n : ℕ} (L : Fin n → LocPl ψ S T M M') (inj : Function.
     unfold Place.down
     have : Matrix.map (∑ i, (ofSplit (L i).q).up (L i).FS (L i).FT (x i)) (ofSplit (L i).q).π = (L i).FT.β * x i * (L i).FS.γ := by
       ext r s
-      rw [Matrix.map_apply, Matrix.sum_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Matrix.map_apply, Matrix.sum_apply, map_sum]
       exact (Finset.sum_eq_single i (fun j _ h => hp i j (Ne.symm h) _) (fun h => (h (Finset.mem_univ _)).elim)).trans
         ((L i).q.pr_sec _)
     rw [this, Matrix.mul_assoc (L i).FT.β, ← Matrix.mul_assoc (L i).FT.γ, (L i).FT.γβ, Matrix.one_mul, Matrix.mul_assoc,

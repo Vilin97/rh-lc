@@ -67,7 +67,8 @@ theorem from_diagonal : FromDiag := by
   refine ⟨(qmap b Q).linearEquivOfInjective (qmap_injective b Q q hq hQ) hdim, ?_⟩
   intro x y
   simp only [LinearMap.linearEquivOfInjective_apply]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   unfold DiagId at hb
   simp_rw [hb]
   rw [Fintype.sum_prod_type, Finset.sum_comm, Finset.sum_comm (γ := Fin 4)]
@@ -75,13 +76,15 @@ theorem from_diagonal : FromDiag := by
   have hx : ∀ c, algebraMap K E (qmap b Q x (c, i))
       = ∑ a, (Q i c a : E) * algebraMap K E (b.repr (x a) i) := by
     intro c
-    rw [qmap_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [qmap_apply, map_sum]
     refine Finset.sum_congr rfl fun a _ => ?_
     rw [map_mul, map_ratCast]
   have hy : ∀ c, algebraMap K E (qmap b Q y (c, i))
       = ∑ a, (Q i c a : E) * algebraMap K E (b.repr (y a) i) := by
     intro c
-    rw [qmap_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [qmap_apply, map_sum]
     refine Finset.sum_congr rfl fun a _ => ?_
     rw [map_mul, map_ratCast]
   simp_rw [hx, hy]

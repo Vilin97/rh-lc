@@ -89,7 +89,8 @@ theorem ea_applyD_map {σ τ K K' : Type} [Field K] [Field K'] (φ : K →+* K')
     (P : MvPolynomial σ (MvPolynomial τ ℤ)) (f : MvPowerSeries σ K) :
     applyD P (MvPowerSeries.map φ f) = MvPolynomial.map φ (applyD P f) := by
   unfold applyD
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun n _ => ?_
   have e : φ.comp (Int.castRingHom K) = Int.castRingHom K' := RingHom.ext_int _ _
   have e2 : φ (∏ x ∈ n.support, ((n x).factorial : K)) = ∏ x ∈ n.support, ((n x).factorial : K') := by

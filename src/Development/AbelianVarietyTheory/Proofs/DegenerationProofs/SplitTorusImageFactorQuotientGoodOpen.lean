@@ -207,10 +207,12 @@ theorem exists_open (k : Type) [Field k] [IsAlgClosed k] (G : Over (Sp k)) [GrpO
       · rw [map_zero, map_zero]
       · rw [hc Y t g k₁ k₂, appTop_charUnit, ht ψ ⟨U, c, hne, hu, hc⟩, _root_.one_mul]
     have ea : (((t ≫ i) * g).left.appLE U ⊤ k₁).hom (∑ j, a j) = (g.left.appLE U ⊤ k₂).hom (∑ j, a j) := by
-      rw [map_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, map_sum]
       exact Finset.sum_congr rfl fun j _ => key _ _ (hw j).1 (hw j).2.2.1
     have eb : (((t ≫ i) * g).left.appLE U ⊤ k₁).hom (∑ j, b j) = (g.left.appLE U ⊤ k₂).hom (∑ j, b j) := by
-      rw [map_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, map_sum]
       exact Finset.sum_congr rfl fun j _ => key _ _ (hw j).2.1 (hw j).2.2.2
     rw [← e, map_mul, map_mul, eb, appLE_res _ hU k₁ h₁, appLE_res _ hU k₂ h₂] at ea
     exact (hb.map (g.left.appLE U ⊤ k₂).hom).mul_right_cancel ea

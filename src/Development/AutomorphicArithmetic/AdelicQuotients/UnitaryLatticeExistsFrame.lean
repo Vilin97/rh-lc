@@ -66,7 +66,8 @@ theorem UpperTheory.unitaryLattice_exists_frame :
       · have ho' : ((o : 𝓞 E) : E) = algebraMap F E (s : F) * ((P⁻¹).1 *ᵥ x) i := by
           simpa using ho
         rw [ho', mul_smul, key v hst]
-        simp only [Matrix.mulVec, dotProduct, map_sum, Finset.smul_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [Matrix.mulVec, dotProduct, map_sum, Finset.smul_sum]
         refine Finset.sum_congr rfl fun j _ => ?_
         rw [map_mul, Matrix.smul_apply, smul_mul_assoc, mul_smul_comm, smul_comm]
         rfl

@@ -78,7 +78,8 @@ theorem UpperTheory.V.AlgebraTools.qRegAt_map :
     choose c hc using hs'
     have h1 : f (∑ β : GlobalTheory.MonoDeg σ a, GlobalTheory.monoVal y (β : σ →₀ ℕ) • c β) ∈
         ((Ideal.span (Set.range y) ^ (a + 1) ⊔ J) • ⊤ : Submodule S M') := by
-      simp only [map_sum, map_smul, hc]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, hc]
       have e : (∑ β : GlobalTheory.MonoDeg σ a, GlobalTheory.monoVal y (β : σ →₀ ℕ) • ((s : S) • c' β)) =
           (s : S) • ∑ β : GlobalTheory.MonoDeg σ a, GlobalTheory.monoVal y (β : σ →₀ ℕ) • c' β := by
         rw [Finset.smul_sum]

@@ -123,12 +123,14 @@ theorem GlobalTheory.CompanionTheory.SiegelND.Integ.Hua.HS.LocalBound.local_boun
       -∑ j, σ ((c *ᵥ fun j => algebraMap (𝓞 E) E (yo j)) j) * algebraMap (𝓞 E) E (yo j) := by
     have hs : ∑ j, σ ((c *ᵥ fun j => algebraMap (𝓞 E) E (yo j)) j) * algebraMap (𝓞 E) E (yo j) =
         ∑ j, (c *ᵥ fun j => algebraMap (𝓞 E) E (yo j)) j * σ (algebraMap (𝓞 E) E (yo j)) := by
-      simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Finset.sum_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Finset.sum_mul]
       rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun k _ => ?_
       rw [hc]
       ring
-    rw [map_neg, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_neg, map_sum]
     simp only [map_mul, hinv]
     rw [hs]
   obtain ⟨f, hf⟩ := hfix _ hf0
@@ -183,7 +185,8 @@ theorem GlobalTheory.CompanionTheory.SiegelND.Integ.Hua.HS.LocalBound.local_boun
       ring
     have hs2 : algebraMap (𝓞 E) E (∑ j, sO σ (lo j) * yo j) =
         ∑ j, σ (algebraMap (𝓞 E) E (lo j)) * algebraMap (𝓞 E) E (yo j) := by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [map_mul]
       exact congrArg (· * _) (hsO (lo j))

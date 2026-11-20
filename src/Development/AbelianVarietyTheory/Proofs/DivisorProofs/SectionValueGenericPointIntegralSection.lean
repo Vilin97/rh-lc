@@ -62,7 +62,8 @@ theorem value_at_section : ∀ (R : Type) [CommRing R] [IsDomain R] (I : Ideal R
 
   rw [cst_eq] at a₃ a₄
   apply cstH_inj (R := R) z
-  rw [map_mul, map_pow, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_mul, map_pow, map_sum]
   refine alg_value_at a₁ a₂ a₃ a₄ (fun i => ?_)
   have b : gs r.left z ⊤ (scal (fst (TFK (R := R) (FractionRing R)) ((Over.pullback (jK R)).obj G)).left (c i)) =
       cstH (R := R) z (c i) :=

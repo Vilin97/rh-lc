@@ -280,7 +280,8 @@ theorem om_key (i a b : Fin d) :
     rw [pderiv_ev czX, Fintype.sum_prod_type]
     simp [pt, MvPowerSeries.pderiv_X, Pi.single_apply]
   have hP := congrArg (⇑(pderiv k ((1 : Fin 2), b))) (om_P G i a)
-  rw [hR, map_sum] at hP
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hR, map_sum] at hP
   simp only [Derivation.leibniz, smul_eq_mul, d_evF] at hP
   have hP2 := congrArg (ev (n := 1) ![pt k d 0, 0]) hP
   simp only [hsE, hz0, ev_mul hE, ev_add hE, ez_F, ez_dx, ez_dy,
@@ -294,7 +295,8 @@ theorem om_key (i a b : Fin d) :
   have hone : pderiv k ((0 : Fin 1), a) ((1 : Matrix (Fin d) (Fin d) (PS k 1 d)) i b) = 0 := by
     rw [Matrix.one_apply]
     split_ifs <;> simp
-  rw [hone, map_sum] at hM2
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hone, map_sum] at hM2
   simp only [Derivation.leibniz, smul_eq_mul] at hM2
   rw [Finset.sum_add_distrib] at hM2
   linear_combination hM2 - hP2

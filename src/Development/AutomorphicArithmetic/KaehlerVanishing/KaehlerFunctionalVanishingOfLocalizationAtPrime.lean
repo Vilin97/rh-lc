@@ -74,7 +74,8 @@ theorem UpperTheory.kaehler_functional_vanishing_of_localization_at_prime :
     intro ω hω
     rw [LinearMap.mem_ker] at hω ⊢
     obtain ⟨m, b, ω', hb, rfl⟩ := hker ω hω
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_eq_zero fun i _ => by rw [hLs, hb, zero_mul]
   let φq := (LinearMap.ker φ).liftQ φ le_rfl
   have hinj : LinearMap.ker φq = ⊥ := Submodule.ker_liftQ_eq_bot _ _ _ le_rfl

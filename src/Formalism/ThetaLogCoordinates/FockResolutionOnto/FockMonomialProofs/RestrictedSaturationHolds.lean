@@ -65,7 +65,8 @@ theorem sat_main {s : ℕ} (LL : Letters (K + 1)) {q : ℕ} (J : Fin q → ℕ) 
     intro la
     obtain ⟨Q, hQ1, hQ2, hQ3⟩ := Formalism.InvariantFactorPaths.PW.Top.typeInt p _ (s + 1) G _ _ (4 * LL.total) L la
     have hQx : Q x = f la := by
-      rw [← hsum, Finsupp.sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hsum, Finsupp.sum, map_sum]
       by_cases hla : la ∈ f.support
       · rw [Finset.sum_eq_single_of_mem la hla (fun mu _ hne => hQ2 mu hne _ (hf mu)), hQ1 _ (hf la)]
       · rw [Finset.sum_eq_zero (fun mu hmu => hQ2 mu (fun h => hla (h ▸ hmu)) _ (hf mu)),

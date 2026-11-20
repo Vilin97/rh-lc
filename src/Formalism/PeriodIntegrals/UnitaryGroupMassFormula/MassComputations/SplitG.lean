@@ -37,7 +37,8 @@ def mix (M1 : Matrix (Fin n) (Fin n) (R1 ⊗[F] E)) (M2 : Matrix (Fin n) (Fin n)
 theorem mix_mul (M1 N1 : Matrix (Fin n) (Fin n) (R1 ⊗[F] E)) (M2 N2 : Matrix (Fin n) (Fin n) (R2 ⊗[F] E)) :
     mix R1 R2 M1 M2 * mix R1 R2 N1 N2 = mix R1 R2 (M1 * N1) (M2 * N2) := by
   ext i j
-  simp only [mix, Matrix.mul_apply, Matrix.of_apply, ← map_mul, Prod.mk_mul_mk, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [mix, Matrix.mul_apply, Matrix.of_apply, ← map_mul, Prod.mk_mul_mk, ← map_sum]
   congr 1
   ext
   · simp only [Prod.fst_sum]

@@ -258,7 +258,8 @@ theorem e_mem_loc_adm {g r : ℕ} {T T' : E} {F : LFlag S r T} {F' : LFlag S r T
 
 theorem hT_sum_left {ι : Type*} (s : Finset ι) (f : ι → S.V) (y : S.V) :
     S.hT (∑ i ∈ s, f i) y = ∑ i ∈ s, S.hT (f i) y := by
-  rw [map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, LinearMap.sum_apply]
 
 theorem algebraMap_injO : Function.Injective (algebraMap (𝓞 E) E) :=
   FaithfulSMul.algebraMap_injective (𝓞 E) E
@@ -401,14 +402,16 @@ theorem surj {r : ℕ} (hU : Formalism.HermitianLatticesTheory.IsUnimodular S.hT
           rw [hfW] at this
           exact (Submodule.mem_bot _).mp this
         rw [hfw] at h1
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         simp only [map_mul]
         rw [← h1]
         apply Finset.sum_congr rfl
         intro a _
         show mk (c a) * mk (iv (ε a) l) = mk (iv (ε a) l) * f (ef a)
         rw [hc a]; ring
-      · rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        · rw [map_sum]
         apply Finset.sum_congr rfl
         intro a _
         rw [map_mul, iv_spec hU (hε a) hl])
@@ -452,8 +455,10 @@ theorem surj {r : ℕ} (hU : Formalism.HermitianLatticesTheory.IsUnimodular S.hT
       simp only [wv, Matrix.mulVec_mulVec, Matrix.mul_adjugate, Matrix.smul_mulVec,
         Matrix.one_mulVec, Pi.smul_apply, smul_eq_mul]
     have e1 : S.hT (ε b) (∑ a, wv a • lam a) = algebraMap (𝓞 E) E ((Mo.mulVec wv) b) := by
-      rw [map_sum]
-      simp only [Matrix.mulVec, dotProduct, map_sum, map_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Matrix.mulVec, dotProduct, map_sum, map_mul]
       apply Finset.sum_congr rfl
       intro a _
       rw [smulO, hT_smul_right, ← iv_spec hU (hε b) (hlamΛ a)]

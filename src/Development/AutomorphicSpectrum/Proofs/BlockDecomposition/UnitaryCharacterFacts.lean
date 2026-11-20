@@ -280,7 +280,8 @@ theorem hom_prod {m : ℕ} (Φ : (Fin m → ℤ) → ℂˣ) (h : ∀ a b, Φ (a 
     simp [Finset.sum_apply, Pi.single_apply]
   have h2 : f a = ∑ i, a i • f (Pi.single i 1) := by
     conv_lhs => rw [ha]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun i _ => map_zsmul f _ _
   have h3 := congrArg Additive.toMul h2
   simpa [f, toMul_sum] using h3

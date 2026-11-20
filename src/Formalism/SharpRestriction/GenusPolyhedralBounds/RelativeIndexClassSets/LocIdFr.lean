@@ -142,7 +142,8 @@ theorem fr_lat_of {k : ℕ} (w : HeightOneSpectrum (𝓞 F))
           ρ (((N : E) • ((B : Matrix (Fin k) (Fin k) E) *ᵥ Pi.single i 1)) a) = _
         rw [Pi.smul_apply, smul_eq_mul, hB, map_mul, map_natCast]
         field_simp
-      rw [← hπa, Finset.sum_apply, map_sum, ht]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hπa, Finset.sum_apply, map_sum, ht]
       simp only [hterm]
       simp [Matrix.mulVec, dotProduct]
 

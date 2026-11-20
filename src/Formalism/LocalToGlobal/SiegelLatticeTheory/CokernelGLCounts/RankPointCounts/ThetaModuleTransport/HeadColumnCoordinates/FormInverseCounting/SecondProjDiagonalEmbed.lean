@@ -31,11 +31,13 @@ def lamV (g : SplitG M.L) (m : Fin (r + 1) → M.R) : Ix r → F :=
 
 theorem firstProj_ring_sum (s : Finset (Fin (r + 1))) (f : Fin (r + 1) → M.R) :
     ph1 g ((∑ j ∈ s, f j : M.R) : E) = ∑ j ∈ s, ph1 g (f j : E) := by
-  rw [AddSubmonoidClass.coe_finset_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [AddSubmonoidClass.coe_finset_sum, map_sum]
 
 theorem secondProj_ring_sum (s : Finset (Fin (r + 1))) (f : Fin (r + 1) → M.R) :
     ph2 g ((∑ j ∈ s, f j : M.R) : E) = ∑ j ∈ s, ph2 g (f j : E) := by
-  rw [AddSubmonoidClass.coe_finset_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [AddSubmonoidClass.coe_finset_sum, map_sum]
 
 theorem firstProj_diagonalEmbed (hs : M.split = some g) (c : 𝒪[F]) : ph1 g ((dgR hs c : M.R) : E) = c := by
   show (g.e (algebraMap F E (c : F))).1 = c

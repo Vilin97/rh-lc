@@ -77,7 +77,8 @@ theorem map_pairDet_covec {S : Type} [CommRing S] (φ : R →+* S) (β : V →+*
   rw [pairDet, pairDet, RingHom.map_det]
   congr 1
   ext k k'
-  simp [covec, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [covec, map_sum]
 
 end Minors
 

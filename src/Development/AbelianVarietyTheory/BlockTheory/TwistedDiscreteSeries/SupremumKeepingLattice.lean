@@ -103,7 +103,8 @@ theorem keepsSup_iff {h : WL →ₗ[LL] WL} {hK : ∀ x ∈ X.WK, h x ∈ X.WK} 
   refine ⟨fun H => ⟨H.unitBall, H.types.1⟩, fun ⟨hb, hc⟩ => ?_⟩
   have hc' : ∀ g x, h (X.ρ g x) = X.ρ g (h x) := fun g x => LinearMap.congr_fun (hc g) x
   have he : ∀ (eC : G → LL) x, h (X.eOp eC x) = X.eOp eC (h x) := fun eC x => by
-    simp only [FormsL.eOp, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, hc']
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [FormsL.eOp, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, hc']
   have ht : ∀ (J : Subgroup G) (lam : J →* LLˣ), ∀ x ∈ X.typeP J lam, h x ∈ X.typeP J lam := fun J lam x hx p => by
     rw [← hc', hx p, map_smul]
   have hg : ∀ eC : G → LL, ∀ x ∈ X.good eC, h x ∈ X.good eC := by

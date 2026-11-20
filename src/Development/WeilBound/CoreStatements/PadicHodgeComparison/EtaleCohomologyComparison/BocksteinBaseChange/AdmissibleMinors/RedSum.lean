@@ -20,7 +20,8 @@ theorem red_sum (P : Pre G R) {M N : Model l K} (u : M.X ⟶ N.X) (hu : u ≫ N.
   have hexp : ∀ v, P.c M n v φ = ∑ j, R.q (e.coord j v) * P.c M n (e j) φ := by
     intro v
     conv_lhs => rw [← e.sum_repr v]
-    rw [map_sum, AddMonoidHom.finsetSum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, AddMonoidHom.finsetSum_apply]
     simp only [P.lin, Module.Basis.coord_apply]
   simp_rw [← P.nat M N u hu n hM hN, Finset.sum_mul]
   rw [Finset.sum_comm]

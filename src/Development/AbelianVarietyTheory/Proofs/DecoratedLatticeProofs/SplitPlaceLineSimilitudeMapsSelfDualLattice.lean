@@ -41,12 +41,14 @@ theorem mul_csec (q : SplitPt D k) (a : AE D) (b : k) :
 theorem mulVec_sec' (q : SplitPt D k) {m n : ℕ} (M : Matrix (Fin m) (Fin n) (AE D)) (A : Fin n → k) :
     (M *ᵥ fun i => q.sec (A i)) = fun j => q.sec ((M.map q.pr *ᵥ A) j) := by
   funext j
-  simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, mul_sec', map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, mul_sec', map_sum]
 
 theorem mulVec_csec (q : SplitPt D k) {m n : ℕ} (M : Matrix (Fin m) (Fin n) (AE D)) (B : Fin n → k) :
     (M *ᵥ fun i => cA D (q.sec (B i))) = fun j => cA D (q.sec ((M.map (fun a => q.pr (cA D a)) *ᵥ B) j)) := by
   funext j
-  simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, mul_csec, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, mul_csec, map_sum]
 
 theorem pr_cA_sec (q : SplitPt D k) (c : k) : q.pr (cA D (q.sec c)) = 0 := by
   have he : q.pr (cA D q.e) = 0 := by

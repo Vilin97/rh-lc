@@ -18,7 +18,8 @@ theorem dens_mul_pull {n m : ℕ} (L : V n →L[ℂ] V m) (c : ℂ) (a : Alt m) 
     dens (algebraMap ℂ (Alt n) c * pull L a) = c * ∑ S, (bas m).repr a S * dens (pull L (bas m S)) := by
   conv_lhs => rw [← (bas m).sum_repr a]
   rw [← Algebra.smul_def]
-  simp only [dens, map_sum, map_smul, Finsupp.smul_apply, Finsupp.finsetSum_apply, smul_eq_mul, Finset.sum_div,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dens, map_sum, map_smul, Finsupp.smul_apply, Finsupp.finsetSum_apply, smul_eq_mul, Finset.sum_div,
     mul_div_assoc]
 
 theorem continuous_integral_fib : ∀ (M : Type) [TopologicalSpace M] [T2Space M] [SecondCountableTopology M] [CompactSpace M] [MeasurableSpace M] [BorelSpace M] (A : HolAtlas M 1) (α : (famAtlas A).Fld), (famAtlas A).IsForm α → ∀ (χ : M → ℝ) (j : A.ι), A.SmoothOn univ (fun y => (χ y : ℂ)) → tsupport χ ⊆ (A.e j).source → Continuous fun t : OnePoint ℂ => A.integral (A.fn χ * (famAtlas A).pullback A (fib t) α) := by

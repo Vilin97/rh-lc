@@ -241,7 +241,8 @@ theorem framepf_loc_core (hc : IsCrys PD T.ρ) (c : ZMod n) (ζ : LL) (hζ : IsP
     (min m₁ 0) (fun r hr => hm₁ r (by omega))
     (fun r hr => Finset.sum_eq_zero fun j _ => framepf_serC_neg _ _ _ (by omega)) (k + R)
     (fun r hr => ?_) i hi
-  rw [← ModelFPf.levN_eq_serMul, heq, map_add, map_sum, Pi.add_apply, Finset.sum_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← ModelFPf.levN_eq_serMul, heq, map_add, map_sum, Pi.add_apply, Finset.sum_apply,
     framepf_serMul_sum, ModelFPf.levN_eq_serMul W T c ζ g,
     framepf_serMul_congr _ R hg _ (fun _ => 0) ((d + k : ℕ) : ℤ) hp0 r (by push_cast; omega),
     framepf_serMul_zero, add_zero]
@@ -323,7 +324,8 @@ theorem framepf_locC (hc : IsCrys PD T.ρ) (hs : W.s = 1) (c : ZMod n) (ζ : LL)
     | add x y hx hy => rw [map_add, map_add, hx, hy, map_add, smul_add]
   have hΛ : Eπ ^ h' • Ψ x =
       ∑ j, ((letE c : LetA O n) * a j) • W.φD T (hh (mkL W T π' c (z j) (hz j))) := by
-    rw [← hsm, hrep, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hsm, hrep, map_sum]
     exact Finset.sum_congr rfl fun j _ => by rw [hΨ, algebraMap_smul]
   have hmid : ∀ ℓ (r : ℤ), 1 ≤ r → r < (4 * h' : ℕ) → Ct.levB T (c - 1) 1 ⟨hh ℓ, hN ℓ⟩ r = 0 := by
     intro ℓ r h1 h2

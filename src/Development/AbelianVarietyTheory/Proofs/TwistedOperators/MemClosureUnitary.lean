@@ -468,7 +468,8 @@ theorem dense_inf (F E : Type) [Field F] [NumberField F] [Field E] [NumberField 
     refine (hf.comp hg hfc).mono ?_
     rintro _ ⟨c, rfl⟩
     refine ⟨∑ i, c i • b i, ?_⟩
-    simp only [Function.comp_apply, map_sum, algebraMap_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Function.comp_apply, map_sum, algebraMap_smul]
     refine Finset.sum_congr rfl fun i _ => ?_
     simp [inclR, bb, Algebra.TensorProduct.basis_apply]
   exact dense_unitary (K := E) (R := Ainf F ⊗[F] E) (inclR (Ainf F)) (σ : E →+* E) (sigR (Ainf F) σ)
@@ -524,7 +525,8 @@ private theorem weak_approx_real_lemma_3 (F E : Type) [Field F] [NumberField F] 
       rw [hΦ, (weak_approx_real_lemma_2 F E _ _).1, (weak_approx_real_lemma_2 F E _ _).2,
         ← (Prod.mk.inj h0).1, ← (Prod.mk.inj h0).2]
       exact Prod.ext rfl (smul_zero _)
-    rw [AlgEquiv.apply_symm_apply, map_add, map_sum, AlgEquiv.apply_symm_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [AlgEquiv.apply_symm_apply, map_add, map_sum, AlgEquiv.apply_symm_apply]
     simp only [hw]
     refine Prod.ext ?_ ?_
     · simp [Prod.fst_sum]

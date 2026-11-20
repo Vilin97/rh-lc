@@ -42,10 +42,12 @@ theorem halfFin : ∀ {D : D7} (P : Finset (Formalism.L2.DIV.Pl D.host.E)) (e : 
   intro D P e he m n y hy
   obtain ⟨⟨es, hes, rfl⟩, -⟩ := he
   have h0 : infPart D (∑ PP ∈ P, es PP) = 0 := by
-    rw [map_sum (infPart D)]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum (infPart D)]
     exact Finset.sum_eq_zero fun PP hPP => (infPart_eq_zero_of_isSplitIdem (hes PP hPP).1).1
   have h1 : infPart D (cA D (∑ PP ∈ P, es PP)) = 0 := by
-    rw [map_sum (cA D), map_sum (infPart D)]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum (cA D), map_sum (infPart D)]
     exact Finset.sum_eq_zero fun PP hPP => (infPart_eq_zero_of_isSplitIdem (hes PP hPP).1).2
   ext i j
   simp only [Matrix.map_apply, Matrix.zero_apply]

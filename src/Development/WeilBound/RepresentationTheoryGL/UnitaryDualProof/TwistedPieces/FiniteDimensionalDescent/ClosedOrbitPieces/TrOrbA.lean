@@ -77,7 +77,8 @@ theorem pidem_idem (I : MaximalSpectrum A) : IsIdempotentElem (pidem A I) := by
 theorem sum_pidem [Fintype (MaximalSpectrum A)] : ∑ I, pidem A I = 1 := by
   apply (IsArtinianRing.equivPi A).injective
   funext L
-  rw [map_sum, Finset.sum_apply, map_one, Pi.one_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_apply, map_one, Pi.one_apply]
   simp_rw [equivPi_pidem]
   simp [Pi.single_apply]
 

@@ -94,7 +94,8 @@ theorem mem_bkOn_of_orthogonal : ∀ (D : Formalism.BasicNotions.D7) (N : NData 
     rw [← divMap_apply, ← map_smul, ← map_sub, ← map_add, ← sub_eq_zero, ← map_sub]
     apply divMap_eq_zero hϖ
     rw [eq_iff hK, map_add, map_sub, smul_eq_mul, map_mul, hlift, hlift, hlift, ← e g h]
-    simp only [dotProductBilin_apply_apply, dotProduct, map_sum, map_mul, hact]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [dotProductBilin_apply_apply, dotProduct, map_sum, map_mul, hact]
     rfl
 
 end GlobalTheory.ResDual.Perp

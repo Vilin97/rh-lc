@@ -111,7 +111,8 @@ def linP (i : ι) (a : ℂ) (p : Polynomial ℂ) : MvPolynomial ι ℂ :=
 
 omit [Fintype ι] in
 theorem eval_linP (i : ι) (a : ℂ) (p : Polynomial ℂ) (g : ι → ℂ) : eval g (linP i a p) = p.eval (a * g i) := by
-  rw [Polynomial.eval_eq_sum_range, linP, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Polynomial.eval_eq_sum_range, linP, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   simp [mul_pow, mul_assoc]
 
@@ -151,7 +152,8 @@ omit [Fintype ι] in
 theorem eval_as_sum (Q : MvPolynomial ι ℂ) (y : ι → ℂ) :
     eval y Q = ∑ s ∈ Q.support, AddMonoidAlgebra.coeff Q s * eval y (monomial s (1 : ℂ)) := by
   conv_lhs => rw [Q.as_sum]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun s _ => ?_
   rw [eval_monomial, eval_monomial, one_mul]
 
@@ -202,7 +204,8 @@ theorem fourierInv_poly_gauss {ι : Type} [Fintype ι] (b : ℝ) (hb : 0 < b) (Q
     simp_rw [e]
     rw [integral_finsetSum _ fun s _ => (integrable_mono hb s u).const_mul _]
     simp_rw [integral_const_mul, integral_mono' hb]
-    rw [map_sum, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_mul]
     refine Finset.sum_congr rfl fun s _ => ?_
     rw [eval_mul, eval_C]
     ring

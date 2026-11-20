@@ -33,7 +33,8 @@ theorem prod_ev {M Q : Type} [AddCommGroup M] [Group Q] {m : ℕ} (ev : M → Q)
   show ev _ = _
   congr 1
   rw [toAdd_prod]
-  simp only [toAdd_pow, toAdd_ofAdd, ← map_nsmul, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [toAdd_pow, toAdd_ofAdd, ← map_nsmul, ← map_sum]
   congr 1
   funext j
   simp [Finset.sum_apply, Pi.single_apply]
@@ -98,7 +99,8 @@ theorem root_ext {S : Scheme.{0}} {n : ℕ} (hn : IsUnit (n : Γ(S, ⊤))) {u v 
         rw [map_mul, map_inv, h K x, mul_inv_cancel]
       exact congrArg Units.val this
     have h2 : IsUnit (x.appTop.hom (∑ i ∈ Finset.range n, w ^ i)) := by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simp only [map_pow, h1, one_pow, Finset.sum_const, Finset.card_range, nsmul_eq_mul, _root_.mul_one]
       simpa using hn.map x.appTop.hom
     have h3 : x ⁻¹ᵁ S.basicOpen (∑ i ∈ Finset.range n, w ^ i) = ⊤ := by

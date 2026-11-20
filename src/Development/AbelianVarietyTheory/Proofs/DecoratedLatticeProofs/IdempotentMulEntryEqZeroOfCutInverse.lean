@@ -102,12 +102,15 @@ theorem c_mul {W : Type} [Fintype W] (v : W → Pl D) (hv : Function.Injective v
   have hp1 : fstA D.host.F (pairA D.host.F 1 0) = 1 := rfl
   have hp2 : sndA D.host.F (pairA D.host.F 1 0) = 0 := rfl
   refine baseAdele_ext_infinite_finite ?_ ?_
-  · rw [map_mul, map_zero, map_sub, map_sub, map_sum, map_one, hp1]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_mul, map_zero, map_sub, map_sub, map_sum, map_one, hp1]
     simp [hf]
-  · rw [map_mul, map_zero, map_sub, map_sub, map_sum, map_one, hp2]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_mul, map_zero, map_sub, map_sub, map_sum, map_one, hp2]
     simp only [hs, sub_zero]
     refine af_ext _ fun u => ?_
-    rw [map_mul, map_zero, map_sub, map_one, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_mul, map_zero, map_sub, map_one, map_sum]
     by_cases hu : u ∈ Set.range v
     · obtain ⟨w0, rfl⟩ := hu
       rw [Finset.sum_eq_single w0 (fun w _ hw => evalV_single_ne _ (fun e => hw (hv e).symm))

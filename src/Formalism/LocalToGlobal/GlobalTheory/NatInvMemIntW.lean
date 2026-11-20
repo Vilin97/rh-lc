@@ -57,7 +57,8 @@ theorem sum_gamma (c : (D.mem u).C.cls 0) (τ : D.what₂.Tau) (Y : Matrix (Fin 
   have hbc : B.bc c τ (vcol Y a) = ∑ r, B.rho τ (Y r a) •
       B.bc c τ ((D.sp.X 0).frame ((finCongr (Formalism.L2.Forms.rankN D 0 (Nat.zero_le _))).symm r)) := by
     unfold vcol
-    rw [hz, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hz, map_sum, map_sum]
     refine Finset.sum_congr rfl fun r _ => ?_
     rw [map_smul, B.bc_smul, hfr]
   have hexp : ∀ v : (B.Q c τ).V,
@@ -148,10 +149,12 @@ theorem locBasis_gamma (hB : B.rho = rhoC D) (w : D.what₂.places.Pl) (c : (D.m
           rw [Matrix.mulVec_mulVec, Units.mul_inv, Matrix.one_mulVec]
         have hyz : y = ∑ a, ((((Y⁻¹ : GL (Fin (D.R.N 0)) D.host.E)) : Matrix (Fin (D.R.N 0)) (Fin (D.R.N 0)) D.host.E) *ᵥ
             eqv D y) a • vcol (Y : Matrix (Fin (D.R.N 0)) (Fin (D.R.N 0)) D.host.E) a := by
-          conv_lhs => rw [← (eqv D).symm_apply_apply y, ← h1, hcolv, map_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            conv_lhs => rw [← (eqv D).symm_apply_apply y, ← h1, hcolv, map_sum]
           simp only [LinearEquiv.map_smul]
           rfl
-        rw [hyz, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [hyz, map_sum]
         refine Submodule.sum_mem _ fun a _ => ?_
         rw [B.bc_smul, hB, hsmul _ (rhoC_mem_intW w τ _ s hs (hint a))]
         exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨a, rfl⟩)

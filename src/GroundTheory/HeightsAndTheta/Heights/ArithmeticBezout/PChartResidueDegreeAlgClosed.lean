@@ -46,7 +46,8 @@ theorem ChartResidueDegreeAlgClosed.proof (h₁ : ChowFormBirationalAlgClosed.St
     exact (map_ne_zero_iff _ (IsFractionRing.injective _ K)).mpr
       fun h => htW (Ideal.Quotient.eq_zero_iff_mem.mp h)
   have hℓsum : ℓ = ∑ l, algebraMap F K (t l) * ξ l := by
-    simp [hℓdef, linForm, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [hℓdef, linForm, map_sum]
     all_goals rfl
   set c : Fin n → K := fun m => algebraMap F K (t m) / ℓ with hcdef
   have hc : ∑ j, c j * ξ j = 1 := by
@@ -148,7 +149,8 @@ theorem ChartResidueDegreeAlgClosed.proof (h₁ : ChowFormBirationalAlgClosed.St
     (fun m => aeval (genSubst ξ c) (pderiv (0, m) g)) B ℓ' hB (hℓsum ▸ hℓ) hrel
   have hDtω : aeval (genSubst ξ c) Dt =
       ∑ l, C (algebraMap F K (t l)) * aeval (genSubst ξ c) (pderiv (0, l) g) := by
-    rw [hDtdef, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hDtdef, map_sum]
     simp only [map_mul, hωC]
   have hAt : aeval (genSubst ξ c) Dt ≠ 0 := by rw [hDtω]; exact hAt'
   have hη : ∀ m, aeval (genSubst ξ c) (pderiv (0, m) g) = C (ξ m / ℓ) * aeval (genSubst ξ c) Dt := by

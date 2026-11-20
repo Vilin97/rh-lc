@@ -67,7 +67,8 @@ theorem fderiv_conj_comp {g : ℕ} (G : (Fin g → ℂ) → ℂ) (x u : Fin g �
 
 theorem conj_form {g : ℕ} (H : Matrix (Fin g) (Fin g) ℂ) (hH : ∀ i j, starRingEnd ℂ (H i j) = H i j)
     (a b : Fin g → ℂ) : starRingEnd ℂ (HermFrame.form H a b) = HermFrame.form H (star a) (star b) := by
-  simp [HermFrame.form, dotProduct, mulVec, map_sum, map_mul, hH]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [HermFrame.form, dotProduct, mulVec, map_sum, map_mul, hH]
 
 theorem mem_stdLat_iff {g : ℕ} {x : Fl g} : x ∈ stdLat g ↔ ∀ i, ∃ n : ℤ, x i = n := by
   rw [stdLat, Module.Basis.mem_span_iff_repr_mem]
@@ -87,7 +88,8 @@ theorem negP_mem {g : ℕ} {l : Fl g} (h : l ∈ stdLat g) : negP l ∈ stdLat g
 theorem star_per {g : ℕ} (t : Matrix (Fin g) (Fin g) ℂ) (l : Fl g) :
     star (per t l) = per (-(t.map (starRingEnd ℂ))) (negP l) := by
   ext i
-  simp [per, negP, vecMul, dotProduct, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [per, negP, vecMul, dotProduct, map_sum]
 
 theorem lat_conj {g : ℕ} (t : Matrix (Fin g) (Fin g) ℂ) (z : Fin g → ℂ) :
     (∃ l ∈ stdLat g, star z = per t l) ↔ ∃ l ∈ stdLat g, z = per (-(t.map (starRingEnd ℂ))) l := by

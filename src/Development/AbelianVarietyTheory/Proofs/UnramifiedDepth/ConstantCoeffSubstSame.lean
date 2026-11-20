@@ -98,7 +98,8 @@ theorem pderiv_subst {σ τ : Type} [Fintype σ] {a : σ → MvPowerSeries τ k}
       coeff e (pderiv k t (subst a g)) = 0 ∧ coeff e (∑ s, subst a (pderiv k s g) * pderiv k t (a s)) = 0 := by
     intro g hg
     refine ⟨ordGE_pderiv t (ordGE_subst a ha hg) e (by omega), ?_⟩
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_eq_zero fun s _ => ?_
     exact ordGE_mul (ordGE_subst a ha (ordGE_pderiv s hg)) (ordGE_zero_left (pderiv k t (a s))) e (by omega)
   set p := truncTotal (e.degree + 1 + 1) f
@@ -192,7 +193,8 @@ theorem jetAt0_sum_smul_right {σ ι : Type} (s : Finset ι) (P : MvPolynomial �
     (G : ι → MvPowerSeries σ K) :
     jetAt0 P (∑ i ∈ s, c i • G i) = ∑ i ∈ s, c i * jetAt0 P (G i) := by
   unfold jetAt0
-  simp only [map_sum, Finset.mul_sum, coeff_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Finset.mul_sum, coeff_smul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun m _ => by ring
 
@@ -233,7 +235,8 @@ theorem jetAt0_subst_linear {σ τ : Type} [Fintype σ] [Fintype τ] (M : σ →
     rw [jetAt0_mul_X, pderiv_subst ha, map_mul, MvPolynomial.aeval_X, Finset.mul_sum, jetAt0_sum_left]
     have : ∀ s, pderiv K t (∑ t, M s t • (X t : MvPowerSeries τ K)) = C (M s t) := by
       intro s
-      rw [map_sum, Finset.sum_eq_single t]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Finset.sum_eq_single t]
       · rw [Derivation.map_smul, pderiv_X_self, smul_eq_C_mul, mul_one]
       · intro b _ hb
         rw [Derivation.map_smul, pderiv_X_of_ne hb, smul_zero]
@@ -251,7 +254,8 @@ theorem subst_mvExp {σ τ : Type} [Finite σ] {a : σ → MvPowerSeries τ K}
   have key : ∀ {υ : Type} (u : MvPowerSeries υ K), constantCoeff u = 0 → ∀ N : ℕ,
       OrdGE (N + 1) (mvExp u - ∑ j ∈ Finset.range (N + 1), ((j.factorial : K)⁻¹) • u ^ j) := by
     intro υ u hu N e he
-    rw [map_sub, map_sum, sub_eq_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_sum, sub_eq_zero]
     change ∑ j ∈ Finset.range (e.degree + 1), coeff e (u ^ j) / (j.factorial : K) = _
     rw [Finset.sum_subset (s₂ := Finset.range (N + 1)) (Finset.range_mono (by omega))]
     · refine Finset.sum_congr rfl fun j _ => ?_
@@ -263,7 +267,8 @@ theorem subst_mvExp {σ τ : Type} [Finite σ] {a : σ → MvPowerSeries τ K}
   have h2 := key (subst a h) (by rw [constantCoeff_subst_same ha, h0]) e.degree e (by omega)
   rw [map_sub, sub_eq_zero] at h2
   rw [subst_sub hs, map_sub, sub_eq_zero] at h1
-  rw [h1, h2, ← coe_substAlgHom hs, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h1, h2, ← coe_substAlgHom hs, map_sum]
   simp only [map_smul, map_pow]
 
 theorem complete_step (V : VF K) {n j : ℕ} (hj : j < n) (A : Fin j → Fin n → K) (B : Fin n → Fin j → K)

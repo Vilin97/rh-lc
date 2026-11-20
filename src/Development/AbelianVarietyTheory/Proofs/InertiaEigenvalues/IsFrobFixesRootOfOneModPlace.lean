@@ -122,7 +122,8 @@ theorem frob_fixes_root_of_one_mod (F Ω : Type) [Field F] [NumberField F] [Fiel
     simpa [aξ] using hsum
   have hres : res ((M : ℕ) : A) = res 0 := by
     have := congrArg res hsumA
-    rw [map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at this
     simp only [map_pow, hresξ, one_pow, Finset.sum_const, Finset.card_range, nsmul_eq_mul,
       mul_one] at this
     rw [map_natCast, this]

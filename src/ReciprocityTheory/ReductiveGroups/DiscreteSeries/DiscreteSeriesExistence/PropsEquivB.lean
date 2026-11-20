@@ -233,7 +233,8 @@ theorem phi_K (hσ : IsURepOn (UJset ε) σ) (hD : IsDerivedOn ε σ D E) {V : S
     · simp only [resE_of_ne h, LinearMap.zero_apply, map_zero]
   have hZc : ∀ v, φ (resZ E V hst Z v) = resZ E₂ V₂ hst₂ Z (φ v) := by
     intro v
-    simp only [resZ, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, hc]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [resZ, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, hc]
   have hZp : ∀ m v, φ (((resZ E V hst Z) ^ m) v) = ((resZ E₂ V₂ hst₂ Z) ^ m) (φ v) := by
     intro m
     induction m with

@@ -51,7 +51,8 @@ theorem incAdj_yZero_apply {ρ : ℕ} (hρ : 0 < ρ) {S T T₀ : HSp D} (d : Hyp
     intro i
     simp only [ell, Fin.ext_iff]
     split_ifs with h1 h2 h2 <;> first | (exfalso; omega) | simp
-  simp only [HypDec.incAdj_apply, HypDec.incY_apply, yZero, zEll, Matrix.vecMul, dotProduct,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [HypDec.incAdj_apply, HypDec.incY_apply, yZero, zEll, Matrix.vecMul, dotProduct,
     Matrix.mul_apply, Matrix.smul_apply, Matrix.neg_apply, adj, Matrix.transpose_apply, Matrix.map_apply,
     Matrix.vecMulVec_apply, smul_eq_mul, map_mul, map_neg, hell, map_sum]
   rw [Finset.sum_eq_single (⟨ρ - 1, by omega⟩ : Fin ρ) (fun i _ hi => by simp [hi]) (fun h => absurd (Finset.mem_univ _) h)]
@@ -63,7 +64,8 @@ theorem incAdj_yZero_apply {ρ : ℕ} (hρ : 0 < ρ) {S T T₀ : HSp D} (d : Hyp
 
 theorem map_row {E : Type} [Field E] (f : E →+* k) {m n : Type} [Fintype m] (w : m → E) (M : Matrix m n E) (j : n) :
     ∑ l, f (w l) * f (M l j) = f ((w ᵥ* M) j) := by
-  simp only [Matrix.vecMul, dotProduct, map_sum, RingHom.map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.vecMul, dotProduct, map_sum, RingHom.map_mul]
 
 theorem row_core (q : GlobalTheory.FinPl.SplitPt D k) {ρ : ℕ} (B : BesLev D ρ) {n : Type} [Fintype n] [DecidableEq n] (sc : k)
     (FA : Frame k B.A.rank n) (F₀ : Frame k B.V₀.rank (n ⊕ Unit)) (hF₀ : (ofSplit q).IsCoreFrame B sc FA F₀) :
@@ -90,7 +92,8 @@ theorem row_core (q : GlobalTheory.FinPl.SplitPt D k) {ρ : ℕ} (B : BesLev D �
     have h0 : (star (vecB B.o B.ζ) ᵥ* B.V₀.gram) ⬝ᵥ vecB B.o B.ζ = star B.ζ ⬝ᵥ B.L.gram *ᵥ B.ζ := by
       rw [vecB, Matrix.star_mulVec, Matrix.vecMul_vecMul, ← Matrix.dotProduct_mulVec, Matrix.mulVec_mulVec, B.o.isoB]
     change ∑ l, f _ * F₀.β l (Sum.inr ()) = sc * f (star B.ζ ⬝ᵥ B.L.gram *ᵥ B.ζ)
-    rw [← h0, dotProduct, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← h0, dotProduct, map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun l _ => ?_
     rw [hF₀.2 l, RingHom.map_mul, mul_left_comm]
     rfl
@@ -104,7 +107,8 @@ theorem row_jac (q : GlobalTheory.FinPl.SplitPt D k) {ρ : ℕ} (hρ : 0 < ρ) (
   set i₀ : Fin ρ := ⟨ρ - 1, by omega⟩ with hi₀
   have hcol : ∀ {m : ℕ} (M : Matrix (Fin J.W.rank) (Fin m) D.host.E) (j : Fin m),
       ∑ l, f ((J.d.e'ᴴ * J.W.gram) i₀ l) * f (M l j) = f ((J.d.e'ᴴ * J.W.gram * M) i₀ j) := fun M j => by
-    rw [Matrix.mul_apply (M := J.d.e'ᴴ * J.W.gram), map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Matrix.mul_apply (M := J.d.e'ᴴ * J.W.gram), map_sum]
     simp only [RingHom.map_mul]
   funext t
   rcases t with t | t

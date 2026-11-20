@@ -66,7 +66,8 @@ theorem unramAt_of_unramOutside {χ : (AE D)ˣ →* Circle} {Q : Finset (Formali
     exact sub_eq_zero.1 this.symm
   refine hu x hx1 i1 i2 ?_
   have h0 : (idem Q + cA D (idem Q)) * algebraMap (AF D.host.F) (AE D) ε = 0 := by
-    rw [idem, map_sum, ← Finset.sum_add_distrib, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [idem, map_sum, ← Finset.sum_add_distrib, Finset.sum_mul]
     exact Finset.sum_eq_zero fun PP hPP => split_mul_nonSplit (hs.isIdemAt hPP).1 hv
   calc (idem Q + cA D (idem Q)) * (x : AE D)
       = (idem Q + cA D (idem Q)) * algebraMap (AF D.host.F) (AE D) ε * ((x : AE D) - 1) + (idem Q + cA D (idem Q)) := by

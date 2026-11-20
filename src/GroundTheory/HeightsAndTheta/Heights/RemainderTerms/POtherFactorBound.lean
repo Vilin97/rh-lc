@@ -47,7 +47,8 @@ theorem OtherFactorBound.coeff_bound (hS : SchurSignCoefficient.Statement)
   have hSsum : S = ∑ nu ∈ partitionsOf r k,
       C ((numStandardTable (fun i => a + nu i) : ℕ) : ℚ) * T nu := by
     apply Flag.powerSumHom_injective
-    rw [hSeq, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hSeq, map_sum]
     refine Finset.sum_congr rfl fun nu hnu => ?_
     rw [map_mul, (hT nu hnu).1]
     congr 1

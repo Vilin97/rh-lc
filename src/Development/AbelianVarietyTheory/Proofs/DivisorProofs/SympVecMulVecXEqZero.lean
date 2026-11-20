@@ -40,7 +40,8 @@ theorem symp_vecMulVec_x_eq_zero : ∀ {F E : Type} [Field F] [NumberField F] [F
     have h2 := congrArg (inclR (F := F) (AF F)) hxx
     rw [map_zero] at h2
     rw [← h2]
-    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, Finset.mul_sum, incV, incM,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, Finset.mul_sum, incV, incM,
       Matrix.map_apply, hc, mul_assoc]
   unfold symp hTens
   rw [hTens_vecMulVec_eq_zero (cA σ) _ _ a c _ hx, mul_zero, map_zero]

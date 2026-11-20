@@ -37,7 +37,8 @@ theorem exists_map_eq_of_constantCoeff (φ : R →+* L) (A G : MvPolynomial σ R
     exact ⟨_, rfl⟩
   choose r hr using hc
   refine ⟨∑ m ∈ P.support, MvPolynomial.monomial m (r m), ?_⟩
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   conv_rhs => rw [P.as_sum]
   refine Finset.sum_congr rfl fun m _ => ?_
   rw [MvPolynomial.map_monomial, hr]

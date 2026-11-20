@@ -36,7 +36,8 @@ theorem natCast_mul_tmul (c e : ℕ) (x : E) (a : 𝔸) :
 theorem comm_eq_sum {m : ℕ} (b : Module.Basis (Fin m) F E) (z : 𝔸 ⊗[F] E) :
     Algebra.TensorProduct.comm F 𝔸 E z = ∑ k, b k ⊗ₜ[F] (Algebra.TensorProduct.basis 𝔸 b).repr z k := by
   conv_lhs => rw [← (Algebra.TensorProduct.basis 𝔸 b).sum_repr z]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [Algebra.TensorProduct.basis_apply, TensorProduct.smul_tmul', smul_eq_mul, mul_one,
     Algebra.TensorProduct.comm_tmul]

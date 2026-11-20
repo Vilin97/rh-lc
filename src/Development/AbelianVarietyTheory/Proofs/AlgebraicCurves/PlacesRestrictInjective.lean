@@ -172,7 +172,8 @@ theorem exists_gauss_variables (d : Data K ι Ω WT A) (hd : d.AxH 𝒜)
   have hrel : ∀ i : Fin (d.D + 1), i ≠ 0 → ∑ j, s (i, j) * f (a j) = 0 := by
     intro i hi
     rw [Fin.sum_univ_succAbove _ (d.jc c)]
-    simp only [s, sImg, Fin.succAbove_cases_eq_insertNth, Fin.insertNth_apply_same,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [s, sImg, Fin.succAbove_cases_eq_insertNth, Fin.insertNth_apply_same,
       Fin.insertNth_apply_succAbove, hi, ↓reduceIte, ha_jc, map_one, mul_one, map_neg, map_sum,
       map_mul, hC]
     rw [neg_add_eq_zero]

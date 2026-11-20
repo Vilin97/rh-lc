@@ -336,7 +336,8 @@ theorem jetPairPoly_map_rename {K : Type} [Field K] {σ τ ι : Type} (ρ : σ �
       MvPolynomial.rename ρ (jetPairPoly P Th) := by
   rw [OrbMul.jetPairPoly_eq_sum _ Th P.support (MvPolynomial.support_map_subset _ _)]
   unfold jetPairPoly
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun κ _ => ?_
   rw [MvPolynomial.coeff_map, map_mul (MvPolynomial.rename ρ), MvPolynomial.rename_C]
   rfl
@@ -413,7 +414,8 @@ theorem psi_Gxz (l : ℕ) [Fact l.Prime] (d N0 N1 : ℕ) [NeZero d] (nu : ZMod d
   rw [RingHom.map_det]
   congr 1
   ext r r'
-  simp [psi, frIdx, map_sum, map_mul, MvPolynomial.map_C, MvPolynomial.rename_X]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [psi, frIdx, map_sum, map_mul, MvPolynomial.map_C, MvPolynomial.rename_X]
 
 theorem tieFrame : TieFrame := by
   intro l _ d N0 N1 _ nu hp Th ep B hep hyp I m
@@ -526,7 +528,8 @@ theorem jet_map_minor_product (nu : YoungDiagram) (hp : ∀ c : Fin (nu.rowLen 0
   rw [RingHom.map_det]
   congr 1
   ext r r'
-  simp [psi1, frIdx1, map_sum, map_mul, MvPolynomial.map_C, MvPolynomial.rename_X]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [psi1, frIdx1, map_sum, map_mul, MvPolynomial.map_C, MvPolynomial.rename_X]
   all_goals rfl
 
 end One

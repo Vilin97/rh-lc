@@ -52,7 +52,8 @@ theorem fe : FunctionalEquationAtIndex := by
       ∑ y : Gn g (m + 1), (ψ₀ (-superDiag (umGL N)) : ℂ) *
         (ψ₀ (trace (Um N * Hm (bcol b) * (y : Mt g (m + 1)))) : ℂ) * l (τ.ρ y⁻¹ v) := by
     intro N b
-    simp only [sv, map_sum, map_smul, smul_eq_mul, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [sv, map_sum, map_smul, smul_eq_mul, Finset.mul_sum]
     exact Finset.sum_congr rfl (fun y _ => by ring)
   have hR : ∑ N : SIdx m → ZMod g, ∑ b : JIdx m j → ZMod g,
       (ψ₀ (-superDiag (umGL N)) : ℂ) * l (sv ψ₀ τ (Um N * Hm (bcol b)) v) =

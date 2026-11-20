@@ -43,7 +43,8 @@ theorem mulVec_map_rho (A : Matrix (Fin N) (Fin N) E) (x : Fin N → E) (a : Fin
     ((A.map ((rho v spl).comp (inclE (F := F) (v.adicCompletion F)))) *ᵥ
       fun b => rho v spl (inclE (F := F) (v.adicCompletion F) (x b))) a =
       rho v spl (inclE (F := F) (v.adicCompletion F) ((A *ᵥ x) a)) := by
-  simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, RingHom.comp_apply, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, RingHom.comp_apply, map_sum, map_mul]
 
 theorem base_free (hs : SplitInt v spl) (hd : ∀ a : v.adicCompletion F, spl ((1 : E) ⊗ₜ[F] a) = (a, a)) (B : GL (Fin N) E)
     (Λ : Submodule (𝓞 E) (Fin N → E))
@@ -126,7 +127,8 @@ theorem base_free (hs : SplitInt v spl) (hd : ∀ a : v.adicCompletion F, spl ((
         rw [hc, Matrix.mulVec_mulVec, ← Matrix.map_mul, Units.mul_inv, Matrix.map_one _ (map_zero _) (map_one _),
           Matrix.one_mulVec]
       rw [← key]
-      simp only [Finset.sum_apply, Pi.smul_apply, Subring.smul_def, smul_eq_mul, map_sum, map_mul, Prod.fst_sum,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Finset.sum_apply, Pi.smul_apply, Subring.smul_def, smul_eq_mul, map_sum, map_mul, Prod.fst_sum,
         Prod.fst_mul, hd, Matrix.mulVec, dotProduct, Matrix.map_apply, RingHom.comp_apply]
       refine Finset.sum_congr rfl fun b _ => ?_
       exact mul_comm _ _

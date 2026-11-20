@@ -22,12 +22,14 @@ private theorem sum_sec_eq_zero (Pa : Parts C) (F : Coef C) (hF : Pa.Add F) {Q P
       a i • c (S.B s) ((u i).app _ (Q.map (S.f s) y)) := by
     intro i
     rw [map_zsmul, hc' (S.f s) _, FunctorToTypes.naturality]
-  rw [map_zero, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_zero, map_sum]
   simp only [hnat]
   rcases hs s with h0 | h0
   · have hL := congrArg
       (Finsupp.liftAddHom fun p : P.obj (S.B s) => zmultiplesHom (F.obj (S.B s)) (c (S.B s) p)) h0
-    simpa [map_sum] using hL
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [map_sum] using hL
   · apply (hF _ _ h0).1
     funext e
     exact e.elim
@@ -43,7 +45,8 @@ private theorem locSum_zero (Pa : Parts C) (T : Theory C) (F : Coef C) (hF : Pa.
     intro z w
     simp [map_add])
   show E (∑ i, a i • T.pull (u i) F 0 x) = 0
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   have hE : ∀ i, E (a i • T.pull (u i) F 0 x) = a i • (T.zero P F x).1 A ((u i).app A y) := by
     intro i
     rw [map_zsmul]
@@ -60,7 +63,8 @@ private theorem locSum_shift (T : Theory C) {Q P : C ⥤ Type} {I : Type} [Finty
   obtain ⟨w, rfl⟩ := (T.ex₁ P S hS j x).1 (hsub.elim _ _)
   have hδ : ∑ i, a i • T.δ Q S hS j (T.pull (u i) S.X₃ j w) =
       T.δ Q S hS j (∑ i, a i • T.pull (u i) S.X₃ j w) := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [map_zsmul]
   simp only [T.pull_δ]
   rw [hδ, ih w, map_zero]

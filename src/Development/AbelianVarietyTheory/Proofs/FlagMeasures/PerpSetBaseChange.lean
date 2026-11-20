@@ -114,12 +114,14 @@ theorem perpSet_baseChange : ∀ (E A : Type) [Field E] [CommRing A] (σ : E →
   have key : ∀ w z : Fin n → E, Formalism.UG.hform s (J.map ι) (fun i => ι (w i)) (fun i => ι (z i)) =
       ι (Formalism.UG.hform σ J w z) := by
     intro w z
-    simp only [Formalism.UG.hform, Matrix.map_apply, hs, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Formalism.UG.hform, Matrix.map_apply, hs, map_sum, map_mul]
 
   have pair : ∀ (w : Fin n → E) (y : Fin n → A), Formalism.UG.hform s (J.map ι) (fun i => ι (w i)) y =
       ∑ j, ι (formRight σ J w (Pi.single j 1)) * y j := by
     intro w y
-    simp only [formRight_apply, Formalism.UG.hform, Matrix.map_apply, hs, Pi.single_apply, mul_ite, mul_one,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [formRight_apply, Formalism.UG.hform, Matrix.map_apply, hs, Pi.single_apply, mul_ite, mul_one,
       mul_zero, Finset.sum_ite_eq', Finset.sum_ite_eq, Finset.mem_univ, if_true, map_sum, map_mul,
       Finset.sum_mul]
     rw [Finset.sum_comm]

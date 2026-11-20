@@ -140,7 +140,8 @@ theorem del_key {V : Type} [AddCommGroup V] [Module Ω V] {s N : ℕ} (Rs Rt : S
     have hl2 : l ⬝ᵥ (f ^ (m₁ + m') • (Fintype.linearCombination Ω (fun (i : Fin N) (k : Fin s) => Hs i (v k)) a -
         Fintype.linearCombination Ω (fun (i : Fin N) (k : Fin s) => Ht i (v k)) a)) =
         ∑ i, f ^ m₁ * a i * (f ^ m' * (Hs i (∑ k, l k • v k) - Ht i (∑ k, l k • v k))) := by
-      simp only [map_sum, map_smul, smul_eq_mul, dotProduct, Pi.smul_apply, Pi.sub_apply,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, smul_eq_mul, dotProduct, Pi.smul_apply, Pi.sub_apply,
         Fintype.linearCombination_apply, Finset.sum_apply]
       simp only [Finset.mul_sum, ← Finset.sum_sub_distrib]
       rw [Finset.sum_comm]

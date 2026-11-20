@@ -128,7 +128,8 @@ theorem sphAt_of (hL : LatSt) {M : Model σ X W} {ψ : AddChar (AF F) ℂ} {om :
     set φ' := ∑ i, ω (x i, 1) φ with hφ'
     have hφ'S : φ' ∈ SB _ := sum_mem fun i _ => (hxr i φ hφ).1
     have hφ'ι : ι φ' = fun Y => ∑ i, ι φ (((g i)⁻¹).val * Y) := by
-      rw [hφ', map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hφ', map_sum]
       funext Y
       rw [Finset.sum_apply]
       exact Finset.sum_congr rfl fun i _ => congrFun (hterm i) Y
@@ -161,7 +162,8 @@ theorem sphAt_of (hL : LatSt) {M : Model σ X W} {ψ : AddChar (AF F) ℂ} {om :
     set φ' := ∑ i, ((α (gdet (h i)) : ℂ))⁻¹ • ω (1, y i) φ with hφ'
     have hφ'S : φ' ∈ SB _ := sum_mem fun i _ => Submodule.smul_mem _ _ (hyr i φ hφ).1
     have hφ'ι : ι φ' = fun Y => ∑ i, ι φ (Y * (h i).val) := by
-      rw [hφ', map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hφ', map_sum]
       funext Y
       rw [Finset.sum_apply]
       exact Finset.sum_congr rfl fun i _ => congrFun (hterm i φ hφ) Y

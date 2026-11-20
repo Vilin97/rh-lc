@@ -48,7 +48,8 @@ theorem form_y_x {n n₁ : ℕ} {B : Base F E} {X : Spc F E n} {X₁ : Spc F E n
     form σ X.J H.y H.x = -1 := by
   have h := congrArg σ hH.xy
   have hs' : ∀ i j, σ (X.J i j) = -X.J j i := fun i j => hs j i
-  simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, map_one, hs', Finset.mul_sum] at h
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, map_one, hs', Finset.mul_sum] at h
   simp only [form, dotProduct, Matrix.mulVec, Finset.mul_sum]
   rw [← h, Finset.sum_comm, ← Finset.sum_neg_distrib]
   refine Finset.sum_congr rfl fun i _ => ?_

@@ -42,7 +42,8 @@ private theorem factor (l : ℕ) [Fact l.Prime] (G : Type) [Group G] [Topologica
         rw [← sub_eq_zero, ← map_one (Ideal.Quotient.mk m), ← map_sub, Ideal.Quotient.eq_zero_iff_mem]
         exact hy
       have hS : (∑ i ∈ Finset.range l, (x ^ (l ^ k)) ^ i) ∈ m := by
-        rw [← Ideal.Quotient.eq_zero_iff_mem, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [← Ideal.Quotient.eq_zero_iff_mem, map_sum]
         simp only [map_pow, h1, one_pow, Finset.sum_const, Finset.card_range, nsmul_eq_mul, mul_one]
         rw [← map_natCast (Ideal.Quotient.mk m), Ideal.Quotient.eq_zero_iff_mem]
         exact hl

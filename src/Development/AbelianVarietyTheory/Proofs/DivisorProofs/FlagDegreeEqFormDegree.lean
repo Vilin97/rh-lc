@@ -112,7 +112,8 @@ theorem coeff_aeval_lin (r : V → MvPolynomial E ℝ) (c : E → V → ℝ) (h 
       rintro rfl
       exact he hf
     rw [h2, pderiv_aeval_lin r e (c e) (h e), ih, apolar_sum_left] at h1
-    rw [Finset.sum_insert he, Finset.prod_insert he, add_comm, Finset.sum_mul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_insert he, Finset.prod_insert he, add_comm, Finset.sum_mul, map_sum]
     simp only [Nat.cast_zero, zero_add, one_mul] at h1
     rw [← h1]
     refine Finset.sum_congr rfl fun x _ => ?_
@@ -153,13 +154,15 @@ theorem pderiv_rootForm (e : ι × Fin N × Fin N) (x : ι × Fin N) : pderiv e 
       have : (s, i, b') ≠ (τ, a, b) := fun h' => hb (by simp_all)
       by_cases h' : i < b' <;> simp [h', pderiv_X_of_ne this]
     · simp
-  simp only [rootForm, map_sub, map_sum, inc]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [rootForm, map_sub, map_sum, inc]
   rw [h1, h2]
   split_ifs <;> simp
 
 omit [Fintype ι] [DecidableEq ι] in
 theorem constantCoeff_rootForm (x : ι × Fin N) : constantCoeff (rootForm x) = 0 := by
-  simp [rootForm, map_sum, apply_ite]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [rootForm, map_sum, apply_ite]
 
 def pairs (ι : Type) [Fintype ι] (N : ℕ) : Finset (ι × Fin N × Fin N) := Finset.univ.filter fun e => e.2.1 < e.2.2
 
@@ -234,7 +237,8 @@ theorem superFact_ne_zero (N : ℕ) : (superFact N : ℝ) ≠ 0 := by
 
 theorem degFl_eq_formDeg (ι : Type) [Fintype ι] [DecidableEq ι] (N : ℕ) (P : Pol ι N) :
     degFl ι N P = formDeg (toForm P) := by
-  rw [formDeg, toForm, volExp_eq, coeff_aeval_lin rootForm inc pderiv_rootForm constantCoeff_rootForm, prod_pairs,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [formDeg, toForm, volExp_eq, coeff_aeval_lin rootForm inc pderiv_rootForm constantCoeff_rootForm, prod_pairs,
     C_mul', map_smul, map_sum, eq_div_iff (pow_ne_zero _ (superFact_ne_zero N)), degFl, smul_eq_mul, mul_assoc,
     Finset.sum_mul]
   congr 1

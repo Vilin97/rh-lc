@@ -111,7 +111,8 @@ theorem sum_sq_eigVar : sgnSub (Var O) (∑ i, X (eigVar O i) ^ 2) = 2 * ∑ x, 
   have h (i) : sgnSub (Var O) (X (eigVar O i) ^ 2) = X (Sum.inl (rootAt O i)) ^ 2 := by
     unfold eigVar
     split_ifs <;> simp [sgnSub]
-  rw [map_sum, Finset.sum_congr rfl fun i _ => h i, Fintype.sum_sum_type, two_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_congr rfl fun i _ => h i, Fintype.sum_sum_type, two_mul]
   congr 1
   · exact Equiv.sum_comp (rootEquiv O.S) fun x => (X (Sum.inl x) ^ 2 : MvPolynomial (Var O) ℝ)
   · exact Equiv.sum_comp (Fin.revPerm.trans (rootEquiv O.S)) fun x => (X (Sum.inl x) ^ 2 : MvPolynomial (Var O) ℝ)
@@ -159,7 +160,8 @@ theorem sgnSub_diff : sgnSub (Var O)
   have e₃ := Equiv.sum_comp (finSumFinEquiv (m := D.R.f * O.N) (n := D.R.f * O.N)).symm
     fun i => (X (wholeVar O i) ^ 2 : MvPolynomial (Var O ⊕ Var O) ℝ)
   have e₄ : sgnSub (Var O) (∑ i, X (wholeVar O i) ^ 2) = ∑ i, X (Sum.inr i) ^ 2 := by
-    simp only [map_sum, map_pow, sgnSub, wholeVar, aeval_X, Sum.elim_inl]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_pow, sgnSub, wholeVar, aeval_X, Sum.elim_inl]
   have e₅ : (C (1 / 2 : ℝ) : MvPolynomial (Var O) ℝ) * 2 = 1 := by
     rw [show (2 : MvPolynomial (Var O) ℝ) = C 2 from rfl, ← C_mul]
     norm_num

@@ -36,7 +36,8 @@ theorem gen_conj {v : FinPl D} (π : AE D →+* Fv D.host.F v)
   ext i j
   simp only [Matrix.map_apply, Matrix.transpose_apply, Matrix.of_apply, cA_tmul_pair]
   rw [tmul_eq_mul]
-  simp only [map_mul, hA, Matrix.smul_apply, smul_eq_mul, Matrix.mul_apply, vecMulVec_apply, star_mul', star_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_mul, hA, Matrix.smul_apply, smul_eq_mul, Matrix.mul_apply, vecMulVec_apply, star_mul', star_sum,
     star_star, GlobalTheory.LatVac.gram_star, map_sum]
   rw [show sndA D.host.F (pairA D.host.F 0 α) = α from rfl]
   simp only [Matrix.map_apply, Finset.mul_sum]

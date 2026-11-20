@@ -92,7 +92,8 @@ theorem _root_.GlobalTheory.TraceSpread.map_trace {R K : Type} [CommRing R] [Com
     (A' : Module.End K (Fin n → K)) (h : ∀ c, f ∘ A c = A' (f ∘ c)) :
     f (LinearMap.trace R _ A) = LinearMap.trace K _ A' := by
   classical
-  rw [LinearMap.trace_eq_matrix_trace R (Pi.basisFun R (Fin n)),
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [LinearMap.trace_eq_matrix_trace R (Pi.basisFun R (Fin n)),
     LinearMap.trace_eq_matrix_trace K (Pi.basisFun K (Fin n)), Matrix.trace, Matrix.trace, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   simp only [Matrix.diag_apply, LinearMap.toMatrix_apply, Pi.basisFun_repr, Pi.basisFun_apply]

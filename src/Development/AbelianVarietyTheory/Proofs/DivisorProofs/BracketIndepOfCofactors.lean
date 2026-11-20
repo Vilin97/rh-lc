@@ -18,7 +18,8 @@ theorem bracket_indep_of_cofactors : ∀ (A B M : Type) [CommRing A] [CommRing B
   have hterm : ∀ i, aeval D (G i) • m i - aeval D (G' i) • m i
       = ∑ j, aeval D (H i j) • (D j • m i) := by
     intro i
-    rw [← sub_smul, ← map_sub, hG' i, map_sum, Finset.sum_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← sub_smul, ← map_sub, hG' i, map_sum, Finset.sum_smul]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_mul, aeval_X, mul_comm, mul_smul]
   simp_rw [hterm]

@@ -68,13 +68,15 @@ theorem twCent_iff_gram : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E]
 theorem herm_finsum_left {K : GlobalTheory.UnitLemma.UQ} (B : GlobalTheory.UnitLemma.InvAlg K) (β : B.A) {ι : Type} (s : Finset ι)
     (v : ι → K.E) (x : ι → B.A) (z : B.A) :
     B.herm β (∑ i ∈ s, v i • x i) z = ∑ i ∈ s, v i * B.herm β (x i) z := by
-  simp only [GlobalTheory.UnitLemma.InvAlg.herm, Finset.mul_sum, Finset.sum_mul, map_sum, mul_smul_comm, smul_mul_assoc,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [GlobalTheory.UnitLemma.InvAlg.herm, Finset.mul_sum, Finset.sum_mul, map_sum, mul_smul_comm, smul_mul_assoc,
     map_smul, smul_eq_mul]
 
 theorem herm_finsum_right {K : GlobalTheory.UnitLemma.UQ} (B : GlobalTheory.UnitLemma.InvAlg K) (β y : B.A) {ι : Type} (s : Finset ι)
     (r : ι → K.E) (x : ι → B.A) :
     B.herm β y (∑ i ∈ s, r i • x i) = ∑ i ∈ s, K.c (r i) * B.herm β y (x i) := by
-  simp only [GlobalTheory.UnitLemma.InvAlg.herm, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [GlobalTheory.UnitLemma.InvAlg.herm, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [Algebra.smul_def, RingEquiv.map_mul B.σ, B.σ_alg, ← Algebra.smul_def, mul_smul_comm, map_smul, smul_eq_mul]
 
@@ -88,7 +90,8 @@ theorem gram_isometry_iff : ∀ (E : Type) [Field E] [NumberField E] [IsCMField 
   have hent : ∀ i j, ((M.map e)ᵀ * gram e b β * (M.map e).map (cj w)) i j = e (B.herm β (f (b i)) (f (b j))) := by
     intro i j
     rw [hf i, hf j, herm_finsum_left]
-    simp only [herm_finsum_right, Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, gram, Matrix.of_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [herm_finsum_right, Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, gram, Matrix.of_apply,
       Finset.mul_sum, Finset.sum_mul, map_sum, map_mul, hec]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun l _ => ?_
@@ -101,7 +104,8 @@ theorem gram_isometry_iff : ∀ (E : Type) [Field E] [NumberField E] [IsCMField 
       rw [← hent, h]
       rfl
     rw [← b.sum_repr y, ← b.sum_repr z]
-    simp only [map_sum, map_smul, herm_finsum_left, herm_finsum_right, hij]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, herm_finsum_left, herm_finsum_right, hij]
   · intro h
     ext i j
     rw [hent, h]
@@ -115,12 +119,14 @@ theorem twCent_equiv_torus : ∀ (E : Type) [Field E] [NumberField E] [IsCMField
     have hsum : ∀ z, B.herm β y z = ∑ i, b.repr y i * B.herm β (b i) z := by
       intro z
       conv_lhs => rw [← b.sum_repr y]
-      simp only [GlobalTheory.UnitLemma.InvAlg.herm, Finset.mul_sum, Finset.sum_mul, map_sum, mul_smul_comm,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [GlobalTheory.UnitLemma.InvAlg.herm, Finset.mul_sum, Finset.sum_mul, map_sum, mul_smul_comm,
         smul_mul_assoc, map_smul, smul_eq_mul]
     have h1 : Matrix.vecMul (fun i => e (b.repr y i)) (gram e b β) = 0 := by
       funext j
       have := congrArg e (hsum (b j))
-      rw [hy, map_zero, map_sum] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hy, map_zero, map_sum] at this
       simp only [Matrix.vecMul, dotProduct, gram, Matrix.of_apply, Pi.zero_apply]
       rw [this]
       simp only [map_mul]

@@ -371,7 +371,8 @@ theorem exists_idem (I : Ideal (𝓞 D.host.F)) (hI : I ≠ ⊥) : ∃ α ∈ in
   have hev : ∀ w, evalV D.host.F w (∑ v ∈ hfin.toFinset, singleV D.host.F v 1) =
       if w ∈ hfin.toFinset then 1 else 0 := by
     intro w
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     rw [Finset.sum_congr rfl (g := fun v => if w = v then (1 : Fv D.host.F w) else 0)]
     · exact Finset.sum_ite_eq _ _ _
     · intro v _

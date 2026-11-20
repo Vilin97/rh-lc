@@ -85,7 +85,8 @@ theorem aeval_scale {g : MRing ι} {d : K → ℕ} (hg : IsMultiHomog g d) (μ :
   classical
   conv_lhs => rw [g.as_sum]
   conv_rhs => rw [g.as_sum]
-  rw [map_sum, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun m hm => ?_
   rw [aeval_monomial, aeval_monomial, Finsupp.prod, Finsupp.prod]
   simp only [mul_pow, Finset.prod_mul_distrib]
@@ -107,7 +108,8 @@ theorem secM_fg (y : (Σ k, ι k) → Ω) (d : K → ℕ) : (secM y d).FG := by
       Submodule.span ℤ S := by
     rw [Submodule.span_le]
     rintro _ ⟨g, hg, rfl⟩
-    rw [SetLike.mem_coe, g.as_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [SetLike.mem_coe, g.as_sum, map_sum]
     refine Submodule.sum_mem _ fun m hm => ?_
     have hmon : aeval y (monomial m (AddMonoidAlgebra.coeff g m)) = (AddMonoidAlgebra.coeff g m) • aeval y (monomial m (1 : ℤ)) := by
       rw [aeval_monomial, aeval_monomial, zsmul_eq_mul]

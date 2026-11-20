@@ -113,7 +113,8 @@ theorem dictLatB_holds : DictLatB := by
     have hnx : n x = ∑ c, (VS D).hT (X.fY c) x • n (X.eX c) + ∑ c, (VS D).hT (X.eX c) x • n (X.fY c) +
         n (pW X x) := by
       conv_lhs => rw [decomp X x]
-      simp only [map_add, map_sum, map_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_add, map_sum, map_smul]
     rw [mem_hermitianStandardLattice_iff_pairing_integral X]
     refine ⟨fun b => ?_, fun b => ?_, ?_⟩
     · rw [hnx, map_add, map_add, hT_sumR, hT_sumR, row hn b hwW]

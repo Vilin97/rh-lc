@@ -47,12 +47,14 @@ theorem UpperTheory.ConvolutionTheory.FX.abs_growth :
   refine ⟨∑ β, B β, fun α x hx => ?_⟩
   obtain ⟨G, h1, h2, h3⟩ := hR α
   have hl : ∀ p : MvPolynomial (τ × Fin n) ℂ, 0 ≤ l1 p := fun p => Finset.sum_nonneg fun _ _ => norm_nonneg _
-  rw [h1, map_sum, Finset.sum_smul, map_sum, Finset.sum_apply, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h1, map_sum, Finset.sum_smul, map_sum, Finset.sum_apply, Finset.sum_mul]
   refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun β _ => ?_)
   have e : MvPolynomial.aeval ξ (∏ u, (MvPolynomial.X u : MvPolynomial (τ × Fin n) ℂ) ^ (β u : ℕ)) =
       MvPolynomial.aeval I (∏ u, (MvPolynomial.C (Λ u) + MvPolynomial.X (idx u.2) : MvPolynomial (Fin r) ℂ) ^ (β u : ℕ)) := by
     simp [hξ]
-  rw [map_mul, mul_smul, ← cen, e, ← mul_smul, MvPolynomial.aeval_def Z, MvPolynomial.eval₂_eq, Finset.sum_mul, Finset.sum_smul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_mul, mul_smul, ← cen, e, ← mul_smul, MvPolynomial.aeval_def Z, MvPolynomial.eval₂_eq, Finset.sum_mul, Finset.sum_smul,
     map_sum, Finset.sum_apply]
   have hG : l1 (G β) ≤ K ^ α.degree := (Finset.single_le_sum (fun β _ => hl (G β)) (Finset.mem_univ β)).trans h2
   calc _ ≤ ∑ γ ∈ (G β).support, ‖(G β).coeff γ‖ * (B β * max |C| 1 ^ α.degree) := by

@@ -224,7 +224,8 @@ theorem sobO_dvL_le (hc : Chart θ σ) (hψ : IsStdChar D ψ (-1)) (p : ℕ) {ρ
     (m : thetaSub ψ S T) : sobO ψ θ μ 𝓕 p (dvL hc hψ S T z m).1 ≤
       (Fintype.card (D.what₂.Tau × Fin T.rank × Fin S.rank × Bool) * ρ : ℝ≥0) * sobO ψ θ μ 𝓕 (p + 1) m.1 := by
   obtain ⟨c, h1, rfl⟩ := exists_coord z
-  rw [map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, LinearMap.sum_apply]
   refine (Finset.le_sum_of_subadditive (fun m : thetaSub ψ S T => sobO ψ θ μ 𝓕 p m.1) ?_
     (fun x y => sobO_add_le hψ hc.inf x.2 y.2 p) _ _).trans ((Finset.sum_le_card_nsmul _ _
       (ρ * sobO ψ θ μ 𝓕 (p + 1) m.1) fun a _ => ?_).trans_eq ?_)
@@ -318,7 +319,8 @@ theorem cube_dilate_bound (hψ : IsStdChar D ψ (-1)) (hc : Chart θ σ) {N : �
   have hsum : ∀ t : Fin N → ℝ, 0 + ∑ i, iotaW σ T S (t i • n • b i) = e (ι t) := fun t => by
     rw [he]
     show _ = n • iotaW σ T S (b.equivFun.symm t)
-    rw [zero_add, Module.Basis.equivFun_symm_apply, ← map_nsmul, Finset.smul_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [zero_add, Module.Basis.equivFun_symm_apply, ← map_nsmul, Finset.smul_sum, map_sum]
     exact Finset.sum_congr rfl fun i _ => by rw [smul_comm]
   have en : ∀ z : ℂ, ENNReal.ofReal (‖z‖ ^ 2) = ‖z‖ₑ ^ 2 := fun z => by
     rw [ENNReal.ofReal_pow (norm_nonneg _), ofReal_norm_eq_enorm]

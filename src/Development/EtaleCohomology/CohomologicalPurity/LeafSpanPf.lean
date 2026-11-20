@@ -92,7 +92,8 @@ theorem key {R A : Type} [CommRing R] [CommRing A] [Algebra R A] (I : Ideal A) {
     obtain ⟨b, hb⟩ := Ideal.mem_span_range_iff_exists_fun.mp (hfI a ha)
     have e1 : D R A (f * a) = f • D R A a + a • D R A f := Derivation.leibniz _ _ _
     have e2 : D R A (f * a) = ∑ j, (b j • D R A (x j) + x j • D R A (b j)) := by
-      rw [← hb, map_sum]; simp only [Derivation.leibniz]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hb, map_sum]; simp only [Derivation.leibniz]
     have e3 : f • D R A a = ∑ j, (b j • D R A (x j) + x j • D R A (b j)) - a • D R A f := by
       rw [← e2, e1]; abel
     rw [e3]
@@ -110,7 +111,8 @@ theorem key {R A : Type} [CommRing R] [CommRing A] [Algebra R A] (I : Ideal A) {
     intro k
     rw [← algebraMap_smul (A ⧸ I) (c' k), Ideal.Quotient.algebraMap_eq, hc']
   have h0 : mapBaseChange R A (A ⧸ I) (1 ⊗ₜ ω') = 0 := by
-    rw [mapBaseChange_tmul, one_smul, hω', map_sub, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [mapBaseChange_tmul, one_smul, hω', map_sub, map_sum]
     simp only [LinearMap.map_smul_of_tower, map_D, hck, hc, sub_self]
   obtain ⟨t, ht⟩ := (exact_kerCotangentToTensor_mapBaseChange R A (A ⧸ I)
     Ideal.Quotient.mk_surjective (1 ⊗ₜ ω')).mp h0

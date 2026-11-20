@@ -107,7 +107,8 @@ theorem UpperTheory.V.Alg.hh_small :
     set Z0 : Matrix ι ι R := K * ((-u) • E) with hZ0
     have Z1 : Φ.JR R * Z0 = (-u) • E := by rw [hZ0, ← mul_assoc, hK, one_mul]
     have Z2 : ∀ a b, p (Z0 a b) = 0 := fun a b => by
-      rw [hZ0, mul_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hZ0, mul_apply, map_sum]
       refine Finset.sum_eq_zero fun c _ => ?_
       have : p (E c b) = 0 := congrFun (congrFun E1 c) b
       simp [this]

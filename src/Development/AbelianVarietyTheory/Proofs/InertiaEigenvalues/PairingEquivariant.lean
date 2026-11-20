@@ -14,7 +14,8 @@ theorem vecPair_matAct {β : Y →+ Y' →+ ZMod n} (hβ : Bal A β) (T : Matrix
     (y : Fin r → Y') : vecPair r β (matAct T x) y = vecPair r β x (matAct T.transpose y) := by
   rw [vecPair_apply, vecPair_apply]
   change ∑ c, β (∑ a, T c a • x a) (y c) = ∑ a, β (x a) (∑ c, T c a • y c)
-  simp only [map_sum, AddMonoidHom.finsetSum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, AddMonoidHom.finsetSum_apply]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun c _ => hβ _ _ _
 

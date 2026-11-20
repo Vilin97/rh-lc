@@ -62,7 +62,8 @@ omit [DecidableEq n] in
 theorem hform_symm (hσ : ∀ x, σ (σ x) = x) (hJ : cT σ J = J) (x y : n → B) :
     σ (hform σ J x y) = hform σ J y x := by
   have : ∀ i j, σ (J i j) = J j i := fun i j => congrFun (congrFun hJ j) i
-  simp only [hform, map_sum, map_mul, hσ, this]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hform, map_sum, map_mul, hσ, this]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 

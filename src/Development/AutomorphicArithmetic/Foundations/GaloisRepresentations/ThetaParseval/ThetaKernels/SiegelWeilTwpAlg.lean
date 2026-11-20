@@ -116,7 +116,8 @@ theorem rp_nondeg_k (d : _root_.PositivityTheory.SiegelWeilFormula.SD_k σ) (Y :
     intro i j
     refine (traceForm_nondegenerate F E).1 _ fun z => ?_
     obtain ⟨e, rfl⟩ := hσ z
-    rw [Algebra.traceForm_apply, ← d.bs.sum_repr e, map_sum, Finset.mul_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Algebra.traceForm_apply, ← d.bs.sum_repr e, map_sum, Finset.mul_sum, map_sum]
     refine Finset.sum_eq_zero fun k _ => ?_
     rw [AlgHom.map_smul_of_tower, mul_smul_comm, map_smul, ← _root_.PositivityTheory.SiegelWeilFormula.TW.Twp.rp_eq_k, h, smul_zero]
   have hdet : IsUnit d.A.J.det := isUnit_iff_ne_zero.2 (_root_.PositivityTheory.SiegelWeilFormula.KWhit.meas_detA_k d)

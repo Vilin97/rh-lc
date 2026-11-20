@@ -224,7 +224,8 @@ theorem isIntegral_xr (hfd : FiniteDimensional (Kp X la N) (OsK X la w)) (k : Fi
     rw [hδv, hδOv, dF_xr, map_neg, map_mul, map_neg, map_mul]
   have h1 : ∑ k, T (0, k) * y k = 1 := by
     have := congrArg (fun z => π (toOsK X la w z)) (sum_T0_mul_ratio_eq_one X la w)
-    simp only [map_sum, map_mul, map_one] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, map_one] at this
     exact this
   have halg : Algebra.IsAlgebraic (Algebra.adjoin (X.Kl la) (Set.range T)) (OsK X la w ⧸ m) := by
     set Sa := Algebra.adjoin (X.Kl la) (Set.range T) with hSa
@@ -318,10 +319,12 @@ theorem generic_section_minimum_integral {D : D7} {B : WeightFamilies.Prov D} {P
   have hs1 : s = 1 := by
     apply Subtype.ext
     have := congrArg (toOsK (xplus X E hM) la G.w) (sum_T0_mul_ratio_eq_one (xplus X E hM) la G.w)
-    simp only [map_sum, map_mul, map_one] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, map_one] at this
     show (As (Op (xplus X E hM) la G.N) (OsK (xplus X E hM) la G.w)).val s =
       (As (Op (xplus X E hM) la G.N) (OsK (xplus X E hM) la G.w)).val 1
-    rw [map_sum, map_one]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_one]
     simp only [map_mul]
     exact this
   have hsζ : s ∈ ζ.asIdeal := Ideal.sum_mem _ fun k _ => Ideal.mul_mem_left _ _ (hmemζ k)

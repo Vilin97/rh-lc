@@ -206,13 +206,16 @@ theorem exists_ideal_conj (V : HSp D) (hg : V.gram = 1) (hL : Bridge.hLat V 1 = 
   simp only [← hev] at hid hcj
   obtain ⟨⟨es, hes, hsum⟩, horth⟩ := he
   have e0 : infPart D e = 0 := by
-    rw [hsum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hsum, map_sum]
     exact Finset.sum_eq_zero fun Q hQ => (hid _ _ (hes Q hQ)).1
   have e1 : ∀ Q ∈ P, ev Q e = 1 := fun Q hQ => by
-    rw [hsum, map_sum, Finset.sum_eq_single Q (fun Q' h' hne => (hid _ _ (hes Q' h')).2.2 Q hne.symm)
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hsum, map_sum, Finset.sum_eq_single Q (fun Q' h' hne => (hid _ _ (hes Q' h')).2.2 Q hne.symm)
       (fun h' => absurd hQ h'), (hid _ _ (hes Q hQ)).2.1]
   have e2 : ∀ Q, Q ∉ P → ev Q e = 0 := fun Q hQ => by
-    rw [hsum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hsum, map_sum]
     exact Finset.sum_eq_zero fun Q' h' => (hid _ _ (hes Q' h')).2.2 Q fun hh => hQ (hh ▸ h')
   have hP : ∀ Q ∈ P, GlobalTheory.IdemSupport.cP Q ∉ P := fun Q hQ hQ' => by
     have a := congrArg (ev (GlobalTheory.IdemSupport.cP Q)) horth

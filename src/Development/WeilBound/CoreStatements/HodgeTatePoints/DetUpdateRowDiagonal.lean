@@ -29,7 +29,8 @@ theorem len_eq : ∀ (C : Type) [Field C] (v : Valuation C NNReal) (R : Type) [C
     rw [eq_top_iff]
     intro z _
     obtain ⟨w, rfl⟩ := hπ z
-    rw [eq_sum_single c w, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [eq_sum_single c w, map_sum]
     refine Submodule.sum_mem _ fun i _ => ?_
     rw [map_smul]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)
@@ -58,7 +59,8 @@ theorem len_eq : ∀ (C : Type) [Field C] (v : Valuation C NNReal) (R : Type) [C
       funext i
       have hrel : ∑ k, (Quotient.out (w k) : R) • π (s k) = 0 := by
         rw [← hπw]
-        conv_rhs => rw [eq_sum_single c w, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          conv_rhs => rw [eq_sum_single c w, map_sum]
         simp only [map_smul, s]
       have h := key ((Matrix.diagonal c).updateRow i fun k => (Quotient.out (w k) : R)) (by
         intro k

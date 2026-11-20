@@ -40,7 +40,8 @@ theorem main_succ (A : Type) [Ring A] [Algebra ℂ A] (m : ℕ) (F : Fin (m+1) �
   let Rp : ℂ[X] := ∑ d ∈ range (m + 1), C (φ (Rc d)) * X ^ d
   have hRp : ∀ w : ℂ, φ (∑ d ∈ range (m + 1), w ^ d • Rc d) = Rp.eval w := by
     intro w
-    simp only [Rp, eval_finset_sum, eval_mul, eval_C, eval_pow, eval_X, map_sum, map_smul, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Rp, eval_finset_sum, eval_mul, eval_C, eval_pow, eval_X, map_sum, map_smul, smul_eq_mul]
     exact sum_congr rfl fun d _ => mul_comm _ _
   have hRpdeg : Rp.natDegree ≤ m := natDegree_sum_le_of_forall_le _ _ fun i hi =>
     (natDegree_C_mul_X_pow_le _ _).trans (Nat.lt_succ_iff.mp (mem_range.mp hi))
@@ -52,7 +53,8 @@ theorem main_succ (A : Type) [Ring A] [Algebra ℂ A] (m : ℕ) (F : Fin (m+1) �
     have h1 := congrArg φ (GlobalTheory.T.traced_qminor_comatrix_truncated_inverse A m F hF w N)
     rw [← GlobalTheory.T.qdet_add_one_sub_eq_sum_qminor', hR] at h1
     simp only [hq, ← Algebra.smul_def, map_add, map_smul, smul_eq_mul, hRp] at h1
-    simp only [mul_sum, map_sum, map_smul, map_sub, smul_eq_mul, hφa] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [mul_sum, map_sum, map_smul, map_sub, smul_eq_mul, hφa] at h1
     rw [mul_sum]
     linear_combination h1
   obtain ⟨rs, hrs, hrsE⟩ := GlobalTheory.T.scalar_capelli_truncated_perelomov_popov m N χ

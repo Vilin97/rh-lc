@@ -174,7 +174,8 @@ lemma bounded_map (φ : (m → ℂ) →ₗ[ℂ] (m → ℂ))
   choose p q hpq using fun i => (lattice_iff _ _).1 (hs' i)
   have hs_sum : s = ∑ i, Pi.single i (s i) := by
     exact (Finset.univ_sum_single s).symm
-  rw [hs_sum, map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hs_sum, map_sum, Finset.smul_sum]
   refine sum_mem fun i _ => ?_
   have e : Pi.single i (s i) = ((p i : ℤ) : ℂ) • Pi.single i (PI.ULS.cmL a b d ha hd lam hlam).ω₁ +
       ((q i : ℤ) : ℂ) • Pi.single i (PI.ULS.cmL a b d ha hd lam hlam).ω₂ := by

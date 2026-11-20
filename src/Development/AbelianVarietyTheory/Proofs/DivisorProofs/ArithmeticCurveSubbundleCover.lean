@@ -176,7 +176,8 @@ theorem isVB_cokernel_ofGeneric {Y : Scheme.{0}} [IsIntegral Y] {F : Y.Modules} 
     refine ⟨fun _ => ∑ j, a j * resG Y hTW (c j), ?_⟩
     rw [lc, ← sub_eq_zero, ← map_sub, N.cokernel_π_app_eq_zero_iff]
     intro hη
-    rw [LinearMap.mem_ker, map_sub, map_sub, val, Fintype.linearCombination_apply, map_sum, map_sum, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [LinearMap.mem_ker, map_sub, map_sub, val, Fintype.linearCombination_apply, map_sum, map_sum, map_sum,
       Finset.sum_mul, sub_eq_zero]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [val, map_mul, fnOf_resG, hc, mul_assoc, hg']
@@ -195,7 +196,8 @@ theorem coord_pullback {X Y : Scheme.{0}} [IsIntegral X] [IsIntegral Y] (ρ : Y 
   rw [Fintype.linearCombination_apply] at ha
   have e₁ : E.presheaf.germ V _ hV s = ∑ j, X.presheaf.germ _ _ hT (a j) • he.stalkBasis _ hU j := by
     rw [← germ_resM (inf_le_right : U ⊓ V ≤ V) hT, ← ha]
-    simp only [map_sum, QCoh.germ_smul, germ_resM, IsFrame.stalkBasis_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, QCoh.germ_smul, germ_resM, IsFrame.stalkBasis_apply]
   have pr {T : X.Opens} (h : U ⊓ V ≤ T) (t : Γ(E, T)) :
       QCoh.pullbackSections ρ E (le_refl (ρ ⁻¹ᵁ (U ⊓ V))) (resM E h t) =
         resM _ (ρ.preimage_mono h) (QCoh.pullbackSections ρ E (le_refl (ρ ⁻¹ᵁ T)) t) :=
@@ -203,7 +205,8 @@ theorem coord_pullback {X Y : Scheme.{0}} [IsIntegral X] [IsIntegral Y] (ρ : Y 
   have e₂ : ((Scheme.Modules.pullback ρ).obj E).presheaf.germ _ _ hV'
       (QCoh.pullbackSections ρ E (le_refl (ρ ⁻¹ᵁ V)) s) =
       ∑ j, Y.presheaf.germ _ _ hT' (ρ.appLE _ _ le_rfl (a j)) • (he.pullback ρ).stalkBasis _ hU' j := by
-    rw [← germ_resM (ρ.preimage_mono (inf_le_right : U ⊓ V ≤ V)) hT', ← pr inf_le_right, ← ha, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← germ_resM (ρ.preimage_mono (inf_le_right : U ⊓ V ≤ V)) hT', ← pr inf_le_right, ← ha, map_sum, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [QCoh.pullbackSections_smul, QCoh.germ_smul, pr, germ_resM, IsFrame.stalkBasis_apply]
   rw [e₁, e₂, Module.Basis.coord_apply, Module.Basis.coord_apply, Module.Basis.repr_sum_self,

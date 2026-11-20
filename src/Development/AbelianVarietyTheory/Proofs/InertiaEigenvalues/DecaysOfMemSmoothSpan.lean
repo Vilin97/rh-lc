@@ -50,7 +50,8 @@ theorem exists_norm_vecMul_le {κ : Set (GA E a)} (hκ : IsCompact κ) :
   obtain ⟨B, hB⟩ := hκ.exists_bound_of_continuousOn hc.continuousOn
   refine ⟨a * |B| + 1, by positivity, fun y hy x => ?_⟩
   refine (pi_norm_le_iff_of_nonneg (by positivity)).2 fun i => ?_
-  simp only [vecMul, dotProduct, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [vecMul, dotProduct, map_sum, map_mul]
   refine (norm_sum_le _ _).trans ((Finset.sum_le_card_nsmul _ _ (‖fun i => pInf E (x i)‖ * |B|) fun j _ => ?_).trans ?_)
   · refine (norm_mul_le _ _).trans (mul_le_mul (norm_le_pi_norm (fun i => pInf E (x i)) j) ?_ (norm_nonneg _)
       (norm_nonneg _))

@@ -85,7 +85,8 @@ theorem dot_hessC_star {e : ℕ} (f : (Fin e → ℂ) → ℝ) (z : Fin e → �
   have hHsum : ∀ x y : Fin e → ℂ, H x y = ∑ i, ∑ j, H (x i • E i) (y j • E j) := by
     intro x y
     conv_lhs => rw [hw x, hw y]
-    simp only [map_sum, ContinuousLinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, ContinuousLinearMap.sum_apply]
     exact Finset.sum_comm
   have hpair : ∀ i j, w i * (hessC f z i j * star (w j)) =
       (((H (w i • E i) (w j • E j) + H ((Complex.I * w i) • E i) ((Complex.I * w j) • E j)) / 4 : ℝ) : ℂ) +

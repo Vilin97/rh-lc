@@ -79,7 +79,8 @@ private theorem core (T C : Type) [CommRing T] [IsDomain T] [IsIntegrallyClosed 
       by_cases h : k = i
       · subst h; simp [Pi.single_eq_of_ne hij]
       · simp [Pi.single_eq_of_ne h]
-    · rw [map_sum, map_one]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [map_sum, map_one]
       simp only [hc]
       exact Finset.univ_sum_single 1
   refine ⟨c, hcoi, fun j => ?_⟩

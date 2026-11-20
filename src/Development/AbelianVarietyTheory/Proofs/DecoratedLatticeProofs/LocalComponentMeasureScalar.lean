@@ -51,7 +51,8 @@ theorem monoAt_of_besFrame (hU : q.UnitAA) {σ : ℕ} (B : BesLev D σ) {n : Typ
     exact Finset.sum_congr rfl fun t _ => congrArg _ (hcore.1 t a).symm
   · refine (b3 l hl r).trans ?_
     change _ * GlobalTheory.MonoSplit.prE q _ = _
-    rw [Matrix.mul_apply, Matrix.mulVec, dotProduct, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Matrix.mul_apply, Matrix.mulVec, dotProduct, map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun t _ => ?_
     rw [map_mul, mul_left_comm]
     exact congrArg _ (hcore.2 t).symm
@@ -74,7 +75,8 @@ theorem line_bes (hU : q.UnitAA) {σ : ℕ} (B : BesLev D σ) {n : Type} [Fintyp
     have e := GlobalTheory.SplitLine.line_mem_latV_iff D k q B.V L _ F _ s m hL h hs hA hB hC a ha
     convert e using 2
     funext r
-    simp [GlobalTheory.FinPl.colMul, xLast, HypDec.j0, rat, ratV, Matrix.mulVec, dotProduct, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [GlobalTheory.FinPl.colMul, xLast, HypDec.j0, rat, ratV, Matrix.mulVec, dotProduct, map_sum]
   · obtain ⟨b, m, hb, hA, hB, hC⟩ := GlobalTheory.BesPair.bes_cols D k (ofSplit q) σ B s n c FA F hF hs hz
       (GlobalTheory.MonoSplit.xi_unit q hU) i'
     have e := GlobalTheory.SplitLine.line_mem_latV_iff D k q B.V L _ F _ b m hL h hb hA hB hC a ha

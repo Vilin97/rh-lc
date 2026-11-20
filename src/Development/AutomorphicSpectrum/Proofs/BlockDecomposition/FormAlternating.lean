@@ -421,7 +421,8 @@ theorem d_pj (a b : IdF A) {n : ℕ} (z : Co A n) (hz : In a z) (s : ComposableA
   change (sqM a b _).subtype (∑ i : Fin (n + 2), (-1 : ℤ) ^ (i : ℕ) •
     ((sq a b).map (GlobalTheory.CatH.toLast i s)).hom (pj a b z hz (GlobalTheory.CatH.face i s))) =
     Ideal.Quotient.mk _ (∑ i : Fin (n + 2), (-1 : ℤ) ^ (i : ℕ) • tm s z i.succAbove (Fin.strictMono_succAbove i).monotone)
-  rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_zsmul, map_zsmul]
   rfl

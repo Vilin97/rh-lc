@@ -38,9 +38,11 @@ theorem exists_smul_eq_zero_of_crossed {G : Type} [Group G] [Finite G] {R : Type
   have hdet := Submodule.natAbs_det_equiv (LinearMap.ker L) e
   have hrel : ∀ n : LinearMap.ker L, ∃ ν : G → R, (∀ i, ε (ν i) = n.1 i) ∧ ∑ i, ν i • d i = 0 := fun n => by
     have h0 : ∑ i, n.1 i • d i ∈ J := by
-      rw [← Submodule.Quotient.mk_eq_zero, ← Submodule.mkQ_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← Submodule.Quotient.mk_eq_zero, ← Submodule.mkQ_apply, map_sum]
       have := congrArg ψ' n.2
-      rw [map_zero, Fintype.linearCombination_apply, map_sum] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_zero, Fintype.linearCombination_apply, map_sum] at this
       simpa only [map_zsmul, hψ'] using this
     obtain ⟨ν, hν, hs⟩ := h0
     refine ⟨fun i => (n.1 i : R) - ν i, fun i => ?_, ?_⟩

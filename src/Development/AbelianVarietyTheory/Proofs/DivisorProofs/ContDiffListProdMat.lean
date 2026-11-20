@@ -178,7 +178,8 @@ theorem smooth_of_der {F E : Type} [Field F] [NumberField F] [Field E] [NumberFi
     have hval : FF (D (Zt t) Ψ) (g * P t) =
         ∑ x, (cf x t : ℂ) * FF (D (bm x) Ψ) (g * P t) := by
       have e2 : D (Zt t) Ψ = ∑ x, (cf x t : ℂ) • D (bm x) Ψ := by
-        rw [hZe t, map_sum, LinearMap.sum_apply]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [hZe t, map_sum, LinearMap.sum_apply]
         refine Finset.sum_congr rfl fun x _ => ?_
         rw [map_smul, LinearMap.smul_apply]
         funext y

@@ -98,7 +98,8 @@ theorem resSec_iff {A : X.Modules} [A.IsQuasicoherent] {ε : I → Γ(A, U)} (h�
   have key (r : I → R) : resSec w A (∑ i, cst R (r i) • pullbackSections f A hU (ε i)) =
       ∑ i, cst K (algebraMap R K (r i)) • pullbackSections ξ _ hξ (pullbackSections f₀ A hVU (ε i)) := by
     unfold resSec
-    rw [map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     refine (congrArg _ (QCoh.pullbackSections_smul _ _ _ _ _)).trans ?_
     rw [Scheme.Modules.Hom.app_smul, appLE_cst]
@@ -118,7 +119,8 @@ theorem mem_dual_span (β : LinearMap.BilinForm K H) (x : I → H) (c : H) :
   rw [LinearMap.BilinForm.mem_dualSubmodule]
   refine ⟨fun h i => Submodule.mem_one.1 (h _ (Submodule.subset_span ⟨i, rfl⟩)), fun h y hy => ?_⟩
   obtain ⟨r, rfl⟩ := (mem_span_iff (K := K) x y).1 hy
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Submodule.sum_mem _ fun i _ => ?_
   rw [map_smul, algebraMap_smul]
   exact Submodule.smul_mem _ _ (Submodule.mem_one.2 (h i))
@@ -158,19 +160,22 @@ theorem reads_of_frames [DecidableEq I] (hs : (ShortComplex.mk a b z).ShortExact
   let Xs (i : I) := pullbackSections ξ D hξ (a.app V (pullbackSections f₀ A hVU (ε i)))
   let Zs (i : I) := pullbackSections ξ D hξ (s i)
   have hE' (c : I → K) (t : I → _) : E (∑ i, cst K (c i) • t i) = ∑ i, c i • E (t i) := by
-    rw [map_sum]; exact Finset.sum_congr rfl fun i _ => hE _ _
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]; exact Finset.sum_congr rfl fun i _ => hE _ _
   have dec (m : Γ((Scheme.Modules.pullback ξ).obj D, ⊤)) :
       ∃ k d : I → K, m = ∑ i, cst K (k i) • Xs i + ∑ i, cst K (d i) • Zs i := by
     refine pb_induction ξ D hV hξ (fun m => ∃ k d : I → K, m = ∑ i, cst K (k i) • Xs i + ∑ i, cst K (d i) • Zs i)
       (fun t => ?_) ?_ ?_ m
     · let d := (fθ.basis le_rfl).repr (b.app V t)
       obtain ⟨u, hu⟩ := (ex (t - ∑ i, d i • s i)).1 (by
-        rw [map_sub, map_sum, sub_eq_zero]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sub, map_sum, sub_eq_zero]
         conv_lhs => rw [← (fθ.basis le_rfl).sum_repr (b.app V t)]
         simp only [IsFrame.basis_apply, Twist.resM_self, Scheme.Modules.Hom.app_smul, hsb, d])
       refine ⟨fun i => ofFn K (ξ.appLE V ⊤ hξ ((fε.basis le_rfl).repr u i)), fun i => ofFn K (ξ.appLE V ⊤ hξ (d i)), ?_⟩
       conv_lhs => rw [eq_add_of_sub_eq hu.symm, ← (fε.basis le_rfl).sum_repr u]
-      simp only [map_add, map_sum, IsFrame.basis_apply, Twist.resM_self, Scheme.Modules.Hom.app_smul,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_add, map_sum, IsFrame.basis_apply, Twist.resM_self, Scheme.Modules.Hom.app_smul,
         QCoh.pullbackSections_smul, cst_ofFn, Xs, Zs]
     · rintro c _ ⟨k, d, rfl⟩
       exact ⟨fun i => c * k i, fun i => c * d i, by simp only [smul_add, Finset.smul_sum, map_mul, mul_smul]⟩
@@ -180,11 +185,13 @@ theorem reads_of_frames [DecidableEq I] (hs : (ShortComplex.mk a b z).ShortExact
   have ab (t) : b.app V (a.app V t) = 0 := ex.apply_apply_eq_zero t
   have hb (k d : I → K) : b' (∑ i, cst K (k i) • Xs i + ∑ i, cst K (d i) • Zs i) =
       ∑ i, cst K (d i) • pullbackSections ξ _ hξ (pullbackSections f₀ B hVU (θ i)) := by
-    simp only [b', Xs, Zs, map_add, map_sum, Scheme.Modules.Hom.app_smul, QCoh.pullback_map_app_pullbackSections, ab,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [b', Xs, Zs, map_add, map_sum, Scheme.Modules.Hom.app_smul, QCoh.pullback_map_app_pullbackSections, ab,
       hsb, map_zero, smul_zero, Finset.sum_const_zero, zero_add]
   have ha (k : I → K) : a' (∑ i, cst K (k i) • pullbackSections ξ _ hξ (pullbackSections f₀ A hVU (ε i))) =
       ∑ i, cst K (k i) • Xs i := by
-    simp only [a', Xs, map_sum, Scheme.Modules.Hom.app_smul, QCoh.pullback_map_app_pullbackSections]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [a', Xs, map_sum, Scheme.Modules.Hom.app_smul, QCoh.pullback_map_app_pullbackSections]
   have hp' (t u) : dualApp (β₀.app V t) le_rfl (a.app V u) = dualApp (p.app V (b.app V t)) le_rfl u :=
     congr(dualApp (($hp).app V t) le_rfl u).symm
   have hE₂ (k d : I → K) : E (∑ i, cst K (k i) • Xs i + ∑ i, cst K (d i) • Zs i) =
@@ -260,7 +267,8 @@ theorem exists_equiv [Algebra Γ(T, V) K] (hσ : ∀ r, algebraMap Γ(T, V) K r 
     rw [map_smul, Finsupp.smul_apply, smul_eq_mul, map_mul, mul_smul]
     exact congrArg (· • _) (ofFn_cst c)
   · rw [hE]
-    conv_rhs => rw [← (hδ.basis le_rfl).sum_repr s, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_rhs => rw [← (hδ.basis le_rfl).sum_repr s, map_sum, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, map_smulₛₗ, hσ, hb]
     exact congrArg (fun z => ofFn K z • _) (hδ.pullback_basis_repr ξ le_rfl hξ s i)
@@ -347,7 +355,8 @@ theorem tv_sum {I : Type} [Fintype I] (c : I → k) (σ : I → Γ(omega B, ⊤)
     tv (∑ i, cst k (c i) • σ i) v hv = ∑ i, c i * tv (σ i) v hv := by
   let L : omega B ⟶ structureModule (Sp k) := cotMap (T' := specO k (DualNumber k)) v (epsZero_comp_of_isTangent hv) ≫ (epsIso k).hom
   change ofFn k (L.app ⊤ _) = ∑ i, c i * ofFn k (L.app ⊤ _)
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine (map_sum (ofFn k) _ _).trans (Finset.sum_congr rfl fun i _ => ?_)
   rw [Scheme.Modules.Hom.app_smul]
   exact (map_mul (ofFn k) _ _).trans (by rw [ofFn_cst])
@@ -418,7 +427,8 @@ theorem forms_eq_span {R K : Type} [CommRing R] [Field K] [Algebra R K] [QuasiSe
       ((Module.forall_dual_apply_eq_zero_iff K _).1 fun h => ?_)⟩
     obtain ⟨v, hhv, -⟩ := H.1 h
     have e₁ := (hl v h hhv).trans ((hs ⟨v, (HodgeSubSurj.isTangent_iff_ptMap v).1 hhv.1⟩).trans (tv_sum d _ hhv.1))
-    rw [map_sub, e₁, map_sum, sub_eq_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, e₁, map_sum, sub_eq_zero]
     exact Finset.sum_congr rfl fun i _ => (map_smul h _ _).trans (congrArg (d i * ·) (hv i h v hhv))
   have key (i : Fin n) (v : epsR R ⟶ G') (v' : epsR K ⟶ A') (h : HdR A') (t : IsTangent v)
       (ev : v'.left ≫ χ = spMap (Formalism.L2.Pj.dualMap (algebraMap R K)) ≫ v.left) (hh : IsLieImage h v') :
@@ -432,7 +442,8 @@ theorem forms_eq_span {R K : Type} [CommRing R] [Field K] [Algebra R K] [QuasiSe
     obtain ⟨v', ev⟩ := ArcQ.NormalForm.exists_baseChange hχ v
     obtain ⟨h, hh⟩ := H.2 v' (ArcQ.NormalForm.isTangent_baseChange hχ ev t)
     have := Submodule.mem_one.1 (hc.2 v v' h t ev hh)
-    rw [map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at this
     simp only [map_smul, key _ v v' h t ev hh, hvt] at this
     simpa [Pi.single_apply, apply_ite (algebraMap R K)] using this
   choose r hr using this

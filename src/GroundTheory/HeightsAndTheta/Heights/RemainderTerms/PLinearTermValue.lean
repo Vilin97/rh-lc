@@ -118,7 +118,8 @@ theorem LinearTermValue.proof (hA : LemmaA.Statement) (hB : LemmaB.Statement)
   have hS'eq : S' = C (κ * b) * X (⟨0, by omega⟩ : Fin (r + a)) := by
     apply Flag.powerSumHom_injective
     rw [hS', hPeq, hres]
-    simp only [powerSumHom, map_mul, aeval_C, aeval_X, algebraMap_eq, psum, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [powerSumHom, map_mul, aeval_C, aeval_X, algebraMap_eq, psum, map_sum,
       SmallBlock.sign, map_one, one_mul, one_smul, zero_add, pow_one]
     first | done | ring
   rw [hS'eq, one_mul] at hI

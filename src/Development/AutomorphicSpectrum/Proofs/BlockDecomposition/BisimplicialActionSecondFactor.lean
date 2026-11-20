@@ -243,7 +243,8 @@ theorem act_const {p : ℕ} (x : Cn F 1) (hx : dn F 1 x = 0) (θ : Fin 2 →o Fi
     have c : ∀ i : Fin 3, (cst 2 (0 : Fin 1)).comp (Fin.succAboveOrderEmb i).toOrderHom = cst 1 (0 : Fin 1) :=
       fun i ↦ by ext j; simp [cst]
     have key : act F (cst 2 (0 : Fin 1)) (dn F 1 x) = act F (cst 1 (0 : Fin 1)) x := by
-      simp only [dn, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, cof_eq]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [dn, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, cof_eq]
       simp only [← act_comp, c]
       simp [Fin.sum_univ_succ]
     rw [← key, hx, map_zero]

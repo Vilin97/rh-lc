@@ -51,7 +51,8 @@ theorem exists_interpolation_basis (Y : Type) (r : ℕ) (g : Fin r → Y → ℂ
     simp [Φ, hev, Finset.sum_apply, Pi.single_apply]
   have h3 := congrArg (fun w : V => (w : Y → ℂ) y) h1
   simp only at h3
-  rw [h3, h2, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h3, h2, map_sum]
   simp [Finset.sum_apply, map_smul]
 
 end GlobalTheory

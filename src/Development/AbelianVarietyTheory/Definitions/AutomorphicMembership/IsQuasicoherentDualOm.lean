@@ -184,7 +184,8 @@ variable {Z} {n : ℕ} (h : HTOn Z n)
 def imHT : Sub (modN Z.om (p ^ n)) := spanSub fun i => h.1 (Module.Free.chooseBasis ℤ Dw.La i)
 
 theorem mem_imHT (t : Dw.La) : h.1 t ∈ (imHT h).sec ⊤ := by
-  rw [← (Module.Free.chooseBasis ℤ Dw.La).sum_repr t, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← (Module.Free.chooseBasis ℤ Dw.La).sum_repr t, map_sum]
   refine sum_mem fun i _ => ?_
   rw [map_zsmul]
   have := res_mem_spanSub (fun i => h.1 (Module.Free.chooseBasis ℤ Dw.La i)) i ⊤

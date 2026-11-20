@@ -93,7 +93,8 @@ theorem hop_mem_fixed {ρ : Representation ℂ G V} {K : Subgroup G} {g : G} [Fi
   letI := Fintype.ofFinite (K ⧸ stabK K g)
   rw [mem_fixed_iff]
   intro k hk
-  rw [hop_apply, finsum_eq_sum_of_fintype, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hop_apply, finsum_eq_sum_of_fintype, map_sum]
   let F : K → V := fun y => ρ (y : G) (ρ g v)
   have hF : ∀ x, ∀ h ∈ stabK K g, F (x * h) = F x := term_inv hv
   have step : ∀ q : K ⧸ stabK K g, ρ k (ρ ((q.out : K) : G) (ρ g v)) =
@@ -174,7 +175,8 @@ theorem comm_core (ρ : Representation ℂ G V) (J : Subgroup G) (τ : G → G) 
   have key : ∀ A B : Finset G, ∑ γ ∈ A, ρ γ (∑ δ ∈ B, ρ δ x)
       = ∑ p ∈ A ×ˢ B, f ((p.1 * p.2 : G) : G ⧸ J) := fun A B => by
     rw [Finset.sum_product]
-    simp only [hf, map_sum, map_mul, Module.End.mul_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hf, map_sum, map_mul, Module.End.mul_apply]
   rw [key, key]
   let T : Finset (G ⧸ J) := (R ×ˢ S).image (fun p => ((p.1 * p.2 : G) : G ⧸ J)) ∪
     (S ×ˢ R).image (fun p => ((p.1 * p.2 : G) : G ⧸ J))
@@ -264,7 +266,8 @@ theorem fixed_simple {K : Subgroup G} (hK : GelPair K) (ρ : Representation ℂ 
     refine Submodule.mem_map.2 ⟨⟨hop ρ K (gs i) (ws i), hop_mem_fixed hwf⟩,
       hst (gs i) u hu _ (by show hop ρ K (gs i) (ws i) = hop ρ K (gs i) u; rw [← hue]; rfl), rfl⟩
   have hsum : P x ∈ W' := by
-    rw [← hs, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hs, map_sum]
     refine W'.sum_mem fun i _ => ?_
     rw [map_smul, hgw i]
     exact W'.smul_mem _ (hPs i)

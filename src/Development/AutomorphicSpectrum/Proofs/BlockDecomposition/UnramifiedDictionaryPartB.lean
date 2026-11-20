@@ -19,7 +19,8 @@ theorem sub_mem_span_pow {O : Type*} [CommRing O] (τ : O →+* O) (π : O) (q :
     have e1 : τ (x ^ q - x) = τ z * π := by rw [← hz, map_mul, hτπ]
     rw [map_sub, map_pow] at e1
     have hsum : ∑ i ∈ Finset.range q, (τ x) ^ i * x ^ (q - 1 - i) ∈ Ideal.span {π} := by
-      rw [← Ideal.Quotient.eq_zero_iff_mem, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← Ideal.Quotient.eq_zero_iff_mem, map_sum]
       have hab : Ideal.Quotient.mk (Ideal.span {π}) (τ x) = Ideal.Quotient.mk (Ideal.span {π}) x :=
         Ideal.Quotient.eq.mpr (h1 x)
       simp only [map_mul, map_pow, hab]

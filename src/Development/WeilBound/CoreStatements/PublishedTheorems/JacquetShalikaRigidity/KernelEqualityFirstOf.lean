@@ -241,7 +241,8 @@ theorem law_memO {w : Pl E} (x : w.adicCompletion E) :
 
 theorem law_lr (hk : 1 ≤ k) {R R' : Type} [CommRing R] [CommRing R'] (σ : R →+* R') (M : Matrix (Fin k) (Fin k) R) (c : Fin k) :
     σ (∑ i : Fin k, if (i : ℕ) + 1 = k then M i c else 0) = M.map σ ⟨k - 1, by omega⟩ c := by
-  rw [map_sum, Finset.sum_eq_single (⟨k - 1, by omega⟩ : Fin k)]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_eq_single (⟨k - 1, by omega⟩ : Fin k)]
   · rw [if_pos (by simp; omega)]; rfl
   · intro b _ hb; rw [if_neg, map_zero]
     intro h; exact hb (Fin.ext (by simp; omega))
@@ -433,7 +434,8 @@ theorem sph_memO {w : Pl E} (x : w.adicCompletion E) :
 
 theorem sph_lr (hk : 1 ≤ k) {R' : Type} [CommRing R'] (σ : Ad E →+* R') (g : GA E k) (c : Fin k) :
     σ (lastRow g c) = (g.val.map σ) ⟨k - 1, by omega⟩ c := by
-  rw [lastRow, map_sum, Finset.sum_eq_single (⟨k - 1, by omega⟩ : Fin k)]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [lastRow, map_sum, Finset.sum_eq_single (⟨k - 1, by omega⟩ : Fin k)]
   · rw [if_pos (by simp; omega)]; rfl
   · intro b _ hb; rw [if_neg, map_zero]
     intro h; exact hb (Fin.ext (by simp; omega))

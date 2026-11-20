@@ -176,11 +176,13 @@ theorem exists_ist [FiniteDimensional K V] [CharZero K] (G G' : FlagD H r) {j : 
   have hsX : ∀ b, s b ∈ G.X := fun b => by
     rw [hsd]; exact Submodule.sum_mem _ fun a _ => Submodule.smul_mem _ _ (e_mem_X G a)
   have hsy : ∀ a b : Fin r, j ≤ b.val → H.B (s a) (y b) = H.B (y a) (y b) / 2 := fun a b hb => by
-    rw [hsd, map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hsd, map_sum, LinearMap.sum_apply]
     simp [hy1, hb]
   refine ⟨fun b => y b - s b, fun a b => ?_, fun b u hu => ?_, fun b => ?_, fun a b ha hb => ?_⟩
   · rw [map_sub, hy1, e_X G _ (hsX b), sub_zero]
-  · rw [map_sub, hy2 b u hu, hsd, map_sum, Finset.sum_eq_zero, sub_zero]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sub, hy2 b u hu, hsd, map_sum, Finset.sum_eq_zero, sub_zero]
     intro a ha
     rw [map_smulₛₗ, hp a.castSucc (Finset.mem_filter.mp ha).2 u hu, smul_zero]
   · rw [map_sub, hy3, z_X G (hsX b), sub_zero]
@@ -232,7 +234,8 @@ theorem exists_nf : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [Add
       (G'.e (Fin.castLE (hj.trans (Nat.le_succ r)) b)) = w.mat a b * ((sgn b : ℤ) : K) := fun a b => by
     have h := congrFun (congrFun hW a) b
     rw [Matrix.of_apply] at h
-    rw [← h, hG, hG', hf, hf', dif_pos (show (Fin.castLE (hj.trans (Nat.le_succ r)) a).val < j from a.isLt),
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← h, hG, hG', hf, hf', dif_pos (show (Fin.castLE (hj.trans (Nat.le_succ r)) a).val < j from a.isLt),
       dif_pos (show (Fin.castLE (hj.trans (Nat.le_succ r)) b).val < j from b.isLt), map_sum, Matrix.mul_apply]
     refine Finset.sum_congr rfl fun d _ => ?_
     rw [map_smulₛₗ, B_sum_left, Matrix.mul_apply]

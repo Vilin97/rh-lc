@@ -32,7 +32,8 @@ theorem vanishing_ample_snc_charZero : ∀ (k : Type) [Field k] [CharZero k] (X 
   have hApull : cls (A₁.pull π) (pull_isLB hA₁ π) = cls A hA.isLB := by
     have e : cls A hA.isLB = r • cls M hM - r • cls K.bundle K.isLB - ∑ i, b i • cls (L i) (h.isLB i) := by
       rw [hcls]; abel
-    rw [e, cls_pull hA₁, hA₁c, map_sub, map_sub, map_nsmul, map_nsmul, map_sum, ← hMc, ← hK]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, cls_pull hA₁, hA₁c, map_sub, map_sub, map_nsmul, map_nsmul, map_sum, ← hMc, ← hK]
     congr 1
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_nsmul, ← hL i]

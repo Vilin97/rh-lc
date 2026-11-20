@@ -24,7 +24,8 @@ theorem GlobalTheory.continuousMultilinear_norm_le_basis_sum : ∀ (E : Type) [N
   have hv : v = fun r => ∑ c, b.repr (v r) c • b c := funext fun r => (b.sum_repr (v r)).symm
   have key : M v = ∑ cs : Fin j → ι, (∏ r, b.repr (v r) (cs r)) • M (fun r => b (cs r)) := by
     conv_lhs => rw [hv]
-    rw [M.map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [M.map_sum]
     refine Finset.sum_congr rfl fun cs _ => ?_
     exact M.map_smul_univ (fun r => b.repr (v r) (cs r)) (fun r => b (cs r))
   rw [key]

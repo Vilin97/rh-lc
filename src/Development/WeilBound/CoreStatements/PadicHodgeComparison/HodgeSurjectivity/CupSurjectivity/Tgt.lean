@@ -30,7 +30,8 @@ theorem core (hC : CupLaws) (hS : Slant) (P : HTPre l K) {M : Model l K} (hM : M
       ∑ s, P.h M 0 0 (M.toV 0 (Dt.b₀ s)) G = qC l Dt.N * kC K (G (oneH M.q)) := by
     intro G
     have e1 : ∑ s, P.h M 0 0 (M.toV 0 (Dt.b₀ s)) G = P.h M 0 0 (∑ s, M.toV 0 (Dt.b₀ s)) G := by
-      rw [map_sum, AddMonoidHom.finsetSum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, AddMonoidHom.finsetSum_apply]
     rw [e1, Dt.sum₀, P.lin, P.one M hM Dt.one Dt.hone]
   let vec : (Σ α : ℕ, Module.Dual K (Hdg M.q α (2 + 2 * d))) → (Fin Dt.m₀ → ℂ_[l]) :=
     fun p s => P.h M p.1 (2 + 2 * d) (M.toV _ (Dt.a₀ s)) p.2

@@ -133,7 +133,8 @@ private theorem sH_comp_eq_of_X_eq (hd : d.AxH 𝒜) (h : d.S1)
     e M.det = (e : KTf K d.D d.N →+* KTf K d.D d.N) M.det from fun _ => rfl, RingHom.map_det]
   congr 1
   ext k l
-  simp only [RingHom.mapMatrix_apply, Matrix.map_apply, Matrix.of_apply, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [RingHom.mapMatrix_apply, Matrix.map_apply, Matrix.of_apply, map_sum,
     RingEquiv.coe_toRingHom]
   refine Finset.sum_congr rfl fun c _ => ?_
   obtain ⟨τ, hτ⟩ : ∃ τ : OmS (Ω c) d.D d.N ≃+* OmS (Ω c) d.D d.N,

@@ -40,9 +40,11 @@ lemma cc_expo {K : Type} [Field K] {H : Type} [Fintype H] {N0 N1 : ℕ} (S : K) 
     MvPowerSeries.constantCoeff ((-S) • ∑ t : H, ∑ ab : Fin N0 × Fin N1, MvPowerSeries.C (u t) *
       MvPowerSeries.X ((false, t), ab.1, ab.2) * MvPowerSeries.X ((true, t), ab.1, ab.2) :
         MvPowerSeries ((Bool × H) × Fin N0 × Fin N1) K) = 0 := by
-  rw [MvPowerSeries.smul_eq_C_mul, map_mul, map_sum, Finset.sum_eq_zero, mul_zero]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [MvPowerSeries.smul_eq_C_mul, map_mul, map_sum, Finset.sum_eq_zero, mul_zero]
   intro t _
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_eq_zero fun ab _ => ?_
   simp
 
@@ -55,7 +57,8 @@ lemma map_expo {F K : Type} [Field F] [Field K] (φ : F →+* K) {H : Type} [Fin
         MvPowerSeries.X ((false, t), ab.1, ab.2) * MvPowerSeries.X ((true, t), ab.1, ab.2) := by
   rw [MvPowerSeries.smul_eq_C_mul, map_mul, MvPowerSeries.map_C, ← MvPowerSeries.smul_eq_C_mul,
     map_neg]
-  simp only [map_sum, map_mul, MvPowerSeries.map_C, MvPowerSeries.map_X]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, MvPowerSeries.map_C, MvPowerSeries.map_X]
 
 lemma jetsIntegral_map {F K : Type} [NormedField F] [NormedField K] (φ : F →+* K)
     (hφ : ∀ z, ‖φ z‖ = ‖z‖) {ι : Type} {sg : MvPowerSeries ι F} (h : JetsIntegral sg) :
@@ -96,7 +99,8 @@ theorem theorem_B_gauss_sums : ThmBGauss := by
     (fun τ => norm_det_generic p Y hgen τ) TT colN ht hht hht1 I nu1 nu2 size hnu1 hnu2 hsize
   refine le_trans (le_ciSup (bddAbove_norm_coeff _) n) ?_
   rw [← hgauss, eval₂_jetPairPoly, map_mul, map_mvExp φ _ (cc_expo S u), map_expo, map_prod]
-  simp only [ringMap_minorProd, map_sum, map_mul, MvPolynomial.map_C, MvPolynomial.map_X,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [ringMap_minorProd, map_sum, map_mul, MvPolynomial.map_C, MvPolynomial.map_X,
     MvPolynomial.coe_eval₂Hom, MvPolynomial.eval₂_X]
   exact hB
 

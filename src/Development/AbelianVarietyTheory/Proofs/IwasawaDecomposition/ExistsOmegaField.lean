@@ -102,7 +102,8 @@ theorem redM_uMat (V W : HSp D) (hV : V.gram = 1) (βV : GL (Fin V.rank) (EAf D)
     exact sum_mem fun b' _ => mul_mem (hβ b b') (hi b' a)
   refine ⟨h, fun PP b a => ?_⟩
   rw [redM, dif_pos (h b a)]
-  simp only [← map_mul, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← map_mul, ← map_sum]
   congr 1
   refine Subtype.ext ?_
   rw [AddSubmonoidClass.coe_finset_sum]

@@ -32,7 +32,8 @@ theorem dvProjGram_of' (hA : ProjA) (hI : IdxCalc) (hD : IdxDet) : gram_det_kern
   have hdual : ∀ i j, h (a' i) (a j) = if i = j then 1 else 0 := by
     intro i j
     have e1 : h (a' i) (a j) = ∑ k, star ((G⁻¹) k i) * G k j := by
-      simp only [ha', map_sum, LinearMap.map_smulₛₗ, starRingEnd_apply, hGdef, Matrix.of_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [ha', map_sum, LinearMap.map_smulₛₗ, starRingEnd_apply, hGdef, Matrix.of_apply]
       rw [LinearMap.sum_apply]
       simp only [LinearMap.smul_apply, smul_eq_mul]
     have e2 : ∑ k, star ((G⁻¹) k i) * G k j = ((G⁻¹).conjTranspose * G) i j := by
@@ -76,7 +77,8 @@ theorem dvProjGram_of' (hA : ProjA) (hI : IdxCalc) (hD : IdxDet) : gram_det_kern
     rw [hee]
   have ha'e : ∀ i, e (a' i) = a' i := by
     intro i
-    simp only [ha', map_sum, map_smul, hak]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [ha', map_sum, map_smul, hak]
 
   have hLfg : A.L.FG := hP.1.2.1
   have hMfg : M.FG := Submodule.FG.of_le hLfg inf_le_left

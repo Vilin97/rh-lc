@@ -93,7 +93,8 @@ theorem param_hadamard (f : SchwartzMap (κ' ⊕ κ'' → W) ℂ) (hf : ∀ x : 
     have e1 : ∀ s : ℝ, fderiv ℝ f (Ain s x) (inr2 (x ∘ Sum.inr)) =
         ∑ i, (L i (x ∘ Sum.inr) : ℂ) * d i (Ain s x) := by
       intro s
-      rw [show (inr2 (x ∘ Sum.inr) : κ' ⊕ κ'' → W) = inr2 (∑ i, b.repr (x ∘ Sum.inr) i • b i) by rw [b.sum_repr],
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [show (inr2 (x ∘ Sum.inr) : κ' ⊕ κ'' → W) = inr2 (∑ i, b.repr (x ∘ Sum.inr) i • b i) by rw [b.sum_repr],
         map_sum, map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_smul, map_smul, Complex.real_smul, hdi, hL]

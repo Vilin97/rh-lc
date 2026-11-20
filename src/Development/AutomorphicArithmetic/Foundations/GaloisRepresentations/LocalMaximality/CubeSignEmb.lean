@@ -75,7 +75,8 @@ theorem UpperTheory.Gal.productCup_of_system.det_of :
   rw [key]
   by_cases h : t.card = p + 1
   · have h0 := congrArg (fun x => act x m) (ring_core ρ f t h)
-    simp only [map_zero, LinearMap.zero_apply, map_sum, LinearMap.sum_apply] at h0
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_zero, LinearMap.zero_apply, map_sum, LinearMap.sum_apply] at h0
     rw [Pi.zero_apply, ← h0]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [← zsmul_eq_mul, map_zsmul, LinearMap.smul_apply, map_mul, Module.End.mul_apply]

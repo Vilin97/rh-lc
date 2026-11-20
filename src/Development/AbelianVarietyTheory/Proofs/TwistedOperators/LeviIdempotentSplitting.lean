@@ -45,7 +45,8 @@ theorem hD_f_e (i j : Fin (wittIndex V)) : V.hD (Φ.f i) (Φ.e j) = if i = j the
 
 theorem hD_sum_left {ι : Type} (s : Finset ι) (c : ι → V.V) (w : V.V) :
     V.hD (∑ i ∈ s, c i) w = ∑ i ∈ s, V.hD (c i) w := by
-  simp only [HSpace.hD, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [HSpace.hD, map_sum]
 
 theorem hD_smul_left (a : E) (x w : V.V) : V.hD (a • x) w = a * V.hD x w := by
   simp only [HSpace.hD, map_smul, smul_eq_mul]

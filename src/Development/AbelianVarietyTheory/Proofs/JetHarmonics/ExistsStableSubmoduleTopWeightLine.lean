@@ -73,7 +73,8 @@ theorem loweringWord_height (hE : GlRel E) (hv : IsHW E ν v) {N : ℕ} {x : V}
     have key : (∑ a : Fin n, ((a.val : ℕ) : ℂ) • E a a) (E c d y)
         = E c d ((∑ a : Fin n, ((a.val : ℕ) : ℂ) • E a a) y)
           + ((c.val : ℕ) : ℂ) • E c d y - ((d.val : ℕ) : ℂ) • E c d y := by
-      simp only [LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul]
       simp only [glRel_apply_comm hE _ _ c d y, smul_sub, smul_add, Finset.sum_sub_distrib,
         Finset.sum_add_distrib, smul_ite, smul_zero, Finset.sum_ite_eq, Finset.sum_ite_eq',
         Finset.mem_univ, if_true]

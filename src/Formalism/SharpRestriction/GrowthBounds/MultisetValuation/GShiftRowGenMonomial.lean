@@ -133,7 +133,8 @@ theorem g_rowDiv_shift (R : Type*) [CommRing R] {n : ℕ} (H : ℤ) (a b : Fin r
     IsWeightedHomogeneous (htW ht n) (rowDiv R a b k f) (H + k * (ht a - ht b)) := by
   unfold rowDiv
   conv => enter [2, 1, 2]; rw [f.as_sum]
-  rw [map_sum, Polynomial.finsetSum_coeff]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Polynomial.finsetSum_coeff]
   refine IsWeightedHomogeneous.sum _ _ _ fun d hd => ?_
   have := gShift_rowGen_monomial (ht := ht) R a b d (AddMonoidAlgebra.coeff f d) k
   rwa [hf (mem_support_iff.mp hd)] at this
@@ -255,7 +256,8 @@ theorem diag_monomial {K : Type} [Field K] {k n : ℕ} (r : ℕ) (c : K) (d : Fi
 theorem diag_const {K : Type} [Field K] {k n : ℕ} (r : ℕ) (c : K) (G : MvPolynomial (Fin k × Fin n) K) (π0 : ℕ)
     (h : ∀ d ∈ G.support, piR r d = π0) : rowAct K (lb_D k r c) G = (c⁻¹) ^ π0 • G := by
   conv_lhs => rw [G.as_sum]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   conv_rhs => rw [G.as_sum]
   rw [Finset.smul_sum]
   refine Finset.sum_congr rfl fun d hd => ?_

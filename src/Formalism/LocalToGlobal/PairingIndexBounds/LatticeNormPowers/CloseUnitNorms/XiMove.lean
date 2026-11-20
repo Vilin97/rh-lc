@@ -345,7 +345,8 @@ theorem cv_smul {r : ℕ} (b : Fin r → Matrix (Fin N') (Fin N) D.host.E) (a : 
 theorem cv_change {r : ℕ} {f g : Fin r → Matrix (Fin N') (Fin N) D.host.E} {c : Fin r → Fin r → D.host.K}
     (hc : ∀ j, ee D cc δ g j = cv D cc δ f (fun i => c i j)) (ζ : Fin r → D.host.K) :
     cv D cc δ g ζ = cv D cc δ f (fun i => ∑ j, c i j * ζ j) := by
-  simp only [cv, hc, Finset.smul_sum, map_sum, Finset.sum_smul, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [cv, hc, Finset.smul_sum, map_sum, Finset.sum_smul, map_mul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   rw [smul_smul, mul_comm]
@@ -649,7 +650,8 @@ theorem Ctx.dX (X : Ctx D cc δ p lam La₁ La b₁ b c d n ε Φ Np) {Xm : Fin 
   rw [← h1]
   simp_rw [Finset.mul_sum]
   rw [Finset.sum_comm]
-  simp_rw [← mul_assoc, ← Finset.sum_mul, ← map_mul, ← map_sum, X.dcm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp_rw [← mul_assoc, ← Finset.sum_mul, ← map_mul, ← map_sum, X.dcm]
   simp [apply_ite (tKc D lam)]
 
 theorem Ctx.norm_entry_le_prime_pow (X : Ctx D cc δ p lam La₁ La b₁ b c d n ε Φ Np) (j l : Fin r) :
@@ -820,7 +822,8 @@ theorem Ctx.c1a (X : Ctx D cc δ p lam La₁ La b₁ b c d n ε Φ Np) {y : Fin 
       exact (h1.sub (h2.mono (by omega) (by omega))).1
     · have : tKc D lam ((vac D a - fun i => ∑ j, c i j * x' j) i) =
           ∑ j, tKc D lam (c i j) * (zcH (x j) - (((x j).appr n : ℕ) : ℂ_[p])) := by
-        simp only [Pi.sub_apply, vac, map_sub, map_sum, map_mul, map_natCast, hx', mul_sub,
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [Pi.sub_apply, vac, map_sub, map_sum, map_mul, map_natCast, hx', mul_sub,
           Finset.sum_sub_distrib]
         rw [← hx i, map_natCast]
       rw [this]
@@ -846,7 +849,8 @@ theorem Ctx.c1b (X : Ctx D cc δ p lam La₁ La b₁ b c d n ε Φ Np) {y : Fin 
   have hΦ : Φ (fun i => ((a i : ℕ) : ℤ_[p])) = 1 := by
     have h1 : Φ a' = 1 := X.phi_one (fun j => ((x' j : ℕ) : ℤ_[p])) (by
       intro i
-      simp only [ha', map_sum, map_mul, hY])
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [ha', map_sum, map_mul, hY])
     rw [← h1]
     apply X.fm
     intro i
@@ -870,7 +874,8 @@ theorem Ctx.c1b (X : Ctx D cc δ p lam La₁ La b₁ b c d n ε Φ Np) {y : Fin 
     · have : tKc D lam (((fun i => ∑ j, c i j * ζ j) - vac D a) i) =
           (∑ j, tKc D lam (c i j) * (tKc D lam (ζ j) - ((x' j : ℕ) : ℂ_[p]))) +
             (zcH (a' i) - (((a' i).appr n : ℕ) : ℂ_[p])) := by
-        simp only [Pi.sub_apply, vac, map_sub, map_sum, map_mul, map_natCast, ha, ha', mul_sub,
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [Pi.sub_apply, vac, map_sub, map_sum, map_mul, map_natCast, ha, ha', mul_sub,
           Finset.sum_sub_distrib, hY]
         ring
       rw [this]
@@ -1086,7 +1091,8 @@ theorem cv_add (b : Fin r → Matrix (Fin N') (Fin N) D.host.E) (ξ ξ' : Fin r 
 
 theorem Hf_sum_left (T : Tor D) {ι : Type*} (s : Finset ι) (f : ι → VC D N N') (y : VC D N N') :
     Hf D T (∑ i ∈ s, f i) y = ∑ i ∈ s, Hf D T (f i) y := by
-  rw [Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity.IO.Hf_herm T y, Hf_sum_right, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity.IO.Hf_herm T y, Hf_sum_right, map_sum]
   exact Finset.sum_congr rfl fun i _ => (Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity.IO.Hf_herm T y (f i)).symm
 
 def PhiR (Φ : LocallyConstant (Fin r → ℤ_[p]) ℂ) (a : Fin r → Fin (p ^ n)) : ℂ :=

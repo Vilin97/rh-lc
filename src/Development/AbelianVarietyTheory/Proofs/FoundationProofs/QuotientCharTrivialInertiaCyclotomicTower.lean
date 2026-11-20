@@ -84,7 +84,8 @@ theorem gauss_fix [IsAlgClosure ℚ Ω] (hl : l ≠ 2) (s : G ℚ Ω) (hs : ∀ 
   · rw [gaussSum_sq hχ1 hχ2 hψ, hχa, ZMod.card]
     push_cast
     rfl
-  · rw [gaussSum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [gaussSum, map_sum]
     refine Finset.sum_congr rfl fun x _ => ?_
     rw [map_mul, hχa, map_intCast, hψdef, AddChar.zmodChar_apply, map_pow, hs ζ hζ.pow_eq_one]
 

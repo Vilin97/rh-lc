@@ -36,7 +36,8 @@ theorem lattice_of_charMap {X Y : Type} [AddCommGroup X] [AddCommGroup Y] (S a a
   apply e.symm.injective
   rw [AddEquiv.symm_apply_apply, ← key]
   conv_lhs => rw [← hT y]
-  simp only [map_sum, map_zsmul, hh, Finset.smul_sum, smul_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_zsmul, hh, Finset.smul_sum, smul_smul]
   have L : ∀ f : Fin 8 → Fin 8 → Fin 8 → Y, ∑ v, ∑ u, ∑ w, f v u w = ∑ w, ∑ u, ∑ v, f v u w := fun f => by
     rw [Finset.sum_comm]
     rw [Finset.sum_congr rfl fun u _ => Finset.sum_comm]

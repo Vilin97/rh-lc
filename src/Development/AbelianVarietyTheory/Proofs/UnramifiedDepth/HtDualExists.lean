@@ -111,7 +111,8 @@ theorem evHt_of_lam :
     (fun i => B.isHeight_zsmul hB1 (Dt.Dp 0) _ hchar (hy2 i) (D.L.ht_spec i 0) _)
   have e1 : ∑ i, (((red p g t i).val : ℕ) : ℤ) • B.map (Tw.q 0) (D.L.τ i 0) =
       B.map (Tw.q 0) (ptOf B D.L.τ (red p g t)) := by
-    simp only [ptOf, map_sum, map_nsmul, natCast_zsmul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [ptOf, map_sum, map_nsmul, natCast_zsmul]
   rw [e1] at H2
   have hyp : (p ^ (0 + 1)) • B.map (Tw.q 0) (ptOf B D.L.τ (red p g t)) = 0 := by
     rw [← map_nsmul, zero_add, pow_one, D.pt_p, map_zero]
@@ -125,7 +126,8 @@ theorem evHt_of_lam :
       exact (congrArg (fun u : LHom _ _ => u.1 (F (D.ptIdx (red p g t)))) hψμ).symm
     rw [e2]
     refine Eq.trans ?_ hU.symm
-    rw [LinearMap.sum_apply, Matrix.mulVec, dotProduct, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [LinearMap.sum_apply, Matrix.mulVec, dotProduct, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     have e3 : t i = ((red p g t i).val : ℤ_[p]) + p * b i := by
       rw [← hb i]

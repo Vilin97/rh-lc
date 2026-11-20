@@ -227,7 +227,8 @@ theorem UpperTheory.Kd.L.wit :
   rw [h1, map_smul]
   have h2 : AdicCompletion.eval (idl l) (X.Kl l) n (clsBmu X l n m N x c d (w + 2) gm σ ![1, 0]) = X.cls l n FU := by
     simp only [FU, cls_prod']
-    simp only [clsBmu, Finset.sum_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [clsBmu, Finset.sum_apply, map_sum]
     refine Finset.sum_congr rfl fun r₀ _ => Finset.sum_congr rfl fun γ _ => ?_
     exact eval_term X l n w u _
   rw [h2, cls_pow', ← Nat.cast_smul_eq_nsmul ℤ_[l]]

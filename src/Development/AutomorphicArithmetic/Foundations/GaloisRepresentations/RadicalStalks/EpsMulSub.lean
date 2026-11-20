@@ -192,10 +192,12 @@ theorem UpperTheory.Gal.Ord.lie :
         rw [sub_smul, ← e4, ← e5, sub_self]
       exact (smul_eq_zero.mp e6).resolve_left (GlobalTheory.HTLieRho.two_rho_sub_ne_zero b β)
     have hsum : HL.toLie (OActN.toF D o.act) h = HL.toLie (OActN.toF D o.act) (hu' + ∑ j, hs j) := by
-      rw [hdec, map_add, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hdec, map_add, map_sum]
       simp only [hhs]
     have hLε : HL.toLie (OActN.toF D o.act) (hom o π.ε h) = wv i := by
-      rw [hLc, hsum, ← hLc, map_add, map_sum, map_add, map_sum, hu0, zero_add]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hLc, hsum, ← hLc, map_add, map_sum, map_add, map_sum, hu0, zero_add]
       have e9 : ∀ j, HL.toLie (OActN.toF D o.act) (hom o π.ε (hs j)) = β (b.t j π.ε) • wv j := by
         intro j
         rw [hLc, hhs j]

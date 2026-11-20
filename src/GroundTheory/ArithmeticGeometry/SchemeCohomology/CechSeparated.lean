@@ -31,7 +31,8 @@ lemma cechAcyclic_of_transport (φ : Opens Y → Opens X) (hφ : Monotone φ)
   have hE'0 : ∀ n, E' n 0 = 0 := fun n => funext fun i => by
     simp only [E', Pi.zero_apply, map_zero]
   have hEd : ∀ n σ, E (n + 1) (d P' U n σ) = d P (φ ∘ U) n (E n σ) := fun n σ => funext fun i => by
-    simp only [E, d_apply, map_sum, map_zsmul, he, res_res]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [E, d_apply, map_sum, map_zsmul, he, res_res]
   intro n σ hσ
   have hσ' : d P' U (n + 1) (E' (n + 1) σ) = 0 := by
     rw [← hE'E (n + 2) (d P' U (n + 1) _), hEd, hEE', hσ, hE'0]

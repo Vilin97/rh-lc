@@ -28,7 +28,8 @@ theorem linearIndependent_values {Ω C E EC : Type} [Field Ω] [Field C] [AddCom
         ∑ i, t i • (⟨b (f i), hbm _⟩ : Submodule.span A (Set.range b)) := by
       apply Subtype.ext
       simp
-    rw [this, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [this, map_sum]
     exact Finset.sum_congr rfl fun i _ => hsm _ _
   have hvspan : ⊤ ≤ Submodule.span C (Set.range v) := by
     rw [← hspan]
@@ -90,7 +91,8 @@ theorem linearIndependent_values {Ω C E EC : Type} [Field Ω] [Field C] [AddCom
         simp only [hdelta]
         simp [apply_ite ρ]
     _ = ∑ k : S, (∑ i, l i * ρ (a i k)) * ρ (d k j) := by
-        simp only [map_sum, map_mul, Finset.mul_sum, Finset.sum_mul, _root_.mul_assoc]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, map_mul, Finset.mul_sum, Finset.sum_mul, _root_.mul_assoc]
         exact Finset.sum_comm
     _ = 0 := by simp [hk]
 

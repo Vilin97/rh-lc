@@ -36,7 +36,8 @@ theorem one_le_p {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E
     simpa [z] using this
   have key : z ⬝ᵥ M *ᵥ star z = 0 := by
     have h1 : τ (form σ V.J x x) = z ⬝ᵥ M *ᵥ star z := by
-      simp [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hcm, M, z, Matrix.map_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hcm, M, z, Matrix.map_apply]
     rw [← h1, hxx, map_zero]
   set P := M * A.map star with hP
   have hA1 : Aᵀ * P = 1 := by

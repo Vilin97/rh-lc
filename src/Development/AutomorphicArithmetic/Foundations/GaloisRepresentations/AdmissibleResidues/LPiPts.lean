@@ -56,7 +56,8 @@ private theorem piPts_coord {A N V κ : Type} [CommRing A] [AddCommGroup N] [Mod
   by_cases h : i ∈ (b.repr z).support
   · refine linearIndependent_iff'.1 hi (b.repr z).support (fun i => φ (b.repr z i)) ?_ i h
     have : S z = S (Finsupp.linearCombination A b (b.repr z)) := by rw [b.linearCombination_repr]
-    rw [Finsupp.linearCombination_apply, Finsupp.sum, map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finsupp.linearCombination_apply, Finsupp.sum, map_sum] at this
     rw [← hz]
     exact (Finset.sum_congr rfl fun i _ => (hs _ _).symm).trans this.symm
   · rw [Finsupp.notMem_support_iff.1 h, map_zero]
@@ -140,7 +141,8 @@ private theorem piPts_abs {M V R G Lev X : Type} {I : Type 1} [AddCommGroup V] [
     have h0 : ∑ f : u.support, u f • (⟨s f, hEK K f (hm f)⟩ : EK K) = 0 := Subtype.ext (by
       rw [Submodule.coe_sum]; exact hu)
     have h3 := congrArg (fun F => (act t F : V)) h0
-    simp only [map_sum, map_smul, map_zero, Submodule.coe_sum, Submodule.coe_smul, Submodule.coe_zero] at h3
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, map_zero, Submodule.coe_sum, Submodule.coe_smul, Submodule.coe_zero] at h3
     rw [← h3]
     exact Finset.sum_congr rfl fun f _ => by rw [a1 t f (hm f)]
   choose T hT using hT

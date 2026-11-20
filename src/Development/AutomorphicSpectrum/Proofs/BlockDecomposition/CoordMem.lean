@@ -154,7 +154,8 @@ theorem fl_sum {d : ℕ} {a₀ : ι} {t : T₁ ⟶ T₂} (ht : ∀ m, e (Finsupp
     map_sum (ev Φ T₂ r) (fun k => fl Φ e he (fun a => K a = some k) x) Finset.univ
   simp only [fl_coe] at h1
   refine (show ((Φ.prMap t (co Φ e he a₀ x)) r).1 + ((∑ k, fl Φ e he (fun a => K a = some k) x) r).1 = (x r).1 from ?_)
-  rw [h1, show ((Φ.prMap t (co Φ e he a₀ x)) r).1 = (F.map t).hom (e.symm (x r).1 a₀) from rfl, ← ht, ← map_sum, ← map_add]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h1, show ((Φ.prMap t (co Φ e he a₀ x)) r).1 = (F.map t).hom (e.symm (x r).1 a₀) from rfl, ← ht, ← map_sum, ← map_add]
   apply e.symm.injective
   rw [e.symm_apply_apply]
   ext a

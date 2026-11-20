@@ -105,7 +105,8 @@ theorem injective_of_constantCoeff {R S V : Type*} [CommRing R] [CommRing S]
     rw [monomial_eq, monomial_eq, map_mul, C_1, one_mul, map_finsuppProd]
     simp [hX]
   have : AddMonoidAlgebra.coeff (ψ P) a = constantCoeff (ψ (C (AddMonoidAlgebra.coeff P a))) := by
-    conv_lhs => rw [P.as_sum, map_sum, coeff_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [P.as_sum, map_sum, coeff_sum]
     rw [Finset.sum_eq_single a]
     · rw [hmon, coeff_mul_monomial', if_pos le_rfl, tsub_self, mul_one, constantCoeff_eq]
     · intro b hb hba
@@ -341,7 +342,8 @@ theorem isPrincipal_elimIdeal [Nonempty β] {p : Ideal (MvPolynomial σ K)} [p.I
         · intro k _ hk
           rw [if_neg fun h => hk (Subtype.ext h), zero_mul]
         · simp
-      simp only [ψ, s, AlgHom.toRingHom_eq_coe, RingHom.coe_coe, aeval_X, RingHom.comp_apply,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [ψ, s, AlgHom.toRingHom_eq_coe, RingHom.coe_coe, aeval_X, RingHom.comp_apply,
         eval₂Hom_C, map_neg, map_sum, map_mul, eval_X, eval_C, this]
       ring
     exact DFunLike.congr_fun this r

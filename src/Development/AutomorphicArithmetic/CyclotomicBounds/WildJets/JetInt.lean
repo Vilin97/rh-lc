@@ -75,7 +75,8 @@ open Classical in
 private theorem jetLin_zmem (k : DVar ι a b →₀ ℕ)
     {p : MvPolynomial ((ι × Fin b × Fin b) ⊕ DVar ι a b) ℂ} (hp : p ∈ zPol _) :
     jetLin (fun m => if m = k then (1 : ℂ) else 0) p ∈ zPol (ι × Fin b × Fin b) := by
-  rw [p.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [p.as_sum, map_sum]
   refine sum_mem fun μ _ => ?_
   rw [jetLin_mono]
   obtain ⟨z, hz⟩ := zcoeff hp μ
@@ -93,7 +94,8 @@ private theorem jetLin_split (p : MvPolynomial ((ι × Fin b × Fin b) ⊕ DVar 
         (AddMonoidAlgebra.coeff p μ * J' (μ.comapDomain Sum.inr Sum.inr_injective.injOn)) := by
     intro J'
     conv_lhs => rw [p.as_sum]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [jetLin_mono]
   refine ⟨p.support.image (fun μ => μ.comapDomain Sum.inr Sum.inr_injective.injOn), fun J => ?_⟩
   rw [hsplit J]
@@ -159,7 +161,8 @@ theorem UpperTheory.WildA.jetInt :
     rw [Submodule.coe_sum]
     simp only [Submodule.coe_smul, hJQ]
     exact hS J
-  rw [hop, hsum, map_sum, Finsupp.finset_sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hop, hsum, map_sum, Finsupp.finset_sum_apply]
   simp only [map_smul, Finsupp.smul_apply, smul_eq_mul, hz]
   rw [← Finsupp.sum_finset_sum_index (by simp) (by intros; push_cast; ring)]
   refine Finset.sum_congr rfl fun k _ => ?_

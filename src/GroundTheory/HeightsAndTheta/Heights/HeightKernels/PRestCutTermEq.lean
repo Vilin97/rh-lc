@@ -39,16 +39,19 @@ theorem RestCutTermEq.proof (h₁ : RestCutRealSyzygy.Statement) (h₂ : RestCut
     have h1 : ∑ l ∈ Finset.Icc 1 (j + k), ∑ σ : Fin f,
         map (algebraMap ℚ ℝ) (RestTerms.blockPowerSum f (j + k) l σ) * rename E' (Q σ l) =
         rename E' (restTransport f j k (j + k) e F) := by
-      rw [hQ.2, map_sum, Finset.sum_comm]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hQ.2, map_sum, Finset.sum_comm]
       refine Finset.sum_congr rfl fun l _ => ?_
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun σ _ => ?_
       rw [map_mul, hpsum]
     have h2 : ∑ l ∈ Finset.Icc 1 (j + k), ∑ σ : Fin f,
         map (algebraMap ℚ ℝ) (RestTerms.blockPowerSum f (j + k) l σ) *
           map (algebraMap ℚ ℝ) (Q₀ l σ) = map (algebraMap ℚ ℝ) F := by
       rw [hQ₀]
-      simp only [map_sum, map_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_mul]
     rw [h1, h2]
     exact hrp _
   have hzero := h₁ f (j + k) R hsyz m hm1 hmN τ G hG

@@ -102,7 +102,8 @@ theorem finite_classes (ρ : Representation ℂ H X) (C : Submodule ℂ X) (K : 
       refine ⟨hsm i (g i), ?_⟩
       have he : (g i • y i : ↥(C ⊓ fixed ρ K)) = - ∑ j ∈ s.erase i, g j • y j := by
         rw [eq_neg_iff_add_eq_zero, Finset.add_sum_erase s (fun j => g j • y j) hi, hs]
-      rw [he, Submodule.coe_neg, Submodule.coe_sum, map_neg, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [he, Submodule.coe_neg, Submodule.coe_sum, map_neg, map_sum]
       refine Submodule.neg_mem _ (Submodule.sum_mem _ fun j hj => ?_)
       refine (le_sSup (show (j : Submodule (MonoidAlgebra ℂ H) ρ.asModule) ∈ T \ {(i : Submodule (MonoidAlgebra ℂ H) ρ.asModule)} from
           ⟨j.2, fun h => Finset.ne_of_mem_erase hj (Subtype.ext h)⟩) :

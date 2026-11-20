@@ -261,7 +261,8 @@ theorem nFCoreNC_of_cut (hL : NFLeibV) (hT : NFTieHatC) (hH : NFHatProdKBS) (hN 
   set Y : Fin (Q' + 1) → (Wq →L[ℂ] Wp) := fun j => p.V (B.opApply (L' j) f) γ with hY
   have hnorm : ‖B.hsVec ((p.TP.E ρ).comp (((G ^ p₀ : ℝ) : ℂ) • ∑ j, ((cc qq' j : ℝ) : ℂ) • Y j))‖ ≤
       G ^ p₀ * ∑ j, cc qq' j * ‖Λ (Y j)‖ := by
-    rw [← hΛ, map_smul, map_sum, norm_smul, Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg (pow_nonneg hG0 _)]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hΛ, map_smul, map_sum, norm_smul, Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg (pow_nonneg hG0 _)]
     refine mul_le_mul_of_nonneg_left (le_trans (norm_sum_le _ _) (le_of_eq (Finset.sum_congr rfl fun j _ => ?_)))
       (pow_nonneg hG0 _)
     rw [map_smul, norm_smul, Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg (Nat.cast_nonneg _)]

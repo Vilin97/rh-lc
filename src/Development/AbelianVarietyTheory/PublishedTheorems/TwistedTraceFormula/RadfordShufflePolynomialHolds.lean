@@ -646,9 +646,11 @@ theorem aeval_injective [CharZero K] : Function.Injective
   have hsum : p = ∑ d ∈ p.support, p.coeff d • MvPolynomial.monomial d (1 : K) := by
     conv_lhs => rw [p.as_sum]
     simp [MvPolynomial.smul_monomial]
-  rw [hsum, map_sum] at hp
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hsum, map_sum] at hp
   have h1 := congrArg (fun x => (wordBasis K A).repr x (Λ d₀).flatten) hp
-  simp only [map_smul, hmon, map_sum, Finsupp.finsetSum_apply, Finsupp.smul_apply, map_zero,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_smul, hmon, map_sum, Finsupp.finsetSum_apply, Finsupp.smul_apply, map_zero,
     Finsupp.zero_apply, smul_eq_mul] at h1
   rw [Finset.sum_eq_single d₀] at h1
   · exact mul_ne_zero (MvPolynomial.mem_support_iff.1 hd₀) (repr_prod_self K _) h1

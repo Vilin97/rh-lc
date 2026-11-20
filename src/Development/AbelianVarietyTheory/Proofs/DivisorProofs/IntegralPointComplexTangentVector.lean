@@ -44,7 +44,8 @@ theorem tanPull_frac_injective {E : Type} [Field E] [NumberField E] [IsCMField E
   have hDs : D = ∑ e, a e • d e := (GlobalTheory.LieMet.isComb_iff d a D).1 ha
   have h0 : (0 : ReciprocityTheory.ChartRestriction.G.PullbackSections.TanM (spMap (algebraMap T.V T.Fr) ≫ xV) t.G) =
       ∑ e, algebraMap T.V T.Fr (a e) • GlobalTheory.FlagMod.tanPull (algebraMap T.V T.Fr) rfl (d e) := by
-    rw [← hD, hDs, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hD, hDs, map_sum]
     simp only [map_smulₛₗ]
   obtain ⟨b, -, hb⟩ := hst T.Fr (algebraMap T.V T.Fr) (ReciprocityTheory.ChartRestriction.G.PullbackSections.tv (0 : ReciprocityTheory.ChartRestriction.G.PullbackSections.TanM (spMap (algebraMap T.V T.Fr) ≫ xV) t.G)).left
     (isTan_tv _)
@@ -133,7 +134,8 @@ theorem intFrame_model_sat : ∀ (E : Type) [Field E] [NumberField E] [IsCMField
       exact fun a => f.act_vec τ i a
     obtain ⟨a, ha⟩ := hsp U hmem
     have h2' : GlobalTheory.FlagMod.tanPull (G := Z.t.G) (algebraMap T.V T.Fr) rfl U = ∑ i, algebraMap T.V T.Fr (a i) • f.vec τ i := by
-      rw [← ha, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← ha, map_sum]
       simp only [map_smulₛₗ, hvec]
     have hli := Fintype.linearIndependent_iff.1 (f.linearIndependent_vec τ) (fun i => cf i - algebraMap T.V T.Fr (a i))
       (by simp only [sub_smul, Finset.sum_sub_distrib, ← hU, ← h2', sub_self])

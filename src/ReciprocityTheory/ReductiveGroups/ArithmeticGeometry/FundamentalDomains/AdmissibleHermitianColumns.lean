@@ -33,7 +33,8 @@ private lemma hermC_add_smul_add_smul (τ : E →+* ℂ) (G : Matrix (Fin r) (Fi
 private lemma hermC_swap_of_conj_symm (τ : E →+* ℂ) (G : Matrix (Fin r) (Fin r) E)
     (hG : ∀ a b, cc (G a b) = G b a) (u v : Fin r → ℂ) :
     hermC τ G v u = conj (hermC τ G u v) := by
-  simp only [hermC, map_sum, map_mul, Complex.conj_conj]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hermC, map_sum, map_mul, Complex.conj_conj]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
   rw [← emb_cc', hG]
@@ -53,7 +54,8 @@ lemma alpha_conj (c : ℝ) (s : ℂ) :
 
 private lemma hermC_emb_emb_eq_herm (τ : E →+* ℂ) (G : Matrix (Fin r) (Fin r) E) (x y : Fin r → E) :
     hermC τ G (Data.emb τ x) (Data.emb τ y) = τ (herm G x y) := by
-  simp [hermC, herm, Data.emb, map_sum, map_mul, emb_cc']
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [hermC, herm, Data.emb, map_sum, map_mul, emb_cc']
 
 lemma gram_flowMat {ξ : Fin r → E} (hξ : herm X.Gm ξ ξ = 0) (τ : X.Ψ) (s : ℂ)
     (M : Matrix (Fin r) (Fin r) ℂ) :

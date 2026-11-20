@@ -45,7 +45,8 @@ theorem ip_sum_sum (μ : Measure X) [IsFiniteMeasureOnCompacts μ] {V : Type} (F
   have e : (fun z => (∑ y ∈ F, a y • xs y) z * (starRingEnd ℂ) ((∑ y ∈ F, a y • xs y) z)) =
       fun z => ∑ y ∈ F, ∑ y' ∈ F, a y * (starRingEnd ℂ) (a y') * (xs y z * (starRingEnd ℂ) (xs y' z)) := by
     funext z
-    simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum]
     rw [Finset.sum_mul_sum]
     refine Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => ?_
     rw [map_mul]
@@ -110,7 +111,8 @@ theorem expand (μ : Measure T) [IsFiniteMeasureOnCompacts μ] {V : Type} [AddGr
     ip μ x x = (∑ y ∈ F, ∑ y' ∈ F, if y - y' ∈ L then f y * (starRingEnd ℂ) (f y') else 0) * c := by
   have hxe : x = ∑ y ∈ F, f y • xs y := by
     refine hinj hx (Submodule.sum_mem _ fun y _ => Submodule.smul_mem _ _ (hxs y)) ?_
-    rw [hf, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hf, map_sum]
     simp only [map_smul, hιxs]
     exact hF
   rw [hxe, ip_sum_sum μ F f xs hxs, Finset.sum_mul]

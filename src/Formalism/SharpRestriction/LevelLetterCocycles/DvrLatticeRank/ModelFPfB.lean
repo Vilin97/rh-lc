@@ -69,7 +69,8 @@ theorem range_rep (u : LA W T π' c) (hu : u ∈ LinearMap.range (toLA W T π' c
   choose x hx using fun j =>
     Submodule.Quotient.mk_surjective _ ((s j : ↥(⊤ : Submodule O (LcQ W T π' c))) : LcQ W T π' c)
   refine ⟨m, fun j => f j • a j, fun j => (x j : W.DD T), fun j => (x j).2, ?_⟩
-  rw [← hfg, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hfg, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [← hs j, TensorProduct.smul_tmul', toLA_tmul]
   congr 1
@@ -85,7 +86,8 @@ theorem rep_mem {m : ℕ} (a : Fin m → LetA O n) (ha : ∀ j, a j ∈ W.AΔ) (
 theorem smulLA_rep (b : LetA O n) {m : ℕ} (a : Fin m → LetA O n) (z : Fin m → LcQ W T π' c) :
     smulLA W T π' c b (∑ j, algebraMap (LetA O n) W.EE ((letE c : LetA O n) * a j) ⊗ₜ z j) =
       ∑ j, algebraMap (LetA O n) W.EE ((letE c : LetA O n) * (b * a j)) ⊗ₜ z j := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [smulLA_tmul, ← map_mul]
   congr 2
@@ -94,7 +96,8 @@ theorem smulLA_rep (b : LetA O n) {m : ℕ} (a : Fin m → LetA O n) (z : Fin m 
 theorem γLA_rep {m : ℕ} (a : Fin m → LetA O n) (z : Fin m → LcQ W T π' c) :
     γLA W T π' c (∑ j, algebraMap (LetA O n) W.EE ((letE c : LetA O n) * a j) ⊗ₜ z j) =
       ∑ j, algebraMap (LetA O n) W.EE ((letE c : LetA O n) * W.γA W.gamK (a j)) ⊗ₜ z j := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [γLA_tmul, W.γE_ext]
   congr 2

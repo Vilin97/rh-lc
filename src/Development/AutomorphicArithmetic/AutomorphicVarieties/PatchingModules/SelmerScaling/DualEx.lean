@@ -82,7 +82,8 @@ private theorem UpperTheory.V.Pa.exists_dual_functional_complement {R F N V : Ty
       intro μ hμ
       have e : ∀ j, μ (m j) = C ⟨μ, hμ⟩ j := fun j => hm j ⟨μ, hμ⟩
       have ev2 : μ y = ∑ j, C ⟨μ, hμ⟩ j * a j := hev ⟨μ, hμ⟩
-      rw [map_sub, map_sum, ev2]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, map_sum, ev2]
       simp only [hL μ hμ, hb, e]
       rw [sub_eq_zero]
       exact Finset.sum_congr rfl fun j _ => mul_comm _ _

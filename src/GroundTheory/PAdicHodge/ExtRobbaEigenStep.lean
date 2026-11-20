@@ -100,7 +100,8 @@ theorem twistFrob_res {τ τ' : Set.Ioo (0 : ℝ) 1} (h : (τ' : ℝ) ≤ τ)
     F.twistFrob A N τ' hτ' (fun j => T.res h (w j)) =
       fun i => T.res (F.powRadius_le h) (F.twistFrob A N τ hτ w i) := by
   funext i
-  simp only [twistFrob, map_mul, map_pow, map_sum, res_piInvE, res_res, ← F.res_extFrob]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [twistFrob, map_mul, map_pow, map_sum, res_piInvE, res_res, ← F.res_extFrob]
 
 theorem extNorm_twistFrob_le {τ : Set.Ioo (0 : ℝ) 1}
     (hτ : ((F.powRadius τ : Set.Ioo (0 : ℝ) 1) : ℝ) ≤ ρ) (w : Fin n → T.RobbaExt τ)
@@ -134,7 +135,8 @@ theorem twistFrob_res_untwist (A' : Matrix (Fin n) (Fin n) (T.RobbaExt ρ)) (hAA
       (T.piE ρ ^ N * (A'.mulVec w) j))) =
       T.res (F.powRadius_le_self ρ) (T.piE ρ ^ N * (A'.mulVec w) j) := fun j =>
     F.extFrob_res_extFrobSymm _ _ _
-  simp only [h1, ← map_mul, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [h1, ← map_mul, ← map_sum]
   have h2 : ∑ j, A i j * (T.piE ρ ^ N * (A'.mulVec w) j) = T.piE ρ ^ N * w i := by
     have : ∑ j, A i j * (T.piE ρ ^ N * (A'.mulVec w) j) =
         T.piE ρ ^ N * (A.mulVec (A'.mulVec w)) i := by

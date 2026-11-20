@@ -107,9 +107,11 @@ theorem sum_pos_of_isPosHerm [Module.Free ℤ X] [Module.Finite ℤ X] {n : ℕ}
   have key : ∀ f g : X →ₗ[ℤ] ℤ, Algebra.trace ℤ (𝓞 E) (outer E x x' (up f) (up g)) =
       N * ∑ p : Fin n × ι, f (ω p.2 • x p.1) * g (bar E (θ p.2) • x' p.1) := by
     intro f g
-    rw [outer, map_sum, Fintype.sum_prod_type, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [outer, map_sum, Fintype.sum_prod_type, Finset.mul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
-    rw [hup f, Finset.sum_mul, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hup f, Finset.sum_mul, map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun s _ => ?_
     have e : θ s * bar E (up g (x' i)) = bar E (bar E (θ s) * up g (x' i)) := by
       conv_lhs => rw [← bar_bar E (θ s)]
@@ -139,7 +141,8 @@ theorem sum_pos_of_isPosHerm [Module.Free ℤ X] [Module.Finite ℤ X] {n : ℕ}
     have : ∀ s, γ (ω s • x i) (bar E (θ s) • x' i) = γ ((θ s * ω s) • x i) (x' i) := fun s => by
       rw [← hγ.2, mul_smul]
     simp only [this]
-    rw [← LinearMap.sum_apply, ← map_sum, ← Finset.sum_smul, hsum, Nat.cast_smul_eq_nsmul, map_nsmul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← LinearMap.sum_apply, ← map_sum, ← Finset.sum_smul, hsum, Nat.cast_smul_eq_nsmul, map_nsmul,
       LinearMap.smul_apply, nsmul_eq_mul]
   rw [h2] at h1
   exact pos_of_mul_pos_right h1 (Nat.cast_nonneg N)
@@ -177,14 +180,16 @@ theorem pairing_append (γ : Bil X) (hγ : ∀ a c, γ a c = γ c a) {n : ℕ} (
 theorem bar_outer {n : ℕ} (x x' : Fin n → X) (η η' : Module.Dual (𝓞 E) X) :
     bar E (outer E x x' η η') = outer E x' x η' η := by
   have := bar_bar E
-  simp only [outer, bar, map_sum, map_mul] at this ⊢
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [outer, bar, map_sum, map_mul] at this ⊢
   simp only [this, mul_comm]
 
 theorem re_outer {n : ℕ} (x x' : Fin n → X) (η : Module.Dual (𝓞 E) X) (τ : E →+* ℂ) :
     (τ (outer E x x' η η : E)).re = ∑ i, rankOne E η τ (x i) (x' i) := by
   simp only [outer, rankOne_apply]
   push_cast
-  rw [map_sum, Complex.re_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Complex.re_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_mul, ← emb_bar]
 

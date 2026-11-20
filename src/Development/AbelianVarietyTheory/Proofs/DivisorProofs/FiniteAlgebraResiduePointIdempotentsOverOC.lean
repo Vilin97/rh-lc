@@ -214,7 +214,8 @@ theorem finite_and_idempotents {L : Type} [Field L] [IsAlgClosed L] {v : Valuati
     have horth : OrthogonalIdempotents e := ⟨hei, fun c c' h => hort c c' h⟩
     have hsum := horth.isIdempotentElem_sum (s := Finset.univ)
     have h0 := idempotent_eq_zero hv hsum.one_sub (fun c'' => by
-      rw [map_sub, map_one, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, map_one, map_sum]
       simp [hec])
     exact (sub_eq_zero.1 h0).symm
   · intro c c'

@@ -40,7 +40,8 @@ variable {C : Type u} [Category.{v} C] [Preadditive C]
 
 theorem dbl_d_f (Y : SimplicialObject (SimplicialObject C)) (a b : ℕ) :
     ((dbl Y).d (a + 1) a).f b = (ev Y).map (dH (a + 1) b a b) := by
-  simp only [dH, and_self, if_true, Functor.map_sum, Functor.map_zsmul, ev_map_bop,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dH, and_self, if_true, Functor.map_sum, Functor.map_zsmul, ev_map_bop,
     idc_self, op_id, CategoryTheory.Functor.map_id, Category.comp_id]
   rw [Finset.sum_range]
   dsimp only [dbl, alternatingFaceMapComplex]
@@ -51,7 +52,8 @@ theorem dbl_d_f (Y : SimplicialObject (SimplicialObject C)) (a b : ℕ) :
 
 theorem dbl_X_d (Y : SimplicialObject (SimplicialObject C)) (a b : ℕ) :
     ((dbl Y).X a).d (b + 1) b = (ev Y).map (dV a (b + 1) a b) := by
-  simp only [dV, and_self, if_true, Functor.map_sum, Functor.map_zsmul, ev_map_bop,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dV, and_self, if_true, Functor.map_sum, Functor.map_zsmul, ev_map_bop,
     idc_self, op_id, CategoryTheory.Functor.map_id, NatTrans.id_app, Category.id_comp]
   rw [Finset.sum_range]
   change (AlternatingFaceMapComplex.obj (Y.obj (op (SimplexCategory.mk a)))).d (b + 1) b = _

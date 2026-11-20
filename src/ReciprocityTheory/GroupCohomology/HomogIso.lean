@@ -59,7 +59,8 @@ theorem hd_mem (M : TRep R G) (X : Type u) [TopologicalSpace X] [MulAction G X] 
   refine ⟨?_, fun g x => ?_⟩
   · exact continuous_finsetSum _ fun i _ => (continuous_const_smul ((-1 : ℤ) ^ (i : ℕ))).comp
       (hF.1.comp (continuous_pi fun j => continuous_apply (i.succAbove j)))
-  · simp only [hd, hF.2, map_sum, map_zsmul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [hd, hF.2, map_sum, map_zsmul]
 
 def hcx (M : TRep R G) (X : Type u) [TopologicalSpace X] [MulAction G X] : Cx R where
   X n := hcoch M X n
@@ -136,7 +137,8 @@ theorem eFun_dn (M : TRep R G) (n : ℕ) (f : (Fin n → G) → M.V) :
   rw [hd, Fin.sum_univ_succ, eFun_zero]
   simp only [eFun_succ, Fin.val_zero, pow_zero, one_smul, Fin.val_succ]
   show M.rho (x 0) (dn M.rho n f _) = _
-  rw [dn_apply, map_add, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [dn_apply, map_add, map_sum]
   congr 1
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [hgi_negpow, map_zsmul]

@@ -139,7 +139,8 @@ theorem epsilonDual_almost_all : EpDualCof := by
             Algebra.trace (D.s.atP p).Fp (D.s.atP p).Ep
               (PI.ProdFormulaE.Base.basisE (D.s.atP p) b h2 i * PI.ProdFormulaE.Base.basisE (D.s.atP p) b h2 j) := by
         conv_lhs => rw [← (PI.ProdFormulaE.Base.basisE (D.s.atP p) b h2).sum_repr z]
-        rw [Finset.sum_mul, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [Finset.sum_mul, map_sum]
         simp only [smul_mul_assoc, map_smul, smul_eq_mul]
       have hmem := hz (PI.ProdFormulaE.Base.basisE (D.s.atP p) b h2 j)
         (by rw [hbL]; exact iotaE_mem_of_int D p (hbint j))

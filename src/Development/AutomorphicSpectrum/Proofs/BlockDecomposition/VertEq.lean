@@ -58,7 +58,8 @@ theorem key (p : ℕ) [Fact p.Prime] {m : ℕ} {n : Fin (m + 1) → ℕ} (a : Fi
         exact VdmRec.CutSec.dim_closure_of_coheight (isArithVar_mpStr m n) f hd hw
       have hcl : cls (L.pull (redι C)) (pull_isLB hL _) =
           ∑ k, a k • cls (pullO ((redι C ≫ f) ≫ prB n k) 1) (isLB_pullO _ 1) := by
-        rw [cls_pull hL, hc, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [cls_pull hL, hc, map_sum]
         refine Finset.sum_congr rfl fun k _ => ?_
         rw [map_zsmul, Category.assoc, GlobalTheory.T.cls_pullO_one_comp_eq_pull (redι C) (f ≫ prB n k)]
       have e := ih _ (redι C ≫ f) hdim _ (pull_isLB hL _) hcl
@@ -96,7 +97,8 @@ theorem key (p : ℕ) [Fact p.Prime] {m : ℕ} {n : Fin (m + 1) → ℕ} (a : Fi
 theorem vertEq : VertEq := by
   intro m n M A hA X i _ Z _ j _ p _ _ d hd
   refine key p A.a d Z (j ≫ i) hd _ (pull_isLB (pull_isLB M.isLB _) _) ?_
-  rw [cls_pull (pull_isLB M.isLB _), cls_pull M.isLB, GlobalTheory.T.hermRep_class_decomposition m n M A hA, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [cls_pull (pull_isLB M.isLB _), cls_pull M.isLB, GlobalTheory.T.hermRep_class_decomposition m n M A hA, map_sum, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [map_zsmul, map_zsmul, Category.assoc, GlobalTheory.T.cls_pullO_one_comp_eq_pull, GlobalTheory.T.cls_pullO_one_comp_eq_pull]
 

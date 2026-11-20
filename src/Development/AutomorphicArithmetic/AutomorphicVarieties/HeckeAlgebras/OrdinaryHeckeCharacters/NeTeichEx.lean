@@ -111,7 +111,8 @@ private theorem ne_type {L Ω : Type} [Field L] [NumberField L] [IsCMField L] [F
     rw [hJ]).2 hwd
   refine ⟨J, j1, j2, j3, fun i => F i, fun e => hF0 (funext fun i => Subtype.ext (congrFun e i)), fun i => (F i).2, fun k i => ?_⟩
   have := congrArg M.subtype (hF k i)
-  rw [map_sum] at this
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum] at this
   exact this
 
 private theorem ne_teich_ex (l : ℕ) [Fact l.Prime] (O : Type) [CommRing O] [IsLocalRing O]
@@ -249,7 +250,8 @@ theorem UpperTheory.V.Hi.neU :
     ((Submodule.ne_bot_iff _).2 ⟨F₀, ⟨hF1, hF2⟩, hF0⟩) (fun F hF k => (hF.1 k).1) fun x hx F hF =>
       ⟨fun i => ⟨hσ.stable _ _ (hF.1 i).1, fun k hk => by rw [hcomm x hx k (mem_neK.1 hk).1, (hF.1 i).2 k hk]⟩, fun k i => by
         beta_reduce
-        rw [← hF.2 k i, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [← hF.2 k i, map_sum]
         exact Finset.sum_congr rfl fun a _ => by rw [map_smul, hcomm x hx _ (j1 _)]⟩
   obtain ⟨f1, -, f3, f4, f5⟩ := formU l L Ω s n hn V Q c m τ₀ ι lam d e ξ he _ fun _ => rfl
   have f6 : ∀ i : Fin m, ∃ F : Ga l L n × GV n (fun v : V.frame.Vl => s.w v.1) → Fin d → ℂ, F ∈ (hset Q τ₀).X.AF ξ ∧
@@ -276,7 +278,8 @@ theorem UpperTheory.V.Hi.neU :
       rw [hT, ← ((hΦN ℓ).1 a).2 _ hk, GlobalTheory.DefU.RU_RU, mul_inv_cancel_left]
       exact e3.symm
     refine (hT _).symm.trans ?_
-    rw [map_sub, map_sum, hT, hF, sub_eq_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_sum, hT, hF, sub_eq_zero]
     simp only [map_smul, e2]
     exact (hΦN ℓ).2 _ i
   have key : ∀ u : Ub n s, u ∈ UQ n Q → ∀ i g k,

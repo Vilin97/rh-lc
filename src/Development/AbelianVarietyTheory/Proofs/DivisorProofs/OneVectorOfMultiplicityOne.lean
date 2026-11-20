@@ -24,7 +24,8 @@ theorem sum_conj_char {χ : G → K} (h : IsAbsIrrChar χ) (s u : G) :
   set T : Module.End (AlgebraicClosure K) (Fin n → AlgebraicClosure K) := ∑ g, ρ (g * s * g⁻¹) with hT
   have hc : ∀ g v, T (ρ g v) = ρ g (T v) := by
     intro g v
-    simp only [hT, LinearMap.sum_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hT, LinearMap.sum_apply, map_sum]
     rw [← Equiv.sum_comp (Equiv.mulLeft g)]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [← Module.End.mul_apply, ← map_mul, ← Module.End.mul_apply, ← map_mul]
@@ -36,14 +37,16 @@ theorem sum_conj_char {χ : G → K} (h : IsAbsIrrChar χ) (s u : G) :
     intro u
     have : LinearMap.trace _ _ (T * ρ u) = c * ρ.character u := by
       rw [hcT]; simp [Representation.character, Module.End.mul_eq_comp]
-    rw [← this, hT, Finset.sum_mul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← this, hT, Finset.sum_mul, map_sum]
     refine Finset.sum_congr rfl fun g _ => ?_
     rw [Representation.character, map_mul ρ _ u]
   have h2 := h1 1
   simp only [mul_one, Representation.char_conj, Finset.sum_const, Finset.card_univ, nsmul_eq_mul] at h2
   have h3 := h1 u
   apply hj
-  simp only [map_mul, map_sum, map_natCast]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_mul, map_sum, map_natCast]
   simp only [hρ] at h2 h3
   rw [h3, ← mul_assoc, h2]
   ring
@@ -109,7 +112,8 @@ omit [CharZero K] in
 theorem asAlg_eq_sum (r : Representation K G V) (a : MonoidAlgebra K G) (x : V) :
     r.asAlgebraHom a x = ∑ g : G, a.coeff g • r g x := by
   conv_lhs => rw [eq_sum_single a]
-  simp [map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, LinearMap.sum_apply]
 
 omit [CharZero K] in
 theorem asAlg_mem (r : Representation K G V) {Z : Submodule K V} (hZ : ∀ g, ∀ x ∈ Z, r g x ∈ Z)
@@ -121,7 +125,8 @@ omit [CharZero K] in
 theorem semi_asAlg {σ : K →+* ℂ} {E : Type} [AddCommGroup E] [Module ℂ E] (r : Representation K G V)
     (ρ : Representation ℂ G E) (ι : V →ₛₗ[σ] E) (hι : ∀ g x, ι (r g x) = ρ g (ι x)) (a : MonoidAlgebra K G) (x : V) :
     ι (r.asAlgebraHom a x) = ∑ g : G, σ (a.coeff g) • ρ g (ι x) := by
-  rw [asAlg_eq_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [asAlg_eq_sum, map_sum]
   exact Finset.sum_congr rfl fun g _ => by rw [map_smulₛₗ, hι]
 
 theorem image_le_of_type {V₀ : Type} [AddCommGroup V₀] [Module K V₀] {σ : K →+* ℂ} {E : Type} [AddCommGroup E] [Module ℂ E]
@@ -157,10 +162,12 @@ theorem image_le_of_type {V₀ : Type} [AddCommGroup V₀] [Module K V₀] {σ :
     rintro g y ⟨y₀, hy, hy'⟩
     exact ⟨r₀ g y₀, hZ₀ g _ hy, by rw [hι, hι₀, hy']⟩
   have hxS : x ∈ S := by
-    rw [← he, idemOf, map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← he, idemOf, map_sum, LinearMap.sum_apply]
     refine S.sum_mem fun χ hχ => ?_
     obtain ⟨c, hc⟩ := chiIdem_eq_sum (hX χ hχ) P ψ (hgen χ hχ)
-    rw [hc, map_smul, LinearMap.smul_apply, map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hc, map_smul, LinearMap.smul_apply, map_sum, LinearMap.sum_apply]
     refine S.smul_mem c (S.sum_mem fun g _ => ?_)
     rw [map_mul, Module.End.mul_apply]
     refine asAlg_mem r hS _ (h0 _ ⟨asAlg_mem r hZ _ hxZ, ?_⟩)
@@ -217,7 +224,8 @@ theorem iC_cpt (t : Bs.Tup) (x : Fin ((lv (fc X.zs) b).dQ t) → K) :
     X.iC cr b t (cpt Bs.v0.embedding x) = X.Θ t (X.jR t (cr.toR X.zs b t x)) := by
   classical
   conv_rhs => rw [← Finset.univ_sum_single x]
-  rw [CxData.iC, lin_apply, map_sum, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [CxData.iC, lin_apply, map_sum, map_sum, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   have : (Pi.single k (x k) : Fin _ → K) = x k • Pi.single k 1 := by
     funext i; by_cases hi : i = k <;> simp [hi]
@@ -386,7 +394,8 @@ theorem oneVector_of_whittaker (R : RealDat D A Ks) (F : Face D A) (hW : GlobalT
   rw [← hP] at h
   let e : (R.levR F false).H ≃ F.P0 := R.eG.symm.toEquiv.subtypeEquiv fun _ => Iff.rfl
   apply D.what₂.embLL.injective
-  rw [map_natCast, ← Nat.card_congr e, ← h, typeSum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_natCast, ← Nat.card_congr e, ← h, typeSum, map_sum]
   unfold GlobalTheory.IndefiniteRowSideFullHecke.CuspidalInducedCharacter.lvlSum
   letI := GlobalTheory.IndefiniteRowSideFullHecke.CuspidalInducedCharacter.fintypeH (R.levR F false)
   refine (Fintype.sum_equiv e _ _ fun x => ?_).symm

@@ -147,8 +147,10 @@ theorem scalar_of_irred {V : Type} [AddCommGroup V] [Module ℂ V] (P : Submodul
       rw [← Finset.mul_prod_erase s _ hc, mul_comm, map_mul, Module.End.mul_apply, hlin, hw]
     have h0 : Polynomial.aeval T (∑ c ∈ s, g c • q c) v₀ = 0 := by
       have h2 := congrArg (Polynomial.aeval T (∏ d ∈ s, (Polynomial.X - Polynomial.C d))) hsum
-      rw [map_zero, map_sum] at h2
-      rw [map_sum, LinearMap.sum_apply, ← h2]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_zero, map_sum] at h2
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, LinearMap.sum_apply, ← h2]
       refine Finset.sum_congr rfl fun c hc => ?_
       rw [LinearMap.map_smul, hq c hc, map_smul, LinearMap.smul_apply]
     have hp0 : ∑ c ∈ s, g c • q c = 0 := by

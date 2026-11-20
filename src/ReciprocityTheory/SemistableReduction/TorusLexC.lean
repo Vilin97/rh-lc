@@ -54,7 +54,8 @@ theorem torus_parseval {ι : Type} [Fintype ι] (f : MvPolynomial ι ℂ) :
     have hc : conj (MvPolynomial.eval (torusPoint θ) f) =
         ∑ s ∈ f.support, conj (f.coeff s) * conj (torusMono θ s) := by
       conv_lhs => rw [eval_torus]
-      simp [map_sum, map_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [map_sum, map_mul]
     push_cast
     rw [show ((‖MvPolynomial.eval (torusPoint θ) f‖ : ℂ)) ^ 2 =
         MvPolynomial.eval (torusPoint θ) f * conj (MvPolynomial.eval (torusPoint θ) f) by

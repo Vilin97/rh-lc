@@ -37,7 +37,8 @@ theorem yx_eq_one {r : ℕ} {X Y : Matrix (Fin n) (Fin r) E} (hσ : IsCMExt F E 
     (hW : IsWittFrame σ J X Y) : Formalism.UG.cT (σ : E →+* E) Y * J * X = 1 := by
   ext i j
   have h := congrArg σ (congrFun₂ hW.xy j i)
-  simp only [Matrix.mul_apply, Formalism.UG.cT, Matrix.transpose_apply, Matrix.map_apply, map_sum, map_mul, RingHom.coe_coe,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mul_apply, Formalism.UG.cT, Matrix.transpose_apply, Matrix.map_apply, map_sum, map_mul, RingHom.coe_coe,
     sigma_sigma hσ, hJ.1, Matrix.one_apply, apply_ite σ, map_one, map_zero, Finset.sum_mul] at h ⊢
   rw [Finset.sum_comm, if_congr eq_comm rfl rfl, ← h]
   exact Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => by ring

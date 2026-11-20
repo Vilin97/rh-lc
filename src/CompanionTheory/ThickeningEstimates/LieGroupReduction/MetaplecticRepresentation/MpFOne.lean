@@ -45,7 +45,8 @@ def qdLin (f : Sch l) : Mat l →ₗ[ℝ] Sch l where
 theorem qd_sum (X : Mat l) (f : Sch l) : ∑ a, ∑ b, X a b • Qd (Matrix.single a b 1) f = Qd X f := by
   show _ = qdLin f X
   conv_rhs => rw [Matrix.matrix_eq_sum_single X]
-  simp only [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
   rw [show Matrix.single a b (X a b) = X a b • Matrix.single a b (1 : ℝ) by
     rw [Matrix.smul_single, smul_eq_mul, mul_one], map_smul]
@@ -106,7 +107,8 @@ theorem onePar_of (h1 : TopG l) (h2 : Cover l) (h3 : NearOne l) (h4 : SecDer l) 
         ContinuousLinearMap.one_apply, one_smul]
       rw [show quad X f = Qd X f from quad_eq hX f, ← qd_sum X f]
       show _ = schwartzToL2 l _
-      simp only [map_sum, ContinuousLinearMap.map_smul_of_tower]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, ContinuousLinearMap.map_smul_of_tower]
     rw [hval] at hS
     refine hS.congr_of_eventuallyEq ?_
     filter_upwards [hev] with t ht

@@ -83,7 +83,8 @@ theorem redV_add_smul_stab : ∀ {F E : Type} [Field F] [NumberField F] [Field E
     have e1 : (⟨_, hs i⟩ : Formalism.L2.Herm.intAf F E) = ((y : Matrix (Fin n) (Fin n) (Formalism.L2.Herm.intAf F E)) *ᵥ X) i :=
       Subtype.ext (hkey i)
     rw [e1]
-    simp only [Matrix.mulVec, dotProduct, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, dotProduct, map_sum, map_mul]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [redV_eq_of_int β PP _ (hint v hv) j]
     rfl

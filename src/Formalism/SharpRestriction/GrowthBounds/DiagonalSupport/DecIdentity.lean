@@ -102,7 +102,8 @@ theorem dec_identity {N1 N2 : ℕ} (A' : Fin N1 → ZMod J → MvPolynomial (ℤ
           nmEmb O r K (B' (finProdFinEquiv.symm q).2 (((t : ℤ)) : ZMod J))) =
       PhiPl Fr p O K J (∑ i, ∏ j, rename (fun v : ℤ × Fin r => ((j, v.1), v.2)) (A' i j)) *
         PhiNo Fr p O K J (∑ i, ∏ j, rename (fun v : ℤ × Fin K => ((j, v.1), v.2)) (B' i j)) := by
-  simp only [map_sum, map_prod, PhiPl_seg, PhiNo_seg]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_prod, PhiPl_seg, PhiNo_seg]
   rw [sum_mul_sum_prod]
   refine Finset.sum_congr rfl fun q _ => ?_
   refine (prod_range_zmod (fun t : ℤ => phSeg O K p Fr t

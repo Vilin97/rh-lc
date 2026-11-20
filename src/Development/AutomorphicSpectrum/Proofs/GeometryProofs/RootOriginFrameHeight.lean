@@ -19,7 +19,8 @@ theorem exists_const_set {K Ω : Type} [Field K] [CharZero K] [FiniteDimensional
   have hq : ∀ q : ℚ, f (algebraMap ℚ K q) ∈ A := fun q => by
     rw [eq_ratCast, Rat.cast_def, map_div₀, map_intCast, map_natCast, div_eq_mul_inv]
     exact A.mul_mem (intCast_mem A _) (hn _ q.den_nz)
-  rw [← bs.sum_repr a, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← bs.sum_repr a, map_sum]
   refine A.sum_mem fun i _ => ?_
   rw [Algebra.smul_def, map_mul]
   exact A.mul_mem (hq _) (hS ⟨i, rfl⟩)

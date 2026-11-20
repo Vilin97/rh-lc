@@ -31,7 +31,8 @@ theorem coe_aeval_sym_subst (L : V n →L[ℂ] V m) (q : MvPolynomial (Fin m × 
   have h : ((Subalgebra.center ℂ (Alt n)).val.comp ((aeval sym).comp (subst L))) =
       (pull L).comp ((Subalgebra.center ℂ (Alt m)).val.comp (aeval sym)) := by
     refine MvPolynomial.algHom_ext fun x => ?_
-    simp only [AlgHom.comp_apply, subst, aeval_X, map_sum, map_mul, aeval_C, Subalgebra.coe_val, sym,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [AlgHom.comp_apply, subst, aeval_X, map_sum, map_mul, aeval_C, Subalgebra.coe_val, sym,
       (pull_dz _ _).1, (pull_dz _ _).2, Finset.sum_mul_sum, smul_mul_smul_comm]
     refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
     rw [Subalgebra.coe_algebraMap, Subalgebra.coe_algebraMap, ← map_mul, ← Algebra.smul_def]
@@ -52,7 +53,8 @@ theorem curvPoly_comp {H : V m → Matrix r r ℂ} {φ : V n → V m} {v : V n} 
   have e (a b : Fin n) := (curv_comp_holo h2 hu hφ.contDiffAt (coordVec a) (coordVec b)).trans
     (curv_eq_sum_sum h2 hu _ _)
   refine Matrix.ext fun i j => ?_
-  simp only [curvPoly, Matrix.of_apply, Matrix.map_apply, e, Matrix.sum_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [curvPoly, Matrix.of_apply, Matrix.map_apply, e, Matrix.sum_apply,
     Matrix.smul_apply, smul_eq_mul, map_sum, map_mul, subst, aeval_X, aeval_C, algebraMap_eq,
     Finset.sum_mul, Finset.mul_sum]
   simp_rw [← Fintype.sum_prod_type']

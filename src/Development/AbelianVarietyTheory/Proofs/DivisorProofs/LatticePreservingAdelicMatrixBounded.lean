@@ -84,10 +84,12 @@ theorem coord_mem {n : ℕ} (b : Module.Basis (Fin n) F E) (W : Spc F E d) (v : 
     have ha' : sndA F a ∈ intAt v := ha
     rw [Pi.smul_apply, tensMap_smul, tensMap_inclR, map_smul, Pi.smul_apply, crd_inclR, smul_eq_mul]
     have hrep : b.repr ((∑ k, c k • x k) i) l = ∑ k, (c k : F) * b.repr (x k i) l := by
-      rw [Finset.sum_apply, map_sum, Finsupp.finset_sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Finset.sum_apply, map_sum, Finsupp.finset_sum_apply]
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [Pi.smul_apply, map_zsmul, Finsupp.smul_apply, zsmul_eq_mul]
-    rw [hrep, map_sum, Finset.mul_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hrep, map_sum, Finset.mul_sum, Finset.mul_sum]
     refine Subring.sum_mem _ fun k _ => ?_
     rw [map_mul, map_intCast]
     have e : (N : Af F) * (sndA F a * ((c k : Af F) * algebraMap F (Af F) (b.repr (x k i) l))) =

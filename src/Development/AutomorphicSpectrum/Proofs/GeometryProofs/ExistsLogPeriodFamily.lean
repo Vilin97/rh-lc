@@ -203,7 +203,8 @@ theorem exists_additive_sections {n g : ℕ} (Γ₀ : Submodule ℤ (Fin g → �
   · intro x
     have hx : (x : Fin g → ℂ) = ∑ j, (bs.repr x j) • ((bs j : Γ₀) : Fin g → ℂ) := by
       have h := congrArg Γ₀.subtype (bs.sum_repr x)
-      rw [map_sum] at h
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum] at h
       simp only [map_smul, Submodule.subtype_apply] at h
       exact h.symm
     simp only [h0]

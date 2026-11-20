@@ -85,7 +85,8 @@ theorem proj_eigen_ne [IsDomain R] {χ ψ : MulChar F R} (h : χ ≠ ψ) (e : N 
   simp only [proj, he, Pi.zero_apply]
   have hs : ∑ a : Fˣ, algebraMap R C (χ⁻¹ (a : F)) * (algebraMap R C (ψ (a : F)) * e x) =
       algebraMap R C (∑ a : Fˣ, χ⁻¹ (a : F) * ψ (a : F)) * e x := by
-    rw [map_sum, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_mul]
     exact Finset.sum_congr rfl fun a _ => by rw [map_mul, mul_assoc]
   rw [hs, orth_ne h, map_zero, zero_mul, mul_zero]
 
@@ -203,7 +204,8 @@ theorem proj_props : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgClo
       rw [← Finset.mul_sum, Finset.sum_comm]
       congr 1
       refine Finset.sum_congr rfl fun a _ => ?_
-      rw [map_sum, Finset.sum_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Finset.sum_mul]
     rw [hsum]
     simp only [hz, apply_ite (algebraMap R C), ite_mul, map_zero, zero_mul, Finset.sum_ite_eq',
       Finset.mem_univ, if_true, Units.val_one, one_smul, map_natCast]
@@ -259,7 +261,8 @@ theorem proj_nf : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgClosed
     exact Ideal.zero_mem _
   have hval : proj χ g x = algebraMap R C (w * ∑ a : Fˣ, χ⁻¹ (a : F) * l a) := by
     simp only [proj]
-    rw [← hw, map_mul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hw, map_mul, map_sum]
     congr 1
     refine Finset.sum_congr rfl fun a _ => ?_
     rw [map_mul, hl]

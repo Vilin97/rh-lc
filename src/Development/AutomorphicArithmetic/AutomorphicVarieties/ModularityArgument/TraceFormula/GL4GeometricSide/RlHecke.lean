@@ -205,7 +205,8 @@ private theorem form_R {π : CuspSub E n} {K : Subgroup (GL (Fin n) (Af E))} (hK
   have key : ∀ M : π.V →ₗ[ℂ] ℂ, ∫ g, h.1 g * M (tr π g (D.i u)) ∂μf =
       M (∑ s ∈ S, (((μf.real (K : Set (GL (Fin n) (Af E))) : ℝ) : ℂ) * h.1 s) • tr π s (D.i u)) := by
     intro M
-    rw [hS _ (fun g k hk => by simp only [hr g k hk, tr_mul, hfix k hk]) (fun g hg => by simp [hg]), map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hS _ (fun g k hk => by simp only [hr g k hk, tr_mul, hfix k hk]) (fun g hg => by simp [hg]), map_sum,
       Finset.mul_sum]
     exact Finset.sum_congr rfl fun s _ => by rw [map_smul, smul_eq_mul, mul_assoc]
   rw [key]

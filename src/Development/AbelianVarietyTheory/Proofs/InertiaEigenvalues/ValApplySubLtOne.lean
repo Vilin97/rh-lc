@@ -274,10 +274,12 @@ theorem exists_fixed {Δ Ω C : Type} [CommGroup Δ] [Fintype Δ] [Field Ω] [Is
       rw [h r, Finset.mul_sum]
       refine Finset.sum_congr rfl (fun d _ => ?_)
       rw [map_mul r, map_inv r, Units.val_mul, map_mul j, mul_assoc]
-    simp only [map_mul, map_inv₀, map_natCast, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_mul, map_inv₀, map_natCast, map_sum]
     simp_rw [key]
     rw [Finset.sum_comm]
-    simp_rw [← Finset.sum_mul, ← map_sum, orth]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp_rw [← Finset.sum_mul, ← map_sum, orth]
     rw [Finset.sum_eq_single δ]
     · simp [hNC]
     · intro d _ hd
@@ -290,7 +292,8 @@ theorem exists_fixed {Δ Ω C : Type} [CommGroup Δ] [Fintype Δ] [Field Ω] [Is
         invFun := fun r => (Units.map g.symm.toMonoidHom).comp r
         left_inv := fun r => by ext d; simp
         right_inv := fun r => by ext d; simp }
-    simp only [map_mul, map_inv₀, map_natCast, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_mul, map_inv₀, map_natCast, map_sum]
     congr 1
     refine Fintype.sum_equiv e _ _ (fun r => ?_)
     rw [hg r]

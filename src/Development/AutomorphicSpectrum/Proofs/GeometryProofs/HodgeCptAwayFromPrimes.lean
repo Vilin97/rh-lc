@@ -127,7 +127,8 @@ theorem mem_of_sum_mem (P : Submodule R E) {O : Type} [CommRing O] (ρ : O →+*
       have hg : (∑ u ∈ A, (σ u a - σ t a) • f u) ∈ P := by
         have e : (∑ u ∈ A, (σ u a - σ t a) • f u) =
             ρ a (f t + ∑ u ∈ A, f u) - σ t a • (f t + ∑ u ∈ A, f u) := by
-          rw [map_add, map_sum, mem_eigSp_apply (hf t (Finset.mem_insert_self _ _)) a, smul_add, Finset.smul_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [map_add, map_sum, mem_eigSp_apply (hf t (Finset.mem_insert_self _ _)) a, smul_add, Finset.smul_sum]
           simp only [sub_smul, Finset.sum_sub_distrib]
           rw [Finset.sum_congr rfl fun u hu =>
             (mem_eigSp_apply (hf u (Finset.mem_insert_of_mem hu)) a).symm]

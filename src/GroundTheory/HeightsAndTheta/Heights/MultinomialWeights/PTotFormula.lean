@@ -22,7 +22,8 @@ def totalDeriv (d : IndexData) (τ : Fin d.f) : Derivation ℚ (XPoly d) (XPoly 
 
 theorem totalDeriv_apply (d : IndexData) (τ : Fin d.f) (G : XPoly d) :
     totalDeriv d τ G = ∑ i : Fin d.N, pderiv (τ, i) G := by
-  rw [totalDeriv, ← Derivation.coeFnAddMonoidHom_apply, map_sum, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [totalDeriv, ← Derivation.coeFnAddMonoidHom_apply, map_sum, Finset.sum_apply]
   rfl
 
 theorem totalDeriv_blockPowerSum (d : IndexData) (τ σ : Fin d.f) (k : ℕ) :
@@ -30,7 +31,8 @@ theorem totalDeriv_blockPowerSum (d : IndexData) (τ σ : Fin d.f) (k : ℕ) :
       if σ = τ then C (k : ℚ) * RestTerms.blockPowerSum d.f d.N (k - 1) τ else 0 := by
   classical
   rw [totalDeriv_apply]
-  simp only [RestTerms.blockPowerSum, map_sum, Derivation.leibniz_pow, pderiv_X]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [RestTerms.blockPowerSum, map_sum, Derivation.leibniz_pow, pderiv_X]
   split_ifs with h
   · subst h
     rw [Finset.mul_sum]
@@ -68,7 +70,8 @@ theorem TotFormula.proof (hK : RestTerms.FlagIntegralKillsPowerSums.Statement) :
     simp [RestTerms.blockPowerSum]
   unfold totalFl
   rw [← totalDeriv_apply]
-  simp only [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum]
   rw [Finset.sum_congr rfl fun k hk => Finset.sum_congr rfl fun σ _ => key k hk σ]
   simp only [Finset.sum_ite_eq', Finset.mem_univ, if_true]
   rw [Finset.sum_eq_single 1]

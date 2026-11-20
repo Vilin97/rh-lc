@@ -36,7 +36,8 @@ theorem denom {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [
   have hxy : form σ X.J H.y H.x = 1 := by
     have h1 := hxy0
     have e1 : form σ X.J H.y H.x = σ (form σ X.J H.x H.y) := by
-      simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσσ]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσσ]
       simp only [Finset.mul_sum]
       rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
@@ -146,7 +147,8 @@ theorem arch_decay {F E : Type} [Field F] [NumberField F] [Field E] [NumberField
   have hx : ∀ p, p2 (x p) = 0 := fun p => real_adele_mul_finite_part_zero _
   have hrho : M₁.co.rho B.ψ (realAd F 1 • Matrix.vecMulVec (incV F H.y) (incV F w)) φ =
       schr B.ψ (∑ p, x p • M₁.co.e (Sm p)) φ := by
-    rw [Darboux.rho, vecMulVec_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Darboux.rho, vecMulVec_sum, map_sum]
     simp only [map_smul]
     rfl
   have hθ : thetaSum F (e' (M₁.co.rho B.ψ (realAd F 1 • Matrix.vecMulVec (incV F H.y) (incV F w)) φ)) =

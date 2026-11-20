@@ -193,7 +193,8 @@ def hfL (L : LocE F E) {n : ℕ} (H : Matrix (Fin n) (Fin n) E) (y : Fin n → E
 theorem hf_conj (L : LocE F E) {n : ℕ} {H : Matrix (Fin n) (Fin n) E} (h : IsHerm L H)
     (x y : Fin n → E) : hf L H x y = L.cj (hf L H y x) := by
   have h1 : ∀ i j, L.cj (H j i) = H i j := fun i j => congrFun (congrFun h i) j
-  simp only [hf, map_sum, map_mul, L.cj_cj, h1]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hf, map_sum, map_mul, L.cj_cj, h1]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 
@@ -217,7 +218,8 @@ theorem split_of_gram (L : LocE F E) [IsArtinianRing E] {n : ℕ} {H : Matrix (F
   have key : ∀ (α : ι → E) (y : Fin n → E),
       hf L H (∑ i, α i • g i) y = ∑ i, α i * hf L H (g i) y := fun α y => by
     change hfL L H y _ = _
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun i _ => by rw [map_smul]; rfl
   let φ : (ι → E) →ₗ[E] (ι → E) :=
     LinearMap.pi fun j => (hfL L H (g j)).comp (Fintype.linearCombination E g)

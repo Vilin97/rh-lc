@@ -47,7 +47,8 @@ theorem exists_extend {L L' : Type} [Field L] [Field L'] (ι : L →+* L') (σ' 
     simp only [Pi.smul_apply, smul_eq_mul, map_mul, mul_smul, Finset.smul_sum]
   · intro x x' h
     change ∑ k, σ' (x' k) • j (Pi.single k 1) = j x
-    conv_rhs => rw [pi_eq_sum_univ' x, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_rhs => rw [pi_eq_sum_univ' x, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_smulₛₗ, h.2 k k rfl]
     rfl

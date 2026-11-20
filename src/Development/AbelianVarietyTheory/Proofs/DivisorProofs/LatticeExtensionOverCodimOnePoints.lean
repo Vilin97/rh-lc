@@ -65,7 +65,8 @@ theorem IsGerm.exists_sec {x : X} (h : IsGerm g x) (hF : IsVB F r) (t : Γ((pb g
   have hxV : x ∈ V := ⟨hx, by rw [Opens.coe_finset_inf]; simpa using hW⟩
   have hV (i) : V ≤ W i := inf_le_right.trans (Finset.inf_le (Finset.mem_univ i))
   refine ⟨V, hxV, ∑ i, resG X (hV i) (a i) • resM F inf_le_left (e i), ?_⟩
-  rw [map_sum, Fintype.linearCombination_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Fintype.linearCombination_apply]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [pullbackSections_smul, ← ha]
   congr 1

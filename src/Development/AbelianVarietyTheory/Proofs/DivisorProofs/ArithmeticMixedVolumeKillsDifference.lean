@@ -48,7 +48,8 @@ theorem GlobalTheory.TrivFlag.arIn_powerSum_mul_vertical (h2 : Hypotheses2) (hH 
     · refine (aeval_X _ _).trans (Eq.symm ?_)
       change rename w (ev (X (Sum.inr (b, k)))) =
         (C ((k.factorial : ℝ)⁻¹) : MvPolynomial (Sym D.host.E →₀ ℤ) ℝ) * ∑ l, X (w (Sum.inr (b, l))) ^ k
-      simp only [ev, aeval_X, rename_X, map_mul, rename_C, map_sum, map_pow]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [ev, aeval_X, rename_X, map_mul, rename_C, map_sum, map_pow]
       rfl
   change numL _ _ ((arIn s Φ (metsOf x Φ)).mixEv Sx R p c _) = 0
   rw [hev, ← hd c]

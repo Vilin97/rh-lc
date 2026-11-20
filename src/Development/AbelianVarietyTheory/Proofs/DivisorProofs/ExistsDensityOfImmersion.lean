@@ -251,7 +251,8 @@ theorem det_gram_ne_zero [Fintype ι] (hH : ∀ i, (H i).IsHermitian ∧ (H i).d
   have h1 : B (b.equivFun.symm v) = 0 := by
     refine b.ext fun l => ?_
     have := congrFun hvG l
-    rw [Module.Basis.equivFun_symm_apply, map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Module.Basis.equivFun_symm_apply, map_sum, LinearMap.sum_apply]
     simp only [map_smul, LinearMap.smul_apply, smul_eq_mul]
     exact this
   have h2 := eq_zero_of_trForm hH (b.equivFun.symm v) fun Y => LinearMap.congr_fun h1 Y

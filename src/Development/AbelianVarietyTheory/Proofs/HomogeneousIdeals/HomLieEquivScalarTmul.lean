@@ -70,7 +70,8 @@ def equivTangent (a : OAct O G) : Lie a ≃ {w : epsR R ⟶ G // IsTangent w} wh
 
 theorem hom_sum {I : Type*} (s : Finset I) (v : I → Lie a) :
     (∑ i ∈ s, v i).hom = ∏ i ∈ s, (v i).hom := by
-  rw [← hom_toPts, map_sum, Pts.hom_sum]; rfl
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hom_toPts, map_sum, Pts.hom_sum]; rfl
 
 instance baseModule : Module R (Lie a) where
   smul r v := mk a (epsScale r ≫ v.hom) (isTangent_epsScale r v.isTangent)

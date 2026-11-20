@@ -91,7 +91,8 @@ theorem linInd_orth {ι : Type} {h : V →ₗ⋆[K] V →ₗ[K] K} (g : ι → V
   rw [linearIndependent_iff']
   intro s c hs i hi
   have key := congrArg (h (g i)) hs
-  rw [map_sum, map_zero, Finset.sum_eq_single i] at key
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_zero, Finset.sum_eq_single i] at key
   · rw [map_smul, smul_eq_mul] at key
     exact (mul_eq_zero.1 key).resolve_right (hn i)
   · intro j _ hji

@@ -110,7 +110,8 @@ theorem exists_bound_short (n : ℕ) (hn : n ≠ 0) {N : ℤ} (hN : N ≠ 0) :
   have hbΛ : ∀ x ∈ Λ, ∃ c : κ → ℤ, x = ∑ i, c i • b i := fun x hx =>
     ⟨β.repr ⟨x, hx⟩, by
       have := congrArg Λ.subtype (β.sum_repr ⟨x, hx⟩)
-      rw [map_sum] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum] at this
       exact this.symm⟩
   have hbs : ⊤ ≤ span ℚ (Set.range b) := by
     have hΛ : ∀ x ∈ Λ, x ∈ span ℚ (Set.range b) := fun x hx => by
@@ -162,7 +163,8 @@ theorem exists_bound_short (n : ℕ) (hn : n ≠ 0) {N : ℤ} (hN : N ≠ 0) :
     have h1 : ∀ j, ∃ m : ℤ, Algebra.trace ℚ E (h y (b j)) = m := fun j => by
       obtain ⟨m, hm⟩ := hx j
       refine ⟨m, ?_⟩
-      rw [← hm, hy, map_sum, LinearMap.sum_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hm, hy, map_sum, LinearMap.sum_apply, map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [← algebraMap_smul E, map_smul, LinearMap.smul_apply, algebraMap_smul, map_smul, ← htr]
       rfl
@@ -170,7 +172,8 @@ theorem exists_bound_short (n : ℕ) (hn : n ≠ 0) {N : ℤ} (hN : N ≠ 0) :
       obtain ⟨c, rfl⟩ := hbΛ w hw
       choose m hm using h1
       refine ⟨∑ j, c j * m j, ?_⟩
-      rw [map_sum, map_sum, Int.cast_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, map_sum, Int.cast_sum]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [map_zsmul, map_zsmul, hm, zsmul_eq_mul, Int.cast_mul]
     have h3 : (N : E) • (D : E) • y ∈ Λ := hdual _ fun w hw => by

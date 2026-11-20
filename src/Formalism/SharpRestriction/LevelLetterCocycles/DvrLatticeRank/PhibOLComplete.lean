@@ -93,7 +93,8 @@ theorem phib_shift (φ : PowerSeries O →ₐ[O] PowerSeries O) (c : ℕ → O) 
 theorem phib_poly (r : Polynomial O) (p : ℕ) (h : r.degree < (p : WithBot ℕ)) :
     (r : PowerSeries O) = ∑ k : Fin p, PowerSeries.X ^ (k : ℕ) * PowerSeries.C (r.coeff k) := by
   ext m
-  rw [Polynomial.coeff_coe, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Polynomial.coeff_coe, map_sum,
     Fin.sum_univ_eq_sum_range
       (fun k => PowerSeries.coeff m (PowerSeries.X ^ k * PowerSeries.C (r.coeff k))) p]
   simp_rw [mul_comm (PowerSeries.X ^ _) (PowerSeries.C _), PowerSeries.coeff_C_mul_X_pow]
@@ -284,7 +285,8 @@ theorem phii_step (p : ℕ) (hp : p.Prime) [IsHausdorff (Ideal.span {((p : ℕ) 
   have hrd : r.degree < (p : WithBot ℕ) := Polynomial.degree_sum_fin_lt _
   have hrc : (r : PowerSeries O) = ∑ k : Fin p,
       PowerSeries.X ^ (k : ℕ) * PowerSeries.C (PowerSeries.constantCoeff (a k)) := by
-    rw [hr, ← Polynomial.coeToPowerSeries.ringHom_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hr, ← Polynomial.coeToPowerSeries.ringHom_apply, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [Polynomial.coeToPowerSeries.ringHom_apply, Polynomial.coe_mul, Polynomial.coe_C,
       Polynomial.coe_pow, Polynomial.coe_X, mul_comm]
@@ -395,7 +397,8 @@ theorem phii_EE (W : LocWach PD LL O v n) [IsAdicComplete (Ideal.span {((PD.p : 
         rw [← Finset.sum_mul, h, zero_mul]
       simp_rw [hd, map_add, map_mul, map_pow, map_natCast, mul_add] at h2
       rw [Finset.sum_add_distrib] at h2
-      rw [map_sum, mul_neg, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, mul_neg, Finset.mul_sum]
       rw [eq_neg_iff_add_eq_zero, ← h2]
       congr 1
       · refine Finset.sum_congr rfl fun k _ => ?_
@@ -454,7 +457,8 @@ theorem phii_basis (W : LocWach PD LL O v n) (T : LocLat G Qp LL O) (hT : IsCrys
     intro y
     refine ⟨fun t => W.φE (β.equivFun y t), ?_⟩
     rw [hL]
-    conv_rhs => rw [← β.sum_equivFun y, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_rhs => rw [← β.sum_equivFun y, map_sum]
     exact Finset.sum_congr rfl fun t _ => (W.φD_smul T _ _).symm
   have hN : ∀ m ∈ W.N T, m ∈ LinearMap.range L := by
     intro m hm
@@ -495,7 +499,8 @@ theorem phii_DD (W : LocWach PD LL O v n) [IsAdicComplete (Ideal.span {((PD.p : 
   let β := Module.finBasis W.EE (W.DD T)
   have hx : ∀ k, W.φD T (x k) = ∑ t, W.φE (β.equivFun (x k) t) • W.φD T (β t) := by
     intro k
-    conv_lhs => rw [← β.sum_equivFun (x k), map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [← β.sum_equivFun (x k), map_sum]
     exact Finset.sum_congr rfl fun t _ => W.φD_smul T _ _
   have h1 : ∑ t, (∑ k : Fin PD.p, (algebraMap (LetA O n) W.EE letπ) ^ (k : ℕ) *
       W.φE (β.equivFun (x k) t)) • W.φD T (β t) = 0 := by

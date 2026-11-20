@@ -58,7 +58,8 @@ theorem gl_compl_smul_map (hw : Formalism.UG.IsInertAt F E v w) (P : Matrix ι �
 theorem gl_map_mul_map (hw : Formalism.UG.IsInertAt F E v w) (P Q : Matrix ι ι (w.adicCompletion E)) :
     P.map (iotaW hw) * Q.map (iotaW hw) = (P * Q).map (iotaW hw) := by
   ext i k
-  rw [Matrix.mul_apply, Matrix.map_apply, Matrix.mul_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.mul_apply, Matrix.map_apply, Matrix.mul_apply, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [Matrix.map_apply, Matrix.map_apply, gl_iotaW_mul]
 
@@ -124,7 +125,8 @@ theorem glueW_props : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [Numb
       funext i
       simp [Matrix.mulVec, dotProduct, Matrix.one_apply]
     funext i
-    rw [glueW, Matrix.add_mulVec, hd, Pi.add_apply, Pi.smul_apply, smul_eq_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [glueW, Matrix.add_mulVec, hd, Pi.add_apply, Pi.smul_apply, smul_eq_mul,
       gl_compl_mul_iotaW, zero_add, Matrix.mulVec, dotProduct, Matrix.mulVec, dotProduct, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [Matrix.map_apply, gl_iotaW_mul]

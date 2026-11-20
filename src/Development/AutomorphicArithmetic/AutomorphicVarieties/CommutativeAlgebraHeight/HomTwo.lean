@@ -17,7 +17,8 @@ private theorem hom_two {n : ℕ} {A : Type} [CommRing A] (P : MvPolynomial (Fin
     ← Finset.sum_fiberwise_of_maps_to (t := Finset.range (n + 1)) (g := fun d => d 1)
       (fun d h => by have := hd d h; simp only [Finset.mem_range]; omega)]
   refine Finset.sum_congr rfl fun i _ => ?_
-  rw [map_sum, Finset.sum_mul, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_mul, Finset.sum_mul]
   refine Finset.sum_congr rfl fun d h => ?_
   rw [Finset.mem_filter] at h
   have h0 : d 0 = n - i := by have := hd d h.1; have := h.2; omega

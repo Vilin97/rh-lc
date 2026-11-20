@@ -64,7 +64,8 @@ theorem exists_continuous_character :
   refine ⟨⟨_, hc⟩, fun a => rfl, fun a => ?_⟩
   show F _ = _
   have hw : vecOf D cc δ (∑ i, (a i / (p ^ n : ℕ)) • b i) ∈ Λ := by
-    rw [← vecHom_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← vecHom_apply, map_sum]
     exact sum_mem fun i _ => by rw [map_zsmul]; exact zsmul_mem (hb i) _
   have hs : ∑ i, (a i : D.host.E) • b i =
       ∑ i, (((PadicInt.toZModPow n (a i : ℤ_[p])).val : ℕ) : D.host.E) • b i +

@@ -132,7 +132,8 @@ theorem isWtOn_iff : ∀ (p q n : ℕ) (e : Ix p q ≃ Fin n) (ε : Fin n → Bo
   · intro h θ _
     rw [← key]
     apply flow_eq R (torX_mem _)
-    rw [torX_eq_sum, map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [torX_eq_sum, map_sum, LinearMap.sum_apply]
     simp only [map_smul, LinearMap.smul_apply, h, smul_smul, ← Finset.sum_smul]
     congr 1
     rw [← e.sum_comp]

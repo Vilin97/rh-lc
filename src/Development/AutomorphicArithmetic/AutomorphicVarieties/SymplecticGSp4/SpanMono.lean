@@ -308,7 +308,8 @@ private theorem spanMono_parts {O X R : Type} [CommRing O] [IsLocalRing O] [IsNo
   obtain ⟨f, hf, rfl⟩ := hx
   obtain ⟨μ, hμS, hμ⟩ := part_span O R X W {n | Finsupp.weight W.wt n = w} w (fun n hn => hn)
   obtain ⟨b, hb, rfl⟩ := hμ f (fun n hn => hf n hn)
-  rw [AlgHom.toLinearMap_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [AlgHom.toLinearMap_apply, map_sum]
   refine Submodule.sum_mem _ fun m hm => ?_
   rw [map_mul]
   have hw : Finsupp.weight W.wt m = w := hμS hm

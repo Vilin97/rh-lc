@@ -328,7 +328,8 @@ def IsRed (P : HeightOneSpectrum (𝓞 E)) (x : GL (Fin n) (AfE F E)) (A : Matri
 
 theorem IsRed.mul {x y : GL (Fin n) (AfE F E)} {A B : Matrix (Fin n) (Fin n) (𝓞 E ⧸ P.asIdeal)} (h : IsRed P x A)
     (h' : IsRed P y B) : IsRed P (x * y) (A * B) := fun i j => by
-  rw [Units.val_mul, Matrix.mul_apply, Matrix.mul_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Units.val_mul, Matrix.mul_apply, Matrix.mul_apply, map_sum]
   exact hasRes_sum _ fun l => by rw [map_mul]; exact hasRes_mul (h i l) (h' l j)
 
 theorem IsRed.unique {x : GL (Fin n) (AfE F E)} {A B : Matrix (Fin n) (Fin n) (𝓞 E ⧸ P.asIdeal)} (h : IsRed P x A)
@@ -366,7 +367,8 @@ theorem pullV_mul (g m : GL (Fin n) (AfE F E)) [StarRing E] (x : Sp E n) (i : Fi
 theorem hasRes_pullV [StarRing E] {g m : GL (Fin n) (AfE F E)} {A : Matrix (Fin n) (Fin n) (𝓞 E ⧸ P.asIdeal)} (hm : IsRed P m A)
     {x : Sp E n} {c : Fin n → 𝓞 E ⧸ P.asIdeal} (h : ∀ i, HasRes P (adAt F P (Col2.pullV g x i)) (c i)) (i : Fin n) :
     HasRes P (adAt F P (Col2.pullV (g * m⁻¹) x i)) ((A *ᵥ c) i) := by
-  rw [pullV_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [pullV_mul, map_sum]
   exact hasRes_sum _ fun l => by rw [map_mul]; exact hasRes_mul (hm i l) (h l)
 
 end Res
@@ -412,7 +414,8 @@ theorem isPtOf_mul (hQ : ∀ P, P ∉ Q) {g m : GL (Fin n) (AfE F E)} {p : DecoF
       rwa [Matrix.mulVec_mulVec, ← Units.val_mul, _root_.mul_inv_rev, inv_inv, inv_mul_cancel_left] at this
   · rw [smul_N] at hv
     have e : adAt F P.1 (Col2.pullV (g * m⁻¹) v i) = adAt F P.1 (Col2.pullV (g * 1⁻¹) v i) := by
-      rw [pullV_mul, pullV_mul, map_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [pullV_mul, pullV_mul, map_sum, map_sum]
       exact Finset.sum_congr rfl fun j _ => by rw [map_mul, map_mul, hT _ P.2]
     rw [e, inv_one, mul_one]
     exact hg.f P v hv i hi

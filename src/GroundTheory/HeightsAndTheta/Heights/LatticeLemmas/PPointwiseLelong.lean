@@ -148,7 +148,8 @@ theorem sphereIntegrable_coord {p : Fin N → ℂ} (hp : ∑ j, ‖p j‖ ^ 2 = 
   have h : (∑ j, X ((0 : Fin 1), j) * C (star (p j)) : MvPolynomial (Fin 1 × Fin N) ℂ) ≠ 0 := by
     intro h0
     have := congrArg (eval fun ij : Fin 1 × Fin N => p ij.2) h0
-    simp only [map_sum, map_mul, eval_X, eval_C, map_zero] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, eval_X, eval_C, map_zero] at this
     have hj : ∀ j, p j * star (p j) = ((‖p j‖ ^ 2 : ℝ) : ℂ) := fun j => by
       rw [Complex.star_def, Complex.mul_conj']
       push_cast
@@ -157,7 +158,8 @@ theorem sphereIntegrable_coord {p : Fin N → ℂ} (hp : ∑ j, ‖p j‖ ^ 2 = 
     rw [← Complex.ofReal_sum, hp] at this
     simp at this
   have := (LogInt.integrableOn_log_mahler (HermNorm.std N) _ h).1
-  simp only [map_sum, map_mul, eval_X, eval_C] at this
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, eval_X, eval_C] at this
   exact this
 
 theorem continuous_coordAlong (p : Fin N → ℂ) : Continuous (coordAlong p) :=

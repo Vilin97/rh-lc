@@ -141,7 +141,8 @@ theorem isBas_of_local [IsProper A.hom] [IsAffine T.left] (hL : L.IsLB) {n : ℕ
   · refine (Submodule.mem_bot Γ(T.left, ⊤)).1 (Submodule.mem_of_span_eq_top_of_smul_pow_mem ⊥ _ hspan (c i) ?_)
     rintro ⟨_, x, rfl⟩
     have e := congrArg (pull A L a (overResι (T.left.basicOpen (r x)))) hc
-    rw [map_sum, map_zero] at e
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero] at e
     simp only [map_smulₛₗ] at e
     obtain ⟨N, hN⟩ := fun_kill (overResι (T.left.basicOpen (r x))).left (r x) (overResι_range _)
       (W := ⊤) isCompact_univ (W' := ⊤) (le_pre_top _) le_top (c i) (Fintype.linearIndependent_iff.1 (hb x).1 _ e i)
@@ -174,7 +175,8 @@ theorem stableBas_of_traits [IsProper A.hom] (hL : L.IsLB) {n : ℕ} (b : Fin n 
   choose P hP using fun i => (((isBas_iff_existsUnique _).1 (he _ k)) (pull A L a (overResι V) (b i))).exists
   have hP' : ∀ {T'' : Over S} (u : T'' ⟶ overRes V) i, pull A L a (u ≫ overResι V) (b i) =
       ∑ j, pa u.left (V := ⊤) (le_pre_top _) (P i j) • pull A L a (u ≫ k) (e j) := fun u i => by
-    rw [← pull_pull, hP, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← pull_pull, hP, map_sum]
     simp only [map_smulₛₗ, pull_pull]
   obtain ⟨W, _, _, χ, hχ, hW⟩ := tr (h.left x)
   obtain ⟨u₀, hu₀⟩ := exists_lift (Over.homMk χ rfl : Over.mk (χ ≫ T.hom) ⟶ T) V (fun y =>
@@ -291,7 +293,8 @@ theorem exists_stableBas_polAV (H : SecBaseChangeAnySt) {S : Scheme.{0}} (P : Po
   refine ⟨Fintype.linearIndependent_iff.2 fun c hc i => ?_,
     h₃ ▸ span_of_retract P.A P.L n e e' h₁ (homAt t) _ hb'.2⟩
   have q := congrArg (pull P.A P.L n e) hc
-  rw [map_sum, map_zero] at q
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_zero] at q
   simp only [map_smulₛₗ, pull_pull, h₂] at q
   have q' := congrArg (pa e'.left (V := ⊤) (le_pre_top _)) (Fintype.linearIndependent_iff.1 hb'.1 _ q i)
   rw [map_zero, pa_pa _ _ _ _ (𝟙 _) (congrArg (fun u => u.left) h₁) (le_pre_top _), pa_id] at q'

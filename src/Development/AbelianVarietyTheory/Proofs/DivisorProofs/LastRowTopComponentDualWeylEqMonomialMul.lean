@@ -25,7 +25,8 @@ theorem eq_zmon_mul_emb_of_homogeneous {K : Type} [Field K] {n : ℕ} (b : Fin n
     exact_mod_cast h1
   choose! g hg using h
   refine ⟨∑ μ ∈ H.support, g μ, ?_⟩
-  rw [map_sum, Finset.mul_sum, ← Finset.sum_congr rfl hg]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.mul_sum, ← Finset.sum_congr rfl hg]
   exact H.as_sum
 
 theorem zmon_mul_emb_injective {K : Type} [Field K] {n : ℕ} (b : Fin n → ℕ) {f g : MvPolynomial (Fin n × Fin n) K}

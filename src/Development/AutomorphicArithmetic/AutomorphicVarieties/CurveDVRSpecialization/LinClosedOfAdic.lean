@@ -78,7 +78,8 @@ theorem UpperTheory.V.Pr.linClosedOfAdic :
         mul_zero, Finset.sum_ite_eq, Finset.mem_univ, if_true]
     have hmem : K.mkQ (y g - y g0) ∈
         (maximalIdeal A ^ N • ⊤ : Submodule A ((Fin n × Fin n → A) ⧸ K)) := by
-      rw [hsum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hsum, map_sum]
       refine Submodule.sum_mem _ fun p _ => ?_
       rw [LinearMap.map_smul]
       exact Submodule.smul_mem_smul (hd p) Submodule.mem_top

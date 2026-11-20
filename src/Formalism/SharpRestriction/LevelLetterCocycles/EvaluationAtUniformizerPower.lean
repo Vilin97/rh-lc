@@ -247,7 +247,8 @@ theorem span_phi_top (T : LocLat G Qp LL O) (hT : IsCrys PD T.ρ) (hs : W.s = 1)
       rw [Submodule.span_le]
       rintro _ ⟨y, hy, rfl⟩
       obtain ⟨a, ha, _⟩ := huniq y hy
-      rw [ha, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [ha, map_sum]
       refine Submodule.sum_mem _ fun i _ => ?_
       rw [φD_smulA, ← algebraMap_smul W.EE]
       rw [Submodule.restrictScalars_mem]
@@ -315,7 +316,8 @@ theorem pullJ_repr (T : LocLat G Qp LL O) {R : ℕ} (b : Fin R → W.DD T) (i : 
     obtain ⟨a, ha, -⟩ := hb'.2 y0 hy0 hy0D
     refine ⟨fun m => (W.φA ^ j) (at0 W (a m)), ?_⟩
     conv_lhs => rw [ha]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun m _ => ?_
     rw [Formalism.MainNotions.UnusedSlot80.SatPW.φD_pow_smulA]
   | zero => exact ⟨0, by simp⟩
@@ -338,7 +340,8 @@ theorem transfer (hR : Ring9 W) (T : LocLat G Qp LL O) {R r : ℕ} (c : ZMod n) 
   simp_rw [hv, h1, Finset.smul_sum, smul_smul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun k _ => ?_
-  simp only [evaluation_eq_homomorphism W hR, map_sum, map_mul, Finset.sum_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [evaluation_eq_homomorphism W hR, map_sum, map_mul, Finset.sum_smul]
 
 end Formalism.MainNotions.RamifiedCoefficientChains.Sh.BT
 
@@ -376,7 +379,8 @@ theorem exist_bL (hR : Ring9 W) (T : LocLat G Qp LL O) {R : ℕ} (b : Fin R → 
       calc ∑ m, α m • ((W.φD T) ^ j) ((letE i : LetA O n) • b m) = x := hα.symm
         _ = W.γD T δ x := (hxD.2 δ hδ).symm
         _ = _ := by
-          rw [hα, map_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [hα, map_sum]
           refine Finset.sum_congr rfl fun m _ => ?_
           rw [Formalism.MainNotions.UnusedSlot80.SatW.γD_smulA' W T, γD_φpow, Formalism.MainNotions.UnusedSlot80.SatW.γD_smulA' W T,
             Formalism.MainNotions.UnusedSlot80.KL.γA_letE W, (hb m).2 δ hδ]
@@ -416,13 +420,15 @@ theorem pullback_coordinates (hR : Ring9 W) (T : LocLat G Qp LL O) (hT : IsCrys 
       ∑ k, (W.φA ^ j) (at0 W (D m k)) • ((W.φD T) ^ j) (e k) := by
     intro m
     conv_lhs => rw [hD m]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [Formalism.MainNotions.UnusedSlot80.SatPW.φD_pow_smulA]
   have hvC : ∀ k, ((W.φD T) ^ j) (e k) =
       ∑ m, (W.φA ^ j) (at0 W (C k m)) • ((W.φD T) ^ j) (b' m) := by
     intro k
     conv_lhs => rw [hC k]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [Formalism.MainNotions.UnusedSlot80.SatPW.φD_pow_smulA]
   choose ψD hψD using fun m k => invariant_letter_eq_evaluation W hR
     (Formalism.MainNotions.UnusedSlot80.PhiPowers.φA_pow_mem_AΔ W (evaluation_mem_invariants W hR (D m k)) j) (i + (j : ZMod n))
@@ -452,7 +458,8 @@ theorem pullback_coordinates (hR : Ring9 W) (T : LocLat G Qp LL O) (hT : IsCrys 
     have hE2 := letE_mul_self' (O := O) (i + (j : ZMod n))
     calc at0 W (∑ m, ψC k m * ψD m k') * letE (i + (j : ZMod n))
         = ∑ m, (at0 W (ψC k m) * letE (i + (j : ZMod n))) * (at0 W (ψD m k') * letE (i + (j : ZMod n))) := by
-          simp only [evaluation_eq_homomorphism W hR, map_sum, map_mul, Finset.sum_mul]
+          set_option synthInstance.maxHeartbeats 100000 in
+            simp only [evaluation_eq_homomorphism W hR, map_sum, map_mul, Finset.sum_mul]
           refine Finset.sum_congr rfl fun m _ => ?_
           conv_rhs => rw [show ∀ a b c : LetA O n, a * c * (b * c) = a * b * (c * c) from
             fun a b c => by ring]
@@ -461,7 +468,8 @@ theorem pullback_coordinates (hR : Ring9 W) (T : LocLat G Qp LL O) (hT : IsCrys 
             ((W.φA ^ j) (at0 W (D m k')) * letE (i + (j : ZMod n))) := by
           simp_rw [hψC, hψD]
       _ = (W.φA ^ j) (at0 W (∑ m, C k m * D m k')) * letE (i + (j : ZMod n)) := by
-          simp only [evaluation_eq_homomorphism W hR, map_sum, map_mul, Finset.sum_mul]
+          set_option synthInstance.maxHeartbeats 100000 in
+            simp only [evaluation_eq_homomorphism W hR, map_sum, map_mul, Finset.sum_mul]
           refine Finset.sum_congr rfl fun m _ => ?_
           calc _ = (W.φA ^ j) (at0H W hR (C k m)) * (W.φA ^ j) (at0H W hR (D m k')) *
                 (letE (i + (j : ZMod n)) * letE (i + (j : ZMod n))) := by ring
@@ -778,7 +786,8 @@ theorem ser_cv (κ : M →ₗ[L] L) (s₀ : ℕ) (g : PowerSeries L) (y : ℤ �
   rw [ser, PowerSeries.coeff_mk, cv, PowerSeries.coeff_mul,
     Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk]
   rw [finsum_eq_sum_of_support_subset (s := Finset.range (j + 1))]
-  · rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum]
     refine Finset.sum_congr rfl fun i hi => ?_
     have hij : i ≤ j := Nat.lt_succ_iff.1 (Finset.mem_range.1 hi)
     rw [map_smul, ser, PowerSeries.coeff_mk, smul_eq_mul]
@@ -795,7 +804,8 @@ theorem ser_cv (κ : M →ₗ[L] L) (s₀ : ℕ) (g : PowerSeries L) (y : ℤ �
 theorem ser_sum {ι : Type} (s : Finset ι) (κ : M →ₗ[L] L) (s₀ : ℕ) (y : ι → ℤ → M) :
     ser κ s₀ (fun k => ∑ a ∈ s, y a k) = ∑ a ∈ s, ser κ s₀ (y a) := by
   ext j
-  simp [ser, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [ser, map_sum]
 
 theorem ser_shift (κ : M →ₗ[L] L) (s₀ : ℕ) (y : ℤ → M) (m : ℤ) (hm : -(s₀ : ℤ) ≤ m)
     (hv : ∀ j < m, κ (y j) = 0) :
@@ -1030,7 +1040,8 @@ theorem letE_span_phi (hR : BT.Ring9 W) (T : LocLat G Qp LL O) {R : ℕ} (b : Fi
         show i - 1 + ((1 : ℕ) : ZMod n) = i by push_cast; ring]
     have h1 : (letE i : LetA O n) • W.φD T z0 =
         ∑ j, (W.φA ^ 1) (a j) • ((W.φD T) ^ 1) ((letE (i - 1) : LetA O n) • b j) := by
-      rw [← e2, ha, Finset.smul_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← e2, ha, Finset.smul_sum, map_sum]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [smul_comm, Formalism.MainNotions.UnusedSlot80.SatPW.φD_pow_smulA]
     rw [h1]
@@ -1100,7 +1111,8 @@ theorem exists_Pinv (hR : BT.Ring9 W) (T : LocLat G Qp LL O) (hT : IsCrys PD T.�
           rw [smul_comm, pow_one]
       _ = ∑ k', at0 W (Pc m k') • ∑ m'', at0 W (P m'' k') • e m'' := by simp_rw [hP]
       _ = ∑ m'', at0 W ((P * P') m'' m) • e m'' := by
-          simp only [Matrix.mul_apply, P', Matrix.of_apply, BT.evaluation_eq_homomorphism W hR, map_sum, map_mul,
+          set_option synthInstance.maxHeartbeats 100000 in
+            simp only [Matrix.mul_apply, P', Matrix.of_apply, BT.evaluation_eq_homomorphism W hR, map_sum, map_mul,
             Finset.smul_sum, smul_smul, Finset.sum_smul]
           rw [Finset.sum_comm]
           refine Finset.sum_congr rfl fun m'' _ => Finset.sum_congr rfl fun k' _ => ?_
@@ -1180,7 +1192,8 @@ theorem levN_smul' (T : LocLat G Qp LL O) (i : ZMod n) (ζ : LL) (a : LetA O n) 
 theorem levN_sum_smul (T : LocLat G Qp LL O) (i : ZMod n) (ζ : LL) {r : ℕ} (a : Fin r → LetA O n)
     (x : Fin r → ↥(W.N T)) :
     W.levN T i ζ (∑ k, a k • x k) = fun j => ∑ k, cv (W.lev i ζ (a k)) (W.levN T i ζ (x k)) j := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   funext j
   rw [Finset.sum_apply]
   refine Finset.sum_congr rfl fun k _ => ?_
@@ -1249,7 +1262,8 @@ theorem lead_F_span (hR : BT.Ring9 W) (hA : Formalism.MainNotions.LiftingTheory.
     exact this
   have c2 : (letE i : LetA O n) • (W.Q ^ k' • W.φD T x) =
       ∑ k, (W.Q ^ k' * W.φA (β k)) • W.φD T (e' k) := by
-    rw [smul_comm, ← hφl, ← Formalism.MainNotions.RamifiedCoefficientChains.S9.NinQ.φD_smulA W T, c1, map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [smul_comm, ← hφl, ← Formalism.MainNotions.RamifiedCoefficientChains.S9.NinQ.φD_smulA W T, c1, map_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [Formalism.MainNotions.RamifiedCoefficientChains.S9.NinQ.φD_smulA W T, smul_smul]
   have hYi : (letE i : LetA O n) • (W.Q ^ k' • W.φD T x) ∈ W.N T := (W.N T).smul_mem _ hk

@@ -173,7 +173,8 @@ theorem intNum_eq_geoNum_comap (n : ℕ) : ∀ Q : Ideal (MRing ι (ZMod p)), Is
         simp [Finset.sum_apply, Pi.single_apply]
       have : f c = ∑ k, c k • f (Pi.single k 1) := by
         conv_lhs => rw [hc]
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         exact Finset.sum_congr rfl fun k _ => map_zsmul f (c k) _
       simpa [f, smul_eq_mul] using this
 

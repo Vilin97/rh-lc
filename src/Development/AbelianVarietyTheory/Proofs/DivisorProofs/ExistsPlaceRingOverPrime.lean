@@ -265,8 +265,10 @@ theorem vacS_mem_SB : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [Numb
   have hΦ : ∀ (a : M → Fv F v) k, evFin F v ((planeT σ X W H H'
       (∑ m, GlobalTheory.EmbChart.atPlace v (a m) • incM F (g m))).1.1 k) = ∑ m, a m * w m k := by
     intro a k
-    rw [map_sum]
-    simp only [Prod.fst_sum, Finset.sum_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Prod.fst_sum, Finset.sum_apply, map_sum]
     exact Finset.sum_congr rfl fun m _ => evFin_planeT_smul_incM σ X W H H' v (a m) (g m) k
   have hrange : latS σ X W H H' v = Set.range (fun a : M → O => ∑ m, ((a m : Fv F v)) • w m) := by
     ext y; constructor

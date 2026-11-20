@@ -151,7 +151,8 @@ theorem leviElt_arch : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Num
     have hcc : τ.1 c⁻¹ * τ.1 c = 1 := by rw [← map_mul, inv_mul_cancel₀ hc, map_one]
     set z := piInf τ (a : AE F E)
     ext i j
-    simp only [torMat, projL, Matrix.add_apply, Matrix.sub_apply, Matrix.smul_apply, Matrix.vecMulVec_apply, smul_eq_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [torMat, projL, Matrix.add_apply, Matrix.sub_apply, Matrix.smul_apply, Matrix.vecMulVec_apply, smul_eq_mul,
       Matrix.mulVec, Matrix.vecMul, dotProduct, map_sum, map_mul, incV, incM, Matrix.map_apply, piInf_inclR,
       AlgHom.coe_toRingHom, cA_inclR, Pi.star_apply, hst]
     have hτc : τ.1 c ≠ 0 := (map_ne_zero _).2 hc

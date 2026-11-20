@@ -120,7 +120,8 @@ theorem corH1_natural [IsTopologicalGroup G'] (ι : G →* G') (hι : Continuous
         (F.f (c.1 (Function.invFun ι ((g • q).out⁻¹ * g * q.out))))
     = F.f (∑ q : G' ⧸ ι.range, T₁.ρ (g • q).out
         (c.1 (Function.invFun ι ((g • q).out⁻¹ * g * q.out))))
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_congr rfl fun q _ => (F.equiv _ _).symm
 
 variable {K₀ K K₀' K' : Type} [Field K₀] [Field K] [Field K₀'] [Field K']

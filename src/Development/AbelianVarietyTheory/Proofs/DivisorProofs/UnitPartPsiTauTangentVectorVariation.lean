@@ -250,7 +250,8 @@ theorem units_eval : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H :
   have hcst : constHom ρ (2 * (e : ChartRing k m d) * ∑ i, ((((e : ℤ) * n i + gam i mu α).toNat : ℕ) : ChartRing k m d) * q i) =
       TrivSqZeroExt.inl (2 * (e : k) * s) := by
     rw [hcH, hs]; congr 1
-    rw [map_mul, map_mul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_mul, map_mul, map_sum]
     simp only [map_mul, map_natCast, map_ofNat]
   rw [hcst, map_add, map_nsmul, nsmul_eq_mul] at hii
 

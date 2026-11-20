@@ -135,10 +135,12 @@ theorem map_eq_zero_of_equivariant (e : (Σ a, m a) ≃ n) {ρ : Representation 
     refine sub_eq_zero.1 (SatInd.eq_zero_of_apply_one e (sub_mem hF (Submodule.smul_mem _ _ hfix)) ?_)
     let ev : IndSp e ρ →ₗ[ℂ] W := ⟨⟨fun f => f.1.1 1, fun _ _ => rfl⟩, fun _ _ => rfl⟩
     show ev (∑ u ∈ S, u - ((∑ u ∈ S, c u : ℕ) : ℂ) • f₀) = 0
-    rw [map_sub, map_sum, map_smul, Nat.cast_sum, Finset.sum_smul, sub_eq_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_sum, map_smul, Nat.cast_sum, Finset.sum_smul, sub_eq_zero]
     exact Finset.sum_congr rfl hc
   have h3 := congrArg l hF2
-  rw [map_sum, map_smul, Finset.sum_eq_zero fun u hu => by
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_smul, Finset.sum_eq_zero fun u hu => by
     obtain ⟨g, -, rfl⟩ := (hS u).1 hu
     rw [hl, hlv, smul_zero]] at h3
   exact (smul_eq_zero.1 h3.symm).resolve_left (by exact_mod_cast hN.ne')

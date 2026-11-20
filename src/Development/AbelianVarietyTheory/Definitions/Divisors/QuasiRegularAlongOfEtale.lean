@@ -433,7 +433,8 @@ variable (hL s hO h) in
 theorem hasLead_sum (hM : M.IsLB) (m : MonoDeg ι a → H0 p (tw M L n) O) :
     HasLead hL s hO h (∑ α, mulMono hM hL s α h (m α)) fun α => resTo hO (m α) :=
   fun z i j hi hj => by
-    simp only [LeadIn, map_sum, germ_mulMono hM hL s _ h _ i j _ _ hi hj]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [LeadIn, map_sum, germ_mulMono hM hL s _ h _ i j _ _ hi hj]
     exact (congrArg (LeadAt _ _ _) (funext fun α =>
       (germ_resTo hO (fun _ => twIdx n i j) z _ (m α)).symm)).mp (leadAt_sum _)
 
@@ -466,7 +467,8 @@ theorem exists_hasLead (hM : M.IsLB) (hq : QuasiRegularAlong hL s)
         (germ (twIdx l _ _) _ (t.2 hz).1 (mem_tw_U.2 ⟨hi t hz, hj t hz⟩) f) fun α =>
           ((cutIdeal hL s).subschemeι.stalkMap z).hom (ger _ hz (μ t α)) := by
     have e := congrArg (ger _ hz) (hμ t)
-    simp only [map_sum, smul_eq_mul, map_mul, map_monoVal, ger_resG] at e
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, smul_eq_mul, map_mul, map_monoVal, ger_resG] at e
     exact (congrArg (LeadAt _ _ · _) e).mp (leadAt_sum _)
   have cover (z : (cutIdeal hL s).subscheme) : ∃ t : τ, (cutIdeal hL s).subschemeι z ∈ t.1.1.1 := by
     obtain ⟨i, hi⟩ := exists_chart hM ((cutIdeal hL s).subschemeι z)

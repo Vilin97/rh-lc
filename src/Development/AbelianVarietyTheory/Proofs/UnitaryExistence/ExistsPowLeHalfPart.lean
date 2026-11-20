@@ -55,7 +55,8 @@ theorem hom_eq_sum {n N : ℕ} {Lm : Submodule (𝓞 E) (Fin n → E)}
     simp only [Algebra.smul_def, hu, Pi.single_eq_same, map_mul, map_natCast, eq_natCast, Nat.cast_id]
     ring
   have h2 := congrArg (fun z => algebraMap (𝓞 E) E (f z)) h1
-  simp only [map_smul, map_sum, smul_eq_mul, map_mul, map_natCast, hu] at h2
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_smul, map_sum, smul_eq_mul, map_mul, map_natCast, hu] at h2
   apply mul_left_cancel₀ hd0
   rw [← _root_.mul_assoc, Finset.mul_sum]
   refine h2.trans (Finset.sum_congr rfl fun j _ => ?_)

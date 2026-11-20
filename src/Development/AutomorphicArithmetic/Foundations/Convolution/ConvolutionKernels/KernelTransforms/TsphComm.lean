@@ -108,7 +108,8 @@ private theorem act_eq_sum (hJc : IsCompact (J : Set G)) (hJo : IsOpen (J : Set 
       have h1 := ((dcF_mem (ν := ν) hJc hJo x) k hk g).2
       have h2 : ρ k v = v := hv k hk
       simp only [h1, map_mul, Module.End.mul_apply, h2])
-  rw [key, hfs, map_smul, map_sum, Complex.real_smul, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [key, hfs, map_smul, map_sum, Complex.real_smul, smul_eq_mul]
   congr 1
   refine Finset.sum_congr rfl fun c hc => ?_
   rw [dcF_apply, Set.indicator_of_mem (hout c hc), one_mul]

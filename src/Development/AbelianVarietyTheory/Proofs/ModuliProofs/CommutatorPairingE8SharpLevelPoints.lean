@@ -107,7 +107,8 @@ end Abstract
 theorem eq_sum_basis {n : ℕ} {M : Type} [AddCommGroup M] (bas : (Fin n → ℤ) ≃ₗ[ℤ] M) (X : M) :
     X = ∑ i, bas.symm X i • bas (Pi.single i 1) := by
   apply bas.symm.injective
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [map_zsmul, LinearEquiv.symm_apply_apply]
   funext j
   simp [Finset.sum_apply, Pi.single_apply]
@@ -134,7 +135,8 @@ theorem form_eq {h g : ℕ} {W : Matrix (Fin 8) (Fin 8) ℤ}
   have hs : ∀ i j, Out.stdSymp g i j = ∑ u, ∑ v, (W + W.transpose) u v *
       omegaLin h (bas (Pi.single i 1) u) (bas (Pi.single j 1) v) := fun i j => by
     rw [← hb i j]; simp only [hω]
-  simp only [hs, hω, hX, hY, map_sum, map_zsmul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hs, hω, hX, hY, map_sum, map_zsmul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
     Finset.mul_sum]
   refine (Finset.sum_congr rfl fun u _ => Finset.sum_comm).trans ?_
   refine Finset.sum_comm.trans ?_

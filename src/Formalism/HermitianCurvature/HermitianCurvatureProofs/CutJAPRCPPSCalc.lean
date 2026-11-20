@@ -313,7 +313,8 @@ theorem PSV.map {V V' : Type*} [AddCommGroup V] [Module ℂ V] [AddCommGroup V']
   obtain ⟨n, b, v, hb, hf⟩ := hf
   refine ⟨n, b, fun i => L (v i), hb, fun ζ hζ => ?_⟩
   show L (f ζ) = ∑ i, b i ζ • L (v i)
-  rw [hf ζ hζ, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hf ζ hζ, map_sum]
   exact Finset.sum_congr rfl fun i _ => map_smul _ _ _
 
 theorem PSV.const {V : Type*} [AddCommGroup V] [Module ℂ V] (TT : ℝ) (v : V) : PSV TT (fun _ => v) :=

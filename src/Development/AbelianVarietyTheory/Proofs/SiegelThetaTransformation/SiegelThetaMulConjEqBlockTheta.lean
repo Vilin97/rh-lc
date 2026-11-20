@@ -96,7 +96,8 @@ theorem thS_mul_conj_thS : ∀ (κ ι₁ ι₂ : Type) [Fintype κ] [Fintype ι�
   rw [Complex.conj_tsum, tsum_mul_tsum_of_summable_norm s₁
     (by simpa only [Complex.norm_conj] using s₂), ← (colsEquiv κ ι₁ ι₂).tsum_eq]
   refine tsum_congr fun m => ?_
-  simp only [row_exponent, Finset.sum_sub_distrib, mul_sub, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [row_exponent, Finset.sum_sub_distrib, mul_sub, ← map_sum]
   rw [map_mul, ← Complex.exp_conj, map_mul, map_mul, Complex.conj_ofReal, Complex.conj_I,
     sub_eq_add_neg, Complex.exp_add, mul_mul_mul_comm, mul_neg, neg_mul]
   rfl

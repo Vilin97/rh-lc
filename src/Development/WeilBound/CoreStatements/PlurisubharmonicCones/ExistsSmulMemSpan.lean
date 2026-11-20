@@ -81,7 +81,8 @@ theorem exists_vec (hρ : MB.IsActOf t'.act.act ρM) {S S₀ : Scheme.{0}} {tK :
   · refine (hb.1 r _ (fun k => j (y k)) _).2 (congrArg M₀.pt ?_)
     have hu' : g u ≠ 0 := (map_ne_zero_iff _ hg).2 hu
     have h7 := congrArg j h
-    rw [h3, map_sum] at h7
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h3, map_sum] at h7
     simp only [h3] at h7
     simp only [mul_smul]
     rw [← Finset.smul_sum, ← h7, smul_smul, inv_mul_cancel₀ hu', one_smul]

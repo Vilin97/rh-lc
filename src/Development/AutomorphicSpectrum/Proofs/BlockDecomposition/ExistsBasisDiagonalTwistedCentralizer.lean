@@ -124,7 +124,8 @@ theorem aeval_stable (A : Matrix (Fin n) (Fin n) ℂ) (W : Submodule ℂ (Fin n 
 
 theorem mulVec_sum_smul (M : Matrix (Fin n) (Fin n) ℂ) (a : Fin n → ℂ) (v : Fin n → Fin n → ℂ) :
     M *ᵥ (∑ j, a j • v j) = ∑ j, a j • (M *ᵥ v j) := by
-  rw [← Matrix.mulVecLin_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Matrix.mulVecLin_apply, map_sum]
   simp only [map_smul, Matrix.mulVecLin_apply]
 
 theorem expand (P : GL (Fin n) ℂ) (x : Fin n → ℂ) :

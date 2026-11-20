@@ -92,16 +92,19 @@ private theorem lowOne_le_harmTy {P Q R S : ℕ} {x : ℚ} {k k' : ℕ} (ek : x 
     rw [GlobalTheory.KFixIrr.mem_chiOne]
     intro Y hY
     rw [← map_smul, ← hc Y hY, ← hsum]
-    simp only [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum]
     exact Finset.sum_congr rfl fun d _ => (GlobalTheory.FockScalarType.comm_parts hY hZ (hh d)).2
   by_contra h0
   have hlow := GlobalTheory.FockLowDeg.lowerDeg P Q R S x k k' ek ek' _ hchi h0
   by_cases h2 : g.totalDegree < 2
   · apply h0
-    rw [← hsum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hsum, map_sum]
     exact Finset.sum_eq_zero fun d hd => dnOp_low _ d (by have := Finset.mem_range.1 hd; omega) _ (hh d)
   · have : (dnOp (kron2 P Q Z) g).totalDegree ≤ g.totalDegree - 2 := by
-      conv_lhs => rw [← hsum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        conv_lhs => rw [← hsum, map_sum]
       refine MvPolynomial.totalDegree_finsetSum_le fun d hd => ?_
       refine (MvPolynomial.IsHomogeneous.totalDegree_le (dnOp_homog _ d _ (hh d))).trans ?_
       have := Finset.mem_range.1 hd; omega

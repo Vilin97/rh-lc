@@ -95,10 +95,12 @@ theorem act_comp (A B : Matrix (Fin n) (Fin n) ℂ) :
     act (m := m) (B * A) = (act A).comp (act B) := by
   apply MvPolynomial.algHom_ext
   rintro (⟨l, a⟩ | ⟨l, b⟩)
-  · simp only [act, AlgHom.comp_apply, aeval_X, Sum.elim_inl, map_sum, map_mul, aeval_C,
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [act, AlgHom.comp_apply, aeval_X, Sum.elim_inl, map_sum, map_mul, aeval_C,
       MvPolynomial.algebraMap_eq, Matrix.mul_apply, Finset.sum_mul, Finset.mul_sum, mul_assoc]
     rw [Finset.sum_comm]
-  · simp only [act, AlgHom.comp_apply, aeval_X, Sum.elim_inr, map_sum, map_mul, aeval_C,
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [act, AlgHom.comp_apply, aeval_X, Sum.elim_inr, map_sum, map_mul, aeval_C,
       MvPolynomial.algebraMap_eq, Matrix.mul_inv_rev, Matrix.mul_apply, Finset.sum_mul, Finset.mul_sum,
       mul_assoc]
     rw [Finset.sum_comm]
@@ -263,7 +265,8 @@ theorem Dsrc_monomial (l : Fin n) (d : FinalTheorems m n →₀ ℕ) (r : ℂ) :
 theorem coeff_Dsrc (l : Fin n) (p : MvPolynomial (FinalTheorems m n) ℂ) (d : FinalTheorems m n →₀ ℕ) :
     AddMonoidAlgebra.coeff (Dsrc (m := m) l l p) d = ((wgt l d : ℤ) : ℂ) * AddMonoidAlgebra.coeff p d := by
   conv_lhs => rw [p.as_sum]
-  rw [map_sum, coeff_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, coeff_sum]
   simp only [Dsrc_monomial, coeff_C_mul, coeff_monomial]
   rw [Finset.sum_eq_single d]
   · simp
@@ -314,7 +317,8 @@ theorem act_diag (D : Fin n → ℂ) (hD : ∀ l, D l ≠ 0) (p : MvPolynomial (
     congr 1
     exact_mod_cast h
   conv_lhs => rw [p.as_sum]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   conv_rhs => rw [p.as_sum]
   refine Finset.sum_congr rfl fun d hd => ?_
   rw [hmono, hprod d hd, map_one, one_mul]

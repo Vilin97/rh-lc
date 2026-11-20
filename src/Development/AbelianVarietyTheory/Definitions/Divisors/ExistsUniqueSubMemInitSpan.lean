@@ -127,7 +127,8 @@ def vecAt (k : F.J) (z : Sp S ⟶ Z) (hz : ⊤ ≤ z ⁻¹ᵁ F.U k) {x : Sp S �
 theorem sum_vecAt (k : F.J) (z : Sp S ⟶ Z) (hz : ⊤ ≤ z ⁻¹ᵁ F.U k) {x : Sp S ⟶ Y.X} (hx : z ≫ π = x) (σ : E →+* ℂ)
     (a : Fin (Dw.mult σ) → S) : ∑ i, a i • F.vecAt k z hz hx σ i =
       vec (F.M k).toMChart x (F.inM hz hx) ((F.uAt k z hz σ).mulVec a) := by
-  simp only [vecAt, ← map_smul, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [vecAt, ← map_smul, ← map_sum]
   congr 1
   funext j
   simp [Matrix.mulVec, dotProduct, Finset.sum_apply, _root_.mul_comm]
@@ -361,7 +362,8 @@ theorem step_eq (k : F.J) (z : Sp S ⟶ Z) (hz : ⊤ ≤ z ⁻¹ᵁ F.U k) {x : 
     rw [F.initSpan_vecAt_eq k' k _ hz' (le_preimage_comp _ hz)]
     obtain ⟨a, ha, rfl⟩ := mem_initSpan.1 hv
     refine mem_initSpan.2 ⟨fun j => φ (a j), fun j hj => (congrArg φ (ha j hj)).trans (map_zero φ), ?_⟩
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun j _ => by rw [map_smulₛₗ, F.tanPull_vecAt k φ z hz _ hx hx' e]
 
 theorem step_mono (z : Sp S ⟶ Z) {x : Sp S ⟶ Y.X} (hx : z ≫ π = x) (σ : E →+* ℂ) {i i' : ℕ} (h : i ≤ i') :

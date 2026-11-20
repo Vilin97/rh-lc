@@ -123,7 +123,8 @@ theorem proj_frame (r : κ → R) :
     | add x y _ _ hx hy => rw [add_smul, map_add, TensorProduct.tmul_add, map_add, hx, hy, map_add, add_smul]
     | smul a x _ hx =>
       rw [smul_assoc, map_smul, TensorProduct.tmul_smul, LinearMap.map_smul_of_tower, hx, map_smul, smul_assoc]
-  conv_lhs => rw [pi_eq_sum_univ' r, map_sum, TensorProduct.tmul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [pi_eq_sum_univ' r, map_sum, TensorProduct.tmul_sum, map_sum]
   exact Finset.sum_congr rfl fun j _ => h1 _ _
 
 include hχ hf in

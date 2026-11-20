@@ -241,7 +241,8 @@ theorem tot_smulC (C : Coord W I T) (m : O) (y : ZMod n → C.V) :
 
 theorem tot_Δ (C : Coord W I T) (y : ZMod n → C.V) (δ : W.Gam) (hδ : δ ∈ W.DelF) :
     W.γD T δ (tot C y) = tot C y := by
-  rw [tot, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [tot, map_sum]
   exact Finset.sum_congr rfl fun i _ => C.t_Δ i (y i) δ hδ
 
 theorem letE_tot (C : Coord W I T) (y : ZMod n → C.V) (i : ZMod n) :
@@ -269,13 +270,15 @@ theorem tot_surj (C : Coord W I T) (x : W.DD T) (hx : ∀ δ ∈ W.DelF, W.γD T
 
 theorem tot_dφ (C : Coord W I T) (z : ZMod n → C.V) :
     tot C ((latOf C).dφ z) = W.φD T (tot C z) - tot C z := by
-  simp only [tot, Formalism.ExponentWindows.E.Lat.dφ, Coord.t_sub, t_φ, Finset.sum_sub_distrib, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [tot, Formalism.ExponentWindows.E.Lat.dφ, Coord.t_sub, t_φ, Finset.sum_sub_distrib, map_sum]
   congr 1
   exact Fintype.sum_equiv (Equiv.subRight 1) _ _ (fun i => rfl)
 
 theorem tot_dγ (C : Coord W I T) (z : ZMod n → C.V) :
     tot C ((latOf C).dγ z) = W.γD T W.gamK (tot C z) - tot C z := by
-  simp only [tot, Formalism.ExponentWindows.E.Lat.dγ, Coord.t_sub, t_γ, Finset.sum_sub_distrib, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [tot, Formalism.ExponentWindows.E.Lat.dγ, Coord.t_sub, t_γ, Finset.sum_sub_distrib, map_sum]
 
 theorem mem_Z1DΔ (a b : W.DD T) : (a, b) ∈ W.wachCocyclesDelta T ↔
     W.γD T W.gamK a - a = W.φD T b - b ∧ (∀ δ ∈ W.DelF, W.γD T δ a = a) ∧
@@ -359,7 +362,8 @@ theorem tot_map {T T' : LocLat G Qp LL O} {C : Coord W I T} {C' : Coord W I T'} 
     (h : CoordHom C C' F) (y : ZMod n → C.V) :
     tot C' (fun i => (latHomOf h).f (y i)) = W.map F (tot C y) := by
   simp only [tot]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_congr rfl fun i _ => h.coord_hom_map_trace i (y i)
 
 def BaseId.Inj (I : BaseId W) : Prop := Function.Injective I.ι

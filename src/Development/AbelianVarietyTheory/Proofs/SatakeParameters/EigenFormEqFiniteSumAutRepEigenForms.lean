@@ -221,7 +221,8 @@ theorem eigen_decomp : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n
     rfl
   have hval : ∀ v, f.1 v ∈ ⨆ U ∈ t, U := by
     intro v
-    rw [← hsup, htS, ← b.sum_repr v, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hsup, htS, ← b.sum_repr v, map_sum]
     refine Submodule.sum_mem _ fun i _ => ?_
     rw [map_smul]
     refine Submodule.smul_mem _ _ ?_
@@ -290,7 +291,8 @@ theorem eigen_decomp : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n
       · exact (htA U hU).stable _ _ (hcm v U)
       · rw [hc0 v U hU, map_zero]
         exact U.zero_mem
-    · rw [← map_sum, ← Finset.smul_sum, hcs]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [← map_sum, ← Finset.smul_sum, hcs]
       funext g
       rw [RU_apply, hf c0 v g]
       rfl

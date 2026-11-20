@@ -39,7 +39,8 @@ theorem hasDerivAt_theta_sum_along_line : _root_.GlobalTheory.FunPr.ThetaLocalIn
   have hcurve : (fun t : ℝ => GlobalTheory.WeilM.thetaSum F (M.co.rho ψ u (om (1, γ (Multiplicative.ofAdd t)) (∑ i, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure (f i) (φ i)))))
       = fun t => ∑ i, Λ i (c i t) := by
     funext t
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [hc]
     rw [rho_sum M ψ hψ u _ (fun i => hmem i _)]
     simp only [hΛ]

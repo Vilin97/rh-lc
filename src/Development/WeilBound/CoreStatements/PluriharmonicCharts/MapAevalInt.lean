@@ -64,13 +64,15 @@ theorem PositivityTheory.Xgp.c_algsq.lc : ∀ (K : Type) [Fintype K] (ι : K →
     refine ⟨fun m => ∑ I, cA (uA ⟨k, m⟩ I) * minorIJ D I (stepCols N j i₀), fun m => ?_, fun m => ?_⟩
     · have e1 : i (∑ I, cA (uA ⟨k, m⟩ I) * minorIJ D I (stepCols N j i₀)) =
           ∑ I, φΩ (F.u ⟨k, m⟩ I) * minorIJ (D.map i) I (stepCols N j i₀) := by
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         refine Finset.sum_congr rfl fun I _ => ?_
         rw [map_mul, hic, minorIJ_map]
         rfl
       rw [e1, div_mul_eq_mul_div, ← hW m]
       field_simp
-    · rw [map_sum, hz m, inv_mul_cancel_left₀ hα]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [map_sum, hz m, inv_mul_cancel_left₀ hα]
       refine Finset.sum_congr rfl fun I _ => ?_
       rw [map_mul, hρc, ← minorIJ_map]
       rfl
@@ -147,7 +149,8 @@ theorem PositivityTheory.Xgp.c_algsq.lc : ∀ (K : Type) [Fintype K] (ι : K →
           have e1 : θ (M.wCo (τ, a) k₀ ca cb RatFunc.X ⟨none, m⟩) = ∑ I, φΩ (M.coef ⟨k₀, m⟩ I) *
               minorIJ ((M.g τ).map φ * (1 + Matrix.single cb ca (θ RatFunc.X))) I (stepCols N j a) := by
             show θ (∑ I, _) = _
-            rw [map_sum]
+            set_option synthInstance.maxHeartbeats 100000 in
+              rw [map_sum]
             refine Finset.sum_congr rfl fun I _ => ?_
             rw [map_mul, hθ, ← hEθ, minorIJ_map]
             rfl

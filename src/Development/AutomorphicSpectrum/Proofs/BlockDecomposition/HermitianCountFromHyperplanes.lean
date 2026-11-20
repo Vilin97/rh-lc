@@ -8,7 +8,8 @@ open Finset
 theorem re_sesq_sum {V ι : Type} [AddCommGroup V] [Module ℂ V] (B : V →ₗ[ℂ] V →ₗ⋆[ℂ] ℂ)
     (s t : Finset ι) (f : ι → V) :
     (B (∑ a ∈ s, f a) (∑ b ∈ t, f b)).re = ∑ a ∈ s, ∑ b ∈ t, (B (f a) (f b)).re := by
-  simp only [map_sum, LinearMap.sum_apply, Complex.re_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.sum_apply, Complex.re_sum]
   rw [Finset.sum_comm]
 
 theorem card_filter_ne_zero {α : Type} [Fintype α] [Zero α] :

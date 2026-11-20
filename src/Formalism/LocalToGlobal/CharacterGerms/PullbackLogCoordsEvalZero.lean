@@ -126,14 +126,17 @@ theorem dpull_of_ode {Y : FBChart C V O dd} (p : ∀ o, PairData Y d (I o)) (hE 
       intro w
       rw [VP.expAll_eq, Formalism.L2.FormalSeriesBounds.pderiv_subst_linS]
       exact Finset.sum_congr rfl fun i _ => by rw [hE i j]
-    simp only [e1, hrow, map_sum, map_smul, Finset.smul_sum, smul_smul, Finset.sum_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [e1, hrow, map_sum, map_smul, Finset.smul_sum, smul_smul, Finset.sum_smul]
     rw [Finset.sum_comm]
     rfl
   simp only [VP.pderiv_pullN]
   unfold DofN
   simp only [← MvPowerSeries.smul_eq_C_mul]
-  rw [hpull, map_sum]
-  simp only [map_mul, map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hpull, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_mul, map_sum, map_smul]
   simp only [← hpull, VP.pullback_log_coords_eval_zero]
   simp only [Finset.smul_sum]
   rw [Finset.sum_comm]

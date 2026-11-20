@@ -208,7 +208,8 @@ theorem locDer_regular_coeff : ∀ (P₀ : Out.PolAV (Sp ℂ)) (u : HolUnif P₀
   have lin : ∀ (L : (Fin P₀.g → ℂ) →L[ℂ] ℂ) (v : Fin P₀.g → ℂ), L v = ∑ i, v i * L (Pi.single i 1) := by
     intro L v
     conv_lhs => rw [← Finset.univ_sum_single v]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     have hs : (Pi.single i (v i) : Fin P₀.g → ℂ) = v i • (Pi.single i (1 : ℂ) : Fin P₀.g → ℂ) := by
       ext j

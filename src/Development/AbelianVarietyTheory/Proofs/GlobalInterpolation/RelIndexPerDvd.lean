@@ -84,7 +84,8 @@ theorem apply_mem_of_std {N' : Submodule (𝓞 E) (Sp E b)} {P : HeightOneSpectr
     ext j
     rw [← ht j]
     simp [Finset.sum_apply, Pi.single_apply, Algebra.smul_def]
-  rw [← LinearMap.map_smul_of_tower, e, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← LinearMap.map_smul_of_tower, e, map_sum]
   exact Submodule.sum_mem _ fun i _ => by
     rw [LinearMap.map_smul_of_tower]; exact Submodule.smul_mem _ _ (hy i)
 

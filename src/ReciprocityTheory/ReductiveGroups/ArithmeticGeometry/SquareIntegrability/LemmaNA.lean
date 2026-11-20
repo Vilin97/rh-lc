@@ -32,7 +32,8 @@ lemma nA_Hf_smul_right (c : ℂ) (v w : EuclideanSpace ℂ ι) :
   simp [map_mul]; ring
 
 lemma nA_Hf_conj (v w : EuclideanSpace ℂ ι) : (starRingEnd ℂ) (Hf v w) = Hf w v := by
-  simp [Hf, map_sum, mul_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Hf, map_sum, mul_comm]
 
 lemma nA_Hf_self_im (v : EuclideanSpace ℂ ι) : (Hf v v).im = 0 := by
   have h := nA_Hf_conj v v
@@ -55,7 +56,8 @@ lemma nA_HC_sub_right (u v w : Fin n → EuclideanSpace ℂ ι) : HC u (v - w) =
   simp [HC, nA_Hf_sub_right, Finset.sum_sub_distrib]
 
 lemma nA_HC_conj (v w : Fin n → EuclideanSpace ℂ ι) : (starRingEnd ℂ) (HC v w) = HC w v := by
-  simp [HC, map_sum, nA_Hf_conj]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [HC, map_sum, nA_Hf_conj]
 
 lemma nA_HC_self_im (v : Fin n → EuclideanSpace ℂ ι) : (HC v v).im = 0 := by
   simp [HC, Complex.im_sum, nA_Hf_self_im]

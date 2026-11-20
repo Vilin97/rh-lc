@@ -77,7 +77,8 @@ theorem surj_lattice : ∀ (K : Type) [Field K] [NumberField K] (d : ℕ) (δ : 
       simp only [hb']
     simp only [Finset.sum_apply, Pi.smul_apply, MonoidHom.coe_coe, smul_eq_mul, Pi.zero_apply]
     rw [hx]
-    simp only [map_sum, Algebra.smul_def, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, Algebra.smul_def, map_mul]
     have hio' : ∀ i (k : K), φ (e i) (algebraMap K E k) = io k := fun i k => by
       rw [← hio (e i)]; rfl
     simp only [hio']
@@ -95,7 +96,8 @@ theorem surj_lattice : ∀ (K : Type) [Field K] [NumberField K] (d : ℕ) (δ : 
     · funext i
       have hio' : φ (e i) (algebraMap K E δ) = io δ := by rw [← hio (e i)]; rfl
       show A.mulVec z i = φ (e i) _
-      simp only [Matrix.mulVec, dotProduct, A, map_sum, map_add, map_mul, map_intCast, hio', ha]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Matrix.mulVec, dotProduct, A, map_sum, map_add, map_mul, map_intCast, hio', ha]
       refine Finset.sum_congr rfl fun j _ => by ring
 
 end GlobalTheory.LatModel

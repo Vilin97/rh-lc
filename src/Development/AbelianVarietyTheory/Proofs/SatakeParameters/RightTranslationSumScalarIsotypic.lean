@@ -35,7 +35,8 @@ theorem sumRt_iso {ρ : Representation ℂ (GQ L n) W} {S S' : Submodule ℂ (Fo
   have hσ : (σ : Formalism.AUTREP.GAf L n → W) = ∑ γ ∈ R, Formalism.L2.NG.rt L n (r γ) f := by
     simp only [σ, Submodule.coe_sum]
   have hTσ : ((T σ : S') : Formalism.AUTREP.GAf L n → W) = ∑ γ ∈ R, Formalism.L2.NG.rt L n (r γ) f' := by
-    simp only [σ, map_sum, Submodule.coe_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [σ, map_sum, Submodule.coe_sum]
     exact Finset.sum_congr rfl fun γ _ => hrt _
   have key : σ = c • f := Subtype.ext (by rw [hσ, Submodule.coe_smul]; exact hcf)
   have h3 := congrArg (fun y => ((T y : S') : Formalism.AUTREP.GAf L n → W)) key

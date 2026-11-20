@@ -25,7 +25,8 @@ theorem ConeScaling.proof : ConeScaling.Statement := by
     rintro s _ ⟨x, hx, rfl⟩
     show ∀ q ∈ J, eval (s • x) q = 0
     intro q hq
-    rw [← sum_homogeneousComponent q, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← sum_homogeneousComponent q, map_sum]
     refine Finset.sum_eq_zero fun i _ => ?_
     rw [eval_smul_of_isHomogeneous (homogeneousComponent_isHomogeneous i q),
       hx _ (homogeneousComponent_mem_of_mem hJ hq i), mul_zero]

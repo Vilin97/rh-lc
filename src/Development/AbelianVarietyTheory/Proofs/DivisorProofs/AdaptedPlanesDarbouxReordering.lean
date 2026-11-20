@@ -228,7 +228,8 @@ theorem local_vac {σ : E →ₐ[F] E} (B : Base F E) {n d n₁ d₁ : ℕ} (r s
     obtain ⟨γ', hγ', hy⟩ := mem_latPos.1 hy
     have hAt' := at_of_mem co v _ hγ'
     have e1 : y ⬝ᵥ (fun i => β (eq.symm (Sum.inl i))) = evFin F v ((co.e γ').1 ⬝ᵥ (co.e p).2) := by
-      simp only [dotProduct, map_sum, map_mul, hβ, ← hy]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [dotProduct, map_sum, map_mul, hβ, ← hy]
       rw [sum_of_inr eq _ (fun j => by rw [hp.2 j, map_zero, mul_zero])]
     have hz : At (evFin F v) ((co.e γ').1 ⬝ᵥ (co.e p).2) :=
       GlobalTheory.VacAny.at_sum _ fun k _ => GlobalTheory.VacAny.at_mul_right (hAt' k).1 _
@@ -250,7 +251,8 @@ theorem local_vac {σ : E →ₐ[F] E} (B : Base F E) {n d n₁ d₁ : ℕ} (r s
       GlobalTheory.VacAny.at_mul_left _ (GlobalTheory.VacAny.at_sum _ fun k _ => GlobalTheory.VacAny.at_mul_right (hAtq k).1 _)
     rw [psi_eq_psiV B.ψ v hz, map_mul, GlobalTheory.VacAny.evFin_invOf_two]
     congr 2
-    simp only [dotProduct, map_sum, map_mul, hα, hβ]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [dotProduct, map_sum, map_mul, hα, hβ]
     rw [sum_of_inr eq _ (fun j => by rw [hp.2 j, map_zero, mul_zero])]
   intro rr hrr
   show schr B.ψ (co.e (p + q + incM F H.ι * g * (incM F H'.ι)ᵀ)) _ = _

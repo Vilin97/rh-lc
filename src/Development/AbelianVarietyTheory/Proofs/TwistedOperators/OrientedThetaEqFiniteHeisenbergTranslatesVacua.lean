@@ -25,7 +25,8 @@ theorem comb_eq_linearCombination (ψ : AddChar (AF D.host.F) ℂ) (c : WO S T �
 theorem comb_sum_single {ι : Type} [Fintype ι] (ψ : AddChar (AF D.host.F) ℂ) (x : ι → WO S T) (a : ι → ℂ)
     (f : WO S T → ℂ) :
     comb ψ S T (∑ i, Finsupp.single (x i) (a i)) f = ∑ i, a i • heisO ψ S T (x i) f := by
-  rw [comb_eq_linearCombination, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [comb_eq_linearCombination, map_sum]
   exact Finset.sum_congr rfl fun i _ => Finsupp.linearCombination_single _ _ _
 
 theorem isFinComb_sum_single {ι : Type} [Fintype ι] (x : ι → WO S T) (a : ι → ℂ)
@@ -139,7 +140,8 @@ theorem decomp_of_lam (ψ : AddChar (AF D.host.F) ℂ) (Λ : AddSubgroup (WO S T
       intro a
       rw [hcomb]
       change heisL S T ψ (s a) (∑ q : Qm m Λ, lam (repm q) • heisL S T ψ (repm q) (N⁻¹ • heisL S T ψ (-s a) f)) = _
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun q _ => ?_
       rw [map_smul, map_smul, map_smul, heisL_comm, heisL_cancel, smul_smul, smul_smul, smul_smul]
       congr 1

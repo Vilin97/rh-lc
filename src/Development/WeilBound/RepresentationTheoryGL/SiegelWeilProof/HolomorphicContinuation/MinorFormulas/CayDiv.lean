@@ -52,7 +52,8 @@ theorem cayDiv_of : CayDivOf := by
     intro ρ M
     rw [← Matrix.det_transpose, Matrix.det_apply]
     change (Algebra.adjoin ℂ (Sop s m n)).val _ = _
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun σ _ => ?_
     rw [Units.smul_def, map_zsmul, ← Int.cast_smul_eq_zsmul ℂ, Fin.prod_univ_def, map_list_prod, List.map_map,
       ← list_prod_eq_foldr]

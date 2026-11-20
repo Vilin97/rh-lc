@@ -81,8 +81,10 @@ theorem htLin (B : BX R₀) (hB1 : PairingPropertiesStatement B) {p : ℕ} (Tw :
   have hlin : (Tw.q n).1.toLinearMap ∘ₗ ∑ i, α i • ht i =
       ∑ i, a i n • ((Tw.q n).1.toLinearMap ∘ₗ ht i) := by
     ext v
-    simp [LinearMap.sum_apply, map_sum, map_mul, hα, zsmul_eq_mul]
-  rw [map_sum, hlin]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [LinearMap.sum_apply, map_sum, map_mul, hα, zsmul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, hlin]
   simp only [map_zsmul]
   exact BX.isHeight_sum (B := B) hB1 (Dp n) (p ^ (n + 1)) hN Finset.univ
     (fun i => a i n • B.map (Tw.q n) (τ i n)) (fun i => by rw [smul_comm, hy i, smul_zero])

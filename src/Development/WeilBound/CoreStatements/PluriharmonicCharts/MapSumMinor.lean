@@ -17,7 +17,8 @@ variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {Φ : 
 theorem map_sum_minor {R S : Type} [CommRing R] [CommRing S] (f : R →+* S) (u : Finset (Fin N) → R)
     (H : Matrix (Fin N) (Fin N) R) (J : Finset (Fin N)) :
     f (∑ I, u I * minorIJ H I J) = ∑ I, f (u I) * minorIJ (H.map f) I J := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_congr rfl fun I _ => by rw [map_mul, CPts.minorIJ_map]
 
 theorem frame_colsB {τ : Ψ} {a b ca cb : Fin N} {k₀ : K} (s : Swp N j a b ca cb) (hk : M.blk (τ, a) = some k₀)
@@ -68,7 +69,8 @@ theorem core {τ : Ψ} {a b ca cb : Fin N} {k₀ : K} (s : Swp N j a b ca cb) (h
   have horth : ∀ i k, M.blk (τ, i) = some k → ∀ I I', IsStepRows N j i I → IsStepRows N j i I' →
       ∑ m, u' I ⟨k, m⟩ * u ⟨k, m⟩ I' = if I = I' then 1 else 0 := fun i k hp I I' h1 h2 => Subtype.ext (by
     have := congrArg am (hF.2.2.1 (τ, i) k hp I I' h1 h2)
-    rw [map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at this
     simp only [map_mul] at this
     simp only [AddSubmonoidClass.coe_finsetSum, Subring.coe_mul]
     refine this.trans ?_
@@ -113,7 +115,8 @@ theorem core {τ : Ψ} {a b ca cb : Fin N} {k₀ : K} (s : Swp N j a b ca cb) (h
       obtain rfl := Option.some.inj h
       refine ⟨fun h0 => ?_, h1⟩
       have h4 := congrArg val (hdu i k hp _ (stepCols N j i) fun I hI => minor_stepCols_eq_zero M.j_le H I hH hI)
-      rw [CPts.minorIJ_one, map_one, map_sum] at h4
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [CPts.minorIJ_one, map_one, map_sum] at h4
       refine zero_ne_one (Eq.trans (Finset.sum_eq_zero fun m _ => ?_).symm h4)
       rw [map_mul, ← h1 m, h0, zero_mul, mul_zero]
   choose ev hev using hev

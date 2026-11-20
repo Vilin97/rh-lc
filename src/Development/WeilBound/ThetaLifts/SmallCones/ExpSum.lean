@@ -88,7 +88,8 @@ theorem slice_bound (hS : Slice) (hB : B.IsGood σ) (hM : M.IsGood B.ψ) (hM₁ 
   choose T hT using fun i => hl (φ₁ i) (h1 i)
   choose p hp hq using fun i => h4 ((normSeminorm ℂ ℂ).comp (T i).toLinearMap) N (T i).continuous.norm
   refine ⟨_, fun f => ∑ i, p i f, hN, continuous_finset_sum _ fun i _ => hp i, by simp, fun y f => ?_⟩
-  rw [h2, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h2, map_sum]
   simp only [hT]
   split_ifs with hy
   · rw [Finset.sum_mul]

@@ -31,7 +31,8 @@ theorem Rep.trans {π : X ⟶ Z} {p : X ⟶ Sp K} {n N : ℕ} {σ : Fin n → Se
     {s : SecP L π m} {r : Fin n → K} {c : Fin n → Fin N → K} (h : Rep p σ s r) (hc : ∀ i, Rep p β (σ i) (c i)) :
     Rep p β s fun l => ∑ i, r i * c i l := fun R _ f q j hq hj => by
   rw [h R f q j hq hj]
-  simp only [map_sum, map_mul, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, Finset.sum_mul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [hc i R f q j hq hj, Finset.mul_sum]
@@ -81,7 +82,8 @@ theorem mem_of_inverse {k F : Type} [Field k] [Field F] [Algebra k F] (M : Inter
   have h₃ : ∀ b, ∑ i, (pr (c a i) : F) * g i b = (Pi.single a 1 : Fin n → F) b := fun b => by
     have e : ∀ i, c a i * g i b = (⟨_, hg i b⟩ : M) • c a i := fun i => mul_comm _ _
     have := congrArg (fun x => (pr x : F)) (h₁ a b)
-    simp only [e, map_sum, map_smul, smul_eq_mul] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [e, map_sum, map_smul, smul_eq_mul] at this
     have e' : (pr ((Pi.single a 1 : Fin n → F) b) : F) = (Pi.single a 1 : Fin n → F) b := by
       by_cases hb : b = a
       · subst hb
@@ -255,7 +257,8 @@ theorem extend_of_frame {E : Type} [Field E] [NumberField E] [IsCMField E] {H : 
       ArcPts.sval (σ₀ α th) (fib q₀) k = Γ.ev w (ArcPts.sval (σt α th) (fib q) k) := by
     intro α th q q₀ k hq hk
     have hk' : ⊤ ≤ q.left ⁻¹ᵁ t.PP.L.U k := le_preimage_of_ev Γ w (hq ▸ hk :)
-    rw [sval_comb _ _ _ _ _ (fib_snd q) (by rw [fib_fst]; exact hk'),
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [sval_comb _ _ _ _ _ (fib_snd q) (by rw [fib_fst]; exact hk'),
       sval_comb _ _ _ _ _ (fib_snd q₀) (by rw [fib_fst]; exact hk), map_sum]
     exact Finset.sum_congr rfl fun i _ => by rw [hb _ hyt hyw q q₀ i k hq.symm hk', map_mul]; rfl
   refine ⟨σt, H₁, σ₀, H₂, fun α th h v k hk => ?_, fun s => ?_⟩
@@ -279,7 +282,8 @@ theorem extend_of_frame {E : Type} [Field E] [NumberField E] [IsCMField E] {H : 
       calc c l = ∑ i, c i * Γ.ev w (i₂ ((Pi.single i 1 : Fin N → _) l)) := by
             simp [Pi.single_apply, apply_ite]
         _ = _ := by
-            simp only [← hg, map_sum, map_mul, Finset.sum_mul, Finset.mul_sum, _root_.mul_assoc]
+            set_option synthInstance.maxHeartbeats 100000 in
+              simp only [← hg, map_sum, map_mul, Finset.sum_mul, Finset.mul_sum, _root_.mul_assoc]
             exact Finset.sum_comm
     have := (rep_comb (pullback.snd _ _) (fun b => σ₀ (α b) (th b)) fun b => ∑ i, c i * Γ.ev w (i₂ (g i b)))
     exact ((hc _ _ _ k (fib_snd q₀) hk').trans (by simp only [← e])).trans

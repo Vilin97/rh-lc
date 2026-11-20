@@ -104,7 +104,8 @@ theorem cv_coeff {F : Type} {m : ℕ} {A : F → Fin m → ℂ⸨X⸩} {B : F �
   have hδ : ∀ j, ∑ f ∈ cf.support, (cf f : ℂ⸨X⸩) * A f j = algebraMap ℂ ℂ⸨X⸩ (if j = k then 1 else 0) := by
     intro j
     have h2 := congrArg (fun x : Fin m → convLaurent => convLaurent.val (x j)) hcf
-    simp only [Finsupp.sum, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum, map_mul] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Finsupp.sum, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum, map_mul] at h2
     refine h2.trans ?_
     by_cases hj : j = k <;> simp [hj]
   have hG : G k = ∑ f ∈ cf.support, (cf f : ℂ⸨X⸩) * B f := by

@@ -170,7 +170,8 @@ theorem cf_eval (ℓ : Pol K ι n →ₗ[K] K) (y : ι × Fin n × Fin n → K)
     (Q : MvPolynomial (ι × Fin n × Fin n) (MvPolynomial (ι × Fin n × Fin n) K)) :
     eval y (cf ℓ Q) = ℓ (MvPolynomial.map (eval y) Q) := by
   conv_rhs => rw [Q.as_sum]
-  rw [map_sum, map_sum, cf, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, cf, map_sum]
   refine Finset.sum_congr rfl fun m _ => ?_
   rw [MvPolynomial.map_monomial, eval_mul, eval_C,
     show monomial m (eval y (AddMonoidAlgebra.coeff Q m)) = eval y (AddMonoidAlgebra.coeff Q m) • (monomial m 1 : Pol K ι n) by
@@ -435,7 +436,8 @@ theorem dd_hwAt : ∀ (L : Type) [Field L] [NumberField L] [IsCMField L] (n : �
         (bVVfun K lam j)) * (bVV K lam).repr (hwV (K := K) lam) j =
         c * coord lam i (Formalism.GradedWeylDivisibility.blockAct K (fun τ => if τ = τ₀ then (B : Matrix (Fin n) (Fin n) K)ᵀ else 1)
           (∑ j, ((bVV K lam).repr (hwV (K := K) lam) j) • bVVfun K lam j)) := by
-      rw [map_sum, map_sum, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, map_sum, Finset.mul_sum]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [map_smul, map_smul, smul_eq_mul]
       ring

@@ -206,7 +206,8 @@ theorem pderiv_KopL (ε : Fin m → Bool) (i j : Fin n) (k : Fin m × Fin n × B
       ((if ε k.1 = true ∧ k.2.1 = i ∧ k.2.2 = false then pderiv (k.1, j, false) f else 0) -
         (if ε k.1 = false ∧ k.2.1 = j ∧ k.2.2 = true then pderiv (k.1, i, true) f else 0)) := by
   classical
-  rw [KopL_apply, KopL_apply, map_sub, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [KopL_apply, KopL_apply, map_sub, map_sum, map_sum]
   have e1 : ∀ (a : Fin m) (c : Fin n) (b : Bool) (q : Fin m × Fin n × Bool),
       pderiv k (X (a, c, b) * pderiv q f) =
         (if k = (a, c, b) then pderiv q f else 0) + X (a, c, b) * pderiv q (pderiv k f) := by

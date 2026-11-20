@@ -40,7 +40,8 @@ theorem coeff_single_subst {σ τ : Type} [Fintype σ] {a : σ → MvPowerSeries
     coeff (Finsupp.single i 1) (subst a f) =
       ∑ s, coeff (Finsupp.single s 1) f * coeff (Finsupp.single i 1) (a s) := by
   have hs : HasSubst a := hasSubst_of_constantCoeff_zero ha
-  rw [← cc_pderiv, pderiv_subst hs, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← cc_pderiv, pderiv_subst hs, map_sum]
   refine Finset.sum_congr rfl fun s _ => ?_
   rw [map_mul, constantCoeff_subst_of_zero hs ha, cc_pderiv, cc_pderiv]
   rfl

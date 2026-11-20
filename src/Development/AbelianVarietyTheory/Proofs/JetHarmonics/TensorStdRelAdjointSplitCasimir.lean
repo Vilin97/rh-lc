@@ -39,7 +39,8 @@ theorem tensorStd_rel_adjoint_splitCasimir : ∀ (V : Type) [NormedAddCommGroup 
     exact Finset.sum_comm
   · intro a b
     refine LinearMap.ext fun y => PiLp.ext fun k => ?_
-    simp only [Module.End.mul_apply, hEt, hOm, map_add, map_sum, Finset.sum_add_distrib]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Module.End.mul_apply, hEt, hOm, map_add, map_sum, Finset.sum_add_distrib]
     have h1 : ∀ c, E c k (E a b (y c)) = _ := fun c => hv c k a b (y c)
     simp only [h1, Finset.sum_add_distrib, Finset.sum_sub_distrib, apply_ite (E _ k), map_zero]
     by_cases h : k = a

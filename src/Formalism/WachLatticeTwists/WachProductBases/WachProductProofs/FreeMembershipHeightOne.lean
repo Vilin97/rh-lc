@@ -57,7 +57,8 @@ theorem base_facts_holds : BaseFacts := by
     linear_combination S.X * (1 + S.X) * w * σ * hQ + S.X * (S.ℓ : A) * c * hσ - S.X * c * hpow +
       S.X * (S.ℓ : A) * σ * hw
   · have hdvd : (S.γ S.X - S.X) ∣ (S.γ S.Q - S.Q) := by
-      rw [HidaSetting.Q, map_sum, ← Finset.sum_sub_distrib]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [HidaSetting.Q, map_sum, ← Finset.sum_sub_distrib]
       apply Finset.dvd_sum
       intro k _
       rw [map_mul, map_natCast, map_pow, ← mul_sub]

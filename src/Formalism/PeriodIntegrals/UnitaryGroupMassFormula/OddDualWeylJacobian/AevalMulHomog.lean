@@ -65,7 +65,8 @@ lemma cM_one : cM (1 : Matrix (Fin k) (Fin k) R) = 1 := by
 lemma map_mul_sbs (A M N : Matrix (Fin k) (Fin k) (MvPolynomial (Fin k × Fin k) R)) :
     (M * N).map (sbs A) = M.map (sbs A) * N.map (sbs A) := by
   ext i j
-  simp [Matrix.mul_apply, _root_.map_sum, _root_.map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Matrix.mul_apply, _root_.map_sum, _root_.map_mul]
 
 lemma sbs_det (A : Matrix (Fin k) (Fin k) (MvPolynomial (Fin k × Fin k) R)) :
     sbs A (genM R k).det = A.det := by
@@ -110,7 +111,8 @@ lemma aeval_mul_homog {σ S : Type*} [CommRing S] [Algebra R S] (b : σ → S) (
   classical
   conv_lhs => rw [p.as_sum]
   conv_rhs => rw [p.as_sum]
-  rw [_root_.map_sum, _root_.map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [_root_.map_sum, _root_.map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun m hm => ?_
   have hsum := sum_support_eq_degree_of_isHomogeneous' hp hm
   have hc : ∏ i ∈ m.support, c ^ m i = c ^ D := by
@@ -133,7 +135,8 @@ lemma rowAct_homog (g : Matrix (Fin k) (Fin k) R) {p : MvPolynomial (Fin k × Fi
       first | exact isHomogeneous_X _ _ | exact isHomogeneous_X _
     have h1 := hC.mul hX
     rwa [zero_add] at h1
-  rw [p.as_sum, _root_.map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [p.as_sum, _root_.map_sum]
   apply IsHomogeneous.sum
   intro m hm
   have hsum := sum_support_eq_degree_of_isHomogeneous' hp hm

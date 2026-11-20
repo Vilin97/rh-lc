@@ -161,7 +161,8 @@ theorem isQuasicoherent_of_sum_eq_id (h : ∑ i, p i ≫ q i = 𝟙 F) [∀ i, (
   · choose n t ht using fun i ↦
       exists_pow_smul_eq_res (A i) hU f (X.basicOpen_le f) rfl ((p i).app _ s)
     refine ⟨∑ i, n i, ∑ i, (q i).app U (f ^ (∑ j, n j - n i) • t i), ?_⟩
-    rw [map_sum, ← sum_app_app p q h s, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, ← sum_app_app p q h s, Finset.smul_sum]
     refine Finset.sum_congr rfl fun i _ ↦ ?_
     have hi : n i ≤ ∑ j, n j := Finset.single_le_sum (fun _ _ ↦ Nat.zero_le _) (Finset.mem_univ i)
     rw [← app_res, Scheme.Modules.map_smul, ← ht, smul_smul, map_pow, ← pow_add,

@@ -68,7 +68,8 @@ theorem hO_eq_trace (x y : MO S T) : hO S T x y = (hOM S T x y).trace := by
 
 theorem cA_trace {k : ℕ} (M : Matrix (Fin k) (Fin k) (AE D)) : cA D M.trace = ((M.map (cA D))ᵀ).trace := by
   rw [Matrix.trace_transpose]
-  simp only [Matrix.trace, Matrix.diag, Matrix.map_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.trace, Matrix.diag, Matrix.map_apply, map_sum]
 
 theorem hO_swap (x y : MO S T) : hO S T y x = cA D (hO S T x y) := by
   have e0 : (y.map (cA D)).map (cA D) = y := by ext i j; simp [cA_cA]
@@ -134,7 +135,8 @@ theorem hO_rat (a b : Matrix (Fin T.rank) (Fin S.rank) D.host.E) :
     ∃ e : D.host.E, hO S T (ratW T S a) (ratW T S b) = incA D e := by
   refine ⟨∑ i, ∑ j, ∑ k, ∑ l, (HSpace.gram S)⁻¹ i j * D.sp.cm.sig (b k j) * HSpace.gram T k l * a l i, ?_⟩
   unfold hO ratW
-  simp only [Matrix.map_apply, Formalism.IndefR.PHeisTh.cA_incA, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.map_apply, Formalism.IndefR.PHeisTh.cA_incA, map_sum, map_mul]
 
 theorem symplO_rat (a b : Matrix (Fin T.rank) (Fin S.rank) D.host.E) :
     ∃ q : D.host.F, symplO S T (ratW T S a) (ratW T S b) = algebraMap D.host.F (AF D.host.F) q := by

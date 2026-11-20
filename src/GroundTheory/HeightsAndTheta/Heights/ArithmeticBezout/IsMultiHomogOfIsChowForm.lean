@@ -21,7 +21,8 @@ variable {n : ℕ}
 
 theorem rename_linForm (u : Fin n → ℤ) :
     rename (blk n) (linForm u) = IndefiniteRowSideFullHecke.ArithBezout.linForm u := by
-  simp [linForm, IndefiniteRowSideFullHecke.ArithBezout.linForm, map_sum, blk, Xc]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [linForm, IndefiniteRowSideFullHecke.ArithBezout.linForm, map_sum, blk, Xc]
 
 theorem linForm_mem_finIdeal (P : Ideal (MRing (PBlk n))) (u : Fin n → ℤ) :
     linForm u ∈ IndefiniteRowSideFullHecke.ArithBezout.finIdeal P ↔ IndefiniteRowSideFullHecke.ArithBezout.linForm u ∈ P := by

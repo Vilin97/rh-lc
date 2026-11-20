@@ -24,7 +24,8 @@ theorem mem_isometriesFixingBothFrames_iff_unitriangular : ∀ (D : D7) {T T' : 
 
   have fwd : ∀ {f h : Fin (D.R.rS + 1) → (VS D).V}, Tri D.host.E f h → (∀ a, g (f a) = f a) → ∀ a, g (h a) = h a := by
     rintro f h ⟨A, -, hC⟩ hf a
-    rw [hC a, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hC a, map_sum]
     refine Finset.sum_congr rfl fun b _ => ?_
     rw [map_smul, hf b]
   have bwd : ∀ {f h : Fin (D.R.rS + 1) → (VS D).V}, Tri D.host.E f h → (∀ a, g (h a) = h a) → ∀ a, g (f a) = f a := by
@@ -41,7 +42,8 @@ theorem mem_isometriesFixingBothFrames_iff_unitriangular : ∀ (D : D7) {T T' : 
             rw [hlow b a (lt_of_le_of_ne hb (Ne.symm hba)), zero_smul]
         rw [hrest, add_comm]
       have h1 := hh a
-      rw [hsplit, map_add, map_sum] at h1
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hsplit, map_add, map_sum] at h1
       have h2 : ∑ b ∈ Finset.univ.filter (fun b => b < a), g (A b a • f b) =
           ∑ b ∈ Finset.univ.filter (fun b => b < a), A b a • f b := by
         refine Finset.sum_congr rfl fun b hb => ?_

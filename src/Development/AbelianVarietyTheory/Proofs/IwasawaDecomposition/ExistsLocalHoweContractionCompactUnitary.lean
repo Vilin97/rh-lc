@@ -123,7 +123,8 @@ theorem exists_contraction {H : Type} [NormedAddCommGroup H] [InnerProductSpace 
       smul_smul, Complex.conj_conj, RingHom.id_apply]
   · intro P v u
     conv_rhs => rw [← b.sum_repr' u]
-    simp only [LinearMap.mk₂_apply, inner_sum, inner_smul_right, map_sum, map_smul, fischer_sum_right,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [LinearMap.mk₂_apply, inner_sum, inner_smul_right, map_sum, map_smul, fischer_sum_right,
       fischer_smul_right, inner_conj_symm]
     exact Finset.sum_congr rfl fun i _ => mul_comm _ _
 

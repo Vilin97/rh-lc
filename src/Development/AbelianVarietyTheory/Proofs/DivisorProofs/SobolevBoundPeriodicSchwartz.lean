@@ -114,7 +114,8 @@ theorem sobolev_schA {f : (κ → AF F) → ℂ} (hf : f ∈ schA F κ) (x : κ 
   · rintro u ⟨w, h1, h2, rfl⟩
     have e : ∀ t : Fin (dimA F κ) → ℝ, ∑ j, archIn F κ (Pi.single j (t j)) = archIn F κ t := by
       intro t
-      rw [← map_sum, Finset.univ_sum_single]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← map_sum, Finset.univ_sum_single]
     simp only [e]
     exact hB w (by simpa using h1) h2
 

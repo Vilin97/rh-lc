@@ -55,7 +55,8 @@ theorem frame_bc {σ : S →+* R} {n : ℕ} {p : Fin n → P} {l : Fin n → Dua
   induction hc using Submodule.span_induction with
   | mem _ hc =>
     obtain ⟨c, rfl⟩ := hc
-    conv_rhs => rw [← hp c, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_rhs => rw [← hp c, map_sum]
     simp [hl, LinearMap.map_smulₛₗ]
   | zero => simp
   | add a b _ _ ha hb => simp only [map_add, add_smul, Finset.sum_add_distrib, ha, hb]
@@ -64,7 +65,8 @@ theorem frame_bc {σ : S →+* R} {n : ℕ} {p : Fin n → P} {l : Fin n → Dua
 theorem dual_frame {n : ℕ} {p : Fin n → P} {l : Fin n → Dual S P}
     (hp : ∀ c, ∑ i, l i c • p i = c) (x : Dual S P) : ∑ i, x (p i) • l i = x := by
   ext c
-  conv_rhs => rw [← hp c, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_rhs => rw [← hp c, map_sum]
   simp [mul_comm]
 
 theorem exists_descent {τ : S →+* S₀} {σ₁ : S₀ →+* R} {σ : S →+* R} (hσ : ∀ a, σ₁ (τ a) = σ a)
@@ -83,7 +85,8 @@ theorem exists_descent {τ : S →+* S₀} {σ₁ : S₀ →+* R} {σ : S →+* 
   have fr := frame_bc hp f hf hl
   refine ⟨∑ i, (LinearMap.applyₗ (f₀ (p i))).smulRight (∑ j, b i j • l₁ j), fun x x' hx c ↦ ?_⟩
   conv_lhs => rw [← dual_frame fr x', ← fr (f₁ c)]
-  simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, LinearMap.smulRight_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, LinearMap.smulRight_apply,
     LinearMap.applyₗ_apply_apply, smul_eq_mul, map_mul, hb, k, ← hx, hc, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ ↦ Finset.sum_congr rfl fun j _ ↦ by ring
@@ -168,7 +171,8 @@ theorem ann_bc {Q Q' : Type*} [AddCommGroup Q] [Module S Q] [AddCommGroup Q'] [M
         zero_add]
       simp [q]
     rw [this, ← hp (q (θ c))]
-    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, hee _ _ (ha' _), ha,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, hee _ _ (ha' _), ha,
       LinearMap.map_smulₛₗ, smul_eq_mul, LinearMap.comp_apply, mul_comm]
   · rintro ⟨w, rfl⟩
     choose l' hl using fun i ↦ ef (l i)

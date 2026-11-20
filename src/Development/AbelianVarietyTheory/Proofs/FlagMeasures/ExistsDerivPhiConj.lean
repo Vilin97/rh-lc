@@ -129,7 +129,8 @@ theorem exists_deriv_Phi_conj : ∀ (n : ℕ) (ε : Fin n → Bool) (lam : Fin n
         ∑ c, ∑ d, Y c d * fderiv ℂ (Phi lam) w (w * Matrix.single c d 1) := by
       intro w Y
       conv_lhs => rw [Matrix.matrix_eq_sum_single Y]
-      simp only [Matrix.mul_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Matrix.mul_sum, map_sum]
       refine Finset.sum_congr rfl fun c _ => Finset.sum_congr rfl fun d _ => ?_
       have hs : Matrix.single c d (Y c d) = Y c d • Matrix.single c d (1 : ℂ) := by
         rw [Matrix.smul_single, smul_eq_mul, mul_one]

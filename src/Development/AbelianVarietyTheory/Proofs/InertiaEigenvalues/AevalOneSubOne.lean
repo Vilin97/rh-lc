@@ -107,12 +107,14 @@ theorem Coord.step {P : PlE D.host} {t : ℕ → Matrix (Fin n) (Fin n) (X.O i)}
   intro a
   have hc : ∀ w, A.baseChange (X.Ok i k) (PqF Y i j b k P y w) = PqF Y i j b k P y (A.baseChange (X.Ok i k) w) := by
     intro w
-    simp only [PqF, LinearMap.add_apply, Module.End.one_apply, LinearMap.sum_apply, LinearMap.smul_apply, map_add,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [PqF, LinearMap.add_apply, Module.End.one_apply, LinearMap.sum_apply, LinearMap.smul_apply, map_add,
       map_sum, map_smul]
     congr 1
     refine Finset.sum_congr rfl fun m hm => ?_
     rw [← LinearMap.comp_apply, ← LinearMap.baseChange_comp, hA m hm, LinearMap.baseChange_comp, LinearMap.comp_apply]
-  rw [hrel, hc, ← map_smul, h a, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hrel, hc, ← map_smul, h a, map_sum]
   simp only [map_smul, pqF_basis ht, Finset.smul_sum, smul_smul, Matrix.mul_apply, Finset.sum_smul]
   rw [Finset.sum_comm]
   simp only [mul_comm]
@@ -431,7 +433,8 @@ theorem propABCD_of_rel : ∀ (D : Formalism.BasicNotions.D7) (N : NData D.R D.h
           have h2 := hHu _ _ (hP' (.inl a)) hv.1 hv.2.2.2.1 (hS.1 a) s
           rw [← IsLocalRing.residue_ne_zero_iff_isUnit] at h2 ⊢
           convert h2 using 1
-          simp only [map_add, map_sum, map_mul]
+          set_option synthInstance.maxHeartbeats 100000 in
+            simp only [map_add, map_sum, map_mul]
           congr 1
           refine Finset.sum_congr rfl fun m hm => ?_
           have h3 := (IsLocalRing.residue_eq_zero_iff _).2 (hs m _ (hidx m hm))

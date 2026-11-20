@@ -148,7 +148,8 @@ theorem mom_zero (c : ℝ) (P : PX m n) : mom c (0 * P) = 0 := by
 
 theorem evX_ell (ε : Fin m → Bool) (b : Matrix (Fin n) (Fin n) ℂ) (x : Fin m → Fin n → ℂ) :
     evX (∑ i, ∑ j, C (b i j) * (Qp ε j i : PX m n)) x = (b * gramX ε x).trace := by
-  simp only [evX, map_sum, map_mul, MvPolynomial.eval_C, Matrix.trace, Matrix.diag, Matrix.mul_apply, gramX]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [evX, map_sum, map_mul, MvPolynomial.eval_C, Matrix.trace, Matrix.diag, Matrix.mul_apply, gramX]
 
 theorem ell_mem (ε : Fin m → Bool) (b : Matrix (Fin n) (Fin n) ℂ) :
     (∑ i, ∑ j, C (b i j) * (Qp ε j i : PX m n)) ∈

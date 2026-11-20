@@ -25,7 +25,8 @@ theorem quad_eq {p : ℕ} (e : Fin p → Fin r) (s : Fin r → ℝ) (Y : Matrix 
     rw [Matrix.mul_apply]
     simp [Matrix.mul_diagonal]
   push_cast
-  simp only [dotProduct, mulVec, submatrix_apply, h, Pi.star_apply, Complex.star_def,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dotProduct, mulVec, submatrix_apply, h, Pi.star_apply, Complex.star_def,
     ← Complex.mul_conj', map_sum, map_mul, Complex.conj_conj, Finset.mul_sum, Finset.sum_mul]
   rw [Finset.sum_comm]
   conv_rhs => rw [Finset.sum_comm]

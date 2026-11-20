@@ -144,7 +144,8 @@ theorem cq_r_apply {r : (Fin (n + c) → k) ≃ₗ[k] (Fin (n + c) → k)} {g : 
     (hg : ∀ x, r (Loc.inX k n c x) = Loc.inX k n c (g x)) (z : Fin (n + c) → k) :
     r z = Loc.inX k n c (g (fun j => z (Fin.castAdd c j))) + ∑ i : Fin c, z (Fin.natAdd n i) • r (Loc.eN k (n + c) (n + i.1)) := by
   conv_lhs => rw [cq_decomp z]
-  rw [map_add, hg, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_add, hg, map_sum]
   simp only [map_smul]
 
 theorem reduction_entry_lower_block {r : (Fin (n + c) → k) ≃ₗ[k] (Fin (n + c) → k)} {g : (Fin n → k) ≃ₗ[k] (Fin n → k)}

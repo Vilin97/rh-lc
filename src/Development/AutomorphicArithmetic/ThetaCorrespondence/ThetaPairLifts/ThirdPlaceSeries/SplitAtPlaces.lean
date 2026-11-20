@@ -44,7 +44,8 @@ theorem splitAt_places_alt : ∀ {D : D7} {L : SizeData₂ D} {hT : GatTies D} {
       (a.x j).L _ ((l PP hP).FX j hj) F₀ _ (hM₁ j ρ h) hA ⟨_, GlobalTheory.LineSelfDual.isSelfDualC_selfDualLatticeCoordsInFrame D _⟩ hF₀.1 (fun r => ?_)
       hIntM ((l PP hP).latX j hj)
     rw [hF₀.2 r]
-    simp only [GlobalTheory.MixPer.vecB, Matrix.mulVec, dotProduct, Matrix.map_apply, GlobalTheory.LocMod.Place.pr, map_sum, map_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [GlobalTheory.MixPer.vecB, Matrix.mulVec, dotProduct, Matrix.map_apply, GlobalTheory.LocMod.Place.pr, map_sum, map_mul,
       Finset.mul_sum]
     exact Finset.sum_congr rfl fun i _ => by ring
   have hx : PP.under (𝓞 D.host.F) ∉ v.tP := by

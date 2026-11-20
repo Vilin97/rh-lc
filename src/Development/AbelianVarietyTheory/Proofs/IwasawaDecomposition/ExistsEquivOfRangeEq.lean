@@ -44,7 +44,8 @@ theorem semi_injective_of_basis {ι : Type} [Fintype ι] (b : Basis ι K U) (g :
     (h : LinearIndependent ℂ fun i => g (b i)) : Function.Injective g := by
   rw [injective_iff_map_eq_zero]
   intro x hx
-  rw [← b.sum_repr x, map_sum] at hx
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← b.sum_repr x, map_sum] at hx
   simp only [map_smulₛₗ] at hx
   have := Fintype.linearIndependent_iff.1 h (fun i => σ (b.repr x i)) hx
   refine b.repr.injective (Finsupp.ext fun i => σ.injective ?_)
@@ -64,7 +65,8 @@ theorem eq_top_of_span_image {ι : Type} [Fintype ι] (b : Basis ι K U) (g : U 
   have hall : ∀ u, ψ (g u) = σ (φ u) := fun u => by
     conv_lhs => rw [← b.sum_repr u]
     conv_rhs => rw [← b.sum_repr u]
-    simp only [map_sum, map_smulₛₗ, hψ, RingHom.id_apply, smul_eq_mul, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smulₛₗ, hψ, RingHom.id_apply, smul_eq_mul, map_mul]
   apply hφ0
   ext u
   have h1 : Submodule.span ℂ (g '' (N : Set U)) ≤ LinearMap.ker ψ := by

@@ -172,7 +172,8 @@ theorem pderiv_subst {σ τ : Type} [Fintype σ] [DecidableEq σ] (a : σ → Mv
   have k1 : coeff e (pderiv k i (subst a (f - (q : MvPowerSeries σ k)))) = 0 :=
     ordGE_pderiv i (r := e.degree + 1) (ordGE_subst a ha hq) e (by omega)
   have k2 : coeff e (∑ s, subst a (pderiv k s (f - (q : MvPowerSeries σ k))) * pderiv k i (a s)) = 0 := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_eq_zero fun s _ => ?_
     exact ordGE_mul (ordGE_subst a ha (ordGE_pderiv s (r := e.degree + 1) hq))
       (ordGE_zero_left (pderiv k i (a s))) e (by omega)
@@ -236,7 +237,8 @@ theorem ev_sum {m n : ℕ} {a : Fin m → Pt k n d} (ha : ∀ p q, constantCoeff
     | rfl
     | (rw [MvPowerSeries.coe_substAlgHom]; rfl)
     | simp [MvPowerSeries.coe_substAlgHom, ev]
-  rw [e, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, map_sum]
   exact Finset.sum_congr rfl fun i _ => (e (f i)).symm
 
 theorem ev_C {m n : ℕ} {a : Fin m → Pt k n d} (ha : ∀ p q, constantCoeff (a p q) = 0) (c : k) :

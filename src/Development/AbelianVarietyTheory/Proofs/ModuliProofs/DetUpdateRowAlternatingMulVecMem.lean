@@ -49,7 +49,8 @@ theorem det_updateRow_alternating_mulVec_mem {T : Type} [CommRing T] {g : ℕ} (
     rw [e, Fintype.sum_prod_type]
     refine Finset.sum_congr rfl fun i _ => ?_
     simp only [Matrix.mulVec, dotProduct, Finset.sum_mul, mul_assoc]
-  rw [h1, ← Ideal.Quotient.eq_zero_iff_mem, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h1, ← Ideal.Quotient.eq_zero_iff_mem, map_sum]
   refine Finset.sum_ninvolution Prod.swap ?_ ?_ (fun _ => Finset.mem_univ _) Prod.swap_swap
   · rintro ⟨i, j⟩
     rw [← map_add, Ideal.Quotient.eq_zero_iff_mem]

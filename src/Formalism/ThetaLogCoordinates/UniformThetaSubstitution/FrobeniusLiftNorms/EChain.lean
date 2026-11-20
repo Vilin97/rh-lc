@@ -38,7 +38,8 @@ theorem constantCoeff_zLin {K : Type} [Field K] {ν r0 r1 : ℕ} [NeZero ν]
     (om oms : Fin ν → ZMod (2 * ν) → K) (x : Bool × EV ν r0 r1) :
     MvPowerSeries.constantCoeff (zLin om oms x) = 0 := by
   unfold zLin
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_eq_zero fun s _ => ?_
   split_ifs <;> simp
 
@@ -49,7 +50,8 @@ theorem subst_scale_zLin {K : Type} [Field K] {ν r0 r1 : ℕ} [NeZero ν]
         (zLin om oms x) = MvPowerSeries.C a * zLin om oms x := by
   have hb := hasSubst_scale (K := K) (ι := ZV ν r0 r1) a
   unfold zLin
-  rw [← MvPowerSeries.coe_substAlgHom hb, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← MvPowerSeries.coe_substAlgHom hb, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun s _ => ?_
   rw [MvPowerSeries.coe_substAlgHom hb]
   split_ifs

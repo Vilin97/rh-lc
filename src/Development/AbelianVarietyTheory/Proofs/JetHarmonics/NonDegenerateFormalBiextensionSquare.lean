@@ -237,7 +237,8 @@ theorem killCompl_formalGroupCocycleLinearTerm_column (col : Fin 2) (u : Fin 2 �
     funext ⟨j, i⟩
     fin_cases j <;> rfl
   rw [dfc_square Y p (zc_gp _) (zc_gp _) (zc_gp _), Fintype.sum_prod_type]
-  simp only [key, ← coeff_killCompl, map_sum, coeff_formalBiextensionChart_secondPhase]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [key, ← coeff_killCompl, map_sum, coeff_formalBiextensionChart_secondPhase]
   rw [Finset.sum_eq_single col]
   · refine Finset.sum_congr rfl fun i _ => ?_
     rw [Finset.sum_eq_single col]

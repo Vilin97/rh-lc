@@ -113,7 +113,8 @@ theorem sum_expand {α : Type} (hS : Set0 μ 𝓕 mK 𝓓) (hc : Continuous φ)
     Λ * conj Λ * pr μ 𝓕 φ 1 1 = ∑ b ∈ B, ∑ b' ∈ B, pr μ 𝓕 φ (t b) (t b') := by
   have key : ∀ g, Λ * conj Λ * (φ (g * 1) * conj (φ (g * 1))) =
       ∑ b ∈ B, ∑ b' ∈ B, φ (g * t b) * conj (φ (g * t b')) := fun g => by
-    rw [← Finset.sum_mul_sum, ← map_sum, hsum, map_mul, mul_one]; ring
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Finset.sum_mul_sum, ← map_sum, hsum, map_mul, mul_one]; ring
   calc Λ * conj Λ * pr μ 𝓕 φ 1 1
       = ∫ g in 𝓕 ∩ band, Λ * conj Λ * (φ (g * 1) * conj (φ (g * 1))) ∂μ :=
         (integral_const_mul _ _).symm

@@ -47,7 +47,8 @@ theorem move_mem_of_entries {A B : Type} [CommRing A] [CommRing B] {n : ℕ} (s 
     apply hs.1
     have e2 := congrFun e1 i
     simp only [Pi.sub_apply, Pi.smul_apply, smul_eq_mul, Matrix.mulVec, dotProduct, Matrix.map_apply] at e2
-    simp only [Pi.sub_apply, Pi.smul_apply, Matrix.mulVec, dotProduct, map_sub, map_sum, map_mul, nsmul_eq_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Pi.sub_apply, Pi.smul_apply, Matrix.mulVec, dotProduct, map_sub, map_sum, map_mul, nsmul_eq_mul,
       map_natCast]
     exact e2
 

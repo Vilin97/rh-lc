@@ -107,7 +107,8 @@ theorem generic_translate_weights_mem (hT : TransvectionExpansion) (hTo : TorusA
     intro u
     apply good_of
     intro w hw
-    rw [MvPolynomial.as_sum w, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [MvPolynomial.as_sum w, map_sum]
     have hmono : ∀ m ∈ w.support, matrixSubst LL S φ (Matrix.diagonal fun a => ((u a : Kˣ) : K))
         (Matrix.diagonal fun a => (((u a)⁻¹ : Kˣ) : K)) (MvPolynomial.monomial m (w.coeff m)) =
         (((∏ a, u a ^ (wtS LL S m a) : Kˣ) : K)) • MvPolynomial.map φ (MvPolynomial.monomial m (w.coeff m)) := by
@@ -125,7 +126,8 @@ theorem generic_translate_weights_mem (hT : TransvectionExpansion) (hTo : TorusA
         rw [scalarExtension]
         exact Submodule.subset_span ⟨_, hGr R ι LL n S W hW2 w hw ν, rfl⟩) using 1
     unfold weightComponent
-    rw [map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.smul_sum]
     refine Finset.sum_congr ?_ fun m hm => ?_
     · ext m
       simp

@@ -101,7 +101,8 @@ private theorem lie_mem (N : Submodule ℂ (Sm E n))
       simp [hi]
     · simp
   rw [hX]
-  simp only [map_sum, map_add, map_smul, ← lieS_apply, lieS_atEmb_one, lieS_atEmb_I, LinearMap.sum_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_add, map_smul, ← lieS_apply, lieS_atEmb_one, lieS_atEmb_I, LinearMap.sum_apply,
     LinearMap.add_apply, LinearMap.smul_apply, LinearMap.sub_apply]
   refine N.sum_mem fun i _ => N.sum_mem fun j _ => N.sum_mem fun w _ => N.add_mem ?_ ?_
   · exact N.smul_of_tower_mem _ (N.add_mem (h1 w i j x hx) (h2 w i j x hx))
@@ -245,7 +246,8 @@ theorem UpperTheory.V.Z.GSp4Splitting.rlSimple :
             rw [map_mul, mul_assoc])
       have hN : (T.card : ℂ) ≠ 0 := Nat.cast_ne_zero.2 hT.card_pos.ne'
       refine ⟨(c * T.card)⁻¹ • D.R ⟨h, hs, hbi⟩ x, W.smul_mem _ (hR _ x hx), fun u => ?_⟩
-      rw [map_smul, map_smul, e1, map_smul, map_sum, Finset.sum_congr rfl (e2 u), Finset.sum_const, nsmul_eq_mul,
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_smul, map_smul, e1, map_smul, map_sum, Finset.sum_congr rfl (e2 u), Finset.sum_const, nsmul_eq_mul,
         smul_eq_mul, smul_eq_mul, ← mul_assoc c, inv_mul_cancel_left₀ (mul_ne_zero hc hN)]
   refine eq_top_iff.2 fun v _ => ?_
   obtain ⟨x, hx, e⟩ := key (D.i v).1 (h1.ge (D.i v).2) (D.i v).2

@@ -44,7 +44,8 @@ theorem hTens_eq_zero {n d d₁ : ℕ} (JX : Matrix (Fin n) (Fin n) E) (JW : Mat
     have h0 := congrArg (inclR (F := F) (AF F)) (hor (Pi.single m 1))
     rw [map_zero] at h0
     rw [Pi.zero_apply, ← h0]
-    simp [hvdef, form, Matrix.mulVec, dotProduct, incM, incV, map_sum, map_mul, hc, Pi.single_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [hvdef, form, Matrix.mulVec, dotProduct, incM, incV, map_sum, map_mul, hc, Pi.single_apply]
   have h0 : ∀ i, ∑ j, (z * (incM F ι)ᵀ) i j * ∑ l, incM F JW j l * cA σ (incV F x l) = 0 := by
     intro i
     have := congrFun (show z *ᵥ ((incM F ι)ᵀ *ᵥ v) = 0 by rw [hv, Matrix.mulVec_zero]) i

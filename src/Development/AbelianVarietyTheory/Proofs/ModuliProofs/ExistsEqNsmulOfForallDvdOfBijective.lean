@@ -220,7 +220,8 @@ theorem exists_rel_of_forall_dvd_of_card_mul :
       calc EF a a' = EF (∑ i, b.repr a i • b i) (∑ j, b.repr a' j • b j) := by
             rw [b.sum_repr, b.sum_repr]
         _ = _ := by
-            simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
+            set_option synthInstance.maxHeartbeats 100000 in
+              simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul,
               Finset.mul_sum]
             rw [Finset.sum_comm]
             refine Finset.sum_congr rfl (fun i _ => Finset.sum_congr rfl (fun j _ => ?_))

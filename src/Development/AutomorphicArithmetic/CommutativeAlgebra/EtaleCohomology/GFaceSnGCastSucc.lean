@@ -64,7 +64,8 @@ def ofL {k : ℕ} {B : C} (g : Gen P k B) : (L P k).obj B := FreeAbelianGroup.of
 theorem d_hh_of (B : C) (k : ℕ) (g : Gen P (k + 1) B) :
     ((dL P (k + 1)).app B).hom (hh B (k + 1) (ofL g)) = hh B k (((dL P k).app B).hom (ofL g)) + (-1 : ℤ) ^ (k + 2) • ofL g := by
   unfold ofL
-  rw [hh_of, dL_of, dL_of, Fin.sum_univ_castSucc, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hh_of, dL_of, dL_of, Fin.sum_univ_castSucc, map_sum]
   congr 1
   · refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_zsmul, hh_of, gFace_sn_castSucc]

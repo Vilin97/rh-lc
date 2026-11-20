@@ -23,7 +23,8 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 theorem form_swap_herm {σ : E →ₐ[F] E} (hinv : ∀ t, σ (σ t) = t) {d : ℕ} {J : Matrix (Fin d) (Fin d) E}
     (hherm : ∀ i j, σ (J j i) = J i j) (x v : Fin d → E) :
     GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.form σ J x v = σ (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.form σ J v x) := by
-  simp only [GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.form, dotProduct, Matrix.mulVec, map_sum, map_mul, hinv, hherm, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.form, dotProduct, Matrix.mulVec, map_sum, map_mul, hinv, hherm, Finset.mul_sum]
   rw [Finset.sum_comm (f := fun a b => σ (v a) * (J b a * x b))]
   refine Finset.sum_congr rfl fun j _ => ?_
   refine Finset.sum_congr rfl fun l _ => ?_
@@ -68,17 +69,20 @@ theorem GlobalTheory.ArchSchB.symp_levi_pair_eq_trace : ∀ {F E : Type} [Field 
   set U : Fin n → AE F E := incM F (X.J * H.ι.map σ) *ᵥ c' with hUdef
   have hA' : ∀ j, ∑ l, incM F W.J j l * cA σ (incV F H'.x l) = A j := by
     intro j
-    simp only [hAdef, incV, incM, Matrix.map_apply, OrthPlane.cA_inclR, Matrix.mulVec, dotProduct, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hAdef, incV, incM, Matrix.map_apply, OrthPlane.cA_inclR, Matrix.mulVec, dotProduct, map_sum, map_mul]
   have hU' : ∀ i, ∑ k, incM F X.J i k * cA σ ((incM F H.ι *ᵥ c) k) = U i := by
     intro i
-    simp only [hUdef, hc', incM, Matrix.mulVec, dotProduct, Matrix.map_apply, Matrix.mul_apply, map_sum, map_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hUdef, hc', incM, Matrix.mulVec, dotProduct, Matrix.map_apply, Matrix.mul_apply, map_sum, map_mul,
       OrthPlane.cA_inclR, Finset.mul_sum, Finset.sum_mul]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun m _ => ?_
     ring
   have hdotA : ∀ v : Fin d → E, incV F v ⬝ᵥ A = inclR (F := F) (AF F) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.form σ W.J v H'.x) := by
     intro v
-    simp only [hAdef, incV, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.form, Matrix.mulVec, dotProduct, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hAdef, incV, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.form, Matrix.mulVec, dotProduct, map_sum, map_mul]
   have hx0 : ∀ m, ∑ i, H.x i * (X.J * H.ι.map σ) i m = 0 := by
     intro m
     have h := (hH.orth (Pi.single m 1)).1
@@ -91,7 +95,8 @@ theorem GlobalTheory.ArchSchB.symp_levi_pair_eq_trace : ∀ {F E : Type} [Field 
     have : incV F H.x ᵥ* incM F (X.J * H.ι.map σ) = 0 := by
       ext m
       have := congrArg (inclR (F := F) (AF F)) (hx0 m)
-      simpa only [Matrix.vecMul, dotProduct, incV, incM, Matrix.map_apply, map_sum, map_mul, map_zero, Pi.zero_apply] using this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa only [Matrix.vecMul, dotProduct, incV, incM, Matrix.map_apply, map_sum, map_mul, map_zero, Pi.zero_apply] using this
     rw [this, zero_dotProduct]
   have h2 : incV F H'.x ⬝ᵥ A = 0 := by rw [hdotA, hH'.xx, map_zero]
   have h3 : (incM F H'.ι)ᵀ *ᵥ A = 0 := by

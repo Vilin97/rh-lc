@@ -155,7 +155,8 @@ theorem ev_δ_succ {m : ℤ} (hm : n + 1 = m) (α : Cochain ((chains R).obj E) I
   rw [ev_def, δ_v n m hm α _ t ht s (-(p : ℤ)) (by omega) (by omega), Preadditive.comp_add, Units.smul_def,
     Preadditive.comp_zsmul, ← Category.assoc _ (((chains R).obj E).d _ _), chains_d, Category.assoc, Preadditive.sum_comp]
   refine (map_add (mapHom _ _ (freeGen R _ U x)) _ _).trans ?_
-  rw [map_zsmul, map_sum, Units.smul_def]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_zsmul, map_sum, Units.smul_def]
   refine congrArg₂ (· + ·) rfl (congrArg _ (Finset.sum_congr rfl fun i _ => ?_))
   rw [Preadditive.zsmul_comp, map_zsmul]
   congr 1

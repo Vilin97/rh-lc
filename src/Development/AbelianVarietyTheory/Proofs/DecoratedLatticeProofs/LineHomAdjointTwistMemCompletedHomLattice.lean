@@ -56,7 +56,8 @@ theorem pairH_gen (L : HSp D) (α β : Af D.host.F) (x x' : Fin L.rank → D.hos
     pairH L (fun i => pairA D.host.F 0 α ⊗ₜ[D.host.F] (1 * x i)) (fun i => pairA D.host.F 0 β ⊗ₜ[D.host.F] (1 * x' i)) =
       pairA D.host.F 0 (α * β) ⊗ₜ[D.host.F] (1 * ∑ i, ∑ j, star (x i) * L.gram i j * x' j) := by
   have hp : pairA D.host.F 0 α * pairA D.host.F 0 β = pairA D.host.F 0 (α * β) := Prod.ext (zero_mul _) rfl
-  simp only [tmul_eq, pairH, dotProduct, Matrix.mulVec, gA, rat, Matrix.map_apply, map_mul, cA_tmul_one,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [tmul_eq, pairH, dotProduct, Matrix.mulVec, gA, rat, Matrix.map_apply, map_mul, cA_tmul_one,
     GlobalTheory.DualPairCheck.cA_incA, map_sum]
   rw [← hp, ← one_mul (1 : D.host.E), ← Algebra.TensorProduct.tmul_mul_tmul, one_mul, Finset.mul_sum]
   refine Finset.sum_congr rfl fun a _ => ?_
@@ -120,9 +121,11 @@ theorem mem_latV_of_pairH {S : HSp D} {MS : Lat S} (hS : IsSelfDualC S MS) {P : 
       GlobalTheory.FinPl.LatMem.indicatorAdele_supported _ _, 1, rfl, s i, hs i, rfl⟩
   have hdualA : ∀ a b, ∑ i, incA D (s i a) * ∑ k, incA D (star (s' i k)) * gA S k b = incA D (if a = b then 1 else 0) := by
     intro a b
-    rw [← hdual a b, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hdual a b, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
-    simp only [map_mul, map_sum, gA, rat, Matrix.map_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_mul, map_sum, gA, rat, Matrix.map_apply]
   have h2 : ∀ a, ∑ i, incA D (s i a) * ∑ b, (∑ k, incA D (star (s' i k)) * gA S k b) * x b = x a := by
     intro a
     simp only [Finset.mul_sum]

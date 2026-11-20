@@ -24,7 +24,8 @@ theorem trace_asAlgebraHom {G : Type} [Group G] [Fintype G] (V : FDRep ℂ G) (a
     LinearMap.trace ℂ V (Representation.asAlgebraHom (k := ℂ) (V.ρ : Representation ℂ G V) a) =
       tr a V.character := by
   simp only [tr, Representation.asAlgebraHom_def, MonoidAlgebra.lift_apply, FDRep.character]
-  rw [Finsupp.sum_fintype _ _ (by simp), map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finsupp.sum_fintype _ _ (by simp), map_sum]
   simp
 
 theorem tr_idem_nat {G : Type} [Group G] [Fintype G] (a : MonoidAlgebra ℂ G) (χ : G → ℂ)

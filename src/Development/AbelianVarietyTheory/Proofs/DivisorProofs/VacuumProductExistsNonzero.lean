@@ -20,7 +20,8 @@ theorem vacProd_ne_zero_somewhere : ∀ {F : Type} [Field F] [NumberField F] {κ
   refine ⟨fun i => ∑ v ∈ S, singleFin v (z v i), ?_⟩
   have hev : ∀ (u : Pl F) (i : κ), evalV F u (∑ v ∈ S, singleFin v (z v i)) = if u ∈ S then z u i else 0 := by
     intro u i
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     split_ifs with hu
     · rw [Finset.sum_eq_single u]
       · exact GlobalTheory.AdelicU.evalV_singleFin_self u (z u i)

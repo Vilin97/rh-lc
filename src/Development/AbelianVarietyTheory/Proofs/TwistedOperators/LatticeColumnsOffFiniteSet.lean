@@ -128,7 +128,8 @@ theorem col_mem_imp {A B : HSp D} {c : ℕ} {ε : D.host.E} (d : HermitianOrthog
     have hl := h1 p
     rw [if_pos rfl] at hl
     calc ∑ k, incA D (l k) * (t * incA D (d.a k p)) = t * incA D (∑ k, l k * d.a k p) := by
-          rw [map_sum, Finset.mul_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [map_sum, Finset.mul_sum]
           refine Finset.sum_congr rfl fun k _ => ?_
           rw [map_mul]
           ring

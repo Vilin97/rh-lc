@@ -20,7 +20,8 @@ abbrev spanOn {V : X.Opens} (η : Fin r → Γ(F, V)) {U : X.Opens} (h : U ≤ V
 theorem resM_mem_spanOn {V U W : X.Opens} (η : Fin r → Γ(F, V)) (h : U ≤ V) (h' : W ≤ U) {s : Γ(F, U)}
     (hs : s ∈ spanOn η h) : resM F h' s ∈ spanOn η (h'.trans h) := by
   obtain ⟨a, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun _).1 hs
-  simp only [map_sum, resM_smul, resM_resM]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, resM_smul, resM_resM]
   exact Submodule.sum_mem _ fun l _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨l, rfl⟩)
 
 def locSpan {V : X.Opens} (η : Fin r → Γ(F, V)) : Sub F where
@@ -62,7 +63,8 @@ theorem isFrame_mkSec (N : Sub F) {V : X.Opens} {η : Fin r → Γ(F, V)} (hη :
   have key (U : X.Opens) (h : U ≤ V) (a : Fin r → Γ(X, U)) :
       N.incl.app U (Fintype.linearCombination Γ(X, U) (fun l => resM N.toMod h (N.mkSec (η l) (hη l))) a) =
         Fintype.linearCombination Γ(X, U) (fun l => resM F h (η l)) a := by
-    simp only [Fintype.linearCombination_apply, map_sum, Scheme.Modules.Hom.app_smul, app_resM, Sub.incl_app_mkSec]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Fintype.linearCombination_apply, map_sum, Scheme.Modules.Hom.app_smul, app_resM, Sub.incl_app_mkSec]
   have inj (U : X.Opens) (h : U ≤ V) : Function.Injective
       (Fintype.linearCombination Γ(X, U) fun l => resM N.toMod h (N.mkSec (η l) (hη l))) := fun a b hab => by
     have := congrArg (N.incl.app U) hab

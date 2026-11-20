@@ -11,7 +11,8 @@ open MvPolynomial Finset
 
 theorem constantCoeff_blockPowerSum (f N k : ℕ) (τ : Fin f) (hk : 1 ≤ k) :
     constantCoeff (blockPowerSum f N k τ) = 0 := by
-  simp [blockPowerSum, map_sum, map_pow, constantCoeff_X, zero_pow (show k ≠ 0 by omega)]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [blockPowerSum, map_sum, map_pow, constantCoeff_X, zero_pow (show k ≠ 0 by omega)]
 
 theorem FlagIntegralKillsPowerSums.proof (h1 : FlagDividedDifferencePoly.Statement)
     (h2 : FlagSymmetricMulAntisym.Statement) (h3 : FlagPowerSumSymmetric.Statement)

@@ -163,7 +163,8 @@ theorem hasSum_of_adic (Λ : W →+ C) (J : Ideal W)
       rw [← Finset.sum_sdiff hS']; abel
     rw [h]
     exact sub_mem hS2 (sum_mem fun α hα => hS1 α (Finset.mem_sdiff.1 hα).2)
-  rw [dist_eq_norm, ← map_sum, ← map_sub, ← norm_neg, ← map_neg, neg_sub]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [dist_eq_norm, ← map_sum, ← map_sub, ← norm_neg, ← map_neg, neg_sub]
   exact he _ hmem
 
 end Norms

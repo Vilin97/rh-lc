@@ -307,7 +307,8 @@ theorem teich_inj {S : Type*} [CommRing S] [IsLocalRing S] [Algebra V S] [IsLoca
   have h4 : (∑ i ∈ Finset.range N, t ^ i * u ^ (N - 1 - i)) ∈ maximalIdeal S := by
     have h5 : residue S t = residue S u := by
       rw [← sub_eq_zero, ← map_sub, residue_eq_zero_iff]; exact h
-    rw [← residue_eq_zero_iff, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← residue_eq_zero_iff, map_sum]
     simp only [map_mul, map_pow, h5]
     rw [geom_sum₂_self, hN, zero_mul]
   have h6 := isUnit_one_sub_self_of_mem_nonunits _ h4

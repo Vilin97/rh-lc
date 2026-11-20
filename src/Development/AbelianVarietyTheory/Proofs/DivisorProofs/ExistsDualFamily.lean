@@ -66,7 +66,8 @@ theorem exists_dual_family (t : SAB H (Sp A)) {G' : Over (Sp A')} [GrpObj G'] (�
   induction hs using Submodule.span_induction with
   | mem _ hx =>
     obtain ⟨s, rfl⟩ := hx
-    simp only [val, ← sm, ← map_sum, ← map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [val, ← sm, ← map_sum, ← map_smul]
     rw [← pi_eq_sum_univ', show f (g (pb hid k₀ s)) = pb hid k₀ s from LinearMap.congr_fun hfg _,
       pb_pb hid hψ hψ (Category.comp_id _) (Category.comp_id _)]
   | zero => simp

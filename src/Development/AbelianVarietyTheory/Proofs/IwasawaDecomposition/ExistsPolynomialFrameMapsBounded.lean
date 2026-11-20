@@ -76,7 +76,8 @@ theorem isPolyFn_pairing (L : SmT M' →ₗ[ℂ] SmT M) (a b : M.Vec) (a' b' : M
     congr 1
     funext τ
     by_cases hτ : τ ∈ t <;> simp [Finset.piecewise, hτ]
-  simp only [pairing, h, map_sum, map_smul, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [pairing, h, map_sum, map_smul, smul_eq_mul]
   refine IsPolyFn.sum _ fun t => IsPolyFn.mul (IsPolyFn.prod _ fun τ => ?_) (isPolyFn_ellT M a b _)
   by_cases hτ : τ ∈ t
   · simpa [hτ] using IsPolyFn.const 1

@@ -177,7 +177,8 @@ theorem F_d (i : ℕ) (t : Cech.Cochain (fun K : Chart x => ↥(((G.twist (B.pow
     have e2 : UT.toL (locEmb η M₀ J.1.1 hJ
         (Cech.d (locSys (MvPolynomial (Fin (r + 1)) S) N (TwM η M₀)) locResS i (Fmap η M₀ n c hG hB i t) J)) =
         ∑ j : J.1.1, Cech.sgn J.1.1 j • single ((n : ℤ), c) ((t (Cech.face (downI J hJ) j)) : Ω) := by
-      rw [Cech.d_apply, map_sum, UT.toL_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Cech.d_apply, map_sum, UT.toL_sum]
       refine Finset.sum_congr rfl fun j _ => ?_
       have hf : (Cech.face J j).1.1 ⊆ support x := (Cech.face_subset J j).trans hJ
       rw [map_zsmul, UT.toL_zsmul, locEmb_locResS η M₀ (Cech.face J j).1 J.1 hf hJ,
@@ -201,7 +202,8 @@ theorem gm_zero (i : ℕ) (K : Cech.Idx (support x) i) : gm η M₀ n c i 0 K = 
 theorem gm_d (i : ℕ) (s : Cech.Cochain (locSys (MvPolynomial (Fin (r + 1)) S) N (TwM η M₀)) i)
     (K : Cech.Idx (support x) (i + 1)) :
     gm η M₀ n c (i + 1) (Cech.d _ locResS i s) K = ∑ j : K.1.1, Cech.sgn K.1.1 j • gm η M₀ n c i s (Cech.face K j) := by
-  rw [gm, Cech.d_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [gm, Cech.d_apply, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_zsmul, cf_locResS η M₀ n c _ _ ((Cech.face_subset (upI K) j).trans K.1.2.2) K.1.2.2]
   rfl

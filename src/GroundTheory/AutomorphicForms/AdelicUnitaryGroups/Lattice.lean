@@ -24,7 +24,8 @@ theorem repr_mul (z w : R ⊗[K] E) (m : κ) :
         (Algebra.TensorProduct.basis R b).repr w l * algebraMap K R (b.repr (b k * b l) m) := by
   set B := Algebra.TensorProduct.basis R b
   conv_lhs => rw [← B.sum_repr z, ← B.sum_repr w]
-  simp only [Finset.sum_mul, Finset.mul_sum, smul_mul_smul_comm, B,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finset.sum_mul, Finset.mul_sum, smul_mul_smul_comm, B,
     Algebra.TensorProduct.basis_apply, Algebra.TensorProduct.tmul_mul_tmul, one_mul, map_sum,
     map_smul, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.smul_apply, smul_eq_mul,
     repr_one_tmul]
@@ -87,7 +88,8 @@ theorem mulVec_mem_stdLattice {O : Subring R} (hO : IsAdapted b O) {M : Matrix �
     (hM : ∀ i j k, (Algebra.TensorProduct.basis R b).repr (M i j) k ∈ O) {x : ι → R ⊗[K] E}
     (hx : x ∈ stdLattice ι R b O) : M *ᵥ x ∈ stdLattice ι R b O := by
   intro i k
-  simp only [Matrix.mulVec, dotProduct, map_sum, Finsupp.coe_finsetSum, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mulVec, dotProduct, map_sum, Finsupp.coe_finsetSum, Finset.sum_apply]
   exact O.sum_mem fun j _ => repr_mul_mem hO (hM i j) (hx j) k
 
 theorem mem_latticeStabilizer_iff {O : Subring R} (hO : IsAdapted b O)

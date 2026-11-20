@@ -40,7 +40,8 @@ theorem sum_cz (x : Fin n → 𝓞 E) : ∑ m, cz x m • dl m = x := by
 theorem hom_eq {A : Type} [AddCommGroup A] (f : (Fin n → 𝓞 E) →+ A) (x : Fin n → 𝓞 E) :
     f x = ∑ m, cz x m • f (dl m) := by
   conv_lhs => rw [← sum_cz x]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [map_zsmul]
 
 theorem cz_surj : Function.Surjective (cz (E := E) (n := n)) := fun z =>
@@ -152,14 +153,18 @@ theorem exists_dualOf {C : Type} [Field C] [Algebra R C] (hi : Function.Injectiv
   unfold IsDualOf
   refine ⟨?_, ?_⟩
   · apply hi
-    rw [map_sum, map_one]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_one]
     simp only [map_mul, hs, hσ']
-    rw [← map_one σ, ← GlobalTheory.CompanionTheory.Ar.HT.ProjEig.sum_dualInt_mul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_one σ, ← GlobalTheory.CompanionTheory.Ar.HT.ProjEig.sum_dualInt_mul, map_sum]
     simp [map_mul]
   · intro a l
     apply hi
-    simp only [map_mul, map_sum, hs, hσ', map_intCast]
-    rw [← map_mul, GlobalTheory.CompanionTheory.Ar.HT.ProjEig.mul_dualInt_eq, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_mul, map_sum, hs, hσ', map_intCast]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_mul, GlobalTheory.CompanionTheory.Ar.HT.ProjEig.mul_dualInt_eq, map_sum]
     simp [map_mul, map_intCast]
 
 variable {σ : 𝓞 E →+* R} {s : Module.Free.ChooseBasisIndex ℤ (𝓞 E) → R}
@@ -180,7 +185,8 @@ theorem Pm_cz (k : Fin n) (x : Fin n → 𝓞 E) : ∑ m, Pm n σ k m * (cz x m 
   rw [Fintype.sum_prod_type, Finset.sum_eq_single k]
   · simp only [Pm, if_true, cz_apply]
     conv_rhs => rw [← (RingOfIntegers.basis E).sum_repr (x k)]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl (fun k' _ => ?_)
     rw [map_zsmul, zsmul_eq_mul, mul_comm]
   · intro b _ hb; simp [Pm, hb]

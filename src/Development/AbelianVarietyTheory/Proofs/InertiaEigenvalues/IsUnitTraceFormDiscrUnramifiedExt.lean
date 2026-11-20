@@ -68,7 +68,8 @@ theorem discr_trace_isUnit : ∀ (K K' : UQ) (d : ℕ) (φ : K.E →+* K'.E), Is
   have hsum : ∀ (g : Fin d → K.O) (v : Fin d → K'.O),
       algebraMap K'.O K'.E (∑ k, g k • v k) = ∑ k, algebraMap K.O K.E (g k) • algebraMap K'.O K'.E (v k) := by
     intro g v
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun k _ => hsm _ _
 
   have hw1 : ∀ k, ∃ y : K'.O, algebraMap K'.O K'.E y = w k := by
@@ -113,7 +114,8 @@ theorem discr_trace_isUnit : ∀ (K K' : UQ) (d : ℕ) (φ : K.E →+* K'.E), Is
   have hTr : ∀ y, algebraMap K.O K.E (Algebra.trace K.O K'.O y) =
       Algebra.trace K.E K'.E (algebraMap K'.O K'.E y) := by
     intro y
-    rw [Algebra.trace_eq_matrix_trace b, Algebra.trace_eq_matrix_trace w, Matrix.trace, Matrix.trace,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Algebra.trace_eq_matrix_trace b, Algebra.trace_eq_matrix_trace w, Matrix.trace, Matrix.trace,
       map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     simp only [Matrix.diag_apply, Algebra.leftMulMatrix_apply, LinearMap.toMatrix_apply,

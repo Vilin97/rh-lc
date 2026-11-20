@@ -143,7 +143,8 @@ def diagForm {ι : Type*} [Fintype ι] [DecidableEq ι] (a : ι → Fˣ) :
       simp only [Pi.smul_apply, smul_eq_mul, RingHom.id_apply, Finset.mul_sum]
       exact Finset.sum_congr rfl fun i _ => by ring)
   isSymm := ⟨fun x y => by
-    simp only [LinearMap.mk₂'ₛₗ_apply, conjHom_apply, map_sum, map_mul, conj_conj,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [LinearMap.mk₂'ₛₗ_apply, conjHom_apply, map_sum, map_mul, conj_conj,
       conj_algebraMap]
     exact Finset.sum_congr rfl fun i _ => by ring⟩
   nonsingular := by

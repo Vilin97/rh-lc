@@ -61,7 +61,8 @@ lemma exists_real_combination (Ψ : Finset (E →+* ℂ))
     exact Subtype.ext (conjugate_conjugate τ.1).symm
   have h5 : y τ = ∑ i, (starRingEnd ℂ) (B.repr z i) * τ.1 (integralBasis E i) := by
     have := congrArg (starRingEnd ℂ) h2
-    simpa [map_sum] using this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [map_sum] using this
   have h6 : y τ = (y τ + y τ) / 2 := by ring
   rw [h6]
   nth_rewrite 1 [h1]

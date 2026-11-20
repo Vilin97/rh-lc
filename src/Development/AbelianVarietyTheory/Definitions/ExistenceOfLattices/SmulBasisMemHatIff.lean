@@ -39,7 +39,8 @@ def ext {n : ℕ} (φ : (Fin n → E) →ₗ[F] F) : (Fin n → RA F E) →+ Fin
 theorem ext_tmul {n : ℕ} (φ : (Fin n → E) →ₗ[F] F) (a : FiniteAdeleRing (𝓞 F) F) (x : Fin n → E) :
     ext φ (fun i => a ⊗ₜ x i) = algebraMap F _ (φ x) * a := by
   have hx : φ x = ∑ i, φ (Pi.single i (x i)) := by
-    rw [← map_sum, Finset.univ_sum_single]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, Finset.univ_sum_single]
   rw [hx, ← Algebra.smul_def, Finset.sum_smul]
   simp [ext]
 
@@ -149,7 +150,8 @@ theorem _root_.GlobalTheory.AdLat.Model.hermA_symm (c : E ≃ₐ[F] E) (hc : ∀
       ((1 : FiniteAdeleRing (𝓞 F) F) ⊗ₜ[F] G a b) = 1 ⊗ₜ[F] G b a := by
     intro a b
     simp [_root_.GlobalTheory.AdLat.sg, hG]
-  simp only [_root_.GlobalTheory.AdLat.hermA, map_sum, map_mul, hinv, hG']
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [_root_.GlobalTheory.AdLat.hermA, map_sum, map_mul, hinv, hG']
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
   ring

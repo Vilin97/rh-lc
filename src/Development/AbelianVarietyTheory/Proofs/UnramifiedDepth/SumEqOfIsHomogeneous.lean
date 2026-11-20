@@ -39,7 +39,8 @@ theorem form_monomial (φ : (σ →₀ ℕ) → C) (A : σ →₀ ℕ) (c : C) :
 theorem form_eq_sum (φ : (σ →₀ ℕ) → C) (P : MvPolynomial σ C) :
     form φ P = ∑ A ∈ P.support, AddMonoidAlgebra.coeff P A * φ A := by
   conv_lhs => rw [P.as_sum]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [form_monomial]
 
 theorem form_mul_X (φ : (σ →₀ ℕ) → C) (P : MvPolynomial σ C) (i : σ) :
@@ -356,7 +357,8 @@ theorem act_monomial (g : MvPowerSeries (κ ⊕ κ') C) (m : κ ⊕ κ' →₀ �
 theorem act_eq (g : MvPowerSeries (κ ⊕ κ') C) (P : MvPolynomial (κ ⊕ κ') C) :
     act g P = ∑ m ∈ P.support, AddMonoidAlgebra.coeff P m • actMon g m := by
   conv_lhs => rw [P.as_sum]
-  simp only [map_sum, act_monomial]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, act_monomial]
 
 theorem act_mul (g : MvPowerSeries (κ ⊕ κ') C) (R : MvPolynomial κ C)
     (P : MvPolynomial (κ ⊕ κ') C) :
@@ -597,7 +599,8 @@ theorem main :
     split_ifs with hA
     swap
     · simp
-    rw [act_eq, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [act_eq, map_sum]
     refine v.map_le_sum fun m hm => ?_
     rw [hψ, ← map_pow] at hm ⊢
     obtain ⟨a1, a2, a3⟩ := GlobalTheory.T.det_frobenius_sub_pow_support_bounds l i E n s hl hi1 (psi l (l ^ i) E n) rfl m
@@ -651,12 +654,14 @@ theorem main :
     generalize hP : (MvPolynomial.C ((-((l : C) ^ E)⁻¹) ^ n) *
       (ψ + MvPolynomial.rename Sum.inl (cayDet n C ^ l ^ i))) ^ y = P
     refine Eq.trans (b := pair (cayDet n C ^ (l ^ i * y)) (act g P)) ?_ ?_
-    · rw [act_eq, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [act_eq, map_sum]
       refine Finset.sum_congr rfl fun m _ => ?_
       rw [actMon, LinearMap.map_smul, LinearMap.map_smul, smul_eq_mul, smul_eq_mul, ← mul_assoc,
         pair_apply]
       rfl
-    rw [← hP, mul_pow, ← map_pow, ← pow_mul, MvPolynomial.C_mul', map_smul, map_smul, smul_eq_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hP, mul_pow, ← map_pow, ← pow_mul, MvPolynomial.C_mul', map_smul, map_smul, smul_eq_mul,
       add_pow, map_sum, map_sum]
     congr 1
     refine Finset.sum_congr rfl fun s hs => ?_
@@ -759,7 +764,8 @@ theorem hP_eq (l i n : ℕ) (h1 : MvPowerSeries (PVar n) C) :
     hP C l i n h1 = ((∑ q : Fin n × Fin n, MvPolynomial.C (-((l : C) ^ expE l i)⁻¹) *
       MvPolynomial.X (Sum.inl q) ^ (l ^ i) * MvPolynomial.X (Sum.inr q) : MvPolynomial (PVar n) C) :
         MvPowerSeries (PVar n) C) + h1 := by
-  rw [hP, ← MvPolynomial.coeToMvPowerSeries.ringHom_apply, map_sum, Fintype.sum_prod_type, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hP, ← MvPolynomial.coeToMvPowerSeries.ringHom_apply, map_sum, Fintype.sum_prod_type, Finset.smul_sum]
   congr 1
   refine Finset.sum_congr rfl fun b _ => ?_
   rw [Finset.smul_sum]
@@ -774,8 +780,10 @@ theorem constantCoeff_hP (l i n : ℕ) (h1 : MvPowerSeries (PVar n) C) (h : HM2 
     by_contra hc
     have := h 0 (by simpa using hc)
     simp [degR] at this
-  rw [hP, map_add, h0, MvPowerSeries.smul_eq_C_mul, map_mul, map_sum]
-  simp [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hP, map_add, h0, MvPowerSeries.smul_eq_C_mul, map_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum]
 
 theorem weight_sum (n : ℕ) (α : PVar n →₀ ℕ) (a b : ℝ) :
     α.sum (fun j e => Sum.elim (fun _ => a) (fun _ => b) j * (e : ℝ)) = (degL α : ℝ) * a + (degR α : ℝ) * b := by

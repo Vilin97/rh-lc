@@ -51,7 +51,8 @@ theorem ReducedBasisBound.short_basis {W : Type*} [NormedAddCommGroup W] [InnerP
         (hc'span ▸ (hmemc (proj v x)).2 ⟨x, hx, rfl⟩)
       have hzL : ∑ j, k j • y j ∈ L := L.sum_mem fun j _ => L.smul_mem _ (hyL j)
       have h0 : proj v (x - ∑ j, k j • y j) = 0 := by
-        rw [map_sub, map_sum, ← hk, sub_eq_zero]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sub, map_sum, ← hk, sub_eq_zero]
         simp [map_zsmul, hy]
       obtain ⟨n, hn⟩ := mem_zsmul_of_proj_eq_zero hvL hv hmin (L.sub_mem hx hzL) h0
       have hxe : x = n • v + ∑ j, k j • y j := by rw [← hn]; abel

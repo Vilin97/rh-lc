@@ -49,7 +49,8 @@ theorem frobpin_geom (I : Ideal A) [IsAdicComplete I M] (f : M →+ M)
   have hS : ∀ k, f (S k) - S k = (⇑f)^[k] b - b := by
     intro k
     have e1 : f (S k) = ∑ i ∈ Finset.range k, (⇑f)^[i + 1] b := by
-      simp only [S, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [S, map_sum]
       exact Finset.sum_congr rfl (fun i _ => (Function.iterate_succ_apply' _ _ _).symm)
     rw [e1]
     simp only [S]

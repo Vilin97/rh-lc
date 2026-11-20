@@ -30,7 +30,8 @@ theorem UpperTheory.V.Pa.idem_nil :
       intro j
       rw [← hc, coeff_map, Det.lam]; simp
     have h3 : (D.D B[X] (1 + X ⊗ₜ e)).map (algebraMap B F) = 1 + X := by
-      rw [(d_chi D e).2.2.1, Polynomial.map_sum, Finset.sum_range_succ', Finset.sum_range_succ',
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [(d_chi D e).2.2.1, Polynomial.map_sum, Finset.sum_range_succ', Finset.sum_range_succ',
         Finset.sum_eq_zero]
       · simp [hl, coeff_X_pow, add_comm]
       · intro j hj

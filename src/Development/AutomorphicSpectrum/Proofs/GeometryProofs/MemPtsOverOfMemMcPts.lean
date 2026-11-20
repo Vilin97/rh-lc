@@ -260,7 +260,8 @@ theorem fin_bounds (hG : Top.Given) [IsGalois ℚ E] (U : ∀ σ : c.F →+* ℂ
       rw [hvalf, hX, mul_div_cancel₀ _ hram.ne']
     have hn := hnorm _ hsv
     have hsum : Fr.rd (e Z * w₀) * ∏ r', Or.e r' ^ (-n₁ (some r')) = ∑ i, nn (ei i) • G.w i := by
-      rw [← hnn, Small.GenFrame.rd, ← Small.GenFrame.rd, ← Small.GenFrame.rdHom_apply, map_sum, Finset.sum_mul,
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hnn, Small.GenFrame.rd, ← Small.GenFrame.rd, ← Small.GenFrame.rdHom_apply, map_sum, Finset.sum_mul,
         ← Equiv.sum_comp ei]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [hGw i, map_zsmul, Small.GenFrame.rdHom_apply, smul_mul_assoc]

@@ -165,7 +165,8 @@ theorem eq_zero_of_sum_rename_mul {S₁ S₂ κ : Type*} [Fintype κ] (w : κ �
   funext j
   ext m
   have h' := congrArg (mvPolynomialCoeffInFirstVariables (K := K) (S₁ := S₁) (S₂ := S₂) m) h
-  simp only [map_sum, leftCoeff_rename_mul, map_zero] at h'
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, leftCoeff_rename_mul, map_zero] at h'
   simpa using (Fintype.linearIndependent_iff.1 hw) (fun j => AddMonoidAlgebra.coeff (a j) m) h' j
 
 def mvPolynomialProductExtension {ι σ : Type} [Fintype ι] [DecidableEq ι] (τ₀ : ι) (κ : ι → Type) [∀ τ, Fintype (κ τ)]
@@ -185,7 +186,8 @@ theorem factorMap_injective {ι σ : Type} [Fintype ι] [DecidableEq ι] (τ₀ 
     linearIndependent_prod_rename_of_forall (fun τ : {τ // τ ≠ τ₀} => κ τ.1) (fun τ => b τ.1) (fun τ => hb τ.1 τ.2)
   have key : mvPolynomialProductExtension τ₀ κ b h = rename (sumComplementToProduct (σ := σ) τ₀) (∑ g, rename Sum.inl (h g) *
       rename Sum.inr (∏ τ : {τ // τ ≠ τ₀}, rename (Prod.mk τ) (b τ.1 (g τ)))) := by
-    simp only [mvPolynomialProductExtension, LinearMap.coe_mk, AddHom.coe_mk, map_sum, map_mul, map_prod, rename_rename]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [mvPolynomialProductExtension, LinearMap.coe_mk, AddHom.coe_mk, map_sum, map_mul, map_prod, rename_rename]
     rfl
   rw [key] at hh
   have hh' : ∑ g, rename Sum.inl (h g) *

@@ -14,7 +14,8 @@ def leftInvVal (P Q R : ℕ) : Ix P Q × Ix R 0 → Mdl P Q
 
 theorem leftInv_mR (P Q R : ℕ) (h : P ≤ R) (a : Fin P) (b : Fin Q) :
     aeval (leftInvVal P Q R) (mR P Q R a b) = (X (a, b) : Mdl P Q) := by
-  rw [mR, map_sum, Finset.sum_eq_single (Fin.castLE h a)]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [mR, map_sum, Finset.sum_eq_single (Fin.castLE h a)]
   · simp [leftInvVal]
   · intro c _ hc
     have : (c : ℕ) ≠ (a : ℕ) := fun e => hc (Fin.ext e)

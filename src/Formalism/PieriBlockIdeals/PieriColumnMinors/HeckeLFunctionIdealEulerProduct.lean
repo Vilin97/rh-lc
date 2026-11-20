@@ -549,7 +549,8 @@ theorem theta_base_change_holds : ThetaBaseChange := by
       M.map (coeff 1) * N.map constantCoeff + M.map constantCoeff * N.map (coeff 1) := by
     intro M N
     ext i j
-    simp only [Matrix.map_apply, Matrix.mul_apply, Matrix.add_apply, map_sum, hc1,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.map_apply, Matrix.mul_apply, Matrix.add_apply, map_sum, hc1,
       Finset.sum_add_distrib]
   set A := ((g⁻¹ : (Matrix (Fin n) (Fin n) k⟦X⟧)ˣ) : Matrix (Fin n) (Fin n) k⟦X⟧) with hA
   set G := (g : Matrix (Fin n) (Fin n) k⟦X⟧) with hG
@@ -1171,7 +1172,8 @@ theorem constantCoeff_conj_diagonal_rescale {L : Type} [Field L] {n : ℕ} (Γ G
     apply mul_right_cancel₀ hX
     rw [mul_assoc, hij]
   have h3 := congrArg constantCoeff h2
-  rw [map_mul, constantCoeff_C, Matrix.mul_apply, map_sum] at h3
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_mul, constantCoeff_C, Matrix.mul_apply, map_sum] at h3
   rw [Matrix.mul_diagonal, Matrix.map_apply, ← h3, Matrix.mul_apply]
   congr 1
   refine Finset.sum_congr rfl (fun k _ => ?_)

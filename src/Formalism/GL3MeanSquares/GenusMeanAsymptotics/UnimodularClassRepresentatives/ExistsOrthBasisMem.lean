@@ -29,7 +29,8 @@ theorem form_eq {ι : Type*} [Fintype ι] [DecidableEq ι] {h : V →ₗ⋆[K] V
     (ho : ∀ i j, i ≠ j → h (b i) (b j) = 0) (x : V) :
     h x x = ∑ i, star (b.repr x i) * b.repr x i * h (b i) (b i) := by
   conv_lhs => rw [← b.sum_repr x]
-  simp only [map_sum, LinearMap.sum_apply, map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.sum_apply, map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul,
     starRingEnd_apply, RingHom.id_apply]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [Finset.sum_eq_single i]
@@ -43,7 +44,8 @@ theorem re_form_eq (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) {ι : Ty
     {h : V →ₗ⋆[K] V →ₗ[K] K} (b : Basis ι K V) (ho : ∀ i j, i ≠ j → h (b i) (b j) = 0) (x : V)
     (φ : K →+* ℂ) :
     (φ (h x x)).re = ∑ i, (φ (h (b i) (b i))).re * Complex.normSq (φ (b.repr x i)) := by
-  rw [form_eq b ho x, map_sum, Complex.re_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [form_eq b ho x, map_sum, Complex.re_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_mul, map_mul, hK.2.1, ← Complex.normSq_eq_conj_mul_self, Complex.re_ofReal_mul, mul_comm]
 

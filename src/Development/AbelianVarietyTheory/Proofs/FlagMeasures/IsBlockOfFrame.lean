@@ -336,7 +336,8 @@ theorem entries {β : Fin r → ℕ} (hβ : IsBlock N β) {s : V ≃ₗ[K] V} (h
   have hcoef : ∀ (c : Fin r) (d : V), IsDual N c d →
       H.B ((s : V →ₗ[K] V) (N.F.e b.castSucc) - N.F.e b.castSucc) d = u c := by
     intro c d hd
-    rw [hu, map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hu, map_sum, LinearMap.sum_apply]
     simp only [map_smul, LinearMap.smul_apply, IsDual.e hβ hd, smul_eq_mul, mul_ite, mul_one, mul_zero,
       Finset.sum_ite_eq', Finset.mem_univ, if_true]
   have hlow : ∀ c : Fin r, c < b → ∀ d, IsDual N c d →
@@ -381,7 +382,8 @@ theorem entries {β : Fin r → ℕ} (hβ : IsBlock N β) {s : V ≃ₗ[K] V} (h
           rw [hiso]
           have hexp : (s⁻¹ : V ≃ₗ[K] V) (N.F'.e p.castSucc) =
               N.F'.e p.castSucc + ∑ q, v q • N.F'.e q.castSucc := eq_add_of_sub_eq' hv
-          rw [hexp, map_add, map_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [hexp, map_add, map_sum]
           have h0 : H.B (N.F.e b.castSucc) (N.F'.e p.castSucc) = 0 := by
             by_contra h'
             exact hne (hβcp.trans (hβ.2.2.1 b p h').symm)

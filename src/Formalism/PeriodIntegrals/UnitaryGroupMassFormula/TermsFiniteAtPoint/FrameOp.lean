@@ -122,7 +122,8 @@ theorem frame_fin (D : D7) {T : D.host.E} (F0 : FlagG (VS D) D.R.rS T) (b : 𝓞
     congr 1
     simp
   | cast i =>
-    rw [hfe, hnLe, map_sum, Fin.sum_univ_castSucc, hfz, (hB _ _).1 (Fin.castSucc_lt_last i)]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hfe, hnLe, map_sum, Fin.sum_univ_castSucc, hfz, (hB _ _).1 (Fin.castSucc_lt_last i)]
     simp only [map_smul, hnHe, hfe]
     simp
 

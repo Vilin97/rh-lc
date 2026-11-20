@@ -47,7 +47,8 @@ noncomputable def twistHom {Ω Ω' : Type} [Field Ω] [Field Ω'] (s : Ω →+* 
   map_mul' x y := by
     ext a
     show (twistMap s χ (x * y)).coeff a = (twistMap s χ x * twistMap s χ y).coeff a
-    rw [twistMap_coeff, HahnSeries.coeff_mul, HahnSeries.coeff_mul, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [twistMap_coeff, HahnSeries.coeff_mul, HahnSeries.coeff_mul, map_sum, Finset.mul_sum]
     have hsub : Finset.antidiagonal (twistMap s χ x).isPWO_support (twistMap s χ y).isPWO_support a ⊆
         Finset.antidiagonal x.isPWO_support y.isPWO_support a :=
       fun ij hij => (Finset.antidiagonal_mono_right (twistMap_support s χ y))

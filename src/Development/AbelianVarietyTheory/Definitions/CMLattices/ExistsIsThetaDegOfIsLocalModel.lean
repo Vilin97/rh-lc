@@ -169,7 +169,8 @@ theorem f_injective (Z : CMLat hP p q) (hpq : p + q = D.p + D.q) (j : Fin p ⊕ 
     obtain ⟨n, hn, hs⟩ := Z.span
     obtain ⟨x, hx⟩ := hs y
     have : N.mkQ (n • y) ∈ Submodule.torsion (𝓞 E) (D.La ⧸ N) := by
-      rw [hx, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hx, map_sum]
       exact Submodule.sum_mem _ fun i _ => ht i _
     obtain ⟨r, hr⟩ := this
     refine ⟨r * ⟨n, mem_nonZeroDivisors_of_ne_zero (by exact_mod_cast hn.ne')⟩, ?_⟩

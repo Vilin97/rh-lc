@@ -257,7 +257,8 @@ theorem coeff_eq_zero_of_stable (ε : A →ₐ[R] R) (x : Fin d → A) (hx : ∀
       set Q' : MvPolynomial (Fin d) R := ∑ j, pderiv j Q * T j with hQ'def
       have hQ' : aeval x Q' ∈ K := by
         have e : aeval x Q' = D i (aeval x Q) := by
-          rw [map_aeval_of_leibniz (D i) (hD i), hQ'def, map_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [map_aeval_of_leibniz (D i) (hD i), hQ'def, map_sum]
           refine Finset.sum_congr rfl fun j _ => ?_
           rw [map_mul, hT]
         rw [e]; exact hKD i _ hQ

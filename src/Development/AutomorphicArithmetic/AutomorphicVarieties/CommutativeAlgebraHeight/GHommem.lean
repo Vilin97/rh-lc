@@ -156,7 +156,8 @@ theorem UpperTheory.V.CA.g_hommem :
       AddMonoidAlgebra.coeff (c (p.degree + i.2.val) i) p
     have hFeq : F = ∑ i, C i * MvPolynomial.coeToMvPowerSeries.ringHom (σ := σ) (R := R) (h i) := by
       ext m
-      rw [← hcoefF m, map_sum, MvPolynomial.coeff_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hcoefF m, map_sum, MvPolynomial.coeff_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [MvPowerSeries.coeff_mul, smul_eq_mul, MvPolynomial.coeff_mul]
       refine Finset.sum_congr rfl fun p hp => ?_

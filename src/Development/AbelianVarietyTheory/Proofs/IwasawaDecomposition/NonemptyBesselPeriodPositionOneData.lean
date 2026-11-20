@@ -48,7 +48,8 @@ theorem fix_inv {g g' : Matrix (Fin n) (Fin n) R} (hg : g' * g = 1) {v : Fin n �
 
 theorem fix_sum {m : ℕ} {g : Matrix (Fin n) (Fin n) R} {v : Fin m → Fin n → R} (h : ∀ l, ε • (g *ᵥ v l - v l) = 0)
     (y : Fin m → R) : ε • (g *ᵥ (∑ l, y l • v l) - ∑ l, y l • v l) = 0 := by
-  rw [← Matrix.mulVecLin_apply, map_sum, ← Finset.sum_sub_distrib, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Matrix.mulVecLin_apply, map_sum, ← Finset.sum_sub_distrib, Finset.smul_sum]
   refine Finset.sum_eq_zero fun l _ => ?_
   rw [map_smul, ← smul_sub, smul_comm, Matrix.mulVecLin_apply, h, smul_zero]
 

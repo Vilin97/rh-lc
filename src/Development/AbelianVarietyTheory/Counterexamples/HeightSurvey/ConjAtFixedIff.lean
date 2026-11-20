@@ -70,7 +70,8 @@ theorem gram_det_ne : V.gram.det ≠ 0 := by
   have hx : ∀ y, V.hT y (∑ j, v j • V.frame j) = 0 := by
     intro y
     rw [← V.frame.sum_repr y]
-    simp only [map_sum, LinearMap.sum_apply, map_smulₛₗ, LinearMap.smul_apply, RingHom.id_apply, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.sum_apply, map_smulₛₗ, LinearMap.smul_apply, RingHom.id_apply, smul_eq_mul]
     simp only [Finset.mul_sum]
     rw [Finset.sum_comm]
     refine Finset.sum_eq_zero fun i _ => ?_

@@ -247,7 +247,8 @@ theorem EF_swap (u v : Fin r → E) : EF X v u = -EF X u v := by
 
 theorem sum_EF_pure (y : Matrix (Fin n) (Fin r) E) (v : Fin n → E) (u : Fin r → E) :
     ∑ k, EF X (y k) (vecMulVec v u k) = EF X (ctr y v) u := by
-  rw [ctr, EF_eq_bilin, map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [ctr, EF_eq_bilin, map_sum, LinearMap.sum_apply]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [← EF_eq_bilin, EF_smul]
   congr 1

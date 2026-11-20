@@ -40,10 +40,12 @@ theorem oEv_eq_span : OEv (E := E) v = ((Submodule.span (v.adicCompletionInteger
   · rw [Submodule.span_le]
     rintro _ ⟨x, -, rfl⟩
     have hx := congrArg (algebraMap (𝓞 E) E) ((RingOfIntegers.basis E).sum_repr x)
-    rw [map_sum] at hx
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at hx
     simp only [map_zsmul] at hx
     show inclR (F := F) (Fv F v) (algebraMap (𝓞 E) E x) ∈ _
-    rw [← hx, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hx, map_sum]
     refine Submodule.sum_mem _ fun i _ => ?_
     rw [map_zsmul]
     exact zsmul_mem (Submodule.subset_span (Set.mem_range_self i)) _

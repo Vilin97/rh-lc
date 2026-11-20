@@ -49,7 +49,8 @@ theorem projQ_map_mul (ℓ : ℂ →ₗ[ℚ] ℚ) (g : MvPolynomial σ ℚ) (h :
     projQ ℓ (MvPolynomial.map (algebraMap ℚ ℂ) g * h) = g * projQ ℓ h := by
   classical
   ext m
-  rw [coeff_projQ, coeff_mul, coeff_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [coeff_projQ, coeff_mul, coeff_mul, map_sum]
   refine Finset.sum_congr rfl fun x _ => ?_
   rw [coeff_map, coeff_projQ]
   have : algebraMap ℚ ℂ (AddMonoidAlgebra.coeff g x.1) * AddMonoidAlgebra.coeff h x.2 = AddMonoidAlgebra.coeff g x.1 • AddMonoidAlgebra.coeff h x.2 := by

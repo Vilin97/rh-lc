@@ -92,7 +92,8 @@ theorem arDeg_lin_mul_pow (D : D7) (Y : DV.ShimX D.what₂.Tau) (T : Real0 Y) (h
   have hf : ∀ t : ℝ, A (Formalism.DegreeFormula.linRoot (u + t • w) ^ (Formalism.MainNotions.WeightThresholdDefs.dimY Y + 1)) =
       ∑ m ∈ Finset.range (Formalism.MainNotions.WeightThresholdDefs.dimY Y + 1 + 1), ((Formalism.MainNotions.WeightThresholdDefs.dimY Y + 1).choose m * A (lw ^ m * lu ^ (Formalism.MainNotions.WeightThresholdDefs.dimY Y + 1 - m))) * t ^ m := by
     intro t
-    rw [linRoot_add_smul, add_pow, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [linRoot_add_smul, add_pow, map_sum]
     refine Finset.sum_congr rfl fun m _ => ?_
     have h1 : (C t * lw) ^ m * lu ^ (Formalism.MainNotions.WeightThresholdDefs.dimY Y + 1 - m) * ((Formalism.MainNotions.WeightThresholdDefs.dimY Y + 1).choose m : MvPolynomial _ ℝ) =
         (t ^ m * ((Formalism.MainNotions.WeightThresholdDefs.dimY Y + 1).choose m : ℝ)) • (lw ^ m * lu ^ (Formalism.MainNotions.WeightThresholdDefs.dimY Y + 1 - m)) := by

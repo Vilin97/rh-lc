@@ -102,7 +102,8 @@ theorem real_indep {J : Type*} [Fintype J] (b : Module.Basis J ℤ Λ) {w : Fin 
     rw [h2, hu]
     simp [Module.Basis.coord_apply, Finsupp.single_apply]
   have h2 := congrArg ψ h
-  simp only [map_sum, map_smul, h1, map_zero, smul_eq_mul, mul_ite, mul_one, mul_zero,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, h1, map_zero, smul_eq_mul, mul_ite, mul_one, mul_zero,
     Finset.sum_ite_eq', Finset.mem_univ, if_true] at h2
   simpa using h2
 
@@ -150,7 +151,8 @@ theorem eventually_eq (A : (Fin n → ℂ) → Module.End ℂ (Fin g → ℂ))
   obtain ⟨y', hy'⟩ := hex w hwC x
   have hk : L.P w (y' - y) = ∑ i, ((b.repr (y' - y) i : ℤ) : ℝ) • L.P w (b i) := by
     conv_lhs => rw [← b.sum_repr (y' - y)]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_zsmul]
     exact (Int.cast_smul_eq_zsmul ℝ _ _).symm

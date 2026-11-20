@@ -18,7 +18,8 @@ theorem eq_homogeneousComponent {κ R : Type} [AddCommGroup R] (f : MvPolynomial
     (hf : ∀ d, d ≠ D → ∀ Q : MvPolynomial κ ℝ, Q.IsHomogeneous d → f Q = 0) (P : MvPolynomial κ ℝ) :
     f P = f (homogeneousComponent D P) := by
   conv_lhs => rw [← sum_homogeneousComponent P]
-  rw [map_sum, Finset.sum_eq_single D]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_eq_single D]
   · intro b _ hb
     exact hf b hb _ (homogeneousComponent_isHomogeneous b P)
   · intro hD
@@ -28,7 +29,8 @@ theorem eq_homogeneousComponent {κ R : Type} [AddCommGroup R] (f : MvPolynomial
 theorem interPoly_eq_zero {F : Type} [Field F] (Y : Var F) {κ : Type} (Δ : κ → Y.Dv) (d : ℕ) (hd : d ≠ Y.dim)
     (Q : MvPolynomial κ ℝ) (hQ : Q.IsHomogeneous d) : Y.interPoly Δ Q = 0 := by
   classical
-  rw [Q.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Q.as_sum, map_sum]
   refine Finset.sum_eq_zero fun m hm => ?_
   have hm' : m.degree = d := by
     have := hQ (mem_support_iff.mp hm)
@@ -40,7 +42,8 @@ theorem interPoly_eq_zero {F : Type} [Field F] (Y : Var F) {κ : Type} (Δ : κ 
   rw [map_smul, Var.interPoly, Module.Basis.constr_basis, dif_neg, smul_zero]
   rintro ⟨s, hs⟩
   apply hd
-  rw [← hm', ← hs, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hm', ← hs, map_sum]
   simp
 
 theorem integral_evalF_c1W_eq_interPoly : GlobalTheory.Published.ChernDegree → ∀ (F : Type) [Field F] (σ : F →+* ℂ) (X : Var F) (κ : Type) [Fintype κ] (Δ : κ → X.Dv) (L : κ → LB X.X) (r : ∀ a, (L a).ι → X.Fnˣ) (ψ : ∀ a, Weight X.str σ (L a)), (∀ a, Presents (Δ a) (L a) (r a) ∧ (ψ a).IsCInf) → ∀ P : MvPolynomial κ ℝ, (atlas X σ).integral (evalF (atlas X σ) (fun a => c1W (ψ a)) P) = X.interPoly Δ P := by

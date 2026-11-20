@@ -273,7 +273,8 @@ theorem exists_gen (AA : HopfOrder (C := C) R (ZMod p)) [CharZero C] :
   have e : (∑ i, c i • b i) = fun a => ∑ j, algebraMap R C (c j) * b j a := by
     funext a
     simp [Finset.sum_apply, Algebra.smul_def]
-  rw [e, lam_sum, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, lam_sum, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [hr j, map_mul]
   ring

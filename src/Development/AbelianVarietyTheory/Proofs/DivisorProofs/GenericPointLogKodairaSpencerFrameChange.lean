@@ -227,7 +227,8 @@ theorem genKS_change : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H
     have h3 : eW ⟨DlW j, hDlW j⟩ = eW (∑ k, LW k j • (⟨Dl'W k, hDl'W k⟩ : LogKS.logDer TF.Y.s
         (Scheme.IdealSheafData.vanishingIdeal (LogKS.interior TF.Y).compl) W)) := by
       apply Subtype.ext
-      rw [← h1, map_sum, Submodule.coe_sum, hcfs j]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← h1, map_sum, Submodule.coe_sum, hcfs j]
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [map_smul, Submodule.coe_smul, ← h2 k]
       rfl
@@ -244,13 +245,15 @@ theorem genKS_change : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H
     simp only [Matrix.map_mul, Matrix.transpose_map, hBmap, map_symPair] at h
     rw [h]
     ext a b
-    simp only [Matrix.map_apply, Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul, map_sum, map_mul, Matrix.of_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.map_apply, Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul, map_sum, map_mul, Matrix.of_apply]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [← map_symPair ρW e' (ε' k)]
     rfl
   · apply der_ext_frac ρW hfr
     intro r
-    rw [hDW j r, hrel j, der_sum_apply, der_sum_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hDW j r, hrel j, der_sum_apply, der_sum_apply, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [Derivation.smul_apply, Derivation.smul_apply, smul_eq_mul, smul_eq_mul, map_mul, hD'W]
     rfl

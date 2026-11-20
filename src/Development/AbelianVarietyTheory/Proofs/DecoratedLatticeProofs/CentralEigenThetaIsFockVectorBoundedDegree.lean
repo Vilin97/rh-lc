@@ -183,7 +183,8 @@ theorem cenFock : ∀ D : D7, CenFock D := by
   refine sub_eq_zero.1 (GlobalTheory.FockTotal.eq_zero_of_orth_fock D ψ θ hθ S T x y hx hy k.vac hk.vac v _ hg hgl fun Q => ?_)
   have hQ : pt Q = ∑ β ∈ Q.support, AddMonoidAlgebra.coeff Q β • pt (MvPolynomial.monomial β 1) := by
     conv_lhs => rw [Q.as_sum]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun β _ => ?_
     rw [← map_smul, MvPolynomial.smul_monomial, smul_eq_mul, mul_one]
   show thPair v.μ v.𝓕 (f - pt (∑ α, c α • mon α)) (pt Q) = 0

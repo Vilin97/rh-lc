@@ -469,7 +469,8 @@ theorem label_operators : ∀ {D : D7} (V : HSp D) (P : Pl D.host.E), (∀ d R, 
     simp only [one_mul]
   have dual : ∀ d, IsLab V P d → IsLab V P (dualLab d) := fun d ⟨R, hR⟩ => (exists_dual hR).imp fun _ h => h.1
   refine ⟨c1, fun c M _ _ π u hu k hk => ?_, ?_, fun d => ?_, fun e f g h hg => ?_⟩
-  · simp only [opOf, Finsupp.sum, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [opOf, Finsupp.sum, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul]
     refine Finset.sum_congr rfl fun d _ => congrArg _ ?_
     by_cases hd : IsLab V P d
     · obtain ⟨g, r1, -⟩ := exists_reps hK (sphOp_rep hd)

@@ -237,10 +237,13 @@ theorem cotMap_mul [IsCocomm R C] (f g : WithConv (C →ₐc[R] A)) :
     have h1 := congrArg (fun x => dUnit R (g.ofConv x)) (Coalgebra.sum_counit_smul r)
     have h2 : ∑ i ∈ r.index, counit (R := R) (r.right i) • r.left i = c := by
       have := congrArg (TensorProduct.rid R C) (Coalgebra.sum_tmul_counit_eq r)
-      simpa only [map_sum, TensorProduct.rid_tmul, one_smul] using this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa only [map_sum, TensorProduct.rid_tmul, one_smul] using this
     have h3 := congrArg (fun x => dUnit R (f.ofConv x)) h2
-    simp only [map_sum, map_smul] at h1 h3
-    rw [LinearMap.add_apply, cotMap_d, cotMap_d, cotMap_d, h, ← h1, ← h3, add_comm,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul] at h1 h3
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [LinearMap.add_apply, cotMap_d, cotMap_d, cotMap_d, h, ← h1, ← h3, add_comm,
       ← Finset.sum_add_distrib, dUnit, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [AugCot.d_mul]
@@ -280,7 +283,8 @@ def dualMonoidHom :
       (CartierDual.transpose f.ofConv.toLinearMap) (CartierDual.transpose g.ofConv.toLinearMap)
       (comul φ))) c
     rw [CartierDual.mul'_apply, CartierDual.pair_map_transpose, h, ← r.eq]
-    simp only [map_sum, TensorProduct.map_tmul, CartierDual.pair_comul_tmul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, TensorProduct.map_tmul, CartierDual.pair_comul_tmul]
     rfl
 
 omit [IsCocomm R A] in

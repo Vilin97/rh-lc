@@ -102,7 +102,8 @@ theorem frameFix (Y : Full X) {u u' : D.what₂.Word}
   have hXδ : ∀ x ∈ Submodule.span D.host.E (Set.range (X.Fu u').e), δ x ∈ Submodule.span D.host.E (Set.range (X.Fu u').e) := by
     intro x hx
     obtain ⟨c, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun D.host.E).1 hx
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Submodule.sum_mem _ fun a _ => by rw [map_smul, hδe']; exact Submodule.smul_mem _ _ (hyE a)
 
   obtain ⟨f, L, hff, hef, hLp, hzL, hsplit⟩ := Y.split u' s.lam' s.mem'

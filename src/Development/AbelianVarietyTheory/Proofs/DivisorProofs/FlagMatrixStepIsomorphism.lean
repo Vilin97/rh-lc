@@ -37,7 +37,8 @@ theorem coordAt_id_pullbackSections {B Y : Scheme.{0}} {M : B.Modules} {r : ℕ}
   have h2 : ((Scheme.Modules.pullbackComp y π).hom.app M ≫ (Scheme.Modules.pullbackCongr w).hom.app M).app ⊤
         (QCoh.pullbackSections y _ hy s) = ∑ b, (y.appLE W ⊤ hy).hom (c b) • (hf.pullback x).basis hx b := by
     rw [hs]
-    simp only [map_sum, QCoh.pullbackSections_smul, Scheme.Modules.Hom.app_smul, key, IsFrame.basis_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, QCoh.pullbackSections_smul, Scheme.Modules.Hom.app_smul, key, IsFrame.basis_apply,
       Twist.resM, QCoh.res_pullbackSections]
   funext b
   simp only [coordAt]

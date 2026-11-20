@@ -77,7 +77,8 @@ theorem div_monomial (hl : 0 < l) (he : 0 < e) (hρ0 : 0 < ρ) (hρ1 : ρ ≤ 1)
     refine Div.mono (s := 1) ⟨algebraMap _ _ q, by simpa using alg_mem_ball (l := l) (X : R⟦X⟧) ρ 0 q,
       fun i => algebraMap _ _ (c i), fun i => by simpa using alg_mem_ball (l := l) (0 : R) 1 0 (c i), ?_⟩ ?_
     · rw [h]
-      simp only [preMap_alg, map_add, map_mul, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [preMap_alg, map_add, map_mul, map_sum]
     · rw [one_le_div (by positivity)]
       exact pow_le_pow_of_le_one h0.le h1 hb.le
   · obtain ⟨b, rfl⟩ := Nat.exists_eq_add_of_le' hb
@@ -164,7 +165,8 @@ theorem div_disc [hl : Fact l.Prime] (hρ0 : 0 < ρ)
       have hp : 0 < 2 * ‖ofPre l X ρ x‖ / (ρ : ℝ) ^ e := by positivity
       refine ⟨(ofPre _ _ _ q, fun i => ofPre _ _ _ (c i)), ?_, ?_⟩
       · conv_rhs => rw [h2]
-        simp only [f0, AddMonoidHom.coe_mk, ZeroHom.coe_mk, map_add, map_mul, map_sum, hιp]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [f0, AddMonoidHom.coe_mk, ZeroHom.coe_mk, map_add, map_mul, map_sum, hιp]
         rfl
       · rw [div_mul_eq_mul_div]
         refine max_le ?_ ((pi_norm_le_iff_of_nonneg hp.le).2 fun i => ?_)
@@ -175,7 +177,8 @@ theorem div_disc [hl : Fact l.Prime] (hρ0 : 0 < ρ)
 
 theorem coe_sum_fin (c : Fin e → R) :
     ((∑ i, Polynomial.C (c i) * Polynomial.X ^ (i : ℕ) : Polynomial R) : R⟦X⟧) = ∑ i, C (c i) * X ^ (i : ℕ) := by
-  rw [← Polynomial.coeToPowerSeries.ringHom_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Polynomial.coeToPowerSeries.ringHom_apply, map_sum]
   simp [Polynomial.coeToPowerSeries.ringHom_apply]
 
 theorem div_disc_poly [hl : Fact l.Prime] (hρ0 : 0 < ρ)
@@ -202,7 +205,8 @@ theorem div_disc_poly [hl : Fact l.Prime] (hρ0 : 0 < ρ)
   choose w hw using hw
   refine ⟨((l : ℕ) : Disc l (X : R⟦X⟧) ρ) ^ (k + 1) * q, k + 1,
     ∑ i, Polynomial.C (w i) * Polynomial.X ^ (i : ℕ), Polynomial.degree_sum_fin_lt w, ?_⟩
-  rw [h, coe_sum_fin, map_sum, mul_add, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h, coe_sum_fin, map_sum, mul_add, Finset.mul_sum]
   congr 1
   · ring
   · refine Finset.sum_congr rfl fun i _ => ?_

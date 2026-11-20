@@ -17,7 +17,8 @@ private theorem mul_atEmb_map {E : Type} [Field E] {a : ℕ} (τ : E →+* ℂ)
     p * x.map (atEmb τ) = (p.map (coord τ) * x).map (atEmb τ) := by
   ext1 i j
   simp only [Matrix.mul_apply, Matrix.map_apply]
-  rw [show atEmb τ (∑ k, coord τ (p i k) * x k j) = ∑ k, atEmb τ (coord τ (p i k) * x k j) from
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [show atEmb τ (∑ k, coord τ (p i k) * x k j) = ∑ k, atEmb τ (coord τ (p i k) * x k j) from
     map_sum (atEmbHom τ) _ _]
   exact Finset.sum_congr rfl fun k _ => GlobalTheory.CapAdInv.mul_atEmb _ _ _
 
@@ -26,7 +27,8 @@ private theorem atEmb_map_mul {E : Type} [Field E] {a : ℕ} (τ : E →+* ℂ)
     x.map (atEmb τ) * p = (x * p.map (coord τ)).map (atEmb τ) := by
   ext1 i j
   simp only [Matrix.mul_apply, Matrix.map_apply]
-  rw [show atEmb τ (∑ k, x i k * coord τ (p k j)) = ∑ k, atEmb τ (x i k * coord τ (p k j)) from
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [show atEmb τ (∑ k, x i k * coord τ (p k j)) = ∑ k, atEmb τ (x i k * coord τ (p k j)) from
     map_sum (atEmbHom τ) _ _]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [mul_comm, mul_comm (x i k)]

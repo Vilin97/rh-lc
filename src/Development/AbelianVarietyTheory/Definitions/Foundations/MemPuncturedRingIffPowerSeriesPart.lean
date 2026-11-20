@@ -339,7 +339,8 @@ theorem eventually_sum_eval (P : Polynomial convSeries) (a : convSeries) :
       ∑ i ∈ Finset.range (P.natDegree + 1), sum (P.coeff i : convSeries) v * sum a v ^ i := by
   have h : germ (P.eval a) = ((fun v => ∑ i ∈ Finset.range (P.natDegree + 1),
       sum (P.coeff i : convSeries) v * sum a v ^ i : ℂ → ℂ) : Germ (𝓝 (0 : ℂ)) ℂ) := by
-    rw [Polynomial.eval_eq_sum_range, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Polynomial.eval_eq_sum_range, map_sum]
     simp only [map_mul, map_pow, germ_apply]
     have := map_sum (Germ.coeRingHom (R := ℂ) (𝓝 (0 : ℂ)))
       (fun i => sum (P.coeff i : convSeries) * sum a ^ i) (Finset.range (P.natDegree + 1))

@@ -65,7 +65,8 @@ theorem substTr_mul {r r' r'' n : ℕ} (x' : Matrix (Fin r'') (Fin r') ℂ) (x :
     substTr n (x' * x) = (substTr n x').comp (substTr n x) := by
   apply MvPolynomial.algHom_ext
   intro v
-  simp only [substTr, AlgHom.comp_apply, aeval_X, map_sum, map_mul, algHom_C, Matrix.mul_apply, algebraMap_eq,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [substTr, AlgHom.comp_apply, aeval_X, map_sum, map_mul, algHom_C, Matrix.mul_apply, algebraMap_eq,
     Finset.mul_sum, Finset.sum_mul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => ?_
@@ -73,7 +74,8 @@ theorem substTr_mul {r r' r'' n : ℕ} (x' : Matrix (Fin r'') (Fin r') ℂ) (x :
 
 theorem substTr_vec {r r' n : ℕ} (x : Matrix (Fin r') (Fin r) ℂ) (v : Fin r → ℂ) (s : Fin n) :
     substTr n x (∑ a, C (v a) * X (a, s)) = ∑ b, C ((x *ᵥ v) b) * X (b, s) := by
-  simp only [substTr, aeval_X, map_sum, map_mul, algHom_C, algebraMap_eq, Matrix.mulVec, dotProduct,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [substTr, aeval_X, map_sum, map_mul, algHom_C, algebraMap_eq, Matrix.mulVec, dotProduct,
     Finset.mul_sum, Finset.sum_mul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => ?_

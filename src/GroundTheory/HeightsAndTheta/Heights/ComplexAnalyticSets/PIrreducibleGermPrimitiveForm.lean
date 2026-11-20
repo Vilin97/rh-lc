@@ -55,7 +55,8 @@ theorem primitive_with_resultant_denominator (hG : GroundTheory.Heights₂.Heigh
   set ℓs : S := ∑ j, algebraMap R S (c (cc j)) * z j with hℓs
   set ℓ' : L' := ∑ j, cc j • x j with hℓ'
   have hVℓ : V ℓ' = ι ℓs := by
-    simp only [hℓ', hℓs, map_sum, map_mul, Algebra.smul_def, hVx]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hℓ', hℓs, map_sum, map_mul, Algebra.smul_def, hVx]
     refine Finset.sum_congr rfl fun j _ => ?_
     congr 1
     rw [AlgHom.commutes, IsScalarTower.algebraMap_apply R (FractionRing R) (FractionRing S)]
@@ -269,7 +270,8 @@ theorem IrreducibleGermPrimitiveForm.proof (hF : FiniteFibreGermIntegral.Stateme
       alongOf X x ⟨ℓ, ℓ.analyticAt x⟩ := by
     have h1 : ∀ j, algebraMap (holGerms (A x)) (germsAlong X x) (c (cc j)) = alongOf X x (constAn x (cc j)) :=
       fun j => rfl
-    simp only [h1, ← map_mul, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [h1, ← map_mul, ← map_sum]
     congr 1
     apply Subtype.ext
     funext w
@@ -279,7 +281,8 @@ theorem IrreducibleGermPrimitiveForm.proof (hF : FiniteFibreGermIntegral.Stateme
   let a : Fin N → analyticAtRing (A x) := fun j => germRep (A x) (p.coeff j)
   have hPt : (Polynomial.X ^ N + ∑ j, C (a j) * Polynomial.X ^ (j : ℕ)).map (germOf (A x)) = p := by
     conv_rhs => rw [hpm.as_sum]
-    simp only [Polynomial.map_add, Polynomial.map_pow, Polynomial.map_X, Polynomial.map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Polynomial.map_add, Polynomial.map_pow, Polynomial.map_X, Polynomial.map_sum,
       Polynomial.map_mul, Polynomial.map_C, a, germOf_germRep]
     rw [← hN, Fin.sum_univ_eq_sum_range (fun i => C (p.coeff i) * Polynomial.X ^ i) N]
   set Pt : (analyticAtRing (A x))[X] := Polynomial.X ^ N + ∑ j, C (a j) * Polynomial.X ^ (j : ℕ) with hPtdef
@@ -291,7 +294,8 @@ theorem IrreducibleGermPrimitiveForm.proof (hF : FiniteFibreGermIntegral.Stateme
   have hQt : ∀ i, (∑ j, C (q i j) * Polynomial.X ^ (j : ℕ)).map (germOf (A x)) = f (e i) := by
     intro i
     conv_rhs => rw [as_sum_range' (f (e i)) N (hfdeg (e i))]
-    simp only [Polynomial.map_sum, Polynomial.map_mul, Polynomial.map_C, Polynomial.map_pow,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Polynomial.map_sum, Polynomial.map_mul, Polynomial.map_C, Polynomial.map_pow,
       Polynomial.map_X, q, germOf_germRep]
     rw [Fin.sum_univ_eq_sum_range (fun k => C ((f (e i)).coeff k) * Polynomial.X ^ k) N]
     simp only [C_mul_X_pow_eq_monomial]
@@ -319,7 +323,8 @@ theorem IrreducibleGermPrimitiveForm.proof (hF : FiniteFibreGermIntegral.Stateme
     let ev : analyticAtRing (A x) →+* ℂ :=
       (Pi.evalRingHom (fun _ : Fin d → ℂ => ℂ) y).comp (analyticAtRing (A x)).subtype
     have hmap : Pt.map ev = Polynomial.X ^ N + ∑ j, C ((a j).1 y) * Polynomial.X ^ (j : ℕ) := by
-      simp [hPtdef, Polynomial.map_sum, ev]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [hPtdef, Polynomial.map_sum, ev]
     have h2 := congrArg (Polynomial.map ev) huv
     rw [Polynomial.map_add, Polynomial.map_mul, Polynomial.map_mul, Polynomial.map_C, ← derivative_map,
       hmap] at h2

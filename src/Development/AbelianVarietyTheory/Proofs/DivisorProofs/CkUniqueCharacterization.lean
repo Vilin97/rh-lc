@@ -52,7 +52,8 @@ theorem ck_pull {B B₁ : Vert.Model O} (hB : IsNormalScheme B.X) (h : Hom B₁ 
     fun a => (symMap_symOf _ a).symm
   have hG : ∀ (a b : PicSym B.X), Gk (B₁.toITh p) k (picSymPull h.f a) (picSymPull h.f b) =
       picSymPull h.f (Gk (B.toITh p) k a b) := fun a b => by
-    simp [Gk, map_sum, map_mul, map_pow]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Gk, map_sum, map_mul, map_pow]
   simp only [ck, Finset.mul_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [hx, hx', hD, hc, hc, hG, ← map_mul]

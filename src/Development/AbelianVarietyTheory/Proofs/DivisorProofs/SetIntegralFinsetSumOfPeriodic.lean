@@ -300,7 +300,8 @@ theorem coverSum : CoverSum := by
           funext x
           rw [hfx x, ContinuousLinearMap.smul_apply, ContinuousLinearMap.sum_apply,
             Fintype.sum_prod_type]
-          simp only [hψ, map_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            simp only [hψ, map_sum]
         rw [e1, integral_smul, setIntegral_finset_sum_of_periodic M hMl _ hD0 _ Finset.univ (fun (p : AddChar (M' ⧸ M.submoduleOf M') ℂ × AddChar (M' ⧸ M.submoduleOf M') ℂ) x => ψ p.1 p.2 x)
           (fun p _ => hψc _ _) (fun p _ l hl x => hMper p.1 p.2 l hl x), Fintype.sum_prod_type]
         have e4 : ∀ χ, ∑ χ', ∫ x in GlobalTheory.latticeDomain M, ψ χ χ' x =

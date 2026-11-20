@@ -29,7 +29,8 @@ theorem existsUnique_eigen_sum : ∀ (E : Type) [Field E] [NumberField E] [IsCMF
   have hsum : ∀ x : DirectSum _ (fun τ => A τ), DirectSum.coeAddMonoidHom A x = ∑ τ, (x τ : N) :=
     fun x => by
       conv_lhs => rw [← DirectSum.sum_univ_of x]
-      simp [map_sum, DirectSum.coeAddMonoidHom_of]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [map_sum, DirectSum.coeAddMonoidHom_of]
   obtain ⟨x, hx⟩ := hI.2 m
   refine ⟨fun τ => x τ, ⟨fun τ a => EigenSplit.mem_eigenSub.1 (x τ).2 a, (hsum x).symm.trans hx⟩, ?_⟩
   rintro f ⟨hf, hm⟩

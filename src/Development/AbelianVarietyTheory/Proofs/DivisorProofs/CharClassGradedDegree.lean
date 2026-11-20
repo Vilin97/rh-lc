@@ -22,7 +22,8 @@ open MvPolynomial
 theorem aeval_mem {A σ : Type} [CommRing A] [Algebra ℚ A] (𝒜 : ℕ → Submodule ℚ A) [SetLike.GradedMonoid 𝒜]
     (w : σ → ℕ) (x : σ → A) (hx : ∀ i, x i ∈ 𝒜 (w i)) {P : MvPolynomial σ ℚ} {j : ℕ}
     (hP : P.IsWeightedHomogeneous w j) : aeval x P ∈ 𝒜 j := by
-  rw [P.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [P.as_sum, map_sum]
   refine Submodule.sum_mem _ fun d hd => ?_
   rw [aeval_monomial, ← Algebra.smul_def, ← hP (mem_support_iff.1 hd), Finsupp.weight_apply]
   exact Submodule.smul_mem _ _ (SetLike.prod_mem_graded 𝒜 _ _ fun i _ => SetLike.pow_mem_graded _ (hx _))

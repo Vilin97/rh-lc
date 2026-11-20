@@ -63,7 +63,8 @@ omit [NumberField E] in
 theorem col_succ {n n₁ r : ℕ} {X' : Matrix (Fin n) (Fin (r + 1)) E} {Xf : Matrix (Fin n₁) (Fin r) E}
     {ι : Matrix (Fin n) (Fin n₁) E} (hs : ∀ k (i : Fin r), X' k i.succ = (ι * Xf) k i) (i : Fin r) :
     (adMat F X')ᵀ i.succ = incM F ι *ᵥ (adMat F Xf)ᵀ i := funext fun k => by
-  simp [adMat, incM, hs, Matrix.mul_apply, Matrix.mulVec, dotProduct, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [adMat, incM, hs, Matrix.mul_apply, Matrix.mulVec, dotProduct, map_sum]
 
 omit [NumberField E] in
 
@@ -126,7 +127,8 @@ omit [NumberField E] in
 theorem T_apply {σ : E →ₐ[F] E} (hσ : ∀ x, σ (σ x) = x) {n m : ℕ} (J : Matrix (Fin n) (Fin n) E) (c₀ : E)
     (C : Matrix (Fin n) (Fin m) E) (v : Fin n → E) (i : Fin m) :
     ((Formalism.UG.cT (σ : E →+* E) C * (c₀ • J.map σ)) *ᵥ v) i = c₀ * σ (form σ J (fun l => C l i) v) := by
-  simp only [Formalism.UG.cT, form, Matrix.mulVec, dotProduct, Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Formalism.UG.cT, form, Matrix.mulVec, dotProduct, Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply,
     Matrix.smul_apply, smul_eq_mul, map_sum, map_mul, hσ, Finset.sum_mul, Finset.mul_sum, AlgHom.coe_toRingHom,
     RingHom.coe_coe]
   rw [Finset.sum_comm]
@@ -137,7 +139,8 @@ theorem form_lift {σ : E →ₐ[F] E} {n n₁ : ℕ} {J : Matrix (Fin n) (Fin n
     {ι : Matrix (Fin n) (Fin n₁) E} (hJ₁ : ιᵀ * J * ι.map σ = J₁) (u u' : Fin n₁ → E) :
     form σ J (ι *ᵥ u) (ι *ᵥ u') = form σ J₁ u u' := by
   have e : (fun i => σ ((ι *ᵥ u') i)) = ι.map σ *ᵥ fun i => σ (u' i) := funext fun i => by
-    simp [Matrix.mulVec, dotProduct, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Matrix.mulVec, dotProduct, map_sum]
   simp only [form]
   rw [e, ← hJ₁, Matrix.mulVec_mulVec, Matrix.dotProduct_mulVec, Matrix.dotProduct_mulVec, ← Matrix.vecMul_transpose,
     Matrix.vecMul_vecMul, Matrix.mul_assoc]

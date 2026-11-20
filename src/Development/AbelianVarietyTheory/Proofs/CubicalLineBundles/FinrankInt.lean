@@ -36,7 +36,8 @@ theorem trace_eq (H : Host E) {g : ℕ} {ty : Fin g → (E →+* ℂ)} (hty : Is
     rw [← eq_ratCast (algebraMap ℚ ℂ), trace_eq_sum_embeddings (E := ℂ), Equiv.sum_comp e (fun τ => τ a)]
     exact (Equiv.sum_comp (RingHom.equivRatAlgHom E ℂ) (fun σ => σ a)).symm
   simp only [Nat.cast_one, _root_.one_mul, Nat.cast_zero, zero_mul, add_zero] at h1 h2
-  rw [h2, Finset.sum_add_distrib, ← map_sum, ← h1] at h3
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h2, Finset.sum_add_distrib, ← map_sum, ← h1] at h3
   have := congrArg Complex.re h3
   simp only [Complex.add_re, Complex.conj_re, Complex.ratCast_re] at this
   linarith

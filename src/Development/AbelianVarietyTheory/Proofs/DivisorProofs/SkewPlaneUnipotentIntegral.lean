@@ -23,7 +23,8 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
   {n n₁ r : ℕ} {H : Plane E n n₁}
 
 theorem dot_incV (a b : Fin n → E) : incV F a ⬝ᵥ incV F b = inclR (F := F) (AF F) (a ⬝ᵥ b) := by
-  simp [incV, dotProduct, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [incV, dotProduct, map_sum, map_mul]
 
 theorem col_zero {X' : Matrix (Fin n) (Fin (r + 1)) E} (hX0 : ∀ k, X' k 0 = H.x k) :
     (GlobalTheory.SiegelSet.adMat F X')ᵀ 0 = incV F H.x := by
@@ -33,7 +34,8 @@ theorem col_succ {X' : Matrix (Fin n) (Fin (r + 1)) E} {Xf : Matrix (Fin n₁) (
     (hXs : ∀ (k : Fin n) (i : Fin r), X' k i.succ = (H.ι * Xf) k i) (i : Fin r) :
     (GlobalTheory.SiegelSet.adMat F X')ᵀ i.succ = incM F H.ι *ᵥ (GlobalTheory.SiegelSet.adMat F Xf)ᵀ i := by
   ext k
-  simp [GlobalTheory.SiegelSet.adMat, incM, hXs, Matrix.mul_apply, Matrix.mulVec, dotProduct, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [GlobalTheory.SiegelSet.adMat, incM, hXs, Matrix.mul_apply, Matrix.mulVec, dotProduct, map_sum, map_mul]
 
 theorem mem_colSpan_insert {X' : Matrix (Fin n) (Fin (r + 1)) E} {Xf : Matrix (Fin n₁) (Fin r) E}
     (hX0 : ∀ k, X' k 0 = H.x k) (hXs : ∀ (k : Fin n) (i : Fin r), X' k i.succ = (H.ι * Xf) k i) (I : Set (Fin r))
@@ -69,7 +71,8 @@ theorem form_mulVec (hσ : ∀ x, σ (σ x) = x) (J : Matrix (Fin n) (Fin n) E) 
 theorem entry (hσ : ∀ x, σ (σ x) = x) {m : ℕ} (J : Matrix (Fin n) (Fin n) E) (C : Matrix (Fin n) (Fin m) E)
     (ι : Matrix (Fin n) (Fin n₁) E) (c : E) (i : Fin m) (k : Fin n₁) :
     (cT (σ : E →+* E) C * (c • J.map σ) * ι) i k = c * σ (form σ J (fun l => C l i) (fun l => ι l k)) := by
-  simp only [cT, form, Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, Matrix.smul_apply, smul_eq_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [cT, form, Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, Matrix.smul_apply, smul_eq_mul,
     Matrix.mulVec, dotProduct, map_sum, map_mul, hσ, Finset.mul_sum, Finset.sum_mul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun l _ => Finset.sum_congr rfl fun m _ => ?_
@@ -94,7 +97,8 @@ theorem eq_zero_of_add {W : Matrix (Fin n) (Fin n) E} (hxy : form σ W H.x H.y =
       funext k
       have := congrFun hvι k
       simp only [Matrix.vecMul, dotProduct, incV, incM, Matrix.map_apply, Pi.zero_apply] at this ⊢
-      rw [← map_zero (inclR (F := F) (AF F)), ← this, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← map_zero (inclR (F := F) (AF F)), ← this, map_sum]
       simp [map_mul]
     rw [this, zero_dotProduct]
   have hb : b = 0 := by

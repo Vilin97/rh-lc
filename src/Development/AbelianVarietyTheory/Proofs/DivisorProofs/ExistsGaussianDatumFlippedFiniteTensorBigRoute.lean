@@ -65,7 +65,8 @@ theorem schr_slice (co : Darboux B κ) (ψ : AddChar (AF F) ℂ) {v : HeightOneS
         (GlobalTheory.VacAny.at_mul_left _ (GlobalTheory.VacAny.at_sum _ fun k _ => GlobalTheory.VacAny.at_mul_left _ (h2 k)))
     rw [← hl _ hat]
     refine congrArg (fun z => ψ (liftV v z)) ?_
-    simp only [dotProduct, map_add, map_sum, map_mul, GlobalTheory.VacAny.evFin_invOf_two, Pi.add_apply, hy, zero_add,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [dotProduct, map_add, map_sum, map_mul, GlobalTheory.VacAny.evFin_invOf_two, Pi.add_apply, hy, zero_add,
       GlobalTheory.LatVac.evFin_liftV]
     rfl
   · congr 1
@@ -167,11 +168,13 @@ theorem pure_vac_inj {ψ} (hG : Γ.M.IsGood ψ) {f f' : SInf D.host.F (Ix G i j)
     refine finprod_induction (· ≠ (0 : ℂ)) one_ne_zero (fun _ _ => mul_ne_zero) fun v => ?_
     by_cases hv : v ∈ hS.toFinset
     · have : (fun k => evalV D.host.F v (y k)) = ξ v := funext fun k => by
-        rw [map_sum, Finset.sum_eq_single_of_mem v hv fun v' _ h => evalV_singleFin_ne h.symm _, evalV_singleFin_self]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum, Finset.sum_eq_single_of_mem v hv fun v' _ h => evalV_singleFin_ne h.symm _, evalV_singleFin_self]
       rw [this]
       exact hξ v
     · have : (fun k => evalV D.host.F v (y k)) = 0 := funext fun k => by
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         exact Finset.sum_eq_zero fun v' h => evalV_singleFin_ne (fun e : v = v' => hv (e ▸ h)) _
       rw [this, of_not_not (mt hS.mem_toFinset.2 hv), Set.indicator_of_mem (by exact fun _ => zero_mem _)]
       exact one_ne_zero

@@ -49,7 +49,8 @@ theorem chart_pullback {X Y : Scheme.{0}} [IsIntegral X] [IsIntegral Y] (φ : Y 
     rw [CorankOne.fnMap_fnOf_appLE φ hη hle hV hgV', RingHom.map_det (φ.appLE V _ hle).hom]
     rfl
   refine ⟨_, _, _, a.map (φ.appLE V _ hle).hom, hyV', hF', hE', fun j => ?_, fun h0 => ?_, fun K => ?_⟩
-  · rw [pullback_map_app_pullbackSections, hu, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [pullback_map_app_pullbackSections, hu, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [pullbackSections_smul]
     rfl

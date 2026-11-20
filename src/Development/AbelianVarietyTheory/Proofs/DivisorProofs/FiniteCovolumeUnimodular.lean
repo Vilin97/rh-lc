@@ -56,7 +56,8 @@ theorem isIntV_star_eventually : ∀ (p : ℕ) [Fact p.Prime] (G : HTGroup p),
           ∈ v.1.adicCompletionIntegers ℚ :=
     Filter.eventually_all.2 fun ij => rat_mem_integers_eventually _
   filter_upwards [hs] with v hv a ha i
-  rw [← starLin_apply, ← (basV G v).sum_repr a, map_sum, map_sum, Finsupp.finset_sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← starLin_apply, ← (basV G v).sum_repr a, map_sum, map_sum, Finsupp.finset_sum_apply]
   refine sum_mem fun j _ => ?_
   rw [map_smul, map_smul, Finsupp.smul_apply, smul_eq_mul]
   refine mul_mem (ha j) ?_

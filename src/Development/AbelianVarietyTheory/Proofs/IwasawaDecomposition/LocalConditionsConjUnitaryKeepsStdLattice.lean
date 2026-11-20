@@ -69,7 +69,8 @@ theorem hasRes_matMul {n : ℕ} {P : HeightOneSpectrum (𝓞 E)} {A B : Matrix (
     {a b : Matrix (Fin n) (Fin n) (𝓞 E ⧸ P.asIdeal)} (hA : ∀ i j, HasRes P (adAt F P (A i j)) (a i j))
     (hB : ∀ i j, HasRes P (adAt F P (B i j)) (b i j)) (i j : Fin n) :
     HasRes P (adAt F P ((A * B) i j)) ((a * b) i j) := by
-  rw [Matrix.mul_apply, Matrix.mul_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.mul_apply, Matrix.mul_apply, map_sum]
   exact hasRes_sum Finset.univ fun k _ => by
     rw [map_mul]
     exact hasRes_mul (hA i k) (hB k j)

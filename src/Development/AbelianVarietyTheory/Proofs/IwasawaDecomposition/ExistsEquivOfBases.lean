@@ -23,7 +23,8 @@ theorem eq_sum_single (x : Fin n → K) : x = ∑ i, x i • (Pi.single i (1 : K
 
 theorem mem_span_single (j : (Fin n → K) →ₛₗ[σ] M) (x : Fin n → K) :
     j x ∈ Submodule.span ℂ (Set.range fun i => j (Pi.single i 1)) := by
-  rw [eq_sum_single x, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [eq_sum_single x, map_sum]
   refine Submodule.sum_mem _ fun i _ => ?_
   rw [map_smulₛₗ]
   exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)
@@ -46,7 +47,8 @@ theorem exists_equiv_of_bases {M' : Type} [AddCommGroup M'] [Module ℂ M'] (j :
   let b := Module.Basis.mk hli hsp.ge
   let b' := Module.Basis.mk hli' hsp'.ge
   refine ⟨b.equiv b' (Equiv.refl _), fun x => ?_⟩
-  rw [eq_sum_single x, map_sum, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [eq_sum_single x, map_sum, map_sum, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_smulₛₗ j, map_smulₛₗ j', LinearEquiv.map_smul]
   congr 1

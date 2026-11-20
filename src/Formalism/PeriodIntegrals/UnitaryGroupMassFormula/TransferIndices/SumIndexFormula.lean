@@ -32,7 +32,8 @@ theorem sum_index_formula (hI : IdxCalc) : SumIdx := by
     rintro _ ⟨z, rfl⟩
     have : ∀ s, π s (P z) = π s z := by
       intro s
-      rw [hP, LinearMap.sum_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hP, LinearMap.sum_apply, map_sum]
       simp only [hcomp]
       rw [Finset.sum_ite_eq Finset.univ s]; simp
     simp only [this]
@@ -48,7 +49,8 @@ theorem sum_index_formula (hI : IdxCalc) : SumIdx := by
     intro x hx h0
     funext t
     have : π t (σ x) = x t := by
-      rw [hσ, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hσ, map_sum]
       simp only [fun s => hfix s t (x s) (hx s (Set.mem_univ s))]
       rw [Finset.sum_ite_eq Finset.univ t]; simp
     rw [← this, h0, map_zero]; rfl

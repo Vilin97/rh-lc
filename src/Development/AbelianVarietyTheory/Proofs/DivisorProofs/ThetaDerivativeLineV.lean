@@ -39,7 +39,8 @@ theorem hasDerivAt_theta_line (hP : GlobalTheory.ThK.KP) {F E : Type} [Field F] 
     simp [pureA, mul_assoc]
   have horb : ∀ t : ℝ, om' (γ (Multiplicative.ofAdd t), 1) Φ = ∑ i, pureA F (u i t) (φ i) := by
     intro t
-    rw [hΦe, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hΦe, map_sum]
     exact Finset.sum_congr rfl fun i _ => hu i t
   have hΦ₁ : Φ₁ = ∑ i, pureA F (u₁ i) (φ i) := by
     funext x

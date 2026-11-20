@@ -112,7 +112,8 @@ theorem iwasawa (B : Base F E) {n n₁ : ℕ} {X : Spc F E n} {X₁ : Spc F E n�
   set yc : Matrix (Fin n) (Fin 1) E := Matrix.of fun i _ => H.y i with hyc
   have hfyx : form σ X.J H.y H.x = 1 := by
     have e : form σ X.J H.y H.x = σ (form σ X.J H.x H.y) := by
-      simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hs, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hs, Finset.mul_sum]
       rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun l _ => ?_
       rw [← hX.herm k l, hs]; ring

@@ -470,7 +470,8 @@ theorem levelSetting_indep_chain (hT : X.A.T = Y.A.T) : HidaSetting X ↔ HidaSe
 end Indep
 
 theorem emb_mem_Fi (i : ℕ) (x : Vl X i) : X.fm.emb i x ∈ X.fm.Fi i := by
-  rw [← (X.fm.emb_basis i).2, ← (X.fm.lat i).b.sum_repr x, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← (X.fm.emb_basis i).2, ← (X.fm.lat i).b.sum_repr x, map_sum]
   refine Submodule.sum_mem _ fun a _ => ?_
   rw [LinearMap.map_smulₛₗ]
   exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨a, rfl⟩)
@@ -568,7 +569,8 @@ theorem S_iff (w : D.what₂.places.Pl) (x : Vl X 0) : eL x ∈ Y.fm.S 0 w ↔ x
 
 theorem Nm_eq (v : X.A.vT) {φ : Fn X 0} (hφ : φ ∈ X.fm.Fi 0) : e (Nm X 0 v φ) = Nm Y 0 (ev v) (e φ) := by
   unfold Nm
-  rw [LinearMap.sum_apply, LinearMap.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [LinearMap.sum_apply, LinearMap.sum_apply, map_sum]
   exact Fintype.sum_equiv (Units.mapEquiv (eF v).toMulEquiv).toEquiv _ _ fun a => h.dia_eq v a φ hφ
 
 theorem ramSub_iff (x : Vl X 0) : eL x ∈ Y.fm.ramSub ↔ x ∈ X.fm.ramSub := by

@@ -28,7 +28,8 @@ lemma isIntegral_trace_conj (c : E ≃ₐ[ℚ] E) (φ₀ : E →+* ℂ)
   letI : Algebra K ℂ := (φ₀.comp (algebraMap K E)).toAlgebra
   have h1 : algebraMap K ℂ (Algebra.trace K E (c z)) =
       starRingEnd ℂ (algebraMap K ℂ (Algebra.trace K E z)) := by
-    rw [trace_eq_sum_embeddings ℂ, trace_eq_sum_embeddings ℂ, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [trace_eq_sum_embeddings ℂ, trace_eq_sum_embeddings ℂ, map_sum]
     exact Finset.sum_congr rfl fun σ _ => hc (σ : E →+* ℂ) z
   have h2 : IsIntegral ℤ (algebraMap K ℂ (Algebra.trace K E (c z))) := by
     rw [h1]
@@ -118,7 +119,8 @@ theorem exists_family (c : E ≃ₐ[ℚ] E) (φ₀ : E →+* ℂ)
       have h1 : f (g ⟨y, hy⟩) = ⟨y, hy⟩ := LinearMap.congr_fun hfg' _
       have h2 : g ⟨y, hy⟩ = ∑ i, g ⟨y, hy⟩ i • (Pi.single i 1 : Fin m → 𝓞 K) := by
         ext j; simp [Pi.single_apply]
-      rw [h2, map_sum] at h1
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [h2, map_sum] at h1
       have h3 := congrArg Subtype.val h1
       simp only [map_smul, Submodule.coe_sum, Submodule.coe_smul] at h3
       refine h3.symm.trans (Finset.sum_congr rfl fun i _ => ?_)

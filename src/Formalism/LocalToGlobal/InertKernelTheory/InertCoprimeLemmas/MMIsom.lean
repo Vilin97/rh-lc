@@ -173,7 +173,8 @@ theorem frameONB_of (hLB : LocBasisMM) (hRC : RatCoord) (hFC : FixConj) : FrameO
     have h := congrFun (congrFun hM' x) y
     rw [Matrix.mul_apply, Matrix.one_apply] at h
     have h2 := congrArg (MaximalUnramifiedExtension p).subtype h
-    rw [map_sum] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at h2
     simp only [map_mul, apply_ite (MaximalUnramifiedExtension p).subtype, map_one, map_zero] at h2
     rw [Matrix.mul_apply, Matrix.one_apply]
     exact h2
@@ -182,7 +183,8 @@ theorem frameONB_of (hLB : LocBasisMM) (hRC : RatCoord) (hFC : FixConj) : FrameO
     have h := congrFun (congrFun hM' x) y
     rw [Matrix.mul_apply, Matrix.one_apply] at h
     have h2 := congrArg (fun z => (MaximalUnramifiedExtension p).subtype (σ z)) h
-    simp only [map_sum, map_mul, apply_ite σ, apply_ite (MaximalUnramifiedExtension p).subtype, map_one, map_zero,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, apply_ite σ, apply_ite (MaximalUnramifiedExtension p).subtype, map_one, map_zero,
       Matrix.transpose_apply, Matrix.map_apply, hσσ] at h2
     rw [Matrix.mul_apply, Matrix.one_apply]
     exact h2
@@ -207,7 +209,8 @@ theorem frameONB_of (hLB : LocBasisMM) (hRC : RatCoord) (hFC : FixConj) : FrameO
 
   have hfr : ∀ i' τ w, ∑ j, B' τ j * gc (i', j) w = ∑ m, Bb τ m * Cm (i', m) w := by
     intro i' τ w
-    rw [hF.2 i' τ w, hc w i' τ, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hF.2 i' τ w, hc w i' τ, map_sum]
     refine Finset.sum_congr rfl fun m _ => ?_
     rw [map_mul, iota_lamC lam ι hι (JetIntegrality.test_vector_mem_schwartz_bruhat (D := D) _),
       iota_lamC lam ι hι (AlgP.embT_mem_Qbar (D := D) τ _), ← htE', mul_comm]
@@ -265,7 +268,8 @@ theorem frameONB_of (hLB : LocBasisMM) (hRC : RatCoord) (hFC : FixConj) : FrameO
     refine Matrix.ext fun w w' => ?_
     rw [Matrix.sum_apply, Matrix.one_apply]
     have h := congrArg tE (hcG w w')
-    simp only [map_sum, map_mul, apply_ite tE, map_one, map_zero] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, apply_ite tE, map_one, map_zero] at h
     rw [← h]
     refine Finset.sum_congr rfl fun i' _ => ?_
     simp only [Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, Matrix.of_apply, Finset.sum_mul]

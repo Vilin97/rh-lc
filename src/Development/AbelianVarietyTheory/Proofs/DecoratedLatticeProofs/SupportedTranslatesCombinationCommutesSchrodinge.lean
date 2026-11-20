@@ -44,7 +44,8 @@ theorem mxAt_of_idemSum {e : AE D} {Pg : Finset (Pl D.host.E)} (hs : IsIdemSum e
         zero_mul, add_zero]
     have := mxAt_of_idemAt (Q := fun p => ∃ PP ∈ Pg, p = PP.under (𝓞 D.host.F)) (hes PP hPP) ⟨PP, hPP, rfl⟩ hw i j
     rwa [Matrix.smul_apply, smul_eq_mul] at this
-  · rw [← hx i j, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [← hx i j, map_sum, Finset.sum_mul]
     refine Ideal.sum_mem _ fun PP hPP => ?_
     have hw : IsHalf (es PP + cA D (es PP)) (cA D (es PP) • x) := fun a b => by
       obtain ⟨h1, h2, -⟩ := (hes PP hPP).1

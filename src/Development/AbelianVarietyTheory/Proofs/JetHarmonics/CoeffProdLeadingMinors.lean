@@ -89,7 +89,8 @@ theorem _root_.GlobalTheory.LeadingMinors.coeff_prod_leading_minors : ∀ (k : T
     simp [Finsupp.mapDomain_finsetSum, Finsupp.mapDomain_smul, Finsupp.mapDomain_single]
   have hdeg : al.degree = ∑ τ, ∑ s : Fin (r τ), m τ s * (s.val + 1) := by
     rw [hal]
-    simp [map_sum, Finsupp.degree_single]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, Finsupp.degree_single]
   have hhom : P.IsHomogeneous (∑ τ, ∑ s : Fin (r τ), m τ s * (s.val + 1)) := by
     rw [hP]
     refine MvPolynomial.IsHomogeneous.prod _ _ _ fun τ _ =>

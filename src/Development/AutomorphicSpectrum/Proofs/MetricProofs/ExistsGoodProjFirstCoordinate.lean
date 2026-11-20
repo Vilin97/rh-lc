@@ -95,7 +95,8 @@ theorem component_aeval_cx {E : Type*} (w' : E → (K →₀ ℕ))
     weightedHomogeneousComponent (blkWt (ι := ι)) δ (aeval yt H) =
       aeval yt (weightedHomogeneousComponent w' δ H) := by
   classical
-  rw [H.as_sum, map_sum, map_sum, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [H.as_sum, map_sum, map_sum, map_sum, map_sum]
   refine Finset.sum_congr rfl fun m _ => ?_
   have hmon : IsWeightedHomogeneous (blkWt (ι := ι)) (aeval yt (monomial m (AddMonoidAlgebra.coeff H m)))
       (Finsupp.weight w' m) := by
@@ -119,7 +120,8 @@ theorem aeval_sumElim_factor_cx (k0 : K) {S : Type*} [CommRing S] [Algebra ℂ S
     aeval (Sum.elim a b) H = (∏ k', b k' ^ n0 (Sum.inr k')) * aeval (Sum.elim a 1) H := by
   conv_lhs => rw [H.as_sum]
   conv_rhs => rw [H.as_sum]
-  rw [map_sum, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun n hn => ?_
   have hw : Finsupp.weight (sWt k0 r) n = Finsupp.weight (sWt k0 r) n0 :=
     (hH (mem_support_iff.mp hn)).trans (hH (mem_support_iff.mp hn0)).symm
@@ -153,7 +155,8 @@ theorem algebraicIndependent_sumElim_cx (Q : Ideal (MRingOver ℂ ι)) [Q.IsPrim
   have hπy : (fun e => π (yt e)) = Sum.elim (forms (segC Q) L) xs := by
     funext e
     rcases e with j | k'
-    · simp [yt, π, forms, segC, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp [yt, π, forms, segC, map_sum]
     · rfl
   have hcomp : ∀ G : MvPolynomial (Fin r ⊕ {k // k ≠ k0}) ℂ,
       Ideal.Quotient.mk Q (aeval yt G) = aeval (Sum.elim (forms (segC Q) L) xs) G := by
@@ -258,7 +261,8 @@ theorem evC_segC (Q : Ideal (MRingOver ℂ ι)) (z : (Σ k, ι k) → ℂ) (hz :
 theorem evC_forms (Q : Ideal (MRingOver ℂ ι)) (z : (Σ k, ι k) → ℂ) (hz : z ∈ conePts Q) {r : ℕ}
     (L : Fin r → ((k : K) → ι k) → ℂ) (j : Fin r) :
     evC Q z hz (forms (segC Q) L j) = ∑ t, L j t * segre z t := by
-  simp only [forms, map_sum, map_smul, evC_segC, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [forms, map_sum, map_smul, evC_segC, smul_eq_mul]
 
 theorem mem_conePts (Q : Ideal (MRingOver ℂ ι)) (hQ : IsMultiHomogIdeal Q) (k0 : K) {c : ℂ}
     (hc : c ≠ 0) {z : (Σ k, ι k) → ℂ} (hz : z ∈ conePts Q) : scaleBlock k0 c z ∈ conePts Q := by

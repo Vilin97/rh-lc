@@ -47,7 +47,8 @@ theorem continuous_form (w : Matrix R Q k →ₗ[k] k) : Continuous w := by
   have h : (w : Matrix R Q k → k) = fun m => ∑ i, ∑ j, m i j * w (Matrix.single i j 1) := by
     funext m
     conv_lhs => rw [Matrix.matrix_eq_sum_single m]
-    simp only [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
     rw [← smul_eq_mul, ← map_smul, Matrix.smul_single, smul_eq_mul, mul_one]
   rw [h]
@@ -214,7 +215,8 @@ theorem kills_insert_of_evalLaw : ∀ (k : Type) [Field k] [ValuativeRel k] [Top
     split_ifs with hx
     · rfl
     · exact image_eq_zero_of_notMem_tsupport fun h => hx ⟨x, h, rfl⟩
-  rw [hsum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hsum, map_sum]
   exact Finset.sum_eq_zero fun q _ => hP q
 
 end GlobalTheory.PartRedEval

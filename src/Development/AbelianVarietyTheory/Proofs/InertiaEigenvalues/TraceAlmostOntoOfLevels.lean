@@ -84,7 +84,8 @@ theorem sum_mem_Kinf (K : FinExt l) (L : IntermediateField ℚ_[l] (Om l)) (S : 
   have hex : ∀ s ∈ S, ∃ t, t ∈ S ∧ t⁻¹ * (h * s) ∈ L.fixingSubgroup := fun s hs =>
     (hrep (h * s) (mul_mem hh (hS s hs))).exists
   choose! φ hφS hφF using hex
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_nbij φ hφS ?_ ?_ ?_
   · intro s₁ hs₁ s₂ hs₂ he
     have h₁ := hφF s₁ hs₁

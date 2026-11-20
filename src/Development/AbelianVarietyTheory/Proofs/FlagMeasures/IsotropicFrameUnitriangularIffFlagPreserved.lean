@@ -22,7 +22,8 @@ theorem mul_eOf_Pc_apply (u : D.what₂.Word)
 theorem eOf_Pc_mul_apply (u : D.what₂.Word) (ν : Matrix (Fin D.R.rS) (Fin D.R.rS) D.host.E)
     (i : Fin (2 * D.R.rS + D.R.k + 1)) (a : Fin D.R.rS) :
     (GlobalTheory.SgAlg.eOf (Pc X u) * ν) i a = crdH X (∑ b, ν b a • X.eX b) i := by
-  rw [← coordEquiv_symm_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← coordEquiv_symm_apply, map_sum]
   simp [Matrix.mul_apply, GlobalTheory.SgAlg.eOf, Pc, coordEquiv_symm_apply, Finset.sum_apply, mul_comm]
 
 theorem xflag_Fu (u : D.what₂.Word) (j : ℕ) :

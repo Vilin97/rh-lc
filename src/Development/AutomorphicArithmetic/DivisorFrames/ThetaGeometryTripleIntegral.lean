@@ -67,7 +67,8 @@ private theorem symp_eq_zero_y {B : Base F E} {n n₁ d : ℕ} {X : Spc F E n} {
     have h := congrArg (inclR (F := F) (AF F)) (hH.orth (Pi.single a 1)).2
     rw [map_zero, Matrix.mulVec_single_one] at h
     rw [← h]
-    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, Finset.mul_sum, mul_assoc]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, Finset.mul_sum, mul_assoc]
     rfl
   have h1 : hTens (cA σ) (incM F X.J) JB (incM F H.ι * z) (l • Matrix.vecMulVec (incV F H.y) y) =
       ∑ a, ∑ j, ∑ m, (∑ i, ∑ k, incM F H.ι i a * incM F X.J i k * cA σ (incV F H.y k)) *

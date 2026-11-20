@@ -138,12 +138,14 @@ theorem morita_spread_stable_summand_lie : ∀ {C : Type} [CommRing C] (I : Idea
     · intro j c
       have : σ c (∑ i, E i 0 (w i j)) - χ j c • ∑ i, E i 0 (w i j) =
           ∑ i, E i 0 (σ c (w i j) - χ j c • w i j) := by
-        simp only [map_sum, map_sub, map_smul, Finset.smul_sum, Finset.sum_sub_distrib, sigcomm]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, map_sub, map_smul, Finset.smul_sum, Finset.sum_sub_distrib, sigcomm]
       rw [this]; exact Submodule.sum_mem _ fun i _ => spread_in G₀ i _ (hw1 i j c)
     · have : d - ∑ j, ∑ i, E i 0 (w i j) = ∑ i, E i 0 (E 0 i d - ∑ j, w i j) := by
         conv_lhs => rw [← decomp d]
         rw [Finset.sum_comm]
-        simp only [map_sub, map_sum, Finset.sum_sub_distrib]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sub, map_sum, Finset.sum_sub_distrib]
       rw [this]; exact Submodule.sum_mem _ fun i _ => spread_in G₀ i _ (hw2 i)
 
 end GlobalTheory

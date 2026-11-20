@@ -384,7 +384,8 @@ theorem span_per_eq_top : ∀ (R : Type) [CommRing R] (G : Over (Sp R)) [GrpObj 
       ext c
       have h2 : (2 * Real.pi * Complex.I : ℂ) ≠ 0 := Complex.two_pi_I_ne_zero
       simp [Finset.sum_apply, Pi.single_apply, h2]
-    rw [e1, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e1, map_sum]
     exact Submodule.sum_mem _ fun a _ => by
       rw [map_smul]
       exact Submodule.smul_mem _ _ (hW a)

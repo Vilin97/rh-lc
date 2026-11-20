@@ -108,7 +108,8 @@ theorem GlobalTheory.JR.exists_small_dual_lattices : ∀ (F : Type) [Nontriviall
   have hB : ∀ x y, β x y = ∑ i, e.repr x i * e'.repr y i := by
     intro x y
     conv_lhs => rw [← e.sum_repr x]
-    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [LinearMap.BilinForm.dualBasis_repr_apply, hs.eq]
   refine ⟨(stdChar_continuous hψ).comp ?_, fun U hU => ?_⟩

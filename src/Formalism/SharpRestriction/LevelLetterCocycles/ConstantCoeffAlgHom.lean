@@ -60,7 +60,8 @@ private theorem coeff_algHom_eq_sum_range_of_lt (σ : PowerSeries O →ₐ[O] Po
     coeff m (σ a) = ∑ n ∈ Finset.range N, coeff n a * coeff m (σ X ^ n) := by
   obtain ⟨b, hb⟩ := trunc_decomp a N
   have hdeg := natDegree_trunc_lt_of_pos a (lt_of_le_of_lt (Nat.zero_le m) hN)
-  rw [show σ a = σ ((trunc N a : PowerSeries O) + X ^ N * b) from congrArg σ hb, map_add, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [show σ a = σ ((trunc N a : PowerSeries O) + X ^ N * b) from congrArg σ hb, map_add, map_mul,
     map_pow, algHom_coe, map_add,
     coeff_pow_mul_lt hσ hN, add_zero,
     Polynomial.aeval_eq_sum_range' hdeg, map_sum]
@@ -110,7 +111,8 @@ theorem coeff_qn {Y Z : PowerSeries O} (hY : constantCoeff Y = 0) (hZ : constant
   obtain ⟨Y', rfl⟩ := PowerSeries.X_dvd_iff.mpr hY
   obtain ⟨Z', rfl⟩ := PowerSeries.X_dvd_iff.mpr hZ
   unfold qn
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_eq_zero fun i hi => ?_
   rw [Finset.mem_range] at hi
   have e : n - 1 = i + (n - 1 - i) := by omega

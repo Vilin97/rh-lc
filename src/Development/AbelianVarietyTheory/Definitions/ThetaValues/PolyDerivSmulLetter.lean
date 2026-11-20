@@ -154,7 +154,8 @@ theorem per_bas (x : Frame X.Ψ r) (m : Fin g ⊕ Fin g → ℤ) :
   have hm : m = ∑ j, m j • Pi.single j (1 : ℤ) := by
     funext j; simp [Pi.single_apply]
   funext i
-  conv_lhs => rw [hm, map_sum, AddSubmonoidClass.coe_finsetSum, per_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [hm, map_sum, AddSubmonoidClass.coe_finsetSum, per_sum]
   simp only [map_zsmul, AddSubgroupClass.coe_zsmul, per_zsmul, Fintype.sum_sum_type]
   simp [mulVec, dotProduct, mul_comm]
 

@@ -114,7 +114,8 @@ theorem exists_extend {k : ℕ} (L : Submodule (𝓞 E) (Fin k → E)) (hL : Sub
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [Submodule.coe_smul, ← algebraMap_smul E (a i), ha, smul_assoc, hBi]
   have key : d • (B.constr E (fun i => l ⟨i.1, hbL i.2⟩) z) = d • l z := by
-    rw [← l.map_smul, hdz, map_sum, Module.Basis.constr_apply_fintype, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← l.map_smul, hdz, map_sum, Module.Basis.constr_apply_fintype, Finset.smul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [l.map_smul, Module.Basis.equivFun_apply, ← algebraMap_smul E (a i), ha, smul_assoc]
   have hd0 : d ≠ 0 := nonZeroDivisors.ne_zero hd

@@ -124,7 +124,8 @@ theorem vmAct_mul (τ : Matrix (Fin n) (Fin n) ℂ → (W →L[ℂ] W)) (k l : M
     (h : τ (lᴴ * kᴴ) = τ lᴴ * τ kᴴ) (G : PiLp 2 (fun _ : Fin n × Fin n => W)) :
     vmAct τ (k * l) G = vmAct τ l (vmAct τ k G) := by
   ext q
-  simp only [vmAct_apply, Matrix.conjTranspose_mul, h, ContinuousLinearMap.mul_apply, map_sum, map_smul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [vmAct_apply, Matrix.conjTranspose_mul, h, ContinuousLinearMap.mul_apply, map_sum, map_smul,
     Finset.smul_sum, smul_smul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun p _ => ?_
@@ -216,7 +217,8 @@ theorem familyArrayLinearMap_matrixUnitFamilyActionGenerator (E : Fin n → Fin 
     exact Finset.sum_congr rfl fun x _ => by simp
   ext α
   obtain ⟨⟨a, b⟩, rfl⟩ : ∃ p, α = fun _ => p := ⟨α 0, funext fun i => by rw [Subsingleton.elim i 0]⟩
-  simp [isometryArrayLinearMap, arr1, arrE, factorAction, ptE, arrTo, arrOf, actM, vmGen_apply, ha, Finset.sum_add_distrib,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [isometryArrayLinearMap, arr1, arrE, factorAction, ptE, arrTo, arrOf, actM, vmGen_apply, ha, Finset.sum_add_distrib,
     smul_add, smul_sub, Finset.sum_sub_distrib, hYe', hite, smul_ite, hs1, hs2,
     LinearMap.sum_apply, map_sum, map_smul, neg_smul, Finset.sum_neg_distrib]
   abel

@@ -71,7 +71,8 @@ theorem eq_sum (y : AdeleRing (𝓞 E) E) :
     y = ∑ i, algebraMap E (AdeleRing (𝓞 E) E) (Module.finBasis F E i) *
       adeleMap F E (coord (Module.finBasis F E) i y) := by
   conv_lhs => rw [← adeleTensorEquiv_sum_coord (Module.finBasis F E) y]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp_rw [adeleTensorEquiv_tmul]
 
 def gfin (c : Fin (Module.finrank F E) → Af F) : FiniteAdeleRing (𝓞 E) E :=
@@ -84,7 +85,8 @@ theorem snd_eq (y : AdeleRing (𝓞 E) E) :
     y.2 = gfin F E (fun i => (coord (Module.finBasis F E) i y).2) := by
   conv_lhs => rw [eq_sum F E y]
   change sndAddHom (∑ i, _) = _
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   rfl
 
 def infPart {K : Type} [Field K] [NumberField K] (y : AdeleRing (𝓞 K) K) : InfiniteAdeleRing K := y.1
@@ -95,7 +97,8 @@ theorem fst_apply (y : AdeleRing (𝓞 E) E) (w : InfinitePlace E) :
         ((coord (Module.finBasis F E) i y).1 (w.comap (algebraMap F E))) := by
   conv_lhs => rw [eq_sum F E y]
   change ((fstAddHom (L := E)) (∑ i, _)) w = _
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine (map_sum (Pi.evalAddMonoidHom (fun v : InfinitePlace E => v.Completion) w) _ (Finset.univ : Finset (Fin (Module.finrank F E)))).trans ?_
   rfl
 

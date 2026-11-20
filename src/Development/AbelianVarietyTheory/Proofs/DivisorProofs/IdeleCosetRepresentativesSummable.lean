@@ -66,7 +66,8 @@ theorem exists_finite_key (E : Type) [Field E] [NumberField E] (c : ℕ) (hc : 0
     let b := Ideal.selfBasis (RingOfIntegers.basis E) J hJ
     refine ⟨fun i => b i, fun _ => ⟨fun i => (b i).2, fun x hx => ⟨b.repr ⟨x, hx⟩, ?_⟩⟩⟩
     have := congrArg J.subtype.toAddMonoidHom (b.sum_repr ⟨x, hx⟩)
-    simp only [map_sum, map_zsmul] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_zsmul] at this
     exact this.symm
   choose e he using hφ
   refine ⟨Set (ι → ZMod c), inferInstance,
@@ -218,7 +219,8 @@ theorem exists_nat_int_ord : ∃ c : ℕ, 0 < c ∧ ∀ a : 𝓞 E, c • inclR 
   refine ⟨n, hn, fun a => ?_⟩
   rw [← b.sum_repr a]
   change n • inclR (F := F) (AF F) (algebraMap (𝓞 E) E _) ∈ _
-  simp only [map_sum, map_zsmul, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_zsmul, Finset.smul_sum]
   refine sum_mem fun j _ => ?_
   rw [smul_comm]
   exact zsmul_mem (h j) _

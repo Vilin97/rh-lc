@@ -155,7 +155,8 @@ theorem wFrob :
     · funext j
       rw [Function.comp_apply, Function.comp_apply, root_term wd (μ j) (d (μ j)) (hd _) η]
       simp only [map_mul, map_prod, map_pow, MvPolynomial.eval_C, MvPolynomial.eval_X, hπy]
-  · simp only [map_sum, map_mul, map_prod, map_pow, MvPolynomial.eval_C, MvPolynomial.eval_X]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [map_sum, map_mul, map_prod, map_pow, MvPolynomial.eval_C, MvPolynomial.eval_X]
 
 example (p : ℕ) [Fact p.Prime] : WFrobStatement (GlobalTheory.WModel.wModel p) 1 := wFrob _ _
 

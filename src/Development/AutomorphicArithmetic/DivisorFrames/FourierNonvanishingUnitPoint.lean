@@ -7,7 +7,8 @@ private theorem exists_rep {ι : Type} [Fintype ι] (l : (ι → ℂ) →ₗ[ℝ
   classical
   refine ⟨fun w => (l (Pi.single w 1) : ℂ) - (l (Pi.single w Complex.I) : ℂ) * Complex.I, fun s => ?_⟩
   conv_lhs => rw [← Finset.univ_sum_single s]
-  rw [map_sum, Complex.re_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Complex.re_sum]
   refine Finset.sum_congr rfl fun w _ => ?_
   have h : (Pi.single w (s w) : ι → ℂ) =
       (s w).re • (Pi.single w 1 : ι → ℂ) + (s w).im • (Pi.single w Complex.I : ι → ℂ) := by

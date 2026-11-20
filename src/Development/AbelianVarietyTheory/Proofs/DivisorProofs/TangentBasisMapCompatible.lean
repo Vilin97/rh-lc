@@ -81,7 +81,8 @@ theorem coord_unit : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H :
     rw [pairDet, RingHom.map_det]
     congr 1
     ext k k'
-    simp only [RingHom.mapMatrix_apply, Matrix.map_apply, Matrix.of_apply, map_sum, map_mul, hcoef,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [RingHom.mapMatrix_apply, Matrix.map_apply, Matrix.of_apply, map_sum, map_mul, hcoef,
       Matrix.mul_apply, M, Finset.mul_sum, Finset.sum_mul]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun b _ => by ring

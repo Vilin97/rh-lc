@@ -43,9 +43,11 @@ theorem exists_multiplicative_lift_charZero :
       rwa [hc, hc] at this
     · intro ι s f hf
       simp only [hτ] at hf
-      rw [← map_sum, ← map_zero (algebraMap (WittVector p K) (FractionRing (WittVector p K)))] at hf
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← map_sum, ← map_zero (algebraMap (WittVector p K) (FractionRing (WittVector p K)))] at hf
       have := congrArg (WittVector.constantCoeff : WittVector p K →+* K) (hinj hf)
-      rw [map_sum, map_zero] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, map_zero] at this
       simpa only [hc] using this
   · subst h
     haveI : CharZero K := CharP.charP_to_charZero K

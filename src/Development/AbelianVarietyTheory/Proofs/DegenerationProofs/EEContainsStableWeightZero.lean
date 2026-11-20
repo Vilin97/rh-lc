@@ -49,7 +49,8 @@ theorem single_mem_testLattice [hA : ArithBase o Ω] (i : S.J) : Pi.single i (1 
     funext j
     rw [Finset.sum_apply]
     simp only [_root_.one_mul]
-    rw [← map_sum, ← map_sum, ← Matrix.sum_apply, hsum, Matrix.one_apply, Pi.single_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, ← map_sum, ← Matrix.sum_apply, hsum, Matrix.one_apply, Pi.single_apply]
     split_ifs <;> simp
   rw [h1]
   refine Submodule.sum_mem _ fun c _ => Submodule.subset_span ?_
@@ -71,7 +72,8 @@ theorem operator_mem_testLattice (hint : ∀ a : o, ‖y₀ (algebraMap o S.R a)
       funext j
       have h2 := congrArg (fun a => l * y₀ (algebraMap o S.R a))
         (congrFun (congrFun (operator_comm_proj _ hh (τ.wt α)) j) i)
-      simp only [Matrix.mul_apply, map_sum, map_mul, Finset.mul_sum] at h2
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Matrix.mul_apply, map_sum, map_mul, Finset.mul_sum] at h2
       rw [Finset.sum_apply]
       refine Eq.trans (Finset.sum_congr rfl fun k _ => ?_) (h2.trans (Finset.sum_congr rfl fun k _ => ?_))
       · ring
@@ -102,7 +104,8 @@ theorem weightZero_mem [hA : ArithBase o Ω] (hint : ∀ a : o, ‖y₀ (algebra
   refine sum_mul_mem_of_mem_span (OO p) _ ?_ hw
   rintro _ ⟨α, l, i, hα, hl, rfl⟩
   have h2 := congrArg (fun a => l * y₀ (algebraMap o S.R a)) (congrFun (congrFun (hmul 0 (τ.wt α)) j) i)
-  simp only [Matrix.mul_apply, map_sum, map_mul, Finset.mul_sum] at h2
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mul_apply, map_sum, map_mul, Finset.mul_sum] at h2
   rw [(Finset.sum_congr rfl fun k _ => by ring).trans h2]
   split_ifs with h0
   · have h3 := q_le_of_wt_eq τ (β := 0) hα (by rw [map_zero, h0])

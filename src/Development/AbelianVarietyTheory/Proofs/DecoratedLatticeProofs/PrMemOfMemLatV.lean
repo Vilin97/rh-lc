@@ -43,7 +43,8 @@ theorem pr_mem_of_mem_latV (p : SplitPt D k) {S : HSp D} {L : Lat S}
 theorem rat_mulVec_sec (p : SplitPt D k) {a b : ℕ} (Q : Matrix (Fin a) (Fin b) D.host.E) (w : Fin b → k) :
     rat Q *ᵥ (fun i => p.sec (w i)) = fun i => p.sec (((rat Q).map p.pr *ᵥ w) i) := by
   funext i
-  simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [mul_comm (rat Q i j), FrameLat.sec_mul_right, mul_comm (w j)]
 

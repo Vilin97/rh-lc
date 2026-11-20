@@ -73,7 +73,8 @@ theorem hf_symm (hadd : ∀ a b : L, (a + b) ^ q = a ^ q + b ^ q) (hinv : ∀ a 
   have hq := q_ne_zero_of_inv hinv
   have e : (hf q M x y) ^ q = sig q hq hadd (hf q M x y) := rfl
   rw [e]
-  simp only [hf, map_sum, map_mul, map_pow, sig_apply, hinv]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hf, map_sum, map_mul, map_pow, sig_apply, hinv]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun l _ => ?_
   rw [hM]

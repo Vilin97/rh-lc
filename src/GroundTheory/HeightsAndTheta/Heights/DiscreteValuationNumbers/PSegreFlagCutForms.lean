@@ -197,7 +197,8 @@ theorem genVal_flag (w w' e : Module.Basis (Fin N) Ω E) (hsame : ∀ i j : Fin 
   by_cases hj : (j : ℕ) < k + 1
   · have hχ : χ (w j) = w'.repr (w j) ⟨k, hk⟩ := by
       conv_lhs => rw [← w'.sum_repr (w j)]
-      rw [map_sum, Finset.sum_eq_single ⟨k, hk⟩]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Finset.sum_eq_single ⟨k, hk⟩]
       · rw [map_smul, htop, smul_eq_mul, mul_one]
       · intro m _ hm
         rcases lt_or_gt_of_ne hm with hlt | hgt
@@ -317,7 +318,8 @@ theorem chart_pair (y : (Σ k, ι k) → Ω) (B' : ChartBundle O (segreVec y) N 
         (∑ l, X ⟨none, l⟩ * G l : MRing (bundleIdx (bundleIdx ι M) M') O) =
         ∑ l, aeval (pairProjCoord y w φ φ' (flagCoord w e t (k + 1))) (G l) *
           genVal w (flagCoord w e t (k + 1)) (φ' l) := by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       exact Finset.sum_congr rfl fun l _ => by rw [map_mul, aeval_X, mul_comm]; rfl
     rw [hpt, map_mul, hs, ← hval, hm, map_mul]
     ring

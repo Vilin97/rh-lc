@@ -207,7 +207,8 @@ theorem linSubst_coeff_along (w : Matrix (Fin N) (Fin n) R) (b : Fin B) (k : Fin
       have e2 : ∀ c, ψ (C c) = C c := fun c => by simp [ψ]
       rw [Polynomial.map_add, Polynomial.map_mul, Polynomial.map_C, Polynomial.map_C, Polynomial.map_X, e1, e2,
         along_sum]
-      simp only [along_mul, along_C, along_X, mul_add, Finset.sum_add_distrib, map_sum, map_mul, ← mul_assoc,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [along_mul, along_C, along_X, mul_add, Finset.sum_add_distrib, map_sum, map_mul, ← mul_assoc,
         ← Finset.sum_mul]
       congr 2
       by_cases h : i.1 = b <;> simp [inBlock, h, Pi.single_apply, apply_ite]
@@ -222,7 +223,8 @@ theorem homog_coeff_along {K : Type} [Field K] {B N : ℕ} (b : Fin B) (u : Fin 
   let wt : Option (Fin B × Fin N) → Fin B → ℕ := fun o => o.elim (Pi.single b 1) GlobalTheory.Chow.blockWeight
   have hs : IsWeightedHomogeneous wt (shift (inBlock b u) f) a := by
     rw [isMultiHomogeneous_iff_block] at hf
-    rw [f.as_sum, shift, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [f.as_sum, shift, map_sum]
     refine IsWeightedHomogeneous.sum _ _ _ fun s hs => ?_
     rw [aeval_monomial, algebraMap_eq]
     refine IsWeightedHomogeneous.C_mul ?_ _

@@ -105,7 +105,8 @@ theorem exists_locCo_smul {n d : ℕ} {X : Spc F E n} {W : Spc F E d} (M : Model
   let b := Algebra.TensorProduct.basis (AF F) (Module.finBasis F E)
   refine ⟨fun x => ∑ i, crdV E v x i • GlobalTheory.LatVac.locCo M.co v (b i • u),
     continuous_finsetSum _ fun i _ => ((continuous_apply i).comp (continuous_crdV v)).smul continuous_const, fun l => ?_⟩
-  conv_lhs => rw [← b.sum_repr l, Finset.sum_smul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [← b.sum_repr l, Finset.sum_smul, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [smul_assoc, locCo_smul, crdV_compFin]
   rfl

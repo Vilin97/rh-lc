@@ -19,7 +19,8 @@ private theorem exists_trace_pow_ne {W : Type} [AddCommGroup W] [Module ℂ W] [
     obtain ⟨m, hm, hm0⟩ := (LinearMap.charpoly_constantCoeff_eq_zero_iff R).1 h0
     exact hm (hR (by rw [hm0, map_zero]))
   have h1 := congrArg (LinearMap.trace ℂ W) (LinearMap.aeval_self_charpoly R)
-  rw [Polynomial.aeval_eq_sum_range, Finset.sum_range_succ', map_add, map_sum, map_zero] at h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Polynomial.aeval_eq_sum_range, Finset.sum_range_succ', map_add, map_sum, map_zero] at h1
   simp only [map_smul, h, mul_zero, Finset.sum_const_zero, zero_add, pow_zero, LinearMap.trace_one, smul_eq_mul] at h1
   rcases mul_eq_zero.1 h1 with h2 | h2
   · exact h0 h2

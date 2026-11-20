@@ -15,7 +15,8 @@ private theorem basis_bd {V : Type} [NormedAddCommGroup V] [NormedSpace ℝ V] [
   have e : m v = ∑ I : Fin q → Fin n, (∏ i, b.repr (v i) (I i)) • m fun i => b (I i) := by
     have e1 : v = fun i => ∑ j, b.repr (v i) j • b j := funext fun i => (b.sum_repr (v i)).symm
     conv_lhs => rw [e1]
-    rw [ContinuousAlternatingMap.map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [ContinuousAlternatingMap.map_sum]
     exact Finset.sum_congr rfl fun I _ => m.map_smul_univ _ _
   rw [e, mul_assoc, Finset.sum_mul]
   refine norm_sum_le_of_le _ fun I _ => ?_

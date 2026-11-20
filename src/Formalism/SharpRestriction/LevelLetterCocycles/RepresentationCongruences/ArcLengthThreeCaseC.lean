@@ -271,13 +271,15 @@ theorem arc_length_three_case_c [NeZero n] [Fintype (K →ₐ[Qp] LL)] [IsDomain
     obtain ⟨u, hu, hku⟩ := hK k
     rw [hΛ] at hku
     have h0 := ArcLengthThreeFiltration.coeff_zero_of_coord Br hinj a K (b + η + S) _ _ u hu hku j (by omega)
-    rw [map_sub, map_sum, sub_eq_zero] at h0
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_sum, sub_eq_zero] at h0
     simpa only [PowerSeries.coeff_C_mul, PowerSeries.coeff_mul_C] using h0
 
   have hpr2 : ∀ j < size (c - 1) + S - η, Formalism.MainNotions.TruncatedSeriesCountingBounds.crisMap B F.f (dvO W T₁ 2 b₁ (fun m => PowerSeries.coeff j (Gs m))) =
       algebraMap O LL (PowerSeries.coeff j Fser) • dv W T₂ 2 bb (Pi.single k₀ 1) := by
     intro j hj
-    rw [ArcLengthThreeFiltration.dvO_eq, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [ArcLengthThreeFiltration.dvO_eq, map_sum]
     simp_rw [map_smul, hμ]
     rw [← ArcLengthThreeFiltration.dvO_lin, ← ArcLengthThreeFiltration.dvO_single, ← ArcLengthThreeFiltration.dvO_smulO]
     congr 1

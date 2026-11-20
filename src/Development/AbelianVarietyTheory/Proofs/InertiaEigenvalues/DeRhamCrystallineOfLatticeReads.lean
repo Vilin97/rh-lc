@@ -52,7 +52,8 @@ theorem exists_read_map {Γ : Type} [Group Γ] {a d : ℕ} (ρ : Γ →* GL (Fin
     intro g y
     rw [hq]
     simp only [Φ, Matrix.mul_sum, Matrix.mul_smul, hR.equi, Finset.smul_sum, smul_smul]
-    simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum, map_mul, Finset.sum_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum, map_mul, Finset.sum_smul]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun j _ => ?_
     rw [mul_comm]
@@ -64,7 +65,8 @@ theorem exists_read_map {Γ : Type} [Group Γ] {a d : ℕ} (ρ : Γ →* GL (Fin
     rw [hΦg, ← Matrix.mulVec_mulVec]
     generalize Φ y *ᵥ w = z
     change p (∑ k, (r g).val i k * z k) = _
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [← hr]
     exact LinearMap.map_smul p ((r' g).val i k) (z k)
@@ -159,7 +161,8 @@ theorem dr_pass (T : LocTied l P AI) (K L : FinExt l) {LL0 : Type} [Field LL0] [
       intro g
       rw [← hg, h1 g]
     · have h2 := congrArg E hx
-      rw [map_sum] at h2
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum] at h2
       simp only [hE] at h2
       simpa [E] using h2
 

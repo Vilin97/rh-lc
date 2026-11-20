@@ -416,7 +416,8 @@ theorem Xi_of_eq_sum {c : B → A → k} {WA : A → T →ₗ[k] T} {WB : B → 
       = ∑ i ∈ s, r i • ⟨gen c A₀ (a i) (b i), gen_mem c A₀ (a i) (b i)⟩ := by
     apply Subtype.ext
     simp
-  rw [e, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_smul, hXi]
 

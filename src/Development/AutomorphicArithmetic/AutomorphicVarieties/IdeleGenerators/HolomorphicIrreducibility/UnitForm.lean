@@ -110,7 +110,8 @@ theorem UpperTheory.V.Sd.unitForm :
     simp only [hw, mul_inv_rev, inv_inv, Units.val_mul, map_mul]
     ring
   · intro n
-    rw [coef_comb, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [coef_comb, map_sum]
     refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg zero_le_one (fun a _ => ?_)
     rw [map_mul, norm_mul]
     have hwa : ‖ι.symm (w a)‖ = 1 := by

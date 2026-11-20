@@ -20,7 +20,8 @@ lemma binMatK_map (F L : Type) [Field F] [Field L] (φ : F →+* L) {n : ℕ} (d
     (c : Fin n → Fin n → ℕ → F) :
     binMatK L del (fun i j k => φ (c i j k)) = (binMatK F del c).map (Polynomial.map φ) := by
   funext i j
-  simp only [binMatK, Matrix.map_apply, Polynomial.map_sum, Polynomial.map_mul, Polynomial.map_C, binK_map]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [binMatK, Matrix.map_apply, Polynomial.map_sum, Polynomial.map_mul, Polynomial.map_C, binK_map]
 
 lemma binMatK_eval_nat (F : Type) [Field F] [CharZero F] {n : ℕ} (del : ℕ)
     (c : Fin n → Fin n → ℕ → F) (i j : Fin n) (t : ℕ) :
@@ -721,11 +722,13 @@ theorem meanGam_of (hDeg : GamDeg) (hLead : GamLead) (hInt : GamInt) (hW : Forma
       have hfe := congrFun (congrFun hfac x) y
       simp only [Matrix.of_apply, Matrix.mul_apply, Matrix.mul_diagonal] at hfe
       simp only [Matrix.map_apply, hpt, eval_natCast_map, Matrix.mul_apply, Matrix.mul_diagonal]
-      rw [hAeval x y (s + d * j) (le_trans hSs (Nat.le_add_right _ _)), pow_add, mul_comm ((p : ℚ_[p]) ^ ⌈κ⌉₊),
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hAeval x y (s + d * j) (le_trans hSs (Nat.le_add_right _ _)), pow_add, mul_comm ((p : ℚ_[p]) ^ ⌈κ⌉₊),
         mul_assoc, hfe, Finset.mul_sum, map_sum]
       apply Finset.sum_congr rfl
       intro b _
-      simp [Matrix.diagonal_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [Matrix.diagonal_apply, map_sum]
       ring
   have hcop' : IsCoprime (d : ℤ) (p : ℤ) := hcop
   have hE0 : (0 : ℝ) < E := by linarith

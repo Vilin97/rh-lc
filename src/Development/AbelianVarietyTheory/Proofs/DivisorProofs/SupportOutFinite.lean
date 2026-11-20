@@ -106,7 +106,8 @@ theorem twTr_level (ρ : Representation ℂ G V) (K K₀ K'' : Subgroup G) (F : 
     intro v hv
     rw [mem_fixed_iff] at hv ⊢
     intro k hk
-    rw [hPapp, map_smul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hPapp, map_smul, map_sum]
     congr 1
     have := finsum_out_left (K''.subgroupOf K₀) (fun x : K₀ => ρ (x : G) v) (fun g h hh => by
       simp only [Subgroup.coe_mul, map_mul, Module.End.mul_apply]
@@ -131,7 +132,8 @@ theorem twTr_level (ρ : Representation ℂ G V) (K K₀ K'' : Subgroup G) (F : 
     have hR : ∀ a : G ⧸ K₀, F a.out • ρ a.out (P v) =
         (d : ℂ)⁻¹ • ∑ᶠ b : ↥K₀ ⧸ K''.subgroupOf K₀, F a.out • ρ (a.out * ((b.out : K₀) : G)) v := by
       intro a
-      rw [hPapp, map_smul, map_sum, smul_comm, finsum_eq_sum_of_fintype, Finset.smul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hPapp, map_smul, map_sum, smul_comm, finsum_eq_sum_of_fintype, Finset.smul_sum]
       congr 1
       apply Finset.sum_congr rfl
       intro b _

@@ -103,7 +103,8 @@ theorem UpperTheory.V.Pa.secondCohomologyBound_of_boundaryBound :
       have e2 : q m ((Ψt m γ a b).ep' j) = q m (x.t ^ C * ∑ i, cm m i * z i j γ a b) := by
         rw [show q m ((Ψt m γ a b).ep' j) = (DD.map k.g (q m) (Ψt m γ a b)).ep' j from rfl, e]
         simp only [Matrix.smul_apply, Matrix.sum_apply, Matrix.map_apply]
-        rw [map_mul, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_mul, map_sum]
         simp only [map_mul]
         rw [Algebra.smul_def, ← (q m).commutes, Algebra.algebraMap_self, RingHom.id_apply]
         congr 1

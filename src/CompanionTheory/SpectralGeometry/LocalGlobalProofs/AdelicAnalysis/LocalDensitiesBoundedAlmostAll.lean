@@ -72,7 +72,8 @@ theorem hE_single {n : ℕ} (T : Matrix (Fin n) (Fin n) E) (i j : Fin n) :
 
 theorem hE_self_fixed {n : ℕ} (T : Matrix (Fin n) (Fin n) E) (hT : ∀ a b, σ (T b a) = T a b)
     (x : Fin n → E) (hinv : ∀ y, σ (σ y) = y) : σ (hE σ T x x) = hE σ T x x := by
-  simp only [hE, hform, map_sum, map_mul, RingHom.coe_coe]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hE, hform, map_sum, map_mul, RingHom.coe_coe]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   rw [hinv, hT]

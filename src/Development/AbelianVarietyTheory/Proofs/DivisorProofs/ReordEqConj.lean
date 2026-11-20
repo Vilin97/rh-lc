@@ -61,7 +61,8 @@ theorem columnMult : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T : Type
     (R.eG.trans (MulAut.conj w)).toEquiv.subtypeEquiv fun g => by
       rw [← hm, hmem, hw]; rfl
   apply D.what₂.embLL.injective
-  rw [map_natCast, ← hn, map_mul, map_inv₀, map_natCast, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_natCast, ← hn, map_mul, map_inv₀, map_natCast, map_sum]
   unfold GlobalTheory.IndefiniteRowSideFullHecke.CuspidalProductMultiplicity.levelMult
   rw [Nat.card_congr e]
   congr 1

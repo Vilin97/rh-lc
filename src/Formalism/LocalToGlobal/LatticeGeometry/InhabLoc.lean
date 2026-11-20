@@ -94,7 +94,8 @@ theorem pd_of_int {Y : Type} [AddCommGroup Y] (β : Y →ₗ[ℤ] Y →ₗ[ℤ] 
       β (∑ i, z i • b i) (∑ i, z i • b i) := by
     intro z
     rw [← hq]
-    simp only [map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply, zsmul_eq_mul, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply, zsmul_eq_mul, Finset.mul_sum]
     exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun k _ => by
       rw [hsymm (b k) (b i)]
       ring

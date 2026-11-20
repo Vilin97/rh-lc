@@ -55,7 +55,8 @@ theorem sum_X_pow_mul_frob_frobSlice (l : ℕ) [Fact l.Prime] (z : K⟦X⟧) :
     z = ∑ i ∈ Finset.range l, (X : K⟦X⟧) ^ i * frob K l (frobSlice l i z) := by
   have hl : 0 < l := (Fact.out : l.Prime).pos
   ext n
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp_rw [coeff_X_pow_mul', coeff_frob, coeff_frobSlice]
   rw [Finset.sum_eq_single (n % l)]
   · have h1 : n % l ≤ n := Nat.mod_le n l

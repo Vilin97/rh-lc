@@ -21,7 +21,8 @@ theorem map_dotProduct_of_mem {B : Subalgebra o Ω} {f : Ω → K} (φ : B →+*
     f (u ⬝ᵥ v) = (fun j => f (u j)) ⬝ᵥ fun j => f (v j) := by
   have h : u ⬝ᵥ v = ((∑ j, (⟨u j, hu j⟩ : B) * ⟨v j, hv j⟩ : B) : Ω) := by
     simp [dotProduct]
-  rw [h, ← hf, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h, ← hf, map_sum]
   exact Finset.sum_congr rfl fun j _ => by rw [map_mul, hf, hf]
 
 theorem dotProduct_mem_of_mem_span {σ : Type} [SetLike σ K] [SubringClass σ K] (O : σ) {s : Set (J → K)} {w v : J → K}

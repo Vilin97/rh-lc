@@ -158,7 +158,8 @@ theorem extMap_liftOld_monomial (s : Coord n →₀ ℕ) (a : ℤ) :
 theorem extMap_liftOld {h : MvPolynomial (Coord n) ℤ} {δ : ι → ℕ}
     (hh : IsWeightedHomogeneous (coordDeg n) h δ) :
     D.extMap (D.liftOld h) = C (P.mkF h) * ∏ k, X (some k) ^ δ k := by
-  rw [h.as_sum, map_sum, map_sum, map_sum, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h.as_sum, map_sum, map_sum, map_sum, map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun s hs ↦ ?_
   rw [extMap_liftOld_monomial, hh (mem_support_iff.mp hs)]
 
@@ -168,7 +169,8 @@ theorem extMap_newCoord (j : Fin (D.size + 1)) :
   rfl
 
 theorem liftOld_mem {p : MvPolynomial (Coord n) ℤ} (hp : p ∈ P.ideal) : D.liftOld p ∈ D.extIdeal := by
-  rw [AddBlockData.extIdeal, RingHom.mem_ker,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [AddBlockData.extIdeal, RingHom.mem_ker,
     ← finsum_weightedHomogeneousComponent (w := coordDeg n) (φ := p),
     finsum_eq_sum _ (weightedHomogeneousComponent_finsupp p), map_sum, map_sum]
   refine Finset.sum_eq_zero fun m _ ↦ ?_
@@ -285,7 +287,8 @@ theorem exists_form_not_mem (hg : D.IsFormSystem d g) {c : (k : ι) → Fin (n k
     field_simp
   set Q := chartMonomial c fun k ↦ ((d k : ℤ) + D.deg k).toNat
   have hmem : ∑ j, f j * g c j - chartMonomial c 1 ^ E * Q ∈ P.ideal := by
-    rw [← P.mkF_eq_zero_iff, map_sub, map_sum, map_mul, map_pow,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← P.mkF_eq_zero_iff, map_sub, map_sum, map_mul, map_pow,
       ← mkF_chartMonomial_mul_chartPow D hg.nonneg hc, ← hsum', sub_eq_zero, Finset.mul_sum,
       Finset.mul_sum]
     refine Finset.sum_congr rfl fun j _ ↦ ?_
@@ -295,7 +298,8 @@ theorem exists_form_not_mem (hg : D.IsFormSystem d g) {c : (k : ι) → Fin (n k
   simp only [not_exists, not_not] at h
   have h1 := hPW (liftOld_mem D hmem)
   have h2 : D.liftOld (∑ j, f j * g c j) ∈ W := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact W.sum_mem fun j _ ↦ by rw [map_mul]; exact W.mul_mem_left _ (h j)
   have h3 : D.liftOld (chartMonomial c 1 ^ E * Q) ∈ W := by
     have := W.sub_mem h2 h1

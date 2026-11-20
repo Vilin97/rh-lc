@@ -17,7 +17,8 @@ theorem comb_translate {G : Type} [Group G] (e : G →₀ ℂ) (f : G → G →�
     comb e (fun g => comb (f g) (fun h => F (h * g))) =
       comb (e.sum fun g a => a • (f g).mapDomain (· * g)) F := by
   conv_rhs => rw [comb_eq_lc]
-  simp only [Finsupp.sum, map_sum, map_smul, Finsupp.linearCombination_mapDomain, comb_eq_lc, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finsupp.sum, map_sum, map_smul, Finsupp.linearCombination_mapDomain, comb_eq_lc, smul_eq_mul]
   rfl
 
 def conjSub {G : Type} [Group G] (U : Subgroup G) (g : G) : Subgroup G :=

@@ -70,7 +70,8 @@ theorem isGenSec_of_flat {R F : Type} [CommRing R] [CommRing F] (g : R →+* F) 
       Set.mem_iInter.2 fun _ => hk
     rw [ThetaAct.sv_smul _ _ _ _ hJ, Category.id_comp]
     refine (hσ _ _ y J hJ).symm.trans ((hu y _ (hJ (𝟙 _ ≫ (snd T P.A).left))).trans (Eq.trans ?_ (congrArg₂ (· * ·) (k₁ _) (hv _ _ y J hJ)).symm))
-    rw [map_sum, Finset.sum_mul, Category.id_comp, sval_of th _ y J (fun _ => J (snd T P.A).left)
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_mul, Category.id_comp, sval_of th _ y J (fun _ => J (snd T P.A).left)
       (fun _ => by rw [Category.comp_id])]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [k₂, map_mul, _root_.mul_assoc, ← hu' i _ _ y _ hk, ← k₃]

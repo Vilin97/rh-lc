@@ -47,7 +47,8 @@ theorem append_of_shortExact {A M₁ M₂ M₃ : Type*} [CommRing A]
     have hgx : g x ∈ Submodule.span A (Set.range fun i => g (w i)) := hws ▸ Submodule.mem_top
     obtain ⟨c, hc⟩ := (Submodule.mem_span_range_iff_exists_fun A).mp hgx
     have hker : g (x - ∑ i, c i • w i) = 0 := by
-      simp [map_sum, hc]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [map_sum, hc]
     obtain ⟨y, hy⟩ := (hfg _).mp hker
     have hy' : y ∈ Submodule.span A (Set.range u) := hus ▸ Submodule.mem_top
     have hfy : f y ∈ Submodule.span A (Set.range fun i => f (u i)) := by

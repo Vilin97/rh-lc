@@ -222,7 +222,8 @@ theorem isInv_pbT (φ : G ⟶ G') [IsMonHom φ] {v : TanM (𝟙 (Sp R)) G} {d : 
   have f₃ := congrArg TrivSqZeroExt.snd f₂
   simp only [TrivSqZeroExt.snd_sum, TrivSqZeroExt.inr_mul_inl, TrivSqZeroExt.snd_inr, MulOpposite.smul_eq_mul_unop,
     MulOpposite.unop_op, _root_.one_mul] at f₃
-  rw [HolHom.valR_eq _ _ hx, map_sub, ← HolHom.valR_eq _ _ hx, ← HolHom.valR_eq _ _ hx, f₃,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [HolHom.valR_eq _ _ hx, map_sub, ← HolHom.valR_eq _ _ hx, ← HolHom.valR_eq _ _ hx, f₃,
     GlobalTheory.KS.pbT_of_le _ hW, valR_appLE _ _ _ _ hW hx, HolHom.valR_eq _ _ hxU, map_sum, sub_eq_zero]
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [map_mul, ← HolHom.valR_eq _ _ hxU, ← HolHom.valR_eq _ _ hxU,
@@ -244,7 +245,8 @@ theorem exists_dlg_eq_pbT : ∀ (R : Type) [CommRing R] [IsDomain R] [IsLocalRin
   refine ⟨g, w, dd', fun b a => w.repr (pushL Y.q (v b)) a, fun a b => v.repr (u a) b, hdd',
     fun m => ⟨w.repr m, (w.sum_repr m).symm⟩, fun a a' => ?_, fun b i i' W hW => ?_⟩
   · have h := congrArg (fun m => w.repr (pushL Y.q m) a') (v.sum_repr (u a))
-    simp only [map_sum, map_smul, hu, Finsupp.finset_sum_apply, Finsupp.smul_apply, smul_eq_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, hu, Finsupp.finset_sum_apply, Finsupp.smul_apply, smul_eq_mul,
       Module.Basis.repr_self, Finsupp.single_apply] at h
     exact h
   · simp only [dlg, pbT_id]

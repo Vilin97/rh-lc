@@ -54,7 +54,8 @@ theorem framepf_φpull_coord {y : W.DD T}
     obtain ⟨z, hz, rfl⟩ := hx
     obtain ⟨a, ha, -⟩ := Bs.uniq z hz
     refine ⟨fun k => W.φA (a k), ?_⟩
-    rw [ha, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [ha, map_sum]
     exact Finset.sum_congr rfl fun k _ => Formalism.MainNotions.LiftingTheory.wmap_φD_smul W T _ _
   | zero => exact ⟨0, by simp⟩
   | add x y _ _ hx hy =>
@@ -114,7 +115,8 @@ theorem framepf_phi_coordΔ (hT : IsCrys PD T.ρ) (c : ZMod n) {y : W.DD T}
   refine ⟨a, fun k δ hδ => ?_, fun k => ?_, ha⟩
   · have e : ∑ j, W.γA δ (a j) • W.φD T (Bs.b j) = ∑ j, a j • W.φD T (Bs.b j) := by
       rw [← ha, ← hΔ δ hδ]
-      conv_rhs => rw [ha, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        conv_rhs => rw [ha, map_sum]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [Formalism.MainNotions.LiftingTheory.wmap_γD_smul, ← W.φγ_comm, (Bs.mem j).2 δ hδ]
     exact congrFun (framepf_phi_uniq Bs hT e) k

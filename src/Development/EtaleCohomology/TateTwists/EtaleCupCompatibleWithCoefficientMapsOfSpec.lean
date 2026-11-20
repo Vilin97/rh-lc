@@ -34,7 +34,8 @@ theorem etale_cup_compatible_with_coefficient_maps_of_spec (hspec : EtaleCupComp
   intro N w h U x
   rw [etale_cocycle_comp_hom_evaluation_eq_map, hγ N w h U x]
   simp only [Sec.map]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun p _ => ?_
   rw [Units.smul_def, Units.smul_def, map_zsmul, etale_cocycle_comp_hom_evaluation_eq_map, etale_cocycle_comp_hom_evaluation_eq_map]
   congr 1

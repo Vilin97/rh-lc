@@ -142,7 +142,8 @@ theorem ev_gDet [A.IsSeparated] (a b : Σ i, MChart (C i)) (z : Sp S ⟶ A) (h :
   have h1 := (gBasis (hF a.1) a.2 (tau (isAffineOpen_gU_inf C ψ a b)) (tau_le _ inf_le_left)).sum_toMatrix_smul_self
     (gBasis (hF b.1) b.2 (tau (isAffineOpen_gU_inf C ψ a b)) (tau_le _ inf_le_right)) j
   have h2 := congrArg (tanPull (G := G) _ e) h1
-  rw [map_sum, tanPull_gBasis (hF b.1) b.2 _ e _ h'] at h2
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, tanPull_gBasis (hF b.1) b.2 _ e _ h'] at h2
   simp only [map_smulₛₗ, tanPull_gBasis (hF a.1) a.2 _ e _ h] at h2
   rw [Module.Basis.toMatrix_apply, ← h2, Module.Basis.repr_sum_self]
   rfl

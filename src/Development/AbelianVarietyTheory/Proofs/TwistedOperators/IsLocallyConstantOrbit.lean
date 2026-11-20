@@ -49,7 +49,8 @@ theorem exists_orbit (hπ : IsSmooth π) {H : Subgroup G} (hH : IsCompact (H : S
     continuous_subtype_val).range_finite
   have hS : ∀ u, u ∈ hf.toFinset ↔ ∃ h ∈ H, π h v = u := fun u => by simp
   refine ⟨hf.toFinset, hS, mem_fixed.2 fun g hg => ?_⟩
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   have key : ∀ g ∈ H, ∀ u ∈ hf.toFinset, π g u ∈ hf.toFinset := fun g hg u hu => by
     obtain ⟨h, hh, rfl⟩ := (hS u).1 hu
     exact (hS _).2 ⟨g * h, mul_mem hg hh, by simp⟩

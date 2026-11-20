@@ -208,7 +208,8 @@ theorem trace_red (hG : GoodLoc σ J T bs v ψv S σS ϖ ε) (k : ℕ) (X : Matr
     simp only [red]
     exact (Matrix.map_mul (f := Ideal.Quotient.mk (lev hG.pS k))).symm
   rw [e, hm, hm, hm]
-  simp only [Matrix.trace, Matrix.diag_apply, red, Matrix.map_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.trace, Matrix.diag_apply, red, Matrix.map_apply, map_sum]
 
 theorem gram_emb (hG : GoodLoc σ J T bs v ψv S σS ϖ ε) (x : Matrix (Fin M) (Fin n) S) (c a : Fin n) :
     gramR (Fv F v) σ J (emb S M n x) c a =

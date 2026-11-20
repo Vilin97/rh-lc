@@ -16,7 +16,8 @@ theorem form_eq_sum_sum {K : Type} [Field K] {g : ℕ} (h : HermFam K (Fin g →
     h.form s x y = ∑ j, ∑ i, s (y j) * star (s (x i)) * h.form s (Pi.single i 1) (Pi.single j 1) := by
   rw [form_sum_right]
   refine Finset.sum_congr rfl fun j _ => ?_
-  rw [← h.conj_symm, form_sum_right, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← h.conj_symm, form_sum_right, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_mul, h.conj_symm, _root_.mul_assoc]
   rfl

@@ -46,7 +46,8 @@ theorem exists_finExt_root_emb (E : Type) [Field E] [NumberField E] (l : ℕ) [F
   have hT : ∀ x ∈ T, x ∈ K := fun x hx => IntermediateField.subset_adjoin _ _ hx
   refine ⟨⟨K, inferInstance⟩, ⟨⟨ζ, hT _ (Finset.mem_insert_self _ _)⟩, ?_⟩, fun τ x => ?_⟩
   · exact IsPrimitiveRoot.of_map_of_injective (f := K.val) (by simpa using hζ) K.val.injective
-  · rw [← b.sum_repr x, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [← b.sum_repr x, map_sum]
     refine sum_mem fun i _ => ?_
     rw [map_rat_smul]
     exact SubfieldClass.qsmul_mem K _ (hT _ (Finset.mem_insert_of_mem

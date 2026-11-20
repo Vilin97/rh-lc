@@ -29,7 +29,8 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarR
 private lemma hform_crd_lemma (S : HSpace E) (a b : S.V) :
     Formalism.DivisionValues.hform S.gram (crd S a) (crd S b) = S.hT a b := by
   conv_rhs => rw [← S.frame.sum_equivFun a, ← S.frame.sum_equivFun b]
-  simp only [Formalism.DivisionValues.hform, Matrix.toLinearMapₛₗ₂'_apply, map_sum, LinearMap.sum_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Formalism.DivisionValues.hform, Matrix.toLinearMapₛₗ₂'_apply, map_sum, LinearMap.sum_apply,
     LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, crd, HSpace.gram, RingHom.id_apply,
     Finset.mul_sum]
   conv_rhs => rw [Finset.sum_comm]

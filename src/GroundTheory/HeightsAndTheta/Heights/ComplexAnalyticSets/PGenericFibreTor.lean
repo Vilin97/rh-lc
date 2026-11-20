@@ -57,7 +57,8 @@ theorem GenericFibreTor.proof (hGF : GenericFreeness.Statement.{0, 0, 0}) :
           rw [Finset.sum_coe_sort x.support (fun v => monomial v (AddMonoidAlgebra.coeff x v))]
           exact (MvPolynomial.as_sum x).symm
   have hrel : ∑ m, a m • g (π (e m)) = 0 := by
-    simp_rw [← map_smul, ← map_sum, hsum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp_rw [← map_smul, ← map_sum, hsum]
     simp [g, π, Ideal.Quotient.eq_zero_iff_mem.2 hxL]
   have htriv : Module.IsTrivialRelation a (fun m => g (π (e m))) :=
     Module.Flat.isTrivialRelation_of_sum_smul_eq_zero hrel
@@ -69,7 +70,8 @@ theorem GenericFibreTor.proof (hGF : GenericFreeness.Statement.{0, 0, 0}) :
       c • π ((b : MvPolynomial σ ℂ) • e m) = c • π (∑ j, A m j • r j) := by
     intro m
     apply IsLocalizedModule.exists_of_eq (S := Submonoid.powers F) (f := g)
-    rw [map_smul, map_smul, show g (π (e m)) = ∑ j, A m j • y j from hy m, Finset.smul_sum, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_smul, map_smul, show g (π (e m)) = ∑ j, A m j • y j from hy m, Finset.smul_sum, map_sum, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [smul_comm, ← hq j, ← hr j, map_smul, map_smul]
     rfl

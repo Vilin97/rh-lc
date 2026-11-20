@@ -44,7 +44,8 @@ private theorem scale (B : SB G →ₗ[ℂ] ℂ) (U U' : Subgroup G) (s : Finset
     rw [ha']
   have ht : ∀ g ∈ s, B (t g) = B a' := fun g hg =>
     hB g⁻¹ (U.inv_mem (hs g hg)) a' (t g) fun _ => rfl
-  rw [hat, map_sum, Finset.sum_congr rfl ht, Finset.sum_const, nsmul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hat, map_sum, Finset.sum_congr rfl ht, Finset.sum_const, nsmul_eq_mul]
 
 variable [T2Space G]
 

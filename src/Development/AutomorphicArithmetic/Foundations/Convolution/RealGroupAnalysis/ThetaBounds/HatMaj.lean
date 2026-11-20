@@ -161,7 +161,8 @@ theorem UpperTheory.ConvolutionTheory.R2.Ff.hatMaj :
     rw [show nu F (infGL E 2 y) = 1 from hy, cD_one_left] at h
     exact (LinearMap.congr_fun h φ).symm
   have hΨ : W.Om k (W.L (infGL E 2 y) φ) = ∑ i, c i • W.L (infGL E 2 y) (e i) := by
-    rw [hcomm, hk', map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hcomm, hk', map_sum]
     exact Finset.sum_congr rfl fun i _ => map_smul _ _ _
   have hsplit : W.Om (nU b * mD a * k) (W.L (infGL E 2 y) φ) =
       W.Om (nU b) (W.Om (mD a) (∑ i, c i • W.L (infGL E 2 y) (e i))) := by

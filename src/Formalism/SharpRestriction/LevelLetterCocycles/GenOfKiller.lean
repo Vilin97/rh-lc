@@ -115,7 +115,8 @@ theorem gen_of_killer {R V : Type*} [CommRing R] [IsDomain R] [IsPrincipalIdealR
   · apply hIM
     exact Isub.sub_mem hf (Isub.sum_mem fun i _ => Isub.smul_mem _ (hJI i))
   · have h0 : ((lR ^ K * t) • Psub.mkQ) (f - ∑ i, o i • J i) = 0 := by
-      rw [map_sub, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, map_sum]
       simp only [map_smul, hJw]
       rw [ho, sub_self]
     rw [LinearMap.smul_apply, ← map_smul] at h0

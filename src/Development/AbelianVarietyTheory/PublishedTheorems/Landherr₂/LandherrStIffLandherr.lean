@@ -34,7 +34,8 @@ theorem _root_.GlobalTheory.Published.LandherrSt.herm_mulVec (G P : Matrix (Fin 
   have h : (fun b => _root_.ReciprocityTheory.ChartRestriction.G.FD.cc ((P *ᵥ y) b)) = P.map _root_.ReciprocityTheory.ChartRestriction.G.FD.cc *ᵥ fun b => _root_.ReciprocityTheory.ChartRestriction.G.FD.cc (y b) := by
     funext b
     unfold _root_.ReciprocityTheory.ChartRestriction.G.FD.cc
-    simp [mulVec, dotProduct, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [mulVec, dotProduct, map_sum, map_mul]
   rw [h, mulVec_mulVec, ← vecMul_transpose, ← dotProduct_mulVec, mulVec_mulVec, Matrix.mul_assoc]
 
 end LandherrSt

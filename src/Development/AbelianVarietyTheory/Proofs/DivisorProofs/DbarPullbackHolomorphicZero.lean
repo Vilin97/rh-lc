@@ -28,7 +28,8 @@ theorem _root_.GlobalTheory.CxForm.PullClosed.repr_sum_smul {ι : Type} [Fintype
     (fun x => (_root_.GlobalTheory.CxForm.bas n).repr (∑ i, f i x • e i) S) =
       fun x => ∑ i, f i x * (_root_.GlobalTheory.CxForm.bas n).repr (e i) S := by
   funext x
-  simp [map_sum, Finsupp.finset_sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, Finsupp.finset_sum_apply]
 
 open Set Filter Topology in
 open scoped ComplexConjugate ContDiff in
@@ -51,7 +52,8 @@ theorem _root_.GlobalTheory.CxForm.PullClosed.dbarAt_sum_smul {ι : Type} [Finty
     ext S
     rw [_root_.GlobalTheory.CxForm.FormMul.repr_coefwise,
       _root_.GlobalTheory.CxForm.PullClosed.repr_sum_smul]
-    simp only [map_sum, map_smul, Finsupp.finset_sum_apply, Finsupp.smul_apply, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, Finsupp.finset_sum_apply, Finsupp.smul_apply, smul_eq_mul]
     rw [_root_.GlobalTheory.dbar_sum fun i _ => (hf i).mul_const _]
     simp [ContinuousLinearMap.sum_apply,
       _root_.GlobalTheory.dbar_mul (hf _) (differentiableAt_const _),
@@ -238,7 +240,8 @@ theorem _root_.GlobalTheory.CxForm.PullClosed.diff_and_closed {φ : _root_.Recip
     have hx : ExteriorAlgebra.ι ℂ x = ∑ a, x (Sum.inl a) • _root_.GlobalTheory.CxForm.dz a +
         ∑ a, x (Sum.inr a) • _root_.GlobalTheory.CxForm.dzb a := by
       conv_lhs => rw [← Finset.univ_sum_single x]
-      rw [map_sum, Fintype.sum_sum_type]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Fintype.sum_sum_type]
       congr 1 <;> refine Finset.sum_congr rfl fun a _ => ?_ <;>
         [unfold _root_.GlobalTheory.CxForm.dz; unfold _root_.GlobalTheory.CxForm.dzb] <;>
         (rw [← map_smul]; congr 1; ext j; simp [Pi.single_apply])

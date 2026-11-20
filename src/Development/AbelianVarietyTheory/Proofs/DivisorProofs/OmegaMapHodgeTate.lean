@@ -71,7 +71,8 @@ theorem toBase_omegaMap {p : ℕ} [Fact p.Prime] {A : Type} [CommRing A] (R : Ty
 theorem eq_sum_dualVec {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {Dw : Datum H} {J : Type} [Fintype J]
     (b : Module.Basis J ℤ Dw.La) (x : Dw.La) : x = ∑ j, Dw.EF (b j) x • dualVec b j := by
   refine Dw.unimod.1 (b.ext fun i => ?_)
-  rw [← LinearMap.IsAlt.neg Dw.alt, ← LinearMap.IsAlt.neg Dw.alt (b i), map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← LinearMap.IsAlt.neg Dw.alt, ← LinearMap.IsAlt.neg Dw.alt (b i), map_sum]
   classical
   simp [EF_dualVec, Finsupp.single_apply]
 
@@ -145,7 +146,8 @@ theorem ker_rho : RingRSt := by
       omegaMap_hodgeTate _ hP.skew, map_neg]
     rfl
   have hal : ∀ y, P (c.al y) = -∑ i, y i • F (b' i) := fun y => by
-    rw [c.al_apply, map_sum, ← Finset.sum_neg_distrib]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [c.al_apply, map_sum, ← Finset.sum_neg_distrib]
     exact Finset.sum_congr rfl fun i _ => by rw [map_smul, ← smul_neg, ← hF]; rfl
   let lv := (GG.baseChange S.R).omegaLevel 1
   have hlv : ∀ j, lv (Φ (1 ⊗ₜ η j)) = lv (F (dualVec b' j)) := fun j => by
@@ -160,14 +162,17 @@ theorem ker_rho : RingRSt := by
     obtain ⟨y, hy⟩ := (rho_eq_zero_iff hI hr w).1 hw
     choose a ha using fun j => mp.1 (-∑ i, y i * (Dw.EF (b' j) (b' i) : ℤ))
     have h1 : lv (Φ (1 ⊗ₜ w)) = ∑ j, (-∑ i, y i * (Dw.EF (b' j) (b' i) : ℤ)) • lv (F (dualVec b' j)) := by
-      rw [hΦ, ← hy, hal, map_neg, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hΦ, ← hy, hal, map_neg, map_sum]
       simp only [neg_smul, Finset.sum_smul, Finset.sum_neg_distrib]
       rw [Finset.sum_comm]
       refine congrArg _ (Finset.sum_congr rfl fun i _ => ?_)
       conv_lhs => rw [eq_sum_dualVec b' (b' i)]
-      simp only [map_sum, map_zsmul, map_smul, Finset.smul_sum, mul_smul, Int.cast_smul_eq_zsmul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_zsmul, map_smul, Finset.smul_sum, mul_smul, Int.cast_smul_eq_zsmul]
     have h2 : lv (Φ (1 ⊗ₜ (w - ∑ j, a j • η j))) = 0 := by
-      rw [TensorProduct.tmul_sub, map_sub, map_sub, h1, TensorProduct.tmul_sum, map_sum, map_sum, ← Finset.sum_sub_distrib]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [TensorProduct.tmul_sub, map_sub, map_sub, h1, TensorProduct.tmul_sum, map_sum, map_sum, ← Finset.sum_sub_distrib]
       refine Finset.sum_eq_zero fun j _ => ?_
       obtain ⟨q, hq⟩ := ha j
       rw [TensorProduct.tmul_smul, ← algebraMap_smul S.R (a j), map_smul, map_smul, hlv, ← sub_smul, hq, map_natCast, mul_comm,
@@ -186,7 +191,8 @@ theorem ker_rho : RingRSt := by
       have h1 : P (c.al y) = F (dualVec b' j) := by
         rw [hal]
         conv_rhs => rw [← b'.sum_repr (dualVec b' j)]
-        simp only [y, neg_smul, Finset.sum_neg_distrib, neg_neg, map_sum, map_zsmul, Int.cast_smul_eq_zsmul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [y, neg_smul, Finset.sum_neg_distrib, neg_neg, map_sum, map_zsmul, Int.cast_smul_eq_zsmul]
       obtain ⟨z, hz⟩ := hk (1 ⊗ₜ η j - eO.symm (c.al y)) (by
         rw [map_sub, map_sub, hlv, hΦ, LinearEquiv.apply_symm_apply, h1, sub_self])
       have h2 : eO (1 ⊗ₜ η j) = c.al y + (p : S.R) • eO z := by

@@ -212,7 +212,8 @@ theorem par2 : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField
     · show nM s _ _ (z _) = _
       rw [nM, nM, pm_map, map_one, Matrix.map_one _ (map_zero _) (map_one _)]
       congr 1
-      · simp only [hz, hhf, hform, map_add, map_neg, map_mul, map_sum, ratTup, hsi, JR, Matrix.map_apply, hκ, hdl]
+      set_option synthInstance.maxHeartbeats 100000 in
+        · simp only [hz, hhf, hform, map_add, map_neg, map_mul, map_sum, ratTup, hsi, JR, Matrix.map_apply, hκ, hdl]
         congr 2
         exact ((Algebra.TensorProduct.includeRight : E →ₐ[F] AF F ⊗[F] E).commutes t).symm
       · funext i

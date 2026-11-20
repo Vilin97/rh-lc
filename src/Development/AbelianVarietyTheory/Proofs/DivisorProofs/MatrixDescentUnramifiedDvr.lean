@@ -110,7 +110,8 @@ theorem rational_rows (R W : Type) [CommRing R] [IsDomain R] [IsDiscreteValuatio
   have hN₀B : ∀ x : N₀, φ x ∈ Submodule.span W (Set.range B) := by
     intro x
     have hx := congrArg Subtype.val (b'.sum_repr x)
-    rw [← hx, Submodule.coe_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hx, Submodule.coe_sum, map_sum]
     refine Submodule.sum_mem _ fun i _ => ?_
     rw [Submodule.coe_smul, map_smul, ← hBφ]
     exact Submodule.smul_of_tower_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)
@@ -237,7 +238,8 @@ theorem matrix_descent_unramified (R K W K' : Type) [CommRing R] [IsDomain R]
     have hGτ : G.map τ = h * G := by
       ext i j
       apply hinjW
-      rw [Matrix.map_apply, hτσ, hGmap, map_mul, Matrix.mul_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Matrix.map_apply, hτσ, hGmap, map_mul, Matrix.mul_apply, map_sum]
       have := congrFun (congrFun hh i) j
       rw [Matrix.map_apply, Matrix.mul_apply] at this
       rw [this, hRK'', AlgEquiv.commutes, ← hRK'', Finset.mul_sum]
@@ -248,7 +250,8 @@ theorem matrix_descent_unramified (R K W K' : Type) [CommRing R] [IsDomain R]
         Matrix.vecMul (Matrix.vecMul (fun i => τ (a i)) h) G := by
       rw [Matrix.vecMul_vecMul, ← hGτ]
       funext i
-      simp [Matrix.vecMul, dotProduct, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [Matrix.vecMul, dotProduct, map_sum]
     rw [e]; exact vecMul_mem_span G _
   have hspan := stable_lattice_descent_unramified R W hm D' hres' n r N hlat hstab'
   obtain ⟨A, h, hhu, hA⟩ :=
@@ -258,7 +261,8 @@ theorem matrix_descent_unramified (R K W K' : Type) [CommRing R] [IsDomain R]
   have e1 := congrFun (congrFun hA i) j
   rw [Matrix.map_apply, Matrix.mul_apply] at e1
   have e2 : algebraMap R K' (A i j) = algebraMap R K' c * (h.map iW * g) i j := by
-    rw [hRK', e1, map_sum, Matrix.mul_apply, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hRK', e1, map_sum, Matrix.mul_apply, Finset.mul_sum]
     refine Finset.sum_congr rfl fun l _ => ?_
     rw [map_mul, hGmap, Matrix.map_apply]; ring
   rw [Matrix.map_apply, Matrix.smul_apply, Matrix.map_apply, smul_eq_mul, map_mul, map_inv₀,

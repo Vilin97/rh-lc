@@ -34,7 +34,8 @@ theorem exists_haar_unipSp_mass_one : ∀ (F E : Type) [Field F] [NumberField F]
     refine ⟨Matrix.mulVec_injective_iff.1 hY, ?_⟩
     ext k l
     have h := congrArg (fun x => c * σ x) (hiso k l)
-    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, map_zero, mul_zero] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, map_zero, mul_zero] at h
     rw [Matrix.zero_apply, ← h]
     simp only [Formalism.UG.cT, Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, Matrix.smul_apply, smul_eq_mul,
       Matrix.zero_apply, Finset.sum_mul, Finset.mul_sum, RingHom.coe_coe]

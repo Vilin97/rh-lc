@@ -22,7 +22,8 @@ theorem exists_factor_pi {O B : Type} [CommRing O] [IsDomain O] [CommRing B] [Al
   haveI := Fintype.ofFinite J
   set χ : (Π i, T i) →ₐ[O] O := ψ.comp e.symm.toAlgHom with hχ
   have hsum : ∑ i, χ (Pi.single i 1) = 1 := by
-    rw [← map_sum, show (∑ i, Pi.single i 1 : Π i, T i) = 1 from Finset.univ_sum_single (1 : Π i, T i), map_one]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, show (∑ i, Pi.single i 1 : Π i, T i) = 1 from Finset.univ_sum_single (1 : Π i, T i), map_one]
   obtain ⟨i, -, hi⟩ := Finset.exists_ne_zero_of_sum_ne_zero (hsum.trans_ne one_ne_zero)
   have hidem : IsIdempotentElem (χ (Pi.single i 1)) := by
     have : IsIdempotentElem (Pi.single i (1 : T i) : Π j, T j) := by

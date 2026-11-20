@@ -163,7 +163,8 @@ theorem exists_complexStructure (H : Host E) {M : Type} [AddCommGroup M] [Module
     · refine LinearMap.ext fun v => ?_
       simp only [LinearMap.comp_apply, LinearMap.smul_apply, map_smul, act_act, _root_.mul_comm]
     · have h := congrArg Complex.re (sum_add_conj_eq_trace H a)
-      rw [Finset.sum_add_distrib, ← map_sum, ← ht] at h
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Finset.sum_add_distrib, ← map_sum, ← ht] at h
       rw [trace_act ψ hψ hr]
       simp at h
       linarith
@@ -176,7 +177,8 @@ theorem exists_complexStructure (H : Host E) {M : Type} [AddCommGroup M] [Module
         rw [ht, Finset.mul_sum]
         refine Finset.sum_congr rfl fun τ hτ => ?_
         rw [coe_mul', map_mul, (Finset.mem_filter.1 hτ).2]
-      rw [Finset.sum_add_distrib, ← map_sum, h2] at h
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Finset.sum_add_distrib, ← map_sum, h2] at h
       rw [h1, map_smul, trace_act ψ hψ hr, smul_eq_mul]
       simp [hre, ← hs] at h
       rw [← h]

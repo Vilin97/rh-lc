@@ -47,7 +47,8 @@ theorem hasDerivAt_bilin {E G : Type*} [AddCommGroup E] [Module ℂ E] [AddCommG
   let b := Module.finBasis ℂ G
   have e : ∀ a u, B a u = ∑ i, B.flip (b i) a * b.coord i u := by
     intro a u
-    conv_lhs => rw [← b.sum_repr u, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [← b.sum_repr u, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, smul_eq_mul, mul_comm]
     rfl
@@ -108,7 +109,8 @@ theorem continuous_tprod (M : DSModel V S) (h : ∀ τ, FiniteDimensional ℂ (M
   let b := Basis.piTensorProduct o
   have e : ∀ v : ∀ τ, M.H τ, f (PiTensorProduct.tprod ℂ v) = ∑ i, (∏ τ, (o τ).coord (i τ) (v τ)) * f (b i) := by
     intro v
-    conv_lhs => rw [← b.sum_repr (PiTensorProduct.tprod ℂ v), map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [← b.sum_repr (PiTensorProduct.tprod ℂ v), map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, smul_eq_mul, Basis.piTensorProduct_repr_tprod_apply]
     rfl

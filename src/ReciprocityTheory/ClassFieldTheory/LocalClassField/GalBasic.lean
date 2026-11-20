@@ -76,9 +76,11 @@ theorem isOpen_subG (hL : FiniteDimensional ℚ_[p] L) : IsOpen (subG p K L : Se
     · intro hσ x hx
       have hx' : x = ∑ i, b.repr ⟨x, hx⟩ i • (b i : PadicAlgCl p) := by
         have := congrArg L.val (b.sum_repr ⟨x, hx⟩)
-        rw [map_sum] at this
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum] at this
         exact this.symm
-      rw [hx', map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hx', map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [Algebra.smul_def, map_mul]
       exact congrArg₂ _ ((σ.restrictScalars ℚ_[p]).commutes _) (hσ i)

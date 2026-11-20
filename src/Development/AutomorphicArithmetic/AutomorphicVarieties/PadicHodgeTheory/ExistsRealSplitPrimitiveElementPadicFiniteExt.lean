@@ -161,7 +161,8 @@ private theorem exists_rat_monic_aeval_close (l : ℕ) [Fact l.Prime] (f : ℚ_[
     have e : aeval α (X ^ n + p) - aeval α f =
         ∑ i : Fin n, algebraMap ℚ_[l] (Om l) ((q i : ℚ_[l]) - f.coeff i) * α ^ (i : ℕ) := by
       conv_lhs => rw [hf', hp]
-      simp only [map_add, map_sum, map_mul, aeval_C, aeval_X_pow, add_sub_add_left_eq_sub,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_add, map_sum, map_mul, aeval_C, aeval_X_pow, add_sub_add_left_eq_sub,
         ← Finset.sum_sub_distrib]
       apply Finset.sum_congr rfl
       intro i _

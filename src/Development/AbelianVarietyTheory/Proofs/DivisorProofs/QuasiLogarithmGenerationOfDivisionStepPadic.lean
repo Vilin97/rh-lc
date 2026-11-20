@@ -158,8 +158,10 @@ theorem generate_of_step : ∀ (p : ℕ) [Fact p.Prime] (O E : Type) [CommRing O
           ∑ n ∈ Finset.range N, (p : E) ^ n • map (algebraMap O E) (sf (F n)) +
             (p : E) ^ N • map (algebraMap O E) T := by
         ext α
-        rw [coeff_map, hSd, hcS α, map_add, map_add, coeff_smul, coeff_map, hTd, map_sum (coeff α)]
-        simp only [coeff_smul, coeff_map, map_sum, map_mul, map_pow, map_natCast]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [coeff_map, hSd, hcS α, map_add, map_add, coeff_smul, coeff_map, hTd, map_sum (coeff α)]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [coeff_smul, coeff_map, map_sum, map_mul, map_pow, map_natCast]
       rw [h1, h2]
       linear_combination (norm := module) tele N
   have hR : f - comb Bv e - map (algebraMap O E) S = 0 := by

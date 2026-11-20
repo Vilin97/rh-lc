@@ -149,7 +149,8 @@ theorem symmetric_le_adjoin (q : Fin n → MvPolynomial (Fin n) ℂ) (hq : ∀ k
       exact TopClose.prod _ _ _ _ fun i _ => (hclose i).pow (c i)
     have hF : aeval psumFin F = ∑ c ∈ F.support, AddMonoidAlgebra.coeff F c • P c := by
       conv_lhs => rw [F.as_sum]
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine sum_congr rfl fun c _ => ?_
       rw [aeval_monomial, Algebra.smul_def]
     set S := F.support.filter fun c => psumWt c = d + 1
@@ -159,7 +160,8 @@ theorem symmetric_le_adjoin (q : Fin n → MvPolynomial (Fin n) ℂ) (hq : ∀ k
       simp only [Q, Finsupp.prod]
       exact B.prod_mem fun i _ => B.pow_mem (Algebra.subset_adjoin ⟨i, rfl⟩) _
     have htop : homogeneousComponent (d + 1) (aeval psumFin F) = ∑ c ∈ S, AddMonoidAlgebra.coeff F c • P c := by
-      rw [hF, map_sum, sum_filter]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hF, map_sum, sum_filter]
       refine sum_congr rfl fun c _ => ?_
       rw [map_smul, homogeneousComponent_of_mem (hPhom c)]
       by_cases h : psumWt c = d + 1

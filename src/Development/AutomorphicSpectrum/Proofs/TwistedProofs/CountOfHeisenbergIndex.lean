@@ -67,7 +67,8 @@ theorem exists_int_lift (hH : Heis) (hU : IsUnramInv ϖ σ q) (ρ : Fin N → L)
     rw [hU.2.1]
     exact hx
   have hσs : σ (-∑ j, ρ j * σ (ρ j.rev)) = -∑ j, ρ j * σ (ρ j.rev) := by
-    rw [map_neg, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_neg, map_sum]
     congr 1
     simp only [map_mul, hσσ]
     exact Fintype.sum_equiv Fin.revPerm _ _ (fun j => by simp only [Fin.revPerm_apply, Fin.rev_rev]; ring)

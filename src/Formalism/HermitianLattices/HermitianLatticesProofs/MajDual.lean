@@ -42,7 +42,8 @@ lemma majDual_herm (h : V →ₗ⋆[K] V →ₗ[K] K) (b : Module.Basis ι K V) 
     (hst : ∀ (φ : K →+* ℂ) (a : K), φ (star a) = starRingEnd ℂ (φ a)) (x y : V) :
     v.embedding (h x y) = dotProduct (star (vecAt b v x)) ((gramAt h b v).mulVec (vecAt b v y)) := by
   conv_lhs => rw [← b.sum_repr x, ← b.sum_repr y]
-  simp only [map_sum, map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, map_smul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, map_smul,
     smul_eq_mul, map_mul, starRingEnd_apply, hst, RingHom.id_apply]
   simp only [dotProduct, Matrix.mulVec, vecAt, gramAt, Matrix.of_apply, Pi.star_apply]
   simp only [Finset.mul_sum]
@@ -369,7 +370,8 @@ lemma majDual_zdual [IsTotallyComplex K] (h : V →ₗ⋆[K] V →ₗ[K] K) (b :
     have hJu : jW h b X u = 0 := by
       apply hext
       intro i
-      rw [inner_zero_right, ← majDualJ_apply, hu, map_sum, inner_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [inner_zero_right, ← majDualJ_apply, hu, map_sum, inner_sum]
       simp only [map_smul, real_inner_smul_right, majDualJ_apply, hGr]
       have h1 := congrFun hv i
       simp only [Matrix.mulVec, dotProduct, Pi.zero_apply] at h1
@@ -396,7 +398,8 @@ lemma majDual_zdual [IsTotallyComplex K] (h : V →ₗ⋆[K] V →ₗ[K] K) (b :
   have htr : ∀ x : V, Algebra.trace ℚ K (h x y) =
       ∑ k, qv k * Algebra.trace ℚ K (h x (m k)) := by
     intro x
-    rw [hy, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hy, map_sum, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_smul, smul_eq_mul, ← Algebra.smul_def, map_smul, smul_eq_mul]
   have hq : ∀ i, Algebra.trace ℚ K (h (m i) y) / 2 = nz i := by

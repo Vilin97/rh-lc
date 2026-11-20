@@ -88,7 +88,8 @@ theorem stalk_derivation_span : ∀ (R : Type) [CommRing R] [IsDomain R] [IsNoet
   have hcc : c' = c₀ := hu₀ c' (down V₀ V' (hle.trans inf_le_left) hpV₀ hpV' c' hc')
   subst hcc
   have eW : V' ≤ W := hle.trans inf_le_right
-  rw [← germ_res W V' eW hpW hpV' g, hc', map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← germ_res W V' eW hpW hpV' g, hc', map_sum]
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [map_mul, hc, hD]
   rfl

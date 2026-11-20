@@ -282,7 +282,8 @@ theorem Reads.HasBlock.dvd {l : ℕ} [Fact l.Prime] {ι : Type} [DecidableEq ι]
     refine List.map_congr_left fun ν _ => ?_
     simp [blockPoly, Polynomial.map_prod]
   have e2 : (heckePoly B.n B.q x Q).map R.e0 = heckePolyOf B.n (B.q Q) (sysOf B.n pt θ P) := by
-    rw [heckePoly, heckePolyOf, heckePolyOf, Polynomial.map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [heckePoly, heckePolyOf, heckePolyOf, Polynomial.map_sum]
     refine Finset.sum_congr rfl fun k hk => ?_
     have : R.e0 (x (Q, k)) = sysOf B.n pt θ P k := by
       rcases k with _ | k

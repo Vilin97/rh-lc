@@ -30,7 +30,8 @@ theorem cmpD_sum (T : LocLat G Qp LL O) (a : ZMod n) {d : ℕ} (c : Fin d → Le
   rw [Formalism.MainNotions.UnusedSlot80.ArcF.cmpD_of_mem W T hs]
   have e : (⟨∑ m, c m • z m, hs⟩ : ↥(W.N T)) = ∑ m, (⟨c m • z m, hmem m⟩ : ↥(W.N T)) :=
     Subtype.ext (by simp)
-  rw [e, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, map_sum]
   refine Finset.sum_congr rfl fun m _ => ?_
   rw [Formalism.MainNotions.UnusedSlot80.ArcF.cmp_smul_letter W T a (c m) (z m) (hz m) (hzl m),
     Formalism.MainNotions.UnusedSlot80.ArcF.cmpD_of_mem W T (hz m)]

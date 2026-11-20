@@ -68,7 +68,8 @@ private theorem comb_iff' {n : ℕ} {u : Fin n → (Sp (DualNumber S) ⟶ t'.G.l
     IsCombAtG t x (fun i => u i ≫ φ) cf (w ≫ φ) ↔ IsCombAtG t' x' u cf w := by
   refine (GlobalTheory.LieMet.isComb_iff (fun i => pE m x' hx (tanOf (hu i))) cf (pE m x' hx (tanOf hw))).trans
     (Iff.trans ?_ (GlobalTheory.LieMet.isComb_iff (fun i => tanOf (hu i)) cf (tanOf hw)).symm)
-  simp only [← map_smul, ← map_sum, EmbeddingLike.apply_eq_iff_eq]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← map_smul, ← map_sum, EmbeddingLike.apply_eq_iff_eq]
 
 private theorem eig_iff' (ha : ∀ a, (t'.act.act a).left ≫ φ = φ ≫ (t.act.act a).left)
     {w : Sp (DualNumber S) ⟶ t'.G.left} (hw : IsTanAtG t' x' w) (a : 𝓞 E) (s : S) :

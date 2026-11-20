@@ -181,9 +181,11 @@ theorem r_om_of (h : type_of% @GlobalTheory.T.fundamental_ideal_frobenius_powers
         proj (σ ^ m) g * proj (σ ^ m') g' := by
       conv_lhs => rw [hsum, hsum']
       rw [Finset.sum_mul_sum]
-    rw [hgg, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hgg, map_sum]
     refine Valuation.map_sum_le _ (fun m hm => ?_)
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Valuation.map_sum_le _ (fun m' hm' => ?_)
     rw [Finset.mem_Icc] at hm hm'
     have e1 : proj (σ ^ m) g ∈ AA.carrier ∧ ∀ (x : F) (y : F), proj (σ ^ m) g (x • y) = algebraMap R C ((σ ^ m) x) * proj (σ ^ m) g y := hPg (σ ^ m)

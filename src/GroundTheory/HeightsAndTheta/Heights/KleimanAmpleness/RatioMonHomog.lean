@@ -122,7 +122,8 @@ theorem ResidueGen.proof : ResidueGen.Statement := by
       push_cast
       exact hsum
     have hone := congrArg σ hsumR
-    rw [map_sum, map_one] at hone
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_one] at hone
     have h2 : (∑ j, σ ⟨u j, hUR j⟩ *
         (ext (s j * ∏ k, y ⟨k, d₀ k⟩ ^ (-β k)) / (∏ k, y' ⟨k, d₀ k⟩ ^ (-β k)))) *
           (∏ k, y' ⟨k, c k⟩ ^ (-β k)) = 1 := by

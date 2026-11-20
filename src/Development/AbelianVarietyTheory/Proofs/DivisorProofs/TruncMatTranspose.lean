@@ -23,7 +23,8 @@ theorem evFin_liftV_one (v w : Pl F) : evFin F w (GlobalTheory.LatVac.liftV v 1)
 
 theorem evFin_idem (T : Finset (Pl F)) (w : Pl F) : evFin F w (idem T) = if w ∈ T then 1 else 0 := by
   classical
-  simp only [idem, map_sum, evFin_liftV_one]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [idem, map_sum, evFin_liftV_one]
   rw [Finset.sum_ite_eq]
 
 theorem idem_mul_idem (T : Finset (Pl F)) : idem T * idem T = idem T := by

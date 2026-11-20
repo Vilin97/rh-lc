@@ -30,7 +30,8 @@ private theorem cont_rowAct (n : ℕ) (f : MvPolynomial (Fin n × Fin n) ℂ) :
       have h1 : Formalism.GradedWeylDivisibility.rowAct ℂ g (MvPolynomial.X v : MvPolynomial (Fin n × Fin n) ℂ) =
           ∑ b : Fin n, MvPolynomial.C (g v.1 b) * MvPolynomial.X (b, v.2) := by
         simp only [Formalism.GradedWeylDivisibility.rowAct, MvPolynomial.aeval_X]
-      rw [map_mul, h1, Finset.mul_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_mul, h1, Finset.mul_sum, map_sum]
       refine Finset.sum_congr rfl fun b _ => ?_
       rw [mul_left_comm, ← MvPolynomial.smul_eq_C_mul, map_smul, smul_eq_mul]
       rfl
@@ -61,7 +62,8 @@ private theorem cont_multi {X ι : Type} [TopologicalSpace X] [Fintype ι] [Deci
     have h1 : (fun i => F i x) = fun i => ∑ j, (b i).coord j (F i x) • b i j := by
       funext i
       simp only [Module.Basis.coord_apply, Module.Basis.sum_repr]
-    rw [h1, MultilinearMap.map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h1, MultilinearMap.map_sum]
     refine Finset.sum_congr rfl fun r _ => ?_
     rw [MultilinearMap.map_smul_univ]
   simp only [e]

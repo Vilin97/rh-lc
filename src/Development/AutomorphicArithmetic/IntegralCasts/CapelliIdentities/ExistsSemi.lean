@@ -47,7 +47,8 @@ theorem UpperTheory.Reformulated.B.Ra9.exists_semi :
         ((bK.repr v).mapRange ι (map_zero ι)) := by
       rw [Finsupp.linearCombination_apply, Finsupp.sum_mapRange_index (by simp)]
       conv_lhs => rw [← bK.linearCombination_repr v]
-      rw [Finsupp.linearCombination_apply, Finsupp.sum, map_sum, Finsupp.sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Finsupp.linearCombination_apply, Finsupp.sum, map_sum, Finsupp.sum]
       refine Finset.sum_congr rfl ?_
       intro i _
       rw [hsemi, Algebra.TensorProduct.basis_apply, hΨ, map_one, one_smul]

@@ -121,7 +121,8 @@ theorem UpperTheory.RealTr.homSurj :
       apply Subtype.ext
       rw [Submodule.coe_sum]
       exact (hsum y).symm
-    rw [happ, Finset.sum_congr rfl (fun i _ => key i), ← Submodule.coe_sum, ← map_sum, hs]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [happ, Finset.sum_congr rfl (fun i _ => key i), ← Submodule.coe_sum, ← map_sum, hs]
   · intro μ' hne y hy
     rw [happ]
     refine Finset.sum_eq_zero (fun i _ => ?_)

@@ -32,7 +32,8 @@ private theorem UpperTheory.Reformulated.B.Gc5.nonempty_normalModel_of_extension
     obtain ⟨c, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun R).1 hy
     choose p hp using fun i => hπ (c i)
     refine ⟨∑ i, rename Sum.inl (p i) * X (Sum.inr i), ?_⟩
-    simp only [map_sum, map_mul, hren, hY, hp, Algebra.smul_def]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, hren, hY, hp, Algebra.smul_def]
   refine ⟨⟨m, RingHom.ker φ, RingHom.ker_isPrime _,
     IsIntegrallyClosed.of_equiv (RingHom.quotientKerEquivOfSurjective hsurj).symm, ?_, ?_, ?_⟩⟩
   · ext q

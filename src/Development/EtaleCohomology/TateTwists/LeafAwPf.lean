@@ -91,7 +91,8 @@ lemma aw_eq (n : ℕ) : Pr.aw n = ∑ x ∈ Finset.HasAntidiagonal.antidiagonal 
 lemma bd_sum {N : ℕ} {ι : Type*} (s : Finset ι) (g : ι → Pr N →₀ ℤ) :
     Pr.bd (∑ x ∈ s, g x) = ∑ x ∈ s, Pr.bd (g x) := by
   unfold Pr.bd
-  simp only [map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Finset.smul_sum]
   exact Finset.sum_comm
 
 lemma d_S (n : ℕ) (x : ℕ × ℕ) : Pr.d n (S n x) = g1 n x + g2 n x := by
@@ -164,7 +165,8 @@ lemma key (p r : ℕ) :
 
 theorem leaf_aw_of : LateralTheory.EtaleFoundations.SteenPf.leaf_aw := by
   intro N
-  rw [aw_eq, aw_eq, map_sum, bd_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [aw_eq, aw_eq, map_sum, bd_sum]
   simp only [d_S]
   rw [Finset.sum_add_distrib, Finset.Nat.sum_antidiagonal_succ, Finset.Nat.sum_antidiagonal_succ']
   have z1 : g1 (N + 1) (0, N + 1) = 0 := by

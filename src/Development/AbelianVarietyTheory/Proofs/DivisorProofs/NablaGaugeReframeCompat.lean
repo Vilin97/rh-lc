@@ -37,7 +37,8 @@ theorem der_wedgeVec (M : Matrix (Fin m) (Fin m) ℂ) (u : Fin m → ℂ) (x : E
     simp only [wedgeVec_apply, Finset.smul_sum, smul_smul, Matrix.vecMul, dotProduct,
       Finset.sum_smul]
     exact Finset.sum_comm
-  rw [e, der_apply, der_apply, map_sum, ← Finset.sum_add_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, der_apply, der_apply, map_sum, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [contr_wedgeVec, map_sub, map_smul, wedgeVec_comm (M i) u, sub_neg_eq_add]
 
@@ -126,7 +127,8 @@ theorem extMap_fderiv (ψ : V → Matrix (Fin m) (Fin m) ℂ) (x : V → Ext m) 
     (hxS S).smul (genProd_fderiv ψ b hψ v M hM S).1.hasFDerivAt
   simp only [extMap_apply]
   erw [h.fderiv]
-  simp [ContinuousLinearMap.sum_apply, Finset.sum_add_distrib, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [ContinuousLinearMap.sum_apply, Finset.sum_add_distrib, map_sum,
     fun S => (genProd_fderiv ψ b hψ v M hM S).2]
 
 theorem mder_mul {ι κ μ : Type} [Fintype κ] (f : V → Matrix ι κ ℂ) (f' : V → Matrix κ μ ℂ) (b v : V)
@@ -437,7 +439,8 @@ theorem nablaE_gauge : ∀ {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E]
     rw [hΦe, extMap_der _ _ _ hfix, der_fibZero_add, ← hΦe]
     change _ + _ + der _ (Φ (s (reframe τ γ P))) = _
     abel
-  rw [Pullback.nablaE_eq_sum, Pullback.nablaE_eq_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Pullback.nablaE_eq_sum, Pullback.nablaE_eq_sum, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   simp only [Pullback.nabPiece]
   have hw := fun w => (GlobalTheory.TorsionForm.FrameWedge.frameMap_wedge n (den γ (τ b)) w).2 i

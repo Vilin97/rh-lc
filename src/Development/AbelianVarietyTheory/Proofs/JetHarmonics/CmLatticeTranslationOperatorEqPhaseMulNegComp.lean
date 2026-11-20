@@ -361,7 +361,8 @@ theorem moments_of_translates : ∀ (d q : ℕ) [Fact q.Prime] (lam : Qbar →+*
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [lamA_eq lam ι hlam (hβ' _ (hys l) _ (hb.1 j))]
-  conv_lhs => rw [C1 (ys l), beta_sum_left, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [C1 (ys l), beta_sum_left, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_mul]
   show GlobalTheory.MomOne.zc (A j) * (ι (yc l i) * _) = _

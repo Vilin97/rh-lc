@@ -82,7 +82,8 @@ theorem apply_frame {E V : Type} [CommRing E] [AddCommGroup V] [Module E V] {N :
     (g : V ≃ₗ[E] V) (f : Fin N → V) (s u : Matrix (Fin N) (Fin N) E)
     (hs : ∀ j, g (f j) = ∑ i, s i j • f i) (j : Fin N) :
     g (∑ i, u i j • f i) = ∑ i, (s * u) i j • f i := by
-  simp only [map_sum, map_smul, hs, Matrix.mul_apply, Finset.smul_sum, Finset.sum_smul, smul_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, hs, Matrix.mul_apply, Finset.smul_sum, Finset.sum_smul, smul_smul]
   rw [Finset.sum_comm]
   simp only [mul_comm]
 

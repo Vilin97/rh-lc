@@ -41,7 +41,8 @@ theorem exists_cdvr_over (hv : v.Integers O) (T : CDVR) (k : T.Fr →+* C) (kO :
     rintro _ ⟨i, rfl⟩
     exact ((Algebra.IsIntegral.isIntegral (R := ℚ) (b i)).map s.toRatAlgHom).tower_top)
   have hs : ∀ x, s x ∈ L := fun x => by
-    rw [← b.sum_repr x, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← b.sum_repr x, map_sum]
     refine sum_mem fun i _ => ?_
     rw [Algebra.smul_def, map_mul, eq_ratCast, map_ratCast]
     exact mul_mem (SubfieldClass.ratCast_mem L _) (IntermediateField.subset_adjoin _ _ ⟨i, rfl⟩)

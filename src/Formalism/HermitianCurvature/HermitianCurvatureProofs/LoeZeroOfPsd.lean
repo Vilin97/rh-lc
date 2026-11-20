@@ -90,7 +90,8 @@ theorem loe_convex {N : Type} [Fintype N] (Y : Finset α) (lam : N → ℂ) (h :
   rw [loe_iff]
   constructor
   · intro x _ y _
-    simp only [gramH, map_sub, map_mul, map_sum, Complex.conj_ofReal, inner_conj_symm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [gramH, map_sub, map_mul, map_sum, Complex.conj_ofReal, inner_conj_symm]
   · intro c
     have eW : ∑ P ∈ Y, conj (c P) • ∑ n, lam n • h n P = ∑ n, lam n • ∑ P ∈ Y, conj (c P) • h n P := by
       simp only [Finset.smul_sum, smul_smul]

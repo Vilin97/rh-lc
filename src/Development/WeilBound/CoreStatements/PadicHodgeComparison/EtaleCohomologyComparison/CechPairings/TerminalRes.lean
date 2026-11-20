@@ -164,7 +164,8 @@ def relHom : DCx.Hom (relCx π F).dcx (relCx (m.G ⋙ π) F').dcx (RingHom.id R)
     funext i
     change ∑ k : Fin (p + 2), (-1 : ℤ) ^ (k : ℕ) • (relRes _ F' (GlobalTheory.CatH.toLast k i)).pullC q ((relMor π m _).pullC q (g (GlobalTheory.CatH.face k i))) =
       (relMor π m _).pullC q (∑ k : Fin (p + 2), (-1 : ℤ) ^ (k : ℕ) • (relRes π F (GlobalTheory.CatH.toLast k i)).pullC q (g (GlobalTheory.CatH.face k i)))
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun k _ => by rw [map_zsmul]; rfl
   cv p q g := funext fun i => (relMor π m _).d_pullC q (g i)
 

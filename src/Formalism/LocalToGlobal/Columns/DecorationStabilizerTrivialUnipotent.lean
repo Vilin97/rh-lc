@@ -477,7 +477,8 @@ theorem trace_star_mul_self_pos (hconj : ∀ (φ : E →+* ℂ) (x : E), φ (sta
 
 theorem hStd_trace_pos (hconj : ∀ (φ : E →+* ℂ) (x : E), φ (star x) = starRingEnd ℂ (φ x))
     (x : Sp E n) (hx : x ≠ 0) : 0 < Algebra.trace ℚ E (hStd E n x x) := by
-  rw [hStd_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hStd_apply, map_sum]
   obtain ⟨i, hi⟩ : ∃ i, x i ≠ 0 := by
     by_contra hh
     push Not at hh

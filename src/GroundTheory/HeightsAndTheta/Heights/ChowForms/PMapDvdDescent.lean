@@ -26,7 +26,8 @@ theorem MapDvdDescent.proof : MapDvdDescent.Statement := by
   refine ⟨Φ, ?_⟩
   ext s
   have h1 := congrArg (fun P => π (AddMonoidAlgebra.coeff P s)) hG
-  simp only [coeff_map, hπa, coeff_mul, map_sum, hπm] at h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [coeff_map, hπa, coeff_mul, map_sum, hπm] at h1
   rw [h1, coeff_mul]
   exact Finset.sum_congr rfl fun x _ => by rw [hΦ]
 

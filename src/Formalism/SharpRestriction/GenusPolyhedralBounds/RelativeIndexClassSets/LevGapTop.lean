@@ -217,7 +217,8 @@ theorem QD_tmul {m : ℕ} (b : Fin m → 𝓞 E) (hb : Submodule.span ℤ (Set.r
   have he : e ∈ Submodule.span ℤ (Set.range b) := by rw [hb]; exact Submodule.mem_top
   obtain ⟨c, hc⟩ := (Submodule.mem_span_range_iff_exists_fun ℤ).1 he
   refine ⟨fun j => c j • y, fun j => zsmul_mem hy _, ?_⟩
-  rw [← hc, map_sum, TensorProduct.sum_tmul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hc, map_sum, TensorProduct.sum_tmul]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_zsmul, TensorProduct.smul_tmul]
 
@@ -253,7 +254,8 @@ theorem crd_int (hO : ∀ t : 𝓞 F, algebraMap F R (algebraMap (𝓞 F) F t) �
     {s : E ⊗[F] R} (hs : s ∈ tensInt (F := F) R (intOE E) O) (l : ι) :
     algebraMap F R N1 * crd R b l s ∈ O := by
   obtain ⟨r, hr, rfl⟩ := QD_of_mem O β hβ hs
-  rw [map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.mul_sum]
   refine sum_mem fun j _ => ?_
   obtain ⟨t, ht⟩ := hN1 j l
   rw [crd_tmul, Algebra.smul_def, ← mul_assoc, ← map_mul, ← ht]
@@ -401,7 +403,8 @@ theorem exists_int_span : ∃ e : Fin (Module.finrank F E) → 𝓞 E,
 theorem prV_comb_mem {ι : Type} [Fintype ι] (e : ι → 𝓞 E) (a : ι → 𝔸) (ha : ∀ l, a l ∈ intAd F)
     (v : HeightOneSpectrum (𝓞 F)) :
     prV (E := E) v (comb 𝔸 (fun l => algebraMap (𝓞 E) E (e l)) a) ∈ intV E v := by
-  rw [comb_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [comb_apply, map_sum]
   refine sum_mem fun l _ => ?_
   rw [Formalism.UG.P.afsplit_prV_tmul]
   exact tmul_mem_tensInt _ (e l) (ha l v)

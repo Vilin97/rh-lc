@@ -696,7 +696,8 @@ lemma sum_weighted_lie_derivative_bound (hl : HhLip) (hz : IntRdZero) {a : ℝ} 
         ∑ i, ∑ j, ((sgn ε i j : ℝ) : ℂ) * (radialWeight a R (toM g) * u (toM g) *
           starRingEnd ℂ (Eab ε j i (Eab ε i j u) (toM g))) := by
       intro g
-      simp only [signedCasimirDifference, map_sum, map_mul, Complex.conj_ofReal]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [signedCasimirDifference, map_sum, map_mul, Complex.conj_ofReal]
       rw [Finset.mul_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [Finset.mul_sum]

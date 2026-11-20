@@ -61,7 +61,8 @@ private theorem push_coc (g : G → V →ₗ[R] V) (hg : ∀ s t v, g (s * t) v 
       exact ⟨fun h => by rw [h], fun h => mul_right_cancel h⟩
     · intro y _
       rfl
-  rw [e, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, map_sum]
   simp only [GlobalTheory.KA.push]
   rw [← Finset.sum_add_distrib, ← Finset.sum_sub_distrib]
   exact AddSubgroup.sum_mem _ fun y _ => sh_coc g hg c rep hr P hP z H s t y

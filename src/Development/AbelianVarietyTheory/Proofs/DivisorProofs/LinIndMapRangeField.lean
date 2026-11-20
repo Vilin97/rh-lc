@@ -80,7 +80,8 @@ theorem linInd_mapRange_field {F K P ι : Type} [Field F] [Field K] [Algebra F K
     simp only [Finsupp.finset_sum_apply, Finsupp.smul_apply, Finsupp.mapRange_apply, smul_eq_mul,
       Finsupp.coe_zero, Pi.zero_apply] at h1 ⊢
     have h2 := congrArg (fun x => B.repr x j) h1
-    simp only [map_sum, map_zero, Finsupp.finset_sum_apply, Finsupp.coe_zero, Pi.zero_apply] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_zero, Finsupp.finset_sum_apply, Finsupp.coe_zero, Pi.zero_apply] at h2
     rw [← h2]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [mul_comm (c i), ← Algebra.smul_def, map_smul, Finsupp.smul_apply, smul_eq_mul, mul_comm]
@@ -257,7 +258,8 @@ theorem rowAct_map {R S : Type} [CommRing R] [CommRing S] (φ : R →+* S) {r n 
   | mul_X p v hp =>
     rw [map_mul, map_mul, map_mul, hp, map_X]
     congr 1
-    simp [rowAct, map_sum, Matrix.map_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [rowAct, map_sum, Matrix.map_apply]
 
 theorem dwAct_map {R S : Type} [CommRing R] [CommRing S] (φ : R →+* S) (r n : ℕ) (g : GL (Fin r) R)
     (f : MvPolynomial (Fin r × Fin n) R) :

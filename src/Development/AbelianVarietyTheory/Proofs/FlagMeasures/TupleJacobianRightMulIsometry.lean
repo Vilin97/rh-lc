@@ -93,7 +93,8 @@ theorem exists_lat_basis [IsNonarchimedeanLocalField F] [CharZero F] (L : LocE F
         map_smul' := fun c x => by simp [hf, Finset.mul_sum, mul_assoc] }
     have hfb : ∀ i, f (b i) = if i = j then 1 else 0 := fun i => hb i j
     have := congrArg f hg
-    simpa [map_sum, hfb] using this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [map_sum, hfb] using this
   have hsp : ⊤ ≤ Submodule.span E (Set.range b) := by
     rw [← hΛ.1.2, Submodule.span_span_of_tower]
   refine ⟨Module.Basis.mk hli hsp, fun x => ?_⟩

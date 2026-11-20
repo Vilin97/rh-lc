@@ -80,7 +80,8 @@ theorem beO_eq (a b : 𝓞 D.host.E) : ((beO D a b : ℝ) : ℂ) =
 
 theorem beO_symm (a b : 𝓞 D.host.E) : beO D a b = beO D b a := by
   apply Complex.ofReal_injective
-  rw [← Complex.conj_ofReal (beO D a b : ℝ), beO_eq, beO_eq, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Complex.conj_ofReal (beO D a b : ℝ), beO_eq, beO_eq, map_sum]
   refine Finset.sum_congr rfl fun σ _ => ?_
   rw [map_mul, Complex.conj_conj, mul_comm]
 
@@ -151,7 +152,8 @@ theorem beO_sum {ι : Type} [Fintype ι] (a : ι → 𝓞 D.host.E) (c : ι → 
     _ = ((∑ σ : D.host.E →ₐ[ℚ] ℂ, Complex.normSq (∑ i, (c i : ℂ) * σ (a i : D.host.E)) : ℝ) : ℂ) := by
         push_cast
         refine Finset.sum_congr rfl fun σ _ => ?_
-        rw [← Complex.mul_conj, map_sum, Finset.sum_mul_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [← Complex.mul_conj, map_sum, Finset.sum_mul_sum]
         refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
         rw [map_mul, Complex.conj_ofReal]
         ring

@@ -63,9 +63,11 @@ theorem cls_tens (T : Tens D D' W) :
 
 theorem pull_tens (T : Tens D D' W) {X : Over (Spec (CommRingCat.of R))} (h : X ⟶ D'.P.A) :
     pull h.left (cls D'.P.L D'.P.isLB) = pairP T W h h := by
-  rw [cls_tens T, pairP, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [cls_tens T, pairP, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_zsmul, pull_lam]
 
@@ -168,7 +170,8 @@ theorem rosatiAdj_core (T : Tens D D' W) (h : IsUnit (W + W.transpose).det) (a :
   calc ∑ k, rosatiε k • pull (((D'.P.A ⊗ D'.P.A).hom ⁻¹ᵁ ⊤).ι ≫ rosatiφ D'.P.A f g k) (cls D'.P.L D'.P.isLB)
       = pull (((D'.P.A ⊗ D'.P.A).hom ⁻¹ᵁ ⊤).ι)
           (∑ k, rosatiε k • pull (rosatiφ D'.P.A f g k) (cls D'.P.L D'.P.isLB)) := by
-        simp only [pull_comp, map_sum, map_zsmul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [pull_comp, map_sum, map_zsmul]
     _ = 0 := by rw [key, map_zero]
 
 end GlobalTheory.Mum.RosatiTens

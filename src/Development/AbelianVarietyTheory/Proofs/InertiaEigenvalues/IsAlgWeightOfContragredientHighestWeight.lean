@@ -50,7 +50,8 @@ theorem isAlgWeight_of_hwAtF_dual : ∀ (L : Type) [Field L] [NumberField L] [Is
     rw [e3, e2]
     simp only [Matrix.mul_apply, Finset.sum_mul]
     simp only [hinv]
-    simp only [Q, map_sum, map_mul, MvPolynomial.eval_C, MvPolynomial.eval_rename]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Q, map_sum, map_mul, MvPolynomial.eval_C, MvPolynomial.eval_rename]
     refine Finset.sum_congr rfl fun l _ => ?_
     refine Finset.sum_congr rfl fun k _ => ?_
     congr 2

@@ -61,7 +61,8 @@ theorem dual_top_le_mu [Finite T] : dualOrder (⊤ : Subalgebra R (T → R)) ≤
       apply Subtype.ext
       funext s
       simp [Finset.sum_apply, Pi.single_apply]
-    rw [e, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, map_sum]
     simp [Finset.sum_apply, evChar, mul_comm]
   rw [this]
   exact Subalgebra.sum_mem _ fun t _ => Subalgebra.smul_mem _ (char_mem_mu (evChar t)) _

@@ -39,7 +39,8 @@ def xin (ε : OCb l) (n : ℕ) : Ainf l :=
 theorem frob_iter_xin (ε : OCb l) (n k : ℕ) :
     (⇑(WittVector.frobenius : Ainf l →+* Ainf l))^[n + k] (xin ε n) =
       ∑ i ∈ Finset.range l, (WittVector.teichmuller l (rt ε 1 ^ (l ^ k))) ^ i := by
-  rw [xin, ← RingHom.coe_pow, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [xin, ← RingHom.coe_pow, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_pow, RingHom.coe_pow, frob_iter_teich, pow_add, pow_mul, add_comm n 1, rt_pow]
 
@@ -58,7 +59,8 @@ theorem natCast_ne_zero : ((l : ℕ) : Per.OC l) ≠ 0 := by
 
 theorem theta_frob_xin (ε : OCb l) (hε : ε.untilt = 1) (n j : ℕ) :
     Per.θ l ((⇑(WittVector.frobenius : Ainf l →+* Ainf l))^[n + (j + 1)] (xin ε n)) = l := by
-  rw [frob_iter_xin, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [frob_iter_xin, map_sum]
   have h1 : (rt ε 1 ^ (l ^ (j + 1))).untilt = 1 := by
     rw [pow_succ', pow_mul]
     have : rt ε 1 ^ l = ε := by
@@ -79,7 +81,8 @@ theorem xin_dvd (ε : OCb l) (hε : GlobalTheory.MemLoc.IsEps ε) (n : ℕ) (b :
 
 theorem coeff_xin (ε : OCb l) (n : ℕ) :
     (xin ε n).coeff 0 * (rt ε (n + 1) - 1) = rt ε n - 1 := by
-  rw [← WittVector.constantCoeff_apply, xin, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← WittVector.constantCoeff_apply, xin, map_sum]
   simp only [map_pow, WittVector.constantCoeff_apply, WittVector.teichmuller_coeff_zero]
   rw [geom_sum_mul]
   have := rt_pow ε n 1

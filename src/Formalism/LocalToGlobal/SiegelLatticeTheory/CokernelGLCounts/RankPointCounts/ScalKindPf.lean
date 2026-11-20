@@ -60,7 +60,8 @@ def wv (F' : LFlag S r T') (v : Fin (r + 1) → E) : S.V := ∑ j, v j • F'.fl
 
 theorem hT_wv (F : LFlag S r T) (F' : LFlag S r T') (v : Fin (r + 1) → E) (i : Fin (r + 1)) :
     S.hT (F.fl.fvec i) (wv F' v) = (Zhat F.fl F'.fl *ᵥ v) i := by
-  simp only [wv, Matrix.mulVec, dotProduct, map_sum, map_smul, smul_eq_mul, zhat_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [wv, Matrix.mulVec, dotProduct, map_sum, map_smul, smul_eq_mul, zhat_apply]
   exact Finset.sum_congr rfl fun j _ => mul_comm _ _
 
 theorem wv_eq (F' : LFlag S r T') (v : Fin (r + 1) → E) :

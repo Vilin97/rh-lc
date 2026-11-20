@@ -35,7 +35,8 @@ theorem line_sup_eq_ker (y ℓ : Fin n → ℂ) (J : Ideal (MvPolynomial (Fin n)
   set I := J ⊔ Ideal.span {linForm ℓ - 1} with hI
   have hsmul : ∀ t : ℂ, eval (t • y) (linForm ℓ) = t * c := by
     intro t
-    simp only [hc, linForm, map_sum, map_mul, eval_C, eval_X, Pi.smul_apply, smul_eq_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hc, linForm, map_sum, map_mul, eval_C, eval_X, Pi.smul_apply, smul_eq_mul,
       Finset.mul_sum]
     exact Finset.sum_congr rfl fun j _ => by ring
   apply le_antisymm
@@ -49,7 +50,8 @@ theorem line_sup_eq_ker (y ℓ : Fin n → ℂ) (J : Ideal (MvPolynomial (Fin n)
         ring
       have hs : ∑ a, C (ℓ a) * (C (y a) * X b - C (y b) * X a) =
           C c * X b - C (y b) * linForm ℓ := by
-        rw [hc, map_sum, Finset.sum_mul, linForm, Finset.mul_sum, ← Finset.sum_sub_distrib]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [hc, map_sum, Finset.sum_mul, linForm, Finset.mul_sum, ← Finset.sum_sub_distrib]
         refine Finset.sum_congr rfl fun a _ => ?_
         rw [map_mul]
         ring
@@ -96,7 +98,8 @@ theorem PointSliceMass.proof : PointSliceMass.Statement := by
     apply hℓ
     rw [hline]
     intro t
-    simp only [linForm, map_sum, map_mul, eval_C, eval_X, Pi.smul_apply, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [linForm, map_sum, map_mul, eval_C, eval_X, Pi.smul_apply, smul_eq_mul]
     rw [← mul_zero t, ← h0, Finset.mul_sum]
     exact Finset.sum_congr rfl fun j _ => by ring
   rw [line_sup_eq_ker y ℓ J hline hly, PointIntegral.proof, hδ1, Nat.cast_one]

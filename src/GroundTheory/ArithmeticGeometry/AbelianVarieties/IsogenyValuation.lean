@@ -188,7 +188,8 @@ theorem valuation_le_one_of_isIntegral {K : Type*} [Field K] [Algebra F K]
   have hmon : (minpoly M z).Monic := minpoly.monic hz
   have h0 := minpoly.aeval M z
   rw [hmon.as_sum] at h0
-  simp only [map_add, map_pow, aeval_X, map_sum, map_mul, aeval_C] at h0
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_add, map_pow, aeval_X, map_sum, map_mul, aeval_C] at h0
   set n := (minpoly M z).natDegree
   have hpow : ∀ i : ℕ, v z ^ i = exp (i * k) := fun i => by
     rw [hk, ← exp_nsmul, nsmul_eq_mul]

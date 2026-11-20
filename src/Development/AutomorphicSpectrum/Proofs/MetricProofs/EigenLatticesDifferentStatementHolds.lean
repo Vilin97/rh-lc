@@ -238,7 +238,8 @@ theorem eigenLat_le [Fintype (E →+* K)] (hc : Fintype.card (E →+* K) = Modul
       obtain ⟨u, hu, rfl⟩ := hv
       funext a
       have e := congrArg (fun z : I => s ((z : Fin N → E) a)) (hxf ⟨u, hu⟩)
-      simp only [Submodule.coe_sum, Finset.sum_apply, map_sum] at e
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Submodule.coe_sum, Finset.sum_apply, map_sum] at e
       simp only [tmap_gen, hφ _ ⟨u, hu⟩ , Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
       rw [← e]
       refine Finset.sum_congr rfl fun i _ => ?_

@@ -47,7 +47,8 @@ theorem polarization_match_deriv : _root_.GlobalTheory.FunPr.ThetaLocalInputs �
     have e : (∑ i, fun t : ℝ => om (1, γ (Multiplicative.ofAdd t)) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure (f i) (φ i)) x) =
         fun t : ℝ => om (1, γ (Multiplicative.ofAdd t)) (∑ i, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure (f i) (φ i)) x := by
       funext t
-      rw [Finset.sum_apply, map_sum, Finset.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Finset.sum_apply, map_sum, Finset.sum_apply]
     rw [e] at hs
     rw [(hd x).unique hs, Finset.sum_apply]
   have hΦ₁' : Φ₁' = ∑ j, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure (δ' (f' j)) (φ' j) := by
@@ -56,7 +57,8 @@ theorem polarization_match_deriv : _root_.GlobalTheory.FunPr.ThetaLocalInputs �
     have e : (∑ j, fun t : ℝ => om' (1, γ (Multiplicative.ofAdd t)) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure (f' j) (φ' j)) x) =
         fun t : ℝ => om' (1, γ (Multiplicative.ofAdd t)) (∑ j, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure (f' j) (φ' j)) x := by
       funext t
-      rw [Finset.sum_apply, map_sum, Finset.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Finset.sum_apply, map_sum, Finset.sum_apply]
     rw [e] at hs
     rw [(hd' x).unique hs, Finset.sum_apply]
   have hR := hMt.real
@@ -92,7 +94,8 @@ theorem polarization_match_deriv : _root_.GlobalTheory.FunPr.ThetaLocalInputs �
     fun i => ⟨(hδ (f i) (hf i).1).1, (hf i).2.1, (hf i).2.2⟩,
     fun j => ⟨(hδ' (f' j) (hf' j).1).1, (hf' j).2.1, (hf' j).2.2⟩, rfl, rfl, ?_⟩
   have := congrArg (LinearMap.rTensor _ L) heq
-  simp only [map_sum, LinearMap.rTensor_tmul] at this
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.rTensor_tmul] at this
   simpa only [hL _ (hf _).1, hL' _ (hf' _).1] using this
 end GlobalTheory.LineMatch
 end

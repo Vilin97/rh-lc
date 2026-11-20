@@ -58,7 +58,8 @@ theorem line_derivative_split_eq_sum : _root_.GlobalTheory.FunPr.ThetaLocalInput
         have e : (fun t : ℝ => om (γ (Multiplicative.ofAdd t), 1) ΦD x) =
             fun t => ∑ j, om (γ (Multiplicative.ofAdd t), 1) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure (c j • f j) (φ j)) x := by
           funext t
-          rw [hΦ, map_sum, Finset.sum_apply]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [hΦ, map_sum, Finset.sum_apply]
         rw [e]
         have hs := HasDerivAt.sum (u := Finset.univ) fun j _ => GlobalTheory.ThetaFacInf.Fib.hasDerivAt_pure (φ j) (hSB j) (hstd j)
           ((hDγ _ (hmem j) _).2 rfl) x

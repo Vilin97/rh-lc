@@ -103,7 +103,8 @@ theorem capelli_coef : PI.UnitaryGroupMassFormula.CapelliEig.FunAct := by
   have h0 : IsCoef ε σ P B (fun x => P.comp ((σ x).comp Q)) := fun _ _ _ => rfl
   have e : Q w = (B w : Hs) := rfl
   rw [e, actU_eq hσ]
-  simp only [capelli, qdetOp, qminorOp, qdet, qminor, map_sum, map_mul, map_intCast, Finset.sum_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [capelli, qdetOp, qminorOp, qdet, qminor, map_sum, map_mul, map_intCast, Finset.sum_apply,
     _root_.sum_apply, LinearMap.sum_apply, Submodule.coe_sum, Pi.smul_apply,
     _root_.smul_apply]
   refine Finset.sum_congr rfl fun τ _ => ?_

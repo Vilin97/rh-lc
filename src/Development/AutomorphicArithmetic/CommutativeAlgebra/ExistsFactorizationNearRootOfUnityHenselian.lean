@@ -124,7 +124,8 @@ private lemma eval_lin (c : D) (a y : Fin n → D) :
 
 private lemma pderiv_lin (c : D) (a : Fin n → D) (j : Fin n) :
     MvPolynomial.pderiv j (lin c a) = MvPolynomial.C (a j) := by
-  simp [lin, MvPolynomial.pderiv_X, Pi.single_apply, map_sum, Derivation.leibniz]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [lin, MvPolynomial.pderiv_X, Pi.single_apply, map_sum, Derivation.leibniz]
 
 end
 

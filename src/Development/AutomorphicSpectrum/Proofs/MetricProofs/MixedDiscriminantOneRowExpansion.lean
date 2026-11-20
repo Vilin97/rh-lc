@@ -40,7 +40,8 @@ theorem pderiv_row_weight (c v : ℝ) : pderiv (some 0 : Option (Fin 2)) (rowW !
 theorem eval_row_weight (n : Fin 3 → ℝ) (c v : ℝ) :
     evalW n n (rowW ![c, 0] v) = lin4 (fun i => c * n i) + C v * X none := by
   have h : lin4 (fun i => c * n i) = C c * lin4 n := by
-    simp only [lin4, lin3, map_sum, map_mul, rename_C, rename_X, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [lin4, lin3, map_sum, map_mul, rename_C, rename_X, Finset.mul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     ring
   rw [h]
@@ -59,7 +60,8 @@ theorem extract_one : ∀ (d : ℕ) (T : Fin 3 → Matrix (Fin d) (Fin d) ℂ) (
   have h1 := ((GlobalTheory.T.mixed_discriminant_cofactor_expansion d).1 (fun r => (c r : ℂ) * e)
     (fun r => (∑ i, ((c r * n i : ℝ) : ℂ) • T i) + ((v r : ℝ) : ℂ) • H))
   refine h1.trans ?_
-  rw [pderiv_fin_prod, map_sum, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [pderiv_fin_prod, map_sum, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun r _ => ?_
   have h3 := hL (fun s i => c (r.succAbove s) * n i) (fun s => v (r.succAbove s))
   rw [h3, pderiv_row_weight, map_mul (evalW n n), map_prod (evalW n n)]

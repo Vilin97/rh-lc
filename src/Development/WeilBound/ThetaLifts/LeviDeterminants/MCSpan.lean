@@ -143,7 +143,8 @@ theorem comp_mem_adm {κ₁ : Type} [Fintype κ₁] (e : ((κ → AF F) → ℂ)
   have h2 : ∀ k, e (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure f (φ k)) = pureA F (ei f : (κ₁ → mixedEmbedding.mixedSpace F) → ℂ)
       (fun y => ∏ᶠ v, ev v (φ k v) fun i => evalV F v (y i)) := fun k =>
     hloc f (φ k) (hφSB k) (hφstd k)
-  simp only [LinearMap.comp_apply, h1, map_sum, map_smul, h2, hT, FunLike.coe_sum, Finset.sum_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [LinearMap.comp_apply, h1, map_sum, map_smul, h2, hT, FunLike.coe_sum, Finset.sum_apply,
     FunLike.coe_smul, Pi.smul_apply, ContinuousLinearMap.coe_comp, Function.comp_apply]
 
 end PositivityTheory.ThKF0.Span

@@ -78,7 +78,8 @@ theorem exists_sympl_of_selfDual {V : Type} [AddCommGroup V] [Module ℚ V] [Fin
         have : ∀ i, ψ (e i) = -(φ (e i) : ℚ) := fun i => by
           have := eQ.constr_basis ℚ (fun i => -(φ (e i) : ℚ)) i
           rwa [Module.Basis.mk_apply] at this
-        simp only [AddSubmonoidClass.coe_finset_sum, SetLike.val_smul, map_sum, map_zsmul, this]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [AddSubmonoidClass.coe_finset_sum, SetLike.val_smul, map_sum, map_zsmul, this]
         simp
       let z := (B.toDual hnd).symm ψ
       have hz : ∀ y, B z y = ψ y := fun y => LinearMap.BilinForm.apply_toDual_symm_apply ψ y

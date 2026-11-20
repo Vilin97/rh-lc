@@ -64,7 +64,8 @@ theorem hilbert90_baseChange : ∀ (F E K : Type) [Field F] [CharZero F] [Field 
   have hfix : ∀ c, x * T (Θ c) = Θ c := by
     intro c
     have h1 : x * T (Θ c) = ∑ i ∈ Finset.range m, a (i + 1) * (T ^ (i + 1)) c := by
-      rw [hΘ, map_sum, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hΘ, map_sum, Finset.mul_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_mul, ← mul_assoc, ha, pow_succ', AlgHom.mul_apply]
     have h2 := Finset.sum_range_succ' (fun i => a i * (T ^ i) c) m
@@ -89,7 +90,8 @@ theorem hilbert90_baseChange : ∀ (F E K : Type) [Field F] [CharZero F] [Field 
     have := Fintype.linearIndependent_iff.1 hli (fun i => Ideal.Quotient.mk 𝔪 (a i)) (by
       ext c
       have h := Ideal.Quotient.eq_zero_iff_mem.2 (hcon (1 ⊗ₜ c))
-      rw [hΘ, map_sum, Finset.sum_range] at h
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hΘ, map_sum, Finset.sum_range] at h
       simp only [htm, map_mul] at h
       rw [Finset.sum_apply]
       exact h) ⟨0, hm0⟩

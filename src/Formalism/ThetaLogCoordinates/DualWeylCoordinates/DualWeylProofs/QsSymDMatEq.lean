@@ -123,6 +123,7 @@ lemma qs_SM_diag {A : Type*} [CommRing A] (d : Fin n → A) (b : ℕ) (α β : S
 lemma qs_SM_map {A B : Type*} [CommRing A] [CommRing B] (f : A →+* B) (G : Matrix (Fin n) (Fin n) A) (b : ℕ)
     (α β : SymIdx n b) : f (qs_SM G b α β) = qs_SM (G.map f) b α β := by
   rw [qs_SM, qs_SM, ← MvPolynomial.coeff_map]
-  simp [map_prod, map_pow, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_prod, map_pow, map_sum]
 
 end Formalism.InvariantFactorPaths.ColumnFamilies

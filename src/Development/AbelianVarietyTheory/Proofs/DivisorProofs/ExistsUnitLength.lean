@@ -312,12 +312,14 @@ theorem extend_family [IsAdicComplete (maximalIdeal O) O] [Finite (ResidueField 
         · obtain ⟨a, hai⟩ := (hdual z).1 hz (v i) (hv i)
           rw [← hai, algebraMap_smul]
           exact L.smul_mem _ (hv i)
-        · rw [← hB, map_sub, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          · rw [← hB, map_sub, map_sum]
           simp only [hB, hm, hon]
           simp
       have := hyz _ hz'
       have hvy : ∀ i, h (v i) y = 0 := fun i => by rw [hc, (hφ y).1 hy i, map_zero]
-      rw [hc, ← hB, map_sub, map_sum] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hc, ← hB, map_sub, map_sum] at this
       simp only [hB, hm, hvy, mul_zero, Finset.sum_const_zero, sub_zero] at this
       rw [hc]
       exact this)

@@ -113,7 +113,8 @@ private theorem evCongr {l : ℕ} [Fact l.Prime] {V M X : Type} [AddCommGroup V]
     intro m
     have : i m = Fintype.linearCombination ℚ_[l] (i ∘ e) fun j => (e.equivFun m j : ℚ_[l]) := by
       conv_lhs => rw [← e.sum_equivFun m]
-      rw [Fintype.linearCombination_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Fintype.linearCombination_apply, map_sum]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [map_smul, ← algebraMap_smul ℚ_[l]]
       rfl

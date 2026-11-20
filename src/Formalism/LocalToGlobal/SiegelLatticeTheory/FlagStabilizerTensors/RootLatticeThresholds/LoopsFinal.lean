@@ -82,7 +82,8 @@ theorem frameEqvInj_of (hFC : FrameChangeAt W hI) (u u' : D.what₂.Word) :
   refine term_injC W hI t t' hL ⟨n, hn, m, hm, fun b => ?_⟩
   have e1 : frame (fl'Of W hI t') b = frameAct (fun a => n (frame (fl'Of W hI t) a)) ξ b := congrFun hfr b
   rw [e1, hmf b]
-  simp only [frameAct, map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [frameAct, map_sum, map_smul]
 
 end AtOne
 

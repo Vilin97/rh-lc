@@ -88,7 +88,8 @@ theorem T_dd (g : G) : (T g).1 (dd K) = ∑ y ∈ (hp g).toFinset, Finsupp.singl
   h1 g _ (by simp)
 
 theorem augmentation_of_hecke_operator (g : G) : eps K ((T g).1 (dd K)) = q hp g := by
-  rw [T_dd T hp h1, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [T_dd T hp h1, map_sum]
   simp [eps_single, q]
 
 include h3
@@ -104,7 +105,8 @@ theorem mul_of {g h u : G} (H : ∀ k ∈ K, ∃ a ∈ K, ∃ b ∈ K, h * k * g
   have hw : (T g * T h).1 (dd K) =
       ∑ y ∈ (hp h).toFinset, lam K (Quotient.out y) ((T g).1 (dd K)) := by
     show (T g).1 ((T h).1 (dd K)) = _
-    rw [T_dd T hp h1 h, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [T_dd T hp h1 h, map_sum]
     refine Finset.sum_congr rfl fun y _ => ?_
     rw [← lam_out_dd, hk_comm]
   have key : ∀ y ∈ (hp h).toFinset, ∀ z ∈ (hp g).toFinset,
@@ -131,7 +133,8 @@ theorem mul_of {g h u : G} (H : ∀ k ∈ K, ∃ a ∈ K, ∃ b ∈ K, h * k * g
     intro y hy
     rw [hw, Finsupp.finsetSum_apply]
     refine Finset.sum_eq_zero fun x hx => ?_
-    rw [T_dd T hp h1 g, map_sum, Finsupp.finsetSum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [T_dd T hp h1 g, map_sum, Finsupp.finsetSum_apply]
     refine Finset.sum_eq_zero fun z hz => ?_
     rw [lam_single, Finsupp.single_apply, if_neg]
     intro e
@@ -147,7 +150,8 @@ theorem mul_of {g h u : G} (H : ∀ k ∈ K, ∃ a ∈ K, ∃ b ∈ K, h * k * g
     have e1 : eps K ((T g * T h).1 (dd K)) = c * q hp u := by
       rw [hfix, map_smul, ← T_dd T hp h1 u, augmentation_of_hecke_operator T hp h1, smul_eq_mul]
     have e2 : eps K ((T g * T h).1 (dd K)) = q hp g * q hp h := by
-      rw [hw, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hw, map_sum]
       simp only [eps_lam, augmentation_of_hecke_operator T hp h1]
       simp [q, mul_comm]
     rw [← e1, e2]

@@ -27,7 +27,8 @@ theorem linInd_of_basis {K C X M I : Type} [Field K] [Field C] [AddCommGroup X] 
   refine (funext fun a => ?_ : (fun a => f (x a)) = _) ▸ h3
   simp only [Function.comp_apply]
   rw [Finsupp.linearCombination_apply, Finsupp.sum_mapRange_index (by simp)]
-  conv_lhs => rw [← b.linearCombination_repr (x a), Finsupp.linearCombination_apply, Finsupp.sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [← b.linearCombination_repr (x a), Finsupp.linearCombination_apply, Finsupp.sum, map_sum]
   simp only [map_smulₛₗ, Finsupp.sum]
 
 theorem exists_avatar {K C X W M I : Type} [Field K] [Field C] [AddCommGroup X] [Module K X] [AddCommGroup W] [Module ℂ W]
@@ -53,7 +54,8 @@ theorem exists_avatar {K C X W M I : Type} [Field K] [Field C] [AddCommGroup X] 
     · simp
   refine ⟨θ, hs, fun x => ?_, (injective_iff_map_eq_zero θ).2 fun w hw => ?_⟩
   · rw [← b.sum_repr x]
-    simp only [map_sum, map_smulₛₗ, hs, hb, ← h, RingEquiv.symm_apply_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smulₛₗ, hs, hb, ← h, RingEquiv.symm_apply_apply]
   · have := Fintype.linearIndependent_iff.1 hΦ _ ((hθ w).symm.trans hw)
     refine B.ext_elem fun i => ?_
     simpa using this i
@@ -96,11 +98,14 @@ theorem exists_reading (P : ClassPres ι S σ ρ J χ) {C M : Type} [Field C] [A
     have h2 := h1 (fun i => io (a i)) (funext fun g => hinj ?_) i
     · simpa using h2
     have h3 := congrArg (fun F => Λ g (F g)) ha
-    simp only [Finset.sum_apply, Pi.smul_apply, hrd, map_sum, map_smul, hm, mul_inv_cancel, map_one, Module.End.one_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Finset.sum_apply, Pi.smul_apply, hrd, map_sum, map_smul, hm, mul_inv_cancel, map_one, Module.End.one_apply,
       Pi.zero_apply, map_zero] at h3
-    simp only [Finset.sum_apply, Pi.smul_apply, map_sum, hs, RingEquiv.symm_apply_apply, Pi.zero_apply, map_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Finset.sum_apply, Pi.smul_apply, map_sum, hs, RingEquiv.symm_apply_apply, Pi.zero_apply, map_zero]
     exact h3
-  · rw [hrd, hA, dcOp, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [hrd, hA, dcOp, map_sum, map_sum]
     refine Finset.sum_congr rfl fun s hs' => ?_
     have e : Λ s⁻¹ = 1 := by
       have := map_mul Λ s⁻¹ s

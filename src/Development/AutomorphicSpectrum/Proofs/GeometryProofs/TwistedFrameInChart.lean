@@ -120,7 +120,8 @@ theorem exists_chart_frame : ∀ (X : Scheme.{0}) (Ω : Type) [Field Ω] (ξ : S
     intro l e he
     rw [hLp] at he
     obtain ⟨cf, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun _).1 he
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine sum_mem fun i _ => ?_
     rw [Subring.smul_def, map_smul, hw, smul_eq_mul]
     refine mul_mem (cf i).2 ?_
@@ -178,7 +179,8 @@ theorem exists_chart_frame : ∀ (X : Scheme.{0}) (Ω : Type) [Field Ω] (ξ : S
     rw [Matrix.mul_apply]
     simp only [Matrix.of_apply]
     conv_lhs => rw [hbexp l]
-    rw [map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_smul, smul_eq_mul]
     first

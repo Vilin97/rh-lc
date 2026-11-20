@@ -32,10 +32,12 @@ theorem T_phi_expand {W A C₀ : Type} [CommRing W] [CommRing A] [CommRing C₀]
     have h1 : (1 : K₀) ⊗ₜ[W] φL y = φD (1 ⊗ₜ y) := by rw [hD, map_one]
     have h2 : φD ((1 : K₀) ⊗ₜ[W] y) = ∑ s, fr (b.coord s (1 ⊗ₜ y)) • φD (b s) := by
       conv_lhs => rw [← b.sum_repr ((1 : K₀) ⊗ₜ[W] y)]
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simp_rw [hsmul]
       rfl
-    rw [h1, h2, map_sum, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h1, h2, map_sum, map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun s _ => ?_
     rw [map_smul, smul_eq_mul, map_mul]
     ring

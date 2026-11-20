@@ -202,7 +202,8 @@ theorem existsUnique_pairV (l : P.T →ₗ[ℤ_[p]] C) : ∃! w : P.V, ∀ t, P.
   obtain ⟨n, e, s, h1, h2⟩ := P.exists_dual_bases
   refine ⟨∑ i, l (e i) ⊗ₜ s i, fun t => ?_, fun w hw => ?_⟩
   · conv_rhs => rw [← e.sum_repr t]
-    simp only [map_sum, LinearMap.sum_apply, pairV_tmul, h1, map_smul, _root_.mul_one]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.sum_apply, pairV_tmul, h1, map_smul, _root_.mul_one]
   · conv_lhs => rw [← (s.baseChange C).sum_repr w]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [h2, hw, Module.Basis.baseChange_apply, TensorProduct.smul_tmul', smul_eq_mul, _root_.mul_one]

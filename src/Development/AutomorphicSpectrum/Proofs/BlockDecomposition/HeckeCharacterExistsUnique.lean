@@ -61,7 +61,8 @@ theorem avg_act {S : Subgroup H} [S.Normal] [S.FiniteIndex] {x : V} (hx : S ≤ 
 
 theorem act_avg {S : Subgroup H} [S.Normal] [S.FiniteIndex] {x : V} (hx : S ≤ stab ρ x) (k : H) :
     ρ k (avg ρ S x) = avg ρ S x := by
-  rw [avg_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [avg_apply, map_sum]
   refine Fintype.sum_equiv (Equiv.mulLeft (k : H ⧸ S)) _ _ fun q => ?_
   rw [← Module.End.mul_apply, ← map_mul, act_eq_out hx]
   congr 3

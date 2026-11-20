@@ -100,7 +100,8 @@ theorem GlobalTheory.LatJet.baseChange_liftFil : GlobalTheory.Published.AbelianD
           (GrpMor.pull_pull Y.mor M (m.comp mor') (fun r ↦ map_algebraMap σ J J' τ hτ r)
             (by simp) c₀).symm
       rw [e1, hd', hd₀ c₀, hx c₀]
-      simp only [map_add, map_sum, map_mul, map_algebraMap σ J J' τ hτ, map_t σ J J' τ hτ,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_add, map_sum, map_mul, map_algebraMap σ J J' τ hτ, map_t σ J J' τ hτ,
         fun i ↦ hN i x₀ x hx c₀]
     | zero => simp
     | add a b _ _ ha hb =>

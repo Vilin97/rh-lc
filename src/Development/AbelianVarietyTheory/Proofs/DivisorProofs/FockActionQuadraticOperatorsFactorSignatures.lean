@@ -99,7 +99,8 @@ theorem dual {l : Type} [Fintype l] (φ : (∀ w, MD P Q R S w) ≃ₗ[ℝ] (l �
   obtain ⟨c, rfl⟩ := φ.surjective x
   have e1 : ∀ i, sympl (φ (cv i)) (φ c) • φ (cu i) = φ (sympl (φ (cv i)) (φ c) • cu i) :=
     fun i => (map_smul φ _ _).symm
-  simp only [e1, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [e1, ← map_sum]
   congr 1
   conv_rhs => rw [decomp c]
   rw [sum_idx]
@@ -178,7 +179,8 @@ theorem quad_fockD : ∀ (ι l : Type) [Fintype ι] [DecidableEq ι] [Fintype l]
     refine Finset.sum_congr rfl fun w _ => ?_
     dsimp only
     rw [GlobalTheory.T.fockAct2_eq_symmetrised_heisenbergQuadratic (P w) (Q w) (R w) (S w) (Y w) (hY w)]
-    simp only [← atPlLin_apply, map_smul, map_sum, map_sub, map_add, atPlLin_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [← atPlLin_apply, map_smul, map_sum, map_sub, map_add, atPlLin_mul]
     congr 1
     refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
     rw [lineSign_eq_sgn]
@@ -187,7 +189,8 @@ theorem quad_fockD : ∀ (ι l : Type) [Fintype ι] [DecidableEq ι] [Fintype l]
     module
   rw [hop, hq]
   clear hq hop hφ hY
-  simp only [ContinuousLinearMap.smul_apply, ContinuousLinearMap.coe_sum', Finset.sum_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [ContinuousLinearMap.smul_apply, ContinuousLinearMap.coe_sum', Finset.sum_apply,
     ContinuousLinearMap.add_apply, ContinuousLinearMap.mul_apply, LinearMap.smul_apply, LinearMap.sum_apply,
     LinearMap.add_apply, Module.End.mul_apply, map_smul, map_sum, map_add, hΨ, hZ]
 

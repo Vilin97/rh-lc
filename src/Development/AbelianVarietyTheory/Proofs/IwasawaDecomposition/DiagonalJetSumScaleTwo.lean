@@ -37,7 +37,8 @@ theorem GlobalTheory.ExpUniqCh0.diag_comp_jet : ∀ {S : Type} [CommRing S] {ρ 
   · apply Ideal.Quotient.algHom_ext
     apply MvPolynomial.algHom_ext
     intro r
-    simp only [AlgHom.comp_apply, Ideal.Quotient.mkₐ_eq_mk, jetSum, jetScale, diag, jetMap_mk_X', jetMap_mk',
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [AlgHom.comp_apply, Ideal.Quotient.mkₐ_eq_mk, jetSum, jetScale, diag, jetMap_mk_X', jetMap_mk',
       map_sum, map_mul, MvPolynomial.aeval_X, MvPolynomial.aeval_C, Fin.sum_univ_two]
     rw [← map_mul, map_add, MvPolynomial.aeval_X, MvPolynomial.aeval_X, ← two_mul]
     congr 1

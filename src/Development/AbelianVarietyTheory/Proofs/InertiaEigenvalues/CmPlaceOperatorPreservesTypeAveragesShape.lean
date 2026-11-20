@@ -35,7 +35,8 @@ theorem opP_comm {om : GA D S × GA D T →* Module.End ℂ (WO S T → ℂ)}
     (hc : ∀ y ∈ c.support, IsHalf e y) (h : GA D T) {B : Module.End ℂ (WO S T → ℂ)} (hB : CommAt ψ S T e B)
     (hBh : ∀ f, IsThetaFunO ψ S T f → B (om (1, h) f) = om (1, h) (B f)) {f : WO S T → ℂ} (hf : IsThetaFunO ψ S T f) :
     B (opP ψ S T om c h f) = opP ψ S T om c h (B f) := by
-  simp only [opP, LinearMap.sum_apply, LinearMap.smul_apply, Module.End.mul_apply, map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [opP, LinearMap.sum_apply, LinearMap.smul_apply, Module.End.mul_apply, map_sum, map_smul]
   refine Finset.sum_congr rfl fun y hy => ?_
   rw [GlobalTheory.SplitScalar.heisL_apply, GlobalTheory.SplitScalar.heisL_apply, (hB _ (hpres _ _ hf)).2 y (hc y hy), hBh f hf]
 
@@ -92,7 +93,8 @@ theorem placeOp_keep : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T : Ty
   · obtain ⟨w, hw, how⟩ := hov
     have h0 := hCl PP a ha tr z hz ⟨w, (mem_dropPl.1 hw).2, how⟩ κ hκ fun g hg => suppIn_of_drop (hsup g hg)
     unfold avgW at h0 ⊢
-    rw [← map_zero (opP R.ψ _ _ (R.ωP i t) c h), ← h0, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_zero (opP R.ψ _ _ (R.ωP i t) c h), ← h0, map_sum]
     refine Finset.sum_congr rfl fun g _ => ?_
     by_cases hg : mirC R i PP a tr z g = 0
     · rw [hg, zero_mul, zero_smul, zero_smul, map_zero]

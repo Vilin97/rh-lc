@@ -88,12 +88,14 @@ theorem free_rank_one {O k M : Type} [CommRing O] [Field k] [Algebra O k] [AddCo
     intro s g hg i hi
     choose g' hg' using fun i => hs (g i)
     have h0 : q (∑ j ∈ s, g' j • b j) = 0 := by
-      rw [map_sum, ← hg]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, ← hg]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [map_smul, ← hg', algebraMap_smul]
     obtain ⟨y, hy⟩ := (hker _).mp h0
     have := congrArg (fun z => b.repr z i) hy
-    simp only [map_sum, map_smul, Module.Basis.repr_self, Finsupp.coe_finsetSum, Finset.sum_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, Module.Basis.repr_self, Finsupp.coe_finsetSum, Finset.sum_apply,
       Finsupp.smul_apply, smul_eq_mul] at this
     rw [Finset.sum_eq_single i (fun j _ hj => by simp [hj]) (fun h => absurd hi h)] at this
     rw [← hg', hk]

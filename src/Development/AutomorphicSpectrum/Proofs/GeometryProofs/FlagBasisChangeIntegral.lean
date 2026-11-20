@@ -94,7 +94,8 @@ theorem red_indep {ι : Type} [Fintype ι] [DecidableEq ι] {r : ℕ} (D Ee : ι
   calc c l = ∑ l', c l' * (if l = l' then 1 else 0) := by simp
     _ = ∑ l', c l' * ∑ i, residue R (Ee l i) * residue R (D l' i) := by
         refine Finset.sum_congr rfl fun l' _ => ?_
-        rw [← hδ l', map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [← hδ l', map_sum]
         simp only [map_mul]
     _ = ∑ i, residue R (Ee l i) * ∑ l', c l' * residue R (D l' i) := by
         simp only [Finset.mul_sum]

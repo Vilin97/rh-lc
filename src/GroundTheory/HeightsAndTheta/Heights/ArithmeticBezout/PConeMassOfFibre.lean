@@ -37,7 +37,8 @@ theorem homogeneousComponent_aeval_coordPlaneSubst (m k d : ℕ) (f : MvPolynomi
     rw [homogeneousComponent_of_mem ((mem_homogeneousSubmodule _ _).2 he)]
     exact if_congr eq_comm rfl rfl
   conv_lhs => rw [← sum_homogeneousComponent f]
-  rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum]
   simp_rw [hterm]
   rw [Finset.sum_ite_eq']
   split_ifs with hd

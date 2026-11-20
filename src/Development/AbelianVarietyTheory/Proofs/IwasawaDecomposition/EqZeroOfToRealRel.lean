@@ -61,7 +61,8 @@ theorem eq_zero_of_toReal_rel {a b : ℕ} {u : Fin a → LinearMap.BilinForm ℤ
   have hq : ∀ x y : X, ∑ j, ((u j x y : ℤ) : ℚ) * f (r j) = ∑ k, ((v k x y : ℤ) : ℚ) * f (s k) := by
     intro x y
     have hxy := congrArg f (hpt x y)
-    rw [map_sum, map_sum] at hxy
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum] at hxy
     simpa only [e] using hxy
 
   let N : ℕ := (∏ j, (f (r j)).den) * ∏ k, (f (s k)).den

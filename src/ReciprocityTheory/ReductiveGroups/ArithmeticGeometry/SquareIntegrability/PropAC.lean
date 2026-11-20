@@ -122,7 +122,8 @@ theorem pa_opNorm_le (L : EuclideanSpace ℂ ι →L[ℂ] ℂ) :
     simp [Pi.single_apply, mul_ite, Finset.sum_ite_eq]
   calc ‖L v‖ = ‖∑ j, v j • L (EuclideanSpace.single j 1)‖ := by
         conv_lhs => rw [hv]
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         simp only [map_smul]
     _ ≤ ∑ j, ‖v j‖ * ‖L (EuclideanSpace.single j 1)‖ :=
         (norm_sum_le _ _).trans (le_of_eq (Finset.sum_congr rfl fun j _ => norm_smul _ _))
@@ -245,7 +246,8 @@ theorem Hf_add_right (a b c : EuclideanSpace ℂ ι) : Hf a (b + c) = Hf a b + H
   simp [Hf, mul_add, Finset.sum_add_distrib]
 
 theorem Hf_swap (a b : EuclideanSpace ℂ ι) : Hf b a = (starRingEnd ℂ) (Hf a b) := by
-  simp [Hf, map_sum, mul_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Hf, map_sum, mul_comm]
 
 theorem pa_factor (q : ℕ) (v g g' : EuclideanSpace ℂ ι) (kk : ℤ) (hkk : (Hf g' g).im = kk) :
     cexp (-(Real.pi * q * (Hf g g').im) * I) *

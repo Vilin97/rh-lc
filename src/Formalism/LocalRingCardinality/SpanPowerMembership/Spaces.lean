@@ -56,7 +56,8 @@ theorem diagForm_single (N : ℕ) (neg : Fin N → Bool) (i j : Fin N) :
 theorem diagForm_isSymm (N : ℕ) (neg : Fin N → Bool) : (diagForm (E := E) N neg).IsSymm := by
   constructor
   intro x y
-  simp only [diagForm_apply, map_sum, starRingEnd_apply, star_mul', star_star, star_sgn]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [diagForm_apply, map_sum, starRingEnd_apply, star_mul', star_star, star_sgn]
   refine Finset.sum_congr rfl fun i _ => ?_
   ring
 

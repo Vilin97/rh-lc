@@ -133,7 +133,8 @@ theorem lrb_aeval_hom {σ τ Mo : Type*} [AddCommMonoid Mo] (w : τ → Mo) (φ 
     (hφ : ∀ v, IsWeightedHomogeneous w (φ v) (ω v)) (x : MvPolynomial σ R) (κ : Mo)
     (hx : IsWeightedHomogeneous ω x κ) : IsWeightedHomogeneous w (aeval φ x) κ := by
   conv => enter [2, 2]; rw [x.as_sum]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine IsWeightedHomogeneous.sum _ _ _ fun d hd => ?_
   rw [aeval_monomial, ← hx (mem_support_iff.mp hd), Finsupp.weight_apply, MvPolynomial.algebraMap_eq]
   refine IsWeightedHomogeneous.C_mul ?_ _

@@ -135,7 +135,8 @@ theorem exists_sum_mul_mul_eq_matrixUnit (n : ℕ) (hn : 0 < n) (hC : Module.fin
     apply LinearMap.ext
     intro x
     obtain ⟨c, hc, -⟩ := he x
-    rw [hc, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hc, map_sum]
     have hfW := f.2
     simp only [W, Submodule.mem_mk, AddSubmonoid.mem_mk, AddSubsemigroup.mem_mk, Set.mem_setOf_eq] at hfW
     simp only [ZeroMemClass.coe_zero, LinearMap.zero_apply]

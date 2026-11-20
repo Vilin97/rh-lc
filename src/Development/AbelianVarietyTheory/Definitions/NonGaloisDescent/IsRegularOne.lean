@@ -32,7 +32,8 @@ def lauHom (deg : M →* Multiplicative (ι → ℤ)) (ρ : Representation ℂ M
   toLinearMap := lau V c
   isIntertwining' g := by
     refine LinearMap.ext fun y => ?_
-    simp only [lau, Finsupp.sum, LinearMap.comp_apply, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [lau, Finsupp.sum, LinearMap.comp_apply, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul]
     exact Finset.sum_congr rfl fun μ _ => congrArg _ (LinearMap.congr_fun (shift_univ deg ρ μ g) y)
 
 def evalLau [Fintype ι] (c : (ι → ℤ) →₀ ℂ) (u : ι → ℂˣ) : ℂ := c.sum fun μ w => w * ((∏ a, u a ^ μ a : ℂˣ) : ℂ)

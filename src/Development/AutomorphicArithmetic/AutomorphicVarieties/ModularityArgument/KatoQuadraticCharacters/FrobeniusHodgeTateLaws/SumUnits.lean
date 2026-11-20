@@ -74,7 +74,8 @@ theorem UpperTheory.V.Z.Kato.Joint.rhsEq :
           (2 * ι.symm (θ (a : ZMod N)) * ι.symm ((θ * χ)⁻¹ (b : ZMod N))) • fun i => ι.symm (F i) := by
         funext i
         apply ι.injective
-        simp only [avg, Pi.smul_apply, smul_eq_mul, map_mul, map_sum, RingEquiv.apply_symm_apply, map_ofNat]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [avg, Pi.smul_apply, smul_eq_mul, map_mul, map_sum, RingEquiv.apply_symm_apply, map_ofNat]
         rw [← h3 i]
         refine Finset.sum_congr rfl fun u _ => ?_
         rw [hδ _ (ZMod.val_coe_unit_coprime u), ZMod.natCast_zmod_val]

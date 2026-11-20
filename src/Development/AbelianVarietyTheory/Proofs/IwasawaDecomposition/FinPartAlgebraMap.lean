@@ -134,9 +134,11 @@ theorem idem_props : ∀ D : D7, (∀ v v' : Pl D, v ≠ v' → idem D v * idem 
     exact TensorProduct.zero_tmul _ _
   · have h : (∑ τ, idem D (.inr τ)) =
         algebraMap (AF D.host.F) (AE D) (∑ v : InfinitePlace D.host.F, eInf D.host.F v) := by
-      rw [← hb.sum_comp, map_sum (algebraMap (AF D.host.F) (AE D))]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hb.sum_comp, map_sum (algebraMap (AF D.host.F) (AE D))]
       rfl
-    rw [h, infPart_algebraMap, map_sum (fstA D.host.F), sum_single_one]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h, infPart_algebraMap, map_sum (fstA D.host.F), sum_single_one]
     rfl
   · intro v
     exact ⟨eFin D.host.F v, ⟨singleV D.host.F v 1, rfl, evalV_single_same _ v, fun v' h => evalV_single_ne _ h⟩, rfl⟩

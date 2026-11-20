@@ -54,7 +54,8 @@ theorem good_tensor {Z O : Type} [CommRing Z] [CommRing O] [Algebra Z O] {I : Ty
     exact ⟨crd b i r, by rw [← hp, ← hr]⟩
   · choose s r hs using fun i => h.2.2 fun k => crd b i (x k)
     refine ⟨∑ j, b j ⊗ₜ[Z] s j, fun k => ⟨∑ j, b j ⊗ₜ[Z] r j k, ext_crd b fun i => ?_⟩⟩
-    rw [map_sub, hp, crd_sum, crd_sum b (fun j => r j k), map_sum, ← hs]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, hp, crd_sum, crd_sum b (fun j => r j k), map_sum, ← hs]
     simp only [hp]
 
 theorem good_witt (p : ℕ) [Fact p.Prime] (k : Type) [Field k] [CharP k p] [PerfectRing k p] :

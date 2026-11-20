@@ -31,7 +31,8 @@ theorem pair_zero_of_form (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fi
   have h1 := congrArg (inclR (F := F) (AF F)) h0
   rw [map_zero] at h1
   rw [← h1]
-  simp only [form, incV, incM, Matrix.map_apply, hc, dotProduct, Matrix.mulVec, Finset.mul_sum, map_sum, map_mul, mul_assoc]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, incV, incM, Matrix.map_apply, hc, dotProduct, Matrix.mulVec, Finset.mul_sum, map_sum, map_mul, mul_assoc]
 
 theorem pair_iota_left (σ : E →ₐ[F] E) {n n₁ : ℕ} (J : Matrix (Fin n) (Fin n) E) (ι : Matrix (Fin n) (Fin n₁) E)
     (x : Fin n → E) (h0 : ∀ u, form σ J (ι *ᵥ u) x = 0) (y : Fin n₁ → AE F E) :
@@ -43,7 +44,8 @@ theorem pair_iota_left (σ : E →ₐ[F] E) {n n₁ : ℕ} (J : Matrix (Fin n) (
     have h1 := congrArg (inclR (F := F) (AF F)) (h0 (Pi.single q 1))
     rw [map_zero] at h1
     rw [← h1]
-    simp only [form, incV, incM, Matrix.map_apply, hc, dotProduct, Matrix.mulVec, map_sum, map_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [form, incV, incM, Matrix.map_apply, hc, dotProduct, Matrix.mulVec, map_sum, map_mul,
       Pi.single_apply, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true, Finset.mul_sum]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun k _ => ?_
     ring
@@ -65,7 +67,8 @@ theorem pair_conj (σ : E →ₐ[F] E) (hσ : ∀ x, σ (σ x) = x) {n : ℕ} (J
     (hJ : ∀ i j, σ (J j i) = J i j) (a b : Fin n → AE F E) :
     ∑ i, ∑ k, a i * incM F J i k * cA σ (b k) = cA σ (∑ i, ∑ k, b i * incM F J i k * cA σ (a k)) := by
   have hc : ∀ x : E, cA σ (inclR (F := F) (AF F) x) = inclR (F := F) (AF F) (σ x) := fun x => rfl
-  simp only [map_sum, map_mul, GlobalTheory.IsoOrthLoc.cA_cA hσ, incM, Matrix.map_apply, hc, hJ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, GlobalTheory.IsoOrthLoc.cA_cA hσ, incM, Matrix.map_apply, hc, hJ]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun k _ => ?_
   ring

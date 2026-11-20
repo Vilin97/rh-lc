@@ -10,7 +10,8 @@ theorem totalDegree_aeval_le {σ κ : Type*} (f : σ → MvPolynomial κ ℂ) (h
     (P : MvPolynomial σ ℂ) : (MvPolynomial.aeval f P).totalDegree ≤ P.totalDegree := by
   classical
   conv_lhs => rw [P.as_sum]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine MvPolynomial.totalDegree_finsetSum_le fun s hs => ?_
   rw [MvPolynomial.aeval_monomial]
   refine (MvPolynomial.totalDegree_mul _ _).trans ?_

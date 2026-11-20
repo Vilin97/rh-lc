@@ -43,12 +43,14 @@ theorem mul_iota (b : AE D) (a : k) : b * p.ι a = p.ι (p.π b * a) := by
 theorem rat_mul_iota {a b c : ℕ} (R : Matrix (Fin a) (Fin b) D.host.E) (A : Matrix (Fin b) (Fin c) k) :
     rat R ⬝ (A.map p.ι : Mx D b c) = ((R.map p.pr * A).map p.ι : Mx D a c) := by
   ext i j
-  simp only [rat, Matrix.mul_apply, Matrix.map_apply, map_sum, mul_iota, Place.pr]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [rat, Matrix.mul_apply, Matrix.map_apply, map_sum, mul_iota, Place.pr]
 
 theorem iota_mul_rat {a b c : ℕ} (A : Matrix (Fin a) (Fin b) k) (R : Matrix (Fin b) (Fin c) D.host.E) :
     (A.map p.ι : Mx D a b) ⬝ rat R = ((A * R.map p.pr).map p.ι : Mx D a c) := by
   ext i j
-  simp only [rat, Matrix.mul_apply, Matrix.map_apply, map_sum, Place.pr]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [rat, Matrix.mul_apply, Matrix.map_apply, map_sum, Place.pr]
   refine Finset.sum_congr rfl fun l _ => ?_
   rw [mul_comm, mul_iota, mul_comm]
 
@@ -107,7 +109,8 @@ theorem bessel_normal_frame_core_frame_part {ρ : ℕ} (B : BesLev D ρ) (s : k)
     exact (h0 r a).symm
   · cases u
     have h2 : p.pr ((B.d.i₀ *ᵥ vecB B.o B.ζ) r) = ∑ m, p.pr (B.d.i₀ r m) * p.pr (vecB B.o B.ζ m) := by
-      simp only [Place.pr, Matrix.mulVec, dotProduct, map_sum, map_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Place.pr, Matrix.mulVec, dotProduct, map_sum, map_mul]
     simp only [Matrix.submatrix_apply, Sum.map_inr, id, hz j hj r, h2, Matrix.mul_apply, Matrix.map_apply, h₀.2,
       Finset.mul_sum]
     exact Finset.sum_congr rfl fun _ _ => by ring

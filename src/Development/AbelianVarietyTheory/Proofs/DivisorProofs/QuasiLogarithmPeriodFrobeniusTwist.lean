@@ -104,7 +104,8 @@ private lemma subst_inr_zero_pderiv_coboundary_eq {Q : Type} [CommRing Q] {d : �
   simp only [pderiv_X, Pi.single_apply, Sum.inr.injEq, reduceCtorEq, if_false, mul_zero,
     Finset.sum_const_zero, sub_zero, mul_ite, mul_one, Finset.sum_ite_eq, Finset.sum_ite_eq', Finset.mem_univ, if_true]
   rw [← coe_substAlgHom he0]
-  simp only [map_sub, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sub, map_sum, map_mul]
   rw [coe_substAlgHom he0, subst_comp_subst_apply hR he0]
   simp only [subst_comp_subst_apply hν he0, hν1, subst_X he0, Sum.elim_inr]
   rw [subst_zero_fin_eq_C_constantCoeff]

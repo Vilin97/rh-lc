@@ -78,11 +78,13 @@ def lin {n : ℕ} (X : Fin n → V) (c : Fin n → E) : V := ∑ a, c a • X a
 
 theorem form_lin_left (B : V →ₛₗ[σ] V →ₗ[E] E) {n : ℕ} (X : Fin n → V) (c : Fin n → E) (z : V) :
     B (lin X c) z = ∑ a, σ (c a) * B (X a) z := by
-  simp [lin, map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [lin, map_sum, LinearMap.sum_apply]
 
 theorem form_lin_right (B : V →ₛₗ[σ] V →ₗ[E] E) {n : ℕ} (X : Fin n → V) (c : Fin n → E) (z : V) :
     B z (lin X c) = ∑ a, c a * B z (X a) := by
-  simp [lin, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [lin, map_sum]
 
 theorem lin_single {n : ℕ} (X : Fin n → V) (a : Fin n) : lin X (Pi.single a (1 : E)) = X a := by
   simp [lin, Pi.single_apply, ite_smul]
@@ -256,7 +258,8 @@ theorem formB_apply (s : E →+* E) {M : ℕ} (J : Matrix (Fin M) (Fin M) E) (x 
 theorem formB_conj (s : E →+* E) (hs : ∀ x, s (s x) = x) {M : ℕ} (J : Matrix (Fin M) (Fin M) E)
     (hJ : ∀ i j, s (J j i) = J i j) (x y : Fin M → E) :
     s (formB s J x y) = formB s J y x := by
-  simp only [formB_apply, hform, map_sum, map_mul, hs, hJ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [formB_apply, hform, map_sum, map_mul, hs, hJ]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
 

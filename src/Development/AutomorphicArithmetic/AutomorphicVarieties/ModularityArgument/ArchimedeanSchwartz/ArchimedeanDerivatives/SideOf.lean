@@ -38,7 +38,8 @@ private theorem eulerd_shift (B : HeightOneSpectrum (𝓞 K) → Multiset ℂ) (
 
 private theorem sum_shift {ι : Type} [Fintype ι] (m : ι → Multiset ℂ) (z : ℂ) :
     (∑ τ, (m τ).map (· + z)).map (· - z) = ∑ τ, m τ := by
-  rw [← Multiset.mapAddMonoidHom_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Multiset.mapAddMonoidHom_apply, map_sum]
   refine Finset.sum_congr rfl fun τ _ => ?_
   simp [Multiset.map_map, Function.comp_def]
 

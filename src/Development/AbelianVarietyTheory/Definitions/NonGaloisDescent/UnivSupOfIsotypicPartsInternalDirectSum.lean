@@ -160,10 +160,12 @@ open Classical in
     hkU := fun i j _ k P c y => D.nth.iC i (A i j k P (Pi.single c 1) y)
     hk_ev := fun i j _ k P _ _ _ _ f y => by
       change D.nth.iC i (A i j k P f y) = ∑ c, D.nth.iC i (A i j k P (Pi.single c 1) y) * D.nth.iC i (f c)
-      simp_rw [← map_mul, ← map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp_rw [← map_mul, ← map_sum]
       congr 1
       conv_lhs => rw [pi_eq_sum_univ' f]
-      simp [map_sum, mul_comm]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [map_sum, mul_comm]
     MaximalUnramifiedExtension := fun _ => ⊤
     FmUr := fun _ _ _ => ⊤
     FmUr_smul := fun _ _ _ _ _ _ _ => trivial

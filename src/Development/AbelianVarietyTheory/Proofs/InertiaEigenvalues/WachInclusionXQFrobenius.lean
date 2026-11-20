@@ -41,7 +41,8 @@ theorem X_eq (W : LocWach PD LL O v n) : W.X = (1 + letπ) ^ (PD.p ^ (W.s - 1)) 
 
 theorem Q_eq (W : LocWach PD LL O v n) :
     W.Q = ∑ i ∈ Finset.range PD.p, ((1 + letπ) ^ (PD.p ^ (W.s - 1))) ^ i := by
-  rw [LocWach.Q, q_eq, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [LocWach.Q, q_eq, map_sum]
   simp only [map_pow, φA_pow_one_add]
 
 theorem isUnit_φA_pow (W : LocWach PD LL O v n) {a : LetA O n} (ha : IsUnit (algebraMap _ W.EE a)) (k : ℕ) :
@@ -98,7 +99,8 @@ theorem io_X_gen {W : LocWach PD LL O v n} (E : EtTie W RA RW inclR φR gR πA) 
 
 theorem io_Q_gen {W : LocWach PD LL O v n} (E : EtTie W RA RW inclR φR gR πA) :
     E.io W.Q = ∑ i ∈ Finset.range PD.p, ((1 + πA) ^ (PD.p ^ (W.s - 1))) ^ i := by
-  rw [Q_eq, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Q_eq, map_sum]
   simp only [map_pow, map_add, map_one, E.io_π]
 
 end Generic

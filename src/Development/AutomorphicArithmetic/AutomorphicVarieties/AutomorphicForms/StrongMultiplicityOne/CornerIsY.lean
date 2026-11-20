@@ -18,9 +18,11 @@ private theorem corner_isY {R S : Type} [CommRing R] [CommRing S] {n : ℕ} (m :
   · rw [e, (h i hi).1]; simp
   · rw [e, (h i hi).2 j hj, Matrix.one_apply_ne hj.ne', Matrix.one_apply_ne hj.ne']; simp
   · unfold supN
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     split_ifs with hij
     · have hne : i ≠ j := fun h' => by subst h'; omega

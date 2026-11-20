@@ -197,7 +197,8 @@ theorem xiSeq_dvd (n : ℕ) (τ : ZMod a) (i j : ι) :
     rw [zero_add, pow_one, X_dvd_iff]
     simp only [xiSeq_succ, xiSeq_zero, Matrix.map_one _ (map_zero (frob K l)) (map_one _), Matrix.mul_one, map_sub]
     rw [Matrix.mul_apply] at h ⊢
-    simp only [map_sum, map_mul, Matrix.map_apply, constantCoeff_C, mx0] at h ⊢
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, Matrix.map_apply, constantCoeff_C, mx0] at h ⊢
     rw [h, Matrix.one_apply, Matrix.one_apply]
     split_ifs <;> simp
   | succ n ih =>
@@ -348,7 +349,8 @@ theorem conn_phi (v : Vec K a ι) : P.conn (P.phi v) = (l : K) • P.phi (P.conn
   rw [phi_xiExt, conn_xiExt, conn_xiExt, phi_xiExt, ← map_smul]
   congr 1
   ext τ i : 2
-  simp only [Matrix.mulVec, dotProduct, map_sum, Pi.smul_apply, Finset.smul_sum, frobV_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mulVec, dotProduct, map_sum, Pi.smul_apply, Finset.smul_sum, frobV_apply,
     Matrix.map_apply]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [← smul_eq_C_mul, ← smul_eq_C_mul, Derivation.map_smul, N_frob, smul_comm, smul_eq_C_mul (a := (l : K)),
@@ -362,7 +364,8 @@ theorem map_conn {Q : PhiMod O K l e a κ} (g : Vec K a ι →+ Vec K a κ)
     g (P.conn v) = Q.conn (g v) := by
   obtain ⟨w, rfl⟩ := P.xiExt.surjective v
   rw [eq_sum_bas w]
-  simp only [map_sum, xiExt_smul_tot, ← cst_single, ← xi_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, xiExt_smul_tot, ← cst_single, ← xi_apply]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [conn_smul_tot, conn_xi, smul_zero, add_zero, hs, hs, conn_smul_tot, map_xi hg, conn_xi,
     smul_zero, add_zero, hσ]

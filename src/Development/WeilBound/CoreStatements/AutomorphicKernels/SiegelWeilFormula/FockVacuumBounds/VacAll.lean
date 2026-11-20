@@ -81,7 +81,8 @@ theorem vacOn_step (hG : AbsSt.GenCore) (c : ℂ) (hT : TAll) (hAux : AuxiliaryP
     have hmem : Φ - ∑ i, a i • Φf i ∈ d.sch :=
       d.sch.sub_mem hΦ (d.sch.sum_mem fun i _ => d.sch.smul_mem _ (hK i).1)
     refine sub_eq_zero.mp ((hT.1 F E σ d).2.2 _ hmem ?_)
-    rw [← Tl_apply, map_sub, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Tl_apply, map_sub, map_sum]
     simp only [map_smul, Tl_apply, hTf, hf, sub_self]
   rw [hΦeq]
   exact ident_lincomb hT hSK hEW d c a Φf hK hI x

@@ -595,7 +595,8 @@ theorem thetaKer_le : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [Number
     (fun v : T => (Fin a' × Fin (a + a') → Fv F v) → ℂ) (fun v : T => Rf.Pi v) (G.M'.Pol B.ψ B.emb)
     (fun v => SB _) N R.p' (fun v => Rf.p' v) Ψ hM.real.quot'.onto (fun v => hM.fin.onto' v) hk1 hk2 m' f'
     (fun k v => φ' k v) (fun k => ⟨(hj k).1, fun v => (hj k).2.1 v⟩) heq.symm
-  rw [← GlobalTheory.SoPure.atOp_of_mem_so G.M' B.ψ B.τ₁ hs π₁ (fun χ hχ => hπid χ (Submodule.subset_span hχ)) Φ' hSo, hΦ, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← GlobalTheory.SoPure.atOp_of_mem_so G.M' B.ψ B.τ₁ hs π₁ (fun χ hχ => hπid χ (Submodule.subset_span hχ)) Φ' hSo, hΦ, map_sum]
   convert key using 2 with k
   have hk : ∀ᶠ v in Filter.cofinite, φ' k v = Set.indicator {x | ∀ i, x i ∈ v.adicCompletionIntegers F} 1 := by
     filter_upwards [hs, T.eventually_cofinite_notMem] with v hv hT

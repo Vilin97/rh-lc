@@ -44,7 +44,8 @@ theorem ex_smul (T : PAT H (Sp ℂ)) {s : 𝓞 E} {r : ℂ}
     exact ⟨F, hF⟩
   refine Eq.trans (congrArg u.ex ?_) (hρ s z)
   have hs := PointUnif.isSplitting_embeddings (E := E)
-  rw [← sum_proj hs ρ z, map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← sum_proj hs ρ z, map_sum, Finset.smul_sum]
   refine Finset.sum_congr rfl fun φ _ => ?_
   have hm := proj_mem hs ρ φ z
   by_cases hφ : φ.comp (algebraMap (𝓞 E) E) s = r

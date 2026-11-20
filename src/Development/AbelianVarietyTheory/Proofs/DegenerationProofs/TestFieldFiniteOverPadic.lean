@@ -284,7 +284,8 @@ theorem _root_.GlobalTheory.ZH.FieldOfTest.exists_finiteDimensional_of_isComplet
       rw [hi] at this
       exact one_ne_zero this
     have hgy : Polynomial.aeval (y : PadicAlgCl p) g = 0 := by
-      simpa [g, map_sum] using hsum
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa [g, map_sum] using hsum
     have hgdeg : g.natDegree ≤ n :=
       Polynomial.natDegree_sum_le_of_forall_le _ _ fun j _ =>
         (Polynomial.natDegree_C_mul_X_pow_le _ _).trans (Nat.lt_succ_iff.1 j.2)

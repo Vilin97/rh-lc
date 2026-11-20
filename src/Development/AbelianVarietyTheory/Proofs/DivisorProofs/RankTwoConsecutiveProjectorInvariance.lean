@@ -147,7 +147,8 @@ theorem rankTwo : RankTwo := by
       (((k : ℚ) + 1) * coef (j + 1) (k + 1)) • (D q o ^ k) ((D o q ^ (k + 1)) T) := ⟨_, rfl⟩
 
   have hZT' : D p q T' = D p o U := by
-    rw [hT', hproj, map_sum, Finset.sum_range_succ', hU, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hT', hproj, map_sum, Finset.sum_range_succ', hU, map_sum]
     simp only [map_smul, pow_zero, Module.End.one_apply, hpqT, smul_zero, add_zero]
     refine Finset.sum_congr rfl (fun k _ => ?_)
     rw [comm_pow_apply _ _ _ rZYq rYpYq, hZv, map_zero, zero_add, smul_smul, mul_comm]
@@ -170,14 +171,16 @@ theorem rankTwo : RankTwo := by
       rw [Finset.sum_range_succ, ih, hXq_step n, Finset.sum_range_succ, ← key n]
       module
   have hXqT' : D o q T' = (-((j : ℚ) + 1)) • U := by
-    rw [hT', hproj, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hT', hproj, map_sum]
     simp only [map_smul]
     rw [hS K, hXqK, map_zero, smul_zero, zero_add, hU, Finset.smul_sum]
     refine Finset.sum_congr rfl (fun k _ => ?_)
     rw [smul_smul]
 
   have hHpU : (D o o - D p p) U = (1 : ℚ) • U := by
-    rw [hU, map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hU, map_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl (fun k _ => ?_)
     rw [map_smul, eig_pow _ _ (-1) _ hHpYq _ (eig_pow _ _ 1 0 hHpXq T hHpT (k + 1)) k, smul_smul, smul_smul]
     congr 1; push_cast; ring

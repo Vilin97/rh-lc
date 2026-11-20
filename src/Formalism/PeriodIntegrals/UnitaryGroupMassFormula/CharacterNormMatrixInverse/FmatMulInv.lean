@@ -103,7 +103,8 @@ theorem sigA_inclE' (e : I.E) :
 theorem hA_incl' (x y : Fin I.n → I.E) :
     hA I (incl I x) (incl I y) =
       Formalism.UG.inclE (F := I.F) (Af I.F) (Formalism.UG.hform (starRingEnd I.E) I.J x y) := by
-  simp only [hA, Formalism.UG.hform, incl, Matrix.map_apply, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hA, Formalism.UG.hform, incl, Matrix.map_apply, map_sum, map_mul]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   rw [show Formalism.UG.sigR I.cm.sig (Af I.F) (Formalism.UG.inclE (F := I.F) (Af I.F) (x i)) =
     Formalism.UG.inclE (F := I.F) (Af I.F) (starRingEnd I.E (x i)) from sigA_inclE' I (x i)]

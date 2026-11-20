@@ -97,7 +97,8 @@ theorem moved_coord_mem {F E : Type} [Field F] [NumberField F] [Field E] [Number
   set x : (κ → AF F) × (κ → AF F) := (fun k => algebraMap F (AF F) (Y k), fun k => algebraMap F (AF F) (Z k))
   have key : e (A * (c • e.symm x) * B) = ∑ k, ((c * algebraMap F (AF F) (Y k)) • L (Pi.single k 1, 0) +
       (c * algebraMap F (AF F) (Z k)) • L (0, Pi.single k 1)) := by
-    rw [← map_smul, ← hL, map_smul, prod_eq_sum x, map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_smul, ← hL, map_smul, prod_eq_sum x, map_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_add, map_smul, map_smul, smul_add, smul_smul, smul_smul]
   have hc : ∀ q : F, c * algebraMap F (AF F) q = GlobalTheory.FinSupp.finPart F (algebraMap F (AF F) (((m₁ * m₂ * D₀ : ℕ) : F) * q)) := by
@@ -155,7 +156,8 @@ theorem GlobalTheory.KernelDenomUnif.main : GlobalTheory.ThK.KP → ∀ (F E : T
 
   have hxy : form σ X.J H.y H.x = 1 := by
     have e1 : form σ X.J H.y H.x = σ (form σ X.J H.x H.y) := by
-      simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσσ]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσσ]
       simp only [Finset.mul_sum]
       rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_

@@ -32,12 +32,14 @@ theorem sum_integral_iff_dual {O C : Type} [CommRing O] [IsDomain O] [Field C] [
   have e : d • m = ((∑ i, u i • f i : F) : Fin h → O) := by
     funext k
     apply hi
-    simp only [Pi.smul_apply, smul_eq_mul, map_mul, hm, Submodule.coe_sum, Finset.sum_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Pi.smul_apply, smul_eq_mul, map_mul, hm, Submodule.coe_sum, Finset.sum_apply,
       Submodule.coe_smul, map_sum, hu', Finset.mul_sum, mul_assoc]
   have hmF : m ∈ F := hF d m hd0 (e ▸ Subtype.prop _)
   have e2 : d • (⟨m, hmF⟩ : F) = ∑ i, u i • f i := Subtype.ext e
   have e3 := congrArg (fun z => algebraMap O C (y z)) e2
-  simp only [map_smul, map_sum, smul_eq_mul, map_mul, hu', mul_assoc, ← Finset.mul_sum] at e3
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_smul, map_sum, smul_eq_mul, map_mul, hu', mul_assoc, ← Finset.mul_sum] at e3
   exact ⟨_, mul_left_cancel₀ ((map_ne_zero_iff _ hi).2 hd0) e3⟩
 
 section Group
@@ -102,7 +104,8 @@ theorem coordV_actV (a : Λ) (X : Matrix (Fin h) (Fin h) ℤ_[p])
   | tmul c t =>
     funext i
     change coordV P ψ (c ⊗ₜ P.actT a t) i = _
-    simp only [coordV_tmul, hX, Matrix.mulVec, dotProduct, map_sum, map_mul, Matrix.map_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [coordV_tmul, hX, Matrix.mulVec, dotProduct, map_sum, map_mul, Matrix.map_apply,
       Finset.mul_sum, mul_left_comm]
 
 variable [Algebra ℤ_[p] O] [IsScalarTower ℤ_[p] O C]
@@ -181,7 +184,8 @@ theorem exists_isTie_of_selfDual : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Fiel
     rw [← dlog_eq_omegaMap, hl, pairingO, map_mul, ← P.pairV_bLie] at h1
     refine mul_left_cancel₀ hu₂ (h1.symm.trans ?_)
     rw [hφ]
-    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, Point.pairV_tmul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, Point.pairV_tmul,
       Finset.mul_sum, map_mul, hpad, heps]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [← hu]
@@ -225,7 +229,8 @@ theorem exists_isTie_of_selfDual : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Fiel
     · rintro ⟨w, hw⟩
       rw [eq_sum_incl (O := O) C w, ← LinearEquiv.symm_apply_eq] at hw
       rw [← hw]
-      simp only [map_sum, map_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul]
       refine Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _ (Submodule.subset_span ?_)
       refine (hlie _).2 ⟨_, ⟨Pi.single i 1, rfl⟩, ?_⟩
       rw [LinearEquiv.apply_symm_apply]
@@ -239,7 +244,8 @@ theorem exists_isTie_of_selfDual : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Fiel
       simp [toO, t, Pi.single_apply, apply_ite]
     have h1 : ∀ k, alC C D w k = ∑ i, w i * algebraMap O C ((f i : _ → O) k) := fun k => by
       conv_lhs => rw [eq_sum_incl (O := O) C w]
-      simp only [map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, ← hf]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, ← hf]
       exact Finset.sum_congr rfl fun i _ => congrArg _ (congrFun (redC_incl C D.F _) k)
     have hsign := omegaMap_hodgeTate G (G.pairing_flip_bijective C).1 pol.hom fun s s' => by
       rw [hpair, hpair, ← neg_smul, (isAlt_pairT P.A P.eps).neg_eq]
@@ -254,7 +260,8 @@ theorem exists_isTie_of_selfDual : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Fiel
       exact neg_eq_iff_eq_neg.2 (hsign _)
     have h3 : ∀ z, P.pairV (P.bLie z) (φ.symm w) =
         ∑ i, w i * algebraMap O C (Φ.dualMap (l z) (f i)) := fun z => by
-      simp only [hφ, map_sum, map_smul, P.pairV_bLie, LinearEquiv.dualMap_apply, hΦ, hl,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hφ, map_sum, map_smul, P.pairV_bLie, LinearEquiv.dualMap_apply, hΦ, hl,
         smul_eq_mul]
     simp only [LinearEquiv.apply_symm_apply, h1]
     rw [sum_integral_iff_dual D.Fil (fun d m hd hm => ?_) f w]

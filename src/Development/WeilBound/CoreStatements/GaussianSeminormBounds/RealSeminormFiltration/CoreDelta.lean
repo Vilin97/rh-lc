@@ -234,7 +234,8 @@ theorem dl_unit (a b : Ix p q) (f : Pol p q r s) :
       (fockAct1 p q r 0 (Eab a b)).rTensor _ (dl p q r s f) +
       (fockAct1 p q 0 s (Eab a b)).lTensor _ (dl p q r s f) := by
   rw [act_unit, act_unit, act_unit, sumL, sumR]
-  simp only [Fintype.sum_sum_type, LinearMap.add_apply, map_add, LinearMap.sum_apply, map_sum, dl_omL, dl_omR,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Fintype.sum_sum_type, LinearMap.add_apply, map_add, LinearMap.sum_apply, map_sum, dl_omL, dl_omR,
     Finset.univ_eq_empty, Finset.sum_empty, add_zero, zero_add, Fin.sum_univ_zero]
 
 theorem eq_sum_units (Z : Mat p q) : Z = ∑ a, ∑ b, Z a b • Eab a b := by
@@ -247,7 +248,8 @@ theorem dl_act (Z : Mat p q) (f : Pol p q r s) :
     dl p q r s (fockAct1 p q r s Z f) =
       (fockAct1 p q r 0 Z).rTensor _ (dl p q r s f) + (fockAct1 p q 0 s Z).lTensor _ (dl p q r s f) := by
   rw [eq_sum_units Z]
-  simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, sumL, sumR, dl_unit,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, sumL, sumR, dl_unit,
     LinearMap.rTensor_smul, LinearMap.lTensor_smul, smul_add, Finset.sum_add_distrib]
 
 def iA (p q r s : ℕ) : Ln p q r 0 → Ln p q r s := fun l => (l.1, Sum.elim Sum.inl Fin.elim0 l.2)

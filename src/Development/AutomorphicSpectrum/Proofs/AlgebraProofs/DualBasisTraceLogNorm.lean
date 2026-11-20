@@ -303,7 +303,8 @@ theorem exists_basis (H : Host E) (ℓ f : ℕ) (b : Fin f → 𝓞 E) (h : IsLo
       ring
     have hz : ∑ k, c' k • b k = 0 := by
       apply inj
-      rw [map_sum, map_zero]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, map_zero]
       have h1 : ∀ k, algebraMap (𝓞 E) E (c' k • b k) = P * (g k • (b k : E)) := fun k => by
         rw [Subalgebra.smul_def, smul_eq_mul, map_mul, Algebra.smul_def, ← _root_.mul_assoc]
         exact congrArg (· * _) (hc' k)
@@ -441,7 +442,8 @@ theorem orth_of_dual (H : Host E) {f : ℕ} (B : Module.Basis (Fin f) (Kf H) E) 
   have hs := sum_dual_embeddings (Ω := Ω) B B.traceDual
     (by rw [Module.finrank_eq_card_basis B]; simp) (trace_dual_apply H B) τ τ'
   have hm : em (∑ k, σ (B.traceDual k) * σ' (B k)) = ∑ k, τ (B.traceDual k) * τ' (B k) := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun k _ => map_mul em _ _
   rw [← hm] at hs
   have heq : τ' = τ ↔ σ = σ' := by
@@ -467,7 +469,8 @@ theorem trace_dual_mem (H : Host E) {f : ℕ} (B : Module.Basis (Fin f) (Kf H) E
   let cK : Fin f → Kf H := fun i => ⟨(((c i : Ord H) : 𝓞 E) : E), mem_Kf_of_ord H (c i).2⟩
   have hx : (n : E) * a = ∑ i, cK i • B i := by
     have h1 := congrArg (algebraMap (𝓞 E) E) hc
-    rw [map_sum, map_nsmul] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_nsmul] at h1
     rw [nsmul_eq_mul] at h1
     refine h1.symm.trans (Finset.sum_congr rfl fun i _ => ?_)
     rw [Subalgebra.smul_def, smul_eq_mul, map_mul, Algebra.smul_def, hB]
@@ -529,7 +532,8 @@ theorem relative_dual : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (
     have h2 := bridge_up H y h1
     have h3 : y = ∑ k, (B.traceDual.repr y k) • B.traceDual k := (B.traceDual.sum_repr y).symm
     have h4 : ‖j y‖ ≤ ⨆ k, ‖j (B.traceDual k)‖ := by
-      rw [h3, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [h3, map_sum]
       refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg hnn fun k _ => ?_
       obtain ⟨c, -, hc'⟩ := h2 (b k)
       have e : B.traceDual.repr y k = Algebra.trace (Kf H) E (y * (b k : E)) := by

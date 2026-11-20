@@ -48,5 +48,6 @@ theorem GlobalTheory.KerStd.hyp_of_stdBases : ∀ (D : D7) (p : ℕ) [Fact p.Pri
     (fun k j => chgB D lam P P' k ((0 : ZMod 1), (tauPl D j.1, j.2))) hO hR (GlobalTheory.T.traceDual_expansion_orbitLength D p σ om oms hTr)
     (fun q z a b₀ => GlobalTheory.T.lambdaTau_orthonormalBasis_sum_coordinates D p lam σ hσ hcl' N N' L L' P P' hP hP' r b hONB q z a b₀)
   refine GlobalTheory.T.standardSeries_scaled_eq_orthonormalBasisSeries D p lam N N' r P P' b _ (fun i => ?_) hlin
-  simp only [hypZ, linEv, linOd, map_sum, map_add, map_mul, MvPowerSeries.constantCoeff_C, MvPowerSeries.constantCoeff_X,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hypZ, linEv, linOd, map_sum, map_add, map_mul, MvPowerSeries.constantCoeff_C, MvPowerSeries.constantCoeff_X,
     mul_zero, apply_ite MvPowerSeries.constantCoeff, map_zero, ite_self, Finset.sum_const_zero, add_zero]

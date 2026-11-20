@@ -204,7 +204,8 @@ theorem GlobalTheory.CompanionTheory.SW.FD.main : ∀ (F : Type) [Field F] [Numb
     rw [GlobalTheory.CompanionTheory.SW.FD.latR_eq_range, Submodule.span_int_eq_addSubgroupClosure]
     apply le_antisymm
     · rintro _ ⟨r, rfl⟩
-      rw [← B.sum_repr r, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← B.sum_repr r, map_sum]
       refine AddSubgroup.sum_mem _ fun i _ => ?_
       rw [map_zsmul, ← hbi]
       exact AddSubgroup.zsmul_mem _ (AddSubgroup.subset_closure (Set.mem_range_self i)) _

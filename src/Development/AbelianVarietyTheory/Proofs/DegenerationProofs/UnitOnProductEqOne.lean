@@ -38,7 +38,8 @@ theorem exists_primitive (t : F ⊗[K] A) (ht : t ≠ 0) :
     · exact ⟨0, fun h => (hi h).elim⟩
   choose g hg using hg
   refine ⟨x i₀, ∑ i ∈ x.support, g i ⊗ₜ[K] b i, ?_, ?_⟩
-  · rw [map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum, Finset.mul_sum]
     conv_lhs => rw [← bF.linearCombination_repr t, Finsupp.linearCombination_apply, Finsupp.sum]
     refine Finset.sum_congr rfl fun i hi => ?_
     simp only [Algebra.TensorProduct.map_tmul, IsScalarTower.coe_toAlgHom', hg i hi,
@@ -50,7 +51,8 @@ theorem exists_primitive (t : F ⊗[K] A) (ht : t ≠ 0) :
       apply IsFractionRing.injective O F
       rw [hg i₀ hi₀, div_self hc, map_one]
     have h2 := congrArg (fun z => bk.repr z i₀) h
-    simp only [map_sum, Algebra.TensorProduct.map_tmul, IsScalarTower.coe_toAlgHom',
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, Algebra.TensorProduct.map_tmul, IsScalarTower.coe_toAlgHom',
       AlgHom.id_apply, map_zero, Finsupp.coe_zero, Pi.zero_apply, bk,
       Algebra.TensorProduct.basis_repr_tmul, Module.Basis.repr_self, Finsupp.coe_finsetSum,
       Finset.sum_apply, Finsupp.coe_smul, Pi.smul_apply, Finsupp.mapRange_apply,

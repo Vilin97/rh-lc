@@ -93,7 +93,8 @@ open ReciprocityTheory.ChartRestriction.G.DVR GlobalTheory.UT GlobalTheory.UT.Co
 
 theorem gs_sum' {Y Z : Scheme.{0}} (f : Z ⟶ Y) (z : Z) (U : Y.Opens) (h : f z ∈ U) {I : Type} (A : Finset I)
     (a : I → Γ(Y, U)) : gs f z U (∑ i ∈ A, a i) = ∑ i ∈ A, gs f z U (a i) := by
-  simp only [gs_eq f z U h, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [gs_eq f z U h, map_sum]
 
 section
 variable {R : Type} [CommRing R] [IsDomain R] {D : DegPre R} {F : Type} [Field F] [Algebra (FractionRing R) F] {k : ℕ}
@@ -178,7 +179,8 @@ theorem exists_comb {α : D.toPre.X} {I : Type} [Fintype I] {β : I → D.toPre.
       rw [← SectionScalarValuation.secScal_sval (hs i) _ y hJ, ← cst_prB]
       exact (gs_mul _ y _ hm _ _).trans (congrArg₂ (· * ·) (gs_constFn _ _ _ y hm _) rfl)
     rw [sval_sum _ _ _ _ _ _ hJ, SectionScalarValuation.sval_lin (fun i => gF D.toPre F (a i)) σF (fun j => hsum j) _ y hJ]
-    simp only [e, Finset.mul_sum, gs_eq (𝟙 (DegPre.BF D.toPre F).left) y ⊤ trivial, map_sum, map_mul, Finset.sum_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [e, Finset.mul_sum, gs_eq (𝟙 (DegPre.BF D.toPre F).left) y ⊤ trivial, map_sum, map_mul, Finset.sum_mul,
       _root_.mul_assoc]
     exact Finset.sum_comm
 

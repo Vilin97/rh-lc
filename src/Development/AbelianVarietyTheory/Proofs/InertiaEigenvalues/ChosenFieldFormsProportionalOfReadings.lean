@@ -48,13 +48,15 @@ private theorem tensor_scalar_relation {O L M N ι : Type*} [CommRing O] [Field 
   have hind := Fintype.linearIndependent_iff.1 hli
   constructor
   · rintro rfl
-    rw [map_zero, smul_zero, map_sum] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_zero, smul_zero, map_sum] at h
     simp only [hR] at h
     have h2 : ∀ a, α a = 0 := fun a => ε.injective ((hind _ h a).trans (map_zero _).symm)
     simp [h2]
   · obtain ⟨β, rfl⟩ := hsp B
     intro hB
-    rw [map_sum, map_sum] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum] at h
     simp only [hR] at h
     have h1 : ∀ a, ε (α a) - z * ε (β a) = 0 := hind (fun a => ε (α a) - z * ε (β a)) (by
       simp only [sub_smul, mul_smul, Finset.sum_sub_distrib, ← Finset.smul_sum, h, sub_self])

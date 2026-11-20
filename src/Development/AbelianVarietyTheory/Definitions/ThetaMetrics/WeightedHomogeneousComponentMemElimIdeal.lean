@@ -79,7 +79,8 @@ theorem aeval_eq_zero_of_mem_elimIdeal {G : Type*} [CommRing G] [IsDomain G] [Al
   have hle : incidenceIdeal β p ≤ RingHom.ker ev := by
     refine incidenceIdeal_le.2 ⟨fun g hg => ?_, fun i => ?_⟩
     · simpa [ev, RingHom.mem_ker] using hξ g hg
-    · rw [RingHom.mem_ker, genericForm_eq, map_sum, ← ht i]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [RingHom.mem_ker, genericForm_eq, map_sum, ← ht i]
       exact Finset.sum_congr rfl fun j _ => by simp [ev, mul_comm]
   have h := hle (hm j)
   have h2 : ev (map C f) = aeval t f := by

@@ -42,7 +42,8 @@ theorem val_mul_le_of_cyclic_ker {C : Type} [Field C] {v : Valuation C NNReal} {
     have hz : ∃ r : Fin m → R, π z = ∑ j, r j • ε j := by
       refine ⟨fun j => Quotient.out (e (π z) j), e.injective ?_⟩
       funext i
-      rw [map_sum, Finset.sum_apply, Finset.sum_eq_single i]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Finset.sum_apply, Finset.sum_eq_single i]
       · simp only [ε, map_smul, LinearEquiv.apply_symm_apply, Pi.smul_apply, Pi.single_eq_same,
           Algebra.smul_def, mul_one, Ideal.Quotient.algebraMap_eq]
         exact (Ideal.Quotient.mk_out _).symm

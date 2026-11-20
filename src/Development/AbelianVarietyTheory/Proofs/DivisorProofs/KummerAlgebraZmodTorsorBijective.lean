@@ -233,7 +233,8 @@ theorem ev_E (c : L →₀ B) (hc : (c.sum fun f a => a • φ fun _ => f) = 1) 
     ev φ ζ hζ g (E φ c s (tw ζ (-h.toAdd))) = if g = h then 1 else 0 := by
   have h1 : ev φ ζ hζ g (E φ c s (tw ζ (-h.toAdd))) = algebraMap B (Alg φ)
       (s * ∑ j ∈ Finset.range (n + 1), tw ζ (g.toAdd - h.toAdd) ^ j) := by
-    rw [E, map_smul, map_sum, Finset.mul_sum, map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [E, map_smul, map_sum, Finset.mul_sum, map_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl fun j hj => ?_
     rw [map_smul, kummerTensorEvalAction_powerRatio φ c hc ζ hζ g j (by simp at hj; omega), ← tw_neg_mul ζ hζ, mul_pow,
       Algebra.smul_def, Algebra.smul_def, map_mul, map_mul]
@@ -306,7 +307,8 @@ theorem bijective_succ (hq : IsUnit ((n + 1 : ℕ) : B))
   · intro d
     funext g
     rw [hΦev]
-    simp only [ψ, map_sum, map_mul, ev_tmul, map_one, mul_one, hEh,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [ψ, map_sum, map_mul, ev_tmul, map_one, mul_one, hEh,
       ev_E φ c hc s hs ζ hζ hk, ite_mul, one_mul, zero_mul, Finset.sum_ite_eq, Finset.mem_univ,
       if_true]
 

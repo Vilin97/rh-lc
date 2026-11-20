@@ -121,7 +121,8 @@ theorem exists_isWt_of_isPolyRep : ∀ (n : ℕ) (ι : Type) [Fintype ι] [Decid
       have e1 := congrFun (hχ _ (nz t ht)) a
       simp only [Pi.smul_apply, smul_eq_mul, mulVec, dotProduct, hent t ht] at e1
       have e2 := hp t ht
-      simp only [map_sum, map_mul, MvPolynomial.eval_C, MvPolynomial.eval_X, g2] at e2
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_mul, MvPolynomial.eval_C, MvPolynomial.eval_X, g2] at e2
       have e3 : (∑ c, v c * MvPolynomial.eval (fun s => g s t) (Q a c)) =
           χ (Pi.mulSingle i t) * v a := by
         rw [← e1]; exact Finset.sum_congr rfl fun c _ => mul_comm _ _

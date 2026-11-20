@@ -54,7 +54,8 @@ theorem hodge_of_adapted : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : L
     simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul] at hs
     have h1 : ι (aDp l ξ) ^ q * ι (∑ i, z j i * V j' i) =
         ι (aDp l ξ) ^ q * T.eD (∑ i, u j i * w i j') := by
-      rw [map_sum, map_sum, Finset.mul_sum, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, map_sum, Finset.mul_sum, Finset.mul_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       have ha := hV j' i
       have hb := hz j i
@@ -78,7 +79,8 @@ theorem hodge_of_adapted : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : L
   · intro g hg
     ext r c
     have h := congrArg T.eD (congrFun (hinv g hg c) r)
-    simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum, map_mul, T.actD, hFit.o] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum, map_mul, T.actD, hFit.o] at h
     rw [Matrix.mul_apply]
     simpa [Matrix.map_apply, Matrix.of_apply, GlobalTheory.MemLoc.Core.oD] using h
   · intro n

@@ -243,7 +243,8 @@ theorem hodge_lift (hd : DeRham K ρ) {m : ℤ → ℕ} (h : HodgeType K ρ' m) 
     (fun f J hf y hy => ⟨hΛ f J hf y hy i, hΛ f J hf y hy (i + 1)⟩) h⟩
   change p.rTensor _ (∑ a, sm V (Bdr l) (c a) (x a)) =
     ∑ a, sm V' (Bdr l) ((π.toLinearMap.restrictScalars ℚ_[l]).rTensor _ (c a)) (x' a)
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [rTensor_sm (π.toLinearMap.restrictScalars ℚ_[l]) p hV.smul, e]
 
@@ -264,7 +265,8 @@ theorem crys_lift {L : FinExt l} (h : K.1 ≤ L.1) (hc : Crys L (ρ.comp (incl h
   have hp : ∀ c : Fin n → B ⊗[ℚ_[l]] ↥(K0 L), p.rTensor (Bcr l) (∑ a, smulC V L (c a) (x a)) =
       ∑ a, smulC V' L ((π.toLinearMap.restrictScalars ℚ_[l]).rTensor _ (c a)) (x' a) := by
     intro c
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun a _ => ?_
     rw [← e]
     exact rTensor_sm (π.toLinearMap.restrictScalars ℚ_[l]) p hV.smul _ _
@@ -320,8 +322,10 @@ theorem crys_lift {L : FinExt l} (h : K.1 ≤ L.1) (hc : Crys L (ρ.comp (incl h
       · simp
     | succ k ih =>
       intro b
-      rw [pow_succ', actC_mul, ih, map_sum, pow_succ']
-      simp only [actC_smulC (GK K).subtype ρ L γ (Or.inr hγ), hM, map_sum, Matrix.mul_apply, LinearMap.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [pow_succ', actC_mul, ih, map_sum, pow_succ']
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [actC_smulC (GK K).subtype ρ L γ (Or.inr hγ), hM, map_sum, Matrix.mul_apply, LinearMap.sum_apply]
       rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun c _ => ?_
       rw [mul_comm]

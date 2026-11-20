@@ -38,7 +38,8 @@ theorem OrthFrame.mem_iff {V : HSpace E} (h : OrthFrame V) (x : Fin V.rank → E
       rw [V.baseLattice_isUnimodular]; exact hx
     simp only [Formalism.HermitianLatticesTheory.dual, Formalism.E.hdual, Submodule.mem_iInf, Submodule.mem_comap] at hd
     have h1 : V.hT (V.frame a) (∑ b, x b • V.frame b) ∈ (1 : Submodule (𝓞 E) E) := hd _ (h.2 a)
-    simpa [map_sum, map_smul, h.1] using h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [map_sum, map_smul, h.1] using h1
   · intro hx
     refine Submodule.sum_mem _ fun a _ => ?_
     obtain ⟨o, ho⟩ := Submodule.mem_one.1 (hx a)

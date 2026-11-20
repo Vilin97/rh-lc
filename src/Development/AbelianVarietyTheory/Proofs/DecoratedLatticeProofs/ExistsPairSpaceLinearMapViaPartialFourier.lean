@@ -134,7 +134,8 @@ theorem coupleBil_injective (ν : Measure k) [ν.IsAddHaarMeasure] (ψ : AddChar
     have hrow : (fromRows x (Matrix.of fun (_ : Unit) r => η r)) (Sum.inr ()) = η := by
       funext r; simp
     have := congrFun ht (x₀, fromRows x (Matrix.of fun (_ : Unit) r => η r))
-    simp only [ht', Finsupp.sum, map_sum, TensorProduct.lift.tmul] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [ht', Finsupp.sum, map_sum, TensorProduct.lift.tmul] at this
     simpa [coupleBil, Finset.sum_apply, hrow] using this
   have hzero : c = 0 := by
     ext i : 1

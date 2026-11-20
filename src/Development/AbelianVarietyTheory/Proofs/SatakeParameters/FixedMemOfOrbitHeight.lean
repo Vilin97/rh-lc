@@ -94,7 +94,8 @@ include hc1 hc2 hc3 hc4
 theorem comp_equivariant (hπ : ∀ (g : G) (i : ι), (V i).map (π g) ≤ V (g • i))
     (g : G) (i : ι) (w : M) : c (g • i) (π g w) = π g (c i w) := by
   obtain ⟨F, hF⟩ := hc4 w
-  rw [hF, map_sum, map_sum, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hF, map_sum, map_sum, map_sum, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   have hmem : π g (c j w) ∈ V (g • j) := hπ g j (Submodule.mem_map_of_mem (hc1 j w))
   by_cases hij : j = i

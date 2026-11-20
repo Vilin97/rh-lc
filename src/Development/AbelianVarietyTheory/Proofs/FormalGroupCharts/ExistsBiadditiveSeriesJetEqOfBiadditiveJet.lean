@@ -69,16 +69,19 @@ theorem evalPoints_linear {m n : ℕ} {b : Fin m → Pt k n d} (hb : ∀ j, NoCo
     (u : Pt k m d) : evP b (lin A u) = lin A (evP b u) := by
   funext i
   simp only [evP, lin, ev]
-  rw [← coe_substAlgHom (hasSubst_of hb), map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← coe_substAlgHom (hasSubst_of hb), map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_mul, coe_substAlgHom, subst_C]
 
 theorem ev_bilSer {m n : ℕ} {b : Fin m → Pt k n d} (hb : ∀ j, NoConst (b j)) (β : Matrix (Fin d) (Fin d) k)
     (u v : Pt k m d) : ev b (bilSer β u v) = bilSer β (evP b u) (evP b v) := by
   simp only [evP, bilSer, ev]
-  rw [← coe_substAlgHom (hasSubst_of hb), map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← coe_substAlgHom (hasSubst_of hb), map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_mul, map_mul, coe_substAlgHom, subst_C]
 
@@ -128,7 +131,8 @@ theorem bilSer_swap {n : ℕ} (β : Matrix (Fin d) (Fin d) k) (u v : Pt k n d) :
 
 theorem bilSer_lin_right {n : ℕ} (β A : Matrix (Fin d) (Fin d) k) (u v : Pt k n d) :
     bilSer β u (lin A v) = bilSer (β * A) u v := by
-  simp only [bilSer, lin, Matrix.mul_apply, map_sum, map_mul, Finset.mul_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [bilSer, lin, Matrix.mul_apply, map_sum, map_mul, Finset.mul_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun l _ => by ring
@@ -151,7 +155,8 @@ theorem coeff_bilSer (β : Matrix (Fin d) (Fin d) k) (i j : Fin d) :
     · have := DFunLike.congr_fun h (1, j)
       by_contra hne
       simp [Finsupp.single_apply, Ne.symm hne] at this
-  simp only [bilSer, pt, map_sum, coeff_C_mul, X_def, monomial_mul_monomial, coeff_monomial, key]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [bilSer, pt, map_sum, coeff_C_mul, X_def, monomial_mul_monomial, coeff_monomial, key]
   rw [Finset.sum_eq_single i, Finset.sum_eq_single j]
   · simp
   · intro b _ hb; simp [Ne.symm hb]

@@ -41,7 +41,8 @@ theorem ident_lincomb (hT : TAll) (hSK : SecK) (hEW : EisWk) (d : SD σ) (c : �
   choose tt htt using hconv
   have hsec : d.sec0 (∑ i, a i • Ψ i) = fun y => ∑ i, a i * d.sec0 (Ψ i) y := by
     funext y
-    rw [← secl_apply, map_sum, Finset.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← secl_apply, map_sum, Finset.sum_apply]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul]
     rfl

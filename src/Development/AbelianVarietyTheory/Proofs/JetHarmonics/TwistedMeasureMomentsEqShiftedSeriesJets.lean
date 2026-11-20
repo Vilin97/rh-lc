@@ -98,7 +98,8 @@ theorem DT_iter_sum (s : Finset ℕ) (c : ℕ → ℂ_[q]) (k : ℕ) :
   induction k with
   | zero => simp
   | succ k ih =>
-    rw [Function.iterate_succ_apply', ih, DT, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Function.iterate_succ_apply', ih, DT, map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     have := DT_one_add_pow (c j * (j : ℂ_[q]) ^ k) j
     rw [DT] at this
@@ -120,7 +121,8 @@ theorem twisted_moments : ∀ (q : ℕ) [Fact q.Prime] (S : ℂ_[q]⟦X⟧) (ζ 
   have := hasSum_coeff_iter hζ hS k 0
   rw [coeff_zero_eq_constantCoeff] at this
   convert this using 3 with m
-  rw [fwdDiff_iter_eq_sum_shift, sS_pow_eq, DT_iter_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [fwdDiff_iter_eq_sum_shift, sS_pow_eq, DT_iter_sum, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   have e : (0 : ℤ_[q]) + j • (1 : ℤ_[q]) = (j : ℤ_[q]) := by simp
   rw [e]

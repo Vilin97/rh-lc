@@ -211,7 +211,8 @@ theorem basis_repr_left_eq_pairing {ι : Type} [Fintype ι] [DecidableEq ι] (P 
     (x : V) (i : ι) : b.repr x i = P x (b' i) := by
   have h : P x (b' i) = ∑ j, b.repr x j * P (b j) (b' i) := by
     conv_lhs => rw [← b.sum_repr x]
-    rw [map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, LinearMap.sum_apply]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_smul, LinearMap.smul_apply, smul_eq_mul]
   rw [h, Finset.sum_eq_single i]
@@ -226,7 +227,8 @@ theorem basis_repr_right_eq_pairing {ι : Type} [Fintype ι] [DecidableEq ι] (P
     (y : V') (j : ι) : b'.repr y j = P (b j) y := by
   have h : P (b j) y = ∑ k, b'.repr y k * P (b j) (b' k) := by
     conv_lhs => rw [← b'.sum_repr y]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_smul, smul_eq_mul]
   rw [h, Finset.sum_eq_single j]
@@ -261,7 +263,8 @@ theorem dualS_lattice [FiniteDimensional LL V] [FiniteDimensional LL V']
     refine ⟨b.repr ⟨x, hx⟩ i, ?_⟩
     have hx' : x = ∑ k, algebraMap O LL (b.repr ⟨x, hx⟩ k) • bV k := by
       have := congrArg (Submodule.subtype T) (b.sum_repr ⟨x, hx⟩)
-      simp only [map_sum, map_smul, Submodule.subtype_apply] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, Submodule.subtype_apply] at this
       refine this.symm.trans ?_
       exact Finset.sum_congr rfl fun k _ => by rw [hbV, algebraMap_smul]
     have h := congrFun (bV.repr_sum_self fun k => algebraMap O LL (b.repr ⟨x, hx⟩ k)) i

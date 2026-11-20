@@ -118,7 +118,8 @@ private theorem UpperTheory.Reformulated.B.AdmissibleSmoothRepresentations.inner
     exact W.apply_mem_toSubmodule k hw
   have hsfix : ∀ k ∈ K, ρ k (∑ y ∈ hfin.toFinset, y) = ∑ y ∈ hfin.toFinset, y := by
     intro k hk
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_nbij' (fun y => ρ k y) (fun y => ρ k⁻¹ y) ?_ ?_ ?_ ?_ ?_
     · intro y hy
       obtain ⟨l, hl, rfl⟩ := (hO y).mp hy

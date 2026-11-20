@@ -97,7 +97,8 @@ private theorem inv_mem (hV : VInv) (l : ℕ) [Fact l.Prime] {W Z : Scheme.{0}} 
     rfl
   have hE : ∀ m, (∑ δ, pullTot l (sch.map (b δ))) m ∈ LinearMap.range (pullTot l (sch.map f)) := fun m => by
     refine tot_range hV l _ G b hG _ fun δ' => ?_
-    rw [LinearMap.sum_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [LinearMap.sum_apply, map_sum]
     simp only [hmul]
     exact Fintype.sum_equiv (Equiv.mulLeft δ') _ _ fun _ => rfl
   have hEy : (∑ δ, pullTot l (sch.map (b δ))).baseChange L y = ((Fintype.card G : ℕ) : L) • y := by

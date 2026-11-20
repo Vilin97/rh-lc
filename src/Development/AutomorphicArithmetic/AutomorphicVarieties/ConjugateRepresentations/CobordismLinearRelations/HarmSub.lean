@@ -51,7 +51,8 @@ private theorem cocl_trans {q : ℕ} (x : GL (Fin a) (Af E)) {ω : Geo.Co Ξ q} 
     refine AlternatingMap.ext fun X => ?_
     have h1 := DFunLike.congr_fun (show del _ e ω = 0 from hω) X
     rw [del_apply, AlternatingMap.zero_apply] at h1 ⊢
-    simp only [ap, ← rT_adj, ← map_sum, h1, map_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [ap, ← rT_adj, ← map_sum, h1, map_zero]
 
 end SlopeTestRemainingChoices
 

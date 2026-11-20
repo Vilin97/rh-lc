@@ -43,7 +43,8 @@ theorem flagMat_change_frame : ∀ (B Y : Scheme.{0}) (M : B.Modules) (r : ℕ) 
   rw [← Matrix.vecMul_vecMul, ← h1]
   funext b
   simp only [coordAt, Matrix.vecMul, dotProduct, Matrix.of_apply]
-  rw [← TangentOrigin.evalPt_res y (inf_le_left : W ⊓ π ⁻¹ᵁ V' ≤ W) hy hy', ← IsFrame.repr_resM _ hWV inf_le_left,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← TangentOrigin.evalPt_res y (inf_le_left : W ⊓ π ⁻¹ᵁ V' ≤ W) hy hy', ← IsFrame.repr_resM _ hWV inf_le_left,
     FlagSec.repr_change π hf hf' _ inf_le_right h2, map_sum, Twist.app_resM]
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [map_mul, FlagSec.evalPt_appLE π y _ _ h2 hy' hxx, mul_comm]

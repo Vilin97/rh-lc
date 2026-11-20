@@ -156,7 +156,8 @@ theorem unifCls_bilin {L : Type} [AddCommGroup L] [Module.Free ℤ L] [Module.Fi
     Matrix.of fun i j => E (b i) (b j)
   have hsum : ∀ (c : Module.Free.ChooseBasisIndex ℤ L → ℤ) j, E (b.equivFun.symm c) (b j) = (c ᵥ* M) j := by
     intro c j
-    simp [Module.Basis.equivFun_symm_apply, map_sum, Matrix.vecMul, dotProduct, M]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Module.Basis.equivFun_symm_apply, map_sum, Matrix.vecMul, dotProduct, M]
   have hdet : M.det ≠ 0 := by
     intro h0
     obtain ⟨v, hv, hvM⟩ := Matrix.exists_vecMul_eq_zero_iff.2 h0

@@ -58,7 +58,8 @@ theorem conjT_mul_int {L : Type} [Field L] [Valued L (WithZero (Multiplicative �
     ∀ i j, (Matrix.transpose (x.map σ) * C) i j ∈ Formalism.UG.intL L := by
   intro j k
   have h : (Matrix.transpose (x.map σ) * C) j k = - σ ((C * x) k j) := by
-    simp only [Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, map_sum, map_mul, hC,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, map_sum, map_mul, hC,
       ← Finset.sum_neg_distrib]
     refine Finset.sum_congr rfl fun i _ => ?_
     ring

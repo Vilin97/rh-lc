@@ -36,7 +36,8 @@ theorem comatrix_last_row_inverts_casimir
         simp [hc]
       · simp
     rw [hK]
-    simp only [h1, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [h1, map_sum]
     rw [Finset.sum_comm]
     have h2 : ∀ c, ∑ l, Q u l (Tm E u c l (x c)) =
         (if c = Fin.last n then qdet E u else 0 : Module.End ℂ V) (x c) := by

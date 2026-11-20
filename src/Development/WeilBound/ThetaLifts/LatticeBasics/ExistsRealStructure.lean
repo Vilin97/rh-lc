@@ -40,7 +40,8 @@ def linForm (B : κ → mixedEmbedding.mixedSpace F) : (κ → mixedEmbedding.mi
 
 theorem linForm_apply (B y : κ → mixedEmbedding.mixedSpace F) :
     linForm B y = Algebra.trace ℝ (mixedEmbedding.mixedSpace F) (∑ i, y i * B i) := by
-  simp [linForm, map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [linForm, map_sum, LinearMap.sum_apply]
 
 open scoped Classical in
 
@@ -298,7 +299,8 @@ theorem trace_mul_eq_zero (b : mixedSpace F) (h : ∀ y, Algebra.trace ℝ (mixe
   refine (latticeBasis F).ext_elem fun j => ?_
   have := h (mixedEmbedding F ((integralBasis F).traceDual j))
   rw [← (latticeBasis F).sum_repr b] at this
-  simp only [Finset.sum_mul, smul_mul_assoc, map_sum, map_smul, latticeBasis_apply, ← map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finset.sum_mul, smul_mul_assoc, map_sum, map_smul, latticeBasis_apply, ← map_mul,
     trace_emb, Module.Basis.trace_mul_traceDual] at this
   simpa [apply_ite] using this
 
@@ -317,8 +319,10 @@ theorem exists_linForm_eq {κ : Type} [Fintype κ] (l : (κ → mixedSpace F) �
   classical
   choose B hB using fun i => exists_trace_eq (F := F) (l ∘ₗ LinearMap.single ℝ (fun _ => mixedSpace F) i)
   refine ⟨B, fun y => ?_⟩
-  rw [linForm_apply, map_sum]
-  conv_lhs => rw [← Finset.univ_sum_single y, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [linForm_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [← Finset.univ_sum_single y, map_sum]
   exact Finset.sum_congr rfl fun i _ => hB i (y i)
 
 def reAd (x : mixedSpace F) : AF F :=

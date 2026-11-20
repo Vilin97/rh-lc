@@ -182,7 +182,8 @@ theorem UpperTheory.Kd.C7.pToBasis :
     have hne : ∀ k, (P k).eval (ζ m ^ (b : ZMod (l ^ m)).val) ≠ 0 := fun k => by
       rw [hev]; exact (map_ne_zero s).2 (hu k).2.1
     unfold htv
-    simp only [hmap, logd _ P _ _ hne, map_sum, map_mul j, map_natCast]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hmap, logd _ P _ _ hne, map_sum, map_mul j, map_natCast]
     refine cg_swap β.val o _ a ha fun k => hj _ ?_
     rw [div_eq_mul_inv]
     refine A.mul_mem _ _ (A.mul_mem _ _ hz ?_) ?_

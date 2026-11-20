@@ -62,7 +62,8 @@ theorem inv_lift [CompactSpace G] (N : Subgroup G) (hN : IsClosed (N : Set G))
     rw [hh, Subgroup.coe_mul, map_mul, Module.End.mul_apply, show A.rho ((h : N) : G) a₀ = a₀ from h.2]
   have hinv : ∀ g ∈ N, A.rho g s = s := by
     intro g hg
-    rw [hs_def, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hs_def, map_sum]
     have e : ∀ c : N ⧸ W, A.rho g (A.rho ((c.out : N) : G) a₀) =
         A.rho ((((⟨g, hg⟩ : N) • c).out : N) : G) a₀ := by
       intro c
@@ -76,7 +77,8 @@ theorem inv_lift [CompactSpace G] (N : Subgroup G) (hN : IsClosed (N : Set G))
     simp only [e]
     exact Fintype.sum_equiv (MulAction.toPerm (⟨g, hg⟩ : N)) _ _ (fun _ => rfl)
   refine ⟨((v⁻¹ : Rˣ) : R) • s, fun g hg => by rw [map_smul, hinv g hg], ?_⟩
-  rw [map_smul, hs_def, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_smul, hs_def, map_sum]
   simp only [hp, fun c : N ⧸ W => hb _ c.out.2]
   have hcard : (Finset.univ : Finset (N ⧸ W)).card = W.index := by
     rw [Subgroup.index, Nat.card_eq_fintype_card, Finset.card_univ]

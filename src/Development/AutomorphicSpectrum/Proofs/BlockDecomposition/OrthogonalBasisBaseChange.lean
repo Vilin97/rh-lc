@@ -19,7 +19,8 @@ theorem isCMExt_sigma_sigma {F E : Type} [Field F] [NumberField F] [Field E] [Nu
 theorem hform_incV {F E : Type} [Field F] [Field E] [Algebra F E] (σ : E →ₐ[F] E) {M : ℕ}
     (J : Matrix (Fin M) (Fin M) E) (K : Type) [CommRing K] [Algebra F K] (x y : Fin M → E) :
     Formalism.UG.hform (sigR K σ) (JR K J) (incV K x) (incV K y) = inclR K (hf σ J x y) := by
-  simp only [Formalism.UG.hform, hf, incV, JR, map_sum, map_mul, Matrix.map_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Formalism.UG.hform, hf, incV, JR, map_sum, map_mul, Matrix.map_apply]
   rfl
 
 theorem exists_rational_orth : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]

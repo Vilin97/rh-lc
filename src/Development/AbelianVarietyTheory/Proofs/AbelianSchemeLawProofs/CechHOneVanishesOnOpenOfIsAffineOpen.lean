@@ -259,7 +259,8 @@ theorem cechHOneVanishesOnOpen_of_isAffineOpen (hM : M.IsLB) {V : X.Opens} (hT :
   refine isCoboundary_of_refine hφ D τ hD (fun a => (hO a).trans hDc)
     (fun k => ∑ m, rs X (hDV k) (h m * t m ^ a₂) • ρ k m) fun k l => ?_
   have h1 := congrArg (rs X (inf_le_left.trans (hDV k) : D k ⊓ D l ≤ V)) hh
-  simp only [map_sum, map_smulₛₗ, map_mul, map_pow, map_one, rs_rs] at h1 ⊢
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smulₛₗ, map_mul, map_pow, map_one, rs_rs] at h1 ⊢
   rw [← Finset.sum_sub_distrib, ← one_smul Γ(X, D k ⊓ D l) (restrict M _ (φ (τ k) (τ l))), ← h1,
     Finset.sum_smul]
   refine Finset.sum_congr rfl fun m _ => ?_

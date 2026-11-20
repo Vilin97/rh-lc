@@ -95,9 +95,11 @@ theorem N_eq_L (H : D.Hyp) {S : (n → A) →ₗ[A] (n → A)} (hS : D.FixEZ S) 
   have key : v = D.pX v + D.pXv v + D.pz v + D.pW v := by
     rw [pW_apply, pU_apply]; abel
   have h1 : S (D.pX v) = T (D.pX v) := by
-    rw [pX_apply]; simp only [map_sum, map_smul, he]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [pX_apply]; simp only [map_sum, map_smul, he]
   have h2 : S (D.pXv v) = T (D.pXv v) := by
-    rw [pXv_apply]; simp only [map_sum, map_smul, hf]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [pXv_apply]; simp only [map_sum, map_smul, hf]
   have h3 : S (D.pz v) = T (D.pz v) := by
     rw [pz_apply, map_smul, map_smul, hz]
   have h4 : S (D.pW v) = T (D.pW v) := hw _ (isW_pW H v)
@@ -147,7 +149,8 @@ theorem pW_comm (H : D.Hyp) {S : (n → A) →ₗ[A] (n → A)} (hS : D.FixEZ S)
   have hfix : ∀ x, S (D.pU x) = D.pU x := by
     intro x
     rw [pU_apply, pX_apply, pXv_apply, pz_apply]
-    simp only [map_add, map_sum, map_smul, hS'.1, hf, hS'.2]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_add, map_sum, map_smul, hS'.1, hf, hS'.2]
   have hwW : ∀ u, IsW D u → D.pW (S u) = S u := by
     intro u hu
     have hu' : (∀ a, D.h (D.e a) u = 0) ∧ (∀ a, D.h (D.f a) u = 0) ∧ D.h D.z u = 0 := hu

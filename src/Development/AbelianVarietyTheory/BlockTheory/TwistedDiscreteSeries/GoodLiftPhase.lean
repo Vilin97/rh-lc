@@ -65,9 +65,11 @@ theorem liftWeight_complexPoint_eq_twist (R : RealDat D A Ks) (F : Face D A) (b 
   have hs : sg0 D A = D.what₂.embLL := sgAt_mk _ R.hv0
   have h1 : (R.toCx F).w0C b j (cpt A.v0.embedding y) =
       ∑ k, A.v0.embedding (y k) • (R.toCx F).eW b j ((R.toCx F).bW b j A.v0 k) := by
-    simp only [CxData.w0C, CxData.wC, lin, LinearMap.comp_apply, Fintype.linearCombination_apply, map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [CxData.w0C, CxData.wC, lin, LinearMap.comp_apply, Fintype.linearCombination_apply, map_sum, map_smul]
     rfl
-  rw [h1, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h1, map_sum]
   have h2 : ∀ (s : Bool) (f : Fin (Module.finrank D.what₂.LL (R.WL F b j)) → Tw s (R.HW j (sg0 D A)).H),
       Tw.out (∑ k, f k) = ∑ k, Tw.out (f k) := fun _ _ => rfl
   refine (h2 _ _).trans (Finset.sum_congr rfl fun k _ => ?_)

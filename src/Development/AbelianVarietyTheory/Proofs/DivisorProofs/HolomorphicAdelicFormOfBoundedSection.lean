@@ -21,7 +21,8 @@ theorem continuous_place {F L : Type} [Field F] [NumberField F] [Field L] [Numbe
   have he : (fun z : AF F ⊗[F] L => θ (Algebra.TensorProduct.map (fstA F) (AlgHom.id F L) z)) = fun z => ∑ i,
       θ (fstA F (B.coord i z) ⊗ₜ[F] (1 : L)) * τ (b i) := by
     funext z
-    conv_lhs => rw [← B.sum_repr z, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [← B.sum_repr z, map_sum, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [Algebra.TensorProduct.basis_apply, TensorProduct.smul_tmul', smul_eq_mul, mul_one, ← hθ.1, ← map_mul,
       Algebra.TensorProduct.tmul_mul_tmul, mul_one, one_mul, Algebra.TensorProduct.map_tmul]

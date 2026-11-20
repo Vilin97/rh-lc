@@ -23,13 +23,16 @@ theorem sum_coeff_mul_weight {k σ : Type} [CommRing k] (w : (σ →₀ ℕ) →
   have hP : ∀ P : MvPolynomial σ k, L P = ∑ mo ∈ P.support, P.coeff mo * w mo := by
     intro P
     conv_lhs => rw [P.as_sum]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun m _ => hL m _
   rw [← hP]
   conv_lhs => rw [P₁.as_sum, P₂.as_sum]
-  rw [Finset.sum_mul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.sum_mul_sum, map_sum]
   refine Finset.sum_congr rfl fun m₁ _ => ?_
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun m₂ _ => ?_
   rw [MvPolynomial.monomial_mul, hL]
 

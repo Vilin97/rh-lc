@@ -108,9 +108,11 @@ theorem lie_sum_single (X : Lie E (r + s)) (F : Sm E (r + s)) :
   have hdec : X = ∑ p, ∑ q, (toL (Matrix.single p q (X p q)) : Lie E (r + s)) :=
     Matrix.matrix_eq_sum_single (Matrix.of X)
   conv_lhs => rw [hdec]
-  rw [map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, LinearMap.sum_apply]
   refine Finset.sum_congr rfl fun p _ => ?_
-  rw [map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, LinearMap.sum_apply]
 
 theorem right_slice_eq_sum (F : Sm E (r + s)) {n : ℕ} (b : Fin n → Sm E r) (q : Fin n → Sm E s)
     (hexp : ∀ m : GA E r × GA E s, F.1 (lev (Ad E) r s m) = ∑ i, (b i).1 m.1 * (q i).1 m.2) (m₁ : GA E r) :
@@ -133,7 +135,8 @@ theorem left_slice_lie_second_block (F : Sm E (r + s)) {n : ℕ} (b : Fin n → 
     (m₂ : GA E s) :
     sl0 m₂ (lie E (r + s) (GlobalTheory.BlockCap.blockCLM (e2 r s) 1 Y) F) = ∑ i, (lie E s Y (q i)).1 m₂ • b i := by
   refine Subtype.ext (funext fun m₁ => ?_)
-  rw [left_slice_apply, ← right_slice_apply, right_slice_lie_second_block, right_slice_eq_sum F b q hexp, map_sum, Submodule.coe_sum, Finset.sum_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [left_slice_apply, ← right_slice_apply, right_slice_lie_second_block, right_slice_eq_sum F b q hexp, map_sum, Submodule.coe_sum, Finset.sum_apply,
     Submodule.coe_sum, Finset.sum_apply]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_smul]
@@ -145,7 +148,8 @@ theorem right_slice_lie_first_block (F : Sm E (r + s)) {n : ℕ} (b : Fin n → 
     (m₁ : GA E r) :
     sl1 m₁ (lie E (r + s) (GlobalTheory.BlockCap.blockCLM (e2 r s) 0 Y) F) = ∑ i, (lie E r Y (b i)).1 m₁ • q i := by
   refine Subtype.ext (funext fun m₂ => ?_)
-  rw [right_slice_apply, ← left_slice_apply, left_slice_lie_first_block, left_slice_eq_sum F b q hexp, map_sum, Submodule.coe_sum, Finset.sum_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [right_slice_apply, ← left_slice_apply, left_slice_lie_first_block, left_slice_eq_sum F b q hexp, map_sum, Submodule.coe_sum, Finset.sum_apply,
     Submodule.coe_sum, Finset.sum_apply]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_smul]
@@ -186,9 +190,11 @@ theorem key_left (W : Submodule ℂ (Sm E r)) (hW : IsStable W) (F : Sm E (r + s
     (hexp : ∀ m : GA E r × GA E s, F.1 (lev (Ad E) r s m) = ∑ i, (b i).1 m.1 * (q i).1 m.2)
     (X : Lie E (r + s)) (hX : ∀ (i : Fin s) (j : Fin r), X (Fin.natAdd r i) (Fin.castAdd s j) = 0)
     (m₂ : GA E s) : sl0 m₂ (lie E (r + s) X F) ∈ W := by
-  rw [lie_sum_single, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [lie_sum_single, map_sum]
   refine W.sum_mem fun p _ => ?_
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine W.sum_mem fun q' _ => ?_
   induction p using Fin.addCases with
   | left p =>
@@ -219,9 +225,11 @@ theorem key_right (W : Submodule ℂ (Sm E s)) (hW : IsStable W) (F : Sm E (r + 
     (hexp : ∀ m : GA E r × GA E s, F.1 (lev (Ad E) r s m) = ∑ i, (b i).1 m.1 * (q i).1 m.2)
     (X : Lie E (r + s)) (hX : ∀ (i : Fin s) (j : Fin r), X (Fin.natAdd r i) (Fin.castAdd s j) = 0)
     (m₁ : GA E r) : sl1 m₁ (lie E (r + s) X F) ∈ W := by
-  rw [lie_sum_single, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [lie_sum_single, map_sum]
   refine W.sum_mem fun p _ => ?_
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine W.sum_mem fun q' _ => ?_
   induction p using Fin.addCases with
   | left p =>

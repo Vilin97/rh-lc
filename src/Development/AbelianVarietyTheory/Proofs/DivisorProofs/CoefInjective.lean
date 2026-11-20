@@ -62,7 +62,8 @@ theorem adjoint_idem {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
   set E : H →ₗ[ℂ] H := ∑ g, a g • ρ g with hE
   have hin : ∀ g u w, ⟪ρ g u, ρ g w⟫_ℂ = ⟪u, w⟫_ℂ := fun g => LinearIsometry.inner_map_map ⟨ρ g, hu g⟩
   have hcomm : ∀ g u, E (ρ g u) = ρ g (E u) := fun g u => by
-    simp only [hE, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, ← Module.End.mul_apply, ← map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hE, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, ← Module.End.mul_apply, ← map_mul]
     refine (Fintype.sum_equiv (MulAut.conj g).toEquiv _ _ fun h => ?_).symm
     show _ = a (g * h * g⁻¹) • ρ (g * h * g⁻¹ * g) u
     rw [ha.1, inv_mul_cancel_right]
@@ -70,7 +71,8 @@ theorem adjoint_idem {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
     have h1 : E u = ∑ g, ∑ h, (a h * a (h⁻¹ * g)) • ρ g u := by
       simp only [← Finset.sum_smul, ha.2, hE, LinearMap.sum_apply, LinearMap.smul_apply]
     have h2 : E (E u) = ∑ h, ∑ g, (a h * a g) • ρ h (ρ g u) := by
-      simp only [hE, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, Finset.smul_sum, smul_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hE, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, Finset.smul_sum, smul_smul]
       rw [Finset.sum_comm]
       simp only [mul_comm]
     rw [h2, h1, Finset.sum_comm (f := fun g h => (a h * a (h⁻¹ * g)) • ρ g u)]
@@ -85,7 +87,8 @@ theorem adjoint_idem {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
       mul_inv_cancel, map_one, Module.End.one_apply]
     simp
   have hfix : E (LinearMap.adjoint E x) = LinearMap.adjoint E x := by
-    rw [hadj, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hadj, map_sum]
     simp only [map_smul, hcomm, hx]
 
   have hz : LinearMap.adjoint E x - x = 0 := by

@@ -36,7 +36,8 @@ theorem full_left_support : Laws → Laws2 → ∀ (S : Scheme.{0}) [IsLocallyNo
     obtain ⟨r, hr⟩ := GlobalTheory.T.additionTensor_eigen_diagonal_theta_order_two h1.globalFns S P F p th n t t' (fun i => Φ θ.1 (t i)) (fun i => Φ θ.1 (t' i))
       hadd θ.1 θ.2 (fun i => ⟨hΦ θ.1 (t i), hΦ θ.1 (t' i)⟩)
     refine ⟨r, Eq.trans ?_ hr⟩
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun i _ => TensorProduct.map_tmul _ _ _ _
 
 end GlobalTheory.AddTensor

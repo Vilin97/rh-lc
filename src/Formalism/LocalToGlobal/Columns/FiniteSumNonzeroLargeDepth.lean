@@ -315,7 +315,8 @@ def CplKer.comp {S₀ S S₁ : GSD K} {Y : Cpl S} (A : CplKer S₀ S S₁ Y) (h 
       rw [this]
       rfl
     ext x
-    simp only [e1, e2, LinearMap.sum_apply, LinearMap.smul_apply, LinearMap.comp_apply, map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [e1, e2, LinearMap.sum_apply, LinearMap.smul_apply, LinearMap.comp_apply, map_sum, map_smul]
 
 def colCpl {F : ℕ → GFam K} (kk : KerFam F) (hF : ∀ j, (F j).Ok) (n : ℕ) {S S₁ : GSD K} {Y : Cpl S}
     (A : ∀ b : (F n).β, CplKer ((F n).mem b) S S₁ Y) (h : S.Ok) : (F 0).Forms →ₗ[K] S₁.EqFun :=

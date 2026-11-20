@@ -134,14 +134,17 @@ theorem measure_of_products : ∀ (d q : ℕ) [Fact q.Prime] (ι : ℂ ≃+* ℂ
     rw [iteratedFDeriv_sum (fun j _ => contDiff_const.mul (hcd j)), Finset.sum_apply]
     refine Finset.sum_congr rfl fun j _ => ?_
     exact iteratedFDeriv_const_smul_apply' (a := c j) (x := 0) (hcd j).contDiffAt
-  rw [hit, hFP, map_sum μ]
-  simp only [map_smul, hP, smul_eq_mul, ContinuousMultilinearMap.sum_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hit, hFP, map_sum μ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_smul, hP, smul_eq_mul, ContinuousMultilinearMap.sum_apply,
     ContinuousMultilinearMap.smul_apply, Finset.mul_sum, map_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [GlobalTheory.CoordProdDeriv.iteratedFDeriv_prod_coord g k
     (fun i z => W1 d (y i) (U1 d (t j i) θ) z ^ a i) _ (fun i => (hdiff j i).pow _)]
-  simp only [Finset.mul_sum, map_sum, map_mul, map_prod, Pi.smul_apply, smul_eq_mul, map_inv₀]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finset.mul_sum, map_sum, map_mul, map_prod, Pi.smul_apply, smul_eq_mul, map_inv₀]
   refine Finset.sum_congr rfl fun σ _ => ?_
   rw [Finset.prod_mul_distrib (f := fun i => ω ^ (Finset.univ.filter (fun l => σ l = i)).card),
     ← prod_fiber_pow σ (fun _ => ω)]

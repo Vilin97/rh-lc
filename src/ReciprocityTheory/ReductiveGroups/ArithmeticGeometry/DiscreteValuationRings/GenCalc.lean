@@ -368,7 +368,8 @@ theorem valuation_ge_at_zero (hϖ : Irreducible ϖ) (hv : ValOver ϖ F v) {k : �
     rw [hT, hT2, AddValuation.map_pow, v_alg_unit hv w, smul_zero]
   have hE := congrArg (evalTop _ hW) (hxj j)
   erw [map_mul, evalTop_const, evalTop_res _ hZ hW] at hE
-  rw [hsum j, map_sum] at hE
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hsum j, map_sum] at hE
   have hE2 : ∑ i, a i * evalTop _ hZ (((DegPre.zF D.toPre F).left.app _).hom ((σF i).f j)) =
       x * evalTop _ hW (τ.s j).val := by
     refine Eq.trans ?_ hE

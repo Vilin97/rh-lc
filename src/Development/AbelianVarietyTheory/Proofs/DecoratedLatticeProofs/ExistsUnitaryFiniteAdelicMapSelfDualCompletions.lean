@@ -55,7 +55,8 @@ theorem swap_mulVec (g : GL (Fin n) (E ⊗[F] R)) (z : Fin n → R ⊗[F] E) :
       (((Formalism.UG.bc (Algebra.TensorProduct.comm F R E).symm.toAlgHom.toRingHom g).val *ᵥ z) i)) =
       g.val *ᵥ fun i => Algebra.TensorProduct.comm F R E (z i) := by
   funext i
-  simp only [Matrix.mulVec, dotProduct, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mulVec, dotProduct, map_sum, map_mul]
   refine Finset.sum_congr rfl fun j _ => ?_
   congr 1
   exact (Algebra.TensorProduct.comm F R E).apply_symm_apply (g.val i j)

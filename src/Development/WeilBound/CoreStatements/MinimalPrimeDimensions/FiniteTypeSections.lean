@@ -97,7 +97,8 @@ theorem norm_le_of_emb {K V Ω : Type} [Field K] [NumberField K] [AddCommGroup V
         exact this
       have e3 : ∀ m, ρ (ψ (ev (b m))) = ∑ j, σ' (c j m) * ρ (ψ (ev (gw j))) := fun m => by
         rw [hbc m]
-        simp only [map_sum, map_smul, Algebra.smul_def, map_mul, hσa]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, map_smul, Algebra.smul_def, map_mul, hσa]
       have e4 : ∀ a, ∑ j, (∑ m, σ' (c j m) * A σ' m a) * (ρ (ψ (ev (gw j))) * lam) =
           lam * ∑ m, A σ' m a * ρ (ψ (ev (b m))) := fun a => by
         simp only [e3, Finset.sum_mul, Finset.mul_sum]

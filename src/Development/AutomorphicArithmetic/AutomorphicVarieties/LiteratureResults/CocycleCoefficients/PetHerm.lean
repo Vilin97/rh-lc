@@ -52,7 +52,8 @@ theorem UpperTheory.V.Lit.KT.petHerm :
     congr 1
     ring
   · simp only [pet, finsum_eq_sum_of_fintype]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun γ _ => ?_
     rw [← integral_conj]
     congr 1

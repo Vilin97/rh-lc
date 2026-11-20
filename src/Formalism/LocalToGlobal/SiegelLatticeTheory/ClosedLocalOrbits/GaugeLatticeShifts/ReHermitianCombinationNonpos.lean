@@ -430,7 +430,8 @@ theorem sig_bound {N p q : ℕ} (G : Matrix (Fin N) (Fin N) ℂ) (hG : Formalism
     set x := ∑ l, d l • c l with hx
     have hprx : ∀ s, pr x s = ∑ l, d l * pr (c l) s := by
       intro s
-      rw [hx, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hx, map_sum]
       simp
     have hinr : ∀ b, pr x (Sum.inr b) = 0 := by
       intro b
@@ -621,7 +622,8 @@ theorem form_coord {E : Type} [Field E] [NumberField E] [StarRing E] (S : Formal
     τ (S.hT a b) = cform (S.gram.map τ) (fun i => τ (S.frame.equivFun a i))
       (fun j => τ (S.frame.equivFun b j)) := by
   conv_lhs => rw [← S.frame.sum_equivFun a, ← S.frame.sum_equivFun b]
-  simp only [map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, map_smul, smul_eq_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, map_smul, smul_eq_mul,
     map_mul, starRingEnd_apply, hconj]
   simp only [cform, dotProduct, Matrix.mulVec, Matrix.map_apply, Formalism.BasicNotions.HSpace.gram, Pi.star_apply,
     Finset.mul_sum]

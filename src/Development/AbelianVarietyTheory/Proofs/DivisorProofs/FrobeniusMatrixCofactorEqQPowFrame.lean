@@ -35,7 +35,8 @@ theorem φpull_le_span {n : ℕ} (T : LocLat G Qp LL O) (b : Module.Basis (Fin n
   rintro _ ⟨x, hx, rfl⟩
   have e := congrArg Subtype.val (b.sum_repr ⟨x, hx⟩)
   simp only [AddSubmonoidClass.coe_finset_sum, SetLike.val_smul] at e
-  rw [← e, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← e, map_sum]
   refine Submodule.sum_mem _ fun j _ => ?_
   rw [φD_smul_A]
   exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨j, rfl⟩)

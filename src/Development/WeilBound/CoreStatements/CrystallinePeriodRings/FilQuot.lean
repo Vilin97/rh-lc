@@ -38,7 +38,8 @@ theorem filq_tiltMap_ε1 (AI : LocAinf l P) : Per6.tiltMap l AI.ε1 =
 
 theorem filq_ainfMap_ξ (AI : LocAinf l P) :
     Per6.ainfMap l AI.ξ = AInf.xi (K := ℂ_[l]) (Per6.tiltMap l AI.ε) := by
-  rw [LocAinf.ξ, map_sum, AInf.xi]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [LocAinf.ξ, map_sum, AInf.xi]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_pow, frob_ainfMap_teich, filq_tiltMap_ε1]
 

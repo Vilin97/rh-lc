@@ -126,7 +126,8 @@ theorem exists_nsmul_mem_of_dual {g : ℕ} {Hm : Matrix (Fin g) (Fin g) ℂ} (hH
     rw [hGe]; rfl
   have key : ∀ (c : _ → ℝ) i, imForm Hm (∑ j, c j • e j) (e i) = (Matrix.mulVec GR c) i := by
     intro c i
-    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply,
       smul_eq_mul, Matrix.mulVec, dotProduct, hGRe]
     exact Finset.sum_congr rfl fun j _ => mul_comm _ _
   have hd : G.det ≠ 0 := by
@@ -237,7 +238,8 @@ theorem exists_unimodular_overlattice : ∀ (g : ℕ) (Λ : Submodule ℤ (Fin g
     set x : Fin g → ℂ := ∑ i, (φ (b i) : ℝ) • D i with hx_def
     have hxe : ∀ j, imForm Hm x (e j) = φ (b j) := by
       intro j
-      rw [hx_def, map_sum, LinearMap.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hx_def, map_sum, LinearMap.sum_apply]
       simp only [map_smul, LinearMap.smul_apply, smul_eq_mul, hD,
         LinearMap.BilinForm.apply_dualBasis_left, mul_ite, mul_one, mul_zero]
       simp

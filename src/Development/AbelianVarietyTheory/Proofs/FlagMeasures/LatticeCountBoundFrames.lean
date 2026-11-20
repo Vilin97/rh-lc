@@ -228,12 +228,14 @@ theorem hf_comb (L : LocE F E) {n : ℕ} {H : Matrix (Fin n) (Fin n) E} (h : IsH
   have key : ∀ (α : ι → E) (g : ι → Fin n → E) (y : Fin n → E),
       hf L H (∑ i, α i • g i) y = ∑ i, α i * hf L H (g i) y := fun α g y => by
     change GlobalTheory.FrameBasic.hfL L H y _ = _
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun i _ => by rw [map_smul]; rfl
   ext i j
   simp only [Matrix.of_apply, Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply,
     Finset.sum_mul]
-  rw [GlobalTheory.FrameBasic.hf_conj L h, key, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [GlobalTheory.FrameBasic.hf_conj L h, key, map_sum]
   refine Finset.sum_congr rfl fun l _ => ?_
   rw [map_mul, ← GlobalTheory.FrameBasic.hf_conj L h, key, Finset.mul_sum]
   exact Finset.sum_congr rfl fun m _ => by ring

@@ -128,7 +128,8 @@ theorem solve_of_root (hφ : ∀ (c : k) (x : V), φ (c • x) = c ^ p ^ e • �
       (∑ i ∈ range (n + 1), (recPoly (p ^ e) c ε i).eval y • (⇑φ)^[i] z) + ε • z := by
   have hit : ∀ i, φ ((⇑φ)^[i] z) = (⇑φ)^[i + 1] z := fun i =>
     (Function.iterate_succ_apply' _ _ _).symm
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp_rw [hφ, hit]
   rw [Finset.sum_range_succ, hy, hrel, Finset.smul_sum, Finset.sum_range_succ' _ n,
     Finset.sum_range_succ' (fun i => (recPoly (p ^ e) c ε i).eval y • (⇑φ)^[i] z) n]

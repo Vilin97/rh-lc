@@ -52,7 +52,8 @@ theorem lin_gen {Z : Scheme.{0}} {G : Over Z} {L : LB G.left} (hL : L.IsLB) {N :
     (fun _ _ _ => rfl) (fun _ => hJ (r ≫ (snd T' G).left))
   have e₀ := e 0
   have H₀ := congrArg (r.stalkMap y).hom (H (r y) J₀ hJ₀)
-  rw [sval_of s _ _ J₀ (fun _ => J (r ≫ (snd T' G).left)) (fun _ => by rw [Category.id_comp]; exact e₀), map_sum] at H₀
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [sval_of s _ _ J₀ (fun _ => J (r ≫ (snd T' G).left)) (fun _ => by rw [Category.id_comp]; exact e₀), map_sum] at H₀
   have m : r y ∈ LB.wchart L (fun _ : Fin 1 => (snd T' G).left) (fun _ => J (r ≫ (snd T' G).left)) :=
     hJ.mem (fun _ : Fin 1 => (snd T' G).left) r
   refine (gs_stalkMap r y _ m _).trans (H₀.trans (Finset.sum_congr rfl fun i _ => ?_))

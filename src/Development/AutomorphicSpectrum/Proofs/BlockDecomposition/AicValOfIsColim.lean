@@ -21,7 +21,8 @@ theorem aic_of_isColim {A : Type} [CommRing A] {G : ℕ → Type} [∀ n, CommRi
   set Q : Polynomial (G n) := Polynomial.X ^ P.natDegree + ∑ i : Fin P.natDegree, Polynomial.C (y i) * Polynomial.X ^ (i : ℕ) with hQ
   have hQm : Q.Monic := Polynomial.monic_X_pow_add (Polynomial.degree_sum_fin_lt y)
   have hmap : Q.map (ι n : G n →+* L) = P := by
-    rw [hQ, Polynomial.map_add, Polynomial.map_pow, Polynomial.map_X, Polynomial.map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hQ, Polynomial.map_add, Polynomial.map_pow, Polynomial.map_X, Polynomial.map_sum]
     simp only [Polynomial.map_mul, Polynomial.map_C, Polynomial.map_pow, Polynomial.map_X, RingHom.coe_coe, hy]
     conv_rhs => rw [hP.as_sum]
     rw [Fin.sum_univ_eq_sum_range (fun i => Polynomial.C (P.coeff i) * Polynomial.X ^ i) P.natDegree]

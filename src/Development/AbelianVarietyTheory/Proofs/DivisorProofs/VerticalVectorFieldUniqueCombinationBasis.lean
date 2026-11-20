@@ -109,7 +109,8 @@ theorem vert_span : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : 
       ∀ (c : Fin n → Γ(t.G.left, W)) (f : Γ(t.G.left, O)),
         valR g O (∑ a, resG t.G.left hO (c a) * δ a O f) = ∑ a, valR g W (c a) * (valR (wt a) O f).snd := by
     intro S _ g φ wt hφg hwt O hO hgO c f
-    rw [GlobalTheory.Points.valR_eq _ _ hgO, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [GlobalTheory.Points.valR_eq _ _ hgO, map_sum]
     refine Finset.sum_congr rfl fun a _ => ?_
     rw [← GlobalTheory.Points.valR_eq _ _ hgO, GlobalTheory.Points.valR_mul _ _ hgO, GlobalTheory.Points.valR_res _ hO hgO,
       hδv a O (hO.trans hW) f S φ g (wt a) hφg hgO (hwt a)]

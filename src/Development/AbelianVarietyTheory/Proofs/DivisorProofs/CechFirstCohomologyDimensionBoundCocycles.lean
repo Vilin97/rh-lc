@@ -102,7 +102,8 @@ theorem ch_d (p : ℕ) (x : Cube.Term (secCube s (LB.triv Y) D) p)
   show ch s _ (∑ i : t.1, cubeSign t.1 i.1 • (SecOnR.restrict s (LB.triv Y)
     (iInf_le_iInf_of_subset D (Finset.erase_subset i.1 t.1)) (x (Cube.eraseIdx t i)) :
       SecOnR s (LB.triv Y) (⨅ j ∈ t.1, D j))) = _
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_zsmul]
   congr 1
@@ -200,7 +201,8 @@ theorem ch_sum_smul {ι : Type} [Fintype ι] (c : ι → K)
   have key : ∀ v : ι → SecOnR s (LB.triv Y) (⨅ j ∈ t.1, D j),
       ch s _ (∑ b, c b • v b) = ∑ b, AbLaw.cst s (⨅ j ∈ t.1, D j) (c b) * ch s _ (v b) := by
     intro v
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun b _ => ch_smul s _ _ _
   exact key fun b => x b t
 
@@ -263,7 +265,8 @@ theorem pair_lt {ι : Type} [Fintype ι] (e : ι → ∀ i i' : κ, Γ(Y, D i �
   have hc : ∀ b, ch s (⨅ j ∈ t.1, D j) (coc s D (e b) t) = resG Y hle (e b i i') :=
     fun b => coc_pair s D (e b) hii t rfl
   simp only [hc] at key
-  simp only [hh, map_sum, map_mul, map_sub, map_neg, resG_resG, resG_cst]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hh, map_sum, map_mul, map_sub, map_neg, resG_resG, resG_cst]
   rw [one_smul, neg_smul, one_smul] at key
   linear_combination -key
 
@@ -284,7 +287,8 @@ theorem exists_comb_coboundary : ∀ (K : Type) [Field K] (Y : Scheme.{0}) (s : 
     omega
   obtain ⟨c, hc, b0, hb0⟩ := Fintype.not_linearIndependent_iff.1 hnli
   have h0 : cechClass A 1 (∑ b, c b • z b) = 0 := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simpa only [map_smul] using hc
   obtain ⟨y, hy⟩ := (cechClass_succ_eq_zero_iff A 0 _).1 h0
   have hy' : Cube.d A (0 + 1) y = ∑ b, c b • coc s D (e b) := by
@@ -314,7 +318,8 @@ theorem exists_comb_coboundary : ∀ (K : Type) [Field K] (Y : Scheme.{0}) (s : 
     apply resG_inj hW inf_le_left
     have P' := congrArg (resG Y (le_inf (inf_le_left.trans inf_le_right) inf_le_right :
       D i ⊓ D i' ⊓ D i ≤ D i' ⊓ D i)) P
-    simp only [map_sum, map_mul, map_sub, resG_cst, resG_resG] at P' ⊢
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, map_sub, resG_cst, resG_resG] at P' ⊢
     simp only [hanti, mul_neg, Finset.sum_neg_distrib]
     linear_combination -P'
 

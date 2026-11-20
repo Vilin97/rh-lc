@@ -79,7 +79,8 @@ theorem det_isUnit : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H :
       rw [pairDet, pairDet, RingHom.map_det]
       congr 1
       ext k k'
-      simp [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [map_sum]
     exact e2 ▸ hP.map α
   have hMu : IsUnit (Matrix.of M).det :=
     isUnit_det_of_factor _ _ (Matrix.of M) C (fun k b => hrel k b) hP'

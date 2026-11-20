@@ -101,7 +101,8 @@ theorem exists_covectors {p : ℕ} [Fact p.Prime] {x : Sp ↥(intO ℂ_[p]) ⟶ 
     rw [hr' w hw]
     congr 1
     apply (intO ℂ_[p]).subtype_injective
-    rw [map_sum (intO ℂ_[p]).subtype]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum (intO ℂ_[p]).subtype]
     exact (hr.trans (key m fun i => (b i : ℂ_[p])).symm)
   · ext r l
     have h1 : A.mulVec (a l) = Pi.single l 1 := hi _ _ _ (tanLinG u hu _ A _ _ hcf (ha l)) (isCombAtG_single t _ hu l)

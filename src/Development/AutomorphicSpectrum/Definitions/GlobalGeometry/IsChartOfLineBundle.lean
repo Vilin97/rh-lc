@@ -243,7 +243,8 @@ theorem isVB_pull {F : Type} [AddCommGroup F] [Module Ω' F] {f : X' ⟶ X} {i :
     · rw [Submodule.span_le]
       rintro _ ⟨e, he, rfl⟩
       obtain ⟨c, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun _).1 he
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       exact Submodule.sum_mem _ fun k _ => by
         rw [hj]; exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨k, rfl⟩)
   · have hq' := (hb ⟨f q.1, dominates_spec h q⟩ trivial hq).2
@@ -252,7 +253,8 @@ theorem isVB_pull {F : Type} [AddCommGroup F] [Module Ω' F] {f : X' ⟶ X} {i :
       rintro _ ⟨hs, e, he, rfl⟩
       rw [hq'] at he
       obtain ⟨c, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun _).1 he
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Submodule.sum_mem _ fun k _ => ?_
       have : j (c k • b k) = (⟨i (c k), dominates_regAt h q hs (c k).2⟩ : regAt ξ' q) • j (b k) := hj _ _
       rw [this]; exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨k, rfl⟩)

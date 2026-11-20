@@ -85,7 +85,8 @@ theorem coeff_extract {W : Type*} [AddCommGroup W] [Module ℂ W] (T : Module.En
         - C (φ u) * P = 0 := by
       refine Polynomial.funext fun t => ?_
       have := congrArg φ (h t)
-      simp only [map_add, map_sum, map_smul, smul_eq_mul] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_add, map_sum, map_smul, smul_eq_mul] at this
       simp only [eval_sub, eval_add, eval_mul, Polynomial.eval_finsetSum, eval_C, eval_X, eval_pow, eval_zero]
       rw [sub_eq_zero, mul_comm (φ u)]
       simp only [mul_comm (φ _) (t ^ _)]
@@ -130,7 +131,8 @@ theorem om_nnPlus {m : ℕ} (X : GMod (m + 1)) (y : Fin (m + 1) → ℂ) (x : �
     · simp
   show om X (nnPlus X.E y x v) b + x • nnPlus X.E y x v b = y b • capelliC X.E x v
   rw [hR, om_apply]
-  simp only [nnPlus, map_sum, map_smul, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [nnPlus, map_sum, map_smul, Finset.smul_sum]
   rw [Finset.sum_comm, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun c _ => ?_
   rw [← key c, smul_add, Finset.smul_sum]

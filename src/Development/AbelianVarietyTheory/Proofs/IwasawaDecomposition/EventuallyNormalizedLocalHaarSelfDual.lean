@@ -145,7 +145,8 @@ theorem trace_mul_eq (R : Type) [CommRing R] [Algebra F R] (e : E) (y : R ⊗[F]
       ∑ k, (Algebra.TensorProduct.basis R b).repr y k *
         algebraMap F R (Algebra.trace F E (e * b k)) := by
   conv_lhs => rw [GlobalTheory.GaugeEx.IntBasis.eq_sum b R y]
-  rw [Finset.mul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.mul_sum, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   have h1 : inclR R e * ((Algebra.TensorProduct.basis R b).repr y k ⊗ₜ[F] b k) =
       (Algebra.TensorProduct.basis R b).repr y k • ((1 : R) ⊗ₜ[F] (e * b k)) := by
@@ -237,7 +238,8 @@ theorem BR_test (hJ : J.det ≠ 0) (j : Fin M) (k : Fin d) : ∃ x : Fin M → E
   have hrow : ∀ j' : Fin M, (∑ i, inclR R (b.traceDual k * J⁻¹ j i) * inclR R (J i j') * Y 0 j') =
       inclR R (if j = j' then b.traceDual k else 0) * Y 0 j' := by
     intro j'
-    rw [← key j', map_sum, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← key j', map_sum, Finset.sum_mul]
     refine Finset.sum_congr rfl fun i _ => ?_
     simp only [map_mul]
   have hsum : hR R σ J (fun i => inclR R (τ (b.traceDual k * J⁻¹ j i))) (Y 0) =

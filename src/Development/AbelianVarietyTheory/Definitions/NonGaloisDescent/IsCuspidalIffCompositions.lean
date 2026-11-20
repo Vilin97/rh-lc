@@ -424,13 +424,15 @@ theorem bijective_fixed_mkQ (ρ : Representation ℂ G V) (U : Subgroup G) [Fini
     obtain ⟨v, rfl⟩ := Submodule.mkQ_surjective _ q
     have hf : (Fintype.card U : ℂ)⁻¹ • S v ∈ fixed ρ U := by
       refine Submodule.smul_mem _ _ (mem_fixed.2 fun n hn => ?_)
-      rw [hS, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hS, map_sum]
       exact Fintype.sum_equiv (Equiv.mulLeft (⟨n, hn⟩ : U)) _ _ fun u => by simp
     refine ⟨⟨_, hf⟩, ?_⟩
     show (twKer ρ U 1).mkQ ((Fintype.card U : ℂ)⁻¹ • S v) = _
     have h2 : ∀ u : U, (twKer ρ U 1).mkQ (ρ u v) = (twKer ρ U 1).mkQ v := fun u =>
       (Submodule.Quotient.eq _).2 (Submodule.subset_span ⟨u, v, by simp⟩)
-    rw [map_smul, hS, map_sum, Finset.sum_congr rfl fun u _ => h2 u, Finset.sum_const, Finset.card_univ,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_smul, hS, map_sum, Finset.sum_congr rfl fun u _ => h2 u, Finset.sum_const, Finset.card_univ,
       ← Nat.cast_smul_eq_nsmul ℂ, smul_smul, inv_mul_cancel₀ hc, one_smul]
 
 def Embeds (ρ : Representation ℂ G V) (σ : Representation ℂ G W) : Prop :=

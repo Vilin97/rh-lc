@@ -43,7 +43,8 @@ private lemma act_ptOf (D : Dat p g B Tw Dt Oe σ cp) (a : Oe) (t : Nb p g) :
       ∑ j, (t j).val • (⟨D.L.τ j 0, (mem_torP B p _).2 (tau_p D j)⟩ : torP B p Tw.O) := by
     apply Subtype.ext
     simp [ptOf]
-  rw [h, map_sum, AddSubgroup.val_finsetSum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h, map_sum, AddSubgroup.val_finsetSum]
   simp only [map_nsmul, AddSubgroup.coe_nsmul]
   simp only [D.L.ρ_spec, Finset.smul_sum]
   rw [Finset.sum_comm, ptOf]

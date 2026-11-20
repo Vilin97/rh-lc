@@ -60,7 +60,8 @@ theorem rename_lap_one {τ : ι} (h : Ψ τ) (i : Fin (dim τ)) (j : Fin (dim (�
   rw [laplacian_apply]
   simp only [Formalism.L2.Pj.lap, Matrix.one_apply, ite_smul, one_smul, zero_smul, Finset.sum_ite_eq,
     Finset.mem_univ, if_true]
-  simp only [LinearMap.sum_apply, LinearMap.comp_apply, Derivation.coeFn_coe, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [LinearMap.sum_apply, LinearMap.comp_apply, Derivation.coeFn_coe, map_sum]
   refine Finset.sum_congr rfl fun b _ => ?_
   rw [← ex b, ← ey b, pderiv_rename (typeLetterEquiv hσ hΨ hp hq n).injective,
     pderiv_rename (typeLetterEquiv hσ hΨ hp hq n).injective]
@@ -192,7 +193,8 @@ theorem mem_HHa_iff_rename [CharZero K] (a : ι → ℕ → ℕ)
 private theorem X_mul_pderiv_mem_restrictTotalDegree {S' F' : Type*} [Field F'] [DecidableEq S'] {N : ℕ}
     (v u : S') {Q : MvPolynomial S' F'} (hQ : Q ∈ restrictTotalDegree S' F' N) :
     X v * pderiv u Q ∈ restrictTotalDegree S' F' N := by
-  rw [Q.as_sum, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Q.as_sum, map_sum, Finset.mul_sum]
   refine Submodule.sum_mem _ fun m hm => ?_
   rw [pderiv_monomial]
   by_cases hu : m u = 0
@@ -339,14 +341,16 @@ theorem rename_letB_of_mem {τ : E →+* ℂ} (h : InPsi H τ) (i : Fin (Dw.mult
     rename (thetaLetterEquiv Dw n) (letB c τ i v) =
       xForm ⟨τ, h⟩ (i.cast (mult_of_mem Dw h)) fun k => embF c τ (v k) := by
   rw [xForm_apply]
-  simp only [Formalism.L2.Pj.letB, map_sum, map_mul, rename_C, rename_X, thetaLetterEquiv_of_mem Dw h]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Formalism.L2.Pj.letB, map_sum, map_mul, rename_C, rename_X, thetaLetterEquiv_of_mem Dw h]
 
 theorem rename_letB_conjugate {τ : E →+* ℂ} (h : InPsi H τ)
     (i : Fin (Dw.mult (ComplexEmbedding.conjugate τ))) (v : Fin n → E) :
     rename (thetaLetterEquiv Dw n) (letB c (ComplexEmbedding.conjugate τ) i v) =
       yForm ⟨τ, h⟩ (i.cast (mult_conjEmb_of_mem Dw h)) fun k => embF c τ (FD.cc (v k)) := by
   rw [yForm_apply]
-  simp only [Formalism.L2.Pj.letB, map_sum, map_mul, rename_C, rename_X, thetaLetterEquiv_conjugate Dw h]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Formalism.L2.Pj.letB, map_sum, map_mul, rename_C, rename_X, thetaLetterEquiv_conjugate Dw h]
   refine Finset.sum_congr rfl fun k _ => ?_
   congr 2
   apply Subtype.ext

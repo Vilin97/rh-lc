@@ -28,7 +28,8 @@ variable {O : Type} [CommRing O] [Algebra ℤ_[l] O] {I : Type} [Fintype I] (b :
 theorem crd_smul_eq {W : Type} [CommRing W] [Algebra ℤ_[l] W] (o : O) (w : O ⊗[ℤ_[l]] W) (i : I) :
     crd b i (o • w) = ∑ k, b.repr (o * b k) i • crd b k w := by
   conv_lhs => rw [← sum_crd b w]
-  simp only [Finset.smul_sum, smul_tmul', smul_eq_mul, map_sum, crd_tmul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finset.smul_sum, smul_tmul', smul_eq_mul, map_sum, crd_tmul]
 
 theorem crd_mem_of_mem_filO (C : GlobalTheory.MemLoc.Core l) {n : ℤ} {w : OB l O} (hw : w ∈ filO O C n)
     (i : I) : C.ι (crd b i w) ∈ Per.FilD l n := by
@@ -40,7 +41,8 @@ theorem crd_mem_of_mem_filO (C : GlobalTheory.MemLoc.Core l) {n : ℤ} {w : OB l
   | zero => rw [map_zero, map_zero]; exact zero_mem _
   | add w w' _ _ h h' => rw [map_add, map_add]; exact add_mem (h i) (h' i)
   | smul o w _ h =>
-    rw [crd_smul_eq, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [crd_smul_eq, map_sum]
     exact Submodule.sum_mem _ fun k _ => ι_smul_mem_FilD C _ (h k)
 
 theorem crd_toOB (x : OCr l O) (i : I) : crd b i (toOB l O x) = acrisToBcris l (crd b i x) :=
@@ -65,7 +67,8 @@ theorem toOB_mem_filO_of_approx (l : ℕ) [Fact l.Prime] (O : Type) [CommRing O]
       change C.ι (algebraMap (Per.Acris l) (Per.Bcris l) _) ∈ _ at h1
       rw [C.ι_j] at h1
       exact (alg_mem_FilD_iff m _).1 h1
-  rw [← sum_crd b x, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← sum_crd b x, map_sum]
   refine Submodule.sum_mem _ fun i _ => ?_
   have : (b i ⊗ₜ[ℤ_[l]] crd b i x : OCr l O) = b i • ((1 : O) ⊗ₜ[ℤ_[l]] crd b i x) := by
     rw [smul_tmul', smul_eq_mul, mul_one]

@@ -18,7 +18,8 @@ theorem mConeMap_form (y : Coord n → Ω) {f : MvPolynomial (Coord n) ℤ} {δ 
   have hg := (geoMultiHomog_iff f δ).mpr hf
   conv_lhs => rw [f.as_sum]
   conv_rhs => rw [f.as_sum]
-  rw [map_sum, map_sum, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun m hm => ?_
   have hdeg := hg m hm
   simp only [Geo.mConeMap, aeval_monomial, map_mul]

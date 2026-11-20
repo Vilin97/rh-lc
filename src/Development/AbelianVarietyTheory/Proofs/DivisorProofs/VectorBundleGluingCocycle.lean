@@ -107,7 +107,8 @@ theorem isSheaf_presheaf : (presheaf A).IsSheaf := by
     rw [ht, resG_resG, ht' i T h hi b k _ _ inf_le_right]
   · refine ext h fun k => ?_
     dsimp only
-    rw [ht, (sf k).2.2 i j _ inf_le_right (inf_le_left.trans hi) (inf_le_left.trans hj), map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [ht, (sf k).2.2 i j _ inf_le_right (inf_le_left.trans hi) (inf_le_left.trans hj), map_sum]
     refine Finset.sum_congr rfl fun c _ => ?_
     rw [map_mul, resG_resG, ht]
   · have := ht' i T (h.trans (le_iSup W k)) hi b k T le_rfl h

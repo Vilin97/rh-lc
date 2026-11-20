@@ -43,7 +43,8 @@ theorem ann_gen (P : A → Prop) (hP : ∀ x : A, (∀ t : F, P (algebraMap F A 
       ∑ k, B.repr z k * algebraMap F A (Algebra.trace F E (e * b k)) := by
     intro e
     conv_lhs => rw [← hz]
-    rw [Finset.mul_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.mul_sum, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [mul_smul_comm, Algebra.TensorProduct.tmul_mul_tmul, mul_one, map_smul, trace_one_tmul', smul_eq_mul]
   have hak : ∀ k, ∃ c : F, B.repr z k = algebraMap F A c := fun k => by
@@ -166,7 +167,8 @@ theorem chi_rat {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsCharAF D.host.F ψ) {m
   have hδ' : rat δ = c.1.1 := hδ
   have h1 : (HMul.hMul (rat γ) c.1.1 : Mx D r r) = rat (γ * δ) := by rw [← hδ', rat_mul]
   have h2 : Matrix.trace (rat (γ * δ) : Mx D r r) = incA D (Matrix.trace (γ * δ)) := by
-    simp only [rat, Matrix.trace, Matrix.diag, Matrix.map_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [rat, Matrix.trace, Matrix.diag, Matrix.map_apply, map_sum]
   show ψ (halfTr (Matrix.trace (HMul.hMul (rat γ) c.1.1 : Mx D r r))) = 1
   rw [h1, h2, halfTr_incA']
   exact hψ.2.2.1 _

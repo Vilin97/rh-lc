@@ -314,7 +314,8 @@ theorem GSD.pairAt_eq_pairEmb (v : InfinitePlace K) (x y : S.V) : S.pairAt v x y
 theorem GSD.map_pair (σ : K →+* ℂ) (hσ : ∀ a : K, σ (star a) = starRingEnd ℂ (σ a)) (x y : S.V) :
     σ (S.pair x y) = S.pairEmb σ x y := by
   conv_lhs => rw [← S.bV.sum_repr x, ← S.bV.sum_repr y]
-  simp only [map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, map_smul, smul_eq_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, map_smul, smul_eq_mul,
     starRingEnd_apply, map_mul, hσ, GSD.pairEmb, GSD.gramV, Matrix.of_apply, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
@@ -377,7 +378,8 @@ theorem GSD.map_ip (h : S.Ok) (σ : K →+* ℂ) (hσ : ∀ a : K, σ (star a) =
     σ (S.ip h φ ψ) = S.ipEmb h σ φ ψ := by
   let _ : Fintype S.Cl := h.fintypeCl
   unfold GSD.ip GSD.ipOf GSD.ipEmb CSD.csum
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun c _ => ?_
   rw [map_mul, map_inv₀, map_natCast]
   congr 1

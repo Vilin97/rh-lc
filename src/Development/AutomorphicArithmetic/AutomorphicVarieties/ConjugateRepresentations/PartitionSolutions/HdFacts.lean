@@ -38,7 +38,8 @@ private theorem hd_map' {I J M : Type} [AddCommGroup M] (f : J → I) (c : List 
 private theorem hd_hom' {I M N : Type} [AddCommGroup M] [AddCommGroup N] (f : M →+ N) (c : List I → M)
     (x : List I) : hd (fun y => f (c y)) x = f (hd c x) := by
   unfold hd
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_congr rfl fun j _ => (map_zsmul f _ _).symm
 
 private theorem hd_congr' {I M : Type} [AddCommGroup M] (c c' : List I → M) (x : List I)

@@ -34,7 +34,8 @@ theorem eq_zero_of_rat_comb {P G : Type} [Fintype G] (r : G → P → ℂ) (Q : 
     rw [MvPolynomial.eval₂Hom_bind₁]
     congr 2
     funext p
-    simp [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum]
   have hQ' : Q' = 0 := by
     refine MvPolynomial.funext_set (fun _ => Set.range (Rat.cast : ℚ → ℂ))
       (fun _ => Set.infinite_range_of_injective Rat.cast_injective) fun z hz => ?_
@@ -101,7 +102,8 @@ theorem eq_zero_of_vanish_skew (F E : Type) [Field F] [NumberField F] [Field E] 
   refine eq_zero_of_rat_comb (fun G p => ψ p.1 ((J⁻¹ * A G) p.2.1 p.2.2)) Q (fun t => ?_) (fun y => ?_)
   · have hA : Formalism.UG.cT c (∑ G, (t G : E) • A G) = -∑ G, (t G : E) • A G := by
       ext i j
-      simp only [Formalism.UG.cT, Matrix.transpose_apply, Matrix.map_apply, Matrix.sum_apply, Matrix.neg_apply,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Formalism.UG.cT, Matrix.transpose_apply, Matrix.map_apply, Matrix.sum_apply, Matrix.neg_apply,
         Matrix.smul_apply, smul_eq_mul, map_sum, map_mul, map_ratCast]
       rw [← Finset.sum_neg_distrib]
       refine Finset.sum_congr rfl fun G _ => ?_
@@ -145,7 +147,8 @@ theorem eq_zero_of_vanish_skew (F E : Type) [Field F] [NumberField F] [Field E] 
     have e2 := congrFun (congrFun e1 i) j
     rw [Matrix.of_apply, Matrix.mul_apply] at e2
     rw [← e2]
-    simp only [Matrix.mul_apply, map_sum, map_mul, Finset.mul_sum, Matrix.map_apply, ← hw]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mul_apply, map_sum, map_mul, Finset.mul_sum, Matrix.map_apply, ← hw]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun G _ => Finset.sum_congr rfl fun l _ => ?_
     ring

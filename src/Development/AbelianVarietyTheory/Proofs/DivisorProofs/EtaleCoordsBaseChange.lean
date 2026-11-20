@@ -217,7 +217,8 @@ theorem Data.IntegralBound.baseChange {X : Data F} {β κ : (F →+* ℂ) → �
       (map_smul _ _ _).trans (congrArg _ (X.toExtV_inclE E hj _).symm))
   have e₂ : ∑ i, c i • cval τ (∑ l, a i l • X.toExt₂ E j (b l)) =
       ∑ l, (∑ i, c i * τ (a i l)) • cval τ (X.toExt₂ E j (b l)) := by
-    simp only [map_sum, map_smulₛₗ, Finset.smul_sum, Finset.sum_smul, smul_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smulₛₗ, Finset.smul_sum, Finset.sum_smul, smul_smul]
     exact Finset.sum_comm
   refine (congrArg (csq _ τ c) e₁).trans_le (((csq_comb _ _ _ _ _).trans
     (csq_extend (X.isExtension_extMap E j) _ τ _ _)).trans_le ((h j hj _ _ _ b).trans_eq (congrArg _ ?_)))

@@ -41,7 +41,8 @@ theorem aeval_homogP {K : Type} [Field K] {d D : ℕ} {P : MvPolynomial (Fin d) 
     {R : Type} [CommRing R] [Algebra K R] (u : R) (t : Fin d → R) :
     aeval (Fin.cons u (fun k => u * t k) : Fin (d + 1) → R) (homogP D P) = u ^ D * aeval t P := by
   conv_rhs => rw [← support_sum_monomial_coeff P]
-  rw [homogP, map_sum, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [homogP, map_sum, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun α hα => ?_
   have h := degree_le_of_mem hD hα
   rw [aeval_monomial, aeval_monomial, Finsupp.prod_fintype _ _ (by simp), Finsupp.prod_fintype _ _ (by simp),

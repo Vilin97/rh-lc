@@ -14,11 +14,13 @@ theorem map_exterior_one (φ : P →+* Q) (J : Finset (Fin n)) : φ (extOne J) =
 
 theorem map_right_wedge (φ : P →+* Q) (x : Fin n → P) (K : Finset (Fin n) → P) (J : Finset (Fin n)) :
     φ (wedgeR x K J) = wedgeR (fun m => φ (x m)) (fun J => φ (K J)) J := by
-  simp [wedgeR, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [wedgeR, map_sum]
 
 theorem map_right_contraction (φ : P →+* Q) (x : Fin n → P) (K : Finset (Fin n) → P) (J : Finset (Fin n)) :
     φ (contrR x K J) = contrR (fun m => φ (x m)) (fun J => φ (K J)) J := by
-  simp [contrR, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [contrR, map_sum]
 
 theorem map_column_operator (φ : P →+* Q) (c : ℤ) (hP hN : ℕ) (x : Fin n → P) (K : Finset (Fin n) → P)
     (J : Finset (Fin n)) :
@@ -260,7 +262,8 @@ theorem derivation_sum_divided_power (sg : ι → R) (src dst : ι → σ) (hs :
     (s : Finset ι) (m : σ →₀ ℕ) (k : ℕ) :
     (∑ l ∈ s, dividedPowerDerivation sg src dst l) (dividedPowerSum sg src dst s k m) = (k + 1) • dividedPowerSum sg src dst s (k + 1) m := by
   classical
-  simp only [LinearMap.sum_apply, dividedPowerSum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [LinearMap.sum_apply, dividedPowerSum, map_sum]
   have h1 : ∀ l ∈ s, ∑ f ∈ Finset.finsuppAntidiag s k, dividedPowerDerivation sg src dst l (dividedPowerTerm sg src dst s m f) =
       ∑ g ∈ Finset.finsuppAntidiag s (k + 1), (g l) • dividedPowerTerm sg src dst s m g := by
     intro l hl
@@ -415,7 +418,8 @@ theorem map_divided_power_monomial {R R' : Type*} [CommRing R] [CommRing R'] (φ
     MvPolynomial.map φ (divPowMono R LL S a b k m) = divPowMono R' LL S a b k m := by
   classical
   unfold divPowMono
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun f _ => ?_
   rw [MvPolynomial.map_monomial, map_prod]
   congr 1
@@ -616,7 +620,8 @@ theorem derivation_exterior_induction {n : ℕ} {P : Type*} [CommRing P] (D : P 
   have h := congrFun hc J
   simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, LinearMap.sub_apply, Module.End.mul_apply,
     Pi.sub_apply] at h
-  rw [map_sum, Finset.sum_apply, Finset.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_apply, Finset.sum_apply, map_sum]
   simp only [Pi.smul_apply, smul_eq_mul, map_smul, hD, ho, hK']
   rw [Finset.sum_add_distrib]
   have h2 : ∑ m, o m K J * D (x m) = ∑ m, D (x m) * o m K J := Finset.sum_congr rfl fun m _ => mul_comm _ _
@@ -831,7 +836,8 @@ theorem gl_action_diag_monomial (S : Set (Fin N)) (a : Fin n) (m : Fin N × Fin 
     glAct ℤ LL S a a (monomial m c) = monomial m (wtS LL S m a * c) := by
   classical
   unfold glAct wtS
-  rw [LinearMap.sum_apply, Finset.sum_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [LinearMap.sum_apply, Finset.sum_mul, map_sum]
   refine Finset.sum_congr rfl fun l _ => ?_
   have key := X_mul_pderiv_monomial_bis (R := ℤ) (l, a) m c
   rw [pderiv_monomial] at key

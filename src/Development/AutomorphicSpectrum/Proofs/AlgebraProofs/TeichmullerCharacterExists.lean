@@ -79,7 +79,8 @@ theorem fund_ex_relay : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlg
       have hGM : G ∈ M := by
         rw [← hmk0]
         have hst' : Ideal.Quotient.mk M s = Ideal.Quotient.mk M t := Ideal.Quotient.eq.mpr hst
-        rw [hG, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [hG, map_sum]
         simp only [map_mul, map_pow, hst']
         have hsum : ∑ i ∈ Finset.range (p ^ f), Ideal.Quotient.mk M t ^ i * Ideal.Quotient.mk M t ^ (p ^ f - 1 - i)
             = ∑ i ∈ Finset.range (p ^ f), Ideal.Quotient.mk M t ^ (p ^ f - 1) := by

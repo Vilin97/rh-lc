@@ -34,7 +34,8 @@ theorem exists_leftInverse {O : Type} [CommRing O] (bar : O →+* O) {M : Type} 
   change h x (n • m) = h x _
   rw [hsym (n • m), hsym (Fintype.linearCombination O e _), Fintype.linearCombination_apply]
   change bar (f x (n • m)) = bar (f x _)
-  rw [map_sum, map_nsmul, map_sum, map_nsmul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_nsmul, map_sum, map_nsmul]
   change n • bar (h m x) = ∑ i, bar (h (l i m • e i) x)
   simp only [hsmul, map_mul, ← hsym, ← he]
   rw [nsmul_eq_mul, hl]
@@ -105,7 +106,8 @@ theorem relAmple_tensor : Out.Laws → ∀ (S : Scheme.{0}) [IsLocallyNoetherian
           have := adj (x ≫ a.act c) y (bar d)
           rw [hbar, Category.assoc, ← a.mul] at this
           exact this.symm
-        simp only [Category.assoc, hp, hφ, ← map_sum, ← hl, base, ← nsmul_eq_mul, map_nsmul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [Category.assoc, hp, hφ, ← map_sum, ← hl, base, ← nsmul_eq_mul, map_nsmul]
         rfl
   have dbl : ∀ x : A ⟶ P.A, 2 • lam (cls P.L hL) x (x ≫ a.act w) = 2 • pull x.left (cls P.L hL) := by
     intro x
@@ -119,7 +121,8 @@ theorem relAmple_tensor : Out.Laws → ∀ (S : Scheme.{0}) [IsLocallyNoetherian
     rw [cls_lbPow hψB, cls_lbPow hN', cls_pull hB, cls_linComb hL,
       (cls_eq_iff hN' (LB.isLB_linComb hN _ _)).2 hiso]
     erw [cls_cube_two hN]
-    rw [mul_smul, key, map_sum, Finset.smul_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [mul_smul, key, map_sum, Finset.smul_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [Category.id_comp, (pl i).comm, dbl, one_smul, ← pull_comp]
     rfl

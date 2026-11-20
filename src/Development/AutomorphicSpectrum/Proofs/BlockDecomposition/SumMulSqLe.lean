@@ -95,7 +95,8 @@ theorem abs_vecs (hKB : KerBasic) (hKL : KerLin) (hCB : CntBasic) (hVE : VecEx) 
     rw [hfun, (hKL X (ι × ι) (fun p => Φ p.1 p.2) (fun p => M p.2 p.1) fun p => tΦ _ _).2,
       Fintype.sum_prod_type]
     refine Finset.sum_congr rfl fun i _ => ?_
-    rw [map_sum, inner_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, inner_sum]
     refine Finset.sum_congr rfl fun l _ => ?_
     rw [map_smul, inner_smul_right,
       hPt X ι Φ₁ Φ₂ Φ T₁ T₂ U t₁ t₂ tΦ o₁ o₂ oΦ x (th x) i l (k₁ x i) (k (th x) l) (v₁ x i) (v _ l),

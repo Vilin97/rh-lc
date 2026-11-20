@@ -235,7 +235,8 @@ theorem mid2 (hL : LocalLift) (K : W → Matrix β β ℂ) (hK : ∀ w, (K w)ᴴ
   have hZ : Z ∈ LG K := funext hZw
   have e : ∀ t, (γ t).1 = expU (t • Z) := fun t => Units.ext (funext fun w => (hγ t w).trans (hpi (t • Z) w).symm)
   have b : ζ Z = ∑ w, c w * (Z w).trace := by
-    conv_lhs => rw [← Finset.univ_sum_single Z, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [← Finset.univ_sum_single Z, map_sum]
     exact Finset.sum_congr rfl fun w _ => hc w _ (hZw w)
   refine ⟨fun t => e t ▸ hS' _ ((LG K).smul_mem t hZ), ?_⟩
   simp only [e, ← b]
@@ -397,7 +398,8 @@ theorem main2 (hLL : LocalLift) (h : IsCMExt F E σ) {ψ : AddChar (AF F) ℂ} (
     obtain ⟨x, hx, rfl⟩ := hsurj w
     simp only [sympl_e]
     rw [← hE0 x hx, hρ]
-    simp only [huv x hx, ← hE0 _ (hu _), ← map_smul, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [huv x hx, ← hE0 _ (hu _), ← map_smul, ← map_sum]
     congr 1
     funext w
     simp [Finset.sum_apply]
@@ -407,7 +409,8 @@ theorem main2 (hLL : LocalLift) (h : IsCMExt F E σ) {ψ : AddChar (AF F) ℂ} (
   refine (this.congr_deriv ?_).congr_of_eventuallyEq (.of_forall fun t => ?_)
   · rw [ContinuousLinearMap.comp_apply, hq]
     congr 1
-    simp only [ContinuousLinearMap.smul_apply, ContinuousLinearMap.sum_apply, ContinuousLinearMap.add_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [ContinuousLinearMap.smul_apply, ContinuousLinearMap.sum_apply, ContinuousLinearMap.add_apply,
       ContinuousLinearMap.mul_apply, map_add, map_smul, map_sum, hD.P c (hu _), hD.P c (hv _), c.P_P']
   · show l (om (γ (Multiplicative.ofAdd t)) _) = T (c.P (A0 ⟨(γ0 t).1, hγ0 t⟩ (c.P' f)))
     rw [← hT, ← hA0 _ _ gf hgf, c.P_P', e0]

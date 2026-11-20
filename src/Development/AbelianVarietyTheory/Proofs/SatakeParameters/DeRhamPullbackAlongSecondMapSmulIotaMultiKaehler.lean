@@ -19,7 +19,8 @@ theorem wd_comp (φ : E →ₗ[k] E') (w : ι → Module.End k E) (w' : ι → M
     (h : ∀ i, φ ∘ₗ w i = w' i ∘ₗ φ) (c : Finset ι → E) :
     (fun t => φ (wd w c t)) = wd w' (fun t => φ (c t)) := by
   funext t
-  simp only [wd, LinearMap.pi_apply, LinearMap.sum_apply, LinearMap.smul_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [wd, LinearMap.pi_apply, LinearMap.sum_apply, LinearMap.smul_apply,
     LinearMap.comp_apply, LinearMap.proj_apply, map_sum, map_zsmul]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [← LinearMap.comp_apply φ (w i), h i, LinearMap.comp_apply]

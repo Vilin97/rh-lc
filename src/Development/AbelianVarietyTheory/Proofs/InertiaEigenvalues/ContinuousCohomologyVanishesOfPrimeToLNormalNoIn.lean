@@ -24,7 +24,8 @@ theorem two_variables [K.Normal] (hJK : ∀ j ∈ J, π j ∈ K)
   have hS : ∀ a b, ∑ i : K, ∑ j : K, F (a * i) (b * j) = 0 := by
     intro a b
     refine hinv _ fun g hg => ?_
-    simp only [map_sum, ← heq]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, ← heq]
     rw [← sum_shift K (fun x => ∑ j : K, F x (b * j)) a _ (hJK g hg)]
     exact Finset.sum_congr rfl fun i _ => sum_shift K (fun x => F _ x) b _ (hJK g hg)
   have key : ∀ a b, (Fintype.card K) ^ 2 • F a b =
@@ -44,7 +45,8 @@ theorem two_variables [K.Normal] (hJK : ∀ j ∈ J, π j ∈ K)
         simp only [Finset.sum_sub_distrib, Finset.sum_add_distrib, hS, zero_add, Finset.sum_const,
           Finset.card_univ, ← Finset.smul_sum]
   refine ⟨-(Fintype.card K • ∑ i : K, F 1 (1 * i)), fun g => ?_⟩
-  rw [key, map_neg, map_nsmul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [key, map_neg, map_nsmul, map_sum]
   simp only [← heq, mul_one, one_mul]
   abel
 
@@ -57,7 +59,8 @@ theorem three_variables [K.Normal] (hJK : ∀ j ∈ J, π j ∈ K)
   have hS : ∀ a b c, ∑ i : K, ∑ j : K, ∑ k : K, F (a * i) (b * j) (c * k) = 0 := by
     intro a b c
     refine hinv _ fun g hg => ?_
-    simp only [map_sum, ← heq]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, ← heq]
     rw [← sum_shift K (fun x => ∑ j : K, ∑ k : K, F x (b * j) (c * k)) a _ (hJK g hg)]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [← sum_shift K (fun x => ∑ k : K, F _ x (c * k)) b _ (hJK g hg)]
@@ -88,7 +91,8 @@ theorem three_variables [K.Normal] (hJK : ∀ j ∈ J, π j ∈ K)
           Finset.card_univ, ← Finset.smul_sum, smul_sub]
   have hH : ∀ g a b, H (π g * a) (π g * b) = ρ g (H a b) := by
     intro g a b
-    simp only [H, map_nsmul, map_sum, map_sub, ← heq, mul_assoc]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [H, map_nsmul, map_sum, map_sub, ← heq, mul_assoc]
   refine ⟨H 1, fun g h => ?_⟩
   rw [key, ← hH, mul_one, map_mul]
 

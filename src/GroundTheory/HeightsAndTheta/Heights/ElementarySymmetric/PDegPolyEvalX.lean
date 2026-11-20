@@ -15,15 +15,18 @@ theorem polarPoly_eval {σ R : Type*} [CommRing R] [Fintype σ]
   let ψ : MvPolynomial σ (MvPolynomial σ R) →+* MvPolynomial σ R :=
     eval₂Hom (RingHom.id _) (fun v => C (u v))
   have hψ : ψ P = (-∑ v : σ, C (u v) * X v) ^ n := by
-    simp [P, ψ, outerDot, map_pow, map_neg, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [P, ψ, outerDot, map_pow, map_neg, map_sum]
   have hψ' : ψ P = ∑ m ∈ P.support, C (∏ i, u i ^ m i) * AddMonoidAlgebra.coeff P m := by
     change eval₂ (RingHom.id _) (fun v => C (u v)) P = _
     rw [eval₂_eq']
     refine sum_congr rfl fun m _ => ?_
     simp [map_prod, map_pow, mul_comm]
-  rw [← hψ, hψ', map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hψ, hψ', map_sum]
   unfold polarPoly
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine sum_congr rfl fun m _ => ?_
   rw [eval_monomial, Finsupp.prod_fintype _ _ (fun i => pow_zero _), C_mul', map_smul,
     smul_eq_mul, mul_comm]

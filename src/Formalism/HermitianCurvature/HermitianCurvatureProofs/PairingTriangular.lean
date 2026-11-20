@@ -98,7 +98,8 @@ lemma repr_Tl (y : Fin (finrank ℤ La) → ℝ) (j) : (bR La).repr (Tl La y) j 
 
 lemma pair_Tl (σ : V f) (y : Fin (finrank ℤ La) → ℝ) :
     pair σ (Tl La y) = ∑ j, y j * pair σ (bR La j) := by
-  rw [Tl_apply, ← pairL_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Tl_apply, ← pairL_apply, map_sum]
   simp only [map_smul, pairL_apply, smul_eq_mul]
 
 def Lm : V f →ₗ[ℝ] (Fin (finrank ℤ La) → ℝ) where

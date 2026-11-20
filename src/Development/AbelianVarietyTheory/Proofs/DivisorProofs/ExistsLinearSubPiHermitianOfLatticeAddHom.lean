@@ -24,7 +24,8 @@ theorem exists_linear_sub_pi_mul_form_of_addMonoidHom :
   have hsplit : ∀ u, F u = s ⬝ᵥ u + c ⬝ᵥ star u := by
     intro u
     conv_lhs => rw [AppellHumbert.eq_sum_re_im u]
-    simp only [map_sum, map_add, map_smul, dotProduct, ← Finset.sum_add_distrib,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_add, map_smul, dotProduct, ← Finset.sum_add_distrib,
       Pi.star_apply, real_smul, s, c]
     refine Finset.sum_congr rfl fun b _ => ?_
     have h1 : u b = (u b).re + (u b).im * I := (re_add_im _).symm

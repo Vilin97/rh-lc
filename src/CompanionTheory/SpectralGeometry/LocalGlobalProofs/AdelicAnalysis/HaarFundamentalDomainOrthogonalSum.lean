@@ -27,7 +27,8 @@ theorem hform_act {A : Type} [CommRing A] (s : A →+* A) {M : ℕ} (J g : Matri
     (hg : cT s g * J * g = J) (x y : Fin M → A) : hform s J (g *ᵥ x) (g *ᵥ y) = hform s J x y := by
   have h1 : (fun i => s ((g *ᵥ x) i)) = (fun i => s (x i)) ᵥ* cT s g := by
     funext i
-    simp [Matrix.vecMul, dotProduct, Matrix.mulVec, cT, map_sum, mul_comm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Matrix.vecMul, dotProduct, Matrix.mulVec, cT, map_sum, mul_comm]
   rw [hform_eq_dot, hform_eq_dot, h1, ← Matrix.dotProduct_mulVec, Matrix.mulVec_mulVec,
     Matrix.mulVec_mulVec, hg]
 
@@ -73,7 +74,8 @@ theorem actW_ratH (σ : E →ₐ[F] E) {M n : ℕ} (J : Matrix (Fin M) (Fin M) E
   funext a i
   change (∑ j, inclR R (((g : GL (Fin M) E) : Matrix (Fin M) (Fin M) E) i j) * inclR R (X a j)) =
     inclR R (∑ j, ((g : GL (Fin M) E) : Matrix (Fin M) (Fin M) E) i j * X a j)
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [map_mul]
 
 theorem ratTup_consTup {M n : ℕ} (X : Fin n → Fin M → E) :

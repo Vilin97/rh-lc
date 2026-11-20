@@ -110,7 +110,8 @@ theorem conj_of_frames [∀ m, Nonempty (L m)] {N₁ N₂ : Matrix (Fin n) (Fin 
     have h1 := F₂.hZ ⟨a, ha⟩ m p (ψ m j)
     have h2 := F₁.hZ ⟨a, ha⟩ m p j
     simp only at h1 h2
-    rw [h1, h2, hGv, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h1, h2, hGv, map_sum]
     refine Finset.sum_congr rfl fun q _ => ?_
     rw [map_smul, hg, hΦ]
   · apply hext
@@ -125,11 +126,14 @@ theorem conj_of_frames [∀ m, Nonempty (L m)] {N₁ N₂ : Matrix (Fin n) (Fin 
       rfl
     · have hi2 : ¬ (i : ℕ) + 1 < F₂.l m (σ m a) := by rw [(hσ m a).1]; exact hi
       rw [dif_neg hi, dif_neg hi2, map_zero]
-  · rw [hGv, F₁.hv, F₂.hv, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [hGv, F₁.hv, F₂.hv, map_sum]
     refine Finset.sum_congr rfl fun m _ => ?_
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun p _ => ?_
-    rw [map_sum, ← Equiv.sum_comp (σ m)]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, ← Equiv.sum_comp (σ m)]
     refine Finset.sum_congr rfl fun a _ => ?_
     by_cases ha : F₁.s m a < F₁.l m a
     · have ha2 : F₂.s m (σ m a) < F₂.l m (σ m a) := by rw [(hσ m a).1, (hσ m a).2]; exact ha

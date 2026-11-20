@@ -130,7 +130,8 @@ theorem cechKS_lifts : ∀ (K : Type) [Field K] (A : Over (Sp K)) [GrpObj A] (A'
     rw [hS]
     congr 1
     change (TrivSqZeroExt.fstHom K P.B P.B) _ = _
-    simp only [map_sum, map_mul, TrivSqZeroExt.fstHom_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, TrivSqZeroExt.fstHom_apply]
     simp only [e1, e2, e3, e4, dlog, Finset.sum_mul]
 
 end GlobalTheory.CechKS

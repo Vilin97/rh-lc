@@ -90,7 +90,8 @@ private theorem trivCrys_Dcris_eq :
       rw [← trivCrysCoord_act PD b i g x, hx g]
     choose c hc using hc
     refine ⟨∑ i, b i ⊗ₜ[Qp] c i, ?_⟩
-    rw [map_sum, trivCrys_decomp b x]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, trivCrys_decomp b x]
     refine Finset.sum_congr rfl fun i _ => ?_
     simp only [trivCrysMap, trivCrysIncl, AlgebraTensorModule.lTensor_tmul, LinearMap.restrictScalars_apply,
       Algebra.linearMap_apply, hc i]

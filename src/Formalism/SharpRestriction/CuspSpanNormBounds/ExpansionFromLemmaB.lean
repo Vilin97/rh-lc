@@ -143,7 +143,8 @@ theorem hs_point {Wp Wq : Type} [NormedAddCommGroup Wp] [InnerProductSpace ℂ W
   set u := P (σ a⁻¹ (σ x (σ b (Q (C (eb i))))))
   have hv : v = ∑ c, ⟪fb c, v⟫_ℂ • fb c := (fb.sum_repr' v).symm
   conv_lhs => rw [hv]
-  rw [map_sum, inner_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, inner_sum]
   refine Finset.sum_congr rfl fun c _ => ?_
   rw [map_smul, inner_smul_right]
   congr 1

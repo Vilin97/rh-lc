@@ -118,7 +118,8 @@ theorem resT_wrong_degree (p q : ℕ) (f : MvPolynomial (Fin (p + q) × Fin (p +
     (hf : IsWeightedHomogeneous (colW (p + q) (p + q)) f ν)
     (hsum : ∑ c : Fin p, Formalism.CohomologicalDescent.LR.der (p + q) (p + q) (Fin.castAdd q c) (Fin.castAdd q c) f = t • f)
     (ht : t ≠ ∑ c : Fin p, (ν (Fin.castAdd q c) : ℚ)) : resT ℚ p q f = 0 := by
-  rw [f.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [f.as_sum, map_sum]
   refine Finset.sum_eq_zero fun m hm => ?_
   have hc : AddMonoidAlgebra.coeff f m ≠ 0 := mem_support_iff.1 hm
   by_contra hne

@@ -57,14 +57,16 @@ theorem incl_co {S S' : Formalism.BasicNotions.HSpace E} {n : ℕ} (hn : S.rank 
   have hs : (co S' hn').symm x = ∑ a : Fin (S.rank - 1), x a • S'.frame (finCongr hn'.symm a) := by
     rw [LinearEquiv.symm_apply_eq]
     funext k
-    rw [map_sum, Finset.sum_apply, Finset.sum_eq_single k]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_apply, Finset.sum_eq_single k]
     · simp [co]
     · intro a _ ha
       have : ¬ (a : ℕ) = k := fun h => ha (Fin.ext h)
       simp [co, Finsupp.single_apply, Fin.ext_iff, this]
     · simp
   have hb : ∀ a : Fin (S.rank - 1), f (S'.frame (finCongr hn'.symm a)) = S.frame ⟨a.1, by omega⟩ := fun a => hf _ _ rfl
-  rw [hs, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hs, map_sum, map_sum]
   simp only [map_smul, hb, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
   have hc : ∀ a : Fin (S.rank - 1), co S rfl (S.frame ⟨a.1, by omega⟩) j = if a.1 = j.1 then 1 else 0 := by
     intro a

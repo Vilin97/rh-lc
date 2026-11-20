@@ -79,7 +79,8 @@ private theorem exists_hermGL_coset_eq_of_integral {k : Type} [Field k] [Valuati
       exact ((W⁻¹ : GL (Fin n) 𝒪[k]) i j).2
   have hhnf : _root_.GlobalTheory.SatakeBound.hermGL hp a c = b * Wk := by
     ext i j
-    rw [_root_.GlobalTheory.SatakeBound.val_hermGL, hW, Matrix.GeneralLinearGroup.coe_mul, RingHom.mapMatrix_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [_root_.GlobalTheory.SatakeBound.val_hermGL, hW, Matrix.GeneralLinearGroup.coe_mul, RingHom.mapMatrix_apply,
       Matrix.map_apply, Matrix.mul_apply, Matrix.mul_apply, map_sum]
     refine Finset.sum_congr rfl fun l _ => ?_
     rw [map_mul]

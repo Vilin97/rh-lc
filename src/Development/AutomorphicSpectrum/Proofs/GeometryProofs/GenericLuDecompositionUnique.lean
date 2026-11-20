@@ -13,7 +13,8 @@ theorem affine_form_ne_zero {K L : Type} [Field K] [Field L] [Algebra K L] {n : 
   let P : MvPolynomial (Fin n) K :=
     MvPolynomial.C a + ∑ j, MvPolynomial.C (b j) * MvPolynomial.X j
   have hP : MvPolynomial.aeval x P = 0 := by
-    simpa [P, map_add, map_sum, map_mul, MvPolynomial.aeval_C, MvPolynomial.aeval_X] using h
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [P, map_add, map_sum, map_mul, MvPolynomial.aeval_C, MvPolynomial.aeval_X] using h
   have hP0 : P = 0 := by
     have := (injective_iff_map_eq_zero (MvPolynomial.aeval x : MvPolynomial (Fin n) K →ₐ[K] L)).mp hx
     exact this P hP
@@ -180,7 +181,8 @@ theorem generic_lu_decomposition_exists (n : ℕ) : ∀ (K L : Type) [Field K] [
     have hxs : ∀ k, algebraMap K₁ L (xs k) = x k := fun _ => rfl
     have hM0 : ∀ i, M i 0 = algebraMap K₁ L (q i) := by
       intro i
-      simp only [M, q, Matrix.mul_apply, Fin.sum_univ_succ, Matrix.map_apply, hdiag, map_add,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [M, q, Matrix.mul_apply, Fin.sum_univ_succ, Matrix.map_apply, hdiag, map_add,
         map_sum, map_mul, hcoe, hxs, mul_one]
       rfl
     have hMs : ∀ i j, M i j.succ = ∑ k, algebraMap K L (A i k.succ) * u' k j := by

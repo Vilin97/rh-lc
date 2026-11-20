@@ -248,7 +248,8 @@ theorem lin_core {Ω₀ Ω Li₀ Li : Type} [Field Ω₀] [Field Ω] [Algebra Ω
       rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun l _ => ?_
       have e1 : j (cc s l) = ∑ m, algebraMap Ω₀ Ω (P s l m) • j (ec s m) := by
-        rw [hP s l, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [hP s l, map_sum]
         exact Finset.sum_congr rfl fun m _ => hjs _ _
       rw [e1, Finset.smul_sum]
       refine Finset.sum_congr rfl fun m _ => ?_

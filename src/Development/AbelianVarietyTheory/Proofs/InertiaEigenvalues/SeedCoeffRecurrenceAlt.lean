@@ -87,7 +87,8 @@ theorem seed_coeff_recurrence : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (bk 
     · rfl
   have stepA : HasSum (fun i => Φ ((s.W * (s.W'.map (cD i)).map j) a b) * c i)
       ((s.W.map Φ * (s.W'.map Φ).map L) a b) := by
-    simp only [Matrix.mul_apply, Matrix.map_apply, map_sum, map_mul, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mul_apply, Matrix.map_apply, map_sum, map_mul, Finset.sum_mul]
     refine hasSum_sum fun k _ => ?_
     simp_rw [mul_assoc]
     exact (key (s.W' k b)).mul_left (Φ (s.W a k))
@@ -98,7 +99,8 @@ theorem seed_coeff_recurrence : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (bk 
       (M.map bk.iS * Y).map L = M.map bk.iS * Y.map L := by
     intro M Y
     ext k m
-    simp only [Matrix.map_apply, Matrix.mul_apply, map_sum, hL]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.map_apply, Matrix.mul_apply, map_sum, hL]
   have hμ : (l : bk.DA bk.ρ₀) ^ (s.c₁ + s.c₂) * bk.iS (frobS l bk.a bk.E) ^ s.N * bk.iS bk.E ^ (2 * s.N) =
       bk.iS ((l : bk.S) ^ (s.c₁ + s.c₂) * frobS l bk.a bk.E ^ s.N * bk.E ^ (2 * s.N)) := by
     simp only [map_mul, map_pow, map_natCast]

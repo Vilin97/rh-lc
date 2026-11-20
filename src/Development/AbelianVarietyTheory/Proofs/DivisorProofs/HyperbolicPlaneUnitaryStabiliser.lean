@@ -49,7 +49,8 @@ omit [NumberField F] [NumberField E] in
 theorem hform_map (R : Type) [CommRing R] [Algebra F R] {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (x y : Fin n → E) :
     hform (sigR R σ) (JR R J) (fun i => inclR R (x i)) (fun i => inclR R (y i)) =
       inclR (F := F) R (hform (σ : E →+* E) J x y) := by
-  simp [hform, JR, map_sum, sigR, inclR]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [hform, JR, map_sum, sigR, inclR]
 
 theorem fin_iwasawa (hσ : ∀ x, σ (σ x) = x) {n : ℕ} {J : Matrix (Fin n) (Fin n) E} (hJ : IsHermND σ J) {x y : Fin n → E}
     (hxx : hform (σ : E →+* E) J x x = 0) (hxy : hform (σ : E →+* E) J x y = 1) :
@@ -149,7 +150,8 @@ theorem adelic_iwasawa (hcm : IsCMExt F E σ) (hσ : ∀ x, σ (σ x) = x) {n : 
       refine ⟨Matrix.of fun _ _ => φ s, ?_⟩
       ext i j
       have := congrArg φ (congrFun hs i)
-      simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, hφ, Pi.smul_apply, smul_eq_mul] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, hφ, Pi.smul_apply, smul_eq_mul] at this
       simp only [Matrix.mul_apply, Matrix.map_apply, C, Matrix.of_apply, Fin.sum_univ_one]
       rw [mul_comm _ (φ s), ← this]
       rfl

@@ -37,7 +37,8 @@ theorem map_dpolyOf (F : Fin d → PS k 2 d) {ι : Type} [Fintype ι] (u : ι �
     (P : MvPolynomial ι k) (f : PS k 1 d) :
     MvPowerSeries.map φ (DpolyOf F u P f) =
       DpolyOf (mapP φ F) (fun l i => φ (u l i)) (MvPolynomial.map φ P) (MvPowerSeries.map φ f) := by
-  rw [GE.dpolyOf_eq_sum_of_subset _ _ (MvPolynomial.map φ P) P.support
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [GE.dpolyOf_eq_sum_of_subset _ _ (MvPolynomial.map φ P) P.support
     (MvPolynomial.support_map_subset _ _), DpolyOf, map_sum]
   refine Finset.sum_congr rfl fun m _ => ?_
   rw [map_mul, map_C, GlobalTheory.map_dmonOf, MvPolynomial.coeff_map]

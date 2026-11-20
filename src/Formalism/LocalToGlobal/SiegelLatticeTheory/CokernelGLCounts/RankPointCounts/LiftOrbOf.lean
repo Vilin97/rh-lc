@@ -50,11 +50,14 @@ theorem liftOrb_of (hSR : SRLift) : LiftOrb := by
     rw [hl₁v]
     have e1 : (Submodule.Quotient.mk (∑ j, x j • w j) : M.Cok Z') =
         ∑ j, x j • (Submodule.Quotient.mk (w j) : M.Cok Z') := by
-      rw [← Submodule.mkQ_apply, map_sum]; simp
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← Submodule.mkQ_apply, map_sum]; simp
     have e2 : (Submodule.Quotient.mk (∑ j, x j • (Pi.single j 1 : Fin (m + 1) → M.R)) : M.Cok Z) =
         ∑ j, x j • (Submodule.Quotient.mk (Pi.single j 1) : M.Cok Z) := by
-      rw [← Submodule.mkQ_apply, map_sum]; simp
-    rw [e1, e2, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← Submodule.mkQ_apply, map_sum]; simp
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e1, e2, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_smul, hw1 j]
   have hP2 : ∀ x, mu M Z' (l₁.mulVec x) = mu M Z x := by

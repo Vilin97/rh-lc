@@ -65,7 +65,8 @@ private theorem order (ι : Type) (x : ι → Fin a → Cinf E) (N : ℕ) (hx : 
       have e1 : x i ᵥ* Matrix.of Z = lmul (x i ᵥ* Matrix.of y) (Ring.inverse (Matrix.of y) * Matrix.of Z) := by
         change _ = (x i ᵥ* Matrix.of y) ᵥ* _
         rw [Matrix.vecMul_vecMul, ← mul_assoc, Ring.mul_inverse_cancel _ hu, one_mul]
-      rw [e1, ← b.sum_repr (Ring.inverse (Matrix.of y) * Matrix.of Z), map_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [e1, ← b.sum_repr (Ring.inverse (Matrix.of y) * Matrix.of Z), map_sum, map_sum]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [map_smul, map_smul, ← hQ' j]
       rfl

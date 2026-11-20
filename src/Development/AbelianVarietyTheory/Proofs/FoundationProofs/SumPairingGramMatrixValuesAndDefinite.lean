@@ -96,7 +96,8 @@ theorem pairK_equivFun_symm {ι : Type} [Fintype ι] {n : ℕ} (lam : ι → Dom
     (u v : VVIdx lam → K) :
     pairK lam G ((bVV K lam).equivFun.symm u) ((bVV K lam).equivFun.symm v) =
       star u ⬝ᵥ (Matrix.of fun i j => pairK lam G (bVV K lam i) (bVV K lam j)) *ᵥ v := by
-  simp only [Module.Basis.equivFun_symm_apply, dotProduct, Matrix.mulVec, Matrix.of_apply, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Module.Basis.equivFun_symm_apply, dotProduct, Matrix.mulVec, Matrix.of_apply, map_sum,
     LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, Finset.mul_sum,
     Pi.star_apply, starRingEnd_apply, RingHom.id_apply]
   rw [Finset.sum_comm]

@@ -95,7 +95,8 @@ theorem GlobalTheory.coeff_eq_zero_of_evA_eq_zero_of_le_finrank :
     ∑ a : Fin d → Fin q, coeff (boxPt a) f • monomial (boxPt a) (1 : K) with hP
   have hPcoeff : ∀ a : Fin d → Fin q, coeff (boxPt a) P = coeff (boxPt a) f := by
     intro a
-    rw [hP, map_sum, Finset.sum_eq_single a]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hP, map_sum, Finset.sum_eq_single a]
     · simp [coeff_monomial]
     · intro b _ hb
       simp [coeff_monomial, boxPt_injective.ne (Ne.symm hb)]
@@ -113,7 +114,8 @@ theorem GlobalTheory.coeff_eq_zero_of_evA_eq_zero_of_le_finrank :
     omega
   have hsum : h = ∑ i, hi i := by
     ext β
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [hic]
     by_cases hb : ∀ i, β i < q
     · obtain ⟨a, rfl⟩ := exists_boxPt β hb
@@ -143,7 +145,8 @@ theorem GlobalTheory.coeff_eq_zero_of_evA_eq_zero_of_le_finrank :
           omega
       · simp
   have hEh : E h = 0 := by
-    rw [hsum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hsum, map_sum]
     apply Finset.sum_eq_zero
     intro i _
     obtain ⟨g, hg⟩ := hdiv i
@@ -153,7 +156,8 @@ theorem GlobalTheory.coeff_eq_zero_of_evA_eq_zero_of_le_finrank :
   have hfP : f = P + h := by rw [hh]; ring
   have hzero : ∑ a : Fin d → Fin q, coeff (boxPt a) f • v a = 0 := by
     have : E P = ∑ a : Fin d → Fin q, coeff (boxPt a) f • v a := by
-      rw [hP, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hP, map_sum]
       simp only [map_smul, hv]
     rw [← this, ← hEf, hfP, map_add, hEh, add_zero]
   have hall := Fintype.linearIndependent_iff.1 hli _ hzero

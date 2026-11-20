@@ -525,7 +525,8 @@ theorem red_lin_iff {γ : GL (Fin r) E} {k l : GL (Fin r) (𝓞 E ⧸ D.𝔪)}
     D.Red (fun i => lin γ (u i)) (k * l) ↔ D.Red u l := by
   have key {b : Matrix (Fin r) (Fin r) (𝓞 E)} (hb : b.map (Ideal.Quotient.mk D.𝔪) = l) :
       D.Red (fun i => lin γ (∑ j, b j i • D.β j)) (k * l) := by
-    simpa only [map_sum, map_smul] using red_comb h hb
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa only [map_sum, map_smul] using red_comb h hb
   constructor
   · intro H
     obtain ⟨b, hb⟩ := exists_lift l

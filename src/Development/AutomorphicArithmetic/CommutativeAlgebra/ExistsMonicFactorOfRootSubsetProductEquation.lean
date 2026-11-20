@@ -117,7 +117,8 @@ private lemma Ph_sym {A : Type} [CommRing A] (N m : ℕ) (α c' : A)
     (Ph N m α c' f).map (MvPolynomial.rename σ : MvPolynomial (Fin N) A →ₐ[A] _).toRingHom =
       Ph N m α c' f := by
   unfold Ph
-  simp only [Polynomial.map_sum, Polynomial.map_mul, Polynomial.map_C, Polynomial.map_prod,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Polynomial.map_sum, Polynomial.map_mul, Polynomial.map_C, Polynomial.map_prod,
     Polynomial.map_sub, Polynomial.map_X, AlgHom.toRingHom_eq_coe, RingHom.coe_coe, Wt_rename,
     MvPolynomial.rename_X]
   refine Finset.sum_nbij' (fun J => J.map σ.toEmbedding) (fun J => J.map σ.symm.toEmbedding)
@@ -158,7 +159,8 @@ private lemma Ph_map {A S : Type} [CommRing A] [CommRing S] [Algebra A S] (N m :
         C (algebraMap A S c' * ∏ J' ∈ (Finset.powersetCard m (Finset.univ : Finset (Fin N))).erase J,
             (algebraMap A S α - ∏ i ∈ J', x i)) * ∏ i ∈ f J, (X - C (x i)) := by
   unfold Ph Wt
-  simp [Polynomial.map_sum, Polynomial.map_prod, map_prod, map_sub, MvPolynomial.aeval_X,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Polynomial.map_sum, Polynomial.map_prod, map_prod, map_sub, MvPolynomial.aeval_X,
     MvPolynomial.aeval_C]
 
 private lemma coeff_sum {S ι : Type} [CommRing S] [Nontrivial S] {N : ℕ} (Λ : Finset ι)

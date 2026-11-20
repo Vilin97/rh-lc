@@ -88,7 +88,8 @@ theorem two_frames (Ω Ω₀ : Type) [Field Ω] [Field Ω₀] (i : Ω₀ →+* �
       intro a
       obtain ⟨ψ, hψ⟩ := exists_dual_ext hext hs (π₀ a)
       have hψv : ψ (κ • b j) = c a := by
-        rw [← hc, map_sum, Finset.sum_eq_single a]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [← hc, map_sum, Finset.sum_eq_single a]
         · rw [map_smul, hψ, hπ, if_pos rfl, map_one, smul_eq_mul, mul_one]
         · intro x _ hx
           rw [map_smul, hψ, hπ, if_neg (Ne.symm hx), map_zero, smul_zero]

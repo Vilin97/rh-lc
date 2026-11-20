@@ -66,7 +66,8 @@ theorem ProjAvoidingForm.proof (hSeg : SegreArith.Statement) : ProjAvoidingForm.
     rw [coneMap_of_isHomogeneous ℚ x' (hlin _), pow_one] at this
     convert this using 2
     rw [hxinv p]
-    simp [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum]
 
   let ℓq : Fin (D + 1) → MvPolynomial (Ix ((k : K) → ι k)) ℚ := fun j => ∑ i, C (B (e j) i) * X i
   have hℓhom : ∀ j, (ℓq j).IsHomogeneous 1 := fun j => hlin _
@@ -96,7 +97,8 @@ theorem ProjAvoidingForm.proof (hSeg : SegreArith.Statement) : ProjAvoidingForm.
   have hLz : ∀ (z : (Σ k, ι k) → ℂ) j,
       eval z (map (Int.castRingHom ℂ) (L j)) = (N : ℂ) * aeval (segreCoords z) (ℓq j) := by
     intro z j
-    simp only [L, ℓq, eval_segreSub, map_sum, map_mul, map_C, map_X, eval_X, eval_C, aeval_C, aeval_X,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [L, ℓq, eval_segreSub, map_sum, map_mul, map_C, map_X, eval_X, eval_C, aeval_C, aeval_X,
       Finset.mul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     have := congrArg (fun q : ℚ => (q : ℂ)) (hn j i)

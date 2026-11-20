@@ -104,8 +104,10 @@ theorem smul_mem_wRec_of_mem_span : ∀ {p : ℕ} [Fact p.Prime] {C : Type} [Fie
   have hexp : ∀ x, P.bLie (e x) = ∑ i, algebraMap O C (x i) • P.bLie (u i) := by
     intro x
     refine P.eq_of_pairV fun s => ?_
-    simp only [map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply, Point.pairV_bLie, smul_eq_mul]
-    simp only [← map_mul, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply, Point.pairV_bLie, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [← map_mul, ← map_sum]
     congr 1
     exact (omLin P e he1 he2 (P.al₀ s)).pi_apply_eq_sum_univ x
   have hspan : w ∈ Submodule.span C (Set.range fun i => P.bLie (u i)) := by
@@ -118,7 +120,8 @@ theorem smul_mem_wRec_of_mem_span : ∀ {p : ℕ} [Fact p.Prime] {C : Type} [Fie
     intro i
     obtain ⟨κ, hκ⟩ := exists_pairV_inclT P hwT (t i)
     refine ⟨κ, hκ.trans ?_⟩
-    rw [← hβ, map_sum, LinearMap.sum_apply, Finset.sum_eq_single i]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hβ, map_sum, LinearMap.sum_apply, Finset.sum_eq_single i]
     · rw [map_smul, LinearMap.smul_apply, hpair, smul_eq_mul, hu, e.symm_apply_apply, if_pos rfl,
         _root_.mul_one, mul_comm]
     · intro j _ hj

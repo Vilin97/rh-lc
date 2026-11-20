@@ -134,7 +134,8 @@ theorem opST_apply_apply (A : Finset (Fin n → ℕ)) (b : (Fin n → ℕ) → �
     (u : 𝓢'(EuclideanSpace ℝ (Fin n), ℂ)) (φ : 𝓢(EuclideanSpace ℝ (Fin n), ℂ)) :
     opST A b u φ = u (∑ α ∈ A,
       SchwartzMap.smulLeftCLM ℂ (b α : EuclideanSpace ℝ (Fin n) → ℂ) (∂^{mdir α} φ)) := by
-  simp only [opST, sum_apply, smul_apply, ContinuousLinearMap.comp_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [opST, sum_apply, smul_apply, ContinuousLinearMap.comp_apply,
     iteratedLineDerivOpCLM_apply, smulLeftCLM_apply_apply, iteratedLineDerivOp_apply_apply,
     comp_rev_rev, map_sum, smul_eq_mul]
   refine Finset.sum_congr rfl fun α _ ↦ ?_

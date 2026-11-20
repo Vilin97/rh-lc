@@ -70,7 +70,8 @@ private lemma Good.mul {k k' : ℤ} {f g : (ZMod N)ˣ → ℍ → ℂ} (hf : Goo
   pre := hf.pre.mul hg.pre
   int a n := by
     show ‖ι.symm (coef (f a * g a) n)‖ ≤ 1
-    rw [hf.pre.coef_sum hg.pre, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hf.pre.coef_sum hg.pre, map_sum]
     refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg zero_le_one fun p _ => ?_
     rw [map_mul, norm_mul]
     exact mul_le_one₀ (hf.int a p.1) (norm_nonneg _) (hg.int a p.2)
@@ -79,7 +80,8 @@ private lemma Good.mul {k k' : ℤ} {f g : (ZMod N)ˣ → ℍ → ℂ} (hf : Goo
     obtain ⟨g', pg, cg⟩ := hg.cg σ
     refine ⟨fun a => f' a * g' a, pf.mul pg, fun a n => ?_⟩
     show coef (f' a * g' a) n = σ (coef (f a * g a) n)
-    rw [pf.coef_sum pg, hf.pre.coef_sum hg.pre, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [pf.coef_sum pg, hf.pre.coef_sum hg.pre, map_sum]
     exact Finset.sum_congr rfl fun p _ => by rw [map_mul, cf, cg]
 
 private lemma Pre.coef_comb {k : ℤ} {f g : (ZMod N)ˣ → ℍ → ℂ} (hf : Pre k f) (hg : Pre k g) (c : ℂ) (a) (n : ℕ) :
@@ -201,7 +203,8 @@ private lemma good_eis (hl : l ≠ 2) (hN : 3 ≤ N) (hlN : ¬ l ∣ N) (k : ℕ
     · rw [eis_coef0 hN k hk]
       refine (lkSep l hl N (by omega) hlN).1 k _ (rt_powN _) fun h => rt_sq (ι := ι) hN a ?_
       rw [h, one_pow]
-    · rw [(eisCoef N k hk a (unit_ne_zero hN a)).2 n hn, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [(eisCoef N k hk a (unit_ne_zero hN a)).2 n hn, map_sum]
       refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg zero_le_one fun e _ => ?_
       have hr : ∀ b : ZMod N, ‖ι.symm (ZMod.stdAddChar b : ℂ)‖ = 1 := fun b => rt_norm (ι := ι) b
       rw [map_mul ι.symm, norm_mul, map_pow ι.symm, map_natCast ι.symm, norm_pow, map_add ι.symm, map_mul ι.symm]
@@ -279,7 +282,8 @@ private lemma VC.mul {k k' : ℕ} {f g : (ZMod N)ˣ → ℍ → ℂ} (hv : VC k 
   obtain ⟨g', pg, cg⟩ := hg.cg σ
   refine ⟨fun a => f' a * g' a, by rw [Nat.cast_add]; exact p'.mul pg, fun a => van_mul (v' a) pg a, fun a n => ?_⟩
   show coef (f' a * g' a) n = σ (coef (f a * g a) n)
-  rw [p'.coef_sum pg, pf.coef_sum hg.pre, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [p'.coef_sum pg, pf.coef_sum hg.pre, map_sum]
   exact Finset.sum_congr rfl fun p _ => by rw [map_mul, c', cg]
 
 private lemma vc_eis (hN : 3 ≤ N) : VC 3 (fun a : (ZMod N)ˣ => eisFun N 3 a) := by

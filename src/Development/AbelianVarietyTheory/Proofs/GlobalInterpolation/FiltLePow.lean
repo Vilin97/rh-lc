@@ -115,7 +115,8 @@ theorem decomp {a : ℕ} (f : MvPowerSeries (Fin a) O) :
     f = C (coeff 0 f) + ∑ i, X i * part f i := by
   classical
   ext m
-  rw [map_add, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_add, map_sum]
   simp_rw [coeff_X_mul_part]
   by_cases hm : m = 0
   · subst hm

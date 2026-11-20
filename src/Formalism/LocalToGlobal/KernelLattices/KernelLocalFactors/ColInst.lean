@@ -444,7 +444,8 @@ theorem Seam.stdH_vec (hok : s.Ok) {n : ℕ} (x y : Sp X.E n) :
     (letI := D.host.cmStar; stdH D.host.E n (s.vec x) (s.vec y)) = s.iE (hStd X.E n x y) := by
   rw [Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity.SD.stdH_eq]
   show _ = s.iE (∑ i, star (x i) * y i)
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_mul, hok.2]
   rfl
@@ -738,7 +739,8 @@ theorem specY_subD (hab : a ≤ b) :
   have hv : v.2.2.1 < b := lt_of_lt_of_le v.2.2.2 hab
   rw [AlgHom.comp_apply, rename_X]
   unfold subD specY
-  rw [aeval_X, dif_pos hv, map_sum, Finset.sum_eq_single (⟨v.2.2.1, hv⟩ : Fin b)]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [aeval_X, dif_pos hv, map_sum, Finset.sum_eq_single (⟨v.2.2.1, hv⟩ : Fin b)]
   · rw [map_mul, aeval_X, aeval_X]
     simp only [Sum.elim_inl, Sum.elim_inr, if_true, one_mul]
     rfl
@@ -1268,7 +1270,8 @@ theorem tabK_spec (cA cB : ℕ) (hA : 0 < cA) (hB : 0 < cB) (hsm : A.ESmooth a b
   have h4 : A.tabK Sall cA cB N N' Ξ m = ∑ z, Ξ (rep z) * A.jetK Sall N N' cB (rep z) m := by
     unfold Amb.tabK latSum
     rw [finsum_eq_sum_of_fintype]
-  rw [h4, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h4, map_sum]
   unfold jetC
   rw [h2, Finset.mul_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun z _ => ?_

@@ -233,9 +233,11 @@ theorem contDiff_thetaTr_realF : ∀ (F E : Type) [Field F] [NumberField F] [Fie
           refine Prod.ext ?_ ?_
           · apply eM.injective
             rw [hφdef, hφdef, hφpair, hm]
-            simp only [dotProduct, map_add, map_mul, map_sum, hφx, hφP, hφQ, hφa, hφb, hφ2, Finset.sum_add_distrib]
+            set_option synthInstance.maxHeartbeats 100000 in
+              simp only [dotProduct, map_add, map_mul, map_sum, hφx, hφP, hφQ, hφa, hφb, hφ2, Finset.sum_add_distrib]
           · rw [hφfdef, hφfdef, hφfpair]
-            simp only [dotProduct, map_add, map_mul, map_sum, hφfP, hφfQ, mul_zero, zero_mul, Finset.sum_const_zero,
+            set_option synthInstance.maxHeartbeats 100000 in
+              simp only [dotProduct, map_add, map_mul, map_sum, hφfP, hφfQ, mul_zero, zero_mul, Finset.sum_const_zero,
               add_zero]
         rw [← hY, hX]
         simp only [dotProduct_add, add_dotProduct]

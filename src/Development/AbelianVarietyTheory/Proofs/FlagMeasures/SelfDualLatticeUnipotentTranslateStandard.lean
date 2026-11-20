@@ -281,7 +281,8 @@ theorem lift_of_frame [IsNonarchimedeanLocalField F] [CharZero F] (Λ : Submodul
     rw [e1, e2]
     linear_combination (-hf L S.Hm (c i.castSucc) (c j.castSucc)) * hσ2
   have hyΛ : ∀ j, n (y j) ∈ Λ := fun j => by
-    simp only [hy, map_sub, map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hy, map_sub, map_sum, map_smul]
     refine sub_mem (hcΛ _) (sum_mem_O S _ _ (fun i => mul_mem hσ ?_) fun i => (hng _).1)
     rw [← hni]; exact hint _ (hcΛ _) _ (hcΛ _)
   obtain ⟨m, hm, hmg, hmy⟩ := exists_move S g gs T gram dual iso y dy iy r

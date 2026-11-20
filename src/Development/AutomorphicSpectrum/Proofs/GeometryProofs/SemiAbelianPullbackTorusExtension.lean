@@ -25,7 +25,8 @@ theorem hom_eq_sum {O : Type} [CommRing O] (δ : X →+ O) :
     δ = ∑ i, δ (Module.Free.chooseBasis ℤ X i) •
       (Int.castAddHom O).comp ((Module.Free.chooseBasis ℤ X).coord i).toAddMonoidHom := by
   ext x
-  conv_lhs => rw [← (Module.Free.chooseBasis ℤ X).sum_repr x, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [← (Module.Free.chooseBasis ℤ X).sum_repr x, map_sum]
   simp only [map_zsmul]
   simp [AddMonoidHom.finsetSum_apply, mul_comm]
 
@@ -36,11 +37,13 @@ theorem exists_dual (bs : Module.Basis (Fin r) ℤ (X →+ ℤ)) (a : Fin r) :
   have e : φ = ∑ i, φ (Module.Free.chooseBasis ℤ X i) •
       ((Module.Free.chooseBasis ℤ X).coord i).toAddMonoidHom := by
     ext x
-    conv_lhs => rw [← (Module.Free.chooseBasis ℤ X).sum_repr x, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [← (Module.Free.chooseBasis ℤ X).sum_repr x, map_sum]
     simp only [map_zsmul]
     simp [AddMonoidHom.finsetSum_apply, mul_comm]
   conv_rhs => rw [e]
-  simp [map_sum, mul_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, mul_comm]
 
 theorem indep {O : Type} [CommRing O] (bs : Module.Basis (Fin r) ℤ (X →+ ℤ)) :
     LinearIndependent O (fun a => (Int.castAddHom O).comp (bs a)) := by
@@ -59,7 +62,8 @@ theorem span_top {O : Type} [CommRing O] (bs : Module.Basis (Fin r) ℤ (X →+ 
       ext x
       have e₀ := DFunLike.congr_fun (bs.sum_repr φ) x
       rw [AddMonoidHom.finsetSum_apply] at e₀
-      rw [AddMonoidHom.comp_apply, ← e₀, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [AddMonoidHom.comp_apply, ← e₀, map_sum]
       simp [AddMonoidHom.finsetSum_apply]
     rw [e]
     exact Submodule.sum_mem _ fun a _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨a, rfl⟩)

@@ -106,7 +106,8 @@ theorem _root_.GlobalTheory.DieudonneTest.eigen_step [IsDomain (PreTilt O p)] {�
   have hξ0 : WittVector.coeff (_root_.GlobalTheory.Sandwich.xi ε) 0 = s := by
     rw [← WittVector.constantCoeff_apply]
     unfold _root_.GlobalTheory.Sandwich.xi
-    simp [map_sum, map_pow, WittVector.constantCoeff_apply, WittVector.teichmuller_coeff_zero, hs]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, map_pow, WittVector.constantCoeff_apply, WittVector.teichmuller_coeff_zero, hs]
   have hμ0 : WittVector.coeff (_root_.GlobalTheory.Sandwich.mu ε) 0 = t := by
     unfold _root_.GlobalTheory.Sandwich.mu
     rw [← WittVector.constantCoeff_apply, map_sub, map_one, WittVector.constantCoeff_apply,

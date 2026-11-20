@@ -50,7 +50,8 @@ private theorem hd_lin (c c' : List Γ → M) (s t : ℂ) : hd (s • c + t • 
 private theorem map_hd (f : M →ₗ[ℂ] N) (c : List Γ → M) (c' : List Γ → N) (k : ℕ)
     (h : ∀ x : List Γ, x.length = k + 1 → f (c x) = c' x) (x : List Γ) (hx : x.length = k + 2) :
     f (hd c x) = hd c' x := by
-  simp only [hd, map_sum, map_zsmul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hd, map_sum, map_zsmul]
   refine Finset.sum_congr rfl fun i hi => ?_
   rw [h]
   rw [List.length_eraseIdx_of_lt (Finset.mem_range.1 hi), hx]; rfl

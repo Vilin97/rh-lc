@@ -33,7 +33,8 @@ omit [Algebra ℤ_[l] O] [IsDomain O] [CharZero O] [Fact l.Prime] in
 theorem _root_.GlobalTheory.CycFr.constantCoeff_lvl (k : ℕ) :
     constantCoeff (_root_.GlobalTheory.CycFr.lvl l O k) = (l : O) := by
   unfold _root_.GlobalTheory.CycFr.lvl
-  simp [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum]
 
 open PowerSeries in
 variable {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [IsDomain O] [CharZero O] [Algebra ℤ_[l] O] in

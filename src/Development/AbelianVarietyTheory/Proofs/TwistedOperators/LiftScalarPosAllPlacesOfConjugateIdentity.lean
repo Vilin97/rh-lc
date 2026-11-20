@@ -32,7 +32,8 @@ private theorem eq_zero_of_semilinear_eq_zero_of_linearIndependent {K V W ι : T
   classical
   have hsum : Finsupp.linearCombination ℂ (fun k => f (b k)) ((b.repr z).mapRange σ (map_zero σ)) = f z := by
     conv_rhs => rw [← b.linearCombination_repr z]
-    rw [Finsupp.linearCombination_apply, Finsupp.linearCombination_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finsupp.linearCombination_apply, Finsupp.linearCombination_apply,
       Finsupp.sum_mapRange_index (by intros; simp), Finsupp.sum, Finsupp.sum, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_smulₛₗ]
@@ -59,7 +60,8 @@ private theorem exists_rational_solution_of_semilinear {K E : Type*} [Field K] [
     have hz : z = ∑ l, z l • Pi.single l (1 : ℂ) := by
       ext m; simp [Finset.sum_apply, Pi.single_apply]
     conv_lhs => rw [hz]
-    simp only [map_sum, map_smul, ← ha, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, ← ha, smul_eq_mul]
     exact Finset.sum_congr rfl fun l _ => mul_comm _ _
   have hinj : LinearMap.ker (Matrix.of a).mulVecLin = ⊥ := by
     rw [LinearMap.ker_eq_bot']
@@ -96,7 +98,8 @@ private theorem exists_rational_solution_of_semilinear {K E : Type*} [Field K] [
   intro l
   refine ⟨((LinearMap.toMatrix' g).mulVec c) l, ?_⟩
   rw [hy']
-  simp [Matrix.mulVec, dotProduct, map_sum, Matrix.map_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Matrix.mulVec, dotProduct, map_sum, Matrix.map_apply]
 
 theorem liftMat_inj (hK : X.KFormL) (hZ : X.CrdZL cr b) (hT : Formalism.IndefR.Rat.LiftTestB X b) (hKF : X.KForm b)
     (hEW : X.EWnorm b) (hnP : 0 < X.nP b) (j : Bs.J) (t : Bs.Tup) (hinjL : Function.Injective (cr.toL X.zs b j t))
@@ -159,7 +162,8 @@ theorem liftMat_inj (hK : X.KFormL) (hZ : X.CrdZL cr b) (hT : Formalism.IndefR.R
         cpt Bs.v0.embedding ((X.liftMat cr b j t).mulVec x) := by
       rw [← hmap]
       ext l
-      simp [cpt, Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [cpt, Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum]
     rw [this, hx]
     have h0 : cpt Bs.v0.embedding (0 : Fin (X.dW b j) → K) = 0 := by ext m; simp [cpt]
     rw [h0, map_zero]

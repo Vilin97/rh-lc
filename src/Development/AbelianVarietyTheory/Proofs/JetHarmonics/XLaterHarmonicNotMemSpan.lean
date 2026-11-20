@@ -77,7 +77,8 @@ def colSumL {S : Type} [CommRing S] [Algebra c.F S] {n : ℕ} (v : Fin n → (Lt
 theorem colSumL_apply {S : Type} [CommRing S] [Algebra c.F S] {n : ℕ} (v : Fin n → (Lt1 Dw →₀ ℕ) → S)
     (P : MvPolynomial (LtN Dw n) c.F) : colSumL c v P = colSum c v P := by
   conv_lhs => rw [P.as_sum]
-  rw [map_sum, colSum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, colSum]
   refine Finset.sum_congr rfl fun m _ => ?_
   have : (MvPolynomial.monomial m (P.coeff m) : MvPolynomial (LtN Dw n) c.F) =
       P.coeff m • MvPolynomial.basisMonomials (LtN Dw n) c.F m := by
@@ -202,7 +203,8 @@ theorem colSum_nabVal_rowAct [StarRing (𝓞 E)] {S : Type} [CommRing S] [Algebr
       colSum c (fun b α => B.nabVal S hg H.w0 k (f b) w (MvPolynomial.monomial α 1)) Q =
       prodForm lam (MvPolynomial.eval₂Hom φ (fun ℓ : LtN Dw n => sg ℓ.2.2 (x ⟨ℓ.1, ℓ.2.1⟩)) Q) := by
     intro w x hx Q
-    rw [colSum, MvPolynomial.coe_eval₂Hom, MvPolynomial.eval₂_eq', map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [colSum, MvPolynomial.coe_eval₂Hom, MvPolynomial.eval₂_eq', map_sum]
     refine Finset.sum_congr rfl fun m _ => ?_
     have e : ∏ ℓ : LtN Dw n, sg ℓ.2.2 (x ⟨ℓ.1, ℓ.2.1⟩) ^ m ℓ = ∏ b, sg b (∏ ℓ, x ℓ ^ colOf m b ℓ) := by
       simp only [map_prod, map_pow]
@@ -214,7 +216,8 @@ theorem colSum_nabVal_rowAct [StarRing (𝓞 E)] {S : Type} [CommRing S] [Algebr
     refine Finset.prod_congr rfl fun b _ => ?_
     rw [FB.nabVal, dpoly_monomial, dmon_eq _ Ψ w x hx]
     rfl
-  rw [key u MvPolynomial.X hΨ,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [key u MvPolynomial.X hΨ,
     key u' (fun ℓ => ∑ j, algebraMap c.F S (g ℓ.1 ℓ.2 j) • MvPolynomial.X ⟨ℓ.1, j⟩) (fun ℓ => by
       rw [dEnd_comb (B.FK S) (fun j => algebraMap c.F S (g ℓ.1 ℓ.2 j)) (fun j => u ⟨ℓ.1, j⟩) (u' ℓ) (hu ℓ.1 ℓ.2)]
       simp only [map_sum, map_smul, hΨ])]
@@ -225,7 +228,8 @@ theorem colSum_nabVal_rowAct [StarRing (𝓞 E)] {S : Type} [CommRing S] [Algebr
   | mul_X p ℓ hp =>
     rw [map_mul, map_mul, map_mul, hp, rowAct_X]
     congr 1
-    simp only [MvPolynomial.eval₂Hom_X', map_sum, map_mul, MvPolynomial.eval₂Hom_C, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [MvPolynomial.eval₂Hom_X', map_sum, map_mul, MvPolynomial.eval₂Hom_C, map_smul]
     exact Finset.sum_congr rfl fun j _ => Algebra.smul_def (A := T) _ _
 
 theorem basis_of_isUnit {T : Type} [Fintype T] {r : T → ℕ} {S : Type} [CommRing S] {d : ℕ}

@@ -60,7 +60,8 @@ theorem colFrame_semi {Ω Φ E F : Type} [Field Ω] [Field Φ] [AddCommGroup E] 
     (T : Matrix (Fin r) (Fin r) Ω) :
     (fun k => j (colFrame e T k)) = colFrame (fun a => j (e a)) (T.map i) := by
   funext k
-  simp only [colFrame, map_sum, hj, Matrix.map_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [colFrame, map_sum, hj, Matrix.map_apply]
 
 theorem isFrameAt_of_map {X : Scheme.{0}} {Ω E E' : Type} [Field Ω] [AddCommGroup E] [Module Ω E] [AddCommGroup E']
     [Module Ω E'] {ξ : Spec (CommRingCat.of Ω) ⟶ X} (L : Lat ξ E) (f : E →ₗ[Ω] E') (hf : Function.Injective f) {r : ℕ}
@@ -88,7 +89,8 @@ theorem adapted_frame : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (
     refine isFrameAt_of_map _ (inW 𝔐) (GenBases.inW_injective 𝔐) _ _ ?_
     have h : (fun k => inW 𝔐 (colFrame e T k)) = colFrame (cc 𝔐 bW bO (.inl τ)) T := by
       funext k
-      simp only [colFrame, map_sum, map_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [colFrame, map_sum, map_smul]
       rfl
     rw [h]
     exact hfr

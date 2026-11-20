@@ -118,7 +118,8 @@ include he in
 theorem d_comp (n : ℕ) (f : (Fin n → G) → M) :
     (inhomogeneousCochains.d A n).hom (fun s => e (f s)) = fun s => e (dn rho n f s) := by
   funext s
-  rw [inhomogeneousCochains.d_hom_apply, dn_app, map_add, map_sum, he]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [inhomogeneousCochains.d_hom_apply, dn_app, map_add, map_sum, he]
   congr 1
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [neg_one_pow_smul' (S := k), neg_one_pow_smul' (S := R), map_zsmul]

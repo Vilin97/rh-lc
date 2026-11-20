@@ -86,7 +86,8 @@ theorem galCoef_phiW {g : GQ l} (hg : g ∈ ϖ.GfieldInf a) (v : ι → OW l O) 
     galCoef O ι g (phiW t ϖ P v) = phiW t ϖ P (galCoef O ι g v) := by
   ext1 i
   change galOW O g (∑ j, ϖ.iW t K _ * frobOW l O (v j)) = ∑ j, ϖ.iW t K _ * frobOW l O (galOW O g (v j))
-  simp only [map_sum, map_mul, ϖ.galOW_iW t K hg, galOW_frobOW]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, ϖ.galOW_iW t K hg, galOW_frobOW]
 
 theorem galCoef_mem_Treal {g : GQ l} (hg : g ∈ ϖ.GfieldInf a) {v : ι → OW l O} (hv : v ∈ Treal t ϖ P) :
     galCoef O ι g v ∈ Treal t ϖ P := by
@@ -140,7 +141,8 @@ theorem toW_of_mx (v : ME P) (m : ι → ZMod a → A O K) (h : ∀ τ, v.1 τ =
   simp only [← ϖ.iW_of_mem t K]
   change _ = ∑ j, ϖ.iW t K _ * ϖ.iW t K _
   simp only [← map_mul]
-  rw [← map_sum, toW_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum, toW_apply]
   refine congrArg _ (funext fun τ => Subtype.ext ?_)
   rw [Finset.sum_apply, AddSubmonoidClass.coe_finsetSum]
   exact congrFun (h τ) i
@@ -236,7 +238,8 @@ theorem homW_toW (F : BK.Hom P Q) (v : ME P) :
   ext1 i
   change ∑ j, inclO l O (ϖ.iTot t K _) * ϖ.iW t K _ = _
   simp only [← ϖ.iW_of_mem t K, ← map_mul]
-  rw [← map_sum, toW_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum, toW_apply]
   refine congrArg _ (funext fun τ => Subtype.ext ?_)
   rw [Finset.sum_apply, AddSubmonoidClass.coe_finsetSum]
   rfl
@@ -248,7 +251,8 @@ theorem homMat_mul_frobMat (F : BK.Hom P Q) : (homMat t ϖ F).map (inclO l O) * 
     ∑ k, ϖ.iW t K _ * frobOW l O (inclO l O (ϖ.iTot t K _))
   simp only [frobOW_inclO, ← PiSys.iTot_frob]
   simp only [← ϖ.iW_of_mem t K, ← map_mul]
-  rw [← map_sum, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum, ← map_sum]
   refine congrArg _ (funext fun τ => Subtype.ext ?_)
   rw [Finset.sum_apply, Finset.sum_apply, AddSubmonoidClass.coe_finsetSum, AddSubmonoidClass.coe_finsetSum]
   exact congrFun₂ (F.comm τ) i j
@@ -280,7 +284,8 @@ theorem homW_comp (G : BK.Hom Q R) (F : BK.Hom P Q) (v : ι → OW l O) :
   ext1 i j
   change _ = ∑ k, ϖ.iTot t K _ * ϖ.iTot t K _
   simp only [← map_mul]
-  rw [← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum]
   refine congrArg (ϖ.iTot t K) (funext fun τ => Subtype.ext ?_)
   rw [Finset.sum_apply, AddSubmonoidClass.coe_finsetSum]
   rfl
@@ -429,7 +434,8 @@ theorem exists_isLMat_iff (s : GQ l) (g : G) :
   · choose y hy using fun j => h _ ⟨Pi.single j 1, rfl⟩
     have key : ∀ (d : ι → OA l O) (w : ι → ι → OA l O),
         inclL t ϖ P (∑ j, d j • w j) = ∑ j, inclO l O (d j) • inclL t ϖ P (w j) := fun d w => by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [inclL_apply, inclL_apply, ← Matrix.mulVec_smul]
       exact congrArg _ (funext fun i => map_mul _ _ _)
@@ -437,7 +443,8 @@ theorem exists_isLMat_iff (s : GQ l) (g : G) :
     have h1 : (Matrix.of fun i j => y j i) *ᵥ (fun i => galOA O s (c i)) = ∑ j, galOA O s (c j) • y j := by
       ext1 i
       simp [Matrix.mulVec, dotProduct, mul_comm]
-    conv_lhs => rw [pi_eq_sum_univ' c, key, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [pi_eq_sum_univ' c, key, map_sum]
     rw [h1, key]
     exact Finset.sum_congr rfl fun j _ => by rw [act_smul, galOW_inclO, hy]
 
@@ -799,7 +806,8 @@ def unitIdent (T : LocLat G ℚ_[l] K O) (b : Module.Basis ι O ↥T.L.T) :
     Ident t ϖ (unitMod l a e O K ι) T where
   j := (b.baseChange (OW l O)).equivFun.symm
   j_φ v := by
-    simp only [phiW_apply, frobMat_unitMod, Matrix.one_mulVec, Module.Basis.equivFun_symm_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [phiW_apply, frobMat_unitMod, Matrix.one_mulVec, Module.Basis.equivFun_symm_apply,
       Module.Basis.baseChange_apply, smul_tmul', smul_eq_mul, mul_one, map_sum, TWmap, TensorProduct.map_tmul,
       AlgHom.toLinearMap_apply, LinearMap.id_apply]
 
@@ -811,7 +819,8 @@ theorem unitIdent_j (T : LocLat G ℚ_[l] K O) (b : Module.Basis ι O ↥T.L.T) 
 theorem unitIdent_act (T : LocLat G ℚ_[l] K O) (b : Module.Basis ι O ↥T.L.T) (s : GQ l) {g : G}
     (hg : ∀ x, T.ρ g x = x) (v : ι → OW l O) : (unitIdent t ϖ T b).act s g v = galCoef O ι s v := by
   apply (unitIdent t ϖ T b).j.injective
-  rw [Ident.j_act, unitIdent_j, unitIdent_j, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Ident.j_act, unitIdent_j, unitIdent_j, map_sum]
   exact Finset.sum_congr rfl fun i _ =>
     congrArg (fun y : ↥T.L.T => galOW O s (v i) ⊗ₜ[O] y) (Subtype.ext (hg _))
 
@@ -825,12 +834,14 @@ theorem kappa_sum (T : LocLat G ℚ_[l] K O) (b : Module.Basis ι O ↥T.L.T) {J
     letI := zlLat T
     kappa T (∑ p : J × ι, inclW l (ϖ.ev a (x p)) ⊗ₜ[ℤ_[l]] (o p.1 • b p.2)) =
       (unitIdent t ϖ T b).j (toW t ϖ _ ⟨m, mem_ME_of_mem_M hm⟩) := by
-  rw [unitIdent_j, map_sum, Fintype.sum_prod_type_right]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [unitIdent_j, map_sum, Fintype.sum_prod_type_right]
   refine Finset.sum_congr rfl fun i _ => ?_
   have h1 : toW t ϖ _ ⟨m, mem_ME_of_mem_M hm⟩ i =
       inclO l O (ϖ.iTot t K fun τ => ⟨m τ i, mem_tot.1 hm τ i⟩) :=
     ϖ.iW_of_mem t K fun τ => ⟨m τ i, mem_tot.1 hm τ i⟩
-  rw [h1, h, map_sum, map_sum, sum_tmul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h1, h, map_sum, map_sum, sum_tmul]
   refine Finset.sum_congr rfl fun k _ => (kappa_tmul T _ _).trans ?_
   rw [map_smul, map_smul, PiSys.iTot_toAc, inclO_tmul, smul_tmul]
 
@@ -886,7 +897,8 @@ theorem isMapOf_constHom {T T' : LocLat G ℚ_[l] K O} (b : Module.Basis ι O �
   intro v
   rw [unitIdent_j, unitIdent_j, latW]
   generalize (f.f.restrictScalars O).restrict f.T_le = φ
-  simp only [homW_apply, Matrix.mulVec, dotProduct, homMat_constHom, map_sum, TensorProduct.map_tmul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [homW_apply, Matrix.mulVec, dotProduct, homMat_constHom, map_sum, TensorProduct.map_tmul,
     LinearMap.id_apply, sum_tmul, LinearMap.toMatrix_apply]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun j _ => ?_
@@ -935,7 +947,8 @@ theorem taylor_unitIdent {T : Lat a O K ϖ} (hT : IsTriv T) (b : Module.Basis ι
   choose z hz using fun p => hN p n ((Finset.le_sup (Finset.mem_univ p)).trans hn)
   refine ⟨fun j => ∑ τ, idem (constC t) τ * z (τ, j), funext fun j => ?_⟩
   rw [Matrix.map_one _ (map_zero _) (map_one _), Matrix.one_mulVec, Pi.sub_apply, Finset.sum_apply]
-  simp only [Pi.smul_apply, smul_eq_mul, toCris_unitMod, unitConn_desc, map_sum, map_mul, galOCr_idem,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Pi.smul_apply, smul_eq_mul, toCris_unitMod, unitConn_desc, map_sum, map_mul, galOCr_idem,
     Finset.mul_sum]
   rw [Finset.sum_comm, ← Finset.sum_sub_distrib]
   refine Finset.sum_congr rfl fun τ _ => ?_
@@ -950,7 +963,8 @@ theorem natural_constHom (Y : Matrix κ ι O) :
   funext fun τ => funext fun i => by
     change PowerSeries.derivative K (∑ j, algebraMap O K⟦X⟧ (Y i j) * m τ j) =
       ∑ j, algebraMap O K⟦X⟧ (Y i j) * PowerSeries.derivative K (m τ j)
-    simp only [map_sum, algebraMap_eq_C, ← smul_eq_C_mul, Derivation.map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, algebraMap_eq_C, ← smul_eq_C_mul, Derivation.map_smul]
 
 def trivConn : (trivFunctor (K := K) t ϖ).IntConn where
   conn _ _ := unitConn l a e _

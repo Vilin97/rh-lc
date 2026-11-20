@@ -70,7 +70,8 @@ theorem dblRow_exact : ∀ (V W : Type) (D : Set (List V × List W)) (a b : ℕ)
   set T := x.support.image Prod.snd with hT
   have h1 : hbd V W x = ∑ w ∈ T, incl w (bd V (proj w x)) := by
     conv_lhs => rw [decomp x]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [hbd_incl]
     rfl
   have hbd0 : ∀ w ∈ T, bd V (proj w x) = 0 := by
@@ -101,7 +102,8 @@ theorem dblRow_exact : ∀ (V W : Type) (D : Set (List V × List W)) (a b : ℕ)
     obtain ⟨h2, h3⟩ := hyw w hw hl
     obtain ⟨z0, hz0, rfl⟩ := Finset.mem_image.1 hw
     exact ⟨h2, h3, (hsupp z0 hz0).2.2⟩
-  · rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum]
     simp only [hbd_incl]
     conv_rhs => rw [decomp x]
     refine Finset.sum_congr rfl fun w hw => ?_

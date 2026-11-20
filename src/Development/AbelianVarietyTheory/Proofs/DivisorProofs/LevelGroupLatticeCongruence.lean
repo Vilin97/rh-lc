@@ -22,7 +22,8 @@ theorem det_quot_eq {R M : Type} [CommRing R] [AddCommGroup M] [Module R M] (I :
   have hexp : ∀ v, q v = ∑ i, Ideal.Quotient.mk I (φ v i) • q (a i) := by
     intro v
     simp only [hsm]
-    rw [← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum]
     exact ((Submodule.Quotient.eq _).2 (h2 v)).symm
   have hφ : ∀ v ∈ I • (⊤ : Submodule R M), ∀ i, φ v i ∈ I := by
     intro v hv i
@@ -34,7 +35,8 @@ theorem det_quot_eq {R M : Type} [CommRing R] [AddCommGroup M] [Module R M] (I :
     intro g hg i
     choose r hr using fun j => Ideal.Quotient.mk_surjective (g j)
     have h3 : q (∑ j, r j • a j) = 0 := by
-      rw [map_sum, ← hg]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, ← hg]
       exact Finset.sum_congr rfl fun j _ => by rw [← hr j, hsm]
     have h4 := hφ _ ((Submodule.Quotient.mk_eq_zero _).1 h3) i
     rw [← hr i, Ideal.Quotient.eq_zero_iff_mem]
@@ -188,7 +190,8 @@ theorem det_sub_mem_completedIdeal_of_level (F : Type) {E : Type} [Field F] [Num
     choose w hw using fun j => hsingle j _ ((hL _).1 (hιL v) j)
     have : (∑ i, φ v i • a i) - v = - ∑ i, m i • w i := by
       apply hinj
-      rw [map_sub, map_neg, map_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, map_neg, map_sum, map_sum]
       conv_lhs => rw [← e.sum_repr (ι v)]
       rw [← Finset.sum_sub_distrib, ← Finset.sum_neg_distrib]
       refine Finset.sum_congr rfl fun i _ => ?_

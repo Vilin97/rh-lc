@@ -97,7 +97,8 @@ theorem exists_symm_arForm : GlobalTheory.Published.ArCalc → ∀ (k : Type) [C
   · rw [FormEx.num_apply, ← FormEx.total_rename H hX L hΦ, LinearMap.comp_apply, AlgHom.toLinearMap_apply, map_prod]
     congr 1
     refine Finset.prod_congr rfl fun j _ => ?_
-    simp [lin, FormEx.linOf, map_sum, cl, Finsupp.linearCombination_single, MvPolynomial.smul_eq_C_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [lin, FormEx.linOf, map_sum, cl, Finsupp.linearCombination_single, MvPolynomial.smul_eq_C_mul]
   · rw [FormEx.num_apply, FormEx.num_apply]
     congr 1
     exact Equiv.prod_comp π fun j => FormEx.linOf (v j)

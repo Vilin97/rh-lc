@@ -60,7 +60,8 @@ theorem exists_remb_eq_of_mem_dual {ι : Type} [Fintype ι] [DecidableEq ι] (b 
   have hνb : ∀ i, ⟪remb F ν, remb F (b i)⟫ = c i := fun i => by
     rw [inner_remb_eq_trace]
     have : Algebra.trace ℚ F (ν * b i) = c i := by
-      simp only [ν, Finset.sum_mul, smul_mul_assoc, map_sum, map_smul, hdel, smul_eq_mul,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [ν, Finset.sum_mul, smul_mul_assoc, map_sum, map_smul, hdel, smul_eq_mul,
         mul_ite, mul_one, mul_zero, Finset.sum_ite_eq, Finset.mem_univ, if_true]
     rw [this]; simp
   have hind : LinearIndependent ℝ (fun i => remb F (b i)) := by

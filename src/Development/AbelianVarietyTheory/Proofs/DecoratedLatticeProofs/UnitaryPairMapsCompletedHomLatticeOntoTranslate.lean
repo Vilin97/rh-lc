@@ -52,7 +52,8 @@ theorem int_of_moves (V : HSp D) (g : GA D V) (N : Submodule (𝓞 D.host.E) (Fi
   have := (hM x).1 hx i
   have e : toEAf D ((mt V g⁻¹ *ᵥ fun k => incA D (x k)) i) = (finM V rfl g⁻¹ *ᵥ fun j => eToEAf D (x j)) i := by
     simp only [Matrix.mulVec, dotProduct]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_mul]
     rfl
@@ -75,7 +76,8 @@ theorem int_conj (V : HSp D) (hg : V.gram = 1) (g : GA D V) (N : Submodule (𝓞
     finPart D (∑ l, cA D (incA D (s l)) * mt V g l j) ∈ intAE D := by
   rw [← GlobalTheory.FinPl.FrameLat.cA_int_iff]
   have e : cA D (∑ l, cA D (incA D (s l)) * mt V g l j) = (mt V g⁻¹ *ᵥ fun k => incA D (s k)) j := by
-    rw [mt_inv_eq V hg g, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [mt_inv_eq V hg g, map_sum]
     simp only [Matrix.mulVec, dotProduct, Matrix.transpose_apply, Matrix.map_apply]
     refine Finset.sum_congr rfl fun l _ => ?_
     rw [map_mul, cA_cA'', mul_comm]

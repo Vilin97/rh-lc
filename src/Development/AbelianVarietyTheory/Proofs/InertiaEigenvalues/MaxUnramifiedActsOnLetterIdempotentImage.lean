@@ -22,7 +22,8 @@ theorem lin_ext (K : FinExt l) {M : Type} [AddCommGroup M] [Module ℚ_[l] M] (�
       rw [hsum]
       push_cast
       simp only [Algebra.smul_def]
-    rw [h2, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h2, map_sum, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     obtain ⟨m, hm, hl, hx⟩ := (hω i).2
     rw [map_smul, map_smul, h _ m hm hl hx]

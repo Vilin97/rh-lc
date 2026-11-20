@@ -128,7 +128,8 @@ theorem approxB_split {K : Type} [Field K] [NumberField K] {r p : ℕ} (hp : p �
     have hcz : ∀ k, f (((Matrix.of Mz).adjugate *ᵥ bz) k) = coef x k := by
       intro k
       rw [show coef x = M.adjugate *ᵥ bv x from rfl, ← hMmap, ← RingHom.map_adjugate]
-      simp only [mulVec, dotProduct, RingHom.mapMatrix_apply, Matrix.map_apply, map_sum,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [mulVec, dotProduct, RingHom.mapMatrix_apply, Matrix.map_apply, map_sum,
         map_mul, hbz]
     have hT : T x = (Matrix.of Mz).det • x -
         ∑ k', ((Matrix.of Mz).adjugate *ᵥ bz) k' • l k'.1 := by

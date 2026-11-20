@@ -31,7 +31,8 @@ theorem linearIndependent_mono (D N : ℕ) :
   intro u hu l
   set p : MvPolynomial (Fin (D + 1)) ℤ := ∑ k, u k • monoZ (adtEnum D N k) with hp
   have hpa : aeval (Veronese.t D) p = aeval (Veronese.t D) (0 : MvPolynomial (Fin (D + 1)) ℤ) := by
-    rw [hp, map_sum, map_zero, ← hu]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hp, map_sum, map_zero, ← hu]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_zsmul, aeval_monoZ]
   have hp0 := VeroneseGenDeg.aeval_t_injective D hpa

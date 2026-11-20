@@ -44,7 +44,8 @@ theorem tanEv_trans {X : Scheme.{0}} (t : SAB H X) {k : Type} [CommRing k] {x : 
   have e₁ : tanEv t hv h₁ (θ.app V₁ s) = L (θ.app _ (resM F (inf_le_left : V₁ ⊓ V₂ ≤ V₁) s)) := by
     rw [app_resM]
     exact (tanEv_resM t hv h inf_le_left _).symm
-  rw [e₁, e, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e₁, e, map_sum, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [Scheme.Modules.Hom.app_smul, app_resM]
   refine (tanEv_smul t hv h _ _).trans ?_
@@ -92,7 +93,8 @@ theorem annih : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Reci
   have eev : ev (y ≫ g) _ hyV = (algebraMap R K).comp (ev _ _ hz) :=
     (FlagMod.ev_congr eyg _ _ (FlagMod.le_preimage_comp _ hz)).trans (FlagMod.ev_spMap _ _ _ _ _)
   rw [← key]
-  simp only [hc τ₀ mu₀ hτ₀ K y hy hyo v _ (isTan_tv v') hy₂ hv', Matrix.mul_apply, map_sum, map_mul, Finset.sum_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hc τ₀ mu₀ hτ₀ K y hy hyo v _ (isTan_tv v') hy₂ hv', Matrix.mul_apply, map_sum, map_mul, Finset.sum_mul,
     Matrix.map_apply]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun l _ => ?_

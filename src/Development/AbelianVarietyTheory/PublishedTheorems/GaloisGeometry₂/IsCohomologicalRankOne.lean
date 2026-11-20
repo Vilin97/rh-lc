@@ -28,7 +28,8 @@ theorem chiInf_eq_prod (χ : HChar E) (n : (E →+* ℂ) → ℤ) (h : ∀ τ, e
     have := (InfType.conj_ne w.embedding).symm
     simp [coord, this]
   rw [chiInf_expU]
-  conv_lhs => rw [e, map_sum, Complex.exp_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [e, map_sum, Complex.exp_sum]
   refine Finset.prod_congr rfl fun w _ => ?_
   rw [← chiInf_expU, chiInf_expU_atEmb, InfType.coord_expU, InfType.coord_expU, c1, c2, h, h, Complex.exp_add,
     Complex.exp_int_mul, Complex.exp_int_mul]

@@ -97,7 +97,8 @@ theorem sumE_reindex {K : Type} [Field K] {R ι : Type} [Fintype R] [Fintype ι]
       (X (x.1, x.2.1.2, eA.symm (x.2.1.1, x.2.2.1), x.2.2.2) : MvPowerSeries (Bool × ι × Fin M × Fin N') K)) :=
     hasSubst_of_constantCoeff_zero fun x => constantCoeff_X _
   unfold Formalism.L2.Th1.D.sumE
-  rw [← coe_substAlgHom hρ, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← coe_substAlgHom hρ, map_sum]
   let E : (R × ι) × Fin N × Fin N' ≃ ι × Fin M × Fin N' :=
     { toFun := fun e => (e.1.2, eA.symm (e.1.1, e.2.1), e.2.2)
       invFun := fun e => (((eA e.2.1).1, e.1), (eA e.2.1).2, e.2.2)

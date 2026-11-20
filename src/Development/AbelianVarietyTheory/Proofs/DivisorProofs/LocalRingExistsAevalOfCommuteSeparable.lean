@@ -15,7 +15,8 @@ theorem krylov_mulVec (Y : Matrix (Fin n) (Fin n) S) (v c : Fin n → S) :
 
 theorem aeval_sum_monomial (Y : Matrix (Fin n) (Fin n) S) (c : Fin n → S) :
     aeval Y (∑ j : Fin n, monomial (j : ℕ) (c j)) = ∑ j : Fin n, c j • Y ^ (j : ℕ) := by
-  simp [map_sum, aeval_monomial, Algebra.smul_def]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, aeval_monomial, Algebra.smul_def]
 
 theorem exists_isUnit_krylov (R : Type) [CommRing R] [IsLocalRing R] (Y : Matrix (Fin n) (Fin n) R)
     (hs : Y.charpoly.Separable) : ∃ v, IsUnit (krylov Y v) := by

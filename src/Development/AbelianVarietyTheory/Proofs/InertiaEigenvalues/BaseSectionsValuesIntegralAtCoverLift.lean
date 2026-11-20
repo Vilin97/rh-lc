@@ -63,7 +63,8 @@ theorem le_one_at_lift : ∀ (D : D7) (T : CoreJ D), LawsJ T → ∀ j, Formalis
     exact congrArg iT (DFunLike.congr_fun hφ _)
   have hsum : evI y₄ (∑ k, y k • g k) = iT (∑ k, τ (y k) * i (evI pt (β k))) := by
     show evR _ _ (∑ k, y k • g k) y₄.1 = _
-    rw [GlobalTheory.SupDescent.evR_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [GlobalTheory.SupDescent.evR_sum, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_mul]
     exact congrArg₂ (· * ·) rfl (hval k)

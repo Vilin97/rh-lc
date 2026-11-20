@@ -211,7 +211,8 @@ theorem resF_surjective (hk₀ : Function.Surjective (toF (R := k) k₀)) (j : �
   obtain ⟨n, c, s, rfl⟩ := ha.exists_sum t
   choose c' hc' using fun i => hk₀ (c i)
   exact ⟨∑ i, c' i • s i, by
-    rw [map_sum]; exact Finset.sum_congr rfl fun i _ => by rw [map_smulₛₗ, hc']⟩
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]; exact Finset.sum_congr rfl fun i _ => by rw [map_smulₛₗ, hc']⟩
 
 theorem exists_isPhiTranslate (hG : GlobalFnsSt) (hk₀ : Function.Surjective (toF (R := k) k₀)) {j : ℕ}
     (q : QkPt D k₀ j) {v : LB.Gen (LB.LinComb D.P.L (DegPre.lineφ D k₀ q.g.b) (DegPre.lineε j))} (hv : v.IsGen)

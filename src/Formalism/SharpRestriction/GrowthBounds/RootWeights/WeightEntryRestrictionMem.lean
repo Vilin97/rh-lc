@@ -119,7 +119,8 @@ theorem diagonalMultiplier_mem (W : Submodule R (MvPolynomial (ι × Fin n) R))
       binomPol R LL S a k x = diagonalMultiplier LL S a (fun w => Ring.choose w k) x := by
     intro k x
     conv_lhs => rw [x.as_sum]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [binomialOperator_monomial]
     rfl
   induction hf using AddSubgroup.closure_induction with

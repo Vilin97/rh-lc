@@ -47,7 +47,8 @@ theorem isGoodProj_of_intOver {P : Ideal (MRing ι)} (hK : Nonempty K) (hhom : I
       have hΨj := congrFun hΨ ⟨j.1, by omega⟩
       simp only [projOfForms, LinearMap.coe_mk, AddHom.coe_mk, dif_pos j.2, Fin.eta,
         Pi.zero_apply] at hΨj
-      simp only [forms, map_sum, map_rat_smul, hv, Rat.smul_def]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [forms, map_sum, map_rat_smul, hv, Rat.smul_def]
       rw [show ∑ t, (L j t : ℂ) * (c * segre z t) = c * ∑ t, (L j t : ℂ) * segre z t by
         rw [Finset.mul_sum]; congr 1; funext t; ring, hΨj, mul_zero]
     have hcomp : (evQ P _ hzc).comp

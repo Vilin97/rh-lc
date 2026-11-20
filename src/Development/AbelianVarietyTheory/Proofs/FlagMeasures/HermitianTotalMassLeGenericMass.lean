@@ -195,8 +195,10 @@ theorem total_le_generic : ∀ {F : Type} [Field F] [ValuativeRel F] [Topologica
           fun j => ?_, fun j => ?_⟩
         · obtain ⟨x, hx, hx'⟩ := (hA i j).2.2
           exact ⟨x, hx, by rw [hx', TR.1]⟩
-        · simp only [hf j, map_sum, map_smul, GlobalTheory.HL.CoordUnip.grp_apply]
-        · simp only [hf' j, map_sum, map_smul, GlobalTheory.HL.CoordUnip.grp_apply]
+        set_option synthInstance.maxHeartbeats 100000 in
+          · simp only [hf j, map_sum, map_smul, GlobalTheory.HL.CoordUnip.grp_apply]
+        set_option synthInstance.maxHeartbeats 100000 in
+          · simp only [hf' j, map_sum, map_smul, GlobalTheory.HL.CoordUnip.grp_apply]
       exact ((GlobalTheory.HL.FrameClass.frame_classes M.L r k S _ _).2.1 _ hmem).1
     · rintro ⟨s', hs', heq⟩
       obtain ⟨s, rfl⟩ := c.grp.surjective s'
@@ -212,12 +214,14 @@ theorem total_le_generic : ∀ {F : Type} [Field F] [ValuativeRel F] [Topologica
       · apply c.e.injective
         have := hf j
         simp only [GlobalTheory.HL.CoordUnip.grp_apply] at this
-        rw [this, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [this, map_sum]
         simp only [map_smul]
       · apply c.e.injective
         have := hf' j
         simp only [GlobalTheory.HL.CoordUnip.grp_apply] at this
-        rw [this, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [this, map_sum]
         simp only [map_smul]
   obtain ⟨G, hG⟩ : ∃ G : ℝ≥0∞, G = ENNReal.ofReal (S.wC (S.Fr (c.dat d₁) (c.lat t₁.abelian₂))) *
       (S.sumData fun δ => S.nT δ (S.Fr (c.dat d₁) (c.lat t₁.abelian₂)) fun Λ => S.BBzero δ Λ) := ⟨_, rfl⟩

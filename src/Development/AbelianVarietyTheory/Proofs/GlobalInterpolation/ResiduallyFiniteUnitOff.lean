@@ -52,7 +52,8 @@ def redHom {K k ι : Type} [Field K] [CommRing k] [Fintype ι] [DecidableEq ι] 
     · exact map_zero φ
   map_mul' g h := by
     ext a b
-    simp only [Matrix.of_apply, Matrix.mul_apply, ← map_mul, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.of_apply, Matrix.mul_apply, ← map_mul, ← map_sum]
     congr 1
     apply Subtype.ext
     simp [Matrix.mul_apply]

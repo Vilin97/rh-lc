@@ -20,7 +20,8 @@ theorem aeval_div_pow {f : Poly S N} {e : ℕ} (hf : f.IsHomogeneous e) (c : Ω)
     aeval (fun i => x i / c) f = aeval x f / c ^ e := by
   conv_lhs => rw [← f.support_sum_monomial_coeff]
   conv_rhs => rw [← f.support_sum_monomial_coeff]
-  simp only [map_sum, Finset.sum_div]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Finset.sum_div]
   refine Finset.sum_congr rfl fun μ hμ => ?_
   have hdeg := hf (mem_support_iff.mp hμ)
   simp only [Finsupp.weight_apply, Pi.one_apply, smul_eq_mul, mul_one, Finsupp.sum] at hdeg

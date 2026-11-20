@@ -339,7 +339,8 @@ theorem hermA_conj {m : Matrix (Fin k) (Fin k) (AfE D)}
     funext i
     exact (cf_cf _).symm
   have := congrArg (cf D) (h (cf D ∘ x) (cf D ∘ y))
-  simp only [hermA_one, map_sum, map_mul, e, Function.comp_apply, cf_cf] at this ⊢
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hermA_one, map_sum, map_mul, e, Function.comp_apply, cf_cf] at this ⊢
   exact this
 
 variable {S T : HSp D}

@@ -87,7 +87,8 @@ theorem cone_core (hUn : Unfold) (hU : UnipEx) (hD : StabDec) (hTB : ThetaBasic)
   obtain ⟨m, Ψ, c, hΨ, hc, hd⟩ := kfin_dec hp (hle Φ hΦ) hK S fun k => hst _ _ hΦ
   have hci : ∀ i, Integrable (c i) μK := fun i => (hc i).integrable_of_hasCompactSupport (HasCompactSupport.of_compactSpace _)
   have hd' : ∀ h (k : K), om (k.1, 1) (om (1, h) Φ) = ∑ i, c i k • om (1, h) (Ψ i) := fun h k => by
-    rw [show om (k.1, 1) (om (1, h) Φ) = om (1, h) (om (k.1, 1) Φ) by simp [om_mul], hd, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [show om (k.1, 1) (om (1, h) Φ) = om (1, h) (om (k.1, 1) Φ) by simp [om_mul], hd, map_sum]
     simp only [map_smul]
   refine ⟨fun γ hγ h => ?_, fun t h₁ p hl h => hL.coneI_law hp μK (hle Φ hΦ) hl h,
     fun h h₁ => hOK.coneI_eq μK (fun i => hst _ _ (hΨ i)) hci (hd' h) h₁⟩

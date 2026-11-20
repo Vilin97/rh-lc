@@ -52,7 +52,8 @@ theorem step_down (hψ : ∀ x : ℤ_[g], ψ (i (x : ℚ_[g])) = ψ₀ (PadicInt
         rwa [Matrix.sub_apply, Matrix.one_apply_ne (fun h => by rw [h] at hq'; omega), sub_zero] at this
       rw [h0]; simp
   have h3 := congrArg (fun F : Module.End ℂ τ => L (π (Iwasawa.torusPow (w.adicCompletion E) n d) (φ (F x)))) hS
-  simp only [LinearMap.sum_apply, map_sum, LinearMap.zero_apply, map_zero] at h3
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [LinearMap.sum_apply, map_sum, LinearMap.zero_apply, map_zero] at h3
   rw [Finset.sum_congr rfl
     (fun (u : GlobalTheory.FiniteGL.unipRadical (ZMod g) (GlobalTheory.FiniteGL.twoBlocks n (a.val + 1))) _ => hterm u.1 u.2), Finset.sum_const, Finset.card_univ, smul_eq_zero] at h3
   exact h3.resolve_left Fintype.card_ne_zero

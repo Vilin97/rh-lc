@@ -65,7 +65,8 @@ theorem prod_of_grpAt : ∀ (D : D7) (V : HSp D) (n : ℕ) (k : Fin n → Type) 
     rw [Ideal.mem_iInf] at hoff
     have h1 := key (fun i => (q i).v) hv ((M - 1) a b) (fun u hu =>
       (RingHom.mem_ker).mp (hoff ⟨u, fun ⟨i, hi⟩ => hu ⟨i, hi.symm⟩⟩))
-    rw [map_sub, map_sub, map_one, map_sum] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_sub, map_one, map_sum] at h1
     have h2 := real_idem_mul ((M - 1) a b) ((RingHom.mem_ker).mp hinf)
     have h3 : (1 - ∑ i, E i) = (1 - algebraMap (AF D.host.F) (AE D) (pairA D.host.F 1 0) - ∑ i, E i) +
         algebraMap (AF D.host.F) (AE D) (pairA D.host.F 1 0) := by ring

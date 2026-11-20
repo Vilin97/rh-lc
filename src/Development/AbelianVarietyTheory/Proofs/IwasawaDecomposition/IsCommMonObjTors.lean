@@ -78,7 +78,8 @@ theorem delta_mul (a b : ZMod N) : delta N a * delta N b = if a = b then delta N
 
 theorem sum_delta : ∑ a : ZMod N, delta N a = 1 := by
   unfold delta
-  rw [← map_sum, ← map_one (GlobalTheory.CartierDual.addMonoidAlgebraEquiv ZU.{0} (ZMod N)).symm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum, ← map_one (GlobalTheory.CartierDual.addMonoidAlgebraEquiv ZU.{0} (ZMod N)).symm]
   congr 1
   funext x
   simp [Finset.sum_apply, Pi.single_apply]

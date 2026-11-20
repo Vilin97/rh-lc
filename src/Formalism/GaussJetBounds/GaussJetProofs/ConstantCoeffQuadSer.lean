@@ -58,9 +58,11 @@ def linSer (c : ι → ι → K) (L : ι → K) : MvPowerSeries ι K :=
 
 lemma dirD_quadSer (c : ι → ι → K) (L : ι → K) : dirD L (quadSer c) = linSer c L := by
   unfold quadSer linSer
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun x _ => ?_
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun y _ => ?_
   simp only [Derivation.leibniz, dirD_X, dirD_C, smul_eq_mul]
   ring
@@ -68,9 +70,11 @@ lemma dirD_quadSer (c : ι → ι → K) (L : ι → K) : dirD L (quadSer c) = l
 lemma dirD_linSer (c : ι → ι → K) (L L' : ι → K) :
     dirD L' (linSer c L) = MvPowerSeries.C (polar c L L') := by
   unfold linSer polar
-  rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum]
   refine Finset.sum_congr rfl fun x _ => ?_
-  rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum]
   refine Finset.sum_congr rfl fun y _ => ?_
   simp only [Derivation.leibniz, dirD_X, dirD_C, smul_eq_mul, map_add, map_mul]
   ring

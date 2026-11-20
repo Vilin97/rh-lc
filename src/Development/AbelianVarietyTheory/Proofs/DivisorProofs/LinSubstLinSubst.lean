@@ -22,7 +22,8 @@ theorem _root_.GlobalTheory.HeightUnique.linSubst_linSubst {R : Type} [CommRing 
   congr 1
   apply MvPolynomial.algHom_ext
   intro p
-  simp only [AlgHom.comp_apply, aeval_X, map_sum, map_mul, aeval_C, algebraMap_eq, Matrix.mul_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [AlgHom.comp_apply, aeval_X, map_sum, map_mul, aeval_C, algebraMap_eq, Matrix.mul_apply,
     Finset.mul_sum, Finset.sum_mul, mul_assoc]
   rw [Finset.sum_comm]
 
@@ -76,7 +77,8 @@ private lemma isWeightedHomogeneous_aeval_of_isWeightedHomogeneous {R M σ τ : 
     {w : σ → M} {w' : τ → M} {g : σ → MvPolynomial τ R} (hg : ∀ i, IsWeightedHomogeneous w' (g i) (w i))
     {f : MvPolynomial σ R} {m : M} (hf : IsWeightedHomogeneous w f m) :
     IsWeightedHomogeneous w' (aeval g f) m := by
-  rw [f.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [f.as_sum, map_sum]
   apply IsWeightedHomogeneous.sum
   intro d hd
   rw [aeval_monomial, algebraMap_eq, ← hf (mem_support_iff.mp hd), Finsupp.weight_apply,

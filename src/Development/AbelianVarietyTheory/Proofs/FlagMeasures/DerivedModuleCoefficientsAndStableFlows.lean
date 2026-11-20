@@ -200,12 +200,14 @@ theorem flow_stable (hσ : IsURepOn (UJset ε) σ) (hD : IsDer ε σ V E) {X : M
       ∑ i, b.repr y i • σ g (((b i : W) : V) : H) = σ g ((y : V) : H) := by
     intro g y
     conv_rhs => rw [← b.sum_repr y]
-    simp only [Submodule.coe_sum, Submodule.coe_smul, map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Submodule.coe_sum, Submodule.coe_smul, map_sum, map_smul]
   have e2 : ∀ (g : Matrix (Fin n) (Fin n) ℂ) (y : W),
       ∑ i, b.repr y i • σ g ((act E X ((b i : W) : V) : V) : H) = σ g ((act E X (y : V) : V) : H) := by
     intro g y
     conv_rhs => rw [← b.sum_repr y]
-    simp only [Submodule.coe_sum, Submodule.coe_smul, map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Submodule.coe_sum, Submodule.coe_smul, map_sum, map_smul]
   have hφ : ∀ t : ℝ, HasDerivAt (fun s : ℝ => σ (NormedSpace.exp ((s : ℂ) • X)) (((u s : W) : V) : H)) 0 t := by
     intro t
     have hsum : HasDerivAt (fun s : ℝ => ∑ i, b.repr (u s) i • σ (NormedSpace.exp ((s : ℂ) • X)) (((b i : W) : V) : H))

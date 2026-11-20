@@ -47,7 +47,8 @@ theorem UpperTheory.lie_action_preserves_satake_eigen_at_place :
       rw [hsum fun c => f.1 (z * finGL E 2 (locGL E 2 w c.out))] at h
       simpa [Submodule.coe_sum, Finset.sum_apply, hev] using h
     have h2 := congrArg (fun ψ : Sm E 2 => (lie E 2 X ψ).1 (g * finGL E 2 (locGL E 2 w x))) key
-    simp only [map_sum, map_smul, Submodule.coe_sum, Finset.sum_apply, Submodule.coe_smul, Pi.smul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, Submodule.coe_sum, Finset.sum_apply, Submodule.coe_smul, Pi.smul_apply,
       smul_eq_mul] at h2
     rw [hsum fun c => (lie E 2 X f).1 (g * finGL E 2 (locGL E 2 w (x * c.out)))]
     rw [← h2]

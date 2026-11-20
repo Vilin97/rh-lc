@@ -84,11 +84,13 @@ theorem gram (U U' : Matrix (Fin r) (Fin r) E) (hUU : ∀ a b, ∑ c, star (U c 
   have pairR : ∀ (u : S.V) (s : Fin r → E) (t : Matrix (Fin r) (Fin r) E) (g : Fin r → S.V),
       S.hT u (∑ a, s a • ∑ c, t c a • g c) = ∑ a, s a * ∑ c, t c a * S.hT u (g c) := by
     intro u s t g
-    simp [map_sum, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, smul_eq_mul]
   have pairL : ∀ (u : S.V) (s : Fin r → E) (t : Matrix (Fin r) (Fin r) E) (g : Fin r → S.V),
       S.hT (∑ a, s a • ∑ c, t c a • g c) u = ∑ a, star (s a) * ∑ c, star (t c a) * S.hT (g c) u := by
     intro u s t g
-    simp [map_sum, LinearMap.sum_apply, smul_eq_mul, starRingEnd_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, LinearMap.sum_apply, smul_eq_mul, starRingEnd_apply]
   have hwe : ∀ (v : S.V) (c : Fin r), S.hT (wv e f v) (e c) = 0 := fun v c => by
     rw [← hsym, e_w e f hee hef c v, star_zero]
   have hwf : ∀ (v : S.V) (c : Fin r), S.hT (wv e f v) (f c) = 0 := fun v c => by

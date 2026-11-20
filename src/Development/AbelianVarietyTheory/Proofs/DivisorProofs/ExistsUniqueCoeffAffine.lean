@@ -253,7 +253,8 @@ theorem existsUnique_coeff {A₀ : Over (Sp K)} [GrpObj A₀] {g : ℕ} {v : Fin
       rfl
     · have h1 := hc' (q ''ᵁ W') (hle W' hW') ((q.appIso W').inv.hom f')
       show resG T (hO W') (d (q ''ᵁ W') ((q.appIso W').inv.hom f')) = _
-      rw [h1, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [h1, map_sum]
       refine Finset.sum_congr rfl fun a _ => ?_
       have hA : (y ≫ m' ≫ q) ⁻¹ᵁ (q ''ᵁ W') ≤ (y ≫ m' ≫ q) ⁻¹ᵁ W₀ :=
         (y ≫ m' ≫ q).preimage_mono (hle W' hW')

@@ -45,7 +45,8 @@ theorem dot_elim_left (a b : κ → AF F) : Sum.elim a a ⬝ᵥ Sum.elim b 0 = �
 
 theorem dot_elim_rat (u v : κ → F) :
     Sum.elim (rv u) 0 ⬝ᵥ Sum.elim (rv v) (0 : κ → AF F) = algebraMap F (AF F) (u ⬝ᵥ v) := by
-  simp [dotProduct, Fintype.sum_sum_type, rv, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [dotProduct, Fintype.sum_sum_type, rv, map_sum, map_mul]
 
 theorem term_eq (ψ : AddChar (AF F) ℂ) (hψ : IsStd ψ) {c₀ : ℝ}
     (hB : ∀ H : (κ → AF F) → ℂ,

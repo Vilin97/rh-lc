@@ -24,7 +24,8 @@ theorem exists_poly_rowAct_coef (n k : ℕ) (f : MvPolynomial (Fin n × Fin k) �
     refine ⟨∑ b, X (v.1, b) * P b, fun g => ?_⟩
     have e : rowAct ℂ g (X v) = ∑ b, g v.1 b • X (b, v.2) := by
       simp [rowAct, smul_eq_C_mul]
-    rw [map_mul, e, Finset.mul_sum, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_mul, e, Finset.mul_sum, map_sum, map_sum]
     refine Finset.sum_congr rfl fun b _ => ?_
     rw [mul_smul_comm, map_smul, map_mul (eval _), eval_X, ← hP b g]
     rfl

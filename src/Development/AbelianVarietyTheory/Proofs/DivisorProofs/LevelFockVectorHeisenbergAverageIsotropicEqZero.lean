@@ -185,14 +185,16 @@ theorem exists_sum_zero {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsCharAF D.host.
     have hσ : resS D.host.F PP σ = 0 := by
       have h1 := congrFun (congrFun hAB i) k
       rw [Matrix.mul_apply, Matrix.one_apply] at h1
-      simp only [σ, map_sub, map_sum, map_mul, Formalism.L2.DIV.resS_oToS, hrep]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [σ, map_sub, map_sum, map_mul, Formalism.L2.DIV.resS_oToS, hrep]
       rw [sub_eq_zero, apply_ite (resS D.host.F PP), map_one, map_zero, ← h1]
       refine Finset.sum_congr rfl fun m _ => ?_
       rw [hAb, topL, dif_pos ⟨(Fin.castLE hr m).2, k.2⟩, redM, dif_pos (ht _ _)]
       rfl
     have h2 := hres σ hσ
     convert h2 using 2
-    simp only [σ, AddSubgroupClass.coe_sub, AddSubmonoidClass.coe_finsetSum, Subring.coe_mul, RingHom.map_sub,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [σ, AddSubgroupClass.coe_sub, AddSubmonoidClass.coe_finsetSum, Subring.coe_mul, RingHom.map_sub,
       map_sum, RingHom.map_mul]
     rw [Matrix.mul_apply]
     congr 1
@@ -261,7 +263,8 @@ theorem exists_sum_heisO_eq_zero {ψ : AddChar (AF D.host.F) ℂ} {θ : InfFam D
       Tm (fun t => ψ (symplO S T t (vecMulVec c (l k))) * GlobalTheory.FinZeta.levDatum S T βS βT LT Q m e t) := fun k => by
     rw [hall Tm hTm, ← hTm.modul _ hSB _ (by rw [GlobalTheory.LatVac.cA_cA]; exact hhalf k)]
     rfl
-  rw [Finset.sum_congr rfl fun k _ => hk k, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.sum_congr rfl fun k _ => hk k, ← map_sum]
   have hz : (∑ k, fun t => ψ (symplO S T t (vecMulVec c (l k))) * GlobalTheory.FinZeta.levDatum S T βS βT LT Q m e t) = 0 := by
     funext t
     rw [Finset.sum_apply, ← Finset.sum_mul, Pi.zero_apply]
@@ -307,7 +310,8 @@ theorem sum_heisO_along_eq_zero_level : ∀ {D : D7} {G : Type} [Group G] [Finty
     rw [h1, ← hω.om_heis h g _ _ (hpt Q)]
     refine congrArg _ ?_
     rw [GlobalTheory.IndefiniteRowSideFullHecke.TwistedLevelValues.ptAt, GlobalTheory.IndefiniteRowSideFullHecke.TwistedLevelValues.ptAt, ((htr.2 _ (hl0 k)).2)]
-  rw [Finset.sum_congr rfl fun k _ => key k, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.sum_congr rfl fun k _ => key k, ← map_sum]
   have hs := GlobalTheory.SpecFac.pureTensorO_sum hω.std hθ (fun _ => 1) (R.BV i) (cart (R.MW i σ)) BW Finset.univ
     (fun _ => (1 : ℂ)) (fun k => heisO R.ψ (Vc D i) (Wc D i) (vecMulVec c' (l k)) f) (fun k _ => (htr.2 _ (hl0 k)).1) Q
   simp only [one_smul] at hs

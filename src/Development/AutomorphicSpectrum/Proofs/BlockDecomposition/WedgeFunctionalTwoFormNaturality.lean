@@ -63,7 +63,8 @@ theorem wb_expand (e : Fin n → M) (L : Fin n → Module.Dual A M) (h : ∀ x, 
     wb (A := A) a b = ∑ i, ∑ j ∈ Finset.Ioi i, (L i a * L j b - L j a * L i b) • wb (A := A) (e i) (e j) := by
   have h1 : wb (A := A) a b = ∑ i, ∑ j, (L i a * L j b) • wb (A := A) (e i) (e j) := by
     conv_lhs => rw [h a, h b]
-    simp only [map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply, smul_smul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply, smul_smul,
       Finset.smul_sum]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun i _ ↦ Finset.sum_congr rfl fun j _ ↦ ?_
@@ -142,7 +143,8 @@ theorem Lf_expand (hP : Par F) {n : ℕ} (w : Fin n → Glob1 F) (l : Fin n → 
     α = ∑ i, Lf hP (l i) T α • evForm F T (w i) := by
   refine (hP T).inductionOn α _ (by simp) (fun x ↦ ?_) (fun b y hy ↦ ?_) (fun y z hy hz ↦ ?_)
   · conv_lhs => rw [h x]
-    simp only [map_sum, map_smul, Lf_ev, algebraMap_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, Lf_ev, algebraMap_smul]
   · conv_lhs => rw [hy]
     simp only [map_smul, smul_eq_mul, mul_smul, Finset.smul_sum]
   · conv_lhs => rw [hy, hz]
@@ -193,7 +195,8 @@ theorem twoFormCohSt : TwoFormCohSt := by
     intro x
     have h1 : f (s x) = x := LinearMap.congr_fun hs x
     conv_lhs => rw [← h1, pi_eq_sum_univ' (s x)]
-    simp [w, l, map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [w, l, map_sum, map_smul]
   have hexp : ∀ (T : C) (z : Om R (F.obj T) 2), z = ∑ i, ∑ j ∈ Finset.Ioi i,
       L2 (fun i ↦ Lf hP (l i) T) i j z • wedge R _ (evForm F T (w i)) (evForm F T (w j)) := by
     intro T z
@@ -226,7 +229,8 @@ theorem twoFormCohSt : TwoFormCohSt := by
     refine ⟨∑ i, ∑ j ∈ Finset.Ioi i, r i j • wb (A := R) (w i) (w j), ?_⟩
     funext T
     conv_rhs => rw [hexp T (u T)]
-    simp only [map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, wb_apply, nu_ιMulti]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, wb_apply, nu_ιMulti]
     refine Finset.sum_congr rfl fun i _ ↦ Finset.sum_congr rfl fun j _ ↦ ?_
     rw [← hr, algebraMap_smul]
     rfl

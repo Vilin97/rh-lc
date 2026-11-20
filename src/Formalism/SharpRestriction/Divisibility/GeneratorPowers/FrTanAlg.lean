@@ -213,12 +213,14 @@ theorem decomp (χ : ι → (E →+* S)) (hχ : Function.Injective χ) (hcard : 
   refine ⟨fun m => ⟨fun σ => aeval (ρ θ) (Lagrange.basis Finset.univ (fun σ => χ σ (θ : E)) σ) m,
     fun σ a => eig_lemma_5 (χ σ) ρ θ hθ _ (hproj σ m) a, ?_⟩, ?_⟩
   · have h1 : (∑ σ, aeval (ρ θ) (Lagrange.basis Finset.univ (fun σ => χ σ (θ : E)) σ)) m = m := by
-      rw [← map_sum, hLsum, map_one]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← map_sum, hLsum, map_one]
       rfl
     rwa [LinearMap.sum_apply] at h1
   · intro mσ hmσ hsum σ
     have h := congrArg (aeval (ρ θ) (Lagrange.basis Finset.univ (fun σ => χ σ (θ : E)) σ)) hsum
-    rw [map_sum, map_zero, Finset.sum_eq_single σ] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero, Finset.sum_eq_single σ] at h
     · rwa [aeval_eig (ρ θ) (χ σ (θ : E)) (mσ σ) (hmσ σ θ), hLself, one_smul] at h
     · intro τ _ hτ
       rw [aeval_eig (ρ θ) (χ τ (θ : E)) (mσ τ) (hmσ τ θ), hLne σ τ (Ne.symm hτ), zero_smul]
@@ -235,7 +237,8 @@ theorem global_basis (χ : ι → (E →+* S)) (hχ : Function.Injective χ)
   have heig : ∀ σ (c : Fin (mult σ) → S) (a : 𝓞 E),
       ρ a (∑ i, c i • U ⟨σ, i⟩) = χ σ (a : E) • ∑ i, c i • U ⟨σ, i⟩ := by
     intro σ c a
-    rw [map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, hU, smul_comm]
   obtain ⟨mσ, hmσ, hsum⟩ := hex W

@@ -160,7 +160,8 @@ theorem clear_sum : ∀ {A B Af Bw : Type} [CommRing A] [CommRing B] [CommRing A
   have hymem : (∑ L, ρ (e L) * nn L) ∈ minorGroup ρ D κ :=
     AddSubgroup.sum_mem _ fun L _ => minorGroup_mul ρ D κ (e L) (hnn L)
   have h0 : lam (ρ f ^ K * x - ∑ L, ρ (e L) * nn L) = 0 := by
-    rw [map_sub, map_mul, map_pow, hx, Finset.mul_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_mul, map_pow, hx, Finset.mul_sum, map_sum]
     simp only [hterm]
     exact sub_self _
   obtain ⟨N', hN'⟩ := hker _ h0

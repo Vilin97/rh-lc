@@ -122,7 +122,8 @@ theorem isStrict_face_of_isCone : ∀ (O : Type) [CommRing O] [IsDedekindDomain 
       obtain ⟨k, c, hk, hc⟩ := h3 u hu hp (by rw [hn]; exact_mod_cast heq.symm)
       have hhu : 0 ≤ h u := by
         have e := congrArg h hc
-        simp only [map_nsmul, map_sum, hγh] at e
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_nsmul, map_sum, hγh] at e
         have hs : 0 ≤ ∑ i, c i • (if i ∈ T then (1 : ℤ) else 0) :=
           Finset.sum_nonneg fun i _ => by split_ifs <;> simp
         rw [← e, nsmul_eq_mul] at hs
@@ -192,7 +193,8 @@ theorem isStrict_face_of_isCone : ∀ (O : Type) [CommRing O] [IsDedekindDomain 
     obtain ⟨k, c, hk, hc⟩ := h3 β hβ hp e1.symm
     have hzT : ∀ i ∈ T, c i = 0 := by
       have e := congrArg h hc
-      simp only [map_nsmul, map_sum, hγh, e2, smul_zero] at e
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_nsmul, map_sum, hγh, e2, smul_zero] at e
       have hz := (Finset.sum_eq_zero_iff_of_nonneg fun i _ => by split_ifs <;> simp).1 e.symm
       intro i hi
       have := hz i (Finset.mem_univ _)

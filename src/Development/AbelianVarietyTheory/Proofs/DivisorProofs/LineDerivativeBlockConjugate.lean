@@ -128,7 +128,8 @@ theorem incM_mul_map_mul {m : ℕ} (R : Matrix (Fin m) (Fin n) E) (Q : Matrix (F
       _ = _ := k.symm
       _ = _ := congrArg _ (by ring)
   ext i j
-  simp only [Matrix.mul_apply, Matrix.map_apply, incM, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mul_apply, Matrix.map_apply, incM, map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun l _ => Finset.sum_congr rfl fun k _ => ?_
   exact key _ _ _
 

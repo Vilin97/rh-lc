@@ -27,9 +27,11 @@ theorem absFin_mul_mul_transpose_le : ∀ {F E : Type} [Field F] [NumberField F]
   have hX : ∀ a b, absFin F v (compFin F E v (X a b)) ≤ Finset.univ.sup fun p : Fin n × Fin d => absFin F v (compFin F E v (X p.1 p.2)) := by
     intro a b
     exact Finset.le_sup (f := fun p : Fin n × Fin d => absFin F v (compFin F E v (X p.1 p.2))) (b := (a, b)) (Finset.mem_univ _)
-  rw [Matrix.mul_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.mul_apply, map_sum]
   refine absFin_sum_le F v _ _ fun l _ => ?_
-  rw [Matrix.transpose_apply, Matrix.mul_apply, map_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.transpose_apply, Matrix.mul_apply, map_mul, map_sum]
   refine (absFin_mul_le F v _ _).trans (mul_le_mul' (absFin_sum_le F v _ _ fun k _ => ?_) (hH _ _))
   rw [map_mul]
   exact (absFin_mul_le F v _ _).trans (mul_le_mul' (hG _ _) (hX _ _))

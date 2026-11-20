@@ -17,7 +17,8 @@ theorem Hf_add_left (T : Tor D) (x x' y : VC D N N') :
 
 theorem Hf_herm (T : Tor D) (x y : VC D N N') :
     Hf D T y x = starRingEnd ℂ (Hf D T x y) := by
-  simp only [Hf, map_div₀, map_sum, map_mul, Complex.conj_conj, Complex.conj_ofReal]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Hf, map_div₀, map_sum, map_mul, Complex.conj_conj, Complex.conj_ofReal]
   congr 1
   refine Finset.sum_congr rfl fun τ _ => Finset.sum_congr rfl fun i _ =>
     Finset.sum_congr rfl fun j _ => ?_

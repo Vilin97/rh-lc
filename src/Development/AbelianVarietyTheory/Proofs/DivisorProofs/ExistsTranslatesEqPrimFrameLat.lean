@@ -246,7 +246,8 @@ theorem exists_translates_eq_primFrame_lat {ϖ : kˣ} (hϖ : IsUnif ϖ) (ν α :
       mul_mul_mul_comm, ← Units.val_mul, ← map_mul, ← apow_mul]
     simp
   refine ⟨∑ i, Finsupp.single (g i) (m i * x ^ j i), ?_, ?_⟩
-  · rw [← Finsupp.linearCombination_apply ℂ, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [← Finsupp.linearCombination_apply ℂ, map_sum]
     funext Y
     rw [Finset.sum_apply, show {Y : Matrix (Fin a') D k | IsPrimFrame Λ Y}.indicator 1 Y =
       if IsPrimFrame Λ Y then (1 : ℂ) else 0 by simp [Set.indicator_apply], ← h2]

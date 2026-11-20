@@ -70,7 +70,8 @@ theorem phiX_equiv (hD : Formalism.RepresentationBoundsCohomology.ringDataObject
     intro h
     rw [← map_inv, hχ, map_inv]
   have hrep : ∀ (h : GE D.nd) (y : D.nd.X i), RepresentationBoundsCohomology.repX D.nd r h y = rO D.nd i r y h := fun _ _ => rfl
-  simp [Formalism.NG.uElt, hsm, hr, hu, hrep, MrTw, twistM, TruncatedSeriesCountingIdentities.locC, TruncatedSeriesCountingIdentities.chi1C, mapM, loc_apply, locChi_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Formalism.NG.uElt, hsm, hr, hu, hrep, MrTw, twistM, TruncatedSeriesCountingIdentities.locC, TruncatedSeriesCountingIdentities.chi1C, mapM, loc_apply, locChi_apply,
     Matrix.mulVec, dotProduct, Matrix.smul_apply, Matrix.map_apply, map_sum, map_mul]
   refine Finset.sum_congr rfl fun k _ => ?_
   refine congrArg₂ (· * ·) (congrArg₂ (· * ·) ?_ ?_) ?_
@@ -143,13 +144,15 @@ theorem eL_mul (R : Matrix (Fin n) (Fin n) Kf) (P : Matrix (Fin r) (Fin r) Kf) (
 
   have key : (fun b => f.symm ((R'.mulVec v) b)) = R.mulVec (fun b => f.symm (v b)) := by
     funext b
-    simp only [Matrix.mulVec, dotProduct, hR, map_sum, map_mul, RingEquiv.symm_apply_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, dotProduct, hR, map_sum, map_mul, RingEquiv.symm_apply_apply]
   have h2 : e (fun b => f.symm ((R'.mulVec v) b)) =
       (P.mulVec (e (fun b => f.symm (v b))).1, fun j => c j * (e (fun b => f.symm (v b))).2 j) :=
     (congrArg e key).trans (he _)
   rw [eL_apply, eL_apply, h2]
   refine Prod.ext (funext fun a => ?_) (funext fun j => funext fun x => ?_)
-  · simp only [Matrix.mulVec, dotProduct, hP, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [Matrix.mulVec, dotProduct, hP, map_sum, map_mul]
   · simp only [hc, map_mul]
 
 end BC

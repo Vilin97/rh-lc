@@ -26,7 +26,8 @@ theorem cone_X (x x' : Ix κ → Ω) (p : Σ k, FinTwoTypeFamily κ k) :
 
 theorem cone_num (x x' : Ix κ → Ω) (l : Ix κ → ℤ) :
     mConeMap (pair x x') (twoBlockNum l) = MvPolynomial.C (∑ j, (l j : Ω) * x' j) * X 1 := by
-  simp only [twoBlockNum, map_sum, map_mul, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [twoBlockNum, map_sum, map_mul, Finset.sum_mul]
   refine Finset.sum_congr rfl fun j _ => ?_
   obtain ⟨⟨⟩, j⟩ := j
   rw [cone_X]
@@ -35,7 +36,8 @@ theorem cone_num (x x' : Ix κ → Ω) (l : Ix κ → ℤ) :
 theorem coneMap_firstBlock_linearForm (x x' : Ix κ → Ω) (n : Ix κ → ℤ) :
     mConeMap (pair x x') (∑ i : Ix κ, MvPolynomial.C (n i) * (X ⟨0, i.2⟩ : MRing (FinTwoTypeFamily κ))) =
       MvPolynomial.C (∑ i, (n i : Ω) * x i) * X 0 := by
-  simp only [map_sum, map_mul, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, Finset.sum_mul]
   refine Finset.sum_congr rfl fun i _ => ?_
   obtain ⟨⟨⟩, i⟩ := i
   rw [cone_X]

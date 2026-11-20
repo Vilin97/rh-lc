@@ -23,7 +23,8 @@ theorem cpt_idemSum {e : AE D} {P : Finset (Pl D.host.E)} (he : IsIdemSum e P) (
     cpt Q (toEAf D e) = if Q ∈ P then 1 else 0 := by
   classical
   obtain ⟨⟨es, hes, rfl⟩, -⟩ := he
-  rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum]
   have h : ∀ PP ∈ P, cpt Q (toEAf D (es PP)) = if Q = PP then 1 else 0 := fun PP hP => by
     by_cases hq : Q = PP
     · subst hq; rw [if_pos rfl]; exact (cpt_of_isIdemAt (hes _ hP)).1
@@ -36,7 +37,8 @@ theorem cpt_cA_idemSum (V : HSp D) {e : AE D} {P : Finset (Pl D.host.E)} (he : I
     cpt Q (toEAf D (cA D e)) = if GlobalTheory.IdemSupport.cP Q ∈ P then 1 else 0 := by
   classical
   obtain ⟨⟨es, hes, rfl⟩, -⟩ := he
-  rw [map_sum, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, map_sum]
   have hc := (GlobalTheory.IdemSupport.supported_group_and_prime_idempotents V).2.2.2
   have h : ∀ PP ∈ P, cpt Q (toEAf D (cA D (es PP))) = if GlobalTheory.IdemSupport.cP Q = PP then 1 else 0 := fun PP hP => by
     have hi := hc PP (GlobalTheory.IdemSupport.cP PP) (es PP) (hes PP hP) ((GlobalTheory.IdemSupport.isConjPl_iff PP _).2 rfl)

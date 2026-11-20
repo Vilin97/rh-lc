@@ -93,10 +93,12 @@ def YT (X : PT E) (n q : ℕ) : GT (Fin n × Idx X.dim) where
       have hdec : y = ∑ k, incl k ⟨(eT X n).symm y k, hy k⟩ := by
         apply Subtype.ext
         simp only [incl, AddMonoidHom.mk'_apply, Submodule.coe_sum]
-        rw [← map_sum, Finset.univ_sum_single, LinearEquiv.apply_symm_apply]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [← map_sum, Finset.univ_sum_single, LinearEquiv.apply_symm_apply]
       have hL : ((φ y : ℤ) : ℝ) = ∑ k, (((φ.comp (incl k)) ⟨(eT X n).symm y k, hy k⟩ : ℤ) : ℝ) := by
         conv_lhs => rw [hdec]
-        rw [map_sum, Int.cast_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum, Int.cast_sum]
         rfl
       have hR : (Hf (eT X n x) (y : EuclideanSpace ℂ (Fin n × Idx X.dim))).im =
           ∑ k, (Hf (x k) ((eT X n).symm y k)).im := by

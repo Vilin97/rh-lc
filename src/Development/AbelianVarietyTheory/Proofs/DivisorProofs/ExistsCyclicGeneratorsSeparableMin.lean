@@ -55,7 +55,8 @@ theorem semisimple_charpoly_pow_generators (κ : Type) [Field κ] [IsAlgClosed �
 
   have hpick : ∀ μ ∈ R, ∀ j, aeval T (Lagrange.basis R id μ) (∑ ν ∈ R, b ν j) = b μ j := by
     intro μ hμ j
-    rw [map_sum, Finset.sum_eq_single μ]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_eq_single μ]
     · rw [hev _ μ _ (hbmem μ hμ j)]
       have := Lagrange.eval_basis_self hinj hμ
       simp only [id] at this

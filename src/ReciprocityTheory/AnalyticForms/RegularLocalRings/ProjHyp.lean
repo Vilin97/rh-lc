@@ -87,7 +87,8 @@ theorem mem_projB_iff {P D : Ideal (MvPolynomial (Σ k, ι k) ℂ)} (hP : IsMult
     | smul a f _ h1 => simp only [smul_eq_mul, map_mul, h1, mul_zero]
   · intro h g hg
     obtain ⟨g, hg, rfl⟩ := hg
-    rw [← sum_homogeneousComponent g, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← sum_homogeneousComponent g, map_sum]
     show _ ∈ (ProjectiveSpectrum.asHomogeneousIdeal (𝒜 := segreGrading P) x).toIdeal
     refine Ideal.sum_mem _ fun d _ => ?_
     have hgd : homogeneousComponent d g ∈ segreIdeal D :=

@@ -23,7 +23,8 @@ theorem jetIndep_pderiv {n : ℕ} (w : Fin n → K) (hw : LinearIndependent K (j
     (F : MvPolynomial (Fin n) k) (hF : F.IsHomogeneous m) (h0 : aeval w F = 0) (j : Fin n) :
     aeval w (pderiv j F) = 0 := by
   have e1 := congrArg (aeval w) hF.sum_X_mul_pderiv
-  simp only [map_sum, map_mul, aeval_X, map_nsmul, h0, smul_zero] at e1
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, aeval_X, map_nsmul, h0, smul_zero] at e1
   have e2 := jetIndep_chain w F
   rw [h0, Derivation.map_zero] at e2
   refine Fintype.linearIndependent_iff.1 hw (fun j => aeval w (pderiv j F)) ?_ j

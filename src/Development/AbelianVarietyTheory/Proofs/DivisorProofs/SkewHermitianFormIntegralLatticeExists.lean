@@ -35,7 +35,8 @@ theorem hform_smul (y : Fin d → E) (a : E) (x : Fin d → E) :
 
 theorem hform_symm (hσ : ∀ x, σ (σ x) = x) (hH : ∀ i j, σ (H j i) = H i j) (x y : Fin d → E) :
     Formalism.UG.hform σ H y x = σ (Formalism.UG.hform σ H x y) := by
-  simp only [Formalism.UG.hform, map_sum, map_mul, hσ, hH]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Formalism.UG.hform, map_sum, map_mul, hσ, hH]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 

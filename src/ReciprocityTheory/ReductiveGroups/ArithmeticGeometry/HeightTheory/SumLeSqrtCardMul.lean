@@ -82,7 +82,8 @@ theorem coeff_Ey_le {D N n n' : ℕ} (R : MvPolynomial (UXVar D N) ℂ) (hx : XH
   have hpt1 : ∀ p, ‖pt (Sum.inl p)‖ = 1 := fun p => by simp [hpt, hz]
   have hpt2 : ∀ i, ‖pt (Sum.inr i)‖ ≤ Y := by
     intro i
-    simp only [hpt, Sum.elim_inr, map_sum, map_mul, eval_X, eval_C]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hpt, Sum.elim_inr, map_sum, map_mul, eval_X, eval_C]
     refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun j _ => ?_)
     rw [norm_mul, hz, one_mul]
   have hY0 : 0 ≤ Y := Finset.sum_nonneg fun _ _ => norm_nonneg _

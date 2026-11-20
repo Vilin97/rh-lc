@@ -23,7 +23,8 @@ theorem map_rowAct_eq {R S : Type} [CommRing R] [CommRing S] (φ : R →+* S) {r
   | mul_X p v hp =>
     rw [map_mul, map_mul, map_mul, hp, map_X]
     congr 1
-    simp [rowAct, map_sum, Matrix.map_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [rowAct, map_sum, Matrix.map_apply]
 
 theorem rowAct_detPol_eq {R : Type} [CommRing R] {n : ℕ} (M : Matrix (Fin n) (Fin n) R) :
     rowAct R M (detPol R n) = MvPolynomial.C M.det * detPol R n := by

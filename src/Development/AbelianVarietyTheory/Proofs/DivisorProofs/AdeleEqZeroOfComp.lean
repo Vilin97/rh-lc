@@ -27,7 +27,8 @@ theorem tens_eq_zero_of_comp {z : AF F ⊗[F] E} (hf : ∀ v, compFin F E v z = 
     have hs : z = ∑ j, B.repr z j • B j := (B.sum_repr z).symm
     have hz' : ∑ j, f (B.repr z j) • (Algebra.TensorProduct.basis A b) j = 0 := by
       rw [hs] at hz
-      simpa [B, Algebra.TensorProduct.basis_apply, Finset.sum_apply, map_sum, TensorProduct.smul_tmul', smul_eq_mul, mul_one,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa [B, Algebra.TensorProduct.basis_apply, Finset.sum_apply, map_sum, TensorProduct.smul_tmul', smul_eq_mul, mul_one,
         Algebra.TensorProduct.map_tmul] using hz
     exact Fintype.linearIndependent_iff.1 (Algebra.TensorProduct.basis A b).linearIndependent _ hz' i
   have hc : ∀ i, B.repr z i = 0 := fun i =>

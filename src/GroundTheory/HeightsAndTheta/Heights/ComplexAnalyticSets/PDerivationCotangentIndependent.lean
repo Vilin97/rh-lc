@@ -23,7 +23,8 @@ theorem mem_of_derivation_det_not_mem {T : Type} [CommRing T] (P : Ideal T) [P.I
   have hv : ∀ j, (b ᵥ* A) j ∈ P := by
     intro j
     have h1 := derivation_mem_of_mem_sq P (D j) hsum
-    rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul, map_sum] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul, map_sum] at h1
     have h2 : (∑ i, b i * f i) * D j t ∈ P :=
       P.mul_mem_right _ (P.sum_mem fun i _ => P.mul_mem_left _ (hf i))
     have h3 : t * ∑ i, D j (b i * f i) ∈ P := by
@@ -59,7 +60,8 @@ theorem DerivationCotangentIndependent.proof : DerivationCotangentIndependent.St
     rw [Ideal.map_pow, ← hmax]
     have : algebraMap T (Localization.AtPrime P) (∑ k, b k * f k) =
         algebraMap T (Localization.AtPrime P) (s : T) * ∑ k, a k * algebraMap T (Localization.AtPrime P) (f k) := by
-      simp only [map_sum, map_mul, Finset.mul_sum, hb, Algebra.smul_def]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_mul, Finset.mul_sum, hb, Algebra.smul_def]
       refine Finset.sum_congr rfl fun k _ => ?_
       ring
     rw [this]

@@ -445,7 +445,8 @@ theorem exactModLat_hodgeTate : FarguesHodgeTate → ∀ (E : Type) [Field E] [N
         (fun l => Jc s e l - Jc t e l) (fun l => sub_mem (a1 e hes l) (b1 e het l)) ?_ i
       · ext i j
         have h1 := congrArg (algebraMap (chartRing o (mseg y) s.1) Ω) (congrFun (congrFun hGH i) j)
-        rw [Matrix.mul_apply, map_sum, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add, map_mul, map_pow, map_natCast] at h1
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [Matrix.mul_apply, map_sum, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add, map_mul, map_pow, map_natCast] at h1
         simp only [map_mul] at h1
         simp only [Matrix.mul_apply, Matrix.of_apply, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul]
         have e0 : ∀ k, (Dc s).gram σ (ds s) i k = algebraMap (chartRing o (mseg y) s.1) Ω (G i k) := fun k => (hGg i k).symm

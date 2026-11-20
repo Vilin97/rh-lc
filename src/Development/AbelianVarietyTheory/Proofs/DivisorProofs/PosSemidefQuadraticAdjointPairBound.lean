@@ -188,7 +188,8 @@ theorem pos_form_adjoint_bound : âˆ€ (X : Type) [AddCommGroup X] [Module.Free â„
       rw [LinearMap.aeval_self_charpoly]; rfl
     rw [Polynomial.aeval_eq_sum_range, Finset.sum_range_succ, hmonic.coeff_natDegree, one_smul] at hCH
     have h2 := congrArg (fun x => B x y) hCH
-    simp only [LinearMap.add_apply, LinearMap.sum_apply, LinearMap.smul_apply, map_add,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [LinearMap.add_apply, LinearMap.sum_apply, LinearMap.smul_apply, map_add,
       map_sum, map_zsmul, AddMonoidHom.add_apply, AddMonoidHom.finsetSum_apply,
       AddMonoidHom.smul_apply, smul_eq_mul, map_zero, AddMonoidHom.zero_apply] at h2
     rw [add_comm]; exact h2

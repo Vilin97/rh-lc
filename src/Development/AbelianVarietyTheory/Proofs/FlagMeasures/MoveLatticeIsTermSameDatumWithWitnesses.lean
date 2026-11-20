@@ -31,7 +31,8 @@ theorem h_zero_l (y : S.V) : S.h 0 y = 0 := by simp [Frames.h, hf]
 theorem h_zero_r (y : S.V) : S.h y 0 = 0 := by simp [Frames.h, hf]
 theorem h_symm (v w : S.V) : S.h w v = L.cj (S.h v w) := by
   have h' : ∀ i j, L.cj (S.Hm j i) = S.Hm i j := fun i j => congrFun (congrFun S.herm.1 i) j
-  simp only [Frames.h, hf, map_sum, map_mul, L.cj_cj, h']
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Frames.h, hf, map_sum, map_mul, L.cj_cj, h']
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 theorem h_swap0 {v w : S.V} (h : S.h v w = 0) : S.h w v = 0 := by rw [h_symm, h, map_zero]

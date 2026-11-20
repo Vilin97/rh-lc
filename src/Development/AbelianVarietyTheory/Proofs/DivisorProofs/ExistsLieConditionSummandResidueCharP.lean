@@ -49,7 +49,8 @@ theorem GlobalTheory.HTSummand.Corep.exists_summand_lie_p : ∀ (p : ℕ) [Fact 
     · subst h; rw [Matrix.single_mul_single_same, _root_.mul_one]
     · rw [Matrix.single_mul_single_of_ne (h := h), map_zero]
   have hsum : ∑ i, E i i = 1 := by
-    simp only [E, ← map_sum, GlobalTheory.HTSummand.Corep.mat_sum, map_one]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [E, ← map_sum, GlobalTheory.HTSummand.Corep.mat_sum, map_one]
   have hρσ : ∀ c c', ρ c' * σ c = σ c * ρ c' := by
     intro c c'
     show ρ c' * ρ (algebraMap _ _ c) = ρ (algebraMap _ _ c) * ρ c'
@@ -91,7 +92,8 @@ theorem GlobalTheory.HTSummand.Corep.exists_summand_lie_p : ∀ (p : ℕ) [Fact 
       rw [map_sub, map_smul] at this
       rw [hπapp]; exact this
     · have := hFπ _ hw2
-      rw [map_sub, map_sum, ← Module.End.mul_apply π π, hππ] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, map_sum, ← Module.End.mul_apply π π, hππ] at this
       exact this
   have hcomax : ∀ i j, i ≠ j → Ideal.span (Set.range fun x => χ i x - χ j x) = ⊤ := by
     intro i j hij

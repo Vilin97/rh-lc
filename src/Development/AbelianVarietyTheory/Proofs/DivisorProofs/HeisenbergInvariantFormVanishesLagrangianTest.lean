@@ -186,7 +186,8 @@ theorem lagCo_isotropic (M : Model σ X W) (v : Pl F) {m : ℕ} (C : Matrix (Fin
   rw [M.co.form] at h0
   have h1 := congrArg (evFin F v) h0
   rw [← sub_eq_zero]
-  simpa [locCo, dotProduct, map_sum, map_mul, map_sub] using h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa [locCo, dotProduct, map_sum, map_mul, map_sub] using h1
 
 theorem finrank_lagCo (M : Model σ X W) (v : Pl F) {m : ℕ} (C : Matrix (Fin d) (Fin m) (AE F E))
     (hC : IsLagrAt σ W v C) : Module.finrank (Fv F v) (lagCo M v C) = Fintype.card (Fin n × Fin d) := by

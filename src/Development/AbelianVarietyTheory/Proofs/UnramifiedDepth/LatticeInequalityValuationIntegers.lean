@@ -279,7 +279,8 @@ theorem lattice_ineq_integers : ∀ (C : Type) [Field C] [IsAlgClosed C] (v : Va
         if i = j then algebraMap O C (d * D) else 0 := by
       intro j
       have h2 := congrArg (algebraMap O C) (congrFun (hr j) i)
-      simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum, Pi.single_apply, mul_ite,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum, Pi.single_apply, mul_ite,
         _root_.mul_one, mul_zero] at h2
       rw [apply_ite (algebraMap O C), map_zero] at h2
       rw [← h2]
@@ -303,7 +304,8 @@ theorem lattice_ineq_integers : ∀ (C : Type) [Field C] [IsAlgClosed C] (v : Va
           fun y : Fin n × Fin s => a y.1 ^ (q.1 : ℕ) * φ q.2 y) j) := by
       intro c₀
       funext y
-      simp only [F, freeMat, Matrix.mulVec, dotProduct, Matrix.of_apply, Fintype.sum_prod_type,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [F, freeMat, Matrix.mulVec, dotProduct, Matrix.of_apply, Fintype.sum_prod_type,
         Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum, map_mul, map_pow, ite_mul, zero_mul,
         Finset.sum_ite_eq, Finset.mem_univ, if_true, Finset.mul_sum]
       rw [Finset.sum_comm]

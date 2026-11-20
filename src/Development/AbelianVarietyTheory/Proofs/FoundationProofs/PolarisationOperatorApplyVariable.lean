@@ -31,7 +31,8 @@ theorem deriv_det {m : ℕ} (D : Derivation ℂ R R) (M : Matrix (Fin m) (Fin m)
     intro N
     rw [← det_transpose, det_apply']
     rfl
-  simp only [key, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [key, map_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun σ _ => ?_
   rw [Derivation.leibniz, D.map_intCast, smul_zero, add_zero, smul_eq_mul, ← Finset.mul_sum,
@@ -267,7 +268,8 @@ theorem capelli_step (hd : ∀ r j s c, d r j (x s c) = if r = s ∧ j = c then 
     rw [e1]
     simp only [e2]
     rw [Finset.sum_comm]
-    simp only [Finset.sum_add_distrib, ← Finset.mul_sum, ← map_sum, ih', hcst, hv]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Finset.sum_add_distrib, ← Finset.mul_sum, ← map_sum, ih', hcst, hv]
     rw [Fin.prod_univ_succ, Nat.cast_mul, ← hj, h0, e3]
     change _ = _ * c * _ * _
     have hz' : ∑ s : Fin (m + 1), (-1) ^ (s : ℕ) *

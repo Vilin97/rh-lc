@@ -87,7 +87,8 @@ private lemma entry_smul_eigenfunction_lemma_6 {k r : ℕ} {Wp Wq : Type} [Norme
     have hcong : ∀ g ∈ _root_.Formalism.FourierDecayAlt.B.GV k r, (fun g : _root_.Formalism.FourierDecayAlt.B.Mat k r => ∑ a, g i a • ev (ι (v s a)) g) g =
         ev (∑ a, x a (ι (v s a))) g := by
       intro g hg
-      rw [map_sum, Finset.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Finset.sum_apply]
       refine Finset.sum_congr rfl fun a _ => ?_
       have h3 := (hmul _ (hsm a)).1 (ι (v s a)) g hg
       try simp only at h3
@@ -121,7 +122,8 @@ private lemma entry_smul_eigenfunction_lemma_6 {k r : ℕ} {Wp Wq : Type} [Norme
     show g i j • f g = _
     rw [← hw g hg, ← h3]
     show ev (x j (ι w)) g = _
-    rw [hv, map_sum, Finset.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hv, map_sum, Finset.sum_apply]
 
 open Finset in
 private lemma isEigenSum_entry_smul {k r : ℕ} {Wp Wq : Type} [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp]

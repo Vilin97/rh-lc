@@ -184,7 +184,8 @@ theorem retract_step : ∀ (V : Type) (F : Set (List V)) (S : Set V), SubClosed 
         rw [hCg]
         abel
       conv_lhs => rw [hc2]
-      rw [map_add, map_sum, add_assoc, ← Finset.sum_add_distrib]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_add, map_sum, add_assoc, ← Finset.sum_add_distrib]
       congr 1
       exact Finset.sum_congr rfl fun τ _ => GlobalTheory.T.seqChain_boundary_prefix_chain V τ (ys τ)
     set g := bd V Cg + ∑ τ ∈ P, ((ys τ).sum fun w a =>
@@ -245,7 +246,8 @@ theorem retract_step : ∀ (V : Type) (F : Set (List V)) (S : Set V), SubClosed 
         ∑ τ ∈ P, ((-1 : ℤ) ^ τ.length • ((zf τ).sum fun w a =>
           a • Finsupp.mapDomain (fun σ => σ ++ w) (bd V (Finsupp.single τ 1))) +
           Finsupp.mapDomain (fun w => τ ++ w) (ys τ)) := by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun τ hτ => ?_
       rw [LinearMap.map_smul, GlobalTheory.T.seqChain_boundary_prefix_chain, hzb τ hτ, smul_add, smul_smul, ← mul_pow]
       simp

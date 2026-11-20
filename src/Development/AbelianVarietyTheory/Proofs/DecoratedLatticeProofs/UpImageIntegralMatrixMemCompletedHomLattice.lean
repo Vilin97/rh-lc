@@ -133,7 +133,8 @@ theorem up_mem_latO : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [Topolo
     funext i
     change ∑ m, q.sec ((FT.β * x * FS.γ) i m) * incA D (s c m) = _
     simp_rw [sec_mul]
-    rw [← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum]
     congr 1
     simp only [z, Matrix.mulVec_mulVec]
     rw [← Matrix.mul_assoc]
@@ -146,7 +147,8 @@ theorem up_mem_latO : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [Topolo
     have key : ∀ m, ∑ c, u i m * incA D (s c m) * incA D (∑ l, star (s' c l) * S.gram l j) =
         u i m * incA D (if m = j then 1 else 0) := by
       intro m
-      rw [← hss m j, map_sum, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hss m j, map_sum, Finset.mul_sum]
       refine Finset.sum_congr rfl fun c _ => ?_
       rw [map_mul, mul_assoc]
     rw [Finset.sum_congr rfl fun m _ => key m]

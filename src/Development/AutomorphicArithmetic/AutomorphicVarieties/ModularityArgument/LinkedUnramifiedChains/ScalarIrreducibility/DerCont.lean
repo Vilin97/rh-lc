@@ -98,7 +98,8 @@ private theorem derCont_abs [IsLocalRing O] [Finite (ResidueField O)] [IsLocalRi
       rwa [map_sub, sub_eq_zero] at this
     rw [e0]
     obtain ⟨f, rfl⟩ := Submodule.mem_span_finset'.1 hb₀
-    rw [map_sum, ← Finset.sum_coe_sort s]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, ← Finset.sum_coe_sort s]
     refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun e _ => ?_)
     rw [map_smul, Algebra.smul_def, norm_mul]
     exact mul_le_of_le_one_left (norm_nonneg _) (hO _)

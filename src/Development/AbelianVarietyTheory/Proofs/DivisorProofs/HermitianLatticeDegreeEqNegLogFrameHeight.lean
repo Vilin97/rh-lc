@@ -61,7 +61,8 @@ theorem majAt_smul_right (b : Module.Basis ι K V) (X : InfinitePlace K → Matr
 theorem majAt_conj (b : Module.Basis ι K V) (X : InfinitePlace K → Matrix ι ι ℂ)
     (v : InfinitePlace K) (x y : V) :
     starRingEnd ℂ (Formalism.HermitianLatticesTheory.majAt b X v x y) = Formalism.HermitianLatticesTheory.majAt b X v y x := by
-  simp only [Formalism.HermitianLatticesTheory.majAt, map_sum, map_mul, Complex.star_def, Complex.conj_conj]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Formalism.HermitianLatticesTheory.majAt, map_sum, map_mul, Complex.star_def, Complex.conj_conj]
   exact Finset.sum_congr rfl fun i _ => by ring
 
 theorem majAt_self_re (b : Module.Basis ι K V) (X : InfinitePlace K → Matrix ι ι ℂ)

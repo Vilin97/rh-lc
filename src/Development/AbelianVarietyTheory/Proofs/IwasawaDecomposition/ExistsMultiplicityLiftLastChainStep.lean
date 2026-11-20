@@ -38,7 +38,8 @@ theorem subst_subst (a a' : ι → Matrix (Fin n) (Fin n) ℂ) (b b' : ι → Ma
     subst a b (subst a' b' P) = subst (fun τ => a' τ * a τ) (fun τ => b τ * b' τ) P := by
   refine DFunLike.congr_fun (?_ : (subst a b).comp (subst a' b') = _) P
   refine MvPolynomial.algHom_ext fun v => ?_
-  simp only [subst, AlgHom.comp_apply, MvPolynomial.aeval_X, map_sum, map_smul, Finset.smul_sum, smul_smul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [subst, AlgHom.comp_apply, MvPolynomial.aeval_X, map_sum, map_smul, Finset.smul_sum, smul_smul,
     Matrix.mul_apply, Finset.sum_mul, Finset.mul_sum, Finset.sum_smul]
   calc _ = ∑ i, ∑ c, ∑ i', ∑ c', (b v.1 i' i * b' v.1 i v.2.1 * (a' v.1 v.2.2 c * a v.1 c c')) •
         (MvPolynomial.X (v.1, i', c') : Pol ι m n) := by

@@ -72,9 +72,11 @@ private theorem UpperTheory.ConvolutionTheory.Tf.Crv.deriv {A : ℝ → U} {D : 
   obtain ⟨ι, _, c, c', v, hc, hA', rfl⟩ := hA
   have e : (fun t => l (A t)) = fun t => ∑ i, c i t * l (v i) := by
     funext t
-    simp [hA', map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [hA', map_sum]
   rw [e]
-  simp only [map_sum, map_smul, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, smul_eq_mul]
   exact HasDerivAt.fun_sum fun i _ => (hc i).mul_const _
 
 end

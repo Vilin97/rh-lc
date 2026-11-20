@@ -33,14 +33,16 @@ theorem expS_sum {ι : Type} (s : Finset ι) (g : ι → PS k n d) (hg : ∀ i, 
   induction s using Finset.induction_on with
   | empty => simp [BalancedFrameGauge.expS_zero]
   | insert a s ha ih =>
-    rw [Finset.sum_insert ha, Finset.prod_insert ha,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_insert ha, Finset.prod_insert ha,
       WickVanishing.gt_expS_add _ _ (hg a) (by simp [map_sum, hg]), ih]
 
 theorem expS_smul_sum {ι : Type} [Fintype ι] (g : ι → PS k n d) (hg : ∀ i, constantCoeff (g i) = 0)
     (N : ℕ) : FB.expS k ((N : k) • ∑ i, g i) = ∏ i, FB.expS k (g i) ^ N := by
   have h : (N : k) • ∑ i, g i = ∑ _j : Fin N, ∑ i, g i := by
     rw [Nat.cast_smul_eq_nsmul]; simp
-  rw [h, expS_sum _ _ (fun _ => by simp [map_sum, hg]), expS_sum _ _ hg, Finset.prod_pow]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h, expS_sum _ _ (fun _ => by simp [map_sum, hg]), expS_sum _ _ hg, Finset.prod_pow]
   simp
 
 end Exp

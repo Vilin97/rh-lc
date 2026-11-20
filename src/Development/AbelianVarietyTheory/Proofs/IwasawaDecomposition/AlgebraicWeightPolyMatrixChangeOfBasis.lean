@@ -13,7 +13,8 @@ theorem evM_change_of_basis : ∀ (L : Type) [Field L] [NumberField L] [IsCMFiel
         MvPolynomial.C (b'.toMatrix b i k) * P k l * MvPolynomial.C (b.toMatrix b' l j)) := by
     intro x
     ext i j
-    simp only [evM, Matrix.sub_apply, Matrix.mul_apply, Matrix.of_apply, map_sub, map_sum, map_mul, MvPolynomial.eval_C, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [evM, Matrix.sub_apply, Matrix.mul_apply, Matrix.of_apply, map_sub, map_sum, map_mul, MvPolynomial.eval_C, Finset.sum_mul]
     rw [Finset.sum_comm]
   have hrat : ∀ γ₀ : GL (Fin n) L, γ₀ ∈ GQ0 L n →
       evM P' (upt (ratPt (γ₀ : Matrix (Fin n) (Fin n) L))) =

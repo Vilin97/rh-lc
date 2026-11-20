@@ -46,7 +46,8 @@ theorem pj_mul_ne {ρ σ : M.Ty P} (h : ρ ≠ σ) : pj κ ρ * pj κ σ = 0 := 
 
 theorem sum_pj : ∑ ρ, pj κ ρ = 1 := by
   unfold pj
-  rw [← map_sum, ← map_one κ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum, ← map_one κ]
   congr 1
   funext σ
   simp [Finset.sum_apply]

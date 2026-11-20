@@ -18,7 +18,8 @@ variable {J : Type} [Fintype J]
 theorem coneMap_of_isHomogeneous' {Ω : Type*} [CommRing Ω] [Algebra ℤ Ω] (x : J → Ω) {f : MvPolynomial J ℤ}
     {n : ℕ} (hf : f.IsHomogeneous n) :
     coneMap ℤ x f = Polynomial.C (aeval x f) * Polynomial.X ^ n := by
-  simp only [coneMap, aeval_def, eval₂_eq, Finset.sum_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [coneMap, aeval_def, eval₂_eq, Finset.sum_mul, map_sum]
   refine Finset.sum_congr rfl fun m hm => ?_
   have hdeg : ∑ i ∈ m.support, m i = n := by
     have := hf (mem_support_iff.mp hm)

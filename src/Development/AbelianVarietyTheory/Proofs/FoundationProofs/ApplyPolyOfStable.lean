@@ -244,7 +244,8 @@ theorem exists_pr_isLamFR : ∀ {Ω : Type} [Field Ω] [Algebra ℚ Ω] [IsAlgCl
   set pr : X.Fn l → Fin 2 → Qbar l := fun b => ∑ i, κ i • π i (1 ⊗ₜ[ℤ_[l]] b) with hpr
   have hLpr : ∀ b ∈ chiPart X N w χ, L (1 ⊗ₜ[ℤ_[l]] b) = per * ((pr b 1 : Qbar l) : ℂ_[l]) := by
     intro b hbB
-    rw [← apply_poly_of_stable X N (chiPart X N w χ) hst L ev hLT P hP hP1 ((1 : Qbar l) ⊗ₜ[ℤ_[l]] b)
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← apply_poly_of_stable X N (chiPart X N w χ) hst L ev hLT P hP hP1 ((1 : Qbar l) ⊗ₜ[ℤ_[l]] b)
       ⟨1 ⊗ₜ ⟨b, hbB⟩, by simp⟩, hPσπ _ (hVB b hbB.1), map_sum]
     simp only [hLσ, hpr, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
     rw [← Finset.mul_sum]
@@ -273,7 +274,8 @@ theorem exists_pr_isLamFR : ∀ {Ω : Type} [Field Ω] [Algebra ℚ Ω] [IsAlgCl
       obtain ⟨hsA, hsI⟩ := mem_Ine_of_restrict hj τ hτ s hs
       have h1 := hL n _ (hstG s b hbB).1 _ (GlobalTheory.isThB_galB Ω ε X A N l n w s hlA hsA b hbB.1 φ h)
       have e1 : lam (seqN 1 j (HahnSeries.map φ (s : Ω →+* Ω))) = τ (lam (seqN 1 j φ)) := by
-        rw [hS, hS (seqN 1 j φ), map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [hS, hS (seqN 1 j φ), map_sum]
         refine Finset.sum_congr rfl fun t _ => ?_
         rw [map_mul, hwt t τ ha hτ]
         congr 1

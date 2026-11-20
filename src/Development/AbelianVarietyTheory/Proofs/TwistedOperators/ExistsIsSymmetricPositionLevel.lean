@@ -99,7 +99,8 @@ def symSumInt {κ l : ℕ} (g : GL (Fin κ ⊕ Fin l) 𝒪[k]) : 𝒪[k] :=
 omit [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem map_symSumInt {F : Type} [Field F] (f : 𝒪[k] →+* F) {κ l : ℕ} (g : GL (Fin κ ⊕ Fin l) 𝒪[k]) :
     f (symSumInt g) = symSum (Matrix.GeneralLinearGroup.map f g) := by
-  simp only [symSumInt, symSum, simpleSum, superSum, map_add, map_sum, apply_ite f, map_zero]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [symSumInt, symSum, simpleSum, superSum, map_add, map_sum, apply_ite f, map_zero]
   rfl
 
 end Local

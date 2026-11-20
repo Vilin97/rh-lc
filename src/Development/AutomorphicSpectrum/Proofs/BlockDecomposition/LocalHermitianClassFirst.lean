@@ -175,14 +175,16 @@ theorem det_restr_eq (b : Module.Basis (Fin r) (maximalRealSubfield E) (plus Q))
     rw [hB]; rfl
   have h4 : ∀ j, inclPlus Q k x * ((1 : k) ⊗ₜ B j) = ∑ i, L i j • ((1 : k) ⊗ₜ[maximalRealSubfield E] B i) := by
     intro j
-    rw [← h3, ← map_mul, h2, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← h3, ← map_mul, h2, map_sum]
     simp only [map_smul, h3]
   have h5 : ∀ i, vecT Q φ cm hc ψ ((1 : k) ⊗ₜ B i) = (cB i : Fin n → K) := by
     intro i
     rw [vecT_tmul, map_one, one_smul, hcB]
   have h6 : ∀ j, M *ᵥ (cB j : Fin n → K) = ∑ i, cm (L i j) • (cB i : Fin n → K) := by
     intro j
-    rw [← h5, ← hMx, h4, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← h5, ← hMx, h4, map_sum]
     simp only [vecT_smul, h5]
   have h7 : LinearMap.toMatrix cB cB (restr M V hM) = L.map cm := by
     ext i j

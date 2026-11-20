@@ -68,20 +68,23 @@ private lemma core {G W V : Type} [Group G] [TopologicalSpace G] [IsTopologicalG
         intro g k hk
         simp only [Subgroup.coe_mul, map_mul, Module.End.mul_apply]
         rw [hK i hi k hk]) ⟨u, hu⟩
-    simp only [A, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [A, map_sum]
     simpa [Subgroup.coe_mul, map_mul, Module.End.mul_apply] using this
   have hsum : ∑ i ∈ c.support, (i : {f : W →ₗ[ℂ] V // ∀ (g : G) (x : W), f (σ g x) = τ g (f x)}).1 (A (x i))
       = (Fintype.card (U ⧸ (K : Subgroup U)) : ℂ) • v := by
     have h1 : ∀ i ∈ c.support, i.1 (A (x i)) = ∑ q : U ⧸ (K : Subgroup U), τ (((q.out : U)) : G) (c i) := by
       intro i _
-      simp only [A, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [A, map_sum]
       refine Finset.sum_congr rfl fun q _ => ?_
       rw [i.2, hx i]
     rw [Finset.sum_congr rfl h1, Finset.sum_comm]
     have h2 : ∀ q : U ⧸ (K : Subgroup U), ∑ i ∈ c.support, τ (((q.out : U)) : G) (c i) = v := by
       intro q
       have hcs' : ∑ i ∈ c.support, c i = v := hcs
-      rw [← map_sum, hcs']
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← map_sum, hcs']
       exact hfix _ (q.out : U).2
     simp only [h2, Finset.sum_const, Finset.card_univ]
     rw [Nat.cast_smul_eq_nsmul]

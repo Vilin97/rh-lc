@@ -34,7 +34,8 @@ theorem GlobalTheory.CechFibre.exists_dlog_add_coboundary_mod : ∀ (E : Type) [
     c i i' - ∑ b, (t.G.hom.appLE U.1 (W i ⊓ W i') (inf_le_left.trans (hWU i))).hom (θ b) * κ b i i'
   have hc₀ : ∀ i i' i'', resG t.G.left (inf_le_left : W i ⊓ W i' ⊓ W i'' ≤ W i ⊓ W i') (c₀ i i') + resG t.G.left (le_inf (inf_le_left.trans inf_le_right) inf_le_right : W i ⊓ W i' ⊓ W i'' ≤ W i' ⊓ W i'') (c₀ i' i'') = resG t.G.left (le_inf (inf_le_left.trans inf_le_left) inf_le_right : W i ⊓ W i' ⊓ W i'' ≤ W i ⊓ W i'') (c₀ i i'') := by
     intro i i' i''
-    simp only [c₀, map_sub, map_sum, map_mul, GlobalTheory.CechFibre.resG_appLE]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [c₀, map_sub, map_sum, map_mul, GlobalTheory.CechFibre.resG_appLE]
     rw [← hc i i' i'']
     have e : ∀ b, resG t.G.left (le_inf (inf_le_left.trans inf_le_left) inf_le_right : W i ⊓ W i' ⊓ W i'' ≤ W i ⊓ W i'') (κ b i i'') = _ := fun b => (hκ b i i' i'').symm
     simp only [e, mul_add, Finset.sum_add_distrib]

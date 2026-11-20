@@ -39,11 +39,13 @@ def balBilEquiv : balBil H.bar (J → 𝓞 E) ≃ₗ[ℤ] (J → J → (𝓞 E �
       ext k
       rcases eq_or_ne k i with rfl | h <;> simp [*]
     conv_rhs => rw [hy]
-    rw [map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, LinearMap.sum_apply]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [β.2 (y i) (Pi.single i 1) z]
     conv_rhs => rw [← Finset.univ_sum_single (H.bar (y i) • z)]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     rfl
   right_inv φ := by
     funext i j

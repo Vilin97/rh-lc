@@ -113,7 +113,8 @@ theorem delta_lift (hcase : Formalism.MainNotions.LiftingTheory.CaseA W) (hP9 : 
   have havgN : avg ∈ W.N T₁ := Submodule.sum_mem _ fun δ _ => W.N_Γ T₁ δ x hxN
   have havgΔ : ∀ δ ∈ W.DelF, W.γD T₁ δ avg = avg := by
     intro δ hδ
-    rw [havg, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [havg, map_sum]
     refine Finset.sum_nbij' (δ * ·) (δ⁻¹ * ·) (fun g hg => delF_mul W hδ hg)
       (fun g hg => delF_mul W (delF_inv W hδ) hg) (fun g _ => by simp) (fun g _ => by simp)
       (fun g _ => ?_)
@@ -123,7 +124,8 @@ theorem delta_lift (hcase : Formalism.MainNotions.LiftingTheory.CaseA W) (hP9 : 
     refine Finset.sum_congr rfl fun δ _ => ?_
     rw [← γA_letE W δ c, ← γD_smulA, hxc]
   have hFavg : W.map F avg = ((PD.p - 1 : ℕ) : O) • (Formalism.MainNotions.LiftingTheory.lp W rr • y) := by
-    rw [havg, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [havg, map_sum]
     have : ∀ δ ∈ W.DelF, W.map F (W.γD T₁ δ x) = Formalism.MainNotions.LiftingTheory.lp W rr • y := by
       intro δ hδ
       rw [W.map_γ, hFx, γD_smulA, hy.2 δ hδ]

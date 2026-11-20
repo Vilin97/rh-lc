@@ -307,11 +307,13 @@ theorem exists_matrix {R k L : Type} [CommRing R] [CommRing k] [AddCommGroup L] 
   choose s hs using hr
   refine ⟨Matrix.of fun i j => c (T (b j)) i, fun y => ?_⟩
   have h0 : c (y - ∑ j, s (c y j) • b j) = 0 := by
-    rw [map_sub, map_sum, sub_eq_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_sum, sub_eq_zero]
     simp only [map_smulₛₗ, hs, hb]
     exact pi_eq_sum_univ' _
   have h1 := hT _ h0
-  rw [map_sub, map_sub, map_sum, map_sum, sub_eq_zero] at h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sub, map_sub, map_sum, map_sum, sub_eq_zero] at h1
   rw [h1]
   funext i
   simp only [map_smul, map_smulₛₗ, hs, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Matrix.mulVec, dotProduct,

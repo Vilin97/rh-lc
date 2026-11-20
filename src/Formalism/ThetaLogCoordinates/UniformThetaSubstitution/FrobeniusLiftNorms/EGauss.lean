@@ -26,14 +26,16 @@ lemma map_sPos (p : ℕ) (s : ZMod (2 * ν)) (ab : Fin r0 × Fin r1) :
   ext n
   rw [MvPowerSeries.coeff_map]
   change φ (∑ l ∈ range (n.degree + 1), _) = ∑ l ∈ range (n.degree + 1), _
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun l _ => ?_
   split_ifs <;> simp
 
 lemma map_hhS [NeZero ν] (p : ℕ) (u : ZMod (2 * ν) → F) :
     MvPowerSeries.map φ (hhS (r0 := r0) (r1 := r1) p u) = hhS p (fun s => φ (u s)) := by
   unfold hhS
-  simp only [map_sum, map_mul, map_pow, MvPowerSeries.map_C, map_sPos]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, map_pow, MvPowerSeries.map_C, map_sPos]
 
 lemma inClass_map {ι : Type} (hφ : ∀ z, ‖φ z‖ = ‖z‖) (pp : F) (hh G : MvPowerSeries ι F)
     (h : InClass pp hh G) :
@@ -42,7 +44,8 @@ lemma inClass_map {ι : Type} (hφ : ∀ z, ‖φ z‖ = ‖z‖) (pp : F) (hh G
   refine ⟨fun i => MvPowerSeries.map φ (U i), fun i n => ?_, fun n => ?_⟩
   · rw [MvPowerSeries.coeff_map, hφ]
     exact hU i n
-  · rw [MvPowerSeries.coeff_map, hc n, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [MvPowerSeries.coeff_map, hc n, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_mul, map_inv₀, map_pow, ← MvPowerSeries.coeff_map, map_mul, map_pow]
 
@@ -314,7 +317,8 @@ theorem reduce (p : ℕ) [Fact p.Prime] (ν r0 r1 : ℕ) [NeZero ν] (u : ZMod (
     rw [← hgauss, ← hop]
     unfold frameJet
     rw [Formalism.DworkPowerSeriesWeights.eval₂_jetPairPoly, map_prod]
-    simp only [Formalism.DworkPowerSeriesWeights.ringMap_minorProd, map_sum, map_mul, MvPolynomial.map_C, MvPolynomial.map_X,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Formalism.DworkPowerSeriesWeights.ringMap_minorProd, map_sum, map_mul, MvPolynomial.map_C, MvPolynomial.map_X,
       MvPolynomial.coe_eval₂Hom, MvPolynomial.eval₂_X]
     exact le_rfl
 

@@ -30,7 +30,8 @@ theorem det_ne_zero_of_cartan (B : Base F E) {n : ℕ} (Y : Spc F E n)
   have hMv : M *ᵥ v' = 0 := by
     ext i
     have := congrArg τ (congrFun hJv i)
-    simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Pi.zero_apply, map_zero] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Pi.zero_apply, map_zero] at this
     simp only [M, v', Matrix.smul_mulVec, Matrix.mulVec, dotProduct, Matrix.map_apply, Pi.smul_apply, smul_eq_mul,
       Pi.zero_apply, Matrix.smul_apply, mul_assoc, ← Finset.mul_sum, this, mul_zero]
   have hx : star v' ≠ 0 := fun h => hv' (by simpa using congrArg star h)

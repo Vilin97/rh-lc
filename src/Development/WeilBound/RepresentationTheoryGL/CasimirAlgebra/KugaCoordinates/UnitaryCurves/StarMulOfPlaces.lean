@@ -135,7 +135,8 @@ theorem lieOp_atEmb (π : CuspSub E a) (τ : E →+* ℂ) (X : Matrix (Fin a) (F
     match_scalars <;> ring
   refine LinearMap.ext fun φ => Subtype.ext ?_
   have hX : lie E a (fun i j => atEmb τ (X i j)) = ∑ i, ∑ j, lieS E a i j (atEmb τ (X i j)) := by
-    simp only [lieS_apply, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [lieS_apply, ← map_sum]
     exact congrArg _ (Matrix.matrix_eq_sum_single (Matrix.of fun i j => atEmb τ (X i j)))
   change lie E a (fun i j => atEmb τ (X i j)) φ.1 = _
   rw [hX]

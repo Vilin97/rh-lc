@@ -160,10 +160,12 @@ theorem assemble {k H : Type} [Field k] [CommRing H] [HopfAlgebra k H] {V V' : T
   · simp only [Module.Basis.constr_apply_fintype, LinearMap.sum_apply, LinearMap.smul_apply, hD, smul_eq_mul,
       mul_add, Finset.sum_add_distrib, Finset.sum_mul, Finset.mul_sum]
     refine congrArg₂ (· + ·) (Finset.sum_congr rfl fun _ _ => by ring) (Finset.sum_congr rfl fun _ _ => by ring)
-  · simp only [Module.Basis.constr_apply_fintype, map_sum, map_smul, hf, smul_add, Finset.sum_add_distrib,
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [Module.Basis.constr_apply_fintype, map_sum, map_smul, hf, smul_add, Finset.sum_add_distrib,
       TensorProduct.sum_tmul, TensorProduct.tmul_sum, TensorProduct.smul_tmul', TensorProduct.tmul_smul]
   · conv_rhs => rw [← bU.sum_equivFun u, ← bV.sum_equivFun z]
-    simp only [Module.Basis.constr_apply_fintype, map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, hP]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Module.Basis.constr_apply_fintype, map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, hP]
 
 open Algebra.TensorProduct in
 

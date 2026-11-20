@@ -129,7 +129,8 @@ theorem fockHOp_of : FockHOp := by
   unfold hOp Dop
   rw [← fL_apply hB hc]
   by_cases h : ε a = ε b
-  · rw [if_pos h, map_sum, sgn_mul_same ε h]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [if_pos h, map_sum, sgn_mul_same ε h]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_sub, fL_apply, fL_apply, d1, d2]
     have e1 := hop_tr_false hB hc b i (pderiv (a, i, true) p)
@@ -137,7 +138,8 @@ theorem fockHOp_of : FockHOp := by
     rw [hop_pderiv_comm' (b, i, false) (a, i, true)] at e1
     simp only [sub_self, mul_zero, map_zero, zero_mul, sub_zero, map_one, one_mul]
     linear_combination e1 - e2
-  · rw [if_neg h, map_sum, sgn_mul_diff ε h]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [if_neg h, map_sum, sgn_mul_diff ε h]
     have hab : a ≠ b := fun e => h (e ▸ rfl)
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_sub, map_smul, map_smul, fL_apply, fL_apply, d1, d2, smul_eq_C_mul, smul_eq_C_mul]

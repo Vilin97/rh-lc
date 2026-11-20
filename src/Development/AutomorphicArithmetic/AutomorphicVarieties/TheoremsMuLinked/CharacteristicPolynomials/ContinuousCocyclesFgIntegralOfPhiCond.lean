@@ -221,7 +221,8 @@ theorem UpperTheory.V.Th.Det.continuousCocycles_fg_integral_of_phiCond :
     rw [IsLocallyConstant.iff_eventually_eq]
     intro g
     filter_upwards [Filter.eventually_all.2 fun j => (hσ i j N).eventually_eq g] with g' hg'
-    simp only [hρ, Matrix.mulVec, dotProduct, map_sum, map_mul, hg']
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hρ, Matrix.mulVec, dotProduct, map_sum, map_mul, hg']
   · rw [lc_iff]
     exact fun i => (hZ z hz).1 i N
   · rw [hρ]; exact (hZ z hz).2 g h

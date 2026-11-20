@@ -205,7 +205,8 @@ theorem UpperTheory.ConvolutionTheory.FX.abs_taylor :
         congr 1
         simp only [ha, hσ, Algebra.smul_def]
         ring
-      rw [e, Finset.sum_smul, map_sum, Finset.sum_apply, pow_succ, ← mul_assoc, hM, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [e, Finset.sum_smul, map_sum, Finset.sum_apply, pow_succ, ← mul_assoc, hM, Finset.mul_sum]
       refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun j _ => ?_)
       rw [smul_assoc, c.map_smul, Pi.smul_apply, norm_smul, sub_smul, map_sub, smul_assoc, c.map_smul, Pi.sub_apply,
         Pi.smul_apply, Complex.norm_real, Real.norm_eq_abs, ← hM]

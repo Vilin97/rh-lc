@@ -78,7 +78,8 @@ theorem polyDeriv_barP_symm [StarAddMonoid W] [StarModule ℂ W] (P : MvPolynomi
   have e2 := polyDeriv_polyDeriv P (barP P) u hG
   dsimp only at e1 e2
   rw [e1, e2, hs, Finset.sum_comm]
-  simp only [map_sum, map_mul, hc, Complex.conj_conj]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, hc, Complex.conj_conj]
   refine Finset.sum_congr rfl fun m _ => Finset.sum_congr rfl fun m' _ => ?_
   have h1 : (fun p : W × W => G p.1 p.2) =
       fun p => conj ((fun q : W × W => F q.2 q.1) (star p)) := funext fun p => h p.1 p.2

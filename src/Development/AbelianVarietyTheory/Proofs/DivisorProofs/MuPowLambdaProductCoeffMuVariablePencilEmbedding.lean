@@ -162,7 +162,8 @@ variable {n L : ℕ} (ε : Fin n → Bool) in
 private lemma modeDerivation_offDiagonalBlockSqNorm_lemma_19 (x : _root_.GlobalTheory.PsCo.Pc1.Mode ε) :
     _root_.GlobalTheory.PsCo.Pc1.dM ε x (_root_.GlobalTheory.PsCo.Pc1.rP ε) =
       ∑ j, X (Sum.inl j.1) * _root_.GlobalTheory.PsCo.Pc1.OmP ε x j := by
-  simp [_root_.GlobalTheory.PsCo.Pc1.rP, _root_.GlobalTheory.PsCo.Pc1.OmP, map_sum, Derivation.leibniz,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [_root_.GlobalTheory.PsCo.Pc1.rP, _root_.GlobalTheory.PsCo.Pc1.OmP, map_sum, Derivation.leibniz,
     modeDerivation_offDiagonalEntry_lemma_21]
 
 open MvPolynomial in
@@ -218,21 +219,24 @@ private lemma weight_modeDerivation_sub_mem_lemma_11 (M : ℕ) (m : Fin L → _r
     simp only [_root_.GlobalTheory.PsCo.Pc1.A.pencilConstantPartMatrix, Finset.sum_mul]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun l _ => ?_
-    rw [lambdaModeDerivation_entryPoly_lemma_8, hc, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [lambdaModeDerivation_entryPoly_lemma_8, hc, map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun y _ => ?_
     simp [_root_.GlobalTheory.PsCo.Pc1.A.inL, mul_assoc]
   have hA : ∑ j, _root_.GlobalTheory.PsCo.Pc1.A.inM n L (_root_.GlobalTheory.PsCo.Pc1.A.pencilDerivativePartMatrix ε L i j) *
         _root_.GlobalTheory.PsCo.Pc1.A.i2 L (X (Sum.inl j.1)) =
       _root_.GlobalTheory.PsCo.Pc1.A.i2 L (_root_.GlobalTheory.PsCo.Pc1.dM ε i (_root_.GlobalTheory.PsCo.Pc1.rP ε)) := by
     rw [modeDerivation_offDiagonalBlockSqNorm_lemma_19]
-    simp [map_sum, _root_.GlobalTheory.PsCo.Pc1.A.pencilDerivativePartMatrix, _root_.GlobalTheory.PsCo.Pc1.A.i2, mul_comm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, _root_.GlobalTheory.PsCo.Pc1.A.pencilDerivativePartMatrix, _root_.GlobalTheory.PsCo.Pc1.A.i2, mul_comm]
   have hsplit : ∑ j, _root_.GlobalTheory.PsCo.Pc1.A.Zm ε L (_root_.GlobalTheory.PsCo.Pc1.A.pencilDerivativePartMatrix ε L) (_root_.GlobalTheory.PsCo.Pc1.A.pencilConstantPartMatrix ε c) i j *
         _root_.GlobalTheory.PsCo.Pc1.A.i2 L (X (Sum.inl j.1)) =
       _root_.GlobalTheory.PsCo.Pc1.A.muM n L * ∑ j, _root_.GlobalTheory.PsCo.Pc1.A.inM n L (_root_.GlobalTheory.PsCo.Pc1.A.pencilDerivativePartMatrix ε L i j) *
           _root_.GlobalTheory.PsCo.Pc1.A.i2 L (X (Sum.inl j.1)) +
         _root_.GlobalTheory.PsCo.Pc1.A.inM n L
           (∑ j, _root_.GlobalTheory.PsCo.Pc1.A.pencilConstantPartMatrix ε c i j * _root_.GlobalTheory.PsCo.Pc1.A.inL n L (X (Sum.inl j.1))) := by
-    simp only [_root_.GlobalTheory.PsCo.Pc1.A.Zm, add_mul, Finset.sum_add_distrib, Finset.mul_sum, map_sum, map_mul, mul_assoc]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [_root_.GlobalTheory.PsCo.Pc1.A.Zm, add_mul, Finset.sum_add_distrib, Finset.mul_sum, map_sum, map_mul, mul_assoc]
     rfl
   rw [hsplit, pencilModeDerivation_embedding_lemma_16, hA, hB, pencilModeDerivation_lambdaPoly_lemma_7, hE]
   have key : _root_.GlobalTheory.PsCo.Pc1.A.inM n L (_root_.GlobalTheory.PsCo.Pc1.A.inL n L (_root_.GlobalTheory.PsCo.Pc1.detbP n ^ M) *
@@ -295,7 +299,8 @@ private lemma coeff_eq_zero_of_mem_lambdaSquares_lemma_12 {g : _root_.GlobalTheo
     _root_.GlobalTheory.PsCo.Pc1.A.exL n L (_root_.GlobalTheory.PsCo.Pc1.A.coefM n L k g) = 0 := by
   rw [_root_.GlobalTheory.PsCo.Pc1.A.JM, Ideal.mem_span_range_iff_exists_fun] at hg
   obtain ⟨f, rfl⟩ := hg
-  simp only [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum]
   refine Finset.sum_eq_zero fun l _ => ?_
   rw [← map_pow, mul_comm, muCoeff_lambdaPoly_mul_lemma_18, mul_comm, lambdaCoeff_mul_variable_sq_lemma_22]
 
@@ -399,7 +404,8 @@ private lemma koszulRecursion_solvable_of_product_lemma (M : ℕ) (m : Fin L →
       lambdaModeDerivation_entryPoly_lemma_8, _root_.GlobalTheory.PsCo.Pc1.OmP]
   have h2 : ∀ h i j, _root_.GlobalTheory.PsCo.Pc1.A.dMu L ε h (Z i j) = _root_.GlobalTheory.PsCo.Pc1.A.dMu L ε i (Z h j) := by
     intro h i j
-    simp only [hZ, _root_.GlobalTheory.PsCo.Pc1.A.Zm, Derivation.leibniz, pencilModeDerivation_muVariable_lemma_9,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hZ, _root_.GlobalTheory.PsCo.Pc1.A.Zm, Derivation.leibniz, pencilModeDerivation_muVariable_lemma_9,
       pencilModeDerivation_lambdaPoly_lemma_7, _root_.GlobalTheory.PsCo.Pc1.A.pencilDerivativePartMatrix, lambdaModeDerivation_entryPoly_lemma_8,
       _root_.GlobalTheory.PsCo.Pc1.A.pencilConstantPartMatrix, map_add, map_sum, lambdaModeDerivation_variable_lemma_10, smul_zero, add_zero, smul_eq_mul,
       mul_zero]
@@ -408,7 +414,8 @@ private lemma koszulRecursion_solvable_of_product_lemma (M : ℕ) (m : Fin L →
     rw [_root_.GlobalTheory.PsCo.DMComm.dM_comm ε h i]
   have h3 : pderiv none w = 0 := pderiv_mu_lambdaPoly_lemma_5 _
   have h5 : _root_.GlobalTheory.PsCo.Pc1.A.i2 L (_root_.GlobalTheory.PsCo.Pc1.rP ε) = ∑ j, b j * a j := by
-    simp [hb, ha, _root_.GlobalTheory.PsCo.Pc1.rP, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [hb, ha, _root_.GlobalTheory.PsCo.Pc1.rP, map_sum]
   have hmem := _root_.GlobalTheory.weighted_det_divergence_mem_ideal (fun x => _root_.GlobalTheory.PsCo.Pc1.A.dMu L ε x) (pderiv none)
     (_root_.GlobalTheory.PsCo.Pc1.A.JM L) Z a b w (_root_.GlobalTheory.PsCo.Pc1.A.muM n L)
     (_root_.GlobalTheory.PsCo.Pc1.A.i2 L (_root_.GlobalTheory.PsCo.Pc1.rP ε)) h1 h2 h3
@@ -425,7 +432,8 @@ private lemma koszulRecursion_solvable_of_product_lemma (M : ℕ) (m : Fin L →
     fun x k => _root_.GlobalTheory.PsCo.Pc1.A.exL n L (_root_.GlobalTheory.PsCo.Pc1.A.coefM n L k (w * ∑ j, Z.adjugate j x * a j)),
     ⟨fun k => ?_, fun k hk => ?_, fun x k hk => ?_⟩, ?_⟩
   · have hk := coeff_eq_zero_of_mem_lambdaSquares_lemma_12 hmem k
-    simp only [map_sub, map_add, map_sum, coeff_pderiv_mu_lemma_13, coeff_embedding_mul_lemma_14, coeff_modeDerivation_lemma_15, mul_assoc,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sub, map_add, map_sum, coeff_pderiv_mu_lemma_13, coeff_embedding_mul_lemma_14, coeff_modeDerivation_lemma_15, mul_assoc,
       pencilModeDerivation_embedding_lemma_16, coeff_mu_mul_lemma_17, shift_const_mul_lemma_4] at hk
     simp only [← mul_assoc] at hk ⊢
     linear_combination hk
@@ -433,7 +441,8 @@ private lemma koszulRecursion_solvable_of_product_lemma (M : ℕ) (m : Fin L →
     simp only [hw, muCoeff_lambdaPoly_mul_lemma_18]
     rw [e1 k hk, mul_zero, map_zero]
   · rw [hN] at hk
-    simp only [Finset.mul_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Finset.mul_sum, map_sum]
     refine Finset.sum_eq_zero fun j _ => ?_
     simp only [hw, ha, _root_.GlobalTheory.PsCo.Pc1.A.i2, AlgHom.comp_apply]
     rw [mul_comm (Z.adjugate j x), ← mul_assoc, ← map_mul, muCoeff_lambdaPoly_mul_lemma_18, e3 k x j hk, mul_zero, map_zero]

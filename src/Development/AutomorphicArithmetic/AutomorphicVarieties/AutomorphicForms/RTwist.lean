@@ -97,7 +97,8 @@ def expo (χ : HChar E) (v : InfinitePlace E) : ℂ := dchi χ (Pi.single v 1)
 theorem dchi_eq_sum (χ : HChar E) (z : Rinf E) : dchi χ z = ∑ v, expo χ v * (z v : ℂ) := by
   classical
   conv_lhs => rw [pi_eq_sum_univ' z]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun v _ => ?_
   rw [map_smul, Complex.real_smul, mul_comm]
   rfl

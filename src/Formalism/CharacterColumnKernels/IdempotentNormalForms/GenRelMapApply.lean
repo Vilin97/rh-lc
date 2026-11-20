@@ -104,7 +104,8 @@ lemma gen_bigMat_mul {R O : Type*} [Ring R] [CommRing O] [Algebra O R] {m g d : 
     [Fintype m] [Fintype d] [DecidableEq d] (ρ : R →ₐ[O] Matrix d d O) (C : Matrix g m R) (P : Matrix m g R) :
     bigMat (⇑ρ) (C * P) = bigRect (⇑ρ) C * bigRect (⇑ρ) P := by
   ext p q
-  simp only [bigMat, bigRect, Matrix.mul_apply, map_sum, map_mul, Matrix.sum_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [bigMat, bigRect, Matrix.mul_apply, map_sum, map_mul, Matrix.sum_apply,
     Fintype.sum_prod_type]
 
 theorem generic : StatGeneric := by
@@ -130,7 +131,8 @@ theorem generic : StatGeneric := by
     rw [RingHom.map_det, RingHom.map_det]
     congr 1
     ext p q
-    simp [L, Matrix.mul_apply, bigRect, Matrix.sum_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [L, Matrix.mul_apply, bigRect, Matrix.sum_apply, map_sum]
 
   have hsum : ∀ w (φ : g × m × d w × d w → O),
       bigRect (ρ w) (∑ j : (Σ w : s, g × m × d w × d w),
@@ -138,7 +140,8 @@ theorem generic : StatGeneric := by
         fun p q => φ (p.1, q.1, p.2, q.2) := by
     intro w φ
     funext p q
-    simp only [bigRect, Matrix.sum_apply, Matrix.smul_apply, map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [bigRect, Matrix.sum_apply, Matrix.smul_apply, map_sum, map_smul]
     rw [Fintype.sum_sigma]
     rw [Fintype.sum_eq_single w (fun x hx => by simp [Pi.single_eq_of_ne hx])]
     simp only [Pi.single_eq_same]

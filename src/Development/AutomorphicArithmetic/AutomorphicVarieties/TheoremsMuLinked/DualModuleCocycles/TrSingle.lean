@@ -132,7 +132,8 @@ theorem UpperTheory.V.Th.Coc.smat :
     ext i j
     rw [Matrix.mul_apply, Matrix.smul_apply, hs, smul_eq_mul]
     simp_rw [hs, hτmul]
-    rw [← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum]
     have hrw : ∑ k, p i * a * q' k * (p k * b * q' j) = p i * a * (∑ k, q' k * p k) * b * q' j := by
       rw [Finset.mul_sum, Finset.sum_mul, Finset.sum_mul]
       exact Finset.sum_congr rfl fun k _ => by simp only [mul_assoc]
@@ -148,4 +149,5 @@ theorem UpperTheory.V.Th.Coc.smat :
       intro i
       rw [mul_assoc, hT.comm, mul_assoc]
     simp only [Matrix.trace, Matrix.diag_apply, hs, hc]
-    rw [← map_sum, ← Finset.mul_sum, hsum, mul_smul_comm, mul_one, map_smul, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, ← Finset.mul_sum, hsum, mul_smul_comm, mul_one, map_smul, smul_eq_mul]

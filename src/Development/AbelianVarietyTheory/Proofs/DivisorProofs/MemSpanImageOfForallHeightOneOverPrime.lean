@@ -151,10 +151,12 @@ theorem mem_spanBy_of_forall_height_one : ∀ (R R₁ F F₁ : Type) [CommRing R
     intro n' g' v hv
     choose h hh using fun i => hexp (v i) (hv i)
     refine ⟨fun j => ∑ i, g' i * ρ (h i j), ?_⟩
-    simp only [map_sum, map_mul, Finset.sum_mul, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, Finset.sum_mul, Finset.mul_sum]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun i _ => ?_
-    rw [mul_left_comm, ← hθ, ← map_mul, hh, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [mul_left_comm, ← hθ, ← map_mul, hh, map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_mul, hθ, mul_assoc]
   have htS : ρ t ∈ S := ⟨t, ht, rfl⟩

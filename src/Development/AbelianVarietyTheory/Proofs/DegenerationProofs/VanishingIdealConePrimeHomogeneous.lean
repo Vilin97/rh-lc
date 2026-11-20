@@ -43,7 +43,8 @@ theorem coneHom_of_isHomogeneous (c : k →+* A) (r : J → A) {f : MvPolynomial
     coneHom c r f = Polynomial.monomial n (MvPolynomial.eval₂Hom c r f) := by
   conv_lhs => rw [f.as_sum]
   conv_rhs => rw [f.as_sum]
-  simp only [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum]
   refine Finset.sum_congr rfl fun d hd => ?_
   have hn : d.sum (fun _ e => e) = n := by
     have := hf (MvPolynomial.mem_support_iff.1 hd)
@@ -56,7 +57,8 @@ theorem coneHom_of_isHomogeneous (c : k →+* A) (r : J → A) {f : MvPolynomial
 theorem coeff_coneHom (c : k →+* A) (r : J → A) (f : MvPolynomial J k) (n : ℕ) :
     (coneHom c r f).coeff n = MvPolynomial.eval₂Hom c r (MvPolynomial.homogeneousComponent n f) := by
   conv_lhs => rw [← f.sum_homogeneousComponent]
-  rw [map_sum, Polynomial.finsetSum_coeff]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Polynomial.finsetSum_coeff]
   simp only [coneHom_of_isHomogeneous c r (MvPolynomial.homogeneousComponent_isHomogeneous _ f),
     Polynomial.coeff_monomial]
   rw [Finset.sum_ite_eq']

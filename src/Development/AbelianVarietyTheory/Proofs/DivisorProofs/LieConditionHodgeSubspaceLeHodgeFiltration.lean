@@ -58,13 +58,15 @@ theorem lieZ_le_Fil : ∀ (p : ℕ) [Fact p.Prime] (D : GlobalTheory.UPel.HT.Dat
       rwa [map_sub, map_sum] at this
     have e1 : q (crysAct o₀ (algebraMap (𝓞 D.F) D.O c') y) = q (∑ i, crysAct o₀ (algebraMap (𝓞 D.F) D.O c') (w i)) :=
       (Submodule.Quotient.eq _).2 h1
-    rw [e1, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e1, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [← map_smul]
     exact (Submodule.Quotient.eq _).2 (hw i c')
   rw [SetLike.mem_coe, ← Submodule.Quotient.mk_eq_zero]
   change q _ = 0
-  simp only [map_sum, map_smul, key, Finset.smul_sum, smul_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, key, Finset.smul_sum, smul_smul]
   rw [Finset.sum_comm]
   simp only [← Finset.sum_smul, hlam, zero_smul, Finset.sum_const_zero]
 

@@ -46,7 +46,8 @@ theorem exists_darboux_of_basis {R W κ : Type} [CommRing R] [Invertible (2 : R)
   show B w w' = (fun k => b.repr w (.inl k)) ⬝ᵥ (fun k => b.repr w' (.inr k)) -
     (fun k => b.repr w' (.inl k)) ⬝ᵥ (fun k => b.repr w (.inr k))
   conv_lhs => rw [← b.sum_repr w, ← b.sum_repr w']
-  simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, Fintype.sum_sum_type, map_add,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, Fintype.sum_sum_type, map_add,
     LinearMap.add_apply, h11, h22, e12, e21, smul_eq_mul, mul_zero, Finset.sum_const_zero, zero_add, add_zero,
     mul_ite, Finset.sum_ite_eq', Finset.mem_univ, if_true, dotProduct, mul_one, mul_neg, Finset.sum_neg_distrib]
   rw [sub_eq_add_neg, add_comm]
@@ -68,7 +69,8 @@ theorem isAlt_sympBil [CharZero F] (σ : E →ₐ[F] E) (hσ : ∀ x, σ (σ x) 
   intro x
   show Algebra.trace F E (-1 * hTens σ JA JB x x) = 0
   have h : σ (hTens σ JA JB x x) = -hTens σ JA JB x x := by
-    simp only [hTens, map_sum, map_mul, hσ, hA, hB]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hTens, map_sum, map_mul, hσ, hA, hB]
     simp only [← Finset.sum_neg_distrib]
     rw [sum_four_swap]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun k _ =>
@@ -135,7 +137,8 @@ theorem symp_map (σ : E →ₐ[F] E) (JA : Matrix α α E) (JB : Matrix β β E
   have hc : ∀ e : E, Algebra.TensorProduct.map (AlgHom.id R R) σ (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) R e) =
       Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (F := F) R (σ e) := fun e => rfl
   rw [symp, symp, ← ht]
-  simp only [hTens, Matrix.map_apply, hc, map_mul, map_sum, map_neg, map_one]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hTens, Matrix.map_apply, hc, map_mul, map_sum, map_neg, map_one]
 
 theorem exists_darboux [CharZero F] [Invertible (2 : R)] (h2 : finrank F E = 2) (σ : E →ₐ[F] E)
     (hσ : ∀ x, σ (σ x) = x) {JA : Matrix α α E} {JB : Matrix β β E}

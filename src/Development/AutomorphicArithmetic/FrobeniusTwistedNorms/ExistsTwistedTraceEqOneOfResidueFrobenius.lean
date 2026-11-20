@@ -36,12 +36,14 @@ theorem UpperTheory.exists_twistedTrace_eq_one_of_residueFrobenius :
       rw [Function.iterate_succ_apply', Function.iterate_succ_apply', hσ, ih]
   set s := ∑ i ∈ Finset.range n, σ^[i] a with hs_def
   have hrs : r s = 1 := by
-    rw [hs_def, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hs_def, map_sum]
     simp_rw [hrit, ha]
     exact hsumy
   have hsunit : IsUnit s := hu s (by rw [hrs]; exact one_ne_zero)
   have hσs : σ s = s := by
-    rw [hs_def, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hs_def, map_sum]
     have h1 : ∀ i, σ (σ^[i] a) = σ^[i + 1] a := fun i => (Function.iterate_succ_apply' σ i a).symm
     simp_rw [h1]
     have e1 := Finset.sum_range_succ' (fun i => σ^[i] a) n

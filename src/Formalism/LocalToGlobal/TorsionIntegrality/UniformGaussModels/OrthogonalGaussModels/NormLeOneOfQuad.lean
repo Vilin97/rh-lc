@@ -157,7 +157,8 @@ theorem CMDatum_proof : CMDatum := by
     rwa [Formalism.L2.Th1.E.ScaledModelNorms.py_ptOf p L ι hΔ _ (hker P).2] at h
   · rw [← map_mul, hprod, Fintype.card_coe]
     simp
-  · rw [← map_sub, ← map_mul, ← map_mul, hs2C, map_sum, hb2]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [← map_sub, ← map_mul, ← map_mul, hs2C, map_sum, hb2]
     simp
 
 theorem ShapeCM_of (hD : CMDatum) : ShapeCM := by

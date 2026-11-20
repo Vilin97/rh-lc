@@ -25,7 +25,8 @@ theorem xi : StatXi := by
     have h1 : jS (xiOf S.ℓ S.s πs) i
         = ∑ k ∈ Finset.range S.ℓ, ((S.ℓ.choose (k + 1) : ℕ) : A) * (jS (xOf S.ℓ S.s πs) i) ^ k := by
       change ((Pi.evalRingHom (fun _ => A) i).comp jS) (xiOf S.ℓ S.s πs) = _
-      simp only [xiOf, map_sum, map_mul, map_natCast, map_pow]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [xiOf, map_sum, map_mul, map_natCast, map_pow]
       rfl
     rw [h1, hx]
     rfl
@@ -72,7 +73,8 @@ def lc (jS : As →+* (ι → A)) {r : ℕ} (b : Fin r → ι → D) (c : Fin r 
 theorem lc_vecMul (jS : As →+* (ι → A)) {r : ℕ} (b : Fin r → ι → D) (v : Fin r → As)
     (Mx : Matrix (Fin r) (Fin r) As) :
     lc jS b (v ᵥ* Mx) = lc jS (fun l => lc jS b (Mx l)) v := by
-  simp only [lc, Matrix.vecMul, dotProduct, map_sum, map_mul, Finset.sum_smul, Finset.smul_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [lc, Matrix.vecMul, dotProduct, map_sum, map_mul, Finset.sum_smul, Finset.smul_sum,
     mul_smul]
   exact Finset.sum_comm
 
@@ -128,7 +130,8 @@ theorem BasisN.coords {b : Fin r → ι → D} (hb : BasisN W jS b) (y : Fin r �
 
 theorem cmp_lc (C : Cmp W jS jA io φ H act ρ) (b : Fin r → ι → D) (c : Fin r → As) :
     C.cmp (lc jS b c) = (fun l => io (jA (c l))) ᵥ* xMat C b := by
-  rw [lc, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [lc, map_sum]
   ext j
   simp [C.smul, Matrix.vecMul, dotProduct, xMat, Finset.sum_apply]
 

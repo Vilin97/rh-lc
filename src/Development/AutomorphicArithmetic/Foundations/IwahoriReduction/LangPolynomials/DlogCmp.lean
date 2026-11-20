@@ -63,7 +63,8 @@ theorem pDlogCmp : SDlogCmp := by
       unfold cyc
       rw [Polynomial.cyclotomic_prime_pow_eq_geom_sum hp.out, Polynomial.eval₂_finset_sum]
       simp only [Polynomial.eval₂_pow, Polynomial.eval₂_X, pow_mul]
-    rw [hc, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hc, map_sum]
     refine Ideal.sum_mem _ fun i _ => ?_
     rw [Derivation.leibniz_pow, map_add, Derivation.map_one_eq_zero, PowerSeries.derivative_X,
       zero_add, smul_eq_mul, mul_one, nsmul_eq_mul, Nat.cast_mul, Nat.cast_pow, mul_assoc]

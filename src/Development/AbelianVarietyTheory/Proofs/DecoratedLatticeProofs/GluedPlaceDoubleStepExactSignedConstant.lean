@@ -293,9 +293,11 @@ theorem vertexExact (D : D7) : VertexExact D := by
       (U₂ (y₀ + ∑ Q'' ∈ withLat Q.lat, y Q'')) =
       ∑ Q' ∈ withLat Q.lat, ((Θ v' (x Q') y₀).1 + ∑ Q'' ∈ withLat Q.lat, (Θ v' (x Q') (y Q'')).1) := by
     refine (hΘ v' _ _).symm.trans ?_
-    rw [map_sum, LinearMap.sum_apply, Submodule.coe_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, LinearMap.sum_apply, Submodule.coe_sum]
     refine Finset.sum_congr rfl fun Q' _ => ?_
-    rw [map_add, map_sum, Submodule.coe_add, Submodule.coe_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_add, map_sum, Submodule.coe_add, Submodule.coe_sum]
   rw [h2, hΞ₂, hexp, Finset.sum_congr rfl fun Q' hQ' => by rw [t0 Q' hQ', zero_add, t1 Q' hQ', hall Q' hQ'],
     Finset.sum_const, ← Nat.cast_smul_eq_nsmul ℂ, smul_smul, hfin, card_withLat_eq_pairCount Q]
   congr 1

@@ -99,7 +99,8 @@ theorem omega_projection_scalar_character (hS : ScalChar X χ) (v : X.V) :
   funext a
   rw [right_casimir_apply]
   simp only [← Pr_tensE]
-  rw [← map_sum, sum_tensE_single, map_add, map_smul, Pr_om, om_Pr hS, ← add_smul, ← neg_smul, Pi.smul_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum, sum_tensE_single, map_add, map_smul, Pr_om, om_Pr hS, ← add_smul, ← neg_smul, Pi.smul_apply]
   congr 1
   unfold cn; push_cast; ring
 

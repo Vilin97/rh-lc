@@ -66,7 +66,8 @@ theorem goodStable_of_irr {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Typ
       obtain ⟨n, ρ, -, hρ⟩ := GlobalTheory.GoodTypeGeneric.isIrrChar_of_isAbsIrrChar D.what₂.embLL (hirr ψ hψ)
       exact isChar_dual ⟨n, ρ, hρ⟩) (fun g => by
       rw [← hsym g]
-      simp only [idemOf, MonoidAlgebra.coeff_sum, Finsupp.finsetSum_apply, coeff_chiIdem, map_sum, map_mul, map_div₀,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [idemOf, MonoidAlgebra.coeff_sum, Finsupp.finsetSum_apply, coeff_chiIdem, map_sum, map_mul, map_div₀,
         map_natCast, inv_one, inv_inv, Nat.card_eq_fintype_card]) hχ
   convert hψ using 1
   funext g

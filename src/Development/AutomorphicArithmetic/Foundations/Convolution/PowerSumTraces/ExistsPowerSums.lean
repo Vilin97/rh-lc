@@ -82,7 +82,8 @@ private theorem hasTrace_hk (m : Measure G) [IsFiniteMeasureOnCompacts m] [m.IsM
   have hres : ∀ w : UpperTheory.V.Hi.fixd ρ I, A w = UpperTheory.V.AlgebraTools.hk ρ I x w := fun w => by
     rw [hk_sum ρ I x hx', ← sub_eq_zero, ← Module.forall_dual_apply_eq_zero_iff ℂ]
     intro l
-    rw [map_sub, sub_eq_zero, (hA w l).2, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, sub_eq_zero, (hA w l).2, map_sum]
     have hsub : ∀ q ∈ Set.Finite.toFinset hx', C q ⊆ D := fun q hq => by
       rw [hU]
       exact Set.subset_biUnion_of_mem (u := C) hq

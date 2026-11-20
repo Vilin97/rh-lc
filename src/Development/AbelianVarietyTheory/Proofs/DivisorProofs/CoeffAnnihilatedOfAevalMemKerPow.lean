@@ -143,7 +143,8 @@ theorem eval_iterDer_aeval {R B : Type} [CommRing R] [CommRing B] [Algebra R B] 
         exact this
       rw [split, map_add, map_add, h0, add_zero, map_smul, map_smul, smul_eq_mul,
         eval_iterDer_aeval ε y D hy hD L (pderiv j Q) (hP j)]
-    rw [der_aeval, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [der_aeval, map_sum, map_sum]
     simp only [key, hD, ite_mul, one_mul, zero_mul, Finset.sum_ite_eq, Finset.mem_univ, if_true]
 
 theorem exists_mul_coeff_eq_zero (d N : ℕ) : ∃ K : ℕ, 0 < K ∧ ∀ (R B : Type) [CommRing R] [CommRing B] [Algebra R B]

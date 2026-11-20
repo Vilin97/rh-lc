@@ -92,7 +92,8 @@ theorem sum_prod_mul_det_rowSel (U : Matrix (Fin n) (Fin n) ℂ) :
     simp [Pi.single_apply]
   conv_rhs => rw [← h]
   change _ = (Matrix.detRowAlternating : AlternatingMap ℂ (Fin n → ℂ) ℂ (Fin n)) _
-  rw [← AlternatingMap.coe_multilinearMap, MultilinearMap.map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← AlternatingMap.coe_multilinearMap, MultilinearMap.map_sum]
   refine Finset.sum_congr rfl fun c _ => ?_
   rw [MultilinearMap.map_smul_univ, smul_eq_mul]
   rfl

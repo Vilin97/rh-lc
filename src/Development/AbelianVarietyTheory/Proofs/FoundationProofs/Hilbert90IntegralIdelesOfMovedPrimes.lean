@@ -167,9 +167,11 @@ theorem exists_asm (a : HeightOneSpectrum (𝓞 ℚ) → 𝓞 E) :
   let b := Module.finBasis ℤ (𝓞 E)
   refine ⟨∑ j, algebraMap (𝓞 E) E (b j) ⊗ₜ[ℚ] mkInt (fun v => ((b.repr (a v) j : ℤ) : v.adicCompletion ℚ))
     (fun v => intCast_mem _ _), sum_mem fun j _ => levelaf_tmul_mem _ (mkInt_mem _ _), fun v => ?_⟩
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   conv_rhs => rw [← b.sum_repr (a v)]
-  rw [show ∀ x : 𝓞 E, (x : E) = algebraMap (𝓞 E) E x from fun _ => rfl, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [show ∀ x : 𝓞 E, (x : E) = algebraMap (𝓞 E) E x from fun _ => rfl, map_sum, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [afsplit_prV_tmul, mkInt_apply, map_zsmul, ← zsmul_one, ← TensorProduct.smul_tmul]
   rfl

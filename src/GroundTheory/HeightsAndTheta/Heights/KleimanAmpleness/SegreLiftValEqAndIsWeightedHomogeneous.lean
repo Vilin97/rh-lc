@@ -115,11 +115,13 @@ theorem SegreLiftPrime.proof : SegreLiftPrime.Statement := by
       · by_contra hne
         exact h (Finset.mem_insert_of_mem (Finset.mem_image_of_mem _ (mem_support_iff.mpr hne)))
     have hker : segreLiftMap ι F W f = 0 := hf
-    rw [hsum, map_sum, Finset.sum_congr rfl (fun b' _ => (hB b').1)] at hker
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hsum, map_sum, Finset.sum_congr rfl (fun b' _ => (hB b').1)] at hker
     have hcoeff := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p (b (Sum.inl ()))) hker
     simp only [Polynomial.finsetSum_coeff, Polynomial.coeff_C_mul_X_pow, Polynomial.coeff_zero]
       at hcoeff
-    rw [← Finset.sum_filter, ← map_sum, Ideal.Quotient.eq_zero_iff_mem] at hcoeff
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Finset.sum_filter, ← map_sum, Ideal.Quotient.eq_zero_iff_mem] at hcoeff
     have hcomp := hW.multiHomog _ hcoeff (segreDeg b)
     have hval : ∀ b' ∈ s.filter (fun b' => b (Sum.inl ()) = b' (Sum.inl ())),
         weightedHomogeneousComponent (blockWeight ι) (segreDeg b)
@@ -135,7 +137,8 @@ theorem SegreLiftPrime.proof : SegreLiftPrime.Statement := by
       · rw [if_neg hbb, if_neg (fun h => hbb (segreDeg_injective_of_fst h₀.symm h.symm))]
     have hbmem : b ∈ s.filter (fun b' => b (Sum.inl ()) = b' (Sum.inl ())) :=
       Finset.mem_filter.mpr ⟨Finset.mem_insert_self _ _, rfl⟩
-    rw [map_sum, Finset.sum_congr rfl hval, Finset.sum_ite_eq', if_pos hbmem] at hcomp
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_congr rfl hval, Finset.sum_ite_eq', if_pos hbmem] at hcomp
     show segreLiftMap ι F W _ = 0
     rw [(hB b).1, (Ideal.Quotient.eq_zero_iff_mem).mpr hcomp, map_zero, zero_mul]
   · intro d

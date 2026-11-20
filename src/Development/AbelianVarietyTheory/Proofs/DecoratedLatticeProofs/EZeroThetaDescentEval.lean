@@ -40,7 +40,8 @@ theorem good_fix {K : Type} [Field K] [NumberField K] [StarRing K] {G : Type} [G
       B.S.basis.equivFun.symm (B.S.gaMat B.r a *ᵥ x) = ∑ g, a.coeff g • B.r g (B.S.basis.equivFun.symm x) := by
     intro a x
     apply B.S.basis.equivFun.injective
-    rw [LinearEquiv.apply_symm_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [LinearEquiv.apply_symm_apply, map_sum]
     simp only [CSD.gaMat, Matrix.sum_mulVec, Matrix.smul_mulVec, map_smul, CSD.actMat]
     refine Finset.sum_congr rfl fun g _ => ?_
     congr 1
@@ -91,7 +92,8 @@ theorem goodProjector_fixes_compositeThetaLift_of_fixed (hCR : GlobalTheory.Publ
     R.e0 (R.thDn t (R.jX t x) (PiTensorProduct.tprod ℂ v)) = R.thDn t (R.jX t x) (PiTensorProduct.tprod ℂ v) := by
   have key : R.thDn t (R.jX t x) (PiTensorProduct.tprod ℂ v) = R.e0 (R.thDn t (R.jX t x) (PiTensorProduct.tprod ℂ v)) := by
     conv_lhs => rw [← hx]
-    simp only [map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply]
     simp only [RealDat.e0, gaL, LinearMap.sum_apply, LinearMap.smul_apply]
     refine Finset.sum_congr rfl fun g _ => ?_
     exact congrArg (fun z => RealDat.eC (A := A) D.what₂.embLL g • z) (thDn_act hCR R h hM hC hred t g x v)

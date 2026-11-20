@@ -43,7 +43,8 @@ theorem herm_sum {A : Type} [CommRing A] {m n : ℕ} (σ : A →+* A) (hσ : ∀
     (x y : Matrix (Fin n) (Fin m) A) :
     σ (∑ a, ∑ b, ∑ c, ∑ d, P a b * σ (y c b) * Q c d * x d a) =
       ∑ a, ∑ b, ∑ c, ∑ d, P a b * σ (x c b) * Q c d * y d a := by
-  simp only [map_sum, map_mul, hσ, hP, hQ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, hσ, hP, hQ]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => ?_
   rw [Finset.sum_comm]

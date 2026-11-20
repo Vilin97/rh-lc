@@ -38,12 +38,14 @@ theorem exists_fixed_map_eq {π : Representation ℂ G V} (hπ : IsSmooth π) {H
   have hc : ∀ (g : G) w, π g⁻¹ (π g w) = w := fun g w => by
     rw [← Module.End.mul_apply, ← map_mul]; simp
   refine ⟨(S.card : ℂ)⁻¹ • ∑ w ∈ S, w, fun h => ?_, ?_⟩
-  · simp only [MonoidHom.one_apply, Units.val_one, one_smul, map_smul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [MonoidHom.one_apply, Units.val_one, one_smul, map_smul, map_sum]
     congr 1
     refine Finset.sum_nbij' (π h) (π (h⁻¹ : H)) (hst h) (hst h⁻¹) (fun w _ => hc _ w)
       (fun w _ => ?_) fun _ _ => rfl
     simpa using hc (h : G)⁻¹ w
-  · rw [map_smul, map_sum, Finset.sum_congr rfl (g := fun _ => f u), Finset.sum_const,
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_smul, map_sum, Finset.sum_congr rfl (g := fun _ => f u), Finset.sum_const,
       ← Nat.cast_smul_eq_nsmul ℂ, smul_smul, inv_mul_cancel₀ hne, one_smul]
     intro w hw
     obtain ⟨h, rfl⟩ := (hmem w).1 hw

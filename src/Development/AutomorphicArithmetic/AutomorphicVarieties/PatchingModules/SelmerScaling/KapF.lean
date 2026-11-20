@@ -66,7 +66,8 @@ theorem UpperTheory.V.Pa.indF :
       obtain ⟨γ, rfl⟩ := hsurj g'
       apply hψinj
       have hL : ψ ((∑ j, cA j • k.κ j) (h.p₀ γ)) = (b : x.A) • (∑ j, c j • kapF h k j) γ := by
-        simp only [Finset.sum_apply, Pi.smul_apply, map_sum, map_smul, hκ, hcj, Finset.smul_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [Finset.sum_apply, Pi.smul_apply, map_sum, map_smul, hκ, hcj, Finset.smul_sum]
       rw [hL, hcY]
       simp only [dY, map_sub, map_mul, hρ, hψY, Matrix.mul_smul, Matrix.smul_mul, smul_sub, map_inv]
   have hzero := k.indep cA hmem

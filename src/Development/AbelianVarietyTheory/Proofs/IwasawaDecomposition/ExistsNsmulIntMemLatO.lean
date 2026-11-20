@@ -50,7 +50,8 @@ theorem sum_idem_mul_self {A ι : Type} [CommRing A] (tf : ∀ (n : ℕ) (z : A)
     (h0 : (∑ i ∈ s, p i) * σ (∑ i ∈ s, p i) = 0)
     (h : ∀ i ∈ s, ∀ j ∈ s, j ≠ i → p i * σ (p j) = 0 → p j * σ (p i) = 0 → p i * p j = 0) :
     (∑ i ∈ s, p i) * (∑ i ∈ s, p i) = ∑ i ∈ s, p i := by
-  rw [map_sum, Finset.sum_mul_sum, ← Finset.sum_product'] at h0
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_mul_sum, ← Finset.sum_product'] at h0
   have hz := idem_eq_zero_of_sum tf (fun x : ι × ι => p x.1 * σ (p x.2)) _ (fun i hi => by
     obtain ⟨h1, h2⟩ := Finset.mem_product.1 hi
     rw [mul_mul_mul_comm, ← map_mul, hp _ h1, hp _ h2]) h0
@@ -154,7 +155,8 @@ theorem idemSum_mul_self {e : AE D} {P : Finset (Formalism.L2.DIV.Pl D.host.E)} 
 
 theorem idemSum_infPart {e : AE D} {P : Finset (Formalism.L2.DIV.Pl D.host.E)} (h : IsIdemSum e P) : infPart D e = 0 := by
   obtain ⟨⟨es, hes, rfl⟩, -⟩ := h
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_eq_zero fun i hi => GlobalTheory.SplitScalar.infPart_splitIdem (hes i hi).1
 
 theorem infPart_cA {a : AE D} (h : infPart D a = 0) : infPart D (cA D a) = 0 := by

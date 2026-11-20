@@ -125,7 +125,8 @@ lemma val_sub_roots {N : ℕ} (hN : 1 ≤ N) (hvN : v (N : F) = 0) {z z' : F} (h
       rw [h]
     exact (mul_eq_zero.1 h1).resolve_right hne'
   have hmap := congrArg (IsLocalRing.residue (intRing v)) hsum0
-  rw [map_sum, map_zero] at hmap
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_zero] at hmap
   simp only [map_mul, map_pow, ← hres] at hmap
   rw [geom_sum₂_self] at hmap
   have hres0 : IsLocalRing.residue (intRing v) Z ≠ 0 :=
@@ -187,7 +188,8 @@ theorem span_of_eigen (UU Pos : W → Prop) (hb : LinearIndependent F b)
       T γ (∑ i ∈ S, a i • sv i) - χ j γ • ∑ i ∈ S, a i • sv i =
         ∑ i ∈ S.erase j, (a i * (χ i γ - χ j γ)) • sv i := by
     intro S a j γ hj
-    rw [map_sum, Finset.smul_sum, ← Finset.sum_sub_distrib]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.smul_sum, ← Finset.sum_sub_distrib]
     have hterm : ∀ i, T γ (a i • sv i) - χ j γ • (a i • sv i) = (a i * (χ i γ - χ j γ)) • sv i := by
       intro i
       rw [map_smul, heig, smul_smul, smul_smul, ← sub_smul]

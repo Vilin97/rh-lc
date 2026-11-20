@@ -54,7 +54,8 @@ theorem qb_key {M : GLMod n} (CF : ColFam M) (F : Type) [CommRing F] (j : CF.J) 
       ∑ K, if qb_wtT (CF.mu j) K = nu then (CF.ph j i K : GLCoord F n) * mapCoord F (TMat (CF.mu j) K I)
         else 0 := by
   have h := congrArg (mapCoord F) (qb_keyZ CF j I nu i)
-  simp only [map_sum, map_mul, map_intCast, apply_ite (mapCoord F), map_zero] at h
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, map_intCast, apply_ite (mapCoord F), map_zero] at h
   rw [← h, qb_ev_apply]
   simp only [ColFam.vec, map_intCast]
 
@@ -82,7 +83,8 @@ lemma qb_indep_ext {k W κ ι : Type*} [Field k] [AddCommGroup W] [Module k W] [
   refine hl (Fintype.linearIndependent_iff.1 hc (fun j => l (f j)) ?_ j)
   funext i
   have := congrArg l (h i)
-  simpa [map_sum, mul_comm] using this
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa [map_sum, mul_comm] using this
 
 theorem qb_indepF {M : GLMod n} (CF : ColFam M) (F : Type) [Field F] (nu : Fin n → ℤ) :
     LinearIndependent F
@@ -114,7 +116,8 @@ lemma qb_vecF_def {M : GLMod n} (CF : ColFam M) (F : Type) [CommRing F] (x : qb_
 theorem qb_nonvanish (hA : LemmaA) {M : GLMod n} (CF : ColFam M) (F : Type) [Field F] (a : qb_Idx CF → F)
     (nu : Fin n → ℤ) (hmax : ∀ x, a x ≠ 0 → DomLE nu (CF.mu x.1) → CF.mu x.1 = nu)
     (h0 : qb_ev M F nu (∑ x, a x • qb_vecF CF F x) = 0) : ∀ x, CF.mu x.1 = nu → a x = 0 := by
-  rw [← qb_evL_apply, map_sum] at h0
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← qb_evL_apply, map_sum] at h0
   simp only [map_smul, qb_evL_apply] at h0
   let f : CF.J → GLCoord F n := fun j => ∑ I : {I : TIdx (CF.mu j) // StdT I}, a ⟨j, I⟩ • mapCoord F (brk (CF.mu j) I.1)
   have h2 : ∀ (x : qb_Idx CF) (i : M.ι), (a x • qb_ev M F nu (qb_vecF CF F x)) i =

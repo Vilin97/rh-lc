@@ -63,7 +63,8 @@ theorem UpperTheory.Gal.productCup_of_system.idJ_of :
     exact Submodule.sum_mem _ fun k _ => Submodule.apply_mem_map₂ _ (hwB k) (hv k)
   · intro y hy
     conv_rhs => rw [hdec' y (hsp y hy)]
-    simp only [map_sum, LinearMap.sum_apply, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.sum_apply, Finset.smul_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     have : muP F K τ (w k ⊗ₜ[ℂ] v k) y = (Algebra.trace F K (τ (w k * y))) ⊗ₜ[ℂ] v k := by
       simp [muP]

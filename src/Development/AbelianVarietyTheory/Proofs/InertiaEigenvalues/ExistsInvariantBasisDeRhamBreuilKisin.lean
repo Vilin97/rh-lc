@@ -65,7 +65,8 @@ theorem frob_basis_eq {K : FinExt l} {bk : BK K} {τ : Ainf l} (hτ : bk.IsPer �
     simpa [Matrix.mul_apply, BK.evW] using congrFun (congrFun F.φ i) j
   refine Matrix.ext fun i j => ?_
   apply GlobalTheory.Prism.inclW_injective
-  rw [Matrix.map_apply, ← frobW_inclW, hYij, map_mul, map_pow, frobW_inclW, hτ.1, Matrix.mul_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.map_apply, ← frobW_inclW, hYij, map_mul, map_pow, frobW_inclW, hτ.1, Matrix.mul_apply, map_sum]
   simp_rw [map_mul, hYij]
   calc (inclW l (bk.ev bk.E) * inclW l τ) ^ N * frobW l (F.T i j)
       = inclW l τ ^ N * (bk.evW bk.E ^ N * frobW l (F.T i j)) := by simp only [BK.evW, RingHom.comp_apply]; ring

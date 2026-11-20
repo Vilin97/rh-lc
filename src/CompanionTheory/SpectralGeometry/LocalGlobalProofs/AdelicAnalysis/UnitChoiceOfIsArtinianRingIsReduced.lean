@@ -39,11 +39,13 @@ theorem unitChoice_of_isArtinianRing_isReduced :
     rw [← map_mul, ← map_zero φ.symm]
     congr 1
     split_ifs with h1 h2 <;> simp_all
-  · rw [← map_sum, ← map_one φ.symm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [← map_sum, ← map_one φ.symm]
     congr 1
     rw [Finset.sum_ite_eq]
     simp
-  · rw [← isUnit_map_iff φ, map_sum, Pi.isUnit_iff]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [← isUnit_map_iff φ, map_sum, Pi.isUnit_iff]
     intro I
     have hcomp : (∑ i, φ (φ.symm (E i) * f i)) I = φ (f (c I)) I := by
       simp only [map_mul, AlgEquiv.apply_symm_apply, Finset.sum_apply, Pi.mul_apply, E, ite_mul,

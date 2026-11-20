@@ -58,7 +58,8 @@ theorem conjRoot : GlobalTheory.Published.CuspRapidDecay → GlobalTheory.Publis
       ν⁻¹ • ∑ k, ρ₀.e ((Fm.ex x hx i).nch.twI w) ((Fm.ex x hx i).nch.sd w) (a k) • evW p.nexp p.v₀ j (g k).val := by
     intro ρ₀ hρ₀
     change ν⁻¹ • evK p.nexp p.v₀ hρ₀ _ j _ (p.nexp.eF _ _ _ (Nat.le_add_left _ _) j.2 f) = _
-    rw [hfe, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hfe, map_sum]
     rfl
   rw [key ρ' hρ', key ρ hρ, smul_comm, ← hsum]
   congr 1

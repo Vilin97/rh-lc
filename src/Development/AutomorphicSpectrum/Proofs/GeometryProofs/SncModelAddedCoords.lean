@@ -129,7 +129,8 @@ theorem isSncModel_pull : ∀ (X X' : Scheme.{0}) (Ω₀ Ω : Type) [Field Ω₀
       rw [AddSubmonoidClass.coe_finset_sum]
       show ∑ l, algebraMap Ω₀ Ω (a₀ l) * algebraMap Ω₀ Ω (f₀ l) = 1
       simp only [← map_mul]
-      rw [← map_sum, hsum, map_one]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← map_sum, hsum, map_one]
     obtain ⟨l, hl⟩ : ∃ l, fl l ∉ P := by
       by_contra hcon
       push_neg at hcon

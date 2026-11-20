@@ -22,11 +22,13 @@ theorem eq_algebraMap_of_isType {n : ℕ} {a : Alt n} (h : IsType 0 0 a) : ∃ c
 
 theorem algebraMapInv_delAt {n : ℕ} (u : ReciprocityTheory.L2DbarEstimates.V n → Alt n) (v : ReciprocityTheory.L2DbarEstimates.V n) :
     ExteriorAlgebra.algebraMapInv (delAt u v) = 0 := by
-  simp [delAt, dz, map_sum, ExteriorAlgebra.algebraMapInv]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [delAt, dz, map_sum, ExteriorAlgebra.algebraMapInv]
 
 theorem algebraMapInv_dbarAt {n : ℕ} (u : ReciprocityTheory.L2DbarEstimates.V n → Alt n) (v : ReciprocityTheory.L2DbarEstimates.V n) :
     ExteriorAlgebra.algebraMapInv (dbarAt u v) = 0 := by
-  simp [dbarAt, dzb, map_sum, ExteriorAlgebra.algebraMapInv]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [dbarAt, dzb, map_sum, ExteriorAlgebra.algebraMapInv]
 
 theorem eq_of_isExact_sub : ∀ (M : Type) [TopologicalSpace M] (n : ℕ) (A : HolAtlas M n) (α β : A.Fld),
     (∀ x, IsType 0 0 (α x)) → (∀ x, IsType 0 0 (β x)) → A.IsExact (α - β) → α = β := by

@@ -352,7 +352,8 @@ theorem ord_prod : ∀ (R K : Type) [CommRing R] [IsDomain R] [IsLocalRing R] [F
         simp only [T, Sum.elim_inl, Sum.elim_inr, Pi.zero_apply, map_zero, zero_mul, Finset.sum_const_zero,
           add_zero, app_appLE ep]
         rcases i with i | i
-        · simp only [Sum.elim_inl, a₁ i _ _ _ _, hr, map_sum, map_mul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          · simp only [Sum.elim_inl, a₁ i _ _ _ _, hr, map_sum, map_mul]
         · simp only [Sum.elim_inr, b₂ i _ _ _ _]
           simp [VF.zero]
       · obtain ⟨r, hr⟩ := inSpan_of_cramer (φ := (N.j.app V').hom) (d := fun i => (D' i).D (N.j ⁻¹ᵁ V'))
@@ -364,7 +365,8 @@ theorem ord_prod : ∀ (R K : Type) [CommRing R] [IsDomain R] [IsLocalRing R] [F
         rcases i with i | i
         · simp only [Sum.elim_inl, a₂ i _ _ _ _]
           simp [VF.zero]
-        · simp only [Sum.elim_inr, b₁ i _ _ _ _, hr, map_sum, map_mul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          · simp only [Sum.elim_inr, b₁ i _ _ _ _, hr, map_sum, map_mul]
     obtain ⟨ρ, hρ⟩ := det_of_inSpan (φ := ((M.prod N).j.app W').hom)
       (d := fun i => (Sum.elim E₁ E₂ i).D ((M.prod N).j ⁻¹ᵁ W')) (T := T) (τ := τ₁) fun j => by
         obtain ⟨a, ha, b, hb, hu, e⟩ := hg (τ₁ j)

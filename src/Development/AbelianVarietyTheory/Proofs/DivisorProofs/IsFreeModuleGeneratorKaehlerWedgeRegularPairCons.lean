@@ -121,7 +121,8 @@ theorem isFreeGen_dForm_regularPair_cons : ∀ {L : Type} [Field L] (cL : ℂ �
       intro y _
       let c := b'.repr (mapBaseChange ℂ Q (ResidueField Q) y)
       have hy0 : mapBaseChange ℂ Q (ResidueField Q) (y - ∑ i, c i • w i.succ.succ) = 0 := by
-        rw [map_sub, map_sum, sub_eq_zero]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sub, map_sum, sub_eq_zero]
         conv_lhs => rw [← b'.sum_repr (mapBaseChange ℂ Q (ResidueField Q) y)]
         refine Finset.sum_congr rfl fun i _ => ?_
         rw [map_smul, hwz, hmb, hz, hb']
@@ -143,7 +144,8 @@ theorem isFreeGen_dForm_regularPair_cons : ∀ {L : Type} [Field L] (cL : ℂ �
       intro g hg
       rw [Fin.sum_univ_succ, Fin.sum_univ_succ] at hg
       have hφ := congrArg (mapBaseChange ℂ Q (ResidueField Q)) hg
-      simp only [map_add, map_sum, map_smul, map_zero] at hφ
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_add, map_sum, map_smul, map_zero] at hφ
       rw [hw0, hmb, ht0, Derivation.map_zero, smul_zero, zero_add] at hφ
       rw [hw1, hmb, hu0, Derivation.map_zero, smul_zero, zero_add] at hφ
       simp only [hwz, hmb, hz, ← hb'] at hφ

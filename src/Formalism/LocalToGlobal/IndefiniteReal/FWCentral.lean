@@ -137,7 +137,8 @@ theorem principal_form_tensor_expansion (c : Fin (finrank D.what₂.LL (R.toReal
   show ((Real.sqrt (RealDat.nP F.lv2 b) : ℝ) : ℂ) • (R.toRealDat.WS F.lv2 b i (sg0 D A3.A)).subtype
     (∑ l, cj (twAt D.what₂.embLL A3.A.v0) (c l) •
       (⟨R.toRealDat.bC F.lv2 b i _ l, Submodule.subset_span ⟨l, rfl⟩⟩ : R.toRealDat.WS F.lv2 b i (sg0 D A3.A))) = _
-  rw [map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.smul_sum]
   refine Finset.sum_congr rfl fun l _ => ?_
   rw [LinearMap.map_smul, smul_comm]
   congr 1
@@ -267,7 +268,8 @@ theorem FWTie.rat_of_val (t : FWTie T R κ v₀) (ht : t.Evaluates) {i : Fin D.R
     (h : ∀ g, evAt R i σ (v₀ i σ) w g = ∑ k, σ (a k) * phiC T hV (wtA (κ i)) (f k : T.R ((i : ℕ) + 1)) g) :
     ∃ y, (R.FW i).j σ y = w := by
   refine ⟨∑ k, a k • ((t.e i (f k) : (R.FW i).WK) : Fin (R.nW i) → D.what₂.LL), hinj (funext fun g => ?_)⟩
-  rw [h g, evAt, map_sum, map_sum, _root_.sum_apply, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h g, evAt, map_sum, map_sum, _root_.sum_apply, Finset.sum_apply]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [map_smulₛₗ, map_smul, ← ht i σ hσ hV (f k)]
   rfl

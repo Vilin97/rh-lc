@@ -288,7 +288,8 @@ theorem param_of_dif_bijective (hG : Smooth G.hom)
   have pr : ∀ c : Fin d → S, P _ (Chart.prodPts c v) = tv (dif x0 (j 1) (h0 1) c) := fun c => by
     have e : c = ∑ i, c i • (Pi.single i 1 : Fin d → S) := by
       funext k; simp [Pi.single_apply]
-    conv_rhs => rw [e, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_rhs => rw [e, map_sum]
     simp only [map_smul]
     rw [tv_comb, Chart.prodPts, List.prod_ofFn, map_prod]
     refine Finset.prod_congr rfl fun i _ => ?_
@@ -394,7 +395,8 @@ theorem tan_iff (h0 : algMap x0 (jetAug : Jet S (Fin d) 1 →ₐ[S] S) ≫ j 1 =
     refine Eq.trans ?_ (tv_dif x0 _ _ _).symm
     rw [← tan_jIn, ← hcomp]; rfl
   have e₂ : ∑ i, c i • dif x0 (j 1) h0 (Pi.single i 1) = dif x0 (j 1) h0 c := by
-    simp only [← map_smul, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [← map_smul, ← map_sum]
     congr 1
     funext k; simp [Pi.single_apply]
   simp only [e₁]
@@ -424,7 +426,8 @@ theorem tanBasis_iff (h0 : algMap x0 (jetAug : Jet S (Fin d) 1 →ₐ[S] S) ≫ 
       (fun i => (tv (dif x0 (j 1) h0 (c ((Fintype.equivFin κ).symm i)))).left)
       (fun i => a ((Fintype.equivFin κ).symm i)) (tv W).left ↔
         dif x0 (j 1) h0 (Fintype.linearCombination S c a) = W := fun W a => by
-    rw [comb_iff_sum t x0 (Fintype.equivFin κ).symm (fun ℓ => dif x0 (j 1) h0 (c ℓ)) a,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [comb_iff_sum t x0 (Fintype.equivFin κ).symm (fun ℓ => dif x0 (j 1) h0 (c ℓ)) a,
       Fintype.linearCombination_apply, map_sum]
     simp only [map_smul]
     exact ⟨fun h => tv_injective (Over.OverMorphism.ext h), fun h => by rw [h]⟩

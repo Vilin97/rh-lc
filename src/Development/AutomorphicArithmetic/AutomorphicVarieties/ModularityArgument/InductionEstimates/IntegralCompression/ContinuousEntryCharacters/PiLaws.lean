@@ -20,7 +20,8 @@ private theorem T_idem (n : ℕ) (q : ℤ) (k : U2) : ∫ h, T n q h * T n q (h�
   have e : ∀ h, T n q h * T n q (h⁻¹ * k) = ((KT.normSqInt n q : ℂ))⁻¹ * (((KT.normSqInt n q : ℂ))⁻¹ *
       (conj (KT.psi n q n h) • ∑ i ∈ Finset.range (n + 1), ((n.choose i : ℂ) * KT.psi n q i h) • conj (KT.psi n q i k))) := by
     intro h
-    simp only [T, KT.psi_inv_mul, map_sum, map_mul, map_natCast, starRingEnd_self_apply, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [T, KT.psi_inv_mul, map_sum, map_mul, map_natCast, starRingEnd_self_apply, smul_eq_mul]
     ring
   simp_rw [e]
   rw [integral_const_mul, integral_const_mul]

@@ -90,7 +90,8 @@ omit [Smooth G.hom] [GrpObj G] in
 theorem mem_span_range {A Ω : Type} [CommRing A] [Field Ω] (g : A →+* Ω) {Fq E : Type} [AddCommGroup Fq]
     [Module A Fq] [AddCommGroup E] [Module Ω E] {n : ℕ} (B : Module.Basis (Fin n) A Fq) (j : Fq →ₛₗ[g] E)
     (y : Fq) : j y ∈ Submodule.span g.range (Set.range fun k => j (B k)) := by
-  rw [← B.sum_repr y, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← B.sum_repr y, map_sum]
   refine Submodule.sum_mem _ fun k _ => ?_
   rw [j.map_smulₛₗ]
   exact Submodule.smul_mem _ (⟨g (B.repr y k), _, rfl⟩ : g.range) (Submodule.subset_span ⟨k, rfl⟩)

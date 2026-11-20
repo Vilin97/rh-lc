@@ -78,7 +78,8 @@ theorem UpperTheory.Gal.TranscendenceTraces.imgBasic_of :
       rw [map_add]
       congr 1
       · exact (congrArg _ (hαβ _ _ rfl A)).trans (τ.comm A _ s _)
-      · rw [Units.smul_def, Units.smul_def, map_zsmul, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        · rw [Units.smul_def, Units.smul_def, map_zsmul, map_sum]
         congr 1
         refine Finset.sum_congr rfl fun i _ => ?_
         rw [map_zsmul]

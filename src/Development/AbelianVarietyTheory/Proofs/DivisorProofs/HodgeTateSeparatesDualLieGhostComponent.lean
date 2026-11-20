@@ -70,7 +70,8 @@ theorem main : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgClosed C]
       simp [Pi.single_apply, eq_comm]
     have hθ : WittVector.fontaineTheta O p (r ⬝ᵥ (D.F *ᵥ fun i => ofPadic p O (e t i))) =
         ρ (D.al (toO e t)) := by
-      rw [hρ, dotProduct, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hρ, dotProduct, map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_mul, RingHom.map_mulVec]
       rfl

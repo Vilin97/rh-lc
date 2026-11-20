@@ -24,7 +24,8 @@ theorem hf_smul_right (c : R) (x y : Fin n → R) : hf σ G x (c • y) = σ c *
 
 theorem hf_conj (hσ : ∀ a, σ (σ a) = a) (hG : ∀ a b, σ (G a b) = G b a) (x y : Fin n → R) :
     σ (hf σ G x y) = hf σ G y x := by
-  simp only [hf, map_sum, map_mul, hσ, hG]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hf, map_sum, map_mul, hσ, hG]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
   ring

@@ -74,7 +74,8 @@ theorem map_dv {S' : Type*} [CommRing S'] [Algebra ℚ S'] (f : S →+* S') (k :
 theorem map_Lg {S' : Type*} [CommRing S'] [Algebra ℚ S'] (f : S →+* S') (N : ℕ) (x : S) :
     f (large₂ N x) = large₂ N (f x) := by
   unfold large₂
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [map_mul, map_mul, map_pow, map_neg, map_one, map_natCast, map_dv]
 

@@ -268,7 +268,8 @@ theorem mom_map (X : Hn r F E) (a : Inv r F) (h : HasInv X a) (n : ℕ) :
       -((fun j : Fin r => algebraMap F E (mom (sec a) (k + j))) ⬝ᵥ fun i => algebraMap F E (a.1 i)) := by
     intro k
     rw [sec_rec]
-    simp [dotProduct, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [dotProduct, map_sum, map_mul]
   have := seq_eq (u := fun n => mom X.toGl n) (v := fun n => algebraMap F E (mom (sec a) n)) _
     (mom_add_r X.toGl _ hq) hS (fun k hk => by
       have e1 := h2 ⟨k, hk⟩

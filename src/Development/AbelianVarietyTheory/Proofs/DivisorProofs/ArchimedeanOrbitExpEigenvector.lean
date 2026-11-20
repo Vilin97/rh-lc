@@ -98,7 +98,8 @@ theorem mulVec_embArch_eq_smul : ∀ (F E : Type) [Field F] [NumberField F] [Fie
   simp only [Pi.smul_apply, smul_eq_mul, Matrix.mulVec, dotProduct, hM, add_mul, Finset.sum_add_distrib, hkey]
   have hs : ∑ s, T2 (T1 ((Y r s - (1 : Matrix (Fin n) (Fin n) (w.Completion ⊗[F] E)) r s) * ((1 : w.Completion) ⊗ₜ[F] x s))) =
       T2 (T1 ((b - 1) * ((1 : w.Completion) ⊗ₜ[F] x r))) := by
-    rw [← map_sum, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, ← map_sum]
     congr 2
     have := hYX r
     simp only [Matrix.mulVec, dotProduct, X'] at this

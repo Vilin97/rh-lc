@@ -39,7 +39,8 @@ theorem aic_step : ∀ (B : Type) [CommRing B] (T : Type) [CommRing T] (π : B) 
     have e : P.eval (g x) - g (Q.eval x) =
         ∑ i ∈ Finset.range P.natDegree, (P.coeff i - g (c i)) * g x ^ i := by
       conv_lhs => rw [hP.as_sum]
-      simp only [Q, eval_add, eval_pow, eval_X, eval_finsetSum, eval_mul, eval_C, map_add, map_pow,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Q, eval_add, eval_pow, eval_X, eval_finsetSum, eval_mul, eval_C, map_add, map_pow,
         map_sum, map_mul, sub_mul, Finset.sum_sub_distrib]
       ring
     rw [e]

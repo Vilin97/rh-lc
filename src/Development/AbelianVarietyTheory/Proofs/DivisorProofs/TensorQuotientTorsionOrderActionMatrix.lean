@@ -127,7 +127,8 @@ theorem GlobalTheory.Mum.TensAct.qkAct_tens : ∀ (R : Type) [CommRing R] [IsDom
   have hey : ∀ i, TensTor.chi T ν ν' y'' i = (us i).1.1.toAdd := fun i => by
     rw [husy i]
     have h1 : ν'.eX y'' = x • p'.y := by rw [hy'', AddEquiv.apply_symm_apply]
-    simp only [TensTor.chi, h1, hact.1 x p'.y i, map_sum, map_zsmul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [TensTor.chi, h1, hact.1 x p'.y i, map_sum, map_zsmul]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [← hrel0.1 j, ← hq0.1]
     rfl

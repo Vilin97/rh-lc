@@ -21,7 +21,8 @@ theorem span_inter_eq_span_image {O Kf : Type} [CommRing O] [Field Kf] [Algebra 
   have hmaplc : ∀ c : X →₀ O, MvPolynomial.map (algebraMap O Kf) (Finsupp.linearCombination O bO c) =
       Finsupp.linearCombination Kf bK (c.mapRange (algebraMap O Kf) (map_zero _)) := by
     intro c
-    rw [Finsupp.linearCombination_apply, Finsupp.linearCombination_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finsupp.linearCombination_apply, Finsupp.linearCombination_apply,
       Finsupp.sum_mapRange_index (by intro i; exact zero_smul _ _), Finsupp.sum, Finsupp.sum, map_sum]
     refine Finset.sum_congr rfl fun x _ => ?_
     rw [MvPolynomial.smul_eq_C_mul, map_mul, MvPolynomial.map_C, hmap, ← MvPolynomial.smul_eq_C_mul]

@@ -32,7 +32,8 @@ theorem hkS_map {G V W : Type} [Group G] [AddCommGroup V] [Module ℂ V] [AddCom
     φ (hkS ρ K f v) = hkS σ K f (φ v) := by
   rw [hkS_eq_sum ρ K f hf, hkS_eq_sum σ K f hf]
   show φ.toLinearMap _ = _
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun q _ => ?_
   rw [map_smul]
   congr 1

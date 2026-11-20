@@ -334,7 +334,8 @@ theorem det_ne_zero : ∀ (A B : Type) [CommRing A] [CommRing B] (π : B →+* A
   rw [hTdef, det_expand x y hx hy D W'] at hTdet
   apply hne
   refine Eq.trans ?_ (hann _ hTdet)
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   have hN : π.mapMatrix ((fromRows D (fromCols (0 : Matrix μ (Fin a) B) (1 : Matrix μ μ B))).updateRow
       (Sum.inr j) (W' j)) =

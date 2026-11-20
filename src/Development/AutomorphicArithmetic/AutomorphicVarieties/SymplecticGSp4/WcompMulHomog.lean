@@ -54,7 +54,8 @@ private theorem span_coeffs {O R X κ N : Type} [CommRing O] [CommRing R] [Algeb
   obtain ⟨f, hf, s, ht, hs⟩ := hl
   have hsum : f = ∑ j ∈ s, wcomp O W.wt j f := by
     ext n
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [coeff_wcomp]
     rw [Finset.sum_ite_eq]
     split_ifs with h
@@ -63,12 +64,14 @@ private theorem span_coeffs {O R X κ N : Type} [CommRing O] [CommRing R] [Algeb
   obtain ⟨a, ha⟩ := Ideal.mem_span_range_iff_exists_fun.1 hx
   choose G hG using fun i => W.surj (a i)
   have h1 : f - ∑ i, G i * e i ∈ RingHom.ker W.π := by
-    rw [RingHom.mem_ker, map_sub, hf, ← ha, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [RingHom.mem_ker, map_sub, hf, ← ha, map_sum]
     simp [hG, heg]
   have key : ∀ j, W.π (wcomp O W.wt j f) = ∑ i, W.π (wcomp O W.wt (j - c i) (G i)) * g i := by
     intro j
     have h2 := W.homog _ h1 j
-    rw [RingHom.mem_ker, map_sub, map_sub, sub_eq_zero, map_sum, map_sum] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [RingHom.mem_ker, map_sub, map_sub, sub_eq_zero, map_sum, map_sum] at h2
     rw [h2]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [wcomp_mul_homog O W.wt (he i), map_mul, heg]
@@ -78,7 +81,8 @@ private theorem span_coeffs {O R X κ N : Type} [CommRing O] [CommRing R] [Algeb
     exact hB n i ⟨_, wcomp_mem O W.wt _ _, rfl⟩
   · rw [← hf]
     conv_lhs => rw [hsum]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [key, Finset.sum_mul]
     exact Finset.sum_comm
 

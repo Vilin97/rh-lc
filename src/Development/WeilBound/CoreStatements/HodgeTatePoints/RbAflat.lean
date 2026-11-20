@@ -124,7 +124,8 @@ theorem proj_Phi [Fintype F] [DecidableEq F] [IsDomain R] (h0 : (Fintype.card F�
     (hinj : ∀ s t : Fin f, σ ^ p ^ (s : ℕ) = σ ^ p ^ (t : ℕ) → s = t)
     (l : Fin n × Fin f → R) (s : Fin f) :
     proj (σ ^ p ^ (s : ℕ)) (Phi C p f b σ l) = Phi C p f b σ (cut s l) := by
-  conv_lhs => rw [← sum_cut l, map_sum, ← projL_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [← sum_cut l, map_sum, ← projL_apply, map_sum]
   rw [Finset.sum_eq_single s]
   · exact proj_eigen_self h0 _ _ (Phi_eigen _ s (cut_supp s l))
   · intro t _ ht
@@ -151,7 +152,8 @@ theorem exists_Phi (p : ℕ) [Fact p.Prime] {C : Type} [Field C] [IsAlgClosed C]
     (Ideal.sum_mem _ (t := Finset.univ) fun i _ => hβ i (b.repr x i))
   convert Submodule.add_mem _ h1 h2 using 1
   rw [Pi.sub_apply, Phi_apply, Fintype.sum_prod_type, Finset.sum_sub_distrib, map_sub]
-  simp only [map_sum, hr]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, hr]
   ring
 
 theorem aflatT : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgClosed C] [CharZero C] (v : Valuation C NNReal) (R : Type) [CommRing R] [Algebra R C], v.Integers R → v (p : C) < 1 → ∀ (F : Type) [Field F] [Fintype F] [DecidableEq F] [CharP F p] (f : ℕ), Fintype.card F = p ^ f → ∀ (N : Type) [AddCommGroup N] [Module F N] [Fintype N] [DecidableEq N] (AA : HopfOrder (C := C) R N), FStable F AA.carrier → ∀ σ : MulChar F R, IsFund p σ → ∀ (n : ℕ) (b : Module.Basis (Fin n) F N), (afLatT p f b σ AA.carrier).FG ∧ Nonempty (AFQuot p AA.carrier ≃ₗ[R] ((Fin n × Fin f → R) ⧸ afLatT p f b σ AA.carrier)) ∧ (∀ l ∈ afLatT p f b σ AA.carrier, ∀ s : Fin f, (fun j => if j.2 = s then l j else 0) ∈ afLatT p f b σ AA.carrier) ∧ ∀ (i : Fin n) (s : Fin f) (c : R), c ∈ idealD p AA.carrier (flagSub b i) (b i) (σ ^ p ^ (s : ℕ)) ↔ ∃ l ∈ afLatT p f b σ AA.carrier, (∀ j, j.2 ≠ s → l j = 0) ∧ (∀ j, j < i → l (j, s) = 0) ∧ l (i, s) = c := by

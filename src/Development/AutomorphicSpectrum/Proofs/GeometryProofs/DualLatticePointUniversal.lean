@@ -179,7 +179,8 @@ theorem expand (hβ : IsBaseChange B β) (he : ∀ y, ∑ k, w k y • e k = y) 
   · intro y
     simp only [extForm_apply, algebraMap_smul]
     conv_lhs => rw [← he y]
-    simp only [map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul]
   · intro s n h
     simp only [map_smul, smul_eq_mul, mul_smul, ← Finset.smul_sum]
     rw [← h]
@@ -216,7 +217,8 @@ theorem resum (he : ∀ y, ∑ k, w k y • e k = y) (q : J → V) :
       (TrivSqZeroExt.inr (q j) : TrivSqZeroExt R V) • β (e j) := by
     intro j
     conv_rhs => rw [← he (e j)]
-    rw [map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_smul, TrivSqZeroExt.inr_smul, smul_assoc, smul_comm]
   simp only [inr_sum, Finset.sum_smul]
@@ -229,7 +231,8 @@ theorem extForm_inr (hβ : IsBaseChange (TrivSqZeroExt R V) β) (he : ∀ y, ∑
       TrivSqZeroExt.inr (φ f) := by
   rw [extForm_sum]
   conv_rhs => rw [← dual_expand he f]
-  rw [map_sum, inr_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, inr_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [map_smul, TrivSqZeroExt.inr_smul, Algebra.smul_def, mul_comm]
 
@@ -239,7 +242,8 @@ theorem fst_extForm (hβ : IsBaseChange (TrivSqZeroExt R V) β) (he : ∀ y, ∑
   rw [extForm_sum] at h₁
   have h₂ := congrArg TrivSqZeroExt.fst h₁
   have h₃ := congrArg (w k) h
-  simp only [map_sum, map_smul, map_zero, smul_eq_mul] at h₃
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, map_zero, smul_eq_mul] at h₃
   rw [h₂, ← h₃]
   simp [TrivSqZeroExt.algebraMap_eq_inl, TrivSqZeroExt.fst_sum]
 
@@ -412,7 +416,8 @@ theorem tangent_universal (S : Scheme.{0}) (G : Over S) [GrpObj G] [IsCommMonObj
     have h := LinearMap.congr_fun hfg y
     simp only [LinearMap.comp_apply, LinearMap.id_apply] at h
     conv_rhs => rw [← h, ← Finset.univ_sum_single (g y)]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     have : Pi.single k (g y k) = g y k • (Pi.single k 1 : Fin n → R) := by
       rw [← Pi.single_smul, smul_eq_mul, _root_.mul_one]

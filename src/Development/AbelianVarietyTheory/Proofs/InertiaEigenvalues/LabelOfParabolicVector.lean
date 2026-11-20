@@ -66,7 +66,8 @@ theorem push_mul (i : A →* G) (e e' : MonoidAlgebra ℂ A) : push i (e * e') =
   have h : ∀ e, push i e = MonoidAlgebra.mapDomainAlgHom ℂ ℂ i e := by
     intro e
     conv_rhs => rw [eq_sum_single e]
-    simp [push, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [push, map_sum]
   simp only [h, map_mul]
 
 theorem tr_sum {ι : Type} (s : Finset ι) (e : ι → MonoidAlgebra ℂ G) (χ : G → ℂ) :

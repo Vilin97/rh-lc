@@ -15,7 +15,8 @@ theorem exists_perm_coord_complement {e c : ℕ} (A : (Fin (e + c) → ℂ) →�
     have : v = ∑ j, v j • (Pi.single j 1 : Fin (e + c) → ℂ) := by
       ext k; simp [Finset.sum_apply, Pi.single_apply]
     conv_lhs => rw [this]
-    simp [col, map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [col, map_sum, map_smul]
   have hspan : Submodule.span ℂ (Set.range col) = ⊤ := by
     rw [eq_top_iff]
     rintro y -

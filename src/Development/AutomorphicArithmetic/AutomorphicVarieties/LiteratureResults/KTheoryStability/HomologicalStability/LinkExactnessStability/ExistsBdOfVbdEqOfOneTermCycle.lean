@@ -98,7 +98,8 @@ theorem sum_slicePr {V W : Type} (z : List V × List W →₀ ℤ) (U : Finset (
     ∑ w ∈ U, slicePr V W w z = Finsupp.mapDomain Prod.fst z := by
   unfold Finsupp.mapDomain
   conv_lhs => rw [← Finsupp.sum_single z]
-  simp only [Finsupp.sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finsupp.sum, map_sum]
   rw [Finset.sum_comm]
   apply Finset.sum_congr rfl
   intro q hq
@@ -110,7 +111,8 @@ theorem exists_sum_bd {V : Type} (F : Set (List V)) (p : ℕ) {ι : Type} (S : F
     ∃ b ∈ chains F (p + 1), bd V b = ∑ i ∈ S, f i := by
   choose! g hg1 hg2 using hS
   refine ⟨∑ i ∈ S, g i, Submodule.sum_mem _ (fun i hi => hg1 i hi), ?_⟩
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_congr rfl (fun i hi => hg2 i hi)
 
 theorem bd_of_oneTerm_cycle : ∀ (V W : Type) (D : Set (List V × List W)) (F : Set (List V)) (p : ℕ),

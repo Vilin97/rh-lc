@@ -181,7 +181,8 @@ theorem eq_zero_of_comm : ∀ (Γ O Λ K C : Type) [Group Γ] [CommRing O] [IsLo
     simp only [matAct_single] at e
     simpa [Pi.single_eq_of_ne hb] using e
   refine AddMonoidHom.ext fun m => ?_
-  rw [← Finset.univ_sum_single m, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Finset.univ_sum_single m, map_sum]
   simp [hsingle]
 
 end GlobalTheory.ResComm

@@ -73,7 +73,8 @@ theorem main : ∀ (F E : Type) [NontriviallyNormedField F] [NontriviallyNormedF
     rw [map_mul, hf, hf, map_zero]
     exact single_mul_single_of_ne (e.symm.injective.ne hij) _ _
   · apply ψ.injective
-    rw [map_sum, map_one]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_one]
     simp_rw [hf]
     rw [Equiv.sum_comp e.symm (fun I => (Pi.single I 1 : ∀ J : MaximalSpectrum A.K, A.K ⧸ J.asIdeal))]
     exact Finset.univ_sum_single 1

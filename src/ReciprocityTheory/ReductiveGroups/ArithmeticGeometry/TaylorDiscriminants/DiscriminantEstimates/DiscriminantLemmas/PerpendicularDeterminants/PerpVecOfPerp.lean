@@ -17,7 +17,8 @@ theorem perpVec_perp (R : Type) [CommRing R] (V : Type) [AddCommGroup V] [Module
     simp only [hentry] at hk
     rw [hk, Matrix.smul_apply, Matrix.one_apply, smul_eq_mul]
     split_ifs <;> simp
-  simp only [perpVec, map_sub, map_smul, map_sum, Pi.sub_apply, Pi.smul_apply, Finset.sum_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [perpVec, map_sub, map_smul, map_sum, Pi.sub_apply, Pi.smul_apply, Finset.sum_apply,
     smul_eq_mul]
   have hsum : ∑ a, ∑ a', (hMat h e e').adjugate a a' * h g (e a) * h (e' a') (e c) =
       (hMat h e e').det * h g (e c) := by

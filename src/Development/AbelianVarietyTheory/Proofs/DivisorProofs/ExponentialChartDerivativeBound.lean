@@ -66,12 +66,15 @@ theorem met_eq_sum_gram (x : OddPrimesWithRootsOfUnity Z) {y : CxPts (genStr Z) 
     exact Fintype.sum_sigma _
   have hoff : ∀ τ τ', τ ≠ τ' → x.met σ y (∑ b, a τ b • f.vec τ b) (∑ b, a τ' b • f.vec τ' b) = 0 := by
     intro τ τ' hne
-    simp only [map_sum, map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, x.met_vec_eq_zero f f hne,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply, x.met_vec_eq_zero f f hne,
       smul_zero, Finset.sum_const_zero]
   conv_lhs => rw [hv]
-  rw [map_sum (x.met σ y), LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum (x.met σ y), LinearMap.sum_apply]
   refine Finset.sum_congr rfl fun τ _ => ?_
-  rw [map_sum (x.met σ y _), Finset.sum_eq_single τ (fun τ' _ h => hoff τ τ' (Ne.symm h)) (by simp)]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum (x.met σ y _), Finset.sum_eq_single τ (fun τ' _ h => hoff τ τ' (Ne.symm h)) (by simp)]
   exact form_sum _ _ _ _
 
 theorem sq_norm_dir_le (x : OddPrimesWithRootsOfUnity Z) {y : CxPts (genStr Z) σ} (ε : (Fin g → ℂ) → (Sp ℂ ⟶ Z.t.G.left))

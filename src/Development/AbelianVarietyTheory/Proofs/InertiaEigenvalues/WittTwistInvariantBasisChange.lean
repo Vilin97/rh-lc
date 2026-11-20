@@ -21,7 +21,8 @@ theorem exists_basis [Nontrivial S] [Module.Free S M] [Module.Finite S M] {r : �
   have h : ⊤ ≤ Submodule.span S (Set.range fun i => j (b i)) := by
     rw [← hsp, Submodule.span_le]
     rintro _ ⟨x, rfl⟩
-    rw [← b.sum_repr x, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← b.sum_repr x, map_sum]
     refine Submodule.sum_mem _ fun i _ => ?_
     rw [hj]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)
@@ -30,7 +31,8 @@ theorem exists_basis [Nontrivial S] [Module.Free S M] [Module.Finite S M] {r : �
 theorem repr_semi {r : ℕ} (e : Module.Basis (Fin r) S M) (φ : S → S) (Φ : M →+ M)
     (hΦ : ∀ c m, Φ (c • m) = φ c • Φ m) (m : M) (i : Fin r) :
     e.repr (Φ m) i = ∑ k, e.repr (Φ (e k)) i * φ (e.repr m k) := by
-  conv_lhs => rw [← e.sum_repr m, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [← e.sum_repr m, map_sum, map_sum]
   simp [hΦ, Finsupp.finset_sum_apply, mul_comm]
 
 theorem isUnit_det {r : ℕ} (e : Module.Basis (Fin r) S M) (φ : S → S) (Φ : M →+ M)
@@ -143,7 +145,8 @@ theorem mem_range (E : WEt I) (T : LocLat G Qp LL O) (H : G → Prop) (hH : ∀ 
   have he' : ∀ i, e i = E.jD T (b i) := he
   have hrep : ∀ (d : E.DD T) i, e.repr (E.jD T d) i = I.ioE (b.repr d i) := by
     intro d i
-    conv_lhs => rw [← b.sum_repr d, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [← b.sum_repr d, map_sum]
     simp only [E.jD_smul, ← he']
     rw [e.repr_sum_self]
   have hsφ : ∀ (c : RW) (m : TW RW T), (TWmap φR T).toAddMonoidHom (c • m) =
@@ -164,7 +167,8 @@ theorem mem_range (E : WEt I) (T : LocLat G Qp LL O) (H : G → Prop) (hH : ∀ 
   have hU := hrat _ F (Matrix.of fun k j => e.repr (x j) k) hFu ?_ ?_
   · choose u hu' using hU
     refine ⟨∑ k, u k i₀ • b k, ?_⟩
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [E.jD_smul, ← he', hu', Matrix.of_apply]
     exact e.sum_repr _
   · intro i j g hg
@@ -182,7 +186,8 @@ theorem mem_range (E : WEt I) (T : LocLat G Qp LL O) (H : G → Prop) (hH : ∀ 
     have h1 := repr_semi e φR (TWmap φR T).toAddMonoidHom hsφ (x j) i
     simp only [Matrix.mul_apply, Matrix.of_apply, Matrix.map_apply]
     rw [← h1, LinearMap.toAddMonoidHom_coe, hφ]
-    simp only [map_mulLeft, map_sum, map_smul, Finsupp.finset_sum_apply, Finsupp.smul_apply, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_mulLeft, map_sum, map_smul, Finsupp.finset_sum_apply, Finsupp.smul_apply, smul_eq_mul]
     exact Finset.sum_congr rfl fun k _ => mul_comm _ _
 
 end Generic

@@ -76,7 +76,8 @@ theorem exists_gl_of_span_eq_top {O Q n : Type*} [CommRing O] [IsLocalRing O] [A
     have h1 : a j - ∑ i, g₀ i j • b i ∈ I • (⊤ : Submodule O Q) := by
       rw [← Submodule.Quotient.mk_eq_zero]
       change π _ = 0
-      rw [map_sub, hab j, map_sum, sub_eq_zero]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, hab j, map_sum, sub_eq_zero]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_smul, ← hg₀ i j]
       rfl
@@ -128,7 +129,8 @@ theorem exists_gl_comp_eq_of_surjective {O Q n : Type*} [CommRing O] [IsLocalRin
   obtain ⟨g, hg⟩ := exists_gl_of_span_eq_top _ _ (hspan a ha) (hspan b hb)
   refine ⟨g, (Pi.basisFun O n).ext fun j => ?_⟩
   rw [hg j, LinearMap.comp_apply]
-  simp_rw [← map_smul, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp_rw [← map_smul, ← map_sum]
   congr 1
   ext i
   simp [Pi.single_apply, Finset.sum_apply]
@@ -228,7 +230,8 @@ theorem eq_of_span_col_eq {O m n R : Type*} [CommRing O] [IsLocalRing O] [Fintyp
         ext i
         simp [Matrix.mul_apply, Finset.sum_apply, mul_comm]
       have h3 := hg j
-      simp_rw [← map_smul, ← map_sum] at h3
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp_rw [← map_smul, ← map_sum] at h3
       rw [h2]
       exact h3
     rw [Submodule.ideal_span_singleton_smul, Submodule.mem_smul_pointwise_iff_exists] at h1

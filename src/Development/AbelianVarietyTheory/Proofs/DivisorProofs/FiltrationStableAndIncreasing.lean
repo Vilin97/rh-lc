@@ -58,7 +58,8 @@ lemma act_comm_eNC {act : Mat R S →ₗ[ℂ] Module.End ℂ V} (hlie : IsLieAct
   have h := hlie Z (eNC x)
   rw [bracket_eNC hZ x] at h
   have h2 := congrArg (fun T : Module.End ℂ V => T w) h
-  simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply,
     LinearMap.sub_apply, Module.End.mul_apply] at h2
   rw [h2]; abel
 
@@ -81,7 +82,8 @@ lemma word_mem_range (act : Mat R S →ₗ[ℂ] Module.End ℂ V) (N : Submodule
 lemma act_eNC_mem_range (act : Mat R S →ₗ[ℂ] Module.End ℂ V) (N : Submodule ℂ V) {k : ℕ} (x : NC R S) {w : V}
     (hw : w ∈ LinearMap.range (phiN act N k)) : act (eNC x) w ∈ LinearMap.range (phiN act N (k + 1)) := by
   obtain ⟨Ψ, rfl⟩ := hw
-  rw [phiN_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [phiN_apply, map_sum]
   refine Submodule.sum_mem _ fun g _ => ?_
   have := word_mem_range act N (Fin.cons x g : Fin (k + 1) → NC R S) (Ψ g).2
   rwa [word_cons, Module.End.mul_apply] at this
@@ -92,14 +94,16 @@ lemma kstable_range {act : Mat R S →ₗ[ℂ] Module.End ℂ V} (hlie : IsLieAc
   | zero =>
     intro Z hZ w hw
     obtain ⟨Ψ, rfl⟩ := hw
-    rw [phiN_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [phiN_apply, map_sum]
     refine Submodule.sum_mem _ fun g _ => ?_
     have := word_mem_range act N g (hN Z hZ _ (Ψ g).2)
     simpa [word_zero] using this
   | succ k ih =>
     intro Z hZ w hw
     obtain ⟨Ψ, rfl⟩ := hw
-    rw [phiN_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [phiN_apply, map_sum]
     refine Submodule.sum_mem _ fun g _ => ?_
     rw [← Fin.cons_self_tail g, word_cons, Module.End.mul_apply, act_comm_eNC hlie hZ]
     have hw' := word_mem_range act N (Fin.tail g) (Ψ (Fin.cons (g 0) (Fin.tail g))).2

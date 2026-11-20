@@ -58,7 +58,8 @@ private theorem coeff_rename_mem_multiple_of_coeff {σ τ : Type} (φ : σ → �
   classical
   have hP : rename φ P = ∑ u ∈ P.support, monomial (u.mapDomain φ) (P.coeff u) := by
     conv_lhs => rw [P.as_sum]
-    simp only [map_sum, rename_monomial]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, rename_monomial]
   rw [hP]
   refine Finset.sum_induction _
     (fun Q : MvPolynomial τ (KK O) => ∀ m, ∃ c : O, Q.coeff m = algebraMap O (KK O) (a * c)) ?_ ?_ ?_

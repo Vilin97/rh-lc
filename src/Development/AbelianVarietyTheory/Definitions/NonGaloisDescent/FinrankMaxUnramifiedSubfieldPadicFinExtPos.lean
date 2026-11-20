@@ -276,7 +276,8 @@ theorem jump_of_total [CharZero Qp] [FiniteDimensional Qp K] (hs : Nat.card (K �
     have := mu_alg (K := K) (LL := LL) (0 : Qp) y
     simpa using this
   have hsum : x = ∑ τ, aeval (μ pb.gen) (Lagrange.basis Finset.univ v τ) x := by
-    rw [← LinearMap.sum_apply, ← map_sum, Lagrange.sum_basis hv.injOn hne, map_one, Module.End.one_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← LinearMap.sum_apply, ← map_sum, Lagrange.sum_basis hv.injOn hne, map_one, Module.End.one_apply]
   rw [hsum]
   refine Submodule.sum_mem _ fun τ _ => ?_
   set y := aeval (μ pb.gen) (Lagrange.basis Finset.univ v τ) x with hy

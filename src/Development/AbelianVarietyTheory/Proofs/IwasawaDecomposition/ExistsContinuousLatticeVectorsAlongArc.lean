@@ -86,7 +86,8 @@ theorem exists_basis {σ : c.F →+* ℂ} {y : Sp ℂ ⟶ Z.X} (f : EigFrame Z �
   refine ⟨Module.Basis.mk (v := fun p => f.vec p.1 p.2) (Fintype.linearIndependent_iff.2 fun a ha q => ?_)
     fun w _ => ?_, fun _ => Module.Basis.mk_apply _ _ _⟩
   · have := proj_sum_eig (actR (x0 := y) Z.t.act) χ α hα (fun τ => ∑ i, a ⟨τ, i⟩ • f.vec τ i) (fun τ b => by
-      simp only [map_sum, map_smul, f.act_vec, Finset.smul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, f.act_vec, Finset.smul_sum]
       exact Finset.sum_congr rfl fun i _ => smul_comm _ _ _) q.1
     rw [← Fintype.sum_sigma (fun q : Σ τ : E →+* ℂ, Fin (Dw.mult τ) => a q • f.vec q.1 q.2), ha, map_zero] at this
     exact Fintype.linearIndependent_iff.1 (f.linearIndependent_vec q.1) _ this.symm q.2
@@ -251,7 +252,8 @@ theorem exists_lattice_sections : ∀ (E : Type) [Field E] [NumberField E] [IsCM
   have hc : ∀ u ∈ Metric.ball (0 : ℂ) ρ, ContinuousAt (fun u => (h u).inverse) u := fun u hu => by
     refine ((hh u hu).1.contDiffAt_map_inverse (n := 1)).continuousAt.comp (continuousAt_clm_apply.2 fun z => ?_)
     have : ∀ u, h u z = ∑ j, z j • h u (Pi.single j 1) := fun u => by
-      simp only [← map_smul, ← map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [← map_smul, ← map_sum]
       exact congrArg _ (pi_eq_sum_univ' z)
     simp only [this]
     refine tendsto_finset_sum _ fun j _ => ContinuousAt.const_smul ?_ (z j)

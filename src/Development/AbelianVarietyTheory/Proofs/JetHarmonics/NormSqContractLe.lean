@@ -42,7 +42,8 @@ theorem wigMap_contract : ∀ (V : Type) [NormedAddCommGroup V] [InnerProductSpa
     rw [MvPolynomial.totalDegree_C, MvPolynomial.totalDegree_X]
   · refine Finset.sum_congr rfl fun c _ => ?_
     congr 1
-    simp only [map_sum, map_mul, MvPolynomial.eval_C, MvPolynomial.eval_X, Sum.elim_inl]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, MvPolynomial.eval_C, MvPolynomial.eval_X, Sum.elim_inl]
     rw [herm, Matrix.dotProduct_mulVec]
     rfl
   · obtain ⟨hW, hpres, -⟩ := hU h hh
@@ -52,7 +53,8 @@ theorem wigMap_contract : ∀ (V : Type) [NormedAddCommGroup V] [InnerProductSpa
       intro d
       obtain ⟨h1, h2⟩ := hW (B d) (hB.1 d) (hB.2.2 d z (by simp))
       rw [← HermitianFormSums.herm_rsum, ← hexp _ h1 h2, hpres]
-    simp only [ContinuousLinearMap.comp_apply, ContinuousLinearMap.sum_apply, ContinuousLinearMap.smul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [ContinuousLinearMap.comp_apply, ContinuousLinearMap.sum_apply, ContinuousLinearMap.smul_apply,
       heq h hh, map_sum, map_smul, Finset.smul_sum, smul_smul]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun d _ => ?_

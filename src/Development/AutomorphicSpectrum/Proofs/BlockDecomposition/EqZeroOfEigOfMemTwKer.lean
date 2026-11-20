@@ -159,7 +159,8 @@ theorem avgVanish_of_fibre {G Z Γ A : Type} [Group G] [TopologicalSpace G] [IsT
         have := hDs _ _ h6 ha₁
         rwa [add_sub_cancel_left] at this
       rw [this, map_zero, smul_zero]
-    rw [hg, map_smul, map_sum, Finset.sum_eq_zero fun i _ => hz0 i, smul_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hg, map_smul, map_sum, Finset.sum_eq_zero fun i _ => hz0 i, smul_zero]
 
   have hper : ∀ a ∈ D, evL H σ (e a * y) g = evL H σ (e 0 * y) g := by
     intro a ha

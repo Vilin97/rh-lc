@@ -40,7 +40,8 @@ theorem mem_of_eigen_mem {A W : Type} [AddCommGroup A] [AddCommGroup W] [Module 
   have h1 : ∀ ψ : H, ∑ q, ψ.1 (-q) • T q ∈ V := by
     intro ψ
     refine hV ψ ψ.2 _ (U.sum_mem fun q _ => U.smul_mem _ (hU _)) fun u => ?_
-    rw [map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.smul_sum]
     refine Fintype.sum_equiv (Equiv.addLeft (u : A ⧸ N)) _ _ fun q => ?_
     rw [map_smul, hST, smul_smul, ← AddChar.map_add_eq_mul]
     simp

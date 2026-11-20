@@ -32,7 +32,8 @@ theorem exists_mem_span_red_eq (p : ℕ) [Fact p.Prime] (P : ∀ (k : Type) [Com
     obtain ⟨R, rfl⟩ := (WittVector.constantCoeff_surjective p : Function.Surjective
       (WittVector.constantCoeff : WittVector p k' →+* k')) r
     refine ⟨R • B.smap hG' hG (G.toBase k') m, Submodule.smul_mem _ _ ?_, ?_⟩
-    · rw [← b.linearCombination_repr m, Finsupp.linearCombination_apply, Finsupp.sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [← b.linearCombination_repr m, Finsupp.linearCombination_apply, Finsupp.sum, map_sum]
       exact Submodule.sum_mem _ fun i _ => by
         rw [B.smap_smul]
         exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)

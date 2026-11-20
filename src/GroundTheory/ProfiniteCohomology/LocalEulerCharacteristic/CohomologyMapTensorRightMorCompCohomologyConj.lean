@@ -53,7 +53,8 @@ noncomputable def twistInv {ι : Type*} [Fintype ι] (b : Module.Basis ι k M) (
 theorem twistMap_comp_twistInv {ι : Type*} [Fintype ι] (b : Module.Basis ι k M) (n : ℕ) :
     twistMap T hM n ∘ₗ twistInv T hM b n = LinearMap.id := by
   ext y
-  simp only [twistInv, LinearMap.comp_apply, LinearMap.sum_apply, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [twistInv, LinearMap.comp_apply, LinearMap.sum_apply, map_sum,
     LinearMap.flip_apply, TensorProduct.mk_apply, twistMap_tmul, LinearMap.id_apply]
   simp_rw [← ModuleCat.comp_apply, ← cohomologyMap_comp]
   rw [← LinearMap.sum_apply, ← ModuleCat.hom_sum, ← cohomologyMap_sum,

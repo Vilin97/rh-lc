@@ -40,11 +40,13 @@ theorem sqAt_eq {n : ℕ} (lam : ι → DomWeight n) (x : Formalism.L2.DIV.VV K 
   have hy : (y : Pol ℂ ι n) = ∑ i, σ ((bVV K lam).repr x i) • map σ (bVVfun K lam i) := by
     rw [h]
     conv_lhs => rw [hx]
-    simp only [map_sum, smul_eq_C_mul, map_mul, map_C]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, smul_eq_C_mul, map_mul, map_C]
   unfold sqAt invNormSq
   congr 1
   rw [pairK_apply, hy]
-  simp only [pairK_apply, bVV_coe, map_pairP_basis, map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [pairK_apply, bVV_coe, map_pairP_basis, map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ,
     LinearMap.smul_apply, map_smul, smul_eq_mul, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_

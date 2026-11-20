@@ -50,7 +50,8 @@ theorem qm_inv_entry {R : Type} [CommRing R] (φ : R →+* K) (hφ : ∀ x, φ x
     h2, one_mul] at e1
   have e2 : ξ⁻¹ k b = -∑ c ∈ Finset.univ.erase k, ξ k c * ξ⁻¹ c b := by
     linear_combination e1
-  rw [e2, map_neg, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e2, map_neg, map_sum]
   refine qm_neg q (qm_sum q _ _ fun c hc' => ?_)
   rw [map_mul]
   rcases lt_or_gt_of_ne (Finset.ne_of_mem_erase hc') with hlt | hgt

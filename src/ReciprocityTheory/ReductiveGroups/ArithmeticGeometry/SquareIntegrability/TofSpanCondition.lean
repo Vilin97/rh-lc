@@ -117,7 +117,8 @@ theorem tof_span_condition [IsCMField E] {X : PT E} (I : Submodule ℤ (Vsp X.di
     rw [hxe]
     simp_rw [e1]
     rw [Finset.sum_add_distrib, Nat.cast_smul_eq_nsmul ℂ]
-    simp only [map_add, map_sum, map_nsmul, hz, Finset.sum_const_zero, zero_add, smul_add, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_add, map_sum, map_nsmul, hz, Finset.sum_const_zero, zero_add, smul_add, Finset.smul_sum]
     abel)
   have hLT : ∀ x ∈ X.L, x ∈ T := fun x hx => hf0inv x (by
     have h : f x ∈ X.L.map f := ⟨x, hx, rfl⟩

@@ -51,7 +51,8 @@ theorem exists_onb (R : RiemLat E g Λ) (W : Submodule ℂ (Fin g → ℂ)) {m :
     simp [Pi.single_apply, eq_comm]
   · have h : (⟨z, hz⟩ : W) = ∑ i, c z i • e i := by
       apply hinj
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simp only [map_smul, he]
       ext k
       simp [Pi.single_apply]
@@ -73,14 +74,16 @@ theorem star_io (a : Λ) : star (io b a) = io b a := by
 
 theorem Pc_io (R : RiemLat E g Λ) (a : Λ) : Pc b R (io b a) = R.P a := by
   conv_rhs => rw [← b.sum_repr a]
-  rw [Pc_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Pc_apply, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [map_zsmul, io, Int.cast_smul_eq_zsmul]
 
 def act (a : 𝓞 E) (ξ : Fin (2 * g) → ℂ) : Fin (2 * g) → ℂ := ∑ k, ξ k • io b (a • b k)
 
 theorem Pc_act (R : RiemLat E g Λ) (a : 𝓞 E) (ξ : Fin (2 * g) → ℂ) : Pc b R (act b a ξ) = R.B a (Pc b R ξ) := by
-  rw [act, map_sum, Pc_apply b R ξ, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [act, map_sum, Pc_apply b R ξ, map_sum]
   simp only [map_smul, Pc_io, R.act]
 
 theorem star_act (a : 𝓞 E) (ξ : Fin (2 * g) → ℂ) : star (act b a ξ) = act b a (star ξ) := by

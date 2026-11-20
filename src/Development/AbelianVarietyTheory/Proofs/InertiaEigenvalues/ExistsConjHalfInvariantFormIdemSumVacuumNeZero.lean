@@ -128,11 +128,13 @@ theorem invariant_form {Λ : AddSubgroup (WO S T)} {e : AE D} (he1 : e * e = e) 
         | mul_right B _ g hg ih =>
           obtain ⟨y', N, hy', rfl⟩ := hg
           refine ⟨fun y hy => ?_, ?_⟩
-          · rw [Module.End.mul_apply, LinearMap.sum_apply, map_sum, map_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            · rw [Module.End.mul_apply, LinearMap.sum_apply, map_sum, map_sum]
             refine Finset.sum_nonneg fun k _ => ?_
             rw [heisL_apply, ← heisO_add_of_orth ψ S T (symplO_eq_zero S T he2 (isHalf_nsmul hy' k) hy)]
             exact ih.1 _ (isHalf_add (isHalf_nsmul hy' k) hy)
-          · rw [Module.End.mul_apply, LinearMap.sum_apply, map_sum, map_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            · rw [Module.End.mul_apply, LinearMap.sum_apply, map_sum, map_sum]
             refine Finset.sum_pos' (fun k _ => ih.1 _ (isHalf_nsmul hy' k)) ⟨0, Finset.mem_range.2 N.succ_pos, ?_⟩
             rw [heisL_apply, zero_smul, heisO_zero]
             exact ih.2
@@ -220,7 +222,8 @@ theorem exists_invariant_form_idemSum : ∀ (D : D7) (ψ : AddChar (AF D.host.F)
     intro u hu
     ext i j
     show infPart D (u i j) = 0
-    rw [← hu i j, RingHom.map_mul, hcsum, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hu i j, RingHom.map_mul, hcsum, map_sum,
       Finset.sum_eq_zero fun Q hQ => infPart_splitIdem (isSplitIdem_conj (hes Q hQ).1), zero_mul]
   have he1 : cA D eT * cA D eT = cA D eT := by rw [← RingHom.map_mul, hsum1]
   have he2 : cA D (cA D eT) * cA D eT = 0 := by rw [GlobalTheory.DualPairCheck.cA_cA, hTo]

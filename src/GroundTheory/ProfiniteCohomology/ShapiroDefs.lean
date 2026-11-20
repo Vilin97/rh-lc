@@ -77,7 +77,8 @@ noncomputable def coindTrace : Rep.coind U.subtype (Rep.res U.subtype A) ⟶ A :
     ext f
     change (∑ c : G ⧸ U, coindTraceTerm U A c) ((Rep.coind U.subtype (Rep.res U.subtype A)).ρ g f) =
       A.ρ g ((∑ c : G ⧸ U, coindTraceTerm U A c) f)
-    rw [LinearMap.sum_apply, LinearMap.sum_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [LinearMap.sum_apply, LinearMap.sum_apply, map_sum]
     refine (Fintype.sum_equiv (MulAction.toPerm g) _ _ fun c => ?_).symm
     induction c using QuotientGroup.induction_on with
     | H x =>

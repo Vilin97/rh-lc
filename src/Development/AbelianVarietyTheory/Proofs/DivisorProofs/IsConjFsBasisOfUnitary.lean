@@ -138,7 +138,8 @@ theorem isConj_fsBasis_of_unitary {α : Type*} [Fintype α] [DecidableEq α] (hB
   simp only [RCLike.norm_conj] at this
   refine Eq.trans (Finset.sum_congr rfl fun a _ => ?_) this
   congr 2
-  simp only [e, hv, Matrix.mul_apply, Matrix.map_apply, Matrix.vecMul, dotProduct, map_sum, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [e, hv, Matrix.mul_apply, Matrix.map_apply, Matrix.vecMul, dotProduct, map_sum, map_mul,
     Finset.sum_mul]
   exact Finset.sum_comm.trans (Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring)
 

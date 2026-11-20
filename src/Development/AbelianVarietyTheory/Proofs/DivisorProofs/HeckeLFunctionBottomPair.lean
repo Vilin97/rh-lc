@@ -143,7 +143,8 @@ theorem coef_sum (hom : IsWeilDatumO ψ S T χS χT om) (hν : IsCovolOne (ratL 
     ip S T ν 𝓕 (om (ι x, 1) (∑ y ∈ R, om (ι y, 1) φ)) (∑ y ∈ R, om (ι y, 1) φ) =
       ∑ y ∈ R, ∑ y' ∈ R, ip S T ν 𝓕 (om (ι (y'⁻¹ * x * y), 1) φ) φ := by
   have hth : ∀ g : GA D S, IsThetaFunO ψ S T (om (g, 1) φ) := fun g => hom.om_pres _ _ hφ
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [← om_mul_one]
   rw [ip_sum_left hom.std hν R _ (fun _ => hth _) ((GlobalTheory.FinWeilO.thetaSub _ _ _).sum_mem fun j _ => hth _)]
   refine Finset.sum_congr rfl fun y _ => ?_

@@ -98,7 +98,8 @@ theorem exists_frame (i : A →ₗ[ℂ] H) (hi : Function.Injective i) (E : Subm
   have hxF : i x ∈ F := Submodule.mem_map_of_mem hx
   have key := congrArg Subtype.val (bF.sum_repr' (⟨i x, hxF⟩ : F))
   simp only [Submodule.coe_sum, Submodule.coe_smul, Submodule.coe_inner] at key
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [map_smul, hia]
   exact key
 
@@ -142,7 +143,8 @@ theorem exists_finiteDimensional_kill {r s : ℕ} {T₂ : GrpData r s} (R₂ : D
     intro Q z hz
     conv_rhs => rw [← hfr z hz]
     rw [hφ]
-    simp only [map_sum, map_smul, LinearMap.map_smulₛₗ, inner_sum, inner_smul_right, smul_eq_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, LinearMap.map_smulₛₗ, inner_sum, inner_smul_right, smul_eq_mul,
       inner_conj_symm]
     exact Finset.sum_congr rfl fun j _ => mul_comm _ _
   have hsep : ∀ u ∈ Y, ∀ u' ∈ Y,
@@ -209,13 +211,16 @@ theorem exists_tensor_map : ∀ (p q r s : ℕ) (T₂ : GrpData r s) (R₂ : DSR
       have e1 : inner ℂ (R₂.ι y) (R₂.ι x) =
           ∑ j, inner ℂ (R₂.ι (a j)) (R₂.ι x) * inner ℂ (R₂.ι y) (R₂.ι (a j)) := by
         conv_lhs => rw [← hfr x hx]
-        simp only [map_sum, map_smul, inner_sum, inner_smul_right]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, map_smul, inner_sum, inner_smul_right]
       rw [map_sub, inner_sub_left, e1]
-      simp only [map_sum, map_smul, sum_inner, inner_smul_left, inner_conj_symm]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, sum_inner, inner_smul_left, inner_conj_symm]
       rw [sub_eq_zero]
       exact Finset.sum_congr rfl fun j _ => mul_comm _ _
     rw [map_sub, sub_eq_zero] at hperp
-    rw [hperp, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hperp, map_sum, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [LinearMap.map_smulₛₗ, contrR_tmul, hm, inner_conj_symm]
   choose F hF using hex

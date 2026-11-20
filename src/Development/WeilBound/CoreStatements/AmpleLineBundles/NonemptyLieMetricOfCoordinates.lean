@@ -77,13 +77,15 @@ theorem nonempty_lie_metric_of_coordinates : ∀ (X : Scheme.{0}) (Ω : Type) [F
     by_cases hl : rho f l (wz z) = 0
     · simp only [hl, Complex.ofReal_zero, zero_mul]
     · rw [(hg l hl).2, (hg l hl).2]
-  · rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum]
     refine Finset.sum_congr rfl fun l _ => ?_
     by_cases hl : rho f l (wz (spMap (starRingEnd ℂ) ≫ z)) = 0
     · rw [← hcj z l]
       simp only [hl, Complex.ofReal_zero, zero_mul, map_zero]
     · have hfr := frame (hwz _) l (rho_ne f (hf _) hl)
-      rw [map_mul, Complex.conj_ofReal, hcj, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_mul, Complex.conj_ofReal, hcj, map_sum]
       congr 1
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [co_conj hξ M _ z _ hfr v v' hv, co_conj hξ M _ z _ hfr w w' hw, map_mul]

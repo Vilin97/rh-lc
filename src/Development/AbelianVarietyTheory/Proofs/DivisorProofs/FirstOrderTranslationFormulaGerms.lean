@@ -89,7 +89,8 @@ theorem point_formula {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Ho
   have hε : ψ DualNumber.eps = ψ₀ DualNumber.eps := by simp [ψ, dualMap]
   have hsp : valR (spMap ψ₀) ⊤ ((Scheme.ΓSpecIso (CommRingCat.of (DualNumber S))).inv.hom DualNumber.eps) =
       ψ₀ DualNumber.eps := GlobalTheory.Points.valR_specMap (CommRingCat.ofHom ψ₀) _
-  rw [hsp, ← hε, valR_eq _ _ hg₀O, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hsp, ← hε, valR_eq _ _ hg₀O, map_sum]
   congr 1
   refine Finset.sum_congr rfl fun b _ => ?_
   rw [map_mul, ← valR_eq _ _ hg₀O, ← valR_eq _ _ hg₀O, GlobalTheory.LogKSLin.valR_base U hO hbase hg₀O,

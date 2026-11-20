@@ -144,7 +144,8 @@ theorem RelLen.unique (v : AddValuation C (WithTop ℝ)) {M : Type} [AddCommGrou
     intro x hx
     have : (x : M) = ∑ k, b'.repr ⟨x, hx⟩ k • (b' k : M) := by
       have := congrArg X'.subtype (b'.sum_repr ⟨x, hx⟩)
-      rw [map_sum] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum] at this
       exact this.symm
     rw [this]
     refine X.sum_mem fun k _ => X.smul_mem _ ?_

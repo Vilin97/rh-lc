@@ -32,7 +32,8 @@ theorem OL_resFinite : Finite (ResidueField ↥(OL LL)) := by
   have hx : x ∈ Submodule.span ℤ_[l] (Set.range s) := hs ▸ Submodule.mem_top
   obtain ⟨c, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun ℤ_[l]).mp hx
   refine ⟨fun i => PadicInt.toZMod (c i), ?_⟩
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [Algebra.smul_def, map_mul, residue_algebraMap]
 

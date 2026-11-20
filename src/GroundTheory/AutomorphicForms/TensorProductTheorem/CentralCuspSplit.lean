@@ -133,11 +133,13 @@ theorem exists_average {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ
     obtain ⟨g, -, rfl⟩ := (hmemO v).1 hv
     exact hUτ g u hu
   refine ⟨(O.card : ℂ)⁻¹ • ∑ v ∈ O, v, U.smul_mem _ (U.sum_mem hOU), fun h hh => ?_, fun w hw hwf => ?_⟩
-  · rw [map_smul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_smul, map_sum]
     congr 1
     conv_rhs => rw [← hperm h hh]
     rw [Finset.sum_image fun a _ b _ hab => hinj h hab]
-  · rw [map_smul, map_sum, inner_smul_left, sum_inner, map_inv₀, Complex.conj_natCast]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_smul, map_sum, inner_smul_left, sum_inner, map_inv₀, Complex.conj_natCast]
     have hterm : ∀ v ∈ O, inner ℂ (ι v) (ι w) = inner ℂ (ι u) (ι w) := by
       intro v hv
       obtain ⟨g, hg, rfl⟩ := (hmemO v).1 hv
@@ -307,7 +309,8 @@ theorem exists_isCompl_of_finite {H : Type*} [NormedAddCommGroup H] [InnerProduc
   let Δ := uActionCusp K n (laplacianU K n b)
   have hΔsum : ∀ φ : cuspForms K n, Δ φ = ∑ i, (gkModuleCusp K n).ρ (b i) ((gkModuleCusp K n).ρ (b i) φ) := by
     intro φ
-    simp only [Δ, laplacianU, map_sum, map_mul, LinearMap.sum_apply, Module.End.mul_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Δ, laplacianU, map_sum, map_mul, LinearMap.sum_apply, Module.End.mul_apply]
     rfl
   have hΔV : ∀ φ ∈ centralCuspForms K n, Δ φ ∈ centralCuspForms K n :=
     fun φ hφ => uActionCusp_mem_centralCuspForms _ hφ
@@ -321,7 +324,8 @@ theorem exists_isCompl_of_finite {H : Type*} [NormedAddCommGroup H] [InnerProduc
   have hT : ∀ x ∈ centralCuspForms K n, ∀ y ∈ centralCuspForms K n,
       inner ℂ (ι (Δ x)) (ι y) = inner ℂ (ι x) (ι (Δ y)) := by
     intro x hx y hy
-    rw [hΔsum, hΔsum, map_sum, map_sum, sum_inner, inner_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hΔsum, hΔsum, map_sum, map_sum, sum_inner, inner_sum]
     exact Finset.sum_congr rfl fun i _ => hXX (b i) x hx y hy
   have hUΔ : ∀ φ ∈ U, Δ φ ∈ U := fun φ hφ => by
     rw [hΔsum]

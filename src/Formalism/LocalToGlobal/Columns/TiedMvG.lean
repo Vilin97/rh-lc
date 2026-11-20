@@ -22,7 +22,8 @@ theorem hxm_hform_mulVec {R : Type} [CommRing R] {n : ℕ} (σ : R →+* R) (J g
   have hs : (fun i => σ ((g *ᵥ x) i)) = (g.map σ) *ᵥ (fun i => σ (x i)) := by
     funext i
     unfold mulVec dotProduct
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun j _ => map_mul _ _ _
   rw [key, key, hs, ← Matrix.vecMul_transpose, ← Matrix.dotProduct_mulVec, Matrix.mulVec_mulVec, Matrix.mulVec_mulVec]
   show _ ⬝ᵥ ((cT σ g * J * g) *ᵥ y) = _

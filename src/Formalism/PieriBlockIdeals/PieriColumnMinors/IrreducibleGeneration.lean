@@ -25,7 +25,8 @@ theorem lpr_inv {K A : Type*} [Field K] [AddCommGroup A] [Module K A] (f : Modul
     have h1 : f (x a + ∑ μ ∈ s, x μ) - a • (x a + ∑ μ ∈ s, x μ) ∈ p :=
       p.sub_mem (hp _ hsum) (p.smul_mem a hsum)
     have e : f (x a + ∑ μ ∈ s, x μ) - a • (x a + ∑ μ ∈ s, x μ) = ∑ μ ∈ s, (μ - a) • x μ := by
-      rw [map_add, map_sum, smul_add, Finset.smul_sum, Finset.sum_congr rfl hxs, hxa]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_add, map_sum, smul_add, Finset.smul_sum, Finset.sum_congr rfl hxs, hxa]
       rw [show a • x a + ∑ μ ∈ s, μ • x μ - (a • x a + ∑ μ ∈ s, a • x μ) =
           ∑ μ ∈ s, μ • x μ - ∑ μ ∈ s, a • x μ by abel, ← Finset.sum_sub_distrib]
       exact Finset.sum_congr rfl fun μ _ => (sub_smul μ a (x μ)).symm
@@ -65,7 +66,8 @@ theorem diagonal_transfer : DiagTransfer := by
     exact hw ⟨μ, h⟩
   have hxsum : x = ∑ μ ∈ c.support, W μ := by
     apply hi
-    rw [map_sum, Finset.sum_congr rfl hW]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_congr rfl hW]
     exact hcsum.symm
   rw [hxsum]
   refine Submodule.sum_mem _ fun μ hμ => (le_iSup (fun μ => Module.End.eigenspace g μ) μ) ?_
@@ -126,7 +128,8 @@ theorem euler_diagonal : EulerDiag := by
           tsub_add_cancel_of_le]
         exact Finsupp.single_le_iff.2 (Nat.one_le_iff_ne_zero.2 (Finsupp.mem_support_iff.1 hi))
       · rw [smul_zero]
-    rw [Finset.sum_congr rfl hterm, ← Finset.sum_filter, ← map_sum (monomial m), smul_monomial, smul_monomial,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_congr rfl hterm, ← Finset.sum_filter, ← map_sum (monomial m), smul_monomial, smul_monomial,
       smul_eq_mul, smul_eq_mul]
     congr 1
     rw [mul_comm, ← hsum m]

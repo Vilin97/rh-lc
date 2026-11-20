@@ -173,10 +173,12 @@ theorem level_pow {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsCharAF D.host.F ψ) 
           (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR (Af D.host.F) D.sp.cm.sig))ᵀ *
           ((GlobalTheory.MixModel.gA V).map (finPart D) * Matrix.of fun i j => finPart D (y i j))) := by
       ext i j
-      simp [Matrix.mul_apply, GlobalTheory.MixModel.adj, GlobalTheory.StdUnn.inner, map_sum, GlobalTheory.CompanionTheory.WSum.finPart_cA]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [Matrix.mul_apply, GlobalTheory.MixModel.adj, GlobalTheory.StdUnn.inner, map_sum, GlobalTheory.CompanionTheory.WSum.finPart_cA]
     have ht : ∀ M : Mx D r r, finPart D (Matrix.trace M) = Matrix.trace (M.map (finPart D)) := by
       intro M
-      simp [Matrix.trace, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [Matrix.trace, map_sum]
     show sndA D.host.F (algebraMap D.host.F (AF D.host.F) (1 / 2) *
       Algebra.trace (AF D.host.F) (AE D) (Matrix.trace (HMul.hMul A (inner V y y) : Mx D r r))) = _
     rw [map_mul, AlgHom.commutes, trace_bc_lemma_8, ht, hM]

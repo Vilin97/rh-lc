@@ -23,7 +23,8 @@ theorem polD_subst (D : D7) (N N' : ℕ) (s : D.what₂.Tau → ℂ) (Q : MvPoly
   rw [← AlgHom.comp_apply, ← AlgHom.comp_apply, ← AlgHom.comp_apply]
   congr 1
   refine algHom_ext fun ⟨τ, a, k⟩ => ?_
-  simp only [AlgHom.comp_apply, aeval_X, map_sum, map_mul, aeval_C, algebraMap_eq, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [AlgHom.comp_apply, aeval_X, map_sum, map_mul, aeval_C, algebraMap_eq, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun a' _ => ?_
   rw [Finset.sum_comm]
@@ -31,7 +32,8 @@ theorem polD_subst (D : D7) (N N' : ℕ) (s : D.what₂.Tau → ℂ) (Q : MvPoly
   split_ifs with hk
   · have e : y' τ b' ⟨k, hk⟩ = ∑ b, (γ' τ)⁻¹ b' b * (γ' τ * y' τ) b ⟨k, hk⟩ := by
       rw [← Matrix.mul_apply, Matrix.nonsing_inv_mul_cancel_left _ _ (h τ).isUnit]
-    rw [e, map_sum, Finset.mul_sum, Finset.sum_mul, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, map_sum, Finset.mul_sum, Finset.sum_mul, Finset.mul_sum]
     refine Finset.sum_congr rfl fun b _ => ?_
     rw [map_mul]
     ring

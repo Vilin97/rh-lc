@@ -40,7 +40,8 @@ theorem pe_one (J : Matrix (Fin n) (Fin n) E) (b : GL (Fin n) (Fv F v)) : PE σ 
 
 theorem form_swap (hσ : IsCMExt F E σ) {J : Matrix (Fin n) (Fin n) E} {ε : E} (hJ : ∀ i j, σ (J j i) = ε * J i j) (hε : ε * ε = 1)
     (p q : Fin n → E) : form σ J q p = ε * σ (form σ J p q) := by
-  simp only [form, dotProduct, mulVec, map_sum, map_mul, hJ, Finset.mul_sum, PositivityTheory.ThK.Vac.sigma_sigma hσ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, mulVec, map_sum, map_mul, hJ, Finset.mul_sum, PositivityTheory.ThK.Vac.sigma_sigma hσ]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   linear_combination (-(q j * J j i * σ (p i))) * hε
@@ -62,12 +63,14 @@ theorem plane {B : Base F E} (hσ : IsCMExt F E σ) {H : Plane E n n₁} {i₀ i
   have R : ∀ (i : Fin n) (p q : Fin n → E), (∀ r, b.1 r i = t (p r)) →
       ((b.1ᵀ * X.J.map t) *ᵥ fun r => t (σ (q r))) i = t (form σ X.J p q) := fun i p q hp => by
     rw [← mulVec_mulVec]
-    simp only [form, dotProduct, mulVec, transpose_apply, hp, map_sum, map_mul, map_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [form, dotProduct, mulVec, transpose_apply, hp, map_sum, map_mul, map_apply]
   have S : ∀ (j : Fin n₁) (q : Fin n → E), (∀ u, form σ X.J (H.ι *ᵥ u) q = 0) →
       ((b.1ᵀ * X.J.map t) *ᵥ fun r => t (σ (q r))) (sk j) = 0 := fun j q hq => by
     have a : ∀ k, ((H.ι.map t)ᵀ *ᵥ (X.J.map t *ᵥ fun r => t (σ (q r)))) k = 0 := fun k => by
       have := congrArg t (hq (Pi.single k 1))
-      simpa only [form, dotProduct, mulVec, transpose_apply, map_sum, map_mul, map_apply, map_zero, Pi.single_apply, mul_ite, mul_one,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa only [form, dotProduct, mulVec, transpose_apply, map_sum, map_mul, map_apply, map_zero, Pi.single_apply, mul_ite, mul_one,
         mul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true] using this
     have : ((b.1 * emb (Fv F w.1) sk)ᵀ *ᵥ (X.J.map t *ᵥ fun r => t (σ (q r)))) j = 0 := by
       rw [e1, transpose_mul, ← mulVec_mulVec, show (H.ι.map t)ᵀ *ᵥ _ = 0 from funext a, mulVec_zero]; rfl

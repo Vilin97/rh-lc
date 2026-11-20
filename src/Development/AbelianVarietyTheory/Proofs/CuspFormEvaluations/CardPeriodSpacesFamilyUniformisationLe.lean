@@ -94,7 +94,8 @@ theorem card_isometric_le {D D₀ : Datum H} (h₀ : D₀.p + D₀.q = D.p + D.q
       obtain ⟨c, m', rfl⟩ := hx a
       refine ⟨(gam j.1 j.2).symm (∑ d, c d • e d + gam i.1 i.2 (t i.1 m') - gam j.1 j.2 (t j.1 m')), ?_⟩
       apply (gam j.1 j.2).injective
-      simp only [LinearEquiv.trans_apply, LinearEquiv.apply_symm_apply, map_add, map_nsmul, map_sum,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [LinearEquiv.trans_apply, LinearEquiv.apply_symm_apply, map_add, map_nsmul, map_sum,
         map_smul, he, smul_add, smul_sub, Finset.sum_add_distrib, Finset.smul_sum, smul_comm k]
       abel
   have h2 := Nat.card_le_card_of_injective F hF

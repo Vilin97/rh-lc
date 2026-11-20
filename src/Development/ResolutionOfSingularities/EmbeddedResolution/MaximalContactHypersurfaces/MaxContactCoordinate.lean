@@ -309,7 +309,8 @@ theorem exists_isMaxContactCoord (I : X.IdealSheafData) {m : ℕ} (hm : 1 ≤ m)
         (algebraMap Γ(X, U) ↑(X.presheaf.stalk x) s)
         = ∑ i, (KaehlerDifferential.map k k Γ(X, U) ↑(X.presheaf.stalk x))
             (a i • (EtaleCoordinates.basisKaehler k (ULift.{u} (Fin n)) Γ(X, U) i)) := by
-      rw [← KaehlerDifferential.map_D k k Γ(X, U) ↑(X.presheaf.stalk x) s, hrepr, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← KaehlerDifferential.map_D k k Γ(X, U) ↑(X.presheaf.stalk x) s, hrepr, map_sum]
     rw [h0, TensorProduct.tmul_sum]
     refine Finset.sum_eq_zero fun i _ => ?_
     have h1 : (KaehlerDifferential.map k k Γ(X, U) ↑(X.presheaf.stalk x))
@@ -369,7 +370,8 @@ theorem exists_isMaxContactCoord (I : X.IdealSheafData) {m : ℕ} (hm : 1 ≤ m)
   have hz : KaehlerDifferential.D k Γ(X, X.basicOpen (a i0))
       (algebraMap Γ(X, U) Γ(X, X.basicOpen (a i0)) s)
       = ∑ i, (algebraMap Γ(X, U) Γ(X, X.basicOpen (a i0)) (a i)) • e i := by
-    rw [← KaehlerDifferential.map_D k k Γ(X, U) Γ(X, X.basicOpen (a i0)) s, hrepr, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← KaehlerDifferential.map_D k k Γ(X, U) Γ(X, X.basicOpen (a i0)) s, hrepr, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, he_apply i, algebraMap_smul]
   obtain ⟨w, hw⟩ : ∃ w : ULift.{u} (Fin n) → Γ(X, X.basicOpen (a i0)),

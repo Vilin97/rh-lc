@@ -37,7 +37,8 @@ private theorem oh_sub (v : Pl F) : ∃ (ι : Type) (_ : Fintype ι) (o : ι →
       conv_lhs => rw [← bs.sum_repr o]
       simp
     conv_lhs => rw [e]
-    rw [map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     beta_reduce
     have e2 : sg v ((bs.repr o i : ℤ) • evFin F v a) = (bs.repr o i : ℤ) • sg v (evFin F v a) :=

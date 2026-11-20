@@ -47,7 +47,8 @@ theorem polyTop_of (hKA : KrAA) : PBN.PolyTop := by
             rw [hc, map_smul, smul_comm]
             rfl
           · show a • L (PBG.Kr Bs (PBN.aaTop Bs y G) _) = _
-            rw [hcy y, map_sum, Finset.smul_sum]
+            set_option synthInstance.maxHeartbeats 100000 in
+              rw [hcy y, map_sum, Finset.smul_sum]
             apply Finset.sum_congr rfl
             intro n _
             rw [map_smul, smul_comm])

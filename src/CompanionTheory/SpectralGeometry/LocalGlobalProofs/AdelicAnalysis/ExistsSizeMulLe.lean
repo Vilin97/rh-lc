@@ -76,7 +76,8 @@ theorem repr_mul (b : Module.Basis (Fin d) F E) (x y : Ainf F ⊗[F] E) (k : Fin
     simp [hB, Algebra.TensorProduct.basis_apply, Algebra.TensorProduct.tmul_mul_tmul,
       Algebra.TensorProduct.basis_repr_tmul]
   conv_lhs => rw [← B.sum_repr x, ← B.sum_repr y, Finset.sum_mul_sum]
-  simp only [map_sum, Finsupp.coe_finsetSum, Finset.sum_apply, smul_mul_smul_comm, map_smul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Finsupp.coe_finsetSum, Finset.sum_apply, smul_mul_smul_comm, map_smul,
     Finsupp.smul_apply, hBB, smul_eq_mul]
 
 theorem exists_size_mul_le (b : Module.Basis (Fin d) F E) :

@@ -52,7 +52,8 @@ theorem sesq_expand {α : V n → V n → ℂ} (hα : IsSesq α) (x y : V n) :
 
 theorem pull_ofValues (L : V n →L[ℂ] V n) {α : V n → V n → ℂ} (hα : IsSesq α) :
     pull L (ofValues α : Alt n) = ofValues (fun ξ η => α (L ξ) (L η)) := by
-  simp only [ofValues, sesq_expand hα (L _), AddSubmonoidClass.coe_finset_sum, Subalgebra.coe_smul, sym, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [ofValues, sesq_expand hα (L _), AddSubmonoidClass.coe_finset_sum, Subalgebra.coe_smul, sym, map_sum,
     map_smul, map_mul, (pull_dz L _).1, (pull_dz L _).2, Finset.sum_mul, Finset.mul_sum, Finset.sum_smul,
     Finset.smul_sum, smul_mul_smul_comm, smul_smul]
   conv_lhs => enter [2, a, 2, b]; rw [Finset.sum_comm]
@@ -64,7 +65,8 @@ theorem pull_ofValues (L : V n →L[ℂ] V n) {α : V n → V n → ℂ} (hα : 
 theorem repr_ofValues (α : V n → V n → ℂ) (S : Finset (Fin (n + n))) :
     (bas n).repr (ofValues α : Alt n) S =
       ∑ a, ∑ b, α (coordVec a) (coordVec b) * (bas n).repr (dz a * dzb b) S := by
-  simp [ofValues, map_sum, Finsupp.finset_sum_apply, sym]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [ofValues, map_sum, Finsupp.finset_sum_apply, sym]
 
 theorem dz_mul_dzb (a b : Fin n) : ∃ ε : ℤ, dz a * dzb b =
     (ε : ℂ) • bas n ({finSumFinEquiv (.inl a)} ∪ {finSumFinEquiv (.inr b)}) := by
@@ -108,9 +110,11 @@ theorem isReal_ofValues {α : V n → V n → ℂ} (hα : ∀ ξ η, conj (α ξ
     rw [h, map_smul, Module.Basis.repr_self, Finsupp.smul_apply, smul_eq_mul, Finsupp.single_apply]
     split_ifs <;> simp
   have h₃ : swap (ofValues α : Alt n) = ∑ a, ∑ b, α (coordVec a) (coordVec b) • -(dz b * dzb a) := by
-    simp only [ofValues, AddSubmonoidClass.coe_finset_sum, Subalgebra.coe_smul, sym, map_sum, map_smul, h₁]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [ofValues, AddSubmonoidClass.coe_finset_sum, Subalgebra.coe_smul, sym, map_sum, map_smul, h₁]
   rw [repr_ofValues, h₃, Finset.sum_comm]
-  simp only [map_sum, map_smul, map_neg, map_mul, Finsupp.finset_sum_apply, Finsupp.smul_apply, Finsupp.neg_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, map_neg, map_mul, Finsupp.finset_sum_apply, Finsupp.smul_apply, Finsupp.neg_apply,
     smul_eq_mul, h₂, hα, mul_neg, neg_mul]
 
 end Point

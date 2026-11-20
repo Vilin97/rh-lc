@@ -154,7 +154,8 @@ theorem law_integrated (hχ : HasConductor χ c) (μ : Measure (n → k)) [μ.Is
       ring
     · have h0 : b.1 η = 0 := image_eq_zero_of_notMem_tsupport hη
       simp [h0]
-  rw [ea, eb, map_sum, LinearMap.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [ea, eb, map_sum, LinearMap.sum_apply, map_sum]
   refine Finset.sum_congr rfl fun x _ => ?_
   rw [map_smul, LinearMap.smul_apply, map_smul]
   congr 1

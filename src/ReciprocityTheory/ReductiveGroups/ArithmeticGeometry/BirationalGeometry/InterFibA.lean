@@ -60,7 +60,8 @@ theorem fibSys_finite {W : Type*} [Fintype W] (r : W → ℕ) (H : W → MvPolyn
       choose q hqM hq using hterm
       refine ⟨∑ v ∈ (H i).support.attach, q v.1 v.2, Submodule.sum_mem _ fun v _ => hqM v.1 v.2, ?_⟩
       intro w hw
-      rw [hsplit w hw, hsum, map_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hsplit w hw, hsum, map_sum, map_sum]
       exact (Finset.sum_attach _ _).symm.trans (Finset.sum_congr rfl fun v _ => hq v.1 v.2 w hw)
   have hA : ∀ p : MvPolynomial W ℂ, ∃ q ∈ M, ∀ w : W → ℂ, (∀ i, w i ^ r i = eval w (H i)) →
       eval w p = eval w q := by
@@ -128,7 +129,8 @@ theorem fibSys_finite {W : Type*} [Fintype W] (r : W → ℕ) (H : W → MvPolyn
     obtain ⟨q, hqM, hq⟩ := hA (∑ x ∈ T, C (f' x) * L x)
     obtain ⟨c, hc⟩ := key q hqM
     refine ⟨c, funext fun t => ?_⟩
-    rw [← hc t, ← hq t (hTS t.2), map_sum, Finset.sum_eq_single (t : W → ℂ)]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hc t, ← hq t (hTS t.2), map_sum, Finset.sum_eq_single (t : W → ℂ)]
     · rw [map_mul, eval_C, hLself, mul_one, hf']
     · intro x _ hxt
       rw [map_mul, hLother x t t.2 (Ne.symm hxt), mul_zero]

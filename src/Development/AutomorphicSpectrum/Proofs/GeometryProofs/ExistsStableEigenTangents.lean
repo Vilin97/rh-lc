@@ -99,7 +99,8 @@ theorem image_frame [DecidableEq ι] {θ : R →+* T} {ρ : O →+* Module.End R
     exact (mem_eig ρ' _ _).2 (hv s i)
   · let f : ι → N' := fun s' => ∑ i, B.repr w ⟨s', i⟩ • β (b s' i)
     have hf : ∀ s' a, ρ' a (f s') = (θ.comp (τ s')) a • f s' := fun s' a => by
-      simp only [f, map_sum, Finset.smul_sum, map_smul, hv s']
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [f, map_sum, Finset.smul_sum, map_smul, hv s']
       exact Finset.sum_congr rfl fun i _ => smul_comm _ _ _
     have hsum : ∑ s', f s' = w := by
       have := B.sum_repr w

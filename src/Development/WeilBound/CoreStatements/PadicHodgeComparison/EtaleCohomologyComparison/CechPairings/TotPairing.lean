@@ -31,7 +31,8 @@ theorem term_d {R : Type} [CommRing R] {C : Type u} [Category.{v} C] (F : C ⥤ 
   have e : d F p f (hg.functor ⋙ s) = ∑ i : Fin (p + 2), (-1 : ℤ) ^ (i : ℕ) •
       term F (hg.functor ⋙ s) f i.succAbove (Fin.strictMono_succAbove i).monotone := rfl
   show (F.map (s.map (homOfLE (Fin.le_last (g (Fin.last (p + 1))))))).hom (d F p f (hg.functor ⋙ s)) = _
-  rw [e, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_zsmul, term_comp]
 
@@ -66,7 +67,8 @@ theorem CrystallineSemistableComparison.P.leibniz : ∀ {R : Type} [CommRing R] 
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [CrystallineSemistableComparison.Auxff.cupC_apply, ← P.nat, term_face, term_face]
   rw [hL, Pi.add_apply, Pi.smul_apply, CrystallineSemistableComparison.Auxff.cupC_apply, CrystallineSemistableComparison.Auxff.cupC_apply, CrystallineSemistableComparison.Auxff.term_d, CrystallineSemistableComparison.Auxff.term_d]
-  simp only [map_sum, map_zsmul, LinearMap.sum_apply, LinearMap.smul_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_zsmul, LinearMap.sum_apply, LinearMap.smul_apply]
   rw [CrystallineSemistableComparison.Auxff.sum_split (show p + q + 2 = (p + 1) + (q + 1) by omega), Fin.sum_univ_castSucc (n := p + 1),
     Fin.sum_univ_succ (n := q + 1), smul_add, Finset.smul_sum]
   refine CrystallineSemistableComparison.Auxff.four (Finset.sum_congr rfl fun j _ => ?_) (Finset.sum_congr rfl fun k _ => ?_) ?_

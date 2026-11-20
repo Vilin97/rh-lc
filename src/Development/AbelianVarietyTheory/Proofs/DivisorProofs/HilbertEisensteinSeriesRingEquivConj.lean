@@ -32,8 +32,10 @@ theorem _root_.GlobalTheory.HilbFam.hser_conj : ∀ (F : Type) [Field F] [Number
       hexp hemb
   unfold _root_.GlobalTheory.HilbFam.hser
   subst hk
-  simp only [map_smul, map_sum, smul_eq_mul, _root_.GlobalTheory.HilbFam.omegaFactor_pow_two_mul]
-  rw [map_mul, map_ratCast, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_smul, map_sum, smul_eq_mul, _root_.GlobalTheory.HilbFam.omegaFactor_pow_two_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_mul, map_ratCast, map_sum]
   congr 1
   refine Finset.sum_nbij' (fun μ j ↦ μ (π.symm j)) (fun μ i ↦ μ (π i)) ?_ ?_ ?_ ?_ ?_
   · intro μ hμ

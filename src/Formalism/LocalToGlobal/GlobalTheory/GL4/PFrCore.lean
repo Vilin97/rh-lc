@@ -36,7 +36,8 @@ theorem vi_smul_int (r : 𝓞 E) (x : n → E) : vi F (r • x) = ιA (algebraMa
 
 theorem vi_sum {ι : Type} (s : Finset ι) (f : ι → n → E) : vi F (∑ j ∈ s, f j) = ∑ j ∈ s, vi F (f j) := by
   funext i
-  simp [vi, map_sum, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [vi, map_sum, Finset.sum_apply]
 
 theorem incl_int_mem (r : 𝓞 E) : ιA (algebraMap (𝓞 E) E r) ∈ 𝒮 := by
   have := levelaf_tmul_mem (F := F) (E := E) r (one_mem (intAd F))
@@ -44,7 +45,8 @@ theorem incl_int_mem (r : 𝓞 E) : ιA (algebraMap (𝓞 E) E r) ∈ 𝒮 := by
 
 theorem gmv (G : Matrix n n E) (x : n → E) : (G.map ιA) *ᵥ vi F x = vi F (G *ᵥ x) := by
   funext i
-  simp [vi, Matrix.mulVec, dotProduct, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [vi, Matrix.mulVec, dotProduct, map_sum, map_mul]
 
 theorem natCast_ne (M : ℕ) (hM : M ≠ 0) : ((M : ℕ) : 𝓞 F) ≠ 0 := by
   intro h

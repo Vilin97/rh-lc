@@ -32,7 +32,8 @@ theorem exists_unit_of_local {R I : Type} [CommRing R] {v v' : I → R} (hv : Id
     obtain ⟨u, hu⟩ := h q
     refine ⟨u, ?_, hu⟩
     have e := congrArg (algebraMap R (Localization.AtPrime q)) hc
-    simp only [Finsupp.sum, map_sum, map_mul, map_one] at e ⊢
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Finsupp.sum, map_sum, map_mul, map_one] at e ⊢
     simp only [hu, mul_left_comm _ (u : Localization.AtPrime q)]
     rw [← Finset.mul_sum, e, _root_.mul_one]
   have hu : IsUnit (c.sum fun i a => a * v' i) := by

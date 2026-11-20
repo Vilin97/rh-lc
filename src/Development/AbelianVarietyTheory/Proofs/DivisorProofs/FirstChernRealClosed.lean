@@ -27,9 +27,11 @@ theorem coe_ofValues {n : ℕ} (α : V n → V n → ℂ) :
 
 theorem isType_ofValues {n : ℕ} (α : V n → V n → ℂ) : IsType 1 1 (ofValues α : Alt n) := by
   intro S hS
-  rw [coe_ofValues, map_sum, Finsupp.finsetSum_apply] at hS
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [coe_ofValues, map_sum, Finsupp.finsetSum_apply] at hS
   obtain ⟨a, -, ha⟩ := Finset.exists_ne_zero_of_sum_ne_zero hS
-  rw [map_sum, Finsupp.finsetSum_apply] at ha
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finsupp.finsetSum_apply] at ha
   obtain ⟨b, -, hb⟩ := Finset.exists_ne_zero_of_sum_ne_zero ha
   obtain ⟨ε, h⟩ := dz_mul_dzb a b
   obtain rfl : ({finSumFinEquiv (.inl a)} ∪ {finSumFinEquiv (.inr b)} : Finset (Fin (n + n))) = S := by
@@ -64,7 +66,8 @@ theorem isReal_ofValues {n : ℕ} {α : V n → V n → ℂ} (hα : ∀ ξ η, c
     simp only [map_smul, Module.Basis.repr_self, Finsupp.smul_apply, Finsupp.single_apply]
     split_ifs <;> simp
   rw [coe_ofValues]
-  simp only [map_sum, map_smul, h1, map_neg, Finsupp.finsetSum_apply, Finsupp.smul_apply, Finsupp.neg_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, h1, map_neg, Finsupp.finsetSum_apply, Finsupp.smul_apply, Finsupp.neg_apply,
     smul_eq_mul]
   simp only [map_mul (starRingEnd ℂ), h2, hα]
   rw [Finset.sum_comm]
@@ -82,7 +85,8 @@ theorem chernAt_exp_neg {n : ℕ} {u : V n → ℝ} {v : V n} (hu : ContDiffAt �
   have h1 (G : V n → Matrix Unit Unit ℂ) : chernAt G v 1 = ofValues (chernOne G v) := by
     unfold chernAt ofValues GlobalTheory.GoodMetric.chernPoly chernOne
     rw [Matrix.coeff_charpolyRev_eq_neg_trace, Matrix.trace_neg, neg_neg, pow_one]
-    simp only [Matrix.trace, Matrix.diag, GlobalTheory.GoodMetric.curvPoly, Matrix.of_apply, map_sum, map_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.trace, Matrix.diag, GlobalTheory.GoodMetric.curvPoly, Matrix.of_apply, map_sum, map_mul,
       MvPolynomial.aeval_C, MvPolynomial.aeval_X, ← Algebra.smul_def, mul_smul, ← Finset.smul_sum, Finset.sum_smul]
     congr 1
     rw [Finset.sum_comm]

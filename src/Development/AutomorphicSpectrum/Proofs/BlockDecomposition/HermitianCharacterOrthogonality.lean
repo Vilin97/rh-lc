@@ -41,7 +41,8 @@ theorem trace_red_mul (ϖ : R) (k n : ℕ) (b y : Matrix (Fin n) (Fin n) R) :
     Matrix.trace (red ϖ k b * red ϖ k y) = Ideal.Quotient.mk (lev ϖ k) (Matrix.trace (b * y)) := by
   unfold PositivityTheory.PfSWUS.Loc.red
   rw [← Matrix.map_mul]
-  simp only [Matrix.trace, Matrix.diag_apply, Matrix.map_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.trace, Matrix.diag_apply, Matrix.map_apply, map_sum]
 
 theorem tsum_eq_zero_of_shift {G : Type} [AddCommGroup G] (H : Set G)
     (hadd : ∀ a b, a ∈ H → b ∈ H → a + b ∈ H) (hneg : ∀ a, a ∈ H → -a ∈ H)

@@ -27,7 +27,8 @@ theorem UpperTheory.V.Z.Kato.Nb.sEsLev : UpperTheory.V.Z.Kato.Nb.SEsLev := by
   have cong : ∀ u u' : Fin 2 → ℤ_[l], (∀ i, (l : ℤ_[l]) ^ n ∣ u i - u' i) →
       (AdicCompletion.eval (idl l) (X.Kl l) n) (b u - b u') = 0 := by
     intro u u' h
-    rw [hbu u, hbu u', ← Finset.sum_sub_distrib, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hbu u, hbu u', ← Finset.sum_sub_distrib, map_sum]
     refine Finset.sum_eq_zero fun i _ => ?_
     exact api.2.2.2.2.1 _ _ _ (hsub _ _ _ _ _ _ (h 0) (h 1))
   refine ⟨cong, ?_, ?_⟩

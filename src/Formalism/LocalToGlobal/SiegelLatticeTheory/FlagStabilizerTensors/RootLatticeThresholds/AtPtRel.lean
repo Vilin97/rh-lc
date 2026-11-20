@@ -349,7 +349,8 @@ theorem rel_of_matRel (K : Type) [Field K] [Algebra K E]
     ext a b
     have e := hLie (F.fvec a) (F'.fvec b)
     rw [coefM_expand F hYF a, coefM_expand F' hYF' b] at e
-    simp only [map_sum, map_smulₛₗ, map_smul, LinearMap.sum_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smulₛₗ, map_smul, LinearMap.sum_apply,
       LinearMap.smul_apply, smul_eq_mul, starRingEnd_apply] at e
     simp only [Matrix.add_apply, Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.zero_apply,
       Zhat, brS]

@@ -29,9 +29,11 @@ theorem exists_weak_limit_of_separating {V : Type*} [AddCommGroup V] [Module ℝ
   refine ⟨∑ i, L i • b i, fun φ => ?_⟩
   have h1 : (fun R => φ (G R)) = fun R => ∑ i, b.coord i (G R) * φ (b i) := by
     funext R
-    conv_lhs => rw [← b.sum_repr (G R), map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [← b.sum_repr (G R), map_sum]
     simp only [map_smul, smul_eq_mul, Module.Basis.coord_apply]
-  rw [h1, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h1, map_sum]
   refine tendsto_finsetSum _ fun i _ => ?_
   rw [map_smul, smul_eq_mul]
   exact (hL i).mul_const _

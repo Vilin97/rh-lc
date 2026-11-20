@@ -326,7 +326,8 @@ theorem kapSign_eq_one_of_vals (hU : Unr E) (w : Pl E) (n : ℕ) (γ : GLw n w) 
     exact mul_ne_zero ((map_ne_zero (cj w)).2 hPdet) hPdet
   have hherm : ∀ i j, cj w (H j i) = H i j := by
     intro i j
-    simp only [hHdef, Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, map_sum, map_mul, hinv]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hHdef, Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, map_sum, map_mul, hinv]
     exact Finset.sum_congr rfl fun k _ => mul_comm _ _
   have hun : ∀ i j, cj w (u i) * H i j * u j = H i j := by
     have e1 : (((γ.val * (P : Matrix (Fin n) (Fin n) (w.adicCompletion E))).map (cj w))ᵀ *

@@ -52,7 +52,8 @@ theorem mem_iff_XgE {K G H : Type} [Field K] [CharZero K] [Group G] [Fintype G] 
     (he : ∀ g, σ ((idemOf Xg).coeff g) = e.coeff (eG g)) (χ : G → K) :
     χ ∈ Xg ↔ (fun g => χ (eG.symm g)) ∈ XgE σ e := by
   rw [mem_XgE, isAbsIrrChar_comp_iff eG.symm, ← Equiv.sum_comp eG.toEquiv]
-  simp only [MulEquiv.toEquiv_eq_coe, EquivLike.coe_coe, MulEquiv.symm_apply_apply, map_one, ← he, ← map_mul, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [MulEquiv.toEquiv_eq_coe, EquivLike.coe_coe, MulEquiv.symm_apply_apply, map_one, ← he, ← map_mul, ← map_sum]
   rw [σ.injective.eq_iff]
   exact ⟨fun h => ⟨hXg χ h, (mem_iff_trace Xg hXg (hXg χ h)).1 h⟩, fun h => (mem_iff_trace Xg hXg h.1).2 h.2⟩
 
@@ -66,7 +67,8 @@ theorem exists_coord {K W : Type} [Field K] [AddCommGroup W] [Module ℂ W] (σ 
     intro y
     rw [← LinearEquiv.eq_symm_apply, Module.Basis.equivFun_symm_apply]
     conv_lhs => rw [pi_eq_sum_univ' y]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [LinearMap.map_smulₛₗ, Module.Basis.mk_apply]
   let A := LinearMap.toMatrix' Ψ.toLinearMap

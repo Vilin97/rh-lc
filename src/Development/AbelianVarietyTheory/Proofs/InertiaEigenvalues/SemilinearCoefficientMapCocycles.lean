@@ -55,7 +55,8 @@ def vecMap : (Fin r → K) →ₛₗ[(f : K →+* K')] (Fin r → K') where
 theorem vecMap_repOn {Γ : Type} [Group Γ] {r : ℕ} (ρ : Γ →* GL (Fin r) O) (g : Γ) (m : Fin r → K) :
     vecMap f r (repOn ρ (1 : Γ →* Kˣ) K g m) = repOn ρ (1 : Γ →* K'ˣ) K' g (vecMap f r m) := by
   funext a
-  simp [vecMap, repOn, matAct, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [vecMap, repOn, matAct, map_sum]
 
 end Coef
 

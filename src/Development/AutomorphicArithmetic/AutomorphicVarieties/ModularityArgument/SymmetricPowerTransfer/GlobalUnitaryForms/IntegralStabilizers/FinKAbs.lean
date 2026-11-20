@@ -29,7 +29,8 @@ private theorem exists_natAbs_det_mulLeft_sum_le_mul_pow_card {B : Type} [Ring B
   have hent : ∀ i l, |LinearMap.toMatrix b b (LinearMap.mulLeft ℤ (∑ t, c t • b t)) i l| ≤ (m : ℤ) * K0 := by
     intro i l
     rw [LinearMap.toMatrix_apply, LinearMap.mulLeft_apply, Finset.sum_mul]
-    simp only [smul_mul_assoc, map_sum, map_zsmul, Finsupp.coe_finset_sum, Finset.sum_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [smul_mul_assoc, map_sum, map_zsmul, Finsupp.coe_finset_sum, Finset.sum_apply,
       Finsupp.smul_apply, smul_eq_mul]
     calc |∑ t, c t * b.repr (b t * b l) i| ≤ ∑ t, |c t * b.repr (b t * b l) i| :=
           Finset.abs_sum_le_sum_abs _ _

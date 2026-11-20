@@ -135,7 +135,8 @@ theorem mdisc_const (A : Matrix (Fin D) (Fin D) ℂ) : mdisc (fun _ => A) = A.de
 theorem det_sum_smul_eq_sum_mdisc {m : ℕ} (c : Fin m → ℂ)
     (A : Fin m → Matrix (Fin D) (Fin D) ℂ) :
     (∑ j, c j • A j).det = ∑ f : Fin D → Fin m, (∏ k, c (f k)) * mdisc (A ∘ f) := by
-  rw [← mdisc_const, ← mdiscML_apply, MultilinearMap.map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← mdisc_const, ← mdiscML_apply, MultilinearMap.map_sum]
   refine Finset.sum_congr rfl fun f _ => ?_
   have := MultilinearMap.map_smul_univ (mdiscML (D := D)) (fun i => c (f i)) (fun i => A (f i))
   rw [this, smul_eq_mul, mdiscML_apply]

@@ -63,7 +63,8 @@ theorem eq_sum_E (H : Mc n) : H = ∑ p : Fin n × Fin n, H p.1 p.2 • E p := b
 theorem dd_expand (H : Mc n) (f : Mc n → ℂ) (x : Mc n) :
     dd H f x = ∑ p : Fin n × Fin n, H p.1 p.2 * dd (E p) f x := by
   conv_lhs => rw [eq_sum_E H]
-  simp [dd, map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [dd, map_sum, map_smul]
 
 theorem two_le_top' : (2 : WithTop ℕ∞) ≤ ((⊤ : ℕ∞) : WithTop ℕ∞) := by
   rw [show (2 : WithTop ℕ∞) = ((2 : ℕ∞) : WithTop ℕ∞) from rfl]

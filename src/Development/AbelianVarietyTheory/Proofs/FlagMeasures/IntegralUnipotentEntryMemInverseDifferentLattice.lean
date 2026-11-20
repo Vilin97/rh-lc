@@ -33,7 +33,8 @@ theorem coord_eI {E : Type} [Field E] {k r : ℕ} (σ : E →+* E) (τ : E →+*
     rw [hy, star_smul, bvec, ← hpk_mulVec_esI k r a (B *ᵥ fun i => τ (x i))]
     simp [Pi.star_def, dotProduct, Pi.single_apply, -Matrix.mulVec_mulVec]
   have rhs : star (fun i => τ (y i)) ⬝ᵥ (J.map τ *ᵥ fun i => τ (x i)) = τ (form σ J x y) := by
-    simp only [form, dotProduct, map_sum, map_mul, hτ, RingHom.map_mulVec]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [form, dotProduct, map_sum, map_mul, hτ, RingHom.map_mulVec]
     rfl
   rw [lhs, rhs] at key
   rw [← key, ← mul_assoc, mul_inv_cancel₀ (by exact_mod_cast hs), one_mul]

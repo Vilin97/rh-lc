@@ -82,7 +82,8 @@ theorem etale_alexander_whitney_cup_exists_of_cochain_from_evaluations (hmk : Et
       (ev α p _ rfl U (x.sub 0 p (by omega))) (ev β (N - p) _ rfl U (x.sub p (N - p) (by omega))))
     (by
       intro N w h V U g x
-      simp only [Sec.res, map_sum, Units.smul_def, map_zsmul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Sec.res, map_sum, Units.smul_def, map_zsmul]
       refine Finset.sum_congr rfl fun p _ => ?_
       congr 1
       rw [awex_sub_res, awex_sub_res, ← awex_ev_res, ← awex_ev_res]

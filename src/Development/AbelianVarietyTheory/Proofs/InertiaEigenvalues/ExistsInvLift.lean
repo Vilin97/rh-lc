@@ -43,7 +43,8 @@ theorem C_mem (w : Wq l bk.a) : (C w : bk.S) ∈ InvSet bk m := fun g => by
 omit hl in
 theorem coe_sum_fin {R : Type} [CommRing R] {e : ℕ} (c : Fin e → R) :
     ((∑ i, Polynomial.C (c i) * Polynomial.X ^ (i : ℕ) : Polynomial R) : R⟦X⟧) = ∑ i, C (c i) * X ^ (i : ℕ) := by
-  rw [← Polynomial.coeToPowerSeries.ringHom_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Polynomial.coeToPowerSeries.ringHom_apply, map_sum]
   simp [Polynomial.coeToPowerSeries.ringHom_apply]
 
 theorem exists_div (s : bk.S) : ∃ (q : bk.S) (c : Fin bk.Ep.natDegree → Wq l bk.a),

@@ -219,7 +219,8 @@ theorem HookCharacterSumIdentity.proof (hSh : ShiftSumRule.Statement)
         C (symmetricGroupCharacter (fun i => a + nu i) ((k - 1) :: List.replicate (r * a + 1) 1)) *
           Sν nu := by
       apply Flag.powerSumHom_injective
-      rw [hS1, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hS1, map_sum]
       refine Finset.sum_congr rfl fun nu hnu => ?_
       rw [map_mul, hSν1 nu hnu]
       simp [powerSumHom, SmallBlock.sign]

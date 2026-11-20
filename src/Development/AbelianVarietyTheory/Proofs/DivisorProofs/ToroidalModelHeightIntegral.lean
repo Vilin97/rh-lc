@@ -63,7 +63,8 @@ theorem mono_of_matches : ∀ {E : Type} [Field E] [NumberField E] [IsCMField E]
       rw [← Finset.sum_smul]
       have e1 : ∑ i, TangentOrigin.evalPt (y ≫ jB) _ h (a i) * TangentOrigin.evalPt (y ≫ jB) _ h (A b i) =
           TangentOrigin.evalPt (y ≫ jB) _ h (∑ i, A b i * a i) := by
-        simp only [map_sum, map_mul, mul_comm]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, map_mul, mul_comm]
       rw [e1, ha b, map_zero, zero_smul]
     funext j
     show a j = 0
@@ -88,7 +89,8 @@ theorem mono_of_matches : ∀ {E : Type} [Field E] [NumberField E] [IsCMField E]
     intro b
     have e0 : (hf'U.basis le_rfl).repr (u.app (V ⊓ W₀) (s - s')) b = 0 := by rw [hd, map_zero]; rfl
     rw [hs] at e0
-    simp only [map_sum, Scheme.Modules.Hom.app_smul, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, Scheme.Modules.Hom.app_smul, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply,
       Finsupp.coe_smul, Pi.smul_apply, smul_eq_mul] at e0
     rw [← e0]
     exact Finset.sum_congr rfl fun i _ => by simp only [A, Twist.resM_self]; exact mul_comm _ _

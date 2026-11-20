@@ -43,7 +43,8 @@ theorem exists_hypDec (S : HSp D) {r : ℕ} (e e' : Matrix (Fin S.rank) (Fin r) 
     rw [Fintype.linearIndependent_iff]
     intro c hc i
     have h := congrArg (S.hT (ev' i)) hc
-    rw [map_sum, map_zero] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero] at h
     simp only [map_smul, hpair, smul_eq_mul, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq, Finset.mem_univ,
       if_true] at h
     exact h

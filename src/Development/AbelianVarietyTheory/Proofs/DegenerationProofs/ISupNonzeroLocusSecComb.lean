@@ -56,7 +56,8 @@ theorem exists_matrix {o Ω : Type} [CommRing o] [Field Ω] [Algebra o Ω] (M : 
   refine ⟨Matrix.of B, Matrix.of C, Matrix.ext fun i j => M.res_injective W hW ?_, fun _ => hB⟩
   have := congrFun (congrFun hc i) j
   rw [Matrix.mul_apply] at this ⊢
-  rw [map_sum, Matrix.one_apply, apply_ite (M.res W hW), map_one, map_zero, ← Matrix.one_apply, ← this]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Matrix.one_apply, apply_ite (M.res W hW), map_one, map_zero, ← Matrix.one_apply, ← this]
   exact Finset.sum_congr rfl fun l _ => by
     rw [map_mul, M.res_apply, M.res_apply, Matrix.of_apply, Matrix.of_apply, hB, hC]
 

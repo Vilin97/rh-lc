@@ -397,7 +397,8 @@ theorem mem_inn (c : F) (x : (stdH M m).perp ((stdH M m).X (r := 0) (frame M m c
         (stdH M m).perp ((stdH M m).X (r := 0) (frame M m c).f)) := by
       ext j
       simp [Finset.sum_apply, Pi.single_apply]
-    rw [hsum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hsum, map_sum]
     refine Submodule.sum_mem _ fun i _ => ?_
     rw [map_smul]
     change ((⟨x.1 i, hx i⟩ : M.L.O) : E) • _ ∈ inn M m c

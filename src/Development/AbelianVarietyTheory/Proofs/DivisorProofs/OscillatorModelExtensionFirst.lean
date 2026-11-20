@@ -87,7 +87,8 @@ theorem exists_ext {K X M N : Type} [Field K] [AddCommGroup X] [Module K X] [Fin
     exact h1
   refine ⟨B, fun v => ?_⟩
   rw [← b.sum_repr v]
-  simp only [map_sum, map_smulₛₗ, hj, RingHom.id_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smulₛₗ, hj, RingHom.id_apply]
 
 theorem trace_parity {k : ℕ} {G s B : Matrix (Fin k) (Fin k) ℂ} {p : ℕ} (h : IsONBasis G s B p) :
     B.det ≠ 0 ∧ ∃ x : ℤ, s.trace / 2 + (k : ℂ) / 2 = x := by
@@ -287,7 +288,8 @@ theorem toF_gaStar (hl : IsLt lt) (h : IsTyp D H) (pW : D.what₂.Tau → ℕ) (
   | mul_X P ℓ hP =>
     simp only [map_mul, hP]
     congr 1
-    rw [toF_X, gaStar, MvPolynomial.aeval_X, MvPolynomial.aeval_X, letB, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [toF_X, gaStar, MvPolynomial.aeval_X, MvPolynomial.aeval_X, letB, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_mul, toF_C, toF_X, hl.col h, hU, hp, (hl ℓ).1]
     congr 2
@@ -379,7 +381,8 @@ theorem rat_parts (hθ : IsInfFam θ) (h : V.gram = 1) (γ : GQ V) :
     refine Matrix.ext fun i j => (tauE D t).injective ?_
     have h4 := congrFun (congrFun h3 i) j
     rw [Matrix.mul_apply] at h4 ⊢
-    rw [map_sum, Matrix.one_apply, apply_ite (tauE D t), map_one, map_zero, ← Matrix.one_apply, ← h4]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Matrix.one_apply, apply_ite (tauE D t), map_one, map_zero, ← Matrix.one_apply, ← h4]
     refine Finset.sum_congr rfl fun l _ => ?_
     rw [map_mul]
     congr 1

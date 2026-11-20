@@ -104,7 +104,8 @@ theorem wToC_mem_Wp (x : WW p) : wToC p x ∈ Formalism.MainNotions.GL3Theta.Wp 
   obtain ⟨c, hc⟩ := WittVector.dvd_sub_sum_teichmuller_iterateFrobeniusEquiv_coeff x N
   refine ⟨wToC p (∑ i ∈ Finset.Iic N, (WittVector.teichmuller p
         (((_root_.frobeniusEquiv (kb p) p).symm ^ i) (x.coeff i)) * (p : WW p) ^ i)), ?_, ?_⟩
-  · rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum]
     refine Subring.sum_mem _ fun i _ => ?_
     rw [map_mul, map_pow, map_natCast]
     exact Subring.mul_mem _ (wToC_teich_mem p _) (Subring.pow_mem _ (natCast_mem _ p) i)
@@ -232,7 +233,8 @@ theorem logF_map : PowerSeries.map (k0ToC p) (Formalism.MainNotions.FormalGroupS
   ext n
   rw [PowerSeries.coeff_map]
   unfold Formalism.MainNotions.FormalGroupSystem.logF Formalism.MainNotions.GL3Theta.logF
-  rw [PowerSeries.coeff_mk, PowerSeries.coeff_mk, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [PowerSeries.coeff_mk, PowerSeries.coeff_mk, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   split_ifs <;> simp
 

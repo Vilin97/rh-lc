@@ -14,12 +14,14 @@ variable {T K : Type} [CommRing T] [CommRing K] {n : Type} [Fintype n] [Decidabl
 include hσ in
 theorem hform_fst (z y : n → T) :
     (φ (hform σ J z y)).1 = ∑ i, ∑ j, (φ (z i)).2 * (φ (J i j)).1 * (φ (y j)).1 := by
-  simp [hform, map_sum, map_mul, Prod.fst_sum, hσ, swapR]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [hform, map_sum, map_mul, Prod.fst_sum, hσ, swapR]
 
 include hσ in
 theorem hform_snd (z y : n → T) :
     (φ (hform σ J z y)).2 = ∑ i, ∑ j, (φ (z i)).1 * (φ (J i j)).2 * (φ (y j)).2 := by
-  simp [hform, map_sum, map_mul, Prod.snd_sum, hσ, swapR]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [hform, map_sum, map_mul, Prod.snd_sum, hσ, swapR]
 
 include hσ hS hΛ in
 
@@ -36,7 +38,8 @@ theorem map_of_first (x : GL n T) (hx : x ∈ UJ σ J)
     intro M a b
     have hmap : (fun i => σ ((M *ᵥ a) i)) = (M.map σ) *ᵥ (fun i => σ (a i)) := by
       funext i
-      simp [Matrix.mulVec, dotProduct, map_sum, map_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [Matrix.mulVec, dotProduct, map_sum, map_mul]
     rw [key, key, hmap, Matrix.dotProduct_mulVec, ← Matrix.vecMul_transpose, Matrix.vecMul_vecMul,
       Matrix.vecMul_vecMul]
     simp only [Matrix.mul_assoc]

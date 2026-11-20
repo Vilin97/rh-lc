@@ -88,7 +88,8 @@ theorem main : ∀ (R K L : Type) [CommRing R] [IsDomain R] [IsDiscreteValuation
     rw [injective_iff_map_eq_zero]
     intro x hx
     have hli := bK.linearIndependent.comp (Fin.cast hdeg) (Fin.cast_injective hdeg)
-    rw [← bR.sum_repr x, map_sum] at hx
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← bR.sum_repr x, map_sum] at hx
     simp only [map_smul, hψb] at hx
     have h0 : ∀ i, bR.repr x i = 0 := Fintype.linearIndependent_iff.1 hli _ hx
     rw [← bR.sum_repr x]

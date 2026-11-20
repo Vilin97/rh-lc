@@ -45,7 +45,8 @@ theorem sum_sImg (y : Fin (N + 1) → Ω) (hy : ∀ k, y (j₀.succAbove k) = x 
       algebraMap (MvPolynomial (SVar D N) Ω) (OmS Ω D N) (MvPolynomial.C a) := fun a =>
     IsScalarTower.algebraMap_apply Ω (MvPolynomial (SVar D N) Ω) (OmS Ω D N) a
   rw [Fin.sum_univ_succAbove _ j₀]
-  simp only [sImg, Fin.succAbove_cases_eq_insertNth, Fin.insertNth_apply_same,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [sImg, Fin.succAbove_cases_eq_insertNth, Fin.insertNth_apply_same,
     Fin.insertNth_apply_succAbove, hy, hC, ← map_mul, ← map_sum, ← map_add]
   congr 1
   split_ifs

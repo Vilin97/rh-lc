@@ -51,7 +51,8 @@ theorem coefX_transport (F₁ : FlagG S r T) (F₂ : FlagG S r T') (g : S.V ≃�
       have : v = ∑ j, c j • F₁.e j := by
         apply g.injective
         rw [← hc]
-        simp [he, map_sum, map_smul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp [he, map_sum, map_smul]
       rw [this]
       exact sum_mem_X F₁ c
     unfold FlagG.coefX

@@ -52,7 +52,8 @@ theorem twisted_period_of_class_decomposition {Dx : DivX D} {T : TwForms D}
   obtain ⟨pc, hs, hi⟩ := h u μ hμ
   choose y hy hv using hi x hx F hF
   refine ⟨∑ c, ((Nat.card ((T.fm u μ).stabilizer₂ c) : ℕ) : D.what₂.LL)⁻¹ * y c, ?_, fun w hw => ?_⟩
-  · rw [hs, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [hs, map_sum]
     refine Finset.sum_congr rfl fun c _ => ?_
     rw [map_mul, map_inv₀, map_natCast, hy c]
   · refine Finset.sum_induction _ (fun t => t = 0 ∨ -ur D w (Formalism.MainNotions.WeilJacquetShalikaLaw.vDG D u w) ≤ (vAdd (D.plEq w) t : ℝ))

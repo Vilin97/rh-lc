@@ -69,7 +69,8 @@ theorem pres {B : Type} [CommRing B] [IsDomain B] {h : ℕ} {ϖ : B} (P Q : Subm
   rw [he', Submodule.Quotient.eq, Submodule.mem_comap, hQ'] at hc
   rw [he, Submodule.Quotient.eq, Submodule.mem_comap]
   convert hc using 1
-  simp [hx, map_sum, map_smulₛₗ, hu]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [hx, map_sum, map_smulₛₗ, hu]
 
 theorem presLie (p : ℕ) (A B : Type) [CommRing A] [CommRing B] [Algebra A B] (Lie : Type) [AddCommGroup Lie] [Module A Lie]
     [Module.Finite A Lie] [Module.Projective A Lie] : ∃ (m r : ℕ) (R : Matrix (Fin m) (Fin r) B)
@@ -93,7 +94,8 @@ theorem presLie (p : ℕ) (A B : Type) [CommRing A] [CommRing B] [Algebra A B] (
   rw [he, Submodule.Quotient.eq, Submodule.mem_smul_pointwise_iff_exists]
   refine ⟨l z, trivial, ?_⟩
   have := congrArg l hz
-  simpa [map_sum, map_smulₛₗ, hl] using this
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa [map_sum, map_smulₛₗ, hl] using this
 
 theorem main : ∀ (p : ℕ) [Fact p.Prime] (A B : Type) [CommRing A] [CommRing B] [IsDomain B] [Algebra A B] [Algebra.IsIntegral A B] (h o : ℕ) (π : A) (γ : ℕ → A) (Lie Om : Type) [AddCommGroup Lie] [Module A Lie] [AddCommGroup Om] [Module A Om] [Module.Finite A Lie] [Module.Projective A Lie] [Module.Finite A Om] [Module.Projective A Om] (C : RChain p B h o (algebraMap A B π) (fun n => algebraMap A B (γ n)) (B ⊗[A] Lie) (B ⊗[A] Om)) (S : Set (Om × C.L 0)), S.Finite → algebraMap A B π ≠ 0 → (∀ s ∈ S, C.ρ (1 ⊗ₜ s.1) = Submodule.Quotient.mk (Submodule.Quotient.mk s.2)) → ∃ T : Set B, T.Finite ∧ ∀ (A' : Type) [CommRing A'] [IsDomain A'] [IsIntegrallyClosed A'] [Algebra A A'] (g : A' →+* B), Function.Injective g → (∀ a, g (algebraMap A A' a) = algebraMap A B a) → T ⊆ Set.range g → ∀ (π' : A') (γ' : ℕ → A'), π' = algebraMap A A' π → (∀ n, γ' n = algebraMap A A' (γ n)) → ∀ (Lie' Om' : Type) [AddCommGroup Lie'] [Module A' Lie'] [AddCommGroup Om'] [Module A' Om'] (eL : A' ⊗[A] Lie ≃ₗ[A'] Lie') (eO : A' ⊗[A] Om ≃ₗ[A'] Om'), ∃ (C' : RChain p A' h o π' γ' Lie' Om') (l : Lie' →ₛₗ[g] B ⊗[A] Lie) (m : Om' →ₛₗ[g] B ⊗[A] Om), (∀ y, l (eL (1 ⊗ₜ y)) = 1 ⊗ₜ y) ∧ (∀ w, m (eO (1 ⊗ₜ w)) = 1 ⊗ₜ w) ∧ (∀ n ≤ o, ∀ x, x ∈ C'.L n ↔ piMap g (Fin h) x ∈ C.L n) ∧ (∀ n, o < n → C'.L n = baseOf π' h) ∧ C'.Map C g 1 l m ∧ ∀ s ∈ S, ∃ x : C'.L 0, piMap g (Fin h) x.1 = s.2.1 ∧ C'.ρ (eO (1 ⊗ₜ s.1)) = Submodule.Quotient.mk (Submodule.Quotient.mk x) := by
   intro p _ A B _ _ _ _ _ h o π γ Lie Om _ _ _ _ _ _ _ _ C S hS h0 hρ

@@ -90,7 +90,8 @@ theorem deg_sigma (hC : IsProjCurve k C) {ι : Type} [Fintype ι] (L : ι → C.
         (∑ j, stalkLinear (biproduct.ι L j) _ ∘ₗ LinearMap.proj j)
         (by
           refine LinearMap.pi_ext' fun i => LinearMap.ext fun t => funext fun j => ?_
-          simp only [LinearMap.comp_apply, LinearMap.pi_apply, LinearMap.sum_apply, map_sum,
+          set_option synthInstance.maxHeartbeats 100000 in
+            simp only [LinearMap.comp_apply, LinearMap.pi_apply, LinearMap.sum_apply, map_sum,
             LinearMap.proj_apply, LinearMap.id_apply, LinearMap.single_apply]
           rw [Finset.sum_eq_single j (fun i' _ h' => ?_) (by simp), ← LinearMap.comp_apply,
             ← QCoh.stalkLinear_comp, biproduct.ι_π_self, QCoh.stalkLinear_id, LinearMap.id_apply]

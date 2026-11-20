@@ -41,7 +41,8 @@ theorem exists_eq_span_range {R : Type*} [CommRing R] [IsPrincipalIdealRing R] (
       rw [hb] at h2
       obtain ⟨d, hd⟩ := (Submodule.mem_span_range_iff_exists_fun R).1 h2
       refine (Submodule.mem_span_range_iff_exists_fun R).2 ⟨Fin.cons a d, ?_⟩
-      rw [← hd, map_sum] at h1
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hd, map_sum] at h1
       simp only [Fin.sum_univ_succ, Fin.cons_zero, Fin.cons_succ, ← map_smul, h1]
       abel
     · rw [Submodule.span_le]

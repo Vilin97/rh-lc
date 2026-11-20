@@ -30,7 +30,8 @@ theorem coord_mem_fieldRange {ι K J : Type} [Field K] [Fintype J] (σ : K →+*
   have hsum : ∑ k, π (a k) • e k = 0 := by
     ext m
     have h1 := hπ0 _ (hp _ (hx m))
-    simp only [MvPolynomial.coeff_sum, MvPolynomial.coeff_smul, MvPolynomial.coeff_map, smul_eq_mul, map_sum] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [MvPolynomial.coeff_sum, MvPolynomial.coeff_smul, MvPolynomial.coeff_map, smul_eq_mul, map_sum] at h1
     simp only [MvPolynomial.coeff_sum, MvPolynomial.coeff_smul, smul_eq_mul, MvPolynomial.coeff_zero]
     rw [← h1]
     refine Finset.sum_congr rfl fun k _ => ?_
@@ -39,7 +40,8 @@ theorem coord_mem_fieldRange {ι K J : Type} [Field K] [Fintype J] (σ : K →+*
     rw [e1, map_smul, smul_eq_mul, mul_comm]
   have h2 : ∑ k, σ (π (a k)) • MvPolynomial.map σ (e k) = 0 := by
     have := congrArg (MvPolynomial.map σ) hsum
-    simpa [map_sum, MvPolynomial.smul_eq_C_mul, MvPolynomial.map_C] using this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [map_sum, MvPolynomial.smul_eq_C_mul, MvPolynomial.map_C] using this
   have h3 := Fintype.linearIndependent_iff.1 hli _ h2 j
   exact hπ ((map_eq_zero σ).1 h3)
 

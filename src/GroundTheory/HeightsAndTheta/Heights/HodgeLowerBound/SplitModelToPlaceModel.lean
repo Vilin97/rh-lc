@@ -157,7 +157,8 @@ def toIndefiniteRowSideFullHecke (hA : HermMetric y W Xo χ) (hXo : Xo ⊆ mcPts
       hA.conj l z hz hd
     rw [gramMatrix_change_of_frame hA hXo hcz hd' hS' hSe, gramMatrix_change_of_frame hA hXo hz hd hS hSe, hv, ht]
     ext p q
-    simp [Matrix.mul_apply, Matrix.conjTranspose_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Matrix.mul_apply, Matrix.conjTranspose_apply, map_sum]
   smooth m O γ hO hγ hγU w hw b hb p q := by
     have hU : ∀ w ∈ O, γ w ∈ mcPts (mCoordIdeal y) := fun w hw => hXo (hγU w hw)
     obtain ⟨l, hd⟩ := hA.cover _ (hγU w hw)

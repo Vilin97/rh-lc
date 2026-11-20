@@ -38,7 +38,8 @@ theorem uniq {C : Type} [CommRing C] [IsLocalRing C] {n : ℕ} (hn : IsUnit (n :
   have key := (Commute.all x y).geom_sum₂_mul n
   rw [hx, hy, sub_self] at key
   have hS : IsUnit (∑ i ∈ Finset.range n, x ^ i * y ^ (n - 1 - i)) := by
-    rw [← residue_ne_zero_iff_isUnit, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← residue_ne_zero_iff_isUnit, map_sum]
     have : ∀ i ∈ Finset.range n, residue C (x ^ i * y ^ (n - 1 - i)) = residue C x ^ (n - 1) := by
       intro i hi
       rw [map_mul, map_pow, map_pow, ← hr, ← pow_add]

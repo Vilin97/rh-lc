@@ -54,7 +54,8 @@ theorem RestCutCompareReal.proof : RestCutCompareReal.Statement := by
   have hL : I (restRename f j k N e P) =
       ∑ α ∈ P.support, I (restRename f j k N e (monomial α (AddMonoidAlgebra.coeff P α))) := by
     conv_lhs => rw [P.as_sum]
-    rw [map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum]
   rw [hL, realFlagIntegral_eq_sum, Finset.mul_sum]
   exact Finset.sum_congr rfl hmono
 

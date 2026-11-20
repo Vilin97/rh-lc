@@ -33,7 +33,8 @@ def bnd (N k : ℕ) : ℝ := 16 * (N : ℝ) ^ (k + 1) * (k.factorial : ℝ)
 theorem map_genB {R S : Type*} [CommRing R] [Algebra ℚ R] [CommRing S] [Algebra ℚ S] {N : ℕ} (f : R →+* S) (k : ℕ)
     (Φ : ZMod N → R) : f (genB k Φ) = genB k (fun a => f (Φ a)) := by
   unfold genB
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [map_mul, RingHom.map_rat_algebraMap]
 

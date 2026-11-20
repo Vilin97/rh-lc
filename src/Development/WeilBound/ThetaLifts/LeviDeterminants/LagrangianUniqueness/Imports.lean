@@ -88,7 +88,8 @@ theorem off (h2 : ∀ a ∉ P, ∃ χ : G → ℂ, IsLocallyConstant χ ∧ χ a
   obtain ⟨U, hU⟩ := NonarchimedeanAddGroup.is_nonarchimedean ((U₀ : Set G) ∩ U₁ ∩ ⋂ a ∈ s, (V a : Set G))
     (inter_mem (inter_mem U₀.mem_nhds_zero U₁.mem_nhds_zero) ((biInter_finset_mem s).2 fun a _ => (V a).mem_nhds_zero))
   obtain ⟨t, ht, e⟩ := decomp hφ U fun u hu => hU₁ u (hU hu).1.2
-  rw [e, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, map_sum]
   refine Finset.sum_eq_zero fun q hq => ?_
   obtain ⟨a, ha, hqa⟩ := Set.mem_iUnion₂.mp (hcov ((ht q).1 hq))
   have haP : a ∉ P := hP a (hs a ha)
@@ -129,7 +130,8 @@ theorem test (hP0 : (0 : G) ∈ P) (h1 : ∀ p ∈ P, ∀ φ ∈ SB G, l (fun x 
       split_ifs at this ⊢ with h
       · rfl
       · exact absurd rfl this
-    rw [e, map_sum, Finset.sum_congr rfl fun q hq => by rw [h3 q hq, one_smul, key U hU], ← Finset.sum_filter,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, map_sum, Finset.sum_congr rfl fun q hq => by rw [h3 q hq, one_smul, key U hU], ← Finset.sum_filter,
       Finset.sum_const, nsmul_eq_mul] at h0
     refine (mul_eq_zero.1 h0).resolve_left (Nat.cast_ne_zero.2 (Finset.card_ne_zero.2 ⟨0, ?_⟩))
     have h4 : (0 : G ⧸ U.toAddSubgroup).out ∈ U :=
@@ -138,7 +140,8 @@ theorem test (hP0 : (0 : G) ∈ P) (h1 : ∀ p ∈ P, ∀ φ ∈ SB G, l (fun x 
     simp [ind, hU h4]
   obtain ⟨U₁, hU₁⟩ := uniform hφ
   obtain ⟨t, -, e⟩ := decomp hφ (U₀ ⊓ U₁) fun u hu => hU₁ u hu.2
-  rw [e, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, map_sum]
   refine Finset.sum_eq_zero fun q _ => ?_
   rw [map_smul, key _ inf_le_left, zero _ inf_le_left, ite_self, smul_zero]
 

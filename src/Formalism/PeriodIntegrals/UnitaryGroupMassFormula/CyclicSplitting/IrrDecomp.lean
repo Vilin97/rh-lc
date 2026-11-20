@@ -124,7 +124,8 @@ private theorem subrepresentation_exists_equivariant_projection {V : Type} [AddC
     have hne : (Fintype.card G : L) ≠ 0 := Nat.cast_ne_zero.mpr Fintype.card_ne_zero
     rw [← Nat.cast_smul_eq_nsmul L, smul_smul, inv_mul_cancel₀ hne, one_smul]
   have hequiv : ∀ (h : G) (v : V), A (σ h v) = σ h (A v) := fun h v => by
-    rw [hA, hA, map_smul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hA, hA, map_smul, map_sum]
     congr 1
     refine Fintype.sum_equiv (Equiv.mulRight h) _ _ (fun g => ?_)
     simp only [Equiv.coe_mulRight]

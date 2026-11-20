@@ -54,13 +54,15 @@ private theorem zero_iff (ξ : FA O W.wt →ₐ[O] K) (ξ' : W.A →ₐ[O] K) (h
 private theorem lin_zero (D : FA O W.wt →ₗ[O] K) (h : ∀ j, ∀ f ∈ Fgr O W.wt j, D f = 0) : D = 0 := by
   classical
   refine LinearMap.ext fun f => ?_
-  rw [LinearMap.zero_apply, ← DirectSum.sum_support_decompose (Fgr O W.wt) f, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [LinearMap.zero_apply, ← DirectSum.sum_support_decompose (Fgr O W.wt) f, map_sum]
   exact Finset.sum_eq_zero fun i _ => h i _ (SetLike.coe_mem _)
 
 private theorem alg_ext (ξ ξ' : FA O W.wt →ₐ[O] K) (h : ∀ j, ∀ f ∈ Fgr O W.wt j, ξ f = ξ' f) : ξ = ξ' := by
   classical
   refine AlgHom.ext fun f => ?_
-  rw [← DirectSum.sum_support_decompose (Fgr O W.wt) f, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← DirectSum.sum_support_decompose (Fgr O W.wt) f, map_sum, map_sum]
   exact Finset.sum_congr rfl fun i _ => h i _ (SetLike.coe_mem _)
 
 end Transfer

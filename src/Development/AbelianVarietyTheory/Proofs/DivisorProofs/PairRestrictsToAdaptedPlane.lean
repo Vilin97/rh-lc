@@ -44,7 +44,8 @@ theorem symp_right {n d : ℕ} (JX : Matrix (Fin n) (Fin n) E) (JW : Matrix (Fin
     have h1 := congrArg (inclR (F := F) (AF F)) h0
     rw [map_zero] at h1
     rw [← h1]
-    simp only [form, incV, incM, Matrix.map_apply, hc, dotProduct, Matrix.mulVec, Finset.mul_sum, map_sum, map_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [form, incV, incM, Matrix.map_apply, hc, dotProduct, Matrix.mulVec, Finset.mul_sum, map_sum, map_mul,
       mul_assoc]
   have ht : hTens (cA σ) (incM F JX) (incM F JW) (Matrix.vecMulVec p (incV F x)) (Matrix.vecMulVec q (incV F x)) =
       (∑ i, ∑ k, p i * incM F JX i k * cA σ (q k)) * ∑ j, ∑ l, incV F x j * incM F JW j l * cA σ (incV F x l) := by
@@ -184,7 +185,8 @@ theorem ev_step : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberFiel
     have h := congrArg σ hxy
     rw [map_one] at h
     rw [← h]
-    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, hP.herm.herm, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, hP.herm.herm, Finset.mul_sum]
     rw [Finset.sum_comm]
     exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
   have hu' : u⁻¹ ∈ GlobalTheory.UnipCT.unipSet σ X H := by

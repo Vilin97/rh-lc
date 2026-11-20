@@ -12,7 +12,8 @@ attribute [local instance] Matrix.linftyOpNormedRing Matrix.linftyOpNormedAlgebr
 theorem form_eq_sum {d : ℕ} (φ : (Fin d → ℂ) →ₗ[ℂ] ℂ) (y : Fin d → ℂ) :
     φ y = ∑ i, y i * φ (Pi.single i 1) := by
   conv_lhs => rw [pi_eq_sum_univ y]
-  simp only [map_sum, map_smul, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, smul_eq_mul]
   refine Finset.sum_congr rfl fun i _ => ?_
   congr 2
   ext j

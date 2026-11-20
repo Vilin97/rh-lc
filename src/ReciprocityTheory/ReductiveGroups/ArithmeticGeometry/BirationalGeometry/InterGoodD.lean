@@ -50,7 +50,8 @@ theorem subst_monomial {r : ℕ} (lam : Fin r → k) (m : Fin (r + 1) →₀ ℕ
 
 theorem subst_natDegree_le {r : ℕ} (lam : Fin r → k) (F : MvPolynomial (Fin (r + 1)) k) :
     (subst lam F).natDegree ≤ F.totalDegree := by
-  conv_lhs => rw [F.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [F.as_sum, map_sum]
   refine Polynomial.natDegree_sum_le_of_forall_le _ _ fun m hm => ?_
   exact (subst_monomial lam m _).1.trans (le_totalDegree hm)
 
@@ -58,9 +59,11 @@ theorem subst_coeff_totalDegree {r : ℕ} (lam : Fin r → k) (F : MvPolynomial 
     (subst lam F).coeff F.totalDegree =
       C (eval (Fin.cons (1 : k) lam) (homogeneousComponent F.totalDegree F)) := by
   classical
-  rw [show subst lam F = ∑ v ∈ F.support, subst lam (monomial v (AddMonoidAlgebra.coeff F v)) by
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [show subst lam F = ∑ v ∈ F.support, subst lam (monomial v (AddMonoidAlgebra.coeff F v)) by
     rw [← map_sum, ← F.as_sum]]
-  rw [homogeneousComponent_apply, map_sum, map_sum, Polynomial.finsetSum_coeff,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [homogeneousComponent_apply, map_sum, map_sum, Polynomial.finsetSum_coeff,
     Finset.sum_filter]
   refine Finset.sum_congr rfl fun m hm => ?_
   have hle : Finsupp.degree m ≤ F.totalDegree := le_totalDegree hm

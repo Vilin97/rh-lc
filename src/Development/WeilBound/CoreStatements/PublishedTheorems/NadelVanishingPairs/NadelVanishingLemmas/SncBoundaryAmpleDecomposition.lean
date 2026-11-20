@@ -117,7 +117,8 @@ theorem vanishing_ample_snc_cartier : ∀ (k : Type) [Field k] [CharZero k] (Y :
   have hdec : Γ = ∑ j, b j • D j := by
     refine sub_eq_zero.mp (cartierDiv_eq_zero_of_mult_eq_zero hN _ fun z => ?_)
     show multHom z (Γ - ∑ j, b j • D j) = 0
-    rw [map_sub, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_sum]
     simp only [map_nsmul]
     show Γ.mult z - ∑ j, b j • (D j).mult z = 0
     by_cases hz : ∃ j, z = w j
@@ -147,7 +148,8 @@ theorem vanishing_ample_snc_cartier : ∀ (k : Type) [Field k] [CharZero k] (Y :
     have h2 := hnn (w j)
     simp only [b]
     omega
-  rw [hdec, map_sum] at heq
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hdec, map_sum] at heq
   simp only [map_nsmul, toPic_apply] at heq
   exact GlobalTheory.Div.vanishing_ample_snc_charZero k Y q n hp r (fun j => toLB (D j)) σ hrel Kc Q A hQ hA
     e b he hb heq i hi

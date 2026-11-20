@@ -240,7 +240,8 @@ theorem cartier_projector_homotopic : ∀ (K : Type) [Field K] (p : ℕ) [Fact p
     refine e1.trans ?_
     have hb := logWedge_basis K n x hx
     let b := Module.Basis.mk hb.1 (by rw [hb.2])
-    rw [← b.sum_repr η, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← b.sum_repr η, map_sum, map_sum]
     refine Finset.sum_eq_zero fun I _ => ?_
     rw [Module.Basis.mk_apply, hQact]
     obtain ⟨g, hg⟩ := hπ1 (b.repr η I)

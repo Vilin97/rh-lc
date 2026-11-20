@@ -17,7 +17,8 @@ theorem linForm_eq_of_antisymm_eq : ∀ (ι : Type) [Fintype ι] (m : ι → ℕ
   have key : ∀ P : MvPolynomial (Root m) ℝ,
       L (antisymm P) = (Fintype.card (∀ τ, Equiv.Perm (Fin (m τ))) : ℝ) * L P := by
     intro P
-    simp only [GlobalTheory.GoodMetric.antisymm, map_sum, map_zsmul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [GlobalTheory.GoodMetric.antisymm, map_sum, map_zsmul]
     rw [Finset.sum_congr rfl (fun w _ => by
       rw [GlobalTheory.T.linearForm_alternating_of_adjacent_swap_blocks ι m L hL w P, zsmul_eq_mul, ← mul_assoc, sq, one_mul])]
     rw [Finset.sum_const, Finset.card_univ, nsmul_eq_mul]

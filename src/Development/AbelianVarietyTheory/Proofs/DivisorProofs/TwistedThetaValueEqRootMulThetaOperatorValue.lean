@@ -186,7 +186,8 @@ theorem isValueAt_act {o Ω : Type} [CommRing o] [Field Ω] [Algebra o Ω] {S : 
   have hgs : ∀ b : S.R, gs (𝟙 (baseOver (Sp S.R)).left) y ⊤ (fn b) = g b := fun b => gs_eq _ y ⊤ trivial _
   have b₂ := EvCrd.sval_sum (ρ.U_act t ρ.i₀ σ H) (ρ.pt h) hJ
   simp only [fun l => ThetaCompare.sval_valueAt (ρ.ev_val l h) hJ, hgs, ← _root_.mul_assoc, ← Finset.sum_mul] at b₂
-  rw [Category.id_comp, hgs, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Category.id_comp, hgs, map_sum]
   simp only [map_mul]
   exact b₂
 
@@ -236,7 +237,8 @@ theorem exists_generic_data {o Ω : Type} [CommRing o] [Field Ω] [Algebra o Ω]
     obtain ⟨σ, hσ⟩ := exists_secRel hp g hg hw hL₀ hL₁ σ₀
     have q := isValueAt_move hp g hg hL₀ hL₁ (hX h).symm (ThetaGeom.genThrough_pow g (vτ h) S.N) hσ
       (isValueAt_act ρ t h hσ₀)
-    rw [spMap_appTop_fn, map_sum] at q
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [spMap_appTop_fn, map_sum] at q
     have q' := sv_of_isValueAt q (𝟙 _) z hJ
     have b₀ := VVRank.sv_of_isTwistPull P₀.A (hU' _ _ _ _ hs hσ hσ₀) (ptSecT P₀.A (X h)).left z hJ
     have b₁ := VVRank.sv_of_isTwistPull P₀.A h₁ (ptSecT P₀.A (X (S.r • t) * X h)).left z hJ

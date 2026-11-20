@@ -26,7 +26,8 @@ theorem sigR_sigR (hσ : ∀ e, σ (σ e) = e) (y : Fv F v ⊗[F] E) : sigR (Fv 
 theorem sigR_hR (hσ : ∀ e, σ (σ e) = e) (hJ : ∀ i j, σ (J j i) = J i j) (x y : Fin n → Fv F v ⊗[F] E) :
     sigR (Fv F v) σ (hR (Fv F v) σ J x y) = hR (Fv F v) σ J y x := by
   rw [hR_apply, hR_apply, Finset.sum_comm]
-  simp only [map_sum, map_mul, sigR_sigR hσ, sigR_inclR]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, sigR_sigR hσ, sigR_inclR]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   rw [← hJ i j]
   ring

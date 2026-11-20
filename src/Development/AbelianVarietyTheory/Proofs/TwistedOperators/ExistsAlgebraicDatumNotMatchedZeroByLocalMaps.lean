@@ -101,10 +101,12 @@ theorem exists_algD_not_polMatch_zero : ∀ {F E : Type} [Field F] [NumberField 
     exact finprod_eq_one_of_forall_eq_one fun v => hl v
   have h2 : LL (q' (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure f φ)) =
       Ltot (∑ j, R.p' (fs' j) ⊗ₜ[ℂ] PiTensorProduct.tprod ℂ fun v : T => Rf.p' v (φs' j v)) := by
-    rw [hΦe, map_sum, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hΦe, map_sum, map_sum, map_sum]
     exact Finset.sum_congr rfl fun j _ => hP' j
   have h3 : Ltot (∑ i, R.p (fs i) ⊗ₜ[ℂ] PiTensorProduct.tprod ℂ fun v : T => Rf.p v (φs i v)) = 0 := by
-    rw [map_sum, ← Finset.sum_congr rfl fun i _ => hP i, ← map_sum, ← map_sum, ← h0, map_zero, map_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, ← Finset.sum_congr rfl fun i _ => hP i, ← map_sum, ← map_sum, ← h0, map_zero, map_zero]
   rw [htens, ← h2, h1] at h3
   exact one_ne_zero h3
 

@@ -621,7 +621,8 @@ theorem leviForm_eq_form_hessC {D : ℕ} {u : (Fin D → ℂ) → ℝ} {z : Fin 
   have e : ∀ v : Fin D → ℂ, v = ∑ i, v i • (Pi.single i 1 : Fin D → ℂ) := fun v => by
     ext j; simp [Pi.single_apply]
   conv_lhs => rw [e ξ, e η]
-  simp only [form_eq_sum, h, map_sum, map_smul, map_smulₛₗ, ContinuousLinearMap.sum_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form_eq_sum, h, map_sum, map_smul, map_smulₛₗ, ContinuousLinearMap.sum_apply,
     ContinuousLinearMap.smul_apply, smul_eq_mul, RingHom.id_apply, Finset.mul_sum]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring

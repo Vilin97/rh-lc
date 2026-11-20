@@ -29,7 +29,8 @@ theorem comb_right_comm (ψ : AddChar (AF D.host.F) ℂ) {A S A' : HSp D} (L : M
     funext u'
     simp only [comb, heisO, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
     exact Finset.sum_congr rfl fun t _ => by ring
-  rw [e, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, map_sum]
   simp only [comb, heisO, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_smul]
   exact Finset.sum_congr rfl fun t _ => by ring
 
@@ -41,7 +42,8 @@ theorem comb_left_comm (ψ : AddChar (AF D.host.F) ℂ) {A S A' : HSp D} (L : Mo
     funext v'
     simp only [comb, heisO, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
     exact Finset.sum_congr rfl fun t _ => by ring
-  rw [e, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, map_sum]
   simp only [comb, heisO, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_smul]
   exact Finset.sum_congr rfl fun t _ => by ring
 
@@ -50,7 +52,8 @@ theorem comb_om_comm {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D} {χS χT : (
     (hc : ∀ t ∈ c.support, actO S T g g' t = t) {f : WO S T → ℂ} (hf : IsThetaFunO ψ S T f) :
     comb ψ S T c (ω (g, g') f) = ω (g, g') (comb ψ S T c f) := by
   unfold comb
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun t ht => ?_
   rw [map_smul, h.om_heis g g' t f hf, hc t ht]
 

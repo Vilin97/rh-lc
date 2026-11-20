@@ -30,7 +30,8 @@ theorem shiftOne : ShiftOne := by
     intro g hg
     have hsum : (∑ i, g i • v i) =
         (groupCohomology.H1π (Rep.of ρM)).hom (∑ i, g i • (⟨φ i, hcoc i⟩ : groupCohomology.cocycles₁ (Rep.of ρM))) := by
-      simp only [map_sum, map_smul, v]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, v]
     rw [hsum, groupCohomology.H1π_eq_zero_iff] at hg
     obtain ⟨m, hm⟩ := hg
     have key : Subtype.val (∑ i, g i • (⟨φ i, hcoc i⟩ : groupCohomology.cocycles₁ (Rep.of ρM))) = ∑ i, g i • φ i := by
@@ -48,16 +49,19 @@ theorem shiftOne : ShiftOne := by
       rfl
     · intro γ
       have h1 : ι (ρM γ m) - ι m = ∑ i, g i • (ρΩ γ (y i) - y i) := by
-        rw [← map_sub, hm', map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [← map_sub, hm', map_sum]
         simp only [map_smul, hφ]
       rw [hι] at h1
-      rw [map_sub, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, map_sum]
       simp only [map_smul]
       simp only [smul_sub, Finset.sum_sub_distrib] at h1
       rw [sub_eq_iff_eq_add] at h1
       rw [h1]
       abel
-    · rw [map_sub, hex.apply_apply_eq_zero, sub_zero, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [map_sub, hex.apply_apply_eq_zero, sub_zero, map_sum]
       simp only [map_smul, hy]
   have := hli.cardinal_le_rank
   simpa using this

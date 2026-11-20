@@ -115,13 +115,15 @@ theorem exists_unit_adelic {F E : Type} [Field F] [NumberField F] [Field E] [Num
     obtain ⟨b, hb⟩ := hΛ y hy x hx
     have : ∑ i, ∑ j, σ (ι (x i)) * (J.map ι) i j * ι (y j) = ι b := by
       rw [hb]
-      simp only [map_sum, RingHom.map_mul, hσι, Matrix.map_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, RingHom.map_mul, hσι, Matrix.map_apply]
     show ∑ i, ∑ j, σ (ι (x i)) * (J.map ι) i j * ι (y j) ∈ _
     rw [this]
     exact (oToS F E b).2
   · intro a j
     have := congrArg ι (hd a j)
-    simp only [map_sum, RingHom.map_mul, ← hσι, apply_ite ι, RingHom.map_one, RingHom.map_zero] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, RingHom.map_mul, ← hσι, apply_ite ι, RingHom.map_one, RingHom.map_zero] at this
     exact this
 
 theorem gram_unimodular : ∀ (D : D7) (V : HSp D) (β : GL (Fin V.rank) (EAf D)) (Λ : Submodule (𝓞 D.host.E) (Fin V.rank → D.host.E)) (N : ℕ), IsBaseFrame V β Λ N → ∃ G : GL (Fin V.rank) (Formalism.L2.Herm.intAf D.host.F D.host.E), (intGL D.host.F D.host.E V.rank G).val = BadPlacesGoodCoefficients.gramIn V β := by

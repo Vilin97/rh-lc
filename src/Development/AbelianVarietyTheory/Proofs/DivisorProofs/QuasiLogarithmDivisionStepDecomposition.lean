@@ -131,7 +131,8 @@ theorem main : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgClosed C]
     have key := GlobalTheory.T.eq_zero_of_lin_zero_cob1_zero p O E hF d c.μ c.isLaw (g - comb bw e) ?_ ?_
     · exact sub_eq_zero.1 key
     · funext i
-      simp only [lin, hcw, map_sub, map_sum, coeff_smul, Pi.zero_apply] at hw ⊢
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [lin, hcw, map_sub, map_sum, coeff_smul, Pi.zero_apply] at hw ⊢
       have hl' : ∀ j, coeff (Finsupp.single i 1) (e (Sum.inl j)) =
           (Pi.single j (1 : E) : Fin d → E) i := fun j => congrFun (hlin j) i
       simp only [hl', hw]
@@ -140,7 +141,8 @@ theorem main : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgClosed C]
     · let L : MvPowerSeries (Fin d) E →+ MvPowerSeries (Fin d ⊕ Fin d) E :=
         AddMonoidHom.mk' (cob1 (up E c.μ)) (formalCoboundary_add hc0)
       have hL : ∀ x, L x = cob1 (up E c.μ) x := fun _ => rfl
-      rw [← hL, map_sub, hcw, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hL, map_sub, hcw, map_sum]
       simp only [hL, formalCoboundary_smul hc0, hcob, smul_zero, Finset.sum_const_zero, sub_zero]
       exact hg
 

@@ -48,7 +48,8 @@ theorem Hom.H_sum {ι : Type*} (s : Finset ι) (φ : Hom A B) (ψ : ι → Hom A
     φ.H n y = ∑ c ∈ s, (ψ c).H n y := by
   refine Submodule.Quotient.induction_on _ y fun z => ?_
   show Submodule.Quotient.mk (φ.Z n z) = ∑ c ∈ s, Submodule.Quotient.mk ((ψ c).Z n z)
-  rw [← Submodule.mkQ_apply, show (∑ c ∈ s, Submodule.Quotient.mk ((ψ c).Z n z) : B.H n) =
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Submodule.mkQ_apply, show (∑ c ∈ s, Submodule.Quotient.mk ((ψ c).Z n z) : B.H n) =
     ∑ c ∈ s, (Submodule.mkQ _) ((ψ c).Z n z) from rfl, ← map_sum]
   congr 1
   apply Subtype.ext
@@ -168,7 +169,8 @@ theorem normF_mem (n : ℕ) (F : (Fin (n + 1) → G) → M.V) (hF : F ∈ hcoch 
     rw [this]
     refine continuous_finsetSum _ fun c _ => (continuous_rho M _).comp (hF.1.comp ?_)
     exact continuous_pi fun i => continuous_const.mul (continuous_apply i)
-  · rw [normF_eq, normF_eq, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [normF_eq, normF_eq, map_sum]
     have key : ∀ c : Quotient (QuotientGroup.rightRel U),
         M.rho c.out⁻¹ (F fun i => c.out * (g • x i)) =
         M.rho g (M.rho (cosetMul U g c).out⁻¹ (F fun i => (cosetMul U g c).out * x i)) := by
@@ -194,7 +196,8 @@ theorem normF_hd (n : ℕ) (F : (Fin (n + 1) → G) → M.V) :
   classical
   haveI : Fintype (Quotient (QuotientGroup.rightRel U)) := Fintype.ofFinite _
   funext x
-  simp only [normF_eq, hd, map_sum, map_zsmul, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [normF_eq, hd, map_sum, map_zsmul, Finset.smul_sum]
   exact Finset.sum_comm
 
 theorem normF_add (n : ℕ) (F F' : (Fin (n + 1) → G) → M.V) :

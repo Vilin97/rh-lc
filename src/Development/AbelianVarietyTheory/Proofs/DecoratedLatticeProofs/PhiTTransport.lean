@@ -169,7 +169,8 @@ theorem cond_iff {g : GL (Fin a) (AfE F E)} {g' : GL (Fin b) (AfE F E)} {p : Dec
     have hxz : x z ∈ p'.deco.1.at P.1 := by
       refine (mem_localization_iff p'.deco.2.lat hg'.lat P.1 _).2 fun r => ?_
       rw [pullV_mid g]
-      simp only [Matrix.mulVec, dotProduct, map_sum, map_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Matrix.mulVec, dotProduct, map_sum, map_mul]
       exact Valuation.map_sum_le _ fun s _ => by
         rw [map_mul]
         exact mul_le_one' (h1 r s) (hw s)
@@ -179,7 +180,8 @@ theorem cond_iff {g : GL (Fin a) (AfE F E)} {g' : GL (Fin b) (AfE F E)} {p : Dec
       have e1 : Col2.pullV g z ia = ((1 : Matrix (Fin a) (Fin a) (AfE F E)) *ᵥ Col2.pullV g z) ia := by rw [Matrix.one_mulVec]
       rw [pullV_mid g, e1]
       simp only [Matrix.mulVec, dotProduct, _root_.sub_mul, Finset.sum_sub_distrib]
-    rw [Valuation.map_sub_swap, ← map_sub, e, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Valuation.map_sub_swap, ← map_sub, e, map_sum]
     refine Valuation.map_sum_lt _ one_ne_zero fun s _ => ?_
     rw [map_mul, map_mul]
     exact lt_of_le_of_lt (mul_le_of_le_one_right' (hw s)) (h2 s)
@@ -189,11 +191,13 @@ omit [StarRing E] in
 theorem val_mul_mul_lt (P : HeightOneSpectrum (𝓞 E)) {A : Matrix (Fin b) (Fin b) (AfE F E)} {D : Matrix (Fin b) (Fin a) (AfE F E)}
     {C : Matrix (Fin a) (Fin a) (AfE F E)} (hA : ∀ r s, Valued.v (adAt F P (A r s)) ≤ 1) (hD : ∀ r s, Valued.v (adAt F P (D r s)) < 1)
     (hC : ∀ r s, Valued.v (adAt F P (C r s)) ≤ 1) (r : Fin b) (s : Fin a) : Valued.v (adAt F P ((A * D * C) r s)) < 1 := by
-  rw [Matrix.mul_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.mul_apply, map_sum]
   refine Valuation.map_sum_lt _ one_ne_zero fun j _ => ?_
   rw [map_mul, map_mul]
   refine lt_of_le_of_lt (mul_le_of_le_one_right' (hC j s)) ?_
-  rw [Matrix.mul_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.mul_apply, map_sum]
   refine Valuation.map_sum_lt _ one_ne_zero fun l _ => ?_
   rw [map_mul, map_mul]
   exact lt_of_le_of_lt (mul_le_of_le_one_left' (hA r l)) (hD l j)

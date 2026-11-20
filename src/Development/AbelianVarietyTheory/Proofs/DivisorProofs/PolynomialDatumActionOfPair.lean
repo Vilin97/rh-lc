@@ -42,7 +42,8 @@ theorem lineSign_flip (a : Ix P Q) (b : Ix R S) :
 
 theorem flipE_heisOp (c : Matrix (Ix R S) (Ix P Q) ℂ) (f : Formalism.BasicNotions.TH.Pol R S P Q) :
     flipE P Q R S (heisOp c f) = heisOp cᵀ (flipE P Q R S f) := by
-  simp only [heisOp, flipE_apply, LinearMap.smul_apply, LinearMap.sum_apply, LinearMap.sub_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [heisOp, flipE_apply, LinearMap.smul_apply, LinearMap.sum_apply, LinearMap.sub_apply,
     map_smul, map_sum, map_sub, GlobalTheory.FockSwap.rename_raiB, GlobalTheory.FockSwap.rename_lowB]
   congr 1
   refine Fintype.sum_equiv (Equiv.prodComm _ _) _ _ fun l => ?_
@@ -71,7 +72,8 @@ theorem flipT_atPl (w : ι) (L' : Module.End ℂ (Formalism.BasicNotions.TH.Pol 
 theorem flipT_sumPl (L' : ι → Module.End ℂ (Formalism.BasicNotions.TH.Pol R S P Q)) (L : ι → Module.End ℂ (Formalism.BasicNotions.TH.Pol P Q R S))
     (h : ∀ w f, flipE P Q R S (L' w f) = L w (flipE P Q R S f)) (T : ⨂[ℂ] _ : ι, Formalism.BasicNotions.TH.Pol R S P Q) :
     flipT ι P Q R S (sumPl L' T) = sumPl L (flipT ι P Q R S T) := by
-  simp only [sumPl, LinearMap.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [sumPl, LinearMap.sum_apply, map_sum]
   exact Finset.sum_congr rfl fun w _ => flipT_atPl w (L' w) (L w) (h w) T
 
 end Swap

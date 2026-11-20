@@ -59,7 +59,8 @@ theorem redMatB_unique {p : ℕ} (hp : p.Prime) (hcard : Nat.card (𝓞 I.E ⧸ 
     have h0 : (Lq I w).mkQ (∑ l, (((M' l i).val : ℕ) : I.E ⊗[I.F] Af I.F) • iv I (b l) -
         ∑ l, (((M l i).val : ℕ) : I.E ⊗[I.F] Af I.F) • iv I (b l)) = 0 :=
       (Submodule.Quotient.mk_eq_zero _).2 hdiff
-    rw [map_sub, map_sum, map_sum] at h0
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_sum, map_sum] at h0
     simp only [mkQ_natSmul] at h0
     rw [← h0, ← Finset.sum_sub_distrib]
     exact Finset.sum_congr rfl fun l _ => sub_smul _ _ _

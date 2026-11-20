@@ -143,7 +143,8 @@ theorem fil_of_rep (C : Formalism.MainNotions.UnusedSlot80.LevC.Ctx W) (Ti : For
     congr 1
     ring
   have hL := congrArg (levB T a ζ) key
-  rw [map_add, map_sum] at hL
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_add, map_sum] at hL
   simp only [Formalism.MainNotions.UnusedSlot80.LevE.levB_smul W levB Ti.hEq Ti.hsupp] at hL
   obtain ⟨mx, hmx⟩ := Ti.hsupp T a ζ ⟨x, hxN⟩
   let F' : Fin d → ℤ → T.V ⊗[Qp] B := fun m r => if r = 0 then ((PD.p : LL) ^ κ) •

@@ -72,7 +72,8 @@ theorem mem_idHat_iff (𝔟 : Ideal (𝓞 E)) (v) :
     choose u hu using fun j : Fin r => F.vec_surj (fun w i => (z w i j : w.adicCompletion E)) fun w i => (z w i j).2
     have e : v = ∑ j, mulF S.D (b j) (u j) := by
       refine sub_eq_zero.1 (F.vec_inj _ fun w hw => ?_)
-      rw [map_sub, map_sum, sub_eq_zero]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, map_sum, sub_eq_zero]
       funext i
       rw [hz w i hw, Finset.sum_apply]
       exact Finset.sum_congr rfl fun j _ => by rw [F.vec_mul w hw (b j) (u j), hu j w hw]; rfl

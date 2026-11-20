@@ -72,7 +72,8 @@ theorem psi_sum (h1 : OrdLin) (a : Fin r → AA) (a' : Fin s → AA) (κ : Fin r
     (N : ℕ) {α : Type} (t : Finset α) (g : α → MvPolynomial (Fin r ⊕ Fin s) k) :
     psi h1 a a' κ σ₀ N (∑ x ∈ t, g x) = ∑ x ∈ t, psi h1 a a' κ σ₀ N (g x) := by
   unfold psi
-  simp only [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum]
   exact Finset.sum_comm
 
 theorem factorial_smul (n : ℕ) (S : MvPolynomial (Fin r ⊕ Fin s) k) :
@@ -157,7 +158,8 @@ theorem claim (h1 : OrdLin) (h2 : OrdX) (h3 : Base) (h4 : BComm) (g1 : Gen.PowXL
   | succ d ih =>
     intro R hR N hN
     obtain ⟨N', rfl⟩ : ∃ N', N = N' + 1 := ⟨N - 1, by omega⟩
-    rw [R.as_sum, map_sum, psi_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [R.as_sum, map_sum, psi_sum]
     refine Finset.sum_congr rfl fun m hm => ?_
     have hmd := hR m hm
     by_cases h0 : xdeg m = 0

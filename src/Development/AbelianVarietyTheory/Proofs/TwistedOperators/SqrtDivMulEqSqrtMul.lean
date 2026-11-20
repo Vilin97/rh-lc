@@ -272,7 +272,8 @@ theorem om_coset {ΛS : Submodule (𝓞 D.host.E) (Fin S.rank → D.host.E)}
   refine ⟨by rw [← hc]; convert card_halfReps hS hT hL hP hϖ hϖ2 hα h, ?_⟩
   have h3 := om_elt hW hS hT hL hP.1 hα hf hv h
   rw [Finset.card_image_of_injective Δ (act_inj k₁⁻¹), Finset.sum_image fun _ _ _ _ h => act_inj k₁⁻¹ h] at h3
-  rw [show ((1 : GA D S), k₁ * α * k₂) = (1, k₁) * (1, α) * (1, k₂) by simp, map_mul, map_mul, Module.End.mul_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [show ((1 : GA D S), k₁ * α * k₂) = (1, k₁) * (1, α) * (1, k₂) by simp, map_mul, map_mul, Module.End.mul_apply,
     Module.End.mul_apply, f₂, h3, map_smul, map_sum]
   congr 1
   refine Finset.sum_congr rfl fun u _ => ?_

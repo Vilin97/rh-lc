@@ -32,7 +32,8 @@ theorem h_sum_left {M : Loc.Model F E} {V : Type} [AddCommGroup V] [Module E V] 
 
 theorem h_sum_right {M : Loc.Model F E} {V : Type} [AddCommGroup V] [Module E V] (H : Loc.HermSp M V)
     {ι : Type} (s : Finset ι) (v : ι → V) (x : V) : H.h x (∑ i ∈ s, v i) = ∑ i ∈ s, H.h x (v i) := by
-  rw [H.h_herm, h_sum_left, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [H.h_herm, h_sum_left, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [← H.h_herm]
 

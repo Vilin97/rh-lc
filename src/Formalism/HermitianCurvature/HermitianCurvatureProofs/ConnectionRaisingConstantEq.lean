@@ -28,11 +28,13 @@ theorem pj_orth {ρ σ : M.Ty P} (h : ρ ≠ σ) : proj κ ρ * proj κ σ = 0 :
 
 theorem sum_pj : ∑ ρ, proj κ ρ = 1 := by
   unfold proj
-  rw [← map_sum, ← map_one κ]; congr 1; funext x; simp
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum, ← map_one κ]; congr 1; funext x; simp
 
 theorem kap_eq (f : M.Ty P → ℂ) : κ f = ∑ ρ, f ρ • proj κ ρ := by
   unfold proj
-  simp_rw [← map_smul, ← map_sum]; congr 1; funext x; simp
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp_rw [← map_smul, ← map_sum]; congr 1; funext x; simp
 
 theorem kap_mul_pj (f : M.Ty P → ℂ) (ρ : M.Ty P) : κ f * proj κ ρ = f ρ • proj κ ρ := by
   unfold proj
@@ -121,7 +123,8 @@ theorem isPF_zero {f : ℂ → A} (hf : IsPF f) {S : Set ℂ} (hS : S.Infinite) 
   let q : ℂ[X] := p.sum fun n a => monomial n (φ a)
   have hq : ∀ Z, q.eval Z = φ (ev p Z) := by
     intro Z
-    simp only [q, ev, eval₂_eq_sum, Polynomial.sum, eval_finsetSum, eval_monomial, map_sum, RingHom.id_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [q, ev, eval₂_eq_sum, Polynomial.sum, eval_finsetSum, eval_monomial, map_sum, RingHom.id_apply]
     refine Finset.sum_congr rfl fun n _ => ?_
     rw [← map_pow, ← Algebra.commutes, ← Algebra.smul_def, map_smul, smul_eq_mul, mul_comm]
   have : q = 0 := by

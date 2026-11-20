@@ -84,14 +84,16 @@ theorem sig_sig {σ : E →ₐ[F] E} (h : IsCMExt F E σ) (x : E) : σ (σ x) = 
 
 theorem form_swap {σ : E →ₐ[F] E} (hcm : IsCMExt F E σ) {n : ℕ} {J : Matrix (Fin n) (Fin n) E} (ε : E)
     (hJ : ∀ i j, σ (J j i) = ε * J i j) (x y : Fin n → E) : σ (form σ J x y) = ε * form σ J y x := by
-  simp only [form, dotProduct, mulVec, map_sum, map_mul, sig_sig hcm, hJ, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, mulVec, map_sum, map_mul, sig_sig hcm, hJ, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 
 theorem dot_form {v : Pl F} (t : E →ₐ[F] Fv F v) (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E)
     (y z : Fin n → E) :
     (fun r => t (y r)) ⬝ᵥ (J.map t *ᵥ fun r => t (σ (z r))) = t (form σ J y z) := by
-  simp [form, dotProduct, mulVec, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [form, dotProduct, mulVec, map_sum, map_mul]
 
 end GlobalTheory.IsoCoord
 
@@ -105,7 +107,8 @@ theorem piW_incV {v : Pl F} (τ : E →ₐ[F] Fv F v) {n : ℕ} (x : Fin n → E
 theorem piW_mulVec {v : Pl F} (τ : E →ₐ[F] Fv F v) {n m : ℕ} (M : Matrix (Fin n) (Fin m) E) (y : Fin m → AE F E) :
     (fun i => piW τ ((incM F M *ᵥ y) i)) = M.map τ *ᵥ fun k => piW τ (y k) := by
   funext i
-  simp [mulVec, dotProduct, map_sum, map_mul, incM, piW_incl]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [mulVec, dotProduct, map_sum, map_mul, incM, piW_incl]
 
 def ein {K : Type} [Zero K] {b : ℕ} (s : Fin b → K) : Fin (b + 2) → K := Fin.cons 0 (Fin.snoc (α := fun _ => K) s 0)
 

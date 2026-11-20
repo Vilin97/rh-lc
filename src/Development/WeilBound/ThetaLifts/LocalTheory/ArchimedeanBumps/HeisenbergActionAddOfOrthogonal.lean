@@ -58,7 +58,8 @@ theorem sy_vv (x x' : Fin n → AE F E) (y y' : Fin d → AE F E) :
   exact Finset.sum_congr rfl fun l _ => Finset.sum_congr rfl fun k _ => by ring
 
 theorem bA_inc (J : Matrix (Fin n) (Fin n) E) (x y : Fin n → E) : bA σ J (incV F x) (incV F y) = inclR (F := F) (AF F) (form σ J x y) := by
-  simp only [bA, form, dotProduct, Matrix.mulVec, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [bA, form, dotProduct, Matrix.mulVec, map_sum, map_mul]
   rfl
 
 theorem bA_smul (J : Matrix (Fin n) (Fin n) E) (a b : AE F E) (x y : Fin n → AE F E) : bA σ J (a • x) (b • y) = a * cA σ b * bA σ J x y := by

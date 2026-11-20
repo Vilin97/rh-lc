@@ -46,16 +46,19 @@ theorem entry_regular : ∀ (K : Type) [Field K] [CharZero K] (P₀ : Out.PolAV 
   have key : ∀ b, ∑ i, φ (g i) * δ b (φ (f i)) = if a = b then 1 else 0 := by
     intro b
     have := congrArg φ (hgf b)
-    simp only [map_sum, map_mul, hδ'] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, hδ'] at this
     rw [this]; split_ifs <;> simp
   have key' : ∀ b, ∑ j, φ (g' j) * δ b (φ (f' j)) = if e = b then 1 else 0 := by
     intro b
     have := congrArg φ (hgf' b)
-    simp only [map_sum, map_mul, hδ'] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, hδ'] at this
     rw [this]; split_ifs <;> simp
   refine ⟨∑ i, ∑ j, g i * g' j * h i j, ?_⟩
   rw [hφ]
-  simp only [map_sum, map_mul, hh']
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, hh']
   rw [sum_sum_bilin_regroup (fun i => φ (g i)) (fun j => φ (g' j)) Λ (fun a' i => δ a' (φ (f i)))
     (fun e' j => δ e' (φ (f' j)))]
   simp only [key, key', mul_ite, _root_.mul_one, mul_zero, Finset.sum_ite_eq, Finset.mem_univ, if_true]

@@ -282,7 +282,8 @@ theorem func_unique (φ₀ : PowerSeries O →ₐ[O] PowerSeries O) (l : ℕ) (h
         rw [mul_pow] at e1
         linear_combination e1
       have e3 := congrArg constantCoeff e2
-      rw [map_mul, map_mul, map_pow, cc_map φ₀ hφ0, hq0, map_sum] at e3
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_mul, map_mul, map_pow, cc_map φ₀ hφ0, hq0, map_sum] at e3
       simp only [map_mul, map_pow, h0U, h0V, one_pow, mul_one, Finset.sum_const, Finset.card_range,
         nsmul_eq_mul] at e3
       have hne : ((l : O) ^ (m + 2) - l) ≠ 0 := by

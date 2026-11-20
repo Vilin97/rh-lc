@@ -26,7 +26,8 @@ theorem ev_basis (add : ∀ a b, ev (a + b) = ev a * ev b) (bas : (Fin r → ℤ
     simp [Finset.sum_apply, Pi.single_apply]
   have h : f (bas c) = ∑ i, c i • f (bas (Pi.single i 1)) := by
     conv_lhs => rw [hc]
-    simp only [map_sum, map_zsmul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_zsmul]
   have h' := congrArg Additive.toMul h
   rw [toMul_sum] at h'
   simp only [toMul_zsmul] at h'

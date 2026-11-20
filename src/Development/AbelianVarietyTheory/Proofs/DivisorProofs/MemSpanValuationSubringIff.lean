@@ -164,7 +164,8 @@ theorem mem_iSup_eig_iff (hv : v.Integers O) {Λ : Type} [CommRing Λ] [Finite (
   · intro hx
     letI := Fintype.ofFinite (Λ →+* O)
     have e : x = ∑ σ, Φ.symm (Pi.single σ (Φ x σ)) := by
-      rw [← map_sum, Finset.univ_sum_single, Φ.symm_apply_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← map_sum, Finset.univ_sum_single, Φ.symm_apply_apply]
     rw [e]
     refine sum_mem fun σ _ => ?_
     by_cases hσ : σ = τ

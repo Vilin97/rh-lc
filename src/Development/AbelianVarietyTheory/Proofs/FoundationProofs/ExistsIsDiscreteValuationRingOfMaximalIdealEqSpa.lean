@@ -295,7 +295,8 @@ theorem isUnit_adjoinRoot_mk_of_aeval_ne_zero {θ : K} (hθ : IsIntegral (Residu
     rw [Polynomial.map_sub, Polynomial.map_add, Polynomial.map_mul, Polynomial.map_mul, hμ, hab,
       Polynomial.map_one, sub_self]
   have h₁ : AdjoinRoot.mk μ (a * μ + b * g - 1) ∈ M := by
-    rw [(a * μ + b * g - 1).as_sum_support_C_mul_X_pow, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [(a * μ + b * g - 1).as_sum_support_C_mul_X_pow, map_sum]
     refine Ideal.sum_mem _ fun i _ => ?_
     rw [map_mul]
     refine Ideal.mul_mem_right _ _ ?_

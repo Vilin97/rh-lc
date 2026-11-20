@@ -119,7 +119,8 @@ theorem blkE_blockAct (U : ι → Matrix (Fin n) (Fin n) ℂ) (τ : ι) (F : MvP
     blkE τ (Formalism.GradedWeylDivisibility.blockAct ℂ U F) = Formalism.GradedWeylDivisibility.blockAct ℂ U (blkE τ F) := by
   classical
   unfold blkE
-  simp only [map_sum, map_mul, blockAct_X, pderiv_blockAct, Finset.mul_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, blockAct_X, pderiv_blockAct, Finset.mul_sum, Finset.sum_mul]
   rw [Finset.sum_comm]
   conv_rhs => rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun t _ => ?_
@@ -135,7 +136,8 @@ theorem fockN_euler (τ : ι) (G : MvPolynomial (ι × Fin n × Fin n) ℂ) (c :
     simp only [← fockL_self, fockL_pderiv_X]
     have e : ∑ a, ∑ t, fockL G (X (τ, a, t) * pderiv (τ, a, t) G) = fockL G (blkE τ G) := by
       unfold blkE
-      simp only [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum]
     rw [e, hE, map_smul, smul_eq_mul]
   exact_mod_cast this
 

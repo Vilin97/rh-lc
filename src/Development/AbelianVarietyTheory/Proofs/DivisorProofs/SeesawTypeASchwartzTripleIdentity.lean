@@ -127,7 +127,8 @@ theorem hTens_vecMulVec {n d : ℕ} (JX : Matrix (Fin n) (Fin n) E) (JW : Matrix
       (t • Matrix.vecMulVec (incV F x') (incV F y')) =
       l * cA σ t * inclR (F := F) (AF F) (form σ JX x x') * inclR (F := F) (AF F) (form σ JW y y') := by
   have hc : ∀ e : E, cA σ (inclR (F := F) (AF F) e) = inclR (F := F) (AF F) (σ e) := fun e => rfl
-  simp only [hTens, form, dotProduct, Matrix.mulVec, map_sum, map_mul, Matrix.smul_apply, Matrix.vecMulVec_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hTens, form, dotProduct, Matrix.mulVec, map_sum, map_mul, Matrix.smul_apply, Matrix.vecMulVec_apply,
     smul_eq_mul, incV, incM, Matrix.map_apply, hc, Finset.mul_sum, Finset.sum_mul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun j _ => ?_

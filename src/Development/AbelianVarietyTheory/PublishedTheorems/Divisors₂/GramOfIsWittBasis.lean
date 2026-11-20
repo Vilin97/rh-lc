@@ -116,7 +116,8 @@ theorem exists_data (h : IsCMExt F E σ) (n m : ℕ) :
   · obtain ⟨w⟩ : Nonempty (InfinitePlace E) := inferInstance
     rw [form, Matrix.smul_mulVec, Matrix.one_mulVec, dotProduct_smul, smul_eq_zero] at hx
     have h1 := congrArg (fun z => (w.embedding z).re) (hx.resolve_left ha0)
-    simp only [dotProduct, map_sum, map_mul, h.2.2.2, Complex.star_def, Complex.mul_conj, Complex.re_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [dotProduct, map_sum, map_mul, h.2.2.2, Complex.star_def, Complex.mul_conj, Complex.re_sum,
       Complex.ofReal_re, map_zero, Complex.zero_re] at h1
     have h2 := (Finset.sum_eq_zero_iff_of_nonneg fun k _ => Complex.normSq_nonneg _).1 h1 i (Finset.mem_univ i)
     simpa using h2

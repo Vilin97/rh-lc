@@ -113,7 +113,8 @@ open Formalism.BasicNotions Formalism.MainNotions.flipTwoThree
 theorem hT_equivFun_symm (S : HSpace E) (b : Module.Basis (Fin S.rank) E S.V) (i : Fin S.rank)
     (z : Fin S.rank → E) :
     S.hT (b i) (b.equivFun.symm z) = ((fun i j ↦ S.hT (b i) (b j) : Matrix (Fin S.rank) (Fin S.rank) E) *ᵥ z) i := by
-  rw [Module.Basis.equivFun_symm_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Module.Basis.equivFun_symm_apply, map_sum]
   simp only [map_smul, smul_eq_mul, Matrix.mulVec, dotProduct]
   exact Finset.sum_congr rfl fun j _ => mul_comm _ _
 
@@ -130,7 +131,8 @@ theorem gram_det_ne (S : HSpace E) (b : Module.Basis (Fin S.rank) E S.V) :
   apply hy0
   apply S.nondeg.2
   intro x
-  rw [← b.sum_repr x, map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← b.sum_repr x, map_sum, LinearMap.sum_apply]
   refine Finset.sum_eq_zero fun i _ => ?_
   rw [LinearMap.map_smulₛₗ, LinearMap.smul_apply, hT_equivFun_symm, hGz]
   simp

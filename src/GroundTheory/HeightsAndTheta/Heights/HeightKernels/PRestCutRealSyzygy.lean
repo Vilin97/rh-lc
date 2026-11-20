@@ -18,8 +18,10 @@ theorem RestCutRealSyzygy.proof (h₁ : RestTerms.RestTermWellDefined.Statement)
   set Rψ : ℕ → Fin f → RestTerms.RootRing f N := fun l σ => KRest.psiPoly ψ (R l σ) with hRψ
   have hsyz : RestTerms.IsPowerSumDecomposition f N 0 Rψ := by
     have h0 := congrArg (KRest.psiPoly ψ) hR
-    rw [map_zero, map_sum] at h0
-    simp_rw [map_sum, KRest.psiPoly_map_mul] at h0
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_zero, map_sum] at h0
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp_rw [map_sum, KRest.psiPoly_map_mul] at h0
     exact h0.symm
   have hzero : RestTerms.IsPowerSumDecomposition f N 0 (fun _ _ => 0) := by
     simp [RestTerms.IsPowerSumDecomposition]

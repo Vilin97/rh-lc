@@ -59,7 +59,8 @@ private theorem mem_span_image_algebraMap_of_linearForm_comp_mem {X k₀ k : Typ
     intro x
     have hx : z x ∈ L := Submodule.subset_span ⟨x, rfl⟩
     have h1 := congrArg L.subtype (e.sum_repr ⟨z x, hx⟩)
-    rw [map_sum] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at h1
     show L.subtype ⟨z x, hx⟩ = _
     rw [← h1]
     refine Finset.sum_congr rfl fun j _ => ?_

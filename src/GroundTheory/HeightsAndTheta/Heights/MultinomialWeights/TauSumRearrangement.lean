@@ -71,7 +71,8 @@ theorem HeightSumIdentity.proof : HeightSumIdentity.Statement := by
       _ = _ := by ring
   have hEE : |S.EE B F| ≤ (∑ m ∈ F.support, |((F.coeff m : ℚ) : ℝ)|) * CE * (Real.log B / B) := by
     conv_lhs => rw [F.as_sum]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine (Finset.abs_sum_le_sum_abs _ _).trans ?_
     rw [Finset.sum_mul, Finset.sum_mul]
     refine Finset.sum_le_sum fun m hm => ?_

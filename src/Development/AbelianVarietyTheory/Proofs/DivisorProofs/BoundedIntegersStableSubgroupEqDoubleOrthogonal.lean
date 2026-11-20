@@ -43,7 +43,8 @@ theorem exists_integral_form_separating {R K : Type} [CommRing R] [IsDomain R]
       have := congrArg Subtype.val (b.sum_repr ⟨s, hs⟩)
       simp only [Submodule.coe_sum, Submodule.coe_smul] at this
       exact this.symm
-    rw [hs', map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hs', map_sum]
     refine Subring.sum_mem _ fun i _ => ?_
     rw [f.map_smul_of_tower]
     obtain ⟨r, hr⟩ := hf i

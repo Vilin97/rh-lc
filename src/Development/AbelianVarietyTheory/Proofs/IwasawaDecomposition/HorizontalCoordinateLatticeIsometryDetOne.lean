@@ -193,10 +193,12 @@ theorem exists_matrix (Di : Datum H) {J : Type} [Fintype J] [DecidableEq J] (x :
         rw [← hg, map_smul, smul_comm a n, map_nsmul, map_nsmul]
         simp [mul_assoc]
       rw [e1, hA, hA, Finset.smul_sum, LinearMap.map_sum₂]
-      simp only [map_sum, LinearMap.sum_apply, hb, mul_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, LinearMap.sum_apply, hb, mul_smul]
     have h2 := congrArg (Int.cast : ℤ → ℚ) h1
     push_cast at h2
-    simp only [htr, ← map_sum] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [htr, ← map_sum] at h2
     have hnQ : (n : ℚ) ≠ 0 := Nat.cast_ne_zero.2 hn
     rw [mul_sub, map_sub, sub_eq_zero]
     refine mul_left_cancel₀ (mul_ne_zero hnQ hnQ) ?_
@@ -211,7 +213,8 @@ theorem exists_matrix (Di : Datum H) {J : Type} [Fintype J] [DecidableEq J] (x :
   · intro ρ f hf k
     have hnC : (n : ℂ) ≠ 0 := Nat.cast_ne_zero.2 hn
     refine mul_left_cancel₀ hnC ?_
-    rw [← nsmul_eq_mul, ← map_nsmul, hA, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← nsmul_eq_mul, ← map_nsmul, hA, map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     simp only [hf, Matrix.map_apply, Matrix.smul_apply, smul_eq_mul, map_mul, map_natCast, map_inv₀]
     field_simp

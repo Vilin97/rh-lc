@@ -234,7 +234,8 @@ theorem bijective_base [Fintype ι] (P : Algebra.SubmersivePresentation R A ι �
         Dc c (algebraMap P.Ring A (Sum.elim P.relation T j)) := fun c j => by
       rw [hF, der_eq_dirDeriv P χ₀ (Dc c) (h0 c) (hL c)]
     refine ⟨v₁ + ∑ c, (w (Sum.inr c) - F v₁ (Sum.inr c)) • (fun i => Dc c (P.val i)), ?_⟩
-    rw [map_add, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_add, map_sum]
     funext j
     simp only [map_smul, Pi.add_apply, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, hFc]
     rcases j with j | c'

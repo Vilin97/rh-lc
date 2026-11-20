@@ -143,7 +143,8 @@ omit [NumberField E] in
 theorem splitProj_hLin (σ : E →ₐ[F] E) (J : Matrix (Fin n) (Fin n) E) (τ : E →ₐ[F] Fv F v)
     (y x : Fin n → Fv F v ⊗[F] E) :
     splitProj τ (hLin σ J (Fv F v) y x) = splitVec (τ.comp σ) x ⬝ᵥ J.map τ *ᵥ splitVec τ y := by
-  simp only [hLin, hR, Formalism.UG.hform, map_sum, map_mul, ← splitProj_comp, JR, Matrix.map_apply, splitProj_inclR,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hLin, hR, Formalism.UG.hform, map_sum, map_mul, ← splitProj_comp, JR, Matrix.map_apply, splitProj_inclR,
     dotProduct, Matrix.mulVec, splitVec, Finset.mul_sum, mul_assoc]
 
 theorem splitProj_comp_hLin (h : IsCMExt F E σ) (hJ : IsHermND σ J) (τ : E →ₐ[F] Fv F v)

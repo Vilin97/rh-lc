@@ -156,7 +156,8 @@ theorem UpperTheory.Gal.W2.hSep_of :
     have hk := hkill q hdvd
     rw [eval₂_eq_sum]
     have e2 : (q.sum fun i b => f b * (e H) ^ i) = e (q.sum fun i b => ρ (a b) * H ^ i) := by
-      simp only [Polynomial.sum, map_sum, map_mul, map_pow]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Polynomial.sum, map_sum, map_mul, map_pow]
       rfl
     rw [e2, hk, map_zero]
   have hss := isSemisimple_of_commute_of_integral_bezout f hf (e H) hc q u v y hy hq huv

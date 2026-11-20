@@ -55,11 +55,13 @@ theorem span_bcMap {R R' : Type} [CommRing R] [IsLocalRing R] [CommRing R'] [Alg
       rw [liftSemi_tmul, map_smul, map_smul]
       congr 1
       rw [LinearMap.sum_apply]
-      conv_lhs => rw [← b.sum_repr c, map_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        conv_lhs => rw [← b.sum_repr c, map_sum, map_sum]
       refine Finset.sum_congr rfl fun k _ ↦ ?_
       rw [LinearMap.smul_apply, hm.corr_iff.2 rfl c, LinearMap.map_smulₛₗ, map_smul, smul_eq_mul, smul_eq_mul, mul_comm]
       rfl
-  rw [this, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [this, map_sum]
   simp [h]
 
 open ReciprocityTheory.ChartRestriction.G.Chart (isTan_iff) in

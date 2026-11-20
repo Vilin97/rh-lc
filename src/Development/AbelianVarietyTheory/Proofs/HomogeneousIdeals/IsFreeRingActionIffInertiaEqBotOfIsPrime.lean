@@ -496,7 +496,8 @@ theorem bijective_galoisMap (h : IsFreeRingAction G A) :
     rw [← key x, ← key y, hxy]
   · intro f
     refine ⟨∑ k : G, f k • ∑ p ∈ s, p.1 ⊗ₜ (k⁻¹ • p.2), funext fun g ↦ ?_⟩
-    simp only [map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, galoisMap_tmul, smul_smul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, galoisMap_tmul, smul_smul,
       smul_eq_mul]
     rw [Finset.sum_eq_single g (fun k _ hk ↦ by
       rw [hs _ (fun h ↦ hk (mul_inv_eq_one.mp h).symm), mul_zero]) (by simp)]

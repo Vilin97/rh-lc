@@ -148,7 +148,8 @@ theorem compAt_unitary (C : Ctx S T) (h : GA D S) (τ : D.what₂.Tau) :
   unfold compAt
   ext i j
   have e := congrArg (fun A => C.θ τ (infPart D (A i j))) hm
-  simp only [Matrix.mul_apply, map_sum, map_mul, Formalism.UG.cT, Matrix.transpose_apply, Matrix.map_apply, hc] at e
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mul_apply, map_sum, map_mul, Formalism.UG.cT, Matrix.transpose_apply, Matrix.map_apply, hc] at e
   simp only [Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.map_apply, Complex.star_def]
   refine e.trans ?_
   by_cases hij : i = j
@@ -175,7 +176,8 @@ theorem toH_sub (C : Ctx S T) (h : GA D S) : C.toH.comp (sub C h) = (Harm.colAct
   apply MvPolynomial.algHom_ext
   intro v
   obtain ⟨σ, i, k⟩ := v
-  simp only [AlgHom.comp_apply, sub, MvPolynomial.aeval_X, Ctx.toH, map_sum, MvPolynomial.smul_eq_C_mul, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [AlgHom.comp_apply, sub, MvPolynomial.aeval_X, Ctx.toH, map_sum, MvPolynomial.smul_eq_C_mul, map_mul,
     MvPolynomial.aeval_C]
   have hσ : C.m.e.symm (C.m.e σ) = σ := C.m.e.symm_apply_apply σ
   rcases hi : (rowIdx C.hr).symm i with a | b
@@ -255,7 +257,8 @@ theorem col_change : ∀ (D : D7) (S T : HSp D) (C : Ctx S T), ∀ h : GA D S, �
           MvPolynomial.X (v.1, v.2.1, l) := by
         unfold sub
         rw [MvPolynomial.aeval_X]
-      rw [mul_comm, (hL (fun τ => compAt C.θ τ (Formalism.L2.Theta.mt S h)) f hf p).2.1 v, hp, map_mul, hsX,
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [mul_comm, (hL (fun τ => compAt C.θ τ (Formalism.L2.Theta.mt S h)) f hf p).2.1 v, hp, map_mul, hsX,
         Finset.sum_mul, map_sum]
       simp only [smul_mul_assoc, map_smul, (hL (fun _ => 1) f hf (sub C h p)).2.1]
       unfold aPlusAll aPlus

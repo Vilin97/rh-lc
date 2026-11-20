@@ -220,7 +220,8 @@ private lemma rowAct_map {O K : Type} [CommRing O] [CommRing K] (φ : O →+* K)
   congr 1
   congr 1
   funext v
-  simp [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum]
 
 private lemma colAddGen_map {O K : Type} [CommRing O] [CommRing K] (φ : O →+* K) {k n : ℕ}
     (l j : Fin n) (f : MvPolynomial (Fin k × Fin n) O) :

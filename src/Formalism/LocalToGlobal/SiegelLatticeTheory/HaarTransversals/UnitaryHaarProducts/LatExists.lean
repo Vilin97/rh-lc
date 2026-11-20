@@ -138,9 +138,11 @@ theorem decomp {r : ℕ} (e f : Fin r → S.V) (hee : ∀ a b, S.hT (e a) (e b) 
       S.hT (f b) (y - ∑ a, S.hT (f a) y • e a - ∑ a, S.hT (e a) y • f a) = 0 := by
   have hfe := hfe_of hef
   constructor
-  · simp only [map_sub, map_sum, map_smul, hee, hef, smul_eq_mul, mul_zero, Finset.sum_const_zero, sub_zero,
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [map_sub, map_sum, map_smul, hee, hef, smul_eq_mul, mul_zero, Finset.sum_const_zero, sub_zero,
       mul_ite, mul_one, Finset.sum_ite_eq, Finset.mem_univ, if_true, sub_self]
-  · simp only [map_sub, map_sum, map_smul, hff, hfe, smul_eq_mul, mul_zero, Finset.sum_const_zero,
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [map_sub, map_sum, map_smul, hff, hfe, smul_eq_mul, mul_zero, Finset.sum_const_zero,
       mul_ite, mul_one, Finset.sum_ite_eq, Finset.mem_univ, if_true, sub_self]
 
 theorem key_split (Λ : Submodule (𝓞 E) S.V) {r : ℕ} (e f : Fin r → S.V)
@@ -213,7 +215,8 @@ theorem zero_of_dual {r : ℕ} {e f : Fin r → S.V} (hfe : ∀ a b, S.hT (f a) 
   have ht : ∀ b, t b = 0 := by
     intro b
     have h := h0 b
-    simp only [map_sum, map_smul, hfe, smul_eq_mul, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, hfe, smul_eq_mul, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq,
       Finset.mem_univ, if_true] at h
     exact h
   simp [ht]
@@ -293,7 +296,8 @@ theorem genFrame_holds : GenFrame := by
     intro b y hy
     have hy' : y ∈ latSpan c e := by rw [← hX]; exact hy
     obtain ⟨x, hx, rfl⟩ := (mem_latSpan c e y).1 hy'
-    simp only [map_sum, map_smul, hcf, smul_eq_mul, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, hcf, smul_eq_mul, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq,
       Finset.mem_univ, if_true]
     exact hx b
   have hw := fun b : Fin n =>
@@ -366,13 +370,16 @@ theorem genFrame_holds : GenFrame := by
   refine ⟨fun b => f0 b + ∑ k, cc k b • e k, ?_, ?_, ?_⟩
   · intro a b
     have h := hsum a b
-    simp [map_sum, hf0e, hef0, hiso, Finset.sum_ite_eq', starRingEnd_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, hf0e, hef0, hiso, Finset.sum_ite_eq', starRingEnd_apply]
     linear_combination h
   · intro a b
-    simp [map_sum, hiso, hef0]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, hiso, hef0]
   · intro b y hy
     have hexp : S.hT (f0 b + ∑ k, cc k b • e k) y = S.hT (f0 b) y + ∑ k, star (cc k b) * S.hT (e k) y := by
-      simp [map_sum, starRingEnd_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [map_sum, starRingEnd_apply]
     rw [hexp]
     exact PI.SRW.fi_add (hf0Λ b y hy) (fi_sum _ (fun k => hterm k b y hy))
 
@@ -686,9 +693,11 @@ theorem posFrameSig (S : HSpace E) (σ : E →+* ℂ)
     have h3 : σ (S.hT y y) = star z ⬝ᵥ G.mulVec z := by
       have := LinearMap.sum_repr_mul_repr_mulₛₗ S.frame S.frame (B := S.hT) y y
       rw [← this, Finsupp.sum_fintype _ _ (by intro i; simp)]
-      simp only [dotProduct, Matrix.mulVec, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [dotProduct, Matrix.mulVec, map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
-      rw [Finsupp.sum_fintype _ _ (by intro j; simp), map_sum, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Finsupp.sum_fintype _ _ (by intro j; simp), map_sum, Finset.mul_sum]
       refine Finset.sum_congr rfl fun j _ => ?_
       simp only [smul_eq_mul, map_mul, RingHom.id_apply, hG, hz, Matrix.map_apply, HSpace.gram, Pi.star_apply]
       rw [starRingEnd_apply, hσ]
@@ -881,7 +890,8 @@ theorem latExists_of_steps (hSB : SatBasis) (hPC : PrimesInClasses) (hDd : DdG D
     have hc : ∀ j : Fin D.R.rS, g (Fin.castSucc j) = 0 := by
       intro j
       have h1 := congrArg ((VS D).hT (D.sp.hypF j)) hg
-      rw [map_sum, map_zero, Fin.sum_univ_castSucc] at h1
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, map_zero, Fin.sum_univ_castSucc] at h1
       simp only [wf, map_smul, Fin.snoc_castSucc, Fin.snoc_last, (hwo j).2, hfe_hyp, smul_eq_mul, mul_zero,
         add_zero, mul_ite, mul_one, Finset.sum_ite_eq, Finset.mem_univ, if_true] at h1
       exact h1

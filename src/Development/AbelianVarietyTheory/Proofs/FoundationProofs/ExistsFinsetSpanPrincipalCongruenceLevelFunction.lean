@@ -339,7 +339,8 @@ private lemma mem_adjoin_jK_of_sl_invariant [IsAlgClosure ℚ Ω]
   have hexp : h ^ d + ∑ i ∈ Finset.range d, (p.coeff i : X.K) * h ^ i = 0 := by
     have h0 : Polynomial.aeval h p = 0 := minpoly.aeval F h
     rw [hmon.as_sum] at h0
-    simpa [map_add, map_sum, Polynomial.aeval_C, Polynomial.aeval_X_pow,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [map_add, map_sum, Polynomial.aeval_C, Polynomial.aeval_X_pow,
       IntermediateField.algebraMap_apply] using h0
   set c : ℕ → X.K := fun i => Polynomial.aeval X.jK (s ^ (d - i - 1) * r i) with hc
   have hrel : (ℓ * h) ^ d + ∑ i ∈ Finset.range d, c i * (ℓ * h) ^ i = 0 := by
@@ -362,7 +363,8 @@ private lemma mem_adjoin_jK_of_sl_invariant [IsAlgClosure ℚ Ω]
   have hgerm : X.an (ℓ * h) ^ d + ∑ i ∈ Finset.range d,
       (C i : _root_.GlobalTheory.KZ.Mero) * X.an (ℓ * h) ^ i = 0 := by
     have e := congrArg X.an hrel
-    rw [map_add, map_pow, map_sum, map_zero] at e
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_add, map_pow, map_sum, map_zero] at e
     simpa only [map_mul, map_pow, hCe] using e
   obtain ⟨φ, hφ, hφe⟩ := exists_differentiableOn_eq_of_monic_root_Mero
     (X.an_mero (ℓ * h)) hC hgerm

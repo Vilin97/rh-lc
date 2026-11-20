@@ -96,7 +96,8 @@ theorem delta_cup_eq : ∀ {ι : Type} [LinearOrder ι] {E : Type} [AddCommGroup
         ∑ i ∈ u.filter (· < j), cubeSign (u.filter (· ≤ j)) i •
           Φ (c ((u.filter (· ≤ j)).erase i)) (u.filter (j ≤ ·)) +
         (-1 : ℤ) ^ (u.filter (· < j)).card • Φ (c (u.filter (· < j))) (u.filter (j ≤ ·)) := by
-      simp only [delta, map_sum, map_zsmul, Finset.sum_apply, Pi.smul_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [delta, map_sum, map_zsmul, Finset.sum_apply, Pi.smul_apply]
       rw [← Finset.sum_filter_add_sum_filter_not (u.filter (· ≤ j)) (· < j), eLeL, eLeJ,
         Finset.sum_singleton, eLeE]
       congr 2

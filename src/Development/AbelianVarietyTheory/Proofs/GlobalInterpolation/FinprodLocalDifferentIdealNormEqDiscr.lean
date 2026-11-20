@@ -137,7 +137,8 @@ private lemma exists_integer_valuation_sub_le_exp_neg (k : K) (hk : v.valuation 
       rw [← map_mul, ← map_one (algebraMap (𝓞 K) K), ← map_sub, ← hyi]
       ring_nf
     have h3 := congrArg (algebraMap (𝓞 K) K) hgeom
-    simp only [map_mul, map_sub, map_one, map_pow, map_sum] at h3 ⊢
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_mul, map_sub, map_one, map_pow, map_sum] at h3 ⊢
     have key : algebraMap (𝓞 K) K b - algebraMap (𝓞 K) K c * (algebraMap (𝓞 K) K a' *
         (algebraMap (𝓞 K) K y * ∑ j ∈ Finset.range n, algebraMap (𝓞 K) K i ^ j)) =
         algebraMap (𝓞 K) K b * algebraMap (𝓞 K) K i ^ n := by

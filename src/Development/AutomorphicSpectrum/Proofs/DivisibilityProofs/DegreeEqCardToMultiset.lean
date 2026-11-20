@@ -82,8 +82,10 @@ theorem arFun_toA_eq_arNum : ∀ (Ψ : Type) [Fintype Ψ] [DecidableEq Ψ] (N : 
   have hsum : toA F = ∑ μ ∈ F.support, toA (monomial μ (F.coeff μ)) := by
     unfold toA
     conv_lhs => rw [F.as_sum]
-    rw [map_sum]
-  rw [hsum, map_sum, Finset.sum_congr rfl hmono]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hsum, map_sum, Finset.sum_congr rfl hmono]
   unfold arNum
   rw [Finset.sum_div]
   refine Finset.sum_congr rfl fun μ _ => ?_

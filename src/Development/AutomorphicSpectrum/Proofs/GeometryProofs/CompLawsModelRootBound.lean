@@ -46,7 +46,8 @@ theorem exists_form_const {K : Type} [Fintype K] {ι : K → Type} [∀ k, Finty
     rw [e]
     exact A.mul_mem (intCast_mem A _) (hinv _ q.den_nz)
   have hA : ∀ t : F, cst t ∈ A := fun t => by
-    rw [← b.sum_repr t, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← b.sum_repr t, map_sum]
     refine A.sum_mem fun i _ => ?_
     rw [Algebra.smul_def, map_mul]
     exact A.mul_mem (hq _) (hB (Finset.mem_coe.2 (Finset.mem_image_of_mem _ (Finset.mem_univ i))))

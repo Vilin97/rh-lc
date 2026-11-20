@@ -127,7 +127,8 @@ theorem sOp_ramAt_other' (β : Frame p S n) (β' : Frame p' S n') (P : Pair k n)
     simp [T, LinearMap.sum_apply]
   have hTc : ∀ h' : GL n' k, ∀ f, T (β'.rep h' f) = β'.rep h' (T f) := by
     intro h' f
-    rw [hT, hT, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hT, hT, map_sum]
     refine Finset.sum_congr rfl fun P₁ _ => ?_
     rw [map_smul, rep_comm β β' hv]
   refine ⟨fun P₂ => T (φ P₂), ⟨?_, ?_, ?_⟩, ?_⟩
@@ -137,7 +138,8 @@ theorem sOp_ramAt_other' (β : Frame p S n) (β' : Frame p' S n') (P : Pair k n)
   · let _ := Fintype.ofFinite 𝓀[k]ˣ
     rw [mem_Mram] at hM ⊢
     intro P₂
-    rw [← map_sum, hM P₂, map_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, hM P₂, map_zero]
   · intro P₂
     show IsContAut S (T (φ P₂))
     rw [hT]

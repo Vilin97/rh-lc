@@ -116,7 +116,8 @@ theorem exists_isStd_of_injective (K : Type) [CommRing K] [Algebra ℚ K] [Algeb
         by_cases h0 : k.1 = 0
         · exact Ideal.mul_mem_left _ _ (hv _ (by omega))
         · exact Ideal.mul_mem_right _ _ (hu _ h0)
-      · rw [map_add, κ.dpow_add (Ideal.mem_map_of_mem f hx) (Ideal.mem_map_of_mem f hy), map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        · rw [map_add, κ.dpow_add (Ideal.mem_map_of_mem f hx) (Ideal.mem_map_of_mem f hy), map_sum]
         simp only [map_mul, hu', hv']
     · intro a x hx ih n
       replace hx : x ∈ Q.ext J := hs.ge hx

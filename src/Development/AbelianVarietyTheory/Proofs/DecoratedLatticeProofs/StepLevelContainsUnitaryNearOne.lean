@@ -57,7 +57,8 @@ theorem exists_smallAt_subset (Q : Finset (HeightOneSpectrum (𝓞 E))) {V : Set
   set e : E ⊗[F] FiniteAdeleRing (𝓞 F) F := ∑ P ∈ Q, PtExist.idem F P with he_def
   have he : ∀ w, adAt F w e = if w ∈ Q then 1 else 0 := by
     intro w
-    rw [he_def, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [he_def, map_sum]
     simp only [PtExist.adAt_idem]
     exact Finset.sum_ite_eq Q w (fun _ => (1 : w.adicCompletion E))
   have hint : ∀ y ∈ Formalism.L2.Herm.intAf F E, ∀ w, Valued.v (adAt F w y) ≤ 1 := fun y hy w =>

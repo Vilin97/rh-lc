@@ -18,7 +18,8 @@ theorem extZero_hom (M : Type) [AddCommGroup M] [Module R M] (n : ℕ) (h : ExtZ
       (ModuleCat.ofHom (LinearMap.applyₗ (b i)) : ModuleCat.of R (F →ₗ[R] M) ⟶ ModuleCat.of R M) ≫
       (ModuleCat.ofHom (LinearMap.smulRightₗ (b.coord i)) : ModuleCat.of R M ⟶ ModuleCat.of R (F →ₗ[R] M)) := by
     ext f x
-    simp only [ModuleCat.hom_sum, ModuleCat.hom_id, LinearMap.id_apply, ModuleCat.hom_comp, ModuleCat.hom_ofHom,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [ModuleCat.hom_sum, ModuleCat.hom_id, LinearMap.id_apply, ModuleCat.hom_comp, ModuleCat.hom_ofHom,
       LinearMap.sum_apply, LinearMap.comp_apply, LinearMap.applyₗ_apply_apply, LinearMap.smulRightₗ_apply, LinearMap.smulRight_apply,
       Module.Basis.coord_apply, ← map_smul, ← map_sum, b.sum_repr x]
   refine subsingleton_of_forall_eq 0 fun x => ?_

@@ -34,7 +34,8 @@ theorem exists_tanEv_comb {k : Type} [CommRing k] {x : Sp k ⟶ X} {V : X.Opens}
   obtain ⟨Φ, hΦ⟩ := TanPair.exists_tanM_equiv _ _ _ t k _ V hV n m hm
   have e := (LieMet.isComb_iff (fun i => LieMet.tanOf (hu i)) c (LieMet.tanOf hw)).1 h
   refine ⟨hw, fun b => (hΦ (LieMet.tanOf hw) b).symm.trans ?_⟩
-  rw [e, map_sum, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, map_sum, Finset.sum_apply]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_smul, Pi.smul_apply, hΦ]
   rfl
@@ -74,7 +75,8 @@ theorem exists_inv_pairing {X : Scheme.{0}} {P : X.Modules} {r n : ℕ} {V V' T 
       if l = l' then 1 else 0 := by
   refine ⟨fun b l' => (hε.basis hT).repr (hμ.dual.basis hT' b) l', fun l l' => ?_⟩
   have e := congrArg (fun s => (hε.basis hT).repr s l') ((hμ.dual.basis hT').sum_repr (hε.basis hT l))
-  simp only [map_sum, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.smul_apply, smul_eq_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.smul_apply, smul_eq_mul,
     Module.Basis.repr_self, Finsupp.single_apply, IsFrame.dual_basis_repr] at e
   rw [← e]
   refine Finset.sum_congr rfl fun b _ => ?_
@@ -86,7 +88,8 @@ theorem forall_mem_iff {K : Type} [CommRing K] (O : Subring K) {r n : ℕ} (A : 
   refine ⟨fun H l => ?_, fun H b => O.sum_mem fun l _ => O.mul_mem (H l) (A l b).2⟩
   have h' (l l' : Fin r) : ∑ b, (A l b : K) * B b l' = if l = l' then 1 else 0 := by
     have := congrArg O.subtype (h l l')
-    rw [map_sum, apply_ite O.subtype, map_one, map_zero] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, apply_ite O.subtype, map_one, map_zero] at this
     exact this
   have e : d l = ∑ b, (∑ l', d l' * (A l' b : K)) * B b l := by
     simp only [Finset.sum_mul]
@@ -133,7 +136,8 @@ theorem mem_lat_iff_coef : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E
     (resM _ inf_le_right (pullbackSections h (om Z) le_rfl (μ₀ b)))
   have hAB (l l' : Fin r) : ∑ b, ρ (A l b) * ρ (B b l') = if l = l' then 1 else 0 := by
     have := congrArg ρ (hB l l')
-    rw [map_sum, apply_ite ρ, map_one, map_zero] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, apply_ite ρ, map_one, map_zero] at this
     simp only [map_mul] at this
     exact this
   refine Iff.trans (forall_congr' fun b => ?_) (forall_mem_iff (intO ↥y.C.S) _ _ hAB _)

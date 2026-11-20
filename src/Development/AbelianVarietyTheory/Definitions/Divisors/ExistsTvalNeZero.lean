@@ -93,7 +93,8 @@ theorem rhoMat_scalar (la : Fin n → ℕ) {K : Type} [Field K] [CharZero K] (t 
 theorem evalAt_eq_sum (la : Fin n → ℕ) {K : Type} [Field K] [CharZero K] (y : Matrix (Fin n) (Fin n) K) (f : nabla la K) :
     evalAt y f.1 = ∑ i, (basis la K).repr f i * evalAt y (map (Int.castRingHom K) (intVec la i)) := by
   have h := congrArg (fun f : nabla la K => evalAt y f.1) ((basis la K).sum_repr f)
-  simp only [Submodule.coe_sum, Submodule.coe_smul, map_sum, map_smul, smul_eq_mul, coe_basis] at h
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Submodule.coe_sum, Submodule.coe_smul, map_sum, map_smul, smul_eq_mul, coe_basis] at h
   exact h.symm
 
 theorem evalAt_mul (la : Fin n → ℕ) {K : Type} [Field K] [CharZero K] (g y : Matrix (Fin n) (Fin n) K) (j : Idx la) :
@@ -125,7 +126,8 @@ theorem onMat_mulVec (la : Fin n → ℕ) (f : nabla la ℂ) :
     onMat la *ᵥ (basis la ℂ).repr f = (onBasis la).repr (toSpace la f) := by
   funext i
   have h := congrArg (fun f : nabla la ℂ => (onBasis la).repr (toSpace la f) i) ((basis la ℂ).sum_repr f)
-  simp only [map_sum, map_smul, WithLp.ofLp_sum, WithLp.ofLp_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul] at h
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, WithLp.ofLp_sum, WithLp.ofLp_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul] at h
   rw [← h]
   simp only [onMat, Matrix.mulVec, dotProduct, Matrix.of_apply, mul_comm]
 

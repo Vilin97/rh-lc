@@ -22,7 +22,8 @@ theorem UpperTheory.exists_prime_to_p_multiple_in_range_of_bilinForm :
   have hcoe : ∀ u : X.lat, (u : VQ D) = ∑ i, ((b.repr u i : ℤ) : ℚ) • ((b i : X.lat) : VQ D) := by
     intro u
     have h := congrArg X.lat.subtype (b.sum_repr u)
-    rw [map_sum] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at h
     rw [← show _ = (u : VQ D) from h]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_zsmul, Int.cast_smul_eq_zsmul]
@@ -50,7 +51,8 @@ theorem UpperTheory.exists_prime_to_p_multiple_in_range_of_bilinForm :
     calc Bq.coord i u = Bq.coord i (∑ j, ((b.repr ⟨u, hu⟩ j : ℤ) : ℚ) • ((b j : X.lat) : VQ D)) :=
           congrArg _ h
       _ = _ := by
-          rw [map_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [map_sum]
           simp [hd]
   choose w hwM hw using fun i => UpperTheory.exists_dual_vector_of_integral_functional p D X (Bq.coord i) (hint i)
   choose m hm0 hmc hml using fun i => (UpperTheory.lattice_saturated_at_p_and_prime_to_p p D X).2.1 (w i) (hwM i)
@@ -75,4 +77,5 @@ theorem UpperTheory.exists_prime_to_p_multiple_in_range_of_bilinForm :
     exact_mod_cast h3
   choose t ht using ht
   refine ⟨∑ i, f (b i) • t i, b.ext fun j => ?_⟩
-  simp [map_sum, LinearMap.sum_apply, ht, mul_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, LinearMap.sum_apply, ht, mul_comm]

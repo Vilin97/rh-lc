@@ -32,7 +32,8 @@ variable {P : Finset (Formalism.L2.DIV.Pl D.host.E)} {e : AE D} {es : Formalism.
 
 theorem algebraMap_epsP (hes : ∀ PP ∈ P, Formalism.L2.NTheta.IsIdemAt (es PP) PP) (he : e = ∑ PP ∈ P, es PP) :
     algebraMap (AF D.host.F) (AE D) (epsP P) = e + cA D e := by
-  rw [epsP, map_sum, he, map_sum, ← Finset.sum_add_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [epsP, map_sum, he, map_sum, ← Finset.sum_add_distrib]
   exact Finset.sum_congr rfl fun PP hPP => (below_of_idemAt (hes PP hPP)).symm
 
 open Classical in

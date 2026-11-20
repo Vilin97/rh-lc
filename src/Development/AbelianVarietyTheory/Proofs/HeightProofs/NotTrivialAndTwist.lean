@@ -201,7 +201,8 @@ theorem sum_weight_eq (R : DSRep T) {μ ν : Ix p q → ℚ} {v w : R.HK.V} (hv 
     apply TorusWt.flow_eq R (TorusWt.torX_mem _)
     have h1 : ∀ a, R.HK.act (Eab a a) v = ((μ a : ℚ) : ℂ) • v := by
       simpa [wtSub, sub_eq_zero] using hv.2.1
-    rw [TorusWt.torX_eq_sum, map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [TorusWt.torX_eq_sum, map_sum, LinearMap.sum_apply]
     simp only [map_smul, LinearMap.smul_apply, h1, smul_smul, ← Finset.sum_smul, ← Finset.mul_sum]
     push_cast
     rfl

@@ -16,7 +16,8 @@ def hf (σ : L →+* L) (x y : Fin n → L) : L := ∑ k, σ (x k.rev) * y k
 omit [Valued L (WithZero (Multiplicative ℤ))] in
 theorem hf_conj (hσσ : ∀ x, σ (σ x) = x) (x y : Fin n → L) : σ (hf σ x y) = hf σ y x := by
   unfold hf
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Fintype.sum_equiv Fin.revPerm _ _ (fun k => ?_)
   simp [hσσ, mul_comm]
 

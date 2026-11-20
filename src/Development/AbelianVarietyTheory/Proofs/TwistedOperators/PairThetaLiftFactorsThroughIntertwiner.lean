@@ -141,7 +141,8 @@ theorem exists_factor_kFin (hdec : GlobalTheory.Published.CuspRapidDecay) {θ : 
     fun τ L hL p y hne => ⟨fun L' hL' p' y' => hker τ _ _ _ _ (pI τ L hL p y) (pI τ L' hL' p' y') hne,
       fun p' y' n x z h => by
         refine (hE0 _ (GlobalTheory.Chain.CuspGrowSpace.isCuspGrow_of_mem_span D θ V _ (sum_mem fun i _ => Submodule.subset_span (hBg _ _)))).2 ?_
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         exact hker τ _ _ _ _ (pI τ L hL p y) (pB τ p' y') hne n x z h⟩
   refine ⟨⟨T, fun φ y => ?_⟩, eq_top_iff.2 (hs ▸ Submodule.span_mono ?_)⟩
   · have := span_multi (I.compr₂ T - B) fun p y => sub_eq_zero.2 (hT p y)
@@ -362,7 +363,8 @@ theorem pairLifts (D : D7) (X : ProvA) (hI : Inputs D X) (hC : CuspAll D X) : Pa
         (hpt φ) (fun κ => ?_) (hcl v).1.toIsAutFun (fun i x => apply_kMean (hM Fc) τ (hc.1 i) v _ rfl x) g
         (hint Fc _ _ g) fun i => hint Fc _ _ g
       rw [hφ, hp]
-      simp only [map_sum, map_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul]
   obtain ⟨u, hu, hue⟩ := GlobalTheory.PairLift.RuleLift.exists_mult hI.ext.1 hI.decay hθ h h' ha ha' hirr hker It BF
     (J := ∅) (χ := 1)
     (by

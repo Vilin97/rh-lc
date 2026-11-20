@@ -46,7 +46,8 @@ theorem cones_eq_min_linear : ∀ (O : Type) [CommRing O] (bar : O → O) (φ : 
     have hev := evalZ_eq_of_nsmul_eq_sum (hγ i).linear hk he
     have hl : (k : ℤ) * ℓ i b' = ∑ j, (cf j : ℤ) * ℓ i (γ i j) := by
       have := congrArg (ℓ i) he
-      simpa [map_sum, map_nsmul, nsmul_eq_mul] using this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa [map_sum, map_nsmul, nsmul_eq_mul] using this
     have hl' : (k : ℝ) * ℓ i b' = ∑ j, (cf j : ℝ) * ℓ i (γ i j) := by exact_mod_cast hl
     have hk' : (k : ℝ) ≠ 0 := by positivity
     rw [hev, Finset.mul_sum, show (ℓ i b' : ℝ) = (∑ j, (cf j : ℝ) * ℓ i (γ i j)) / k by

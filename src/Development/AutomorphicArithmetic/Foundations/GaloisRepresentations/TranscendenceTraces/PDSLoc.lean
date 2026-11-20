@@ -36,9 +36,11 @@ theorem UpperTheory.Gal.TranscendenceTraces.dSLoc_of :
   intro V g hg
   choose a ha using hg
   refine ⟨∑ i : x.support, a i, ?_⟩
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [ha]
-  rw [← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum]
   congr 1
   conv_rhs => rw [← DirectSum.sum_support_of x]
   simp only [inc, DirectSum.lof_eq_of]

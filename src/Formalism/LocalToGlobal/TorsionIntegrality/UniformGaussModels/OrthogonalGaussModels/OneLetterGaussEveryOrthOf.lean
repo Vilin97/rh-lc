@@ -58,7 +58,8 @@ theorem OneLetterGaussEveryOrth_of (hS : OrthShapeOne) : OneLetterGaussEveryOrth
   rw [hΘ]
   refine one_letter_gauss_all l h5 g2 g3 ε hg.2.2.1 hg.2.2.2.1 hε hth σ hσ F hF s2 (hN σ hσ) N0 N1 C
     U0 _ hU ?_ (InverseCommuting.sim_refl _)
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_eq_zero fun x _ => ?_
   refine Pair.constantCoeff_inVar_eq_zero x ?_
   rw [← PowerSeries.coeff_zero_eq_constantCoeff_apply, PowerSeries.coeff_map,

@@ -92,7 +92,8 @@ theorem mem_mCoordIdeal {y : (Σ k, J k) → Ω} {g : MRing J} {d : K → ℕ} (
   have key : mConeMap y g = C (aeval y g) * ∏ k, X k ^ d k := by
     conv_lhs => rw [g.as_sum]
     conv_rhs => rw [g.as_sum]
-    rw [map_sum, map_sum, map_sum, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum, map_sum, Finset.sum_mul]
     refine Finset.sum_congr rfl fun m hm => ?_
     rw [mConeMap, aeval_monomial, aeval_monomial, Finsupp.prod_fintype _ _ (by simp),
       Finsupp.prod_fintype _ _ (by simp)]
@@ -166,7 +167,8 @@ theorem exists_rep [CharZero Ω] {y : (Σ k, J k) → Ω} {p : ℕ} [hp : Fact p
   suffices H : ∃ (n : ℕ) (g : MRing J), ¬ p ∣ n ∧ IsMultiHomog g (fun _ => d) ∧ n * aeval z U = aeval y g by
     obtain ⟨n, g, h1, h2, h3⟩ := H
     exact ⟨n, d, g, h1, h2, by rw [mul_assoc, ← e, h3]⟩
-  rw [U.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [U.as_sum, map_sum]
   refine Finset.sum_induction _
     (fun u : Ω => ∃ (n : ℕ) (g : MRing J), ¬ p ∣ n ∧ IsMultiHomog g (fun _ => d) ∧ n * u = aeval y g) ?_ ?_ ?_
   · rintro u v ⟨n, g, h1, h2, h3⟩ ⟨n', g', h1', h2', h3'⟩

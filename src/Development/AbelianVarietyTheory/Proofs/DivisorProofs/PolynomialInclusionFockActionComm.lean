@@ -76,7 +76,8 @@ theorem polIncl_comp_fockAct2 (P Q R S : ℕ) (r₀ : Fin (R + 1)) (s₀ : Fin (
   refine LinearMap.ext fun f => ?_
   rw [hE]
   conv_lhs => rw [hY]
-  simp only [LinearMap.comp_apply, AlgHom.toLinearMap_apply, map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [LinearMap.comp_apply, AlgHom.toLinearMap_apply, map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply,
     fockAct2_Eab, polIncl_omE]
 
 end GlobalTheory.FockInclAct

@@ -25,7 +25,8 @@ omit [NumberField K] in
 
 theorem coords_dotProduct {n : ℕ} (f : Module.Dual K (Fin n → K)) (x : Fin n → K) :
     (Pi.basisFun K (Fin n)).dualBasis.equivFun f ⬝ᵥ x = f x := by
-  conv_rhs => rw [← (Pi.basisFun K (Fin n)).sum_repr x, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_rhs => rw [← (Pi.basisFun K (Fin n)).sum_repr x, map_sum]
   simp [dotProduct, mul_comm]
 
 theorem dotProduct_mem_one {n : ℕ} {M : Submodule (𝓞 K) (Fin n → K)} {y : Fin n → K}

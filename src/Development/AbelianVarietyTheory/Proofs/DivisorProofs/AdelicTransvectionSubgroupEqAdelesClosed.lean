@@ -48,7 +48,8 @@ theorem nil_adj (c : A →+* A) (hc : ∀ a, c (c a) = a) (x : Fin n → A) (J :
     (hJ : ∀ i j, c (J i j) = J j i) :
     Formalism.UG.cT c (vecMulVec x ((fun i => c (x i)) ᵥ* J)) * J = J * vecMulVec x ((fun i => c (x i)) ᵥ* J) := by
   ext i j
-  simp only [Formalism.UG.cT, transpose_apply, map_apply, Matrix.mul_apply, vecMulVec_apply, vecMul, dotProduct, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Formalism.UG.cT, transpose_apply, map_apply, Matrix.mul_apply, vecMulVec_apply, vecMul, dotProduct, map_mul,
     map_sum, hc, hJ, Finset.mul_sum, Finset.sum_mul]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
@@ -286,7 +287,8 @@ theorem archM_eq {θ : InfFam D} (hθ : IsInfFam θ) {V : HSp D} (ξ : Fin V.ran
   have e2 : ∀ x, ((θ τ).comp (infPart D)) (incA D x) = tauE D τ x := comp_incA hθ τ
   have e3 : ∀ x, tauE D τ ((D.sp.cm.sig : D.host.E →+* D.host.E) x) = star (tauE D τ x) := tauE_star τ
   rw [Matrix.map_apply, Matrix.map_apply, e2]
-  simp only [vecMulVec_apply, vecMul, dotProduct, map_mul, map_sum, e3, Pi.star_apply, gramAt, Matrix.map_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [vecMulVec_apply, vecMul, dotProduct, map_mul, map_sum, e3, Pi.star_apply, gramAt, Matrix.map_apply]
 
 theorem mem_ZI {V : HSp D} {ξ : Fin V.rank → D.host.E} (h : IsoVec V ξ) (z : GA D V) :
     z ∈ ZI V ξ ↔ ∃ s, tvHom (AF D.host.F) D.sp.cm.sig (nilM_sq h) (nilM_adj V ξ) (sig_sqrt D) s = z := by

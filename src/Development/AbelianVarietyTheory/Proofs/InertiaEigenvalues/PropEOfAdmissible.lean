@@ -308,7 +308,8 @@ theorem exists_lift {N0 : X.Tw → ℕ} (h9 : adm9 X N0) {i : X.Tw} (hi : X.Nonz
   choose g hg using X.art_surj i Q
   refine ⟨∑ δ, MvPolynomial.C (y δ) * ∏ q, (1 + MvPolynomial.X q) ^ (Multiplicative.toAdd (d q (g δ))).val,
     fun k u ψ' h => ?_⟩
-  rw [thEval, Finset.mul_sum, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [thEval, Finset.mul_sum, map_sum, map_sum]
   refine Finset.sum_congr rfl fun δ _ => ?_
   have e := congrArg (kMap X i k) (hy δ)
   rw [kMap_algebraMap, map_mul, map_pow, map_natCast] at e
@@ -427,7 +428,8 @@ theorem propE (D : Formalism.BasicNotions.D7) (N : NData D.R D.host D.what₂) (
   choose y hy using h9 i hi ∅ hQe lam s hs
   have hY : algebraMap (X.O i) (FractionRing (X.O i)) (∑ δ, y δ) =
       ((X.l i : ℕ) : FractionRing (X.O i)) ^ N0 i * ∑ δ, X.th i ∅ lam δ := by
-    rw [map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.mul_sum]
     exact Finset.sum_congr rfl fun δ _ => hy δ
   have hY0 : (∑ δ, y δ) ≠ 0 := by
     intro h

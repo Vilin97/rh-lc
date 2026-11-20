@@ -148,7 +148,8 @@ theorem xh_coeffs (hℓ : 0 < ℓ) (hε : φA ε = ε ^ ℓ)
         ∑ i : Fin ℓ, ε ^ (i : ℕ) * φA (e i) := by
       rw [pow_succ', ← sum_split (fun k => (m k : A) * ε ^ k) ℓ (ℓ ^ n)]
       refine sum_congr rfl fun i _ => ?_
-      simp only [e, map_sum, map_mul, map_intCast, map_pow, hε, mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [e, map_sum, map_mul, map_intCast, map_pow, hε, mul_sum]
       refine sum_congr rfl fun j _ => ?_
       rw [pow_add, ← pow_mul]
       ring

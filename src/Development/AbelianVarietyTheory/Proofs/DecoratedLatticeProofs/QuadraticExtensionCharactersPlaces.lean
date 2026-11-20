@@ -173,7 +173,8 @@ theorem om_comb {ψ : AddChar (AF D.host.F) ℂ} {χS χT} {om : Om S T} (hom : 
     (c : WO S T →₀ ℂ) {f : WO S T → ℂ} (hf : IsThetaFunO ψ S T f) :
     om (g, h) (comb ψ S T (c.mapDomain (actO S T g⁻¹ h⁻¹)) f) = comb ψ S T c (om (g, h) f) := by
   change om (g, h) ((c.mapDomain _).sum fun u a => a • heisO ψ S T u f) = c.sum fun u a => a • heisO ψ S T u (om (g, h) f)
-  rw [Finsupp.sum_mapDomain_index (h := fun u (a : ℂ) => a • heisO ψ S T u f) (fun _ => zero_smul _ _) (fun _ _ _ => add_smul _ _ _), Finsupp.sum, Finsupp.sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finsupp.sum_mapDomain_index (h := fun u (a : ℂ) => a • heisO ψ S T u f) (fun _ => zero_smul _ _) (fun _ _ _ => add_smul _ _ _), Finsupp.sum, Finsupp.sum, map_sum]
   refine Finset.sum_congr rfl fun u _ => ?_
   rw [map_smul, hom.om_heis g h _ f hf, GlobalTheory.LocModMove.actO_actO_inv'']
 

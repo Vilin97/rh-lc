@@ -48,7 +48,8 @@ theorem sec_rel {W : X.Opens} {s : ∀ α, κ α → Γ(X, W ⊓ U α)} (hs : s 
     rs h₁ (s α k) = ∑ k', rs h₃ (g α β k k') * rs h₂ (s β k') := by
   have hV : V ≤ W ⊓ U α ⊓ U β := le_inf h₁ (h₂.trans inf_le_right)
   have := congrArg (rs hV) (hs α β k)
-  simp only [map_sum, map_mul, rs_rs _ _ h₁, rs_rs _ _ h₂, rs_rs _ _ h₃] at this
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, rs_rs _ _ h₁, rs_rs _ _ h₂, rs_rs _ _ h₃] at this
   exact this
 
 instance secModule (W : X.Opens) : Module Γ(X, W) (secGroup g W) where
@@ -125,7 +126,8 @@ theorem isSheaf_secPresheaf : (secPresheaf g).IsSheaf := by
     have hB : W j ⊓ U α ⊓ U β ≤ W j ⊓ U β := inf_le_inf_right _ inf_le_left
     have hC : W j ⊓ U α ⊓ U β ≤ U α ⊓ U β := le_inf (inf_le_left.trans inf_le_right) inf_le_right
     change rs _ (rs _ (b α k)) = rs _ (∑ k', rs _ (g α β k k') * rs _ (b β k'))
-    rw [rs_rs _ _ (hA.trans (hW α j)), e1 α k hA, sec_rel (sf j).2 α β k hA hB hC, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [rs_rs _ _ (hA.trans (hW α j)), e1 α k hA, sec_rel (sf j).2 α β k hA hB hC, map_sum]
     refine Finset.sum_congr rfl fun k' _ => ?_
     rw [map_mul, rs_rs _ _ hC, rs_rs _ _ (hB.trans (hW β j)), e1 β k' hB]
   · refine Subtype.ext (funext fun α => funext fun k => GlobalTheory.LB.fun_ext_of_cover _ (hW α) (hc α) fun j => ?_)
@@ -167,7 +169,8 @@ variable {g} in
 def ofCoord (hc : Coc g) {W : X.Opens} (α : ι) (h : W ≤ U α) (t : κ α → Γ(X, W)) : secGroup g W :=
   ⟨fun β k => ∑ k', rs (le_inf inf_le_right (inf_le_left.trans h) : W ⊓ U β ≤ U β ⊓ U α) (g β α k k') *
     rs inf_le_left (t k'), fun β γ k => by
-      simp only [map_sum, map_mul, rs_trans, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_mul, rs_trans, Finset.mul_sum]
       have := hc.2 β γ α (W ⊓ U β ⊓ U γ)
         (le_inf (inf_le_left.trans inf_le_right) inf_le_right)
         (le_inf inf_le_right (inf_le_left.trans (inf_le_left.trans h)))
@@ -196,7 +199,8 @@ def coordEquiv (hc : Coc g) {W : X.Opens} (α : ι) (h : W ≤ U α) :
     rw [rs_trans]
   right_inv t := funext fun k => by
     change rs _ (∑ k', _ * rs _ (t k')) = t k
-    simp only [map_sum, map_mul, rs_trans, rs_self]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, rs_trans, rs_self]
     exact hc.1 α W (le_inf h h) t k
 
 variable {g}

@@ -63,7 +63,8 @@ theorem iA_eq (s : Fin A.rank → AE D) : iA ι s = ∑ l, s l • vecA B (ι (A
 theorem vecA_iota (a : A.V) : vecA B (ι a) = iA ι (vecA A a) := by
   rw [iA_eq]
   conv_lhs => rw [← A.frame.sum_repr a]
-  simp only [map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul]
   rw [vecA_sum]
   rfl
 
@@ -96,7 +97,8 @@ theorem mem_NS {n : GA D B} (hn : n ∈ d.N) : n ∈ NS B d.e := by
 theorem lower {n : GA D B} (hn : n ∈ d.N) {k : ℕ} {v} (hv : v ∈ spanLt B d.e (k + 1)) :
     (mt B n).mulVec v - v ∈ spanLt B d.e k := by
   obtain ⟨c, hc, rfl⟩ := hv
-  rw [← Matrix.mulVecLin_apply, map_sum, ← Finset.sum_sub_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Matrix.mulVecLin_apply, map_sum, ← Finset.sum_sub_distrib]
   refine Submodule.sum_mem _ fun l _ => ?_
   rw [map_smul, ← smul_sub]
   rcases lt_or_ge l.1 (k + 1) with hl | hl
@@ -104,7 +106,8 @@ theorem lower {n : GA D B} (hn : n ∈ d.N) {k : ℕ} {v} (hv : v ∈ spanLt B d
   · rw [hc l hl, zero_smul]; exact zero_mem _
 
 theorem lower_iA {n : GA D B} (hn : n ∈ d.N) (a) : (mt B n).mulVec (iA ι a) - iA ι a ∈ spanLt B d.e d.ρ := by
-  rw [iA_eq, ← Matrix.mulVecLin_apply, map_sum, ← Finset.sum_sub_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [iA_eq, ← Matrix.mulVecLin_apply, map_sum, ← Finset.sum_sub_distrib]
   refine Submodule.sum_mem _ fun l _ => ?_
   rw [map_smul, ← smul_sub]
   exact Submodule.smul_mem _ _ ((mem_NS_iff.1 (mem_NS d hn)).2 _ fun i => hD_swap_zero (d.eA i _))
@@ -131,7 +134,8 @@ theorem hA_span_span {k k' : ℕ} {v w} (hv : v ∈ spanLt B d.e k) (hw : w ∈ 
 theorem hD_e_fTop (l : Fin d.ρ) : B.hD (d.e l) d.fTop = if l.1 + 1 = d.ρ then 1 else 0 := by
   have ef : ∀ i, B.hT (d.f i) (d.e l) = if l = i then 1 else 0 := fun i => d.ef l i
   unfold HSpace.hD
-  rw [FJDat.fTop, map_sum, LinearMap.sum_apply, Finset.sum_eq_single l]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [FJDat.fTop, map_sum, LinearMap.sum_apply, Finset.sum_eq_single l]
   · split_ifs
     · rw [ef, if_pos rfl]
     · rw [map_zero, LinearMap.zero_apply]

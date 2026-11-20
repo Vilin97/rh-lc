@@ -22,7 +22,8 @@ theorem perpNorm : PerpNormStatement := by
   have hs : ((vsq g : ℝ) : ℂ) ≠ 0 := by exact_mod_cast (hlin_vsq_pos hg).ne'
   obtain ⟨c, hc⟩ : ∃ c, c = ∑ j, (starRingEnd ℂ) (g j) * w j := ⟨_, rfl⟩
   have hc' : ∑ i, g i * conj (w i) = conj c := by
-    rw [hc, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hc, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_mul, Complex.conj_conj, mul_comm]
   have key : ((vsq (perp g w) : ℝ) : ℂ) =

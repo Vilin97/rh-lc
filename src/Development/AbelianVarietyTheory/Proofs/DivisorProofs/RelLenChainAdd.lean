@@ -17,7 +17,8 @@ theorem relLen_chain_add : ∀ (C : Type) [Field C] (v : AddValuation C (WithTop
   have hU : ∀ i, (b i : M) = ∑ j, c'.toMatrix b j i • (c' j : M) := by
     intro i
     have := congrArg X'.subtype (c'.sum_repr (b i))
-    simp only [map_sum, map_smul, Submodule.subtype_apply] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, Submodule.subtype_apply] at this
     simp only [Basis.toMatrix_apply]
     exact this.symm
   have u : IsUnit (c'.toMatrix b).det := by

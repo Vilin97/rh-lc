@@ -11,7 +11,8 @@ theorem bilin_eq_sum {X : Type} [AddCommGroup X] [Module.Free ℤ X] [Module.Fin
     β = ∑ j, ∑ k, β (Module.Free.chooseBasis ℤ X j) (Module.Free.chooseBasis ℤ X k) •
       (LinearMap.toMatrix₂ (Module.Free.chooseBasis ℤ X) (Module.Free.chooseBasis ℤ X)).symm (Matrix.single j k 1) := by
   apply (LinearMap.toMatrix₂ (Module.Free.chooseBasis ℤ X) (Module.Free.chooseBasis ℤ X)).injective
-  simp only [map_sum, map_zsmul, LinearEquiv.apply_symm_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_zsmul, LinearEquiv.apply_symm_apply]
   ext a b
   simp only [Matrix.sum_apply, Matrix.smul_apply, Matrix.single_apply, LinearMap.toMatrix₂_apply, smul_eq_mul,
     mul_ite, mul_one, mul_zero]
@@ -33,7 +34,8 @@ theorem linearForm_of_toReal_eq : ∀ (X : Type) [AddCommGroup X] [Module.Free �
   have key : ∀ β : LinearMap.BilinForm ℤ X, ((ℓ β : ℤ) : ℝ) = ∑ j, ∑ k, ((β (b j) (b k) : ℤ) : ℝ) * ((ℓ (E j k) : ℤ) : ℝ) := by
     intro β
     conv_lhs => rw [GlobalTheory.PolFanReal.bilin_eq_sum β]
-    simp only [map_sum, map_zsmul, smul_eq_mul, Int.cast_sum, Int.cast_mul, E, b]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_zsmul, smul_eq_mul, Int.cast_sum, Int.cast_mul, E, b]
   have hjk : ∀ j k, ((be (b j) (b k) : ℤ) : ℝ) = ∑ i, c i * ((γ i (b j) (b k) : ℤ) : ℝ) := by
     intro j k
     have := congrArg (fun f => f (b j) (b k)) h

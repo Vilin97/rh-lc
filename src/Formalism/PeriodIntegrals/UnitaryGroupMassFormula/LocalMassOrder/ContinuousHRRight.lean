@@ -42,7 +42,8 @@ theorem exists_gens : ∃ (m : ℕ) (w : Fin m → Fv F v ⊗[F] E), (∀ k, w k
       push_cast
       simp [zsmul_eq_mul]
     beta_reduce
-    rw [SetLike.mem_coe, ha, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [SetLike.mem_coe, ha, map_sum]
     refine Submodule.sum_mem _ fun k _ => ?_
     rw [map_mul, map_intCast, ← zsmul_eq_mul]
     exact zsmul_mem (Submodule.subset_span (Set.mem_range_self k)) _

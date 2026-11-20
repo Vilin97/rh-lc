@@ -75,7 +75,8 @@ private theorem wd_map {ι E E' : Type} [LinearOrder ι] [AddCommGroup E] [Modul
     (h : ∀ i m, f (w i m) = w' i (f m)) (c : Finset ι → E) :
     wd w' (fun s => f (c s)) = fun s => f (wd w c s) := by
   funext t
-  simp [wd, h, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [wd, h, map_sum]
 
 section
 variable {F K K' : Type} [Field F] [Field K] [Field K'] [Algebra ℂ F] [Algebra ℂ K] [Algebra ℂ K'] [Algebra F K]

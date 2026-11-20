@@ -8,7 +8,8 @@ private theorem UpperTheory.ConvolutionTheory.FX.opb_lin {Z V : Type} [NormedAdd
     ‖T P‖ ≤ (∑ α ∈ P.support, ‖P.coeff α‖) * B := by
   have e : T P = ∑ α ∈ P.support, P.coeff α • T (monomial α 1) := by
     conv_lhs => rw [P.as_sum]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun α _ => ?_
     rw [← map_smul, smul_monomial, smul_eq_mul, mul_one]
   rw [e, Finset.sum_mul]

@@ -111,7 +111,8 @@ theorem Via.comb {R R' : Type} [CommRing R] [CommRing R'] (f : R →+* R') (p : 
     {b : Fin N → ∀ j, Γ(X, L.U j)} (hb : ∀ k, Via w l (b' k) (b k)) (c : Fin N → R) :
     Via w l (fun i => ∑ k, cst p' _ (f (c k)) * b' k i) (fun j => ∑ k, cst p _ (c k) * b k j) := by
   intro j i h
-  rw [map_sum, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [map_mul, map_mul, hb k j i h, appLE_cst f p p' hφ, rs_cst, mul_left_comm]
 

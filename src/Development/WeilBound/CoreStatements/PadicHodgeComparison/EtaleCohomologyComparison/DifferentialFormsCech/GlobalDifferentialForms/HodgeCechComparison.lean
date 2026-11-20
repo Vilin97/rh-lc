@@ -30,7 +30,8 @@ def tH (ht : ∀ m n (i : Fin (n + 1) → U.ι) (θ : Fin (m + 1) → Fin (n + 1
         t (n + 1) i ((cechH (Fk q U a) (Vk q U a) a).δ n k x i) := fun k =>
       (ht n (n + 1) i k.succAbove (x (i ∘ k.succAbove))).symm
     change (formCos q U.U a).d n (fun i' => t n i' (x i')) i = t (n + 1) i ((cechH (Fk q U a) (Vk q U a) a).d n x i)
-    rw [Cos.d_apply, Cos.d_apply, Finset.sum_apply, Finset.sum_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Cos.d_apply, Cos.d_apply, Finset.sum_apply, Finset.sum_apply, map_sum]
     exact Finset.sum_congr rfl fun k _ => by rw [Pi.smul_apply, Pi.smul_apply, map_zsmul, key k]
 
 theorem tH_bij (ht) (n : ℕ) : Function.Bijective ((tH q U a t ht).f n) := by

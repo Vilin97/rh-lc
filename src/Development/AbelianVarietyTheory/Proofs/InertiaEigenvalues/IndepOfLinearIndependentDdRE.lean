@@ -41,7 +41,8 @@ private theorem eq_zero_of_sum_smul_invariant_eq_zero_of_card_support_le {G E M 
       obtain ⟨d, hd⟩ : ∃ d : ι → E, ∀ i, d i = σ g (c' i) - c' i := ⟨fun i => σ g (c' i) - c' i, fun _ => rfl⟩
       have h1 : ∑ i, σ g (c' i) • v i = 0 := by
         have hmap : ρ g (∑ i, c' i • v i) = ∑ i, σ g (c' i) • v i := by
-          rw [map_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [map_sum]
           exact Finset.sum_congr rfl fun i _ => by rw [hρ, hv]
         rw [← hmap, hsum', map_zero]
       have hdsum : ∑ i, d i • v i = 0 := by
@@ -267,7 +268,8 @@ theorem indep_of_linearIndependent_DdRE {G : Type} [Group G] {Qp K₀ K : Type} 
     have hzero : ∑ i, (∑ j, τ (k (i, j)) * l j) • d i = 0 := by
       have h2 : TensorProduct.comm Qp V F (∑ i, (∑ j, τ (k (i, j)) * l j) • d i) = 0 := by
         rw [← hcsum, Fintype.sum_prod_type]
-        simp only [hterm, map_sum, Finset.sum_smul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [hterm, map_sum, Finset.sum_smul]
       exact (TensorProduct.comm Qp V F).map_eq_zero_iff.mp h2
     have hcoef := Fintype.linearIndependent_iff.mp hind (fun i => ∑ j, τ (k (i, j)) * l j) hzero
     rintro ⟨i, j⟩
@@ -284,7 +286,8 @@ theorem indep_of_linearIndependent_DdRE {G : Type} [Group G] {Qp K₀ K : Type} 
     have h2 := congrArg (TensorProduct.comm Qp V F) hrel
     rw [map_zero] at h2
     rw [← h2, Fintype.sum_prod_type]
-    simp only [w, map_sum, LinearMap.sum_apply, hL2]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [w, map_sum, LinearMap.sum_apply, hL2]
   have hb0 := indep_of_invariant_isField hF σ' ρ' hρ' w hv' hind' (fun p => b p.1 p.2) hcomb
   intro i
   have hbij : ∀ j, b i j = 0 := fun j => hb0 (i, j)

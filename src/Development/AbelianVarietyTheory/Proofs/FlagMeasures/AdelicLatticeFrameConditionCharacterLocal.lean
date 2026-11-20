@@ -43,7 +43,8 @@ omit [NumberField E] in
 theorem prV_sum_IE [DecidableEq (HeightOneSpectrum (𝓞 F))] (S : Finset (HeightOneSpectrum (𝓞 F)))
     (u : ∀ v : HeightOneSpectrum (𝓞 F), E ⊗[F] v.adicCompletion F) (w : HeightOneSpectrum (𝓞 F)) (hw : w ∈ S) :
     prV (E := E) w (∑ v ∈ S, afsplitIE v (u v)) = u w := by
-  rw [map_sum, Finset.sum_eq_single w]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_eq_single w]
   · exact afsplit_prV_IE w (u w)
   · intro v _ hvw
     exact afsplit_prV_IE_ne v w (Ne.symm hvw) (u v)
@@ -54,7 +55,8 @@ omit [NumberField E] in
 theorem prV_sum_IE_not (S : Finset (HeightOneSpectrum (𝓞 F)))
     (u : ∀ v : HeightOneSpectrum (𝓞 F), E ⊗[F] v.adicCompletion F) (w : HeightOneSpectrum (𝓞 F)) (hw : w ∉ S) :
     prV (E := E) w (∑ v ∈ S, afsplitIE v (u v)) = 0 := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_eq_zero fun v hv => afsplit_prV_IE_ne v w (fun h => hw (h ▸ hv)) (u v)
 
 private theorem prV_mem_of_mem_OAd (v : HeightOneSpectrum (𝓞 F)) {a : E ⊗[F] Ad F} (ha : a ∈ OAd F E) :
@@ -260,7 +262,8 @@ theorem hR_incl (σ : E →ₐ[F] E) (J : Matrix (Fin n) (Fin n) E) (x y : Fin n
   have key : ∀ e : E, sigR σ (Ad F) (inclE (F := F) (Ad F) e) = inclE (F := F) (Ad F) (σ e) := by
     intro e
     simp [sigR, inclE]
-  simp only [hR, hform, map_sum, map_mul, Matrix.map_apply, key]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hR, hform, map_sum, map_mul, Matrix.map_apply, key]
   rfl
 
 private theorem sigR_mem_intAE' (σ : E →ₐ[F] E) {a : E ⊗[F] Ad F} (ha : a ∈ OAd F E) :
@@ -335,7 +338,8 @@ theorem prV_hR (σ : E →ₐ[F] E) (J : Matrix (Fin n) (Fin n) E) (v : HeightOn
     prV (E := E) v (hR σ J (Ad F) x y) = hR σ J (v.adicCompletion F) (prVec v x) (prVec v y) := by
   have key : ∀ a, prV (E := E) v (sigR σ (Ad F) a) = sigR σ (v.adicCompletion F) (prV (E := E) v a) :=
     fun a => RingHom.congr_fun (afsplit_prV_comp_sigR σ v) a
-  simp only [hR, hform, map_sum, map_mul, Matrix.map_apply, key, afsplit_prV_inclE, prVec]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hR, hform, map_sum, map_mul, Matrix.map_apply, key, afsplit_prV_inclE, prVec]
 
 theorem prV_supSum (σ : E →ₐ[F] E) (J : Matrix (Fin n) (Fin n) E) (v : HeightOneSpectrum (𝓞 F)) {k : ℕ}
     (b bd : Fin k → Fin n → E ⊗[F] Ad F) (y : GL (Fin n) (E ⊗[F] Ad F)) :
@@ -343,7 +347,8 @@ theorem prV_supSum (σ : E →ₐ[F] E) (J : Matrix (Fin n) (Fin n) E) (v : Heig
       supSum (hR σ J (v.adicCompletion F)) (fun j => prVec v (b j)) (fun j => prVec v (bd j))
         (bc (prV (E := E) v) y).1 := by
   unfold supSum
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   split_ifs with hi
   · rw [prV_hR, Carry.prVec_mulVec]
@@ -440,7 +445,8 @@ theorem chi_local (Fr : AdFrame σ J (hat F L) (gp 0 * gp 1) k) (hp : ∀ i, (gp
   have hrest : (1 - ∑ v ∈ S, afsplitEps E v) * a ∈ OAd F E := by
     apply IntAd.mem_of_local
     intro w
-    rw [map_mul, map_sub, map_one, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_mul, map_sub, map_one, map_sum]
     by_cases hw : w ∈ S
     · rw [Finset.sum_eq_single w (fun v _ hvw => afsplit_prV_eps_ne v w (Ne.symm hvw))
         (fun h => absurd hw h), afsplit_prV_eps, sub_self, zero_mul]

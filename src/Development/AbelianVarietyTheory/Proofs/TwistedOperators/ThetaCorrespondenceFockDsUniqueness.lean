@@ -78,7 +78,8 @@ theorem map_hwSub {a : Mat p q →ₗ[ℂ] Module.End ℂ V} {b : Mat p q →ₗ
 theorem map_casimir {a : Mat p q →ₗ[ℂ] Module.End ℂ V} {b : Mat p q →ₗ[ℂ] Module.End ℂ W}
     (g : V →ₗ[ℂ] W) (hg : ∀ Z v, g (a Z v) = b Z (g v)) (v : V) :
     g (casimir a v) = casimir b (g v) := by
-  simp [casimir, LinearMap.sum_apply, map_sum, hg]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [casimir, LinearMap.sum_apply, map_sum, hg]
 
 theorem eq_zero_of_contract {z : V ⊗[ℂ] W}
     (h : ∀ φ : W →ₗ[ℂ] ℂ, TensorProduct.rid ℂ V (LinearMap.lTensor V φ z) = 0) : z = 0 := by

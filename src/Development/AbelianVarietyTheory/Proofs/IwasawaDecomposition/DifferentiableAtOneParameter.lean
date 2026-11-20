@@ -135,7 +135,8 @@ theorem hasDerivAt_move (ℓ : S →ₗ[ℂ] ℂ) (d : U →ₗ[ℝ] Module.End 
   let b := Module.finBasis ℝ U
   have e : ∀ (Q : Module.End ℂ S) (u : U), ℓ (Q (d u Φ)) = ∑ i, b.coord i u • ℓ (Q (d (b i) Φ)) := fun Q u => by
     conv_lhs => rw [← b.sum_repr u]
-    simp only [map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply, LinearMap.map_smul_of_tower,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply, LinearMap.map_smul_of_tower,
       Module.Basis.coord_apply]
   have e1 := e 1 c'
   rw [Module.End.one_apply] at e1
@@ -160,7 +161,8 @@ theorem exists_dualBases (hβ : ∀ x, (∀ y, β x y = 0) → x = 0) (hs : ∀ 
     refine Finset.sum_congr rfl fun i _ => ?_
     congr 1
     conv_lhs => rw [← b.sum_repr x]
-    simp only [b', map_sum, map_smul, LinearMap.BilinForm.apply_dualBasis_left]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [b', map_sum, map_smul, LinearMap.BilinForm.apply_dualBasis_left]
     simp
   · conv_rhs => rw [← b'.sum_repr x]
     refine Finset.sum_congr rfl fun i _ => ?_
@@ -172,10 +174,12 @@ theorem DualBases.sum_adjoint (h : DualBases β b b') {M : Type} [AddCommGroup M
     (g g' : U → U) (hg : ∀ x y, β (g' x) y = β x (g y)) : ∑ i, B (g (b i)) (b' i) = ∑ i, B (b i) (g' (b' i)) := by
   have e1 : ∀ i, B (g (b i)) (b' i) = ∑ j, β (b' j) (g (b i)) • B (b j) (b' i) := fun i => by
     conv_lhs => rw [← h.1 (g (b i))]
-    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply]
   have e2 : ∀ j, B (b j) (g' (b' j)) = ∑ i, β (b' j) (g (b i)) • B (b j) (b' i) := fun j => by
     conv_lhs => rw [← h.2 (g' (b' j))]
-    simp only [map_sum, map_smul, hg]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, hg]
   simp only [e1, e2]
   exact Finset.sum_comm
 
@@ -198,7 +202,8 @@ theorem DualBases.quad_comm (h : DualBases β b b') (hs : ∀ x y, β y x = -β 
       mul_smul, mul_smul, Complex.coe_smul, Complex.coe_smul]
   rw [quad, Finset.sum_mul, Finset.mul_sum, ← Finset.sum_sub_distrib]
   simp only [e]
-  rw [Finset.sum_add_distrib, ← Finset.smul_sum, ← Finset.smul_sum, ← map_sum, ← map_sum, ← map_sum, h.1, h.2, two_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.sum_add_distrib, ← Finset.smul_sum, ← Finset.smul_sum, ← map_sum, ← map_sum, ← map_sum, h.1, h.2, two_mul,
     add_smul]
 
 theorem DualBases.quad_group (h : DualBases β b b') (P : Module.End ℂ S) (g g' : U →ₗ[ℝ] U)
@@ -222,7 +227,8 @@ theorem DualBases.quad_lie (h : DualBases β b b') {N : Submodule ℂ S} (hN : �
   simp only [LinearMap.compl₁₂_apply, LinearMap.comp_apply, LinearMap.mul_apply', map_neg, Finset.sum_neg_distrib] at this
   have h2 := LinearMap.congr_fun this Φ
   simp only [LinearMap.sum_apply, LinearMap.neg_apply, Module.End.mul_apply] at h2
-  simp only [quad, LinearMap.sum_apply, Module.End.mul_apply, map_sum, hA _ _ (hN _ _ hΦ), hA _ _ hΦ, map_add, hc,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [quad, LinearMap.sum_apply, Module.End.mul_apply, map_sum, hA _ _ (hN _ _ hΦ), hA _ _ hΦ, map_add, hc,
     Finset.sum_add_distrib, h2]
   abel
 

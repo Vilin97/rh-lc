@@ -93,7 +93,8 @@ theorem blockVandermonde_ne_zero (f N : ℕ) : blockVandermonde f N ≠ 0 := by
 
 theorem blockPermute_antisymmetrize (f N : ℕ) (v : Fin f → Equiv.Perm (Fin N)) (H : RootRing f N) :
     blockPermute f N v (antisymmetrize f N H) = blockSign f N v • antisymmetrize f N H := by
-  simp only [antisymmetrize, map_sum, map_smul, blockPermute_blockPermute, Finset.smul_sum, smul_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [antisymmetrize, map_sum, map_smul, blockPermute_blockPermute, Finset.smul_sum, smul_smul]
   refine Fintype.sum_equiv (Equiv.mulLeft v) _ _ (fun w => ?_)
   simp only [Equiv.coe_mulLeft]
   congr 1
@@ -198,10 +199,12 @@ theorem derivation_restPolynomial (D : Derivation ℚ (RootRing f (r + a)) (Root
       add_zero]
   refine ⟨hfib, ?_⟩
   have hmu : D (smallBlockMu f r a c) = C (c.sign * r * ∑ σ, α σ) := by
-    simp only [smallBlockMu, map_sum, hyr, Finset.sum_const, Finset.card_univ, Fintype.card_fin,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [smallBlockMu, map_sum, hyr, Finset.sum_const, Finset.card_univ, Fintype.card_fin,
       nsmul_eq_mul]
     rw [show (r : RootRing f (r + a)) = C (r : ℚ) from (map_natCast C r).symm]
-    simp_rw [← C_mul, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp_rw [← C_mul, ← map_sum]
     congr 1
     rw [Finset.mul_sum]
     refine Finset.sum_congr rfl (fun σ _ => ?_)

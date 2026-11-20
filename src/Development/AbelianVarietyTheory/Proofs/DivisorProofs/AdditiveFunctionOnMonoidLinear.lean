@@ -80,7 +80,8 @@ theorem exists_linear : ∀ (ι : Type) [Fintype ι] (S : Set (ι → ℕ)) (c :
     ext j; simp [A, v, Finset.sum_apply, Pi.single_apply]
   have hC : C (Finsupp.single ⟨x, hx⟩ 1) = c x := by simp [C]
   simp only [AddMonoidHom.comp_apply, QuotientAddGroup.kerLift_mk, QuotientAddGroup.lift_mk] at h1
-  rw [hA, hC, map_sum] at h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hA, hC, map_sum] at h1
   rw [← h1]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_zsmul, zsmul_eq_mul, Int.cast_natCast]

@@ -124,7 +124,8 @@ theorem idem_eq_zero (ι : B →+* R) (τ : B) (hu : IsUnit (ι τ)) (hinj : Fun
 private theorem coeff_tail_lemma {O : Type} [CommRing O] (f : ℕ → PowerSeries O) (j M : ℕ) (h : j < M) :
     PowerSeries.coeff j (∑ k ∈ Finset.range M, PowerSeries.X ^ k * f k) =
       PowerSeries.coeff j (∑ k ∈ Finset.range (j + 1), PowerSeries.X ^ k * f k) := by
-  rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum]
   symm
   apply Finset.sum_subset
   · intro k hk
@@ -242,7 +243,8 @@ theorem near_closed (ι : B →+* R) (io : LetA O n →+* B) (al : LetA O n →+
       Finset.sum_range_sub (fun k => j (e k)) M
     have S1 : j (e M) - j (e 0) = ι (io (∑ k ∈ Finset.range M, letπ ^ k * b k)) +
         (p : R) * ∑ k ∈ Finset.range M, r k := by
-      rw [← S0, map_sum, map_sum, Finset.mul_sum, ← Finset.sum_add_distrib]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← S0, map_sum, map_sum, Finset.mul_sum, ← Finset.sum_add_distrib]
       exact Finset.sum_congr rfl fun k _ => by rw [← map_sub]; exact hbr k
     have H := congrArg (fun z => ι (io z)) htM
     simp only [map_sub, map_mul, map_pow] at H

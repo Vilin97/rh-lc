@@ -240,7 +240,8 @@ theorem index_baseChange_lattice : RelIndexSpanImage := by
     all_goals rfl
   have hP' : ∀ i, j (b i) = ∑ k, (P.map (algebraMap K K')) k i • j (a k) := by
     intro i
-    rw [← hc i, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hc i, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_smul, Matrix.map_apply, algebraMap_smul]
     all_goals rfl

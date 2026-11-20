@@ -101,7 +101,8 @@ variable (K) in
 def HermitianNorms.standard (n : ℕ) : HermitianNorms K (Fin n → K) where
   form σ := coreOfInjective (fieldStdCoord σ n) (fieldStdCoord_injective σ n)
   form_conj σ x y := by
-    simp only [coreOfInjective_inner, PiLp.inner_apply, RCLike.inner_apply, fieldStdCoord_conjMap,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [coreOfInjective_inner, PiLp.inner_apply, RCLike.inner_apply, fieldStdCoord_conjMap,
       map_sum, map_mul, Complex.conj_conj]
 
 variable (K) in

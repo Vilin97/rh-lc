@@ -53,7 +53,8 @@ theorem core (h2 : Hypotheses2) (hH : HypothesesH) {D : D7} {A : Amb D} {N j : �
       rename (fun v : {v // v ∈ G.vars} => (Sum.inr (Sum.inr v) : ι)) G')) =
       (∑ i, X (B i) ^ k) * ((X ((arIn s Φ (metsOf x Φ)).root (Function.update (ArIn.ind Sx) p false) R y c) -
         X ((arIn s Φ (metsOf x Φ)).root (Function.update (ArIn.ind Sx) p true) R y c)) * G) := by
-    simp only [map_mul, map_sum, map_pow, map_sub, rename_X, rename_rename, hw, hG']
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_mul, map_sum, map_pow, map_sub, rename_X, rename_rename, hw, hG']
     rfl
   rw [← hd c]
   refine (congrArg (numL ((arIn s Φ (metsOf x Φ)).num c) ((Φ.C c).Y.dim + 1)) hT).symm.trans ?_

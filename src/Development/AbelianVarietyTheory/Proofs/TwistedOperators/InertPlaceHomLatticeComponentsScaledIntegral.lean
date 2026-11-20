@@ -108,8 +108,10 @@ theorem map_compW_sum (S T : HSp D) {v : HeightOneSpectrum (𝓞 D.host.F)} {w :
     algebraMap D.host.E (w.adicCompletion D.host.E) a₀ •
       (A * Y * (Formalism.UG.cT c A' * S.gram.map (algebraMap D.host.E (w.adicCompletion D.host.E)))) := by
   refine Matrix.ext fun p q => ?_
-  rw [Matrix.map_apply, Matrix.sum_apply, map_sum]
-  simp only [Matrix.sum_apply, map_sum, Matrix.smul_apply, smul_eq_mul, map_mul, compW_liftFin, compAt_singleAt,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.map_apply, Matrix.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.sum_apply, map_sum, Matrix.smul_apply, smul_eq_mul, map_mul, compW_liftFin, compAt_singleAt,
     GlobalTheory.SplitHomLattice.rk, Matrix.of_apply, compAt_sigR hv hc, compAt_one_tmul]
   simp only [Matrix.mul_apply, Formalism.UG.cT, Matrix.transpose_apply, Matrix.map_apply, Finset.mul_sum, Finset.sum_mul]
   rw [Finset.sum_comm]
@@ -162,7 +164,8 @@ theorem mem_map_latF_iff : ∀ (D : D7) (S T : HSp D) (v : HeightOneSpectrum (�
           lam * π (a1 * t i * ∑ k, star (s k) * S.gram k j) := compAt_tmul w α _
       rw [Matrix.map_apply, Matrix.of_apply, e1, Matrix.smul_apply, smul_eq_mul, Matrix.vecMulVec_apply]
       have hconj : ∀ y, c (π y) = π (star y) := fun y => InertChart.conj_algebraMap hc y
-      simp only [map_mul, map_sum, Matrix.vecMul, dotProduct, hG, Matrix.map_apply, hconj]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_mul, map_sum, Matrix.vecMul, dotProduct, hG, Matrix.map_apply, hconj]
       ring_nf
     have hy : ∀ p, ((a⁻¹ : GL (Fin T.rank) (w.adicCompletion D.host.E)).1 *ᵥ fun i => π (t i)) p ∈ Formalism.UG.Ov D.host.E w := by
       refine (ha _).2 ?_

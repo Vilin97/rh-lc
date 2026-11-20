@@ -180,11 +180,13 @@ theorem exists_invariant_form_iso {Λ : AddSubgroup (WO S T)} {e : AE D} (he : I
         | mul_right B _ g hg ih =>
           obtain ⟨y', N, hy', rfl⟩ := hg
           refine ⟨fun y hy => ?_, ?_⟩
-          · rw [Module.End.mul_apply, LinearMap.sum_apply, map_sum, map_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            · rw [Module.End.mul_apply, LinearMap.sum_apply, map_sum, map_sum]
             refine Finset.sum_nonneg fun k _ => ?_
             rw [heisL_apply, ← heisO_add_of_orth ψ S T (half_orth_iso he (isHalf_nsmul hy' k) hy)]
             exact ih.1 _ (isHalf_add (isHalf_nsmul hy' k) hy)
-          · rw [Module.End.mul_apply, LinearMap.sum_apply, map_sum, map_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            · rw [Module.End.mul_apply, LinearMap.sum_apply, map_sum, map_sum]
             refine Finset.sum_pos' (fun k _ => ih.1 _ (isHalf_nsmul hy' k)) ⟨0, Finset.mem_range.2 N.succ_pos, ?_⟩
             rw [heisL_apply, zero_smul, heisO_zero]
             exact ih.2
@@ -257,7 +259,8 @@ theorem om_eq_smul_sum_iso {χS χT : (AE D)ˣ →* Circle} {om : GA D S × GA D
   obtain ⟨v₀, ⟨hv₀, hv₀Λ⟩, hv₀u⟩ := hRu 0 h0 (isHalf_zero e)
   have hv₀' : v₀ ∈ Λ := by rwa [zero_sub, neg_mem_iff] at hv₀Λ
   have hsum : ℓ (∑ u ∈ R, heisO ψ S T u f) = ℓ f := by
-    rw [map_sum, Finset.sum_eq_single_of_mem v₀ hv₀, hf1 v₀ hv₀' (hR _ hv₀).2]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_eq_single_of_mem v₀ hv₀, hf1 v₀ hv₀' (hR _ hv₀).2]
     intro u hu hne
     have huΛ : u ∉ Λ := fun huΛ => hne (hv₀u u ⟨hu, by rwa [zero_sub, neg_mem_iff]⟩)
     obtain ⟨l, hl, hlh, hlne⟩ := hd u (hR u hu).2 huΛ

@@ -53,11 +53,13 @@ theorem dc_sum {V : Type} [NormedAddCommGroup V] [NormedSpace ℂ V] (ε : Mat n
   have hsd : HasFDerivAt (fun x => ∑ i, c i • h i x) (∑ i, c i • fderiv ℝ (h i) 1) 1 :=
     HasFDerivAt.fun_sum fun i _ => (hd i).hasFDerivAt.const_smul (c i)
   simp only [DC, Rd, hsd.fderiv]
-  simp only [ContinuousLinearMap.coe_sum', Finset.sum_apply, ContinuousLinearMap.coe_smul', Pi.smul_apply, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [ContinuousLinearMap.coe_sum', Finset.sum_apply, ContinuousLinearMap.coe_smul', Pi.smul_apply, map_sum,
     map_smul, Finset.smul_sum, smul_add]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun p _ => ?_
-  rw [← Finset.sum_add_distrib, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Finset.sum_add_distrib, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [← smul_add, map_smul]
 

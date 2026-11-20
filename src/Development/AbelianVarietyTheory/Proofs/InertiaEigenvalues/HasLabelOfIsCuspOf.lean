@@ -17,7 +17,8 @@ theorem trace_alg {G : Type} [Group G] [Fintype G] (τ : FDRep ℂ G) (a : Monoi
     LinearMap.trace ℂ τ (Representation.asAlgebraHom τ.ρ a) = tr a τ.character := by
   have e : Representation.asAlgebraHom τ.ρ a = ∑ x, a.coeff x • τ.ρ x :=
     LinearMap.ext fun w => by rw [alg_apply, LinearMap.sum_apply]; rfl
-  rw [e, map_sum, tr]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, map_sum, tr]
   exact Finset.sum_congr rfl fun x _ => map_smul _ _ _
 
 section Finite

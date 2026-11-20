@@ -102,7 +102,8 @@ theorem rescale_thetaProd {K κ n : Type} [Field K] [Fintype κ] [Fintype n] (a 
     · subst h
       simp
     · simp
-  simp only [Formalism.L2.Th1.E.thetaProd, map_sum, map_mul, map_prod, hC, rescale_single_variable_series]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Formalism.L2.Th1.E.thetaProd, map_sum, map_mul, map_prod, hC, rescale_single_variable_series]
 
 theorem herm_scale (L : PeriodPair) (c : ℂ) (hc : c ≠ 0) (z x : ℂ) :
     herm (scalePair L c hc) (c * z) (c * x) = herm L z x := by

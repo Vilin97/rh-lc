@@ -203,10 +203,12 @@ theorem sum_mackeyProj_comp_mackeyIncl :
   let ev : (Rep.res ι (Rep.coind U.subtype N) ⟶ Rep.res ι (Rep.coind U.subtype N)) →+
       Rep.coind U.subtype N := AddMonoidHom.mk' (fun φ => φ.hom f) fun _ _ => rfl
   change ev (∑ d : MackeyDoubleCoset U ι, mackeyProj U ι N d.out ≫ mackeyIncl U ι N d) = f
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   change ∑ d : MackeyDoubleCoset U ι,
     (mackeyIncl U ι N d).hom ((mackeyProj U ι N d.out).hom f) = f
-  rw [Finset.sum_congr rfl fun d _ => mackeyIncl_hom_apply U ι N d _, ← map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.sum_congr rfl fun d _ => mackeyIncl_hom_apply U ι N d _, ← map_sum,
     Finset.univ_sum_single]
   exact mackeyLift_mackeyProj U ι N f
 

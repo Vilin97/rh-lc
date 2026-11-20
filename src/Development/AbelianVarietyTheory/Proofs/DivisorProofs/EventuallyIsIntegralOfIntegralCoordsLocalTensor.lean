@@ -36,7 +36,8 @@ theorem intC_isIntegral : ∀ (p : ℕ) [Fact p.Prime] (G : HTGroup p), ∀ᶠ w
     intro i j
     rw [Algebra.leftMulMatrix_eq_repr_mul]
     rw [← B.sum_repr x]
-    rw [Finset.sum_mul, map_sum, Finsupp.finsetSum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_mul, map_sum, Finsupp.finsetSum_apply]
     refine sum_mem fun k _ => ?_
     rw [smul_mul_assoc, map_smul, Finsupp.smul_apply, smul_eq_mul]
     have e : B k * B j = (1 : w.1.adicCompletion ℚ) ⊗ₜ[ℚ] (b k * b j) := by

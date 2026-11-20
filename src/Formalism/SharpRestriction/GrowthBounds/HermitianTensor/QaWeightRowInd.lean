@@ -51,7 +51,8 @@ theorem subMapP : SubMapP := by
       cases hm : midOf w.2 with
       | none => rw [qa_subY_X_none w hm, qa_subY_X_none w hm, map_X]
       | some j =>
-        rw [qa_subY_X_some w j hm, qa_subY_X_some w j hm, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [qa_subY_X_some w j hm, qa_subY_X_some w j hm, map_sum]
         refine Finset.sum_congr rfl fun i _ => ?_
         rw [map_mul, map_C, map_X, map_X]
   exact RingHom.congr_fun h v
@@ -97,7 +98,8 @@ theorem subRowP : SubRowP := by
       rw [zero_add] at h
       exact h
   have hmain : IsWeightedHomogeneous (rowInd a) (subY A r v) d := by
-    rw [← support_sum_monomial_coeff v, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← support_sum_monomial_coeff v, map_sum]
     refine IsWeightedHomogeneous.sum _ _ _ fun u hu => ?_
     have hd : rowDeg u a = d := hv u (mem_support_iff.1 hu)
     have e : (monomial u (AddMonoidAlgebra.coeff v u) : MvPolynomial (Fin (r + 1 + 1) × Fin (r + 1 + 1)) A) =
@@ -130,7 +132,8 @@ theorem qa_subY_rowAct {A : Type} [CommRing A] {r : ℕ} (g : Matrix (Fin (r + 1
       rw [qa_rowAct_C, qa_subY_C, qa_rowAct_C]
     · intro x
       show subY A r (rowAct A g (X x)) = rowAct _ (g.map C) (subY A r (X x))
-      rw [qa_rowAct_X, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [qa_rowAct_X, map_sum]
       cases hm : midOf x.2 with
       | none =>
         rw [qa_subY_X_none x hm, qa_rowAct_X]
@@ -138,7 +141,8 @@ theorem qa_subY_rowAct {A : Type} [CommRing A] {r : ℕ} (g : Matrix (Fin (r + 1
         rw [map_mul (subY A r), qa_subY_C, qa_subY_X_none (b, x.2) hm]
         try rfl
       | some j =>
-        rw [qa_subY_X_some x j hm, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [qa_subY_X_some x j hm, map_sum]
         have e1 : ∀ b, subY A r (C (g x.1 b) * X (b, x.2)) =
             ∑ i, C (C (g x.1 b)) * (C (X (i, j)) * X (b, midI r i)) := by
           intro b

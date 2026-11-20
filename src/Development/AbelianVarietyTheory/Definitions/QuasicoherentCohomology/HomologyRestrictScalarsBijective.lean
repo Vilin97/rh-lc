@@ -213,7 +213,8 @@ theorem _root_.GlobalTheory.Cube.SemiHom.term_d (p : ℕ) (x : _root_.GlobalTheo
     ψ.term (p + 1) (_root_.GlobalTheory.Cube.d A p x) =
       _root_.GlobalTheory.Cube.d B p (ψ.term p x) := by
   funext t
-  rw [_root_.GlobalTheory.Cube.SemiHom.term_apply, _root_.GlobalTheory.Cube.d_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [_root_.GlobalTheory.Cube.SemiHom.term_apply, _root_.GlobalTheory.Cube.d_apply,
     _root_.GlobalTheory.Cube.d_apply, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_zsmul, _root_.GlobalTheory.Cube.SemiHom.app_res, _root_.GlobalTheory.Cube.SemiHom.term_apply]

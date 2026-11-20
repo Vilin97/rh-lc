@@ -61,7 +61,8 @@ theorem exists_tval_resIne_ne {l : ℕ} [Fact l.Prime] {t : Ine (F := E) A →* 
   have : CharZero Ω := (RingHom.charZero_iff (algebraMap E Ω).injective).mp inferInstance
   have hfix : ∀ y : E', (σ : G E Ω) (algebraMap E' Ω y) = algebraMap E' Ω y := by
     intro y
-    rw [← bQ.sum_repr y, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← bQ.sum_repr y, map_sum, map_sum]
     exact Finset.sum_congr rfl fun i _ => by rw [map_rat_smul, map_rat_smul, hb]
   let τ : G E' Ω := { (σ : G E Ω).toRingEquiv with commutes' := hfix }
   have hτ : resG E τ = (σ : G E Ω) := AlgEquiv.ext fun _ => rfl

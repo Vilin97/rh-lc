@@ -57,7 +57,8 @@ theorem hermPair_comm (hH : IsHermitianFor (conjHom K E) H) (x y : ι → E) :
     have := congrFun (congrFun hH j) i
     simp only [transpose_apply, map_apply, conjHom, AlgHom.toRingHom_eq_coe, RingHom.coe_coe] at this
     exact this.symm
-  simp only [hermPair, dotProduct, mulVec, map_sum, map_mul, conj_conj, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hermPair, dotProduct, mulVec, map_sum, map_mul, conj_conj, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   rw [hHij]

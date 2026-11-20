@@ -64,7 +64,8 @@ theorem isLat_dl (σ : E →ₐ[F] E) (J : Matrix (Fin N) (Fin N) E) (co : (Fin 
   have hexp : ∀ z : Fin N → E, z = ∑ a, co z a • v a := by
     intro z
     conv_lhs => rw [← co.symm_apply_apply z, ← Finset.univ_sum_single (co z)]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun a _ => ?_
     rw [hsingle, map_smul]
   have hcv : ∀ (c : E) a b, co (c • v a) b = if b = a then c else 0 := by

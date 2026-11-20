@@ -7,7 +7,8 @@ theorem exists_factor_through_projection {J : Type} [Fintype J] [DecidableEq J] 
     (χ : ((i : J) → A i) →+* k) :
     ∃ (i : J) (ψ : A i →+* k), ∀ (x : (i : J) → A i), χ x = ψ (x i) := by
   have hsum : ∑ i : J, χ (Pi.single i (1 : A i)) = 1 := by
-    rw [← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum]
     have h : ∑ i : J, (Pi.single i (1 : A i) : (j : J) → A j) = 1 :=
       Finset.univ_sum_single (1 : (j : J) → A j)
     rw [h, map_one]

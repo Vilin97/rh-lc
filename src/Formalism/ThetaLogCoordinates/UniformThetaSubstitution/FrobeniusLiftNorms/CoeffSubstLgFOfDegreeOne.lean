@@ -32,7 +32,8 @@ theorem coeff_one_lgF (p : ℕ) (hp : 2 ≤ p) : PowerSeries.coeff 1 (lgF K p) =
 theorem map_lgF {L : Type} [Field L] (φ : K →+* L) (p : ℕ) :
     PowerSeries.map φ (lgF K p) = lgF L p := by
   ext n
-  simp only [lgF, PowerSeries.coeff_map, PowerSeries.coeff_mk, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [lgF, PowerSeries.coeff_map, PowerSeries.coeff_mk, map_sum]
   refine Finset.sum_congr rfl (fun j _ => ?_)
   split_ifs <;> simp
 

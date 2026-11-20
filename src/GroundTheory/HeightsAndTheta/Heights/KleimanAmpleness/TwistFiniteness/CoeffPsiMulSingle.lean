@@ -203,7 +203,8 @@ theorem coeff_psi_mul_single (c : Sy S r) (b' b : ℕ) (s' : Ω) :
       ∑ d ∈ Finset.range (c.totalDegree + 1),
         if d + b' = b then aeval η (homogeneousComponent d c) * s' else 0 := by
   conv_lhs => rw [← sum_homogeneousComponent c]
-  rw [map_sum, Finset.sum_mul, AddMonoidAlgebra.coeff_sum, Finsupp.finsetSum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_mul, AddMonoidAlgebra.coeff_sum, Finsupp.finsetSum_apply]
   refine Finset.sum_congr rfl fun d _ => ?_
   rw [psi_of_isHomogeneous η S (homogeneousComponent_isHomogeneous d c), single_mul_single, coeff_single,
     Finsupp.single_apply]

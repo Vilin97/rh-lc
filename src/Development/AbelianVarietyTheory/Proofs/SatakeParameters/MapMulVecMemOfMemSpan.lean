@@ -46,7 +46,8 @@ theorem mem_span_of_map_mem_span {L E ι : Type} [Field L] [Field E] [Fintype ι
   let Λ : (ι → E) →ₗ[E] E := ∑ i, f (c i) • LinearMap.proj i
   have hΛ : ∀ v, Λ (f ∘ v) = f (l v) := by
     intro v
-    simp [Λ, hlc, map_sum, mul_comm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Λ, hlc, map_sum, mul_comm]
   have hker : Submodule.span E ((fun v => f ∘ v) '' S) ≤ LinearMap.ker Λ := by
     rw [Submodule.span_le]
     rintro _ ⟨s, hs, rfl⟩

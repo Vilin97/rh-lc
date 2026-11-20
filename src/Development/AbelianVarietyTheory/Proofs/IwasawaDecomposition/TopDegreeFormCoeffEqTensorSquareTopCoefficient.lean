@@ -33,7 +33,8 @@ theorem topBig_toEven_prod {m : ℕ} (x : Fin m → Fin n × Fin n) :
 
 theorem toMultiset_sum_single {α : Type*} [DecidableEq α] {m : ℕ} (x : Fin m → α) :
     Finsupp.toMultiset (∑ j, Finsupp.single (x j) 1) = Finset.univ.val.map x := by
-  rw [map_sum, Finset.sum_eq_multiset_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_eq_multiset_sum]
   simp only [Finsupp.toMultiset_single, one_nsmul]
   have : (fun j => ({x j} : Multiset α)) = (fun a => ({a} : Multiset α)) ∘ x := rfl
   rw [this, ← Multiset.map_map, Multiset.sum_map_singleton]

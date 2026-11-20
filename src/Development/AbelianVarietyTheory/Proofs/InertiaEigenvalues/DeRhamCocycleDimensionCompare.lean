@@ -137,7 +137,8 @@ theorem orth_of_cont (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l P
         (actVB (P.PD K) (charRep (cycLL (P.PD K) ℚ_[l])) g⁻¹ we) = we := by
       rw [← actVB_mul, mul_inv_cancel, actVB_one]
     rw [ek]
-    simp only [F, map_sub, e3, e4, map_neg, ec, map_sum, LinearMap.sum_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [F, map_sub, e3, e4, map_neg, ec, map_sum, LinearMap.sum_apply,
       map_smul, LinearMap.smul_apply]
     abel
   have hk : Continuous k :=

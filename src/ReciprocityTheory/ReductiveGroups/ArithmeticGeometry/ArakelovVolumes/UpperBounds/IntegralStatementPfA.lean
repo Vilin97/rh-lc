@@ -19,7 +19,8 @@ theorem cone_homog (a : ι → E) {f : MvPolynomial ι R} {d : ℕ} (hf : f.IsHo
   classical
   conv_lhs => rw [f.as_sum]
   conv_rhs => rw [f.as_sum]
-  rw [map_sum, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, map_sum]
   refine Finset.sum_congr rfl fun m hm => ?_
   have hd : ∑ i ∈ m.support, m i = d := by
     have := hf (mem_support_iff.mp hm)
@@ -35,7 +36,8 @@ theorem coeff_cone (a : ι → E) (f : MvPolynomial ι R) (n : ℕ) :
     (cone a f).coeff n = aeval a (homogeneousComponent n f) := by
   classical
   conv_lhs => rw [← sum_homogeneousComponent f]
-  rw [map_sum, Polynomial.finsetSum_coeff]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Polynomial.finsetSum_coeff]
   simp_rw [cone_homog a (homogeneousComponent_isHomogeneous _ f), Polynomial.coeff_monomial]
   rw [Finset.sum_ite_eq']
   split_ifs with h

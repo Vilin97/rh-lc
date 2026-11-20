@@ -24,7 +24,8 @@ theorem isIsoV_embV {r : ℕ} (X : Data E r) {ξ : Fin r → E} (h : X.IsIso ξ)
   intro τ
   obtain ⟨-, hh, hne⟩ := h
   have key : hermC τ.1 X.Gm (X.embV ξ τ) (X.embV ξ τ) = τ.1 (herm X.Gm ξ ξ) := by
-    simp only [hermC, herm, Data.embV, Data.emb, map_sum, map_mul, cc,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hermC, herm, Data.embV, Data.emb, map_sum, map_mul, cc,
       IsCMField.complexEmbedding_complexConj]
   refine ⟨by rw [key, hh, map_zero], fun h0 => hne ?_⟩
   funext a

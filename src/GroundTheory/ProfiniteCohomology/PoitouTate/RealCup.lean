@@ -107,7 +107,8 @@ theorem cochainsMap_normHomotopy {F' : Type u} [Group F'] [TopologicalSpace F'] 
   change g.hom (cochainOf Z (normHomotopy μ h e y) σ) = _
   rw [cochainOf_normHomotopy]
   change g.hom (∑ a : F', Z.ρ a (μ.hom _)) = ∑ a : F', Z'.ρ a (g.hom (μ.hom _))
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_congr rfl fun a _ => Rep.hom_comm_apply g a _
 
 set_option maxHeartbeats 1600000 in

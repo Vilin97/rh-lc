@@ -60,7 +60,8 @@ theorem finrank_fixed {R G M K L : Type} [Field R] [Group G] [AddCommGroup M] [M
     intro x hx
     have h3 : ∀ σ : L ≃ₐ[K] L, ∑ i, m (σ (b i)) (x i) = 0 := fun σ => by
       have := congrArg (A (s σ)) hx
-      rw [hΦ, map_sum, map_zero] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hΦ, map_sum, map_zero] at this
       rw [← this]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [hε, hs', (hD _).1 (x i).2]
@@ -68,9 +69,11 @@ theorem finrank_fixed {R G M K L : Type} [Field R] [Group G] [AddCommGroup M] [M
     apply Subtype.ext
     have h4 : ∑ σ : L ≃ₐ[K] L, m (σ (μ j)) (∑ i, m (σ (b i)) (x i)) = 0 := by
       simp only [h3, map_zero, Finset.sum_const_zero]
-    simp only [map_sum, ← Module.End.mul_apply, ← map_mul m] at h4
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, ← Module.End.mul_apply, ← map_mul m] at h4
     rw [Finset.sum_comm] at h4
-    simp only [← LinearMap.sum_apply, ← map_sum m, h1] at h4
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [← LinearMap.sum_apply, ← map_sum m, h1] at h4
     rw [Finset.sum_eq_single j (fun i _ hi => by simp [Ne.symm hi]) (by simp)] at h4
     simpa using h4
   have hr : LinearMap.range Φ₀ = D' := by
@@ -80,7 +83,8 @@ theorem finrank_fixed {R G M K L : Type} [Field R] [Group G] [AddCommGroup M] [M
       exact D'.sum_mem fun i _ => hm _ _ (hDD (x i).2)
     · intro x hx
       refine ⟨fun i => ⟨∑ σ, A (s σ) (m (μ i) x), (hD _).2 fun g => ?_⟩, ?_⟩
-      · rw [map_sum, ← Equiv.sum_comp (Equiv.mulLeft (ε g))
+      set_option synthInstance.maxHeartbeats 100000 in
+        · rw [map_sum, ← Equiv.sum_comp (Equiv.mulLeft (ε g))
           (fun σ => A (s σ) (m (μ i) x))]
         refine Finset.sum_congr rfl fun σ _ => ?_
         rw [← Module.End.mul_apply, ← map_mul]
@@ -88,9 +92,11 @@ theorem finrank_fixed {R G M K L : Type} [Field R] [Group G] [AddCommGroup M] [M
       · rw [hΦ]
         have hmm : ∀ a a' y, m a (m a' y) = m (a * a') y := fun a a' y => by
           rw [map_mul, Module.End.mul_apply]
-        simp only [hε, hs', map_sum, hmm]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [hε, hs', map_sum, hmm]
         rw [Finset.sum_comm]
-        simp only [← LinearMap.sum_apply, ← map_sum m, h2]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [← LinearMap.sum_apply, ← map_sum m, h2]
         rw [Finset.sum_eq_single 1 (fun i _ hi => by simp [Ne.symm hi]) (by simp)]
         simpa using (hD' x).1 hx _ (hs' 1)
   rw [← hr, LinearMap.finrank_range_of_inj hinj]

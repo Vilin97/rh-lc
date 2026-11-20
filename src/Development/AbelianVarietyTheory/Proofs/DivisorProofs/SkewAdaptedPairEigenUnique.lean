@@ -48,7 +48,8 @@ theorem iota_orth (H' : Plane E d d₁) (hH : ∀ u, form σ W.J (H'.ι *ᵥ u) 
   have : (incM F H'.ι)ᵀ *ᵥ (incM F W.J *ᵥ fun l => inclR (F := F) (AF F) (σ (H'.x l))) =
       fun i => inclR (F := F) (AF F) ((H'.ιᵀ *ᵥ (W.J *ᵥ fun l => σ (H'.x l))) i) := by
     funext i
-    simp only [incM, Matrix.mulVec, dotProduct, Matrix.transpose_apply, Matrix.map_apply, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [incM, Matrix.mulVec, dotProduct, Matrix.transpose_apply, Matrix.map_apply, map_sum, map_mul]
   rw [hc, this, hE]
   funext i
   simp

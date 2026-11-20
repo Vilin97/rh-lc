@@ -17,7 +17,8 @@ theorem aeval_mul_of_isHomogeneous {σ A : Type*} [CommRing A] [Algebra ℤ A] {
     aeval (fun j ↦ t * x j) F = t ^ τ * aeval x F := by
   conv_lhs => rw [F.as_sum]
   conv_rhs => rw [F.as_sum]
-  simp only [map_sum, aeval_monomial, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, aeval_monomial, Finset.mul_sum]
   refine Finset.sum_congr rfl fun μ hμ ↦ ?_
   have hw : (μ.sum fun _ e ↦ e) = τ := by
     have h := hF (mem_support_iff.mp hμ)
@@ -33,7 +34,8 @@ theorem isWeightedHomogeneous_aeval {σ : Type*} {F : MvPolynomial σ ℤ} {τ :
     {g : σ → MvPolynomial (Coord n) ℤ} {δ : ι → ℕ}
     (hg : ∀ j, IsWeightedHomogeneous (coordDeg n) (g j) δ) :
     IsWeightedHomogeneous (coordDeg n) (aeval g F) (τ • δ) := by
-  rw [F.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [F.as_sum, map_sum]
   refine IsWeightedHomogeneous.sum _ _ _ fun μ hμ ↦ ?_
   have hw : (μ.sum fun _ e ↦ e) = τ := by
     have h := hF (mem_support_iff.mp hμ)
@@ -149,7 +151,8 @@ theorem exists_evalCone_ne_zero {P : ArithVariety n} {D : AddBlockData P} {d : �
     conv_rhs => rw [← Nat.add_sub_cancel' hS, pow_add]
     ring
   have hmem : chartMonomial c 1 ^ S * R - ∑ j, E j * chartMonomial c 1 ^ (S - N j) * g c j ∈ P.ideal := by
-    rw [← P.mkF_eq_zero_iff, map_sub, map_mul, map_pow, hR, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← P.mkF_eq_zero_iff, map_sub, map_mul, map_pow, hR, map_sum]
     simp only [hterm]
     rw [← Finset.mul_sum, hxu]
     ring

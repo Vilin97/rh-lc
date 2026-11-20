@@ -59,7 +59,8 @@ theorem exists_bound {P : HeightOneSpectrum (𝓞 E)} (h : ∀ x : E, ∃ m : �
     conv_lhs => rw [show u = ∑ s, u s • (Pi.single s (1 : E) : ι → E) from by
       funext k
       simp [Finset.sum_apply, Pi.single_apply]]
-    simp only [map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul]
   rw [e, Finset.sum_apply, Finset.mul_sum]
   refine intAt_sum _ _ fun s _ => ?_
   have := (hu s).mul (hm m' hm' (s, l))

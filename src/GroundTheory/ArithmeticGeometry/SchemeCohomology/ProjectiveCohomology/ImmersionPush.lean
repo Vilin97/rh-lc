@@ -150,7 +150,8 @@ theorem span_eq_top_of_generatingSections (G : Y.Modules) [G.IsQuasicoherent]
       rw [h1]
       change (π.val.app (op (Y.basicOpen f))) (∑ k, (SheafOfModules.ιFree k).val.app
         (op (Y.basicOpen f)) (c k)) = _
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [freeHomEquiv_symm_app_ιFree, sections_val_eq_resF]
 
@@ -169,7 +170,8 @@ theorem span_eq_top_of_generatingSections (G : Y.Modules) [G.IsQuasicoherent]
       rw [mul_assoc, ← pow_add, Nat.add_sub_cancel' (hna k), mul_comm]
     let δ : Γ(G, V) := f ^ a • g - ∑ k, b' k • resF G (le_top : V ≤ ⊤) (x k)
     have hδ : resF G hDV δ = 0 := by
-      simp only [δ, map_sub, map_sum, resF_smul, resF_resF, hg, Finset.smul_sum, smul_smul,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [δ, map_sub, map_sum, resF_smul, resF_resF, hg, Finset.smul_sum, smul_smul,
         map_pow, hb']
       rw [sub_self]
     obtain ⟨e, he⟩ := qcoh_exists_pow_smul_eq_zero G hV f δ hδ

@@ -122,7 +122,8 @@ theorem exists_prime_saturation_generic_section (K L : Type) [Field K] [Field L]
   have hΨC (a) : Ψ (C a) = map (algebraMap K L) a := by simp [Ψ]
   have hΨL : Ψ (genericForm K (Fin N) ()) =
       ∑ j : Fin N, C (algebraMap (MvPolynomial (Fin N) K) L (X j)) * X j := by
-    rw [genericForm_eq, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [genericForm_eq, map_sum]
     exact Finset.sum_congr rfl fun j _ => by simp [Ψ, mul_comm]
   have hΨc (c : MvPolynomial (Fin N) K) : Ψ (map C (ρ c)) = C (algebraMap _ L c) := by
     have : Ψ.comp ((map C).comp ρ) = C.comp (algebraMap _ L) := by

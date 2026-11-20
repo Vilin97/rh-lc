@@ -138,7 +138,8 @@ private theorem exists_coord_homeomorph_tensor (I : AutInst) (θ : InfinitePlace
   have hsum : ∀ z v, θ v z = ∑ k, ((a (B.equivFun z k) v : ℝ) : ℂ) * I.φ v (b k) := by
     intro z v
     conv_lhs => rw [← B.sum_equivFun z]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [hBk, TensorProduct.smul_tmul', smul_eq_mul, mul_one, ← ha, ← (hθ v).1 (b k), ← map_mul,
       Algebra.TensorProduct.tmul_mul_tmul, mul_one, one_mul]
@@ -388,7 +389,8 @@ theorem trace_form : ∀ (I : AutInst) (v : InfinitePlace I.F) (θ : Ainf I.F �
       ∑ i, ∑ j, (starRingEnd ℂ) (θ (x i)) * (I.J.map (I.φ v)) i j * θ (y j) := by
     rw [hR]
     unfold Formalism.UG.hform
-    simp only [map_sum, map_mul, hB, JR, Matrix.map_apply, inclR, AlgHom.toRingHom_eq_coe,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, hB, JR, Matrix.map_apply, inclR, AlgHom.toRingHom_eq_coe,
       RingHom.coe_coe, Algebra.TensorProduct.includeRight_apply, hθ.1]
   have hPu : IsUnit (I.P v).det := (Matrix.isUnit_iff_isUnit_det _).1 (I.P_unit v)
 

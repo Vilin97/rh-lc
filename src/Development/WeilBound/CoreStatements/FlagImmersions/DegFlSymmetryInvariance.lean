@@ -91,14 +91,16 @@ theorem degFl_symmetry_invariance : ∀ (Ψ : Type) [Fintype Ψ] [DecidableEq Ψ
     refine ⟨pa_degFl_relabel σ F, fun j τ => ⟨?_, ?_⟩⟩
     · unfold Sh
       conv_rhs => rw [← pa_degFl_relabel σ]
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       congr 1
       apply Finset.sum_congr rfl
       intro i _
       exact pderiv_rename hinj (τ, i) F
     · unfold Tot
       conv_rhs => rw [← pa_degFl_relabel σ]
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       congr 1
       apply Finset.sum_congr rfl
       intro i _

@@ -134,7 +134,8 @@ theorem hA_col (I : AutInst) (β : GL (Fin I.n) (I.E ⊗[I.F] Formalism.MainNoti
     refine Eq.trans this.symm ?_
     rw [Matrix.mul_apply]
     exact Finset.sum_congr rfl fun l _ => mul_comm _ _
-  rw [e, ← hL_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, ← hL_apply, map_sum]
   refine Finset.sum_congr rfl fun l _ => ?_
   rw [hL_apply, hA_smul_right]
   rfl

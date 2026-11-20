@@ -65,7 +65,8 @@ theorem exists_co_eq {R : Type} [CommRing R] {φ : c.F →+* R} {x : Sp R ⟶ Z.
     exact Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun i _ => by rw [mul_comm]
   let g : EigFrame Z φ x := EigFrame.ofVec (fun τ i => ∑ j, T τ j i • f.vec τ j)
     (fun τ i a => by
-      simp only [map_sum, map_smul, f.act_vec, Finset.smul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, f.act_vec, Finset.smul_sum]
       exact Finset.sum_congr rfl fun j _ => smul_comm _ _ _)
     (fun τ w hw => by
       obtain ⟨b, hb, hbu⟩ := f.existsUnique_sum τ w hw

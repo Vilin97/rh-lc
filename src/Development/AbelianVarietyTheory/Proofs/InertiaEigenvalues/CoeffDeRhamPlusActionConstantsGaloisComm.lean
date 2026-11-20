@@ -56,7 +56,8 @@ theorem eq_of_pow_eq {R : Type} [CommRing R] (I : Ideal R) [IsAdicComplete I R] 
   set S := ∑ i ∈ Finset.range e, x ^ i * y ^ (e - 1 - i) with hSdef
   have hq : Ideal.Quotient.mk I y = Ideal.Quotient.mk I x := (Ideal.Quotient.eq.2 h).symm
   have h1 : Ideal.Quotient.mk I S = Ideal.Quotient.mk I ((e : R) * x ^ (e - 1)) := by
-    rw [hSdef, map_sum, map_mul, map_natCast, map_pow]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hSdef, map_sum, map_mul, map_natCast, map_pow]
     simp only [map_mul, map_pow, hq]
     rw [Finset.sum_congr rfl fun i hi => by
       rw [← pow_add, Nat.add_sub_cancel' (by have := Finset.mem_range.1 hi; omega)]]
@@ -241,7 +242,8 @@ theorem galOD_idem {a : ℕ} [NeZero a] (t : Wq l a →ₐ[ℤ_[l]] O) {g : GQ l
 theorem galOD_iD_kLift {a : ℕ} [NeZero a] (t : Wq l a →ₐ[ℤ_[l]] O) {g : GQ l} (hK : ∀ x ∈ Kunr l a, g x = x)
     (hg : g (ϖ.seq 0) = ϖ.seq 0) (c : ZMod a → AdjoinRoot (Polynomial.X ^ e + Polynomial.C (l : K))) :
     galOD O g (ϖ.iD t K (GlobalTheory.BKGal.JumpDR.kLift O c)) = ϖ.iD t K (GlobalTheory.BKGal.JumpDR.kLift O c) := by
-  rw [PiSys.iD, glue_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [PiSys.iD, glue_apply, map_sum]
   refine Finset.sum_congr rfl fun τ _ => ?_
   rw [map_mul, galOD_idem t hK]
   exact congrArg _ (galOD_iHat_C K ϖ hg (c τ))

@@ -108,7 +108,8 @@ theorem theta_identity_orthogonal : ThetaIdentityOrth := by
 theorem trace_class : TraceClass := by
   intro R N Y Γ _ _ _ _ _ _ _ ρ lam θ hθ P
   refine ⟨fun γ' => ?_, ?_, fun N0 hρ hl hP => ?_⟩
-  · rw [map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum, Finset.smul_sum]
     simp only [map_smul]
     apply Fintype.sum_equiv (Equiv.mulLeft γ')
     intro γ
@@ -122,7 +123,8 @@ theorem trace_class : TraceClass := by
     first
       | rfl
       | simp [Module.End.mul_apply]
-  · rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum]
     simp only [map_smul]
     rw [Finset.sum_congr rfl (fun γ _ => (hθ γ P).symm), Finset.sum_const, Finset.card_univ]
     first

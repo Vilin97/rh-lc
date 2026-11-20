@@ -118,9 +118,11 @@ theorem cut_rat (hc : IsCMExt F E σ) (hJ : IsHermND σ Jᵀ) {L : Subgroup (UA 
     let w : Fin n → E := J *ᵥ fun b => c (p.1 b)
     have hw : w ⬝ᵥ p.1 = h := by rw [hh0, hform, dotProduct_comm]; simp only [w, hcσ]
     have hw' : ∀ b, σ (w b) = (p.1 ᵥ* J) b := fun b => by
-      simp only [w, Matrix.mulVec, Matrix.vecMul, dotProduct, map_sum, map_mul, hcσ, hh, show ∀ x, σ (σ x) = x from hσ, mul_comm]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [w, Matrix.mulVec, Matrix.vecMul, dotProduct, map_sum, map_mul, hcσ, hh, show ∀ x, σ (σ x) = x from hσ, mul_comm]
     have hσh : σ h = h := by
-      rw [← hw, dotProduct, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hw, dotProduct, map_sum]
       simp only [map_mul, hw']
       rw [show ∑ x, (p.1 ᵥ* J) x * σ (p.1 x) = (p.1 ᵥ* J) ⬝ᵥ fun b => σ (p.1 b) from rfl, ← Matrix.dotProduct_mulVec,
         ← hform, ← hh0, ← hw, dotProduct]
@@ -188,7 +190,8 @@ theorem cut_place (hc : IsCMExt F E σ) (hJ : IsHermND σ Jᵀ) {L : Subgroup (U
     simp only [b', Algebra.TensorProduct.basis_apply, TensorProduct.smul_tmul', smul_eq_mul, mul_one]
   have cq : Continuous q := by
     have : ⇑q = fun x => ∑ i, j (b'.repr x i) • ((1 : AF F) ⊗ₜ[F] b i) := funext fun x => by
-      conv_lhs => rw [← b'.sum_repr x, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        conv_lhs => rw [← b'.sum_repr x, map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [hb, TensorProduct.smul_tmul', smul_eq_mul, mul_one]
       rfl

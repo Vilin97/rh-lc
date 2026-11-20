@@ -30,7 +30,8 @@ theorem tsum_mul_term {R : Type} [CommRing R] (φ : R →+* ℂ_[l]) (hφ : ∀ 
   rw [tsum_mul_tsum_eq_tsum_sum_antidiagonal_of_summable_norm (summable_norm_term φ hφ hy G)
     (summable_norm_term φ hφ hy G')]
   refine tsum_congr fun n => ?_
-  rw [PowerSeries.coeff_mul, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [PowerSeries.coeff_mul, map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun p hp => ?_
   replace hp : p.1 + p.2 = n := by simpa using hp
   rw [← hp, map_mul, pow_add]

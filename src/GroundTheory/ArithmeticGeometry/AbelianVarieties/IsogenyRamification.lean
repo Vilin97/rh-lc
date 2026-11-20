@@ -156,7 +156,8 @@ theorem ramIdx_mulIsogeny_mul_card_ker (n : ℤ) (hn : n ≠ 0) :
       · rw [if_pos hT, if_pos (hmem.mpr hT)]
       · rw [if_neg hT, if_neg (fun h' => hT (hmem.mp h'))]
   have hdeg := divisorDegree_divisorOf E ha
-  rw [hD, map_add, map_sum, divisorDegree_single] at hdeg
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hD, map_add, map_sum, divisorDegree_single] at hdeg
   simp only [divisorDegree_single, Finset.sum_const, Finset.card_erase_of_mem h0S, smul_eq_mul] at hdeg
   have hS : 1 ≤ S.card := Finset.card_pos.mpr ⟨0, h0S⟩
   rw [hcard]

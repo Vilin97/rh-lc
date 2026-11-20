@@ -239,7 +239,8 @@ variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {k : ℕ}
 
 theorem lastRowM_map {R T : Type} [CommRing R] [CommRing T] (p : R →+* T) (A : GL (Fin k) R) (c : Fin k) :
     p (lastRowM A.val c) = lastRowM (GeneralLinearGroup.map p A).val c := by
-  simp only [lastRowM, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [lastRowM, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   split_ifs
   · rfl
@@ -475,9 +476,11 @@ theorem cut_of (h0 : PositivityTheory.jumpWindows.G0) (h4 : S4) (h8 : S8) (hk : 
       refine integral_congr_ae (Filter.Eventually.of_forall fun y => ?_)
       have hψs : ψ (∑ i, y i * z i) = ψ (sInf E (∑ i, pInf E (y i) * zi i)) * ψ (sFin E (∑ i, pFin E (y i) * zf i)) := by
         have e1 : pInf E (∑ i, y i * z i) = ∑ i, pInf E (y i) * zi i := by
-          rw [map_sum]; exact Finset.sum_congr rfl fun i _ => map_mul _ _ _
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [map_sum]; exact Finset.sum_congr rfl fun i _ => map_mul _ _ _
         have e2 : pFin E (∑ i, y i * z i) = ∑ i, pFin E (y i) * zf i := by
-          rw [map_sum]; exact Finset.sum_congr rfl fun i _ => map_mul _ _ _
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [map_sum]; exact Finset.sum_congr rfl fun i _ => map_mul _ _ _
         rw [← e1, ← e2, ← AddChar.map_add_eq_mul, ← ad_split]
       have hφ' : (etaOf b (latS S B : Set (Af E)) y : ℂ) * φ (g * (sOf S y)⁻¹) =
           (etaOf b (latS S B : Set (Af E)) y : ℂ) * φ (g * (infGL E k (rowGL fun i => pInf E (y i)))⁻¹) := by

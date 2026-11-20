@@ -129,7 +129,8 @@ private theorem act_compact (σ : K ≃+* K) {k : AdelicGLn.AdelicGL K n} (hk : 
         fun j => (CT.infEquiv σ u).toRingHom
           (Matrix.vecMul x (infAt (u.comap σ.toRingHom) k : Matrix (Fin n) (Fin n) (u.comap σ.toRingHom).Completion) j) := by
       funext j
-      simp only [Matrix.vecMul, dotProduct, map_sum, map_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Matrix.vecMul, dotProduct, map_sum, map_mul]
       rfl
     rw [hv, hN, hN, hk.1 (u.comap σ.toRingHom) x]
   · have h : ∀ y : (CT.plMap σ.symm v).adicCompletion K, y ∈ (ValuativeRel.valuation _).integer →

@@ -29,7 +29,8 @@ theorem form_sum_right {K V : Type} [Field K] [AddCommGroup V] [Module K V] (nm 
 theorem form_sum_left {K V : Type} [Field K] [AddCommGroup V] [Module K V] (nm : HermFam K V)
     (σ : K →+* ℂ) (y : V) {ι : Type} (s : Finset ι) (a : ι → K) (w : ι → V) :
     nm.form σ (∑ i ∈ s, a i • w i) y = ∑ i ∈ s, starRingEnd ℂ (σ (a i)) * nm.form σ (w i) y := by
-  rw [← nm.conj_symm, form_sum_right, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← nm.conj_symm, form_sum_right, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_mul, nm.conj_symm]
 

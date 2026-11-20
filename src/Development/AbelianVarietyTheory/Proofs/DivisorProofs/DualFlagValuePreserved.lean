@@ -197,7 +197,8 @@ theorem isIsometry_thetaIso {k : Type} [CommRing k] {X Y : Scheme.{0}} {p : X �
 theorem aeval_vdmPol (r e : ℕ) :
     aeval (fun o : Option (Fin r) => (o.elim (X none) fun i => -X (some i.rev) : MvPolynomial (Option (Fin r)) ℝ))
       (vdmPol r e) = vdmPol r e := by
-  simp only [vdmPol, map_mul, map_sum, map_prod, map_pow, map_sub, aeval_X, aeval_C, Option.elim, neg_sq, algebraMap_eq]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [vdmPol, map_mul, map_sum, map_prod, map_pow, map_sub, aeval_X, aeval_C, Option.elim, neg_sq, algebraMap_eq]
   congr 2
   · congr 1
     exact Fintype.sum_equiv Fin.revPerm _ _ fun i => rfl

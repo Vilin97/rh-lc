@@ -87,7 +87,8 @@ theorem etale_coords_basis : ∀ (p : ℕ) [Fact p.Prime] (A : Type) [CommRing A
     have h1 := bA.sum_repr (D (ZMod p) A f)
     rw [← he, ← map_D (ZMod p) (ZMod p) A L]
     conv_lhs => rw [← h1]
-    rw [map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [LinearMap.map_smul, hbA, map_D, ← algebraMap_smul L (bA.repr (D (ZMod p) A f) j), LinearEquiv.map_smul, he]
 

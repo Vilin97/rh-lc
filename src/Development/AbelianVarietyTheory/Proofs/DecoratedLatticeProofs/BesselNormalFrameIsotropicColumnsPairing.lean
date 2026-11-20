@@ -36,7 +36,8 @@ theorem cols_pair : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [Topologi
       p.pr ((((B.d.e)ᴴ * G) *ᵥ x) i) := by
     intro x
     change ∑ r, ∑ r', LocMod.Witness.prH p _ * LocMod.Witness.prH p _ * LocMod.Witness.prH p _ = LocMod.Witness.prH p _
-    simp only [← map_mul, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [← map_mul, ← map_sum]
     congr 1
     simp only [Matrix.mulVec, dotProduct, Matrix.mul_apply, Matrix.conjTranspose_apply, Finset.sum_mul]
     rw [Finset.sum_comm]

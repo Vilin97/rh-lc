@@ -169,7 +169,8 @@ theorem hx_map (x y y' : k ⊗[F] Fld P) :
 theorem map_hform (J : Matrix (Fin n) (Fin n) E) (u v : Fin n → k ⊗[F] E) :
     mapE ψ (Formalism.UG.hform (sigR k σ) (JR k J) u v) =
       Formalism.UG.hform (sigR k' σ) (JR k' J) (fun i => mapE ψ (u i)) (fun i => mapE ψ (v i)) := by
-  simp only [Formalism.UG.hform, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Formalism.UG.hform, map_sum, map_mul]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   rw [← sigR_map]
   congr 2

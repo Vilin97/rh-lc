@@ -52,7 +52,8 @@ theorem pull_cubeCls {T T' : Over S} {n : ℕ} (x : Fin n → (T ⟶ G)) (x' : F
     (h : ∀ i, x' i = u ≫ x i) (c : Pic G.left) : CechPic.pull u.left (cubeCls G x c) = cubeCls G x' c := by
   obtain rfl : x' = fun i => u ≫ x i := funext h
   unfold cubeCls
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun I _ => ?_
   rw [map_zsmul, ← pull_comp, ← Over.comp_left]
   exact congrArg (fun z : T' ⟶ G => _ • CechPic.pull z.left c) (psum_hom (preHom u) x I.down)
@@ -77,7 +78,8 @@ theorem push_cubeCls {G' : Over S'} [GrpObj G'] [IsCommMonObj G'] {f : S' ⟶ S}
     (hx : ∀ i, (x' i).left ≫ φ = u ≫ (x i).left) (c : Pic G.left) :
     CechPic.pull u (cubeCls G x c) = cubeCls G' x' (CechPic.pull φ c) := by
   unfold cubeCls
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun I _ => ?_
   rw [map_zsmul, ← pull_comp, ← pull_comp,
     psum_push h x' x (Over.homMk u hu) (fun i => Over.OverMorphism.ext (hx i)) I.down]
@@ -211,7 +213,8 @@ theorem hypS_and_endo_and_iso_extend : (∀ (T K : Type) [CommRing T] [IsDomain 
     have key : ∀ (y : Fin n → (Q.G ⊗ Q.G ⟶ Q.G)) (δ : Fin n → ℤ), (∀ i, IsMonHom (y i)) →
         CechPic.pull (η[Q.G ⊗ Q.G]).left (cls _ (LB.isLB_linComb hL (fun i => (y i).left) δ)) = 0 := by
       intro y δ hy
-      rw [cls_linComb hL, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [cls_linComb hL, map_sum]
       refine Finset.sum_eq_zero fun i _ => ?_
       rw [map_zsmul, ← pull_comp, ← Over.comp_left, (hy i).one_hom]
       exact (congrArg (_ • ·) h0).trans (smul_zero _)

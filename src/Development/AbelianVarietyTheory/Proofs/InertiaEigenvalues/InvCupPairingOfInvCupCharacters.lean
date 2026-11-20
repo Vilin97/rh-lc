@@ -32,7 +32,8 @@ theorem exists_sum_mul_of_finite_torsion (l : ℕ) [Fact l.Prime] (M M' : Type) 
     conv_lhs => rw [← b.linearCombination_repr m]
     rw [Finsupp.linearCombination_apply, Finsupp.sum]
   conv_lhs => rw [hm']
-  rw [map_sum, AddMonoidHom.finsetSum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, AddMonoidHom.finsetSum_apply]
   simp only [pairing_smul_left', LinearMap.toAddMonoidHom_coe, Module.Basis.coord_apply]
   refine Finset.sum_subset hsub ?_
   intro k _ hk
@@ -75,7 +76,8 @@ theorem inv_cup_pairing_of_inv_cup_characters : ∀ (Γ : Type) [Group Γ] [Topo
   have hq : (Submodule.Quotient.mk (∑ k ∈ s, W k) : H2 μ) =
       ∑ k ∈ s, (Submodule.Quotient.mk (W k) : H2 μ) :=
     map_sum (Submodule.mkQ _) W s
-  rw [hWsum, hq, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hWsum, hq, map_sum]
   simp only [hW]
   rw [← Finset.mul_sum, ← hdec (x γ) ⟨γ, rfl⟩ (y φ)]
 

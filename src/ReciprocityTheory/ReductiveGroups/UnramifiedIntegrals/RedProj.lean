@@ -24,7 +24,8 @@ theorem coeff_serMap (ψ : E →+ E) (S : PowerSeries E) (n : ℕ) :
 theorem serMap_sum (ψ : E →+ E) {ι : Type} (s : Finset ι) (f : ι → PowerSeries E) :
     serMap ψ (∑ i ∈ s, f i) = ∑ i ∈ s, serMap ψ (f i) := by
   ext n
-  simp [coeff_serMap, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [coeff_serMap, map_sum]
 
 theorem coeff_polMap (ψ : E →+ E) (m : ℕ) (Q : E[X]) (i : ℕ) :
     (polMap ψ m Q).coeff i = if i ≤ m then ψ (Q.coeff i) else 0 := by
@@ -71,7 +72,8 @@ theorem serMap_mul (ψ : E →+ E) (hψ : ∀ c ∈ k, ∀ x, ψ (c * x) = c * �
     (hW : ∀ n, PowerSeries.coeff n W ∈ k) (S : PowerSeries E) :
     serMap ψ (W * S) = W * serMap ψ S := by
   ext n
-  rw [coeff_serMap, PowerSeries.coeff_mul, PowerSeries.coeff_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [coeff_serMap, PowerSeries.coeff_mul, PowerSeries.coeff_mul, map_sum]
   refine Finset.sum_congr rfl fun p _ => ?_
   rw [hψ _ (hW _), coeff_serMap]
 

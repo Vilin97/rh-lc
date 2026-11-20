@@ -212,7 +212,8 @@ theorem rho_adj (hsp : Submodule.span ℂ (Set.range j) = ⊤) (hjr : ∀ g x, j
 theorem theta_opV (hsp : Submodule.span ℂ (Set.range j) = ⊤) (hjr : ∀ g x, j (r g x) = ρ g (j x))
     (heq : ∀ g x, Θ (j (r g x)) = gE g (Θ (j x))) (a : MonoidAlgebra K G) (u : V) :
     Θ (opV σ ρ a u) = opV σ (fun g => gE g) a (Θ u) := by
-  simp only [opV, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [opV, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul]
   refine Finset.sum_congr rfl fun g _ => ?_
   rw [show Θ (ρ g u) = gE g (Θ u) from LinearMap.congr_fun (theta_rho hsp hjr heq g) u]
 
@@ -220,7 +221,8 @@ theorem opV_adj (hsp : Submodule.span ℂ (Set.range j) = ⊤) (hjr : ∀ g x, j
     (hiso : ∀ g x y, ⟪j (r g x), j (r g y)⟫_ℂ = ⟪j x, j y⟫_ℂ) (heq : ∀ g x, Θ (j (r g x)) = gE g (Θ (j x)))
     (hu : ∀ (g : G) (x y : E), ⟪gE g x, gE g y⟫_ℂ = ⟪x, y⟫_ℂ) (a : MonoidAlgebra K G) (e : E) :
     opV σ ρ a (LinearMap.adjoint Θ e) = LinearMap.adjoint Θ (opV σ (fun g => gE g) a e) := by
-  simp only [opV, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [opV, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul]
   refine Finset.sum_congr rfl fun g _ => ?_
   rw [rho_adj hsp hjr hiso heq hu]
 

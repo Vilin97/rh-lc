@@ -85,7 +85,8 @@ theorem small (T : Set (AF F ⊗[F] E)) (hT : T ∈ 𝓝 0) : ∃ N : ℕ, 0 < N
       refine ⟨fun i => b.repr o i • c0, fun i v => zsmul_mem (h0 v) _, ?_⟩
       have e1 : incAF F E o = ∑ i, b.repr o i • incAF F E (b i) := by
         have := congrArg ((incAF F E).comp (algebraMap (𝓞 E) E)) (b.sum_repr o).symm
-        rw [map_sum] at this
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum] at this
         simp only [map_zsmul] at this
         exact this
       rw [hΦ, fI, ← mul_assoc, ← map_mul, uFin_mul, e0, e1, Finset.mul_sum]

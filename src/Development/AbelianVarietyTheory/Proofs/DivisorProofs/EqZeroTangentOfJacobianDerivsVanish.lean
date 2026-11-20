@@ -59,7 +59,8 @@ theorem derivation_eq_zero_of_jacobian {k B F : Type} [CommRing k] [CommRing B] 
     exact hJ0 (by rw [h2, map_mul, h0, zero_mul])
   have h4 : (φ.mapMatrix m).mulVec (fun c => ℓ (e c)) = 0 := by
     funext a
-    rw [Matrix.mulVec, dotProduct, Pi.zero_apply, ← hg a, ← hℓ, hsum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Matrix.mulVec, dotProduct, Pi.zero_apply, ← hg a, ← hℓ, hsum, map_sum]
     refine Finset.sum_congr rfl fun c _ => ?_
     rw [map_smul, Algebra.smul_def]
     rfl

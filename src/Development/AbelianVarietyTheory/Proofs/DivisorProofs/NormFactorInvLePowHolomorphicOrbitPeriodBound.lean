@@ -41,7 +41,8 @@ theorem entry_eq (τ : X.Ψ) (z : Fin N → ℂ) (c : Fin N) :
   rw [Finset.sum_comm]
   have h2 : ∀ a, ∑ d, z a * τ.1 (X.Gm a d) * τ.1 (X.Gm⁻¹ d c) = z a * τ.1 ((X.Gm * X.Gm⁻¹) a c) := by
     intro a
-    rw [Matrix.mul_apply, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Matrix.mul_apply, map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun d _ => ?_
     rw [map_mul]; ring
   simp_rw [h2, hG]

@@ -17,7 +17,8 @@ theorem GlobalTheory.adicCompletion_trace_norm_of_basis_image : ∀ (K L : Type)
         ∑ k, (algebraMap K (v.adicCompletion K) (b.repr (z * b j) k)) • b' k := by
       rw [hb, ← map_mul]
       conv_lhs => rw [← b.sum_repr (z * b j)]
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [hb, Algebra.smul_def, Algebra.smul_def, map_mul, RingHom.algebraMap_toAlgebra, hf]
     rw [key, b'.repr_sum_self]

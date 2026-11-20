@@ -123,7 +123,8 @@ theorem coordA_map (f : R →ₐ[ℚ] R') (X : Matrix (Fin (Module.finrank ℚ D
     coordA D R' (f.toRingHom.mapMatrix X) = Algebra.TensorProduct.map f (AlgHom.id ℚ D) (coordA D R X) := by
   apply (basR D R').repr.injective
   ext k
-  rw [repr_map, repr_coordA, repr_coordA, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [repr_map, repr_coordA, repr_coordA, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_mul, ← repr_map f]
   have h1 : Algebra.TensorProduct.map f (AlgHom.id ℚ D) (1 : R ⊗[ℚ] D) = 1 := map_one _

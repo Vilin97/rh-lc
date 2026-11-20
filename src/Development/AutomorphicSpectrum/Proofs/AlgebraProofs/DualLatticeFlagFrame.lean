@@ -18,7 +18,8 @@ variable {V V₁ : Type*} [AddCommGroup V] [Module Ω V] [AddCommGroup V₁] [Mo
 theorem form_eq_sum {W : Type*} [AddCommGroup W] [Module Ω W] (w : Module.Basis (Fin N) Ω W)
     (φ : W →ₗ[Ω] Ω) (v : W) : φ v = ∑ j, w.repr v j * φ (w j) := by
   conv_lhs => rw [← w.sum_repr v]
-  simp only [map_sum, map_smul, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, smul_eq_mul]
 
 theorem exists_coeffs (R : Subalgebra O Ω) (L : AddSubgroup V)
     (hst : ∀ a ∈ R, ∀ v ∈ L, a • v ∈ L) (w : Module.Basis (Fin N) Ω V) (m : Fin N → Ω)
@@ -166,7 +167,8 @@ theorem dual_graded (R : Subalgebra O Ω) (L : AddSubgroup V) (L₁ : AddSubgrou
       have hcoef : e'.repr v r = c r := by
         have : v = ∑ i, c i • e' i := by simpa [he'] using hc
         rw [this]
-        simp [map_sum, Finsupp.finset_sum_apply, Finsupp.single_apply]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp [map_sum, Finsupp.finset_sum_apply, Finsupp.single_apply]
       rw [hβu, hcoef]
       exact mul_mem haR (hcR r)
     · rw [hcoord, hβu, hlow _ (by simpa [hr] using Fin.rev_lt_rev.2 hl), mul_zero]

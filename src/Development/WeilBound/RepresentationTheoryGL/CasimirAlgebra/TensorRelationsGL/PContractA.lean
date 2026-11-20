@@ -79,7 +79,8 @@ theorem pm_alt_firstG {m k : ℕ} (τ : Equiv.Perm (Fin m)) (hτ : τ ∈ firstG
     intro σ
     funext I
     rfl
-  simp only [alt, LinearMap.sum_apply, map_sum, Finset.smul_sum, LinearMap.smul_apply, map_smul, hmul, smul_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [alt, LinearMap.sum_apply, map_sum, Finset.smul_sum, LinearMap.smul_apply, map_smul, hmul, smul_smul]
   refine Finset.sum_nbij' (fun σ => τ * σ) (fun σ => τ⁻¹ * σ) ?_ ?_ ?_ ?_ ?_
   · intro σ hσ
     rw [hmem] at hσ ⊢

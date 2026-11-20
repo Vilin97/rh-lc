@@ -415,7 +415,8 @@ theorem gauss_direct {F K : Type} [Field F] [Field K] [CharZero K] [Algebra K F]
       exact hb ((Finsupp.single_left_inj one_ne_zero).mp hs)
     · simp
   have hev : MvPolynomial.aeval (fun s => residue V ⟨T (0, s), hTV _⟩) Lp = residue V (∑ k, aV k * tV k) := by
-    simp only [Lp, map_sum, map_mul, MvPolynomial.aeval_C, MvPolynomial.aeval_X]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Lp, map_sum, map_mul, MvPolynomial.aeval_C, MvPolynomial.aeval_X]
     refine Finset.sum_congr rfl fun k _ => ?_
     congr 1
   have hres : residue V (∑ k, aV k * tV k) ≠ 0 := by

@@ -66,7 +66,8 @@ private lemma mulP_tmul (f : F) (w : DR ℂ K) : mulP F K (f ⊗ₜ w) = algebra
 private lemma acts_expand (τ : DR ℂ K →ₗ[K] K) {m : ℕ} (w' w : Fin m → DR ℂ K) (v : DR ℂ K) :
     mulP F K (muP F K τ (∑ k, w' k ⊗ₜ w k) v) =
       ∑ k, algebraMap F K (Algebra.trace F K (τ (w' k * v))) • w k := by
-  simp only [map_sum, LinearMap.sum_apply, muP_tmul, mulP_tmul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.sum_apply, muP_tmul, mulP_tmul]
 
 private lemma omG_ne {d : ℕ} (x : Fin (d + 1) → Fˣ) : algebraMap F K (omG x 0) ≠ 0 := by
   refine (map_ne_zero _).2 ?_

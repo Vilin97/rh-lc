@@ -30,7 +30,8 @@ theorem exists_proj {F K L M : Type} [Field F] [Field K] [Field L] [Algebra F K]
   have he : ∀ τ, GlobalTheory.DeRhamSplit.evalEmb F K L (e τ) = Pi.single τ 1 := fun τ => Φ.apply_symm_apply _
   have hsum : ∑ τ, e τ = 1 := by
     apply hb.1
-    rw [map_sum, map_one]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_one]
     simp only [he]
     exact Finset.univ_sum_single (fun _ => (1 : L))
   have hmul : ∀ τ c, (1 ⊗ₜ c) * e τ = (τ c ⊗ₜ 1) * e τ := by
@@ -45,7 +46,8 @@ theorem exists_proj {F K L M : Type} [Field F] [Field K] [Field L] [Algebra F K]
   have h2 : ∀ a, α a = Ψ (a ⊗ₜ 1) := fun c => by rw [hΨ, map_one, mul_one]
   refine ⟨fun σ => Ψ (e σ), fun x => ?_, fun σ c x => ?_, fun σ c x => ?_, fun σ c x => ?_,
     fun N hα hβ σ x hx => ?_⟩
-  · rw [← LinearMap.sum_apply, ← map_sum, hsum, map_one]; rfl
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [← LinearMap.sum_apply, ← map_sum, hsum, map_one]; rfl
   · rw [h1, h2, ← Module.End.mul_apply, ← Module.End.mul_apply, ← map_mul, ← map_mul, hmul]
   · rw [h1, ← Module.End.mul_apply, ← Module.End.mul_apply, ← map_mul, ← map_mul, mul_comm]
   · rw [h2, ← Module.End.mul_apply, ← Module.End.mul_apply, ← map_mul, ← map_mul, mul_comm]
@@ -70,7 +72,8 @@ theorem indep_of_span {L R D : Type} [Field L] [CommRing R] (ι : L → R) [AddC
     rintro _ ⟨x, rfl⟩
     refine ⟨fun s => ι (Bs.repr x s), ?_⟩
     conv_rhs => rw [← Bs.sum_repr x]
-    simp only [Fintype.linearCombination_apply, map_sum, hA]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Fintype.linearCombination_apply, map_sum, hA]
   have hinj := OrzechProperty.injective_of_surjective_of_injective
     (LinearEquiv.funCongrLeft R R q.symm).toLinearMap _ (LinearEquiv.injective _) hsurj
   have hli : LinearIndependent R fun s => A (Bs s) := linearIndependent_iff_injective_fintypeLinearCombination.2 hinj
@@ -153,7 +156,8 @@ theorem coords_surj {n : ℕ} (v : Basis (Fin n) LL V) (ι : LL →ₐ[Qp] R) :
   intro f
   refine ⟨∑ j, v j ⊗ₜ f j, ?_⟩
   funext j
-  rw [map_sum, Finset.sum_apply, Finset.sum_eq_single j]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_apply, Finset.sum_eq_single j]
   · simp [coords_tmul]
   · intro k _ hk
     simp [coords_tmul, Finsupp.single_apply, hk]
@@ -257,7 +261,8 @@ theorem mu_iota_mem [FiniteDimensional Qp K] [FiniteDimensional Qp K₀]
       (DcrisL PD T.ρ (τ.comp (IsScalarTower.toAlgHom Qp K₀ K))).map (ιV PD (LL := LL) (V := T.V)) ⊔
         others PD T τ := by
   obtain ⟨y, h1, h2⟩ := exists_sum hc0 _ (mu_mem_Dcris PD T) d hd
-  rw [← h1, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← h1, map_sum, map_sum]
   refine Submodule.sum_mem _ fun σ _ => ?_
   let N : Submodule LL (T.V ⊗[Qp] BdR) := DdR PD T.ρ ⊓ ⨅ c : K₀,
     LinearMap.ker (mu Qp LL T.V (algebraMap K BdR (algebraMap K₀ K c)) - σ c • LinearMap.id)
@@ -321,7 +326,8 @@ theorem indep (τ : K →ₐ[Qp] LL) (ι : LL →ₐ[Qp] BdR) (hι : ∀ c, ι (
       intro f _
       obtain ⟨y, rfl⟩ := coords_surj v ι f
       obtain ⟨m, b, w, hw, rfl⟩ := hspan y
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Submodule.sum_mem _ fun i _ => ?_
       rw [coords_mu]
       refine Submodule.smul_mem _ _ ?_
@@ -331,7 +337,8 @@ theorem indep (τ : K →ₐ[Qp] LL) (ι : LL →ₐ[Qp] BdR) (hι : ∀ c, ι (
     (fun a => ⟨d a, hd a⟩) (LinearIndependent.of_comp D.subtype hli)
   refine Fintype.linearIndependent_iff.1 hl b ?_ a
   have := coords_ker T v ι _ h
-  rw [map_sum] at this
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum] at this
   rw [← this]
   exact Finset.sum_congr rfl fun a _ => (coords_mu v ι _ _).symm
 

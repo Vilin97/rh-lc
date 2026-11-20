@@ -121,7 +121,8 @@ theorem coeff_incl (x : AInf K p) (n : ℕ) :
   have hx := (WittVector.eq_teichmullerSeries_iff (tcoeff x) x).1
     (WittVector.teichmullerSeries_coeff_eq x).symm n
   have h2 := map_dvd (incl K p) hx
-  rw [map_pow, map_natCast, map_sub, map_sum] at h2
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_pow, map_natCast, map_sub, map_sum] at h2
   rw [Ideal.mem_span_singleton, teichLift_π]
   convert h2 using 2
   rw [TeichLift.finSum, show Finset.range (n + 1) = Finset.Iic n by ext; simp [Nat.lt_succ_iff]]

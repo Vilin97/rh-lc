@@ -28,7 +28,8 @@ theorem exists_lifts_of_norm_le_one : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime
     rfl
   refine ⟨∑ i, algebraMap ℤ_[l] (Ainf l) (z i) * w i, ?_⟩
   unfold Lifts at hw ⊢
-  rw [h2, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h2, map_sum, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_mul, map_mul, hw, ιA_zl AI T, ← IsScalarTower.algebraMap_apply]
 

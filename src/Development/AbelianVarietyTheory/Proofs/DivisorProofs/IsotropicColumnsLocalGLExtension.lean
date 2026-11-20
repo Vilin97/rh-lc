@@ -37,7 +37,8 @@ theorem mulVec_sub_mem_span : ∀ (F E : Type) [Field F] [NumberField F] [Field 
   have hsum : ∀ (τ : E →ₐ[F] Fv F v) (c : Fin r → Fv F v ⊗[F] E),
       splitVec τ (∑ l, c l • Y l) = ∑ l, splitProj τ (c l) • splitVec τ (Y l) := fun τ c => by
     funext a
-    simp [splitVec, Finset.sum_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [splitVec, Finset.sum_apply, map_sum]
   set j' : Fin n := Fin.castLE hrn j with hj'
   set c : Fin r → Fv F v ⊗[F] E := fun l => (g.1 - 1) (Fin.castLE hrn l) j' • splitIdem hcm t with hc
   have key : M *ᵥ Y j - Y j = ∑ l, c l • Y l := by
@@ -75,7 +76,8 @@ theorem mulVec_sub_mem_span : ∀ (F E : Type) [Field F] [NumberField F] [Field 
         intro l hl
         have e : t ((Formalism.UG.cT (σ : E →+* E) X * J * X) j ⟨l, hl⟩) = 0 := by rw [hX]; simp
         rw [← e]
-        simp only [Formalism.UG.cT, Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, map_sum, map_mul, hw, hu',
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [Formalism.UG.cT, Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, map_sum, map_mul, hw, hu',
           Matrix.vecMul, dotProduct, splitGram_val, hB ⟨l, hl⟩ l rfl, RingHom.coe_coe, Finset.sum_mul]
       have hzg : (w ᵥ* B.1) ᵥ* g.1 = w ᵥ* B.1 := by
         have h0 : (w ᵥ* B.1) ᵥ* (g.1 - 1) = 0 := by

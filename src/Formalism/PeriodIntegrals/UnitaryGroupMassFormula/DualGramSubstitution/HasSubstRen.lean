@@ -75,7 +75,8 @@ include hl0 in
 theorem cc_lin {ι' : Type} [Fintype ι'] (c : ι' → ℂ_[p]) (w : ι' → MvPowerSeries σ ℂ_[p])
     (hw : ∀ j, constantCoeff (w j) = 0) :
     constantCoeff (∑ j, C (c j) * lg l (w j)) = 0 := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_eq_zero fun j _ => by
     rw [map_mul, lg, PI.FglPhSplit.Wk.cc_psubst _ hl0 (hw j), mul_zero]
 
@@ -84,7 +85,8 @@ theorem ren_lin {ι' : Type} [Fintype ι'] (c : ι' → ℂ_[p]) (w : ι' → Mv
     (hw : ∀ j, constantCoeff (w j) = 0) :
     ren r (lin l ex c w) = lin l ex c (fun j => ren r (w j)) := by
   unfold lin pt
-  rw [ren_psubst r _ (cc_lin hl0 c w hw), map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [ren_psubst r _ (cc_lin hl0 c w hw), map_sum]
   congr 1
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_mul, ren_C, lg, lg, ren_psubst r _ (hw j)]
@@ -95,7 +97,8 @@ theorem ren_PhOn {κ T : Type} [Fintype κ] [Fintype T] {n : ℕ} (E : T ≃ Fin
     (B : T → κ → ℂ_[p] × ℂ_[p]) :
     ren (p := p) E.symm (PhOn l ex ph (fun j => B (E.symm j))) = PhOn l ex ph B := by
   unfold PhOn phAt
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   have hw : ∀ j : Fin n, constantCoeff (Xv j : MvPowerSeries (Fin n) ℂ_[p]) = 0 :=
     fun j => constantCoeff_X j

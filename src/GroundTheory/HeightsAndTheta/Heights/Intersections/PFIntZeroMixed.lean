@@ -78,7 +78,8 @@ theorem mixedDisc_mul_right (A : Fin D → Matrix (Fin D) (Fin D) ℂ) (P : Matr
 theorem mixedDisc_map_star (A : Fin D → Matrix (Fin D) (Fin D) ℂ) :
     mixedDisc (fun k => (A k).map (starRingEnd ℂ)) = starRingEnd ℂ (mixedDisc A) := by
   unfold mixedDisc
-  rw [map_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_mul, map_sum]
   congr 1
   · simp
   · refine Finset.sum_congr rfl fun T _ => ?_

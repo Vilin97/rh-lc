@@ -110,7 +110,8 @@ theorem dimDeg_add_finrank {A σ : Type} [CommRing A] [Finite σ] (I : Ideal (Mv
   have hrange : (homogeneousSubmodule σ K e).map ψ = (piece I e).baseChange K := by
     apply le_antisymm
     · rintro _ ⟨G, hG, rfl⟩
-      rw [G.as_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [G.as_sum, map_sum]
       refine Submodule.sum_mem _ fun d hd => ?_
       have hd' : d.degree = e := by
         rw [Finsupp.degree_eq_weight_one]

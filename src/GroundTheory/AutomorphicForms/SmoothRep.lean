@@ -115,7 +115,8 @@ theorem cosetSum_mem_fixedVectors (hnorm : ∀ k ∈ K, ∀ n ∈ N, k * n * k�
   have : (N.subgroupOf K).Normal :=
     ⟨fun n hn g => Subgroup.mem_subgroupOf.2 (by simpa using hnorm g g.2 n hn)⟩
   intro k hk
-  rw [cosetSum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [cosetSum_apply, map_sum]
   refine Fintype.sum_equiv (Equiv.mulLeft ((⟨k, hk⟩ : K) : K ⧸ N.subgroupOf K)) _ _ fun q => ?_
   rw [← Module.End.mul_apply, ← map_mul]
   have := act_eq_of_mk_eq ρ hv (a := ⟨k, hk⟩ * Quotient.out q)

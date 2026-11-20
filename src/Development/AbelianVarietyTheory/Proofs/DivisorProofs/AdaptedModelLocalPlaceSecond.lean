@@ -27,7 +27,8 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 
 private theorem form_herm {σ : E →ₐ[F] E} (hσ : ∀ x, σ (σ x) = x) {d : ℕ} {J : Matrix (Fin d) (Fin d) E}
     (hJ : ∀ i j, σ (J j i) = J i j) (x w : Fin d → E) : form σ J x w = σ (form σ J w x) := by
-  simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hJ, hσ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hJ, hσ]
   simp only [Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun l _ => ?_
@@ -57,7 +58,8 @@ private theorem fA_smul_right (σ : E →ₐ[F] E) {d : ℕ} (J : Matrix (Fin d)
 private theorem fA_inc (σ : E →ₐ[F] E) {d : ℕ} (J : Matrix (Fin d) (Fin d) E) (a b : Fin d → E) :
     fA σ J (incV F a) (incV F b) = inclR (F := F) (AF F) (form σ J a b) := by
   have hc : ∀ x : E, cA σ (inclR (F := F) (AF F) x) = inclR (F := F) (AF F) (σ x) := fun x => rfl
-  simp only [fA, form, incV, incM, Matrix.map_apply, hc, dotProduct, Matrix.mulVec, Finset.mul_sum, map_sum, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [fA, form, incV, incM, Matrix.map_apply, hc, dotProduct, Matrix.mulVec, Finset.mul_sum, map_sum, map_mul,
     mul_assoc]
 
 private theorem incM_mulVec {d d₁ : ℕ} (ι : Matrix (Fin d) (Fin d₁) E) (e : Fin d₁ → AE F E) :

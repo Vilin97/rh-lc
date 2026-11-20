@@ -98,7 +98,8 @@ theorem isTrans_cocycle : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E]
         ((A i j).map (TangentOrigin.evalPt (x ≫ jB) _ (hm hij))) _ (hA i j K x hi hj (hm hij))
         (hA j k K x hj hk (hm hjk) b)
       have h2 := congrFun ((bi.2 _ (bk.1 b)).unique h1 (hA i k K x hi hk (hm hik) b)) a
-      simp only [Matrix.mul_apply, Matrix.map_apply, map_sum, map_mul] at h2 ⊢
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Matrix.mul_apply, Matrix.map_apply, map_sum, map_mul] at h2 ⊢
       simp only [TangentOrigin.evalPt_res (x ≫ jB) hij (hm hij) h, TangentOrigin.evalPt_res (x ≫ jB) hjk (hm hjk) h,
         TangentOrigin.evalPt_res (x ≫ jB) hik (hm hik) h]
       exact h2

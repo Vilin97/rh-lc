@@ -641,7 +641,8 @@ lemma index_ideal_smul_top_le_norm_pow {E : Type} [Field E] [NumberField E] (p :
         rw [this, hg, smul_zero]
       have hrelQ : ∑ i ∈ s, (Ideal.Quotient.mk p (y i)) • b i = 0 := by
         have := congrArg (Submodule.mkQ (p • (⊤ : Submodule (𝓞 E) X))) hrel
-        rw [map_sum, map_zero] at this
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum, map_zero] at this
         rw [← this]
         refine Finset.sum_congr rfl fun i _ => ?_
         rw [hsm, map_smul, Submodule.mkQ_apply, hv]

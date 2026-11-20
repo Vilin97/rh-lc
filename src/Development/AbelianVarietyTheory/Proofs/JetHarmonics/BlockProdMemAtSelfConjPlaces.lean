@@ -218,7 +218,8 @@ theorem isImgS_sub (hinj : Function.Injective fun x : Orb × ZMod 2 => tau x.1 x
         · intro ρ _ h
           exact Finset.sum_eq_zero fun w _ => by rw [co_ne tau pl hinj gi _ _ _ h, map_zero, zero_mul]
         · simp
-      simp only [AlgHom.comp_apply, MvPolynomial.aeval_X, sub, map_sum, map_mul, MvPolynomial.aeval_C,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [AlgHom.comp_apply, MvPolynomial.aeval_X, sub, map_sum, map_mul, MvPolynomial.aeval_C,
         MvPolynomial.algebraMap_eq, h1, AlgHom.id_apply]
       simp only [← MvPolynomial.smul_eq_C_mul, Finset.smul_sum, smul_smul]
       rw [Finset.sum_comm]
@@ -338,7 +339,8 @@ theorem sub_minor (hty : ∀ o g c, ((X o).G g).ty (Sum.inl c) = c.1 + sh g)
     RF.Flag.letter]
   rw [en_eq (X o) (F o) (hty o) (hen o) g s _ (Fin.castLE hk i) rfl]
   have hρ : (ρ : ℕ) < what₂ := lt_of_lt_of_le ρ.2 hr
-  simp only [cf, dif_pos hρ, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [cf, dif_pos hρ, map_sum, Finset.sum_mul]
   rw [Finset.sum_comm]
   unfold sub
   refine Finset.sum_congr rfl fun col _ => ?_

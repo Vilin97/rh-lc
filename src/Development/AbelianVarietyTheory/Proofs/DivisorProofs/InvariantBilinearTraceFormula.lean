@@ -177,7 +177,8 @@ theorem eq_trace_form : ∀ (r : ℕ) (B : Matrix (Fin r) (Fin r) ℂ →ₗ[ℂ
     rw [trace_single_eq_same, mul_one] at h
     have hone : (1 : Matrix (Fin r) (Fin r) ℂ) = ∑ a, single a a 1 := by
       rw [sum_single_eq_diagonal (fun _ => (1 : ℂ)), diagonal_one]
-    rw [hone, map_sum, LinearMap.sum_apply] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hone, map_sum, LinearMap.sum_apply] at h
     have hterm : ∀ a : Fin r, B (single a a 1) (single p p 1) =
         B (single p p 1) (single p p 1) / 2 + (if a = p then B (single p p 1) (single p p 1) / 2 else 0) := by
       intro a

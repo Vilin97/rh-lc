@@ -24,7 +24,8 @@ theorem evY_genSub (O : Type) [CommRing O] (N : ℕ) (R : Type) [CommRing R] [Al
     simp only [GlobalTheory.HighWt.genSub, map_mul] at hp ⊢
     rw [hp]
     congr 1
-    simp [evY, rowSubst, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [evY, rowSubst, map_sum]
 
 theorem evY_eq_sum (O : Type) [CommRing O] (N : ℕ) (R : Type) [CommRing R] [Algebra O R] (Y : Matrix (Fin N) (Fin N) R)
     (P : MvPolynomial (Fin N × Fin N) (MvPolynomial (Fin N × Fin N) O)) :

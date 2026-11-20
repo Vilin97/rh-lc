@@ -71,7 +71,8 @@ theorem exists_cone_of_large_multiple : ∀ (E : Type) [Field E] [NumberField E]
     simpa using this
   have hℓdu : (ℓd u : ℝ) = Nd * φ.evalZ u := by
     rw [hφu, Finset.mul_sum, ← Finset.sum_congr rfl (fun j _ => hd1 j)]
-    simp [u, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [u, map_sum]
   have hK' : 0 ≤ (ℓd w : ℝ) - Nd * φ.evalZ w := sub_nonneg.2 (hd2 w hw hwp)
   obtain ⟨n, hn⟩ := exists_nat_gt ((Nmax : ℝ) * ((ℓd w : ℝ) - Nd * φ.evalZ w))
   set y : LinearMap.BilinForm ℤ X := (n : ℤ) • u + w with hy_def

@@ -30,7 +30,8 @@ theorem gram_det_unit (hc : CMData F E) (S : HSpace E) : IsUnit S.gram.det := by
     have h1 : ∑ j, S.gram i j * v j = 0 := by
       have := congrFun hv i
       simpa [Matrix.mulVec, dotProduct] using this
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine (Finset.sum_congr rfl (fun j _ => ?_)).trans h1
     rw [map_smul, smul_eq_mul]
     exact mul_comm _ _
@@ -84,7 +85,8 @@ theorem gram_totDef (hc : CMData F E) (S : HSpace E) (hs : S.SigOK) (hd : S.IsDe
   have hτform : ∀ x : Fin S.rank → E, τ (hform (hc.sig : E →+* E) S.gram x x) =
       star (fun i => τ (x i)) ⬝ᵥ ((S.gram.map τ) *ᵥ (fun i => τ (x i))) := by
     intro x
-    simp only [hform, map_sum, map_mul, hσ, dotProduct, Matrix.mulVec, Matrix.map_apply, Pi.star_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hform, map_sum, map_mul, hσ, dotProduct, Matrix.mulVec, Matrix.map_apply, Pi.star_apply,
       Finset.mul_sum]
     exact Finset.sum_congr rfl (fun i _ => Finset.sum_congr rfl (fun j _ => mul_assoc _ _ _))
   have hre : ∀ (p q : ℕ) (e : Fin S.rank ≃ Fin p ⊕ Fin q) (y : Fin S.rank → ℂ),

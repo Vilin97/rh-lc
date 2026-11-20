@@ -97,7 +97,8 @@ theorem lifting_along_exact_triple : GlobalTheory.IndefiniteRowSideFullHecke.Con
 
   have hGF : ∀ v : Vec K a ι₀, G.app (F.app v) = 0 := by
     intro v
-    rw [eq_sum_bas v, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [eq_sum_bas v, map_sum, map_sum]
     refine Finset.sum_eq_zero fun i _ => ?_
     rw [F.app_smul_tot, G.app_smul_tot]
     have h1 : F.app (bas i) ∈ D₁.M := F.app_mem_M (D₀.bas_mem_M i)

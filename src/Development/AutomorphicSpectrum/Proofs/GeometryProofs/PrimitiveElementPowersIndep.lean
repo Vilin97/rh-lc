@@ -26,7 +26,8 @@ theorem convPow_succ_pow (y : A →ₗ[k] k) (f : A)
     convPow y (m + 1) (f ^ i) =
       ∑ l ∈ Finset.range (i + 1), (i.choose l : k) * (y (f ^ l) * convPow y m (f ^ (i - l))) := by
   simp only [convPow, LinearMap.comp_apply]
-  rw [comul_pow_of_primitive f hf i, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [comul_pow_of_primitive f hf i, map_sum, map_sum]
   refine Finset.sum_congr rfl (fun l _ => ?_)
   rw [map_smul, map_smul, TensorProduct.map_tmul, LinearMap.mul'_apply, smul_eq_mul]
 
@@ -111,7 +112,8 @@ theorem powers_indep_of_primitive :
   have key : ∀ m < p, (∀ i, m < i → i < p → c i = 0) → c m = 0 := by
     intro m hm hgt
     have h := congrArg (convPow y m) hsum
-    rw [map_sum, map_zero] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero] at h
     simp only [map_smul, smul_eq_mul] at h
     rw [Finset.sum_eq_single m] at h
     · rw [(convPow_pow y f hf hy1 hyf m).2] at h

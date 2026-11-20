@@ -26,7 +26,8 @@ theorem gram_det_ne_zero (S : HSp D) : S.gram.det ≠ 0 := by
     intro i
     have := congrFun hv i
     simp only [Matrix.mulVec, dotProduct, Pi.zero_apply] at this
-    rw [hxdef, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hxdef, map_sum]
     simp only [map_smul, smul_eq_mul]
     rw [← this]
     refine Finset.sum_congr rfl fun j _ => ?_

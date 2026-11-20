@@ -88,7 +88,8 @@ theorem main : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberField
       rw [G.Hm_eq p, hform, hx0, map_zero]
     have hbcx : A.bc p x = ∑ q, (A.loc p).ιE (v q) • A.bc p (g q) := by
       funext i
-      simp [Places.bc, hx, Finset.sum_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [Places.bc, hx, Finset.sum_apply, map_sum]
     have hmem : A.bc p x ∈ S.ME := by
       rw [hbcx, hME]
       refine Submodule.sum_mem _ fun q _ => Submodule.smul_mem _ _ ?_

@@ -46,7 +46,8 @@ theorem evDelta_pf : ChernClassExistence.LeafEvDelta := by
     rw [δ_v n m hm α _ t ht s (-(p : ℤ)) (by omega) (by push_cast; omega), chains_d]
     simp only [Preadditive.comp_add, Preadditive.comp_zsmul, Category.assoc, Iso.inv_hom_id_assoc]
     simp [Sec.map, Units.smul_def, Preadditive.comp_sum, Preadditive.sum_comp, Preadditive.zsmul_comp, Preadditive.comp_zsmul, freeGen_nat, Sx.face]
-    rw [evH_apply, map_zsmul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [evH_apply, map_zsmul, map_sum]
     congr 1
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_zsmul]

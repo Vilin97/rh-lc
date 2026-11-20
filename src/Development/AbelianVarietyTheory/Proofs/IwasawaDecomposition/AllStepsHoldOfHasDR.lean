@@ -59,7 +59,8 @@ theorem full_map {X X' : Scheme.{0}} {t : SAB H X} {t' : SAB H X'} {R : Type} [C
     (L : TanM y t.G ≃ₗ[R] TanM y' t'.G) {n : ℕ} {v : Fin n → TanM y t.G} (hv : Full v) : Full fun i => L (v i) := fun w => by
   obtain ⟨w, rfl⟩ := L.surjective w
   refine (existsUnique_congr fun a => ?_).1 (hv w)
-  rw [← L.injective.eq_iff, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← L.injective.eq_iff, map_sum]
   simp only [map_smul]
 
 theorem exists_full {X X' X₁ : Scheme.{0}} {t : SAB H X} {t' : SAB H X'} {t₁ : SAB H X₁} {τ : X' ⟶ X} {π : X₁ ⟶ X}
@@ -76,7 +77,8 @@ theorem exists_full {X X' X₁ : Scheme.{0}} {t : SAB H X} {t' : SAB H X'} {t₁
 theorem sum_map_mul_eq_zero {R k : Type} [CommRing R] [CommRing k] (φ : R →+* k) {n : ℕ} (a b : Fin n → R) (c : k)
     (h : ∑ l, a l * b l = 0) : ∑ l, φ (a l) * (c * φ (b l)) = 0 := by
   have := congrArg (fun s => c * φ s) h
-  simp only [map_sum, map_mul, map_zero, mul_zero, Finset.mul_sum] at this
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, map_zero, mul_zero, Finset.mul_sum] at this
   exact (Finset.sum_congr rfl fun l _ => mul_left_comm _ _ _).trans this
 
 variable {Dw : Datum H} {Xo : ∀ l : Level H, Moduli Dw l} {p : ℕ} {W : ValuationSubring ℂ} {Y : LocalSystem Xo p W}

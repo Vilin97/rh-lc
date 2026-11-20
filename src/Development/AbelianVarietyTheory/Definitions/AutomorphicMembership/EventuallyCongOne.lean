@@ -305,7 +305,8 @@ theorem isAniso_of_gram (hG : V.gram = 1) : IsAniso V := by
   have h3 : ∀ a : D.host.E, D.host.φ₀ (star a) = starRingEnd ℂ (D.host.φ₀ a) := D.sp.cm.cmUnram.2.1 _
   have h4 : ∑ i, Complex.normSq (D.host.φ₀ (C i ⟨0, hr⟩)) = 0 := by
     apply Complex.ofReal_injective
-    rw [map_sum] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at h2
     rw [Complex.ofReal_sum, Complex.ofReal_zero, ← map_zero D.host.φ₀]
     refine Eq.trans (Finset.sum_congr rfl fun i _ => ?_) h2
     rw [map_mul, Complex.normSq_eq_conj_mul_self, ← h3]

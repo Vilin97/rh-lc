@@ -153,7 +153,8 @@ theorem isRBasis_of_locBasis (D : D7) (ρ : D.host.E →+* ℂ_[p]) {N : ℕ} {L
       rw [Finset.sum_apply] at hk ⊢
       change (s : D.host.E) * x k = ∑ a, (c a : D.host.E) * P k a at hk
       change ∑ a, (ρ (s : D.host.E))⁻¹ * ρ (c a : D.host.E) * ρ (P k a) = ρ (x k)
-      simp only [mul_assoc, ← map_mul, ← Finset.mul_sum, ← map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [mul_assoc, ← map_mul, ← Finset.mul_sum, ← map_sum]
       rw [← hk, map_mul, inv_mul_cancel_left₀ h0]
 
 theorem transition_integral (D : D7) (ρ : D.host.E → ℂ_[p]) {N : ℕ} {L : Submodule (𝓞 D.host.E) (Fin N → D.host.E)}

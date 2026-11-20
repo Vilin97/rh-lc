@@ -134,8 +134,10 @@ theorem aeval_homogAt {R : Type*} [Field R] (x : σ → R) (i : σ) (hi : x i �
     aeval x (homogAt i G) = x i ^ G.totalDegree * aeval (fun j => x j / x i) G := by
   have h0 : aeval (fun j => x j / x i) G = ∑ m ∈ Finset.range (G.totalDegree + 1),
       aeval (fun j => x j / x i) (homogeneousComponent m G) := by
-    rw [← map_sum, sum_homogeneousComponent]
-  rw [h0, homogAt, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, sum_homogeneousComponent]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h0, homogAt, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun m hm => ?_
   have hle : m ≤ G.totalDegree := Nat.lt_succ_iff.mp (Finset.mem_range.mp hm)
   have h2 := aeval_mul_homog (homogeneousComponent_isHomogeneous m G) (x i)

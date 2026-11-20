@@ -245,7 +245,8 @@ theorem support (hU : UTorsSt) [ArithBase o Ω] (l : u.Lab) (α : u.D.toPre.X) (
     (hact (Φ.U a) t' t'' (fun j => (Φ.U_act a j _).2 (ht' j)) ht'') (fun m => ?_) β (fun e => hne ?_) j
   · have e : ∀ n, ∑ j, b j * y₀ (algebraMap o S.R (S.ρ a n j)) = (τ (Multiplicative.ofAdd α)).val * b n := fun n => by
       have := congrArg (fun M => y₀ (algebraMap o S.R (M n i))) (ρ_mul_proj l.isoFree (l.wt α) a)
-      simp only [Matrix.mul_apply, Matrix.smul_apply, smul_eq_mul, map_sum, map_mul] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Matrix.mul_apply, Matrix.smul_apply, smul_eq_mul, map_sum, map_mul] at this
       rw [hτw, hb]
       beta_reduce
       rw [mul_left_comm, ← this, Finset.mul_sum]
@@ -256,7 +257,8 @@ theorem support (hU : UTorsSt) [ArithBase o Ω] (l : u.Lab) (α : u.D.toPre.X) (
     have e₂ : t''.f m = con u.A _ (τ (Multiplicative.ofAdd α)).val * t.f m := by
       rw [e₁, (isComb_iff _ _ _).1 ht m, Finset.mul_sum, Finset.sum_comm]
       refine Finset.sum_congr rfl fun n _ => ?_
-      rw [← _root_.mul_assoc, ← map_mul, ← e, map_sum, Finset.sum_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← _root_.mul_assoc, ← map_mul, ← e, map_sum, Finset.sum_mul]
       exact Finset.sum_congr rfl fun j _ => by rw [map_mul, _root_.mul_assoc]
     exact e₂
   · rw [ofAdd_sub, map_div, Units.ext e, div_self']

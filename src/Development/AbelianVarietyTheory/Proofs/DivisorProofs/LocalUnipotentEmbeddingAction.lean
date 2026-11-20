@@ -80,7 +80,8 @@ theorem emb_mulVec (v : HeightOneSpectrum (𝓞 F)) (x : GLoc σ J v) (y : Fin n
   set M := (matHom (Fv F v) σ J x).1
   set L := GlobalTheory.UnipEmb.locInc F E v
   have e2 : ∀ k, (M.map L *ᵥ y) k = L ((M *ᵥ fun i => compFin F E v (y i)) k) := fun k => by
-    simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum, L, locInc_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum, L, locInc_mul]
   funext k
   simp only [GlobalTheory.IndefiniteRowSideFullHecke.AdelicUnitaryGroups.glue, Matrix.add_mulVec, Matrix.one_mulVec, Pi.add_apply,
     Pi.smul_apply, smul_eq_mul, e2, Matrix.sub_mulVec, Pi.sub_apply, map_sub]

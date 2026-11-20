@@ -145,7 +145,8 @@ theorem EntirePolynomialGrowth.proof : EntirePolynomialGrowth.Statement := by
       rw [Polynomial.aeval_def, Polynomial.hom_eval₂, MvPolynomial.eval_X, hid]
       rfl
     conv_lhs => rw [← Fin.cons_self_tail y, hq (y 0), key]
-    rw [Lagrange.interpolate_apply, Polynomial.eval_finsetSum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Lagrange.interpolate_apply, Polynomial.eval_finsetSum, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_mul, hev, eval_rename, Polynomial.eval_mul, Polynomial.eval_C, ← hq, hp, mul_comm]
     rfl

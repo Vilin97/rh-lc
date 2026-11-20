@@ -49,7 +49,8 @@ theorem lifts_Fr {w : Ainf l} {c : ↥(K0 K)} (h : Lifts AI K w c) (n : ℕ) :
 theorem lifts_sum {ι : Type} (T : Finset ι) (w : ι → Ainf l) (c : ι → ↥(K0 K))
     (h : ∀ i ∈ T, Lifts AI K (w i) (c i)) : Lifts AI K (∑ i ∈ T, w i) (∑ i ∈ T, c i) := by
   unfold Lifts at h ⊢
-  rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum]
   exact Finset.sum_congr rfl h
 
 def oK (P : LocPrime l) (K : FinExt l) : ↥(K0 K) →+* P.R.BdR :=
@@ -124,7 +125,8 @@ theorem tail (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l P) (hT : 
     have h1 : io AI (Fr l n y) - io AI (Fr l (n + 1) y) =
         ∑ i ∈ T, oK P K ((frK P K ^ n) (c i)) *
           io AI (WittVector.teichmuller l AI.ε ^ (m i * l ^ n)) := by
-      rw [Fr_succ', ← map_sub, ← map_sub, hy, map_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Fr_succ', ← map_sub, ← map_sub, hy, map_sum, map_sum]
       refine Finset.sum_congr rfl fun i hi => ?_
       rw [map_mul, map_mul, (lifts_Fr (hw i hi) n).io_eq, map_pow (Fr l n), Fr_teich, ← pow_mul,
         mul_comm (l ^ n), oK_apply]
@@ -134,7 +136,8 @@ theorem tail (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l P) (hT : 
         ∑ i ∈ T, oK P K ((frK P K ^ n) (c i)) * (((m i * l ^ n : ℕ) : P.R.BdR) ^ j * u P j) := by
       intro j hj
       have h3 := congrArg (fun x => oK P K ((frK P K ^ n) x)) (hd j (Finset.mem_range.mp hj)).2
-      simp only [map_sub, map_mul, map_pow, map_natCast, map_sum] at h3
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sub, map_mul, map_pow, map_natCast, map_sum] at h3
       have h4 : (frK P K ^ (n + 1)) (d j) = (frK P K ^ n) (frK P K (d j)) := by
         rw [pow_succ]; rfl
       have h5 : ∑ i ∈ T, oK P K ((frK P K ^ n) (c i)) * (((m i * l ^ n : ℕ) : P.R.BdR) ^ j * u P j)

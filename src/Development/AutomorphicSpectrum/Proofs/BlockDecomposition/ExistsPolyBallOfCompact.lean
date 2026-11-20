@@ -38,7 +38,8 @@ theorem exists_avg (H : Subgroup G) (σ : Representation ℂ H Z) (L : Subgroup 
     have : E (cInd H σ ((r i : L) : G) f) = 0 := hcon _ (r i).2
     simp only [GlobalTheory.CompanionTheory.TwistedAverage.twOrbit, map_smul, this, smul_zero]
   have : E (c • ∑ i, GlobalTheory.CompanionTheory.TwistedAverage.twOrbit (cInd H σ) L θ f (r i)) = 0 := by
-    rw [map_smul, map_sum, Finset.sum_eq_zero fun i _ => hz i, smul_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_smul, map_sum, Finset.sum_eq_zero fun i _ => hz i, smul_zero]
   exact this
 
 theorem avgVanish_conj (H : Subgroup G) (σ : Representation ℂ H Z) (U : Subgroup G) (θ : U →* ℂˣ) (y : G)

@@ -51,7 +51,8 @@ theorem locCo_sum {n d : ℕ} {κ : Type} [Fintype κ]
                  ∑ m, a m * algebraMap F (Fv F v) (ry m i) ∧
       (GlobalTheory.LatVac.locCo co v (∑ m, GlobalTheory.EmbChart.atPlace v (a m) • incM F (g m))).2 i =
         ∑ m, a m * algebraMap F (Fv F v) (rz m i) := by
-  simp only [GlobalTheory.LatVac.locCo, AddMonoidHom.coe_mk, ZeroHom.coe_mk, map_sum, map_smul, hr, Prod.fst_sum, Prod.snd_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [GlobalTheory.LatVac.locCo, AddMonoidHom.coe_mk, ZeroHom.coe_mk, map_sum, map_smul, hr, Prod.fst_sum, Prod.snd_sum,
     Finset.sum_apply, Prod.smul_fst, Prod.smul_snd, Pi.smul_apply, smul_eq_mul, map_mul, GlobalTheory.EmbChart.evFin_atPlace,
     AlgHom.commutes, and_self]
 
@@ -73,7 +74,8 @@ theorem param {n d : ℕ} (X : Spc F E n) (Y : Spc F E d) (v : Pl F) {kx ky : �
       obtain ⟨c', rfl⟩ := (Submodule.mem_span_range_iff_exists_fun ℤ).1 hy'
       refine ⟨fun m => ⟨(c m.1 * c' m.2) • GlobalTheory.AdelicU.evFin F v a, zsmul_mem hint _⟩, ?_⟩
       have ha' := GlobalTheory.VacAny.eq_atPlace_of_at v a ha
-      simp only [hI, GlobalTheory.LatParam.vecMulVec_sum_zsmul, map_sum, map_zsmul, Finset.smul_sum, map_zsmul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hI, GlobalTheory.LatParam.vecMulVec_sum_zsmul, map_sum, map_zsmul, Finset.smul_sum, map_zsmul]
       refine Finset.sum_congr rfl fun m _ => ?_
       rw [← ha', smul_comm, smul_assoc]
     | zero => exact ⟨fun _ => 0, by simp⟩
@@ -236,7 +238,8 @@ theorem darboux_rat_surj : ∀ {F E : Type} [Field F] [NumberField F] [Field E] 
       algebraMap F (AF F) (f (u, v)) := by
     intro u v
     rw [hfp]
-    simp [φA, map_add, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [φA, map_add, map_sum, map_mul]
   let Φ : Matrix (Fin n) (Fin d) (AE F E) →ₗ[AF F] AF F := φA ∘ₗ co.e.toLinearMap
   have hΦ : Φ = 0 := by
     have hle : Submodule.span (AF F) (Set.range (incM F : Matrix (Fin n) (Fin d) E → Matrix (Fin n) (Fin d) (AE F E)))
@@ -300,13 +303,15 @@ theorem locCo_latAtV_eventually : ∀ (F E : Type) [Field F] [NumberField F] [Fi
     obtain ⟨c, hc⟩ := (Submodule.mem_span_range_iff_exists_fun F).1 (hspan x)
     refine ⟨c, fun i => ?_⟩
     have key : M.co.e (incM F x) = ∑ m, algebraMap F (AF F) (c m) • M.co.e (incM F (g m)) := by
-      rw [← hc, incM_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hc, incM_sum, map_sum]
       refine Finset.sum_congr rfl fun m _ => ?_
       rw [incM_smul, map_smul]
     rw [hx] at key
     have k1 := congrArg (fun p => p.1 i) key
     have k2 := congrArg (fun p => p.2 i) key
-    simp only [hr, Prod.fst_sum, Prod.snd_sum, Finset.sum_apply, Prod.smul_fst, Prod.smul_snd, Pi.smul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hr, Prod.fst_sum, Prod.snd_sum, Finset.sum_apply, Prod.smul_fst, Prod.smul_snd, Pi.smul_apply,
       smul_eq_mul, ← map_mul, ← map_sum] at k1 k2
     have hinj : Function.Injective (algebraMap F (AF F)) := AdeleRing.algebraMap_injective (𝓞 F) F
     exact ⟨(hinj k1).symm, (hinj k2).symm⟩

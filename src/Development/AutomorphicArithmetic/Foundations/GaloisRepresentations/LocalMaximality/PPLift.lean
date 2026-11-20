@@ -275,7 +275,8 @@ private lemma split_form {F K : Type} [Field F] [Field K] [Algebra ℂ F] [Algeb
 private lemma wd_act {S E κ : Type} [CommRing S] [Algebra ℂ S] [AddCommGroup E] [Module ℂ E] [LinearOrder κ]
     (act : S →ₐ[ℂ] Module.End ℂ E) (z : κ → S) (f : Finset κ → S) (m : E) (t : Finset κ) :
     wd (fun l => act (z l)) (fun L => act (f L) m) t = act (wd (fun l => Algebra.lmul ℂ S (z l)) f t) m := by
-  simp only [wd, LinearMap.pi_apply, Finset.sum_apply, LinearMap.smul_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [wd, LinearMap.pi_apply, Finset.sum_apply, LinearMap.smul_apply,
     LinearMap.comp_apply, LinearMap.proj_apply, map_sum, LinearMap.sum_apply]
   refine Finset.sum_congr rfl fun i _ => ?_
   simp [map_zsmul, Module.End.mul_apply]

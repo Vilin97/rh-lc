@@ -25,7 +25,8 @@ private lemma pSerOf_trunc {R₀ : Type} [CommRing R₀] {g : ℕ} (N : ℕ) (G�
       exact h (Finset.mem_filter.1 hm).2
   · intro S _ _ a ha
     conv_rhs => rw [G₁.as_sum]
-    rw [map_sum, map_sum, Finset.sum_filter]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum, Finset.sum_filter]
     refine Finset.sum_congr rfl fun m _ => ?_
     split_ifs with h
     · rfl

@@ -122,7 +122,8 @@ theorem dof_sig {B : FB R d O} {h : PS k 2 d} (hc : B.IsCanonGauge k h) (u : Fin
     exact Finset.sum_congr rfl fun b _ => Finset.sum_congr rfl fun c _ => by ring
   have e2 : (C (∑ j, sg1 k h i j * algebraMap R k (u j)) : PS k 1 d) =
       ∑ b, C (algebraMap R k (u b)) * C (sg1 k h i b) := by
-    simp only [map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul]
     exact Finset.sum_congr rfl fun b _ => mul_comm _ _
   rw [e1, e2, ← Finset.sum_sub_distrib]
   refine sum_mem fun b _ => ?_

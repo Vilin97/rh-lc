@@ -51,7 +51,8 @@ theorem ConeHyperplaneNull.proof (hZ : ZeroLocusDimH.Statement) (hC : ChowFormDi
     have hle : J ≤ RingHom.ker (eval (h.pointOf y)) := by
       refine sup_le (fun q hq => (RingHom.mem_ker).2 (hyW q hq)) ?_
       rw [Ideal.span_le, Set.singleton_subset_iff, SetLike.mem_coe, RingHom.mem_ker]
-      simpa [linForm, map_sum] using hyu
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa [linForm, map_sum] using hyu
     intro q hq
     rw [hg]
     exact (RingHom.mem_ker).1 (hle hq)

@@ -156,7 +156,8 @@ theorem exists_rewrite : GlobalTheory.Published.HarishChandraModules → GlobalT
   · intro y _
     have h1 : ∀ j, ℓ j (σ y (x j)) = ∑ i, ⟪e i, x j⟫_ℂ * ℓ j (σ y (e i)) := fun j => by
       conv_lhs => rw [hexp j]
-      simp only [map_sum, map_smul, smul_eq_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, smul_eq_mul]
     simp only [h1, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul]
     exact Finset.sum_comm
 

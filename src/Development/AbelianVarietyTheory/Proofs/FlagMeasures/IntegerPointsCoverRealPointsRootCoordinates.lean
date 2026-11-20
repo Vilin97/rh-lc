@@ -211,7 +211,8 @@ theorem cover_action : ∀ Cg cb Cu cT CT C0 A : ℝ, ∀ (D : D7) (X : HidaSett
       have h := ha j
       simp only [e1] at h
       show (W.δ u).symm (n (W.δ u (frame s.frame j))) = _
-      rw [h, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [h, map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_smul, LinearEquiv.symm_apply_apply]
       rfl

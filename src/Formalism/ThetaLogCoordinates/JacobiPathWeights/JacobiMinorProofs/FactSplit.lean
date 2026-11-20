@@ -192,7 +192,8 @@ theorem wExp_high (last : Bool) {e : ℕ × Fin n →₀ ℕ} (he : ∀ j a, j �
 
 theorem Psi_Gc_low {i : ℕ} (hS : ∀ j, j ∈ S ↔ j < i) (G : MvPolynomial (ℕ × Fin n) k) (β : ℕ × Fin n →₀ ℕ) :
     Psi isVec S (Gc i G β) ∈ supported (GenField k n) (loSet n S) := by
-  simp only [Gc, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Gc, map_sum]
   exact Subalgebra.sum_mem _ fun e _ =>
     Psi_low isVec S (fun j a hj => by rw [lowerUnipotent_symm_apply, if_neg ((hS j).not.mp hj)]) _
 
@@ -206,7 +207,8 @@ theorem Psi_decomp {i : ℕ} (hS : ∀ j, j ∈ S ↔ j < i) (G : MvPolynomial (
     Psi isVec S G = ∑ β ∈ G.support.image (highP i),
       Psi isVec S (Gc i G β) * monomial (β.mapDomain Sum.inl) 1 := by
   conv_lhs => rw [decomp i G]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   apply Finset.sum_congr rfl
   intro β hβ
   rw [map_mul, Psi_high isVec S (high_zero S hS hβ)]

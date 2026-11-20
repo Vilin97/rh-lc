@@ -84,7 +84,8 @@ theorem exists_pair (a : G → M →ₗ[O] M) (hmul : ∀ g h x, a (g * h) x = a
         rw [he, he]
         exact k1 _ _ (by rw [map_mul, hs δ hδ, hs _ (hΔm _ hg _ hδ)])
     simp only [hcoc, Finset.sum_add_distrib, Finset.sum_const] at h1
-    rw [hm, map_smul, map_smul, map_sum, map_sum, ← smul_sub,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hm, map_smul, map_smul, map_sum, map_sum, ← smul_sub,
       show ∑ δ ∈ Δ, a g (j (e (s δ))) - ∑ δ ∈ Δ, j (e (s δ)) = -(Δ.card • j (e g)) by
         rw [← h1]; abel,
       smul_neg, ← Nat.cast_smul_eq_nsmul O, smul_smul, hu, one_smul]

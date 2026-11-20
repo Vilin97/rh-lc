@@ -25,7 +25,8 @@ theorem continuous_theta_integral_vector : ∀ {D : D7} (ψ : AddChar (Formalism
   have e : ∀ g h, thetaKO om h g (L (u h)) = ∑ k, b.coord k (u h) * om (h, g) (L (b k)) 0 := by
     intro g h
     conv_lhs => rw [← b.sum_repr (u h)]
-    simp only [thetaKO, map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Module.Basis.coord_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [thetaKO, map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Module.Basis.coord_apply]
   have hK : Continuous fun p : GA D W × GA D V => thetaKO om p.2 p.1 (L (u p.2)) := by
     simp only [e]
     refine continuous_finset_sum _ fun k _ => Continuous.mul ?_ ?_

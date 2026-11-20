@@ -8,7 +8,8 @@ theorem bcForm_eq_blkForm_sub_toForm_pLow (ι : Type) [Fintype ι] [DecidableEq 
     (bcForm τ : FormPol ι N) = blkForm j τ - toForm (pLow j τ 1 : Pol ι N) := by
   have h1 : toForm (pLow j τ 1 : Pol ι N) =
       ∑ i : Fin N, if (i : ℕ) < j then rootForm (τ, i) else 0 := by
-    simp only [toForm, pLow, map_sum, Finset.sum_filter, pow_one]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [toForm, pLow, map_sum, Finset.sum_filter, pow_one]
     refine Finset.sum_congr rfl (fun i _ => ?_)
     split_ifs <;> simp [aeval_X]
   have h2 : toForm (pLow j τ 1 : Pol ι N) =

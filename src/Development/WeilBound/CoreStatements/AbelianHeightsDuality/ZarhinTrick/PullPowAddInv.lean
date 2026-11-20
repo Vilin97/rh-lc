@@ -196,7 +196,8 @@ theorem two_cls_pow (hA : IsAbelianScheme A) (hB : IsAbelianScheme B) {P : LB (A
   have hz := isLB_zb mu α s hP hL
   have hpull : cls _ h' = pull ((𝟙 ((Over.pullback s).obj (G4 (A ⊗ B)))) ^ n).left (cls _ hz) := rfl
   have hsplit : cls _ hz = cls _ hLA + cls _ hPA := cls_tens hLA hPA hz
-  rw [hpull, hsplit, map_add, cls_linComb hL, cls_linComb hP, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hpull, hsplit, map_add, cls_linComb hL, cls_linComb hP, map_sum, map_sum]
   simp only [map_zsmul, ← pull_comp, one_smul]
   rw [Fintype.sum_prod_type, Fintype.sum_prod_type, Fintype.sum_prod_type, Fintype.sum_prod_type]
   obtain ⟨N, hN⟩ : ∃ N : (Over.pullback s).obj (G4 (A ⊗ B)) ⟶ (Over.pullback s).obj (G4 (A ⊗ B)), N = (𝟙 _) ^ n := ⟨_, rfl⟩

@@ -451,7 +451,8 @@ theorem rat_comp {ι ι' ι'' V V' V'' : Type} [Fintype ι'] [AddCommGroup V] [M
     (f : V →ₗ[K] V') (f' : V' →ₗ[K] V'') (F : Subfield K) (h : ∀ i j, b'.repr (f (b j)) i ∈ F)
     (h' : ∀ i j, b''.repr (f' (b' j)) i ∈ F) (i : ι'') (j : ι) : b''.repr (f' (f (b j))) i ∈ F := by
   rw [← b'.sum_repr (f (b j))]
-  simp only [map_sum, map_smul, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.smul_apply, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.smul_apply, smul_eq_mul]
   exact sum_mem fun k _ => mul_mem (h k j) (h' i k)
 
 def trans {S'' : GSD K} (e' : GSD.Iso S' S'') : GSD.Iso S S'' where
@@ -587,13 +588,15 @@ theorem adjoint (A : LocOp S S') (B : LocOp S' S) (h : S.Ok) (h' : S'.Ok) (e : S
     rw [Nat.card_congr (hstab (s'.rep c')), Rat.smul_def, Rat.cast_inv, Rat.cast_natCast]
     congr 1
     unfold app
-    rw [Finsupp.sum, map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finsupp.sum, map_sum, LinearMap.sum_apply]
     exact Finset.sum_congr rfl fun d _ => hadj _ _ _ _
   · refine Finset.sum_congr rfl fun c _ => ?_
     rw [Rat.smul_def, Rat.cast_inv, Rat.cast_natCast]
     congr 1
     unfold app
-    rw [Finsupp.sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finsupp.sum, map_sum]
 
 theorem adjoint_of_nondeg (A : LocOp S S') (B : LocOp S' S) (h : S.Ok) (h' : S'.Ok) (e : S.G ≃* S'.G)
     (hB : ∀ g, B.tr g = e g) (hn : S.pair.Nondegenerate)

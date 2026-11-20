@@ -194,7 +194,8 @@ theorem sum_bLie_mem_htLat_of_pointOver {E : Type} [Field E] [NumberField E] [Is
     rw [Category.assoc, Category.assoc, h3]
   have hs : ∑ j, a j • P'.bLie (x' j) =
       algebraMap ℤ_[p] O r • e.toLinearMap.baseChange C (∑ j, a j • P.bLie (x j)) := by
-    rw [map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [hb, map_smul, smul_comm, ← algebraMap_smul C (algebraMap ℤ_[p] O r), ← IsScalarTower.algebraMap_apply,
       algebraMap_smul]

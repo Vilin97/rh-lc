@@ -59,7 +59,8 @@ theorem conjG_continuous [Algebra.IsAlgebraic E Ω] (c : Ω ≃+* Ω) (τ : E �
     have := congrArg (fun z : S => (z : Ω)) (b.sum_repr ⟨x, hx⟩)
     simp only [AddSubmonoidClass.coe_finset_sum, IntermediateField.coe_smul] at this
     exact this.symm
-  rw [hx', map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hx', map_sum]
   simp [map_smul, hb]
 
 theorem mem_Dec_iff' {A : ValuationSubring Ω} {σ : G E Ω} :

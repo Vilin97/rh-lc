@@ -48,7 +48,8 @@ theorem subst_zero_of_constantCoeff {σ τ : Type} [Finite σ] (h : MvPowerSerie
 theorem subst_sum_smul_X {σ τ ι : Type} [Fintype ι] {s : σ → MvPowerSeries τ C} (hs : HasSubst s)
     (c : ι → C) (k : ι → σ) :
     subst s (∑ a, c a • (X (k a) : MvPowerSeries σ C)) = ∑ a, c a • s (k a) := by
-  rw [← coe_substAlgHom hs, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← coe_substAlgHom hs, map_sum]
   simp only [map_smul, substAlgHom_X]
 
 end

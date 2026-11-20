@@ -90,7 +90,8 @@ theorem secM_eq_span {Ω : Type} [Field Ω] (y : Coord n → Ω) (d : ι → ℕ
   apply le_antisymm
   · rw [Submodule.span_le]
     rintro s ⟨g, hg, rfl⟩
-    rw [g.as_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [g.as_sum, map_sum]
     refine Submodule.sum_mem _ fun m hm ↦ ?_
     rw [aeval_monomial, Finsupp.prod_fintype _ _ (fun _ ↦ pow_zero _), ← Algebra.smul_def]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨m, hg m hm, rfl⟩)

@@ -25,7 +25,8 @@ theorem injective_of_map_basis {K L M N J : Type} [Field K] [Field L] [AddCommGr
     (li : LinearIndependent L fun i => φ (b i)) : Function.Injective φ := by
   refine (injective_iff_map_eq_zero φ).2 fun w hw => ?_
   obtain ⟨a, rfl⟩ := hb w
-  simp only [map_sum, map_smulₛₗ] at hw
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smulₛₗ] at hw
   have h0 : ∀ i, a i = 0 := fun i => (map_eq_zero σ).1 (Fintype.linearIndependent_iff.1 li _ hw i)
   simp [h0]
 
@@ -80,7 +81,8 @@ theorem tanBasis_and_eigFrame_of_baseChange : ∀ {E : Type} [Field E] [NumberFi
         simp [hφ, map_smulₛₗ, Finsupp.single_apply]
       have h2 : B.repr (φ w) z = 0 := by
         have h3 : ∀ i, y.frame.vec τ i = B ⟨τ, i⟩ := fun i => (hB ⟨τ, i⟩).symm
-        rw [ha', map_sum, Finsupp.finset_sum_apply]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [ha', map_sum, Finsupp.finset_sum_apply]
         refine Finset.sum_eq_zero fun i _ => ?_
         rw [h3, map_smul, B.repr_self, Finsupp.smul_apply, Finsupp.single_eq_of_ne fun h => hz (congrArg Sigma.fst h),
           smul_zero]

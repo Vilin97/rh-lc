@@ -46,7 +46,8 @@ theorem proof : ProjectionUnramifiedGeneric.Statement := by
     ring
   have hDsum : ∀ c (f : Fin r → MvPolynomial (α ⊕ β) ℂ), D c (∑ j, f j) = ∑ j, D c (f j) := by
     intro c f
-    simp only [D, map_sum, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [D, map_sum, Finset.sum_mul]
     rw [Finset.sum_comm]
   have hDX : ∀ c b, D c (X (Sum.inr b)) = c b := by
     intro c b

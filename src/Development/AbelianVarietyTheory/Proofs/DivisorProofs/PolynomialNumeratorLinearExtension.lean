@@ -25,7 +25,8 @@ theorem numL_rename_of_agree : ∀ {A ι : Type} (num : Multiset A → ℝ) (d :
   classical
   conv_lhs => rw [P.as_sum]
   conv_rhs => rw [P.as_sum]
-  rw [map_sum, map_sum, map_sum, Finset.sum_div]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, map_sum, Finset.sum_div]
   refine Finset.sum_congr rfl fun m hm => ?_
   have hdeg : m.degree = d := by
     have := hP (MvPolynomial.mem_support_iff.1 hm)

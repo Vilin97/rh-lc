@@ -26,7 +26,8 @@ theorem Pf_MapHyp_ambMap_smul (g : Ks ⊗[LL] D₁ →ₗ[Ks] Ks ⊗[LL] D₂) (
     rw [Pf_MapHyp_ambMap_coeff, h0, map_zero]
   apply HahnModule.ext
   funext k
-  rw [HahnModule.coeff_smul_right (y := ambMap g f) ((HahnModule.of Ks).symm f).isPWO_support hsupp,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [HahnModule.coeff_smul_right (y := ambMap g f) ((HahnModule.of Ks).symm f).isPWO_support hsupp,
     Pf_MapHyp_ambMap_coeff, HahnModule.coeff_smul, map_sum]
   refine Finset.sum_congr rfl fun ij _ => ?_
   rw [map_smul, Pf_MapHyp_ambMap_coeff]

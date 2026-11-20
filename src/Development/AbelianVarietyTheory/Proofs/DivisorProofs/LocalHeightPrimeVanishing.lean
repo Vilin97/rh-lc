@@ -66,7 +66,8 @@ theorem exists_basis [Module.Free ℤ_[p] T] [Module.Finite ℤ_[p] T] (hN : Mod
     ext m m'
     rw [Matrix.mul_apply, Matrix.of_apply]
     conv_lhs => rw [← c.sum_repr (s m')]
-    simp only [map_sum, map_smul, smul_eq_mul, Matrix.of_apply, Module.Basis.toMatrix_apply, mul_comm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, smul_eq_mul, Matrix.of_apply, Module.Basis.toMatrix_apply, mul_comm]
   rw [hG, Matrix.det_mul] at h
   obtain ⟨h1, h2⟩ := c.is_basis_iff_det.2 (isUnit_of_mul_isUnit_right h)
   exact ⟨Module.Basis.mk h1 h2.ge, fun m => Module.Basis.mk_apply _ _ m⟩
@@ -76,7 +77,8 @@ variable [Algebra ℤ_[p] ℂ_[p]]
 theorem norm_pair_le (hf : ∀ x : ℤ_[p], ‖algebraMap ℤ_[p] ℂ_[p] x‖ ≤ 1) (e : LinearMap.BilinForm ℤ_[p] T)
     (s : Module.Basis (Fin N) ℤ_[p] T) (b : ℂ_[p] ⊗[ℤ_[p]] T) {r : ℝ} (hr : 0 ≤ r)
     (h : ∀ m, ‖e.baseChange ℂ_[p] b (1 ⊗ₜ s m)‖ ≤ r) (y : T) : ‖e.baseChange ℂ_[p] b (1 ⊗ₜ y)‖ ≤ r := by
-  rw [← s.sum_repr y, TensorProduct.tmul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← s.sum_repr y, TensorProduct.tmul_sum, map_sum]
   refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg hr fun m _ => ?_
   rw [TensorProduct.tmul_smul, ← algebraMap_smul ℂ_[p], map_smul, smul_eq_mul, norm_mul]
   exact (mul_le_of_le_one_left (norm_nonneg _) (hf _)).trans (h m)
@@ -98,12 +100,14 @@ theorem dot_inv_eq_zero (e : LinearMap.BilinForm ℤ_[p] T) (s : Module.Basis (F
   have h1 : (fun m => e.baseChange ℂ_[p] b' (1 ⊗ₜ s m)) = (G.transpose.map f) *ᵥ x' := by
     funext m
     conv_lhs => rw [hb']
-    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, hv, Matrix.mulVec,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, hv, Matrix.mulVec,
       dotProduct, Matrix.map_apply, Matrix.transpose_apply, mul_comm]
   rw [h1, Matrix.mulVec_mulVec, ← Matrix.map_mul, ← Matrix.transpose_mul, hH, Matrix.transpose_one,
     Matrix.map_one _ (map_zero f) (map_one f), Matrix.one_mulVec, ← hbb]
   conv_rhs => rw [hb']
-  simp only [map_sum, map_smul, smul_eq_mul, dotProduct, mul_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, smul_eq_mul, dotProduct, mul_comm]
 
 omit [Algebra ℤ_[p] ℂ_[p]] in
 

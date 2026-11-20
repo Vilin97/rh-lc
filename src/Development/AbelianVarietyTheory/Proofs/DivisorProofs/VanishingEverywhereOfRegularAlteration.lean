@@ -246,7 +246,8 @@ theorem form_eq_of_chart {σ : k →+* ℂ} {E E' : X.Modules} {r : ℕ} (m : Me
   have step (s t : Γ(E, V ⊓ c.U)) (h : ∀ a, m'.form (u.app _ (Twist.resM E inf_le_right (c.e a))) (u.app _ t) y =
       m.form (Twist.resM E inf_le_right (c.e a)) t y) : m'.form (u.app _ s) (u.app _ t) y = m.form s t y := by
     rw [← (c.isFrame.basis inf_le_right).sum_repr s]
-    simp only [map_sum, Scheme.Modules.Hom.app_smul, form_sum_left, IsFrame.basis_apply, h]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, Scheme.Modules.Hom.app_smul, form_sum_left, IsFrame.basis_apply, h]
   rw [← m.form_resM s t inf_le_left hW, ← m'.form_resM _ _ inf_le_left hW, ← Twist.app_resM, ← Twist.app_resM]
   refine step _ _ fun a => ?_
   rw [← m.conj_form, ← m'.conj_form]

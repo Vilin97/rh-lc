@@ -62,7 +62,8 @@ theorem mem_latHT_iff_sq : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E
     let s : ↥(intO ℂ_[p]) := ⟨∑ i, (h j i : ℂ_[p]) * a i, h1 j⟩
     have h3 : ∑ i, D i * b i = (s + ∑ i, δ i * b i) * (p : ↥(intO ℂ_[p])) ^ 2 := by
       apply (intO ℂ_[p]).subtype_injective
-      simp only [map_mul, map_pow, map_natCast, map_sum, map_add, Subring.subtype_apply, s, b]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_mul, map_pow, map_natCast, map_sum, map_add, Subring.subtype_apply, s, b]
       rw [← Finset.sum_add_distrib, Finset.sum_mul]
       refine Finset.sum_congr rfl fun i _ => ?_
       have := congrArg (intO ℂ_[p]).subtype (hδ i)

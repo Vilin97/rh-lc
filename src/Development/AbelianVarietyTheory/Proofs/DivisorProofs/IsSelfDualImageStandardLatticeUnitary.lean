@@ -8,7 +8,8 @@ namespace GlobalTheory.LatOrb
 theorem herm_mulVec_right {K : Type} [Field K] (σ : K →+* K)
     {n : ℕ} (g : Matrix (Fin n) (Fin n) K) (y u : Fin n → K) :
     herm σ y (g *ᵥ u) = herm σ ((g.map σ)ᵀ *ᵥ y) u := by
-  simp only [herm, mulVec, dotProduct, map_sum, map_mul, Matrix.transpose_apply, Matrix.map_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [herm, mulVec, dotProduct, map_sum, map_mul, Matrix.transpose_apply, Matrix.map_apply,
     Finset.mul_sum, Finset.sum_mul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl (fun j _ => Finset.sum_congr rfl (fun k _ => ?_))

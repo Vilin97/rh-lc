@@ -52,14 +52,16 @@ theorem coordMat_compat : ∀ {E : Type} [Field E] [NumberField E] [IsCMField E]
       (fun i => hA K x hU i) (ht.2.1 U U' f g hf hg K x hU hU' h a)
     have h3 := congrFun ((bf'.2 _ (bg.1 a)).unique h1 h2) k
     apply hinj
-    simp only [Matrix.of_apply, Matrix.map_apply, map_sum, map_mul] at h3 ⊢
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.of_apply, Matrix.map_apply, map_sum, map_mul] at h3 ⊢
     simp only [TangentOrigin.evalPt_res (x ≫ jB) inf_le_left hU h,
       TangentOrigin.evalPt_res (x ≫ jB) inf_le_right hU' h]
     exact h3
   refine (hf'.basis (inf_le_left : U ⊓ U' ≤ U)).ext_elem fun k => ?_
   have e1 (b : Fin r) : Twist.resM M' (inf_le_left : U ⊓ U' ≤ U) (f' b) = hf'.basis inf_le_left b :=
     (VB.IsFrame.basis_apply _ _ _).symm
-  simp only [map_sum, Twist.resM_smul, e1, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Twist.resM_smul, e1, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply,
     Finsupp.coe_smul, Pi.smul_apply, smul_eq_mul, Module.Basis.repr_self, Finsupp.single_apply, mul_ite, mul_one,
     mul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true]
   have := key k

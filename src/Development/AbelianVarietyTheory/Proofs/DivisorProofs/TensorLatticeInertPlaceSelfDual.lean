@@ -104,7 +104,8 @@ theorem exists_formFrame (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin
             rw [Finset.sum_comm]
             exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
         _ = σ ((Φ *ᵥ x) j) := by
-            rw [h2]; simp [Matrix.mulVec, dotProduct, map_sum, map_mul]
+            set_option synthInstance.maxHeartbeats 100000 in
+              rw [h2]; simp [Matrix.mulVec, dotProduct, map_sum, map_mul]
     rw [e]; exact GlobalTheory.AdelicU.SelfDual.sig_mem_range σ (hΦ x hx j)
   · rw [Matrix.transpose_mul, ← Matrix.mul_assoc, Matrix.mul_assoc _ (Φ.map σ)ᵀ, ← Matrix.transpose_mul,
       ← Matrix.map_mul, h1, Matrix.map_one _ (map_zero _) (map_one _), Matrix.transpose_one, Matrix.mul_one,
@@ -135,7 +136,8 @@ theorem trace_expand {k : ℕ} (s c : Fin k → 𝓞 E)
     rw [h1]
     simp_rw [mul_smul_comm, map_smul, ← map_mul, trace_inclR, smul_eq_mul]
     conv_lhs => rw [← hsc e]
-    rw [map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [inclR_smul, smul_smul]
   | add x y hx hy =>
@@ -170,7 +172,8 @@ theorem hTens_frame (σ : E →ₐ[F] E) {n d k k' : ℕ} (JA : Matrix (Fin n) (
     (j : Fin k) (l : Fin k') :
     hTens (cA σ) (incM F JA) (incM F JB) z (incM F (Matrix.vecMulVec (fun i => e * S i j) (fun i => S' i l))) =
       inclR (F := F) (AF F) (σ e) * (incM F (JA * S.map σ)ᵀ * z * (incM F (JB * S'.map σ)ᵀ)ᵀ) j l := by
-  simp only [hTens, incM, Matrix.map_apply, Matrix.mul_apply, Matrix.transpose_apply, Matrix.vecMulVec_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hTens, incM, Matrix.map_apply, Matrix.mul_apply, Matrix.transpose_apply, Matrix.vecMulVec_apply,
     cA_inclR, map_mul, map_sum, Finset.mul_sum, Finset.sum_mul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun b _ => ?_

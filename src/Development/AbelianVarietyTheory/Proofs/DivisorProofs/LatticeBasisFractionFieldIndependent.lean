@@ -69,7 +69,8 @@ theorem baseChange_eq_iSup_eigK : ∀ {E : Type} [Field E] [NumberField E] {c : 
     intro m
     have hm : m = ∑ k, m k • (Pi.single k (1 : R) : Fin n → R) := by
       ext i; simp [Finset.sum_apply, Pi.single_apply]
-    rw [hm, TensorProduct.tmul_sum, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hm, TensorProduct.tmul_sum, map_sum, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [TensorProduct.tmul_smul, ← algebraMap_smul (FractionRing R) (m k), map_smul, ← hbK, hgb,
       β.map_smulₛₗ, hsmul, hj]

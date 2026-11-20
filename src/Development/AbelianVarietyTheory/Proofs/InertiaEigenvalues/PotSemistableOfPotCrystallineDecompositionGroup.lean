@@ -59,7 +59,8 @@ theorem isPst_of_isCrys (T : LocTied l P AI) {K LL : FinExt l} {V : Type} [AddCo
     have h2 : (((toUr P ρ).symm (∑ j, c j • y j) : ↥(Dpst P ρ)) : V ⊗[ℚ_[l]] Bst P) =
         crisIncl P ↥LL.1 V (TensorProduct.comm ℚ_[l] P.R.B V
           (∑ j, algebraMap ↥(MaximalUnramifiedExtension l) P.R.B (c j) • (e j : P.R.B ⊗[ℚ_[l]] V))) := by
-      rw [map_sum, Submodule.coe_sum, map_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Submodule.coe_sum, map_sum, map_sum]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [← mulV_crisIncl_comm]
       rfl

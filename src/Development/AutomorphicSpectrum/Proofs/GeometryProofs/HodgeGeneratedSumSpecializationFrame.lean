@@ -69,7 +69,8 @@ theorem exists_dual_sup (𝔐 : HodgeCpt Y S y) (hind : iSupIndep 𝔐.Vgen) (q 
         have e2 : pr x = ∑ k, ((c' k : regAt 𝔐.ξ q) : Ω) • bb k := by
           rw [show pr x = ⟨x, hxs⟩ from hpr ⟨x, hxs⟩, ← hc']
           exact Finset.sum_congr rfl fun k _ => e1 k
-        simp only [LinearMap.comp_apply, e2, map_sum, map_smul, hgb, LinearMap.proj_apply]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [LinearMap.comp_apply, e2, map_sum, map_smul, hgb, LinearMap.proj_apply]
         refine sum_mem fun k _ => ?_
         rw [smul_eq_mul]
         refine mul_mem (c' k).2 ?_
@@ -107,6 +108,7 @@ theorem values_indep : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H
   choose g hg using hg
   refine Fintype.linearIndependent_iff.2 fun w hw j => ?_
   have := congrArg (g j) hw
-  simpa [map_sum, hg, Finset.sum_ite_eq] using this
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa [map_sum, hg, Finset.sum_ite_eq] using this
 
 end GlobalTheory.CompanionTheory.Ar.PeriodIndep

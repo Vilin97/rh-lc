@@ -115,7 +115,8 @@ theorem one_factor {b b' : Fin N → V}
     have hm : b (Fin.castLE hj a') ∈ span Ω (Set.range (b' ∘ Fin.castLE hj)) :=
       hb'.2.2 ▸ hb.2.2 ▸ subset_span ⟨a', rfl⟩
     obtain ⟨c, hc⟩ := (Submodule.mem_span_range_iff_exists_fun Ω).mp hm
-    simp only [S, Basis.toMatrix_apply, ← hc, Function.comp_apply, ← hB, map_sum, map_smul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [S, Basis.toMatrix_apply, ← hc, Function.comp_apply, ← hB, map_sum, map_smul,
       Basis.repr_self, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.smul_apply,
       Finsupp.single_apply, castLE_ne_tailIdx, if_false, smul_zero, Finset.sum_const_zero]
   have hF' : ∀ a, b' (Fin.castLE hj a) ∈ F := fun a => hb'.2.2 ▸ subset_span ⟨a, rfl⟩
@@ -136,7 +137,8 @@ theorem one_factor {b b' : Fin N → V}
     rw [quotWedge, quotWedge, ← this]
     congr 2
     funext q
-    rw [hexp, map_sum, sum_split hj]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hexp, map_sum, sum_split hj]
     have h0 : ∀ a, F.mkQ (S (Fin.castLE hj a) (tailIdx hj q) • b' (Fin.castLE hj a)) = 0 := fun a => by
       simpa using Or.inr (hF' a)
     simp only [h0, Finset.sum_const_zero, zero_add, map_smul]

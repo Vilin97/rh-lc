@@ -100,7 +100,8 @@ theorem integral_div_iff : ∀ (D : D7) (Q : Finset (Pl D.host.E)) (es : Pl D.ho
       have hs : ((∑ P ∈ Q, eI P * oToS D.host.F D.host.E (ϖ P) :
           Formalism.L2.Herm.intAf D.host.F D.host.E) : EAf D) =
           toEAf D (∑ P ∈ Q, es P * incA D ((ϖ P : D.host.E))) := by
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         push_cast
         apply Finset.sum_congr rfl
         intro P hP
@@ -118,7 +119,8 @@ theorem integral_div_iff : ∀ (D : D7) (Q : Finset (Pl D.host.E)) (es : Pl D.ho
       simp only [eI, dif_pos hP]
       exact GlobalTheory.TameProd.resS_idem_eq_zero (hid P hP) hPe _
   · intro hres
-    rw [map_sum, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_mul]
     refine Subring.sum_mem _ fun P hP => ?_
     have hmem : (⟨N, hN⟩ : Formalism.L2.Herm.intAf D.host.F D.host.E) ∈
         Ideal.map (oToS D.host.F D.host.E) P.asIdeal :=

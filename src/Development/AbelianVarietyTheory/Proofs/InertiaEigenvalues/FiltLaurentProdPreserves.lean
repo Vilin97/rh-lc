@@ -97,7 +97,8 @@ theorem filtLaurent_shift_line : ∀ (L : Type) [Field L] (M : Type) [AddCommGro
         · have h2 := congrArg φ h1
           rw [coeff_mul, Finset.Nat.sum_antidiagonal_eq_sum_range_succ
             (fun a b => coeff a p * coeff b (G (m + 1) + c (xs.getD m 0) • G m))]
-          rw [map_sum, map_smul] at h2
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [map_sum, map_smul] at h2
           simp only [filtLaurentDiag, LinearMap.coe_mk, AddHom.coe_mk, coeff_mk, hG, hw]
           rw [← smul_eq_mul, ← h2]
           refine Finset.sum_congr rfl fun j hj => ?_

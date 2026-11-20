@@ -30,7 +30,8 @@ theorem angleForm_eq_sum_coeff {D : ℕ} (n : ℕ) (a a' : V D → ℝ) (q : V D
       map_smul' := fun c η => (angleForm_props _ n a a' q η z).1 c }
   change L ξ = ∑ j, ξ j * L (EuclideanSpace.single j 1)
   conv_lhs => rw [vec_eq_sum_single_smul ξ]
-  simp only [map_sum, map_smul, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, smul_eq_mul]
 
 theorem sum_dbar_angleForm_single : ∀ (D n : ℕ) (a a' : V D → ℝ) (q : V D → ℂ) (z ξ : V D), ContDiffAt ℝ 2 a z → ContDiffAt ℝ 2 a' z → ContDiffAt ℝ 2 q z → 0 < a z → 0 < a' z → ∑ j, ∑ l, ξ j * dbar (CurveDens.angleForm n a a' q (EuclideanSpace.single j 1)) z (EuclideanSpace.single l 1) * starRingEnd ℂ (ξ l) = dbar (CurveDens.angleForm n a a' q ξ) z ξ := by
   intro D n a a' q z ξ ha ha' hq h0 h0'
@@ -46,7 +47,8 @@ theorem sum_dbar_angleForm_single : ∀ (D n : ℕ) (a a' : V D → ℝ) (q : V 
   generalize dbar (angleForm n a a' q (EuclideanSpace.single j 1)) z = T
   have hT : T ξ = ∑ l, starRingEnd ℂ (ξ l) * T (EuclideanSpace.single l 1) := by
     conv_lhs => rw [vec_eq_sum_single_smul ξ]
-    simp only [map_sum, map_smulₛₗ, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smulₛₗ, smul_eq_mul]
   rw [hT, Finset.mul_sum]
   exact Finset.sum_congr rfl fun l _ => by ring
 

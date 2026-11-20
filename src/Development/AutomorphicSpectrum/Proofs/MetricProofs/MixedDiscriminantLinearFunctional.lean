@@ -37,7 +37,8 @@ lemma prod_X_eq_monomial {d : ℕ} (τ : Fin d → Option (Fin 3)) :
 lemma linear_form_add_eq_sum (n : Fin 3 → ℝ) (v : ℝ) :
     lin4 n + C v * X none =
       ∑ j : Option (Fin 3), C (Option.elim j v n) * (X j : MvPolynomial (Option (Fin 3)) ℝ) := by
-  simp only [lin4, lin3, map_sum, map_mul, rename_X, rename_C, Fintype.sum_option, Option.elim_none,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [lin4, lin3, map_sum, map_mul, rename_X, rename_C, Fintype.sum_option, Option.elim_none,
     Option.elim_some]
   rw [add_comm]
   congr 1
@@ -85,7 +86,8 @@ theorem exists_functional : ∀ (d : ℕ) (T : Fin 3 → Matrix (Fin d) (Fin d) 
     rw [Finset.prod_mul_distrib, ← map_prod (C : ℝ →+* MvPolynomial (Option (Fin 3)) ℝ), prod_X_eq_monomial,
       C_mul_monomial, mul_one]
   simp only [hrow]
-  rw [← hΛ, MultilinearMap.map_sum, hprod, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hΛ, MultilinearMap.map_sum, hprod, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun r _ => ?_
   rw [MultilinearMap.map_smul_univ, hL, hg, smul_eq_mul, Complex.ofReal_prod]
   ring

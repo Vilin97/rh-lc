@@ -65,7 +65,8 @@ theorem intD_mul (hC : Q.InCurve) {f1 f2 : Lw X la G.w} (h1 : IntD G la f1) (h2 
     refine Finset.sum_congr rfl fun q _ => ?_
     rw [hg1, hg2]
     rfl
-  · rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum]
     refine ord_sum_nonneg hC ζ _ _ fun q _ => ?_
     rw [map_mul]
     exact ord_mul_nonneg hC ζ (ho1 _ ζ) (ho2 _ ζ)
@@ -122,7 +123,8 @@ theorem intD_sfr (hC : Q.InCurve) (u : Fin G.N → OsK X la G.w) (hu : uSpec G l
     by_cases hm : mq q.2 = 0
     · simp [hm]
     · have hn := hmq q.2 hm
-      simp only [hfk1, map_sum, map_prod, map_pow, Algebra.smul_def, map_mul,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hfk1, map_sum, map_prod, map_pow, Algebra.smul_def, map_mul,
         ← IsScalarTower.algebraMap_apply (Kp X la G.N) (Rp X la G.N) (Lw X la G.w)]
       rw [← hn, pow_add, ← Finset.prod_pow_eq_pow_sum]
       simp only [mul_pow, Finset.prod_mul_distrib]
@@ -131,12 +133,14 @@ theorem intD_sfr (hC : Q.InCurve) (u : Fin G.N → OsK X la G.w) (hu : uSpec G l
         rw [Finset.sum_mul]; exact Finset.sum_congr rfl fun k _ => by ring
       rw [e1]
       ring
-  · rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum]
     refine ord_sum_nonneg hC ζ _ _ fun q _ => ?_
     have := isDVRAt_of_curve Q hC ζ
     rw [map_mul, map_mul, map_intCast]
     refine ord_mul_nonneg hC ζ (ord_nonneg ζ hU (intCast_mem _ _)) (ord_mul_nonneg hC ζ ?_ ?_)
-    · rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [map_sum]
       refine ord_sum_nonneg hC ζ _ _ fun k _ => ?_
       rw [map_smul, hfk2, hc, algebraMap_smul, Algebra.smul_def]
       exact ord_mul_nonneg hC ζ (ord_nonneg ζ hU (Subalgebra.algebraMap_mem _ _)) (ho ζ k)
@@ -170,7 +174,8 @@ theorem good_mul (hC : Q.InCurve) {T : ℕ} {f : ↥(Frac0 X la G.w)} (hf : IntD
     refine Finset.sum_congr rfl fun q _ => ?_
     rw [Submodule.coe_smul]
     exact (congrArg (· * hasse X la G.w q.2 (x : Lw X la G.w)) (hg q.1)).symm
-  rw [e, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, map_sum]
   refine le_ordA_sum Q hC ζ _ _ _ fun q hq => ?_
   rw [LinearMap.map_smul, ← algebraMap_smul (OsK X la G.w) (g q.1)]
   refine le_ordA_smul_OsK Q hC ζ _ (ho q.1 ζ) _ _ ?_

@@ -12,7 +12,8 @@ theorem semilinear_coord_fixed {F D ι : Type*} [Field F] [AddCommGroup D] [Modu
     {b : ι → D} (hb : LinearIndependent F b) (σ : F → F) (T : D →+ D)
     (hT : ∀ c x, T (c • x) = σ c • T x) (hTb : ∀ i, T (b i) = b i) (c : ι → F)
     (h : T (∑ i, c i • b i) = ∑ i, c i • b i) (i : ι) : σ (c i) = c i := by
-  rw [map_sum] at h
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum] at h
   simp only [hT, hTb] at h
   exact Fintype.linearIndependent_iffₛ.mp hb _ _ h i
 
@@ -82,7 +83,8 @@ theorem mem_closure_mulV_of_finrank_eq : ∀ (l : ℕ) [Fact l.Prime] (P : LocPr
       exact congrArg Subtype.val this
     refine ⟨fun i => ⟨c i, hfix i, (c i).2⟩, ?_⟩
     have := congrArg val hc
-    rw [map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at this
     exact this
   have h1 : finrank ℚ_[l] ↥(S.restrictScalars ℚ_[l]) ≤ Fintype.card ↥b * finrank ℚ_[l] ↥(K0 K) := by
     refine (Submodule.finrank_mono hle).trans ((LinearMap.finrank_range_le f).trans ?_)
@@ -98,7 +100,8 @@ theorem mem_closure_mulV_of_finrank_eq : ∀ (l : ℕ) [Fact l.Prime] (P : LocPr
   rw [Subtype.range_coe] at htop
   obtain ⟨c, hc⟩ := hspan (toUr P ρ ⟨x, hx⟩) (htop ▸ Submodule.mem_top)
   have h4 := congrArg val hc
-  rw [map_sum] at h4
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum] at h4
   rw [← show _ = x from h4]
   exact sum_mem fun i _ => AddSubgroup.subset_closure ⟨c i, val i, hbS i.2, rfl⟩
 

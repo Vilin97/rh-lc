@@ -139,7 +139,8 @@ def HermitianForm.ofGram (H : Matrix ι ι A) (hH : IsHermitianFor (conjHom F A)
       simp only [Pi.smul_apply, smul_eq_mul, RingHom.id_apply, Finset.mul_sum]
       exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring)
   isSymm := ⟨fun x y => by
-    simp only [LinearMap.mk₂'ₛₗ_apply, conjHom_apply, map_sum, map_mul, conj_conj]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [LinearMap.mk₂'ₛₗ_apply, conjHom_apply, map_sum, map_mul, conj_conj]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
     have : conj F A (H j i) = H i j := congrFun (congrFun hH i) j

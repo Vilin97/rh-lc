@@ -89,10 +89,12 @@ def corePi {ι : Type*} [Fintype ι] {V : ι → Type*} [∀ c, AddCommGroup (V 
     (h : ∀ c, InnerProductSpace.Core ℂ (V c)) : InnerProductSpace.Core ℂ (∀ c, V c) where
   inner x y := ∑ c, (h c).inner (x c) (y c)
   conj_inner_symm x y := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun c _ ↦ (h c).conj_inner_symm _ _
   re_inner_nonneg x := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_nonneg fun c _ ↦ (h c).re_inner_nonneg _
   add_left x y z := by
     simp only [Pi.add_apply, (h _).add_left, Finset.sum_add_distrib]
@@ -143,7 +145,8 @@ def piMetric {ι : Type*} [Fintype ι] [DecidableEq ι] {E : ι → Type*} [∀ 
     HermitianMetric K' (∀ c, E c) where
   form σ := coreComap (corePi fun c ↦ (h c).form σ) (fibrePi σ E).toLinearMap (fibrePi σ E).injective
   form_conj σ x y := by
-    simp only [coreComap_inner, LinearEquiv.coe_coe, fibrePi_conjMap, corePi_inner, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [coreComap_inner, LinearEquiv.coe_coe, fibrePi_conjMap, corePi_inner, map_sum,
       (h _).form_conj]
 
 def formScale {E : Type*} [AddCommGroup E] [Module (𝓞 K') E] [Module.Finite (𝓞 K') E]

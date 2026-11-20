@@ -100,7 +100,8 @@ theorem isProj_sum (τ : ι) (e : (Fin N → ℕ) → Module.End O (NablaT O N l
     rw [MultilinearMap.toLinearMap_apply]
     exact he w x _ rfl
   rw [Finset.sum_congr rfl (fun w _ => key w)]
-  rw [← map_sum, MultilinearMap.toLinearMap_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum, MultilinearMap.toLinearMap_apply]
   have : ∑ w ∈ wtBox N lam τ, rowProj O N (res N (lam τ)) w (x τ) = x τ := by
     apply Subtype.ext
     rw [Submodule.coe_sum]

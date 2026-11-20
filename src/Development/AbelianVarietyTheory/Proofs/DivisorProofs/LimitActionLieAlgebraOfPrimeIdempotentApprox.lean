@@ -98,7 +98,8 @@ theorem dActX_mulVec_lieVec (hst : ∀ a : 𝓞 E, star a = H.bar a) (φ : 𝓞 
   have h := GlobalTheory.PowGerm.eigDirSt E H Dw l Xo c T io y Ch a ⟨τ, i⟩
   funext e
   have h3 := congrArg X.ιF (congrFun h e)
-  simp only [Matrix.mulVec, dotProduct, Pi.smul_apply, smul_eq_mul, map_sum, map_mul] at h3 ⊢
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mulVec, dotProduct, Pi.smul_apply, smul_eq_mul, map_sum, map_mul] at h3 ⊢
   simp only [dActX_apply, lieVec, jX, RingHom.comp_apply, hφ, ← Ch.gen.1.2.2.2.2.2.2]
   exact h3
 
@@ -185,7 +186,8 @@ theorem limActSt_of_epsSt (hε : EpsSt) : LimActSt := by
     have key : ∑ e', algebraMap X.O X.C (L e e') * lieVec Ch X ⟨τ, i⟩ e' - jX X t * lieVec Ch X ⟨τ, i⟩ e =
         (p : X.C) ^ N * algebraMap X.O X.C
           (∑ e', W e e' N * X.ι (Ch.uvecT ⟨τ, i⟩ e') + X.ι z * X.ι (Ch.uvecT ⟨τ, i⟩ e)) := by
-      simp only [hA N, add_mul, Finset.sum_add_distrib, he, map_add, map_sum, map_mul, ← hj, mul_add, Finset.mul_sum,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hA N, add_mul, Finset.sum_add_distrib, he, map_add, map_sum, map_mul, ← hj, mul_add, Finset.mul_sum,
         mul_assoc]
       simp only [lieVec]
       ring

@@ -49,7 +49,8 @@ theorem descend_eSum (D : D7) (T : TwR D.LL0 D.nd) (S : RatDat D.ntw) (In : RatI
     Φ ((∑ᶠ g : G0g D.nd, ((D.nexp.eLL0 g : ↥D.LL0) : D.what₂.LL) • actL D S j g) x) =
       eGT D T S In.rho In.chi i j b (Φ x) := by
   haveI : Fintype (G0g D.nd) := Fintype.ofFinite _
-  rw [finsum_eq_sum_of_fintype, LinearMap.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [finsum_eq_sum_of_fintype, LinearMap.sum_apply, map_sum]
   unfold eGT
   rw [MonoidAlgebra.lift_apply]
   simp only [eAlgT, MonoidAlgebra.coeff_ofCoeff]

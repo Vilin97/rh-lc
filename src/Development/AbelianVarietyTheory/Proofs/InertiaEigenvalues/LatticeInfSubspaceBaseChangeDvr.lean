@@ -106,17 +106,20 @@ private theorem mem_span_image_inf_ker {K F R : Type} [Field K] [NumberField K] 
     intro k
     have h := hβ k
     rw [Finset.mul_sum] at h
-    simp only [w, map_sub, map_sum, hρs, map_smul, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [w, map_sub, map_sum, hρs, map_smul, smul_eq_mul]
     rw [sub_eq_zero]
     conv_lhs => rw [← h]
     exact Finset.sum_congr rfl fun j _ => by ring
   have key : ∑ k, algebraMap R F (r k) * e (φ (a k)) = 0 := by
-    rw [← h0, ← hxg, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← h0, ← hxg, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [← hag k, ← algebraMap_smul F (r k) (iV (a k)), LinearMap.map_smul, smul_eq_mul, hψ]
   have hiw : ∀ k, iV (w k) = iV (a k) - ∑ j, (e (β j) * e (φ (a k))) • iV (a j) := by
     intro k
-    simp only [w, map_sub, map_sum, hρs, LinearMap.map_smulₛₗ, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [w, map_sub, map_sum, hρs, LinearMap.map_smulₛₗ, map_mul]
   have hx' : x = ∑ k, r k • iV (w k) := by
     simp only [hiw, smul_sub, Finset.sum_sub_distrib, Finset.smul_sum]
     have h2 : ∑ k, ∑ j, r k • (e (β j) * e (φ (a k))) • iV (a j) = 0 := by

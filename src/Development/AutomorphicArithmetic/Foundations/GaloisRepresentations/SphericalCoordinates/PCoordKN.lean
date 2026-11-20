@@ -47,7 +47,8 @@ private theorem exists_den_act (g : G.GAf) :
     intro i
     rw [map_nsmul, Finsupp.smul_apply, nsmul_eq_mul, KNLevel.isIntAf_iff]
     exact hden _ ⟨(k, i), rfl⟩
-  rw [← B.sum_repr z, map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← B.sum_repr z, map_sum, Finset.smul_sum]
   refine sum_mem fun k _ => ?_
   rw [LinearMap.map_smul, smul_comm m]
   exact smul_mem_laHat (KNLevel.repr_isIntAf b z hz k) (hy k)

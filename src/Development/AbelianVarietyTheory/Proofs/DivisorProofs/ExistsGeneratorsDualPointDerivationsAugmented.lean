@@ -32,7 +32,8 @@ theorem exists_generators_dual_point_derivations :
     refine ⟨∑ j, b.repr u j • x j,
       Submodule.sum_mem _ (fun j _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨j, rfl⟩)), ?_⟩
     have h1 : W.mkQ (∑ j, b.repr u j • x j) = ∑ j, b.repr u j • (b j : A ⧸ W) := by
-      simp [map_sum, hxq]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [map_sum, hxq]
     have h2 := congrArg Subtype.val (b.sum_repr u)
     push_cast at h2
     have hq : W.mkQ (∑ j, b.repr u j • x j) = W.mkQ y := by rw [h1, h2]

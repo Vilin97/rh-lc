@@ -174,17 +174,20 @@ theorem isPure_of_facts (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam D
     · exact attach_orth (A1 j hj) (A2 i hi) (vne j hj i hi hji)
   have hcAc : ∀ i ∈ s, cA D (∑ j ∈ s, a j) * cA D (a i) = cA D (a i) := by
     intro i hi
-    rw [map_sum, Finset.sum_mul, Finset.sum_eq_single i
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_mul, Finset.sum_eq_single i
       (fun j hj hji => attach_orth (A2 j hj) (A2 i hi) (vne j hj i hi hji)) (fun h => (h hi).elim),
       ← RingHom.map_mul, (ha i hi).1.1]
   have hAA : (∑ j ∈ s, a j) * (∑ j ∈ s, a j) = ∑ j ∈ s, a j := by
     rw [Finset.mul_sum]
     exact Finset.sum_congr rfl hAa
   have hAcA : (∑ j ∈ s, a j) * cA D (∑ j ∈ s, a j) = 0 := by
-    rw [map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.mul_sum]
     exact Finset.sum_eq_zero hAc
   have hAinf : infPart D (∑ j ∈ s, a j) = 0 := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_eq_zero fun j hj => GlobalTheory.SplitScalar.infPart_splitIdem (ha j hj).1
   have wsp : ∀ i ∈ s, _ := fun i hi =>
     hwave (a i) (ha i hi).1.1 (ha i hi).1.2.1 (GlobalTheory.SplitScalar.infPart_splitIdem (ha i hi).1)
@@ -253,7 +256,8 @@ theorem isPure_of_facts (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam D
         simp only [wave]
         rw [Finset.prod_mul_distrib]
         congr 1
-        · rw [← addChar_sum, show symplO S T t (∑ i ∈ s, (xy i).2) = ∑ i ∈ s, symplO S T t (xy i).2 from
+        set_option synthInstance.maxHeartbeats 100000 in
+          · rw [← addChar_sum, show symplO S T t (∑ i ∈ s, (xy i).2) = ∑ i ∈ s, symplO S T t (xy i).2 from
             map_sum (GlobalTheory.LatVac.symplHom S T t) _ _]
           congr 1
           refine Finset.sum_congr rfl fun i hi => ?_

@@ -63,7 +63,8 @@ theorem exists_periods (Fu : FamilyUnif Xo σ ty) (i : Fin Fu.n) (Pm : (Fu.Di i)
     refine congrArg Additive.ofMul (?_ : ev (o • r) = Fu.ex i Pm _)
     rw [h1, Fu.ex_lin i Pm hP, hev.2.1, h2]
   have hsum : e q = f ((N : ℂ)⁻¹ • Pm (∑ b, cf b • a (z b))) := by
-    rw [← hcf, map_sum, map_sum, Finset.smul_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hcf, map_sum, map_sum, Finset.smul_sum, map_sum]
     exact Finset.sum_congr rfl fun b _ => hlin _ _
   have h0 : f ((N : ℂ)⁻¹ • Pm (u - ∑ b, cf b • a (z b))) = 0 := by
     rw [map_sub, smul_sub, map_sub, ← hq', ← hsum, sub_self]

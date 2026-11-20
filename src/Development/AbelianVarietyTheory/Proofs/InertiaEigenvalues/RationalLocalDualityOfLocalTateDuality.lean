@@ -252,7 +252,8 @@ theorem exists_eq_of_nondeg {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValu
       have hker : lam (Ψ a) = 0 := hle ⟨a, rfl⟩
       rw [LinearMap.pi_apply_eq_sum_univ] at hker
       have : Φ a (w : W) = (d : O) • ∑ i, Ψ a i • lam (fun j => if i = j then 1 else 0) := by
-        simp only [w, Submodule.coe_sum, Submodule.coe_smul, map_sum, map_smul, Finset.smul_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [w, Submodule.coe_sum, Submodule.coe_smul, map_sum, map_smul, Finset.smul_sum]
         refine Finset.sum_congr rfl fun i _ => ?_
         rw [← hΨ, smul_comm, smul_eq_mul, ← hμ i, Algebra.smul_def, mul_comm]
       rw [this, hker, smul_zero]

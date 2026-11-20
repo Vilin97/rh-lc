@@ -92,14 +92,16 @@ theorem eventually_good (σ : E →ₐ[F] E) (hCM : IsCMExt F E σ) {d M n : ℕ
     refine sum_mem_intE bs v _ _ fun k _ => sum_mem_intE bs v _ _ fun l _ => ?_
     rw [Algebra.TensorProduct.tmul_mul_tmul]
     exact tmul_mem_intE bs v (mul_mem (he k) (he' l)) (h2 k l)
-  · rw [eq_sum_tmul bs (Fv F v) e, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [eq_sum_tmul bs (Fv F v) e, map_sum]
     refine sum_mem_intE bs v _ _ fun k _ => ?_
     have : sigR (Fv F v) σ ((Algebra.TensorProduct.basis (Fv F v) bs).repr e k ⊗ₜ[F] bs k) =
         (Algebra.TensorProduct.basis (Fv F v) bs).repr e k ⊗ₜ[F] σ (bs k) := by
       simp [sigR]
     rw [this]
     exact tmul_mem_intE bs v (he k) (h3 k)
-  · rw [eq_sum_tmul bs (Fv F v) e, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [eq_sum_tmul bs (Fv F v) e, map_sum]
     refine sum_mem fun k _ => ?_
     rw [GlobalTheory.CompanionTheory.SW.HermSd.trace_tmul]
     exact mul_mem (he k) (h4 k)
@@ -117,7 +119,8 @@ theorem diag_eq_halfTrace (σ : E →ₐ[F] E) (hCM : IsCMExt F E σ) (v : Heigh
   have h2 : e + e = algebraMap (Fv F v) (Fv F v ⊗[F] E) (Algebra.trace (Fv F v) (Fv F v ⊗[F] E) e) := by
     conv_lhs => rw [show e + e = e + sigR (Fv F v) σ e by rw [he]]
     rw [eq_sum_tmul bs (Fv F v) e]
-    simp only [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum]
     rw [← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun k _ => ?_
     have hs : sigR (Fv F v) σ ((Algebra.TensorProduct.basis (Fv F v) bs).repr e k ⊗ₜ[F] bs k) =

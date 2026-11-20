@@ -32,7 +32,8 @@ private theorem eig_chi_map {n : ℕ} {A B G : Type} [CommRing A] [CommRing B] [
 private theorem eig_pol {A B : Type} [CommRing A] [CommRing B] (f : A →+* B) (n q : ℕ) (a : ℕ → A) (b : ℕ → B)
     (h : ∀ j ≤ n, f (a j) = b j) : (Hi.heckePol n q a).map f = Hi.heckePol n q b := by
   unfold Hi.heckePol
-  rw [Polynomial.map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Polynomial.map_sum]
   refine Finset.sum_congr rfl fun j hj => ?_
   rw [Polynomial.map_mul, Polynomial.map_pow, map_X, map_C, map_mul, h j (Nat.lt_succ_iff.1 (Finset.mem_range.1 hj))]
   simp

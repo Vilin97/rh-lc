@@ -167,7 +167,8 @@ theorem apply_pairPol (HP : Hypotheses2) (hR : RegularAlteration) {k : Type} [Co
     exact bcPair_pull_of_eq hZ hγ v (((H a).pull F.π rfl).pull π₂ rfl) _ _
   have e₃ : Ψ ((∑ i, MvPolynomial.X (.inr (e.symm i)) ^ 2 - ∑ i, MvPolynomial.X (.inl (.inr (some i))) ^ 2) *
       rename Sum.inl (rename Sum.inl (vdm r) * rename Sum.inr (Vy * MvPolynomial.X none ^ n))) = 0 := by
-    rw [← hV, map_sum, Finset.mul_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hV, map_sum, Finset.mul_sum, map_sum]
     simp only [map_smul, mul_smul_comm, map_pow, smul_eq_mul, key, mul_sub, Finset.sum_sub_distrib, b₃, b₁, sub_zero,
       Finset.mul_sum]
     rw [Finset.sum_comm]
@@ -182,7 +183,8 @@ theorem apply_pairPol (HP : Hypotheses2) (hR : RegularAlteration) {k : Type} [Co
     have a₃ : (VMetric.det HX).icls = _ := HermLB.icls_eq_iff.2 ((VMetric.isometric_det_pull (HL.pull π rfl) ρ rfl).trans
       ((VMetric.isometric_det_pull HL π rfl).pull ρ rfl))
     have a₄ := congrArg (HermLB.IsomClass.pull W.π rfl) (a₂.trans a₃)
-    rw [map_sum] at a₄
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at a₄
     rw [a₁, HermLB.icls_pull _ W.π, HermLB.icls_pull _ ρ, HermLB.icls_pull N π, hN, map_neg, map_neg, map_neg, neg_neg]
     exact a₄
   have e₄ := apply_aeval HP.p4.arIso hW hΨ hΨ
@@ -210,12 +212,14 @@ theorem apply_pairPol (HP : Hypotheses2) (hR : RegularAlteration) {k : Type} [Co
         MvPolynomial (((Σ a, Fin (r a)) ⊕ Option (Fin g)) ⊕ (Σ a, Fin (r a))) ℝ) := by
       rw [rename_eq_aeval]; rfl
     rw [rename_vdm_unit fun i => Sum.inl (Sum.inr (some i)), e.symm.sum_comp fun z => MvPolynomial.X (Sum.inr z) ^ 2]
-    simp only [pairPol, Vy, map_mul, map_sum, map_prod, map_sub, map_pow, map_neg, rename_X, aeval_X, rename_rename,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [pairPol, Vy, map_mul, map_sum, map_prod, map_sub, map_pow, map_neg, rename_X, aeval_X, rename_rename,
       aeval_rename, Function.comp_def, Sum.elim_inl, Sum.elim_inr, reduceCtorEq, Sum.inl.injEq, Sum.inr.injEq, if_false,
       if_true, a₁]
     ring
   · congr 1
-    simp only [map_mul, map_sum, map_pow, rename_X]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_mul, map_sum, map_pow, rename_X]
     ring
   · rw [e₆]
     field_simp

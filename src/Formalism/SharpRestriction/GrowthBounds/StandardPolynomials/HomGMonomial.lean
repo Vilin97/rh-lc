@@ -66,7 +66,8 @@ theorem phi_plS (φ : MonH X →+ ℕ) (c : ℤ) :
       if nuS C0 CE1 CE2 mu X β j t.val < c ∧ c ≤ nuS C0 CE1 CE2 mu X β j (t.val + 1) then
         PS X j t * φ (Finsupp.single (phiS X j (t, Fin.castAdd X.m 0)) 1) else 0 := by
   unfold plS
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun t _ => ?_
   split_ifs
   · exact phi_single φ _ _

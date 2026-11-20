@@ -155,14 +155,17 @@ theorem ev_ring : ∀ (p : ℕ) [Fact p.Prime], ∀ (Ω : Type) [Field Ω] [Alge
           (by intro z hz; rw [Set.mem_singleton_iff] at hz; subst hz; exact hg) (hmem y)
       refine ev_of_fintype ψ _ _ _ (fun t => g (e t)) a
         (fun t => ⟨isInt_gal g (he t).1, isAlgZp_gal g (he t).2⟩) (fun r => ?_) ?_ ?_
-      · rw [hc r, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        · rw [hc r, map_sum]
         refine Finset.sum_congr rfl fun t _ => ?_
         rw [map_mul]
         congr 1
         exact g.commutes _
-      · rw [hx, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        · rw [hx, map_sum]
         exact Finset.sum_congr rfl fun t _ => by rw [map_mul, hfix]
-      · rw [hx', map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        · rw [hx', map_sum]
         exact Finset.sum_congr rfl fun t _ => by rw [map_mul, hfix]
 
 end GlobalTheory.Glue.EvRing

@@ -117,7 +117,8 @@ theorem slope_sq_sub_le_of_different_smul {K K' V V' : Type} [Field K] [NumberFi
     refine le_antisymm (Submodule.span_le.2 (hsM.trans (Submodule.span_le.2 ?_))) (Submodule.span_mono ?_)
     · rintro _ ⟨x, hx, rfl⟩
       obtain ⟨a, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun K).1 (hsp ▸ hx)
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       exact Submodule.sum_mem _ fun k _ => by
         rw [map_smulₛₗ]; exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨k, rfl⟩)
     · rintro _ ⟨k, rfl⟩; exact hιM _ (heL k)

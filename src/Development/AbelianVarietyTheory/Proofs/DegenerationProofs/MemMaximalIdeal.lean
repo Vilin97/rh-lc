@@ -78,7 +78,8 @@ theorem main : LL → ∀ (V : Type) [CommRing V] [IsDomain V] [IsDiscreteValuat
   obtain ⟨a, ha⟩ := AdaptedSpan.exists_comb hL.1.globalFns U hk σ cls f h₂ h₃ hσ h₅ h₆ h₇ (toGen U.toUnifPre k s)
   obtain ⟨d, b, hd, hb⟩ := exists_denom a
   have e : (d • (show SecG U.toUnifPre k from s)) = ∑ i, b i • σ i := toGen_injective U.toUnifPre k (by
-    rw [map_smulₛₗ, map_sum, ha, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_smulₛₗ, map_sum, ha, Finset.smul_sum]
     exact Finset.sum_congr rfl fun i _ => by rw [map_smulₛₗ, smul_smul, hb])
   refine GlobalTheory.SaturatedSections.existsUnique_comb
     (A := fun j => Γ(G.left, (LB.LinComb U.LG.L (K := Fin 1) (fun _ => 𝟙 G.left) (fun _ => (k : ℤ))).U j))

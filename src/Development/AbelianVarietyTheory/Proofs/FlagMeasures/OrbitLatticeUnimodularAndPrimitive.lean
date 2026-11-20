@@ -82,10 +82,12 @@ theorem pr_mem (v : (VS D).V) : pr X v ∈ Wb X := by
   intro b
   constructor
   · rw [pr_apply]
-    simp only [map_sub, map_sum, map_smul, X.ee, X.ef, smul_eq_mul, mul_zero, Finset.sum_const_zero, sub_zero,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sub, map_sum, map_smul, X.ee, X.ef, smul_eq_mul, mul_zero, Finset.sum_const_zero, sub_zero,
       mul_ite, mul_one, Finset.sum_ite_eq, Finset.mem_univ, if_true, sub_self]
   · rw [pr_apply]
-    simp only [map_sub, map_sum, map_smul, X.ff, hT_fe, smul_eq_mul, mul_zero, Finset.sum_const_zero, sub_zero,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sub, map_sum, map_smul, X.ff, hT_fe, smul_eq_mul, mul_zero, Finset.sum_const_zero, sub_zero,
       mul_ite, mul_one, Finset.sum_ite_eq', Finset.mem_univ, if_true, sub_self]
 
 theorem pr_eX (c : Fin D.R.rS) : pr X (X.eX c) = 0 := by
@@ -224,12 +226,14 @@ theorem lmap_unimod (Y : Full X) (u : D.what₂.Word) (Λ : Submodule (𝓞 D.ho
     have hw'f : ∀ b, (VS D).hT (f b) w' = 0 := by
       intro b
       rw [hw']
-      simp only [map_sub, map_sum, map_smul, hfe, smul_eq_mul, mul_ite, mul_one, mul_zero,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sub, map_sum, map_smul, hfe, smul_eq_mul, mul_ite, mul_one, mul_zero,
         Finset.sum_ite_eq', Finset.mem_univ, if_true, sub_self]
     have hw'e : ∀ b, (VS D).hT (X.eX b) w' = 0 := by
       intro b
       rw [hw']
-      simp only [map_sub, map_sum, map_smul, X.ee, (hwW b).1, smul_eq_mul, mul_zero, Finset.sum_const_zero,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sub, map_sum, map_smul, X.ee, (hwW b).1, smul_eq_mul, mul_zero, Finset.sum_const_zero,
         sub_zero]
     have hw'Λ : w' ∈ Λ := by
       rw [memΛ]
@@ -244,7 +248,8 @@ theorem lmap_unimod (Y : Full X) (u : D.what₂.Word) (Λ : Submodule (𝓞 D.ho
         intro a; rw [a_herm, (hL l hl a).1, star_zero]
       have e1 : (VS D).hT l w' = (VS D).hT l w := by
         rw [hw']
-        simp only [map_sub, map_sum, map_smul, hle, smul_zero, Finset.sum_const_zero, sub_zero]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sub, map_sum, map_smul, hle, smul_zero, Finset.sum_const_zero, sub_zero]
       have hpl : pW X l ∈ Lmap X u Λ := by
         rw [mem_Lmap, pW_coe, pr_apply]
         have e0 : ∑ a, (VS D).hT (X.eX a) l • X.fY a = 0 := by
@@ -259,7 +264,8 @@ theorem lmap_unimod (Y : Full X) (u : D.what₂.Word) (Λ : Submodule (𝓞 D.ho
       rw [hb_apply, pW_coe, pr_apply] at h2
       have e2 : (VS D).hT (l - ∑ a, (VS D).hT (X.fY a) l • X.eX a - ∑ a, (VS D).hT (X.eX a) l • X.fY a) w =
           (VS D).hT l w := by
-        simp only [map_sub, map_sum, LinearMap.sub_apply, LinearMap.sum_apply,
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sub, map_sum, LinearMap.sub_apply, LinearMap.sum_apply,
           LinearMap.map_smulₛₗ, LinearMap.smul_apply, (hwW _).1, (hwW _).2, smul_zero, Finset.sum_const_zero,
           sub_zero]
       rw [e1, ← e2]

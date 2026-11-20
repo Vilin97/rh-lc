@@ -123,13 +123,15 @@ theorem neg_mem (V : VF C) (g : Fin 2) (hodd : V.l ≠ 2) (x : ℕ → I g ⊕ J
     isCv_rescale_neg_one V hγ, isCv_rescale_neg_one V hlam, ?_, ?_⟩
   · intro i
     simp only [Pi.neg_apply]
-    rw [alongCv_rescale_eq_rescale_alongCv hγ0, hlg i, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [alongCv_rescale_eq_rescale_alongCv hγ0, hlg i, map_sum]
     refine Finset.sum_congr rfl fun c _ => ?_
     rw [tyS_neg_eq_rescale_neg_one_of_odd hl, powerSeries_rescale_smul]
   · intro q
     simp only [Pi.neg_apply]
     rw [tyS_neg_eq_rescale_neg_one_of_odd hl, hq q, alongCv_rescale_eq_rescale_alongCv hγ0]
-    simp only [tyS_neg_eq_rescale_neg_one_of_odd hl, map_add, map_sub, map_sum, apply_ite ⇑(PowerSeries.rescale (-1 : C)), map_zero,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [tyS_neg_eq_rescale_neg_one_of_odd hl, map_add, map_sub, map_sum, apply_ite ⇑(PowerSeries.rescale (-1 : C)), map_zero,
       powerSeries_rescale_smul]
 
 theorem sum_mem (V : VF C) (g : Fin 2) (h0 : (0 : ℕ → I g ⊕ JJ I g → C) ∈ X.TySet V g)

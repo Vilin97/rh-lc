@@ -124,7 +124,8 @@ private theorem aPoly_mulV_of_unit_place_monomials_ne_one (hSpan : Span) (hEig :
     intro x y
     unfold mulV
     simp [smul_add]
-  · rw [map_add, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_add, map_sum]
     simp only [map_smul, hf, smul_zero, Finset.sum_const_zero, zero_add]
     exact aeval_mapOp_dc_comm _ q f e
 

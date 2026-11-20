@@ -74,7 +74,8 @@ private theorem exists_mem_bilinForm_eq_of_selfDual {V : Type} [AddCommGroup V] 
   have hexp : ∀ (x : V) (y : L), B x y = ∑ j, (b.repr y j : ℚ) * B x (b j) := by
     intro x y
     conv_lhs => rw [← b.sum_repr y]
-    rw [Submodule.coe_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Submodule.coe_sum, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [Submodule.coe_smul, map_zsmul, zsmul_eq_mul]
   let G : Matrix _ _ ℤ := fun i j => ⌊B (b i) (b j)⌋
@@ -90,7 +91,8 @@ private theorem exists_mem_bilinForm_eq_of_selfDual {V : Type} [AddCommGroup V] 
       rw [show y = ((⟨y, hy⟩ : L) : V) from rfl, hexp]
       refine Finset.sum_eq_zero fun j _ => ?_
       have hj : B xL (b j) = ((∑ i, v i * G i j : ℤ) : ℚ) := by
-        simp only [xL, Submodule.coe_sum, Submodule.coe_smul, map_sum, map_zsmul,
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [xL, Submodule.coe_sum, Submodule.coe_smul, map_sum, map_zsmul,
           LinearMap.sum_apply, LinearMap.smul_apply, zsmul_eq_mul]
         push_cast
         simp [hG]
@@ -117,14 +119,16 @@ private theorem exists_mem_bilinForm_eq_of_selfDual {V : Type} [AddCommGroup V] 
   have hxb : ∀ j, B x (b j) = ψv j := by
     intro j
     rw [← hc]
-    simp only [x, map_sum, LinearMap.map_smul₂, LinearMap.sum_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [x, map_sum, LinearMap.map_smul₂, LinearMap.sum_apply,
       LinearMap.smul_apply, smul_eq_mul, Matrix.vecMul, dotProduct, Gq, Matrix.map_apply, hG]
   have hxy : ∀ y : L, B x y = ψ y := by
     intro y
     rw [hexp]
     simp only [hxb, ψv]
     conv_rhs => rw [← b.sum_repr y]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     push_cast
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_zsmul, zsmul_eq_mul]; push_cast; ring

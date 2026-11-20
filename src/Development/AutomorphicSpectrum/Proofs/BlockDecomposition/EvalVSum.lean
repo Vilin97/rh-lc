@@ -19,7 +19,8 @@ theorem eSF_eq (S : Finset (Pl F)) : eSF S = ((1, ∑ v ∈ S, singleFin v 1) : 
 open Classical in
 theorem evalV_sum (S : Finset (Pl F)) (u : Pl F) :
     evalV F u (∑ v ∈ S, singleFin v 1) = if u ∈ S then 1 else 0 := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   have hs : ∀ v : Pl F, evalV F u (singleFin v 1) = if u = v then 1 else 0 := by
     intro v
     have e1 : evalV F u (singleFin v 1) = (singleFin v (1 : Fv F v) : Af F) u := rfl

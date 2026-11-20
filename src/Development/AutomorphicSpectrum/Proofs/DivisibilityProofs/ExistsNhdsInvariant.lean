@@ -352,7 +352,8 @@ theorem tensor_insert {ι Q : Type} [DecidableEq ι] {Mo : ι → Type} [∀ i, 
     · obtain rfl : w = v := (Finset.mem_insert.1 hw).resolve_right hwT
       simp [e, hwT, ex, hc]
   have := congrArg (LinearMap.lTensor Q (PiTensorProduct.lift M)) h
-  simpa only [map_sum, LinearMap.lTensor_tmul, PiTensorProduct.lift.tprod, hM _ (hb hvT _), hM _ (hb' hvT _)] using this
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa only [map_sum, LinearMap.lTensor_tmul, PiTensorProduct.lift.tprod, hM _ (hb hvT _), hM _ (hb' hvT _)] using this
 
 end Tensor
 
@@ -439,7 +440,8 @@ theorem polMatch_move (hM' : G.M'.IsGood B.ψ) {v : GlobalTheory.IndefiniteRowSi
     change Function.update (φ' j) v (A (φ' j v)) w = _
     rw [Function.update_of_ne h]
     exact (h2 j).2.2 w fun h' => hw (Finset.mem_insert_of_mem h')
-  · rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum]
     exact Finset.sum_congr rfl fun j _ => opL_pure hM'.std (hc j) v A (f' j)
   · simp only [hpu]
     exact tensor_insert T v (Rf.p v (G.M.vac v)) _ (fun i w => Rf.p w (φ i w)) _ (fun j w => Rf.p' w (φ' j w))
@@ -458,7 +460,8 @@ theorem match_move (hM' : G.M'.IsGood B.ψ) {v : GlobalTheory.IndefiniteRowSideF
   have hg : ∀ j, opF v A (g' j) ∈ SB _ := fun j => opF_mem v A (fun φ _ => hSB φ) (hc' j).1
   have he : ∀ u : Fin m' → GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.SInf F (Fin a' × Fin (a + a')),
       opL v A (∑ j, pureA F (u j) (g' j)) = ∑ j, pureA F (u j) (opF v A (g' j)) := fun u => by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun j _ => opL_pureA v A _ _
   have hso := opL_so G.M' B.ψ hM' B.τ₁ τ hne A hA hΨ
   have hk' := fun k => opL_so G.M' B.ψ hM' B.τ₁ τ hne A hA (hk k).1

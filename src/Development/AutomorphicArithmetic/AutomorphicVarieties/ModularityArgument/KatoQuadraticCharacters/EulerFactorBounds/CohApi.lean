@@ -58,7 +58,8 @@ theorem UpperTheory.V.Z.Kato.Nb.sCohApi :
       symm
       refine Finset.sum_equiv (Equiv.mulRight (κ s)) (fun y => ?_) (fun y _ => rfl)
       simp
-    simp only [GlobalTheory.KA.push, e, Finset.sum_add_distrib, Finset.sum_sub_distrib, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [GlobalTheory.KA.push, e, Finset.sum_add_distrib, Finset.sum_sub_distrib, map_sum]
   · intro p hp hc z z' h
     have hd := (GlobalTheory.KZ.Betti.isDiam_sgD (l := l) hN.ne' hl.out.ne_zero (Nat.Coprime.coprime_mul_left_right hc)).1
     refine ⟨lin _ (fun a b hab => ?_) (sHeckeInv Ω ε X l N w n p hN hp hc) (sHeckeGal Ω ε X l N w n p hN hp hc) z z' h,

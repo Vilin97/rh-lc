@@ -118,7 +118,8 @@ theorem sImg_rel {Ω : Type} [Field Ω] {D N : ℕ} (j₀ : Fin (N + 1)) (x : Fi
   have hC : ∀ a : Ω, algebraMap (MvPolynomial (SVar D N) Ω) (OmS Ω D N) (C a) =
       algebraMap Ω (OmS Ω D N) a := fun a => by
     rw [← MvPolynomial.algebraMap_eq, ← IsScalarTower.algebraMap_apply]
-  simp only [sImg, sac_self, sac_succAbove, Fin.succ_ne_zero, if_false,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [sImg, sac_self, sac_succAbove, Fin.succ_ne_zero, if_false,
     ↓reduceIte, map_neg, map_sum, map_mul, hC]
   exact neg_add_cancel _
 
@@ -150,7 +151,8 @@ theorem bijOn_restrict {K Ω : Type} [Field K] [Field Ω] [Algebra K Ω] {D N : 
         rw [← MvPolynomial.algebraMap_eq]; exact (sHom (K := K) (D := D) j₀ x).commutes a,
         eval₂_C] at this
     · have := congrArg P (sImg_rel (D := D) j₀ x i)
-      simpa [map_sum, map_mul, hX P hP] using this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa [map_sum, map_mul, hX P hP] using this
   refine ⟨hmaps, ?_, ?_⟩
   · intro P₁ h₁ P₂ h₂ he
     have hm := hmaps h₁

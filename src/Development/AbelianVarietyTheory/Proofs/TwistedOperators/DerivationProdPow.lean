@@ -35,7 +35,8 @@ theorem derivation_det {A n : Type*} [CommRing A] [Algebra ℂ A] [DecidableEq n
     refine Finset.sum_congr rfl fun π _ => ?_
     rw [Units.smul_def]
     rfl
-  rw [key M, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [key M, map_sum]
   simp_rw [key, map_zsmul, derivation_prod D Finset.univ, Finset.smul_sum]
   conv_lhs => rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun π _ => ?_
@@ -86,7 +87,8 @@ theorem rowOp_eq_rowDer (z : Fin p × Fin r → σ) (a b : Fin p) (P : MvPolynom
     rowOp ℂ z a b P = rowDer z a b P := by
   rw [GlobalTheory.Capelli.rowOp_apply]
   unfold rowDer
-  rw [← Derivation.coeFnAddMonoidHom_apply, map_sum, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Derivation.coeFnAddMonoidHom_apply, map_sum, Finset.sum_apply]
   simp only [Derivation.coeFnAddMonoidHom_apply, Derivation.smul_apply, smul_eq_mul]
 
 theorem rowDer_X (z : Fin p × Fin r → σ) (hz : Function.Injective z) (a b c : Fin p) (k : Fin r) :

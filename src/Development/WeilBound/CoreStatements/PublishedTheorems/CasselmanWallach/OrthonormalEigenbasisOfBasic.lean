@@ -81,9 +81,11 @@ theorem orthonormal_eigenbasis_of_basic : A0 := by
     · simp
   refine ⟨?_, ?_, ?_, ?_⟩
   · intro x y
-    rw [← inner_conj_symm, hK, hK, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← inner_conj_symm, hK, hK, map_sum]
     refine Finset.sum_congr rfl fun a _ => ?_
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun b _ => ?_
     split_ifs <;> simp
   · intro μ v hv h0

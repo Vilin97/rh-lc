@@ -63,7 +63,8 @@ theorem loc_pr (T : ((κ → AF F) × (κ → AF F)) →ₗ[AF F] ((κ → AF F)
   rw [lf_pr, map_smul, pr_smul, rho_li, one_smul]
 
 theorem pr_dot (x y : κ → AF F) : (fun i => rho F (x i)) ⬝ᵥ (fun i => rho F (y i)) = rho F (x ⬝ᵥ y) := by
-  simp [dotProduct, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [dotProduct, map_sum]
 
 theorem trace_nondeg (a : mixedSpace F) (h : ∀ b, Algebra.trace ℝ (mixedSpace F) (a * b) = 0) : a = 0 := by
   let b : mixedSpace F := (fun w => (a.1 w)⁻¹, fun w => (a.2 w)⁻¹)

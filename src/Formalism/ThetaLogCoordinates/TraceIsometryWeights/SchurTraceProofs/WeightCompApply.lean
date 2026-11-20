@@ -26,7 +26,8 @@ theorem glAct_whe (LL : Letters N) (j : ℕ) (e : Fin n ↪o Fin r) (a b : Fin n
     (hx : x ∈ weightedHomogeneousSubmodule ℚ_[p] (fun x => (wv LL j x) ∘ e) ν) :
     glAct p LL j (e a) (e b) x ∈ weightedHomogeneousSubmodule ℚ_[p] (fun x => (wv LL j x) ∘ e) (ν + dl a b) := by
   classical
-  rw [x.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [x.as_sum, map_sum]
   refine Submodule.sum_mem _ fun d hd => ?_
   have hdw : Finsupp.weight (fun x => (wv LL j x) ∘ e) d = ν := hx (mem_support_iff.mp hd)
   rw [glAct_apply]
@@ -88,7 +89,8 @@ noncomputable def GAe (p : ℕ) [Fact p.Prime] (LL : Letters N) (j : ℕ) (e : F
   diag := by
     classical
     intro c μ x
-    rw [weightedHomogeneousComponent_apply, map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [weightedHomogeneousComponent_apply, map_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl fun d hd => ?_
     rw [glAct_diag_monomial, ← weight_comp_apply, (Finset.mem_filter.mp hd).2]
   shift := by
@@ -105,7 +107,8 @@ noncomputable def GAe (p : ℕ) [Fact p.Prime] (LL : Letters N) (j : ℕ) (e : F
       · by_contra hne
         exact h (Finset.mem_image.mpr ⟨d, mem_support_iff.mpr hne, rfl⟩)
     conv_lhs => rw [hx]
-    rw [map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum]
     have e' : ∀ ν, weightedHomogeneousComponent (fun x => (wv LL j x) ∘ e) μ
         (glAct p LL j (e a) (e b) (weightedHomogeneousComponent (fun x => (wv LL j x) ∘ e) ν x)) =
         if ν = μ - dl a b then

@@ -170,7 +170,8 @@ theorem exists_reproducing_kernel : ∀ (K : Type) [Group K] [TopologicalSpace K
     simpa [Basis.coord_apply, Function.comp_def] using this
   · intro k₀ k
     simp only
-    rw [hR, hexp, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hR, hexp, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_mul, mul_comm]
   · intro y
@@ -435,11 +436,13 @@ theorem weightedIntegral_mem_span_and_map_integral :
     have h1 : ∀ k, e k * L ⟨ρ k, Submodule.subset_span ⟨k, rfl⟩⟩
         = ∑ i, (e k * c i k) * L (b i) := by
       intro k
-      rw [hrep k, map_sum, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hrep k, map_sum, Finset.mul_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_smul, smul_eq_mul, mul_assoc]
     simp_rw [h1]
-    rw [integral_finset_sum _ (fun i _ => (hint i).mul_const _), map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [integral_finset_sum _ (fun i _ => (hint i).mul_const _), map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [integral_mul_const, map_smul, smul_eq_mul]
   set w : Submodule.span ℂ (Set.range ρ) := ∑ i, (∫ k, e k * c i k ∂ν) • b i with hw

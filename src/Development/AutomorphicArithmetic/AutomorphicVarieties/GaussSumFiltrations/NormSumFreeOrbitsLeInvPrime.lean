@@ -63,7 +63,8 @@ theorem norm_sum_free_orbits_le : ∀ (p : ℕ) [Fact p.Prime] (ι : Qbar p ≃+
       _ = (p : ℝ)⁻¹ := by ring
   have hsum : ∑ x ∈ s, Φ x = ∑ c ∈ s.image Φ, (s.filter (fun x => Φ x = c)).card • c :=
     Finset.sum_comp (fun c => c) Φ
-  rw [hsum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hsum, map_sum]
   generalize s.image Φ = T at key
   induction T using Finset.induction_on with
   | empty => simp

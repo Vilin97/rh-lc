@@ -48,11 +48,14 @@ theorem fock_map_of_ccr_dep : ∀ {V : Type} [AddCommGroup V] [Module ℂ V] {W 
   · exact (GlobalTheory.FockAlg.injective_of_pderiv (polEval m hm f₀) D hD (by rw [polEval_one]; exact hf₀)).comp hθ
   · intro c T
     rw [hH c, Fintype.sum_sigma]
-    simp only [LinearMap.comp_apply, sumPl, LinearMap.sum_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [LinearMap.comp_apply, sumPl, LinearMap.sum_apply, map_sum]
     refine Finset.sum_congr rfl fun w _ => ?_
     obtain ⟨L, hL⟩ := atPl_linear_dep (W := W) (Λ := fun w => Ix (P w) (Q w) × Ix (R w) (S w)) w
-    rw [heisOp_eq_sum_mul_pderiv, ← hL, map_sum]
-    simp only [LinearMap.sum_apply, map_sum, map_add, map_smul, LinearMap.add_apply, LinearMap.smul_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [heisOp_eq_sum_mul_pderiv, ← hL, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [LinearMap.sum_apply, map_sum, map_add, map_smul, LinearMap.add_apply, LinearMap.smul_apply]
     simp only [hL]
     refine Finset.sum_congr rfl fun l _ => ?_
     obtain ⟨hX, hY⟩ := hθ' w l T

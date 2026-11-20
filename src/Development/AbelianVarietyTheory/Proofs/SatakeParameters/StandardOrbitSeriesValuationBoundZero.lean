@@ -148,7 +148,8 @@ theorem uL_spec {σ : MaximalUnramifiedExtension l →+* MaximalUnramifiedExtens
     · exact hur_linTerm _ (norm_iter_le hσ hc _) _
     · exact hur_zero _
   · unfold uL
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_eq_zero fun s _ => ?_
     split_ifs <;> simp
 
@@ -160,7 +161,8 @@ theorem vL_spec {σ : MaximalUnramifiedExtension l →+* MaximalUnramifiedExtens
     · exact hur_zero _
     · exact hur_linTerm _ (norm_iter_le hσ hc _) _
   · unfold vL
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_eq_zero fun s _ => ?_
     split_ifs <;> simp
 
@@ -283,7 +285,8 @@ theorem subst_sumE {a : Bool × ι × Fin N0 × Fin N1 → MvPowerSeries (ZMod d
       ∑ e : ι × Fin N0 × Fin N1, MvPowerSeries.subst ![a (false, e), a (true, e)] B := by
   have hs := MvPowerSeries.hasSubst_of_constantCoeff_zero ha
   unfold sumE
-  rw [← MvPowerSeries.coe_substAlgHom hs, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← MvPowerSeries.coe_substAlgHom hs, map_sum]
   refine Finset.sum_congr rfl fun e _ => ?_
   rw [MvPowerSeries.coe_substAlgHom hs,
     MvPowerSeries.subst_comp_subst_apply (MvPowerSeries.hasSubst_of_constantCoeff_zero (fun _ => by simp)) hs]
@@ -295,7 +298,8 @@ theorem subst_sumE {a : Bool × ι × Fin N0 × Fin N1 → MvPowerSeries (ZMod d
 theorem cc_sumE (B : MvPowerSeries (Fin 2) ℂ_[l]) (h : MvPowerSeries.constantCoeff B = 0) :
     MvPowerSeries.constantCoeff (sumE (ι := ι) (N0 := N0) (N1 := N1) B) = 0 := by
   unfold sumE
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_eq_zero fun e _ => ?_
   rw [cc_subst (fun _ => by simp), h]
 

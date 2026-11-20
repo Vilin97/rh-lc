@@ -160,7 +160,8 @@ private lemma pow_le (W : WPres O (ℤ × ℤ) R) (h : W.HasOrigin) {A : Subalge
       exact lt_of_lt_of_le (by exact_mod_cast hlt) hf
     · rfl
   obtain ⟨b, hb, hbe⟩ := hμ (wcomp O W.wt j f) hsupp
-  rw [hbe, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hbe, map_sum]
   refine Submodule.sum_mem _ fun m hm => ?_
   have hmS := hμS hm
   have hmpart : W.π (monomial m 1) ∈ W.part j := by
@@ -414,7 +415,8 @@ private theorem crLin_proj [DecidableEq X] [GradedAlgebra 𝒜] (h : IsChart �
   classical
   symm
   conv_lhs => rw [← DirectSum.sum_support_decompose 𝒜 f]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_eq_single j
     (fun j' _ hj' => crLin_wt h i (by rw [hij]; exact fun e => hj' e.symm) (SetLike.coe_mem _)) ?_
   intro hj
@@ -467,11 +469,13 @@ private theorem expand [Fintype τ] (h : IsChart 𝒜 x wt φ) {g : τ → A}
     rw [if_neg hk, smul_zero] at this
     exact IsFractionRing.injective O (FractionRing O) (this.trans (map_zero _).symm)
   have hxq : x (c • p - ∑ k, a k • g k) = 0 := by
-    rw [map_sub, map_sum, map_smul, hp0, smul_zero, zero_sub, neg_eq_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_sum, map_smul, hp0, smul_zero, zero_sub, neg_eq_zero]
     exact Finset.sum_eq_zero fun k _ => by rw [map_smul, (hg k).2.1, smul_zero]
   have hcr : ∀ i, coeff (Finsupp.single i 1) (φ (c • p - ∑ k, a k • g k)) = 0 := by
     intro i
-    rw [← crLin_apply, map_sub, map_sum, map_smul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← crLin_apply, map_sub, map_sum, map_smul,
       Finset.sum_eq_single i (fun k _ hk => by rw [map_smul, (hg k).2.2.2 i (fun e => hk e.symm), smul_zero])
         (fun hi => absurd (Finset.mem_univ i) hi), map_smul]
     by_cases hi : wt i = j
@@ -512,7 +516,8 @@ private theorem chart_of_span [Fintype τ] (h1 : ∀ j, ∀ f ∈ 𝒜 j, φ f �
     obtain ⟨c, hc, a, ha⟩ := clear_den v
     have key : ∀ j, coeff (Finsupp.single j 1) (φ (∑ k, a k • G k)) = c • (Pi.single i 1 : τ → FractionRing O) j := by
       intro j
-      rw [← crLin_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← crLin_apply, map_sum]
       have e := congrFun hv j
       simp only [Matrix.mulVec, dotProduct] at e
       rw [← e, Finset.smul_sum]
@@ -528,7 +533,8 @@ private theorem chart_of_span [Fintype τ] (h1 : ∀ j, ∀ f ∈ 𝒜 j, φ f �
     obtain ⟨c, hc, a, hsq⟩ := hspan f hf
     have ha : (fun k => algebraMap O (FractionRing O) (a k)) = 0 := hinj _ (fun j => by
       have e := crLin_sq h2 j _ hsq
-      rw [map_sub, map_smul, crLin_apply, hcr j, smul_zero, zero_sub, neg_eq_zero, map_sum] at e
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, map_smul, crLin_apply, hcr j, smul_zero, zero_sub, neg_eq_zero, map_sum] at e
       rw [← e]
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [map_smul, Algebra.smul_def])
@@ -928,7 +934,8 @@ private theorem main {O R τ : Type} [CommRing O] [IsDomain O] [CommRing R] [Alg
     let Γ : τ → R := fun k => if (wt k).1 = 0 then (g k : R) else (g k : R) * (g b : R)
     have hΓ : ∀ a : τ → O, a b = 0 → ∑ k, a k • Γ k = A.val (∑ i : {i // i ≠ b}, a i.1 • G i) := by
       intro a hab
-      rw [Fintype.sum_eq_add_sum_subtype_ne _ b, hab, zero_smul, zero_add, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Fintype.sum_eq_add_sum_subtype_ne _ b, hab, zero_smul, zero_add, map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_smul]
       congr 1
@@ -967,7 +974,8 @@ private theorem main {O R τ : Type} [CommRing O] [IsDomain O] [CommRing R] [Alg
       refine ⟨c, hc, _, hN', hA', ?_⟩
       rw [← hsum]
       have e : W.A.val (c • W.zA s - ∑ k, a k • g k) = c • W.z s - ∑ k, a k • (g k : R) := by
-        rw [map_sub, map_smul, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sub, map_smul, map_sum]
         simp only [map_smul]
         rfl
       rw [← e]
@@ -1010,7 +1018,8 @@ private theorem main {O R τ : Type} [CommRing O] [IsDomain O] [CommRing R] [Alg
       let a : τ → O := fun k => a₁ k * a₂ b
       have hab : a b = 0 := by simp [a, hb1]
       have hsum : W.A.val ((∑ k, a₁ k • g k) * (a₂ b • g b)) = ∑ k, a k • Γ k := by
-        rw [map_mul, map_sum, Finset.sum_mul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_mul, map_sum, Finset.sum_mul]
         refine Finset.sum_congr rfl fun k _ => ?_
         by_cases hk : a₁ k = 0
         · simp [a, hk]

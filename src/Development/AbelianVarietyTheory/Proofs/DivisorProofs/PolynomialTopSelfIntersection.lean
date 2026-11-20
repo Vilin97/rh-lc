@@ -28,7 +28,8 @@ theorem pol_topSelf_comb_pull : ∀ (k : Type) [CommRing k] (X : Scheme.{0}) (p 
     simp only [Function.comp_apply, Int.coe_castAddHom]
     congr 2
     funext j
-    rw [CechPic.cls_pull (comb N n).isLB, GenFibreSecs.cls_comb, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [CechPic.cls_pull (comb N n).isLB, GenFibreSecs.cls_comb, map_sum]
     refine Finset.sum_congr rfl fun a _ => ?_
     rw [map_zsmul]
     simp only [c]

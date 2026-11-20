@@ -269,7 +269,8 @@ theorem isLev_psiTie {l : Level H} {Xo : Moduli Dw l} {c : Coeff l} {n : ℕ} (d
     intro y i P hP e
     have h1 : evR d.Xo₂ d.c₂ f y = ∑ j, d.eF (v j : c.F) • evR d.Xo₂ d.c₂ (χ j) y := by
       change evalL (K := d.c₂.F) (fun S _ _ => FrPt d.Xo₂ d.c₂ S) (fun φ y z => FrMap φ y z) y f = _
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       exact Finset.sum_congr rfl fun j _ => map_smul _ _ _
     rw [h1, Finset.sum_eq_single i]
     · rw [hval i y i P hP e, if_pos rfl, Algebra.smul_def, mul_one]

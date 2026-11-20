@@ -55,7 +55,8 @@ theorem sum_eOm [IsAlgClosed Ω] (ε : Ω →+* ℂ) (q : ℕ) (hq : 0 < q) (s :
     rw [eps_eOm, ← Complex.exp_nat_mul]
     congr 1
     push_cast; ring
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [hz]
   split_ifs with hd
   · have h1 : Complex.exp (2 * Real.pi * Complex.I * (s : ℂ)) = 1 := by

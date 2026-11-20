@@ -67,7 +67,8 @@ theorem ren_PhVF (hex0 : PowerSeries.constantCoeff ex = 0) (hl0 : PowerSeries.co
     (B : T → κ → ℂ_[p] × ℂ_[p]) (w : T → MvPowerSeries σ ℂ_[p]) (hw : ∀ e, constantCoeff (w e) = 0) :
     ren (p := p) r (PhVF l ex ph B w) = PhVF l ex ph B (fun e => ren r (w e)) := by
   unfold PhVF
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [ren_phAt r (cc_linF hex0 hl0 _ w hw), ren_lin r hl0 _ w hw]
 
@@ -84,12 +85,14 @@ theorem ren_GramRhs (hex0 : PowerSeries.constantCoeff ex = 0) (hl0 : PowerSeries
     ren (p := p) r (GramRhs l ex ph (fun j => B (E.symm j))) = GR l ex ph E B (fun x => X (r (E x))) := by
   unfold GramRhs GR
   simp only [Finset.sum_filter, Xv]
-  rw [map_add, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_add, map_sum, map_sum]
   congr 1
   · refine Fintype.sum_equiv E.symm _ _ fun j => ?_
     rw [map_mul, ren_C, ren_phAt r (constantCoeff_X j), ren_X, Equiv.apply_symm_apply]
   · refine Fintype.sum_equiv E.symm _ _ fun j => ?_
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Fintype.sum_equiv E.symm _ _ fun j' => ?_
     simp only [Equiv.apply_symm_apply]
     split_ifs

@@ -13,7 +13,8 @@ theorem norm_emb_entry_le_one (E : Type) [Field E] [NumberField E] [IsCMField E]
     Matrix.one_apply_eq] at hjj
   have h2 : ∑ k, ((‖τ (γ.1.val k j)‖ ^ 2 : ℝ) : ℂ) = 1 := by
     have := congrArg τ hjj
-    rw [map_sum, map_one] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_one] at this
     rw [← this]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_mul]

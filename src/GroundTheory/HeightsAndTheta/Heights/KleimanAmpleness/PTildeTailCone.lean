@@ -99,7 +99,8 @@ theorem mem_coneSupp {w : ConeLaurent S x} {d : ℤ} : d ∈ coneSupp w ↔ coef
 theorem sum_coneSingle (w : ConeLaurent S x) :
     ∑ c ∈ coneSupp w, coneSingle S x c (coeffAt S x c w) = w := by
   refine coneLaurent_ext fun d => ?_
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   by_cases hd : d ∈ coneSupp w
   · rw [Finset.sum_eq_single d (fun c _ hc => coeffAt_coneSingle_ne hc _) (fun h => absurd hd h),
       coeffAt_coneSingle_same]
@@ -140,7 +141,8 @@ def FinGradedSub.coneSub : Submodule (Poly S N) (ConeLaurent S x) where
   zero_mem' c := by rw [map_zero]; exact zero_mem _
   smul_mem' p w hw c := by
     change coeffAt S x c (p • w) ∈ M.piece c
-    rw [← sum_homogeneousComponent p, Finset.sum_smul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← sum_homogeneousComponent p, Finset.sum_smul, map_sum]
     refine Submodule.sum_mem _ fun e _ => ?_
     rw [coeffAt_smul_of_isHomogeneous (homogeneousComponent_isHomogeneous e p)]
     have := M.smul_mem e (c - e) _ _ (homogeneousComponent_isHomogeneous e p) (hw (c - e))

@@ -41,7 +41,8 @@ theorem pull_pair (π : Pic (A ⊗ A).left) {T T' : Over S} (g : T' ⟶ T) (x y 
 
 theorem pull_quad (π : Pic (A ⊗ A).left) (W : Matrix (Fin n) (Fin n) ℤ) {T T' : Over S} (g : T' ⟶ T)
     (x : Fin n → (T ⟶ A)) : pull g.left (quad π W x) = quad π W (fun u => g ≫ x u) := by
-  simp only [quad, map_sum, map_zsmul, pull_pair]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [quad, map_sum, map_zsmul, pull_pair]
 
 variable [GrpObj A] [IsCommMonObj A] {π : Pic (A ⊗ A).left}
   (hadd : ∀ (T : Over S) (x x' y : T ⟶ A), pair π (x * x') y = pair π x y + pair π x' y)
@@ -272,7 +273,8 @@ theorem principal_of_generic_of_ample_special : Out.Laws → Out.Laws2 → ∀ (
   have hLW' : cls L' hL' = quad (cls c'.P c'.isLB) W8 pr' := cls_linComb c'.isLB _ _ _
   have hiso : LBIso L' (L.pull ψ) := by
     refine (cls_eq_iff hL' (pull_isLB hL _)).1 ?_
-    rw [cls_pull hL, hLW, hLW', quad, quad, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [cls_pull hL, hLW, hLW', quad, quad, map_sum]
     exact Finset.sum_congr rfl fun uv _ => by rw [map_zsmul, hpair ψ _ _ _ _ (hpr uv.1) (hpr uv.2)]
   have := hG.smooth
   have := hG.geomConnected

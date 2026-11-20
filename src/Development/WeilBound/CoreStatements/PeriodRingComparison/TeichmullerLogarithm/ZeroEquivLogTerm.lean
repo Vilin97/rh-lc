@@ -46,7 +46,8 @@ theorem acrisNHom_log (u : Reformulated.AutPerF.Ainf l (NC l))
   have hsum : ∑ n ∈ Finset.range M, ACris.logTerm hx n =
       acrisNHom l (algebraMap _ (Reformulated.AutPerF.Acris l (NC l))
         (Reformulated.AutPerF.Acris.logPartial M u hu)) := by
-    rw [acrisNHom_algebraMap, Reformulated.AutPerF.Acris.logPartial, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [acrisNHom_algebraMap, Reformulated.AutPerF.Acris.logPartial, map_sum, map_sum]
     refine Finset.sum_congr rfl fun n _ => ?_
     rw [ACris.logTerm, zeroEquiv_logTerm l u hu hx n]
   rw [hsum, ← map_sub]

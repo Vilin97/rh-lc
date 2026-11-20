@@ -66,7 +66,8 @@ theorem norm_apply_le_infNorm (X : Matrix (Fin n) (Fin n) 𝔸[K]) (i j : Fin n)
 theorem mul_apply_fst_apply (X Y : Matrix (Fin n) (Fin n) 𝔸[K]) (i j : Fin n)
     (w : InfinitePlace K) : ((X * Y) i j).1 w = ∑ k, (X i k).1 w * (Y k j).1 w := by
   change Reduction.infEval w ((X * Y) i j) = ∑ k, Reduction.infEval w (X i k) * Reduction.infEval w (Y k j)
-  rw [Matrix.mul_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.mul_apply, map_sum]
   simp only [map_mul]
 
 theorem infNorm_mul_le (X Y : Matrix (Fin n) (Fin n) 𝔸[K]) :

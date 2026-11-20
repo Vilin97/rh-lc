@@ -144,7 +144,8 @@ theorem card_transport {k K : Type} [Field k] [CommRing K] [Algebra k K] (σ : K
   have key : ∀ r s, ffGram (FiniteFieldSplitting.swapR k) (J.map e) (fun r i ↦ e (X r i)) r s =
       e (ffGram (σ : K →+* K) J X r s) := by
     intro r s
-    simp only [ffGram, ffH, map_sum, map_mul, Matrix.map_apply, swapR_apply, ← he]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [ffGram, ffH, map_sum, map_mul, Matrix.map_apply, swapR_apply, ← he]
     rfl
   constructor
   · intro h

@@ -206,9 +206,11 @@ include hsig in
 theorem fst_hR (x y : Fin n → E ⊗[F] v.adicCompletion F) :
     p₁ sp (hR cm.sig J (v.adicCompletion F) x y) =
       pairing sp J (fun b => p₂ sp (x b)) (fun b => p₁ sp (y b)) := by
-  rw [pairing, Matrix.toBilin'_apply, hR, hform, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [pairing, Matrix.toBilin'_apply, hR, hform, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_mul, map_mul]
   have : p₁ sp (sigR cm.sig (v.adicCompletion F) (x i)) = p₂ sp (x i) := congrArg Prod.fst (hsig _)

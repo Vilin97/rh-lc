@@ -11,7 +11,8 @@ theorem UpperTheory.V.AlgRepEndIrreducible.holEq :
   have hsum : ∀ y : Matrix (Fin a) (Fin a) ℂ,
       L' (y.map (atEmb τ)) = ∑ i, ∑ j, L' (Matrix.single i j (atEmb τ (y i j))) := fun y => by
     conv_lhs => rw [Matrix.matrix_eq_sum_single (y.map (atEmb τ))]
-    simp only [map_sum, Matrix.map_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, Matrix.map_apply]
   have hL : ∀ (i j : Fin a) (w : ℂ), L' (Matrix.single i j (atEmb τ w)) =
       (w.re : ℂ) • L' (Matrix.single i j (atEmb τ 1)) +
         (w.im : ℂ) • L' (Matrix.single i j (atEmb τ Complex.I)) := fun i j w => by

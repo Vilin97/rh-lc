@@ -47,7 +47,8 @@ theorem mem_of_perp_perp {J : Matrix (Fin n) (Fin n) K} (hJ : Formalism.UG.IsHer
     intro z
     rw [hform_eq, star_star, dotProduct_mulVec, vecMul_vecMul,
       Matrix.nonsing_inv_mul _ (Ne.isUnit hd), vecMul_one]
-    conv_rhs => rw [← Finset.univ_sum_single z, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_rhs => rw [← Finset.univ_sum_single z, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     have : (Pi.single j (z j) : Fin n → K) = z j • (Pi.single j 1 : Fin n → K) := by
       rw [← Pi.single_smul, smul_eq_mul, mul_one]

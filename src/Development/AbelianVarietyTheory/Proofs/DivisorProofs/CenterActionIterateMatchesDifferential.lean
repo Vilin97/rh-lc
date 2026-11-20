@@ -294,7 +294,8 @@ theorem gelfG_right (ι : UJ ε →* G) {a : G} {k : UJ ε} (hk : ∀ h, ι h * 
     rw [← transpose_mul, show uMat k⁻¹ * uMat k = 1 from Units.inv_mul _, transpose_one]
   have key := GelfAd.trace_pow_comm (fun a b => derEnd ι (Matrix.single a b 1)) T _ _ hQP
     (fun a b => by
-      simp only [← map_smul, ← map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [← map_smul, ← map_sum]
       have e : ∑ c, ∑ d, ((uMat k⁻¹)ᵀ a c * (uMat k)ᵀ d b) •
           (Matrix.single c d 1 : Matrix (Fin n) (Fin n) ℂ) = uMat k⁻¹ * Matrix.single a b 1 * uMat k := by
         rw [matrix_eq_sum_single (uMat k⁻¹ * Matrix.single a b 1 * uMat k)]

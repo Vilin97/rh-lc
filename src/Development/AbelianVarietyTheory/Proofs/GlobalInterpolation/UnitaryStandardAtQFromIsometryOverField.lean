@@ -40,7 +40,8 @@ theorem main : ∀ (D : D7) (cc : Ideal (𝓞 D.host.K)) (δ : ℂ) (B : Base D 
         have e1 := form_u D B.L u hu (fun w => D.host.φ₀ ((B.γ₀.g x w : D.host.K) : D.host.E))
           (fun w => D.host.φ₀ ((B.γ₀.g y w : D.host.K) : D.host.E))
         rw [hG', hG'] at e1
-        rw [← B.γ₀.isom x y, map_sum, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [← B.γ₀.isom x y, map_sum, map_sum]
         simp only [map_mul, Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity.CU.emb_conj]
         exact e1 }
   refine ⟨γ, ⟨fun x hx => GlobalTheory.T.fourfoldLattice_isometry_denominator_coprime D cc δ B hcc q hqc u h1 h2 G hG' x hx,

@@ -51,7 +51,8 @@ theorem coef_unr_continuous : ∀ (l : ℕ) [Fact l.Prime] (r : ℕ), 0 < r → 
       apply Subtype.ext
       rw [← key, hψ, Fintype.linearCombination_apply]
       simp [hv]
-    rw [hxt, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hxt, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [Algebra.smul_def, map_mul, fr_q, mul_comm]
     rfl

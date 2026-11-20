@@ -364,7 +364,8 @@ theorem dividedContraction_succ_X_inl_mul (γ : ι → κ → R) (n : ℕ) (i : 
         dividedDeriv_add_single_X_mul, map_add, hX]
       congr 1
       rw [monomial_add_single, pow_one, mul_comm, map_mul, hE, commEval_X, Module.End.mul_apply]
-  simp only [dividedContraction, LinearMap.sum_apply, Module.End.mul_apply, ← hE, key,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dividedContraction, LinearMap.sum_apply, Module.End.mul_apply, ← hE, key,
     Finset.sum_add_distrib, Finset.mul_sum, map_sum]
   congr 1
   have hsum (β : ι →₀ ℕ) : Finset.univ.sum ⇑(β + Finsupp.single i 1 : ι →₀ ℕ) =

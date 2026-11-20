@@ -48,7 +48,8 @@ theorem exists_eigBasis_comb {K : Type} [CommRing K] {φ : c.F →+* K} {x : Sp 
   have hU : ∀ i a, actR Z.t.act a (U i) = φ (embK c τ a) • U i := fun i a => LieMet.tan_ext ((hu.1 i).2 a)
   let W : Fin m → TanM x Z.t.G := fun i => ∑ b, d i b • U b
   have hW : ∀ i a, actR Z.t.act a (W i) = φ (embK c τ a) • W i := fun i a => by
-    simp only [W, map_sum, map_smul, hU, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [W, map_sum, map_smul, hU, Finset.smul_sum]
     exact Finset.sum_congr rfl fun b _ => smul_comm _ _ _
   have hs : ∀ a : Fin m → K, ∑ i, a i • W i = ∑ b, Matrix.vecMul a d b • U b := fun a => by
     simp only [W, Finset.smul_sum, smul_smul, Matrix.vecMul, dotProduct, Finset.sum_smul]

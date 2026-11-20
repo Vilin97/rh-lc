@@ -26,7 +26,8 @@ private theorem UpperTheory.linearIndependent_distinct_characters {Γ W ι : Typ
     refine hli (fun j => c j * φ (y j)) ?_ i
     funext σ
     have h1 : φ (ρ σ (∑ j, c j • y j)) = 0 := by rw [hc, map_zero, map_zero]
-    rw [map_sum, map_sum] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum] at h1
     rw [Finset.sum_apply, Pi.zero_apply, ← h1]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_smul, he, map_smul, map_smul]

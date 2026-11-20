@@ -42,7 +42,8 @@ theorem card_fibre_compl {K V U : Type} [Field K] [Fintype K] [AddCommGroup V] [
     rw [LinearMap.mem_range, Submodule.mem_span_range_iff_exists_fun]
     refine exists_congr fun c => ?_
     show φ (∑ j, c j • z j) = u ↔ _
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [map_smul]
 
   have hin : Nat.card {x : V // x ∈ span K (Set.range z) ∧ φ x = a} = Nat.card {c : Fin k → K // ψ c = a} := by

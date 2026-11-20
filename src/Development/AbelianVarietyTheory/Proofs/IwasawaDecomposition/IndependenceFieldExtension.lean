@@ -20,7 +20,8 @@ theorem gs_zero' {X Y : Scheme.{0}} (f : Y ⟶ X) (y : Y) (U : X.Opens) : gs f y
 
 theorem gs_sum' {X Y : Scheme.{0}} (f : Y ⟶ X) (y : Y) (U : X.Opens) (h : f y ∈ U) {I : Type} (s : Finset I)
     (a : I → Γ(X, U)) : gs f y U (∑ i ∈ s, a i) = ∑ i ∈ s, gs f y U (a i) := by
-  simp only [gs_eq f y U h, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [gs_eq f y U h, map_sum]
 
 theorem gs_algX {Y : Scheme.{0}} {A : Type} [CommRing A] (q : Y ⟶ Spec (CommRingCat.of A)) (W : Y.Opens) (s : A)
     (y : Y) (hy : y ∈ W) :
@@ -49,14 +50,16 @@ theorem local_ascent (k K : Type) [Field k] [Field K] (ι : k →+* K) (X X' : S
     apply fn_ext
     intro z hz
     have hzV : φ z ∈ V := hz.1
-    simp only [t, map_sum, ReciprocityTheory.ChartRestriction.G.DVR.FlatBC.eTens_tmul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [t, map_sum, ReciprocityTheory.ChartRestriction.G.DVR.FlatBC.eTens_tmul]
     rw [gs_zero', gs_sum' _ _ _ hz, ← hv z (hVU hzV)]
     refine Finset.sum_congr rfl fun i _ => ?_
     have et := ReciprocityTheory.ChartRestriction.G.DVR.FlatBC.eTens_tmul p p' φ H V hV (ReciprocityTheory.ChartRestriction.G.DVR.rs hVU (B i)) (d i)
     erw [et]
     rw [gs_mul (𝟙 X') z _ hz, gs_appLE φ V _ _ _ z hz, gs_algX _ _ _ _ hz, gs_res φ z hVU hzV, mul_comm]
   have e := congrArg (fun q => TensorProduct.rid k Γ(X, V) (LinearMap.lTensor Γ(X, V) lam' q)) ht
-  simp only [t, map_sum, LinearMap.lTensor_tmul, TensorProduct.rid_tmul, map_zero] at e
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [t, map_sum, LinearMap.lTensor_tmul, TensorProduct.rid_tmul, map_zero] at e
   have e2 := congrArg (gs (𝟙 X) x V) e
   rw [gs_sum' _ _ _ hxV, gs_zero'] at e2
   rw [← e2]

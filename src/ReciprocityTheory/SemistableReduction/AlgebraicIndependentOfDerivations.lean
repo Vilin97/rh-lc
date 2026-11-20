@@ -26,7 +26,8 @@ theorem totalDegree_pderiv_lt {K ι : Type*} [CommRing K] (P : MvPolynomial ι K
   classical
   have hsum : pderiv i P = ∑ m ∈ P.support, pderiv i (monomial m (AddMonoidAlgebra.coeff P m)) := by
     conv_lhs => rw [P.as_sum]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
   rw [hsum]
   refine lt_of_le_of_lt (MvPolynomial.totalDegree_finsetSum _ _) ?_
   rw [Finset.sup_lt_iff hP]

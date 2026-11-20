@@ -232,7 +232,8 @@ theorem dof_al {F : Pt k 2 d} (iF : IP φ F) (hU : evP (n := 1) ![pt k d 0, 0] F
     (int_C (n := 1) (d := d) hβ)
   convert h using 1
   rw [al, GE.dof_sum]
-  simp only [GE.dof_C_mul, mul_sub, Finset.sum_sub_distrib, ← map_mul, ← map_sum, dotProduct]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [GE.dof_C_mul, mul_sub, Finset.sum_sub_distrib, ← map_mul, ← map_sum, dotProduct]
   ring
 
 theorem dof_dy {F : Pt k 2 d} (iF : IP φ F) (hU : evP (n := 1) ![pt k d 0, 0] F = pt k d 0)
@@ -262,7 +263,8 @@ theorem dof_dy {F : Pt k 2 d} (iF : IP φ F) (hU : evP (n := 1) ![pt k d 0, 0] F
     (int_C (n := 1) (d := d) hβ)
   convert h using 1
   rw [dy, GE.dof_sum]
-  simp only [GE.dof_C_mul, mul_sub, Finset.sum_sub_distrib, ← map_mul, ← map_sum, dotProduct]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [GE.dof_C_mul, mul_sub, Finset.sum_sub_distrib, ← map_mul, ← map_sum, dotProduct]
   ring
 
 theorem dmon_div {F : Pt k 2 d} (iF : IP φ F) (hU : evP (n := 1) ![pt k d 0, 0] F = pt k d 0)
@@ -282,7 +284,8 @@ theorem dmon_div {F : Pt k 2 d} (iF : IP φ F) (hU : evP (n := 1) ![pt k d 0, 0]
   have hS : ∀ G ∈ IntS φ 2 d, S G := fun G hG =>
     ⟨int_const hG, fun l => ⟨dd_int iF 0 (hu l) hG, dd_int iF 1 (hv l) hG⟩⟩
   have cD : ∀ a v, constantCoeff (DD F a v g) ∈ φ.range := fun a v => by
-    simp only [DD, map_sum, map_mul, c1, mul_zero, Finset.sum_const_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [DD, map_sum, map_mul, c1, mul_zero, Finset.sum_const_zero]
     exact zero_mem _
   have hS0 : ∀ l, S (DD F 0 (U l) g) := by
     intro l

@@ -81,7 +81,8 @@ theorem hasRes_last {F E : Type} [Field F] [NumberField F] [Field E] [NumberFiel
   rw [pullbackVector_mul_right]
   have e1 : adAt F P ((((k⁻¹ : GL (Fin n) (AfE F E)) : Matrix (Fin n) (Fin n) (AfE F E)) *ᵥ GlobalTheory.Mem.Col2.pullV y x) r) =
       ∑ j, adAt F P ((k⁻¹ : GL (Fin n) (AfE F E)).1 r j) * adAt F P (GlobalTheory.Mem.Col2.pullV y x j) := by
-    simp only [Matrix.mulVec, dotProduct, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, dotProduct, map_sum, map_mul]
   have e2 : b * cj r = ∑ j, (if j = r then b else 0) * cj j := by
     simp only [ite_mul, zero_mul, Finset.sum_ite_eq', Finset.mem_univ, if_true]
   rw [e1, e2]

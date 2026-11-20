@@ -55,7 +55,8 @@ theorem sigR_hR (R : Type) [CommRing R] [Algebra F R] (σ : E →ₐ[F] E) (hσ 
   have h3 : ∀ i j, sigR R σ (JR R J i j) = JR R J j i := by
     intro i j
     simp [sigR, JR, inclR, hJ j i]
-  simp only [hR, Formalism.UG.hform, map_sum, map_mul, h2, h3]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hR, Formalism.UG.hform, map_sum, map_mul, h2, h3]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   ring
@@ -65,7 +66,8 @@ theorem hermMap_hR {R R' : Type} [CommRing R] [Algebra F R] [CommRing R'] [Algeb
     Algebra.TensorProduct.map f (AlgHom.id F E) (hR R σ J x y) =
       hR R' σ J (fun i => Algebra.TensorProduct.map f (AlgHom.id F E) (x i))
         (fun i => Algebra.TensorProduct.map f (AlgHom.id F E) (y i)) := by
-  simp only [hR, Formalism.UG.hform, map_sum, map_mul, sigR_map]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hR, Formalism.UG.hform, map_sum, map_mul, sigR_map]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   simp [JR, inclR]
 

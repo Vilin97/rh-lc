@@ -52,7 +52,8 @@ theorem cocycle_decomp (hE : KHFreeEmbed.Statement) (hD : KHFreeDecomp.Statement
   obtain ⟨A, f, hA, rfl⟩ := hD S K ι c d n z hz.1
   refine ⟨A, f, hA, rfl, hI S K ι (n + 1) A (fun a => combD S (negSet a) n (f a)) ?_⟩
   have h0 : KH.cechD S ι _ n (∑ a ∈ A, embed S a n (f a)) = 0 := hz.2
-  rw [map_sum] at h0
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum] at h0
   simpa only [(hE S K ι _).1] using h0
 
 theorem part_cyclic (hC : KHCombContract.Statement) (hY : KHCombCyclic.Statement) (a : (Σ k, ι k) → ℤ) {n : ℕ}
@@ -209,7 +210,8 @@ theorem sections (hE : KHFreeEmbed.Statement) (hD : KHFreeDecomp.Statement) (hI 
   choose! m hm hmI using hpart
   refine ⟨∑ a ∈ A, m a, Submodule.sum_mem _ hm, fun I => ?_⟩
   rw [Finset.sum_apply]
-  rw [← LocalizedModule.mkLinearMap_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← LocalizedModule.mkLinearMap_apply, map_sum]
   exact Finset.sum_congr rfl fun a ha => by rw [hmI a ha, LocalizedModule.mkLinearMap_apply]
 
 end KHTheoremSFree

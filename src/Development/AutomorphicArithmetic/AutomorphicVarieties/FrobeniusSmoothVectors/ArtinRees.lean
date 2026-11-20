@@ -93,12 +93,15 @@ theorem UpperTheory.V.Fr.cone_u :
       intro g
       have h2 := Filter.eventually_all.2 fun i => (IsLocallyConstant.iff_eventually_eq _).1 (haB i N) g
       filter_upwards [h2] with g' hg'
-      simp only [Space.trB, map_sum, hg']
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Space.trB, map_sum, hg']
     · show res O S.B (∑ i, S.aB g i) = _
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       exact Finset.sum_congr rfl fun i _ => by rw [hres]; exact hdiag g i
     · show algebraMap S.B S.A (∑ i, S.aB g i) = _
-      rw [map_sum, Matrix.trace]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Matrix.trace]
       rfl
   · obtain ⟨-, -, -, -, hst⟩ := UpperTheory.V.Fr.star hF
     have hz : ∀ i : Fin n, (S.u.r F.g0 - S.u.r (F.star F.g0)) i i = S.u.r F.g0 i i - S.u.r F.g0 i.rev i.rev :=

@@ -277,7 +277,8 @@ theorem chiL_eq_psiG {x : X.B.I.Gf} (hx : Good X x) (hk : x ∈ X.K2) : chiL X x
       rw [hC]
       refine Finset.sum_congr rfl (fun i _ => ?_)
       split_ifs <;> rfl
-    rw [e, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, map_sum]
     refine Finset.sum_congr rfl (fun i _ => ?_)
     split_ifs <;> simp
   have hinner : ∀ (v : TR.Pl) (M : Matrix (Fin D.R.k) (Fin D.R.k) (TR.Fq v)) (i : Fin D.R.k),

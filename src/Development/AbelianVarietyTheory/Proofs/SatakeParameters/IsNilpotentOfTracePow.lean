@@ -7,7 +7,8 @@ namespace GlobalTheory.NilpotentOfTracePowers
 theorem trace_mul_aeval {K : Type} [Field K] {V : Type} [AddCommGroup V] [Module K V]
     (f : Module.End K V) (h : ∀ k : ℕ, 1 ≤ k → LinearMap.trace K V (f ^ k) = 0) (p : K[X]) :
     LinearMap.trace K V (f * aeval f p) = 0 := by
-  rw [Polynomial.aeval_eq_sum_range, Finset.mul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Polynomial.aeval_eq_sum_range, Finset.mul_sum, map_sum]
   refine Finset.sum_eq_zero fun i _ => ?_
   rw [mul_smul_comm, map_smul, ← pow_succ', h (i + 1) (by omega), smul_zero]
 

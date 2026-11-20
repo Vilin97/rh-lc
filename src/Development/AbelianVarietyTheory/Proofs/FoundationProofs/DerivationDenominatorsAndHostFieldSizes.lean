@@ -129,7 +129,8 @@ theorem exists_dual_pair : ∃ (m : ℕ) (w : Fin m → 𝓞 E) (w' : Fin m → 
     have : (y : E) = ∑ j, (RingOfIntegers.basis E).repr y j • b j := by
       conv_lhs => rw [← (RingOfIntegers.basis E).sum_repr y]
       simp [b, integralBasis_apply]
-    rw [this, Finset.mul_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [this, Finset.mul_sum, map_sum]
     simp only [mul_smul_comm, map_zsmul, hb]
     simp
   · let A : Matrix ι (E →ₐ[ℚ] ℂ) ℂ := Matrix.of fun i φ => φ (b' i)

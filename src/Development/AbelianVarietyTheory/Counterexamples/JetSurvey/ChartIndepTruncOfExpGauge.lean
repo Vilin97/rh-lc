@@ -86,7 +86,8 @@ theorem eq_sum_quadMat (q : MvPowerSeries (Fin 1 × Fin d) S) (hq : ∀ m, coeff
     intro p
     rw [mul_assoc, coeff_C_mul, X, X, monomial_mul_monomial, coeff_monomial]
     split_ifs <;> simp
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [hc]
   by_cases hm : m.degree = 2
   · obtain ⟨a, b, hab, rfl⟩ := exists_sq_of_degree_two m hm
@@ -137,7 +138,8 @@ theorem killAddVal : KillAddValSt := by
     rw [map_neg, map_smul, neg_smul]
     congr 2
     conv_lhs => rw [eq_sum_quadMat q hq2]
-    rw [map_sum, Fintype.sum_prod_type]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Fintype.sum_prod_type]
     simp only [map_mul, rename_C, rename_X, r]
   have hprod : ∏ b, rename (r b) (g b * PowerSeries.subst (-((k : S) • q)) (PowerSeries.exp S)) =
       Germ.FB.expS S (-((k : S)) • TB.quadCol (n := n) (quadMat q)) * ∏ b, rename (r b) (g b) := by

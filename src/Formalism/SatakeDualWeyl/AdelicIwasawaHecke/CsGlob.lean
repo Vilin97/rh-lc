@@ -127,7 +127,8 @@ theorem csGlob_approx (hA : Formalism.UG.CS.IntAdApprox) (D : 𝓞 F) (hD : D �
   choose ρ y hy hρ using fun j => hA F D hD (r j) (hr j)
   refine ⟨∑ j, algebraMap (𝓞 F) (𝓞 E) (ρ j) * bb j, ∑ j, algebraMap (𝓞 E) E (bb j) ⊗ₜ[F] y j,
     sum_mem fun j _ => levelaf_tmul_mem _ (hy j), ?_⟩
-  simp only [hρ, TensorProduct.tmul_add, Finset.sum_add_distrib, map_sum, Finset.mul_sum, levelafC,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hρ, TensorProduct.tmul_add, Finset.sum_add_distrib, map_sum, Finset.mul_sum, levelafC,
     Algebra.TensorProduct.tmul_mul_tmul, one_mul]
   congr 1
   refine Finset.sum_congr rfl fun j _ => ?_

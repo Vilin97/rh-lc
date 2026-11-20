@@ -150,18 +150,21 @@ theorem rho_lin {κ' : Type} [Fintype κ'] (c : κ' → K) (w : κ' → MvPowerS
   have hs : ∀ (σ : Type) (v : κ' → MvPowerSeries σ K), (∀ j, MvPowerSeries.constantCoeff (v j) = 0) →
       MvPowerSeries.constantCoeff (∑ j, MvPowerSeries.C (c j) * PowerSeries.subst (v j) g.l) = 0 := by
     intro σ v hv
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_eq_zero fun j _ => by rw [map_mul, cc_psubst _ hl0 (hv j), mul_zero]
   have e : rho (ι' := ι') (∑ j, MvPowerSeries.C (c j) * PowerSeries.subst (w j) g.l) =
       ∑ j, MvPowerSeries.C (c j) * PowerSeries.subst (rho (ι' := ι') (w j)) g.l := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun j _ => by rw [map_mul, rho_C, rho_psubst _ (hw j)]
   rw [rho_psubst _ (hs _ w hw), e]
 
 theorem rho_PhOn {κ : Type} [Fintype κ] (b : ι ⊕ ι → κ → K × K) :
     rho (ι' := ι') (g.PhOn b) = g.PhV b (fun e => MvPowerSeries.X (Sum.inl e)) := by
   unfold Dat.PhOn Dat.PhV
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   have hX : ∀ e : ι ⊕ ι, MvPowerSeries.constantCoeff (MvPowerSeries.X e : MvPowerSeries (ι ⊕ ι) K) = 0 :=
     fun e => MvPowerSeries.constantCoeff_X e
@@ -169,7 +172,8 @@ theorem rho_PhOn {κ : Type} [Fintype κ] (b : ι ⊕ ι → κ → K × K) :
       (g.lin (fun e => (b e k).1) (fun e => (MvPowerSeries.X e : MvPowerSeries (ι ⊕ ι) K))) = 0 := by
     unfold Dat.lin Dat.pt Dat.lg
     refine cc_psubst _ hex0 ?_
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_eq_zero fun j _ => by rw [map_mul, cc_psubst _ hl0 (hX j), mul_zero]
   unfold Dat.phAt
   rw [rho_psubst _ hlin, rho_lin g hex0 hl0 _ _ hX]
@@ -179,7 +183,8 @@ theorem rho_beSum :
     rho (ι' := ι') (g.beSum ι) = ∑ e : ι, g.be (MvPowerSeries.X (Sum.inl (Sum.inl e)))
       (MvPowerSeries.X (Sum.inl (Sum.inr e))) := by
   unfold Dat.beSum
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun e _ => ?_
   rw [rho_be g hex0 hl0 (MvPowerSeries.constantCoeff_X _) (MvPowerSeries.constantCoeff_X _), rho_X, rho_X]
 

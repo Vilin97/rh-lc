@@ -410,7 +410,8 @@ theorem mem_flagN_bes (B : BesLev D ρ) (s : k) (FA : Frame k B.A.rank n) (F : F
       exact Finset.sum_congr rfl fun u _ => by rw [h₀.1]; rfl
     · refine (hz _ rfl r).trans (congrArg (s * ·) ?_)
       change Witness.prH p (∑ u, B.d.i₀ r u * vecB B.o B.ζ u) = (B.d.i₀.map (Witness.prH p) * F₀.β) r (Sum.inr ())
-      rw [Matrix.mul_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Matrix.mul_apply, map_sum]
       exact Finset.sum_congr rfl fun u _ => by rw [h₀.2, one_mul, RingHom.map_mul]; rfl
     · exact hX i _ rfl r
     · exact hY i _ (by simp only; omega) r

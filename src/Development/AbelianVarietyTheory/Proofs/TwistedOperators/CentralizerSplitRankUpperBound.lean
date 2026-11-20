@@ -62,7 +62,8 @@ theorem splitRankUpper (hL : SubtorusLaurent) (hM : CharacterMonomial) (hP : Sep
     intro i
     refine hM F (AlgebraicClosure F) s ((ψ i : _ →+* AlgebraicClosure F).toMonoidHom.comp uu) S
       (fun a => ψ i (ρ (C a))) (fun t => ?_)
-    simp only [MonoidHom.coe_comp, Function.comp_apply, RingHom.toMonoidHom_eq_coe,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [MonoidHom.coe_comp, Function.comp_apply, RingHom.toMonoidHom_eq_coe,
       MonoidHom.coe_coe, RingHom.coe_coe, huu, hC t, map_sum, map_smul]
   choose a ha using hmono
   have hconj : ∀ i t, ψ i (uu t) * ψ i (lConj σ J (γ : Matrix n n E) F (uu t)) = 1 := by

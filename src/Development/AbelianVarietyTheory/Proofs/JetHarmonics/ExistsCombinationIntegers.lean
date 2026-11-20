@@ -53,7 +53,8 @@ theorem nabValN_algebraMap (S S' : Type) [CommRing S] [Algebra ℚ S] [CommRing 
     fin_cases j
     exact baseChange_pt ψ b
   unfold nabValN
-  rw [← MvPowerSeries.constantCoeff_map, ← GlobalTheory.dpolyN_map, eF, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← MvPowerSeries.constantCoeff_map, ← GlobalTheory.dpolyN_map, eF, map_mul,
     map_expS _ _ (by
       rw [MvPowerSeries.smul_eq_C_mul, map_mul, map_sum, Finset.sum_eq_zero fun b _ => cb b, mul_zero]),
     MvPowerSeries.smul_eq_C_mul, MvPowerSeries.smul_eq_C_mul, map_mul, map_C, map_natCast ψ, map_sum,

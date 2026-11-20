@@ -39,7 +39,8 @@ private theorem transpose_rho_mul_herm_eq_herm_mul_bar {O : Type} [Ring O] {bar 
     rw [← Matrix.mulVec_mulVec]
     congr 2
     funext i
-    simp [Matrix.mulVec, dotProduct, map_sum, Pi.star_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Matrix.mulVec, dotProduct, map_sum, Pi.star_apply]
   set A := (ρ x)ᵀ * M₀ - M₀ * (ρ (bar x)).map star with hA
   have key : ∀ p q : D.La, (P₀ p ⬝ᵥ A *ᵥ star (P₀ q)).im = 0 := by
     intro p q

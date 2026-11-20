@@ -170,7 +170,8 @@ theorem isNoetherianRing_holGerms_option (hD : WeierstrassDivision.Statement)
       simp only [Subring.coe_mul, Subring.coe_pow, hι]
       change (↑g : Germ (𝓝 (0 : Option σ → ℂ)) ℂ) = Germ.coeRingHom _ (q ∘ A.symm) * Germ.coeRingHom _ f +
         ∑ j : Fin d, Germ.coeRingHom _ (a j ∘ Pl) * Germ.coeRingHom _ (Tl : (Option σ → ℂ) → ℂ) ^ (j : ℕ)
-      simp only [← map_mul, ← map_pow, ← map_sum, ← map_add]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [← map_mul, ← map_pow, ← map_sum, ← map_add]
       refine Germ.coe_eq.2 ?_
       filter_upwards [hev'] with y hy
       simp [hy, Finset.sum_apply]

@@ -232,7 +232,8 @@ theorem ops_splitC (i : Fin D.R.m) (hi : Function.Injective (R.HW i (sg0 D A)).e
     (hw : ∀ j, h P (Finsupp.single (splitLab n j) 1) w = a j • w) :
     h P (GlobalTheory.Hk3.splitC n z) w = (∑ j ∈ Finset.range (n + 1), z j * a j) • w := by
   apply hi
-  rw [hW _ hP, hk_splitC, postOn_sum, Finset.sum_smul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hW _ hP, hk_splitC, postOn_sum, Finset.sum_smul, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [← hW _ hP, hw, mul_smul, map_smul, map_smul, map_smul]
 

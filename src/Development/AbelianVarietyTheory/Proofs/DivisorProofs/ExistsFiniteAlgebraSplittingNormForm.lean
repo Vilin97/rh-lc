@@ -27,15 +27,18 @@ theorem map_normForm_eq_prod (K L Ω : Type) [Field K] [Field L] [Algebra K L] [
     ext1 j k
     have h (i : Fin m) : e j (x i) * e j (b k) =
         ∑ l, e j (b l) * algebraMap K Ω (Algebra.leftMulMatrix b (x i) l k) := by
-      rw [← map_mul, ← b.sum_repr (x i * b k), map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← map_mul, ← b.sum_repr (x i * b k), map_sum]
       refine Finset.sum_congr rfl fun l _ => ?_
       rw [map_smul, Algebra.leftMulMatrix_eq_repr_mul, Algebra.smul_def, mul_comm]
     rw [Matrix.diagonal_mul, Matrix.mul_apply]
-    simp only [V, Matrix.of_apply, Matrix.map_apply, RingHom.mapMatrix_apply, Matrix.sum_apply, Matrix.smul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [V, Matrix.of_apply, Matrix.map_apply, RingHom.mapMatrix_apply, Matrix.sum_apply, Matrix.smul_apply,
       smul_eq_mul, map_sum, map_mul, map_X, map_C, Finset.mul_sum, Finset.sum_mul, mul_assoc]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun i _ => ?_
-    rw [mul_left_comm, ← C_mul, h, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [mul_left_comm, ← C_mul, h, map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun l _ => ?_
     rw [C_mul]
     ring
@@ -110,7 +113,8 @@ theorem exists_finite_split_normForm : ∀ (A B K L : Type) [CommRing A] [IsDoma
     have hQ : Q.map (algebraMap R (AlgebraicClosure K)) =
         (normForm K L (fun i => algebraMap B L (g i))).map (algebraMap K (AlgebraicClosure K)) := by
       rw [map_normForm_eq_prod K L _ e]
-      simp only [Q, map_prod, map_sum, map_mul, map_C, map_X]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Q, map_prod, map_sum, map_mul, map_C, map_X]
       rfl
     set N := normForm K L (fun i => algebraMap B L (g i))
     have hcoef : ∀ n, ∃ a : A, algebraMap A K a = N.coeff n := by

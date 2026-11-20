@@ -135,7 +135,8 @@ theorem constantCoeff_invDer_X (μ : Fin d → MvPowerSeries (Fin d ⊕ Fin d) R
     intro k
     rw [← coeff_zero_eq_constantCoeff_apply, coeff_pderiv, zero_add, coeff_inr_of_unit μ hunit hswap]
     simp
-  simp only [invDer, subst_X hμ, map_sum, smul_eq_C_mul, map_mul, constantCoeff_C,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [invDer, subst_X hμ, map_sum, smul_eq_C_mul, map_mul, constantCoeff_C,
     constantCoeff_atZero, hp]
   simp
 
@@ -315,7 +316,8 @@ theorem constantCoeff_iterate_invDer_monomial : ∀ (R : Type) [CommRing R] (d :
           · simp
         rw [hp]
         ring
-    rw [Function.iterate_succ_apply, hD, hL, map_add, map_sum, ← hL, map_add, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Function.iterate_succ_apply, hD, hL, map_add, map_sum, ← hL, map_add, map_sum]
     simp only [← hL]
     rw [hG0, add_zero, Finset.sum_congr rfl (fun j _ => hterm j), ← Finset.sum_mul]
     have hs : (∑ j, (α j : R)) = ((n + 1 : ℕ) : R) := by

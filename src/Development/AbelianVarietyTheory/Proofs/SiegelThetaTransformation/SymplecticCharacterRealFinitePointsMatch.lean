@@ -93,7 +93,8 @@ theorem sum_EF (C : Ctx S T) (y y' : Matrix (Fin S.rank) (Fin T.rank) D.host.E) 
     ∑ k, EF C.X (y k) (y' k) = -Algebra.trace ℚ D.host.F
       (Algebra.trace D.host.F D.host.E (D.host.xi0 * GlobalTheory.LatVac.hRat S T yᵀ y'ᵀ)) := by
   simp only [GlobalTheory.ThFr.EF_def]
-  rw [← map_sum, ← Finset.mul_sum, ← hRat_eq C, C.m.ka, Algebra.trace_trace,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum, ← Finset.mul_sum, ← hRat_eq C, C.m.ka, Algebra.trace_trace,
     show -(2 * D.host.xi0 / 2) * GlobalTheory.LatVac.hRat S T yᵀ y'ᵀ = -(D.host.xi0 * GlobalTheory.LatVac.hRat S T yᵀ y'ᵀ) by ring,
     map_neg]
 
@@ -114,7 +115,8 @@ theorem re_match {m n : ℕ} (ξ : ℂ) (Q : Fin m → Fin m → ℂ) (x y : Fin
   have key : ∀ k, conj (-ξ) * ∑ a, ∑ b, conj (x a k) * conj (Q b a) * conj (conj (y b k)) =
       conj (-ξ * ∑ a, ∑ b, x a k * Q b a * conj (y b k)) := by
     intro k
-    simp only [map_mul, map_sum, map_neg]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_mul, map_sum, map_neg]
   simp only [key, Complex.conj_re, neg_mul, Complex.neg_re, mul_neg, Finset.sum_neg_distrib, neg_inj]
   rw [← Finset.mul_sum, ← Complex.re_sum, ← Finset.mul_sum]
 

@@ -60,12 +60,14 @@ theorem form_eq (a b : V) : B a b = formL d a b := rfl
 include d in
 theorem form_sum_left {ι : Type} (s : Finset ι) (t : ι → R) (v : ι → V) (b : V) :
     B (∑ j ∈ s, t j • v j) b = ∑ j ∈ s, t j * B (v j) b := by
-  simp only [form_eq d, map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form_eq d, map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul]
 
 include d in
 theorem form_sum_right {ι : Type} (s : Finset ι) (t : ι → R) (v : ι → V) (b : V) :
     B b (∑ j ∈ s, t j • v j) = ∑ j ∈ s, t j * B b (v j) := by
-  simp only [form_eq d, map_sum, map_smul, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form_eq d, map_sum, map_smul, smul_eq_mul]
 
 end Gen
 
@@ -237,7 +239,8 @@ theorem incM_lin (a : Fin m → F) : incM F (∑ j, a j • u j) = lin u fun j =
   let j : Matrix (Fin n) (Fin d) E →ₗ[F] Ten F E n d :=
     (Algebra.TensorProduct.includeRight : E →ₐ[F] AF F ⊗[F] E).toLinearMap.mapMatrix
   show j _ = _
-  rw [map_sum, lin]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, lin]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_smul, algebraMap_smul]
   rfl

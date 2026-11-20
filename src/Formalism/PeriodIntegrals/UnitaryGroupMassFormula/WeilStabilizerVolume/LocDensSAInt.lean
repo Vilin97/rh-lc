@@ -21,7 +21,8 @@ theorem addIntF_holds : AddIntF := by
     choose n hn using hn
     refine ⟨∑ i, (integralBasis F).repr x i * n i, ?_⟩
     conv_lhs => rw [← (integralBasis F).sum_repr x]
-    rw [Finset.mul_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.mul_sum, map_sum]
     push_cast
     refine Finset.sum_congr rfl (fun i _ => ?_)
     rw [mul_smul_comm, map_rat_smul, hn i, Rat.smul_def]

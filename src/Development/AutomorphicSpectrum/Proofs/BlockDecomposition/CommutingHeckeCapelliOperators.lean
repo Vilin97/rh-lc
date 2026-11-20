@@ -30,7 +30,8 @@ theorem coeff_mem_of_values {A : Type} [AddCommGroup A] [Module ℂ A] (W : Subm
     have h0 : (Submodule.Quotient.mk (∑ i ∈ Finset.range n, u ^ i • c i) : A ⧸ W) = 0 :=
       (Submodule.Quotient.mk_eq_zero W).2 (h u)
     have h1 := congrArg f h0
-    rw [← Submodule.mkQ_apply, map_sum, map_sum, map_zero] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Submodule.mkQ_apply, map_sum, map_sum, map_zero] at h1
     simp only [p, Polynomial.eval_finset_sum, Polynomial.eval_mul, Polynomial.eval_C, Polynomial.eval_pow,
       Polynomial.eval_X, Polynomial.eval_zero]
     rw [← h1]

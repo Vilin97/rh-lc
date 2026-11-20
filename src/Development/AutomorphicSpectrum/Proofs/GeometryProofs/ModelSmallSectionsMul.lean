@@ -117,7 +117,8 @@ theorem cone_form (y : (Σ k, ι k) → Ω) {h : MRing ι} {d : K → ℕ} (hh :
     simp only [hh m hm]
   conv_lhs => rw [MvPolynomial.as_sum h]
   conv_rhs => rw [MvPolynomial.as_sum h]
-  simp only [map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Finset.sum_mul]
   exact Finset.sum_congr rfl key
 
 theorem sub_mem_coord (y : (Σ k, ι k) → Ω) {f g : MRing ι} {d : K → ℕ} (hf : IsMultiHomog f d)

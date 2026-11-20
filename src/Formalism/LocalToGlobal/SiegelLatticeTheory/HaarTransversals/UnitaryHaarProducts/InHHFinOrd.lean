@@ -56,7 +56,8 @@ theorem matE_crdC (M : GL (Fin X.B.I.n) X.B.I.E) (y : (VS D).V) :
   funext i
   have h := congrFun (matE_reprC X M y) i
   simp only [Module.Basis.equivFun_apply] at h
-  simp only [Formalism.L2.SG.HidaSetting.HidaSetting.crd, Formalism.L2.SG.HidaSetting.crdOf, h, Matrix.mulVec, dotProduct, mapMC,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Formalism.L2.SG.HidaSetting.HidaSetting.crd, Formalism.L2.SG.HidaSetting.crdOf, h, Matrix.mulVec, dotProduct, mapMC,
     RingHom.mapMatrix_apply, Matrix.map_apply, map_sum, map_mul, RingEquiv.coe_toRingHom,
     RingEquiv.symm_apply_apply, Module.Basis.equivFun_apply]
 
@@ -78,7 +79,8 @@ theorem hT_expandC (x y : (VS D).V) :
     (VS D).hT x y =
       ∑ i, ∑ j, star (X.bas.equivFun x i) * (X.bas.equivFun y j * (VS D).hT (X.bas i) (X.bas j)) := by
   conv_lhs => rw [← X.bas.sum_equivFun x, ← X.bas.sum_equivFun y]
-  simp only [map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply, LinearMap.smul_apply,
     map_smul, smul_eq_mul, starRingEnd_apply, Finset.mul_sum]
   refine Finset.sum_comm.trans (Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_)
   ring
@@ -236,13 +238,16 @@ theorem decomp (v : (VS D).V) : ∃ s ∈ Submodule.span D.host.E (Set.range X.e
           ((VS D).hT (X.zu u) v / (VS D).hT (X.zu u) (X.zu u)) • X.zu u)) = 0 := by
       intro x hx
       rcases hx with (⟨b, rfl⟩ | ⟨b, rfl⟩) | hz
-      · simp [map_sub, map_add, map_sum, map_smul, smul_eq_mul, X.ee, X.ef, (X.zu_orth u b).1,
+      set_option synthInstance.maxHeartbeats 100000 in
+        · simp [map_sub, map_add, map_sum, map_smul, smul_eq_mul, X.ee, X.ef, (X.zu_orth u b).1,
           mul_ite, Finset.sum_ite_eq, Finset.sum_ite_eq']
-      · simp [map_sub, map_add, map_sum, map_smul, smul_eq_mul, X.ff, hfe, (X.zu_orth u b).2,
+      set_option synthInstance.maxHeartbeats 100000 in
+        · simp [map_sub, map_add, map_sum, map_smul, smul_eq_mul, X.ff, hfe, (X.zu_orth u b).2,
           mul_ite, Finset.sum_ite_eq, Finset.sum_ite_eq']
       · rw [Set.mem_singleton_iff] at hz
         subst hz
-        simp [map_sub, map_add, map_sum, map_smul, smul_eq_mul, hze, hzf, hzz]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp [map_sub, map_add, map_sum, map_smul, smul_eq_mul, hze, hzf, hzz]
     simp only [Formalism.MainNotions.S.Lat.orth, Submodule.mem_iInf, LinearMap.mem_ker]
     intro x hx
     induction hx using Submodule.span_induction with
@@ -293,7 +298,8 @@ theorem delta_finOrd (δ : (VS D).V ≃ₗ[D.host.E] (VS D).V) (hδiso : δ ∈ 
     have hc0 : ∀ b, cf b = 0 := by
       intro b
       have h1 := (mem_orth_iff_bl.1 hw) (X.fY b) (Submodule.subset_span (Or.inl (Or.inr ⟨b, rfl⟩)))
-      rw [← hcf, map_sum] at h1
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hcf, map_sum] at h1
       simp only [map_smul, smul_eq_mul, hT_f_e, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq',
         Finset.mem_univ, if_true] at h1
       exact h1

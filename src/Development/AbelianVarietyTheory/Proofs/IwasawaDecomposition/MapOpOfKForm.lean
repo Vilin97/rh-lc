@@ -19,7 +19,8 @@ theorem rowForm_rE {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A :
     (A.fam.lvl P ψ).P (A.fam.lvl P ψ).ψ (idemOf A.X) (hc _).symm).1
   unfold rowForm rE
   change _ = (A.fam.R t).S.gaOp (A.fam.R t).r (idemOf A.X) _
-  rw [Matrix.mulVec_mulVec, h1, ← Matrix.mulVec_mulVec, CSD.gaMat, Matrix.sum_mulVec, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.mulVec_mulVec, h1, ← Matrix.mulVec_mulVec, CSD.gaMat, Matrix.sum_mulVec, map_sum]
   rw [CSD.gaOp]
   rw [LinearMap.sum_apply]
   refine Finset.sum_congr rfl fun g _ => ?_

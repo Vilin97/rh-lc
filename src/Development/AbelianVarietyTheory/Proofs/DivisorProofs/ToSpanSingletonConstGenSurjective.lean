@@ -18,7 +18,8 @@ theorem exists_algHom_pi_eq_eval {O ι : Type*} [CommRing O] [Nontrivial O] [Fin
     by_contra h
     have h' : ∀ k, f (Pi.single k 1) = 0 := fun k => by_contra fun hk => h ⟨k, hk⟩
     have h2 : f (∑ k, Pi.single k 1) = 0 := by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       exact Finset.sum_eq_zero fun k _ => h' k
     have h3 : (∑ k, Pi.single k 1 : ι → O) = 1 := Finset.univ_sum_single (1 : ι → O)
     rw [h3, map_one] at h2

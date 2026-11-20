@@ -103,7 +103,8 @@ theorem form_mem {σ : E →ₐ[F] E} {B : Base F E} (hB : B.IsGood σ) {d r s :
     (hx : x ∈ W.L) (hy : y ∈ W.L) : τ (form σ W.J x y) ∈ v.adicCompletionIntegers F := by
   haveI := hB.unram
   obtain ⟨m, p, c, hsc⟩ := exists_traceFamily (F := F) (E := E)
-  rw [← hsc (form σ W.J x y), map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hsc (form σ W.J x y), map_sum]
   refine sum_mem fun i _ => ?_
   rw [map_smul, Algebra.smul_def]
   refine mul_mem (mem_of_trace_int hB.std hu _ fun a => ?_) (apply_coe_mem τ _)
@@ -152,7 +153,8 @@ theorem pairing_mem {σ : E →ₐ[F] E} {B : Base F E} (hB : B.IsGood σ) {d r 
   show β _ _ ∈ v.adicCompletionIntegers F
   rw [hβ]
   convert form_mem hB hW hu τ hx hy using 1
-  simp [form, dotProduct, Matrix.mulVec, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [form, dotProduct, Matrix.mulVec, map_sum]
 
 omit [NumberField E] in
 theorem col_mem {d : ℕ} {L : Submodule (𝓞 E) (Fin d → E)} {v : Pl F} {τ : E →ₐ[F] Fv F v}

@@ -37,7 +37,8 @@ theorem aeval_scale {σ : Type} (c : ℂ) {P : MvPolynomial σ ℂ} {d : ℕ} (h
     MvPolynomial.aeval (fun l => MvPolynomial.C c * MvPolynomial.X l : σ → MvPolynomial σ ℂ) P = c ^ d • P := by
   conv_lhs => rw [P.as_sum]
   conv_rhs => rw [P.as_sum]
-  rw [map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.smul_sum]
   refine Finset.sum_congr rfl fun m hm => ?_
   have hd : ∑ i ∈ m.support, m i = d := by
     have := hP (MvPolynomial.mem_support_iff.1 hm)

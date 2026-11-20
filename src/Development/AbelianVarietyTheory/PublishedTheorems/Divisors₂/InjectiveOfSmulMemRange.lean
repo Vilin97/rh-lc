@@ -125,7 +125,8 @@ theorem injective_of_smul_mem_range [IsDomain A] [Module.Free A M] [Module.Finit
   let P : Matrix _ _ A := Matrix.of fun i j => b.repr (φ (b j)) i
   have key : ∀ m i, b.repr (φ m) i = (P.mulVec fun j => σ (b.repr m j)) i := fun m i => by
     have h1 : φ m = ∑ j, σ (b.repr m j) • φ (b j) := by
-      conv_lhs => rw [← b.sum_repr m, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        conv_lhs => rw [← b.sum_repr m, map_sum]
       simp only [map_smulₛₗ]
     rw [h1]
     simp [P, Matrix.mulVec, dotProduct, mul_comm]
@@ -162,7 +163,8 @@ theorem free_of_reduction [Nontrivial A] [Nontrivial O] [Module.Free A M] [Modul
   have sp : ⊤ ≤ Submodule.span O (Set.range fun i => r (b i)) := by
     intro y _
     obtain ⟨m, rfl⟩ := hr y
-    rw [← b.sum_repr m, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← b.sum_repr m, map_sum]
     exact Submodule.sum_mem _ fun i _ => by
       rw [map_smulₛₗ]; exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)
   let c := Module.Basis.mk li sp

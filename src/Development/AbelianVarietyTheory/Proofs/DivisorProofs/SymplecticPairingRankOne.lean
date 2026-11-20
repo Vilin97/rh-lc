@@ -24,7 +24,8 @@ theorem form_swap {F E : Type} [Field F] [NumberField F] [Field E] [NumberField 
     {σ : E →ₐ[F] E} (hσ : ∀ e, σ (σ e) = e) {d : ℕ} (J : Matrix (Fin d) (Fin d) E)
     (hJ : ∀ i j, σ (J j i) = -J i j) (x y : Fin d → E) :
     σ (form σ J x y) = - form σ J y x := by
-  simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, hJ, Finset.mul_sum, ← Finset.sum_neg_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, hJ, Finset.mul_sum, ← Finset.sum_neg_distrib]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   ring
@@ -44,7 +45,8 @@ theorem symp_iso_term : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Nu
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [Finset.sum_comm, Matrix.mulVec, dotProduct, Finset.mul_sum, Finset.sum_mul]
     refine Finset.sum_congr rfl fun k _ => ?_
-    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, Finset.mul_sum, Matrix.map_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, Finset.mul_sum, Matrix.map_apply]
     refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun l _ => ?_
     ring
   rw [symp, key, hf, map_neg, map_one]

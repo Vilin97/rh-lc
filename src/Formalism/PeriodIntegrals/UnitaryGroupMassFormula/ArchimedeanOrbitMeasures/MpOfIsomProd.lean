@@ -86,7 +86,8 @@ theorem herm_cross {m : ℕ} (A B : Matrix (Fin m) (Fin m) ℂ) (hA : Aᴴ = A) 
   have hB' : ∀ i j, B j i = conj (B i j) := fun i j => by
     simpa [Matrix.conjTranspose_apply] using (congrFun (congrFun hB j) i).symm
   have hc : conj (∑ i, ∑ j, A i j * conj (B i j)) = ∑ i, ∑ j, A i j * conj (B i j) := by
-    simp only [map_sum, map_mul, Complex.conj_conj]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, Complex.conj_conj]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
     rw [hA' j i, hB' j i, Complex.conj_conj]

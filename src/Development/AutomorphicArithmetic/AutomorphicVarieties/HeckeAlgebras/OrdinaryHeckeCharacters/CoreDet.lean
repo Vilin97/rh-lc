@@ -294,7 +294,8 @@ private theorem cd_pol {T : Type} [CommRing T] {l : ℕ} [Fact l.Prime] (ι : Qb
     (Hi.heckePol n q a).map x = p := by
   apply Polynomial.map_injective ι.toRingHom ι.injective
   rw [hp]
-  simp only [Hi.heckePol, Polynomial.map_sum, Polynomial.map_mul, Polynomial.map_pow, map_C, map_X]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Hi.heckePol, Polynomial.map_sum, Polynomial.map_mul, Polynomial.map_pow, map_C, map_X]
   refine Finset.sum_congr rfl fun j hj => ?_
   simp [← h j (Nat.lt_succ_iff.1 (Finset.mem_range.1 hj))]
 

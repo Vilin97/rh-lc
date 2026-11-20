@@ -106,7 +106,8 @@ theorem coeff_zero_of_torus {n : ℕ} (S : Finset (Fin n → ℤ)) (h : (Fin n �
         rw [← zpow_natCast, hs m hm a, ← zpow_natCast, ← zpow_add₀ (hz0 a), add_comm]
       simp only [this, Finset.prod_mul_distrib]
       ring
-    rw [map_sum, Finset.sum_congr rfl hterm, ← Finset.mul_sum, H z hz hi, mul_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_congr rfl hterm, ← Finset.mul_sum, H z hz hi, mul_zero]
   intro m hm
   have h1 := congrArg (AddMonoidAlgebra.coeff · (s m)) hp
   rw [MvPolynomial.coeff_sum, Finset.sum_eq_single m] at h1

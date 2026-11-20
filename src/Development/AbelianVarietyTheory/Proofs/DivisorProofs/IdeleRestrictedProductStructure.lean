@@ -52,11 +52,13 @@ theorem exists_adele_comp (z : AE F E) (c : ∀ v : Pl F, Fv F v ⊗[F] E)
     ⟨fun v => (Algebra.TensorProduct.basis (Fv F v) b).repr (c v) j, hr j⟩
   let q : Fin (Module.finrank F E) → AF F := fun j => ((0, r j) : InfiniteAdeleRing F × FiniteAdeleRing (𝓞 F) F)
   refine ⟨eInf F • z + ∑ j, q j ⊗ₜ[F] b j, fun w => ?_, fun v => ?_⟩
-  · rw [map_add, compInf_smul, GlobalTheory.IdeleCyl.evInf_eInf, one_smul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_add, compInf_smul, GlobalTheory.IdeleCyl.evInf_eInf, one_smul, map_sum]
     refine (add_eq_left).2 (Finset.sum_eq_zero fun j _ => ?_)
     change evInf F w (q j) ⊗ₜ[F] b j = 0
     rw [show evInf F w (q j) = 0 from map_zero (GlobalTheory.AutFunCompare.evW w), TensorProduct.zero_tmul]
-  · rw [map_add, compFin_smul, show evFin F v (eInf F) = 0 from map_zero (evalV F v), zero_smul, zero_add, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_add, compFin_smul, show evFin F v (eInf F) = 0 from map_zero (evalV F v), zero_smul, zero_add, map_sum]
     conv_rhs => rw [← (Algebra.TensorProduct.basis (Fv F v) b).sum_repr (c v)]
     refine Finset.sum_congr rfl fun j _ => ?_
     change evFin F v (q j) ⊗ₜ[F] b j = _

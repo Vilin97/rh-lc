@@ -33,7 +33,8 @@ theorem finrank_le_transfer (φK : Y →+ WK) (hK : ∀ (a : LL) y, φK (a • y
   have hsp : Submodule.span K (Set.range φK) ≤ Submodule.span K (Set.range fun j => φK (b j)) := by
     rw [Submodule.span_le]
     rintro _ ⟨y, rfl⟩
-    rw [← b.sum_repr y, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← b.sum_repr y, map_sum]
     refine Submodule.sum_mem _ fun j _ => ?_
     rw [hK]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨j, rfl⟩)

@@ -43,7 +43,8 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 theorem form_map (τ : E →+* ℂ) (hcm : ∀ z, τ (σ z) = star (τ z)) {n : ℕ} (J : Matrix (Fin n) (Fin n) E)
     (a b : Fin n → E) :
     (fun i => τ (a i)) ⬝ᵥ (Complex.I • J.map τ) *ᵥ star (fun i => τ (b i)) = Complex.I * τ (form σ J a b) := by
-  simp only [form, dotProduct, mulVec, Matrix.smul_apply, Matrix.map_apply, smul_eq_mul, map_sum, map_mul, hcm, Pi.star_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, mulVec, Matrix.smul_apply, Matrix.map_apply, smul_eq_mul, map_sum, map_mul, hcm, Pi.star_apply,
     star_star, Finset.mul_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   refine Finset.sum_congr rfl fun j _ => ?_

@@ -26,7 +26,8 @@ theorem smul_mem_pts_coord {J : Type} [Fintype J] (x : J → Ω) {z : J → ℂ}
     (hz : z ∈ pts (coordIdeal ℤ x)) {c : ℂ} (hc : c ≠ 0) : c • z ∈ pts (coordIdeal ℤ x) := by
   refine ⟨smul_ne_zero hc hz.1, fun f hf => ?_⟩
   have hH := coordIdeal_isHomogIdeal ℤ x
-  rw [← sum_homogeneousComponent f, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← sum_homogeneousComponent f, map_sum, map_sum]
   refine Finset.sum_eq_zero fun d _ => ?_
   rw [eval_smul_of_isHomogeneous ((homogeneousComponent_isHomogeneous d f).map _),
     hz.2 _ (hH f hf d), mul_zero]

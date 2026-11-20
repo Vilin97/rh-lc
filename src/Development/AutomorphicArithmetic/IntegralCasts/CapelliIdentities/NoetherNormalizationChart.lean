@@ -92,7 +92,8 @@ theorem UpperTheory.exists_monic_change_of_variables :
   have ha : f.coeff v ≠ 0 := MvPolynomial.mem_support_iff.mp hv
   have hsum : chart A n b f = ∑ w ∈ f.support,
       Polynomial.C (MvPolynomial.C (f.coeff w)) * chart A n b (MvPolynomial.monomial w 1) := by
-    conv_lhs => rw [← f.support_sum_monomial_coeff, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [← f.support_sum_monomial_coeff, map_sum]
     refine Finset.sum_congr rfl fun w _ => ?_
     rw [← chart_C b, ← map_mul, MvPolynomial.C_mul_monomial, mul_one]
   have hdeg : (chart A n b f).natDegree ≤ wt v := by

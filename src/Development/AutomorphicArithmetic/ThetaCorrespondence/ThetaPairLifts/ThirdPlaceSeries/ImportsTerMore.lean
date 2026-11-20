@@ -45,7 +45,8 @@ theorem main_alt_alt : ∀ (hL : _root_.UpperTheory.Zero.LLC.RecTExists) (D : D7
     rw [← hgsum, show g = 0 from Finsupp.ext h, Finsupp.sum_zero_index]
   set G : D.naut.AV i → (GAf D.host.E D.R.nV → (P.M.loc i).wt.W) := fun Q => (P.M.loc i).real (g Q) with hGdef
   have hsum : (P.M.loc i).real f' = ∑ Q ∈ g.support, G Q := by
-    rw [← hgsum, Finsupp.sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hgsum, Finsupp.sum, map_sum]
   have hGiso : ∀ Q ∈ g.support, G Q ∈ NG.isoTyp (P.M.loc i).wt.ρ (P.H.av.S i Q) := by
     intro Q hQ
     have hy := (hg' Q (Finsupp.mem_support_iff.1 hQ)).2

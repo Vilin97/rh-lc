@@ -105,7 +105,8 @@ theorem hasDerivAt_thetaSum_line : GlobalTheory.FunPr.Hypotheses₂ → ∀ {F E
   have hL : ∀ t : ℝ, GlobalTheory.WeilM.thetaSum F (M.co.rho ψ u (om (1, γ (Multiplicative.ofAdd t))
       (∑ i, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure (f i) (φ i)))) = ∑ i, Λ i (c i t) := by
     intro t
-    rw [map_sum, Finset.sum_congr rfl (fun i _ => hc i t),
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_congr rfl (fun i _ => hc i t),
       rho_sum M ψ hψ u (fun i => GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure (c i t) (φ i)) (fun i => hmem i _)]
     exact Finset.sum_congr rfl fun i _ => hΛ i _
   have hT : GlobalTheory.WeilM.thetaSum F (M.co.rho ψ u (∑ i, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure (f₁ i) (φ i))) =

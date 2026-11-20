@@ -55,7 +55,8 @@ private theorem hJ_smul_right_eq_mul (a : ℂ) (x y : Fin n → ℂ) : hJ ε x (
   simp only [hJ, Matrix.mulVec_smul, dotProduct_smul, smul_eq_mul]
 
 private theorem hJ_eq_conj_hJ_swap (x y : Fin n → ℂ) : hJ ε x y = conj (hJ ε y x) := by
-  simp only [hJ, Formalism.REAL.Jm, Matrix.mulVec_diagonal, dotProduct, Pi.star_apply, map_sum, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hJ, Formalism.REAL.Jm, Matrix.mulVec_diagonal, dotProduct, Pi.star_apply, map_sum, map_mul,
     Complex.star_def, Complex.conj_conj]
   refine Finset.sum_congr rfl fun i _ => ?_
   by_cases h : ε i <;> simp [h] <;> ring

@@ -40,7 +40,8 @@ theorem polyOf_monic {R : Type} [CommRing R] (n : ℕ) (c : ℕ → R) (h : c n 
 
 theorem polyOf_map {R R' : Type} [CommRing R] [CommRing R'] (f : R →+* R') (n : ℕ) (c : ℕ → R) :
     (polyOf n c).map f = polyOf n (fun k => f (c k)) := by
-  simp [polyOf, Polynomial.map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [polyOf, Polynomial.map_sum]
 
 theorem alg_kill {ι : Type} [Fintype ι] (r s : ℕ) (hr : 0 < r) (M : ι → Multiset ℂ) (l' : Multiset ℂ)
     (hl' : ∀ (R : Type) [CommRing R] [Algebra ℂ R] (h : ι → R),
@@ -81,7 +82,8 @@ theorem alg_kill {ι : Type} [Fintype ι] (r s : ℕ) (hr : 0 < r) (M : ι → M
   rw [map_multiset_prod, Multiset.map_map, ← key]
   congr 1
   refine Multiset.map_congr rfl fun z _ => ?_
-  simp [hπ, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [hπ, map_sum]
 
 theorem polyOf_eval {R : Type} [CommRing R] (n : ℕ) (c : ℕ → R) (x : R) :
     (polyOf n c).eval x = ∑ k ∈ Finset.range (n + 1), c k * x ^ k := by
@@ -90,7 +92,8 @@ theorem polyOf_eval {R : Type} [CommRing R] (n : ℕ) (c : ℕ → R) (x : R) :
 theorem coeff_zero_of_eval {R : Type} [CommRing R] [Algebra ℂ R] (P : R[X]) (Λ : R →ₗ[ℂ] ℂ)
     (h : ∀ u : ℂ, Λ (P.eval (algebraMap ℂ R u)) = 0) (j : ℕ) : Λ (P.coeff j) = 0 := by
   have hQ : polyOf P.natDegree (fun k => Λ (P.coeff k)) = 0 := Polynomial.funext fun u => by
-    rw [polyOf_eval, eval_zero, ← h u, eval_eq_sum_range, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [polyOf_eval, eval_zero, ← h u, eval_eq_sum_range, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [← map_pow, ← Algebra.commutes, ← Algebra.smul_def, map_smul, smul_eq_mul, mul_comm]
   by_cases hj : j ≤ P.natDegree
@@ -140,7 +143,8 @@ theorem levi_kill : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E
       ((polyOf n c).eval (algebraMap ℂ S u)).1 = ∑ k ∈ Finset.range (n + 1), u ^ k • e k := fun u n c e he => by
     rw [polyOf_eval]
     change S.val _ = _
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_mul, map_pow, AlgHom.commutes, ← map_pow, ← Algebra.commutes, ← Algebra.smul_def]
     exact congrArg _ (he k)
@@ -175,7 +179,8 @@ theorem levi_kill : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E
   have e : ∀ z, S.val (∑ τ, ca τ (r - 1) - algebraMap ℂ S z) =
       (∑ τ : E →+* ℂ, ∑ i : Fin r, Eop (a := r + s) τ (Fin.castAdd s i) (Fin.castAdd s i)) -
         (z - ∑ τ, t τ) • (1 : Module.End ℂ (Sm E (r + s))) := fun z => by
-    rw [map_sub, map_sum, AlgHom.commutes]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_sum, AlgHom.commutes]
     have h3 : ∀ τ, S.val (ca τ (r - 1)) = a τ (r - 1) := fun _ => rfl
     simp only [h3, htr, Finset.sum_add_distrib, ← Finset.sum_smul, sub_smul, Algebra.algebraMap_eq_smul_one]
     abel

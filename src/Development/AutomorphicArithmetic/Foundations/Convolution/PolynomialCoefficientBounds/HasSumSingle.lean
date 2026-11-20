@@ -46,7 +46,8 @@ theorem UpperTheory.ConvolutionTheory.FX.piece_sum :
       simp [ev, PositivityTheory.Rg.Fx.lift, expChar, lin, mul_comm, aeval_eq_eval]
     rw [hv]
     convert hasSum_single' v p Λ using 2 with k
-    rw [(UpperTheory.ConvolutionTheory.FX.piece_add ι k).2.2 v p, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [(UpperTheory.ConvolutionTheory.FX.piece_add ι k).2.2 v p, map_sum]
     refine Finset.sum_congr rfl fun b _ => ?_
     simp only [map_mul, map_pow, eval_C]
     ring

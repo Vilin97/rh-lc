@@ -85,7 +85,8 @@ theorem lev_Eat_simple (D : D7) (HW : HWOf D.loc) (l : ℕ) [Fact l.Prime] (hl :
       _ = _ := by rw [hlq]; ring
   · rw [map_mul]
     refine mul_ne_zero ((u⁻¹).isUnit.map PowerSeries.constantCoeff).ne_zero ?_
-    rw [map_mul, hF1c, one_mul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_mul, hF1c, one_mul, map_sum]
     simpa [hF0] using hl0
 
 end Formalism.MainNotions.N.Ln34.MLK

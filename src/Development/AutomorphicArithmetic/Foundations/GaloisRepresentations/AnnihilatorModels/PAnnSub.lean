@@ -42,7 +42,8 @@ theorem UpperTheory.Gal.crystallineComparison.annSub_of :
     intro g
     exact (algebraTensorModule_map_map_id_right_comm_of_comm i (ρU g) (ρ g) (σ g) (hI g) x).trans (congrArg M (hx g))
   apply hM_inj
-  rw [map_zero, ← hAnn (M x) hmx, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_zero, ← hAnn (M x) hmx, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [LinearMap.map_smul_of_tower]
   congr 1

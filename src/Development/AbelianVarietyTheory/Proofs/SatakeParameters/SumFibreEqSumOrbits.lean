@@ -159,7 +159,8 @@ theorem cpl_op_eq_comp {K : Type} [Field K] [NumberField K] [StarRing K] {S₀ S
   show (A.comp h S.outSec).appOf h₀ S₀.outSec φ d₁ =
     (cplKer2 A).appOf (cplGSD_ok Y h) (cplGSD S Y).outSec ((cplKer1 A).appOf h₀ S₀.outSec φ) d₁
   unfold ClsKer.appOf
-  simp only [cpl_comp_k, LinearMap.sum_apply, LinearMap.smul_apply, LinearMap.comp_apply, map_sum, map_smul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [cpl_comp_k, LinearMap.sum_apply, LinearMap.smul_apply, LinearMap.comp_apply, map_sum, map_smul,
     Finset.smul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun q _ => Finset.sum_congr rfl fun c _ => ?_

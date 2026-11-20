@@ -130,7 +130,8 @@ theorem exists_gens_LLC (B : Base) : ∃ S₂ : Finset ℂ, (∀ z ∈ S₂, IsA
     obtain ⟨x, rfl⟩ := B.mem_LLC.1 hz
     have e : B.embLL x = ∑ i, (b.repr x i) • B.embLL (b i) := by
       conv_lhs => rw [← b.sum_repr x]
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       exact map_rat_smul B.embLL _ _
     rw [e]

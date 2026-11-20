@@ -372,7 +372,8 @@ theorem val_unit_columns {R : Type} [CommRing R] {d : ℕ} {O : Type} [CommRing 
   refine ⟨g, fun b => (colM al b).degree, fun b mo => ?_, (SymbolCols.sum_degree_colM al).trans hdeg, fun f hf => ?_⟩
   · have : g b = MvPowerSeries.map (algebraMap (TWO.Ov v) F)
         (∏ l, (∑ i, C (lam' l i) * (X ((0 : Fin 1), i) : PS (TWO.Ov v) 1 d)) ^ al (l, b)) := by
-      simp only [map_prod, map_pow, map_sum, map_mul, map_C, map_X]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_prod, map_pow, map_sum, map_mul, map_C, map_X]
       rfl
     rw [this, coeff_map]
     exact TWO.v_nonneg v _
@@ -389,7 +390,8 @@ theorem val_unit_columns {R : Type} [CommRing R] {d : ℕ} {O : Type} [CommRing 
         · rw [hl, Units.inv_mul, mul_one]
         · rw [mul_zero]
       have h2 := congrArg (algebraMap (TWO.Ov v) F) h1
-      rw [map_sum, apply_ite (algebraMap (TWO.Ov v) F), map_one, map_zero] at h2
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, apply_ite (algebraMap (TWO.Ov v) F), map_one, map_zero] at h2
       exact h2)
     (fun _ => 1) f₂ (fun b mo hmo => by
       rw [one_mul]

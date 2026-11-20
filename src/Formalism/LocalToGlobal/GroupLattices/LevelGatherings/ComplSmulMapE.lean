@@ -136,7 +136,8 @@ def mapE (X : Matrix n n (E ⊗[F] w.adicCompletion F)) : Matrix n n (E ⊗[F] F
 theorem mapE_mul (X Y : Matrix n n (E ⊗[F] w.adicCompletion F)) :
     mapE F E w (X * Y) = mapE F E w X * mapE F E w Y := by
   ext i j
-  simp only [mapE, Matrix.map_apply, Matrix.mul_apply, map_sum, iE_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [mapE, Matrix.map_apply, Matrix.mul_apply, map_sum, iE_mul]
 
 theorem eps_smul_mapE (X : Matrix n n (E ⊗[F] w.adicCompletion F)) : epsW F E w • mapE F E w X = mapE F E w X := by
   ext i j

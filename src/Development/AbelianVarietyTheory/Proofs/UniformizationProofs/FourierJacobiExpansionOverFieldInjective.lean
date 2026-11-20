@@ -33,7 +33,8 @@ theorem split_iff {R F : Type} [CommRing R] [CommRing F] [Algebra R F] {X X₀ :
     (hτ l Z r z J hJ).trans (Finset.sum_congr rfl fun i _ => congrArg (· * _) (germOf_apply _ _ _).symm)
   constructor
   · intro h Z q r e z J hJ
-    simp only [map_sum, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, Finset.sum_mul]
     rw [Finset.sum_comm]
     refine Finset.sum_eq_zero fun l _ => ?_
     have h₁ := (hτ l Z r z J hJ).symm.trans ((congrArg (fun s => sval s r z J) (h l)).trans (h₀ Z r z J hJ))

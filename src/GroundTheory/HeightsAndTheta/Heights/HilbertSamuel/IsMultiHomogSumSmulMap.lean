@@ -97,9 +97,11 @@ theorem SectionL2Lattice.proof (hV : SectionPointValue.Statement) (hF : RealForm
       convert h2 using 1 <;> first | rfl | (funext i; simp [hgy i])
     · intro z hz
       have hF' := hZ e (∑ i, (c i : ℂ) • map (Int.castRingHom ℂ) (g i)) (isMultiHomog_sum_smul_map hg _) ?_ z hz
-      · simpa only [map_sum, smul_eval] using hF'
+      set_option synthInstance.maxHeartbeats 100000 in
+        · simpa only [map_sum, smul_eval] using hF'
       · filter_upwards [hc, hae] with z hz0 hzP
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         simp only [smul_eval]
         calc ∑ i, (c i : ℂ) * eval z (map (Int.castRingHom ℂ) (g i))
             = ∑ i, (c i : ℂ) * (w n (x i) z * eval z (map (Int.castRingHom ℂ) h) * (A.h z : ℂ) ^ n) := by

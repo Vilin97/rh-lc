@@ -79,7 +79,8 @@ theorem exists_supports_int : ∀ (φ : InvFun ℤ) (X : Type) [AddCommGroup X] 
       β x y = ∑ i, ∑ j, b.repr x i * b.repr y j * β (b i) (b j) := by
     intro β x y
     conv_lhs => rw [← b.sum_repr x, ← b.sum_repr y]
-    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, Finset.mul_sum]
     rw [Finset.sum_comm]
     exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
   have hA : ∀ β : LinearMap.BilinForm ℤ X, (∀ y z, β y z = β z y) →
@@ -94,7 +95,8 @@ theorem exists_supports_int : ∀ (φ : InvFun ℤ) (X : Type) [AddCommGroup X] 
       rw [← Finset.sum_add_distrib]
       exact Finset.sum_congr rfl fun j _ => by ring
     have := congrArg ℓ hsum
-    simp only [map_sum, map_smul, smul_eq_mul] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, smul_eq_mul] at this
     simpa only [hL] using this
   have hsym : L.IsSymm := Matrix.IsSymm.ext fun i j => by simp only [hL, S, add_comm]
   have hpos : ∀ ξ : Fin (Module.finrank ℤ X) → ℤ, ξ ≠ 0 → 0 < ξ ⬝ᵥ (L *ᵥ ξ) := by

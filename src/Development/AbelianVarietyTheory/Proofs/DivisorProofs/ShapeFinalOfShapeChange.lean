@@ -13,7 +13,8 @@ theorem tendsto_zero_of_monomials {σ : Type} (n : ℕ) (EE : ℕ → MvPolynomi
   have e : ∀ B, EE B F = ∑ m ∈ F.support, F.coeff m * EE B (monomial m 1) := by
     intro B
     conv_lhs => rw [F.as_sum]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun m _ => ?_
     rw [← smul_eq_mul, ← map_smul, smul_monomial, smul_eq_mul, mul_one]
   simp only [e]

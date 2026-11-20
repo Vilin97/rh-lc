@@ -59,7 +59,8 @@ theorem GlobalTheory.PlaceDecomp.decompAt_place : ∀ (D : D7) (θ : InfFam D), 
     funext x
     have h1 := (moves_avg hθ (N.M.fr_unit τ) (N.M.fr_gram τ) hσ he f x _ _ _ _ (hW x) (hc x) (h x)).1.2.2.2.2 1
       (one_mem_UJ _)
-    simp only [res_one hθ (N.M.fr_unit τ), sigma_one hσ.1, hQ, map_sum, map_smul, smul_eq_mul] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [res_one hθ (N.M.fr_unit τ), sigma_one hσ.1, hQ, map_sum, map_smul, smul_eq_mul] at h1
     have h2 := h1.unique (hasSum_sum fun j _ => (Expn.summable_term (h x) (c j) (hσ.2.2.1 _ (haK j))).hasSum)
     have h3 : avg θ N.V τ (N.M.ε τ) (N.M.fr τ) e f x = f x := by
       have := he1 _ (hTy x)

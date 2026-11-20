@@ -34,7 +34,8 @@ lemma normSq_mul_eq {r : ℕ} (s : Fin r → X → ℂ) (w : X → ℝ) (c : Fin
   have h : ((‖∑ i, c i * s i x‖ ^ 2 * w x : ℝ) : ℂ) =
       ∑ i, ∑ j, starRingEnd ℂ (c i) * c j * (starRingEnd ℂ (s i x) * s j x * (w x : ℂ)) := by
     push_cast
-    rw [← Complex.conj_mul', map_sum, Finset.sum_mul_sum, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Complex.conj_mul', map_sum, Finset.sum_mul_sum, Finset.sum_mul]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [Finset.sum_mul]
     refine Finset.sum_congr rfl fun j _ => ?_

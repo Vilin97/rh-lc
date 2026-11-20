@@ -120,7 +120,8 @@ theorem Row_apply (δ : ℂ) {N N' : ℕ} (t₀ : D.host.E) (b : Fin N → D.hos
 
 theorem sum_Row (δ : ℂ) {N N' : ℕ} (t₀ : D.host.E) (b : Fin N → D.host.E) (a : Fin N' → 𝓞 D.host.E) :
     ∑ i, Row D cc δ N' t₀ b i (a i) = Pt D cc δ N N' (fun i => (a i • t₀) • cv D b) := by
-  simp only [Row_apply, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Row_apply, ← map_sum]
   rw [Finset.univ_sum_single (fun i => (a i • t₀) • cv D b)]
 
 theorem Hf_zero_left (T : Tor D) {N N' : ℕ} (y : VC D N N') : Hf D T 0 y = 0 := by simp [Hf]

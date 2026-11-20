@@ -42,7 +42,8 @@ theorem exists_loc (hB : B.IsGood σ) (hW : W.IsSkew σ B r s) (hH : H.IsAdapted
     exact zero_ne_one e
   have hvv : hf M v v = 0 := by
     have e := congrArg τ hH.xx
-    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hB.cm.2.2.2, map_zero] at e
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hB.cm.2.2.2, map_zero] at e
     rw [hf_apply, hM, Matrix.smul_mulVec, dotProduct_smul]
     exact smul_eq_zero_of_right _ e
   have hgv : g *ᵥ (g' *ᵥ v) = v := by rw [Matrix.mulVec_mulVec, h1, Matrix.one_mulVec]

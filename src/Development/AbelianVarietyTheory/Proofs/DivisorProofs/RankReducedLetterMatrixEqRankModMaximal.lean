@@ -29,7 +29,8 @@ theorem mat_identity {S M M' : Type} [CommRing S] [AddCommGroup M] [Module S M] 
     (hX : ∀ k, f (v k) = ∑ m, X m k • v' m) (hY : ∀ k, f (u k) = ∑ m, Y m k • B' m) : G' * X = Y * G := by
   ext r k
   have h := congrArg (fun z => B'.repr z r) (hX k)
-  simp only [hv, hv', hY, map_sum, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.smul_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hv, hv', hY, map_sum, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.smul_apply,
     Module.Basis.repr_self, Finsupp.single_apply, smul_eq_mul, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq',
     Finset.mem_univ, if_true] at h
   simp only [Matrix.mul_apply]
@@ -95,7 +96,8 @@ theorem choose_max {O R : Type} [CommRing O] [CommRing R] [Algebra O R] {n : ℕ
       rwa [ZMod.natCast_zmod_val, add_sub_cancel] at this
     have h4 : ∑ j : ZMod n, (letE j : LetA O n) = 1 := Finset.univ_sum_single (1 : ZMod n → O⟦X⟧)
     apply h1
-    rw [← map_one ι, ← h4, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_one ι, ← h4, map_sum]
     exact Ideal.sum_mem _ fun j _ => h3 j
   have hee : ι (letE i) * ι (letE i) = ι (letE i) := by
     rw [← map_mul]
@@ -230,7 +232,8 @@ theorem exists_unit_tie (T : LocLat G Qp LL O) (hT : IsCrys PD T.ρ) {n : ℕ}
   · rw [map_zero]
     exact Submodule.zero_mem _
   · intro y
-    rw [← b.sum_repr y, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← b.sum_repr y, map_sum, map_sum]
     refine Submodule.sum_mem _ fun k _ => ?_
     rw [map_smul, ← algebraMap_smul W.EE, E.jD_smul]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨k, rfl⟩)
@@ -264,7 +267,8 @@ theorem rank_eq_of_tie (l : ℕ) [Fact l.Prime] (hl : l ≠ 2) [IsDomain O] [IsD
       (Algebra.TensorProduct.basis RW' e') (fun k => E.jD T (b k : W.DD T)) (fun k => E.jD T' (b' k : W.DD T'))
       M M' _ _ (LinearMap.baseChange RW' ((g.f.restrictScalars O).restrict g.T_le)) hb hb' (fun k => ?_) (fun k => ?_)
     · have h1 := E.jD_map g (b k : W.DD T)
-      rw [hmap k, map_sum] at h1
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hmap k, map_sum] at h1
       refine h1.symm.trans (Finset.sum_congr rfl fun r _ => ?_)
       rw [Matrix.of_apply, hι, ← E.jD_smul, algebraMap_smul]
     · have h2 : ((g.f.restrictScalars O).restrict g.T_le) (e k) = ∑ r, a r k • e' r := by

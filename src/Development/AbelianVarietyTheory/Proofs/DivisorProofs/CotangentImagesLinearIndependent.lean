@@ -167,7 +167,8 @@ theorem exists_adapted_frame : ∀ {X : Scheme.{0}} {p : X ⟶ Sp ℂ} {n : ℕ}
       funext j
       rw [Function.comp_apply, Fintype.linearCombination_apply, ← hz₀ j]
       have e1 := congrArg (KaehlerDifferential.map ℂ ℂ Γ(X, U) (X.presheaf.stalk y)) (ha j)
-      rw [map_sum] at e1
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum] at e1
       change KaehlerDifferential.map ℂ ℂ Γ(X, U) (X.presheaf.stalk y)
         (KaehlerDifferential.D ℂ Γ(X, U) (z₀ j)) = _ at e1
       rw [KaehlerDifferential.map_D] at e1

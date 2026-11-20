@@ -182,7 +182,8 @@ theorem sub_hcEmb_mem_nPlusU {z : U n} (hz : ∀ k, e (k, k) * z = z * e (k, k))
     have := linearIndependent_iff'.1 linearIndependent_canon s _ h0 m hm
     have hc : c m ≠ 0 := Finsupp.mem_support_iff.1 hm
     exact_mod_cast (mul_eq_zero.1 this).resolve_left hc
-  rw [hzs, map_sum, map_sum, ← Finset.sum_sub_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hzs, map_sum, map_sum, ← Finset.sum_sub_distrib]
   refine Submodule.sum_mem _ fun m hm => ?_
   rw [map_smul, map_smul, ← smul_sub]
   refine Submodule.smul_mem _ _ ?_

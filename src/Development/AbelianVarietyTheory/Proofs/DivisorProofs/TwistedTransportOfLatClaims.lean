@@ -159,7 +159,8 @@ theorem conj_part {K : Type} [Field K] [NumberField K] {d : ℕ} {δ : K} {ι : 
     rw [QuotientGroup.out_eq', QuotientGroup.mk_mul, QuotientGroup.mk_inv, QuotientGroup.out_eq', hct']
   choose S'' hS'' using fun q : PicO (condQ 𝔣 Q) => exists_isLatSum_of_mk_eq hφ s κ' (hmk q) (hS' (q * ct⁻¹))
   rw [finsum_eq_sum_of_fintype, finsum_eq_sum_of_fintype, coordIn_eq d s κ Ω₀, coordIn_eq d s κ Ω₁]
-  simp only [Finset.mul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finset.mul_sum, map_sum]
   refine Fintype.sum_equiv (Equiv.mulRight ct⁻¹) _ _ fun q => ?_
   simp only [Equiv.coe_mulRight]
   have hg1 : g (GlobalTheory.IndefiniteRowSideFullHecke.ToricSymbols.lamF χ s q.out) = lv χ' s q.out := (hcc.1 q.out).symm

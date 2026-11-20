@@ -41,7 +41,8 @@ def rotA (P : M.Par) (Bs : B.RealPlaceData P.k P.r Wp Wq) (φ : ℝ) (X : Wq →
 theorem rotA_sum (P : M.Par) (Bs : B.RealPlaceData P.k P.r Wp Wq) (φ : ℝ) {ι : Type} (s : Finset ι) (a : ι → ℂ)
     (X : ι → (Wq →L[ℂ] Wp)) : rotA P Bs φ (∑ i ∈ s, a i • X i) = ∑ i ∈ s, a i • rotA P Bs φ (X i) := by
   ext v
-  simp [rotA, map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [rotA, map_sum, map_smul]
 
 theorem rotA_smul (P : M.Par) (Bs : B.RealPlaceData P.k P.r Wp Wq) (φ : ℝ) (a : ℂ) (X : Wq →L[ℂ] Wp) :
     rotA P Bs φ (a • X) = a • rotA P Bs φ X := by

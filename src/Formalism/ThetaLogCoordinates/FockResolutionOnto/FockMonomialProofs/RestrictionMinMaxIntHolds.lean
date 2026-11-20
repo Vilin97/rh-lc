@@ -139,7 +139,8 @@ private theorem glAct_slice_lemma_2 (LL : Letters N) (j : ℕ) (ρ c d : Fin r) 
     have h2 : (i', b) ≠ (i, ρ) := fun h => hb (Prod.mk.inj h).2
     simpa [Finsupp.single_apply, h1, h2] using hn
   rw [MvPolynomial.mem_restrictSupport_iff] at hy
-  rw [← MvPolynomial.support_sum_monomial_coeff y, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← MvPolynomial.support_sum_monomial_coeff y, map_sum]
   refine Submodule.sum_mem _ fun n hn => ?_
   have hnQ : n (i, ρ) ∈ Q := hy (Finset.mem_coe.mpr hn)
   simp only [glAct, LinearMap.sum_apply]
@@ -262,7 +263,8 @@ private theorem glAct_md_lemma_5 (LL : Letters N) (j : ℕ) (c d : Fin r) (B : P
       unfold MultiDeg
       simp only [hsum]
   rw [MvPolynomial.mem_restrictSupport_iff] at hy
-  rw [← MvPolynomial.support_sum_monomial_coeff y, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← MvPolynomial.support_sum_monomial_coeff y, map_sum]
   refine Submodule.sum_mem _ fun n hn => ?_
   have hnB : (MultiDeg LL n ↔ B) := hy (Finset.mem_coe.mpr hn)
   simp only [glAct, LinearMap.sum_apply]

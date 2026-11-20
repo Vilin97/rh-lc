@@ -22,12 +22,14 @@ theorem map_coord_commute {K R : Type} [Field K] [CommRing R] [Algebra K R] {n :
     (hX : Commute X (N.map (algebraMap K R))) (f : R →ₗ[K] K) : Commute (X.map f) N := by
   have k1 : (X * N.map (algebraMap K R)).map f = X.map f * N := by
     ext i j
-    simp only [Matrix.map_apply, Matrix.mul_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.map_apply, Matrix.mul_apply, map_sum]
     refine Finset.sum_congr rfl fun l _ => ?_
     rw [mul_comm, ← Algebra.smul_def, map_smul, smul_eq_mul, mul_comm]
   have k2 : (N.map (algebraMap K R) * X).map f = N * X.map f := by
     ext i j
-    simp only [Matrix.map_apply, Matrix.mul_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.map_apply, Matrix.mul_apply, map_sum]
     refine Finset.sum_congr rfl fun l _ => ?_
     rw [← Algebra.smul_def, map_smul, smul_eq_mul]
   have h := congrArg (fun Y => Y.map f) hX.eq

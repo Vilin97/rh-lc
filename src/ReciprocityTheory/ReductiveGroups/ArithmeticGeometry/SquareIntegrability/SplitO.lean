@@ -141,7 +141,8 @@ theorem omega_exists' [IsCMField E] : ∃ (n : ℕ) (ω : Fin n → 𝓞 E),
         simp [Hf, g, mul_comm]
       have hswap : ∑ σ, k (ComplexEmbedding.conjugate σ) * σ (RingOfIntegers.basis E i : E) =
           starRingEnd ℂ (∑ σ, starRingEnd ℂ (k σ) * σ (RingOfIntegers.basis E i : E)) := by
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         conv_lhs => rw [← Equiv.sum_comp cj]
         refine Finset.sum_congr rfl fun σ _ => ?_
         simp [cj, ComplexEmbedding.involutive_conjugate E _, ComplexEmbedding.conjugate_coe_eq]
@@ -164,7 +165,8 @@ theorem omega_exists' [IsCMField E] : ∃ (n : ℕ) (ω : Fin n → 𝓞 E),
         have := LinearMap.BilinForm.apply_dualBasis_left
           (traceForm_nondegenerate ℚ E) (integralBasis E) i j
         rwa [Algebra.traceForm_apply, integralBasis_apply] at this
-      simp only [w, Finset.sum_mul, map_sum, smul_mul_assoc, LinearMap.map_smul, hd]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [w, Finset.sum_mul, map_sum, smul_mul_assoc, LinearMap.map_smul, hd]
       simp
     have hwσ : ∀ σ : E →+* ℂ, σ w = u σ := by
       have hv := so_emb_inj (fun σ => σ w - u σ) (fun j => by
@@ -201,7 +203,8 @@ theorem omega_exists' [IsCMField E] : ∃ (n : ℕ) (ω : Fin n → 𝓞 E),
           (RingOfIntegers.basis E j : E) := by
         conv_lhs => rw [← (RingOfIntegers.basis E).sum_repr y]
         simp [Rat.smul_def]
-      rw [hy, Finset.mul_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hy, Finset.mul_sum, map_sum]
       push_cast
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [mul_smul_comm, LinearMap.map_smul, htr, smul_eq_mul]
@@ -323,12 +326,14 @@ theorem omega_exists' [IsCMField E] : ∃ (n : ℕ) (ω : Fin n → 𝓞 E),
         simp_rw [hα]
         ext σ
         have := congrArg σ hq
-        simp only [map_sum, map_zero, map_rat_smul] at this
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, map_zero, map_rat_smul] at this
         simpa [Rat.smul_def, Complex.real_smul] using this
       have h1 : ∑ i, (q i : ℝ) • v i = 0 := by
         have h3 : ∑ i, (q i : ℝ) • e.symm (v i) = 0 := Subtype.ext (by simpa using h2)
         have h4 := congrArg e h3
-        simpa [map_sum] using h4
+        set_option synthInstance.maxHeartbeats 100000 in
+          simpa [map_sum] using h4
       have := Fintype.linearIndependent_iff.1 hvli _ h1 j
       exact_mod_cast this
     have hspanQ := hli.span_eq_top_of_card_eq_finrank' (by rw [Fintype.card_fin, ← hJN, hJ])

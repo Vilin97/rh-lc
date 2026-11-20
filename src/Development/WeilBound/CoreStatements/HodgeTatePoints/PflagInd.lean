@@ -24,7 +24,8 @@ theorem aeval_neg_hsymm (N a : ℕ) :
   have hneg : (fun i : Fin N => (-X i : MvPolynomial (Fin N) ℝ)) = fun i => C (-1) * X i := by
     funext i
     simp
-  simp only [hsymm, map_sum, map_multiset_prod, Multiset.map_map, Function.comp_def, aeval_X,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hsymm, map_sum, map_multiset_prod, Multiset.map_map, Function.comp_def, aeval_X,
     Finset.mul_sum]
   refine Finset.sum_congr rfl fun s _ => ?_
   rw [hneg, Multiset.prod_map_mul, Multiset.map_const', Multiset.prod_replicate, ← map_pow]
@@ -80,9 +81,11 @@ private theorem genNum_mul {N : ℕ} (b : Fin N → K → ℤ) (G H : MvPolynomi
       monomial μ (G.coeff μ) * monomial ν (H.coeff ν) := by
     conv_lhs => rw [G.as_sum, H.as_sum]
     rw [Finset.sum_mul_sum]
-  rw [hG, hL, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hG, hL, map_sum]
   refine Finset.sum_congr rfl fun μ _ => ?_
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   unfold genNum
   rw [Finset.mul_sum]
   refine Finset.sum_congr rfl fun ν _ => ?_
@@ -301,7 +304,8 @@ theorem field_flag_indep : ∀ (F : Type) [Field F] (Ω : Type) [Field Ω] [Alge
     obtain ⟨μ, rfl⟩ := hx
     have hm : MvPolynomial.map (Int.castRingHom ℝ) (hsymmPart (Fin N) ℤ μ) =
         (μ.parts.map (hsymm (Fin N) ℝ)).prod := by
-      simp only [hsymmPart, hsymm, map_multiset_prod, Multiset.map_map, Function.comp_def, map_sum,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hsymmPart, hsymm, map_multiset_prod, Multiset.map_map, Function.comp_def, map_sum,
         MvPolynomial.map_X]
       rfl
     rw [hm]

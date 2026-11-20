@@ -50,7 +50,8 @@ theorem exists_fixed_sum_eq {ρ : Representation ℂ G X} {π : Representation �
     (by rw [map_sub, map_sum, map_smul, hEz, smul_eq_mul, mul_one, sub_self])
   have h2 := congrArg (fun y => l (f y)) (sub_eq_zero.1 h1)
   have hI : ∀ c : G ⧸ K, f (ρ c.out z) = π c.out (f z) := fun c => f.isIntertwining _ _ _ _
-  simp only [map_sum, map_smul, hI, hfz, smul_eq_mul, hlv, mul_one] at h2
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, hI, hfz, smul_eq_mul, hlv, mul_one] at h2
   rw [← Finset.mul_sum] at h2
   exact (mul_right_injective₀ (inv_ne_zero hEw)).eq_iff.1 (h2.trans (mul_comm _ _))
 

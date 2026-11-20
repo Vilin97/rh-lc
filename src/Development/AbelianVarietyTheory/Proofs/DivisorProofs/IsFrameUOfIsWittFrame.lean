@@ -24,7 +24,8 @@ private theorem form_eq (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin 
 omit [NumberField F] [NumberField E] in
 private theorem form_swap {σ : E →ₐ[F] E} (hσ : ∀ x, σ (σ x) = x) {n : ℕ} {J : Matrix (Fin n) (Fin n) E}
     (hJ : ∀ i j, σ (J j i) = J i j) (u v : Fin n → E) : form σ J u v = σ (form σ J v u) := by
-  simp only [form_eq, map_sum, map_mul, hσ, hJ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form_eq, map_sum, map_mul, hσ, hJ]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
 
@@ -32,7 +33,8 @@ omit [NumberField F] [NumberField E] in
 private theorem witt_entry {σ : E →ₐ[F] E} (hσ : ∀ x, σ (σ x) = x) {n q : ℕ} (J : Matrix (Fin n) (Fin n) E)
     (U V : Matrix (Fin n) (Fin q) E) (i j : Fin q) :
     form σ J (fun k => U k i) (fun k => V k j) = σ ((Formalism.UG.cT (σ : E →+* E) U * ((1 : E) • J.map σ) * V) i j) := by
-  simp only [form_eq, one_smul, Formalism.UG.cT, Matrix.mul_apply, Matrix.map_apply, Matrix.transpose_apply, RingHom.coe_coe,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form_eq, one_smul, Formalism.UG.cT, Matrix.mul_apply, Matrix.map_apply, Matrix.transpose_apply, RingHom.coe_coe,
     Finset.sum_mul, map_sum, map_mul, hσ]
   exact Finset.sum_comm
 
@@ -66,7 +68,8 @@ private theorem mat_eq_of_isTorusU {σ : E →ₐ[F] E} (hσ : ∀ x, σ (σ x) 
     have hdec : incV F z = incV F z0 + ∑ i, inclR (F := F) (AF F) (form σ J z (y i)) • incV F (x i) +
         ∑ i, inclR (F := F) (AF F) (form σ J z (x i)) • incV F (y i) := by
       funext k
-      simp only [hz0, incV, Pi.add_apply, Pi.sub_apply, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sub, map_sum,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hz0, incV, Pi.add_apply, Pi.sub_apply, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sub, map_sum,
         map_mul]
       ring
     rw [hdec]

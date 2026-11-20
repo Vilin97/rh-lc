@@ -31,7 +31,8 @@ theorem psi_half_rat (ψ : AddChar (AF F) ℂ) (hψ : IsStd ψ) {ι : Type} [Fin
   have e : ⅟(2 : AF F) * ((fun i => algebraMap F (AF F) (a1 i)) ⬝ᵥ (fun i => algebraMap F (AF F) (b2 i)) -
       (fun i => algebraMap F (AF F) (b1 i)) ⬝ᵥ (fun i => algebraMap F (AF F) (a2 i))) =
       algebraMap F (AF F) (1 / 2 * (a1 ⬝ᵥ b2 - b1 ⬝ᵥ a2)) := by
-    simp only [dotProduct, map_sub, map_mul, map_sum, h2]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [dotProduct, map_sub, map_mul, map_sum, h2]
   rw [e]
   exact hψ.2.1 _
 

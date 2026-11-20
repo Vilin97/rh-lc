@@ -132,11 +132,13 @@ theorem mem_smSub_of_closed (hG : IsUnit G) (hπ : IsURepOn (UH G) π) (N : Set 
       rw [Nat.cast_succ, contDiff_succ_iff_fderiv_apply]
       refine ⟨fun t => (hF t).differentiableAt, by simp, fun z => ?_⟩
       have e : ∀ t i, D ⟨Y t i, h2 t i⟩ = ∑ j, c j (Y t i) • D (b j) := fun t i => by
-        conv_lhs => rw [← b.sum_repr ⟨Y t i, h2 t i⟩, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          conv_lhs => rw [← b.sum_repr ⟨Y t i, h2 t i⟩, map_sum]
         refine Finset.sum_congr rfl fun j _ => ?_
         rw [map_smul, ← b.coord_apply, ← hc j]
         rfl
-      simp only [(hF _).fderiv, e, ContinuousLinearMap.comp_apply, _root_.sum_apply,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [(hF _).fderiv, e, ContinuousLinearMap.comp_apply, _root_.sum_apply,
         ContinuousLinearMap.smulRight_apply, map_sum, ContinuousLinearMap.coe_restrictScalars',
         ContinuousLinearMap.map_smul_of_tower]
       refine ContDiff.sum fun i _ => ContDiff.const_smul _ (ContDiff.sum fun j _ =>

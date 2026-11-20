@@ -167,13 +167,15 @@ theorem sum_e (e : IsoFam K) {M : CrystallineSemistableComparison.Model l K.1} (
 theorem h_dual (P : CrystallineSemistableComparison.HT.HTPre l K.1) (M : CrystallineSemistableComparison.Model l K.1) (a n : ℕ) (v : M.V n) {ι : Type} (s : Finset ι)
     (c : ι → K.1) (φ : ι → Module.Dual K.1 (CrystallineSemistableComparison.HT.Hdg M.q a n)) :
     P.h M a n v (∑ i ∈ s, c i • φ i) = ∑ i ∈ s, CrystallineSemistableComparison.HT.kC K.1 (c i) * P.h M a n v (φ i) := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_congr rfl fun i _ => P.lin' M a n (c i) v (φ i)
 
 theorem h_vec (P : CrystallineSemistableComparison.HT.HTPre l K.1) (M : CrystallineSemistableComparison.Model l K.1) (a n : ℕ) {ι : Type} (s : Finset ι) (r : ι → ℚ_[l])
     (v : ι → M.V n) (φ : Module.Dual K.1 (CrystallineSemistableComparison.HT.Hdg M.q a n)) :
     P.h M a n (∑ i ∈ s, r i • v i) φ = ∑ i ∈ s, CrystallineSemistableComparison.HT.qC l (r i) * P.h M a n (v i) φ := by
-  rw [map_sum, AddMonoidHom.finsetSum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, AddMonoidHom.finsetSum_apply]
   exact Finset.sum_congr rfl fun i _ => P.lin M a n (r i) (v i) φ
 
 theorem hm_inj (P : CrystallineSemistableComparison.HT.HTPre l K.1) (e : IsoFam K) {M : CrystallineSemistableComparison.Model l K.1} (hM : M.Sm) {n : ℕ}

@@ -15,7 +15,8 @@ theorem map_mulVec_incl {E A : Type} [CommRing E] [CommRing A] (ι : E →+* A) 
     (M : Matrix (Fin n) (Fin n) E) (w : Fin n → E) :
     M.map ι *ᵥ (fun i => ι (w i)) = fun i => ι ((M *ᵥ w) i) := by
   funext i
-  simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum, map_mul]
 
 theorem unitary_map {E A : Type} [CommRing E] [CommRing A] (σ : E →+* E) (s : A →+* A)
     (ι : E →+* A) (hι : ∀ e, s (ι e) = ι (σ e)) {n : ℕ} (J g : Matrix (Fin n) (Fin n) E)

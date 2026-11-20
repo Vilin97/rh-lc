@@ -94,7 +94,8 @@ private theorem read_pair {n d : ℕ} (w : HeightOneSpectrum (𝓞 E)) (hw : Glo
     (GlobalTheory.UnitaryBC.locU d w) (τ'.ρ.comp ((GlobalTheory.UnitaryBC.cLoc w).comp (GlobalTheory.UnitaryBC.locU d w).subtype))
     (decomp_loc d w hw) hU'.stable hU'.irred (irr_pull _ _ (cLoc_surj d w hw) hirr') f' hf0' hfU' hfe' (P φ) (hPU φ hφ)).2 hne
   have hs : ∑ i, p (P (c i (x i))) ≠ 0 := by
-    rw [← map_sum, ← map_sum, ← hsum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, ← map_sum, ← hsum]
     exact hp0
   obtain ⟨i, -, hi⟩ := Finset.exists_ne_zero_of_sum_ne_zero hs
   exact ⟨c i, p, x i, hcU i, fun h y => hce i h y, fun h y hy => hpe h y hy, hi⟩

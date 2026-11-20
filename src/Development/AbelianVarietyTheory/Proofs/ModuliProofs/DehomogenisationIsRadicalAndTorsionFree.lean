@@ -91,7 +91,8 @@ theorem exists_ker_eq_dehomogenisation {o σ : Type} [CommRing o] (I : Ideal (Mv
   · apply sup_le
     ·
       intro F hF
-      rw [RingHom.mem_ker, ← MvPolynomial.sum_homogeneousComponent F, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [RingHom.mem_ker, ← MvPolynomial.sum_homogeneousComponent F, map_sum]
       refine Finset.sum_eq_zero fun e _ => ?_
       have h1 := eval₂_scale_of_isHomogeneous (g.comp MvPolynomial.C)
         (fun j => g (MvPolynomial.X j)) u (MvPolynomial.homogeneousComponent_isHomogeneous e F)

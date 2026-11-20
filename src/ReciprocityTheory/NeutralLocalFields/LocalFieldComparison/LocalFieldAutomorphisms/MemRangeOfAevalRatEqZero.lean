@@ -175,7 +175,8 @@ theorem finiteDimensional_Kloc (ι : Ω →+* PadicAlgCl p) : FiniteDimensional 
   have hle : Kloc F ι ≤ IntermediateField.adjoin ℚ_[p] (Set.range fun i => f (b i)) := by
     apply IntermediateField.adjoin_le_iff.2
     rintro _ ⟨y, rfl⟩
-    rw [← b.sum_repr y, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← b.sum_repr y, map_sum]
     refine sum_mem fun i _ => ?_
     rw [map_rat_smul, Rat.smul_def, ← map_ratCast (algebraMap ℚ_[p] (PadicAlgCl p))]
     exact mul_mem (IntermediateField.algebraMap_mem _ _) (IntermediateField.subset_adjoin _ _ ⟨i, rfl⟩)

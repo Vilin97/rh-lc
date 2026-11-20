@@ -110,7 +110,8 @@ theorem finiteDimensional_colT : FiniteDimensional ℂ (ColT hinj) := by
   intro T _
   rw [← shInv_shT hb T, ← b.sum_repr (shT hinj T)]
   show shInvAdd hb _ ∈ _
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Submodule.sum_mem _ fun i _ => ?_
   show shInv hb _ ∈ _
   rw [shInv_smul]

@@ -75,7 +75,8 @@ private theorem ift_expand [Fintype σ] (g : MvPowerSeries σ E) :
     Low 2 (g - (constantCoeff g • 1 + ∑ s, coeff (Finsupp.single s 1) g • X s)) := by
   classical
   refine ift_low_two (by simp [map_sum]) fun i => ?_
-  simp [map_sum, ift_coeff_X, coeff_one]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, ift_coeff_X, coeff_one]
 
 end SlopeTestRemainingChoices
 
@@ -138,7 +139,8 @@ theorem UpperTheory.V.Alg.M.ift_holds :
     have := hlow _ (ift_expand f) d hd
     rw [map_sub, map_sub, sub_eq_zero] at this
     rw [this]
-    simp only [map_add, map_smul, map_one, map_sum, hX, map_sub, hlow _ (hg _) d hd, sub_zero, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_add, map_smul, map_one, map_sum, hX, map_sub, hlow _ (hg _) d hd, sub_zero, smul_eq_mul]
   refine ⟨ψ, fun j f hf => ?_, ?_, fun f => ?_, fun f i => ?_⟩
   · rw [hψ]; exact ift_subst_mem hl (ift_lim_mem hG hg hGw hgw) hf
   · refine ift_span (E := E) (κ := {i // wt i = 0}) (by rw [← hcard, Nat.card_eq_fintype_card])
@@ -147,10 +149,12 @@ theorem UpperTheory.V.Alg.M.ift_holds :
     · ext i i'
       have := hc i.1 i.2 i'.1
       rw [ift_coeff_X] at this
-      simp only [map_sum, map_smul, smul_eq_mul] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, smul_eq_mul] at this
       simp only [Matrix.mul_apply, Matrix.of_apply, this, Matrix.one_apply, Subtype.ext_iff, eq_comm]
     · have := hX i.1
-      simp only [G, g, dif_pos i.2, map_sub, map_sum, map_smul] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [G, g, dif_pos i.2, map_sub, map_sum, map_smul] at this
       simp only [Matrix.of_apply]
       linear_combination this
   · have := key f 0 (by simp)

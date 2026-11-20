@@ -292,7 +292,8 @@ theorem exists_adForm_eq_phase_smul : GlobalTheory.Published.CuspRapidDecay → 
   refine ⟨(YS.fi j).e (∑ k, c k • Subtype.val (x k)), ?_⟩
   rw [e, one_smul, show (fun τ => (u τ : (Rl.MW j (sg0 D A3.A)).sm τ)) = v₀ j _ from funext hu]
   change evW YS v₀ j (∑ k, c k • Subtype.val (x k)) = _
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_congr rfl fun k _ => by rw [evW_smul, ← hc k]; rfl
 
 end GlobalTheory.KerPhase

@@ -137,12 +137,14 @@ theorem HostLog.subst_unitary : ∀ (p : ℕ) [Fact p.Prime] (g2 g3 s2 ε : Maxi
     rw [Formalism.InvariantFactorPaths.G7.at1, Formalism.L2.Th1.C.Pts.substMv_subst (MvPowerSeries.constantCoeff_X i) hcc,
       MvPowerSeries.subst_X ht]
     simp only [t, Formalism.L2.Th1.C.flin]
-    rw [Formalism.L2.Th1.C.Pts.subst_l_linv hFr.1 (by
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Formalism.L2.Th1.C.Pts.subst_l_linv hFr.1 (by
       rw [map_sum]
       exact Finset.sum_eq_zero fun j _ => by
         rw [map_mul, show PowerSeries.subst (MvPowerSeries.X j : MvPowerSeries m ℂ_[p]) l = Formalism.InvariantFactorPaths.G7.at1 j l from rfl,
           hb0, mul_zero])]
-    rw [← MvPowerSeries.coe_substAlgHom hb, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← MvPowerSeries.coe_substAlgHom hb, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_mul, MvPowerSeries.coe_substAlgHom hb, MvPowerSeries.subst_X hb]
     rw [MvPowerSeries.subst_C]

@@ -54,7 +54,8 @@ theorem formsL_exists_baseChange_coordinates : ∀ {L L' Ks : Type} [Field L] [N
       funext i; simp [Finset.sum_apply, Pi.single_apply]
     show ∑ k, σ' (ι (x k)) • F.j (σ'.comp ι) (Pi.single k 1) = F.j (σ'.comp ι) x
     conv_rhs => rw [hx]
-    simp only [map_sum, map_smulₛₗ, RingHom.comp_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smulₛₗ, RingHom.comp_apply]
   · intro x'
     show x' ∈ F.WK.map m ↔ _
     rw [Submodule.mem_map]

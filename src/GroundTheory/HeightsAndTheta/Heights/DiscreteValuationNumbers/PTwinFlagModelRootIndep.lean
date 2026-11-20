@@ -73,7 +73,8 @@ theorem divDiff_last {m : ℕ} (P : MvPolynomial (Fin m) ℤ) :
   unfold divDiff
   rw [support_mul_X, support_rename_of_injective hcs, Finset.sum_map,
     Finset.sum_image fun a _ b _ h => Finsupp.mapDomain_injective hcs h]
-  conv_rhs => rw [P.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_rhs => rw [P.as_sum, map_sum]
   refine Finset.sum_congr rfl fun ν _ => ?_
   have hl : Finsupp.mapDomain Fin.castSucc ν (Fin.last m) = 0 :=
     Finsupp.mapDomain_of_notMem_range _ _ (by

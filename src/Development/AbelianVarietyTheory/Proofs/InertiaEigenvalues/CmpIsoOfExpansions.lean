@@ -117,7 +117,8 @@ theorem const_lev (i : ZMod n) (a : LetA O n) :
   simp [PowerSeries.algebraMap_apply]
 
 theorem const_lev_Q (i : ZMod n) : PowerSeries.constantCoeff (W.lev i 1 W.Q) = (PD.p : LL) := by
-  rw [LevPt.Q_eq, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [LevPt.Q_eq, map_sum, map_sum]
   simp [const_lev_π]
 
 theorem π_dvd_of_van (hinj : Function.Injective (algebraMap O LL)) (a : LetA O n)
@@ -134,7 +135,8 @@ theorem π_dvd_of_van (hinj : Function.Injective (algebraMap O LL)) (a : LetA O 
 
 theorem cmp_eq_sum [NeZero n] (T : LocLat G Qp LL O) (x : ↥(W.N T)) :
     W.cmp T x = ∑ i : ZMod n, W.cmp T ((letE i : LetA O n) • x) := by
-  rw [← map_sum, ← Finset.sum_smul, sum_letE, one_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum, ← Finset.sum_smul, sum_letE, one_smul]
 
 theorem cmp_iso_of_expansions [NeZero n] (hinj : Function.Injective (algebraMap O LL))
     (T : LocLat G Qp LL O) (ex : ZMod n → ↥(W.N T) → ℤ → T.V ⊗[Qp] B)
@@ -187,7 +189,8 @@ theorem cmp_iso_of_expansions [NeZero n] (hinj : Function.Injective (algebraMap 
       rintro _ ⟨x, rfl⟩
       exact ⟨_, rfl⟩
   · intro x m hx
-    rw [cmp_eq_sum W T x, cmp_eq_sum, map_sum, Finset.smul_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [cmp_eq_sum W T x, cmp_eq_sum, map_sum, Finset.smul_sum,
       ← Equiv.sum_comp (Equiv.subRight (1 : ZMod n))
         (fun i => (PD.p : LL) ^ m •
           φVB PD (LL := LL) (V := T.V) (W.cmp T ((letE i : LetA O n) • x)))]

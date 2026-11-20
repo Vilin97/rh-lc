@@ -36,7 +36,8 @@ theorem io_pol_diag_hw {k : ℕ} (ν : Fin k → ℕ) (hν : Antitone ν) (a : F
       ∑ s : Fin k, X (a, s) * pderiv (a, s) f = ((d a : ℕ) : ℂ) • f := by
     intro f d hf
     rw [f.as_sum]
-    simp only [map_sum, Finset.mul_sum, MvPolynomial.X_mul_pderiv_monomial, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, Finset.mul_sum, MvPolynomial.X_mul_pderiv_monomial, Finset.smul_sum]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl (fun m hm => ?_)
     rw [← Finset.sum_smul, Nat.cast_smul_eq_nsmul]

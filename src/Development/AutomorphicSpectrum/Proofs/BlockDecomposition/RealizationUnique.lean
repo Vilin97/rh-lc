@@ -30,7 +30,8 @@ theorem eq_of_unit_smul_combination {K B V M : Type*} [Field K] [CommRing B] [Ad
     have e : ∑ s, φ (bs s) • bs.coord s = φ := bs.sum_dual_apply_smul_coord φ
     calc F φ = F (∑ s, φ (bs s) • bs.coord s) := by rw [e]
       _ = _ := by
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         exact Finset.sum_congr rfl fun s _ => by rw [hF, mul_comm]
   ext φ
   rw [key f hf, key f' hf']

@@ -308,7 +308,8 @@ theorem perIntOnAmb_iff (A : AmbForm D (RowSide.sharp D)) (N : Submodule (𝓞 D
     choose y hy using hg
     refine ⟨∑ v ∈ (D.what₂.Mtilde D.what₂.mu0).gen, (show 𝓞 D.what₂.LL from ⟨D.what₂.OtoLL (c v), D.O_int (c v)⟩) * y v, ?_⟩
     rw [lin]
-    rw [show ∀ t : 𝓞 D.what₂.LL, (t : D.what₂.LL) = algebraMap (𝓞 D.what₂.LL) D.what₂.LL t from fun _ => rfl, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [show ∀ t : 𝓞 D.what₂.LL, (t : D.what₂.LL) = algebraMap (𝓞 D.what₂.LL) D.what₂.LL t from fun _ => rfl, map_sum, map_sum]
     refine Finset.sum_congr rfl fun v hv => ?_
     rw [map_mul, map_mul, ← hy v hv]
     rfl
@@ -324,7 +325,8 @@ theorem perIntOnAmb_iff (A : AmbForm D (RowSide.sharp D)) (N : Submodule (𝓞 D
     refine ⟨∑ v ∈ (D.what₂.Mtilde D.what₂.mu0).gen, c v * y v, ?_⟩
     rw [hc]
     refine Eq.trans ?_ (lin _ _ _).symm
-    rw [show ∀ t : 𝓞 D.what₂.LL, (t : D.what₂.LL) = algebraMap (𝓞 D.what₂.LL) D.what₂.LL t from fun _ => rfl, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [show ∀ t : 𝓞 D.what₂.LL, (t : D.what₂.LL) = algebraMap (𝓞 D.what₂.LL) D.what₂.LL t from fun _ => rfl, map_sum, map_sum]
     refine Finset.sum_congr rfl fun v hv => ?_
     rw [map_mul, map_mul, ← hy v hv]
 

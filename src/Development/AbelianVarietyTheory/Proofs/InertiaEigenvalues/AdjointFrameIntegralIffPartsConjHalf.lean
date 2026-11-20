@@ -29,7 +29,8 @@ theorem frMapAdj_int_iff : ∀ (D : D7) (S T : HSp D) (βS : GL (Fin S.rank) (EA
       toEAf D e ∈ Formalism.L2.Herm.intAf D.host.F D.host.E := fun e P h => by
     rw [← GlobalTheory.ExportSeries.idem_eq h]
     unfold GlobalTheory.ExportSeries.idem
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact sum_mem fun PP hPP => GlobalTheory.RedHalfDrop.int_idemAt ⟨e, h⟩ hPP
   constructor
   · intro h

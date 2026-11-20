@@ -18,7 +18,8 @@ theorem qR_ratTup {F E : Type} [Field F] [CharZero F] [Field E] [Algebra F E]
     qR R σ J (ratTup (F := F) R x 0) = algebraMap F R β := by
   have h1 : hR R σ J (ratTup (F := F) R x 0) (ratTup (F := F) R x 0) =
       inclR (F := F) R (hE σ J (x 0) (x 0)) := by
-    simp only [hR, hE, Formalism.UG.hform, map_sum, map_mul, ratTup, JR, Matrix.map_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hR, hE, Formalism.UG.hform, map_sum, map_mul, ratTup, JR, Matrix.map_apply]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
     congr 2
   have h2 : inclR (F := F) R (algebraMap F E β) = algebraMap R (R ⊗[F] E) (algebraMap F R β) := by

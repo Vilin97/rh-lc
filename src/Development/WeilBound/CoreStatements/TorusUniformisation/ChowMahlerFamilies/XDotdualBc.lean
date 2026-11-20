@@ -45,7 +45,8 @@ theorem exists_system (R : Subalgebra o Ω) {m : ℕ} (L : AddSubgroup (Fin m �
 
 theorem bc_dot {C : Type} [Field C] [Algebra Ω C] {m : ℕ} (a b : Fin m → Ω) :
     bcMap Ω C (Fin m) a ⬝ᵥ bcMap Ω C (Fin m) b = algebraMap Ω C (a ⬝ᵥ b) := by
-  simp [dotProduct, bcMap, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [dotProduct, bcMap, map_sum]
 
 end PositivityTheory.Xgn.A_dotdual_bc
 
@@ -69,7 +70,8 @@ theorem PositivityTheory.Xgn.t_dotdual_bc : ∀ {o Ω C : Type} [CommRing o] [Fi
       have h3 : ∀ j', ∑ i, algebraMap Ω C (l i j) * algebraMap Ω C (v i j')
           = if j' = j then 1 else 0 := fun j' => by
         have := congrArg (algebraMap Ω C) (hs j j')
-        rw [map_sum] at this
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum] at this
         simp only [map_mul] at this
         rw [this]
         split_ifs <;> simp

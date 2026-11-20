@@ -20,7 +20,8 @@ theorem comp_eq_sum_inner_smul_rankOne {H Wp Wq : Type} [NormedAddCommGroup H] [
     ContinuousLinearMap.sum_apply, ContinuousLinearMap.smul_apply, ContinuousLinearMap.smulRight_apply,
     innerSL_apply_apply, Fintype.sum_prod_type, smul_smul]
   conv_lhs => rw [← c.sum_repr' x]
-  simp only [map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun j _ => ?_
   conv_lhs => rw [← b.sum_repr' (P (A (Q (c j))))]

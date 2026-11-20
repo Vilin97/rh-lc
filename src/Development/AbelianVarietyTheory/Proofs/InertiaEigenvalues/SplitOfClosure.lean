@@ -29,7 +29,8 @@ theorem cob_of_vanish {G : Type} [Group G] (H : Subgroup G) [H.FiniteIndex] {L M
     congr 2
     conv_lhs => rw [← QuotientGroup.out_eq' q]
     rfl
-  simp only [h2, Finset.sum_add_distrib, Finset.sum_const, Finset.card_univ, ← map_sum] at h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [h2, Finset.sum_add_distrib, Finset.sum_const, Finset.card_univ, ← map_sum] at h1
   rw [← hS, ← Nat.cast_smul_eq_nsmul L] at h1
   have h3 : c g = ((Fintype.card (G ⧸ H) : ℕ) : L)⁻¹ • (S - a g S) := by
     rw [eq_inv_smul_iff₀ hn, eq_sub_iff_add_eq]; exact h1.symm

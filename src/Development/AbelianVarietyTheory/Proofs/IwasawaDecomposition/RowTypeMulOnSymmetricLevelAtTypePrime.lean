@@ -165,7 +165,8 @@ theorem entB_mul (hq : q ≠ 0) {k₀ n c : ℕ} (hk : k₀ ≤ n) (g g' : Sp E 
         entB q k₀ c n c n (fun i => i + 1) (fun i => i + 1) g'.toLinearMap l p' := by
   simp only [entB_eq hq]
   show co q k₀ n c (g.toLinearMap (g'.toLinearMap _)) p = _
-  conv_lhs => rw [eq_sum_co hq hk (g'.toLinearMap _), map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [eq_sum_co hq hk (g'.toLinearMap _), map_sum]
   simp only [map_smul]
   rw [co_sum]
 

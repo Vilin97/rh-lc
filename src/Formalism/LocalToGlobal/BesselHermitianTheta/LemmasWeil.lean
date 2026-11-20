@@ -183,7 +183,8 @@ theorem gram_det_ne (V : HSp D) : V.gram.det ≠ 0 := by
     simpa [Matrix.mulVec, dotProduct] using this
   have hb : V.hT.flip (∑ j, v j • V.frame j) = 0 := by
     refine V.frame.ext fun i => ?_
-    rw [LinearMap.flip_apply, LinearMap.zero_apply, map_sum, ← hrow i]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [LinearMap.flip_apply, LinearMap.zero_apply, map_sum, ← hrow i]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_smul, smul_eq_mul]
     exact mul_comm _ _

@@ -71,7 +71,8 @@ theorem has_mul_of_isParVec : ∀ (g : ℕ) [Fact g.Prime] (S : Sys g) (n : ℕ)
     · intro u0 h0 h1 h2
       obtain ⟨B, rfl⟩ := eq_par (k := a) (l := b) u0 h0 h1 h2
       show (repK π) _ (ρA.asAlgebraHom (S.e a f) v') = ρA.asAlgebraHom (S.e a f) v'
-      rw [alg_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [alg_apply, map_sum]
       refine Finset.sum_congr rfl fun x _ => ?_
       rw [map_smul]
       congr 1

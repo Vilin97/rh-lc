@@ -157,9 +157,11 @@ theorem rel_pair {X X' : Scheme.{0}} {t : SAB H X} {t' : SAB H X'} {g : X' ⟶ X
       (by rw [Category.assoc, hg₀, ← Category.assoc, GlobalTheory.LogKSLoc.spMap_comp'])
       (fun p _ => hO₀ (Set.mem_univ ((spMap σ).base p)))
       (fun b => isTranslate_baseChange E H X' t' _ _ _ φS σ g₀ (v' b) (w b) (hw b))
-    rw [← GlobalTheory.CechKS.valR_spMap_comp σ g₀ O hO₀, k, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← GlobalTheory.CechKS.valR_spMap_comp σ g₀ O hO₀, k, map_sum]
     refine Finset.sum_congr rfl fun b _ => ?_
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun b' _ => ?_
     rw [GlobalTheory.CechKS.valR_spMap_comp _ _ _ (GlobalTheory.CechKS.le_preimage_of_red (hred b') hΩ₀),
       GlobalTheory.CechKS.valR_spMap_comp _ _ _ (GlobalTheory.CechKS.le_preimage_of_red (hred b) hO₀),

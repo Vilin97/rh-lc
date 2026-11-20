@@ -44,7 +44,8 @@ theorem exists_monic_aeval_apply_eq_zero {M : Type*} [AddCommGroup M] [Module �
       Q = ∑ j : Fin (m + 1), Polynomial.C (c j) * Polynomial.X ^ (j : ℕ) := ⟨_, rfl⟩
   have hQv : Polynomial.aeval T Q v = 0 := by
     have e1 : Polynomial.aeval T Q v = ∑ j : Fin (m + 1), c j • (T ^ (j : ℕ)) v := by
-      rw [hQdef, map_sum, LinearMap.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hQdef, map_sum, LinearMap.sum_apply]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [map_mul, Polynomial.aeval_C, map_pow, Polynomial.aeval_X, Module.End.mul_apply,
         Module.algebraMap_end_apply]
@@ -98,7 +99,8 @@ theorem rightUAction_laplacianU {ι : Type*} [Fintype ι]
     (b : Module.Basis ι ℝ (isExpLieAlgebra K n).lieSubalgebra) :
     (isExpLieAlgebra K n).rightUAction (F := ℂ) (laplacianU K n b) =
       (isExpLieAlgebra K n).laplacian (F := ℂ) b := by
-  simp only [laplacianU, IsExpLieAlgebra.laplacian, map_sum, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [laplacianU, IsExpLieAlgebra.laplacian, map_sum, map_mul,
     IsExpLieAlgebra.rightUAction_ι]
 
 theorem laplacianU_eq_casimir_add {ι : Type*} [Fintype ι]
@@ -264,7 +266,8 @@ theorem exists_aeval_laplacian_sliceL_eq_zero_of_isSmoothKZ {φ : AdelicGLn.Adel
     have e : uAction (laplacianU K n b) (uAction z ψ) = uAction (z * casimir b ε) ψ +
         uAction z (∑ i, (1 - ε i) • uAction (UniversalEnvelopingAlgebra.ι ℝ (b i))
           (uAction (UniversalEnvelopingAlgebra.ι ℝ (b i)) ψ)) := by
-      rw [← Module.End.mul_apply, ← map_mul, hc, map_mul, Module.End.mul_apply,
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← Module.End.mul_apply, ← map_mul, hc, map_mul, Module.End.mul_apply,
         laplacianU_eq_casimir_add b ε, map_add, LinearMap.add_apply, map_add, map_mul,
         Module.End.mul_apply, map_sum, LinearMap.sum_apply]
       congr 2

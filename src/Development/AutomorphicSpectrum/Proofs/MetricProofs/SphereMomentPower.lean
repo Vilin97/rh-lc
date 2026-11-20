@@ -26,10 +26,12 @@ theorem coordHom_apply (g : MvPolynomial (Fin 3) ℝ) (p : S2) :
     coordHom g p = MvPolynomial.eval (fun i => (p : E3) i) g := rfl
 
 theorem linear_form_eq_map_eval (n : Fin 3 → ℝ) : lin3 n = MvPolynomial.map (MvPolynomial.eval n) genLin := by
-  simp [lin3, genLin, map_sum, MvPolynomial.map_X, MvPolynomial.map_C, MvPolynomial.eval_X]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [lin3, genLin, map_sum, MvPolynomial.map_X, MvPolynomial.map_C, MvPolynomial.eval_X]
 
 theorem dotPoly_id_eq_map : dotPoly (id : S2 → S2) = MvPolynomial.map coordHom genLin := by
-  simp only [dotPoly, genLin, map_sum, map_mul, MvPolynomial.map_X, MvPolynomial.map_C]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dotPoly, genLin, map_sum, map_mul, MvPolynomial.map_X, MvPolynomial.map_C]
   refine Finset.sum_congr rfl fun i _ => ?_
   congr 2
   funext p
@@ -41,7 +43,8 @@ theorem linear_expand (ℓ : MvPolynomial (Fin 3) ℝ →ₗ[ℝ] ℝ) (S : Fins
     ℓ Q = ∑ m ∈ S, AddMonoidAlgebra.coeff Q m * ℓ (monomial m 1) := by
   calc ℓ Q = ℓ (∑ m ∈ Q.support, monomial m (AddMonoidAlgebra.coeff Q m)) := by rw [support_sum_monomial_coeff]
     _ = ∑ m ∈ Q.support, AddMonoidAlgebra.coeff Q m * ℓ (monomial m 1) := by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun m _ => ?_
       rw [show monomial m (AddMonoidAlgebra.coeff Q m) = (AddMonoidAlgebra.coeff Q m) • monomial m (1 : ℝ) by
         rw [smul_monomial, smul_eq_mul, mul_one], map_smul, smul_eq_mul]

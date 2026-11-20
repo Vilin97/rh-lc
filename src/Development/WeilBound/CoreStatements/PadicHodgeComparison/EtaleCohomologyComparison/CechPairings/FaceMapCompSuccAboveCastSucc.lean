@@ -106,7 +106,8 @@ theorem tm_d (m' : Mor F F' σ) {G : C' ⥤ C} (η : G ⟶ m'.G) {n k : ℕ} (s 
   rw [dif_pos ⟨ha, hb⟩]
   simp only [dif_pos (hs _)]
   change m'.τ _ ((F.map _).hom (∑ i : Fin (k+2), (-1:ℤ)^(i:ℕ) • (F.map (toLast i (ch s ha hb ⋙ Th η))).hom (f (face i (ch s ha hb ⋙ Th η))))) = _
-  rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_zsmul, map_zsmul]
   erw [Fmc]
@@ -313,7 +314,8 @@ theorem htpy_succ (m m' : Mor F F' σ) (η : m.G ⟶ m'.G) (hτ : ∀ T x, m'.τ
     change ∑ j : Fin (n+2), (-1:ℤ)^(j:ℕ) • (F'.map (toLast j s)).hom
       (∑ i : Fin (n+1), (-1:ℤ)^(i:ℕ) • tm m' η (face j s) f i.predAbove (bb i)) = _
     refine Finset.sum_congr rfl fun j _ => ?_
-    rw [map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_zsmul, tm_face]
   have h2 : (0 : F'.obj (s.obj (Fin.last (n+1)))) = ∑ i : Fin (n+2), ∑ k : Fin (n+3),

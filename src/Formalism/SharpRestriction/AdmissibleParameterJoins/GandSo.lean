@@ -199,7 +199,8 @@ theorem map_Ex (h : K →+* K') {f : MvPowerSeries ι K} (hf : constantCoeff f =
   ext n
   have hf' : constantCoeff (map h f) = 0 := by
     rw [MvPowerSeries.constantCoeff_map, hf, map_zero]
-  rw [MvPowerSeries.coeff_map, coeff_Ex_eq_sum_inv_factorial_coeff_pow hf, coeff_Ex_eq_sum_inv_factorial_coeff_pow hf', map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [MvPowerSeries.coeff_map, coeff_Ex_eq_sum_inv_factorial_coeff_pow hf, coeff_Ex_eq_sum_inv_factorial_coeff_pow hf', map_sum]
   apply Finset.sum_congr rfl
   intro k _
   rw [map_mul, map_inv₀, map_natCast, ← map_pow (MvPowerSeries.map h) f k, MvPowerSeries.coeff_map]
@@ -216,7 +217,8 @@ theorem Ex_zero : Ex (0 : MvPowerSeries ι K) = 1 := by
 private theorem coeff_X_zero_add_X_one_pow (n : Fin 2 →₀ ℕ) (k : ℕ) :
     coeff n ((X 0 + X 1 : MvPowerSeries (Fin 2) K) ^ k) =
       if k = n 0 + n 1 then ((k.choose (n 0) : ℕ) : K) else 0 := by
-  rw [add_pow, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [add_pow, map_sum]
   have hterm : ∀ m ∈ Finset.range (k + 1),
       coeff n ((X 0 : MvPowerSeries (Fin 2) K) ^ m * X 1 ^ (k - m) *
         ((k.choose m : ℕ) : MvPowerSeries (Fin 2) K)) =

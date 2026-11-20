@@ -12,7 +12,8 @@ theorem aeval_mul_hom {σ R A : Type} [CommRing R] [CommRing A] [Algebra R A] {P
     (c : A) (z : σ → A) : aeval (fun i => c * z i) P = c ^ q * aeval z P := by
   conv_lhs => rw [P.as_sum]
   conv_rhs => rw [P.as_sum]
-  rw [map_sum, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun m hm => ?_
   have hd := hP (mem_support_iff.mp hm)
   simp only [aeval_monomial, mul_pow]

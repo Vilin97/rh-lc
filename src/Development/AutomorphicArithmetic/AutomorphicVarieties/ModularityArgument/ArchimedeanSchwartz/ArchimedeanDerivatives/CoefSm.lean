@@ -102,7 +102,8 @@ private theorem chart_deriv (φ : Sm K n) (g : GA K n) {y : Lie K n} (hy : y ∈
     exact chart_lieD φ.2 Y g hy
   have e2 : ∀ b, cf K n b y (e X) = (Module.finBasis ℝ (Lie K n)).repr X b := fun b => by
     simp [cf, ← he]
-  simp only [ContinuousLinearMap.sum_apply, ContinuousLinearMap.smulRight_apply, e1, e2, ← map_smul, ← map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [ContinuousLinearMap.sum_apply, ContinuousLinearMap.smulRight_apply, e1, e2, ← map_smul, ← map_sum,
     Module.Basis.sum_repr]
 
 omit [IsTotallyComplex K] in
@@ -204,14 +205,16 @@ private theorem coefMap_lie (hn : 1 ≤ n) (μ : Measure (Reduction.normOneGL K 
     rw [Submodule.coe_sum]
     change lie K n X φ.1 = ∑ b, (((Module.finBasis ℝ (Lie K n)).repr X b : ℝ) : ℂ) • lie K n (Module.finBasis ℝ (Lie K n) b) φ.1
     conv_lhs => rw [← (Module.finBasis ℝ (Lie K n)).sum_repr X]
-    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, Complex.coe_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, Complex.coe_smul]
   refine Subtype.ext (funext fun g => ?_)
   have h1 : oneL K n ∈ invSet K n := val_mem_invSet (1 : GL (Fin n) (Cinf K))
   have hc : ∀ F : GA K n → ℂ, chart F g (oneL K n) = F g := fun F =>
     (chart_val F g 1).trans (by rw [map_one, mul_one])
   have h2 := congrArg (fun L : Lie K n →L[ℝ] ℂ => L X) (coef_deriv hn μ h φ₂ g φ h1).fderiv
   refine Eq.trans ?_ h2.symm
-  simp only [e, map_sum, map_smul, ContinuousLinearMap.sum_apply, ContinuousLinearMap.smulRight_apply, cf_one, hc,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [e, map_sum, map_smul, ContinuousLinearMap.sum_apply, ContinuousLinearMap.smulRight_apply, cf_one, hc,
     Submodule.coe_sum, Finset.sum_apply, Submodule.coe_smul, Pi.smul_apply, Complex.real_smul, smul_eq_mul]
   rfl
 

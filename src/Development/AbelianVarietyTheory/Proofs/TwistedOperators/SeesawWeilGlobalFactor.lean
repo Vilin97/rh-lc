@@ -129,7 +129,8 @@ theorem real_side (hP : GlobalTheory.FunPr.Hypotheses₂) {a a' : ℕ} {B : Base
     rw [act γ hγ Y hY T f₁, LinearMap.comp_apply, LinearMap.comp_apply, e]
   · obtain ⟨Y, hYu, hY⟩ := gen γ hγ
     obtain ⟨T, rfl⟩ := pol_eq B G.M Φ hr hf
-    rw [(act γ hγ Y hY T f₁).1 h1, sumPl, LinearMap.sum_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [(act γ hγ Y hY T f₁).1 h1, sumPl, LinearMap.sum_apply, map_sum]
     refine N.sum_mem fun w _ => ?_
     obtain ⟨γ', hγS, hγ', hgen⟩ := hS w (Y w) (hYu w)
     refine hN γ' hγS hγ' _ (hmem T) _ ((act γ' hγ' _ hgen T _).2 ?_) hfN

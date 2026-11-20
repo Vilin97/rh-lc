@@ -41,7 +41,8 @@ theorem evh_bd {m : ℕ} (Φ : (Fin (m + 1) → G) → ℝ) (hΦ : ∀ (a : G) p
         Fin.partialProd (Fin.contractNth j (· * ·) g) := fun j => by
       rw [Fin.partialProd_contractNth]; rfl
     rw [evh_single, dC, Fin.sum_univ_succ, h0, hΦ]
-    simp only [h1, bd, Finsupp.linearCombination_single, map_smul, map_add, map_sum, evh_single,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [h1, bd, Finsupp.linearCombination_single, map_smul, map_add, map_sum, evh_single,
       smul_eq_mul, one_mul, Fin.val_zero, pow_zero, Fin.val_succ]
     rfl
 

@@ -33,9 +33,11 @@ theorem UpperTheory.V.Z.Desc.W.splitSat_alt :
   apply Multiset.map_injective (f := fun z : ℂˣ => (z : ℂ)) Units.val_injective
   rw [← s2]
   unfold satTot
-  rw [← Multiset.coe_mapAddMonoidHom (fun z : ℂˣ => (z : ℂ)), map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Multiset.coe_mapAddMonoidHom (fun z : ℂˣ => (z : ℂ)), map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
-  rw [map_sum, ← Equiv.sum_comp Fin.revPerm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, ← Equiv.sum_comp Fin.revPerm]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [Multiset.coe_mapAddMonoidHom, Multiset.map_map]
   refine Multiset.map_congr rfl fun x _ => ?_

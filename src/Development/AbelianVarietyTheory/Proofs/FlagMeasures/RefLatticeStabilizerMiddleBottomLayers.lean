@@ -408,7 +408,8 @@ theorem GlobalTheory.RowStab.middle_bottom_layers : ∀ (K V : Type) [Field K] [
       rw [hd, map_sub, LinearMap.sub_apply, e1, sub_eq_zero.mp h0, sub_self]
     have hρX : ∀ a : Fin r, H.B ρ (N.F.e a.castSucc) = 0 := by
       intro a
-      rw [hρdef, map_sub, LinearMap.sub_apply, hdX a, map_sum, LinearMap.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hρdef, map_sub, LinearMap.sub_apply, hdX a, map_sum, LinearMap.sum_apply]
       simp [N.F.iso]
     have hρW : ρ ∈ N.Wn := by
       show ρ ∈ perp H _
@@ -424,13 +425,15 @@ theorem GlobalTheory.RowStab.middle_bottom_layers : ∀ (K V : Type) [Field K] [
         show H.B ρ (N.F'.e a.castSucc) = 0
         by_cases ha : N.j ≤ a.val
         · rw [e'_eq N a ha, map_smulₛₗ, hρX a, smul_zero]
-        · rw [hρdef, map_sub, LinearMap.sub_apply, hdX' a (lt_of_not_ge ha), map_sum, LinearMap.sum_apply]
+        set_option synthInstance.maxHeartbeats 100000 in
+          · rw [hρdef, map_sub, LinearMap.sub_apply, hdX' a (lt_of_not_ge ha), map_sum, LinearMap.sum_apply]
           simp only [map_smul, LinearMap.smul_apply, smul_eq_mul]
           rw [Finset.sum_eq_zero fun a' ha' => by rw [B_e_e' N a a' ((mem_JJ N a').mp ha'), mul_zero], sub_zero]
       · refine Submodule.span_le.mpr ?_
         rintro _ ⟨a, ha, rfl⟩
         show H.B ρ (N.ist a) = 0
-        rw [hρdef, map_sub, LinearMap.sub_apply, map_sum, LinearMap.sum_apply]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [hρdef, map_sub, LinearMap.sub_apply, map_sum, LinearMap.sum_apply]
         simp only [map_smul, LinearMap.smul_apply, smul_eq_mul]
         rw [Finset.sum_congr rfl (g := fun a' => if a' = a then H.B d (N.ist a) else 0)]
         · rw [Finset.sum_ite_eq']; simp [(mem_JJ N a).mpr ha]

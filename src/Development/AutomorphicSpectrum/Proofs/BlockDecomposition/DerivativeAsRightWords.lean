@@ -85,7 +85,8 @@ theorem Rw_smooth {V : Type} [NormedAddCommGroup V] [NormedSpace ℂ V] {f : Mat
 theorem fderiv_mul_expand {V : Type} [NormedAddCommGroup V] [NormedSpace ℂ V] (H : Mat n → V)
     (y M : Mat n) : fderiv ℝ H y (y * M) = ∑ q, co q M • Rd (bs q) H y := by
   conv_lhs => rw [← sum_co_smul M]
-  rw [Matrix.mul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.mul_sum, map_sum]
   refine Finset.sum_congr rfl fun q _ => ?_
   rw [Matrix.mul_smul, map_smul]
   rfl

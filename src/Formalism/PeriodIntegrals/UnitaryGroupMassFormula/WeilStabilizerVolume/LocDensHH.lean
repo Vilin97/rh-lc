@@ -35,7 +35,8 @@ theorem hform_mul_left {M a : ℕ} (Jm : Matrix (Fin M) (Fin M) A) (Y : Fin a �
       ∑ k, s (C i k) * Formalism.UG.hform s Jm (Y k) (Y j) := by
   calc Formalism.UG.hform s Jm (fun l => ∑ k, C i k * Y k l) (Y j)
       = ∑ p, ∑ q, ∑ k, s (C i k) * s (Y k p) * Jm p q * Y j q := by
-        simp only [Formalism.UG.hform, map_sum, map_mul, Finset.sum_mul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [Formalism.UG.hform, map_sum, map_mul, Finset.sum_mul]
     _ = ∑ p, ∑ k, ∑ q, s (C i k) * s (Y k p) * Jm p q * Y j q :=
         Finset.sum_congr rfl fun p _ => Finset.sum_comm
     _ = ∑ k, ∑ p, ∑ q, s (C i k) * s (Y k p) * Jm p q * Y j q := Finset.sum_comm
@@ -53,7 +54,8 @@ theorem pol_solve {a : ℕ} (h πA : A) (hh : h + h = 1) (hsh : s h = h)
   have hC1 : ((h • (Tinv * Sm))ᵀ)ᵀ = h • (Tinv * Sm) := transpose_transpose _
   have hC2 : ((h • (Tinv * Sm))ᵀ).map s = h • (Sm * Ts) := by
     ext i j
-    simp only [hTsdef, Matrix.map_apply, Matrix.transpose_apply, Matrix.smul_apply, Matrix.mul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hTsdef, Matrix.map_apply, Matrix.transpose_apply, Matrix.smul_apply, Matrix.mul_apply,
       smul_eq_mul, map_mul, map_sum, hsh, hS]
     congr 1
     exact Finset.sum_congr rfl fun k _ => mul_comm _ _
@@ -129,7 +131,8 @@ theorem sigR_smul (σ : E →ₐ[F] E) (c : Fv F v) (z : Fv F v ⊗[F] E) :
 theorem intA_sig (σ : E →ₐ[F] E)
     (hg : ∀ k m, algebraMap F (Fv F v) (b.repr (σ (b k)) m) ∈ v.adicCompletionIntegers F)
     {z : Fv F v ⊗[F] E} (hz : intA b v z) : intA b v (sigR (Fv F v) σ z) := by
-  rw [PositiveNearLattice.eq_sum_crd b (Fv F v) z, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [PositiveNearLattice.eq_sum_crd b (Fv F v) z, map_sum]
   refine intA_sum _ _ fun i _ => ?_
   rw [sigR_smul, ← incl_eq_tmul, sigR_incl]
   exact intA_smul (hz i) (intA_incl _ (hg i))

@@ -129,7 +129,8 @@ theorem map_colFrame {Ω' V' : Type} [Field Ω'] [AddCommGroup V'] [Module Ω' V
     (hj : ∀ (a : Ω) (e : V), j (a • e) = i a • j e) (c : Fin r → V) (T : Matrix (Fin r) (Fin r) Ω) :
     (fun k => j (colFrame c T k)) = colFrame (fun k => j (c k)) (T.map i) := by
   funext k
-  simp [colFrame, map_sum, hj]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [colFrame, map_sum, hj]
 
 end Lin
 

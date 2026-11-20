@@ -46,7 +46,8 @@ theorem sum_dual_swap {ι κ : Type} [Fintype ι] [DecidableEq ι] [Fintype κ] 
     _ = ∑ j, c j ⊗ₜ[ℚ] τ (c.traceDual j) := by
         rw [Finset.sum_comm]
         refine Finset.sum_congr rfl fun j _ => ?_
-        conv_rhs => rw [h2 j, map_sum, TensorProduct.tmul_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          conv_rhs => rw [h2 j, map_sum, TensorProduct.tmul_sum]
         simp only [map_rat_smul, TensorProduct.tmul_smul]
 
 theorem idemOf_eq_idem {ι κ : Type} [Fintype ι] [DecidableEq ι] [Fintype κ]
@@ -72,7 +73,8 @@ theorem integral_iff_ratBasis {ι : Type} [Fintype ι] (b : Basis ι ℚ E) :
       have : x = ∑ i, c i • v i := by
         apply NumberField.RingOfIntegers.ext
         rw [hc]
-        simp only [map_sum, map_zsmul, Int.cast_smul_eq_zsmul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, map_zsmul, Int.cast_smul_eq_zsmul]
         rfl
       rw [this]
       exact Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)
@@ -143,7 +145,8 @@ theorem sum_mem_integralPart_iff {ι : Type} [Fintype ι] (b : Basis ι ℤ (�
       rw [← hy']; exact ht
     have h2 := congrArg (fun z => TensorProduct.lid ℚ C
       (TensorProduct.map ((ratBasis b).coord i) LinearMap.id z)) ht'
-    simp [Finsupp.single_apply, map_sum, ite_smul] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Finsupp.single_apply, map_sum, ite_smul] at h2
     rw [← h2]; exact hy i
   · intro h
     refine Subring.sum_mem _ fun i _ => ⟨b i ⊗ₜ[ℤ] ⟨x i, h i⟩, ?_⟩

@@ -32,7 +32,8 @@ theorem mul_mem {L L' : Module.End ℂ (MvPolynomial σ ℂ)} (h : L ∈ nonRais
 theorem totalDegree_X_mul_pderiv (x y : σ) (P : MvPolynomial σ ℂ) :
     (X x * pderiv y P).totalDegree ≤ P.totalDegree := by
   classical
-  conv_lhs => rw [P.as_sum, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [P.as_sum, map_sum, Finset.mul_sum]
   refine totalDegree_finsetSum_le fun s hs => ?_
   rw [pderiv_monomial]
   by_cases h0 : s y = 0
@@ -134,7 +135,8 @@ theorem fockQuadraticPart_ne_zero_of_offBlock_entry (Y : Matrix (Fin b) (Fin b) 
       exact hc ⟨hi, hl⟩
   have := congrArg (eval pt) h0
   unfold quadAll at this
-  simp only [map_sum, smul_eval, hq, map_zero, ite_and] at this
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, smul_eval, hq, map_zero, ite_and] at this
   apply hY
   simpa using this
 

@@ -210,7 +210,8 @@ theorem wedgeCoord_eq_sum (p : ℕ) (v : Fin p → (Fin n × Fin n → ℂ)) :
     funext i y
     simp [Finset.sum_apply, Pi.single_apply]
   conv_lhs => rw [hv]
-  rw [MultilinearMap.map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [MultilinearMap.map_sum]
   refine Finset.sum_congr rfl fun r _ => ?_
   rw [MultilinearMap.map_smul_univ]
 
@@ -251,7 +252,8 @@ theorem ff_exp_wedge_hasDeriv {X : Matrix (Fin n) (Fin n) ℂ} (hX : Xᴴ = -X) 
   rw [hfun]
   convert h using 1
   all_goals try rfl
-  rw [ContinuousLinearMap.coe_restrictScalars', ContinuousMultilinearMap.linearDeriv_apply, hc0, isDer_sgX,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [ContinuousLinearMap.coe_restrictScalars', ContinuousMultilinearMap.linearDeriv_apply, hc0, isDer_sgX,
     map_sum]
   rfl
 
@@ -260,7 +262,8 @@ theorem ff_exp_hasDeriv {X : Matrix (Fin n) (Fin n) ℂ} (hX : Xᴴ = -X) (f : F
       ((fockBasis n).equivFun (sgX ε X f)) 0 := by
   have hf : f = ∑ S, (fockBasis n).repr f S • fockBasis n S := ((fockBasis n).sum_repr f).symm
   rw [hf]
-  simp only [map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul]
   refine HasDerivAt.fun_sum fun S _ => ?_
   refine HasDerivAt.const_smul ((fockBasis n).repr f S) ?_
   rw [fockBasis_eq]

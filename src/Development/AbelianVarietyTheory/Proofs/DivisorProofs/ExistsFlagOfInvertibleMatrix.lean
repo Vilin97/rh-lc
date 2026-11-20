@@ -27,8 +27,10 @@ theorem isFrame_sum_smul_of_isUnit_det {U : X.Opens} {g : Fin r → Γ(N, U)} (h
     have e : (hg.basis h).toMatrix (fun i => resM N h (∑ b, A i b • g b)) =
         ((resG X h).mapMatrix A).transpose := by
       ext b i
-      simp only [Module.Basis.toMatrix_apply, map_sum, resM_smul, ← hg.basis_apply h]
-      rw [← map_sum, Module.Basis.repr_sum_self]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Module.Basis.toMatrix_apply, map_sum, resM_smul, ← hg.basis_apply h]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← map_sum, Module.Basis.repr_sum_self]
       rfl
     rw [Module.Basis.det_apply, e, Matrix.det_transpose, ← RingHom.map_det]
     exact hA.map _
@@ -55,7 +57,8 @@ theorem exists_flag_of_isFrame_top {s : Fin r → Γ(N, ⊤)} (hs : VB.IsFrame s
     (freeFrame X (Fin k) i) = (hs.basis le_rfl) (Fin.castLE hk i)) → (hs.basis le_rfl).repr (φ.app ⊤ t) l = 0
   intro φ t h1
   obtain ⟨a, rfl⟩ := (isFrame_freeFrame X (Fin k) ⊤ le_rfl).2 t
-  rw [Fintype.linearCombination_apply, map_sum, map_sum, Finsupp.finset_sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Fintype.linearCombination_apply, map_sum, map_sum, Finsupp.finset_sum_apply]
   refine Finset.sum_eq_zero fun i _ => ?_
   rw [Scheme.Modules.Hom.app_smul, resM_self, h1, map_smul, Module.Basis.repr_self, Finsupp.smul_apply,
     Finsupp.single_eq_of_ne, smul_zero]
@@ -92,7 +95,8 @@ theorem exists_flag_flagMat : ∀ (B : Scheme.{0}) (M : B.Modules) (r : ℕ) (hM
     simp only [← (hf.pullback x).basis_apply hWV]
     rw [Module.Basis.repr_sum_self]
     rfl
-  simp only [map_sum, map_smul, Finsupp.finset_sum_apply, Finsupp.smul_apply, smul_eq_mul, h1, map_mul, hc,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, Finsupp.finset_sum_apply, Finsupp.smul_apply, smul_eq_mul, h1, map_mul, hc,
     Matrix.vecMul, dotProduct]
 
 end GlobalTheory.FlagCls

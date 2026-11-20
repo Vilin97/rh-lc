@@ -78,7 +78,8 @@ theorem impl_local : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Numbe
     exact this
   have hact : actB (cA σ) (eB.symm g).1 (w.map (liftE v)) = (actB (GlobalTheory.HoweLocal.cv σ v) g w).map (liftE v) := by
     funext i j
-    simp only [actB, Matrix.map_apply, Matrix.mul_apply, Matrix.transpose_apply, map_sum, hm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [actB, Matrix.map_apply, Matrix.mul_apply, Matrix.transpose_apply, map_sum, hm]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [liftE_mul_eq]; rfl
   have h1 := GlobalTheory.ThK.LocalOps.acts_comp v (hpresR (w.map (liftE v))) (hrho w φ) (hL g _ (hSB w φ hφ)).2

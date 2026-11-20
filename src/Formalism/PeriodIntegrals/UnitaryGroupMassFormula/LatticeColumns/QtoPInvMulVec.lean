@@ -47,7 +47,8 @@ theorem crd_mulVec (M : Matrix (Fin X.B.I.n) (Fin X.B.I.n) (TpX X p)) (v : Fin X
   have h1 : pr1 θ (M *ᵥ v) = (M.map fun t => (θ t).1) *ᵥ pr1 θ v := by
     funext i
     show (θ ((M *ᵥ v) i)).1 = ((M.map fun t => (θ t).1) *ᵥ pr1 θ v) i
-    simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Prod.fst_sum, Prod.fst_mul, Matrix.map_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Prod.fst_sum, Prod.fst_mul, Matrix.map_apply]
     rfl
   have h2 : ((M.map fun t => (θ t).1) *ᵥ pr1 θ v) ∘ (idxEquiv X).symm =
       Matrix.reindex (idxEquiv X) (idxEquiv X) (M.map fun t => (θ t).1) *ᵥ (pr1 θ v ∘ (idxEquiv X).symm) := by

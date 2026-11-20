@@ -48,13 +48,16 @@ theorem exists_decomp {E : Type} [Field E] {ι : Type} [Fintype ι] [DecidableEq
     have e : (⟨P i₀ k ((∑ a, ∑ b', M a b' • P a b') u), hW k _⟩ : W)
         = ∑ b', M k b' • (⟨P i₀ b' u, hW b' u⟩ : W) := by
       apply Subtype.ext
-      simp [LinearMap.sum_apply, map_sum, map_smul, hPa]
-    rw [e, map_sum, Finsupp.finset_sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [LinearMap.sum_apply, map_sum, map_smul, hPa]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, map_sum, Finsupp.finset_sum_apply]
     simp only [map_smul, Finsupp.smul_apply, smul_eq_mul, Matrix.mulVec, dotProduct, hπ]
   · intro i M
     refine LinearMap.ext fun v => ?_
     simp only [LinearMap.comp_apply, Matrix.toLin'_apply, hs]
-    simp [LinearMap.sum_apply, map_sum, map_smul, hPa, Matrix.mulVec, dotProduct, Finset.sum_smul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [LinearMap.sum_apply, map_sum, map_smul, hPa, Matrix.mulVec, dotProduct, Finset.sum_smul,
       mul_smul]
     simp only [Finset.smul_sum, smul_smul]
     rw [Finset.sum_comm]
@@ -64,7 +67,8 @@ theorem exists_decomp {E : Type} [Field E] {ι : Type} [Fintype ι] [DecidableEq
     simp only [LinearMap.comp_apply, hπ, hs]
     have e : (⟨P i₀ k (∑ l, v l • P l i₀ (b j)), hW k _⟩ : W) = v k • b j := by
       apply Subtype.ext
-      simp [map_sum, map_smul, hPa, hfix _ (b j).2]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [map_sum, map_smul, hPa, hfix _ (b j).2]
     rw [e]
     split_ifs with h
     · subst h; simp
@@ -75,7 +79,8 @@ theorem exists_decomp {E : Type} [Field E] {ι : Type} [Fintype ι] [DecidableEq
     have hk : ∀ k, ∑ x, b.repr ⟨P i₀ k u, hW k u⟩ x • P k i₀ (b x) = P k k u := by
       intro k
       have := congrArg (P k i₀) (hrec k u)
-      rw [map_sum] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum] at this
       simp only [map_smul] at this
       rw [this, hPa, if_pos rfl]
     simp only [hk]
@@ -205,18 +210,22 @@ theorem isotypic_of_quadratic_relation : ∀ {E : Type} [Field E] [IsAlgClosed E
       simp [h]
   have hsum : ∑ i, P i i = 1 := by
     simp only [P]
-    rw [← map_sum, ← map_one Φ]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, ← map_one Φ]
     apply hΦeq
-    rw [map_sum, map_one]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_one]
     simp only [hyP]
     ext i j; fin_cases i <;> fin_cases j <;> simp [Fin.sum_univ_two, Matrix.single_apply, Matrix.one_apply]
   have hσ : ∀ g, σ g = ∑ a, ∑ b, (R g) a b • P a b := by
     intro g
     have e : σ g = Φ (MonoidAlgebra.single g 1) := by rw [hΦ, one_smul]
     rw [e]
-    simp only [P, ← map_smul, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [P, ← map_smul, ← map_sum]
     apply hΦeq
-    simp only [map_sum, map_smul, hΨ, hyP, one_smul, Matrix.smul_single, smul_eq_mul, mul_one]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, hΨ, hyP, one_smul, Matrix.smul_single, smul_eq_mul, mul_one]
     exact Matrix.matrix_eq_sum_single (R g)
   obtain ⟨m, π, s, k1, k2, k3, k4⟩ := exists_decomp (0 : Fin 2) P hP hsum
   refine ⟨m, π, s, fun i g => ?_, fun i g => ?_, k3, k4⟩

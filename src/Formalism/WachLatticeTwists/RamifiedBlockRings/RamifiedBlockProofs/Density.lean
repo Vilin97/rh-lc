@@ -21,7 +21,8 @@ theorem densityMod (k A : Type*) [Field k] [Ring A] [Algebra k A] {ι : Type*} [
     refine ⟨c, fun w i => ?_⟩
     have hw : w = ∑ j, Pi.single j (w j) := (Finset.univ_sum_single w).symm
     conv_lhs => rw [hw]
-    rw [map_sum, Finset.sum_apply, Finset.sum_eq_single i]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_apply, Finset.sum_eq_single i]
     · exact hc i (w i)
     · intro j _ hj
       have := LinearMap.congr_fun

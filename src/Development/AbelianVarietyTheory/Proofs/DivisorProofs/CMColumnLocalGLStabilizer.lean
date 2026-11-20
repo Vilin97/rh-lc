@@ -65,7 +65,8 @@ theorem mulVec_sub_mem_span_frame : ∀ (F E : Type) [Field F] [NumberField F] [
       set l' : Fin r := ⟨l, lt_of_le_of_lt hli i.2⟩
       have hq := congrArg (splitProj (t.comp σ)) (hy l' (by change (l : ℕ) ≤ i; exact hli))
       have hBl : ∀ a, B.1 a l = t (X a l') := hB l' l rfl
-      simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Matrix.map_apply, splitProj_inclR, map_zero,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Matrix.map_apply, splitProj_inclR, map_zero,
         Formalism.UG.cT, Matrix.mul_apply, Matrix.transpose_apply, AlgHom.comp_apply, RingHom.coe_coe,
         cm_conj_conj hcm, hJ.1] at hq
       simp only [hz, Matrix.vecMul, dotProduct, splitGram_val, Matrix.map_apply, hBl]
@@ -100,13 +101,15 @@ theorem mulVec_sub_mem_span_frame : ∀ (F E : Type) [Field F] [NumberField F] [
         funext fun a => map_sub _ _ _
       rw [this, e1, key1]
       funext a
-      simp [splitVec, Finset.sum_apply, map_sum, splitProj_inclR]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [splitVec, Finset.sum_apply, map_sum, splitProj_inclR]
     · have e2 : splitVec (t.comp σ) ((matHom _ σ J x).1 *ᵥ y) = u' := by rw [splitVec_matHom_mulVec, h2, key2]
       have : splitVec (t.comp σ) ((matHom _ σ J x).1 *ᵥ y - y) = splitVec (t.comp σ) ((matHom _ σ J x).1 *ᵥ y) - u' :=
         funext fun a => map_sub _ _ _
       rw [this, e2, sub_self]
       funext a
-      simp [splitVec, Finset.sum_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [splitVec, Finset.sum_apply, map_sum]
   rw [heq]
   exact Submodule.sum_mem _ fun l hl => Submodule.smul_mem _ _
     (Submodule.subset_span ⟨l, (Finset.mem_filter.1 hl).2, rfl⟩)

@@ -23,7 +23,8 @@ theorem le_nonzeroLocus_iff {k K : Type} [CommRing k] [Field K] {X : Scheme.{0}}
     obtain ⟨l, c, hl, hv⟩ := hv
     refine ⟨l, c, hl, fun _ => ?_⟩
     beta_reduce
-    rw [hφ l, CrdCalc.valR_eq x _ hl, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hφ l, CrdCalc.valR_eq x _ hl, map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_mul, ← CrdCalc.valR_eq, ← CrdCalc.valR_eq,
       GlobalTheory.Points.valR_constFn_of_over p ψ x hx _ hl, hv, mul_left_comm]
@@ -57,7 +58,8 @@ theorem exists_ne_zero_of_le {T T' : AddSubgroup S.Gam} (h : T' ≤ T) (hT : S.I
   push_neg at hn
   apply hi
   rw [← GlobalTheory.ThetaBound.proj_mul_proj S T T' h hT.1 hT' 0 0 fun _ => rfl]
-  simp only [Matrix.mul_apply, map_sum, map_mul, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mul_apply, map_sum, map_mul, Finset.sum_mul]
   rw [Finset.sum_comm]
   refine Finset.sum_eq_zero fun k _ => ?_
   have := congrArg (ψ (S.proj T 0 k i) * ·) (hn k)

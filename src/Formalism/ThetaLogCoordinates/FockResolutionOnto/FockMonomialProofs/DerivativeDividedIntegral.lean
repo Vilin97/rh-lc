@@ -234,7 +234,8 @@ theorem DDop_cov (i : Fin (K + 1)) (hi : i ≠ Fin.last K) (hv : LL.vec i = fals
 
 theorem DDop_pair (ha : a ∈ Cs) (i : Fin (K + 1)) (hi : i ≠ Fin.last K) (hv : LL.vec i = false) :
     DDop p LL Cs a (∑ b ∈ Cs, X (Fin.last K, b) * X (i, b)) = 0 := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [DDop_mul, DDop_last, DDop_cov LL Cs a i hi hv]
   simp [Finset.sum_add_distrib, mul_ite, Finset.sum_ite_eq, ha]
   rw [Finset.mul_sum, ← sub_eq_add_neg, sub_eq_zero]

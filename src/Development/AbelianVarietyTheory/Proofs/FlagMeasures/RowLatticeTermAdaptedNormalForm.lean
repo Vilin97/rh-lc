@@ -248,7 +248,8 @@ theorem admissibleFrame_congruent_mod_unitriangular {T T' : E} (G : Formalism.Ma
     obtain ⟨s, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun E).1 hy
     refine Finset.sum_congr rfl fun c _ => ?_
     congr 1
-    simp [map_sum, hfe']
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, hfe']
   have hloc : ∀ P : IsDedekindDomain.HeightOneSpectrum (𝓞 E), (g : 𝓞 E) ∈ P.asIdeal → ∀ y ∈ Λ, y ∈ G'.fl.X →
       ∃ s : 𝓞 E, s ∉ P.asIdeal ∧ ∀ b, ∃ o : 𝓞 E, (o : E) = (s : E) * S.hT (f' b) y := by
     intro P hg y hy hyX

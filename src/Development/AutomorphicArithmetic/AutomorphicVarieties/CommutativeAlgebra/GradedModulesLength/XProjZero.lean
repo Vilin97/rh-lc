@@ -38,7 +38,8 @@ private theorem kill_sq (x : A →ₐ[O] O) (hx : ∀ j, j ≠ 0 → ∀ f ∈ �
   rw [sq] at hf
   refine Submodule.mul_induction_on hf (fun u hu v hv => ?_) (fun a b ha hb => by rw [map_add, map_add, ha, hb, add_zero])
   rw [← DirectSum.sum_support_decompose 𝒜 u, ← DirectSum.sum_support_decompose 𝒜 v, Finset.sum_mul_sum]
-  simp only [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum]
   refine Finset.sum_eq_zero fun a _ => Finset.sum_eq_zero fun b _ => ?_
   have hm : (DirectSum.decompose 𝒜 u a : A) * (DirectSum.decompose 𝒜 v b : A) ∈ 𝒜 (a + b) :=
     SetLike.GradedMul.mul_mem (SetLike.coe_mem _) (SetLike.coe_mem _)

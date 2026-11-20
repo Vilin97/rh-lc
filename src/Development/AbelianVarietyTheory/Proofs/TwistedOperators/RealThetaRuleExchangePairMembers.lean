@@ -106,7 +106,8 @@ theorem fock_inner_sum {T0 : GrpData (p * r + q * s) (p * s + q * r)} {T1 : GrpD
     (m : ι → (Ix p q × Ix r s →₀ ℕ)) (hm : Set.InjOn m t) :
     inner ℂ (F.ι (∑ i ∈ t, c i • monomial (m i) 1)) (F.ι (∑ i ∈ t, c i • monomial (m i) 1)) =
       ∑ i ∈ t, star (c i) * c i * (m i).prod (fun _ k => (k.factorial : ℂ)) := by
-  simp only [map_sum, map_smul, sum_inner, inner_sum, inner_smul_left, inner_smul_right, F.fockIP]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, sum_inner, inner_sum, inner_smul_left, inner_smul_right, F.fockIP]
   refine Finset.sum_congr rfl fun i hi => ?_
   rw [Finset.sum_eq_single i]
   · simp only [if_true]; simp [mul_assoc, mul_left_comm]
@@ -126,7 +127,8 @@ theorem norm_swap {T0 : GrpData (p * r + q * s) (p * s + q * r)} {T1 : GrpData p
     ‖F.ι (rename Prod.swap Φ)‖ = ‖F'.ι Φ‖ := by
   have h1 : rename Prod.swap Φ = ∑ α ∈ Φ.support, AddMonoidAlgebra.coeff Φ α • monomial (Finsupp.mapDomain Prod.swap α) 1 := by
     conv_lhs => rw [pol_as_sum Φ]
-    simp only [map_sum, map_smul, rename_monomial]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, rename_monomial]
   have hinj : Set.InjOn (fun α : Ix r s × Ix p q →₀ ℕ => Finsupp.mapDomain Prod.swap α) Φ.support :=
     fun a _ b _ h => Finsupp.mapDomain_injective Prod.swap_injective h
   have e1 := fock_inner_sum F Φ.support (fun α => AddMonoidAlgebra.coeff Φ α) _ hinj

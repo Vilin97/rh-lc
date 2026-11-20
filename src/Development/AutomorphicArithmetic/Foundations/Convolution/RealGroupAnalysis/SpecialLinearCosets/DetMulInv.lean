@@ -189,7 +189,8 @@ theorem UpperTheory.ConvolutionTheory.R2.I.absS :
         ((x * Matrix.SpecialLinearGroup.toGL g)⁻¹).val * m.1 * (dd x).val
       rw [hinv]
       simp only [Matrix.mul_assoc]
-    rw [hs, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hs, map_sum]
     refine Finset.sum_congr rfl fun g _ => ?_
     rw [map_smul, smul_eq_mul,
       one_term ρ β hβ I hI Λ hΛ U hUo a0 rfl f hfix (x * Matrix.SpecialLinearGroup.toGL g) (dd x)

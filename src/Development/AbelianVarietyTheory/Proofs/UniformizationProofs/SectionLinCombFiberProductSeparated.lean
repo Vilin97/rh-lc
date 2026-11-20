@@ -64,7 +64,8 @@ theorem pi_tensor_surj (c : ∀ p q, A p ⊗[F] B q) : ∃ t : (∀ p, A p) ⊗[
   cases nonempty_fintype P
   cases nonempty_fintype Q
   refine ⟨∑ p, ∑ q, TensorProduct.map (LinearMap.single F A p) (LinearMap.single F B q) (c p q), fun p q => ?_⟩
-  simp only [map_sum, TensorProduct.map_map]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, TensorProduct.map_map]
   rw [Finset.sum_eq_single p, Finset.sum_eq_single q]
   · simp [LinearMap.proj_comp_single_same]
   · intro q' _ hq
@@ -106,7 +107,8 @@ theorem exists_sum_of_compatible (hF : IsField F) {A' : P → P → Type} {B' : 
   refine ⟨n, a, b, fun i p p' => sub_eq_zero.1 (congrFun (ha i) (p, p')),
     fun i p p' => sub_eq_zero.1 (congrFun (hb i) (p, p')), fun p q => ?_⟩
   rw [← ht, e]
-  simp [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum]
 
 theorem eq_zero_of_linearIndependent (hF : IsField F) {C : Type} [AddCommGroup C] [Module F C] {n : ℕ} (a : Fin n → ∀ p, A p)
     (ha : LinearIndependent F a) (b : Fin n → C) (h : ∀ p, ∑ i, a i p ⊗ₜ[F] b i = 0) (k : Fin n) : b k = 0 := by
@@ -118,7 +120,8 @@ theorem eq_zero_of_linearIndependent (hF : IsField F) {C : Type} [AddCommGroup C
   have hl' : ∀ i, l (a i) = Finsupp.single i 1 := fun i => by
     simpa using LinearMap.congr_fun hl (Finsupp.single i 1)
   have := congrArg (fun t => TensorProduct.lid F (Unit → C) ((Finsupp.lapply k ∘ₗ l).rTensor (Unit → C) t) ()) e
-  simpa [map_sum, hl', Finsupp.single_apply, ite_apply] using this
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa [map_sum, hl', Finsupp.single_apply, ite_apply] using this
 
 end
 

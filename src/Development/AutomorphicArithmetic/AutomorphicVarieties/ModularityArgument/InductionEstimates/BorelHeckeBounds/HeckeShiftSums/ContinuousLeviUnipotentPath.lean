@@ -315,7 +315,8 @@ private theorem sec_exp {e : ℕ} {X : Type} (sec : Eu e →ₗ[ℂ] (X → ℂ)
     sec w g = ∑ i, w i * sec (EuclideanSpace.basisFun (Fin e) ℂ i) g := by
   have h := (EuclideanSpace.basisFun (Fin e) ℂ).sum_repr w
   conv_lhs => rw [← h]
-  rw [map_sum, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_apply]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_smul, Pi.smul_apply, smul_eq_mul, EuclideanSpace.basisFun_repr]
 

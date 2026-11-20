@@ -58,7 +58,8 @@ theorem UpperTheory.exists_derivations_dual_to_cotangent_parameters :
       intro a ha
       rw [← hg] at ha
       obtain ⟨r, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun R).1 ha
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Submodule.sum_mem _ fun i _ => ?_
       rw [smul_eq_mul, hder, hgp, zero_smul, add_zero, ← IsScalarTower.algebraMap_smul E]
       exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)
@@ -101,7 +102,8 @@ theorem UpperTheory.exists_derivations_dual_to_cotangent_parameters :
       (fun i => b.repr (π u) i)
     choose o ho using hd
     have h0 : π ((d : O) • u - ∑ i, o i • t i) = 0 := by
-      rw [map_sub, map_smul, map_sum, sub_eq_zero]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, map_smul, map_sum, sub_eq_zero]
       conv_lhs => rw [← b.sum_repr (π u), Finset.smul_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_smul, hbt, ← IsScalarTower.algebraMap_smul E (o i), ho, smul_assoc]

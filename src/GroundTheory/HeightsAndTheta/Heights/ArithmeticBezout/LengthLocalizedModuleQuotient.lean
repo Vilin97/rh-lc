@@ -120,7 +120,8 @@ theorem ι_apply (a : ℤ) : ι a = (a : 𝓞 ℚ) := map_intCast ι a
 
 theorem Ψ_linForm (u : Fin n → ℤ) :
     Ψ n (IndefiniteRowSideFullHecke.ArithBezout.linForm u) = linForm (fun j => ((u j : ℤ) : 𝓞 ℚ)) := by
-  simp [IndefiniteRowSideFullHecke.ArithBezout.linForm, linForm, map_sum, Ψ_C, Ψ_X, ι_apply, Xc]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [IndefiniteRowSideFullHecke.ArithBezout.linForm, linForm, map_sum, Ψ_C, Ψ_X, ι_apply, Xc]
 
 theorem finIdeal_eq_map (W : Ideal (MRing (PBlk n))) :
     IndefiniteRowSideFullHecke.ArithBezout.finIdeal W =

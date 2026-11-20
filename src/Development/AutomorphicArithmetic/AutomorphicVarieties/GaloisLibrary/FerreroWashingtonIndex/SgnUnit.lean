@@ -68,14 +68,16 @@ theorem UpperTheory.V.FW.sgnUnit :
   have hval : ((hu.unit : 𝓞 L) : L) = (ζ ^ k)⁻¹ * ∑ j ∈ Finset.range (2 * k + 1), ζ ^ j := by
     rw [IsUnit.unit_spec, ← hinv]
     change algebraMap (𝓞 L) L _ = _
-    simp only [map_mul, map_pow, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_mul, map_pow, map_sum]
     rfl
   have hM0 : (0 : ℝ) < M := by positivity
   have key : ∀ a : ℕ, a.Coprime M → ∀ ψ : L →+* ℂ, ψ ζ = φ ζ ^ a → ψ ((hu.unit : 𝓞 L) : L) =
       ((Real.sin ((2 * k + 1 : ℕ) * (Real.pi * ((a : ℝ) / M))) / Real.sin (Real.pi * ((a : ℝ) / M)) : ℝ) : ℂ) := by
     intro a ha ψ hψ
     rw [hval, ← geom_sin k _ (sin_ne M a hM ha) (ψ ζ)]
-    · simp only [map_mul, map_pow, map_sum, map_inv₀]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp only [map_mul, map_pow, map_sum, map_inv₀]
     · rw [hψ, hφ, ← Complex.exp_nat_mul, ← Complex.exp_nat_mul]
       congr 1
       push_cast

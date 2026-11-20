@@ -57,7 +57,8 @@ theorem oneLetterGaussCMReformulated_of_uniformGaussModels (hK : uniformGaussMod
   have h0 : MvPowerSeries.constantCoeff
       (Formalism.L2.Th1.E.phSum (phL l g2 g3 s2 ε) : MvPowerSeries (Fin N0 × Fin N1) ℂ_[l]) = 0 := by
     unfold Formalism.L2.Th1.E.phSum
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_eq_zero fun x _ => ?_
     refine Pair.constantCoeff_inVar_eq_zero x ?_
     unfold phL

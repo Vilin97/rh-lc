@@ -147,7 +147,8 @@ theorem Dcris_eq_range [Module.Finite Qp V] (hρ : ∀ g x, ρ g x = x) :
     choose c hc using fun i => crd_Dcris PD hρ b hx i
     refine ⟨∑ i, b i ⊗ₜ[Qp] c i, ?_⟩
     conv_rhs => rw [← sum_crd b x]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [jK₀, AlgebraTensorModule.map_tmul, ← hc i]
     rfl
@@ -181,7 +182,8 @@ theorem DdR_le_FilV [Module.Finite Qp V] (hρ : ∀ g x, ρ g x = x) {a : ℤ} (
     exact fil_mono PD ha ((PD.Fil 0).smul_mem _ PD.one_mem)
   refine ⟨∑ i, b i ⊗ₜ[Qp] (⟨crd b i BdR x, hmem i⟩ : (PD.Fil a).restrictScalars Qp), ?_⟩
   conv_rhs => rw [← sum_crd b x]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   rfl
 
 theorem DdR_inf_FilV [Module.Finite Qp V] (hρ : ∀ g x, ρ g x = x) {a : ℤ} (ha : 1 ≤ a) :

@@ -137,13 +137,15 @@ theorem fourth_expansion_identity : ExpansionDualCovector := by
   have hLa : (∑ w, yb (wI k _ w) • La (qminor E (ew w) (sR k _ (i0 + s'' + 1) le_rfl) (ell + ((i0 + s'' : ℕ) : ℂ)))) =
       star t • La (qminor E (sR k _ i0 (by omega)) (sR k _ i0 (by omega)) (ell + (i0 : ℂ) - 1)) := by
     have := la_congr hR hP
-    rw [map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at this
     simp only [map_smul] at this
     rw [herm_swap, hzy] at this
     exact this
   have hD : Dlead i0 (s'' + 2) h t (i0 + s'' + 1 + 1) = h.det * t ^ (s'' + 2) * -sgnW s'' := by
     rw [show i0 + s'' + 1 + 1 = i0 + (s'' + 2) by omega, (derivative_leading_zb i0 (s'' + 2) h t).2, sign_alternates_add_two]
-  rw [hAA, hhead, map_smul, map_smul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hAA, hhead, map_smul, map_smul, map_sum]
   simp only [map_smul]
   rw [hLa, hD, (derivative_leading_zb i0 (s'' + 2) h t).1, smul_smul, smul_smul, smul_smul, smul_smul]
   congr 1

@@ -28,7 +28,8 @@ theorem det_cross {K B : Type} [CommRing K] [CommRing B] [Algebra K B] {I : Type
     ext i j
     rw [Matrix.mul_apply, Matrix.of_apply, ← Derivation.liftKaehlerDifferential_comp_D (E i) (v j)]
     conv_lhs => rw [← b.sum_repr (KaehlerDifferential.D K B (v j))]
-    simp only [map_sum, map_smul, smul_eq_mul, Matrix.of_apply, mul_comm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, smul_eq_mul, Matrix.of_apply, mul_comm]
   rw [key D' t, key D u, key D' u, key D t]
   ring
 

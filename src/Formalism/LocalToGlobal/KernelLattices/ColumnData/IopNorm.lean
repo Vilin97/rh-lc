@@ -173,7 +173,8 @@ private theorem Hf_swap_eq_conj (T : Tor D) (x y : VC D N N') :
   unfold Formalism.L2.Ker.Cd.TaylorLogMetric.Hf
   rw [map_div₀, Complex.conj_ofReal]
   congr 1
-  simp only [map_sum, map_mul, Complex.conj_conj]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, Complex.conj_conj]
   exact Finset.sum_congr rfl fun τ _ => Finset.sum_congr rfl fun i _ =>
     Finset.sum_congr rfl fun j _ => mul_comm _ _
 
@@ -484,7 +485,8 @@ private theorem crD_const_mul_sum (T : Tor D) (c : ℂ) {ι : Type*} (s : Finset
     crD T (fun w => c * ∑ i ∈ s, A i w) (fun w => c * ∑ i ∈ s, A i w) z =
       c * starRingEnd ℂ c * ∑ i ∈ s, ∑ j ∈ s, crD T (A i) (A j) z := by
   simp only [crD]
-  rw [map_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_mul, map_sum]
   calc c * (∑ i ∈ s, A i z) * (starRingEnd ℂ c * ∑ j ∈ s, starRingEnd ℂ (A j z)) *
         ((Real.exp (-Real.pi * (Hf D T z z).re) : ℝ) : ℂ)
       = c * starRingEnd ℂ c * ((∑ i ∈ s, A i z) * (∑ j ∈ s, starRingEnd ℂ (A j z)) *

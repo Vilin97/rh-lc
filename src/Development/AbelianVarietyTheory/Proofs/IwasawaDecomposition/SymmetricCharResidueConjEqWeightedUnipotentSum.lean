@@ -72,7 +72,8 @@ theorem read (X : HidaSetting D) (w : HeightOneSpectrum (𝓞 D.host.E)) {g : �
     (hG : ∀ j, hA X.B.I v (u j) - (if j = q then c else 0) ∈ wInt X w) :
     mkW X w (hA X.B.I v (X.B.I.fmat x *ᵥ u p)) = (M q p).val • mkW X w c := by
   classical
-  rw [mkW_eq (hA_isMatIn X w hM hv p), map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [mkW_eq (hA_isMatIn X w hM hv p), map_sum]
   have e : ∀ j, mkW X w ((((M j p).val : ℕ) : X.B.I.E ⊗[X.B.I.F] Formalism.MainNotions.S.Af X.B.I.F) * hA X.B.I v (u j)) =
       if j = q then (M q p).val • mkW X w c else 0 := by
     intro j
@@ -144,7 +145,8 @@ theorem resBar : ∀ (D : D7) (X : HidaSetting D) (h : X.B.I = Formalism.L2.SG.I
   have hU : N ∈ unip _ _ := unipCol_le _ _ _ hNu
   rw [GlobalTheory.T.symEdge_conjWeighted_sum_eq_flag_and_unipotent_pairs _ _ _ hr]
   apply modW_of hφ
-  simp only [argS, map_add, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [argS, map_add, map_sum]
   congr 1
   · refine Finset.sum_congr rfl fun a _ => ?_
     rw [← Formalism.L2.SG.Pf.unitaryCongruence.hA_symm]
@@ -183,7 +185,8 @@ theorem resBar : ∀ (D : D7) (X : HidaSetting D) (h : X.B.I = Formalism.L2.SG.I
       · rw [dif_neg hi, map_zero, map_zero]
     · have hs : side X w = false := by simp [side, hE]
       have hew := GlobalTheory.T.conj_idempotent_sub_one_mem_placeIdeal D X h hι kv hgw hE
-      rw [hs, if_neg (by simp), map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hs, if_neg (by simp), map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       by_cases hi : i.val + 1 < D.R.k
       · rw [dif_pos hi, dif_pos hi]

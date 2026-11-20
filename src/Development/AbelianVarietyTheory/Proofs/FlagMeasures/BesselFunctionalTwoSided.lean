@@ -103,7 +103,8 @@ theorem eq_sum_entries {ι κ : Type*} [Fintype ι] [Fintype κ] (e : Orthonorma
     (f : OrthonormalBasis κ ℂ Wq) (A : Wq →L[ℂ] Wp) :
     A = ∑ j, ∑ i, ⟪e i, A (f j)⟫_ℂ • rk1 (e i) (f j) := by
   ext η
-  conv_lhs => rw [← f.sum_repr' η, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [← f.sum_repr' η, map_sum]
   simp only [ContinuousLinearMap.sum_apply, ContinuousLinearMap.smul_apply, rankOneInnerOperator_apply, map_smul]
   refine Finset.sum_congr rfl fun j _ => ?_
   conv_lhs => rw [← e.sum_repr' (A (f j)), Finset.smul_sum]

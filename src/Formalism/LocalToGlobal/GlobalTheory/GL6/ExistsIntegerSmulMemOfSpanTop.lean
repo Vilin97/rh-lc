@@ -21,7 +21,8 @@ theorem norm_preserves_rational_form (v : (D.mem u).A.vT) (x : ((D.fm u).lat 0).
     intro x hx
     choose ys _ hys using fun a => (D.fm u).rhoT_lat v a x hx
     refine ⟨∑ a, ys a, ?_⟩
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     unfold ColumnsAtT.Nm
     rw [LinearMap.sum_apply]
     exact Finset.sum_congr rfl fun a _ => hys a
@@ -42,13 +43,15 @@ theorem ramified_rational_ne_bot (h : (D.mem u).A.Mram ≠ ⊥) : (D.fm u).ramSu
       ∑ i, D.what₂.embLL (((D.fm u).lat 0).b.repr x i) • (D.fm u).emb 0 (((D.fm u).lat 0).b i) := by
     intro x
     conv_lhs => rw [← ((D.fm u).lat 0).b.sum_repr x]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun i _ => LinearMap.map_smulₛₗ _ _ _
   have key : ∀ (v : (D.mem u).A.vT) (c : ((D.fm u).lat 0).ι → ℂ),
       (D.mem u).A.Nm v (∑ j, c j • (D.fm u).emb 0 (((D.fm u).lat 0).b j)) =
         ∑ i, ((A.map D.what₂.embLL) *ᵥ c) (v, i) • (D.fm u).emb 0 (((D.fm u).lat 0).b i) := by
     intro v c
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     have hj : ∀ j, (D.mem u).A.Nm v (c j • (D.fm u).emb 0 (((D.fm u).lat 0).b j)) =
         c j • ∑ i, D.what₂.embLL (((D.fm u).lat 0).b.repr (yv v j) i) • (D.fm u).emb 0 (((D.fm u).lat 0).b i) := by
       intro j; rw [map_smul, ← hyv, ← hE (yv v j)]
@@ -95,7 +98,8 @@ theorem ramified_rational_ne_bot (h : (D.mem u).A.Mram ≠ ⊥) : (D.fm u).ramSu
     exact hx0 (funext fun j => (Fintype.linearIndependent_iff.1 ((D.fm u).lat 0).b.linearIndependent) x h0 j)
   have hEX : (D.fm u).emb 0 (∑ j, x j • ((D.fm u).lat 0).b j) =
       ∑ j, (D.what₂.embLL ∘ x) j • (D.fm u).emb 0 (((D.fm u).lat 0).b j) := by
-    rw [map_sum]; exact Finset.sum_congr rfl fun j _ => LinearMap.map_smulₛₗ _ _ _
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]; exact Finset.sum_congr rfl fun j _ => LinearMap.map_smulₛₗ _ _ _
   refine Submodule.ne_bot_iff _ |>.2 ⟨_, ?_, hX0⟩
   show (D.fm u).emb 0 (∑ j, x j • ((D.fm u).lat 0).b j) ∈ (D.mem u).A.Mram
   rw [hEX]

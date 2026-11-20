@@ -146,7 +146,8 @@ theorem powerSum_mul_vertical (hP : Hypotheses2) (M : TrueGeo.Model Y) {ι : Typ
         by_cases hj : (j : ℕ) < k
         · simp only [Finset.mem_filter, Finset.mem_univ, true_and, hj, if_true, hg']
         · simp only [Finset.mem_filter, Finset.mem_univ, true_and, hj, if_false])
-    rw [← hv, Finset.sum_mul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hv, Finset.sum_mul, map_sum]
     refine Finset.sum_congr rfl fun a _ => ?_
     have := hn ι L' Φ hΦ (Fin.cons (Pi.single i₀ 1 - Pi.single i₁ 1) fun j =>
       Pi.single (if (j : ℕ) < k then s a else ν' j) 1)
@@ -361,7 +362,8 @@ theorem neg_cancel (h2 : Hypotheses2) (hH : HypothesesH) (hO : O.Core)
       split_ifs with hi
       · subst hi; ring
       · ring
-    simp only [lin, map_sum, e, Finset.sum_sub_distrib, Finset.sum_ite_eq', Finset.mem_univ, if_true, Pi.sub_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [lin, map_sum, e, Finset.sum_sub_distrib, Finset.sum_ite_eq', Finset.mem_univ, if_true, Pi.sub_apply,
       Pi.smul_apply, Pi.single_apply, smul_eq_mul, mul_ite, mul_one, mul_zero, Int.cast_sub, Int.cast_ite, Int.cast_zero,
       map_sub, sub_mul, apply_ite C, ite_mul, map_zero, zero_mul]
     ring
@@ -467,7 +469,8 @@ theorem pair_abstract {Comp A ι La : Type} [Fintype Comp] [Fintype La] (num : C
     ring
   conv_lhs => rw [Q.as_sum]
   conv_rhs => rw [Q.as_sum]
-  simp only [map_sum, Finset.mul_sum, Rat.cast_sum, Finset.sum_div]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, Finset.mul_sum, Rat.cast_sum, Finset.sum_div]
   rw [Finset.sum_comm]
   refine Eq.trans ?_ Finset.sum_comm
   refine Finset.sum_congr rfl fun d hd => ?_
@@ -568,7 +571,8 @@ theorem dl_isHomogeneous (K : Type) [CommRing K] : (dl O K).IsHomogeneous 1 :=
     · exact isHomogeneous_X _ _).sub (IsHomogeneous.sum _ _ _ fun _ _ => isHomogeneous_X _ _)
 
 theorem map_dl : map (algebraMap ℚ ℝ) (dl O ℚ) = dl O ℝ := by
-  simp only [dl, map_sub, map_sum, apply_ite (map (algebraMap ℚ ℝ)), map_neg, map_X]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dl, map_sub, map_sum, apply_ite (map (algebraMap ℚ ℝ)), map_neg, map_X]
 
 section Model
 
@@ -610,7 +614,8 @@ theorem exists_dl_eq : ∃ V : (mdlOf z jc).Z.VDiv,
   obtain ⟨e, V, h⟩ := lieW_gen D O.A O.N O.j O.S O.κ p Fact.out W hW z jc
   obtain ⟨e', h'⟩ := (mdlOf z jc).omW_dual
   refine ⟨∑ k, V k, ?_⟩
-  simp only [dl, map_sub, map_sum, apply_ite (aeval fun v => (mdlOf z jc).Z.c1 (lb O z jc (false, v))), map_neg, aeval_X,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dl, map_sub, map_sum, apply_ite (aeval fun v => (mdlOf z jc).Z.c1 (lb O z jc (false, v))), map_neg, aeval_X,
     lb_root, fun k => (lb_om O z jc k).1, h']
   rw [e'.sum_comp fun k => -(mdlOf z jc).Z.c1 ((mdlOf z jc).lieW.x k), ← e.sum_comp, ← Finset.sum_sub_distrib]
   refine Finset.sum_congr rfl fun k _ => ?_
@@ -672,13 +677,15 @@ theorem dr_sub_ht (hX : HypothesesXH) (h2 : Hypotheses2) (hH : HypothesesH) (hRA
     have e₂ : (rename (Prod.mk false) (pw O) - rename (Prod.mk true) (pw O)) *
         rename (Prod.mk false) (dl O ℝ * map (algebraMap ℚ ℝ) G) = ∑ l, (X (false, .inr l) - X (true, .inr l)) *
           map (algebraMap ℚ ℝ) ((X (false, .inr l) + X (true, .inr l)) * rename (Prod.mk false) (dl O ℚ * G)) := by
-      simp only [pw, map_sum, map_pow, rename_X, map_mul, map_add, map_X, map_rename, map_dl, ← Finset.sum_sub_distrib,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [pw, map_sum, map_pow, rename_X, map_mul, map_add, map_X, map_rename, map_dl, ← Finset.sum_sub_distrib,
         Finset.sum_mul]
       exact Finset.sum_congr rfl fun l _ => by ring
     have hQ (l : Fin (D.R.f * O.N) ⊕ Fin (D.R.f * O.N)) : ((X (false, .inr l) + X (true, .inr l)) *
         rename (Prod.mk false) (dl O ℚ * G) : MvPolynomial (Bool × Vr O) ℚ).IsHomogeneous (1 + (1 + m)) :=
       ((isHomogeneous_X _ _).add (isHomogeneous_X _ _)).mul ((dl_isHomogeneous O ℚ).mul hu).rename_isHomogeneous
-    simp only [e₂, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [e₂, map_sum]
     by_cases hm : 1 + (1 + m) = dimFl D.what₂.Tau O.N
     swap
     · refine Finset.sum_eq_zero fun c _ => Finset.sum_eq_zero fun l _ => numL_homog _ _ (1 + (1 + (1 + m))) (by omega) _ ?_
@@ -743,7 +750,8 @@ theorem ram_kill (h2 : Hypotheses2) (hH : HypothesesH) (hRA : RegularAlteration)
       (fun p hp => ⟨Nat.prime_of_mem_primeFactors hp, hT hp⟩) .inr (fa_inr O _ _) (.inl (rootEquiv O.S k)) (.inr l) hn
       ((lnSym_eq O _ _ _).trans (congrArg _ h₀)) h₁ (AdmTest.letterOf_inl _) (letterOf_rootEquiv O.S k)
       (fun q hq hq' => ⟨rfl, .inr fun h => hq (Nat.mem_primeFactors.2 ⟨hq', h, hd⟩)⟩) G
-  rw [dl, ← (rootEquiv O.S).sum_comp, ← Equiv.sum_comp Fin.revPerm fun k => (X (.inr (.inr k)) : MvPolynomial (Vr O) ℝ), ← Finset.sum_sub_distrib,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [dl, ← (rootEquiv O.S).sum_comp, ← Equiv.sum_comp Fin.revPerm fun k => (X (.inr (.inr k)) : MvPolynomial (Vr O) ℝ), ← Finset.sum_sub_distrib,
     Finset.sum_mul, Finset.mul_sum, map_sum, map_sum]
   refine Finset.sum_eq_zero fun k _ => ?_
   split_ifs with h
@@ -794,9 +802,11 @@ theorem sum_kill (hX : HypothesesXH) (h2 : Hypotheses2) (hH : HypothesesH) (hRA 
     (Finset.sum_eq_zero fun c _ => ram_kill h2 hH hRA hSW hO R hR _ Finset.subset_union_left c G)
 
 theorem rename_lamA : rename (Sum.inl : _ → Vr O) (lamA D.what₂.Tau O.N O.j) = dl O ℝ + ∑ k, X (.inr (.inr k)) := by
-  rw [dl, sub_add_cancel, lamA, map_sum, Fintype.sum_prod_type]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [dl, sub_add_cancel, lamA, map_sum, Fintype.sum_prod_type]
   refine Finset.sum_congr rfl fun τ _ => ?_
-  simp only [pHigh, pLow, map_sub, map_sum, pow_one, rename_X, Finset.sum_filter, ← Finset.sum_sub_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [pHigh, pLow, map_sub, map_sum, pow_one, rename_X, Finset.sum_filter, ← Finset.sum_sub_distrib]
   refine Finset.sum_congr rfl fun i _ => ?_
   by_cases h : (i : ℕ) < O.j
   · simp [h, not_le.2 h]
@@ -815,7 +825,8 @@ theorem mixEv_empty (R : ℝ) (c : O.s.Comp) (P : Pol D.what₂.Tau O.N) :
   simp only [AlgHom.comp_apply] at e2
   rw [map_mul, e2, map_mul, map_mul, rename_rename]
   congr 1
-  simp only [ArIn.mixEv, aeval_X, hT, pw, map_sum, map_pow, rename_X, map_mul, algHom_C, fa_inr]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [ArIn.mixEv, aeval_X, hT, pw, map_sum, map_pow, rename_X, map_mul, algHom_C, fa_inr]
   norm_num
   rfl
 
@@ -836,7 +847,8 @@ theorem sum_termL_eq_sum_termW : ScholzeWeinsteinB → HypothesesXH → Hypothes
   have e : (∑ i : Fin (D.R.f * O.N), X (wholeSym (fun _ => false) (some R)
       (.inr i : Fin (D.R.f * O.N) ⊕ Fin (D.R.f * O.N))) : MvPolynomial (Sym D.host.E →₀ ℤ) ℝ) =
       rename (fa O (ArIn.ind ∅) R) (∑ k, X (.inr (.inr k))) := by
-    simp only [map_sum, rename_X, fa_inr]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, rename_X, fa_inr]
     rfl
   have e₁ : termL O c R = cNum O c (rename (fa O (ArIn.ind ∅) R)
       (C (1 / 2 : ℝ) * pw O * rename Sum.inl (curveV D.what₂.Tau O.N O.j))) := congrArg (cNum O c) (mixEv_empty R c _)

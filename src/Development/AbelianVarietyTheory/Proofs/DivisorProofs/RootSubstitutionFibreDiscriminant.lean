@@ -17,7 +17,8 @@ theorem antisymm_prod_rename {ι : Type} [Fintype ι] (m : ι → ℕ) (P : ∀ 
         (∑ v : Equiv.Perm (Fin (m a)), ((Equiv.Perm.sign v : ℤˣ) : ℤ) • rename v (P a)) := by
   classical
   unfold GlobalTheory.GoodMetric.antisymm
-  simp only [map_sum, map_prod, map_zsmul, rename_rename]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_prod, map_zsmul, rename_rename]
   rw [Finset.prod_univ_sum, Fintype.piFinset_univ]
   refine Finset.sum_congr (by congr) fun w _ => ?_
   simp only [zsmul_eq_mul, Finset.prod_mul_distrib, Units.coe_prod, Int.cast_prod]

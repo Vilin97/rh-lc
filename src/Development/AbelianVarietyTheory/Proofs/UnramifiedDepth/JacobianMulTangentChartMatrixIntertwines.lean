@@ -90,7 +90,8 @@ theorem lin_mul_tanMat : ∀ (R₀ : Type) [CommRing R₀] (B : BX R₀) (O : LA
   have hη : Dp.η ∈ Dp.π.ker := by simpa using Dp.ση_mem 1
   ext j l
   have h := hρ Dp.σ Dp.π hπ l ⟨Dp.η, hη⟩ (fun k => ⟨Dp.σ.1 (ρ k l) * Dp.η, Dp.ση_mem _⟩) (fun _ => rfl)
-  rw [map_sum, hS _ _ Dp.σ, hA _ _ _ (fun _ => hn _)] at h
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, hS _ _ Dp.σ, hA _ _ _ (fun _ => hn _)] at h
   simp only [hS _ _ Dp.σ, ← _root_.mul_assoc] at h
   rw [chart_sum hY _ _ _ Dp.η_sq] at h
   have hv : (fun j => nv Dp.σ.1.toRingHom (α j) ![fun k => Dp.σ.1 (S k l) * Dp.η]) =
@@ -106,7 +107,8 @@ theorem lin_mul_tanMat : ∀ (R₀ : Type) [CommRing R₀] (B : BX R₀) (O : LA
   have h2 := congrFun (hY.inj _ _ _ _ (fun _ => hn _) (fun _ => hn _) h) j
   rw [← sub_eq_zero]
   apply Dp.free
-  rw [map_sub, sub_mul, h2, Matrix.mul_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sub, sub_mul, h2, Matrix.mul_apply, map_sum]
   simp only [map_mul, sub_self]
 
 end GlobalTheory.ChF

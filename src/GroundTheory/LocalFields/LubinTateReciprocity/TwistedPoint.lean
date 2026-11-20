@@ -156,11 +156,13 @@ theorem repr_ringHom_eq (T : AdjoinRoot P →+* AdjoinRoot P) (ψ : B → B)
     pb.basis.repr (T z) i = ψ (pb.basis.repr z i) := by
   have hTz : T z = ∑ j, ψ (pb.basis.repr z j) • pb.basis j := by
     conv_lhs => rw [← pb.basis.sum_repr z]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [Algebra.smul_def, Algebra.smul_def, map_mul, PowerBasis.coe_basis, map_pow, hgen,
       AdjoinRoot.algebraMap_eq, hof, hroot]
-  rw [hTz, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hTz, map_sum]
   simp only [map_smul, Module.Basis.repr_self, Finsupp.coe_finsetSum, Finset.sum_apply,
     Finsupp.smul_apply, Finsupp.single_apply, smul_eq_mul, mul_ite, mul_one, mul_zero,
     Finset.sum_ite_eq', Finset.mem_univ, if_true]

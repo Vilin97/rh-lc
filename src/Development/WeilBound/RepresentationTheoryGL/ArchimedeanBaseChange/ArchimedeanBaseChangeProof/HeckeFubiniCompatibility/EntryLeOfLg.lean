@@ -98,7 +98,8 @@ theorem ent_mul (M : KMod n) (A B : M.V →L[ℂ] M.V) (i j : Ix M) :
     ((stdOrthonormalBasis ℂ M.V).sum_repr' _).symm
   rw [ContinuousLinearMap.mul_apply]
   conv_lhs => rw [hx]
-  rw [map_sum, inner_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, inner_sum]
   refine Finset.sum_congr rfl fun m _ => ?_
   rw [map_smul, inner_smul_right, mul_comm]
 

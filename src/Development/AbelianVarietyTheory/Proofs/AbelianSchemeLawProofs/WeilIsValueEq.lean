@@ -135,7 +135,8 @@ theorem Rep.rigid (hG : GlobalFnsSt) (hA : IsAbelianScheme A) (hL : L.IsLB) {Z :
   obtain ⟨c, hc⟩ := exists_ratio hL (φ := φ) (ε := ε) (K' := PEmpty) (φ' := PEmpty.elim) (ε' := PEmpty.elim)
     (fun U _ g => by
       have := congrArg (FreeAbelianGroup.lift (fun q => Additive.ofMul (g q))) (hD'.trans hD)
-      simp only [map_sum, map_zsmul, FreeAbelianGroup.lift_apply_of, map_zero] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_zsmul, FreeAbelianGroup.lift_apply_of, map_zero] at this
       refine Eq.trans ?_ (Fintype.prod_empty _).symm
       apply Additive.ofMul.injective
       simpa only [ofMul_prod, ofMul_zpow, ofMul_one] using this)

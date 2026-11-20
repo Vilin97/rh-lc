@@ -115,7 +115,8 @@ theorem decoOf_dia_eq : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Nu
     have hl : (lastIdx n).1 + 1 = n := Nat.sub_add_cancel (Nat.pos_of_ne_zero (NeZero.ne n))
     have h1 := h.f P x hx _ hl
     rw [DilPt.pullbackVector_mul_right] at h1
-    simp only [Matrix.mulVec, dotProduct, map_sum, map_mul] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, dotProduct, map_sum, map_mul] at h1
     have h2 := hasRes_row (lastIdx n) _ (fun j => adAt F P.1 (GlobalTheory.Mem.Col2.pullV g x j)) (fun j => hrow P _ j hl)
       (fun j => (mem_rInt_iff F E _).1 (hint x hx j) P.1) (PtExist.hasRes_redA P.1 (hint x hx _))
     rw [hraw]
@@ -129,7 +130,8 @@ theorem decoOf_dia_eq : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Nu
     funext i
     have h1 := h.be w x hx i
     rw [DilPt.pullbackVector_mul_right] at h1
-    simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, hone w.1 w.2, ite_mul, one_mul, zero_mul, Finset.sum_ite_eq',
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, hone w.1 w.2, ite_mul, one_mul, zero_mul, Finset.sum_ite_eq',
       Finset.mem_univ, if_true] at h1
     exact (PtExist.hasRes_redA w.1 (hint x hx i)).unique h1
 

@@ -20,7 +20,8 @@ theorem antilin_apply_eq_sum {D : ℕ} (L : EuclideanSpace ℂ (Fin D) →L⋆[�
     ext i
     simp [Finset.sum_apply, Pi.single_apply]
   conv_lhs => rw [h]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun b _ => ?_
   rw [ContinuousLinearMap.map_smulₛₗ, smul_eq_mul]
   rfl

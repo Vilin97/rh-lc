@@ -65,7 +65,8 @@ private theorem lv_eig {G V : Type} [Group G] [AddCommGroup V] [Module ℂ V] (�
     exact smul_ne_zero (Nat.cast_ne_zero.2 (Nat.totient_pos.2 (NeZero.pos N)).ne') h0
   obtain ⟨χ, -, hχ⟩ := Finset.exists_ne_zero_of_sum_ne_zero hs
   refine ⟨χ, _, W.sum_mem fun a _ => W.smul_mem _ (hfW a), hχ, fun g => ?_⟩
-  rw [map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.smul_sum]
   refine Fintype.sum_equiv (δ.toHomUnits g).mulLeft _ _ fun a => ?_
   rw [map_smul, hm, smul_smul, ← map_mul]
   rfl

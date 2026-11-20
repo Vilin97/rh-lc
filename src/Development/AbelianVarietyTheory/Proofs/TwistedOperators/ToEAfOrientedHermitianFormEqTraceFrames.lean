@@ -51,7 +51,8 @@ theorem toEAf_hO_eq_trace_frames {D : D7} (S T : HSp D) (βS : GL (Fin S.rank) (
     simp only [Matrix.mul_assoc]
     rw [← Matrix.mul_assoc B B', hBB, Matrix.one_mul]
   rw [h1, h2, h3, Matrix.trace_mul_comm, Matrix.mul_assoc, hAA, Matrix.mul_one, h4, hO_eq_trace_mul]
-  simp only [Matrix.trace, Matrix.diag_apply, Matrix.map_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.trace, Matrix.diag_apply, Matrix.map_apply, map_sum]
   rfl
 
 end GlobalTheory.TraceFrames

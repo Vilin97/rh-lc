@@ -54,7 +54,8 @@ theorem GermProjectionFunctionForm.proof : GermProjectionFunctionForm.Statement 
     have key : q.eval₂ (germPull A (A.analyticAt w) rfl) (coordGerm w i) =
         toGerm w (Z i ^ q.natDegree + ∑ j : Fin q.natDegree, compA A w (rep (q.coeff j)) * Z i ^ (j : ℕ)) := by
       conv_lhs => rw [hq.as_sum]
-      simp only [Polynomial.eval₂_add, Polynomial.eval₂_pow, Polynomial.eval₂_X, Polynomial.eval₂_finsetSum,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Polynomial.eval₂_add, Polynomial.eval₂_pow, Polynomial.eval₂_X, Polynomial.eval₂_finsetSum,
         Polynomial.eval₂_mul, Polynomial.eval₂_C, map_add, map_pow, map_sum, map_mul, hpull, hZ]
       rw [Fin.sum_univ_eq_sum_range (fun j => toGerm w (compA A w (rep (q.coeff j))) * toGerm w (Z i) ^ j)]
     rw [key] at hqP
@@ -67,7 +68,8 @@ theorem GermProjectionFunctionForm.proof : GermProjectionFunctionForm.Statement 
     have key : toGerm w (mkA g hg) - MvPolynomial.eval₂ (germPull A (A.analyticAt w) rfl) (coordGerm w) F =
         toGerm w (mkA g hg - ∑ m ∈ F.support, compA A w (rep (F.coeff m)) * ∏ i, Z i ^ m i) := by
       rw [MvPolynomial.eval₂_eq']
-      simp only [map_sub, map_sum, map_mul, map_prod, map_pow, hpull, hZ]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sub, map_sum, map_mul, map_prod, map_pow, hpull, hZ]
     rw [key] at hF
     refine isGermCombination_of_mem p _ hF _ fun z => ?_
     rw [Finset.sum_image (fun x _ y _ h => e.injective h)]

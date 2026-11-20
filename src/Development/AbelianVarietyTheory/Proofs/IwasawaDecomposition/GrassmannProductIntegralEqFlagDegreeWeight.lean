@@ -16,7 +16,8 @@ theorem degFl_rho_antisymm (H : Host E) (Dw : Datum H) (Q : MvPolynomial (Root D
       (∏ τ, ((Dw.mult τ).factorial : ℝ)) * Formalism.DegreeFormula.degFl (GlobalTheory.AllWt.Psi H) (Dw.p + Dw.q) (rho H Dw Q) := by
   rw [rho_eq_flagMap]
   unfold GlobalTheory.GoodMetric.antisymm
-  rw [map_sum, ← GlobalTheory.Schubert.flagLin_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, ← GlobalTheory.Schubert.flagLin_apply, map_sum]
   have hterm : ∀ w : ∀ τ, Equiv.Perm (Fin (Dw.mult τ)),
       GlobalTheory.Schubert.flagLin (GlobalTheory.AllWt.Psi H) (Dw.p + Dw.q) (GlobalTheory.Schubert.flagMap Dw
         ((((∏ τ, Equiv.Perm.sign (w τ) : ℤˣ) : ℤ)) • rename (fun x : Root Dw.mult =>

@@ -30,7 +30,8 @@ theorem hTens_self_zero {n d : ℕ} (JA : Matrix (Fin n) (Fin n) E) (JB : Matrix
   have hc : ∀ e : E, cA σ (inclR (F := F) (AF F) e) = inclR (F := F) (AF F) (σ e) := fun _ => rfl
   have hg : ∑ i, ∑ k, incV F x i * incM F JA i k * cA σ (incV F x k) = 0 := by
     have e : ∑ i, ∑ k, incV F x i * incM F JA i k * cA σ (incV F x k) = inclR (F := F) (AF F) (form σ JA x x) := by
-      simp only [form, dotProduct, Matrix.mulVec, incV, incM, Matrix.map_apply, hc, map_sum, map_mul, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [form, dotProduct, Matrix.mulVec, incV, incM, Matrix.map_apply, hc, map_sum, map_mul, Finset.mul_sum]
       exact Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun l _ => by ring
     rw [e, hx, map_zero]
   unfold hTens
@@ -63,7 +64,8 @@ theorem schr_comm_vac {n d : ℕ} {X : Spc F E n} {W : Spc F E d} (M : Model σ 
   rw [GlobalTheory.VacLoc.schr_comm, hfix]
   congr 2
   rw [M.co.form]
-  simp only [GlobalTheory.LatVac.locCo, AddMonoidHom.coe_mk, ZeroHom.coe_mk, dotProduct, map_sub, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [GlobalTheory.LatVac.locCo, AddMonoidHom.coe_mk, ZeroHom.coe_mk, dotProduct, map_sub, map_sum, map_mul]
 
 theorem evShift_vac : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
     (B : Base F E) {a b : ℕ} (G : Geo σ a (b + 2)) (G₁ : Geo σ a b) (H : Plane E (b + 2) b)

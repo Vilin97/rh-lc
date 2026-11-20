@@ -60,7 +60,8 @@ theorem norm_iff (hF : IsFixF K F) {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaxim
         Ideal.Quotient.mk _ n' := by
   choose z hz using fun i => Ideal.Quotient.mk_surjective (y i)
   obtain rfl : (fun i => Ideal.Quotient.mk _ (z i)) = y := funext hz
-  simp only [mulW_mk, Ideal.Quotient.factor_mk, sg_mk, ← map_mul, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [mulW_mk, Ideal.Quotient.factor_mk, sg_mk, ← map_mul, ← map_sum]
   rw [Ideal.Quotient.eq, Ideal.Quotient.eq]
   have e1 : ∑ i, conjO K (ι ϖ * z i) * (ι ϖ * z i) = ι ϖ ^ 2 * ∑ i, conjO K (z i) * z i := by
     rw [Finset.mul_sum]
@@ -142,7 +143,8 @@ theorem cntI_eq_zero (hF : IsFixF K F) (𝔭 : Ideal (𝓞 F)) (j M : ℕ) {n : 
   rintro ⟨x, hx1, hx2⟩
   choose z hz hzx using hx1
   obtain rfl : (fun i => Ideal.Quotient.mk _ (z i)) = x := funext hzx
-  simp only [sg_mk, ← map_mul, ← map_sum] at hx2
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [sg_mk, ← map_mul, ← map_sum] at hx2
   rw [Ideal.Quotient.eq] at hx2
   have h1 : ∑ i, conjO K (z i) * z i - n ∈ extP K 𝔭 ^ 2 := Ideal.pow_le_pow_right (by omega) hx2
   have h2 : ∑ i, conjO K (z i) * z i ∈ extP K 𝔭 ^ 2 := by

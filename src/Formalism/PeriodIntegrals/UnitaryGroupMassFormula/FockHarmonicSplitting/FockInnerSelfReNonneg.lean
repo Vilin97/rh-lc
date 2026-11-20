@@ -121,7 +121,8 @@ lemma fockInner_zero_right (P : MvPolynomial σ ℂ) : FockH1Action.fockInner P 
 
 lemma fockInner_conj (P Q : MvPolynomial σ ℂ) :
     (starRingEnd ℂ) (FockH1Action.fockInner Q P) = FockH1Action.fockInner P Q := by
-  rw [fockInner_eq_sum_right Q P P.support (Finset.Subset.refl _),
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [fockInner_eq_sum_right Q P P.support (Finset.Subset.refl _),
     fockInner_eq_sum_support_left P Q, map_sum]
   refine Finset.sum_congr rfl (fun α _ => ?_)
   rw [map_mul, map_mul, conj_wt, Complex.conj_conj]

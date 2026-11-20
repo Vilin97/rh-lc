@@ -126,7 +126,8 @@ theorem GlobalTheory.crysLattice_basis_mem_sum_fil_dR : ∀ (l : ℕ) [Fact l.Pr
       exact this g
     show _ = T.eD (coord (basisQ L.T L.span b) s (dd i))
     conv_rhs => rw [← hinv]
-    rw [actVdR, coord_map, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [actVdR, coord_map, map_sum]
     simp only [Matrix.mulVec, dotProduct, Matrix.map_apply]
     refine Finset.sum_congr rfl fun r _ => ?_
     rw [toMatrix_basisQ, Algebra.smul_def, map_mul, T.zD]
@@ -141,12 +142,14 @@ theorem GlobalTheory.crysLattice_basis_mem_sum_fil_dR : ∀ (l : ℕ) [Fact l.Pr
     simpa using (hdd i).2.2
   · funext r
     have h1 := congrArg (coord (basisQ L.T L.span b) r) hsum
-    rw [← basisQ_apply L.T L.span b j, coord_tmul, map_sum] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← basisQ_apply L.T L.span b j, coord_tmul, map_sum] at h1
     simp only [coord_mulLeft, Module.Basis.repr_self] at h1
     rw [Finset.sum_apply]
     simp only [Pi.smul_apply, smul_eq_mul]
     have h2 := congrArg T.eD h1
-    rw [map_sum] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at h2
     simp only [map_mul] at h2
     rw [← h2]
     by_cases hr : r = j

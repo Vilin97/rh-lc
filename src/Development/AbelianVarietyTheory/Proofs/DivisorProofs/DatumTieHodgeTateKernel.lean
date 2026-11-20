@@ -36,7 +36,8 @@ theorem shift_eq_of_isTie : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [I
     refine (hW _).2 ?_
     rw [(ker_bC_eq_range_alC_and_ker_alC_eq_range_bC p C v O hv ε hε _ h D).2, ← hu]
     refine ⟨incl C h u, funext fun i => ?_⟩
-    simp [bC, redC, incl, Datum.bb, Matrix.mulVec, dotProduct, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [bC, redC, incl, Datum.bb, Matrix.mulVec, dotProduct, map_sum]
   have hle : Submodule.span C (Set.range fun i => ∑ j, g i j • x j) ≤
       Submodule.span C (Set.range x) := by
     rw [Submodule.span_le]
@@ -60,7 +61,8 @@ theorem shift_eq_of_isTie : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [I
   have b2 : IsBasisOf C (wQuot C D σ) (fun i => ∑ j, g i j • φ (x j)) := by
     have e : (fun i => ∑ j, g i j • φ (x j)) = fun i => φ (∑ j, g i j • x j) := by
       funext i
-      simp only [map_sum, map_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul]
     rw [e]
     refine ⟨hg.1.map' (φ : P.V →ₗ[C] (Fin h → C)) φ.ker, ?_⟩
     rw [hmap, hg.2, hsp, wQuot, ← hE3]

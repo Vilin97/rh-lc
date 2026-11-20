@@ -101,7 +101,8 @@ theorem rho_pure_tensor {E : Type} [Field E] [NumberField E] [Algebra F E] {σ :
   have hev : evFin F v s = (fun i => evFin F v (x i)) ⬝ᵥ (GlobalTheory.FinComm.locPt v p).2 +
       (GlobalTheory.FinComm.locPt v p).1 ⬝ᵥ (GlobalTheory.FinComm.locPt v p).2 / 2 := by
     rw [hs]
-    simp only [GlobalTheory.FinComm.locPt, dotProduct, map_add, map_mul, map_sum, h2']
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [GlobalTheory.FinComm.locPt, dotProduct, map_add, map_mul, map_sum, h2']
     try ring
   set g : Pl F → ℂ := fun u => φ u fun i => evFin F u (x i + p.1 i) with hg
   have hfin : (Function.mulSupport g).Finite := mulSupport_finite φ hφ (x + p.1)

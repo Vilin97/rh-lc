@@ -21,7 +21,8 @@ theorem map_eval_genColSub {d a : ℕ} (g : ι → Matrix (Fin a) (Fin a) ℂ) (
   | add p q hp hq => simp only [map_add, hp, hq]
   | mul_X p y hp =>
     simp only [map_mul, hp]
-    simp [genColSub, colSub, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [genColSub, colSub, map_sum]
 
 def genDetChar (a : ℕ) (n : ι → ℕ) : MvPolynomial (ι × Fin a × Fin a) ℂ :=
   ∏ τ, (Matrix.of fun i j => (X (τ, i, j) : MvPolynomial (ι × Fin a × Fin a) ℂ)).det ^ n τ

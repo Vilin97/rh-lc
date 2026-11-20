@@ -89,7 +89,8 @@ theorem congCc (ob : Bool) (hsew : sg X.B.I X.ew - (if ob then 0 else 1) ∈ Wq 
     CongW (w := wc X.B.I w) p (argC X x) (tWc (D := D) ob N') := by
   refine congW_of_sg X ?_
   unfold argC tWc
-  rw [map_add, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_add, map_sum, map_sum]
   refine congW_add (congW_sum _ fun a _ => ?_) (congW_sum _ fun i _ => ?_)
   · unfold nxt
     split_ifs with h

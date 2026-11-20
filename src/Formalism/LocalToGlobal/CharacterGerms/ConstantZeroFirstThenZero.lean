@@ -195,7 +195,8 @@ theorem mms_dA (hF : ∀ i, IntS V (G.F i)) (hc : IntS V c) (hlin : ∀ j : Fin 
   | _ n ih =>
     intro ν hν i
     have h := hM i ν
-    rw [map_sum] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at h
     have hsplit : ∀ r, MvPowerSeries.coeff ν (MvPowerSeries.pderiv C ((0 : Fin 1), r) A * M i r) =
         MvPowerSeries.coeff ν (MvPowerSeries.pderiv C ((0 : Fin 1), r) A) * MvPowerSeries.constantCoeff (M i r) +
           ∑ p ∈ (Finset.HasAntidiagonal.antidiagonal ν).erase (ν, 0),

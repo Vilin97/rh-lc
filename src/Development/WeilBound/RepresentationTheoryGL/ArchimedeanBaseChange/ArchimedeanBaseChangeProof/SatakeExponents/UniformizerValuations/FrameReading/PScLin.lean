@@ -70,7 +70,8 @@ theorem lw_actP (w : Pl E) (U : Subgroup (GLw a w × GLw b w)) (hUo : IsOpen (U 
     intro k hk g
     show u (g * k) * lw (τ (g * k) (Λ G)) = u g * lw (τ g (Λ G))
     rw [hur g k (hSU hk), map_mul, Module.End.mul_apply, ← hΛ k, hGf k (hSU hk)]
-  rw [GlobalTheory.CompanionTheory.HintLevel.hint_eq_level _ (K2 a b w) S _ hSK hr hidx, hEq, map_smul, map_smul, map_sum, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [GlobalTheory.CompanionTheory.HintLevel.hint_eq_level _ (K2 a b w) S _ hSK hr hidx, hEq, map_smul, map_smul, map_sum, map_sum,
     smul_eq_mul]
   congr 1
   rw [finsum_eq_sum_of_support_subset _ (s := s) ?_]

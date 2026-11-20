@@ -97,7 +97,8 @@ theorem Xinv (hn : NFl X u n) : Xq X n.symm * Xq X n = 1 := by
   rw [Finset.sum_congr rfl fun d _ => mul_comm _ _, ← hT_sumR]
   have e : ∑ d, (VS D).hT (X.fY d) (n (X.eX a)) • n.symm (X.eX d) = n.symm (n (X.eX a)) := by
     conv_rhs => rw [Xq_expand hn a]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [map_smul, Xq]
   rw [e, LinearEquiv.symm_apply_apply, hfe, Matrix.one_apply]
 

@@ -72,7 +72,8 @@ theorem exists_isotypic_uniform : ∀ (D : D7), BiAct D → CenFock D → LiftSu
     exact (Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _ (hg' i) :
       _ ∈ vacSub ψ S A' (latO S A' y.L z.L fun _ => True))
   · simp only []
-    rw [hr, map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hr, map_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, smul_comm]
     exact congrArg _ (eigen_mean hwb hθ hχ hm (hg i).1 ⟨b, hb, hc⟩)

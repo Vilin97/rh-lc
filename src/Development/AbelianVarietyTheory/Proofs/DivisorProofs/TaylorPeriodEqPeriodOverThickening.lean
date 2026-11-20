@@ -126,7 +126,8 @@ theorem GlobalTheory.GaussManinTaylor.taylor_period_eq_period_over_thickening : 
         change et (algebraMap ℂ (Hol F₀.V) b) = io (algebraMap ℂ D b)
         rw [hetc, AlgHom.commutes]) (a i) (p' i) (hpa i K₀ r₀ hr₀)
   have hmain := congrArg (r₀.coefD dl H).pull1 hsum
-  rw [hfam, map_sum] at hmain
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hfam, map_sum] at hmain
   simp only [map_smulₛₗ, hfib] at hmain
   have het : ∀ (f : Hol F₀.V), ∀ z ∈ F₀.V, (et : Hol F₀.V →+* R) f = algebraMap ℂ R (f.fn z) := fun f z hz ↦ by
     have : z = default := Subsingleton.elim _ _
@@ -135,7 +136,8 @@ theorem GlobalTheory.GaussManinTaylor.taylor_period_eq_period_over_thickening : 
     rw [Hol.ev_apply]
   have hdu := GlobalTheory.T.periodClass_linear_relation_unique_of_nilpotent K₀ (et : Hol F₀.V →+* R) M hRich hV₀ ⟨n₀, hn₀⟩ het S _ _ _ hmain l
   apply hinj
-  rw [map_sum, ← hθio]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, ← hθio]
   refine Eq.trans ?_ hdu.symm
   refine Finset.sum_congr rfl fun i _ ↦ ?_
   change io (d i * algebraMap ℂ D (p i l)) = io (d i) * et (p' i l)

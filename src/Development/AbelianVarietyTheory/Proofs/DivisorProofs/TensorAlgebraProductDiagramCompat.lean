@@ -59,14 +59,16 @@ theorem contr_tmul (M : Type) [AddCommGroup M] [Module K M] (Λ : C1 G →ₗ[K]
   rw [contr_apply]
   simp only [LinearMap.lTensor_tmul, TensorProduct.rid_tmul, ← Finset.sum_smul]
   congr 1
-  simp only [coef, LinearMap.comp_apply, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [coef, LinearMap.comp_apply, ← map_sum]
   congr 1
   simp only [LinearMap.single_apply, Finset.univ_sum_single]
 
 theorem contr_natural (M N : Type) [AddCommGroup M] [Module K M] [AddCommGroup N] [Module K N]
     (Λ : C1 G →ₗ[K] K) (h : M →ₗ[K] N) (c : ∀ (T T' : Q) (_ : T ⟶ T'), M ⊗[K] G.obj T') :
     contr G N Λ (fun T T' φ => LinearMap.rTensor (G.obj T') h (c T T' φ)) = h (contr G M Λ c) := by
-  simp only [contr_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [contr_apply, map_sum]
   refine Finset.sum_congr rfl fun T _ => Finset.sum_congr rfl fun T' _ =>
     Finset.sum_congr rfl fun φ _ => ?_
   induction c T T' φ using TensorProduct.induction_on with
@@ -116,13 +118,15 @@ theorem sum_tmul_eq_zero_of_cup : ∀ (K : Type) [Field K] (P Q : Type) [Categor
   haveI : ∀ T T' : Q, Fintype (T ⟶ T') := fun _ _ => Fintype.ofFinite _
   apply tensor_eq_zero_of_forall
   intro l
-  simp only [map_sum, LinearMap.lTensor_tmul, TensorProduct.rid_tmul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.lTensor_tmul, TensorProduct.rid_tmul]
   obtain ⟨Λ, hΛ⟩ := LinearMap.exists_extend (l ∘ₗ H1.mk G)
   have hΛy : ∀ z : Z1 G, Λ z.1 = l (H1.mk G z) := fun z => LinearMap.congr_fun hΛ z
   have hΛd : ∀ g : C0 G, Λ (d0 G g) = 0 := fun g => by
     have e := hΛy ⟨d0 G g, commAlgFunctorCoboundaryZero_mem_cocyclesOne G g⟩
     rw [e, H1.mk_eq_zero.2 ⟨g, rfl⟩, map_zero]
-  simp only [← hΛy, ← map_smul, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← hΛy, ← map_smul, ← map_sum]
   rw [H1.mk_eq_zero]
   let β : ∀ T : P × Q, F.obj T.1 ⊗[K] G.obj T.2 ≃ₐ[K] E.obj T :=
     fun T => AlgEquiv.ofBijective _ (hb T)
@@ -169,7 +173,8 @@ theorem sum_tmul_eq_zero_of_cup : ∀ (K : Type) [Field K] (P Q : Type) [Categor
     simp only [prod_comp, Category.comp_id, Category.id_comp] at H1 H2
     simp only [Z1.id, map_zero, zero_mul, Finset.sum_const_zero] at H2
     simp only [← h₁, mp_id] at H1
-    simp only [map_sub, map_sum, AlgEquiv.apply_symm_apply, natL, natR, hβ]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sub, map_sum, AlgEquiv.apply_symm_apply, natL, natR, hβ]
     linear_combination H1 - H2
   have nat := contr_natural G (F.obj p) (F.obj p') Λ (mp F a).toLinearMap
     (fun T T' φ => (β (p, T')).symm (f (p, T) (p, T') ((𝟙 p, φ) : (p, T) ⟶ (p, T'))))
@@ -183,7 +188,8 @@ theorem sum_tmul_eq_zero_of_cup : ∀ (K : Type) [Field K] (P Q : Type) [Categor
     funext T T' b
     simp only [Pi.sub_apply, Finset.sum_apply]
     exact step T T' b
-  · rw [map_sub, kunneth_contraction_d0_vanishes _ _ _ hΛd, sub_zero, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sub, kunneth_contraction_d0_vanishes _ _ _ hΛd, sub_zero, map_sum]
     simp only [contr_tmul]
 
 end GlobalTheory.CatCoh.KunnethOne

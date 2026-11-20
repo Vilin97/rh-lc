@@ -164,7 +164,8 @@ theorem subst_corr {τ : Type} {a : Fin d → MvPowerSeries τ R} (ha : ∀ t, c
   classical
   have hS : HasSubst a := hasSubst_of_constantCoeff_zero ha
   unfold corr
-  rw [← coe_substAlgHom hS, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← coe_substAlgHom hS, map_sum]
   refine Finset.sum_congr rfl fun m _ => ?_
   rw [coe_substAlgHom hS, subst_powerSeriesEvalTwoGroups (cc_sum_single _ _ (fun j => by simp))
     (fun i => by rw [Pi.single_apply]; split_ifs <;> simp) ha, subst_sum_single ha, subst_single ha]

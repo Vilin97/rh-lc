@@ -272,7 +272,8 @@ theorem exists_lowDeg {φ : Mx D V.rank n → ℂ} (hφ : φ ∈ fockA θ V n l 
       rw [Finset.sum_apply]
       simp only [gen, Pi.smul_apply, smul_eq_mul, evalPoly_eq]
       conv_lhs => rw [p.as_sum]
-      rw [map_sum, Finset.sum_mul, Finset.sum_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Finset.sum_mul, Finset.sum_mul]
       refine Finset.sum_congr rfl fun e _ => ?_
       rw [eval_monomial, eval_monomial]
       ring

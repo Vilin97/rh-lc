@@ -49,7 +49,8 @@ variable {κ : Type} {d : κ → ℕ} {ι : κ → Type} [∀ b, Fintype (ι b)]
 theorem hasSubst_lin (u : ∀ b, ι b → Fin (d b) → C) (b : κ) :
     ∀ e : Fin (d b), constantCoeff (∑ a, u b a e • (X ⟨b, a⟩ : MvPowerSeries (Σ b, ι b) C)) = 0 := by
   intro e
-  simp [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum]
 
 theorem hasSubst_expAlong [Finite κ] (G : ∀ b, LogFGL v (d b)) (u : ∀ b, ι b → Fin (d b) → C) :
     HasSubst (expAlong G u) :=
@@ -80,7 +81,8 @@ variable {K C : Type} [Field K] [Field C] (φ : K →+* C) {v : AddValuation C (
 
 theorem derivAt0_map {σ : Type} (P : MvPolynomial σ K) (g : MvPowerSeries σ K) :
     derivAt0 (MvPolynomial.map φ P) (MvPowerSeries.map φ g) = φ (derivAt0 P g) := by
-  simp only [derivAt0, MvPolynomial.support_map_of_injective _ φ.injective, map_sum, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [derivAt0, MvPolynomial.support_map_of_injective _ φ.injective, map_sum, map_mul,
     MvPolynomial.coeff_map, coeff_map, mfact, Finsupp.prod, map_prod, map_natCast]
 
 theorem expOf_map {d : ℕ} (G : LogFGL w d) (G' : LogFGL v d)
@@ -103,7 +105,8 @@ theorem depth_map {κ : Type} [Finite κ] {d : κ → ℕ} {ι : κ → Type} [�
     rw [map_subst (hasSubst_of_constantCoeff_zero (hasSubst_lin u x.1)), expOf_map φ _ _ (h x.1)]
     congr 1
     funext e
-    simp [map_sum, smul_eq_C_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, smul_eq_C_mul]
   rw [depth_eq_iInf_monomial, depth_eq_iInf_monomial, hE]
   refine iInf_congr fun β => ?_
   rw [← hv, ← derivAt0_map, map_subst (hasSubst_expAlong G u), map_monomial, φ.map_one]

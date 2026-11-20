@@ -123,7 +123,8 @@ theorem trace_mul_offAlg {i : ι} {g : G i} (hg : g ≠ 1) {x : Module.End K ((�
 theorem trace_nmF_mul {i : ι} {x : Module.End K ((∀ i, G i) → M)} (hx : x ∈ offAlg K G M i) :
     LinearMap.trace K _ (nmF K M i * x) = LinearMap.trace K _ x := by
   show LinearMap.trace K _ ((∑ g : G i, trl K M (Pi.mulSingle i g)) * x) = _
-  rw [Finset.sum_mul, map_sum, Finset.sum_eq_single (1 : G i)]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.sum_mul, map_sum, Finset.sum_eq_single (1 : G i)]
   · rw [Pi.mulSingle_one, trl_one, one_mul]
   · intro g _ hg
     exact trace_mul_offAlg hg hx
@@ -294,7 +295,8 @@ theorem split_NmOp (u : Pr.Word) (j : ℕ) (σ : (colGSD W Ch u j).Slice (DiaG X
     rw [e, e, DecoSet.dia_mul]
   have hN : NmOp W Ch u j P φ = ∑ c, diamondOperatorOnForms' (colVal W u j (Pr.vT u) Pr.vGs) (colLev Ch j) P c φ := by
     simp only [NmOp, NmG, LinearMap.sum_apply]
-  rw [hN, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hN, map_sum]
   simp only [hc]
   show _ = (∑ g, RamFun.trl X.K _ (Pi.mulSingle P g)) (σ.split φ)
   rw [LinearMap.sum_apply]

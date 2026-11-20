@@ -91,10 +91,12 @@ theorem exists_sum {W C : Type} [CommRing W] [CommRing C] (F : W →+* O ⊗[Z] 
   choose a a1 a2 using hz
   choose b b1 b2 using hu
   refine ⟨∑ i, a i * b i, ?_, ?_⟩
-  · rw [map_sum, tmul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum, tmul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_mul, a1, b1, Algebra.TensorProduct.tmul_mul_tmul, one_mul]
-  · rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_mul, map_mul, a2, b2]
 

@@ -44,7 +44,8 @@ theorem map_sumPl (e : V →ₗ[ℂ] W) (L : ι → Module.End ℂ V) (L' : ι �
       sumPl (V := fun _ => W) L' (PiTensorProduct.map (fun _ => e) T) := by
   induction T using PiTensorProduct.induction_on with
   | smul_tprod r x =>
-    simp only [map_smul, sumPl, LinearMap.sum_apply, map_sum, atL_eq, atL_tprod, PiTensorProduct.map_tprod]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_smul, sumPl, LinearMap.sum_apply, map_sum, atL_eq, atL_tprod, PiTensorProduct.map_tprod]
     congr 1
     refine Finset.sum_congr rfl fun w _ => congrArg _ (funext fun v => ?_)
     by_cases hv : v = w
@@ -240,7 +241,8 @@ theorem sw_rai (a : Ix P Q) (b : Ix R S) (p : Pol R S P Q) : sw P Q R S (raiB (b
 
 theorem sw_heis (c : Matrix (Ix R S) (Ix P Q) ℂ) (p : Pol R S P Q) :
     sw P Q R S (heisOp c p) = heisOp cᵀ (sw P Q R S p) := by
-  simp only [heisOp, LinearMap.smul_apply, LinearMap.sum_apply, LinearMap.sub_apply, map_smul, map_sum, map_sub,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [heisOp, LinearMap.smul_apply, LinearMap.sum_apply, LinearMap.sub_apply, map_smul, map_sum, map_sub,
     Fintype.sum_prod_type, sw_low, sw_rai, lineSign_eq, Matrix.transpose_apply]
   rw [Finset.sum_comm]
   refine congrArg _ (Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_)
@@ -252,7 +254,8 @@ theorem sw_fock (Y : Mat P Q) (p : Pol R S P Q) :
     fun a a' b b' => by
       simp only [omE, LinearMap.add_apply, Module.End.mul_apply, map_add, sw_rai, sw_low, Prod.mk.injEq, and_comm]
       split_ifs <;> simp
-  simp only [fockAct1, fockAct2, LinearMap.comp_apply, LinearMap.flip_apply, omAct_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [fockAct1, fockAct2, LinearMap.comp_apply, LinearMap.flip_apply, omAct_apply,
     Matrix.kroneckerMapBilinear_apply_apply, Matrix.kroneckerMap_apply, LinearMap.mul_apply', Fintype.sum_prod_type,
     LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, h]
   rw [Finset.sum_comm]

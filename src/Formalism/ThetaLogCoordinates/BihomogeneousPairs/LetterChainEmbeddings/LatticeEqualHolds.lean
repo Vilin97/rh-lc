@@ -50,7 +50,8 @@ theorem tieF_gen (hB : D.BlockOK) (i : Fin D.T.t) (y : MvPolynomial (Fin N × Fi
     tieF (wv D i) (ev D i) (rename (chainEmb N r D.T.t) y * g) =
       rename (chainEmb N r D.T.t)
         (tieF (fun c => (D.letterAt (D.T.pos i), c)) (fun c => (D.letterAt (D.T.pos i + 1), c)) y) * g := by
-  rw [tieF_apply', tieF_apply', map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [tieF_apply', tieF_apply', map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl (fun c _ => ?_)
   rw [pderiv_mul, he c, mul_zero, add_zero, ev_chain hB, pderiv_rename chainEmb_inj, pderiv_mul, hw c,
     mul_zero, add_zero, wv_chain hB, pderiv_rename chainEmb_inj]

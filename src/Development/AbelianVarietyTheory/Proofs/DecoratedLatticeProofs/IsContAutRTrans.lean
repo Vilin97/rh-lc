@@ -127,7 +127,8 @@ theorem GlobalTheory.Core.Mi.bot_of_pinBot : GlobalTheory.Published.DiscreteSeri
       have hlin : B.colForm (R T).1 ξ' = ∑ i ∈ c.support, c i • B.colForm (R T).1 (ξ i) := by
         rw [← hc]
         funext g
-        simp only [SBes.colForm, Finsupp.sum, map_sum, map_smul, Finset.sum_apply, Pi.smul_apply]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [SBes.colForm, Finsupp.sum, map_sum, map_smul, Finset.sum_apply, Pi.smul_apply]
       rw [hlin, GlobalTheory.T.period_sum_holds D d.c.ψ hBase.com.std D.R.rS B.lev _ hf _ c.support c (fun i => B.colForm (R T).1 (ξ i))
         (fun i _ => hcontR (ξ i))]
       exact Finset.sum_eq_zero fun i _ => by rw [hy i, mul_zero]

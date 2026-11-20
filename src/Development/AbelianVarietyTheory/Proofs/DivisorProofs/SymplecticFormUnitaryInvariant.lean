@@ -38,7 +38,8 @@ theorem hTens_act (JA : Matrix α α E) (JB : Matrix β β E) (G : Matrix α α 
   rw [hTens_eq_trace, hTens_eq_trace]
   have e1 : (G * y * Hᵀ).map c = G.map c * y.map c * (H.map c)ᵀ := by
     ext i j
-    simp [Matrix.mul_apply, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Matrix.mul_apply, map_sum, map_mul]
   have e2 : (H.map c)ᵀ * JBᵀ * H = JBᵀ := by
     conv_rhs => rw [← hH]
     rw [Matrix.transpose_mul, Matrix.transpose_mul, Matrix.transpose_transpose, Matrix.mul_assoc]

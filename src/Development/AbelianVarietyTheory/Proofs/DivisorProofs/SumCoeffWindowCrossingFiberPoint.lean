@@ -151,7 +151,8 @@ theorem chain_coeff (blk : σ → β) (pos : σ → ℕ) (hinj : ∀ a b, blk a 
       rw [map_prod, map_prod]
       exact Finset.prod_congr rfl hdif
     have hG : splitAt z (coProd (chPairs blk pos s) dif) = Polynomial.C (coProd (chPairs blk pos s) dif) := by
-      simp only [coProd, map_prod, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [coProd, map_prod, map_sum]
       exact Finset.sum_congr rfl fun p _ => Finset.prod_congr rfl fun q hq => hdif q (Finset.mem_of_mem_erase hq)
     have hdif' : ∀ b ∈ P, splitAt z (dif (g b)) = Polynomial.X - Polynomial.C (X b) := by
       intro b hb
@@ -163,14 +164,16 @@ theorem chain_coeff (blk : σ → β) (pos : σ → ℕ) (hinj : ∀ a b, blk a 
       exact Finset.prod_congr rfl hdif'
     have hGP : splitAt z (coProd (P.map g) dif) = coProd P fun b => (Polynomial.X - Polynomial.C (X b)) := by
       rw [coProd_map]
-      simp only [coProd, map_prod, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [coProd, map_prod, map_sum]
       exact Finset.sum_congr rfl fun p _ => Finset.prod_congr rfl fun q hq => hdif' q (Finset.mem_of_mem_erase hq)
     constructor
     · rw [hE, coeff_splitAt _ _ _ hE0, hW, Finset.prod_union hdisj, map_mul, hD, hM, Polynomial.coeff_C_mul,
         coeff_prod_card, mul_one, ih1]
     · intro c
       have hL : splitAt z (∑ x ∈ s, C (c (blk x)) * X x) = Polynomial.C (∑ x ∈ s, C (c (blk x)) * X x) := by
-        rw [map_sum, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum, map_sum]
         refine Finset.sum_congr rfl fun x hx => ?_
         have : x ≠ z := fun h => hz (h ▸ hx)
         rw [map_mul, map_mul, splitAt_C, splitAt_ne this]

@@ -38,14 +38,16 @@ theorem S_dn (q : ℕ) (w : Cn (box F) (q + 1)) :
     rw [S_apply]
     simp only [dn, LinearMap.sum_apply, LinearMap.smul_apply, cof_eq]
     refine Finset.sum_congr rfl fun i _ ↦ ?_
-    rw [map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl fun j _ ↦ ?_
     rw [LinearMap.map_smul, bi_act, smul_smul, ← pow_add, neg_one_pow_smul_int (R := R)]
   have e2 : ∑ j : Fin (q + 2), ((-1 : R) ^ (j : ℕ)) • a2 F (Fin.succAboveOrderEmb j).toOrderHom (S F q w) =
       ∑ j : Fin (q + 2), ∑ i : Fin (q + 1), ((-1 : ℤ) ^ ((i : ℕ) + (j : ℕ))) •
         bi F (th q i) ((Fin.succAboveOrderEmb j).toOrderHom.comp (sg q i)) w := by
     refine Finset.sum_congr rfl fun j _ ↦ ?_
-    rw [S_apply, map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [S_apply, map_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl fun i _ ↦ ?_
     rw [LinearMap.map_smul, bisimplicial_action_second_factor, smul_smul, ← pow_add, neg_one_pow_smul_int (R := R),
       Nat.add_comm (j : ℕ) (i : ℕ)]
@@ -72,7 +74,8 @@ theorem T_dn [Fintype (Fin 1 ⥤ C)] [Fintype (Fin 2 ⥤ C)] (q : ℕ) (ρ : Cn 
       exact LinearMap.ext fun f ↦ funext fun c ↦ GlobalTheory.CompanionTheory.Dict.dn0 F f c
     rw [d, LinearMap.comp_sub]
   change sl F (q + 1) ρ (S F (q + 1) _) = sl F (q + 1) (ρ ∘ₗ dn F 0) (S0 F (q + 1) w) - dn F q (sl F q ρ (S F q w))
-  rw [S_dn, e, map_sub, map_sub, map_sum, slant_product_first_action, slant_product_first_action, sl_sub]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [S_dn, e, map_sub, map_sub, map_sum, slant_product_first_action, slant_product_first_action, sl_sub]
   congr 1
   simp only [dn, LinearMap.sum_apply, LinearMap.smul_apply, map_smul, slant_product_second_action, cof_eq]
 

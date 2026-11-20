@@ -25,7 +25,8 @@ theorem incA_mul_ι (b : D.host.E) (x : k) : incA D b * p.ι x = p.ι (p.pr b * 
 theorem map_rat_mul_ι {a b c : Type} [Fintype b] (N : Matrix a b D.host.E) (M : Matrix b c k) :
     N.map (incA D) * M.map p.ι = (N.map p.pr * M).map p.ι := by
   ext i j
-  simp [Matrix.mul_apply, incA_mul_ι, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Matrix.mul_apply, incA_mul_ι, map_sum]
 
 theorem map_pr_eq {a b : Type} (M : Matrix a b D.host.E) : M.map p.pr = M.map (Witness.prH p) := rfl
 

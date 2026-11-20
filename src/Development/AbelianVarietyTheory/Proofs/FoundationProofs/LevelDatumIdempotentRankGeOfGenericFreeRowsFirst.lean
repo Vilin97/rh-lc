@@ -150,7 +150,8 @@ theorem avg_eigen {L : Lev g N} (hL : L.sharp = false) {x : M} (hx : ∀ u, IsUp
   rw [inv_mul_cancel_left] at hn hnu
   have e1 : ρ n (avg ρ L k x w) = L.chi n • avg ρ L k x w := by
     unfold avg
-    rw [map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl fun v hv => ?_
     have hh : InBlock k (v * w) := InBlock.mul _ _ (mem_blockUp.1 hv).2 hw
     generalize v * w = h at hh
@@ -166,7 +167,8 @@ theorem avg_eigen {L : Lev g N} (hL : L.sharp = false) {x : M} (hx : ∀ u, IsUp
     rw [map_smul, this, hx _ hup, hchi, map_smul, smul_comm]
   have e2 : ρ u (avg ρ L k x w) = L.chi u • avg ρ L k x w := by
     unfold avg
-    rw [map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.smul_sum]
     refine Finset.sum_bijective (fun v => u * v) (Group.mulLeft_bijective u) ?_ ?_
     · intro v
       simp only [mem_blockUp]

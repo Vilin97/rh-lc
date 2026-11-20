@@ -109,13 +109,15 @@ theorem core {H A N : Type} [AddCommGroup H] [Module (PowerSeries L) H] [CommRin
   set u : Fin r → H := fun j => Ex (nb j) with hu
   have hsum : ∀ e : Fin r → PowerSeries L, c (∑ j, e j • u j) = ∑ j, conv (e j) (ex (nb j)) := by
     intro e
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun j _ => by rw [hc, hEx]
   have hy : ∀ y, Ex y = ∑ j, lev (nb.repr y j) • u j := by
     intro y
     apply hinj
     rw [hsum, hEx]
-    conv_lhs => rw [← nb.sum_repr y, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [← nb.sum_repr y, map_sum]
     exact Finset.sum_congr rfl fun j _ => hsm _ _
   have h2 : ∀ f ∈ (latSpan ex : Submodule L (ℤ → M)), ∃ e : Fin r → PowerSeries L,
       f = c (∑ j, e j • u j) := by
@@ -155,7 +157,8 @@ theorem core {H A N : Type} [AddCommGroup H] [Module (PowerSeries L) H] [CommRin
     intro g hg a
     ext n
     have h1 := congrFun (congrArg c hg) ((m : ℤ) + n)
-    rw [map_sum, map_zero, Finset.sum_apply] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero, Finset.sum_apply] at h1
     simp only [hc, ← hE, conv_single, Pi.zero_apply] at h1
     simpa using Fintype.linearIndependent_iff.1 hd' _ h1 a
   refine ⟨fun e he => ?_, fun f hf => ?_, fun y k => ⟨?_, fun h => ?_⟩⟩

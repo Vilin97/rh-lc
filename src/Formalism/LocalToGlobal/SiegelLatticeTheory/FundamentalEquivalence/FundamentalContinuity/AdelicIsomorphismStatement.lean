@@ -343,7 +343,8 @@ private theorem thetaV_tmul_lemma_2 (v : InfinitePlace I.F) (a : Formalism.MainN
 theorem alg_theta (v : InfinitePlace I.F) (y : TT I) :
     thetaV I v y = evV I v ((alg_B I).repr y 0) + evV I v ((alg_B I).repr y 1) * I.φ v (beta I) := by
   conv_lhs => rw [alg_y_eq I y]
-  rw [map_sum, Fin.sum_univ_two, thetaV_tmul_lemma_2, thetaV_tmul_lemma_2, bas_zero, bas_one, map_one, mul_one]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Fin.sum_univ_two, thetaV_tmul_lemma_2, thetaV_tmul_lemma_2, bas_zero, bas_one, map_one, mul_one]
 
 private theorem tauF_tmul_lemma (a : Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.AF I.F) (b : I.E) :
     tauF I (a ⊗ₜ[I.F] b) = b ⊗ₜ[I.F] a.2 := by
@@ -355,7 +356,8 @@ private theorem tauF_tmul_lemma (a : Formalism.MainNotions.GlobalTheoryTheory.Ge
 theorem alg_tau (y : TT I) :
     tauF I y = (1 : I.E) ⊗ₜ[I.F] ((alg_B I).repr y 0).2 + beta I ⊗ₜ[I.F] ((alg_B I).repr y 1).2 := by
   conv_lhs => rw [alg_y_eq I y]
-  rw [map_sum, Fin.sum_univ_two, tauF_tmul_lemma, tauF_tmul_lemma, bas_zero, bas_one]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Fin.sum_univ_two, tauF_tmul_lemma, tauF_tmul_lemma, bas_zero, bas_one]
 
 theorem alg_comm_eq (c : Fin 2 → Af I.F) :
     Algebra.TensorProduct.comm I.F I.E (Af I.F)
@@ -597,12 +599,14 @@ theorem top_expand (y : TT I) : y = ∑ i, (top_eq I y i) ⊗ₜ[I.F] bas I i :=
 theorem top_theta_formula (v : InfinitePlace I.F) (y : TT I) :
     thetaV I v y = ∑ i, evV I v (top_eq I y i) * I.φ v (bas I i) := by
   conv_lhs => rw [top_expand I y]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_congr rfl fun i _ => thetaV_tmul_lemma_2 I v _ _
 
 theorem top_tau_formula (y : TT I) : tauF I y = ∑ i, bas I i ⊗ₜ[I.F] (top_eq I y i).2 := by
   conv_lhs => rw [top_expand I y]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_congr rfl fun i _ => tauF_tmul_lemma I _ _
 
 theorem top_cont_evV (v : InfinitePlace I.F) : Continuous (evV I v) := by
@@ -685,7 +689,8 @@ theorem top_kappa_bas (i j : Fin 2) (a : Af I.F) :
   split_ifs <;> simp
 
 theorem top_kappa_tau (i : Fin 2) (y : TT I) : top_kappa I i (tauF I y) = (top_eq I y i).2 := by
-  rw [top_tau_formula, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [top_tau_formula, map_sum]
   simp_rw [top_kappa_bas]
   simp
 
@@ -725,7 +730,8 @@ theorem top_coord_den : ∃ D : ℕ, 1 ≤ D ∧ ∀ o ∈ Formalism.UG.intOE I.
   · have h := Int.natAbs_pos.mpr hy0
     nlinarith
   obtain ⟨o', rfl⟩ := ho
-  rw [← (NumberField.RingOfIntegers.basis I.E).sum_repr o', map_sum, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← (NumberField.RingOfIntegers.basis I.E).sum_repr o', map_sum, map_sum, Finset.mul_sum]
   refine IsIntegral.sum _ (fun k _ => ?_)
   rw [map_zsmul, map_zsmul, mul_smul_comm]
   refine IsIntegral.smul _ (key _ (hy _ ?_))

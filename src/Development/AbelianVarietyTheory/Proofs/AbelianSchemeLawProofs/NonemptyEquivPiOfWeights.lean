@@ -47,7 +47,8 @@ theorem nonempty_equiv_pi_of_weights {R M N G : Type} [CommRing R] [IsDomain R] 
     funext c
     apply hf c
     have := congrArg (avg ρ u c) hx
-    rw [hF, map_sum, map_zero, Finset.sum_eq_single c, avg_of_weight ρ u hu c _ ((hr c _).1 ⟨_, rfl⟩).2] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hF, map_sum, map_zero, Finset.sum_eq_single c, avg_of_weight ρ u hu c _ ((hr c _).1 ⟨_, rfl⟩).2] at this
     · simpa using this
     · exact fun d _ hd => avg_of_weight_ne ρ u c d hd _ ((hr d _).1 ⟨_, rfl⟩).2
     · simp
@@ -102,7 +103,8 @@ theorem formEq_of_dv {φ : K → (Y ⟶ X)} {ε : K → ℤ} {φ' : K' → (Y �
     (h : dv φ ε = dv φ' ε') : FormEq φ ε φ' ε' := by
   intro U _ f
   have := congrArg (Finsupp.linearCombination ℤ (fun ψ => Additive.ofMul (f ψ))) h
-  simp only [dv, map_sum, Finsupp.linearCombination_single] at this
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dv, map_sum, Finsupp.linearCombination_single] at this
   apply Additive.ofMul.injective
   simpa only [ofMul_prod, ofMul_zpow] using this
 

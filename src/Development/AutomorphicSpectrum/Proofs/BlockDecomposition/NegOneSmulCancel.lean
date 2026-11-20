@@ -164,7 +164,8 @@ theorem neg_one_smul_cancel {M : Type*} [AddCommGroup M] (s : ℤ) (X Y : M) :
 theorem BB_dh (p q : ℕ) (x : (KK A W).X p q) :
     (KK A W).dh (p + 1) (q + 1) (BB b p q x) = BB b (p + 1) q ((KK A W).dh p q x) := by
   funext i
-  rw [dh_apply, BB_apply, dh_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [dh_apply, BB_apply, dh_apply, map_sum]
   have hS : ∀ k : Fin (p + 2), bm (cap_le W (Fin.last (p + 2)) i)
       (LL b i (Fin.last (p + 1)).castSucc (Fin.last (p + 2))) q
       ((-1 : ℤ) ^ (k : ℕ) • resB A (cap_le W k (fc (Fin.last (p + 2)) i)) (x (fc k (fc (Fin.last (p + 2)) i)))) =

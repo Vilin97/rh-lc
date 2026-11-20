@@ -170,7 +170,8 @@ private theorem fix_deep (hc : D.host.ccK = ⊤) (hs : Setup ψ θ S T ⊤ δ 1)
   rw [one_smul] at hvac
   have hT : ∑ q, heisO ψ S T (cA D e • finTens 1 (-z q)) v =
       (Fintype.card (B ⧸ A.addSubgroupOf B) : ℂ) • Tm (cosInd e 𝔪 rfl rfl 0) := by
-    rw [← map_smul, show (Fintype.card (B ⧸ A.addSubgroupOf B) : ℂ) • cosInd e 𝔪 rfl rfl 0 =
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_smul, show (Fintype.card (B ⧸ A.addSubgroupOf B) : ℂ) • cosInd e 𝔪 rfl rfl 0 =
       ∑ q, fun t => ψ (symplO S T t (cA D e • finTens 1 (-z q))) * halfInd e
         (latO S T (stdL D S.rank : Set (Fin S.rank → D.host.E))
           (stdL D T.rank : Set (Fin T.rank → D.host.E)) fun _ => True) t from
@@ -193,7 +194,8 @@ private theorem fix_deep (hc : D.host.ccK = ⊤) (hs : Setup ψ θ S T ⊤ δ 1)
     rw [h4, h5, one_smul] at h3
     exact h3
   have h6 := congrArg (GlobalTheory.PlaceModel.heisL S T ψ (2 • (n • l))) hT
-  rw [map_sum, map_smul, Finset.sum_congr rfl fun q _ => hq q, hT] at h6
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_smul, Finset.sum_congr rfl fun q _ => hq q, hT] at h6
   exact (smul_right_injective _ (Nat.cast_ne_zero.2 Fintype.card_ne_zero) h6).symm
 
 end GlobalTheory.CosRead

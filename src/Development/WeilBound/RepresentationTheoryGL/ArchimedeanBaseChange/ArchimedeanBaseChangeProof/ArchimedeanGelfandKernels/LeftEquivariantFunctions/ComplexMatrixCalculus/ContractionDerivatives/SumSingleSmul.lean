@@ -58,7 +58,8 @@ theorem Dop_ι_mul (B : X n) (m : Md n → ℂ) (x : abelian₂ n) :
   have h1 : ExteriorAlgebra.ι ℂ (mv B m) =
       ∑ r, ∑ s, (B r s * m s) • ExteriorAlgebra.ι ℂ (Pi.single r (1 : ℂ)) := by
     conv_lhs => rw [← sum_single_smul (mv B m)]
-    simp only [map_sum, map_smul, mv, Finset.sum_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, mv, Finset.sum_smul]
   rw [Dop_apply, Dop_apply, h1, Finset.sum_mul, Finset.mul_sum, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun r _ => ?_
   rw [Finset.sum_mul, Finset.mul_sum, ← Finset.sum_add_distrib]

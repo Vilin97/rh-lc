@@ -161,7 +161,8 @@ theorem GlobalTheory.Reg.exists_sec_of_integral : ∀ (E : Type) [Field E] [Numb
     by_cases hne : Z' = Z
     · subst hne
       refine mul_eq_zero_of_right _ ?_
-      rw [← hb, map_add, map_pow, map_sum, ← ev, hZ]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hb, map_add, map_pow, map_sum, ← ev, hZ]
       congr 1
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_mul, map_pow, ← ev, ← ev, hZ, evC_aeval hL]

@@ -61,7 +61,8 @@ theorem GlobalTheory.FlatVertDeg.topSelf_comb_eq_zero : GlobalTheory.CovTop.Hypo
   have key {ι : Type} [Fintype ι] (L : ι → HermLB (h.mdl (GlobalTheory.FlagAr.setB O.Y B) c).V.p) (e : ι → ℤ) :
       topSelfIntersection κ ((comb L e).B.pull i) 1 = ∑ x, e x * F (L x).icls := by
     change F (comb L e).icls = _
-    rw [icls_comb, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [icls_comb, map_sum]
     exact Finset.sum_congr rfl fun x _ => by rw [map_zsmul, smul_eq_mul]
   have hcore := if hp : ringChar κ ∈ GlobalTheory.FlagAr.setB O.Y B then
       GlobalTheory.T.top_self_curve_char_in_bad_set P2 PH SW D O hO hf B hB c (h.mdl (GlobalTheory.FlagAr.setB O.Y B) c) τ Z i κ hd hp

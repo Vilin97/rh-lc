@@ -39,7 +39,8 @@ theorem hform_sub_smul_right (s : R) (x y z : Fin M → R) :
 
 theorem hform_conj (hc : ∀ x, c (c x) = x) (hJ : ∀ i j, c (Jm j i) = Jm i j) (x y : Fin M → R) :
     c (hform c Jm x y) = hform c Jm y x := by
-  simp only [hform, map_sum, map_mul, hc]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hform, map_sum, map_mul, hc]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   rw [hJ]

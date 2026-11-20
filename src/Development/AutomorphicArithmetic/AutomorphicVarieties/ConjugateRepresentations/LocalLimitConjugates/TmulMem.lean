@@ -11,7 +11,8 @@ private theorem tens_map {W : Type} [AddCommGroup W] [Module ℂ W] {d : ℕ} (N
     (T : Module.End ℂ (W ⊗[ℂ] (Fin d → ℂ))) (h : ∀ φ ∈ N, ∀ v, T (φ ⊗ₜ[ℂ] v) ∈ tens d N) :
     ∀ m ∈ tens d N, T m ∈ tens d N := by
   intro m hm
-  rw [← sum_cmp m, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← sum_cmp m, map_sum]
   exact Submodule.sum_mem _ fun i _ => h _ (mem_tens.1 hm i) _
 
 private theorem tmul_mem {W : Type} [AddCommGroup W] [Module ℂ W] {d : ℕ} {N : Submodule ℂ W} {φ : W} (h : φ ∈ N)

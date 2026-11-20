@@ -154,7 +154,8 @@ theorem test_eq_term (I : AutInst) (θ : InfinitePlace I.F → (Ainf I.F ⊗[I.F
       X 0 ∈ lamX I (T h) := by
     rw [GlobalTheory.T.mem_adelicLatticeClosure_iff_swap_mem_span, (GlobalTheory.PointLattice.lamX_selfDual I (T h)).1, show (T h).2⁻¹ = (T h⁻¹).2 by rw [map_inv]; rfl, hf]
     refine iff_of_eq (congrArg (· ∈ I.Lf) (funext fun i => ?_))
-    simp only [projFin, e0, map_sum, map_mul, Algebra.TensorProduct.map_tmul, map_one]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [projFin, e0, map_sum, map_mul, Algebra.TensorProduct.map_tmul, map_one]
     rfl
   have e2 : ∀ v, ((I.P v)⁻¹ *ᵥ fun i => θ v (projInf (h⁻¹ • ratTup (F := I.F) (AF I.F) X) 0 i)) =
       ((uMat ((T h).1 v))⁻¹ * (I.P v)⁻¹) *ᵥ fun i => I.φ v (X 0 i) := fun v => by

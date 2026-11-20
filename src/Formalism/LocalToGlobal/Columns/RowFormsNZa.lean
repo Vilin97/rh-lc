@@ -17,7 +17,8 @@ theorem nz_sum_normSq (hconj : ∀ (φ : E →+* ℂ) (x : E), φ (star x) = sta
     (x : ι → 𝓞 E) (h : ∑ i, star ((x i : 𝓞 E) : E) * ((x i : 𝓞 E) : E) = 1) (φ : E →+* ℂ) :
     ∑ i, Complex.normSq (φ ((x i : 𝓞 E) : E)) = 1 := by
   have h1 := congrArg φ h
-  rw [map_sum, map_one] at h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_one] at h1
   have h2 : ((∑ i, Complex.normSq (φ ((x i : 𝓞 E) : E)) : ℝ) : ℂ) = 1 := by
     rw [← h1, Complex.ofReal_sum]
     refine Finset.sum_congr rfl fun i _ => ?_

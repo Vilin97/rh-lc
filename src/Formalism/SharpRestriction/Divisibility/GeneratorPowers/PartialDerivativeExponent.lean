@@ -110,7 +110,8 @@ variable [Algebra ℚ k]
 private lemma coeff_XX_pow_lemma (d : ℕ) (e : Fin 2 →₀ ℕ) :
     coeff e ((X 0 + X 1 : MvPowerSeries (Fin 2) k) ^ d) =
       if e 0 + e 1 = d then ((d.choose (e 0) : ℕ) : k) else 0 := by
-  rw [add_pow, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [add_pow, map_sum]
   have key : ∀ m ∈ Finset.range (d + 1),
       coeff e ((X 0 : MvPowerSeries (Fin 2) k) ^ m * X 1 ^ (d - m) * (d.choose m : MvPowerSeries (Fin 2) k)) =
         if e 0 = m ∧ e 1 = d - m then (d.choose m : k) else 0 := by

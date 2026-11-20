@@ -15,7 +15,8 @@ theorem map_form {B B' J : Type} [CommRing B] [CommRing B'] (ψ : B →+* B') (T
     (c : (J →₀ ℕ) → B) (s : J → B) :
     ψ (∑ m ∈ T, c m * m.prod (fun i n => s i ^ n)) =
       ∑ m ∈ T, ψ (c m) * m.prod (fun i n => ψ (s i) ^ n) := by
-  simp only [map_sum, map_mul, Finsupp.prod, map_prod, map_pow]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, Finsupp.prod, map_prod, map_pow]
 
 theorem form_scale {B J : Type} [CommRing B] (T : Finset (J →₀ ℕ)) (d : ℕ)
     (hT : ∀ m ∈ T, ∑ i ∈ m.support, m i = d) (c : (J →₀ ℕ) → B) (u : B) (s : J → B) :

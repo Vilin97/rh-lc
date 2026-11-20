@@ -252,7 +252,8 @@ def contMap {G' M' : Type} [Group G'] [AddCommGroup M'] [Module A M'] [Topologic
         fun i => φ (Fin.contractNth j (· * ·) g i) := fun j =>
       (Fin.comp_contractNth (· * ·) (· * ·) (map_mul φ) j g).symm
     change u (dInh ρ n f.1 fun i => φ (g i)) = dInh ρ' n (fun g => u (f.1 fun i => φ (g i))) g
-    simp only [dInh_apply, map_add, map_sum, map_smul, h, hc]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [dInh_apply, map_add, map_sum, map_smul, h, hc]
 
 def crossed (ρ : Representation A G M) : Submodule A (G → M) where
   carrier := {z | Continuous z ∧ ∀ g h, z (g * h) = z g + ρ g (z h)}

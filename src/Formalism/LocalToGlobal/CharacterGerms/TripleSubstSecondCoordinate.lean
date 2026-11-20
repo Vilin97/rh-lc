@@ -62,7 +62,8 @@ theorem exp_add {σ : Type} {f g : MvPowerSeries σ C} (hf : MvPowerSeries.const
         ∑ i ∈ Finset.range (k + 1), MvPowerSeries.coeff m (f ^ i * g ^ (k - i)) /
           ((i.factorial : C) * ((k - i).factorial : C)) := by
       intro k _
-      rw [add_pow, map_sum, Finset.sum_div]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [add_pow, map_sum, Finset.sum_div]
       refine Finset.sum_congr rfl fun i hi => ?_
       have hik : i ≤ k := Nat.lt_succ_iff.mp (Finset.mem_range.mp hi)
       rw [← nsmul_eq_mul', map_nsmul, nsmul_eq_mul, Nat.cast_choose C hik]

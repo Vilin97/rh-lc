@@ -158,7 +158,8 @@ theorem GlobalTheory.LinSchur.eq_smul_of_commute : ∀ {k : Type} [Field k] [Val
     obtain ⟨F, hF⟩ := GlobalTheory.T.exists_finset_eq_sum_addCosetIndicator _ (hLoc s hs).1 (ι₁ x) (maps x hx) hper
     have hxeq : x = ∑ y ∈ F, ι₁ x y • xs s y :=
       inj _ hx _ (V.sum_mem fun y _ => V.smul_mem _ (hxsV s hs y)) (by
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         simp only [map_smul, hxs1 s hs]
         exact hF)
     calc ι₂ x = ι₂ (∑ y ∈ F, ι₁ x y • xs s y) := congrArg ι₂ hxeq

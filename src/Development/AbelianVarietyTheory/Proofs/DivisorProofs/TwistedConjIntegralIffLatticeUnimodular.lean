@@ -119,10 +119,12 @@ theorem herm_smul_right (t : K.E) (y z : B.A) : B.herm β y (t • z) = K.c t * 
   rw [Algebra.smul_def, (B.σ).map_mul, B.σ_alg, ← Algebra.smul_def, mul_smul_comm, map_smul, smul_eq_mul]
 
 theorem herm_sum_left (f : Fin a → B.A) (z : B.A) : B.herm β (∑ i, f i) z = ∑ i, B.herm β (f i) z := by
-  simp [GlobalTheory.UnitLemma.InvAlg.herm, Finset.mul_sum, Finset.sum_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [GlobalTheory.UnitLemma.InvAlg.herm, Finset.mul_sum, Finset.sum_mul, map_sum]
 
 theorem herm_sum_right (y : B.A) (f : Fin a → B.A) : B.herm β y (∑ i, f i) = ∑ i, B.herm β y (f i) := by
-  simp [GlobalTheory.UnitLemma.InvAlg.herm, Finset.mul_sum, Finset.sum_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [GlobalTheory.UnitLemma.InvAlg.herm, Finset.mul_sum, Finset.sum_mul, map_sum]
 
 end Herm
 
@@ -135,7 +137,8 @@ theorem herm_crd (c : w.adicCompletion E →+* w.adicCompletion E) (hc : ∀ x, 
   conv_lhs => rw [← b.sum_repr y, ← b.sum_repr z]
   rw [herm_sum_left]
   simp_rw [herm_smul_left, herm_sum_right, herm_smul_right]
-  simp only [map_sum, map_mul, hc, crd, GlobalTheory.TwLat.gram, dotProduct, Matrix.mulVec, Function.comp_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, hc, crd, GlobalTheory.TwLat.gram, dotProduct, Matrix.mulVec, Function.comp_apply,
     Matrix.of_apply, Finset.mul_sum]
   refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun l _ => by ring
 

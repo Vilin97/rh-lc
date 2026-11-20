@@ -145,7 +145,8 @@ theorem exists_coeff (X : Mat n) : ∃ c : Bool × Fin n × Fin n → ℝ, X = �
 theorem Rd_expand (f : Mat n → V) {X : Mat n} {c : Bool × Fin n × Fin n → ℝ} (h : X = ∑ p, c p • bs p) (g : Mat n) :
     Rd X f g = ∑ p, c p • Rd (bs p) f g := by
   simp only [Rd]
-  rw [h, Matrix.mul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h, Matrix.mul_sum, map_sum]
   refine Finset.sum_congr rfl fun p _ => ?_
   rw [Matrix.mul_smul, map_smul]
 
@@ -154,7 +155,8 @@ theorem lg_bound (hL : LgFacts) (X : Mat n) : ∃ C : ℝ, ∀ x ∈ GLs n, |fde
   obtain ⟨C, hC⟩ := (hL n).2.2.2.2.2.2
   refine ⟨∑ p, |c p| * C, fun x hx => ?_⟩
   have e : fderiv ℝ lg x (x * X) = ∑ p, c p * fderiv ℝ lg x (x * bs p) := by
-    rw [hc, Matrix.mul_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hc, Matrix.mul_sum, map_sum]
     refine Finset.sum_congr rfl fun p _ => ?_
     rw [Matrix.mul_smul, map_smul, smul_eq_mul]
   rw [e]

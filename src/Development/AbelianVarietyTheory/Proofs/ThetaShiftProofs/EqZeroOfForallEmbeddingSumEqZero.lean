@@ -28,7 +28,8 @@ theorem eq_zero_of_forall_embedding_sum_eq_zero :
     have h2 : ∀ b, (ε j : K₁ →+* ℂ) (y b) = ∑ s, σ₀ (ω.repr (y b) s) * ε j (ω s) := by
       intro b
       conv_lhs => rw [← ω.sum_repr (y b)]
-      simp only [RingHom.coe_coe, map_sum, Algebra.smul_def, map_mul, AlgHom.commutes, hσ]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [RingHom.coe_coe, map_sum, Algebra.smul_def, map_mul, AlgHom.commutes, hσ]
     simp only [h2, Finset.mul_sum] at h1
     rw [Finset.sum_comm] at h1
     simp only [Matrix.vecMul, dotProduct, u, Finset.sum_mul, Pi.zero_apply]

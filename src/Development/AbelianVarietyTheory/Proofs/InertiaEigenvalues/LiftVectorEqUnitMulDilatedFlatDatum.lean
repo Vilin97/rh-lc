@@ -150,7 +150,8 @@ theorem placeModel_sum {ψ : AddChar (AF D.host.F) ℂ} {B : Mx D m n → Mx D m
     funext x
     rw [hΨ x, Finset.sum_apply]
     rfl
-  rw [hΨ', map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hΨ', map_sum]
   refine Finset.sum_congr rfl fun u hu => ?_
   rw [map_smul, hT.trans _ (GlobalTheory.isSBHalf_halfInd e Λ) u (hR u hu), hvac]
 
@@ -166,7 +167,8 @@ theorem thetaAt_sum {ψ : AddChar (AF D.host.F) ℂ} {B : Mx D m n → Mx D m n 
     simp only [Pi.smul_apply, smul_eq_mul]
     ring
   have hvac : Tm (halfInd e Λ) = f₀ := by simpa using hTm.vac
-  rw [hall Tm hTm, hΦ', map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hall Tm hTm, hΦ', map_sum]
   refine Finset.sum_congr rfl fun y hy => ?_
   rw [map_smul, hTm.modul _ (GlobalTheory.isSBHalf_halfInd e Λ) y (hY y hy), hvac]
 

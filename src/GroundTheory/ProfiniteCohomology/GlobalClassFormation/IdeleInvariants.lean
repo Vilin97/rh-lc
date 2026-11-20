@@ -92,7 +92,8 @@ theorem sumPlaceInv_eq_sum (D : ⨁ w : Place E.1, localGaloisCohomology E 2 w) 
         (fun h => absurd hw h), DirectSum.of_eq_same]
     · rw [hS w hw, Finset.sum_eq_zero fun b hb => DirectSum.of_eq_of_ne _ _ _ (by rintro rfl; exact hw hb)]
   conv_lhs => rw [hD]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_congr rfl fun w _ => sumPlaceInv_of w (D w)
 
 set_option maxHeartbeats 4000000 in
@@ -170,7 +171,8 @@ theorem idelesSumInv_idelesResField (y : cohomology (limitRep K) 2) :
   classical
   set Φ := idelesLimitCohomologyEquiv ι (by norm_num : 1 ≤ 2)
   obtain ⟨D, rfl⟩ := Φ.symm.surjective y
-  rw [← DirectSum.sum_support_of D, map_sum, map_sum, map_sum, map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← DirectSum.sum_support_of D, map_sum, map_sum, map_sum, map_sum, Finset.smul_sum]
   exact Finset.sum_congr rfl fun u _ => idelesSumInv_idelesResField_of ι ιE u (D u)
 
 end Sum

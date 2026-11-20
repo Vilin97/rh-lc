@@ -61,7 +61,8 @@ theorem leviEx : LeviEx := by
   have o2 : Nᵀ * W.J * H.ι.map σ = 0 := by
     ext j i
     have := congrArg σ (congrFun (congrFun o1 i) j)
-    simp only [Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, map_sum, map_mul, inv, hW.skew, Matrix.zero_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, map_sum, map_mul, inv, hW.skew, Matrix.zero_apply,
       map_zero, Finset.sum_mul] at this ⊢
     rw [Finset.sum_comm, ← neg_eq_zero, ← this, ← Finset.sum_neg_distrib]
     refine Finset.sum_congr rfl fun a _ => ?_

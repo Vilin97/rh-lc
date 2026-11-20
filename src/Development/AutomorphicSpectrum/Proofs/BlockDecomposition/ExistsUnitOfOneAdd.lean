@@ -16,15 +16,19 @@ theorem bessel {V : Type} [AddCommGroup V] [Module ℂ V] (B : V →ₗ⋆[ℂ] 
     ∑ j ∈ Finset.range T, (B (w j) (w j)).re ≤ (B v v).re := by
   set S : V := ∑ j ∈ Finset.range T, w j with hS
   have e1 : B v S = ∑ j ∈ Finset.range T, B (w j) (w j) := by
-    rw [hS, map_sum]; exact Finset.sum_congr rfl fun j _ => h1 j
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hS, map_sum]; exact Finset.sum_congr rfl fun j _ => h1 j
   have e2 : B S v = ∑ j ∈ Finset.range T, B (w j) (w j) := by
-    rw [hS, map_sum, LinearMap.sum_apply]; exact Finset.sum_congr rfl fun j _ => h2 j
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hS, map_sum, LinearMap.sum_apply]; exact Finset.sum_congr rfl fun j _ => h2 j
   have e3 : B S S = ∑ j ∈ Finset.range T, B (w j) (w j) := by
     have e5 : ∀ u, B S u = ∑ j ∈ Finset.range T, B (w j) u := fun u => by
-      rw [hS, map_sum, LinearMap.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hS, map_sum, LinearMap.sum_apply]
     rw [e5]
     refine Finset.sum_congr rfl fun i hi => ?_
-    rw [hS, map_sum, Finset.sum_eq_single i (fun j _ hj => h3 i j hj.symm)
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hS, map_sum, Finset.sum_eq_single i (fun j _ hj => h3 i j hj.symm)
       (fun h => absurd hi h)]
   have h := hpsd (v - S)
   have e4 : B (v - S) (v - S) = B v v - ∑ j ∈ Finset.range T, B (w j) (w j) := by

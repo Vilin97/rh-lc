@@ -53,7 +53,8 @@ theorem isIrred_of_absIrrSub :
       have hF : ∀ X : Fin a → k, F (f ∘ X) = f (φ X) := by
         intro X
         conv_rhs => rw [← Finset.univ_sum_single X]
-        simp only [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum]
         change ∑ i, f (X i) * f (φ (Pi.single i 1)) = _
         refine Finset.sum_congr rfl fun i _ => ?_
         have : Pi.single i (X i) = X i • (Pi.single i (1 : k) : Fin a → k) := by

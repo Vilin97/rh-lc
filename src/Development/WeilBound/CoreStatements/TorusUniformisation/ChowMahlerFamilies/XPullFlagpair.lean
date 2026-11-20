@@ -62,7 +62,8 @@ theorem repr_bc {Ω Ω₁ : Type} [Field Ω] [Field Ω₁] [Algebra Ω Ω₁] {N
     (hw : ∀ i, w₁ i = bc (w i)) (v : V) (j : Fin N) :
     w₁.repr (bc v) j = algebraMap Ω Ω₁ (w.repr v j) := by
   have h : bc v = ∑ i, algebraMap Ω Ω₁ (w.repr v i) • w₁ i := by
-    conv_lhs => rw [← w.sum_repr v, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [← w.sum_repr v, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, hw, algebraMap_smul]
   rw [h, w₁.repr_sum_self]

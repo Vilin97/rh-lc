@@ -110,7 +110,8 @@ theorem UpperTheory.V.Z.Tf.SR.absShare :
       refine tsum_congr fun p => ?_
       have hp : (starRingEnd ℂ) (∑ a, A x p.1.1 a ^ (p.1.2 + 1)) =
           ∑ j, (starRingEnd ℂ) (∑ b, A (y j) p.1.1 b ^ (p.1.2 + 1)) := by
-        rw [h p.1.1 p.2 (p.1.2 + 1), map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [h p.1.1 p.2 (p.1.2 + 1), map_sum]
       simp only [lterm]
       rw [hp, Finset.mul_sum, Finset.sum_mul, Finset.sum_div]
     have hre := congrArg Complex.re hid

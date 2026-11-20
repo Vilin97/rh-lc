@@ -26,7 +26,8 @@ theorem casK_isSymmetric_and_form :
   intro M _ _ n ε E h
   refine ⟨fun x y => ?_, fun x => ?_⟩
   · rw [← inner_conj_symm, inner_casK_eq_sum h, inner_casK_eq_sum h]
-    simp only [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum]
     refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
     split_ifs
     · rw [inner_conj_symm]

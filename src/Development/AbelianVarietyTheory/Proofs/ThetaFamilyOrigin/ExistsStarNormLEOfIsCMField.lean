@@ -59,11 +59,13 @@ theorem casimir {ι : Type} [Fintype ι] [DecidableEq ι] (e : Module.Basis ι �
     intro y
     rw [Algebra.trace_eq_matrix_trace e y]
     simp only [Matrix.trace, Matrix.diag, Algebra.leftMulMatrix_eq_repr_mul]
-    rw [hc, Finset.sum_mul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hc, Finset.sum_mul, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [smul_mul_assoc, map_smul, mul_assoc, mul_comm y (e i)]
     conv_lhs => rw [← e.sum_repr (e i * y)]
-    rw [Finset.mul_sum, map_sum, Finset.sum_eq_single i]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.mul_sum, map_sum, Finset.sum_eq_single i]
     · rw [mul_smul_comm, map_smul, smul_eq_mul, smul_eq_mul]
       field_simp [hd i]
     · intro j _ hj

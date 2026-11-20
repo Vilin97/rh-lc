@@ -151,7 +151,8 @@ theorem natDegree_defect_op (V : Type) [AddCommGroup V] [Module ℂ V] (m : ℕ)
     rw [← GlobalTheory.T.qdet_add_one_sub_eq_sum_qminor', hR] at h1
     have h2 : (qdet M w * ∑ k ∈ range (N + 1), algebraMap ℂ (Module.End ℂ V) ((-1) ^ k * (w - m) ^ (N - k)) * etr M k) v
         = (∑ k ∈ range (N + 1), (-1) ^ k * (w - m) ^ (N - k) * t k) • qdet M w v := by
-      rw [Module.End.mul_apply, LinearMap.sum_apply, map_sum, sum_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Module.End.mul_apply, LinearMap.sum_apply, map_sum, sum_smul]
       refine sum_congr rfl fun k _ => ?_
       rw [Module.End.mul_apply, ht k, Module.algebraMap_end_apply, smul_smul, map_smul]
     rw [h2] at h1

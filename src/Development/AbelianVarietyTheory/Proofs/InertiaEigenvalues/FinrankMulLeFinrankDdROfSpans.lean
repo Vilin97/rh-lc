@@ -86,7 +86,8 @@ theorem finrank_mul_le_finrank_DdR_of_spans {G : Type} [Group G] {Qp K₀ K : Ty
     intro y _
     obtain ⟨m, b, d, hd, hy⟩ := hs (e.symm y)
     have hy' : y = ∑ i, b i • e (d i) := by
-      rw [← e.apply_symm_apply y, hy, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← e.apply_symm_apply y, hy, map_sum]
       simp only [he]
     rw [hy']
     exact Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _

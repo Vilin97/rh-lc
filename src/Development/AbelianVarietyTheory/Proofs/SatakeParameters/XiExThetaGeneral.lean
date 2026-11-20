@@ -19,14 +19,17 @@ theorem resV_linSub_sum {σ κ ι R : Type} [Fintype σ] [Field R] (f : κ → �
     ∑ i ∈ s, d i • resV f (linSub B (G i)) = resV f (linSub B (∑ i ∈ s, d i • G i)) := by
   have hs : MvPowerSeries.HasSubst (S := R) (fun x : σ => ∑ y, MvPowerSeries.C (B x y) * MvPowerSeries.X y) := by
     refine ⟨fun x => ?_, fun d => Set.toFinite _⟩
-    simp [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum]
   have h1 : linSub B (∑ i ∈ s, d i • G i) = ∑ i ∈ s, d i • linSub B (G i) := by
-    simp only [linSub, ← MvPowerSeries.substAlgHom_apply hs, map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [linSub, ← MvPowerSeries.substAlgHom_apply hs, map_sum, map_smul]
   rw [h1]
   ext n
   show MvPowerSeries.coeff n (∑ i ∈ s, d i • resV f (linSub B (G i))) =
     MvPowerSeries.coeff (n.mapDomain f) (∑ i ∈ s, d i • linSub B (G i))
-  rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [MvPowerSeries.coeff_smul, MvPowerSeries.coeff_smul]
   rfl
@@ -35,7 +38,8 @@ theorem resV_linSub_zero {σ κ R : Type} [Fintype σ] [Field R] (f : κ → σ)
     resV f (linSub B 0) = 0 := by
   have hs : MvPowerSeries.HasSubst (S := R) (fun x : σ => ∑ y, MvPowerSeries.C (B x y) * MvPowerSeries.X y) := by
     refine ⟨fun x => ?_, fun d => Set.toFinite _⟩
-    simp [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum]
   simp only [linSub, ← MvPowerSeries.substAlgHom_apply hs, map_zero]
   rfl
 
@@ -254,7 +258,8 @@ theorem xiEx_theta_general : letI := fun D : D7 => D.host.cmStar; ∀ (D : D7) (
         MvPowerSeries.coeff α (serP lam θ) = TaylorLogMetric.lamC lam (TaylorLogMetric.taylor D θ α) := fun α θ => rfl
     have hG0 : ∑ i ∈ s, ((cq i : ℂ_[p]) * (E.iK (kk i.1.1 i.1.2))⁻¹) • G i = 0 := by
       ext α
-      rw [map_sum, map_zero]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, map_zero]
       have e1 : ∀ i ∈ s, MvPowerSeries.coeff α (((cq i : ℂ_[p]) * (E.iK (kk i.1.1 i.1.2))⁻¹) • G i) =
           Q₀ * (p : ℂ_[p]) ^ (hh * volE X v j La₀.2 La₀'.2) * TaylorLogMetric.lamC lam (((cq i * r i : ℚ) : ℂ) *
             ((Base.chiFac χ _ _ (fd.kerN j i.1.1) (fd.kerN (j + 1) i.1.2))⁻¹ *

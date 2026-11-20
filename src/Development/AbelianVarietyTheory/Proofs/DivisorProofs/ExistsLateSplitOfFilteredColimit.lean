@@ -101,7 +101,8 @@ theorem exists_late_linear (hc : IsColimit c) (k₁ : J) (M : Type) [AddCommGrou
   have hπapp : ∀ {T : Type} [AddCommGroup T] [Module (F.obj k₁) T] (g : M →ₗ[F.obj k₁] T)
       (v : s →₀ F.obj k₁), g (π v) = ∑ x, v x • g x := by
     intro T _ _ g v
-    rw [hπdef, Finsupp.linearCombination_apply, Finsupp.sum_fintype _ _ (fun i => by simp), map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hπdef, Finsupp.linearCombination_apply, Finsupp.sum_fintype _ _ (fun i => by simp), map_sum]
     simp
   let lin : (s →₀ F.obj k₁) → MvPolynomial s (F.obj k₁) :=
     fun v => ∑ x, MvPolynomial.C (v x) * MvPolynomial.X x

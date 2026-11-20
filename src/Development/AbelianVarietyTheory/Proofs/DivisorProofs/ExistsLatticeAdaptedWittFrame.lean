@@ -27,7 +27,8 @@ theorem exists_isAdapted : ∀ (F E : Type) [Field F] [NumberField F] [Field E] 
   have YX : cT (σ : E →+* E) Y * J * X = 1 := by
     ext i j
     have h := congrArg (fun M => σ (M j i)) hW.xy
-    simp only [Formalism.UG.cT, Matrix.mul_apply, map_sum, map_mul, Matrix.transpose_apply, Matrix.map_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Formalism.UG.cT, Matrix.mul_apply, map_sum, map_mul, Matrix.transpose_apply, Matrix.map_apply,
       AlgHom.coe_toRingHom, sigma_sigma hcm, hJ.1] at h
     rw [Matrix.one_apply] at h ⊢
     simp only [Formalism.UG.cT, Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, AlgHom.coe_toRingHom]

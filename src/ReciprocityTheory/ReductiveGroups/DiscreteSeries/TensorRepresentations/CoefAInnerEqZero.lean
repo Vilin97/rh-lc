@@ -101,7 +101,8 @@ theorem coefA_toSum {T : X →ₗ[ℂ] X} (hT : ∀ x y, inner ℂ (T x) y = inn
     (Submodule.span ℂ {y | y ∈ M' ∧ ∃ θ : ℝ, θ ≤ C ∧ T y = (θ : ℂ) • y}) ℓ
   refine ⟨z, hZM (hLZ hzL), fun y hy => ?_⟩
   obtain ⟨m, b, θ, hsum, hb⟩ := coefA_decompM hT hloc hy
-  rw [hsum, inner_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hsum, inner_sum, map_sum]
   refine Finset.sum_congr rfl (fun i _ => ?_)
   by_cases hθ : θ i ≤ C
   · exact hz (b i) (Submodule.subset_span ⟨(hb i).1, θ i, hθ, (hb i).2⟩)
@@ -188,9 +189,11 @@ theorem coefA_ofSum {T : X →ₗ[ℂ] X} (hT : ∀ x y, inner ℂ (T x) y = inn
   refine ⟨ι (∑ k, x k), Submodule.mem_map_of_mem (Submodule.sum_mem _ (fun k _ => hxM k)), ?_⟩
   intro y hy
   obtain ⟨n, c, η, hys, hc⟩ := coefA_decompM hT hloc hy
-  rw [map_sum, hzs, hys, sum_inner, sum_inner]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, hzs, hys, sum_inner, sum_inner]
   refine Finset.sum_congr rfl (fun k _ => ?_)
-  rw [map_sum, inner_sum, inner_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, inner_sum, inner_sum]
   refine Finset.sum_congr rfl (fun j _ => ?_)
   by_cases hkj : θ k = η j
   · exact hxr k (c j) (hc j).1 (by rw [hkj]; exact (hc j).2)

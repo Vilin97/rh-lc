@@ -227,9 +227,11 @@ theorem acts_indicator {κ : Type} [Fintype κ] {W : Type} [AddCommGroup W] [Mod
     · simp
     · rw [map_add, map_mul, invOf_two_eq, evFin_algebraMap]
       refine add_mem ?_ (mul_mem h2 ?_)
-      · simp only [dotProduct, map_sum, map_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        · simp only [dotProduct, map_sum, map_mul]
         exact sum_mem fun k _ => mul_mem (hx k) (hi2 k)
-      · simp only [dotProduct, map_sum, map_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        · simp only [dotProduct, map_sum, map_mul]
         exact sum_mem fun k _ => mul_mem (hi1 k) (hi2 k)
   · have hx' : ¬ ∀ k, evFin F v ((x + w.1) k) ∈ O := fun h => hx fun k => by
       have := sub_mem (h k) (hi1 k)
@@ -263,7 +265,8 @@ theorem hTens_smul_incM (σ : E →ₐ[F] E) (A : Matrix (Fin n) (Fin n) E) (B :
     (a a' : AF F) (x y : Matrix (Fin n) (Fin d) E) :
     hTens (cA σ) (incM F A) (incM F B) (a • incM F x) (a' • incM F y) =
       (a * a') • inclR (F := F) (AF F) (hTens σ A B x y) := by
-  simp only [hTens, incM, Matrix.smul_apply, Matrix.map_apply, map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hTens, incM, Matrix.smul_apply, Matrix.map_apply, map_sum, Finset.smul_sum]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun k _ =>
     Finset.sum_congr rfl fun l _ => ?_
   rw [cA_smul, cA_inclR, map_mul, map_mul, map_mul, smul_mul_assoc, smul_mul_assoc, smul_mul_assoc,

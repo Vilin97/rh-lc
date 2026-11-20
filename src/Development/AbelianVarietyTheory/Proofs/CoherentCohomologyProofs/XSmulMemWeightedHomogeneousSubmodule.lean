@@ -164,7 +164,8 @@ theorem proj_map (ℳ : ℤ → Submodule R M) [Decomposition ℳ] (𝒩 : ℤ �
     (n : ℤ) (m : M) : proj 𝒩 (n + d) (f m) = f (proj ℳ n m) := by
   classical
   conv_lhs => rw [← sum_support_decompose ℳ m]
-  rw [map_sum, map_sum, Finset.sum_eq_single n]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, Finset.sum_eq_single n]
   · rw [proj_of_mem 𝒩 (hf n _ (decompose ℳ m n).2), proj_apply]
   · intro i _ hi
     exact proj_of_mem_ne 𝒩 (hf i _ (decompose ℳ m i).2) (by omega)

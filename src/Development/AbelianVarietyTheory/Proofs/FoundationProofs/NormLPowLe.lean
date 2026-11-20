@@ -98,7 +98,8 @@ theorem sum_unitVal [IsAlgClosure ℚ Ω] (ε : Ω →+* ℂ) (j : Ω →+* Qbar
       funext i
       simpa [Finset.sum_apply] using h i
     have e2 := congrArg lam e
-    simpa [map_sum, map_smul] using e2
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [map_sum, map_smul] using e2
   refine key _ _ _ fun i => ?_
   have h1 := hE (j ζ) hjζ i
   rw [toQ, ← hP, gaussS, ← map_pow, hrN] at h1
@@ -199,7 +200,8 @@ theorem law_of_parts [IsAlgClosure ℚ Ω] (A : ValuationSubring Ω) (cf : Coef 
     rw [Finset.sum_comm]
     exact Finset.sum_congr rfl fun b _ => Finset.mul_sum _ _ _
   beta_reduce
-  rw [hsw, hup, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hsw, hup, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun x _ => ?_
   by_cases hx : cw x = 0
   · simp [hx]

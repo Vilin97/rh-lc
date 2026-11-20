@@ -51,11 +51,13 @@ theorem isHermE_of (T : GoodSet K G) (A : HLat K) (ρ : Representation K G A.V)
     have := h3 g x (ρ g⁻¹ y)
     rwa [← Module.End.mul_apply, ← map_mul, mul_inv_cancel, map_one, Module.End.one_apply] at this
   have hl : h ((ρ.asAlgebraHom (eG T)) x) y = ∑ g : G, star (cf T g) * h (ρ g x) y := by
-    rw [asAlgebraHom_eG, LinearMap.sum_apply, map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [asAlgebraHom_eG, LinearMap.sum_apply, map_sum, LinearMap.sum_apply]
     refine Finset.sum_congr rfl fun g _ => ?_
     rw [LinearMap.smul_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, starRingEnd_apply]
   have hr : h x ((ρ.asAlgebraHom (eG T)) y) = ∑ g : G, cf T g * h x (ρ g y) := by
-    rw [asAlgebraHom_eG, LinearMap.sum_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [asAlgebraHom_eG, LinearMap.sum_apply, map_sum]
     refine Finset.sum_congr rfl fun g _ => ?_
     rw [LinearMap.smul_apply, map_smul, smul_eq_mul]
   rw [hl, hr]
@@ -72,7 +74,8 @@ theorem isCMFormE_of (T : GoodSet K G) (A : HLat K) (ρ : Representation K G A.V
   refine ⟨c1, fun i j => ?_, c3⟩
   have he : A.b.repr ((ρ.asAlgebraHom (eG T)) (A.b j)) i =
       ∑ g : G, cf T g * A.b.repr (ρ g (A.b j)) i := by
-    rw [asAlgebraHom_eG, LinearMap.sum_apply, map_sum, Finsupp.finsetSum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [asAlgebraHom_eG, LinearMap.sum_apply, map_sum, Finsupp.finsetSum_apply]
     refine Finset.sum_congr rfl fun g _ => ?_
     rw [LinearMap.smul_apply, map_smul, Finsupp.smul_apply, smul_eq_mul]
   rw [he]

@@ -68,7 +68,8 @@ theorem isHermND_smul (σ : E →ₐ[F] E) (B : Base F E) {d r s : ℕ} (W : Spc
       have hMv : M *ᵥ v' = 0 := by
         ext i
         have := congrArg τ (congrFun hJv i)
-        simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Pi.zero_apply, map_zero] at this
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Pi.zero_apply, map_zero] at this
         simp only [M, v', Matrix.smul_mulVec, Matrix.mulVec, dotProduct, Matrix.map_apply, Pi.smul_apply, smul_eq_mul,
           Pi.zero_apply, Matrix.smul_apply, mul_assoc, ← Finset.mul_sum, this, mul_zero]
       have hx : star v' ≠ 0 := fun h => hv' (by simpa using congrArg star h)
@@ -98,7 +99,8 @@ theorem isIsoCols_plane (σ : E →ₐ[F] E) (B : Base F E) {d d₁ : ℕ} (W : 
   · ext i j
     have h2 : c * σ (form σ W.J H'.x H'.x) = 0 := by rw [hH.xx, map_zero, mul_zero]
     rw [Matrix.zero_apply, ← h2]
-    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, Formalism.UG.cT, Matrix.mul_apply, Matrix.transpose_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, Formalism.UG.cT, Matrix.mul_apply, Matrix.transpose_apply,
       Matrix.map_apply, Matrix.smul_apply, Matrix.of_apply, smul_eq_mul, Matrix.zero_apply, Finset.mul_sum, Finset.sum_mul]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun l _ => ?_

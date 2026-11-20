@@ -170,14 +170,16 @@ theorem cas_of_capelli : ∀ (M : Type) [AddCommGroup M] [Module ℂ M] (n : ℕ
             = (∏ s, (Y + (mu s : ℂ))) • (1 : Module.End ℂ M) := by
           ext w; simpa using h Y w
         have h2 := congrArg φ ((hR _).symm.trans h1)
-        simp only [map_add, map_sum, map_smul, smul_eq_mul, add_sub_assoc] at h2
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_add, map_sum, map_smul, smul_eq_mul, add_sub_assoc] at h2
         exact h2)
   have e1 : ∑ i, E i i = (∑ l, (mu l : ℂ)) • (1 : Module.End ℂ M) := by
     rw [← sub_eq_zero, ← Module.forall_dual_apply_eq_zero_iff ℂ]
     intro φ
     have := (core φ).1
     rw [hρ0] at this
-    simp only [map_sub, map_sum, map_smul, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sub, map_sum, map_smul, smul_eq_mul]
     linear_combination this
   have e2 : Formalism.REAL.Cas E = (casG mu : ℂ) • (1 : Module.End ℂ M) := by
     rw [← sub_eq_zero, ← Module.forall_dual_apply_eq_zero_iff ℂ]
@@ -186,7 +188,8 @@ theorem cas_of_capelli : ∀ (M : Type) [AddCommGroup M] [Module ℂ M] (n : ℕ
     have h3 := congrArg φ (sq_sub_cas E hE)
     rw [e1, smul_mul_smul_comm, mul_one] at h3
     simp only [sum_erase_eq_sub (mem_univ _), hρ0] at h2
-    simp only [map_sub φ, map_sum, map_smul, smul_eq_mul] at h3 h2 ⊢
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sub φ, map_sum, map_smul, smul_eq_mul] at h3 h2 ⊢
     have h4 : (casG mu : ℂ) = ∑ l, (mu l : ℂ) ^ 2 - ∑ l, ρ l ^ 2 := by
       simp [casG, Formalism.QuantumDeterminants.rhoStd, hρ]
     have h5 : ∑ i : Fin n, ((n : ℂ) - 1 - 2 * (i : ℕ)) * φ (E i i)

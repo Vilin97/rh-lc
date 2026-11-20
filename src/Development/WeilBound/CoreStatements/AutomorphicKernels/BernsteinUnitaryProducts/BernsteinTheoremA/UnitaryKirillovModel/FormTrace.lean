@@ -34,7 +34,8 @@ theorem riesz_unique (hpos : ∀ v, v ≠ 0 → 0 < (B₀ v v).re) {C : Sesq V} 
 
 theorem antilin_ext_basis [FiniteDimensional ℂ W] (φ ψ : V →ₗ⋆[ℂ] ℂ)
     (h : ∀ i, φ (Module.finBasis ℂ W i : V) = ψ (Module.finBasis ℂ W i : V)) (u : W) : φ u = ψ u := by
-  rw [← (Module.finBasis ℂ W).sum_repr u, Submodule.coe_sum, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← (Module.finBasis ℂ W).sum_repr u, Submodule.coe_sum, map_sum, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [Submodule.coe_smul, LinearMap.map_smulₛₗ, LinearMap.map_smulₛₗ, h i]
 

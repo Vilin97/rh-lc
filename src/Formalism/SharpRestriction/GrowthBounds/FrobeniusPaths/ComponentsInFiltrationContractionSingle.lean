@@ -343,7 +343,8 @@ theorem lemma_A3_over_field (D : Formalism.BasicNotions.D7) (hW : WordValuationB
 theorem map_linear_combination_words {R R' : Type*} [CommRing R] [CommRing R'] (φ : R →+* R') (l : StandardWordIndex n LL B →₀ R) :
     MvPolynomial.map φ (Finsupp.linearCombination R (columnWord LL B R) l) =
       Finsupp.linearCombination R' (columnWord LL B R') (l.mapRange φ (map_zero φ)) := by
-  rw [Finsupp.linearCombination_apply, Finsupp.linearCombination_apply, Finsupp.sum_mapRange_index (by simp),
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finsupp.linearCombination_apply, Finsupp.linearCombination_apply, Finsupp.sum_mapRange_index (by simp),
     Finsupp.sum, Finsupp.sum, map_sum]
   refine Finset.sum_congr rfl fun x _ => ?_
   rw [MvPolynomial.smul_eq_C_mul, MvPolynomial.smul_eq_C_mul, map_mul, MvPolynomial.map_C]
@@ -491,7 +492,8 @@ theorem conjugate_operator_sum {Q F : Type*} [CommRing Q] [AddCommGroup F] [Modu
     intro b
     have := congrArg (fun f => f K) (hI b)
     simpa [Module.End.mul_apply, LinearMap.add_apply, LinearMap.smul_apply, LinearMap.sum_apply] using this
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [map_smul, h, smul_add, add_smul, Finset.sum_add_distrib]
   congr 1
   simp only [smul_smul]
@@ -550,7 +552,8 @@ theorem sum_U_mul_V_eq_one : ∑ m, twistColumnVector N jj m * twistRowVector N 
   rw [Matrix.mul_apply, Matrix.one_apply_eq] at this
   unfold twistColumnVector twistRowVector
   simp only [← map_mul]
-  rw [← map_sum, ← map_one (C : GLLaurent ℤ n →+* TwistedRing N n), ← this]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum, ← map_one (C : GLLaurent ℤ n →+* TwistedRing N n), ← this]
   congr 1
   exact Finset.sum_congr rfl fun m _ => mul_comm _ _
 

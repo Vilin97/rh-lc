@@ -37,7 +37,8 @@ theorem altSum_eq_of_eventually (p : MvPolynomial K ℚ) {n : ℕ} (δ : Fin n �
   have hq : ∀ w : K → ℤ, eval (fun k => (w k : ℚ)) q =
       ∑ T : Finset (Fin n), (-1 : ℚ) ^ T.card * eval (fun k => (((w - ∑ i ∈ T, δ i) k : ℤ) : ℚ)) p := by
     intro w
-    simp only [q, map_sum, map_mul, eval_C, eval_bind₁_shift]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [q, map_sum, map_mul, eval_C, eval_bind₁_shift]
     refine Finset.sum_congr rfl fun T _ => ?_
     congr 3
   obtain ⟨m₀, hm₀⟩ := eventually_atTop.mp h

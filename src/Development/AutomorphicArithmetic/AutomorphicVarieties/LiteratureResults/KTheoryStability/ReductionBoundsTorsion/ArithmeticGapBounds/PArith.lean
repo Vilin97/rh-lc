@@ -422,7 +422,8 @@ private theorem sl_mul_col_off_diag_zero_of_both {R : Type} [CommRing R] {F : Ty
     (hY : ∀ i, i ≠ k → q ((Y : Matrix (Fin N) (Fin N) R) i k) = 0) :
     ∀ i, i ≠ k → q (((X * Y : Matrix.SpecialLinearGroup (Fin N) R) : Matrix (Fin N) (Fin N) R) i k) = 0 := by
   intro i hi
-  rw [Matrix.SpecialLinearGroup.coe_mul, Matrix.mul_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.SpecialLinearGroup.coe_mul, Matrix.mul_apply, map_sum]
   rw [Finset.sum_eq_single k]
   · rw [map_mul, hX i hi, zero_mul]
   · intro j _ hj

@@ -46,7 +46,8 @@ theorem recon_of_pairings {E : Type} [Field E] {n n₁ : ℕ} (x y a b : Fin n �
 theorem pair_swap {F E : Type} [Field F] [Field E] [Algebra F E] (σ : E →ₐ[F] E) (hσ : ∀ e, σ (σ e) = e) {n : ℕ}
     (J : Matrix (Fin n) (Fin n) E) (hJ : ∀ i j, σ (J j i) = -J i j) (v w : Fin n → E) :
     (w ⬝ᵥ J *ᵥ fun i => σ (v i)) = -σ (v ⬝ᵥ J *ᵥ fun i => σ (w i)) := by
-  simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, hσ, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, hσ, Finset.mul_sum]
   rw [Finset.sum_comm, ← Finset.sum_neg_distrib]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [← Finset.sum_neg_distrib]

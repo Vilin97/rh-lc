@@ -61,7 +61,8 @@ theorem isCrys_chiE_of_constituent (D : D7) (i : D.nd.Loc) (w : HeightOneSpectru
     have h1 := congrArg f (congrFun (hg (decS D.nd w (Br.iota D.nbr i w hw g))) a)
     have h2 : (mapM (toK D.nd i) M (decS D.nd w (Br.iota D.nbr i w hw g))).mulVec v a =
         ∑ b, toK D.nd i (M (decS D.nd w (Br.iota D.nbr i w hw g)) a b) * v b := rfl
-    rw [h2, map_sum, Pi.smul_apply, smul_eq_mul, map_mul, hf] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h2, map_sum, Pi.smul_apply, smul_eq_mul, map_mul, hf] at h1
     simp only [map_mul, hf] at h1
     rw [Pi.smul_apply, smul_eq_mul]
     exact h1

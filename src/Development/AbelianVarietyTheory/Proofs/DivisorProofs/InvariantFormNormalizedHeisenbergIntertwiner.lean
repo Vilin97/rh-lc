@@ -171,7 +171,8 @@ theorem _root_.GlobalTheory.FinWeil.invForm_intertwiner : ∀ {R X M : Type} [Co
         obtain ⟨k, -, hk⟩ := hfu (f i) (hfB i)
         rw [hk i (by simp), hk j (by show f i - f j ∈ A; rwa [sub_eq_neg_add])]
     rw [hT' e he, hT' e' he']
-    simp only [map_smul, LinearMap.smul_apply, LinearMap.map_smulₛₗ, map_sum, LinearMap.sum_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_smul, LinearMap.smul_apply, LinearMap.map_smulₛₗ, map_sum, LinearMap.sum_apply,
       smul_eq_mul, hterm, Finset.sum_ite_eq, Finset.mem_univ, if_true, Finset.sum_const,
       Finset.card_univ, Fintype.card_fin, nsmul_eq_mul, map_inv₀]
     have hinv : (lam n)⁻¹ * (starRingEnd ℂ (lam n))⁻¹ * n = 1 := by

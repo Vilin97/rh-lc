@@ -76,7 +76,8 @@ def vecSec (k : F.J) (V : C.Opens) (h : V ≤ g ⁻¹ᵁ F.U k) (i : Fin (Dw.mul
 
 theorem resM_vecSec (k : F.J) {V V' : C.Opens} (h : V ≤ g ⁻¹ᵁ F.U k) (h' : V' ≤ V) (i : Fin (Dw.mult σ)) :
     resM _ h' (vecSec F g σ f k V h i) = vecSec F g σ f k V' (h'.trans h) i := by
-  rw [vecSec, vecSec, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [vecSec, vecSec, map_sum]
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [Twist.resM_smul, DualPull.resG_appLE]
   exact congrArg _ (QCoh.res_pullbackSections _ _ _ _ _)
@@ -116,7 +117,8 @@ theorem vecSec_chg (hc : ∀ (M M' : MChart Y) (j : Fin M'.n), resM _ (inf_le_ri
       ∑ b, (g ≫ π).appLE _ V hM (chg (F.M k).toMChart (F.M k').toMChart b a) •
         pullbackSections (g ≫ π) _ (le_chart F g h) (f (F.M k).toMChart b) := fun a => by
     have := congrArg (pullbackSections (g ≫ π) _ hM) (hc (F.M k).toMChart (F.M k').toMChart a)
-    rw [map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at this
     refine ((QCoh.pullbackSections_res _ _ _ _ _).symm.trans this).trans (Finset.sum_congr rfl fun b _ => ?_)
     rw [QCoh.pullbackSections_smul]
     exact congrArg _ (QCoh.pullbackSections_res _ _ _ _ _)
@@ -128,7 +130,8 @@ theorem vecSec_chg (hc : ∀ (M M' : MChart Y) (j : Fin M'.n), resM _ (inf_le_ri
         ∑ j, resG Z inf_le_left (F.u k σ b j) * F.B k k' σ j i :=
       congrFun (congrFun (F.tri k k' σ).choose_spec.2 b) i
     have := congrArg (g.appLE _ V hh).hom e₀
-    rw [map_sum, map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum] at this
     refine (Finset.sum_congr rfl fun a _ => ?_).trans (this.trans (Finset.sum_congr rfl fun j _ => ?_))
     · rw [_root_.mul_comm, map_mul, ← Scheme.Hom.appLE_comp_appLE g π _ _ V (inf_le_inf (F.le k) (F.le k')) hh]
       exact congrArg₂ (· * ·) rfl (DualPull.appLE_resG g _ hh _).symm

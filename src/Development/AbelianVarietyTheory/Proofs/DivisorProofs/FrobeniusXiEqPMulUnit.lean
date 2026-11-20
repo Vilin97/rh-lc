@@ -10,7 +10,8 @@ variable {p : ℕ} [Fact p.Prime] {O : Type} [CommRing O] [Fact ¬IsUnit (p : O)
 
 theorem frobenius_xi (ε : PreTilt O p) :
     WittVector.frobenius (Sandwich.xi ε) = ∑ i ∈ Finset.range p, (1 + Sandwich.mu ε) ^ i := by
-  rw [Sandwich.xi, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Sandwich.xi, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_pow, WittVector.frobenius_eq_map_frobenius, WittVector.map_teichmuller, Sandwich.mu,
     add_sub_cancel]
@@ -28,7 +29,8 @@ theorem one_add_pow {ε : PreTilt O p} (F : BFrame ε) (i : ℕ) :
 
 theorem a_frobenius_xi {ε : PreTilt O p} (F : BFrame ε) :
     F.a (WittVector.frobenius (Sandwich.xi ε)) = p * (1 + ((p.choose 2 : ℕ) : F.B) * F.τ) := by
-  rw [frobenius_xi, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [frobenius_xi, map_sum]
   have h1 : ∀ i ∈ Finset.range p, F.a ((1 + Sandwich.mu ε) ^ i) = 1 + (i : F.B) * ((p : F.B) * F.τ) :=
     fun i _ => by rw [map_pow, map_add, map_one, ← F.p_τ, one_add_pow]
   rw [Finset.sum_congr rfl h1, Finset.sum_add_distrib, ← Finset.sum_mul, Finset.sum_const,

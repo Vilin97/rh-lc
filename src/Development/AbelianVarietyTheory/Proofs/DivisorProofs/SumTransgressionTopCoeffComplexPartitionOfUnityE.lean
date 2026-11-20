@@ -37,7 +37,8 @@ theorem corrC_sum_eq_zero : ∀ {n : ℕ} {r : Type} [Fintype r] [DecidableEq r]
       map_add' := fun L L' => hadd _ _ _ L L' }
   have hF : ∑ i, mixTop (intersection_update_fsHerm_neg_one (curvAt G₁ v) (cutForm (ρ i) G₀ G₁ v) (curvAt G₀ v) j) =
       F (∑ i, cutForm (ρ i) G₀ G₁ v) := by
-    rw [map_sum]; rfl
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]; rfl
   rw [hF, hc, map_zero]
 
 end GlobalTheory.GoodTop

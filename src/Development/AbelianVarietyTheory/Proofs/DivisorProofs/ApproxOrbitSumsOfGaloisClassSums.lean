@@ -67,7 +67,8 @@ theorem exists_invariant [Finite (B ≃ₐ[A] B)] (𝔷 : Ideal B) (hz : 𝔷.Is
   set x := u * F with hx
   set T : Finset B := Finset.univ.image (fun σ : B ≃ₐ[A] B => σ x) with hT
   refine ⟨∑ b ∈ T, b, fun σ => ?_, ?_⟩
-  · rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum]
     refine Finset.sum_equiv σ.toEquiv (fun b => ?_) (fun b _ => rfl)
     simp only [hT, Finset.mem_image, Finset.mem_univ, true_and]
     constructor
@@ -359,7 +360,8 @@ theorem orbitSums_of_classSums : ∀ (O : Type) [CommRing O] (bar : O → O) (q 
   set F : B := ∑ c ∈ C, ∏ i, f (fun u => c (i, u)) (κ i) with hF
   obtain ⟨g, hg1, hg2⟩ := exists_invariant (A := A) 𝔷 hz E F (fun σ hσ => by
     obtain ⟨γ, h1, h2, h3, h4⟩ := hγ σ hσ
-    rw [hF, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hF, map_sum]
     simp only [map_prod, h4]
     exact sum_comp_eq C hC1 hC2 hC3 γ h1 h2 h3 (fun c => ∏ i, f (fun u => c (i, u)) (κ i))
       (fun c c' h => Finset.prod_congr rfl fun i _ => hf _ _ _ fun u => h _))
@@ -415,7 +417,8 @@ theorem orbitSums_of_classSums : ∀ (O : Type) [CommRing O] (bar : O → O) (q 
   · rw [sum_orbit_eq C hC1 hC2 hC3 (k y) (hk y) T _ (fun μ => hSfin.mem_toFinset) (fun i ν => t y ν (κ i))]
     rw [← sub_add_sub_cancel _ (ev' y F), max_comm]
     refine (IsUltrametricDist.norm_add_le_max _ _).trans (max_le_max hgF ?_)
-    rw [hF, map_sum, ← Finset.sum_sub_distrib]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hF, map_sum, ← Finset.sum_sub_distrib]
     refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg hε.le fun c hc => ?_
     rw [map_prod]
     refine (norm_prod_sub_le _ _ _ _ hε'.le (min_le_right _ _) (fun i => hle y _) fun i => ?_).trans (min_le_left _ _)

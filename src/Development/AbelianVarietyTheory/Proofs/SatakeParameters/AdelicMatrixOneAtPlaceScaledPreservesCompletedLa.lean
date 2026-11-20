@@ -107,7 +107,8 @@ theorem basis_coeff {E N : Type} [Field E] [AddCommGroup N] [Module F N] [Algebr
     (bE : Module.Basis (Fin d) F E) (x : Fin d → N) (k : Fin d) :
     TensorProduct.equivFinsuppOfBasisLeft bE (∑ j, bE j ⊗ₜ[F] x j) k = x k := by
   classical
-  simp [map_sum, TensorProduct.equivFinsuppOfBasisLeft_apply_tmul_apply, Module.Basis.repr_self,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, TensorProduct.equivFinsuppOfBasisLeft_apply_tmul_apply, Module.Basis.repr_self,
     Finsupp.single_apply]
 
 theorem basis_expand {E N : Type} [Field E] [AddCommGroup N] [Module F N] [Algebra F E] {d : ℕ}
@@ -134,7 +135,8 @@ theorem tensorFam {E : Type} [Field E] [NumberField E] [Algebra F E] (v : Height
   have ha : ∀ p, a p v = 0 := by
     intro p
     have h := hm p.1
-    rw [hexp p.1, map_sum] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hexp p.1, map_sum] at h
     simp only [prV_tmul] at h
     have := congrArg (fun z => TensorProduct.equivFinsuppOfBasisLeft bE z p.2) h
     simp only [basis_coeff, map_zero, Finsupp.coe_zero, Pi.zero_apply] at this

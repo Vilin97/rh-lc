@@ -103,7 +103,8 @@ theorem saturatedLowerSetSpan_of_lowerSetTypesSpan (D : Formalism.BasicNotions.D
   have hmaplc : ∀ c : WI n N LL B →₀ O, MvPolynomial.map (algebraMap O (KK O)) (Finsupp.linearCombination O (wd LL B O) c) =
       Finsupp.linearCombination (KK O) (wd LL B (KK O)) (c.mapRange (algebraMap O (KK O)) (map_zero _)) := by
     intro c
-    rw [Finsupp.linearCombination_apply, Finsupp.linearCombination_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finsupp.linearCombination_apply, Finsupp.linearCombination_apply,
       Finsupp.sum_mapRange_index (by intro i; exact zero_smul _ _), Finsupp.sum, Finsupp.sum, map_sum]
     refine Finset.sum_congr rfl fun x _ => ?_
     rw [MvPolynomial.smul_eq_C_mul, map_mul, MvPolynomial.map_C, hmapwd, ← MvPolynomial.smul_eq_C_mul]

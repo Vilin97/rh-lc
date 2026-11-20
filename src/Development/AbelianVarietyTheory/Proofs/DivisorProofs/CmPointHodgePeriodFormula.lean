@@ -126,7 +126,8 @@ theorem span_eq_top_of_full (φ : I → E →+* ℂ) (hφ : IsCMType φ) {g : �
     have hxW : x ∈ W := Submodule.subset_span hx
     have h1 : (fun j ↦ φ (e j) x) = Φ ((⟨x, hxW⟩ : W) : E) := rfl
     rw [h1, ← b.sum_repr ⟨x, hxW⟩]
-    simp only [Submodule.coe_sum, Submodule.coe_smul, map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Submodule.coe_sum, Submodule.coe_smul, map_sum, map_smul]
     refine Submodule.sum_mem _ fun k _ ↦ ?_
     rw [← Rat.cast_smul_eq_qsmul ℝ]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨k, rfl⟩)
@@ -173,7 +174,8 @@ theorem hermE_add_right (φ : I → E →+* ℂ) (h : I → ℝ) (x a b : E) :
 
 theorem hermE_swap (φ : I → E →+* ℂ) (h : I → ℝ) (x x' : E) :
     hermE φ h x' x = starRingEnd ℂ (hermE φ h x x') := by
-  simp only [hermE, map_sum, map_mul, Complex.conj_ofReal, Complex.conj_conj]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hermE, map_sum, map_mul, Complex.conj_ofReal, Complex.conj_conj]
   exact Finset.sum_congr rfl fun i _ ↦ by ring
 
 theorem hermE_one_im (φ : I → E →+* ℂ) (h : I → ℝ) (w : E) :

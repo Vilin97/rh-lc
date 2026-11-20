@@ -106,7 +106,8 @@ theorem overInt_pt : OverInt (pt F) (RingHom.id F) := by
     have := mul_mem (hg p) h1
     rwa [div_mul_cancel₀ _ (hc ())] at this
   rw [← (RingOfIntegers.basis F).sum_repr a]
-  simp only [RingHom.id_apply, map_sum, map_zsmul, RingOfIntegers.coe_eq_algebraMap]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [RingHom.id_apply, map_sum, map_zsmul, RingOfIntegers.coe_eq_algebraMap]
   exact Subalgebra.sum_mem _ fun i _ => zsmul_mem (h2 ⟨(), some i⟩) _
 
 theorem X_none_notMem (W : Ideal (MRing (Idx F))) (hW : W.IsPrime) (hP : mCoordIdeal (pt F) ≤ W)
@@ -116,7 +117,8 @@ theorem X_none_notMem (W : Ideal (MRing (Idx F))) (hW : W.IsPrime) (hP : mCoordI
   obtain ⟨q, hq, hz⟩ := (intPt F j).isIntegral_coe
   have hG : (∑ i ∈ Finset.range (q.natDegree + 1), C (q.coeff i) * X ⟨(), j⟩ ^ i *
       X ⟨(), none⟩ ^ (q.natDegree - i) : MRing (Idx F)) ∈ mCoordIdeal (pt F) := by
-    rw [mCoordIdeal, RingHom.mem_ker, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [mCoordIdeal, RingHom.mem_ker, map_sum]
     have : ∀ i ∈ Finset.range (q.natDegree + 1), mConeMap (pt F) (C (q.coeff i) * X ⟨(), j⟩ ^ i *
         X ⟨(), none⟩ ^ (q.natDegree - i) : MRing (Idx F)) =
         C (algebraMap ℤ F (q.coeff i) * pt F ⟨(), j⟩ ^ i) * X () ^ q.natDegree := by
@@ -126,7 +128,8 @@ theorem X_none_notMem (W : Ideal (MRing (Idx F))) (hW : W.IsPrime) (hP : mCoordI
       simp only [mConeMap, map_mul, map_pow, aeval_X, pt_none, map_one, one_mul, he,
         Nat.add_sub_cancel_left, eq_intCast, map_intCast]
       ring
-    rw [Finset.sum_congr rfl this, ← Finset.sum_mul, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_congr rfl this, ← Finset.sum_mul, ← map_sum]
     rw [Polynomial.eval₂_eq_sum_range] at hz
     have hz' : ∑ i ∈ Finset.range (q.natDegree + 1), algebraMap ℤ F (q.coeff i) * pt F ⟨(), j⟩ ^ i = 0 := hz
     rw [hz', map_zero, zero_mul]

@@ -57,10 +57,12 @@ theorem stageV_alt : _root_.GlobalTheory.FunPr.ThetaLocalInputs → ∀ (F E : T
     · by_cases h : v ∈ T
       · simp only [dif_pos h]; exact (φ j ⟨v, h⟩).2
       · simp only [dif_neg h]; exact (hM.triple.geo.hM.vac v).1
-    · rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [map_sum]
       exact Finset.sum_congr rfl fun j _ => hL _ _ _ (fun v h => by simp only [dif_pos h]) (fun v h => by simp only [dif_neg h])
     · simp
-    · rw [LinearMap.mem_ker, map_sum] at ht0
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [LinearMap.mem_ker, map_sum] at ht0
       rw [Fin.sum_univ_zero, ← ht0]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [TensorProduct.map_tmul, PiTensorProduct.map_tprod]

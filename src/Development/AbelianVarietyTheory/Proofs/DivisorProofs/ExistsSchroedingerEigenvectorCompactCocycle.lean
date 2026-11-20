@@ -82,7 +82,8 @@ theorem avg_fixed : ∀ {A X : Type} [AddCommGroup A] [AddCommGroup X] [Module �
     have h : -a + Quotient.out (a : A ⧸ H) ∈ H :=
       QuotientAddGroup.eq.mp (QuotientAddGroup.out_eq' (a : A ⧸ H)).symm
     rw [show Quotient.out (a : A ⧸ H) = a + (-a + Quotient.out (a : A ⧸ H)) by abel, hπ, hx₀ _ h]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   calc ∑ q : A ⧸ H, π b (π (Quotient.out q) x₀) = ∑ q : A ⧸ H, π (b + Quotient.out q) x₀ :=
         Finset.sum_congr rfl fun q _ => (hπ _ _ _).symm
     _ = ∑ q : A ⧸ H, π (Quotient.out ((b : A ⧸ H) + q)) x₀ := by
@@ -264,7 +265,8 @@ theorem exists_schr_eigen : ∀ {F : Type} [Field F] [NumberField F] (v : Global
     rw [hconj, hπK h hh, (hKs h).mp hh w₀ w₀.2, one_smul]
   have hsum : schr ψ (w₀ : (κ → Fv F v) × (κ → Fv F v)) (∑ q, θ w₀ q • c q) =
       ∑ q : (M → v.adicCompletionIntegers F) ⧸ Ks, πL (Quotient.out q) (schr ψ (w₀ : (κ → Fv F v) × (κ → Fv F v)) φ₁) := by
-    rw [show schr ψ (w₀ : (κ → Fv F v) × (κ → Fv F v)) (∑ q, θ w₀ q • c q) =
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [show schr ψ (w₀ : (κ → Fv F v) × (κ → Fv F v)) (∑ q, θ w₀ q • c q) =
       ∑ q, schr ψ (w₀ : (κ → Fv F v) × (κ → Fv F v)) (θ w₀ q • c q) from map_sum (schrL ψ (w₀ : (κ → Fv F v) × (κ → Fv F v))) _ _]
     exact Finset.sum_congr rfl fun q _ => (hconj _ _ _).symm
   refine ⟨∑ q : (M → v.adicCompletionIntegers F) ⧸ Ks, πL (Quotient.out q) (schr ψ (w₀ : (κ → Fv F v) × (κ → Fv F v)) φ₁),

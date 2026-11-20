@@ -146,7 +146,8 @@ theorem coord_bound : ∃ μ : ℝ, 0 < μ ∧ ∀ m : Module.Free.ChooseBasisIn
   set t : Module.Free.ChooseBasisIndex ℤ (𝓞 F) → ℝ := fun j => (m j : ℝ)
   have hx : mixedEmbedding F x = lb.equivFun.symm t := by
     rw [Module.Basis.equivFun_symm_apply]
-    simp only [x, t, lb, map_sum, map_zsmul, mixedEmbedding.latticeBasis_apply, Int.cast_smul_eq_zsmul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [x, t, lb, map_sum, map_zsmul, mixedEmbedding.latticeBasis_apply, Int.cast_smul_eq_zsmul]
   have hft : f (mixedEmbedding F x) = t := by
     rw [hx]; exact lb.equivFun.apply_symm_apply t
   have h1 : ‖t‖ ≤ ‖f‖ * ‖mixedEmbedding F x‖ := by
@@ -192,7 +193,8 @@ theorem exists_coord (a : F) (x : aL κ a) : ∃ m : κ × Module.Free.ChooseBas
   funext i
   have h1 : ∑ j, (RingOfIntegers.basis F).repr (o i) j • integralBasis F j = l i := by
     have h2 := congrArg (algebraMap (𝓞 F) F) ((RingOfIntegers.basis F).sum_repr (o i))
-    simp only [map_sum, map_zsmul] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_zsmul] at h2
     simp only [integralBasis_apply]
     exact h2
   simp only [h1]

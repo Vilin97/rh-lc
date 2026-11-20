@@ -93,7 +93,8 @@ theorem hR_eq (x y : Fin M → Fv F v ⊗[F] E) : hR (Fv F v) σ J x y =
 theorem hR_sum_right (x : Fin M → Fv F v ⊗[F] E) (z : Fin M → Fv F v ⊗[F] E)
     (b : Fin M → Fin M → Fv F v ⊗[F] E) :
     hR (Fv F v) σ J x (∑ i, z i • b i) = ∑ i, z i * hR (Fv F v) σ J x (b i) := by
-  simp only [hR_eq, map_sum, map_smul, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hR_eq, map_sum, map_smul, smul_eq_mul]
 
 theorem hR_sum_left (y : Fin M → Fv F v ⊗[F] E) (z : Fin M → Fv F v ⊗[F] E)
     (b : Fin M → Fin M → Fv F v ⊗[F] E) :
@@ -102,7 +103,8 @@ theorem hR_sum_left (y : Fin M → Fv F v ⊗[F] E) (z : Fin M → Fv F v ⊗[F]
       ∑ i, sigR (Fv F v) σ (z i) • fun j => sigR (Fv F v) σ (b i j) := by
     funext j
     simp [Finset.sum_apply]
-  simp only [hR_eq, this, map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hR_eq, this, map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul]
 
 theorem hR_smul_left (x y : Fin M → Fv F v ⊗[F] E) (c : Fv F v ⊗[F] E) :
     hR (Fv F v) σ J (c • x) y = sigR (Fv F v) σ c * hR (Fv F v) σ J x y := by
@@ -268,7 +270,8 @@ theorem exists_coords (hσ : IsCMExt F E σ) (hJ : IsHermND σ J)
       exact add_mem ((algebraMap_mem_iff v _).2 (h _))
         (mul_mem ((algebraMap_mem_iff v _).2 (h _)) hw)
   · apply algebraMap_inj (E := E) v
-    rw [← hR_self _ hσ hJ, hh, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hR_self _ hσ hJ, hh, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     change _ = algebraMap (Fv F v) _
       (e X (i, 0) ^ 2 + t * e X (i, 0) * e X (i, 1) + n * e X (i, 1) ^ 2)
@@ -279,7 +282,8 @@ theorem exists_coords (hσ : IsCMExt F E σ) (hJ : IsHermND σ J)
     have hB : ∀ X : Fin 1 → Fin M → Fv F v ⊗[F] E, BR (Fv F v) σ J X Y =
         ∑ i, Algebra.trace (Fv F v) (Fv F v ⊗[F] E) (sigR (Fv F v) σ (g (X 0) i) * g (Y 0) i) := by
       intro X
-      rw [BR, Fin.sum_univ_one, hh, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [BR, Fin.sum_univ_one, hh, map_sum]
     constructor
     · intro h X hX
       have hX' := fun i => SelfDualLatticeActions.sigR_mem v σ ((hg _).1 hX i)

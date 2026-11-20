@@ -12,7 +12,8 @@ theorem IrreducibleBasicOpenConnected.eval_pullback {n d : ℕ} (A : Matrix (Fin
     eval x (ComplexSets.pullback A P) = eval (A.mulVec x) P := by
   have h : ∀ i, eval x (ComplexSets.linPoly A i) = A.mulVec x i := by
     intro i
-    simp [ComplexSets.linPoly, Matrix.mulVec, dotProduct, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [ComplexSets.linPoly, Matrix.mulVec, dotProduct, map_sum]
   rw [ComplexSets.pullback, aeval_eq_bind₁]
   change eval₂Hom (RingHom.id ℂ) x (bind₁ (ComplexSets.linPoly A) P) =
     eval₂Hom (RingHom.id ℂ) (A.mulVec x) P
@@ -24,7 +25,8 @@ theorem IrreducibleBasicOpenConnected.eval_pullback {n d : ℕ} (A : Matrix (Fin
 theorem IrreducibleBasicOpenConnected.eval_linPoly {n d : ℕ} (A : Matrix (Fin d) (Fin n) ℂ)
     (x : Fin n → ℂ) : (fun i => eval x (ComplexSets.linPoly A i)) = A.mulVec x := by
   funext i
-  simp [ComplexSets.linPoly, Matrix.mulVec, dotProduct, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [ComplexSets.linPoly, Matrix.mulVec, dotProduct, map_sum]
 
 theorem IrreducibleBasicOpenConnected.exists_dim {n : ℕ} {W : Ideal (MvPolynomial (Fin n) ℂ)}
     (hW : W.IsPrime) : ∃ d : ℕ, ringKrullDim (MvPolynomial (Fin n) ℂ ⧸ W) = d := by

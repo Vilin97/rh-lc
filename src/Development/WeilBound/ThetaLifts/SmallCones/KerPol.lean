@@ -158,7 +158,8 @@ variable {T : Type} [AddCommGroup T] [Module E T] [Module F T] [IsScalarTower F 
 theorem lin_basis (b : Module.Basis (Fin m) F T) (t : T) :
     lin (fun j => U (b j)) (fun j => algebraMap F (AF F) (b.equivFun t j)) = incM F (U t) := by
   rw [← incM_lin]
-  simp only [← LinearMap.map_smul_of_tower, ← map_sum, b.sum_equivFun]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← LinearMap.map_smul_of_tower, ← map_sum, b.sum_equivFun]
 
 theorem PolT.exp (hP : PolT σ X W X₁ W₁ ι ι' I U) (hE : ThetaExp) (hB : B.IsGood σ) (hM : M.IsGood B.ψ) (hM₁ : M₁.IsGood B.ψ)
     (he : IsEv B M M₁ ι ι' I e) : ∃ C : ℂ, C ≠ 0 ∧ ∀ Φ ∈ schA F _,
@@ -231,7 +232,8 @@ theorem isEv_comp {n₂ d₂ : ℕ} {X₂ : Spc F E n₂} {W₂ : Spc F E d₂} 
       simp only [GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure]
       rw [mul_left_comm]
       rfl
-    rw [h1, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h1, map_sum]
     refine Finset.sum_eq_zero fun k _ => ?_
     rw [map_smul, key f (φ k) (a k) (((b k).and hM.std).mono fun v h => by rw [h.1, h.2]), h0]
     funext x

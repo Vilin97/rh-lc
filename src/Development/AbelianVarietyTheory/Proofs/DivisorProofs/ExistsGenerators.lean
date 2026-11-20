@@ -198,13 +198,16 @@ theorem maps_descend : ∀ (A B : Type) [CommRing A] [CommRing B] [IsDomain B] [
       key _ _ (by rw [hw, hu', ht]) (by rw [hw, hu']; exact (k1 i).2)
     obtain ⟨c, hc⟩ := hu A' g π' hπ (fun x => kd π' x hπ0) k0 x.1 ((hP' _).1 x.2)
     have hx : x = ∑ i, c i • u' i := hι₀ (Subtype.ext (by
-      rw [hι₀v, hc, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hι₀v, hc, map_sum]
       simp only [map_smulₛₗ, hu']
       simp))
     refine ⟨∑ i, c i • w i, ?_⟩
-    rw [hx, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hx, map_sum]
     change _ = (LinearMap.range j').mkQ (((baseOf π' h).comap P'.subtype).mkQ _)
-    simp only [map_sum, map_smul, h1]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, h1]
     rfl
   · obtain rfl : x' = ι₀ x := Subtype.ext e
     rw [← hj', k, hιv]

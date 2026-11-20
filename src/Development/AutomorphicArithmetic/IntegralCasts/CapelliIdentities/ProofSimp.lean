@@ -41,9 +41,11 @@ theorem UpperTheory.Reformulated.B.GenericNoetherNormalisationCapelliIdentities.
     · simpa only [Polynomial.C_mul_X_pow_eq_monomial] using
         Polynomial.as_sum_range' r N ((Polynomial.natDegree_lt_iff_degree_lt hr0).mpr hr)
   refine ⟨k, fun t ↦ ∑ j ∈ Finset.range N with π Polynomial.X ^ j = t, r.coeff j, ?_⟩
-  rw [h1, h2, map_sum, ← Finset.sum_fiberwise_of_maps_to (g := fun j ↦ π Polynomial.X ^ j)
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h1, h2, map_sum, ← Finset.sum_fiberwise_of_maps_to (g := fun j ↦ π Polynomial.X ^ j)
     (fun j hj ↦ Finset.mem_image_of_mem _ hj), ← h2]
   refine Finset.sum_congr rfl fun t _ ↦ ?_
-  rw [map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun j hj ↦ ?_
   rw [map_mul, map_pow, hz, (Finset.mem_filter.mp hj).2]

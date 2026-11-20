@@ -36,7 +36,8 @@ theorem conj_part_mem_iff : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [
       GlobalTheory.FinPl.FrameLat.cA_incA, star_star]
   have h1 : ∑ r, ∑ r', q.pr (incA D (star (u r))) * q.pr (incA D (S.gram r r')) * F.β r' m₁ = c₁ := by
     have h := congrArg (fun x => c₁ * q.pr (incA D x)) hd
-    simp only [map_sum, RingHom.map_mul, RingHom.map_one, mul_one, Finset.mul_sum] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, RingHom.map_mul, RingHom.map_one, mul_one, Finset.mul_sum] at h
     rw [← h]
     refine Finset.sum_congr rfl fun r _ => Finset.sum_congr rfl fun r' _ => ?_
     rw [hb]; ring

@@ -40,7 +40,8 @@ theorem crd_eq_sum {F E : Type} [Field F] [NumberField F] [Field E] [NumberField
     rw [Module.Basis.equivFun_apply, Algebra.TensorProduct.basis_repr_tmul]
     simp
   conv_lhs => rw [← (Algebra.TensorProduct.basis (AF F) b₀).sum_equivFun x, hlin]
-  rw [map_sum, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_apply]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_smul, Pi.smul_apply, smul_eq_mul, Algebra.TensorProduct.basis_apply, h1, mul_comm]
 
@@ -67,7 +68,8 @@ theorem integrable_norm_mul_absE_pow : ∀ (F E : Type) [Field F] [NumberField F
     intro x hx
     refine ⟨_, hx, funext fun j => ?_⟩
     change _ = sndA F (GlobalTheory.XTermMaj.crd F E x j)
-    rw [crd_eq_sum b₀, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [crd_eq_sum b₀, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_mul, AlgHom.commutes]
     rfl
@@ -83,7 +85,8 @@ theorem integrable_norm_mul_absE_pow : ∀ (F E : Type) [Field F] [NumberField F
         ‖fun i => evI F ((Algebra.TensorProduct.basis (AF F) b₀).equivFun x i)‖ := by
       intro j v
       change ‖evInf F v (GlobalTheory.XTermMaj.crd F E x j)‖ ≤ _
-      rw [crd_eq_sum b₀, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [crd_eq_sum b₀, map_sum]
       refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun i _ => ?_)
       rw [map_mul, norm_mul]
       exact mul_le_mul_of_nonneg_left (hT i v) (norm_nonneg _)

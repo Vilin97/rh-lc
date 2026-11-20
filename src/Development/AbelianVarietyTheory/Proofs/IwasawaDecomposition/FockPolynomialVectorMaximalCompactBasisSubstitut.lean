@@ -35,7 +35,8 @@ theorem pure_subst {κ : Type} [Fintype κ] (hadd : ∀ f f', P f → P f' → P
       map_smul, map_smul, pure_one, pure_one]
   | add p q hp hq => rw [map_add, map_add, map_add, hp, hq]
   | mul_X p v hp =>
-    rw [mul_comm, pure_X_mul hadd hsm hA' hc' Aadd' Asm' hf, hp, h _ _ (pure_mem hadd hsm hA hf _), map_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [mul_comm, pure_X_mul hadd hsm hA' hc' Aadd' Asm' hf, hp, h _ _ (pure_mem hadd hsm hA hf _), map_mul,
       MvPolynomial.aeval_X, Finset.sum_mul, map_sum]
     refine Finset.sum_congr rfl fun b _ => ?_
     rw [smul_mul_assoc, map_smul, pure_X_mul hadd hsm hA hc Aadd Asm hf]

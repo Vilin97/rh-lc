@@ -29,8 +29,10 @@ theorem fn_eq {p : DecoF E n ST SG Q} {k : GL (Fin n) (AfE F E)} (h : IsPtOf hc 
   refine HasRes.unique (h.f P _ (hN ▸ (Formalism.L2.Col.mem_stdLat _).2 fun i => ⟨x i, rfl⟩) r hr) ?_
   choose ρ hρ hv using hrow
   refine ⟨∑ i, ρ i * x i, ?_, ?_⟩
-  · simp only [map_sum, map_mul, hρ, ite_mul, zero_mul, Finset.sum_ite_eq', Finset.mem_univ, if_true]
-  · simp only [Col2.pullV, Matrix.mulVec, dotProduct, map_sum, map_mul, adAt_inclE]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [map_sum, map_mul, hρ, ite_mul, zero_mul, Finset.sum_ite_eq', Finset.mem_univ, if_true]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [Col2.pullV, Matrix.mulVec, dotProduct, map_sum, map_mul, adAt_inclE]
     rw [← Finset.sum_sub_distrib]
     refine Valuation.map_sum_lt _ one_ne_zero fun i _ => ?_
     show Valued.v (_ * algebraMap E (P.1.adicCompletion E) (algebraMap (𝓞 E) E (x i)) - _) < 1

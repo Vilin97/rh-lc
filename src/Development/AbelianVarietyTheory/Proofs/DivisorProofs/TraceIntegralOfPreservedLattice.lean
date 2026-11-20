@@ -59,7 +59,8 @@ theorem isIntegral_trace_of_isIntegral {K : Type} [Field K] {n : ℕ}
     rw [hpM, map_zero] at h
     exact h
   have htr : φ M.trace = M'.trace := by
-    simp [Matrix.trace, M', map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Matrix.trace, M', map_sum]
   have hroots : ∀ μ ∈ M'.charpoly.roots, IsIntegral ℤ μ := by
     intro μ hμ
     have h0 : M'.charpoly.eval μ = 0 := (Polynomial.mem_roots'.1 hμ).2

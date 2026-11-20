@@ -23,7 +23,8 @@ private theorem exists_higman_linear_map {R La : Type} [CommRing R] [AddCommGrou
   have h2 : s (i t) = t := LinearMap.congr_fun hsi t
   conv_rhs => rw [← h2, ← map_nsmul]
   change ∑ j, a j • s (fun l => (lam (i (b j • t) l) : R)) = _
-  simp only [← map_smul s, ← map_sum s]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← map_smul s, ← map_sum s]
   congr 1
   ext l
   simp only [Finset.sum_apply, Pi.smul_apply, map_smul, smul_eq_mul, nsmul_eq_mul, Pi.mul_apply, Pi.natCast_apply, ← h1,
@@ -88,7 +89,8 @@ private theorem higman_trace_integrality {R K La : Type} [CommRing R] [Field K] 
     | add x y hx hy => simp only [map_add, smul_add, hx, hy]
     | tmul c t =>
       rw [hP, hP, Finset.smul_sum]
-      simp only [hAt, smul_smul, ← map_mul, hMb, mul_comm (a _) o, hMa, Finset.sum_smul, TensorProduct.tmul_sum,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hAt, smul_smul, ← map_mul, hMb, mul_comm (a _) o, hMa, Finset.sum_smul, TensorProduct.tmul_sum,
         Finset.smul_sum, map_sum, map_zsmul, smul_assoc, TensorProduct.tmul_smul]
       rw [Finset.sum_comm]
       exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => smul_comm _ _ _

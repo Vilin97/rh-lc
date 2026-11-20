@@ -106,7 +106,8 @@ theorem exists_torus_matrix {S : Scheme.{0}} {X X' : Type} [AddCommGroup X] [Add
   obtain ⟨χ, rfl⟩ := Multiplicative.ofAdd.surjective χ
   have e : h' (xe.symm (Pi.single s χ)) = ∑ l, xe.symm (Pi.single l (h s l χ)) := by
     apply xe.injective
-    rw [← map_sum, xe.apply_symm_apply, Finset.univ_sum_single]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, xe.apply_symm_apply, Finset.univ_sum_single]
     funext l
     exact hh s χ l
   rw [MonoidHom.finset_prod_apply, Units.coe_prod, splitTorusPointsEquiv_val, appTop_comp, hpr, key,

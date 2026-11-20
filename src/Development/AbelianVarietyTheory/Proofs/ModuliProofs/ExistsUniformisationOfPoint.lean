@@ -34,7 +34,8 @@ theorem exists_equiv_of_finrank_eq {O K J V V' : Type} [CommRing O] [Field K] [F
   have key : ∀ {W : Type} [AddCommGroup W] [Module K W] (r : O →+* Module.End K W) (v : ∀ i, eigenSub r (σ i)),
       r a ((eigenEquiv hs r).symm v) = (eigenEquiv hs r).symm fun i => σ i a • v i := by
     intro W _ _ r v
-    rw [eigenEquiv_symm_apply, eigenEquiv_symm_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [eigenEquiv_symm_apply, eigenEquiv_symm_apply, map_sum]
     exact Finset.sum_congr rfl fun i _ => mem_eigenSub.1 (v i).2 a
   rw [key]
   simp only [LinearEquiv.trans_apply, LinearEquiv.apply_symm_apply]

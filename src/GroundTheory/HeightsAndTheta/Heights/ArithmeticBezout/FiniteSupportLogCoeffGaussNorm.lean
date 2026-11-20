@@ -151,7 +151,8 @@ theorem linForm_not_mem_genericIdeal {P : Ideal (MRing (PBlk n))} {d : ℕ} (hP 
     linForm (fun j => (u j : ℚ)) ∉ genericIdeal P := by
   intro h
   have hmap : linForm (fun j => (u j : ℚ)) = map (Int.castRingHom ℚ) (linForm u) := by
-    simp [linForm, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [linForm, map_sum]
   rw [hmap, map_mem_genericIdeal_iff hP, ObjectsChow.linForm_mem_finIdeal] at h
   exact hu h
 

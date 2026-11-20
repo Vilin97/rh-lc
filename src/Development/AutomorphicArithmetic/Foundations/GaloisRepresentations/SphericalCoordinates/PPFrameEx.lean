@@ -16,7 +16,8 @@ variable {F K : Type} [Field F] [Field K] {n : ℕ}
 private theorem map_mulVec' (τ : F →+* K) (M : Matrix (Fin n) (Fin n) F) (v : Fin n → F) :
     (fun i => τ ((M *ᵥ v) i)) = M.map τ *ᵥ (fun i => τ (v i)) := by
   funext i
-  simp [Matrix.mulVec, dotProduct, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Matrix.mulVec, dotProduct, map_sum, map_mul]
 
 private theorem transpose_conj {R M S : Matrix (Fin n) (Fin n) K} (hS : S.det ≠ 0) (h : R * S = S * M) :
     Rᵀ * (S⁻¹)ᵀ = (S⁻¹)ᵀ * Mᵀ := by
@@ -32,7 +33,8 @@ private theorem pair_eval (τ : F →+* K) (j : F →+* F) (S B : Matrix (Fin n)
     (h : Bᵀ * S = Q.map τ) (y z : Fin n → F) :
     (B *ᵥ (fun i => τ (j (y i)))) ⬝ᵥ (S *ᵥ (fun i => τ (z i))) = τ ((fun i => j (y i)) ⬝ᵥ (Q *ᵥ z)) := by
   rw [← Matrix.vecMul_transpose, ← Matrix.dotProduct_mulVec, Matrix.mulVec_mulVec, h, ← map_mulVec']
-  simp [dotProduct, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [dotProduct, map_sum, map_mul]
 
 private theorem conj_form (j : F →+* F) (hj : ∀ x, j (j x) = x) (Q : Matrix (Fin n) (Fin n) F) (hQ : (Q.map j)ᵀ = -Q)
     (y z : Fin n → F) :
@@ -40,7 +42,8 @@ private theorem conj_form (j : F →+* F) (hj : ∀ x, j (j x) = x) (Q : Matrix 
   have hQ' : ∀ i k, j (Q i k) = - Q k i := fun i k => by
     have := congrFun (congrFun hQ k) i
     simpa using this
-  simp only [dotProduct, Matrix.mulVec, map_sum, map_mul, hj, hQ', Finset.mul_sum, ← Finset.sum_neg_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dotProduct, Matrix.mulVec, map_sum, map_mul, hj, hQ', Finset.mul_sum, ← Finset.sum_neg_distrib]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun i _ => ?_
   ring
@@ -106,13 +109,15 @@ theorem UpperTheory.Gal.W2.pFrameEx_of :
         = (M.map (IsCMField.complexConj G.F)).map (G.embW w) *ᵥ (fun i => G.embW w (IsCMField.complexConj G.F (v i))) := by
     intro w M v
     funext i
-    simp [Matrix.mulVec, dotProduct, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Matrix.mulVec, dotProduct, map_sum, map_mul]
   have hc1 : ∀ (M : Matrix (Fin G.n) (Fin G.n) G.F) (v : Fin G.n → G.F),
       (fun i => IsCMField.complexConj G.F ((M *ᵥ v) i))
         = M.map (IsCMField.complexConj G.F) *ᵥ (fun i => IsCMField.complexConj G.F (v i)) := by
     intro M v
     funext i
-    simp [Matrix.mulVec, dotProduct, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Matrix.mulVec, dotProduct, map_sum, map_mul]
   have hdetS : ∀ w, ((S w)⁻¹).det ≠ 0 := by
     intro w
     have : ((S w)⁻¹).det * (S w).det = 1 := by

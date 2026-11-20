@@ -124,7 +124,8 @@ theorem card_quot_range_toLin_clean {ι : Type*} [Fintype ι] [DecidableEq ι] (
         have h3 := congrFun hCvb m
         rw [Pi.zero_apply] at h3
         rw [← h3]
-        simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Matrix.map_apply, hvlift]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Matrix.map_apply, hvlift]
       rw [IsLocalRing.residue_eq_zero_iff, hmax, Ideal.mem_span_singleton] at h1
       exact h1
     choose c hc using hdiv

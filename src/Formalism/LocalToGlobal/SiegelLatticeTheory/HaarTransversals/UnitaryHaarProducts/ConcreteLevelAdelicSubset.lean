@@ -782,7 +782,8 @@ theorem trC_nondeg (u : I.E ⊗[I.F] Af I.F) (h : ∀ x : 𝓞 I.E, trC I x u = 
     let bi : 𝓞 I.E := ⟨b i, hbI i⟩
     have hbi : (bi : I.E) = b i := rfl
     have h1 := h bi
-    rw [map_sum] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at h1
     simp only [trC_tmul, hbi] at h1
     have e : ∀ j, Algebra.trace I.F I.E (b i * d j) = if i = j then 1 else 0 := by
       intro j

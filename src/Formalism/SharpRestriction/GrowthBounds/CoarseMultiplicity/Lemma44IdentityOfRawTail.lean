@@ -185,7 +185,8 @@ theorem t44 {C0 Cde CE1 CE2 : ℝ}
               (liftSubst X.p X.n' O S.w 1 (hhLetters X.TT) g raw - symFam (KK O) X.p C0 CE1 CE2 X β s -
                 ∑ ε ∈ Finset.Ico 1 n, (S.w ^ ε) • τ ε) -
               ∑ ε ∈ Finset.Ico 1 n, (S.w ^ ε) • (liftSubst X.p X.n' O S.w 1 (hhLetters X.TT) g (Fe ε) - τ ε) := by
-            rw [map_sub, map_sum]
+            set_option synthInstance.maxHeartbeats 100000 in
+              rw [map_sub, map_sum]
             simp only [AlgHom.map_smul_of_tower, smul_sub, Finset.sum_sub_distrib]
             ring
           rw [e1]

@@ -61,7 +61,8 @@ theorem fock_tensor_le (lam : ι → DomWeight a)
   have h1 := key.dotProduct_mulVec_nonneg c
   rw [Matrix.sub_mulVec, dotProduct_sub, Matrix.smul_mulVec, dotProduct_smul, gram_dot, gram_dot] at h1
   have e3 : T (∑ i, c i • ten (f i)) = ∑ i, c i • ten fun τ => F τ (f i τ) := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun i _ => by rw [map_smul, hT]
   rw [e3]
   have h2 := (Complex.le_def.mp h1).1
@@ -214,7 +215,8 @@ theorem scalar_block (hab : a ≤ b) (lam ν : ι → DomWeight a) (lam' : ι �
     have : Rc.sum (fun e A => g e • A) = Finsupp.linearCombination ℂ g Rc := by
       rw [Finsupp.linearCombination_apply]
       simp only [smul_eq_mul, mul_comm]
-    rw [this, hRc, GlobalTheory.JetPoint.jetMap_eq_sum, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [this, hRc, GlobalTheory.JetPoint.jetMap_eq_sum, map_sum, map_sum]
     refine Finset.sum_congr rfl fun μ _ => ?_
     rw [Finsupp.linearCombination_single, map_smul, smul_eq_mul, smul_eq_mul, mul_comm]
   have hcast : ∀ τ i, (((ν τ).w i : ℤ) : ℝ) = (((ν τ).w i).toNat : ℝ) := fun τ i => by

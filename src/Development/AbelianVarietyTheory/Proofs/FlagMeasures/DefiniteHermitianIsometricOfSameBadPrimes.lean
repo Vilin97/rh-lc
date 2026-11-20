@@ -306,7 +306,8 @@ theorem iso_of_ortho {W : Type} [AddCommGroup W] [Module K W] [Module (𝓞 K) V
   have he : ∀ i, e (A i) = B i := fun i => by simp [e]
   refine ⟨e, fun x y => ?_⟩
   rw [← A.sum_repr x, ← A.sum_repr y]
-  simp only [map_sum, LinearMap.sum_apply, map_smulₛₗ, LinearMap.smul_apply, he]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.sum_apply, map_smulₛₗ, LinearMap.smul_apply, he]
   simp [A, B, a3, b3]
 
 theorem cancel {W : Type} [AddCommGroup W] [Module K W] [FiniteDimensional K V] [FiniteDimensional K W]

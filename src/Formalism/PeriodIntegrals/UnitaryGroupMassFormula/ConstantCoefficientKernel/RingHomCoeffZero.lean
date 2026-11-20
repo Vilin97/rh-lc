@@ -39,7 +39,8 @@ theorem extC : PI.KerIso.ExtC := by
       _ = g.symm (∑ v, g x v • (Pi.single v (1 : K) : Fin 4 × n → K)) := by
           conv_lhs => rw [hgx]
       _ = ∑ v, g x v • b v := by
-          rw [map_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [map_sum]
           simp only [LinearEquiv.map_smul, b]
   have hι : ∀ k : Fin 4 × n → K, ι (∑ v, k v • b v) = ∑ v, φ (k v) • ι (b v) := by
     have hs : ∀ i (k : K) (y : E), τ i (k • y) = φ k * τ i y := by
@@ -47,7 +48,8 @@ theorem extC : PI.KerIso.ExtC := by
       rw [Algebra.smul_def, map_mul, hφ]
     intro k
     funext w
-    simp only [ι, Finset.sum_apply, Pi.smul_apply, map_sum, hs, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [ι, Finset.sum_apply, Pi.smul_apply, map_sum, hs, smul_eq_mul]
   have hM : ∀ x : Fin 4 → E, M (fun v => φ (g x v)) = ι x := by
     intro x
     exact (hι (g x)).symm.trans (congrArg ι (hx x).symm)
@@ -76,7 +78,8 @@ theorem extC : PI.KerIso.ExtC := by
           simp [ι, Finset.sum_apply, Pi.single_apply]
         · simp [ι, Finset.sum_apply, ha]
       have h2 := hfι (Pi.single a e)
-      rw [h1, map_sum] at h2
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [h1, map_sum] at h2
       simpa [smul_eq_mul, mul_comm] using h2
     refine (Pi.basisFun ℂ (Fin 4 × n)).ext (fun w => ?_)
     rcases w with ⟨a, i⟩

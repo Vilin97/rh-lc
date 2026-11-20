@@ -34,7 +34,8 @@ theorem traceMatrix_mul_leftMulMatrix (b : Module.Basis J ℤ O) (r : O) (i j : 
     (Algebra.traceMatrix ℤ b * Algebra.leftMulMatrix b r) i j = Algebra.trace ℤ O (b i * (r * b j)) := by
   rw [Matrix.mul_apply]
   simp only [Algebra.traceMatrix_apply, Algebra.traceForm_apply, Algebra.leftMulMatrix_eq_repr_mul]
-  conv_rhs => rw [← b.sum_repr (r * b j), Finset.mul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_rhs => rw [← b.sum_repr (r * b j), Finset.mul_sum, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [mul_smul_comm, LinearMap.map_smul, smul_eq_mul, mul_comm]
 

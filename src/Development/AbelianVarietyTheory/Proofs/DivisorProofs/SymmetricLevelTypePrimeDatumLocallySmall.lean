@@ -51,7 +51,8 @@ theorem maps_iff (hq : q ≠ 0) {N' N : ℕ} (e' e : ℕ → ℤ) (x : HomE E N'
     have h1 : y = ∑ l' : Fin N', y l' • eN E N' l'.1 := by
       funext i
       simp [Finset.sum_apply, eN, Fin.val_inj]
-    rw [h1, map_sum, Finset.sum_apply, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h1, map_sum, Finset.sum_apply, Finset.mul_sum]
     refine intAt_sum' P _ _ fun l' _ => ?_
     convert (hy l').mul (h l l') using 1
     rw [map_smul, Pi.smul_apply, smul_eq_mul, zpow_sub₀ hq']

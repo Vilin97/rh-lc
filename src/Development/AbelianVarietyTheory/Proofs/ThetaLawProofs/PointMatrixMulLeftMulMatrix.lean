@@ -13,7 +13,8 @@ theorem pointMatrix_mul_leftMulMatrix {O B Ix : Type} [CommRing O] [CommRing B] 
   simp only [Matrix.of_apply, Algebra.leftMulMatrix_eq_repr_mul]
   rw [← map_mul]
   conv_rhs => rw [← β.sum_repr (y * β a')]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_smul, smul_eq_mul, mul_comm]
 

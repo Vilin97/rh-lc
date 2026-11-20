@@ -245,7 +245,8 @@ theorem tev_gq (E : PerEnv S F ϖ) (h : R →+* B) (hh : ∀ c, h c ∈ S) (k m 
   refine ⟨∑ i ∈ Finset.range D, (h.codRestrict S hh) (PowerSeries.coeff i φ) * y ^ i, ?_, ?_⟩
   · push_cast
     rfl
-  · simp [tev, gq, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp [tev, gq, map_sum]
 
 theorem iter_val (E : PerEnv S F ϖ) (h : R →+* B) (hh : ∀ c, h c ∈ S) (π : R) (hπ : h π = ϖ)
     {q : ℕ} (hq : 2 ≤ q) (φ : PowerSeries R) (h0 : PowerSeries.constantCoeff φ = 0)

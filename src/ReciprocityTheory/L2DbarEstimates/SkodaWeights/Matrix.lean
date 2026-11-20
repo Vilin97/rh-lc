@@ -148,9 +148,11 @@ theorem skodaPointwise : SkodaPointwiseStatement := by
   have hsum : (∑ i, ∑ k, (starRingEnd ℂ ((projPerp g * J) i k) / ((sqNorm g : ℝ) : ℂ)) *
       starRingEnd ℂ (V i k)) =
       starRingEnd ℂ (trace (projPerp g * J * Vᵀ)) / ((sqNorm g : ℝ) : ℂ) := by
-    rw [trace_mul_transpose, map_sum, Finset.sum_div]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [trace_mul_transpose, map_sum, Finset.sum_div]
     refine Finset.sum_congr rfl fun i _ => ?_
-    rw [map_sum, Finset.sum_div]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_div]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_mul]
     ring

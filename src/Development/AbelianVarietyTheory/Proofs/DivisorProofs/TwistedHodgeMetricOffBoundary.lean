@@ -283,7 +283,8 @@ theorem unitary_push (T : Tw Z) (hσ : Formalism.L2.PjFree.GoodEmb c σ) {U : Fo
     have hsum : pushE Z.m0.toSABMap _ (ptF_fst (U.un k₁ x₁)) v0 =
         ∑ j, (show CAt σ from (cxFrame Z (U.un k₁ x₁)).co g' τ j b) • tanOf (t := Xo.univ.t) ((U.un k₁ x₁).tan τ j) := by
       apply L.injective
-      rw [hL, hg', (cxFrame Z (U.un k₁ x₁)).vec_eq g' τ b, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hL, hg', (cxFrame Z (U.un k₁ x₁)).vec_eq g' τ b, map_sum]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [map_smul, cxFrame_vec]
       rfl

@@ -178,7 +178,8 @@ theorem weilEq_gram : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H 
     (fun b => (X.A true).t.act.act (x b) ≫ phiP X b)
     (fun b => (X.A true).t.act.act (H.bar ((∑ a, z a * gP a b) * H.bar (x b)))) base2 (fun b _ => F2 b)
   have hsum : (∑ b, H.bar ((∑ a, z a * gP a b) * H.bar (x b))) = H.bar ((m : 𝓞 E) * r) := by
-    rw [hr, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hr, ← map_sum]
     congr 1
     rw [Finset.sum_comm]
     simp only [Finset.sum_mul]

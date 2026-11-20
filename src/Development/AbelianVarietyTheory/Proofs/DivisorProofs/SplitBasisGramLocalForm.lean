@@ -18,7 +18,8 @@ theorem form_swap (σ : E →ₐ[F] E) (hσ : ∀ x, σ (σ x) = x) {n : ℕ} (J
     (hJ : ∀ i j, σ (J j i) = -J i j) (x y : Fin n → E) :
     form σ J y x = -σ (form σ J x y) := by
   have hJ' : ∀ r s, J s r = -σ (J r s) := fun r s => by rw [hJ s r, neg_neg]
-  simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, Finset.mul_sum, ← Finset.sum_neg_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, Finset.mul_sum, ← Finset.sum_neg_distrib]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun r _ => Finset.sum_congr rfl fun s _ => ?_
   rw [hJ' r s]; ring
@@ -102,7 +103,8 @@ theorem basMat_gram : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Numb
   have h1 : ((basMat H e).map t)ᵀ * W.J.map t * (basMat H e).map (t.comp σ) =
       ((basMat H e)ᵀ * W.J * (basMat H e).map σ).map t := by
     ext r s
-    simp only [Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, map_sum, map_mul, AlgHom.comp_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, map_sum, map_mul, AlgHom.comp_apply]
   rw [h1, basMat_gram_E hσ hH hJ e]
   exact (gam_map (t : E →+* Fv F v) e W₁.J).symm
 

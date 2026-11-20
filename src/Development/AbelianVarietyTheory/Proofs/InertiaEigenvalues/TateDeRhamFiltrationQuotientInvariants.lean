@@ -65,7 +65,8 @@ theorem step_invariant
       graded_indep σ ρ F FM hρ hmul hsmul hFG hMG hinv hT k d hd hdk s hs c
         (fun i => σ g (b i) - b i) (fun i hi => (F _).sub_mem (hFG _ _ _ (hb i hi)) (hb i hi)) (by
           convert hsum g using 1
-          simp only [map_sum, hρ, hd, sub_smul, Finset.sum_sub_distrib])
+          set_option synthInstance.maxHeartbeats 100000 in
+            simp only [map_sum, hρ, hd, sub_smul, Finset.sum_sub_distrib])
     have hκ : ∀ i, ∃ κ ∈ F 0, (∀ g, σ g κ = κ) ∧ (c - k i ≠ 0 → κ = 0) ∧
         (i ∈ s → b i - κ ∈ F (c - k i + 1)) := fun i => by
       by_cases hi : i ∈ s
@@ -79,7 +80,8 @@ theorem step_invariant
         rwa [show 0 + k i = c by omega] at this
       · rw [h3 i hk, zero_smul]
         exact (FM _).zero_mem
-    · simp only [map_sum, hρ, hd, h2]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp only [map_sum, hρ, hd, h2]
     · rw [← Finset.sum_sub_distrib]
       refine (FM _).sum_mem fun i hi => ?_
       have := hsmul _ _ _ _ (h4 i hi) (hdk i)

@@ -39,7 +39,8 @@ theorem famMap_d (hres : ∀ s t (h : s ⊆ t), s.Nonempty → ∀ x, g t (Cube.
   change _ = GlobalTheory.DI.delta (famMap g (m + 1) x) t
   unfold GlobalTheory.DI.delta
   by_cases ht : t.card = m + 1 + 1
-  · rw [famMap_of_eq g _ ht, Cube.d_apply_extend, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [famMap_of_eq g _ ht, Cube.d_apply_extend, map_sum]
     refine Finset.sum_congr rfl fun i hi => ?_
     have hn : (t.erase i).Nonempty := by
       rw [← Finset.card_pos, Finset.card_erase_of_mem hi, ht]; omega

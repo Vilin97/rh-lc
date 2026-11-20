@@ -130,7 +130,8 @@ theorem isCompact_latHat (X : Spc F E n) (hX : X.L.FG) : IsCompact (latHat X : S
       obtain ⟨c, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun ℤ).1 hy'
       refine ⟨fun j => c j • ⟨a, ha, ha'⟩, funext fun i => ?_⟩
       change (∑ j, (c j • a) • incV F (s j)) i = a • inclR (F := F) (AF F) ((∑ j, c j • s j) i)
-      rw [Finset.sum_apply, Finset.sum_apply, map_sum, Finset.smul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Finset.sum_apply, Finset.sum_apply, map_sum, Finset.smul_sum]
       refine Finset.sum_congr rfl fun j _ => ?_
       change (c j • a) • inclR (F := F) (AF F) (s j i) = _
       rw [Pi.smul_apply, map_zsmul, smul_assoc, smul_comm]

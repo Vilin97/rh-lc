@@ -84,7 +84,8 @@ theorem span_real_eq_top : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E
   have hexp : ∀ w : Fin n → ℂ, ((f w : ℝ) : ℂ) = ∑ j, (c j * w j + conj (c j) * conj (w j)) := by
     intro w
     conv_lhs => rw [← Finset.univ_sum_single w]
-    rw [map_sum, Complex.ofReal_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Complex.ofReal_sum]
     exact Finset.sum_congr rfl fun j _ => functional_single f j (w j)
 
   let ψ : I ⊕ I → (E →* ℂ) := fun a => ((Sum.elim φ (fun i => ComplexEmbedding.conjugate (φ i)) a : E →+* ℂ) : E →* ℂ)

@@ -161,17 +161,20 @@ theorem dualFunctionalsExist : Dual := by
         rw [Submodule.coe_smul, Dual_smul_coe]
       have h1 : (d : E) * χ s = (d : E) * (ρ ⟨s, hSLb s hs⟩ : E) := by
         have hL : (d : E) * χ s = ∑ t : B, (o t : E) * (ρ ⟨t, hBLb t t.2⟩ : E) := by
-          rw [← smul_eq_mul, ← map_smul, hdo, map_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [← smul_eq_mul, ← map_smul, hdo, map_sum]
           refine Finset.sum_congr rfl fun t _ => ?_
           rw [map_smul, smul_eq_mul, hχ t]
         have hR : ρ (d • (⟨s, hSLb s hs⟩ : Lb)) = ∑ t : B, o t * ρ ⟨t, hBLb t t.2⟩ := by
-          rw [hsum, map_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [hsum, map_sum]
           refine Finset.sum_congr rfl fun t _ => ?_
           rw [map_smul, smul_eq_mul]
         rw [map_smul, smul_eq_mul] at hR
         rw [hL]
         have h3 := congrArg (algebraMap (𝓞 E) E) hR
-        simp only [map_mul, map_sum] at h3
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_mul, map_sum] at h3
         exact h3.symm
       exact mul_left_cancel₀ hdE h1
     have key' : ∀ l, l ∈ Submodule.span (𝓞 E) (S : Set (Fin n → E)) → ∀ hl : l ∈ Lb,

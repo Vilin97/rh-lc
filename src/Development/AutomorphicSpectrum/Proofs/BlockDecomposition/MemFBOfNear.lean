@@ -146,7 +146,8 @@ theorem mem_FB_of_near {l : ℕ} [Fact l.Prime] (S : Subring (Formalism.Per6.BdR
     intro s hs
     obtain ⟨a, rfl⟩ := hS s hs
     refine ⟨∑ t ∈ T, (l : Wl l) ^ (c - cf t) * af t * a t, ?_⟩
-    rw [map_sum, Finset.mul_sum, ← Finset.sum_sub_distrib]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.mul_sum, ← Finset.sum_sub_distrib]
     refine Ideal.sum_mem _ fun t ht => ?_
     have e : (l : Formalism.Per6.BdRp l) ^ c * (t * wB l (a t)) -
         wB l ((l : Wl l) ^ (c - cf t) * af t * a t) =

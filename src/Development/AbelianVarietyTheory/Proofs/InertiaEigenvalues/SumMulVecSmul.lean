@@ -20,7 +20,8 @@ theorem sum_mulVec_smul {ι E EE D O : Type} [CommRing O] [CommRing E] [CommRing
     intro m
     funext i
     simp [Matrix.mulVec, dotProduct, Finset.sum_apply, mul_comm]
-  simp only [h, map_sum, map_mul, Finset.sum_smul, Finset.smul_sum, mul_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [h, map_sum, map_mul, Finset.sum_smul, Finset.smul_sum, mul_smul]
   exact Finset.sum_comm
 
 theorem isUnit_ι_E {l : ℕ} {O : Type} [CommRing O] (R : Fr l O) : IsUnit (R.ι R.E) := by
@@ -39,7 +40,8 @@ theorem coord_comm_φ_γ : ∀ {G : Type} [Group G] [TopologicalSpace G] {Qp K�
     _ hE _ S hγ hφ
   obtain ⟨hext, -, -, hφE, hγE⟩ := hE
   refine ⟨fun x => ?_, fun x => ?_⟩
-  · rw [coord_apply, coord_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [coord_apply, coord_apply, map_sum]
     refine (sum_mulVec_smul jE (fun k => (b k : W.DD T))
       (fun i => Ring.inverse (R.ι R.E) ^ S.M • (S.Φ i).map R.ι)
       (fun i k => R.φE (x (i - 1) k))).trans ?_
@@ -62,7 +64,8 @@ theorem coord_comm_φ_γ : ∀ {G : Type} [Group G] [TopologicalSpace G] {Qp K�
     rw [← Finset.smul_sum, ← hφ, ← algebraMap_smul W.EE ((fun _ => j R.E : LetA O n) ^ S.M),
       smul_smul, map_pow, ← mul_pow, h2, one_pow,
       one_smul]
-  · rw [coord_apply, coord_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [coord_apply, coord_apply, map_sum]
     refine (sum_mulVec_smul jE (fun k => (b k : W.DD T))
       (fun i => (S.G i).map R.ι) (fun i k => R.γE (x i k))).trans ?_
     refine Finset.sum_congr rfl fun k _ => ?_

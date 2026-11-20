@@ -66,11 +66,13 @@ theorem smL_liB (X : (isExpLieAlgebra E a).lieSubalgebra) (ψ : Sm E a) :
 theorem smL_lapOp {d : ℕ} (b : Fin d → (isExpLieAlgebra E a).lieSubalgebra) (ψ : Sm E a) :
     smL E a (lapOp b ψ) = ∑ i, uAction (UniversalEnvelopingAlgebra.ι ℝ (b i))
       (uAction (UniversalEnvelopingAlgebra.ι ℝ (b i)) (smL E a ψ)) := by
-  simp only [lapOp, LinearMap.sum_apply, map_sum, Module.End.mul_apply, smL_liB]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [lapOp, LinearMap.sum_apply, map_sum, Module.End.mul_apply, smL_liB]
 
 theorem smL_omegaOp {d : ℕ} (b : Module.Basis (Fin d) ℝ (isExpLieAlgebra E a).lieSubalgebra) (ε : Fin d → ℝ)
     (ψ : Sm E a) : smL E a (omegaOp b ε ψ) = uAction (casimir b ε) (smL E a ψ) := by
-  simp only [omegaOp, casimir, LinearMap.sum_apply, map_sum, LinearMap.smul_apply, map_smul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [omegaOp, casimir, LinearMap.sum_apply, map_sum, LinearMap.smul_apply, map_smul,
     Module.End.mul_apply, smL_liB, map_mul]
   refine Finset.sum_congr rfl fun i _ => ?_
   ext g

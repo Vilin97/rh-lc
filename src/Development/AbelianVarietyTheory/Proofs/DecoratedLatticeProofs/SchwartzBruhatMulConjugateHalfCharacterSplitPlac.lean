@@ -22,7 +22,8 @@ theorem continuous_pi_hO_up {D : D7} {k : Type} [Field k] [ValuativeRel k] [Topo
         (FT.β * t * FS.γ) d a := by
     funext t
     unfold hO
-    simp only [map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul]
     refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => Finset.sum_congr rfl fun c _ =>
       Finset.sum_congr rfl fun d _ => ?_
     simp only [GlobalTheory.LocMod.Place.up, Matrix.map_apply, p.π_ι]

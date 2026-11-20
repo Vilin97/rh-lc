@@ -46,7 +46,8 @@ theorem down_mem_integer : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [T
     have hmap : (Matrix.of fun i j => (pairA D.host.F 0 α) ⊗ₜ[D.host.F] (a * t i * ∑ l, star (s l) * S.gram l j) :
         WO S T).map q.pr = M * Gw := by
       ext i j
-      simp only [Matrix.map_apply, Matrix.of_apply, Matrix.mul_apply, M, hGw, tmul_eq, map_mul, map_sum, hlam]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Matrix.map_apply, Matrix.of_apply, Matrix.mul_apply, M, hGw, tmul_eq, map_mul, map_sum, hlam]
       simp only [Finset.mul_sum]
       exact Finset.sum_congr rfl fun l _ => by ring
     have hd : (Place.ofSplitPt q).down FS FT (Matrix.of fun i j => (pairA D.host.F 0 α) ⊗ₜ[D.host.F]

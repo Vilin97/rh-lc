@@ -124,7 +124,8 @@ theorem not_prim_two : ¬ Prim (Int.castRingHom ℚ) ![(2 : ℚ)] := by
 
 theorem symTup_map {R R' : Type} [CommRing R] [CommRing R'] (i : R →+* R') {N : ℕ} (c : Fin N → R) (j : Fin N) :
     symTup (fun a => i (c a)) j = i (symTup c j) := by
-  simp only [symTup, Finset.esymm_map_val, map_pow, map_sum, map_prod]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [symTup, Finset.esymm_map_val, map_pow, map_sum, map_prod]
 
 theorem thG_pull {S : Scheme.{0}} (P : PolAV S) {ρ : LB.Gen (P.L.pull (eSec P.A))} (hρ : ρ.IsGen) {m : ℕ}
     {B T : Over S} (β : B ⟶ T) {θ : LB.Sec (LPow P.A P.L ((1 : ℕ) : ℤ) T)} {y : T ⟶ P.A} {c : Γ(T.left, ⊤)}

@@ -50,7 +50,8 @@ theorem GlobalTheory.FinWeil.gamA_alg : ∀ (D : D7), admG1 D → ∀ (cc : Idea
   · unfold gamA
     set t := ∑ i, ∑ j, ζ i j * sgA D (ζ i j) with ht
     have h1 : sgA D t = t := by
-      simp only [ht, map_sum, map_mul, sgA_sgA]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [ht, map_sum, map_mul, sgA_sgA]
       simp only [mul_comm]
     have h2 : t = inc D (1 / 2) * t + sgA D (inc D (1 / 2) * t) := by
       rw [map_mul, sgA_inc, h1, ← add_mul, ← map_add, map_div₀, map_one, map_ofNat, add_halves, map_one, one_mul]

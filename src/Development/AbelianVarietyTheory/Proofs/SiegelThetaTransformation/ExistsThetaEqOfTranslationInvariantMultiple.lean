@@ -33,7 +33,8 @@ theorem exponent_eq {x : Frame X.Ψ r}
   have h2 (k) : hx X bas idx x (z k + (1 / 2 : ℂ) • p k) (p k) = hx X bas idx x (z k) (p k) +
       1 / 2 * hx X bas idx x (p k) (p k) := by
     simp only [hx, mulVec_add, mulVec_smul, add_dotProduct, smul_dotProduct, smul_eq_mul]
-  simp only [h1, h2, Finset.sum_add_distrib, ← Finset.mul_sum, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [h1, h2, Finset.sum_add_distrib, ← Finset.mul_sum, ← map_sum]
   have h3 := Complex.sub_conj (∑ k, hx X bas idx x (z k) (p k))
   push_cast at h3
   linear_combination (π / 2 : ℂ) * h3

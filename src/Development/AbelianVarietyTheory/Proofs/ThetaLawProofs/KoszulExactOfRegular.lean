@@ -49,7 +49,8 @@ def sec (x : KeyIn K) {l N : ℕ} (b : Fin N → RR x l) (v : Fin N → K) : RR 
       fun k => hu ▸ (b k).compat i j
     have h' : rs x.P.A.left (inf_le_left : x.P.L.U i ⊓ x.P.L.U j ≤ _) (phi x b v i) =
         u * rs x.P.A.left (inf_le_right : x.P.L.U i ⊓ x.P.L.U j ≤ _) (phi x b v j) := by
-      simp only [phi, map_sum, map_mul, rs_cst, h, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [phi, map_sum, map_mul, rs_cst, h, Finset.mul_sum]
       exact Finset.sum_congr rfl fun k _ => by ring
     subst hu
     exact h'
@@ -71,7 +72,8 @@ theorem phi_mulVec (x : KeyIn K) {n l : ℕ} {s : Fin x.P.g → RR x n}
   calc phi x (b j) ((m i j (j + 1)).mulVec v) c
       = ∑ k', ∑ k, cst x.P.A.hom (x.P.L.U c) (v k) *
           (cst x.P.A.hom (x.P.L.U c) (m i j (j + 1) k' k) * lf x (b j k') c) := by
-        simp only [phi, Matrix.mulVec, dotProduct, map_sum, map_mul, Finset.sum_mul]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [phi, Matrix.mulVec, dotProduct, map_sum, map_mul, Finset.sum_mul]
         exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
     _ = ∑ k, cst x.P.A.hom (x.P.L.U c) (v k) * (lf x (s i) c * lf x (b (j + 1) k) c) := by
         rw [Finset.sum_comm]

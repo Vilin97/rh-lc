@@ -113,7 +113,8 @@ theorem layer : ∀ (l : ℕ) [Fact l.Prime] (Γ : Type) [Group Γ] [Topological
       fun s => (coordsB hR (F s)).symm⟩
   have hPz : ∀ z : Fin d' → ℤ_[l], ∑ i, (P *ᵥ z) i • b i = Finsupp.linearCombination ℤ_[l] (fun h => ((r h : GL (Fin a) (Om l)) : Matrix (Fin a) (Fin a) (Om l))) (∑ s, z s • F s) := by
     intro z
-    simp only [map_sum, map_smul, ← hP, Finset.smul_sum, smul_smul, Matrix.mulVec, dotProduct, Finset.sum_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, ← hP, Finset.smul_sum, smul_smul, Matrix.mulVec, dotProduct, Finset.sum_smul]
     rw [Finset.sum_comm]
     exact Finset.sum_congr rfl fun s _ => Finset.sum_congr rfl fun i _ => by rw [mul_comm]
   have hCar : ∀ (z : Fin d' → ℤ_[l]) (G : Γ →₀ ℤ_[l]) (y0 : Fin m → Matrix (Fin a) (Fin a) (Om l)), y0 ∈ latL t M →
@@ -123,7 +124,8 @@ theorem layer : ∀ (l : ℕ) [Fact l.Prime] (Γ : Type) [Group Γ] [Topological
     obtain ⟨w, hw⟩ := hW (∑ s, z s • F s - G) (by
       have hLF : ∀ s, Finsupp.linearCombination ℤ_[l] (tup ρs) (F s) = bb s - y s := fun s => by rw [hFy s]; abel
       have : Finsupp.linearCombination ℤ_[l] (tup ρs) (∑ s, z s • F s - G) = y0 - ∑ s, z s • y s := by
-        rw [map_sub, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sub, map_sum]
         simp only [map_smul, hLF, smul_sub, Finset.sum_sub_distrib, heq]
         abel
       rw [this]

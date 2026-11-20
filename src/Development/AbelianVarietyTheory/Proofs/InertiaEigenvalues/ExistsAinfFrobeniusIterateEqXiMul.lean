@@ -41,7 +41,8 @@ theorem xi_bar_ne_zero (e : Per.Fl l) (he : GlobalTheory.MemLoc.IsEps e) :
     WittVector.constantCoeff (GlobalTheory.MemLoc.xi e) ≠ 0 := by
   set e' := (frobeniusEquiv (Per.Fl l) l).symm e with he'
   have hxi : WittVector.constantCoeff (GlobalTheory.MemLoc.xi e) = ∑ i ∈ Finset.range l, e' ^ i := by
-    simp [GlobalTheory.MemLoc.xi, map_sum, map_pow, WittVector.constantCoeff_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [GlobalTheory.MemLoc.xi, map_sum, map_pow, WittVector.constantCoeff_apply,
       WittVector.teichmuller_coeff_zero, he']
   have hpow : e' ^ l = e := by
     have := (frobeniusEquiv (Per.Fl l) l).apply_symm_apply e

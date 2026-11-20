@@ -29,7 +29,8 @@ theorem awF_res {n m k : ℤ} (hk : n + m = k) (a : Cochain ((chains R).obj E) I
     (N : ℕ) (w : ℤ) (h : -(N : ℤ) + k = w) {V U : Scheme.{0}} (g : V ⟶ U) (x : Sx E N U) :
     Sec.res g (awF μ hk a b N w h U x) = awF μ hk a b N w h V (x.res g) := by
   unfold awF
-  rw [Sec.res, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Sec.res, map_sum]
   refine Finset.sum_congr rfl fun p _ => ?_
   rw [Units.smul_def, Units.smul_def, map_zsmul, sub_res, sub_res, ← ev_res, ← ev_res, ← μ.nat]
 
@@ -150,7 +151,8 @@ theorem image_δ {m : ℤ} (hm : n + 1 = m) {a : Cochain ((chains S).obj E) I n}
   cases p with
   | zero => rw [ev_δ_zero hm b U _ t rfl, ev_δ_zero hm a U _ t rfl, h, ρ.comm]
   | succ p =>
-    rw [ev_δ_succ hm b U p _ t rfl, ev_δ_succ hm a U p _ t rfl, h, ρ.comm, map_add, sg_smul, sg_smul, map_zsmul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [ev_δ_succ hm b U p _ t rfl, ev_δ_succ hm a U p _ t rfl, h, ρ.comm, map_add, sg_smul, sg_smul, map_zsmul, map_sum]
     refine congrArg₂ (· + ·) rfl (congrArg _ (Finset.sum_congr rfl fun i _ => ?_))
     rw [map_zsmul, h]
 

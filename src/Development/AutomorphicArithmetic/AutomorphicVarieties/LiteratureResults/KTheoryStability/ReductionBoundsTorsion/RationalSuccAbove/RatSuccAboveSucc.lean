@@ -41,7 +41,8 @@ theorem chMap_single (f : X → Y) (n : ℕ) (t : Fin n → X) (c : ℝ) :
 theorem hbd_chMap (f : X → Y) (n : ℕ) (c : HC X (n + 1)) :
     hbd Y n (chMap f (n + 1) c) = chMap f n (hbd X n c) := by
   refine eq_of_single (hbd Y n ∘ₗ chMap f (n + 1)) (chMap f n ∘ₗ hbd X n) (fun t => ?_) c
-  simp only [LinearMap.comp_apply, chMap_single, hbd_single, map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [LinearMap.comp_apply, chMap_single, hbd_single, map_sum, map_smul]
   rfl
 
 theorem chMap_chMap (f : X → Y) (g : Y → Z) (n : ℕ) (c : HC X n) :
@@ -65,7 +66,8 @@ theorem hbd_cone_succ (a : X) (n : ℕ) (c : HC X (n + 1)) :
     hbd X (n + 1) (cone a (n + 1) c) = c - cone a n (hbd X n c) := by
   refine eq_of_single (hbd X (n + 1) ∘ₗ cone a (n + 1)) (LinearMap.id - cone a n ∘ₗ hbd X n)
     (fun t => ?_) c
-  simp only [LinearMap.comp_apply, cone_single, hbd_single, LinearMap.id_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [LinearMap.comp_apply, cone_single, hbd_single, LinearMap.id_apply,
     LinearMap.sub_apply, map_sum, map_smul]
   rw [Fin.sum_univ_succ, sub_eq_add_neg, ← Finset.sum_neg_distrib]
   congr 1
@@ -254,7 +256,8 @@ theorem rat_succAbove_succ {m : ℕ} (x : Fin (m + 2) → G) (j : Fin (m + 1)) :
 
 theorem ibd_ph (m : ℕ) (c : HC G (m + 2)) : ibd G m (ph (m + 1) c) = ph m (hbd G (m + 1) c) := by
   refine eq_of_single (ibd G m ∘ₗ ph (m + 1)) (ph m ∘ₗ hbd G (m + 1)) (fun x => ?_) c
-  simp only [LinearMap.comp_apply, ph_single, ibd_single, hbd_single, map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [LinearMap.comp_apply, ph_single, ibd_single, hbd_single, map_sum, map_smul]
   conv_rhs => rw [Fin.sum_univ_succ]
   congr 1
   · rw [rat_succAbove_zero]
@@ -281,7 +284,8 @@ theorem ibd_ibd (m : ℕ) (z : HC G (m + 2)) : ibd G m (ibd G (m + 1) z) = 0 := 
 theorem ibd_icmap {H : Type} [Group H] (f : G →* H) (m : ℕ) (z : HC G (m + 1)) :
     ibd H m (icmap f (m + 1) z) = icmap f m (ibd G m z) := by
   refine eq_of_single (ibd H m ∘ₗ icmap f (m + 1)) (icmap f m ∘ₗ ibd G m) (fun x => ?_) z
-  simp only [LinearMap.comp_apply, icmap_single, ibd_single, map_add, map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [LinearMap.comp_apply, icmap_single, ibd_single, map_add, map_sum, map_smul]
   congr 1
   refine Finset.sum_congr rfl fun j _ => ?_
   congr 2

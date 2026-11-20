@@ -45,7 +45,8 @@ theorem app_res_map {A B : Opens Y} (h : A ≤ B) (x : P.obj (op B)) :
 theorem pullCoch_d (n : ℕ) (σ : Cochain P V n) :
     pullCoch f φ V U τ hτ (n + 1) (d P V n σ) = d Q U n (pullCoch f φ V U τ hτ n σ) := by
   funext t
-  simp only [pullCoch, AddMonoidHom.coe_mk, ZeroHom.coe_mk, d_apply, map_sum, map_zsmul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [pullCoch, AddMonoidHom.coe_mk, ZeroHom.coe_mk, d_apply, map_sum, map_zsmul]
   refine Finset.sum_congr rfl fun k _ => ?_
   congr 1
   rw [app_res_map, res_res, res_res]

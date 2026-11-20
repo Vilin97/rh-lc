@@ -133,7 +133,8 @@ theorem ext_mem_span {G Γ W : Type} [Group G] [Group Γ] [NormedAddCommGroup W]
   have e : pres.ext (lvlForm S r P ψ x).1 = ∑ a, σ (x a) • pres.ext (lvlForm S r P ψ (Pi.single a 1)).1 := by
     show pres.extL (lvlLin S r P ψ x) = ∑ a, σ (x a) • pres.extL (lvlLin S r P ψ (Pi.single a 1))
     conv_lhs => rw [pi_eq_sum_univ' x]
-    simp only [map_sum, map_smul, map_smulₛₗ]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, map_smulₛₗ]
   rw [e]
   exact Submodule.sum_mem _ fun a _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨a, rfl⟩)
 

@@ -64,7 +64,8 @@ variable {σ τ : Type*} (f : σ ≃ τ)
 theorem hc_rename (φ : MvPolynomial σ ℂ) (k : ℕ) :
     homogeneousComponent k (rename f φ) = rename f (homogeneousComponent k φ) := by
   conv_lhs => rw [← sum_homogeneousComponent φ]
-  rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum]
   have h : ∀ i, homogeneousComponent k (rename f (homogeneousComponent i φ)) =
       if k = i then rename f (homogeneousComponent i φ) else 0 := fun i =>
     homogeneousComponent_of_mem ((mem_homogeneousSubmodule _ _).2
@@ -141,8 +142,10 @@ theorem rename_omAct (M : Matrix (Ln p q r s) (Ln p q r s) ℂ) (P : Pol p q r s
       omAct r s p q (M.submatrix (sw p q r s).symm (sw p q r s).symm) (rename (sw p q r s) P) := by
   simp only [omAct, LinearMap.sum_apply, LinearMap.smulRight_apply,
     Matrix.entryLinearMap_apply, LinearMap.smul_apply]
-  rw [map_sum]
-  simp only [map_sum, map_smul, rename_omE]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, rename_omE]
   refine Fintype.sum_equiv (sw p q r s) _ _ (fun l => ?_)
   refine Fintype.sum_equiv (sw p q r s) _ _ (fun l' => ?_)
   simp [Matrix.submatrix_apply]

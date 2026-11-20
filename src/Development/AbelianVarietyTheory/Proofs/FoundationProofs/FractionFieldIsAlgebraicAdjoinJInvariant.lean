@@ -46,13 +46,15 @@ theorem isIntegral_io_adjoin_j (Ω : Type) [Field Ω] [Algebra ℚ Ω] (ε : Ω 
     apply Subtype.ext; funext τ
     have h := hrel τ
     have key : evAt ε.range τ (b ^ n + ∑ i, (d i).eval₂ (constHom ε) a * b ^ (i : ℕ)) = 0 := by
-      simp only [map_add, map_sum, map_mul, map_pow, Polynomial.hom_eval₂, evAt_comp_constHom,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_add, map_sum, map_mul, map_pow, Polynomial.hom_eval₂, evAt_comp_constHom,
         evAt_apply, ha]
       simpa [← Polynomial.eval_map, hd] using h
     simpa [evAt_apply] using key
   have hK : T.io b ^ n + ∑ i, Polynomial.aeval (T.io a) (d i) * T.io b ^ (i : ℕ) = 0 := by
     have := congrArg T.io hr
-    simp only [map_add, map_sum, map_mul, map_pow, Polynomial.hom_eval₂, io_comp_constHom, map_zero] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_add, map_sum, map_mul, map_pow, Polynomial.hom_eval₂, io_comp_constHom, map_zero] at this
     simpa [Polynomial.aeval_def] using this
   refine ⟨Polynomial.X ^ n + ∑ i, Polynomial.C (φ (d i)) * Polynomial.X ^ (i : ℕ),
     Polynomial.monic_X_pow_add (Polynomial.degree_sum_fin_lt _), ?_⟩

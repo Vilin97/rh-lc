@@ -135,9 +135,11 @@ theorem complementary_of (h : Signature) : Complementary := by
       have e1 : ∀ t, T t g w = ∑ i, ((Real.exp (r i * t) : ℝ) : ℂ) • (⟨e (u i), idem_mem hsm hKc _⟩ : W) := by
         intro t
         apply Subtype.ext
-        rw [hT, hu t, map_sum, Submodule.coe_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [hT, hu t, map_sum, Submodule.coe_sum]
         simp only [map_smul, Submodule.coe_smul]
-      simp_rw [e1, map_sum, map_smul, smul_eq_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp_rw [e1, map_sum, map_smul, smul_eq_mul]
       refine continuous_finset_sum _ fun i _ => Continuous.mul ?_ continuous_const
       exact Complex.continuous_ofReal.comp (Real.continuous_exp.comp (continuous_const.mul continuous_id))
     have hsimple : ∀ t, 0 ≤ t → ∀ U : Submodule ℂ W, (∀ g, ∀ w ∈ U, T t g w ∈ U) → U = ⊥ ∨ U = ⊤ := by

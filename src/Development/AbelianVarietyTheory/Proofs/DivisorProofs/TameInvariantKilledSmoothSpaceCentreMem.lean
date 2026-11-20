@@ -29,7 +29,8 @@ theorem zalg_mem_space : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComp
       funext k
       have hcomm := LinearMap.congr_fun (GlobalTheory.ZalgCpt.zalg_comm_cptRep E b k z hz) ψ
       simp only [Module.End.mul_apply] at hcomm
-      rw [← hcomm, hk k, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hcomm, hk k, map_sum]
       simp only [map_smul, Submodule.coe_sum, Submodule.coe_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, mul_comm]
     rw [e]
     exact W.sum_mem fun i _ => W.smul_mem _ (c i).2

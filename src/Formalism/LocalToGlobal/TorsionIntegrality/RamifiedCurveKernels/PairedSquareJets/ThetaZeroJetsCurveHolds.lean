@@ -178,14 +178,16 @@ theorem toZ_phSum {n : Type} [Fintype n] {linv : PowerSeries K}
     (h0 : PowerSeries.constantCoeff linv = 0) (c : n → K) (ph : PowerSeries K) :
     toZ linv (phSum c ph) = phSum c (PowerSeries.subst linv ph) := by
   unfold phSum
-  rw [← toZHom_apply h0, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← toZHom_apply h0, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_smul, toZHom_apply, toZ_subst_X h0]
 
 theorem cc_phSum {n : Type} [Fintype n] (c : n → K) {ph : PowerSeries K}
     (h0 : PowerSeries.constantCoeff ph = 0) : MvPowerSeries.constantCoeff (phSum c ph) = 0 := by
   unfold phSum
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_eq_zero fun i _ => ?_
   rw [MvPowerSeries.smul_eq_C_mul, map_mul,
     PowerSeries.constantCoeff_subst_eq_zero (MvPowerSeries.constantCoeff_X i) ph h0, mul_zero]

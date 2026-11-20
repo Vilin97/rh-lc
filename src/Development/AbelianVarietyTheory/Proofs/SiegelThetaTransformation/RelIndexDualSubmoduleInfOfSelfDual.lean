@@ -112,7 +112,8 @@ theorem relIndex_dualSubmodule (B : LinearMap.BilinForm ℚ V) (hB : B.Nondegene
   rw [Matrix.transpose_apply, Basis.toMatrix_apply, Basis.toMatrix_apply,
     LinearMap.BilinForm.dualBasis_repr_apply]
   conv_lhs => rw [← b₂.sum_repr (b₁ i)]
-  simp only [map_sum, map_smul, LinearMap.BilinForm.apply_dualBasis_left]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, LinearMap.BilinForm.apply_dualBasis_left]
   simp
 
 theorem relIndex_dualSubmodule_inf_of_selfDual (B : LinearMap.BilinForm ℚ V)

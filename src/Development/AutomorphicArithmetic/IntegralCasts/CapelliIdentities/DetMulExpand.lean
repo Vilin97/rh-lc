@@ -12,7 +12,8 @@ theorem UpperTheory.Reformulated.B.DetMulExpand.det_mul_expand :
           (fun a => ∑ j, (A a j • B j : Fin k → F)) := by
     rw [← h1]
     rfl
-  rw [h2, MultilinearMap.map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h2, MultilinearMap.map_sum]
   refine Finset.sum_congr rfl fun f _ => ?_
   rw [MultilinearMap.map_smul_univ]
   rfl

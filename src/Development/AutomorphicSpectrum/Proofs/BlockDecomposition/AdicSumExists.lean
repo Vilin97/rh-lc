@@ -71,7 +71,8 @@ theorem sum_exists {W B : Type} [CommRing W] [CommRing B] (w : W →+* B) (p : �
       + (p : B) ^ (M / N) * w (c t M) := by
     intro t
     have h := congrArg w (hc t M)
-    simp only [map_sub, map_sum, map_mul, map_pow, map_natCast] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sub, map_sum, map_mul, map_pow, map_natCast] at h
     rw [← h]; ring
   simp only [hpow, hterm, mul_add, Finset.sum_add_distrib, Finset.mul_sum]
   have hswap : ∑ n ∈ Finset.range M, ∑ t ∈ T, (p : B) ^ (n / N) * (t * w (a n t))

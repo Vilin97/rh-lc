@@ -29,10 +29,12 @@ theorem conj_matrix_det_isUnit : ∀ (K K' : UQ) (d : ℕ) (φ : K.E →+* K'.E)
     intro x n
     have hx : K'.c x = ∑ m, K.c (w.repr x m) • K'.c (w m) := by
       conv_lhs => rw [← w.sum_repr x]
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun m _ => ?_
       rw [hsm, hsm, map_mul, ← hφ]
-    rw [hx, map_sum, Finsupp.finsetSum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hx, map_sum, Finsupp.finsetSum_apply]
     refine Finset.sum_congr rfl fun m _ => ?_
     rw [map_smul, Finsupp.smul_apply, smul_eq_mul]
     rfl

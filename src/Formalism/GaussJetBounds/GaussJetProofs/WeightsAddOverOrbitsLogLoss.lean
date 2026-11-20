@@ -42,7 +42,8 @@ theorem unipotent_weight_bound : UWt.{u, v, w} := by
       (∑ i, MvPowerSeries.C (M x i) * MvPowerSeries.X i : MvPowerSeries ι K) := by
     intro x n
     rw [monoWtGe_iff]
-    simp only [map_sum, MvPowerSeries.coeff_C_mul, MvPowerSeries.coeff_X]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, MvPowerSeries.coeff_C_mul, MvPowerSeries.coeff_X]
     refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg (Real.rpow_nonneg h0.le _)
       fun i _ => ?_
     split_ifs with h

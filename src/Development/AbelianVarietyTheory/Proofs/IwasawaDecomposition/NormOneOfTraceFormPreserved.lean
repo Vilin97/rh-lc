@@ -24,10 +24,12 @@ theorem trace_form_scalar_norm_one : ∀ (E : Type) [Field E] [NumberField E] [I
       { toFun := fun y => cc (herm X.Gm x y)
         map_add' := by
           intro y y'
-          simp only [herm, cc, Pi.add_apply, map_add, map_sum, map_mul, mul_add, Finset.sum_add_distrib]
+          set_option synthInstance.maxHeartbeats 100000 in
+            simp only [herm, cc, Pi.add_apply, map_add, map_sum, map_mul, mul_add, Finset.sum_add_distrib]
         map_smul' := by
           intro a y
-          simp only [herm, cc, Pi.smul_apply, smul_eq_mul, RingHom.id_apply, map_sum, map_mul,
+          set_option synthInstance.maxHeartbeats 100000 in
+            simp only [herm, cc, Pi.smul_apply, smul_eq_mul, RingHom.id_apply, map_sum, map_mul,
             IsCMField.complexConj_apply_apply, Finset.mul_sum]
           refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring }
     have h1 : ∀ v ∈ X.Λ, ∀ x, herm X.Gm x v = 0 := by

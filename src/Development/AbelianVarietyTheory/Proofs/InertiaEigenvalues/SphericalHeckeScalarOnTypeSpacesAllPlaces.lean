@@ -186,7 +186,8 @@ theorem tN_iso {ρ : Representation ℂ (GQ L n) W} {S S' : Submodule ℂ (GAf L
     refine Finset.sum_congr rfl fun d _ => ?_
     split_ifs <;> rfl
   have hTσ : ((T σ : S') : GAf L n → W) = NG.heckeD (Umax L n) (tSet L n s ϖ k) f' := by
-    rw [heckeD_eq_sum _ _ hfin, map_sum, Submodule.coe_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [heckeD_eq_sum _ _ hfin, map_sum, Submodule.coe_sum]
     refine Finset.sum_congr rfl fun d _ => ?_
     split_ifs
     · exact hrt _

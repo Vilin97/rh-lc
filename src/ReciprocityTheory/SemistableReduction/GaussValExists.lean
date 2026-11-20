@@ -48,16 +48,19 @@ theorem gaussRed_eval {Ω U : Type} [Field Ω] [Field U] [Algebra Ω U] {σ : Ty
   have hy : (y : U) = aeval t p := by
     change V.subtype y = _
     rw [hydef, MvPolynomial.aeval_def, MvPolynomial.eval₂_eq]
-    simp only [map_sum, map_mul, map_prod, map_pow]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, map_prod, map_pow]
     rfl
   have hmem : aeval t p ∈ V := by
     rw [← hy]
     exact y.2
   refine ⟨hmem, ?_⟩
   have hyy : (⟨aeval t p, hmem⟩ : V) = y := Subtype.ext hy.symm
-  rw [hyy, hydef, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hyy, hydef, map_sum]
   unfold gaussRed
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun α _ => ?_
   rw [MvPolynomial.aeval_monomial]
   simp only [map_mul, map_prod, map_pow]

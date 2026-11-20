@@ -51,9 +51,11 @@ theorem main : ∀ (A R : Type) [CommRing A] [CommRing R] [Algebra A R] (h : ℕ
   have hinj : Function.Injective Φ :=
     (TensorProduct.piScalarRight A R R (Fin h)).injective.comp (baseChange_injective κ π hκ hb hπ)
   have hsum : Φ (∑ l, c l ⊗ₜ[A] x l) = ∑ l, c l • piMap (algebraMap A R) (Fin h) (κ (x l)) := by
-    rw [map_sum]; exact Finset.sum_congr rfl fun l _ => hΦ _ _
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]; exact Finset.sum_congr rfl fun l _ => hΦ _ _
   have hsum' : t.baseChange R (∑ l, c l ⊗ₜ[A] x l) = ∑ l, c l ⊗ₜ[A] t (x l) := by
-    rw [map_sum]; rfl
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]; rfl
   rw [← hsum, ← hsum']
   generalize (∑ l, c l ⊗ₜ[A] x l) = y
   constructor

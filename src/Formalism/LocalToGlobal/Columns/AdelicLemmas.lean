@@ -98,7 +98,8 @@ theorem redA_sum {ι : Type} [Fintype ι] (P : Pl E) {s : 𝓞 E} (hs : s ∉ P.
       resS F P (y j * ⟨_, hu j⟩) := by
     intro j
     rw [mul_left_comm (Ideal.Quotient.mk P.asIdeal s), redA_spec P hs (hu j), map_mul]
-  rw [Finset.mul_sum, Finset.sum_congr rfl fun j _ => e1 j, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.mul_sum, Finset.sum_congr rfl fun j _ => e1 j, ← map_sum]
   congr 1
   apply Subtype.ext
   simp only [AddSubmonoidClass.coe_finset_sum, MulMemClass.coe_mul, Subtype.coe_mk]
@@ -1117,7 +1118,8 @@ theorem lin_factor (π : R →+* κ) (hπ : Function.Surjective π) (N : Submodu
   refine ⟨Matrix.of fun i j => ψ (u j) i, fun v hv => ?_⟩
   let g : Fin n → N := fun j => ⟨r (φ v j) • u j, N.smul_mem _ (hu j)⟩
   have hgφ : Φ (∑ j, g j) = φ v := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     have e : ∀ j, Φ (g j) = φ v j • Pi.single j (1 : κ) := fun j => by
       show φ (r (φ v j) • u j) = _
       rw [hφs _ _ (hu j), hu' j, hr]
@@ -1125,7 +1127,8 @@ theorem lin_factor (π : R →+* κ) (hπ : Function.Surjective π) (N : Submodu
     ext i
     simp [Finset.sum_apply, Pi.single_apply]
   have hgψ : Ψ (∑ j, g j) = Matrix.of (fun i j => ψ (u j) i) *ᵥ φ v := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     have e : ∀ j, Ψ (g j) = φ v j • ψ (u j) := fun j => by
       show ψ (r (φ v j) • u j) = _
       rw [hψs _ _ (hu j), hr]

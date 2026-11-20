@@ -558,7 +558,8 @@ theorem adj : Adj := by
     intro ε₂ ω
     unfold pr
     simp_rw [hLeib B _ _ (S.g Y) S.X (S.r + 1) (hJet Y hY) (hI4 Y hY) _ (hsm ε₂) ω]
-    simp only [map_sum, map_div₀, map_mul, Complex.conj_ofReal, map_natCast, Finset.mul_sum, Finset.sum_div]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_div₀, map_mul, Complex.conj_ofReal, map_natCast, Finset.mul_sum, Finset.sum_div]
     rw [Finset.sum_comm]
     apply Finset.sum_congr rfl
     intro p _

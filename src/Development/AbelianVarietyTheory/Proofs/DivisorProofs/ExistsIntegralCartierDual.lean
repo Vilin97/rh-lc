@@ -73,7 +73,8 @@ theorem exists_integral : ∀ (R : Type) [CommRing R] (D : Type) [CommRing D] [H
   have h1 : ∀ l, algebraMap R D r * yD l - ∑ i, algebraMap R D (s l i) * xD i ∈ I ^ 2 := by
     intro l
     have h0 : I.toCotangent (r • y l - ∑ i, s l i • xt i) = 0 := by
-      rw [map_sub, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, map_sum]
       simp only [LinearMap.map_smul_of_tower, hxt]
       rw [hs l, sub_self]
     have := (I.toCotangent_eq_zero _).1 h0

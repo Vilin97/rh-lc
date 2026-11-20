@@ -214,12 +214,14 @@ theorem coeff_lt_one : ∀ (p : ℕ) [Fact p.Prime] (Ω : Type) [Field Ω] [Alge
     exact (hCz z).symm
   obtain ⟨f, hf, hfix⟩ := exists_pow_eq _ halg
   have hrel : ∑ t, ρ (E t) * φ (LauZ.red p (a t)) = 0 := by
-    simp only [hφ, ← map_mul, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hφ, ← map_mul, ← map_sum]
     rw [hρ]
     convert hsum using 2
     exact map_sum A.subtype _ _
   have hres := coeff_rel_of_pow φ hf _ hfix Finset.univ _ (fun t ht => absurd (Finset.mem_univ t) ht) hrel r
-  simp only [LauZ.red_coeff, ← hCz, ← map_mul, ← map_sum] at hres
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [LauZ.red_coeff, ← hCz, ← map_mul, ← map_sum] at hres
   rw [hρ] at hres
   convert hres using 2
   refine Eq.trans ?_ (map_sum A.subtype _ _).symm

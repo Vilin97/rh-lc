@@ -141,7 +141,8 @@ theorem exists_finEmb : ∀ {D : D7} (V : HSp D) (n : ℕ), V.gram = 1 → V.ran
       map_one' := (uniq 1 1 ((key 1 1).2 ⟨one_mem _, fun i j => by
           simp [Matrix.one_apply, apply_ite]; split_ifs <;> simp_all⟩)).symm
       map_mul' := fun x y => (uniq _ _ ((key _ _).2 ⟨mul_mem ((key _ x).1 (hf x)).1 ((key _ y).1 (hf y)).1, fun i j => by
-          simp only [map_mul, Units.val_mul, Subgroup.coe_mul, Matrix.mul_apply, map_sum, hfx]⟩)).symm }
+          set_option synthInstance.maxHeartbeats 100000 in
+            simp only [map_mul, Units.val_mul, Subgroup.coe_mul, Matrix.mul_apply, map_sum, hfx]⟩)).symm }
   refine ⟨ι, hf, ?_, ?_, ?_⟩
   · intro x y hxy
     change f x = f y at hxy

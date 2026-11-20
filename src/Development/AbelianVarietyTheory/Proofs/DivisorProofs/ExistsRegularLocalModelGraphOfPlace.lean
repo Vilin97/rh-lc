@@ -72,7 +72,8 @@ theorem GlobalTheory.GraphLocal.exists_locModel_graph : ∀ {K κ κ' L : Type} 
     have hw : ∑ i, (a i : K) ⊗ₜ[ℂ] b i ∈ tens (κ' := κ') (placeAlg E) :=
       Subalgebra.sum_mem _ fun i _ => tmul_mem (hER _ (a i).2) (b i)
     refine ⟨toQ 𝔭 ⟨_, hw⟩, isUnit_toQ 𝔭 hinj (GlobalTheory.T.sum_tmul_notMem_prime_of_graph_image_ne_zero R π ρ E 𝔭 hle hER l a b ⟨_, hw⟩ rfl hs), ?_⟩
-    simp [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum]
   · intro M l a b hJ
     have hw : ∑ i, (a i : K) ⊗ₜ[ℂ] b i ∈ tens (κ' := κ') (placeAlg E) :=
       Subalgebra.sum_mem _ fun i _ => tmul_mem (hER _ (a i).2) (b i)

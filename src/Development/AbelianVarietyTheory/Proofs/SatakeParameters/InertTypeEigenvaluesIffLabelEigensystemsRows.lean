@@ -97,7 +97,8 @@ theorem ops_decomp {D : D7} (V : HSp D) {W H : Type} [AddCommGroup W] [Module �
     h c x = c.sum fun d z => z • h (Finsupp.single d 1) x := by
   apply he
   rw [hh, hkF_eq_sum]
-  simp only [Finsupp.sum, map_sum, map_smul, hh]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finsupp.sum, map_sum, map_smul, hh]
 
 theorem ops_zero {D : D7} (V : HSp D) {W H : Type} [AddCommGroup W] [Module ℂ W] [AddCommGroup H] [Module ℂ H]
     (e : H →ₗ[ℂ] (Bridge.Gf V → W)) (he : Function.Injective e) (P : Pl D.host.E) (h : (List ℤ →₀ ℂ) → Module.End ℂ H)

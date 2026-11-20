@@ -87,7 +87,8 @@ theorem gaL_actL (hl : LiftsExist V β L) {G : Type} [Group G] [Fintype G] (eG :
   have hm : ∀ a b : G, actL V β L (eG a) (actL V β L (eG b) F) = actL V β L (eG (a * b)) F := fun a b => by
     rw [map_mul]
     exact (GlobalTheory.FlagAction.act_mul hF (hl _) (hl _)).symm
-  simp only [gaL, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, hm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [gaL, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, hm]
   refine (Fintype.sum_equiv (MulAut.conj g).toEquiv _ _ fun a => ?_).symm
   show _ = c (g * a * g⁻¹) • actL V β L (eG (g * a * g⁻¹ * g)) F
   rw [hc, inv_mul_cancel_right]

@@ -39,7 +39,8 @@ theorem eval_comb {K A s μ F M : Type} [Field K] [CommRing A] [Algebra K A] [Fi
     rw [RingHom.comp_apply, RingHom.comp_apply, Algebra.algebraMap_eq_smul_one,
       Algebra.algebraMap_eq_smul_one, he, map_one]
   obtain rfl : τ' = fun i => algebraMap F M (τ i) := funext hτ
-  simp only [map_sum, map_mul, MvPolynomial.coe_eval₂Hom, MvPolynomial.eval₂_C, MvPolynomial.eval₂_map,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, MvPolynomial.coe_eval₂Hom, MvPolynomial.eval₂_C, MvPolynomial.eval₂_map,
     Fintype.linearCombination_apply]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [Algebra.smul_def, MvPolynomial.eval₂_comp_left, hcomp] <;> rfl

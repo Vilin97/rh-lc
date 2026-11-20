@@ -24,9 +24,11 @@ theorem dvd_E : ((l : ℕ) : Ainf l) ∣ bk.ev bk.E - bk.ev X ^ bk.Ep.natDegree 
     conv_lhs => rw [h]
     rw [Polynomial.coe_add, Polynomial.coe_pow, Polynomial.coe_X]
     congr 1
-    rw [← Polynomial.coeToPowerSeries.ringHom_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Polynomial.coeToPowerSeries.ringHom_apply, map_sum]
     simp
-  rw [this, map_add, map_pow, add_sub_cancel_left, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [this, map_add, map_pow, add_sub_cancel_left, map_sum]
   refine Finset.dvd_sum fun i hi => ?_
   obtain ⟨d, hd⟩ := bk.dvd_coeff i (Finset.mem_range.1 hi)
   rw [hd, map_mul, map_mul, map_mul, map_natCast, map_natCast, mul_assoc]

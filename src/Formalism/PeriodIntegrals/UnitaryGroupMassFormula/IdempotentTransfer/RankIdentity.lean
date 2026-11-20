@@ -129,7 +129,8 @@ lemma ge_apply {V : Type} [AddCommGroup V] [Module K V] (T : GoodSet K G) (ρ : 
     (s : T.S) (x : V) :
     ρ.asAlgebraHom (((Fintype.card G : ℕ) : K) • eS T s) x =
       ∑ y : G, (((finrank K (T.W s) : ℕ) : K) * LinearMap.trace K (T.W s) (T.tau s y⁻¹)) • ρ y x := by
-  rw [card_smul_eS, map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [card_smul_eS, map_sum, LinearMap.sum_apply]
   simp only [map_smul, Representation.asAlgebraHom_of, LinearMap.smul_apply]
 
 lemma ge_mem (T : GoodSet K G) (A : Formalism.BasicNotions.HLat K) (ρ : Representation K G A.V) (hA : IsGLat A ρ)
@@ -267,12 +268,14 @@ theorem splitBound : SplitBound := by
       rw [← hz, ← Module.End.mul_apply, ← map_mul, eS_eps_eS]
       split_ifs <;> simp
     have := congrArg (ρ.asAlgebraHom (eS T t)) h0
-    rw [hfA, map_sum, map_zero] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hfA, map_sum, map_zero] at this
     simp only [hproj, Finset.sum_ite_eq', Finset.mem_univ, if_true] at this
     exact this
   have hA3 : ∀ x ∈ Pi, ‖ρR (fA x)‖ ≤ Real.sqrt (Fintype.card G) * ‖ρP x‖ := by
     intro x _
-    rw [hfA, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hfA, map_sum]
     have h1 : ‖∑ s, ρR (x s)‖ ≤ ∑ s, ‖ρR (x s)‖ := norm_sum_le _ _
     have h2 : (∑ s, ‖ρR (x s)‖) ^ 2 ≤ (Fintype.card T.S : ℝ) * ∑ s, ‖ρR (x s)‖ ^ 2 :=
       sq_sum_le_card_mul_sum_sq
@@ -312,7 +315,8 @@ theorem splitBound : SplitBound := by
       exact (smul_eq_zero.mp this).resolve_left hG0
     have hx' : ρ.asAlgebraHom (eG T) x = x := by
       rw [← hz, ← Module.End.mul_apply, ← map_mul, eG_eps_eG]
-    rw [← hx', eG, map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hx', eG, map_sum, LinearMap.sum_apply]
     exact Finset.sum_eq_zero fun s _ => hes s
   have hB3 : ∀ x ∈ L1, ‖ρP (fB x)‖ ≤ Real.sqrt ((Fintype.card G : ℝ) ^ 5) * ‖ρR x‖ := by
     intro x _

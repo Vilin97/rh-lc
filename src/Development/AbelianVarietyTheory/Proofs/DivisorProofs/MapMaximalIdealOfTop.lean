@@ -161,7 +161,8 @@ theorem apply_prod_lin {e : ℕ} {I : (Fin e → ι) → ℝ} (hI : ∀ a (σ : 
     have hh : (∏ j, lin (c j)).IsHomogeneous e := by
       simpa using IsHomogeneous.prod Finset.univ (fun j => lin (c j)) (fun _ => 1) fun j _ => by
         simpa using isHomogeneous_lin_pow (c j) 1
-    rw [LinearMap.comp_apply, homogeneousComponent_of_mem hh, if_pos rfl, prod_lin, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [LinearMap.comp_apply, homogeneousComponent_of_mem hh, if_pos rfl, prod_lin, map_sum]
     simp only [map_smul, hT, smul_eq_mul]
   rw [← hT', sub_eq_zero.1 (Model.eq_zero_of_pow e (Φ - T ∘ₗ homogeneousComponent e) (fun n => ?_) fun P d hd hP => ?_)]
   · rw [LinearMap.sub_apply, h₁, ← hT' fun _ j => n j, Fin.prod_const, sub_self]
@@ -227,7 +228,8 @@ theorem mixed_horizontal (hC : ArCalc) (hc : CharZero Γ(Z, ⊤)) :
   rw [map_mul, map_pow, aeval_X, aeval_rename]
   congr 2
   · exact (lin_single o m).symm
-  · rw [lin, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [lin, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_mul, aeval_C, aeval_X]
     exact congrArg _ ((one_smul ℝ _).symm.trans ((Int.cast_one (R := ℝ)) ▸ (lin_single j 1).symm))
@@ -255,7 +257,8 @@ theorem mixed_vertical (ℓ : ℕ) [Fact ℓ.Prime] [Algebra (ZMod ℓ) Γ(Z, �
         ((CechPic.cls_lbPow (hL o) m _).trans ?_)
       simp [Pi.single_apply]) fun _ => by
       refine (CechPic.cls_pull (comb L n).isLB i hP).trans ?_
-      rw [GenFibreSecs.cls_comb, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [GenFibreSecs.cls_comb, map_sum]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [map_zsmul, CechPic.cls_pull (L j).isLB]
       rfl)

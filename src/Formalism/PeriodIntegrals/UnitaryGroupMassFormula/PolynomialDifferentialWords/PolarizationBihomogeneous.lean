@@ -27,7 +27,8 @@ theorem iwh_X_pderiv {σ : Type} {K : Type} [Field K] (w : σ → ℕ) (i j : σ
     {f : MvPolynomial σ K} {n : ℕ} (hf : IsWeightedHomogeneous w f n) :
     IsWeightedHomogeneous w (X i * pderiv j f) n := by
   classical
-  rw [f.as_sum, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [f.as_sum, map_sum, Finset.mul_sum]
   apply IsWeightedHomogeneous.sum
   intro m hm
   have hwm : weight w m = n := hf (MvPolynomial.mem_support_iff.1 hm)

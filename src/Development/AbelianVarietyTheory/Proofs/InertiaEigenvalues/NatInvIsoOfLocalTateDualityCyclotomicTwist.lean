@@ -36,7 +36,8 @@ theorem natInvIso_of_localTateDuality (hT : Formalism.GaloisCohomology.LocalTate
       exact (Submodule.isOpenQuotientMap_mkQ _).isQuotientMap.continuous_iff.2 this
     · intro x
       conv_rhs => rw [← E.symm_apply_apply x]
-      simp only [LinearMap.coe_comp, LinearEquiv.coe_coe, Function.comp_apply, ← map_sum, ← map_add]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [LinearMap.coe_comp, LinearEquiv.coe_coe, Function.comp_apply, ← map_sum, ← map_add]
       congr 1
       ext <;> simp [Finset.univ_sum_single]
     · show Function.Bijective (phi ε z O)

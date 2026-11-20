@@ -41,7 +41,8 @@ theorem exists_gauss {K : Type} [Field K] [CharZero K] {d : ℕ} [hd : Fact d.Pr
           rw [ZMod.natCast_zmod_val]
     let u : (ZMod d)ˣ := ZMod.unitOfCoprime a ha
     have hG : σ (gaussSum χ ψ) = gaussSum χ (ψ.mulShift u) := by
-      simp only [gaussSum, map_sum, map_mul, AddChar.mulShift_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [gaussSum, map_sum, map_mul, AddChar.mulShift_apply]
       refine Finset.sum_congr rfl (fun x _ => ?_)
       rw [hσψ]
       simp [χ, u]

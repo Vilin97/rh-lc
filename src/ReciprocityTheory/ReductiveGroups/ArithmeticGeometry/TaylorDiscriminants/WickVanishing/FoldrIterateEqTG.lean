@@ -34,7 +34,8 @@ theorem foldr_iterate_eq_TG (Ls : List ι) (m : ι →₀ ℕ) (A : S) :
 theorem e_PolG [Fintype ι] (e : S →+* k) (he : ∀ a, e (κ a) = a) (P : MvPolynomial ι k) (A : S) :
     e (PolG D κ P A) = (AddMonoidAlgebra.coeff P).sum
       (fun n a => a * e (TG D (word (Finset.univ : Finset ι).toList n) A)) := by
-  simp only [PolG, map_sum, map_mul, he, foldr_iterate_eq_TG]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [PolG, map_sum, map_mul, he, foldr_iterate_eq_TG]
   rfl
 
 theorem half_gen [Algebra ℚ k] [Fintype ι]

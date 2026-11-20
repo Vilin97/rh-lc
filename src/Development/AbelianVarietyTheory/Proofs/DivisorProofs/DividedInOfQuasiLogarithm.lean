@@ -121,7 +121,8 @@ theorem dIn_of_QL : ∀ (p : ℕ) [Fact p.Prime] (B O Q : Type) [CommRing B] [Co
   have hvg : ∀ i, ∑ j, pderiv Q j f * map (algebraMap B Q) (M j i) = g i := by
     intro i
     simp only [g, M]
-    rw [GlobalTheory.T.pderiv_subst_chain_rule (up Q μ) hμ0 f (Sum.inr i), ← substAlgHom_apply hρ, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [GlobalTheory.T.pderiv_subst_chain_rule (up Q μ) hμ0 f (Sum.inr i), ← substAlgHom_apply hρ, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_mul, substAlgHom_apply, substAlgHom_apply, subst_comp_subst_apply haμ hρ, hmapsub]
     have e : (fun s => subst ρ (up Q μ s)) = X := funext hunit

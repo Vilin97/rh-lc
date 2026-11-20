@@ -51,7 +51,8 @@ theorem annihilator_baseChange : ∀ {R R' : Type} [CommRing R] [CommRing R'] [A
       intro m
       have e1 : m = π (s m) := by rw [← LinearMap.comp_apply, hs, LinearMap.id_apply]
       conv_lhs => rw [e1, pi_eq_sum_univ (s m)]
-      simp only [map_sum, map_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul]
       refine Finset.sum_congr rfl fun i _ => ?_
       congr 2
       ext j
@@ -69,7 +70,8 @@ theorem annihilator_baseChange : ∀ {R R' : Type} [CommRing R] [CommRing R'] [A
           have := hφ _ (Submodule.subset_span ⟨_, hqd c, rfl⟩)
           rw [map_sub, map_sub, sub_eq_zero] at this; exact this
         rw [h1, hexp (q c)]
-        simp [map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply, hg, k, Algebra.smul_def, mul_comm]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp [map_sum, LinearMap.map_smulₛₗ, LinearMap.sum_apply, hg, k, Algebra.smul_def, mul_comm]
     rw [key]
     exact Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨k i, hk i, rfl⟩)
 

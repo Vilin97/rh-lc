@@ -105,7 +105,8 @@ theorem mem_L_of (h3 : LocGlob) {x : Fin I.n → I.E} (hx : incl I x ∈ I.Lf) :
   have hinc : ∀ z : Fin I.n → I.E, H (incl I z) =
       Formalism.UG.inclE (F := I.F) (Af I.F) (Formalism.UG.hform (starRingEnd I.E) I.J y z) := by
     intro z
-    simp only [H, incl, Formalism.UG.hform, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [H, incl, Formalism.UG.hform, map_sum, map_mul]
   have key : ∀ v ∈ I.Lf, H v ∈ IntAf I.F I.E := by
     intro v hv
     change v ∈ Submodule.span _ _ at hv

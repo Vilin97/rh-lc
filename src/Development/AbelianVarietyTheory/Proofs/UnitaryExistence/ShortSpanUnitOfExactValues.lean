@@ -164,7 +164,8 @@ theorem comb_eq {n : ℕ} (κ : c.F) (x0 : Fin n → Dw.La) (W : (Fin n → Name
         ∑ᶠ q : Fin n → LevQ Dw l, algebraMap c.F S (zetaM c ^ pairL (l := l) x0 fun b => levRep (q b)) * w q) := by
   rw [finsum_eq_sum_of_support_subset (s := levelIndex Dw l n) _ fun q _ => by simp [levelIndex], _root_.mul_assoc,
     Finset.mul_sum, fourierComb]
-  simp only [map_mul, map_sum, AlgHom.commutes, h, ← normalized_datum_eq_induced_coeff, x0Dat, _root_.mul_assoc]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_mul, map_sum, AlgHom.commutes, h, ← normalized_datum_eq_induced_coeff, x0Dat, _root_.mul_assoc]
 
 theorem rule_triv_iff {n N : ℕ} {β : c.F} {a : (E →+* ℂ) × ℕ → ℕ} {P : MvPolynomial (LtN Dw n) c.F}
     (hN : (Lat.std E n).Admissible l.M N) (hβ : β ≠ 0) (hP : P ∈ harmA c a n) (x0 : Fin n → Dw.La) (f : Rul Xo c) :

@@ -19,7 +19,8 @@ namespace GlobalTheory.HodgeConj
 theorem hermForm_star {g : ℕ} (Hm : Matrix (Fin g) (Fin g) ℂ) (z w : Fin g → ℂ) :
     hermForm (Hm.map star) (star z) (star w) = starRingEnd ℂ (hermForm Hm z w) := by
   unfold hermForm
-  simp [dotProduct, Matrix.mulVec, map_sum, Complex.star_def]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [dotProduct, Matrix.mulVec, map_sum, Complex.star_def]
 
 open scoped CategoryTheory.Obj in
 

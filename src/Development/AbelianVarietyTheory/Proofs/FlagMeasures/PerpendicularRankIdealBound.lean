@@ -127,10 +127,12 @@ theorem isCompl_perp (h : V →ₗ⋆[K] V →ₗ[K] K) (ha : ∀ x, h x x = 0 �
     have hx' : ∀ i, h (b i : V) x = 0 := fun i => congrFun (LinearMap.mem_ker.1 hx) i
     have e : p = ∑ i, b.repr ⟨p, hp⟩ i • (b i : V) := by
       have := congrArg A.subtype (b.sum_repr ⟨p, hp⟩)
-      rw [map_sum] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum] at this
       exact this.symm
     rw [e]
-    simp [map_sum, hx']
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, hx']
   have h1 := f.finrank_range_add_finrank_ker
   have h2 : finrank K (LinearMap.range f) ≤ finrank K A := by
     have := (LinearMap.range f).finrank_le

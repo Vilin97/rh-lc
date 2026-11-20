@@ -29,7 +29,8 @@ theorem numL_congr_supported {A : Type} (num num' : Multiset A → ℝ) (d : ℕ
     (h : ∀ M : Multiset A, (∀ a ∈ M, a ∈ s) → num M = num' M) (P : MvPolynomial A ℝ)
     (hP : P ∈ MvPolynomial.supported ℝ s) : numL num d P = numL num' d P := by
   classical
-  rw [P.as_sum, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [P.as_sum, map_sum, map_sum]
   refine Finset.sum_congr rfl fun m hm => ?_
   have h2 : MvPolynomial.monomial m (P.coeff m) = P.coeff m • MvPolynomial.basisMonomials A ℝ m := by
     simp [MvPolynomial.smul_monomial]
@@ -177,7 +178,8 @@ theorem mixE_max (Sx : Finset ℕ) (R : ℝ) (p : ℕ) :
   refine MvPolynomial.algHom_ext fun v => ?_
   rcases v with ⟨b, x⟩ | ⟨b, m⟩
   · simp only [mixE, MvPolynomial.aeval_X, AlgHom.comp_apply, MvPolynomial.rename_X, lift_two_root_symbol]
-  · simp only [mixE, MvPolynomial.aeval_X, AlgHom.comp_apply, map_mul, map_sum, map_pow, MvPolynomial.rename_X,
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [mixE, MvPolynomial.aeval_X, AlgHom.comp_apply, map_mul, map_sum, map_pow, MvPolynomial.rename_X,
       MvPolynomial.rename_C, lift_two_whole_symbol]
 
 theorem mixE_supported (Sx : Finset ℕ) (R : ℝ) (p : ℕ) (Q : MvPolynomial (Vm D.what₂.Tau N) ℝ) :

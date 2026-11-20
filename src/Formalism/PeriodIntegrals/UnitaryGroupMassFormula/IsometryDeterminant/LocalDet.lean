@@ -77,7 +77,8 @@ theorem map_std_le {g : Matrix ι ι K} (hg : ∀ a b, ∃ z : R, algebraMap R K
   choose z hz using hg
   refine Submodule.mem_pi.mpr (fun a _ => Submodule.mem_one.mpr ?_)
   refine ⟨∑ b, z a b * w b, ?_⟩
-  rw [mR_apply, Matrix.mulVec, dotProduct, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [mR_apply, Matrix.mulVec, dotProduct, map_sum]
   refine Finset.sum_congr rfl (fun b _ => ?_)
   rw [map_mul, hz, hw]
 

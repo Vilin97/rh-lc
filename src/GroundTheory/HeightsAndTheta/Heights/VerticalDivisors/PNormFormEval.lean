@@ -71,11 +71,13 @@ theorem normForm_eq_det {R A : Type*} [CommRing R] [CommRing A] [Algebra R A] {n
           = ∑ j, ∑ i', (X j : MvPolynomial (Fin n) A) * C (M j i' k • b i') := by
             rw [Finset.sum_mul]
             refine Finset.sum_congr rfl fun j _ => ?_
-            rw [mul_assoc, ← C_mul, hM j k, map_sum, Finset.mul_sum]
+            set_option synthInstance.maxHeartbeats 100000 in
+              rw [mul_assoc, ← C_mul, hM j k, map_sum, Finset.mul_sum]
         _ = ∑ i', ∑ j, (X j : MvPolynomial (Fin n) A) * C (M j i' k • b i') := Finset.sum_comm
         _ = ∑ i', (∑ j, (X j : MvPolynomial (Fin n) R) * C (M j i' k)) • bP i' := by
             refine Finset.sum_congr rfl fun i' _ => ?_
-            rw [polyBasis_apply, key, map_sum, Finset.sum_mul]
+            set_option synthInstance.maxHeartbeats 100000 in
+              rw [polyBasis_apply, key, map_sum, Finset.sum_mul]
             refine Finset.sum_congr rfl fun j _ => ?_
             rw [map_mul, map_X, map_C, Algebra.smul_def, C_mul, mul_assoc]
     rw [hsum, bP.repr_sum_self, Matrix.sum_apply]
@@ -92,7 +94,8 @@ theorem NormFormEval.proof : NormFormEval.Statement := by
   have hev : (MvPolynomial.eval u).mapMatrix (∑ j, (X j : MvPolynomial (Fin n) R) • (M j).map C) =
       Algebra.leftMulMatrix b (∑ j, algebraMap R A (u j) * x j) := by
     ext i k
-    simp only [RingHom.mapMatrix_apply, Matrix.map_apply, Matrix.sum_apply, Matrix.smul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [RingHom.mapMatrix_apply, Matrix.map_apply, Matrix.sum_apply, Matrix.smul_apply,
       smul_eq_mul, map_sum, map_mul, eval_X, eval_C, M]
     refine Finset.sum_congr rfl fun c _ => ?_
     rw [AlgHom.commutes, Algebra.algebraMap_eq_smul_one, Matrix.smul_mul, Matrix.one_mul,

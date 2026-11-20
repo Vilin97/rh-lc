@@ -21,7 +21,8 @@ theorem cup_per_sum_const {I : Type} [Fintype I] {g : ℕ} {Λ : Type} [AddCommG
       GlobalTheory.CatCoh.d1 K.Oc c' T T' T'' φ ψ =
         algebraMap (Hol F.V) (K.Oc.obj T'') (∑ i, p i φ.deg * q i ψ.deg - β φ.deg ψ.deg) := by
   simp only [Charts.perCl, GlobalTheory.CatCoh.cup_mk] at h
-  rw [← map_sum, GlobalTheory.CatCoh.H2.mk_eq_mk] at h
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum, GlobalTheory.CatCoh.H2.mk_eq_mk] at h
   obtain ⟨f, hf⟩ := h
   refine ⟨f + c, fun T T' T'' φ ψ ↦ ?_⟩
   have e := congrFun (congrFun (congrFun (congrFun (congrFun hf T) T') T'') φ) ψ
@@ -29,7 +30,8 @@ theorem cup_per_sum_const {I : Type} [Fintype I] {g : ℕ} {Λ : Type} [AddCommG
   rw [map_add, Pi.add_apply, Pi.add_apply, Pi.add_apply, Pi.add_apply, Pi.add_apply, e]
   rw [Pi.sub_apply, Pi.sub_apply, Pi.sub_apply, Pi.sub_apply, Pi.sub_apply, Submodule.coe_sum]
   simp only [Finset.sum_apply, GlobalTheory.CatCoh.cupZ_apply, Charts.perZ, Charts.mp_Oc] at e2 ⊢
-  rw [e2, map_sub, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e2, map_sub, map_sum]
   simp only [AlgHom.commutes, map_mul]
   ring
 

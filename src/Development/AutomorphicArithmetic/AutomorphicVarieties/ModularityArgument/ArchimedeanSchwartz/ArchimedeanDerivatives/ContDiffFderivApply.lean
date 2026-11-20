@@ -68,7 +68,8 @@ private theorem rd_eq (τ : K →+* ℂ) (i j : Fin n) (F : Lie K n → ℂ) (x 
 
 private theorem rd_eq_sum (τ : K →+* ℂ) (a b : Fin n) (F : Lie K n → ℂ) (y : Lie K n) :
     rd τ a b F y = ∑ k, coordC τ k a y * pd τ k b F y := by
-  rw [rd_eq, rmul_eDir, rmul_eDir, map_sum, map_sum, Finset.mul_sum, ← Finset.sum_sub_distrib, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [rd_eq, rmul_eDir, rmul_eDir, map_sum, map_sum, Finset.mul_sum, ← Finset.sum_sub_distrib, Finset.mul_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [pd_eq, coordC_apply, map_eDir _ τ k b (_ * 1), map_eDir _ τ k b (_ * Complex.I)]
   generalize coord τ (y k a) = c

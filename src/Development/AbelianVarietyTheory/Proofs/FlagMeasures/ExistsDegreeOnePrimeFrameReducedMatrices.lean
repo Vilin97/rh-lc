@@ -145,7 +145,8 @@ theorem exists_coords_of_frame {A κ : Type} [CommRing A] [CommRing κ] {n : ℕ
       simp [Matrix.mulVec, dotProduct]
     rw [hc]
     change r ⟨(B *ᵥ (X.1 *ᵥ (y : Fin n → A))) i, hmem ⟨_, h⟩ i⟩ = _
-    rw [e, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, map_sum]
     simp only [map_mul, hM, Matrix.mulVec, dotProduct, hc]
 
 private theorem hatL_eq_Lf' (I : Formalism.MainNotions.S.AutInst) : Formalism.L2.Herm.hatL (F := I.F) I.L = I.Lf := by

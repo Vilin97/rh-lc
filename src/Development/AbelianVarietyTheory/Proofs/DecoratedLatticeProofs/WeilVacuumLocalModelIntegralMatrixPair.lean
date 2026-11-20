@@ -211,7 +211,8 @@ theorem vacuum_move : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [Topolo
     rw [Finset.sum_image fun a _ b _ hab => up_inj hab]
     have e1 : ∀ v ∈ R₀, heisO ψ S T (p.up FS FT v) (Tm (ind 1 1 0)) = Tm (ind 1 1 v) :=
       fun v _ => (hTm.trans v _ _ fun t => hΦv v t).symm
-    rw [Finset.sum_congr rfl e1, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_congr rfl e1, ← map_sum]
     congr 1
     refine Subtype.ext (funext fun t => ?_)
     rw [Submodule.coe_sum, Finset.sum_apply, hΦB]

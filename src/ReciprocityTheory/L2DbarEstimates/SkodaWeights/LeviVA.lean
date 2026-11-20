@@ -21,7 +21,8 @@ variable {n : ℕ}
 theorem ofReal_normSq_sum_mul (a ξ : Fin n → ℂ) :
     ((Complex.normSq (∑ j, a j * ξ j) : ℝ) : ℂ) =
       ∑ j, ∑ kk, a j * conj (a kk) * ξ j * conj (ξ kk) := by
-  rw [← Complex.mul_conj, map_sum, Finset.sum_mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Complex.mul_conj, map_sum, Finset.sum_mul_sum]
   refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun k _ => ?_
   rw [map_mul]
   ring
@@ -308,7 +309,8 @@ private theorem ofReal_sqNorm_projPerp_mulVec {p : ℕ} (G w : Fin p → ℂ) (h
     rw [hP i, map_sub, map_mul, map_mul, map_inv₀, Complex.conj_ofReal]
     ring
   have h2 : ∑ i, G i * conj (w i) = conj (∑ j, conj (G j) * w j) := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_mul, Complex.conj_conj]
   rw [hc (projPerp G *ᵥ w), hc w, ← Complex.mul_conj]

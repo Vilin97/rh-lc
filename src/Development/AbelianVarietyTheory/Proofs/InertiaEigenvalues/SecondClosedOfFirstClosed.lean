@@ -48,7 +48,8 @@ theorem continuous_of_comb (had : IsAdic (IsLocalRing.maximalIdeal O)) {ι : Typ
   have : (fun x => (d : O) * f x) = fun x => ∑ j, a j * h j x := by
     funext x
     apply IsFractionRing.injective O (FractionRing O)
-    simp only [map_mul, map_sum, hf, ha, Finset.mul_sum, Algebra.smul_def, mul_assoc]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_mul, map_sum, hf, ha, Finset.mul_sum, Algebra.smul_def, mul_assoc]
   rw [this]
   exact continuous_finset_sum _ fun j _ => continuous_const.mul (hh j)
 
@@ -68,7 +69,8 @@ theorem continuous_of_splitsAs (had : IsAdic (IsLocalRing.maximalIdeal O)) {Γ :
   have h2 : ∀ v : Fin n → FractionRing O, (e v).1 a = ∑ j, (e (Pi.single j 1)).1 a * v j := by
     intro v
     conv_lhs => rw [pi_eq_sum_univ' v]
-    simp [map_sum, Prod.fst_sum, Finset.sum_apply, mul_comm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum, Prod.fst_sum, Finset.sum_apply, mul_comm]
   rw [h2] at h1
   simp only [hu, LinearEquiv.apply_symm_apply, Matrix.mulVec_single_one] at h1
   rw [← hu] at h1

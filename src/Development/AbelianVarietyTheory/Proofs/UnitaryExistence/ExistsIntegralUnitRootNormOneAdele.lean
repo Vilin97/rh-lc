@@ -430,11 +430,13 @@ theorem _root_.GlobalTheory.AdLat.exists_integral_unit_root : ∀ (F E : Type) [
     push_neg at hcon
     choose cy hcy using fun j => _root_.GlobalTheory.AdLat.UnitRoot.conj_mem c _ ⟨Y j, rfl⟩
     have h1 : ∑ i, ρ (Y i) * m i = 1 := by
-      simp only [m, mul_add, Finset.sum_add_distrib, mul_left_comm _ u, ← Finset.mul_sum,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [m, mul_add, Finset.sum_add_distrib, mul_left_comm _ u, ← Finset.mul_sum,
         ← map_mul, ← map_sum, hXY, hCXY, map_one, map_zero, mul_zero, add_zero]
     have h1' : ∑ j, ρ (cy j) * σ (m j) = 1 := by
       have := congrArg σ h1
-      rw [map_sum, map_one] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, map_one] at this
       rw [← this]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [map_mul, hρ (Y j), hσ, ← hcy]
@@ -516,7 +518,8 @@ theorem _root_.GlobalTheory.AdLat.exists_integral_unit_root : ∀ (F E : Type) [
     have hevv : ∀ a : FiniteAdeleRing (𝓞 F) F, ev v a = a v := fun _ => rfl
     have hev : ∀ q, e q v = if ij v = q then 1 else 0 := fun _ => rfl
     have hdv : d v = (p (ij v).1 (ij v).2 v)⁻¹ := rfl
-    simp only [map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul]
     simp only [hevv, hev, hdv, ite_mul, one_mul, zero_mul, mul_ite, mul_one,
       mul_zero, Finset.sum_ite_eq, Finset.sum_ite_eq', Finset.mem_univ, if_true]
     exact inv_mul_cancel₀ (hne v)
@@ -536,7 +539,8 @@ theorem _root_.GlobalTheory.AdLat.exists_integral_unit_root : ∀ (F E : Type) [
         Algebra.TensorProduct.tmul_mul_tmul, Algebra.TensorProduct.tmul_mul_tmul, mul_one, mul_one]
     simp only [hterm, ← TensorProduct.sum_tmul, Algebra.TensorProduct.tmul_mul_tmul, mul_one, hsum1]
     rfl
-  · rw [map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun q _ => ?_
     rw [map_mul, hσ, map_one, mul_left_comm, hum]
 

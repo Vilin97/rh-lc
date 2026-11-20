@@ -125,7 +125,8 @@ private theorem coeffDer_linearCombinationPoly_apply {K Ω : Type*} [CommRing K]
     [Algebra K Ω] {D m : ℕ} (δ : Derivation K Ω Ω) (x : Fin m → Ω) (b : Fin D) :
     coeffDer (σ := ReciprocityTheory.MultiplicativeHeights.SVars D m) δ (yPoly x b) =
       -∑ k, X (Sum.inr (b.succ, k)) * C (δ (x k)) := by
-  simp only [yPoly, map_neg, map_sum, Derivation.leibniz, coeffDer_X,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [yPoly, map_neg, map_sum, Derivation.leibniz, coeffDer_X,
     coeffDer_C, smul_eq_mul, mul_zero, add_zero]
 
 private theorem restrictScalars_pderiv_apply {K Ω σ : Type*} [CommRing K] [CommRing Ω]

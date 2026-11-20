@@ -56,7 +56,8 @@ private theorem exists_global_cechPrimitive_of_zero_section_lemma
       ext j
       · simp [Prod.fst_sum]
       · simp [Prod.snd_sum, Finset.sum_apply, Pi.single_apply]
-    rw [hv, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hv, map_sum]
     refine Finset.sum_congr rfl fun a _ => ?_
     rw [map_smul, smul_eq_mul, (hG q hq).2.2.2.2.2.2.2.2.1 k a y hy hyB]
   set H : P × (Fin g → ℂ) → K → P × (Fin g → ℂ) → ℂ :=

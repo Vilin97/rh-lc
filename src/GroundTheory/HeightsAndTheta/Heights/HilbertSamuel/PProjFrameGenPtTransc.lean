@@ -36,13 +36,15 @@ theorem proof : ProjFrameGenPtTransc.Statement := by
       rw [graphP, ← G.genericFibre_ker_target, RingHom.mem_ker]; exact h
     refine key _ ?_
     rw [Polynomial.aeval_def, Polynomial.eval₂_eq_sum, Polynomial.sum_def] at hq
-    rw [← hq, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hq, map_sum]
     refine Finset.sum_congr rfl fun n _ => ?_
     rw [map_mul, map_pow, aeval_X, aeval_rename]
     exact congrArg (· * _) (hg n)
   replace hFΓ : graphMap (coordIdeal ℤ x) (linForm (ι := GlobalTheory κ) (ι₂ := GlobalTheory (Fin (D + 1))) (projMat e))
       (∑ n ∈ q.support, rename (fun p : Ix κ => aV D p.2) (g n) * X (bV κ 0) ^ n) = 0 := hFΓ
-  rw [map_sum] at hFΓ
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum] at hFΓ
   simp only [map_mul, map_pow, graphMap_rename_inl, graphMap_inr, ProjFrameGraph.linForm_projMat] at hFΓ
   simp only [mul_pow, ← mul_assoc, ← C_pow, ← C_mul] at hFΓ
   have hX : Ideal.Quotient.mk (coordIdeal ℤ x) (X (e 0)) ≠ 0 := by

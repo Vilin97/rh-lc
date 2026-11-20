@@ -34,7 +34,8 @@ theorem clm_eq_sum (l : (Fin k → ℝ) →L[ℝ] ℂ) : l = ∑ i, l (Pi.single
     · subst h; simp
     · simp [h]
   conv_lhs => rw [← Finset.univ_sum_single v]
-  simp only [map_sum, e, map_smul, ContinuousLinearMap.coe_sum', Finset.sum_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, e, map_smul, ContinuousLinearMap.coe_sum', Finset.sum_apply,
     ContinuousLinearMap.coe_smul', Pi.smul_apply, coordC, ContinuousLinearMap.coe_comp, Function.comp_apply,
     ContinuousLinearMap.proj_apply, Complex.ofRealCLM_apply, smul_eq_mul, Complex.real_smul]
   exact Finset.sum_congr rfl fun i _ => mul_comm _ _

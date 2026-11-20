@@ -39,7 +39,8 @@ theorem eq_zero_of_mem_X {E : Type} [Field E] [NumberField E] [StarRing E] {S : 
     have h1 := hx' _ (fvec_mem_Xplus F' b)
     have h2 : S.hT (∑ i, c i • F.e i) (F'.fvec b) = 0 := by
       rw [← S.herm.eq, h1, map_zero]
-    rw [map_sum, LinearMap.sum_apply] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, LinearMap.sum_apply] at h2
     rw [← h2]
     refine Finset.sum_congr rfl fun a _ => ?_
     simp only [Zhat, brS, FlagG.fvec, Fin.snoc_castSucc, LinearMap.map_smulₛₗ, LinearMap.smul_apply,

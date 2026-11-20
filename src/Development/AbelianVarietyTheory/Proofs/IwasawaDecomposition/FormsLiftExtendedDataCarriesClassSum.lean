@@ -59,7 +59,8 @@ theorem csum_round_bc (X : Formalism.L2.Col.Fields) {L : Type} [Field L] [Number
     apply MvPolynomial.map_injective c₂ c₂.injective
     rw [eq_of_heq h, MvPolynomial.map_map, show c₂.comp ι = c₁ from RingHom.ext hc]
   unfold CSD.csum
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun c _ => ?_
   rw [map_mul, map_inv₀, map_natCast]
   have a1 := key _ _ (hf (Quotient.out c) (Quotient.out c) HEq.rfl)

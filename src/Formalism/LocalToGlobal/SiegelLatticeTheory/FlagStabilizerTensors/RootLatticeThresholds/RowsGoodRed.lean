@@ -55,7 +55,8 @@ theorem rowsGood_of (G : GoodOp X) (ι : D.s.HH ≃ₗᵢ[ℂ] Formalism.L2.SG.P
     rw [linearIndependent_iff']
     intro s g hs i hi
     have h0 : conjL (muX X) (∑ i ∈ s, (starRingEnd ℂ (g i)) • ((j (D.what₂.onb i) : EEC X G) : L2X X)) = 0 := by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       rw [← hs]
       refine Finset.sum_congr rfl fun σ _ => ?_
       rw [LinearIsometryEquiv.map_smulₛₗ, conjL_apply, hb σ]
@@ -69,7 +70,8 @@ theorem rowsGood_of (G : GoodOp X) (ι : D.s.HH ≃ₗᵢ[ℂ] Formalism.L2.SG.P
     intro φ hφ
     obtain ⟨F, hF⟩ := (range_sEE X hT' ⟨φ, hφ.1⟩).1 hφ
     have e : φ = ((ι (D.sEE F) : Formalism.L2.SG.PoincareInHH.PoincareSetting.HHX X) : L2X X) := by rw [hF]
-    rw [e, ← D.what₂.onb.sum_repr F, map_sum, map_sum, Submodule.coe_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, ← D.what₂.onb.sum_repr F, map_sum, map_sum, Submodule.coe_sum]
     refine Submodule.sum_mem _ fun σ _ => ?_
     rw [map_smulₛₗ, map_smul, Submodule.coe_smul]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨σ, rfl⟩)

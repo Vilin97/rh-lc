@@ -73,6 +73,7 @@ theorem eigen_decomp_base_change :
     congr 1
     rw [hWsum j]
     funext k
-    simp [Finset.sum_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Finset.sum_apply, map_sum]
 
 end GlobalTheory

@@ -24,7 +24,8 @@ theorem exists_split_of_finite_projective {R K : Type*} [CommRing R] [Field K] (
   · have h1 : π (s (e i')) = e i' := LinearMap.congr_fun hs (e i')
     have h2 : π (s (e i')) = ∑ k, s (e i') k • π (Pi.single k 1) := by
       conv_lhs => rw [pi_eq_sum_univ' (s (e i'))]
-      simp only [map_sum, map_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul]
     have h3 : ∑ k, (π (Pi.single k 1) : Fin h → R) i * s (e i') k = c * (if i = i' then 1 else 0) := by
       have := congrArg (fun x : L => (x : Fin h → R) i) (h2.symm.trans h1)
       simp only [Submodule.coe_sum, Submodule.coe_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, e,
@@ -32,7 +33,8 @@ theorem exists_split_of_finite_projective {R K : Type*} [CommRing R] [Field K] (
       rw [← this]
       exact Finset.sum_congr rfl fun k _ => mul_comm _ _
     have h4 := congrArg f h3
-    simp only [map_sum, map_mul, apply_ite f, map_one, map_zero] at h4
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, apply_ite f, map_one, map_zero] at h4
     simp only [← mul_div_assoc]
     rw [← Finset.sum_div, h4, mul_div_cancel_left₀ _ hc]
   · have h1 : c • (⟨v, hv⟩ : L) = ∑ i, v i • e i := by
@@ -41,11 +43,13 @@ theorem exists_split_of_finite_projective {R K : Type*} [CommRing R] [Field K] (
       simp [e, Pi.single_apply, mul_comm]
     have h2 : c * s ⟨v, hv⟩ k = ∑ i, s (e i) k * v i := by
       have := congrArg (fun x : L => s x k) h1
-      simp only [map_smul, map_sum, Finset.sum_apply, Pi.smul_apply, smul_eq_mul] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_smul, map_sum, Finset.sum_apply, Pi.smul_apply, smul_eq_mul] at this
       rw [this]
       exact Finset.sum_congr rfl fun k _ => mul_comm _ _
     have h4 := congrArg f h2
-    simp only [map_sum, map_mul] at h4
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul] at h4
     simp only [div_mul_eq_mul_div]
     rw [← Finset.sum_div, ← h4, mul_div_cancel_left₀ _ hc]
 

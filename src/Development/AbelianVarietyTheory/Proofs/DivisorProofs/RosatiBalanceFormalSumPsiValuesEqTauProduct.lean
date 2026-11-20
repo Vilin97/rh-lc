@@ -68,7 +68,8 @@ theorem main : ∀ (R : Type) [CommRing R] [IsDomain R] (D D' : DegPre R) {r : �
   rw [prod_eq_logHom (fun w => val (D.psi (vecLat T w y y')) (𝟙 _) z J)]
   apply Additive.ofMul.injective
   rw [ofMul_toMul]
-  simp only [sig, map_sum, map_zsmul, logHom_lam T hB hJ, vecLat_rosVec, qv, ofMul_prod, ofMul_zpow,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [sig, map_sum, map_zsmul, logHom_lam T hB hJ, vecLat_rosVec, qv, ofMul_prod, ofMul_zpow,
     Finset.smul_sum, ofMul_inv, smul_neg, smul_smul]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   rw [← neg_smul, neg_mul, vecLat_rosVec, vecLat_rosVec]

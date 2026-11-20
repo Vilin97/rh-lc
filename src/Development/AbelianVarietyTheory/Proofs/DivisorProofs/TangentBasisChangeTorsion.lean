@@ -36,7 +36,8 @@ theorem dlog_sub_norm_lt_one : ∀ (E : Type) [Field E] [NumberField E] [IsCMFie
   have h3 : ∑ i, (h i : ℂ_[p]) * a i - ∑ i, (h' i : ℂ_[p]) * a' i = (r : ℂ_[p]) * p := by
     apply mul_left_cancel₀ hp0
     have := congrArg (intO ℂ_[p]).subtype hr
-    simp only [map_mul, map_pow, map_natCast, map_sum, map_sub, Subring.subtype_apply, hb, hb'] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_mul, map_pow, map_natCast, map_sum, map_sub, Subring.subtype_apply, hb, hb'] at this
     have e1 : ∑ i, (h i : ℂ_[p]) * ((p : ℂ_[p]) * a i) = (p : ℂ_[p]) * ∑ i, (h i : ℂ_[p]) * a i := by
       rw [Finset.mul_sum]; exact Finset.sum_congr rfl fun i _ => by ring
     have e2 : ∑ i, (h' i : ℂ_[p]) * ((p : ℂ_[p]) * a' i) = (p : ℂ_[p]) * ∑ i, (h' i : ℂ_[p]) * a' i := by

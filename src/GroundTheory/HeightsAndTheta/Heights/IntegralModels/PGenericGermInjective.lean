@@ -31,7 +31,8 @@ theorem GenericGermInjective.proof : GenericGermInjective.Statement := by
       apply (hb W hWUx).1
       simp only [Pi.zero_apply, zero_smul, Finset.sum_const_zero]
       rw [map_zero] at e
-      rw [← e, ← hr, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← e, ← hr, map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [Scheme.Modules.map_smul, ← ConcreteCategory.comp_apply, ← Functor.map_comp]
       rfl

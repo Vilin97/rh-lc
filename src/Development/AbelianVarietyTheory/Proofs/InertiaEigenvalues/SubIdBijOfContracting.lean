@@ -53,7 +53,8 @@ theorem sub_id_bij_of_contracting {A M : Type} [CommRing A] [AddCommGroup M] [Mo
     have hsucc : ∀ k, T (T^[k] b) = T^[k + 1] b := fun k => (Function.iterate_succ_apply' T k b).symm
     have h2 : T (-(∑ k ∈ Finset.range j, T^[k] b)) - -(∑ k ∈ Finset.range j, T^[k] b) - b =
         -(T^[j] b) := by
-      rw [map_neg, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_neg, map_sum]
       simp only [hsucc]
       have e : -(∑ k ∈ Finset.range j, T^[k + 1] b) - -(∑ k ∈ Finset.range j, T^[k] b) - b =
           ((∑ k ∈ Finset.range j, T^[k] b) - ∑ k ∈ Finset.range j, T^[k + 1] b) - b := by abel

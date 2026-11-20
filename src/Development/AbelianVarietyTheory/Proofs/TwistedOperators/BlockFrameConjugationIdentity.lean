@@ -318,7 +318,8 @@ theorem exists_good_base_vec : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl
       obtain ⟨h, rfl⟩ := hx
       simp only [hprod _ h v hvWs]
       conv_rhs => rw [← hgoodv]
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simp only [map_smul, hprod h _ v hvWs]
       refine Fintype.sum_equiv (MulAut.conj h⁻¹).toEquiv _ _ fun g => ?_
       simp only [MulEquiv.toEquiv_eq_coe, MulEquiv.coe_toEquiv, MulAut.conj_apply]
@@ -486,7 +487,8 @@ theorem exists_mem_isotL (hP : GlobalTheory.Published.HarishChandraFinite) {D : 
     · have := hyG (fun g => e.symm (κ g)) (fun g => by
         have e1 : PY.ψ (e.symm (κ g)) = (κ g : GA D (Yc D 0)) := congrArg Subtype.val (e.apply_symm_apply (κ g))
         rw [e1]; exact hκ g)
-      rw [map_sub, map_sum, LinearMap.sub_apply, LinearMap.sum_apply, Representation.asAlgebraHom_single, map_one, one_smul, Module.End.one_apply, sub_eq_zero]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, map_sum, LinearMap.sub_apply, LinearMap.sum_apply, Representation.asAlgebraHom_single, map_one, one_smul, Module.End.one_apply, sub_eq_zero]
       apply Subtype.ext
       rw [Submodule.coe_sum]
       refine Eq.trans (Finset.sum_congr rfl fun g _ => ?_) this

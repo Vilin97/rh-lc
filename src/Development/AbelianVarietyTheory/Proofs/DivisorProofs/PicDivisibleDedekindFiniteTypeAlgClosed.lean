@@ -56,7 +56,8 @@ theorem not_mem_pow_succ {A : Type} [CommRing A] [IsDedekindDomain A] {N : ℕ} 
 theorem coeff_map_sum {k A : Type} [Field k] [CommRing A] [Algebra k A] {m : ℕ}
     (σ : A →ₐ[k] PowerSeries k) (v : Fin m → A) (c : Fin m → k) (l : ℕ) :
     ∑ j, c j * PowerSeries.coeff l (σ (v j)) = PowerSeries.coeff l (σ (∑ j, c j • v j)) := by
-  simp [map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, map_smul]
 
 theorem formal_deformation : ∀ (k A : Type) [Field k] [IsAlgClosed k] [CommRing A] [IsDedekindDomain A] [Algebra k A] [Algebra.FiniteType k A] (N : ℕ) (I : Type) [Fintype I] (V : Submodule k A) (D P₀ : Ideal A) (Q : I → Ideal A) (f₀ : A), 2 ≤ N → (N : k) ≠ 0 → P₀.IsMaximal → (FiniteDimensional k V ∧ (∀ v ∈ V, v ∈ D) ∧ (∀ i, (Q i).IsMaximal) ∧ Function.Injective Q ∧ (∀ i, Q i ≠ P₀) ∧ (∀ i, ¬ D ≤ Q i) ∧ ¬ D ≤ P₀ ∧ f₀ ∈ V ∧ f₀ ≠ 0 ∧ Ideal.span {f₀} = P₀ * D * ∏ i, Q i ^ N ∧ (∀ u : A, ∃ v ∈ V, u - v ∈ P₀ * ∏ i, Q i ^ (N - 1))) → ∃ (ξ : A →ₐ[k] PowerSeries k) (Δ : I → ℕ → A →ₗ[k] PowerSeries k) (m : ℕ) (v : Fin m → A) (y : Fin m → PowerSeries k),
   Function.Injective ξ ∧ (∀ i, Δ i 0 1 = 1) ∧ (∀ i, (∀ l, ∀ u w : A, Δ i l (u * w) = ∑ p ∈ Finset.range (l + 1), Δ i p u * Δ i (l - p) w)) ∧ (∀ i, ∃ π : A, Δ i 1 π = 1) ∧
@@ -323,7 +324,8 @@ theorem specialise_generic_solution_hasse : ∀ (k A : Type) [Field k] [IsAlgClo
     apply GlobalTheory.T.exists_maximal_mem_pow_of_hasse_vanishing k A N (Δ' i) hN
     · rw [hΔ' i 0 hN0, h01 i, hone]
     · intro l hl u w
-      rw [hΔ' i l hl, hleib i l u w, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hΔ' i l hl, hleib i l u w, map_sum]
       refine Finset.sum_congr rfl fun p hp => ?_
       have hp' : p < l + 1 := Finset.mem_range.1 hp
       rw [hmul _ (hSΔ i p (by omega) u) _ (hSΔ i (l - p) (by omega) w),
@@ -371,7 +373,8 @@ theorem specialise_generic_solution_hasse : ∀ (k A : Type) [Field k] [IsAlgClo
     exact hunit _ (hy j0) hj0 (hTS _ (by simp [T])) this
   · apply (hφ f).2
     have : φ f = L (∑ j, y j * ξ (v j)) := by
-      simp only [f, map_sum, map_smul, smul_eq_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [f, map_sum, map_smul, smul_eq_mul]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [hmul _ (hy j) _ (hξS _), hLξ]
     rw [this, heq0, map_zero]
@@ -379,7 +382,8 @@ theorem specialise_generic_solution_hasse : ∀ (k A : Type) [Field k] [IsAlgClo
     apply hQpow i
     intro l hl
     have : Δ' i l f = L (∑ j, y j * Δ i l (v j)) := by
-      simp only [f, map_sum, map_smul, smul_eq_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [f, map_sum, map_smul, smul_eq_mul]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [hmul _ (hy j) _ (hSΔ i l hl _), hΔ' i l hl]
     rw [this, heqΔ i l hl, map_zero]

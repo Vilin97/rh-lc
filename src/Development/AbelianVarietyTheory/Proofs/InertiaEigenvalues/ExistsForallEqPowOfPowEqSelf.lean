@@ -19,7 +19,8 @@ theorem eq_of_pow_eq_self_of_map_eq {O k : Type} [CommRing O] [IsDomain O] [Fiel
   rcases mul_eq_zero.1 h2 with h3 | h3
   · exfalso
     have h4 := congrArg φ h3
-    simp only [map_sub, map_sum, map_mul, map_pow, map_one, map_zero, h] at h4
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sub, map_sum, map_mul, map_pow, map_one, map_zero, h] at h4
     rw [geom_sum₂_self, hq, zero_mul, zero_sub, neg_eq_zero] at h4
     exact one_ne_zero h4
   · exact sub_eq_zero.1 h3

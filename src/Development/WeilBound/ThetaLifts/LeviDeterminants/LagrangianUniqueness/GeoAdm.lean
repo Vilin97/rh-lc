@@ -166,7 +166,8 @@ theorem comp_mem_adm : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Num
     rw [mul_left_comm]
     rfl
   refine ⟨∑ k, c k • (T k).comp ei, fun f => ?_⟩
-  rw [LinearMap.comp_apply, hsplit f, map_sum, map_sum, ContinuousLinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [LinearMap.comp_apply, hsplit f, map_sum, map_sum, ContinuousLinearMap.sum_apply]
   simp only [map_smul, smul_eq_mul, ContinuousLinearMap.smul_apply, ContinuousLinearMap.comp_apply]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [hpure f (φ k) (hφ k) (hcofM k), ← hT k (ei f)]

@@ -231,7 +231,8 @@ theorem val_det_hat_le {M : Submodule (𝓞 E) (Fin N → E)} (h : M.FG)
     funext i
     rw [← e i]
     exact Finset.sum_congr rfl fun k _ => by rw [← ex i k]; rfl
-  rw [e1, MultilinearMap.map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e1, MultilinearMap.map_sum]
   refine ν.map_sum_le fun r _ => ?_
   rw [MultilinearMap.map_smul_univ, smul_eq_mul, map_mul]
   refine (mul_le_of_le_one_left' (h2 _ (prod_mem fun i _ => (c i (r i)).2))).trans ?_

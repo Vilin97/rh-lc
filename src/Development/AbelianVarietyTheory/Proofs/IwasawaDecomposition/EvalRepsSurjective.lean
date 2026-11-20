@@ -13,7 +13,8 @@ variable {p : ℕ} {O Kf : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationR
 theorem gPos_mul (v : Fin P.nV) (s : Fin (P.n' v)) (A B : Matrix (Fin (P.m + 1)) (Fin (P.m + 1)) (P.Qq v)) :
     P.gPos v s (A * B) = P.gPos v s A * P.gPos v s B := by
   ext a b
-  simp only [Places.gPos, Matrix.mul_apply, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Places.gPos, Matrix.mul_apply, map_sum, map_mul]
 
 theorem gPos_one (v : Fin P.nV) (s : Fin (P.n' v)) : P.gPos v s 1 = 1 := by
   ext a b
@@ -23,7 +24,8 @@ theorem subst_comp (G H : ∀ v, Fin (P.n' v) → Matrix (Fin (P.m + 1)) (Fin (P
     (P.subst G).comp (P.subst H) = P.subst fun v s => H v s * G v s := by
   apply MvPolynomial.algHom_ext
   intro x
-  simp only [Places.subst, AlgHom.comp_apply, aeval_X, map_sum, map_mul, algHom_C, algebraMap_eq,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Places.subst, AlgHom.comp_apply, aeval_X, map_sum, map_mul, algHom_C, algebraMap_eq,
     Matrix.mul_apply, Finset.mul_sum, Finset.sum_mul]
   rw [Finset.sum_comm]
   simp only [mul_assoc]

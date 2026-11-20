@@ -58,7 +58,8 @@ theorem lift_mem {a : Xs → Matrix d d O} (ha : a ∈ tSpan T r) :
   refine ⟨s, fun g x => C (c g x), fun g => C_mem_polyT T (hc g), ?_⟩
   funext x
   ext i j
-  simp [rPoly, Finset.sum_apply, Matrix.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [rPoly, Finset.sum_apply, Matrix.sum_apply, map_sum]
 
 private theorem matrix_charpolyRev_map {R S : Type*} [CommRing R] [CommRing S] (f : R →+* S)
     (M : Matrix d d R) : (M.map f).charpolyRev = M.charpolyRev.map f := by

@@ -24,7 +24,8 @@ theorem map_addM (i : R →+ S) (A B : Matrix (Fin M) (Fin M) R) :
 theorem map_mulM (i : R →+ S) (hi : ∀ x y, i (x * y) = i x * i y) (A B : Matrix (Fin M) (Fin M) R) :
     (A * B).map i = A.map i * B.map i := by
   ext a b
-  simp [Matrix.mul_apply, map_sum, hi]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Matrix.mul_apply, map_sum, hi]
 
 theorem map_zeroM (i : R →+ S) : (0 : Matrix (Fin M) (Fin M) R).map i = 0 := by
   ext a b
@@ -165,14 +166,16 @@ theorem JR_mul_map (P : PlaceMap F K) {M : ℕ} (J : Matrix (Fin M) (Fin M) E)
     (A : Matrix (Fin M) (Fin M) (K ⊗[F] E)) :
     JR (AF F) J * A.map (iBa P) = (JR K J * A).map (iBa P) := by
   ext a b
-  simp only [Matrix.mul_apply, Matrix.map_apply, map_sum, JR]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mul_apply, Matrix.map_apply, map_sum, JR]
   exact Finset.sum_congr rfl fun k _ => incl_mul_iB P (J a k) (A k b)
 
 theorem map_mul_JR (P : PlaceMap F K) {M : ℕ} (J : Matrix (Fin M) (Fin M) E)
     (A : Matrix (Fin M) (Fin M) (K ⊗[F] E)) :
     A.map (iBa P) * JR (AF F) J = (A * JR K J).map (iBa P) := by
   ext a b
-  simp only [Matrix.mul_apply, Matrix.map_apply, map_sum, JR]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mul_apply, Matrix.map_apply, map_sum, JR]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [mul_comm, mul_comm (A a k)]
   exact incl_mul_iB P (J k b) (A a k)

@@ -68,7 +68,8 @@ theorem exists_glue {G F K₀ K B D E Ω : Type} [Group G] [Field F] [CharZero F
         invFun := fun ν => (s g).symm.toAlgHom.comp ν
         left_inv := fun ν => by ext a; simp
         right_inv := fun ν => by ext a; simp }
-    rw [hL₂, hL₂, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hL₂, hL₂, map_sum]
     conv_rhs => rw [← q.sum_comp]
     refine Finset.sum_congr rfl fun ν _ => ?_
     change _ = j (s g (ν _)) * y ((s g).toAlgHom.comp ν)

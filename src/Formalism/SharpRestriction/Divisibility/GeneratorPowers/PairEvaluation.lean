@@ -150,7 +150,8 @@ lemma aeval_double {h : MvPolynomial σ S} {j : ℕ} (hh : h.IsHomogeneous j) :
     aeval (fun i => X i + X i) h = C ((2 : S) ^ j) * h := by
   conv_lhs => rw [h.as_sum]
   conv_rhs => rw [h.as_sum]
-  rw [map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun e he => ?_
   have hdeg : e.degree = j := by
     have := hh (mem_support_iff.1 he)

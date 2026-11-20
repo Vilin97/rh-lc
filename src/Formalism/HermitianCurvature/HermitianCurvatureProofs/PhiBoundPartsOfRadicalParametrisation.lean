@@ -134,7 +134,8 @@ lemma aesm_fderiv {X : Type*} [NormedAddCommGroup X] [NormedSpace ℝ X] [Finite
     simp only [FunLike.coe_sum, Finset.sum_apply, ContinuousLinearMap.smulRight_apply,
       LinearMap.coe_toContinuousLinearMap']
     conv_lhs => rw [← b.sum_repr v]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_smul, Module.Basis.coord_apply]
   rw [e]
@@ -633,7 +634,8 @@ lemma aC_apply (g0 : Mat k r) (i : J k r) (Y W : J k r → ℝ) :
   have e1 : -(fderiv ℝ (chart g0) Y W) * (chart g0 Y)⁻¹ =
       ∑ b, W b • (-(fderiv ℝ (chart g0) Y (ebv b)) * (chart g0 Y)⁻¹) := by
     conv_lhs => rw [hW]
-    rw [map_sum, ← Finset.sum_neg_distrib, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, ← Finset.sum_neg_distrib, Finset.sum_mul]
     refine Finset.sum_congr rfl fun b _ => ?_
     rw [map_smul, ← smul_neg, Matrix.smul_mul]
   rw [e1, kc_sum]
@@ -680,7 +682,8 @@ lemma hasFDeriv_chart {g0 : Mat k r} (hg0 : g0 ∈ GV k r) {H : Mat k r → E}
   simp only [ContinuousLinearMap.smulRight_apply]
   have hop : ∀ i, op true (Lt i) H c = fderiv ℝ h' c (-(Lt i * c)) := fun i =>
     op_eq_op' 0 true hU hcd hff (Lt_unit i).1 c hcU hcG
-  simp_rw [hop, ← map_smul, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp_rw [hop, ← map_smul, ← map_sum]
   congr 1
   set Xv := -(fderiv ℝ (chart g0) Y W) * c⁻¹ with hXv
   have hXl : inLie k r Xv := tangent hg0 hY W

@@ -78,7 +78,8 @@ private theorem form_val {E : Type} [Field E] [NumberField E] [IsCMField E] {a :
   refine h1.trans ?_
   have h2 := congrFun (congrArg f.1 (B.sum_repr (W.rep ⟨x, hx⟩ v))) q
   refine h2.symm.trans ?_
-  rw [map_sum, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_apply]
   exact Finset.sum_congr rfl fun j _ => by rw [map_smul]; rfl
 
 end UpperTheory.Gal.Gen

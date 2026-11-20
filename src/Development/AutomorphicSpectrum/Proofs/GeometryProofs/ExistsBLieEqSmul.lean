@@ -86,7 +86,8 @@ theorem exists_bLie_eq_smul (q : O) (hq0 : q ≠ 0) (hcok : ∀ f : omega P.Gt, 
     have h := GlobalTheory.FlatModel.BoundProof.pairV_inclT_mem P hu (y j)
     rw [← ha] at h
     convert h using 1
-    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul]
     rw [Finset.sum_eq_single j]
     · rw [hyF]
       simp [mul_comm]
@@ -127,12 +128,14 @@ theorem delta_smul_proj_mem {_ : DecidableEq (E →+* C)} (i : E →+* C) {δ : 
     apply (isSplitting_embO (E := E) P.integers).1
     rw [map_smul, splitMap_idem]
     ext k
-    simp only [t, map_sum, Finset.sum_apply, splitMap_tmul, RingHom.comp_apply, Pi.smul_apply, smul_eq_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [t, map_sum, Finset.sum_apply, splitMap_tmul, RingHom.comp_apply, Pi.smul_apply, smul_eq_mul,
       algebraMap_embO]
     have h := _root_.idempotent_evaluation E C _ (integralBasis E) k i
     have h2 : ∑ j, i (ReciprocityTheory.ChartRestriction.G.TB.trDual (integralBasis E) j) * k (integralBasis E j) =
         ReciprocityTheory.ChartRestriction.G.TB.evAt i (ReciprocityTheory.ChartRestriction.G.TB.idemOf (integralBasis E) k) := by
-      simp only [ReciprocityTheory.ChartRestriction.G.TB.idemOf, ReciprocityTheory.ChartRestriction.G.TB.evAt, map_sum,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [ReciprocityTheory.ChartRestriction.G.TB.idemOf, ReciprocityTheory.ChartRestriction.G.TB.evAt, map_sum,
         Algebra.TensorProduct.productMap_apply_tmul, map_mul]
       rfl
     have h3 : ∑ j, i ((r j : 𝓞 E) : E) * k ((ω j : 𝓞 E) : E) =
@@ -151,7 +154,8 @@ theorem delta_smul_proj_mem {_ : DecidableEq (E →+* C)} (i : E →+* C) {δ : 
       tensorAction P.actV t y := by
     rw [ht, map_smul, proj, LinearMap.smul_apply]
   rw [e2]
-  simp only [t, map_sum, LinearMap.sum_apply, tensorAction_tmul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [t, map_sum, LinearMap.sum_apply, tensorAction_tmul]
   refine Submodule.sum_mem _ fun j _ => ?_
   rw [algebraMap_smul]
   exact Submodule.smul_mem _ _ (GlobalTheory.FlatModel.BoundProof.actV_mem_latT P _ hy)

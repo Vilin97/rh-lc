@@ -37,7 +37,8 @@ theorem exists_matrix_gamma : ∀ {G : Type} [Group G] [TopologicalSpace G] {Qp 
       apply Subtype.ext
       rw [← h1]
       conv_lhs => rw [hexp (z k)]
-      simp only [map_sum, hsm, Submodule.coe_sum, Submodule.coe_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, hsm, Submodule.coe_sum, Submodule.coe_smul]
       exact Finset.sum_congr rfl fun m _ => by rw [(hb m).2 δ hδ]
     have h3 : b.repr (z k) m = letγ (W.γ₀ δ) (b.repr (z k) m) := by
       conv_lhs => rw [h2]

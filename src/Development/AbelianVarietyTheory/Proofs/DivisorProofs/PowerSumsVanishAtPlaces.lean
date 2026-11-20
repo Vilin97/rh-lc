@@ -42,7 +42,8 @@ theorem charpoly_reduce {R S : Type} [CommRing R] [CommRing S] (π : R →+* S)
   let b := Module.Free.chooseBasis R N
   have hsum : ∀ c : Module.Free.ChooseBasisIndex R N → R,
       e (∑ i, c i • b i) = ∑ i, π (c i) • e (b i) := fun c => by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun i _ => hsmul _ _
   have hli : LinearIndependent S fun i => e (b i) := by
     refine Fintype.linearIndependent_iff.2 fun s hs i => ?_

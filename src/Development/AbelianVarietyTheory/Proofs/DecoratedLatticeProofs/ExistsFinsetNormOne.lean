@@ -95,7 +95,8 @@ theorem exists_int_near (F : Type) [Field F] [NumberField F] : ∃ C : ℝ, 0 < 
   have e : ((∑ i, ⌊b.repr f i⌋ • RingOfIntegers.basis F i : 𝓞 F) : F) - f =
       ∑ i, (((⌊b.repr f i⌋ : ℚ) - b.repr f i : ℚ) : F) * b i := by
     conv_lhs => arg 2; rw [← b.sum_repr f]
-    rw [show ((∑ i, ⌊b.repr f i⌋ • RingOfIntegers.basis F i : 𝓞 F) : F) =
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [show ((∑ i, ⌊b.repr f i⌋ • RingOfIntegers.basis F i : 𝓞 F) : F) =
       algebraMap (𝓞 F) F (∑ i, ⌊b.repr f i⌋ • RingOfIntegers.basis F i) from rfl, map_sum, ← Finset.sum_sub_distrib]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_zsmul, ← integralBasis_apply, ← hb, Rat.smul_def, zsmul_eq_mul]
@@ -103,7 +104,8 @@ theorem exists_int_near (F : Type) [Field F] [NumberField F] : ∃ C : ℝ, 0 < 
     ring
   have h2 : ‖algebraMap F w.Completion (((∑ i, ⌊b.repr f i⌋ • RingOfIntegers.basis F i : 𝓞 F) : F) - f)‖ ≤
       ∑ i, w (b i) := by
-    rw [e, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, map_sum]
     refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun i _ => ?_)
     rw [norm_alg_inf, map_mul]
     refine mul_le_of_le_one_left (apply_nonneg _ _) ?_

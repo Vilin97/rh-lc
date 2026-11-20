@@ -210,7 +210,8 @@ theorem mapH_sum {R : Type} [CommRing R] {A B : Cx.{w} R} {κ : Type} [Fintype �
     rw [AddSubmonoidClass.coe_finsetSum]
     exact h z.1
   change Submodule.mkQ _ (ψ.mapZ q z) = ∑ k, c k • Submodule.mkQ _ ((φ k).mapZ q z)
-  rw [e, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, map_sum]
   exact Finset.sum_congr rfl fun k _ => map_zsmul _ _ _
 
 theorem col_comm : ∀ {R : Type} [CommRing R] {C : Type u} [Category.{v} C] {ι : Type} (U : ι → ObjectProperty C) (hU : ∀ α, Cosieve (U α)) (F : C ⥤ ModuleCat.{w} R) (p q : ℕ) (x : ((dbl U hU F).col p).H q), (cechH F U q).d p (fun i => (tupM U hU F i).pull q x) = fun i => (tupM U hU F i).pull q ((colMap (dbl U hU F) p).mapH q x) := by
@@ -219,7 +220,8 @@ theorem col_comm : ∀ {R : Type} [CommRing R] {C : Type u} [Category.{v} C] {ι
   have h1 := mapH_sum (colMap (dbl U hU F) p)
     (fun k : Fin (p + 2) => (CH.elMor (CH.cechMap (idxπ U hU) k.succAbove) F).hom) (fun k => (-1 : ℤ) ^ (k : ℕ)) q
     (fun a => Cos.d_apply ((CH.cechCos (idxπ U hU) F).cos q) p a) x
-  rw [h1, map_sum, Cos.d_apply, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h1, map_sum, Cos.d_apply, Finset.sum_apply]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [map_zsmul]
   obtain ⟨z, rfl⟩ := Submodule.mkQ_surjective _ x

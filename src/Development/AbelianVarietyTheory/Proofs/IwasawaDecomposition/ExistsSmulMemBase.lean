@@ -353,7 +353,8 @@ theorem herm_emb (D : D7) (S : HSpace D.host.E) (τ : D.host.E →+* ℂ) (v w :
     τ (S.hT v w) = star (fun i => τ (S.frame.repr v i)) ⬝ᵥ
       (gramAt D S τ *ᵥ fun i => τ (S.frame.repr w i)) := by
   rw [sesq_repr S.hT S.frame v w]
-  simp only [map_sum, map_mul, emb_star D, dotProduct, mulVec, gramAt, HSpace.gram, Matrix.map_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, emb_star D, dotProduct, mulVec, gramAt, HSpace.gram, Matrix.map_apply,
     Pi.star_apply, Complex.star_def, Finset.mul_sum]
   refine Finset.sum_congr rfl (fun i _ => Finset.sum_congr rfl (fun k _ => by ring))
 

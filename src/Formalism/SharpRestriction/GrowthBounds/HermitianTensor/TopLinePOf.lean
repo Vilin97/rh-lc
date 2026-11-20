@@ -89,7 +89,8 @@ theorem topCore (h2 : ExplicitMapOntoTwoLetters) (h5 : TwoLetterLatticeGaussInve
   rw [hT]
   have hsum : dPsi R.Kf m f = ∑ v ∈ f.support, deltaB R.Kf m (PsiXY R.Kf m (monomial v (AddMonoidAlgebra.coeff f v))) := by
     conv_lhs => rw [dPsi_apply, f.as_sum]
-    simp only [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum]
   obtain ⟨s0, sl⟩ := qtW_vStar m a b hm
   ext u
   by_cases hu : rowDeg u 0 = a + b ∧ rowDeg u (Fin.last m) = 0

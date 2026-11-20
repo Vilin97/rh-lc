@@ -28,8 +28,10 @@ theorem out_sum_tw {E : Type} [NormedAddCommGroup E] [InnerProductSpace ℂ E] (
     conv_lhs => rw [← Finset.univ_sum_single z]
     refine Finset.sum_congr rfl fun k _ => ?_
     ext j; by_cases hj : j = k <;> simp [hj]
-  conv_lhs => rw [e, map_sum]
-  rw [show Tw.out (∑ k, φ (z k • Pi.single k 1)) = ∑ k, Tw.out (φ (z k • (Pi.single k 1 : Fin n → ℂ))) from
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [e, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [show Tw.out (∑ k, φ (z k • Pi.single k 1)) = ∑ k, Tw.out (φ (z k • (Pi.single k 1 : Fin n → ℂ))) from
     map_sum o (fun k => φ (z k • (Pi.single k 1 : Fin n → ℂ))) Finset.univ, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [map_smul, Tw.out_smul, map_smul, smul_eq_mul]

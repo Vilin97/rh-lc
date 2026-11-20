@@ -13,7 +13,8 @@ private theorem UpperTheory.polynomial_identity_coefficients_zero {M : Type*} [A
     apply Polynomial.funext
     intro u
     have := congrArg f (h u)
-    simp only [map_sum, map_smul, map_zero, smul_eq_mul] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, map_zero, smul_eq_mul] at this
     simp only [Polynomial.eval_finsetSum, Polynomial.eval_monomial, Polynomial.eval_zero]
     rw [← this]
     exact Finset.sum_congr rfl fun j _ => mul_comm _ _

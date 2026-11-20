@@ -68,7 +68,8 @@ theorem koszul_relations_among_variables :
   have hrel : ∀ n, ∑ j : Fin r, (if (j : ℕ) < n then 0 else X j) * R n (G j) = 0 := by
     intro n
     have := congrArg (R n) hG
-    rw [map_sum, map_zero] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero] at this
     simpa [map_mul, hRX] using this
   have key : ∀ i : Fin r, R i (G i) + ∑ j : Fin r, (if i < j then X j * D i (G j) else 0) = 0 := by
     intro i

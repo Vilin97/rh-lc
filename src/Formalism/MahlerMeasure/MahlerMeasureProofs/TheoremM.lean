@@ -421,7 +421,8 @@ theorem adStep_succ (L : Submodule ℤ_[p] (MvPolynomial σ ℚ_[p])) (v : σ) (
         intro j _
         rw [hgmk j]
       have hc2 : Fe1.mkQ (∑ j, c j • g j) = Fe1.mkQ x := by
-        rw [map_sum]; simp only [map_smul]; exact hc'
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]; simp only [map_smul]; exact hc'
       simp only [Submodule.mkQ_apply] at hc2
       have hdiff : x - ∑ j, c j • g j ∈ Fe1 := (Submodule.Quotient.eq Fe1).mp hc2.symm
       have : x = (x - ∑ j, c j • g j) + ∑ j, c j • g j := by abel

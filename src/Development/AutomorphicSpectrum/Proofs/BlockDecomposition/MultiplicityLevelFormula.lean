@@ -197,7 +197,8 @@ theorem sum_mem_lev_iff (hG : GoodLoc σ J T bs v ψv S σS ϖ ε) (k : ℕ) (X 
     (∑ c, X a c * σS (p c)) ∈ lev hG.pS k ↔ (∑ c, p c * X c a) ∈ lev hG.pS k := by
   rw [← sig_mem_lev_iff hG k (∑ c, X a c * σS (p c))]
   have : σS (∑ c, X a c * σS (p c)) = ∑ c, p c * X c a := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun c _ => ?_
     have h := congrFun (congrFun hX c) a
     have h' : σS (X a c) = X c a := by simpa [PositivityTheory.PfSWUS.Loc.cT] using h
@@ -270,7 +271,8 @@ theorem multiplicity_hermitian_level (hG : GoodLoc σ J T bs v ψv S σS ϖ ε) 
       exact smul_mul_assoc _ _ _
     have hga : ∀ a, g p a = Ideal.Quotient.mk (lev hG.pS k) (∑ c, p c * X c a) := by
       intro a
-      rw [hgdef, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hgdef, map_sum]
       simp [Matrix.vecMul, dotProduct, red, map_mul]
     constructor
     · intro h a

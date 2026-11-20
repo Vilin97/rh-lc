@@ -173,7 +173,8 @@ theorem GlobalTheory.HermDiagCM.diagonal_of_conj_form : ∀ (K : Type) [Field K]
     rw [Finset.sum_congr rfl (fun i _ => A i), Finset.sum_congr rfl (fun i _ => B i),
       ← Finset.mul_sum]
     congr 1
-    rw [← sum_embeddings_eq φ hφ w, ← sum_embeddings_map g w, ← map_sum, sum_embeddings_eq φ hφ w,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← sum_embeddings_eq φ hφ w, ← sum_embeddings_map g w, ← map_sum, sum_embeddings_eq φ hφ w,
       map_sum]
     refine Finset.sum_congr rfl (fun i _ => ?_)
     rw [map_add, hgc]

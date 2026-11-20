@@ -28,7 +28,8 @@ theorem vec_gmap {n : ℕ} (γ : UF X.E n) (x : Sp X.E n) : s.vec (γ.1 x) = (ma
   have h := toGLm_mulVec γ.1 x
   rw [← h]
   funext i
-  simp only [Cd.Seam.vec, Matrix.mulVec, dotProduct, map_sum, map_mul, matU]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Cd.Seam.vec, Matrix.mulVec, dotProduct, map_sum, map_mul, matU]
   rfl
 
 theorem lat_gmap {n : ℕ} (γ : UF X.E n) (N : Submodule (𝓞 X.E) (Sp X.E n)) :

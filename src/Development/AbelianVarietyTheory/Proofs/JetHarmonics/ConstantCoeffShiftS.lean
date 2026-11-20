@@ -21,7 +21,8 @@ lemma coeff_sS_pow (ζ : ℂ_[q]) (m n : ℕ) :
     intro k _
     simp only [mul_pow, map_mul, map_pow, map_natCast]
     ring
-  rw [hs, add_pow, Finset.sum_congr rfl hterm, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hs, add_pow, Finset.sum_congr rfl hterm, map_sum]
   simp only [PowerSeries.coeff_C_mul_X_pow]
   rw [Finset.sum_ite_eq]
   split_ifs with hn

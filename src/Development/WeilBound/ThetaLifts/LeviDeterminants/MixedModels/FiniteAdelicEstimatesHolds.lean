@@ -85,7 +85,8 @@ theorem locT_int (T : ((κ → AF F) × (κ → AF F)) →ₗ[AF F] ((κ → AF 
       simp [liftW, Prod.fst_sum, Prod.snd_sum, Finset.sum_apply, Pi.single_apply]
   have hs : ∀ (c : κ → Fv F v) (z : κ → (κ → AF F) × (κ → AF F)), (∀ i, c i ∈ v.adicCompletionIntegers F) →
       (∀ i, locW v (T (z i)) ∈ intW v) → locW v (T (∑ i, liftV v (c i) • z i)) ∈ intW v := fun c z hc hz => by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_induction _ (fun t => locW v t ∈ intW v) (fun a b ha hb => locW_add a b ▸ add_mem ha hb) ?_ fun i _ => ?_
     · have z0 : evFin F v 0 ∈ v.adicCompletionIntegers F := by rw [map_zero]; exact zero_mem _
       exact ⟨fun _ => z0, fun _ => z0⟩
@@ -141,7 +142,8 @@ theorem finite_adelic_estimates_holds : FinSt := by
       y.1 ⬝ᵥ y'.2 - y'.1 ⬝ᵥ y.2 := fun v y y' => by
     have := congrArg (evFin F v) (hS (S.symm (liftW v y)) (S.symm (liftW v y')))
     rw [S.apply_symm_apply, S.apply_symm_apply] at this
-    simp only [dotProduct, map_sub, map_sum, map_mul, liftW, evFin_liftV] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [dotProduct, map_sub, map_sum, map_mul, liftW, evFin_liftV] at this
     exact this.symm
   choose ι hb hi using fun v : Pl F => Mod.model ((adjoint_statement.psi F ψ hψ).2 v).1 ((adjoint_statement.psi F ψ hψ).2 v).2 (locE v S).symm (hsy v)
   let s : ∀ v : Pl F, (κ → Fv F v) → ℂ := fun v => Set.indicator {x | ∀ i, x i ∈ v.adicCompletionIntegers F} 1

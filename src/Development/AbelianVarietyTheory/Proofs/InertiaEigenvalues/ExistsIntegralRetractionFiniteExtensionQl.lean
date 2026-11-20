@@ -72,7 +72,8 @@ theorem exists_retraction (A K L : Type) [CommRing A] [IsDomain A] [IsPrincipalI
       smul_eq_mul]
     rw [h1]
     simp only [hrepr]
-    rw [← map_one (algebraMap A K), ← ha, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_one (algebraMap A K), ← ha, map_sum]
     simp only [map_mul]
   · intro x hx
     set z : integralClosure A L := ⟨x, show x ∈ integralClosure A L from hx⟩ with hz
@@ -82,7 +83,8 @@ theorem exists_retraction (A K L : Type) [CommRing A] [IsDomain A] [IsPrincipalI
       smul_eq_mul]
     rw [hx']
     simp only [hrepr]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [map_mul]
 
 theorem exists_retraction_closure (R F K L : Type) [CommRing R] [IsDomain R] [Field F] [Algebra R F]

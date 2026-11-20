@@ -286,7 +286,8 @@ theorem dof_comp (q : Fin N) (g : PS S 1 d) :
   simp only [hk]
   rw [Dof, subst_sum' hL]
   refine Finset.sum_congr rfl fun k _ => ?_
-  rw [← coe_substAlgHom hL, map_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← coe_substAlgHom hL, map_mul, map_sum]
   simp only [map_mul, coe_substAlgHom, subst_C_lemma hL]
   rw [mul_comm]
   congr 1

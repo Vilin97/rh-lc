@@ -132,7 +132,8 @@ theorem sepLemma (g : ℕ) (hgw : (g : 𝓞 F) ∈ w.asIdeal) :
   have : Module.Finite O A := Module.Finite.iff_fg.2 hfg
   have hιA : ∀ x : 𝓞 E, ι x ∈ A := by
     intro x
-    rw [← bs.sum_repr x, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← bs.sum_repr x, map_sum]
     refine Subalgebra.sum_mem _ fun i _ => ?_
     rw [zsmul_eq_mul, map_mul, map_intCast]
     exact A.mul_mem (intCast_mem A _) (Algebra.subset_adjoin ⟨i, rfl⟩)

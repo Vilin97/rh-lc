@@ -365,7 +365,8 @@ theorem compLeft_pow_apply {V : Type*} [AddCommGroup V] [Module ℂ V] {I : Type
 
 theorem commute_C_om (X : GMod n) (u : ℂ) : Commute ((qdet X.E u).compLeft (Fin n)) (om X) := by
   refine LinearMap.ext fun f => funext fun b => ?_
-  simp only [Module.End.mul_apply, om_apply, LinearMap.compLeft_apply, Function.comp, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Module.End.mul_apply, om_apply, LinearMap.compLeft_apply, Function.comp, map_sum]
   refine Finset.sum_congr rfl fun a _ => ?_
   exact LinearMap.congr_fun (Formalism.REAL.qDetCentral _ n X.E X.gl u a b) (f a)
 

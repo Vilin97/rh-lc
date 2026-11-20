@@ -91,7 +91,8 @@ private theorem mt_ext (M : Matrix J J ℂ) (s : ℂ) (hs : ∀ x : Ten J ℂ, m
 private theorem cas_eq (c : Fin n → Fin n → Matrix J J ℂ) :
     Cas (Fm c) = mt ℂ (Cas (spn c)) := by
   obtain ⟨φ, hφ⟩ := (tenF n ℂ J).1
-  simp only [Cas, Fm_eq, ← hφ, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Cas, Fm_eq, ← hφ, map_sum, map_mul]
 
 private theorem hw_bot (c : Fin n → Fin n → Matrix J J ℂ) (η : J → Wt n) (h : ClifMod c η)
     (hU : UF (Fm c)) (μ : Wt n) (hμ : μ ≠ rhoV n) : hw (Fm c) μ ⊓ ⊤ = ⊥ := by

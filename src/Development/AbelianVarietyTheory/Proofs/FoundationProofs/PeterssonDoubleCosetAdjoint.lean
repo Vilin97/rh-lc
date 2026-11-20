@@ -195,6 +195,7 @@ theorem GlobalTheory.EisM.pet_hsum_adjoint : ∀ (k L N q : ℕ) (ε : Dirichlet
     simp only [K, Finset.mul_sum, Finset.sum_mul]
     exact Finset.sum_congr rfl fun i _ => by ring
   · refine integral_congr_ae (Eventually.of_forall fun x => ?_)
-    simp only [map_sum, Finset.mul_sum, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, Finset.mul_sum, Finset.sum_mul]
 
 end

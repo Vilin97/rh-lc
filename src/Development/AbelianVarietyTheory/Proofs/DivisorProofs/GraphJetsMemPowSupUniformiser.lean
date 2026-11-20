@@ -154,7 +154,8 @@ theorem jets_mem_pow_sup : ∀ {K κ κ' : Type} [Field K] [Field κ] [Field κ'
       rw [hw]
       simp only [AddSubmonoidClass.coe_finset_sum, Subalgebra.coe_mul, hjL, hjR, hι,
         Algebra.TensorProduct.tmul_mul_tmul, mul_one, one_mul]
-    rw [ew, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [ew, map_sum, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [hθt, hθ₀, map_mul]
 

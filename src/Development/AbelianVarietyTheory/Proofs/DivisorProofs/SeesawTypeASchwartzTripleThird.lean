@@ -152,7 +152,8 @@ theorem norm_ev_shift_arch_le : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field 
   obtain ⟨C, hCb⟩ := hK.exists_bound_of_continuousOn hq.continuousOn
   refine ⟨C, fun f hf t ht y => ?_⟩
   have hS : G.M.co.e (t • Matrix.vecMulVec (incV F H.x) (incV F H'.y)) = ∑ i, GlobalTheory.IdeleDecay.coord F E t i • S i := by
-    simp only [S, ← map_smul, ← map_sum, ← smul_assoc, ← Finset.sum_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [S, ← map_smul, ← map_sum, ← smul_assoc, ← Finset.sum_smul]
     congr 2
     refine ((Algebra.TensorProduct.basis (AF F) (Module.finBasis F E)).sum_equivFun t).symm.trans ?_
     refine Finset.sum_congr rfl fun i _ => ?_

@@ -313,7 +313,8 @@ theorem imageDeg_eq_del (hQ : GlobalTheory.HSCore.Quoted) {F : Type} [Field F] [
       have hF : ∀ r, algebraMap F Ω r ∈ S.ratioField x.1 := fun r =>
         Subfield.subset_closure (Or.inl ⟨r, by rw [LinSys.baseHom_ptOver]⟩)
       have h₃ : ∀ v, a * ev v / S.coords x.1 j ∈ S.ratioField x.1 := fun v => by
-        rw [← b.sum_repr v, map_sum, Finset.mul_sum, Finset.sum_div]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [← b.sum_repr v, map_sum, Finset.mul_sum, Finset.sum_div]
         refine sum_mem fun i _ => ?_
         rw [map_smul, Algebra.smul_def, mul_left_comm, mul_div_assoc]
         exact mul_mem (hF _) (Subfield.subset_closure (Or.inr ⟨i, j, by rw [congrFun hc i]; rfl⟩))

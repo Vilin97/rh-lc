@@ -104,7 +104,8 @@ theorem main : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgClosed C]
   set s : Ainf p O := ∑ i ∈ Finset.range p, (WittVector.teichmuller p ε) ^ i with hs
   have h1 : ε.untilt = 1 := by simpa [zeta] using hε.zeta_zero
   have hθs : WittVector.fontaineTheta O p s = p := by
-    simp [hs, map_sum, map_pow, WittVector.fontaineTheta_teichmuller, h1]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [hs, map_sum, map_pow, WittVector.fontaineTheta_teichmuller, h1]
   have hK' := key p O ι (s • M) 1 (fun j i => by
     have e : (fun k => WittVector.frobenius ((Pi.single j 1 : ι → Ainf p O) k)) = Pi.single j 1 := by
       funext k; by_cases h : k = j

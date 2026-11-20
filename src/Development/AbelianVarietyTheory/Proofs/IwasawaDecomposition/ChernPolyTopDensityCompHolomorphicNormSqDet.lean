@@ -100,7 +100,8 @@ theorem curvPoly_comp {H : V n → Matrix r r ℂ} {φ : V n → V n} {v : V n} 
     (h2 : MContDiffAt 2 H (φ v)) (hu : IsUnit (H (φ v)).det) :
     curvPoly (fun x => H (φ x)) v = (curvPoly H (φ v)).map (substAlg (jac φ v)) := by
   refine Matrix.ext fun i j => ?_
-  simp only [curvPoly, Matrix.of_apply, Matrix.map_apply, curv_comp_coord hφ h2 hu, Matrix.sum_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [curvPoly, Matrix.of_apply, Matrix.map_apply, curv_comp_coord hφ h2 hu, Matrix.sum_apply,
     Matrix.smul_apply, smul_eq_mul, map_sum, map_mul, substAlg, aeval_X, aeval_C, algebraMap_eq,
     Finset.sum_mul, Finset.mul_sum]
   simp_rw [← Fintype.sum_prod_type']

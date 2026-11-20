@@ -84,7 +84,8 @@ private theorem sum_support_inr_eq_xDeg {D N : ℕ} (s : UXVar D N →₀ ℕ) :
 theorem coeffIn_evW (w : Fin (N + 1) → B) (hw : ∀ j, w j ∈ W) {n : ℕ}
     (Q : MvPolynomial (UXVar D N) R) (hx : XHom n Q) : CoeffIn W n (evW w Q) := by
   intro β
-  rw [Q.as_sum, map_sum, coeff_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Q.as_sum, map_sum, coeff_sum]
   refine Submodule.sum_mem _ fun s hs => ?_
   have hterm : CoeffIn W n (evW w (monomial s (AddMonoidAlgebra.coeff Q s))) := by
     rw [evW, aeval_monomial, MvPolynomial.algebraMap_apply]
@@ -119,7 +120,8 @@ theorem evW_factor {R S B : Type*} [CommRing R] [CommRing S] [CommRing B] [Algeb
     (Q : MvPolynomial (UXVar D N) R) (hx : XHom n Q) :
     evW (fun j => algebraMap S B (y j) * w0) Q =
       MvPolynomial.map (algebraMap S B) (evW y Q) * C (w0 ^ n) := by
-  rw [Q.as_sum, map_sum, map_sum, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Q.as_sum, map_sum, map_sum, map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun s hs => ?_
   simp only [evW, aeval_monomial, MvPolynomial.algebraMap_apply, map_mul, map_C, Finsupp.prod,
     map_prod, map_pow]
@@ -131,7 +133,8 @@ theorem evW_factor {R S B : Type*} [CommRing R] [CommRing S] [CommRing B] [Algeb
   cases x with
   | inl p => simp
   | inr i =>
-    simp only [Sum.elim_inr, map_sum, map_mul, map_X, map_C]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Sum.elim_inr, map_sum, map_mul, map_X, map_C]
     rw [← mul_pow, Finset.sum_mul]
     congr 1
     refine Finset.sum_congr rfl fun j _ => ?_

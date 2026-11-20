@@ -19,7 +19,8 @@ theorem norm_emb_entry_le_one (E : Type) [Field E] [NumberField E] [IsCMField E]
     simpa [Formalism.UG.cT, Matrix.mul_apply] using this
   have hτ : ∑ k, ((Complex.normSq (τ (M k j)) : ℝ) : ℂ) = 1 := by
     have := congrArg τ hjj
-    rw [map_sum, map_one] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_one] at this
     rw [← this]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_mul, IsCMField.complexEmbedding_complexConj, Complex.normSq_eq_conj_mul_self]

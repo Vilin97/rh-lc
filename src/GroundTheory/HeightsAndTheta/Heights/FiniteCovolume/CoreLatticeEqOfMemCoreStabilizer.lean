@@ -76,7 +76,8 @@ theorem mem_integralCore_iff_basis {u : ι → FinAdele K ⊗[K] E} :
   have hβ : (β : E) = ∑ s, ((RingOfIntegers.basis E).repr β s) •
       ((RingOfIntegers.basis E s : 𝓞 E) : E) := by
     have := congrArg (algebraMap (𝓞 E) E) ((RingOfIntegers.basis E).sum_repr β)
-    rw [map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at this
     simp only [map_zsmul] at this
     exact this.symm
   rw [hβ, tmul_sum, Finset.sum_smul]
@@ -244,7 +245,8 @@ theorem isCompact_coreStabilizer (hH : IsUnit H.det) :
   show _ = unitaryCoords H (FinAdele K) b g (i, j, m)
   rw [unitaryCoords_apply]
   conv_rhs => rw [← mul_one (unitaryMat g i j), hone]
-  simp only [Finset.mul_sum, mul_smul_comm, map_sum, map_smul, Finsupp.coe_finsetSum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finset.mul_sum, mul_smul_comm, map_sum, map_smul, Finsupp.coe_finsetSum,
     Finset.sum_apply, Finsupp.smul_apply, smul_eq_mul]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [← mul_assoc, ← map_mul, mul_assoc, inv_mul_cancel₀ (hd0 (j, k)), mul_one]
@@ -381,7 +383,8 @@ theorem exists_int_smul_mem_coreLattice : ∃ N : ℤ, N ≠ 0 ∧
   have hβ : (β : E) = ∑ s, ((RingOfIntegers.basis E).repr β s) •
       ((RingOfIntegers.basis E s : 𝓞 E) : E) := by
     have := congrArg (algebraMap (𝓞 E) E) ((RingOfIntegers.basis E).sum_repr β)
-    rw [map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at this
     simp only [map_zsmul] at this
     exact this.symm
   rw [hβ, tmul_sum, Finset.sum_smul]

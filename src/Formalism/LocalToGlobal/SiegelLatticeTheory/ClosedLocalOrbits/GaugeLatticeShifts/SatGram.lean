@@ -200,7 +200,8 @@ theorem resV_joint : Function.Surjective
   apply Subtype.ext
   rw [rO_coe]
   show rV hR w (prV (E := X.B.I.E) w.1 (∑ v : gPl X, (1 : X.B.I.E) ⊗ₜ[X.B.I.F] afsplitI v.1 (o v : v.1.adicCompletion X.B.I.F))) = _
-  rw [map_sum, Finset.sum_eq_single w]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_eq_single w]
   · rw [afsplit_prV_tmul, afsplitI_self]; exact (rV_spec hR w).2.1 _
   · intro v _ hvw
     rw [afsplit_prV_tmul, afsplitI_ne v.1 w.1 (fun h => hvw (Subtype.ext h.symm)), TensorProduct.tmul_zero]
@@ -301,7 +302,8 @@ def sumS (o : ∀ v : gPl X, v.1.adicCompletion X.B.I.F) : X.B.I.E ⊗[X.B.I.F] 
 theorem prV_sumS (o : ∀ v : gPl X, v.1.adicCompletion X.B.I.F) (w : gPl X) :
     prV (E := X.B.I.E) w.1 (sumS o) = prV (E := X.B.I.E) w.1 X.ew * ((1 : X.B.I.E) ⊗ₜ[X.B.I.F] o w) := by
   unfold sumS
-  rw [map_sum, Finset.sum_eq_single w]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_eq_single w]
   · rw [map_mul, afsplit_prV_tmul, afsplitI_self]
   · intro v _ hvw
     rw [map_mul, afsplit_prV_tmul, afsplitI_ne v.1 w.1 (fun h => hvw (Subtype.ext h.symm)),

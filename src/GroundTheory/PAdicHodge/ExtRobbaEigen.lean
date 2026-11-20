@@ -598,7 +598,8 @@ theorem exists_eigenvector (ha : 0 < F.a) (hn : 0 < n) (A : Matrix.GeneralLinear
     apply T.ofRad_injective ρ
     have h1 : (A.val * A⁻¹.val) i k = (1 : Matrix (Fin n) (Fin n) T.RobbaTilde) i k := by
       rw [Units.mul_inv]
-    rw [Matrix.mul_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Matrix.mul_apply, map_sum]
     simp only [map_mul, hA0, hA0']
     rw [← Matrix.mul_apply, h1, Matrix.one_apply, Matrix.one_apply]
     split_ifs <;> simp
@@ -610,7 +611,8 @@ theorem exists_eigenvector (ha : 0 < F.a) (hn : 0 < n) (A : Matrix.GeneralLinear
   · funext i
     simp only [Matrix.mulVec, dotProduct, Pi.smul_apply, smul_eq_mul]
     have h := congrArg (T.ofRad (F.powRadius ρ)) (hv i)
-    simp only [map_sum, map_mul, map_pow, ofRad_piE, T.ofRad_res, ← F.tildeFrob_ofRad, hA0] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, map_pow, ofRad_piE, T.ofRad_res, ← F.tildeFrob_ofRad, hA0] at h
     exact h
 
 end TeichFrob

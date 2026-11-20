@@ -38,7 +38,8 @@ theorem mem_pow_of_flat_quotient {V C : Type} [CommRing V] [IsDomain V] [CommRin
       Ideal.span_singleton_pow, Ideal.mem_span_singleton, pow_succ'] at h1
     exact (mul_dvd_mul_iff_left hϖ).1 h1
   have h2 : a - ∑ j, σ (c' j) * y' j ∈ (I ^ (e + 1)).map σ := by
-    rw [← Ideal.Quotient.eq, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Ideal.Quotient.eq, map_sum]
     refine (hy ()).trans ?_
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [← hc', ← hy', hsm]

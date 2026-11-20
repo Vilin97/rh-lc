@@ -190,12 +190,14 @@ theorem sharp_comp (x xi y yi : Matrix (Fin n) (Fin n) A) (P : MvPolynomial (LVa
   rintro (⟨i, a⟩ | z)
   · by_cases h1 : i ∈ S
     · cases h3 : isVec i
-      · simp only [AlgHom.comp_apply, sharp_covec h1 h3, map_sum, map_mul, sharp_C, Matrix.mul_apply,
+      set_option synthInstance.maxHeartbeats 100000 in
+        · simp only [AlgHom.comp_apply, sharp_covec h1 h3, map_sum, map_mul, sharp_C, Matrix.mul_apply,
           Finset.sum_mul, Finset.mul_sum]
         rw [Finset.sum_comm]
         refine Finset.sum_congr rfl fun b _ => Finset.sum_congr rfl fun c _ => ?_
         ring
-      · simp only [AlgHom.comp_apply, sharp_vec h1 h3, map_sum, map_mul, sharp_C, Matrix.mul_apply,
+      set_option synthInstance.maxHeartbeats 100000 in
+        · simp only [AlgHom.comp_apply, sharp_vec h1 h3, map_sum, map_mul, sharp_C, Matrix.mul_apply,
           Finset.sum_mul, Finset.mul_sum]
         rw [Finset.sum_comm]
         refine Finset.sum_congr rfl fun b _ => Finset.sum_congr rfl fun c _ => ?_

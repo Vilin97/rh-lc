@@ -360,7 +360,8 @@ theorem crd_linM (M : Matrix (Fin X.B.I.n) (Fin X.B.I.n) X.B.I.E) (y : (VS D).V)
   simp only [linM, LinearMap.toMatrix_toLin] at h
   simp only [HidaSetting.crd, crdOf, linM]
   rw [← h]
-  simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum, map_mul, RingEquiv.symm_apply_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum, map_mul, RingEquiv.symm_apply_apply]
   rfl
 
 def linGL (M : GL (Fin X.B.I.n) X.B.I.E) : (VS D).V ≃ₗ[D.host.E] (VS D).V :=

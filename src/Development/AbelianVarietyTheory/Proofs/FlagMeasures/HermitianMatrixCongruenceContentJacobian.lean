@@ -128,7 +128,8 @@ theorem mem_hermLat_iff (L : LocE F E) (m : ℕ) (X : Matrix (Fin m) (Fin m) E) 
 theorem cT_mul (L : LocE F E) {m : ℕ} (X Y : Matrix (Fin m) (Fin m) E) :
     cT L (X * Y) = cT L Y * cT L X := by
   ext i j
-  simp only [cT, Matrix.mul_apply, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [cT, Matrix.mul_apply, map_sum, map_mul]
   exact Finset.sum_congr rfl fun k _ => mul_comm _ _
 
 theorem cT_cT (L : LocE F E) {m : ℕ} (X : Matrix (Fin m) (Fin m) E) : cT L (cT L X) = X := by

@@ -59,7 +59,8 @@ theorem coeff_mem_span {d : ℕ} {a : ℕ → M} {p : ℂ → M} (hp : ∀ u, p 
       have h0 : W.mkQ (p u) = 0 :=
         (Submodule.Quotient.mk_eq_zero W).2 (Submodule.subset_span ⟨u, rfl⟩)
       have h1 : f (W.mkQ (p u)) = ∑ j ∈ Finset.range (d + 1), u ^ j * f (W.mkQ (a j)) := by
-        rw [hp u, map_sum, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [hp u, map_sum, map_sum]
         refine Finset.sum_congr rfl fun j _ => ?_
         rw [map_smul, map_smul, smul_eq_mul]
       rw [h0, map_zero] at h1

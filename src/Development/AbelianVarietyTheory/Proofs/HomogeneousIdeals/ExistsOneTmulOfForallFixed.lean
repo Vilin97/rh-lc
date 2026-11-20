@@ -12,7 +12,8 @@ theorem repr_apply_of_semilinear (s : L →+* L) (b : Basis ι L M) (φ : M →+
     (hφ : ∀ a i, φ (a • b i) = s a • b i) (w : M) (i : ι) :
     b.repr (φ w) i = s (b.repr w i) := by
   classical
-  conv_lhs => rw [← b.linearCombination_repr w, Finsupp.linearCombination_apply, Finsupp.sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [← b.linearCombination_repr w, Finsupp.linearCombination_apply, Finsupp.sum,
     map_sum, map_sum]
   simp only [hφ, map_smul, Basis.repr_self, Finsupp.coe_finsetSum, Finset.sum_apply,
     Finsupp.smul_apply, Finsupp.single_apply, smul_eq_mul, mul_ite, mul_one, mul_zero,

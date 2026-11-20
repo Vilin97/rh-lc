@@ -141,7 +141,8 @@ theorem LocIdxLift_vecV_mulVec (v : HeightOneSpectrum (𝓞 I.F)) (M : Matrix (F
     (w : Fin I.n → I.E ⊗[I.F] Af I.F) :
     PI.FinKW.vecV I v (M *ᵥ w) = (M.map (PI.FinKW.psiV I v)) *ᵥ PI.FinKW.vecV I v w := by
   funext i
-  simp [PI.FinKW.vecV, Matrix.mulVec, dotProduct, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [PI.FinKW.vecV, Matrix.mulVec, dotProduct, map_sum, map_mul]
 
 variable (hb : Formalism.L2.SG.AdBridge.AdBridgeIso I)
 

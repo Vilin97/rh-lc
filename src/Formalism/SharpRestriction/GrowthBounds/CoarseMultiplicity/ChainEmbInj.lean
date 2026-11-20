@@ -101,7 +101,8 @@ theorem Ehat_eq' {D : BlockData N} (hT : TieOK D) (i : Fin D.T.t) :
     D.Ehat O (r := r) i = X (scalZ N r D.T.t (Fin.castSucc i)) * X (scalS N r D.T.t (Fin.castSucc i)) +
       rename (chainEmb N r D.T.t) (pairP O r hT i) := by
   rw [Ehat_eq hT i]
-  simp [pairP, map_sum, rename_X]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [pairP, map_sum, rename_X]
 
 theorem tieW_ne_tieE {D : BlockData N} (hT : TieOK D) (i i' : Fin D.T.t) : tieW hT i ≠ tieE hT i' := by
   intro h

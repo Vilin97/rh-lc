@@ -55,7 +55,8 @@ theorem relAmple_diag_lam {R : Type} [CommRing R] [IsLocalRing R] [IsNoetherianR
   have h₁ : cls _ hlam = lam (cls M hM) (fst B B) (snd B B) := cls_cube_two hM _ _ hlam
   have h₂ := lam_mul_left hM hΘ (𝟙 B) (𝟙 B)⁻¹ (𝟙 B)
   rw [mul_inv_cancel, lam_one_left, lam.eq_1 _ (𝟙 B)⁻¹, inv_mul_cancel, h₀] at h₂
-  rw [cls_pull hbox, cls_pull hlam, h₁, pull_lam, lift_fst, lift_snd, cls_linComb hM, map_sum, Fin.sum_univ_two,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [cls_pull hbox, cls_pull hlam, h₁, pull_lam, lift_fst, lift_snd, cls_linComb hM, map_sum, Fin.sum_univ_two,
     one_smul, one_smul, ← pull_comp, ← pull_comp, ← Over.comp_left, ← Over.comp_left, hψ, hψ]
   refine Eq.trans ?_ (eq_neg_of_add_eq_zero_left h₂.symm).symm
   simp only [Matrix.cons_val_zero, Matrix.cons_val_one]

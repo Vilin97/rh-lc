@@ -172,7 +172,8 @@ theorem coord_alg (bO : Module.Basis ι O O') (bL : Module.Basis ι LL LL')
   have e : algebraMap O' LL' o = bL.equivFun.symm (fun i => algebraMap O LL (bO.repr o i)) := by
     rw [Module.Basis.equivFun_symm_apply]
     conv_lhs => rw [← bO.sum_repr o]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [hb, Algebra.smul_def, map_mul, Algebra.smul_def, ← IsScalarTower.algebraMap_apply,
       ← IsScalarTower.algebraMap_apply]
@@ -377,7 +378,8 @@ theorem sum_eq {LL LL' O O' : Type} [Field LL] [Field LL'] [Algebra LL LL'] [Com
     (hb : ∀ i, bL i = algebraMap O' LL' (bO i)) {V : Type} [AddCommGroup V] [Module LL V]
     (c : ι → V) (k : ι) :
     prj (bL.coord k) V (∑ i, bO i • ((1 : LL') ⊗ₜ[LL] c i)) = c k := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp_rw [prj_smul_one bO bL hb]
   simp
 
@@ -517,7 +519,8 @@ theorem descCol [IsLocalRing O'] (hk : lenOl PD (O := O) ≠ ⊤) (T₁ T₂ : L
         rw [smul_smul, smul_smul, mul_comm] }
   have hψ : ∀ q, ψ q = N'.mkQ (∑ i, bO i • (⟨jp (O' := O') hc hO' T₂ (q i), hjZ (q i)⟩ : Z')) := by
     intro q
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul]
     rfl

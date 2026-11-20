@@ -20,7 +20,8 @@ theorem tagDR_whom (Tau : Type) [Fintype Tau] (N m : ℕ) (Q : MvPolynomial (Rt 
     (tagDR Tau N Q).IsWeightedHomogeneous (LatticeTransfer.wt Tau N) m := by
   unfold tagDR
   have h' : Q.IsWeightedHomogeneous (1 : Rt Tau N → ℕ) m := h
-  rw [Q.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Q.as_sum, map_sum]
   refine IsWeightedHomogeneous.sum _ _ _ (fun d hd => ?_)
   rw [rename_monomial]
   refine isWeightedHomogeneous_monomial _ _ _ ?_

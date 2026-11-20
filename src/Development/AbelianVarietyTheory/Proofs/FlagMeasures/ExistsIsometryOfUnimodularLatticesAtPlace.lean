@@ -147,7 +147,8 @@ omit hP hPv [FiniteDimensional K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) 
 theorem form_eq (h : V →ₗ⋆[K] V →ₗ[K] K) {n : ℕ} (b : Module.Basis (Fin n) K V) (x y : V) :
     h y x = herm (Matrix.of fun i j => h (b j) (b i)) (b.equivFun x) (b.equivFun y) := by
   conv_lhs => rw [← b.sum_equivFun x, ← b.sum_equivFun y]
-  simp only [herm, map_sum, LinearMap.sum_apply, map_smul, LinearMap.map_smulₛₗ, LinearMap.smul_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [herm, map_sum, LinearMap.sum_apply, map_smul, LinearMap.map_smulₛₗ, LinearMap.smul_apply,
     smul_eq_mul, Matrix.of_apply, Finset.mul_sum, starRingEnd_apply, hst]
   exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 

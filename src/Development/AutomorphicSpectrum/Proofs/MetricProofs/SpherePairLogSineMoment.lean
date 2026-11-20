@@ -139,7 +139,8 @@ theorem ell_eq (ℓ : MvPolynomial (Fin 3) ℝ →ₗ[ℝ] ℝ) (R : MvPolynomia
     (S : Finset (Fin 3 →₀ ℕ)) (hS : R.support ⊆ S) :
     ℓ R = ∑ m ∈ S, AddMonoidAlgebra.coeff R m * ℓ (monomial m 1) := by
   conv_lhs => rw [R.as_sum]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   rw [← Finset.sum_subset hS fun m _ hm => by simp [notMem_support_iff.1 hm]]
   refine Finset.sum_congr rfl fun m _ => ?_
   rw [← mul_one (AddMonoidAlgebra.coeff R m), ← smul_eq_mul, ← smul_monomial, map_smul, smul_eq_mul, smul_eq_mul, mul_one]
@@ -163,9 +164,11 @@ theorem continuous_coeff_pp {Ω : Type*} [TopologicalSpace Ω] (u v : Ω → Fin
   have hw : ![dp u, dp v] = fun r => mapAlgHom φ (w r) := by
     funext r
     fin_cases r
-    · simp only [Fin.zero_eta, Matrix.cons_val_zero, w, dp, mapAlgHom_apply, map_sum, map_mul, map_X, map_C]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp only [Fin.zero_eta, Matrix.cons_val_zero, w, dp, mapAlgHom_apply, map_sum, map_mul, map_X, map_C]
       rfl
-    · simp only [Fin.mk_one, Matrix.cons_val_one, Matrix.cons_val_fin_one, w, dp, mapAlgHom_apply, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp only [Fin.mk_one, Matrix.cons_val_one, Matrix.cons_val_fin_one, w, dp, mapAlgHom_apply, map_sum,
         map_mul, map_X, map_C]
       rfl
   rw [pp, hw, ← comp_aeval, AlgHom.comp_apply, mapAlgHom_apply, coeff_map]
@@ -207,7 +210,8 @@ theorem ell_moment (ℓ : MvPolynomial (Fin 3) ℝ →ₗ[ℝ] ℝ) (Q : MvPolyn
   simp only [h, Finset.mul_sum]
   rw [integral_finset_sum _ fun m _ => by
     simpa only [mul_assoc] using (hI m).mul_const (ℓ (monomial m 1))]
-  rw [momentPoly, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [momentPoly, map_sum]
   refine Finset.sum_congr rfl fun m _ => ?_
   simp only [← mul_assoc]
   rw [integral_mul_const, ← mul_one (∫ p, _ ∂_), ← smul_eq_mul, ← smul_monomial, map_smul, smul_eq_mul,

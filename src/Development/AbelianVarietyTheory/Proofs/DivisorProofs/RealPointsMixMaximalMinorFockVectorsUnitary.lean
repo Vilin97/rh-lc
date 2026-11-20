@@ -78,7 +78,8 @@ theorem real_mix : ∀ {D : D7} {cc : Ideal (𝓞 D.host.K)} {δ t0 : ℂ} {Q : 
     change X.om (1, k) (pureTensorO X.ψ X.θ X.A X.B (fun _ => 1) (fun _ => 1) (fun _ => 1) (fun _ => 1) X.vac _) = _
     rw [e2, hcv, GlobalTheory.FiniteFock.pureTensorO_smul, e3]
     change c • (pureTensorO X.ψ X.θ X.A X.B (fun _ => 1) (fun _ => 1) (fun _ => 1) (fun _ => 1) X.vac) (GlobalTheory.CompactHowe.substF K (fun _ => 1) (MvPolynomial.rename (fun k : Formalism.MainNotions.GL3Theta.Idx D P.a P.d => ((k.1, Fin.cast X.rkB.symm k.2.1, Fin.cast X.rkA.symm k.2.2) : D.what₂.Tau × Fin X.B.rank × Fin X.A.rank)) (minorPol D T))) = _
-    rw [e4, map_sum, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e4, map_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl fun T' _ => ?_
     rw [map_smul, smul_smul, Matrix.smul_apply, smul_eq_mul]
     rfl

@@ -30,7 +30,8 @@ theorem finite_semisimple (k R : Type) [Field k] [CharZero k] [IsAlgClosed k] [R
     choose a ha1 ha using hv
     obtain ⟨⟨s, hs, hsT⟩, -⟩ := GlobalTheory.T.pseudoCharacter_apply_idempotent_nat_le k R d T h (∑ i, e i) he.isIdempotentElem_sum
     have h1 : ((∑ i, a i : ℕ) : k) = s := by
-      rw [← hsT, map_sum]; push_cast; exact Finset.sum_congr rfl fun i _ => (ha i).symm
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hsT, map_sum]; push_cast; exact Finset.sum_congr rfl fun i _ => (ha i).symm
     have h2 : ∑ i, a i = s := by exact_mod_cast h1
     calc m = ∑ _i : Fin m, 1 := by simp
       _ ≤ ∑ i, a i := Finset.sum_le_sum fun i _ => ha1 i

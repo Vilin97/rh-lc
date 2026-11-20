@@ -25,7 +25,8 @@ def expAt (X : RawChart C d I κ) {ω : Type} [Fintype ω] (v : ω → κ → C)
 
 theorem comb_cc {ι ω : Type} [Fintype ι] (c : ι → C) (φ : ι → ω) :
     constantCoeff (∑ w, c w • (MvPowerSeries.X (φ w) : MvPowerSeries ω C)) = 0 := by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_eq_zero fun y _ => ?_
   rw [constantCoeff_smul, constantCoeff_X, smul_zero]
 
@@ -142,7 +143,8 @@ theorem exists_intS_frame_eq_prod : ∀ (C : Type) [Field C] [CharZero C] (V : V
     rw [MvPowerSeries.constantCoeff_smul, hEnd_cc H, smul_zero]
   have h3 : MvPowerSeries.subst (expAt X₀ u) ((X₀.k : C) • D + (X₀.k : C) • hEnd X₀ 1 W) =
       ∑ o, MvPowerSeries.subst (r o) (X o).hRow := by
-    rw [← smul_add, MvPowerSeries.subst_smul he, MvPowerSeries.subst_add he, ← h1, ← MvPowerSeries.subst_add he,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← smul_add, MvPowerSeries.subst_smul he, MvPowerSeries.subst_add he, ← h1, ← MvPowerSeries.subst_add he,
       hDdef, sub_add_cancel, ← MvPowerSeries.substAlgHom_apply he, map_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl fun o _ => ?_
     rw [MvPowerSeries.substAlgHom_apply, h2]

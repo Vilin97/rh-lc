@@ -57,7 +57,8 @@ theorem gramAt_change (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Ho
     (hh _ _ _).1 (by rw [key, key]; exact hΓ' p q)
   ext p q
   rw [e2]
-  simp only [Matrix.mul_apply, Matrix.conjTranspose_apply, e1, map_sum, LinearMap.sum_apply, map_smul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mul_apply, Matrix.conjTranspose_apply, e1, map_sum, LinearMap.sum_apply, map_smul,
     map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, Finset.sum_mul, Finset.mul_sum, RCLike.star_def,
     RingHom.id_apply]
   refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun i _ => ?_

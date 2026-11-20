@@ -217,7 +217,8 @@ theorem exists_pow_approx_cycl {n : ℕ} {x : PadicAlgCl p} (hx : x ∈ cycl p n
     rw [sub_pow_char, one_pow, ← map_pow]
     congr 2
   have hmk : mk (Y ^ p) = mk X := by
-    simp only [Y, X, map_pow, map_sum, map_mul, map_sub, map_one]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Y, X, map_pow, map_sum, map_mul, map_sub, map_one]
     rw [sum_pow_char]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [mul_pow, hA, ← pow_mul, mul_comm i p, pow_mul, hH]

@@ -76,7 +76,8 @@ theorem GlobalTheory.PDivLat.hasDatum_of_isConst : ∀ (p : ℕ) [Fact p.Prime] 
     rw [Fintype.linearCombination_apply]
     have hb : b.equivFun = e := Module.Basis.equivFun_ofEquivFun e
     conv_rhs => rw [← b.sum_equivFun t]
-    rw [map_sum, hb]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, hb]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [hodgeTate_smul (padicToO p O)]
     rfl

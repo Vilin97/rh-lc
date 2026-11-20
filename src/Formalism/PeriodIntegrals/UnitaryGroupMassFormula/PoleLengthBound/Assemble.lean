@@ -229,7 +229,8 @@ theorem pole_length_assemble : Assemble := by
       have := prod_sfr_mem X la G.w α.1
       rwa [mon_sum] at this
     have hXA : toWK X la G.w wF (a0 D j T) Xs ∈ Q.AA T := by
-      rw [hXs, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hXs, map_sum]
       exact Submodule.sum_mem _ fun α _ => hE7 (x α) α.1 (hx2 α)
     refine ⟨⟨_, Submodule.subset_span ⟨Xs, hX, rfl⟩⟩, hXA, ?_⟩
     rw [psiF_lt G la a hk _ Xs rfl]

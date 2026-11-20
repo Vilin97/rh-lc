@@ -201,7 +201,8 @@ private theorem spans_setOf_q_le_ten_mul_of_covering {L : Type} [Field L] [Numbe
     have he : ∀ w : InfinitePlace L, ∑ i, w.embedding (a i) * toR v w i = 0 := by
       intro w
       have := congrArg w.embedding hv
-      rw [hfv, map_sum, map_zero] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hfv, map_sum, map_zero] at this
       rw [← this]
       refine Finset.sum_congr rfl fun i _ => ?_
       simp [toR, embO, toL, mul_comm]

@@ -47,7 +47,8 @@ theorem isHomogeneous_ideal_cone {σ E : Type} [Fintype σ] (f : σ → E → �
       Polynomial.eval_pow, Polynomial.eval_X, Polynomial.eval_zero]
     have hs := (hI F).1 hF s z
     conv_lhs at hs => rw [← MvPolynomial.sum_homogeneousComponent F]
-    rw [map_sum] at hs
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at hs
     rw [← hs]
     refine Finset.sum_congr rfl fun n _ => ?_
     rw [eval_smul_of_isHomogeneous_toric_geometry (MvPolynomial.homogeneousComponent_isHomogeneous n F)]

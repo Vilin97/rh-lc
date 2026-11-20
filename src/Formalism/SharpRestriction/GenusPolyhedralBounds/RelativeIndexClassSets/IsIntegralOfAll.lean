@@ -95,7 +95,8 @@ theorem integralClosure_dvr :
       apply hinj
       intro m'
       rw [map_sub]
-      simp only [AddSubmonoidClass.coe_finsetSum, map_sum, he, OneMemClass.coe_one, map_one]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [AddSubmonoidClass.coe_finsetSum, map_sum, he, OneMemClass.coe_one, map_one]
       rw [← Finset.sum_apply, Finset.univ_sum_single]
       simp
     obtain ⟨m, hm⟩ : ∃ m, (⟨e m, hei m⟩ : ↥(As O A)) ∉ ζ.asIdeal := by

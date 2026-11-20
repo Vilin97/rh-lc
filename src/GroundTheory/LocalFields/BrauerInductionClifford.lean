@@ -294,7 +294,8 @@ theorem IsIrrCharacter.exists_eq_indFun_inertia {χ : G → ℂ} (hχ : IsIrrCha
       charInner T (χ ∘ T.subtype) ψ * charInner A (res ψ) θ ≠ 0 := by
     apply Finset.exists_ne_zero_of_sum_ne_zero
     rw [hχA, eq_sum_irrChars_of_isClassFun hχT.isClassFun] at h
-    simpa only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul] using h
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul] using h
   have hψirr := mem_irrChars.mp hψ
   have ha : charInner T (χ ∘ T.subtype) ψ ≠ 0 := left_ne_zero_of_mul hne
   have he : charInner A (res ψ) θ ≠ 0 := right_ne_zero_of_mul hne

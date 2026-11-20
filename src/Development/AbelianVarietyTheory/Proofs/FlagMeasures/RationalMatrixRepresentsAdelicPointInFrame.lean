@@ -24,6 +24,7 @@ theorem repF_of_rational : ∀ (D : D7) (X : HidaSetting D) (wt : (VS D).V ≃�
     rw [← RingHom.map_mulVec]
   rw [hl, hq j]
   funext k
-  simp [qA, incl, Finset.sum_apply, map_sum, Pi.smul_apply, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [qA, incl, Finset.sum_apply, map_sum, Pi.smul_apply, smul_eq_mul]
 
 end GlobalTheory.St

@@ -19,7 +19,8 @@ local notation "φ" => WittVector.frobeniusEquiv p (PreTilt (normInteger K) p)
 
 theorem fontaineTheta_frobenius_pow_succ_xi {ε : 𝒪♭} (hε : PreTilt.untilt ε = 1) (n : ℕ) :
     θ ((φ ^ (n + 1)) (xi ε)) = p := by
-  rw [pow_succ, RingAut.mul_apply, frobeniusEquiv_xi, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [pow_succ, RingAut.mul_apply, frobeniusEquiv_xi, map_sum, map_sum]
   simp only [map_pow, WittVector.frobeniusEquiv_pow_teichmuller, fontaineTheta_teichmuller, hε,
     one_pow, Finset.sum_const, Finset.card_range, nsmul_eq_mul, mul_one]
 

@@ -211,7 +211,8 @@ variable {κ L}
 
 theorem IsCochain.dCo (h : ∀ (k : Kinf E a) (X : Herm E a), κ k * L (toL X.1) = L (toL (adHerm k X).1) * κ k)
     {q : ℕ} {ω : Herm E a [⋀^Fin q]→ₗ[ℝ] M} (hω : IsCochain κ ω) : IsCochain κ (dCo L ω) := fun k X => by
-  rw [dCo_apply, dCo_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [dCo_apply, dCo_apply, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_zsmul, ← Module.End.mul_apply, h, Module.End.mul_apply, ← hω]
   rfl

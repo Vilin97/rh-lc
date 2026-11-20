@@ -65,7 +65,8 @@ theorem gen_mem_polys {n : ℕ} (γ : Fin n → ℂ) (M : ℕ) (T : (Fin n → �
       ∑ b ∈ Fintype.piFinset (fun _ : Fin n => Finset.range (M + 1)),
         C (T b) * ∏ i, mk (fun t => if min t M = b i then γ i ^ (t - M) else 0) := by
     ext t
-    rw [coeff_mk, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [coeff_mk, map_sum]
     simp only [coeff_C_mul, coeff_prod_mk, Finset.mul_sum]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun a _ => ?_

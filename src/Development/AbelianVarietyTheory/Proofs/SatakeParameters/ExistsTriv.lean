@@ -39,7 +39,8 @@ theorem exists_triv (hur : Algebra.Unramified (𝓞 (maximalRealSubfield E)) (�
     have e2 : ∑ j, (x j : E) * IsCMField.complexConj E (y j : E) =
         ((∑ j, x j * IsCMField.ringOfIntegersComplexConj E (y j) : 𝓞 E) : E) := by
       change _ = algebraMap (𝓞 E) E _
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [map_mul, ← IsCMField.coe_ringOfIntegersComplexConj]
     rw [e1, e2, Nat.cast_one, one_mul]

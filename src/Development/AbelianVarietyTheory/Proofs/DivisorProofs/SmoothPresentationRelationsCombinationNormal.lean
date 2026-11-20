@@ -66,7 +66,8 @@ theorem relations_combination :
   have hg0 : ∀ k, Ideal.Quotient.mk J (g k) = 0 := fun k =>
     Ideal.Quotient.eq_zero_iff_mem.mpr (hg k)
   rw [← Ideal.Quotient.eq_zero_iff_mem] at hF ⊢
-  simpa [Derivation.leibniz, map_sum, map_add, map_mul, hg0, smul_eq_mul, mul_add,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa [Derivation.leibniz, map_sum, map_add, map_mul, hg0, smul_eq_mul, mul_add,
     Finset.sum_add_distrib] using hF
 
 end GlobalTheory.SmoothRel

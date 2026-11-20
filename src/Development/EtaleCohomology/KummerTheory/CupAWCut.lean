@@ -40,7 +40,8 @@ theorem mul_bd_left {s t w : ℤ} (h : s + t = w) {p q : ℕ} (hs : -(p : ℤ) +
   cases p with
   | zero => simp [bd]
   | succ p =>
-    simp only [bd, map_sum, map_zsmul, LinearMap.sum_apply, LinearMap.smul_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [bd, map_sum, map_zsmul, LinearMap.sum_apply, LinearMap.smul_apply]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [ev0, dif_pos (by omega), mul_ev]
 
@@ -49,7 +50,8 @@ theorem mul_bd_right {s t w : ℤ} (h : s + t = w) {p q : ℕ} (hs : -(p : ℤ) 
   cases q with
   | zero => simp [bd]
   | succ q =>
-    simp only [bd, map_sum, map_zsmul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [bd, map_sum, map_zsmul]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [ev0, dif_pos (by omega), mul_ev]
 
@@ -87,7 +89,8 @@ theorem leibniz : LateralTheory.EtaleFoundations.cupflip_aw_leibniz := by
           push_cast
           rw [mul_add, mul_one, Int.negOnePow_add]
           rcases Int.units_eq_one_or m.negOnePow with e | e <;> simp [e]) M x)
-  rw [ev_delta rfl γ M w _ hw, ev_add, ev_units_smul, aw_eq h, aw_eq h1, aw_eq h2, hb, Sec.map, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [ev_delta rfl γ M w _ hw, ev_add, ev_units_smul, aw_eq h, aw_eq h1, aw_eq h2, hb, Sec.map, map_sum,
     Units.smul_def, Units.smul_def, Finset.smul_sum, Finset.smul_sum, ← Finset.sum_add_distrib, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun p _ => ?_
   have := p.2

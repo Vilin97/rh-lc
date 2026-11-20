@@ -149,7 +149,8 @@ theorem hat_NgX (A : X.B.I.Gf) {u : D.what₂.Word} {Λ : Submodule (𝓞 D.host
     obtain ⟨s, hs⟩ := (Submodule.mem_span_range_iff_exists_fun D.host.E).1 hspan
     have hcoef : ∀ b, (VS D).hT (X.fY b) q = s b := by
       intro b
-      rw [← hs, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hs, map_sum]
       simp only [map_smul, smul_eq_mul, Formalism.L2.SG.Pf.hT_f_e X, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq',
         Finset.mem_univ, if_true]
     choose c hc hcF using fun b => cF_mem X b
@@ -304,7 +305,8 @@ theorem iotaBridgeRAC_holds : IotaBridgeRAC := by
     rw [this]; exact Submodule.smul_mem _ _ hyL
   have hxo : ∀ a, (VS D).hT (X.eX a) x = 0 := by
     intro a
-    rw [hx, map_sub, map_smul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hx, map_sub, map_smul, map_sum]
     simp only [map_smul, smul_eq_mul, X.ef, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq, Finset.mem_univ, if_true, hs]
     ring
   have hxL : x ∈ Lrep Λ (lf D (X.Fu u)) := ⟨hxΛ, orth_of_eX X hxo⟩

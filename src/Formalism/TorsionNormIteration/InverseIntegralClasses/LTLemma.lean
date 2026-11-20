@@ -434,7 +434,8 @@ theorem cc_lin (a : ι → K) : MvPowerSeries.constantCoeff (lin a) = 0 := by
 
 theorem coeff_lin (a : ι → K) (d : ι →₀ ℕ) :
     MvPowerSeries.coeff d (lin a) = ∑ i, a i * (if d = Finsupp.single i 1 then 1 else 0) := by
-  simp only [lin, map_sum, MvPowerSeries.coeff_smul, MvPowerSeries.coeff_X]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [lin, map_sum, MvPowerSeries.coeff_smul, MvPowerSeries.coeff_X]
 
 theorem coeff_lin_single (a : ι → K) (i : ι) :
     MvPowerSeries.coeff (Finsupp.single i 1) (lin a) = a i := by

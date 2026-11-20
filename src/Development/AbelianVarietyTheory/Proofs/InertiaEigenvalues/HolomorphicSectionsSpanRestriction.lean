@@ -85,7 +85,8 @@ theorem cover_form_desc : ∀ (D : D7) (T : CoreJ D), LawsJ T → ∀ j, Formali
     exact Submodule.subset_span ⟨i, rfl⟩
   obtain ⟨c, hc⟩ := mem_span_of_image_mem_span C.σ₂ (rdL C a) (sec C.d.Xo₂ C.d.c₂ a n) hinj g (fun i => (hg i).1) f₂ hf₂s hmem
   refine ⟨m, c, fun i => (ψ i : GA D (T.V j σ) → ℂ), fun i => (ψ i).2, ?_⟩
-  rw [← hc, rd_eq, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hc, rd_eq, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_smulₛₗ, ← rd_eq, hgψ i]
 

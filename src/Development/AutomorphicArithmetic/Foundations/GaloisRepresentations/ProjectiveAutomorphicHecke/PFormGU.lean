@@ -131,7 +131,8 @@ theorem pFormGU_of (hExt : ExtEig2) (hCl : ClassFin) (hXi : XiZeta) (hKer : KerF
         let L : algForms W →ₗ[ℂ] Module.Dual ℂ W.Sp :=
           { toFun := fun F => algForms.val F u.1, map_add' := fun _ _ => rfl, map_smul' := fun _ _ => rfl }
         have e3 := congrArg L e
-        rw [map_sum, map_smul] at e3
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum, map_smul] at e3
         rw [hφu]
         exact e3)
   refine ⟨Φ, ψ, ⟨hΦ0, hΦ.1, fun k hk h g => ?_, fun w hw h1 h2 B hB => ⟨hΦ0, ?_, (hsv w hw h1 h2 B hB).2.2.1, fun p hp i hi => ?_⟩⟩, hψ.1⟩

@@ -85,7 +85,8 @@ theorem UpperTheory.V.Pa.Det.conjCont :
     have e := congrFun (congrFun (hconj g) a) b
     simp only [Matrix.map_apply, Matrix.mul_apply, RingHom.comp_apply] at e
     rw [map_mul, e]
-    simp only [map_sum, map_mul, hP, hR, Algebra.smul_def, Finset.mul_sum, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, hP, hR, Algebra.smul_def, Finset.mul_sum, Finset.sum_mul]
     apply Finset.sum_congr rfl
     intro l _
     apply Finset.sum_congr rfl

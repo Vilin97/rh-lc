@@ -100,7 +100,8 @@ theorem eval_applyAt0 (P : MvPolynomial (KM.XZ Lt N0 N1) ℤ) :
     MvPolynomial.eval (xS N0 l) (KM.applyAt0 N0 N1 l (ThE N0 N1 l) P) =
       MvPolynomial.eval₂ (Int.castRingHom ℂ_[l]) (Sum.elim (xS N0 l) (zS N0 N1 l)) P := by
   unfold KM.applyAt0
-  rw [map_sum, MvPolynomial.eval₂_eq]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, MvPolynomial.eval₂_eq]
   refine Finset.sum_congr rfl fun μ _ => ?_
   rw [MvPolynomial.eval_monomial]
   set e := Finsupp.sumFinsuppEquivProdFinsupp μ with he
@@ -144,7 +145,8 @@ theorem eval_Gxz (nu : Lt → YoungDiagram) (hnu : ∀ s c, (nu s).colLen c ≤ 
         MvPolynomial.X (Sum.inl (s, (i : ℕ), a)) * MvPolynomial.X (Sum.inr (s, a, I s c k))) =
       Matrix.of fun i k : Fin ((nu s).colLen c) => if (i : ℕ) = (I s c k : ℕ) then (1 : ℂ_[l]) else 0 := by
     ext i k
-    rw [RingHom.mapMatrix_apply, Matrix.map_apply, Matrix.of_apply, Matrix.of_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [RingHom.mapMatrix_apply, Matrix.map_apply, Matrix.of_apply, Matrix.of_apply, map_sum]
     simp only [map_mul, MvPolynomial.eval₂Hom_X', Sum.elim_inl, Sum.elim_inr]
     exact sum_xz N0 N1 l (hnu s c) s i (I s c k)
   rw [RingHom.map_det, hM, det_ind]

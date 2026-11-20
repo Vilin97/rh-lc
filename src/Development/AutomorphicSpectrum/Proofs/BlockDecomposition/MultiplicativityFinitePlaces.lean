@@ -13,7 +13,8 @@ theorem det_mul_submatrix_expand {K ι ι' κ : Type} [CommRing K] [Fintype ι] 
     simp [Matrix.mul_apply, Finset.sum_apply]
   have key : ∀ M : Matrix κ κ K,
       M.det = (detRowAlternating (R := K) (n := κ)).toMultilinearMap M := fun _ => rfl
-  rw [key, h, MultilinearMap.map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [key, h, MultilinearMap.map_sum]
   refine Finset.sum_congr rfl fun s _ => ?_
   rw [MultilinearMap.map_smul_univ, smul_eq_mul]
   rfl

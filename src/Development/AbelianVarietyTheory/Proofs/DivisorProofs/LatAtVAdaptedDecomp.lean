@@ -66,7 +66,8 @@ theorem two_terms_eq {n d d₁ : ℕ} (a : AF F) (x x₀ : Fin n → E) (w : Fin
       Matrix.vecMulVec (fun i => a • inclR (F := F) (AF F) (x i * s')) (incV F w) +
         Matrix.vecMulVec (incV F x₀) (incM F ι' *ᵥ fun m => a • inclR (F := F) (AF F) (s * u' m)) := by
   ext i j
-  simp only [Matrix.add_apply, Matrix.smul_apply, incM, incV, Matrix.map_apply, Matrix.vecMulVec_apply, Matrix.mulVec,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.add_apply, Matrix.smul_apply, incM, incV, Matrix.map_apply, Matrix.vecMulVec_apply, Matrix.mulVec,
     dotProduct, Pi.smul_apply, smul_eq_mul, map_mul, map_sum]
   simp only [Algebra.smul_def, Finset.mul_sum, map_mul]
   congr 1

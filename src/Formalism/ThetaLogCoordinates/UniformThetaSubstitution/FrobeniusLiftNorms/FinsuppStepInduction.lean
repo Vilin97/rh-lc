@@ -49,7 +49,8 @@ lemma shiftPoly_C (b : κ → ι → K) (a : K) :
 
 lemma shiftPoly_sum {α : Type*} (b : κ → ι → K) (s : Finset α) (f : α → MvPolynomial ι K) :
     shiftPoly b (∑ a ∈ s, f a) = ∑ a ∈ s, shiftPoly b (f a) := by
-  simp only [shiftPoly_eq, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [shiftPoly_eq, map_sum]
 
 lemma hasseDir_zero_right (b : κ → ι → K) (β : κ →₀ ℕ) :
     hasseDir b β (0 : MvPolynomial ι K) = 0 := by
@@ -77,7 +78,8 @@ lemma pderiv_shiftGen (b : κ → ι → K) (x : ι) (k : κ) :
     MvPolynomial.pderiv k (shiftGen b x) = MvPolynomial.C (MvPolynomial.C (b k x)) := by
   classical
   unfold shiftGen
-  rw [map_add, MvPolynomial.pderiv_C, zero_add, map_sum, Finset.sum_eq_single k]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_add, MvPolynomial.pderiv_C, zero_add, map_sum, Finset.sum_eq_single k]
   · rw [MvPolynomial.pderiv_C_mul, MvPolynomial.pderiv_X_self, mul_one]
   · intro k' _ hk'
     rw [MvPolynomial.pderiv_C_mul, MvPolynomial.pderiv_X_of_ne hk', mul_zero]
@@ -715,7 +717,8 @@ lemma degLE_minor_row (W : Finset κ) (ξ0 : Fin r0 → K) (hW : ∀ k ∈ W, ξ
   convert key using 2
   refine Matrix.ext fun i c => ?_
   simp only [Matrix.of_apply, shiftGen]
-  rw [hφ, RingHom.comp_apply, map_sum, map_sum, Finset.sum_mul, ← Finset.sum_add_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hφ, RingHom.comp_apply, map_sum, map_sum, Finset.sum_mul, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [← Finset.sum_add_sum_compl W, Finset.mul_sum, mul_add, mul_add, mul_add, Finset.mul_sum,
     Finset.mul_sum]

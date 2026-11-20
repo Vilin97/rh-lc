@@ -30,7 +30,8 @@ theorem resS_idemSum_eq_zero {D : D7} {e : AE D} {P : Finset (Pl D.host.E)} (he 
     rw [← Finset.sum_coe_sort P]
     refine (GlobalTheory.TameProd.map_sum_ringHom (toEAf D) _ _).trans ?_
     exact (map_sum (Formalism.L2.Herm.intAf D.host.F D.host.E).subtype t Finset.univ).symm
-  rw [e1, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e1, map_sum]
   refine Finset.sum_eq_zero fun Q _ => ?_
   exact GlobalTheory.TameProd.resS_idem_eq_zero (hes Q Q.2) (fun h => hPP (by rw [← h]; exact Q.2)) _
 

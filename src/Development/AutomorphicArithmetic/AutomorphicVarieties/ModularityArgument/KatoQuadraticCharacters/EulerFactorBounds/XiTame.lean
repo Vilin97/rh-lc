@@ -193,7 +193,8 @@ private theorem tm_prod {Ω : Type} [Field Ω] [Algebra ℚ Ω] [IsAlgClosure �
   obtain ⟨h1, h2, -⟩ := sCls Ω ε X l n
   have hs : ∀ g : X.Kˣ, slD X N (g : X.K) = (slU X (toGQ !![(N : ℤ), 0; 0, 1]) g : X.Kˣ) := fun g => rfl
   simp only [hs]
-  rw [map_prod, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_prod, ← map_sum]
   have key : Rep X l n (∏ i ∈ S, slU X (toGQ !![(N : ℤ), 0; 0, 1]) (f i))
       (∑ i ∈ S, clsK X l n (slU X (toGQ !![(N : ℤ), 0; 0, 1]) (f i) : X.Kˣ)) := by
     induction S using Finset.induction_on with
@@ -234,7 +235,8 @@ theorem sXiTame : SXiTame := by
     simp only [Cnd, e, zmod_val_cast_compose h hN, zmod_val_cast_compose h hl]
   rw [map_sub, sub_eq_zero]
   unfold Xi
-  rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum]
   rw [← Finset.sum_fiberwise_of_maps_to (g := Matrix.GeneralLinearGroup.map (ZMod.castHom h (ZMod M)))
     (t := Finset.univ.filter (fun m : GL (Fin 2) (ZMod M) =>
       Cnd l N g (m : Matrix (Fin 2) (Fin 2) (ZMod M)) ∧ P (Matrix.GeneralLinearGroup.det m)))]

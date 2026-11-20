@@ -49,7 +49,8 @@ theorem exists_dual_family {E : Type} [Field E] [NumberField E] [StarRing E] {r 
   have hc : ∀ i x, ψ i x = ∑ j, x j * c i j := by
     intro i x
     conv_lhs => rw [pi_eq_sum_univ' x]
-    simp [c, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [c, map_sum]
   let s' : Fin n → Fin r → E := fun i => star (c i ᵥ* G⁻¹)
   have hs' : ∀ i j, ∑ k, star (s' i k) * G k j = c i j := by
     intro i j
@@ -75,9 +76,11 @@ theorem exists_dual_family {E : Type} [Field E] [NumberField E] [StarRing E] {r 
   · have key : (∑ i, (ψ i).smulRight (s i) : (Fin r → E) →ₗ[E] (Fin r → E)) = LinearMap.id := by
       refine LinearMap.ext_on hspan fun x hx => ?_
       have h1 : f (σ ⟨x, hx⟩) = ⟨x, hx⟩ := LinearMap.congr_fun hσ ⟨x, hx⟩
-      rw [pi_eq_sum_univ' (σ ⟨x, hx⟩), map_sum] at h1
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [pi_eq_sum_univ' (σ ⟨x, hx⟩), map_sum] at h1
       have h2 := congrArg Λ.subtype h1
-      rw [map_sum] at h2
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum] at h2
       rw [LinearMap.sum_apply, LinearMap.id_apply]
       refine Eq.trans (Finset.sum_congr rfl fun i _ => ?_) h2
       rw [LinearMap.smulRight_apply, show ψ i x = _ from hψ i ⟨x, hx⟩, algebraMap_smul, map_smul, map_smul]

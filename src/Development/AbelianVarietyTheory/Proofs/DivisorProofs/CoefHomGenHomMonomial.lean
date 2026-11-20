@@ -79,7 +79,8 @@ theorem coefHom_genHom_monomial (wf : Fin N × Fin N → M) (h : ∀ a b s, wx (
 theorem coefHom_genHom (wf : Fin N × Fin N → M) (h : ∀ a b s, wx (b, s) = u (a, b) + wf (a, s))
     (f : MvPolynomial (Fin N × Fin N) O) (e : M) (hf : IsWeightedHomogeneous wf f e) : CoefHom wx u (genHom O N f) e := by
   intro m
-  rw [f.as_sum, map_sum, coeff_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [f.as_sum, map_sum, coeff_sum]
   refine IsWeightedHomogeneous.sum _ _ _ fun d hd => ?_
   rw [← hf (mem_support_iff.1 hd)]
   exact coefHom_genHom_monomial wx u wf h d _ m
@@ -192,7 +193,8 @@ theorem extHom_genHom {Z : Type} (β : MvPolynomial (Fin N × Fin N) O →ₐ[O]
     (f : MvPolynomial (Fin N × Fin N) O) (hf : f ∈ dualWeyl O N N ν) :
     extHom O N β (genHom O N f) = ∑ m ∈ expSet N ν, map C (β (monomial m 1)) * C (AddMonoidAlgebra.coeff (genHom O N f) m) := by
   conv_lhs => rw [genHom_eq_sum O N ν f hf]
-  simp only [map_sum, extHom_monomial]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, extHom_monomial]
 
 theorem extHom_id (G : MvPolynomial (Fin N × Fin N) (MvPolynomial (Fin N × Fin N) O)) : extHom O N (AlgHom.id O _) G = G := by
   have : extHom O N (AlgHom.id O _) = RingHom.id _ := by
@@ -238,7 +240,8 @@ theorem extHom_colAddGen (l j : Fin N) (ν : Fin N → ℕ) (f : MvPolynomial (F
         simp [extHom, genHom_X, elemHom, apply_ite (map C), add_mul, Finset.sum_add_distrib, ite_and]
       simp only [RingHom.comp_apply, AlgHom.toRingHom_eq_coe, RingHom.coe_coe]
       rw [genHom_X]
-      simp only [RingHom.comp_apply, AlgHom.toRingHom_eq_coe, RingHom.coe_coe, map_sum, map_mul, Θ, eval₂Hom_X', eval₂Hom_C, e1]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [RingHom.comp_apply, AlgHom.toRingHom_eq_coe, RingHom.coe_coe, map_sum, map_mul, Θ, eval₂Hom_X', eval₂Hom_C, e1]
       have e2 : ∀ b, extHom O N (colAddGen O l j) (X (v.1, b)) =
           X (some (v.1, b)) + if b = j then X none * X (some (v.1, l)) else 0 := by
         intro b
@@ -249,7 +252,8 @@ theorem extHom_colAddGen (l j : Fin N) (ν : Fin N → ℕ) (f : MvPolynomial (F
   refine (RingHom.congr_fun this f).trans ?_
   show Θ (genHom O N f) = _
   conv_lhs => rw [genHom_eq_sum O N ν f hf]
-  rw [map_sum, Finset.sum_product]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_product]
   refine Finset.sum_congr rfl fun m _ => ?_
   simp only [Θ, eval₂Hom_monomial, RingHom.comp_apply, AlgHom.toRingHom_eq_coe, RingHom.coe_coe]
   rw [extHom_genHom O N _ ν _ (coeff_genHom_mem O N ν f hf m), Finset.sum_mul]

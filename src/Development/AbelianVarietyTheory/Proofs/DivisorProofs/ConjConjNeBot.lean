@@ -79,7 +79,8 @@ theorem kill_of_inId (hψ : IsStdChar D ψ (-1)) (hcc : D.host.ccK = ⊤) (hLS :
     choose c hc using fun k => toEAf_surj (D := D) (r k : EAf D)
     refine ⟨c, fun k => hc k ▸ (r k).2, ?_⟩
     have h3 := congrArg (Formalism.L2.Herm.intAf D.host.F D.host.E).subtype hr
-    rw [map_sum] at h3
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at h3
     refine h3.symm.trans (Finset.sum_congr rfl fun k _ => ?_)
     rw [map_mul, hc, mul_comm]
     rfl
@@ -99,7 +100,8 @@ theorem kill_of_inId (hψ : IsStdChar D ψ (-1)) (hcc : D.host.ccK = ⊤) (hLS :
       exact Finset.sum_congr rfl fun k _ => mul_left_comm _ _ _
   have e2 : t = ∑ k, incA D (f k : D.host.E) • u k := half_ext hinf ht
     (fun i j => by rw [hent, ← mul_assoc, hee]) fun i j => by
-      rw [hent, ← ht i j, RingHom.map_mul, RingHom.map_mul, hc2, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hent, ← ht i j, RingHom.map_mul, RingHom.map_mul, hc2, map_sum]
       simp only [RingHom.map_mul]
   rw [e2]
   exact Finset.sum_induction _ (fun t => ψ (symplO S T t y) = 1)

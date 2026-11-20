@@ -41,7 +41,8 @@ theorem cupflip_eta_mk_pf : cupflip_eta_mk := by
   obtain ⟨η, hη⟩ := LateralTheory.Fin.EtaleCochainExistsOfNaturalEvaluation.intersectionNumber_baseChange R (E := E) (I := K) (n := k - 1)
     (fun N s _ U x => phi μ hk α β x s (h N)) (by
       intro N s hs V U g x
-      simp only [phi, Finsupp.sum, Sec.res, map_sum, map_zsmul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [phi, Finsupp.sum, Sec.res, map_sum, map_zsmul]
       refine Finset.sum_congr rfl fun z _ => ?_
       congr 1
       unfold phiT

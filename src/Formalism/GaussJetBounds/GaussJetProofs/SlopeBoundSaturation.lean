@@ -56,7 +56,8 @@ lemma sat_coeff_prod_rename {R S τ σ : Type} [CommSemiring R] [Fintype S] [Dec
       ∑ n ∈ (f s).support, monomial (n.mapDomain (e s)) (AddMonoidAlgebra.coeff (f s) n) := by
     intro s
     conv_lhs => rw [← support_sum_monomial_coeff (f s)]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     exact Finset.sum_congr rfl fun n _ => rename_monomial _ _ _
   simp_rw [h1]
   rw [Finset.prod_univ_sum, coeff_sum]
@@ -236,7 +237,8 @@ theorem slope_bound_saturation : ∀ (K : Type) [NormedField K] [IsUltrametricDi
         (X (s, i, a) : MvPolynomial (ZMod d × Fin N0 × Fin N0) K)) (p s) (hp s) (A s) =
         ∑ m, φ (a s m) • rename (satEmb d N0 s) (map φ (b s m)) := by
       intro s
-      rw [sat_minorProd_eq, ← sat_map_bidet φ, ← ha s, map_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [sat_minorProd_eq, ← sat_map_bidet φ, ← ha s, map_sum, map_sum]
       refine Finset.sum_congr rfl fun m _ => ?_
       rw [smul_eq_C_mul, map_mul, map_C, map_mul, rename_C, ← smul_eq_C_mul]
     simp_rw [h3]

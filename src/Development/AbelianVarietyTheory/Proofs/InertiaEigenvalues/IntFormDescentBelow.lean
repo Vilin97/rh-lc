@@ -58,7 +58,8 @@ theorem exists_local_basis {F : Type} [Field F] [NumberField F] (p : HeightOneSp
       fun x hx i => by
         obtain ⟨o, ho, hxo⟩ := hgen (e x) (heC x) hx
         have hx' : x = ∑ k, o k • B.equivFun ⟨g k, hg k⟩ := heinj (by
-          rw [hxo, map_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [hxo, map_sum]
           exact Finset.sum_congr rfl fun k _ => by rw [map_smul, he1])
         rw [hx', Finset.sum_apply, Finset.mul_sum]
         refine Valuation.map_sum_le _ fun k _ => ?_
@@ -80,12 +81,14 @@ theorem exists_local_basis {F : Type} [Field F] [NumberField F] (p : HeightOneSp
     obtain ⟨c, hc⟩ := (Submodule.mem_span_range_iff_exists_fun F).1 hxsp
     refine ⟨c, ?_⟩
     have := he1 ⟨f, hf⟩
-    rw [← hc, map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hc, map_sum] at this
     exact this.symm.trans (Finset.sum_congr rfl fun k _ => map_smul _ _ _)
   · have hy : (∑ k, c k • b k) ∈ S := by
       show Int (e _)
       convert hc using 1
-      rw [map_sum]; exact Finset.sum_congr rfl fun k _ => map_smul _ _ _
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]; exact Finset.sum_congr rfl fun k _ => map_smul _ _ _
     obtain ⟨a, ha, hya⟩ := hbsp _ hy
     have hz : ∑ k, (c k - a k) • b k = 0 := by
       simp only [sub_smul, Finset.sum_sub_distrib]; rw [← hya, sub_self]
@@ -148,14 +151,16 @@ theorem intForm_descent_below (l e : ℕ) (hl : l.Prime) : ∃ c₀ : ℕ, ∀ (
     obtain ⟨cc, hcc⟩ := hspanβ f (GlobalTheory.T.mem_cuspForms_allEmbeddings_of_inclusion_reading D T hL j hj w hlast f hf.1 hf.2)
     refine ⟨cc, ?_⟩
     rw [← hfe, hcc]
-    simp only [CoreJ.phiJ, map_sum, map_smulₛₗ, map_smul, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [CoreJ.phiJ, map_sum, map_smulₛₗ, map_smul, Finset.smul_sum]
     exact Finset.sum_congr rfl fun k _ => smul_comm _ _ _
   choose cc hcc using hcc'
   have hσ₂ : ∀ z, C.σ₂ (C.inc z) = T.σ₀ z := fun z => congrArg (fun f => f z) hU.2.2.1
   let y : Fin m → C.d.c₂.F := fun k => ∑ i, x i * C.inc (cc i k)
   have hsum : φ = ∑ k, C.σ₂ (y k) • T.phiJ j T.σ₀ (wtA w) (β k) := by
     rw [hφe]
-    simp only [y, hcc, Finset.smul_sum, smul_smul, map_sum, Finset.sum_smul, map_mul, hσ₂]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [y, hcc, Finset.smul_sum, smul_smul, map_sum, Finset.sum_smul, map_mul, hσ₂]
     exact Finset.sum_comm
   have hφ' : (∑ k, C.σ₂ (y k) • T.phiJ j T.σ₀ (wtA w) (β k)) ∈ C.intForms (wtA w) w.n {la} := hsum ▸ hφ
   obtain ⟨N, hN⟩ := GlobalTheory.T.traceCombination_coverForm_integral_over_prime D T hL j hj T.σ₀ hσ _ _ hD hspan hK C hU hP la p hp m β hβs

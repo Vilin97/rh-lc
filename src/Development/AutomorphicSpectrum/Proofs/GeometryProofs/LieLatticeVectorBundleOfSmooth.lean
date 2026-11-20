@@ -30,7 +30,8 @@ theorem exists_isCoord (c : Module.Basis (Fin g) B Ω[B⁄A]) :
   refine ⟨fun k => (c.coord k).compDer (KaehlerDifferential.D A B), w, ?_, ?_⟩
   · intro i k
     have := congrArg (c.coord k) (hw i)
-    rw [Finsupp.sum, map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finsupp.sum, map_sum] at this
     rw [Finsupp.sum]
     simp only [map_smul, smul_eq_mul] at this
     refine Eq.trans (Finset.sum_congr rfl fun x _ => rfl) (this.trans ?_)
@@ -53,13 +54,15 @@ theorem exists_isCoord (c : Module.Basis (Fin g) B Ω[B⁄A]) :
       simp [L, δ', δl]
     have hc : ∀ k, L (c k) = (w k).sum (fun b' a => ε a • δ b') := by
       intro k
-      rw [← hw k, Finsupp.sum, map_sum, Finsupp.sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hw k, Finsupp.sum, map_sum, Finsupp.sum]
       refine Finset.sum_congr rfl fun b' _ => ?_
       rw [map_smul, hLD]
       rfl
     rw [← hLD b]
     conv_lhs => rw [← c.sum_repr (KaehlerDifferential.D A B b)]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_smul, hc]
     rfl
@@ -243,7 +246,8 @@ theorem co_onto (hc : IsChart J J₀) (hε : IsUnitIn J x ε) (hd : IsCoord d w)
     rw [hd.1 i k]; split_ifs <;> simp
   have e : yco ε w (fun b => (defo d ε y b).snd) i =
       ∑ k, ε ((w i).sum fun b a => a * d k b) • y k := by
-    simp only [yco, defo, Finsupp.sum, RingHom.coe_mk, MonoidHom.coe_mk, OneHom.coe_mk,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [yco, defo, Finsupp.sum, RingHom.coe_mk, MonoidHom.coe_mk, OneHom.coe_mk,
       TrivSqZeroExt.snd_add, TrivSqZeroExt.snd_inl, TrivSqZeroExt.snd_inr, zero_add, Finset.smul_sum, map_sum,
       Finset.sum_smul, map_mul, mul_smul]
     exact Finset.sum_comm
@@ -259,7 +263,8 @@ theorem co_hom (l : M →ₗ[T] N) {v : LieEx.ob x M ⟶ G} {y : Fin g → M} (h
   · simpa using hf.1 b
   · simp [hf.2 a]
   · change l (y i) = _
-    rw [hy, yco, yco, Finsupp.sum, Finsupp.sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hy, yco, yco, Finsupp.sum, Finsupp.sum, map_sum]
     simp
 
 theorem co_mul (hc : IsChart J J₀) (hε : IsUnitIn J x ε) {v v' : LieEx.ob x T ⟶ G} {y y' : Fin g → T}
@@ -310,7 +315,8 @@ theorem co_base (φ : T →+* T') {x' : Spec (CommRingCat.of T') ⟶ X} {v : Lie
   · simpa [dualMap] using congrArg φ (hf.1 b)
   · simp [dualMap, hf.2 a]
   · change φ (y i) = _
-    rw [hy, yco, yco, Finsupp.sum, Finsupp.sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hy, yco, yco, Finsupp.sum, Finsupp.sum, map_sum]
     simp [dualMap]
 
 theorem tan_iff (φ : T →+* T') {x' : Spec (CommRingCat.of T') ⟶ X}

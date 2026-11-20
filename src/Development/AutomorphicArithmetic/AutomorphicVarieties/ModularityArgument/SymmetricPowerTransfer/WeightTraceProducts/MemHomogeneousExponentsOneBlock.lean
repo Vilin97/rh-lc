@@ -104,7 +104,8 @@ theorem coeff_glue_prod (μ : K → (Unit × Fin d →₀ ℕ)) (P : K → MvPol
       ∑ m ∈ (P k).support, rename (inB k) (monomial m (AddMonoidAlgebra.coeff (P k) m)) := by
     intro k
     conv_lhs => rw [(P k).as_sum]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
   simp_rw [hP]
   rw [Finset.prod_univ_sum]
   simp_rw [prod_rename_monomial]
@@ -127,7 +128,8 @@ theorem sbs_rename (g : K → GL (Fin d) ℂ) (k : K) (P : MvPolynomial (Unit ×
       (rename (inB k)).comp (sbs fun _ : Unit => g k) := by
     apply MvPolynomial.algHom_ext
     rintro ⟨⟨⟩, i⟩
-    simp [sbs, inB, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [sbs, inB, map_sum]
   exact congrArg (fun φ => φ P) h
 
 theorem coeff_sbs_glue (g : K → GL (Fin d) ℂ) (μ ν : K → (Unit × Fin d →₀ ℕ)) :

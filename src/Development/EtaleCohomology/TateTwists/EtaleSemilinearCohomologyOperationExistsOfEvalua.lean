@@ -40,7 +40,8 @@ theorem img_delta (hD : LateralTheory.EtaleFoundations.pp_ev_delta) (ρ : SemiMa
     rw [(hD R hm β U).2 p _ t rfl ht x, (hD S hm α U).2 p _ t rfl ht x]
     rw [map_add, ← ρ.comm, ← h]
     congr 1
-    rw [Units.smul_def, Units.smul_def, map_zsmul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Units.smul_def, Units.smul_def, map_zsmul, map_sum]
     congr 1
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_zsmul, ← h]

@@ -45,7 +45,8 @@ def negDatum (D : Datum H) : Datum H where
     · simp [baseChange_neg_apply, h2]
     · simpa [baseChange_neg_apply] using h3 x hx
     · obtain ⟨e1, e2, e3⟩ := h4 a A (starRingEnd ℂ t) hA (by
-        rw [ht, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [ht, map_sum]
         refine Finset.sum_congr rfl fun τ _ => ?_
         simp [add_comm])
       refine ⟨by rw [LinearMap.neg_comp, LinearMap.comp_neg, e1], by simpa using e2, ?_⟩

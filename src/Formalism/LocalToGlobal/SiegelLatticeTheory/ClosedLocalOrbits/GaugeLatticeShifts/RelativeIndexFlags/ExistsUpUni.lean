@@ -23,7 +23,8 @@ theorem apply_comb {φ : S.V ≃ₗ[E] S.V} {A : Matrix (Fin (r + 1)) (Fin (r + 
     (B : Matrix (Fin (r + 1)) (Fin (r + 1)) E) (b : Fin (r + 1)) :
     φ (∑ c, B c b • f c) = ∑ d, (A * B) d b • f d := by
   have h' : ∀ c, φ (f c) = ∑ d, A d c • f d := h
-  simp only [map_sum, map_smul, h', Finset.smul_sum, smul_smul, Matrix.mul_apply, Finset.sum_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, h', Finset.smul_sum, smul_smul, Matrix.mul_apply, Finset.sum_smul]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun d _ => Finset.sum_congr rfl fun c _ => by rw [mul_comm]
 

@@ -105,7 +105,8 @@ theorem hTens_mul_right (c : S →ₐ[R] S) {α β β' : Type} [Fintype α] [Fin
 theorem gram_swap (c : S →ₐ[R] S) (hc : ∀ a, c (c a) = a) {α β : Type} [Fintype α] [Fintype β] (ε : S)
     (J : Matrix α α S) (hJ : ∀ i j, c (J j i) = ε * J i j) (P : Matrix α β S) (i j : β) :
     c ((Pᵀ * J * P.map c) j i) = ε * (Pᵀ * J * P.map c) i j := by
-  simp only [Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, map_sum, map_mul, hc, hJ, Finset.sum_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, map_sum, map_mul, hc, hJ, Finset.sum_mul,
     Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun r _ => Finset.sum_congr rfl fun s _ => ?_
@@ -160,7 +161,8 @@ theorem symp_gramM (c : S →ₐ[R] S) (hc : ∀ a, c (c a) = a) (J₁ : Matrix 
     rintro (i | i) (j | j) <;> simp [hJ, hK]
   have h : c (-∑ i, ∑ j, pos Z' i * Matrix.fromBlocks (-gramM 1 J₁) 0 0 K₁ i j * c (mom Z j)) =
       ∑ i, ∑ j, mom Z i * Matrix.fromBlocks (gramM 1 J₁) 0 0 K₁ i j * c (pos Z' j) := by
-    simp only [map_neg, map_sum, map_mul, hc, hb, ← Finset.sum_neg_distrib]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_neg, map_sum, map_mul, hc, hb, ← Finset.sum_neg_distrib]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
     ring
@@ -304,7 +306,8 @@ theorem exists_pair_fin (σ : E →ₐ[F] E) (d : ℕ) (K : Matrix (Fin d) (Fin 
     intro a b
     rw [← GlobalTheory.PairCoords.pairBil_apply]
     conv_rhs => rw [← B₂.sum_equivFun b, ← B₁.sum_equivFun a]
-    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, hk, smul_eq_mul, mul_ite, mul_one,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, hk, smul_eq_mul, mul_ite, mul_one,
       mul_zero, Finset.sum_ite_eq, Finset.mem_univ, if_true, dotProduct]
     exact Finset.sum_congr rfl fun i _ => mul_comm _ _
   have hrat : ∀ (b : Module.Basis (Fin (2 * d)) F (Fin d → E)) (a : Fin d → E),

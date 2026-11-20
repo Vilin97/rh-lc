@@ -38,7 +38,8 @@ theorem pointwise {X : Type} [MeasurableSpace X] {ν : Measure X}
   have hw2 : ∀ c, ‖w c‖ ^ 2 = ∑ j : s, ‖c j‖ ^ 2 := by
     intro c
     have h := hon.inner_sum c c Finset.univ
-    rw [@norm_sq_eq_re_inner ℂ, h, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [@norm_sq_eq_re_inner ℂ, h, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [RCLike.conj_mul, ← RCLike.ofReal_pow, RCLike.ofReal_re]
 
@@ -46,7 +47,8 @@ theorem pointwise {X : Type} [MeasurableSpace X] {ν : Measure X}
   have hD : ∀ c ∈ D, ∀ᵐ x ∂ν, ‖∑ j : s, c j * T (e j) x‖ ≤ C * ‖w c‖ := by
     intro c _
     have hlin : T (w c) = ∑ j : s, c j • T (e j) := by
-      simp only [w, map_sum, map_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [w, map_sum, map_smul]
     have hsm : ∀ᵐ x ∂ν, ∀ j : s, (c j • T (e j) : Lp ℂ 2 ν) x = c j * T (e j) x := by
       rw [ae_all_iff]
       intro j

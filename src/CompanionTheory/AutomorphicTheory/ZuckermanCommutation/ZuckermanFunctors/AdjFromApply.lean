@@ -117,7 +117,8 @@ def adjEquiv : ((Fin n → V) →ₗ[ℂ] (Unit → V')) ≃ₗ[ℂ] ((Unit → 
   left_inv p := LinearMap.ext fun y => funext fun u => by
     rw [adjFrom_apply]
     simp only [adjTo_apply]
-    rw [← Finset.sum_apply, ← map_sum, Finset.univ_sum_single]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Finset.sum_apply, ← map_sum, Finset.univ_sum_single]
   right_inv i := LinearMap.ext fun x => funext fun d => by
     rw [adjTo_apply, adjFrom_apply, Finset.sum_eq_single d]
     · simp

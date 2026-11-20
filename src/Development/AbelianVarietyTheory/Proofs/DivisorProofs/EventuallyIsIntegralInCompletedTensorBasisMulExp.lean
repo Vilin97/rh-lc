@@ -13,7 +13,8 @@ theorem basV_repr_mul (G : HTGroup p) (v : AwayP p) (a b : Qv v ⊗[ℚ] G.C) (k
       algebraMap ℚ (Qv v) ((Module.finBasis ℚ G.C).repr
         (Module.finBasis ℚ G.C i * Module.finBasis ℚ G.C j) k) := by
   conv_lhs => rw [← (basV G v).sum_repr a, ← (basV G v).sum_repr b]
-  simp only [Finset.sum_mul, Finset.mul_sum, smul_mul_smul, map_sum, map_smul, Finset.sum_apply',
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finset.sum_mul, Finset.mul_sum, smul_mul_smul, map_sum, map_smul, Finset.sum_apply',
     Finsupp.smul_apply, smul_eq_mul, basV, Algebra.TensorProduct.basis_apply,
     Algebra.TensorProduct.tmul_mul_tmul, one_mul, Algebra.TensorProduct.basis_repr_tmul,
     Finsupp.mapRange_apply]

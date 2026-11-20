@@ -30,7 +30,8 @@ theorem sq_norm_sum_mul_index_le {G : Type*} [AddCommGroup G] [Fintype G] (Q : A
     · exact h3
   have hexp : (∑ u, f u) * conj (∑ u, f u) = ∑ h, ∑ u, f (u + h) * conj (f u) := by
     calc (∑ u, f u) * conj (∑ u, f u) = ∑ w, ∑ u, f w * conj (f u) := by
-          rw [map_sum, Finset.sum_mul_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [map_sum, Finset.sum_mul_sum]
       _ = ∑ u, ∑ w, f w * conj (f u) := Finset.sum_comm
       _ = ∑ u, ∑ h, f (u + h) * conj (f u) := Finset.sum_congr rfl fun u _ =>
           (Fintype.sum_equiv (Equiv.addLeft u) (fun h => f (u + h) * conj (f u))
@@ -246,7 +247,8 @@ theorem norm_gauss_sum_le : ∀ {F : Type} [Field F] [ValuativeRel F] [Topologic
       refine ⟨∑ a, ((τ a : F) + (ϖ : F) ^ N * (ν a : F)),
         sum_mem fun a _ => add_mem (τ a).2 (mul_mem (pow_mem ϖ.2 _) (ν a).2), ?_⟩
       apply hinjA
-      rw [algebraMap_nrm_add_sub_nrm_eq_sum L nrm hnrm, map_mul (algebraMap F E), map_sum, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [algebraMap_nrm_add_sub_nrm_eq_sum L nrm hnrm, map_mul (algebraMap F E), map_sum, Finset.mul_sum]
       refine Finset.sum_congr rfl fun a _ => ?_
       rw [map_add, map_mul (algebraMap F E), ← hτ a, ← hν a, hιp]
       simp only [Pi.smul_apply, smul_eq_mul, map_mul, hcje, L.cj_cj]

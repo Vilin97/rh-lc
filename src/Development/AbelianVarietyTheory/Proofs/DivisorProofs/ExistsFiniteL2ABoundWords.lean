@@ -45,7 +45,8 @@ theorem exists_bound_foldr_le {M U : Type*} [AddCommGroup M] [Module ℝ M] [Nor
       set y := l.foldr (fun u x => D u x) m with hy
       have e : T (D u y) = ∑ j, b.repr u j • T (D (b j) y) := by
         conv_lhs => rw [← b.sum_repr u]
-        simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply]
       rw [e]
       have hR : 0 ≤ R := (norm_nonneg u).trans (hu u List.mem_cons_self)
       refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun j _ => ?_)

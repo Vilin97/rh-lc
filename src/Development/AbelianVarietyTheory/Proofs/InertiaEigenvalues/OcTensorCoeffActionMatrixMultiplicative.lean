@@ -37,7 +37,8 @@ theorem actMat_props {Z O N C : Type} [CommRing Z] [CommRing O] [Algebra Z O] [A
     rw [Matrix.mul_apply, hA, mul_smul]
     conv_lhs => rw [← b.sum_repr (a' • b j)]
     rw [Finset.smul_sum]
-    simp only [hc, map_sum, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.smul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hc, map_sum, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.smul_apply,
       smul_eq_mul, map_mul, hA]
     exact Finset.sum_congr rfl fun k _ => mul_comm _ _
 

@@ -244,7 +244,8 @@ theorem dilate_sub_mem_elemSpan (Φ : k → ℂ) (hΦ : IsLC Φ) (hΦ' : IsCS Φ
   have hD : ∀ f x, D f x = f ((a : k) * x) - α * f x := fun f x => rfl
   have hΨ : (fun x => Φ (a * x) - ((absPow k 1 a : ℂˣ) : ℂ)⁻¹ * Φ x) = D Φ := by
     funext x; rw [hD, hα]
-  rw [hΨ, hdec, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hΨ, hdec, map_sum]
   refine Submodule.sum_mem _ fun B hB => ?_
   obtain ⟨c, rfl⟩ := hQ' B hB
   have hB : (ball c s).indicator Φ = Φ c • (ball c s).indicator (1 : k → ℂ) := by

@@ -106,10 +106,12 @@ theorem spans_dual_base {V : Type} [AddCommGroup V] [Module Qp V] [FiniteDimensi
     intro g i y
     have h1 : actVdR PD ρ g y = ∑ j, PD.actdR g (E.repr y j) • E j := by
       conv_lhs => rw [← E.sum_repr y]
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [hact, (hinv _).1 (hE j) g]
-    rw [h1, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h1, map_sum]
     simp [Basis.coord_apply, Finsupp.single_apply]
   let e := LinearEquiv.ofBijective β.flip hb
   let w : Fin (Module.finrank Qp V) → V' := fun j => e.symm (bV.coord j)
@@ -120,10 +122,12 @@ theorem spans_dual_base {V : Type} [AddCommGroup V] [Module Qp V] [FiniteDimensi
     intro v'
     apply hb.1
     refine LinearMap.ext fun x => ?_
-    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply,
       LinearMap.flip_apply, hw, smul_eq_mul]
     conv_lhs => rw [← bV.sum_repr x]
-    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply,
       smul_eq_mul, Basis.coord_apply]
     exact Finset.sum_congr rfl fun j _ => mul_comm _ _
   let π : V → (V' ⊗[Qp] F) →ₗ[Qp] F := fun x =>
@@ -163,8 +167,10 @@ theorem spans_dual_base {V : Type} [AddCommGroup V] [Module Qp V] [FiniteDimensi
   let d' : Fin m → V' ⊗[Qp] F := fun i => ∑ j, w j ⊗ₜ[Qp] E.coord i (bV j ⊗ₜ[Qp] (1 : F))
   have hπd' : ∀ x i, π x (d' i) = E.coord i (x ⊗ₜ[Qp] (1 : F)) := by
     intro x i
-    rw [hdec (x ⊗ₜ[Qp] (1 : F)), map_sum]
-    simp only [d', map_sum, hπ, hw, hκ, map_smul, smul_eq_mul, smul_one_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hdec (x ⊗ₜ[Qp] (1 : F)), map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [d', map_sum, hπ, hw, hκ, map_smul, smul_eq_mul, smul_one_mul]
   have hd'inv : ∀ i g, actVdR PD ρ' g (d' i) = d' i := by
     intro i g
     apply hπext
@@ -178,7 +184,8 @@ theorem spans_dual_base {V : Type} [AddCommGroup V] [Module Qp V] [FiniteDimensi
   refine ⟨m, c, d', fun i => (hinv' _).2 (hd'inv i), ?_⟩
   apply hπext
   intro x
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [hπmul, hπd']
   have hx1 : x ⊗ₜ[Qp] (1 : F) = ∑ i, E.coord i (x ⊗ₜ[Qp] (1 : F)) • E i := by
     simp only [Basis.coord_apply]
@@ -186,11 +193,13 @@ theorem spans_dual_base {V : Type} [AddCommGroup V] [Module Qp V] [FiniteDimensi
   have key : ∀ k, κ k (x ⊗ₜ[Qp] (1 : F)) = ∑ i, E.coord i (x ⊗ₜ[Qp] (1 : F)) * κ k (E i) := by
     intro k
     conv_lhs => rw [hx1]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [hκmul]
   calc π x y' = ∑ k, bV.coord k x • π (bV k) y' := by
         conv_lhs => rw [hzdec y']
-        simp only [map_sum, hπ, hw]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, hπ, hw]
     _ = ∑ k, π (bV k) y' * κ k (x ⊗ₜ[Qp] (1 : F)) := by
         refine Finset.sum_congr rfl fun k _ => ?_
         rw [hκ, mul_smul_comm, mul_one]

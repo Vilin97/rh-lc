@@ -180,7 +180,8 @@ theorem lin_of_add (f : MvPowerSeries (Fin dd) C) (h0 : MvPowerSeries.constantCo
       Finset.sum_congr rfl fun m _ => h3 m, Finset.sum_const_zero, zero_add, Finset.sum_ite_eq', Finset.sum_ite_eq'] at h
     simpa using h
   ext μ
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [map_smul, smul_eq_mul, MvPowerSeries.coeff_X]
   by_cases hμ : μ = 0
   · subst hμ

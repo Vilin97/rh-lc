@@ -121,7 +121,8 @@ theorem central_of_mem_qdet {a : B}
       refine Algebra.adjoin_le ?_
       rintro _ ⟨u, rfl⟩ _ rfl
       rw [eq_sum_frame hQR X]
-      simp only [map_sum, map_smul, Finset.sum_mul, Finset.mul_sum, smul_mul_assoc, mul_smul_comm]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, Finset.sum_mul, Finset.mul_sum, smul_mul_assoc, mul_smul_comm]
       exact Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => by
         rw [Formalism.REAL.qDetCentral _ _ _ hG u a b]
     exact this ha _ rfl
@@ -136,7 +137,8 @@ theorem mem_qdet_of_central {a : B} (h1 : a ∈ Algebra.adjoin ℂ (Set.range D)
       refine Algebra.adjoin_le ?_ h1
       rintro _ ⟨Z, rfl⟩
       rw [eq_sum_frame hQR Z]
-      simp only [map_sum, map_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul]
       exact Subalgebra.sum_mem _ fun i _ => Subalgebra.sum_mem _ fun j _ =>
         Subalgebra.smul_mem _ (Algebra.subset_adjoin (Set.mem_range.2 ⟨(i, j), rfl⟩)) _) fun i j => h2 _
   rw [sup_bot_eq] at h
@@ -220,7 +222,8 @@ theorem gram_frame_support (h : IsCMExt F E σ) (hsk : ∀ i j, σ (W.J j i) = -
     exact Finset.sum_comm
   have hskew : ∀ u v : Fin n → E, form σ W.J u v = -σ (form σ W.J v u) := by
     intro u v
-    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, Finset.mul_sum, ← Finset.sum_neg_distrib]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, Finset.mul_sum, ← Finset.sum_neg_distrib]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
     rw [hsk]; ring
@@ -242,7 +245,8 @@ theorem gram_frame_support (h : IsCMExt F E σ) (hsk : ∀ i j, σ (W.J j i) = -
     · exact hyy
   have hA'e : (((frame H).map τ)ᴴ * (c • W.J.map σ).map τ * (frame H).map τ) a b =
       τ c * star (τ (((frame H)ᵀ * W.J * (frame H).map σ) a b)) := by
-    simp only [Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.map_apply, Matrix.smul_apply, smul_eq_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.map_apply, Matrix.smul_apply, smul_eq_mul,
       Matrix.transpose_apply, map_mul, map_sum, h.2.2.2, star_sum, star_mul', star_star, Finset.mul_sum, Finset.sum_mul]
     exact Finset.sum_congr rfl fun x _ => Finset.sum_congr rfl fun y _ => by ring
   rw [hA'e, hGs, map_zero, star_zero, mul_zero]
@@ -564,7 +568,8 @@ theorem finite_of_isInd {F E : Type} [Field F] [NumberField F] [Field E] [Number
   change _ = (b v).1 g
   conv_rhs => rw [hg g]
   refine Eq.trans ?_ (h4.symm.trans (h3.symm.trans h1))
-  simp only [L, LinearMap.coe_mk, AddHom.coe_mk, map_sum, map_smul, Submodule.coe_sum, Finset.sum_apply, Submodule.coe_smul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [L, LinearMap.coe_mk, AddHom.coe_mk, map_sum, map_smul, Submodule.coe_sum, Finset.sum_apply, Submodule.coe_smul,
     Pi.smul_apply, smul_eq_mul]
 
 theorem finite_centre_of_isInd : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E), IsCMExt F E σ →

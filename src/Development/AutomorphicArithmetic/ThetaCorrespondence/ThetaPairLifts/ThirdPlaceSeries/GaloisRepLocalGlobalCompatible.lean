@@ -119,7 +119,8 @@ theorem localGlobal_compatible_at_place_alt (hPr : _root_.GlobalTheory.NRows.The
   have hu := (hpar φ F).1
   change φ.1 ((P.M.loc i).real (D.ntypes.onMt (D.nd.mu i) (D.nd.j i) (Formalism.MainNotions.ArithmeticCylinders.atPlace D k v a) F)) =
     actTop (σ.ρ.comp (Matrix.GeneralLinearGroup.map e.toRingHom)) D.R.r D.R.t a (φ.1 ((P.M.loc i).real F))
-  rw [e1, map_sum, actTop, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e1, map_sum, actTop, LinearMap.sum_apply]
   refine Finset.sum_congr rfl fun h _ => ?_
   rw [map_smul, φ.2 _ (hxs h).1 _ hF, LinearMap.smul_apply, MonoidHom.comp_apply]
   congr 1

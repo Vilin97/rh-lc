@@ -85,7 +85,8 @@ theorem _root_.GlobalTheory.HilbFam.hser_coeff_isAlgebraic : ∀ (F : Type) [Fie
   intro F _ _ _ k 𝔞 𝔟 a₀ a x s N κ c n hk ha ha₀ hc
   rw [← mem_algebraicClosure_iff]
   unfold _root_.GlobalTheory.HilbFam.hser
-  simp only [map_smul, map_sum, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_smul, map_sum, smul_eq_mul]
   refine mul_mem ?_ (sum_mem fun μ _ ↦ mul_mem (intCast_mem _ _) ?_)
   · rw [hk, _root_.GlobalTheory.HilbFam.omegaFactor_pow_two_mul]
     exact SubfieldClass.ratCast_mem _ _

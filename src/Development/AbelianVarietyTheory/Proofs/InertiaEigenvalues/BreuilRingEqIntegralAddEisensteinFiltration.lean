@@ -93,7 +93,8 @@ theorem low_eq (e j Q : ℕ) (b : ℕ → ℕ → K) :
       ∑ k ∈ Finset.range j, ∑ r ∈ Finset.range e,
         C (∑ q ∈ Finset.range Q, b (q * e + r) k) * X ^ r * Ediv K l e k := by
   rw [sum_range_mul]
-  simp_rw [map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp_rw [map_sum, Finset.sum_mul]
   calc _ = ∑ q ∈ Finset.range Q, ∑ r ∈ Finset.range e, ∑ k ∈ Finset.range j,
         C (b (q * e + r) k) * X ^ r * Ediv K l e k :=
       Finset.sum_congr rfl fun q _ => Finset.sum_congr rfl fun r hr => Finset.sum_congr rfl
@@ -108,7 +109,8 @@ theorem low_eq (e j Q : ℕ) (b : ℕ → ℕ → K) :
 
 theorem coeff_head (f : K⟦X⟧) (M m : ℕ) :
     coeff m (∑ m' ∈ Finset.range M, C (coeff m' f) * X ^ m') = if m < M then coeff m f else 0 := by
-  simp_rw [map_sum, coeff_C_mul_X_pow]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp_rw [map_sum, coeff_C_mul_X_pow]
   rw [Finset.sum_ite_eq]
   simp
 

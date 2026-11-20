@@ -290,7 +290,8 @@ theorem pb_gp (Φ : C' ⥤ C) {F : C ⥤ ModuleCat.{0} R} {G : C' ⥤ ModuleCat.
 
 theorem pb_mdn (Φ : C' ⥤ C) {F : C ⥤ ModuleCat.{0} R} {G : C' ⥤ ModuleCat.{0} R} (α : Φ ⋙ F ⟶ G) (n : ℕ)
     (f : MCn F n) : pb Φ α (n + 1) (mdn F n f) = mdn G n (pb Φ α n f) := by
-  simp only [mdn, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, pb_gp]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [mdn, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, pb_gp]
 
 def pbH (Φ : C' ⥤ C) {F : C ⥤ ModuleCat.{0} R} {G : C' ⥤ ModuleCat.{0} R} (α : Φ ⋙ F ⟶ G) : Hm (cn F) (cn G) where
   f n := pb Φ α n
@@ -447,7 +448,8 @@ theorem CoD.ev_congr (A : CoD H B) {n : ℕ} (φ : MCn H n) {c c' : Fin (n + 1) 
 theorem CoD.ev_mdn (A : CoD H B) {n : ℕ} (f : MCn H n) (c : Fin (n + 2) ⥤ E) {y : E}
     (g : c.obj (Fin.last _) ⟶ y) : A.ev g (mdn H n f c) = ∑ i : Fin (n + 2), ((-1 : R) ^ (i : ℕ)) •
       A.ev (c.map (homOfLE (Fin.le_last (i.succAbove (Fin.last n)))) ≫ g) (f (fc i c)) := by
-  rw [mdn_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [mdn_apply, map_sum]
   refine Finset.sum_congr rfl fun i _ ↦ ?_
   rw [map_smul]
   congr 1

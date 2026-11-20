@@ -33,7 +33,8 @@ theorem repr_map [M.IsQuasicoherent] [M'.IsQuasicoherent] (π : Y ⟶ B) (g : M 
     rw [IsFrame.basis_apply]
     exact QCoh.res_pullbackSections π M _ _ _
   conv_lhs => rw [← ((hf.pullback π).basis h).sum_repr s]
-  rw [← QCoh.appLinear_apply, map_sum, map_sum, Finsupp.finsetSum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← QCoh.appLinear_apply, map_sum, map_sum, Finsupp.finsetSum_apply]
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [map_smul, map_smul, Finsupp.smul_apply, smul_eq_mul, e, QCoh.appLinear_apply,
     QCoh.pullback_map_app_pullbackSections, Twist.resM_self]
@@ -70,7 +71,8 @@ theorem flagMat_map (hM : IsVB M r) (hM' : IsVB M' r) (π : Y ⟶ B) (g : M ⟶ 
     rw [← h2, e]
     funext b
     simp only [coordAt, Matrix.vecMul, dotProduct]
-    rw [repr_map π g hf hf', map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [repr_map π g hf hf', map_sum]
     refine Finset.sum_congr rfl fun a _ => ?_
     rw [map_mul, FlagSec.evalPt_appLE π y _ _ hWV hy hV, hU']
   choose T' h1 h2 using h

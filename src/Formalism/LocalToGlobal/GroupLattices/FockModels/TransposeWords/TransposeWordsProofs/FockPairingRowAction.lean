@@ -137,7 +137,8 @@ lemma tsact_chain (G : Matrix (Fin r) (Fin r) R) (b : Fin r) (s : Fin n) (h : Mv
     obtain ⟨c, t⟩ := v
     have hL : pderiv (b, s) (∑ d : Fin r, C (G c d) * X (d, t) : MvPolynomial (Fin r × Fin n) R)
         = if t = s then C (G c b) else 0 := by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simp only [pderiv_C_mul, pderiv_X, Pi.single_apply, Prod.mk.injEq]
       by_cases hts : t = s
       · subst hts

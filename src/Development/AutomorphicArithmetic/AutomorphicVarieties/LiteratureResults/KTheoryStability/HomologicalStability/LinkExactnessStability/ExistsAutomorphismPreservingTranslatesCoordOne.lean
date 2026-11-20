@@ -46,7 +46,8 @@ theorem unimodular_to_coord_one : ∀ (R : Type) [CommRing R] (s : ℕ), StableR
   have hht : h t = 0 := by
     rw [hh]
     have h1 : f t = ∑ j : Fin n, t' j * a j := by
-      simp only [t, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [t, map_sum]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [← Finsupp.smul_single_one, map_smul, smul_eq_mul]
     have h2 : ∑ i : Fin n, a i * t i = ∑ j : Fin n, t' j * a j := by

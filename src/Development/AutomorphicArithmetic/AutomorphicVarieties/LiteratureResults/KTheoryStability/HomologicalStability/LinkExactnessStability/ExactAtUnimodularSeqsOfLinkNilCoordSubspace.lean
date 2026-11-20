@@ -53,7 +53,8 @@ theorem emb_form {R : Type} [CommRing R] {m : ℕ} (f : (ℕ →₀ R) →ₗ[R]
       simp
     · simp [Pi.single_apply, hj]
   conv_rhs => rw [← Finset.univ_sum_single v]
-  simp only [map_sum, hs, map_smul, smul_eq_mul, dotProduct]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, hs, map_smul, smul_eq_mul, dotProduct]
   refine Finset.sum_congr rfl ?_
   intro k _
   ring

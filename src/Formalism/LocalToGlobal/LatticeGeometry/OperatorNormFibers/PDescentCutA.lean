@@ -107,7 +107,8 @@ theorem sq_sum_le {C Hb : Type} [AddCommGroup C] [Fintype Hb] (B : C →+ C →+
     (B (∑ g, y g) (∑ g, y g)).re ≤ (Fintype.card Hb : ℝ) * ∑ g, (B (y g) (y g)).re := by
   classical
   have hS : (B (∑ g, y g) (∑ g, y g)).re = ∑ g, ∑ h, (B (y g) (y h)).re := by
-    simp only [map_sum, AddMonoidHom.finset_sum_apply, Complex.re_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, AddMonoidHom.finset_sum_apply, Complex.re_sum]
     first
       | rfl
       | exact Finset.sum_comm

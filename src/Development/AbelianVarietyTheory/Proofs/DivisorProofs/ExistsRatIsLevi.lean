@@ -47,7 +47,8 @@ theorem form_smul_right (c : E) (v w : Fin n → E) : form σ J v (c • w) = σ
 
 theorem form_swap (hσ : ∀ x, σ (σ x) = x) (hsk : ∀ i j, σ (J j i) = -J i j) (v w : Fin n → E) :
     form σ J w v = -σ (form σ J v w) := by
-  simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, hsk, Finset.mul_sum, mul_neg, neg_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, hsk, Finset.mul_sum, mul_neg, neg_mul,
     Finset.sum_neg_distrib, neg_neg]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring

@@ -33,7 +33,8 @@ theorem aeval_intertwine (f g L : Module.End 𝕜 V) (K : Submodule 𝕜 V)
       intro x hx
       rw [pow_succ, pow_succ, Module.End.mul_apply, Module.End.mul_apply, hL x hx, ih _ (hK x hx)]
   intro x hx
-  simp only [aeval_eq_sum_range, LinearMap.sum_apply, LinearMap.smul_apply, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [aeval_eq_sum_range, LinearMap.sum_apply, LinearMap.smul_apply, map_sum,
     LinearMap.map_smul_of_tower, hp _ x hx]
 
 theorem aeval_adjoint (B : LinearMap.BilinForm 𝕜 V) (f g : Module.End 𝕜 V)
@@ -46,7 +47,8 @@ theorem aeval_adjoint (B : LinearMap.BilinForm 𝕜 V) (f g : Module.End 𝕜 V)
     | succ n ih =>
       intro x y
       rw [pow_succ', pow_succ, Module.End.mul_apply, Module.End.mul_apply, h, ih]
-  simp only [aeval_eq_sum_range, LinearMap.sum_apply, LinearMap.smul_apply, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [aeval_eq_sum_range, LinearMap.sum_apply, LinearMap.smul_apply, map_sum,
     LinearMap.map_smul_of_tower, hp]
 
 end
@@ -59,7 +61,8 @@ theorem aeval_rev {A : Type} [Ring A] [Algebra ℚ A] (u v : A) (h : u * v = 1) 
     induction i with
     | zero => simp
     | succ i ih => rw [pow_succ, pow_succ', _root_.mul_assoc, ← _root_.mul_assoc u, h, _root_.one_mul, ih]
-  rw [aeval_eq_sum_range v, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [aeval_eq_sum_range v, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun i hi => ?_
   have hi' : i ≤ R.natDegree := Nat.lt_succ_iff.mp (Finset.mem_range.mp hi)
   have : u ^ R.natDegree = u ^ (R.natDegree - i) * u ^ i := by
@@ -79,7 +82,8 @@ theorem exists_rev {A : Type} [Ring A] [Algebra ℚ A] (u v : A) (h : u * v = 1)
   by_cases hb : β = 0
   · exfalso
     subst hb
-    rw [map_sum, Finset.sum_eq_single R.natDegree] at hβ
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_eq_single R.natDegree] at hβ
     · simp [hR0] at hβ
     · intro i hi hne
       have hi' : i ≤ R.natDegree := Nat.lt_succ_iff.mp (Finset.mem_range.mp hi)

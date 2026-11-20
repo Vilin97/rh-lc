@@ -27,7 +27,8 @@ def secComb {R : Type} [CommRing R] {X : Scheme.{0}} (p : X ⟶ Sp R) {L : LB X}
     [Fintype K] (a : K → R) (s : K → L.Sec) : L.Sec where
   f j := ∑ i, constFn p _ (a i) * (s i).f j
   compat j k := by
-    rw [map_sum, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_mul, map_mul, res_constFn, res_constFn, (s i).compat j k]
     ring
@@ -106,7 +107,8 @@ theorem theta_from_section :
         rw [← he]; exact (hT i).2 j z hz
       rw [he]
       show e (∑ i, constFn P.A.hom _ (a i) * (s i).f j) = _
-      rw [map_sum, Finset.sum_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Finset.sum_mul]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_mul, hca, hsi, _root_.mul_assoc]
     have hli : LinearIndependent ℂ T := by

@@ -87,7 +87,8 @@ theorem gram_det_isUnit (S : HSp D) : IsUnit S.gram.det := by
     have : (S.hT.flip (∑ j, v j • S.frame j)) = 0 := by
       refine S.frame.ext fun i => ?_
       have := congrFun hv0 i
-      simpa [Matrix.mulVec, dotProduct, HSpace.gram, map_sum, mul_comm] using this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa [Matrix.mulVec, dotProduct, HSpace.gram, map_sum, mul_comm] using this
     exact LinearMap.congr_fun this x
   exact funext (Fintype.linearIndependent_iff.1 S.frame.linearIndependent v h1)
 

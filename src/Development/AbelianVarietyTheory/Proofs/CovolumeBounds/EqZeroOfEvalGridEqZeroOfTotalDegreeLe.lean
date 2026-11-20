@@ -79,7 +79,8 @@ theorem exists_poly_dual_sum_monomial_smul (d : ℕ) (s : Finset (σ →₀ ℕ)
     have := Finset.mem_singleton.1 (support_monomial_subset hma)
     rw [this]
     exact hs a ha i
-  · simp only [map_sum, map_smul, eval_monomial, smul_eq_mul, mul_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [map_sum, map_smul, eval_monomial, smul_eq_mul, mul_comm]
 
 theorem span_grid_eq_span_range_of_eq_sum (d : ℕ) (Φ : (σ → A) → V)
     (s : Finset (σ →₀ ℕ)) (v : (σ →₀ ℕ) → V) (hs : ∀ a ∈ s, ∀ i, a i ≤ d)

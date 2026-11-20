@@ -17,7 +17,8 @@ open GlobalTheory.IdemSupport
 
 theorem map_mul_apply_mem {A B n : Type} [CommRing A] [CommRing B] [Fintype n] (φ : A →+* B) (S : Subring B)
     {a b : Matrix n n A} (ha : ∀ i j, φ (a i j) ∈ S) (hb : ∀ i j, φ (b i j) ∈ S) (i j : n) : φ ((a * b) i j) ∈ S := by
-  rw [Matrix.mul_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.mul_apply, map_sum]
   exact sum_mem fun l _ => by rw [map_mul]; exact mul_mem (ha i l) (hb l j)
 
 theorem mulVec_mem {B n : Type} [CommRing B] [Fintype n] (S : Subring B) {a : Matrix n n B} {y : n → B}

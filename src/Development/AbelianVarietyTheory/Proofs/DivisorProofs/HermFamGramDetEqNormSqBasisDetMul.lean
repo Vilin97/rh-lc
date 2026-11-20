@@ -22,7 +22,8 @@ theorem form_sum_right (nm : HermFam F V) (σ : F →+* ℂ) {ι : Type} (s : Fi
 
 theorem form_sum_left (nm : HermFam F V) (σ : F →+* ℂ) {ι : Type} (s : Finset ι) (f : ι → V) (y : V) :
     nm.form σ (∑ i ∈ s, f i) y = ∑ i ∈ s, nm.form σ (f i) y := by
-  rw [← nm.conj_symm σ y, form_sum_right, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← nm.conj_symm σ y, form_sum_right, map_sum]
   exact Finset.sum_congr rfl fun i _ => nm.conj_symm σ y (f i)
 
 theorem form_smul_left (nm : HermFam F V) (σ : F →+* ℂ) (a : F) (x y : V) :

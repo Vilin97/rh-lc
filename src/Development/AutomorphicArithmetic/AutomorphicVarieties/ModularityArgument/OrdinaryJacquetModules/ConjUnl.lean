@@ -39,7 +39,8 @@ private theorem mem_range_of_sum [CharZero k] (a b : Fin n → H →* kˣ) (h : 
   let L : (H →* k) →₀ k := ∑ j, Finsupp.single (c (a j)) 1 - ∑ j, Finsupp.single (c (b j)) 1
   have h0 : Finsupp.linearCombination k (fun f : H →* k => (f : H → k)) L = 0 := by
     funext s
-    simp only [L, map_sub, map_sum, Finsupp.linearCombination_single, one_smul, Pi.sub_apply, Finset.sum_apply, Pi.zero_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [L, map_sub, map_sum, Finsupp.linearCombination_single, one_smul, Pi.sub_apply, Finset.sum_apply, Pi.zero_apply]
     exact sub_eq_zero.2 (h s)
   have hL := (linearIndependent_iff.1 (linearIndependent_monoidHom H k)) L h0
   have hv : L (c (a i)) = 0 := by rw [hL]; rfl

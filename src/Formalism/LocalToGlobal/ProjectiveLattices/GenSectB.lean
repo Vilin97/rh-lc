@@ -34,7 +34,8 @@ theorem exists_pderiv_ne_zero_lt' {K : Type*} [Field K] [CharZero K] {ι : Type*
   have hder : pderiv i P =
       ∑ t ∈ P.support, monomial (t - Finsupp.single i 1) (AddMonoidAlgebra.coeff P t * (t i : K)) := by
     conv_lhs => rw [P.as_sum]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun t _ => ?_
     rw [pderiv_monomial]
   refine ⟨i, ?_, ?_⟩

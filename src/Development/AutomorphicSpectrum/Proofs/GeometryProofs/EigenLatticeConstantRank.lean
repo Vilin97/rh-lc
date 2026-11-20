@@ -163,7 +163,8 @@ theorem finrank_eigSp_baseChange : ∀ (k k' : Type) [Field k] [Field k'] [Algeb
   have hbL : ∀ i, bL i = j (b i) := fun i => by simp [bL]
   have hsymm : ∀ c : Fin n → k, bL.equivFun.symm (algebraMap k k' ∘ c) = j (b.equivFun.symm c) := by
     intro c
-    rw [Module.Basis.equivFun_symm_apply, Module.Basis.equivFun_symm_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Module.Basis.equivFun_symm_apply, Module.Basis.equivFun_symm_apply, map_sum]
     exact Finset.sum_congr rfl fun i _ => by rw [hjs, hbL]; rfl
   have hfwd : ∀ e, bL.equivFun (j e) = algebraMap k k' ∘ b.equivFun e := by
     intro e

@@ -75,7 +75,8 @@ theorem form_quotWedge (hb' : Submodule.span Ω (Set.range (b' ∘ Fin.castLE hj
   rw [quotWedge, quotWedge, ← this]
   congr 2
   funext q
-  rw [hS, map_sum, sum_split hj]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hS, map_sum, sum_split hj]
   have h0 : ∀ a, F.mkQ (S (Fin.castLE hj a) (tailIdx hj q) • b' (Fin.castLE hj a)) = 0 := fun a => by
     simpa using Or.inr (hF' a)
   simp only [h0, Finset.sum_const_zero, zero_add, map_smul]

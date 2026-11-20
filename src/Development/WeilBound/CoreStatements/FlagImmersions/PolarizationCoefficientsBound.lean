@@ -53,7 +53,8 @@ theorem polarization_coefficients_bound : ∀ (J : Type) [Fintype J] [DecidableE
     intro m hm
     exact isHomogeneous_monomial _ ((hS m).1 hm)
   · intro c
-    rw [pa_neg_lin_pow, hPl, map_sum (eval c), map_sum Φ]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [pa_neg_lin_pow, hPl, map_sum (eval c), map_sum Φ]
     refine Finset.sum_congr hSdef fun m _ => ?_
     rw [eval_monomial, map_smul, smul_eq_mul, ha]
     ring

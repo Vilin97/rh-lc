@@ -50,7 +50,8 @@ theorem rho_avg (h : S.Ok) (c : S.Cl) (γ : MulAction.stabilizer S.G (S.outSec.r
   classical
   letI := h.fintypeStab (S.outSec.rep c)
   unfold avg
-  simp only [LinearMap.smul_apply, LinearMap.sum_apply, map_smul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [LinearMap.smul_apply, LinearMap.sum_apply, map_smul, map_sum]
   congr 1
   refine Fintype.sum_equiv (Equiv.mulLeft γ) _ _ fun γ' => ?_
   show S.ρ (γ : S.G) (S.ρ (γ' : S.G) v) = S.ρ ((γ * γ' : MulAction.stabilizer S.G (S.outSec.rep c)) : S.G) v
@@ -63,7 +64,8 @@ theorem ev_avg (h : S.Ok) (c : S.Cl) (v : S.V) :
   classical
   letI := h.fintypeStab (S.outSec.rep c)
   unfold avg
-  rw [LinearMap.smul_apply, LinearMap.map_smulₛₗ, map_inv₀, map_natCast, LinearMap.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [LinearMap.smul_apply, LinearMap.map_smulₛₗ, map_inv₀, map_natCast, LinearMap.sum_apply, map_sum]
   congr 1
   exact Finset.sum_congr rfl fun γ _ => (E.tr_ev _ _).symm
 
@@ -111,7 +113,8 @@ theorem mem_Fi_of_invAt (h : S.Ok) {F : S.Cl → E.Y → ℂ} (hF : E.InvAt F) :
       have h2 : ∀ γ : MulAction.stabilizer S.G (S.outSec.rep c'),
           ∑ i, E.tr (γ : S.G) (z c' i • E.ev (S.bV i)) = F c' := by
         intro γ
-        rw [← map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [← map_sum]
         have : ∑ i, z c' i • E.ev (S.bV i) = F c' := by
           rw [← hz c']
           simp [lin, Fintype.linearCombination_apply]

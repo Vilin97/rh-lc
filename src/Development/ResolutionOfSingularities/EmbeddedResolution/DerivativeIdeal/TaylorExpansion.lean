@@ -59,7 +59,8 @@ private theorem iterate_deriv_mul_eq_sum_nsmul (D : Derivation A R R) (n : ℕ) 
       _ = ⇑D (∑ i ∈ Finset.range (n + 1), n.choose i • ((⇑D)^[i] f * (⇑D)^[n - i] g)) := by
             rw [ih]
       _ = ∑ i ∈ Finset.range (n + 1), ⇑D (n.choose i • ((⇑D)^[i] f * (⇑D)^[n - i] g)) := by
-            rw [map_sum]
+            set_option synthInstance.maxHeartbeats 100000 in
+              rw [map_sum]
       _ = ∑ i ∈ Finset.range (n + 1), (n.choose i • ((⇑D)^[i] f * (⇑D)^[n - i + 1] g)
             + n.choose i • ((⇑D)^[i + 1] f * (⇑D)^[n - i] g)) :=
             Finset.sum_congr rfl fun i _ => key i
@@ -152,7 +153,8 @@ theorem truncatedSeries_mul (σ : R →+* S) (D : Derivation A R R) (β : S) (N 
           coeff σ D i f * coeff σ D (j - i) g := by
   rw [truncatedSeries_apply]
   refine Finset.sum_congr rfl fun j _ => ?_
-  rw [iterate_deriv_mul D j f g, map_sum, Finset.mul_sum, Finset.sum_mul, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [iterate_deriv_mul D j f g, map_sum, Finset.mul_sum, Finset.sum_mul, Finset.mul_sum]
   refine Finset.sum_congr rfl fun i hi => ?_
   have hij : i ≤ j := Nat.lt_succ_iff.mp (Finset.mem_range.mp hi)
   have key := factorial_inv_mul_choose (S' := S) j i hij

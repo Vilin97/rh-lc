@@ -46,7 +46,8 @@ private theorem exists_span_mod {R N : Type} [CommRing R] [IsDomain R] [AddCommG
   obtain ⟨c, hc⟩ := (Submodule.mem_span_range_iff_exists_fun R).1
     (h1 ▸ Submodule.mem_top : q.symm (Submodule.Quotient.mk x) ∈ Submodule.span R (Set.range b))
   have h2 : x - ∑ k, c k • v k ∈ (I • ⊤ : Submodule R N) := by
-    rw [← Submodule.Quotient.eq, ← q.apply_symm_apply (Submodule.Quotient.mk x), ← hc, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Submodule.Quotient.eq, ← q.apply_symm_apply (Submodule.Quotient.mk x), ← hc, map_sum,
       ← Submodule.mkQ_apply, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_smul, map_smul, Submodule.mkQ_apply, hv]
@@ -95,7 +96,8 @@ theorem exists_gens_mod : ∀ (E : Type) [Field E] [NumberField E] (ℓ : ℕ) [
   obtain ⟨c, z, h⟩ := hv ⟨x, hx⟩
   refine ⟨fun k => c (σ k), z, z.2, ?_⟩
   have h1 := congrArg N.subtype h
-  rw [map_add, map_sum, map_smul, Nat.cast_smul_eq_nsmul, ← Nat.cast_smul_eq_nsmul ℂ,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_add, map_sum, map_smul, Nat.cast_smul_eq_nsmul, ← Nat.cast_smul_eq_nsmul ℂ,
     ← σ.sum_comp] at h1
   exact h1
 
@@ -132,7 +134,8 @@ theorem exists_tate_gens : ∀ (E : Type) [Field E] [NumberField E] (ℓ : ℕ) 
   have h2 : lv (t - ∑ k, α (c k) (T k)) = 0 := by
     have h3 : lv t = φ w := congrArg Additive.ofMul hw.symm
     have h4 : φ z = 0 := congrArg Additive.ofMul ((hL z).2 hz)
-    rw [map_sub, sub_eq_zero, h3, h1, map_add, h4, add_zero, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, sub_eq_zero, h3, h1, map_add, h4, add_zero, map_sum, map_sum]
     refine Finset.sum_congr rfl fun k _ => congrArg Additive.ofMul ?_
     exact (hβ _ _).trans (hα _ (T k) 1).symm
   obtain ⟨s, hs⟩ := GlobalTheory.TateSpan.exists_eq_p_smul_of_lev_one (t - ∑ k, α (c k) (T k)) h2
@@ -192,7 +195,8 @@ theorem tate_free_of_lattice : ∀ (E : Type) [Field E] [NumberField E] (ℓ : �
     exact h.of_comp
   refine ⟨LinearEquiv.ofBijective F ⟨hinj, hsurjF⟩, fun a r => ?_⟩
   change F _ = α a (F r)
-  rw [hF, hF, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hF, hF, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [Pi.smul_apply, smul_eq_mul, map_mul, hact]
   rfl

@@ -41,7 +41,8 @@ theorem finite : Module.Finite (v.adicCompletionIntegers F) (intLoc F E v) := by
     Submodule.span _ (Set.range fun i => intLocIncl v (b i))
   have hincl : ∀ x : 𝓞 E, intLocIncl v x ∈ N := by
     intro x
-    rw [← b.sum_repr x, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← b.sum_repr x, map_sum]
     refine sum_mem fun i _ => ?_
     rw [map_zsmul]
     exact Submodule.smul_of_tower_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)

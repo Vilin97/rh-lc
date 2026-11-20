@@ -35,7 +35,8 @@ theorem exists_weight_zero_sum_one {A X J : Type} [CommRing A] [AddCommGroup X] 
       split_ifs with h
       · exact h ▸ one
       · exact zero_mem _
-    · rw [← hT, map_sub, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [← hT, map_sub, map_sum]
       simp only [map_smul]
       simp only [hT, Finsupp.sum_equivMapDomain, ← hsum, smul_eq_mul]
       rw [Finsupp.sum_single_index rfl, sub_eq_zero, ← hc]
@@ -128,7 +129,8 @@ theorem main : ∀ (K : Type) [Field K] (H : Over (Sp K)) [GrpObj H] [IsCommMonO
   obtain ⟨b, hb, hd, h1⟩ := exists_weight_zero_sum_one (wtSpace i (C.W a)) GlobalTheory.UU.isWt_one
     (fun _ _ _ _ => GlobalTheory.UU.IsWt.mul) ex un g _ hg hs
   have hu : IsUnit (∑ f, (H.left.presheaf.germ (C.W a) x hx).hom (b f)) := by
-    rw [← map_sum, h1, map_one]; exact isUnit_one
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, h1, map_one]; exact isUnit_one
   obtain ⟨f, -, hf⟩ := IsLocalRing.exists_of_isUnit_sum hu
   refine ⟨b f, hasWt_iff.2 (hb f), (H.left.mem_basicOpen _ x hx).2 hf,
     stable_basicOpen (hT.stable a) (hasWt_iff.2 (hb f)), ?_⟩

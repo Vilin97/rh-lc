@@ -34,13 +34,17 @@ theorem sub_mem_mCoordIdeal {Ω : Type} [Field Ω] {y : (Σ k, ι k) → Ω} {k�
     X ⟨k₀, i⟩ - ∑ j, C (N i j) * blockForms k₀ M j ∈ mCoordIdeal y := by
   have hf : ∀ j, mConeMap y (blockForms k₀ M j) = MvPolynomial.C (x j) * MvPolynomial.X k₀ := by
     intro j
-    rw [h.1 j, map_sum, Finset.sum_mul]
-    simp [blockForms, mConeMap, map_sum, mul_assoc]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h.1 j, map_sum, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [blockForms, mConeMap, map_sum, mul_assoc]
   have hX : mConeMap y (X ⟨k₀, i⟩) = MvPolynomial.C (y ⟨k₀, i⟩) * MvPolynomial.X k₀ := by
     simp [mConeMap]
-  rw [mCoordIdeal, RingHom.mem_ker, map_sub, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [mCoordIdeal, RingHom.mem_ker, map_sub, map_sum]
   simp only [map_mul, hf]
-  rw [hX, h.2 i, map_sum, Finset.sum_mul, sub_eq_zero]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hX, h.2 i, map_sum, Finset.sum_mul, sub_eq_zero]
   refine Finset.sum_congr rfl fun j _ => ?_
   simp [mConeMap, mul_assoc]
 

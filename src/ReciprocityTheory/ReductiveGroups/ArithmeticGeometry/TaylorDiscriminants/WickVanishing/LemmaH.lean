@@ -62,7 +62,8 @@ theorem ordNabla_value_expand (hV : ValueSt) (hN2 : ConnectionCommutator) (hN3 :
     constantCoeff (ordNabla k B h m s (fun l => (u l, φ l)) Q (liftX k g)) =
       ∑ n ∈ Finset.range (Q.totalDegree + 1),
         constantCoeff (DpolyOf (B.FK k) u (((n.factorial : ℚ)⁻¹) • (secondOrder k (kapH m c s u φ))^[n] Q) g) := by
-  rw [ordNabla_expand hN2 hN3 B h m c s u φ hUF hFU Q g, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [ordNabla_expand hN2 hN3 B h m c s u φ hUF hFU Q g, map_sum]
   refine Finset.sum_congr rfl fun n _ => ?_
   exact hV R d O k B h hax m ι u _ g
 

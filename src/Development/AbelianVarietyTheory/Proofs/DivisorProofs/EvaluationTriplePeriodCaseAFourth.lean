@@ -148,7 +148,8 @@ theorem arch_decay_of_compact {B : Base F E} {b a' : ℕ} {G : Geo σ (b + 2) a'
   refine ⟨∑ j, D₀ j, fun k hk l hl => ?_⟩
   choose f₁ hf₁ hb₁ using fun j => hCb j ⟨k, hk⟩ (GlobalTheory.XTermMaj.crd F E (l : AE F E)) hl
   have hS : G.M.co.e (shiftA H H' l) = ∑ i, GlobalTheory.XTermMaj.crd F E (l : AE F E) i • S i := by
-    simp only [S, ← map_smul, ← map_sum, ← smul_assoc, ← Finset.sum_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [S, ← map_smul, ← map_sum, ← smul_assoc, ← Finset.sum_smul]
     congr 2
     rw [shiftA]
     congr 1
@@ -161,7 +162,8 @@ theorem arch_decay_of_compact {B : Base F E} {b a' : ℕ} {G : Geo σ (b + 2) a'
     simp only at h1
     rw [h1, Darboux.rho, hS]
     change coeL (∑ j, f₁ j) y = (sliceL c ∘ₗ e) (schrL B.ψ _ _) y
-    rw [map_sum, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_sum, map_sum]
     exact congrFun (Finset.sum_congr rfl fun j _ => hf₁ j) y
   · rw [Finset.sum_mul]
     exact (Finset.le_sum_of_subadditive _ (map_zero _).le (map_add_le_add _) _ _).trans (Finset.sum_le_sum fun j _ => hb₁ j)

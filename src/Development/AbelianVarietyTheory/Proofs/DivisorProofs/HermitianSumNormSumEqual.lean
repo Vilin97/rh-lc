@@ -58,7 +58,8 @@ theorem sum_norm_eq : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Numb
   intro F E _ _ _ _ _ σ h w k k' z z' hz
   obtain ⟨hN, hinj⟩ := algebraMap_norm_and_inj F E σ h w
   apply hinj
-  rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum]
   simp only [hN]
   exact hz
 

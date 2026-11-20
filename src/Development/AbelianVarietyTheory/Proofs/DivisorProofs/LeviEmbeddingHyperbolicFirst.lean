@@ -23,7 +23,8 @@ theorem gram_entry (σ : E →ₐ[F] E) {N : ℕ} {ι₁ ι₂ : Type*} (J : Mat
 theorem form_swap {σ : E →ₐ[F] E} (hσ : ∀ e, σ (σ e) = e) {N : ℕ} {J : Matrix (Fin N) (Fin N) E}
     (hsk : ∀ i j, σ (J j i) = -J i j) (a b : Fin N → E) :
     form σ J a b = -σ (form σ J b a) := by
-  simp only [form, dotProduct, mulVec, map_sum, map_mul, hσ, Finset.mul_sum, ← Finset.sum_neg_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, mulVec, map_sum, map_mul, hσ, Finset.mul_sum, ← Finset.sum_neg_distrib]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   rw [hsk]; ring

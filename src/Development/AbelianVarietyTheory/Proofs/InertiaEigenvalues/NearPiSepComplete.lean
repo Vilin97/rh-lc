@@ -35,7 +35,8 @@ theorem sep_complete_of_coord {R A B I : Type} [AddCommGroup R] [CommRing A] [Co
     refine ⟨x, fun m i => ?_⟩
     obtain ⟨d, hd⟩ := hy i m
     refine ⟨d, ?_⟩
-    rw [map_sub, map_sum, hx i, Finset.sum_congr rfl (fun n _ => hc n i), ← map_sum j, ← map_sub j]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_sum, hx i, Finset.sum_congr rfl (fun n _ => hc n i), ← map_sum j, ← map_sub j]
     congr 1
     have e : t ^ k * y i - ∑ n ∈ Finset.range m, t ^ (n + k) * c n i =
         t ^ k * (y i - ∑ n ∈ Finset.range m, t ^ n * c n i) := by
@@ -86,7 +87,8 @@ private theorem expand_lemma_3 {l : ℕ} [Fact l.Prime] (LL : FinExt l) (y : RW 
 private theorem crd_sum_lemma_4 {l : ℕ} [Fact l.Prime] (LL : FinExt l)
     (i : Fin (Module.finrank ℤ_[l] ↥(OL LL))) (w : Fin (Module.finrank ℤ_[l] ↥(OL LL)) → WCb l) :
     crd (W := WCb l) (basisO LL) i (∑ k, basisO LL k ⊗ₜ[ℤ_[l]] w k) = w i := by
-  simp [map_sum, crd_tmul_lemma, Finsupp.single_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, crd_tmul_lemma, Finsupp.single_apply]
 
 private theorem wdiv_lemma_5 {l : ℕ} [Fact l.Prime] (w : WCb l) (hw : w.coeff 0 = 0) :
     ∃ v : WCb l, w = (l : WCb l) * v := by
@@ -173,7 +175,8 @@ private theorem near_of_coord_lemma_13 {l : ℕ} [Fact l.Prime] (P : LocPrime l)
   obtain ⟨r, hr⟩ := rwdiv_lemma_6 LL (y - piR AI LL s ^ n * (inclR LL) a) (fun i => by
     have ha : (inclR LL) a = ∑ k, basisO LL k ⊗ₜ[ℤ_[l]] inclW l (WittVector.teichmuller l (c k)) := by
       change (inclR LL : RA LL →+* RW LL) (∑ k, basisO LL k ⊗ₜ[ℤ_[l]] WittVector.teichmuller l (c k)) = _
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       exact Finset.sum_congr rfl fun k _ => rfl
     rw [LinearMap.map_sub, inclR_piR_lemma_9, Algebra.TensorProduct.tmul_pow, one_pow, crd_mul_lemma_2, ha,
       crd_sum_lemma_4]

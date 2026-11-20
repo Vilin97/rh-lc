@@ -82,7 +82,8 @@ private theorem snd_jetTan_psJet_succ_eq_coeff_single {κ : Type} [Fintype κ] [
   change (MvPolynomial.aeval (fun i => if i = ℓ then (DualNumber.eps : DualNumber ℂ) else 0)
     (psTrunc (k + 1) F)).snd = _
   unfold psTrunc
-  rw [map_sum, TrivSqZeroExt.snd_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, TrivSqZeroExt.snd_sum]
   simp_rw [snd_aeval_eps_monomial_eq_ite]
   rw [Finset.sum_ite_eq', if_pos (single_one_mem_degLE_succ k ℓ)]
 
@@ -115,7 +116,8 @@ theorem fderiv_eq_of_jetOf {g : ℕ} (m : ℕ) (θ θ' : (Fin g → ℂ) → ℂ
     exact e1.symm.trans e2
   ext v
   rw [PullbackSections.sum_single_smul v]
-  simp only [map_sum, map_smul, hd]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, hd]
 
 def renInv (n g m : ℕ) : Jet ℂ (Fin n × Fin g) m →ₐ[ℂ] Jet ℂ (Fin 1 × Fin (n * g)) m :=
   jetMap (fun p => MvPolynomial.X ((0 : Fin 1), finProdFinEquiv p)) fun _ => X_mem_orig _
@@ -258,7 +260,8 @@ private theorem jetAug_jetN_zero_eq_apply_zero {n g : ℕ} (F : (Fin n → Fin g
       (psTrunc 0 (PullbackSections.tay (fun v => F (colsOf n g v)) 0))) = F 0
   rw [← AlgHom.comp_apply, hc2, hcc]
   unfold psTrunc
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [MvPolynomial.constantCoeff_monomial]
   rw [Finset.sum_ite_eq', if_pos (zero_mem_degLE' 0)]
   have e1 := PullbackSections.coeff_tay_zero (fun v => F (colsOf n g v)) 0

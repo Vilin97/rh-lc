@@ -103,7 +103,8 @@ theorem fderiv_vac (h : Chart θ σ) (hψ : IsStdChar D ψ (-1)) (F : BB ψ S T)
     rfl
   have h2 : ∀ x : Ix S T → ℂ, x = ∑ τ, vecL (Pi.single τ (cpt x τ) : RW T S) := by
     intro x
-    rw [← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum]
     exact (congrArg vecL (Finset.univ_sum_single (unvecL x))).symm
   have h3 : ∀ τ, cpt (Complex.I • blk sT sS *ᵥ z) τ = cplxO (sS τ) (sT τ) (cpt z τ) := fun τ => by
     unfold cplxO

@@ -234,7 +234,8 @@ theorem BlockImageDatum.proof (hA : BlockImageArith.Statement) (hI : BlockImageI
         rw [← ProjLine.isConjInvariant_fs (fun i => ∑ j, (N i j : ℂ) * u j)]
         congr 1
         funext i
-        simp [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp [map_sum]
       normalForm_baseLattice_le_dualSpan_sup_line := bot_le
       semipos := hMet.1 (ι d.k₀) (Fin r) N hN _
       vol := d.vol }

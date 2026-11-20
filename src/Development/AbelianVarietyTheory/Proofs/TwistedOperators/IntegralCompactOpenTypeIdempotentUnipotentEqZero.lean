@@ -28,7 +28,8 @@ theorem sum_typeIdem_translate {G Q W : Type} [Group G] [MeasurableSpace G] (μ 
   · obtain ⟨g, rfl⟩ : ∃ g' : K, (g' : G) = g := ⟨⟨g, hg⟩, rfl⟩
     have h0 := GlobalTheory.NoFixedCharSum.noFixedSum Q W τ H hH 1 (red g)
     simp only [← Subgroup.coe_mul, GlobalTheory.Orb.typeIdem_coe, map_mul red, hκ]
-    rw [← Finset.mul_sum, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Finset.mul_sum, ← map_sum]
     simp only [one_mul] at h0
     have h1 : ∑ v : H, τ.character ((v : Q) * red g) = 0 := h0
     rw [h1, map_zero, mul_zero]

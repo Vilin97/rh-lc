@@ -23,7 +23,8 @@ theorem sum_wd_mul {n : ℕ} {f : V n → ℂ} {z0 : V n} (h : DifferentiableAt 
   have hξ : (WithLp.toLp 2 ξ : V n) = ∑ j, ξ j • bas n j := by
     conv_lhs => rw [← (EuclideanSpace.basisFun (Fin n) ℂ).sum_repr (WithLp.toLp 2 ξ)]
     simp [bas]
-  rw [hξ, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hξ, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [wd_of_differentiableAt h, map_smul, smul_eq_mul, mul_comm]
 

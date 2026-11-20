@@ -77,7 +77,8 @@ theorem oSmul_eq (c : 𝓞 Em) (x : Fin N → Em) : c • x = (c : Em) • x := 
 
 theorem emb_hermForm (σ : Em →+* ℂ) (H : Matrix (Fin N) (Fin N) Em) (x y : Fin N → Em) :
     σ (hermForm Em H x y) = star (fun a => σ (x a)) ⬝ᵥ (H.map σ *ᵥ fun b => σ (y b)) := by
-  simp only [hermForm, map_sum, map_mul, IsCMField.complexEmbedding_complexConj, dotProduct, Matrix.mulVec,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hermForm, map_sum, map_mul, IsCMField.complexEmbedding_complexConj, dotProduct, Matrix.mulVec,
     Matrix.map_apply, Pi.star_apply, Finset.mul_sum, mul_assoc, starRingEnd_apply]
 
 theorem det_signMat_ne_zero (N j : ℕ) : (signMat N j).det ≠ 0 := by

@@ -549,7 +549,8 @@ theorem partner_converse : PartnerConverse := by
     simp [g, Module.Basis.constr_apply_fintype]
   have hrepr_f : ∀ z i, S.bM.repr (g z) (S.f i) = z i := by
     intro z i
-    rw [hg_apply, map_sum, Finsupp.finsetSum_apply, Finset.sum_eq_single i]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hg_apply, map_sum, Finsupp.finsetSum_apply, Finset.sum_eq_single i]
     · simp
     · intro j _ hj
       have : S.f j ≠ S.f i := fun e => hj (S.f.injective e)
@@ -557,7 +558,8 @@ theorem partner_converse : PartnerConverse := by
     · simp
   have hrepr_nf : ∀ z j, j ∉ Set.range S.f → S.bM.repr (g z) j = 0 := by
     intro z j hj
-    rw [hg_apply, map_sum, Finsupp.finsetSum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hg_apply, map_sum, Finsupp.finsetSum_apply]
     apply Finset.sum_eq_zero
     intro i _
     have : S.f i ≠ j := fun e => hj ⟨i, e⟩

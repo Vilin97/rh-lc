@@ -42,7 +42,8 @@ theorem sum_gapX_Ico {Ψ : Type} {N : ℕ} (τ : Ψ) {a b : Fin N} (hab : a ≤ 
 theorem toWt_gapDelta_eq_antisymDelta (Ψ : Type) [Fintype Ψ] [DecidableEq Ψ] (N : ℕ) :
     PB.toWt (gapDelta Ψ N) = GroundTheory.Heights₂.Heights.antisymDelta Ψ N := by
   unfold gapDelta GroundTheory.Heights₂.Heights.antisymDelta
-  simp only [map_prod, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_prod, map_sum]
   refine Finset.prod_congr rfl fun τ _ => Finset.prod_congr rfl fun a _ =>
     Finset.prod_congr rfl fun b hb => ?_
   have hab : a ≤ b := (Finset.mem_Ioi.1 hb).le

@@ -116,7 +116,8 @@ theorem two_letter_lattice_gauss_inverse : TwoLetterLatticeGaussInverse := by
     have hf₀ : f₀ ∈ PolAB R.Kf (m + 1) P Q := by
       have := glAct_mem_PolAB g'⁻¹ _ hf
       rwa [glAct_inv_glAct] at this
-    rw [f₀.as_sum, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [f₀.as_sum, map_sum, map_sum]
     refine Submodule.sum_mem _ fun v hv => ?_
     obtain ⟨c, hc⟩ : ∃ c : R.O, algebraMap R.O R.Kf c = AddMonoidAlgebra.coeff f₀ v := hG v
     rw [ta_monomial_split, map_smul, map_smul, ← hc, algebraMap_smul]

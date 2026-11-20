@@ -101,11 +101,13 @@ theorem form_sum {Λ Λ' : AddSubgroup (WO S T)} {e : AE D} (he : IsSplitIdem D 
   obtain ⟨v₀, ⟨hv₀, hv₀Λ⟩, hv₀u⟩ := hRu 0 (zero_mem _) (isHalf_zero e)
   have h1 : ∀ u ∈ R, ℓ (∑ u' ∈ R', heisO ψ S T u (heisO ψ S T u' f)) = R'.card * ℓ (heisO ψ S T u f) := by
     intro u hu
-    rw [map_sum, ← nsmul_eq_mul, ← Finset.sum_const]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, ← nsmul_eq_mul, ← Finset.sum_const]
     refine Finset.sum_congr rfl fun u' hu' => ?_
     rw [heisO_comm, hdd _ (hR u hu).1 _ (hR' u' hu').1, one_smul, hℓ _ (hR' u' hu').2 _ (hth u (hR u hu).2)]
   have hv₀' : v₀ ∈ Λ := by rwa [zero_sub, neg_mem_iff] at hv₀Λ
-  rw [map_sum, Finset.sum_congr rfl h1, Finset.sum_eq_single_of_mem v₀ hv₀, hf.2 e he v₀ hv₀' (hR _ hv₀).2]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_congr rfl h1, Finset.sum_eq_single_of_mem v₀ hv₀, hf.2 e he v₀ hv₀' (hR _ hv₀).2]
   intro u hu hne
   have huΛ : u ∉ Λ := fun huΛ => hne (hv₀u u ⟨hu, by rwa [zero_sub, neg_mem_iff]⟩)
   obtain ⟨l, hl, hlh, hlne⟩ := exists_dual_half he hd hstc (hR u hu).2 huΛ

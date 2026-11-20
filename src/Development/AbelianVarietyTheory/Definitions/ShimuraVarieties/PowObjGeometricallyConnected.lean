@@ -314,7 +314,8 @@ def tmulLinear : M →ₗ[O] Pts b G where
 
 theorem tmul_sum {I : Type*} (s : Finset I) (m : I → M) :
     h.tmul (∑ i ∈ s, m i) = ∏ i ∈ s, h.tmul (m i) := by
-  rw [← hom_tmulLinear, map_sum, Pts.hom_sum]; rfl
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hom_tmulLinear, map_sum, Pts.hom_sum]; rfl
 
 theorem induction_on {P : (T ⟶ H) → Prop} (y : T ⟶ H) (one : P 1)
     (tmul : ∀ (m : M) (x : T ⟶ G), P (x ≫ h.tmul m)) (mul : ∀ y z, P y → P z → P (y * z)) :

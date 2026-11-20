@@ -56,7 +56,8 @@ theorem act_extA_fst {F : Type} [Field F] [NumberField F] {m κ : Type} [Fintype
     (GlobalTheory.AdelicSvN.act h (GlobalTheory.SiegelConv.extA A t)).1 =
       fun i => ∑ j, t j * algebraMap F (AF F) (firstHalf h (A (Pi.single j 1)) i) := by
   funext i
-  simp only [GlobalTheory.AdelicSvN.act, GlobalTheory.SiegelConv.extA, GlobalTheory.SiegelConv.ratP, firstHalf_apply, Function.comp_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [GlobalTheory.AdelicSvN.act, GlobalTheory.SiegelConv.extA, GlobalTheory.SiegelConv.ratP, firstHalf_apply, Function.comp_apply,
     Matrix.mulVec, dotProduct, Matrix.map_apply, Fintype.sum_sum_type, Sum.elim_inl, Sum.elim_inr, Prod.fst_sum,
     Prod.snd_sum, Finset.sum_apply, Prod.smul_fst, Prod.smul_snd, Pi.smul_apply, smul_eq_mul, map_sum, map_mul,
     map_add, Finset.mul_sum, mul_add, Finset.sum_add_distrib]

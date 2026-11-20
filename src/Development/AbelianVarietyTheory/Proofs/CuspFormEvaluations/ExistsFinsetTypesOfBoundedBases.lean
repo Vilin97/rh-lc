@@ -278,7 +278,8 @@ theorem exists_mem_of_pairing {v w : Fin r → Fin r → E} (hv : ∀ i, v i ∈
       rw [h3, h4] at h2
       rw [smul_sub, smul_add, sub_vecMul, add_vecMul, Pi.sub_apply, Pi.add_apply, ← sub_sub, ← h2,
         hvA]
-      simp only [vecMulLinear_apply, vecMul, dotProduct, map_sum, Matrix.smul_apply, smul_eq_mul,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [vecMulLinear_apply, vecMul, dotProduct, map_sum, Matrix.smul_apply, smul_eq_mul,
         map_mul, map_natCast, Pi.smul_apply, map_apply, Pi.zero_apply, ← Finset.sum_sub_distrib]
       refine Finset.sum_eq_zero fun i _ => ?_
       push_cast
@@ -373,7 +374,8 @@ theorem exists_finset_boundedBasis_of_gram (X : DataX E r) {B : ℝ} (hB : 0 ≤
     obtain ⟨γ, hγ, h⟩ := exists_mem_of_pairing X hv.1 w.2.1.1 hv.2.1 w.2.1.2.1 A hvA w.2.2
       fun m => by
         obtain ⟨c, m', rfl⟩ := hx m
-        rw [map_add, map_add, add_sub_add_comm, map_sum, map_sum, ← Finset.sum_sub_distrib,
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_add, map_add, add_sub_add_comm, map_sum, map_sum, ← Finset.sum_sub_distrib,
           map_smul, map_smul, ← smul_sub]
         refine add_mem (Submodule.sum_mem _ fun j _ => ?_) ⟨(pairing X w.1 w.2.1.1 m' -
           pairing X v hv.1 m') ᵥ* N.adjugate, ?_⟩

@@ -244,7 +244,8 @@ theorem val_gen (f : V →ₛₗ[e] W) (A : Subring LL) (val : AddValuation LL (
   have e1 : f y = Finsupp.linearCombination Kf (fun i => f (b i)) ((b.repr y).mapRange e (map_zero e)) := by
     rw [Finsupp.linearCombination_apply, Finsupp.sum_mapRange_index (h := fun i (a : Kf) => a • f (b i)) (fun i => zero_smul _ _)]
     have h1 := congrArg f hyy
-    rw [map_sum] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at h1
     rw [h1]
     exact Finset.sum_congr rfl fun i _ => LinearMap.map_smulₛₗ f _ _
   have e2 : t • F = Finsupp.linearCombination Kf (fun i => f (b i))

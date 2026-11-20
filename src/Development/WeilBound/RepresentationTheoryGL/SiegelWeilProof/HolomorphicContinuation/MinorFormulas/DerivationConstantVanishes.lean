@@ -43,8 +43,10 @@ theorem sum_eq (s : ℂ) (b : Bool) (k l : Fin n) (p : Fm n) :
       rw [show ((∑ a : Fin n, ∑ d : Fin n, (k0 s b * (yv b a k * yv b l d)) • MvPolynomial.pderiv (b, a, d) :
           Derivation (Polynomial ℂ) (Fm n) (Fm n)) q) =
           Derivation.coeFnAddMonoidHom (∑ a : Fin n, ∑ d : Fin n, (k0 s b * (yv b a k * yv b l d)) • MvPolynomial.pderiv (b, a, d)) q from rfl]
-      rw [map_sum]
-      simp only [map_sum, Finset.sum_apply, Derivation.coeFnAddMonoidHom_apply, Derivation.smul_apply, smul_eq_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, Finset.sum_apply, Derivation.coeFnAddMonoidHom_apply, Derivation.smul_apply, smul_eq_mul]
     rw [this]
     simp only [smul_eq, k0]
     refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun d _ => ?_

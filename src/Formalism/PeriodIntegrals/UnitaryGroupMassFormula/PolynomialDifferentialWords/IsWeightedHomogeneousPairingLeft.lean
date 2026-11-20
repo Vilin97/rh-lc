@@ -132,7 +132,8 @@ theorem chi_eq (i0 : Fin k) (d : ℕ) (f : Pol K k) (hf : IsWeightedHomogeneous 
     aeval (chiF K i0) f = X (Sum.inl i0) ^ d * f := by
   conv_lhs => rw [f.as_sum]
   conv_rhs => rw [f.as_sum]
-  rw [map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun m hm => ?_
   rw [chi_monomial, hf (mem_support_iff.1 hm)]
 

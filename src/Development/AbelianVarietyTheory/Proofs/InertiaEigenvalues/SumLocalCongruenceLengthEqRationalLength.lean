@@ -148,7 +148,8 @@ theorem sum_etaLoc_eq_etaRat : ∀ (D : D7) (M : MtFam D) (T : NormalizedLocalCo
     have hli := (D.what₂.jMt_basis (D.what₂.muTw w) j b).1
     refine (injective_iff_map_eq_zero _).2 fun y hy => ?_
     have hsum := b.sum_repr y
-    rw [← hsum, map_sum] at hy
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hsum, map_sum] at hy
     simp only [LinearMap.map_smulₛₗ] at hy
     have hz := Fintype.linearIndependent_iff.1 hli _ hy
     rw [← hsum]

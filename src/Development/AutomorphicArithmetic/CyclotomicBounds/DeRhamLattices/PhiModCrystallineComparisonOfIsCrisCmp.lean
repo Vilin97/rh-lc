@@ -58,7 +58,8 @@ theorem _root_.UpperTheory.KN.phiMod_crystalline_comparison_of_isCrisCmp :
       rw [Pi.smul_apply, Pi.single_eq_of_ne hj.symm, smul_zero]
     · intro h
       exact absurd (Finset.mem_univ i) h
-  rw [UpperTheory.KN.phiMod_deRham_image_coord_expansion l a e O K t ϖ ι P α hx σ, hσ, map_sum, map_sum, map_sum, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [UpperTheory.KN.phiMod_deRham_image_coord_expansion l a e O K t ϖ ι P α hx σ, hσ, map_sum, map_sum, map_sum, map_sum,
     Finset.smul_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [jD.map_smul, jB.map_smul, twSmul, twSmul,

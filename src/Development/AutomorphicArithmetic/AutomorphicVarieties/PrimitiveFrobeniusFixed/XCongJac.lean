@@ -38,7 +38,8 @@ private theorem jac_cong {F R R' S : Type} [Field F] [Fintype F] [CommRing R] [C
   rw [map_prod, map_prod]
   refine Finset.prod_congr rfl fun j hj => ?_
   have hj0 : j ≠ 0 := by have := (Finset.mem_Ico.1 hj).1; omega
-  simp only [jacobiSum, map_sum, map_mul, MulChar.pow_apply' _ hj0, map_pow, h]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [jacobiSum, map_sum, map_mul, MulChar.pow_apply' _ hj0, map_pow, h]
 
 private theorem pow_cong {R : Type} [CommRing R] (P : Ideal R) [hP : P.IsPrime] (q : ℕ) (hq : q.Prime)
     (hqP : (q : R) ∈ P) (a c : R) (h : a ^ q = c ^ q) : Ideal.Quotient.mk P a = Ideal.Quotient.mk P c := by

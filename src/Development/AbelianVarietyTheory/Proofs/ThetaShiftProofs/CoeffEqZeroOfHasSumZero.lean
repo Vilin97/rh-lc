@@ -95,7 +95,8 @@ theorem flow_mem_dom_of_im_nonneg (X : Data E r) {ξ : Fin r → E} (hξ : X.IsI
     intro τ
     refine ⟨?_, ?_⟩
     · have key : hermC τ.1 X.Gm (Data.emb τ.1 ξ) (Data.emb τ.1 ξ) = τ.1 (herm X.Gm ξ ξ) := by
-        simp only [hermC, herm, Data.emb, map_sum, map_mul, cc,
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [hermC, herm, Data.emb, map_sum, map_mul, cc,
           NumberField.IsCMField.complexEmbedding_complexConj]
       change hermC τ.1 X.Gm (Data.emb τ.1 ξ) (Data.emb τ.1 ξ) = 0
       rw [key, hξ.2.1, map_zero]

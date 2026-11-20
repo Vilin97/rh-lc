@@ -21,7 +21,8 @@ variable {D : D7} (X : HidaSetting D) (u u' : D.what₂.Word)
 theorem hE_comb (M : Matrix (Fin X.B.I.n) (Fin X.B.I.n) X.B.I.E) (c : Fin (D.R.rS + 1) → X.B.I.E)
     (a : Fin (D.R.rS + 1)) :
     Formalism.L2.SG.Pf.Level.hE X (famE X u a) (∑ b, c b • (M *ᵥ famE X u' b)) = (ZE X u u' M *ᵥ c) a := by
-  rw [← Formalism.L2.SG.Pf.Level.hEl_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Formalism.L2.SG.Pf.Level.hEl_apply, map_sum]
   simp only [map_smul, Formalism.L2.SG.Pf.Level.hEl_apply, smul_eq_mul, Matrix.mulVec, dotProduct, ZE]
   exact Finset.sum_congr rfl fun b _ => mul_comm _ _
 
@@ -51,7 +52,8 @@ def x2E (M : Matrix (Fin X.B.I.n) (Fin X.B.I.n) X.B.I.E) : Fin X.B.I.n → X.B.I
 theorem hE_sum_left {m : ℕ} (k : Fin m → X.B.I.E) (f : Fin m → Fin X.B.I.n → X.B.I.E) (y : Fin X.B.I.n → X.B.I.E) :
     Formalism.L2.SG.Pf.Level.hE X (∑ a, star (k a) • f a) y = ∑ a, k a * Formalism.L2.SG.Pf.Level.hE X (f a) y := by
   conv_lhs => rw [Formalism.L2.SG.Pf.Level.hE_symm]
-  rw [← Formalism.L2.SG.Pf.Level.hEl_apply, map_sum, star_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Formalism.L2.SG.Pf.Level.hEl_apply, map_sum, star_sum]
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [map_smul, Formalism.L2.SG.Pf.Level.hEl_apply, smul_eq_mul, star_mul', star_star, ← Formalism.L2.SG.Pf.Level.hE_symm]
 
@@ -328,7 +330,8 @@ theorem fixedX (v : (VS D).V) (hv : v ∈ (X.Fu u).X) : v ∈ Submodule.span D.h
 
 theorem symm_frameX {v : (VS D).V} (hv : v ∈ s.frame.fl.X) : s.lin.symm v ∈ Submodule.span D.host.E (Set.range X.eX) := by
   obtain ⟨c, hc⟩ := x_sum _ hv
-  rw [← hc, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hc, map_sum]
   refine Submodule.sum_mem _ fun i _ => ?_
   rw [map_smul, frame_e, LinearEquiv.symm_apply_apply]
   exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)

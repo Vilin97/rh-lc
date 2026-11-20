@@ -125,7 +125,8 @@ theorem exists_coeff (K : OpenSubgroup G) (hK : IsCompact (K : Set G)) (f : SB G
         M f = s * M (ind K hK) := by
   obtain ⟨S, a, h⟩ := exists_decomp K hK f hf
   refine ⟨∑ t ∈ S, a t, fun M hM => ?_⟩
-  rw [h, _root_.map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h, _root_.map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun t _ => ?_
   rw [map_smul, hM, smul_eq_mul]
 

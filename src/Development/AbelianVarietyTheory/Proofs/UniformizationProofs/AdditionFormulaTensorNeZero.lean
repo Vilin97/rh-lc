@@ -47,7 +47,8 @@ theorem sum_sval_mul_eq_zero {F : Type} [CommRing F] {Z Y₁ Y₂ T : Scheme.{0}
   have hb : ∀ (c : F) s t, f (c • s) t = f s (c • t) := fun c s t => by
     rw [hf, hf, svalHom_smul, svalHom_smul, e]; ring
   have := congrArg (TensorProduct.liftAddHom f hb) h
-  rw [map_sum, map_zero] at this
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_zero] at this
   simp only [TensorProduct.liftAddHom_tmul] at this
   exact this
 

@@ -87,7 +87,8 @@ theorem frame_ind {k : Type} [Field k] {f : c.F →+* k} {x : Sp k ⟶ X} {u : V
   obtain ⟨U, hU⟩ := exists_tan fun i => (h.1 τ i).1
   have e := (comb_iff U cf w).1 (hU ▸ h1)
   refine (h.2 τ w (e ▸ isTan_tv _) fun a => ?_).unique h1 h2
-  rw [e, eig_iff, map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, eig_iff, map_sum, Finset.smul_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_smul, smul_comm, (eig_iff (U i) a _).1 (congrFun hU i ▸ (h.1 τ i).2 a)]
 
@@ -100,7 +101,8 @@ theorem comb_push {m : ℕ} {u : Fin m → (Sp (DualNumber R) ⟶ t'.G.left)} (h
     IsCombAtG t x (fun i => u i ≫ mu.φ) cf (w ≫ mu.φ) ↔ IsCombAtG t' x' u cf w := by
   refine (GlobalTheory.LieMet.isComb_iff (fun i => pushE mu x' hx (tanOf (hu i))) cf (pushE mu x' hx (tanOf hw))).trans
     (Iff.trans ?_ (GlobalTheory.LieMet.isComb_iff (fun i => tanOf (hu i)) cf (tanOf hw)).symm)
-  simp only [← map_smul, ← map_sum, EmbeddingLike.apply_eq_iff_eq]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← map_smul, ← map_sum, EmbeddingLike.apply_eq_iff_eq]
 
 theorem frame_push {f' : c'.F →+* R} {f : c.F →+* R} (hf : ∀ τ a, f (embK c τ a) = f' (embK c' τ a))
     {u : Vecs Dw t' R} (h : GlobalTheory.LocM.IsFrame t' f' x' u) : GlobalTheory.LocM.IsFrame (Dw := Dw) t f x fun τ i => u τ i ≫ mu.φ := by

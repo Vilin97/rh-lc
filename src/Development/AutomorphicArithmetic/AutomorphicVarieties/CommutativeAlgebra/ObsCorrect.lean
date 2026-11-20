@@ -13,9 +13,11 @@ private theorem exists_strictHenselian_absolutely_closed_local_ring {k A ι : Ty
   have h3 : ∀ (a : A) c, m (π a * c) = a * m c := h2
   refine ⟨m.mapMatrix, fun Y => rfl, fun M Y => ?_, fun M Y => ?_⟩
   · ext a b
-    simp only [AddMonoidHom.mapMatrix_apply, Matrix.map_apply, Matrix.mul_apply, map_sum, h3]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [AddMonoidHom.mapMatrix_apply, Matrix.map_apply, Matrix.mul_apply, map_sum, h3]
   · ext a b
-    simp only [AddMonoidHom.mapMatrix_apply, Matrix.map_apply, Matrix.mul_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [AddMonoidHom.mapMatrix_apply, Matrix.map_apply, Matrix.mul_apply, map_sum]
     refine Finset.sum_congr rfl fun c _ => ?_
     rw [mul_comm (Y a c), h3, mul_comm]
 

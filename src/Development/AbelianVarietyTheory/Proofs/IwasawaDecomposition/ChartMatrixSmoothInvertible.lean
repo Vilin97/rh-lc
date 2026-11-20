@@ -25,7 +25,8 @@ theorem exists_herm {d : ℕ} (b : Matrix (Fin d) (Fin d) ℂ) :
     ring
   · set S := ∑ k, ∑ l, b k l * ξ k * starRingEnd ℂ (ξ l)
     have hT : ∑ k, ∑ l, starRingEnd ℂ (b l k) * ξ k * starRingEnd ℂ (ξ l) = starRingEnd ℂ S := by
-      simp only [S, map_sum, map_mul, Complex.conj_conj]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [S, map_sum, map_mul, Complex.conj_conj]
       rw [Finset.sum_comm]
       exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
     have e : ∑ k, ∑ l, (Matrix.of fun k l => (b k l + starRingEnd ℂ (b l k)) / (2 * Real.pi) :

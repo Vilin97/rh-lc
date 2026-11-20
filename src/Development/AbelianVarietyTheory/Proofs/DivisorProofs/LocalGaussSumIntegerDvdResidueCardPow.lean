@@ -45,10 +45,12 @@ theorem exists_int_gauss {K : Type} [Field K] [NumberField K] (σ : K →+* ℂ)
   have hinv : ∀ u, χ u⁻¹ = (χ u)⁻¹ := fun u =>
     eq_inv_of_mul_eq_one_left (by rw [← map_mul, inv_mul_cancel, map_one])
   have hg : σ ((∑ u : Rˣ, a u⁻¹ * b u : NumberField.RingOfIntegers K) : K) = ∑ u : Rˣ, (χ u)⁻¹ * ψ u := by
-    simp only [map_sum, map_mul, ha, hb, hinv]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, ha, hb, hinv]
   have hg' : σ ((∑ u : Rˣ, a u * b (-u) : NumberField.RingOfIntegers K) : K) =
       starRingEnd ℂ (∑ u : Rˣ, (χ u)⁻¹ * ψ u) := by
-    simp only [map_sum, map_mul, ha, hb]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, ha, hb]
     refine Finset.sum_congr rfl fun z _ => ?_
     rw [Complex.inv_eq_conj (hχ z), Complex.conj_conj, AddChar.map_neg_eq_conj]
   refine ⟨_, ∑ u : Rˣ, a u * b (-u), hg, ?_⟩

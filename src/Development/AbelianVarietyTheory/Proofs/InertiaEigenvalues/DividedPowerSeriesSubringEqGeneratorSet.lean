@@ -62,7 +62,8 @@ theorem sdSet_mul {F G : ZMod a → K⟦X⟧} (hF : F ∈ SdSet t K e) (hG : G �
     by_cases h1 : N ≤ p.1
     · exact (hN _ h1).mul_right _
     · exact (hN' _ (by omega)).mul_left _
-  · rw [Pi.mul_apply, coeff_mul, Finset.mul_sum, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [Pi.mul_apply, coeff_mul, Finset.mul_sum, map_sum, map_sum]
     refine Finset.sum_congr rfl fun p hp => ?_
     rw [Finset.HasAntidiagonal.mem_antidiagonal] at hp
     rw [map_nsmul, map_nsmul, nsmul_eq_mul, map_mul, map_mul, ← hF τ p.1, ← hG τ p.2, ← hp, hq p.1 p.2]

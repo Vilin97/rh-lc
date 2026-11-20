@@ -33,7 +33,8 @@ theorem glue_mul (j : B →ₙ+* A) (a a' : Matrix n n A) (b b' : Matrix n n B) 
     glue j a b * glue j a' b' = glue j (a * a') (b * b') := by
   have h1 : ∀ y, j 1 * j y = j y := fun y => by rw [← map_mul, one_mul]
   ext r s
-  simp only [glue, Matrix.mul_apply, Matrix.add_apply, Matrix.smul_apply, Matrix.map_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [glue, Matrix.mul_apply, Matrix.add_apply, Matrix.smul_apply, Matrix.map_apply,
     smul_eq_mul, map_sum, map_mul, Finset.mul_sum, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun k _ => ?_
   linear_combination (a r k * a' k s) * h1 1 - a r k * h1 (b' k s) - a' k s * h1 (b r k)
@@ -495,7 +496,8 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarR
 theorem hT_coord (V : HSpace E) (x y : V.V) :
     V.hT x y = ∑ i, ∑ j, star (V.frame.repr x i) * V.gram i j * V.frame.repr y j := by
   conv_lhs => rw [← V.frame.sum_repr x, ← V.frame.sum_repr y]
-  simp only [map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul,
     HSpace.gram, RingHom.id_apply, starRingEnd_apply]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun i _ => by

@@ -54,7 +54,8 @@ theorem exists_approx {L : Submodule (𝓞 E) (Fin r → E)} (hL : L.FG) {n : �
       have := congrArg Subtype.val hc
       simpa using this.symm
     change vec v x ∈ _
-    rw [e, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, map_sum]
     refine Submodule.sum_mem _ fun i _ => ?_
     rw [map_zsmul]
     exact zsmul_mem (Submodule.subset_span (Set.mem_range_self i)) _
@@ -65,7 +66,8 @@ theorem exists_approx {L : Submodule (𝓞 E) (Fin r → E)} (hL : L.FG) {n : �
   choose a ha using fun i => hs i v
   refine ⟨∑ i, a i • vec v (t i : Fin r → E),
     Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _ (vec_mem v (t i).2), ?_⟩
-  rw [← hc v, map_sum, Finset.smul_sum, ← Finset.sum_add_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hc v, map_sum, Finset.smul_sum, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [ha i, vec_smul_real, add_smul, smul_assoc]
 

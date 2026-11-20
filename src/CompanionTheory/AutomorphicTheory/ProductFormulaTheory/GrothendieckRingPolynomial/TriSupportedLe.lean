@@ -152,7 +152,8 @@ theorem uni_exists {M I C : Type*} (L : M ≃ I) (c : M → C) (w : M → ℕ) (
       rw [Finsupp.sum, ← Finset.add_sum_erase _ _
         (Finsupp.mem_support_iff.2 (by rw [h1]; exact one_ne_zero)), h1]
       simp_rw [Finsupp.smul_single_one]
-    rw [map_sub, map_sum, Finsupp.linearCombination_single, one_smul, hs]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_sum, Finsupp.linearCombination_single, one_smul, hs]
     exact (eq_sub_of_add_eq hsplit.symm).symm
 
 theorem uni_bij {M I C : Type*} (L : M ≃ I) (c : M → C) (w : M → ℕ) (b : C → ℕ) (f : M → I →₀ ℤ)

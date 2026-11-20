@@ -33,7 +33,8 @@ theorem cycloSq_coeff_eq {l : ℕ} (hl : l.Prime) {ζ : ℂ} (hζ : IsPrimitiveR
     have hl' : l = (l - 1) + 1 := by omega
     rw [hl', Finset.sum_range_succ] at h1
     simp only [Nat.add_sub_cancel, sub_self, Int.cast_zero, zero_mul, add_zero] at h1
-    rw [hQdef, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hQdef, map_sum]
     simpa using h1
   have hdvd : minpoly ℚ ζ ∣ Q := minpoly.dvd ℚ ζ hQ
   have hdeg : (minpoly ℚ ζ).natDegree = l - 1 := by

@@ -77,7 +77,8 @@ private theorem form_core {F : Type} [Field F] [NumberField F] [IsCMField F] {n 
   have hform : ∀ u w, B u w = Algebra.trace ℚ F ((fun i => IsCMField.complexConj F (w i)) ⬝ᵥ (A *ᵥ u)) := by
     intro u w
     conv_lhs => rw [sum_single u, sum_single w]
-    simp only [map_sum, AddMonoidHom.finset_sum_apply, dotProduct, Matrix.mulVec, Finset.mul_sum, hterm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, AddMonoidHom.finset_sum_apply, dotProduct, Matrix.mulVec, Finset.mul_sum, hterm]
   refine ⟨A, ?_, ?_, hform⟩
   · intro hdet
     obtain ⟨v, hv, hAv⟩ := Matrix.exists_mulVec_eq_zero_iff.2 hdet
@@ -185,7 +186,8 @@ theorem UpperTheory.Gal.W2.fForm_of :
     rw [← Matrix.mulVec_mulVec, Matrix.dotProduct_mulVec, Matrix.vecMul_transpose]
     congr 1
     ext i
-    simp [Matrix.mulVec, dotProduct, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Matrix.mulVec, dotProduct, map_sum, map_mul]
   rw [hcj, ← Matrix.mulVec_mulVec]
   have h1 := hform (σ (sh G c) *ᵥ u) w
   have h2 := hform u (σ c *ᵥ w)

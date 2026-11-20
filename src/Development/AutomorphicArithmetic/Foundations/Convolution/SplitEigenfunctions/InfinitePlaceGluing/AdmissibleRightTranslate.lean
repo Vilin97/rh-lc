@@ -34,7 +34,8 @@ private theorem lie_expand {ι : Type} [Fintype ι] (b : Module.Basis ι ℝ (Li
     (lie E 2 X f).1 = ∑ i, ((b.repr X i : ℝ) : ℂ) • (lie E 2 (b i) f).1 := by
   have h : lie E 2 X = ∑ i, (b.repr X i) • lie E 2 (b i) := by
     conv_lhs => rw [← b.sum_repr X]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [map_smul]
   rw [h]
   funext g

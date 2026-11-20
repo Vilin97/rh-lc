@@ -688,7 +688,8 @@ theorem ga_det_ne {T T' : D.host.E} (F0 : FlagG (VS D) D.R.rS T) (F' : LFlag (VS
   have hperp : ∀ a, (VS D).hT (vfam F0 F' a) w = 0 := fun a => by
     have := congrFun hc a
     simp only [Matrix.mulVec, dotProduct, Matrix.of_apply, Pi.zero_apply, brS] at this
-    rw [hw, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hw, map_sum]
     simp only [map_smul, smul_eq_mul]
     rw [← this]; exact Finset.sum_congr rfl fun b _ => mul_comm _ _
   have hwO : w ∈ orthK (VS D).hT (UPair D F0 F') := by

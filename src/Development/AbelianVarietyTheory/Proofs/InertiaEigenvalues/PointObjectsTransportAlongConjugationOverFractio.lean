@@ -123,7 +123,8 @@ theorem exists_cj_of_forall (h : ∀ b, ∃ b', Cj f P b b') (a' : Matrix (Fin n
   have : (Matrix.map (Matrix.of fun y x => ∑ j, ∑ i, c i x y j * a' j i) f : Matrix (Fin n) (Fin n) K) =
       ((P⁻¹ : GL (Fin n) K) : Matrix (Fin n) (Fin n) K) * (a'.map f * (P : Matrix (Fin n) (Fin n) K)) := by
     ext y x
-    simp only [Matrix.map_apply, Matrix.of_apply, map_sum, map_mul, hc, Matrix.mul_apply, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.map_apply, Matrix.of_apply, map_sum, map_mul, hc, Matrix.mul_apply, Finset.mul_sum]
     refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun i _ => by ring
   unfold Cj
   rw [this, ← mul_assoc, Units.mul_inv, one_mul]

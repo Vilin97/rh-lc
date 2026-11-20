@@ -27,7 +27,8 @@ variable {R A σ : Type} [CommRing R] [CommRing A] [Algebra R A] {r : σ → A} 
 theorem map_eq_zero_of_forms {B : Type} [CommRing B] (θ : MvPolynomial σ R →+* B)
     (hI : ∀ F ∈ I, ∀ e, homogeneousComponent e F ∈ I)
     (H : ∀ t F, F.IsHomogeneous t → F ∈ I → θ F = 0) {F : MvPolynomial σ R} (hF : F ∈ I) : θ F = 0 := by
-  rw [← sum_homogeneousComponent F, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← sum_homogeneousComponent F, map_sum]
   exact Finset.sum_eq_zero fun t _ => H t _ (homogeneousComponent_isHomogeneous t F) (hI F hF t)
 
 theorem ker_aeval (hi : r i = 1) (hI : ∀ F ∈ I, ∀ e, homogeneousComponent e F ∈ I)
@@ -87,12 +88,14 @@ theorem flat_chart (hi : r i = 1) (hr : Function.Surjective (aeval (R := R) r))
   let y : Fin l → homogeneousSubmodule σ R (d + k + m) := fun a =>
     ⟨X i ^ (d + k) * (X i ^ (m - n a) * G a), (isHomogeneous_X_pow i _).mul (hG' a)⟩
   have hy : ∑ a, f a • N.mkQ (y a) = 0 := by
-    simp only [← map_smul, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [← map_smul, ← map_sum]
     refine (Submodule.Quotient.mk_eq_zero _).2 ?_
     change (homogeneousSubmodule σ R (d + k + m)).subtype _ ∈ I
     have e : (homogeneousSubmodule σ R (d + k + m)).subtype (∑ a, f a • y a) =
         X i ^ d * (X i ^ k * ∑ a, f a • (X i ^ (m - n a) * G a)) := by
-      simp only [map_sum, map_smul, Finset.mul_sum, mul_smul_comm, y, Submodule.subtype_apply, pow_add,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, Finset.mul_sum, mul_smul_comm, y, Submodule.subtype_apply, pow_add,
         _root_.mul_assoc]
     rw [e]
     exact I.mul_mem_left _ hk
@@ -104,7 +107,8 @@ theorem flat_chart (hi : r i = 1) (hr : Function.Surjective (aeval (R := R) r))
     rw [aeval_X_pow_mul hi, aeval_X_pow_mul hi, eG]
   obtain ⟨s, c, z, hz, hc⟩ := Module.Flat.isTrivialRelation_of_sum_smul_eq_zero hy
   refine ⟨s, c, fun j => θ (z j), fun a => ?_, hc⟩
-  rw [← hθ, show N.mkQ (y a) = _ from hz a, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hθ, show N.mkQ (y a) = _ from hz a, map_sum]
   simp only [map_smul]
 
 end Algebra

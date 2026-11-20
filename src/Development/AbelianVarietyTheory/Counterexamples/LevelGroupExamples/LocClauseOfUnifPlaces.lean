@@ -110,7 +110,8 @@ theorem continuous_place {F L : Type} [Field F] [NumberField F] [Field L] [Numbe
       ∑ i, θ (fstA F (B.repr z i) ⊗ₜ[F] (1 : L)) * τ (b i) := by
     intro z
     conv_lhs => rw [← B.sum_repr z]
-    simp only [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [Algebra.TensorProduct.basis_apply, TensorProduct.smul_tmul', smul_eq_mul, mul_one,
       Algebra.TensorProduct.map_tmul, AlgHom.id_apply, ← hθ.1, ← map_mul,

@@ -74,8 +74,10 @@ theorem GlobalTheory.ThetaDecay.dH_transport : ∀ (F E : Type) [Field F] [Numbe
       fun t => ∑ i, l (M.co.rho B.ψ (realAd F t • u) (pureA F (f' i) (g i))) := by
     funext t
     have e1 : ∑ i, l (M.co.rho B.ψ (realAd F t • u) (pureA F (f' i) (g i))) = l (M.co.rho B.ψ (realAd F t • u) Φ) := by
-      rw [← map_sum, hΦe, Darboux.rho, schr_finset_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← map_sum, hΦe, Darboux.rho, schr_finset_sum]
     rw [e1, hl, LinearMap.comp_apply, hS.impl p _ Φ hΦ, actAB_smul, Darboux.rho, map_smul]
     rfl
-  rw [dH, e, hs.deriv, ← map_sum, hdΦ, hl, LinearMap.comp_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [dH, e, hs.deriv, ← map_sum, hdΦ, hl, LinearMap.comp_apply]
   rfl

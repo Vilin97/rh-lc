@@ -17,7 +17,8 @@ theorem UpperTheory.V.Pa.Core.quotientRegularAt_of_quotient_free_over_powerSerie
       s (GlobalTheory.monoVal MvPowerSeries.X β) := fun β => by
     simp only [GlobalTheory.monoVal, Finsupp.prod, map_prod, map_pow]
   have h0 := congrArg e ((Submodule.Quotient.mk_eq_zero _).2 hc)
-  rw [map_zero, ← Submodule.mkQ_apply, map_sum, map_sum] at h0
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_zero, ← Submodule.mkQ_apply, map_sum, map_sum] at h0
   simp only [map_smul, hmono, he, Submodule.mkQ_apply] at h0
   have hL : ∀ i, t α i ∈ kjIdeal Λ σ 1 j := by
     intro i
@@ -25,7 +26,8 @@ theorem UpperTheory.V.Pa.Core.quotientRegularAt_of_quotient_free_over_powerSerie
     rw [Finset.sum_apply] at h1
     simp only [Pi.smul_apply, ← ht, Pi.zero_apply] at h1
     have h2 : (∑ β : GlobalTheory.MonoDeg σ a, GlobalTheory.monoVal (MvPowerSeries.X : σ → MvPowerSeries σ Λ) β.1 * t β i) ∈ kjIdeal Λ σ (a + 1) j := by
-      rw [← Ideal.Quotient.eq_zero_iff_mem, map_sum, ← h1]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← Ideal.Quotient.eq_zero_iff_mem, map_sum, ← h1]
       rfl
     have h3 := qRegAt_mvPowerSeries Λ σ (maximalIdeal Λ ^ j) a (fun β => t β i)
       (by simpa [kjIdeal, Ideal.map_pow] using h2) α
@@ -35,7 +37,8 @@ theorem UpperTheory.V.Pa.Core.quotientRegularAt_of_quotient_free_over_powerSerie
   have h4 : c α - ∑ i, s (t α i) • m i ∈ ((kjIdeal Λ σ (a + 1) j).map s • ⊤ : Submodule R M) := by
     rw [← Submodule.Quotient.eq]
     apply e.injective
-    rw [← Submodule.mkQ_apply _ (∑ i, _), map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Submodule.mkQ_apply _ (∑ i, _), map_sum, map_sum]
     simp only [map_smul, he, Submodule.mkQ_apply, hm, AddEquiv.apply_symm_apply]
     funext k
     rw [Finset.sum_apply, Finset.sum_eq_single k]

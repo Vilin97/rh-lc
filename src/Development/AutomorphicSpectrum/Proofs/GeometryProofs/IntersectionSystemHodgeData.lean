@@ -54,7 +54,8 @@ theorem gramAt_eq_hodge : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E]
     (fun k => Or.i τ (b k)) _ G hS.choose _ (GlobalTheory.T.interior_point_polarised E H D l Xo c Y S₀ Ω K J Dc.y Or.𝔐 z hint)
     (Or.metric τ hex.choose z w hco hint hex.choose_spec) hG ?_ hval).symm
   intro q
-  rw [hS.choose_spec q, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hS.choose_spec q, map_sum]
   exact Finset.sum_congr rfl fun p _ => map_smul _ _ _
 
 end GlobalTheory.CompanionTheory.Ar.Cusp.GramChosen

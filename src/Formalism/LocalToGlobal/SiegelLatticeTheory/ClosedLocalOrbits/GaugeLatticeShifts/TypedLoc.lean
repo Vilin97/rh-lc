@@ -514,7 +514,8 @@ theorem trV_nondeg (z : I.E ⊗[I.F] v.adicCompletion I.F)
     let bi : 𝓞 I.E := ⟨b i, hbI i⟩
     have hbi : (bi : I.E) = b i := rfl
     have h1 := h bi
-    rw [Finset.mul_sum, map_sum] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.mul_sum, map_sum] at h1
     simp only [Algebra.TensorProduct.tmul_mul_tmul, one_mul, trV_tmul, hbi] at h1
     have e : ∀ j, tlin I (b i * d j) = if i = j then 1 else 0 := by
       intro j

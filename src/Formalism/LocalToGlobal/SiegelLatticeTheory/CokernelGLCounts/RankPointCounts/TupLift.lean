@@ -135,7 +135,8 @@ theorem zhat_lift {T T' : E} (F : LFlag S r T) (F₁ : LFlag S r T') {ν m : S.V
     rw [← hiso (frame F a) (ν⁻¹ (m (frame F₁ b)))]
     simp [LinearEquiv.coe_inv]
   rw [e, hνF a, hmF b]
-  simp only [Matrix.mul_apply, Matrix.conjTranspose_apply, ZhatL, Zhat, brS, map_sum, map_smulₛₗ,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mul_apply, Matrix.conjTranspose_apply, ZhatL, Zhat, brS, map_sum, map_smulₛₗ,
     LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, Finset.sum_mul, Finset.mul_sum, starRingEnd_apply]
   refine Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => ?_
   simp only [RingHom.id_apply]

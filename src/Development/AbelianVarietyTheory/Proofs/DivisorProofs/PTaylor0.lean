@@ -49,7 +49,8 @@ theorem of_core (core : ∀ {I : Type} [Fintype I] [DecidableEq I] {g : ℕ} {Λ
     (fun l _ ↦ (hτ l).symm) φ₀ (fun p _ ↦ (hE p.2).symm) D π κ hκ hπ N t ht hN (j : B →+* D) hj
     (A₀.hom ≫ spMap π) (by rw [Category.comp_id]) n (Over.Hom.left (𝟙 A₀)) rfl k.isMor c.1 per hper m dd
     (fun a ↦ (cs a).1) (fun a l ↦ P₀ l (cs a)) _ (fun _ _ ↦ rfl) (fun a ↦ hP (cs a)) hn x
-  rw [← key, crysToDR_apply, ← hv, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← key, crysToDR_apply, ← hv, map_sum]
   refine Finset.sum_congr rfl fun a _ ↦ ?_
   rw [map_smul, ← hcs a, hd, smul_eq_mul]
 
@@ -76,7 +77,8 @@ theorem of_core0 (core : ∀ {I : Type} [Fintype I] [DecidableEq I] {g : ℕ} {�
     (fun l _ ↦ (hτ l).symm) φ₀ (fun p _ ↦ (hE p.2).symm) D π κ hκ hπ N t ht hN (j : B →+* D) hj
     (A₀.hom ≫ spMap π) (by rw [Category.comp_id]) n (Over.Hom.left (𝟙 A₀)) rfl k.isMor c.1 per hper m dd
     (fun a ↦ (cs a).1) (fun a l ↦ P₀ l (cs a)) _ (fun _ _ ↦ rfl) (fun a ↦ hP (cs a)) hn x
-  rw [← key, crysToDR_apply, ← hv, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← key, crysToDR_apply, ← hv, map_sum]
   refine Finset.sum_congr rfl fun a _ ↦ ?_
   rw [map_smul, ← hcs a, hd, smul_eq_mul]
 

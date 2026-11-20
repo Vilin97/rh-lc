@@ -22,7 +22,8 @@ lemma evFin_phase {κ : Type} [Fintype κ] (v : Pl F) {_ : Invertible (2 : Fv F 
     evFin F v (x ⬝ᵥ b + ⅟(2 : AF F) * (a ⬝ᵥ b)) =
       (fun i => evFin F v (x i)) ⬝ᵥ (fun i => evFin F v (b i)) +
         ⅟(2 : Fv F v) * ((fun i => evFin F v (a i)) ⬝ᵥ (fun i => evFin F v (b i))) := by
-  simp only [dotProduct, map_add, map_mul, map_sum, evFin_invOf_two]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dotProduct, map_add, map_mul, map_sum, evFin_invOf_two]
 
 lemma trace_phase {κ : Type} [Fintype κ] (x a b : κ → AF F) :
     Algebra.trace ℝ (mixedEmbedding.mixedSpace F) (evI F (x ⬝ᵥ b + ⅟(2 : AF F) * (a ⬝ᵥ b))) =
@@ -32,7 +33,8 @@ lemma trace_phase {κ : Type} [Fintype κ] (x a b : κ → AF F) :
     simp only [GlobalTheory.ArchUniq.evI_eq_evIHom]
     rw [← map_add, ← two_mul, ← mul_assoc, mul_invOf_self, one_mul]
   have hs : ∀ y c : κ → AF F, evI F (y ⬝ᵥ c) = ∑ i, GlobalTheory.ArchUniq.locV y i * GlobalTheory.ArchUniq.locV c i := fun y c => by
-    simp only [dotProduct, GlobalTheory.ArchUniq.evI_eq_evIHom, map_sum, map_mul, GlobalTheory.ArchUniq.locV]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [dotProduct, GlobalTheory.ArchUniq.evI_eq_evIHom, map_sum, map_mul, GlobalTheory.ArchUniq.locV]
   have hh : Algebra.trace ℝ (mixedEmbedding.mixedSpace F) (evI F (⅟(2 : AF F) * (a ⬝ᵥ b))) =
       Algebra.trace ℝ (mixedEmbedding.mixedSpace F) (evI F (a ⬝ᵥ b)) / 2 := by
     rw [h2 (a ⬝ᵥ b), map_add]; ring

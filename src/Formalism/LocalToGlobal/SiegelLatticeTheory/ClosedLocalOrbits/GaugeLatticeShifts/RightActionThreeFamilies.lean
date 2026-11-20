@@ -42,7 +42,8 @@ theorem hsInv_hsEmb (A : Wq →L[ℂ] Wp) : hsInv (Formalism.L2.SG.PackageTie.hs
   rw [hsInv_apply]
   simp only [Formalism.L2.SG.PackageTie.hsEmb, LinearMap.coe_mk, AddHom.coe_mk, PiLp.toLp_apply]
   conv_rhs => rw [← (stdOrthonormalBasis ℂ Wq).sum_repr' ξ]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp [map_smul]
 
 theorem hsNormSq_comp_iso (A : Wq →L[ℂ] Wp) (P : Wq ≃ₗᵢ[ℂ] Wq) :

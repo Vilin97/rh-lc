@@ -83,12 +83,14 @@ theorem eventually_eq_of_lattice {B La V : Type} [TopologicalSpace B] [AddCommGr
     let xl : L := ⟨P b₀ x, x, rfl⟩
     have h1 : ∀ i, bR.repr (P b₀ x) i = (bz.repr xl i : ℝ) := fun i => bz.ofZLatticeBasis_repr_apply ℝ L xl i
     have h2 : x = ∑ i, bz.repr xl i • c i := hinj (by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simp only [map_zsmul, hc]
       rw [← bR.sum_repr (P b₀ x)]
       exact Finset.sum_congr rfl fun i _ => by rw [h1, Int.cast_smul_eq_zsmul])
     rw [hT]
-    conv_rhs => rw [h2, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_rhs => rw [h2, map_sum]
     exact Finset.sum_congr rfl fun i _ => by rw [h1, Int.cast_smul_eq_zsmul, map_zsmul]
   obtain ⟨ε, hε, hb⟩ := Metric.isOpen_iff.1 (isOpen_discrete ({0} : Set L)) 0 rfl
   have h1 : ∀ᶠ b in 𝓝 b₀, ‖T b - T b₀‖ < 1 / 2 := by

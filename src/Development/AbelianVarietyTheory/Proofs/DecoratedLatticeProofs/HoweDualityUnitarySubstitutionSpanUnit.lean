@@ -32,7 +32,8 @@ theorem matRep_ren {a b : ℕ} (g : GL (Fin a) ℂ) (h : GL (Fin b) ℂ) (P : FP
     apply MvPolynomial.algHom_ext
     rintro ⟨u, i, j⟩
     rw [AlgHom.comp_apply, AlgHom.comp_apply, ren_X, ← matRep_apply, matRep_X]
-    simp [mvZ, map_sum, ren_X, Matrix.transpose_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [mvZ, map_sum, ren_X, Matrix.transpose_apply]
   exact congrArg (fun φ => φ P) e
 
 theorem subY_one_injective {a b : ℕ} (hab : a ≤ b) :
@@ -226,7 +227,8 @@ theorem howeSpan_unit : HoweSpan Unit := by
   have := LinearMap.congr_fun hT ⟨F, hF⟩
   rw [LinearMap.sum_apply] at this
   simp only [LinearMap.smul_apply, hyT, subMap_apply] at this
-  simp only [map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul]
   exact this.symm
 
 end GlobalTheory.HoweOne

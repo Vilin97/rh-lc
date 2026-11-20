@@ -38,7 +38,8 @@ private theorem trLat_range {A B R : Type} [CommRing A] [CommRing B] [CommRing R
           exact Algebra.subset_adjoin ⟨i, rfl⟩
         · have e : φ b - (algebraMap A R (f b) + ∑ i, m (c i) * φ (g i)) = ∑ i, (φ (c i) - m (c i)) * φ (g i) := by
             have := congrArg φ hc
-            rw [map_sub, map_sum, hb'] at this
+            set_option synthInstance.maxHeartbeats 100000 in
+              rw [map_sub, map_sum, hb'] at this
             simp only [smul_eq_mul, map_mul] at this
             simp only [sub_mul, Finset.sum_sub_distrib]
             linear_combination -this

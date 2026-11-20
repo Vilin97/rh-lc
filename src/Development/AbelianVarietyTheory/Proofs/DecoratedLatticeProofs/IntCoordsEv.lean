@@ -53,7 +53,8 @@ theorem int_coords_ev : ∀ᶠ w in Filter.cofinite, ∀ z ∈ intAE D, ∀ i,
       conv_lhs => rw [← B.sum_repr o]
       push_cast
       rfl
-    rw [ho, map_sum, Finsupp.coe_finset_sum, Finset.sum_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [ho, map_sum, Finsupp.coe_finset_sum, Finset.sum_apply, map_sum]
     refine sum_mem fun j _ => ?_
     rw [map_zsmul, Finsupp.smul_apply, map_zsmul]
     exact zsmul_mem (hw i j) _
@@ -90,12 +91,14 @@ theorem glue : ∀ (D : D7) (a : Pl D → AE D), (∀ x, a x ∈ idAt D (· = x)
     exact hw _ (hT w hwT).2 i
   let C : Fin (Module.finrank D.host.F D.host.E) → Af D.host.F := fun i => RestrictedProduct.mk (c i) (hc i)
   refine ⟨∑ i, pairA D.host.F 0 (C i) ⊗ₜ[D.host.F] b i, ?_, fun x => ?_⟩
-  · rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum]
     exact Finset.sum_eq_zero fun i _ => infPart_pair _ _
   · unfold idOff
     refine (Submodule.mem_iInf _).2 fun w => RingHom.mem_ker.2 ?_
     obtain ⟨w, rfl⟩ := w
-    rw [map_sub, map_sum, sub_eq_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_sum, sub_eq_zero]
     simp only [compAt_pair]
     exact sum_repr_tmul w (compAt D w (a w))
 

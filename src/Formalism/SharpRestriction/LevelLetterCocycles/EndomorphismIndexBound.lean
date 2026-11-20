@@ -182,7 +182,8 @@ theorem eigSpan (hsep : ∀ x y : X, x ≠ y → ∃ f ∈ T, f x ≠ f y) :
   have hCK : algebraMap O (FractionRing O) C ≠ 0 :=
     (map_ne_zero_iff _ (IsFractionRing.injective O (FractionRing O))).mpr hC
   have hv : algebraMap O (FractionRing O) C • v = ∑ x, actK T act (e x) v := by
-    rw [← LinearMap.sum_apply, ← map_sum, hsum, AlgHom.commutes, Module.algebraMap_end_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← LinearMap.sum_apply, ← map_sum, hsum, AlgHom.commutes, Module.algebraMap_end_apply,
       algebraMap_smul]
   have h1 : algebraMap O (FractionRing O) C • v ∈ ⨆ x, Vx T (actK T act).toRingHom x := by
     rw [hv]
@@ -250,14 +251,16 @@ theorem len_le (hsep : ∀ x y : X, x ≠ y → ∃ f ∈ T, f x ≠ f y)
     simp
   have hPA' : ∀ v, actK T act (∑ x ∈ S, e x) v ∈ VS T (actK T act).toRingHom (S : Set X) := by
     intro v
-    rw [map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, LinearMap.sum_apply]
     refine Submodule.sum_mem _ fun x hx => ?_
     unfold Formalism.NG.VS
     exact Submodule.mem_iSup_of_mem x (Submodule.mem_iSup_of_mem (Finset.mem_coe.mpr hx) (hmemV x v))
   have hrest : ∀ v, actK T act (∑ x ∈ Finset.univ \ S, e x) v ∈
       VS T (actK T act).toRingHom ((S : Set X)ᶜ) := by
     intro v
-    rw [map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, LinearMap.sum_apply]
     refine Submodule.sum_mem _ fun x hx => ?_
     have hx' : x ∈ ((S : Set X)ᶜ) := fun h => (Finset.mem_sdiff.mp hx).2 (Finset.mem_coe.mp h)
     unfold Formalism.NG.VS

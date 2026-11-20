@@ -14,7 +14,8 @@ theorem GlobalTheory.span_ιMulti_span_range_eq : ∀ (C : Type) [Field C] (O : 
       funext i; rw [← hc i]; simp [algebraMap_smul]
     rw [hx']
     show (exteriorPower.ιMulti C N).toMultilinearMap (fun i => ∑ j, (algebraMap O C (c i j)) • g j) ∈ _
-    rw [MultilinearMap.map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [MultilinearMap.map_sum]
     refine Submodule.sum_mem _ (fun s _ => ?_)
     rw [MultilinearMap.map_smul_univ, ← map_prod, algebraMap_smul]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨s, rfl⟩)

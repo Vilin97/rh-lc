@@ -111,7 +111,8 @@ theorem exists_line_subsheaf_split_at_finite : ∀ (κ : Type) [Field κ] [Infin
       ρ ∘ₗ stalkLinear α x = LinearMap.id := fun x hx => by
     refine exists_retraction_of_isUnit (g x) _ ((b x).coord 0) ?_
     convert hc ⟨x, hx⟩ using 1
-    rw [stalkLinear_finset_sum, LinearMap.sum_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [stalkLinear_finset_sum, LinearMap.sum_apply, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [stalkLinear_comp, LinearMap.comp_apply, stalkLinear_smulHom_apply, map_smul]
     rfl

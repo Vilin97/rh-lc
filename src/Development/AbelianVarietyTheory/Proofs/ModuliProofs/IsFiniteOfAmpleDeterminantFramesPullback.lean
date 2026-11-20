@@ -104,7 +104,8 @@ theorem Det.comp {χ : T ⟶ T₁} {ρ : T ⟶ T₀} {d} (h : Det e e₀ χ ρ d
   obtain ⟨P, hP, rfl⟩ := h
   subst h₁ h₂
   refine ⟨(pa s.left (V := ⊤) (le_pre_top _)).mapMatrix P, fun k => ?_, (RingHom.map_det _ _).symm⟩
-  rw [← pull_pull, hP, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← pull_pull, hP, map_sum]
   simp only [map_smulₛₗ, pull_pull]
   rfl
 

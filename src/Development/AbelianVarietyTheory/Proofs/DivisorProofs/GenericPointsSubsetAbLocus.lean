@@ -76,7 +76,8 @@ theorem exists_gen_theta_generic {R : Type} [CommRing R] [IsDomain R] (G : Over 
       zpow_one, zpow_neg_one]) t₁ ht₁
   let c := CechPic.cls M hM
   refine (CechPic.cls_eq_zero_iff (pull_isLB (LB.isLB_linComb hM _ _) pf)).1 ?_
-  rw [CechPic.cls_pull (LB.isLB_linComb hM _ _), CechPic.cls_linComb hM, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [CechPic.cls_pull (LB.isLB_linComb hM _ _), CechPic.cls_linComb hM, map_sum]
   simp only [map_zsmul, ← CechPic.pull_comp]
   have h2 := (CechPic.cls_eq_zero_iff (LB.isLB_linComb hM (fun I => pf ≫ thφ G (x3 G) I) thε)).2 ⟨t₂, ht₂⟩
   rw [CechPic.cls_linComb hM] at h2

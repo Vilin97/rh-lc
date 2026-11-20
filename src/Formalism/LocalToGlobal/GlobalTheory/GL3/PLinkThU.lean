@@ -25,7 +25,8 @@ private def sS (z w : VC D N N') : ℂ := ∑ τ, ∑ i, ∑ j, z τ i j * (star
 private theorem Hf_eq (T : Tor D) (z w : VC D N N') : Hf D T z w = sS z w / (area T.abelian₂ : ℂ) := rfl
 
 private theorem sS_swap (z w : VC D N N') : sS w z = (starRingEnd ℂ) (sS z w) := by
-  simp only [sS, map_sum, map_mul, starRingEnd_self_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [sS, map_sum, map_mul, starRingEnd_self_apply]
   exact Finset.sum_congr rfl fun τ _ => Finset.sum_congr rfl fun i _ =>
     Finset.sum_congr rfl fun j _ => mul_comm _ _
 
@@ -207,7 +208,8 @@ theorem sum_emb_zero {ι : Type*} [Fintype ι] (b : ι → D.host.E) (g : ι →
   obtain ⟨τ, rfl | rfl⟩ := emb_cases D φ
   · exact h τ
   · have h1 := congrArg (starRingEnd ℂ) (h τ)
-    simpa [map_sum, map_mul, Complex.conj_ofReal] using h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [map_sum, map_mul, Complex.conj_ofReal] using h1
 
 theorem card_tau : Fintype.card D.what₂.Tau = 2 * D.R.ord := by
   rw [← Nat.card_eq_fintype_card, Nat.card_congr D.eTau, Formalism.HC.Frame.natCard_Psi]

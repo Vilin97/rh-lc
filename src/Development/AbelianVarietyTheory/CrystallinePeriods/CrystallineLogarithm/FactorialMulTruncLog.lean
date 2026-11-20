@@ -80,7 +80,8 @@ theorem general {p : ℕ} [Fact p.Prime] {R : Type*} [CommRing R] [Fact ¬IsUnit
   have e : algebraMap (Ainf p R) (BdRPlus p R) u - 1 =
       algebraMap (AinfInv p R) (BdRPlus p R) (algebraMap (Ainf p R) (AinfInv p R) (u - 1)) := by
     rw [← IsScalarTower.algebraMap_apply, map_sub, map_one]
-  rw [BdRPlus.eval_log, factorial_mul_truncLog, e, BdRPlus.eval_algebraMap, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [BdRPlus.eval_log, factorial_mul_truncLog, e, BdRPlus.eval_algebraMap, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   simp only [map_mul, map_pow, map_neg, map_one, map_natCast]
 

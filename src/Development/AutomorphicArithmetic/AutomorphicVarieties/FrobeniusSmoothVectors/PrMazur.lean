@@ -15,17 +15,20 @@ theorem UpperTheory.V.Fr.pr_mazur :
     refine ⟨fun u => ob (co u), ?_⟩
     intro c hc A' _ _ _ p' p'' η hp' hcomp hη hη0 hε
     have hw0 : ob (∑ u, residue O (c u) • co u) = 0 := by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simp only [map_smul]
       exact hc
     refine hob' _ hw0 A' p' p'' hcomp hp' ?_
     intro y hy
     obtain ⟨b, hb, hy'⟩ := hco y
-    rw [hy', map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hy', map_sum]
     simp only [map_smul, hε, smul_smul]
     rw [← Finset.sum_smul]
     have hm : ∑ u, b u * c u ∈ maximalIdeal O := by
-      rw [← residue_eq_zero_iff, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← residue_eq_zero_iff, map_sum]
       simp only [map_mul, hb]
       simp only [LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul] at hy
       rw [← hy]

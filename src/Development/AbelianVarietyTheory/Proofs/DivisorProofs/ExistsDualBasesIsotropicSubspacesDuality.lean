@@ -47,7 +47,8 @@ theorem finrank_le_of_sep (V : Formalism.BasicNotions.HSpace E) (A B : Submodule
     have : x = ∑ i, (bA.repr ⟨x, hx⟩ i) • (bA i : V.V) := by
       calc x = ((∑ i, (bA.repr ⟨x, hx⟩ i) • bA i : A) : V.V) := by rw [← hx']
         _ = _ := by simp only [Submodule.coe_sum, Submodule.coe_smul]
-    rw [this, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [this, map_sum]
     simp [map_smulₛₗ, hy']
   have := LinearMap.finrank_le_finrank_of_injective hinj
   simpa using this
@@ -87,7 +88,8 @@ theorem exists_dual_bases : ∀ {D : D7} {V : HSp D} (X X' : Submodule D.host.E 
       calc z = ((∑ i, (bx.repr ⟨z, hz⟩ i) • bx i : X) : V.V) := by rw [← hz']
         _ = _ := by simp only [Submodule.coe_sum, Submodule.coe_smul]; rfl
     show V.hT (y : V.V) z = 0
-    rw [← hT_herm, this, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hT_herm, this, map_sum]
     simp [map_smulₛₗ, hy']
   have hsurj : Function.Surjective Φ := by
     rw [← LinearMap.injective_iff_surjective_of_finrank_eq_finrank]
@@ -112,7 +114,8 @@ theorem exists_dual_bases : ∀ {D : D7} {V : HSp D} (X X' : Submodule D.host.E 
     have hd : ∀ k, c (Sum.inr k) = 0 := by
       intro k
       have := congrArg (V.hT (x k)) hc
-      rw [map_add, map_sum, map_sum, map_zero] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_add, map_sum, map_sum, map_zero] at this
       simp only [map_smul, smul_eq_mul, hTX (hxX k) (hxX _), mul_zero, Finset.sum_const_zero,
         zero_add, hxx', mul_ite, mul_one, mul_zero, Finset.sum_ite_eq, Finset.mem_univ, if_true] at this
       exact this

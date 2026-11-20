@@ -37,7 +37,8 @@ theorem map_comb {σ ι : Type} [Fintype ι] (hΘ : ∀ b, Θ (algebraMap B Q b)
     (b : ι → B) (e : ι → MvPowerSeries σ Q) :
     map Θ (comb b e) = comb (fun i => θ (b i)) (fun i => map Θ (e i)) := by
   unfold comb
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   ext α
   rw [coeff_map, MvPowerSeries.coeff_smul, MvPowerSeries.coeff_smul, coeff_map, map_mul, hΘ]

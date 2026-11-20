@@ -117,7 +117,8 @@ private theorem nl_nrm {R : Type} [CommRing R] (p : ℕ) [hp : Fact p.Prime] (m 
       refine Finset.sum_congr rfl fun i' _ => ?_
       rw [hb i']
       rfl
-    rw [e, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, map_sum]
     simp [Finsupp.single_apply]
   rw [Model.nrm_ev p m hm hu h, hn]
 
@@ -146,7 +147,8 @@ theorem UpperTheory.Kd.C7.pNormLev :
       = ∑ i, phi l hl0 ((ψ.mapMatrix M) i jx) * PowerSeries.X ^ (i : ℕ) := by
     intro jx
     have := congrArg ψ (hG jx)
-    rw [map_mul, map_pow, hψX, map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_mul, map_pow, hψX, map_sum] at this
     rw [hψ, this]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_mul, map_pow, hψX, hψexp]

@@ -39,7 +39,8 @@ theorem goal1 :
       simp only [Module.Basis.constr_basis] at this
       simpa using this
     rw [← b.sum_repr y]
-    simp only [map_sum, h2, map_smul, smul_eq_mul, hb, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, h2, map_smul, smul_eq_mul, hb, map_mul]
   have hsm : ∀ c : K, w.valuation K c ≤ 1 → ∀ (Tt : Set Fn) (z : Fn),
       z ∈ Submodule.span O Tt → φ c • z ∈ Submodule.span O Tt := by
     intro c hc Tt z hz
@@ -88,7 +89,8 @@ theorem goal1 :
         simp only [neg_mul, neg_smul, mul_smul, Finset.sum_neg_distrib, ← Finset.smul_sum, e',
           smul_neg, neg_neg, inv_smul_smul₀ hl0]
       have hx0mem : cmp x0 ∈ Submodule.span O (cmp '' (S.erase x0 : Set V)) := by
-        rw [show cmp x0 = cmp (∑ x ∈ S.erase x0, (-(lam x0)⁻¹ * lam x) • x) from congrArg cmp hrel,
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [show cmp x0 = cmp (∑ x ∈ S.erase x0, (-(lam x0)⁻¹ * lam x) • x) from congrArg cmp hrel,
           map_sum]
         refine Submodule.sum_mem _ fun x hx => ?_
         rw [h2]

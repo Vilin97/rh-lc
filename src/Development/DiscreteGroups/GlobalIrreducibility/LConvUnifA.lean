@@ -45,7 +45,8 @@ theorem fixedProj_eq_avg {L : Subgroup G} (hLK : L ≤ K) (hLo : IsOpen (L : Set
       rw [← h1]
       apply act_eq_of_mk_eq ρ hv
       rw [QuotientGroup.out_eq', ← smul_eq_mul, MulAction.Quotient.mk_smul_out]
-    rw [hs, map_sum, Finset.sum_congr rfl (fun q _ => key q)]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hs, map_sum, Finset.sum_congr rfl (fun q _ => key q)]
     exact Fintype.sum_equiv (MulAction.toPerm (⟨k, hk⟩ : K)) _ _ (fun _ => rfl)
   have hsub : s - ((Fintype.card (K ⧸ L.subgroupOf K) : ℕ) : ℂ) • v ∈ coinvariantsKer ρ K := by
     have h1 : s - ((Fintype.card (K ⧸ L.subgroupOf K) : ℕ) : ℂ) • v =
@@ -65,7 +66,8 @@ theorem map_fixedProj_of_invariant {U : Type*} [AddCommGroup U] [Module ℂ U] (
   have hLo : IsOpen ((K ⊓ stabilizerOf ρ v : Subgroup G) : Set G) := by
     rw [Subgroup.coe_inf]; exact hKo.inter (hρ v)
   obtain ⟨N, r, hN, hr, h⟩ := fixedProj_eq_avg hρ hKc hKo (L := K ⊓ stabilizerOf ρ v) inf_le_left hLo
-  rw [h v (fun l hl => hl.2), map_smul, map_sum, Finset.sum_congr rfl (fun i _ => hf (r i) (hr i)),
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h v (fun l hl => hl.2), map_smul, map_sum, Finset.sum_congr rfl (fun i _ => hf (r i) (hr i)),
     Finset.sum_const, Finset.card_univ, Fintype.card_fin, ← Nat.cast_smul_eq_nsmul ℂ, smul_smul,
     inv_mul_cancel₀ (by exact_mod_cast hN.ne'), one_smul]
 
@@ -120,7 +122,8 @@ theorem hop_mul_mem_span (g h : G) :
       (N : ℂ)⁻¹ • ∑ i, hop ρ hρ hKc hKo (g * r i * h) := by
     refine LinearMap.ext fun w => ?_
     show fixedProj ρ hρ hKc hKo (ρ g (fixedProj ρ hρ hKc hKo (ρ h w) : V)) = _
-    rw [hav _ (hfix w), map_smul, map_smul, map_sum, map_sum, LinearMap.smul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hav _ (hfix w), map_smul, map_smul, map_sum, map_sum, LinearMap.smul_apply,
       LinearMap.sum_apply]
     congr 1
     refine Finset.sum_congr rfl fun i _ => ?_

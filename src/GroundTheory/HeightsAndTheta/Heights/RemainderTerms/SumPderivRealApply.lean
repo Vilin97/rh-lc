@@ -58,7 +58,8 @@ theorem deriv_restPoly (D : Derivation ℝ (IndefiniteRowSideFullHecke.RestTerms
   have hmu : D (IndefiniteRowSideFullHecke.RestTerms.muClass f j k bot) =
       C (if bot then (k : ℝ) * ∑ σ, β σ else -((j : ℝ) * ∑ σ, α σ)) := by
     cases bot <;>
-      simp [IndefiniteRowSideFullHecke.RestTerms.muClass, IndefiniteRowSideFullHecke.RestTerms.smallPsum, map_sum, ht, hb, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [IndefiniteRowSideFullHecke.RestTerms.muClass, IndefiniteRowSideFullHecke.RestTerms.smallPsum, map_sum, ht, hb, Finset.mul_sum]
   rw [IndefiniteRowSideFullHecke.RestTerms.restPoly, Derivation.leibniz, hfib, smul_zero, zero_add,
     Derivation.leibniz_pow, hmu, IndefiniteRowSideFullHecke.RestTerms.degPoly]
   simp only [smul_eq_mul, nsmul_eq_mul, Nat.add_sub_cancel]

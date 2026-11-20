@@ -72,14 +72,16 @@ theorem conj_cas_of_isHerm {n : ℕ} {χ : Inf n} (h : IsHerm χ) : conj (cas χ
     rw [hσ a, neg_sq]
   have hF : ∑ a, conj (χ false a) ^ 2 = ∑ a, χ true a ^ 2 := by
     have h2 := congrArg conj hT
-    simpa [map_sum, map_pow] using h2.symm
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [map_sum, map_pow] using h2.symm
   have hK : ∀ j : Fin n, conj (((n : ℂ) - 1) / 2 - ((j : ℕ) : ℂ)) = ((n : ℂ) - 1) / 2 - ((j : ℕ) : ℂ) := by
     intro j
     simp only [map_sub, map_div₀, map_natCast, map_one, map_ofNat]
   have hconj : ∀ x : Fin n → ℂ, conj (GlobalTheory.Dec.gelfVal x 2) =
       ∑ j, (conj (x j) ^ 2 - (((n : ℂ) - 1) / 2 - ((j : ℕ) : ℂ)) ^ 2) := by
     intro x
-    rw [gelfVal_two_eq_sum_sq_sub_sq, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [gelfVal_two_eq_sum_sq_sub_sq, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_sub, map_pow, map_pow, hK]
   simp only [cas]

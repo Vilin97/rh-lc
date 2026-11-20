@@ -39,7 +39,8 @@ theorem Bd_rat_neg (a : Fin N → F) (u : Fin N → AF F) (ξ : Fin N → F) :
 
 theorem Bd_rat_rat (a : Fin N → F) (η ξ : Fin N → F) :
     Bd (AF F) a (rat η) (rat ξ) = algebraMap F (AF F) (Bd F a η ξ) := by
-  simp [Bd, rat, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Bd, rat, map_sum, map_mul]
 
 theorem cont_Bd (a : Fin N → F) (w : Fin N → AF F) : Continuous fun u : Fin N → AF F => Bd (AF F) a u w := by
   unfold Bd

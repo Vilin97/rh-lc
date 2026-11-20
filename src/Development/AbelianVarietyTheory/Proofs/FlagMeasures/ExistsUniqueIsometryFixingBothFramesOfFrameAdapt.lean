@@ -49,7 +49,8 @@ lemma pair_apply (F : FlagG S r T) (x : S.V) (a) : pair F x a = S.hT (F.fvec a) 
 lemma pair_comb (F : FlagG S r T) (F' : FlagG S r T') (c : Fin (r + 1) → E) :
     pair F (comb F' c) = (Zhat F F').mulVec c := by
   ext a
-  simp [pair_apply, comb, Fintype.linearCombination_apply, map_sum, Matrix.mulVec, dotProduct, Zhat, brS,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [pair_apply, comb, Fintype.linearCombination_apply, map_sum, Matrix.mulVec, dotProduct, Zhat, brS,
     mul_comm]
 
 lemma fvec_cast (F : FlagG S r T) (a : Fin r) : F.fvec a.castSucc = F.e a := by simp [FlagG.fvec]
@@ -60,9 +61,11 @@ lemma pair_comb_self (F : FlagG S r T) (c : Fin (r + 1) → E) :
   have hz : ∀ a, S.hT F.z (F.e a) = 0 := fun a => by rw [hsymm, F.z_orth]; simp
   ext a
   refine Fin.lastCases ?_ (fun a => ?_) a
-  · simp [pair_apply, comb, Fintype.linearCombination_apply, Fin.sum_univ_castSucc, fvec_cast, fvec_last,
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp [pair_apply, comb, Fintype.linearCombination_apply, Fin.sum_univ_castSucc, fvec_cast, fvec_last,
       map_sum, hz, F.z_norm]
-  · simp [pair_apply, comb, Fintype.linearCombination_apply, Fin.sum_univ_castSucc, fvec_cast, fvec_last,
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp [pair_apply, comb, Fintype.linearCombination_apply, Fin.sum_univ_castSucc, fvec_cast, fvec_last,
       map_sum, F.e_iso, F.z_orth, Fin.castSucc_ne_last]
 
 lemma cramer_last (F : FlagG S r T) (F' : FlagG S r T') (c c' : Fin (r + 1) → E)
@@ -166,7 +169,8 @@ lemma Stab.sub_Xa {s : S.V ≃ₗ[E] S.V} {F : FlagG S r T} (hs : Stab s F) (j :
 lemma Stab.sub_comb {s : S.V ≃ₗ[E] S.V} {F : FlagG S r T} (hs : Stab s F) (x : S.V)
     (hx : x ∈ LinearMap.range (comb F)) : s x - x ∈ F.X := by
   obtain ⟨c, rfl⟩ := hx
-  simp only [comb, Fintype.linearCombination_apply, map_sum, map_smul, ← Finset.sum_sub_distrib, ← smul_sub]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [comb, Fintype.linearCombination_apply, map_sum, map_smul, ← Finset.sum_sub_distrib, ← smul_sub]
   exact Submodule.sum_mem _ fun a _ => Submodule.smul_mem _ _ (Xa_le_X F _ (hs a))
 
 lemma surj_of_stable (s : S.V ≃ₗ[E] S.V) (U : Submodule E S.V) (hU : ∀ u ∈ U, s u ∈ U) :
@@ -195,7 +199,8 @@ lemma map_M {s : S.V ≃ₗ[E] S.V} {F : FlagG S r T} {F' : FlagG S r T'} (hs : 
   exact add_mem (add_mem (range_le_M F F' (X_le_range F h1)) (range_le_M' F F' (X_le_range F' h2))) ⟨_, rfl⟩
 
 lemma orth_comb (F : FlagG S r T) (w : S.V) (hw : pair F w = 0) (c) : S.hT (comb F c) w = 0 := by
-  simp only [comb, Fintype.linearCombination_apply, map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [comb, Fintype.linearCombination_apply, map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ,
     LinearMap.smul_apply]
   refine Finset.sum_eq_zero fun a _ => ?_
   have : S.hT (F.fvec a) w = 0 := congrFun hw a
@@ -269,7 +274,8 @@ lemma mem_orth (U : Submodule E S.V) (x : S.V) : x ∈ orth S U ↔ ∀ u ∈ U,
 lemma Fix.onM {F : FlagG S r T} {F' : FlagG S r T'} {h : S.V ≃ₗ[E] S.V} (hh : Fix F F' h) :
     ∀ m ∈ Msp F F', h m = m := by
   rintro _ ⟨⟨c, c'⟩, rfl⟩
-  simp [comb, Fintype.linearCombination_apply, map_sum, hh.2.1, hh.2.2]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [comb, Fintype.linearCombination_apply, map_sum, hh.2.1, hh.2.2]
 
 lemma unip_of {s h : S.V ≃ₗ[E] S.V} (hi : s ∈ Formalism.HermitianLatticesTheory.isom S.hT) (hh : h ∈ Formalism.HermitianLatticesTheory.isom S.hT)
     {F : FlagG S r T} (hs : Stab s F) (M W : Submodule E S.V) (hc : IsCompl M W) (hX : F.X ≤ M)

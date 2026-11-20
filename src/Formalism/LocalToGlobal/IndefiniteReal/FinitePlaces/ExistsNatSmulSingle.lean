@@ -113,7 +113,8 @@ theorem selfDual_basis (S : HSp D) {ΛS : Submodule (𝓞 D.host.E) (Fin S.rank 
     have h1 : f (σ x) = x := LinearMap.congr_fun hσ x
     have h2 : f (σ x) = ∑ i, σ x i • gg i := by
       conv_lhs => rw [pi_eq_sum_univ (σ x)]
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simp only [map_smul, gg]
     rw [← h2, h1]
   let A := algebraMap (𝓞 D.host.E) D.host.E
@@ -141,7 +142,8 @@ theorem selfDual_basis (S : HSp D) {ΛS : Submodule (𝓞 D.host.E) (Fin S.rank 
       rw [map_natCast, this]
       push_cast; ring
     have h3 := congrArg (fun y => A (σ y i)) hx
-    simp only [map_smul, map_sum, Pi.smul_apply, Finset.sum_apply, smul_eq_mul, map_mul, map_natCast] at h3
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_smul, map_sum, Pi.smul_apply, Finset.sum_apply, smul_eq_mul, map_mul, map_natCast] at h3
     apply mul_left_cancel₀ (mul_ne_zero hc0 hm0)
     rw [dotProduct, Finset.mul_sum]
     have e1 : ((c * m : ℕ) : D.host.E) = (c : D.host.E) * m := by push_cast; ring

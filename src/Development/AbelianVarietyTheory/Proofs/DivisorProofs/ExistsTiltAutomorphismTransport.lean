@@ -77,7 +77,8 @@ theorem map_root (G : PreTilt O p ≃+* PreTilt O p) (ε : PreTilt O p) :
 
 theorem wittEquiv_xi (G : PreTilt O p ≃+* PreTilt O p) (ε : PreTilt O p) :
     wittEquiv G (xi ε) = xi (G ε) := by
-  simp only [xi, map_sum, map_pow, wittEquiv_teich, map_root]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [xi, map_sum, map_pow, wittEquiv_teich, map_root]
 
 theorem wittEquiv_mu (G : PreTilt O p ≃+* PreTilt O p) (ε : PreTilt O p) :
     wittEquiv G (mu ε) = mu (G ε) := by

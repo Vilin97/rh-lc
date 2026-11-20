@@ -66,7 +66,8 @@ theorem seed_module_lAdic_closed : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (
       rw [Pi.smul_apply, smul_eq_mul, mul_comm, hc_mul, hc_to]
     simp only [Φ, h1]
     have h2 := congrArg (toDisc l (X : bk.S) bk.ρ₀) hf
-    rw [Finsupp.sum, map_sum, map_pow, map_natCast] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finsupp.sum, map_sum, map_pow, map_natCast] at h2
     rw [← h2, Finset.sum_mul]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [smul_eq_mul, map_mul]; ring

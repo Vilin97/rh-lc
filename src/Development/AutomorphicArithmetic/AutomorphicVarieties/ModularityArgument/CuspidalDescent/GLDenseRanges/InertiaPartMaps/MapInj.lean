@@ -129,7 +129,8 @@ theorem eOp : EOp := by
           l (f p : 𝓀[k]) * (y.1.val p.1.1 p.1.2) : 𝒪[k]) : k) := by
       rw [AddSubmonoidClass.coe_finset_sum]
       exact Finset.sum_congr rfl fun p _ => by rw [hlp]; rfl
-    rw [e, hres, map_sum (IsLocalRing.residue 𝒪[k])]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, hres, map_sum (IsLocalRing.residue 𝒪[k])]
     congr 2
     refine Finset.sum_congr rfl fun p _ => ?_
     rw [map_mul, hl]

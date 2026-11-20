@@ -18,8 +18,10 @@ theorem interpolation_holds : Interp := by
     apply MvPolynomial.funext
     intro x
     have := congrArg φ (h x)
-    rw [map_sum, map_zero] at this
-    rw [map_zero, map_sum, ← this]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_zero, map_sum, ← this]
     refine Finset.sum_congr rfl fun m' _ => ?_
     rw [eval_monomial, map_smul, smul_eq_mul, mul_comm]
   have hc : AddMonoidAlgebra.coeff P m = φ (w m) := by

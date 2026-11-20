@@ -89,7 +89,8 @@ theorem om_scaled (hW : IsWeilDatumO ψ S T χS χT om) {p : GA D S × GA D T} {
   refine ⟨∑ q, c q • heisO ψ S T (actO S T x h (w q)) F₀, IsAlgComb.finsum _ _ hc fun q => IsAlgComb.Heisenberg₂
     (fun a b ha hb => mem_algebraicClosure_iff.1 (GlobalTheory.BotFourier.psiH_mem hv.1 hS hT ha hb))
     (GlobalTheory.FinApprox.actO_fin _ _ (hw q)) h0, ?_⟩
-  rw [map_sum, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.smul_sum]
   refine Finset.sum_congr rfl fun q _ => ?_
   rw [map_smul, hW.om_heis x h (w q) v hv.2.theta, hp, GlobalTheory.VacSchurFin.heisO_smul', smul_comm]
 
@@ -179,7 +180,8 @@ theorem split_alg {e : Formalism.L2.Theta.AE D} (he : IsSplitIdem D e) {g : GA D
   obtain ⟨n, c, w, hc, hw, hFe⟩ := id hF
   obtain ⟨ℓ, l1, l2, l3⟩ := GlobalTheory.T.exists_algebraicInvariantForm_vacuum_splitPlace hv hS hT e he n w hw
   have ha : ℓ F ∈ Qb := by
-    rw [hFe, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hFe, map_sum]
     exact sum_mem fun q _ => by
       rw [map_smul, smul_eq_mul]
       exact mul_mem (mem_algebraicClosure_iff.2 (hc q)) (mem_algebraicClosure_iff.2 (l3 q))

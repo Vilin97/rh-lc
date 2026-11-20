@@ -35,7 +35,8 @@ theorem values_conj_hecke : GlobalTheory.Published.CuspRapidDecay → ∀ D : D7
     refine ⟨h1, h2, h3, fun k hk g => by simpa using h4 k hk g, ?_⟩
     exact (GlobalTheory.ChainOnto.MultRapid.multT_apply_rapidDec hP D s.V s.par s.M c.θ hc.inf _ _ _ u.2 v).2.2
   · funext g
-    simp [heckeLin, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [heckeLin, map_sum]
 
 end GlobalTheory.EvenOnto.ConjVal
 

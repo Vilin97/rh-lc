@@ -55,16 +55,19 @@ theorem momInt_push (q : ℕ) [Fact q.Prime] (ι : ℂ ≃+* ℂ_[q]) (V : Type)
       rw [pullCLM_apply, ContinuousMap.comp_apply, hf]
       simp only [ContinuousMap.coe_sum, ContinuousMap.coe_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul,
         monoC, ContinuousMap.coe_mk, linZ]
-      simp only [zc_eq_zcHom, map_sum, map_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [zc_eq_zcHom, map_sum, map_mul]
       rw [Finset.prod_univ_sum]
       simp [Fintype.piFinset_univ, Finset.prod_mul_distrib]
     have hd : iteratedFDeriv ℂ k G 0 (fun l => w (j l)) =
         ∑ σ : Fin k → κ, (∏ l, c (j l) (σ l)) • iteratedFDeriv ℂ k G 0 (fun l => v (σ l)) := by
       simp only [hw]
-      rw [ContinuousMultilinearMap.map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [ContinuousMultilinearMap.map_sum]
       refine Finset.sum_congr rfl fun σ _ => ?_
       exact ContinuousMultilinearMap.map_smul_univ _ _ _
-    rw [ContinuousLinearMap.comp_apply, hfe, hd, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [ContinuousLinearMap.comp_apply, hfe, hd, map_sum, map_sum]
     refine Finset.sum_congr rfl fun σ _ => ?_
     rw [smul_eq_mul, map_mul, map_prod, map_smul, smul_eq_mul, ← hm k σ (monoC σ) (fun _ => rfl)]
     simp only [hc]

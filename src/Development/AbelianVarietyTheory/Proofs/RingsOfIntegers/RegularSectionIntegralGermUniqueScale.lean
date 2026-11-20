@@ -23,7 +23,8 @@ theorem psJet_map {R R' : Type} [CommRing R] [CommRing R'] (f : R →+* R') {κ 
   rw [Ideal.Quotient.lift_mk, RingHom.comp_apply]
   congr 1
   unfold psTrunc
-  simp [map_sum, MvPolynomial.map_monomial, MvPowerSeries.coeff_map]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, MvPolynomial.map_monomial, MvPowerSeries.coeff_map]
 
 theorem psJet_smul {F κ : Type} [CommRing F] [Fintype κ] [DecidableEq κ] (m : ℕ) (c : F) (f : MvPowerSeries κ F) :
     psJet m (c • f) = algebraMap F (Jet F κ m) c * psJet m f := by

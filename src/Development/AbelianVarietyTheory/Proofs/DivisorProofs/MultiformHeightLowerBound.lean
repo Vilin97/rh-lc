@@ -35,7 +35,8 @@ theorem frameNorm_sum_le {N n : ℕ} (A : Matrix (Fin N) (Fin N) ℂ) (c : Fin n
     (WithLp.linearEquiv 2 ℂ (Fin N → ℂ)).symm.toLinearMap ∘ₗ A⁻¹.mulVecLin
   have hT : ∀ z, frameNorm A z = ‖T z‖ := fun z => by
     rw [frameNorm, EuclideanSpace.norm_eq]; rfl
-  rw [hT, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hT, map_sum]
   refine (norm_sum_le _ _).trans ?_
   calc _ ≤ ∑ _k : Fin n, Λ := Finset.sum_le_sum fun k _ => by
         rw [map_smul, norm_smul, ← hT]
@@ -99,7 +100,8 @@ theorem eval₂_linSubst {F : Type} [Field F] {B N n : ℕ} (s : F →+* ℂ) (w
       MvPolynomial (Fin B × Fin N) F →ₐ[F] MvPolynomial (Fin B × Fin n) F).toRingHom) =
       (eval (fun q => ∑ k, z (q.1, k) * s (w q.2 k))).comp (MvPolynomial.map s) := by
     refine MvPolynomial.ringHom_ext (fun c => by simp) (fun q => ?_)
-    simp only [RingHom.comp_apply, AlgHom.toRingHom_eq_coe, RingHom.coe_coe, aeval_X, map_sum, map_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [RingHom.comp_apply, AlgHom.toRingHom_eq_coe, RingHom.coe_coe, aeval_X, map_sum, map_mul,
       coe_eval₂Hom, eval₂_C, eval₂_X, map_X, eval_X]
     exact Finset.sum_congr rfl fun k _ => mul_comm _ _
   exact RingHom.congr_fun e G

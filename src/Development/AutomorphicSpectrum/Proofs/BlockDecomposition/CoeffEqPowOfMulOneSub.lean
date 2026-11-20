@@ -57,7 +57,8 @@ theorem coeff_prod_one_sub {n : ℕ} (β : Fin n → ℂ) (r : ℕ) :
       ring
   have e2 : (∏ i, (1 - C (β i) * X) : ℂ⟦X⟧) = ∏ i, (1 + -(C (β i) * X)) := by
     simp only [sub_eq_add_neg]
-  rw [e2, Finset.prod_one_add, map_sum, Finset.powersetCard_eq_filter, Finset.sum_filter,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e2, Finset.prod_one_add, map_sum, Finset.powersetCard_eq_filter, Finset.sum_filter,
     Finset.mul_sum]
   refine Finset.sum_congr rfl fun t _ => ?_
   rw [e, coeff_C_mul, coeff_X_pow]

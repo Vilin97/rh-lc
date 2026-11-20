@@ -33,7 +33,8 @@ theorem der_intCast (μ : R →ₐ[ℂ] A) (a : A) (n : ℤ) : Der μ a n 0 := b
 theorem der_sum {μ : R →ₐ[ℂ] A} {a : A} {ι : Type} (s : Finset ι) {x x' : ι → R}
     (h : ∀ i ∈ s, Der μ a (x i) (x' i)) : Der μ a (∑ i ∈ s, x i) (∑ i ∈ s, x' i) := by
   unfold Der at *
-  rw [map_sum, map_sum, Finset.mul_sum, Finset.sum_mul, ← Finset.sum_sub_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, Finset.mul_sum, Finset.sum_mul, ← Finset.sum_sub_distrib]
   exact Finset.sum_congr rfl h
 
 theorem der_prod_zero {μ : R →ₐ[ℂ] A} {a : A} {ι : Type} (s : Finset ι) {x : ι → R}
@@ -225,7 +226,8 @@ theorem lead_std {p t : ℕ} (μ : R →ₐ[ℂ] A) (E : Fin (p + t) → Fin (p 
       push_cast; ring
     have e2 : (∑ π : Equiv.Perm (Fin p), ((Equiv.Perm.sign π : ℤ) : A) * H fun i => σ (Fin.castAdd t (π i))) =
         μ (Matrix.of fun a j : Fin p => fi * η a (σ (Fin.castAdd t j))).det := by
-      rw [← Matrix.det_transpose, Matrix.det_apply', map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← Matrix.det_transpose, Matrix.det_apply', map_sum]
       refine Finset.sum_congr rfl fun π _ => ?_
       rw [map_mul, map_intCast, ← List.prod_ofFn, map_list_prod, List.map_ofFn]
       rfl
@@ -275,7 +277,8 @@ theorem lead_conj_qdet {n p t : ℕ} (hn : n = p + t) (μ : R →ₐ[ℂ] A) (E 
   obtain ⟨F, c, hF, hs, hc⟩ := lead_std μ (Econj E Q⁻¹ Q) (Formalism.QuantumDeterminants.gl_relation_adjoint_holds A _ E _ _ hE h1)
     (fun i a => ∑ c, Q a c • Y i c) (fun i a b c => by
       have := PI.QnHermHaar.leibVec E (fun c => μ (Y i c)) Q⁻¹ Q h1 (hY i) a b c
-      simpa only [PI.QnHermHaar.vecC, map_sum, map_smul] using this) f fi
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa only [PI.QnHermHaar.vecC, map_sum, map_smul] using this) f fi
     (by rw [hf]; simp only [Q, Matrix.of_apply, e]) hfi u
   refine ⟨F, c, hF, fun s => ?_, ?_⟩
   · rw [hs, (Formalism.FourierDecayAlt.P.contractions_covariant A _ E _ _ hE h1 h2 u 0 0 0 0).1]
@@ -570,7 +573,8 @@ theorem det_yF (z : Fin (2 * r + k + 1) → ℂ) (γ : Fin (r + 1) → Fin (mdim
   rw [← evAt_apply, RingHom.map_det]
   congr 1
   ext i j
-  simp only [RingHom.mapMatrix_apply, Matrix.map_apply, Matrix.of_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [RingHom.mapMatrix_apply, Matrix.map_apply, Matrix.of_apply, map_sum]
   rfl
 
 variable (E) in

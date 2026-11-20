@@ -290,7 +290,8 @@ theorem mahler_mul (V : Type) [NormedAddCommGroup V] [NormedSpace ℂ V] (κ : T
       mahler v F k * mahler v G (fun i => n i - k i) := by
   have hF' : ContDiff ℂ ∞ F := hF.of_le le_top
   have hG' : ContDiff ℂ ∞ G := hG.of_le le_top
-  rw [mahler_eq, LJ_mul v _ F G hF' hG', cop_Pn, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [mahler_eq, LJ_mul v _ F G hF' hG', cop_Pn, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [BJ_rename, ← mahler_eq, ← mahler_eq]
 

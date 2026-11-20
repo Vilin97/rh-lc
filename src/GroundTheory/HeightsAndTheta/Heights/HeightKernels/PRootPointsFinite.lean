@@ -29,7 +29,8 @@ theorem homog_mem (y : (Σ k, ι k) → ℂ) (k : K) (i i₀ : ι k) (ha : y ⟨
     conv_rhs => rw [← pow_mul_pow_sub (MvPolynomial.X k) hle]
     rw [aeval_C, eq_intCast (algebraMap ℤ (MvPolynomial K ℂ))]
     ring
-  rw [homog, map_sum, Finset.sum_congr rfl hterm, ← Finset.sum_mul, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [homog, map_sum, Finset.sum_congr rfl hterm, ← Finset.sum_mul, ← map_sum]
   have : ∑ n ∈ Finset.range (q.natDegree + 1), (q.coeff n : ℂ) * y ⟨k, i⟩ ^ n = 0 := by
     rw [← hq, Polynomial.eval₂_eq_sum_range]; rfl
   rw [this, map_zero, zero_mul]
@@ -37,7 +38,8 @@ theorem homog_mem (y : (Σ k, ι k) → ℂ) (k : K) (i i₀ : ι k) (ha : y ⟨
 theorem homog_eval (z : (Σ k, ι k) → ℂ) (p a : Σ k, ι k) (hza : z a ≠ 0) (q : Polynomial ℤ) :
     eval z (map (Int.castRingHom ℂ) (homog q p a)) =
       z a ^ q.natDegree * q.eval₂ (Int.castRingHom ℂ) (z p / z a) := by
-  rw [Polynomial.eval₂_eq_sum_range, Finset.mul_sum, homog, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Polynomial.eval₂_eq_sum_range, Finset.mul_sum, homog, map_sum, map_sum]
   refine Finset.sum_congr rfl fun n hn => ?_
   have hle : n ≤ q.natDegree := by simpa [Nat.lt_succ_iff] using hn
   simp only [map_mul, map_pow, map_intCast, map_X, eval_X, eq_intCast]

@@ -88,7 +88,8 @@ theorem exists_sections_restrict_basis :
   choose s hs using fun i => hl₁ l hl (v i)
   refine ⟨_, fun i => hP.rat (s i), fun i => hP.rat_mem _, hr, fun a ha => ?_⟩
   have e₁ : ∑ i, Cartier.constFn p (a i) * hP.rat (s i) = hP.rat (∑ i, algX p ⊤ (a i) • s i) := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [LinearMap.map_smul, Algebra.smul_def, CartierDiv.algebraMap_top]
     rfl
@@ -100,7 +101,8 @@ theorem exists_sections_restrict_basis :
           rwa [zero_smul, map_zero, zero_smul] at this
         map_add' := fun t t' => secPull_add' t t' _ }
     change F _ = _
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     change GlobalTheory.secPull _ _ = _
     rw [secPull_smul', hs i, algX_top_eq]

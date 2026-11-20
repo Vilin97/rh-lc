@@ -44,7 +44,8 @@ theorem toPi_WKG {Γ : Type} [Group Γ] (M : Γ →* Matrix (Fin k) (Fin k) O) (
   obtain ⟨v, rfl⟩ := Submodule.Quotient.mk_surjective _ x
   change Submodule.mkQ _ (∑ j, algebraMap O (FractionRing O) (M g a j) * v j) =
     ∑ j, M g a j • Submodule.mkQ _ (v j)
-  simp only [map_sum, ← Algebra.smul_def, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, ← Algebra.smul_def, map_smul]
 
 theorem push_WKG {O' : Type} [CommRing O'] [IsDomain O'] (f : O →+* O') (hf : Function.Injective f)
     {Γ Γ' : Type} [Group Γ] [Group Γ']

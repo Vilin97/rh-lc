@@ -207,7 +207,8 @@ theorem coindDualInv_comp_coindDualHom :
   change (coindTrace W D).hom ((coindDualPairing W V D).hom (f ⊗ₜ[k] (coindDualInv W V D).hom l)) =
     (l : Rep.coind W.subtype (Rep.trivial k W V) →ₗ[k] D) f
   rw [coindTrace_hom_apply]
-  conv_rhs => rw [← sum_coindSingle W V f, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_rhs => rw [← sum_coindSingle W V f, map_sum]
   refine Finset.sum_congr rfl fun c _ => ?_
   change D.ρ c.out (D.ρ c.out⁻¹ (l ((Rep.coind W.subtype (Rep.trivial k W V)).ρ c.out⁻¹⁻¹
     ((coindSingle (k := k) W V).hom (f.1 c.out⁻¹))))) = _
@@ -224,7 +225,8 @@ theorem coindDualHom_comp_coindDualInv :
   change D.ρ h ((coindTrace W D).hom ((coindDualPairing W V D).hom
     ((Rep.coind W.subtype (Rep.trivial k W V)).ρ h⁻¹ ((coindSingle (k := k) W V).hom a) ⊗ₜ[k] μ))) =
       (μ.1 h : V →ₗ[k] D) a
-  rw [coindTrace_hom_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [coindTrace_hom_apply, map_sum]
   have key := sum_ite_mul_out_mem W (fun x => D.ρ h (D.ρ x ((μ.1 x⁻¹ : V →ₗ[k] D) a)))
     (fun x w => by
       have hμ : μ.1 ((w⁻¹ : W) * x⁻¹) = _ := μ.2 w⁻¹ x⁻¹

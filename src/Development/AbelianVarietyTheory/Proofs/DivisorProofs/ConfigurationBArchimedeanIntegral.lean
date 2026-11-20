@@ -152,7 +152,8 @@ theorem GlobalTheory.FockInclK.tensIncl_acts : GlobalTheory.ThK.KP → ∀ (F E 
     · funext i
       have := congrArg (fun v => piInf (B.emb w) (v i)) hL.1
       simp only [Units.val_one, one_smul] at this
-      simpa [Matrix.mulVec, dotProduct, map_sum, map_mul, incV, piInf_inclR] using this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa [Matrix.mulVec, dotProduct, map_sum, map_mul, incV, piInf_inclR] using this
     · have := congrArg (fun M => M.map (piInf (B.emb w))) hL.2.2
       simpa only [Matrix.map_mul, GlobalTheory.RealLift.Main.incM_map_piInf] using this
 

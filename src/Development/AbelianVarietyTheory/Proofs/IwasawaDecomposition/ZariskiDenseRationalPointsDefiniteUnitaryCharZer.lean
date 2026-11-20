@@ -78,13 +78,15 @@ theorem eval_skewPoly (σ : L →+* K) (x : Fin (Module.finrank ℚ L) × Fin n 
     MvPolynomial.eval x (skewPoly L K n σ a b) =
       ∑ i, σ (Module.finBasis ℚ L i) * x (i, a, b) -
         ∑ i, σ ((IsCMField.complexConj L : L →+* L) (Module.finBasis ℚ L i)) * x (i, b, a) := by
-  simp [skewPoly, linPoly, Matrix.sub_apply, Matrix.transpose_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [skewPoly, linPoly, Matrix.sub_apply, Matrix.transpose_apply, map_sum]
 
 theorem skewRat_map (σ : L →+* K) (x : Fin (Module.finrank ℚ L) × Fin n × Fin n → ℚ) :
     (skewRat L n x).map σ = (skewPoly L K n σ).map (MvPolynomial.eval (fun v => (x v : K))) := by
   ext a b
   rw [Matrix.map_apply, Matrix.map_apply, eval_skewPoly]
-  simp [skewRat, map_sum, map_sub, mul_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [skewRat, map_sum, map_sub, mul_comm]
 
 theorem skewRat_skew (x : Fin (Module.finrank ℚ L) × Fin n × Fin n → ℚ) :
     skewRat L n x + ((skewRat L n x).map (IsCMField.complexConj L : L →+* L))ᵀ = 0 := by

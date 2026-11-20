@@ -19,7 +19,8 @@ theorem orthogonality_relation : DualVectorOrthogonal := by
   intro V _ _ h r y f' b
   have h1 : h (formalDeterminantVector h y f') (f' b) =
       ((Matrix.of fun a b => h (y a) (f' b)).adjugate * (Matrix.of fun a b => h (y a) (f' b))) (Fin.last r) b := by
-    simp [formalDeterminantVector, Matrix.mul_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [formalDeterminantVector, Matrix.mul_apply, map_sum]
   rw [h1, Matrix.adjugate_mul]
   by_cases hb : b = Fin.last r
   · subst hb; simp
@@ -184,11 +185,13 @@ lemma s1c2_hL_apply {ι : Type*} [Fintype ι] (H : Matrix ι ι ℂ) (x y : ι �
 
 lemma s1c2_herm_sum_left {ι σ : Type*} [Fintype ι] (H : Matrix ι ι ℂ) (s : Finset σ) (c : σ → ℂ) (a : σ → ι → ℂ)
     (y : ι → ℂ) : herm H (∑ i ∈ s, c i • a i) y = ∑ i ∈ s, c i * herm H (a i) y := by
-  simp only [← s1c2_hL_apply, map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← s1c2_hL_apply, map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply, smul_eq_mul]
 
 lemma s1c2_herm_sum_right {ι σ : Type*} [Fintype ι] (H : Matrix ι ι ℂ) (s : Finset σ) (c : σ → ℂ) (a : σ → ι → ℂ)
     (x : ι → ℂ) : herm H x (∑ i ∈ s, c i • a i) = ∑ i ∈ s, star (c i) * herm H x (a i) := by
-  simp only [← s1c2_hL_apply, map_sum, map_smulₛₗ, smul_eq_mul]; rfl
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← s1c2_hL_apply, map_sum, map_smulₛₗ, smul_eq_mul]; rfl
 
 lemma s1c2_herm_sub_left {ι : Type*} [Fintype ι] (H : Matrix ι ι ℂ) (u v w : ι → ℂ) :
     herm H (u - v) w = herm H u w - herm H v w := by

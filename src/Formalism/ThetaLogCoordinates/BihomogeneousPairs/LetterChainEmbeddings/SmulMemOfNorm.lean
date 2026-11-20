@@ -18,7 +18,8 @@ theorem intPol_iff_bnd (x : MvPolynomial σ ℚ_[p]) : x ∈ IntPol p σ ↔ ∀
     exact PadicInt.norm_le_one (AddMonoidAlgebra.coeff y m)
   · intro h
     refine ⟨∑ m ∈ x.support, MvPolynomial.monomial m (⟨AddMonoidAlgebra.coeff x m, h m⟩ : ℤ_[p]), ?_⟩
-    simp only [AlgHom.toLinearMap_apply, map_sum, MvPolynomial.mapAlgHom_apply, MvPolynomial.map_monomial]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [AlgHom.toLinearMap_apply, map_sum, MvPolynomial.mapAlgHom_apply, MvPolynomial.map_monomial]
     conv_rhs => rw [x.as_sum]
     refine Finset.sum_congr rfl fun m _ => ?_
     erw [MvPolynomial.map_monomial]
@@ -60,7 +61,8 @@ theorem free_pow {v : σ} {a : MvPolynomial σ ℚ_[p]} (ha : pderiv v a = 0) (n
 theorem free_ehP {r : ℕ} {w e : Fin r → σ} {zv sv v : σ} (h1 : zv ≠ v) (h2 : sv ≠ v) (h3 : ∀ c, w c ≠ v)
     (h4 : ∀ c, e c ≠ v) : pderiv v (ehP w e zv sv : MvPolynomial σ ℚ_[p]) = 0 := by
   unfold ehP
-  rw [map_add, map_sum, free_mul (free_X h1) (free_X h2), zero_add]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_add, map_sum, free_mul (free_X h1) (free_X h2), zero_add]
   exact Finset.sum_eq_zero fun c _ => free_mul (free_X (h3 c)) (free_X (h4 c))
 
 end intpol

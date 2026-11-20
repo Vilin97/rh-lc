@@ -45,13 +45,15 @@ theorem UpperTheory.ConvolutionTheory.C.nearFinite :
   have hT : ∀ φ : cuspForms K n, uActionCusp K n (casimir b' ε') φ =
       ∑ i, (ε' i : ℂ) • (gkModuleCusp K n).ρ (b' i) ((gkModuleCusp K n).ρ (b' i) φ) := by
     intro φ
-    simp only [casimir, map_sum, map_smul, map_mul, LinearMap.sum_apply, LinearMap.smul_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [casimir, map_sum, map_smul, map_mul, LinearMap.sum_apply, LinearMap.smul_apply,
       Module.End.mul_apply, gkModuleCusp_ρ_apply, Complex.coe_smul]
   have hsymT : ∀ x ∈ centralCuspForms K n, ∀ y ∈ centralCuspForms K n,
       inner ℂ (cuspVecL μ (uActionCusp K n (casimir b' ε') x)) (cuspVecL μ y) =
         inner ℂ (cuspVecL μ x) (cuspVecL μ (uActionCusp K n (casimir b' ε') y)) := by
     intro x hx y hy
-    rw [hT, hT, map_sum, map_sum, sum_inner, inner_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hT, hT, map_sum, map_sum, sum_inner, inner_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     have h1 := hskew (b' i) _ (ρ_mem_centralCuspForms (b' i) hx) y hy
     have h2 := hskew (b' i) x hx _ (ρ_mem_centralCuspForms (b' i) hy)

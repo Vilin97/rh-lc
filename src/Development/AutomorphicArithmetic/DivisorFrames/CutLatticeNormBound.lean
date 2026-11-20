@@ -83,7 +83,8 @@ private theorem pr_sum {E : Type} [Field E] [NumberField E] [IsCMField E] {H : R
     (Dw : Datum H) {K : Type} [CommRing K] {g : ℕ} (b : (Fin g → K) →ₗ[K] K ⊗[ℤ] Dw.La) (v : Fin g → K) (a : Dw.La) :
     pr Dw (b v) a = ∑ j, pr Dw (b (Pi.single j 1)) a * v j := by
   conv_lhs => rw [pi_eq_sum_univ' v]
-  simp only [pr, map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [pr, map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul]
   exact Finset.sum_congr rfl fun j _ => mul_comm _ _
 
 private theorem eig_smul {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E}
@@ -111,7 +112,8 @@ theorem UpperTheory.cut_lattice_norm_bound :
     simp [Finset.smul_sum, mul_smul]
   have hEv : ∀ cf : Fin r → ℂ_[p], IsEigL Dw σ (b (∑ i, cf i • A i)) := by
     intro cf o
-    simp only [map_sum, map_smul, hE _ o, Finset.smul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, hE _ o, Finset.smul_sum]
     exact Finset.sum_congr rfl fun i _ => smul_comm _ _ _
   have hPv : ∀ (cf : Fin r → ℂ_[p]) k, (covMat T (fun m => h (a m)) A *ᵥ cf) k =
       ∑ m, T k m * ∑ j, h (a m) j * (∑ i, cf i • A i) j := by

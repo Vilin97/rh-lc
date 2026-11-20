@@ -99,7 +99,8 @@ def liftMat (h : IsCMExt F E σ) (τ : E →ₐ[F] Fv F v) :
     rw [show ((∑ k, p.1 i k * q.1 k j), (∑ k, p.2 i k * q.2 k j)) =
         ∑ k, ((p.1 i k, p.2 i k) * (q.1 k j, q.2 k j)) by
       ext <;> simp [Prod.fst_sum, Prod.snd_sum]]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [map_mul]
 
 theorem liftMat_apply (h : IsCMExt F E σ) (τ : E →ₐ[F] Fv F v) (p : Matrix n n (Fv F v) × Matrix n n (Fv F v))

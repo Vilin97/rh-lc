@@ -59,13 +59,15 @@ theorem exists_traceForm_matrix : ∀ (E : Type) [Field E] [NumberField E] [IsCM
     have h1 : ∑ k, e.repr (a * e i) k * Algebra.trace ℤ (𝓞 E) (e k * H.bar (e j))
         = Algebra.trace ℤ (𝓞 E) (a * e i * H.bar (e j)) := by
       conv_rhs => rw [← e.sum_repr (a * e i)]
-      rw [Finset.sum_mul, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Finset.sum_mul, map_sum]
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [smul_mul_assoc, map_zsmul, smul_eq_mul]
     have h2 : ∑ k, Algebra.trace ℤ (𝓞 E) (e i * H.bar (e k)) * e.repr (H.bar a * e j) k
         = Algebra.trace ℤ (𝓞 E) (e i * H.bar (H.bar a * e j)) := by
       conv_rhs => rw [← e.sum_repr (H.bar a * e j)]
-      rw [map_sum, Finset.mul_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Finset.mul_sum, map_sum]
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [map_zsmul, mul_smul_comm, map_zsmul, smul_eq_mul, mul_comm]
     rw [h1, h2, map_mul H.bar, bar_bar]

@@ -374,7 +374,8 @@ private theorem coeff_dg_eq_coeff_mul (f : (σ →₀ ℕ) → K) (F : MvPolynom
     AddMonoidAlgebra.coeff (dg f F) α = AddMonoidAlgebra.coeff F α * f α := by
   classical
   conv_lhs => rw [F.as_sum]
-  rw [map_sum, coeff_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, coeff_sum]
   simp only [dg_monomial']
   rw [Finset.sum_eq_single α]
   · rw [coeff_monomial, if_pos rfl]

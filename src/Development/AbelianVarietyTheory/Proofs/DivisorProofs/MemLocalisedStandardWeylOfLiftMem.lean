@@ -82,7 +82,8 @@ theorem ten_sum {C : Type} [Field C] {ι : Type} [Fintype ι] [DecidableEq ι] {
     (u : ∀ τ, P τ → MvPolynomial (Fin n × Fin n) C) (a : ∀ τ, P τ → C) :
     (ten fun τ => ∑ j, a τ j • u τ j) = ∑ i : ∀ τ, P τ, (∏ τ, a τ (i τ)) • ten fun τ => u τ (i τ) := by
   unfold ten
-  simp only [map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul]
   rw [Finset.prod_univ_sum]
   simp only [Fintype.piFinset_univ, Finset.prod_smul]
 
@@ -168,7 +169,8 @@ theorem mem_localization_standardWeylLattice : ∀ (K : Type) [Field K] [NumberF
     funext τ
     rw [hy, liftPol, map_map_int]
   have hΦv : mulMap (PadicAlgCl l) n lamW (Φ v) = ∑ i, e0 (a i) • ten fun τ => u τ (i τ) := by
-    rw [hveq, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hveq, map_sum, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smulₛₗ, map_smul, hΦi]
   obtain ⟨r, hr, hrv⟩ := latD_coords lamW F hF u (fun τ x0 hx0 => by
@@ -177,7 +179,8 @@ theorem mem_localization_standardWeylLattice : ∀ (K : Type) [Field K] [NumberF
     rw [hspan τ F.O] at hg
     obtain ⟨d, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun F.O).1 hg
     refine ⟨d, ?_⟩
-    rw [map_mul, map_pow, map_detPol, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_mul, map_pow, map_detPol, map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     simp only [u, MvPolynomial.smul_eq_C_mul, map_mul, MvPolynomial.map_C, map_map_int]
     ring) hv

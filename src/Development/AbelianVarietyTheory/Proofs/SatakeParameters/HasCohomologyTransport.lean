@@ -45,7 +45,8 @@ theorem dCo_tr {σ : Herm E a →ₗ[ℝ] Herm E a} {T : M →ₗ[ℂ] M'}
     (hL : ∀ X m, T (L (toL (σ X).1) m) = L' (toL X.1) (T m))
     {q : ℕ} (ω : Herm E a [⋀^Fin q]→ₗ[ℝ] M) : dCo L' (tr σ T ω) = tr σ T (dCo L ω) := by
   refine AlternatingMap.ext fun X => ?_
-  rw [tr_apply, dCo_apply, dCo_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [tr_apply, dCo_apply, dCo_apply, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_zsmul, hL, tr_apply]
   rfl

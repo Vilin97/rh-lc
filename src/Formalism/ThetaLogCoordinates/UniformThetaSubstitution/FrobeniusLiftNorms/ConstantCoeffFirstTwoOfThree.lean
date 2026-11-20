@@ -247,12 +247,14 @@ theorem map_Gser (σ : K →+* K) (p : ℕ) (c c' : K) :
     ext n
     rw [MvPowerSeries.coeff_map]
     change σ (Aser K p n) = Aser K p n
-    simp only [Aser, map_sum, apply_ite σ, map_inv₀, map_pow, map_natCast, map_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Aser, map_sum, apply_ite σ, map_inv₀, map_pow, map_natCast, map_zero]
   have hA' : MvPowerSeries.map σ (Aser' K p) = Aser' K p := by
     ext n
     rw [MvPowerSeries.coeff_map]
     change σ (Aser' K p n) = Aser' K p n
-    simp only [Aser', map_sum, apply_ite σ, map_inv₀, map_pow, map_natCast, map_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Aser', map_sum, apply_ite σ, map_inv₀, map_pow, map_natCast, map_zero]
   unfold Gser
   rw [map_sub, map_mul, map_mul, MvPowerSeries.map_C, MvPowerSeries.map_C, hA, hA']
 

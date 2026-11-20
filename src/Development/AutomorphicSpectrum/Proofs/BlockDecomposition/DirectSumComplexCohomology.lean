@@ -88,7 +88,8 @@ theorem toH_surjective (n : ℕ) : Function.Surjective (toH E n) := by
     | insert j S hj ih =>
       intro h
       have hS : (Dsum E).d n (∑ i ∈ S, (inj E i).f n ((prj E i).f n x)) = 0 := by
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         exact Finset.sum_eq_zero fun i _ ↦ hci i
       simp only [Finset.sum_insert hj]
       rw [CrystallineSemistableComparison.CechClassBoundaries.cls_add _ _ (hci j) hS, ih hS]
@@ -96,7 +97,8 @@ theorem toH_surjective (n : ℕ) : Function.Surjective (toH E n) := by
     conv_rhs => rw [← DirectSum.sum_support_of x]
     rfl
   refine ⟨∑ i ∈ DFinsupp.support x, DirectSum.lof K I (fun i ↦ (E i).H n) i ((E i).cls _ (hc i)), ?_⟩
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [toH, DirectSum.toModule_lof]
   have hx' : (Dsum E).d n (∑ i ∈ DFinsupp.support x, (inj E i).f n ((prj E i).f n x)) = 0 := by
     rw [hx_eq]

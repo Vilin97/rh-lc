@@ -97,12 +97,14 @@ theorem range_averageMap [Invertible (Fintype.card G : k)] :
 
 theorem averageMap_apply [Invertible (Fintype.card G : k)] (v : V) :
     ρ.averageMap v = ⅟(Fintype.card G : k) • ∑ g : G, ρ g v := by
-  simp [averageMap, GroupAlgebra.average, map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [averageMap, GroupAlgebra.average, map_sum, LinearMap.sum_apply]
 
 theorem averageMap_dual [Invertible (Fintype.card G : k)] :
     ρ.dual.averageMap = Module.Dual.transpose (R := k) ρ.averageMap := by
   ext f v
-  rw [averageMap_apply, Module.Dual.transpose_apply, LinearMap.comp_apply, averageMap_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [averageMap_apply, Module.Dual.transpose_apply, LinearMap.comp_apply, averageMap_apply,
     LinearMap.smul_apply, LinearMap.sum_apply, map_smul, map_sum]
   congr 1
   exact Fintype.sum_equiv (Equiv.inv G) _ _ fun g => by simp [Module.Dual.transpose_apply]

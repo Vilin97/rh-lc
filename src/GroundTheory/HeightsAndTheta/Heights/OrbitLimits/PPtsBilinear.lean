@@ -53,7 +53,8 @@ theorem mixedDisc_update_sum {D : ℕ} {T : Type} [Fintype T] (A : Fin D → Mat
   have e : ∀ C, mixedDisc (Function.update A k C) = M.toLinearMap A k C := fun C => by
     rw [MultilinearMap.toLinearMap_apply, hM]
     rfl
-  simp only [e, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [e, map_sum]
 
 theorem cxHessian_cons {n : ℕ} (L : Fin n → HermLine ι) (f v : ((Σ k, ι k) → ℂ) → ℝ)
     (γ : (Fin (n + 1) → ℂ) → (Σ k, ι k) → ℂ) (y : Fin (n + 1) → ℂ) :

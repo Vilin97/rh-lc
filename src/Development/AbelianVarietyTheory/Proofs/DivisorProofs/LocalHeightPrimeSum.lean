@@ -138,7 +138,8 @@ theorem exists_integral [IsLocallyNoetherian X] (hX : X.IsSeparated) {p : ℕ} [
     rw [Ideal.Quotient.eq] at h3
     obtain ⟨δ, hδ⟩ := Ideal.mem_span_singleton'.1 h3
     have h4 := congrArg (intO ℂ_[p]).subtype hδ
-    simp only [map_mul, map_pow, map_natCast, map_sum, map_sub, Subring.subtype_apply, hb, hr] at h4
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_mul, map_pow, map_natCast, map_sum, map_sub, Subring.subtype_apply, hb, hr] at h4
     obtain ⟨j, rfl⟩ := Nat.exists_eq_add_of_le hn
     have h5 : ∑ k, (h m k : ℂ_[p]) * (((p : ℂ_[p]) ^ 2 * a i)⁻¹ * a k) =
         ((p : ℂ_[p]) ^ 2 * a i)⁻¹ * ∑ l, Mc m l * cf l + (δ : ℂ_[p]) * (p : ℂ_[p]) ^ j := by
@@ -233,13 +234,15 @@ theorem norm_equi [IsLocallyNoetherian X] (hX : X.IsSeparated) {p : ℕ} [hp : F
   replace h1 := (snd_prod_zpow _ hf _).symm.trans h1
   have h2 : Ideal.Quotient.mk (Ideal.span {(p : ↥(intO ℂ_[p])) ^ (k + 2)}) (∑ m', (ρ α m m' : ↥(intO ℂ_[p])) * r m') =
       Ideal.Quotient.mk _ s := by
-    rw [← h1, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← h1, map_sum]
     refine Finset.sum_congr rfl fun m' _ => ?_
     rw [hr' m' w hw, map_mul, map_intCast]
   rw [Ideal.Quotient.eq] at h2
   obtain ⟨δ, hδ⟩ := Ideal.mem_span_singleton'.1 h2
   have h4 := congrArg (intO ℂ_[p]).subtype hδ
-  simp only [map_mul, map_pow, map_natCast, map_intCast, map_sum, map_sub, Subring.subtype_apply, hr, hs] at h4
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_mul, map_pow, map_natCast, map_intCast, map_sum, map_sub, Subring.subtype_apply, hr, hs] at h4
   refine ⟨δ, δ.2, mul_left_cancel₀ (pow_ne_zero 2 hp0) ?_⟩
   have e1 : (p : ℂ_[p]) ^ 2 * ∑ m', (ρ α m m' : ℂ_[p]) * ∑ l, Mc m' l * cf l =
       ∑ m', (ρ α m m' : ℂ_[p]) * ∑ l, Mc m' l * ((p : ℂ_[p]) ^ 2 * cf l) := by
@@ -318,7 +321,8 @@ theorem GlobalTheory.EqHalf.equi_of_ptData : Hypotheses2 → HypothesesH → Glo
       (M a).mulVec fun l => algebraMap D.what₂.LL (AlgebraicClosure D.what₂.LL) (letterEmb O l (α : D.host.E)) * u l) m) =
       δ * (resP v : ℂ_[resP v]) ^ (k + j) := by
     rw [← h]
-    simp only [Matrix.mulVec, dotProduct, Pi.sub_apply, map_sub, map_sum, map_mul, Matrix.map_apply, eq_intCast,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, dotProduct, Pi.sub_apply, map_sub, map_sum, map_mul, Matrix.map_apply, eq_intCast,
       map_intCast]
   rw [h2, pow_add, mul_comm ((resP v : ℂ_[resP v]) ^ k), ← mul_assoc, mul_div_cancel_right₀ _ (pow_ne_zero _ hp1), norm_mul,
     ← Nat.cast_pow]

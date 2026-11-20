@@ -45,7 +45,8 @@ theorem rowGen_diag_homog (R : Type) [CommRing R] {r n : ℕ} (μ : Fin r → �
     rowGen R a a f = (1 + Polynomial.X) ^ (μ a) * Polynomial.C f := by
   conv_lhs => rw [f.as_sum]
   conv_rhs => rw [f.as_sum]
-  rw [map_sum, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun d hd => ?_
   have e : (monomial d (AddMonoidAlgebra.coeff f d) : MvPolynomial (Fin r × Fin n) R) = AddMonoidAlgebra.coeff f d • monomial d 1 := by
     rw [smul_monomial, smul_eq_mul, mul_one]

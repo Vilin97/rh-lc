@@ -44,7 +44,8 @@ theorem sm_avg {α : Type} (R : Finset α) (f : α → ℂ) (hf : ∀ x ∈ R, S
   · push_cast
     congr 1
     exact Finset.sum_congr rfl fun x hx => (hg x hx).1
-  · rw [map_mul, map_inv₀, map_natCast, map_sum, norm_mul, norm_inv, Complex.norm_natCast]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_mul, map_inv₀, map_natCast, map_sum, norm_mul, norm_inv, Complex.norm_natCast]
     have h1 : ‖∑ x ∈ R, ρ (g x)‖ ≤ R.card := by
       refine (norm_sum_le _ _).trans ?_
       refine (Finset.sum_le_sum fun x hx => (hg x hx).2 ρ).trans ?_
@@ -130,7 +131,8 @@ theorem pres_of_finset (D : D7) (T : TaylorLogMetric.Tor D) {a b : ℕ} (L : Sub
 
 theorem HV_herm {ι : Type} [Fintype ι] {a b : ℕ} (sc : ℝ) : IsHerm (Formalism.L2.Ker.HV sc : Sesq (Formalism.L2.Ker.VV ι a b)) := by
   intro x y
-  simp only [Formalism.L2.Ker.HV, LinearMap.mk₂'ₛₗ_apply, map_mul, map_sum, Complex.conj_ofReal, Complex.conj_conj]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Formalism.L2.Ker.HV, LinearMap.mk₂'ₛₗ_apply, map_mul, map_sum, Complex.conj_ofReal, Complex.conj_conj]
   simp only [mul_comm]
 
 section Host

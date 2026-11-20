@@ -17,16 +17,19 @@ theorem UpperTheory.Gal.Gen.latFacts_pf :
       fun R x hx => ?_⟩
     have e : φ x = ∑ i, B.repr x i * φ (B i) := by
       have h := congrArg φ (B.sum_repr x)
-      rw [map_sum] at h
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum] at h
       rw [← h]
       exact Finset.sum_congr rfl fun i _ => by rw [map_smul, smul_eq_mul]
     have h1 : ∀ i, ‖ι.symm (B.repr x i)‖ ≤ (∑ m : s i, ‖ι.symm (a i m)‖) * R := by
       intro i
-      rw [ha i x, map_sum, Finset.sum_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [ha i x, map_sum, Finset.sum_mul]
       refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun m _ => ?_)
       rw [map_mul, norm_mul]
       exact mul_le_mul_of_nonneg_left (hx _) (norm_nonneg _)
-    rw [e, map_sum, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, map_sum, Finset.sum_mul]
     refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun i _ => ?_)
     rw [map_mul, norm_mul, Finset.sum_mul]
     calc _ ≤ (∑ m : s i, ‖ι.symm (a i m)‖) * R * ‖ι.symm (φ (B i))‖ :=

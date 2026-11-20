@@ -43,7 +43,8 @@ theorem pv_sum_left_clopen (k : Type) [Field k] [ValuativeRel k] [TopologicalSpa
   have hsum : (∑ i ∈ s, Ψ i).1 = B₁.indicator 1 := by
     rw [Submodule.coe_sum, Finset.sum_congr rfl hΨ, hB, Finset.indicator_biUnion s Kf hdis]
     ext x; simp [Finset.sum_apply]
-  rw [pv_eq Bf (∑ i ∈ s, Ψ i) ⟨_, h₂⟩ hsum rfl, map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [pv_eq Bf (∑ i ∈ s, Ψ i) ⟨_, h₂⟩ hsum rfl, map_sum, LinearMap.sum_apply]
   exact Finset.sum_congr rfl fun i hi => (pv_eq Bf (Ψ i) ⟨_, h₂⟩ (hΨ i hi) rfl).symm
 
 end GlobalTheory.NormalCore

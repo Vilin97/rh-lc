@@ -12,7 +12,8 @@ private theorem hermC_emb_emb_eq_zero_of_isIsoPair {r : ℕ} (X : Data E r) (u :
     (τ : E →+* ℂ) (i k : Fin 2) :
     hermC τ X.Gm (Data.emb τ (u i)) (Data.emb τ (u k)) = 0 := by
   have h := congrArg τ (hiso.1 i k)
-  simp only [herm, map_sum, map_mul, map_zero, tau_cc_eq_conj_tau] at h
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [herm, map_sum, map_mul, map_zero, tau_cc_eq_conj_tau] at h
   simp only [hermC, Data.emb]
   exact h
 
@@ -90,7 +91,8 @@ private theorem hermC_sub_sum_smul_expand {r : ℕ} (τ : E →+* ℂ) (G : Matr
 
 private theorem hermC_Gm_eq_starRingEnd_swap {r : ℕ} (X : Data E r) (τ : E →+* ℂ) (v w : Fin r → ℂ) :
     hermC τ X.Gm v w = starRingEnd ℂ (hermC τ X.Gm w v) := by
-  simp only [hermC, map_sum, map_mul, Complex.conj_conj]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hermC, map_sum, map_mul, Complex.conj_conj]
   conv_rhs => rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun x _ => Finset.sum_congr rfl fun y _ => ?_
   rw [← X.Gm_herm y x, tau_cc_eq_conj_tau]

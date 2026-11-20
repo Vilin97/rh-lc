@@ -62,7 +62,8 @@ theorem map_comb {G H X Y : Type} [Fintype G] [AddCommGroup H] [Module ℂ H] [A
     Θ y = ∑ g, c g • b g := by
   choose z hz using h1
   have h3 : y = ∑ g, c g • z g := he (by simp only [hy, map_sum, map_smul, hz])
-  simp only [h3, map_sum, map_smul, h2 _ _ (hz _)]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [h3, map_sum, map_smul, h2 _ _ (hz _)]
 
 end GlobalTheory.ThetaCommutation
 

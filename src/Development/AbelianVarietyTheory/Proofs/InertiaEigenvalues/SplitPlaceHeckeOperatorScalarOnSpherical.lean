@@ -323,12 +323,14 @@ theorem tN_scalar : ∀ (L : Type) [Field L] [NumberField L] [IsCMField L] (n : 
     · intro x hx
       rw [hT]
       refine ⟨S.sum_mem fun γ _ => hS.1.stable γ x hx.1, fun κ hκ => ?_⟩
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       have := hRα.sum_eq hRα hκ (fun g => rtHom L n a.W g x)
         (fun y l hl => by rw [map_mul, Module.End.mul_apply, hx.2 l hl])
       simpa only [map_mul, Module.End.mul_apply] using this
     · intro b hb x _
-      rw [hT, hT, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hT, hT, map_sum]
       refine Finset.sum_congr rfl fun γ hγ => ?_
       rw [← Module.End.mul_apply, ← map_mul, ← Module.End.mul_apply, ← map_mul, (hcomm γ b (hRtriv γ hγ) hb).eq]
     · intro b hb x hx

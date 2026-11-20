@@ -57,7 +57,8 @@ theorem exists_ops {ι : Type} [Fintype ι] [DecidableEq ι] (H : Matrix ι ι �
   refine ⟨x, d, isCCR_restrict j hj hx hd' hc, fun X f => ?_⟩
   have ex : ∀ k f, J (x k f) = xOp ρ k (J f) := fun k f => (congrArg Subtype.val (hx k f)).trans (hx₀ k _)
   have ed : ∀ k f, J (d k f) = dOp ρ H k (J f) := fun k f => (congrArg Subtype.val (hd' k f)).trans (hd₀ k _)
-  simp only [nOp, LinearMap.sum_apply, LinearMap.smul_apply, Module.End.mul_apply, map_sum, map_smul, ex, ed]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [nOp, LinearMap.sum_apply, LinearMap.smul_apply, Module.End.mul_apply, map_sum, map_smul, ex, ed]
 
 end GlobalTheory.Mem.Lift.ThOps
 

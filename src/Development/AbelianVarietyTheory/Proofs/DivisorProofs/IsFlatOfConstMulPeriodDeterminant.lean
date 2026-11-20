@@ -179,7 +179,8 @@ theorem exists_data {U : Set (Xo.XF c)} {τ : E →+* ℂ} {e : c.F →+* ℂ} {
   · rw [← u.full]
     exact congrArg _ (Set.ext fun z => (hmk.2.1 z).symm)
   · show h (P v) = _
-    rw [hPQ, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hPQ, map_sum]
     simp only [map_smul]
   · obtain ⟨v₀, k1, k2, k3⟩ := hW ⟨τ, k⟩
     obtain ⟨v₁, l1, l2⟩ := sv j

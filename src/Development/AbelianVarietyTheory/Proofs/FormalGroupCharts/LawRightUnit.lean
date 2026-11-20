@@ -52,7 +52,8 @@ theorem dof_hom (G G' : FGLaw k d) (α : Pt k 1 d) (hα : ∀ i, constantCoeff (
   rw [dof_eq _ G.const (law_right_unit G), dof_eq _ G'.const (law_right_unit G'), key,
     ev_sum _ (single_point_zero_constant hφ)]
   simp only [axis_pderiv_comp α hφ, ev_C_mul _ (single_point_zero_constant hφ)]
-  simp only [Matrix.mulVec, dotProduct, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mulVec, dotProduct, map_sum,
     map_mul, Finset.mul_sum, Finset.sum_mul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_

@@ -56,7 +56,8 @@ theorem IsTest.exists_transpose (hU : IsOpen U) (h : IsTest U α) (L : V →L[�
     (hG.continuousOn_fderiv_of_isOpen hU (by simp)).clm_apply continuousOn_const
   have e : ∀ x, α x * _root_.fderiv ℝ G x (L x) = ∑ i, c i x * _root_.fderiv ℝ G x (b i) := fun x => by
     conv_lhs => rw [← b.sum_repr (L x)]
-    simp only [map_sum, map_smul, Finset.mul_sum, c, Complex.real_smul, mul_assoc]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, Finset.mul_sum, c, Complex.real_smul, mul_assoc]
   simp only [e, Finset.sum_apply, Finset.sum_mul]
   rw [integral_finset_sum _ fun i _ => (hc i).integrable_mul ν hU (hG' _), integral_finset_sum _ fun i _ =>
     (((hc i).fderiv _).mul contDiff_const).integrable_mul ν hU hG.continuousOn]

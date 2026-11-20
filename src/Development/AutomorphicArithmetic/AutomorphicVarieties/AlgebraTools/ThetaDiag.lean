@@ -173,7 +173,8 @@ theorem UpperTheory.V.AlgebraTools.vr_hom :
       calc U.x i * (y * z) * T.st (U.x j) = U.x i * y * (∑ k, T.st (U.x k) * U.x k) * z * T.st (U.x j) := by
             rw [hB, mul_one, mul_assoc (U.x i) y z]
         _ = _ := by simp only [Finset.mul_sum, Finset.sum_mul, mul_assoc]
-    rw [hs, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hs, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     exact theta_mul U hpq (ho i) (ho k) (ho j) (hG i k y) (hG k j z)
   have hone : U.vr p q 1 = 1 := by

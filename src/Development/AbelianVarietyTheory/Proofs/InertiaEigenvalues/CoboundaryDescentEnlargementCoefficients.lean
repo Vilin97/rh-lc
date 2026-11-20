@@ -73,7 +73,8 @@ theorem desc_abs {O K O' K' : Type} [CommRing O] [Field K] [Algebra O K] [CommRi
   choose r hr using hRO
   refine ⟨fun j => r (u j), fun j => ?_⟩
   have hj : algebraMap O' K' (u j) = ∑ t, algebraMap O' K' (f (N g j t)) * m t - m j - φ (v j) := hu j
-  rw [hr, hj, map_sub, map_sub, map_sum, hR1]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hr, hj, map_sub, map_sub, map_sum, hR1]
   simp only [hc, hR]
 
 end Abstract

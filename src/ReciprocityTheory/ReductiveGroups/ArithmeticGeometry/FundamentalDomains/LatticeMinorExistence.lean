@@ -60,7 +60,8 @@ lemma hermC_uvec {u : Fin 2 → Fin r → E} (hu : ∀ i k, herm X.Gm (u i) (u k
     hermC τ.1 X.Gm (X.uvec u a τ) (X.uvec u b τ) = 0 := by
   have key : hermC τ.1 X.Gm (X.uvec u a τ) (X.uvec u b τ) =
       ∑ i, ∑ k, a τ i * conj (b τ k) * τ.1 (herm X.Gm (u i) (u k)) := by
-    simp only [hermC, herm, Data.uvec, Data.emb, Finset.sum_apply, Pi.smul_apply, smul_eq_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hermC, herm, Data.uvec, Data.emb, Finset.sum_apply, Pi.smul_apply, smul_eq_mul,
       map_sum, map_mul, emb_cc, Fin.sum_univ_two, map_add, Finset.mul_sum,
       ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun x _ => Finset.sum_congr rfl fun y _ => ?_
@@ -114,7 +115,8 @@ lemma posSemidef_of {χ : X.Ψ → Fin 2 → Fin 2 → ℂ} (hχ : IsHermFam χ)
 
 lemma chiAt_embH (β : Matrix (Fin 2) (Fin 2) E) (c : Fin 2 → E) (τ : X.Ψ) :
     X.chiAt (X.embH β) (fun σ i => σ.1 (c i)) τ = τ.1 (∑ i, ∑ k, β i k * c i * cc (c k)) := by
-  simp only [Data.chiAt, Data.embH, map_sum, map_mul, emb_cc]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Data.chiAt, Data.embH, map_sum, map_mul, emb_cc]
 
 lemma herm_of_LZ {g : ℕ} {b : X.Ψ → Fin 2 → Fin 2 → ℂ} (hb : b ∈ X.LZ g) : IsHermFam b := by
   obtain ⟨β, hβ, -, rfl⟩ := hb
@@ -125,7 +127,8 @@ lemma herm_of_LZ {g : ℕ} {b : X.Ψ → Fin 2 → Fin 2 → ℂ} (hb : b ∈ X.
 lemma herm_comb {N : ℕ} {ω : Fin N → X.Ψ → Fin 2 → Fin 2 → ℂ} (hω : ∀ j, IsHermFam (ω j))
     (t : Fin N → ℝ) : IsHermFam (∑ j, (t j : ℂ) • ω j) := by
   intro τ i k
-  simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum, map_mul, Complex.conj_ofReal]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum, map_mul, Complex.conj_ofReal]
   exact Finset.sum_congr rfl fun j _ => by rw [hω j τ i k]
 
 end

@@ -46,7 +46,8 @@ private theorem wachExpansion_smul_compatible {F O : Type} [Field F] [NumberFiel
   rw [Fintype.sum_option] at hg
   have hmap : algebraMap (𝓞 F) O (∑ j, g (some j) • b j) =
       ∑ j, g (some j) • algebraMap (𝓞 F) O (b j) := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [map_zsmul]
   have hg' : g none • x + algebraMap (𝓞 F) O (∑ j, g (some j) • b j) = 0 := by
     rw [hmap]

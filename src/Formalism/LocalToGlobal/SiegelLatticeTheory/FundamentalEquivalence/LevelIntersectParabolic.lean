@@ -205,7 +205,8 @@ theorem hR_lin (g : HA R σ J) (x y : Fin n → R ⊗[F] E) :
   have hσ : (fun i => sigR R σ ((M.mulVec x) i)) =
       (M.map (sigR R σ)).mulVec (fun i => sigR R σ (x i)) := by
     funext i
-    simp [Matrix.mulVec, dotProduct, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Matrix.mulVec, dotProduct, map_sum]
   rw [hσ, ← Matrix.vecMul_transpose, ← Matrix.dotProduct_mulVec, Matrix.mulVec_mulVec,
     Matrix.mulVec_mulVec, hg]
 

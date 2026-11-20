@@ -145,7 +145,8 @@ theorem lieLat_conjData : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E]
       rw [h2] at h1
       exact (isCombAtG_iff_lie t M c _ _).1 h1
     · funext j
-      simp [map_sum, Matrix.mulVec, dotProduct, hec, mul_comm]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [map_sum, Matrix.mulVec, dotProduct, hec, mul_comm]
   constructor
   · intro hv
     have hsub : Y.lieLat M i ≤ (D.lie i).comap e.toLinearMap.toAddMonoidHom := by

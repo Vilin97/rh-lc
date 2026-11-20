@@ -57,7 +57,8 @@ theorem glue : ∀ {I : Type} [Fintype I] {g : ℕ} {Λ : Type} [AddCommGroup Λ
           rw [show Hol.der _ (f k) = dw a (f k) from rfl, h0 k a, ← Hol.ev_apply _ hk, map_zero] at this
           exact this.symm
         refine ContinuousLinearMap.ext fun v ↦ ?_
-        rw [← Finset.univ_sum_single v, map_sum, ContinuousLinearMap.zero_apply]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [← Finset.univ_sum_single v, map_sum, ContinuousLinearMap.zero_apply]
         refine Finset.sum_eq_zero fun a _ ↦ ?_
         have e : Pi.single a (v a) = v a • (Pi.single a 1 : Fin g → ℂ) := by
           rw [← Pi.single_smul]; simp

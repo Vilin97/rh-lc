@@ -270,7 +270,8 @@ theorem isogenyIff_of (hE : MvExpLaws) : IsogenyIff := by
       nsmul_eq_mul]
     ring
   have hend' : C al ^ 2 * rescale al e = e + ∑ P, w P - C (∑ P, c P) := by
-    rw [← map_pow, hend, Finset.sum_sub_distrib, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_pow, hend, Finset.sum_sub_distrib, map_sum]
     ring
   have hd : derivative K (derivative K Φ) = g + C (2 * (∑ P, c P - (al ^ 2 - ((Fintype.card ι : K) + 1)) * s2)) := by
     rw [hΦdef, map_sub, map_sub, Derivation.map_smul, Derivation.map_smul, Derivation.map_smul, Derivation.map_smul,

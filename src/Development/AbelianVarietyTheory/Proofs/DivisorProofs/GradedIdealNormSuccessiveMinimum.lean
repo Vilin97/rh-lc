@@ -98,14 +98,16 @@ theorem grNorm_latC_eq_inv_iSup : ∀ {K : Type} [Field K] [NumberField K] {C : 
   · obtain ⟨c, rfl, hc0, hcL⟩ := haI
     refine ⟨fun k => j (c k), hja, fun k hk => by simp [hc0 k hk], Submodule.subset_span ⟨_, hcL, ?_⟩, rfl⟩
     funext m
-    simp [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum]
   · rintro _ ⟨d, hdi, hd0, hdL, rfl⟩
     obtain ⟨f, hf1, hf2⟩ := grSup_exists_form L v i hL.1 hv
     let F : (Fin n → C) →ₗ[C] C := Fintype.linearCombination C (fun m => j (f (Pi.single m 1)))
     have hF : ∀ x : Fin n → K, F (fun m => j (x m)) = j (f x) := by
       intro x
       conv_rhs => rw [pi_eq_sum_univ' x]
-      simp [F, Fintype.linearCombination_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [F, Fintype.linearCombination_apply, map_sum]
     have hb : ∀ y ∈ latC j L, ‖F y‖ ≤ ‖j a‖ := by
       intro y hy
       induction hy using Submodule.span_induction with
@@ -122,7 +124,8 @@ theorem grNorm_latC_eq_inv_iSup : ∀ {K : Type} [Field K] [NumberField K] {C : 
         rw [Subring.smul_def, map_smul, smul_eq_mul, norm_mul]
         exact (mul_le_of_le_one_left (norm_nonneg _) hc).trans hy
     have hval : F (∑ k, d k • fun m => j (v k m)) = d i := by
-      rw [map_sum, Finset.sum_eq_single i]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Finset.sum_eq_single i]
       · rw [map_smul, hF, hf1 i le_rfl]
         simp
       · intro k _ hk

@@ -191,7 +191,8 @@ theorem exists_adelic (hur : Algebra.Unramified (𝓞 (maximalRealSubfield E)) (
     cases hy'
     rw [sum_one, FractionalIdeal.mem_one_iff]
     refine ⟨∑ a, x a * IsCMField.ringOfIntegersComplexConj E (y a), ?_⟩
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun a _ => ?_
     rw [map_mul, ← IsCMField.coe_ringOfIntegersComplexConj]
   · obtain ⟨c, hc⟩ := hfac N hN
@@ -268,7 +269,8 @@ theorem repExists : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n : 
     obtain ⟨b, hb⟩ := inc_surjective ⟨_, hx⟩
     refine ⟨∑ j, a j * IsCMField.ringOfIntegersComplexConj E (b j), ?_⟩
     simp only [mul_comm (IsCMField.complexConj E _)]
-    rw [← e, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← e, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     have ha' : (a j : E) = t • (γ.1 *ᵥ w) j := congrFun (congrArg Subtype.val ha) j
     have hb' : (b j : E) = x j := congrFun (congrArg Subtype.val hb) j

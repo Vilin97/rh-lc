@@ -253,7 +253,8 @@ variable (P : PhiMod O K l e a ι)
 omit [NormedAlgebra ℚ_[l] K] [NeZero e] in
 theorem nabla_mem_MM_of_basis (h : ∀ i, P.nabla (P.phi (bas i)) ∈ P.MM)
     (h' : ∀ i, P.phi (bas i) ∈ P.MM) {m : Vec K a ι} (hm : m ∈ P.MM) : P.nabla m ∈ P.MM := by
-  rw [P.eq_sum_phi_bas m, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [P.eq_sum_phi_bas m, map_sum]
   refine Submodule.sum_mem _ fun i _ => ?_
   have hc (τ) := P.mem_extc_iff.1 (mem_tot.1 hm τ) i
   rw [nabla_smul_tot]
@@ -262,7 +263,8 @@ theorem nabla_mem_MM_of_basis (h : ∀ i, P.nabla (P.phi (bas i)) ∈ P.MM)
 
 theorem EN_mem_Man_of_basis (h : ∀ i, P.EN (bas i) ∈ P.Man) {m : Vec K a ι} (hm : m ∈ P.Man) :
     P.EN m ∈ P.Man := by
-  rw [eq_sum_bas m, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [eq_sum_bas m, map_sum]
   refine Submodule.sum_mem _ fun i _ => ?_
   have hc (τ) : m τ i ∈ Rpi O K l e := mem_tot.1 hm τ i
   rw [EN_apply, conn_smul_tot, smul_add, smul_comm (E K l e) (fun τ => m τ i)]

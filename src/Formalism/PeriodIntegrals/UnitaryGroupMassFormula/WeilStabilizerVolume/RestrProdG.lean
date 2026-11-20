@@ -32,7 +32,8 @@ theorem map_gramR (f : R →ₐ[F] S) (σ : E →ₐ[F] E) {M n : ℕ} (J : Matr
     (X : Fin n → Fin M → R ⊗[F] E) (x y : Fin n) :
     Algebra.TensorProduct.map f (AlgHom.id F E) (gramR R σ J X x y) =
       gramR S σ J (fun x i => Algebra.TensorProduct.map f (AlgHom.id F E) (X x i)) x y := by
-  simp only [gramR, hR, Formalism.UG.hform, JR, Matrix.map_apply, map_sum, map_mul, map_sigR,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [gramR, hR, Formalism.UG.hform, JR, Matrix.map_apply, map_sum, map_mul, map_sigR,
     map_inclR]
 
 end Maps

@@ -19,7 +19,8 @@ theorem plane_compl_skew : ∀ (F E : Type) [Field F] [NumberField F] [Field E] 
   intro F E _ _ _ _ _ σ B hB n n₁ W W₁ H i₀ i₁ r s hW hH i j
   have hσσ := PlaneCompl.cm_sigma_sigma hB.cm
   rw [← hH.gram]
-  simp only [Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, map_sum, map_mul, hσσ, hW.skew]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, map_sum, map_mul, hσσ, hW.skew]
   simp only [Finset.sum_mul, ← Finset.sum_neg_distrib]
   rw [Finset.sum_comm (f := fun a b => -(H.ι b i * W.J b a * σ (H.ι a j)))]
   refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun l _ => ?_

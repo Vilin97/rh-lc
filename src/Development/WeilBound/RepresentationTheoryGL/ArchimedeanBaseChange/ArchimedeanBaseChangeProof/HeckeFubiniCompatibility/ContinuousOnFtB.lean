@@ -175,7 +175,8 @@ theorem RvB_eq (hF : CompatFub) (D : Dom E a b) (hC : Compat D μa μb ν) (v : 
     refine integral_congr_ae (ae_of_all _ fun t => ?_)
     beta_reduce
     rw [StB_indep v ka kb ψ f i q0 q]
-    simp only [StB, map_sum, inner_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [StB, map_sum, inner_sum]
     refine Finset.sum_congr rfl fun j hj => ?_
     have hjq : j.1.2 v = q := (Finset.mem_filter.1 hj).2
     obtain ⟨hc1, hcs1⟩ := cB_props v hka hkb hψ i j

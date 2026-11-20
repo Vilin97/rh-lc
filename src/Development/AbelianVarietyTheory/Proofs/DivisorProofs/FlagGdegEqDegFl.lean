@@ -34,7 +34,8 @@ theorem flag_gdeg_eq_degFl : Hypotheses2 → GlobalTheory.Published.ArDegree →
   have hc := hP.p16.flag hRef hGr hH hG hR
   rw [hI, hT R _ hc, GlobalTheory.T.chern_root_eval_eq_flag_degree ι N _ R hR, map_prod, Finset.prod_const, Finset.card_univ, Fintype.card_fin]
   congr 2
-  rw [map_sum, lin]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, lin]
   rw [← e.sum_comp (fun x => C ((n x : ℤ) : ℝ) * (X x : MvPolynomial (ι × Fin N) ℝ))]
   refine Finset.sum_congr rfl fun x _ => ?_
   rw [map_mul, rename_C, rename_X]

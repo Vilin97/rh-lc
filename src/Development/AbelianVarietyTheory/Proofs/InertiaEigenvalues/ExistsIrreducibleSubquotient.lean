@@ -101,7 +101,8 @@ theorem exists_irreducible_subquotient (G V : Type) [Group G] [AddCommGroup V] [
     rw [AddSubmonoidClass.coe_finsetSum]
     exact h
   have h2 := congrArg M.toSubmodule.mkQ h'
-  rw [map_sum, map_smul] at h2
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_smul] at h2
   simpa only [map_smul, quot_mk] using h2
 
 end GlobalTheory.QuotientGenerator

@@ -28,7 +28,8 @@ theorem UpperTheory.exists_linearly_disjoint_span :
   · intro j
     exact C.sum_mem fun i _ => C.smul_mem _ (hwC i)
   · rw [← hv]
-    simp only [map_sum, map_smulₛₗ, Finset.smul_sum, smul_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smulₛₗ, Finset.smul_sum, smul_smul]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [← Finset.sum_smul, hw i, hc i]

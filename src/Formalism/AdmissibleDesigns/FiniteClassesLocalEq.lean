@@ -768,7 +768,8 @@ theorem embAt_Dd {n : ℕ} (hn : K.plOf i dc n ∈ placesOver D.host.E (D.nd.l i
     have key : ∀ γ : ↥(Γn i dc n), (γ : GE D.nd) = ((Br.iota D.nbr i _ hn g : Gw D.nd (K.plOf i dc n)) : GE D.nd) →
         e ((Λ (locRep ρP γ (untr e v))) q.1 a q.2) = (MsAt i dc r hn (Dd.p q.1) g).mulVec (Ψ q v) a := by
       intro γ hγ
-      rw [hΛe, Pi.mul_apply, hγ, uElt_at i r Dd hr' hsm hχ, Matrix.mul_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hΛe, Pi.mul_apply, hγ, uElt_at i r Dd hr' hsm hχ, Matrix.mul_apply, map_sum]
       simp only [Matrix.mulVec, dotProduct, msAt_apply]
       refine Finset.sum_congr rfl fun b _ => ?_
       simp [Ψ, Matrix.map_apply, map_mul]

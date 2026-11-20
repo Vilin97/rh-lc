@@ -54,9 +54,11 @@ theorem wirt_term (a b d1 d2 : ℂ) (v : ℂ) (ha : a = v.re) (hb : b = v.im) :
 theorem fderiv_first (D : E5 →L[ℝ] ℂ) (v : M23) : D (v, 0) = ∑ r, ∑ c,
     (v r c * ((2 : ℂ)⁻¹ * (D (eU 1 r c) - Complex.I * D (eU Complex.I r c))) +
       (starRingEnd ℂ) (v r c) * ((2 : ℂ)⁻¹ * (D (eU 1 r c) + Complex.I * D (eU Complex.I r c)))) := by
-  rw [expand_first v, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [expand_first v, map_sum]
   refine Finset.sum_congr rfl fun r _ => ?_
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun c _ => ?_
   rw [map_add, map_smul, map_smul, Complex.real_smul, Complex.real_smul]
   exact wirt_term _ _ _ _ _ rfl rfl
@@ -250,7 +252,8 @@ theorem hasFDerivAt_normSq_det {M : complexMatrix3} (hM : (Matrix.of M).det ≠ 
         (Matrix.of M).det • (Complex.conjCLE.toContinuousLinearMap.comp ((Matrix.of M).det • ∑ i, ell M i i)) := by
     refine ContinuousLinearMap.ext fun m => ?_
     have hs : ∑ i, ellc M i i m = (starRingEnd ℂ) (∑ i, ell M i i m) := by
-      simp only [ellc_apply, ell_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [ellc_apply, ell_apply, map_sum]
     have hδ : ((‖(Matrix.of M).det‖ ^ 2 : ℝ) : ℂ) = (starRingEnd ℂ) (Matrix.of M).det * (Matrix.of M).det := by
       rw [Complex.conj_mul']
       push_cast

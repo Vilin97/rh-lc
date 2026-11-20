@@ -42,7 +42,8 @@ private theorem isBC_pi {T : Type} [Finite T] {M N : T → Type} [∀ t, AddComm
   · intro y
     choose x hx using fun t => (h t).2 (y t)
     refine ⟨∑ t, (x t).mapRange (Pi.single t) (Pi.single_zero t), ?_⟩
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     have hs : ∀ t, bcSum e Ψ ((x t).mapRange (Pi.single t) (Pi.single_zero t)) = Pi.single t (y t) := by
       intro t
       rw [bcSum_mapRange e (ψ t) Ψ (Pi.single t) (Pi.single_zero t)

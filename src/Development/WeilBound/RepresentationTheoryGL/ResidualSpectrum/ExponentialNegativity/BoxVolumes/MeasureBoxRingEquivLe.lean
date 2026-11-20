@@ -65,7 +65,8 @@ theorem measure_box_ringEquiv_le (φ : E ≃+* 𝕜) (hφ : ∀ x, ‖φ x‖ = 
     have : (fun i => φ (φ.symm (z i))) ᵥ* (k : Matrix (Fin (m + 1)) (Fin (m + 1)) E).map φ =
         fun j => φ.toRingHom (((fun i => φ.symm (z i)) ᵥ* (k : Matrix (Fin (m + 1)) (Fin (m + 1)) E)) j) := by
       ext j
-      simp [vecMul, dotProduct, _root_.map_sum, map_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [vecMul, dotProduct, _root_.map_sum, map_mul]
     rw [this, euclidNorm_map φ.toRingHom hφ, hk, ← euclidNorm_map φ.toRingHom hφ]
     rfl
   refine ⟨Φ b, ⟨b, hbω, rfl⟩, y, hy, ⟨_, hkU⟩, ?_⟩

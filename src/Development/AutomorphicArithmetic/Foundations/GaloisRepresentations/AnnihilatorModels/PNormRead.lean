@@ -5,7 +5,8 @@ open UpperTheory.Gal.crystallineComparison
 
 private theorem form_map' {B B' ι : Type} [CommRing B] [CommRing B'] [Fintype ι] (f : B →+* B') (c : ι → B) :
     (form c).map (MvPolynomial.map f) = form fun k => f (c k) := by
-  simp [form, Polynomial.map_sub, Polynomial.map_X, Polynomial.map_C, Polynomial.map_sum, map_sum, MvPolynomial.map_C, MvPolynomial.map_X]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [form, Polynomial.map_sub, Polynomial.map_X, Polynomial.map_C, Polynomial.map_sum, map_sum, MvPolynomial.map_C, MvPolynomial.map_X]
 
 private theorem descend {R S B B' ι I : Type} [CommRing R] [CommRing S] [CommRing B] [CommRing B']
     [Algebra R S] [Algebra R B] [Algebra R B'] [Fintype ι] [Fintype I]

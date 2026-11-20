@@ -141,7 +141,8 @@ theorem map_posU {R S : Type} [CommRing R] [CommRing S] (φ : R →+* S) {ι : T
   apply Units.ext
   ext i j
   change φ ((1 + posM p x) i j) = (1 + posM p fun t => φ (x t)) i j
-  simp only [posM, Matrix.add_apply, Matrix.sum_apply, map_add, map_sum, Matrix.one_apply, Matrix.single_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [posM, Matrix.add_apply, Matrix.sum_apply, map_add, map_sum, Matrix.one_apply, Matrix.single_apply]
   congr 1
   · split_ifs <;> simp
   · refine Finset.sum_congr rfl fun t _ => ?_
@@ -199,7 +200,8 @@ theorem StdPsi.map_dot (hψ : StdPsi ψ) {ι : Type} [Fintype ι] (ξ c : ι →
     ψ (dot ξ ((fun t => algebraMap E (Ad E) (c t)) + x)) = ψ (dot ξ x) := by
   have : dot ξ ((fun t => algebraMap E (Ad E) (c t)) + x) =
       algebraMap E (Ad E) (∑ t, ξ t * c t) + dot ξ x := by
-    simp only [dot, Pi.add_apply, mul_add, Finset.sum_add_distrib, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [dot, Pi.add_apply, mul_add, Finset.sum_add_distrib, map_sum, map_mul]
   rw [this, AddChar.map_add_eq_mul, hψ.rat, one_mul]
 
 theorem continuous_dot {ι : Type} [Fintype ι] (ξ : ι → E) : Continuous (dot ξ : (ι → Ad E) → Ad E) :=

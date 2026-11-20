@@ -66,10 +66,12 @@ theorem geoFun_toA_eq : ∀ (Ψ : Type) [Fintype Ψ] [DecidableEq Ψ] (N : ℕ) 
     M.geoFun (toA F) = genNum ℚ (extTo ℚ M.P) M.xdeg F [] / (M.δ : ℝ) := by
   intro Ψ _ _ N M _ II hII F hF
   have h1 : toA F = ∑ μ ∈ F.support, F.coeff μ • basisMonomials (Option (Ψ × Fin N)) ℝ (μ.mapDomain some) := by
-    conv_lhs => rw [toA, F.as_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [toA, F.as_sum, map_sum]
     refine Finset.sum_congr rfl fun μ _ => ?_
     rw [rename_monomial, coe_basisMonomials, smul_monomial, smul_eq_mul, mul_one]
-  rw [h1, map_sum, genNum, Finset.sum_div]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [h1, map_sum, genNum, Finset.sum_div]
   refine Finset.sum_congr rfl fun μ hμ => ?_
   have hd : μ.degree = dimFl Ψ N := by
     exact (DFunLike.congr_fun Finsupp.degree_eq_weight_one μ).trans (hF (mem_support_iff.1 hμ))

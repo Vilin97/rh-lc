@@ -59,7 +59,8 @@ theorem Lin_chain (N : S → Matrix (Fin k) (Fin k) R) (s : S) (b : Fin k) (h : 
     obtain ⟨t, c⟩ := v
     have hL : pderiv (s, b) (∑ d : Fin k, C (N t c d) * X (t, d) : MvPolynomial (S × Fin k) R)
         = if t = s then C (N t c b) else 0 := by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simp only [pderiv_C_mul, pderiv_X, Pi.single_apply, Prod.mk.injEq]
       by_cases hts : t = s
       · subst hts

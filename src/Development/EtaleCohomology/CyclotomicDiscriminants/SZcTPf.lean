@@ -109,7 +109,8 @@ theorem contract_eq {q : ℕ} (e a : ℕ) (ha : a < e + 1) (j : Fin (e + 1) → 
 theorem SZc_of : SZc := by
   intro q _ e
   unfold Cyc
-  rw [zc_eq, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [zc_eq, map_sum]
   simp only [bd, Finsupp.linearCombination_single, one_smul]
   rw [Finset.sum_add_distrib, tail_sum, zero_add, Finset.sum_comm]
   simp only [← Finset.smul_sum]

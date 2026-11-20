@@ -31,10 +31,12 @@ theorem exists_fixed {G V : Type} [AddCommGroup G] [AddCommGroup V] [Module ℂ 
   have hz : ∀ y ∈ A, ∑ q : L ⧸ K.addSubgroupOf L, χ (q.out : L) y • ρ (q.out : L) f = 0 := fun y hy => by
     have hfix : ∀ κ ∈ K, ρ κ (σ y f) = σ y f := fun κ hκ => by rw [hc, hy κ hκ, hK κ hκ, one_smul]
     refine hσ y _ ?_
-    simp only [map_sum, map_smul, ← hc]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, ← hc]
     by_contra hne
     refine hcon ⟨_, P.sum_mem fun q _ => hP _ (q.out : L).2 _ (hP' y f hf), hne, fun u hu => ?_⟩
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Fintype.sum_equiv (Equiv.addLeft (QuotientAddGroup.mk (⟨u, hu⟩ : L))) _ _ fun q => ?_
     rw [hρ]
     refine hcl _ hfix (⟨u, hu⟩ + q.out) _ ?_
@@ -57,7 +59,8 @@ theorem exists_fixed {G V : Type} [AddCommGroup G] [AddCommGroup V] [Module ℂ 
   have := hli (fun q => ℓ (ρ (q.out : L) f)) (by
     funext y
     have := congrArg ℓ (hz _ y.toAdd.2)
-    simp only [map_sum, map_smul, smul_eq_mul, map_zero] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, smul_eq_mul, map_zero] at this
     rw [Finset.sum_apply]
     refine Eq.trans (Finset.sum_congr rfl fun q _ => ?_) this
     simp [ch, mul_comm]) (QuotientAddGroup.mk 0)

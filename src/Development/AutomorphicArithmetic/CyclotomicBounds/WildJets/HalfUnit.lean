@@ -34,7 +34,8 @@ theorem UpperTheory.WildA.halfUnit :
   · have hx : ((c : 𝓞 D.host.E)) ≠ 0 := by exact_mod_cast hc0
     let w : AE D := (∑ PP ∈ P, es PP) * incA D (((c : 𝓞 D.host.E) : D.host.E))⁻¹
     have hw : finPart D w ∈ intAE D := by
-      simp only [w, Finset.sum_mul, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [w, Finset.sum_mul, map_sum]
       refine AddSubgroup.sum_mem _ ?_
       intro PP hPP
       by_contra hn

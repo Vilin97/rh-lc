@@ -62,7 +62,8 @@ theorem compAt_singleV_ne {u v : HeightOneSpectrum (𝓞 F)} (h : u ≠ v) (x : 
 
 theorem compAt_restrictTo (S : Finset (HeightOneSpectrum (𝓞 F))) (v : HeightOneSpectrum (𝓞 F))
     (a : AE F E) : compAt E v (restrictTo E S a) = if v ∈ S then compAt E v a else 0 := by
-  rw [restrictTo, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [restrictTo, map_sum]
   split_ifs with hv
   · rw [Finset.sum_eq_single_of_mem v hv (fun w _ hw => compAt_singleV_ne hw.symm _),
       compAt_singleV_same]

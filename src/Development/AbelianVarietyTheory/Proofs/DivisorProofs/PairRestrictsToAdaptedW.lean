@@ -143,13 +143,15 @@ theorem isotropic {σ : E →ₐ[F] E} {B : Base F E} {d d₁ : ℕ} {W : Spc F 
     have h1 := congrArg (inclR (F := F) (AF F)) hH.xx
     rw [map_zero] at h1
     rw [← h1]
-    simp only [form, incV, incM, Matrix.map_apply, hc, dotProduct, Matrix.mulVec, Finset.mul_sum, map_sum, map_mul, mul_assoc]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [form, incV, incM, Matrix.map_apply, hc, dotProduct, Matrix.mulVec, Finset.mul_sum, map_sum, map_mul, mul_assoc]
   have h0 : (incM F H'.ι)ᵀ *ᵥ (incM F W.J *ᵥ fun k => cA σ (incV F H'.x k)) = 0 := by
     funext m
     have e := (hH.orth (Pi.single m 1)).1
     rw [Matrix.mulVec_single_one] at e
     have := congrArg (inclR (F := F) (AF F)) e
-    simpa [form, incM, incV, Matrix.mulVec, dotProduct, map_sum, map_mul, hc] using this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [form, incM, incV, Matrix.mulVec, dotProduct, map_sum, map_mul, hc] using this
   have hA : (incM F H'.ι)ᵀ * incM F W.J * (incM F H'.ι).map (cA σ) = incM F W₁.J := by
     rw [incM_map_cA, ← hH.gram]
     simp only [incM, Matrix.map_mul, Matrix.transpose_map]
@@ -239,7 +241,8 @@ theorem exists_ratLagr : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [N
     rw [hfe, hΦ]
     congr 1
     ext i j
-    simp [incM, incV, Matrix.vecMulVec_apply, Matrix.mul_apply, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [incM, incV, Matrix.vecMulVec_apply, Matrix.mul_apply, map_sum, map_mul]
   refine ⟨LinearMap.range (f ∘ₗ Φ), ?_, ?_, ?_⟩
   · rintro _ ⟨p, rfl⟩ _ ⟨q, rfl⟩
     have h := isotropic hH _ dd dd₁ (fun j => inclR (F := F) (AF F) (p.1 j)) (fun j => inclR (F := F) (AF F) (q.1 j))

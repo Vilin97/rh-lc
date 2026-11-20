@@ -124,7 +124,8 @@ theorem block_algebra (n : ℕ) (φ ψ : MvPolynomial (Fin n) ℝ →ₗ[ℝ] �
       simp only [Equiv.Perm.sign_one, Equiv.Perm.one_apply, Fin.val_zero] at e
       push_cast at e
       linear_combination e
-  rw [hV, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hV, map_sum]
   simp only [map_smul, smul_eq_mul]
   rw [hsum, Finset.sum_add_distrib, ← Finset.mul_sum, sum_perm_apply_zero, Finset.sum_const, Finset.card_univ,
     Fintype.card_perm, Fintype.card_fin, nsmul_eq_mul]
@@ -164,7 +165,8 @@ theorem powerSum_eq_mid {κ : Type} [Fintype κ] {x y : κ} (hxy : x ≠ y) :
   have key (f : κ → MvPolynomial κ ℝ) : ∑ z, f z = f x + f y + ∑ z ∈ (Finset.univ.erase x).erase y, f z := by
     rw [add_assoc, Finset.add_sum_erase _ _ (Finset.mem_erase.2 ⟨hxy.symm, Finset.mem_univ _⟩),
       Finset.add_sum_erase _ _ (Finset.mem_univ _)]
-  rw [map_sum, key, key fun z => mid x y (X z ^ 2)]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, key, key fun z => mid x y (X z ^ 2)]
   simp only [map_pow, mid_X_left, mid_X_right]
   rw [Finset.sum_congr rfl fun z hz => congrArg (· ^ 2)
     (mid_X_of_ne (Finset.mem_erase.1 (Finset.mem_erase.1 hz).2).1 (Finset.mem_erase.1 hz).1)]

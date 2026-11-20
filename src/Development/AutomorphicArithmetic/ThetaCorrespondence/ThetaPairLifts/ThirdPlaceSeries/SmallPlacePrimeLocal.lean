@@ -104,7 +104,8 @@ private theorem frame_embedding_exists {D : D7} {L : SizeData₂ D} {hT : GatTie
   rw [GlobalTheory.SplitTransfer.heckeVec_divInd hTr hKQ hR]
   refine hsum _ R (fun γ => (GlobalTheory.DefTransfer.cj jj h₀).symm γ) _ (fun γ hγ => ((hTr.2.2.2.2.2.2.2 _ _ R hR).1 γ hγ).1.1) fun g => ?_
   simp only [htr, MulEquiv.apply_symm_apply]
-  rw [← map_sum, hRs _ Fm hFr, hA, ← map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum, hRs _ Fm hFr, hA, ← map_smul]
   exact congrArg A (hFh i hloc _)
 theorem _root_.GlobalTheory.T.small_place_prime_local_alt : ∀ {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : Formalism.MainNotions.G.Inst D L} {Gl : Formalism.MainNotions.G.LatInst D} {Kc : Formalism.MainNotions.G.Consts}
     {Y : DivX D} {cX : ExtraC} {ex : Extra D L hT Gi Gl Kc Y cX} {Csz : ℝ} (p : PtAt ex Csz), _root_.GlobalTheory.BigTop.PtAt.PointConditions' p → More p →

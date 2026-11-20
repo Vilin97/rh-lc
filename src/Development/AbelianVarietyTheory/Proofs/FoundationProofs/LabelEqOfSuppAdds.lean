@@ -185,7 +185,8 @@ theorem hasLab_of_eqv (L : LabelDatum g) {n : ℕ} (π : Representation ℂ (GL 
     (h : ∀ x u, T (repK π (i (red g a x)) u) = σ (inc g a x) (T u)) (f : (ZMod g)[X]) (u : fixK1 π)
     (hne : T ((repK π).asAlgebraHom (mapDomainAlgHom ℂ ℂ i (eSerC L a f)) u) ≠ 0) : HasLab L σ f := by
   refine ⟨T u, (mem_principalCongruenceFixedVectors_iff σ _).2 fun k hk => by rw [← h, hk, map_one, map_one, Module.End.one_apply], ?_⟩
-  rw [← comp_alg, alg_apply, map_sum] at hne
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← comp_alg, alg_apply, map_sum] at hne
   rw [actK, LinearMap.sum_apply]
   convert hne using 2 with x
   rw [LinearMap.smul_apply, map_smul, lift, ← h, red_invFun]
@@ -262,8 +263,10 @@ theorem label_of_mapsToProd (L : LabelDatum g) (h5 : 5 ≤ g) (hG : Green) {n : 
     intro m i u hu
     obtain ⟨S, -, hS⟩ := (GlobalTheory.T.harishChandraSeriesCentralIdempotent_laws g L h5 hG m).2.2.2.2
     have e : u = ∑ f ∈ S, (repK π).asAlgebraHom (mapDomainAlgHom ℂ ℂ i (eSerC L m f)) u := by
-      rw [← LinearMap.sum_apply, ← map_sum, ← map_sum, hS, map_one, map_one, Module.End.one_apply]
-    rw [e, map_sum] at hu
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← LinearMap.sum_apply, ← map_sum, ← map_sum, hS, map_one, map_one, Module.End.one_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, map_sum] at hu
     obtain ⟨f, -, hf⟩ := Finset.exists_ne_zero_of_sum_ne_zero hu
     exact ⟨f, hf⟩
   obtain ⟨F', hF'⟩ := hsum (MonoidHom.id _) ⟨w, hw⟩ hw0

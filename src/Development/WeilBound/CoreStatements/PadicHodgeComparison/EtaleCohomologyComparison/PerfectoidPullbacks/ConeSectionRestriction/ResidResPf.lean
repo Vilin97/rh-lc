@@ -64,7 +64,8 @@ theorem resRPf_linInd (t : Fin (n + 1) → Rˣ) (ht : AlgebraicIndependent K fun
     rw [← Finset.sum_mul, hg, zero_mul]
   have hpoly : ∑ m ∈ s, MvPolynomial.monomial (e m) (g m) = 0 := by
     apply algebraicIndependent_iff_injective_aeval.1 ht
-    rw [map_sum, map_zero, ← hmul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero, ← hmul]
     refine Finset.sum_congr rfl (fun m hm => ?_)
     rw [he m hm]
     simp only [MvPolynomial.aeval_monomial, map_one, one_mul, Algebra.smul_def]

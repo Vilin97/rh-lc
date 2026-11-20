@@ -189,11 +189,13 @@ theorem isCusp_character {d : ℕ} (hd : 0 < d) (τ : FDRep ℂ (Gn g d)) (hs : 
   set U := FiniteGL.unipRadical (ZMod g) (FiniteGL.twoBlocks d a)
   have hz : ∑ u : U, τ.ρ u = 0 := by
     refine LinearMap.ext fun v => (FiniteGL.isCuspidal_iff_twoBlocks τ.ρ).1 hc a h0 had _ fun x hx => ?_
-    rw [LinearMap.sum_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [LinearMap.sum_apply, map_sum]
     refine Fintype.sum_equiv (Equiv.mulLeft (⟨x, hx⟩ : U)) _ _ fun u => ?_
     simp
   have ht := congrArg (LinearMap.trace ℂ τ) hz
-  rw [map_sum, map_zero] at ht
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_zero] at ht
   unfold res
   rw [← Finset.sum_filter, Finset.sum_subtype (p := fun x => x ∈ U) _
     (fun x => by rw [mem_unipRadical_iff had]; simp) τ.character]

@@ -67,12 +67,14 @@ theorem lift_mul (g h : Matrix (Fin D.R.r) (Fin D.R.r) (Formalism.L2.DIV.kP PP))
   have e : (lift G g * lift G h - lift G (g * h)) a b =
       -(rho G (out ((g * h) (pos G a) (pos G b))) -
         rho G (∑ l, out (g (pos G a) l) * out (h l (pos G b)))) := by
-    simp only [Matrix.sub_apply, Matrix.mul_apply, lift, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.sub_apply, Matrix.mul_apply, lift, map_sum, map_mul]
     rw [← Equiv.sum_comp (pos G) (fun l => rho G (out (g (pos G a) l)) * rho G (out (h l (pos G b))))]
     ring
   rw [e, Valuation.map_neg]
   refine rho_sub_lt G ?_
-  simp only [map_sum, map_mul, mk_out, Matrix.mul_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, mk_out, Matrix.mul_apply]
 
 theorem lift_one : MaxM (lift G 1 - 1) := by
   intro a b

@@ -61,7 +61,8 @@ theorem isItW_of_mem_span {χS χT : (AE D)ˣ →* Circle} {ω : WRep S T} (hω 
     rw [map_smul, map_sub, map_smul, hd _ _ _ hF, hd _ _ _ hF]
   have hom : ∀ g ∈ GinfC S, ∀ k ∈ GinfC T, ∀ Q, ω (g, k) (pureTensorO ψ θ S T sS sT BS BT (L f₀) Q) =
       L (ω (g, k) (pureTensorO ψ θ S T sS sT BS BT f₀ Q)) := fun g hg k hk Q => by
-    rw [← (hpt Q).2, hL, hL, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← (hpt Q).2, hL, hL, map_sum]
     refine Finset.sum_congr rfl fun a _ => ?_
     rw [map_smul, hω.om_heis _ _ _ _ (hpt Q).1, actO_eq_of_real hg hk a.2]
   have hder : ∀ (F : ℝ → WO S T → ℂ) (F' : WO S T → ℂ), (∀ z, HasDerivAt (fun t => F t z) (F' z) 0) →

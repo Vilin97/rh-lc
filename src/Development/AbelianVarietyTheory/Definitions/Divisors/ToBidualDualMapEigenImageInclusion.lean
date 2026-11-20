@@ -375,7 +375,8 @@ theorem pullback (f : Y ⟶ X) : IsEigenProj (pullAct ρ f) (f.appTop.hom.comp �
   exists_sum := by
     obtain ⟨n, c, b, rfl, rfl⟩ := h.exists_sum
     refine ⟨n, fun i => f.appTop (c i), b, ?_, by simp⟩
-    rw [Functor.map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Functor.map_sum]
     exact Finset.sum_congr rfl fun i _ => pullback_map_smul _ _ _
 
 theorem of_iso {ρ' : O →+* End G} {φ : F ≅ G} (hφ : IsEquivariant ρ ρ' φ.hom) :

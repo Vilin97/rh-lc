@@ -31,12 +31,14 @@ theorem map_hYY (D : D7) {N N' : ℕ} (x y : Matrix (Fin N') (Fin N) D.host.E) :
     D.host.φ₀ ((hYY D x y : D.host.K) : D.host.E) =
       ∑ τ, ∑ i, ∑ j, embT D τ (x i j) * (starRingEnd ℂ) (embT D τ (y i j)) := by
   rw [hYY, ← GlobalTheory.InducedType.sum_eq_trace D]
-  simp only [map_sum, map_mul, emb_conj]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, emb_conj]
 
 theorem map_hYY_symm (D : D7) {N N' : ℕ} (x y : Matrix (Fin N') (Fin N) D.host.E) :
     D.host.φ₀ ((hYY D y x : D.host.K) : D.host.E) =
       (starRingEnd ℂ) (D.host.φ₀ ((hYY D x y : D.host.K) : D.host.E)) := by
-  simp only [map_hYY, map_sum, map_mul, Complex.conj_conj, mul_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_hYY, map_sum, map_mul, Complex.conj_conj, mul_comm]
 
 theorem map_hYY_smul_left (D : D7) {N N' : ℕ} (z : D.host.K) (x y : Matrix (Fin N') (Fin N) D.host.E) :
     D.host.φ₀ ((hYY D (z • x) y : D.host.K) : D.host.E) =

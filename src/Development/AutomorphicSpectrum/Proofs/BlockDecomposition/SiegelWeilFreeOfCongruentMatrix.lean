@@ -266,7 +266,8 @@ theorem rmul_mem_scaleB {d M n : ℕ} (b : Module.Basis (Fin d) F E) (c : F) (hc
     (rmul (Fv F v) X (G.map (inclR (Fv F v))) a i) l ∈ v.adicCompletionIntegers F
   rw [repr_scaleB]
   simp only [rmul, Matrix.map_apply]
-  rw [map_sum, Finsupp.finsetSum_apply, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finsupp.finsetSum_apply, Finset.mul_sum]
   refine sum_mem fun c' _ => ?_
   rw [LatRat.repr_mul, Finset.mul_sum]
   refine sum_mem fun k _ => ?_

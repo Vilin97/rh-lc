@@ -179,7 +179,8 @@ theorem exists_sum_sub_mem {S T : Type} {i : S → T} (hi : Function.Injective i
   classical
   refine ⟨F ∪ ((Finset.range e).biUnion L).image i, Finset.subset_union_left,
     PowerSeries.X_pow_dvd_iff.2 fun k hk => ?_⟩
-  rw [map_sub, map_sum, PowerSeries.coeff_mk, sub_eq_zero, ← Finset.sum_subset (s₁ := (L k).image i),
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sub, map_sum, PowerSeries.coeff_mk, sub_eq_zero, ← Finset.sum_subset (s₁ := (L k).image i),
     Finset.sum_image hi.injOn]
   · refine Finset.sum_congr rfl fun mu hmu => ?_
     rw [h₁, PowerSeries.coeff_mul_C, PowerSeries.coeff_X_pow, if_pos ((hL _ _).1 hmu).symm, _root_.one_mul]

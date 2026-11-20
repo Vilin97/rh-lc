@@ -105,7 +105,8 @@ theorem serFix_of_locS {L : Type} [Field L] [NumberField L] [IsCMField L] {n g :
     have hx := hφfix x hlift
     have hθx : Matrix.GeneralLinearGroup.map θ.toRingHom (s.loc n x) = GlobalTheory.GLp.inc g n kk := by
       rw [hx2]; ext; simp
-    rw [hφsum, map_sum] at hx
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hφsum, map_sum] at hx
     have hx' : ∑ y ∈ J, NG.rt L n y.1 (T (ρ' (GlobalTheory.GLp.inc g n kk) (c y))) = ∑ y ∈ J, NG.rt L n y.1 (T (c y)) := by
       rw [← hx]; refine Finset.sum_congr rfl fun y _ => ?_
       rw [← hθx, ← hτθ, hTeq x hx1, rt_rt', rt_rt', (hI.2.1 x y.1 hx1 y.2).eq]
@@ -122,13 +123,15 @@ theorem serFix_of_locS {L : Type} [Field L] [NumberField L] [IsCMField L] {n g :
   choose kk hkk hkkeq using hℓ'
   have hterm : ∀ γ, NG.rt L n (ℓ γ) φ = ∑ y ∈ J, NG.rt L n y.1 (T (ρ' (GlobalTheory.GLp.lift g n γ) (c y))) := by
     intro γ
-    rw [hφsum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hφsum, map_sum]
     refine Finset.sum_congr rfl fun y hy => ?_
     rw [rt_rt', (hI.2.1 (ℓ γ) y.1 (hℓ γ).1 y.2).eq, ← rt_rt', ← hTeq _ (hℓ γ).1, hτθ, hkkeq, map_mul,
       Module.End.mul_apply, hfix' y hy _ (hkk γ)]
   rw [finsum_eq_sum_of_fintype]
   calc ∑ γ, a.coeff γ • NG.rt L n (ℓ γ) φ = ∑ y ∈ J, NG.rt L n y.1 (T (GlobalTheory.GLp.actK ρ' a (c y))) := by
-        simp only [hterm, Finset.smul_sum, GlobalTheory.GLp.actK, LinearMap.sum_apply,
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [hterm, Finset.smul_sum, GlobalTheory.GLp.actK, LinearMap.sum_apply,
           LinearMap.smul_apply, map_sum, map_smul]
         exact Finset.sum_comm
     _ = φ := by

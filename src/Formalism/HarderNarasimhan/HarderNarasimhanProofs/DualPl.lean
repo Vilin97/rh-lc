@@ -129,7 +129,8 @@ theorem ident_sum_fcoord (b : Basis ι K V) (X : InfinitePlace K → Matrix ι �
   rw [Matrix.mulVec_transpose, ← Matrix.dotProduct_mulVec, Matrix.mulVec_mulVec,
     Matrix.mul_nonsing_inv _ (hX v), Matrix.one_mulVec]
   conv_rhs => rw [← b.sum_repr x]
-  simp only [map_sum, map_smul, smul_eq_mul, map_mul, dotProduct, Formalism.HermitianLatticesTheory.vecAt]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, smul_eq_mul, map_mul, dotProduct, Formalism.HermitianLatticesTheory.vecAt]
   refine Finset.sum_congr rfl fun i _ => ?_
   ring
 
@@ -239,7 +240,8 @@ theorem dualZ_zl_eq [IsTotallyComplex K] (b : Basis ι K V) (X : InfinitePlace K
     let c : s → K := fun j => ∑ k, ((t j k : ℚ)) • ω' k
     have hc : ∀ j l, Algebra.trace ℚ K (integralBasis K l * c j) = (t j l : ℚ) := by
       intro j l
-      simp only [c, Finset.mul_sum, mul_smul_comm, map_sum, map_smul, hω, smul_eq_mul, mul_ite,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [c, Finset.mul_sum, mul_smul_comm, map_sum, map_smul, hω, smul_eq_mul, mul_ite,
         mul_one, mul_zero, Finset.sum_ite_eq, Finset.mem_univ, if_true]
     have hsp' : ⊤ ≤ Submodule.span K (Set.range e) := by
       rw [show Set.range e = s from Subtype.range_coe, hspan, hsp]

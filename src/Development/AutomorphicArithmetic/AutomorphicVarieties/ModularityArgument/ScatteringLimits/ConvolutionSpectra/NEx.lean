@@ -122,6 +122,7 @@ theorem UpperTheory.V.Z.IntegralApplyAeEq.nEx :
   have e : M.J' (one W w) - M.J (one V (b.constr ℂ (fun i => n (b i)) w)) =
       ∑ i, b.repr w i • (M.J' (one W (b i)) - M.J (one V (n (b i)))) := by
     conv_lhs => rw [← b.sum_repr w]
-    simp only [map_sum, map_smul, Module.Basis.constr_basis, smul_sub, Finset.sum_sub_distrib]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, Module.Basis.constr_basis, smul_sub, Finset.sum_sub_distrib]
   rw [e]
   exact Finset.sum_induction _ _ (fun x y hx hy => (cadd x y hx hy).1) c0 fun i _ => csmul _ _ (hn _)

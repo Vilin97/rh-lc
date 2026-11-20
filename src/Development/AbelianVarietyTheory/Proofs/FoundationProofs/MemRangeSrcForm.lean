@@ -43,7 +43,8 @@ theorem invChar_int (g : G) : ∃ a : 𝓞 K, (a : K) = invChar U ψ g := by
   · exact ⟨0, rfl⟩
 
 theorem trU_eigen (f : M) (u : U) : r u (trU r U ψ f) = ((ψ u : Kˣ) : K) • trU r U ψ f := by
-  rw [trU_apply, map_sum, Finset.smul_sum, ← Equiv.sum_comp (Equiv.mulLeft (u : G)) fun g => ((ψ u : Kˣ) : K) • _]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [trU_apply, map_sum, Finset.smul_sum, ← Equiv.sum_comp (Equiv.mulLeft (u : G)) fun g => ((ψ u : Kˣ) : K) • _]
   refine Finset.sum_congr rfl fun g _ => ?_
   simp only [Equiv.coe_mulLeft, map_smul, map_mul, Module.End.mul_apply, smul_smul]
   congr 1
@@ -270,7 +271,8 @@ theorem clSum_trU [Nontrivial (Fin (R.nW i) → D.what₂.LL)] (f : (A.MtCSD i t
     clSum (presV R i t) (kern R i t) (trU (A.leftGroupActionLift i t) U ψ f) v =
       levelTrace R i U ψ (clSum (presV R i t) (kern R i t) f v) := by
   unfold levelTrace gaL
-  rw [trU_apply, map_sum, Finset.sum_apply, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [trU_apply, map_sum, Finset.sum_apply, LinearMap.sum_apply]
   refine Finset.sum_congr rfl fun g _ => ?_
   rw [map_smulₛₗ, h.clSum_equiv, LinearMap.smul_apply, invChar, apply_dite D.what₂.embLL, map_zero]
   rfl
@@ -337,10 +339,13 @@ theorem theta_mem_span {θ} (hθ : OnTies.IsClassSum R i t U ψ ph θ) {y : Fin 
       exact (congrArg (fun g' => kern R i t g' _ v) eg.symm).trans (h.kern_fin hg _ v)
   have hsum : (Nat.card U : D.what₂.LL) • y = ∑ c, (Fintype.card ((A.MtCSD i t).Gam c) : D.what₂.LL)⁻¹ • z c := by
     apply srcForm_injective i t U ψ
-    rw [map_smul, ← trU_of_eigen _ U ψ ((mem_range_srcForm i t U ψ _).1 ⟨y, rfl⟩), map_sum]
-    conv_lhs => rw [← sum_avgForm _ (srcForm A i t U ψ y), map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_smul, ← trU_of_eigen _ U ψ ((mem_range_srcForm i t U ψ _).1 ⟨y, rfl⟩), map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [← sum_avgForm _ (srcForm A i t U ψ y), map_sum]
     exact Finset.sum_congr rfl fun c _ => by rw [map_smul, map_smul, ez]
-  rw [← Submodule.smul_mem_iff _ (Nat.cast_ne_zero.2 Nat.card_pos.ne' : (Nat.card U : D.what₂.LL) ≠ 0), ← map_smul, hsum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Submodule.smul_mem_iff _ (Nat.cast_ne_zero.2 Nat.card_pos.ne' : (Nat.card U : D.what₂.LL) ≠ 0), ← map_smul, hsum, map_sum]
   exact Submodule.sum_mem _ fun c _ => by
     rw [map_smul]
     exact Submodule.smul_mem _ _ (Submodule.subset_span (hmem c))

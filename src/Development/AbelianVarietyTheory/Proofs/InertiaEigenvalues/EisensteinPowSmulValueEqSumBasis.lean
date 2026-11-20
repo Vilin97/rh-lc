@@ -59,7 +59,8 @@ theorem GlobalTheory.BKGal.HatVal.Epow_smul_jB_toBcris_eq_sum : ∀ (l : ℕ) [F
   have hE : toB l O ((1 : O) ⊗ₜ[ℤ_[l]] ϖ.ev a (eis l a e) : OA l O) =
       toB l O (ϖ.iTot t K (fun _ => EIn l e _)) := by rw [ϖ.iTot_E t K]
   rw [← LinearEquiv.map_smul]
-  simp only [← LinearEquiv.map_smul, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← LinearEquiv.map_smul, ← map_sum]
   congr 1
     ← map_sum]
   congr 1

@@ -121,7 +121,8 @@ theorem gs_cst (p : X ⟶ Spec (CommRingCat.of R)) (r : Z ⟶ X) (z : Z) (U : X.
 theorem gs_lin {n : ℕ} (p : X ⟶ Spec (CommRingCat.of R)) (r : Z ⟶ X) (z : Z) (U : X.Opens) (h : r z ∈ U)
     (c : Fin n → R) (x : Fin n → Γ(X, U)) :
     gs r z U (∑ i, AbLaw.cst p U (c i) * x i) = ∑ i, cstGerm (r ≫ p) z (c i) * gs r z U (x i) := by
-  rw [← gsHom_apply r z _ h, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← gsHom_apply r z _ h, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_mul, gsHom_apply, gsHom_apply, gs_cst p r z _ h]
 
@@ -182,10 +183,12 @@ theorem exists_form_correction : ∀ (A : Type) [CommRing A] [IsLocalRing A] [Is
         (congrArg (· * (τ' i).f k') (map_zero (AbLaw.cst f' ((AbLaw.pw H' t).U k')))).trans (zero_mul _)).symm
   refine ⟨∑ i, MvPolynomial.C (c i) * Q i,
     MvPolynomial.IsHomogeneous.sum _ _ _ fun i _ => (hQ i).C_mul _, fun d => ?_, fun k => ?_⟩
-  · rw [MvPolynomial.coeff_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [MvPolynomial.coeff_sum, map_sum]
     refine Finset.sum_eq_zero fun i _ => ?_
     rw [MvPolynomial.coeff_C_mul, map_mul, congrFun hgc i, Pi.zero_apply, zero_mul]
-  · rw [map_sub, sub_eq_zero, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sub, sub_eq_zero, map_sum]
     refine (hc' k).trans (Finset.sum_congr rfl fun i _ => ?_)
     rw [map_mul, MvPolynomial.eval₂Hom_C, hτQ i k]
     rfl

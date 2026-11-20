@@ -50,7 +50,8 @@ theorem length_ne_top_of_smul_eq_zero {X : Type} [AddCommGroup X] [Module R X] [
       funext j
       simp [Finset.sum_apply, Pi.single_apply]
     conv_rhs => rw [hv]
-    simp only [g, li, LinearMap.sum_apply, LinearMap.comp_apply, LinearMap.proj_apply, map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [g, li, LinearMap.sum_apply, LinearMap.comp_apply, LinearMap.proj_apply, map_sum, map_smul]
     refine Finset.sum_congr rfl fun i _ => ?_
     erw [Submodule.liftQ_apply]
     simp
@@ -763,7 +764,8 @@ theorem AO_cut (i : X.Tw) (j : ℕ) (b : Bool) [CharZero (FractionRing (X.O i))]
 theorem eG_commT (i : X.Tw) (j : ℕ) (b : Bool) (T : Module.End (FractionRing (X.O i)) (Y.Fm i j b))
     (hT : ∀ g, (Y.actG i j b g).toLinearMap ∘ₗ T = T ∘ₗ (Y.actG i j b g).toLinearMap) (x : Y.Fm i j b) :
     eG Y i j b (T x) = T (eG Y i j b x) := by
-  rw [eG_eq, Formalism.IrreducibleCountingLemmas.TW.asAlgebraHom_apply_eq_sum, Formalism.IrreducibleCountingLemmas.TW.asAlgebraHom_apply_eq_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [eG_eq, Formalism.IrreducibleCountingLemmas.TW.asAlgebraHom_apply_eq_sum, Formalism.IrreducibleCountingLemmas.TW.asAlgebraHom_apply_eq_sum, map_sum]
   refine Finset.sum_congr rfl fun g _ => ?_
   rw [map_smul]
   congr 1

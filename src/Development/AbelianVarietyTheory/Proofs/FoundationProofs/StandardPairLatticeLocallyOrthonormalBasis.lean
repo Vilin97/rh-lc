@@ -299,7 +299,8 @@ theorem hYY_herm (D : D7) (σ : D.host.K →+* D.host.K)
     (hc : ∀ y : D.host.E, D.host.conj (D.host.conj y) = y)
     (ht : ∀ y : D.host.E, Algebra.trace D.host.K D.host.E (D.host.conj y) = σ (Algebra.trace D.host.K D.host.E y))
     {N N' : ℕ} (x y : Matrix (Fin N') (Fin N) D.host.E) : hYY D y x = σ (hYY D x y) := by
-  simp only [hYY, ← ht, map_sum D.host.conj, map_mul, hc, mul_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hYY, ← ht, map_sum D.host.conj, map_mul, hc, mul_comm]
 
 theorem hYY_pos (D : D7)
     (hp : ∀ y : D.host.E, y ≠ 0 → ∃ a : ℚ, 0 < a ∧ Algebra.trace D.host.K D.host.E (y * D.host.conj y) = (a : D.host.K))
@@ -320,7 +321,8 @@ theorem hYY_pos (D : D7)
   refine ⟨∑ i, ∑ j, a (x i j), ?_, ?_⟩
   · refine Finset.sum_pos' (fun i _ => Finset.sum_nonneg fun j _ => ha0 _) ⟨i, Finset.mem_univ _, ?_⟩
     exact Finset.sum_pos' (fun j _ => ha0 _) ⟨j, Finset.mem_univ _, ha1 _ hij⟩
-  · simp only [hYY, map_sum, ha2, Rat.cast_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [hYY, map_sum, ha2, Rat.cast_sum]
 
 theorem hYY_single (D : D7) {N N' : ℕ} (x : Matrix (Fin N') (Fin N) D.host.E) (i : Fin N') (j : Fin N)
     (y : D.host.E) :
@@ -429,7 +431,8 @@ theorem odd_one : ∀ D : D7, odd1 D := by
     have e1 : ((s * t : ℕ) : D.host.K) * h x y = ∑ i, ∑ j, Algebra.trace D.host.K D.host.E
         ((s : D.host.E) * x i j * D.host.conj ((t : D.host.E) * y i j)) := by
       rw [hh, hYY, ← smul_eq_mul, ← map_smul]
-      simp only [← map_sum, Finset.smul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [← map_sum, Finset.smul_sum]
       congr 1
       refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
       rw [smul_eq, map_mul, map_natCast]; push_cast; ring

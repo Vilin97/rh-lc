@@ -211,7 +211,8 @@ theorem form_expand {g r : ℕ} (Hm : Matrix (Fin g) (Fin g) ℂ) (d : Fin r →
     rw [star_sum]
     exact Finset.sum_congr rfl fun l _ => star_smul _ _
   have e2 : Hm.mulVec (∑ l, star (x l) • star (d l)) = ∑ l, star (x l) • Hm.mulVec (star (d l)) := by
-    rw [← Matrix.mulVecLin_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Matrix.mulVecLin_apply, map_sum]
     exact Finset.sum_congr rfl fun l _ => by rw [map_smul, Matrix.mulVecLin_apply]
   rw [e1, e2]
   simp only [sum_dotProduct, dotProduct_sum, smul_dotProduct, dotProduct_smul, smul_eq_mul, Finset.mul_sum,

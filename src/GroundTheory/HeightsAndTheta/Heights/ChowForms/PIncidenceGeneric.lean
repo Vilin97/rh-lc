@@ -21,19 +21,22 @@ theorem hom_aeval {F σ R T : Type*} [Field F] [CommRing R] [CommRing T] [Algebr
 theorem map_genSubst {R S : Type*} [CommRing R] [CommRing S] (φ : R →+* S) {n k : ℕ}
     (ζ c : Fin n → R) (ij : Fin k × Fin n) :
     map φ (genSubst ζ c ij) = genSubst (fun l => φ (ζ l)) (fun l => φ (c l)) ij := by
-  simp [genSubst, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [genSubst, map_sum]
 
 theorem aeval_genSubst_genSubst {R : Type*} [CommRing R] {n k : ℕ} (ζ c c' : Fin n → R)
     (hc : ∑ l, c l * ζ l = 1) (ij : Fin k × Fin n) :
     aeval (genSubst ζ c) (genSubst ζ c' ij) = genSubst ζ c ij := by
   have hC : ∑ l, C (c l) * C (ζ l) = (1 : MvPolynomial (Fin k × Fin n) R) := by
-    rw [← C_1, ← hc, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← C_1, ← hc, map_sum]
     simp only [C_mul]
   have h0 : ∑ l, genSubst ζ c (ij.1, l) * C (ζ l) = 0 := by
     simp only [genSubst, sub_mul, Finset.sum_sub_distrib, mul_assoc, ← Finset.mul_sum, hC, mul_one,
       sub_self]
   rw [show genSubst ζ c' ij = X ij - (∑ l, X (ij.1, l) * C (ζ l)) * C (c' ij.2) from rfl]
-  simp only [map_sub, map_mul, map_sum, aeval_X, aeval_C, algebraMap_eq, h0, zero_mul, sub_zero]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sub, map_mul, map_sum, aeval_X, aeval_C, algebraMap_eq, h0, zero_mul, sub_zero]
 
 theorem aeval_genSubst_eq_zero_of {F R : Type*} [Field F] [CommRing R] [Algebra F R] {n k : ℕ}
     (ζ c c' : Fin n → R) (hc : ∑ l, c l * ζ l = 1) (g : MvPolynomial (Fin k × Fin n) F)

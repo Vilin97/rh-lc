@@ -86,7 +86,8 @@ theorem eq_sum_fn_mul {X : Type} [TopologicalSpace X] {n N : ℕ} (B : HolAtlas 
     (h1 : ∀ y, ∑ j, χ j y = 1) (η : B.Fld) : η = ∑ j, B.fn (χ j) * η := by
   rw [← Finset.sum_mul]
   funext x
-  simp only [Finset.sum_apply, Pi.mul_apply, HolAtlas.fn, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finset.sum_apply, Pi.mul_apply, HolAtlas.fn, ← map_sum]
   rw [show (∑ j, ((χ j x.pt : ℝ) : ℂ)) = 1 by exact_mod_cast h1 x.pt, map_one, one_mul]
 
 section Fam

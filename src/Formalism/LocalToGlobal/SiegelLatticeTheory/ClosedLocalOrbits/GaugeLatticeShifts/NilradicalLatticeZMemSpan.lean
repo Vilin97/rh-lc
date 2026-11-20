@@ -57,16 +57,19 @@ theorem tr_orth (j : E →+* R) (ι : (Fin n → E) →+ (Fin n → R)) (hs : �
   set w' : Fin n → Fin n → E := fun i => w i - ∑ a, hE (e a) (w i) • f a with hw'def
   have hw' : ∀ i b, hE (e b) (w' i) = 0 := by
     intro i b
-    simp only [hw'def, map_sub, map_sum, map_smul, hef, smul_eq_mul, mul_ite, mul_one, mul_zero,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hw'def, map_sub, map_sum, map_smul, hef, smul_eq_mul, mul_ite, mul_one, mul_zero,
       Finset.sum_ite_eq', Finset.mem_univ, if_true, sub_self]
   have hdec : ∀ i, ι (w i) = ι (w' i) + ∑ a, j (hE (e a) (w i)) • ι (f a) := by
     intro i
-    simp only [hw'def, map_sub, map_sum, hs]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hw'def, map_sub, map_sum, hs]
     abel
   have hB0 : ∀ a, ∑ i, c i * j (hE (e a) (w i)) = 0 := by
     intro a
     have := hy a
-    rw [map_sum] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at this
     simpa [map_smul, hB] using this
   have hsum : ∑ i, c i • ι (w i) = ∑ i, c i • ι (w' i) + ∑ a, (∑ i, c i * j (hE (e a) (w i))) • ι (f a) := by
     simp only [hdec, smul_add, Finset.sum_add_distrib, Finset.smul_sum, smul_smul, Finset.sum_smul]
@@ -506,7 +509,8 @@ theorem crd_matOf (n : (VS D).V ≃ₗ[D.host.E] (VS D).V) (y : (VS D).V) :
   show X.ιE.symm (X.bas.repr (n y) i) = _
   rw [LinearEquiv.coe_coe] at h
   rw [← h]
-  simp only [matOf, Matrix.mulVec, dotProduct, map_sum, map_mul, Matrix.map_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [matOf, Matrix.mulVec, dotProduct, map_sum, map_mul, Matrix.map_apply]
   rfl
 
 theorem matOf_comp (n m : (VS D).V ≃ₗ[D.host.E] (VS D).V) (l : Fin X.B.I.n → X.B.I.E)

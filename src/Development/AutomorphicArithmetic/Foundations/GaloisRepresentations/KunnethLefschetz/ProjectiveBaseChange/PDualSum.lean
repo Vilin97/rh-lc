@@ -46,7 +46,8 @@ private theorem dualSum_abs {F : Type*} [Field F] {r : ℕ} {A B C : Type*}
     have hc' : c = ∑ s, tr s (pc s c) • g s := by
       apply hc.1
       funext t
-      simp only [map_sum, map_smul, hg]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, hg]
       rw [Finset.sum_eq_single t]
       · rw [Pi.single_eq_same]
         apply (tr t).injective

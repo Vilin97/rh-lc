@@ -77,7 +77,8 @@ private theorem lineTerm [IsTotallyComplex K] (μ : Measure (G1 K (2 + 2))) [μ.
     exact ⟨h'.1, h'.2.1⟩
   have hT := fun i => thBasic μ (F i) (hB i).1.cont (hB i).1.rat (hB i).2
   have hR : IsContRep μ (A.J (∑ i, U i)) (∑ i, th (F i)) := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine repSum Finset.univ (fun i => A.J (U i)) (fun i => th (F i)) fun i => ⟨(hT i).2.1, (hT i).2.2.1, ?_⟩
     rw [hFd]
     exact A.spec _ _ _ (hci i) (hcc i) (hU i)
@@ -126,13 +127,15 @@ private theorem lineTerm [IsTotallyComplex K] (μ : Measure (G1 K (2 + 2))) [μ.
   congr 1
   · have hs : A.sec (w s) g = ∑ i, w s i * A.sec (e i) g := by
       conv_lhs => rw [hsum s]
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       simp only [map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
     rw [map_smul, Pi.smul_apply, hs, smul_eq_mul, Finset.mul_sum, (volOne (K := K) 0 0).2.1]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [hF, Complex.ofReal_one, one_mul]
     ring
-  · rw [map_sum, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum, Finset.sum_apply]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [hq]
 

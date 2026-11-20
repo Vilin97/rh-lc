@@ -23,7 +23,8 @@ theorem GlobalTheory.CharPVanish.charp_of_lift : ∀ (p : ℕ) [Fact p.Prime] (Y
       ((CechPic.cls_eq_iff _ _).2 (CanonLB.lbIso _ _))
   have hH : GlobalTheory.Cartier.toPic (r • M' - r • GlobalTheory.Cartier.canonical f d - ∑ i, b i • E i)
       = cls A hA.isLB := by
-    simp only [map_sub, map_nsmul, map_sum, hM', hcan, hE]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sub, map_nsmul, map_sum, hM', hcan, hE]
     rw [heq]
     abel
   have hiso : LBIso (GlobalTheory.Cartier.toLB (r • M' - r • GlobalTheory.Cartier.canonical f d - ∑ i, b i • E i)) A := by

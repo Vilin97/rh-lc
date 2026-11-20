@@ -93,7 +93,8 @@ theorem quad_mul {r : ℕ} (W : Matrix (Fin r) (Fin r) ℤ) (a y : Fin r → Γ)
     ∑ i, ∑ j, W i j • ℓ (a i * y i) (a j * y j) = ∑ i, ∑ j, W i j • ℓ (a i) (a j) + ∑ i, ∑ j, W i j • ℓ (y i) (y j) +
       ∑ i, ∑ j, W i j • ((ℓ (a i) (y j) - κ (Additive.ofMul ((g j).s (χ i)))) +
         (ℓ (a j) (y i) - κ (Additive.ofMul ((g i).s (χ j))))) + κ (Additive.ofMul (PVu W χ g)) := by
-  simp only [PVu, ofMul_prod, map_sum, ofMul_zpow, map_zsmul, ← Finset.sum_add_distrib, ← smul_add]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [PVu, ofMul_prod, map_sum, ofMul_zpow, map_zsmul, ← Finset.sum_add_distrib, ← smul_add]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   congr 1
   rw [hc _ _ _ (by rw [map_mul, a₀, y₀, _root_.mul_one]), hs (a i), hs (y i), hc _ _ _ (a₀ i), hc _ _ _ (y₀ i), map_mul,
@@ -316,7 +317,8 @@ theorem ros_value (T : Tens D D' W) (ν : NumOf D F N) (ν' : NumOf D' F N') (A 
       exact MonObj.mul_comp x y (T.pr i)
   have mq : ∀ x : D'.P.A ⊗ D'.P.A ⟶ D'.P.A, (QuotientAddGroup.mk' H).comp (AddMonoidHom.inl _ _) (qf T.pr W x) =
       ∑ i, ∑ j, W i j • ℓ (x ≫ T.pr i) (x ≫ T.pr j) := fun x => by
-    simp only [qf, map_sum, map_zsmul, ℓ]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [qf, map_sum, map_zsmul, ℓ]
   have mem : (∑ q : Fin 6 × ((Fin r × Fin r) × Fin 4), (rosatiε q.1 * tensε W q.2) •
       FreeAbelianGroup.of (rosatiφ D'.P.A f g q.1 ≫ tensφ T.pr q.2),
       Additive.ofMul (τ (PVu W χ (fun i => ∏ k, gs k ^ A' i k) / PVu W χ₁ gs))) ∈ H := by
@@ -361,6 +363,7 @@ theorem GlobalTheory.Mum.TensRos.rosVT_components : ∀ (R : Type) [CommRing R] 
   · simp only [TensTor.cmp, TensTor.chi]
     rw [ν.eA.symm_apply_eq, ν.c_eq, ν'.c_eq, ν.eX.apply_symm_apply]
     simp only [DegPre.cF, Category.assoc, T.c_pr]
-  · simp only [TensTor.chi, AddEquiv.apply_symm_apply, hact.1, map_sum, map_zsmul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [TensTor.chi, AddEquiv.apply_symm_apply, hact.1, map_sum, map_zsmul]
 
 end

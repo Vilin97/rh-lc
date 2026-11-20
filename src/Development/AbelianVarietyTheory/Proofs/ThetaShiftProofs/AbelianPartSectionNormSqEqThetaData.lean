@@ -491,7 +491,8 @@ theorem norm_eq : Out.Laws → Out.Laws2 → ∀ (E : Type) [Field E] [NumberFie
       funext k
       by_cases h : k ∈ Θ.S <;> simp [ext, h, Finset.sum_apply, Pi.single_apply]
     conv_rhs => rw [h1]
-    rw [Matrix.mulVec_add, map_add, Matrix.mulVec_sum, map_sum, Finset.sum_eq_zero fun k hk => by
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Matrix.mulVec_add, map_add, Matrix.mulVec_sum, map_sum, Finset.sum_eq_zero fun k hk => by
       rw [Matrix.mulVec_smul, map_smul, hS k hk, smul_zero], add_zero]
     rfl
   have hinj : Function.Injective fun i => (e i).1 := Subtype.val_injective.comp e.injective

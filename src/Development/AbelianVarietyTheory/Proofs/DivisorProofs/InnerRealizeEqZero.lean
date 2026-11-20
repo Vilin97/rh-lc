@@ -110,7 +110,8 @@ theorem sum_finset [IsTotallyComplex K] [StarRing K] {n : ℕ} {b : Module.Basis
         inner ℝ (Formalism.HermitianLatticesTheory.realize b X x) (Formalism.HermitianLatticesTheory.realize b X y) = 0 := by
       intro x hx y hy
       obtain ⟨μ, hμ⟩ := (Submodule.mem_iSup_finset_iff_exists_sum M y).1 hy
-      rw [← hμ, map_sum, inner_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hμ, map_sum, inner_sum]
       refine Finset.sum_eq_zero fun i hi => ?_
       exact inner_pair hG M hN (by rintro rfl; exact ha hi) hx (μ i).2
     have hlA := (Formalism.HN.plLat K V (Fin n) b X hX (M a) (hM a)).1

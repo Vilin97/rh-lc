@@ -58,7 +58,8 @@ theorem exists_section_maps : ∀ (D : D7) (B : WeightFamilies.Prov D) (P : Modu
       (algebraMap (Formalism.MainNotions.Gaps.EtaleWeightGaps.Op X la N) (Kp X la N) (Tv X la N (i, k))) * χ (X.inc wL (w k)) := by
     intro i
     unfold Formalism.MainNotions.Gaps.EtaleWeightGaps.sec
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_smul, hΘ, Algebra.smul_def]
   have hu : IsUnit (Θ (Formalism.MainNotions.Gaps.EtaleWeightGaps.sec X la w 0)) := by rw [hsec]; exact h1

@@ -49,9 +49,11 @@ theorem awayTo_surjective (hsurj : Function.Surjective ψ) :
   refine ⟨∑ m ∈ Finset.range (P.totalDegree + 1),
     Away.mk (homGrading W) (var_mem W j) m (π W (homogeneousComponent m P))
       (mk_mem_quotGrading _ _ (by simpa using homogeneousComponent_mem m P)), ?_⟩
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   conv_rhs => rw [← sum_homogeneousComponent P]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_congr rfl fun m _ => awayTo_mk W ψ hψ1 hψF m _ _
 
 theorem val_eq_scale (m : ℕ) (P : MvPolynomial (Fin 3) R) (hP : P.IsHomogeneous m)

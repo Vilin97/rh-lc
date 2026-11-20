@@ -31,7 +31,8 @@ theorem trace_eq {R R' n : Type} [CommRing R] [CommRing R'] [Fintype n] [Decidab
       intro i hi
       have := Finset.mem_range.1 hi
       rw [map_mul, map_pow, h, ← map_pow, ← map_mul, ← pow_add, show i + (k + 1 - i) = k + 1 by omega, hM', map_one]
-    rw [map_sum, Finset.sum_congr rfl this, Nat.cast_smul_eq_nsmul, map_nsmul, map_one]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finset.sum_congr rfl this, Nat.cast_smul_eq_nsmul, map_nsmul, map_one]
     simp
   have h3 : IsUnit U.det := by
     have e : p (U.det - ((k + 1 : ℕ) : R) ^ Fintype.card n) = 0 := by

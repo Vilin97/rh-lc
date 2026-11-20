@@ -29,7 +29,8 @@ theorem repr_change {ι ι' : Type} [Fintype ι'] (b : Module.Basis ι F E)
       ∑ j, (Algebra.TensorProduct.basis (Fv F v) c).repr z j *
         algebraMap F (Fv F v) (b.repr (c j) k) := by
   conv_lhs => rw [← (Algebra.TensorProduct.basis (Fv F v) c).sum_repr z]
-  simp [map_sum, Algebra.TensorProduct.basis_apply, Algebra.TensorProduct.basis_repr_tmul, mul_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, Algebra.TensorProduct.basis_apply, Algebra.TensorProduct.basis_repr_tmul, mul_comm]
 
 theorem int_iff {ι ι' : Type} [Fintype ι] [Fintype ι'] (b : Module.Basis ι F E)
     (c : Module.Basis ι' F E)

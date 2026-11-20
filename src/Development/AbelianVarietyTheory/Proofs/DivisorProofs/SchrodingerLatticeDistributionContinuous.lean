@@ -109,22 +109,26 @@ theorem sndH_apply (a : AF F) : sndH F a = a.2 := rfl
 theorem Xv_fst_fst (u : Fin r → (κ → F) × (κ → F)) (x : Fin r → AF F) (k : κ) :
     ((Xv u x).1 k).1 = ∑ j, (x j).1 * algebraMap F (InfiniteAdeleRing F) ((u j).1 k) := by
   simp only [Xv, Prod.fst_sum, Prod.smul_fst, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
-  rw [← fstH_apply, map_sum]; simp only [map_mul, fstH_apply]; rfl
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← fstH_apply, map_sum]; simp only [map_mul, fstH_apply]; rfl
 
 theorem Xv_fst_snd (u : Fin r → (κ → F) × (κ → F)) (x : Fin r → AF F) (k : κ) :
     ((Xv u x).1 k).2 = ∑ j, (x j).2 * algebraMap F (FiniteAdeleRing (𝓞 F) F) ((u j).1 k) := by
   simp only [Xv, Prod.fst_sum, Prod.smul_fst, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
-  rw [← sndH_apply, map_sum]; simp only [map_mul, sndH_apply]; rfl
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← sndH_apply, map_sum]; simp only [map_mul, sndH_apply]; rfl
 
 theorem sc_fst_congr (u : Fin r → (κ → F) × (κ → F)) (x x' : Fin r → AF F) (h : ∀ j, (x j).1 = (x' j).1) :
     (sc u x).1 = (sc u x').1 := by
   simp only [sc, Xv, dotProduct, Prod.fst_sum, Prod.snd_sum, Prod.smul_fst, Prod.smul_snd, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
-  rw [← fstH_apply, ← fstH_apply]; simp only [map_mul, map_sum, fstH_apply, h]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← fstH_apply, ← fstH_apply]; simp only [map_mul, map_sum, fstH_apply, h]
 
 theorem sc_snd_congr (u : Fin r → (κ → F) × (κ → F)) (x x' : Fin r → AF F) (h : ∀ j, (x j).2 = (x' j).2) :
     (sc u x).2 = (sc u x').2 := by
   simp only [sc, Xv, dotProduct, Prod.fst_sum, Prod.snd_sum, Prod.smul_fst, Prod.smul_snd, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
-  rw [← sndH_apply, ← sndH_apply]; simp only [map_mul, map_sum, sndH_apply, h]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← sndH_apply, ← sndH_apply]; simp only [map_mul, map_sum, sndH_apply, h]
 
 theorem continuous_sc (u : Fin r → (κ → F) × (κ → F)) : Continuous (sc u) := by
   unfold sc Xv
@@ -180,7 +184,8 @@ theorem lagr_form_admitted : ∀ (F : Type) [Field F] [NumberField F] (ψ : AddC
     rw [Finset.sum_comm]
     have h1 : ∀ j, ∑ k, a i k * (y j * c j k) = y j * iotaI F (∑ k, A i k * (u j).1 k) := by
       intro j
-      rw [map_sum, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, Finset.mul_sum]
       refine Finset.sum_congr rfl fun k _ => ?_
       simp only [map_mul, a, c]
       ring
@@ -220,7 +225,8 @@ theorem lagr_form_admitted : ∀ (F : Type) [Field F] [NumberField F] (ψ : AddC
       funext k
       rw [Xv_fst_fst]
       show _ = ∑ j, y j * c j k
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [map_mul]
       simp only [splitE_apply, RingEquiv.apply_symm_apply, c]

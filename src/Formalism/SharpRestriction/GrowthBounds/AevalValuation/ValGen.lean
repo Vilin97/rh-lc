@@ -47,7 +47,8 @@ private theorem ringHom_eq_of_mem_supported_of_eqOn {σ R T : Type} [CommRing R]
 private theorem homComp_eq_polComp {R ι : Type} [CommRing R] {n : ℕ} (d : ι → ℕ)
     (F : MvPolynomial (ι × Fin n) R) : homComp d F = Joints.StandardMonomialSpace.polComp R n d F := by
   conv_rhs => rw [F.as_sum]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [Joints.StandardMonomialSpace.polComp, Joints.StandardMonomialSpace.suppProj_monomial, Set.mem_setOf_eq]
   rw [homComp, Finset.sum_filter]
 
@@ -58,7 +59,8 @@ theorem valS_sum_ge {R : Type} [CommRing R] {ι : Type} {n : ℕ} [NeZero n] (LL
   intro m k hk
   have hs : Joints.StandardMonomialSpace.SuppIn {k : ℤ | a ≤ (k : WithTop ℤ)}
       (AddMonoidAlgebra.coeff (twistSub LL S (lastIdx n) (∑ i ∈ s, f i)) m) := by
-    rw [map_sum, coeff_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, coeff_sum]
     apply Joints.StandardMonomialSpace.SuppIn.sum
     intro i hi k' hk'
     exact (le_valS_iff_forall_coeff_ne_zero LL S (f i) a).mp (h i hi) m k' hk'
@@ -123,11 +125,13 @@ theorem twist_aeval (LL : Letters ι) (LL' : Letters κ) (S L : Set ι) (S' : Se
       rw [hg]
       simp only [twistSub, eval₂Hom_X', if_pos hS, if_pos hf, hvec]
       split_ifs
-      · simp only [map_sum, map_mul, thetaG, eval₂Hom_C, eval₂Hom_X']
+      set_option synthInstance.maxHeartbeats 100000 in
+        · simp only [map_sum, map_mul, thetaG, eval₂Hom_C, eval₂Hom_X']
         apply Finset.sum_congr rfl
         intro b _
         rw [(h1 (v.1, b) hv hS).1, map_X]
-      · simp only [map_sum, map_mul, thetaG, eval₂Hom_C, eval₂Hom_X']
+      set_option synthInstance.maxHeartbeats 100000 in
+        · simp only [map_sum, map_mul, thetaG, eval₂Hom_C, eval₂Hom_X']
         apply Finset.sum_congr rfl
         intro b _
         rw [(h1 (v.1, b) hv hS).1, map_X]

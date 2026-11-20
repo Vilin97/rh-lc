@@ -78,9 +78,11 @@ theorem antiLift_idem (σ : G → G) (hσ : ∀ x y, σ (x * y) = σ y * σ x) (
       invFun := fun u => ⟨σ u, (hJ u).1⟩
       left_inv := fun u => Subtype.ext (hσσ u)
       right_inv := fun u => Subtype.ext (hσσ u) }
-  rw [twistedIdem_def, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [twistedIdem_def, map_sum]
   show _ = MulOpposite.opAddEquiv _
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Fintype.sum_equiv s _ _ (fun u => ?_)
   rw [map_smul, antiLift_of, MulOpposite.opAddEquiv_apply, MulOpposite.op_smul]
   have : χ (s u) = χ u := (hJ u).2

@@ -59,7 +59,8 @@ theorem exists_sum_smul {F R : Type} [CommRing F] [CommRing R] [Algebra F R] [Al
     rw [LinearMap.comp_apply, LinearMap.id_apply, pi_eq_sum_univ' (i _)] at e0
     simpa using e0.symm
   have hs : ∀ δ : Fin n → Derivation ℤ R R, (∑ k, δ k) r = ∑ k, δ k r := fun δ => by
-    rw [← Derivation.coeFnAddMonoidHom_apply, map_sum, Finset.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Derivation.coeFnAddMonoidHom_apply, map_sum, Finset.sum_apply]
     rfl
   rw [← hL, e, hs]
   simp [mul_comm]

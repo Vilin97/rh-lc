@@ -30,9 +30,11 @@ theorem lap_colOp [DecidableEq σ] (z : Fin k × Fin n → σ) (y : Fin l × Fin
     ∑ t, pderiv (z (i, t)) (pderiv (y (j, t)) (colOp ℂ x a b P)) =
       ∑ t, ∑ c, (if z (i, t) = x (c, a) then pderiv (x (c, b)) (pderiv (y (j, t)) P) else 0) +
       ∑ t, ∑ c, (if y (j, t) = x (c, a) then pderiv (z (i, t)) (pderiv (x (c, b)) P) else 0) := by
-  simp only [colOp_apply, map_sum, pderiv_pderiv_polar, Finset.sum_add_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [colOp_apply, map_sum, pderiv_pderiv_polar, Finset.sum_add_distrib]
   rw [Finset.sum_comm]
-  simp only [← Finset.mul_sum, ← map_sum, hP i j]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← Finset.mul_sum, ← map_sum, hP i j]
   simp
 
 theorem harmSub_mixedOp {z : Fin k × Fin n → σ} {y : Fin l × Fin n → σ}

@@ -120,7 +120,8 @@ theorem exists_prod_act_comp_eq_one_of_pure : ∀ (E : Type) [Field E] [NumberFi
           rw [hcomm, hb, hGPB]
       _ = 0 := by rw [← map_sum, ← map_sum, hx, map_zero, map_zero]
   have hΘc : ∀ s z, Θ (GA s z) = GB s (Θ z) := fun s z => by
-    rw [hΘ, hΘ, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hΘ, hΘ, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [hGAc, hcomm]
   have hΘl : ∀ a', Θ (FA (PeA a')) = 0 := fun a' => by

@@ -75,7 +75,8 @@ theorem cont_act {R : Type} [CommRing R] [TopologicalSpace R] [IsTopologicalRing
 
 theorem quadruple_sum_map_zero {R S : Type} [CommRing R] [CommRing S] (f : R →+* S) {m n : ℕ} (a : Fin m → Fin n → Fin m → Fin n → R)
     (y : Matrix (Fin m) (Fin n) R) (h : ∀ k l, f (y k l) = 0) : f (∑ i, ∑ j, ∑ k, ∑ l, a i j k l * y k l) = 0 := by
-  simp only [map_sum, map_mul, h, mul_zero, Finset.sum_const_zero]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, h, mul_zero, Finset.sum_const_zero]
 
 theorem alg_trace_gen {F E R : Type} [Field F] [Field E] [Algebra F E] [FiniteDimensional F E] [CommRing R] [Algebra F R]
     (σ : E →ₐ[F] E) (h : ∀ e, algebraMap F E (Algebra.trace F E e) = e + σ e) (z : R ⊗[F] E) :
@@ -195,9 +196,11 @@ theorem cmp_hHom (τ : D.what₂.Tau) (x y : WA V W) : cmpAt D τ (hHom V W x y)
     else ((x.map (cmpAt D τ))ᴴ * gramAt D V τ * y.map (cmpAt D τ) * gramAt D W τ).trace := by
   unfold hHom
   split_ifs
-  · simp only [map_sum, RingHom.map_mul, cmpAt_cA, cmpAt_incA]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [map_sum, RingHom.map_mul, cmpAt_cA, cmpAt_incA]
     exact sum_eq_trace (starRingEnd ℂ) (gramAt D V τ) (gramAt D W τ) (x.map (cmpAt D τ)) (y.map (cmpAt D τ))
-  · simp only [map_sum, RingHom.map_mul, cmpAt_cA, cmpAt_incA]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [map_sum, RingHom.map_mul, cmpAt_cA, cmpAt_incA]
     exact sum_eq_trace (starRingEnd ℂ) (gramAt D V τ)ᵀ (gramAt D W τ)ᵀ (x.map (cmpAt D τ)) (y.map (cmpAt D τ))
 
 theorem cmp_cM (τ : D.what₂.Tau) {m n : ℕ} (M : Matrix (Fin m) (Fin n) (AE D)) :

@@ -21,7 +21,8 @@ theorem unit_transfer {A B m n : Type} [CommRing A] [CommRing B] [Fintype m] [Fi
   ext i j
   have := congrArg s (congrFun (congrFun hy (e i)) (e j))
   rw [hJ, ← this]
-  simp only [Matrix.mul_apply, Formalism.UG.cT, Matrix.transpose_apply, Matrix.map_apply, map_sum, map_mul, hg, hJ, hs]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mul_apply, Formalism.UG.cT, Matrix.transpose_apply, Matrix.map_apply, map_sum, map_mul, hg, hJ, hs]
   rw [← e.sum_comp]
   refine Finset.sum_congr rfl fun b _ => ?_
   rw [← e.sum_comp]

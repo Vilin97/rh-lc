@@ -51,7 +51,8 @@ theorem lin_f (f : X ⟶ Sp R) (a : Matrix (Fin (n + 1)) (Fin (n + 1)) R) (s : F
 theorem lin_lin (f : X ⟶ Sp R) (a b : Matrix (Fin (n + 1)) (Fin (n + 1)) R) (s : Fin (n + 1) → H.Sec) :
     lin f b (lin f a s) = lin f (b * a) s := by
   funext i
-  simp only [lin, Finset.smul_sum, smul_smul, ← map_mul, Matrix.mul_apply, map_sum, Finset.sum_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [lin, Finset.smul_sum, smul_smul, ← map_mul, Matrix.mul_apply, map_sum, Finset.sum_smul]
   exact Finset.sum_comm
 
 theorem lin_one (f : X ⟶ Sp R) (s : Fin (n + 1) → H.Sec) : lin f 1 s = s := by
@@ -82,7 +83,8 @@ theorem iSup_nonzeroLocus_lin (f : X ⟶ Sp R) {s : Fin (n + 1) → H.Sec} (hs :
   have hnu : ∀ j, ¬ IsUnit (X.presheaf.germ (H.U k) y hk ((lin f a s j).f k)) := fun j hu =>
     hne (Opens.mem_iSup.2 ⟨j, (GlobalTheory.mem_nonzeroLocus_iff_basicOpen _ hk).2 ((X.mem_basicOpen _ y hk).2 hu)⟩)
   have hu := (X.mem_basicOpen _ y hk).1 ((GlobalTheory.mem_nonzeroLocus_iff_basicOpen _ hk).1 hi)
-  rw [← hb, lin_f, map_sum] at hu
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← hb, lin_f, map_sum] at hu
   refine (IsLocalRing.mem_maximalIdeal _).1 (Ideal.sum_mem _ fun j _ => ?_) hu
   rw [map_mul]
   exact Ideal.mul_mem_left _ _ ((IsLocalRing.mem_maximalIdeal _).2 (hnu j))
@@ -107,7 +109,8 @@ theorem toProj_lin (f : X ⟶ Sp R) {s : Fin (n + 1) → H.Sec} (hs : ⨆ i, non
     inf_le_left.trans (toProj_preimage_chart f s hs i).ge
   refine ⟨nonzeroLocus (s i) ⊓ H.U l, ⟨hi, hl⟩, i, hW, l, inf_le_right, resG X inf_le_right ((s i).f l),
     fun j => ?_⟩
-  rw [lin_f, lin_f (H := O1 R n) (PSpace.str R n) a (coord R n) j i, map_sum, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [lin_f, lin_f (H := O1 R n) (PSpace.str R n) a (coord R n) j i, map_sum, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun m _ => ?_
   rw [map_mul, map_mul, resG_cst, coord_f]
   erw [appLE_cst (PSpace.str R n) (toProj f s hs) hW (a j m)]

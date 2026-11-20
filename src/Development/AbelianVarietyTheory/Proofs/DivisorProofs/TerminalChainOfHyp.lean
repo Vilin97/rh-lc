@@ -72,7 +72,8 @@ theorem isHomogeneous_aeval_of_weighted {σ τ : Type} (w : σ → ℕ) (f : σ 
     (hf : ∀ s, (f s).IsHomogeneous (w s)) {m : ℕ} {G : MvPolynomial σ ℚ} (hG : G.IsWeightedHomogeneous w m) :
     (aeval f G).IsHomogeneous m := by
   classical
-  rw [G.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [G.as_sum, map_sum]
   refine IsHomogeneous.sum _ _ _ fun d hd => ?_
   have h := hG (mem_support_iff.1 hd)
   rw [aeval_monomial, ← h, Finsupp.weight_apply, Finsupp.sum, Finsupp.prod, ← zero_add (∑ _ ∈ _, _)]
@@ -173,7 +174,8 @@ theorem arMix_dCh (I : ArIn Tau N g Cp) (Sx : Finset ℕ) (R : ℝ) (q : ℕ) (s
       congr 1
       rcases v with ⟨b, x⟩ | ⟨b, k⟩
       · simp [evL, ArIn.mixEv, h₁]
-      · simp only [evL, ArIn.mixEv, aeval_X, map_X, rename_X, map_mul, map_C, rename_C, map_sum, map_pow, h₂, eq_ratCast,
+      set_option synthInstance.maxHeartbeats 100000 in
+        · simp only [evL, ArIn.mixEv, aeval_X, map_X, rename_X, map_mul, map_C, rename_C, map_sum, map_pow, h₂, eq_ratCast,
           Rat.cast_inv, Rat.cast_natCast]
   rw [e, ArIn.arMix, LinearMap.sum_apply]
   exact Finset.sum_congr rfl fun c _ => congrArg (numL _ _) (e' c _)
@@ -217,7 +219,8 @@ theorem whole_ext {rk : ι → Emb D p → ℕ} (M : ∀ la, DV.Mdl D p N (rk la
       have := ((gk_homog k l).mul (evL_homog rt wl hG)).C_mul ((k.factorial : ℚ)⁻¹)
       rwa [show k - 1 + m = d by omega] at this)
   rw [evL_dCh]
-  simp only [toR, map_sum] at key ⊢
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [toR, map_sum] at key ⊢
   rw [Finset.sum_comm]
   simp only [key]
   rw [← Finset.mul_sum, Finset.sum_comm]

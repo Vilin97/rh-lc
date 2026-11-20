@@ -46,7 +46,8 @@ theorem mulVec_sum_smul {n : ℕ} (c : G → K) (M : G → Matrix (Fin n) (Fin n
 theorem cpt_sum_smul (σ : K →+* ℂ) {n : ℕ} (c : G → K) (y : G → Fin n → K) :
     cpt σ (∑ g, c g • y g) = ∑ g, σ (c g) • cpt σ (y g) := by
   funext i
-  simp [cpt, Finset.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [cpt, Finset.sum_apply, map_sum]
 
 theorem sum_eq_one_of {E : Type} [AddCommGroup E] [Module ℂ E] (σ : K →+* ℂ) {n : ℕ}
     (f : (Fin n → ℂ) →ₗ[ℂ] E) (hf : Function.Injective f) (ρ : G → Matrix (Fin n) (Fin n) K)
@@ -58,7 +59,8 @@ theorem sum_eq_one_of {E : Type} [AddCommGroup E] [Module ℂ E] (σ : K →+* �
   intro x
   rw [Matrix.toLin'_apply, Matrix.toLin'_one, LinearMap.id_apply]
   have h1 : f (cpt σ ((∑ g, c g • ρ g) *ᵥ x)) = f (cpt σ x) := by
-    rw [mulVec_sum_smul, cpt_sum_smul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [mulVec_sum_smul, cpt_sum_smul, map_sum]
     simp only [map_smul, hρ]
     exact hfix x
   have h2 := hf h1
@@ -130,7 +132,8 @@ theorem iCg_fix {s : ℕ} (hH : I.Hyp s)
   rw [I.iCg_cpt x]
   simp_rw [hq]
   conv_rhs => rw [← I.idemOf_fix hH.ok x]
-  simp only [map_sum, LinearMap.map_smulₛₗ, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.map_smulₛₗ, map_smul]
 
 theorem pGood_of_rho (hρ : I.PRho) {S : Type} [Fintype S] {Ws : S → Type} [∀ s, AddCommGroup (Ws s)]
     [∀ s, Module K (Ws s)] (τ : ∀ s, Representation K G (Ws s)) : I.PGood τ := by

@@ -123,7 +123,8 @@ theorem cT_mul_eq_one (L : LocE F E) (A B : Matrix (Fin n) (Fin n) E) (h : A * B
     cT L B * cT L A = 1 := by
   ext i j
   have h1 := congrArg L.cj (congrFun (congrFun h j) i)
-  simp only [Matrix.mul_apply, map_sum, map_mul] at h1
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mul_apply, map_sum, map_mul] at h1
   simp only [Matrix.mul_apply, cT]
   rw [Finset.sum_congr rfl fun k _ => mul_comm _ _, h1]
   by_cases hij : i = j

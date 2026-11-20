@@ -42,7 +42,8 @@ theorem comb_push_iff {f : X' ⟶ X} (mu : SABMap t' t f) {x : Sp R ⟶ X'} {m :
     IsCombAtG t (x ≫ f) (fun i => v i ≫ mu.φ) cf (w ≫ mu.φ) ↔ IsCombAtG t' x v cf w := by
   refine (isComb_iff (fun i => pushE mu x rfl (tanOf (hv i))) cf (pushE mu x rfl (tanOf hw))).trans
     (Iff.trans ?_ (isComb_iff (fun i => tanOf (hv i)) cf (tanOf hw)).symm)
-  rw [← (pushE mu x rfl).injective.eq_iff, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← (pushE mu x rfl).injective.eq_iff, map_sum]
   simp only [map_smul]
 
 theorem Vecs.bc_bc (φ : R →+* S) (ψ : S →+* T) (u : Vecs Dw t R) : (u.bc φ).bc ψ = u.bc (ψ.comp φ) := by

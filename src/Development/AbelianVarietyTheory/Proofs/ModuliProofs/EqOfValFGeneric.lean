@@ -354,7 +354,8 @@ theorem rel_of_genVal (hU₀ : (U₀ : Set M.Z).Nonempty) (k : ℤ) {I : Type} [
     rw [← e₁, Finset.mul_sum]
     refine Eq.trans ?_ (Finset.sum_congr rfl fun i _ => (congrArg (β (valF M.pt W (m i)) * ·) (e₂ i)).trans
       (mul_left_comm _ _ _))
-    simp only [hm, map_sum, map_mul, Finset.sum_mul, Finset.mul_sum, _root_.mul_assoc]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hm, map_sum, map_mul, Finset.sum_mul, Finset.mul_sum, _root_.mul_assoc]
     rw [Finset.sum_comm]
   let O : Z.G.left.Opens := Z.G.hom ⁻¹ᵁ W ⊓ (powAlong Z.L.L k (𝟙 _)).U fun _ => jL
   have hO : r y ∈ O := ⟨hy, hj⟩
@@ -363,7 +364,8 @@ theorem rel_of_genVal (hU₀ : (U₀ : Set M.Z).Nonempty) (k : ℤ) {I : Type} [
   have e₄ : resG _ l₁ (σ fun _ => jL) =
       ∑ i, resG _ (inf_le_left : O ≤ _) ((Z.G.hom.app W).hom (m i)) * resG _ l₂ (τ i fun _ => jL) := by
     refine eq_of_valF_generic ξ hξ (hξU hO) (((Points.valR_res ξ l₁ (hξU hO) _).trans e₃).trans (Eq.symm ?_))
-    rw [Points.valF_eq_valR, Points.valR_eq ξ O (hξU hO), map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Points.valF_eq_valR, Points.valR_eq ξ O (hξU hO), map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_mul, ← Points.valR_eq, ← Points.valR_eq]
     refine congrArg₂ (· * ·) ((Points.valR_res ξ _ (hξU hO) _).trans ((Points.valR_comp ξ Z.G.hom W _).symm.trans ?_))
@@ -371,7 +373,8 @@ theorem rel_of_genVal (hU₀ : (U₀ : Set M.Z).Nonempty) (k : ℤ) {I : Type} [
     rw [hβ]
     exact Points.valR_spMap_comp β M.pt W (M.top_le_preimage_pt ⟨_, hy⟩) _
   refine (gs_res r y l₁ hO _).symm.trans ((congrArg (gs r y O) e₄).trans ?_)
-  rw [gs_eq r y O hO, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [gs_eq r y O hO, map_sum, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [← gs_eq r y O hO, gs_mul r y O hO]
   exact congrArg₂ (· * ·) ((gs_res r y _ hO _).trans (gs_pull r Z.G.hom y W hy _)) (gs_res r y l₂ hO _)

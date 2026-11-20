@@ -60,7 +60,8 @@ theorem bd_pow {a : ℝ} {f : MvPowerSeries ι K} (ha : 0 ≤ a) (hf : Bd a f) (
 
 theorem bd_sum {α : Type} {c : ℝ} (hc : 0 ≤ c) (s : Finset α) (F : α → MvPowerSeries ι K)
     (h : ∀ a ∈ s, Bd c (F a)) : Bd c (∑ a ∈ s, F a) := fun n => by
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg hc fun a ha => h a ha n
 
 theorem bd_natCast (k : ℕ) : Bd 1 ((k : ℕ) : MvPowerSeries ι K) := by
@@ -91,7 +92,8 @@ theorem coeff_truncD (d : ℕ) (f : MvPowerSeries ι K) (n : ι →₀ ℕ) :
     MvPowerSeries.coeff n (truncD d f) = if n.degree < d then MvPowerSeries.coeff n f else 0 := by
   classical
   unfold truncD
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [MvPowerSeries.coeff_monomial]
   rw [Finset.sum_ite_eq]
   simp

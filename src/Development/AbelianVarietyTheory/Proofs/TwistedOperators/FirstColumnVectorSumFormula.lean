@@ -42,7 +42,8 @@ private theorem sum_prod_ite_map_eq_zero_of_sum_prod_eq_zero {ι κ : Type} [Fin
       ring
 
     have hT := congrArg (fun g => Tm j g (x j)) hg
-    simp only [map_sum, map_smul, map_zero, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Pi.zero_apply] at hT
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, map_zero, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Pi.zero_apply] at hT
     rw [← hT]
     refine Finset.sum_congr rfl fun d _ => ?_
     rw [← Finset.mul_prod_erase Finset.univ _ (Finset.mem_univ j)]

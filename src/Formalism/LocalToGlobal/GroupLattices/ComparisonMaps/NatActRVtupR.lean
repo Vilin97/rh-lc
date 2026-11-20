@@ -109,7 +109,8 @@ theorem substR_rename (R : Type) [CommRing R] (h : ∀ v, Fin (P.n' v) → Matri
       (MvPolynomial.rename (fun x => (⟨v, x⟩ : Var P))).comp (Formalism.GradedWeylDivisibility.blockAct R (h v)) := by
     apply MvPolynomial.algHom_ext
     intro x
-    simp [substR, Formalism.GradedWeylDivisibility.blockAct, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [substR, Formalism.GradedWeylDivisibility.blockAct, map_sum]
   exact congrArg (fun f => f F) e
 
 set_option maxHeartbeats 1000000 in

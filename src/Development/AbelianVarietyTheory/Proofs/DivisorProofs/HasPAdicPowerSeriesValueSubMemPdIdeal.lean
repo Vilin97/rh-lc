@@ -145,8 +145,10 @@ theorem monomial_val_sub (p : ℕ) (hp : p.Prime)
   obtain ⟨b, hb, e⟩ := prod_pow_sub_prod_pow p hp hu J hJ z z' hz α Finset.univ
   refine ⟨∑ i, b i * c i, J.sum_mem (fun i _ => J.mul_mem_right _ (hb i)), ?_⟩
   have e' := congrArg (algebraMap B Q) e
-  simp only [map_sub, map_prod, map_pow, map_sum, map_mul, map_natCast] at e'
-  rw [← mul_sub, e', Finset.mul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sub, map_prod, map_pow, map_sum, map_mul, map_natCast] at e'
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← mul_sub, e', Finset.mul_sum, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_mul, ← hc i]
   ring
@@ -158,7 +160,8 @@ theorem eval_sub_eval (p : ℕ) (hp : p.Prime)
     (hP : ∀ (α : σ →₀ ℕ) i, ∃ c : B, (α i : Q) * P.coeff α = algebraMap B Q c) :
     ∃ b ∈ J, MvPolynomial.eval (fun i => algebraMap B Q (z i)) P -
       MvPolynomial.eval (fun i => algebraMap B Q (z' i)) P = algebraMap B Q b := by
-  rw [P.as_sum, map_sum, map_sum, ← Finset.sum_sub_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [P.as_sum, map_sum, map_sum, ← Finset.sum_sub_distrib]
   apply sum_eq_map_mem
   intro v _
   rw [MvPolynomial.eval_monomial, MvPolynomial.eval_monomial,

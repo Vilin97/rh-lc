@@ -41,7 +41,8 @@ theorem le_finrank_lagr : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [
       hK0 _ p.2.2, ?_⟩
     rw [h1, Matrix.one_mul, hΦ]
     ext i j
-    simp [incM, incV, Matrix.vecMulVec_apply, Matrix.mul_apply, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [incM, incV, Matrix.vecMulVec_apply, Matrix.mul_apply, map_sum, map_mul]
   have hform : ∀ (a : E) (u v : Fin d → E), form σ W.J (a • u + v) H'.y = a * form σ W.J u H'.y + form σ W.J v H'.y := by
     intro a u v
     simp [form, add_dotProduct, smul_dotProduct]

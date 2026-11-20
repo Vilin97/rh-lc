@@ -64,7 +64,8 @@ theorem cloud_node_projector_bound (H : Type) [NormedAddCommGroup H] [NormedSpac
     have e : n + 1 - kk - 1 = n - kk := by omega
     rwa [e] at this
   · intro y hy
-    rw [← hsum y, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hsum y, map_sum]
     exact VV.sum_mem fun i _ => by rw [(hp i y hy).2]; exact VV.smul_mem _ (hp i y hy).1
   · intro i hi
     rw [← Complex.ofReal_sub, Complex.norm_real, Real.norm_eq_abs]
@@ -133,7 +134,8 @@ theorem cloud_node_projection_norm : ∀ (M : Type) [NormedAddCommGroup M] [Inne
   have hsum : ∀ x, ∑ i, p i x = x := by
     intro x
     apply e.injective
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [hp]
     exact hA.sum_io_pr _
   have hx₀V : x₀ ∈ VV := by
@@ -175,7 +177,8 @@ theorem cloud_node_projection_norm : ∀ (M : Type) [NormedAddCommGroup M] [Inne
     (fun s => -μ s + (1 - (n : ℝ)) / 2) hfd hb hsum ?_ hpos ?_ hcard ?_ ?_ x₀ hx₀V
   · refine ⟨?_, fun s hs => ?_⟩
     · have h := pow_le_pow_left₀ (norm_nonneg _) key.1 2
-      rw [mul_pow, hx₀n, hn, map_sum] at h
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [mul_pow, hx₀n, hn, map_sum] at h
       simp only [hp, hx₀] at h
       exact h
     · have h := pow_le_pow_left₀ (norm_nonneg _) (key.2 s hs) 2

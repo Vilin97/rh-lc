@@ -30,7 +30,8 @@ theorem exists_basis_semi {E W : Type} [AddCommGroup E] [Module ℂ E] [AddCommG
       _ = ∑ i, s (z i) • g (Pi.single i 1) := Finset.sum_congr rfl fun i _ => gsmul _ _
   have key : ∀ z, jE (∑ i, s (z i) • c0 i) = g z := by
     intro z
-    rw [map_sum, gsum z]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, gsum z]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, hc0 i]
   have hli : LinearIndependent ℂ c0 := by

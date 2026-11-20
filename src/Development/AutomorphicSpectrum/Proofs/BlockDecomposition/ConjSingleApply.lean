@@ -181,7 +181,8 @@ theorem D_single (hs : ∀ (r : ℝ) X, D ((r : ℂ) • X) = (r : ℂ) • D X)
 theorem D_expand (hs : ∀ (r : ℝ) X, D ((r : ℂ) • X) = (r : ℂ) • D X) (X : Mat n) :
     D X = ∑ a, ∑ b, (X a b • Tc D true a b + conj (X a b) • Tc D false a b) := by
   conv_lhs => rw [Matrix.matrix_eq_sum_single X]
-  simp only [map_sum, D_single hs]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, D_single hs]
 
 theorem TX_expand (hs : ∀ (r : ℝ) X, D ((r : ℂ) • X) = (r : ℂ) • D X) (s : Bool) (X : Mat n) :
     TX D s X = ∑ a, ∑ b, cs s (X a b) • Tc D s a b := by

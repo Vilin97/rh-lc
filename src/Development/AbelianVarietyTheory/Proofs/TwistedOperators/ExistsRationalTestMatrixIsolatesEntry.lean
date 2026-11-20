@@ -49,7 +49,8 @@ theorem hO_test (V W : HSp D) (N : Matrix (Fin V.rank) (Fin W.rank) D.host.E) (x
   simp only [hc]
   generalize V.gram * N * W.gram⁻¹ = M at h1
   subst h1
-  simp only [Matrix.mul_apply, map_sum, map_mul, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mul_apply, map_sum, map_mul, Finset.sum_mul]
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [Finset.sum_comm]
   refine (Finset.sum_congr rfl fun c _ => Finset.sum_comm).trans ?_

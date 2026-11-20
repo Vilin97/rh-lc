@@ -38,7 +38,8 @@ theorem SecLinNZD.proof (h1 : ChowNormForm.Statement) (h2 : NormFormEval.Stateme
       (hy'.eq_zero_of_aeval_eq_zero _ (by rw [aeval_def]; exact h0))
   have hsum : (∑ j, algebraMap E (SecAlg QE y) (algebraMap k E (u j)) * secCoord QE y j) =
       secLin QE y (fun j => algebraMap k E (u j)) := by
-    simp only [secLin, linForm, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [secLin, linForm, map_sum, map_mul]
     rfl
   have hnorm : Algebra.norm E (secLin QE y (fun j => algebraMap k E (u j))) ≠ 0 := by
     have h := h2 E (SecAlg QE y) n (secCoord QE y) (fun j => algebraMap k E (u j))

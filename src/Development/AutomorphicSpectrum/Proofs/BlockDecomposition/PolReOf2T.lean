@@ -102,7 +102,8 @@ theorem polRe_of2T (hH : PositivityTheory.ThKR.JoinTri) (hM : MaxFinT) (hO : Arc
     refine ⟨S, hS, k, k', u, φ, fun i => Λ • u' i, φ', fun i => ⟨hu i, (h1 i).2⟩,
       fun i => ⟨Submodule.smul_mem _ _ (hw i), (h2 i).2⟩, rfl, e3, ?_⟩
     have := congrArg (TensorProduct.map e (PiTensorProduct.map fun v : S => ef v)) eq
-    simp only [map_sum, TensorProduct.map_tmul, PiTensorProduct.map_tprod] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, TensorProduct.map_tmul, PiTensorProduct.map_tprod] at this
     refine Eq.trans (Finset.sum_congr rfl fun i _ => ?_) (this.trans (Finset.sum_congr rfl fun j _ => ?_))
     · rw [← fu i, show e (R.p (T (u i))) = R₂.p (u i) from he _ (hu i)]
       simp only [hef _ _ ((h1 i).2.1 _)]

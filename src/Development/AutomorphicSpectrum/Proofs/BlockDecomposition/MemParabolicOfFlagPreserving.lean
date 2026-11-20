@@ -52,7 +52,8 @@ theorem mem_parRat_frameFlag_firstCols : ∀ (D : D7) (V : HSp D) (r : ℕ) (X Y
       have hsum : X *ᵥ b = ∑ l, b l • (fun a => X a l) := by
         funext a
         simp [Matrix.mulVec, dotProduct, Finset.sum_apply, mul_comm]
-      rw [hsum, GlobalTheory.AutFunCompare.vecOf, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hsum, GlobalTheory.AutFunCompare.vecOf, map_sum]
       refine Submodule.sum_mem _ fun l _ => ?_
       rw [map_smul]
       by_cases hl : l ≤ j

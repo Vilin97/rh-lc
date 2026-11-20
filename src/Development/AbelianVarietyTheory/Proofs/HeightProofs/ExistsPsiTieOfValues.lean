@@ -129,7 +129,8 @@ theorem exists_basis_lift {R L : Type} [CommRing R] [AddCommGroup L] [Module R L
   have h0 : y - ∑ i, co i • c • x i ∈ (I • ⊤ : Submodule R L) := by
     rw [← Submodule.Quotient.eq]
     apply e.injective
-    rw [← Submodule.mkQ_apply _ (∑ i, _), map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Submodule.mkQ_apply _ (∑ i, _), map_sum, map_sum]
     simp only [map_smul, Submodule.mkQ_apply, ← Submodule.Quotient.mk_smul _ c, hv, e.apply_symm_apply]
     funext i
     rw [Finset.sum_apply, Finset.sum_eq_single i]
@@ -215,7 +216,8 @@ theorem exists_psiTie_of_values (V : HSp D) {l : Level H} {Xo : Moduli Dw l} {c 
       rw [← hrange, ← (GlobalTheory.T.adelicElementLattice_full_and_completion D V 1).2.2.2.2.1]
       exact hlift _ (hv₁ j))
   have hdet := hδ k a fun j => by
-    rw [← hv₂, ← hk, (Submodule.Quotient.eq _).2 (ha₁ j), ← Submodule.mkQ_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hv₂, ← hk, (Submodule.Quotient.eq _).2 (ha₁ j), ← Submodule.mkQ_apply, map_sum]
     simp only [map_smul, Submodule.mkQ_apply, hv₂]
   have hval' := hχ _ a.det (δ k) (normOne_det V u) (hlM ▸ hcong) hdet ha₂
   refine value_ratio V (U₂ ()) (dict₂ ()) io e₀ F ik φ th x₀ (RingHom.ext fun _ => rfl) hA₂ hpq hU hW hD hι hth

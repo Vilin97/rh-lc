@@ -35,7 +35,8 @@ theorem idemSum_add_conj_support_finite : ∀ (D : D7) (ι : (Af D.host.F ⊗[D.
   simp only [← hev] at hid hcj ⊢
   obtain ⟨⟨es, hes, hsum⟩, horth⟩ := he
   have e2 : ∀ Q, Q ∉ P → ev Q e = 0 := fun Q hQ => by
-    rw [hsum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hsum, map_sum]
     exact Finset.sum_eq_zero fun Q' h' => (hid _ _ (hes Q' h')).2.2 Q fun hh => hQ (hh ▸ h')
   refine ⟨↑P ∪ GlobalTheory.IdemSupport.cP '' ↑P, P.finite_toSet.union (P.finite_toSet.image _), ?_, ?_⟩
   · rintro Q (hQ | ⟨Q', hQ', rfl⟩)

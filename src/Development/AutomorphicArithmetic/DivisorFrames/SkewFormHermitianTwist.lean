@@ -53,7 +53,8 @@ private theorem symp_rat {F E : Type} [Field F] [NumberField F] [Field E] [Numbe
     unfold hTens
     rw [form_sum, form_sum]
     simp_rw [Finset.sum_mul_sum]
-    simp only [Matrix.vecMulVec_apply, map_mul, map_sum, incV, incM, Matrix.map_apply, hc]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.vecMulVec_apply, map_mul, map_sum, incV, incM, Matrix.map_apply, hc]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun k _ =>
       Finset.sum_congr rfl fun l _ => ?_
     ring
@@ -66,7 +67,8 @@ private theorem symp_rad {F E : Type} [Field F] [NumberField F] [Field E] [Numbe
     symp (R := AF F) (cA σ) (-1) (incM F JA) (incM F JB) (Matrix.vecMulVec (incV F p) (incV F q)) B = 0 := by
   have h0 : ∀ l, ∑ j, incV F q j * incM F JB j l = 0 := fun l => by
     have := congrArg (inclR (F := F) (AF F)) (congrFun hq l)
-    simpa only [Matrix.vecMul, dotProduct, map_sum, map_mul, Pi.zero_apply, map_zero, incV, incM, Matrix.map_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa only [Matrix.vecMul, dotProduct, map_sum, map_mul, Pi.zero_apply, map_zero, incV, incM, Matrix.map_apply]
       using this
   have h : hTens (cA σ) (incM F JA) (incM F JB) (Matrix.vecMulVec (incV F p) (incV F q)) B = 0 := by
     unfold hTens

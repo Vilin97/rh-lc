@@ -25,7 +25,8 @@ theorem poly_eq_zero_of_evU (Q : A[X]) (h : ∀ u : ℂ, evU u Q = 0) : Q = 0 :=
   have hR : R = 0 := by
     refine Polynomial.funext fun u => ?_
     have h1 := congrArg φ (h u)
-    rw [evU_apply, eval₂_eq_sum_range, map_sum, map_zero] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [evU_apply, eval₂_eq_sum_range, map_sum, map_zero] at h1
     rw [eval_zero, ← h1]
     simp only [R, eval_finset_sum, eval_monomial, RingHom.id_apply, ← map_pow]
     refine Finset.sum_congr rfl fun k _ => ?_
@@ -106,7 +107,8 @@ theorem capelli_coef_commute : ∀ (W : Type) [AddCommGroup W] [Module ℂ W] (M
   · intro i hi
     obtain ⟨-, -, hsub⟩ := prod_linear (d i) fun k => X i k k - algebraMap ℂ (Module.End ℂ W) ((k : ℕ) : ℂ)
     show (qdetPoly (X i)).coeff (d i - 1) = _
-    rw [coeff_qdetPoly_top _ _ (by omega), hsub (d i - 1) (by omega), Finset.sum_sub_distrib,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [coeff_qdetPoly_top _ _ (by omega), hsub (d i - 1) (by omega), Finset.sum_sub_distrib,
       ← map_sum, sum_fin_cast, Algebra.algebraMap_eq_smul_one]
   · intro i j a b
     have hm := coeff_qdetPoly_mem (X j) (Subalgebra.centralizer ℂ {(qdetPoly (X i)).coeff a})

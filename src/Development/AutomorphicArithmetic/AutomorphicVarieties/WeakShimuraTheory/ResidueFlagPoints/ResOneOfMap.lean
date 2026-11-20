@@ -6,7 +6,8 @@ private theorem eq_one_of_res {R : Type} [CommRing R] [IsDomain R] [IsLocalRing 
     (h1 : residue R x = 1) (hx : x ^ m = 1) : x = 1 := by
   have hs : IsUnit (∑ i ∈ Finset.range m, x ^ i) := by
     have h0 : residue R (∑ i ∈ Finset.range m, x ^ i) = residue R (m : R) := by
-      simp [map_sum, map_pow, h1]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [map_sum, map_pow, h1]
     by_contra hn
     have hmem : (∑ i ∈ Finset.range m, x ^ i) ∈ maximalIdeal R := hn
     rw [← residue_eq_zero_iff, h0] at hmem

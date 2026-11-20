@@ -48,7 +48,8 @@ theorem exists_lin_of_injective : ∀ (E : Type) [Field E] [NumberField E] [IsCM
     have := hM' k _ (𝟙 _) z J hJ
     simp only [GlobalTheory.FrameGen.sv, Category.id_comp] at this
     exact this
-  simp only [e₂, Finset.mul_sum, GlobalTheory.FrameGen.gs_top, map_sum, map_mul, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [e₂, Finset.mul_sum, GlobalTheory.FrameGen.gs_top, map_sum, map_mul, Finset.sum_mul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun k _ => ?_
   ring

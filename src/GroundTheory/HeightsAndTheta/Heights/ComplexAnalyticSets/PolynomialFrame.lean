@@ -51,7 +51,8 @@ theorem exists_eval_line_ne_zero {k : ℕ} (P : MvPolynomial (Fin k) ℂ) (v : F
       tendsto_const_nhds.congr' (eventually_nhdsWithin_of_forall fun s hs => (hzero s hs).symm)
     exact tendsto_nhds_unique h1 h2
   apply hv
-  rw [homogeneousComponent_apply, map_sum, ← h0, Finset.sum_filter]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [homogeneousComponent_apply, map_sum, ← h0, Finset.sum_filter]
   refine Finset.sum_congr rfl fun m hm => ?_
   rw [eval_monomial, Finsupp.prod]
   split_ifs with hmd

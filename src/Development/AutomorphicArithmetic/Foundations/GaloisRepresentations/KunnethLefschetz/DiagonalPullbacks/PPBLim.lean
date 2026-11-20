@@ -96,7 +96,8 @@ private theorem Psi_bij (hB : A11) {E Z : Scheme.{0}} (r : E ⟶ Z) (hl : IsUnit
       refine congrFun ((hv k n).1 ?_)
       refine Eq.trans ?_ (hc k).symm
       refine Eq.trans ?_ (y.2 k)
-      rw [← hc (k + 1), map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hc (k + 1), map_sum]
       exact Finset.sum_congr rfl fun j _ => (lvl_red hB r hl v j _ k (c (k + 1) j)).symm
     refine ⟨fun j => ⟨fun k => c k j, fun k => compat k j⟩, Subtype.ext (funext fun k => ?_)⟩
     rw [Psi_lvl]

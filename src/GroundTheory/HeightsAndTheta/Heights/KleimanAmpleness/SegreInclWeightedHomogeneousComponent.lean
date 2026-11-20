@@ -89,7 +89,8 @@ theorem segreLiftMap_of_isWeightedHomogeneous (W : Ideal (MRing ι F)) {f : MRin
   choose a ha using fun s => segreLiftMap_monomial W s (AddMonoidAlgebra.coeff f s)
   refine ⟨∑ s ∈ f.support, a s, ?_⟩
   conv_lhs => rw [f.as_sum]
-  rw [map_sum, map_sum, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun s hs => ?_
   rw [ha s, hf (mem_support_iff.mp hs)]
 
@@ -170,7 +171,8 @@ theorem SegreLiftComap.proof : SegreLiftComap.Statement := by
   rw [segreLift, RingHom.mem_ker]
   constructor
   · intro hf
-    rw [← sum_weightedHomogeneousComponent (NumbersDVR.blockWeight (segreIdx ι)) f,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← sum_weightedHomogeneousComponent (NumbersDVR.blockWeight (segreIdx ι)) f,
       finsum_eq_sum _ (weightedHomogeneousComponent_finsupp f), map_sum]
     refine Finset.sum_eq_zero fun e _ => ?_
     obtain ⟨a, ha⟩ := segreLiftMap_of_isWeightedHomogeneous W

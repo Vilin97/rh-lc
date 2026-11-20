@@ -130,7 +130,8 @@ theorem infinitePart_le (A : Matrix (Fin a) (Fin a) (Ad E)) (B : ℝ) (hB : 1 �
 
 theorem cV_mul (v : InfinitePlace E) (A B : Matrix (Fin a) (Fin a) (Ad E)) (i j : Fin a) :
     cV v ((A * B) i j) = ∑ k, cV v (A i k) * cV v (B k j) := by
-  rw [Matrix.mul_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.mul_apply, map_sum]
   simp only [map_mul]
 
 theorem cV_infGL (v : InfinitePlace E) (y : GL (Fin a) (Cinf E)) (k j : Fin a) :

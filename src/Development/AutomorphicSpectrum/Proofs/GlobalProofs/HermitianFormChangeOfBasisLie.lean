@@ -28,7 +28,8 @@ theorem prM_kills_colSpan
     rw [h1]
     funext k
     have h2 := congrArg (inclR (F := D.host.F) (AF D.host.F)) (congrFun h0 k)
-    simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Pi.zero_apply, map_zero] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Pi.zero_apply, map_zero] at h2
     simpa [Matrix.mulVec, dotProduct] using h2
   exact hle hz
 

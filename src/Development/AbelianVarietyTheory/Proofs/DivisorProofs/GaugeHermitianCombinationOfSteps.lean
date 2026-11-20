@@ -101,11 +101,14 @@ theorem finSt_of (hAdd : AddSt) (hAct : ActSt) (hUnit : UnitSt) (hBi : BiaddSt) 
       (h2 _ (hw b)) Finset.univ _ fun b' => hIact _ _ (hIact _ _ (hw b'))).2.trans
       (Finset.sum_congr rfl fun b' _ => ?_)
     rw [hF, mv_mv, ← ReciprocityTheory.ChartRestriction.G.PullbackSections.Pf.EigA.dAct_mul, mul_right_comm]
-  rw [← key, map_sub, sub_eq_zero, map_sum, Finset.sum_congr rfl fun j _ => hj j, Finset.sum_comm, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← key, map_sub, sub_eq_zero, map_sum, Finset.sum_congr rfl fun j _ => hj j, Finset.sum_comm, map_sum]
   refine Finset.sum_congr rfl fun b _ => ?_
-  rw [Finset.sum_comm, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.sum_comm, map_sum]
   refine Finset.sum_congr rfl fun b' _ => ?_
-  rw [← map_sum, ← Finset.sum_mul, ht, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum, ← Finset.sum_mul, ht, map_sum, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_zsmul, Int.cast_smul_eq_zsmul, map_zsmul, hF]
 

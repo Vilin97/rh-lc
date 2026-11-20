@@ -78,7 +78,8 @@ theorem zfin_of_hc (hHC : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [
     rw [← hι]
     simp only [Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, Finset.sum_mul]
     conv_rhs => rw [Finset.sum_comm]
-    simp only [map_sum, map_mul, hσ, ← Finset.sum_neg_distrib]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul, hσ, ← Finset.sum_neg_distrib]
     refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
     rw [hY]; ring
   have hA := hfa ⊥ fun x hx => by

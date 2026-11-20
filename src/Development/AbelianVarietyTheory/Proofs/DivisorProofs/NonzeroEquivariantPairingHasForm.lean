@@ -87,7 +87,8 @@ theorem fockAct1_Eab_mul (a b : Ix P Q) (f : Pol P Q R 0) (g : Pol P Q 0 S) :
       rename (jR P Q R S) (fockAct1 P Q R 0 (Eab a b) f) * rename (jS P Q R S) g +
         rename (jR P Q R S) f * rename (jS P Q R S) (fockAct1 P Q 0 S (Eab a b) g) := by
   rw [fockAct1_Eab, fockAct1_Eab, fockAct1_Eab]
-  simp only [LinearMap.sum_apply, LinearMap.add_apply, Fintype.sum_sum_type, Finset.univ_eq_empty, Finset.sum_empty, add_zero, zero_add,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [LinearMap.sum_apply, LinearMap.add_apply, Fintype.sum_sum_type, Finset.univ_eq_empty, Finset.sum_empty, add_zero, zero_add,
     map_sum, Finset.sum_mul, Finset.mul_sum]
   congr 1
   · refine Finset.sum_congr rfl fun c _ => ?_
@@ -112,7 +113,8 @@ theorem fockAct1_rename_mul (Z : Mat P Q) (f : Pol P Q R 0) (g : Pol P Q 0 S) :
     conv_lhs => rw [Matrix.matrix_eq_sum_single Z]
     simp only [Eab, Matrix.smul_single, smul_eq_mul, mul_one]
   rw [hZ]
-  simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, fockAct1_Eab_mul, smul_add,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, fockAct1_Eab_mul, smul_add,
     Finset.sum_add_distrib, Finset.sum_mul, Finset.mul_sum, smul_mul_assoc, mul_smul_comm]
 
 def toTens (P Q R S : ℕ) (v : Ln P Q R S) : Pol P Q R 0 ⊗[ℂ] Pol P Q 0 S :=

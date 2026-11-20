@@ -54,7 +54,8 @@ theorem symProd_mem_UgF {p q k m : ℕ} (x : Fin m → Mat p q) (h : m ≤ k) :
 
 theorem symU_mem_UgF {p q k : ℕ} (f : MvPolynomial (PIx p q) ℂ) (hf : f.IsHomogeneous k) :
     symU p q f ∈ UgF p q k := by
-  rw [f.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [f.as_sum, map_sum]
   refine Submodule.sum_mem _ fun d hd => ?_
   have hdeg : d.degree = k := by
     by_contra hne

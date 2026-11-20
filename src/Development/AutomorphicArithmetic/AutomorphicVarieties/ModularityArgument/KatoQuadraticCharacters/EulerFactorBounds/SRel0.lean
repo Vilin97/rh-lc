@@ -38,7 +38,8 @@ theorem UpperTheory.V.Z.Kato.Nb.sRel0 :
     have h3 : (∑ r₀, Y0 X l n r N x c d (2 * e - 1) (gm r₀) s y) =
         ∑ y' ∈ Finset.univ.filter (fun y' => redM l n r (N * N) y' = y),
           shB X l (topM l n r (N * N)) (clsBmu X l n r N x c d (2 * e + 1) gm) s y' := by
-      simp only [Y0, GlobalTheory.KA.push, shB, clsBmu_eq, h2, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Y0, GlobalTheory.KA.push, shB, clsBmu_eq, h2, map_sum]
       exact Finset.sum_comm
     simp only [map_smul, ← Finset.smul_sum] at h1
     beta_reduce

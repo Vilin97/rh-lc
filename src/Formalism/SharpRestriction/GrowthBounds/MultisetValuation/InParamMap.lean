@@ -129,7 +129,8 @@ theorem restSInt (p : ℕ) [Fact p.Prime] : RestSInt p := by
   have hLint : ∀ x, IntR R' (coordZ (r0 := r0) (r1 := r1) B K' 1 x) := by
     intro x n
     rcases x with ⟨r, a, b⟩ | ⟨r, a, b⟩ <;>
-    · simp only [coordZ, one_mul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp only [coordZ, one_mul, map_sum]
       refine R'.sum_mem fun s _ => ?_
       rw [MvPowerSeries.coeff_C_mul, MvPowerSeries.coeff_X]
       split_ifs

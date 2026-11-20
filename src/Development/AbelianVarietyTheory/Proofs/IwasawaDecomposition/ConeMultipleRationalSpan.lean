@@ -93,11 +93,13 @@ theorem exists_intPiece : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E]
     obtain ⟨N₀, ℓ₁, hN₀, h1, h2, -⟩ := hC.strict
     have k1 : (M : ℝ) * ℓ β = ∑ i, (a i : ℝ) * ℓ (δ i) := by
       have := congrArg ℓ hMa
-      simp only [map_smul, map_sum, smul_eq_mul] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_smul, map_sum, smul_eq_mul] at this
       exact_mod_cast this
     have k2 : (M : ℝ) * ℓ₁ β = ∑ i, (a i : ℝ) * ℓ₁ (δ i) := by
       have := congrArg ℓ₁ hMa
-      simp only [map_smul, map_sum, smul_eq_mul] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_smul, map_sum, smul_eq_mul] at this
       exact_mod_cast this
     have k3 : (M : ℝ) * ((N₀ : ℝ) * ℓ β) = (M : ℝ) * ((N : ℝ) * ℓ₁ β) := by
       rw [mul_left_comm, k1, mul_left_comm (M : ℝ) (N : ℝ), k2, Finset.mul_sum, Finset.mul_sum]

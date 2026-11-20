@@ -127,7 +127,8 @@ theorem slice_unif (hS : Slice) (hB : B.IsGood σ) (hM : M.IsGood B.ψ) (hM₁ :
     choose q hq hb using fun i => theta_unif h (h1 i)
     choose p hp hpq using fun i => h4 (q i) N (hq i)
     refine ⟨_, hN.mul_left (∑ i, p i f), fun y w => ?_⟩
-    rw [show e (rhoL B M _ _) = _ from h2 _ f, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [show e (rhoL B M _ _) = _ from h2 _ f, map_sum, map_sum]
     have hb' : ∀ i (f' : SInf F (Fin n₁ × Fin d₁)), ‖l (rhoL B M₁ w (pureA F f' (φ₁ i)))‖ ≤ q i f' := fun i f' =>
       (congrArg norm (hl _ (rho_mem M₁ h w (Submodule.subset_span ⟨f', _, h1 i, rfl⟩)))).trans_le (hb i f' _)
     split_ifs with hy

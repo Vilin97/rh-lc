@@ -127,7 +127,8 @@ theorem adjA_rep (dual : Bool) (hσ : IsURepOn (UJset ε) σ) (hD : IsDerivedOn 
       funext x
       simp only [Pi.single_apply, Finset.sum_apply]
       split_ifs <;> simp
-    rw [this, map_sum, inner_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [this, map_sum, inner_sum]
     exact Finset.sum_eq_zero fun q hq => hg q hq v hv c
   have hcasP : ∀ y ∈ genSub E V, P y → P (casimirK ε E y) := by
     intro y hy hPy

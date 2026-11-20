@@ -139,7 +139,8 @@ private theorem gramL_mul (s z : R ⊗[k] A) : gramL b s * mat b z = gramL b (s 
   ext i j
   rw [Matrix.mul_apply, gramL_apply, mul_assoc, mul_left_comm z,
     ← (Algebra.TensorProduct.basis R b).sum_repr (z * _)]
-  simp only [Finset.mul_sum, map_sum, mul_smul_comm, map_smul, gramL_apply, mat,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finset.mul_sum, map_sum, mul_smul_comm, map_smul, gramL_apply, mat,
     Algebra.leftMulMatrix_eq_repr_mul, smul_eq_mul, mul_comm]
 
 private theorem gramL_tr (s : R ⊗[k] A) : (gramL b s)ᵀ = gramL b s := by

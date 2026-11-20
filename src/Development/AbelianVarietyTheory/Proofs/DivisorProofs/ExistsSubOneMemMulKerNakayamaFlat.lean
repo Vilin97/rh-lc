@@ -19,7 +19,8 @@ theorem mem_map_mul_ker_of_flat {R' A C' : Type} [CommRing R'] [CommRing A] [Com
   have hg : ∀ i, ∃ j ∈ J, algebraMap R' A j = (g i : A) := fun i => (g i).2
   choose j hjJ hjg using hg
   have hsum : ∑ i, j i • f (c i) = 0 := by
-    rw [← hfx, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hfx, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [smul_eq_mul, ← hjg i, map_mul, AlgHom.commutes, Algebra.smul_def, _root_.mul_comm]
   obtain ⟨k, a, y, hy, ha⟩ := Module.Flat.isTrivialRelation_of_sum_smul_eq_zero (R := R') (M := C') (f := j)
@@ -29,7 +30,8 @@ theorem mem_map_mul_ker_of_flat {R' A C' : Type} [CommRing R'] [CommRing A] [Com
     intro i
     rw [RingHom.mem_ker]
     change f (c i - ∑ l, a i l • z l) = 0
-    rw [map_sub, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_sum]
     simp only [map_smul, hz]
     rw [← hy i, sub_self]
   have h0 : ∑ i, algebraMap R' A (j i) * ∑ l, a i l • z l = 0 := by

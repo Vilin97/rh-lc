@@ -71,7 +71,8 @@ theorem map_act : ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationR
     refine hf.2.2.1 U ?_
     have := congrFun (hx'.trans e₂) i
     rw [← hx, GlobalTheory.RingChain.MapDown.mv_apply] at this
-    rw [GlobalTheory.RingChain.MapDown.mv_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [GlobalTheory.RingChain.MapDown.mv_apply, map_sum]
     simp only [map_mul, map_intCast]
     exact this
   · rw [← kx', e₁]

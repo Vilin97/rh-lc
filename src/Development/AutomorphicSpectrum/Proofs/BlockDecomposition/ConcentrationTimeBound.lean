@@ -432,9 +432,11 @@ theorem concT : ConcT := by
     obtain ⟨f, hf, hm, rfl⟩ := rep x
     obtain ⟨f', hf', e, ew⟩ := hPS n μ V T hLg hU hR hS hcomm f hf
     refine ⟨⟨cls μ f', inM f' hf'⟩, e, ?_⟩
-    rw [hΩ f' _ hf', hΩ f hm hf, cls_om hOm hf', cls_om hOm hf, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hΩ f' _ hf', hΩ f hm hf, cls_om hOm hf', cls_om hOm hf, map_sum]
     refine Finset.sum_congr rfl fun a _ => ?_
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun c _ => ?_
     rw [map_sub, ew, ew]
   obtain ⟨h1, h2⟩ := inverse_of_dense (Msob μ V) Ω D hDM hDense hsym T hTs

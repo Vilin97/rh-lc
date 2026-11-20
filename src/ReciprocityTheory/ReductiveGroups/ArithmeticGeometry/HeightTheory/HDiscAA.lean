@@ -53,7 +53,8 @@ theorem gram_mul {F L : Type*} [Field F] [Field L] [Algebra F L] {κ : Type*} [F
   simp only [Matrix.of_apply, Matrix.mul_apply, Matrix.transpose_apply,
     Algebra.traceMatrix_apply, Algebra.traceForm_apply, Algebra.leftMulMatrix_eq_repr_mul]
   conv_lhs => rw [← a.sum_repr (h * a p)]
-  rw [Finset.sum_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.sum_mul, map_sum]
   refine Finset.sum_congr rfl fun r _ => ?_
   rw [smul_mul_assoc, map_smul, smul_eq_mul]
 

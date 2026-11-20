@@ -39,7 +39,8 @@ theorem cls_cube_box {j : ℕ} (p : IsPowGrp G' G j) {L : LB G.left} {L' : LB G'
     rw [(cls_eq_iff hL' (LB.isLB_linComb hL _ _)).2 hb, cls_linComb hL]
     simp only [one_smul]
   refine a.trans (Eq.trans ?_ (Finset.sum_congr rfl fun i _ => congrArg (pull (h i).left) b.symm))
-  simp only [c, map_sum, map_zsmul, Finset.smul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [c, map_sum, map_zsmul, Finset.smul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun I _ => ?_
   have := p.hom i

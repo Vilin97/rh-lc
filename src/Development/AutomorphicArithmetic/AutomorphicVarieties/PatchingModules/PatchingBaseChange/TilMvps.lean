@@ -27,7 +27,8 @@ private def sw : PowerSeries (MvPowerSeries σ A) →ₐ[K] MvPowerSeries σ (Po
   map_mul' f g := by
     classical
     ext n k
-    simp only [coeff_swF, PowerSeries.coeff_mul, MvPowerSeries.coeff_mul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [coeff_swF, PowerSeries.coeff_mul, MvPowerSeries.coeff_mul, map_sum]
     exact Finset.sum_comm
   map_zero' := by
     ext n k

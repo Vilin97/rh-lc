@@ -75,7 +75,8 @@ theorem MulBound.mulBoundAt_of_not_isReal (h : X.MulBound β) {σ : F →+* ℂ}
   · rintro ⟨a, b⟩
     have := h.of_field hj σ a (∑ i, b i • f i) (∑ t : Fin X.N × Fin m, (a t.1 * b t.2) • g t) (by
       conv_rhs => rw [pi_eq_sum_univ' a]
-      simp only [Fintype.sum_prod_type, Submodule.coe_sum, Submodule.coe_smul, hg, map_sum, map_smul,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Fintype.sum_prod_type, Submodule.coe_sum, Submodule.coe_smul, hg, map_sum, map_smul,
         LinearMap.sum_apply, LinearMap.smul_apply, Finset.smul_sum, mul_smul]
       exact Finset.sum_comm.trans (Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => smul_comm _ _ _))
     simp only [← cnrm_map, map_mul] at this

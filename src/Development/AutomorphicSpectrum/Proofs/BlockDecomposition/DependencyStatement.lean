@@ -156,7 +156,8 @@ theorem depSt : DepSt := by
     omega
   obtain ⟨c, hc, i₀, hi₀⟩ := Fintype.not_linearIndependent_iff.1 hnot
   have h0 : CatCoh.H1.mk (OAff s₀) (∑ i, c i • f i) = 0 := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simpa only [map_smul] using hc
   obtain ⟨g, hg⟩ := CatCoh.H1.mk_eq_zero.1 h0
   obtain ⟨G, hG⟩ : ∃ G : ∀ T : Y.affineOpens, Γ(Y, T.1), ∀ (T T' : Y.affineOpens) (h : T'.1 ≤ T.1),
@@ -176,16 +177,19 @@ theorem depSt : DepSt := by
       (hb : W ≤ V b), rs Y (le_inf h ha) (P T a) - rs Y (le_inf h hb) (P T b) =
         rs Y (le_inf ha hb) (∑ i, GlobalTheory.SmallExtLift.cst s₀ _ (c i) * α i a b) := by
     intro T a b W h ha hb
-    simp only [P, map_add, map_sum, map_mul, rs_rs, rs_cst]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [P, map_add, map_sum, map_mul, rs_rs, rs_cst]
     simp only [← hp _ T a b W h ha hb, mul_sub, Finset.sum_sub_distrib]
     ring
   have hPres : ∀ (T T' : Y.affineOpens) (h : T'.1 ≤ T.1) (a : A),
       rs Y (inf_le_inf_right _ h) (P T a) = P T' a := by
     intro T T' h a
     have e := congrArg (rs Y (inf_le_left : T'.1 ⊓ V a ≤ T'.1)) (hG T T' h)
-    simp only [map_sub, map_sum, map_mul, rs_rs, rs_cst, diffF_spec, mul_sub,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sub, map_sum, map_mul, rs_rs, rs_cst, diffF_spec, mul_sub,
       Finset.sum_sub_distrib] at e
-    simp only [P, map_add, map_sum, map_mul, rs_rs, rs_cst]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [P, map_add, map_sum, map_mul, rs_rs, rs_cst]
     linear_combination -e
   refine ⟨c, fun a => rs Y (le_inf le_rfl le_rfl) (P ⟨V a, hVa a⟩ a),
     fun h => hi₀ (by rw [h]; rfl), fun a b => ?_⟩

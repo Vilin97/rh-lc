@@ -37,7 +37,8 @@ theorem satDir_of (hS : ChartSaturated Xo c) {T : CDVR} {io : c.F →+* T.Fr} {y
     intro j
     rw [huv, map_mul, hw]
   refine (Finset.sum_congr rfl (fun j _ => e1 j)).trans ?_
-  rw [← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum]
   have h3 := congrFun (congrFun hwA (emb i')) (emb i)
   simp only [Matrix.mul_apply, Matrix.of_apply, Matrix.one_apply] at h3
   rw [h3]

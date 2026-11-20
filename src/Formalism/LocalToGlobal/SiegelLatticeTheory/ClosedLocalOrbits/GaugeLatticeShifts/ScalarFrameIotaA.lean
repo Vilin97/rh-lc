@@ -90,7 +90,8 @@ theorem proj_exists (Λ : Submodule (𝓞 E) S.V) (hL : Submodule.IsFullLattice 
     rw [← hU', Formalism.HermitianLatticesTheory.dualBasic_mem_dual]
     intro y hy
     have hval : S.hT y (∑ a, S.hT (F'.fl.e a) l • u a) = S.hT ((ρ ⟨y, hy⟩ : Λ) : S.V) l := by
-      rw [hexp, map_sum, map_sum, LinearMap.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hexp, map_sum, map_sum, LinearMap.sum_apply]
       refine Finset.sum_congr rfl fun a _ => ?_
       rw [LinearMap.map_smul, smul_eq_mul, LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul,
         PI.UnitaryGroupMassFormula.BetaModX.Iota.herm'' (u a) y, hu a y hy, starRingEnd_apply, mul_comm]
@@ -102,7 +103,8 @@ theorem proj_exists (Λ : Submodule (𝓞 E) S.V) (hL : Submodule.IsFullLattice 
     show l - ∑ a, S.hT (F'.fl.e a) l • u a ∈ orth S (Xsp F')
     rw [PI.UnitaryGroupMassFormula.BetaModX.Iota.mem_orth'']
     refine hT_span_zero F'.fl.e _ fun b => ?_
-    rw [map_sub, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_sum]
     simp only [LinearMap.map_smul, smul_eq_mul, hdual, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq',
       Finset.mem_univ, if_true, sub_self]
 

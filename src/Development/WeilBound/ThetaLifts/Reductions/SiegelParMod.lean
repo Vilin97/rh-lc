@@ -428,7 +428,8 @@ theorem char_torus (h : IsCMExt F E σ) (hJ : IsHermND σ J) (hW : IsWittFrame �
     rw [hk _ (by omega) c, hk _ (by omega) c] at e1
     linarith
   have hfg : f s = g s := by
-    rw [← Finset.univ_sum_single s, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Finset.univ_sum_single s, map_sum, map_sum]
     exact Finset.sum_congr rfl fun i _ => hs i (s i)
   have e : Real.log (mulEquivHaarChar (conjC (⟨a s, haH s⟩ : H))) = 2 * Module.finrank ℚ F * rho2 n s := hfg
   rw [← e]

@@ -112,7 +112,8 @@ private theorem pderiv_coe_mvPolynomial (s : σ) (p : MvPolynomial σ k) :
 private theorem Low_finset_sum {N : ℕ} {ι : Type} (S : Finset ι) (F : ι → MvPowerSeries τ k)
     (h : ∀ i ∈ S, Low N (F i)) : Low N (∑ i ∈ S, F i) := by
   intro d hd
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_eq_zero fun i hi => h i hi d hd
 
 theorem pderiv_subst [Fintype σ] {a : σ → MvPowerSeries τ k} (ha : ∀ s, constantCoeff (a s) = 0)

@@ -76,9 +76,11 @@ theorem GlobalTheory.LimVec.invertible_basis : ∀ (l : ℕ) [Fact l.Prime] (K :
       hdvd' _ _ (dvd_trans (dvd_pow_self ((l : ℕ) : WCb l) (show m ≠ 0 by omega)) (by simpa [Matrix.sub_apply] using hRR' i j))
     simp only [RingHom.mapMatrix_apply, Matrix.map_apply, V, Matrix.of_apply, Matrix.smul_apply, smul_eq_mul]
     rw [e1]
-    simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, hσ]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, hσ]
     rw [Matrix.mul_apply] at e2
-    rw [map_sum] at e2
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at e2
     simp only [map_mul] at e2
     calc ∑ x, π (R m i x) * (π (bk.evW X ^ N) * π (R' x j)) = π (bk.evW X ^ N) * ∑ x, π (R m i x) * π (R' x j) := by
           rw [Finset.mul_sum]; exact Finset.sum_congr rfl fun x _ => by ring

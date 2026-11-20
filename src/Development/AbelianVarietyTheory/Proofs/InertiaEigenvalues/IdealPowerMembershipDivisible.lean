@@ -81,7 +81,8 @@ theorem crdB_mul {J : Type} (b : Module.Basis J ℤ_[l] O) (j : J) (c : Per.BdRp
 
 theorem crdB_sum {J : Type} [Fintype J] [DecidableEq J] (b : Module.Basis J ℤ_[l] O) (j : J)
     (β : J → Per.BdRp l) : crdB b j (∑ k, b k ⊗ₜ β k) = β j := by
-  rw [map_sum, Finset.sum_eq_single j (fun k _ hk => by
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_eq_single j (fun k _ hk => by
     rw [crdB_tmul, Module.Basis.coord_apply, Module.Basis.repr_self]
     simp [Finsupp.single_apply, hk])
     (by simp), crdB_tmul, Module.Basis.coord_apply, Module.Basis.repr_self, Finsupp.single_eq_same, one_smul]
@@ -107,7 +108,8 @@ theorem exists_of_toOD_iTot_mem (t : Wq l a →ₐ[ℤ_[l]] O) (ϖ : PiSys l e) 
   obtain ⟨x, rfl⟩ := exists_eq_sum_toAc t K b f
   have hT : toOD l O (ϖ.iTot t K (∑ j, b j • toAc t K (x j))) =
       ∑ j, b j ⊗ₜ[ℤ_[l]] GlobalTheory.MemLoc.aDp l (ϖ.ev a (x j)) := by
-    simp only [map_sum, map_smul, PiSys.iTot_toAc]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, PiSys.iTot_toAc]
     refine Finset.sum_congr rfl fun j _ => ?_
     show b j • ((1 : O) ⊗ₜ[ℤ_[l]] GlobalTheory.MemLoc.aDp l (ϖ.ev a (x j))) = _
     rw [smul_tmul', smul_eq_mul, mul_one]

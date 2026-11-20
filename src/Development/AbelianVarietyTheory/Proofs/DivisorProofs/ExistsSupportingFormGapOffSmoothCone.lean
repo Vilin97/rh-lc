@@ -73,7 +73,8 @@ theorem exists_abs_lin_le [Module.Free ℤ X] [Module.Finite ℤ X] (ha : Submod
   choose C hC using exists_abs_apply_le ha
   refine ⟨∑ i, ∑ j, C (b i) (b j) * (lam (E i j)).natAbs, fun β hs hp => ?_⟩
   conv_lhs => rw [hE β]
-  simp only [map_sum, map_smul, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, smul_eq_mul]
   push_cast
   rw [Finset.sum_mul]
   refine (Finset.abs_sum_le_sum_abs _ _).trans (Finset.sum_le_sum fun i _ => ?_)
@@ -171,7 +172,8 @@ theorem exists_gap : ∀ (O : Type) [CommRing O] [IsDedekindDomain O] [CharZero 
     rw [intCone_evalZ_sum hδ.linear, Finset.mul_sum]
     have e : (D * ∑ l, (∑ i, n i • δ i) (a l) (a l) + lam (∑ i, n i • δ i) : ℤ) =
         ∑ i, (n i : ℤ) * (D * ∑ l, δ i (a l) (a l) + lam (δ i)) := by
-      simp only [LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_nsmul, nsmul_eq_mul, mul_add,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_nsmul, nsmul_eq_mul, mul_add,
         Finset.sum_add_distrib, Finset.mul_sum]
       rw [Finset.sum_comm]
       congr 1

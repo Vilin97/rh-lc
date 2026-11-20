@@ -79,7 +79,8 @@ theorem mixEv_sieg (T : Finset ℕ) (hT : 1 ∉ T) (R : ℝ) (c : O.s.Comp) :
   simp only [AlgHom.comp_apply] at e2
   rw [map_mul, e2, map_mul, map_mul, rename_rename]
   congr 1
-  simp only [ArIn.mixEv, aeval_X, update_ind_one T hT, map_sum, map_pow, rename_X, map_mul, algHom_C]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [ArIn.mixEv, aeval_X, update_ind_one T hT, map_sum, map_pow, rename_X, map_mul, algHom_C]
   norm_num
   rfl
 
@@ -95,9 +96,11 @@ theorem rename_testF_gen {σ : Type} (f : DV.Rt D.what₂.Tau O.N → σ) :
     rename f (testF O.Y) = (∑ x, X (f x) ^ 2) * rename f (curveCl D.what₂.Tau O.N O.j) := by
   have e : rename f (testF O.Y) =
       rename f (∑ τ, pSum τ 2 * curveCl D.what₂.Tau O.N O.j : Pol D.what₂.Tau O.N) := rfl
-  rw [e, map_sum, Fintype.sum_prod_type, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, map_sum, Fintype.sum_prod_type, Finset.sum_mul]
   refine Finset.sum_congr rfl fun τ _ => ?_
-  rw [map_mul, show (pSum τ 2 : Pol D.what₂.Tau O.N) = ∑ i, X (τ, i) ^ 2 from rfl, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_mul, show (pSum τ 2 : Pol D.what₂.Tau O.N) = ∑ i, X (τ, i) ^ 2 from rfl, map_sum, Finset.sum_mul]
   simp only [map_pow, rename_X]
   rw [Finset.sum_mul]
 
@@ -150,7 +153,8 @@ theorem comp_eq (hM : RamModel) (hC : ArCalc) (hD : ArDegree) (hO : O.Core) (B :
   have hL : rename (fun y => (arIn O.s O.Φ O.met.hm).root (ArIn.ind (Pad.setB O.κ B)) R y c) (testF O.Y) =
       rename (fam O (Pad.setB O.κ B) R)
         ((∑ x, X (Sum.inl x) ^ 2) * rename Sum.inl (curveCl D.what₂.Tau O.N O.j)) := by
-    rw [rename_testF_gen, map_mul, map_sum, rename_rename]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [rename_testF_gen, map_mul, map_sum, rename_rename]
     simp only [map_pow, rename_X]
     rfl
   obtain ⟨hPL, hPR⟩ := isHomogeneous_sides O

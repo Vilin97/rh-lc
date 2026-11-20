@@ -150,10 +150,12 @@ theorem locS_locT_exchange : ∀ (a b : ℕ) (ε : Fin a → Bool) (ε' : Fin b 
   · rw [swapEquiv_apply, swapEquiv_apply, swapHom_smul]
   · rw [swapEquiv_apply, swapEquiv_apply]
     unfold locT locS
-    simp only [LinearMap.sum_apply, LinearMap.smul_apply, map_sum, swapHom_smul, swapHom_termT, Matrix.map_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [LinearMap.sum_apply, LinearMap.smul_apply, map_sum, swapHom_smul, swapHom_termT, Matrix.map_apply]
   · rw [swapEquiv_apply, swapEquiv_apply]
     unfold locT locS
-    simp only [LinearMap.sum_apply, LinearMap.smul_apply, map_sum, swapHom_smul, swapHom_termS, Matrix.map_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [LinearMap.sum_apply, LinearMap.smul_apply, map_sum, swapHom_smul, swapHom_termS, Matrix.map_apply,
       starRingEnd_self_apply]
 
 end GlobalTheory.Chain.RealIt.SwapFock

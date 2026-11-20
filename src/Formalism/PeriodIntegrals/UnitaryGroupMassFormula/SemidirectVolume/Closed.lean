@@ -61,7 +61,8 @@ theorem ratV_mem_spanR {m : ℕ} (Y : Fin m → Fin n → E) (s : Set (Fin m)) (
 theorem ratV_mulVec (P : Matrix (Fin n) (Fin n) E) (x : Fin n → E) :
     ratV (F := F) R (P *ᵥ x) = (P.map (inclR (F := F) R)) *ᵥ ratV (F := F) R x := by
   funext i
-  simp [ratV, Matrix.mulVec, dotProduct, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [ratV, Matrix.mulVec, dotProduct, map_sum]
 
 theorem mem_spanR_iff {m : ℕ} (Y : Fin m → Fin n → E) (s : Set (Fin m))
     (P : Matrix (Fin n) (Fin n) E) (hP1 : ∀ x, P *ᵥ x ∈ Submodule.span E (Y '' s))

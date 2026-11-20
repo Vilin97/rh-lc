@@ -99,7 +99,8 @@ theorem lattice_split (K : Type) [Field K] [NumberField K] : ∀ (k : ℕ)
     have hsum : ∀ t : Fin (k + 1) → K,
         ∑ i, t i • z i = t 0 • v + consZero K k (∑ j, t j.succ • z' j) := by
       intro t
-      rw [Fin.sum_univ_succ, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Fin.sum_univ_succ, map_sum]
       simp [z, map_smul]
     refine ⟨C, z, fun i => Fin.cases hC0fg hfg' i, fun i => Fin.cases hC01 h1' i, ?_, ?_, ?_, ?_, ?_⟩
     · intro j i hij

@@ -25,7 +25,8 @@ theorem linApply_eq (b : Module.Basis T ℤ (dualLattice (HermLattice.standard K
   have hA : ∀ p : (K →+* ℂ) × Fin i,
       ∑ t, (dualStdCoordMat b () j t : ℂ) * dualEmbMatrix b t p = p.1 ((Pi.single j 1 : Fin i → K) p.2) := by
     intro p
-    rw [← dualStdCoordMat_sum b j, Finset.sum_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← dualStdCoordMat_sum b j, Finset.sum_apply, map_sum]
     refine Finset.sum_congr rfl fun t _ => ?_
     simp [dualEmbMatrix, Pi.smul_apply, zsmul_eq_mul]
   calc linApply (ι₂ := PBlk i) (dualStdCoordMat b) z ⟨(), j⟩

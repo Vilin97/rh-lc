@@ -223,7 +223,8 @@ section Pol
 variable {K : Type} [Field K] (σ : K →+* ℂ)
 
 theorem map_fockB {τ : Type} (f g : MvPolynomial τ K) : σ (fockB f g) = fockB (MvPolynomial.map σ f) (MvPolynomial.map σ g) := by
-  rw [fockB_eq_sum _ _ f.support (MvPolynomial.support_map_subset _ _), fockB, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [fockB_eq_sum _ _ f.support (MvPolynomial.support_map_subset _ _), fockB, map_sum]
   exact Finset.sum_congr rfl fun m _ => by rw [map_mul, map_mul, map_natCast, MvPolynomial.coeff_map, MvPolynomial.coeff_map]
 
 theorem map_pairB {ι : Type} [Fintype ι] {n : ℕ} (lam : ι → DomWeight n) (F F' : Pol K ι n) :
@@ -245,7 +246,8 @@ theorem period_embF {E K ι : Type} [Field E] [NumberField E] [StarRing E] [Fiel
     (y : Q.S'.Cl → VV K Q.sgT) (hy : ∀ c, Q.rd emb σ F c = MvPolynomial.map σ (y c).1) :
     (Q.per emb σ hI hQ hc).period (Q.S'.embF emb σ Q.sgT hF x) F = letI := Q.clFin hQ
       σ (∑ c : Q.S'.Cl, ((Nat.card (Q.S'.Stab c) : ℕ) : K)⁻¹ * pairBK Q.sgT (x.1 c) (y c)) := by
-  simp only [LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, map_sum, map_mul, map_inv₀, map_natCast]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, map_sum, map_mul, map_inv₀, map_natCast]
   refine Finset.sum_congr rfl fun c _ => congrArg _ ?_
   rw [pairBK_apply, map_pairB, ← hy, ← polOf_evV σ emb]
   rfl

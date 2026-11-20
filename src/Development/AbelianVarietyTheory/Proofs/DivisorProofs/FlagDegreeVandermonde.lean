@@ -31,7 +31,8 @@ theorem signed_sum {N : ℕ} (v : Fin N → ℝ) :
 
 theorem eval_detE_rho (N : ℕ) (v : Fin N → ℝ) :
     eval v (detE (rho N)) = (∏ a : Fin N, ∏ b ∈ Ioi a, (v a - v b)) / ∏ m ∈ range N, (m.factorial : ℝ) := by
-  rw [← signed_sum, ← prod_rho_factorial, detE, ← Matrix.det_transpose, Matrix.det_apply', map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← signed_sum, ← prod_rho_factorial, detE, ← Matrix.det_transpose, Matrix.det_apply', map_sum,
     Finset.sum_div]
   refine Finset.sum_congr rfl fun σ _ => ?_
   rw [map_mul, map_prod, mul_div_assoc,

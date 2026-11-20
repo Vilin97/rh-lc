@@ -79,7 +79,8 @@ theorem UpperTheory.V.Af.Smo.schOfClosed :
         rw [ContinuousLinearMap.sum_apply]
         simp only [hL, hg, hc]
         conv_lhs => rw [← b.sum_repr v]
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         simp only [map_smul]
       have hsum : iteratedFDeriv ℝ n (fun x => ∑ i, L i (g i x))
           = ∑ i, iteratedFDeriv ℝ n (fun y => L i (g i y)) :=

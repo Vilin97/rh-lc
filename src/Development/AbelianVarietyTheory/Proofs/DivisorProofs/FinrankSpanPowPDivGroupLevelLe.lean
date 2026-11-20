@@ -34,7 +34,8 @@ def annPowIdeal (h : (p : K) = 0) (G : PDivGroup p K) (r : ℕ) : Ideal (G.dual.
         rw [← map_natCast (algebraMap K (G.A r ⊗[K] G.A r)), h, map_zero])
       haveI : ExpChar (G.A r ⊗[K] G.A r) p := ExpChar.prime (Fact.out : p.Prime)
       have rep := Coalgebra.Repr.arbitrary K a
-      rw [← rep.eq, sum_pow_char_pow, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← rep.eq, sum_pow_char_pow, map_sum]
       refine Finset.sum_eq_zero fun i _ => ?_
       rw [Algebra.TensorProduct.tmul_pow, CartierDual.pair_tmul_tmul]
       have e := hχ (rep.right i)

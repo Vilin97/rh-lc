@@ -59,7 +59,8 @@ theorem torus_iff (R : DSRep T) (ν : Ix p q → ℝ) (v : R.HK.V) :
     exact smul_right_injective _ Complex.I_ne_zero h4
   · intro h θ
     apply flow_eq R (torX_mem _)
-    rw [torX_eq_sum, map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [torX_eq_sum, map_sum, LinearMap.sum_apply]
     simp only [map_smul, LinearMap.smul_apply, h, smul_smul, ← Finset.sum_smul]
     congr 1
     push_cast

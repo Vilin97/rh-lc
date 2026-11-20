@@ -130,7 +130,8 @@ theorem dbar_ka (bb : ℝ) {f0 : Frame X.Ψ r → ℂ} (hf0 : DifferentiableOn �
     rw [wdb_mul hK.differentiableAt (hF.restrictScalars ℝ), wdb_holo_lemma j hF, wdb_ofReal hka,
       hwd j, map_mul, Complex.conj_ofReal]
     ring
-  simp only [hw, map_sum, map_mul, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hw, map_sum, map_mul, Finset.mul_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   ring
 

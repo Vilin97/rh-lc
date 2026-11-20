@@ -24,7 +24,8 @@ theorem coordMat_place : ∀ {D : D7} (X : HidaSetting D) {x : X.B.I.GA} (n : (V
     rw [← hc]
     funext i
     rw [crdH_eq_crd, h4]
-    simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Matrix.submatrix_apply, Matrix.map_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Matrix.submatrix_apply, Matrix.map_apply]
     rw [← (ci X).sum_comp]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [← crdH_eq_crd, crdH_vecOf]

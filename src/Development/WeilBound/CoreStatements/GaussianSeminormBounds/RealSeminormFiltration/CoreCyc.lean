@@ -370,7 +370,8 @@ theorem glK_of_lie {M : Type} [AddCommGroup M] [Module ℂ M] {act : Mat r s →
 theorem act_eq_sum {M : Type} [AddCommGroup M] [Module ℂ M] (act : Mat r s →ₗ[ℂ] Module.End ℂ M) (W : Mat r s) :
     act W = ∑ a, ∑ b, W a b • act (Eab a b) := by
   conv_lhs => rw [Matrix.matrix_eq_sum_single W]
-  simp only [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
   rw [← map_smul, Eab, Matrix.smul_single, smul_eq_mul, mul_one]
 

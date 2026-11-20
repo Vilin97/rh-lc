@@ -63,7 +63,8 @@ theorem exists_frame_hyp (D : D7) (t : ℕ) : ∃ b : Module.Basis (Fin (t + t))
   refine ⟨b, fun i j => ?_⟩
   have e : (GlobalTheory.OrthSumSp.hypSp D t).hT (b i) (b j) =
       (Pᴴ * dblGram finSumFinEquiv (1 : Matrix (Fin t) (Fin t) D.host.E) * P) i j := by
-    simp only [hb, map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, hG, smul_eq_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hb, map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, hG, smul_eq_mul,
       Matrix.mul_apply, Matrix.conjTranspose_apply, Finset.sum_mul, Finset.mul_sum, RingHom.id_apply, starRingEnd_apply]
     exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
   have e1 : Pᴴ = blk 1 1 (-((2 : D.host.E)⁻¹ • 1)) ((2 : D.host.E)⁻¹ • 1) := by

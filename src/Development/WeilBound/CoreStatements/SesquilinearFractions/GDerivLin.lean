@@ -152,7 +152,8 @@ theorem lie_model_with_cm_action : ∀ (E : Type) [Field E] [NumberField E] [IsC
       · exact HT.LatBasic.eigProj_of_ne (fun h => hj h.symm) (hmem j)
     have hw : w = ∑ j, w j • (Pi.single j 1 : Fin g → ℂ) := by
       funext k; simp [Pi.single_apply]
-    conv_lhs => rw [hw, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [hw, map_sum]
     simp only [map_smul, hproj]
     funext k
     rw [Finset.sum_apply, Finset.sum_eq_single k]

@@ -22,7 +22,8 @@ theorem filtration_coaction_stable : FiltrationCoactionStable := by
     have : L (CF.vec j I) = ∑ K, l (TMat (CF.mu j) K I) • CF.vec j K := by
       funext i
       have h1 : L (CF.vec j I) i = l (∑ k, M.A i k * (CF.ph j k I : GLCoord ℤ n)) := rfl
-      rw [h1, qb_equiv_apply, map_sum, Finset.sum_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [h1, qb_equiv_apply, map_sum, Finset.sum_apply]
       refine sum_congr rfl fun K _ => ?_
       rw [← zsmul_eq_mul, map_zsmul, Pi.smul_apply, smul_eq_mul, smul_eq_mul, mul_comm]
       rfl

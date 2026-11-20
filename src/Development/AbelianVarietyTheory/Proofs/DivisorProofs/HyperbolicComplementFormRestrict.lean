@@ -14,7 +14,8 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 theorem form_swap (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E)
     (hσ : ∀ z, σ (σ z) = z) (hJ : ∀ i j, σ (J j i) = J i j) (u v : Fin n → E) :
     σ (form σ J u v) = form σ J v u := by
-  simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   rw [hJ i j]; ring
@@ -22,13 +23,15 @@ theorem form_swap (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E)
 theorem incV_pair (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (v z : Fin n → E) :
     incV F v ⬝ᵥ (fun i => inclR (F := F) (AF F) ((J *ᵥ fun j => σ (z j)) i)) =
       inclR (F := F) (AF F) (form σ J v z) := by
-  simp only [incV, form, dotProduct, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [incV, form, dotProduct, map_sum, map_mul]
 
 theorem incM_pair (σ : E →ₐ[F] E) {n n₁ : ℕ} (J : Matrix (Fin n) (Fin n) E)
     (ι : Matrix (Fin n) (Fin n₁) E) (w : Fin n₁ → AE F E) (z : Fin n → E) :
     (incM F ι *ᵥ w) ⬝ᵥ (fun i => inclR (F := F) (AF F) ((J *ᵥ fun j => σ (z j)) i)) =
       ∑ k : Fin n₁, (w k * inclR (F := F) (AF F) (form σ J (fun i => ι i k) z) : AE F E) := by
-  simp only [incM, form, dotProduct, Matrix.mulVec, Matrix.map_apply, map_sum, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [incM, form, dotProduct, Matrix.mulVec, Matrix.map_apply, map_sum, map_mul,
     Finset.sum_mul, Finset.mul_sum]
   conv_lhs => arg 2; ext i; rw [Finset.sum_comm]
   rw [Finset.sum_comm]

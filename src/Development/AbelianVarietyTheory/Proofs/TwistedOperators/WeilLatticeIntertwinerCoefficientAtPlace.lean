@@ -38,7 +38,8 @@ theorem map_eq_zero_of_local_vacuum {N : Type} [AddCommGroup N] [Module ℂ N] (
     | H s ih =>
       intro e he hfix
       by_cases hall : ∀ i ∈ s, P (x i) ∈ A
-      · rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        · rw [map_sum]
         exact Finset.sum_eq_zero fun i hi => hL _ _ (he i) (hall i hi)
       · push Not at hall
         obtain ⟨j, hj, hjA⟩ := hall
@@ -55,7 +56,8 @@ theorem map_eq_zero_of_local_vacuum {N : Type} [AddCommGroup N] [Module ℂ N] (
         have hsum : (1 - z) • ∑ i ∈ s, W (x i) (e i) = ∑ i ∈ s.erase j, W (x i) ((γ (P a) (x i) - z) • e i) := by
           rw [Finset.sum_erase s (by simp [hzdef]), sub_smul, one_smul]
           have h4 : ∑ i ∈ s, W (x i) (e i) = ∑ i ∈ s, γ (P a) (x i) • W (x i) (e i) := by
-            rw [← hfix a ha, map_sum]
+            set_option synthInstance.maxHeartbeats 100000 in
+              rw [← hfix a ha, map_sum]
             exact Finset.sum_congr rfl fun i _ => hact i
           calc _ = ∑ i ∈ s, γ (P a) (x i) • W (x i) (e i) - ∑ i ∈ s, z • W (x i) (e i) := by
                 rw [← h4, Finset.smul_sum]
@@ -94,7 +96,8 @@ theorem intertwiner_eq_sum (h : IsHeis σ w γ W) (A : Submodule R X) (hA : Self
     have h2 : γ y (b i) = 1 := by rw [← hb i, ← hP, hPy, h.zero_left]
     rw [h.comm, h2, one_smul]
   have h3 : T (W y e) = Q (W y e) := by
-    rw [hT, hy, hφ, ← hy, hTe e he, hQ, map_smul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hT, hy, hφ, ← hy, hTe e he, hQ, map_smul, map_sum]
     congr 1
     exact Finset.sum_congr rfl fun i _ => hcomm i
   rw [h1, map_smul, map_smul] at h3
@@ -129,7 +132,8 @@ theorem coef_of_local_vacuum (h : IsHeis σ w γ W) (lam : ℕ →* ℂ) (A : Su
       rwa [sub_sub_sub_cancel_right] at h1
   have hTe' : ∀ e, Fixes W A e → T e = (lam (idx A (A.map φ)))⁻¹ • ∑ i, W (b i) e := fun e he => by
     rw [hTe e he, normOp, ((sumOp_transversal h A _ hB).1 e he (Fin n) b hbB hbu).1]
-  rw [intertwiner_eq_sum h A hA hspan φ T hT P hP hPA hPP hφ _ b hb hTe' m hm, map_smul, map_sum, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [intertwiner_eq_sum h A hA hspan φ T hT P hP hPA hPP hφ _ b hb hTe' m hm, map_smul, map_sum, smul_eq_mul]
   congr 1
   obtain ⟨i₀, hi₀, hu₀⟩ := hbu 0 (Submodule.zero_mem _)
   have hbA : b i₀ ∈ A := by simpa using A.neg_mem hi₀

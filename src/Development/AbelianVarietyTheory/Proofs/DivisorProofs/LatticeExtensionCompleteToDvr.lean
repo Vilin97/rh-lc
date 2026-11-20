@@ -57,7 +57,8 @@ variable {φ : R →+* K} {ψ : S →+* L} {θ : K →+* L} {n : ℕ} {e : Modul
 theorem repr_map (hj : ∀ (c : K) x, j (c • x) = θ c • j x) (he : ∀ i, j (e i) = e' i) (x : H) (i : Fin n) :
     e'.repr (j x) i = θ (e.repr x i) := by
   conv_lhs => rw [← e.sum_repr x]
-  simp only [map_sum j, hj, he]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum j, hj, he]
   rw [e'.repr_sum_self]
 
 theorem lat_map_iff (hint : ∀ x, θ x ∈ ψ.range ↔ x ∈ φ.range) (hj : ∀ (c : K) x, j (c • x) = θ c • j x)
@@ -98,7 +99,8 @@ theorem exists_lat_iff [IsNoetherianRing R] (hint : ∀ x, θ x ∈ ψ.range ↔
     have : Lat φ e (u.val • s) := by
       rw [← lat_map_iff hint hj he, lat_iff_repr, hj, hc]
       intro i
-      simp only [map_smul, map_sum, Finsupp.smul_apply, Finsupp.finset_sum_apply, smul_eq_mul, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_smul, map_sum, Finsupp.smul_apply, Finsupp.finset_sum_apply, smul_eq_mul, Finset.mul_sum]
       exact sum_mem fun k _ => by
         rw [mul_left_comm]; exact mul_mem ⟨_, rfl⟩ (hg k i)
     obtain ⟨r, hr⟩ := this
@@ -260,7 +262,8 @@ theorem resSec_iff (w : spMap (algebraMap R K) ≫ f = ξ ≫ f₀) {A : X.Modul
       (fun i => pullbackSections ξ _ h' (pullbackSections f₀ A le_rfl (e i))) s := by
   have key (c : Fin r → R) : resSec w A (∑ i, fnHom R (c i) • pullbackSections f A h (e i)) =
       ∑ i, (fnHom K).comp (algebraMap R K) (c i) • pullbackSections ξ _ h' (pullbackSections f₀ A le_rfl (e i)) := by
-    rw [resSec, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [resSec, map_sum, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [pullbackSections_smul, Scheme.Modules.Hom.app_smul, appLE_fnHom]
     exact congrArg _ (Vert.DivPull.pullbackSquare_app w A h le_top le_rfl h' (e i))

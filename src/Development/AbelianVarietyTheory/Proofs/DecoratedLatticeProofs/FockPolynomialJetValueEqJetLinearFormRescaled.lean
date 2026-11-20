@@ -41,7 +41,8 @@ theorem jetP_eq_jetL : ∀ (D : D7) (S T : HSp D) (s : ℂ) (cD : D.what₂.Tau 
   rw [hid]
   simp only [Finsupp.mapDomain_id]
   conv_rhs => rw [P.as_sum]
-  rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [mvZ_scal_monomial]
   have hm : ∀ x : ℂ, (MvPolynomial.monomial k x : FP D.what₂.Tau S.rank T.rank) = x • MvPolynomial.monomial k 1 := by

@@ -100,7 +100,8 @@ theorem _root_.GlobalTheory.GalDisj.galois_linearDisjoint : ∀ (k Ω D : Type) 
     have := Fintype.linearIndependent_iff.1 hli (fun j => ⟨_, hmem j⟩) ?_ j
     · exact congrArg Subtype.val this
     rw [← hsum]
-    simp only [hexp, Subfield.smul_def, map_sum, map_smul, Algebra.smul_def, map_mul, map_pow,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hexp, Subfield.smul_def, map_sum, map_smul, Algebra.smul_def, map_mul, map_pow,
       Finset.sum_mul]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun j _ => ?_
@@ -118,7 +119,8 @@ theorem _root_.GlobalTheory.GalDisj.galois_linearDisjoint : ∀ (k Ω D : Type) 
         simp [hgx, Finsupp.single_apply]
     _ = ∑ j : Fin pb.dim, o (algebraMap k Ω (g (α ^ (j : ℕ)) l)) *
           ∑ i, o (algebraMap k Ω (c i j)) * b i := by
-        simp only [hexp, map_sum, map_smul, Finsupp.coe_finsetSum, Finset.sum_apply,
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [hexp, map_sum, map_smul, Finsupp.coe_finsetSum, Finset.sum_apply,
           Finsupp.smul_apply, smul_eq_mul, map_mul, Finset.mul_sum, Finset.sum_mul]
         rw [Finset.sum_comm]
         refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun i _ => ?_

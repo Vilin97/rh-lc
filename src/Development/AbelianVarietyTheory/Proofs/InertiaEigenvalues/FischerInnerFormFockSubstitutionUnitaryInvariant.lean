@@ -70,7 +70,8 @@ theorem fockBlock_conjTranspose_mul (p : D.what₂.Tau → ℕ) (U : GlobalTheor
     rw [hinv]
     ext i j
     have := congrArg (starRingEnd ℂ) (congrFun (congrFun hu' i) j)
-    simp only [Matrix.mul_apply, Matrix.star_apply, map_sum, map_mul, Complex.conj_conj, RCLike.star_def] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mul_apply, Matrix.star_apply, map_sum, map_mul, Complex.conj_conj, RCLike.star_def] at this
     have h1 : ((star (U k.1).val)ᵀᴴ * (star (U k.1).val)ᵀ) i j =
         ∑ x, (U k.1).val x i * starRingEnd ℂ ((U k.1).val x j) := by
       simp only [Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.transpose_apply, Matrix.star_apply, RCLike.star_def,

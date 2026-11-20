@@ -93,7 +93,8 @@ theorem mem_mulG (I : Ideal (𝓞 F)) {γ : Af F} (hγ : γ ∈ intAf F)
   have e : γ = algebraMap F (Af F) (t₁ : F) * β₁ + ∑ w ∈ Z, algebraMap F (Af F) (τ w : F) * β w := by
     refine FiniteAdeleRing.ext F fun v => ?_
     change evalV F v γ = evalV F v (algebraMap F (Af F) (t₁ : F) * β₁ + ∑ w ∈ Z, algebraMap F (Af F) (τ w : F) * β w)
-    rw [map_add, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_add, map_sum, map_mul]
     simp only [map_mul, ev_apply, eβ₁, eβ]
     by_cases hv : t₁ ∈ v.asIdeal
     · have hvZ : v ∈ Z := (hZ v).2 hv

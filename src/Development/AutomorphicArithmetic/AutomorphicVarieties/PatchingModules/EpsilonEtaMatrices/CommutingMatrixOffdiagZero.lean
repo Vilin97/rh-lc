@@ -76,7 +76,8 @@ private theorem map_ep_mul_eq_leibniz {X : Type} [CommRing X] {g n : ℕ} (M N :
   refine Matrix.ext fun r c => ?_
   simp only [Matrix.map_apply, Matrix.mul_apply, Matrix.add_apply]
   rw [← Finset.sum_add_distrib]
-  rw [show (∑ t, M r t * N t c).ep j = ∑ t, (M r t * N t c).ep j from map_sum (ddEpsCoordAddHom X g j) _ _]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [show (∑ t, M r t * N t c).ep j = ∑ t, (M r t * N t c).ep j from map_sum (ddEpsCoordAddHom X g j) _ _]
   simp [DD.mul_ep]
 
 private theorem map_a_mul_eq_map_a_mul_map_a {X : Type} [CommRing X] {g n : ℕ} (M N : Matrix (Fin n) (Fin n) (DD X g)) :

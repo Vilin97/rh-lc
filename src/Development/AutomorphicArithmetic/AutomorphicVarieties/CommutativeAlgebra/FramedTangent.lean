@@ -192,7 +192,8 @@ private theorem abstract {S X : Type} (z : S → R) (hz : ∀ s, z s ∈ maximal
     obtain ⟨f, hf, hf'⟩ := hc j x
     have h3 := snd_zero i f hf ∅ (Set.empty_subset _) (by simp) _ (by
       rw [sup_assoc]; exact Ideal.mem_sup_right hcm)
-    rw [map_sum, TrivSqZeroExt.snd_sum, Finset.sum_eq_single ⟨j, t⟩] at h3
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, TrivSqZeroExt.snd_sum, Finset.sum_eq_single ⟨j, t⟩] at h3
     · rw [map_smul, TrivSqZeroExt.snd_smul, Function.comp_apply, hf', x1, Algebra.smul_def, mul_one] at h3
       exact (residue_eq_zero_iff _).1 h3
     · rintro ⟨j', t'⟩ - e

@@ -43,7 +43,8 @@ theorem good_of_isGLSubmodule (k : Type) [Field k] (N : ℕ) (lam : DomWeight N)
     classical
     have hsum := sum_weightedHomogeneousComponent (rowW N N) f
     rw [finsum_eq_sum _ (weightedHomogeneousComponent_finsupp f)] at hsum
-    rw [← hsum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hsum, map_sum]
     refine Submodule.sum_mem _ fun μ _ => ?_
     rw [((GlobalTheory.T.rowPolarizationOperators_action_on_rowWeight k N N μ _ (weightedHomogeneousComponent_isWeightedHomogeneous μ f)).1 a)]
     exact Submodule.smul_mem _ _ (hw μ f hf)

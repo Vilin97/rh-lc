@@ -23,7 +23,8 @@ theorem aeval_ratio_mul_chartMono {B : Type} [Fintype B] {J : B → Type} [∀ k
   have hψC : ∀ a : ℤ, ψ (C a) = φ (C a) := fun a =>
     RingHom.congr_fun (RingHom.ext_int (ψ.comp C) (φ.comp C)) a
   show ψ g * φ (chartMono c e) = φ g
-  rw [g.as_sum, map_sum, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [g.as_sum, map_sum, map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun m hm => ?_
   have hdeg : ∀ k, ∑ i, m ⟨k, i⟩ = e k := hg m hm
   have hchart : φ (chartMono c e) = ∏ q : (Σ k, J k), φ (X ⟨q.1, c q.1⟩) ^ m q := by

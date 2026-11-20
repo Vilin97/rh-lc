@@ -120,13 +120,15 @@ theorem surjection_of_rank_one_idempotent (O : Type) [CommRing O] [IsDomain O] [
     funext i
     show algebraMap O (FractionRing O) (∑ j, ρ a i j • u j) =
       ∑ j, ρ a i j • algebraMap O (FractionRing O) (u j)
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp [Algebra.smul_def]
   · intro a u
     funext i
     show (1 : Submodule O (FractionRing O)).mkQ (∑ j, ρ a i j • u j) =
       ∑ j, ρ a i j • (1 : Submodule O (FractionRing O)).mkQ (u j)
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [map_smul]
   · intro u x
     funext i

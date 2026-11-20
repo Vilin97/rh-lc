@@ -74,7 +74,8 @@ theorem pt_comp_zero : ∀ (C : Type) [Field C] (v : Valuation C NNReal) (O : Ty
   have hut : ∀ j, ∃ z : O, P.e u (P.t j) = algebraMap O C (π * z) := fun j => by
     obtain ⟨z, hz⟩ := hx j
     refine ⟨z, ?_⟩
-    rw [hu, map_sub, LinearMap.sub_apply, sub_eq_iff_eq_add', ← hz, hs, Finset.smul_sum, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hu, map_sub, LinearMap.sub_apply, sub_eq_iff_eq_add', ← hz, hs, Finset.smul_sum, map_sum,
       LinearMap.sum_apply]
     refine Finset.sum_congr rfl fun l _ => ?_
     rw [smul_comm d (x l), ← algebraMap_smul C (x l), map_smul, LinearMap.smul_apply, smul_eq_mul]
@@ -109,7 +110,8 @@ theorem pt_comp_zero : ∀ (C : Type) [Field C] (v : Valuation C NNReal) (O : Ty
     exact ⟨_, hy, rfl⟩
   · have hw0 : P.ht w = 0 := hw.1
     have h1 : P.ht s = ∑ l, x l • eigProj P.ρΩ σ (P.ht (P.t l)) := by
-      rw [hs, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hs, map_sum]
       refine Finset.sum_congr rfl fun l _ => ?_
       rw [LinearMap.map_smul_of_tower, hcomm]
     have h2 : algebraMap O C d • P.ht s = algebraMap O C π • P.ht u' := by

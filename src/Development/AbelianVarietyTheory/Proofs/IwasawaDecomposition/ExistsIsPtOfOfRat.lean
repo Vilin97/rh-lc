@@ -56,7 +56,8 @@ theorem glEquiv_mem_iff {P : HeightOneSpectrum (𝓞 E)} {g : GL (Fin n) (AfE F 
       have e2 : ((γ⁻¹ : GL (Fin n) E) : Matrix (Fin n) (Fin n) E) *ᵥ glEquiv γ x = x := by
         rw [glEquiv_apply, Matrix.mulVec_mulVec, ← Units.val_mul, inv_mul_cancel, Units.val_one, Matrix.one_mulVec]
       conv_rhs => rw [← e2]
-      simp only [Formalism.L2.Col.pullV, Matrix.mulVec, dotProduct, map_sum, map_mul, hi, adAt_inclE]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Formalism.L2.Col.pullV, Matrix.mulVec, dotProduct, map_sum, map_mul, hi, adAt_inclE]
     rwa [e] at h1
   · intro hx
     obtain ⟨f, hf⟩ := CharValCompare.exists_isFr P hN
@@ -68,7 +69,8 @@ theorem glEquiv_mem_iff {P : HeightOneSpectrum (𝓞 E)} {g : GL (Fin n) (AfE F 
         intro j
         have h2 := valued_symm_le (u := fun l => (g : Matrix (Fin n) (Fin n) (AfE F E)) l j) hf
           ((carries_globLat g _).2 ((mem_latS_std _).2 fun l => ?_)) i
-        · simp only [h, ← map_mul, ← map_sum] at h2
+        set_option synthInstance.maxHeartbeats 100000 in
+          · simp only [h, ← map_mul, ← map_sum] at h2
           rw [hA, Matrix.mul_apply]
           exact h2
         · simp only [Matrix.mulVec, dotProduct]
@@ -80,7 +82,8 @@ theorem glEquiv_mem_iff {P : HeightOneSpectrum (𝓞 E)} {g : GL (Fin n) (AfE F 
         rw [← mat_mulVec, hA, ← Matrix.mulVec_mulVec, glEquiv_apply]
         rfl
       rw [e3]
-      simp only [Matrix.mulVec, dotProduct, map_sum, map_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Matrix.mulVec, dotProduct, map_sum, map_mul]
       refine Valuation.map_sum_le _ fun j _ => ?_
       rw [map_mul]
       exact mul_le_one' (hA1 j) ((GlobalTheory.Mem.ColAd.mem_stdAt_val.1 hx) j)

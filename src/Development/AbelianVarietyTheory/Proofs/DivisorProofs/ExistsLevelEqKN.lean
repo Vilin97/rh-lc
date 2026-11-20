@@ -156,7 +156,8 @@ theorem exists_leftInv (b : Module.Basis κ ℤ D.La) (L : Link D G) :
       have e1 : a ⊗ₜ[ℚ] c = a • ((1 : AfP p) ⊗ₜ[ℚ] T' (T c)) := by
         rw [hTT, TensorProduct.smul_tmul', smul_eq_mul, _root_.mul_one]
       rw [e1, Matrix.matrix_eq_sum_single (T c)]
-      simp only [map_sum, TensorProduct.tmul_sum, Finset.smul_sum, Matrix.smul_apply, Matrix.map_apply]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, TensorProduct.tmul_sum, Finset.smul_sum, Matrix.smul_apply, Matrix.map_apply]
       refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
       rw [show Matrix.single i j (T c i j) = (T c i j) • Matrix.single i j (1 : ℚ) by
         rw [Matrix.smul_single, smul_eq_mul, _root_.mul_one], map_smul, TensorProduct.tmul_smul,

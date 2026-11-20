@@ -40,7 +40,8 @@ theorem equivFun_map {T : Type} [AddCommGroup T] [Module ℤ_[l] T] {ι : Type} 
   | tmul a t =>
     rw [TensorProduct.map_tmul, Module.Basis.baseChange_repr_tmul, AlgEquiv.toLinearMap_apply,
       ← LinearMap.toMatrix_mulVec_repr b b r t]
-    simp only [Module.Basis.baseChange_repr_tmul, Matrix.mulVec, dotProduct, map_smul, Algebra.smul_def,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Module.Basis.baseChange_repr_tmul, Matrix.mulVec, dotProduct, map_smul, Algebra.smul_def,
       Finset.sum_mul, map_mul, mul_assoc, map_sum, AlgEquiv.commutes]
   | add y z hy hz =>
     simp only [map_add, Finsupp.add_apply, hy, hz, mul_add, Finset.sum_add_distrib]

@@ -77,7 +77,8 @@ theorem UpperTheory.V.Pa.k1F :
       have h1 := congrFun hYeq g
       have hsum : (DD.map (algebraMap x.A x.Fr)).mapMatrix (∑ i, c i • z' i g)
           = ∑ i, (algebraMap x.A x.Fr (c i) * algebraMap x.A x.Fr x.t ^ (Finset.univ.sup s₀)) • z i g := by
-        rw [map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sum]
         refine Finset.sum_congr rfl fun i _ => ?_
         rw [hmapSmul, show (DD.map (algebraMap x.A x.Fr)).mapMatrix (z' i g)
           = algebraMap x.A x.Fr x.t ^ (Finset.univ.sup s₀) • z i g from hz'map i g, smul_smul]

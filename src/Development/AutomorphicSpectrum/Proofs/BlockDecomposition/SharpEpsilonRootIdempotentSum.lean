@@ -48,7 +48,8 @@ def powSum (A : PAlg l) (u : (A.cont ℤ_[l]).A) (N : ℕ) : (A.cont ℤ_[l]).A 
 
 theorem ev_powSum (A : PAlg l) (u : (A.cont ℤ_[l]).A) (N : ℕ) (z : ℤ_[l]) :
     Hom.f (A.evCont z) (powSum A u N) = Hom.f (A.evCont z) u ^ (PadicInt.toZModPow N z).val := by
-  rw [powSum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [powSum, map_sum]
   simp only [map_mul, map_pow, ev_ind, ite_mul, one_mul, zero_mul]
   rw [Finset.sum_ite_eq]
   simp

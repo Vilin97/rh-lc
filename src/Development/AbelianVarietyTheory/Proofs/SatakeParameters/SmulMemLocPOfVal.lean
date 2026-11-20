@@ -84,7 +84,8 @@ theorem jetMap_ten [DecidableEq ι] (h : a ≤ b) (J : (DVar ι a b →₀ ℕ) 
     rw [← GlobalTheory.WeylMinorDual.ten_gdet]
     simp only [ten, map_mul, map_pow, GlobalTheory.WeylMinorDual.map_gdet, Finset.prod_mul_distrib]
   change jetLin J (subD K ι a b (_ * _)) = _
-  rw [e, subD_ten h, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, subD_ten h, map_sum]
   exact Finset.sum_congr rfl fun α _ => jetLin_mul_monomial _ _ _
 
 end Expand

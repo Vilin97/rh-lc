@@ -66,7 +66,8 @@ lemma comb_mem (β : Fin r → E) (hβ : ∀ a, β a ∈ M.L.O) :
   apply cjO
   have hl : H.h (∑ a, β a • Fr.e a) v = ∑ a, β a * H.h (Fr.e a) v := by
     show (lf H v) _ = _
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [map_smul, smul_eq_mul]
     rfl
   rw [hl]

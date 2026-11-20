@@ -19,7 +19,8 @@ theorem coef {Y : Type*} [AddCommGroup Y] [Module ℂ Y] (d : ℕ) (y : ℕ → 
     apply hS.mono
     intro u hu
     have hfu := congrArg f (h u hu)
-    simp only [map_sum, map_smul, smul_eq_mul, map_zero] at hfu
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, smul_eq_mul, map_zero] at hfu
     show Polynomial.eval u p = 0
     simp only [hp, Polynomial.eval_finsetSum, Polynomial.eval_mul,
       Polynomial.eval_C, Polynomial.eval_pow, Polynomial.eval_X]

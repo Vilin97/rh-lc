@@ -21,7 +21,8 @@ variable {D : D7} {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [Is
 theorem ι_mul_rat (p : Place D k) {l m r : ℕ} (N : Matrix (Fin r) (Fin l) k) (M : Matrix (Fin l) (Fin m) D.host.E) :
     (N.map p.ι : Mx D r l) * rat M = (N * M.map p.pr).map p.ι := by
   ext i j
-  simp only [Matrix.mul_apply, Matrix.map_apply, rat, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mul_apply, Matrix.map_apply, rat, map_sum]
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [mul_comm, BoxModel.incA_mul_ι, mul_comm]
 
@@ -41,7 +42,8 @@ theorem qB_β (p : Place D k) {n : Type} [Fintype n] [DecidableEq n] {ρ : ℕ} 
     have h2 : p.pr (B.ζ r) = ∑ j, p.pr (B.o.qB r j) * p.pr (vecB B.o B.ζ j) := by
       conv_lhs => rw [← h1]
       change BoxModel.prH p (∑ j, B.o.qB r j * vecB B.o B.ζ j) = ∑ j, BoxModel.prH p _ * BoxModel.prH p _
-      simp only [map_sum, map_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_mul]
     rw [fromCols_apply_inr, Matrix.of_apply, h2, Finset.mul_sum, Matrix.mul_apply]
     simp only [h.2, Matrix.map_apply]
     exact Finset.sum_congr rfl fun j _ => by ring
@@ -81,7 +83,8 @@ theorem link_frames (p : Place D k) {ρ σ : ℕ} (B : BesLev D ρ) (B' : BesLev
   · simp [Matrix.mul_apply, Matrix.single_apply]
   · have h2 : ∑ j, p.pr ((B.o.iB * l.τ) r j) * p.pr (B'.ζ j) = -p.pr (vecB B.o B.ζ r) := by
       have := congrArg (fun v => BoxModel.prH p (v r)) h1
-      simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Pi.neg_apply, map_neg] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Pi.neg_apply, map_neg] at this
       exact this
     have h3 : (F₀.β * (Matrix.single (Sum.inr ()) (Sum.inr ()) (-p.xi) : Matrix (n' ⊕ Unit) (n'' ⊕ Unit) k)) r (Sum.inr ())
         = F₀.β r (Sum.inr ()) * -p.xi := by

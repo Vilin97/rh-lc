@@ -63,7 +63,8 @@ theorem linearIndependent_evLie {n : ℕ} (x : Fin n → LieG P.Gt)
   have h0 := h a (fun f => P.integers.hom_inj (by
     have h1 := congrArg (fun L : P.OmC →ₗ[C] C => (b : O) • L ((1 : C) ⊗ₜ f)) hg
     simp only [LinearMap.sum_apply, LinearMap.smul_apply, LinearMap.zero_apply, smul_zero, Finset.smul_sum] at h1
-    rw [map_zero, map_sum, ← h1]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_zero, map_sum, ← h1]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_mul, ha, ← smul_assoc, smul_eq_mul]
     congr 1

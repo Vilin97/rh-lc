@@ -45,8 +45,10 @@ theorem exists_not_mem_mul_isIntegral : ∀ (F E : Type) [Field F] [NumberField 
       intro a
       have ha : (a : E) = ∑ i, ((b.repr a i : ℤ) : E) * (b i : E) := by
         have := congrArg (algebraMap (𝓞 E) E) (b.sum_repr a)
-        simpa [map_sum, zsmul_eq_mul] using this.symm
-      rw [ha, Finset.mul_sum, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simpa [map_sum, zsmul_eq_mul] using this.symm
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [ha, Finset.mul_sum, map_sum]
       refine Subring.sum_mem _ fun i _ => ?_
       have e2 : algebraMap F E ((∏ i, s i : 𝓞 F) : F) * e * (((b.repr a i : ℤ) : E) * (b i : E)) =
           algebraMap F E (((b.repr a i : ℤ) : F) * algebraMap (𝓞 F) F (∏ j, s j)) * ((b i : E) * e) := by

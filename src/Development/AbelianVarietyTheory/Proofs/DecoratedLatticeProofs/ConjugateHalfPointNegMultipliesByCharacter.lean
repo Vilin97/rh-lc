@@ -20,7 +20,8 @@ theorem e_mul_sec (p : SplitPt D k) (a : k) : p.e * p.sec a = p.sec a := by
   rw [← p.sec_pr, p.pr_sec]
 
 theorem pr_trace (p : SplitPt D k) {m : ℕ} (M : Mx D m m) : p.pr M.trace = (M.map p.pr).trace := by
-  simp only [Matrix.trace, Matrix.diag, map_sum, Matrix.map_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.trace, Matrix.diag, map_sum, Matrix.map_apply]
 
 theorem map_rat (p : SplitPt D k) {m n : ℕ} (M : Matrix (Fin m) (Fin n) D.host.E) :
     (rat M).map p.pr = M.map (iota p) := by

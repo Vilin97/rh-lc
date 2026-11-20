@@ -52,11 +52,13 @@ theorem one (hT : TensorGl) (hJ : JMComm) (hQ : PiQdet) (hC : Curry) (E : Fin n 
     congr 1
     · congr 1; congr 1; funext j; congr 1
       have hk : (Fin.cast (Nat.add_comm 1 n).symm j.castSucc : Fin (1 + n)) = ⟨j, by omega⟩ := Fin.ext (by simp)
-      rw [hΨ, conj_xJ hT E hE, hk, rot_nat, map_add, hOr, xJ, sum_lt_cast _ (by simp), map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hΨ, conj_xJ hT E hE, hk, rot_nat, map_add, hOr, xJ, sum_lt_cast _ (by simp), map_sum]
       congr 1
       refine Finset.sum_congr (Finset.filter_congr fun i _ => Iff.rfl) fun i _ => ?_
       rw [rot_nat, hsw]
-    · rw [hΨ, conj_xJ hT E hE, rot_last _ (by simp), map_add, hOl, sum_lt_cast _ (by simp), hQdef, map_sum, map_sum,
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [hΨ, conj_xJ hT E hE, rot_last _ (by simp), map_add, hOl, sum_lt_cast _ (by simp), hQdef, map_sum, map_sum,
         add_assoc]
       congr 2
       refine Finset.sum_congr (Finset.filter_true_of_mem fun i _ => by simp) fun i _ => ?_

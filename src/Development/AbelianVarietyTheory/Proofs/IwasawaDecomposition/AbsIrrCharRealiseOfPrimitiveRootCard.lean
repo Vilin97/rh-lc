@@ -55,7 +55,8 @@ theorem isIrreducible_of_sum_char_mul_char_inv [Fintype G] {k : Type} [Field k] 
         intro h
         apply LinearMap.ext
         intro v
-        rw [LinearMap.comp_apply, LinearMap.comp_apply, hPv, hPv, map_smul, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [LinearMap.comp_apply, LinearMap.comp_apply, hPv, hPv, map_smul, map_sum]
         congr 1
         refine Fintype.sum_equiv (Equiv.mulLeft h⁻¹) _ _ (fun g => ?_)
         simp only [Equiv.coe_mulLeft, mul_inv_rev, inv_inv, map_mul, Module.End.mul_apply]
@@ -96,7 +97,8 @@ def mapScalars {K k : Type} [Field K] [Field k] (f : K →+* k) {n : ℕ} (ρ : 
 theorem character_mapScalars {K k : Type} [Field K] [Field k] (f : K →+* k) {n : ℕ}
     (ρ : Representation K G (Fin n → K)) (g : G) : (mapScalars f ρ).character g = f (ρ.character g) := by
   rw [character_eq_trace_toMatrix', character_eq_trace_toMatrix']
-  simp [mapScalars, Matrix.trace, Matrix.diag, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [mapScalars, Matrix.trace, Matrix.diag, map_sum]
 
 theorem absIrr_realise_of_isPrimitiveRoot {K : Type} [Field K] (σ : K →+* ℂ) (z : K)
     (hz : IsPrimitiveRoot z (Fintype.card G)) (ψ : G → ℂ) (hψ : ψ ∈ Formalism.L2.Col.gxIrrSet (G := G) ℂ) :
@@ -122,8 +124,10 @@ theorem absIrr_realise_of_isPrimitiveRoot {K : Type} [Field K] (σ : K →+* ℂ
     rw [← mul_one (Nat.card G : ℂ), ← horth, ← mul_assoc, mul_inv_cancel₀ hcardC, one_mul]
   have hsumK : ∑ g, τ.character g * τ.character g⁻¹ = (Nat.card G : K) := by
     apply σ.injective
-    rw [map_sum, map_natCast, ← hsumC]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_natCast, ← hsumC]
     exact Finset.sum_congr rfl fun g _ => by rw [map_mul, hτσ, hτσ]
-  simp only [hch, ← map_mul, ← map_sum, hsumK, map_natCast]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hch, ← map_mul, ← map_sum, hsumK, map_natCast]
 
 end GlobalTheory.BrauerRealise

@@ -181,12 +181,14 @@ theorem cMap_holds (hD : MemD W F c) (kind : ℕ → Kind) (b : ℕ → ℕ) (η
   have hmap := pfMapFl_filD F hD s _ _ hw'
   have hsum : dmapOf hD (∑ k, algebraMap O LL (w k) • lam₁ k) =
       ∑ l, algebraMap O LL (P w l) • lam₂ l := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [map_smul, hLamP, Finset.smul_sum, smul_smul]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun l _ => ?_
     rw [← Finset.sum_smul, ← LinearMap.toMatrix'_mulVec P w]
-    simp only [Matrix.mulVec, dotProduct, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, dotProduct, map_sum]
     refine congrArg (· • lam₂ l) (Finset.sum_congr rfl fun k _ => ?_)
     rw [map_mul]
     ring

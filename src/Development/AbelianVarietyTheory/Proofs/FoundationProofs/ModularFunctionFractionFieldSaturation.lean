@@ -50,7 +50,8 @@ theorem fn_sat : ∀ (Ω : Type) [Field Ω] [Algebra ℚ Ω] [IsAlgClosure ℚ �
     funext z; simp [hF, Finset.sum_apply]
   have hFg : (F : Mero) = 0 := by
     have e1 : (F : Mero) = Filter.Germ.coeRingHom _ F := rfl
-    rw [e1, e2, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e1, e2, map_sum]
     change ∑ i ∈ _, ((up (p i : ℍ → ℂ) * a ^ i * b ^ (n - i) : ℂ → ℂ) : Mero) = _
     simp only [Filter.Germ.coe_mul, Filter.Germ.coe_pow]
     calc _ = (b : Mero) ^ n * ∑ i ∈ Finset.range (n + 1), T.an (T.io (p i)) * (((a / b : ℂ → ℂ)) : Mero) ^ i := by

@@ -44,7 +44,8 @@ theorem exists_env (hθ : IsInfFam θ) (R : RealPoints θ V) (z : List (ℝ → 
   classical
   choose! w hw using fun l (hl : l ∈ z.support) => exists_word hθ R l (hz l hl)
   refine ⟨∑ l ∈ z.support, z l • w l, fun f => ?_⟩
-  rw [map_sum, LinearMap.sum_apply, Submodule.coe_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, LinearMap.sum_apply, Submodule.coe_sum]
   funext g
   simp only [dop, Finsupp.sum, Finset.sum_apply]
   refine Finset.sum_congr rfl fun l hl => ?_

@@ -59,7 +59,8 @@ theorem archLine_continuous_finPart : ∀ (D : D7) (S X : HSp D) {d : ℕ} (e : 
     exact (hsm.matrix_transpose.matrix_submatrix e id).matrix_mul continuous_const
   · rw [hform]
     refine Matrix.ext fun i j => ?_
-    rw [Matrix.map_apply, Matrix.zero_apply, Matrix.mul_apply, map_sum (finPart D)]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Matrix.map_apply, Matrix.zero_apply, Matrix.mul_apply, map_sum (finPart D)]
     refine Finset.sum_eq_zero fun k _ => ?_
     rw [(finPart D).map_mul, Matrix.submatrix_apply, Matrix.transpose_apply, Matrix.smul_apply, GlobalTheory.ArchLineSum.finPart_smul,
       show sndA D.host.F (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.realAd D.host.F t) = 0 from rfl, TensorProduct.zero_tmul, zero_mul, zero_mul]

@@ -111,7 +111,8 @@ theorem eq_trace {β : Type} [Fintype β] [DecidableEq β] (ξ : Matrix β β �
     have := h (single i b 1) (single b i 1)
     rwa [single_mul_single_same, single_mul_single_same, one_mul, map_sub, sub_eq_zero] at this
   conv_lhs => rw [matrix_eq_sum_single A]
-  simp only [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum]
   rw [Matrix.trace, Finset.mul_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   have e : ∀ j, ξ (single i j (A i j)) = A i j * ξ (single i j 1) := fun j => by

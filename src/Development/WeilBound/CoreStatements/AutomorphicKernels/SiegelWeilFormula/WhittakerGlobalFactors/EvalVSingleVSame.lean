@@ -53,14 +53,17 @@ theorem psi_split (ψ : AddChar (AF F) ℂ) (hψ : IsCharAF F ψ) :
   set r : Af F := xf - ∑ v ∈ S, singleV F v (evalV F v xf) with hr
   have hdec : x = pairA F (fstA F x) 0 + ∑ v ∈ S, pairA F 0 (singleV F v (evalV F v xf)) + pairA F 0 r := by
     refine AF_ext ?_ ?_
-    · rw [map_add, map_add, map_sum, fstA_pairA, fstA_pairA]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [map_add, map_add, map_sum, fstA_pairA, fstA_pairA]
       simp only [fstA_pairA, Finset.sum_const_zero, add_zero]
-    · rw [map_add, map_add, map_sum, sndA_pairA, sndA_pairA]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [map_add, map_add, map_sum, sndA_pairA, sndA_pairA]
       simp only [sndA_pairA, hr, hxf]
       abel
   have hrv : ∀ v, evalV F v r = if v ∈ S then 0 else evalV F v xf := by
     intro v
-    rw [hr, map_sub, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hr, map_sub, map_sum]
     by_cases hv : v ∈ S
     · rw [if_pos hv, Finset.sum_eq_single v]
       · rw [evalV_singleV_same, sub_self]

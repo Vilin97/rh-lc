@@ -71,12 +71,14 @@ theorem char_flipDet {D : D7} (c : (AE D)ˣ →* Circle) (χ : HChar D.host.E) (
     rfl
   have heT : ∀ R ∈ T, ev R e = 1 := by
     intro R hR
-    rw [hsum, map_sum, Finset.sum_eq_single R, (hidem R hR).1]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hsum, map_sum, Finset.sum_eq_single R, (hidem R hR).1]
     · intro Q hQ hne; exact (hidem Q hQ).2 R hne.symm
     · intro h; exact absurd hR h
   have heT' : ∀ R, R ∉ T → ev R e = 0 := by
     intro R hR
-    rw [hsum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hsum, map_sum]
     exact Finset.sum_eq_zero fun Q hQ => (hidem Q hQ).2 R fun h => hR (h ▸ hQ)
   have hinc : ∀ R (k : D.host.E), ev R (incA D k) = algebraMap D.host.E (R.adicCompletion D.host.E) k := by
     intro R k

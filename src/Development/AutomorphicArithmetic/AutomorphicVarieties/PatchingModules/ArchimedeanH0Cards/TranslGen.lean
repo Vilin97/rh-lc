@@ -81,7 +81,8 @@ theorem translGen {P : Pl Γ} (D : Dat A P) (M : FRep A Γ) (ι : D.M.X →ₗ[A
     have := e1' (g, h)
     simp only [d1_apply, map_add, map_sub, he, smul_add, smul_sub, Finset.sum_add_distrib,
       Finset.sum_sub_distrib] at this
-    simp only [map_sub, map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sub, map_sum, map_smul]
     rw [← sub_eq_zero] at this ⊢
     rw [← neg_eq_zero, ← this]
     abel
@@ -112,7 +113,8 @@ theorem translGen {P : Pl Γ} (D : Dat A P) (M : FRep A Γ) (ι : D.M.X →ₗ[A
       simp [Prod.snd_sum, Finset.sum_apply]
     rw [hk] at a1
     convert add_mem a1 (Submodule.sum_mem _ fun i (_ : i ∈ Finset.univ) => (N w).smul_mem (c i) (hτ i w g)) using 1
-    simp only [Pi.add_apply, amitsur_d0_apply, map_sub, map_add, map_sum, he, smul_sub, Finset.sum_sub_distrib, map_smul ι (c _)]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Pi.add_apply, amitsur_d0_apply, map_sub, map_add, map_sum, he, smul_sub, Finset.sum_sub_distrib, map_smul ι (c _)]
     abel
 
 end UpperTheory.V.Pa.B2

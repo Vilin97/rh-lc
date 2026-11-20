@@ -27,14 +27,16 @@ theorem sum_coord_jN (M : Seam R cr) (u : D.what₂.Word) (φ : D.what₂.Mu u) 
   have h : ∀ i, D.jN u (R.eNu u (Pi.single i 1)) = (M.cφ u).symm (Pi.single i 1) := fun i => by
     rw [← M.cφ_eq]
     exact congrArg _ (cpt_single D.what₂.embLL i)
-  simp only [h, ← map_smul, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [h, ← map_smul, ← map_sum]
   rw [LinearEquiv.symm_apply_eq]
   funext k
   simp [Finset.sum_apply, Pi.single_apply]
 
 theorem sum_coord_eMu (M : Seam R cr) (u : D.what₂.Word) (φ : D.what₂.Mu u) :
     ∑ i, M.cφ u φ i • D.eMu u (D.jN u (R.eNu u (Pi.single i 1))) = D.eMu u φ := by
-  simp only [← map_smul, ← map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← map_smul, ← map_sum]
   rw [sum_coord_jN]
 
 theorem sum_coord_heq (M : Seam R cr) (u w : D.what₂.Word) (hw : w = u)

@@ -28,7 +28,8 @@ theorem rep_conj_of_trace_eq : ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (g : �
     have : (fun τ => Matrix.scalar (Fin D.m) (f τ)) = ∑ τ, f τ • (Pi.single τ 1 : (D.F →+* ℂ) → Matrix (Fin D.m) (Fin D.m) ℂ) := by
       ext τ i j
       simp [Finset.sum_apply, Pi.single_apply, Matrix.scalar_apply, Matrix.diagonal_apply, Matrix.one_apply]
-    rw [this, map_sum, Matrix.trace_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [this, map_sum, Matrix.trace_sum]
     simp [map_smul, Matrix.trace_smul]
   let χ : (D.F →+* ℂ) → (𝓞 D.F →* ℂ) := fun τ => (τ.comp (algebraMap (𝓞 D.F) D.F)).toMonoidHom
   have hχ : Function.Injective χ := by

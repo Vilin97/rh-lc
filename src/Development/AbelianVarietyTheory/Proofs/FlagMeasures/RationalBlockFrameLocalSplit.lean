@@ -33,7 +33,8 @@ theorem biorth_map {E K : Type} [CommRing E] [CommRing K] {n m : ℕ} {r : ℕ �
       rw [RingHom.mapMatrix_apply, Matrix.map_mul]
       simp only [Matrix.mul_assoc]
     simp only [e]
-    rw [← Finset.sum_mul, ← Finset.mul_sum, ← map_sum, h.2.2, map_one, mul_one, h2]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Finset.sum_mul, ← Finset.mul_sum, ← map_sum, h.2.2, map_one, mul_one, h2]
 
 theorem map_mulVec_comp {E K : Type} [CommRing E] [CommRing K] {n p : ℕ} (φ : E →+* K)
     (A : Matrix (Fin n) (Fin p) E) (y : Fin p → E) :

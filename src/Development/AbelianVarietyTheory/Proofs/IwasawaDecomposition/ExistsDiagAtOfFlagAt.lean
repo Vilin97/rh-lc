@@ -59,7 +59,8 @@ theorem tanEv_sum_smul {X : Scheme.{0}} (t : SAB H X) {k : Type} [CommRing k] {x
     tanEv t hv h (∑ j, a j • s j) = ∑ j, valR x V (a j) * tanEv t hv h (s j) := by
   let f : Γ(GlobalTheory.LieVB.omega t.G, V) →+ k := AddMonoidHom.mk' (tanEv t hv h) (tanEv_add t hv h)
   change f (∑ j, a j • s j) = _
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   change tanEv t hv h (a j • s j) = _
   rw [tanEv_smul, valR, dif_pos h]
@@ -109,7 +110,8 @@ theorem valR_crossC (q q' : LatChart Z L) (hg : q.g = q'.g) {k : Type} [Field k]
     rfl
   have lhs : tanEv B.t hvt hVV (L.N.incl.app (q.V ⊓ q'.V) (GlobalTheory.Twist.resM _ inf_le_right (q'.m l))) =
       ∑ j, valR (x ≫ q.g) _ (crd q q' l j) * valR x q.U (q.c σ i j) := by
-    rw [e, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e, map_sum]
     simp only [Scheme.Modules.Hom.app_smul]
     rw [tanEv_sum_smul]
     refine Finset.sum_congr rfl fun j _ => ?_
@@ -117,7 +119,8 @@ theorem valR_crossC (q q' : LatChart Z L) (hg : q.g = q'.g) {k : Type} [Field k]
     exact congrArg _ (hvc j)
   have hval : valR x (q.U ⊓ q'.U) (crossC q q' hg σ i l) =
       ∑ j, valR (x ≫ q.g) _ (crd q q' l j) * valR x q.U (q.c σ i j) := by
-    rw [crossC, valR_eq x _ hx, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [crossC, valR_eq x _ hx, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_mul, ← valR_eq x _ hx, ← valR_eq x _ hx, pullInf, valR_appLE x q.g _ hx, valR_res x _ hx]
   rw [hval, ← lhs, key]
@@ -141,13 +144,15 @@ theorem valR_diagFn (q q' : LatChart Z L) (hg : q.g = q'.g) {k : Type} [Field k]
   have hone : ∀ b, ∑ l, valR x q'.U (q'.c σ b l) * valR x q'.U
       ((((q'.extMat σ)⁻¹ : GL (Fin q'.n) Γ(Z.X, q'.U)) : Matrix (Fin q'.n) (Fin q'.n) Γ(Z.X, q'.U)) l (q'.extEmb σ i)) =
         if b = i then 1 else 0 := fun b => by
-    simp_rw [← extMat_apply, valR_eq x _ hx', ← map_mul, ← map_sum, ← Matrix.mul_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp_rw [← extMat_apply, valR_eq x _ hx', ← map_mul, ← map_sum, ← Matrix.mul_apply]
     rw [Units.mul_inv, Matrix.one_apply]
     simp only [(q'.extEmb σ).injective.eq_iff]
     split_ifs
     · exact map_one _
     · exact map_zero _
-  rw [diagFn, valR_eq x _ hx, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [diagFn, valR_eq x _ hx, map_sum]
   simp_rw [map_mul, ← valR_eq x _ hx, valR_crossC q q' hg hu hu' σ i cf hc, valR_res x _ hx, Finset.sum_mul]
   rw [Finset.sum_comm]
   simp_rw [mul_assoc, ← Finset.mul_sum, hone, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true]

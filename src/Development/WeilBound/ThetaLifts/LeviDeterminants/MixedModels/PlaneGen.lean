@@ -30,7 +30,8 @@ theorem bf_smul_r (a : R) (u v) : bf c J u (a • v) = c a * bf c J u v := by
 theorem bf_mulVec (M : Matrix (Fin n) (Fin n) R) (u v) : bf c J (M *ᵥ u) (M *ᵥ v) = bf c (Mᵀ * J * M.map c) u v := by
   have hc : (fun i => c ((M *ᵥ v) i)) = M.map c *ᵥ fun i => c (v i) := by
     funext i
-    simp [mulVec, dotProduct, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [mulVec, dotProduct, map_sum, map_mul]
   simp only [bf]
   rw [hc, ← mulVec_mulVec, ← mulVec_mulVec, dotProduct_mulVec u Mᵀ, vecMul_transpose]
 
@@ -63,7 +64,8 @@ variable {ε : R} {x y : Fin n → R} {ι : Matrix (Fin n) (Fin k) R} (h : Plane
 include h
 
 theorem symm (u v) : bf c J v u = ε * c (bf c J u v) := by
-  simp only [bf, dotProduct, mulVec, map_sum, map_mul, Finset.mul_sum, h.cc]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [bf, dotProduct, mulVec, map_sum, map_mul, Finset.mul_sum, h.cc]
   conv_rhs => rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   rw [h.herm]

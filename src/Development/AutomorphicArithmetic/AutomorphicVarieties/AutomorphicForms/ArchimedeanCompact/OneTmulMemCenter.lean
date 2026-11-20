@@ -85,7 +85,8 @@ theorem ιC_eq_sum (X : Lie E a) : ιC E a X = ∑ τ : E →+* ℂ, ∑ i, ∑ 
   AlgRepEndIrreducible.lieDecomp E a _ (ιC E a) (Matrix.of X)
 
 theorem lie_eq_sum (X : Lie E a) : lie E a X = ∑ τ : E →+* ℂ, ∑ i, ∑ j, coord τ (X i j) • Eop τ i j := by
-  simp only [← uC_ιC, ιC_eq_sum, map_sum, map_smul, uC_genC]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← uC_ιC, ιC_eq_sum, map_sum, map_smul, uC_genC]
 
 theorem adjoin_genC : Algebra.adjoin ℂ {x : UC E a | ∃ τ i j, x = genC τ i j} = ⊤ := by
   set S := Algebra.adjoin ℂ {x : UC E a | ∃ τ i j, x = genC τ i j}

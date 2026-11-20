@@ -185,11 +185,13 @@ theorem UpperTheory.V.AlgebraTools.st_coi_lift :
       obtain ⟨hSid, hSj⟩ := hsum ep s (fun i hi => (hp i hi).1) ho
       have he : IsIdempotentElem (1 - ∑ i ∈ s, ep i) := hSid.one_sub
       have hse : T.st (1 - ∑ i ∈ s, ep i) = 1 - ∑ i ∈ s, ep i := by
-        rw [map_sub, scl_st_one, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sub, scl_st_one, map_sum]
         congr 1
         exact Finset.sum_congr rfl (fun i hi => (hp i hi).2.1)
       have hre : r (1 - ∑ i ∈ s, ep i) = 1 - ∑ i ∈ s, Matrix.single i i (1 : F) := by
-        rw [map_sub, map_one, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [map_sub, map_one, map_sum]
         congr 1
         exact Finset.sum_congr rfl (fun i hi => (hp i hi).2.2)
       have hl : (1 - ∑ i ∈ s, Matrix.single i i (1 : F)) * Matrix.single a a 1 = Matrix.single a a 1 := by
@@ -247,7 +249,8 @@ theorem UpperTheory.V.AlgebraTools.st_coi_lift :
       rintro ⟨rfl, rfl⟩
       exact h rfl
   have hr0 : r (1 - ∑ i, ep i) = 0 := by
-    rw [map_sub, map_one, map_sum, sub_eq_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_one, map_sum, sub_eq_zero]
     rw [Finset.sum_congr rfl (fun i _ => (hp i (Finset.mem_univ i)).2.2), hone]
   obtain ⟨M, hM⟩ := hk _ hr0
   have h0 := scl_idem_zero I hSid.one_sub hM

@@ -118,7 +118,8 @@ theorem ev_of_mem_pow : ∀ (R : Type) [CommRing R] (p m N : ℕ) [Fact p.Prime]
     rw [g.eq_X_pow_mul_shift_add_trunc (p ^ m)]
     refine Ideal.add_mem _ ?_ ?_
     · rw [Ideal.mem_comap, map_mul, map_pow]; exact Ideal.mul_mem_right _ _ hXp
-    · rw [trunc_apply, ← Polynomial.coeToPowerSeries.ringHom_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [trunc_apply, ← Polynomial.coeToPowerSeries.ringHom_apply, map_sum]
       refine Ideal.sum_mem _ fun i hi => ?_
       have hi' : i < p ^ m := (Finset.mem_Ico.1 hi).2
       rw [Polynomial.coeToPowerSeries.ringHom_apply, Polynomial.coe_monomial, monomial_eq_C_mul_X_pow]

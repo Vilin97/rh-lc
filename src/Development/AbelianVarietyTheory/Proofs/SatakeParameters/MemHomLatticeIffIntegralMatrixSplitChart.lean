@@ -147,11 +147,13 @@ theorem pi_rk (he : IsSplitIdem D e) (hπ : Chart e v π) (S T : HSp D) (a : D.h
     refine pi_eq_of_finPart he hπ ?_
     rw [rk, Matrix.of_apply, finPart_liftFin]
     simp only [← finPart_cA]
-    rw [RingHom.map_mul (finPart D) (_ * _), RingHom.map_mul (finPart D) (incA D a), map_sum (finPart D)]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [RingHom.map_mul (finPart D) (_ * _), RingHom.map_mul (finPart D) (incA D a), map_sum (finPart D)]
     simp only [finPart_mul_incA]
     rfl
   rw [h]
-  simp only [RingHom.map_mul, map_sum π, GlobalTheory.DualPairCheck.cA_cA, pi_idem he hπ, one_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [RingHom.map_mul, map_sum π, GlobalTheory.DualPairCheck.cA_cA, pi_idem he hπ, one_mul]
 
 theorem exists_generator (he : IsSplitIdem D e) (hπ : Chart e v π) :
     ∃ a₀ ∈ D.host.AA, π (incA D a₀) ≠ 0 ∧ ∀ a ∈ D.host.AA, IsInt (Ov D v) ((π (incA D a₀))⁻¹ * π (incA D a)) := by
@@ -220,7 +222,8 @@ theorem mem_latO_iff_intM : ∀ {D : D7} (e : AE D) (v : HeightOneSpectrum (𝓞
       rw [isInt_iff]
       convert h5 using 1
       rw [← Matrix.vecMul_vecMul]
-      simp only [Matrix.smul_apply, smul_eq_mul, Matrix.mul_apply, Matrix.map_apply, Matrix.of_apply, hm,
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Matrix.smul_apply, smul_eq_mul, Matrix.mul_apply, Matrix.map_apply, Matrix.of_apply, hm,
         Matrix.mulVec, Matrix.vecMul, dotProduct, RingHom.map_mul, map_sum, GlobalTheory.DualPairCheck.cA_incA]
       simp only [Finset.mul_sum, Finset.sum_mul]
       refine Finset.sum_congr rfl fun l _ => ?_
@@ -264,7 +267,8 @@ theorem mem_latO_iff_intM : ∀ {D : D7} (e : AE D) (v : HeightOneSpectrum (𝓞
       (sum_mem fun j (_ : j ∈ Finset.univ) => rk_mem S T ha₀ (hs j) (ht j))
     convert hU using 1
     ext i l
-    rw [Matrix.smul_apply, smul_eq_mul, ← hu i l, ← sub_eq_zero, ← mul_sub, ← hπ.2.1, RingHom.map_sub, sub_eq_zero,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Matrix.smul_apply, smul_eq_mul, ← hu i l, ← sub_eq_zero, ← mul_sub, ← hπ.2.1, RingHom.map_sub, sub_eq_zero,
       Matrix.sum_apply, map_sum]
     have hsum : ∀ j, π (rk S T a₀ (fun k => finPart D (cA D e * cA D (σ (Z j k))))
         (fun k => finPart D (e * σ (Y k j))) i l) = π (incA D a₀) * (Y i j * (Z * G) j l) := by

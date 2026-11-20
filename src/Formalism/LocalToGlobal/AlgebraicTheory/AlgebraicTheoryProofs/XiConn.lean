@@ -230,7 +230,8 @@ theorem linSubst_eq {K : Type} [Field K] {m n : Type} [Fintype n] (M : Matrix m 
 theorem linSub_sumC {K : Type} [Field K] {n m ι : Type} [Finite n] [Fintype m] [Fintype ι] (Fm : n → m → K)
     (cc : ι → K) (T : ι → MvPowerSeries n K) :
     linSub Fm (∑ i, MvPowerSeries.C (cc i) * T i) = ∑ i, MvPowerSeries.C (cc i) * linSub Fm (T i) := by
-  rw [← Formalism.L2.Th1.G.linSubHom_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Formalism.L2.Th1.G.linSubHom_apply, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_mul, Formalism.L2.Th1.G.linSubHom_apply, Formalism.L2.Th1.G.linSubHom_apply, Formalism.L2.Th1.G.linSub_C]
 
@@ -306,7 +307,8 @@ theorem XiConnection.ser_eq {p : ℕ} [Fact p.Prime] (ι : ℂ ≃+* ℂ_[p]) {n
       rw [if_neg (Ne.symm hw), map_zero, zero_mul]
     · intro hi; exact absurd (Finset.mem_univ i) hi
   unfold serLin
-  rw [hfun, hfun2, hcomp, Formalism.L2.Th1.H.FormalGroupLawNegation.map_linSubst, linSubst_eq, Formalism.L2.Th1.GD.GramFrameCompositionLinFacts.linSub_linSub,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hfun, hfun2, hcomp, Formalism.L2.Th1.H.FormalGroupLawNegation.map_linSubst, linSubst_eq, Formalism.L2.Th1.GD.GramFrameCompositionLinFacts.linSub_linSub,
     hmat, hGtay, map_sum]
   simp only [map_mul, MvPowerSeries.map_C]
   rw [linSub_sumC]

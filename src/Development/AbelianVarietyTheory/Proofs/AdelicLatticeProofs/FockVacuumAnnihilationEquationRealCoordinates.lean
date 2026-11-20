@@ -105,7 +105,8 @@ theorem vacuum_annihilation : ∀ (D : D7) (θ : InfFam D) (σ : (D.what₂.Tau 
         rw [ContinuousLinearMap.map_add, LinearMap.map_add, Complex.ofReal_add]
         ring }
   show A z + Complex.I * A (jO S T sS sT z) = 0
-  rw [← Finset.univ_sum_single z, map_sum, map_sum, map_sum, Finset.mul_sum, ← Finset.sum_add_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← Finset.univ_sum_single z, map_sum, map_sum, map_sum, Finset.mul_sum, ← Finset.sum_add_distrib]
   refine Finset.sum_eq_zero fun τ _ => ?_
   have h1 := congrFun (hv τ (z τ)) (iotaW σ T S w)
   have h2 : Formalism.IndefR.Datum.dRho (heisO ψ S T) θ τ (z τ) f (iotaW σ T S w) +

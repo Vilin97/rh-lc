@@ -19,7 +19,8 @@ theorem aOf_eq (Y : FBChart C V O dd) (u : Fin dd → C) :
     Y.aOf u = ∑ i, MvPowerSeries.C (u i ^ V.l * ((V.l.factorial : C))⁻¹) *
       ev (rz 1) ((pderiv C ((0 : Fin 2), i))^[V.l] Y.u1) := by
   ext ν
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [coeff_C_mul]
   show (∑ i, u i ^ V.l * coeff (Finsupp.single ((0 : Fin 2), i) V.l +
     ν.mapDomain (fun q : Fin 1 × Fin dd => ((1 : Fin 2), q.2))) Y.u1) = _
@@ -38,7 +39,8 @@ theorem link (Y : FBChart C V O dd) (u : Fin dd → C) (W : Pt C 2 dd) (hW : ∀
   have hz1 := z0_1 W hW
   have hz2 := constant_zero_two_points (p3 0) (z0p3 0) hW0
   rw [aOf_eq, ev_sum hz1]
-  simp only [ev_mul hz1, ev_C, map_sum, coeff_C_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [ev_mul hz1, ev_C, map_sum, coeff_C_mul]
   unfold Phi
   refine Finset.sum_congr rfl fun i _ => ?_
   have e1 : ev ![W] (ev (rz 1) ((pderiv C ((0 : Fin 2), i))^[V.l] Y.u1)) =

@@ -15,7 +15,8 @@ theorem graph_orth_stable {p q : ℕ} {A : Type} [NormedAddCommGroup A] [InnerPr
   intro v hv
   have hu' := (Submodule.mem_orthogonal' K u).1 hu
   rw [Matrix.matrix_eq_sum_single W]
-  simp only [map_sum, LinearMap.sum_apply, sum_inner]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.sum_apply, sum_inner]
   refine Finset.sum_eq_zero fun a _ => Finset.sum_eq_zero fun b _ => ?_
   have hs : Matrix.single a b (W a b) = W a b • Eab a b := by
     simp [Eab, Matrix.smul_single]
@@ -156,7 +157,8 @@ theorem graph_sub {p q : ℕ} {A : Type} [NormedAddCommGroup A] [InnerProductSpa
   have hall : ∀ W, ∀ n ∈ R, P W n ∈ R := by
     intro W n hn
     rw [Matrix.matrix_eq_sum_single W]
-    simp only [map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.sum_apply]
     refine R.sum_mem fun a _ => R.sum_mem fun b _ => ?_
     have hs : Matrix.single a b (W a b) = W a b • Eab a b := by
       simp [Eab, Matrix.smul_single]

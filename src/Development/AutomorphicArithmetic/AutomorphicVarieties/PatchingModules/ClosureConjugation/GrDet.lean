@@ -22,7 +22,8 @@ private theorem gdet_eq_ofRep {n : ℕ} {A G E S : Type} [CommRing A] [Group G] 
   have hD : ∀ w : T ⊗[A] E, DE.D T w = (ψ w).det := by
     intro w
     obtain ⟨k, t, z, rfl⟩ := TensorProduct.exists_sum_tmul_eq w
-    rw [d_gma_det DE ep hch he h1 S φ hφ T t z, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [d_gma_det DE ep hch he h1 S φ hφ T t z, map_sum]
     simp only [hψ]
   have h2 : D.D T y = DE.D T (Algebra.TensorProduct.map (AlgHom.id T T) ι (toT A G T y)) := by
     have h3 : D.D T y = D.toDet.D T (toT A G T y) := (congrArg (D.D T) (ofT_toT (A := A) y)).symm

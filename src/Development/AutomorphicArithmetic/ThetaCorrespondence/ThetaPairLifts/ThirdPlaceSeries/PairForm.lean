@@ -46,7 +46,8 @@ theorem pwOf_op_ramCrd_eq_puFun (W : _root_.GlobalTheory.MiS.RealPackAlt ex) (u 
   have hr : Fintype.linearCombination ℂ (fun i => D.eMu w (D.jN w (W.P.I.eNu w (Pi.single i (1 : D.what₂.LL))))) x =
       D.eMu w (_root_.GlobalTheory.MiTop.columnOfCoordinates W w x) := by
     refine (Fintype.linearCombination_apply ℂ _ x).trans ?_
-    simp [_root_.GlobalTheory.MiTop.columnOfCoordinates, map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [_root_.GlobalTheory.MiTop.columnOfCoordinates, map_sum, map_smul]
   refine op_eq (_root_.Formalism.IndefR.pwOf_alt W.S W.Q.hin w) _ T ?_
   show Formalism.L2.SG.ColDict.colDictL W.S.X (W.S.tr w) W.S.Y.hK T = _
   refine hT.trans ?_

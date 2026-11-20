@@ -63,7 +63,8 @@ theorem satake_bound_of_isometric_spherical : ∀ (O K : Type) [CommRing O] [IsD
 
     have h1 : heckeElem k φ L = ρ (γ L) (heckeElem k φ (std O K r)) := by
       conv_lhs => rw [← hγ' L]
-      rw [heckeElem_smul, heckeElem_eq_sum, heckeElem_eq_sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [heckeElem_smul, heckeElem_eq_sum, heckeElem_eq_sum, map_sum]
       exact Finset.sum_congr rfl fun M _ => hφg _ _
     rw [h1, h0, map_smul]
 end GlobalTheory.LatHecke

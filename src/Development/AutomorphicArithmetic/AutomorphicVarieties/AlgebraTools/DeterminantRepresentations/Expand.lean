@@ -17,7 +17,8 @@ private theorem hom_two {A : Type} [CommRing A] {n : ℕ} (P : MvPolynomial (Fin
     rw [MvPolynomial.aeval_monomial, Finsupp.prod_fintype _ _ (fun i => pow_zero _), Fin.prod_univ_two]
     simp [mul_assoc]
   conv_lhs => rw [P.as_sum]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp_rw [hF]
   have hinj : Set.InjOn e (Finset.range (n + 1)) := by
     intro i _ j _ h

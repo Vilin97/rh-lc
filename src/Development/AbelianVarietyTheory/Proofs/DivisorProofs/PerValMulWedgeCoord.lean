@@ -129,7 +129,8 @@ theorem dualMat_mul (hx : IsPerBasis Di x hm) (h : PerData c e Di Hm P W Q) :
     congr 1
     · simp only [part, Matrix.mul_apply, Matrix.transpose_apply, Matrix.of_apply, perMat, Finset.sum_mul, Finset.mul_sum]
       exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
-    · simp only [part, Matrix.mul_apply, Matrix.transpose_apply, Matrix.of_apply, perMat, dualMat, Finset.sum_mul,
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp only [part, Matrix.mul_apply, Matrix.transpose_apply, Matrix.of_apply, perMat, dualMat, Finset.sum_mul,
         Finset.mul_sum, map_sum, map_mul, Complex.conj_conj, ← Finset.sum_neg_distrib]
       rw [Finset.sum_comm]
       exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
@@ -158,12 +159,14 @@ theorem isCoef_per (h : PerData c e Di Hm P W Q) {v : Di.La} {n : ℕ} (hn : n �
   have hn' : (n : ℂ) ≠ 0 := Nat.cast_ne_zero.2 hn
   have key : ∀ z : Pad.Letter D, Q v z = ∑ k, (n : ℂ)⁻¹ * Formalism.L2.PjFree.relab c e z.1 (b k : E) * Q (x k) z := fun z => by
     have := congrFun (congrArg Q hb) z
-    rw [map_sum, map_nsmul, Finset.sum_apply, Pi.smul_apply, nsmul_eq_mul] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_nsmul, Finset.sum_apply, Pi.smul_apply, nsmul_eq_mul] at this
     simp only [h.2.2.2.2.2.2] at this
     simp only [_root_.mul_assoc, ← Finset.mul_sum]
     rw [this, inv_mul_cancel_left₀ hn']
   refine ⟨fun i => key _, fun j => ?_⟩
-  rw [key, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [key, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [relab_conj]
   simp [conjEmb]

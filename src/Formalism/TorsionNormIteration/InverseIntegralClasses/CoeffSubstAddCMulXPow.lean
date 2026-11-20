@@ -62,7 +62,8 @@ lemma coeff_subst_add_C_mul_X_pow (f b : PowerSeries R) (hb : constantCoeff b = 
         (b + C c * X ^ N) ^ i * b ^ (n - 1 - i)) := by
       rw [← sub_eq_iff_eq_add', ← hg]
       ring
-    rw [hx, map_add, coeff_X_pow_mul', if_pos le_rfl, Nat.sub_self,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hx, map_add, coeff_X_pow_mul', if_pos le_rfl, Nat.sub_self,
       coeff_zero_eq_constantCoeff_apply, map_mul, constantCoeff_C, map_sum]
     simp only [map_mul, map_pow, hbe, hb]
     rw [sum_zero_pow_mul]

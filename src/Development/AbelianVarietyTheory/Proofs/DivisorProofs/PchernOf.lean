@@ -57,7 +57,8 @@ theorem pchern_of (hsep : ∀ {R : Type} [CommRing R] (A : Over (Sp R)) [GrpObj 
   have hpr : ∀ c : primDR A, r.coef.pull1 c.1 = K.perCl (pr c) := fun c ↦ hP c K r hF
   obtain ⟨c', hc'⟩ := hcup K (fun k ↦ pr (a k)) (fun k ↦ pr (b k)) ℓ c
     (fun l m ↦ algebraMap ℂ (Hol (fibFam u).V) (β l m)) (by
-      rw [← hz, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hz, map_sum]
       exact Finset.sum_congr rfl fun k _ ↦ by rw [GlobalTheory.CatCoh.CoefMap.pullCohomologyTwo_cup, hpr, hpr]) hcc
   let δ : u.Λ → u.Λ → ℂ := fun l m ↦ ∑ k, P l (a k) * P m (b k) - β l m
   have d1 : ∀ l l' m, δ (l + l') m = δ l m + δ l' m := fun l l' m ↦ by
@@ -78,7 +79,8 @@ theorem pchern_of (hsep : ∀ {R : Type} [CommRing R] (A : Over (Sp R)) [GrpObj 
       rw [hc']
       congr 1
       change _ = algebraMap ℂ (Hol (fibFam u).V) (δ φ.deg ψ.deg)
-      simp only [δ, map_sub, map_sum, map_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [δ, map_sub, map_sum, map_mul]
       rfl) x x'
   have hs' : δ x x' = δ x' x := by
     have := congrArg (Hol.ev (W := (fibFam u).V) 0 trivial) hs

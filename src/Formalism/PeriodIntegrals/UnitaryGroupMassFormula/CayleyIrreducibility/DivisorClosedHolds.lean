@@ -21,7 +21,8 @@ lemma map_genAct_X (τ : ι) (g : Matrix (Fin n) (Fin n) ℂ) (v : ι × Fin n �
   obtain ⟨τ', r, s⟩ := v
   by_cases hv : τ' = τ
   · subst hv
-    simp only [genAct, famAct, aeval_X, if_true, Function.update_self, map_sum, map_mul, map_C, map_X,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [genAct, famAct, aeval_X, if_true, Function.update_self, map_sum, map_mul, map_C, map_X,
       eval_X]
   · simp only [genAct, famAct, aeval_X, if_neg hv, Function.update_of_ne hv, map_X]
     rw [Finset.sum_eq_single r (fun c _ hc => by rw [Matrix.one_apply_ne (Ne.symm hc), map_zero, zero_mul])
@@ -43,7 +44,8 @@ lemma eval_pushφ (φ : Module.Dual ℂ (MvPolynomial (ι × Fin n × Fin n) ℂ
     (Q : MvPolynomial (ι × Fin n × Fin n) (MvPolynomial (Fin n × Fin n) ℂ)) :
     eval x (pushφ φ Q) = φ (map (eval x) Q) := by
   conv_rhs => rw [Q.as_sum]
-  rw [pushφ, map_sum, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [pushφ, map_sum, map_sum, map_sum]
   refine Finset.sum_congr rfl fun m _ => ?_
   rw [map_monomial, smul_eval]
   have : (monomial m (eval x (Q.coeff m)) : MvPolynomial (ι × Fin n × Fin n) ℂ) = eval x (Q.coeff m) • monomial m 1 := by
@@ -145,7 +147,8 @@ theorem divisor_closed_holds : DivClosedOf := by
   set r : Polynomial ℂ := q.sum fun j c => Polynomial.monomial j (φ c) with hr
   have hr_eval : ∀ t : ℂ, r.eval t = φ (q.eval (C t)) := by
     intro t
-    rw [hr, Polynomial.sum_def, Polynomial.eval_finsetSum, Polynomial.eval_eq_sum (p := q), Polynomial.sum_def,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hr, Polynomial.sum_def, Polynomial.eval_finsetSum, Polynomial.eval_eq_sum (p := q), Polynomial.sum_def,
       map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [Polynomial.eval_monomial, ← map_pow, mul_comm (q.coeff j), MvPolynomial.C_mul', map_smul, smul_eq_mul,

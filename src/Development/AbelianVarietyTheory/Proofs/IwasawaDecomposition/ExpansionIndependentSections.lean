@@ -33,7 +33,8 @@ theorem sval_resK (U : UnifPre I D A G) (N : ℕ) (σ : SecG U N) {Z : Scheme.{0
 theorem comb_f (U : UnifPre I D A G) (N : ℕ) {n : ℕ} (c : Fin n → FractionRing R) (b : Fin n → SecKM U N) (j) :
     (∑ i, c i • b i : SecKM U N).f j = ∑ i, resTop _ (scal (pullback.snd G.hom (jK R)) (c i)) * (b i).f j := by
   show chartLin _ _ j (∑ i, c i • b i : SecKM U N) = _
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [map_smul]
   rfl
 

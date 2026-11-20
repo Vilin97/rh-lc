@@ -67,7 +67,8 @@ theorem eq_zero_of_piInf_eq_zero : ∀ (F E : Type) [Field F] [NumberField F] [F
   have hinf' : ∀ w i, evInf F w (bA.repr z i) = 0 := fun w => by
     have hw := IsTotallyReal.isReal w
     have h := hinf w
-    rw [hz_eq, map_sum, Fin.sum_univ_two] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hz_eq, map_sum, Fin.sum_univ_two] at h
     change InfinitePlace.Completion.extensionEmbedding w (evInf F w (bA.repr z 0)) * (emb w).1 (b 0) +
       InfinitePlace.Completion.extensionEmbedding w (evInf F w (bA.repr z 1)) * (emb w).1 (b 1) = 0 at h
     rw [hb0, hb1, map_one, mul_one, ← InfinitePlace.Completion.extensionEmbeddingOfIsReal_apply hw,

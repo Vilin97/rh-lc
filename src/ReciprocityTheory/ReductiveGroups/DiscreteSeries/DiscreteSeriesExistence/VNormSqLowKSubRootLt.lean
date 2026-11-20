@@ -298,7 +298,8 @@ theorem dS_casGen_map_isometry (U : H₁ ≃ₗᵢ[ℂ] H₂) (hU : ∀ g ∈ UJ
 theorem casU_map_isometry (U : H₁ ≃ₗᵢ[ℂ] H₂) (hU : ∀ g ∈ UJset ε, ∀ x : H₁, U (σ₁ g x) = σ₂ g (U x))
     (x : H₁) : casU ε σ₂ (U x) = U (casU ε σ₁ x) := by
   unfold casU
-  simp only [dS_casGen_map_isometry U hU, map_neg, map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dS_casGen_map_isometry U hU, map_neg, map_sum, map_smul]
 
 theorem smooth_symm_of_isometry (U : H₁ ≃ₗᵢ[ℂ] H₂) (hU : ∀ g ∈ UJset ε, ∀ x : H₁, U (σ₁ g x) = σ₂ g (U x))
     {v : H₂} (hv : IsSmoothVecU ε σ₂ v) : IsSmoothVecU ε σ₁ (U.symm v) := by

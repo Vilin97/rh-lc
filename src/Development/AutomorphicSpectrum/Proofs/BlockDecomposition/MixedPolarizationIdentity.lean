@@ -19,7 +19,8 @@ theorem multilinear_eq_zero {V : Type} [AddCommGroup V] {N : ℕ}
   have expand : ∀ T : Finset (Fin N), M (fun _ => ∑ i, if i ∈ T then 0 else a i) =
       ∑ f : Fin N → Fin N, if T ⊆ (Finset.univ.image f)ᶜ then M (a ∘ f) else 0 := by
     intro T
-    rw [M.map_sum (fun _ i => if i ∈ T then 0 else a i)]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [M.map_sum (fun _ i => if i ∈ T then 0 else a i)]
     refine Finset.sum_congr rfl fun f _ => ?_
     split_ifs with h
     · congr 1
@@ -155,7 +156,8 @@ theorem lin_add (a b : κ → ℤ) : lin (fun o => ((a + b) o : ℝ)) = lin (fun
 
 theorem lin_elim_zero (n : κ → ℤ) :
     lin (fun o : Option κ => (((o.elim 0 n : ℤ)) : ℝ)) = rename some (lin fun i => (n i : ℝ)) := by
-  simp [lin, Fintype.sum_option, map_sum, rename_X]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [lin, Fintype.sum_option, map_sum, rename_X]
 
 theorem lin_elim_one :
     lin (fun o : Option κ => (((o.elim 1 fun _ => 0 : ℤ)) : ℝ)) = MvPolynomial.X none := by

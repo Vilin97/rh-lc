@@ -153,7 +153,8 @@ theorem deriv (h : IsTensorOf T Θ) (γ : ∀ i, ℝ → GL (Fin (n i)) (Cinf E)
     have := hasDerivAt_prodForm γ Z h0 hγ (fun i => T i (φ i)) m
     rw [← h.prod] at this
     refine this.congr_deriv (congrFun (Eq.symm ?_) m)
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [h.prod, ← h.comm]
     congr 1
@@ -363,9 +364,11 @@ theorem exists_expansion {φ : Sm E N} (hφ : φ ∈ indForms h π) :
     have : res h (infGL E N (Unitary.toUnits (k y))) φ.1 = res h 1 (cptRep E N (k y) φ).1 :=
       funext fun m => congrArg (fun z => φ.1 (z * infGL E N (Unitary.toUnits (k y)))) (mul_one _).symm
     rw [this, e]
-    simp only [Submodule.coe_sum, Submodule.coe_smul, map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Submodule.coe_sum, Submodule.coe_smul, map_sum, map_smul]
   conv_lhs => rw [hy', chart_val, ex, hL, H.indOp_apply hφ hu' hky, er]
-  simp only [map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
 
 theorem indOp_one {φ : Sm E N} (hφ : φ ∈ indForms h π) : indOp h 1 φ.1 = φ.1 :=
   ext_res (fun _ hu => isTensorOf_id.indOp_left hφ hu) hφ.1 fun _ hy => isTensorOf_id.indOp_levi hφ hy

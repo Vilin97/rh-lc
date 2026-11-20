@@ -56,7 +56,8 @@ theorem majAt_eq_classSum (hb : C.HasRatBasis) (hp : ∀ v : InfinitePlace K, (C
   have hg : gramOf C.basis (fun (x y : C.Forms) => ∑ c, ((C.wt c : ℕ) : ℂ)⁻¹ * (valDatum C).pairAt v (x.1 c) (y.1 c)) =
       C.H.map v.embedding := by
     ext a a'
-    simp only [gramOf, Matrix.of_apply, Matrix.map_apply, CSD.H, CSD.csum, map_sum, map_mul, map_inv₀, map_natCast]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [gramOf, Matrix.of_apply, Matrix.map_apply, CSD.H, CSD.csum, map_sum, map_mul, map_inv₀, map_natCast]
     refine Finset.sum_congr rfl fun c _ => ?_
     congr 1
     exact ((valDatum C).pairAt_of_rat v _ _ fun i => C.basis_rat hb a c i).symm

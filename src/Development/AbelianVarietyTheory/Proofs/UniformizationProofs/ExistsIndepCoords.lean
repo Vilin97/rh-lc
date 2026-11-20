@@ -78,14 +78,16 @@ theorem split_relation {R F : Type} [CommRing R] [CommRing F] [Algebra R F] {X :
       exact (Algebra.TensorProduct.tmul_one_eq_one_tmul (R := R) (A := O) (B := F) r)) z (fromSpecStalk_mem x hx _)
   have e : ∑ l, (∑ i, germOf p x (a i l) * gs (𝟙 X) x U (s i)) • ((1 : O) ⊗ₜ[R] b l) =
       ∑ i, eR (∑ l, a i l • b l) * eL (gs (𝟙 X) x U (s i)) := by
-    simp only [Finset.sum_smul, map_sum, Finset.sum_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Finset.sum_smul, map_sum, Finset.sum_mul]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun l _ => ?_
     show _ = ((1 : O) ⊗ₜ[R] (a i l • b l)) * ((gs (𝟙 X) x U (s i) : O) ⊗ₜ[R] (1 : F))
     rw [Algebra.TensorProduct.tmul_mul_tmul, _root_.one_mul, _root_.mul_one, TensorProduct.tmul_smul,
       TensorProduct.smul_tmul', TensorProduct.smul_tmul', smul_eq_mul, _root_.mul_one]
     rfl
-  rw [e, ← h, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, ← h, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_mul]
   congr 1
@@ -155,7 +157,8 @@ theorem expandsG_unique : ∀ (R : Type) [CommRing R] [IsDomain R] (I : Ideal R)
     rw [Category.assoc, Category.assoc, Over.w, ← hj]
     exact congrArg _ (Over.w (fst (TF (R := R) F) D.toPre.P.A)).symm
   refine sub_eq_zero.1 ((sum_append (germOf q y) c c' f f' (fun t => sval (t α) r y J)).symm.trans ?_)
-  simp only [ha, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [ha, map_sum, Finset.sum_mul]
   rw [Finset.sum_comm]
   refine Finset.sum_eq_zero fun l _ => ?_
   have hm := hJ.mem (D.toPre.famφB α) r

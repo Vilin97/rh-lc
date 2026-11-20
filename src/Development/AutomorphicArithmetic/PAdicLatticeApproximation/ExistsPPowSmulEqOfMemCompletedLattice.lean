@@ -26,7 +26,8 @@ theorem UpperTheory.exists_p_pow_smul_eq_of_mem_completedLattice :
   let a : D.La := ∑ i, ((p : ℤ) ^ (R - r i) * z i) • b i
   refine ⟨R, a, B.ext_elem fun i => ?_⟩
   have ha : b.repr a i = (p : ℤ) ^ (R - r i) * z i := by
-    simp [a, map_sum, Finsupp.single_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [a, map_sum, Finsupp.single_apply]
   have e2 : B.repr ((1 : ℚ) ⊗ₜ[ℤ] a) i = ((b.repr a i : ℤ) : ℚ) := by
     simp [B, Module.Basis.baseChange_repr_tmul]
   rw [e2, ha, map_nsmul, Finsupp.smul_apply, nsmul_eq_mul]

@@ -137,7 +137,8 @@ private theorem det_gram_ne_zero' {D : D7} (V : HSp D) : V.gram.det ≠ 0 := by
     intro i
     have h1 := congrFun hc i
     simp only [Matrix.mulVec, dotProduct, Pi.zero_apply] at h1
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [map_smul, smul_eq_mul]
     rw [← h1]
     refine Finset.sum_congr rfl fun j _ => ?_

@@ -76,7 +76,8 @@ theorem valGe_sum_pow_twelve : ∀ (l : ℕ), l.Prime → ∀ (r : ℝ) (J : Typ
     Subtype.ext (by simp)
   rw [he, map_pow, norm_pow, ← hpow]
   refine pow_le_pow_left₀ (norm_nonneg _) ?_ 12
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg (by positivity) fun j _ => ?_
   rw [map_mul, norm_mul]
   calc ‖lam ⟨u j, hu1 j⟩‖ * ‖lam ⟨x j, hx1 j⟩‖ ≤ 1 * (l : ℝ) ^ (r / 12) :=

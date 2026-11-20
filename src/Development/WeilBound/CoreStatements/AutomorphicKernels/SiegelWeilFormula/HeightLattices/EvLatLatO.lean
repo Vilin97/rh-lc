@@ -95,7 +95,8 @@ theorem ev_OE_latO {k : ℕ} (bs : Module.Basis (Fin k) F E) : ∀ᶠ v : Height
     have hz' : z ∈ (OE E v : Set (v.adicCompletion F ⊗[F] E)) := hz
     rw [OE_eq_image] at hz'
     obtain ⟨c, hc, rfl⟩ := hz'
-    rw [map_sum, Finsupp.coe_finset_sum, Finset.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, Finsupp.coe_finset_sum, Finset.sum_apply]
     refine sum_mem fun i _ => ?_
     rw [Algebra.TensorProduct.basis_repr_tmul, Finsupp.smul_apply, Finsupp.mapRange_apply, smul_eq_mul]
     exact mul_mem (hc i trivial) (h2 i j)

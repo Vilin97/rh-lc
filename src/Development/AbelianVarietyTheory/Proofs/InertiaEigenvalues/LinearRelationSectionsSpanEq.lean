@@ -31,7 +31,8 @@ theorem mem_span_of_sum_mul {F : Type} [Field F] (σ : F →+* ℂ) {κ J : Type
   have hsol : ∀ m j, ∑ k, β k m * α k j = 0 := by
     intro m j
     have hs : ∑ m, (∑ k, β k m * α k j) • (ζ m : ℂ) = 0 := by
-      simp_rw [hsm, map_sum, map_mul, Finset.sum_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp_rw [hsm, map_sum, map_mul, Finset.sum_mul]
       rw [Finset.sum_comm, ← hz j]
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [hzexp k, Finset.sum_mul]
@@ -70,7 +71,8 @@ theorem mem_span_of_sum_smul {F V Y : Type} [Field F] [AddCommGroup V] [Module F
   have hz' : ∀ p : ι × Fin (Module.finrank F V'), ∑ k, z k * σ (α k p) = 0 := by
     rintro ⟨i, m⟩
     have h := hz i
-    simp_rw [hAexp, map_sum, map_smulₛₗ, Finset.smul_sum, smul_smul] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp_rw [hAexp, map_sum, map_smulₛₗ, Finset.smul_sum, smul_smul] at h
     rw [Finset.sum_comm] at h
     simp_rw [← Finset.sum_smul] at h
     exact (Fintype.linearIndependent_iff.1 hrli) _ h m

@@ -65,7 +65,8 @@ theorem polMatchOn_insert : ∀ (F E : Type) [Field F] [NumberField F] [Field E]
     hΦ, hΦ', ?_⟩
   let c : ∀ u, Rf.Pi u := fun u => Rf.p u (G.M.vac u)
   have key := congrArg (LinearMap.lTensor R.Pi (padTensor T (insert v T) (Finset.subset_insert _ _) c)) hsum
-  simp only [map_sum, LinearMap.lTensor_tmul, padTensor_tprod] at key
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.lTensor_tmul, padTensor_tprod] at key
   have e1 : ∀ i, padFam T (insert v T) c (fun u : T => Rf.p u (φ i u)) =
       fun u : (insert v T : Finset (Pl F)) => Rf.p u (φ i u) := by
     intro i

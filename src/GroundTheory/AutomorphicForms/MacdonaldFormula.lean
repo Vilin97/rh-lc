@@ -58,7 +58,8 @@ theorem halfModulus_mul_recursion (Q : (Fin n → ℤ) → LaurentRing n)
         (kappa F S : ℂ) * (halfModulus F (l + lamS S) * evalAt z (Q (l + lamS S))) := by
   have h1 : evalAt z (esymmL n r) * evalAt z (Q l) =
       ∑ S ∈ (Finset.univ : Finset (Fin n)).powersetCard r, evalAt z (Q (l + lamS S)) := by
-    rw [← map_mul, hQ, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_mul, hQ, map_sum]
   calc _ = sqrtQ F ^ (r * (n - r)) * halfModulus F l * (evalAt z (esymmL n r) * evalAt z (Q l)) := by
         ring
     _ = _ := by

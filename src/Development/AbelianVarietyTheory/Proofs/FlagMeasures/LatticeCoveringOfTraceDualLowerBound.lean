@@ -127,8 +127,10 @@ theorem exists_trace_form {ι : Type} [Fintype ι] (φ : (ι → K) →ₗ[ℚ] 
   classical
   let D := (Algebra.traceForm ℚ K).toDual (traceForm_nondegenerate ℚ K)
   refine ⟨fun i => D.symm (φ ∘ₗ LinearMap.single ℚ (fun _ => K) i), fun y => ?_⟩
-  rw [dotProduct, map_sum]
-  conv_rhs => rw [← Finset.univ_sum_single y, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [dotProduct, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_rhs => rw [← Finset.univ_sum_single y, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [← Algebra.traceForm_apply]
   exact LinearMap.BilinForm.apply_toDual_symm_apply _ _

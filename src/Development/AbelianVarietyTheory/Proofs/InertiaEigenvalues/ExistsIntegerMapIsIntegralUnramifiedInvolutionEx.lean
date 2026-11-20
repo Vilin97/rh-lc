@@ -21,7 +21,8 @@ theorem intMap_isIntegral_of_unr : ∀ (K K' : UQ) (d : ℕ) (φ : K.E →+* K'.
     obtain ⟨a, ha⟩ := hu y
     have hy : y = ∑ i, a i • u i := by
       apply IsFractionRing.injective K'.O K'.E
-      rw [ha, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [ha, map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [Algebra.smul_def, map_mul]
       change φ (algebraMap K.O K.E (a i)) * _ = algebraMap K'.O K'.E (φO (a i)) * _

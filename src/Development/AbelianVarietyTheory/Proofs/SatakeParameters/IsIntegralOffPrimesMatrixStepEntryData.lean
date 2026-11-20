@@ -67,7 +67,8 @@ theorem intOff_xiEntry : ∀ (D : D7) (L : SizeData₂ D) (hT : GatTies D) (Gi :
         ((t.idx μ).h i al P) ((t.idx μ).h (i + 1) be P) y)) := fun y =>
       GlobalTheory.T.integralAwayFrom_moved_localDatum D L hT Gi Gl K Y cX ex t hmu hval u μ hg i (by omega) P _ _ hst y
     unfold XiAt E1at Loc.E1
-    rw [map_mul, map_mul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_mul, map_mul, map_sum]
     refine IntOff.mul (GlobalTheory.UnipVol.intOff_volN_Cbe D L hT Gi Gl K Y cX ex t u μ i P _) (IntOff.mul ?_ (IntOff.sum _ _ fun s _ => ?_))
     · rw [map_pow, map_inv₀, map_pow, map_natCast, ← inv_pow]
       exact intOff_pow' (intOff_pow' (IntOff.inv_nat hq) _) _

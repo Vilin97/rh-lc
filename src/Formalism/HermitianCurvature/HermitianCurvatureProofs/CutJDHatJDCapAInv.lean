@@ -291,7 +291,8 @@ theorem post_qm (L : E →L[ℂ] E) (F : Mat k r → E) {t : ℕ} (hF : CkOn ((t
 theorem post_AAop (L : E →L[ℂ] E) (F : Mat k r → E) (hF : CkOn ((r : ℕ) : ℕ∞) (GV k r) F) (u : ℂ)
     {g : Mat k r} (hg : g ∈ GV k r) :
     C3.AAop k r r le_rfl u (fun x => L (F x)) g = L (C3.AAop k r r le_rfl u F g) := by
-  simp only [C3.AAop, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [C3.AAop, map_sum]
   refine Finset.sum_congr rfl fun c _ => ?_
   split_ifs
   · rw [map_smul, post_qm L F hF _ _ u hg]
@@ -300,7 +301,8 @@ theorem post_AAop (L : E →L[ℂ] E) (F : Mat k r → E) (hF : CkOn ((r : ℕ) 
 theorem post_AAvop (L : E →L[ℂ] E) (F : Mat k r → E) (hF : CkOn ((r : ℕ) : ℕ∞) (GV k r) F) (ell : ℂ)
     {g : Mat k r} (hg : g ∈ GV k r) :
     C3.AAvop k r r le_rfl ell (fun x => L (F x)) g = L (C3.AAvop k r r le_rfl ell F g) := by
-  simp only [C3.AAvop, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [C3.AAvop, map_sum]
   refine Finset.sum_congr rfl fun c _ => ?_
   split_ifs
   · rw [map_smul, post_qm L F hF _ _ _ hg]

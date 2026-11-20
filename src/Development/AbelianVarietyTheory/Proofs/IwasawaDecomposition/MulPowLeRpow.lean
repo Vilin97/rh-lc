@@ -24,7 +24,8 @@ theorem quad_map_conj {m : ℕ} (M : Matrix (Fin m) (Fin m) ℂ) (v : Fin m → 
       (star v ⬝ᵥ M *ᵥ v).re := by
   have h : star (fun i => starRingEnd ℂ (v i)) ⬝ᵥ M.map (starRingEnd ℂ) *ᵥ (fun i => starRingEnd ℂ (v i)) =
       starRingEnd ℂ (star v ⬝ᵥ M *ᵥ v) := by
-    simp [dotProduct, mulVec, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [dotProduct, mulVec, map_sum, Finset.mul_sum]
   rw [h, Complex.conj_re]
 
 variable (x : ToroidalCompactificationData s)

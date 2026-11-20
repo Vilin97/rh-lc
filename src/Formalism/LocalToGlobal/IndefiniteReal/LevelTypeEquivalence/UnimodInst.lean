@@ -25,7 +25,8 @@ theorem mem_Lv (x : Fin V.rank → D.host.E) : x ∈ Lv D V ↔ (∑ i, x i • 
 
 theorem hform_eq (x y : Fin V.rank → D.host.E) :
     Formalism.UG.hform (starRingEnd D.host.E) V.gram x y = V.hT (∑ i, x i • V.frame i) (∑ j, y j • V.frame j) := by
-  simp only [Formalism.UG.hform, Formalism.BasicNotions.HSpace.gram, map_sum, map_smulₛₗ, LinearMap.sum_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Formalism.UG.hform, Formalism.BasicNotions.HSpace.gram, map_sum, map_smulₛₗ, LinearMap.sum_apply,
     LinearMap.smul_apply, map_smul, smul_eq_mul, Finset.mul_sum, RingHom.id_apply]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
@@ -45,13 +46,15 @@ theorem J_det : V.gram.det ≠ 0 := by
     intro i
     have hi := congrFun hy i
     simp only [Matrix.mulVec, dotProduct, Formalism.BasicNotions.HSpace.gram, Pi.zero_apply] at hi
-    simp only [map_sum, map_smul, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, smul_eq_mul]
     rw [← hi]
     exact Finset.sum_congr rfl fun j _ => mul_comm _ _
   have hw : (∑ j, y j • V.frame j) = 0 := by
     refine V.nondeg.2 _ fun v => ?_
     generalize (∑ j, y j • V.frame j) = w at hrow ⊢
-    rw [← V.frame.sum_repr v, map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← V.frame.sum_repr v, map_sum, LinearMap.sum_apply]
     refine Finset.sum_eq_zero fun i _ => ?_
     rw [map_smulₛₗ, LinearMap.smul_apply, hrow, smul_zero]
   funext i

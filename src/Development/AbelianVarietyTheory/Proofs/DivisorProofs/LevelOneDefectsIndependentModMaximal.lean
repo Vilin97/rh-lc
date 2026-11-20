@@ -228,7 +228,8 @@ theorem defect_level_one_nonunit : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Fiel
       AddMonoidHom.mk' (cob1 (up C c.μ)) (formalCoboundary_add hμC)
     change Φ (comb _ e') = 0
     unfold comb
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_eq_zero fun l _ => ?_
     change cob1 (up C c.μ) _ = 0
     rw [formalCoboundary_smul hμC]
@@ -238,7 +239,8 @@ theorem defect_level_one_nonunit : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Fiel
   have hsplit : map Θ (comb w e) = comb (Sum.elim (fun i => F.θ (w (Sum.inl i))) 0) e' + f := by
     have h1 : map Θ (comb w e) = ∑ l, algebraMap O C (F.θ (w l)) • e' l := by
       unfold comb
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun l _ => ?_
       rw [map_smul', hΘ]
     rw [h1, hf]

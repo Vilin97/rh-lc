@@ -46,7 +46,8 @@ theorem matL_Ers (r s : Md n) : matL n (Ers r s) = creL n (Pi.single r 1) * annL
   exact LinearMap.toMatrix_mul _ _ _
 
 theorem matL_Dop_sum (B : X n) : matL n (Dop B) = ∑ r, ∑ s, B r s • (creL n (Pi.single r 1) * annL n (Pi.single s 1)) := by
-  simp only [Dop, map_sum, map_smul, matL_Ers]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Dop, map_sum, map_smul, matL_Ers]
 
 end PositivityTheory.RgBcC.CxbDer
 

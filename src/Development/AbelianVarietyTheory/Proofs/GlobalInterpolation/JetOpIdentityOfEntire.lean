@@ -47,7 +47,8 @@ omit [Fintype ι] in
 theorem jetLin_congr (J J' : (DVar ι a b →₀ ℕ) → K) (Q : MvPolynomial ((ι × Fin b × Fin b) ⊕ DVar ι a b) K)
     (h : ∀ μ ∈ Q.support, J (μ.comapDomain Sum.inr Sum.inr_injective.injOn) =
       J' (μ.comapDomain Sum.inr Sum.inr_injective.injOn)) : jetLin J Q = jetLin J' Q := by
-  rw [Q.as_sum, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Q.as_sum, map_sum, map_sum]
   refine Finset.sum_congr rfl fun μ hμ => ?_
   have e : (monomial μ (AddMonoidAlgebra.coeff Q μ) : MvPolynomial ((ι × Fin b × Fin b) ⊕ DVar ι a b) K) =
       AddMonoidAlgebra.coeff Q μ • basisMonomials _ K μ := by
@@ -107,7 +108,8 @@ theorem GlobalTheory.jetOp_identity_of_entire : ∀ (X : Fields) (a b : ℕ) (σ
   refine Eq.trans ?_ ((jetOpL lam lam' n).map_smul r _)
   refine jetOp_congr lam lam' n _ _ fun m hm => ?_
   apply σ.injective
-  simp only [Pi.smul_apply, Finset.sum_apply, smul_eq_mul, map_mul, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Pi.smul_apply, Finset.sum_apply, smul_eq_mul, map_mul, map_sum]
   have h1 := jetC_sum cD (fun i => σ (ξ₁ i) * u₁) G₁ hG₁ m
   have h2 := jetC_sum cD (fun i => σ r * (σ (ξ₂ i) * u₂)) G₂ hG₂ m
   have e : (fun z => ∑ i, σ (ξ₁ i) * u₁ * G₁ i z) = fun z => ∑ i, σ r * (σ (ξ₂ i) * u₂) * G₂ i z := by

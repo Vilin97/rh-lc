@@ -46,7 +46,8 @@ lemma germ_comb (E : X.Modules) {V : X.Opens} {n : ℕ} (s : Fin n → Γ(E, V))
     (h : W ≤ V) (r : Fin n → Γ(X, W)) (x : X) (hx : x ∈ W) :
     E.presheaf.germ W x hx (comb E s W h r) =
       ∑ i, X.presheaf.germ W x hx (r i) • E.presheaf.germ V x (h hx) (s i) := by
-  rw [comb, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [comb, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [BundlesAgree.germ_smul']
   congr 1
@@ -58,7 +59,8 @@ lemma comb_res (E : X.Modules) {V : X.Opens} {n : ℕ} (s : Fin n → Γ(E, V)) 
     (h : W ≤ V) (h' : W' ≤ W) (r : Fin n → Γ(X, W)) :
     E.presheaf.map (homOfLE h').op (comb E s W h r) =
       comb E s W' (h'.trans h) (fun i => X.presheaf.map (homOfLE h').op (r i)) := by
-  rw [comb, comb, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [comb, comb, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [Scheme.Modules.map_smul]
   congr 1
@@ -152,7 +154,8 @@ theorem exists_section_of_isBasisOn (hHOI : HeightOneIntersection.Statement)
     rw [Algebra.smul_def, ← hab', mul_comm]
   choose a ha using fun i => Algebra.mem_bot.mp (hmem i)
   refine ⟨∑ i, a i • s i, ?_⟩
-  rw [map_sum, hvc]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, hvc]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [BundlesAgree.germ_smul', ← ha i]
   rfl

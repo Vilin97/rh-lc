@@ -69,7 +69,8 @@ theorem step {d : ℕ} (g : ↥(GK K)) (w : Ainf l)
     have h3 := (mul_dvd_mul_iff_left (pow_ne_zero i (evE_ne_zero bk))).1 h2
     exact (dvd_pow_self (bk.ev bk.E) (by omega)).trans h3
   rw [← theta_eq_zero_iff] at h1
-  simp only [map_sub, map_mul, map_pow, map_sum, theta_gal_ev, hP, ite_mul, one_mul, zero_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sub, map_mul, map_pow, map_sum, theta_gal_ev, hP, ite_mul, one_mul, zero_mul,
     Finset.sum_ite_eq, Finset.mem_univ, if_true] at h1
   have h4 : Per.θ l (bk.ev (δ' a b)) = 0 := by
     have h5 : (Per.θ l w ^ i - 1) * Per.θ l (bk.ev (δ' a b)) = 0 := by
@@ -112,7 +113,8 @@ theorem GlobalTheory.BKLim.beta_unique : ∀ (l : ℕ) [Fact l.Prime] (K : FinEx
   have hP : ∀ a c, Per.θ l (P a c) = if a = c then 1 else 0 := by
     intro a b
     have h := (BetaUniq.theta_eq_zero_iff bk _).2 ((dvd_pow_self _ hm.ne').trans (hent k β hβ a b))
-    simp only [map_sub, map_sum, map_mul, BetaUniq.theta_gal_ev, hθβ, mul_ite, mul_one, mul_zero,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sub, map_sum, map_mul, BetaUniq.theta_gal_ev, hθβ, mul_ite, mul_one, mul_zero,
       Finset.sum_ite_eq', Finset.mem_univ, if_true] at h
     rw [sub_eq_zero] at h
     have hl := pow_ne_zero k (BetaUniq.l_ne_zero_OC (l := l))

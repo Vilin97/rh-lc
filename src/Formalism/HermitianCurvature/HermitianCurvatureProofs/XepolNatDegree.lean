@@ -77,14 +77,16 @@ theorem kap_decomp (d : Q.NFData P A) (g : M.Ty P → ℂ) : d.κ g = ∑ ρ0, g
     funext ρ
     simp [dl, Finset.sum_apply]
   conv_lhs => rw [h]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [map_smul]
 
 theorem sum_dl (d : Q.NFData P A) : ∑ ρ, d.κ (dl ρ) = 1 := by
   have h : ∑ ρ, (dl ρ : M.Ty P → ℂ) = 1 := by
     funext x
     simp [dl, Finset.sum_apply]
-  rw [← map_sum, h, map_one]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum, h, map_one]
 
 theorem dl_mul_kap (d : Q.NFData P A) (ρ : M.Ty P) (g : M.Ty P → ℂ) :
     d.κ (dl ρ) * d.κ g = g ρ • d.κ (dl ρ) := by

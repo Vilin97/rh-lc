@@ -236,7 +236,8 @@ theorem goodLift_eq : ∀ (q : ℕ) [Fact q.Prime] (lam : Qbar →+* ℂ_[q]) (g
           _ ≤ _ := by rw [mul_one]; exact hpow_le
       have h3 : ‖ι (beta S.d S.Hm w x)‖ = ‖ι ((s : ℂ) * beta S.d S.Hm w x)‖ := by
         rw [map_mul, norm_mul, hnat1 s hs, one_mul]
-      rw [h3, hsum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [h3, hsum, map_sum]
       refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg (hpos _) fun j _ => ?_
       rw [map_mul, norm_mul]
       calc _ ≤ 1 * (q : ℝ) ^ (-(n : ℤ)) :=

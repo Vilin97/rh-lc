@@ -93,7 +93,8 @@ theorem adAt_glue (hQ : ∀ P ∈ Q, conjPrime₂ P ∉ Q) (z : AfE F E) (a b : 
     (w : HeightOneSpectrum (𝓞 E)) : adAt F w (glue hc Q z a b) =
       if w ∈ Q then algebraMap E _ (a w) else if conjPrime₂ w ∈ Q then algebraMap E _ (star (b (conjPrime₂ w))) else adAt F w z := by
   unfold glue
-  simp only [map_add, map_mul, map_sub, map_sum, map_one, adAt_idem, adAt_sig_idem, sigR_inclE, adAt_inclE, ite_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_add, map_mul, map_sub, map_sum, map_one, adAt_idem, adAt_sig_idem, sigR_inclE, adAt_inclE, ite_mul,
     one_mul, zero_mul, Finset.sum_ite_eq]
   by_cases h : w ∈ Q
   · simp [h, hQ w h]
@@ -154,7 +155,8 @@ def mat (f : Sp E n ≃ₗ[E] Sp E n) : Matrix (Fin n) (Fin n) E := Matrix.of fu
 omit [NumberField E] [StarRing E] in
 
 theorem mat_mulVec (f : Sp E n ≃ₗ[E] Sp E n) (v : Sp E n) (i : Fin n) : ∑ j, mat f i j * v j = f v i := by
-  conv_rhs => rw [← Finset.univ_sum_single v, map_sum, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_rhs => rw [← Finset.univ_sum_single v, map_sum, Finset.sum_apply]
   refine Finset.sum_congr rfl fun j _ => ?_
   have : (Pi.single j (v j) : Sp E n) = v j • (Pi.single j 1 : Sp E n) := by
     rw [← Pi.single_smul', smul_eq_mul, mul_one]
@@ -183,7 +185,8 @@ theorem valued_symm_le {N : Submodule (𝓞 E) (Sp E n)} {P : HeightOneSpectrum 
   induction hu using Submodule.span_induction with
   | mem x hx =>
     obtain ⟨v, hv, rfl⟩ := hx
-    simp only [adAt_inclE, ← map_mul, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [adAt_inclE, ← map_mul, ← map_sum]
     rw [mat_mulVec, valued_algebraMap]
     have h1 : f.symm v ∈ stdAt E n P := (hf _).1 (by rw [f.apply_symm_apply]; exact le_locP P _ hv)
     obtain ⟨s, hs, h⟩ := (mem_locP _ _ _).1 h1
@@ -237,15 +240,19 @@ theorem exists_modify (hQ : ∀ P ∈ Q, conjPrime₂ P ∉ Q) {x : GL (Fin n) (
   have h1 : G' * G = 1 := by
     ext i j
     refine ad_ext fun w => ?_
-    rw [Matrix.mul_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Matrix.mul_apply, map_sum]
     simp only [map_mul, hG, hG']
     split_ifs with h h'
-    · simp only [← map_mul, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp only [← map_mul, ← map_sum]
       rw [← Matrix.mul_apply, mat_symm_mul, hone]
-    · simp only [← map_mul, ← map_sum, ← star_mul, ← star_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp only [← map_mul, ← map_sum, ← star_mul, ← star_sum]
       rw [← Matrix.mul_apply, mat_symm_mul, hone, Matrix.one_apply, Matrix.one_apply]
       by_cases e : i = j <;> simp [e, eq_comm]
-    · simp only [← map_mul, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp only [← map_mul, ← map_sum]
       rw [← Matrix.mul_apply, Units.inv_mul]
   let g : GL (Fin n) (AfE F E) := ⟨G, G', mul_eq_one_comm.1 h1, h1⟩
   have hg : g ∈ UAd hc n := by
@@ -258,19 +265,23 @@ theorem exists_modify (hQ : ∀ P ∈ Q, conjPrime₂ P ∉ Q) {x : GL (Fin n) (
   have k1 : ∀ w, conjPrime₂ w ∉ Q → ∀ i j,
       Valued.v (adAt F w (((x⁻¹ * g : GL (Fin n) (AfE F E)) : Matrix (Fin n) (Fin n) (AfE F E)) i j)) ≤ 1 := by
     intro w hw i j
-    rw [Units.val_mul, Matrix.mul_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Units.val_mul, Matrix.mul_apply, map_sum]
     simp only [g, map_mul, hG, if_neg hw]
     split_ifs with h
     · have := valued_pullV_le x ((hfr w h (Pi.single j 1)).2 (le_locP w _ (by simpa using single_mem_stdLat (E := E) j 1))) i
-      simp only [Formalism.L2.Col.pullV, Matrix.mulVec, dotProduct, map_sum, map_mul, adAt_inclE] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Formalism.L2.Col.pullV, Matrix.mulVec, dotProduct, map_sum, map_mul, adAt_inclE] at this
       exact this
-    · simp only [← map_mul, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp only [← map_mul, ← map_sum]
       rw [← Matrix.mul_apply, Units.inv_mul, Matrix.one_apply]
       split_ifs <;> simp
   have k2 : ∀ w, conjPrime₂ w ∉ Q → ∀ i j,
       Valued.v (adAt F w ((((x⁻¹ * g)⁻¹ : GL (Fin n) (AfE F E)) : Matrix (Fin n) (Fin n) (AfE F E)) i j)) ≤ 1 := by
     intro w hw i j
-    rw [mul_inv_rev, inv_inv, Units.val_mul, Matrix.mul_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [mul_inv_rev, inv_inv, Units.val_mul, Matrix.mul_apply, map_sum]
     simp only [g, Units.inv_mk, map_mul, hG', if_neg hw]
     split_ifs with h
     · refine valued_symm_le (u := fun l => (x : Matrix (Fin n) (Fin n) (AfE F E)) l j) (hfr w h)
@@ -279,7 +290,8 @@ theorem exists_modify (hQ : ∀ P ∈ Q, conjPrime₂ P ∉ Q) {x : GL (Fin n) (
       rw [← Matrix.mul_apply, Units.inv_mul, Matrix.one_apply]
       split_ifs
       exacts [one_mem _, zero_mem _]
-    · simp only [← map_mul, ← map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp only [← map_mul, ← map_sum]
       rw [← Matrix.mul_apply, Units.inv_mul, Matrix.one_apply]
       split_ifs <;> simp
   have i1 := int_of_uni hQ hk k1 k2
@@ -291,7 +303,8 @@ theorem exists_modify (hQ : ∀ P ∈ Q, conjPrime₂ P ∉ Q) {x : GL (Fin n) (
     · have := mulVec_int i1 h i
       rwa [Matrix.mulVec_mulVec, ← Units.val_mul, mul_inv_cancel_right] at this
   · exact (hG P i j).trans (if_pos hP)
-  · simp only [pullV, Formalism.L2.Col.pullV, Matrix.mulVec, dotProduct, map_sum, map_mul, g, Units.inv_mk, hG', if_neg h,
+  set_option synthInstance.maxHeartbeats 100000 in
+    · simp only [pullV, Formalism.L2.Col.pullV, Matrix.mulVec, dotProduct, map_sum, map_mul, g, Units.inv_mk, hG', if_neg h,
       if_neg h']
 
 variable (hc) in

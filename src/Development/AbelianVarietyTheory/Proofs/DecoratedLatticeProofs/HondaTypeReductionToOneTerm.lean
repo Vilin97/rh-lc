@@ -47,7 +47,8 @@ theorem coeff_frobOp_sub_hondaSum (τ : K →+* K) (l : ℕ) {q : ℕ} (hq : 2 �
   have hq0 : q ≠ 0 := by omega
   rw [coeff_frobOp τ hq0]
   by_cases hd : q ^ i ∣ n
-  · rw [if_pos hd, coeff_frobOp τ hq0 i f, if_pos hd, map_sub, coeff_C_mul, hondaSum, coeff_mk,
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [if_pos hd, coeff_frobOp τ hq0 i f, if_pos hd, map_sub, coeff_C_mul, hondaSum, coeff_mk,
       ← Finset.eventually_constant_sum (N := n / q ^ i) (n := N)
         (fun j hj => by rw [coeff_frobOp_eq_zero τ hq hf (by omega), mul_zero])
         (le_trans (Nat.div_le_self _ _) hN),

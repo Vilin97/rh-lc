@@ -67,7 +67,8 @@ theorem lam_of_tens {L₀ : LB G₀.left} (hL : L₀.IsLB) (hΘ : ∃ t : LB.Gen
     lam c x y = ∑ a, ∑ b, (W + W.transpose) a b • lam (cls L₀ hL) (x ≫ q a) (y ≫ q b) := by
   have hp : ∀ h : T ⟶ G, pull h.left c = ∑ a, ∑ b, W a b • lam (cls L₀ hL) (h ≫ q a) (h ≫ q b) := fun h => by
     rw [hc]
-    simp only [map_sum, map_zsmul, pull_lam]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_zsmul, pull_lam]
   have hm : ∀ i, (x * y) ≫ q i = x ≫ q i * y ≫ q i := fun i => by
     have := hq i
     exact MonObj.mul_comp _ _ _
@@ -173,7 +174,8 @@ theorem exists_tens (R : Type) [CommRing R] [IsDomain R] [IsLocalRing R] (hR : B
   have xk : ∀ y a, xe y a = k a y := fun y a => by
     obtain ⟨mu, rfl⟩ := xe.symm.surjective y
     rw [AddEquiv.apply_symm_apply, hxe]
-    simp only [map_sum, kh, Finset.smul_sum, smul_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, kh, Finset.smul_sum, smul_smul]
     rw [Finset.sum_comm]
     simp only [← Finset.sum_smul, hNs _ a, NS]
     simp

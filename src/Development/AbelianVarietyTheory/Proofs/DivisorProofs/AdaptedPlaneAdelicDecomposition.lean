@@ -24,7 +24,8 @@ theorem span_map {E R : Type} [CommRing E] [CommRing R] (f : E →+* R) {n n₁ 
       = f (s i) * f (x r) + (∑ j, f (ι r j) * f (u i j)) + f (t i) * f (y r) := by
     intro i
     rw [hs i]
-    simp [Matrix.mulVec, dotProduct, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Matrix.mulVec, dotProduct, map_sum]
   have h2 : w r = ∑ i, w i * f ((Pi.single i 1 : Fin n → E) r) := by
     rw [Finset.sum_eq_single r]
     · simp

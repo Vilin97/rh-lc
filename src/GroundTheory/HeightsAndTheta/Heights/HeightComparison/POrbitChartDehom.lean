@@ -58,7 +58,8 @@ theorem ker_dehomFrac
   have hz : ∀ k, classFrac V (X ⟨k, c k⟩) ≠ 0 := fun k h ↦ hc k ((classFrac_eq_zero_iff V _).mp h)
   have hle : V ⊔ chartOneIdeal c ≤ RingHom.ker (dehomFrac V c) := by
     refine sup_le (fun f hf ↦ ?_) (Ideal.span_le.mpr ?_)
-    · rw [RingHom.mem_ker, ← sum_weightedHomogeneousComponent (w := coordDeg n) f,
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [RingHom.mem_ker, ← sum_weightedHomogeneousComponent (w := coordDeg n) f,
         finsum_eq_sum _ (weightedHomogeneousComponent_finsupp f), map_sum]
       refine Finset.sum_eq_zero fun b _ ↦ ?_
       rw [dehomFrac_of_isWeightedHomogeneous c _ b

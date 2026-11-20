@@ -182,7 +182,8 @@ theorem main : ∀ {O : Type} [CommRing O] (F : Fn O) (b : Base) (ht : b.t = 1) 
       rw [e, hqx, map_pow]
     have hsum' : (∑ i ∈ Finset.range b.p, (T.i x) ^ i) ∈ T.J := by
       have := T.i_mem hsum
-      simpa [map_sum, map_pow] using this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa [map_sum, map_pow] using this
     obtain ⟨h1, h2, h3⟩ := GlobalTheory.CompanionTheory.PDAcyc.main T.δ Q η₀ hη b.p hpp (T.adm.1 hp0) (T.i x) hsum' gφ hgφ g.dp hmul
     have hμ' : ∀ z : Q.P, algebraMap T.B Q.P ((T.i x) ^ b.p - 1) * z =
         algebraMap T.B Q.P (T.i (c μ)) * z := by

@@ -127,7 +127,8 @@ theorem hhFl_eq (II : IntersectionSystem) (F : RP Ψ N) : hhFl Ψ N II F = hR Ψ
 theorem hFl_eq (II : IntersectionSystem) (G : GroundTheory.Heights₂.Heights.LowerBoundFree.RootPoly Ψ N) :
     GroundTheory.Heights₂.Heights.LowerBoundFree.hFl Ψ N II G = hR Ψ N II (map (algebraMap ℚ ℝ) G) := by
   conv_rhs => rw [G.as_sum]
-  rw [map_sum, map_sum, GroundTheory.Heights₂.Heights.LowerBoundFree.hFl]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum, GroundTheory.Heights₂.Heights.LowerBoundFree.hFl]
   refine Finset.sum_congr rfl fun m _ => ?_
   rw [map_monomial, hR_monomial]
   rfl
@@ -174,7 +175,8 @@ def muR (j : ℕ) : RP Ψ N := map (algebraMap ℚ ℝ) (GroundTheory.Heights₂
 def vR (j : ℕ) : RP Ψ N := map (algebraMap ℚ ℝ) (GroundTheory.Heights₂.Heights.LowerBoundFree.vandBlocks Ψ N j)
 
 theorem muR_eq (j : ℕ) : (muR j : RP Ψ N) = ∑ τ, ∑ i ∈ Finset.univ.filter (fun i : Fin N => j ≤ (i : ℕ)), X (τ, i) := by
-  rw [muR, GroundTheory.Heights₂.Heights.LowerBoundFree.muPoly, map_sum, Finset.sum_filter, Fintype.sum_prod_type]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [muR, GroundTheory.Heights₂.Heights.LowerBoundFree.muPoly, map_sum, Finset.sum_filter, Fintype.sum_prod_type]
   refine Finset.sum_congr rfl fun τ _ => ?_
   rw [Finset.sum_filter]
   refine Finset.sum_congr rfl fun i _ => ?_
@@ -183,9 +185,11 @@ theorem muR_eq (j : ℕ) : (muR j : RP Ψ N) = ∑ τ, ∑ i ∈ Finset.univ.fil
   · simp [h, Nat.le_of_not_lt h]
 
 theorem negX_muR (j : ℕ) : negX (muR j : RP Ψ N) = -muR j := by
-  rw [muR_eq, negX, map_sum, ← Finset.sum_neg_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [muR_eq, negX, map_sum, ← Finset.sum_neg_distrib]
   refine Finset.sum_congr rfl fun τ _ => ?_
-  rw [map_sum, ← Finset.sum_neg_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, ← Finset.sum_neg_distrib]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [aeval_X]
 
@@ -337,7 +341,8 @@ theorem hhFl_test (II : IntersectionSystem) {j d : ℕ}
       have := ((muR_homog (Ψ := Ψ) (N := N) j).pow i).mul ((muSmall_homog (Ψ := Ψ) (N := N) j).pow (dimX Ψ N j + 1 - 1 - i))
       have e3 : 1 * i + 1 * (dimX Ψ N j + 1 - 1 - i) = dimX Ψ N j := by omega
       rwa [e3] at this
-    rw [e2, map_add, sAll, Finset.sum_mul, map_sum, Finset.sum_eq_zero fun τ _ => hkill τ Q hQh, add_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [e2, map_add, sAll, Finset.sum_mul, map_sum, Finset.sum_eq_zero fun τ _ => hkill τ Q hQh, add_zero]
 
 end Main
 

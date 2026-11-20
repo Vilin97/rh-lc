@@ -86,7 +86,8 @@ theorem span_le_range (hp4 : Formalism.MainNotions.DeltaInvariantLattices.p4 W P
     set p := (PiNS W T π' 1).comap (NcS W T (c - 1)).subtype
     set o := bL.repr (mkL W T π' c y hy)
     have h2 : (∑ k, o k • bL k) = p.mkQ (∑ k, o k • (⟨rep k, hrep k⟩ : ↥(NcS W T (c - 1)))) := by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [map_smul, hbrep]
       rfl

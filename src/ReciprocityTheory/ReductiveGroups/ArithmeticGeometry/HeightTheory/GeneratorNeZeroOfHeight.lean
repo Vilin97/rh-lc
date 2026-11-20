@@ -73,7 +73,8 @@ theorem lineRatio_ne_zero (hd : d.AxH 𝒜) (c : ι) : d.rationalBaseRow c ≠ 0
         MvPolynomial.C (ratio (Ω := Ω c) (d.w ((d.jc c).succAbove k) c) (d.w (d.jc c) c))) := by
     unfold rationalBaseRow sH sHom
     rw [Fin.sum_univ_succAbove _ (d.jc c)]
-    simp only [MvPolynomial.aeval_X, sImg, Fin.succAbove_cases_eq_insertNth, Fin.insertNth_apply_same,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [MvPolynomial.aeval_X, sImg, Fin.succAbove_cases_eq_insertNth, Fin.insertNth_apply_same,
       Fin.insertNth_apply_succAbove, if_true, hr1, map_one, mul_one, map_add, map_sum, map_mul]
     congr 1
   rw [e]

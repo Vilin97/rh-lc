@@ -40,7 +40,8 @@ theorem Lin_chain (N : S → Matrix (Fin k) (Fin k) R) (s : S) (b : Fin k) (h : 
   have hX : ∀ v : S × Fin k, pderiv (s, b) (Lin N (X v)) = ∑ a : Fin k, N s a b • Lin N (pderiv (s, a) (X v)) := by
     rintro ⟨t, c⟩
     rw [Lin_X]
-    simp only [map_sum, Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C, smul_zero, add_zero,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, Derivation.leibniz, MvPolynomial.pderiv_X, MvPolynomial.pderiv_C, smul_zero, add_zero,
       Pi.single_apply, Prod.mk.injEq, smul_eq_mul]
     by_cases ht : t = s
     · subst ht

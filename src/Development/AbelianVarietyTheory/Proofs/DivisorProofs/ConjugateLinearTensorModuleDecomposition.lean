@@ -126,7 +126,8 @@ theorem exists_gram (cR : R →ₐ[A] R) (hcc : ∀ r, cR (cR r) = r) (l : R →
   have hform : ∀ (r : R) x y, e (f (r • x)) (f y) = l (r * ∑ i, ∑ j, x i * H i j * cR (y j)) := by
     intro r x y
     conv_lhs => rw [hvec (r • x), hvec y]
-    simp only [map_sum, LinearMap.sum_apply, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, LinearMap.sum_apply, Finset.mul_sum]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
     rw [← hcc (y j), ← hadj, smul_smul, hH, hcc]

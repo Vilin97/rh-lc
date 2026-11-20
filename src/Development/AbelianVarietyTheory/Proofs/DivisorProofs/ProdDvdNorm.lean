@@ -33,7 +33,8 @@ theorem norm_map {A' S' ι : Type*} [CommRing A'] [CommRing S'] [Algebra A' S'] 
   classical
   have hr : ∀ y i, b'.repr (F y) i = f (b.repr y i) := fun y i => by
     conv_lhs => rw [← b.sum_repr y]
-    simp only [map_sum, Algebra.smul_def, map_mul, hf, hb]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, Algebra.smul_def, map_mul, hf, hb]
     simp [← Algebra.smul_def, Finsupp.single_apply]
   rw [Algebra.norm_eq_matrix_det b, Algebra.norm_eq_matrix_det b', RingHom.map_det]
   congr 1
@@ -48,7 +49,8 @@ theorem prod_dvd_norm [Module.Free A S] [Module.Finite A S] {D m : Type*} [CommR
   let b := Module.Free.chooseBasis A S
   have hr : ∀ i y, ∑ k, φ i (b k) * ψ (b.repr y k) = φ i y := fun i y => by
     conv_rhs => rw [← b.sum_repr y]
-    simp only [map_sum, Algebra.smul_def, map_mul, h, mul_comm]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, Algebra.smul_def, map_mul, h, mul_comm]
   rw [Algebra.norm_eq_matrix_det b, RingHom.map_det, ← Matrix.det_diagonal]
   refine det_dvd_det (Matrix.of fun i k => φ i (b k))
     ((Matrix.of fun k j => ψ (b.repr (c j) k)) * (Matrix.of fun i k => φ i (c k))⁻¹) _ _ ?_ ?_

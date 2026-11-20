@@ -42,7 +42,8 @@ theorem deriv_finset_prod {ι : Type*} [DecidableEq ι] (D : Derivation R A A) (
 theorem deriv_det {n : Type*} [Fintype n] [DecidableEq n] (D : Derivation R A A)
     (M : Matrix n n A) :
     D M.det = ∑ i, (M.updateCol i (fun k => D (M k i))).det := by
-  simp only [Matrix.det_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.det_apply, map_sum]
   rw [Finset.sum_comm]
   apply Finset.sum_congr rfl
   intro σ _

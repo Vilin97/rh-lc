@@ -365,7 +365,8 @@ theorem actM_EcL (hσ : IsURepOn (UJset ε) σ) (X : Matrix (Fin n) (Fin n) ℂ)
     simp
   unfold actM
   conv_rhs => rw [hX]
-  simp only [map_sum, map_smul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul]
 
 end Ec
 

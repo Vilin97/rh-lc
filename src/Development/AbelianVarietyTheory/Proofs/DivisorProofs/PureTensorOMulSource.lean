@@ -285,7 +285,8 @@ theorem pureTensorO_mul_source : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (
     rw [mul_comm, hX, hP, map_mul, MvPolynomial.aeval_X]
     clear hP
     generalize (MvPolynomial.aeval _ P : MvPolynomial (FVar D W.rank V.rank) ℂ) = Q
-    simp only [← MvPolynomial.smul_eq_C_mul, Finset.sum_mul, smul_mul_assoc, map_sum, map_smul, hX]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [← MvPolynomial.smul_eq_C_mul, Finset.sum_mul, smul_mul_assoc, map_sum, map_smul, hX]
     simp only [aPlusAll, aPlus]
     rw [unitMap_mul, crea_sum hψ hθ _ (hm _ _), Finset.smul_sum]
     refine Finset.sum_congr rfl fun l _ => ?_

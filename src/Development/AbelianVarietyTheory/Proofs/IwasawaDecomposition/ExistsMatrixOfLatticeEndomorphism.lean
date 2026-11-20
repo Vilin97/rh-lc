@@ -33,7 +33,8 @@ theorem GlobalTheory.FlagDomain.lattice_endo_matrix : ∀ (E : Type) [Field E] [
       rw [map_smul]; rfl
     have h2 : (d : 𝓞 E) • f (v : Fin r → E) = f (((d : 𝓞 E) • v : X.Λ) : Fin r → E) := by
       rw [SetLike.val_smul, LinearMap.map_smul_of_tower]
-    rw [h1, h2, hsum, map_sum, Submodule.coe_sum, Submodule.coe_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h1, h2, hsum, map_sum, Submodule.coe_sum, Submodule.coe_sum, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, SetLike.val_smul, SetLike.val_smul, LinearMap.map_smul_of_tower]
     congr 1

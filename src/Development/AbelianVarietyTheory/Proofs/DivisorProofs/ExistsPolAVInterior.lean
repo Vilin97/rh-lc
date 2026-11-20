@@ -155,9 +155,11 @@ theorem pull_diff (t : SAB H X) (V : X.Opens) (U : X.affineOpens) {n : ℕ}
     rw [← e1]
     linear_combination (GlobalTheory.TangentOrigin.evalPt x _ hxg (φ b (j i) (j i'))) * e2
   rw [GlobalTheory.CechKS.valR_comp_app, valR_eq_evalPt _ _ hx] at key
-  rw [key, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [key, map_sum]
   refine Finset.sum_congr rfl fun a _ => ?_
-  rw [map_mul, map_sum, Finset.sum_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_mul, map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun b _ => ?_
   rw [ev_g, GlobalTheory.CechKS.valR_comp_app (w a) m O f, hw' a _ hx, map_mul, GlobalTheory.TangentOrigin.evalPt_constFn,
     GlobalTheory.InvFieldBasis.evalPt_congr hxA ⊤ le_rfl le_rfl, GlobalTheory.TangentOrigin.evalPt_spMap]

@@ -96,7 +96,8 @@ theorem wa_form (hτ : ∀ a : E, τ (star a) = starRingEnd ℂ (τ a)) (u v : S
   have hu := S.frame.sum_repr u
   have hv := S.frame.sum_repr v
   conv_lhs => rw [← hu, ← hv]
-  simp only [map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, map_smul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, map_smul,
     smul_eq_mul, map_mul, starRingEnd_apply, hτ]
   simp only [dotProduct, mulVec, wa_cv, HSpace.gram, Matrix.map_apply, Pi.star_apply, Finset.mul_sum]
   conv_lhs => rw [Finset.sum_comm]
@@ -136,12 +137,14 @@ theorem wa_indep {m : ℕ} (u : Fin m → S.V) (hu : LinearIndependent E u) (x :
   have hφ : ∀ v : S.V, g v l = ∑ i, S.frame.repr v i * g (S.frame i) l := by
     intro v
     conv_lhs => rw [← S.frame.sum_repr v]
-    simp only [map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
   have key : ∀ k, ∑ i, wa_cv S τ (u k) i * τ (g (S.frame i) l) = if l = k then 1 else 0 := by
     intro k
     have h2 := congrArg τ (hφ (u k))
     rw [hgu k] at h2
-    simp only [map_sum, map_mul] at h2
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_mul] at h2
     simp only [wa_cv]
     rw [← h2]
     by_cases h : l = k

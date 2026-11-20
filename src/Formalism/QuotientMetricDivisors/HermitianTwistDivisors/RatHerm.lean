@@ -174,7 +174,8 @@ theorem jwGram_of (hIC : IdxChange) : JwGram := by
     have hmul : M * M⁻¹ = 1 := Matrix.mul_nonsing_inv M hMu
     have := congrFun (congrFun hmul a) b
     rw [Matrix.mul_apply, Matrix.one_apply] at this
-    rw [← this, hfs, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← this, hfs, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_smul, smul_eq_mul, mul_comm]
     rfl
@@ -182,7 +183,8 @@ theorem jwGram_of (hIC : IdxChange) : JwGram := by
     rw [Fintype.linearIndependent_iff]
     intro g hg i
     have := congrArg (h (f i)) hg
-    rw [map_sum, map_zero] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero] at this
     simp only [map_smul, hpair, smul_eq_mul, mul_ite, mul_one, mul_zero,
       Finset.sum_ite_eq, Finset.mem_univ, if_true] at this
     exact this

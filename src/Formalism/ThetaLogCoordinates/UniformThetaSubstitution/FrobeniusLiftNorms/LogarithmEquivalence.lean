@@ -297,7 +297,8 @@ theorem map_altR {R S : Type} [CommRing R] [CommRing S] (h : R →+* S) (p : ℕ
     PowerSeries.map h (altR R p) = altR S p := by
   ext n
   unfold altR
-  rw [PowerSeries.coeff_map, PowerSeries.coeff_mk, PowerSeries.coeff_mk, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [PowerSeries.coeff_map, PowerSeries.coeff_mk, PowerSeries.coeff_mk, map_sum]
   refine Finset.sum_congr rfl fun l _ => ?_
   split_ifs
   · rw [map_pow, map_neg, map_one]

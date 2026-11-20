@@ -76,7 +76,8 @@ private theorem diagonal_mul_I_eq_sum_single (θ : Fin n → ℝ) :
 theorem dtau_diag_w {ε : Fin n → Bool} {Λ : Fin n → ℝ} (T : KType ε Λ) (θ : Fin n → ℝ) :
     T.dτ (Matrix.diagonal fun a => (θ a : ℂ) * Complex.I) T.w =
       (((∑ a, Λ a * θ a : ℝ) : ℂ) * Complex.I) • T.w := by
-  rw [diagonal_mul_I_eq_sum_single, map_sum, ContinuousLinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [diagonal_mul_I_eq_sum_single, map_sum, ContinuousLinearMap.sum_apply]
   simp_rw [map_smul, ContinuousLinearMap.smul_apply, T.13, smul_smul]
   rw [← Finset.sum_smul]
   congr 1

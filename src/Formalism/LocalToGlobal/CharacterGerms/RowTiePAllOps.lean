@@ -69,11 +69,13 @@ theorem allSet_repar {V : VF C} {g : Fin 2} (τ : PowerSeries C) (hτ : PowerSer
     exact constantCoeff_subst_zero (σ := Unit) (fun _ => hτ) (hδ i).1
   refine ⟨fun i => PowerSeries.subst τ (γ i), fun q => PowerSeries.subst τ (lam q), hcv γ hγ, hcv lam hlam, ?_, ?_⟩
   · intro i
-    rw [alongCv_repar (fun i => (hγ i).1) hτ, h1 i, ← PowerSeries.coe_substAlgHom hS, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [alongCv_repar (fun i => (hγ i).1) hτ, h1 i, ← PowerSeries.coe_substAlgHom hS, map_sum]
     refine Finset.sum_congr rfl fun c _ => ?_
     rw [map_smul, PowerSeries.coe_substAlgHom hS, hxx]
   · intro q
-    rw [alongCv_repar (fun i => (hγ i).1) hτ, hxx, h2 q, ← PowerSeries.coe_substAlgHom hS, map_add, map_sub,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [alongCv_repar (fun i => (hγ i).1) hτ, hxx, h2 q, ← PowerSeries.coe_substAlgHom hS, map_add, map_sub,
       map_sum]
     congr 1
     refine Finset.sum_congr rfl fun c _ => ?_

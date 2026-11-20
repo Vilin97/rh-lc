@@ -61,7 +61,8 @@ theorem tan_triv_eq_zero : ∀ (k K E : Type) [Field k] [IsAlgClosed k] [CharZer
       simpa only [dualApp_smul, LinearMap.smul_apply, smul_eq_mul, dualApp_res, GlobalTheory.LB.resG_self] using this
     have hs' : ∑ j, g j • resM W hV (s j) = 0 := by
       apply QCoh.injective_app_of_mono i V'
-      simp only [map_sum, map_zero, Scheme.Modules.Hom.app_smul, Twist.app_resM]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_zero, Scheme.Modules.Hom.app_smul, Twist.app_resM]
       exact hl
     have hli := (hs.basis hV).linearIndependent
     rw [hs.coe_basis hV, Fintype.linearIndependent_iff] at hli

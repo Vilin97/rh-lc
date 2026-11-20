@@ -90,7 +90,8 @@ theorem exists_frames_maximal_minor_ne_zero : ∀ (O : Type) [CommRing O] [IsDom
     refine ⟨bF.repr s, bE.equivFun.symm.injective ?_⟩
     rw [← hs]
     conv_rhs => rw [← bF.sum_repr s]
-    simp only [Module.Basis.equivFun_symm_apply, map_sum, map_smul, bF, bE, IsFrame.stalkBasis_apply,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Module.Basis.equivFun_symm_apply, map_sum, map_smul, bF, bE, IsFrame.stalkBasis_apply,
       stalkLinear_germ, ha, QCoh.germ_smul, Finset.smul_sum, smul_smul, Matrix.mulVec, dotProduct,
       Finset.sum_smul]
     rw [Finset.sum_comm]

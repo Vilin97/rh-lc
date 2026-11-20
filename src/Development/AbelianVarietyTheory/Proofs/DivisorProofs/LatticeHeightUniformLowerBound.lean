@@ -43,7 +43,8 @@ theorem extEmb_norm (h : IsCMExt F E σ) {w : InfinitePlace F} (τ : EmbOver E w
 theorem norm_sum_norm (h : IsCMExt F E σ) {w : InfinitePlace F} (τ : EmbOver E w)
     (z : Fin n → w.Completion ⊗[F] E) :
     ‖∑ i, Algebra.norm w.Completion (z i)‖ = ∑ i, ‖infEmb τ (z i)‖ ^ 2 := by
-  rw [← (InfinitePlace.Completion.isometry_extensionEmbedding w).norm_map_of_map_zero (map_zero _), map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← (InfinitePlace.Completion.isometry_extensionEmbedding w).norm_map_of_map_zero (map_zero _), map_sum]
   simp only [extEmb_norm h τ]
   rw [← Complex.ofReal_sum, Complex.norm_of_nonneg (Finset.sum_nonneg fun i _ => by positivity)]
 

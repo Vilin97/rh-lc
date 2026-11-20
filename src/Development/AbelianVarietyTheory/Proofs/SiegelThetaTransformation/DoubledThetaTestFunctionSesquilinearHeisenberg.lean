@@ -222,7 +222,8 @@ theorem hD_eq (hs : IsSympl X bas) {x₁ x₂ : Frame X.Ψ r} (h₁ : x₁ ∈ X
       hD_sub_conj _ _ (hZ τ).inv.isHermitian (nonsing_inv_mul _ (hZ τ).det_pos.ne'.isUnit)
         (Data.emb τ.1 (y₁ - y₂)) (Data.emb τ.1 (bv X y₁ y₂))
         (Data.emb τ.1 (a₁ - a₂)) (Data.emb τ.1 (bv X a₁ a₂))
-    rw [Finset.sum_sub_distrib, ← map_sum, sub_conj, ← Finset.mul_sum, Finset.sum_sub_distrib,
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Finset.sum_sub_distrib, ← map_sum, sub_conj, ← Finset.mul_sum, Finset.sum_sub_distrib,
       ← trace_pair, ← trace_pair, trace_bv, trace_bv] at e
     have e2 : -(1 / 2) * EF X (y₁ + y₂) (a₁ - a₂) - -(1 / 2) * EF X (a₁ + a₂) (y₁ - y₂) =
         EF X a₁ y₁ + EF X y₂ a₂ := by
@@ -356,7 +357,8 @@ theorem isDbl_heis (hs : IsSympl X bas) (hn : Even n) {φ₁ φ₂ : TF n g} (h�
   congr 2
   have e := Finset.sum_congr (s₁ := Finset.univ) rfl fun (k : Fin n) _ =>
     expo_row idx hs h₁ h₂ (y₁ k) (y₂ k) (z k) (w k)
-  simp only [Finset.sum_add_distrib (s := (Finset.univ : Finset (Fin n))), ← Finset.mul_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finset.sum_add_distrib (s := (Finset.univ : Finset (Fin n))), ← Finset.mul_sum,
     hermForm_Hm, ← map_sum, ← Rat.cast_sum] at e
   simp only [← Finset.mul_sum, map_neg, map_mul, conj_ofReal, expo]
   simp only [Finset.sum_comm (s := (Finset.univ : Finset X.Ψ))]

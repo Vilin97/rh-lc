@@ -31,7 +31,8 @@ theorem exists_open_fix_sum (hK : KP) (B : Base F E) {n d : ℕ} {X : Spc F E n}
   refine ⟨⨅ i, U i, ?_, fun k hk hf => ?_⟩
   · rw [Subgroup.coe_iInf]
     exact isOpen_iInter_of_finite hU
-  · rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum]
     exact Finset.sum_congr rfl fun i _ => hfix i k (Subgroup.mem_iInf.1 hk i) hf
 
 theorem I_mul_of_fix {n d : ℕ} {X : Spc F E n} {W : Spc F E d} (M : Model σ X W) (om : Rep σ X W)

@@ -291,7 +291,8 @@ theorem iwasawa : ∀ (k r : ℕ), ∀ g ∈ GG k r, ∃ n ∈ Nset k r, ∃ a :
     intro a b
     obtain ⟨ca, hca⟩ := (Submodule.mem_span_range_iff_exists_fun ℂ).1 (hspan a)
     obtain ⟨cb, hcb⟩ := (Submodule.mem_span_range_iff_exists_fun ℂ).1 (hspan b)
-    rw [← hca, ← hcb, map_sum, sum_inner]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hca, ← hcb, map_sum, sum_inner]
     refine Finset.sum_eq_zero fun i _ => ?_
     rw [inner_sum]
     refine Finset.sum_eq_zero fun j _ => ?_

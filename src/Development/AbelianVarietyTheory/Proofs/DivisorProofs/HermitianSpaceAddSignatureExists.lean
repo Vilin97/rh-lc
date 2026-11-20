@@ -21,7 +21,8 @@ variable {E : Type} [Field E] [NumberField E] [StarRing E]
 theorem coords_gram (B : HSpace E) (x y : B.V) :
     ∑ l, (∑ k, star (B.frame.repr x k) * B.gram k l) * B.frame.repr y l = B.hT x y := by
   conv_rhs => rw [← B.frame.sum_repr x, ← B.frame.sum_repr y]
-  simp only [map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul,
     Finset.sum_mul, HSpace.gram, RingHom.id_apply, starRingEnd_apply, Finset.mul_sum]
   refine Finset.sum_congr rfl fun l _ => Finset.sum_congr rfl fun k _ => by ring
 

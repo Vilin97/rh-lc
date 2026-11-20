@@ -38,7 +38,8 @@ theorem frame_of_spanning : ∀ (p : ℕ) [Fact p.Prime] (O : Type) [CommRing O]
     rw [he]
     have hps : ∀ (f : Fin d → RL p O Λ), Pi.single i (∑ j, f j) = ∑ j, Pi.single (M := fun _ : Fin N => RL p O Λ) i (f j) :=
       fun f => map_sum (AddMonoidHom.single (fun _ : Fin N => RL p O Λ) i) f _
-    rw [← b.sum_repr l, TensorProduct.tmul_sum, hps, map_sum, map_sum, Matrix.sum_mulVec]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← b.sum_repr l, TensorProduct.tmul_sum, hps, map_sum, map_sum, Matrix.sum_mulVec]
     refine Finset.sum_congr rfl fun j _ => ?_
     set c := (b.repr l) j
     have h1 : c • ((1 : Ainf p O) ⊗ₜ[ℤ_[p]] b j) = ofPadic p O c • ((1 : Ainf p O) ⊗ₜ[ℤ_[p]] b j) :=

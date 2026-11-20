@@ -66,7 +66,8 @@ theorem UpperTheory.V.Stick.jacobi :
     exact (Nat.mul_lt_mul_left hd0).mpr (ZMod.val_lt _)
   rw [mem_conjI, RingHom.mem_ker]
   unfold jacobiSum
-  rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, map_sum]
   simp_rw [map_mul, hfac a ha, hfac b hb]
   rw [ffsum p _ _ (Nat.mul_pos hd0 (Nat.pos_of_ne_zero (hunit a ha))) (hlt a)
     (Nat.mul_pos hd0 (Nat.pos_of_ne_zero (hunit b hb))) (hlt b)]

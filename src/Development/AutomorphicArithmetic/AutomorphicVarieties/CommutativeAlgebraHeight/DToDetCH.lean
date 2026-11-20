@@ -11,7 +11,8 @@ private theorem D_congr {n : ℕ} {A G : Type} [CommRing A] [Group G] (D : GDet 
 
 private theorem ofT_gen {A G : Type} [CommRing A] [Group G] {m : ℕ} (y : Fin m → MonoidAlgebra A G) :
     ofT A G (MvPolynomial (Fin m) A) (Det.gen (A := A) y) = GDet.gen y := by
-  simp only [Det.gen, GDet.gen, map_sum, ofT_tmul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Det.gen, GDet.gen, map_sum, ofT_tmul]
   rfl
 
 private theorem ofT_map {A G : Type} [CommRing A] [Group G] (S : Type) [CommRing S] [Algebra A S]

@@ -174,7 +174,8 @@ theorem stepDual : StepDual := by
   have hA : ∀ y, (Hf z y).im = 0 := by
     intro y
     have h1 : (Hf z y).im = A y := rfl
-    rw [h1, ← X.b.sum_repr y, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h1, ← X.b.sum_repr y, map_sum]
     refine Finset.sum_eq_zero (fun i _ => ?_)
     show (Hf z (X.b.repr y i • X.b i)).im = 0
     rw [hHsmul, hz (X.b i) (Submodule.subset_span ⟨i, rfl⟩), mul_zero]

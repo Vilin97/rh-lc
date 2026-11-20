@@ -178,7 +178,8 @@ theorem contCore_of_tied (T : LocTied l P AI) (K : FinExt l) : contCore (P.PD K)
     let b := Module.finBasis LL A.V
     have : (φ : A.V → ℚ_[l]) = fun v => ∑ j, φ (b.coord j v • b j) := by
       funext v
-      rw [← map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← map_sum]
       simp [b.sum_repr]
     rw [this]
     exact continuous_finset_sum _ fun j _ =>

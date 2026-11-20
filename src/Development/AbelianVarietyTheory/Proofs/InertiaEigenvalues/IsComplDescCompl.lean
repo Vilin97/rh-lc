@@ -20,7 +20,8 @@ theorem exists_retraction : ∃ l : k' →ₗ[k] k, ∀ c : k, l (algebraMap k k
 theorem form_mulVec (l : k' →ₗ[k] k) (A : Matrix (Fin n) (Fin n) k) (x : Fin n → k') :
     (fun i => l ((A.map (algebraMap k k')).mulVec x i)) = A.mulVec (fun i => l (x i)) := by
   funext i
-  simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [← Algebra.smul_def, map_smul, smul_eq_mul]
 
@@ -28,7 +29,8 @@ theorem ext_mulVec (A : Matrix (Fin n) (Fin n) k) (v : Fin n → k) :
     (A.map (algebraMap k k')).mulVec (fun i => algebraMap k k' (v i))
       = fun i => algebraMap k k' (A.mulVec v i) := by
   funext i
-  simp [Matrix.mulVec, dotProduct, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Matrix.mulVec, dotProduct, map_sum, map_mul]
 
 def extSub (k' : Type) [Field k'] [Algebra k k'] (W : Submodule k (Fin n → k)) :
     Submodule k' (Fin n → k') :=

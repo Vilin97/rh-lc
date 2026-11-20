@@ -160,7 +160,8 @@ theorem qminor_coeff (hrep : IsCRepOn (UH (Hpk k r)) σ) (ℓ : Vs →L[ℂ] ℂ
     qminorOp (EH k r) a b u (fun x => ℓ (σ x w)) g =
       ℓ (σ g (qmF (fun a b => EcRep (Hpk k r) σ (Matrix.single a b 1)) a b u w)) := by
   unfold qminorOp qmF
-  rw [Finset.sum_apply, map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Finset.sum_apply, map_sum, map_sum]
   refine Finset.sum_congr rfl fun τ _ => ?_
   rw [Pi.smul_apply, map_smul, map_smul]
   congr 1

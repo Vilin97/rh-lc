@@ -82,7 +82,8 @@ theorem heckeVec_mem {n : ℕ} {z : Fin n → Gf} (hz : IsHeckeFam Kf z) {v : H}
   let F : Gf ⧸ Kf → H := fun y => π (1, y.out) v
   have hF : ∀ x : Gf, π (1, x) v = F (x : Gf ⧸ Kf) := fun x =>
     op_fix_congr hv (QuotientGroup.out_eq' (x : Gf ⧸ Kf)).symm
-  simp only [ContinuousLinearMap.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [ContinuousLinearMap.sum_apply, map_sum]
   calc ∑ i, π (1, k) (π (1, z i) v) = ∑ i, F ((k * z i : Gf) : Gf ⧸ Kf) := by
         refine Finset.sum_congr rfl fun i _ => ?_
         rw [← UnitaryRep.map_mul_apply, show ((1 : G), k) * (1, z i) = (1, k * z i) by ext <;> simp, hF]
@@ -102,7 +103,8 @@ theorem heckeOp_fixRep {n : ℕ} {z : Fin n → Gf} (hz : IsHeckeFam Kf z) (g : 
   apply Subtype.ext
   rw [coe_heckeOp]
   show _ = π (g, 1) ((heckeOp hz v : fixSub π Kf) : H)
-  rw [coe_heckeOp, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [coe_heckeOp, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   show π (1, z i) (π (g, 1) (v : H)) = _
   rw [← UnitaryRep.map_mul_apply, ← UnitaryRep.map_mul_apply,
@@ -135,7 +137,8 @@ theorem postL_apply (Φ : Module.End ℂ M) {q : ℕ} (f : P [⋀^Fin q]→ₗ[�
 theorem gd_postL (L : P →ₗ[ℝ] Module.End ℂ M) (Φ : Module.End ℂ M) (hΦ : ∀ X m, Φ (L X m) = L X (Φ m))
     {q : ℕ} (f : P [⋀^Fin q]→ₗ[ℝ] M) : gd L (postL Φ q f) = postL Φ (q + 1) (gd L f) := by
   ext v
-  simp [gd, AlternatingMap.alternatizeUncurryFin_apply, postL_apply, map_sum, hΦ]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [gd, AlternatingMap.alternatizeUncurryFin_apply, postL_apply, map_sum, hΦ]
 
 theorem relCo_postL {K : Type} (ad : K → P → P) (κ : K → Module.End ℂ M) (Φ : Module.End ℂ M)
     (hκ : ∀ k m, Φ (κ k m) = κ k (Φ m)) {q : ℕ} {f : P [⋀^Fin q]→ₗ[ℝ] M} (hf : f ∈ relCo ad κ ⊤ q) :
@@ -219,19 +222,22 @@ theorem opS_gOp (g : G) (v : D.SmV π) : opS D π T hT (D.gOp π g v) = D.gOp π
 theorem opT_tOp (X : 𝔤) (w : Fin d → D.SmV π) :
     opT D π T hT d (D.tOp π ξ X w) = D.tOp π ξ X (opT D π T hT d w) := by
   funext i
-  simp only [opT_apply, CartanData.tOp, LinearMap.pi_apply, LinearMap.add_apply, LinearMap.comp_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [opT_apply, CartanData.tOp, LinearMap.pi_apply, LinearMap.add_apply, LinearMap.comp_apply,
     LinearMap.proj_apply, LinearMap.sum_apply, LinearMap.smul_apply, map_add, map_sum, map_smul, opS_dOp]
 
 theorem opT_gkL (X : D.p) (w : Fin d → D.SmV π) :
     opT D π T hT d (D.gkL π ξ X w) = D.gkL π ξ X (opT D π T hT d w) := by
-  rw [CartanData.gkL, Module.Basis.constr_apply, Finsupp.sum, LinearMap.sum_apply, LinearMap.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [CartanData.gkL, Module.Basis.constr_apply, Finsupp.sum, LinearMap.sum_apply, LinearMap.sum_apply, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [LinearMap.smul_apply, LinearMap.smul_apply, LinearMap.map_smul_of_tower, opT_tOp]
 
 theorem opT_gkK (k : D.K) (w : Fin d → D.SmV π) :
     opT D π T hT d (D.gkK π ξ k w) = D.gkK π ξ k (opT D π T hT d w) := by
   funext i
-  simp only [opT_apply, CartanData.gkK, LinearMap.pi_apply, LinearMap.comp_apply, LinearMap.proj_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [opT_apply, CartanData.gkK, LinearMap.pi_apply, LinearMap.comp_apply, LinearMap.proj_apply,
     LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, opS_gOp]
 
 def hgkMap (q : ℕ) : D.HGK π ξ q →ₗ[ℂ] D.HGK π ξ q :=

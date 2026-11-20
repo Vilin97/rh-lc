@@ -95,7 +95,8 @@ theorem splitLocalPlace_up_wittExtendByZero_rankZero {S S₀ T : HSp D} (d : Hyp
   refine Eq.trans ?_ (congrArg (fun M : Matrix (Fin T.rank) (Fin S.rank) k => M.map p.ι) h4.symm)
   ext i j
   show ((FT.β * x * F₀.γ).map p.ι * (d.q0.map (incA D)) : Matrix _ _ (AE D)) i j = _
-  rw [Matrix.map_apply, Matrix.mul_apply, Matrix.mul_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Matrix.map_apply, Matrix.mul_apply, Matrix.mul_apply, map_sum]
   exact Finset.sum_congr rfl fun l _ => iota_mul p _ _
 
 theorem splitLocalPlace_isModel_wittExtendByZero_rankZero (ψ : AddChar (AF D.host.F) ℂ) {S S₀ T : HSp D} (d : HypDec S S₀ 0) (F₀ : GlobalTheory.LocMod.Frame k S₀.rank n)

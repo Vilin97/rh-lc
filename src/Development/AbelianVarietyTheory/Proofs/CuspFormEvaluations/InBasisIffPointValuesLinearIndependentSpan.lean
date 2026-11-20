@@ -219,7 +219,8 @@ theorem indep_iff (u : WeightFamilies.Wt D j) {n : ℕ} (θ : Fin n → B.Cusp j
       ∃ m : ℕ, sec X la w 0 ^ (m + 1) * ∑ i, c i • emb X la N (X.inc u (θ i)) ∈ Mon X la w u 1 m := by
     intro c
     simp only [← map_smul]
-    rw [← map_sum, restriction_eq_zero_iff_mem_vanishingFiltration, mem_Fil]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sum, restriction_eq_zero_iff_mem_vanishingFiltration, mem_Fil]
     simp only [Submodule.coe_sum, Submodule.coe_smul]
     constructor
     · rintro ⟨-, k, hk, h⟩
@@ -267,7 +268,8 @@ theorem class_mem_iff (u : WeightFamilies.Wt D j) {n : ℕ} (θ : Fin n → B.Cu
   rw [Submodule.mem_span_range_iff_exists_fun, exists_comm]
   refine exists_congr fun c => ?_
   simp only [← map_smul]
-  rw [← map_sum, ← class_pow_mul X la w u k, eq_comm, ← sub_eq_zero, ← map_sub, ← map_sub, class_eq_zero_iff]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_sum, ← class_pow_mul X la w u k, eq_comm, ← sub_eq_zero, ← map_sub, ← map_sub, class_eq_zero_iff]
   simp only [Submodule.coe_sum, Submodule.coe_smul, Submodule.coe_sub]
 
 theorem span_top_iff (u : WeightFamilies.Wt D j) {n : ℕ} (θ : Fin n → B.Cusp j u) :

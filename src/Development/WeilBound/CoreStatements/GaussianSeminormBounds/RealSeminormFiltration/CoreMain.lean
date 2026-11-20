@@ -118,7 +118,8 @@ theorem casK_intertw {V : Type} [AddCommGroup V] [Module ℂ V] {ρ : Ix r s →
     {ρ' : Ix r s → Ix r s → Module.End ℂ M} (ι : V →ₗ[ℂ] M)
     (h : ∀ a b, sameBlock a b → ∀ v, ι (ρ a b v) = ρ' a b (ι v)) (v : V) :
     ι (casK ρ v) = casK ρ' (ι v) := by
-  simp only [casK, LinearMap.sum_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [casK, LinearMap.sum_apply, map_sum]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
   split_ifs with hab
   · simp only [Module.End.mul_apply]

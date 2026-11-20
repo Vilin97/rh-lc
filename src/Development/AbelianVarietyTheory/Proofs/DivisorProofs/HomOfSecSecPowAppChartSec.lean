@@ -132,7 +132,8 @@ theorem hom_ext_of_frames {F G : X.Modules} {φ ψ : F ⟶ G} {ι : Type} [Finty
   rw [← app_resM, ← app_resM]
   obtain ⟨a, ha⟩ := (he x _ (inf_le_right : V ⊓ U x ≤ U x)).2 (resM F inf_le_left s)
   rw [← ha]
-  simp only [Fintype.linearCombination_apply, map_sum, Scheme.Modules.Hom.app_smul, app_resM, h]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Fintype.linearCombination_apply, map_sum, Scheme.Modules.Hom.app_smul, app_resM, h]
 
 theorem exists_iso_of_frames {F G : X.Modules} {κ : Type} {U : κ → X.Opens} (hU : ⨆ k, U k = ⊤)
     {e : ∀ k, Fin 1 → Γ(F, U k)} {f : ∀ k, Fin 1 → Γ(G, U k)} (he : ∀ k, IsFrame (e k))

@@ -150,7 +150,8 @@ theorem isUnE_one_iff {F : Type} [Field F] [Algebra F E] (c : E ≃ₐ[F] E) {n 
     · simp [Pi.single_apply, e, Ne.symm e]
   · intro h x y
     rw [hermE_one, hermE_one]
-    simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Finset.sum_mul, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Finset.sum_mul, Finset.mul_sum]
     calc ∑ a, ∑ i, ∑ j, γ a j * x j * (c (γ a i) * c (y i))
         = ∑ i, ∑ j, (∑ a, c (γ a i) * γ a j) * (x j * c (y i)) := by
           rw [Finset.sum_comm]

@@ -263,7 +263,8 @@ theorem bwd_col (hLB : LatBasis X p θ (reindex₂ X p Q)) (hε : θ (epsP X p) 
   have hpr2v : ∀ j, pr2 θ (PI.FinKW.vecV X.B.I p.1 (X.bw j)) = 0 := fun j => secondProj_weight_vector_zero X p θ hε j
   have hpr2y : pr2 θ y = 0 := secondProj_mulVec_zero X p θ _ _ (hpr2v i)
   have hpr2z : pr2 θ z = 0 := by
-    rw [hz, map_sub, map_sum, secondProj_mulVec_zero X p θ _ _ hpr2y, zero_sub, neg_eq_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hz, map_sub, map_sum, secondProj_mulVec_zero X p θ _ _ hpr2y, zero_sub, neg_eq_zero]
     refine Finset.sum_eq_zero fun j _ => ?_
     rw [LinearMap.map_smul_of_tower, secondProj_mulVec_zero X p θ _ _ (hpr2v j), smul_zero]
   have hzw : z = gO • w' := by

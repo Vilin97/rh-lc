@@ -43,7 +43,8 @@ theorem heisO_sum_smul (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D) (Λ : AddS
       rw [Matrix.smul_apply, smul_eq_mul, ← mul_assoc, hsa.1]
     have h1 : heisO ψ S T (p a • x) f = f := hf.2 (p a) hsa _ hmem hhalf
     have hz : hO S T (p a • x) ((∑ i ∈ s, p i) • x) = 0 := by
-      rw [GlobalTheory.LatVacSign.hO_smul_smul, map_sum, Finset.mul_sum,
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [GlobalTheory.LatVacSign.hO_smul_smul, map_sum, Finset.mul_sum,
         Finset.sum_eq_zero (fun j hj => hc a (Finset.mem_insert_self _ _) j (Finset.mem_insert_of_mem hj)),
         zero_mul]
     have key := GlobalTheory.LatVac.heisO_heisO ψ (p a • x) ((∑ i ∈ s, p i) • x) f
@@ -66,7 +67,8 @@ theorem heisO_idemSum_fix : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (S T :
   have hcross : ∀ i ∈ SS, ∀ j ∈ SS, es i * cA D (es j) = 0 :=
     GlobalTheory.PlaceDatum.cross_eq_zero (R := AE D) GlobalTheory.PlaceDatum.isUnit_natCast (cA D) es SS h1 hce
   refine ⟨heisO_sum_smul ψ S T Λ f hf hΛ es SS (fun i hi => (hes i hi).1) hcross x hx, ?_⟩
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine heisO_sum_smul ψ S T Λ f hf hΛ (fun i => cA D (es i)) SS (fun i hi => isSplitIdem_cA (hes i hi).1)
     (fun i hi j hj => ?_) x hx
   rw [← RingHom.map_mul, hcross i hi j hj, map_zero]

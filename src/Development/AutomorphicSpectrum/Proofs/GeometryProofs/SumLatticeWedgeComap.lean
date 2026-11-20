@@ -98,7 +98,8 @@ theorem frame_of_sum_frame : ∀ (X : Scheme.{0}) (Ω : Type) [Field Ω] (ξ : S
     refine Fintype.linearIndependent_iff.2 fun g hg => ?_
     have hx1 : (∑ k, g k • b (tailIdx hj k)) ∈ Va.comap i := by
       have h : i (∑ k, g k • b (tailIdx hj k)) = ∑ k, g k • (i (b (tailIdx hj k)) - s k) := by
-        simp only [map_sum, map_smul, smul_sub, Finset.sum_sub_distrib, hg, sub_zero]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, map_smul, smul_sub, Finset.sum_sub_distrib, hg, sub_zero]
       show i _ ∈ Va
       rw [h]
       exact Va.sum_mem fun k _ => Va.smul_mem _ (hs k).2

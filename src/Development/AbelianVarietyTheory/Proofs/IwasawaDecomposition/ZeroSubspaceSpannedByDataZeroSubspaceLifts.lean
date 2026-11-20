@@ -92,14 +92,16 @@ theorem orth_ker_inf_range {n d e : ℕ} (J : (Fin n → K) →ₛₗ[σ] M)
     have hz : y = ∑ l, y l • (Pi.single l 1 : Fin e → K) := by
       ext i; simp [Pi.single_apply]
     conv_lhs => rw [hz]
-    simp only [map_sum, map_smulₛₗ]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smulₛₗ]
   have hSk : ∀ a ∈ S, θ' a = 0 → a = 0 := by
     intro a ha h0
     rw [hS, GlobalTheory.Mem.LiftForms.span_range_mulVec, ← Fintype.range_linearCombination] at ha
     obtain ⟨c, rfl⟩ := ha
     have hcomp : θ' (Fintype.linearCombination ℂ (fun k => J (Zm *ᵥ Pi.single k 1)) c) =
         ∑ l, ((Θ.map σ) *ᵥ c) l • jW (Pi.single l 1) := by
-      simp only [Fintype.linearCombination_apply, map_sum, map_smul, hθ, Matrix.mulVec_mulVec, hP.1, Matrix.one_mulVec]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [Fintype.linearCombination_apply, map_sum, map_smul, hθ, Matrix.mulVec_mulVec, hP.1, Matrix.one_mulVec]
       simp only [hexp (Θ *ᵥ _), Finset.smul_sum, smul_smul]
       rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun l _ => ?_

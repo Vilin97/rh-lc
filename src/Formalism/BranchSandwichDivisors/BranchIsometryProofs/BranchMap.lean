@@ -359,7 +359,8 @@ theorem rowAction_X_sum (R : Type*) [CommRing R] {r n : ℕ} (g : Matrix (Fin r)
 theorem rowAction_ext_elemDeriv_X (R : Type*) [CommRing R] (n : ℕ) (g : Matrix (Fin n) (Fin n) R) (s t : Fin n)
     (v : Fin (n + 1) × Fin n) :
     rowAct R (extM R g) (bmE R n s t (X v)) = bmE R n s t (rowAct R (extM R g) (X v)) := by
-  rw [elemDeriv_X, rowAction_X_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [elemDeriv_X, rowAction_X_sum, map_sum]
   obtain ⟨a, c⟩ := v
   by_cases hc : c = t
   · subst hc
@@ -1952,7 +1953,8 @@ theorem bmF_rowAct_WH (R : Type*) [CommRing R] {n : ℕ} {B : Type*} [AddCommMon
     (w : Fin (n + 1) × Fin n → B) (hw : ∀ a b s : Fin n, w (a.castSucc, s) = w (b.castSucc, s))
     (g : Matrix (Fin n) (Fin n) R) (F : BP R n) (β : B) (hF : IsWeightedHomogeneous w F β) :
     IsWeightedHomogeneous w (rowAct R (extM R g) F) β := by
-  rw [F.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [F.as_sum, map_sum]
   refine IsWeightedHomogeneous.sum _ _ _ fun d hd => ?_
   have := bmF_rowAct_monomial_WH R w hw g d (AddMonoidAlgebra.coeff F d)
   rwa [hF (mem_support_iff.mp hd)] at this
@@ -1961,7 +1963,8 @@ theorem bmF_rowAct_low (R : Type*) [CommRing R] {n : ℕ} (g : Matrix (Fin n) (F
     (hL : IsLow D L) : IsLow D (rowAct R (extM R g) L) := by
   classical
   intro m' hm'
-  rw [L.as_sum, map_sum] at hm'
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [L.as_sum, map_sum] at hm'
   obtain ⟨d, hd, hmd⟩ := Finset.mem_biUnion.mp (MvPolynomial.support_sum hm')
   have hW := bmF_rowAct_monomial_WH R (zW n)
     (fun a b s => by rw [bmF_zW_castSucc, bmF_zW_castSucc]) g d (AddMonoidAlgebra.coeff L d)

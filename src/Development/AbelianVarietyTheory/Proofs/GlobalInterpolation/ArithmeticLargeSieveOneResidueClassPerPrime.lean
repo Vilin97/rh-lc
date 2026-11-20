@@ -297,7 +297,8 @@ private lemma sum_norm_sq_exp_sum_eq_mul_sum_residues (d : ℕ) (hd : 0 < d) (S 
   apply Complex.ofReal_injective
   push_cast
   rw [Finset.mul_sum]
-  simp_rw [hgroup, hsq, map_sum, map_mul, Finset.sum_mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp_rw [hgroup, hsq, map_sum, map_mul, Finset.sum_mul_sum]
   have horth : ∀ r ∈ Finset.range d, ∀ s ∈ Finset.range d,
       ∑ a ∈ Finset.range d, B r * cexp (2 * ↑Real.pi * I * r * a / d) *
         ((starRingEnd ℂ) (B s) * (starRingEnd ℂ) (cexp (2 * ↑Real.pi * I * s * a / d)))
@@ -333,7 +334,8 @@ private lemma sum_norm_sq_exp_sum_eq_mul_sum_residues (d : ℕ) (hd : 0 < d) (S 
   rw [Finset.sum_comm, Finset.sum_congr rfl fun s hs => horth r hr s hs, Finset.sum_ite_eq]
   simp only [hr, if_true]
   rw [hB]
-  simp [map_sum, Finset.sum_mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [map_sum, Finset.sum_mul_sum]
 
 open Complex DirichletCharacter ArithmeticFunction MeasureTheory Filter Topology in
 private lemma norm_sum_sq_le_pred_mul_of_avoids_class (p : ℕ) (hp : p.Prime) (c : ℕ) (S : Finset ℕ) (b : ℕ → ℂ)

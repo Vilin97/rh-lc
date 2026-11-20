@@ -34,7 +34,8 @@ theorem eigSp_sum_eq_zero (ρ : O →+* Module.End k V) (s : Finset (O →+* k))
         have h1 : ρ a (f t₀ + ∑ u ∈ s, f u) - t₀ a • (f t₀ + ∑ u ∈ s, f u) = 0 := by
           rw [hsum]; simp
         have h2 : ρ a (∑ u ∈ s, f u) = ∑ u ∈ s, u a • f u := by
-          rw [map_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [map_sum]
           exact Finset.sum_congr rfl fun u hu => (mem_eigSp_iff' ρ u _).1 (hf' u hu) a
         rw [map_add, hf₀ a, h2, smul_add, Finset.smul_sum] at h1
         simp only [sub_smul, Finset.sum_sub_distrib]

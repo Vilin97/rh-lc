@@ -103,8 +103,10 @@ theorem trace_mul_isotypic : ∀ (G : Type) [Group G] (N X : Type) [AddCommGroup
     obtain ⟨w, rfl⟩ := e.surjective z
     rw [LinearEquiv.conj_apply_apply, LinearEquiv.symm_apply_apply]
     change H (B (Φ' w)) = Φ' (M w)
-    rw [hΦ', hΦ', map_sum, map_sum]
-    simp_rw [hBφ, hhc, hM, map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hΦ', hΦ', map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp_rw [hBφ, hhc, hM, map_sum, map_smul]
     rw [Finset.sum_comm]
   have key : LinearMap.trace ℂ Z ((H ∘ₗ B).restrict (p := Z) (q := Z)
       fun x _ => hrange (LinearMap.mem_range_self _ x)) = (∑ j, hc j j) * b := by

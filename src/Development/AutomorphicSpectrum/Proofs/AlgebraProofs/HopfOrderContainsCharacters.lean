@@ -81,7 +81,8 @@ lemma psi_pair [FaithfulSMul R K] {A : Subalgebra R (T → R)} {d : R} (hd0 : d 
     funext s
     simp [Finset.sum_apply, Pi.single_apply, mul_comm]
   have e2 := congrArg (fun a => algebraMap R K (l a)) e
-  simp only [map_smul, map_sum, smul_eq_mul, map_mul] at e2
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_smul, map_sum, smul_eq_mul, map_mul] at e2
   simp only [psi, LinearMap.coe_mk, AddHom.coe_mk]
   rw [eq_comm, ← mul_right_inj' hdK, e2, Finset.mul_sum]
   refine Finset.sum_congr rfl fun t _ => ?_

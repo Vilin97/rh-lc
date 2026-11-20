@@ -135,7 +135,8 @@ theorem main : MainSt := by
   have hsect : ∀ z, sect ω H (∑ i, Φi i) z = fun x => ∑ i, sect ω H (Φi i) z x := by
     intro z
     funext x
-    simp only [sect, map_sum, Submodule.coe_sum, Finset.sum_apply, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [sect, map_sum, Submodule.coe_sum, Finset.sum_apply, Finset.mul_sum]
   have heq : EqRight (fun z => ∑ i, PositivityTheory.PfSWUS.eis ω H (Φi i) g z) (PositivityTheory.PfSWUS.eis ω H Φ g) := by
     refine ⟨∑ i, |σi i|, fun z hz => ?_⟩
     have hz' : ∀ i, σi i < z.re := fun i =>

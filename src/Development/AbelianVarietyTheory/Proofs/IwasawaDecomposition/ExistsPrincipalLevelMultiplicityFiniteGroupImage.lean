@@ -97,7 +97,8 @@ theorem gaL_act (hl : LiftsExist V β L) {c : G → ℂ} (hc : ∀ g a, c (g * a
       postOn M (actL V β L (eG (a * b))) U := fun a b => by
     rw [map_mul]
     exact (act_mul hl _ _ hU).symm
-  rw [postOn_gaL, postOn_gaL, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [postOn_gaL, postOn_gaL, map_sum]
   simp only [map_smul, hm]
   refine (Fintype.sum_equiv (MulAut.conj g).toEquiv _ _ fun a => ?_).symm
   show _ = c (g * a * g⁻¹) • postOn M (actL V β L (eG (g * a * g⁻¹ * g))) U

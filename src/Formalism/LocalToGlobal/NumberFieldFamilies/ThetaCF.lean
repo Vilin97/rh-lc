@@ -176,7 +176,8 @@ theorem atTau_mul (hU : AtTauU D) (V : HSp D) (τ : D.what₂.Tau) {g h : Matrix
     change ((Units.val (HA.mat _ _ _ a * HA.mat _ _ _ b)).map _).map _ = _
     rw [Units.val_mul]
     ext i j
-    simp [Matrix.mul_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Matrix.mul_apply, map_sum]
   have sg := atTau_spec hU hg
   have sh := atTau_spec hU hh
   refine atTau_eq hU (uh_mul hg hh) ⟨mul_mem sg.1 sh.1, ?_, fun τ' hτ' => ?_⟩
@@ -279,7 +280,8 @@ theorem finMat_mul (V : HSp D) (g h : GA D V) :
   change (Units.val (HA.mat _ _ _ g * HA.mat _ _ _ h)).map _ = _
   rw [Units.val_mul]
   ext i j
-  simp [Matrix.mul_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Matrix.mul_apply, map_sum]
 
 theorem finMat_one (V : HSp D) : finMat D.sp.cm.sig V.gram 1 = 1 := by
   unfold finMat
@@ -291,7 +293,8 @@ theorem map_inv_one {n : ℕ} {R S Φ : Type} [CommRing R] [CommRing S] [FunLike
     (A B : Matrix (Fin n) (Fin n) R) (h : A * B = 1) (hA : A.map f = 1) : B.map f = 1 := by
   have e : (A * B).map f = A.map f * B.map f := by
     ext i j
-    simp [Matrix.mul_apply, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [Matrix.mul_apply, map_sum, map_mul]
   rw [h, hA, one_mul] at e
   rw [← e]
   ext i j

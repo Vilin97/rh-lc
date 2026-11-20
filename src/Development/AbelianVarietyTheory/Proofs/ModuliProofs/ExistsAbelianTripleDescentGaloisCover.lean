@@ -120,14 +120,16 @@ theorem pull_cubeCls [IsCommMonObj B] (h : IsGrpPullback B A j φ) {T' : Over S'
     (hx : ∀ i, pushPt h.1.w (x' i) = U ≫ x i) (c : Pic A.left) :
     pull U.left (cubeCls x c) = cubeCls x' (pull φ c) := by
   unfold cubeCls
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun I _ => ?_
   rw [map_zsmul, ← pull_comp, ← pull_comp, psum_push h x' x U hx I]
 
 theorem pull_cubeCls_pre {T' T : Over S} {n : ℕ} (x : Fin n → (T ⟶ A)) (U : T' ⟶ T) (c : Pic A.left) :
     pull U.left (cubeCls x c) = cubeCls (fun i => U ≫ x i) c := by
   unfold cubeCls
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   refine Finset.sum_congr rfl fun I _ => ?_
   rw [map_zsmul, ← pull_comp, ← Over.comp_left]
   exact congrArg (fun q : T' ⟶ A => _ • pull q.left c) (psum_hom (preHom U) x I)

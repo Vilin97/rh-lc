@@ -17,7 +17,8 @@ theorem form_sum_right {K : Type} [Field K] {V : Type} [AddCommGroup V] [Module 
     simpa using this
   let f : V →+ ℂ := { toFun := h.form σ x, map_zero' := h0, map_add' := h.add_right σ x }
   change f _ = _
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   exact Finset.sum_congr rfl fun k _ => h.smul_right σ _ _ _
 
 theorem form_basis {K : Type} [Field K] {r : ℕ} (h : HermFam K (Fin r → K)) (σ : K →+* ℂ) (x y : Fin r → K) :
@@ -27,7 +28,8 @@ theorem form_basis {K : Type} [Field K] {r : ℕ} (h : HermFam K (Fin r → K)) 
   have h1 : ∀ (a w : Fin r → K), h.form σ a w = ∑ l, σ (w l) * h.form σ a (Pi.single l 1) := fun a w => by
     conv_lhs => rw [e w]
     exact form_sum_right h σ a _ w
-  rw [← h.conj_symm σ y x, h1 y x, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← h.conj_symm σ y x, h1 y x, map_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [map_mul, h.conj_symm, h1 _ y, Finset.mul_sum]
   exact Finset.sum_congr rfl fun l _ => by ring
@@ -105,7 +107,8 @@ theorem jet_bound_place : ∀ (K'' : Type) [Field K''] (σ : K'' →+* ℂ) (g r
       (((∫ z in Fd, ‖Θ z‖ ^ 2 * E z) / ((volume Fd).toReal * ‖ρ'‖ ^ 2) : ℝ) : ℂ) := by
     have s1 : (∑ a, ∑ b, starRingEnd ℂ (c a) * c b * hE.form σ (v a) (v b)) =
         ∑ k, ∑ l, starRingEnd ℂ (gm k) * gm l * hE.form σ (Pi.single k 1) (Pi.single l 1) := by
-      simp only [hgm, map_sum, map_mul, Finset.sum_mul, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hgm, map_sum, map_mul, Finset.sum_mul, Finset.mul_sum]
       simp only [form_basis hE σ (v _) (v _), Finset.mul_sum]
       calc _ = ∑ a, ∑ k, ∑ b, ∑ l, starRingEnd ℂ (c a) * c b * (starRingEnd ℂ (σ (v a k)) * σ (v b l) * hE.form σ (Pi.single k 1) (Pi.single l 1)) :=
             Finset.sum_congr rfl fun a _ => Finset.sum_comm
@@ -131,7 +134,8 @@ theorem jet_bound_place : ∀ (K'' : Type) [Field K''] (σ : K'' →+* ℂ) (g r
         rw [Complex.conj_mul']; push_cast; rfl
       simp only
       rw [Complex.ofReal_mul, this]
-      simp only [hΘ, map_sum, map_mul, Finset.sum_mul, Finset.mul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hΘ, map_sum, map_mul, Finset.sum_mul, Finset.mul_sum]
       rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun l _ => ?_
       ring

@@ -72,11 +72,13 @@ theorem UpperTheory.convex_separation_positive_distance :
   · have e1 : pt (rt g) v ⬝ᵥ ((GeneralLinearGroup.map (pInf E) (rt g)⁻¹).val *ᵥ vInf ξ)
         = pInf E (algebraMap E (Ad E) (v ⬝ᵥ ξ)) := by
       refine (dot_cancel (pInf E) (rt g) (vInf v) (vInf ξ)).trans ?_
-      simp only [dotProduct, vInf, map_sum, map_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [dotProduct, vInf, map_sum, map_mul]
     have e2 : ptF (rt g) v ⬝ᵥ ((GeneralLinearGroup.map (pFin E) (rt g)⁻¹).val *ᵥ vFin ξ)
         = algebraMap E (Af E) (v ⬝ᵥ ξ) := by
       refine (dot_cancel (pFin E) (rt g) (vFin v) (vFin ξ)).trans ?_
-      simp only [dotProduct, vFin, map_sum, map_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [dotProduct, vFin, map_sum, map_mul]
     have hv' : ptF (rt g) v ∈ L := by rw [(hR g).2.2]; exact hv
     rw [e1]
     rcases hsep (v ⬝ᵥ ξ) ⟨(_, _), ⟨hv', h1⟩, e2⟩ with h | h

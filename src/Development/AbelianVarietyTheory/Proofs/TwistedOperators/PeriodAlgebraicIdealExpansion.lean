@@ -77,7 +77,8 @@ theorem apply_minorPol {D : D7} {a d : ℕ} {n : D.what₂.Tau → ℕ} (U : Glo
       c * (p ^ (k.sum fun _ e => e) * (ζ * GL3Theta.applyAt0 D (MvPolynomial.monomial k 1) G))) :
     l (GlobalTheory.NormSum.minorPol D U) = c * p ^ (a * ∑ τ, n τ) * (ζ * GL3Theta.applyAt0 D (GlobalTheory.NormSum.minorPol D U) G) := by
   conv_lhs => rw [(GlobalTheory.NormSum.minorPol D U).as_sum]
-  rw [map_sum l, GL3Theta.applyAt0, Finset.mul_sum _ _ ζ, Finset.mul_sum _ _ (c * p ^ (a * ∑ τ, n τ))]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum l, GL3Theta.applyAt0, Finset.mul_sum _ _ ζ, Finset.mul_sum _ _ (c * p ^ (a * ∑ τ, n τ))]
   refine Finset.sum_congr rfl fun α hα => ?_
   have hk := card_of_mem_support U hα
   rw [Finsupp.card_toMultiset] at hk

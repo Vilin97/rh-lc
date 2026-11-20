@@ -80,7 +80,8 @@ theorem apply_sum' {N : ℕ} (f : Sp E N ≃ₗ[E] Sp E N) (v : Sp E N) (i : Fin
     funext l
     simp [eN, Finset.sum_apply, Fin.val_inj]
   conv_lhs => rw [hv]
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp [Finset.sum_apply, map_smul]
 
 theorem atN_of_lt {N : ℕ} (v : Fin N → E) {i : ℕ} (hi : i < N) : atN v i = v ⟨i, hi⟩ := by

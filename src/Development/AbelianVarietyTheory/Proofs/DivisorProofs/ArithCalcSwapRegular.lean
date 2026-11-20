@@ -77,7 +77,8 @@ theorem swapReg_swapG : ArCalc → SwapReg swapG := by
     have h1 : (C c * X 0 + X 1 : MvPolynomial (Fin 2) ℝ).IsHomogeneous 1 :=
       ((isHomogeneous_X _ _).C_mul _).add (isHomogeneous_X _ _)
     simpa using h1.pow e
-  rw [← map_add, l1, l2, add_pow_add_sub_pow_even, map_sum, swapG, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← map_add, l1, l2, add_pow_add_sub_pow_even, map_sum, swapG, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   by_cases hj : 2 * j ≤ d + 2
   · have e := key j hj _ (hhom (d + 2 - 2 * j))

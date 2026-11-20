@@ -117,7 +117,8 @@ def M (A : Matrix (Fin n) (Fin n) ℂ) : Matrix (Fin n) (Fin n) ℂ⟦X⟧ := 1 
 theorem mapC_mul_S (A : Matrix (Fin n) (Fin n) ℂ) :
     A.map (fun a => (PowerSeries.C a : ℂ⟦X⟧)) * S A = Matrix.of fun i j => mk fun k => (A ^ (k + 1)) i j := by
   ext i j m
-  simp only [Matrix.mul_apply, S, Matrix.map_apply, Matrix.of_apply, map_sum, PowerSeries.coeff_C_mul, PowerSeries.coeff_mk]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Matrix.mul_apply, S, Matrix.map_apply, Matrix.of_apply, map_sum, PowerSeries.coeff_C_mul, PowerSeries.coeff_mk]
   rw [pow_succ', Matrix.mul_apply]
 
 theorem X_mul_shift (f : ℕ → ℂ) : (PowerSeries.X : ℂ⟦X⟧) * mk (fun k => f (k + 1)) = mk f - PowerSeries.C (f 0) := by
@@ -156,7 +157,8 @@ theorem det_rank_one (A : Matrix (Fin n) (Fin n) ℂ) :
   rw [hdet]
   have hsum : ∑ i, ∑ j, S A i j = mk (tot A) := by
     refine PowerSeries.ext (R := ℂ) fun m => ?_
-    simp [S, tot, map_sum, coeff_mk]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [S, tot, map_sum, coeff_mk]
   congr 1
   simp only [Matrix.add_apply, Matrix.one_apply_eq, Matrix.mul_apply, Matrix.replicateRow_apply,
     Matrix.replicateCol_apply, one_mul]

@@ -99,7 +99,8 @@ theorem uo_of_mem {y : HA (Fv F v) σ J}
   have hkX : ∀ b, lin (Fv F v) σ J (y * ((s0 : HA (Fv F v) σ J) * g) * y⁻¹) (X b) =
       ∑ a, uMat v x a b • X a := by
     intro b
-    rw [hXa, lin_mul, lin_inv_lin, lin_mul, lin_mul, hg, map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hXa, lin_mul, lin_inv_lin, lin_mul, lin_mul, hg, map_sum, map_sum]
     refine Finset.sum_congr rfl fun a _ => ?_
     rw [map_smul, hs0, map_smul, hXa]
   intro p

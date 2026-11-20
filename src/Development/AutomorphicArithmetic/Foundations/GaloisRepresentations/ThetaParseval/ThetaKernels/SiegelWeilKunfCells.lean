@@ -135,7 +135,8 @@ theorem cells'_k (B : Base F E) (hB : _root_.UpperTheory.TP.W.GoodK σ B) (hb : 
         apply det_one_add_rank_one
         have : (fun j => inclR (F := F) (AF F) (w' j)) ⬝ᵥ (fun i => Λ * inclR (F := F) (AF F) (v i)) =
             Λ * inclR (F := F) (AF F) (w' ⬝ᵥ v) := by
-          simp [dotProduct, Finset.mul_sum, map_sum, mul_left_comm]
+          set_option synthInstance.maxHeartbeats 100000 in
+            simp [dotProduct, Finset.mul_sum, map_sum, mul_left_comm]
         rw [this, hvw0, map_zero, mul_zero]
       rw [ht1, Matrix.det_mul, Matrix.det_mul, h11, hdet, mul_one, ← Matrix.det_mul, incM_GL_mul_inv, Matrix.det_one]
 theorem cells_k (B : Base F E) (hB : _root_.UpperTheory.TP.W.GoodK σ B) (hb : IsFrame2 σ Y b) {ε : ℤˣ} {w : G2 σ Y}

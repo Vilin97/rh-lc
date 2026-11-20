@@ -98,7 +98,8 @@ theorem mD_cons {φ : V → ℂ} {x : V} (hφ : ContDiffAt ℂ ω φ x) (v : V) 
 theorem mD_cons_sum {φ : V → ℂ} {x : V} (hφ : ContDiffAt ℂ ω φ x) {ι : Type} (t : Finset ι) (c : ι → ℂ)
     (w : ι → V) (s : Multiset V) :
     mD φ x ((∑ i ∈ t, c i • w i) ::ₘ s) = ∑ i ∈ t, c i * mD φ x (w i ::ₘ s) := by
-  simp only [mD_cons hφ, map_sum, map_smul, ContinuousMultilinearMap.sum_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [mD_cons hφ, map_sum, map_smul, ContinuousMultilinearMap.sum_apply,
     ContinuousMultilinearMap.smul_apply, smul_eq_mul]
 
 end Sym
@@ -189,7 +190,8 @@ theorem dof_tay {θ : (Fin g → ℂ) → ℂ} (hθ : ContDiffAt ℂ ω θ 0) (v
       Multiset.cons_add]
     push_cast
     field_simp
-  rw [map_sum, Finset.sum_congr rfl fun j _ => key j, coeff_tay, Multiset.add_cons]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_congr rfl fun j _ => key j, coeff_tay, Multiset.add_cons]
   have hs := mD_cons_sum hθ Finset.univ v (fun j => (Pi.single j (1 : ℂ) : Fin g → ℂ)) (dirs n + s)
   rw [← sum_single_smul v] at hs
   rw [hs, Finset.sum_div]
@@ -274,7 +276,8 @@ theorem constantCoeff_dpolyOf_tay {θ : (Fin g → ℂ) → ℂ} (hθ : ContDiff
     (u : ι → Fin g → ℂ) (P : MvPolynomial ι ℂ) :
     constantCoeff (DpolyOf (addF ℂ g) u P (tay θ 0)) = ReciprocityTheory.ChartRestriction.G.I2.polyDeriv P u θ 0 := by
   unfold DpolyOf
-  rw [polyDeriv_eq_mD hθ, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [polyDeriv_eq_mD hθ, map_sum]
   refine Finset.sum_congr rfl fun m _ => ?_
   rw [map_mul, MvPowerSeries.constantCoeff_C, constantCoeff_dmonOf_tay hθ]
 

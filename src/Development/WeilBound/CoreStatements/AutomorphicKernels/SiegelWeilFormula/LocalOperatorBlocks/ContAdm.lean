@@ -103,7 +103,8 @@ theorem schr_pureA (ψ : AddChar (AF F) ℂ) (hψ : IsStd ψ) (p : (κ → AF F)
       ∑ i, InfiniteAdeleRing.ringEquiv_mixedSpace F (x i).1 * arc F p.2 i +
         InfiniteAdeleRing.ringEquiv_mixedSpace F (⅟(2 : AF F) * (p.1 ⬝ᵥ p.2)).1 := by
     show InfiniteAdeleRing.ringEquiv_mixedSpace F ((x ⬝ᵥ p.2).1 + (⅟(2 : AF F) * (p.1 ⬝ᵥ p.2)).1) = _
-    rw [map_add, hs1, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_add, hs1, map_sum]
     simp only [map_mul, arc]
   simp only [schr, pureA]
   rw [hinf _ hat, hsnd, hfst, htr]

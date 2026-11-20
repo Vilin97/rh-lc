@@ -94,7 +94,8 @@ theorem isCompl_perp [FiniteDimensional K V] (h : V →ₗ⋆[K] V →ₗ[K] K)
       have e := congrArg Subtype.val (bU.sum_repr ⟨x, hx⟩)
       simp only [Submodule.coe_sum, Submodule.coe_smul] at e
       exact e.symm
-    rw [hx', map_sum, LinearMap.sum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hx', map_sum, LinearMap.sum_apply]
     simp [hv']
   have h1 := LinearMap.finrank_range_add_finrank_ker T
   have h2 : Module.finrank K (LinearMap.range T) ≤ Module.finrank K U := by

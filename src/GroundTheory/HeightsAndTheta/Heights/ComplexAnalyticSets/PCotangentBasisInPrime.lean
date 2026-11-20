@@ -37,7 +37,8 @@ theorem CotangentBasisInPrime.proof : CotangentBasisInPrime.Statement := by
   have hsum : ∀ c : Fin (Nat.card κ) → Localization.AtPrime P,
       (maximalIdeal _).toCotangent (∑ i, c i • G i) = ∑ i, residue _ (c i) • w i := by
     intro c
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, ← ResidueField.algebraMap_eq, algebraMap_smul]
     rfl

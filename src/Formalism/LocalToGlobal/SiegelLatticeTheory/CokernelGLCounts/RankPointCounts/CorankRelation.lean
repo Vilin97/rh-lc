@@ -26,7 +26,8 @@ theorem span_pair_orth_eq_zero {T T' : E} (F : FlagG S r T) (F' : FlagG S r T') 
   have hc : Formalism.L2.SG.GramJoint.gramFF F F' *ᵥ c = 0 := by
     funext i
     have h := ho i
-    rw [map_sum] at h
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at h
     simp only [Matrix.mulVec, dotProduct, Pi.zero_apply]
     rw [← h]
     refine Finset.sum_congr rfl fun j _ => ?_

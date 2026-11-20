@@ -53,7 +53,8 @@ theorem mk_fixedProj_eq (hρ : IsSmooth ρ) (hKc : IsCompact (K : Set G)) (hKo :
     exact Submodule.neg_mem _ (sub_mem_coinvariantsKer (Quotient.out q).2 w)
   rw [hey]
   show Representation.Coinvariants.mk (ρ.comp N.subtype) (c⁻¹ • cosetSum ρ K N' w) = _
-  rw [map_smul, cosetSum_apply, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_smul, cosetSum_apply, map_sum,
     Finset.sum_congr rfl fun q _ => hterm _ (Quotient.out q).2, Finset.sum_const,
     Finset.card_univ, ← Nat.cast_smul_eq_nsmul ℂ, smul_smul, inv_mul_cancel₀ hc, one_smul]
 

@@ -152,7 +152,8 @@ theorem Rep.conv (anti : Antitone Fil) (exh : ∀ b, ∃ a, b ∈ Fil a)
         ι (PowerSeries.coeff k e) * (t ^ k * (t ^ r * p (f ((r : ℤ) - a)))) := by
     rw [← Finset.sum_range_diag_flip]
     refine Finset.sum_congr rfl fun q _ => ?_
-    rw [conv_eq_sum e f a hf, map_sum, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [conv_eq_sum e f a hf, map_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun j hj => ?_
     have : j ≤ q := Nat.lt_succ_iff.1 (Finset.mem_range.1 hj)
     rw [hp, ← mul_assoc (t ^ j), ← pow_add, Nat.add_sub_cancel' this]
@@ -377,7 +378,8 @@ theorem sum_tmul_mem_filV (a : ℤ) (y : Fin n → BdR) (hy : ∀ α, y α ∈ P
 
 theorem crd_sum_tmul (y : Fin n → BdR) (α : Fin n) :
     crd T ι (bV.coord α) (∑ β, bV β ⊗ₜ[Qp] y β) = y α := by
-  rw [map_sum, Finset.sum_eq_single α]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_eq_single α]
   · simp [crd_tmul]
   · intro β _ hβ
     simp [crd_tmul, hβ]
@@ -462,12 +464,14 @@ theorem lat_eq_fil : ∀ (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc) (F : 
     · obtain ⟨m, b, x, hb, hx⟩ := hΨs _ (sum_tmul_mem_filV _ T bV 0 z hz)
       refine ⟨m, b, x, hb, fun α => ?_⟩
       have := crd_compKer T ι (bV.coord α) hx
-      rw [map_sub, crd_sum_tmul, map_sum, sub_eq_zero] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, crd_sum_tmul, map_sum, sub_eq_zero] at this
       simpa only [crd_mulVR] using this
     · obtain ⟨c, hc⟩ := hΨr x a ha
       refine ⟨c, fun M => ?_⟩
       have := crd_sup _ T ι hι (bV.coord α) _ (hc M)
-      rw [map_sub, map_sum] at this
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, map_sum] at this
       simp only [crd_mulVR] at this
       exact this
     · by_cases hr : r = k

@@ -71,7 +71,8 @@ private lemma A_sum (W : WPres O X R) (g : MvPowerSeries W.σ O) (hx : W.π g �
   refine ⟨T, ?_⟩
   have h1 : f = ∑ j ∈ T, wcomp O W.wt j f := by
     ext m
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp only [coeff_wcomp]
     rw [Finset.sum_ite_eq]
     split_ifs with hm
@@ -79,7 +80,8 @@ private lemma A_sum (W : WPres O X R) (g : MvPowerSeries W.σ O) (hx : W.π g �
     · exact hT m hm
   have h2 : f - g ∈ RingHom.ker W.π := by rw [RingHom.mem_ker, map_sub, hf, sub_self]
   rw [← hf]
-  conv_lhs => rw [h1, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [h1, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   have := W.homog _ h2 j
   rwa [RingHom.mem_ker, map_sub, map_sub, sub_eq_zero] at this
@@ -113,7 +115,8 @@ theorem UpperTheory.V.Alg.ker_pow :
         ∑ m ∈ μ, (⟨W.π (b m), W.part_le_A ⟨_, hb m, rfl⟩⟩ : W.A) * m.prod fun i k => W.zA i ^ k := by
       apply Subtype.ext
       show W.π (wcomp O W.wt j g) = _
-      rw [hbs, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hbs, map_sum]
       simp [π_monomial, Finsupp.prod, WPres.zA]
     rw [h3]
     exact Ideal.sum_mem _ fun m hm => Ideal.mul_mem_left _ _
@@ -124,7 +127,8 @@ theorem UpperTheory.V.Alg.ker_pow :
       (Finsupp.finite_of_degree_le n).subset fun m (hm : m.degree < n) => hm.le
     set t : MvPowerSeries W.σ O := ∑ m ∈ hfin.toFinset, monomial m (coeff m f) with ht
     have htA : W.π t ∈ W.A := by
-      rw [ht, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [ht, map_sum]
       exact Subalgebra.sum_mem _ fun m _ => W.part_le_A ⟨_, monomial_mem W.wt m _, rfl⟩
     refine ⟨⟨_, htA⟩, ?_⟩
     have key : ∃ μ : Finset (W.σ →₀ ℕ), (μ : Set _) ⊆ {m : W.σ →₀ ℕ | n ≤ m.degree} ∧
@@ -139,11 +143,13 @@ theorem UpperTheory.V.Alg.ker_pow :
     obtain ⟨b, -, hbs'⟩ := hs (f - t) (fun m hm => by
       have hm0 : m.degree < n := not_le.1 hm
       have hm' : m ∈ hfin.toFinset := hfin.mem_toFinset.2 hm0
-      rw [map_sub, ht, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, ht, map_sum]
       simp only [coeff_monomial]
       rw [Finset.sum_ite_eq, if_pos hm', sub_self])
     show W.π f - W.π t ∈ _
-    rw [← map_sub, hbs', map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← map_sub, hbs', map_sum]
     refine Ideal.sum_mem _ fun m hm => ?_
     rw [map_mul, π_monomial]
     exact Ideal.mul_mem_left _ _ (prod_pow_mem _ _ (fun i => z_mem_ker W h i) m (hμ hm))

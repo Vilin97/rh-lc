@@ -27,7 +27,8 @@ theorem shift_coeff_of_eval_identity {N : Type} [AddCommGroup N] [Module ℂ N]
     apply Polynomial.funext
     intro u
     have h1 := congrArg f (h u)
-    simp only [map_add, map_smul, map_sum, smul_eq_mul] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_add, map_smul, map_sum, smul_eq_mul] at h1
     simp only [Polynomial.eval_add, Polynomial.eval_mul, Polynomial.eval_X,
       Polynomial.eval_finsetSum, Polynomial.eval_monomial, Polynomial.eval_C,
       LinearMap.comp_apply]

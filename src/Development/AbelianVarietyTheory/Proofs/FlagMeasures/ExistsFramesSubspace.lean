@@ -57,7 +57,8 @@ theorem exists_frames_subspace (hX : ∀ v, IsUnit (X v).det) (U : Submodule K V
     intro v x
     have hx : (x : V) = ∑ k, e.repr x k • (e k : V) := by
       have h := congrArg U.subtype (e.sum_repr x)
-      rw [map_sum] at h
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum] at h
       exact h.symm
     rw [hx, PlaceDecomposition.fcoord_lincomb, WithLp.toLp_sum]
     simp only [T, Fintype.linearCombination_apply, WithLp.toLp_smul]

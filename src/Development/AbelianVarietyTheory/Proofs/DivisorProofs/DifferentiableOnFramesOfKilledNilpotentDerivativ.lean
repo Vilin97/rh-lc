@@ -220,7 +220,8 @@ theorem ell_projU_I [NumberField E] [IsCMField E] (X : Data E r) (ℓ : Frame X.
     ring
   conv_lhs => rw [frame_eq_sum W]
   conv_rhs => rw [frame_eq_sum W]
-  simp only [Finset.smul_sum, smul_smul, map_sum, key2, Finset.mul_sum, mul_assoc]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Finset.smul_sum, smul_smul, map_sum, key2, Finset.mul_sum, mul_assoc]
 
 theorem differentiableAt_bchar (la : Wt Ψ r) :
     DifferentiableAt ℂ (fun W : Frame Ψ r => bchar la (oneFr Ψ r + W)) 0 := by

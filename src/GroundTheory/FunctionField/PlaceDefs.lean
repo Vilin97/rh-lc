@@ -284,7 +284,8 @@ theorem linearIndependent_of_residue {x : K} (hx0 : x ≠ 0) (hx : v.ring.valuat
     simpa [y, hg] using this
   have hcomb : ∑ i, b i • IsLocalRing.residue v.ring (z i) = 0 := by
     have := congrArg (IsLocalRing.residue v.ring) hsum0
-    rw [map_sum, map_zero] at this
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero] at this
     rw [← this]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_mul, hres, Algebra.smul_def]

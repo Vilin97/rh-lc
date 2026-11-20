@@ -46,7 +46,8 @@ theorem UpperTheory.V.Z.Tf.GlobalTraceComparison.Pi.finFac_pf :
       rw [hval _ (by rw [hmul, hl, (xs b).2, add_zero])]
       exact s.fix.1 ψ (hWV hψ) _ _
     have hr := congrArg (evAt s.π x) (hrep ⟨ψ, hWV hψ⟩ ⟨⟨ψ, hψ⟩, rfl⟩)
-    rw [map_sum] at hr
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum] at hr
     rw [hval x rfl]
     refine hr.trans (Finset.sum_congr rfl fun b _ => ?_)
     rw [map_smul, hb b, smul_eq_mul, mul_comm]

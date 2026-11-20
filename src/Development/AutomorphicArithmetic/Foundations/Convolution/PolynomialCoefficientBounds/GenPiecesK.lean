@@ -21,7 +21,8 @@ theorem UpperTheory.ConvolutionTheory.FX.gen_piecesK :
     simp only [coeff_sum, coeff_monomial, Finset.sum_ite_eq']
   have hK0 : 0 ≤ ∑ γ ∈ F.support, |K γ| := Finset.sum_nonneg fun _ _ => abs_nonneg _
   refine ⟨∑ γ ∈ F.support, |K γ|, fun k => ∑ γ ∈ F.support, monomial γ (G γ k), fun k => ⟨?_, ?_, fun β => ?_⟩⟩
-  · rw [map_sum, pieceK]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum, pieceK]
     refine Finset.sum_congr rfl fun γ _ => ?_
     rw [map_monomial, ← (hG γ k).1]
     rfl

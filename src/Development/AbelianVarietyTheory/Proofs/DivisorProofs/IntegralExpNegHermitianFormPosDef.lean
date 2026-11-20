@@ -27,7 +27,8 @@ lemma quad_eq {n : ℕ} (H C : Matrix (Fin n) (Fin n) ℂ) (hC : H.transpose = C
     simpa [Matrix.mul_apply] using this
   have hc : (∑ j, ∑ l, H j l * w j * (starRingEnd ℂ) (w l)) =
       ∑ k, (∑ j, C k j * w j) * (starRingEnd ℂ) (∑ l, C k l * w l) := by
-    simp only [hH, map_sum, map_mul, Finset.sum_mul, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hH, map_sum, map_mul, Finset.sum_mul, Finset.mul_sum]
     exact (Finset.sum_congr rfl fun j _ => Finset.sum_comm).trans (Finset.sum_comm.trans
       (Finset.sum_congr rfl fun k _ => Finset.sum_comm.trans (Finset.sum_congr rfl fun l _ =>
         Finset.sum_congr rfl fun j _ => by ring)))

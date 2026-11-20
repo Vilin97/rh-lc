@@ -120,7 +120,8 @@ theorem fac : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberField F]
         GlobalTheory.T.local_schwartz_stable_under_W hP F E σ B a a' G X om om' hT B.v₁ hv B.τ₁ m hmv (ψ j) (hψ j) (ψ₁ j) (hψ₁ j).1 (hψ₁ j).2
       refine ⟨ψ₁, hψ₁, ?_⟩
       have hm1 : om' (1, m) (om' (1, g) Φ') = ∑ j, tens (evFin F B.v₁) (ψ₁ j) (r j) := by
-        rw [hsum, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [hsum, map_sum]
         exact Finset.sum_congr rfl fun j _ => (hψ₁ j).2 (r j) (hrest j (ψ j) (hSoSB _ (hψ j)))
       have hmem : ∑ j, tens (evFin F B.v₁) (ψ₁ j) (r j) ∈ G.M'.So B.ψ B.τ₁ :=
         Submodule.sum_mem _ fun j _ => hso j _ (hψ₁S j)
@@ -129,7 +130,8 @@ theorem fac : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberField F]
             rw [ctf_om, ctf_om, one_mul]
         _ = ℓ (∑ j, tens (evFin F B.v₁) (ψ₁ j) (r j)) := by rw [hm1, hℓ _ hmem]
         _ = ∑ j, Λ j (ψ₁ j) := by
-            rw [map_sum]
+            set_option synthInstance.maxHeartbeats 100000 in
+              rw [map_sum]
             exact Finset.sum_congr rfl fun j _ => (hΛs j _ (hψ₁S j)).symm
   · obtain ⟨N, ψ, r, hψ, hr, hsum⟩ := GlobalTheory.T.schwartz_factorization_away_base F E σ B a a' G X om om' hT _ hΦ'' v hv1
     refine ⟨N, fun j => ℓ ∘ₗ tensL v (r j), ψ, hψ, ?_, ?_, ?_⟩
@@ -151,7 +153,8 @@ theorem fac : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberField F]
       choose ψ₁ hψ₁ using fun j => ((hAE v).1 1 (hone v) m hmv (ψ j) (hψ j)).exists
       refine ⟨ψ₁, hψ₁, ?_⟩
       have hm1 : om' (1, m) (om' (1, g) Φ') = ∑ j, tens (evFin F v) (ψ₁ j) (r j) := by
-        rw [hsum, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [hsum, map_sum]
         exact Finset.sum_congr rfl fun j _ => (hψ₁ j).2 (r j) (hr j (ψ j) (hψ j)).1
       have hmem : ∑ j, tens (evFin F v) (ψ₁ j) (r j) ∈ G.M'.So B.ψ B.τ₁ :=
         Submodule.sum_mem _ fun j _ => (hr j (ψ₁ j) (hψ₁ j).1).2

@@ -70,12 +70,14 @@ def lft (h : IsCMExt F E σ) (τ : ∀ w : InfinitePlace F, EmbOver E w) (c : In
   ∑ w, GlobalTheory.IndefiniteRowSideFullHecke.AdelicUnitaryGroups.tensNU (inInf w) (inInf_mul w) ((RingEquiv.ofBijective _ (infEmb_bijective h (τ w))).symm (c w))
 
 theorem fin_lft (h : IsCMExt F E σ) (τ) (c) (v : Pl F) : compFin F E v (lft h τ c) = 0 := by
-  rw [lft, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [lft, map_sum]
   exact Finset.sum_eq_zero fun w _ => GlobalTheory.AutFunCompare.map_tensNU_zero (evFin F v) _ _ (fun _ => map_zero (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.evalV F v)) _
 
 theorem pi_lft (h : IsCMExt F E σ) (τ) (c) (w : InfinitePlace F) : piInf (τ w) (lft h τ c) = c w := by
   classical
-  rw [lft, map_sum, Finset.sum_eq_single w]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [lft, map_sum, Finset.sum_eq_single w]
   · have := GlobalTheory.AutFunCompare.map_tensNU_self (E := E) (evInf F w) (inInf w) (inInf_mul w) (fun a => Pi.single_eq_same w a)
       ((RingEquiv.ofBijective _ (infEmb_bijective h (τ w))).symm (c w))
     exact (congrArg (infEmb (τ w)) this).trans ((RingEquiv.ofBijective _ (infEmb_bijective h (τ w))).apply_symm_apply _)

@@ -40,7 +40,8 @@ theorem abs_le_one (hw : IsNonarchimedean w) (φ : E →+* K) (x : 𝓞 E) : w (
     have hy : (y : E) = ∑ k, (RingOfIntegers.basis E).repr y k • (RingOfIntegers.basis E k : E) := by
       conv_lhs => rw [← (RingOfIntegers.basis E).sum_repr y]
       change algebraMap (𝓞 E) E _ = _
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       exact Finset.sum_congr rfl fun k _ => map_zsmul (algebraMap (𝓞 E) E) _ _
     rw [hy]
     exact abs_sum_le hw φ hC0 _ _ fun k =>

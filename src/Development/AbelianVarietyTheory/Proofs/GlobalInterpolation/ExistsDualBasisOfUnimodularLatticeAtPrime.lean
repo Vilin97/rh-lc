@@ -41,7 +41,8 @@ theorem hf_smul_right (Hm : Matrix (Fin g) (Fin g) ℂ) (c : ℂ) (z w : Fin g �
 
 theorem hf_conj {Hm : Matrix (Fin g) (Fin g) ℂ} (hH : Hm.IsHermitian) (z w : Fin g → ℂ) :
     hf Hm w z = conj (hf Hm z w) := by
-  simp only [hf, map_sum, map_mul, Complex.conj_conj]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hf, map_sum, map_mul, Complex.conj_conj]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   have h : Hm j i = conj (Hm i j) := by

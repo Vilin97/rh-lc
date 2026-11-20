@@ -127,7 +127,8 @@ theorem UpperTheory.exists_vector_bundle_gluing :
   have csum (U h) (a : Fin r → Γ(X, U)) (s : Fin r → Γ(N.toMod, U)) :
       c U h (∑ j, a j • s j) = (Matrix.of fun i j => c U h (s j) i) *ᵥ fun j => evalPt ξ U h (a j) := by
     ext i
-    simp only [c, map_sum, Scheme.Modules.Hom.app_smul, hsmul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, mulVec,
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [c, map_sum, Scheme.Modules.Hom.app_smul, hsmul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, mulVec,
       dotProduct, of_apply, mul_comm]
   have hcol (k : ι) (j : Fin r) : ∃ s : Γ(N.toMod, V k), c _ (hV k) s = fun i => P k i j := by
     obtain ⟨s, hs⟩ := (hbij _ (hV k)).2 fun i => P k i j

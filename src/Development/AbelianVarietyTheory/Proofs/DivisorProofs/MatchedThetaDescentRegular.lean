@@ -83,7 +83,8 @@ theorem exists_typeProj : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [Nu
     exact ⟨T, hT, hr⟩
   · intro l hl Ψ hfix
     obtain ⟨n, c, k, hk, hx, -, -⟩ := hjoint Ψ Ψ
-    rw [hx, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hx, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul]
     congr 1
@@ -99,7 +100,8 @@ theorem exists_typeProj : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [Nu
       rw [hx, Submodule.coe_sum]
       rfl
     apply Subtype.ext
-    rw [hy, hPΨ, map_sum, Submodule.coe_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hy, hPΨ, map_sum, Submodule.coe_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, Submodule.coe_smul]
     congr 1

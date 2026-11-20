@@ -55,7 +55,8 @@ lemma isPrecomplete_of_basis (I : Ideal R) [IsPrecomplete I R] (b : Module.Basis
   have h1 := hL i n
   rw [SModEq.sub_mem, hI] at h1
   have hs : b.repr (f n - ∑ j, L j • b j) i = b.repr (f n) i - L i := by
-    rw [map_sub, Finsupp.sub_apply, map_sum, Finsupp.finsetSum_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, Finsupp.sub_apply, map_sum, Finsupp.finsetSum_apply]
     congr 1
     rw [Finset.sum_eq_single i]
     · simp

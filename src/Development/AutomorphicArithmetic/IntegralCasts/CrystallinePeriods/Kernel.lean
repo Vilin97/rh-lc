@@ -397,7 +397,8 @@ theorem associated_xi_omega (ϖ : PFlat p R) {ε : tateModule p R} (hε : IsPrim
       Tilt.isUnit_iff_isUnit_coeff] at h3
     exact not_isUnit_zero h3
   have h4 := congrArg (WittVector.map (p := p) ρ) ha
-  simp only [omega, xi, map_sum, map_pow, map_mul, map_sub, map_natCast,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [omega, xi, map_sum, map_pow, map_mul, map_sub, map_natCast,
     WittVector.map_teichmuller, h1, h2, map_one, one_pow, Finset.sum_const, Finset.card_range,
     nsmul_eq_mul, mul_one, WittVector.teichmuller_zero, sub_zero] at h4
   have h5 : WittVector.map (p := p) ρ a = 1 :=

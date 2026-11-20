@@ -50,7 +50,8 @@ theorem idemLin_commute (p : ι → Matrix n n A) (x : Matrix n n A) (h : ∀ k,
 theorem idemLin_map {B : Type} [CommRing B] (g : A →+* B) (p : ι → Matrix n n A) (c : ι → A) :
     (idemLin p c).map g = idemLin (fun k => (p k).map g) (fun k => g (c k)) := by
   ext i j
-  simp [idemLin, Matrix.sum_apply, Matrix.one_apply, map_sum, apply_ite]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [idemLin, Matrix.sum_apply, Matrix.one_apply, map_sum, apply_ite]
 
 theorem adj_sum (σ : A →+* A) (J : Matrix n n A) (M : ι → Matrix n n A) :
     adj σ J (∑ k, M k) = ∑ k, adj σ J (M k) := by

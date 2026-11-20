@@ -67,7 +67,8 @@ theorem exists_second_functional :
     have : ∀ i, prP s (sigR σ (v.adicCompletion F) (x i)) = 0 := fun i =>
       (congrArg Prod.fst (hs.2.1 (x i))).trans (hx0 i)
     show prP s (H y) = 0
-    simp only [hH, hform, map_sum, map_mul, this, zero_mul, Finset.sum_const_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [hH, hform, map_sum, map_mul, this, zero_mul, Finset.sum_const_zero]
   have hTK : (T : v.adicCompletion F) ≠ 0 := by
     rw [← map_natCast (algebraMap F (v.adicCompletion F))]
     exact (map_ne_zero _).2 (Nat.cast_ne_zero.2 hT)
@@ -120,7 +121,8 @@ theorem exists_second_functional :
     simp
   · rw [hH]; exact ((hs.2.2 _).1 (h1 y hy x hx2)).2
   · have : prPbar s (H y) = 0 := by
-      simp only [hH, hform, map_sum, map_mul, hy, mul_zero, Finset.sum_const_zero]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [hH, hform, map_sum, map_mul, hy, mul_zero, Finset.sum_const_zero]
     rw [this]; simp
 
 end GlobalTheory.SecondFunctional

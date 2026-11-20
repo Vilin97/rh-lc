@@ -78,7 +78,8 @@ theorem basis_L [IsDomain O] (π' : LetA O n) (s' : ℕ) (hs : 1 ≤ s') (w₁ :
     intro g hg j
     have h0 : (∑ j, g j • (⟨_, hmem j⟩ : ↥(NcS W T d))) ∈
         (PiNS W T π' 1).comap (NcS W T d).subtype := by
-      rw [← Submodule.Quotient.mk_eq_zero, ← Submodule.mkQ_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← Submodule.Quotient.mk_eq_zero, ← Submodule.mkQ_apply, map_sum]
       simpa only [map_smul, Submodule.mkQ_apply] using hg
     rw [Submodule.mem_comap, Submodule.coe_subtype, Submodule.coe_sum] at h0
     simp only [Submodule.coe_smul] at h0
@@ -148,7 +149,8 @@ theorem basis_L [IsDomain O] (π' : LetA O n) (s' : ℕ) (hs : 1 ≤ s') (w₁ :
       · rw [← he]
         refine sub_mem hxΔ (Submodule.sum_mem _ fun j _ => Submodule.smul_mem _ _ (hmem j).1.2)
     have hq : (Submodule.Quotient.mk (⟨x, ⟨⟨hxN, hxΔ⟩, hxl⟩⟩ : ↥(NcS W T d)) : LcQ W T π' c) = ∑ j, κ j • v j := by
-      rw [(Submodule.Quotient.eq _).2 hdiff, ← Submodule.mkQ_apply, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [(Submodule.Quotient.eq _).2 hdiff, ← Submodule.mkQ_apply, map_sum]
       simp only [map_smul, Submodule.mkQ_apply]
       rfl
     rw [hq]

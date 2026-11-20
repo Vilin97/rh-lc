@@ -27,7 +27,8 @@ theorem isDR_of_frame_isDR : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (bk : B
   apply T.eD.injective
   have hij := congrFun (congrFun hg i) j
   rw [LinearMap.toMatrix_eq_toMatrix']
-  simp only [qRep, Matrix.mul_apply, Matrix.map_apply, map_sum, map_mul, RingEquiv.mapMatrix_apply] at hij ⊢
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [qRep, Matrix.mul_apply, Matrix.map_apply, map_sum, map_mul, RingEquiv.mapMatrix_apply] at hij ⊢
   simp only [MonoidHom.comp_apply, MonoidHom.coe_coe, Units.coeHom_apply, RingHom.mapMatrix_apply, AlgEquiv.coe_toAlgHom, Matrix.toLinAlgEquiv'_apply, LinearMap.toMatrix'_toLin',
     Matrix.map_apply, T.actD, RingEquiv.apply_symm_apply] at ⊢
   rw [← hij]

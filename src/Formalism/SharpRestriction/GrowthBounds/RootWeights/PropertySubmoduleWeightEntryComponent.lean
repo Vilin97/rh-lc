@@ -85,10 +85,12 @@ theorem propertySubmodule_weightEntryComponent (hTo : TorusActsThroughWeight) (a
       rw [hp, laurent_T_unit_zpow_eq_T, mul_comm]
       rfl
     conv_lhs => rw [← MvPolynomial.support_sum_monomial_coeff y]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     simp_rw [hmono]
     unfold weightEntryComponent
-    simp_rw [map_sum, MvPolynomial.map_monomial, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp_rw [map_sum, MvPolynomial.map_monomial, Finset.mul_sum]
     rw [← Finset.sum_fiberwise_of_maps_to (s := y.support) (t := K) (g := fun m => wtS LL S m a)
       (fun m hm => Finset.mem_image.2 ⟨m, hm, rfl⟩)]
     refine Finset.sum_congr rfl fun w _ => Finset.sum_congr rfl fun m hm => ?_
@@ -103,7 +105,8 @@ theorem propertySubmodule_binomial_stable (hTo : TorusActsThroughWeight) (a : Fi
   have hdec : binomPol R LL S a k y = ∑ w ∈ y.support.image (fun m => wtS LL S m a),
       (((Ring.choose w k : ℤ) : R)) • weightEntryComponent LL S a w y := by
     conv_lhs => rw [← MvPolynomial.support_sum_monomial_coeff y]
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     unfold weightEntryComponent
     simp_rw [Finset.smul_sum]
     rw [← Finset.sum_fiberwise_of_maps_to (s := y.support) (t := y.support.image (fun m => wtS LL S m a))

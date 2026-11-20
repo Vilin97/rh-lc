@@ -58,7 +58,8 @@ theorem trPair_nondeg : ∀ {F : Type} [Field F] [NumberField F] {κ : Type} [Fi
     (∀ x, trPair F κ x y = 0) → y = 0 := by
   intro F _ _ κ _ y h
   have h0 := h (fun i => TrNondeg.conjM (y i))
-  rw [trPair_apply, map_sum] at h0
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [trPair_apply, map_sum] at h0
   have hnn : ∀ i, 0 ≤ Algebra.trace ℝ (mixedEmbedding.mixedSpace F) (TrNondeg.conjM (y i) * y i) := by
     intro i
     rw [TrNondeg.trace_conjM_mul]

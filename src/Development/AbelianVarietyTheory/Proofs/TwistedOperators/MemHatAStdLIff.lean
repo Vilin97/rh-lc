@@ -82,7 +82,8 @@ theorem mem_hatA_stdL_iff : ∀ (D : D7) (S T : HSp D) (L : Lt D.host.E T.rank) 
         simpa using this
       rw [Matrix.sum_apply]
       simp only [GlobalTheory.TensLatMove.outer, Matrix.of_apply, toAf]
-      rw [← map_sum, Finset.sum_eq_single k']
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← map_sum, Finset.sum_eq_single k']
       · rw [Pi.single_eq_same, ← Algebra.TensorProduct.one_def, mul_one]
         exact (emb_finPart _ hc).symm
       · intro j _ hj

@@ -72,7 +72,8 @@ theorem t_aw_assoc0_of (hev : EtaleCochainEvaluationLinear) (hsub : EtaleSimplex
           exact Finset.sum_congr rfl fun p _ => (Fin.sum_univ_eq_sum_range (fun r => Φ p r) _).symm
     _ = _ := by
           refine Finset.sum_congr rfl fun p _ => ?_
-          rw [hbc, map_sum, Finset.smul_sum]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [hbc, map_sum, Finset.smul_sum]
           refine Finset.sum_congr rfl fun r _ => ?_
           have hp := p.is_lt
           have hr := r.is_lt

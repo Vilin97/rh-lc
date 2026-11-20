@@ -61,7 +61,8 @@ theorem src_abs (hI : Interp) (hCP : CoefProd) (F : B → MvPolynomial (Fin n ×
         rw [Finset.sum_sub_distrib, sub_eq_zero]
         have e1 : ∑ m ∈ HH.support ∪ A.support, (m.prod fun t k => x t ^ k) • Φ (AddMonoidAlgebra.coeff HH m) =
             Φ (eval₂ (RingHom.id (MvPolynomial τ K)) (fun t => C (x t)) HH) := by
-          rw [eval₂_eq, map_sum, ← Finset.sum_subset Finset.subset_union_left]
+          set_option synthInstance.maxHeartbeats 100000 in
+            rw [eval₂_eq, map_sum, ← Finset.sum_subset Finset.subset_union_left]
           · refine Finset.sum_congr rfl fun d _ => ?_
             rw [← map_smul]
             congr 1

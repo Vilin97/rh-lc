@@ -32,7 +32,8 @@ theorem sum_tmul_mem_bddA {n : ℕ} (b : Fin n → E) (hb : ∀ i, IsIntegral �
     (∑ i, d i ⊗ₜ[F] b i : AE F E) ∈ bddA E (∅ : Finset (Pl F)) (R * ∑ i, ∑ τ : E →+* ℂ, ‖τ (b i)‖₊) := by
   refine ⟨fun v => ?_, fun w τ => ?_⟩
   · have hv : v ∉ (∅ : Finset (Pl F)) := by simp
-    rw [if_neg hv, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [if_neg hv, map_sum]
     refine absFin_sum_le F v _ _ fun i _ => ?_
     have e : compFin F E v (d i ⊗ₜ[F] b i) = evFin F v (d i) ⊗ₜ[F] b i :=
       Algebra.TensorProduct.map_tmul _ _ _ _
@@ -41,7 +42,8 @@ theorem sum_tmul_mem_bddA {n : ℕ} (b : Fin n → E) (hb : ∀ i, IsIntegral �
     show ‖(d i).2 v‖₊ ≤ 1
     have h2 : (d i).2 v ∈ v.adicCompletionIntegers F := (hd i).2 v
     exact_mod_cast Valued.toNormedField.norm_le_one_iff.2 h2
-  · rw [map_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [map_sum, map_sum]
     refine (nnnorm_sum_le _ _).trans ?_
     rw [Finset.mul_sum]
     refine Finset.sum_le_sum fun i _ => ?_
@@ -82,7 +84,8 @@ theorem exists_rat_sub_mem_bdd : ∀ (F E : Type) [Field F] [NumberField F] [Fie
     rw [Algebra.TensorProduct.basis_apply, TensorProduct.smul_tmul', smul_eq_mul, mul_one]
   set a := B.repr (z t) with ha
   have hinc : inclR (F := F) (AF F) (∑ i, k (a i) • b i) = ∑ i, algebraMap F (AF F) (k (a i)) ⊗ₜ[F] b i := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     show (1 : AF F) ⊗ₜ[F] (k (a i) • b i) = _
     rw [← TensorProduct.smul_tmul, Algebra.algebraMap_eq_smul_one]

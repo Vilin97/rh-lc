@@ -113,7 +113,8 @@ theorem limRatAssemble : LimRatAssemble := by
       rw [LinearMap.liftBaseChange_tmul, map_smul, LinearMap.baseChange_tmul]
       change q • κ₀ (∑ a : Fin (M + 1), ∑ s : Fin (r a), _) = _
       rw [hΦ y, TensorProduct.tmul_sum]
-      simp only [map_sum, hκ₀, TensorProduct.tmul_sum, Finset.smul_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, hκ₀, TensorProduct.tmul_sum, Finset.smul_sum]
       refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun s _ => ?_
       rw [TensorProduct.smul_tmul', smul_eq_mul, mul_one]
   have hsurj : Function.Surjective ψ := by

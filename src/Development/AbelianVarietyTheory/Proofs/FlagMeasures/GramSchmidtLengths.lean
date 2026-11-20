@@ -104,7 +104,8 @@ theorem gramSchmidt_lengths : ∀ (k r : ℕ) (z : (Fin (2 * r + k + 1) → ℂ)
     intro a
     have htl : ∀ v : Fin (2 * r + k + 1) → ℂ,
         WithLp.toLp 2 v = (WithLp.linearEquiv 2 ℂ (Fin (2 * r + k + 1) → ℂ)).symm v := fun v => rfl
-    rw [← hu a, htl, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hu a, htl, map_sum]
     simp only [map_smul]
     rfl
   have hset : ∀ a : Fin r, (Set.range fun b : {b : Fin r // b.val < (a.castSucc : Fin (r + 1)).val} =>

@@ -29,7 +29,8 @@ theorem unimod_hLat {D : D7} (V : HSp D) (hg : V.gram = 1) (g : Bridge.Gf V) :
   simp only [hg, Matrix.one_apply, mul_ite, mul_one, mul_zero, ite_mul, zero_mul, Finset.sum_ite_eq, Finset.mem_univ, if_true]
   have e : ∑ j, (IsCMField.complexConj D.host.E) (v j) * w j =
       IsCMField.complexConj D.host.E (∑ x, star (w x) * v x) := by
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun x _ => ?_
     rw [map_mul, show star (w x) = IsCMField.complexConj D.host.E (w x) from rfl,
       IsCMField.complexConj_apply_apply, mul_comm]

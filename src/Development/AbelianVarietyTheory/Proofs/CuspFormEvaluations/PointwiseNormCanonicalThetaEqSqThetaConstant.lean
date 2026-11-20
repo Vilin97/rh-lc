@@ -112,7 +112,8 @@ def cj : Vsp T.dim ≃ₗ[ℝ] EuclideanSpace ℂ ι where
 theorem cj_apply (y : Vsp T.dim) (i : ι) : cj T e y i = conj (y (e i)) := rfl
 
 theorem Hf_cj (v w : Vsp T.dim) : Hf (cj T e v) (cj T e w) = conj (Hf v w) := by
-  simp only [Hf, cj_apply, map_sum, map_mul]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Hf, cj_apply, map_sum, map_mul]
   exact e.sum_comp fun j => conj (v j) * conj (conj (w j))
 
 variable (Y : GT ι) (F : EuclideanSpace ℂ ι → ℂ)

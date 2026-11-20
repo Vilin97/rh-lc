@@ -243,7 +243,8 @@ theorem rows_independent {K : Type*} [Field K] (r m : ℕ) (J : Fin m → Fin r 
     rw [Finset.sum_comm]
     refine Finset.sum_eq_zero (fun j _ => ?_)
     have h1 := congrArg σ (hw j)
-    rw [map_sum, map_zero] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero] at h1
     simp only [map_mul] at h1
     calc ∑ l, σ (w l) * (c j * σ (J l j)) = c j * ∑ l, σ (J l j) * σ (w l) := by
           rw [Finset.mul_sum]

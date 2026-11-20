@@ -34,7 +34,8 @@ theorem exists_coords : ∃ (n : ℕ) (τ : Fin n → K' →ₗ[K] K) (b : Fin n
   have hsum : ∀ a : 𝓞 K', a = ∑ j, t j a • b j := by
     intro a
     have h1 : g (h a) = a := LinearMap.congr_fun hh a
-    conv_lhs => rw [← h1, ← Finset.univ_sum_single (h a), map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      conv_lhs => rw [← h1, ← Finset.univ_sum_single (h a), map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [show (Pi.single j (h a j) : Fin n → 𝓞 K) = h a j • (Pi.single j 1 : Fin n → 𝓞 K) by
       ext k; by_cases hk : k = j <;> simp [Pi.single_apply, hk], map_smul]
@@ -47,7 +48,8 @@ theorem exists_coords : ∃ (n : ℕ) (τ : Fin n → K' →ₗ[K] K) (b : Fin n
     simpa using nonZeroDivisors.coe_ne_zero d
   apply mul_left_cancel₀ hne
   rw [← Algebra.smul_def, hd', Finset.mul_sum]
-  conv_lhs => rw [hsum a, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [hsum a, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   have e1 : τ j z * algebraMap (𝓞 K) K (d : 𝓞 K) = algebraMap (𝓞 K) K (t j a) := by
     rw [← hτ1, ← hd', map_smul, Algebra.smul_def, mul_comm]

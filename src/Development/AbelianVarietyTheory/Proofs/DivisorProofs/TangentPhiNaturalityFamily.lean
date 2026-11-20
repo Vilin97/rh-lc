@@ -19,7 +19,8 @@ theorem mem_smul_top_of_forms {O W : Type} [CommRing O] [AddCommGroup W] [Module
     conv_lhs => rw [← LinearMap.id_apply (R := O) w, ← hs]
     rw [LinearMap.comp_apply]
     conv_lhs => rw [pi_eq_sum_univ (s w)]
-    simp only [map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul]
     refine Finset.sum_congr rfl fun i _ => ?_
     congr 2
     ext j

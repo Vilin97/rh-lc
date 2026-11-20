@@ -118,7 +118,8 @@ theorem split {n : Type} [Fintype n] [DecidableEq n] {G : Matrix n n E} (hG : �
         map_add' := fun x x' => hf_add_left G x x' y
         map_smul' := fun t x => hf_smul_left G t x y }
     have h1 : hf G (∑ s, γ s • cols s) y = Ly (∑ s, γ s • cols s) := rfl
-    rw [h1, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h1, map_sum]
     refine Finset.sum_congr rfl fun s _ => ?_
     rw [map_smul, smul_eq_mul]
     rfl

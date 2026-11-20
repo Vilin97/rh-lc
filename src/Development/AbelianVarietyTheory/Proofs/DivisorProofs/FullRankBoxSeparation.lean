@@ -98,9 +98,11 @@ theorem bf_eq_zero_of_local : ∀ (k : Type) [Field k] [ValuativeRel k] [Topolog
     obtain ⟨p, hpb, hcp⟩ := Set.mem_iUnion₂.1 (hcov (Set.mk_mem_prod hc0 hc0'))
     exact hN p (hbS hpb) _ ((Finset.le_sup (hbfin.mem_toFinset.2 hpb)).trans (le_max_right _ _))
       c hcp.1 c' hcp.2 _ _ hgc hgc'
-  rw [hsum₁, map_sum, LinearMap.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hsum₁, map_sum, LinearMap.sum_apply]
   refine Finset.sum_eq_zero fun c hc => ?_
-  rw [map_smul, LinearMap.smul_apply, hsum₂, map_sum,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_smul, LinearMap.smul_apply, hsum₂, map_sum,
     Finset.sum_eq_zero fun c' hc' => by rw [map_smulₛₗ, key c hc c' hc', smul_zero], smul_zero]
 
 end GlobalTheory.RankCoinv.OffDiagAssemble

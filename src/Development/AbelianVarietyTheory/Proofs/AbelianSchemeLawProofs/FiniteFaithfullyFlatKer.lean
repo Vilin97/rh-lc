@@ -18,7 +18,8 @@ theorem tr_comm (e : ι → M) (c : ι → M →ₗ[A] A) (h : ∀ m, ∑ i, c i
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [LinearMap.comp_apply]
     conv_lhs => rw [← h (ψ (e i))]
-    simp [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [map_sum]
   rw [key, key, Finset.sum_comm]
   simp [mul_comm]
 
@@ -181,14 +182,17 @@ theorem sum_lam (e : ι → Λ) (c : ι → Λ →ₗ[R] R)
     | add u v hu hv => simp only [map_add, mul_add, Finset.sum_add_distrib, hu, hv]
     | tmul u v =>
       conv_rhs => rw [← h v]
-      simp [tmul_sum, map_sum, mul_comm]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [tmul_sum, map_sum, mul_comm]
   simp only [h1]
   rw [Finset.sum_comm]
-  simp only [← map_sum, h2, Bialgebra.counit_mul, Algebra.algebraMap_eq_smul_one, map_smul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [← map_sum, h2, Bialgebra.counit_mul, Algebra.algebraMap_eq_smul_one, map_smul,
     smul_eq_mul, mul_assoc, ← Finset.mul_sum]
   have : ∑ i, Coalgebra.counit (R := R) (e i) * c i 1 = 1 := by
     have := congrArg (Coalgebra.counit (R := R)) (h 1)
-    simpa [map_sum, mul_comm] using this
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [map_sum, mul_comm] using this
   rw [this, mul_one]
 
 theorem exists_integrals (R Λ : Type*) [CommRing R] [CommRing Λ] [HopfAlgebra R Λ]
@@ -203,7 +207,8 @@ theorem exists_integrals (R Λ : Type*) [CommRing R] [CommRing Λ] [HopfAlgebra 
     intro m
     have h1 : p (s m) = m := LinearMap.congr_fun hps m
     conv_rhs => rw [← h1, pi_eq_sum_univ' (s m)]
-    simp [c, e, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [c, e, map_sum]
   exact ⟨n, fun k => lam e c (c k), fun k => HopfAlgebra.antipode R (e k),
     fun k x => lam_integral e c h _ x, sum_lam e c h⟩
 
@@ -261,7 +266,8 @@ theorem exists_dual_family [Module.Finite R Λ] [Module.Projective R Λ]
   · rw [Fintype.sum_sigma]
     have h1 : ∀ k, ∑ i, ev B (l k) (ρ (y k i) * ρ u) * x k i = ev B (l k) (1 ⊗ₜ T k * ρ u) := by
       intro k
-      rw [← hz, hxy, map_sum, Finset.sum_mul, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hz, hxy, map_sum, Finset.sum_mul, map_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [mul_comm, ← smul_eq_mul, ← map_smul, Algebra.TensorProduct.productMap_apply_tmul,
         mul_assoc, Algebra.smul_def]

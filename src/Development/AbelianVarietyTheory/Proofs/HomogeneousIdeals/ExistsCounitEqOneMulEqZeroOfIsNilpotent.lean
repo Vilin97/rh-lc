@@ -143,7 +143,8 @@ theorem exists_derivations_sum_sub_mem_sq [Bialgebra k H] [Algebra.FiniteType k 
     simp only [Submodule.coe_sum, Submodule.coe_smul, ← hz] at h2
     have h3 : Ideal.Quotient.mk (I ^ 2) y = q y := by
       rw [hq, hp, (hmem y).1 hy]; simp
-    rw [h3, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [h3, map_sum]
     exact h2
   have h2 : ∑ i, p (z i) * p (invariantDerivation (φ i) (hφ i) y) ∈ I ^ 2 :=
     Ideal.sum_mem _ fun i _ ↦ by rw [sq]; exact Ideal.mul_mem_mul (hpI _) (hpI _)

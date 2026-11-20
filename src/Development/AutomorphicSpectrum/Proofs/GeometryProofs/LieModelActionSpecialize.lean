@@ -79,7 +79,8 @@ theorem value_span : ∀ (X : Scheme.{0}) (G : Over X) [GrpObj G] [IsCommMonObj 
         rw [hw' (e k), map_mul, mul_smul]
         rfl
       simp only [πW, LinearMap.sum_apply, LinearMap.smul_apply]
-      rw [Finset.sum_congr rfl fun k _ => h1 k, ← Finset.sum_smul, ← map_sum, hsum, map_one, one_smul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Finset.sum_congr rfl fun k _ => h1 k, ← Finset.sum_smul, ← map_sum, hsum, map_one, one_smul]
     have key : ∀ l : M.lat ⟨centre z, h⟩,
         πW (ev l) ∈ Submodule.span F (Set.range fun i => ev ⟨b i, hbl i⟩) := by
       intro l
@@ -87,7 +88,8 @@ theorem value_span : ∀ (X : Scheme.{0}) (G : Over X) [GrpObj G] [IsCommMonObj 
       let c : Fin n → regAt ξ ⟨centre z, h⟩ := fun k => ⟨inc (cf k), hreg _⟩
       let m : M.lat ⟨centre z, h⟩ := ∑ k, c k • (⟨ρ (e k) l, he k⟩ : M.lat ⟨centre z, h⟩)
       have hevm : ev m = πW (ev l) := by
-        simp only [πW, LinearMap.sum_apply, LinearMap.smul_apply, m, map_sum]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [πW, LinearMap.sum_apply, LinearMap.smul_apply, m, map_sum]
         refine Finset.sum_congr rfl fun k _ => ?_
         rw [hsmul _ _ _ (hinc (cf k)), hk k]
       have hmv : (m : V) = ∑ k, inc (cf k) • ρ (e k) l := by
@@ -104,7 +106,8 @@ theorem value_span : ∀ (X : Scheme.{0}) (G : Over X) [GrpObj G] [IsCommMonObj 
         apply Subtype.ext
         rw [← hd, AddSubmonoidClass.coe_finset_sum]
         exact Finset.sum_congr rfl fun _ _ => rfl
-      rw [← hevm, hm, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← hevm, hm, map_sum]
       refine Submodule.sum_mem _ fun i _ => ?_
       rw [hsmul _ _ _ (ht i)]
       exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)

@@ -108,7 +108,8 @@ theorem span_prop {s : ℕ} (c : Fin s → Vc k m) (g : Vc k m →ₗ[k] Vc k m)
     (h : ∀ a, c a ∈ P ∧ g (c a) - c a ∈ Q) :
     ∀ x ∈ LinearMap.range (Fintype.linearCombination k c), x ∈ P ∧ g x - x ∈ Q := by
   rintro _ ⟨t, rfl⟩
-  rw [Fintype.linearCombination_apply, map_sum, ← Finset.sum_sub_distrib]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [Fintype.linearCombination_apply, map_sum, ← Finset.sum_sub_distrib]
   refine ⟨Submodule.sum_mem _ fun a _ => Submodule.smul_of_tower_mem _ _ (h a).1,
     Submodule.sum_mem _ fun a _ => ?_⟩
   rw [map_smul, ← smul_sub]
@@ -170,7 +171,8 @@ theorem main : GlobalTheory.IndefiniteRowSideFullHecke.OnePlusPowerCharacters.Le
     obtain ⟨y, -, hy⟩ := (Gauge.main R D Dt.w Dt.wst (Dt.sg l) N hL hAB hC
       (fun i => by have := (hW i).1; have := (hw i).2; unfold TopData.wst at this; omega) (fun i => (hs i).1)
       (∑ a, t a • z' a).1 (∑ a, t a • z' a).2 (fun i => by
-        simp only [Prod.snd_sum, Prod.fst_sum, Finset.sum_apply, Prod.smul_snd, Prod.smul_fst, Pi.smul_apply,
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [Prod.snd_sum, Prod.fst_sum, Finset.sum_apply, Prod.smul_snd, Prod.smul_fst, Pi.smul_apply,
           map_sum, map_smul, ← Finset.sum_sub_distrib, ← smul_sub]
         exact Finset.sum_congr rfl fun a _ => by rw [(hc a i).1])
       (fun i => sh_le_sh_of_le (by omega) _ (hg i))).2 hg (fun i => by
@@ -191,6 +193,7 @@ theorem main : GlobalTheory.IndefiniteRowSideFullHecke.OnePlusPowerCharacters.Le
     funext a
     refine Fintype.linearIndependent_iff.1 hli t ?_ a
     have h4 : (herrB D).mkQ (∑ a, t a • z a) = 0 := (Submodule.Quotient.mk_eq_zero _).2 h3
-    simpa only [map_sum, map_smul] using h4
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa only [map_sum, map_smul] using h4
 
 end GlobalTheory.Models.PolarBound

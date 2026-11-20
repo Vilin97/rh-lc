@@ -162,7 +162,8 @@ theorem levi_good {S : Finset (Pl D)} {e : AE D} (he : IsIdem S e) {g : G D p} (
   have hint : ∀ (x : Mx D ρ p) (b : Mx D p p), IntOff S x →
       (∀ v ∉ S, ∀ k j, cv D v (b k j) ∈ intLoc D.host.F D.host.E v) → IntOff S (x * b) := by
     intro x b hx hb' v hv i j
-    rw [Matrix.mul_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [Matrix.mul_apply, map_sum]
     exact Subring.sum_mem _ fun k _ => by
       rw [map_mul]
       exact Subring.mul_mem _ (hx v hv i k) (hb' v hv k j)

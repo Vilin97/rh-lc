@@ -132,7 +132,8 @@ theorem KRep.stable_of_dτ_stable {ε : Fin n → Bool} (R : KRep ε) (W : Submo
   refine exp_mem_of_stable W (R.dτ Y) ?_ v hv
   intro w hw
   rw [Matrix.matrix_eq_sum_single Y]
-  simp only [map_sum, FunLike.coe_sum, Finset.sum_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, FunLike.coe_sum, Finset.sum_apply]
   refine W.sum_mem fun a _ => W.sum_mem fun b _ => ?_
   by_cases hab : ε a = ε b
   · rw [show Matrix.single a b (Y a b) = Y a b • Matrix.single a b 1 by

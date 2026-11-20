@@ -117,7 +117,8 @@ theorem sub_mem_of_gen (A : Subring R) (π : R) (σ : R → R)
     rw [← hP']; abel
   have h2 : ∀ k, σ (a k) = a k + π * b k := fun k => by rw [← hb']; ring
   rw [cmb_smul n π b]
-  conv_lhs => rw [cmb, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_lhs => rw [cmb, map_sum]
   simp only [hT, h1, smul_add, Finset.sum_add_distrib]
   have h3 : ∑ k, ((1 : O) ⊗ₜ[Z] σ (a k) : O ⊗[Z] R) • n k = cmb n a + cmb n fun k => π * b k := by
     rw [cmb_add]
@@ -151,7 +152,8 @@ theorem jD_desc {r : ℕ} (e : Fin r ≃ ι × J) (m : ι → W.DD Y) (y : W.DD 
     ∃ a : Fin r → R, (∀ j, a j ∈ A) ∧ E.jD Y y = cmb (fun k => o (e k).2 • E.jD Y (m (e k).1)) a := by
   obtain ⟨c, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun _).mp hy
   refine ⟨fun k => cf (o.coord (e k).2) (sc E (c (e k).1)), fun k => hA _ _, ?_⟩
-  rw [map_sum (E.jD Y)]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum (E.jD Y)]
   exact (Finset.sum_congr rfl fun i _ => jD_sc E _ _).trans
     (cmb_desc o e (fun i => E.jD Y (m i)) fun i => sc E (c i))
 
@@ -199,7 +201,8 @@ theorem basis_of_module (ξ π : R) (hξ : IsUnit ξ) (hQ : ∀ k, sc E (W.Q ^ k
       ((Submodule.span_le.mpr (by
         rintro _ ⟨z, hz, rfl⟩
         obtain ⟨c, rfl⟩ := hn z hz
-        simp only [map_sum, φD_smulA]
+        set_option synthInstance.maxHeartbeats 100000 in
+          simp only [map_sum, φD_smulA]
         exact Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _
           (Submodule.subset_span ⟨i, rfl⟩)) : _ ≤ _) (h2 _ (hxN k)))
     refine ⟨a, ha, ?_⟩

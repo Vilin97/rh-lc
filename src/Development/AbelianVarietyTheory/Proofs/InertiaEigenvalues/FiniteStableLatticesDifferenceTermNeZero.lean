@@ -21,7 +21,8 @@ theorem isIntegral_trace_of_isIntegral'
   have hM : IsIntegral U (f ω) := h.map f
   have htr : algebraMap L A (Algebra.trace L Ω ω) = (f ω).trace := by
     rw [Algebra.trace_eq_matrix_trace b]
-    simp only [Matrix.trace, Matrix.diag, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [Matrix.trace, Matrix.diag, map_sum]
     rfl
   rw [← isIntegral_algebraMap_iff (A := L) (B := A) , htr,
     Matrix.trace_eq_sum_roots_charpoly]

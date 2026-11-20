@@ -85,7 +85,8 @@ theorem indep_int {n : ℕ} (B : Module.Basis (Fin n) ℚ K) (q : Fin n → MvPo
     (h : ∑ k, embK K i (B k) * psiZ K i (q k) = 0) : ∀ k, q k = 0 := by
   have h' : ∑ k, C (B k) * MvPolynomial.map (Int.castRingHom K) (q k) = 0 := by
     apply psi_injective
-    rw [map_sum, map_zero]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum, map_zero]
     simpa [psiZ, psi_C] using h
   have hB : LinearIndependent ℤ B := B.linearIndependent.restrict_scalars' ℤ
   intro k
@@ -146,7 +147,8 @@ theorem w_ne_zero (b : Module.Basis T ℤ (dualLattice (HermLattice.standard K i
 
 theorem w_eq (b : Module.Basis T ℤ (dualLattice (HermLattice.standard K i))) (t : T) :
     w b t = ∑ j, embK K i ((b t : Fin i → K) j) * u K i j := by
-  simp only [w, u, dualLatticeCoord, map_sum, map_mul, Finset.sum_mul, embK, RingHom.comp_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [w, u, dualLatticeCoord, map_sum, map_mul, Finset.sum_mul, embK, RingHom.comp_apply]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [← MvPolynomial.algebraMap_eq, ← IsScalarTower.algebraMap_apply, mul_assoc, mul_assoc, mul_assoc]
 
@@ -158,10 +160,12 @@ theorem exists_int_comb [Fintype T] (b : Module.Basis T ℤ (dualLattice (HermLa
   refine ⟨N, hN, fun t => b.repr φ t, ?_⟩
   have hrepr := congrArg (fun ψ : dualLattice (HermLattice.standard K i) => evalForm i (ψ : Fin i → K))
     (b.sum_repr φ)
-  simp only [Submodule.coe_sum, Submodule.coe_smul, map_sum, map_zsmul, hφ, map_smul] at hrepr
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Submodule.coe_sum, Submodule.coe_smul, map_sum, map_zsmul, hφ, map_smul] at hrepr
   simp only [← dualLatticeCoord_eq b, zsmul_eq_mul, Algebra.smul_def, map_intCast] at hrepr
   have h2 := congrArg (fun y => dualStdModelEmb K i y * dualStdModelS K i * dualStdModelT K i) hrepr
-  simp only [map_sum, map_mul, map_intCast, Finset.sum_mul] at h2
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, map_intCast, Finset.sum_mul] at h2
   simp only [w, embK, RingHom.comp_apply, mul_assoc] at h2 ⊢
   rw [h2]
 
@@ -199,7 +203,8 @@ theorem adjoin_embK_eq_span {n : ℕ} (B : Module.Basis (Fin n) ℚ K) (Φ₀ : 
   apply le_antisymm
   · rw [Submodule.span_le]
     rintro _ ⟨a, rfl⟩
-    rw [← B.sum_repr a, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← B.sum_repr a, map_sum]
     refine Submodule.sum_mem _ fun k _ => ?_
     rw [Rat.smul_def, map_mul, map_ratCast, hq, ← Algebra.smul_def]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨k, rfl⟩)

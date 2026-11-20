@@ -28,7 +28,8 @@ theorem cong_one_of_suppAt : ∀ (D : D7) (V : HSp D) (Q : Finset (Pl D.host.E))
   simp only [← hev] at hid hcj
   obtain ⟨⟨es, hes, hsum⟩, -⟩ := hQs.isIdemSum
   have e2 : ∀ P, P ∉ Q → ev P (idem Q) = 0 := fun P hP => by
-    rw [hsum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hsum, map_sum]
     exact Finset.sum_eq_zero fun Q' h' => (hid _ _ (hes Q' h')).2.2 P fun hh => hP (hh ▸ h')
   have hA1 : ∀ P, P ∉ Q → GlobalTheory.IdemSupport.cP P ∉ Q → (ev P).mapMatrix (mt V hQ) = 1 := fun P hP hP' => by
     have hc := hcj (idem Q) (GlobalTheory.IdemSupport.cP P)

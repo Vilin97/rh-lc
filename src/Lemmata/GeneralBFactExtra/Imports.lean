@@ -26,7 +26,8 @@ theorem goal1 :
         congr 1
         ring
       have h2 : ∑ j ∈ insert a s, (g j * (c j γ - c a γ)) • w j = 0 := by
-        rw [Finset.sum_congr rfl (fun j _ => e j), Finset.sum_sub_distrib, ← map_sum, ← Finset.smul_sum, hg,
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [Finset.sum_congr rfl (fun j _ => e j), Finset.sum_sub_distrib, ← map_sum, ← Finset.smul_sum, hg,
           map_zero, smul_zero, sub_zero]
       rw [Finset.sum_insert ha, sub_self, mul_zero, zero_smul, zero_add] at h2
       have := ih (fun j => g j * (c j γ - c a γ)) h2 i hi

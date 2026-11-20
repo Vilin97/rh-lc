@@ -27,16 +27,19 @@ theorem symp_freq_snd (σ : E →ₐ[F] E) {n d : ℕ} (JX : Matrix (Fin n) (Fin
   unfold symp
   rw [hv]
   change Algebra.trace (AF F) (AE F E) (-1 * hTensR σ (incM F JX) (incM F JW) _ (∑ j, _)) = _
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   simp only [map_smul]
-  simp only [hTensR, LinearMap.coe_mk, AddHom.coe_mk, hTens_rat, hyx, map_neg,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hTensR, LinearMap.coe_mk, AddHom.coe_mk, hTens_rat, hyx, map_neg,
     Finset.sum_neg_distrib, neg_mul, mul_neg, one_mul, map_sum, map_smul, smul_eq_mul]
 
 omit [NumberField F] [NumberField E] in
 theorem form_swap_herm (σ : E →ₐ[F] E) (hσ : ∀ z, σ (σ z) = z) {d : ℕ} (J : Matrix (Fin d) (Fin d) E)
     (hherm : ∀ i j, σ (J j i) = J i j) (x y : Fin d → E) : form σ J y x = σ (form σ J x y) := by
   unfold form
-  simp only [dotProduct, mulVec, map_sum, map_mul, hσ, hherm, Finset.mul_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [dotProduct, mulVec, map_sum, map_mul, hσ, hherm, Finset.mul_sum]
   exact Finset.sum_comm.trans (Finset.sum_congr rfl fun l _ => Finset.sum_congr rfl fun i _ => by ring)
 
 theorem injective_realTr_form (σ : E →ₐ[F] E) (hσ : ∀ z, σ (σ z) = z) (h2 : Module.finrank F E = 2) {n : ℕ}

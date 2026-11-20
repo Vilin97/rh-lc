@@ -89,7 +89,8 @@ private theorem II_update_combLine (hML : MetricLocalStatement) (II : Intersecti
   calc G d = Gh d := rfl
     _ = Gh (∑ a, d a • Pi.single a (1 : ℤ)) := by rw [← hd]
     _ = ∑ a, (d a : ℝ) * G (Pi.single a 1) := by
-      rw [map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum]
       refine Finset.sum_congr rfl fun a _ => ?_
       rw [map_zsmul, zsmul_eq_mul]
       rfl

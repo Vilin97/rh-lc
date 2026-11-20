@@ -71,7 +71,8 @@ theorem xClasses_denom {K : Type} [Field K] [NumberField K] (A : Ideal (𝓞 K))
   choose g hg using fun k => hx i (f k) β hβ
   refine ⟨∑ k, g k * B.adjugate k j, ?_⟩
   have hc : ∀ u : 𝓞 K, (u : K) = φ u := fun u => rfl
-  simp only [hc, map_sum, map_mul] at hg ⊢
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hc, map_sum, map_mul] at hg ⊢
   simp_rw [hg]
   rw [mul_comm (φ B.det) (φ β), mul_assoc, ← hkey, Finset.mul_sum]
   refine Finset.sum_congr rfl fun k _ => ?_

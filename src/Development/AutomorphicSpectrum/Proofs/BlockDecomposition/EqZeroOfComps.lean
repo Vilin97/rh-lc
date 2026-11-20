@@ -16,7 +16,8 @@ theorem coord_zero {F A B E ι : Type*} [Field F] [AddCommGroup E] [Module F E]
     (h : LinearMap.rTensor E f (c.sum fun i m => m ⊗ₜ[F] ℬ i) = 0) (i : ι) : f (c i) = 0 := by
   have h1 : (c.mapRange f (map_zero f)).sum (fun i m => m ⊗ₜ[F] ℬ i) = 0 := by
     rw [Finsupp.sum_mapRange_index (by intro i; simp)]
-    rw [← h, Finsupp.sum, Finsupp.sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← h, Finsupp.sum, Finsupp.sum, map_sum]
     simp
   have h2 := TensorProduct.sum_tmul_basis_right_eq_zero ℬ _ h1
   simpa using DFunLike.congr_fun h2 i
@@ -35,11 +36,13 @@ theorem tensor_eq_zero {F E : Type} [Field F] [NumberField F] [Field E] [Algebra
     refine adele_eq_zero _ (fun w => ?_) (fun v => ?_)
     · refine coord_zero ℬ (evInf F w).toLinearMap c ?_ i
       rw [← hi w]
-      simp only [compInf, Finsupp.sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [compInf, Finsupp.sum, map_sum]
       rfl
     · refine coord_zero ℬ (evFin F v).toLinearMap c ?_ i
       rw [← hf v]
-      simp only [compFin, Finsupp.sum, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [compFin, Finsupp.sum, map_sum]
       rfl
   simp [hc]
 

@@ -47,14 +47,16 @@ theorem symp_proj (σ : E →ₐ[F] E) {n d : ℕ} (JX : Matrix (Fin n) (Fin n) 
       symp (R := AF F) (cA σ) ξ (incM F JX) (incM F JW) γ (a • Matrix.vecMulVec p (incV F w')) := by
   have hU : (incM F JW *ᵥ fun l => cA σ (incV F w' l)) = incV F (JW *ᵥ fun i => σ (w' i)) := by
     ext i
-    simp only [incV, incM, Matrix.mulVec, dotProduct, Matrix.map_apply, cA_inclR, map_sum, map_mul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [incV, incM, Matrix.mulVec, dotProduct, Matrix.map_apply, cA_inclR, map_sum, map_mul]
   have hQ : incM F (Matrix.vecMulVec (JW *ᵥ fun i => σ (w' i)) w) *ᵥ incV F (JW *ᵥ fun i => σ (w' i)) =
       incV F (JW *ᵥ fun i => σ (w' i)) := by
     ext i
     have h1 : (∑ j, inclR (F := F) (AF F) (w j) * inclR (F := F) (AF F) ((JW *ᵥ fun i => σ (w' i)) j)) = 1 := by
       have h := congrArg (inclR (F := F) (AF F)) hw
       rw [map_one] at h
-      rw [← h, form, dotProduct, map_sum]; simp only [map_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [← h, form, dotProduct, map_sum]; simp only [map_mul]
     generalize (JW *ᵥ fun i => σ (w' i)) = u at h1 ⊢
     simp only [incV, incM, Matrix.mulVec, dotProduct, Matrix.map_apply, Matrix.vecMulVec_apply, map_mul]
     simp_rw [mul_assoc, ← Finset.mul_sum, h1, mul_one]
@@ -143,7 +145,8 @@ theorem coef_mem [NumberField E] (σ : E →ₐ[F] E) (B : Base F E) {n n₁ d :
     have hform : ∀ {m : ℕ} (J : Matrix (Fin m) (Fin m) E) (x y : Fin m → E),
         inclR (F := F) (AF F) (form σ J x y) = ∑ i, incV F x i * incV F (J *ᵥ fun k => σ (y k)) i := by
       intro m J x y
-      simp only [form, dotProduct, map_sum, map_mul, incV]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [form, dotProduct, map_sum, map_mul, incV]
     have he : (∑ i, ∑ j, (a • incM F (Matrix.vecMulVec x y)) i j * incV F (X.J *ᵥ fun k => σ (H.y k)) i *
         incV F (W.J *ᵥ fun k => σ (w k)) j) =
         a ⊗ₜ[F] (form σ X.J x H.y * form σ W.J y w) := by
@@ -236,7 +239,8 @@ theorem exists_lat_pair_ne_one : ∀ {F E : Type} [Field F] [NumberField F] [Fie
     have h := hC.hH'.xy
     have hsk := hT.geo.hW.skew
     have : σ (form σ G.W.J H'.x H'.y) = -form σ G.W.J H'.y H'.x := by
-      simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, Finset.mul_sum, ← Finset.sum_neg_distrib]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, Finset.mul_sum, ← Finset.sum_neg_distrib]
       rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
       rw [hsk]; ring
@@ -248,7 +252,8 @@ theorem exists_lat_pair_ne_one : ∀ {F E : Type} [Field F] [NumberField F] [Fie
     have hform : ∀ {m : ℕ} (J : Matrix (Fin m) (Fin m) E) (x y : Fin m → E),
         inclR (F := F) (AF F) (form σ J x y) = ∑ i, incV F x i * incV F (J *ᵥ fun k => σ (y k)) i := by
       intro m J x y
-      simp only [form, dotProduct, map_sum, map_mul, incV]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [form, dotProduct, map_sum, map_mul, incV]
     rw [hform, hform, mul_assoc, Finset.sum_mul_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [Finset.mul_sum]

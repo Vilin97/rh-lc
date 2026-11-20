@@ -138,7 +138,8 @@ theorem exists_isotypic_projection {n : ℕ} (H : Type) [NormedAddCommGroup H] [
     simp [LinearMap.sum_apply]
   refine ⟨∑ j, T j ∘ₗ P j, ?_, ?_, ?_, ?_⟩
   · intro a c w
-    rw [hp, hp, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hp, hp, map_sum]
     exact Finset.sum_congr rfl fun j _ => by rw [hPi, hTi]
   · intro d hd
     rw [hp]
@@ -178,8 +179,10 @@ theorem exists_isotypic_projection {n : ℕ} (H : Type) [NormedAddCommGroup H] [
     have hsum : (ρ k : H →ₗ[ℂ] H) ∘ₗ S ∘ₗ (∑ j, T j ∘ₗ P j) =
         ∑ j, (ρ k : H →ₗ[ℂ] H) ∘ₗ S ∘ₗ (T j ∘ₗ P j) := by
       ext w
-      simp [LinearMap.sum_apply, map_sum]
-    rw [hsum, map_sum, Finset.sum_congr rfl fun j _ => hj j, ← Finset.sum_mul]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp [LinearMap.sum_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hsum, map_sum, Finset.sum_congr rfl fun j _ => hj j, ← Finset.sum_mul]
     congr 1
     unfold trOn
     rw [dif_pos hSD, LinearMap.trace_eq_matrix_trace ℂ b, Matrix.trace]

@@ -66,7 +66,8 @@ theorem omega_eq (hB : B.IsGood σ) (u u' : Matrix (Fin n) (Fin d) (AE F E)) : o
   rw [omega, symp, tr_tr hB.cm B.emb]
   refine Finset.sum_congr rfl fun w _ => ?_
   congr 2
-  simp only [hTens, neg_one_mul, map_neg, map_sum, map_mul, piInf_cA hB.cm, incM, Matrix.map_apply, piInf_inclR]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hTens, neg_one_mul, map_neg, map_sum, map_mul, piInf_cA hB.cm, incM, Matrix.map_apply, piInf_inclR]
   rfl
 
 def Rel (B : Base F E) (X : Spc F E n) (W : Spc F E d) (e : InfinitePlace F → ℤˣ) (u u' : Matrix (Fin n) (Fin d) (AE F E)) : Prop :=

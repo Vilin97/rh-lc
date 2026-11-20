@@ -57,7 +57,8 @@ variable [FiniteDimensional K M]
 theorem trace_nmF (i : ι) :
     LinearMap.trace K _ (nmF K M (G := G) i) = (finrank K ((∀ i, G i) → M) : K) := by
   unfold nmF
-  rw [map_sum, Finset.sum_eq_single (1 : G i)]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum, Finset.sum_eq_single (1 : G i)]
   · rw [Pi.mulSingle_one, trl_one, LinearMap.trace_one]
   · intro g _ hg
     apply trace_trl

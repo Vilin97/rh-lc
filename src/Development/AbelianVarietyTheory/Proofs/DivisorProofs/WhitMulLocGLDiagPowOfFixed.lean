@@ -128,8 +128,10 @@ theorem supSum_sLoc (w : HeightOneSpectrum (𝓞 E)) (u : GL (Fin a) (w.adicComp
   let t : w.adicCompletion E →+ Ad E := (sFin E).toAddMonoidHom.comp (sLoc E w).toAddMonoidHom
   change supSum 0 (fun p : Pos a => t ((u : Matrix (Fin a) (Fin a) (w.adicCompletion E)) p.1.1 p.1.2)) =
     t (GlobalTheory.Whittaker.superDiag u)
-  rw [GlobalTheory.Whittaker.superDiag, map_sum, supSum]
-  simp only [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [GlobalTheory.Whittaker.superDiag, map_sum, supSum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum]
   exact sum_pos_superdiag (fun i j => t ((u : Matrix (Fin a) (Fin a) (w.adicCompletion E)) i j))
 
 end GlobalTheory.JSW

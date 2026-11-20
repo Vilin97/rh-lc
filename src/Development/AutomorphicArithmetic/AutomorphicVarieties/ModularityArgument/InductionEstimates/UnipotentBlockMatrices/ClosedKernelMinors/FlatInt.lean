@@ -80,11 +80,13 @@ private theorem specW [IsTotallyComplex K] (μ : Measure (G1 K (2 + 2))) [μ.IsH
   have hT := fun i => thBasic μ _ (hB i).1.cont (hB i).1.rat (hB i).2
   have hR := rep_sum Finset.univ (fun i => A.J (U i)) (fun i => th (bf (fun x => w x i) (A.sec (e i))))
     fun i => ⟨(hT i).2.1, (hT i).2.2.1, A.spec _ _ _ (hc i) (hcc i) (hU i)⟩
-  rw [huU, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [huU, map_sum]
   convert hR using 1
   rw [← finsum_sum_comm]
   · refine finsum_congr fun q => ?_
-    rw [hsum (HH _), map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hsum (HH _), map_sum]
     simp only [Finset.sum_apply, map_smul, Pi.smul_apply, smul_eq_mul, bf, exp_cast, Finset.mul_sum]
     refine Finset.sum_congr rfl fun i _ => by ring
   · intro i _

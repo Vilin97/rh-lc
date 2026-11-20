@@ -47,7 +47,8 @@ theorem exists_testRing_ext (p : TRing K) :
     rfl
   · have h1 : ∑ i, b i ⊗ₜ[K] v i = (0 : K' ⊗[K] p.R) := by
       have h2 := congrArg e hv
-      rw [map_zero, map_sum] at h2
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_zero, map_sum] at h2
       rw [← h2]
       refine Finset.sum_congr rfl fun i _ => ?_
       show _ = e (algebraMap K' q.R (b i) * e.symm ((1 : K') ⊗ₜ[K] v i))
@@ -55,7 +56,8 @@ theorem exists_testRing_ext (p : TRing K) :
         Algebra.TensorProduct.tmul_mul_tmul]
       simp
     have h3 := congrArg (fun w => TensorProduct.lid K p.R (lam.rTensor p.R w)) h1
-    simpa [map_sum] using h3
+    set_option synthInstance.maxHeartbeats 100000 in
+      simpa [map_sum] using h3
 
 end Algebra
 

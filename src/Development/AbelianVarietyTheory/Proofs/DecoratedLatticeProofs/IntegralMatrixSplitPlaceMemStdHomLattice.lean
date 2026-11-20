@@ -66,7 +66,8 @@ theorem int_up_mem_stdHom : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [
     ext i' j
     change q.sec ((FT.β * t * FS.γ) i' j) = _
     rw [hβ, hγ, Matrix.one_mul, Matrix.sum_apply, Finset.sum_eq_single i']
-    · rw [Matrix.sum_apply, Matrix.mul_apply, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · rw [Matrix.sum_apply, Matrix.mul_apply, map_sum]
       refine Finset.sum_congr rfl fun l _ => ?_
       rw [hGapp, htm, hrow, Pi.single_eq_same, mul_one, map_mul (incA D), map_mul q.pr, Matrix.smul_apply, Matrix.map_apply, smul_eq_mul]
     · intro i _ hi

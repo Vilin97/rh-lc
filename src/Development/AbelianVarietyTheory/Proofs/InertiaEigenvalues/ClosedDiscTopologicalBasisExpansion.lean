@@ -134,7 +134,8 @@ theorem disc_expand (l : ℕ) [Fact l.Prime] (K : FinExt l) (bk : BK K) (A : Typ
       have h2 := hn _ (TB.approx a n F fun i hi => by
         by_contra h
         exact hi (hF (by simpa using h)))
-      rw [map_sub, map_sum] at h2
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sub, map_sum] at h2
       rw [dist_comm, dist_eq_norm]
       simp only [hc1, hj.ext, ← map_mul]
       linarith

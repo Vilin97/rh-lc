@@ -148,8 +148,10 @@ theorem linearIndependent_pullChart (h : W ≤ r ⁻¹ᵁ O) (h' : r ⁻¹ᵁ O 
       obtain ⟨d, hd⟩ := exists_chart hB' z
       have hz' := hle hz.1
       have e := congrArg (germ d z (h' hz'.1) hd) hu
-      simp only [map_sum, germ_smul, germ_pullChart, map_zero] at e
-      simp only [map_sum, map_mul, ger_algX, ger_appLE, ger_resG, map_zero]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, germ_smul, germ_pullChart, map_zero] at e
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_mul, ger_algX, ger_appLE, ger_resG, map_zero]
       refine Eq.trans (Finset.sum_congr rfl fun i _ => ?_) ((Finset.mul_sum _ _ _).symm.trans
         ((congrArg ((r.stalkMap z).hom (tr B (r z) c (a.idx d)).val * ·) e).trans (mul_zero _)))
       rw [mul_left_comm, ← map_mul]
@@ -158,8 +160,10 @@ theorem linearIndependent_pullChart (h : W ≤ r ⁻¹ᵁ O) (h' : r ⁻¹ᵁ O 
   have e₂ := (map_sum Λ _ _).symm.trans ((congrArg Λ e).trans (map_zero Λ))
   have e₃ := congrArg (ger y hyV) ((Finset.sum_congr rfl fun i _ => (hΛ _ _).symm).trans e₂)
   refine ⟨c, hc, ?_⟩
-  simp only [map_sum, map_mul, map_zero, ger_resG] at e₃
-  simp only [map_sum, germ_smul, map_zero]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, map_zero, ger_resG] at e₃
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, germ_smul, map_zero]
   refine Eq.trans (Finset.sum_congr rfl fun i _ => ?_) e₃
   exact congrArg (· * _) (ger_algX y hyV _).symm
 
@@ -326,8 +330,10 @@ theorem linearIndependent_cval (hq : Etale q) (hB : B.IsLB) (τ : E →+* ℂ) {
     exact congrArg _ ((ev_ofHom hV φ.toRingHom φ.commutes _).symm.trans (ev_res hle hz _))
   have e₂ := congrArg (fun x => ger y hyV (TensorProduct.lid E _ (l.rTensor _ x))) e
   refine ⟨c, hc, ?_⟩
-  simp only [map_sum, LinearMap.rTensor_tmul, lid_tmul, Algebra.smul_def, map_mul, map_zero, ger_resG] at e₂
-  simp only [map_sum, germ_smul, map_zero]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.rTensor_tmul, lid_tmul, Algebra.smul_def, map_mul, map_zero, ger_resG] at e₂
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, germ_smul, map_zero]
   refine Eq.trans (Finset.sum_congr rfl fun i _ => ?_) e₂
   exact congrArg (· * _) (ger_algX y hyV _).symm
 
@@ -355,7 +361,8 @@ theorem csq_pointHerm (τ : E →+* ℂ) {ι : Type*} [Fintype ι] (c : ι → �
     csq (pointHerm hf he φ) τ c g = ∑ᶠ y, (φ τ).nsq (∑ i, c i • cval τ (g i)) y := by
   letI := @Fintype.ofFinite _ (finite_cxPts hf τ)
   rw [finsum_eq_sum_of_fintype, csq, ← Complex.ofReal_re (∑ y, _)]
-  simp only [form_pointHerm, Finset.mul_sum, Weight.nsq, Complex.ofReal_sum, Complex.ofReal_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form_pointHerm, Finset.mul_sum, Weight.nsq, Complex.ofReal_sum, Complex.ofReal_mul,
     Complex.ofReal_pow, ← Complex.conj_mul', Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum, map_mul,
     Finset.sum_mul]
   refine congrArg _ ?_

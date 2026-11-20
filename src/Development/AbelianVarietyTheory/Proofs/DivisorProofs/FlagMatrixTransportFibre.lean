@@ -95,7 +95,8 @@ theorem stepIso_of_flagMat : ∀ (B Y : Scheme.{0}) (M : B.Modules) (r : ℕ) (h
       erw [QCoh.res_pullbackSections]
       rw [← Vert.DivPull.pullbackComp_inv_app y π M hWV hy hx, QCoh.app_app, Iso.inv_hom_id_app_assoc]
       rfl
-    rw [← ((hs.pullback y).basis hy).sum_repr t, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← ((hs.pullback y).basis hy).sum_repr t, map_sum]
     refine Submodule.sum_mem _ fun j _ => ?_
     rw [Scheme.Modules.Hom.app_smul]
     refine Submodule.smul_mem _ _ ?_
@@ -103,7 +104,8 @@ theorem stepIso_of_flagMat : ∀ (B Y : Scheme.{0}) (M : B.Modules) (r : ℕ) (h
     erw [QCoh.res_pullbackSections]
     rw [← QCoh.app_app, QCoh.pullback_map_app_pullbackSections,
       ← ((hf.pullback π).basis hWV).sum_repr ((fl.ι i).app W (s j))]
-    simp only [map_sum, QCoh.pullbackSections_smul, Scheme.Modules.Hom.app_smul, hc]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, QCoh.pullbackSections_smul, Scheme.Modules.Hom.app_smul, hc]
     obtain ⟨cf, h0, h1⟩ := hA.2 i W hWV (s j) hy
     exact matIso_mem_span φ e A i _ cf h0 h1
   · obtain ⟨cf, h0, h1⟩ := hA'.2 i ⊤ hx t le_rfl

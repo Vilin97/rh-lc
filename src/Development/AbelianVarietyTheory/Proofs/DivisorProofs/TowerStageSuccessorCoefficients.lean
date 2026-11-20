@@ -168,7 +168,8 @@ theorem hD_swap (S : HSp D) (u v : S.V) : S.hD v u = star (S.hD u v) := (S.herm.
 theorem hT_sum (S : HSp D) (u v : S.V) :
     S.hT u v = ∑ i, ∑ j, star (S.frame.equivFun u i) * S.gram i j * S.frame.equivFun v j := by
   conv_lhs => rw [← S.frame.sum_repr u, ← S.frame.sum_repr v]
-  simp only [map_sum, LinearMap.sum_apply, map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, HSpace.gram, RingHom.id_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, LinearMap.sum_apply, map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, HSpace.gram, RingHom.id_apply,
     starRingEnd_apply, Module.Basis.equivFun_apply, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring

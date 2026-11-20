@@ -33,7 +33,8 @@ theorem jD_aN_eq_range : ∀ {l : ℕ} [Fact l.Prime] {P : LocPrime l} {AI : Loc
     rw [hspan] at hm
     obtain ⟨c, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun (AA K LL)).1 hm
     refine ⟨c, ?_⟩
-    simp only [smulA, LinearMap.smul_apply, LinearMap.id_apply, Finset.smul_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [smulA, LinearMap.smul_apply, LinearMap.id_apply, Finset.smul_sum, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     simp only [jD_smul_letter]
     exact smul_comm _ _ _
@@ -44,7 +45,8 @@ theorem jD_aN_eq_range : ∀ {l : ℕ} [Fact l.Prime] {P : LocPrime l} {AI : Loc
         exact (Submodule.mem_span_range_iff_exists_fun (AA K LL)).2 ⟨c, rfl⟩
       · simp only [smulA, LinearMap.smul_apply, LinearMap.id_apply, Finset.smul_sum]
         exact Finset.sum_congr rfl fun i _ => smul_comm _ _ _
-    · simp only [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp only [map_sum]
       exact Finset.sum_congr rfl fun i _ => jD_smul_letter E T _ _
 
 end GlobalTheory.NL.WkRange

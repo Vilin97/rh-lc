@@ -63,7 +63,8 @@ theorem reading_of_runModel (p : PtAt ex Csz) (r : TwoRuns p.T p.P.Gp) (h : Runs
     have h1 : cu F ∈ Submodule.span p.T.Q.c.F (Set.range b') := by rw [hspK]; exact hcuW F
     obtain ⟨cf, hcf⟩ := (Submodule.mem_span_range_iff_exists_fun _).1 h1
     have h2 : cu (∑ k, (show (recB (h.laws v).p.toLawsCore).KO from cf k) • bC k) = cu F := by
-      rw [map_sum, ← hcf]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_sum, ← hcf]
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [map_smul, hbC k]
       rfl
@@ -108,7 +109,8 @@ theorem reading_of_runModel (p : PtAt ex Csz) (r : TwoRuns p.T p.P.Gp) (h : Runs
     simp only [Submodule.coe_sum, Submodule.coe_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, TwoLevels.res, hRd,
       rdLin_apply]
     exact hGe c' x'.1 x'.2
-  rw [hy, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [hy, map_sum]
   simp only [map_smul, hρR, Submodule.coe_sum, Submodule.coe_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, hRd,
     rdLin_apply]
   rw [TwoLevels.pull, hGe (g • c) _ (GlobalTheory.T.twoLevelFlagDomain_transporter_mem_domain M g c x.1 x.2), Finset.mul_sum]

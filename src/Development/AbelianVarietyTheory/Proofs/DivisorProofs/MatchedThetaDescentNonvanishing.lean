@@ -190,7 +190,8 @@ theorem average_core {n d : ℕ} {Y : Spc F E n} {W : Spc F E d} (B : Base F E) 
   ·
     intro k hk Ψ Ψ' e
     obtain ⟨s, f, -, hsL, hPx, hPy, -⟩ := hP3 Ψ Ψ'
-    rw [hPy, hPx, e, map_smul, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hPy, hPx, e, map_smul, map_sum]
     congr 1
     refine Finset.sum_congr rfl fun g hg => ?_
     rw [hπ, hπ, ← Module.End.mul_apply, ← map_mul, ← Module.End.mul_apply, ← map_mul, Prod.mk_mul_mk,

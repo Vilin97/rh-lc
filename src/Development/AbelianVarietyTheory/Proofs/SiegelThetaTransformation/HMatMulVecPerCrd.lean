@@ -27,7 +27,8 @@ theorem vecQ_intCast (m : Fin g ⊕ Fin g → ℤ) :
     vecQ X bas (fun j => (m j : ℚ)) = (bas m : Fin r → E) := by
   have hm : m = ∑ j, m j • Pi.single j (1 : ℤ) := by
     funext j; simp [Pi.single_apply]
-  conv_rhs => rw [hm, map_sum, AddSubmonoidClass.coe_finset_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    conv_rhs => rw [hm, map_sum, AddSubmonoidClass.coe_finset_sum]
   simp only [vecQ, map_zsmul, AddSubgroupClass.coe_zsmul, Int.cast_smul_eq_zsmul]
 
 theorem vecQ_surjective : Function.Surjective (vecQ X bas) := by
@@ -62,7 +63,8 @@ theorem EF_vecQ (hs : IsSympl X bas) (m m' : Fin g ⊕ Fin g → ℚ) :
   change EFBil X _ _ = _
   have h (j k) : EFBil X (bas (Pi.single j 1)) (bas (Pi.single k 1)) =
       -(omegaStd (Pi.single j 1) (Pi.single k 1) : ℤ) := hs _ _
-  simp only [vecQ, map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, h]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [vecQ, map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, h]
   simp [Fintype.sum_sum_type, omegaStd, Pi.single_apply, Finset.sum_sub_distrib, mul_comm]
   ring
 

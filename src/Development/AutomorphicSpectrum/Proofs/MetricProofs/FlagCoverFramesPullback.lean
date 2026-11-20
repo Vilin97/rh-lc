@@ -95,7 +95,8 @@ theorem read_minor (M : FlagModel y Ψ N j) (F : FrameData ι Ψ N M.Ω M.blk) (
         congr 1
         have hs : ∀ I, IsStepRows N j p.2 I → ∑ m : ι k, α (F.u' I' ⟨k, m⟩) * α (F.u ⟨k, m⟩ I) = if I' = I then 1 else 0 := fun I hI => by
           have := hF.2.2.1 p k hk I' I hI' hI
-          simp only [← map_mul, ← map_sum, this]
+          set_option synthInstance.maxHeartbeats 100000 in
+            simp only [← map_mul, ← map_sum, this]
           split_ifs <;> simp
         rw [Finset.sum_eq_single I' (fun I _ hne => ?_) (by simp), hs I' hI', if_pos rfl, one_mul]
         by_cases hI : IsStepRows N j p.2 I
@@ -161,7 +162,8 @@ theorem transPt_eq_smul_sum : ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ 
       ∑ I, ∑ I' ∈ Finset.univ.filter (IsStepRows N j p.2),
         α (Cv.φ (F.u ⟨k, m⟩ I)) * α (minorIJ (trMat Cv F' F p.1) I I') *
           ∑ m' : ι' k', α (F'.u' I' ⟨k', m'⟩) * y' ⟨k', m'⟩ := by
-    simp only [coE, map_sum, map_mul, Finset.sum_mul, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [coE, map_sum, map_mul, Finset.sum_mul, Finset.mul_sum]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun I _ => ?_
     rw [Finset.sum_comm]

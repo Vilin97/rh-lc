@@ -32,7 +32,8 @@ theorem hT_coord {D : D7} (V : HSp D) (x : Fin V.rank → D.host.E) :
       HeckeCharacterZeroLocus.SiegelWeilU.hE D.sp.cm.sig (HSpace.gram V) x x := by
   have hσ : ∀ a : D.host.E, ((D.sp.cm.sig : D.host.E →ₐ[D.host.F] D.host.E) : D.host.E →+* D.host.E) a = star a :=
     fun _ => rfl
-  simp only [Module.Basis.equivFun_symm_apply, HeckeCharacterZeroLocus.SiegelWeilU.hE, HeckeCharacterZeroLocus.SiegelWeilU.hform, map_sum, LinearMap.sum_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [Module.Basis.equivFun_symm_apply, HeckeCharacterZeroLocus.SiegelWeilU.hE, HeckeCharacterZeroLocus.SiegelWeilU.hform, map_sum, LinearMap.sum_apply,
     map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, hσ, HSpace.gram]
   simp only [starRingEnd_apply]
   rw [Finset.sum_comm]

@@ -12,7 +12,8 @@ theorem psum_isHomogeneous_alt (N j : ℕ) : (psum (Fin N) ℚ j).IsHomogeneous 
 
 theorem SchPowerSumHomWeighted.proof : SchPowerSumHomWeighted.Statement := by
   intro N d S hS
-  rw [S.as_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [S.as_sum, map_sum]
   refine IsHomogeneous.sum _ _ _ fun e he => ?_
   have hw : Finsupp.weight (fun i : Fin N => (i : ℕ) + 1) e = d :=
     hS (mem_support_iff.mp he)

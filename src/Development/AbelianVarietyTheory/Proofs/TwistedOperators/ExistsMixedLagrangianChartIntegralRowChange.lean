@@ -216,7 +216,8 @@ theorem isSplitBasis_conj {β : GL (Fin n) (Kw (splitPrime τ))} {Λ : Submodule
   rw [e, ← SplitChart.map_mem_latAt_iff h2 h3]
   have e2 : (fun i => ψ (((GeneralLinearGroup.map ψ.symm.toRingHom β).val *ᵥ u) i)) = β.val *ᵥ fun i => ψ (u i) := by
     funext i
-    simp [mulVec, dotProduct, map_sum, GeneralLinearGroup.map_apply]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp [mulVec, dotProduct, map_sum, GeneralLinearGroup.map_apply]
   rw [e2, ← h]
   exact forall_congr' fun i => (SplitChart.map_mem_Ov_iff h3).symm
 

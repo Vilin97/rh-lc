@@ -55,7 +55,8 @@ theorem quotient_retract_pi_quotient :
   apply Submodule.linearMap_qext
   ext x
   have h1 : r (s (F.mkQ x)) = F.mkQ (q (π (σ (q x)))) := by
-    rw [LinearMap.pi_apply_eq_sum_univ π (σ (q x)), map_sum, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [LinearMap.pi_apply_eq_sum_univ π (σ (q x)), map_sum, map_sum]
     simp only [r, s, g, LinearMap.sum_apply, LinearMap.comp_apply,
       LinearMap.proj_apply, Submodule.liftQ_apply, Submodule.mkQ_apply, s0, LinearMap.pi_apply]
     refine Finset.sum_congr rfl (fun k _ => ?_)

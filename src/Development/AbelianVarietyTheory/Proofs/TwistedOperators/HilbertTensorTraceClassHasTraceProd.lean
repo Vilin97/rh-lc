@@ -107,7 +107,8 @@ theorem tensorTrace_hasTrace : ∀ (ι : Type) [Fintype ι] [DecidableEq ι] (Hs
       simp only [comp_apply]
       rw [show (fun i => B i (e i (j i))) = fun i => ∑ m, C i m (D i m (e i (j i))) from
         funext fun i => by rw [hBeq i]; simp]
-      rw [Φ'.map_sum (fun i m => C i m (D i m (e i (j i))))]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [Φ'.map_sum (fun i m => C i m (D i m (e i (j i))))]
       refine Finset.sum_congr rfl fun k _ => ?_
       change _ = GC k (GD k (Φ fun i => e i (j i)))
       rw [hGD1, hGC1]

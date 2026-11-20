@@ -37,7 +37,8 @@ theorem topSelf_comb_pull {k : Type} [CommRing k] {X : Scheme.{0}} {p : X ⟶ Sp
   have hL : ∀ j, ((N j).B.pull i).IsLB := fun j => LB.isLB_pull (N j).isLB i
   have e := HD.interNum_of_cls_eq_sum (L := fun j => (N j).B.pull i) hL (Q := fun _ => (comb N n).B.pull i)
     (fun _ => LB.isLB_pull (comb N n).isLB i) (fun _ => n) fun _ => by
-      rw [CechPic.cls_pull (comb N n).isLB, GenFibreSecs.cls_comb, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [CechPic.cls_pull (comb N n).isLB, GenFibreSecs.cls_comb, map_sum]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [map_zsmul, CechPic.cls_pull (N j).isLB]
   rw [topSelf_def, e]
@@ -87,10 +88,12 @@ theorem expand {D : ℕ} (Φ : MvPolynomial (Option (Fin D)) ℝ →ₗ[ℝ] ℝ
         Φ (MvPolynomial.X none * ∏ j, MvPolynomial.X (some (a j))) := by
   have e : MvPolynomial.rename some (lin fun i => (n i : ℝ)) ^ D =
       ∑ a : Fin D → Fin D, MvPolynomial.C (∏ j, (n (a j) : ℝ)) * ∏ j, MvPolynomial.X (some (a j)) := by
-    rw [← Fin.prod_const, lin, map_sum, Finset.prod_univ_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [← Fin.prod_const, lin, map_sum, Finset.prod_univ_sum]
     refine Finset.sum_congr rfl fun a _ => ?_
     simp only [map_mul, MvPolynomial.rename_C, MvPolynomial.rename_X, Finset.prod_mul_distrib, map_prod]
-  rw [e, Finset.mul_sum, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, Finset.mul_sum, map_sum]
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [mul_left_comm, ← MvPolynomial.smul_eq_C_mul, map_smul, smul_eq_mul]
 

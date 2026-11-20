@@ -113,7 +113,8 @@ def pairing (φ : Ω →ₐ[o] Ω') (s : J → Ω') (v : J → Ω) : Ω' := ∑ 
 
 theorem pairing_sum {I : Type} [Fintype I] (s : J → Ω') (c : I → Ω) (a : I → J → Ω) :
     pairing φ s (∑ i, c i • a i) = ∑ i, φ (c i) * pairing φ s (a i) := by
-  simp only [pairing, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum, map_mul, Finset.sum_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [pairing, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum, map_mul, Finset.sum_mul,
     Finset.mul_sum, _root_.mul_assoc]
   exact Finset.sum_comm
 
@@ -171,7 +172,8 @@ theorem Lat.exists_eq_sum_pairing [DecidableEq J] (EE : M.Lat J) (s : J → Ω')
   refine ⟨fun i => ∑ l, b⁻¹ j l * c l i, ?_⟩
   rw [← e2, e]
   refine (pairing_sum s (fun l => b⁻¹ j l) fun l => b l).trans ?_
-  simp only [hc, map_sum, map_mul, Finset.sum_mul, Finset.mul_sum, _root_.mul_assoc]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [hc, map_sum, map_mul, Finset.sum_mul, Finset.mul_sum, _root_.mul_assoc]
   exact Finset.sum_comm
 
 theorem Lat.eq_top_of_pairing_mem [DecidableEq J] (EE : M.Lat J) {s : J → Ω'}

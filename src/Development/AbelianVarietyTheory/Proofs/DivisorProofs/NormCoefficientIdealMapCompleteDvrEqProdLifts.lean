@@ -35,7 +35,8 @@ theorem GlobalTheory.NormSheaf.normIdeal_map_eq_prod_lifts : ∀ (A B K L : Type
     intro m g P hPR
     rw [← GlobalTheory.T.span_coeff_prod_linear_eq_prod_span V' _ m (fun j i => ψ j (g i))]
     have hE : (∏ j, ∑ i, C (ψ j (g i)) * X i : MvPolynomial (Fin m) V') = (P.map (algebraMap A R)).map ρ := by
-      rw [hPR]; simp [map_prod, map_sum, ψ]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hPR]; simp [map_prod, map_sum, ψ]
     have hfun : (fun s => (f.comp h) (P.coeff s)) =
         fun s => (∏ j, ∑ i, C (ψ j (g i)) * X i : MvPolynomial (Fin m) V').coeff s := by
       funext s

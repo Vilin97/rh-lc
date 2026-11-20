@@ -19,7 +19,8 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 theorem herm_map_eq (σ : E →ₐ[F] E) (hτσ : ∀ (τ : E →+* ℂ) (x : E), τ (σ x) = star (τ x)) (hσ : ∀ x, σ (σ x) = x)
     {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (c : E) (p q : Fin n → E) (τ : E →+* ℂ) :
     (star (fun i => τ (p i)) ᵥ* (c • J.map σ).map τ) ⬝ᵥ (fun i => τ (q i)) = τ (c * σ (form σ J p q)) := by
-  simp only [form, dotProduct, Matrix.vecMul, Matrix.mulVec, map_sum, map_mul, Matrix.map_apply, Matrix.smul_apply,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [form, dotProduct, Matrix.vecMul, Matrix.mulVec, map_sum, map_mul, Matrix.map_apply, Matrix.smul_apply,
     smul_eq_mul, Pi.star_apply, hσ, hτσ, Finset.mul_sum, Finset.sum_mul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun i _ => ?_

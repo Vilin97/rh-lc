@@ -77,7 +77,8 @@ def pullbackBundle {x : ι → Ω} (B : ChartBundle ℤ x r E) (z : κ → Ω') 
     refine ⟨k, fun l' => algebraMap Ω Ω' (f l'), fun l' => algebraMap Ω Ω' (c l'),
       fun l' => algebraMap_mem_chartRing_joinPt x z i l hzl (hf l'),
       fun l' => algebraMap_mem_chartRing_joinPt x z i l hzl (hc l'), ?_, fun l' => ?_⟩
-    · simp only [← map_mul, ← map_sum, hsum, map_one]
+    set_option synthInstance.maxHeartbeats 100000 in
+      · simp only [← map_mul, ← map_sum, hsum, map_one]
     obtain ⟨b, hli, hspan, hiff⟩ := hfr l'
     set R := chartRing ℤ (joinPt x z) (i, l)
     set F := algebraMap Ω Ω' (f l')

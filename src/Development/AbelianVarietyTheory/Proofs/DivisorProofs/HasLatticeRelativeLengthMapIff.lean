@@ -42,7 +42,8 @@ theorem exists_basis_sum {R : Type*} [CommRing R] {M M' : Type*} [AddCommGroup M
       simpa [Fintype.sum_sum_type, u, w] using hg
     have h2 : ∑ j, g (Sum.inr j) • (e j : M') = 0 := by
       have := congrArg f hg'
-      simpa [map_add, map_sum, map_smul, hdf, hσf] using this
+      set_option synthInstance.maxHeartbeats 100000 in
+        simpa [map_add, map_sum, map_smul, hdf, hσf] using this
     have hr : ∀ j, g (Sum.inr j) = 0 := Fintype.linearIndependent_iff.1 heli _ h2
     have h1 : ∑ i, g (Sum.inl i) • (d i : M) = 0 := by simpa [hr] using hg'
     have hl : ∀ i, g (Sum.inl i) = 0 := Fintype.linearIndependent_iff.1 hdli _ h1
@@ -60,7 +61,8 @@ theorem exists_basis_sum {R : Type*} [CommRing R] {M M' : Type*} [AddCommGroup M
       simpa only [Submodule.coe_smul] using h0
     have hk : z - ∑ j, bb j • σ j ∈ Z ⊓ LinearMap.ker f := by
       refine Submodule.mem_inf.2 ⟨Z.sub_mem hz (Z.sum_mem fun j _ => Z.smul_mem _ (hσZ j)), ?_⟩
-      rw [LinearMap.mem_ker, map_sub, map_sum]
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [LinearMap.mem_ker, map_sub, map_sum]
       simp only [map_smul, hσf]
       rw [hy, sub_self]
     have hkk := congrArg Subtype.val (d.sum_repr ⟨_, hk⟩)
@@ -191,7 +193,8 @@ theorem relLen_map_iff : ∀ (C : Type) [Field C] (v : AddValuation C (WithTop �
     have hB : ∀ k, (c' k : M') = ∑ j, B j k • (c j : M') := by
       intro k
       have h1 := congrArg f (hA (Sum.inr k))
-      rw [hb', Sum.elim_inr, hσf', map_sum, Fintype.sum_sum_type] at h1
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hb', Sum.elim_inr, hσf', map_sum, Fintype.sum_sum_type] at h1
       simpa [hb, hdf, hσf, B, Matrix.toBlocks₂₂] using h1
     rw [relLen_iff_of_basis v (Submodule.map_mono hle) c c' B hB]
     have hinl : ∀ i, Submodule.inclusion hle (b' (Sum.inl i)) = b (Sum.inl i) := by

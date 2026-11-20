@@ -172,9 +172,11 @@ theorem thEval_eq_twisted {k : ℕ} {ψ : X.RCG i Q →* (X.Ok i k)ˣ} {ι : ℂ
     refine Finset.sum_congr rfl fun q _ => ?_
     rw [hTq, map_inv, Units.val_inv_eq_inv_val, lamF]
     ring
-  rw [e, ← Finset.sum_fiberwise Finset.univ (fun q => π q⁻¹), map_sum, Finset.mul_sum, BlochKatoReduction.Gen.thEval, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [e, ← Finset.sum_fiberwise Finset.univ (fun q => π q⁻¹), map_sum, Finset.mul_sum, BlochKatoReduction.Gen.thEval, map_sum]
   refine Finset.sum_congr rfl fun δ _ => ?_
-  rw [map_mul, hJ, hδ, show {q | π q⁻¹ = δ} = ↑(Finset.univ.filter fun q => π q⁻¹ = δ) by ext; simp,
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_mul, hJ, hδ, show {q | π q⁻¹ = δ} = ↑(Finset.univ.filter fun q => π q⁻¹ = δ) by ext; simp,
     finsum_mem_coe_finset, map_sum, map_sum, mul_assoc, Finset.sum_mul]
   congr 1
   exact Finset.sum_congr rfl fun q hq => by rw [map_mul, hθ, (Finset.mem_filter.1 hq).2]
@@ -189,7 +191,8 @@ theorem sum_th_eq {ι : ℂ →+* Kbar X i}
   obtain ⟨J, hJ⟩ := GlobalTheory.ToricDistribution.exists_emb X i 0
   have h := thEval_eq_twisted (ψ := 1) (θ := 1) hJ (fun q => by simp) hT hδ (t := t)
     (by simpa [IsTwistedSum, IsToricSum, lamF] using ht)
-  rw [← h, ← hJ, BlochKatoReduction.Gen.thEval, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [← h, ← hJ, BlochKatoReduction.Gen.thEval, map_sum]
   simp
 
 end Record

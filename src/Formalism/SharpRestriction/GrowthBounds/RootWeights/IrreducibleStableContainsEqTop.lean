@@ -107,7 +107,8 @@ theorem weight_support_sum_eq_zero [CharZero (KK O)] (E : GLOps n (KK O) V) (Pr 
       have hkey : (((nu a : ℤ) : KK O) - ((mu0 a : ℤ) : KK O)) • ∑ mu ∈ insert mu0 F, f mu = ∑ mu ∈ F, g mu := by
         have h1 : E a a (∑ mu ∈ insert mu0 F, f mu) = ((nu a : ℤ) : KK O) • ∑ mu ∈ insert mu0 F, f mu :=
           hwt a nu _ hs
-        rw [sub_smul, ← h1, map_sum, hES]
+        set_option synthInstance.maxHeartbeats 100000 in
+          rw [sub_smul, ← h1, map_sum, hES]
         simp only [g, sub_smul, Finset.sum_sub_distrib]
         rw [Finset.sum_insert hmu0, Finset.sum_insert hmu0, smul_add, Finset.smul_sum]
         abel

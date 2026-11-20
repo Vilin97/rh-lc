@@ -13,7 +13,8 @@ theorem pderiv_pSum_single (τ σ : ι) (i : Fin N) (k : ℕ) :
     pderiv (τ, i) (pSum σ k : Pol ι N) =
       if τ = σ then C (k : ℝ) * X (τ, i) ^ (k - 1) else 0 := by
   unfold pSum
-  rw [map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sum]
   split_ifs with h
   · subst h
     rw [Finset.sum_eq_single i]

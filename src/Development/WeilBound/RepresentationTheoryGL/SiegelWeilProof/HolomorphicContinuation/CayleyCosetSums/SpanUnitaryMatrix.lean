@@ -97,7 +97,8 @@ theorem inv_trace (L : Matrix (Fin n) (Fin n) ℂ →ₗ[ℂ] ℂ)
   have hsum : ∀ Y : Matrix (Fin n) (Fin n) ℂ, L Y = κ * Y.trace := by
     intro Y
     conv_lhs => rw [Matrix.matrix_eq_sum_single Y]
-    simp only [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum]
     rw [Matrix.trace, Finset.mul_sum]
     refine Finset.sum_congr rfl fun a _ => ?_
     rw [Finset.sum_eq_single a]

@@ -50,14 +50,16 @@ private theorem squareTopTwistPlaces_coprime_splitPlaces {S A : Type} [CommRing 
     intro z
     have h0 : f' (z - ∑ i, ∑ j, f' z i j • s i j) = 0 := by
       rw [map_sub, sub_eq_zero]
-      simp only [map_sum, map_smul, hs, Matrix.smul_single, smul_eq_mul, mul_one]
+      set_option synthInstance.maxHeartbeats 100000 in
+        simp only [map_sum, map_smul, hs, Matrix.smul_single, smul_eq_mul, mul_one]
       exact Matrix.matrix_eq_sum_single _
     have h1 : π (f (z - ∑ i, ∑ j, f' z i j • s i j)) = 0 := by
       ext i j
       exact Ideal.Quotient.eq_zero_iff_mem.mpr (key _ h0 i j)
     rw [map_sub, map_sub, sub_eq_zero] at h1
     rw [h1]
-    simp only [map_sum, map_smul, hπs]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul, hπs]
     rfl
   let θ : Matrix (Fin r) (Fin r) (A ⧸ c) →ₐ[A ⧸ c] Matrix (Fin r) (Fin r) (A ⧸ c) :=
     AlgHom.ofLinearMap L (by simpa using hL 1) (by

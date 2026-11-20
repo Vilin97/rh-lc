@@ -124,7 +124,8 @@ theorem matH_hSc (sc : ℝ) (a b : ℕ) (x y : DVar X.Tau a b → ℂ) :
 
 theorem herm_hSc (sc : ℝ) (a b : ℕ) : IsHerm (matH (hSc X.Tau a b sc)) := by
   intro x y
-  rw [matH_hSc, matH_hSc, map_mul, Complex.conj_ofReal, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [matH_hSc, matH_hSc, map_mul, Complex.conj_ofReal, map_sum]
   congr 1
   exact Finset.sum_congr rfl fun k _ => by rw [map_mul, Complex.conj_conj, mul_comm]
 

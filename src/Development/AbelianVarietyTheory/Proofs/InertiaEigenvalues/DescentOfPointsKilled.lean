@@ -55,7 +55,8 @@ theorem descent_of_points_killed : ∀ (l : ℕ) [Fact l.Prime] (A B : Type) [Co
     have hD : ∀ i, algebraMap (B ⊗[A] B) T (D i) = i₁ (x i) - i₂ (x i) := by
       intro i; simp [D, i₁, i₂]
     apply IsLocalization.injective T (M := Submonoid.powers U) (Submonoid.powers_le.mpr hUreg)
-    rw [map_mul, map_sum, hD, hc j, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_mul, map_sum, hD, hc j, Finset.mul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     simp only [map_mul, map_pow, hD]
     rw [hc'' (i, j)]

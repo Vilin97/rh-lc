@@ -143,7 +143,8 @@ theorem cong_swap (Λ : Submodule (𝓞 E) (Fin n → E)) (N : ℕ)
   obtain ⟨y, hy, e⟩ := h _ (swap_symm_mem_hat Λ z hz)
   refine ⟨_, swap_mem_hatL Λ y hy, funext fun i => ?_⟩
   have := congrArg (Algebra.TensorProduct.comm F _ E) (congrFun e i)
-  simpa only [Pi.sub_apply, Pi.smul_apply, map_sub, map_nsmul, Matrix.mulVec, dotProduct, map_sum, map_mul,
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa only [Pi.sub_apply, Pi.smul_apply, map_sub, map_nsmul, Matrix.mulVec, dotProduct, map_sum, map_mul,
     AlgEquiv.apply_symm_apply, Matrix.map_apply] using this
 
 theorem swap_mem_UPts (σ : E →ₐ[F] E) (J : Matrix (Fin n) (Fin n) E)

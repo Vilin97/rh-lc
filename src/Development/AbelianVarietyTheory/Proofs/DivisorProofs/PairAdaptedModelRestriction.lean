@@ -28,7 +28,8 @@ theorem lagrangian_injective_diagonal : ∀ (F E : Type) [Field F] [NumberField 
     intro c a w; simp only [form, smul_dotProduct, smul_eq_mul]
   have fswap : ∀ a b : Fin d → E, form σ W.J b a = -σ (form σ W.J a b) := by
     intro a b
-    simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσσ, hp.skew.skew, Finset.mul_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσσ, hp.skew.skew, Finset.mul_sum]
     rw [Finset.sum_comm, ← Finset.sum_neg_distrib]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [← Finset.sum_neg_distrib]

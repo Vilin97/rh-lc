@@ -75,7 +75,8 @@ theorem GlobalTheory.LieCover.exists_cover_lieCoordLat : ∀ {E : Type} [Field E
   have key : ∀ i (a : Fin n → Localization.Away (r i)),
       bcTan (g i) (hxi i) (∑ s, a s • B' i s) = ∑ q, (∑ s, g i (a s) • M i s) q • b q := fun i a => by
     refine Eq.trans ?_ (sum_comb (fun s => g i (a s)) (fun s => M i s) b).symm
-    rw [map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sum]
     refine Finset.sum_congr rfl fun s _ => ?_
     rw [map_smulₛₗ, ← hC i s, hM i s]
   have lin : ∀ c c' : Fin n → K, ∑ q, c q • b q = ∑ q, c' q • b q → c = c' := fun c c' h =>
@@ -113,14 +114,16 @@ theorem GlobalTheory.LieCover.exists_cover_lieCoordLat : ∀ {E : Type} [Field E
     rw [e1, combLeft]
     congr 2
     refine Eq.trans ?_ (sum_comb (fun s => ι' (a s)) (fun s q => j (M i s q)) (fun q => bcTan j hT (b q))).symm
-    rw [hV, map_sum]
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [hV, map_sum]
     refine Finset.sum_congr rfl fun s _ => ?_
     have h3 : spMap (ι'.comp ψ') ≫ spMap (algebraMap (𝓞 K) (Localization.Away (r i))) ≫ xO = xT := by
       rw [← spMap_comp', Category.assoc, h1, h2]
     rw [map_smulₛₗ, bcTan_bcTan (t := t) ψ' ι' h1 h2 h3 (B' i s)]
     congr 1
     have e2 : bcTan j hT (C i s) = ∑ q, j (M i s q) • bcTan j hT (b q) := by
-      rw [hM i s, map_sum]; exact Finset.sum_congr rfl fun q _ => map_smulₛₗ _ _ _
+      set_option synthInstance.maxHeartbeats 100000 in
+        rw [hM i s, map_sum]; exact Finset.sum_congr rfl fun q _ => map_smulₛₗ _ _ _
     have h4 : spMap (j.comp (g i)) ≫ spMap (algebraMap (𝓞 K) (Localization.Away (r i))) ≫ xO = xT := by
       rw [← spMap_comp', Category.assoc, hxi i, hT]
     exact (bcTan_congr hring h3 h4 (B' i s)).trans ((bcTan_bcTan (t := t) (g i) j (hxi i) hT h4 (B' i s)).symm.trans

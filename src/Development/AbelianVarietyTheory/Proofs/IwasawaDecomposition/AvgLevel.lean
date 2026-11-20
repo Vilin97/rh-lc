@@ -20,7 +20,8 @@ theorem avg_level (K : Type) [Field K] (V : Type) [AddCommGroup V] [Module K V] 
     rw [_root_.mul_inv_rev, map_mul, map_inv, map_inv, ← Units.val_mul]
     congr 1
     rw [mul_comm, mul_assoc, inv_mul_cancel, mul_one]
-  rw [map_smul, map_sum, smul_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_smul, map_sum, smul_comm]
   simp only [map_smul]
   rw [key]
 

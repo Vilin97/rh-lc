@@ -150,8 +150,10 @@ theorem gl_eq_sum {m : ℕ} (Z : Gl m) : Z = ∑ a, ∑ b, Z a b • (Matrix.sin
 theorem mem_of_eu {m : ℕ} (S : Subalgebra ℂ (UniversalEnvelopingAlgebra ℂ (Gl m))) (h : ∀ p q, eu m p q ∈ S)
     (a : UniversalEnvelopingAlgebra ℂ (Gl m)) : a ∈ S := by
   refine GlobalTheory.EnvCentre.mem_of_ι_mem (AlgHom.id ℂ _) S (fun Z => ?_) a
-  rw [gl_eq_sum Z, map_sum]
-  simp only [map_sum, map_smul, AlgHom.id_apply]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [gl_eq_sum Z, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_smul, AlgHom.id_apply]
   exact sum_mem fun p _ => sum_mem fun q _ => Subalgebra.smul_mem _ (h p q) _
 
 theorem center_gl_le (m : ℕ) :
@@ -181,7 +183,8 @@ theorem glLin_lie {A : Type} [Ring A] [Algebra ℂ A] {m : ℕ} {E : Fin m → F
     rw [single_lie, map_sub, glLin_single, glLin_single, LieRing.of_associative_ring_bracket, hE a b c d]
     split_ifs <;> simp [glLin_single]
   rw [gl_eq_sum Z, gl_eq_sum Z']
-  simp only [sum_lie, lie_sum, smul_lie, lie_smul, map_sum, map_smul, key]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [sum_lie, lie_sum, smul_lie, lie_smul, map_sum, map_smul, key]
 
 def glHom {A : Type} [Ring A] [Algebra ℂ A] {m : ℕ} (E : Fin m → Fin m → A) (hE : GlRel E) : Gl m →ₗ⁅ℂ⁆ A :=
   { glLin E with map_lie' := fun {Z Z'} => glLin_lie hE Z Z' }
@@ -254,7 +257,8 @@ open UniversalEnvelopingAlgebra
 theorem qdet_map {A A' : Type} [Ring A] [Algebra ℂ A] [Ring A'] [Algebra ℂ A'] (φ : A →ₐ[ℂ] A') {m : ℕ}
     (E : Fin m → Fin m → A) (u : ℂ) : φ (qdet E u) = qdet (fun a b => φ (E a b)) u := by
   unfold Formalism.REAL.qdet Formalism.REAL.qminor Formalism.REAL.Tm
-  simp only [map_sum, map_mul, map_intCast, map_list_prod, List.map_ofFn]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [map_sum, map_mul, map_intCast, map_list_prod, List.map_ofFn]
   refine Finset.sum_congr rfl fun σ _ => ?_
   congr 3
   split_ifs <;> simp
@@ -297,7 +301,8 @@ theorem glHom_comm {A : Type} [Ring A] [Algebra ℂ A] {m m' : ℕ} {E : Fin m �
   rw [gl_eq_sum Z, gl_eq_sum Z']
   have h0 : ∀ p q r v, ⁅E p q, E' r v⁆ = 0 := fun p q r v => by
     rw [LieRing.of_associative_ring_bracket, (hc p q r v).eq, sub_self]
-  simp only [sum_lie, lie_sum, smul_lie, lie_smul, map_sum, map_smul, glLin_single, h0, smul_zero, sum_const_zero]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp only [sum_lie, lie_sum, smul_lie, lie_smul, map_sum, map_smul, glLin_single, h0, smul_zero, sum_const_zero]
 
 end Final
 

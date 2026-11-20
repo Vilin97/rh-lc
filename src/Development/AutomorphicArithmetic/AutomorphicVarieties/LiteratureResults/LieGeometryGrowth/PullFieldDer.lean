@@ -22,7 +22,8 @@ private theorem lie_bound {φ : Sm E a} (h : BddDer φ) :
       map_smul' := fun r X => by rw [map_smul]; rfl }
   have e : L X = ∑ k, b.repr X k • L (b k) := by
     conv_lhs => rw [← b.sum_repr X]
-    simp only [map_sum, map_smul]
+    set_option synthInstance.maxHeartbeats 100000 in
+      simp only [map_sum, map_smul]
   change ‖L X‖ ≤ _
   rw [e, Finset.sum_mul]
   refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun k _ => ?_)

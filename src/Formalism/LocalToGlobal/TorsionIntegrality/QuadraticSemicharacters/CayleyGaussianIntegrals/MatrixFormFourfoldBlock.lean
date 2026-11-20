@@ -159,8 +159,10 @@ theorem matH_apply {n : Type*} [Fintype n] (h : Matrix n n ℂ) (z w : n → ℂ
 theorem matrixFormBasic : MatHBasic := by
   intro n _ h
   refine ⟨fun z w => rfl, fun hh x y => ?_⟩
-  rw [matH_apply, matH_apply, map_sum]
-  simp_rw [map_sum, map_mul, Complex.conj_conj]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [matH_apply, matH_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp_rw [map_sum, map_mul, Complex.conj_conj]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   have hc : conj (h i j) = h j i := by
@@ -181,7 +183,8 @@ theorem standardFormBasic : StdHBasic := by
   intro L n _ _
   have harea := Formalism.L2.Th1.F.PeriodAreaSignLemmas.area_pos L
   refine ⟨stdH_apply L n, fun x y => ?_, fun x hx => ?_⟩
-  · rw [stdH_apply, stdH_apply, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    · rw [stdH_apply, stdH_apply, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     simp only [Formalism.L2.Th1.F.herm, map_div₀, map_mul, Complex.conj_conj, Complex.conj_ofReal]
     ring

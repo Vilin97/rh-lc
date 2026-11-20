@@ -38,7 +38,8 @@ theorem ker_le_span_sup {A : Type} [CommRing A] [Algebra ℂ A] (e : A →+* ℂ
   have hJ : (Matrix.of fun a b => δ b (φ a)) = Matrix.of C * M := by
     ext a b
     have h1 := hsq b _ (hC a)
-    rw [map_sub, map_sum] at h1
+    set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_sub, map_sum] at h1
     simp only [hsmul] at h1
     have h2 : δ b (φ' a) = δ b (φ a) := by simp only [hφ', map_sub, hc, sub_zero]
     rw [Matrix.of_apply, Matrix.mul_apply, ← h2]

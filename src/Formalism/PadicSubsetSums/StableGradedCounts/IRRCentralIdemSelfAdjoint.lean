@@ -63,7 +63,8 @@ theorem character_inv {G V : Type} [Group G] [Fintype G] [AddCommGroup V] [Modul
           rw [smul_smul, inv_mul_cancel₀ (hμ0 i), one_smul]
       _ = (μ i)⁻¹ • v i := by rw [h1]
   unfold Representation.character
-  rw [trace_of_diag v (ρ g⁻¹) _ hinv, trace_of_diag v (ρ g) μ hsv, map_sum]
+  set_option synthInstance.maxHeartbeats 100000 in
+    rw [trace_of_diag v (ρ g⁻¹) _ hinv, trace_of_diag v (ρ g) μ hsv, map_sum]
 
 theorem centralIdem_coeff {G V : Type} [Group G] [Fintype G] [AddCommGroup V] [Module ℂ V]
     (ρ : Representation ℂ G V) (x : G) :

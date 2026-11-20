@@ -71,7 +71,8 @@ theorem ι_injective : Function.Injective (ι σ J X Y) := by
   have h2 := congrArg (bas σ J X Y).repr (Subtype.ext h)
   funext j
   have := congrArg (· j) h2
-  simpa [map_sum, Finsupp.smul_apply, Module.Basis.repr_self, Finsupp.single_apply] using this
+  set_option synthInstance.maxHeartbeats 100000 in
+    simpa [map_sum, Finsupp.smul_apply, Module.Basis.repr_self, Finsupp.single_apply] using this
 
 theorem exists_ι_eq {z : Fin n → E} (hz : z ∈ V0 σ J X Y) : ∃ u, ι σ J X Y u = z :=
   ⟨fun j => (bas σ J X Y).repr ⟨z, hz⟩ j, by
@@ -86,7 +87,8 @@ theorem hE_J0 (u u' : Fin (dim σ J X Y) → E) :
   simp only [hE_eq_dot, J0, ι_apply, Formalism.UG.cT, ← Matrix.mulVec_mulVec, Matrix.dotProduct_mulVec]
   congr 1
   funext i
-  simp [Matrix.vecMul, Matrix.mulVec, dotProduct, map_sum, mul_comm]
+  set_option synthInstance.maxHeartbeats 100000 in
+    simp [Matrix.vecMul, Matrix.mulVec, dotProduct, map_sum, mul_comm]
 
 end GlobalTheory.EisRestrict
 
